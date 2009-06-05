@@ -190,6 +190,22 @@ class EventData
     }
   end
 
+  def getStructName
+    if @items.length > 0 then
+      "#{@section_name}_#{@zonename}"
+    else
+      "NULL"
+    end
+  end
+
+  def putStructName output
+    if @items.length > 0 then
+      output.puts "\t(void *)&#{getStructName},"
+    else
+      output.puts "\t(void *)NULL,"
+    end
+  end
+
 end   # end of class EventData
 
 #============================================================================
@@ -352,6 +368,97 @@ end
 
 #============================================================================
 #
+# POSイベントクラス
+#
+#============================================================================
+class PosEvent < AllEvent
+
+  attr :number
+  attr :pos_id
+  attr :event_id
+  attr :workname
+  attr :workvalue
+  attr :sizex
+  attr :sizez
+  attr :x 
+  attr :y
+  attr :z
+
+
+  def initialize lines, header
+    super
+    @number = readEventNumber( lines )
+    @pos_id = read( lines, /#Pos Event Label/)
+    @event_id = read(lines, /#Pos Script Name/)
+    @workname = read(lines, /#Event Trigger Work Name/)
+    @workvalue = read(lines, /#Event Trigger Work Value/)
+    @sizex = read(lines, /#Pos Event Size X/)
+    @sizez = read(lines, /#Pos Event Size Z/)
+    @x, @y, @z = readPosition(lines)
+  end
+
+  def dump output
+    gx,gz = calc_grid_ofs @x, @z
+    output.puts "\t{#{@pos_id} = #{@number}"
+    putput.puts "\t\t#{@event_id},"
+    output.puts "\t\t#{@gx}, #{@gz},"
+    output.puts "\t\t#{@sizex}, #{@sizez},"
+    output.puts "\t\t#{@y},  //height"
+    output.puts "\t\t#{@workvalue},"
+    output.puts "\t\t#{@workname},"
+    output.puts "\t},"
+  end
+
+  def dumpHeader output
+    output.printf("\#define %-32s %2d\n", @pos_id, @number)
+  end
+end
+
+#============================================================================
+#
+# BGイベントクラス
+#
+#============================================================================
+class BgEvent < AllEvent
+
+  attr :number
+  attr :bg_id
+  attr :bg_type
+  attr :bg_dir
+  attr :event_id
+  attr :x 
+  attr :y
+  attr :z
+
+
+  def initialize lines, header
+    super
+    @number = readEventNumber( lines )
+    @bg_id = read( lines, /#Bg Event Label/)
+    @bg_type = read(lines, /#Bg Event Type/)
+    @bg_dir = read(lines, /#Bg Event Reaction Direction ID/)
+    @event_id = read(lines, /#Bg Script Name/)
+    @x, @y, @z = readPosition(lines)
+  end
+
+  def dump output
+    gx,gz = calc_grid_ofs @x, @z
+    output.puts "\t{#{@bg_id} = #{@number}"
+    output.puts "\t\t#{@event_id},  //event id"
+    output.puts "\t\t#{@bg_type}, //type"
+    output.puts "\t\t#{gx}, #{gz},"
+    output.puts "\t\t#{y},  //height"
+    output.puts "\t\t#{@bg_dir},//direction"
+    output.puts "\t},"
+  end
+
+  def dumpHeader output
+    output.printf("\#define %-32s %2d\n", @bg_id, @number)
+  end
+end
+
+#============================================================================
+#
 # ドアイベントデータクラス
 #
 #============================================================================
@@ -371,10 +478,10 @@ class DoorEventData < EventData
       output.puts "//ConnectData_#{@zonename}[]はデータがないため存在しない"
       return
     end
-    output.puts "const CONNECT_DATA ConnectData_#{@zonename}[] = {"
+    output.puts "const CONNECT_DATA #{getStructName}[] = {"
     @doors.each{|door| door.dump output }
     output.puts "};"
-    output.puts "const int ConnectCount_#{@zonename} = NELEMS(ConnectData_#{@zonename});"
+    output.puts "const int ConnectCount_#{@zonename} = NELEMS(#{getStructName});"
   end
 
   def dumpHeader output
@@ -407,10 +514,10 @@ class ObjEventData < EventData
     if @objs.length == 0 then return end
     #output.puts "\#include \"zone_#{@zonename.downcase}evc.h\""
     output.puts "\#include \"../script/#{@zonename.downcase}_def.h\""
-    output.puts "const FLDMMDL_HEADER FldMMdlHeader_#{@zonename}[] = {"
+    output.puts "const FLDMMDL_HEADER #{getStructName}[] = {"
     @objs.each{|obj| obj.dump(output) }
     output.puts "};"
-    output.puts "const int ObjCount_#{@zonename} = NELEMS(FldMMdlHeader_#{zonename});"
+    output.puts "const int ObjCount_#{@zonename} = NELEMS(#{getStructName});"
   end
 
   def dumpHeader output
@@ -425,6 +532,51 @@ class ObjEventData < EventData
 
 end
 
+class BgEventData < EventData
+
+  def initialize stream, section_name, header
+    super
+    @bgs = Array.new
+    @items.each{|item|
+      lines = item.split(/\r\n/)
+      @bgs << BgEvent.new(lines, header)
+    }
+  end
+
+  def dump output
+    if @bgs.length == 0 then return end
+    output.puts "const BG_TALK_DATA #{getStructName}[] = {"
+    @bgs.each{|bg| bg.dump(output) }
+    output.puts "};"
+    output.puts "const int BgCount_#{@zonename} = NELEMS(#{getStructName});"
+  end
+
+  def dumpHeader output
+  end
+end
+
+class PosEventData < EventData
+
+  def initialize stream, section_name, header
+    super
+    @poss = Array.new
+    @items.each{|item|
+      lines = item.split(/\r\n/)
+      @poss << PosEvent.new(lines, header)
+    }
+  end
+
+  def dump output
+    if @poss.length == 0 then return end
+    output.puts "const POS_TALK_DATA #{getStructName}[] = {"
+    @poss.each{|pos| pos.dump(output) }
+    output.puts "};"
+    output.puts "const int PosCount_#{@zonename} = NELEMS(#{getStructName});"
+  end
+
+  def dumpHeader output
+  end
+end
 
 #============================================================================
 #
@@ -435,8 +587,8 @@ begin
   File.open(ARGV[0]){|file|
     header = EventHeader.new(file)
     obj_events = ObjEventData.new(file, "OBJ_EVENT", header)
-    bg_events = EventData.new(file, "BG_EVENT", header)
-    pos_events = EventData.new(file, "POS_EVENT", header)
+    bg_events = BgEventData.new(file, "BG_EVENT", header)
+    pos_events = PosEventData.new(file, "POS_EVENT", header)
     door_events = DoorEventData.new(file, "DOOR_EVENT", header)
 
     id = "event_" + door_events.zonename.downcase
@@ -445,11 +597,15 @@ begin
     File.open("#{ofilename}.h", "w"){|file|
       door_events.dumpHeader(file)
       obj_events.dumpHeader(file)
+      bg_events.dumpHeader(file)
+      pos_events.dumpHeader(file)
     }
 
     File.open("#{ofilename}.cdat", "w"){|file|
       door_events.dump(file)
       obj_events.dump(file)
+      bg_events.dump(file)
+      pos_events.dump(file)
 
       file.puts ""
       file.puts "static const EVENTDATA_TABLE #{id} = {"
@@ -458,18 +614,11 @@ begin
       file.puts "\t#{door_events.items.length},"
       file.puts "\t#{pos_events.items.length},"
 
-      file.puts "\t(void *)NULL,"
-      if obj_events.items.length == 0 then
-        file.puts "\t(void *)NULL,"
-      else
-        file.puts "\t(void *)&FldMMdlHeader_#{obj_events.zonename.upcase},"
-      end
-      if door_events.items.length == 0 then
-        file.puts "\t(void *)NULL,"
-      else
-        file.puts "\t(void *)&ConnectData_#{door_events.zonename.upcase},"
-      end
-      file.puts "\t(void *)NULL,"
+      bg_events.putStructName( file )
+      obj_events.putStructName( file )
+      door_events.putStructName( file )
+      pos_events.putStructName( file )
+
       file.puts "};"
     }
   }

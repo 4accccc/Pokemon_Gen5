@@ -362,7 +362,7 @@
 
 #endif //ZONE_T02R0301_EVC_H
 
-const CONNECT_DATA ConnectData_C01[] = {
+const CONNECT_DATA DOOR_EVENT_C01[] = {
 	{//DOOR_ID_C01_EXIT01 = 0
 		{11552, 0, 10704},
 		ZONE_ID_R02, DOOR_ID_R02_EXIT01,
@@ -394,7 +394,7 @@ const CONNECT_DATA ConnectData_C01[] = {
 		0 //type
 	},
 };
-const int ConnectCount_C01 = NELEMS(ConnectData_C01);
+const int ConnectCount_C01 = NELEMS(DOOR_EVENT_C01);
 
 static const EVENTDATA_TABLE event_c01 = {
 	0,
@@ -403,10 +403,10 @@ static const EVENTDATA_TABLE event_c01 = {
 	0,
 	(void *)NULL,
 	(void *)NULL,
-	(void *)&ConnectData_C01,
+	(void *)&DOOR_EVENT_C01,
 	(void *)NULL,
 };
-const CONNECT_DATA ConnectData_C02[] = {
+const CONNECT_DATA DOOR_EVENT_C02[] = {
 	{//DOOR_ID_C02_EXIT01 = 0
 		{9152, 0, 10592},
 		ZONE_ID_R03, DOOR_ID_R03_EXIT01,
@@ -438,7 +438,7 @@ const CONNECT_DATA ConnectData_C02[] = {
 		0 //type
 	},
 };
-const int ConnectCount_C02 = NELEMS(ConnectData_C02);
+const int ConnectCount_C02 = NELEMS(DOOR_EVENT_C02);
 
 static const EVENTDATA_TABLE event_c02 = {
 	0,
@@ -447,10 +447,10 @@ static const EVENTDATA_TABLE event_c02 = {
 	0,
 	(void *)NULL,
 	(void *)NULL,
-	(void *)&ConnectData_C02,
+	(void *)&DOOR_EVENT_C02,
 	(void *)NULL,
 };
-const CONNECT_DATA ConnectData_D02[] = {
+const CONNECT_DATA DOOR_EVENT_D02[] = {
 	{//DOOR_ID_D02_EXIT01 = 0
 		{7792, 0, 9904},
 		ZONE_ID_D02R0101, DOOR_ID_D02R0101_EXIT02,
@@ -470,7 +470,7 @@ const CONNECT_DATA ConnectData_D02[] = {
 		0 //type
 	},
 };
-const int ConnectCount_D02 = NELEMS(ConnectData_D02);
+const int ConnectCount_D02 = NELEMS(DOOR_EVENT_D02);
 
 static const EVENTDATA_TABLE event_d02 = {
 	0,
@@ -479,10 +479,10 @@ static const EVENTDATA_TABLE event_d02 = {
 	0,
 	(void *)NULL,
 	(void *)NULL,
-	(void *)&ConnectData_D02,
+	(void *)&DOOR_EVENT_D02,
 	(void *)NULL,
 };
-const CONNECT_DATA ConnectData_D02R0101[] = {
+const CONNECT_DATA DOOR_EVENT_D02R0101[] = {
 	{//DOOR_ID_D02R0101_EXIT06 = 0
 		{1168, 0, 352},
 		ZONE_ID_H01P01, DOOR_ID_H01P01_EXIT01,
@@ -544,7 +544,7 @@ const CONNECT_DATA ConnectData_D02R0101[] = {
 		0 //type
 	},
 };
-const int ConnectCount_D02R0101 = NELEMS(ConnectData_D02R0101);
+const int ConnectCount_D02R0101 = NELEMS(DOOR_EVENT_D02R0101);
 
 static const EVENTDATA_TABLE event_d02r0101 = {
 	0,
@@ -553,10 +553,10 @@ static const EVENTDATA_TABLE event_d02r0101 = {
 	0,
 	(void *)NULL,
 	(void *)NULL,
-	(void *)&ConnectData_D02R0101,
+	(void *)&DOOR_EVENT_D02R0101,
 	(void *)NULL,
 };
-const CONNECT_DATA ConnectData_H01P01[] = {
+const CONNECT_DATA DOOR_EVENT_H01P01[] = {
 	{//DOOR_ID_H01P01_EXIT01 = 0
 		{256, 0, 448},
 		ZONE_ID_D02R0101, DOOR_ID_D02R0101_EXIT08,
@@ -582,7 +582,7 @@ const CONNECT_DATA ConnectData_H01P01[] = {
 		0 //type
 	},
 };
-const int ConnectCount_H01P01 = NELEMS(ConnectData_H01P01);
+const int ConnectCount_H01P01 = NELEMS(DOOR_EVENT_H01P01);
 
 static const EVENTDATA_TABLE event_h01p01 = {
 	0,
@@ -591,12 +591,12 @@ static const EVENTDATA_TABLE event_h01p01 = {
 	0,
 	(void *)NULL,
 	(void *)NULL,
-	(void *)&ConnectData_H01P01,
+	(void *)&DOOR_EVENT_H01P01,
 	(void *)NULL,
 };
 //ConnectData_R01[]ÇÕÉfÅ[É^Ç™Ç»Ç¢ÇΩÇﬂë∂ç›ÇµÇ»Ç¢
 #include "../script/r01_def.h"
-const FLDMMDL_HEADER FldMMdlHeader_R01[] = {
+const FLDMMDL_HEADER OBJ_EVENT_R01[] = {
 	{
 		R01_BOY1,
 		BOY1,
@@ -649,7 +649,7 @@ const FLDMMDL_HEADER FldMMdlHeader_R01[] = {
 		0,
 	},
 };
-const int ObjCount_R01 = NELEMS(FldMMdlHeader_R01);
+const int ObjCount_R01 = NELEMS(OBJ_EVENT_R01);
 
 static const EVENTDATA_TABLE event_r01 = {
 	0,
@@ -657,11 +657,11 @@ static const EVENTDATA_TABLE event_r01 = {
 	0,
 	0,
 	(void *)NULL,
-	(void *)&FldMMdlHeader_R01,
+	(void *)&OBJ_EVENT_R01,
 	(void *)NULL,
 	(void *)NULL,
 };
-const CONNECT_DATA ConnectData_R02[] = {
+const CONNECT_DATA DOOR_EVENT_R02[] = {
 	{//DOOR_ID_R02_EXIT01 = 0
 		{11552, 0, 10816},
 		ZONE_ID_C01, DOOR_ID_C01_EXIT01,
@@ -693,7 +693,7 @@ const CONNECT_DATA ConnectData_R02[] = {
 		0 //type
 	},
 };
-const int ConnectCount_R02 = NELEMS(ConnectData_R02);
+const int ConnectCount_R02 = NELEMS(DOOR_EVENT_R02);
 
 static const EVENTDATA_TABLE event_r02 = {
 	0,
@@ -702,10 +702,10 @@ static const EVENTDATA_TABLE event_r02 = {
 	0,
 	(void *)NULL,
 	(void *)NULL,
-	(void *)&ConnectData_R02,
+	(void *)&DOOR_EVENT_R02,
 	(void *)NULL,
 };
-const CONNECT_DATA ConnectData_R03[] = {
+const CONNECT_DATA DOOR_EVENT_R03[] = {
 	{//DOOR_ID_R03_EXIT01 = 0
 		{9232, 0, 10592},
 		ZONE_ID_C02, DOOR_ID_C02_EXIT01,
@@ -737,7 +737,7 @@ const CONNECT_DATA ConnectData_R03[] = {
 		0 //type
 	},
 };
-const int ConnectCount_R03 = NELEMS(ConnectData_R03);
+const int ConnectCount_R03 = NELEMS(DOOR_EVENT_R03);
 
 static const EVENTDATA_TABLE event_r03 = {
 	0,
@@ -746,10 +746,10 @@ static const EVENTDATA_TABLE event_r03 = {
 	0,
 	(void *)NULL,
 	(void *)NULL,
-	(void *)&ConnectData_R03,
+	(void *)&DOOR_EVENT_R03,
 	(void *)NULL,
 };
-const CONNECT_DATA ConnectData_T01[] = {
+const CONNECT_DATA DOOR_EVENT_T01[] = {
 	{//DOOR_ID_T01_EXIT01 = 0
 		{11952, 0, 13120},
 		ZONE_ID_T01R0201, DOOR_ID_T01R0201_EXIT02,
@@ -775,9 +775,9 @@ const CONNECT_DATA ConnectData_T01[] = {
 		EXIT_TYPE_DOOR //type
 	},
 };
-const int ConnectCount_T01 = NELEMS(ConnectData_T01);
+const int ConnectCount_T01 = NELEMS(DOOR_EVENT_T01);
 #include "../script/t01_def.h"
-const FLDMMDL_HEADER FldMMdlHeader_T01[] = {
+const FLDMMDL_HEADER OBJ_EVENT_T01[] = {
 	{
 		T01_MAN1,
 		MAN1,
@@ -830,7 +830,7 @@ const FLDMMDL_HEADER FldMMdlHeader_T01[] = {
 		0,
 	},
 };
-const int ObjCount_T01 = NELEMS(FldMMdlHeader_T01);
+const int ObjCount_T01 = NELEMS(OBJ_EVENT_T01);
 
 static const EVENTDATA_TABLE event_t01 = {
 	0,
@@ -838,11 +838,11 @@ static const EVENTDATA_TABLE event_t01 = {
 	4,
 	0,
 	(void *)NULL,
-	(void *)&FldMMdlHeader_T01,
-	(void *)&ConnectData_T01,
+	(void *)&OBJ_EVENT_T01,
+	(void *)&DOOR_EVENT_T01,
 	(void *)NULL,
 };
-const CONNECT_DATA ConnectData_T01R0101[] = {
+const CONNECT_DATA DOOR_EVENT_T01R0101[] = {
 	{//DOOR_ID_T01R0101_EXIT01 = 0
 		{80, 0, 112},
 		ZONE_ID_T01, DOOR_ID_T01_EXIT03,
@@ -868,9 +868,9 @@ const CONNECT_DATA ConnectData_T01R0101[] = {
 		EXIT_TYPE_STAIRS //type
 	},
 };
-const int ConnectCount_T01R0101 = NELEMS(ConnectData_T01R0101);
+const int ConnectCount_T01R0101 = NELEMS(DOOR_EVENT_T01R0101);
 #include "../script/t01r0101_def.h"
-const FLDMMDL_HEADER FldMMdlHeader_T01R0101[] = {
+const FLDMMDL_HEADER OBJ_EVENT_T01R0101[] = {
 	{
 		T01R0101_WOMAN1_1,
 		WOMAN1,
@@ -889,7 +889,7 @@ const FLDMMDL_HEADER FldMMdlHeader_T01R0101[] = {
 		0,
 	},
 };
-const int ObjCount_T01R0101 = NELEMS(FldMMdlHeader_T01R0101);
+const int ObjCount_T01R0101 = NELEMS(OBJ_EVENT_T01R0101);
 
 static const EVENTDATA_TABLE event_t01r0101 = {
 	0,
@@ -897,11 +897,11 @@ static const EVENTDATA_TABLE event_t01r0101 = {
 	4,
 	0,
 	(void *)NULL,
-	(void *)&FldMMdlHeader_T01R0101,
-	(void *)&ConnectData_T01R0101,
+	(void *)&OBJ_EVENT_T01R0101,
+	(void *)&DOOR_EVENT_T01R0101,
 	(void *)NULL,
 };
-const CONNECT_DATA ConnectData_T01R0102[] = {
+const CONNECT_DATA DOOR_EVENT_T01R0102[] = {
 	{//DOOR_ID_T01R0102_EXIT01 = 0
 		{112, 8, 32},
 		ZONE_ID_T01R0101, DOOR_ID_T01R0101_EXIT04,
@@ -915,7 +915,7 @@ const CONNECT_DATA ConnectData_T01R0102[] = {
 		0 //type
 	},
 };
-const int ConnectCount_T01R0102 = NELEMS(ConnectData_T01R0102);
+const int ConnectCount_T01R0102 = NELEMS(DOOR_EVENT_T01R0102);
 
 static const EVENTDATA_TABLE event_t01r0102 = {
 	0,
@@ -924,10 +924,10 @@ static const EVENTDATA_TABLE event_t01r0102 = {
 	0,
 	(void *)NULL,
 	(void *)NULL,
-	(void *)&ConnectData_T01R0102,
+	(void *)&DOOR_EVENT_T01R0102,
 	(void *)NULL,
 };
-const CONNECT_DATA ConnectData_T01R0201[] = {
+const CONNECT_DATA DOOR_EVENT_T01R0201[] = {
 	{//DOOR_ID_T01R0201_EXIT01 = 0
 		{80, 0, 112},
 		ZONE_ID_T01, DOOR_ID_T01_EXIT01,
@@ -959,9 +959,9 @@ const CONNECT_DATA ConnectData_T01R0201[] = {
 		EXIT_TYPE_STAIRS //type
 	},
 };
-const int ConnectCount_T01R0201 = NELEMS(ConnectData_T01R0201);
+const int ConnectCount_T01R0201 = NELEMS(DOOR_EVENT_T01R0201);
 #include "../script/t01r0201_def.h"
-const FLDMMDL_HEADER FldMMdlHeader_T01R0201[] = {
+const FLDMMDL_HEADER OBJ_EVENT_T01R0201[] = {
 	{
 		T01R0201_BOY1_1,
 		BOY1,
@@ -980,7 +980,7 @@ const FLDMMDL_HEADER FldMMdlHeader_T01R0201[] = {
 		0,
 	},
 };
-const int ObjCount_T01R0201 = NELEMS(FldMMdlHeader_T01R0201);
+const int ObjCount_T01R0201 = NELEMS(OBJ_EVENT_T01R0201);
 
 static const EVENTDATA_TABLE event_t01r0201 = {
 	0,
@@ -988,11 +988,11 @@ static const EVENTDATA_TABLE event_t01r0201 = {
 	5,
 	0,
 	(void *)NULL,
-	(void *)&FldMMdlHeader_T01R0201,
-	(void *)&ConnectData_T01R0201,
+	(void *)&OBJ_EVENT_T01R0201,
+	(void *)&DOOR_EVENT_T01R0201,
 	(void *)NULL,
 };
-const CONNECT_DATA ConnectData_T01R0202[] = {
+const CONNECT_DATA DOOR_EVENT_T01R0202[] = {
 	{//DOOR_ID_T01R0202_EXIT01 = 0
 		{48, 0, 32},
 		ZONE_ID_T01R0201, DOOR_ID_T01R0201_EXIT04,
@@ -1006,7 +1006,7 @@ const CONNECT_DATA ConnectData_T01R0202[] = {
 		EXIT_TYPE_STAIRS //type
 	},
 };
-const int ConnectCount_T01R0202 = NELEMS(ConnectData_T01R0202);
+const int ConnectCount_T01R0202 = NELEMS(DOOR_EVENT_T01R0202);
 
 static const EVENTDATA_TABLE event_t01r0202 = {
 	0,
@@ -1015,10 +1015,10 @@ static const EVENTDATA_TABLE event_t01r0202 = {
 	0,
 	(void *)NULL,
 	(void *)NULL,
-	(void *)&ConnectData_T01R0202,
+	(void *)&DOOR_EVENT_T01R0202,
 	(void *)NULL,
 };
-const CONNECT_DATA ConnectData_T01R0301[] = {
+const CONNECT_DATA DOOR_EVENT_T01R0301[] = {
 	{//DOOR_ID_T01R0301_EXIT01 = 0
 		{80, 0, 112},
 		ZONE_ID_T01, DOOR_ID_T01_EXIT02,
@@ -1050,9 +1050,9 @@ const CONNECT_DATA ConnectData_T01R0301[] = {
 		EXIT_TYPE_STAIRS //type
 	},
 };
-const int ConnectCount_T01R0301 = NELEMS(ConnectData_T01R0301);
+const int ConnectCount_T01R0301 = NELEMS(DOOR_EVENT_T01R0301);
 #include "../script/t01r0301_def.h"
-const FLDMMDL_HEADER FldMMdlHeader_T01R0301[] = {
+const FLDMMDL_HEADER OBJ_EVENT_T01R0301[] = {
 	{
 		T01R0301_OLDWOMAN1_1,
 		OLDWOMAN1,
@@ -1071,7 +1071,7 @@ const FLDMMDL_HEADER FldMMdlHeader_T01R0301[] = {
 		0,
 	},
 };
-const int ObjCount_T01R0301 = NELEMS(FldMMdlHeader_T01R0301);
+const int ObjCount_T01R0301 = NELEMS(OBJ_EVENT_T01R0301);
 
 static const EVENTDATA_TABLE event_t01r0301 = {
 	0,
@@ -1079,11 +1079,11 @@ static const EVENTDATA_TABLE event_t01r0301 = {
 	5,
 	0,
 	(void *)NULL,
-	(void *)&FldMMdlHeader_T01R0301,
-	(void *)&ConnectData_T01R0301,
+	(void *)&OBJ_EVENT_T01R0301,
+	(void *)&DOOR_EVENT_T01R0301,
 	(void *)NULL,
 };
-const CONNECT_DATA ConnectData_T01R0302[] = {
+const CONNECT_DATA DOOR_EVENT_T01R0302[] = {
 	{//DOOR_ID_T01R0302_EXIT01 = 0
 		{48, 0, 32},
 		ZONE_ID_T01R0301, DOOR_ID_T01R0301_EXIT04,
@@ -1097,7 +1097,7 @@ const CONNECT_DATA ConnectData_T01R0302[] = {
 		EXIT_TYPE_STAIRS //type
 	},
 };
-const int ConnectCount_T01R0302 = NELEMS(ConnectData_T01R0302);
+const int ConnectCount_T01R0302 = NELEMS(DOOR_EVENT_T01R0302);
 
 static const EVENTDATA_TABLE event_t01r0302 = {
 	0,
@@ -1106,10 +1106,10 @@ static const EVENTDATA_TABLE event_t01r0302 = {
 	0,
 	(void *)NULL,
 	(void *)NULL,
-	(void *)&ConnectData_T01R0302,
+	(void *)&DOOR_EVENT_T01R0302,
 	(void *)NULL,
 };
-const CONNECT_DATA ConnectData_T01R0401[] = {
+const CONNECT_DATA DOOR_EVENT_T01R0401[] = {
 	{//DOOR_ID_T01R0401_EXIT01 = 0
 		{64, 0, 160},
 		ZONE_ID_T01, DOOR_ID_T01_EXIT04,
@@ -1129,7 +1129,7 @@ const CONNECT_DATA ConnectData_T01R0401[] = {
 		0 //type
 	},
 };
-const int ConnectCount_T01R0401 = NELEMS(ConnectData_T01R0401);
+const int ConnectCount_T01R0401 = NELEMS(DOOR_EVENT_T01R0401);
 
 static const EVENTDATA_TABLE event_t01r0401 = {
 	0,
@@ -1138,10 +1138,10 @@ static const EVENTDATA_TABLE event_t01r0401 = {
 	0,
 	(void *)NULL,
 	(void *)NULL,
-	(void *)&ConnectData_T01R0401,
+	(void *)&DOOR_EVENT_T01R0401,
 	(void *)NULL,
 };
-const CONNECT_DATA ConnectData_T02[] = {
+const CONNECT_DATA DOOR_EVENT_T02[] = {
 	{//DOOR_ID_T02_EXIT01 = 0
 		{12160, 0, 11536},
 		ZONE_ID_T02PC0101, DOOR_ID_T02PC0101_EXIT02,
@@ -1167,7 +1167,7 @@ const CONNECT_DATA ConnectData_T02[] = {
 		0 //type
 	},
 };
-const int ConnectCount_T02 = NELEMS(ConnectData_T02);
+const int ConnectCount_T02 = NELEMS(DOOR_EVENT_T02);
 
 static const EVENTDATA_TABLE event_t02 = {
 	0,
@@ -1176,10 +1176,10 @@ static const EVENTDATA_TABLE event_t02 = {
 	0,
 	(void *)NULL,
 	(void *)NULL,
-	(void *)&ConnectData_T02,
+	(void *)&DOOR_EVENT_T02,
 	(void *)NULL,
 };
-const CONNECT_DATA ConnectData_T02PC0101[] = {
+const CONNECT_DATA DOOR_EVENT_T02PC0101[] = {
 	{//DOOR_ID_T01R0102_EXIT01 = 0
 		{112, 8, 32},
 		ZONE_ID_T01R0101, DOOR_ID_T01R0101_EXIT04,
@@ -1205,7 +1205,7 @@ const CONNECT_DATA ConnectData_T02PC0101[] = {
 		0 //type
 	},
 };
-const int ConnectCount_T02PC0101 = NELEMS(ConnectData_T02PC0101);
+const int ConnectCount_T02PC0101 = NELEMS(DOOR_EVENT_T02PC0101);
 
 static const EVENTDATA_TABLE event_t02pc0101 = {
 	0,
@@ -1214,10 +1214,10 @@ static const EVENTDATA_TABLE event_t02pc0101 = {
 	0,
 	(void *)NULL,
 	(void *)NULL,
-	(void *)&ConnectData_T02PC0101,
+	(void *)&DOOR_EVENT_T02PC0101,
 	(void *)NULL,
 };
-const CONNECT_DATA ConnectData_T02R0101[] = {
+const CONNECT_DATA DOOR_EVENT_T02R0101[] = {
 	{//DOOR_ID_T02R0101_EXIT02 = 0
 		{272, 0, 352},
 		ZONE_ID_T02, DOOR_ID_T02_EXIT02,
@@ -1237,7 +1237,7 @@ const CONNECT_DATA ConnectData_T02R0101[] = {
 		0 //type
 	},
 };
-const int ConnectCount_T02R0101 = NELEMS(ConnectData_T02R0101);
+const int ConnectCount_T02R0101 = NELEMS(DOOR_EVENT_T02R0101);
 
 static const EVENTDATA_TABLE event_t02r0101 = {
 	0,
@@ -1246,10 +1246,10 @@ static const EVENTDATA_TABLE event_t02r0101 = {
 	0,
 	(void *)NULL,
 	(void *)NULL,
-	(void *)&ConnectData_T02R0101,
+	(void *)&DOOR_EVENT_T02R0101,
 	(void *)NULL,
 };
-const CONNECT_DATA ConnectData_T02R0201[] = {
+const CONNECT_DATA DOOR_EVENT_T02R0201[] = {
 	{//DOOR_ID_T02R0201_EXIT02 = 0
 		{272, 0, 352},
 		ZONE_ID_T02, DOOR_ID_T02_EXIT03,
@@ -1269,7 +1269,7 @@ const CONNECT_DATA ConnectData_T02R0201[] = {
 		0 //type
 	},
 };
-const int ConnectCount_T02R0201 = NELEMS(ConnectData_T02R0201);
+const int ConnectCount_T02R0201 = NELEMS(DOOR_EVENT_T02R0201);
 
 static const EVENTDATA_TABLE event_t02r0201 = {
 	0,
@@ -1278,10 +1278,10 @@ static const EVENTDATA_TABLE event_t02r0201 = {
 	0,
 	(void *)NULL,
 	(void *)NULL,
-	(void *)&ConnectData_T02R0201,
+	(void *)&DOOR_EVENT_T02R0201,
 	(void *)NULL,
 };
-const CONNECT_DATA ConnectData_T02R0301[] = {
+const CONNECT_DATA DOOR_EVENT_T02R0301[] = {
 	{//DOOR_ID_T02R0301_EXIT02 = 0
 		{272, 0, 352},
 		ZONE_ID_T02, DOOR_ID_T02_EXIT04,
@@ -1301,7 +1301,7 @@ const CONNECT_DATA ConnectData_T02R0301[] = {
 		0 //type
 	},
 };
-const int ConnectCount_T02R0301 = NELEMS(ConnectData_T02R0301);
+const int ConnectCount_T02R0301 = NELEMS(DOOR_EVENT_T02R0301);
 
 static const EVENTDATA_TABLE event_t02r0301 = {
 	0,
@@ -1310,7 +1310,7 @@ static const EVENTDATA_TABLE event_t02r0301 = {
 	0,
 	(void *)NULL,
 	(void *)NULL,
-	(void *)&ConnectData_T02R0301,
+	(void *)&DOOR_EVENT_T02R0301,
 	(void *)NULL,
 };
 
