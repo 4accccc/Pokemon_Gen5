@@ -1073,8 +1073,6 @@ void  PPP_SetWazaPos( POKEMON_PASO_PARAM *ppp, u16 wazano, u8 pos )
   {
     u8  pp = WT_PPMaxGet( wazano, 0 );
 
-    TAYA_Printf("[POKETL] SetWazaPos: pos=%d, waza=%d, pp=%d\n", pos, wazano, pp);
-
     PPP_Put( ppp, ID_PARA_waza1 + pos, wazano );
     PPP_Put( ppp, ID_PARA_pp_count1 + pos, 0 );
     PPP_Put( ppp, ID_PARA_pp1 + pos, pp );
