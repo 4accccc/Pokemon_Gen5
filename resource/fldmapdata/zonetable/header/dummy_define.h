@@ -65,7 +65,7 @@ enum {
 //#include "../map_matrix/map_matrix.naix"
 #include "tmp/map_matrix.h"
 #include "../script/script_seq.naix"      //script ID 定義ファイル
-#include "../../message/message.naix"     //message archive ID定義ファイル
+#include "../../message/script_message.naix"     //message archive ID定義ファイル
 
 enum {
 	//sp_scr_dummy = NARC_scr_seq_sp_dummy_bin,
