@@ -23,6 +23,7 @@
 #include "poke_tool\pokeparty.h"
 #include "poke_tool\poke_tool.h"
 #include "poke_tool\monsno_def.h"
+#include "waza_tool\wazadata.h"
 #include "item\itemsym.h"
 #include "net\network_define.h"
 #include "battle\battle.h"
@@ -333,7 +334,6 @@ static void createTemporaryModules( MAIN_WORK* wk )
   wk->printQue = PRINTSYS_QUE_Create( wk->heapID );
   PRINT_UTIL_Setup( wk->printUtil, wk->win );
 
-  TAYA_Printf("Que‚ª‚Â‚­‚ç‚ê‚½\n");
   wk->tmpModuleExistFlag = TRUE;
 
 }
@@ -951,35 +951,23 @@ static BOOL SUBPROC_GoBattle( GFL_PROC* proc, int* seq, void* pwk, void* mywk )
 
     #ifdef DEBUG_ONLY_FOR_taya
       setup_party( HEAPID_CORE, para->partyPlayer, MONSNO_PORIGON, MONSNO_PIKATYUU, MONSNO_GURAADON, MONSNO_KAIOOGA, 0 );
-      setup_party( HEAPID_CORE, para->partyEnemy1, MONSNO_AABOKKU, MONSNO_METAGUROSU, MONSNO_YADOKINGU, MONSNO_REKKUUZA, 0 );
-      if( wk->testPokeEditFlag )
+      setup_party( HEAPID_CORE, para->partyEnemy1, MONSNO_METAGUROSU, MONSNO_AABOKKU, MONSNO_YADOKINGU, MONSNO_REKKUUZA, 0 );
       {
-        PokeParty_SetMemberData( para->partyPlayer, 0, wk->testPoke );
-      }
-      {
-        #if 1
-        POKEMON_PARAM* pp;
-        pp = PokeParty_GetMemberPointer( para->partyPlayer, 0 );
-//        PP_Put( pp, ID_PARA_item, ITEM_TABENOKOSI );
-        PP_SetWazaPos( pp, 0, 1 );
-        PP_SetWazaPos( pp, 0, 2 );
-        PP_SetWazaPos( pp, 0, 3 );
-
-        pp = PokeParty_GetMemberPointer( para->partyPlayer, 1 );
-        PP_SetWazaPos( pp, 0, 2 );
-        PP_SetWazaPos( pp, 0, 3 );
-
-
-        pp = PokeParty_GetMemberPointer( para->partyEnemy1, 0 );
-        PP_Put( pp, ID_PARA_speabino, POKETOKUSEI_DAPPI );
-//        PP_SetSick( pp, POKESICK_MAHI );
-        #endif
+        POKEMON_PARAM* pp = PokeParty_GetMemberPointer( para->partyEnemy1, 0 );
+        PP_SetWazaPos( pp, WAZANO_HANERU, 0 );
+        PP_SetWazaPos( pp, WAZANO_NULL, 1 );
+        PP_SetWazaPos( pp, WAZANO_NULL, 2 );
+        PP_SetWazaPos( pp, WAZANO_NULL, 3 );
       }
     #else
       setup_party( HEAPID_CORE, para->partyPlayer, MONSNO_ARUSEUSU + 2, MONSNO_ARUSEUSU + 1, 0 );
       setup_party( HEAPID_CORE, para->partyEnemy1, MONSNO_ARUSEUSU + 1, MONSNO_ARUSEUSU + 2, 0 );
     #endif
 
+      if( wk->testPokeEditFlag )
+      {
+        PokeParty_SetMemberData( para->partyPlayer, 0, wk->testPoke );
+      }
       GFL_PROC_SysCallProc( FS_OVERLAY_ID(battle), &BtlProcData, para );
       (*seq)++;
     }
