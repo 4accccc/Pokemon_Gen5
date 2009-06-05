@@ -45,6 +45,27 @@ typedef enum {
 	EXIT_DIR_MAX
 }EXIT_DIR;
 
+
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+typedef enum{
+  BG_TALK_TYPE_TALK,  //話し掛けイベント
+  BG_TALK_TYPE_BOARD, //看板イベント
+  BG_TALK_TYPE_HIDE,  //隠しアイテム
+}BG_TALK_TYPE;
+
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+typedef enum{
+  BG_TALK_DIR_DOWN = 0,
+  BG_TALK_DIR_LEFT,
+  BG_TALK_DIR_RIGHT,
+  BG_TALK_DIR_UP,
+  BG_TALK_DIR_ALL,
+  BG_TALK_DIR_SIDE,
+  BG_TALK_DIR_UPDOWN,
+}BG_TYPE_DIR;
+
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 typedef struct _EVENTDATA_HEADER EVENTDATA_HEADER;

@@ -90,9 +90,9 @@ struct _TAG_FLDMMDL
 	u16 dir_disp_old;			///<過去の動いていた方向
 	u16 dir_move_old;			///<過去の動いていた方向
 	
-	int param0;					///<ヘッダ指定パラメタ
-	int param1;					///<ヘッダ指定パラメタ
-	int param2;					///<ヘッダ指定パラメタ
+	u16 param0;					///<ヘッダ指定パラメタ
+	u16 param1;					///<ヘッダ指定パラメタ
+	u16 param2;					///<ヘッダ指定パラメタ
 	
 	u16 acmd_code;				///<アニメーションコマンドコード
 	u16 acmd_seq;				///<アニメーションコマンドシーケンス
@@ -137,8 +137,8 @@ typedef struct
 	u32 status_bit;			///<ステータスビット
 	u32 move_bit;			///<動作ビット
 	
-	u8 obj_id;				///<OBJ ID
-	u8 move_code;			///<動作コード
+	u8 obj_id;        ///<OBJ ID
+	u8 move_code;       ///<動作コード
 	s8 move_limit_x;		///<X方向移動制限
 	s8 move_limit_z;		///<Z方向移動制限
 	
@@ -152,16 +152,20 @@ typedef struct
 	u16 event_type;			///<イベントタイプ
 	u16 event_flag;			///<イベントフラグ
 	u16 event_id;			///<イベントID
-	s16 param0;				///<ヘッダ指定パラメタ
-	s16 param1;				///<ヘッダ指定パラメタ
-	s16 param2;				///<ヘッダ指定パラメタ
+  
+	u16 param0;				///<ヘッダ指定パラメタ
+	u16 param1;				///<ヘッダ指定パラメタ
+	u16 param2;				///<ヘッダ指定パラメタ
+  
 	s16 gx_init;			///<初期グリッドX
 	s16 gy_init;			///<初期グリッドY
 	s16 gz_init;			///<初期グリッドZ
 	s16 gx_now;				///<現在グリッドX
 	s16 gy_now;				///<現在グリッドY
 	s16 gz_now;				///<現在グリッドZ
+  
 	fx32 fx32_y;			///<fx32型の高さ値
+  
 	u8 move_proc_work[FLDMMDL_MOVE_WORK_SIZE];///<動作関数用ワーク
 	u8 move_sub_proc_work[FLDMMDL_MOVE_SUB_WORK_SIZE];///<動作サブ関数用ワーク
 }FLDMMDL_SAVEWORK;
@@ -1715,7 +1719,7 @@ void FLDMMDL_SetDirAll( FLDMMDL * fmmdl, u16 dir )
  * @retval	nothing
  */
 //--------------------------------------------------------------
-void FLDMMDL_SetParam( FLDMMDL *fmmdl, int param, FLDMMDL_H_PARAM no )
+void FLDMMDL_SetParam( FLDMMDL *fmmdl, u16 param, FLDMMDL_H_PARAM no )
 {
 	switch( no ){
 	case FLDMMDL_PARAM_0: fmmdl->param0 = param; break;
@@ -1730,10 +1734,10 @@ void FLDMMDL_SetParam( FLDMMDL *fmmdl, int param, FLDMMDL_H_PARAM no )
  * FLDMMDL ヘッダー指定パラメタ取得
  * @param	fmmdl			FLDMMDL *
  * @param	param			FLDMMDL_PARAM_0等
- * @retval	int				パラメタ
+ * @retval	u16 パラメタ
  */
 //--------------------------------------------------------------
-int FLDMMDL_GetParam( const FLDMMDL * fmmdl, FLDMMDL_H_PARAM param )
+u16 FLDMMDL_GetParam( const FLDMMDL * fmmdl, FLDMMDL_H_PARAM param )
 {
 	switch( param ){
 	case FLDMMDL_PARAM_0: return( fmmdl->param0 );

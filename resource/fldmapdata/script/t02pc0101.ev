@@ -5,7 +5,7 @@
   .text
 
   .include  "scr_seq_def.h"
-  .include  "../../../prog/include/msg/msg_t02pc0101.h"
+  .include  "../../../prog/include/msg/script/msg_t02pc0101.h"
   .include  "../eventdata/zone_t02pc0101evc.h"
 
 //--------------------------------------------------------------

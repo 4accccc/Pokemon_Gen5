@@ -18,7 +18,7 @@
 
 #include "field/zonedata.h"
 
-#include "message.naix"
+#include "script_message.naix"
 #include "print/wordset.h"
 
 #include "arc/fieldmap/zone_id.h"
@@ -584,7 +584,7 @@ static u16 SetScriptDataSub( SCRCMD_WORK *work, VMHANDLE* core, u32 zone_id, u16
 	if( scr_id >= ID_COMMON_SCR_OFFSET ){		//共通スクリプトID
 		SetScriptData( work, core,
 			NARC_script_seq_common_scr_bin,
-			NARC_message_common_scr_dat,
+			NARC_script_message_common_scr_dat,
 			heapID );
 		scr_id -= ID_COMMON_SCR_OFFSET;
 	}else if( scr_id >= ID_START_SCR_OFFSET ){ //ローカルスクリプトID
@@ -625,7 +625,7 @@ static u16 SetScriptDataSub( SCRCMD_WORK *work, VMHANDLE* core, u32 zone_id, u16
 	}else{										//SCRID_NULL(0)が渡された時
 		SetScriptData( work, core,
 			NARC_script_seq_dummy_scr_bin,
-			NARC_message_common_scr_dat,
+			NARC_script_message_common_scr_dat,
 			heapID );
 		scr_id = 0;
 	}
@@ -827,7 +827,7 @@ static void SetScriptData( SCRCMD_WORK *work,
 #ifndef SCRIPT_PL_NULL
 	//メッセージデータマネージャー作成
 	script->msgman = GFL_MSG_Create(
-		GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, dat_id, heapID );
+		GFL_MSG_LOAD_NORMAL, ARCID_SCRIPT_MESSAGE, dat_id, heapID );
 	core->msgman = MSGMAN_Create(
 		MSGMAN_TYPE_DIRECT, ARC_MSG, dat_id, HEAPID_WORLD );
 #else

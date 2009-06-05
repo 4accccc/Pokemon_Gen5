@@ -79,6 +79,7 @@ typedef struct {
 
 //#define DOOR_ID_T01R0301_EXIT01 0 //暫定！
 #include "arc/fieldmap/zone_id.h"
+#include "eventwork_def.h"
 //仮動作モデル配置データ
 //#include "../../../resource/fldmapdata/eventdata/zone_t01evc.cdat"
 //#include "../../../resource/fldmapdata/eventdata/zone_t01r0101evc.cdat"
@@ -129,7 +130,6 @@ static const CONNECT_DATA ConnectData_C03[] = {
 static const int ConnectCount_C03 = NELEMS(ConnectData_C03);
 
 //座標イベントテスト
-#include "eventwork_def.h"
 static const POS_EVENT_DATA PosEventData_T01[] =
 {
   {
@@ -146,6 +146,7 @@ static const POS_EVENT_DATA PosEventData_T01[] =
 static const int PosEventDataCount_T01 = NELEMS(PosEventData_T01);
 
 //BG話し掛けイベントテスト
+#if 0
 static const BG_TALK_DATA BGEventData_T01[] =
 {
   {
@@ -154,10 +155,11 @@ static const BG_TALK_DATA BGEventData_T01[] =
 		753,			// X座標
 		821,			// Y座標
 		0,		// 高さ
-		DIR_DOWN,		// 話しかけ方向タイプ
+		BG_TALK_DIR_DOWN,		// 話しかけ方向タイプ
   },
 };
 static const int BGEventDataCount_T01 = NELEMS(BGEventData_T01);
+#endif
 
 //============================================================================================
 //============================================================================================
@@ -216,8 +218,8 @@ void EVENTDATA_SYS_Load(EVENTDATA_SYSTEM * evdata, u16 zone_id)
 	//	evdata->npc_data = SampleFldMMdlHeader_T01;
     evdata->pos_count = PosEventDataCount_T01;
     evdata->pos_data = PosEventData_T01;
-    evdata->bg_data = BGEventData_T01;
-    evdata->bg_count = BGEventDataCount_T01;
+//    evdata->bg_data = BGEventData_T01;
+//    evdata->bg_count = BGEventDataCount_T01;
 		break;
 	case ZONE_ID_T02:
 		evdata->npc_count = SampleFldMMdlHeaderCount_t02;
@@ -537,20 +539,94 @@ u16 EVENTDATA_CheckTalkBGEvent(
         }
         else
         {
-          u16 true_dir = FLDMMDL_TOOL_FlipDir( talk_dir );
-          
-          if( true_dir == data->dir )
+          switch( data->dir )
           {
+          case BG_TALK_DIR_DOWN:
+            if( talk_dir == DIR_UP )
+            {
+              return data->id;
+            }
+            break;
+          case BG_TALK_DIR_LEFT:
+            if( talk_dir == DIR_RIGHT )
+            {
+              return data->id;
+            }
+            break;
+          case BG_TALK_DIR_RIGHT:
+            if( talk_dir == DIR_LEFT )
+            {
+              return data->id;
+            }
+            break;
+          case BG_TALK_DIR_UP:
+            if( talk_dir == DIR_DOWN )
+            {
+              return data->id;
+            }
+            break;
+          case BG_TALK_DIR_ALL:
             return data->id;
+          case BG_TALK_DIR_SIDE:
+            if( talk_dir == DIR_LEFT || talk_dir == DIR_RIGHT )
+            {
+              return data->id;
+            }
+            break;
+          case BG_TALK_DIR_UPDOWN:
+            if( talk_dir == DIR_UP || talk_dir == DIR_DOWN )
+            {
+              return data->id;
+            }
+            break;
+          default:
+            GF_ASSERT( 0 );
           }
         }
         #else //隠しアイテム未対応
         {
-          u16 true_dir = FLDMMDL_TOOL_FlipDir( talk_dir );
-          
-          if( true_dir == data->dir )
+          switch( data->dir )
           {
+          case BG_TALK_DIR_DOWN:
+            if( talk_dir == DIR_UP )
+            {
+              return data->id;
+            }
+            break;
+          case BG_TALK_DIR_LEFT:
+            if( talk_dir == DIR_RIGHT )
+            {
+              return data->id;
+            }
+            break;
+          case BG_TALK_DIR_RIGHT:
+            if( talk_dir == DIR_LEFT )
+            {
+              return data->id;
+            }
+            break;
+          case BG_TALK_DIR_UP:
+            if( talk_dir == DIR_DOWN )
+            {
+              return data->id;
+            }
+            break;
+          case BG_TALK_DIR_ALL:
             return data->id;
+          case BG_TALK_DIR_SIDE:
+            if( talk_dir == DIR_LEFT || talk_dir == DIR_RIGHT )
+            {
+              return data->id;
+            }
+            break;
+          case BG_TALK_DIR_UPDOWN:
+            if( talk_dir == DIR_UP || talk_dir == DIR_DOWN )
+            {
+              return data->id;
+            }
+            break;
+          default:
+            GF_ASSERT( 0 );
           }
         }
         #endif

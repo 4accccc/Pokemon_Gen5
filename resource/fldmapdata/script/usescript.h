@@ -192,7 +192,7 @@
 //	共通メッセージ関連
 //
 //======================================================================
-#include "../../../prog/include/msg/msg_common_scr.h"
+#include "../../../prog/include/msg/script/msg_common_scr.h"
 #if 0 //wb null
 #include "../../../include/msgdata/msg_common_scr.h"
 #include "../../../include/msgdata/msg_ev_win.h"
