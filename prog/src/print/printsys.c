@@ -142,6 +142,7 @@ struct _PRINT_STREAM {
   u8    pauseWait;
   u8    clearColor;
   u8    putPerFrame;
+  u8    stopFlag;
 
   pPrintCallBack  callback_func;
   u32       org_arg;
@@ -940,10 +941,32 @@ PRINT_STREAM* PRINTSYS_PrintStreamCallBack(
   stwk->pauseType = PRINTSTREAM_PAUSE_CLEAR;
   stwk->pauseWait = 0;
   stwk->pauseReleaseFlag = FALSE;
+  stwk->stopFlag = FALSE;
 
   return stwk;
 }
-
+//=============================================================================================
+/**
+ * プリントストリームをユーザプログラムが強制的に一時停止する
+ *
+ * @param   handle
+ */
+//=============================================================================================
+void PRINTSYS_PrintStreamStop( PRINT_STREAM* handle )
+{
+  handle->stopFlag = TRUE;
+}
+//=============================================================================================
+/**
+ * プリントストリームのユーザ強制一時停止を解除する
+ *
+ * @param   handle
+ */
+//=============================================================================================
+void PRINTSYS_PrintStreamRun( PRINT_STREAM* handle )
+{
+  handle->stopFlag = FALSE;
+}
 //==============================================================================================
 /**
  * プリントストリーム状態取得
@@ -1027,6 +1050,10 @@ void PRINTSYS_PrintStreamShortWait( PRINT_STREAM* handle, u16 wait )
 static void print_stream_task( GFL_TCBL* tcb, void* wk_adrs )
 {
   PRINT_STREAM* wk = wk_adrs;
+
+  if( wk->stopFlag ){
+    return;
+  }
 
   switch( wk->state ){
   case PRINTSTREAM_STATE_RUNNING:
