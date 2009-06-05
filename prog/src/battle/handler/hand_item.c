@@ -2148,8 +2148,9 @@ static void handler_Kodawari_Common( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK
 {
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID )
   {
-    BTL_EVWK_WAZA_EXE* evwk = (BTL_EVWK_WAZA_EXE*)BTL_EVENTVAR_GetValue( BTL_EVAR_WORK_ADRS );
-    evwk->flag_kodawariLock = TRUE;
+    BTL_HANDEX_PARAM_SET_CONTFLAG* param = BTL_SVFLOW_HANDLERWORK_Push( flowWk, BTL_HANDEX_SET_CONTFLAG, pokeID );
+    param->pokeID = pokeID;
+    param->flag = BPP_CONTFLG_KODAWARI_LOCK;
   }
 }
 //------------------------------------------------------------------------------

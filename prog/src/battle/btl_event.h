@@ -221,22 +221,6 @@ typedef struct {
 }BTL_EVWK_WAZAEXE_FAIL;
 
 /**
- *  ワザ出し成功時チェックハンドラ用ワーク
- */
-
-typedef struct {
-
-  union {
-    u8  bitFlags;
-    struct {
-      u8  flag_kodawariLock : 1;
-      u8  flag_dummy        : 7;
-    };
-  };
-
-}BTL_EVWK_WAZA_EXE;
-
-/**
  *  ワザダメージ->回復化チェックハンドラ用ワーク
  */
 typedef struct {

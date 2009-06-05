@@ -781,7 +781,7 @@ void BTLV_SCU_StartWazaEffect( BTLV_SCU* wk, BtlvMcssPos atPos, BtlvMcssPos defP
   param.continue_count = 0;
   param.turn_count = 0;
 
-  BTLV_EFFECT_AddWazaEffect( &param );
+//  BTLV_EFFECT_AddWazaEffect( &param );
 }
 //=============================================================================================
 /**

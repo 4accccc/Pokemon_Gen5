@@ -126,6 +126,7 @@ struct _BTL_POKEPARAM {
 
   u16 prevWazaID;       ///< 直前に使ったワザナンバー
   u16 sameWazaCounter;  ///< 同じワザを何連続で出しているかカウンタ
+  BtlPokePos  prevTargetPos;  ///< 直前に狙った相手
 
   u8  myID;
   u8  wazaCnt;
@@ -716,6 +717,19 @@ WazaID BTL_POKEPARAM_GetPrevWazaNumber( const BTL_POKEPARAM* pp )
 }
 //=============================================================================================
 /**
+ * 直前に狙った相手の位置を返す
+ *
+ * @param   pp
+ *
+ * @retval  BtlPokePos
+ */
+//=============================================================================================
+BtlPokePos BTL_POKEPARAM_GetPrevTargetPos( const BTL_POKEPARAM* pp )
+{
+  return pp->prevTargetPos;
+}
+//=============================================================================================
+/**
  * 同じワザを連続何回出しているか返す（連続していない場合は0、連続中は1オリジンの値が返る）
  *
  * @param   pp
@@ -726,6 +740,26 @@ WazaID BTL_POKEPARAM_GetPrevWazaNumber( const BTL_POKEPARAM* pp )
 u32 BTL_POKEPARAM_GetSameWazaUsedCounter( const BTL_POKEPARAM* pp )
 {
   return pp->sameWazaCounter;
+}
+//=============================================================================================
+/**
+ * 指定ワザのindexを返す（自分が持っていないワザならPTL_WAZA_MAXを返す)
+  *
+ * @param   pp
+ * @param   waza
+ *
+ * @retval  u8
+ */
+//=============================================================================================
+u8 BTL_POKEPARAM_GetWazaIdx( const BTL_POKEPARAM* pp, WazaID waza )
+{
+  u32 i;
+  for(i=0; i<PTL_WAZA_MAX; ++i){
+    if( pp->waza[i].number == waza ){
+      return i;
+    }
+  }
+  return PTL_WAZA_MAX;
 }
 
 
@@ -1155,10 +1189,10 @@ void BTL_POKEPARAM_WazaSick_TurnCheck( BTL_POKEPARAM* pp )
       }else{
         pp->sickCont[i].turn.count = 0;
         // 眠りのみ、目覚めチェックでオフにする
-        if( i != WAZASICK_NEMURI )
-        {
+        if( i != WAZASICK_NEMURI ){
           pp->sickCont[i].type = WAZASICK_CONT_NONE;
         }
+        BTL_Printf("異常[%d]が今、治ったよ\n");
       }
     }
   }
@@ -1267,7 +1301,7 @@ void BTL_POKEPARAM_RemoveItem( BTL_POKEPARAM* pp )
  * @param   waza
  */
 //=============================================================================================
-void BTL_POKEPARAM_UpdateUsedWazaNumber( BTL_POKEPARAM* pp, WazaID waza )
+void BTL_POKEPARAM_UpdateUsedWazaNumber( BTL_POKEPARAM* pp, WazaID waza, BtlPokePos targetPos )
 {
   WazaID prev = pp->prevWazaID;
   if( prev != waza ){
@@ -1277,6 +1311,7 @@ void BTL_POKEPARAM_UpdateUsedWazaNumber( BTL_POKEPARAM* pp, WazaID waza )
   {
     pp->sameWazaCounter++;
   }
+  pp->prevTargetPos = targetPos;
 }
 
 

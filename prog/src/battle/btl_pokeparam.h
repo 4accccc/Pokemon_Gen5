@@ -209,6 +209,7 @@ extern u16 BTL_POKEPARAM_GetTurnCount( const BTL_POKEPARAM* pp );
 extern u16 BTL_POKEPARAM_GetAppearTurn( const BTL_POKEPARAM* pp );
 
 extern WazaID BTL_POKEPARAM_GetPrevWazaNumber( const BTL_POKEPARAM* pp );
+extern BtlPokePos BTL_POKEPARAM_GetPrevTargetPos( const BTL_POKEPARAM* pp );
 extern u32 BTL_POKEPARAM_GetSameWazaUsedCounter( const BTL_POKEPARAM* pp );
 
 
@@ -274,11 +275,11 @@ extern void BTL_POKEPARAM_SetAppearTurn( BTL_POKEPARAM* pp, u16 turn );
 extern void BTL_POKEPARAM_ChangePokeType( BTL_POKEPARAM* pp, PokeTypePair type );
 extern void BTL_POKEPARAM_ChangeForm( BTL_POKEPARAM* pp, u8 formNo );
 extern void BTL_POKEPARAM_RemoveItem( BTL_POKEPARAM* pp );
-extern void BTL_POKEPARAM_UpdateUsedWazaNumber( BTL_POKEPARAM* pp, WazaID waza );
+extern void BTL_POKEPARAM_UpdateUsedWazaNumber( BTL_POKEPARAM* pp, WazaID waza, BtlPokePos targetPos );
 extern void BTL_POKEPARAM_RankRecover( BTL_POKEPARAM* pp );
 extern void BTL_POKEPARAM_RankReset( BTL_POKEPARAM* pp );
 extern fx32 BTL_POKEPARAM_GetHPRatio( const BTL_POKEPARAM* pp );
-
+extern u8 BTL_POKEPARAM_GetWazaIdx( const BTL_POKEPARAM* pp, WazaID waza );
 
 
 

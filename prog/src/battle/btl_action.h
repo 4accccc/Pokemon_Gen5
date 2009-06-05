@@ -35,8 +35,8 @@ typedef union {
 
   struct {
     u32 cmd     : 3;
-    u32 wazaIdx   : 3;
     u32 targetPos : 3;
+    u32 waza      : 16;
   }fight;
 
   struct {
@@ -60,11 +60,11 @@ typedef union {
 }BTL_ACTION_PARAM;
 
 // たたかうアクション
-static void BTL_ACTION_SetFightParam( BTL_ACTION_PARAM* p, u8 wazaIdx, u8 targetPos )
+static void BTL_ACTION_SetFightParam( BTL_ACTION_PARAM* p, WazaID waza, u8 targetPos )
 {
   p->fight.cmd = BTL_ACTION_FIGHT;
-  p->fight.wazaIdx = wazaIdx;
   p->fight.targetPos = targetPos;
+  p->fight.waza = waza;
 }
 // アイテムつかうアクション
 static void BTL_ACTION_SetItemParam( BTL_ACTION_PARAM* p, u16 itemNumber, u8 targetIdx )

@@ -244,9 +244,9 @@ static inline void SCQUE_PUT_OP_RemoveItem( BTL_SERVER_CMD_QUE* que, u8 pokeID  
 {
   SCQUE_PUT_Common( que, SC_OP_REMOVE_ITEM, pokeID );
 }
-static inline void SCQUE_PUT_OP_UpdateUseWaza( BTL_SERVER_CMD_QUE* que, u8 pokeID, WazaID waza  )
+static inline void SCQUE_PUT_OP_UpdateUseWaza( BTL_SERVER_CMD_QUE* que, u8 pokeID, u8 targetPos, WazaID waza  )
 {
-  SCQUE_PUT_Common( que, SC_OP_UPDATE_USE_WAZA, pokeID, waza );
+  SCQUE_PUT_Common( que, SC_OP_UPDATE_USE_WAZA, pokeID, targetPos, waza );
 }
 static inline void SCQUE_PUT_OP_SetContFlag( BTL_SERVER_CMD_QUE* que, u8 pokeID, BppContFlag flag )
 {

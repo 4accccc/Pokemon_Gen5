@@ -367,6 +367,14 @@ static BOOL SubProc_UI_SelectAction( BTL_CLIENT* wk, int* seq )
         (*seq) = SEQ_CHECK_DONE;
         break;
       }
+      if( BTL_POKEPARAM_CheckSick(bpp, WAZASICK_WAZALOCK_HARD) )
+      {
+        WazaID waza = BTL_POKEPARAM_GetPrevWazaNumber( bpp );
+        BtlPokePos pos = BTL_POKEPARAM_GetPrevTargetPos( bpp );
+        BTL_ACTION_SetFightParam( &wk->actionParam[wk->procPokeIdx], waza, pos );
+        (*seq) = SEQ_CHECK_DONE;
+        break;
+      }
 
       BTL_Printf("アクション選択(%d体目）開始します\n", wk->procPokeIdx );
       BTLV_UI_SelectAction_Start( wk->viewCore, bpp, &wk->actionParam[wk->procPokeIdx] );
@@ -531,6 +539,15 @@ static BOOL SubProc_AI_SelectAction( BTL_CLIENT* wk, int* seq )
     if( !BTL_POKEPARAM_IsDead(pp) )
     {
       u8 wazaCount, wazaIdx, mypos, targetPos;
+
+      if( BTL_POKEPARAM_CheckSick(pp, WAZASICK_WAZALOCK_HARD) )
+      {
+        WazaID waza = BTL_POKEPARAM_GetPrevWazaNumber( pp );
+        BtlPokePos pos = BTL_POKEPARAM_GetPrevTargetPos( pp );
+        BTL_ACTION_SetFightParam( &wk->actionParam[i], waza, pos );
+        continue;
+      }
+
       wazaCount = BTL_POKEPARAM_GetWazaCount( pp );
       wazaIdx = GFL_STD_MtRand(wazaCount);
       targetPos = BTL_MAIN_GetOpponentPokePos( wk->mainModule, mypos, 0 );
@@ -560,7 +577,10 @@ static BOOL SubProc_AI_SelectAction( BTL_CLIENT* wk, int* seq )
           targetPos = alivePokePos[ rndIdx ];
         }
       }
-      BTL_ACTION_SetFightParam( &wk->actionParam[i], wazaIdx, targetPos );
+      {
+        WazaID waza = BTL_POKEPARAM_GetWazaNumber( pp, wazaIdx );
+        BTL_ACTION_SetFightParam( &wk->actionParam[i], waza, targetPos );
+      }
     }
     else
     {
@@ -1723,8 +1743,8 @@ static BOOL scProc_OP_RemoveItem( BTL_CLIENT* wk, int* seq, const int* args )
 static BOOL scProc_OP_UpdateUseWaza( BTL_CLIENT* wk, int* seq, const int* args )
 {
   BTL_POKEPARAM* pp = BTL_POKECON_GetPokeParam( wk->pokeCon, args[0] );
-  BTL_Printf("ポケ(%d) の直前使用ワザセット -> %d\n", args[0], args[1] );
-  BTL_POKEPARAM_UpdateUsedWazaNumber( pp, args[1] );
+  BTL_Printf("ポケ(%d) の直前使用ワザセット -> %d\n", args[0], args[2] );
+  BTL_POKEPARAM_UpdateUsedWazaNumber( pp, args[2], args[1] );
   return TRUE;
 }
 static BOOL scProc_OP_SetContFlag( BTL_CLIENT* wk, int* seq, const int* args )
