@@ -269,6 +269,6 @@ const VecFx32 * SCRCMD_WORK_GetTalkMsgWinTailPos( SCRCMD_WORK *work )
 void SCRCMD_WORK_CreateMsgData( SCRCMD_WORK *work, u32 datID )
 {
 	GFL_MSGDATA *msgData = GFL_MSG_Create(
-		GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, datID, work->heapID );
+		GFL_MSG_LOAD_NORMAL, ARCID_SCRIPT_MESSAGE, datID, work->heapID );
 	SCRCMD_WORK_SetMsgData( work, msgData );
 }
