@@ -62,6 +62,9 @@
 
 #include "field_player_grid.h"
 
+#include "script.h"
+#include "eventdata_local.h"
+
 #include "arc/fieldmap/zone_id.h"
 #include "field/weather_no.h"
 #include "sound/pm_sndsys.h"
@@ -538,7 +541,7 @@ static MAINSEQ_RESULT mainSeqFunc_setup(GAMESYS_WORK *gsys, FIELDMAP_WORK *field
   //フィールドエンカウント初期化
   fieldWork->encount = FIELD_ENCOUNT_Create( fieldWork );
   
-   //フィールドデバッグ初期化
+  //フィールドデバッグ初期化
   fieldWork->debugWork = FIELD_DEBUG_Init( fieldWork, fieldWork->heapID );
 
   return MAINSEQ_RESULT_NEXTSEQ;
@@ -1619,6 +1622,13 @@ static GMEVENT * checkRailExit(GAMESYS_WORK *gsys, FIELDMAP_WORK * fieldWork)
 
 }
 
+extern u16 EVENTDATA_CheckPosEvent(
+    const EVENTDATA_SYSTEM *evdata, EVENTWORK *evwork, const VecFx32 *pos );
+
+extern u16 EVENTDATA_CheckTalkBGEvent(
+    const EVENTDATA_SYSTEM *evdata, EVENTWORK *evwork,
+    const VecFx32 *pos, u16 talk_dir );
+
 //--------------------------------------------------------------
 /**
  * イベント　イベント起動チェック
@@ -1634,20 +1644,24 @@ static GMEVENT * fldmapFunc_Event_CheckEvent( GAMESYS_WORK *gsys, void *work )
 		chgCont = PAD_BUTTON_L | PAD_BUTTON_R | PAD_BUTTON_SELECT
 	};
 	
+  int trg,cont;
 	GMEVENT *event;
-	FIELDMAP_WORK *fieldWork = work;
-	int	trg = GFL_UI_KEY_GetTrg();
-	int cont = GFL_UI_KEY_GetCont();
 	PLAYER_MOVE_STATE state;
   PLAYER_MOVE_VALUE value;
+	FIELDMAP_WORK *fieldWork = work;
 
-  { //自機動作ステータス更新
-    FIELD_PLAYER_UpdateMoveStatus( fieldWork->field_player );
-  }
+  //キー情報を取得
+  trg = GFL_UI_KEY_GetTrg();
+  cont = GFL_UI_KEY_GetCont();
+
+  //自機動作ステータス更新
+  FIELD_PLAYER_UpdateMoveStatus( fieldWork->field_player );
   
+  //自機の動作状態を取得
   value = FIELD_PLAYER_GetMoveValue( fieldWork->field_player );
   state = FIELD_PLAYER_GetMoveState( fieldWork->field_player );
   
+  //デバッグ用チェック
 #ifdef  PM_DEBUG
 	//ソフトリセットチェック
 	if( (cont&resetCont) == resetCont ){
@@ -1690,6 +1704,26 @@ static GMEVENT * fldmapFunc_Event_CheckEvent( GAMESYS_WORK *gsys, void *work )
     #endif
   }
   
+  //座標イベントチェック
+  {
+    VecFx32 pos;
+    u16 id,param;
+    GAMEDATA *gdata = GAMESYSTEM_GetGameData( fieldWork->gsys );
+    EVENTDATA_SYSTEM *evdata = GAMEDATA_GetEventData( gdata );
+    EVENTWORK *evwork = GAMEDATA_GetEventWork( gdata );
+    FIELD_PLAYER_GetPos( fieldWork->field_player, &pos );
+    
+    id = EVENTDATA_CheckPosEvent( evdata, evwork, &pos );
+    
+    if( id != EVENTDATA_ID_NONE ){ //座標イベント起動
+      SCRIPT_FLDPARAM fparam;
+      fparam.msgBG = fieldWork->fldMsgBG;
+      event = SCRIPT_SetScript(
+         fieldWork->gsys, id, NULL, fieldWork->heapID, &fparam );
+      return event;
+    }
+  }
+
 #if 0
 	//座標接続チェック
 	event = fldmap_Event_CheckConnect(gsys, fieldWork, &fieldWork->now_pos);
@@ -1744,22 +1778,47 @@ static GMEVENT * fldmapFunc_Event_CheckEvent( GAMESYS_WORK *gsys, void *work )
 	{
 		if( trg == PAD_BUTTON_A )
 		{
-			int gx,gy,gz;
-			FLDMMDL *fmmdl_talk;
-			FIELD_PLAYER_GetFrontGridPos( fieldWork->field_player, &gx, &gy, &gz );
-			fmmdl_talk = FLDMMDLSYS_SearchGridPos(
-					fieldWork->fldMMdlSys, gx, gz, FALSE );
-			
-			if( fmmdl_talk != NULL )
-			{
-				u32 scr_id = FLDMMDL_GetEventID( fmmdl_talk );
-				FLDMMDL *fmmdl_player = FIELD_PLAYER_GetFldMMdl(
-						fieldWork->field_player );
-        FIELD_PLAYER_GRID_ForceStop( fieldWork->field_player );
-				return EVENT_FieldTalk( gsys, fieldWork,
-					scr_id, fmmdl_player, fmmdl_talk, fieldWork->heapID );
-			}
-		}
+      { //OBJ話し掛け
+			  int gx,gy,gz;
+			  FLDMMDL *fmmdl_talk;
+			  FIELD_PLAYER_GetFrontGridPos(
+            fieldWork->field_player, &gx, &gy, &gz );
+	  		fmmdl_talk = FLDMMDLSYS_SearchGridPos(
+	  				fieldWork->fldMMdlSys, gx, gz, FALSE );
+
+		  	if( fmmdl_talk != NULL )
+	  		{
+	  			u32 scr_id = FLDMMDL_GetEventID( fmmdl_talk );
+  				FLDMMDL *fmmdl_player = FIELD_PLAYER_GetFldMMdl(
+  						fieldWork->field_player );
+          FIELD_PLAYER_GRID_ForceStop( fieldWork->field_player );
+  				return EVENT_FieldTalk( gsys, fieldWork,
+  					scr_id, fmmdl_player, fmmdl_talk, fieldWork->heapID );
+  			}
+	  	}
+      
+      { //BG話し掛け
+        u16 id;
+        VecFx32 pos;
+        GAMEDATA *gdata = GAMESYSTEM_GetGameData( fieldWork->gsys );
+        EVENTDATA_SYSTEM *evdata = GAMEDATA_GetEventData( gdata );
+        EVENTWORK *evwork = GAMEDATA_GetEventWork( gdata );
+        FLDMMDL *fmmdl = FIELD_PLAYER_GetFldMMdl( fieldWork->field_player );
+        u16 dir = FLDMMDL_GetDirDisp( fmmdl );
+        
+        FIELD_PLAYER_GetPos( fieldWork->field_player, &pos );
+        FLDMMDL_TOOL_AddDirVector( dir, &pos, GRID_FX32 );
+        id = EVENTDATA_CheckTalkBGEvent( evdata, evwork, &pos, dir );
+        
+        if( id != EVENTDATA_ID_NONE ){ //座標イベント起動
+          SCRIPT_FLDPARAM fparam;
+          fparam.msgBG = fieldWork->fldMsgBG;
+          event = SCRIPT_SetScript(
+             fieldWork->gsys, id, NULL, fieldWork->heapID, &fparam );
+          return event;
+        }
+      }
+    }
 	}
 	
 	//デバッグ：パレスで木に触れたらワープ
@@ -1771,6 +1830,71 @@ static GMEVENT * fldmapFunc_Event_CheckEvent( GAMESYS_WORK *gsys, void *work )
     }
 	}
 	return NULL;
+}
+
+//--------------------------------------------------------------
+/**
+ * イベント起動チェック　決定ボタン入力時に発生するイベントチェック
+ * @param fieldWork FIELDMAP_WORK
+ * @param event 発生イベントプロセス格納先
+ * @param key_trg キートリガ
+ * @param key_cont キーコンティニュー
+ * @retval BOOL TRUE=イベント起動
+ */
+//--------------------------------------------------------------
+static BOOL event_CheckEventDecideButton( FIELDMAP_WORK *fieldWork,
+    GMEVENT **event, const int key_trg, const int key_cont )
+{
+  return FALSE;
+}
+
+//--------------------------------------------------------------
+/**
+ * イベント起動チェック　自機動作終了時に発生するイベントチェック。
+ * 移動終了、振り向き、壁衝突動作などで発生。
+ * @param fieldWork FIELDMAP_WORK
+ * @param event 発生イベントプロセス格納先
+ * @param key_trg キートリガ
+ * @param key_cont キーコンティニュー
+ * @retval BOOL TRUE=イベント起動
+ */
+//--------------------------------------------------------------
+static BOOL event_CheckEventMoveEnd( FIELDMAP_WORK *fieldWork,
+    GMEVENT **event, const int key_trg, const int key_cont )
+{
+  return FALSE;
+}
+
+//--------------------------------------------------------------
+/**
+ * イベント起動チェック　一歩移動終了時に発生するイベントチェック
+ * @param fieldWork FIELDMAP_WORK
+ * @param event 発生イベントプロセス格納先
+ * @param key_trg キートリガ
+ * @param key_cont キーコンティニュー
+ * @retval BOOL TRUE=イベント起動
+ */
+//--------------------------------------------------------------
+static BOOL event_CheckEventOneStepMoveEnd( FIELDMAP_WORK *fieldWork,
+    GMEVENT **event, const int key_trg, const int key_cont )
+{
+  return FALSE;
+}
+
+//--------------------------------------------------------------
+/**
+ * イベント起動チェック　十字キー入力中に発生するイベントチェック
+  * @param fieldWork FIELDMAP_WORK
+ * @param event 発生イベントプロセス格納先
+ * @param key_trg キートリガ
+ * @param key_cont キーコンティニュー
+ * @retval BOOL TRUE=イベント起動
+ */
+//--------------------------------------------------------------
+static BOOL event_CheckEventPushKey( FIELDMAP_WORK *fieldWork,
+    GMEVENT **event, const int key_trg, const int key_cont )
+{
+  return FALSE;
 }
 
 //======================================================================

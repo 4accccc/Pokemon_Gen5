@@ -2368,10 +2368,10 @@ static void MoveSub_KuruKuruSet( FLDMMDL * fmmdl, RT_KURUKURU_WORK *work )
 #if 0	
 	{
 		switch( dir ){
-		case DIR_UP: OS_Printf( "くるくる移動 0 方向は上　" ); break;
-		case DIR_DOWN: OS_Printf( "くるくる移動 0 方向は下　" ); break;
-		case DIR_LEFT: OS_Printf( "くるくる移動 0 方向は左　" ); break;
-		case DIR_RIGHT: OS_Printf( "くるくる移動 0 方向は右　" ); break;
+		case DIR_UP: KAGAYA_Printf( "くるくる移動 0 方向は上　" ); break;
+		case DIR_DOWN: KAGAYA_Printf( "くるくる移動 0 方向は下　" ); break;
+		case DIR_LEFT: KAGAYA_Printf( "くるくる移動 0 方向は左　" ); break;
+		case DIR_RIGHT: KAGAYA_Printf( "くるくる移動 0 方向は右　" ); break;
 		}
 	}
 #endif
@@ -2394,10 +2394,10 @@ static void MoveSub_KuruKuruSet( FLDMMDL * fmmdl, RT_KURUKURU_WORK *work )
 #if 0	
 	{
 		switch( dir ){
-		case DIR_UP: OS_Printf( "1方向は上\n" ); break;
-		case DIR_DOWN: OS_Printf( "1方向は下\n" ); break;
-		case DIR_LEFT: OS_Printf( "1方向は左\n" ); break;
-		case DIR_RIGHT: OS_Printf(  " 1方向は右\n" ); break;
+		case DIR_UP: KAGAYA_Printf( "1方向は上\n" ); break;
+		case DIR_DOWN: KAGAYA_Printf( "1方向は下\n" ); break;
+		case DIR_LEFT: KAGAYA_Printf( "1方向は左\n" ); break;
+		case DIR_RIGHT: KAGAYA_Printf(  " 1方向は右\n" ); break;
 		}
 	}
 #endif

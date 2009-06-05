@@ -105,6 +105,18 @@ static BOOL EvYesNoWinSelect( VMHANDLE *core, void *wk );
 
 static VMCMD_RESULT EvCmdPlayerName( VMHANDLE * core, void *wk );
 
+static VMCMD_RESULT EvCmdFlagSet( VMHANDLE *core, void *wk );
+static VMCMD_RESULT EvCmdFlagReset( VMHANDLE *core, void *wk );
+static VMCMD_RESULT EvCmdFlagCheck( VMHANDLE * core, void *wk );
+static VMCMD_RESULT EvCmdFlagCheckWk( VMHANDLE *core, void *wk );
+static VMCMD_RESULT EvCmdFlagSetWk( VMHANDLE *core, void *wk );
+
+static VMCMD_RESULT EvCmdWkAdd( VMHANDLE *core, void *wk );
+static VMCMD_RESULT EvCmdWkSub( VMHANDLE *core, void *wk );
+static VMCMD_RESULT EvCmdLoadWkValue( VMHANDLE *core, void *wk );
+static VMCMD_RESULT EvCmdLoadWkWk( VMHANDLE *core, void *wk );
+static VMCMD_RESULT EvCmdLoadWkWkValue( VMHANDLE *core, void *wk );
+
 //======================================================================
 //	グローバル変数
 //======================================================================
@@ -184,6 +196,18 @@ const VMCMD_FUNC ScriptCmdTbl[] = {
   EvCmdChangeLangID,
 
   EvCmdPlayerName,
+
+  EvCmdFlagSet,
+  EvCmdFlagReset,
+  EvCmdFlagCheck,
+  EvCmdFlagCheckWk,
+  EvCmdFlagSetWk,
+
+  EvCmdWkAdd,
+  EvCmdWkSub,
+  EvCmdLoadWkValue,
+  EvCmdLoadWkWk,
+  EvCmdLoadWkWkValue,
 };
 
 //--------------------------------------------------------------
@@ -342,7 +366,7 @@ static BOOL EvWaitTime(VMHANDLE * core, void *wk )
 static VMCMD_RESULT EvCmdDebugWatch(VMHANDLE * core, void *wk )
 {
 	u16 value = VMGetWorkValue(core);
-	OS_Printf("SCR WORK: %d\n", value);
+	KAGAYA_Printf("SCR WORK: %d\n", value);
 	return 0;
 }
 #endif
@@ -609,7 +633,7 @@ static VMCMD_RESULT EvCmdCmpWkValue( VMHANDLE *core, void *wk )
 {
 	u16 *p;
 	u16	r1, r2;
-
+  
 	p = VMGetWork( core, wk );
 	r1 = *p;
 	r2 = VMGetU16( core );
@@ -922,6 +946,182 @@ static VMCMD_RESULT EvCmdIfCall( VMHANDLE *core, void *wk )
 	if( ConditionTable[r][core->cmp_flag] == TRUE ){
 		VMCMD_Call( core, (VM_CODE *)(core->adrs+pos) );
 	}
+	return 0;
+}
+
+//======================================================================
+//  イベントワーク関連
+//======================================================================
+//--------------------------------------------------------------
+/*
+ * フラグのセット
+ * @param	core		仮想マシン制御構造体へのポインタ
+ * @return	"0"
+ */
+//--------------------------------------------------------------
+static VMCMD_RESULT EvCmdFlagSet( VMHANDLE *core, void *wk )
+{
+  SCRCMD_WORK *work = wk;
+  GAMEDATA *gdata = SCRCMD_WORK_GetGameData( work );
+  EVENTWORK *evwork = GAMEDATA_GetEventWork( gdata );
+	u16	flag = VMGetU16( core );
+  EVENTWORK_SetEventFlag( evwork, flag );
+	return 0;
+}
+
+//--------------------------------------------------------------
+/**
+ * フラグのリセット
+ * @param	core		仮想マシン制御構造体へのポインタ
+ * @return	"0"
+ */
+//--------------------------------------------------------------
+static VMCMD_RESULT EvCmdFlagReset( VMHANDLE *core, void *wk )
+{
+  SCRCMD_WORK *work = wk;
+  GAMEDATA *gdata = SCRCMD_WORK_GetGameData( work );
+  EVENTWORK *evwork = GAMEDATA_GetEventWork( gdata );
+	u16	flag = VMGetU16( core );
+  EVENTWORK_ResetEventFlag( evwork, flag );
+	return 0;
+}
+
+//--------------------------------------------------------------
+/**
+ * フラグのチェック
+ * @param	core		仮想マシン制御構造体へのポインタ
+ * @return	"0"
+ */
+//--------------------------------------------------------------
+static VMCMD_RESULT EvCmdFlagCheck( VMHANDLE * core, void *wk )
+{
+  SCRCMD_WORK *work = wk;
+  GAMEDATA *gdata = SCRCMD_WORK_GetGameData( work );
+  EVENTWORK *evwork = GAMEDATA_GetEventWork( gdata );
+	u16	flag = VMGetU16( core );
+  core->cmp_flag = EVENTWORK_CheckEventFlag( evwork, flag );
+  return 0;
+}
+
+//--------------------------------------------------------------
+/**
+ * ワークの値をフラグナンバーとしてフラグチェック
+ * @param	core		仮想マシン制御構造体へのポインタ
+ * @return	"0"
+ */
+//--------------------------------------------------------------
+static VMCMD_RESULT EvCmdFlagCheckWk( VMHANDLE *core, void *wk )
+{
+  SCRCMD_WORK *work = wk;
+  GAMEDATA *gdata = SCRCMD_WORK_GetGameData( work );
+  EVENTWORK *evwork = GAMEDATA_GetEventWork( gdata );
+	u16 *flag_work = VMGetWork( core, work );
+	u16 *ret_work	= VMGetWork( core, work );
+  *ret_work = EVENTWORK_CheckEventFlag( evwork, *flag_work );
+	return 0;
+}
+
+//--------------------------------------------------------------
+/**
+ * ワークの値をフラグナンバーとしてフラグセット
+ * @param	core		仮想マシン制御構造体へのポインタ
+ * @return	"0"
+ */
+//--------------------------------------------------------------
+static VMCMD_RESULT EvCmdFlagSetWk( VMHANDLE *core, void *wk )
+{
+  SCRCMD_WORK *work = wk;
+  GAMEDATA *gdata = SCRCMD_WORK_GetGameData( work );
+  EVENTWORK *evwork = GAMEDATA_GetEventWork( gdata );
+	u16 *flag_work = VMGetWork( core, work );
+  EVENTWORK_SetEventFlag( evwork, *flag_work );
+	return 0;
+}
+
+
+//======================================================================
+//	ワーク操作関連
+//======================================================================
+//--------------------------------------------------------------
+/**
+ * ワークに値を足す
+ * @param	core		仮想マシン制御構造体へのポインタ
+ * @return	"0"
+ */
+//--------------------------------------------------------------
+static VMCMD_RESULT EvCmdWkAdd( VMHANDLE *core, void *wk )
+{
+  SCRCMD_WORK *work = wk;
+	u16 *work_val;
+	u16 num;
+	work_val = VMGetWork( core, work );
+	*work_val += VMGetWorkValue( core, work );
+	return 0;
+}
+
+//--------------------------------------------------------------
+/**
+ * ワークから値を引く
+ * @param	core		仮想マシン制御構造体へのポインタ
+ * @return	"0"
+ */
+//--------------------------------------------------------------
+static VMCMD_RESULT EvCmdWkSub( VMHANDLE *core, void *wk )
+{
+  SCRCMD_WORK *work = wk;
+	u16 * work_val;
+	work_val = VMGetWork( core, work );
+	*work_val -= VMGetWorkValue( core, work );
+	return 0;
+}
+
+//--------------------------------------------------------------
+/**
+ * ワークに値を格納
+ * @param	core		仮想マシン制御構造体へのポインタ
+ * @return	"0"
+ */
+//--------------------------------------------------------------
+static VMCMD_RESULT EvCmdLoadWkValue( VMHANDLE *core, void *wk )
+{
+  SCRCMD_WORK *work = wk;
+	u16 *work_val;
+	work_val = VMGetWork( core, work );
+	*work_val = VMGetU16( core );
+	return 0;
+}
+
+//--------------------------------------------------------------
+/**
+ * ワークにワークの値を格納
+ * @param	core		仮想マシン制御構造体へのポインタ
+ * @return	"0"
+ */
+//--------------------------------------------------------------
+static VMCMD_RESULT EvCmdLoadWkWk( VMHANDLE *core, void *wk )
+{
+  SCRCMD_WORK *work = wk;
+	u16 * wk1;
+	u16 * wk2;
+	wk1 = VMGetWork( core, work );
+	wk2 = VMGetWork( core, work );
+	*wk1 = *wk2;
+	return 0;
+}
+
+//--------------------------------------------------------------
+/**
+ * ワークに値かワークの値を格納
+ * @param	core		仮想マシン制御構造体へのポインタ
+ * @return	"0"
+ */
+//--------------------------------------------------------------
+static VMCMD_RESULT EvCmdLoadWkWkValue( VMHANDLE *core, void *wk )
+{
+  SCRCMD_WORK *work = wk;
+	u16 * work_val;
+	work_val = VMGetWork( core, work );
+	*work_val = VMGetWorkValue( core, work );
 	return 0;
 }
 
@@ -1389,6 +1589,7 @@ static VMCMD_RESULT EvCmdTalkObjPauseAll( VMHANDLE *core, void *wk )
 	FLDMMDL **fmmdl = SCRIPT_GetMemberWork( sc, ID_EVSCR_TARGET_OBJ );
 	FLDMMDL *player = PlayerGetFldMMdl( work );
 	FLDMMDL *player_pair = FLDMMDLSYS_SearchMoveCode( fmmdlsys, MV_PAIR );
+  
 #ifndef SCRCMD_PL_NULL
 	FLDMMDL *other_pair = FieldOBJ_MovePairSearch(*fldobj);
 #else
@@ -1403,11 +1604,13 @@ static VMCMD_RESULT EvCmdTalkObjPauseAll( VMHANDLE *core, void *wk )
 		FLDMMDL_OffStatusBitMoveProcPause( player );
 	}
 	
-	if( FLDMMDL_CheckStatusBitMove(*fmmdl) == TRUE ){
-		SetStepWatchBit(OTHER_BIT);
-		FLDMMDL_OffStatusBitMoveProcPause( *fmmdl );
-	}
-	
+  if( *fmmdl != NULL ){
+	  if( FLDMMDL_CheckStatusBitMove(*fmmdl) == TRUE ){
+	  	SetStepWatchBit(OTHER_BIT);
+	  	FLDMMDL_OffStatusBitMoveProcPause( *fmmdl );
+	  }
+  }
+
 	if( player_pair ){
 		#ifndef SCRCMD_PL_NULL
 		if( SysFlag_PairCheck(SaveData_GetEventWork(fsys->savedata)) == 1

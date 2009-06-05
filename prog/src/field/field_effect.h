@@ -77,11 +77,11 @@ typedef struct
 //--------------------------------------------------------------
 typedef struct
 {
-  u32 work_size;
-  FLDEFF_TASK_INIT proc_init;
-  FLDEFF_TASK_DELETE proc_delete;
-  FLDEFF_TASK_UPDATE proc_update;
-  FLDEFF_TASK_DRAW proc_draw;
+  u32 work_size; ///<タスクで使用するワークのサイズ
+  FLDEFF_TASK_INIT proc_init; ///<タスク追加時に呼び出される初期化関数
+  FLDEFF_TASK_DELETE proc_delete; ///<タスク削除時に呼び出される削除関数
+  FLDEFF_TASK_UPDATE proc_update; ///<更新時に呼び出される更新関数
+  FLDEFF_TASK_DRAW proc_draw; ///<描画時に呼び出される描画関数
 }FLDEFF_TASK_HEADER;
 
 //======================================================================

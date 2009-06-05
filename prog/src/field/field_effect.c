@@ -208,10 +208,10 @@ void FLDEFF_CTRL_RegistEffect(
   while( count ){
     #ifdef PM_DEBUG //二重登録チェック
     proc = fectrl_SearchProcEffect( fectrl, *id );
-    GF_ASSERT( proc == NULL );
+    GF_ASSERT( proc == NULL && "effect has registered" );
     #endif
     proc = fectrl_SearchProcEffect( fectrl, FLDEFF_PROCID_MAX );
-    GF_ASSERT( proc != NULL ); //空き無し
+    GF_ASSERT( proc != NULL && "effect max" ); //空き無し
     proc_data = search_ProcEffectData( *id );
     proc->id = *id;
     proc->proc_work = proc_data->proc_init( fectrl, fectrl->heapID );
@@ -410,6 +410,9 @@ void FLDEFF_CTRL_SetTaskParam( FLDEFF_CTRL *fectrl, u32 max )
  * @param add_ptr タスクに渡す任意のポインタ
  * @param pri タスク動作時のTCBプライオリティ
  * @retval FLDEFF_TASK*
+ * @note 追加時にヘッダー指定の初期化関数が呼ばれる。
+ * add_paramはFLDEFF_TASK_GetAddParam()で取得。
+ * add_ptrはFLDEFF_TASK_GetAddPointer()で取得。
  */
 //--------------------------------------------------------------
 FLDEFF_TASK * FLDEFF_CTRL_AddTask(
@@ -540,6 +543,9 @@ void FLDEFF_TASKSYS_Draw( FLDEFF_TASKSYS *tasksys )
  * @param add_ptr タスクに渡す任意のポインタ
  * @param pri タスク動作時のTCBプライオリティ
  * @retval FLDEFF_TASK*
+ * @note 追加時にヘッダー指定の初期化関数が呼ばれる。
+ * add_paramはFLDEFF_TASK_GetAddParam()で取得。
+ * add_ptrはFLDEFF_TASK_GetAddPointer()で取得。
  */
 //--------------------------------------------------------------
 FLDEFF_TASK * FLDEFF_TASKSYS_Add(

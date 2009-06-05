@@ -153,7 +153,7 @@ BOOL FIELD_ENCOUNT_CheckEncount( FIELD_ENCOUNT *enc )
 
 #ifdef DEBUG_ONLY_FOR_kagaya
   if( ret == FALSE ){
-    OS_Printf( "フィールドエンカウント　はずれ\n" );
+    KAGAYA_Printf( "フィールドエンカウント　はずれ\n" );
   }
 #endif
   return( ret );

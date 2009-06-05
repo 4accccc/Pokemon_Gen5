@@ -128,6 +128,37 @@ static const CONNECT_DATA ConnectData_C03[] = {
 };
 static const int ConnectCount_C03 = NELEMS(ConnectData_C03);
 
+//座標イベントテスト
+#include "eventwork_def.h"
+static const POS_EVENT_DATA PosEventData_T01[] =
+{
+  {
+    4,			//スクリプトID
+  	751,		//x
+  	825,		//z
+  	1,			//sizeX
+  	1,			//sizeZ
+  	0,		  //height
+  	0,      //param
+  	SVSCRWK_START+0,
+  },
+};
+static const int PosEventDataCount_T01 = NELEMS(PosEventData_T01);
+
+//BG話し掛けイベントテスト
+static const BG_TALK_DATA BGEventData_T01[] =
+{
+  {
+		5,			//スクリプトID
+		0,		// データタイプ
+		753,			// X座標
+		821,			// Y座標
+		0,		// 高さ
+		DIR_DOWN,		// 話しかけ方向タイプ
+  },
+};
+static const int BGEventDataCount_T01 = NELEMS(BGEventData_T01);
+
 //============================================================================================
 //============================================================================================
 static void loadEventDataTable(EVENTDATA_SYSTEM * evdata, u16 zone_id);
@@ -167,6 +198,9 @@ void EVENTDATA_SYS_Clear(EVENTDATA_SYSTEM * evdata)
 	GFL_STD_MemClear(evdata->load_buffer, EVDATA_SIZE);
 	GFL_STD_MemClear(evdata->spscr_buffer, SPSCR_DATA_SIZE);
 }
+
+
+
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 void EVENTDATA_SYS_Load(EVENTDATA_SYSTEM * evdata, u16 zone_id)
@@ -180,6 +214,10 @@ void EVENTDATA_SYS_Load(EVENTDATA_SYSTEM * evdata, u16 zone_id)
 	case ZONE_ID_T01:
 	//	evdata->npc_count = SampleFldMMdlHeaderCount_T01;
 	//	evdata->npc_data = SampleFldMMdlHeader_T01;
+    evdata->pos_count = PosEventDataCount_T01;
+    evdata->pos_data = PosEventData_T01;
+    evdata->bg_data = BGEventData_T01;
+    evdata->bg_count = BGEventDataCount_T01;
 		break;
 	case ZONE_ID_T02:
 		evdata->npc_count = SampleFldMMdlHeaderCount_t02;
@@ -416,6 +454,111 @@ const FLDMMDL_HEADER * EVENTDATA_GetNpcData( const EVENTDATA_SYSTEM *evdata )
 u16 EVENTDATA_GetNpcCount( const EVENTDATA_SYSTEM *evdata )
 {
 	return( evdata->npc_count );
+}
+
+//============================================================================================
+//  イベント関連
+//============================================================================================
+//------------------------------------------------------------------
+/**
+ * @brief	座標イベントチェック
+ * @param	evdata イベントデータへのポインタ
+ * @param evwork イベントワークへのポインタ 
+ * @param pos チェックする座標
+ * @retval u16 EVENTDATA_ID_NONE = イベントなし
+ */
+//------------------------------------------------------------------
+u16 EVENTDATA_CheckPosEvent(
+    const EVENTDATA_SYSTEM *evdata, EVENTWORK *evwork, const VecFx32 *pos )
+{
+  const POS_EVENT_DATA *data = evdata->pos_data;
+  
+  if( data != NULL )
+  {
+    u16 i = 0;
+    u16 *work_val;
+    u16 max = evdata->pos_count;
+    int gx = SIZE_GRID_FX32( pos->x );
+    int gz = SIZE_GRID_FX32( pos->z );
+    
+    for( ; i < max; i++, data++ )
+    {
+      if( gz >= data->gz && gz < (data->gz+data->sz) )
+      {
+        if( gx >= data->gx && gx < (data->gx+data->sx) )
+        {
+          work_val = EVENTWORK_GetEventWorkAdrs( evwork, data->workID );
+
+          if( (*work_val) == data->param )
+          {
+            return data->id;
+          }
+        }
+      }
+    }
+  }
+  
+  return EVENTDATA_ID_NONE;
+}
+
+//------------------------------------------------------------------
+/**
+ * @brief	BG話し掛けイベントチェック
+ * @param	evdata イベントデータへのポインタ
+ * @param pos チェックする座標
+ * @param talk_dir 話し掛け対象の向き
+ * @retval u16 EVENTDATA_ID_NONE = イベントなし
+ */
+//------------------------------------------------------------------
+u16 EVENTDATA_CheckTalkBGEvent(
+    const EVENTDATA_SYSTEM *evdata, EVENTWORK *evwork,
+    const VecFx32 *pos, u16 talk_dir )
+{
+  const BG_TALK_DATA *data = evdata->bg_data;
+  
+  if( data != NULL )
+  {
+    u16 i = 0;
+    u16 max = evdata->bg_count;
+    int gx = SIZE_GRID_FX32( pos->x );
+    int gz = SIZE_GRID_FX32( pos->z );
+    
+    for( ; i < max; i++, data++ )
+    {
+      if( gz == data->gz && gx == data->gx )
+      {
+        #if 0 //隠しアイテム対応
+        if( data->type == BG_TALK_TYPE_HIDE )
+        {
+          u16 flag = GetHideItemFlagNoByScriptId( data->id );
+          if( EVENTWORK_CheckEventFlag(evwork,flag) == FALSE ){
+            return data->id;
+          }
+        }
+        else
+        {
+          u16 true_dir = FLDMMDL_TOOL_FlipDir( talk_dir );
+          
+          if( true_dir == data->dir )
+          {
+            return data->id;
+          }
+        }
+        #else //隠しアイテム未対応
+        {
+          u16 true_dir = FLDMMDL_TOOL_FlipDir( talk_dir );
+          
+          if( true_dir == data->dir )
+          {
+            return data->id;
+          }
+        }
+        #endif
+      }
+    }
+  }
+  
+  return EVENTDATA_ID_NONE;
 }
 
 //============================================================================================
