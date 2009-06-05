@@ -1,10 +1,10 @@
 #event data
-#save date:2009/06/04 18:59:48
+#save date:2009/06/05 20:30:29
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\t01.wms
 #SECTION START:OBJ_EVENT
 #Map Event List data
-#save date:2009/06/04 18:59:48
+#save date:2009/06/05 20:30:29
 2
 #hold event type:
 1
@@ -101,27 +101,53 @@ DIR_DOWN
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT
 #Map Event List data
-#save date:2009/06/04 18:59:48
+#save date:2009/06/05 20:30:29
 2
 #hold event type:
 1
 #hold event number:
-0
+1
+#event number: 0
+#Bg Event Label
+BGID_TEST01
+#Bg Event Type
+BG_TALK_TYPE_NORMAL
+#Bg Event Reaction Direction ID
+BG_TALK_DIR_ALL
+#Bg Script Name
+SCRID_T01_BGEVENT_TEST1
+#position
+32 0 -80
 #Map Event List Data End
 #SECTION End:BG_EVENT
 #SECTION START:POS_EVENT
 #Map Event List data
-#save date:2009/06/04 18:59:48
+#save date:2009/06/05 20:30:29
 2
 #hold event type:
 1
 #hold event number:
+1
+#event number: 0
+#Pos Event Label
+POSID_TEST01
+#Pos Script Name
+SCRID_T01_POSEVENT_TEST1
+#Event Trigger Work Name
+SVSCRWK_START
+#Event Trigger Work Value
 0
+#Pos Event Size X
+1
+#Pos Event Size Z
+1
+#position
+16 0 -144
 #Map Event List Data End
 #SECTION End:POS_EVENT
 #SECTION START:DOOR_EVENT
 #Map Event List data
-#save date:2009/06/04 18:59:48
+#save date:2009/06/05 20:30:29
 2
 #hold event type:
 1

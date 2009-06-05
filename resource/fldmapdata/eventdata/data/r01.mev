@@ -24,7 +24,7 @@ EV_TYPE_NORMAL
 #Flag Name
 0
 #Event Script Name
-SCRID_TALKOBJ_BOY1
+SCRID_R01_TALKOBJ_BOY1
 #Direction Type Number
 DIR_DOWN
 #Parameter 0 Number
@@ -53,7 +53,7 @@ EV_TYPE_NORMAL
 #Flag Name
 0
 #Event Script Name
-SCRID_TALKOBJ_GIRL1
+SCRID_R01_TALKOBJ_GIRL1
 #Direction Type Number
 DIR_DOWN
 #Parameter 0 Number
@@ -82,7 +82,7 @@ EV_TYPE_NORMAL
 #Flag Name
 0
 #Event Script Name
-SCRID_TALKOBJ_MAN1
+SCRID_R01_TALKOBJ_MAN1
 #Direction Type Number
 DIR_DOWN
 #Parameter 0 Number
