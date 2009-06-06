@@ -2323,6 +2323,7 @@ static void WH_PortReceiveCallback(void *arg)
 {
 	WMPortRecvCallback *cb = (WMPortRecvCallback *)arg;
 
+	
 	if (cb->errcode != WM_ERRCODE_SUCCESS)
 	{
 		WH_REPORT_FAILURE(cb->errcode);
@@ -2338,6 +2339,7 @@ static void WH_PortReceiveCallback(void *arg)
 		if (cb->state == WM_STATECODE_PORT_RECV)
 		{
 			// データを受信したので、コールバックを呼びます。
+
 			(*_pWmInfo->sReceiverFunc) (cb->aid, cb->data, cb->length);
 		}
 		else if (cb->state == WM_STATECODE_DISCONNECTED)
@@ -3099,7 +3101,7 @@ static void WH_StateOutInitialize(void *arg)
 
 #ifndef SDK_FINALROM
 	OS_TPrintf("ライフタイム変更\n");
-	WM_SetLifeTime(_setLifeCallback,0xffff, 100, 5, 100);
+	WM_SetLifeTime(_setLifeCallback,0xffff, 0xffff, 0xffff, 0xffff);
 #else
 	// システム状態をアイドリング（待機中）に変更。
 	WH_ChangeSysState(WH_SYSSTATE_IDLE);
