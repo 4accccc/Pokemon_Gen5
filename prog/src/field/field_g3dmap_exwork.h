@@ -50,6 +50,8 @@ extern FIELD_GRANM_WORK* FLD_G3D_MAP_EXWORK_GetGranmWork( const FLD_G3D_MAP_EXWO
 // 配置モデル制御
 extern FIELD_BMODEL_MAN* FLD_G3D_MAP_EXWORK_GetBModelMan( const FLD_G3D_MAP_EXWORK* cp_wk );
 
+// マップインデックス取得
+const u32 FLD_G3D_MAP_EXWORK_GetMapIndex( const FLD_G3D_MAP_EXWORK* cp_wk );
 
 #ifdef _cplusplus
 }	// extern "C"{

@@ -14,6 +14,8 @@
 #include "mapdatafunc/field_func_pmcustom_file.h"
 #include "mapdatafunc/field_func_bridge_file.h"
 #include "mapdatafunc/field_func_wbnormal_file.h"
+#include "mapdatafunc/field_func_random_generate.h"
+
 
 #include "field_g3d_mapper.h"
 #include "fieldmap_resist.h"
@@ -72,6 +74,7 @@ typedef struct {
 struct _FLD_G3D_MAP_EXWORK{
 	FIELD_GRANM_WORK* p_granm_wk;		// 地面アニメーション
 	FIELD_BMODEL_MAN * bmodel_man;	// 
+	u32               mapIndex;     //マップのindex(ランダムマップで使用
 };
 
 
@@ -197,6 +200,13 @@ static const GFL_G3D_MAP_DDOBJ_DATA drawTreeData;
 //------------------------------------------------------------------
 static const GFL_G3D_MAP_FILE_FUNC mapFileFuncTbl[] = {
 	{ DP3PACK_HEADER, FieldLoadMapData_WBNormalFile, FieldGetAttr_WBNormalFile },
+	{ DP3PACK_HEADER, FieldLoadMapData_MapEditorFile, FieldGetAttr_MapEditorFile },
+	{ BRIDGEPACK_HEADER, FieldLoadMapData_BridgeFile, FieldGetAttr_BridgeFile },
+	{ MAPFILE_FUNC_DEFAULT, FieldLoadMapData_PMcustomFile, FieldGetAttr_PMcustomFile },	//TableEnd&default	
+};
+
+static const GFL_G3D_MAP_FILE_FUNC randommapFileFuncTbl[] = {
+	{ DP3PACK_HEADER, FieldLoadMapData_RandomGenerate, FieldGetAttr_RandomGenerate },
 	{ DP3PACK_HEADER, FieldLoadMapData_MapEditorFile, FieldGetAttr_MapEditorFile },
 	{ BRIDGEPACK_HEADER, FieldLoadMapData_BridgeFile, FieldGetAttr_BridgeFile },
 	{ MAPFILE_FUNC_DEFAULT, FieldLoadMapData_PMcustomFile, FieldGetAttr_PMcustomFile },	//TableEnd&default	
@@ -439,6 +449,12 @@ void FLDMAPPER_ResistData( FLDMAPPER* g3Dmapper, const FLDMAPPER_RESISTDATA* res
 			setup.mapFileFunc = mapFileFuncTbl;
 			setup.externalWork = NULL;
 		}
+		
+		if( resistData->g3DmapFileType == FLDMAPPER_FILETYPE_RANDOM )
+		{
+      OS_TPrintf("C8!!!\n");
+			setup.mapFileFunc = randommapFileFuncTbl;
+    }
 
 
 		//ブロック制御ハンドル作成
@@ -1644,7 +1660,19 @@ FIELD_BMODEL_MAN* FLD_G3D_MAP_EXWORK_GetBModelMan( const FLD_G3D_MAP_EXWORK* cp_
 	return  cp_wk->bmodel_man;
 }
 
-
+//----------------------------------------------------------------------------
+/**
+ *	@brief	マップのインデックス取得
+ *
+ *	@param	cp_wk		ワーク
+ *
+ *	@return	マップのインデックス
+ */
+//-----------------------------------------------------------------------------
+const u32 FLD_G3D_MAP_EXWORK_GetMapIndex( const FLD_G3D_MAP_EXWORK* cp_wk )
+{
+	return  cp_wk->mapIndex;
+}
 
 //----------------------------------------------------------------------------
 /**
@@ -1660,6 +1688,7 @@ static void FLD_G3D_MAP_ExWork_Init( FLD_G3D_MAP_EXWORK* p_wk, FLDMAPPER* g3Dmap
 	// 地面アニメ
 	p_wk->p_granm_wk = FIELD_GRANM_GetWork( g3Dmapper->granime, index );
   p_wk->bmodel_man = g3Dmapper->bmodel_man;
+  p_wk->mapIndex = index;
 }
 
 //----------------------------------------------------------------------------

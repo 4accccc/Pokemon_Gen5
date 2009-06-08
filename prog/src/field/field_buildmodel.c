@@ -303,6 +303,22 @@ static void loadBModelIDList(FIELD_BMODEL_MAN * man, u16 arc_id, u16 file_id)
   }
 
 	//読み込み
+#if 1 //ランダムマップ
+	if( arc_id == ARCID_BMODEL_IDX_OUTDOOR &&
+	    file_id == 18 )
+	{
+    u8 i;
+    u8 tempArr[15] = {  0, 2, 3, 4, 6,
+                        8, 9,10,13,14,
+                       15,17,33,34,41};
+    man->entryCount = 15;
+    for( i=0;i<15;i++ )
+    {
+      man->entryToIDTable[i] = tempArr[i];
+    }
+  }
+  else
+#endif 
 	{	
 		u16 size = GFL_ARC_GetDataSizeByHandle(hdl, file_id);
 		man->entryCount = size / sizeof(BMODEL_ID);
@@ -316,6 +332,7 @@ static void loadBModelIDList(FIELD_BMODEL_MAN * man, u16 arc_id, u16 file_id)
 		GFL_ARC_LoadDataOfsByHandle(hdl, file_id, 0, size, man->entryToIDTable);
 	}
 	GFL_ARC_CloseDataHandle(hdl);
+	
 }
 
 //------------------------------------------------------------------
