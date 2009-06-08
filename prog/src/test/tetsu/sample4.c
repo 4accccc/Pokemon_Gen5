@@ -13,6 +13,7 @@
 
 #include "debug_common.h"
 
+#include "system/fld_wipe_3dobj.h"
 //============================================================================================
 /**
  *
@@ -47,6 +48,8 @@ typedef struct {
 	GFL_G3D_OBJ*				g3Dobj0;
 	GFL_G3D_RES*				g3DresMdl1;
 	GFL_G3D_OBJ*				g3Dobj1;
+
+	FLD_WIPEOBJ*				fldWipeObj;
 
 	int									target;
 	int									mode;
@@ -177,13 +180,20 @@ static BOOL	sample4(SAMPLE4_WORK* sw)
 		sw->mode = 0;
 
 		//３Ｄオブジェクト作成
+#if 0
 		sw->g3DresMdl0 = GFL_G3D_CreateResourceArc
 										(ARCID_SHADOW_TEST, NARC_shadow_test_shadow3_test_nsbmd);
 		sw->g3Dobj0 = GFL_G3D_OBJECT_Create(GFL_G3D_RENDER_Create(sw->g3DresMdl0, 0, NULL), NULL, 0); 
 		sw->g3DresMdl1 = GFL_G3D_CreateResourceArc
 										(ARCID_SHADOW_TEST, NARC_shadow_test_shadow2_test_nsbmd);
 		sw->g3Dobj1 = GFL_G3D_OBJECT_Create(GFL_G3D_RENDER_Create(sw->g3DresMdl1, 0, NULL), NULL, 0); 
+#else
+		sw->g3DresMdl1 = GFL_G3D_CreateResourceArc
+										(ARCID_SHADOW_TEST, NARC_shadow_test_shadow2_test_nsbmd);
+		sw->g3Dobj1 = GFL_G3D_OBJECT_Create(GFL_G3D_RENDER_Create(sw->g3DresMdl1, 0, NULL), NULL, 0); 
 
+		sw->fldWipeObj = FLD_WIPEOBJ_Create(sw->heapID); 
+#endif
 		GFL_G3D_SetSystemSwapBufferMode(GX_SORTMODE_MANUAL, GX_BUFFERMODE_W);
 
 		sw->seq++;
@@ -209,7 +219,7 @@ static BOOL	sample4(SAMPLE4_WORK* sw)
 			GFL_G3D_OBJSTATUS status;
 
 			status = g3DobjStatus1;
-
+#if 0
 			if(sw->target == 0){
 				g3Dobj = sw->g3Dobj0;
 				status.trans = sw->trans;
@@ -248,18 +258,64 @@ static BOOL	sample4(SAMPLE4_WORK* sw)
 
 				GFL_G3D_DRAW_DrawObject(g3Dobj, &status);
 			}
+#else
+			if(sw->target == 0){
+				FLD_WIPEOBJ_Main(sw->fldWipeObj, sw->scale, FX32_ONE);
+			} else {
+				g3Dobj = sw->g3Dobj1;
+				status.trans.y = FX32_ONE*16;
+				rotateCalc(sw, &status.rotate);
+
+				pRnd = GFL_G3D_RENDER_GetRenderObj(GFL_G3D_OBJECT_GetG3Drnd(g3Dobj)); 
+				pMdl = NNS_G3dRenderObjGetResMdl(pRnd);
+
+				if(sw->mode == 0){
+					NNS_G3dMdlSetMdlLightEnableFlag( pMdl, 0, 0x0 );
+					NNS_G3dMdlSetMdlPolygonID( pMdl, 0, 63 );
+					NNS_G3dMdlSetMdlCullMode( pMdl, 0, GX_CULL_NONE ); 
+					NNS_G3dMdlSetMdlAlpha( pMdl, 0, 16 );
+					NNS_G3dMdlSetMdlPolygonMode( pMdl, 0, GX_POLYGONMODE_MODULATE );
+	
+					GFL_G3D_DRAW_DrawObject(g3Dobj, &status);
+				} else {
+					NNS_G3dMdlSetMdlLightEnableFlag( pMdl, 0, 0x0 );
+					NNS_G3dMdlSetMdlPolygonID( pMdl, 0, 0 );
+					NNS_G3dMdlSetMdlCullMode( pMdl, 0, GX_CULL_NONE ); 
+					NNS_G3dMdlSetMdlAlpha( pMdl, 0, 16 );
+					NNS_G3dMdlSetMdlPolygonMode( pMdl, 0, GX_POLYGONMODE_SHADOW );
+	
+					GFL_G3D_DRAW_DrawObject(g3Dobj, &status);
+	
+					NNS_G3dMdlSetMdlLightEnableFlag( pMdl, 0, 0x0 );
+					NNS_G3dMdlSetMdlPolygonID( pMdl, 0, 1 );
+					NNS_G3dMdlSetMdlCullMode( pMdl, 0, GX_CULL_NONE ); 
+					NNS_G3dMdlSetMdlAlpha( pMdl, 0, 16 );
+					NNS_G3dMdlSetMdlPolygonMode( pMdl, 0, GX_POLYGONMODE_SHADOW );
+	
+					GFL_G3D_DRAW_DrawObject(g3Dobj, &status);
+				}
+			}
+#endif
 		}
 
 		GFL_G3D_DRAW_End();				//描画終了（バッファスワップ）					
 		break;
 
 	case 2:
+#if 0
 		GFL_G3D_RENDER_Delete(GFL_G3D_OBJECT_GetG3Drnd(sw->g3Dobj1)); 
 		GFL_G3D_OBJECT_Delete(sw->g3Dobj1); 
 		GFL_G3D_DeleteResource(sw->g3DresMdl1);
 		GFL_G3D_RENDER_Delete(GFL_G3D_OBJECT_GetG3Drnd(sw->g3Dobj0)); 
 		GFL_G3D_OBJECT_Delete(sw->g3Dobj0); 
 		GFL_G3D_DeleteResource(sw->g3DresMdl0);
+#else
+		FLD_WIPEOBJ_Delete(sw->fldWipeObj);
+
+		GFL_G3D_RENDER_Delete(GFL_G3D_OBJECT_GetG3Drnd(sw->g3Dobj1)); 
+		GFL_G3D_OBJECT_Delete(sw->g3Dobj1); 
+		GFL_G3D_DeleteResource(sw->g3DresMdl1);
+#endif
 		return FALSE;
 	}
 	return TRUE;
