@@ -130,12 +130,11 @@ SRCS  +=    $(SOUNDSRC) \
         net_app/union/union_beacon_tool.c \
         app/wifi_note/wifi_note.c \
         test/camera_adjust_view.c \
-        system/el_scoreboard.c \
-        system/talkmsgwin.c \
         system/selbox.c \
         gamesystem/game_comm.c \
         field/field_comm/game_beacon_search.c \
         debug/debugwin_sys.c \
+				test/tetsu/debug_common.c \
         debug/debug_system_group.c \
 
 
@@ -301,8 +300,11 @@ SRCS_OVERLAY_FIELDMAP		=	field/field_proc.c \
         field/field_effect.c \
         field/fldeff_shadow.c \
         field/fldeff_kemuri.c \
-        field/fldeff_grass.c
-
+        system/el_scoreboard.c \
+        system/talkmsgwin.c \
+        test/tetsu/sample2.c \
+        test/tetsu/sample3.c \
+        field/fldeff_grass.c 
 
 # フィールド天気
 #===> SRCS_OVERLAY_FIELDMAP
@@ -320,15 +322,12 @@ SRCS_OVERLAY_FIELD_WEATHER_STORM = field/weather_storm.c \
 
 # マッパーサンプル
 #===> main
-SRCS_OVERLAY_WATANABE_SAMPLE  = test/tetsu/debug_common.c \
-				test/tetsu/sample/samplemain.c \
+SRCS_OVERLAY_WATANABE_SAMPLE  = test/tetsu/sample/samplemain.c \
         test/tetsu/sample/g3d_mapper.c \
         test/tetsu/sample/sample_net.c \
         test/tetsu/sample/g3dmapfunc/func_mapeditor_file.c \
         test/tetsu/sample/g3dmapfunc/func_pmcustom_file.c \
         test/tetsu/test_prog1.c \
-        test/tetsu/sample2.c \
-        test/tetsu/sample3.c \
         test/tetsu/sample4.c \
         test/tetsu/debug_watanabe.c
 

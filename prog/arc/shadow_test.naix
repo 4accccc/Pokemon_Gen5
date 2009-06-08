@@ -4,7 +4,7 @@
 
 	This file was created by NINTENDO NITRO-System Archiver.
 
-	Update:2009-06-05T15:06:42
+	Update:2009-06-08T16:59:35
  *****************************************************************************/
 
 #ifndef NARC_SHADOW_TEST_NAIX_
@@ -12,7 +12,8 @@
 
 enum {
 	NARC_shadow_test_shadow_test_nsbmd = 0,
-	NARC_shadow_test_shadow2_test_nsbmd = 1
+	NARC_shadow_test_shadow2_test_nsbmd = 1,
+	NARC_shadow_test_shadow3_test_nsbmd = 2
 };
 
 /* NARC_SHADOW_TEST_NAIX_ */

@@ -151,6 +151,24 @@ static const GFL_CAMADJUST_SETUP camAdjustData= {
 	GFL_DISPUT_PALID_15,	// = TEXT_PLTTID
 };
 #define PITCH_LIMIT (0x200)
+
+static void g3Dsys_setup( void )
+{
+	// 各種描画モードの設定(シェード＆アンチエイリアス＆半透明)
+	G3X_SetShading( GX_SHADING_TOON );
+	G3X_AntiAlias( FALSE );
+	G3X_AlphaTest( FALSE, 0 );	// アルファテスト　　オフ
+	G3X_AlphaBlend( TRUE );		// アルファブレンド　オン
+	G3X_EdgeMarking( FALSE );
+	G3X_SetFog( FALSE, GX_FOGBLEND_COLOR_ALPHA, GX_FOGSLOPE_0x8000, 0 );
+
+	// クリアカラーの設定
+	G3X_SetClearColor(GX_RGB(0,0,0),0,0x7fff,63,FALSE);	//color,alpha,depth,polygonID,fog
+
+	// ビューポートの設定
+	G3_ViewPort(0, 0, 255, 191);
+}
+
 //------------------------------------------------------------------
 /**
  * @brief		セットアップ
@@ -186,8 +204,13 @@ DWS_SYS* DWS_SYS_Setup(HEAPID heapID)
 	GFL_BG_ClearScreen(TEXT_FRAME_S);
 
 	//３Ｄシステム起動
-	GFL_G3D_Init
-		(GFL_G3D_VMANLNK, GFL_G3D_TEX384K, GFL_G3D_VMANLNK, GFL_G3D_PLT64K, 0, heapID, NULL );
+	GFL_G3D_Init(	GFL_G3D_VMANLNK, 
+								GFL_G3D_TEX384K,
+								GFL_G3D_VMANLNK,
+								GFL_G3D_PLT64K,
+								0,
+								heapID,
+								g3Dsys_setup );
 	GFL_BG_SetBGControl3D(1);
 
 	//ビットマップウインドウ起動

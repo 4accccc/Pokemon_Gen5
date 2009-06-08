@@ -51,6 +51,7 @@ typedef struct {
 	int									target;
 	int									mode;
 	VecFx32							trans;
+	fx32								scale;
 
 	int									timer;
 }SAMPLE4_WORK;
@@ -88,6 +89,7 @@ static GFL_PROC_RESULT Sample4Proc_Init(GFL_PROC * proc, int * seq, void * pwk, 
 
 	sw->dws = DWS_SYS_Setup(sw->heapID);
 	VEC_Set(&sw->trans, 0, 0, 0);
+	sw->scale = FX32_ONE;
 	DWS_SetG3DcamTarget(sw->dws, &sw->trans);
 
 	return GFL_PROC_RES_FINISH;
@@ -163,6 +165,7 @@ static const GFL_G3D_OBJSTATUS g3DobjStatus1 = {
 static void	rotateCalc(SAMPLE4_WORK* sw, MtxFx33* pRotate);
 static void	cameraTraseCalc(SAMPLE4_WORK* sw, MtxFx33* pRotate);
 static void	cameraTargetMvCalc(SAMPLE4_WORK* sw);
+static void	cameraTargetScaleCalc(SAMPLE4_WORK* sw);
 //============================================================================================
 static BOOL	sample4(SAMPLE4_WORK* sw)
 {
@@ -175,7 +178,7 @@ static BOOL	sample4(SAMPLE4_WORK* sw)
 
 		//‚R‚cƒIƒuƒWƒFƒNƒgì¬
 		sw->g3DresMdl0 = GFL_G3D_CreateResourceArc
-										(ARCID_SHADOW_TEST, NARC_shadow_test_shadow_test_nsbmd);
+										(ARCID_SHADOW_TEST, NARC_shadow_test_shadow3_test_nsbmd);
 		sw->g3Dobj0 = GFL_G3D_OBJECT_Create(GFL_G3D_RENDER_Create(sw->g3DresMdl0, 0, NULL), NULL, 0); 
 		sw->g3DresMdl1 = GFL_G3D_CreateResourceArc
 										(ARCID_SHADOW_TEST, NARC_shadow_test_shadow2_test_nsbmd);
@@ -192,6 +195,7 @@ static BOOL	sample4(SAMPLE4_WORK* sw)
 		if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_X ){ sw->mode = (sw->mode)? 0 : 1; }
 
 		cameraTargetMvCalc(sw);
+		cameraTargetScaleCalc(sw);
 
 		//‚R‚c•`‰æ
 		GFL_G3D_DRAW_Start();			//•`‰æŠJŽn
@@ -209,6 +213,7 @@ static BOOL	sample4(SAMPLE4_WORK* sw)
 			if(sw->target == 0){
 				g3Dobj = sw->g3Dobj0;
 				status.trans = sw->trans;
+				VEC_Set(&status.scale, sw->scale, FX32_ONE, sw->scale);
 				cameraTraseCalc(sw, &status.rotate);
 			} else {
 				g3Dobj = sw->g3Dobj1;
@@ -222,7 +227,7 @@ static BOOL	sample4(SAMPLE4_WORK* sw)
 				NNS_G3dMdlSetMdlLightEnableFlag( pMdl, 0, 0x0 );
 				NNS_G3dMdlSetMdlPolygonID( pMdl, 0, 63 );
 				NNS_G3dMdlSetMdlCullMode( pMdl, 0, GX_CULL_NONE ); 
-				NNS_G3dMdlSetMdlAlpha( pMdl, 0, 10 );
+				NNS_G3dMdlSetMdlAlpha( pMdl, 0, 16 );
 				NNS_G3dMdlSetMdlPolygonMode( pMdl, 0, GX_POLYGONMODE_MODULATE );
 
 				GFL_G3D_DRAW_DrawObject(g3Dobj, &status);
@@ -230,7 +235,7 @@ static BOOL	sample4(SAMPLE4_WORK* sw)
 				NNS_G3dMdlSetMdlLightEnableFlag( pMdl, 0, 0x0 );
 				NNS_G3dMdlSetMdlPolygonID( pMdl, 0, 0 );
 				NNS_G3dMdlSetMdlCullMode( pMdl, 0, GX_CULL_NONE ); 
-				NNS_G3dMdlSetMdlAlpha( pMdl, 0, 10 );
+				NNS_G3dMdlSetMdlAlpha( pMdl, 0, 16 );
 				NNS_G3dMdlSetMdlPolygonMode( pMdl, 0, GX_POLYGONMODE_SHADOW );
 
 				GFL_G3D_DRAW_DrawObject(g3Dobj, &status);
@@ -238,7 +243,7 @@ static BOOL	sample4(SAMPLE4_WORK* sw)
 				NNS_G3dMdlSetMdlLightEnableFlag( pMdl, 0, 0x0 );
 				NNS_G3dMdlSetMdlPolygonID( pMdl, 0, 1 );
 				NNS_G3dMdlSetMdlCullMode( pMdl, 0, GX_CULL_NONE ); 
-				NNS_G3dMdlSetMdlAlpha( pMdl, 0, 10 );
+				NNS_G3dMdlSetMdlAlpha( pMdl, 0, 16 );
 				NNS_G3dMdlSetMdlPolygonMode( pMdl, 0, GX_POLYGONMODE_SHADOW );
 
 				GFL_G3D_DRAW_DrawObject(g3Dobj, &status);
@@ -323,4 +328,16 @@ static void	cameraTargetMvCalc(SAMPLE4_WORK* sw)
 	VEC_MultAdd(MV_SP, &vecMv, &sw->trans, &sw->trans);
 }
 
+//--------------------------------------------------------------
+#define SCALE_SP (FX32_ONE/128)
+static void	cameraTargetScaleCalc(SAMPLE4_WORK* sw)
+{
+	if( GFL_UI_KEY_GetCont() & PAD_BUTTON_B ){
+		sw->scale -= SCALE_SP;
+		if(sw->scale < FX32_ONE/2){ sw->scale = FX32_ONE/2; }
+	} else if( GFL_UI_KEY_GetCont() & PAD_BUTTON_Y ){
+		sw->scale += SCALE_SP;
+		if(sw->scale > FX32_ONE*2){ sw->scale = FX32_ONE*2; }
+	}
+}
 
