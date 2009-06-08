@@ -44,9 +44,49 @@ DEP_OUTDOOR	=	\
 	$(RESDIR)/d5_container_02.nsbmd \
 	$(RESDIR)/d5_ship_01.nsbmd \
 	$(RESDIR)/c5_house_01.nsbmd \
+	$(RESDIR)/c5_church_01.nsbmd \
+	$(RESDIR)/c5_box_01.nsbmd \
+	$(RESDIR)/c5_lhouse_01.nsbmd \
+	$(RESDIR)/c5_statue_01.nsbmd \
+	$(RESDIR)/c5_house_02.nsbmd \
+	$(RESDIR)/c5_fvessel_01.nsbmd \
 	$(RESDIR)/c5_build_01.nsbmd \
+	$(RESDIR)/c5_market_01.nsbmd \
 	$(RESDIR)/d5_crane01.nsbmd \
 	$(RESDIR)/searock_01.nsbmd \
 	$(RESDIR)/searock_02.nsbmd \
 	$(RESDIR)/roadcone_01.nsbmd \
+	$(RESDIR)/c6_ctower_01.nsbmd \
+	$(RESDIR)/c6_house_01.nsbmd \
+	$(RESDIR)/c6_plant_01.nsbmd \
+	$(RESDIR)/c6_airport_01.nsbmd \
+	$(RESDIR)/c6_plan_01.nsbmd \
+	$(RESDIR)/c7_house_01.nsbmd \
+	$(RESDIR)/c7_house_02.nsbmd \
+	$(RESDIR)/c7_house_03.nsbmd \
+	$(RESDIR)/c7_windmill_01.nsbmd \
+	$(RESDIR)/d7_conveyor_01.nsbmd \
+	$(RESDIR)/d7_inaba_01.nsbmd \
+	$(RESDIR)/d7_machine_01.nsbmd \
+	$(RESDIR)/plant_01.nsbmd \
+	$(RESDIR)/bc_build_01.nsbmd \
+	$(RESDIR)/bc_build_02.nsbmd \
+	$(RESDIR)/bc_build_03.nsbmd \
+	$(RESDIR)/bc_build_04.nsbmd \
+	$(RESDIR)/bc_build_05.nsbmd \
+	$(RESDIR)/bc_build_06.nsbmd \
+	$(RESDIR)/bc_build_07.nsbmd \
+	$(RESDIR)/bc_build_08.nsbmd \
+	$(RESDIR)/bc_build_09.nsbmd \
+	$(RESDIR)/bc_build_10.nsbmd \
+	$(RESDIR)/wf_tree_01.nsbmd \
+	$(RESDIR)/wf_tree_02.nsbmd \
+	$(RESDIR)/wf_tree_03.nsbmd \
+	$(RESDIR)/wf_tree_04.nsbmd \
+	$(RESDIR)/wf_tree_05.nsbmd \
+	$(RESDIR)/wf_tree_06.nsbmd \
+	$(RESDIR)/wf_tree_07.nsbmd \
+	$(RESDIR)/wf_tree_08.nsbmd \
+	$(RESDIR)/wf_tree_09.nsbmd \
+	$(RESDIR)/wf_tree_10.nsbmd \
 
