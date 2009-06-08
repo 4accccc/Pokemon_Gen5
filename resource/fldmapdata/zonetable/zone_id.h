@@ -77,6 +77,7 @@
 #define ZONE_ID_D06R0101         ( 73)
 #define ZONE_ID_D06R0201         ( 74)
 #define ZONE_ID_D06R0301         ( 75)
-#define ZONE_ID_MAX	(76)
+#define ZONE_ID_BCWFTEST         ( 76)
+#define ZONE_ID_MAX	(77)
 #endif // __ZONE_ID_H__
 

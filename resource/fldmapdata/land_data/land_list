@@ -170,4 +170,8 @@ CONCAT_TARGET = \
 	$(DIR_LANDRES)/m_hh01_00_00.bin $(DIR_LANDRES)/m_hh01_00_00.imd \
 	$(DIR_LANDRES)/m_hh02_00_00.bin $(DIR_LANDRES)/m_hh02_00_00.imd \
 	$(DIR_LANDRES)/m_labo01_00_00.bin $(DIR_LANDRES)/m_labo01_00_00.imd \
-	$(DIR_LANDRES)/h01b_00_00.bin $(DIR_LANDRES)/h01b_00_00.imd
+	$(DIR_LANDRES)/h01b_00_00.bin $(DIR_LANDRES)/h01b_00_00.imd \
+	$(DIR_LANDRES)/bctest_00_00.bin $(DIR_LANDRES)/bctest_00_00.imd \
+	$(DIR_LANDRES)/bctest_01_00.bin $(DIR_LANDRES)/bctest_01_00.imd \
+	$(DIR_LANDRES)/bctest_00_01.bin $(DIR_LANDRES)/bctest_00_01.imd \
+	$(DIR_LANDRES)/bctest_01_01.bin $(DIR_LANDRES)/bctest_01_01.imd
