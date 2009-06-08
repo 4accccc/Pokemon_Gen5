@@ -63,7 +63,8 @@ SUBDIRS	=	wmi \
 			irc_aura \
 			field_menu \
 			irc_rhythm \
-			irc_result
+			irc_result \
+			worldtimer
 
 
 include $(RESOURCE_MACRO)
