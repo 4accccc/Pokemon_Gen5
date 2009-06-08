@@ -303,6 +303,14 @@ BTL_EVENT_FACTOR* BTL_EVENT_SeekFactor( BtlEventFactor factorType, u8 pokeID )
   return NULL;
 }
 
+BTL_EVENT_FACTOR* BTL_EVENT_GetNextFactor( BTL_EVENT_FACTOR* factor )
+{
+  if( factor ){
+    return factor->next;
+  }
+  return NULL;
+}
+
 //=============================================================================================
 /**
  * 特定タイプ＆サブIDのファクターを１ターン休止させる

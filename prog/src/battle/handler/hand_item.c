@@ -294,6 +294,7 @@ BTL_EVENT_FACTOR*  BTL_HANDLER_ITEM_Add( const BTL_POKEPARAM* pp )
     { ITEM_NAMONOMI,      HAND_ADD_ITEM_NamoNomi    },
     { ITEM_RIRIBANOMI,    HAND_ADD_ITEM_RiribaNomi  },
     { ITEM_HOZUNOMI,      HAND_ADD_ITEM_HozuNomi    },
+    { ITEM_KIINOMI,       HAND_ADD_ITEM_KiiNomi     },
 
     { ITEM_SIROIHAABU,        HAND_ADD_ITEM_SiroiHerb         },
     { ITEM_MENTARUHAABU,      HAND_ADD_ITEM_MentalHerb        },
@@ -393,7 +394,6 @@ void BTL_HANDLER_ITEM_Remove( const BTL_POKEPARAM* pp )
 
   while( (factor = BTL_EVENT_SeekFactor(BTL_EVENT_FACTOR_ITEM, pokeID)) != NULL )
   {
-    BTL_Printf("ポケモン[%d]の アイテムハンドラを除去\n", pokeID);
     BTL_EVENT_FACTOR_Remove( factor );
   }
 }
@@ -521,7 +521,7 @@ static void handler_KiiiNomi_Exe( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* f
 static BTL_EVENT_FACTOR* HAND_ADD_ITEM_KiiNomi( u16 pri, u16 itemID, u8 pokeID )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_MAKE_POKESICK, handler_KiiNomi },   // 状態異常チェックハンドラ
+    { BTL_EVENT_MAKE_WAZASICK, handler_KiiNomi },   // 状態異常チェックハンドラ
     { BTL_EVENT_USE_ITEM,      handler_KiiiNomi_Exe },
     { BTL_EVENT_NULL, NULL },
   };

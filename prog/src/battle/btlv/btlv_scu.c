@@ -118,8 +118,9 @@ struct _BTLV_SCU {
   GFL_FONT*       defaultFont;
   GFL_FONT*       smallFont;
   GFL_TCBLSYS*    tcbl;
-  PRINT_STREAM*   printStream;
-  STRBUF*         strBuf;
+  PRINT_STREAM*      printStream;
+  STRBUF*            strBuf;
+
   u8              taskCounter[TASKTYPE_MAX];
 
 
@@ -134,7 +135,9 @@ struct _BTLV_SCU {
   HEAPID        heapID;
   u8            printSeq;
   u8            playerClientID;
+  PRINTSTREAM_STATE  printState;
   u16           printWait;
+  u16           printWaitOrg;
   u8            msgwinVisibleFlag;
   u16           msgwinVisibleSeq;
   MSGWIN_VISIBLE   msgwinVisibleWork;
@@ -671,6 +674,7 @@ void BTLV_SCU_StartMsg( BTLV_SCU* wk, const STRBUF* str, u16 wait )
 
   wk->printSeq = 0;
   wk->printWait = wait;
+  wk->printWaitOrg = wait;
 }
 
 //=============================================================================================
@@ -684,12 +688,21 @@ void BTLV_SCU_StartMsg( BTLV_SCU* wk, const STRBUF* str, u16 wait )
 //=============================================================================================
 BOOL BTLV_SCU_WaitMsg( BTLV_SCU* wk )
 {
+  enum {
+    SEQ_START_MSGWIN_VISIBLE,
+    SEQ_WAIT_MSGWIN_VISIBLE,
+    SEQ_WAIT_STREAM_RUNNING,
+    SEQ_WAIT_USERCTRL_NOT_COMM,
+    SEQ_WAIT_USERCTRL_COMM,
+    SEQ_AFTER_USERCTRL,
+  };
+
   switch( wk->printSeq ){
-  case 0:
+  case SEQ_START_MSGWIN_VISIBLE:
     msgWinVisible_Disp( &wk->msgwinVisibleWork );
     wk->printSeq++;
     /* fallthru */
-  case 1:
+  case SEQ_WAIT_MSGWIN_VISIBLE:
     if( !msgWinVisible_Update(&wk->msgwinVisibleWork) ){
       break;
     }else{
@@ -700,36 +713,26 @@ BOOL BTLV_SCU_WaitMsg( BTLV_SCU* wk )
       wk->printSeq++;
     }
     /* fallthru */
-  case 2:
+  case SEQ_WAIT_STREAM_RUNNING:
     if( wk->printStream )
     {
-      if( PRINTSYS_PrintStreamGetState( wk->printStream ) == PRINTSTREAM_STATE_DONE )
+      wk->printState = PRINTSYS_PrintStreamGetState( wk->printStream );
+      if( wk->printState != PRINTSTREAM_STATE_RUNNING )
       {
-        GFL_FONTSYS_SetDefaultColor();
-        PRINTSYS_PrintStreamDelete( wk->printStream );
-        wk->printStream = NULL;
+        if( BTL_MAIN_GetCommMode(wk->mainModule) == BTL_COMM_NONE ){
+          wk->printSeq = SEQ_WAIT_USERCTRL_NOT_COMM;
+        } else {
+          wk->printSeq = SEQ_WAIT_USERCTRL_COMM;
+        }
       }
-      return FALSE;
     }
     else
     {
-      if( wk->printWait )
-      {
-        // やっぱり非通信時でも普通にwaitする
-        if( BTL_MAIN_GetCommMode(wk->mainModule) == BTL_COMM_NONE ){
-          wk->printSeq = 3;
-        } else {
-          wk->printSeq = 4;
-        }
-      }
-      else
-      {
-        return TRUE;
-      }
+      return TRUE;
     }
     break;
 
-  case 3: // 待ち指定あり（通常時）
+  case SEQ_WAIT_USERCTRL_NOT_COMM: // 待ち指定あり（通常時）
     if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A )
     {
       wk->printWait = 0;
@@ -737,18 +740,34 @@ BOOL BTLV_SCU_WaitMsg( BTLV_SCU* wk )
     if( wk->printWait ){
       wk->printWait--;
     }else{
-      return TRUE;
+      wk->printSeq = SEQ_AFTER_USERCTRL;
     }
     break;
 
-  case 4: // 待ち指定あり（通信時）
+  case SEQ_WAIT_USERCTRL_COMM: // 待ち指定あり（通信時）
     if( wk->printWait )
     {
       wk->printWait--;
     }
     else
     {
+      wk->printSeq = SEQ_AFTER_USERCTRL;
+    }
+    break;
+
+  case SEQ_AFTER_USERCTRL:
+    if( wk->printState == PRINTSTREAM_STATE_DONE )
+    {
+      GFL_FONTSYS_SetDefaultColor();
+      PRINTSYS_PrintStreamDelete( wk->printStream );
+      wk->printStream = NULL;
       return TRUE;
+    }
+    else
+    {
+      PRINTSYS_PrintStreamReleasePause( wk->printStream );
+      wk->printSeq = SEQ_WAIT_STREAM_RUNNING;
+      wk->printWait = wk->printWaitOrg;
     }
     break;
   }

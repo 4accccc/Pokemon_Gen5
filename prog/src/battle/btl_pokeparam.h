@@ -262,7 +262,7 @@ extern void BTL_POKEPARAM_SetWazaSick( BTL_POKEPARAM* pp, WazaSick sick, BPP_SIC
 extern void BTL_POKEPARAM_CurePokeSick( BTL_POKEPARAM* pp );
 extern void BTL_POKEPARAM_CureWazaSick( BTL_POKEPARAM* pp, WazaSick sick );
 extern BOOL BTL_POKEPARAM_Nemuri_CheckWake( BTL_POKEPARAM* pp );
-extern void BTL_POKEPARAM_WazaSick_TurnCheck( BTL_POKEPARAM* pp );
+extern BOOL BTL_POKEPARAM_WazaSick_TurnCheck( BTL_POKEPARAM* pp );
 extern void BTL_POKEPARAM_SetShrink( BTL_POKEPARAM* pp );
 extern void BTL_POKEPARAM_SetTurnFlag( BTL_POKEPARAM* pp, BppTurnFlag flagID );
 extern void BTL_POKEPARAM_ClearTurnFlag( BTL_POKEPARAM* pp );

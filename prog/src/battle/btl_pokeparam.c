@@ -1168,11 +1168,13 @@ BOOL BTL_POKEPARAM_Nemuri_CheckWake( BTL_POKEPARAM* pp )
  *
  * @param   pp
  *
+ * @retval  BOOL    何かこのチェックで治った状態異常があればTRUE
  */
 //=============================================================================================
-void BTL_POKEPARAM_WazaSick_TurnCheck( BTL_POKEPARAM* pp )
+BOOL BTL_POKEPARAM_WazaSick_TurnCheck( BTL_POKEPARAM* pp )
 {
   u32 i;
+  BOOL ret = FALSE;
   for(i=0; i<NELEMS(pp->sickCont); ++i)
   {
     if( pp->sickCont[i].type == WAZASICK_CONT_TURN )
@@ -1192,7 +1194,7 @@ void BTL_POKEPARAM_WazaSick_TurnCheck( BTL_POKEPARAM* pp )
         if( i != WAZASICK_NEMURI ){
           pp->sickCont[i].type = WAZASICK_CONT_NONE;
         }
-        BTL_Printf("異常[%d]が今、治ったよ\n");
+        ret = TRUE;
       }
     }
   }
@@ -1203,6 +1205,8 @@ void BTL_POKEPARAM_WazaSick_TurnCheck( BTL_POKEPARAM* pp )
       pp->pokeSickCounter++;
     }
   }
+
+  return ret;
 }
 //=============================================================================================
 /**
