@@ -963,6 +963,11 @@ static void update_dst( DMP_MAINWORK* wk )
     PP_Put( wk->dst, ID_PARA_spedef_exp, box_getvalue(wk, INPUTBOX_ID_SDFEXP) );
   }
   PP_Renew( wk->dst );
+
+  {
+    u32 item = box_getvalue( wk, INPUTBOX_ID_ITEM );
+    PP_Put( wk->dst, ID_PARA_item, item );
+  }
 }
 
 //----------------------------------------------------------------------------------
