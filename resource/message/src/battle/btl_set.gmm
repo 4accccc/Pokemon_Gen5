@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="taya" host="W00146" date="2009-06-05T12:18:37"/>
+	<create user="taya" host="W00146" date="2009-06-08T20:18:06"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -2269,19 +2269,19 @@
 
 	<row id="BTL_STRID_SET_KaifukuFuji_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]　は
-かいふくふうじで　[1:07:わざ名:1]が
+かいふくふうじで　[1:07:わざ名:1]が[BE:00:ページ切り替え（行送り）]
 だせない！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]　は
-かいふくふうじで　[1:07:わざ名:1]が
+かいふくふうじで　[1:07:わざ名:1]が[BE:00:ページ切り替え（行送り）]
 だせない！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_KaifukuFuji_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]　は
-かいふくふうじで　[1:07:わざ名:1]が
+かいふくふうじで　[1:07:わざ名:1]が[BE:00:ページ切り替え（行送り）]
 だせない！</language>
 		<language name="JPN_KANJI" width="216">相手の　[1:02:ポケモンニックネーム:0]　は
-かいふくふうじで　[1:07:わざ名:1]が
+かいふくふうじで　[1:07:わざ名:1]が[BE:00:ページ切り替え（行送り）]
 だせない！</language>
 	</row>
 
@@ -2332,55 +2332,55 @@
 	<row id="BTL_STRID_SET_UseItem_RecoverHP" back-color=",,,#ffff00,,,,,,,,,,,,,,">
 		<comment>アイテム使用メッセージ</comment>
 		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は
-[1:09:どうぐ名:1]で
+[1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
 たいりょくを　かいふくした！</language>
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
-[1:09:どうぐ名:1]で
+[1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
 体力を　回復した！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_UseItem_RecoverHP_Y">
 		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は
-[1:09:どうぐ名:1]で
+[1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
 たいりょくを　かいふくした！</language>
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
-[1:09:どうぐ名:1]で
+[1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
 体力を　回復した！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_UseItem_RecoverHP_E">
 		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は
-[1:09:どうぐ名:1]で
+[1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
 たいりょくを　かいふくした！</language>
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
-[1:09:どうぐ名:1]で
+[1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
 体力を　回復した！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_UseItem_RecoverPP">
 		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は
-[1:09:どうぐ名:1]で
+[1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
 [1:07:わざ名:0]のPPを　かいふくした！</language>
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
-[1:09:どうぐ名:1]で
+[1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
 [1:07:わざ名:0]のPPを　回復した！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_UseItem_RecoverPP_Y">
 		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は
-[1:09:どうぐ名:1]で
+[1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
 [1:07:わざ名:0]のPPを　かいふくした！</language>
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
-[1:09:どうぐ名:1]で
+[1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
 [1:07:わざ名:0]のPPを　回復した！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_UseItem_RecoverPP_E">
 		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は
-[1:09:どうぐ名:1]で
+[1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
 [1:07:わざ名:0]のPPを　かいふくした！</language>
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
-[1:09:どうぐ名:1]で
+[1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
 [1:07:わざ名:0]のPPを　回復した！</language>
 	</row>
 
@@ -2407,595 +2407,595 @@
 
 	<row id="BTL_STRID_SET_UseItem_CureDoku">
 		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は
-[1:09:どうぐ名:1]で
+[1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
 どく　が　なおった！</language>
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
-[1:09:どうぐ名:1]で
+[1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
 毒が　治った！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_UseItem_CureDoku_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は
-[1:09:どうぐ名:1]で
+[1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
 どく　が　なおった！</language>
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
-[1:09:どうぐ名:1]で
+[1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
 毒が　治った！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_UseItem_CureDoku_E">
 		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は
-[1:09:どうぐ名:1]で
+[1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
 どく　が　なおった！</language>
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
-[1:09:どうぐ名:1]で
+[1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
 毒が　治った！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_UseItem_CureMahi">
 		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は
-[1:09:どうぐ名:1]で
+[1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
 まひ　が　なおった！</language>
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
-[1:09:どうぐ名:1]で
+[1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
 マヒが　治った！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_UseItem_CureMahi_Y">
 		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は
-[1:09:どうぐ名:1]で
+[1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
 まひ　が　なおった！</language>
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
-[1:09:どうぐ名:1]で
+[1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
 マヒが　治った！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_UseItem_CureMahi_E">
 		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は
-[1:09:どうぐ名:1]で
+[1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
 まひ　が　なおった！</language>
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
-[1:09:どうぐ名:1]で
+[1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
 マヒが　治った！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_UseItem_CureNemuri">
 		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は
-[1:09:どうぐ名:1]で
+[1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
 めを　さました！</language>
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
-[1:09:どうぐ名:1]で
+[1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
 目を覚ました！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_UseItem_CureNemuri_Y">
 		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は
-[1:09:どうぐ名:1]で
+[1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
 めを　さました！</language>
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
-[1:09:どうぐ名:1]で
+[1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
 目を覚ました！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_UseItem_CureNemuri_E">
 		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は
-[1:09:どうぐ名:1]で
+[1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
 めを　さました！</language>
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
-[1:09:どうぐ名:1]で
+[1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
 目を覚ました！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_UseItem_CureKoori">
 		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は
-[1:09:どうぐ名:1]で
+[1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
 こおりじょうたいが　なおった！</language>
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
-[1:09:どうぐ名:1]で
+[1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
 氷状態が　治った！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_UseItem_CureKoori_Y">
 		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は
-[1:09:どうぐ名:1]で
+[1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
 こおりじょうたいが　なおった！</language>
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
-[1:09:どうぐ名:1]で
+[1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
 氷状態が　治った！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_UseItem_CureKoori_E">
 		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は
-[1:09:どうぐ名:1]で
+[1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
 こおりじょうたいが　なおった！</language>
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
-[1:09:どうぐ名:1]で
+[1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
 氷状態が　治った！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_UseItem_CureYakedo">
 		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は
-[1:09:どうぐ名:1]で
+[1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
 やけどが　なおった！</language>
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
-[1:09:どうぐ名:1]で
+[1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
 火傷が　治った！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_UseItem_CureYakedo_Y">
 		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は
-[1:09:どうぐ名:1]で
+[1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
 やけどが　なおった！</language>
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
-[1:09:どうぐ名:1]で
+[1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
 火傷が　治った！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_UseItem_CureYakedo_E">
 		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は
-[1:09:どうぐ名:1]で
+[1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
 やけどが　なおった！</language>
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
-[1:09:どうぐ名:1]で
+[1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
 火傷が　治った！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_UseItem_CureKonran">
 		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は
-[1:09:どうぐ名:1]で
+[1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
 こんらんが　なおった！</language>
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
-[1:09:どうぐ名:1]で
+[1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
 混乱が　治った！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_UseItem_CureKonran_Y">
 		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は
-[1:09:どうぐ名:1]で
+[1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
 こんらんが　なおった！</language>
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
-[1:09:どうぐ名:1]で
+[1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
 混乱が　治った！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_UseItem_CureKonran_E">
 		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は
-[1:09:どうぐ名:1]で
+[1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
 こんらんが　なおった！</language>
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
-[1:09:どうぐ名:1]で
+[1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
 混乱が　治った！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_UseItem_CureMero">
 		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は
-[1:09:どうぐ名:1]で
+[1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
 メロメロじょうたいが　なおった！</language>
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
-[1:09:どうぐ名:1]で
+[1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
 メロメロ状態が　治った！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_UseItem_CureMero_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は
-[1:09:どうぐ名:1]で
+[1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
 メロメロじょうたいが　なおった！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]は
-[1:09:どうぐ名:1]で
+[1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
 メロメロ状態が　治った！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_UseItem_CureMero_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は
-[1:09:どうぐ名:1]で
+[1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
 メロメロじょうたいが　なおった！</language>
 		<language name="JPN_KANJI" width="216">相手の　[1:02:ポケモンニックネーム:0]は
-[1:09:どうぐ名:1]で
+[1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
 メロメロ状態が　治った！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_UseItem_Rankup_ATK">
 		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は
-[1:09:どうぐ名:1]で
+[1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
 こうげき　が　あがった！</language>
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
-[1:09:どうぐ名:1]で
+[1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
 攻撃　が　上がった！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_UseItem_Rankup_ATK_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は
-[1:09:どうぐ名:1]で
+[1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
 こうげき　が　あがった！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]は
-[1:09:どうぐ名:1]で
+[1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
 攻撃　が　上がった！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_UseItem_Rankup_ATK_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は
-[1:09:どうぐ名:1]で
+[1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
 こうげき　が　あがった！</language>
 		<language name="JPN_KANJI" width="216">相手の　[1:02:ポケモンニックネーム:0]は
-[1:09:どうぐ名:1]で
+[1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
 攻撃　が　あがった！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_UseItem_Rankup_DEF">
 		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は
-[1:09:どうぐ名:1]で
+[1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
 ぼうぎょ　が　あがった！</language>
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
-[1:09:どうぐ名:1]で
+[1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
 防御　が　上がった！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_UseItem_Rankup_DEF_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は
-[1:09:どうぐ名:1]で
+[1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
 ぼうぎょ　が　あがった！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]は
-[1:09:どうぐ名:1]で
+[1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
 防御　が　上がった！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_UseItem_Rankup_DEF_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は
-[1:09:どうぐ名:1]で
+[1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
 ぼうぎょ　が　あがった！</language>
 		<language name="JPN_KANJI" width="216">相手の　[1:02:ポケモンニックネーム:0]は
-[1:09:どうぐ名:1]で
+[1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
 防御　が　上がった！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_UseItem_Rankup_SPATK">
 		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は
-[1:09:どうぐ名:1]で
+[1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
 とくこう　が　あがった！</language>
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
-[1:09:どうぐ名:1]で
+[1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
 とくこう　が　上がった！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_UseItem_Rankup_SPATK_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は
-[1:09:どうぐ名:1]で
+[1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
 とくこう　が　あがった！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]は
-[1:09:どうぐ名:1]で
+[1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
 とくこう　が　上がった！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_UseItem_Rankup_SPATK_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は
-[1:09:どうぐ名:1]で
+[1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
 とくこう　が　あがった！</language>
 		<language name="JPN_KANJI" width="216">相手の　[1:02:ポケモンニックネーム:0]は
-[1:09:どうぐ名:1]で
+[1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
 とくこう　が　あがった！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_UseItem_Rankup_SPDEF">
 		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は
-[1:09:どうぐ名:1]で
+[1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
 とくぼう　が　あがった！</language>
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
-[1:09:どうぐ名:1]で
+[1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
 とくぼう　が　上がった！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_UseItem_Rankup_SPDEF_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は
-[1:09:どうぐ名:1]で
+[1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
 とくぼう　が　あがった！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]は
-[1:09:どうぐ名:1]で
+[1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
 とくぼう　が　上がった！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_UseItem_Rankup_SPDEF_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は
-[1:09:どうぐ名:1]で
+[1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
 とくぼう　が　あがった！</language>
 		<language name="JPN_KANJI" width="216">相手の　[1:02:ポケモンニックネーム:0]は
-[1:09:どうぐ名:1]で
+[1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
 とくぼう　が　上がった！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_UseItem_Rankup_AGI">
 		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は
-[1:09:どうぐ名:1]で
+[1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
 すばやさ　が　あがった！</language>
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
-[1:09:どうぐ名:1]で
+[1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
 素早さ　が　上がった！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_UseItem_Rankup_AGI_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は
-[1:09:どうぐ名:1]で
+[1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
 すばやさ　が　あがった！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]は
-[1:09:どうぐ名:1]で
+[1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
 素早さ　が　上がった！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_UseItem_Rankup_AGI_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は
-[1:09:どうぐ名:1]で
+[1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
 すばやさ　が　あがった！</language>
 		<language name="JPN_KANJI" width="216">相手の　[1:02:ポケモンニックネーム:0]は
-[1:09:どうぐ名:1]で
+[1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
 素早さ　が　上がった！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_UseItem_Rankup_HIT">
 		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は
-[1:09:どうぐ名:1]で
+[1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
 めいちゅうりつ　が　あがった！</language>
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
-[1:09:どうぐ名:1]で
+[1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
 命中率　が　上がった！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_UseItem_Rankup_HIT_Y">
 		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は
-[1:09:どうぐ名:1]で
+[1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
 めいちゅうりつ　が　あがった！</language>
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
-[1:09:どうぐ名:1]で
+[1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
 命中率　が　上がった！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_UseItem_Rankup_HIT_E">
 		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は
-[1:09:どうぐ名:1]で
+[1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
 めいちゅうりつ　が　あがった！</language>
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
-[1:09:どうぐ名:1]で
+[1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
 命中率　が　上がった！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_UseItem_Rankup_AVOID">
 		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は
-[1:09:どうぐ名:1]で
+[1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
 かいひりつ　が　あがった！</language>
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
-[1:09:どうぐ名:1]で
+[1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
 回避率　が　上がった！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_UseItem_Rankup_AVOID_Y">
 		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は
-[1:09:どうぐ名:1]で
+[1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
 かいひりつ　が　あがった！</language>
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
-[1:09:どうぐ名:1]で
+[1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
 回避率　が　上がった！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_UseItem_Rankup_AVOID_E">
 		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は
-[1:09:どうぐ名:1]で
+[1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
 かいひりつ　が　あがった！</language>
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
-[1:09:どうぐ名:1]で
+[1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
 回避率　が　上がった！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_UseItem_RankupEx_ATK">
 		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は
-[1:09:どうぐ名:1]で
+[1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
 こうげき　が　ぐーんと　あがった！</language>
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
-[1:09:どうぐ名:1]で
+[1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
 攻撃　が　ぐーんと　上がった！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_UseItem_RankupEx_ATK_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は
-[1:09:どうぐ名:1]で
+[1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
 こうげき　が　ぐーんと　あがった！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]は
-[1:09:どうぐ名:1]で
+[1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
 攻撃　が　ぐーんと　上がった！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_UseItem_RankupEx_ATK_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は
-[1:09:どうぐ名:1]で
+[1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
 こうげき　が　ぐーんと　あがった！</language>
 		<language name="JPN_KANJI" width="216">相手の　[1:02:ポケモンニックネーム:0]は
-[1:09:どうぐ名:1]で
+[1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
 攻撃　が　ぐーんと　あがった！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_UseItem_RankupEx_DEF">
 		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は
-[1:09:どうぐ名:1]で
+[1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
 ぼうぎょ　が　ぐーんと　あがった！</language>
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
-[1:09:どうぐ名:1]で
+[1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
 防御　が　ぐーんと　上がった！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_UseItem_RankupEx_DEF_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は
-[1:09:どうぐ名:1]で
+[1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
 ぼうぎょ　が　ぐーんと　あがった！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]は
-[1:09:どうぐ名:1]で
+[1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
 防御　が　ぐーんと　上がった！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_UseItem_RankupEx_DEF_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は
-[1:09:どうぐ名:1]で
+[1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
 ぼうぎょ　が　ぐーんと　あがった！</language>
 		<language name="JPN_KANJI" width="216">相手の　[1:02:ポケモンニックネーム:0]は
-[1:09:どうぐ名:1]で
+[1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
 防御　が　ぐーんと　上がった！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_UseItem_RankupEx_SPATK">
 		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は
-[1:09:どうぐ名:1]で
+[1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
 とくこう　が　ぐーんと　あがった！</language>
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
-[1:09:どうぐ名:1]で
+[1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
 とくこう　が　ぐーんと　上がった！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_UseItem_RankupEx_SPATK_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は
-[1:09:どうぐ名:1]で
+[1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
 とくこう　が　ぐーんと　あがった！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]は
-[1:09:どうぐ名:1]で
+[1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
 とくこう　が　ぐーんと　上がった！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_UseItem_RankupEx_SPATK_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は
-[1:09:どうぐ名:1]で
+[1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
 とくこう　が　ぐーんと　あがった！</language>
 		<language name="JPN_KANJI" width="216">相手の　[1:02:ポケモンニックネーム:0]は
-[1:09:どうぐ名:1]で
+[1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
 とくこう　が　ぐーんと　あがった！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_UseItem_RankupEx_SPDEF">
 		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は
-[1:09:どうぐ名:1]で
+[1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
 とくぼう　が　ぐーんと　あがった！</language>
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
-[1:09:どうぐ名:1]で
+[1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
 とくぼう　が　ぐーんと　上がった！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_UseItem_RankupEx_SPDEF_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は
-[1:09:どうぐ名:1]で
+[1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
 とくぼう　が　ぐーんと　あがった！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]は
-[1:09:どうぐ名:1]で
+[1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
 とくぼう　が　ぐーんと　上がった！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_UseItem_RankupEx_SPDEF_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は
-[1:09:どうぐ名:1]で
+[1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
 とくぼう　が　ぐーんと　あがった！</language>
 		<language name="JPN_KANJI" width="216">相手の　[1:02:ポケモンニックネーム:0]は
-[1:09:どうぐ名:1]で
+[1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
 とくぼう　が　ぐーんと　上がった！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_UseItem_RankupEx_AGI">
 		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は
-[1:09:どうぐ名:1]で
+[1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
 すばやさ　が　ぐーんと　あがった！</language>
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
-[1:09:どうぐ名:1]で
+[1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
 素早さ　が　ぐーんと　上がった！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_UseItem_RankupEx_AGI_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は
-[1:09:どうぐ名:1]で
+[1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
 すばやさ　が　ぐーんと　あがった！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]は
-[1:09:どうぐ名:1]で
+[1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
 素早さ　が　ぐーんと　上がった！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_UseItem_RankupEx_AGI_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は
-[1:09:どうぐ名:1]で
+[1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
 すばやさ　が　ぐーんと　あがった！</language>
 		<language name="JPN_KANJI" width="216">相手の　[1:02:ポケモンニックネーム:0]は
-[1:09:どうぐ名:1]で
+[1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
 素早さ　が　ぐーんと　上がった！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_UseItem_RankupEx_HIT">
 		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は
-[1:09:どうぐ名:1]で
+[1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
 めいちゅうりつ　が　ぐーんと　あがった！</language>
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
-[1:09:どうぐ名:1]で
+[1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
 命中率　が　ぐーんと　上がった！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_UseItem_RankupEx_HIT_Y">
 		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は
-[1:09:どうぐ名:1]で
+[1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
 めいちゅうりつ　が　ぐーんと　あがった！</language>
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
-[1:09:どうぐ名:1]で
+[1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
 命中率　が　ぐーんと　上がった！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_UseItem_RankupEx_HIT_E">
 		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は
-[1:09:どうぐ名:1]で
+[1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
 めいちゅうりつ　が　ぐーんと　あがった！</language>
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
-[1:09:どうぐ名:1]で
+[1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
 命中率　が　ぐーんと　上がった！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_UseItem_RankupEx_AVOID">
 		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は
-[1:09:どうぐ名:1]で
+[1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
 かいひりつ　が　ぐーんと　あがった！</language>
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
-[1:09:どうぐ名:1]で
+[1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
 回避率　が　ぐーんと　上がった！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_UseItem_RankupEx_AVOID_Y">
 		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は
-[1:09:どうぐ名:1]で
+[1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
 かいひりつ　が　ぐーんと　あがった！</language>
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
-[1:09:どうぐ名:1]で
+[1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
 回避率　が　ぐーんと　上がった！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_UseItem_RankupEx_AVOID_E">
 		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は
-[1:09:どうぐ名:1]で
+[1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
 かいひりつ　が　ぐーんと　あがった！</language>
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
-[1:09:どうぐ名:1]で
+[1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
 回避率が　ぐーんと　上がった！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_UseItem_Rankup_Critical">
 		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は
-[1:09:どうぐ名:1]を　つかって
+[1:09:どうぐ名:1]を　つかって[BE:00:ページ切り替え（行送り）]
 はりきりだした！</language>
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
-[1:09:どうぐ名:1]を　使って
+[1:09:どうぐ名:1]を　使って[BE:00:ページ切り替え（行送り）]
 張り切りだした！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_UseItem_Rankup_Critical_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は
-[1:09:どうぐ名:1]を　つかって
+[1:09:どうぐ名:1]を　つかって[BE:00:ページ切り替え（行送り）]
 はりきりだした！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]は
-[1:09:どうぐ名:1]を　使って
+[1:09:どうぐ名:1]を　使って[BE:00:ページ切り替え（行送り）]
 張り切りだした！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_UseItem_Rankup_Critical_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は
-[1:09:どうぐ名:1]を　つかって
+[1:09:どうぐ名:1]を　つかって[BE:00:ページ切り替え（行送り）]
 はりきりだした！</language>
 		<language name="JPN_KANJI" width="216">相手の　[1:02:ポケモンニックネーム:0]は
-[1:09:どうぐ名:1]を　使って
+[1:09:どうぐ名:1]を　使って[BE:00:ページ切り替え（行送り）]
 張り切りだした！</language>
 	</row>
 
