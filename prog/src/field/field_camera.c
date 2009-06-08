@@ -24,7 +24,7 @@
  *---------------------------------------------------------------------------*/
 typedef struct 
 {
-	int HistNum;
+	int bufsize;
 	int CamPoint;
 	int TargetPoint;
 	int Delay;			//遅延時間
@@ -32,7 +32,9 @@ typedef struct
 	BOOL ValidX;		//X遅延を有効にするかのフラグ
 	BOOL ValidY;		//Y遅延を有効にするかのフラグ
 	BOOL ValidZ;		//Z遅延を有効にするかのフラグ
-	VecFx32 *HistPos;
+
+  VecFx32 * targetBuffer;
+  VecFx32 * camPosBuffer;
 
 }CAMERA_TRACE;
 
@@ -112,11 +114,12 @@ typedef struct {
 	void (*control)(FIELD_CAMERA * camera, u16 key_cont);
 }CAMERA_FUNC_TABLE;
 
-static void GFC_AllocTraceData(const int inHistNum, const int inDelay,
+static void createTraceData(const int inHistNum, const int inDelay,
 						const int inTraceMask, const int inHeapID,
 						FIELD_CAMERA * ioCamera);
-static void GFC_FreeTraceData(FIELD_CAMERA * camera_ptr);
-static void UpdateTraceData(CAMERA_TRACE * trace, const VecFx32 *inVec, VecFx32 *outVec);
+static void deleteTraceData(FIELD_CAMERA * camera_ptr);
+static void updateTraceData(CAMERA_TRACE * trace,
+    const VecFx32 * inTarget, const VecFx32 * inCamPos, VecFx32 * outTarget, VecFx32 * outCamPos);
 static void traceUpdate(FIELD_CAMERA * camera);
 //------------------------------------------------------------------
 //------------------------------------------------------------------
@@ -209,7 +212,7 @@ FIELD_CAMERA* FIELD_CAMERA_Create(
 
 	CameraFuncTable[camera->type].init_func(camera);
 
-	GFC_AllocTraceData(	FIELD_CAMERA_TRACE_BUFF, FIELD_CAMERA_DELAY,
+	createTraceData(	FIELD_CAMERA_TRACE_BUFF, FIELD_CAMERA_DELAY,
 							CAM_TRACE_MASK_Y, heapID, camera);
 
 	return camera;
@@ -221,7 +224,7 @@ FIELD_CAMERA* FIELD_CAMERA_Create(
 //------------------------------------------------------------------
 void	FIELD_CAMERA_Delete( FIELD_CAMERA* camera )
 {
-  GFC_FreeTraceData( camera );
+  deleteTraceData( camera );
 	GFL_HEAP_FreeMemory( camera );
 }
 
@@ -780,64 +783,65 @@ void FIELD_CAMERA_DEBUG_ReleaseSubScreen(FIELD_CAMERA * camera)
 
 //---------------------------------------------------------------------------
 /**
- * @brief	トレースデータの更新
- * 
- * @param	camera_ptr	カメラポインタ
- * @param	inVec		バッファに格納する座標
- * @param	outVec		適用座標
- * 
- * @return	none
+ * @brief
  */
 //---------------------------------------------------------------------------
-static void UpdateTraceData(CAMERA_TRACE * trace, const VecFx32 *inVec, VecFx32 *outVec)
+static void updateTraceData(CAMERA_TRACE * trace,
+    const VecFx32 * inTarget, const VecFx32 * inCamPos, VecFx32 * outTarget, VecFx32 * outCamPos)
 {
 	int cam_ofs;
 	int tgt_ofs;
 
 	if (trace==NULL)
   {
-    VEC_Set(outVec, 0, 0, 0);
-		//(*outVec) = (*inVec);
+		*outTarget = *inTarget;
+		*outCamPos = *inCamPos;
     return;
   }
 
   cam_ofs = trace->CamPoint;
   tgt_ofs = trace->TargetPoint;
 
-  if (!trace->UpdateFlg){
-    VEC_Set(outVec, 0, 0, 0);
-    //(*outVec) = (*inVec);
+  if (trace->UpdateFlg){
+    //履歴データから座標取得
+    *outTarget = trace->targetBuffer[cam_ofs];
+    *outCamPos = trace->camPosBuffer[cam_ofs];
+  }
+  else
+  {
+		*outTarget = *inTarget;
+		*outCamPos = *inCamPos;
     if (cam_ofs==trace->Delay){
       trace->UpdateFlg = TRUE;
     }
-  }else{
-    //履歴データから座標取得
-    (*outVec) = trace->HistPos[cam_ofs];
   }
+
   //参照位置更新
-  cam_ofs = (cam_ofs+1) % trace->HistNum;
+  cam_ofs = (cam_ofs+1) % trace->bufsize;
   //履歴に積む
-  trace->HistPos[tgt_ofs] = (*inVec);
+  trace->targetBuffer[tgt_ofs] = *inTarget;
+  trace->camPosBuffer[tgt_ofs] = *inCamPos;
   //書き換え位置更新
-  tgt_ofs = (tgt_ofs+1) % trace->HistNum;
+  tgt_ofs = (tgt_ofs+1) % trace->bufsize;
   
-  //トレースデータの無効座標軸は、そのまま現在座標を採用
-  if (!trace->ValidX){	//ｘ無効判定
-    outVec->x = 0;
-    //outVec->x = inVec->x;
-  }
-  if (!trace->ValidY){	//ｙ無効判定
-    outVec->y = 0;
-    //outVec->y = inVec->y;
-  }
-  if (!trace->ValidZ){	//ｚ無効判定
-    outVec->z = 0;
-    //outVec->z = inVec->z;
-  }
   trace->CamPoint = cam_ofs;
   trace->TargetPoint = tgt_ofs;
 
+  //トレースデータの無効座標軸は、そのまま現在座標を採用
+  if (!trace->ValidX){	//ｘ無効判定
+    outTarget->x = inTarget->x;
+    outCamPos->x = inCamPos->x;
+  }
+  if (!trace->ValidY){	//ｙ無効判定
+    outTarget->y = inTarget->y;
+    outCamPos->y = inCamPos->y;
+  }
+  if (!trace->ValidZ){	//ｚ無効判定
+    outTarget->z = inTarget->z;
+    outCamPos->z = inCamPos->z;
+  }
 }
+
 
 //---------------------------------------------------------------------------
 /**
@@ -852,7 +856,7 @@ static void UpdateTraceData(CAMERA_TRACE * trace, const VecFx32 *inVec, VecFx32 
  * @return	none
  */
 //---------------------------------------------------------------------------
-void GFC_AllocTraceData(const int inHistNum, const int inDelay,
+void createTraceData(const int inHistNum, const int inDelay,
 						const int inTraceMask, const int inHeapID,
 						FIELD_CAMERA * ioCamera)
 {
@@ -863,19 +867,19 @@ void GFC_AllocTraceData(const int inHistNum, const int inDelay,
 		return;
 	}
 	//配列サイズの整合性チェック
-	GF_ASSERT((inDelay+1<=inHistNum)&&"配列数が足りません");
+	GF_ASSERT_MSG(inDelay+1<=inHistNum, "配列数が足りません");
 	
 	trace = GFL_HEAP_AllocMemory(inHeapID,sizeof(CAMERA_TRACE));
-	trace->HistPos = GFL_HEAP_AllocMemory(inHeapID,sizeof(VecFx32)*inHistNum);
+  trace->targetBuffer = GFL_HEAP_AllocMemory(inHeapID, sizeof(VecFx32)*inHistNum);
+  trace->camPosBuffer = GFL_HEAP_AllocMemory(inHeapID, sizeof(VecFx32)*inHistNum);
 	
 	//トレース配列クリア
 	for(i=0;i<inHistNum;i++){
-		trace->HistPos[i].x = 0;
-		trace->HistPos[i].y = 0;
-		trace->HistPos[i].z = 0;
+    VEC_Set(&trace->targetBuffer[i], 0, 0, 0);
+    VEC_Set(&trace->camPosBuffer[i], 0, 0, 0);
 	}
 	
-	trace->HistNum = inHistNum;
+	trace->bufsize = inHistNum;
 	//０番目にカメラ参照位置をセット
 	trace->CamPoint = 0;
 	//対象物参照位置セット
@@ -909,10 +913,11 @@ void GFC_AllocTraceData(const int inHistNum, const int inDelay,
  * @return	none
  */
 //---------------------------------------------------------------------------
-void GFC_FreeTraceData(FIELD_CAMERA * camera_ptr)
+void deleteTraceData(FIELD_CAMERA * camera_ptr)
 {
 	if (camera_ptr->Trace!=NULL){
-		GFL_HEAP_FreeMemory(camera_ptr->Trace->HistPos);
+    GFL_HEAP_FreeMemory(camera_ptr->Trace->targetBuffer);
+    GFL_HEAP_FreeMemory(camera_ptr->Trace->camPosBuffer);
 		GFL_HEAP_FreeMemory(camera_ptr->Trace);
 		camera_ptr->Trace = NULL;
 	}
@@ -923,9 +928,8 @@ void GFC_FreeTraceData(FIELD_CAMERA * camera_ptr)
 //---------------------------------------------------------------------------
 static void traceUpdate(FIELD_CAMERA * camera)
 {
-  VecFx32 sub;
-  VecFx32 apply;
   VecFx32 cam, tgt;
+  VecFx32 outCam, outTgt;
 
   if (camera->watch_target == NULL) return;
 
@@ -933,23 +937,14 @@ static void traceUpdate(FIELD_CAMERA * camera)
   GFL_G3D_CAMERA_GetTarget(camera->g3Dcamera, &tgt);
   GFL_G3D_CAMERA_GetPos(camera->g3Dcamera, &cam);
 
-  VEC_Subtract( &tgt, &camera->target_before, &sub );
-  camera->target_before = tgt;
-#if 0
-  if( VEC_Mag(&sub) > FX32_ONE * 64)
-  {
-    TAMADA_Printf("clear subs %08x %08x %08x\n", sub.x, sub.y, sub.z );
-    VEC_Set( &sub, 0, 0, 0 );   //あんまり差分が大きすぎるときはクリア
-  }
-#endif
-  UpdateTraceData( camera->Trace, &sub, &apply );
-  VEC_Add(&cam, &apply, &cam);
-  VEC_Add(&tgt, &apply, &tgt);
+  updateTraceData( camera->Trace, &tgt, &cam, &outTgt, &outCam );
 
-  GFL_G3D_CAMERA_SetTarget( camera->g3Dcamera, &tgt );
-  GFL_G3D_CAMERA_SetPos( camera->g3Dcamera, &cam );
+  GFL_G3D_CAMERA_SetTarget( camera->g3Dcamera, &outTgt );
+  GFL_G3D_CAMERA_SetPos( camera->g3Dcamera, &outCam );
+
   if (GFL_UI_KEY_GetCont() & PAD_BUTTON_L) {
-    TAMADA_Printf("TARGET Y:%d\n", FX_Whole(tgt.y) );
+    TAMADA_Printf("inTGT:%3d inCAM:%3d ", FX_Whole(tgt.y), FX_Whole(cam.y) );
+    TAMADA_Printf("outTGT:%3d outCAM:%3d \n", FX_Whole(outTgt.y), FX_Whole(outCam.y) );
   }
 }
 
