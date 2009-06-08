@@ -243,7 +243,7 @@ static void Performance_AllOffOam(void);
 void DEBUG_PerformanceInit(void)
 {
 	GFL_STD_MemClear(&pfm_sys, sizeof(PERFORMANCE_SYSTEM));
-	pfm_sys.on_off = 0;//TRUE;	//デフォルトで表示ON
+	pfm_sys.on_off = TRUE;	//デフォルトで表示ON
 }
 
 //--------------------------------------------------------------
@@ -332,7 +332,7 @@ void DEBUG_PerformanceEndLine(PERFORMANCE_ID id)
 //--------------------------------------------------------------
 void DEBUG_PerformanceSetActive(BOOL isActive)
 {
-	pfm_sys.on_off = 0;//isActive;
+	pfm_sys.on_off = isActive;
 	if(isActive == FALSE){
 		Performance_AllOffOam();
 	}
