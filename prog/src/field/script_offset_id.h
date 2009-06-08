@@ -24,4 +24,6 @@
 #define	ID_COMMON_SCR_OFFSET		(2000)	//共通スクリプトIDのオフセット
 #define	ID_COMMON_SCR_OFFSET_END	(2499)	//共通スクリプトIDのオフセット終了
 
+#define	ID_HIDE_ITEM_OFFSET (8000) //隠しアイテムスクリプトIDのオフセット
+
 #endif	/* SCR_OFFSET_H */

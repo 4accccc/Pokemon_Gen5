@@ -1704,6 +1704,35 @@ static GMEVENT * fldmapFunc_Event_CheckEvent( GAMESYS_WORK *gsys, void *work )
     #endif
   }
   
+  //看板イベントチェック
+  if( fieldWork->func_tbl->type == FLDMAP_CTRLTYPE_GRID ){
+    if( state == PLAYER_MOVE_STATE_END ){
+      u16 id;
+      VecFx32 pos;
+      GAMEDATA *gdata = GAMESYSTEM_GetGameData( fieldWork->gsys );
+      EVENTDATA_SYSTEM *evdata = GAMEDATA_GetEventData( gdata );
+      EVENTWORK *evwork = GAMEDATA_GetEventWork( gdata );
+      FLDMMDL *fmmdl = FIELD_PLAYER_GetFldMMdl( fieldWork->field_player );
+      u16 dir = FLDMMDL_GetDirDisp( fmmdl );
+    
+      FIELD_PLAYER_GetPos( fieldWork->field_player, &pos );
+      FLDMMDL_TOOL_AddDirVector( dir, &pos, GRID_FX32 );
+    
+      {
+        //OBJ看板チェック
+      }
+      
+      id = EVENTDATA_CheckTalkBoardEvent( evdata, evwork, &pos, dir );
+      
+      if( id != EVENTDATA_ID_NONE ){
+        SCRIPT_FLDPARAM fparam;
+        fparam.msgBG = fieldWork->fldMsgBG;
+        event = SCRIPT_SetScript(
+           fieldWork->gsys, id, NULL, fieldWork->heapID, &fparam );
+      }
+    }
+  }
+  
   //座標イベントチェック
   {
     VecFx32 pos;

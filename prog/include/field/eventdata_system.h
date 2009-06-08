@@ -23,9 +23,12 @@ extern void EVENTDATA_SYS_Load(EVENTDATA_SYSTEM * evdata, u16 mapid);
 
 #include "field/eventwork.h"
 
+//check event
 extern u16 EVENTDATA_CheckPosEvent(
   const EVENTDATA_SYSTEM *evdata, EVENTWORK *evwork, const VecFx32 *pos );
-
 extern u16 EVENTDATA_CheckTalkBGEvent(
+    const EVENTDATA_SYSTEM *evdata, EVENTWORK *evwork,
+    const VecFx32 *pos, u16 talk_dir );
+extern u16 EVENTDATA_CheckTalkBoardEvent(
     const EVENTDATA_SYSTEM *evdata, EVENTWORK *evwork,
     const VecFx32 *pos, u16 talk_dir );

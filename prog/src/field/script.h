@@ -525,7 +525,8 @@ extern void ResetEventFlagTrainer( FLDCOMMON_WORK* fsys, u16 tr_id );
  * @retval  "フラグナンバー"
  */
 //--------------------------------------------------------------
-extern u16 GetHideItemFlagNoByScriptId( u16 scr_id );
+//extern u16 GetHideItemFlagNoByScriptId( u16 scr_id );
+extern u16 SCRIPT_GetHideItemFlagNoByScriptID( u16 scr_id );
 
 //--------------------------------------------------------------
 /**

@@ -18,6 +18,7 @@
 #include "field/location.h"
 
 #include "fldmmdl.h"
+#include "script.h"
 
 #include "fieldmap/zone_id.h"
 
@@ -531,10 +532,11 @@ u16 EVENTDATA_CheckTalkBGEvent(
     {
       if( gz == data->gz && gx == data->gx )
       {
-        #if 0 //隠しアイテム対応
+        #if 1 //隠しアイテム対応
         if( data->type == BG_TALK_TYPE_HIDE )
         {
-          u16 flag = GetHideItemFlagNoByScriptId( data->id );
+          u16 flag = SCRIPT_GetHideItemFlagNoByScriptID( data->id );
+          
           if( EVENTWORK_CheckEventFlag(evwork,flag) == FALSE ){
             return data->id;
           }
@@ -632,6 +634,41 @@ u16 EVENTDATA_CheckTalkBGEvent(
           }
         }
         #endif
+      }
+    }
+  }
+  
+  return EVENTDATA_ID_NONE;
+}
+
+//------------------------------------------------------------------
+/**
+ * @brief	看板話し掛けイベントチェック
+ * @param	evdata イベントデータへのポインタ
+ * @param pos チェックする座標
+ * @param talk_dir 話し掛け対象の向き
+ * @retval u16 EVENTDATA_ID_NONE = イベントなし
+ */
+//------------------------------------------------------------------
+u16 EVENTDATA_CheckTalkBoardEvent(
+    const EVENTDATA_SYSTEM *evdata, EVENTWORK *evwork,
+    const VecFx32 *pos, u16 talk_dir )
+{
+  const BG_TALK_DATA *data = evdata->bg_data;
+  
+  if( talk_dir != DIR_UP && data != NULL )
+  {
+    u16 i = 0;
+    u16 max = evdata->bg_count;
+    int gx = SIZE_GRID_FX32( pos->x );
+    int gz = SIZE_GRID_FX32( pos->z );
+    
+    for( ; i < max; i++, data++ )
+    {
+      if( data->type == BG_TALK_TYPE_BOARD &&
+          gz == data->gz && gx == data->gx )
+      {
+        return data->id;
       }
     }
   }

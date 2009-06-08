@@ -1687,6 +1687,11 @@ u16 GetHideItemFlagNoByScriptId( u16 scr_id )
 {
 	return (scr_id - ID_HIDE_ITEM_OFFSET + FH_FLAG_START);
 }
+#else //wb
+u16 SCRIPT_GetHideItemFlagNoByScriptID( u16 scr_id )
+{
+	return (scr_id - ID_HIDE_ITEM_OFFSET + FH_FLAG_START);
+}
 #endif
 
 //--------------------------------------------------------------
