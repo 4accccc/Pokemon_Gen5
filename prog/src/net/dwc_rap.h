@@ -252,7 +252,7 @@ extern int GFL_NET_DWC_GetFriendIndex(void);
  */
 //==============================================================================
 
-extern int mydwc_getMyGSID(void);
+//extern int mydwc_getMyGSID(void);
 
 //----------------------------------------------------------------------------
 /**

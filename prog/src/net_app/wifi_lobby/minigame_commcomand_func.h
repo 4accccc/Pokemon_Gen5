@@ -13,6 +13,10 @@
 #define __MINIGAME_COMMCOMAND_FUNC_H__
 
 #include "minigame_tool_local.h"
+#include "net_old\comm_system.h"
+#include "net_old\comm_state.h"
+#include "net_old\comm_info.h"
+#include "net_old\comm_tool.h"
 
 //-----------------------------------------------------------------------------
 /**
@@ -40,18 +44,18 @@ extern int CommMNGMGetZeroSize( void );
 extern int CommMNGMGetu32Size( void );
 
 // 親ー＞子　Rareゲームタイプ
-extern void CommMNGMRareGame( const int netID, const int size, const void* pBuff, void* pWork, GFL_NETHANDLE *pNetHandle );
+extern void CommMNGMRareGame( int netID, int size, void* pBuff, void* pWork );
 
 
 // 子ー>親	もういちど
-extern void CommMNGMRetryYes( const int netID, const int size, const void* pBuff, void* pWork, GFL_NETHANDLE *pNetHandle );
+extern void CommMNGMRetryYes( int netID, int size, void* pBuff, void* pWork );
 // 子ー>親	もうやらない
-extern void CommMNGMRetryNo( const int netID, const int size, const void* pBuff, void* pWork, GFL_NETHANDLE *pNetHandle );
+extern void CommMNGMRetryNo( int netID, int size, void* pBuff, void* pWork );
 
 // 親ー>子	もういちど
-extern void CommMNGMRetryOk( const int netID, const int size, const void* pBuff, void* pWork, GFL_NETHANDLE *pNetHandle );
+extern void CommMNGMRetryOk( int netID, int size, void* pBuff, void* pWork );
 // 親ー>子	もうやらない
-extern void CommMNGMRetryNg( const int netID, const int size, const void* pBuff, void* pWork, GFL_NETHANDLE *pNetHandle );
+extern void CommMNGMRetryNg( int netID, int size, void* pBuff, void* pWork );
 
 #endif		// __MINIGAME_COMMCOMAND_FUNC_H__
 

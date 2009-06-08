@@ -37,7 +37,7 @@
 
 #include "poke_tool/pokeparty.h"
 
-#include "net/dwc_lobbylib.h"
+#include "net_old/comm_dwc_lobbylib.h"
 
 #include "net_app/wifi_country.h"
 
@@ -726,7 +726,7 @@ static u32 WFLBY_UNIONCHARNO_TRTYPE_Get( u32 union_char_no );
  *		通信データ
  */
 //-----------------------------------------------------------------------------
-static const DWC_LOBBY_MSGCOMMAND	sc_WFLBY_SYSTEM_COMMCMD[ WFLBY_SYSTEM_MAIN_COMMCMD_NUM ] = {
+static const OLDDWC_LOBBY_MSGCOMMAND	sc_WFLBY_SYSTEM_COMMCMD[ WFLBY_SYSTEM_MAIN_COMMCMD_NUM ] = {
 
 	// 会話
 	{ WFLBY_SYSTEM_COMMCMD_TALK_Req,		sizeof(WFLBY_SYSTEM_TALK_DATA) },
@@ -772,14 +772,14 @@ WFLBY_SYSTEM* WFLBY_SYSTEM_Init( SAVE_CONTROL_WORK* p_save, u32 heapID )
 
 	// WiFiロビーライブラリ初期化
 	{
-		DWC_LOBBY_CALLBACK callback;
+		OLDDWC_LOBBY_CALLBACK callback;
 		callback.p_user_in				= WFLBY_SYSTEM_CallbackUserIn;
 		callback.p_user_out				= WFLBY_SYSTEM_CallbackUserOut;
 		callback.p_profile_update		= WFLBY_SYSTEM_CallbackUserProfileUpdate;
 		callback.p_event				= WFLBY_SYSTEM_CallbackEvent;
 		callback.p_check_profile		= WFLBY_SYSTEM_CallbackCheckProfile;
 
-		DWC_LOBBY_Init( heapID, p_wk->p_save,
+		OLDDWC_LOBBY_Init( heapID, p_wk->p_save,
 				sizeof(WFLBY_USER_PROFILE),	// プロフィールサイズ
 				&callback,					// コールバック
 				p_wk );						// ワーク
@@ -809,7 +809,7 @@ WFLBY_SYSTEM* WFLBY_SYSTEM_Init( SAVE_CONTROL_WORK* p_save, u32 heapID )
 	WFLBY_SYSTEM_GadGetClear( &p_wk->gadget );
 
 	// 通信コマンド設定
-	DWC_LOBBY_SetMsgCmd( sc_WFLBY_SYSTEM_COMMCMD, WFLBY_SYSTEM_MAIN_COMMCMD_NUM, p_wk );
+	OLDDWC_LOBBY_SetMsgCmd( sc_WFLBY_SYSTEM_COMMCMD, WFLBY_SYSTEM_MAIN_COMMCMD_NUM, p_wk );
 
 	// イベントフラグ設定
 	WFLBY_SYSTEM_EVENT_Init( &p_wk->event );
@@ -861,7 +861,7 @@ void WFLBY_SYSTEM_Exit( WFLBY_SYSTEM* p_wk )
 	
 	// 通信コマンド破棄
 	{
-		DWC_LOBBY_CleanMsgCmd();
+		OLDDWC_LOBBY_CleanMsgCmd();
 	}
 	
 	// グローバルデータ破棄
@@ -876,7 +876,7 @@ void WFLBY_SYSTEM_Exit( WFLBY_SYSTEM* p_wk )
 	}
 
 	// WiFiロビーライブラリ破棄
-	DWC_LOBBY_Exit();
+	OLDDWC_LOBBY_Exit();
 	
 	GFL_HEAP_FreeMemory( p_wk );
 }
@@ -924,7 +924,7 @@ void WFLBY_SYSTEM_Main( WFLBY_SYSTEM* p_wk )
 			profile.userid		= i;						//  ロビー内ユーザID
 			profile.sex			= GFUser_GetPublicRand(PM_NEUTRAL);	// 性別
 			profile.tr_type		= GFUser_GetPublicRand(NELEMS(tr_type));	// トレーナの見た目
-			DWC_LOBBY_DEBUG_PlayerIN( &profile, i );
+			OLDDWC_LOBBY_DEBUG_PlayerIN( &profile, i );
 		}
 
 		if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_R ){
@@ -935,7 +935,7 @@ void WFLBY_SYSTEM_Main( WFLBY_SYSTEM* p_wk )
 				p_profile = (WFLBY_USER_PROFILE*)WFLBY_SYSTEM_GetUserProfile( p_wk, i );
 				p_profile->status = WFLBY_STATUS_WORLDTIMER;
 				
-				DWC_LOBBY_DEBUG_SetProfile( p_profile, i );
+				OLDDWC_LOBBY_DEBUG_SetProfile( p_profile, i );
 			}
 		}
 	}
@@ -947,7 +947,7 @@ void WFLBY_SYSTEM_Main( WFLBY_SYSTEM* p_wk )
 	// 世界時間の更新
 	{
 		s64 time;
-		DWC_LOBBY_GetTime( &time );
+		OLDDWC_LOBBY_GetTime( &time );
 		p_wk->glbdata.worldtime_s64 = time;
 		WFLBY_TIME_Set( &p_wk->glbdata.worldtime, &time );
 	}
@@ -1034,7 +1034,7 @@ WFLBY_SYSTEM_ERR_TYPE WFLBY_SYSTEM_GetError( const WFLBY_SYSTEM* cp_wk )
 BOOL WFLBY_SYSTEM_GetExcessFoodError( const WFLBY_SYSTEM* cp_wk )
 {
 	// 通信過剰状態を取得する
-	return DWC_LOBBY_CheckExcessFlood();
+	return OLDDWC_LOBBY_CheckExcessFlood();
 }
 
 //----------------------------------------------------------------------------
@@ -1188,7 +1188,7 @@ SAVE_CONTROL_WORK* WFLBY_SYSTEM_GetSaveData( WFLBY_SYSTEM* p_wk )
 BOOL WFLBY_SYSTEM_FLAG_GetArceus( const WFLBY_SYSTEM* cp_wk )
 {
 	GF_ASSERT( cp_wk );	// 本当はSYSTEMいらないけど必要なようになるかもしれないから
-	return DWC_LOBBY_GetRoomData( DWC_LOBBY_ROOMDATA_ARCEUS );
+	return OLDDWC_LOBBY_GetRoomData( OLDDWC_LOBBY_ROOMDATA_ARCEUS );
 }
 
 //----------------------------------------------------------------------------
@@ -1496,8 +1496,8 @@ void WFLBY_SYSTEM_PLIDX_Set( WFLBY_SYSTEM* p_wk, s32 userid, u32 netid )
 	GF_ASSERT( netid < WFLBY_MINIGAME_MAX );
 
 	// useridからplidxを求める
-	plidx = DWC_LOBBY_GetUserIDIdx( userid );
-	GF_ASSERT( plidx != DWC_LOBBY_USERIDTBL_IDX_NONE );
+	plidx = OLDDWC_LOBBY_GetUserIDIdx( userid );
+	GF_ASSERT( plidx != OLDDWC_LOBBY_USERIDTBL_IDX_NONE );
 
 //	OS_TPrintf( "idx %d, netid %d\n", plidx, netid );
 	
@@ -1516,7 +1516,7 @@ void WFLBY_SYSTEM_PLIDX_SetMyData( WFLBY_SYSTEM* p_wk, u32 netid )
 {
 	s32 myuserid;
 
-	myuserid = DWC_LOBBY_GetMyUserID();
+	myuserid = OLDDWC_LOBBY_GetMyUserID();
 	WFLBY_SYSTEM_PLIDX_Set( p_wk, myuserid, netid );
 }
 
@@ -1640,8 +1640,8 @@ void WFLBY_SYSTEM_SetBGMVolumeDown( WFLBY_SYSTEM* p_wk, BOOL flag )
 //-----------------------------------------------------------------------------
 u32 WFLBY_SYSTEM_GetMyIdx( const WFLBY_SYSTEM* cp_wk )
 {
-	s32 myuserid = DWC_LOBBY_GetMyUserID();
-	return DWC_LOBBY_GetUserIDIdx( myuserid );
+	s32 myuserid = OLDDWC_LOBBY_GetMyUserID();
+	return OLDDWC_LOBBY_GetUserIDIdx( myuserid );
 }
 
 //----------------------------------------------------------------------------
@@ -1655,7 +1655,7 @@ u32 WFLBY_SYSTEM_GetMyIdx( const WFLBY_SYSTEM* cp_wk )
 //-----------------------------------------------------------------------------
 s32 WFLBY_SYSTEM_GetMyUserID( const WFLBY_SYSTEM* cp_wk )
 {
-	return DWC_LOBBY_GetMyUserID();
+	return OLDDWC_LOBBY_GetMyUserID();
 }
 
 //----------------------------------------------------------------------------
@@ -1671,10 +1671,10 @@ s32 WFLBY_SYSTEM_GetMyUserID( const WFLBY_SYSTEM* cp_wk )
 //-----------------------------------------------------------------------------
 BOOL WFLBY_SYSTEM_GetUserRoomIn( const WFLBY_SYSTEM* cp_wk, u32 idx )
 {
-	DWC_LOBBY_CHANNEL_USERID data;
+	OLDDWC_LOBBY_CHANNEL_USERID data;
 
 	// ユーザIDテーブル取得
-	DWC_LOBBY_GetUserIDTbl( &data );
+	OLDDWC_LOBBY_GetUserIDTbl( &data );
 	
 	if( data.cp_tbl[ idx ] != DWC_LOBBY_INVALID_USER_ID ){
 		return TRUE;
@@ -1695,13 +1695,13 @@ BOOL WFLBY_SYSTEM_GetUserRoomIn( const WFLBY_SYSTEM* cp_wk, u32 idx )
 const WFLBY_USER_PROFILE* WFLBY_SYSTEM_GetUserProfile( const WFLBY_SYSTEM* cp_wk, u32 idx )
 {
 	s32 user;
-	DWC_LOBBY_CHANNEL_USERID usertbl;
+	OLDDWC_LOBBY_CHANNEL_USERID usertbl;
 	const WFLBY_USER_PROFILE* cp_data;
 
 	GF_ASSERT( idx < WFLBY_PLAYER_MAX );
 
 	// ユーザIDテーブル取得
-	DWC_LOBBY_GetUserIDTbl( &usertbl );
+	OLDDWC_LOBBY_GetUserIDTbl( &usertbl );
 
 
 	// ユーザIDのプロフィール取得
@@ -1713,10 +1713,10 @@ const WFLBY_USER_PROFILE* WFLBY_SYSTEM_GetUserProfile( const WFLBY_SYSTEM* cp_wk
 	}
 
 	// 自分のデータならローカル上の自分のデータを取得する
-	if( user == DWC_LOBBY_GetMyUserID() ){
+	if( user == OLDDWC_LOBBY_GetMyUserID() ){
 		cp_data = &cp_wk->myprofile.profile;
 	}else{
-		cp_data = (const WFLBY_USER_PROFILE*)DWC_LOBBY_GetUserProfile( user );
+		cp_data = (const WFLBY_USER_PROFILE*)OLDDWC_LOBBY_GetUserProfile( user );
 	}
 
 	return cp_data;
@@ -1736,7 +1736,7 @@ const WFLBY_USER_PROFILE* WFLBY_SYSTEM_GetMyProfile( const WFLBY_SYSTEM* cp_wk )
 {
 	const WFLBY_USER_PROFILE* cp_data;
 
-	cp_data = (const WFLBY_USER_PROFILE*)DWC_LOBBY_GetMyProfile();
+	cp_data = (const WFLBY_USER_PROFILE*)OLDDWC_LOBBY_GetMyProfile();
 
 	return cp_data;
 }
@@ -1795,7 +1795,7 @@ void WFLBY_SYSTEM_SetMyStatus( WFLBY_SYSTEM* p_wk, WFLBY_STATUS_TYPE status )
 			// 親なら強制終了
 			if( WFLBY_SYSTEM_CheckTalkReq( p_wk ) == FALSE ){
 				// 会話終了
-				userid = DWC_LOBBY_GetUserIdxID( p_wk->talk.talk_idx );
+				userid = OLDDWC_LOBBY_GetUserIdxID( p_wk->talk.talk_idx );
 				WFLBY_SYSTEM_TALK_SendTalkExEnd( p_wk, p_wk->talk.talk_idx );	// 相手方にむりという
 			}
 			WFLBY_SYSTEM_TALK_ExEndClear( &p_wk->talk );
@@ -2605,9 +2605,9 @@ const WFLBY_AIKOTOBA_DATA* WFLBY_SYSTEM_GetUserAikotobaStr( const WFLBY_SYSTEM* 
 //-----------------------------------------------------------------------------
 u32 WFLBY_SYSTEM_GetSubChanPlNum( const WFLBY_SYSTEM* cp_wk )
 {
-	DWC_LOBBY_CHANNEL_USERID usertbl;
+	OLDDWC_LOBBY_CHANNEL_USERID usertbl;
 
-	DWC_LOBBY_SUBCHAN_GetUserIDTbl( &usertbl );
+	OLDDWC_LOBBY_SUBCHAN_GetUserIDTbl( &usertbl );
 
 	return usertbl.num;
 }
@@ -2619,8 +2619,8 @@ u32 WFLBY_SYSTEM_GetSubChanPlNum( const WFLBY_SYSTEM* cp_wk )
  *	@param	cp_wk		ワーク
  *	@param	idx			データＩＤ
  *
- *	@retval	DWC_LOBBY_USERIDTBL_IDX_NONE以外	ユーザＩＤ
- *	@retval	DWC_LOBBY_USERIDTBL_IDX_NONE		そのサブチャンネルＩＤＸにユーザはいない
+ *	@retval	OLDDWC_LOBBY_USERIDTBL_IDX_NONE以外	ユーザＩＤ
+ *	@retval	OLDDWC_LOBBY_USERIDTBL_IDX_NONE		そのサブチャンネルＩＤＸにユーザはいない
  *
  */
 //-----------------------------------------------------------------------------
@@ -2628,11 +2628,11 @@ u32 WFLBY_SYSTEM_GetSubChanEnum( const WFLBY_SYSTEM* cp_wk, u32 idx )
 {
 	u32 userid;
 
-	userid = DWC_LOBBY_SUBCHAN_GetUserIdxID( idx );
+	userid = OLDDWC_LOBBY_SUBCHAN_GetUserIdxID( idx );
 	if( userid == DWC_LOBBY_INVALID_USER_ID ){
-		return DWC_LOBBY_USERIDTBL_IDX_NONE;
+		return OLDDWC_LOBBY_USERIDTBL_IDX_NONE;
 	}
-	return DWC_LOBBY_GetUserIDIdx( userid );
+	return OLDDWC_LOBBY_GetUserIDIdx( userid );
 }
 
 
@@ -2651,10 +2651,10 @@ void WFLBY_SYSTEM_TOPIC_SendConnect( WFLBY_SYSTEM* p_wk, u32 user_a, u32 user_b 
 	WFLBY_TOPIC topic = {0};
 
 	topic.topic_type	= NEWS_TOPICTYPE_CONNECT;
-	topic.lobby_id[0]	= DWC_LOBBY_GetUserIdxID( user_a );
-	topic.lobby_id[1]	= DWC_LOBBY_GetUserIdxID( user_b );
+	topic.lobby_id[0]	= OLDDWC_LOBBY_GetUserIdxID( user_a );
+	topic.lobby_id[1]	= OLDDWC_LOBBY_GetUserIdxID( user_b );
 	topic.num			= 2;
-	DWC_LOBBY_SendChannelMsg( WFLBY_SYSTEM_MAIN_COMMCMD_TOPIC_DATA, &topic, sizeof(WFLBY_TOPIC) );
+	OLDDWC_LOBBY_SendChannelMsg( WFLBY_SYSTEM_MAIN_COMMCMD_TOPIC_DATA, &topic, sizeof(WFLBY_TOPIC) );
 }
 
 //----------------------------------------------------------------------------
@@ -2672,11 +2672,11 @@ void WFLBY_SYSTEM_TOPIC_SendItem( WFLBY_SYSTEM* p_wk, u32 user_a, u32 user_b, WF
 	WFLBY_TOPIC topic = {0};
 
 	topic.topic_type	= NEWS_TOPICTYPE_ITEM;
-	topic.lobby_id[0]	= DWC_LOBBY_GetUserIdxID( user_b );
-	topic.lobby_id[1]	= DWC_LOBBY_GetUserIdxID( user_a );
+	topic.lobby_id[0]	= OLDDWC_LOBBY_GetUserIdxID( user_b );
+	topic.lobby_id[1]	= OLDDWC_LOBBY_GetUserIdxID( user_a );
 	topic.num			= 2;
 	topic.item			= item;
-	DWC_LOBBY_SendChannelMsg( WFLBY_SYSTEM_MAIN_COMMCMD_TOPIC_DATA, &topic, sizeof(WFLBY_TOPIC) );
+	OLDDWC_LOBBY_SendChannelMsg( WFLBY_SYSTEM_MAIN_COMMCMD_TOPIC_DATA, &topic, sizeof(WFLBY_TOPIC) );
 }
 
 //----------------------------------------------------------------------------
@@ -2723,14 +2723,14 @@ void WFLBY_SYSTEM_TOPIC_SendMiniGame( WFLBY_SYSTEM* p_wk, WFLBY_GAMETYPE minigam
 	}
 
 	topic.topic_type	= topic_type;
-	topic.lobby_id[0]	= DWC_LOBBY_GetUserIdxID( user_0 );
-	topic.lobby_id[1]	= DWC_LOBBY_GetUserIdxID( user_1 );
-	topic.lobby_id[2]	= DWC_LOBBY_GetUserIdxID( user_2 );
-	topic.lobby_id[3]	= DWC_LOBBY_GetUserIdxID( user_3 );
+	topic.lobby_id[0]	= OLDDWC_LOBBY_GetUserIdxID( user_0 );
+	topic.lobby_id[1]	= OLDDWC_LOBBY_GetUserIdxID( user_1 );
+	topic.lobby_id[2]	= OLDDWC_LOBBY_GetUserIdxID( user_2 );
+	topic.lobby_id[3]	= OLDDWC_LOBBY_GetUserIdxID( user_3 );
 	topic.num			= num;
 	topic.minigame		= minigame;
 	topic.play			= play;
-	DWC_LOBBY_SendChannelMsg( WFLBY_SYSTEM_MAIN_COMMCMD_TOPIC_DATA, &topic, sizeof(WFLBY_TOPIC) );
+	OLDDWC_LOBBY_SendChannelMsg( WFLBY_SYSTEM_MAIN_COMMCMD_TOPIC_DATA, &topic, sizeof(WFLBY_TOPIC) );
 }
 
 //----------------------------------------------------------------------------
@@ -2763,14 +2763,14 @@ void WFLBY_SYSTEM_TOPIC_SendMiniGameTopResult( WFLBY_SYSTEM* p_wk, WFLBY_GAMETYP
 	}
 
 	topic.topic_type	= topic_type;
-	topic.lobby_id[0]	= DWC_LOBBY_GetUserIdxID( user_0 );
-	topic.lobby_id[1]	= DWC_LOBBY_GetUserIdxID( user_1 );
-	topic.lobby_id[2]	= DWC_LOBBY_GetUserIdxID( user_2 );
-	topic.lobby_id[3]	= DWC_LOBBY_GetUserIdxID( user_3 );
+	topic.lobby_id[0]	= OLDDWC_LOBBY_GetUserIdxID( user_0 );
+	topic.lobby_id[1]	= OLDDWC_LOBBY_GetUserIdxID( user_1 );
+	topic.lobby_id[2]	= OLDDWC_LOBBY_GetUserIdxID( user_2 );
+	topic.lobby_id[3]	= OLDDWC_LOBBY_GetUserIdxID( user_3 );
 	topic.num			= num;
 	topic.minigame		= minigame;
 	topic.play			= FALSE;
-	DWC_LOBBY_SendChannelMsg( WFLBY_SYSTEM_MAIN_COMMCMD_TOPIC_DATA, &topic, sizeof(WFLBY_TOPIC) );
+	OLDDWC_LOBBY_SendChannelMsg( WFLBY_SYSTEM_MAIN_COMMCMD_TOPIC_DATA, &topic, sizeof(WFLBY_TOPIC) );
 }
 
 
@@ -2808,7 +2808,7 @@ void WFLBY_SYSTEM_SetMyProfile( WFLBY_SYSTEM* p_wk, const WFLBY_USER_PROFILE* cp
 u32 WFLBY_SYSTEM_GetSeason( const WFLBY_SYSTEM* cp_wk )
 {
 	u32 season;
-	season = DWC_LOBBY_GetRoomData( DWC_LOBBY_ROOMDATA_SEASON );
+	season = OLDDWC_LOBBY_GetRoomData( OLDDWC_LOBBY_ROOMDATA_SEASON );
 	if( season >= WFLBY_SEASON_NUM ){
 		season = WFLBY_SEASON_NONE;
 	}
@@ -2827,7 +2827,7 @@ u32 WFLBY_SYSTEM_GetSeason( const WFLBY_SYSTEM* cp_wk )
 u32 WFLBY_SYSTEM_GetRoomType( const WFLBY_SYSTEM* cp_wk )
 {
 	u32 roomtype;
-	roomtype = DWC_LOBBY_GetRoomData( DWC_LOBBY_ROOMDATA_ROOMTYPE );
+	roomtype = OLDDWC_LOBBY_GetRoomData( OLDDWC_LOBBY_ROOMDATA_ROOMTYPE );
 	if( roomtype >= WFLBY_ROOM_NUM ){	// 不定値チェック
 		roomtype = WFLBY_ROOM_FIRE;
 	}
@@ -2845,7 +2845,7 @@ u32 WFLBY_SYSTEM_GetRoomType( const WFLBY_SYSTEM* cp_wk )
 //-----------------------------------------------------------------------------
 u32 WFLBY_SYSTEM_GetLockTime( const WFLBY_SYSTEM* cp_wk )
 {
-	return DWC_LOBBY_GetRoomData( DWC_LOBBY_ROOMDATA_LOCKTIME );
+	return OLDDWC_LOBBY_GetRoomData( OLDDWC_LOBBY_ROOMDATA_LOCKTIME );
 }
 
 //----------------------------------------------------------------------------
@@ -2862,7 +2862,7 @@ u32 WFLBY_SYSTEM_GetCloseTime( const WFLBY_SYSTEM* cp_wk )
 	u32 closetime;
 
 	// クローズ時間の取得　たっだし、クローズはイベントは発動後WFLBY_END_OVERTIME秒後
-	closetime = DWC_LOBBY_GetRoomData( DWC_LOBBY_ROOMDATA_CLOSETIME );
+	closetime = OLDDWC_LOBBY_GetRoomData( OLDDWC_LOBBY_ROOMDATA_CLOSETIME );
 	closetime += (WFLBY_END_OVERTIME/30);	// 描画フレーム単位を秒単位にしてから足す
 
 	return closetime;
@@ -2901,7 +2901,7 @@ void WFLBY_SYSTEM_SendGadGetData( WFLBY_SYSTEM* p_wk, WFLBY_ITEMTYPE gadget )
 
 	data = gadget;
 	
-	DWC_LOBBY_SendChannelMsg( WFLBY_SYSTEM_MAIN_COMMCMD_GADGET_DATA, 
+	OLDDWC_LOBBY_SendChannelMsg( WFLBY_SYSTEM_MAIN_COMMCMD_GADGET_DATA, 
 			&data, sizeof(u32) );
 }
 
@@ -2976,7 +2976,7 @@ u32 WFLBY_SYSTEM_GetFloatReserve( const WFLBY_SYSTEM* cp_wk, u32 idx )
  *	@param	plidx		プレイヤーインデックス
  *
  *	@retval	座席インデックス
- *	@retval	DWC_LOBBY_USERIDTBL_IDX_NONE	予約してない
+ *	@retval	OLDDWC_LOBBY_USERIDTBL_IDX_NONE	予約してない
  */
 //-----------------------------------------------------------------------------
 u32 WFLBY_SYSTEM_GetFloatPlIdxReserve( const WFLBY_SYSTEM* cp_wk, u32 plidx )
@@ -2992,7 +2992,7 @@ u32 WFLBY_SYSTEM_GetFloatPlIdxReserve( const WFLBY_SYSTEM* cp_wk, u32 plidx )
  *	@param	plidx		プレイヤーインデックス
  *	@param	station		駅定数
  *
- *	@retval	DWC_LOBBY_USERIDTBL_IDX_NONE	予約失敗
+ *	@retval	OLDDWC_LOBBY_USERIDTBL_IDX_NONE	予約失敗
  *	@retval	その他							予約成功
  */
 //-----------------------------------------------------------------------------
@@ -3107,7 +3107,7 @@ WFLBY_FLOAT_STATION_TYPE WFLBY_SYSTEM_GetFloatReserveLock( const WFLBY_SYSTEM* c
 void WFLBY_SYSTEM_SendFloatOn( WFLBY_SYSTEM* p_wk )
 {
 	u32 dummy;
-	DWC_LOBBY_SendChannelMsg( WFLBY_SYSTEM_MAIN_COMMCMD_FLOAT_ON, &dummy, sizeof(u32) );
+	OLDDWC_LOBBY_SendChannelMsg( WFLBY_SYSTEM_MAIN_COMMCMD_FLOAT_ON, &dummy, sizeof(u32) );
 }
 
 //----------------------------------------------------------------------------
@@ -3120,7 +3120,7 @@ void WFLBY_SYSTEM_SendFloatOn( WFLBY_SYSTEM* p_wk )
 void WFLBY_SYSTEM_SendFloatAnm( WFLBY_SYSTEM* p_wk )
 {
 	u32 dummy;
-	DWC_LOBBY_SendChannelMsg( WFLBY_SYSTEM_MAIN_COMMCMD_FLOAT_ANM, &dummy, sizeof(u32) );
+	OLDDWC_LOBBY_SendChannelMsg( WFLBY_SYSTEM_MAIN_COMMCMD_FLOAT_ANM, &dummy, sizeof(u32) );
 }
 
 
@@ -3178,8 +3178,8 @@ BOOL WFLBY_SYSTEM_SendTalkReq( WFLBY_SYSTEM* p_wk, u32 idx )
 	WFLBY_SYSTEM_TALK_SetSendDataNowSeq( &p_wk->talk, 0 );
 	
 	// 会話開始
-	userid = DWC_LOBBY_GetUserIdxID( idx );
-	DWC_LOBBY_SendPlayerMsg( WFLBY_SYSTEM_MAIN_COMMCMD_TALK_REQ, userid, &p_wk->talk.send_data, sizeof(WFLBY_SYSTEM_TALK_DATA) );
+	userid = OLDDWC_LOBBY_GetUserIdxID( idx );
+	OLDDWC_LOBBY_SendPlayerMsg( WFLBY_SYSTEM_MAIN_COMMCMD_TALK_REQ, userid, &p_wk->talk.send_data, sizeof(WFLBY_SYSTEM_TALK_DATA) );
 
 	// 受信待ち設定
 	WFLBY_SYSTEM_TALK_StartRecvWait( &p_wk->talk );
@@ -3218,7 +3218,7 @@ void WFLBY_SYSTEM_SendTalkData( WFLBY_SYSTEM* p_wk, u16 data )
 	}
 	// 緊急終了
 	if( exend ){
-		userid = DWC_LOBBY_GetUserIdxID( p_wk->talk.talk_idx );
+		userid = OLDDWC_LOBBY_GetUserIdxID( p_wk->talk.talk_idx );
 		WFLBY_SYSTEM_TALK_SendTalkExEnd( p_wk, userid );
 		return ;
 	}
@@ -3238,7 +3238,7 @@ void WFLBY_SYSTEM_SendTalkData( WFLBY_SYSTEM* p_wk, u16 data )
 	default:
 //		GF_ASSERT( 0 );	// 対話タイプがおかしい
 
-		userid = DWC_LOBBY_GetUserIdxID( p_wk->talk.talk_idx );
+		userid = OLDDWC_LOBBY_GetUserIdxID( p_wk->talk.talk_idx );
 		WFLBY_SYSTEM_TALK_SendTalkExEnd( p_wk, userid );
 		return;
 	}
@@ -3247,8 +3247,8 @@ void WFLBY_SYSTEM_SendTalkData( WFLBY_SYSTEM* p_wk, u16 data )
 	WFLBY_SYSTEM_TALK_SetSendDataNowSeq( &p_wk->talk, data );
 	
 	// 会話開始
-	userid = DWC_LOBBY_GetUserIdxID( p_wk->talk.talk_idx );
-	DWC_LOBBY_SendPlayerMsg( WFLBY_SYSTEM_MAIN_COMMCMD_TALK_DATA, userid, &p_wk->talk.send_data, sizeof(WFLBY_SYSTEM_TALK_DATA) );
+	userid = OLDDWC_LOBBY_GetUserIdxID( p_wk->talk.talk_idx );
+	OLDDWC_LOBBY_SendPlayerMsg( WFLBY_SYSTEM_MAIN_COMMCMD_TALK_DATA, userid, &p_wk->talk.send_data, sizeof(WFLBY_SYSTEM_TALK_DATA) );
 
 	// 受信待ち設定
 	WFLBY_SYSTEM_TALK_StartRecvWait( &p_wk->talk );
@@ -3275,8 +3275,8 @@ void WFLBY_SYSTEM_SendTalkEnd( WFLBY_SYSTEM* p_wk )
 	// 送信
 	p_wk->talk.send_data.seq = WFLBY_TALK_SEQ_NONE;
 
-	userid = DWC_LOBBY_GetUserIdxID( p_wk->talk.talk_idx );
-	DWC_LOBBY_SendPlayerMsg( WFLBY_SYSTEM_MAIN_COMMCMD_TALK_END, userid, &p_wk->talk.send_data, sizeof(WFLBY_SYSTEM_TALK_DATA) );
+	userid = OLDDWC_LOBBY_GetUserIdxID( p_wk->talk.talk_idx );
+	OLDDWC_LOBBY_SendPlayerMsg( WFLBY_SYSTEM_MAIN_COMMCMD_TALK_END, userid, &p_wk->talk.send_data, sizeof(WFLBY_SYSTEM_TALK_DATA) );
 
 	// 会話終了
 	WFLBY_SYSTEM_TALK_EndClear( &p_wk->talk );
@@ -3297,11 +3297,11 @@ void WFLBY_SYSTEM_SendTalkExEnd( WFLBY_SYSTEM* p_wk )
 		return ;
 	}
 
-	userid = DWC_LOBBY_GetUserIdxID( p_wk->talk.talk_idx );
+	userid = OLDDWC_LOBBY_GetUserIdxID( p_wk->talk.talk_idx );
 
 	p_wk->talk.talk_seq		= WFLBY_TALK_SEQ_EXEND;
 	p_wk->talk.send_data.seq = WFLBY_TALK_SEQ_EXEND;
-	DWC_LOBBY_SendPlayerMsg( WFLBY_SYSTEM_MAIN_COMMCMD_TALK_DATA, userid, &p_wk->talk.send_data, sizeof(WFLBY_SYSTEM_TALK_DATA) );
+	OLDDWC_LOBBY_SendPlayerMsg( WFLBY_SYSTEM_MAIN_COMMCMD_TALK_DATA, userid, &p_wk->talk.send_data, sizeof(WFLBY_SYSTEM_TALK_DATA) );
 }
 
 //----------------------------------------------------------------------------
@@ -4008,7 +4008,7 @@ static void WFLBY_SYSTEM_CallbackUserIn( s32 userid, const void* cp_profile, voi
 			p_wk->error = WFLBY_SYSTEM_ERR_CRC;
 		}
 
-		idx = DWC_LOBBY_GetUserIDIdx( userid );
+		idx = OLDDWC_LOBBY_GetUserIDIdx( userid );
 		NEWS_DSET_SetRoomIn( p_wk->glbdata.p_lobbynews, idx, p_wk->myprofile.profile.sex, NEWS_ROOMSP_MYDATA|NEWS_ROOMSP_OLD );
 
 		// 自分のユーザIDを設定する
@@ -4021,7 +4021,7 @@ static void WFLBY_SYSTEM_CallbackUserIn( s32 userid, const void* cp_profile, voi
 		// 入室時間を設定する
 		{
 			s64 time;
-			DWC_LOBBY_GetLoginTime( userid, &time );
+			OLDDWC_LOBBY_GetLoginTime( userid, &time );
 			WFLBY_TIME_Set( &p_wk->myprofile.profile.intime, &time );
 			OS_TPrintf( "in time hour=%d min=%d  sec=%d\n", p_wk->myprofile.profile.intime.hour, p_wk->myprofile.profile.intime.minute, p_wk->myprofile.profile.intime.second );
 		}
@@ -4062,11 +4062,11 @@ static void WFLBY_SYSTEM_CallbackUserIn( s32 userid, const void* cp_profile, voi
 //		OS_TPrintf( "user profile lang_code %d\n", cp_userdata->region_code );
 
 		// 一番古くからいる人を先に取得
-		old_user = DWC_LOBBY_GetOldUser();
+		old_user = OLDDWC_LOBBY_GetOldUser();
 
 		// インデックスを取得して、その人を中に入れる
 		// 自分の方が古くからいるので、その人が一番古いわけがない
-		idx = DWC_LOBBY_GetUserIDIdx( userid );
+		idx = OLDDWC_LOBBY_GetUserIDIdx( userid );
 		NEWS_DSET_SetRoomIn( p_wk->glbdata.p_lobbynews, idx, 
 				WFLBY_SYSTEM_GetProfileSex( cp_userdata ), NEWS_ROOMSP_NONE );
 
@@ -4085,7 +4085,7 @@ static void WFLBY_SYSTEM_CallbackUserIn( s32 userid, const void* cp_profile, voi
 
 
 	// 誰か入ってきた
-	idx  = DWC_LOBBY_GetUserIDIdx( userid );
+	idx  = OLDDWC_LOBBY_GetUserIDIdx( userid );
 	p_wk->flag.user_in |= 1 << idx;
 
 #ifdef WFLBY_DEBUG_ALL_VIP
@@ -4105,7 +4105,7 @@ static void WFLBY_SYSTEM_CallbackUserIn( s32 userid, const void* cp_profile, voi
 	}else{
 
 		// VIPチェック
-		if( DWC_LOBBY_VIP_CheckVip( userid ) == TRUE ){
+		if( OLDDWC_LOBBY_VIP_CheckVip( userid ) == TRUE ){
 			u32 aikotoba_key;
 
 			// VIPフラグ設定
@@ -4119,8 +4119,8 @@ static void WFLBY_SYSTEM_CallbackUserIn( s32 userid, const void* cp_profile, voi
 			}
 			
 			// あいことば　チェック
-			aikotoba_key = DWC_LOBBY_VIP_GetAikotobaKey( userid );
-			if( aikotoba_key != DWC_LOBBY_VIP_KEYNONE ){
+			aikotoba_key = OLDDWC_LOBBY_VIP_GetAikotobaKey( userid );
+			if( aikotoba_key != OLDDWC_LOBBY_VIP_KEYNONE ){
 				WFLBY_SYSTEM_AIKOTOBABUFF_SetData( &p_wk->aikotoba, idx, TRUE, aikotoba_key );
 			}else{
 				WFLBY_SYSTEM_AIKOTOBABUFF_SetData( &p_wk->aikotoba, idx, FALSE, aikotoba_key );
@@ -4136,7 +4136,7 @@ static void WFLBY_SYSTEM_CallbackUserIn( s32 userid, const void* cp_profile, voi
 #else
 
 	// VIPチェック
-	if( DWC_LOBBY_VIP_CheckVip( userid ) == TRUE ){
+	if( OLDDWC_LOBBY_VIP_CheckVip( userid ) == TRUE ){
 		u32 aikotoba_key;
 
 		// VIPフラグ設定
@@ -4150,8 +4150,8 @@ static void WFLBY_SYSTEM_CallbackUserIn( s32 userid, const void* cp_profile, voi
 		}
 		
 		// あいことば　チェック
-		aikotoba_key = DWC_LOBBY_VIP_GetAikotobaKey( userid );
-		if( aikotoba_key != DWC_LOBBY_VIP_KEYNONE ){
+		aikotoba_key = OLDDWC_LOBBY_VIP_GetAikotobaKey( userid );
+		if( aikotoba_key != OLDDWC_LOBBY_VIP_KEYNONE ){
 			WFLBY_SYSTEM_AIKOTOBABUFF_SetData( &p_wk->aikotoba, idx, TRUE, aikotoba_key );
 		}else{
 			WFLBY_SYSTEM_AIKOTOBABUFF_SetData( &p_wk->aikotoba, idx, FALSE, aikotoba_key );
@@ -4187,12 +4187,12 @@ static void WFLBY_SYSTEM_CallbackUserOut( s32 userid, void* p_work )
 
 
 	// 自分のログアウトの場合は、エラー処理へ
-	if( userid == DWC_LOBBY_GetMyUserID() ){
+	if( userid == OLDDWC_LOBBY_GetMyUserID() ){
 		return ;
 	}
 
 	// インデックス取得
-	idx = DWC_LOBBY_GetUserIDIdx( userid );
+	idx = OLDDWC_LOBBY_GetUserIDIdx( userid );
 
 	// 会話中の人なら強制終了
 	if( WFLBY_SYSTEM_CheckTalk( p_wk ) == TRUE ){
@@ -4206,8 +4206,8 @@ static void WFLBY_SYSTEM_CallbackUserOut( s32 userid, void* p_work )
 	// その人を退席させる
 	old_set = NEWS_DSET_SetRoomOut( p_wk->glbdata.p_lobbynews, idx );
 	if( old_set ){
-		old_user = DWC_LOBBY_GetOldUser_UserDesc( userid );
-		old_idx = DWC_LOBBY_GetUserIDIdx( old_user );
+		old_user = OLDDWC_LOBBY_GetOldUser_UserDesc( userid );
+		old_idx = OLDDWC_LOBBY_GetUserIDIdx( old_user );
 //		OS_TPrintf( "old user chg =%d\n", old_idx );
 		NEWS_DSET_SetRoomOld( p_wk->glbdata.p_lobbynews, old_idx );
 	}
@@ -4232,7 +4232,7 @@ static void WFLBY_SYSTEM_CallbackUserOut( s32 userid, void* p_work )
 	WFLBY_SYSTEM_AIKOTOBABUFF_SetData( &p_wk->aikotoba, idx, FALSE, 0 );
 
 	// 誰かでていった
-	idx  = DWC_LOBBY_GetUserIDIdx( userid );
+	idx  = OLDDWC_LOBBY_GetUserIDIdx( userid );
 	p_wk->flag.user_out |= 1 << idx;
 
 }
@@ -4255,7 +4255,7 @@ static void WFLBY_SYSTEM_CallbackUserProfileUpdate( s32 userid, const void* cp_p
 
 	p_wk = p_work;
 
-	idx = DWC_LOBBY_GetUserIDIdx( userid );
+	idx = OLDDWC_LOBBY_GetUserIDIdx( userid );
 	
 	p_wk->flag.profile_up |= 1 << idx;
 
@@ -4402,8 +4402,8 @@ static void WFLBY_SYSTEM_CallbackEvent( PPW_LOBBY_TIME_EVENT event, void* p_work
 		{
 			u32 fire_start,  fire_end;
 
-			fire_start	= DWC_LOBBY_GetRoomData( DWC_LOBBY_ROOMDATA_FIRESTART );
-			fire_end	= DWC_LOBBY_GetRoomData( DWC_LOBBY_ROOMDATA_FIREEND );
+			fire_start	= OLDDWC_LOBBY_GetRoomData( OLDDWC_LOBBY_ROOMDATA_FIRESTART );
+			fire_end	= OLDDWC_LOBBY_GetRoomData( OLDDWC_LOBBY_ROOMDATA_FIREEND );
 
 			WFLBY_SYSTEM_FIREDATA_Init( &p_wk->fire_data, fire_start, fire_end );
 		}
@@ -4500,7 +4500,7 @@ static void WFLBY_SYSTEM_CallbackCheckProfile( const void* cp_profile, u32 profi
 static void WFLBY_SYSTEM_SetWldTimerData( WFLBY_USER_MYPROFILE* p_myprofile, WFLBY_WLDTIMER* p_wk )
 {
 	int i;
-	DWC_LOBBY_CHANNEL_USERID usertbl;
+	OLDDWC_LOBBY_CHANNEL_USERID usertbl;
 	const WFLBY_USER_PROFILE* cp_profile;
 	WFLBY_WLDTIMER* p_data;
 	u8 nation;
@@ -4510,7 +4510,7 @@ static void WFLBY_SYSTEM_SetWldTimerData( WFLBY_USER_MYPROFILE* p_myprofile, WFL
 	GFL_STD_MemFill( p_wk, 0, sizeof(WFLBY_WLDTIMER) );
 
 	// ユーザテーブル取得
-	DWC_LOBBY_GetUserIDTbl( &usertbl );
+	OLDDWC_LOBBY_GetUserIDTbl( &usertbl );
 
 	// 自分のデータを先に追加
 	cp_profile = &p_myprofile->profile;
@@ -4522,7 +4522,7 @@ static void WFLBY_SYSTEM_SetWldTimerData( WFLBY_USER_MYPROFILE* p_myprofile, WFL
 	// まずロビーにいる人のデータでバッファを作成
 	for( i=0; i<WFLBY_PLAYER_MAX; i++ ){
 		if( usertbl.cp_tbl[i] != DWC_LOBBY_INVALID_USER_ID ){
-			cp_profile = (const WFLBY_USER_PROFILE*)DWC_LOBBY_GetUserProfile( usertbl.cp_tbl[ i ] );
+			cp_profile = (const WFLBY_USER_PROFILE*)OLDDWC_LOBBY_GetUserProfile( usertbl.cp_tbl[ i ] );
 			WFLBY_WLDTIMER_SetData( p_wk, 
 					WFLBY_SYSTEM_GetProfileNation( cp_profile ), 
 					WFLBY_SYSTEM_GetProfileArea( cp_profile ), FALSE );
@@ -4531,8 +4531,8 @@ static void WFLBY_SYSTEM_SetWldTimerData( WFLBY_USER_MYPROFILE* p_myprofile, WFL
 
 	// 退室者データ
 	for( i=0; i<DWC_WLDDATA_MAX; i++ ){
-		nation	= DWC_LOBBY_WLDDATA_GetNation( i );
-		area	= DWC_LOBBY_WLDDATA_GetArea( i );
+		nation	= OLDDWC_LOBBY_WLDDATA_GetNation( i );
+		area	= OLDDWC_LOBBY_WLDDATA_GetArea( i );
 		WFLBY_WLDTIMER_SetData( p_wk, nation, area, TRUE );
 	}
 }
@@ -4557,7 +4557,7 @@ static void WFLBY_SYSTEM_ContEndTime( WFLBY_SYSTEM* p_wk )
 	// ロック中なら経過時間を取得
 	if( (p_wk->event.lock == TRUE) && 
 		(p_wk->event.endcm == FALSE) && 
-		(DWC_LOBBY_GetState() == DWC_LOBBY_CHANNEL_STATE_CONNECT) ){
+		(OLDDWC_LOBBY_GetState() == OLDDWC_LOBBY_CHANNEL_STATE_CONNECT) ){
 
 		// 終了時間取得
 		closetime = WFLBY_SYSTEM_GetCloseTime( p_wk );
@@ -4724,7 +4724,7 @@ static void WFLBY_SYSTEM_DWC_SetMyProfile( WFLBY_SYSTEM* p_wk )
 	// 名前をライブラリのデータにある物に書き換えてから送る
 	GFL_STD_MemCopy( p_wk->myprofile.comm_name, p_wk->myprofile.profile.name, sizeof(STRCODE)*(PERSON_NAME_SIZE + EOM_SIZE) );
 	
-	DWC_LOBBY_SetMyProfile( &p_wk->myprofile.profile );	// 更新
+	OLDDWC_LOBBY_SetMyProfile( &p_wk->myprofile.profile );	// 更新
 
 	// 書き換えた名前を元に戻す
 	GFL_STD_MemCopy( p_wk->myprofile.def_name, p_wk->myprofile.profile.name, sizeof(STRCODE)*(PERSON_NAME_SIZE + EOM_SIZE) );
@@ -5314,7 +5314,7 @@ static void WFLBY_SYSTEM_TALK_SendTalkAns( WFLBY_SYSTEM* p_wk, s32 userid, BOOL 
 {
 	p_wk->talk.send_data.seq		= WFLBY_TALK_SEQ_A_SEL;
 	p_wk->talk.send_data.data	= ans;
-	DWC_LOBBY_SendPlayerMsg( WFLBY_SYSTEM_MAIN_COMMCMD_TALK_ANS, userid, &p_wk->talk.send_data, sizeof(WFLBY_SYSTEM_TALK_DATA) );
+	OLDDWC_LOBBY_SendPlayerMsg( WFLBY_SYSTEM_MAIN_COMMCMD_TALK_ANS, userid, &p_wk->talk.send_data, sizeof(WFLBY_SYSTEM_TALK_DATA) );
 }
 
 //----------------------------------------------------------------------------
@@ -5329,7 +5329,7 @@ static void WFLBY_SYSTEM_TALK_SendTalkExEnd( WFLBY_SYSTEM* p_wk, s32 userid )
 {
 	p_wk->talk.talk_seq		= WFLBY_TALK_SEQ_EXEND;
 	p_wk->talk.send_data.seq = WFLBY_TALK_SEQ_EXEND;
-	DWC_LOBBY_SendPlayerMsg( WFLBY_SYSTEM_MAIN_COMMCMD_TALK_DATA, userid, &p_wk->talk.send_data, sizeof(WFLBY_SYSTEM_TALK_DATA) );
+	OLDDWC_LOBBY_SendPlayerMsg( WFLBY_SYSTEM_MAIN_COMMCMD_TALK_DATA, userid, &p_wk->talk.send_data, sizeof(WFLBY_SYSTEM_TALK_DATA) );
 }
 
 //----------------------------------------------------------------------------
@@ -5427,8 +5427,8 @@ static void WFLBY_SYSTEM_TOPIC_SetConnect( WFLBY_SYSTEM* p_wk, const WFLBY_TOPIC
 	}
 
 	for( i=0; i<2; i++ ){
-		idx = DWC_LOBBY_GetUserIDIdx( cp_topic->lobby_id[i] );
-		if( idx != DWC_LOBBY_USERIDTBL_IDX_NONE ){
+		idx = OLDDWC_LOBBY_GetUserIDIdx( cp_topic->lobby_id[i] );
+		if( idx != OLDDWC_LOBBY_USERIDTBL_IDX_NONE ){
 			cp_profile = WFLBY_SYSTEM_GetUserProfile( p_wk, idx );
 			WFLBY_SYSTEM_GetProfileMyStatus( cp_profile, p_wk->glbdata.p_mystatus[i], p_wk->heapID );
 		}else{
@@ -5438,8 +5438,8 @@ static void WFLBY_SYSTEM_TOPIC_SetConnect( WFLBY_SYSTEM* p_wk, const WFLBY_TOPIC
 	
 	data.cp_p1	= p_wk->glbdata.p_mystatus[0];
 	data.cp_p2	= p_wk->glbdata.p_mystatus[1];
-	data.idx_p1	= DWC_LOBBY_GetUserIDIdx( cp_topic->lobby_id[0] );
-	data.idx_p2	= DWC_LOBBY_GetUserIDIdx( cp_topic->lobby_id[1] );
+	data.idx_p1	= OLDDWC_LOBBY_GetUserIDIdx( cp_topic->lobby_id[0] );
+	data.idx_p2	= OLDDWC_LOBBY_GetUserIDIdx( cp_topic->lobby_id[1] );
 	
 	NEWS_DSET_SetConnect( p_wk->glbdata.p_lobbynews,
 			&data );
@@ -5463,8 +5463,8 @@ static void WFLBY_SYSTEM_TOPIC_SetItem( WFLBY_SYSTEM* p_wk, const WFLBY_TOPIC* c
 
 
 	for( i=0; i<2; i++ ){
-		idx = DWC_LOBBY_GetUserIDIdx( cp_topic->lobby_id[i] );
-		if( idx != DWC_LOBBY_USERIDTBL_IDX_NONE ){
+		idx = OLDDWC_LOBBY_GetUserIDIdx( cp_topic->lobby_id[i] );
+		if( idx != OLDDWC_LOBBY_USERIDTBL_IDX_NONE ){
 			cp_profile = WFLBY_SYSTEM_GetUserProfile( p_wk, idx );
 			WFLBY_SYSTEM_GetProfileMyStatus( cp_profile, p_wk->glbdata.p_mystatus[i], p_wk->heapID );
 		}else{
@@ -5474,8 +5474,8 @@ static void WFLBY_SYSTEM_TOPIC_SetItem( WFLBY_SYSTEM* p_wk, const WFLBY_TOPIC* c
 
 	data.cp_p1	= p_wk->glbdata.p_mystatus[0];
 	data.cp_p2	= p_wk->glbdata.p_mystatus[1];
-	data.idx_p1	= DWC_LOBBY_GetUserIDIdx( cp_topic->lobby_id[0] );
-	data.idx_p2	= DWC_LOBBY_GetUserIDIdx( cp_topic->lobby_id[1] );
+	data.idx_p1	= OLDDWC_LOBBY_GetUserIDIdx( cp_topic->lobby_id[0] );
+	data.idx_p2	= OLDDWC_LOBBY_GetUserIDIdx( cp_topic->lobby_id[1] );
 	data.item	= cp_topic->item;
 	
 	NEWS_DSET_SetItem( p_wk->glbdata.p_lobbynews,
@@ -5503,8 +5503,8 @@ static void WFLBY_SYSTEM_TOPIC_SetMinigame( WFLBY_SYSTEM* p_wk, const WFLBY_TOPI
 	if( cp_topic->play == TRUE ){
 		for( i=0; i<WFLBY_MINIGAME_MAX; i++ ){
 			if( i<cp_topic->num ){
-				idx = DWC_LOBBY_GetUserIDIdx( cp_topic->lobby_id[i] );
-				if( idx != DWC_LOBBY_USERIDTBL_IDX_NONE ){
+				idx = OLDDWC_LOBBY_GetUserIDIdx( cp_topic->lobby_id[i] );
+				if( idx != OLDDWC_LOBBY_USERIDTBL_IDX_NONE ){
 					cp_profile = WFLBY_SYSTEM_GetUserProfile( p_wk, idx );
 					WFLBY_SYSTEM_GetProfileMyStatus( cp_profile, p_wk->glbdata.p_mystatus[i], p_wk->heapID );
 					p_mystatus[i] = p_wk->glbdata.p_mystatus[i];
@@ -5519,8 +5519,8 @@ static void WFLBY_SYSTEM_TOPIC_SetMinigame( WFLBY_SYSTEM* p_wk, const WFLBY_TOPI
 		// 募集中のときは親の名前のみ
 		for( i=0; i<WFLBY_MINIGAME_MAX; i++ ){
 			if( i==0 ){
-				u32 idx = DWC_LOBBY_GetUserIDIdx( cp_topic->lobby_id[i] );
-				if( idx != DWC_LOBBY_USERIDTBL_IDX_NONE ){
+				u32 idx = OLDDWC_LOBBY_GetUserIDIdx( cp_topic->lobby_id[i] );
+				if( idx != OLDDWC_LOBBY_USERIDTBL_IDX_NONE ){
 					cp_profile = WFLBY_SYSTEM_GetUserProfile( p_wk, idx );
 					WFLBY_SYSTEM_GetProfileMyStatus( cp_profile, p_wk->glbdata.p_mystatus[i], p_wk->heapID );
 					p_mystatus[i] = p_wk->glbdata.p_mystatus[i];
@@ -5539,10 +5539,10 @@ static void WFLBY_SYSTEM_TOPIC_SetMinigame( WFLBY_SYSTEM* p_wk, const WFLBY_TOPI
 	data.cp_p2		= p_mystatus[1];
 	data.cp_p3		= p_mystatus[2];
 	data.cp_p4		= p_mystatus[3];
-	data.idx_p1		= DWC_LOBBY_GetUserIDIdx( cp_topic->lobby_id[0] );
-	data.idx_p2		= DWC_LOBBY_GetUserIDIdx( cp_topic->lobby_id[1] );
-	data.idx_p3		= DWC_LOBBY_GetUserIDIdx( cp_topic->lobby_id[2] );
-	data.idx_p4		= DWC_LOBBY_GetUserIDIdx( cp_topic->lobby_id[3] );
+	data.idx_p1		= OLDDWC_LOBBY_GetUserIDIdx( cp_topic->lobby_id[0] );
+	data.idx_p2		= OLDDWC_LOBBY_GetUserIDIdx( cp_topic->lobby_id[1] );
+	data.idx_p3		= OLDDWC_LOBBY_GetUserIDIdx( cp_topic->lobby_id[2] );
+	data.idx_p4		= OLDDWC_LOBBY_GetUserIDIdx( cp_topic->lobby_id[3] );
 	data.play		= cp_topic->play;
 	
 	NEWS_DSET_SetMiniGame( p_wk->glbdata.p_lobbynews,
@@ -5565,8 +5565,8 @@ static void WFLBY_SYSTEM_TOPIC_SetFootBoard( WFLBY_SYSTEM* p_wk, const WFLBY_TOP
 		return ;
 	}
 
-	idx = DWC_LOBBY_GetUserIDIdx( cp_topic->lobby_id[0] );
-	if( idx != DWC_LOBBY_USERIDTBL_IDX_NONE ){
+	idx = OLDDWC_LOBBY_GetUserIDIdx( cp_topic->lobby_id[0] );
+	if( idx != OLDDWC_LOBBY_USERIDTBL_IDX_NONE ){
 		cp_profile = WFLBY_SYSTEM_GetUserProfile( p_wk, idx );
 		WFLBY_SYSTEM_GetProfileMyStatus( cp_profile, p_wk->glbdata.p_mystatus[0], p_wk->heapID );
 	}else{
@@ -5576,7 +5576,7 @@ static void WFLBY_SYSTEM_TOPIC_SetFootBoard( WFLBY_SYSTEM* p_wk, const WFLBY_TOP
 	data.board	= cp_topic->minigame;
 	data.num	= cp_topic->num;
 	data.cp_p1	= p_wk->glbdata.p_mystatus[0];
-	data.idx_p1	= DWC_LOBBY_GetUserIDIdx( cp_topic->lobby_id[0] );
+	data.idx_p1	= OLDDWC_LOBBY_GetUserIDIdx( cp_topic->lobby_id[0] );
 	
 	NEWS_DSET_SetFootBoard( p_wk->glbdata.p_lobbynews,
 			&data );
@@ -5601,8 +5601,8 @@ static void WFLBY_SYSTEM_TOPIC_SetWldTimer( WFLBY_SYSTEM* p_wk, const WFLBY_TOPI
 
 	for( i=0; i<WFLBY_MINIGAME_MAX; i++ ){
 		if( i<cp_topic->num ){
-			idx = DWC_LOBBY_GetUserIDIdx( cp_topic->lobby_id[i] );
-			if( idx != DWC_LOBBY_USERIDTBL_IDX_NONE ){
+			idx = OLDDWC_LOBBY_GetUserIDIdx( cp_topic->lobby_id[i] );
+			if( idx != OLDDWC_LOBBY_USERIDTBL_IDX_NONE ){
 				cp_profile = WFLBY_SYSTEM_GetUserProfile( p_wk, idx );
 				WFLBY_SYSTEM_GetProfileMyStatus( cp_profile, p_wk->glbdata.p_mystatus[i], p_wk->heapID );
 				p_mystatus[i] = p_wk->glbdata.p_mystatus[i];
@@ -5619,10 +5619,10 @@ static void WFLBY_SYSTEM_TOPIC_SetWldTimer( WFLBY_SYSTEM* p_wk, const WFLBY_TOPI
 	data.cp_p2		= p_mystatus[1];
 	data.cp_p3		= p_mystatus[2];
 	data.cp_p4		= p_mystatus[3];
-	data.idx_p1		= DWC_LOBBY_GetUserIDIdx( cp_topic->lobby_id[0] );
-	data.idx_p2		= DWC_LOBBY_GetUserIDIdx( cp_topic->lobby_id[1] );
-	data.idx_p3		= DWC_LOBBY_GetUserIDIdx( cp_topic->lobby_id[2] );
-	data.idx_p4		= DWC_LOBBY_GetUserIDIdx( cp_topic->lobby_id[3] );
+	data.idx_p1		= OLDDWC_LOBBY_GetUserIDIdx( cp_topic->lobby_id[0] );
+	data.idx_p2		= OLDDWC_LOBBY_GetUserIDIdx( cp_topic->lobby_id[1] );
+	data.idx_p3		= OLDDWC_LOBBY_GetUserIDIdx( cp_topic->lobby_id[2] );
+	data.idx_p4		= OLDDWC_LOBBY_GetUserIDIdx( cp_topic->lobby_id[3] );
 	
 	NEWS_DSET_SetWorldTimer( p_wk->glbdata.p_lobbynews,
 			&data );
@@ -5647,8 +5647,8 @@ static void WFLBY_SYSTEM_TOPIC_SetNews( WFLBY_SYSTEM* p_wk, const WFLBY_TOPIC* c
 
 	for( i=0; i<WFLBY_MINIGAME_MAX; i++ ){
 		if( i<cp_topic->num ){
-			idx = DWC_LOBBY_GetUserIDIdx( cp_topic->lobby_id[i] );
-			if( idx != DWC_LOBBY_USERIDTBL_IDX_NONE ){
+			idx = OLDDWC_LOBBY_GetUserIDIdx( cp_topic->lobby_id[i] );
+			if( idx != OLDDWC_LOBBY_USERIDTBL_IDX_NONE ){
 				cp_profile = WFLBY_SYSTEM_GetUserProfile( p_wk, idx );
 				WFLBY_SYSTEM_GetProfileMyStatus( cp_profile, p_wk->glbdata.p_mystatus[i], p_wk->heapID );
 				p_mystatus[i] = p_wk->glbdata.p_mystatus[i];
@@ -5665,10 +5665,10 @@ static void WFLBY_SYSTEM_TOPIC_SetNews( WFLBY_SYSTEM* p_wk, const WFLBY_TOPIC* c
 	data.cp_p2		= p_mystatus[1];
 	data.cp_p3		= p_mystatus[2];
 	data.cp_p4		= p_mystatus[3];
-	data.idx_p1		= DWC_LOBBY_GetUserIDIdx( cp_topic->lobby_id[0] );
-	data.idx_p2		= DWC_LOBBY_GetUserIDIdx( cp_topic->lobby_id[1] );
-	data.idx_p3		= DWC_LOBBY_GetUserIDIdx( cp_topic->lobby_id[2] );
-	data.idx_p4		= DWC_LOBBY_GetUserIDIdx( cp_topic->lobby_id[3] );
+	data.idx_p1		= OLDDWC_LOBBY_GetUserIDIdx( cp_topic->lobby_id[0] );
+	data.idx_p2		= OLDDWC_LOBBY_GetUserIDIdx( cp_topic->lobby_id[1] );
+	data.idx_p3		= OLDDWC_LOBBY_GetUserIDIdx( cp_topic->lobby_id[2] );
+	data.idx_p4		= OLDDWC_LOBBY_GetUserIDIdx( cp_topic->lobby_id[3] );
 	
 	NEWS_DSET_SetLobbyNews( p_wk->glbdata.p_lobbynews,
 			&data );
@@ -5694,8 +5694,8 @@ static void WFLBY_SYSTEM_TOPIC_SetMgResult( WFLBY_SYSTEM* p_wk, const WFLBY_TOPI
 
 	for( i=0; i<WFLBY_MINIGAME_MAX; i++ ){
 		if( i<cp_topic->num ){
-			idx = DWC_LOBBY_GetUserIDIdx( cp_topic->lobby_id[i] );
-			if( idx != DWC_LOBBY_USERIDTBL_IDX_NONE ){
+			idx = OLDDWC_LOBBY_GetUserIDIdx( cp_topic->lobby_id[i] );
+			if( idx != OLDDWC_LOBBY_USERIDTBL_IDX_NONE ){
 				cp_profile = WFLBY_SYSTEM_GetUserProfile( p_wk, idx );
 				WFLBY_SYSTEM_GetProfileMyStatus( cp_profile, p_wk->glbdata.p_mystatus[i], p_wk->heapID );
 				p_mystatus[i] = p_wk->glbdata.p_mystatus[i];
@@ -5713,10 +5713,10 @@ static void WFLBY_SYSTEM_TOPIC_SetMgResult( WFLBY_SYSTEM* p_wk, const WFLBY_TOPI
 	data.cp_p2		= p_mystatus[1];
 	data.cp_p3		= p_mystatus[2];
 	data.cp_p4		= p_mystatus[3];
-	data.idx_p1		= DWC_LOBBY_GetUserIDIdx( cp_topic->lobby_id[0] );
-	data.idx_p2		= DWC_LOBBY_GetUserIDIdx( cp_topic->lobby_id[1] );
-	data.idx_p3		= DWC_LOBBY_GetUserIDIdx( cp_topic->lobby_id[2] );
-	data.idx_p4		= DWC_LOBBY_GetUserIDIdx( cp_topic->lobby_id[3] );
+	data.idx_p1		= OLDDWC_LOBBY_GetUserIDIdx( cp_topic->lobby_id[0] );
+	data.idx_p2		= OLDDWC_LOBBY_GetUserIDIdx( cp_topic->lobby_id[1] );
+	data.idx_p3		= OLDDWC_LOBBY_GetUserIDIdx( cp_topic->lobby_id[2] );
+	data.idx_p4		= OLDDWC_LOBBY_GetUserIDIdx( cp_topic->lobby_id[3] );
 	
 	NEWS_DSET_SetMgResult( p_wk->glbdata.p_lobbynews,
 			&data );
@@ -5755,7 +5755,7 @@ static void WFLBY_SYSTEM_TOPIC_SetEvent( WFLBY_SYSTEM* p_wk, WFLBY_EVENTTYPE eve
 static void WFLBY_SYSTEM_FLOAT_Init( WFLBY_FLOAT_DATA* p_float )
 {
 	GFL_STD_MemFill( p_float, 0, sizeof(WFLBY_FLOAT_DATA) );
-	GFL_STD_MemFill32( p_float->reserve, DWC_LOBBY_USERIDTBL_IDX_NONE, sizeof(u32)*(WFLBY_FLOAT_MAX*WFLBY_FLOAT_ON_NUM) );
+	GFL_STD_MemFill32( p_float->reserve, OLDDWC_LOBBY_USERIDTBL_IDX_NONE, sizeof(u32)*(WFLBY_FLOAT_MAX*WFLBY_FLOAT_ON_NUM) );
 }
 
 //----------------------------------------------------------------------------
@@ -5833,7 +5833,7 @@ static inline void WFLBY_SYSTEM_FLOAT_GetFloatNumOffs( u32 idx, u32* p_num, u32*
  *	@param	plidx		プレイヤーIDX
  *	@param	station		駅定数
  *
- *	@retval	DWC_LOBBY_USERIDTBL_IDX_NONE	予約失敗
+ *	@retval	OLDDWC_LOBBY_USERIDTBL_IDX_NONE	予約失敗
  *	@retval	その他							予約成功
  */
 //-----------------------------------------------------------------------------
@@ -5847,7 +5847,7 @@ static u32 WFLBY_SYSTEM_FLOAT_SetReserve( WFLBY_FLOAT_DATA* p_float, u32 plidx, 
 
 	// そいつはすでに乗ってないかチェック
 	idx = WFLBY_SYSTEM_FLOAT_GetIdx( p_float, plidx );
-	if( idx == DWC_LOBBY_USERIDTBL_IDX_NONE ){
+	if( idx == OLDDWC_LOBBY_USERIDTBL_IDX_NONE ){
 
 		// ロックがかかっているところ以下で、動作前か動作中で、
 		// 空いているところがないかチェック
@@ -5860,7 +5860,7 @@ static u32 WFLBY_SYSTEM_FLOAT_SetReserve( WFLBY_FLOAT_DATA* p_float, u32 plidx, 
 					if( result == FALSE ){
 						// そこ空いている？
 						on_plidx = WFLBY_SYSTEM_FLOAT_GetReserve( p_float, idx );
-						if( on_plidx == DWC_LOBBY_USERIDTBL_IDX_NONE ){
+						if( on_plidx == OLDDWC_LOBBY_USERIDTBL_IDX_NONE ){
 							// ここに乗せる
 							p_float->reserve[ i ][ j ] = plidx;
 //							OS_TPrintf( "set reserve[%d][%d]=%d\n", i, j, p_float->reserve[ i ][ j ] );
@@ -5875,7 +5875,7 @@ static u32 WFLBY_SYSTEM_FLOAT_SetReserve( WFLBY_FLOAT_DATA* p_float, u32 plidx, 
 	}
 
 	// のれない
-	return DWC_LOBBY_USERIDTBL_IDX_NONE;
+	return OLDDWC_LOBBY_USERIDTBL_IDX_NONE;
 }
 
 //----------------------------------------------------------------------------
@@ -5892,9 +5892,9 @@ static void WFLBY_SYSTEM_FLOAT_ResetReserve( WFLBY_FLOAT_DATA* p_float, u32 plid
 	u32 float_num, float_ofs;
 
 	idx = WFLBY_SYSTEM_FLOAT_GetIdx( p_float, plidx );
-	if( idx != DWC_LOBBY_USERIDTBL_IDX_NONE ){
+	if( idx != OLDDWC_LOBBY_USERIDTBL_IDX_NONE ){
 		WFLBY_SYSTEM_FLOAT_GetFloatNumOffs( idx, &float_num, &float_ofs );
-		p_float->reserve[float_num][float_ofs] = DWC_LOBBY_USERIDTBL_IDX_NONE;
+		p_float->reserve[float_num][float_ofs] = OLDDWC_LOBBY_USERIDTBL_IDX_NONE;
 	}
 }
 
@@ -5905,7 +5905,7 @@ static void WFLBY_SYSTEM_FLOAT_ResetReserve( WFLBY_FLOAT_DATA* p_float, u32 plid
  *	@param	cp_float	フロートデータ
  *	@param	idx			データインデックス
  *
- *	@retval	DWC_LOBBY_USERIDTBL_IDX_NONE	のってない
+ *	@retval	OLDDWC_LOBBY_USERIDTBL_IDX_NONE	のってない
  *	@retval	その他	乗ってる
  */
 //-----------------------------------------------------------------------------
@@ -5971,7 +5971,7 @@ static void WFLBY_SYSTEM_FLOAT_SetAnm( WFLBY_FLOAT_DATA* p_float, u32 plidx )
 	u32 idx;
 
 	idx = WFLBY_SYSTEM_FLOAT_GetIdx( p_float, plidx );
-	if( idx != DWC_LOBBY_USERIDTBL_IDX_NONE ){
+	if( idx != OLDDWC_LOBBY_USERIDTBL_IDX_NONE ){
 		WFLBY_SYSTEM_FLOAT_GetFloatNumOffs( idx, &float_num, &float_ofs );
 		p_float->anm[ float_num ][ float_ofs ] = TRUE;
 	}
@@ -6026,7 +6026,7 @@ static void WFLBY_SYSTEM_FLOAT_CleanAnm( WFLBY_FLOAT_DATA* p_float, u32 idx )
  *	@param	plidx		プレイヤーインデックス
  *
  *	@retval		フロートインデックス
- *	@retval		DWC_LOBBY_USERIDTBL_IDX_NONE	いない
+ *	@retval		OLDDWC_LOBBY_USERIDTBL_IDX_NONE	いない
  */
 //-----------------------------------------------------------------------------
 static u32 WFLBY_SYSTEM_FLOAT_GetIdx( const WFLBY_FLOAT_DATA* cp_float, u32 plidx )
@@ -6042,7 +6042,7 @@ static u32 WFLBY_SYSTEM_FLOAT_GetIdx( const WFLBY_FLOAT_DATA* cp_float, u32 plid
 		}
 	}
 
-	return DWC_LOBBY_USERIDTBL_IDX_NONE;
+	return OLDDWC_LOBBY_USERIDTBL_IDX_NONE;
 }
 
 //----------------------------------------------------------------------------
@@ -6143,7 +6143,7 @@ static void WFLBY_SYSTEM_COMMCMD_TALK_Req( s32 userid, const void* cp_data, u32 
 	cp_talkdata = cp_data;
 
 	// その人のIDXを取得
-	idx = DWC_LOBBY_GetUserIDIdx( userid );
+	idx = OLDDWC_LOBBY_GetUserIDIdx( userid );
 
 	// CRCチェック
 	if( WFLBY_SYSTEM_MyProfile_CheckCrc( &p_wk->myprofile, p_wk->p_save ) == FALSE ){
@@ -6158,7 +6158,7 @@ static void WFLBY_SYSTEM_COMMCMD_TALK_Req( s32 userid, const void* cp_data, u32 
 	// 状態が忙しいか、知らない人ならごめんなさい
 	// その人から何度も話しかけられている場合
 	if( (status != WFLBY_STATUS_LOGIN) ||
-		(idx == DWC_LOBBY_USERIDTBL_IDX_NONE) ||
+		(idx == OLDDWC_LOBBY_USERIDTBL_IDX_NONE) ||
 		(cp_talkdata->seq != WFLBY_TALK_SEQ_B_ANS) ||
 		(now_talk == TRUE)	||
 		(WFLBY_SYSTEM_CheckTalkCount( p_wk, idx ) == FALSE)){
@@ -6213,7 +6213,7 @@ static void WFLBY_SYSTEM_COMMCMD_TALK_Ans( s32 userid, const void* cp_data, u32 
 	cp_talkdata = cp_data;
 
 	// インデックス取得
-	idx = DWC_LOBBY_GetUserIDIdx( userid );
+	idx = OLDDWC_LOBBY_GetUserIDIdx( userid );
 
 	// 会話中かチェック
 	if( p_wk->talk.talk_type == WFLBY_TALK_TYPE_NONE ){
@@ -6278,7 +6278,7 @@ static void WFLBY_SYSTEM_COMMCMD_TALK_Data( s32 userid, const void* cp_data, u32
 	cp_talkdata = cp_data;
 
 	// インデックス取得
-	idx = DWC_LOBBY_GetUserIDIdx( userid );
+	idx = OLDDWC_LOBBY_GetUserIDIdx( userid );
 
 	// 相手があっているかチェック
 	if( p_wk->talk.talk_idx == idx ){
@@ -6302,7 +6302,7 @@ static void WFLBY_SYSTEM_COMMCMD_TALK_Data( s32 userid, const void* cp_data, u32
 	}else{
 
 		// 相手がいなくなってないかチェック
-		if( idx == DWC_LOBBY_USERIDTBL_IDX_NONE ){
+		if( idx == OLDDWC_LOBBY_USERIDTBL_IDX_NONE ){
 			// 緊急切断へ
 			WFLBY_SYSTEM_TALK_ExEndClear( &p_wk->talk );
 		}
@@ -6332,7 +6332,7 @@ static void WFLBY_SYSTEM_COMMCMD_TALK_End( s32 userid, const void* cp_data, u32 
 	}
 
 	// 会話してる人と一緒か
-	idx = DWC_LOBBY_GetUserIDIdx( userid );
+	idx = OLDDWC_LOBBY_GetUserIDIdx( userid );
 	if( p_wk->talk.talk_idx == idx ){
 //		OS_TPrintf( "talk end\n" );
 		// 会話終了
@@ -6386,8 +6386,8 @@ static void WFLBY_SYSTEM_COMMCMD_GADGET_Data( s32 userid, const void* cp_data, u
 	u32 idx;
 
 	// ユーザのIDXを受信
-	idx = DWC_LOBBY_GetUserIDIdx( userid );
-	if( idx != DWC_LOBBY_USERIDTBL_IDX_NONE ){
+	idx = OLDDWC_LOBBY_GetUserIDIdx( userid );
+	if( idx != OLDDWC_LOBBY_USERIDTBL_IDX_NONE ){
 		
 		p_wk->gadget.gadget[idx] = TRUE;
 	}
@@ -6412,13 +6412,13 @@ static void WFLBY_SYSTEM_COMMCMD_FLOAT_On( s32 userid, const void* cp_data, u32 
 	int i;
 
 	// ユーザのIDXを受信
-	idx = DWC_LOBBY_GetUserIDIdx( userid );
-	if( idx != DWC_LOBBY_USERIDTBL_IDX_NONE ){
+	idx = OLDDWC_LOBBY_GetUserIDIdx( userid );
+	if( idx != OLDDWC_LOBBY_USERIDTBL_IDX_NONE ){
 		// どこかに絶対のせる
 		for( i=0; i<WFLBY_FLOAT_STATION_NUM; i++ ){
 			result = WFLBY_SYSTEM_FLOAT_SetReserve( &p_wk->floatdata, idx, i );
 
-			if( result != DWC_LOBBY_USERIDTBL_IDX_NONE ){
+			if( result != OLDDWC_LOBBY_USERIDTBL_IDX_NONE ){
 				break;	// 登録成功
 			}
 		}
@@ -6441,8 +6441,8 @@ static void WFLBY_SYSTEM_COMMCMD_FLOAT_Anm( s32 userid, const void* cp_data, u32
 	u32 idx;
 
 	// ユーザのIDXを受信
-	idx = DWC_LOBBY_GetUserIDIdx( userid );
-	if( idx != DWC_LOBBY_USERIDTBL_IDX_NONE ){
+	idx = OLDDWC_LOBBY_GetUserIDIdx( userid );
+	if( idx != OLDDWC_LOBBY_USERIDTBL_IDX_NONE ){
 		WFLBY_SYSTEM_FLOAT_SetAnm( &p_wk->floatdata, idx );
 	}
 }
@@ -6795,7 +6795,7 @@ static void WFLBY_SYSTEM_FIREDATA_Start( WFLBY_FIRE_DATA* p_wk )
 	p_wk->count		= 0;
 
 	// 花火開始時間取得
-	DWC_LOBBY_GetTime( &p_wk->start_time );
+	OLDDWC_LOBBY_GetTime( &p_wk->start_time );
 }
 
 //----------------------------------------------------------------------------
@@ -6814,7 +6814,7 @@ static void WFLBY_SYSTEM_FIREDATA_Main( WFLBY_FIRE_DATA* p_wk )
 		
 		// 実際の時間での経過間隔よりcountの経過が小さいときは
 		// 時間のほうに合わせる
-		DWC_LOBBY_GetTime( &now_time );
+		OLDDWC_LOBBY_GetTime( &now_time );
 		diff_time = now_time - p_wk->start_time;
 		if( p_wk->count < (diff_time*30) ){
 			p_wk->count = (diff_time*30);

@@ -15,6 +15,10 @@
 #include "minigame_commcomand_func.h"
 
 #include "net_app/net_bugfix.h"
+#include "net_old\comm_system.h"
+#include "net_old\comm_state.h"
+#include "net_old\comm_info.h"
+#include "net_old\comm_tool.h"
 
 //-----------------------------------------------------------------------------
 /**
@@ -55,54 +59,54 @@
 // 通信初期化関数
 void CommCommandMNGMInitialize( MNGM_RESULTWK* p_wk )
 {
-#if WB_FIX
-  CommCommandInitialize( MNGM_CommCommandTclGet(), 
-      MNGM_CommCommandTblNumGet(), p_wk );
-#else
-	GFL_NET_AddCommandTable(GFL_NET_CMD_MINIGAME_TOOL, 
-	  MNGM_CommCommandTclGet(), MNGM_CommCommandTblNumGet(), p_wk);
-#endif
+	CommCommandInitialize( MNGM_CommCommandTclGet(), 
+			MNGM_CommCommandTblNumGet(), p_wk );
 }
 void CommCommandMNGMEntryInitialize( MNGM_ENTRYWK* p_wk )
 {
-#if WB_FIX
-  CommCommandInitialize( MNGM_CommCommandTclGet(), 
-      MNGM_CommCommandTblNumGet(), p_wk );
-#else
-	GFL_NET_AddCommandTable(GFL_NET_CMD_MINIGAME_TOOL, 
-	  MNGM_CommCommandTclGet(), MNGM_CommCommandTblNumGet(), p_wk);
-#endif
+	CommCommandInitialize( MNGM_CommCommandTclGet(), 
+			MNGM_CommCommandTblNumGet(), p_wk );
+}
+
+// 共通サイズ取得関数
+int CommMNGMGetZeroSize( void )
+{
+	return 0;
+}
+int CommMNGMGetu32Size( void )
+{
+	return sizeof(u32);
 }
 
 // 親ー＞子　Rareゲームタイプ
-void CommMNGMRareGame( const int netID, const int size, const void* pBuff, void* pWork, GFL_NETHANDLE *pNetHandle )
+void CommMNGMRareGame( int netID, int size, void* pBuff, void* pWork )
 {
-  MNGM_ENTRY_SetRareGame( pWork, *((u32*)pBuff) );
+	MNGM_ENTRY_SetRareGame( pWork, *((u32*)pBuff) );
 }
 
 
-// 子ー>親  もういちど
-void CommMNGMRetryYes( const int netID, const int size, const void* pBuff, void* pWork, GFL_NETHANDLE *pNetHandle )
+// 子ー>親	もういちど
+void CommMNGMRetryYes( int netID, int size, void* pBuff, void* pWork )
 {
-  MNGM_RESULT_SetKoRetry( pWork, netID, TRUE );
+	MNGM_RESULT_SetKoRetry( pWork, netID, TRUE );
 }
 
-// 子ー>親  もうやらない
-void CommMNGMRetryNo( const int netID, const int size, const void* pBuff, void* pWork, GFL_NETHANDLE *pNetHandle )
+// 子ー>親	もうやらない
+void CommMNGMRetryNo( int netID, int size, void* pBuff, void* pWork )
 {
-  MNGM_RESULT_SetKoRetry( pWork, netID, FALSE );
+	MNGM_RESULT_SetKoRetry( pWork, netID, FALSE );
 }
 
 
-// 親ー>子  もういちど
-void CommMNGMRetryOk( const int netID, const int size, const void* pBuff, void* pWork, GFL_NETHANDLE *pNetHandle )
+// 親ー>子	もういちど
+void CommMNGMRetryOk( int netID, int size, void* pBuff, void* pWork )
 {
-  MNGM_RESULT_SetOyaRetry( pWork, TRUE );
+	MNGM_RESULT_SetOyaRetry( pWork, TRUE );
 }
 
-// 親ー>子  もうやらない
-void CommMNGMRetryNg( const int netID, const int size, const void* pBuff, void* pWork, GFL_NETHANDLE *pNetHandle )
+// 親ー>子	もうやらない
+void CommMNGMRetryNg( int netID, int size, void* pBuff, void* pWork )
 {
-  MNGM_RESULT_SetOyaRetry( pWork, FALSE );
+	MNGM_RESULT_SetOyaRetry( pWork, FALSE );
 }
 

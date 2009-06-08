@@ -57,6 +57,11 @@
 #include "system/gfl_use.h"
 #include "system/bmp_winframe.h"
 
+#include "net_old\comm_system.h"
+#include "net_old\comm_state.h"
+#include "net_old\comm_info.h"
+#include "net_old\comm_tool.h"
+
 //-----------------------------------------------------------------------------
 /**
  *					コーディング規約
@@ -405,57 +410,6 @@ static void * _WFLBY_GetExchangeDataPtr(void *pWork);
 static int _WFLBY_GetExchangeDataSize(void *pWork);
 
 
-//==============================================================================
-//	
-//==============================================================================
-//--------------------------------------------------------------
-//	
-//--------------------------------------------------------------
-#define _MAXNUM   (4)         // 最大接続人数
-#define _MAXSIZE  (80)        // 最大送信バイト数
-#define _BCON_GET_NUM (16)    // 最大ビーコン収集数
-
-static const GFLNetInitializeStruct aGFLNetInit = {
-    NULL,  // 受信関数テーブル
-    0, // 受信テーブル要素数
-    NULL,    ///< ハードで接続した時に呼ばれる
-    NULL,    ///< ネゴシエーション完了時にコール
-    NULL,//_WFLBY_GetExchangeDataPtr,   // ユーザー同士が交換するデータのポインタ取得関数
-    NULL,//_WFLBY_GetExchangeDataSize,   // ユーザー同士が交換するデータのサイズ取得関数
-    NULL,  // ビーコンデータ取得関数
-    NULL,  // ビーコンデータサイズ取得関数
-    NULL,  // ビーコンのサービスを比較して繋いで良いかどうか判断する
-    NULL,            // 普通のエラーが起こった場合 通信終了
-    NULL,  // 通信不能なエラーが起こった場合呼ばれる 切断するしかない
-    NULL,  // 通信切断時に呼ばれる関数
-    NULL,  // オート接続で親になった場合
-    NULL,     ///< wifi接続時に自分のデータをセーブする必要がある場合に呼ばれる関数
-    NULL, ///< wifi接続時にフレンドコードの入れ替えを行う必要がある場合呼ばれる関数
-    _deleteFriendList,  ///< wifiフレンドリスト削除コールバック
-    _getFriendData,   ///< DWC形式の友達リスト	
-    _getMyUserData,  ///< DWCのユーザデータ（自分のデータ）
-    GFL_NET_DWCLOBBY_HEAPSIZE,   ///< DWCへのHEAPサイズ
-    TRUE,        ///< デバック用サーバにつなぐかどうか
-    0x444,  //ggid  DP=0x333,RANGER=0x178,WII=0x346
-    GFL_HEAPID_APP,  //元になるheapid
-    HEAPID_NETWORK,  //通信用にcreateされるHEAPID
-    HEAPID_WIFI,  //wifi用にcreateされるHEAPID
-    HEAPID_NETWORK,  //IRC用にcreateされるHEAPID
-    GFL_WICON_POSX,GFL_WICON_POSY,        // 通信アイコンXY位置
-    _MAXNUM,     // 最大接続人数
-    _MAXSIZE,  //最大送信バイト数
-    _BCON_GET_NUM,    // 最大ビーコン収集数
-    TRUE,     // CRC計算
-    FALSE,     // MP通信＝親子型通信モードかどうか
-    GFL_NET_TYPE_WIFI_LOBBY,  //通信種別
-    TRUE,     // 親が再度初期化した場合、つながらないようにする場合TRUE
-    WB_NET_WIFILOBBY,  //GameServiceID
-#if GFL_NET_IRC
-	IRC_TIMEOUT_STANDARD,	// 赤外線タイムアウト時間
-#endif
-};
-
-
 
 //----------------------------------------------------------------------------
 /**
@@ -709,19 +663,18 @@ GFL_PROC_RESULT WFLBY_CONNECT_Main(GFL_PROC* p_proc, int* p_seq, void * pwk, voi
 		{
 			WFLBY_USER_PROFILE* p_profile;
 			
-			GFL_NET_Init(&aGFLNetInit, NULL, p_wk);
 #ifdef WFLBY_CONNECT_DEBUG_START
 			if( D_Tomoya_WiFiLobby_DebugStart == TRUE ){
 				WFLBY_SYSTEM_DEBUG_SetItem( p_param->p_system, DEBUG_SEL_ITEM );
 				p_profile = WFLBY_SYSTEM_GetMyProfileLocal( p_param->p_system );
-				GFL_NET_StateWifiLobbyLogin_Debug( p_profile, DEBUG_SEL_SEASON, DEBUG_SEL_ROOM );
+				CommStateWifiLobbyLogin_Debug( p_wk->p_save, p_profile, DEBUG_SEL_SEASON, DEBUG_SEL_ROOM );
 			}else{
 				p_profile = WFLBY_SYSTEM_GetMyProfileLocal( p_param->p_system );
-				GFL_NET_StateWifiLobbyLogin( p_profile );
+				CommStateWifiLobbyLogin( p_wk->p_save, p_profile );
 			}
 #else
 			p_profile = WFLBY_SYSTEM_GetMyProfileLocal( p_param->p_system );
-			GFL_NET_StateWifiLobbyLogin( p_profile );
+			CommStateWifiLobbyLogin( p_wk->p_save, p_profile );
 #endif
 		}
 
@@ -733,13 +686,12 @@ GFL_PROC_RESULT WFLBY_CONNECT_Main(GFL_PROC* p_proc, int* p_seq, void * pwk, voi
 	// DWC ログイン待ち
 	case WFLBY_CONNECT_SEQ_LOGIN_WAIT_DWC:
 		// エラー処理
-		if( GFL_NET_SystemIsError() || GFL_NET_SystemIsLobbyError() ){
-			OS_TPrintf("エラー発生 aaa %d, %d\n", GFL_NET_SystemIsError(), GFL_NET_SystemIsLobbyError());
+		if( CommStateIsWifiError() || CommStateWifiLobbyError() ){
 			WFLBY_CONNECT_WIN_EndTimeWait( &p_wk->talk_system );
 			(*p_seq) = WFLBY_CONNECT_SEQ_ERRON;
 		}
 
-		if( GFL_NET_StateWifiLobbyDwcLoginCheck() == TRUE ){	// DWC_LoginAsyncの接続完了
+		if( CommStateWifiLobbyDwcLoginCheck() == TRUE ){	// DWC_LoginAsyncの接続完了
 			// WiFiクラブでの状態をNONEにする処理
 			WFLBY_SYSTEM_WiFiClubBuff_Init( p_param->p_system );
 			(*p_seq)++;
@@ -750,13 +702,12 @@ GFL_PROC_RESULT WFLBY_CONNECT_Main(GFL_PROC* p_proc, int* p_seq, void * pwk, voi
 	case WFLBY_CONNECT_SEQ_LOGIN_WAIT:
 		
 		// エラー処理
-		if( GFL_NET_SystemIsError() || GFL_NET_SystemIsLobbyError() ){
-			OS_TPrintf("エラー発生 bbb %d, %d\n", GFL_NET_SystemIsError(), GFL_NET_SystemIsLobbyError());
+		if( CommStateIsWifiError() || CommStateWifiLobbyError() ){
 			WFLBY_CONNECT_WIN_EndTimeWait( &p_wk->talk_system );
 			(*p_seq) = WFLBY_CONNECT_SEQ_ERRON;
 		}
 
-		if( GFL_NET_StateIsWifiLoginState() ){
+		if( CommStateIsWifiLoginState() ){
 
 			WFLBY_CONNECT_WIN_EndTimeWait( &p_wk->talk_system );
 
@@ -780,15 +731,15 @@ GFL_PROC_RESULT WFLBY_CONNECT_Main(GFL_PROC* p_proc, int* p_seq, void * pwk, voi
 	// エラー表示
 	case WFLBY_CONNECT_SEQ_ERRON:
 		{
-			GFL_NETSTATE_DWCERROR* pErr;
+			COMMSTATE_DWCERROR* pErr;
 			int msgno,err_no;
-			if( GFL_NET_SystemIsError() ){
-				pErr = GFL_NET_StateGetWifiError();
+			if( CommStateIsWifiError() ){
+				pErr = CommStateGetWifiError();
 				msgno = WFLBY_ERR_GetStrID( pErr->errorCode,  pErr->errorType);
                 err_no = pErr->errorCode;
 			}else{
-				err_no = DWC_LOBBY_GetErr();
-				err_no = DWC_LOBBY_GetErrNo( err_no );
+				err_no = OLDDWC_LOBBY_GetErr();
+				err_no = OLDDWC_LOBBY_GetErrNo( err_no );
 				msgno = dwc_lobby_0001;
 			}
 
@@ -809,8 +760,8 @@ GFL_PROC_RESULT WFLBY_CONNECT_Main(GFL_PROC* p_proc, int* p_seq, void * pwk, voi
 			WFLBY_ERR_TYPE err_type;
 			int err_no;
 
-			if( GFL_NET_SystemIsError() ){
-				GFL_NETSTATE_DWCERROR* pErr = GFL_NET_StateGetWifiError();
+			if( CommStateIsWifiError() ){
+				COMMSTATE_DWCERROR* pErr = CommStateGetWifiError();
 				err_type = WFLBY_ERR_GetErrType( pErr->errorCode, pErr->errorType );
 				if( err_type == WFLBY_ERR_TYPE_RETRY ){
 					// 再接続
@@ -847,7 +798,7 @@ GFL_PROC_RESULT WFLBY_CONNECT_Main(GFL_PROC* p_proc, int* p_seq, void * pwk, voi
 			// YES
 			case 0:	
 				// いったんログアウト
-				GFL_NET_StateWifiLobbyLogout();
+				CommStateWifiLobbyLogout();
 				(*p_seq) = WFLBY_CONNECT_SEQ_RETRYLOGOUTWAIT;
 				break;
 
@@ -861,7 +812,7 @@ GFL_PROC_RESULT WFLBY_CONNECT_Main(GFL_PROC* p_proc, int* p_seq, void * pwk, voi
 
 	// 再接続時のログアウト待ち
 	case WFLBY_CONNECT_SEQ_RETRYLOGOUTWAIT:
-		if( GFL_NET_IsInit() == FALSE ){
+		if( CommStateIsInitialize() == FALSE ){
 			(*p_seq) = WFLBY_CONNECT_SEQ_LOGIN;
 		}
 		break;
@@ -871,13 +822,13 @@ GFL_PROC_RESULT WFLBY_CONNECT_Main(GFL_PROC* p_proc, int* p_seq, void * pwk, voi
 		WFLBY_CONNECT_WIN_Off( &p_wk->talk );
 		WFLBY_CONNECT_WIN_Off( &p_wk->talk_system );
 		WFLBY_CONNECT_WIN_Off( &p_wk->system );
-		GFL_NET_StateWifiLobbyLogout();
+		CommStateWifiLobbyLogout();
 		(*p_seq)++;
 		break;
 		
 	// ログアウトまち
 	case WFLBY_CONNECT_SEQ_LOGOUTWAIT:
-		if( GFL_NET_IsInit() == FALSE ){
+		if( CommStateIsInitialize() == FALSE ){
 			WFLBY_CONNECT_WIN_Off( &p_wk->talk );
 			WFLBY_CONNECT_WIN_Off( &p_wk->talk_system );
 			(*p_seq) = WFLBY_CONNECT_SEQ_FADEOUT;
@@ -1077,7 +1028,7 @@ GFL_PROC_RESULT WFLBY_DISCONNECT_Main(GFL_PROC* p_proc, int* p_seq, void * pwk, 
 	case WFLBY_DISCONNECT_SEQ_LOGOUT_MSG:
 		WFLBY_CONNECT_WIN_Print( &p_wk->talk, dwc_message_0011 );
 		// エラーチェック
-		if( GFL_NET_SystemIsError() || GFL_NET_SystemIsLobbyError() ){
+		if( CommStateIsWifiError() || CommStateWifiLobbyError() ){
 			// エラーならすぐにLOGOUT
 			(*p_seq) = WFLBY_DISCONNECT_SEQ_LOGOUT;
 			WFLBY_CONNECT_WIN_StartTimeWait( &p_wk->talk );
@@ -1089,7 +1040,7 @@ GFL_PROC_RESULT WFLBY_DISCONNECT_Main(GFL_PROC* p_proc, int* p_seq, void * pwk, 
 
 	//  世界データ送信
 	case WFLBY_DISCONNECT_SEQ_WLDSEND:
-		DWC_LOBBY_WLDDATA_Send();
+		OLDDWC_LOBBY_WLDDATA_Send();
 
 		// タイムウエイト設定
 		p_wk->wait = WFLBY_DISCONNECT_WLDSENDWAIT_TIMEOUT;
@@ -1102,19 +1053,19 @@ GFL_PROC_RESULT WFLBY_DISCONNECT_Main(GFL_PROC* p_proc, int* p_seq, void * pwk, 
 			p_wk->wait --;
 		}
 		// データがブロードキャストされるかタイムアウトが来るかでログアウト処理にする
-		if( DWC_LOBBY_WLDDATA_SendWait() || (p_wk->wait == 0) ){
+		if( OLDDWC_LOBBY_WLDDATA_SendWait() || (p_wk->wait == 0) ){
 			(*p_seq) = WFLBY_DISCONNECT_SEQ_LOGOUT;
 		}
 		break;
 
 	// ログアウト処理
 	case WFLBY_DISCONNECT_SEQ_LOGOUT:
-		GFL_NET_StateWifiLobbyLogout();
+		CommStateWifiLobbyLogout();
 		(*p_seq) = WFLBY_DISCONNECT_SEQ_LOGOUT_WAIT;
 		break;
 
 	case WFLBY_DISCONNECT_SEQ_LOGOUT_WAIT:
-		if( GFL_NET_IsInit() == FALSE ){
+		if( CommStateIsInitialize() == FALSE ){
 
 			// タイムアウト終了
 			WFLBY_CONNECT_WIN_EndTimeWait( &p_wk->talk_system );

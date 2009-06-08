@@ -36,6 +36,8 @@
 #include "net_app/compati_control.h"
 #include "net_app/wifi_lobby.h"
 
+#include "test\wflby_debug.h"
+
 
 //==============================================================================
 //	’è”’è‹`
@@ -48,6 +50,8 @@ FS_EXTERN_OVERLAY(balloon);
 FS_EXTERN_OVERLAY(compati_check);
 FS_EXTERN_OVERLAY(palace);
 FS_EXTERN_OVERLAY(wifilobby_common);
+FS_EXTERN_OVERLAY(netold);
+FS_EXTERN_OVERLAY(minigame_common);
 
 
 //==============================================================================
@@ -524,6 +528,10 @@ static void * _BalloonParentWorkCreate(D_MATSU_WORK *wk)
 	
 	balloon_pwk = GFL_HEAP_AllocClearMemory(GFL_HEAPID_APP, sizeof(BALLOON_PROC_WORK));
 	balloon_pwk->debug_offline = TRUE;
+	
+	GFL_OVERLAY_Load(FS_OVERLAY_ID(netold));
+	GFL_OVERLAY_Load(FS_OVERLAY_ID(minigame_common));
+	
 	return balloon_pwk;
 }
 
@@ -539,6 +547,8 @@ static void * _WifiLobbyParentWorkCreate(D_MATSU_WORK *wk)
 		= GFL_HEAP_AllocClearMemory(GFL_HEAPID_APP, sizeof(WFLBY_COUNTER_TIME));
 	wflby_pwk->p_save = SaveControl_GetPointer();
 	wflby_pwk->check_skip = FALSE;
+	
+	D_Tomoya_WiFiLobby_DebugStart = 0;//TRUE;
 	return wflby_pwk;
 }
 

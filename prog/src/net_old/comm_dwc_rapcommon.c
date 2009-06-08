@@ -11,6 +11,7 @@
 /*↑[GS_CONVERT_TAG]*/
 #include <dwc.h>
 #include "net_old/comm_dwc_rap.h"
+#include "net_old/comm_dwc_rapcommon.h"
 
 //==============================================================================
 /**
@@ -19,9 +20,7 @@
  * @retval  DS本体に保存するユーザIDのチェック・作成結果。
  */
 //==============================================================================
-#if PL_G292_090323_FIX
-
-int mydwc_initdwc(int heapID)
+int OLDmydwc_initdwc(int heapID)
 {
 	int ret;
     u8* pWork;
@@ -37,7 +36,8 @@ int mydwc_initdwc(int heapID)
     return ret;
 }
 
-int mydwc_init(int heapID)
+#if 0 //使用していないので無効化 2009.06.04(木) matsuda
+int OLDmydwc_init(int heapID)
 {
 	int ret;
 
@@ -45,37 +45,12 @@ int mydwc_init(int heapID)
     DpwCommonOverlayStart();
     
     // DWCライブラリ初期化
-    ret = mydwc_initdwc(heapID);
+    ret = OLDmydwc_initdwc(heapID);
 
     DwcOverlayEnd();
     DpwCommonOverlayEnd();
 	return ret;
 }
-#else
-
-int mydwc_init(int heapID)
-{
-	int ret;
-    u8* pWork;
-    u8* pTemp;
-
-    DwcOverlayStart();
-    DpwCommonOverlayStart();
-    
-    pWork = GFL_HEAP_AllocMemory(heapID, DWC_INIT_WORK_SIZE+32);
-/*↑[GS_CONVERT_TAG]*/
-    pTemp = (u8 *)( ((u32)pWork + 31) / 32 * 32 );
-    // DWCライブラリ初期化
-    ret = DWC_Init( pTemp );
-    GFL_HEAP_FreeMemory(pWork);
-/*↑[GS_CONVERT_TAG]*/
-
-    DwcOverlayEnd();
-    DpwCommonOverlayEnd();
-	return ret;
-}
-
-#endif
 
 //==============================================================================
 /**
@@ -84,7 +59,7 @@ int mydwc_init(int heapID)
  * @retval  DS本体に保存するユーザIDのチェック・作成結果。
  */
 //==============================================================================
-void mydwc_createUserData( WIFI_LIST *pWifiList )
+void OLDmydwc_createUserData( WIFI_LIST *pWifiList )
 {
     // ユーザデータ作成をする。    
     DWCUserData *userdata = WifiList_GetMyUserInfo(pWifiList);
@@ -103,7 +78,7 @@ void mydwc_createUserData( WIFI_LIST *pWifiList )
  */
 //==============================================================================
 
-int mydwc_getMyGSID(WIFI_LIST *pWifiList)
+int OLDmydwc_getMyGSID(WIFI_LIST *pWifiList)
 {
     DWCUserData *userdata = WifiList_GetMyUserInfo(pWifiList);
     DWCFriendData friendData;
@@ -120,7 +95,7 @@ int mydwc_getMyGSID(WIFI_LIST *pWifiList)
  */
 //==============================================================================
 
-BOOL mydwc_checkMyGSID(SAVEDATA *pSV)
+BOOL OLDmydwc_checkMyGSID(SAVEDATA *pSV)
 {
     WIFI_LIST* pList = SaveData_GetWifiListData(pSV);
     DWCUserData *userdata = WifiList_GetMyUserInfo(pList);
@@ -131,4 +106,5 @@ BOOL mydwc_checkMyGSID(SAVEDATA *pSV)
    }
    return FALSE;
 }
+#endif
 

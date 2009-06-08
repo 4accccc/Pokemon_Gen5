@@ -43,7 +43,7 @@
 #include "wifi_lobby_other.naix"
 #include "unionobj2d_onlyfront.naix"
 
-#include "net/dwc_lobbylib.h"
+#include "net_old/comm_dwc_lobbylib.h"
 
 #include "wflby_room_def.h"
 #include "wflby_event.h"
@@ -64,6 +64,11 @@
 #include "lobby_trfgra.naix"
 #include "gamesystem/msgspeed.h"
 #include "sound/pm_sndsys.h"
+
+#include "net_old\comm_system.h"
+#include "net_old\comm_state.h"
+#include "net_old\comm_info.h"
+#include "net_old\comm_tool.h"
 
 
 //-----------------------------------------------------------------------------
@@ -1255,7 +1260,7 @@ GFL_PROC_RESULT WFLBY_ROOM_Init(GFL_PROC* p_proc, int* p_seq, void * pwk, void *
 
 	// プレイヤーナンバー設定
 	p_wk->plno = WFLBY_SYSTEM_GetMyIdx( p_wk->p_system );
-	GF_ASSERT( WFLBY_SYSTEM_GetMyIdx( p_wk->p_system ) != DWC_LOBBY_USERIDTBL_IDX_NONE );
+	GF_ASSERT( WFLBY_SYSTEM_GetMyIdx( p_wk->p_system ) != OLDDWC_LOBBY_USERIDTBL_IDX_NONE );
 
 #if WB_TEMP_FIX
 	// メッセージ表示関係を設定
@@ -1350,6 +1355,7 @@ GFL_PROC_RESULT WFLBY_ROOM_Init(GFL_PROC* p_proc, int* p_seq, void * pwk, void *
  *	@brief	部屋システム	メイン
  */	
 //-----------------------------------------------------------------------------
+#include "net_old\comm_system.h"
 GFL_PROC_RESULT WFLBY_ROOM_Main(GFL_PROC* p_proc, int* p_seq, void * pwk, void * mywk)
 {
 	WFLBY_ROOMWK* p_wk;
@@ -1472,14 +1478,14 @@ GFL_PROC_RESULT WFLBY_ROOM_Main(GFL_PROC* p_proc, int* p_seq, void * pwk, void *
 			WFLBY_ROOM_SubWin_End( &p_wk->subwin );
 			WFLBY_ROOM_YesNoWin_Exit( &p_wk->yesnowin );
 			
-			if( GFL_NET_SystemIsError() ){
+			if( CommStateIsWifiError() ){
 				// DWC系エラー
 				WFLBY_ROOM_ErrWin_DrawDwcErr( &p_wk->errwin, &p_wk->talkwin, &p_wk->graphic, &p_wk->def_msg);
 			}
-			else if( GFL_NET_SystemIsLobbyError() ){
+			else if( CommStateWifiLobbyError() ){
 				// ロビー系エラー
 				WFLBY_ROOM_ErrWin_DrawLobbyErr( &p_wk->errwin, &p_wk->talkwin, &p_wk->graphic, &p_wk->def_msg, 
-						DWC_LOBBY_GetErr() );
+						OLDDWC_LOBBY_GetErr() );
 			}
 			else {
 				// ロビーシステム系エラー
@@ -3490,10 +3496,10 @@ static  void WFLBY_ROOM_MapAnmCont( WFLBY_ROOMWK* p_wk )
 	minigame_end = WFLBY_SYSTEM_Event_GetMiniGameStop( p_wk->p_system );
 	
 	// ミニゲーム
-	for( i=0; i<DWC_LOBBY_MG_NUM; i++ ){
-		recruit = DWC_LOBBY_MG_CheckRecruit( i );				// 募集中か
+	for( i=0; i<OLDDWC_LOBBY_MG_NUM; i++ ){
+		recruit = OLDDWC_LOBBY_MG_CheckRecruit( i );				// 募集中か
 		if( recruit == TRUE ){
-			if( DWC_LOBBY_MG_CheckEntryOk( i ) == FALSE ){		// 募集中でまだあそんでないか
+			if( OLDDWC_LOBBY_MG_CheckEntryOk( i ) == FALSE ){		// 募集中でまだあそんでないか
 				play = TRUE;
 			}else{
 				play = FALSE;
@@ -3501,7 +3507,7 @@ static  void WFLBY_ROOM_MapAnmCont( WFLBY_ROOMWK* p_wk )
 		}else{
 			play = FALSE;	// 募集してないのであそんでるわけない
 		}
-		num = DWC_LOBBY_MG_GetEntryNum( i );
+		num = OLDDWC_LOBBY_MG_GetEntryNum( i );
 		WFLBY_3DMAPOBJCONT_MAP_SetMGAnm(  p_wk->p_mapobjcont, WFLBY_GAME_BALLSLOW+i, num, 
 				recruit, play, minigame_end );
 	}
@@ -4776,9 +4782,9 @@ static void WFLBY_ROOM_ErrWin_DrawDwcErr( WFLBY_ROOM_ERRMSG* p_wk, WFLBY_ROOM_TA
 {
 	u32 msgno;
 	STRBUF*  p_str;
-    GFL_NETSTATE_DWCERROR* pErr;
+  COMMSTATE_DWCERROR* pErr;
 
-    pErr = GFL_NET_StateGetWifiError();
+  pErr = CommStateGetWifiError();
 	// メッセージ取得
 	msgno = WFLBY_ERR_GetStrID(  pErr->errorCode,  pErr->errorType );	// メッセージＮＯ取得
 	WFLBY_ROOM_Msg_SetNumber( p_msg, pErr->errorCode, 5, 0, STR_NUM_DISP_ZERO );	// ＥＲＲＮＯ設定
@@ -4804,7 +4810,7 @@ static void WFLBY_ROOM_ErrWin_DrawLobbyErr( WFLBY_ROOM_ERRMSG* p_wk, WFLBY_ROOM_
 	s32 draw_no;
 	STRBUF*  p_str;
 
-	draw_no = DWC_LOBBY_GetErrNo( errno );
+	draw_no = OLDDWC_LOBBY_GetErrNo( errno );
 
 	// メッセージ取得
 	WFLBY_ROOM_Msg_SetNumber( p_msg, draw_no, 5, 0, STR_NUM_DISP_ZERO );	// ＥＲＲＮＯ設定
@@ -5370,7 +5376,7 @@ static void WFLBY_ROOM_UNDERWIN_Main( WFLBY_UNDER_WIN* p_wk, WFLBY_ROOMWK* p_roo
 					u32 floatidx;
 					u32 floatoffs;
 					idx = WFLBY_SYSTEM_GetFloatPlIdxReserve( p_system, WFLBY_SYSTEM_GetMyIdx( p_system ) );
-					if( idx == DWC_LOBBY_USERIDTBL_IDX_NONE ){
+					if( idx == OLDDWC_LOBBY_USERIDTBL_IDX_NONE ){
 						GF_ASSERT(0);
 						// 予約してない
 						idx = 0;	// 0にしてしまう

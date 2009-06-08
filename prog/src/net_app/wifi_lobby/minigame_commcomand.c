@@ -16,6 +16,11 @@
 #include "minigame_commcomand.h"
 
 #include "net_app/net_bugfix.h"
+#include "net_old\comm_system.h"
+#include "net_old\comm_state.h"
+#include "net_old\comm_info.h"
+#include "net_old\comm_tool.h"
+#include "net_old\comm_command.h"
 
 //-----------------------------------------------------------------------------
 /**
@@ -53,35 +58,35 @@
 //-----------------------------------------------------------------------------
 
 // 対応するコールバック関数
-static const NetRecvFuncTable _CommBucketTbl[] = {
-  //-------------------------------------
-  //　ゲーム用
-  //=====================================
-  { CommMNGMRetryYes, NULL },      ///< 通信開始
-  { CommMNGMRetryNo, NULL },     ///< 通信終了
-  { CommMNGMRetryOk, NULL },       ///< 木の実通信
-  { CommMNGMRetryNg, NULL },     ///< 得点通信
-  { CommMNGMRareGame, NULL },     ///< Rareゲームタイプ
+static const CommPacketTbl _CommBucketTbl[] = {
+	//-------------------------------------
+	//　ゲーム用
+	//=====================================
+	{ CommMNGMRetryYes, CommMNGMGetZeroSize, NULL },			///< 通信開始
+	{ CommMNGMRetryNo, CommMNGMGetZeroSize, NULL },			///< 通信終了
+	{ CommMNGMRetryOk, CommMNGMGetZeroSize, NULL },				///< 木の実通信
+	{ CommMNGMRetryNg, CommMNGMGetZeroSize, NULL },			///< 得点通信
+	{ CommMNGMRareGame, CommMNGMGetu32Size, NULL },			///< Rareゲームタイプ
 };
 
 //----------------------------------------------------------------------------
 /**
- *  @brief    コマンドテーブルを取得
+ *	@brief		コマンドテーブルを取得
  */
 //-----------------------------------------------------------------------------
-const NetRecvFuncTable* MNGM_CommCommandTclGet( void )
+const CommPacketTbl* MNGM_CommCommandTclGet( void )
 {
-  return _CommBucketTbl;
+	return _CommBucketTbl;
 }
 
 //----------------------------------------------------------------------------
 /**
- *  @brief  コマンドテーブル要素数を取得
+ *	@brief	コマンドテーブル要素数を取得
  */
 //-----------------------------------------------------------------------------
 int MNGM_CommCommandTblNumGet( void )
 {
-    return sizeof(_CommBucketTbl)/sizeof(NetRecvFuncTable);
+    return sizeof(_CommBucketTbl)/sizeof(CommPacketTbl);
 }
 
 

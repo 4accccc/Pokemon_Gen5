@@ -86,12 +86,12 @@ void FootPrintTool_NameDraw(GFL_MSGDATA *msgman, WORDSET *wordset, GFL_BMPWIN *w
 	PRINTSYS_LSB print_color;
 	
 	//サブチャンネルのユーザーIDからメインのユーザーIndexを取得する(道のり)
-	user_index = DWC_LOBBY_SUBCHAN_GetUserIDIdx(user_id);
-	if(user_index == DWC_LOBBY_USERIDTBL_IDX_NONE){
+	user_index = OLDDWC_LOBBY_SUBCHAN_GetUserIDIdx(user_id);
+	if(user_index == OLDDWC_LOBBY_USERIDTBL_IDX_NONE){
 		return;
 	}
-	main_idx = DWC_LOBBY_GetUserIDIdx(user_id);
-	if(main_idx == DWC_LOBBY_USERIDTBL_IDX_NONE){
+	main_idx = OLDDWC_LOBBY_GetUserIDIdx(user_id);
+	if(main_idx == OLDDWC_LOBBY_USERIDTBL_IDX_NONE){
 		return;
 	}
 	

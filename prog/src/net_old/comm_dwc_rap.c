@@ -15,11 +15,13 @@
 #include "net_old/comm_local.h"
 #include "net_old/comm_system.h"
 #include "net_old/comm_dwc_rap.h"
-#include "../net/dwc_lobbylib.h"
+#include "net_old/comm_dwc_lobbylib.h"
+#include "net_old/comm_dwc_rapcommon.h"
 //#include "system/pm_debug_wifi.h"
 //#include "savedata/frontier_savedata.h"
 //#include <vct.h>
 #include "system/main.h"
+#include "net_app/net_bugfix.h"
 
 
 // 何秒間通信が届かないとタイムアウトと判断するか
@@ -104,8 +106,10 @@ typedef struct
 	
 	void *orgPtr;  //32バイトアライメントしていない自分のポインタ
     void *recvPtr[COMM_MODE_CLUB_WIFI_NUM_MAX+1];  //受信バッファの32バイトアライメントしていないポインタ
+#if WB_FIX
     void *heapPtr;
 	NNSFndHeapHandle headHandle;
+#endif
     void *heapPtrEx;
 	NNSFndHeapHandle headHandleEx;
     u32 heapSizeEx;
@@ -289,7 +293,9 @@ int mydwc_startConnect(SAVE_CONTROL_WORK* pSaveData, int heapID, int heapSize, i
 //-----#endif //TESTOHNO
 {
     void* pTemp;
-
+  
+  OLDmydwc_initdwc(heapID);
+  
     // ヒープ領域からワーク領域を確保。
 	GF_ASSERT( _dWork == NULL );
 #ifdef DEBUGPRINT_ON
@@ -322,11 +328,15 @@ int mydwc_startConnect(SAVE_CONTROL_WORK* pSaveData, int heapID, int heapSize, i
     _dWork->_heapspace=0x800000;
     _dWork->_heapmaxspace=0x800000;
 #endif
+#if WB_FIX
     _dWork->heapPtr = GFL_HEAP_AllocMemory(heapID, heapSize+(SIZE_RECV_BUFFER*3) + 32);  // RECVバッファ分移動
 /*↑[GS_CONVERT_TAG]*/
+#endif
     _dWork->heapPtrEx = NULL;
 //----#endif //TESTOHNO
+#if WB_FIX
 	_dWork->headHandle = NNS_FndCreateExpHeap( (void *)( ((u32)_dWork->heapPtr + 31) / 32 * 32 ), heapSize);
+#endif
 	_dWork->headHandleEx = NULL;
 
     _dWork->vchatcodec = VCHAT_NONE;
@@ -409,8 +419,10 @@ void mydwc_free()
 /*↑[GS_CONVERT_TAG]*/
             _dWork->heapPtrEx = NULL;
 		}
+    #if WB_FIX
         NNS_FndDestroyExpHeap( _dWork->headHandle );
         GFL_HEAP_FreeMemory(  _dWork->heapPtr  );
+    #endif
 /*↑[GS_CONVERT_TAG]*/
         GFL_HEAP_FreeMemory(  _dWork->orgPtr  );
 /*↑[GS_CONVERT_TAG]*/
@@ -1408,10 +1420,12 @@ static void* mydwc_AllocFunc( DWCAllocType name, u32   size, int align )
 	OSIntrMode old;
 
 	old = OS_DisableInterrupts();
-	GF_ASSERT(align < 32);
-	
-	ptr = GFL_NET_Align32Alloc(HEAPID_NETWORK, size);
-
+	GF_ASSERT(align <= 32);
+#if WB_FIX
+  ptr = NNS_FndAllocFromExpHeapEx( _dWork->headHandle, size, align );
+#else
+	ptr = GFL_NET_Align32Alloc(HEAPID_WIFI, size);
+#endif
 	OS_RestoreInterrupts( old );
   if(ptr == NULL){
 		// ヒープが無い場合の修正
@@ -1433,7 +1447,28 @@ static void mydwc_FreeFunc( DWCAllocType name, void* ptr,  u32 size  )
 
 	if ( !ptr ) return;
 	old = OS_DisableInterrupts();
-	GFL_NET_Align32Free( ptr );
+
+#if WB_FIX
+	// GROUPIDから臨時ヒープか確認し
+	// 確保先の拡張ヒープでメモリを開放する
+	groupid = NNS_FndGetGroupIDForMBlockExpHeap( ptr );
+//	OS_TPrintf( "dwc_rap:heap free groupid %d\n", groupid );
+	if( groupid == _EXTRA_HEAP_GROUPID ){	
+
+		if( _dWork->heapPtrEx==NULL ){
+			// ヒープが無い場合のえらー
+			CommStateSetError(COMM_ERROR_RESET_SAVEPOINT);  // エラーにする
+			OS_TPrintf( "dwc_rap;ex_heap none\n" );
+			return ;
+		}
+		
+	    NNS_FndFreeToExpHeap( _dWork->headHandleEx, ptr );
+	}else{
+	    NNS_FndFreeToExpHeap( _dWork->headHandle, ptr );
+	}
+#else
+ 	GFL_NET_Align32Free( ptr );
+#endif
 	OS_RestoreInterrupts( old );
 }
 

@@ -25,8 +25,6 @@ static void _commCommandRecvThrowOutReq(int netID, int size, void* pData, void* 
 static void _commCommandRecvThrowOutEnd(int netID, int size, void* pData, void* pWork);
 static int _getTwo(void);
 
-// field/d_ohno.hにあるデバッグ用
-extern void CommDebugRecvHugeData(int netID, int size, void* pData, void* pWork);
 
 
 //==============================================================================
@@ -45,13 +43,8 @@ static const CommPacketTbl _CommPacketTbl[] = {
     {CommInfoRecvEnd, _getZero, NULL},
     {CommRecvNegotiation, CommRecvGetNegotiationSize, NULL},
     {CommRecvNegotiationReturn, CommRecvGetNegotiationSize, NULL},
-#ifdef PM_DEBUG
-    {CommDebugRecvHugeData, _getVariable, NULL},
-    {CommStateRecvDebugStart, _getZero, NULL},
-#else
     {NULL, NULL, NULL},
     {NULL, NULL, NULL},
-#endif
     {CommRecvDSMPChange, _getOne, NULL},
     {CommRecvDSMPChangeReq, _getOne, NULL},
     {CommRecvDSMPChangeEnd, _getOne, NULL},

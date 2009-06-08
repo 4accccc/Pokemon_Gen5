@@ -43,7 +43,7 @@ extern void mydwc_createUserData( DWCUserData *userdata );
  */
 //==============================================================================
 
-extern int mydwc_getMyGSID(void);
+//extern int mydwc_getMyGSID(void);
 
 //==============================================================================
 /**

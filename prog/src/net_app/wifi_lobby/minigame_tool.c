@@ -53,10 +53,14 @@
 #include "system/gfl_use.h"
 #include "system/wipe.h"
 #include "net/net_exchange.h"
-#include "net\dwc_rapfriend.h"
+//#include "net_old\comm_dwc_rapfriend.h"
 #include "sound/pm_sndsys.h"
 
 #include "net_app/net_bugfix.h"
+#include "net_old\comm_system.h"
+#include "net_old\comm_state.h"
+#include "net_old\comm_info.h"
+#include "net_old\comm_tool.h"
 
 //-----------------------------------------------------------------------------
 /**
@@ -941,7 +945,7 @@ static const MNGM_BGL_DATA sc_MNGM_ENTRY_BGCNT[MNGM_ENTRY_BGL_USE] = {
     GFL_BG_FRAME3_M,
     {
       0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
-      GX_BG_SCRBASE_0xe800, GX_BG_CHARBASE_0x10000, GX_BG_EXTPLTT_01,
+      GX_BG_SCRBASE_0xe800, GX_BG_CHARBASE_0x10000, 0x8000, GX_BG_EXTPLTT_01,
       3, 0, 0, FALSE
     },
   },
@@ -949,7 +953,7 @@ static const MNGM_BGL_DATA sc_MNGM_ENTRY_BGCNT[MNGM_ENTRY_BGL_USE] = {
     GFL_BG_FRAME1_M,
     {
       0, 0, 0x2000, 0, GFL_BG_SCRSIZ_512x512, GX_BG_COLORMODE_16,
-      GX_BG_SCRBASE_0xc800, GX_BG_CHARBASE_0x10000, GX_BG_EXTPLTT_01,
+      GX_BG_SCRBASE_0xc800, GX_BG_CHARBASE_0x10000, 0x8000, GX_BG_EXTPLTT_01,
       1, 0, 0, FALSE
     },
   },
@@ -957,7 +961,7 @@ static const MNGM_BGL_DATA sc_MNGM_ENTRY_BGCNT[MNGM_ENTRY_BGL_USE] = {
     GFL_BG_FRAME2_M,
     {
       0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
-      GX_BG_SCRBASE_0xc000, GX_BG_CHARBASE_0x18000, GX_BG_EXTPLTT_01,
+      GX_BG_SCRBASE_0xc000, GX_BG_CHARBASE_0x18000, 0x8000, GX_BG_EXTPLTT_01,
       0, 0, 0, FALSE
     },
   },
@@ -965,7 +969,7 @@ static const MNGM_BGL_DATA sc_MNGM_ENTRY_BGCNT[MNGM_ENTRY_BGL_USE] = {
     GFL_BG_FRAME0_M,
     {
       0, 0, 0x2000, 0, GFL_BG_SCRSIZ_512x512, GX_BG_COLORMODE_16,
-      GX_BG_SCRBASE_0xa000, GX_BG_CHARBASE_0x00000, GX_BG_EXTPLTT_01,
+      GX_BG_SCRBASE_0xa000, GX_BG_CHARBASE_0x00000, 0x8000, GX_BG_EXTPLTT_01,
       2, 0, 0, FALSE
     },
   },
@@ -975,7 +979,7 @@ static const MNGM_BGL_DATA sc_MNGM_ENTRY_BGCNT[MNGM_ENTRY_BGL_USE] = {
     GFL_BG_FRAME0_S,
     {
       0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
-      GX_BG_SCRBASE_0x7800, GX_BG_CHARBASE_0x00000, GX_BG_EXTPLTT_01,
+      GX_BG_SCRBASE_0x7800, GX_BG_CHARBASE_0x00000, 0x7800, GX_BG_EXTPLTT_01,
       0, 0, 0, FALSE
     },
   },
@@ -1077,7 +1081,7 @@ static const MNGM_BGL_DATA sc_MNGM_RESULT_BGCNT[MNGM_RESULT_BGL_USE] = {
     GFL_BG_FRAME3_M,
     {
       0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
-      GX_BG_SCRBASE_0xe800, GX_BG_CHARBASE_0x00000, GX_BG_EXTPLTT_01,
+      GX_BG_SCRBASE_0xe800, GX_BG_CHARBASE_0x00000, 0x8000, GX_BG_EXTPLTT_01,
       3, 0, 0, FALSE
     },
   },
@@ -1085,7 +1089,7 @@ static const MNGM_BGL_DATA sc_MNGM_RESULT_BGCNT[MNGM_RESULT_BGL_USE] = {
     GFL_BG_FRAME1_M,
     {
       0, 0, 0x1000, 0, GFL_BG_SCRSIZ_512x256, GX_BG_COLORMODE_16,
-      GX_BG_SCRBASE_0xd800, GX_BG_CHARBASE_0x00000, GX_BG_EXTPLTT_01,
+      GX_BG_SCRBASE_0xd800, GX_BG_CHARBASE_0x00000, 0x8000, GX_BG_EXTPLTT_01,
       2, 0, 0, FALSE
     },
   },
@@ -1093,7 +1097,7 @@ static const MNGM_BGL_DATA sc_MNGM_RESULT_BGCNT[MNGM_RESULT_BGL_USE] = {
     GFL_BG_FRAME2_M,
     {
       0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
-      GX_BG_SCRBASE_0xd000, GX_BG_CHARBASE_0x10000, GX_BG_EXTPLTT_01,
+      GX_BG_SCRBASE_0xd000, GX_BG_CHARBASE_0x10000, 0x8000, GX_BG_EXTPLTT_01,
       0, 0, 0, FALSE
     },
   },
@@ -1101,7 +1105,7 @@ static const MNGM_BGL_DATA sc_MNGM_RESULT_BGCNT[MNGM_RESULT_BGL_USE] = {
     GFL_BG_FRAME0_M,
     {
       0, 0, 0x1000, 0, GFL_BG_SCRSIZ_512x256, GX_BG_COLORMODE_16,
-      GX_BG_SCRBASE_0xc000, GX_BG_CHARBASE_0x00000, GX_BG_EXTPLTT_01,
+      GX_BG_SCRBASE_0xc000, GX_BG_CHARBASE_0x00000, 0x8000, GX_BG_EXTPLTT_01,
       1, 0, 0, FALSE
     },
   },
@@ -1111,7 +1115,7 @@ static const MNGM_BGL_DATA sc_MNGM_RESULT_BGCNT[MNGM_RESULT_BGL_USE] = {
     GFL_BG_FRAME0_S,
     {
       0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
-      GX_BG_SCRBASE_0x7800, GX_BG_CHARBASE_0x04000, GX_BG_EXTPLTT_01,
+      GX_BG_SCRBASE_0x7800, GX_BG_CHARBASE_0x04000, 0x3000, GX_BG_EXTPLTT_01,
       0, 0, 0, FALSE
     },
   },
@@ -1119,7 +1123,7 @@ static const MNGM_BGL_DATA sc_MNGM_RESULT_BGCNT[MNGM_RESULT_BGL_USE] = {
     GFL_BG_FRAME1_S,
     {
       0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
-      GX_BG_SCRBASE_0x7000, GX_BG_CHARBASE_0x00000, GX_BG_EXTPLTT_01,
+      GX_BG_SCRBASE_0x7000, GX_BG_CHARBASE_0x00000, 0x4000, GX_BG_EXTPLTT_01,
       0, 0, 0, FALSE
     },
   },
@@ -1346,39 +1350,6 @@ static void MNGM_COUNT_TimeUpTcb( GFL_TCB* tcb, void* p_work );
 
 
 
-//-------------------------------------
-/// エントリー画面、結果画面共通パラメータツール
-//=====================================
-static MYSTATUS * _CommInfo_GetMyStatus(const GFL_NETHANDLE *net_handle)
-{
-  WIFI_EXCHANGE_WORK *exc;
-  
-  if(net_handle != NULL){
-    exc = GFL_NET_HANDLE_GetInfomationData(net_handle);
-    return &exc->mystatus;
-  }
-  return NULL;
-}
-
-
-//--------------------------------------------------------------
-/**
- * CommInfoGetDWCFriendCodeの代わり
- * @param   net_handle		
- * @retval  DWCFriendData *		
- */
-//--------------------------------------------------------------
-static DWCFriendData * _CommInfo_GetFriendCode(const GFL_NETHANDLE *net_handle)
-{
-  WIFI_EXCHANGE_WORK *exc;
-  
-  if(net_handle != NULL){
-    exc = GFL_NET_HANDLE_GetInfomationData(net_handle);
-    return &exc->friendData;
-  }
-  return NULL;
-}
-
 //----------------------------------------------------------------------------
 /**
  *  @brief  エントリー画面、結果画面共通パラメータ作成
@@ -1396,33 +1367,16 @@ void MNGM_ENRES_PARAM_Init( MNGM_ENRES_PARAM* p_param, BOOL lobby_flag, SAVE_CON
   int count;
   u32 netid;
   MYSTATUS* p_status;
-  const GFL_NETHANDLE *net_handle[WFLBY_MINIGAME_MAX];
   
   GFL_STD_MemFill( p_param,  0, sizeof(MNGM_ENRES_PARAM) );
   
-#if WB_FIX
-  ;
-#else
-  for(i = 0; i < WFLBY_MINIGAME_MAX; i++){
-    net_handle[i] = GFL_NET_GetNetHandle(i);
-  }
-#endif
-  
-#if WB_TEMP_FIX   //CommInfoGetEntryNumに相当するものが無いので暫定
   p_param->num = CommInfoGetEntryNum();
-#else
-  p_param->num = GFL_NET_GetConnectNum();
-#endif
-  netid = GFL_NET_SystemGetCurrentID();
+	netid = CommGetCurrentID();
 
   // PLNO順のNETIDテーブルを作成
   count = 0;
   for( i=0; i<WFLBY_MINIGAME_MAX; i++ ){
-  #if WB_FIX
     p_status = CommInfoGetMyStatus( i );
-  #else
-    p_status = _CommInfo_GetMyStatus(net_handle[i]);
-  #endif
     if( p_status != NULL ){
       
       // 自分のNETIDならPLNOを保存
@@ -1515,7 +1469,7 @@ BOOL MNGM_ENRES_PARAM_GetVipFlag( const MNGM_ENRES_PARAM* cp_param, u32 netid )
   }
   
   plidx = cp_param->p_lobby_wk->plidx.plidx[ netid ];
-  if( plidx == DWC_LOBBY_USERIDTBL_IDX_NONE ){
+  if( plidx == OLDDWC_LOBBY_USERIDTBL_IDX_NONE ){
     return FALSE;
   }
   
@@ -1554,11 +1508,7 @@ MYSTATUS* MNGM_ENRES_PARAM_GetMystatus( const MNGM_ENRES_PARAM* cp_param, u32 ne
     if( plno == cp_param->my_playerid ){
       return SaveData_GetMyStatus( cp_param->p_save );
     }
-  #if WB_FIX
     return CommInfoGetMyStatus( netid );
-  #else
-    return _CommInfo_GetMyStatus( GFL_NET_GetNetHandle(netid) );
-  #endif
   }
 
   // Wi-Fi広場のとき
@@ -1934,29 +1884,17 @@ BOOL MNGM_ERROR_CheckDisconnect( MNGM_ENRES_PARAM* p_commparam )
 #endif
 
     // 通信人数が変わったらエラー
-  #if WB_FIX
     if( p_commparam->num != CommGetConnectNum() ){
-  #else
-    if( p_commparam->num != GFL_NET_GetConnectNum() ){
-  #endif
       ret = TRUE;
     }
 
     //  切断エラー
-    if( GFL_NET_StateIsWifiDisconnect() == TRUE ){
+		if( CommStateIsWifiDisconnect() == TRUE ){
       ret = TRUE;
     }
 
     // マッチングエラー
-  #if WB_FIX
     if( CommWifiIsMatched() >= 2 ){
-  #else
-    switch(GFL_NET_StateGetWifiStatus()){
-    case GFL_NET_STATE_NOTMATCH:    // エラーやCANCEL
-    case GFL_NET_STATE_TIMEOUT:   // タイムアウト
-    case GFL_NET_STATE_DISCONNECTING:   // 切断
-    case GFL_NET_STATE_FAIL:    // 軽度なえらー
-  #endif
       ret = TRUE;
     }
 
@@ -1988,25 +1926,19 @@ BOOL MNGM_ERROR_DisconnectWait( const MNGM_ENRES_PARAM* cp_commparam )
   GF_ASSERT( cp_commparam->p_lobby_wk != NULL );
   GF_ASSERT( cp_commparam->p_lobby_wk->error_end == TRUE );
   
-#if WB_FIX
   if( CommInfoIsInitialize() == TRUE ){
-#else
-  if( GFL_NET_IsInit() == TRUE ){
-#endif
     // 080624 戻るときにコマンドが送られてくる可能性があるので、
     // ここで完全に切断させる
     // 通信を終了させる
     // Info終了
-  #if WB_FIX
     CommInfoFinalize();
-  #endif
   
     // 通信切断
-    GFL_NET_StateWifiP2PEnd();
+		CommStateWifiP2PEnd();
   }else{
 
     // 切断完了
-    if( GFL_NET_StateIsWifiLoginMatchState() == TRUE ){
+		if( CommStateIsWifiLoginMatchState() == TRUE ){
       return TRUE;
     }
   }
@@ -2110,7 +2042,7 @@ int MNGM_PalNoGet( MNGM_COUNTWK* p_wk, PLTTSLOT_SYS_PTR plttslot )
     = CLACT_U_ResManagerGetIDResObjPtr( p_wk->resman.p_resman[1], MNGM_RESCONTID );
   return CLACT_U_PlttManagerGetPlttNo(res, NNS_G2D_VRAM_TYPE_2DMAIN );
 #else
-  return PLTTSLOT_GetPalNo(plttslot, p_wk->p_resobj->p_resobj_index[1], GFL_VRAM_2D_MAIN);
+  return PLTTSLOT_GetPalNo(plttslot, p_wk->p_resobj->p_resobj_index[1], CLSYS_DRAW_MAIN);
 #endif
 }
 
@@ -2430,8 +2362,8 @@ static void MNGM_CLACTRES_OBJ_Init( MNGM_CLACTRES* p_wk, MNGM_CLACTRESOBJ* p_obj
         cg_idx,
         FALSE, contid, NNS_G2D_VRAM_TYPE_2DMAIN, heapID );
 #else
-  p_obj->p_resobj_index[0] = GFL_OBJGRP_RegisterCGR(
-    p_handle, cg_idx, FALSE, GFL_VRAM_2D_MAIN, heapID);
+  p_obj->p_resobj_index[0] = GFL_CLGRP_CGR_Register(
+    p_handle, cg_idx, FALSE, CLSYS_DRAW_MAIN, heapID);
 #endif
 
   // パレット読み込み
@@ -2443,7 +2375,7 @@ static void MNGM_CLACTRES_OBJ_Init( MNGM_CLACTRES* p_wk, MNGM_CLACTRESOBJ* p_obj
       NNS_G2D_VRAM_TYPE_2DMAIN, palnum, heapID );
 #else
   p_obj->p_resobj_index[1] = 
-    PLTTSLOT_ResourceSet(plttslot, p_handle, pal_idx, palnum, GFL_VRAM_2D_MAIN, heapID);
+    PLTTSLOT_ResourceSet(plttslot, p_handle, pal_idx, CLSYS_DRAW_MAIN, palnum, heapID);
 #endif
 
 #if WB_FIX
@@ -2460,7 +2392,7 @@ static void MNGM_CLACTRES_OBJ_Init( MNGM_CLACTRES* p_wk, MNGM_CLACTRESOBJ* p_obj
         FALSE, contid, CLACT_U_CELLANM_RES, heapID );
 #else
   //セル＆アニメ読み込み
-  p_obj->p_resobj_index[2] = GFL_OBJGRP_RegisterCellAnim(p_handle, cell_idx, anm_idx, heapID);
+  p_obj->p_resobj_index[2] = GFL_CLGRP_CELLANIM_Register(p_handle, cell_idx, anm_idx, heapID);
 #endif
 
 #if WB_FIX
@@ -2512,9 +2444,9 @@ static void MNGM_CLACTRES_OBJ_Exit( MNGM_CLACTRES* p_wk, MNGM_CLACTRESOBJ* p_obj
   }
 #else
   //リソース解放
-  GFL_OBJGRP_ReleaseCGR(p_obj->p_resobj_index[0]);
-  PLTTSLOT_ResourceFree(plttslot, p_obj->p_resobj_index[1], GFL_VRAM_2D_MAIN);
-  GFL_OBJGRP_ReleaseCellAnim(p_obj->p_resobj_index[2]);
+  GFL_CLGRP_CGR_Release(p_obj->p_resobj_index[0]);
+  PLTTSLOT_ResourceFree(plttslot, p_obj->p_resobj_index[1], CLSYS_DRAW_MAIN);
+  GFL_CLGRP_CELLANIM_Release(p_obj->p_resobj_index[2]);
 #endif
 }
 
@@ -3096,7 +3028,7 @@ static void MNGM_TALKWIN_Init( MNGM_TALKWIN* p_wk, MNGM_BGL* p_bgl, SAVE_CONTROL
     p_wk->win[i] = GFL_BMPWIN_Create( frame,
         MNGM_TALKWIN_BMP_X, y,
         MNGM_TALKWIN_BMP_SIZX, MNGM_TALKWIN_BMP_SIZY,
-        MNGM_TALKWIN_BMP_PAL, GFL_BMP_CHRAREA_GET_F);
+        MNGM_TALKWIN_BMP_PAL, GFL_BMP_CHRAREA_GET_B);
     GFL_BMP_Clear( GFL_BMPWIN_GetBmp(p_wk->win[i]), 0 );
     GFL_BMPWIN_MakeScreen(p_wk->win[i]);
 
@@ -3184,6 +3116,7 @@ static void MNGM_TALKWIN_MsgPrint( MNGM_TALKWIN* p_wk, MNGM_MSG* p_msg, u32 msgi
   MNGM_TALKWIN_CleanTimeWork( p_wk, idx );
   
   GFL_BMP_Clear( GFL_BMPWIN_GetBmp(p_wk->win[idx]), 15 );
+  GFL_BMPWIN_MakeScreen(p_wk->win[idx]);
   p_wk->print_stream[idx] = MNGM_MSG_PrintScr( p_msg, msgidx, p_wk->win[idx],
       p_wk->p_str[idx], 
       MSGSPEED_GetWait(),
@@ -3191,7 +3124,7 @@ static void MNGM_TALKWIN_MsgPrint( MNGM_TALKWIN* p_wk, MNGM_MSG* p_msg, u32 msgi
 
   // ウインドウを書き込む
     TalkWinFrame_Write(p_wk->win[idx], WINDOW_TRANS_OFF, MNGM_TALKWIN_CGX, MNGM_TALKWIN_PAL );
-
+  
   // 転送リクエスト
   BmpWinFrame_TransScreen( p_wk->win[idx] ,WINDOW_TRANS_ON_V);
 }
@@ -3415,7 +3348,7 @@ static MNGM_ENTRYWK* MNGM_ENTRY_CommonInit( const MNGM_ENRES_PARAM* cp_commparam
   // VCHAT ON
   if( p_wk->comm_param.vchat ){
     // ボイスチャット開始
-    GFL_NET_DWC_StartVChat( heapID );
+		mydwc_startvchat( heapID );
   }
   
   return p_wk;
@@ -3630,12 +3563,12 @@ static void MNGM_ENTRY_Tcb( GFL_TCB* tcb, void* p_work )
 #ifdef DEBUG_SYNCSTART_A
     if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A ){
       p_wk->seq ++;
-      GFL_NET_HANDLE_TimingSyncStart(GFL_NET_HANDLE_GetCurrentHandle(),  MNGM_SYNC_END );
+			CommTimingSyncStart( MNGM_SYNC_END );
 
       // VCHAT OFF
       if( p_wk->comm_param.vchat ){
         // ボイスチャット終了
-        GFL_NET_DWC_StopVChat();
+				mydwc_stopvchat();
       }
 
     }
@@ -3643,19 +3576,19 @@ static void MNGM_ENTRY_Tcb( GFL_TCB* tcb, void* p_work )
     p_wk->wait --;
     if( p_wk->wait == 0 ){
       p_wk->seq ++;
-      GFL_NET_HANDLE_TimingSyncStart(GFL_NET_HANDLE_GetCurrentHandle(),  MNGM_SYNC_END );
+			CommTimingSyncStart( MNGM_SYNC_END );
 
       // VCHAT OFF
       if( p_wk->comm_param.vchat ){
         // ボイスチャット終了
-        GFL_NET_DWC_StopVChat();
+				mydwc_stopvchat();
       }
     }
 #endif
     break;
 
   case MNGM_ENTRY_SEQ_BGMOVE_SYNC:
-    if( GFL_NET_HANDLE_IsTimingSync(GFL_NET_HANDLE_GetCurrentHandle(), MNGM_SYNC_END ) ){
+		if( CommIsTimingSync( MNGM_SYNC_END ) ){
       p_wk->seq ++;
     }
     break;
@@ -3706,12 +3639,7 @@ static void MNGM_ENTRY_Tcb( GFL_TCB* tcb, void* p_work )
         break;
       }
 
-    #if WB_FIX
       CommSendData( CNM_MNGM_ENTRY_RAREGAME, &raregame_type, sizeof(u32) );
-    #else
-	    GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(), CNM_MNGM_ENTRY_RAREGAME, 
-	      sizeof(u32), &raregame_type);
-    #endif
     }
 
     p_wk->seq ++;
@@ -3894,7 +3822,7 @@ static void MNGM_PLATE_PLAYERTBL_Init( MNGM_PLATE_PLAYER* p_player, u32 player_n
         MNGM_ENTRY_BMP_X, 
         MNGM_ENTRY_BMP_Y + sc_MNGM_PLAYER_PLATE_DATA[ player_num-1 ].top[ player_idx ], 
         MNGM_ENTRY_BMP_SIZX, MNGM_ENTRY_BMP_SIZY, MNGM_ENTRY_BMP_PAL,
-        GFL_BMP_CHRAREA_GET_F);
+        GFL_BMP_CHRAREA_GET_B);
   GFL_BMP_Clear( GFL_BMPWIN_GetBmp(p_player->win), 0 );
   GFL_BMPWIN_MakeScreen(p_player->win);
 	PRINT_UTIL_Setup( &p_player->printUtil, p_player->win);
@@ -4417,14 +4345,8 @@ static void MNGM_COMMPDATA_Init( MNGM_COMM_PDATA* p_wk, const MNGM_ENRES_PARAM* 
   for( i=0; i<cp_comm_param->num; i++ ){
     p_wk->cp_status[i]  = MNGM_ENRES_PARAM_GetMystatus( cp_comm_param, cp_comm_param->pnetid[i] );
     GF_ASSERT(  p_wk->cp_status[i] );
-  #if WB_FIX
     p_wk->nation[i]   = CommInfoGetMyNation( cp_comm_param->pnetid[i] );
     p_wk->area[i]   = CommInfoGetMyArea( cp_comm_param->pnetid[i] );
-  #else
-    exc = GFL_NET_HANDLE_GetInfomationData(GFL_NET_GetNetHandle(cp_comm_param->pnetid[i]));
-    p_wk->nation[i] = exc->my_nation;
-    p_wk->area[i] = exc->my_area;
-  #endif
   }
 }
 
@@ -4501,7 +4423,7 @@ static void MNGM_TITLELOGO_Init( MNGM_TITLE_LOGO* p_wk, MNGM_BGL* p_bglwk, MNGM_
   p_wk->bmp = GFL_BMPWIN_Create( GFL_BG_FRAME1_M,
       MNGM_TITLELOGO_BMP_X, MNGM_TITLELOGO_BMP_Y,
       MNGM_TITLELOGO_BMP_SIZX, MNGM_TITLELOGO_BMP_SIZY,
-      MNGM_TITLELOGO_BMP_PAL, GFL_BMP_CHRAREA_GET_F);
+      MNGM_TITLELOGO_BMP_PAL, GFL_BMP_CHRAREA_GET_B);
   GFL_BMP_Clear( GFL_BMPWIN_GetBmp(p_wk->bmp), 0 );
   GFL_BMPWIN_MakeScreen(p_wk->bmp);
 	PRINT_UTIL_Setup( &p_wk->printUtil, p_wk->bmp );
@@ -4936,7 +4858,7 @@ static MNGM_RESULTWK* MNGM_RESULT_CommonInit( const MNGM_ENRES_PARAM* cp_commpar
   // VCHAT ON
   if( p_wk->comm_param.vchat ){
     // ボイスチャット開始
-    GFL_NET_DWC_StartVChat( heapID );
+		mydwc_startvchat( heapID );
   }
   
   return p_wk;
@@ -5369,12 +5291,12 @@ static void MNGM_RESULT_Tcb_BallSlowBalanceBall( GFL_TCB* tcb, void* p_work )
 #ifdef DEBUG_SYNCSTART_A
     if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A ){
       p_wk->seq ++;
-      GFL_NET_HANDLE_TimingSyncStart(GFL_NET_HANDLE_GetCurrentHandle(),  MNGM_SYNC_RESULT_END );
+			CommTimingSyncStart( MNGM_SYNC_RESULT_END );
 
       // VCHAT OFF
       if( p_wk->comm_param.vchat ){
         // ボイスチャット終了
-        GFL_NET_DWC_StopVChat();
+				mydwc_stopvchat();
       }
     }
 #else
@@ -5383,12 +5305,12 @@ static void MNGM_RESULT_Tcb_BallSlowBalanceBall( GFL_TCB* tcb, void* p_work )
       p_wk->wait--;
     }else{
     
-      GFL_NET_HANDLE_TimingSyncStart(GFL_NET_HANDLE_GetCurrentHandle(),  MNGM_SYNC_RESULT_END );
+			CommTimingSyncStart( MNGM_SYNC_RESULT_END );
 
       // VCHAT OFF
       if( p_wk->comm_param.vchat ){
         // ボイスチャット終了
-        GFL_NET_DWC_StopVChat();
+				mydwc_stopvchat();
       }
       p_wk->seq ++;
     } 
@@ -5397,7 +5319,7 @@ static void MNGM_RESULT_Tcb_BallSlowBalanceBall( GFL_TCB* tcb, void* p_work )
     break;
     
   case MNGM_RESULT_BALLSLOW_SEQ_SYNCWAIT:
-    if( GFL_NET_HANDLE_IsTimingSync(GFL_NET_HANDLE_GetCurrentHandle(), MNGM_SYNC_RESULT_END ) ){
+		if( CommIsTimingSync( MNGM_SYNC_RESULT_END ) ){
 
       // リトライを聞くならリトライへ
       if( p_wk->comm_param.replay ){
@@ -5719,14 +5641,14 @@ static void MNGM_RESULT_Tcb_Balloon( GFL_TCB* tcb, void* p_work )
     // VCHAT OFF
     if( p_wk->comm_param.vchat ){
       // ボイスチャット終了
-      GFL_NET_DWC_StopVChat();
+			mydwc_stopvchat();
     }
-    GFL_NET_HANDLE_TimingSyncStart(GFL_NET_HANDLE_GetCurrentHandle(),  MNGM_SYNC_RESULT_END );
+		CommTimingSyncStart( MNGM_SYNC_RESULT_END );
     p_wk->seq ++;
     break;
     
   case MNGM_RESULT_BALLOON_SEQ_SYNCWAIT:
-    if( GFL_NET_HANDLE_IsTimingSync(GFL_NET_HANDLE_GetCurrentHandle(), MNGM_SYNC_RESULT_END ) ){
+		if( CommIsTimingSync( MNGM_SYNC_RESULT_END ) ){
 
       // リトライを聞くp_wk->draw_nationならリトライへ
       if( p_wk->comm_param.replay ){
@@ -5981,7 +5903,7 @@ static BOOL MNGM_RESULT_Retry_Main( MNGM_RETRY_WK* p_wk, MNGM_TALKWIN* p_talkwin
     // VCHAT ON
     if( p_wk->vchat ){
       // ボイスチャット開始
-      GFL_NET_DWC_StartVChat( heapID );
+			mydwc_startvchat( heapID );
     }
     p_wk->seq++;
     break;
@@ -6022,19 +5944,11 @@ static BOOL MNGM_RESULT_Retry_Main( MNGM_RETRY_WK* p_wk, MNGM_TALKWIN* p_talkwin
       (result == TOUCH_SW_RET_NO) ){
 
     
-    #if WB_FIX
       if( result == TOUCH_SW_RET_YES ){
         CommSendData( CNM_MNGM_RETRY_YES, NULL, 0 );
       }else if( result == TOUCH_SW_RET_NO ){
         CommSendData( CNM_MNGM_RETRY_NO, NULL, 0 );
       }
-    #else
-      if( result == TOUCH_SW_RET_YES ){
-        GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(), CNM_MNGM_RETRY_YES, 0, NULL);
-      }else if( result == TOUCH_SW_RET_NO ){
-        GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(), CNM_MNGM_RETRY_NO, 0, NULL);
-      }
-    #endif
 
       MNGM_TALKWIN_MsgPrint( p_talkwin, p_msg, msg_15, MNGM_TALKWIN_IDX_SUB, tcblsys, heapID );
       MNGM_TALKWIN_SetTimeWork( p_talkwin, MNGM_TALKWIN_IDX_SUB );
@@ -6092,7 +6006,7 @@ static BOOL MNGM_RESULT_Retry_Main( MNGM_RETRY_WK* p_wk, MNGM_TALKWIN* p_talkwin
       // VCHAT OFF
       if( p_wk->vchat ){
         // ボイスチャット終了
-        GFL_NET_DWC_StopVChat();
+				mydwc_stopvchat();
       }
       p_wk->seq ++;
     }
@@ -6157,19 +6071,11 @@ static void MNGM_RESULT_RetryOyaRecv( MNGM_RETRY_WK* p_wk, u32 netid, BOOL repla
 
     // みんなから受け取ったらreplayするか送信
     if( recv_num == playernum ){
-    #if WB_FIX
       if( p_wk->recv_replay ){
         CommSendData( CNM_MNGM_RETRY_OK, NULL, 0 );
       }else{
         CommSendData( CNM_MNGM_RETRY_NG, NULL, 0 );
       }
-    #else
-      if( p_wk->recv_replay ){
-        GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(), CNM_MNGM_RETRY_OK, 0, NULL);
-      }else{
-        GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(), CNM_MNGM_RETRY_NG, 0, NULL);
-      }
-    #endif
     }
   }
 }
@@ -6536,6 +6442,7 @@ static BOOL MNGM_RESULT_SndTopMeEndWait( MNGM_RESULTWK* p_wk )
 //-----------------------------------------------------------------------------
 static void MNGM_RESULT_SetPlayNum( MNGM_RESULTWK* p_wk )
 {
+#if WB_FIX    //WiFi-CLUBだけで必要な処理なので消してしまう
   WIFI_LIST* p_list = SaveData_GetWifiListData( p_wk->comm_param.p_save );
   int i;
   int netID, ret;
@@ -6544,7 +6451,7 @@ static void MNGM_RESULT_SetPlayNum( MNGM_RESULTWK* p_wk )
 
   for( i=0; i<p_wk->comm_param.num; i++ ){
     netID = p_wk->comm_param.pnetid[i];
-    p_friend_data = _CommInfo_GetFriendCode( GFL_NET_GetNetHandle(netID) );
+		p_friend_data = CommInfoGetDWCFriendCode( netID );
     ret = GFL_NET_DWC_CheckFriendByToken( p_friend_data, &pos );
     switch( ret ){
     case DWCFRIEND_INLIST:// … すでに、同じデータがリスト上にある。この場合は何もする必要なし。
@@ -6567,6 +6474,7 @@ static void MNGM_RESULT_SetPlayNum( MNGM_RESULTWK* p_wk )
       break;
     }
   }
+#endif
 }
 
 //----------------------------------------------------------------------------
@@ -6832,7 +6740,10 @@ static void MNGM_COUNT_MskExit( MNGM_COUNT_MSKWK* p_wk )
 #if WB_FIX
   sys_HBlankIntrStop();
 #else
-  GFL_TCB_DeleteTask(p_wk->h_tcb);
+  if(p_wk->h_tcb){
+    GFL_TCB_DeleteTask(p_wk->h_tcb);
+    p_wk->h_tcb = NULL;
+  }
 #endif
 
   // ウィンドウマスク破棄

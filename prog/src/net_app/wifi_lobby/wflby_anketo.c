@@ -1589,7 +1589,7 @@ static BOOL ANKETO_INPUT_Main( ANKETO_INPUT* p_wk, ANKETO_MSGMAN* p_msg, ANKETO_
 				p_wk->question_now.anketo_no, p_wk->cursor );
 
 		// サーバに送信
-		DWC_LOBBY_ANKETO_SubMit( p_wk->cursor );
+		OLDDWC_LOBBY_ANKETO_SubMit( p_wk->cursor );
 
 		// 受信メッセージ
 		p_str = ANKETO_MsgManGetStr( p_msg, ANKETO_MSGMAN_MSG, msg_survey_monitor_b_02_01 );
@@ -1606,8 +1606,8 @@ static BOOL ANKETO_INPUT_Main( ANKETO_INPUT* p_wk, ANKETO_MSGMAN* p_msg, ANKETO_
 	case ANKETO_INPUT_SEQ_ANKETO_SENDWAIT:	// 受信中
 		{
 			u32 send_result;
-			send_result = DWC_LOBBY_ANKETO_WaitSubMit();
-			if( send_result != DWC_LOBBY_ANKETO_STATE_SENDING ){
+			send_result = OLDDWC_LOBBY_ANKETO_WaitSubMit();
+			if( send_result != OLDDWC_LOBBY_ANKETO_STATE_SENDING ){
 
 				Snd_SePlay( ANKETO_SND_SEND );
 
@@ -2277,7 +2277,7 @@ static BOOL ANKETO_OUTPUT_Main( ANKETO_OUTPUT* p_wk, ANKETO_MSGMAN* p_msg, ANKET
 		if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_DECIDE ){
 
 			// 先週の結果はある？
-			if( p_wk->last.question_no != DWC_LOBBY_ANKETO_NOT_QUESTION ){
+			if( p_wk->last.question_no != OLDDWC_LOBBY_ANKETO_NOT_QUESTION ){
 				p_wk->seq = ANKETO_OUTPUT_SEQ_ANKETO_YESNO_DRAW;
 			}else{
 				// 終了メッセージ後終わる
@@ -2768,25 +2768,25 @@ static void ANKETO_QUESTION_DATA_Init( ANKETO_QUESTION_DATA* p_wk, BOOL now, u32
 	}
 	
 	if( now == TRUE ){
-		data_start	= DWC_LOBBY_ANKETO_DATA_NOW_QUESTION_SERIAL;
-		msg_start	= DWC_LOBBY_ANKETO_MESSAGE_NOW_QUESTION;
+		data_start	= OLDDWC_LOBBY_ANKETO_DATA_NOW_QUESTION_SERIAL;
+		msg_start	= OLDDWC_LOBBY_ANKETO_MESSAGE_NOW_QUESTION;
 	}else{
-		data_start	= DWC_LOBBY_ANKETO_DATA_LAST_QUESTION_SERIAL;
-		msg_start	= DWC_LOBBY_ANKETO_MESSAGE_LAST_QUESTION;
+		data_start	= OLDDWC_LOBBY_ANKETO_DATA_LAST_QUESTION_SERIAL;
+		msg_start	= OLDDWC_LOBBY_ANKETO_MESSAGE_LAST_QUESTION;
 	}
 
-	p_wk->special		= DWC_LOBBY_ANKETO_GetData( data_start+DWC_LOBBY_ANKETO_DATA_NOW_QUESTION_SPECIAL );
-	p_wk->question_no	= DWC_LOBBY_ANKETO_GetData( data_start+DWC_LOBBY_ANKETO_DATA_NOW_QUESTION_NO );
-	p_wk->anketo_no		= DWC_LOBBY_ANKETO_GetData( data_start+DWC_LOBBY_ANKETO_DATA_NOW_QUESTION_SERIAL );
-	p_wk->make_question	= DWC_LOBBY_ANKETO_GetData( data_start+DWC_LOBBY_ANKETO_DATA_NOW_QUESTION_NINI );
+	p_wk->special		= OLDDWC_LOBBY_ANKETO_GetData( data_start+OLDDWC_LOBBY_ANKETO_DATA_NOW_QUESTION_SPECIAL );
+	p_wk->question_no	= OLDDWC_LOBBY_ANKETO_GetData( data_start+OLDDWC_LOBBY_ANKETO_DATA_NOW_QUESTION_NO );
+	p_wk->anketo_no		= OLDDWC_LOBBY_ANKETO_GetData( data_start+OLDDWC_LOBBY_ANKETO_DATA_NOW_QUESTION_SERIAL );
+	p_wk->make_question	= OLDDWC_LOBBY_ANKETO_GetData( data_start+OLDDWC_LOBBY_ANKETO_DATA_NOW_QUESTION_NINI );
 
 	if( p_wk->make_question == TRUE ){
 		// 質問と回答案を取得
-		p_str = DWC_LOBBY_ANKETO_GetMessage( msg_start+DWC_LOBBY_ANKETO_MESSAGE_NOW_QUESTION );
+		p_str = OLDDWC_LOBBY_ANKETO_GetMessage( msg_start+OLDDWC_LOBBY_ANKETO_MESSAGE_NOW_QUESTION );
 		GF_ASSERT( p_str );
 		STRBUF_SetStringCode( p_wk->p_question, p_str );
 		for( i=0; i<ANKETO_ANSWER_NUM; i++ ){
-			p_str = DWC_LOBBY_ANKETO_GetMessage( msg_start+DWC_LOBBY_ANKETO_MESSAGE_NOW_ANSWER_00+i );
+			p_str = OLDDWC_LOBBY_ANKETO_GetMessage( msg_start+OLDDWC_LOBBY_ANKETO_MESSAGE_NOW_ANSWER_00+i );
 			GF_ASSERT( p_str );
 			STRBUF_SetStringCode( p_wk->p_ans[i], p_str );
 		}
@@ -2873,7 +2873,7 @@ static void ANKETO_QUESTION_RESULT_Init( ANKETO_QUESTION_RESULT* p_wk )
 
 	p_wk->ans_all = 0;
 	for( i=0; i<ANKETO_ANSWER_NUM; i++ ){
-		p_wk->ans[i] = DWC_LOBBY_ANKETO_GetData( DWC_LOBBY_ANKETO_DATA_LAST_RESULT_A+i );
+		p_wk->ans[i] = OLDDWC_LOBBY_ANKETO_GetData( OLDDWC_LOBBY_ANKETO_DATA_LAST_RESULT_A+i );
 		p_wk->ans_all += p_wk->ans[i];
 	}
 }
@@ -2923,7 +2923,7 @@ static void ANKETO_QUESTION_RESULT_CalcHirobaResult( ANKETO_QUESTION_RESULT* p_w
 		if( cp_profile != NULL ){
 			lang = WFLBY_SYSTEM_GetProfileRagionCodeOrg( cp_profile );
 			WFLBY_SYSTEM_GetProfileAnketoData( cp_profile, &anketo );
-			sum = DWC_LOBBY_ANKETO_GetLanguageSummarize( DWC_LOBBY_ANKETO_LANGUAGE_NOW, lang );
+			sum = OLDDWC_LOBBY_ANKETO_GetLanguageSummarize( OLDDWC_LOBBY_ANKETO_LANGUAGE_NOW, lang );
 			if( (sum == TRUE) && (anketo.select < ANKETO_ANSWER_NUM) ){
 				p_wk->ans[ anketo.select ] ++;
 				p_wk->ans_all ++;

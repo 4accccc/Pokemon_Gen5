@@ -30,6 +30,7 @@
 #include "net_app\wifi_lobby.h"
 #include "system/main.h"
 #include "system/gfl_use.h"
+#include "net_old/net_old.h"
 
 //-----------------------------------------------------------------------------
 /**
@@ -128,6 +129,7 @@ GFL_PROC_RESULT WFLBYProc_Init( GFL_PROC* p_proc, int* p_seq , void * pwk, void 
 		DpwCommonOverlayStart();
 	#else
 		GFL_OVERLAY_Load( FS_OVERLAY_ID(dpw_common) );
+    NetOld_Load();
 	#endif
 	}
 	
@@ -241,6 +243,7 @@ GFL_PROC_RESULT WFLBYProc_Exit( GFL_PROC* p_proc, int* p_seq, void * pwk, void *
 		DpwCommonOverlayEnd();
 	#else
 		GFL_OVERLAY_Unload( FS_OVERLAY_ID(dpw_common) );
+    NetOld_Unload();
 	#endif
 	
 	#if WB_FIX

@@ -12,15 +12,19 @@
 #include "net\network_define.h"
 #include "balloon_game.h"
 #include "balloon_comm_types.h"
+#include "net_old\comm_command.h"
 
 
 /// 風船ミニゲーム専用通信コマンドの定義。
 enum CommCommandBalloon_e {
-  CB_EXIT_BALLOON = GFL_NET_CMD_BALLOON, ///<風船ミニゲームを終了しフィールドに戻る事を送信
+  CB_EXIT_BALLOON = CS_COMMAND_MAX, ///<風船ミニゲームを終了しフィールドに戻る事を送信
 
 	CB_SERVER_VERSION,			///<サーバーバージョンを伝える
 	CB_PLAY_PARAM,				///<ゲームプレイ中データ
 	CB_GAME_END,				///<ゲーム終了を伝える
+	
+  //------------------------------------------------ここまで
+  CB_COMMAND_MAX   // 終端--------------これは移動させないでください
 };
 
 extern void CommCommandBalloonInitialize(void* pWork);

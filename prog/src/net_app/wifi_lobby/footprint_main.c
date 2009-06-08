@@ -953,7 +953,7 @@ GFL_PROC_RESULT FootPrintProc_Main( GFL_PROC * proc, int * seq, void * pwk, void
 		}
 		break;
 	default:
-		DWC_LOBBY_SUBCHAN_CleanMsgCmd();	//コマンドクリーン
+		OLDDWC_LOBBY_SUBCHAN_CleanMsgCmd();	//コマンドクリーン
 		return GFL_PROC_RES_FINISH;
 	}
 
@@ -2025,7 +2025,7 @@ static void Footprint_MyCommStatusSet(FOOTPRINT_SYS *fps)
 	
 	my_comm = &fps->my_comm_status;
 	
-	my_comm->user_id = DWC_LOBBY_GetMyUserID();
+	my_comm->user_id = OLDDWC_LOBBY_GetMyUserID();
 }
 
 //--------------------------------------------------------------
@@ -2133,8 +2133,8 @@ BOOL Footprint_StampAdd(FOOTPRINT_SYS_PTR fps, const STAMP_PARAM *param, s32 use
 		fps->handle_footprint, fps->handle_footmark, fps->arceus_flg);
 	if(ret == TRUE){
 		//上画面の足跡マークを変更する
-		user_index = DWC_LOBBY_SUBCHAN_GetUserIDIdx(user_id);
-		if(user_index != DWC_LOBBY_USERIDTBL_IDX_NONE){
+		user_index = OLDDWC_LOBBY_SUBCHAN_GetUserIDIdx(user_id);
+		if(user_index != OLDDWC_LOBBY_USERIDTBL_IDX_NONE){
 			if(fps->name_foot_monsno[user_index] != param->monsno
 					|| fps->name_foot_color[user_index] != param->color){
 				fps->name_foot_monsno[user_index] = param->monsno;
@@ -2171,13 +2171,13 @@ BOOL Footprint_StampAdd(FOOTPRINT_SYS_PTR fps, const STAMP_PARAM *param, s32 use
 //--------------------------------------------------------------
 static FOOTPRINT_NAME_UPDATE_STATUS FootPrintTool_NameAllUpdate(FOOTPRINT_SYS *fps)
 {
-	DWC_LOBBY_CHANNEL_USERID chan_user;
+	OLDDWC_LOBBY_CHANNEL_USERID chan_user;
 	int i, entry_num, out_num, player_max;
 	
 	entry_num = 0;
 	out_num = 0;
 	
-	DWC_LOBBY_SUBCHAN_GetUserIDTbl(&chan_user);	// サブチャンネル内ユーザID列挙取得
+	OLDDWC_LOBBY_SUBCHAN_GetUserIDTbl(&chan_user);	// サブチャンネル内ユーザID列挙取得
 	for(i = 0; i < FOOTPRINT_ENTRY_MAX; i++){
 		OS_TPrintf("chan_user.cp_tbl[%d] = %d\n", i, chan_user.cp_tbl[i]);
 		if(fps->entry_userid[i] != chan_user.cp_tbl[i]){

@@ -341,7 +341,7 @@ void WFLBY_FLOAT_CONT_Main( WFLBY_FLOAT_CONT* p_sys )
 	myidx			= WFLBY_SYSTEM_GetMyIdx( p_sys->p_system );
 	my_float_idx	= WFLBY_SYSTEM_GetFloatPlIdxReserve( p_sys->p_system, myidx );
 
-	if( my_float_idx == DWC_LOBBY_USERIDTBL_IDX_NONE ){
+	if( my_float_idx == OLDDWC_LOBBY_USERIDTBL_IDX_NONE ){
 		my_float_on = FALSE;		// フロートには乗ってない
 	}else{
 		// 自分が乗っているフロートかチェック

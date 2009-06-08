@@ -48,6 +48,10 @@
 #include "system/bmp_winframe.h"
 #include "infowin/infowin.h"
 #include "sound/pm_sndsys.h"
+#include "net_old\comm_system.h"
+#include "net_old\comm_state.h"
+#include "net_old\comm_info.h"
+#include "net_old\comm_tool.h"
 
 
 
@@ -888,7 +892,7 @@ GFL_PROC_RESULT BalloonGameProc_Init( GFL_PROC * proc, int * seq, void * pwk, vo
 		game->clunit = GFL_CLACT_UNIT_Create(128+128, 0, HEAPID_BALLOON);
 		GFL_CLACT_UNIT_SetDefaultRend(game->clunit);
 
-		game->plttslot = PLTTSLOT_Init(HEAPID_BALLOON, 16, 16);
+		game->plttslot = PLTTSLOT_Init(HEAPID_BALLOON, BALLOON_MAIN_OBJPAL_NUM, 16);
 	}
 #endif
 
@@ -955,10 +959,8 @@ GFL_PROC_RESULT BalloonGameProc_Init( GFL_PROC * proc, int * seq, void * pwk, vo
 	game->sns = Sonas_Init(game);
 	
 	// 輝度変更セット
-#if WB_TEMP_FIX
 	WIPE_SYS_Start(WIPE_PATTERN_WMS, WIPE_TYPE_DOORIN, WIPE_TYPE_DOORIN, WIPE_FADE_BLACK, 
 		WIPE_DEF_DIV, WIPE_DEF_SYNC, HEAPID_BALLOON);
-#endif
 
 	game->update_tcb = GFL_TCB_AddTask(game->tcbsys, BalloonUpdate, game, TCBPRI_BALLOON_UPDATE);
 
@@ -982,21 +984,19 @@ GFL_PROC_RESULT BalloonGameProc_Init( GFL_PROC * proc, int * seq, void * pwk, vo
 	}
 #endif
 
-#if WB_TEMP_FIX
 	//ミニゲーム共通カウントダウンシステム
-	game->mgcount = MNGM_COUNT_Init(CATS_GetClactSetPtr(game->crp), HEAPID_BALLOON, game->plttslot);
+	game->mgcount = MNGM_COUNT_Init(game->clunit, HEAPID_BALLOON, game->plttslot);
 	//ミニゲーム共通カウントダウンシステムで使用しているパレットをPFDにも展開
 	{
 		int pal_pos;
 		pal_pos = MNGM_PalNoGet(game->mgcount, game->plttslot);
 		PaletteWorkSet_VramCopy(game->pfd, FADE_MAIN_OBJ, pal_pos*16, MNGM_COUNT_PALNUM*0x20);
 	}
-#endif
 
 	game->vintr_tcb = GFUser_VIntr_CreateTCB(BalloonVBlank, game, 200);
 	
 	if ( game->bsw->vchat ){
-		GFL_NET_DWC_StartVChat( HEAPID_BALLOON );
+		mydwc_startvchat( HEAPID_BALLOON );
 	}
 	
 	//※check　BGM確認用で暫定でここで鳴らす(本来はミニゲームエントリー画面で鳴らす) 2009.05.28(木)
@@ -1049,11 +1049,7 @@ GFL_PROC_RESULT BalloonGameProc_Main( GFL_PROC * proc, int * seq, void * pwk, vo
 		default:
 		case 1:
 			// まずは通信切断
-		#if WB_TEMP_FIX
 			if( MNGM_ERROR_DisconnectWait( &game->bsw->entry_param ) == TRUE ){
-		#else
-			if(TRUE){
-		#endif
 				// 終了処理へ
 				return GFL_PROC_RES_FINISH;
 			}
@@ -1080,11 +1076,11 @@ GFL_PROC_RESULT BalloonGameProc_Main( GFL_PROC * proc, int * seq, void * pwk, vo
 		break;
 	
 	case SEQ_INIT_TIMING:			//サーバーバージョン取得前の同期取り
-		GFL_NET_HANDLE_TimingSyncStart(GFL_NET_HANDLE_GetCurrentHandle(), BALLOON_INIT_TIMING_NO);
+		CommTimingSyncStart(BALLOON_INIT_TIMING_NO);
 		(*seq)++;
 		break;
 	case SEQ_INIT_TIMING_WAIT:
-		if(GFL_NET_HANDLE_IsTimingSync(GFL_NET_HANDLE_GetCurrentHandle(),BALLOON_INIT_TIMING_NO) == TRUE){
+		if(CommIsTimingSync(BALLOON_INIT_TIMING_NO) == TRUE){
 			(*seq)++;
 		}
 		break;
@@ -1135,17 +1131,11 @@ GFL_PROC_RESULT BalloonGameProc_Main( GFL_PROC * proc, int * seq, void * pwk, vo
 			break;
 			
 		case BALLOON_COUNTDOWN_START:
-		#if WB_TEMP_FIX
 			MNGM_COUNT_StartStart(game->mgcount, game->tcbsys);
-		#endif
 			game->countdown_eff = BALLOON_COUNTDOWN_START_WAIT;
 			break;
 		case BALLOON_COUNTDOWN_START_WAIT:
-		#if WB_TEMP_FIX
 			if(MNGM_COUNT_Wait(game->mgcount) == TRUE){
-		#else
-			if(TRUE){
-		#endif
 				game->game_start = TRUE;
 				game->booster.stop = FALSE;
 				game->countdown_eff = BALLOON_COUNTDOWN_START_END;
@@ -1155,18 +1145,12 @@ GFL_PROC_RESULT BalloonGameProc_Main( GFL_PROC * proc, int * seq, void * pwk, vo
 			}
 			break;
 		case BALLOON_COUNTDOWN_TIMEUP:
-		#if WB_TEMP_FIX
 			MNGM_COUNT_StartTimeUp(game->mgcount, game->tcbsys);
-		#endif
 			OS_TPrintf("自分の入れた空気の合計 = %d\n", game->my_total_air);
 			game->countdown_eff = BALLOON_COUNTDOWN_TIMEUP_WAIT;
 			break;
 		case BALLOON_COUNTDOWN_TIMEUP_WAIT:
-		#if WB_TEMP_FIX
 			if(MNGM_COUNT_Wait(game->mgcount) == TRUE){
-		#else
-			if(TRUE){
-		#endif
 				game->countdown_eff = BALLOON_COUNTDOWN_TIMEUP_END;
 			}
 			break;
@@ -1241,9 +1225,7 @@ GFL_PROC_RESULT BalloonGameProc_End( GFL_PROC * proc, int * seq, void * pwk, voi
 	game->bsw->result_param.balloon = game->exploded_count;
 	
 	//ミニゲーム共通カウントダウンシステム削除
-#if WB_TEMP_FIX
 	MNGM_COUNT_Exit(game->mgcount, game->plttslot);
-#endif
 
 	Air_ActorAllDelete(game);
 	Exploded_AllDelete(game);
@@ -1290,11 +1272,6 @@ GFL_PROC_RESULT BalloonGameProc_End( GFL_PROC * proc, int * seq, void * pwk, voi
 	GFL_CLACT_SYS_Delete();
 	PLTTSLOT_Exit(game->plttslot);
 	
-#if WB_TEMP_FIX
-	//Vram転送マネージャー削除
-	DellVramTransferManager();
-#endif
-
 	//パレットフェードシステム削除
 	PaletteFadeWorkAllocFree(game->pfd, FADE_MAIN_BG);
 	PaletteFadeWorkAllocFree(game->pfd, FADE_SUB_BG);
@@ -1394,9 +1371,6 @@ static void BalloonVBlank(GFL_TCB *tcb, void *work)
 	
 	GFL_CLACT_SYS_VBlankFunc();
 	
-#if WB_TEMP_FIX
-	DoVramTransferManager();	// Vram転送マネージャー実行
-#endif
 	PaletteFadeTrans(game->pfd);
 	
 	if(game->bst.bg_on_req == TRUE){
@@ -1656,7 +1630,7 @@ static void BalloonUpdate(GFL_TCB* tcb, void *work)
 	GFL_CLACT_SYS_Main();
 	GFL_G3D_DRAW_End();
 	
-#if WB_TEMP_FIX
+#if WB_FIX  //PLの頃からこの関数の中身は空っぽなので削除 2009.06.07(日)
 	CommErrorCheck(HEAPID_BALLOON);
 #endif
 
@@ -1802,7 +1776,7 @@ static void BalloonSys_DefaultBmpWinAdd(BALLOON_GAME_WORK *game)
 	int i;
 	GFL_BMPWIN *win;
 	
-#if WB_TEMP_FIX
+#if WB_FIX  //使用していないBMPなので消してしまう 2009.06.07(日)
 	win = GFL_BMPWIN_Create(BALLOON_FRAME_WIN, 11, 0x13, 20, 4, 
 		BMPWIN_TALK_COLOR, GFL_BMP_CHRAREA_GET_F);
 	PRINT_UTIL_Setup(&game->printUtil[BALLOON_BMPWIN_TALK], win);
@@ -1895,7 +1869,7 @@ static void PlayerName_Draw(BALLOON_GAME_WORK *game)
 	}
 #endif
 
-	current_id = GFL_NET_SystemGetCurrentID();
+	current_id = CommGetCurrentID();
 	for(i = 0; i < game->bsw->player_max; i++){
 		if(current_id != game->bsw->player_netid[i]){
 		//	mystatus = CommInfoGetMyStatus(game->bsw->player_netid[i]);
@@ -2132,6 +2106,10 @@ static void BalloonDefaultOBJDel(BALLOON_GAME_WORK *game)
 {
 	int i;
 	
+	PLTTSLOT_ResourceFree(game->plttslot, game->pltt_id[PLTTID_COUNTER], CLSYS_DRAW_MAIN);
+	PLTTSLOT_ResourceFree(game->plttslot, game->pltt_id[PLTTID_COUNTER_WIN], CLSYS_DRAW_MAIN);
+	PLTTSLOT_ResourceFree(game->plttslot, game->pltt_id[PLTTID_TOUCH_PEN], CLSYS_DRAW_MAIN);
+	
 	for(i = 0; i < BALLOON_COUNTER_KETA_MAX; i++){
 		Balloon_FontOamDelete(&game->counter.fontact[i][BALLOON_COUNTER_0]);
 		Balloon_FontOamDelete(&game->counter.fontact[i][BALLOON_COUNTER_1]);
@@ -2191,6 +2169,7 @@ static void BalloonDefaultOBJDel_Sub(BALLOON_GAME_WORK *game)
 	Joint_ActorDeleteAll(game, &game->joint);
 	Booster_ActorDeleteAll(game, &game->booster);
 	SioBooster_ActorDeleteAll(game, &game->sio_booster);
+	PLTTSLOT_ResourceFree(game->plttslot, game->pltt_id[PLTTID_SUB_OBJ_COMMON], CLSYS_DRAW_SUB);
 }
 
 //--------------------------------------------------------------
@@ -2334,8 +2313,8 @@ static void BalloonDefault3DSet(BALLOON_GAME_WORK *game, ARCHANDLE *hdl)
 	};
 #endif
 
-	entry_pos = Balloon_NetID_to_EntryNo(game, GFL_NET_SystemGetCurrentID());
-
+	entry_pos = Balloon_NetID_to_EntryNo(game, CommGetCurrentID());
+  entry_pos = 0;
 	
 #if WB_FIX
 	//-- パイプ --//
@@ -2447,6 +2426,7 @@ static void BalloonDefault3DDel(BALLOON_GAME_WORK *game)
     D3DOBJ_MdlDelete( &game->daiza.mdl );
 #else
 	GFL_G3D_UTIL_DelUnit( game->g3Dutil, game->g3DutilUnitIdx );
+	GFL_G3D_UTIL_DelUnit( game->g3Dutil, game->g3DutilUnitIdx_Pipe );
 	GFL_G3D_UTIL_Delete( game->g3Dutil );
 #endif
 }
@@ -2642,7 +2622,7 @@ BOOL Balloon_ServerCheck(BALLOON_GAME_PTR game)
 	}
 #endif
 
-	if(game->server_netid == GFL_NET_SystemGetCurrentID()){
+	if(game->server_netid == CommGetCurrentID()){
 		return TRUE;
 	}
 	return FALSE;
@@ -3019,7 +2999,7 @@ int Balloon_NetID_to_PlayerPos(BALLOON_GAME_PTR game, int net_id)
 	}
 #endif
 
-	current_id = GFL_NET_SystemGetCurrentID();
+	current_id = CommGetCurrentID();
 	target_index = 0xff;
 	my_index = 0xff;
 	
@@ -3164,7 +3144,7 @@ static BOOL Timing_AnswerSend(BALLOON_GAME_PTR game)
 			}
 		#endif
 
-		GFL_NET_HANDLE_TimingSyncStart(GFL_NET_HANDLE_GetCurrentHandle(), game->timing_no);
+		CommTimingSyncStart(game->timing_no);
 		if(Balloon_ServerCheck(game) == TRUE){
 			//サーバーは受信確認でNULL化する為、WAIT
 			game->timing_req = TIMING_REQ_WAIT;
@@ -3206,7 +3186,7 @@ static int Timing_Recv(BALLOON_GAME_PTR game, int server_timing_no)
 		return FALSE;	//サーバーの求めている同期番号と違う
 	}
 	
-	if(GFL_NET_HANDLE_IsTimingSync(GFL_NET_HANDLE_GetCurrentHandle(),game->timing_no) == TRUE){
+	if(CommIsTimingSync(game->timing_no) == TRUE){
 		OS_TPrintf("同期した no = %d\n", game->timing_no);
 		game->timing_req = TIMING_REQ_NULL;
 		return TRUE;

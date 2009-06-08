@@ -1245,7 +1245,6 @@ static void WFLBY_APLDATA_BL_Start( WFLBY_APL* p_sys, WFLBY_APLDATA* p_data )
 //-----------------------------------------------------------------------------
 static WFLBY_APL_RET WFLBY_APLDATA_BL_End( WFLBY_APL* p_sys, WFLBY_APLDATA* p_data )
 {
-#if WB_TEMP_FIX
 	// ミニゲーム共通オーバーレイ破棄
 	FS_EXTERN_OVERLAY(minigame_common);
 	GFL_OVERLAY_Unload( FS_OVERLAY_ID(minigame_common) );
@@ -1262,7 +1261,6 @@ static WFLBY_APL_RET WFLBY_APLDATA_BL_End( WFLBY_APL* p_sys, WFLBY_APLDATA* p_da
 	// 部屋に戻る
 	WFLBY_APLDATA_Start( p_sys, WFLBY_APL_ROOM );
 	
-#endif
 	return WFLBY_APL_RET_NONE;
 }
 

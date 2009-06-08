@@ -11,7 +11,7 @@
 #include "net_app/wifi_lobby/wflby_system_def.h"
 #include "footprint_common.h"
 #include "footprint_stamp.h"
-#include "net/dwc_lobbylib.h"
+#include "net_old/comm_dwc_lobbylib.h"
 #include "footprint_comm.h"
 
 
@@ -35,7 +35,7 @@ static BOOL RecvDataCheck(s32 userid, FOOTPRINT_MY_COMM_STATUS *my_comm);
  *	通信受信テーブル		※COMM_FOOTPRINTと並びを同じにしておくこと！！
  */
 //--------------------------------------------------------------
-static const DWC_LOBBY_MSGCOMMAND MsgCommandTbl_Footprint[] = {
+static const OLDDWC_LOBBY_MSGCOMMAND MsgCommandTbl_Footprint[] = {
 	{ COMMCMD_PlayerIn,						sizeof(FOOTPRINT_IN_PARAM) },
 	{ COMMCMD_PlayerOut,					0 },
 	{ COMMCMD_Stamp,						sizeof(STAMP_PARAM) },
@@ -76,7 +76,7 @@ typedef enum{
 //--------------------------------------------------------------
 void Footprint_Comm_Init(FOOTPRINT_SYS_PTR fps)
 {
-	DWC_LOBBY_SUBCHAN_SetMsgCmd(MsgCommandTbl_Footprint, FOOTPRINT_COMM_MSGTBL_MAX, fps);
+	OLDDWC_LOBBY_SUBCHAN_SetMsgCmd(MsgCommandTbl_Footprint, FOOTPRINT_COMM_MSGTBL_MAX, fps);
 }
 
 //--------------------------------------------------------------
@@ -100,7 +100,7 @@ static BOOL RecvDataCheck(s32 userid, FOOTPRINT_MY_COMM_STATUS *my_comm)
 		OS_TPrintf("ready状態になっていないので受け取り拒否\n");
 		return FALSE;
 	}
-	if(DWC_LOBBY_SUBCHAN_GetUserIDIdx(userid) == DWC_LOBBY_USERIDTBL_IDX_NONE){
+	if(OLDDWC_LOBBY_SUBCHAN_GetUserIDIdx(userid) == OLDDWC_LOBBY_USERIDTBL_IDX_NONE){
 		OS_TPrintf("まだサーバーのシステムに反映されていないユーザーなので拒否\n");
 		return FALSE;
 	}
@@ -124,7 +124,7 @@ static BOOL RecvDataCheck(s32 userid, FOOTPRINT_MY_COMM_STATUS *my_comm)
 //--------------------------------------------------------------
 BOOL Footprint_Send_PlayerIn(const FOOTPRINT_IN_PARAM *in_para)
 {
-	DWC_LOBBY_SUBCHAN_SendMsg(COMM_FOOTPRINT_PLAYER_IN, in_para, sizeof(FOOTPRINT_IN_PARAM));
+	OLDDWC_LOBBY_SUBCHAN_SendMsg(COMM_FOOTPRINT_PLAYER_IN, in_para, sizeof(FOOTPRINT_IN_PARAM));
 	return TRUE;
 }
 
@@ -137,7 +137,7 @@ BOOL Footprint_Send_PlayerIn(const FOOTPRINT_IN_PARAM *in_para)
 //--------------------------------------------------------------
 BOOL Footprint_Send_PlayerOut(void)
 {
-	DWC_LOBBY_SUBCHAN_SendMsg(COMM_FOOTPRINT_PLAYER_OUT, NULL, 0);
+	OLDDWC_LOBBY_SUBCHAN_SendMsg(COMM_FOOTPRINT_PLAYER_OUT, NULL, 0);
 	return TRUE;
 }
 
@@ -155,7 +155,7 @@ BOOL Footprint_Send_Stamp(const STAMP_PARAM *stamp)
 	if(WFLBY_ERR_CheckError() == TRUE){
 		return FALSE;
 	}
-	DWC_LOBBY_SUBCHAN_SendMsg(COMM_FOOTPRINT_STAMP, stamp, sizeof(STAMP_PARAM));
+	OLDDWC_LOBBY_SUBCHAN_SendMsg(COMM_FOOTPRINT_STAMP, stamp, sizeof(STAMP_PARAM));
 	return TRUE;
 }
 
@@ -209,7 +209,7 @@ static void COMMCMD_PlayerOut(s32 userid, const void *cp_data, u32 size, void *p
 		return;
 	}
 	
-	Footprint_NameErase(fps, DWC_LOBBY_SUBCHAN_GetUserIDIdx(userid));
+	Footprint_NameErase(fps, OLDDWC_LOBBY_SUBCHAN_GetUserIDIdx(userid));
 }
 
 //--------------------------------------------------------------
@@ -254,7 +254,7 @@ static void WFLBY_SYSTEM_COMMCMD_TALK_Req( s32 userid, const void* cp_data, u32 
 	cp_talkdata = cp_data;
 
 	// その人のIDXを取得
-	idx = DWC_LOBBY_GetUserIDIdx( userid );
+	idx = OLDDWC_LOBBY_GetUserIDIdx( userid );
 
 	
 	status = WFLBY_SYSTEM_GetProfileStatus( &p_wk->myprofile );
@@ -263,7 +263,7 @@ static void WFLBY_SYSTEM_COMMCMD_TALK_Req( s32 userid, const void* cp_data, u32 
 	// 状態が忙しいか、知らない人ならごめんなさい
 	// その人から何度も話しかけられている場合
 	if( (status != WFLBY_STATUS_LOGIN) ||
-		(idx == DWC_LOBBY_USERIDTBL_IDX_NONE) ||
+		(idx == OLDDWC_LOBBY_USERIDTBL_IDX_NONE) ||
 		(cp_talkdata->seq != WFLBY_TALK_SEQ_B_ANS) ||
 		(WFLBY_SYSTEM_CheckTalkCount( p_wk, idx ) == FALSE)){
 

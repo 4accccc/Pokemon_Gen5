@@ -47,6 +47,10 @@
 #include <calctool.h>
 #include "system/bmp_winframe.h"
 #include "balloon_entry.h"
+#include "net_old\comm_system.h"
+#include "net_old\comm_state.h"
+#include "net_old\comm_info.h"
+#include "net_old\comm_tool.h"
 
 
 //==============================================================================
@@ -130,11 +134,7 @@ GFL_PROC_RESULT BalloonEntryProc_Main( GFL_PROC * proc, int * seq, void * pwk, v
 
 		case 1:
 			// まづは通信切断
-		#if WB_TEMP_FIX
 			if( MNGM_ERROR_DisconnectWait( &entry->bsw->entry_param ) == TRUE ){
-		#else
-			if(TRUE){
-		#endif
 				entry->bsw->dis_error_seq ++;
 			}
 			break;
@@ -143,15 +143,11 @@ GFL_PROC_RESULT BalloonEntryProc_Main( GFL_PROC * proc, int * seq, void * pwk, v
 		case 2:
 			// さらにワークを全部破棄する
 			if( entry->mngm_entry != NULL ){
-			#if WB_TEMP_FIX
 				MNGM_ENTRY_Exit(entry->mngm_entry);
-			#endif
 				entry->mngm_entry = NULL;
 			} 
 			if( entry->mngm_result != NULL ){
-			#if WB_TEMP_FIX
 				MNGM_RESULT_Exit(entry->mngm_result);
-			#endif
 				entry->mngm_result = NULL;
 			} 
 			return GFL_PROC_RES_FINISH;
@@ -173,19 +169,13 @@ GFL_PROC_RESULT BalloonEntryProc_Main( GFL_PROC * proc, int * seq, void * pwk, v
 	
 	//エントリー画面
 	case MAINSEQ_ENTRY_INIT:
-	#if WB_TEMP_FIX
 		entry->mngm_entry = MNGM_ENTRY_InitBalloon(&entry->bsw->entry_param, HEAPID_BALLOON );
-	#endif
 		(*seq)++;
 		break;
 	case MAINSEQ_ENTRY_WAIT:
-	#if WB_TEMP_FIX
 		if(MNGM_ENTRY_Wait(entry->mngm_entry) == TRUE){
 			entry->bsw->raregame_type = MNGM_ENTRY_GetRareGame(entry->mngm_entry);
 			MNGM_ENTRY_Exit(entry->mngm_entry);
-	#else
-		if(TRUE){
-	#endif
 			entry->mngm_entry = NULL;
 			(*seq) = MAINSEQ_END;
 		}
@@ -193,20 +183,14 @@ GFL_PROC_RESULT BalloonEntryProc_Main( GFL_PROC * proc, int * seq, void * pwk, v
 
 	//結果発表画面
 	case MAINSEQ_RESULT_INIT:
-	#if WB_TEMP_FIX
 		entry->mngm_result = MNGM_RESULT_InitBalloon(&entry->bsw->entry_param, 
 			&entry->bsw->result_param, HEAPID_BALLOON );
-	#endif
 		(*seq)++;
 		break;
 	case MAINSEQ_RESULT_WAIT:
-	#if WB_TEMP_FIX
 		if(MNGM_RESULT_Wait(entry->mngm_result) == TRUE){
 			entry->bsw->replay = MNGM_RESULT_GetReplay(entry->mngm_result);
 			MNGM_RESULT_Exit(entry->mngm_result);
-	#else
-		if(TRUE){
-	#endif
 			entry->mngm_result = NULL;
 			(*seq) = MAINSEQ_END;
 		}

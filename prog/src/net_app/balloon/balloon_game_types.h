@@ -16,6 +16,7 @@
 #include "balloon_id.h"
 #include "system/actor_tool.h"
 #include "system/bmp_oam.h"
+#include "net_app/net_bugfix.h"
 
 
 //==============================================================================
@@ -60,8 +61,9 @@ enum{
 //	BMPウィンドウ
 //--------------------------------------------------------------
 enum{
-//	BALLOON_BMPWIN_TALK,		///<会話ウィンドウ
-
+#if WB_FIX  //使用していないウィンドウなので消す　2009.06.07(日)
+	BALLOON_BMPWIN_TALK,		///<会話ウィンドウ
+#endif
 	BALLOON_BMPWIN_NAME_1,		///<プレイヤー名
 	BALLOON_BMPWIN_NAME_2,		///<プレイヤー名
 	BALLOON_BMPWIN_NAME_3,		///<プレイヤー名

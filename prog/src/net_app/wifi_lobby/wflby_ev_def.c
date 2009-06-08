@@ -2049,7 +2049,7 @@ static BOOL WFLBY_EV_DEF_PlayerInGrid_Before( WFLBY_EVENTWK* p_wk, WFLBY_ROOMWK*
 		// ログアウトもする
 		// エラーじゃなければ
 		if( WFLBY_ERR_CheckError() == FALSE ){
-			DWC_LOBBY_SUBCHAN_Logout();
+			OLDDWC_LOBBY_SUBCHAN_Logout();
 		}
 
 		// BGMをフェードイン
@@ -2063,7 +2063,7 @@ static BOOL WFLBY_EV_DEF_PlayerInGrid_Before( WFLBY_EVENTWK* p_wk, WFLBY_ROOMWK*
 		// LOGOUT待ち
 		// エラーじゃなければ
 		if( (WFLBY_ERR_CheckError() == FALSE) ){
-			if( DWC_LOBBY_SUBCHAN_LogoutWait() == FALSE ){
+			if( OLDDWC_LOBBY_SUBCHAN_LogoutWait() == FALSE ){
 				break;
 			}
 		}
@@ -2973,16 +2973,16 @@ static BOOL WFLBY_EV_DEF_PlayerOutSubChan_Before( WFLBY_EVENTWK* p_wk, WFLBY_ROO
 			// チャンネルナンバーからミニゲームタイプを作成
 			channelno = WFLBY_EV_DEF_PlayerOutSubChan_GetEvnoChannel( evno );
 			switch( channelno ){
-			case DWC_LOBBY_SUBCHAN_FOOT1:			// 足跡ボード１
+			case OLDDWC_LOBBY_SUBCHAN_FOOT1:			// 足跡ボード１
 				p_evwk->minigame = WFLBY_GAME_FOOTWHITE;
 				break;
-			case DWC_LOBBY_SUBCHAN_FOOT2:			// 足跡ボード２
+			case OLDDWC_LOBBY_SUBCHAN_FOOT2:			// 足跡ボード２
 				p_evwk->minigame = WFLBY_GAME_FOOTBLACK;
 				break;
-			case DWC_LOBBY_SUBCHAN_CLOCK:			// 世界時計
+			case OLDDWC_LOBBY_SUBCHAN_CLOCK:			// 世界時計
 				p_evwk->minigame = WFLBY_GAME_WLDTIMER;
 				break;
-			case DWC_LOBBY_SUBCHAN_NEWS:				// ロビーニュース
+			case OLDDWC_LOBBY_SUBCHAN_NEWS:				// ロビーニュース
 				p_evwk->minigame = WFLBY_GAME_NEWS;
 				break;
 			default:
@@ -3016,7 +3016,7 @@ static BOOL WFLBY_EV_DEF_PlayerOutSubChan_Before( WFLBY_EVENTWK* p_wk, WFLBY_ROO
 			channel_no = WFLBY_EV_DEF_PlayerOutSubChan_GetEvnoChannel( evno );
 
 			// サブチャンネル接続人数チェック
-			if( DWC_LOBBY_SUBCHAN_LoginCheck( channel_no ) == FALSE ){
+			if( OLDDWC_LOBBY_SUBCHAN_LoginCheck( channel_no ) == FALSE ){
 				p_evwk->msg_idx = msg_wifi_h_info_05_01;
 				p_evwk->msg_type	= WFLBY_DEFMSG_TYPE_INFO;
 				WFLBY_EVENTWK_SetSeq( p_wk, WFLBY_EV_DEF_PLAYER_SUBCHAN_SEQ_NG );
@@ -3024,7 +3024,7 @@ static BOOL WFLBY_EV_DEF_PlayerOutSubChan_Before( WFLBY_EVENTWK* p_wk, WFLBY_ROO
 			}
 
 			
-			result = DWC_LOBBY_SUBCHAN_Login( channel_no );
+			result = OLDDWC_LOBBY_SUBCHAN_Login( channel_no );
 			GF_ASSERT( result );
 			WFLBY_EVENTWK_AddSeq( p_wk );
 		}
@@ -3033,10 +3033,10 @@ static BOOL WFLBY_EV_DEF_PlayerOutSubChan_Before( WFLBY_EVENTWK* p_wk, WFLBY_ROO
 	//  ログイン待機
 	case WFLBY_EV_DEF_PLAYER_SUBCHAN_SEQ_LOGINWAIT:
 		{
-			DWC_LOBBY_SUBCHAN_LOGIN_RESULT result;
+			OLDDWC_LOBBY_SUBCHAN_LOGIN_RESULT result;
 
-			result = DWC_LOBBY_SUBCHAN_LoginWait();
-			if( result == DWC_LOBBY_SUBCHAN_LOGIN_OK ){
+			result = OLDDWC_LOBBY_SUBCHAN_LoginWait();
+			if( result == OLDDWC_LOBBY_SUBCHAN_LOGIN_OK ){
 				WFLBY_EVENTWK_SetSeq( p_wk, WFLBY_EV_DEF_PLAYER_SUBCHAN_SEQ_START );
 
 				// ミニゲーム参加トピック生成
@@ -3062,7 +3062,7 @@ static BOOL WFLBY_EV_DEF_PlayerOutSubChan_Before( WFLBY_EVENTWK* p_wk, WFLBY_ROO
 						count = 0;
 						for( i=0; i<NEWS_TOPICNAME_NUM; i++ ){
 							enumplno = WFLBY_SYSTEM_GetSubChanEnum( p_system, i );
-							if( enumplno != DWC_LOBBY_USERIDTBL_IDX_NONE ){
+							if( enumplno != OLDDWC_LOBBY_USERIDTBL_IDX_NONE ){
 								if( count < NEWS_TOPICNAME_NUM ){
 									pl_no[ count ] = enumplno;
 								}
@@ -3079,7 +3079,7 @@ static BOOL WFLBY_EV_DEF_PlayerOutSubChan_Before( WFLBY_EVENTWK* p_wk, WFLBY_ROO
 				}
 				
 			// ログイン失敗
-			}else if( result == DWC_LOBBY_SUBCHAN_LOGIN_NG ){
+			}else if( result == OLDDWC_LOBBY_SUBCHAN_LOGIN_NG ){
 				p_evwk->msg_idx = msg_wifi_h_info_05_01;
 				p_evwk->msg_type	= WFLBY_DEFMSG_TYPE_INFO;
 				WFLBY_EVENTWK_SetSeq( p_wk, WFLBY_EV_DEF_PLAYER_SUBCHAN_SEQ_NG );
@@ -3338,17 +3338,17 @@ static BOOL WFLBY_EV_DEF_PlayerOutMiniGame_Before( WFLBY_EVENTWK* p_wk, WFLBY_RO
 
 			switch( evno ){
 			case WFLBY_MAPEVID_EV_BALLSLOW:
-				p_evwk->mg_param.mg_type		= DWC_LOBBY_MG_BALLSLOW;
+				p_evwk->mg_param.mg_type		= OLDDWC_LOBBY_MG_BALLSLOW;
 				p_evwk->mg_param.wflby_mg_type	= WFLBY_GAME_BALLSLOW;
 				p_evwk->mg_param.wflby_mg_status= WFLBY_STATUS_BALLSLOW;
 				break;
 			case WFLBY_MAPEVID_EV_BALANCE:
-				p_evwk->mg_param.mg_type	= DWC_LOBBY_MG_BALANCEBALL;
+				p_evwk->mg_param.mg_type	= OLDDWC_LOBBY_MG_BALANCEBALL;
 				p_evwk->mg_param.wflby_mg_type	= WFLBY_GAME_BALANCEBALL;
 				p_evwk->mg_param.wflby_mg_status= WFLBY_STATUS_BALANCEBALL;
 				break;
 			case WFLBY_MAPEVID_EV_BALLOON:
-				p_evwk->mg_param.mg_type	= DWC_LOBBY_MG_BALLOON;
+				p_evwk->mg_param.mg_type	= OLDDWC_LOBBY_MG_BALLOON;
 				p_evwk->mg_param.wflby_mg_type	= WFLBY_GAME_BALLOON;
 				p_evwk->mg_param.wflby_mg_status= WFLBY_STATUS_BALLOON;
 				break;
@@ -3791,14 +3791,14 @@ static u32 WFLBY_EV_DEF_PlayerOutSubChan_GetEvnoChannel( u32 evno )
 	case WFLBY_MAPEVID_EV_WLDTIMER_01:
 	case WFLBY_MAPEVID_EV_WLDTIMER_02:
 	case WFLBY_MAPEVID_EV_WLDTIMER_03:
-		channel_no = DWC_LOBBY_SUBCHAN_CLOCK;
+		channel_no = OLDDWC_LOBBY_SUBCHAN_CLOCK;
 		break;
 
 	case WFLBY_MAPEVID_EV_TOPIC_00:
 	case WFLBY_MAPEVID_EV_TOPIC_01:
 	case WFLBY_MAPEVID_EV_TOPIC_02:
 	case WFLBY_MAPEVID_EV_TOPIC_03:
-		channel_no = DWC_LOBBY_SUBCHAN_NEWS;
+		channel_no = OLDDWC_LOBBY_SUBCHAN_NEWS;
 		break;
 
 	case WFLBY_MAPEVID_EV_FOOT_00_00:
@@ -3809,7 +3809,7 @@ static u32 WFLBY_EV_DEF_PlayerOutSubChan_GetEvnoChannel( u32 evno )
 	case WFLBY_MAPEVID_EV_FOOT_00_05:
 	case WFLBY_MAPEVID_EV_FOOT_00_06:
 	case WFLBY_MAPEVID_EV_FOOT_00_07:
-		channel_no = DWC_LOBBY_SUBCHAN_FOOT1;
+		channel_no = OLDDWC_LOBBY_SUBCHAN_FOOT1;
 		break;
 
 	case WFLBY_MAPEVID_EV_FOOT_01_00:
@@ -3820,7 +3820,7 @@ static u32 WFLBY_EV_DEF_PlayerOutSubChan_GetEvnoChannel( u32 evno )
 	case WFLBY_MAPEVID_EV_FOOT_01_05:
 	case WFLBY_MAPEVID_EV_FOOT_01_06:
 	case WFLBY_MAPEVID_EV_FOOT_01_07:
-		channel_no = DWC_LOBBY_SUBCHAN_FOOT2;
+		channel_no = OLDDWC_LOBBY_SUBCHAN_FOOT2;
 		break;
 
 	default:
@@ -4093,7 +4093,7 @@ static BOOL WFLBY_EV_FLOAT_Inside( WFLBY_EVENTWK* p_wk, WFLBY_ROOMWK* p_rmwk, u3
 				// 予約できるかチェック
 				p_evwk->floatidx = WFLBY_SYSTEM_SetFloatReserve( p_system, plno, p_evwk->station );
 
-				if( p_evwk->floatidx != DWC_LOBBY_USERIDTBL_IDX_NONE ){
+				if( p_evwk->floatidx != OLDDWC_LOBBY_USERIDTBL_IDX_NONE ){
 					// 予約できた！
 					WFLBY_EVENTWK_SetSeq( p_wk, WFLBY_EV_FLOAT_SEQ_FLOAT_INWAIT );
 
@@ -4896,7 +4896,7 @@ static BOOL WFLBY_EV_DEF_NpcMain_Before( WFLBY_EVENTWK* p_wk, WFLBY_ROOMWK* p_rm
 
 			// 乗ってないかチェック
 			idx = WFLBY_SYSTEM_GetFloatPlIdxReserve( p_system, plno );
-			if( idx != DWC_LOBBY_USERIDTBL_IDX_NONE ){
+			if( idx != OLDDWC_LOBBY_USERIDTBL_IDX_NONE ){
 				// 乗ってるのでフロートイベントへ
 				// NPCの動作停止
 				WFLBY_3DOBJCONT_SetWkMove( p_objcont, p_npc, WFLBY_3DOBJCONT_MOVENONE );
@@ -5048,7 +5048,7 @@ static BOOL WFLBY_EV_DEF_NpcFloat_Brfore( WFLBY_EVENTWK* p_wk, WFLBY_ROOMWK* p_r
 			p_evwk = WFLBY_EVENTWK_AllocWk( p_wk, sizeof(WFLBY_EV_DEF_NPCFLOAT_WK) );
 			p_evwk->p_npc		= WFLBY_3DOBJCONT_GetPlIDWk( p_objcont, plno );
 			p_evwk->float_idx	= WFLBY_SYSTEM_GetFloatPlIdxReserve( p_system, plno );
-			GF_ASSERT( p_evwk->float_idx != DWC_LOBBY_USERIDTBL_IDX_NONE );
+			GF_ASSERT( p_evwk->float_idx != OLDDWC_LOBBY_USERIDTBL_IDX_NONE );
 
 			WFLBY_SYSTEM_GetFloatIdxOfs( p_evwk->float_idx, &p_evwk->float_idx, &p_evwk->float_offs );
 

@@ -20,8 +20,13 @@
 #include "net_app/wifi_country.h"
 
 //#include "communication/comm_state.h"
-#include "net/dwc_rap.h"
+#include "net_old/comm_dwc_rap.h"
 #include "poke_tool/poketype.h"
+
+#include "net_old\comm_system.h"
+#include "net_old\comm_state.h"
+#include "net_old\comm_info.h"
+#include "net_old\comm_tool.h"
 
 //-----------------------------------------------------------------------------
 /**
@@ -398,7 +403,7 @@ int WFLBY_ERR_GetStrID( int errno,int errtype )
 	int err_type;
 	int msgno;
 
-	err_type = GFL_NET_DWC_ErrorType( errno,errtype );
+	err_type = mydwc_errorType( errno,errtype );
 	
     if((err_type == 11) || (errno == ERRORCODE_0)){
         msgno = dwc_error_0015;
@@ -431,7 +436,7 @@ WFLBY_ERR_TYPE WFLBY_ERR_GetErrType( int errno,int errtype )
 	int err_type;
 	int ret;
 
-	err_type = GFL_NET_DWC_ErrorType( errno, errtype );
+	err_type = mydwc_errorType( errno, errtype );
 	
     if( errno == ERRORCODE_0 ){
 		err_type = 11;
@@ -474,11 +479,7 @@ WFLBY_ERR_TYPE WFLBY_ERR_GetErrType( int errno,int errtype )
 //-----------------------------------------------------------------------------
 BOOL WFLBY_ERR_CheckError( void )
 {
-#if WB_FIX
-	if( GFL_NET_SystemIsError() || GFL_NET_SystemIsLobbyError() ){
-#else
-	if(GFL_NET_SystemIsError() != 0){
-#endif
+	if( CommStateIsWifiError() || CommStateWifiLobbyError() ){
 		return TRUE;
 	}
 	return FALSE;

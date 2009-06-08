@@ -49,6 +49,10 @@
 #include "comm_command_balloon.h"
 #include "balloon_comm_types.h"
 #include "balloon_send_recv.h"
+#include "net_old\comm_system.h"
+#include "net_old\comm_state.h"
+#include "net_old\comm_info.h"
+#include "net_old\comm_tool.h"
 
 
 //==============================================================================
@@ -147,7 +151,7 @@ void SendBalloon_Air(BALLOON_GAME_PTR game, const BALLOON_AIR_DATA *air_data)
 //--------------------------------------------------------------
 static void RecvBalloon_Air(BALLOON_GAME_PTR game, const BALLOON_SIO_PLAY_WORK *recv)
 {
-	if(recv->air_data.net_id == GFL_NET_SystemGetCurrentID()){
+	if(recv->air_data.net_id == CommGetCurrentID()){
 		return;	//©•ª‚Ìƒf[ƒ^‚Íó‚¯æ‚ç‚È‚¢
 	}
 	BalloonTool_PlayerAirParamAdd(game, &recv->air_data);

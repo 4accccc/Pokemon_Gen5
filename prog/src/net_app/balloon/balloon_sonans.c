@@ -445,7 +445,11 @@ void Sonans_Exit(BALLOON_GAME_PTR game, SONANS_SYS_PTR sns)
 	Aim_ActorDelete(sns->aim_cap);
 	Aim_ResourceFree(game);
 
+  GFL_G3D_DeleteResource(sns->g3Dres_btx);
+  
+#if WB_TEMP_FIX
 	GFL_HEAP_FreeMemory(sns->tex_file);
+#endif
 	GFL_HEAP_FreeMemory(sns->palette_work_src);
 	GFL_HEAP_FreeMemory(sns->palette_work_dest);
 	

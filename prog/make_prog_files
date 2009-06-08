@@ -35,7 +35,8 @@ NETWORKSRC =  net/net_icondata.c \
         net/net_dev.c \
         net/dwc_rapfriend.c \
         net/net_exchange.c \
-        system/net_err.c
+        system/net_err.c \
+        net_old/net_old.c
 
 
 
@@ -192,7 +193,7 @@ SRCS  +=    $(SOUNDSRC) \
 # 要望・質問は森さんか大野にお願いします。
 #
 
-# wifiプログラム
+# wifiプログラムのライブラリ
 #===> main
 #LIB=>          libdwcauth.a
 #LIB=>          libdwcbase.a
@@ -211,6 +212,11 @@ SRCS  +=    $(SOUNDSRC) \
 #LIB=>          libssl.a
 #LIB=>          libwcm.a
 #LIB=>          libstubsmd5.a
+SRCS_OVERLAY_DEV_WIFILIB   = net/net_dummy.c
+
+
+# wifiプログラム
+#===> SRCS_OVERLAY_DEV_WIFILIB
 SRCS_OVERLAY_DEV_WIFI   = net/net_devwifi.c \
                 net/dwc_rap.c \
                 net/dwc_rapinitialize.c \
@@ -348,21 +354,6 @@ SRCS_OVERLAY_ARIIZUMI_DEBUG = test/ariizumi/debug_ariizumi.c
 
 
 
-# 松田デバッグ
-#===> SRCS_OVERLAY_DEV_WIFI
-#===> SRCS_OVERLAY_DEV_WIRELESS
-#===> SRCS_OVERLAY_DEV_IRC
-SRCS_OVERLAY_MATSUDA_DEBUG  = test/matsuda/d_matsu.c \
-        test/matsuda/d_matsu_net.c \
-        test/matsuda/d_matsu_match.c \
-        test/matsuda/d_matsu_item.c \
-        test/matsuda/d_matsu_list.c \
-        test/matsuda/d_matsu_huge_beacon.c \
-        test/matsuda/huge_beacon.c \
-        test/matsuda/d_save.c \
-        test/matsuda/palace_block.c \
-        test/matsuda/palace_block2.c
-
 # 田谷デバッグ
 #===> SRCS_OVERLAY_DEV_IRC
 #===> SRCS_OVERLAY_DEV_WIRELESS
@@ -418,16 +409,6 @@ SRCS_OVERLAY_POKELIST = test/matsuda/easy_pokelist.c
 #===> SRCS_OVERLAY_POKELIST
 SRCS_OVERLAY_TRADE  = trade/trade.c \
         trade/trade_main.c
-
-#wifi風船割り
-#===> main
-SRCS_OVERLAY_BALLOON =  net_app/balloon/balloon.c \
-            net_app/balloon/balloon_game.c \
-            net_app/balloon/balloon_sonans.c \
-            net_app/balloon/balloon_tool.c \
-            net_app/balloon/balloon_entry.c \
-            net_app/balloon/comm_command_balloon.c \
-            net_app/balloon/balloon_send_recv.c
 
 # バトル
 #===> SRCS_OVERLAY_TAYA_DEBUG
@@ -498,17 +479,6 @@ SRCS_OVERLAY_WIFICLUB =   net_app/wificlub/wifi_p2pmatchroom.c \
               net_app/wificlub/wifi_p2pmatchfour.c
 
 
-# WIFI2DMAP
-#===> SRCS_OVERLAY_WIFICLUB
-SRCS_OVERLAY_WIFI2DMAP  = net_app/wifi2dmap/wifi_2dchar.c \
-              net_app/wifi2dmap/wf2dmap_map.c \
-              net_app/wifi2dmap/wf2dmap_obj.c \
-              net_app/wifi2dmap/wf2dmap_judge.c \
-              net_app/wifi2dmap/wf2dmap_objdraw.c \
-              net_app/wifi2dmap/wf2dmap_scroll.c \
-              net_app/wifi2dmap/wf2dmap_scrdraw.c \
-              net_app/wifi2dmap/wf2dmap_cmdq.c
-
 # IRCBATTLEマッチング
 #===> SRCS_OVERLAY_DEV_IRC
 SRCS_OVERLAY_IRCBATTLEMATCH = field/ircbattle/ircbattlematch.c \
@@ -578,7 +548,7 @@ SRCS_OVERLAY_DOWNLOAD_PLAY = test/dlplay/dlplay_parent_sample.c \
         test/dlplay/dlplay_disp_sys.c
 
 # 大野デバッグ
-#===> SRCS_OVERLAY_WIFI2DMAP
+#===> main
 SRCS_OVERLAY_OHNO_DEBUG = test/ohno/d_ohno_list.c
 
 # 大野デバッグ
@@ -638,7 +608,7 @@ SRCS_OVERLAY_PALACE = app/palace/palace_edit.c \
 
 
 #WIFI 世界 共通
-#===> SRCS_OVERLAY_DEV_WIFI
+#===> SRCS_OVERLAY_DEV_WIFILIB
 #LIB=>          libdwcgsghttp.a
 #LIB=>          libdwcnd.a
 #LIB=>          libdwcnhttp.a
@@ -646,8 +616,9 @@ SRCS_OVERLAY_DPW_COMMON   = libdpw/dpwi_encrypt.c \
               libdpw/dpwi_session.c
 
 # 古い通信プログラム WIFI広場以外使用禁止
-#===> SRCS_OVERLAY_WIFI2DMAP
+#===> SRCS_OVERLAY_DPW_COMMON
 SRCS_OVERLAY_NETOLD = net_old/comm_ring_buff.c \
+                      net_old/comm_dwc_rapcommon.c \
                       net_old/comm_command.c \
                       net_old/comm_queue.c \
                       net_old/comm_tool.c \
@@ -657,6 +628,7 @@ SRCS_OVERLAY_NETOLD = net_old/comm_ring_buff.c \
                       net_old/comm_wifihistory.c \
                       net_old/comm_state.c \
                       net_old/comm_dwc_rap.c \
+                      net_old/comm_dwc_lobbylib.c \
                       net_old/com_dwc_warning.c \
                       net_old/com_error_warning_reset.c
 
@@ -719,4 +691,38 @@ SRCS_OVERLAY_WIFILOBBY_ROOM   = net_app/wifi_lobby/wflby_3dmatrix.c \
 SRCS_OVERLAY_MINIGAME_COMMON = net_app/wifi_lobby/minigame_tool.c \
 							   net_app/wifi_lobby/minigame_commcomand.c \
 							   net_app/wifi_lobby/minigame_commcomand_func.c
+
+# WIFI2DMAP
+#===> SRCS_OVERLAY_WIFILOBBY_ROOM
+SRCS_OVERLAY_WIFI2DMAP  = net_app/wifi2dmap/wifi_2dchar.c \
+              net_app/wifi2dmap/wf2dmap_map.c \
+              net_app/wifi2dmap/wf2dmap_obj.c \
+              net_app/wifi2dmap/wf2dmap_judge.c \
+              net_app/wifi2dmap/wf2dmap_objdraw.c \
+              net_app/wifi2dmap/wf2dmap_scroll.c \
+              net_app/wifi2dmap/wf2dmap_scrdraw.c \
+              net_app/wifi2dmap/wf2dmap_cmdq.c
+
+#wifi風船割り
+#===> SRCS_OVERLAY_MINIGAME_COMMON
+SRCS_OVERLAY_BALLOON =  net_app/balloon/balloon.c \
+            net_app/balloon/balloon_game.c \
+            net_app/balloon/balloon_sonans.c \
+            net_app/balloon/balloon_tool.c \
+            net_app/balloon/balloon_entry.c \
+            net_app/balloon/comm_command_balloon.c \
+            net_app/balloon/balloon_send_recv.c
+
+# 松田デバッグ
+#===> SRCS_OVERLAY_NETOLD
+SRCS_OVERLAY_MATSUDA_DEBUG  = test/matsuda/d_matsu.c \
+        test/matsuda/d_matsu_net.c \
+        test/matsuda/d_matsu_match.c \
+        test/matsuda/d_matsu_item.c \
+        test/matsuda/d_matsu_list.c \
+        test/matsuda/d_matsu_huge_beacon.c \
+        test/matsuda/huge_beacon.c \
+        test/matsuda/d_save.c \
+        test/matsuda/palace_block.c \
+        test/matsuda/palace_block2.c
 

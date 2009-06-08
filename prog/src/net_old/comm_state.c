@@ -20,7 +20,7 @@
 //#include "system/pm_str.h"
 #include "system/main.h"
 #include "net_old/comm_dwc_rap.h"   //WIFI
-#include "../net/dwc_lobbylib.h"   //WIFIlobby
+#include "net_old/comm_dwc_lobbylib.h"   //WIFIlobby
 //#include "system/snd_tool.h"  //sndTOOL
 #include "sound/pm_sndsys.h"
 //#include  "net_old/comm_wm_icon.h"
@@ -1737,14 +1737,14 @@ static void _wifiBattleConnecting(void)
 			// Wi-Fiロビーにログイン開始
 #ifndef PM_DEBUG
 			// 通常LOGIN
-			result = DWC_LOBBY_Login( _pCommState->cp_lobby_init_profile );
+			result = OLDDWC_LOBBY_Login( _pCommState->cp_lobby_init_profile );
 #else
 			// DEBUGLOGIN
 			if( D_Tomoya_WiFiLobby_ChannelPrefixFlag == TRUE ){
 				OS_TPrintf( "prefix room %d\n", D_Tomoya_WiFiLobby_ChannelPrefix );
-				result = DWC_LOBBY_LoginEx( _pCommState->cp_lobby_init_profile, D_Tomoya_WiFiLobby_ChannelPrefix );
+				result = OLDDWC_LOBBY_LoginEx( _pCommState->cp_lobby_init_profile, D_Tomoya_WiFiLobby_ChannelPrefix );
 			}else{
-				result = DWC_LOBBY_Login( _pCommState->cp_lobby_init_profile );
+				result = OLDDWC_LOBBY_Login( _pCommState->cp_lobby_init_profile );
 			}
 #endif
 			// ログインに成功するまでループ
@@ -1753,7 +1753,7 @@ static void _wifiBattleConnecting(void)
 #ifdef COMMST_DEBUG_WFLBY_START
 				{
 					// 今回の部屋データを設定
-					DWC_LOBBY_DEBUG_SetRoomData( 20*60, 0, COMMST_DEBUG_WFLBY_START_room, COMMST_DEBUG_WFLBY_START_season );
+					OLDDWC_LOBBY_DEBUG_SetRoomData( 20*60, 0, COMMST_DEBUG_WFLBY_START_room, COMMST_DEBUG_WFLBY_START_season );
 				}
 #endif
 
@@ -1793,9 +1793,9 @@ static void _wifiBattleParentInit(void)
 {
 	MYSTATUS* pMyStatus;
 
-	if(!CommIsVRAMDInitialize()){
-		return;
-	}
+//	if(!CommIsVRAMDInitialize()){
+//		return;
+//	}
 	{
 		GFL_HEAP_CreateHeapLo( GFL_HEAPID_APP, HEAPID_WIFI, _HEAPSIZE_WIFI);
 		/*↑[GS_CONVERT_TAG]*/
@@ -1820,9 +1820,9 @@ static void _wifiBattleParentInit(void)
 
 static void _wifiBattleChildInit(void)
 {
-	if(!CommIsVRAMDInitialize()){
-		return;
-	}
+//	if(!CommIsVRAMDInitialize()){
+//		return;
+//	}
 
 	{
 		GFL_HEAP_CreateHeapLo( GFL_HEAPID_APP, HEAPID_WIFI, _HEAPSIZE_WIFI);
@@ -2046,28 +2046,36 @@ BOOL CommStateWifiLobbyError( void )
  *	@param	type		ゲームタイプ
  */
 //-----------------------------------------------------------------------------
-void CommStateWifiP2PStart( DWC_LOBBY_MG_TYPE type, const HEAPID heapID, SAVE_CONTROL_WORK* pSaveData, int wifiFriendStatusSize )
+void CommStateWifiP2PStart( OLDDWC_LOBBY_MG_TYPE type, const HEAPID heapID, SAVE_CONTROL_WORK* pSaveData, int wifiFriendStatusSize )
 {
+#if 0
+  GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_COMMUNICATION, _HEAPSIZE_WIFILOBBY );
 	_commStateInitialize(pSaveData,COMM_MODE_LOGIN_WIFI);
-	_pCommState->pWifiFriendStatus = GFL_HEAP_AllocMemory( heapID, wifiFriendStatusSize );
-	GFL_STD_MemClear( _pCommState->pWifiFriendStatus, wifiFriendStatusSize );
+	if(wifiFriendStatusSize > 0){
+  	_pCommState->pWifiFriendStatus = GFL_HEAP_AllocMemory( heapID, wifiFriendStatusSize );
+	  GFL_STD_MemClear( _pCommState->pWifiFriendStatus, wifiFriendStatusSize );
+	}
+	else{
+    _pCommState->pWifiFriendStatus = NULL;
+  }
 	_pCommState->regulationNo = 0;
 	_pCommState->pSaveData = pSaveData;
 #ifdef PM_DEBUG
 	_pCommState->soloDebugNo = 0;
+#endif
 #endif
 
 	GF_ASSERT( _pCommState );
 //	GF_ASSERT( CommStateIsWifiLoginMatchState() == TRUE );
 
 	// 接続開始
-	if( DWC_LOBBY_MG_CheckRecruit( type ) == FALSE ){
+	if( OLDDWC_LOBBY_MG_CheckRecruit( type ) == FALSE ){
 		// 誰も募集していないので、自分が募集する
-		DWC_LOBBY_MG_StartRecruit( type, 4 );
+		OLDDWC_LOBBY_MG_StartRecruit( type, 4 );
 		_CHANGE_STATE(_wifiLobbyP2PMatchWait, 0);
 	}else{
 		// 募集に参加する
-		DWC_LOBBY_MG_Entry( type );
+		OLDDWC_LOBBY_MG_Entry( type );
 		_CHANGE_STATE(_wifiLobbyP2PMatchWait, 0);
 	}
 }
@@ -2082,12 +2090,12 @@ void CommStateWifiP2PEnd( void )
 {
 	u32 status;
 
-	if( DWC_LOBBY_MG_MyParent() == TRUE ){
+	if( OLDDWC_LOBBY_MG_MyParent() == TRUE ){
 		// 親なら募集情報を破棄
-		DWC_LOBBY_MG_EndRecruit();
+		OLDDWC_LOBBY_MG_EndRecruit();
 	}
 	// P2P接続終了
-	DWC_LOBBY_MG_EndConnect();
+	OLDDWC_LOBBY_MG_EndConnect();
 
 	// 切断処理へ
 	_CHANGE_STATE(_wifiLobbyP2PDisconnect, 0);
@@ -2443,9 +2451,9 @@ void CommStateChangeWiFiBattle( void )
 //-----------------------------------------------------------------------------
 static void _wifiLobbyCommInit( void )
 {
-	if(!CommIsVRAMDInitialize()){
-		return;
-	}
+//	if(!CommIsVRAMDInitialize()){
+//		return;
+//	}
 	{
 		GFL_HEAP_CreateHeapLo( GFL_HEAPID_APP, HEAPID_WIFI, _HEAPSIZE_WIFI_LOBBY);
 		/*↑[GS_CONVERT_TAG]*/
@@ -2491,7 +2499,7 @@ static void _wifiLobbyLogin( void )
 	if( result == FALSE ){ return ; }	// エラー起きた
 
 	// ログイン完了待ち
-	result = DWC_LOBBY_LoginWait();
+	result = OLDDWC_LOBBY_LoginWait();
 	if( result ){
 
 		//接続完了
@@ -2566,21 +2574,21 @@ static BOOL _wifiLobbyDwcStepRetCheck( int dwc_err )
 //-----------------------------------------------------------------------------
 static BOOL _wifiLobbyUpdate( void )
 {
-	DWC_LOBBY_CHANNEL_STATE lobby_err;
+	OLDDWC_LOBBY_CHANNEL_STATE lobby_err;
 	BOOL ret = TRUE;
 
 	// Wi-Fiロビー毎フレーム処理
-	lobby_err = DWC_LOBBY_Update();
+	lobby_err = OLDDWC_LOBBY_Update();
 	switch( lobby_err ){
 		//  正常
-	case DWC_LOBBY_CHANNEL_STATE_NONE:           // チャンネルに入っていない。
-	case DWC_LOBBY_CHANNEL_STATE_LOGINWAIT:		// チャンネルに入室中。
-	case DWC_LOBBY_CHANNEL_STATE_CONNECT:		// チャンネルに入室済み。
-	case DWC_LOBBY_CHANNEL_STATE_LOGOUTWAIT:     // チャンネルに退室中。
+	case OLDDWC_LOBBY_CHANNEL_STATE_NONE:           // チャンネルに入っていない。
+	case OLDDWC_LOBBY_CHANNEL_STATE_LOGINWAIT:		// チャンネルに入室中。
+	case OLDDWC_LOBBY_CHANNEL_STATE_CONNECT:		// チャンネルに入室済み。
+	case OLDDWC_LOBBY_CHANNEL_STATE_LOGOUTWAIT:     // チャンネルに退室中。
 		break;
 
 		// エラー処理
-	case DWC_LOBBY_CHANNEL_STATE_ERROR:           // チャンネル状態を取得できませんでした。
+	case OLDDWC_LOBBY_CHANNEL_STATE_ERROR:           // チャンネル状態を取得できませんでした。
 		_CHANGE_STATE(_wifiLobbyError, 0);
 		ret = FALSE;
 		break;
@@ -2661,7 +2669,7 @@ static BOOL _wifiLobbyUpdateMatchCommon( u32* p_matchret )
 static void _wifiLobbyLogout( void )
 {
 	// Wi-Fiロビーからログアウト
-	DWC_LOBBY_Logout();
+	OLDDWC_LOBBY_Logout();
 
 	_CHANGE_STATE(_wifiLobbyLogoutWait, 0);
 }
@@ -2680,7 +2688,7 @@ static void _wifiLobbyLogoutWait( void )
 	_wifiLobbyUpdate();
 
 	// ログアウト終了待ち
-	result  = DWC_LOBBY_LogoutWait();
+	result  = OLDDWC_LOBBY_LogoutWait();
 	if( result ){
 		GFL_UI_SoftResetEnable(GFL_UI_SOFTRESET_WIFI);		//sys_SoftResetOK(SOFTRESET_TYPE_WIFI);
 		CommInfoFinalize();
@@ -2711,10 +2719,10 @@ static void _wifiLobbyP2PMatch( void )
 	_wifiLobbyUpdateCommon();
 
 	// ForceEndで終了
-	result = DWC_LOBBY_MG_ForceEnd();
+	result = OLDDWC_LOBBY_MG_ForceEnd();
 	if( result == TRUE ){
 		// P2P接続終了
-		DWC_LOBBY_MG_EndConnect();
+		OLDDWC_LOBBY_MG_EndConnect();
 
 		// 切断処理へ
 		_CHANGE_STATE(_wifiLobbyP2PDisconnect, 0);
@@ -2730,13 +2738,13 @@ static void _wifiLobbyP2PMatch( void )
 static void _wifiLobbyP2PMatchWaitParent( void )
 {
 	BOOL result;
-	DWC_LOBBY_MG_ENTRYRET entrywait;
+	OLDDWC_LOBBY_MG_ENTRYRET entrywait;
 
 	// ForceEndで終了
-	result = DWC_LOBBY_MG_ForceEnd();
+	result = OLDDWC_LOBBY_MG_ForceEnd();
 	if( result == TRUE ){
 		// P2P接続終了
-		DWC_LOBBY_MG_EndConnect();
+		OLDDWC_LOBBY_MG_EndConnect();
 
 		// 切断処理へ
 		_CHANGE_STATE(_wifiLobbyP2PDisconnect, 0);
@@ -2747,20 +2755,20 @@ static void _wifiLobbyP2PMatchWaitParent( void )
 	_wifiLobbyUpdateCommon();
 
 	// 接続完了チェック
-	entrywait = DWC_LOBBY_MG_EntryWait();
+	entrywait = OLDDWC_LOBBY_MG_EntryWait();
 	switch( entrywait ){
-	case DWC_LOBBY_MG_ENTRYWAIT:		// エントリー中
+	case OLDDWC_LOBBY_MG_ENTRYWAIT:		// エントリー中
 		break;
 
-	case DWC_LOBBY_MG_ENTRYOK:			// エントリー完了
+	case OLDDWC_LOBBY_MG_ENTRYOK:			// エントリー完了
 		_CHANGE_STATE(_wifiLobbyP2PMatch, 0);
 		break;
 
-	case DWC_LOBBY_MG_ENTRYNG:			// エントリー失敗
-	case DWC_LOBBY_MG_ENTRYNONE:		// 何もしていない
+	case OLDDWC_LOBBY_MG_ENTRYNG:			// エントリー失敗
+	case OLDDWC_LOBBY_MG_ENTRYNONE:		// 何もしていない
 	default:							// その他
 		// P2P接続終了
-		DWC_LOBBY_MG_EndConnect();
+		OLDDWC_LOBBY_MG_EndConnect();
 		// 状態を戻す
 		_CHANGE_STATE(_wifiLobbyP2PDisconnect, 0);
 		break;
@@ -2779,10 +2787,10 @@ static void _wifiLobbyP2PMatchWait( void )
 	u32 matchret;
 
 	// ForceEndで終了
-	result = DWC_LOBBY_MG_ForceEnd();
+	result = OLDDWC_LOBBY_MG_ForceEnd();
 	if( result == TRUE ){
 		// P2P接続終了
-		DWC_LOBBY_MG_EndConnect();
+		OLDDWC_LOBBY_MG_EndConnect();
 
 		// 切断処理へ
 		_CHANGE_STATE(_wifiLobbyP2PDisconnect, 0);
@@ -2803,7 +2811,7 @@ static void _wifiLobbyP2PMatchWait( void )
 
 	default:							// その他
 		// P2P接続終了
-		DWC_LOBBY_MG_EndConnect();
+		OLDDWC_LOBBY_MG_EndConnect();
 		// 状態を戻す
 		_CHANGE_STATE(_wifiLobbyConnect, 0);
 		break;

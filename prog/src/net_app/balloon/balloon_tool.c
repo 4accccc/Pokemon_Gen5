@@ -46,6 +46,10 @@
 #include "system/gfl_use.h"
 #include <calctool.h>
 #include "system/bmp_winframe.h"
+#include "net_old\comm_system.h"
+#include "net_old\comm_state.h"
+#include "net_old\comm_info.h"
+#include "net_old\comm_tool.h"
 
 
 //==============================================================================
@@ -955,7 +959,7 @@ static int BalloonTool_AirStackAdd(BALLOON_GAME_PTR game, BALLOON_STATUS *bst, i
 	bst->player_air[Balloon_NetID_to_PlayerPos(game, net_id)] += air;
 	OS_TPrintf("追加されたair = %d, add_air = %d, stack = %d, net_id = %d, booster_type = %d, main_frame = %d(%dsec)\n", air, bst->add_air, bst->air_stack, net_id, booster_type, game->main_frame, game->main_frame/30);
 	
-	if(net_id == GFL_NET_SystemGetCurrentID()){
+	if(net_id == CommGetCurrentID()){
 		game->my_total_air += air;
 		Balloon_CounterNextNumberSet(&game->counter, game->my_total_air);
 		OS_TPrintf("my_total_air = %d\n", game->my_total_air);
@@ -1094,7 +1098,7 @@ static int Air_ParamCreate(BALLOON_GAME_PTR game, const BALLOON_AIR_DATA * air_d
 	air_param->x = before.x * FX32_ONE;
 	air_param->y = before.y * FX32_ONE;
 
-	if(air_data->net_id == GFL_NET_SystemGetCurrentID()){
+	if(air_data->net_id == CommGetCurrentID()){
 		Air3D_EntryAdd(game, air_data->air);
 		air_param->wait = MY_AIR_2D_APPEAR_WAIT;
 		GFL_CLACT_WK_SetDrawEnable(air_param->cap, FALSE);
@@ -1257,7 +1261,7 @@ static BOOL Air_Move(BALLOON_GAME_PTR game, PLAYER_AIR_PARAM *air_param)
 	}
 	
 	//ジョイントのセンターを通過した時のブースター発生チェック
-	if(air_param->net_id == GFL_NET_SystemGetCurrentID() && before_joint_offset >= 0 && joint_offset <= 0){
+	if(air_param->net_id == CommGetCurrentID() && before_joint_offset >= 0 && joint_offset <= 0){
 		BOOSTER_MOVE *hit_move;
 		air_param->booster_type = Booster_HitCheckNow(game, &hit_move);
 		switch(air_param->booster_type){
@@ -1908,7 +1912,7 @@ void BalloonTool_PaletteSwap_Pipe(BALLOON_GAME_PTR game)
 	}
 	
 	//自分のプレイヤー位置を取得
-	current_id = GFL_NET_SystemGetCurrentID();
+	current_id = CommGetCurrentID();
 	for(my_player = 0; my_player < game->bsw->player_max; my_player++){
 		if(game->bsw->player_netid[my_player] == current_id){
 			break;
@@ -1956,7 +1960,7 @@ void BalloonTool_PaletteSwap_PlayerOBJ(BALLOON_GAME_PTR game)
 	}
 	
 	//自分のプレイヤー位置を取得
-	current_id = GFL_NET_SystemGetCurrentID();
+	current_id = CommGetCurrentID();
 	for(my_player = 0; my_player < game->bsw->player_max; my_player++){
 		if(game->bsw->player_netid[my_player] == current_id){
 			break;
@@ -2004,7 +2008,7 @@ void BalloonTool_PaletteSwap_Storm(BALLOON_GAME_PTR game)
 	}
 	
 	//自分のプレイヤー位置を取得
-	current_id = GFL_NET_SystemGetCurrentID();
+	current_id = CommGetCurrentID();
 	for(my_player = 0; my_player < game->bsw->player_max; my_player++){
 		if(game->bsw->player_netid[my_player] == current_id){
 			break;
@@ -2037,7 +2041,7 @@ void BalloonTool_PaletteSwap_Storm(BALLOON_GAME_PTR game)
 void BalloonTool_AirDataCreate(BALLOON_GAME_PTR game, int balloon_no, s32 air, BALLOON_AIR_DATA *air_data)
 {
 	GFL_STD_MemClear(air_data, sizeof(BALLOON_AIR_DATA));
-	air_data->net_id = GFL_NET_SystemGetCurrentID();
+	air_data->net_id = CommGetCurrentID();
 	air_data->no = balloon_no;
 	air_data->air = air;
 	air_data->last_air = air;
@@ -2425,7 +2429,7 @@ static int Booster_HitCheck(BALLOON_GAME_PTR game, PLAYER_AIR_PARAM)
 	const AIR_POSITION_DATA *air_posdata;
 	fx32 joint_len_y;
 	
-	player_pos = Balloon_NetID_to_PlayerPos(game, GFL_NET_SystemGetCurrentID());
+	player_pos = Balloon_NetID_to_PlayerPos(game, CommGetCurrentID());
 	air_posdata = &AirPositionDataTbl[game->bsw->player_max][player_pos];
 	
 	joint_len_y = (air_posdata->y - JointActorPosTbl[JOINT_ACTOR_D].y) << FX32_SHIFT;
@@ -2836,7 +2840,7 @@ void SioBooster_Appear(BALLOON_GAME_PTR game, SIO_BOOSTER_WORK *sio_booster, int
 	SIO_BOOSTER_MOVE *sio_move = NULL;
 	GFL_CLACTPOS pos;
 	
-	if(booster_type == BOOSTER_TYPE_NONE || net_id == GFL_NET_SystemGetCurrentID()){
+	if(booster_type == BOOSTER_TYPE_NONE || net_id == CommGetCurrentID()){
 		return;
 	}
 	for(i = 0; i < SIO_BOOSTER_ACTOR_MAX; i++){
@@ -3042,6 +3046,7 @@ void BalloonTool_FontOamCreate(PRINT_QUE *printQue, BMPOAM_SYS_PTR bsp,
 void Balloon_FontOamDelete(BALLOON_FONTACT *fontact)
 {
 	BmpOam_ActorDel(fontact->bact);
+	fontact->bact = NULL;
 	if(fontact->bmp != NULL){
 		GFL_BMP_Delete(fontact->bmp);
 	}

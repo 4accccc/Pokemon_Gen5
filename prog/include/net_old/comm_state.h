@@ -16,8 +16,7 @@
 //#include "savedata/regulation.h"
 typedef void REGULATION;
 
-//#include "net_old/comm_dwc_lobbylib.h"
-#include "src/net/dwc_lobbylib.h"   //WIFIlobby
+#include "net_old/comm_dwc_lobbylib.h"
 
 #ifdef PM_DEBUG
 #define COMMST_DEBUG_WFLBY_START	// デバック開始定義
@@ -232,14 +231,14 @@ extern void CommStateWifiEMailEnd(void);
 //	BOOL CommStateIsWifiConnect(void);
 //
 // ロビー専用の関数
-// この関数を呼ぶ前にDWC_LOBBY_Initを行っておいてください。
+// この関数を呼ぶ前にOLDDWC_LOBBY_Initを行っておいてください。
 extern void CommStateWifiLobbyLogin( SAVE_CONTROL_WORK* p_save, const void* cp_initprofile );
 extern void CommStateWifiLobbyLogout( void );
 extern BOOL CommStateWifiLobbyDwcLoginCheck( void );
 extern BOOL CommStateWifiLobbyError( void );
 
-extern void CommStateWifiP2PStart( DWC_LOBBY_MG_TYPE type, const HEAPID heapID, SAVE_CONTROL_WORK* pSaveData, int wifiFriendStatusSize );
-//extern void CommStateWifiP2PStart( DWC_LOBBY_MG_TYPE type );
+extern void CommStateWifiP2PStart( OLDDWC_LOBBY_MG_TYPE type, const HEAPID heapID, SAVE_CONTROL_WORK* pSaveData, int wifiFriendStatusSize );
+//extern void CommStateWifiP2PStart( OLDDWC_LOBBY_MG_TYPE type );
 
 extern void CommStateWifiP2PEnd( void );	// CommStateWifiP2PGetConnectState関数で切断チェックを行うこと
 enum{
