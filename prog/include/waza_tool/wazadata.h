@@ -217,6 +217,7 @@ typedef enum {
 typedef enum {
 
   WAZAFLAG_MAMORU = 0,  ///< 「まもる」の対象となるワザ
+  WAZAFLAG_TAME,        ///< １ターン溜めワザ
 
   WAZAFLAG_MAX,
 

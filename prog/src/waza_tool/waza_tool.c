@@ -283,6 +283,7 @@ enum {
   WSEQ_CRITICAL_UP = 43,
   WSEQ_ICHIGEKI = 38,
   WSEQ_EFF_SICK1 = 118,
+  WSEQ_EFF_SICK2 = 166,
   WSEQ_SIMPLE_RECOVER = 32,
 
   WSEQ_REACT_HAKAI = 80,  ///< 次のターンアクションできない
@@ -555,12 +556,16 @@ static const SEQ_PARAM* getSeqParam( WazaID waza )
         { { WAZA_RANKEFF_ATTACK, 2 }, { WAZA_RANKEFF_NULL, 0 } },
         FALSE, BTL_WEATHER_NONE, 0, 0,
     },{
+        WSEQ_EFF_SICK2, WAZADATA_CATEGORY_EFFECT_SICK,
+        WAZASICK_KONRAN, WAZASICK_CONT_PERMANENT, 0, 0,
+        { { WAZA_RANKEFF_SP_ATTACK, 1 }, { WAZA_RANKEFF_NULL, 0 } },
+        FALSE, BTL_WEATHER_NONE, 0, 0,
+    },{
         WSEQ_SIMPLE_RECOVER, WAZADATA_CATEGORY_SIMPLE_RECOVER,
         WAZASICK_KONRAN, WAZASICK_CONT_PERMANENT, 0, 0,
         { { WAZA_RANKEFF_NULL, 0 }, { WAZA_RANKEFF_NULL, 0 } },
         FALSE, BTL_WEATHER_NONE, 0, 0,
     },
-
   };
   u16 seq = WT_WazaDataParaGet( waza, ID_WTD_battleeffect );
   u16 i;
@@ -915,7 +920,6 @@ BtlWeather WAZADATA_GetWeather( WazaID id )
   }
   return BTL_WEATHER_NONE;
 }
-
 //=============================================================================================
 /**
  * ワザ使用によるHP回復率（％）を取得
@@ -927,14 +931,12 @@ BtlWeather WAZADATA_GetWeather( WazaID id )
 //=============================================================================================
 u8 WAZADATA_GetRecoverHPRatio( WazaID id )
 {
-
   const SEQ_PARAM* seq = getSeqParam( id );
   if( seq && (seq->wseq == WSEQ_SIMPLE_RECOVER) ){
     return 50;
   }
   return 0;
 }
-
 //=============================================================================================
 /**
  * ワザイメージチェック
@@ -950,7 +952,6 @@ BOOL WAZADATA_IsImage( WazaID id, WazaImage img )
   // @@@ 今はてきとー
   return FALSE;
 }
-
 //=============================================================================================
 /**
  * ワザフラグ取得
@@ -966,7 +967,24 @@ BOOL WAZADATA_GetFlag( WazaID id, WazaFlag flag )
   GF_ASSERT( flag < WAZAFLAG_MAX );
 
   // @@@ 今はてきとー
-  return WAZADATA_IsDamage( id );
+  switch( flag ){
+  case WAZAFLAG_MAMORU:
+    return WAZADATA_IsDamage( id );
+
+  case WAZAFLAG_TAME:
+    if( id == WAZANO_KAMAITATI ){ return TRUE; }
+    if( id == WAZANO_ROKETTOZUTUKI ){ return TRUE; }
+    if( id == WAZANO_SORAWOTOBU ){ return TRUE; }
+    if( id == WAZANO_SOORAABIIMU ){ return TRUE; }
+    if( id == WAZANO_DAIBINGU ){ return TRUE; }
+    if( id == WAZANO_ANAWOHORU ){ return TRUE; }
+    if( id == WAZANO_GODDOBAADO ){ return TRUE; }
+    if( id == WAZANO_TOBIHANERU ){ return TRUE; }
+    return FALSE;
+
+  default:
+    return FALSE;
+  }
 }
 
 
@@ -978,20 +996,20 @@ void WAZADATA_PrintDebug( void )
     const char* name;
     u16 id;
   }tbl[] = {
-    { "みずでっぽう（通常）",     WAZANO_MIZUDEPPOU },
-    { "ねっぷう（相手２体）",     WAZANO_NEPPUU },
-    { "なみのり（３体）",         WAZANO_NAMINORI },
-    { "かげぶんしん（自分）",     WAZANO_KAGEBUNSIN },
-    { "くろいきり（場）",         WAZANO_KUROIKIRI },
-    { "げきりん（ランダム）",     WAZANO_KUROIKIRI },
-    { "あまごい（場）",           WAZANO_AMAGOI },
-    { "あばれる（ランダム）",     WAZANO_ABARERU },
-    { "アロマセラピー（味方２体）",WAZANO_AROMASERAPII },
-    { "まきびし（まきびし）",       WAZANO_MAKIBISI },
-    { "てだすけ（てだすけ）",       WAZANO_TEDASUKE },
-    { "つぼつく（つぼつく）",       WAZANO_TUBOWOTUKU },
-    { "さきどり（さきどり）",       WAZANO_SAKIDORI },
-    { "オウムがえし（なし）",   WAZANO_OUMUGAESI },
+    { "みずでっぽう（通常）",        WAZANO_MIZUDEPPOU },
+    { "ねっぷう（相手２体）",        WAZANO_NEPPUU },
+    { "なみのり（３体）",            WAZANO_NAMINORI },
+    { "かげぶんしん（自分）",        WAZANO_KAGEBUNSIN },
+    { "くろいきり（場）",            WAZANO_KUROIKIRI },
+    { "げきりん（ランダム）",        WAZANO_KUROIKIRI },
+    { "あまごい（場）",              WAZANO_AMAGOI },
+    { "あばれる（ランダム）",        WAZANO_ABARERU },
+    { "アロマセラピー（味方２体）",  WAZANO_AROMASERAPII },
+    { "まきびし（まきびし）",        WAZANO_MAKIBISI },
+    { "てだすけ（てだすけ）",        WAZANO_TEDASUKE },
+    { "つぼつく（つぼつく）",        WAZANO_TUBOWOTUKU },
+    { "さきどり（さきどり）",        WAZANO_SAKIDORI },
+    { "オウムがえし（なし）",        WAZANO_OUMUGAESI },
   };
   u32 i, range;
 
