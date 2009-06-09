@@ -22,7 +22,7 @@
 /*--------------------------------------------------------------------------*/
 enum {
   RANK_STATUS_MIN = 0,
-  RANK_STATUS_MAX = 13,
+  RANK_STATUS_MAX = 12,
   RANK_STATUS_DEF = 6,
 
   RANK_CRITICAL_MIN = 0,
@@ -857,6 +857,7 @@ u8 BTL_POKEPARAM_RankUp( BTL_POKEPARAM* pp, BppValueID rankType, u8 volume )
       volume = max - (*ptr);
     }
     *ptr += volume;
+    BTL_Printf( "要素[%d] を %d 段階アップ -> %d に。\n", rankType, volume, (*ptr) );
     update_RealParam( pp );
     return volume;
   }
@@ -1331,9 +1332,9 @@ static void update_RealParam( BTL_POKEPARAM* pp )
 {
   pp->realParam.attack     = BTL_CALC_StatusRank( pp->baseParam.attack, pp->varyParam.attack );
   pp->realParam.defence    = BTL_CALC_StatusRank( pp->baseParam.defence, pp->varyParam.defence );
-  pp->realParam.sp_attack  = BTL_CALC_StatusRank( pp->baseParam.defence, pp->varyParam.sp_attack );
-  pp->realParam.sp_defence = BTL_CALC_StatusRank( pp->baseParam.defence, pp->varyParam.sp_defence );
-  pp->realParam.agility    = BTL_CALC_StatusRank( pp->baseParam.defence, pp->varyParam.agility );
+  pp->realParam.sp_attack  = BTL_CALC_StatusRank( pp->baseParam.sp_attack, pp->varyParam.sp_attack );
+  pp->realParam.sp_defence = BTL_CALC_StatusRank( pp->baseParam.sp_defence, pp->varyParam.sp_defence );
+  pp->realParam.agility    = BTL_CALC_StatusRank( pp->baseParam.agility, pp->varyParam.agility );
 }
 //---------------------------------------------------------------------------------------------
 // bitフラグバッファ処理

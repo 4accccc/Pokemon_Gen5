@@ -87,6 +87,8 @@ static void handler_Koraeru( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk
 static BTL_EVENT_FACTOR*  ADD_Mamoru( u16 pri, WazaID waza, u8 pokeID );
 static void handler_Mamoru_ExeCheck( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_Mamoru( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static BTL_EVENT_FACTOR*  ADD_TuboWoTuku( u16 pri, WazaID waza, u8 pokeID );
+static void handler_TuboWoTuku( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static BTL_EVENT_FACTOR*  ADD_Nekodamasi( u16 pri, WazaID waza, u8 pokeID );
 static void handler_Nekodamasi( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static BTL_EVENT_FACTOR*  ADD_AsaNoHizasi( u16 pri, WazaID waza, u8 pokeID );
@@ -148,6 +150,8 @@ BTL_EVENT_FACTOR*  BTL_HANDLER_Waza_Add( const BTL_POKEPARAM* pp, WazaID waza )
     { WAZANO_HANABIRANOMAI,   ADD_Abareru       },  // ÇÕÇ»Ç—ÇÁÇÃÇ‹Ç¢ = Ç†ÇŒÇÍÇÈ Ç∆ìôâø
     { WAZANO_GEKIRIN,         ADD_Abareru       },  // Ç∞Ç´ÇËÇÒ = Ç†ÇŒÇÍÇÈ Ç∆ìôâø
     { WAZANO_SIOMIZU,         ADD_Siomizu       },
+    { WAZANO_MEZAMASIBINTA,   ADD_MezamasiBinta },
+    { WAZANO_TUBOWOTUKU,      ADD_TuboWoTuku    },
   };
 
   int i;
@@ -1075,6 +1079,61 @@ static void handler_Mamoru( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk,
     flagParam = BTL_SVFLOW_HANDLERWORK_Push( flowWk, BTL_HANDEX_SET_TURNFLAG, pokeID );
     flagParam->pokeID = pokeID;
     flagParam->flag = BPP_TURNFLG_MAMORU;
+  }
+}
+//----------------------------------------------------------------------------------
+/**
+ * Ç¬Ç⁄ÇÇ¬Ç≠
+ */
+//----------------------------------------------------------------------------------
+static BTL_EVENT_FACTOR*  ADD_TuboWoTuku( u16 pri, WazaID waza, u8 pokeID )
+{
+  static const BtlEventHandlerTable HandlerTable[] = {
+    { BTL_EVENT_UNCATEGORY_WAZA,     handler_TuboWoTuku },          // ñ¢ï™óﬁÉèÉUÉnÉìÉhÉâ
+    { BTL_EVENT_NULL, NULL },
+  };
+  return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_WAZA, waza, pri, pokeID, HandlerTable );
+}
+static void handler_TuboWoTuku( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+{
+  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID )
+  {
+    static const BppValueID rankType[] = {
+      BPP_ATTACK, BPP_DEFENCE, BPP_AGILITY, BPP_SP_ATTACK, BPP_SP_DEFENCE,
+    };
+    const BTL_POKEPARAM* bpp = BTL_SVFLOW_RECEPT_GetPokeParam( flowWk, pokeID );
+    u8 valid_cnt, i;
+
+    for(i=0, valid_cnt=0; i<NELEMS(rankType); ++i){
+      if( BTL_POKEPARAM_IsRankEffectValid(bpp, rankType[i], 2) ){
+        ++valid_cnt;
+      }
+    }
+
+    if( valid_cnt )
+    {
+      u8 idx = GFL_STD_MtRand( valid_cnt );
+      for(i=0; i<NELEMS(rankType); ++i)
+      {
+        if( BTL_POKEPARAM_IsRankEffectValid(bpp, rankType[i], 2) )
+        {
+          if( idx == 0 )
+          {
+            BTL_HANDEX_PARAM_RANK_EFFECT* param = BTL_SVFLOW_HANDLERWORK_Push( flowWk, BTL_HANDEX_RANK_EFFECT, pokeID );
+            param->pokeID[0] = pokeID;
+            param->poke_cnt = 1;
+            param->rankType = rankType[i];
+            param->rankVolume = 2;
+            param->fAlmost = FALSE;
+            break;
+          }
+          else
+          {
+            --idx;
+          }
+        }
+      }
+    }
   }
 }
 
