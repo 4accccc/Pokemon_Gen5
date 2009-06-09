@@ -95,6 +95,7 @@ typedef enum {
   BTL_EVENT_CALC_WEATHER_DAMAGE,    ///< 天候ダメージ計算
   BTL_EVENT_SIMPLE_DAMAGE_ENABLE,   ///< ワザ以外ダメージ有効判定
   BTL_EVENT_SIMPLE_DAMAGE_REACTION, ///< ワザ以外ダメージ後の反応チェック
+  BTL_EVENT_AFTER_DAMAGE,           ///< ダメージワザ処理直後
   BTL_EVENT_SKILL_SWAP,             ///< とくせい入れ替え
   BTL_EVENT_CHECK_PUSHOUT,          ///< ふきとばし系ワザチェック
   BTL_EVENT_CALC_DRAIN,             ///< ドレイン系ワザ回復量計算

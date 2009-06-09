@@ -382,6 +382,7 @@ static BOOL scEvent_CheckShrink( BTL_SVFLOW_WORK* wk,
   const BTL_POKEPARAM* target, const BTL_POKEPARAM* attacker, WazaID waza );
 static WazaSick scEvent_CheckAddSick( BTL_SVFLOW_WORK* wk, WazaID waza,
   const BTL_POKEPARAM* attacker, const BTL_POKEPARAM* defender, BPP_SICK_CONT* pSickCont );
+static void scEvent_AfterDamage( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, TARGET_POKE_REC* targets, WazaID waza );
 static void scEvent_MakePokeSick( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* receiver, BTL_POKEPARAM* attacker,
   PokeSick sick, BPP_SICK_CONT sickCont, BOOL fAlmost );
 static void scEvent_MakeWazaSick( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* receiver, BTL_POKEPARAM* attacker,
@@ -1764,7 +1765,6 @@ static void svflowsub_damage_act_singular(  BTL_SVFLOW_WORK* wk,
       scPut_Koraeru( wk, defender, koraeru_cause );
     }
     damage_sum += damage;
-
     scproc_WazaAdditionalEffect( wk, waza, attacker, defender, damage );
 
     {
@@ -2243,6 +2243,15 @@ static void scproc_Fight_Damage_After( BTL_SVFLOW_WORK* wk, WazaID waza, BTL_POK
 {
   scproc_Fight_Damage_Drain( wk, waza, attacker, targets );
   scproc_Fight_Damage_After_Shrink( wk, waza, attacker, targets );
+
+  {
+    u32 hem_state = Hem_PushState( &wk->HEManager );
+
+    scEvent_AfterDamage( wk, attacker, targets, waza );
+    scproc_HandEx_Root( wk, ITEM_DUMMY_DATA );
+
+    Hem_PopState( &wk->HEManager, hem_state );
+  }
 }
 //------------------------------------------------------------------
 // サーバーフロー：ダメージ受け後の処理 > ひるみチェック
@@ -5128,6 +5137,32 @@ static WazaSick scEvent_CheckAddSick( BTL_SVFLOW_WORK* wk, WazaID waza,
     }
   }
   return  WAZASICK_NULL;
+}
+//----------------------------------------------------------------------------------
+/**
+ * ダメージワザ処理後
+ *
+ * @param   wk
+ * @param   attacker
+ * @param   targets
+ * @param   waza
+ */
+//----------------------------------------------------------------------------------
+static void scEvent_AfterDamage( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, TARGET_POKE_REC* targets, WazaID waza )
+{
+  BTL_EVENTVAR_Push();
+    BTL_EVENTVAR_SetValue( BTL_EVAR_POKEID_ATK, BTL_POKEPARAM_GetID(attacker) );
+    {
+      u32 i, cnt = TargetPokeRec_GetCount( targets );
+      const BTL_POKEPARAM* bpp;
+      BTL_EVENTVAR_SetValue( BTL_EVAR_TARGET_POKECNT, cnt );
+      for(i=0; i<cnt; ++i){
+        bpp = TargetPokeRec_Get( targets, i );
+        BTL_EVENTVAR_SetValue( BTL_EVAR_POKEID_TARGET1+i, BTL_POKEPARAM_GetID(bpp) );
+      }
+    }
+    BTL_EVENT_CallHandlers( wk, BTL_EVENT_AFTER_DAMAGE );
+  BTL_EVENTVAR_Pop();
 }
 //--------------------------------------------------------------------------
 /**
