@@ -31,7 +31,8 @@
 struct _RANDOMMAP_SAVE
 {
   u16 cityLevel;
-  u16 pad;
+  u8 type;  //テスト用街の種類
+  u8 pad;
 };
 
 
@@ -47,6 +48,7 @@ int RANDOMMAP_SAVE_GetWorkSize(void)
 void RANDOMMAP_SAVE_InitWork(RANDOMMAP_SAVE *randomMapSave)
 {
 	randomMapSave->cityLevel = 5;
+	randomMapSave->type = RMT_BLACK_CITY;
 }
 
 //----------------------------------------------------------
@@ -67,3 +69,15 @@ const u16 RANDOMMAP_SAVE_GetCityLevel( RANDOMMAP_SAVE *randomMapSave )
   return randomMapSave->cityLevel;
 }
 
+//----------------------------------------------------------
+//	テスト用街の種類
+//----------------------------------------------------------
+void RANDOMMAP_SAVE_SetCityType( RANDOMMAP_SAVE *randomMapSave , const u8 type )
+{
+  randomMapSave->type = type;
+}
+
+const u8 RANDOMMAP_SAVE_GetCityType( RANDOMMAP_SAVE *randomMapSave )
+{
+  return randomMapSave->type;
+}

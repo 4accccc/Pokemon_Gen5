@@ -24,6 +24,9 @@
 #include "arc/fieldmap/area_id.h"
 #include "arc/fieldmap/buildmodel_info.naix"
 
+#include "savedata/save_control.h"    //テストでランダムマップの都市の種類を取得
+#include "savedata/randommap_save.h"  //テストでランダムマップの都市の種類を取得
+
 typedef EL_SCOREBOARD_TEX ELBOARD_TEX;
 
 //============================================================================================
@@ -302,22 +305,6 @@ static void loadBModelIDList(FIELD_BMODEL_MAN * man, u16 arc_id, u16 file_id)
     file_id = 0;		//とりあえずハングアップ回避
   }
 
-	//読み込み
-#if 1 //ランダムマップ
-	if( arc_id == ARCID_BMODEL_IDX_OUTDOOR &&
-	    file_id == 18 )
-	{
-    u8 i;
-    u8 tempArr[10] = { 70,71,72,73,74,
-                       75,76,77,78,79};
-    man->entryCount = 10;
-    for( i=0;i<10;i++ )
-    {
-      man->entryToIDTable[i] = tempArr[i];
-    }
-  }
-  else
-#endif 
 	{	
 		u16 size = GFL_ARC_GetDataSizeByHandle(hdl, file_id);
 		man->entryCount = size / sizeof(BMODEL_ID);

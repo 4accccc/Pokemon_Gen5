@@ -17,6 +17,7 @@
 #include "savedata/save_control.h"
 #include "savedata/randommap_save.h"
 #include "debug/debugwin_sys.h"
+#include "fieldmap/buildmodel_outdoor.naix"
 
 //============================================================================================
 /**
@@ -59,6 +60,7 @@ typedef enum
 
 static const RANDOM_MAP_MAPPOS FieldFuncRandom_CheckMapPos( GFL_G3D_MAP* g3Dmap , const u8 mapIdx );
 static const u8 FieldFuncRandom_GetBilduingHeight( const u8 idxTop , const u8 idxLeft );
+static const u32 FieldFuncRandom_GetBilduingResId( const u8 height );
 
 BOOL FieldLoadMapData_RandomGenerate( GFL_G3D_MAP* g3Dmap, void * exWork )
 {
@@ -168,7 +170,8 @@ BOOL FieldLoadMapData_RandomGenerate( GFL_G3D_MAP* g3Dmap, void * exWork )
             
             if( height > 0 )
             {
-    					status.id = height-1;
+              const u32 resId = FieldFuncRandom_GetBilduingResId( height );
+              status.id = FIELD_BMODEL_MAN_GetEntryIndex(bm, resId);
     					VEC_Set( &status.trans, 
     							left+FX32_CONST( x*160.0f ), 0, top+FX32_CONST( z*160.0f) );
   					  status.rotate = 0;
@@ -330,17 +333,38 @@ static const u8 FieldFuncRandom_GetBilduingHeight( const u8 idxTop , const u8 id
   return idxArr[idxTop][idxLeft];
 }
 
+static const u32 FieldFuncRandom_GetBilduingResId( const u8 height )
+{
+  SAVE_CONTROL_WORK *saveWork = SaveControl_GetPointer();
+  RANDOMMAP_SAVE* mapSave = RANDOMMAP_SAVE_GetRandomMapSave( saveWork );
+  u8 type = RANDOMMAP_SAVE_GetCityType( mapSave );
+  if( type == RMT_BLACK_CITY )
+  {
+    return NARC_buildmodel_outdoor_bc_build_01_nsbmd + height-1;
+  }
+  else
+  {
+    return NARC_buildmodel_outdoor_wf_tree_01_nsbmd + height-1;
+  }
+  
+}
+
+
 
 //デバッグ操作
 
 static void DEBWIN_Update_CityLevel( void* userWork , DEBUGWIN_ITEM* item );
 static void DEBWIN_Draw_CityLevel( void* userWork , DEBUGWIN_ITEM* item );
+static void DEBWIN_Update_CityType( void* userWork , DEBUGWIN_ITEM* item );
+static void DEBWIN_Draw_CityType( void* userWork , DEBUGWIN_ITEM* item );
 
 
 void FIELD_FUNC_RANDOM_GENERATE_InitDebug( HEAPID heapId )
 {
   DEBUGWIN_AddGroupToTop( 10 , "RandomMap" , heapId );
   DEBUGWIN_AddItemToGroupEx( DEBWIN_Update_CityLevel ,DEBWIN_Draw_CityLevel , 
+                             NULL , 10 , heapId );
+  DEBUGWIN_AddItemToGroupEx( DEBWIN_Update_CityType ,DEBWIN_Draw_CityType , 
                              NULL , 10 , heapId );
 }
 
@@ -381,4 +405,44 @@ static void DEBWIN_Draw_CityLevel( void* userWork , DEBUGWIN_ITEM* item )
   RANDOMMAP_SAVE* mapSave = RANDOMMAP_SAVE_GetRandomMapSave( saveWork );
   u16 level = RANDOMMAP_SAVE_GetCityLevel( mapSave );
   DEBUGWIN_ITEM_SetNameV( item , "Level[%d]",level );
+}
+
+static void DEBWIN_Update_CityType( void* userWork , DEBUGWIN_ITEM* item )
+{
+  SAVE_CONTROL_WORK *saveWork = SaveControl_GetPointer();
+  RANDOMMAP_SAVE* mapSave = RANDOMMAP_SAVE_GetRandomMapSave( saveWork );
+  u8 type = RANDOMMAP_SAVE_GetCityType( mapSave );
+  
+  if( GFL_UI_KEY_GetRepeat() & PAD_KEY_RIGHT || 
+      GFL_UI_KEY_GetRepeat() & PAD_KEY_LEFT  ||
+      GFL_UI_KEY_GetRepeat() & PAD_BUTTON_A )
+  {
+    if( type == RMT_BLACK_CITY )
+    {
+      type = RMT_WHITE_FOREST;
+    }
+    else
+    {
+      type = RMT_BLACK_CITY;
+    }
+    RANDOMMAP_SAVE_SetCityType( mapSave , type );
+    DEBUGWIN_RefreshScreen();
+  }
+  
+}
+
+static void DEBWIN_Draw_CityType( void* userWork , DEBUGWIN_ITEM* item )
+{
+  SAVE_CONTROL_WORK *saveWork = SaveControl_GetPointer();
+  RANDOMMAP_SAVE* mapSave = RANDOMMAP_SAVE_GetRandomMapSave( saveWork );
+  u8 type = RANDOMMAP_SAVE_GetCityType( mapSave );
+  if( type == RMT_BLACK_CITY )
+  {
+    DEBUGWIN_ITEM_SetName( item , "Type[BLACK CITY]" );
+  }
+  else
+  {
+    DEBUGWIN_ITEM_SetName( item , "Type[WHITE FOREST]" );
+  }
+  
 }
