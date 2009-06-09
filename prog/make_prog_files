@@ -249,6 +249,7 @@ SRCS_OVERLAY_WIFI_UTIL  = net/dwc_raputil.c
 #===> SRCS_OVERLAY_DEV_IRC
 SRCS_OVERLAY_FIELDMAP		=	field/field_proc.c \
 				field/fieldmap.c \
+        field/field_event_check.c \
 				field/field_buildmodel.c \
 				field/field_g3d_mapper.c \
 				field/field_data.c \

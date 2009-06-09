@@ -11,7 +11,6 @@
 #include <gflib.h>
 #include "system/gfl_use.h"
 #include "system/main.h"					//GFL_HEAPID_APP
-#include "system/wipe.h"
 #include "arc_def.h"
 
 #include "net/network_define.h"
@@ -21,6 +20,7 @@
 
 #include "fieldmap.h"
 #include "field_common.h"
+
 #include "field_player.h"
 #include "field_camera.h"
 #include "field_data.h"
@@ -39,13 +39,6 @@
 #include "field/zonedata.h"
 #include "field/areadata.h"
 
-#include "event_mapchange.h"
-#include "event_debug_menu.h"
-#include "event_fieldmap_menu.h"
-#include "event_battle.h"
-#include "event_ircbattle.h"
-#include "event_fieldtalk.h"
-
 #include "field_comm_actor.h"
 #include "field_comm/field_comm_main.h"
 #include "field_comm/field_comm_event.h"
@@ -55,20 +48,19 @@
 #include "field_debug.h"
 
 #include "map_matrix.h"
+#include "field_event_check.h"  
 
+#include "eventdata_local.h"
 #include "field/eventdata_sxy.h"
 
 #include "field_effect.h"
 
 #include "field_player_grid.h"
 
-#include "script.h"
-#include "eventdata_local.h"
-
 #include "arc/fieldmap/zone_id.h"
 #include "field/weather_no.h"
 #include "sound/pm_sndsys.h"
-#include "sound/wb_sound_data.sadl"
+//#include "sound/wb_sound_data.sadl"
 
 #include "message.naix" //NARC_message_d_field_dat
 #include "msg/msg_d_field.h"  //DEBUG_FIELD_STR00 DEBUG_FIELD_C_STR10
@@ -264,13 +256,6 @@ static void fldmapMain_FLDMMDL_Finish( FIELDMAP_WORK *fieldWork );
 static void fldmap_FLDMMDL_InitList(
 		MMDL_LIST *mlist, int list_id, HEAPID heapID );
 
-//event
-static GMEVENT * fldmap_Event_CheckConnect(
-		GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork, const VecFx32 *now_pos );
-static GMEVENT * fldmap_Event_CheckPushConnect(
-		GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork );
-static GMEVENT * fldmapFunc_Event_CheckEvent(GAMESYS_WORK *gsys, void *work);
-
 //zonechange
 static BOOL fldmapMain_UpdateMoveZone( FIELDMAP_WORK *fieldWork );
 static BOOL fldmap_CheckPlayerPosUpdate( FIELDMAP_WORK *fieldWork );
@@ -312,7 +297,6 @@ static const u16 fldmapdata_bgColorTable[16];
 FIELDMAP_WORK * FIELDMAP_Create( GAMESYS_WORK *gsys, HEAPID heapID )
 {
 	FIELDMAP_WORK *fieldWork;
-  COMM_FIELD_SYS_PTR comm_field;
 	
 	fieldWork = GFL_HEAP_AllocClearMemory( heapID, sizeof(FIELDMAP_WORK) );
 	fieldWork->heapID = heapID;
@@ -593,7 +577,7 @@ static MAINSEQ_RESULT mainSeqFunc_ready(GAMESYS_WORK *gsys, FIELDMAP_WORK *field
   }
   //フィールドマップ用イベント起動チェックをセットする
   GAMESYSTEM_EVENT_EntryCheckFunc(
-      gsys, fldmapFunc_Event_CheckEvent, fieldWork );
+      gsys, FIELD_EVENT_CheckNormal, fieldWork );
   
   fieldWork->gamemode = GAMEMODE_NORMAL;
 	GAMEDATA_SetFrameSpritEnable(GAMESYSTEM_GetGameData(gsys), TRUE);
@@ -926,14 +910,20 @@ FIELD_CAMERA * FIELDMAP_GetFieldCamera( FIELDMAP_WORK *fieldWork )
 	return fieldWork->camera_control;
 }
 
-//----------------------------------------------------------------------------
+//--------------------------------------------------------------
 /**
  *	@brief  レール制御システムの取得
  */
-//-----------------------------------------------------------------------------
+//--------------------------------------------------------------
 FIELD_RAIL_MAN * FIELDMAP_GetFieldRailMan( FIELDMAP_WORK *fieldWork )
 {
 	return fieldWork->railMan;
+}
+//--------------------------------------------------------------
+//--------------------------------------------------------------
+int * FIELDMAP_GetFirstConnectID( FIELDMAP_WORK * fieldWork )
+{
+  return &fieldWork->firstConnectEventID;
 }
 
 //--------------------------------------------------------------
@@ -1057,6 +1047,30 @@ FLDMAPPER * FIELDMAP_GetFieldG3Dmapper( FIELDMAP_WORK *fieldWork )
 }
 
 //--------------------------------------------------------------
+//--------------------------------------------------------------
+const DEPEND_FUNCTIONS * FIELDMAP_GetDependFunctions( const FIELDMAP_WORK * fieldWork )
+{
+  return fieldWork->func_tbl;
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief 現在のマップ指定IDを取得
+ * @param fieldWork
+ * @return  u16   map指定ID
+ */
+//--------------------------------------------------------------
+u16 FIELDMAP_GetZoneID( const FIELDMAP_WORK * fieldWork )
+{
+  return fieldWork->map_id;
+}
+//--------------------------------------------------------------
+//--------------------------------------------------------------
+const VecFx32 * FIELDMAP_GetNowPos( const FIELDMAP_WORK * fieldWork )
+{
+  return &fieldWork->now_pos;
+}
+//--------------------------------------------------------------
 /**
  * FIELDMAP_WORK マップコントロール用ワーク取得
  * @param fieldWork FIELDMAP_WORK
@@ -1133,6 +1147,13 @@ FLDEFF_CTRL * FIELDMAP_GetFldEffCtrl( FIELDMAP_WORK *fieldWork )
 {
   return fieldWork->fldeff_ctrl;
 }
+//--------------------------------------------------------------
+//--------------------------------------------------------------
+FIELD_ENCOUNT * FIELDMAP_GetEncount( FIELDMAP_WORK * fieldWork )
+{
+  return fieldWork->encount;
+}
+
 
 //======================================================================
 //	フィールドマップ　サブ　BG関連
@@ -1460,489 +1481,6 @@ static void fldmap_FLDMMDL_InitList(
 	mlist->count = i;
 	mlist->id_list[i] = OBJCODEMAX;
 	GFL_HEAP_FreeMemory( pList );
-}
-
-//======================================================================
-//	フィールドマップ　サブ　イベント
-//======================================================================
-//--------------------------------------------------------------
-/**
- * イベント マップ接続チェック
- * @param gsys GAMESYS_WORK
- * @param fieldWork FIELDMAP_WORK
- * @param now_pos チェックする座標
- * @retval GMEVENT NULL=接続なし
- */
-//--------------------------------------------------------------
-static GMEVENT * fldmap_Event_CheckConnect(
-		GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork, const VecFx32 *now_pos )
-{
-	const CONNECT_DATA * cnct;
-	GAMEDATA * gamedata = GAMESYSTEM_GetGameData(gsys);
-	EVENTDATA_SYSTEM *evdata = GAMEDATA_GetEventData(gamedata);
-	int idx = EVENTDATA_SearchConnectIDByPos(evdata, now_pos);
-	
-	if( idx == EXIT_ID_NONE ){
-		return NULL;
-	}
-
-	//マップ遷移発生の場合、出入口を記憶しておく
-	{
-		LOCATION ent_loc;
-		LOCATION_Set(
-				&ent_loc, fieldWork->map_id, idx, 0,
-				now_pos->x, now_pos->y, now_pos->z);
-		GAMEDATA_SetEntranceLocation(gamedata, &ent_loc);
-	}
-
-	cnct = EVENTDATA_GetConnectByID(evdata, idx);
-	
-	if (CONNECTDATA_IsSpecialExit(cnct)) {
-		//特殊接続先が指定されている場合、記憶しておいた場所に飛ぶ
-		const LOCATION * sp = GAMEDATA_GetSpecialLocation(gamedata);
-		return EVENT_ChangeMap(gsys, fieldWork, sp);
-	}else{
-		LOCATION loc_req;
-		CONNECTDATA_SetNextLocation(cnct, &loc_req);
-		return EVENT_ChangeMap(gsys, fieldWork, &loc_req);
-	}
-}
-
-//--------------------------------------------------------------
-/**
- * イベント キー入力イベント起動チェック
- * @param gsys GAMESYS_WORK
- * @param	fieldWork FIELDMAP_WORK
- * @retval GMEVENT NULL イベント無し
- */
-//--------------------------------------------------------------
-static GMEVENT * fldmap_Event_CheckPushConnect(
-		GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork )
-{
-	VecFx32 now_pos = fieldWork->now_pos;
-	
-	switch( GFL_UI_KEY_GetCont() ) {
-	case PAD_KEY_UP:		now_pos.z -= FX32_ONE * 16; break;
-	case PAD_KEY_DOWN:	now_pos.z += FX32_ONE * 16; break;
-	case PAD_KEY_LEFT:	now_pos.x -= FX32_ONE * 16; break;
-	case PAD_KEY_RIGHT:	now_pos.x += FX32_ONE * 16; break;
-	default: return NULL;
-	}
-	
-	{	
-		u32 attr = 0;
-		FLDMAPPER_GRIDINFO gridInfo;
-		FLDMAPPER *g3Dmapper = fieldWork->g3Dmapper;
-		
-		if( FLDMAPPER_GetGridInfo(g3Dmapper,&now_pos,&gridInfo) == TRUE ){
-			attr = gridInfo.gridData[0].attr;
-		}
-
-		if( attr == 0 ){
-			return NULL;
-		}
-	}
-	
-	return fldmap_Event_CheckConnect(gsys, fieldWork, &now_pos);
-}
-
-//--------------------------------------------------------------
-/**
- * サブスクリーンからのイベント起動チェック
- * @param gsys GAMESYS_WORK
- * @param	fieldWork FIELDMAP_WORK
- * @retval GMEVENT NULL イベント無し
- */
-//--------------------------------------------------------------
-static GMEVENT * fldmap_Event_Check_SubScreen(
-		GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork )
-{
-  GMEVENT* event=NULL;
-  
-  switch(FIELD_SUBSCREEN_GetAction(FIELDMAP_GetFieldSubscreenWork(fieldWork))){
-  case FIELD_SUBSCREEN_ACTION_DEBUGIRC:
-		{
-			GAME_COMM_SYS_PTR gcsp = GAMESYSTEM_GetGameCommSysPtr(gsys);
-			GAME_COMM_NO no = GameCommSys_BootCheck(gcsp);
-			if(GAME_COMM_NO_FIELD_BEACON_SEARCH == no){
-				GameCommSys_ExitReq(gcsp);
-			}
-			if((GAME_COMM_NO_FIELD_BEACON_SEARCH == no) || (GAME_COMM_NO_NULL == no)){
-				event = EVENT_IrcBattle(gsys, fieldWork, NULL, TRUE);
-			}
-		}
-    break;
-#if PM_DEBUG
-  case FIELD_SUBSCREEN_ACTION_DEBUG_PALACEJUMP:
-		event = DEBUG_PalaceJamp(fieldWork , gsys, fieldWork->field_player);
-		break;
-#endif
-	}
-	if(event)
-	{
-		FIELD_SUBSCREEN_GrantPermission(FIELDMAP_GetFieldSubscreenWork(fieldWork));
-	}
-	else
-	{
-		FIELD_SUBSCREEN_ResetAction(FIELDMAP_GetFieldSubscreenWork(fieldWork));
-	}
-  return event;
-}
-
-//--------------------------------------------------------------
-//--------------------------------------------------------------
-static GMEVENT * checkRailExit(GAMESYS_WORK *gsys, FIELDMAP_WORK * fieldWork)
-{
-  int idx;
-  VecFx32 pos;
-  GAMEDATA * gamedata = GAMESYSTEM_GetGameData(gsys);
-  EVENTDATA_SYSTEM *evdata = GAMEDATA_GetEventData(gamedata);
-
-  if (ZONEDATA_DEBUG_IsRailMap(fieldWork->map_id) == FALSE) return NULL;
-  FIELD_RAIL_MAN_GetPos(fieldWork->railMan, &pos);
-  idx = EVENTDATA_SearchConnectIDBySphere(evdata, &pos);
-  if (fieldWork->firstConnectEventID == idx) return NULL;
-  if (idx == EXIT_ID_NONE)
-  {
-    fieldWork->firstConnectEventID = idx;
-    return NULL;
-  }
-
-  {
-		LOCATION loc_req;
-    const CONNECT_DATA * cnct;
-    cnct = EVENTDATA_GetConnectByID(evdata, idx);
-	
-		CONNECTDATA_SetNextLocation(cnct, &loc_req);
-		return EVENT_ChangeMap(gsys, fieldWork, &loc_req);
-  }
-#if 0
-	//マップ遷移発生の場合、出入口を記憶しておく
-	{
-		LOCATION ent_loc;
-		LOCATION_Set(
-				&ent_loc, fieldWork->map_id, idx, 0,
-				now_pos->x, now_pos->y, now_pos->z);
-		GAMEDATA_SetEntranceLocation(gamedata, &ent_loc);
-	}
-#endif
-
-#if 0
-	if (CONNECTDATA_IsSpecialExit(cnct)) {
-		//特殊接続先が指定されている場合、記憶しておいた場所に飛ぶ
-		const LOCATION * sp = GAMEDATA_GetSpecialLocation(gamedata);
-		return EVENT_ChangeMap(gsys, fieldWork, sp);
-	}else{
-		LOCATION loc_req;
-		CONNECTDATA_SetNextLocation(cnct, &loc_req);
-		return EVENT_ChangeMap(gsys, fieldWork, &loc_req);
-	}
-#endif
-
-}
-
-extern u16 EVENTDATA_CheckPosEvent(
-    const EVENTDATA_SYSTEM *evdata, EVENTWORK *evwork, const VecFx32 *pos );
-
-extern u16 EVENTDATA_CheckTalkBGEvent(
-    const EVENTDATA_SYSTEM *evdata, EVENTWORK *evwork,
-    const VecFx32 *pos, u16 talk_dir );
-
-//--------------------------------------------------------------
-/**
- * イベント　イベント起動チェック
- * @param	gsys GAMESYS_WORK
- * @param work FIELDMAP_WORK
- * @retval GMEVENT NULL=イベント無し
- */
-//--------------------------------------------------------------
-static GMEVENT * fldmapFunc_Event_CheckEvent( GAMESYS_WORK *gsys, void *work )
-{
-	enum{
-		resetCont = PAD_BUTTON_L | PAD_BUTTON_R | PAD_BUTTON_START,
-		chgCont = PAD_BUTTON_L | PAD_BUTTON_R | PAD_BUTTON_SELECT
-	};
-	
-  int trg,cont;
-	GMEVENT *event;
-	PLAYER_MOVE_STATE state;
-  PLAYER_MOVE_VALUE value;
-	FIELDMAP_WORK *fieldWork = work;
-
-  //キー情報を取得
-  trg = GFL_UI_KEY_GetTrg();
-  cont = GFL_UI_KEY_GetCont();
-
-  //自機動作ステータス更新
-  FIELD_PLAYER_UpdateMoveStatus( fieldWork->field_player );
-  
-  //自機の動作状態を取得
-  value = FIELD_PLAYER_GetMoveValue( fieldWork->field_player );
-  state = FIELD_PLAYER_GetMoveState( fieldWork->field_player );
-  
-  //デバッグ用チェック
-#ifdef  PM_DEBUG
-	//ソフトリセットチェック
-	if( (cont&resetCont) == resetCont ){
-		return DEBUG_EVENT_GameEnd(gsys, fieldWork);
-	}
-	
-	//マップ変更チェック
-	if( (cont&chgCont) == chgCont ){
-		return DEBUG_EVENT_ChangeToNextMap(gsys, fieldWork);
-	}
-	
-	//デバッグメニュー起動チェック
-	//if( trg == PAD_BUTTON_SELECT ){
-  if( (trg & PAD_BUTTON_X) && (cont & PAD_BUTTON_R) )
-  {
-		return DEBUG_EVENT_DebugMenu(gsys, fieldWork, 
-				fieldWork->heapID, ZONEDATA_GetMapRscID(fieldWork->map_id));
-	}
-#endif //debug
-	
-  //戦闘移行チェック
-  if( fieldWork->func_tbl->type == FLDMAP_CTRLTYPE_GRID ){
-    #ifdef PM_DEBUG
-    if( (cont & PAD_BUTTON_R) == 0 ){
-      if( state == PLAYER_MOVE_STATE_END ){
-        if( FIELD_ENCOUNT_CheckEncount(fieldWork->encount) == TRUE ){
-          return EVENT_Battle( gsys, fieldWork );
-        }
-      }
-    }
-    #else
-    if( state == PLAYER_MOVE_STATE_END ){
-			if(!GFL_NET_IsInit())
-			{
-				if( FIELD_ENCOUNT_CheckEncount(fieldWork->encount) == TRUE ){
-					return EVENT_Battle( gsys, fieldWork );
-				}
-			}
-    }
-    #endif
-  }
-  
-  //看板イベントチェック
-  if( fieldWork->func_tbl->type == FLDMAP_CTRLTYPE_GRID ){
-    if( state == PLAYER_MOVE_STATE_END ){
-      u16 id;
-      VecFx32 pos;
-      GAMEDATA *gdata = GAMESYSTEM_GetGameData( fieldWork->gsys );
-      EVENTDATA_SYSTEM *evdata = GAMEDATA_GetEventData( gdata );
-      EVENTWORK *evwork = GAMEDATA_GetEventWork( gdata );
-      FLDMMDL *fmmdl = FIELD_PLAYER_GetFldMMdl( fieldWork->field_player );
-      u16 dir = FLDMMDL_GetDirDisp( fmmdl );
-    
-      FIELD_PLAYER_GetPos( fieldWork->field_player, &pos );
-      FLDMMDL_TOOL_AddDirVector( dir, &pos, GRID_FX32 );
-    
-      {
-        //OBJ看板チェック
-      }
-      
-      id = EVENTDATA_CheckTalkBoardEvent( evdata, evwork, &pos, dir );
-      
-      if( id != EVENTDATA_ID_NONE ){
-        SCRIPT_FLDPARAM fparam;
-        fparam.msgBG = fieldWork->fldMsgBG;
-        event = SCRIPT_SetScript(
-           fieldWork->gsys, id, NULL, fieldWork->heapID, &fparam );
-      }
-    }
-  }
-  
-  //座標イベントチェック
-  {
-    VecFx32 pos;
-    u16 id,param;
-    GAMEDATA *gdata = GAMESYSTEM_GetGameData( fieldWork->gsys );
-    EVENTDATA_SYSTEM *evdata = GAMEDATA_GetEventData( gdata );
-    EVENTWORK *evwork = GAMEDATA_GetEventWork( gdata );
-    FIELD_PLAYER_GetPos( fieldWork->field_player, &pos );
-    
-    id = EVENTDATA_CheckPosEvent( evdata, evwork, &pos );
-    
-    if( id != EVENTDATA_ID_NONE ){ //座標イベント起動
-      SCRIPT_FLDPARAM fparam;
-      fparam.msgBG = fieldWork->fldMsgBG;
-      event = SCRIPT_SetScript(
-         fieldWork->gsys, id, NULL, fieldWork->heapID, &fparam );
-      return event;
-    }
-  }
-
-#if 0
-	//座標接続チェック
-	event = fldmap_Event_CheckConnect(gsys, fieldWork, &fieldWork->now_pos);
-	if( event != NULL ){
-		return event;
-	}
-#endif
-	
-  //レールの場合のマップ遷移チェック
-  event = checkRailExit(gsys, fieldWork);
-  if( event != NULL ){
-    return event;
-  }
-
-	//キー入力接続チェック
-	event = fldmap_Event_CheckPushConnect(gsys, fieldWork);
-	if( event != NULL ){
-		return event;
-	}
-	
-	//メニュー起動チェック
-	if( trg == PAD_BUTTON_X ){
-		if(WIPE_SYS_EndCheck()){
-  			return EVENT_FieldMapMenu( gsys, fieldWork, fieldWork->heapID );
-		}
-	}
-
-	//サブスクリーンからのイベント起動チェック
-	event = fldmap_Event_Check_SubScreen(gsys, fieldWork);
-	if( event != NULL )
-  {
-		return event;
-	}
-  
-	///通信用会話処理(仮
-	//話しかける側
-	if( trg == PAD_BUTTON_A ){
-		if( FIELD_COMM_MAIN_CanTalk( fieldWork->commSys ) == TRUE ){
-			return FIELD_COMM_EVENT_StartTalk(
-					gsys , fieldWork , fieldWork->commSys );
-		}
-	}
-
-	//話しかけられる側(中で一緒に話せる状態かのチェックもしてしまう
-	if( FIELD_COMM_MAIN_CheckReserveTalk( fieldWork->commSys ) == TRUE ){
-		return FIELD_COMM_EVENT_StartTalkPartner(
-				gsys , fieldWork , fieldWork->commSys );
-	}
-	
-	//フィールド話し掛けチェック
-	if(	fieldWork->func_tbl->type == FLDMAP_CTRLTYPE_GRID )
-	{
-		if( trg == PAD_BUTTON_A )
-		{
-      { //OBJ話し掛け
-			  int gx,gy,gz;
-			  FLDMMDL *fmmdl_talk;
-			  FIELD_PLAYER_GetFrontGridPos(
-            fieldWork->field_player, &gx, &gy, &gz );
-	  		fmmdl_talk = FLDMMDLSYS_SearchGridPos(
-	  				fieldWork->fldMMdlSys, gx, gz, FALSE );
-
-		  	if( fmmdl_talk != NULL )
-	  		{
-	  			u32 scr_id = FLDMMDL_GetEventID( fmmdl_talk );
-  				FLDMMDL *fmmdl_player = FIELD_PLAYER_GetFldMMdl(
-  						fieldWork->field_player );
-          FIELD_PLAYER_GRID_ForceStop( fieldWork->field_player );
-  				return EVENT_FieldTalk( gsys, fieldWork,
-  					scr_id, fmmdl_player, fmmdl_talk, fieldWork->heapID );
-  			}
-	  	}
-      
-      { //BG話し掛け
-        u16 id;
-        VecFx32 pos;
-        GAMEDATA *gdata = GAMESYSTEM_GetGameData( fieldWork->gsys );
-        EVENTDATA_SYSTEM *evdata = GAMEDATA_GetEventData( gdata );
-        EVENTWORK *evwork = GAMEDATA_GetEventWork( gdata );
-        FLDMMDL *fmmdl = FIELD_PLAYER_GetFldMMdl( fieldWork->field_player );
-        u16 dir = FLDMMDL_GetDirDisp( fmmdl );
-        
-        FIELD_PLAYER_GetPos( fieldWork->field_player, &pos );
-        FLDMMDL_TOOL_AddDirVector( dir, &pos, GRID_FX32 );
-        id = EVENTDATA_CheckTalkBGEvent( evdata, evwork, &pos, dir );
-        
-        if( id != EVENTDATA_ID_NONE ){ //座標イベント起動
-          SCRIPT_FLDPARAM fparam;
-          fparam.msgBG = fieldWork->fldMsgBG;
-          event = SCRIPT_SetScript(
-             fieldWork->gsys, id, NULL, fieldWork->heapID, &fparam );
-          return event;
-        }
-      }
-    }
-	}
-	
-	//デバッグ：パレスで木に触れたらワープ
-  {
-    GMEVENT *ev;
-    ev =  DEBUG_PalaceTreeMapWarp(fieldWork, gsys, fieldWork->field_player, fieldWork->commSys);
-    if(ev != NULL){
-      return ev;
-    }
-	}
-	return NULL;
-}
-
-//--------------------------------------------------------------
-/**
- * イベント起動チェック　決定ボタン入力時に発生するイベントチェック
- * @param fieldWork FIELDMAP_WORK
- * @param event 発生イベントプロセス格納先
- * @param key_trg キートリガ
- * @param key_cont キーコンティニュー
- * @retval BOOL TRUE=イベント起動
- */
-//--------------------------------------------------------------
-static BOOL event_CheckEventDecideButton( FIELDMAP_WORK *fieldWork,
-    GMEVENT **event, const int key_trg, const int key_cont )
-{
-  return FALSE;
-}
-
-//--------------------------------------------------------------
-/**
- * イベント起動チェック　自機動作終了時に発生するイベントチェック。
- * 移動終了、振り向き、壁衝突動作などで発生。
- * @param fieldWork FIELDMAP_WORK
- * @param event 発生イベントプロセス格納先
- * @param key_trg キートリガ
- * @param key_cont キーコンティニュー
- * @retval BOOL TRUE=イベント起動
- */
-//--------------------------------------------------------------
-static BOOL event_CheckEventMoveEnd( FIELDMAP_WORK *fieldWork,
-    GMEVENT **event, const int key_trg, const int key_cont )
-{
-  return FALSE;
-}
-
-//--------------------------------------------------------------
-/**
- * イベント起動チェック　一歩移動終了時に発生するイベントチェック
- * @param fieldWork FIELDMAP_WORK
- * @param event 発生イベントプロセス格納先
- * @param key_trg キートリガ
- * @param key_cont キーコンティニュー
- * @retval BOOL TRUE=イベント起動
- */
-//--------------------------------------------------------------
-static BOOL event_CheckEventOneStepMoveEnd( FIELDMAP_WORK *fieldWork,
-    GMEVENT **event, const int key_trg, const int key_cont )
-{
-  return FALSE;
-}
-
-//--------------------------------------------------------------
-/**
- * イベント起動チェック　十字キー入力中に発生するイベントチェック
-  * @param fieldWork FIELDMAP_WORK
- * @param event 発生イベントプロセス格納先
- * @param key_trg キートリガ
- * @param key_cont キーコンティニュー
- * @retval BOOL TRUE=イベント起動
- */
-//--------------------------------------------------------------
-static BOOL event_CheckEventPushKey( FIELDMAP_WORK *fieldWork,
-    GMEVENT **event, const int key_trg, const int key_cont )
-{
-  return FALSE;
 }
 
 //======================================================================
