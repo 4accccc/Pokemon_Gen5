@@ -63,7 +63,8 @@ enum{
 	GMDATA_ID_FLDMMDL,		//動作モデル
 	GMDATA_ID_WFHIROBA,		//Wi-Fi広場
 	GMDATA_ID_MUSICAL,		//ミュージカル
-	
+  GMDATA_ID_RANDOMMAP,  //ランダム生成マップ
+  
 #if 0
 	GMDATA_ID_SYSTEM_DATA,
 	GMDATA_ID_PLAYER_DATA,

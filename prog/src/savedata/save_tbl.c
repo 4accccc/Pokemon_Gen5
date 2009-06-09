@@ -29,6 +29,7 @@
 #include "field/fldmmdl.h"
 #include "savedata/wifi_hiroba_save.h"
 #include "savedata/musical_save.h"
+#include "savedata/randommap_save.h"
 
 //==============================================================================
 //	定数定義
@@ -220,7 +221,13 @@ static const GFL_SAVEDATA_TABLE SaveDataTbl_Normal[] = {
 		GMDATA_ID_MUSICAL,
 		(FUNC_GET_SIZE)MUSICAL_SAVE_GetWorkSize,
 		(FUNC_INIT_WORK)MUSICAL_SAVE_InitWork,
-	}
+	},
+  { //ランダム生成マップ
+    GMDATA_ID_RANDOMMAP,  
+    (FUNC_GET_SIZE)RANDOMMAP_SAVE_GetWorkSize,
+    (FUNC_INIT_WORK)RANDOMMAP_SAVE_InitWork,
+  }
+
 };
 
 

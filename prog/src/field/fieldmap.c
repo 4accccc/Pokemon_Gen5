@@ -73,6 +73,13 @@
 #include "message.naix" //NARC_message_d_field_dat
 #include "msg/msg_d_field.h"  //DEBUG_FIELD_STR00 DEBUG_FIELD_C_STR10
 
+#include "debug/debugwin_sys.h" //デバッグメニュー
+
+#if USE_DEBUGWIN_SYSTEM
+#include "mapdatafunc/field_func_random_generate.h" //デバッグ登録のため
+#endif //USE_DEBUGWIN_SYSTEM
+
+
 //======================================================================
 //	define
 //======================================================================
@@ -544,6 +551,13 @@ static MAINSEQ_RESULT mainSeqFunc_setup(GAMESYS_WORK *gsys, FIELDMAP_WORK *field
   //フィールドデバッグ初期化
   fieldWork->debugWork = FIELD_DEBUG_Init( fieldWork, fieldWork->heapID );
 
+#if USE_DEBUGWIN_SYSTEM
+  DEBUGWIN_InitProc( GFL_BG_FRAME1_M , FLDMSGBG_GetFontHandle(fieldWork->fldMsgBG) );
+  DEBUGWIN_ChangeLetterColor( 31,31,31 );
+  FIELD_FUNC_RANDOM_GENERATE_InitDebug( fieldWork->heapID );
+#endif  //USE_DEBUGWIN_SYSTEM
+
+
   return MAINSEQ_RESULT_NEXTSEQ;
 }
 
@@ -720,6 +734,11 @@ static MAINSEQ_RESULT mainSeqFunc_free(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldW
 
 	GAMEDATA_SetFrameSpritEnable(GAMESYSTEM_GetGameData(gsys), FALSE);
 	GFL_UI_StartFrameRateMode( GFL_UI_FRAMERATE_60 );
+
+#if USE_DEBUGWIN_SYSTEM
+  FIELD_FUNC_RANDOM_GENERATE_TermDebug( );
+  DEBUGWIN_ExitProc();
+#endif  //USE_DEBUGWIN_SYSTEM
 
   return MAINSEQ_RESULT_NEXTSEQ;
 }

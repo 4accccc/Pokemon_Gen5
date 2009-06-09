@@ -308,11 +308,10 @@ static void loadBModelIDList(FIELD_BMODEL_MAN * man, u16 arc_id, u16 file_id)
 	    file_id == 18 )
 	{
     u8 i;
-    u8 tempArr[15] = {  0, 2, 3, 4, 6,
-                        8, 9,10,13,14,
-                       15,17,33,34,41};
-    man->entryCount = 15;
-    for( i=0;i<15;i++ )
+    u8 tempArr[10] = { 70,71,72,73,74,
+                       75,76,77,78,79};
+    man->entryCount = 10;
+    for( i=0;i<10;i++ )
     {
       man->entryToIDTable[i] = tempArr[i];
     }

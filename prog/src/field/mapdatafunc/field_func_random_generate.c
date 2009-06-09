@@ -13,6 +13,11 @@
 #include "../field_buildmodel.h"
 #include "../field_g3dmap_exwork.h"	// GFL_G3D_MAP拡張ワーク
 
+
+#include "savedata/save_control.h"
+#include "savedata/randommap_save.h"
+#include "debug/debugwin_sys.h"
+
 //============================================================================================
 /**
  *
@@ -52,7 +57,8 @@ typedef enum
   RMM_RIGHT_BOTTOM,
 }RANDOM_MAP_MAPPOS;
 
-static const RANDOM_MAP_MAPPOS FieldFuncRandom_CheckMapPos( GFL_G3D_MAP* g3Dmap );
+static const RANDOM_MAP_MAPPOS FieldFuncRandom_CheckMapPos( GFL_G3D_MAP* g3Dmap , const u8 mapIdx );
+static const u8 FieldFuncRandom_GetBilduingHeight( const u8 idxTop , const u8 idxLeft );
 
 BOOL FieldLoadMapData_RandomGenerate( GFL_G3D_MAP* g3Dmap, void * exWork )
 {
@@ -104,46 +110,71 @@ BOOL FieldLoadMapData_RandomGenerate( GFL_G3D_MAP* g3Dmap, void * exWork )
 			//配置オブジェクト設定
 			if( fileHeader->positionOffset != fileHeader->endPos )
 			{
+        //レベル取得(仮
+        SAVE_CONTROL_WORK *saveWork = SaveControl_GetPointer();
+        RANDOMMAP_SAVE* mapSave = RANDOMMAP_SAVE_GetRandomMapSave( saveWork );
+        u16 level = RANDOMMAP_SAVE_GetCityLevel( mapSave );
+
 				LayoutFormat* layout = (LayoutFormat*)((u32)mem + fileHeader->positionOffset);
 				PositionSt* objStatus = (PositionSt*)&layout->posData;
 				GFL_G3D_MAP_GLOBALOBJ_ST status;
 				int i, count = layout->count;
         FIELD_BMODEL_MAN * bm = FLD_G3D_MAP_EXWORK_GetBModelMan(p_exwork);
-        const RANDOM_MAP_MAPPOS mapPos = FieldFuncRandom_CheckMapPos( g3Dmap );
+        const u8 mapIndex = FLD_G3D_MAP_EXWORK_GetMapIndex(p_exwork);
+        const RANDOM_MAP_MAPPOS mapPos = FieldFuncRandom_CheckMapPos( g3Dmap , mapIndex );
         u8 x,z;
         fx32 top,left;
-        
+        u8  idxTop,idxLeft;
         switch(mapPos)
         {
         case RMM_LEFT_TOP:
-          top = FX32_CONST(-64.0f);
-          left = FX32_CONST(-64.0f);
+          top = FX32_CONST(-144.0f);
+          left = FX32_CONST(-144.0f);
+          idxTop = 0;
+          idxLeft = 0;
           break;
 
         case RMM_RIGHT_TOP:
-          top = FX32_CONST(-64.0f);
-          left = FX32_CONST(-192.0f);
+          top = FX32_CONST(-144.0f);
+          left = FX32_CONST(-176.0f);
+          idxTop = 0;
+          idxLeft = 3;
           break;
 
         case RMM_LEFT_BOTTOM:
-          top = FX32_CONST(-192.0f);
-          left = FX32_CONST(-64.0f);
+          top = FX32_CONST(-176.0f);
+          left = FX32_CONST(-144.0f);
+          idxTop = 3;
+          idxLeft = 0;
           break;
 
         case RMM_RIGHT_BOTTOM:
-          top = FX32_CONST(-192.0f);
-          left = FX32_CONST(-192.0f);
+          top = FX32_CONST(-176.0f);
+          left = FX32_CONST(-176.0f);
+          idxTop = 3;
+          idxLeft = 3;
           break;
         }
+        i=0;
 				for( x=0; x<3; x++ )
 				{
   				for( z=0; z<3; z++ )
   				{
-  					status.id = 0;
-  					VEC_Set( &status.trans, 
-  							left+FX32_CONST( x*128.0f ), 0, top+FX32_CONST( z*128.0f) );
-					  status.rotate = 0;
-					  GFL_G3D_MAP_ResistGlobalObj( g3Dmap, &status, x*3+z );
+            s8 height = FieldFuncRandom_GetBilduingHeight(idxTop+z,idxLeft+x) + level - 10;
+            if( height > 10 )
+            {
+              height = 10;
+            }
+            
+            if( height > 0 )
+            {
+    					status.id = height-1;
+    					VEC_Set( &status.trans, 
+    							left+FX32_CONST( x*160.0f ), 0, top+FX32_CONST( z*160.0f) );
+  					  status.rotate = 0;
+  					  GFL_G3D_MAP_ResistGlobalObj( g3Dmap, &status, i );
+  					  i++;
+  					}
           }
         }
         /*
@@ -252,13 +283,12 @@ void FieldGetAttr_RandomGenerate( GFL_G3D_MAP_ATTRINFO* attrInfo, const void* ma
 
 
 //MAPの位置をチェック
-static const RANDOM_MAP_MAPPOS FieldFuncRandom_CheckMapPos( GFL_G3D_MAP* g3Dmap )
+static const RANDOM_MAP_MAPPOS FieldFuncRandom_CheckMapPos( GFL_G3D_MAP* g3Dmap , const u8 mapIdx )
 {
-  //仮でマップの座標が6400,2304 6912,2304 6400,2816 6912,2816 だったからそれでチェック
-  
   VecFx32 pos;
   GFL_G3D_MAP_GetTrans( g3Dmap , &pos );
-  OS_Printf("[%f:%f:%f]\n",FX_FX32_TO_F32(pos.x),FX_FX32_TO_F32(pos.y),FX_FX32_TO_F32(pos.z));
+  OS_Printf("[%d][%f:%f:%f]\n",mapIdx,FX_FX32_TO_F32(pos.x),FX_FX32_TO_F32(pos.y),FX_FX32_TO_F32(pos.z));
+/*
   if( pos.x < FX32_CONST( 256.0f+256.0f ) )
   {
     if( pos.z < FX32_CONST( 256.0f+256.0f ) )
@@ -281,4 +311,74 @@ static const RANDOM_MAP_MAPPOS FieldFuncRandom_CheckMapPos( GFL_G3D_MAP* g3Dmap 
       return RMM_RIGHT_BOTTOM;
     }
   }
+*/
+  return (RANDOM_MAP_MAPPOS)(mapIdx);
+}
+
+static const u8 FieldFuncRandom_GetBilduingHeight( const u8 idxTop , const u8 idxLeft )
+{
+  static const u8 idxArr[6][6] =
+  {
+    {1,3,6,5,4,2},
+    {2,5,7,8,6,3},
+    {4,7,10,9,7,5},
+    {3,6,8,10,6,4},
+    {2,4,5,6,5,3},
+    {1,2,4,3,2,1},
+  };
+  
+  return idxArr[idxTop][idxLeft];
+}
+
+
+//デバッグ操作
+
+static void DEBWIN_Update_CityLevel( void* userWork , DEBUGWIN_ITEM* item );
+static void DEBWIN_Draw_CityLevel( void* userWork , DEBUGWIN_ITEM* item );
+
+
+void FIELD_FUNC_RANDOM_GENERATE_InitDebug( HEAPID heapId )
+{
+  DEBUGWIN_AddGroupToTop( 10 , "RandomMap" , heapId );
+  DEBUGWIN_AddItemToGroupEx( DEBWIN_Update_CityLevel ,DEBWIN_Draw_CityLevel , 
+                             NULL , 10 , heapId );
+}
+
+void FIELD_FUNC_RANDOM_GENERATE_TermDebug( void )
+{
+  DEBUGWIN_RemoveGroup( 10 );
+}
+
+static void DEBWIN_Update_CityLevel( void* userWork , DEBUGWIN_ITEM* item )
+{
+  SAVE_CONTROL_WORK *saveWork = SaveControl_GetPointer();
+  RANDOMMAP_SAVE* mapSave = RANDOMMAP_SAVE_GetRandomMapSave( saveWork );
+  u16 level = RANDOMMAP_SAVE_GetCityLevel( mapSave );
+  
+  if( GFL_UI_KEY_GetRepeat() & PAD_KEY_RIGHT )
+  {
+    if( level < 20 )
+    {
+      level++;
+      RANDOMMAP_SAVE_SetCityLevel( mapSave , level );
+      DEBUGWIN_RefreshScreen();
+    }
+  }
+  if( GFL_UI_KEY_GetRepeat() & PAD_KEY_LEFT )
+  {
+    if( level > 0 )
+    {
+      level--;
+      RANDOMMAP_SAVE_SetCityLevel( mapSave , level );
+      DEBUGWIN_RefreshScreen();
+    }
+  }
+}
+
+static void DEBWIN_Draw_CityLevel( void* userWork , DEBUGWIN_ITEM* item )
+{
+  SAVE_CONTROL_WORK *saveWork = SaveControl_GetPointer();
+  RANDOMMAP_SAVE* mapSave = RANDOMMAP_SAVE_GetRandomMapSave( saveWork );
+  u16 level = RANDOMMAP_SAVE_GetCityLevel( mapSave );
+  DEBUGWIN_ITEM_SetNameV( item , "Level[%d]",level );
 }
