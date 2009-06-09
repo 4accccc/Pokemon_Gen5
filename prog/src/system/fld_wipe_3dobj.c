@@ -52,27 +52,36 @@ void FLD_WIPEOBJ_Delete( FLD_WIPEOBJ* fw )
 void FLD_WIPEOBJ_Main( FLD_WIPEOBJ* fw, fx32 scale, fx32 length )
 {
 	GFL_G3D_OBJSTATUS status;
-	GFL_G3D_LOOKAT		lookAt;
-	NNSG3dResMdl*			pMdl;
 
 	GF_ASSERT(fw);
 
 	if( scale == 0 ){ return; }
 
-	GFL_G3D_GetSystemLookAt(&lookAt);
-	status.trans = lookAt.target;
-	VEC_Set(&status.scale, scale, length, scale);
+	{
+		GFL_G3D_LOOKAT		lookAt;
+		VecFx32						vec;
+		fx32							ysin;
+
+		GFL_G3D_GetSystemLookAt(&lookAt);
+		status.trans = lookAt.target;
+
+		VEC_Subtract(&lookAt.target, &lookAt.camPos, &vec);
+		VEC_Normalize(&vec, &vec);
+		ysin = (vec.y > 0)? vec.y : -vec.y; 
+		VEC_Set(&status.scale, scale, FX_Mul(scale,ysin), length);
+	}
 	MTX_Copy43To33(NNS_G3dGlbGetInvCameraMtx(), &status.rotate);
+	{
+		NNSG3dResMdl*	pMdl = NNS_G3dRenderObjGetResMdl
+						(GFL_G3D_RENDER_GetRenderObj(GFL_G3D_OBJECT_GetG3Drnd(fw->g3Dobj)) );
 
-	pMdl = NNS_G3dRenderObjGetResMdl
-					(GFL_G3D_RENDER_GetRenderObj(GFL_G3D_OBJECT_GetG3Drnd(fw->g3Dobj)) );
-
-	NNS_G3dMdlSetMdlLightEnableFlag(pMdl, 0, 0x0);
-	NNS_G3dMdlSetMdlPolygonID(pMdl, 0, 0);
-	NNS_G3dMdlSetMdlCullMode(pMdl, 0, GX_CULL_NONE); 
-	NNS_G3dMdlSetMdlAlpha(pMdl, 0, 16);
-	NNS_G3dMdlSetMdlPolygonMode(pMdl, 0, GX_POLYGONMODE_MODULATE);
-
+		NNS_G3dMdlSetMdlLightEnableFlag(pMdl, 0, 0x0);
+		NNS_G3dMdlSetMdlPolygonID(pMdl, 0, 0);
+		NNS_G3dMdlSetMdlCullMode(pMdl, 0, GX_CULL_NONE); 
+		//NNS_G3dMdlSetMdlAlpha(pMdl, 0, 16);
+		NNS_G3dMdlSetMdlAlpha(pMdl, 0, 31);
+		NNS_G3dMdlSetMdlPolygonMode(pMdl, 0, GX_POLYGONMODE_MODULATE);
+	}
 	GFL_G3D_DRAW_DrawObject(fw->g3Dobj, &status);
 }
 

@@ -180,9 +180,9 @@ static BOOL	sample4(SAMPLE4_WORK* sw)
 		sw->mode = 0;
 
 		//３Ｄオブジェクト作成
-#if 0
+#if 1
 		sw->g3DresMdl0 = GFL_G3D_CreateResourceArc
-										(ARCID_SHADOW_TEST, NARC_shadow_test_shadow3_test_nsbmd);
+										(ARCID_SHADOW_TEST, NARC_shadow_test_shadow_test_nsbmd);
 		sw->g3Dobj0 = GFL_G3D_OBJECT_Create(GFL_G3D_RENDER_Create(sw->g3DresMdl0, 0, NULL), NULL, 0); 
 		sw->g3DresMdl1 = GFL_G3D_CreateResourceArc
 										(ARCID_SHADOW_TEST, NARC_shadow_test_shadow2_test_nsbmd);
@@ -219,7 +219,7 @@ static BOOL	sample4(SAMPLE4_WORK* sw)
 			GFL_G3D_OBJSTATUS status;
 
 			status = g3DobjStatus1;
-#if 0
+#if 1
 			if(sw->target == 0){
 				g3Dobj = sw->g3Dobj0;
 				status.trans = sw->trans;
@@ -302,7 +302,7 @@ static BOOL	sample4(SAMPLE4_WORK* sw)
 		break;
 
 	case 2:
-#if 0
+#if 1
 		GFL_G3D_RENDER_Delete(GFL_G3D_OBJECT_GetG3Drnd(sw->g3Dobj1)); 
 		GFL_G3D_OBJECT_Delete(sw->g3Dobj1); 
 		GFL_G3D_DeleteResource(sw->g3DresMdl1);
@@ -346,7 +346,8 @@ static void	cameraTraseCalc(SAMPLE4_WORK* sw, MtxFx33* pRotate)
 	VecFx32	vecRot;
 	MtxFx33	tmpMtx;
 
-	vecRot.x = 0x4000;
+//	vecRot.x = 0x4000;
+	vecRot.x = 0x2000;
 	vecRot.y = 0;
 	vecRot.z = 0;
 
@@ -358,8 +359,8 @@ static void	cameraTraseCalc(SAMPLE4_WORK* sw, MtxFx33* pRotate)
 	MTX_RotZ33(&tmpMtx, FX_SinIdx((u16)vecRot.z), FX_CosIdx((u16)vecRot.z)); 
 	MTX_Concat33(pRotate, &tmpMtx, pRotate); 
 
-	MTX_Copy43To33(NNS_G3dGlbGetInvCameraMtx(), &tmpMtx);
-	MTX_Concat33(pRotate, &tmpMtx, pRotate); 
+//	MTX_Copy43To33(NNS_G3dGlbGetInvCameraMtx(), &tmpMtx);
+//	MTX_Concat33(pRotate, &tmpMtx, pRotate); 
 }
 
 //--------------------------------------------------------------

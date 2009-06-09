@@ -828,7 +828,8 @@ static void g3d_draw( SAMPLE_SETUP* gs )
 	GFL_G3D_LIGHT_Switching( gs->g3Dlightset );
 	Draw3Dmapper( gs->g3Dmapper, gs->g3Dcamera );
 	GFL_BBDACT_Draw( gs->bbdActSys, gs->g3Dcamera, gs->g3Dlightset );
-	FLD_WIPEOBJ_Main(gs->fldWipeObj, FX32_ONE, FX32_ONE);
+	//FLD_WIPEOBJ_Main(gs->fldWipeObj, FX32_ONE*4, FX32_ONE);
+	FLD_WIPEOBJ_Main(gs->fldWipeObj, FX32_ONE*8, FX32_ONE*4);
 	GFL_G3D_SCENE_Draw( gs->g3Dscene );  
 }
 
