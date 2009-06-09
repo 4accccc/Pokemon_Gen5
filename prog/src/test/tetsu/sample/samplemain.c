@@ -23,6 +23,7 @@ BOOL	SampleMain( void );
 #include "sound/pm_sndsys.h"
 
 #include "test/camera_adjust_view.h"
+#include "system/fld_wipe_3dobj.h"
 //============================================================================================
 //
 //
@@ -442,6 +443,8 @@ struct _SAMPLE_SETUP {
 
 	GFL_BMPWIN*				bmpwin;			//bitmapWin個別ハンドル
 
+	FLD_WIPEOBJ*	fldWipeObj;
+
 	HEAPID					heapID;
 };
 
@@ -773,6 +776,8 @@ static void	g3d_trans_BBD( GFL_BBDACT_TRANSTYPE type, u32 dst, u32 src, u32 siz 
 //作成
 static void g3d_load( SAMPLE_SETUP* gs )
 {
+	gs->fldWipeObj = FLD_WIPEOBJ_Create(gs->heapID);
+
 	//配置物設定
 
 	//g3Dutilを使用し配列管理をする
@@ -823,6 +828,7 @@ static void g3d_draw( SAMPLE_SETUP* gs )
 	GFL_G3D_LIGHT_Switching( gs->g3Dlightset );
 	Draw3Dmapper( gs->g3Dmapper, gs->g3Dcamera );
 	GFL_BBDACT_Draw( gs->bbdActSys, gs->g3Dcamera, gs->g3Dlightset );
+	FLD_WIPEOBJ_Main(gs->fldWipeObj, FX32_ONE, FX32_ONE);
 	GFL_G3D_SCENE_Draw( gs->g3Dscene );  
 }
 
@@ -839,6 +845,8 @@ static void g3d_unload( SAMPLE_SETUP* gs )
 
 	GFL_G3D_SCENE_Delete( gs->g3Dscene );  
 	GFL_G3D_UTIL_Delete( gs->g3Dutil );
+
+	FLD_WIPEOBJ_Delete(gs->fldWipeObj);
 }
 	
 static void	g3d_vblank( GFL_TCB* tcb, void* work )
