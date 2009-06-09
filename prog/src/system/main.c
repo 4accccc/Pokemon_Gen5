@@ -116,7 +116,16 @@ void NitroMain(void)
 
         // VBLANK待ち
 		// ※gflibに適切な関数が出来たら置き換えてください
+	#if 0   //※check　ビーコンサーチ中のマップチラつき対策
 		OS_WaitIrq(TRUE,OS_IE_V_BLANK);
+	#else
+		while( !(GX_GetVCount() > 188 && GX_GetVCount() < 192) ){
+      ;   //通信の為、ARM7優先期間を極力長くする為、VBlank直前まで待つ
+  	}
+ 		MI_SetMainMemoryPriority(MI_PROCESSOR_ARM9);
+		OS_WaitIrq(TRUE,OS_IE_V_BLANK);
+		MI_SetMainMemoryPriority(MI_PROCESSOR_ARM7);
+	#endif
 	}
 
     GameExit();
