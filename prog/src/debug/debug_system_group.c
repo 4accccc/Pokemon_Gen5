@@ -33,6 +33,7 @@ typedef struct
 {
   RTCTime rtcTime;
   RTCDate rtcDate;
+  
 }DEBUG_SYS_GROUP_WORK;
 
 //======================================================================
@@ -72,6 +73,8 @@ DEBUG_SYS_GROUP_WORK *sysGroupWork = NULL;
 //	
 //--------------------------------------------------------------
 
+#pragma mark [> Init&Term
+
 void DEBUGWIN_AddSystemGroup( const HEAPID heapId )
 {
   sysGroupWork = GFL_HEAP_AllocMemory( heapId , sizeof(DEBUG_SYS_GROUP_WORK) );
@@ -79,12 +82,15 @@ void DEBUGWIN_AddSystemGroup( const HEAPID heapId )
   GFL_RTC_GetDateTime( &sysGroupWork->rtcDate , &sysGroupWork->rtcTime );
   
   DEBUGWIN_AddGroupToTop( DEBUGWIN_GROUPID_SYSTEM , "System" , heapId );
+  
+  //System下
   DEBUGWIN_AddGroupToGroup( DEBUGWIN_GROUPID_RTC , "RTC" , DEBUGWIN_GROUPID_SYSTEM , heapId );
   DEBUGWIN_AddItemToGroup( "パフォーマンスメーターON",DEBWIN_Update_PMeterOn , NULL , DEBUGWIN_GROUPID_SYSTEM , heapId );
   DEBUGWIN_AddItemToGroup( "パフォーマンスメーターOFF",DEBWIN_Update_PMeterOff , NULL , DEBUGWIN_GROUPID_SYSTEM , heapId );
   DEBUGWIN_AddItemToGroupEx( DEBWIN_Update_Pause   ,DEBWIN_Draw_Pause   , (void*)sysGroupWork , DEBUGWIN_GROUPID_SYSTEM , heapId );
   DEBUGWIN_AddItemToGroupEx( DEBWIN_Update_Kanji   ,DEBWIN_Draw_Kanji   , (void*)sysGroupWork , DEBUGWIN_GROUPID_SYSTEM , heapId );
 
+  //RTC下
   DEBUGWIN_AddItemToGroupEx( DEBWIN_Update_RTC_year   ,DEBWIN_Draw_RTC_year   , (void*)sysGroupWork , DEBUGWIN_GROUPID_RTC , heapId );
   DEBUGWIN_AddItemToGroupEx( DEBWIN_Update_RTC_month  ,DEBWIN_Draw_RTC_month  , (void*)sysGroupWork , DEBUGWIN_GROUPID_RTC , heapId );
   DEBUGWIN_AddItemToGroupEx( DEBWIN_Update_RTC_day    ,DEBWIN_Draw_RTC_day    , (void*)sysGroupWork , DEBUGWIN_GROUPID_RTC , heapId );
@@ -93,12 +99,15 @@ void DEBUGWIN_AddSystemGroup( const HEAPID heapId )
   DEBUGWIN_AddItemToGroupEx( DEBWIN_Update_RTC_sec    ,DEBWIN_Draw_RTC_sec    , (void*)sysGroupWork , DEBUGWIN_GROUPID_RTC , heapId );
   DEBUGWIN_AddItemToGroup( "適用",DEBWIN_Update_RTC_apply , (void*)sysGroupWork , DEBUGWIN_GROUPID_RTC , heapId );
   DEBUGWIN_AddItemToGroup( "現在時刻取得",DEBWIN_Update_RTC_get , (void*)sysGroupWork , DEBUGWIN_GROUPID_RTC , heapId );
+  
 }
 
 void DEBUGWIN_RemoveSystemGroup(void)
 {
   DEBUGWIN_RemoveGroup( 254 );
 }
+
+#pragma mark [> system
 
 //パフォーマンスメーター
 static void DEBWIN_Update_PMeterOn(  void* userWork , DEBUGWIN_ITEM* item )
@@ -174,6 +183,8 @@ static void DEBWIN_Draw_Kanji( void* userWork , DEBUGWIN_ITEM* item )
     DEBUGWIN_ITEM_SetNameV( item , "漢字モード[現在ON]" );
   }
 }
+
+#pragma mark [> RTC
 
 //RTC
 static void DEBWIN_Update_RTC_year( void* userWork , DEBUGWIN_ITEM* item )
@@ -255,6 +266,7 @@ static void DEBWIN_Draw_RTC_sec( void* userWork , DEBUGWIN_ITEM* item )
   DEBUGWIN_ITEM_SetNameV( item , "秒[%2d]",work->rtcTime.second );
 }
 
+#pragma mark [> util
 static void DEBWIN_UTIL_UpdateU32( u32 *value , const u32 min, const u32 max )
 {
   u32 addValue = 1;

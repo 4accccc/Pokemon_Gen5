@@ -161,6 +161,8 @@ void DEBUGWIN_InitSystem( u8* charArea , u16* scrnArea , u16* plttArea )
   debWork->topGroup = DEBUGWIN_CreateGroup( DEBUGWIN_GROUPID_TOPMENU , "TopMenu" , HEAPID_DEBUGWIN );
 
   DEBUGWIN_AddSystemGroup(HEAPID_DEBUGWIN);
+  
+  OS_TPrintf("Heap[%d]\n", GFL_HEAP_GetHeapFreeSize(HEAPID_DEBUGWIN) );
 }
 
 void DEBUGWIN_ExitSystem(void)
@@ -668,6 +670,7 @@ void DEBUGWIN_ITEM_SetName( DEBUGWIN_ITEM* item , const char *nameStr )
   
   item->flg |= DIF_UPDATE;
 }
+
 void DEBUGWIN_ITEM_SetNameV( DEBUGWIN_ITEM* item , char *nameStr , ...)
 {
   char str[DEBUGWIN_ITEM_NAME_LEN-1];
@@ -676,6 +679,12 @@ void DEBUGWIN_ITEM_SetNameV( DEBUGWIN_ITEM* item , char *nameStr , ...)
   STD_TVSNPrintf( str , DEBUGWIN_ITEM_NAME_LEN-1 , nameStr , vlist );
   va_end(vlist);
   DEBUGWIN_ITEM_SetName( item , str );
+}
+
+void DEBUGWIN_ITEM_SetNameU16( DEBUGWIN_ITEM* item , const STRCODE *strcode )
+{
+  GFL_STR_SetStringCode( item->name , strcode );
+  item->flg |= DIF_UPDATE;
 }
 
 #pragma mark [>Draw Func

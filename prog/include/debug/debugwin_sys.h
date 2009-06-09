@@ -204,6 +204,7 @@ void DEBUGWIN_AddItemToGroupEx( DEBUGWIN_UPDATE_FUNC updateFunc ,
 //------------------------------------------------------------------
 void DEBUGWIN_ITEM_SetName( DEBUGWIN_ITEM* item , const char *nameStr );
 void DEBUGWIN_ITEM_SetNameV( DEBUGWIN_ITEM* item , char *nameStr , ...);
+void DEBUGWIN_ITEM_SetNameU16( DEBUGWIN_ITEM* item , const STRCODE *strcode );
 
 //--------------------------------------------------------------
 //	êFÇÃïœçX
