@@ -29,6 +29,7 @@
 #include "field_subscreen.h"
 #include "field_rail.h"
 #include "field_effect.h"
+#include "field_encount.h"
 
 //======================================================================
 //	define
@@ -65,6 +66,7 @@ extern void * FIELDMAP_GetCommSys( const FIELDMAP_WORK *fieldWork );
 extern FLDMSGBG * FIELDMAP_GetFldMsgBG( FIELDMAP_WORK *fieldWork );
 extern FIELD_CAMERA * FIELDMAP_GetFieldCamera( FIELDMAP_WORK *fieldWork );
 extern FIELD_RAIL_MAN * FIELDMAP_GetFieldRailMan( FIELDMAP_WORK *fieldWork );
+extern int * FIELDMAP_GetFirstConnectID( FIELDMAP_WORK * fieldWork );
 extern FIELD_LIGHT * FIELDMAP_GetFieldLight( FIELDMAP_WORK *fieldWork );
 extern FIELD_FOG_WORK * FIELDMAP_GetFieldFog( FIELDMAP_WORK *fieldWork );
 extern FIELD_WEATHER * FIELDMAP_GetFieldWeather( FIELDMAP_WORK *fieldWork );
@@ -75,6 +77,9 @@ extern MAP_MATRIX * FIELDMAP_GetMapMatrix( FIELDMAP_WORK *fieldWork );
 extern HEAPID FIELDMAP_GetHeapID( FIELDMAP_WORK *fieldWork );
 extern GFL_BBDACT_SYS * FIELDMAP_GetBbdActSys( FIELDMAP_WORK *fieldWork );
 extern FLDMAPPER * FIELDMAP_GetFieldG3Dmapper( FIELDMAP_WORK *fieldWork );
+extern const DEPEND_FUNCTIONS * FIELDMAP_GetDependFunctions( const FIELDMAP_WORK * fieldWork );
+extern u16 FIELDMAP_GetZoneID( const FIELDMAP_WORK * fieldWork );
+extern const VecFx32 * FIELDMAP_GetNowPos( const FIELDMAP_WORK * fieldWork );
 extern void * FIELDMAP_GetMapCtrlWork( FIELDMAP_WORK *fieldWork );
 extern void FIELDMAP_SetMapCtrlWork(FIELDMAP_WORK *fieldWork,void *ctrlWork);
 extern FIELD_PLAYER * FIELDMAP_GetFieldPlayer( FIELDMAP_WORK *fieldWork );
@@ -83,3 +88,5 @@ extern FIELD_SUBSCREEN_WORK* FIELDMAP_GetFieldSubscreenWork(
 extern void FIELDMAP_SetFieldSubscreenWork(
     FIELDMAP_WORK *fieldWork,FIELD_SUBSCREEN_WORK* pWork );
 extern FLDEFF_CTRL * FIELDMAP_GetFldEffCtrl( FIELDMAP_WORK *fieldWork );
+extern FIELD_ENCOUNT * FIELDMAP_GetEncount( FIELDMAP_WORK * fieldWork );
+
