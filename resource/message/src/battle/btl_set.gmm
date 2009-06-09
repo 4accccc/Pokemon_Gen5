@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="taya" host="W00146" date="2009-06-08T20:18:06"/>
+	<create user="taya" host="W00146" date="2009-06-09T21:25:41"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -2159,6 +2159,111 @@
 こうげきから　みを　まもった！</language>
 		<language name="JPN_KANJI" width="216">相手の　[1:02:ポケモンニックネーム:0]は
 攻撃から　身を守った！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_SoraWoTobu">
+		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は
+そらたかく　とびあがった！</language>
+		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
+空高く　飛び上がった！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_SoraWoTobu_Y">
+		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は
+そらたかく　とびあがった！</language>
+		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]は
+空高く　飛び上がった！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_SoraWoTobu_E">
+		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は
+そらたかく　とびあがった！</language>
+		<language name="JPN_KANJI" width="216">相手の　[1:02:ポケモンニックネーム:0]は
+空高く　飛び上がった！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_Diving">
+		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は
+すいちゅうに　みをひそめた！</language>
+		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
+水中に　身を潜めた！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_Diving_Y">
+		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は
+すいちゅうに　みをひそめた！</language>
+		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
+水中に　身を潜めた！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_Diving_E">
+		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は
+すいちゅうに　みをひそめた！</language>
+		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
+水中に　身を潜めた！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_AnaWoHoru">
+		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は
+じめんに　もぐった！</language>
+		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
+地面に　潜った！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_AnaWoHoru_Y">
+		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は
+じめんに　もぐった！</language>
+		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
+地面に　潜った！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_AnaWoHoru_E">
+		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は
+じめんに　もぐった！</language>
+		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
+地面に　潜った！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_ShadowDive">
+		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は
+いっしゅんで　きえた！</language>
+		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
+一瞬で　消えた！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_ShadowDive_Y">
+		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は
+いっしゅんで　きえた！</language>
+		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
+一瞬で　消えた！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_ShadowDive_E">
+		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は
+いっしゅんで　きえた！</language>
+		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
+一瞬で　消えた！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_Tobihaneru">
+		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は
+たかく　とびはねた！</language>
+		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
+高く　飛び跳ねた！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_Tobihaneru_Y">
+		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は
+たかく　とびはねた！</language>
+		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
+高く　飛び跳ねた！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_Tobihaneru_E">
+		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は
+たかく　とびはねた！</language>
+		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
+高く　飛び跳ねた！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_PushOutChange">
