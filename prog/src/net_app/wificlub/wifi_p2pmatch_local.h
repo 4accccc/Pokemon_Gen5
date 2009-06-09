@@ -12,6 +12,7 @@
 
 
 #include <gflib.h>
+#include "savedata/wifi_status.h"
 #include "savedata/wifilist.h"
 #include "savedata/config.h"
 #include "print/wordset.h"
@@ -144,51 +145,6 @@ enum{
 	BMP_WIFIP2PMATCH_MAX,
 };
 
-
-//---------------WIFISTATUSデータ
-
-typedef enum{
-  WIFI_STATUS_NONE,   // 何も無い	NONEのときは出現もしません
-  WIFI_STATUS_VCT,      // VCT中
-  WIFI_STATUS_SBATTLE50,      // シングル対戦中
-  WIFI_STATUS_SBATTLE100,      // シングル対戦中
-  WIFI_STATUS_SBATTLE_FREE,      // シングル対戦中
-  WIFI_STATUS_DBATTLE50,      // ダブル対戦中
-  WIFI_STATUS_DBATTLE100,      // ダブル対戦中
-  WIFI_STATUS_DBATTLE_FREE,      // ダブル対戦中
-  WIFI_STATUS_TRADE,          // 交換中
-  WIFI_STATUS_SBATTLE50_WAIT,   // シングルLv50対戦募集中
-  WIFI_STATUS_SBATTLE100_WAIT,   // シングルLv100対戦募集中
-  WIFI_STATUS_SBATTLE_FREE_WAIT,   // シングルFree対戦募集中
-  WIFI_STATUS_DBATTLE50_WAIT,   // ダブルLv50対戦募集中
-  WIFI_STATUS_DBATTLE100_WAIT,   // ダブルLv100対戦募集中
-  WIFI_STATUS_DBATTLE_FREE_WAIT,   // ダブルFree対戦募集中
-  WIFI_STATUS_TRADE_WAIT,    // 交換募集中
-  WIFI_STATUS_LOGIN_WAIT,    // 待機中　ログイン直後はこれ
-  
-  WIFI_STATUS_DP_UNK,        // DPのUNKNOWN
-  
-  // プラチナで追加
-  WIFI_STATUS_FRONTIER,          // フロンティア中
-  WIFI_STATUS_FRONTIER_WAIT,    // フロンティア募集中
-
-  WIFI_STATUS_BUCKET,				// バケットゲーム
-  WIFI_STATUS_BUCKET_WAIT,			// バケットゲーム募集中
-  WIFI_STATUS_BALANCEBALL,		    // 玉乗りゲーム
-  WIFI_STATUS_BALANCEBALL_WAIT,		// 玉乗りゲーム募集中
-  WIFI_STATUS_BALLOON,				// ばるーんゲーム
-  WIFI_STATUS_BALLOON_WAIT,			// ばるーんーム募集中
-
-#ifdef WFP2P_DEBUG_EXON
-  WIFI_STATUS_BATTLEROOM,     // バトルルーム中
-  WIFI_STATUS_BATTLEROOM_WAIT,// バトルルーム募集中
-  WIFI_STATUS_MBATTLE_FREE,     // マルチバトル中
-  WIFI_STATUS_MBATTLE_FREE_WAIT,// マルチバトル募集中
-#endif
-
-  WIFI_STATUS_PLAY_OTHER,	// WiFiクラブに以外で遊び中
-  WIFI_STATUS_UNKNOWN,   // 新たに作ったらこの番号以上になる
-} WIFI_STATUS_e;
 
 typedef enum{
   _REGULATION_BATTLE_TOWER     // バトルタワー対戦方式
@@ -323,7 +279,9 @@ typedef struct {
 struct _WIFIP2PMATCH_WORK{
 	GFL_TCB					*vblankFunc;
   WIFI_LIST* pList;				// セーブデータ内のユーザーとフレンドデータ
-  TEST_MATCH_WORK* pMatch;		// サーバーと送受信する自分と友達の状態
+//  WIFI_STATUS* pMatch;		// サーバーと送受信する自分の状態
+  TEST_MATCH_WORK* pMatch;		// サーバーと送受信する自分の状態
+
   int friendMatchReadCount;		// ビーコンを受信した友達数
   u8 index2No[WIFIP2PMATCH_MEMBER_MAX];	// フレンドナンバー配列
   u8 index2NoBackUp[WIFIP2PMATCH_MEMBER_MAX];	// フレンドナンバー配列バックアップ

@@ -1,0 +1,85 @@
+#pragma once
+//============================================================================================
+/**
+ * @file	  wifi_status.h
+ * @brief	  WIFIに流れる情報の管理
+            セーブするデータではないが mystatus構造体の内包のためここにある
+ * @author	k.ohno
+ * @date	  2009.6.6
+ */
+//============================================================================================
+#include "savedata/mystatus.h"
+
+typedef struct _WIFI_STATUS WIFI_STATUS;
+
+
+//---------------WIFISTATUSデータ
+typedef enum{
+  WIFI_STATUS_NONE,   // 何も無い	NONEのときは出現もしません
+  WIFI_STATUS_VCT,      // VCT中
+  WIFI_STATUS_SBATTLE50,      // シングル対戦中
+  WIFI_STATUS_SBATTLE100,      // シングル対戦中
+  WIFI_STATUS_SBATTLE_FREE,      // シングル対戦中
+  WIFI_STATUS_DBATTLE50,      // ダブル対戦中
+  WIFI_STATUS_DBATTLE100,      // ダブル対戦中
+  WIFI_STATUS_DBATTLE_FREE,      // ダブル対戦中
+  WIFI_STATUS_TRADE,          // 交換中
+  WIFI_STATUS_SBATTLE50_WAIT,   // シングルLv50対戦募集中
+  WIFI_STATUS_SBATTLE100_WAIT,   // シングルLv100対戦募集中
+  WIFI_STATUS_SBATTLE_FREE_WAIT,   // シングルFree対戦募集中
+  WIFI_STATUS_DBATTLE50_WAIT,   // ダブルLv50対戦募集中
+  WIFI_STATUS_DBATTLE100_WAIT,   // ダブルLv100対戦募集中
+  WIFI_STATUS_DBATTLE_FREE_WAIT,   // ダブルFree対戦募集中
+  WIFI_STATUS_TRADE_WAIT,    // 交換募集中
+  WIFI_STATUS_LOGIN_WAIT,    // 待機中　ログイン直後はこれ
+  
+  WIFI_STATUS_DP_UNK,        // DPのUNKNOWN
+  
+  // プラチナで追加
+  WIFI_STATUS_FRONTIER,          // フロンティア中
+  WIFI_STATUS_FRONTIER_WAIT,    // フロンティア募集中
+
+  WIFI_STATUS_BUCKET,				// バケットゲーム
+  WIFI_STATUS_BUCKET_WAIT,			// バケットゲーム募集中
+  WIFI_STATUS_BALANCEBALL,		    // 玉乗りゲーム
+  WIFI_STATUS_BALANCEBALL_WAIT,		// 玉乗りゲーム募集中
+  WIFI_STATUS_BALLOON,				// ばるーんゲーム
+  WIFI_STATUS_BALLOON_WAIT,			// ばるーんーム募集中
+
+#ifdef WFP2P_DEBUG_EXON
+  WIFI_STATUS_BATTLEROOM,     // バトルルーム中
+  WIFI_STATUS_BATTLEROOM_WAIT,// バトルルーム募集中
+  WIFI_STATUS_MBATTLE_FREE,     // マルチバトル中
+  WIFI_STATUS_MBATTLE_FREE_WAIT,// マルチバトル募集中
+#endif
+
+  WIFI_STATUS_PLAY_OTHER,	// WiFiクラブに以外で遊び中
+  WIFI_STATUS_UNKNOWN,   // 新たに作ったらこの番号以上になる
+
+#if 0  //こうする予定
+	WIFI_STATUS_NONE,         // 何も無い	NONEのときは出現もしません
+  WIFI_STATUS_VCT,            // VCT中
+  WIFI_STATUS_SBATTLE50,      // シングル対戦中か募集中
+  WIFI_STATUS_SBATTLE100,      // シングル対戦中か募集中
+  WIFI_STATUS_SBATTLE_FREE,      // シングル対戦中か募集中
+  WIFI_STATUS_DBATTLE50,      // ダブル対戦中か募集中
+  WIFI_STATUS_DBATTLE100,      // ダブル対戦中か募集中
+  WIFI_STATUS_DBATTLE_FREE,      // ダブル対戦中か募集中
+  WIFI_STATUS_TRADE,          // 交換中か募集中
+  WIFI_STATUS_LOGIN,           // 待機中 ログイン直後はこれ
+  WIFI_STATUS_FRONTIER,        // フロンティア中か募集中
+  WIFI_STATUS_BATTLEROOM,      // バトルルーム中
+  WIFI_STATUS_MBATTLE_FREE,     // マルチバトル中
+  WIFI_STATUS_UNKNOWN,   // 新たに作ったらこの番号以上になる
+#endif
+} WIFI_STATUS_e;
+
+
+
+extern int WIFI_STATUS_GetSize(void);
+extern const MYSTATUS* WIFI_STATUS_GetMyStatus(const WIFI_STATUS* pStatus);
+extern u8 WIFI_STATUS_GetWifiMode(const WIFI_STATUS* pStatus);
+extern u8 WIFI_STATUS_GetVChatStatus(const WIFI_STATUS* pStatus);
+extern u8 WIFI_STATUS_GetActive(const WIFI_STATUS* pStatus);
+extern BOOL WIFI_STATUS_IsVChatMac(const WIFI_STATUS* pStatus, const u8* SearchMacAddress);
+

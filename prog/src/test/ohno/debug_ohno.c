@@ -37,6 +37,7 @@ static BOOL NetTestSendTiming(void* pCtl);
 static BOOL NetTestRecvTiming(void* pCtl);
 static BOOL NetTestEndStart(void* pCtl);
 static BOOL NetTestMoveSend(void* pCtl);
+static BOOL NetTestEnd(void* pCtl);
 
 static void _connectCallBack(void* pWork);
 static void* _netBeaconGetFunc(void* pWork);
@@ -46,6 +47,7 @@ static BOOL _netBeaconCompFunc(GameServiceID myNo,GameServiceID beaconNo);
 static void _netConnectFunc(void* pWork,int hardID);    ///< ハードで接続した時に呼ばれる
 static void _netNegotiationFunc(void* pWork,int hardID);    ///< ネゴシエーション完了時にコール
 
+static void _endCallBack(void* pWork);
 
 
 static const NetRecvFuncTable _CommPacketTbl[] = {
@@ -81,7 +83,7 @@ static GFLNetInitializeStruct aGFLNetInit = {
     _netBeaconCompFunc,  // ビーコンのサービスを比較して繋いで良いかどうか判断する
     NULL,            // 普通のエラーが起こった場合 通信終了
     FatalError_Disp,  // 通信不能なエラーが起こった場合呼ばれる 切断するしかない
-    NULL,  // 通信切断時に呼ばれる関数
+    _endCallBack,  // 通信切断時に呼ばれる関数
     NULL,  // オート接続で親になった場合
 #if GFL_NET_WIFI
     NULL,     ///< wifi接続時に自分のデータをセーブする必要がある場合に呼ばれる関数
@@ -387,6 +389,18 @@ static BOOL NetTestNone(void* pCtl)
     return FALSE;
 }
 
+static BOOL netinit(void* pCtl)
+{
+	DEBUG_OHNO_CONTROL* pDOC = pCtl;
+
+	if( GFL_NET_IsInit() == FALSE ){  // もう通信している場合終了処理
+		GFL_NET_Init(&aGFLNetInit, _initCallBack, pDOC);
+	}
+	return FALSE;
+}
+
+
+
 //--------------------------------------------------------------
 /**
  * @brief   終了
@@ -394,14 +408,12 @@ static BOOL NetTestNone(void* pCtl)
  * @retval  PROC終了時にはTRUE
  */
 //--------------------------------------------------------------
-BOOL NetTestEnd(void* pCtl)
+static BOOL NetTestEnd(void* pCtl)
 {
-    return TRUE;
+    DEBUG_OHNO_CONTROL* pDOC = pCtl;
+    _CHANGE_STATE( netinit );
+    return FALSE;
 }
-
-
-
-
 
 
 
@@ -413,18 +425,17 @@ BOOL NetTestEnd(void* pCtl)
 static GFL_PROC_RESULT DebugOhnoMainProcInit(GFL_PROC * proc, int * seq, void * pwk, void * mywk)
 {
 
-    DEBUG_OHNO_CONTROL * testmode;
+    DEBUG_OHNO_CONTROL * pDOC;
 	HEAPID			heapID = HEAPID_OHNO_DEBUG;
 
 	GFL_HEAP_CreateHeap( GFL_HEAPID_APP, heapID, 0x30000 );
 
-	testmode = GFL_PROC_AllocWork( proc, sizeof(DEBUG_OHNO_CONTROL), heapID );
-	GFL_STD_MemClear(testmode, sizeof(DEBUG_OHNO_CONTROL));
-	testmode->debug_heap_id = heapID;
+	pDOC = GFL_PROC_AllocWork( proc, sizeof(DEBUG_OHNO_CONTROL), heapID );
+	GFL_STD_MemClear(pDOC, sizeof(DEBUG_OHNO_CONTROL));
+	pDOC->debug_heap_id = heapID;
 
-    if( GFL_NET_IsInit() == FALSE ){  // もう通信している場合終了処理
-        GFL_NET_Init(&aGFLNetInit, _initCallBack, testmode);
-    }
+	_CHANGE_STATE( netinit );
+	
 	return GFL_PROC_RES_FINISH;
 }
 
