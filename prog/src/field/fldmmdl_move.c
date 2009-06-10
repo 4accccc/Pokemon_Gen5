@@ -524,7 +524,7 @@ static void FldMMdl_MapAttrGrassProc_0(
 	}
 	#else
   {
-    MAPATTR_FLAG flag = MAPATTR_GetMapAttrFlag( now );
+    MAPATTR_FLAG flag = MAPATTR_GetAttrFlag( now );
     
     if( (flag&MAPATTR_FLAGBIT_GRASS) ){
       FLDMMDLSYS *fos = (FLDMMDLSYS*)FLDMMDL_GetFldMMdlSys( fmmdl );
@@ -555,7 +555,7 @@ static void FldMMdl_MapAttrGrassProc_12(
 	}
 	#else
   {
-    MAPATTR_FLAG flag = MAPATTR_GetMapAttrFlag( now );
+    MAPATTR_FLAG flag = MAPATTR_GetAttrFlag( now );
     
     if( (flag&MAPATTR_FLAGBIT_GRASS) ){
       FLDMMDLSYS *fos = (FLDMMDLSYS*)FLDMMDL_GetFldMMdlSys( fmmdl );

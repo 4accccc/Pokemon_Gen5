@@ -322,8 +322,8 @@ static PLAYER_SET gjiki_CheckMoveStart_Walk(
       if( ret == TRUE )
       {
         u16 attr_dir = DIR_NOT;
-        MAPATTR_VAL val = MAPATTR_GetMapAttrValue( attr );
-        MAPATTR_FLAG flag = MAPATTR_GetMapAttrFlag( attr );
+        MAPATTR_VAL val = MAPATTR_GetAttrValue( attr );
+        MAPATTR_FLAG flag = MAPATTR_GetAttrFlag( attr );
         
         switch( val ) //ジャンプアトリビュートチェック
         {

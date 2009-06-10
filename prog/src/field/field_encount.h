@@ -9,6 +9,7 @@
 #include <gflib.h>
 #include "system/gfl_use.h"
 
+#include "battle/battle.h"
 #include "fieldmap.h"
 
 //======================================================================
@@ -22,6 +23,8 @@
 //======================================================================
 //  proto
 //======================================================================
+///ENCOUNT_DATA
+typedef struct _TAG_ENCOUNT_DATA ENCOUNT_DATA;
 ///FIELD_ENCOUNT
 typedef struct _TAG_FIELD_ENCOUNT FIELD_ENCOUNT;
 
@@ -34,3 +37,6 @@ extern void FIELD_ENCOUNT_Delete( FIELD_ENCOUNT *enc );
 
 //チェック
 extern BOOL FIELD_ENCOUNT_CheckEncount( FIELD_ENCOUNT *enc );
+
+extern void FIELD_ENCOUNT_GetBattleSetupParam(
+    FIELD_ENCOUNT *enc, BATTLE_SETUP_PARAM *setup );

@@ -98,7 +98,7 @@ GMEVENT * EVENT_Battle( GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldmap )
   dbw->gsys = gsys;
   dbw->fieldmap = fieldmap;
   para = &dbw->para;
-
+#if 0
   {
     para->engine = BTL_ENGINE_ALONE;
     para->rule = BTL_RULE_SINGLE;
@@ -140,7 +140,13 @@ GMEVENT * EVENT_Battle( GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldmap )
 
     dbw->timeWait = 0;
   }
-
+#else
+  {
+    FIELD_ENCOUNT *enc = FIELDMAP_GetEncount( fieldmap );
+    FIELD_ENCOUNT_GetBattleSetupParam( enc, para );
+  }
+#endif
+  
   return event;
 }
 

@@ -44,6 +44,8 @@ typedef u16 MAPATTR_FLAG;
 //======================================================================
 //  proto
 //======================================================================
-extern MAPATTR MAPATTR_GetMapAttribute(FLDMAPPER *mapper, const VecFx32 *pos );
-extern MAPATTR_VAL MAPATTR_GetMapAttrValue( const MAPATTR attr );
-extern MAPATTR_FLAG MAPATTR_GetMapAttrFlag( const MAPATTR attr );
+extern MAPATTR MAPATTR_GetAttribute(FLDMAPPER *mapper, const VecFx32 *pos );
+extern MAPATTR_VAL MAPATTR_GetAttrValue( const MAPATTR attr );
+extern MAPATTR_FLAG MAPATTR_GetAttrFlag( const MAPATTR attr );
+
+extern BOOL MAPATTR_CheckAttrValueLongGrass( const MAPATTR_VAL val );
