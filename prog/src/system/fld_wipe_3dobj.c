@@ -32,7 +32,7 @@ FLD_WIPEOBJ* FLD_WIPEOBJ_Create( HEAPID heapID )
 	FLD_WIPEOBJ* fw = GFL_HEAP_AllocClearMemory(heapID, sizeof(FLD_WIPEOBJ));
 
 	//３Ｄオブジェクト作成
-	fw->g3Dres = GFL_G3D_CreateResourceArc(ARCID_SHADOW_TEST, NARC_shadow_test_shadow3_test_nsbmd);
+	fw->g3Dres = GFL_G3D_CreateResourceArc(ARCID_SHADOW_TEST, NARC_shadow_test_shadow4_test_nsbmd);
 	fw->g3Dobj = GFL_G3D_OBJECT_Create(GFL_G3D_RENDER_Create(fw->g3Dres, 0, NULL), NULL, 0); 
 
 	return fw;
@@ -63,7 +63,8 @@ void FLD_WIPEOBJ_Main( FLD_WIPEOBJ* fw, fx32 scale, fx32 length )
 		fx32							ysin;
 
 		GFL_G3D_GetSystemLookAt(&lookAt);
-		status.trans = lookAt.target;
+		//status.trans = lookAt.target;
+		status.trans = lookAt.camPos;
 
 		VEC_Subtract(&lookAt.target, &lookAt.camPos, &vec);
 		VEC_Normalize(&vec, &vec);
