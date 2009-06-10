@@ -79,7 +79,6 @@ typedef enum
 //--------------------------------------------------------------
 struct _TAG_FIELD_ENCOUNT
 {
-  int walk_count;
   FIELDMAP_WORK *fwork;
   GAMESYS_WORK *gsys;
   GAMEDATA *gdata;
@@ -192,6 +191,10 @@ static void enc_SetSpaStruct(
     FIELD_ENCOUNT *enc,
     const POKEPARTY *party,
     const ENCOUNT_DATA* inData, ENC_FLD_SPA *outSpa );
+
+static int enc_GetWalkCount( FIELD_ENCOUNT *enc );
+static void enc_AddWalkCount( FIELD_ENCOUNT *enc );
+static void enc_ClearWalkCount( FIELD_ENCOUNT *enc );
 
 static const ENCOUNT_DATA dataTestEncountData;
 
@@ -387,7 +390,7 @@ BOOL FIELD_ENCOUNT_CheckEncount( FIELD_ENCOUNT *enc )
   }
   
   // 歩数カウントクリア
-  enc->walk_count = 0;
+  enc_ClearWalkCount( enc );
   
   return( ret );
 }
@@ -455,9 +458,7 @@ static BOOL enc_CheckEncount(
   calc_per = per << CALC_SHIFT;
   
   if( enc_CheckEncountWalk(enc,calc_per) == FALSE ){
-    if( enc->walk_count < WALK_COUNT_MAX ){
-      enc->walk_count++; //歩数カウント
-    }
+    enc_AddWalkCount( enc ); //歩数カウント
     
     if( enc_GetPercentRand() >= WALK_NEXT_PERCENT ){ //5%で次の処理へ
       return( FALSE );
@@ -514,7 +515,7 @@ static BOOL enc_CheckEncountWalk( FIELD_ENCOUNT *enc, u32 per )
   
   per = WALK_COUNT_GLOBAL - per;
   
-  if( enc->walk_count >= per ){
+  if( enc_GetWalkCount(enc) >= per ){
     return( TRUE );
   }
    
@@ -980,6 +981,44 @@ static void enc_SetSpaStruct(
 #else
   outSpa->TrainerID = 3539; //kari
 #endif
+}
+
+//--------------------------------------------------------------
+/**
+ * 歩数カウント取得
+ * @param
+ * @retval
+ */
+//--------------------------------------------------------------
+static int enc_GetWalkCount( FIELD_ENCOUNT *enc )
+{
+  return( GAMEDATA_GetFieldMapWalkCount(enc->gdata) );
+}
+
+//--------------------------------------------------------------
+/**
+ * 歩数カウント増加
+ * @param
+ * @retval
+ */
+//--------------------------------------------------------------
+static void enc_AddWalkCount( FIELD_ENCOUNT *enc )
+{
+  int count = GAMEDATA_GetFieldMapWalkCount( enc->gdata );
+  if( count < WALK_COUNT_MAX ){ count++; }
+  GAMEDATA_SetFieldMapWalkCount( enc->gdata, count );
+}
+
+//--------------------------------------------------------------
+/**
+ * 歩数カウントクリア
+ * @param
+ * @retval
+ */
+//--------------------------------------------------------------
+static void enc_ClearWalkCount( FIELD_ENCOUNT *enc )
+{
+  GAMEDATA_SetFieldMapWalkCount( enc->gdata, 0 );
 }
 
 //======================================================================

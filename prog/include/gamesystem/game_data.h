@@ -311,6 +311,25 @@ extern SAVE_RESULT GAMEDATA_Save(GAMEDATA *gamedata);
 //--------------------------------------------------------------
 extern EVENTWORK * GAMEDATA_GetEventWork(GAMEDATA *gamedata);
 
+//------------------------------------------------------------------
+/**
+ * @brief	  フィールドマップ歩数カウント取得
+ * @param   gamedata	GAMEDATAへのポインタ
+ * @return  int 歩数カウント
+ */
+//------------------------------------------------------------------
+extern int GAMEDATA_GetFieldMapWalkCount(GAMEDATA *gamedata);
+
+//------------------------------------------------------------------
+/**
+ * @brief	  フィールドマップ歩数カウントセット
+ * @param   gamedata	GAMEDATAへのポインタ
+ * @param   count セットするカウント
+ * @return  nothing
+ */
+//------------------------------------------------------------------
+extern void GAMEDATA_SetFieldMapWalkCount(GAMEDATA *gamedata,int count);
+
 //============================================================================================
 //	SAVE_CONTROL_WORKへのアクセス
 //============================================================================================

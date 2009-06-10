@@ -52,6 +52,7 @@ struct _GAMEDATA{
 	POKEPARTY *my_pokeparty;	///<手持ちポケモンセーブデータへのポインタ
 	FLDMMDLSYS *fldmmdlsys;
 	EVENTWORK *eventwork;
+  int fieldmap_walk_count; ///<フィールドマップ歩数カウント
 	u8 season_id;				///<季節指定ID
 	u8 subscreen_mode; ///< フィールド下画面の状態
 	u8 subscreen_type; 
@@ -129,6 +130,9 @@ GAMEDATA * GAMEDATA_Create(HEAPID heapID)
 	gd->myitem = SaveControl_DataPtrGet(gd->sv_control_ptr, GMDATA_ID_MYITEM);
 	gd->my_pokeparty = SaveControl_DataPtrGet(gd->sv_control_ptr, GMDATA_ID_MYPOKE);
 	
+  //歩数カウント
+  gd->fieldmap_walk_count = 0;
+
 	if(SaveControl_NewDataFlagGet(gd->sv_control_ptr) == FALSE){
 	}
 	
@@ -429,6 +433,30 @@ BOOL GAMEDATA_IsFrameSpritMode(GAMEDATA *gamedata)
 	return gamedata->frameSpritEnable;
 }
 
+//------------------------------------------------------------------
+/**
+ * @brief	  フィールドマップ歩数カウント取得
+ * @param   gamedata	GAMEDATAへのポインタ
+ * @return  int 歩数カウント
+ */
+//------------------------------------------------------------------
+int GAMEDATA_GetFieldMapWalkCount(GAMEDATA *gamedata)
+{
+	return gamedata->fieldmap_walk_count;
+}
+
+//------------------------------------------------------------------
+/**
+ * @brief	  フィールドマップ歩数カウントセット
+ * @param   gamedata	GAMEDATAへのポインタ
+ * @param   count セットするカウント
+ * @return  nothing
+ */
+//------------------------------------------------------------------
+void GAMEDATA_SetFieldMapWalkCount(GAMEDATA *gamedata,int count)
+{
+	gamedata->fieldmap_walk_count = count;
+}
 
 //============================================================================================
 //
