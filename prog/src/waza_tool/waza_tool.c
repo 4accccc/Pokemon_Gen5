@@ -980,11 +980,14 @@ BOOL WAZADATA_GetFlag( WazaID id, WazaFlag flag )
     if( id == WAZANO_ANAWOHORU ){ return TRUE; }
     if( id == WAZANO_GODDOBAADO ){ return TRUE; }
     if( id == WAZANO_TOBIHANERU ){ return TRUE; }
+    if( id == WAZANO_SYADOODAIBU ){ return TRUE; }
     return FALSE;
 
   default:
-    return FALSE;
+    break;
+
   }
+  return FALSE;
 }
 
 

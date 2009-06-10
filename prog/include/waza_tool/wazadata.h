@@ -202,9 +202,11 @@ typedef enum {
 //------------------------------------------------------------------------------
 typedef enum {
   WAZA_IMG_NULL = 0,    ///< イメージなし
+
   WAZA_IMG_PUNCH,       ///< パンチ（てつのこぶし対象）
   WAZA_IMG_SOUND,       ///< サウンド（ぼうおん対象）
   WAZA_IMG_HEAT,        ///< 高熱（こおり解除）
+  WAZA_IMG_FLY,         ///< 上空に飛ぶ（じゅうりょく時、使用不可）
 
   WAZA_IMG_MAX,
 }WazaImage;
@@ -216,8 +218,8 @@ typedef enum {
 //------------------------------------------------------------------------------
 typedef enum {
 
-  WAZAFLAG_MAMORU = 0,  ///< 「まもる」の対象となるワザ
-  WAZAFLAG_TAME,        ///< １ターン溜めワザ
+  WAZAFLAG_MAMORU = 0,    ///< 「まもる」でガード対象となるワザ
+  WAZAFLAG_TAME,          ///< １ターン溜めワザ
 
   WAZAFLAG_MAX,
 
