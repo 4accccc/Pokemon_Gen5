@@ -3101,7 +3101,7 @@ static void WH_StateOutInitialize(void *arg)
 
 #ifndef SDK_FINALROM
 	OS_TPrintf("ライフタイム変更\n");
-	WM_SetLifeTime(_setLifeCallback,0xffff, 0xffff, 0xffff, 0xffff);
+	WM_SetLifeTime(_setLifeCallback,0xffff, 100, 5, 100);
 #else
 	// システム状態をアイドリング（待機中）に変更。
 	WH_ChangeSysState(WH_SYSSTATE_IDLE);
