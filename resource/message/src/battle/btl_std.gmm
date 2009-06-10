@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="taya" host="W00146" date="2009-06-10T16:14:46"/>
+	<create user="taya" host="W00146" date="2009-06-10T19:49:58"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -327,7 +327,7 @@
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="673"/>
 		<band id="3" index="3" style="0000" width="673"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -397,8 +397,8 @@
 	</row>
 
 	<row id="BTL_STRID_STD_WazaFail">
-		<language name="JPN" width="216">[BE:09:特殊ウェイト:60:1:0]・・・しっぱい！！</language>
-		<language name="JPN_KANJI" width="216">[BE:09:特殊ウェイト:60:1:0]・・・失敗！！</language>
+		<language name="JPN" width="216">[BE:09:特殊ウェイト:60:0:0]しかし　うまく　きまらなかった！！</language>
+		<language name="JPN_KANJI" width="216">[BE:09:特殊ウェイト:60:1:0]しかし　うまく決まらなかった！！</language>
 	</row>
 
 	<row id="BTL_STRID_STD_EscapeSuccess">
