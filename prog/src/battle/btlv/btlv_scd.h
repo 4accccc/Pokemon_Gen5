@@ -1,10 +1,10 @@
 //=============================================================================================
 /**
- * @file	btlv_scd.h
- * @brief	ポケモンWB バトル 描画 下画面制御モジュール
- * @author	taya
+ * @file  btlv_scd.h
+ * @brief ポケモンWB バトル 描画 下画面制御モジュール
+ * @author  taya
  *
- * @date	2008.11.18	作成
+ * @date  2008.11.18  作成
  */
 //=============================================================================================
 #ifndef __BTLV_SCD_H__
@@ -12,10 +12,10 @@
 
 //--------------------------------------------------------------
 /**
- *	モジュールハンドラ型
+ *  モジュールハンドラ型
  */
 //--------------------------------------------------------------
-typedef struct _BTLV_SCD	BTLV_SCD;
+typedef struct _BTLV_SCD  BTLV_SCD;
 
 #include <tcbl.h>
 #include "print/gf_font.h"
@@ -28,21 +28,22 @@ typedef struct _BTLV_SCD	BTLV_SCD;
 
 //--------------------------------------------------------------
 /**
- *	アクション選択中の経過
+ *  アクション選択中の経過
  */
 //--------------------------------------------------------------
 typedef enum {
-	BTLV_SCD_SelAction_Still = 0,	///< まだ選択中
-	BTLV_SCD_SelAction_Done,			///< 選択おわった
+  BTLV_SCD_SelAction_Still = 0, ///< まだ選択中
+  BTLV_SCD_SelAction_Done,      ///< 選択おわった
 
-	BTLV_SCD_SelAction_Warn_Kodawari,	///< こだわり中、出せないワザが選ばれた
+  BTLV_SCD_SelAction_Warn_Kodawari, ///< こだわり中、出せないワザが選ばれた
+  BTLV_SCD_SelAction_Warn_WazaLock, ///< 出せないワザが選ばれた
 
 }BtlvScd_SelAction_Result;
 
 
 
 extern BTLV_SCD*  BTLV_SCD_Create( const BTLV_CORE* vcore,
-		const BTL_MAIN_MODULE* mainModule, const BTL_POKE_CONTAINER* pokeCon, GFL_TCBLSYS* tcbl, GFL_FONT* font, u8 playerClientID, HEAPID heapID );
+    const BTL_MAIN_MODULE* mainModule, const BTL_POKE_CONTAINER* pokeCon, GFL_TCBLSYS* tcbl, GFL_FONT* font, u8 playerClientID, HEAPID heapID );
 extern void BTLV_SCD_Delete( BTLV_SCD* wk );
 
 extern void BTLV_SCD_Setup( BTLV_SCD* wk );

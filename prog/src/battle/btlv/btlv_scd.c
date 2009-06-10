@@ -101,6 +101,7 @@ struct _BTLV_SCD {
   BTL_PROC      subProc;
   BTL_PROC      subProcStack[ SUBPROC_STACK_DEPTH ];
   u32           subProcStackPtr;
+  int           sub_seq;
 
   const BTL_POKEPARAM*  bpp;
   BTL_ACTION_PARAM*     destActionParam;
@@ -469,6 +470,7 @@ static BOOL selectAction_loop( int* seq, void* wk_adrs )
 {
   enum {
     SEQ_START = 0,
+    SEQ_RESTART = 10,
     SEQ_SEL_FIGHT = 100,
     SEQ_SEL_FIGHT_FINISH = 180,
     SEQ_SEL_ITEM = 200,
@@ -521,6 +523,17 @@ static BOOL selectAction_loop( int* seq, void* wk_adrs )
           Sub_TouchEndDelete( wk->bip, TRUE, TRUE );
         }
       }
+    }
+    break;
+
+  case SEQ_RESTART:
+    Sub_TouchEndDelete( wk->bip, TRUE, TRUE );
+    wk->sub_seq = 0;
+    (*seq)++;
+    break;
+  case SEQ_RESTART+1:
+    if( selectAction_init(&wk->sub_seq, wk) ){
+      (*seq) = SEQ_START;
     }
     break;
 
@@ -594,6 +607,7 @@ static BOOL selectAction_loop( int* seq, void* wk_adrs )
       {
         wk->selActionResult = check_unselectable_waza( wk, wk->bpp, hit );
         if( wk->selActionResult != BTLV_SCD_SelAction_Still ){
+          (*seq) = SEQ_RESTART;
           return FALSE;
         }
 
@@ -621,10 +635,8 @@ static BOOL selectAction_loop( int* seq, void* wk_adrs )
         //ƒLƒƒƒ“ƒZƒ‹‚ª‰Ÿ‚³‚ê‚½
         if( hit == 0 )
         {
-          Sub_TouchEndDelete( wk->bip, TRUE, TRUE );
           SePlayCancel();
-          selectAction_init( seq, wk );
-          (*seq) = SEQ_START;
+          (*seq) = SEQ_RESTART;
         }
         else if( hit <= BTL_POKEPARAM_GetWazaCount( wk->bpp ) )
         {
@@ -633,6 +645,7 @@ static BOOL selectAction_loop( int* seq, void* wk_adrs )
           hit--;
           wk->selActionResult = check_unselectable_waza( wk, wk->bpp, hit );
           if( wk->selActionResult != BTLV_SCD_SelAction_Still ){
+            (*seq) = SEQ_RESTART;
             return FALSE;
           }
 
@@ -659,7 +672,6 @@ static BOOL selectAction_loop( int* seq, void* wk_adrs )
     case SEQ_SEL_FIGHT+3:
       if( wk->selTargetDone )
       {
-        BTL_Printf("‚¿‚á‚ñ‚Æ‘I‚ñ‚¾‚Ç\n");
         (*seq) = SEQ_SEL_FIGHT_FINISH;
       }
       else
@@ -728,6 +740,14 @@ static BtlvScd_SelAction_Result  check_unselectable_waza( BTLV_SCD* wk, const BT
     WazaID  select_waza = BTL_POKEPARAM_GetWazaNumber( bpp, waza_idx );
     if( select_waza != BTL_POKEPARAM_GetPrevWazaNumber(bpp) ){
       return BTLV_SCD_SelAction_Warn_Kodawari;
+    }
+  }
+
+  if( BTL_POKEPARAM_CheckSick(bpp, WAZASICK_WAZALOCK) )
+  {
+    WazaID  select_waza = BTL_POKEPARAM_GetWazaNumber( bpp, waza_idx );
+    if( select_waza != BTL_POKEPARAM_GetPrevWazaNumber(bpp) ){
+      return BTLV_SCD_SelAction_Warn_WazaLock;
     }
   }
 

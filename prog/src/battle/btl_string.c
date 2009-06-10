@@ -116,6 +116,7 @@ static void ms_put_single_enemy( STRBUF* dst, BtlStrID_STD strID, const int* arg
 static void ms_select_action_ready( STRBUF* dst, BtlStrID_STD strID, const int* args );
 static void ms_out_member1( STRBUF* dst, BtlStrID_STD strID, const int* args );
 static void ms_kodawari_lock( STRBUF* dst, BtlStrID_STD strID, const int* args );
+static void ms_waza_lock( STRBUF* dst, BtlStrID_STD strID, const int* args );
 static void ms_set_std( STRBUF* dst, u16 strID, const int* args );
 static void ms_set_rankup( STRBUF* dst, u16 strID, const int* args );
 static void ms_set_rankdown( STRBUF* dst, u16 strID, const int* args );
@@ -314,6 +315,7 @@ void BTL_STR_MakeStringStdWithArgArray( STRBUF* buf, BtlStrID_STD strID, const i
     { BTL_STRID_STD_MemberOut1,       ms_out_member1 },
     { BTL_STRID_STD_SelectAction,     ms_select_action_ready },
     { BTL_STRID_STD_KodawariLock,     ms_kodawari_lock },
+    { BTL_STRID_STD_WazaLock,         ms_waza_lock },
   };
   u32 i;
 
@@ -396,6 +398,16 @@ static void ms_kodawari_lock( STRBUF* dst, BtlStrID_STD strID, const int* args )
   GFL_MSG_GetString( SysWork.msg[MSGSRC_STD], strID, SysWork.tmpBuf );
   WORDSET_ExpandStr( SysWork.wset, dst, SysWork.tmpBuf );
 }
+// [arg0]は [arg1]しかだせない！
+// arg0: ポケID, arg1:ワザID
+static void ms_waza_lock( STRBUF* dst, BtlStrID_STD strID, const int* args )
+{
+  register_PokeNickname( args[0], BUFIDX_POKE_1ST );
+  WORDSET_RegisterWazaName( SysWork.wset, 1, args[1] );
+  GFL_MSG_GetString( SysWork.msg[MSGSRC_STD], strID, SysWork.tmpBuf );
+  WORDSET_ExpandStr( SysWork.wset, dst, SysWork.tmpBuf );
+}
+
 
 
 

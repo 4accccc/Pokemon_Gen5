@@ -541,8 +541,9 @@ static BOOL SubProc_AI_SelectAction( BTL_CLIENT* wk, int* seq )
     {
       u8 wazaCount, wazaIdx, mypos, targetPos;
 
-      if( BTL_POKEPARAM_CheckSick(pp, WAZASICK_WAZALOCK_HARD) )
-      {
+      if( BTL_POKEPARAM_CheckSick(pp, WAZASICK_WAZALOCK)
+      ||  BTL_POKEPARAM_CheckSick(pp, WAZASICK_WAZALOCK_HARD)
+      ){
         WazaID waza = BTL_POKEPARAM_GetPrevWazaNumber( pp );
         BtlPokePos pos = BTL_POKEPARAM_GetPrevTargetPos( pp );
         BTL_ACTION_SetFightParam( &wk->actionParam[i], waza, pos );

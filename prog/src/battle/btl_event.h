@@ -101,7 +101,7 @@ typedef enum {
   BTL_EVENT_CALC_DRAIN,             ///< ドレイン系ワザ回復量計算
   BTL_EVENT_CALC_SPECIAL_DRAIN,     ///< ドレイン系ワザ回復量計算
   BTL_EVENT_RECOVER_HP_RATIO,       ///< HP回復ワザの回復率計算
-  BTL_EVENT_CHECK_TAMETURN,         ///< 溜めターン判定
+  BTL_EVENT_CHECK_TAMETURN_SKIP,    ///< 溜めターンスキップ判定
   BTL_EVENT_TAME_START,             ///< 溜め開始
   BTL_EVENT_TAME_RELEASE,           ///< 溜め解放
   BTL_EVENT_CHECK_POKE_HIDE,        ///< ポケモンが消えている状態のワザ命中チェック

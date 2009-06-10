@@ -4494,7 +4494,7 @@ static BOOL scEvent_CheckTameTurnSkip( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM*
   BTL_EVENTVAR_Push();
     BTL_EVENTVAR_SetValue( BTL_EVAR_POKEID_ATK, BTL_POKEPARAM_GetID(attacker) );
     BTL_EVENTVAR_SetValue( BTL_EVAR_GEN_FLAG, result );
-    BTL_EVENT_CallHandlers( wk, BTL_EVENT_CHECK_TAMETURN );
+    BTL_EVENT_CallHandlers( wk, BTL_EVENT_CHECK_TAMETURN_SKIP );
     result = BTL_EVENTVAR_GetValue( BTL_EVAR_GEN_FLAG );
   BTL_EVENTVAR_Pop();
   return result;

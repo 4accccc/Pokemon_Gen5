@@ -301,12 +301,25 @@ static BOOL CmdProc_SelectAction( BTLV_CORE* core, int* seq, void* workBufer )
       BtlvScd_SelAction_Result res = BTLV_SCD_WaitActionSelect( core->scrnD );
       switch( res ){
       case BTLV_SCD_SelAction_Still:  return FALSE;
-      case BTLV_SCD_SelAction_Done:   return TRUE;
+      case BTLV_SCD_SelAction_Done:
+        {
+          return TRUE;
+        }
+        break;
       case BTLV_SCD_SelAction_Warn_Kodawari:
         {
           WazaID wazaID = BTL_POKEPARAM_GetPrevWazaNumber( core->procPokeParam );
           u16    itemID = BTL_POKEPARAM_GetItem( core->procPokeParam );
           BTL_STR_MakeStringStd( core->strBuf, BTL_STRID_STD_KodawariLock, 2, itemID, wazaID );
+          BTLV_SCU_StartMsg( core->scrnU, core->strBuf, BTLV_MSGWAIT_STD );
+          (*seq)++;
+        }
+        break;
+      case BTLV_SCD_SelAction_Warn_WazaLock:
+        {
+          WazaID wazaID = BTL_POKEPARAM_GetPrevWazaNumber( core->procPokeParam );
+          u8    pokeID  = BTL_POKEPARAM_GetID( core->procPokeParam );
+          BTL_STR_MakeStringStd( core->strBuf, BTL_STRID_STD_WazaLock, 2, pokeID, wazaID );
           BTLV_SCU_StartMsg( core->scrnU, core->strBuf, BTLV_MSGWAIT_STD );
           (*seq)++;
         }
@@ -318,7 +331,14 @@ static BOOL CmdProc_SelectAction( BTLV_CORE* core, int* seq, void* workBufer )
     if( BTLV_SCU_WaitMsg(core->scrnU) )
     {
       BTL_STR_MakeStringStd( core->strBuf, BTL_STRID_STD_SelectAction, 1, core->procPokeID );
-      (*seq) = 0;
+      BTLV_SCU_StartMsg( core->scrnU, core->strBuf, BTLV_MSGWAIT_NONE );
+      (*seq)++;
+    }
+    break;
+  case 4:
+    if( BTLV_SCU_WaitMsg(core->scrnU) ){
+      BTLV_SCD_RestartActionSelect( core->scrnD );
+      (*seq) = 2;
     }
     break;
   }
