@@ -59,7 +59,7 @@ subdir:
 	@$(MAKE_SUBDIR)
 
 # narc のコピーだけ実行する
-$(TARGETDIR)/$(targetname).narc: $(targetname).narc
+$(TARGETDIR)/$(targetname).narc: $(targetname).narc $(targetname2).narc
 	$(COPY) $(targetname).narc $(TARGETDIR)
 	$(COPY) $(targetname).naix $(TARGETDIR) 
 	$(COPY) $(targetname2).narc $(TARGETDIR)
