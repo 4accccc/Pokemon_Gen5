@@ -216,33 +216,9 @@ void EVENTDATA_SYS_Load(EVENTDATA_SYSTEM * evdata, u16 zone_id)
   loadEventDataTable(evdata, zone_id);
 	/* テスト的に接続データを設定 */
 	switch (zone_id) {
-	case ZONE_ID_T01:
-	//	evdata->npc_count = SampleFldMMdlHeaderCount_T01;
-	//	evdata->npc_data = SampleFldMMdlHeader_T01;
-//    evdata->pos_count = PosEventDataCount_T01;
-//    evdata->pos_data = PosEventData_T01;
-//    evdata->bg_data = BGEventData_T01;
-//    evdata->bg_count = BGEventDataCount_T01;
-		break;
 	case ZONE_ID_T02:
 		evdata->npc_count = SampleFldMMdlHeaderCount_t02;
 		evdata->npc_data = SampleFldMMdlHeader_t02;
-		break;
-	case ZONE_ID_R01:
-		//evdata->npc_count = SampleFldMMdlHeaderCount_R01;
-		//evdata->npc_data = SampleFldMMdlHeader_R01;
-		break;
-	case ZONE_ID_T01R0101:
-		//evdata->npc_count = SampleFldMMdlHeaderCount_t01r0101;
-		//evdata->npc_data = SampleFldMMdlHeader_t01r0101;
-		break;
-	case ZONE_ID_T01R0201:
-		//evdata->npc_count = SampleFldMMdlHeaderCount_t01r0201;
-		//evdata->npc_data = SampleFldMMdlHeader_t01r0201;
-		break;
-  case ZONE_ID_T01R0301:
-		//evdata->npc_count = SampleFldMMdlHeaderCount_t01r0301;
-		//evdata->npc_data = SampleFldMMdlHeader_t01r0301;
 		break;
   case ZONE_ID_T01R0401:
 		evdata->npc_count = SampleFldMMdlHeaderCount_t01r0401;
@@ -252,6 +228,7 @@ void EVENTDATA_SYS_Load(EVENTDATA_SYSTEM * evdata, u16 zone_id)
 		evdata->npc_count = SampleFldMMdlHeaderCount_t02pc0101;
 		evdata->npc_data = SampleFldMMdlHeader_t02pc0101;
 		break;
+
  case ZONE_ID_H01:
     evdata->connect_count = ConnectCount_H01;
     evdata->connect_data = ConnectData_H01;
@@ -316,10 +293,6 @@ int EVENTDATA_SearchConnectIDByPos(const EVENTDATA_SYSTEM * evdata, const VecFx3
 	y = FX_Whole(pos->y) - OFS_Y;
 	z = FX_Whole(pos->z) - OFS_Z;
 	for (i = 0; i < evdata->connect_count; i++, cnct++ ) {
-#if 0
-		TAMADA_Printf("CNCT:x,y,z=%d,%d,%d\n",
-				FX_Whole(cnct->pos.x),FX_Whole(cnct->pos.y),FX_Whole(cnct->pos.z));
-#endif
 		if (cnct->pos.x != x) continue;
 		if (cnct->pos.y != y) continue;
 		if (cnct->pos.z != z) continue;
@@ -329,16 +302,6 @@ int EVENTDATA_SearchConnectIDByPos(const EVENTDATA_SYSTEM * evdata, const VecFx3
 	}
 	return EXIT_ID_NONE;
 }
-#if 0
-//------------------------------------------------------------------
-//------------------------------------------------------------------
-const CONNECT_DATA * EVENTDATA_SearchConnectByPos(const EVENTDATA_SYSTEM * evdata, const VecFx32 * pos)
-{
-	int idx = EVENTDATA_SearchConnectIDByPos(evdata, pos);
-	if (idx == EXIT_ID_NONE) return NULL;
-	return evdata->connect_data + idx;
-}
-#endif
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 const CONNECT_DATA * EVENTDATA_GetConnectByID(const EVENTDATA_SYSTEM * evdata, u16 exit_id)
@@ -432,6 +395,25 @@ int EVENTDATA_SearchConnectIDBySphere(const EVENTDATA_SYSTEM * evdata, const Vec
 		return i;
 	}
 	return EXIT_ID_NONE;
+}
+
+//------------------------------------------------------------------
+/**
+ * @brief
+ */
+//------------------------------------------------------------------
+EXIT_DIR CONNECTDATA_GetExitDir(const CONNECT_DATA * connect)
+{
+  return connect->exit_dir;
+}
+//------------------------------------------------------------------
+/**
+ * @brief
+ */
+//------------------------------------------------------------------
+EXIT_TYPE CONNECTDATA_GetExitType(const CONNECT_DATA * connect)
+{
+  return connect->exit_type;
 }
 
 //============================================================================================
