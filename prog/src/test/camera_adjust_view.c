@@ -358,18 +358,18 @@ static const GFL_UI_TP_HITTBL eventContTouchPanelTable[TPBTN_CONT_MAX + 1] = {
 };
 
 //------------------------------------------------------------------
-#define ANGLE_ROTATE_SPD		(0x200)
+#define ANGLE_ROTATE_SPD			(0x200)
 #define	CAMERA_TARGET_HEIGHT	(4 * FX32_ONE)
-#define CAMLEN_MVSPD			(8 * FX32_ONE)
-#define	CAMANGLEH_MAX			(0x4000 - ANGLE_ROTATE_SPD)
-#define	CAMANGLEH_MIN			(-0x4000 + ANGLE_ROTATE_SPD)
-#define	CAMLEN_MAX				(4096 * FX32_ONE)
-#define	CAMLEN_MIN				(16 * FX32_ONE)
-#define	CAMANGFOVY_MAX			(0x4000 - ANGLE_ROTATE_SPD)
-#define	CAMANGFOVY_MIN			(0x0 + ANGLE_ROTATE_SPD)
-#define WIPE_SPD			(FX32_ONE/128)
-#define	WIPE_MAX			(4 * FX32_ONE)
-#define	WIPE_MIN			(FX32_ONE/2)
+#define CAMLEN_MVSPD					(8 * FX32_ONE)
+#define	CAMANGLEH_MAX					(0x4000 - ANGLE_ROTATE_SPD)
+#define	CAMANGLEH_MIN					(-0x4000 + ANGLE_ROTATE_SPD)
+#define	CAMLEN_MAX						(4096 * FX32_ONE)
+#define	CAMLEN_MIN						(16 * FX32_ONE)
+#define	CAMANGFOVY_MAX				(0x4000 - ANGLE_ROTATE_SPD)
+#define	CAMANGFOVY_MIN				(0x0 + ANGLE_ROTATE_SPD)
+#define WIPE_SPD							(FX32_ONE/32)
+#define	WIPE_MAX							(16 * FX32_ONE)
+#define	WIPE_MIN							(FX32_ONE)
 
 static BOOL CAMADJUST_ControlCont( GFL_CAMADJUST* gflCamAdjust )
 {

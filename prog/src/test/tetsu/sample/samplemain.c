@@ -111,9 +111,10 @@ const GFL_PROC_DATA DebugWatanabeSample1ProcData = {
 typedef struct _SAMPLE_SETUP SAMPLE_SETUP;
 
 static SAMPLE_SETUP*	SetupGameSystem( HEAPID heapID );
-static void				RemoveGameSystem( SAMPLE_SETUP* gs );
-static void				MainGameSystem( SAMPLE_SETUP* gs );
+static void						RemoveGameSystem( SAMPLE_SETUP* gs );
+static void						MainGameSystem( SAMPLE_SETUP* gs );
 static G3D_MAPPER*		GetG3Dmapper( SAMPLE_SETUP* gs );
+static fx32*					GetWipeScale( SAMPLE_SETUP* gs );
 
 #if 0
 //アーカイブＩＮＤＥＸ
@@ -135,6 +136,8 @@ static void				GetCursorTrans( CURSOR_CONT* cursor, VecFx32* trans );
 static u16*				GetCursorCameraAngleVPointer( CURSOR_CONT* cursor );
 static u16*				GetCursorCameraAngleHPointer( CURSOR_CONT* cursor );
 static fx32*			GetCursorCameraLengthPointer( CURSOR_CONT* cursor );
+static u16*				GetCursorCameraFovyPointer( CURSOR_CONT* cursor );
+static fx32*			GetCursorCameraFarPointer( CURSOR_CONT* cursor );
 
 typedef struct _PC_ACTCONT PC_ACTCONT;
 static PC_ACTCONT*		CreatePlayerAct( SAMPLE_SETUP* gs, HEAPID heapID );
@@ -180,25 +183,25 @@ static const GFL_CAMADJUST_SETUP camAdjustData= {
  */
 //------------------------------------------------------------------
 typedef struct {
-    VecFx32         recvWork;
-	HEAPID			heapID;
-	int				seq;
-	int				timer;
+	VecFx32					recvWork;
+	HEAPID					heapID;
+	int							seq;
+	int							timer;
 
-	SAMPLE_SETUP*	gs;
-	CURSOR_CONT*	cursor;
+	SAMPLE_SETUP*		gs;
+	CURSOR_CONT*		cursor;
 //	CURSOR_CONT*	cursorFriend;
-	PC_ACTCONT*		pcActCont;
-	PC_ACTCONT*		friendActCont;
-	FLD_ACTCONT*	fldActCont;
-	int				mapNum;
+	PC_ACTCONT*			pcActCont;
+	PC_ACTCONT*			friendActCont;
+	FLD_ACTCONT*		fldActCont;
+	int							mapNum;
 
-	GFL_SKB*		gflSkb;
+	GFL_SKB*				gflSkb;
 	GFL_SNDVIEWER*	gflSndViewer;
 	GFL_CAMADJUST*	gflCamAdjust;
-	BOOL			subProcSw;
+	BOOL						subProcSw;
 
-	void*			skbStrBuf;
+	void*						skbStrBuf;
 
 }SAMPLE_WORK;
 
@@ -328,15 +331,13 @@ BOOL	SampleMain( void )
 				//						( sampleWork->skbStrBuf, &skbData, sampleWork->heapID );
 				sampleWork->gflCamAdjust = GFL_CAMADJUST_Create(&camAdjustData, sampleWork->heapID);
 
-        {
-          static u16 fovy;
-          static fx32 far;
-          GFL_CAMADJUST_SetCameraParam(	sampleWork->gflCamAdjust,
-                          GetCursorCameraAngleVPointer(sampleWork->cursor),
-                          GetCursorCameraAngleHPointer(sampleWork->cursor),
-                          GetCursorCameraLengthPointer(sampleWork->cursor),
-                          &fovy, &far);  // プログラムが動くように変更させていただきました。tomoya takahashi
-        }
+        GFL_CAMADJUST_SetCameraParam(	sampleWork->gflCamAdjust,
+																			GetCursorCameraAngleVPointer(sampleWork->cursor),
+																			GetCursorCameraAngleHPointer(sampleWork->cursor),
+																			GetCursorCameraLengthPointer(sampleWork->cursor),
+																			GetCursorCameraFovyPointer(sampleWork->cursor),
+																			GetCursorCameraFarPointer(sampleWork->cursor));
+        GFL_CAMADJUST_SetWipeParam(	sampleWork->gflCamAdjust, GetWipeScale(sampleWork->gs) );
 				sampleWork->subProcSw = TRUE;
 				break;
 			}
@@ -430,22 +431,23 @@ static BOOL GameEndCheck( int cont )
 //------------------------------------------------------------------
 struct _SAMPLE_SETUP {
 	GFL_G3D_UTIL*			g3Dutil;		//g3Dutil Lib ハンドル
-	u16						g3DutilUnitIdx;	//g3Dutil Unitインデックス
-	GFL_G3D_SCENE*			g3Dscene;		//g3Dscene Lib ハンドル
-	GFL_G3D_CAMERA*			g3Dcamera;		//g3Dcamera Lib ハンドル
-	GFL_G3D_LIGHTSET*		g3Dlightset;	//g3Dlight Lib ハンドル
-	GFL_BBDACT_SYS*			bbdActSys;		//ビルボードアクトシステム設定ハンドル
+	u16								g3DutilUnitIdx;	//g3Dutil Unitインデックス
+	GFL_G3D_SCENE*		g3Dscene;		//g3Dscene Lib ハンドル
+	GFL_G3D_CAMERA*		g3Dcamera;		//g3Dcamera Lib ハンドル
+	GFL_G3D_LIGHTSET*	g3Dlightset;	//g3Dlight Lib ハンドル
+	GFL_BBDACT_SYS*		bbdActSys;		//ビルボードアクトシステム設定ハンドル
 
-	GFL_TCB*				g2dVintr;		//2Dシステム用vIntrTaskハンドル
-	GFL_TCB*				g3dVintr;		//3Dシステム用vIntrTaskハンドル
+	GFL_TCB*					g2dVintr;		//2Dシステム用vIntrTaskハンドル
+	GFL_TCB*					g3dVintr;		//3Dシステム用vIntrTaskハンドル
 
 	G3D_MAPPER*				g3Dmapper;		//マップ表示コントローラ
 
 	GFL_BMPWIN*				bmpwin;			//bitmapWin個別ハンドル
 
-	FLD_WIPEOBJ*	fldWipeObj;
+	FLD_WIPEOBJ*			fldWipeObj;
+	fx32							wipeScale;
 
-	HEAPID					heapID;
+	HEAPID						heapID;
 };
 
 //------------------------------------------------------------------
@@ -829,7 +831,7 @@ static void g3d_draw( SAMPLE_SETUP* gs )
 	Draw3Dmapper( gs->g3Dmapper, gs->g3Dcamera );
 	GFL_BBDACT_Draw( gs->bbdActSys, gs->g3Dcamera, gs->g3Dlightset );
 	//FLD_WIPEOBJ_Main(gs->fldWipeObj, FX32_ONE*4, FX32_ONE);
-	FLD_WIPEOBJ_Main(gs->fldWipeObj, FX32_ONE*8, FX32_ONE*4);
+	FLD_WIPEOBJ_Main(gs->fldWipeObj, gs->wipeScale, FX32_ONE*4);
 	GFL_G3D_SCENE_Draw( gs->g3Dscene );  
 }
 
@@ -886,6 +888,11 @@ static G3D_MAPPER* GetG3Dmapper( SAMPLE_SETUP* gs )
 static GFL_BBDACT_SYS* GetBbdActSys( SAMPLE_SETUP* gs )
 {
 	return gs->bbdActSys;
+}
+
+static fx32* GetWipeScale( SAMPLE_SETUP* gs )
+{
+	return &gs->wipeScale;
 }
 	
 
@@ -1004,17 +1011,19 @@ static BOOL CalcSetGroundMove( G3D_MAPPER* g3Dmapper, G3D_MAPPER_INFODATA* gridI
  */
 //------------------------------------------------------------------
 struct _CURSOR_CONT {
-	HEAPID				heapID;
+	HEAPID					heapID;
 	SAMPLE_SETUP*		gs;
-	u16					unitIdx;
-	u16					resIdx;
-	u16					objIdx;
+	u16							unitIdx;
+	u16							resIdx;
+	u16							objIdx;
 
-	u16					cursorIdx;
-	VecFx32				trans;
-	fx32				length;
-	u16					angleV;
-	u16					angleH;
+	u16							cursorIdx;
+	VecFx32					trans;
+	fx32						length;
+	u16							angleV;
+	u16							angleH;
+	u16							fovy;
+	fx32						far;
 
 	G3D_MAPPER_INFODATA gridInfoData;
 };
@@ -1188,6 +1197,15 @@ static fx32* GetCursorCameraLengthPointer( CURSOR_CONT* cursor )
 	return &cursor->length;
 }
 
+static u16* GetCursorCameraFovyPointer( CURSOR_CONT* cursor )
+{
+	return &cursor->fovy;
+}
+
+static fx32* GetCursorCameraFarPointer( CURSOR_CONT* cursor )
+{
+	return &cursor->far;
+}
 
 //============================================================================================
 /**
