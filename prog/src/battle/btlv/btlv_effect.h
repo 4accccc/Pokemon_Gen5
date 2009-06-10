@@ -36,6 +36,17 @@ enum{
 
 typedef struct _BTLV_EFFECT_WORK BTLV_EFFECT_WORK;
 
+
+//--------------------------------------------
+/**
+ *  ターン種類指定
+ */
+//--------------------------------------------
+typedef enum {
+  BTLV_WAZAEFF_TURN_DEFAULT = 0,
+  BTLV_WAZAEFF_TURN_TAME,
+}BtlvWazaEffect_TurnType;
+
 //--------------------------------------------
 /**
  *  ワザエフェクト呼び出しパラメータ
@@ -45,7 +56,7 @@ typedef struct {
   WazaID       waza;            ///< ワザナンバー
   BtlvMcssPos  from;            ///< ワザを出すポケ位置
   BtlvMcssPos  to;              ///< ワザを受けるポケ位置（不要の場合 BTLV_MCSS_POS_ERROR を指定）
-  u8           turn_count;      ///< ターンによって異なるエフェクトを出す場合のターン指定（ex.そらをとぶ）
+  u8           turn_count;      ///< ターンによって異なるエフェクトを出す場合のターン指定。（ex.そらをとぶ）
   u8           continue_count;  ///< 連続して出すとエフェクトが異なる場合の連続カウンタ（ex. ころがる）
 }BTLV_WAZAEFFECT_PARAM;
 

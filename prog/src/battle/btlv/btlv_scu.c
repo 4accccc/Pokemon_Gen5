@@ -695,6 +695,7 @@ BOOL BTLV_SCU_WaitMsg( BTLV_SCU* wk )
     SEQ_WAIT_USERCTRL_NOT_COMM,
     SEQ_WAIT_USERCTRL_COMM,
     SEQ_AFTER_USERCTRL,
+    SEQ_DONE,
   };
 
   switch( wk->printSeq ){
@@ -761,6 +762,7 @@ BOOL BTLV_SCU_WaitMsg( BTLV_SCU* wk )
       GFL_FONTSYS_SetDefaultColor();
       PRINTSYS_PrintStreamDelete( wk->printStream );
       wk->printStream = NULL;
+      wk->printSeq = SEQ_DONE;
       return TRUE;
     }
     else
@@ -770,6 +772,9 @@ BOOL BTLV_SCU_WaitMsg( BTLV_SCU* wk )
       wk->printWait = wk->printWaitOrg;
     }
     break;
+
+  case SEQ_DONE:
+    return TRUE;
   }
   return FALSE;
 }
@@ -787,21 +792,24 @@ BOOL BTLV_SCU_WaitMsg( BTLV_SCU* wk )
  * @param   atPos
  * @param   defPos
  * @param   waza
- *
+ * @param   turnType
+ * @param   continueCount
  */
 //=============================================================================================
-void BTLV_SCU_StartWazaEffect( BTLV_SCU* wk, BtlvMcssPos atPos, BtlvMcssPos defPos, WazaID waza )
+void BTLV_SCU_StartWazaEffect( BTLV_SCU* wk, BtlvMcssPos atPos, BtlvMcssPos defPos,
+  WazaID waza, BtlvWazaEffect_TurnType turnType, u8 continueCount )
 {
   BTLV_WAZAEFFECT_PARAM param;
 
   param.waza = waza;
   param.from = atPos;
   param.to = defPos;
-  param.continue_count = 0;
-  param.turn_count = 0;
+  param.turn_count = turnType;
+  param.continue_count = continueCount;
 
 //  BTLV_EFFECT_AddWazaEffect( &param );
 }
+
 //=============================================================================================
 /**
  * ワザエフェクト終了待ち

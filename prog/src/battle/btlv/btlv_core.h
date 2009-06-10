@@ -28,6 +28,7 @@ typedef  struct _BTLV_CORE    BTLV_CORE;
 #include "battle/btl_calc.h"
 #include "battle/btl_string.h"
 #include "battle/btl_pokeselect.h"
+#include "btlv_effect.h"
 #include "btlv_common.h"
 
 //----------------------------------------------------------------------
@@ -150,7 +151,9 @@ extern void BTLV_StartMsgSet( BTLV_CORE* wk, u16 strID, const int* args );
 extern void BTLV_StartMsgWaza( BTLV_CORE* wk, u8 pokeID, u16 waza );
 extern BOOL BTLV_WaitMsg( BTLV_CORE* wk );
 
-extern void BTLV_ACT_WazaEffect_Start( BTLV_CORE* wk, BtlPokePos atPokePos, BtlPokePos defPokePos, WazaID waza );
+extern void BTLV_ACT_WazaEffect_Start( BTLV_CORE* wk, BtlPokePos atPokePos, BtlPokePos defPokePos, WazaID waza,
+  BtlvWazaEffect_TurnType turnType, u8 continueCount );
+
 extern BOOL BTLV_ACT_WazaEffect_Wait( BTLV_CORE* wk );
 
 extern void BTLV_ACT_DamageEffectSingle_Start( BTLV_CORE* wk, BtlPokePos defPokePos, u16 damage, BtlTypeAff aff );

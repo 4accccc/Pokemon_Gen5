@@ -51,6 +51,7 @@ typedef enum {
   SC_OP_SET_ACTFLAG,        ///< アクション毎フラグセット
   SC_OP_CLEAR_ACTFLAG,      ///< アクション毎フラグオールクリア
   SC_ACT_WAZA_EFFECT,
+  SC_ACT_WAZA_EFFECT_EX,    ///< 【アクション】ワザエフェクト拡張（溜めターンエフェクトなどに使用）
   SC_ACT_WAZA_DMG,          ///< 【アクション】[ AtClient, DefClient, wazaIdx, Affinity ]
   SC_ACT_WAZA_DMG_DBL,      ///< 【アクション】２体同時ダメージ処理 [ pokeID ]
   SC_ACT_WAZA_DMG_PLURAL,   ///< 【アクション】複数体同時ダメージ処理 [ pokeCnt, affAbout, ... ]
@@ -270,6 +271,10 @@ static inline void SCQUE_PUT_OP_ClearActFlag( BTL_SERVER_CMD_QUE* que, u8 pokeID
 static inline void SCQUE_PUT_ACT_WazaEffect( BTL_SERVER_CMD_QUE* que, u8 atPokeID, u8 defPokeID, u16 waza )
 {
   SCQUE_PUT_Common( que, SC_ACT_WAZA_EFFECT, atPokeID, defPokeID, waza );
+}
+static inline void SCQUE_PUT_ACT_WazaEffectEx( BTL_SERVER_CMD_QUE* que, u8 atPokeID, u8 defPokeID, u16 waza, u8 arg )
+{
+  SCQUE_PUT_Common( que, SC_ACT_WAZA_EFFECT_EX, atPokeID, defPokeID, waza, arg );
 }
 
 // 【アクション】単体ダメージ処理

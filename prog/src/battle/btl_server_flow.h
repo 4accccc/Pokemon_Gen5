@@ -175,6 +175,7 @@ typedef enum {
   BTL_HANDEX_CHANGE_TYPE,   ///< ポケモンのタイプを変える
   BTL_HANDEX_SET_TURNFLAG,  ///< ターン有効フラグセット
   BTL_HANDEX_SET_CONTFLAG,  ///< 継続フラグセット
+  BTL_HANDEX_RESET_CONTFLAG,///< 継続フラグリセット
 
   BTL_HANDEX_MAX,
 

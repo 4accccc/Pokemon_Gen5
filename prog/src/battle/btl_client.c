@@ -121,6 +121,7 @@ static BOOL scProc_MSG_Std( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_MSG_Set( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_MSG_Waza( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_ACT_WazaEffect( BTL_CLIENT* wk, int* seq, const int* args );
+static BOOL scProc_ACT_WazaEffectEx( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_ACT_WazaDmg( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_ACT_WazaDmg_Dbl( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_ACT_WazaDmg_Plural( BTL_CLIENT* wk, int* seq, const int* args );
@@ -868,6 +869,7 @@ static BOOL SubProc_UI_ServerCmd( BTL_CLIENT* wk, int* seq )
     { SC_MSG_SET,               scProc_MSG_Set            },
     { SC_MSG_WAZA,              scProc_MSG_Waza           },
     { SC_ACT_WAZA_EFFECT,       scProc_ACT_WazaEffect     },
+    { SC_ACT_WAZA_EFFECT_EX,    scProc_ACT_WazaEffectEx   },
     { SC_ACT_WAZA_DMG,          scProc_ACT_WazaDmg        },
     { SC_ACT_WAZA_DMG_DBL,      scProc_ACT_WazaDmg_Dbl    },
     { SC_ACT_WAZA_DMG_PLURAL,   scProc_ACT_WazaDmg_Plural },
@@ -1084,19 +1086,11 @@ static BOOL scProc_ACT_WazaEffect( BTL_CLIENT* wk, int* seq, const int* args )
     const BTL_PARTY* party;
     const BTL_POKEPARAM* poke;
 
-    #if 0
-    atPokePos   = BTL_MAIN_PokeIDtoPokePosClient( wk->mainModule, args[0] );
-    if( args[1] != BTL_POKEID_NULL ){
-      defPokePos  = BTL_MAIN_PokeIDtoPokePosClient( wk->mainModule, args[1] );
-    }else{
-      defPokePos = BTL_POS_NULL;
-    }
-    #endif
     atPokePos  = args[0];
     defPokePos = args[1];
     waza       = args[2];
     poke = BTL_POKECON_GetFrontPokeDataConst( wk->pokeCon, atPokePos );
-    BTLV_ACT_WazaEffect_Start( wk->viewCore, atPokePos, defPokePos, waza );
+    BTLV_ACT_WazaEffect_Start( wk->viewCore, atPokePos, defPokePos, waza, BTLV_WAZAEFF_TURN_DEFAULT, 0 );
     (*seq)++;
   }
   break;
@@ -1111,6 +1105,38 @@ static BOOL scProc_ACT_WazaEffect( BTL_CLIENT* wk, int* seq, const int* args )
 
   return FALSE;
 }
+static BOOL scProc_ACT_WazaEffectEx( BTL_CLIENT* wk, int* seq, const int* args )
+{
+  switch( *seq ) {
+  case 0:
+  {
+    WazaID waza;
+    u8 atPokePos, defPokePos, turnType;
+    const BTL_PARTY* party;
+    const BTL_POKEPARAM* poke;
+
+    atPokePos  = args[0];
+    defPokePos = args[1];
+    waza       = args[2];
+    turnType   = args[3];
+    poke = BTL_POKECON_GetFrontPokeDataConst( wk->pokeCon, atPokePos );
+    BTLV_ACT_WazaEffect_Start( wk->viewCore, atPokePos, defPokePos, waza, turnType, 0 );
+    (*seq)++;
+  }
+  break;
+
+  case 1:
+    if( BTLV_ACT_WazaEffect_Wait(wk->viewCore) )
+    {
+      return TRUE;
+    }
+    break;
+  }
+
+  return FALSE;
+}
+
+
 
 
 static BOOL scProc_ACT_WazaDmg( BTL_CLIENT* wk, int* seq, const int* args )

@@ -50,6 +50,7 @@ typedef enum {
 
   // à¯êîÇSå¬ÇÃå^
   SC_ARGFMT_53bit_12byte = SC_ARGFMT(4,0),
+  SC_ARGFMT_5_5_14bit_1byte = SC_ARGFMT(4,1),
 
   // à¯êîÇTå¬ÇÃå^
   SC_ARGFMT_5_5_5bit_22byte = SC_ARGFMT(5,0),
@@ -92,6 +93,7 @@ static const u8 ServerCmdToFmtTbl[] = {
   SC_ARGFMT_11byte,           // SC_OP_CLEAR_CONTFLAG
   SC_ARGFMT_1byte,            // SC_OP_CLEAR_ACTFLAG
   SC_ARGFMT_5_5_14bit,        // SC_ACT_WAZA_EFFECT
+  SC_ARGFMT_5_5_14bit_1byte,     // SC_ACT_WAZA_EFFECT_EX
   SC_ARGFMT_5_5_14bit,        // SC_ACT_WAZA_DMG
   SC_ARGFMT_5_5_5bit_22byte,  // SC_ACT_WAZA_DMG_DBL
   SC_ARGFMT_4_4bit,           // SC_ACT_WAZA_DMG_PLURAL
@@ -163,9 +165,6 @@ static inline void unpack1_2args( u8 pack, int bits1, int bits2, int* args, int 
   {
     u8 mask1 = (1 << bits1) - 1;
     u8 mask2 = (1 << bits2) - 1;
-
-    BTL_Printf(" ** pack=%02x, bits1=%d, bits2=%d, mask1=%02x, mask2=%02x\n",
-        pack, bits1, bits2, mask1, mask2 );
 
     args[ idx_start++ ] = (pack >> bits2) & mask1;
     args[ idx_start ] =  pack & mask2;
@@ -269,6 +268,13 @@ static void put_core( BTL_SERVER_CMD_QUE* que, ServerCmd cmd, ScArgFormat fmt, c
     scque_put1byte( que, args[2] );
     scque_put2byte( que, args[3] );
     break;
+  case SC_ARGFMT_5_5_14bit_1byte:
+    {
+      u32 pack = pack_3args( 3, args[0],args[1],args[2], 5,5,14 );
+      scque_put3byte( que, pack );
+      scque_put1byte( que, args[3] );
+    }
+    break;
   case SC_ARGFMT_5_5_5bit_22byte:
     {
       u16 pack = pack_3args( 2, args[0],args[1],args[2], 5,5,5 );
@@ -336,7 +342,6 @@ static void read_core( BTL_SERVER_CMD_QUE* que, ScArgFormat fmt, int* args )
   case SC_ARGFMT_5_5_14bit:
     {
       u32 pack = scque_read3byte( que );
-      BTL_Printf(" 5 5 14 read pack = %08x\n", pack);
       unpack_3args( 3, pack, 5,5,14, args, 0 );
     }
     break;
@@ -353,6 +358,13 @@ static void read_core( BTL_SERVER_CMD_QUE* que, ScArgFormat fmt, int* args )
       unpack1_2args( pack, 5, 3, args, 0 );
       args[2] = scque_read1byte( que );
       args[3] = scque_read2byte( que );
+    }
+    break;
+  case SC_ARGFMT_5_5_14bit_1byte:
+    {
+      u32 pack = scque_read3byte( que );
+      unpack_3args( 3, pack, 5,5,14, args, 0 );
+      args[3] = scque_read1byte( que );
     }
     break;
   case SC_ARGFMT_5_5_5bit_22byte:

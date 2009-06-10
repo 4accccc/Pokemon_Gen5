@@ -341,6 +341,23 @@ BPP_SICK_CONT BTL_CALC_MakeMoudokuSickCont( void )
 }
 //=============================================================================================
 /**
+ * ワザ系状態異常の継続パラメータ（ターン数型）を作成
+ *
+ * @param   turn_count
+ */
+//=============================================================================================
+BPP_SICK_CONT BTL_CALC_MakeWazaSickCont_Turn( u8 turn_count )
+{
+  BPP_SICK_CONT cont;
+  cont.raw = 0;
+  cont.type = WAZASICK_CONT_TURN;
+  cont.turn.count = turn_count;
+  return cont;
+}
+
+
+//=============================================================================================
+/**
  * ワザ系状態異常の、デフォルトの継続パラメータを作成
  *
  * @param   sick
@@ -348,7 +365,7 @@ BPP_SICK_CONT BTL_CALC_MakeMoudokuSickCont( void )
  *
  */
 //=============================================================================================
-void BTL_CALC_MakeDefaultWazaSickCont( PokeSick sick, const BTL_POKEPARAM* attacker, BPP_SICK_CONT* cont )
+void BTL_CALC_MakeDefaultWazaSickCont( WazaSick sick, const BTL_POKEPARAM* attacker, BPP_SICK_CONT* cont )
 {
   if( sick < POKESICK_MAX ){
     BTL_CALC_MakeDefaultPokeSickCont( sick, cont );
@@ -371,7 +388,6 @@ void BTL_CALC_MakeDefaultWazaSickCont( PokeSick sick, const BTL_POKEPARAM* attac
     break;
   }
 }
-
 
 //=============================================================================================
 /**

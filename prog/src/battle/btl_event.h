@@ -101,6 +101,10 @@ typedef enum {
   BTL_EVENT_CALC_DRAIN,             ///< ドレイン系ワザ回復量計算
   BTL_EVENT_CALC_SPECIAL_DRAIN,     ///< ドレイン系ワザ回復量計算
   BTL_EVENT_RECOVER_HP_RATIO,       ///< HP回復ワザの回復率計算
+  BTL_EVENT_CHECK_TAMETURN,         ///< 溜めターン判定
+  BTL_EVENT_TAME_START,             ///< 溜め開始
+  BTL_EVENT_TAME_RELEASE,           ///< 溜め解放
+  BTL_EVENT_CHECK_POKE_HIDE,        ///< ポケモンが消えている状態のワザ命中チェック
   BTL_EVENT_UNCATEGORY_WAZA,        ///< 未分類ワザ処理
 
 
@@ -152,6 +156,8 @@ typedef enum {
   BTL_EVAR_VOLUME,
   BTL_EVAR_GEN_FLAG,
   BTL_EVAR_FAIL_FLAG,
+  BTL_EVAR_AVOID_FLAG,
+  BTL_EVAR_POKE_HIDE,
   BTL_EVAR_FAIL_CAUSE,
   BTL_EVAR_CONF_DMG,
   BTL_EVAR_TURN_COUNT,
