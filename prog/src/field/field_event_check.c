@@ -362,7 +362,7 @@ static void setupRequest(EV_REQUEST * req, GAMESYS_WORK * gsys, FIELDMAP_WORK * 
 
   {
 		FLDMAPPER *g3Dmapper = FIELDMAP_GetFieldG3Dmapper(fieldWork);
-    req->mapattr = MAPATTR_GetMapAttribute(g3Dmapper, req->now_pos);
+    req->mapattr = MAPATTR_GetAttribute(g3Dmapper, req->now_pos);
   }
   req->talkRequest = ((req->key_trg & PAD_BUTTON_A) != 0);
 
@@ -522,7 +522,7 @@ static GMEVENT * fldmap_Event_CheckPushConnect(EV_REQUEST * req,
   setFrontPos(req, &now_pos);
   {
 		FLDMAPPER *g3Dmapper = FIELDMAP_GetFieldG3Dmapper(fieldWork);
-    MAPATTR_FLAG flag = MAPATTR_GetMapAttrFlag( MAPATTR_GetMapAttribute(g3Dmapper, &now_pos) );
+    MAPATTR_FLAG flag = MAPATTR_GetAttrFlag( MAPATTR_GetAttribute(g3Dmapper, &now_pos) );
     if (!(flag & MAPATTR_FLAGBIT_ENTER))
     {
       return NULL;
