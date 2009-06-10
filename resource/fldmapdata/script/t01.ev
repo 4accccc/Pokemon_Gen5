@@ -151,7 +151,7 @@ ev_t01_posevent_test1:
 ev_t01_bgevent_test1:
   _TALK_OBJ_PAUSE_ALL
   _TALKWIN_OPEN
-  _TALKMSG_ALLPUT msg_t01_testmsg03
+  _TALKMSG_ALLPUT msg_t01_sign1_01
   _AB_KEYWAIT
   _TALKWIN_CLOSE
   _OBJ_PAUSE_CLEAR_ALL
