@@ -40,8 +40,10 @@ extern GFL_CAMADJUST*	GFL_CAMADJUST_Create( const GFL_CAMADJUST_SETUP* setup, HE
 extern void				GFL_CAMADJUST_Delete( GFL_CAMADJUST* gflCamAdjust );
 extern BOOL				GFL_CAMADJUST_Main( GFL_CAMADJUST* gflCamAdjust );	//FALSEÇ≈èIóπ
 
-extern void	GFL_CAMADJUST_SetCameraParam
-				( GFL_CAMADJUST* gflCamAdjust, u16* pAngleV, u16* pAngleH, fx32* pLength, u16* pFovy, fx32* pFar );
+extern void	GFL_CAMADJUST_SetCameraParam( GFL_CAMADJUST* gflCamAdjust, 
+																		u16* pAngleV, u16* pAngleH, 
+																		fx32* pLength, u16* pFovy, fx32* pFar );
+extern void	GFL_CAMADJUST_SetWipeParam( GFL_CAMADJUST* gflCamAdjust, fx32* pWipeSize );
 
 #endif
 

@@ -42,6 +42,7 @@ enum {
 	BMP_LENGTH,
 	BMP_FOVY,
 	BMP_FAR,
+	BMP_WIPE,
 
 	BMP_MAX,
 };
@@ -61,6 +62,9 @@ struct _GFL_CAMADJUST {
   u16*          pFovy;
   fx32*         pFar;
 
+	BOOL					wipeSw;
+  fx32*         pWipeSize;
+
 	GFL_BMP_DATA*			bmp[BMP_MAX];
 	STRBUF*					strBufTmp;
 
@@ -74,8 +78,10 @@ struct _GFL_CAMADJUST {
 
 static void loadGraphicData( GFL_CAMADJUST* gflCamAdjust );
 
-static BOOL CAMADJUST_Control( GFL_CAMADJUST* gflCamAdjust );
+static BOOL CAMADJUST_ControlTrg( GFL_CAMADJUST* gflCamAdjust );
+static BOOL CAMADJUST_ControlCont( GFL_CAMADJUST* gflCamAdjust );
 static void CAMADJUST_NumPrint( GFL_CAMADJUST* gflCamAdjust, int bmpIdx, u16 num, u32 vramChr );
+static void CAMADJUST_printWipeSw( GFL_CAMADJUST* gflCamAdjust );
 
 //============================================================================================
 /**
@@ -107,6 +113,9 @@ extern GFL_CAMADJUST*	GFL_CAMADJUST_Create( const GFL_CAMADJUST_SETUP* setup, HE
 	gflCamAdjust->pFovy   = NULL;
 	gflCamAdjust->pFar    = NULL;
 
+	gflCamAdjust->wipeSw = FALSE;
+	gflCamAdjust->pWipeSize = NULL;
+
 	for( i=0; i<BMP_MAX; i++ ){
 		gflCamAdjust->bmp[i] = GFL_BMP_Create( 4, 1, GFL_BMP_16_COLOR, gflCamAdjust->heapID );
 	}
@@ -136,8 +145,9 @@ void	GFL_CAMADJUST_Delete( GFL_CAMADJUST* gflCamAdjust )
 	GFL_HEAP_FreeMemory( gflCamAdjust );
 }
 
-void	GFL_CAMADJUST_SetCameraParam
-		( GFL_CAMADJUST* gflCamAdjust, u16* pAngleV, u16* pAngleH, fx32* pLength, u16* pFovy, fx32* pFar )
+void	GFL_CAMADJUST_SetCameraParam( GFL_CAMADJUST* gflCamAdjust, 
+																		u16* pAngleV, u16* pAngleH, 
+																		fx32* pLength, u16* pFovy, fx32* pFar )
 {
 	if( gflCamAdjust == NULL ) return;
 
@@ -146,6 +156,16 @@ void	GFL_CAMADJUST_SetCameraParam
 	gflCamAdjust->pLength = pLength;
 	gflCamAdjust->pFovy   = pFovy;
 	gflCamAdjust->pFar    = pFar;
+}
+
+void	GFL_CAMADJUST_SetWipeParam( GFL_CAMADJUST* gflCamAdjust, fx32* pWipeSize )
+{
+	if( gflCamAdjust == NULL ) return;
+
+	gflCamAdjust->wipeSw = FALSE;
+	gflCamAdjust->pWipeSize = pWipeSize;
+
+	*(gflCamAdjust->pWipeSize) = 0;
 }
 
 //============================================================================================
@@ -197,15 +217,24 @@ BOOL	GFL_CAMADJUST_Main( GFL_CAMADJUST* gflCamAdjust )
 				break;
 			}
 		}
-		if( CAMADJUST_Control( gflCamAdjust ) == FALSE ){
+		if( CAMADJUST_ControlTrg( gflCamAdjust ) == FALSE ){
 			gflCamAdjust->seq = SEQ_POPVRAM;
+			break;
 		}
-		CAMADJUST_NumPrint( gflCamAdjust, BMP_ANGLEV, *gflCamAdjust->pAngleV, 0xa4 );
-		CAMADJUST_NumPrint( gflCamAdjust, BMP_ANGLEH, *gflCamAdjust->pAngleH, 0xc4 );
-		CAMADJUST_NumPrint( gflCamAdjust, BMP_LENGTH, *gflCamAdjust->pLength/FX32_ONE, 0xe4 );
-		CAMADJUST_NumPrint( gflCamAdjust, BMP_FOVY, *gflCamAdjust->pFovy, 0xac );
-		CAMADJUST_NumPrint( gflCamAdjust, BMP_FOVY, *gflCamAdjust->pFar/FX32_ONE, 0xcc );
+		if( CAMADJUST_ControlCont( gflCamAdjust ) == FALSE ){
+			gflCamAdjust->seq = SEQ_POPVRAM;
+			break;
+		}
+		CAMADJUST_NumPrint( gflCamAdjust, BMP_ANGLEV, *gflCamAdjust->pAngleV, 0x54 );
+		CAMADJUST_NumPrint( gflCamAdjust, BMP_ANGLEH, *gflCamAdjust->pAngleH, 0x64 );
+		CAMADJUST_NumPrint( gflCamAdjust, BMP_LENGTH, *gflCamAdjust->pLength/FX32_ONE, 0x74 );
+		CAMADJUST_NumPrint( gflCamAdjust, BMP_FOVY, *gflCamAdjust->pFovy, 0x84 );
+		CAMADJUST_NumPrint( gflCamAdjust, BMP_FAR, *gflCamAdjust->pFar/FX32_ONE, 0x94 );
+		if(gflCamAdjust->pWipeSize != NULL){
+			CAMADJUST_NumPrint( gflCamAdjust, BMP_WIPE, *gflCamAdjust->pWipeSize, 0xbc );
+		}
 
+		CAMADJUST_printWipeSw( gflCamAdjust );
 		GFL_DISPUT_LoadScr(gflCamAdjust->setup.bgID, gflCamAdjust->scrnBuf, 0, PUSH_SCR_SIZ);
 		break;
 
@@ -245,9 +274,6 @@ static void resetScrAttr( u16* scr, GFL_DISPUT_PALID palID )
 //============================================================================================
 static void loadGraphicData( GFL_CAMADJUST* gflCamAdjust )
 {
-//	void* binCgx = GFL_ARC_LoadDataFilePathAlloc( arc_path, NARC_ncgr, gflCamAdjust->heapID );
-//	void* binScr = GFL_ARC_LoadDataFilePathAlloc( arc_path, NARC_nscr, gflCamAdjust->heapID );
-//	void* binPlt = GFL_ARC_LoadDataFilePathAlloc( arc_path, NARC_nclr, gflCamAdjust->heapID );
 	void* binCgx = GFL_ARC_LoadDataAlloc( ARCID_CAMERACONT, NARC_ncgr, gflCamAdjust->heapID );
 	void* binScr = GFL_ARC_LoadDataAlloc( ARCID_CAMERACONT, NARC_nscr, gflCamAdjust->heapID );
 	void* binPlt = GFL_ARC_LoadDataAlloc( ARCID_CAMERACONT, NARC_nclr, gflCamAdjust->heapID );
@@ -274,10 +300,14 @@ static void loadGraphicData( GFL_CAMADJUST* gflCamAdjust )
  *
  */
 //============================================================================================
+
+
+
+
 //============================================================================================
 /**
  *
- * @brief	タッチパネル判定テーブル
+ * @brief	タッチパネルイベント判定
  *
  */
 //============================================================================================
@@ -294,47 +324,40 @@ enum {
 	TPBTN_ANGLE_R,
 	TPBTN_LENDOWN,
 	TPBTN_LENUP,
-	TPBTN_FOVYUP,
 	TPBTN_FOVYDOWN,
+	TPBTN_FOVYUP,
 	TPBTN_FARUP,
 	TPBTN_FARDOWN,
 
+	TPBTN_WIPEDOWN,
+	TPBTN_WIPEUP,
+
 	//TP_EXIT,
 
-	TPBTN_MAX,
+	TPBTN_CONT_MAX,
 };
 
-static const GFL_UI_TP_HITTBL eventTouchPanelTable[TPBTN_MAX + 1] = {
-	{  5*8,  5*8+BTN_SY, 14*8, 14*8+BTN_SX },	//TPBTN_ANGLE_U
-	{ 19*8, 19*8+BTN_SY, 14*8, 14*8+BTN_SX },	//TPBTN_ANGLE_D
-	{ 12*8, 12*8+BTN_SY,  7*8,  7*8+BTN_SX },	//TPBTN_ANGLE_L
-	{ 12*8, 12*8+BTN_SY, 21*8, 21*8+BTN_SX },	//TPBTN_ANGLE_R
-	{ 10*8, 10*8+BTN_SY, 14*8, 14*8+BTN_SX },	//TPBTN_LENDOWN
-	{ 14*8, 14*8+BTN_SY, 14*8, 14*8+BTN_SX },	//TPBTN_LENUP
-	{ 15*8, 15*8+BTN_SY,  1*8,  1*8+BTN_SX },	//TPBTN_FOVYUP
-	{ 19*8, 19*8+BTN_SY,  1*8,  1*8+BTN_SX },	//TPBTN_FOVYDOWN
-	{ 15*8, 15*8+BTN_SY, 26*8, 26*8+BTN_SX },	//TPBTN_FARUP
-	{ 19*8, 19*8+BTN_SY, 26*8, 26*8+BTN_SX },	//TPBTN_FARDOWN
+static const GFL_UI_TP_HITTBL eventContTouchPanelTable[TPBTN_CONT_MAX + 1] = {
+	{ 0x01*8, 0x01*8+BTN_SY, 0x0e*8, 0x0e*8+BTN_SX },	//TPBTN_ANGLE_U
+	{ 0x09*8, 0x09*8+BTN_SY, 0x0e*8, 0x0e*8+BTN_SX },	//TPBTN_ANGLE_D
+	{ 0x05*8, 0x05*8+BTN_SY, 0x0a*8, 0x0a*8+BTN_SX },	//TPBTN_ANGLE_L
+	{ 0x05*8, 0x05*8+BTN_SY, 0x12*8, 0x12*8+BTN_SX },	//TPBTN_ANGLE_R
+	{ 0x03*8, 0x03*8+BTN_SY, 0x01*8, 0x01*8+BTN_SX },	//TPBTN_LENDOWN
+	{ 0x07*8, 0x07*8+BTN_SY, 0x01*8, 0x01*8+BTN_SX },	//TPBTN_LENUP
+	{ 0x03*8, 0x03*8+BTN_SY, 0x05*8, 0x05*8+BTN_SX },	//TPBTN_FOVYDOWN
+	{ 0x07*8, 0x07*8+BTN_SY, 0x05*8, 0x05*8+BTN_SX },	//TPBTN_FOVYUP
+	{ 0x03*8, 0x03*8+BTN_SY, 0x1b*8, 0x1b*8+BTN_SX },	//TPBTN_FARUP
+	{ 0x07*8, 0x07*8+BTN_SY, 0x1b*8, 0x1b*8+BTN_SX },	//TPBTN_FARDOWN
+
+	{ 0x0e*8, 0x0e*8+BTN_SY, 0x10*8, 0x10*8+BTN_SX },	//TPBTN_WIPEDOWN
+	{ 0x12*8, 0x12*8+BTN_SY, 0x10*8, 0x10*8+BTN_SX },	//TPBTN_WIPEUP
 
 	//{ EXIT_PY, EXIT_PY+7, EXIT_PX, EXIT_PX+23 },
 
 	{GFL_UI_TP_HIT_END,0,0,0},			//終了データ
 };
 
-//============================================================================================
-/**
- *
- * @brief	タッチパネルイベント判定
- *
- */
-//============================================================================================
-//============================================================================================
-/**
- *
- * @brief	メインコントロール	
- *
- */
-//============================================================================================
+//------------------------------------------------------------------
 #define ANGLE_ROTATE_SPD		(0x200)
 #define	CAMERA_TARGET_HEIGHT	(4 * FX32_ONE)
 #define CAMLEN_MVSPD			(8 * FX32_ONE)
@@ -344,10 +367,13 @@ static const GFL_UI_TP_HITTBL eventTouchPanelTable[TPBTN_MAX + 1] = {
 #define	CAMLEN_MIN				(16 * FX32_ONE)
 #define	CAMANGFOVY_MAX			(0x4000 - ANGLE_ROTATE_SPD)
 #define	CAMANGFOVY_MIN			(0x0 + ANGLE_ROTATE_SPD)
+#define WIPE_SPD			(FX32_ONE/128)
+#define	WIPE_MAX			(4 * FX32_ONE)
+#define	WIPE_MIN			(FX32_ONE/2)
 
-static BOOL CAMADJUST_Control( GFL_CAMADJUST* gflCamAdjust )
+static BOOL CAMADJUST_ControlCont( GFL_CAMADJUST* gflCamAdjust )
 {
-	int tblPos = GFL_UI_TP_HitCont(eventTouchPanelTable);
+	int tblPos = GFL_UI_TP_HitCont(eventContTouchPanelTable);
 
 	if(gflCamAdjust->pAngleV == NULL){ return TRUE; }
 	if(gflCamAdjust->pAngleH == NULL){ return TRUE; }
@@ -410,6 +436,63 @@ static BOOL CAMADJUST_Control( GFL_CAMADJUST* gflCamAdjust )
 			*(gflCamAdjust->pFar) -= CAMLEN_MVSPD;
 			if( *gflCamAdjust->pFar < CAMLEN_MIN ){ *(gflCamAdjust->pFar) = CAMLEN_MIN; }
 			break;
+
+	case TPBTN_WIPEDOWN:
+			if( gflCamAdjust->pWipeSize != NULL ){
+				*(gflCamAdjust->pWipeSize) -= WIPE_SPD;
+				if( *gflCamAdjust->pWipeSize < WIPE_MIN ){ *(gflCamAdjust->pWipeSize) = WIPE_MIN; }
+			}
+			break;
+	case TPBTN_WIPEUP:
+			if( gflCamAdjust->pWipeSize != NULL ){
+				*(gflCamAdjust->pWipeSize) += WIPE_SPD;
+				if( *gflCamAdjust->pWipeSize > WIPE_MAX ){ *(gflCamAdjust->pWipeSize) = WIPE_MAX; }
+			}
+			break;
+	}
+	return TRUE;
+}
+
+//============================================================================================
+enum {
+	TPBTN_WIPESW = 0,
+
+	//TP_EXIT,
+
+	TPBTN_TRG_MAX,
+};
+
+static const GFL_UI_TP_HITTBL eventTrgTouchPanelTable[TPBTN_TRG_MAX + 1] = {
+	{ 0x10*8, 0x10*8+(16-1), 0x0d*8, 0x0d*8+(16-1) },	//TPBTN_WIPESW
+
+	//{ EXIT_PY, EXIT_PY+7, EXIT_PX, EXIT_PX+23 },
+
+	{GFL_UI_TP_HIT_END,0,0,0},			//終了データ
+};
+
+//------------------------------------------------------------------
+static BOOL CAMADJUST_ControlTrg( GFL_CAMADJUST* gflCamAdjust )
+{
+	int tblPos = GFL_UI_TP_HitTrg(eventTrgTouchPanelTable);
+
+	if(tblPos == GFL_UI_TP_HIT_NONE){
+		return TRUE;
+	} 
+	switch(tblPos){
+
+	case TPBTN_WIPESW:
+			if( gflCamAdjust->pWipeSize != NULL ){
+				if(gflCamAdjust->wipeSw == FALSE){
+					gflCamAdjust->wipeSw = TRUE;
+					*(gflCamAdjust->pWipeSize) = FX32_ONE;
+				} else {
+					gflCamAdjust->wipeSw = FALSE;
+					*(gflCamAdjust->pWipeSize) = 0;
+				}
+			} else {
+				gflCamAdjust->wipeSw = FALSE;
+			}
+			break;
 	}
 	return TRUE;
 }
@@ -451,4 +534,21 @@ static void CAMADJUST_NumPrint( GFL_CAMADJUST* gflCamAdjust, int bmpIdx, u16 num
 							GFL_BMP_GetBmpDataSize( gflCamAdjust->bmp[bmpIdx] )); 
 }
 
+//============================================================================================
+/**
+ *
+ * @brief	Wipeスイッチ
+ *
+ */
+//============================================================================================
+static void CAMADJUST_printWipeSw( GFL_CAMADJUST* gflCamAdjust )
+{
+	u16 palMask = (gflCamAdjust->setup.bgPalID <<12);
+	u16	scrData = (gflCamAdjust->wipeSw == TRUE)? 0x0c|palMask : 0x08|palMask;
+
+	gflCamAdjust->scrnBuf[0x10 * 32 + 0x0d] = scrData + 0;
+	gflCamAdjust->scrnBuf[0x10 * 32 + 0x0e] = scrData + 1;
+	gflCamAdjust->scrnBuf[0x11 * 32 + 0x0d] = scrData + 2;
+	gflCamAdjust->scrnBuf[0x11 * 32 + 0x0e] = scrData + 3;
+}
 

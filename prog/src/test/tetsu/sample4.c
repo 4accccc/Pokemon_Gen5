@@ -91,8 +91,10 @@ static GFL_PROC_RESULT Sample4Proc_Init(GFL_PROC * proc, int * seq, void * pwk, 
 	sw->seq = 0;
 
 	sw->dws = DWS_SYS_Setup(sw->heapID);
+	GFL_CAMADJUST_SetWipeParam(DWS_GetCamAdjust(sw->dws), &sw->scale);
+
 	VEC_Set(&sw->trans, 0, 0, 0);
-	sw->scale = FX32_ONE;
+	//sw->scale = FX32_ONE;
 	DWS_SetG3DcamTarget(sw->dws, &sw->trans);
 
 	return GFL_PROC_RES_FINISH;
@@ -166,7 +168,6 @@ static const GFL_G3D_OBJSTATUS g3DobjStatus1 = {
 };
 
 static void	rotateCalc(SAMPLE4_WORK* sw, MtxFx33* pRotate);
-static void	cameraTraseCalc(SAMPLE4_WORK* sw, MtxFx33* pRotate);
 static void	cameraTargetMvCalc(SAMPLE4_WORK* sw);
 static void	cameraTargetScaleCalc(SAMPLE4_WORK* sw);
 //============================================================================================
@@ -180,20 +181,15 @@ static BOOL	sample4(SAMPLE4_WORK* sw)
 		sw->mode = 0;
 
 		//３Ｄオブジェクト作成
-#if 1
 		sw->g3DresMdl0 = GFL_G3D_CreateResourceArc
 										(ARCID_SHADOW_TEST, NARC_shadow_test_shadow_test_nsbmd);
 		sw->g3Dobj0 = GFL_G3D_OBJECT_Create(GFL_G3D_RENDER_Create(sw->g3DresMdl0, 0, NULL), NULL, 0); 
 		sw->g3DresMdl1 = GFL_G3D_CreateResourceArc
 										(ARCID_SHADOW_TEST, NARC_shadow_test_shadow2_test_nsbmd);
 		sw->g3Dobj1 = GFL_G3D_OBJECT_Create(GFL_G3D_RENDER_Create(sw->g3DresMdl1, 0, NULL), NULL, 0); 
-#else
-		sw->g3DresMdl1 = GFL_G3D_CreateResourceArc
-										(ARCID_SHADOW_TEST, NARC_shadow_test_shadow2_test_nsbmd);
-		sw->g3Dobj1 = GFL_G3D_OBJECT_Create(GFL_G3D_RENDER_Create(sw->g3DresMdl1, 0, NULL), NULL, 0); 
 
 		sw->fldWipeObj = FLD_WIPEOBJ_Create(sw->heapID); 
-#endif
+
 		GFL_G3D_SetSystemSwapBufferMode(GX_SORTMODE_MANUAL, GX_BUFFERMODE_W);
 
 		sw->seq++;
@@ -205,7 +201,7 @@ static BOOL	sample4(SAMPLE4_WORK* sw)
 		if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_X ){ sw->mode = (sw->mode)? 0 : 1; }
 
 		cameraTargetMvCalc(sw);
-		cameraTargetScaleCalc(sw);
+		//cameraTargetScaleCalc(sw);
 
 		//３Ｄ描画
 		GFL_G3D_DRAW_Start();			//描画開始
@@ -219,46 +215,7 @@ static BOOL	sample4(SAMPLE4_WORK* sw)
 			GFL_G3D_OBJSTATUS status;
 
 			status = g3DobjStatus1;
-#if 1
-			if(sw->target == 0){
-				g3Dobj = sw->g3Dobj0;
-				status.trans = sw->trans;
-				VEC_Set(&status.scale, sw->scale, FX32_ONE, sw->scale);
-				cameraTraseCalc(sw, &status.rotate);
-			} else {
-				g3Dobj = sw->g3Dobj1;
-				status.trans.y = FX32_ONE*16;
-				rotateCalc(sw, &status.rotate);
-			}
-			pRnd = GFL_G3D_RENDER_GetRenderObj(GFL_G3D_OBJECT_GetG3Drnd(g3Dobj)); 
-			pMdl = NNS_G3dRenderObjGetResMdl(pRnd);
 
-			if(sw->mode == 0){
-				NNS_G3dMdlSetMdlLightEnableFlag( pMdl, 0, 0x0 );
-				NNS_G3dMdlSetMdlPolygonID( pMdl, 0, 63 );
-				NNS_G3dMdlSetMdlCullMode( pMdl, 0, GX_CULL_NONE ); 
-				NNS_G3dMdlSetMdlAlpha( pMdl, 0, 16 );
-				NNS_G3dMdlSetMdlPolygonMode( pMdl, 0, GX_POLYGONMODE_MODULATE );
-
-				GFL_G3D_DRAW_DrawObject(g3Dobj, &status);
-			} else {
-				NNS_G3dMdlSetMdlLightEnableFlag( pMdl, 0, 0x0 );
-				NNS_G3dMdlSetMdlPolygonID( pMdl, 0, 0 );
-				NNS_G3dMdlSetMdlCullMode( pMdl, 0, GX_CULL_NONE ); 
-				NNS_G3dMdlSetMdlAlpha( pMdl, 0, 16 );
-				NNS_G3dMdlSetMdlPolygonMode( pMdl, 0, GX_POLYGONMODE_SHADOW );
-
-				GFL_G3D_DRAW_DrawObject(g3Dobj, &status);
-
-				NNS_G3dMdlSetMdlLightEnableFlag( pMdl, 0, 0x0 );
-				NNS_G3dMdlSetMdlPolygonID( pMdl, 0, 1 );
-				NNS_G3dMdlSetMdlCullMode( pMdl, 0, GX_CULL_NONE ); 
-				NNS_G3dMdlSetMdlAlpha( pMdl, 0, 16 );
-				NNS_G3dMdlSetMdlPolygonMode( pMdl, 0, GX_POLYGONMODE_SHADOW );
-
-				GFL_G3D_DRAW_DrawObject(g3Dobj, &status);
-			}
-#else
 			if(sw->target == 0){
 				FLD_WIPEOBJ_Main(sw->fldWipeObj, sw->scale, FX32_ONE);
 			} else {
@@ -289,33 +246,27 @@ static BOOL	sample4(SAMPLE4_WORK* sw)
 					NNS_G3dMdlSetMdlLightEnableFlag( pMdl, 0, 0x0 );
 					NNS_G3dMdlSetMdlPolygonID( pMdl, 0, 1 );
 					NNS_G3dMdlSetMdlCullMode( pMdl, 0, GX_CULL_NONE ); 
-					NNS_G3dMdlSetMdlAlpha( pMdl, 0, 16 );
+					NNS_G3dMdlSetMdlAlpha( pMdl, 0, 0 );
 					NNS_G3dMdlSetMdlPolygonMode( pMdl, 0, GX_POLYGONMODE_SHADOW );
 	
 					GFL_G3D_DRAW_DrawObject(g3Dobj, &status);
 				}
 			}
-#endif
 		}
 
 		GFL_G3D_DRAW_End();				//描画終了（バッファスワップ）					
 		break;
 
 	case 2:
-#if 1
+		FLD_WIPEOBJ_Delete(sw->fldWipeObj);
+
 		GFL_G3D_RENDER_Delete(GFL_G3D_OBJECT_GetG3Drnd(sw->g3Dobj1)); 
 		GFL_G3D_OBJECT_Delete(sw->g3Dobj1); 
 		GFL_G3D_DeleteResource(sw->g3DresMdl1);
 		GFL_G3D_RENDER_Delete(GFL_G3D_OBJECT_GetG3Drnd(sw->g3Dobj0)); 
 		GFL_G3D_OBJECT_Delete(sw->g3Dobj0); 
 		GFL_G3D_DeleteResource(sw->g3DresMdl0);
-#else
-		FLD_WIPEOBJ_Delete(sw->fldWipeObj);
 
-		GFL_G3D_RENDER_Delete(GFL_G3D_OBJECT_GetG3Drnd(sw->g3Dobj1)); 
-		GFL_G3D_OBJECT_Delete(sw->g3Dobj1); 
-		GFL_G3D_DeleteResource(sw->g3DresMdl1);
-#endif
 		return FALSE;
 	}
 	return TRUE;
@@ -338,29 +289,6 @@ static void	rotateCalc(SAMPLE4_WORK* sw, MtxFx33* pRotate)
 
 	MTX_RotZ33(&tmpMtx, FX_SinIdx((u16)vecRot.z), FX_CosIdx((u16)vecRot.z)); 
 	MTX_Concat33(pRotate, &tmpMtx, pRotate); 
-}
-
-//--------------------------------------------------------------
-static void	cameraTraseCalc(SAMPLE4_WORK* sw, MtxFx33* pRotate)
-{
-	VecFx32	vecRot;
-	MtxFx33	tmpMtx;
-
-//	vecRot.x = 0x4000;
-	vecRot.x = 0x2000;
-	vecRot.y = 0;
-	vecRot.z = 0;
-
-	MTX_RotX33(pRotate, FX_SinIdx((u16)vecRot.x), FX_CosIdx((u16)vecRot.x));
-
-	MTX_RotY33(&tmpMtx, FX_SinIdx((u16)vecRot.y), FX_CosIdx((u16)vecRot.y)); 
-	MTX_Concat33(pRotate, &tmpMtx, pRotate); 
-
-	MTX_RotZ33(&tmpMtx, FX_SinIdx((u16)vecRot.z), FX_CosIdx((u16)vecRot.z)); 
-	MTX_Concat33(pRotate, &tmpMtx, pRotate); 
-
-//	MTX_Copy43To33(NNS_G3dGlbGetInvCameraMtx(), &tmpMtx);
-//	MTX_Concat33(pRotate, &tmpMtx, pRotate); 
 }
 
 //--------------------------------------------------------------
