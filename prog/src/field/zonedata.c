@@ -177,7 +177,7 @@ void ZONEDATA_DEBUG_GetStartPos(u16 zone_id, VecFx32 * pos)
 	pos->x = zdbuf.sx * FX32_ONE * 16;
 	pos->y = zdbuf.sy * FX32_ONE * 16;
 	pos->z = zdbuf.sz * FX32_ONE * 16;
-	OS_Printf("x,y,z=%d,%d,%d\n",pos->x, pos->y, pos->z);
+	TAMADA_Printf("%s x,y,z=%d,%d,%d\n",__FILE__,pos->x, pos->y, pos->z);
 }
 
 //------------------------------------------------------------------

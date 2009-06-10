@@ -367,7 +367,13 @@ static void MakeNewLocation(const EVENTDATA_SYSTEM * evdata, const LOCATION * lo
 	}
 	//開始位置セット
 	result = EVENTDATA_SetLocationByExitID(evdata, loc_tmp, loc_req->exit_id);
-	AddOffsetByDirection(loc_tmp->dir_id, &loc_tmp->pos);
+  {
+    const CONNECT_DATA * cnct = EVENTDATA_GetConnectByID(evdata, loc_req->exit_id);
+    if (CONNECTDATA_GetExitType(cnct) != EXIT_TYPE_MAT)
+    {
+	    AddOffsetByDirection(loc_tmp->dir_id, &loc_tmp->pos);
+    }
+  }
 	if (!result) {
 		//デバッグ用処理：本来は不要なはず
 		OS_Printf("connect: debug default position\n");
