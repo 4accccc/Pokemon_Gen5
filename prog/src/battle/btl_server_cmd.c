@@ -88,6 +88,7 @@ static const u8 ServerCmdToFmtTbl[] = {
   SC_ARGFMT_11byte,           // SC_OP_CHANGE_POKEFORM
   SC_ARGFMT_1byte,            // SC_OP_REMOVE_ITEM
   SC_ARGFMT_112byte,          // SC_OP_UPDATE_USE_WAZA,
+  SC_ARGFMT_1byte,            // SC_OP_RESET_USED_WAZA
   SC_ARGFMT_11byte,           // SC_OP_SET_CONTFLAG
   SC_ARGFMT_11byte,           // SC_OP_SET_ACTFLAG
   SC_ARGFMT_11byte,           // SC_OP_CLEAR_CONTFLAG

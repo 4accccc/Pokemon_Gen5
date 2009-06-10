@@ -1226,7 +1226,7 @@ void BTL_POKEPARAM_SetAppearTurn( BTL_POKEPARAM* pp, u16 turn )
 }
 //=============================================================================================
 /**
- * １ターン有効フラグのクリア
+ * ターンフラグの全クリア
  *
  * @param   pp
  *
@@ -1239,6 +1239,19 @@ void BTL_POKEPARAM_ClearTurnFlag( BTL_POKEPARAM* pp )
   {
     pp->turnCount++;
   }
+}
+//=============================================================================================
+/**
+ * ターンフラグの個別途中クリア
+ *
+ * @param   pp
+ * @param   flagID
+ *
+ */
+//=============================================================================================
+void BTL_POKEPARAM_ForceOffTurnFlag( BTL_POKEPARAM* pp, BppTurnFlag flagID )
+{
+  flgbuf_reset( pp->turnFlag, flagID );
 }
 //=============================================================================================
 /**
@@ -1318,6 +1331,19 @@ void BTL_POKEPARAM_UpdateUsedWazaNumber( BTL_POKEPARAM* pp, WazaID waza, BtlPoke
   }
   pp->prevTargetPos = targetPos;
 }
+//=============================================================================================
+/**
+ * 直前に使ったワザナンバーをクリア
+ *
+ * @param   pp
+ */
+//=============================================================================================
+void BTL_POKEPARAM_ResetUsedWazaNumber( BTL_POKEPARAM* pp )
+{
+  pp->prevWazaID = WAZANO_NULL;
+  pp->sameWazaCounter = 0;
+}
+
 
 
 //--------------------------------------------------------------------------

@@ -173,7 +173,8 @@ typedef enum {
   BTL_HANDEX_RECOVER_RANK,  ///< マイナスランクをフラットに戻す
   BTL_HANDEX_DAMAGE,        ///< ダメージを与える
   BTL_HANDEX_CHANGE_TYPE,   ///< ポケモンのタイプを変える
-  BTL_HANDEX_SET_TURNFLAG,  ///< ターン有効フラグセット
+  BTL_HANDEX_SET_TURNFLAG,  ///< ターンフラグセット
+  BTL_HANDEX_RESET_TURNFLAG,///< ターンフラグ強制リセット
   BTL_HANDEX_SET_CONTFLAG,  ///< 継続フラグセット
   BTL_HANDEX_RESET_CONTFLAG,///< 継続フラグリセット
 
@@ -278,7 +279,7 @@ typedef struct {
   BTL_HANDEX_PARAM_DAMAGE  header;
   BppTurnFlag     flag;
   u8              pokeID;
-}BTL_HANDEX_PARAM_SET_TURNFLAG;
+}BTL_HANDEX_PARAM_TURNFLAG;
 
 typedef struct {
   BTL_HANDEX_PARAM_DAMAGE  header;

@@ -158,6 +158,7 @@ static BOOL scProc_OP_ChangePokeForm( BTL_CLIENT* wk, int* seq, const int* args 
 static BOOL scProc_OP_WSTurnCheck( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_OP_RemoveItem( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_OP_UpdateUseWaza( BTL_CLIENT* wk, int* seq, const int* args );
+static BOOL scProc_OP_ResetUsedWaza( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_OP_SetContFlag( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_OP_SetActFlag( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_OP_ResetContFlag( BTL_CLIENT* wk, int* seq, const int* args );
@@ -909,6 +910,7 @@ static BOOL SubProc_UI_ServerCmd( BTL_CLIENT* wk, int* seq )
     { SC_OP_WAZASICK_TURNCHECK, scProc_OP_WSTurnCheck     },
     { SC_OP_REMOVE_ITEM,        scProc_OP_RemoveItem      },
     { SC_OP_UPDATE_USE_WAZA,    scProc_OP_UpdateUseWaza   },
+    { SC_OP_RESET_USED_WAZA,    scProc_OP_ResetUsedWaza   },
     { SC_OP_SET_CONTFLAG,       scProc_OP_SetContFlag     },
     { SC_OP_RESET_CONTFLAG,     scProc_OP_ResetContFlag   },
     { SC_OP_SET_ACTFLAG,        scProc_OP_SetActFlag      },
@@ -1770,8 +1772,13 @@ static BOOL scProc_OP_RemoveItem( BTL_CLIENT* wk, int* seq, const int* args )
 static BOOL scProc_OP_UpdateUseWaza( BTL_CLIENT* wk, int* seq, const int* args )
 {
   BTL_POKEPARAM* pp = BTL_POKECON_GetPokeParam( wk->pokeCon, args[0] );
-  BTL_Printf("ポケ(%d) の直前使用ワザセット -> %d\n", args[0], args[2] );
   BTL_POKEPARAM_UpdateUsedWazaNumber( pp, args[2], args[1] );
+  return TRUE;
+}
+static BOOL scProc_OP_ResetUsedWaza( BTL_CLIENT* wk, int* seq, const int* args )
+{
+  BTL_POKEPARAM* pp = BTL_POKECON_GetPokeParam( wk->pokeCon, args[0] );
+  BTL_POKEPARAM_ResetUsedWazaNumber( pp );
   return TRUE;
 }
 static BOOL scProc_OP_SetContFlag( BTL_CLIENT* wk, int* seq, const int* args )

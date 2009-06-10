@@ -38,7 +38,9 @@ typedef enum {
   BTL_EVENT_NOEFFECT_TYPE_CHECK,    ///< ワザ無効化（タイプによる）チェックハンドラ
   BTL_EVENT_NOEFFECT_CHECK_L1,      ///< ワザ無効化チェック（lv1 = 必中には負ける）ハンドラ
   BTL_EVENT_NOEFFECT_CHECK_L2,      ///< ワザ無効化チェック（lv2 = 必中にも勝つ）ハンドラ
+  BTL_EVENT_CHECK_MAMORU_BREAK,     ///< まもる無効化チェック
   BTL_EVENT_DMG_TO_RECOVER,         ///< ワザダメージ->回復化チェックハンドラ
+  BTL_EVENT_EXCUSE_CALC_HIT,        ///< 命中率計算を飛ばすかチェック
   BTL_EVENT_WAZA_HIT_RANK,          ///< 命中率・回避率の決定ハンドラ
   BTL_EVENT_WAZA_HIT_RATIO,         ///< ワザの命中率補正ハンドラ
   BTL_EVENT_WAZA_HIT_COUNT,         ///< ヒット回数決定（複数回ヒットワザのみ）
