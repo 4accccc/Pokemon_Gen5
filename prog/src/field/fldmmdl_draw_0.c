@@ -190,8 +190,10 @@ static void DrawHero_Draw( FLDMMDL *fmmdl )
 	}
 	
 	FLDMMDL_GetDrawVectorPos( fmmdl, &pos );
+
 	#ifndef FLDMMDL_BLACT_HEAD3_TEST
-	pos.y += FX32_ONE * 12;
+	pos.y += FX32_ONE * 4;
+  pos.z -= NUM_FX32(8);
 	#else
 	pos.y += FX32_ONE * 7; //3
 	#endif
@@ -326,7 +328,8 @@ static void DrawBlAct_Draw( FLDMMDL *fmmdl )
 	
 	FLDMMDL_GetDrawVectorPos( fmmdl, &pos );
 	#ifndef FLDMMDL_BLACT_HEAD3_TEST
-	pos.y += FX32_ONE * 12;
+	pos.y += FX32_ONE * 4;
+  pos.z -= NUM_FX32(8);
 	#else
 	pos.y += FX32_ONE * 7; //3
 	#endif

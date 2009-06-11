@@ -289,10 +289,9 @@ static void shadowTask_Update( FLDEFF_TASK *task, void *wk )
   }
   
   FLDMMDL_GetVectorPos( work->fmmdl, &pos );
-//  pos.x += NUM_FX32(-1)/2;
-  pos.x += NUM_FX32(1) / 4;
-  pos.y += NUM_FX32(-2);
-  pos.z += NUM_FX32(6)+0x800;
+//  pos.x += NUM_FX32(1) / 8;
+  pos.y += NUM_FX32(-4);
+  pos.z += NUM_FX32(2)+0x800;
   FLDEFF_TASK_SetPos( task, &pos );
 }
 
