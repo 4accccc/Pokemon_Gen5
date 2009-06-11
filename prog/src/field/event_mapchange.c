@@ -394,13 +394,18 @@ static GMEVENT_RESULT EVENT_MapChange(GMEVENT * event, int *seq, void*work)
     {
       GMEVENT * sub_event;
       MAPCHANGE_WORK * sub_work;
-	    EVENTDATA_SYSTEM *evdata = GAMEDATA_GetEventData(gamedata);
-      const CONNECT_DATA * cnct = EVENTDATA_GetConnectByID(evdata, mcw->loc_req.exit_id);
-      sub_event = GMEVENT_Create(
-          gsys,
-          NULL,
-          fadeInEventTable[CONNECTDATA_GetExitType(cnct)],
-          sizeof(MAPCHANGE_WORK));
+      EXIT_TYPE type;
+      if (mcw->loc_req.type == LOCATION_TYPE_DIRECT)
+      {
+        type = EXIT_TYPE_NONE;
+      }
+      else
+      {
+        EVENTDATA_SYSTEM *evdata = GAMEDATA_GetEventData(gamedata);
+        const CONNECT_DATA * cnct = EVENTDATA_GetConnectByID(evdata, mcw->loc_req.exit_id);
+        type = CONNECTDATA_GetExitType(cnct);
+      }
+      sub_event = GMEVENT_Create( gsys, NULL, fadeInEventTable[type], sizeof(MAPCHANGE_WORK));
       sub_work = GMEVENT_GetEventWork(sub_event);
       *sub_work = *mcw;
       GMEVENT_CallEvent(event, sub_event);
