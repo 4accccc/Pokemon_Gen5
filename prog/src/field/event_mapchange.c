@@ -24,6 +24,7 @@
 #include "event_mapchange.h"
 #include "sound/pm_sndsys.h"		//サウンドシステム参照
 
+
 static void UpdateMapParams(GAMESYS_WORK * gsys, const LOCATION * loc_req);
 static void SetFldMMdl( GAMESYS_WORK *gsys, const LOCATION *loc_req, GAMEINIT_MODE mode );
 
@@ -166,7 +167,7 @@ GMEVENT * DEBUG_EVENT_GameEnd( GAMESYS_WORK * gsys, FIELD_MAIN_WORK * fieldmap)
 
 //============================================================================================
 //
-//	イベント：デバッグ用マップ切り替え
+//	イベント：マップ切り替え
 //
 //============================================================================================
 //------------------------------------------------------------------
@@ -229,6 +230,9 @@ static GMEVENT_RESULT EVENT_MapChange(GMEVENT * event, int *seq, void*work)
 	}
 	return GMEVENT_RES_CONTINUE;
 }
+
+//============================================================================================
+//============================================================================================
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 GMEVENT * DEBUG_EVENT_ChangeMapPos(GAMESYS_WORK * gsys, FIELD_MAIN_WORK * fieldmap,
@@ -264,6 +268,7 @@ GMEVENT * DEBUG_EVENT_ChangeMap(GAMESYS_WORK * gsys,
 	LOCATION_SetID(&mcw->loc_req, zone_id, exit_id);
 	return event;
 }
+
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 GMEVENT * DEBUG_EVENT_ChangeMapDefaultPos(GAMESYS_WORK * gsys,
@@ -280,6 +285,8 @@ GMEVENT * DEBUG_EVENT_ChangeMapDefaultPos(GAMESYS_WORK * gsys,
 	LOCATION_DEBUG_SetDefaultPos(&mcw->loc_req, zone_id);
 	return event;
 }
+
+#if 0
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 GMEVENT * EVENT_ChangeMap(GAMESYS_WORK * gsys, FIELD_MAIN_WORK * fieldmap,
@@ -296,6 +303,37 @@ GMEVENT * EVENT_ChangeMap(GAMESYS_WORK * gsys, FIELD_MAIN_WORK * fieldmap,
 	mcw->loc_req = *loc_req;
 	return event;
 }
+#endif
+
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+GMEVENT * EVENT_ChangeMapByConnect(GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap,
+    const CONNECT_DATA * cnct)
+{
+	GAMEDATA * gamedata = GAMESYSTEM_GetGameData(gsys);
+	MAPCHANGE_WORK * mcw;
+	GMEVENT * event;
+
+	event = GMEVENT_Create(gsys, NULL, EVENT_MapChange, sizeof(MAPCHANGE_WORK));
+	mcw = GMEVENT_GetEventWork(event);
+	mcw->gsys = gsys;
+	mcw->fieldmap = fieldmap;
+	mcw->gamedata = GAMESYSTEM_GetGameData(gsys);
+
+	if (CONNECTDATA_IsSpecialExit(cnct))
+  {
+		//特殊接続先が指定されている場合、記憶しておいた場所に飛ぶ
+		const LOCATION * sp = GAMEDATA_GetSpecialLocation(gamedata);
+    mcw->loc_req = *sp;
+	}
+  else
+  {
+		CONNECTDATA_SetNextLocation(cnct, &mcw->loc_req);
+	}
+	return event;
+}
+
+
 //------------------------------------------------------------------
 //	※マップIDをインクリメントしている。最大値になったら先頭に戻る
 //------------------------------------------------------------------

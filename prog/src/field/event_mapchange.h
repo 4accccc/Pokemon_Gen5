@@ -11,6 +11,7 @@
 #include "gamesystem/gamesystem.h"
 #include "gamesystem/game_init.h"
 #include "field/fieldmap.h"
+#include "field/eventdata_sxy.h"
 
 //======================================================================
 //======================================================================
@@ -34,6 +35,14 @@ extern GMEVENT * DEBUG_EVENT_GameEnd( GAMESYS_WORK * gsys, FIELD_MAIN_WORK * fie
 //------------------------------------------------------------------
 extern GMEVENT * EVENT_ChangeMap(GAMESYS_WORK * gsys, FIELD_MAIN_WORK * fieldmap,
 		const LOCATION * loc_req);
+
+//------------------------------------------------------------------
+/**
+ */
+//------------------------------------------------------------------
+extern GMEVENT * EVENT_ChangeMapByConnect(GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap,
+    const CONNECT_DATA * cnct);
+
 //------------------------------------------------------------------
 /**
  * @brief	マップ遷移イベント生成（出入口指定）

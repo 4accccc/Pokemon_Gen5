@@ -83,20 +83,23 @@ typedef struct {
 //======================================================================
 //======================================================================
 //event
-static GMEVENT * fldmap_Event_CheckConnect(EV_REQUEST * req,
-		GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork, const VecFx32 *now_pos );
-static GMEVENT * fldmap_Event_CheckPushConnect(EV_REQUEST * req,
+static GMEVENT * checkExit(EV_REQUEST * req,
+    FIELDMAP_WORK *fieldWork, const VecFx32 *now_pos );
+static GMEVENT * checkPushExit(EV_REQUEST * req,
 		GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork );
 static GMEVENT * checkRailExit(const EV_REQUEST * req, GAMESYS_WORK *gsys, FIELDMAP_WORK * fieldWork);
-static GMEVENT * fldmap_Event_Check_SubScreen(
+static GMEVENT * checkSubScreenEvent(
 		GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork );
 
 static void setupRequest(EV_REQUEST * req, GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldWork);
 
 static void setFrontPos(const EV_REQUEST * req, VecFx32 * pos);
 static BOOL checkDirection(u16 player_dir, u16 exit_dir);
-
+static int getConnectID(const EV_REQUEST * req, const VecFx32 * now_pos);
+static void rememberExitInfo(EV_REQUEST * req, FIELDMAP_WORK * fieldWork, int idx, const VecFx32 * pos);
+static GMEVENT * getChangeMapEvent(const EV_REQUEST * req, FIELDMAP_WORK * fieldWork, int idx);
 static GMEVENT * DEBUG_checkKeyEvent(EV_REQUEST * req, GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldWork);
+
 //======================================================================
 //
 //
@@ -137,14 +140,6 @@ GMEVENT * FIELD_EVENT_CheckNormal( GAMESYS_WORK *gsys, void *work )
     /* 今はない */
 
 //☆☆☆一歩移動チェックがここから
-  if( req.moveRequest )
-  { //座標接続チェック
-    event = fldmap_Event_CheckConnect(&req, gsys, fieldWork, req.now_pos);
-    if( event != NULL ){
-      return event;
-    }
-  }
-
   //座標イベントチェック
   if( req.moveRequest )
   {
@@ -161,7 +156,14 @@ GMEVENT * FIELD_EVENT_CheckNormal( GAMESYS_WORK *gsys, void *work )
       event = SCRIPT_SetScript( gsys, id, NULL, req.heapID, &fparam );
       return event;
     }
+
+   //座標接続チェック
+    event = checkExit(&req, fieldWork, req.now_pos);
+    if( event != NULL ){
+      return event;
+    }
   }
+
 
 	
   //レールの場合のマップ遷移チェック
@@ -271,7 +273,7 @@ GMEVENT * FIELD_EVENT_CheckNormal( GAMESYS_WORK *gsys, void *work )
 //☆☆☆押し込み操作チェック（マットでのマップ遷移など）
 	//キー入力接続チェック
   if (req.pushRequest) {
-    event = fldmap_Event_CheckPushConnect(&req, gsys, fieldWork);
+    event = checkPushExit(&req, gsys, fieldWork);
     if( event != NULL ){
       return event;
     }
@@ -287,7 +289,7 @@ GMEVENT * FIELD_EVENT_CheckNormal( GAMESYS_WORK *gsys, void *work )
 	}
 
 	//サブスクリーンからのイベント起動チェック
-	event = fldmap_Event_Check_SubScreen(gsys, fieldWork);
+	event = checkSubScreenEvent(gsys, fieldWork);
 	if( event != NULL )
   {
 		return event;
@@ -391,7 +393,11 @@ static void setupRequest(EV_REQUEST * req, GAMESYS_WORK * gsys, FIELDMAP_WORK * 
 }
 
 //======================================================================
-//	フィールドマップ　サブ　イベント
+//
+//
+//    イベント起動チェック：デバッグ関連
+//
+//
 //======================================================================
 #ifdef  PM_DEBUG
 //--------------------------------------------------------------
@@ -426,23 +432,74 @@ static GMEVENT * DEBUG_checkKeyEvent(EV_REQUEST * req, GAMESYS_WORK * gsys, FIEL
 }
 #endif
 
+//======================================================================
+//
+//
+//    イベント起動チェック：マップ遷移関連
+//
+//
+//======================================================================
 //--------------------------------------------------------------
 /**
  * イベント マップ接続チェック
- * @param gsys GAMESYS_WORK
+ *
+ * @param req   イベントチェック用ワーク
  * @param fieldWork FIELDMAP_WORK
  * @param now_pos チェックする座標
- * @retval GMEVENT NULL=接続なし
+ * @return GMEVENT  発生したイベントデータへのポインタ。 NULLの場合、接続なし
  */
 //--------------------------------------------------------------
-static GMEVENT * fldmap_Event_CheckConnect(EV_REQUEST * req,
-		GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork, const VecFx32 *now_pos )
+static GMEVENT * checkExit(EV_REQUEST * req,
+    FIELDMAP_WORK *fieldWork, const VecFx32 *now_pos )
+{
+  int idx = getConnectID(req, now_pos);
+  if (idx == EXIT_ID_NONE) {
+    return NULL;
+  }
+  {
+    const CONNECT_DATA * cnct;
+    cnct = EVENTDATA_GetConnectByID(req->evdata, idx);
+    if (CONNECTDATA_GetExitType(cnct) != EXIT_TYPE_NONE)
+    {
+      return NULL;
+    }
+  }
+
+	//マップ遷移発生の場合、出入口を記憶しておく
+  rememberExitInfo(req, fieldWork, idx, now_pos);
+  return getChangeMapEvent(req, fieldWork, idx);
+}
+
+//--------------------------------------------------------------
+//--------------------------------------------------------------
+static GMEVENT * getChangeMapEvent(const EV_REQUEST * req, FIELDMAP_WORK * fieldWork, int idx)
+{
+	const CONNECT_DATA * cnct;
+  cnct = EVENTDATA_GetConnectByID(req->evdata, idx);
+
+  return EVENT_ChangeMapByConnect(req->gsys, fieldWork, cnct);
+}
+
+//--------------------------------------------------------------
+//--------------------------------------------------------------
+static void rememberExitInfo(EV_REQUEST * req, FIELDMAP_WORK * fieldWork, int idx, const VecFx32 * pos)
+{
+	//マップ遷移発生の場合、出入口を記憶しておく
+  LOCATION ent_loc;
+  LOCATION_Set( &ent_loc, FIELDMAP_GetZoneID(fieldWork), idx, 0,
+      pos->x, pos->y, pos->z);
+  GAMEDATA_SetEntranceLocation(req->gamedata, &ent_loc);
+}
+
+//--------------------------------------------------------------
+//--------------------------------------------------------------
+static int getConnectID(const EV_REQUEST * req, const VecFx32 * now_pos)
 {
 	const CONNECT_DATA * cnct;
 	int idx = EVENTDATA_SearchConnectIDByPos(req->evdata, now_pos);
 	
 	if( idx == EXIT_ID_NONE ){
-		return NULL;
+		return EXIT_ID_NONE;
 	}
 	cnct = EVENTDATA_GetConnectByID(req->evdata, idx);
   if (CONNECTDATA_GetExitType(cnct) != EXIT_TYPE_NONE)
@@ -450,31 +507,11 @@ static GMEVENT * fldmap_Event_CheckConnect(EV_REQUEST * req,
     EXIT_DIR dir = CONNECTDATA_GetExitDir(cnct);
     if (checkDirection(req->player_dir, dir) == FALSE)
     {
-      return NULL;
+      return EXIT_ID_NONE;
     }
   }
-
-	//マップ遷移発生の場合、出入口を記憶しておく
-	{
-		LOCATION ent_loc;
-		LOCATION_Set(
-				&ent_loc, FIELDMAP_GetZoneID(fieldWork), idx, 0,
-				now_pos->x, now_pos->y, now_pos->z);
-		GAMEDATA_SetEntranceLocation(req->gamedata, &ent_loc);
-	}
-
-	
-	if (CONNECTDATA_IsSpecialExit(cnct)) {
-		//特殊接続先が指定されている場合、記憶しておいた場所に飛ぶ
-		const LOCATION * sp = GAMEDATA_GetSpecialLocation(req->gamedata);
-		return EVENT_ChangeMap(gsys, fieldWork, sp);
-	}else{
-		LOCATION loc_req;
-		CONNECTDATA_SetNextLocation(cnct, &loc_req);
-		return EVENT_ChangeMap(gsys, fieldWork, &loc_req);
-	}
+  return idx;
 }
-
 //--------------------------------------------------------------
 //--------------------------------------------------------------
 static void setFrontPos(const EV_REQUEST * req, VecFx32 * pos)
@@ -508,30 +545,81 @@ static BOOL checkDirection(u16 player_dir, u16 exit_dir)
 
 //--------------------------------------------------------------
 /**
- * イベント キー入力イベント起動チェック
+ * イベント キー入力マップ遷移起動チェック
+ *
+ * @param req   イベントチェック用ワーク
  * @param gsys GAMESYS_WORK
  * @param	fieldWork FIELDMAP_WORK
  * @retval GMEVENT NULL イベント無し
  */
 //--------------------------------------------------------------
-static GMEVENT * fldmap_Event_CheckPushConnect(EV_REQUEST * req,
+static GMEVENT * checkPushExit(EV_REQUEST * req,
 		GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork )
 {
-	VecFx32 now_pos;
+	VecFx32 front_pos;
+  int idx;
 	
-  setFrontPos(req, &now_pos);
+  //目の前が通行不可でない場合、チェックしない
+  setFrontPos(req, &front_pos);
   {
 		FLDMAPPER *g3Dmapper = FIELDMAP_GetFieldG3Dmapper(fieldWork);
-    MAPATTR_FLAG flag = MAPATTR_GetAttrFlag( MAPATTR_GetAttribute(g3Dmapper, &now_pos) );
+    MAPATTR_FLAG flag = MAPATTR_GetAttrFlag( MAPATTR_GetAttribute(g3Dmapper, &front_pos) );
+    //MAPATTR_FLAG flag = MAPATTR_GetAttrFlag( MAPATTR_GetAttribute(g3Dmapper, &now_pos) );
     if (!(flag & MAPATTR_FLAGBIT_ENTER))
     {
       return NULL;
     }
   }
+
+  //足元チェック（マット）
+  idx = getConnectID(req, req->now_pos);
+  if (idx != EXIT_ID_NONE)
+  {
+    const CONNECT_DATA * cnct = EVENTDATA_GetConnectByID(req->evdata, idx);
+    if (CONNECTDATA_GetExitType(cnct) == EXIT_TYPE_MAT)
+    {
+      rememberExitInfo(req, fieldWork, idx, req->now_pos);
+      return getChangeMapEvent(req, fieldWork, idx);
+    }
+  }
 	
-	return fldmap_Event_CheckConnect(req, gsys, fieldWork, &now_pos);
+  //目の前チェック（階段、壁、ドア）
+  idx = getConnectID(req, &front_pos);
+  if (idx == EXIT_ID_NONE) {
+    return NULL;
+  }
+
+	//マップ遷移発生の場合、出入口を記憶しておく
+  rememberExitInfo(req, fieldWork, idx, &front_pos);
+  return getChangeMapEvent(req, fieldWork, idx);
 }
 
+//--------------------------------------------------------------
+/**
+ * @brief ノーグリッドマップ、レールシステム上での出入口判定
+ */
+//--------------------------------------------------------------
+static GMEVENT * checkRailExit(const EV_REQUEST * req, GAMESYS_WORK *gsys, FIELDMAP_WORK * fieldWork)
+{
+  int idx;
+  VecFx32 pos;
+  int * firstID = FIELDMAP_GetFirstConnectID(fieldWork);
+
+  FIELD_RAIL_MAN_GetPos( FIELDMAP_GetFieldRailMan(fieldWork) , &pos );
+  idx = EVENTDATA_SearchConnectIDBySphere(req->evdata, &pos);
+  if (*firstID == idx) return NULL;
+  if (idx == EXIT_ID_NONE)
+  {
+    *firstID = idx;
+    return NULL;
+  }
+
+  return getChangeMapEvent(req, fieldWork, idx);
+}
+
+
+//======================================================================
+//======================================================================
 //--------------------------------------------------------------
 /**
  * サブスクリーンからのイベント起動チェック
@@ -540,7 +628,7 @@ static GMEVENT * fldmap_Event_CheckPushConnect(EV_REQUEST * req,
  * @retval GMEVENT NULL イベント無し
  */
 //--------------------------------------------------------------
-static GMEVENT * fldmap_Event_Check_SubScreen(
+static GMEVENT * checkSubScreenEvent(
 		GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork )
 {
   GMEVENT* event=NULL;
@@ -577,102 +665,7 @@ static GMEVENT * fldmap_Event_Check_SubScreen(
   return event;
 }
 
-//--------------------------------------------------------------
-/**
- * @brief ノーグリッドマップ、レールシステム上での出入口判定
- */
-//--------------------------------------------------------------
-static GMEVENT * checkRailExit(const EV_REQUEST * req, GAMESYS_WORK *gsys, FIELDMAP_WORK * fieldWork)
-{
-  int idx;
-  VecFx32 pos;
-  int * firstID = FIELDMAP_GetFirstConnectID(fieldWork);
-
-  FIELD_RAIL_MAN_GetPos( FIELDMAP_GetFieldRailMan(fieldWork) , &pos );
-  idx = EVENTDATA_SearchConnectIDBySphere(req->evdata, &pos);
-  if (*firstID == idx) return NULL;
-  if (idx == EXIT_ID_NONE)
-  {
-    *firstID = idx;
-    return NULL;
-  }
-
-  {
-		LOCATION loc_req;
-    const CONNECT_DATA * cnct;
-    cnct = EVENTDATA_GetConnectByID(req->evdata, idx);
-	
-		CONNECTDATA_SetNextLocation(cnct, &loc_req);
-		return EVENT_ChangeMap(gsys, fieldWork, &loc_req);
-  }
-}
 
 
 
-
-
-//--------------------------------------------------------------
-/**
- * イベント起動チェック　決定ボタン入力時に発生するイベントチェック
- * @param fieldWork FIELDMAP_WORK
- * @param event 発生イベントプロセス格納先
- * @param key_trg キートリガ
- * @param key_cont キーコンティニュー
- * @retval BOOL TRUE=イベント起動
- */
-//--------------------------------------------------------------
-static BOOL event_CheckEventDecideButton( FIELDMAP_WORK *fieldWork,
-    GMEVENT **event, const int key_trg, const int key_cont )
-{
-  return FALSE;
-}
-
-//--------------------------------------------------------------
-/**
- * イベント起動チェック　自機動作終了時に発生するイベントチェック。
- * 移動終了、振り向き、壁衝突動作などで発生。
- * @param fieldWork FIELDMAP_WORK
- * @param event 発生イベントプロセス格納先
- * @param key_trg キートリガ
- * @param key_cont キーコンティニュー
- * @retval BOOL TRUE=イベント起動
- */
-//--------------------------------------------------------------
-static BOOL event_CheckEventMoveEnd( FIELDMAP_WORK *fieldWork,
-    GMEVENT **event, const int key_trg, const int key_cont )
-{
-  return FALSE;
-}
-
-//--------------------------------------------------------------
-/**
- * イベント起動チェック　一歩移動終了時に発生するイベントチェック
- * @param fieldWork FIELDMAP_WORK
- * @param event 発生イベントプロセス格納先
- * @param key_trg キートリガ
- * @param key_cont キーコンティニュー
- * @retval BOOL TRUE=イベント起動
- */
-//--------------------------------------------------------------
-static BOOL event_CheckEventOneStepMoveEnd( FIELDMAP_WORK *fieldWork,
-    GMEVENT **event, const int key_trg, const int key_cont )
-{
-  return FALSE;
-}
-
-//--------------------------------------------------------------
-/**
- * イベント起動チェック　十字キー入力中に発生するイベントチェック
-  * @param fieldWork FIELDMAP_WORK
- * @param event 発生イベントプロセス格納先
- * @param key_trg キートリガ
- * @param key_cont キーコンティニュー
- * @retval BOOL TRUE=イベント起動
- */
-//--------------------------------------------------------------
-static BOOL event_CheckEventPushKey( FIELDMAP_WORK *fieldWork,
-    GMEVENT **event, const int key_trg, const int key_cont )
-{
-  return FALSE;
-}
 
