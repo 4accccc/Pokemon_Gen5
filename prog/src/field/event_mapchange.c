@@ -24,9 +24,11 @@
 #include "event_mapchange.h"
 #include "sound/pm_sndsys.h"		//サウンドシステム参照
 
+#include "event_fldmmdl_control.h"
 
 static void UpdateMapParams(GAMESYS_WORK * gsys, const LOCATION * loc_req);
 static void SetFldMMdl( GAMESYS_WORK *gsys, const LOCATION *loc_req, GAMEINIT_MODE mode );
+static void setNextBGM(GAMEDATA * gamedata, u16 zone_id);
 
 //============================================================================================
 //
@@ -54,13 +56,7 @@ static GMEVENT_RESULT EVENT_FirstMapIn(GMEVENT * event, int *seq, void *work)
 		UpdateMapParams(gsys, &fmw->loc_req);
 		SetFldMMdl( gsys, &fmw->loc_req, game_init_work->mode );
 		
-		{
-			//取り急ぎ。常にフェードインで始まる
-			u16 trackBit = 0xfcff;	// track 9,10 OFF
-			u16 nextBGM = ZONEDATA_GetBGMID(fmw->loc_req.zone_id,
-					GAMEDATA_GetSeasonID(fmw->gamedata));
-			PMSND_PlayNextBGM_EX(nextBGM, trackBit, 30, 0);
-		}
+    setNextBGM(fmw->gamedata, fmw->loc_req.zone_id);
 		
 		switch(game_init_work->mode){
 		case GAMEINIT_MODE_FIRST:
@@ -177,7 +173,176 @@ typedef struct {
 	GAMEDATA * gamedata;
 	FIELD_MAIN_WORK * fieldmap;
 	LOCATION loc_req;
+  EXIT_TYPE exit_type;
 }MAPCHANGE_WORK;
+
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+static GMEVENT_RESULT EVENT_FadeOut_ExitTypeNone(GMEVENT * event, int *seq, void * work)
+{
+	MAPCHANGE_WORK * mcw = work;
+	GAMESYS_WORK  * gsys = mcw->gsys;
+	FIELD_MAIN_WORK * fieldmap = mcw->fieldmap;
+	GAMEDATA * gamedata = mcw->gamedata;
+  switch (*seq)
+  {
+  case 0:
+		GMEVENT_CallEvent(event, EVENT_FieldFadeOut(gsys, fieldmap, 0));
+    ++ *seq;
+    break;
+  case 1:
+    return GMEVENT_RES_FINISH;
+  }
+  return GMEVENT_RES_CONTINUE;
+}
+
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+static GMEVENT_RESULT EVENT_FadeOut_ExitTypeDoor(GMEVENT * event, int *seq, void * work)
+{
+	MAPCHANGE_WORK * mcw = work;
+	GAMESYS_WORK  * gsys = mcw->gsys;
+	FIELD_MAIN_WORK * fieldmap = mcw->fieldmap;
+	GAMEDATA * gamedata = mcw->gamedata;
+  switch (*seq)
+  {
+  case 0:
+    setNextBGM(gamedata, mcw->loc_req.zone_id);
+    GMEVENT_CallEvent( event, EVENT_PlayerOneStepAnime(gsys, fieldmap) );
+    ++ *seq;
+    break;
+  case 1:
+		GMEVENT_CallEvent(event, EVENT_FieldFadeOut(gsys, fieldmap, 0));
+    ++ *seq;
+    break;
+  case 2:
+    return GMEVENT_RES_FINISH;
+  }
+  return GMEVENT_RES_CONTINUE;
+}
+
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+static GMEVENT_RESULT EVENT_FadeOut_ExitTypeStep(GMEVENT * event, int *seq, void * work)
+{
+	MAPCHANGE_WORK * mcw = work;
+	GAMESYS_WORK  * gsys = mcw->gsys;
+	FIELD_MAIN_WORK * fieldmap = mcw->fieldmap;
+	GAMEDATA * gamedata = mcw->gamedata;
+  switch (*seq)
+  {
+  case 0:
+    setNextBGM(gamedata, mcw->loc_req.zone_id);
+    GMEVENT_CallEvent( event, EVENT_PlayerOneStepAnime(gsys, fieldmap) );
+    ++ *seq;
+    break;
+  case 1:
+		GMEVENT_CallEvent(event, EVENT_FieldFadeOut(gsys, fieldmap, 0));
+    ++ *seq;
+    break;
+  case 2:
+    return GMEVENT_RES_FINISH;
+  }
+  return GMEVENT_RES_CONTINUE;
+}
+
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+static const GMEVENT_FUNC fadeOutEventTable[] = {
+  EVENT_FadeOut_ExitTypeNone,   //EXIT_TYPE_NONE
+  EVENT_FadeOut_ExitTypeNone,   //EXIT_TYPE_MAT
+  EVENT_FadeOut_ExitTypeStep,   //EXIT_TYPE_STAIRS
+  EVENT_FadeOut_ExitTypeDoor,   //EXIT_TYPE_DOOR
+  EVENT_FadeOut_ExitTypeStep,   //EXIT_TYPE_WALL
+};
+
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+static GMEVENT_RESULT EVENT_FadeIn_ExitTypeNone(GMEVENT * event, int *seq, void * work)
+{
+	MAPCHANGE_WORK * mcw = work;
+	GAMESYS_WORK  * gsys = mcw->gsys;
+	FIELD_MAIN_WORK * fieldmap = mcw->fieldmap;
+	GAMEDATA * gamedata = mcw->gamedata;
+  switch (*seq)
+  {
+  case 0:
+		GMEVENT_CallEvent(event, EVENT_FieldFadeIn(gsys, fieldmap, 0));
+    ++ *seq;
+    break;
+  case 1:
+    return GMEVENT_RES_FINISH;
+  }
+  return GMEVENT_RES_CONTINUE;
+}
+
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+static GMEVENT_RESULT EVENT_FadeIn_ExitTypeStep(GMEVENT * event, int *seq, void * work)
+{
+	MAPCHANGE_WORK * mcw = work;
+	GAMESYS_WORK  * gsys = mcw->gsys;
+	FIELD_MAIN_WORK * fieldmap = mcw->fieldmap;
+	GAMEDATA * gamedata = mcw->gamedata;
+  switch (*seq)
+  {
+  case 0:
+		GMEVENT_CallEvent(event, EVENT_FieldFadeIn(gsys, fieldmap, 0));
+    ++ *seq;
+    break;
+  case 1:
+    GMEVENT_CallEvent( event, EVENT_PlayerOneStepAnime(gsys, fieldmap) );
+    ++ *seq;
+    break;
+  case 2:
+    return GMEVENT_RES_FINISH;
+  }
+  return GMEVENT_RES_CONTINUE;
+}
+
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+static GMEVENT_RESULT EVENT_FadeIn_ExitTypeDoor(GMEVENT * event, int *seq, void * work)
+{
+	MAPCHANGE_WORK * mcw = work;
+	GAMESYS_WORK  * gsys = mcw->gsys;
+	FIELD_MAIN_WORK * fieldmap = mcw->fieldmap;
+	GAMEDATA * gamedata = mcw->gamedata;
+  switch (*seq)
+  {
+  case 0:
+    //自機を消す
+		GMEVENT_CallEvent(event, EVENT_FieldFadeIn(gsys, fieldmap, 0));
+    ++ *seq;
+    break;
+  case 1:
+    //ドアを開くアニメ適用
+    ++ *seq;
+    break;
+  case 2:
+    //自機出現、一歩移動アニメ
+    GMEVENT_CallEvent( event, EVENT_PlayerOneStepAnime(gsys, fieldmap) );
+    ++ *seq;
+    break;
+  case 3:
+    //ドアを閉じるアニメ適用
+    ++ *seq;
+    break;
+  case 4:
+    return GMEVENT_RES_FINISH;
+  }
+  return GMEVENT_RES_CONTINUE;
+}
+
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+static const GMEVENT_FUNC fadeInEventTable[] = {
+  EVENT_FadeIn_ExitTypeNone,   //EXIT_TYPE_NONE
+  EVENT_FadeIn_ExitTypeNone,   //EXIT_TYPE_MAT
+  EVENT_FadeIn_ExitTypeStep,   //EXIT_TYPE_STAIRS
+  EVENT_FadeIn_ExitTypeDoor,   //EXIT_TYPE_DOOR
+  EVENT_FadeIn_ExitTypeStep,   //EXIT_TYPE_WALL
+};
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
@@ -188,43 +353,61 @@ static GMEVENT_RESULT EVENT_MapChange(GMEVENT * event, int *seq, void*work)
 	FIELD_MAIN_WORK * fieldmap = mcw->fieldmap;
 	GAMEDATA * gamedata = mcw->gamedata;
 	switch (*seq) {
-	case 0:
-		{
-			//取り急ぎ。常にフェードインで始まる
-			u16 trackBit = 0xfcff;	// track 9,10 OFF
-			u16 nextBGM = ZONEDATA_GetBGMID(mcw->loc_req.zone_id,
-					GAMEDATA_GetSeasonID(gamedata));
-			PMSND_PlayNextBGM_EX(nextBGM, trackBit, 30, 0);
-		}
-		//フィールドマップをフェードアウト
-		GMEVENT_CallEvent(event, EVENT_FieldFadeOut(gsys, fieldmap, 0));
+  case 0:
+    GMEVENT_CallEvent( event, EVENT_ObjPauseAll(gsys, fieldmap) );
+    (*seq) ++;
+    break;
+	case 1:
+    {
+      GMEVENT * sub_event;
+      MAPCHANGE_WORK * sub_work;
+      sub_event = GMEVENT_Create(gsys, NULL,
+          fadeOutEventTable[mcw->exit_type], sizeof(MAPCHANGE_WORK));
+      sub_work = GMEVENT_GetEventWork(sub_event);
+      *sub_work = *mcw;
+      GMEVENT_CallEvent(event, sub_event);
+    }
 		(*seq)++;
 		break;
-	case 1:
+	case 2:
 		//フィールドマップを終了待ち
 		GMEVENT_CallEvent(event, EVENT_FieldClose(gsys, fieldmap));
 		//配置していた動作モデルを削除
 		FLDMMDLSYS_DeleteMMdl( GAMEDATA_GetFldMMdlSys(gamedata) );
 		(*seq)++;
 		break;
-	case 2:
+	case 3:
 		//新しいマップID、初期位置をセット
 		UpdateMapParams(gsys, &mcw->loc_req);
 		//新規ゾーンに配置する動作モデルを追加
 		SetFldMMdl( gsys, &mcw->loc_req, GAMEINIT_MODE_FIRST );
 		(*seq)++;
 		break;
-	case 3:
+	case 4:
 		//フィールドマップを開始待ち
 		GMEVENT_CallEvent(event, EVENT_FieldOpen(gsys));
 		(*seq) ++;
 		break;
-	case 4:
+	case 5:
 		//フィールドマップをフェードイン
-		GMEVENT_CallEvent(event, EVENT_FieldFadeIn(gsys, fieldmap, 0));
+		//GMEVENT_CallEvent(event, EVENT_FieldFadeIn(gsys, fieldmap, 0));
+    {
+      GMEVENT * sub_event;
+      MAPCHANGE_WORK * sub_work;
+	    EVENTDATA_SYSTEM *evdata = GAMEDATA_GetEventData(gamedata);
+      const CONNECT_DATA * cnct = EVENTDATA_GetConnectByID(evdata, mcw->loc_req.exit_id);
+      sub_event = GMEVENT_Create(
+          gsys,
+          NULL,
+          fadeInEventTable[CONNECTDATA_GetExitType(cnct)],
+          sizeof(MAPCHANGE_WORK));
+      sub_work = GMEVENT_GetEventWork(sub_event);
+      *sub_work = *mcw;
+      GMEVENT_CallEvent(event, sub_event);
+    }
 		(*seq) ++;
 		break;
-	case 5:
+	case 6:
 		return GMEVENT_RES_FINISH;
 
 	}
@@ -248,6 +431,7 @@ GMEVENT * DEBUG_EVENT_ChangeMapPos(GAMESYS_WORK * gsys, FIELD_MAIN_WORK * fieldm
 	mcw->gamedata = GAMESYSTEM_GetGameData(gsys);
 	
 	LOCATION_SetDirect(&mcw->loc_req, zone_id, dir, pos->x, pos->y, pos->z);
+  mcw->exit_type = EXIT_TYPE_NONE;
 	
 	return event;
 }
@@ -266,6 +450,7 @@ GMEVENT * DEBUG_EVENT_ChangeMap(GAMESYS_WORK * gsys,
 	mcw->fieldmap = fieldmap;
 	mcw->gamedata = GAMESYSTEM_GetGameData(gsys);
 	LOCATION_SetID(&mcw->loc_req, zone_id, exit_id);
+  mcw->exit_type = EXIT_TYPE_NONE;
 	return event;
 }
 
@@ -283,6 +468,7 @@ GMEVENT * DEBUG_EVENT_ChangeMapDefaultPos(GAMESYS_WORK * gsys,
 	mcw->fieldmap = fieldmap;
 	mcw->gamedata = GAMESYSTEM_GetGameData(gsys);
 	LOCATION_DEBUG_SetDefaultPos(&mcw->loc_req, zone_id);
+  mcw->exit_type = EXIT_TYPE_NONE;
 	return event;
 }
 
@@ -330,6 +516,7 @@ GMEVENT * EVENT_ChangeMapByConnect(GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap
   {
 		CONNECTDATA_SetNextLocation(cnct, &mcw->loc_req);
 	}
+  mcw->exit_type = CONNECTDATA_GetExitType(cnct);
 	return event;
 }
 
@@ -405,6 +592,7 @@ static void MakeNewLocation(const EVENTDATA_SYSTEM * evdata, const LOCATION * lo
 	}
 	//開始位置セット
 	result = EVENTDATA_SetLocationByExitID(evdata, loc_tmp, loc_req->exit_id);
+#if 0
   {
     const CONNECT_DATA * cnct = EVENTDATA_GetConnectByID(evdata, loc_req->exit_id);
     if (CONNECTDATA_GetExitType(cnct) != EXIT_TYPE_MAT)
@@ -412,6 +600,7 @@ static void MakeNewLocation(const EVENTDATA_SYSTEM * evdata, const LOCATION * lo
 	    AddOffsetByDirection(loc_tmp->dir_id, &loc_tmp->pos);
     }
   }
+#endif
 	if (!result) {
 		//デバッグ用処理：本来は不要なはず
 		OS_Printf("connect: debug default position\n");
@@ -494,3 +683,13 @@ static void SetFldMMdl( GAMESYS_WORK *gsys, const LOCATION *loc_req, GAMEINIT_MO
 		}
 	}
 }
+//--------------------------------------------------------------
+//--------------------------------------------------------------
+static void setNextBGM(GAMEDATA * gamedata, u16 zone_id)
+{
+  //取り急ぎ。常にフェードインで始まる
+  u16 trackBit = 0xfcff;	// track 9,10 OFF
+  u16 nextBGM = ZONEDATA_GetBGMID(zone_id, GAMEDATA_GetSeasonID(gamedata));
+  PMSND_PlayNextBGM_EX(nextBGM, trackBit, 30, 0);
+}
+
