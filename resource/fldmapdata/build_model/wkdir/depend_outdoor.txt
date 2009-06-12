@@ -89,4 +89,5 @@ DEP_OUTDOOR	=	\
 	$(RESDIR)/wf_tree_08.nsbmd \
 	$(RESDIR)/wf_tree_09.nsbmd \
 	$(RESDIR)/wf_tree_10.nsbmd \
+	$(RESDIR)/p_door.nsbmd \
 
