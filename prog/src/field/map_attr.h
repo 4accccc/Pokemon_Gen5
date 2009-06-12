@@ -49,3 +49,8 @@ extern MAPATTR_VAL MAPATTR_GetAttrValue( const MAPATTR attr );
 extern MAPATTR_FLAG MAPATTR_GetAttrFlag( const MAPATTR attr );
 
 extern BOOL MAPATTR_CheckAttrValueLongGrass( const MAPATTR_VAL val );
+extern BOOL MAPATTR_CheckAttrValueJumpUp( const MAPATTR_VAL val );
+extern BOOL MAPATTR_CheckAttrValueJumpDown( const MAPATTR_VAL val );
+extern BOOL MAPATTR_CheckAttrValueJumpLeft( const MAPATTR_VAL val );
+extern BOOL MAPATTR_CheckAttrValueJumpRight( const MAPATTR_VAL val );
+

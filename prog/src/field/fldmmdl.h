@@ -271,6 +271,7 @@ typedef enum
 	FLDMMDL_BLACT_ANMTBLNO_NON,		///<アニメ無し
 	FLDMMDL_BLACT_ANMTBLNO_HERO,	///<自機専用
 	FLDMMDL_BLACT_ANMTBLNO_BLACT,	///<汎用アニメ
+  FLDMMDL_BLACT_ANMTBLNO_CYCLEHERO, ///<自転車自機専用
 	FLDMMDL_BLACT_ANMTBLNO_MAX,		///<最大
 }FLDMMDL_BLACT_ANMTBLNO;
 
@@ -282,6 +283,7 @@ typedef enum
 	FLDMMDL_DRAWPROCNO_NON,		///<描画無し
 	FLDMMDL_DRAWPROCNO_HERO,	///<自機専用
 	FLDMMDL_DRAWPROCNO_BLACT,	///<ビルボード汎用
+  FLDMMDL_DRAWPROCNO_CYCLEHERO, ///<自転車自機専用
 	FLDMMDL_DRAWPROCNO_MAX,		///<最大
 }FLDMMDL_DRAWPROCNO;
 
@@ -471,7 +473,7 @@ typedef struct
 //	extern
 //======================================================================
 //--------------------------------------------------------------
-///	fldmmdl.h
+///	fldmmdl.c
 //--------------------------------------------------------------
 extern u32 FLDMMDL_BUFFER_GetWorkSize( void );
 extern void FLDMMDL_BUFFER_InitBuffer( void *p );
@@ -734,6 +736,8 @@ extern void FLDMMDL_DrawProcDummy( FLDMMDL * fmmdl );
 extern void FLDMMDL_DrawDeleteProcDummy( FLDMMDL * fmmdl );
 extern void FLDMMDL_DrawPushProcDummy( FLDMMDL * fmmdl );
 extern void FLDMMDL_DrawPopProcDummy( FLDMMDL * fmmdl );
+
+extern void FLDMMDL_ChangeOBJCode( FLDMMDL *fmmdl, u16 code );
 
 #ifdef DEBUG_FLDMMDL
 extern u8 * DEBUG_FLDMMDL_GetOBJCodeString( u16 code, HEAPID heapID );

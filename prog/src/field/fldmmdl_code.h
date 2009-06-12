@@ -188,8 +188,10 @@
 #define DRAW_STA_WALK_3F	0x07		///<移動 3フレーム
 #define DRAW_STA_WALK_7F	0x08		///<移動 7フレーム
 
-#define DRAW_STA_MAX (DRAW_STA_WALK_7F+1)	///<描画ステータス最大
-#define DRAW_STA_MAXDIR4 (DRAW_STA_MAX*DIR_MAX4)
+///描画ステータス最大
+#define DRAW_STA_MAX (DRAW_STA_WALK_7F+1)
+///描画ステータス四方向分
+#define DRAW_STA_MAXDIR4 (DRAW_STA_MAX*DIR_MAX4) 
 
 #define DRAW_STA_PC_BOW		0x09
 #define DRAW_STA_PCWOMAN_MAX (DRAW_STA_PC_BOW+1)

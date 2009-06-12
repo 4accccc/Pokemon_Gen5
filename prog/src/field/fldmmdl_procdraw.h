@@ -16,6 +16,7 @@
 //--------------------------------------------------------------
 extern const FLDMMDL_DRAW_PROC_LIST DATA_FLDMMDL_DRAWPROCLIST_Non;
 extern const FLDMMDL_DRAW_PROC_LIST DATA_FLDMMDL_DRAWPROCLIST_Hero;
+extern const FLDMMDL_DRAW_PROC_LIST DATA_FLDMMDL_DRAWPROCLIST_CycleHero;
 extern const FLDMMDL_DRAW_PROC_LIST DATA_FLDMMDL_DRAWPROCLIST_BlAct;
 
 #endif	//FLDMMDL_PROCDRAW_H_FILE

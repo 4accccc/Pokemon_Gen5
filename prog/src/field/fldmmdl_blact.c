@@ -227,7 +227,14 @@ GFL_BBDACT_ACTUNIT_ID FLDMMDL_BLACTCONT_AddActor( FLDMMDL *fmmdl, u32 code )
 	
 	actID = GFL_BBDACT_AddAct(
 		pBlActCont->pBbdActSys, pBlActCont->bbdActResUnitID, &actData, 1 );
-	
+  
+#if 0 //転送用リソースとバインド
+  if( code == HERO ){
+//    GFL_BBDACT_BindActTexRes( pBlActCont->pBbdActSys, actID, actData.resID );
+    GFL_BBDACT_BindActTexRes( pBlActCont->pBbdActSys, actID, actData.resID );
+  }
+#endif
+
 	anmTbl = BlActAnm_GetAnmTbl( prm->anm_id );
 	
 	if( anmTbl->pAnmTbl != NULL ){
@@ -473,9 +480,28 @@ static void BBDResUnitIndex_AddResUnit( FLDMMDLSYS *fmmdlsys, u16 obj_code )
 	data.texSiz = prm->tex_size;
 	data.celSizX = 32;				//いずれmdl_sizeから
 	data.celSizY = 32;
+  
+#if 0	
+  case GX_TEXFMT_PLTT16:
+		*celDataSiz = 0x20 * res->celSizX/8 * res->celSizY/8;
+		break;
+	case GX_TEXFMT_PLTT256:
+		*celDataSiz = 0x40 * res->celSizX/8 * res->celSizY/8;
+		break;
+	case GX_TEXFMT_PLTT4:
+		*celDataSiz = 0x10 * res->celSizX/8 * res->celSizY/8;
+#endif
+  
 	data.dataCut = GFL_BBDACT_RESTYPE_DATACUT;
-	
+  
+#if 0 //転送用リソース
+  if( obj_code == HERO ){
+    data.dataCut = GFL_BBDACT_RESTYPE_TRANSSRC;
+  }
+#endif
+  
 	id = GFL_BBDACT_AddResourceUnit( pBlActCont->pBbdActSys, &data, 1 );
+  
 	IDCodeIndex_RegistCode( &pBlActCont->BBDResUnitIdx, obj_code, id );
 }
 

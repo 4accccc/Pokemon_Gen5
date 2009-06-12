@@ -35,9 +35,14 @@
 #include "event_fieldmap_menu.h"  //EVENT_FieldMapMenu
 #include "script.h"     //SCRIPT_SetScript
 
+
 #include "field_encount.h"      //FIELD_ENCOUNT_CheckEncount
 
+#include "fieldmap_ctrl_grid.h"
+#include "field_player_grid.h"
+
 #include "map_attr.h"
+
 //======================================================================
 //======================================================================
 
@@ -76,6 +81,7 @@ typedef struct {
   BOOL moveRequest; ///<一歩移動終了タイミングかどうか
   BOOL stepRequest; ///<振り向きor一歩移動終了タイミングかどうか
   BOOL pushRequest; ///<押し込み操作があったかどうか
+  BOOL convRequest; ///<便利ボタン操作があったかどうか
 
   BOOL debugRequest;  ///<デバッグ操作があったかどうか
 }EV_REQUEST;
@@ -99,6 +105,9 @@ static int getConnectID(const EV_REQUEST * req, const VecFx32 * now_pos);
 static void rememberExitInfo(EV_REQUEST * req, FIELDMAP_WORK * fieldWork, int idx, const VecFx32 * pos);
 static GMEVENT * getChangeMapEvent(const EV_REQUEST * req, FIELDMAP_WORK * fieldWork, int idx);
 static GMEVENT * DEBUG_checkKeyEvent(EV_REQUEST * req, GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldWork);
+
+static GMEVENT * checkEvent_ConvenienceButton( const EV_REQUEST *req,
+    GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork );
 
 //======================================================================
 //
@@ -224,6 +233,7 @@ GMEVENT * FIELD_EVENT_CheckNormal( GAMESYS_WORK *gsys, void *work )
       }
     }
   }
+  
 //☆☆☆自機状態イベントチェックがここから
     /* 今はない */
 
@@ -278,9 +288,17 @@ GMEVENT * FIELD_EVENT_CheckNormal( GAMESYS_WORK *gsys, void *work )
       return event;
     }
   }
-	
-
+  
 //☆☆☆自機位置に関係ないキー入力イベントチェック
+  //便利ボタンチェック
+  if( req.convRequest ){
+    event = checkEvent_ConvenienceButton( &req, gsys, fieldWork );
+    
+    if( event != NULL ){
+      return event;
+    }
+  }
+  
 	//メニュー起動チェック
 	if( req.menuRequest ){
 		if(WIPE_SYS_EndCheck()){
@@ -386,6 +404,10 @@ static void setupRequest(EV_REQUEST * req, GAMESYS_WORK * gsys, FIELDMAP_WORK * 
   else 
   {
     req->pushRequest = FALSE;
+  }
+
+  if( req->key_trg & PAD_BUTTON_Y ){
+    req->convRequest = TRUE;
   }
 
   req->debugRequest = ( (req->key_cont & PAD_BUTTON_R) != 0);
@@ -665,7 +687,157 @@ static GMEVENT * checkSubScreenEvent(
   return event;
 }
 
+//--------------------------------------------------------------
+/**
+ * イベント起動チェック　決定ボタン入力時に発生するイベントチェック
+ * @param fieldWork FIELDMAP_WORK
+ * @param event 発生イベントプロセス格納先
+ * @param key_trg キートリガ
+ * @param key_cont キーコンティニュー
+ * @retval BOOL TRUE=イベント起動
+ */
+//--------------------------------------------------------------
+static BOOL event_CheckEventDecideButton( FIELDMAP_WORK *fieldWork,
+    GMEVENT **event, const int key_trg, const int key_cont )
+{
+  return FALSE;
+}
+
+//--------------------------------------------------------------
+/**
+ * イベント起動チェック　自機動作終了時に発生するイベントチェック。
+ * 移動終了、振り向き、壁衝突動作などで発生。
+ * @param fieldWork FIELDMAP_WORK
+ * @param event 発生イベントプロセス格納先
+ * @param key_trg キートリガ
+ * @param key_cont キーコンティニュー
+ * @retval BOOL TRUE=イベント起動
+ */
+//--------------------------------------------------------------
+static BOOL event_CheckEventMoveEnd( FIELDMAP_WORK *fieldWork,
+    GMEVENT **event, const int key_trg, const int key_cont )
+{
+  return FALSE;
+}
+
+//--------------------------------------------------------------
+/**
+ * イベント起動チェック　一歩移動終了時に発生するイベントチェック
+ * @param fieldWork FIELDMAP_WORK
+ * @param event 発生イベントプロセス格納先
+ * @param key_trg キートリガ
+ * @param key_cont キーコンティニュー
+ * @retval BOOL TRUE=イベント起動
+ */
+//--------------------------------------------------------------
+static BOOL event_CheckEventOneStepMoveEnd( FIELDMAP_WORK *fieldWork,
+    GMEVENT **event, const int key_trg, const int key_cont )
+{
+  return FALSE;
+}
+
+//--------------------------------------------------------------
+/**
+ * イベント起動チェック　十字キー入力中に発生するイベントチェック
+  * @param fieldWork FIELDMAP_WORK
+ * @param event 発生イベントプロセス格納先
+ * @param key_trg キートリガ
+ * @param key_cont キーコンティニュー
+ * @retval BOOL TRUE=イベント起動
+ */
+//--------------------------------------------------------------
+static BOOL event_CheckEventPushKey( FIELDMAP_WORK *fieldWork,
+    GMEVENT **event, const int key_trg, const int key_cont )
+{
+  return FALSE;
+}
+
+//======================================================================
+//  便利ボタンイベント
+//======================================================================
+typedef struct
+{
+  GAMESYS_WORK *gsys;
+  FIELDMAP_WORK *fieldWork;
+}EVWORK_CONVBTN;
+
+static GMEVENT_RESULT event_ConvenienceButton(
+    GMEVENT *event, int *seq, void *wk )
+{
+  EVWORK_CONVBTN *work = wk;
+  FIELD_PLAYER *fld_player;
+  FIELDMAP_CTRL_GRID *gridMap;
+  FIELD_PLAYER_GRID *gjiki;
+  PLAYER_MOVE_FORM form;
+  
+  gridMap = FIELDMAP_GetMapCtrlWork( work->fieldWork );
+  gjiki = FIELDMAP_CTRL_GRID_GetFieldPlayerGrid( gridMap );
+  
+  fld_player = FIELDMAP_GetFieldPlayer( work->fieldWork );
+  form = FIELD_PLAYER_GetMoveForm( fld_player );
+  
+  switch( form ){
+  case PLAYER_MOVE_FORM_NORMAL:
+    FIELD_PLAYER_GRID_SetRequest( gjiki, FIELD_PLAYER_GRID_REQBIT_CYCLE );
+    break;
+  case PLAYER_MOVE_FORM_CYCLE:
+    FIELD_PLAYER_GRID_SetRequest( gjiki, FIELD_PLAYER_GRID_REQBIT_NORMAL );
+    break;
+  }
+  
+  return GMEVENT_RES_FINISH;
+} 
 
 
+static GMEVENT * eventSet_ConvenienceButton( const EV_REQUEST *req,
+    GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork )
+{
+  GMEVENT *event;
+  EVWORK_CONVBTN *work;
+  
+  event = GMEVENT_Create(
+      gsys, NULL, event_ConvenienceButton, sizeof(EVWORK_CONVBTN) );
+  work = GMEVENT_GetEventWork( event );
+  work->gsys = gsys;
+  work->fieldWork = fieldWork;
+  return( event );
+}
 
-
+//--------------------------------------------------------------
+/**
+ * @param
+ * @retval
+ */
+//--------------------------------------------------------------
+static GMEVENT * checkEvent_ConvenienceButton( const EV_REQUEST *req,
+    GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork )
+{
+  //仮 自転車切り替え
+  GMEVENT *event;
+  event = eventSet_ConvenienceButton( req, gsys, fieldWork );
+  return( event );
+#if 0
+    GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork )
+  FIELD_PLAYER *fld_player;
+  FIELDMAP_CTRL_GRID *gridMap;
+  FIELD_PLAYER_GRID *gjiki;
+  PLAYER_MOVE_FORM form;
+  
+  gridMap = FIELDMAP_GetMapCtrlWork( fieldWork );
+  gjiki = FIELDMAP_CTRL_GRID_GetFieldPlayerGrid( gridMap );
+  
+  fld_player = FIELDMAP_GetFieldPlayer( fieldWork );
+  form = FIELD_PLAYER_GetMoveForm( fld_player );
+  
+  switch( form ){
+  case PLAYER_MOVE_FORM_NORMAL:
+    FIELD_PLAYER_GRID_SetRequest( gjiki, FIELD_PLAYER_GRID_REQBIT_CYCLE );
+    break;
+  case PLAYER_MOVE_FORM_CYCLE:
+    FIELD_PLAYER_GRID_SetRequest( gjiki, FIELD_PLAYER_GRID_REQBIT_NORMAL );
+    break;
+  }
+  
+  return( NULL );
+#endif
+}

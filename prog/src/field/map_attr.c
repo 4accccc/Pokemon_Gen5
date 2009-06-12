@@ -88,3 +88,63 @@ BOOL MAPATTR_CheckAttrValueLongGrass( const MAPATTR_VAL val )
   }
   return( FALSE );
 }
+
+//--------------------------------------------------------------
+/**
+ * アトリビュートバリュー　チェック　上ジャンプアトリビュート
+ * @param val MAPATTR_VAL
+ * @retval BOOL FALSE=違う
+ */
+//--------------------------------------------------------------
+BOOL MAPATTR_CheckAttrValueJumpUp( const MAPATTR_VAL val )
+{
+  if( val == 0x74 ){
+    return( TRUE );
+  }
+  return( FALSE );
+}
+
+//--------------------------------------------------------------
+/**
+ * アトリビュートバリュー　チェック　下ジャンプアトリビュート
+ * @param val MAPATTR_VAL
+ * @retval BOOL FALSE=違う
+ */
+//--------------------------------------------------------------
+BOOL MAPATTR_CheckAttrValueJumpDown( const MAPATTR_VAL val )
+{
+  if( val == 0x75 ){
+    return( TRUE );
+  }
+  return( FALSE );
+}
+
+//--------------------------------------------------------------
+/**
+ * アトリビュートバリュー　チェック　左ジャンプアトリビュート
+ * @param val MAPATTR_VAL
+ * @retval BOOL FALSE=違う
+ */
+//--------------------------------------------------------------
+BOOL MAPATTR_CheckAttrValueJumpLeft( const MAPATTR_VAL val )
+{
+  if( val == 0x73 ){
+    return( TRUE );
+  }
+  return( FALSE );
+}
+
+//--------------------------------------------------------------
+/**
+ * アトリビュートバリュー　チェック　右ジャンプアトリビュート
+ * @param val MAPATTR_VAL
+ * @retval BOOL FALSE=違う
+ */
+//--------------------------------------------------------------
+BOOL MAPATTR_CheckAttrValueJumpRight( const MAPATTR_VAL val )
+{
+  if( val == 0x72 ){
+    return( TRUE );
+  }
+  return( FALSE );
+}

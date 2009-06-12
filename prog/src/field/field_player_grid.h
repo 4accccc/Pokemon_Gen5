@@ -12,6 +12,18 @@
 //======================================================================
 //	define
 //======================================================================
+//--------------------------------------------------------------
+/// FIELD_PLAYER_GRID_REQBIT
+//--------------------------------------------------------------
+typedef enum
+{
+  ///é©ã@ÇÇQë¨ï‡çsÇ…
+  FIELD_PLAYER_GRID_REQBIT_NORMAL = (1<<0),
+  ///é©ã@Çé©ì]é‘Ç…
+  FIELD_PLAYER_GRID_REQBIT_CYCLE  = (1<<1),
+}FIELD_PLAYER_GRID_REQBIT;
+
+#define FIELD_PLAYER_GRID_REQBIT_MAX (2)
 
 //======================================================================
 //	struct
@@ -30,3 +42,7 @@ extern void FIELD_PLAYER_GRID_Move(
 		FIELD_PLAYER_GRID *g_jiki, int key_trg, int key_cont );
 
 extern void FIELD_PLAYER_GRID_ForceStop( FIELD_PLAYER *fld_player );
+
+extern void FIELD_PLAYER_GRID_SetRequest(
+  FIELD_PLAYER_GRID *gjiki, FIELD_PLAYER_GRID_REQBIT req_bit );
+extern void FIELD_PLAYER_GRID_UpdateRequest( FIELD_PLAYER_GRID *gjiki );

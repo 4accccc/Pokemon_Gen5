@@ -4302,6 +4302,30 @@ u8 * DEBUG_FLDMMDL_GetOBJCodeString( u16 code, HEAPID heapID )
 }
 #endif //DEBUG_FLDMMDL
 
+//--------------------------------------------------------------
+/**
+ * OBJコードを変更する
+ * @param
+ * @retval
+ */
+//--------------------------------------------------------------
+void FLDMMDL_ChangeOBJCode( FLDMMDL *fmmdl, u16 code )
+{
+	const FLDMMDLSYS *fos;
+	fos = FLDMMDL_GetFldMMdlSys( fmmdl );
+  
+	if( FLDMMDLSYS_CheckCompleteDrawInit(fos) == TRUE ){
+    if( FLDMMDL_CheckStatusBitCompletedDrawInit(fmmdl) == TRUE ){
+		  FLDMMDL_CallDrawDeleteProc( fmmdl );
+    }
+  }
+  
+  FLDMMDL_SetOBJCode( fmmdl, code );
+  FLDMMDL_OffStatusBitCompletedDrawInit( fmmdl );
+  FldMMdl_InitDrawStatus( fmmdl );
+  FldMMdl_InitDrawWork( fmmdl );
+}
+
 //======================================================================
 //
 //======================================================================

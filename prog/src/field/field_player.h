@@ -37,6 +37,16 @@ typedef enum
   PLAYER_MOVE_STATE_END,    ///<動作終了
 }PLAYER_MOVE_STATE;
 
+//--------------------------------------------------------------
+/// PLAYER_MOVE_FORM
+//--------------------------------------------------------------
+typedef enum
+{
+  PLAYER_MOVE_FORM_NORMAL = 0,   ///<自機二足歩行
+  PLAYER_MOVE_FORM_CYCLE,  ///<自機自転車移動
+  PLAYER_MOVE_FORM_MAX,
+}PLAYER_MOVE_FORM;
+
 //======================================================================
 //	struct
 //======================================================================
@@ -71,6 +81,10 @@ extern PLAYER_MOVE_VALUE FIELD_PLAYER_GetMoveValue(
     const FIELD_PLAYER *fld_player );
 extern PLAYER_MOVE_STATE FIELD_PLAYER_GetMoveState(
     const FIELD_PLAYER *fld_player );
+extern PLAYER_MOVE_FORM FIELD_PLAYER_GetMoveForm(
+    const FIELD_PLAYER *fld_player );
+extern void FIELD_PLAYER_SetMoveForm(
+    FIELD_PLAYER *fld_player, PLAYER_MOVE_FORM form );
 
 //ツール
 extern void FIELD_PLAYER_GetFrontGridPos(

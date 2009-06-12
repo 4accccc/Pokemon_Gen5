@@ -1422,6 +1422,7 @@ static void fldmapMain_FLDMMDL_Init( FIELDMAP_WORK *fieldWork )
 			MMDL_LIST mlist;
 			fldmap_FLDMMDL_InitList( &mlist, list_area_id, fieldWork->heapID );
 			FLDMMDL_BLACTCONT_AddOBJCodeRes( fieldWork->fldMMdlSys, HERO );
+			FLDMMDL_BLACTCONT_AddOBJCodeRes( fieldWork->fldMMdlSys, CYCLEHERO );
 			FLDMMDL_BLACTCONT_AddResourceTex(
 					fieldWork->fldMMdlSys, mlist.id_list, mlist.count );
 	}

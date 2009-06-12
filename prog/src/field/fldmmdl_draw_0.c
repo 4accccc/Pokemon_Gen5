@@ -241,8 +241,103 @@ const FLDMMDL_DRAW_PROC_LIST DATA_FLDMMDL_DRAWPROCLIST_Hero =
 	DrawHero_Init,
 	DrawHero_Draw,
 	DrawHero_Delete,
-	DrawHero_Delete,	//本当は退避
-	DrawHero_Init,		//本当は復帰
+	DrawHero_Delete,	//退避
+	DrawHero_Init,    //本当は復帰
+	DrawHero_GetBlActID,
+};
+
+//======================================================================
+//  描画処理　ビルボード　自転車自機専用
+//======================================================================
+//--------------------------------------------------------------
+/**
+ * 描画処理　ビルボード　自転車自機専用　描画
+ * @param	fmmdl	FLDMMDL
+ * @retval	nothing
+ */
+//--------------------------------------------------------------
+static void DrawCycleHero_Draw( FLDMMDL *fmmdl )
+{
+	VecFx32 pos;
+	BOOL chg_dir = FALSE;
+	u16 dir,anm_id,status;
+	DRAW_BLACT_WORK *work;
+	GFL_BBDACT_SYS *actSys;
+	
+	work = FLDMMDL_GetDrawProcWork( fmmdl );
+	actSys = FLDMMDL_BLACTCONT_GetBbdActSys( FLDMMDL_GetBlActCont(fmmdl) );
+	
+	dir = FLDMMDL_GetDirDisp( fmmdl );
+	status = FLDMMDL_GetDrawStatus( fmmdl );
+	GF_ASSERT( status < DRAW_STA_MAX_HERO );
+	anm_id = status * DIR_MAX4;
+	anm_id += dir;
+	
+	if( work->set_anm_dir != dir ){ //方向更新
+		work->set_anm_dir = dir;
+		work->set_anm_status = status;
+		GFL_BBDACT_SetAnimeIdx( actSys, work->actID, anm_id );
+		chg_dir = TRUE;
+	}else if( work->set_anm_status != status ){
+		u16 frame = 0;
+		
+		switch( work->set_anm_status ){
+		case DRAW_STA_WALK_32F:
+		case DRAW_STA_WALK_16F:
+		case DRAW_STA_WALK_8F:
+		case DRAW_STA_WALK_4F:
+		case DRAW_STA_WALK_2F:
+		case DRAW_STA_DASH_4F:
+			if( GFL_BBDACT_GetAnimeFrmIdx(actSys,work->actID) < 2 ){
+				frame = 2;
+			}
+			break;
+		}
+		
+		GFL_BBDACT_SetAnimeIdx( actSys, work->actID, anm_id );
+		GFL_BBDACT_SetAnimeFrmIdx( actSys, work->actID, frame );
+		work->set_anm_status = status;
+	}
+	
+	OS_Printf( "自機自転車アニメ %d\n", GFL_BBDACT_GetAnimeFrmIdx(actSys,work->actID) );
+	FLDMMDL_GetDrawVectorPos( fmmdl, &pos );
+  
+	#ifndef FLDMMDL_BLACT_HEAD3_TEST
+	pos.y += FX32_ONE * 4;
+  pos.z -= NUM_FX32(8);
+	#else
+	pos.y += FX32_ONE * 7; //3
+	#endif
+	
+	GFL_BBD_SetObjectTrans(
+		GFL_BBDACT_GetBBDSystem(actSys), work->actID, &pos );
+	{
+		BOOL flag = TRUE;
+		if( chg_dir == FALSE && FLDMMDL_CheckDrawPause(fmmdl) == TRUE ){
+			flag = FALSE;
+		}
+		GFL_BBDACT_SetAnimeEnable( actSys, work->actID, flag );
+    
+    flag = TRUE; 
+    
+    if( FLDMMDL_CheckStatusBitVanish(fmmdl) == TRUE ){
+      flag = FALSE;
+    }
+    
+    GFL_BBDACT_SetDrawEnable( actSys, work->actID, flag );
+	}
+}
+
+//--------------------------------------------------------------
+/// 描画処理　自転車自機　まとめ
+//--------------------------------------------------------------
+const FLDMMDL_DRAW_PROC_LIST DATA_FLDMMDL_DRAWPROCLIST_CycleHero =
+{
+  DrawHero_Init,
+	DrawCycleHero_Draw,
+	DrawHero_Delete,
+	DrawHero_Delete,	//退避
+	DrawHero_Init,    //本当は復帰
 	DrawHero_GetBlActID,
 };
 

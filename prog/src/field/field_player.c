@@ -27,6 +27,7 @@ struct _FIELD_PLAYER
 	HEAPID heapID;
 	FIELDMAP_WORK *fieldWork;
   
+  PLAYER_MOVE_FORM move_form;
   PLAYER_MOVE_STATE move_state;
   PLAYER_MOVE_VALUE move_value;
 	
@@ -99,6 +100,24 @@ FIELD_PLAYER * FIELD_PLAYER_Create(
 		FLDMMDL_SetVectorPos( fmmdl, pos );
 	}
 	
+  { //OBJコードから動作フォームを設定
+    PLAYER_MOVE_FORM form = PLAYER_MOVE_FORM_NORMAL;
+    u16 code = FLDMMDL_GetOBJCode( fld_player->fldmmdl );
+    switch( code )
+    {
+    case HERO:
+      form = PLAYER_MOVE_FORM_NORMAL;
+      break;
+    case CYCLEHERO:
+      form = PLAYER_MOVE_FORM_CYCLE;
+      break;
+    default:
+      GF_ASSERT( 0 );
+    }
+    
+    fld_player->move_form = form;
+  }
+
 	FLDMMDL_SetStatusBitNotZoneDelete( fld_player->fldmmdl, TRUE );
 	return( fld_player );
 }
@@ -129,11 +148,14 @@ void FIELD_PLAYER_Update( FIELD_PLAYER *fld_player )
 {
 }
 
+//======================================================================
+//  FIELD_PLAYER 動作ステータス
+//======================================================================
 //--------------------------------------------------------------
 /**
  * フィールドプレイヤー　動作ステータス更新
- * @param
- * @retval
+ * @param fld_player
+ * @retval nothing
  */
 //--------------------------------------------------------------
 void FIELD_PLAYER_UpdateMoveStatus( FIELD_PLAYER *fld_player )
@@ -341,6 +363,32 @@ PLAYER_MOVE_STATE FIELD_PLAYER_GetMoveState(
     const FIELD_PLAYER *fld_player )
 {
   return( fld_player->move_state );
+}
+
+//--------------------------------------------------------------
+/**
+ * FIELD_PLAYER PLAYER_MOVE_FORM取得
+ * @param fld_player FIELD_PLAYER
+ * @retval PLAYER_MOVE_FORM
+ */
+//--------------------------------------------------------------
+PLAYER_MOVE_FORM FIELD_PLAYER_GetMoveForm(
+    const FIELD_PLAYER *fld_player )
+{
+  return( fld_player->move_form );
+}
+
+//--------------------------------------------------------------
+/**
+ * FIELD_PLAYER PLAYER_MOVE_FORMセット
+ * @param fld_player FIELD_PLAYER
+ * @retval PLAYER_MOVE_FORM
+ */
+//--------------------------------------------------------------
+void FIELD_PLAYER_SetMoveForm(
+    FIELD_PLAYER *fld_player, PLAYER_MOVE_FORM form )
+{
+  fld_player->move_form = form;
 }
 
 //======================================================================

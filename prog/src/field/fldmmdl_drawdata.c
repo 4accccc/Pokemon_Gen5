@@ -8,28 +8,22 @@
 //======================================================================
 #include "fldmmdl.h"
 #include "fldmmdl_procdraw.h"
-//#include "../../arc/test_graphic/mmodel.naix"
 
 //======================================================================
 //	フィールド動作モデル　描画関数テーブル
 //======================================================================
-//--------------------------------------------------------------
-///	フィールド動作モデル　描画関数テーブル
-//--------------------------------------------------------------
 const FLDMMDL_DRAW_PROC_LIST * const
 	DATA_FLDMMDL_DRAW_PROC_LIST_Tbl[FLDMMDL_DRAWPROCNO_MAX] =
 {
 	&DATA_FLDMMDL_DRAWPROCLIST_Non,		//描画無し
 	&DATA_FLDMMDL_DRAWPROCLIST_Hero,	//自機
 	&DATA_FLDMMDL_DRAWPROCLIST_BlAct,	//通常ビルボードアクター
+	&DATA_FLDMMDL_DRAWPROCLIST_CycleHero,	//自機自転車
 };
 
 //======================================================================
-//	フィールド動作モデル　ビルボードアクター アニメーションテーブル
-//======================================================================
-//--------------------------------------------------------------
 ///	ビルボード汎用アニメ
-//--------------------------------------------------------------
+//======================================================================
 static const GFL_BBDACT_ANM DATA_BlActAnm00_StopU[] =
 {
 	{0,GFL_BBDACT_ANMFLIP_OFF,GFL_BBDACT_ANMFLIP_OFF,1},
@@ -156,9 +150,9 @@ static const GFL_BBDACT_ANM * const DATA_BlActAnm00Tbl[DRAW_STA_MAXDIR4] =
 	DATA_BlActAnm00_WalkR8F,
 };
 
-//--------------------------------------------------------------
-///	自機アニメ
-//--------------------------------------------------------------
+//======================================================================
+//  自機アニメ
+//======================================================================
 static const GFL_BBDACT_ANM DATA_BlActHero_StopU[] = {
 	{0,GFL_BBDACT_ANMFLIP_OFF,GFL_BBDACT_ANMFLIP_OFF,1},
 	{0,GFL_BBDACT_ANMFLIP_OFF,GFL_BBDACT_ANMFLIP_OFF,1},
@@ -374,13 +368,208 @@ static const GFL_BBDACT_ANM * DATA_BlActHeroTbl[DRAW_STA_MAXDIR4_HERO] = {
 	DATA_BlActHero_DashR4F,
 };
 
+//======================================================================
+//  自機自転車アニメ
+//  0 上　停止
+//  1 左　走り0
+//  2 左　停止
+//  3 左　走り1
+//  4 右　走り0
+//  5 右　走り1
+//  6 右　停止0
+//  7 左　ジャンプ0
+//  8 左　ジャンプ1
+//  9 右　ジャンプ0
+//  10 下　走り0
+//  11 右　ジャンプ1
+//  12 上　足つき
+//  13 下　足つき
+//  14 左　足つき
+//  15 右　足つき
+//  16 上　走り0
+//  17 下　停止
+//  18 下　走り0
+//  19 下　走り1
+//======================================================================
 //--------------------------------------------------------------
+//  自機自転車アニメ 上
+//--------------------------------------------------------------
+static const GFL_BBDACT_ANM DATA_BlActCycleHero_StopU[] = {
+	{0,GFL_BBDACT_ANMFLIP_OFF,GFL_BBDACT_ANMFLIP_OFF,1},
+	{0,GFL_BBDACT_ANMFLIP_OFF,GFL_BBDACT_ANMFLIP_OFF,1},
+	{0,GFL_BBDACT_ANMFLIP_OFF,GFL_BBDACT_ANMFLIP_OFF,1},
+	{0,GFL_BBDACT_ANMFLIP_OFF,GFL_BBDACT_ANMFLIP_OFF,1},
+	{GFL_BBDACT_ANMCOM_END,0,0,0},
+};
+static const GFL_BBDACT_ANM DATA_BlActCycleHero_WalkU32F[] = {
+	{0,GFL_BBDACT_ANMFLIP_OFF,GFL_BBDACT_ANMFLIP_OFF,16},
+	{16,GFL_BBDACT_ANMFLIP_OFF,GFL_BBDACT_ANMFLIP_OFF,16},
+	{0,GFL_BBDACT_ANMFLIP_OFF,GFL_BBDACT_ANMFLIP_OFF,16},
+	{16,GFL_BBDACT_ANMFLIP_ON,GFL_BBDACT_ANMFLIP_OFF,16},
+	{GFL_BBDACT_ANMCOM_JMP,0,0,0},
+};
+static const GFL_BBDACT_ANM DATA_BlActCycleHero_WalkU16F[] = {
+	{0,GFL_BBDACT_ANMFLIP_OFF,GFL_BBDACT_ANMFLIP_OFF,8},
+	{16,GFL_BBDACT_ANMFLIP_OFF,GFL_BBDACT_ANMFLIP_OFF,8},
+	{0,GFL_BBDACT_ANMFLIP_OFF,GFL_BBDACT_ANMFLIP_OFF,8},
+	{16,GFL_BBDACT_ANMFLIP_ON,GFL_BBDACT_ANMFLIP_OFF,8},
+	{GFL_BBDACT_ANMCOM_JMP,0,0,0},
+};
+static const GFL_BBDACT_ANM DATA_BlActCycleHero_WalkU8F[] = {
+	{0,GFL_BBDACT_ANMFLIP_OFF,GFL_BBDACT_ANMFLIP_OFF,4},
+	{16,GFL_BBDACT_ANMFLIP_OFF,GFL_BBDACT_ANMFLIP_OFF,4},
+	{0,GFL_BBDACT_ANMFLIP_OFF,GFL_BBDACT_ANMFLIP_OFF,4},
+	{16,GFL_BBDACT_ANMFLIP_ON,GFL_BBDACT_ANMFLIP_OFF,4},
+	{GFL_BBDACT_ANMCOM_JMP,0,0,0},
+};
+
+//--------------------------------------------------------------
+//  自機自転車アニメ　下
+//--------------------------------------------------------------
+static const GFL_BBDACT_ANM DATA_BlActCycleHero_StopD[] = {
+	{17,GFL_BBDACT_ANMFLIP_OFF,GFL_BBDACT_ANMFLIP_OFF,1},
+	{17,GFL_BBDACT_ANMFLIP_OFF,GFL_BBDACT_ANMFLIP_OFF,1},
+	{17,GFL_BBDACT_ANMFLIP_OFF,GFL_BBDACT_ANMFLIP_OFF,1},
+	{17,GFL_BBDACT_ANMFLIP_OFF,GFL_BBDACT_ANMFLIP_OFF,1},
+	{GFL_BBDACT_ANMCOM_END,0,0,0},
+};
+static const GFL_BBDACT_ANM DATA_BlActCycleHero_WalkD32F[] = {
+	{18,GFL_BBDACT_ANMFLIP_OFF,GFL_BBDACT_ANMFLIP_OFF,16},
+	{17,GFL_BBDACT_ANMFLIP_OFF,GFL_BBDACT_ANMFLIP_OFF,16},
+	{18,GFL_BBDACT_ANMFLIP_ON,GFL_BBDACT_ANMFLIP_OFF,16},
+	{17,GFL_BBDACT_ANMFLIP_OFF,GFL_BBDACT_ANMFLIP_OFF,16},
+	{GFL_BBDACT_ANMCOM_JMP,0,0,0},
+};
+static const GFL_BBDACT_ANM DATA_BlActCycleHero_WalkD16F[] = {
+	{18,GFL_BBDACT_ANMFLIP_OFF,GFL_BBDACT_ANMFLIP_OFF,8},
+	{17,GFL_BBDACT_ANMFLIP_OFF,GFL_BBDACT_ANMFLIP_OFF,8},
+	{18,GFL_BBDACT_ANMFLIP_ON,GFL_BBDACT_ANMFLIP_OFF,8},
+	{17,GFL_BBDACT_ANMFLIP_OFF,GFL_BBDACT_ANMFLIP_OFF,8},
+	{GFL_BBDACT_ANMCOM_JMP,0,0,0},
+};
+static const GFL_BBDACT_ANM DATA_BlActCycleHero_WalkD8F[] = {
+	{18,GFL_BBDACT_ANMFLIP_OFF,GFL_BBDACT_ANMFLIP_OFF,4},
+	{17,GFL_BBDACT_ANMFLIP_OFF,GFL_BBDACT_ANMFLIP_OFF,4},
+	{18,GFL_BBDACT_ANMFLIP_ON,GFL_BBDACT_ANMFLIP_OFF,4},
+	{17,GFL_BBDACT_ANMFLIP_OFF,GFL_BBDACT_ANMFLIP_OFF,4},
+	{GFL_BBDACT_ANMCOM_JMP,0,0,0},
+};
+
+//--------------------------------------------------------------
+//  自機自転車アニメ　左
+//--------------------------------------------------------------
+static const GFL_BBDACT_ANM DATA_BlActCycleHero_StopL[] = {
+	{2,GFL_BBDACT_ANMFLIP_OFF,GFL_BBDACT_ANMFLIP_OFF,1},
+	{2,GFL_BBDACT_ANMFLIP_OFF,GFL_BBDACT_ANMFLIP_OFF,1},
+	{2,GFL_BBDACT_ANMFLIP_OFF,GFL_BBDACT_ANMFLIP_OFF,1},
+	{2,GFL_BBDACT_ANMFLIP_OFF,GFL_BBDACT_ANMFLIP_OFF,1},
+	{GFL_BBDACT_ANMCOM_END,0,0,0},
+};
+static const GFL_BBDACT_ANM DATA_BlActCycleHero_WalkL32F[] = {
+	{1,GFL_BBDACT_ANMFLIP_OFF,GFL_BBDACT_ANMFLIP_OFF,16},
+	{2,GFL_BBDACT_ANMFLIP_OFF,GFL_BBDACT_ANMFLIP_OFF,16},
+	{3,GFL_BBDACT_ANMFLIP_OFF,GFL_BBDACT_ANMFLIP_OFF,16},
+	{2,GFL_BBDACT_ANMFLIP_OFF,GFL_BBDACT_ANMFLIP_OFF,16},
+	{GFL_BBDACT_ANMCOM_JMP,0,0,0},
+};
+static const GFL_BBDACT_ANM DATA_BlActCycleHero_WalkL8F[] = {
+	{1,GFL_BBDACT_ANMFLIP_OFF,GFL_BBDACT_ANMFLIP_OFF,4},
+	{2,GFL_BBDACT_ANMFLIP_OFF,GFL_BBDACT_ANMFLIP_OFF,4},
+	{3,GFL_BBDACT_ANMFLIP_OFF,GFL_BBDACT_ANMFLIP_OFF,4},
+	{2,GFL_BBDACT_ANMFLIP_OFF,GFL_BBDACT_ANMFLIP_OFF,4},
+	{GFL_BBDACT_ANMCOM_JMP,0,0,0},
+};
+static const GFL_BBDACT_ANM DATA_BlActCycleHero_WalkL16F[] = {
+	{1,GFL_BBDACT_ANMFLIP_OFF,GFL_BBDACT_ANMFLIP_OFF,8},
+	{2,GFL_BBDACT_ANMFLIP_OFF,GFL_BBDACT_ANMFLIP_OFF,8},
+	{3,GFL_BBDACT_ANMFLIP_OFF,GFL_BBDACT_ANMFLIP_OFF,8},
+	{2,GFL_BBDACT_ANMFLIP_OFF,GFL_BBDACT_ANMFLIP_OFF,8},
+	{GFL_BBDACT_ANMCOM_JMP,0,0,0},
+};
+
+//--------------------------------------------------------------
+//  自機自転車アニメ　右
+//--------------------------------------------------------------
+static const GFL_BBDACT_ANM DATA_BlActCycleHero_StopR[] = {
+	{2,GFL_BBDACT_ANMFLIP_ON,GFL_BBDACT_ANMFLIP_OFF,1},
+	{2,GFL_BBDACT_ANMFLIP_ON,GFL_BBDACT_ANMFLIP_OFF,1},
+	{2,GFL_BBDACT_ANMFLIP_ON,GFL_BBDACT_ANMFLIP_OFF,1},
+	{2,GFL_BBDACT_ANMFLIP_ON,GFL_BBDACT_ANMFLIP_OFF,1},
+	{GFL_BBDACT_ANMCOM_END,0,0,0},
+};
+static const GFL_BBDACT_ANM DATA_BlActCycleHero_WalkR32F[] = {
+	{1,GFL_BBDACT_ANMFLIP_ON,GFL_BBDACT_ANMFLIP_OFF,16},
+	{2,GFL_BBDACT_ANMFLIP_ON,GFL_BBDACT_ANMFLIP_OFF,16},
+	{3,GFL_BBDACT_ANMFLIP_ON,GFL_BBDACT_ANMFLIP_OFF,16},
+	{2,GFL_BBDACT_ANMFLIP_ON,GFL_BBDACT_ANMFLIP_OFF,16},
+	{GFL_BBDACT_ANMCOM_JMP,0,0,0},
+};
+static const GFL_BBDACT_ANM DATA_BlActCycleHero_WalkR16F[] = {
+	{1,GFL_BBDACT_ANMFLIP_ON,GFL_BBDACT_ANMFLIP_OFF,8},
+	{2,GFL_BBDACT_ANMFLIP_ON,GFL_BBDACT_ANMFLIP_OFF,8},
+	{3,GFL_BBDACT_ANMFLIP_ON,GFL_BBDACT_ANMFLIP_OFF,8},
+	{2,GFL_BBDACT_ANMFLIP_ON,GFL_BBDACT_ANMFLIP_OFF,8},
+	{GFL_BBDACT_ANMCOM_JMP,0,0,0},
+};
+static const GFL_BBDACT_ANM DATA_BlActCycleHero_WalkR8F[] = {
+	{1,GFL_BBDACT_ANMFLIP_ON,GFL_BBDACT_ANMFLIP_OFF,4},
+	{2,GFL_BBDACT_ANMFLIP_ON,GFL_BBDACT_ANMFLIP_OFF,4},
+	{3,GFL_BBDACT_ANMFLIP_ON,GFL_BBDACT_ANMFLIP_OFF,4},
+	{2,GFL_BBDACT_ANMFLIP_ON,GFL_BBDACT_ANMFLIP_OFF,4},
+	{GFL_BBDACT_ANMCOM_JMP,0,0,0},
+};
+
+//--------------------------------------------------------------
+//  自機自転車アニメ　データテーブル
+//--------------------------------------------------------------
+static const GFL_BBDACT_ANM * DATA_BlActCycleHeroTbl[DRAW_STA_MAXDIR4] =
+{
+	DATA_BlActCycleHero_StopU,	//DRAW_STA_STOP
+	DATA_BlActCycleHero_StopD,
+	DATA_BlActCycleHero_StopL,
+	DATA_BlActCycleHero_StopR,
+	DATA_BlActCycleHero_WalkU32F,	//DRAW_STA_WALK_32F
+	DATA_BlActCycleHero_WalkD32F,
+	DATA_BlActCycleHero_WalkL32F,
+	DATA_BlActCycleHero_WalkR32F,
+	DATA_BlActCycleHero_WalkU8F,	//DRAW_STA_WALK_16F
+	DATA_BlActCycleHero_WalkD8F,
+	DATA_BlActCycleHero_WalkL8F,
+	DATA_BlActCycleHero_WalkR8F,
+	DATA_BlActCycleHero_WalkU8F,	//DRAW_STA_WALK_8F
+	DATA_BlActCycleHero_WalkD8F,
+	DATA_BlActCycleHero_WalkL8F,
+	DATA_BlActCycleHero_WalkR8F,
+	DATA_BlActCycleHero_WalkU8F,	//DRAW_STA_WALK_4F
+	DATA_BlActCycleHero_WalkD8F,
+	DATA_BlActCycleHero_WalkL8F,
+	DATA_BlActCycleHero_WalkR8F,
+	DATA_BlActCycleHero_WalkU8F,	//DRAW_STA_WALK_2F
+	DATA_BlActCycleHero_WalkD8F,
+	DATA_BlActCycleHero_WalkL8F,
+	DATA_BlActCycleHero_WalkR8F,
+	DATA_BlActCycleHero_WalkU8F,	//DRAW_STA_WALK_6F
+	DATA_BlActCycleHero_WalkD8F,
+	DATA_BlActCycleHero_WalkL8F,
+	DATA_BlActCycleHero_WalkR8F,
+	DATA_BlActCycleHero_WalkU8F,	//DRAW_STA_WALK_3F
+	DATA_BlActCycleHero_WalkD8F,
+	DATA_BlActCycleHero_WalkL8F,
+	DATA_BlActCycleHero_WalkR8F,
+	DATA_BlActCycleHero_WalkU8F,	//DRAW_STA_WALK_7F
+	DATA_BlActCycleHero_WalkD8F,
+	DATA_BlActCycleHero_WalkL8F,
+	DATA_BlActCycleHero_WalkR8F,
+};
+
+//======================================================================
 //	ビルボードアクター　アニメーション　リストテーブル
-//--------------------------------------------------------------
+//======================================================================
 const FLDMMDL_BBDACT_ANMTBL
 	DATA_FLDMMDL_BBDACT_ANM_ListTable[FLDMMDL_BLACT_ANMTBLNO_MAX] =
 {
 	{NULL,0},//FLDMMDL_BLACT_ANMTBLNO_NON
 	{DATA_BlActHeroTbl,DRAW_STA_MAXDIR4_HERO},//FLDMMDL_BLACT_ANMTBLNO_HERO
 	{DATA_BlActAnm00Tbl,DRAW_STA_MAXDIR4},//FLDMMDL_BLACT_ANMTBLNO_BLACT
+  {DATA_BlActCycleHeroTbl,DRAW_STA_MAXDIR4},//FLDMMDL_BLACT_ANMTBLNO_CYCLEHERO
 };
