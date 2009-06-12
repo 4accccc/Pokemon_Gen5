@@ -108,13 +108,15 @@ CONCAT_TARGET = \
 	$(DIR_LANDRES)/palace_test02_00.bin $(DIR_LANDRES)/palace_test02_00.imd \
 	$(DIR_LANDRES)/map12_03.bin $(DIR_LANDRES)/map12_03.imd \
 	$(DIR_LANDRES)/map13_03.bin $(DIR_LANDRES)/map13_03.imd \
-	$(DIR_LANDRES)/m_gate01_00_00.bin $(DIR_LANDRES)/m_gate01_00_00.imd \
-	$(DIR_LANDRES)/m_pc01_00_00.bin $(DIR_LANDRES)/m_pc01_00_00.imd \
+	$(DIR_LANDRES)/h01b_00_00.bin $(DIR_LANDRES)/h01b_00_00.imd \
+	$(DIR_LANDRES)/bctest_00_00.bin $(DIR_LANDRES)/bctest_00_00.imd \
+	$(DIR_LANDRES)/bctest_01_00.bin $(DIR_LANDRES)/bctest_01_00.imd \
+	$(DIR_LANDRES)/bctest_00_01.bin $(DIR_LANDRES)/bctest_00_01.imd \
+	$(DIR_LANDRES)/bctest_01_01.bin $(DIR_LANDRES)/bctest_01_01.imd \
 	$(DIR_LANDRES)/m_dun0101_00_00.bin $(DIR_LANDRES)/m_dun0101_00_00.imd \
 	$(DIR_LANDRES)/m_dun0101_01_00.bin $(DIR_LANDRES)/m_dun0101_01_00.imd \
 	$(DIR_LANDRES)/m_dun0101_00_01.bin $(DIR_LANDRES)/m_dun0101_00_01.imd \
 	$(DIR_LANDRES)/m_dun0101_01_01.bin $(DIR_LANDRES)/m_dun0101_01_01.imd \
-	$(DIR_LANDRES)/m_ruin01_00_00.bin $(DIR_LANDRES)/m_ruin01_00_00.imd \
 	$(DIR_LANDRES)/m_dun0201_00_00.bin $(DIR_LANDRES)/m_dun0201_00_00.imd \
 	$(DIR_LANDRES)/m_dun0201_00_01.bin $(DIR_LANDRES)/m_dun0201_00_01.imd \
 	$(DIR_LANDRES)/m_dun0201_00_02.bin $(DIR_LANDRES)/m_dun0201_00_02.imd \
@@ -154,6 +156,9 @@ CONCAT_TARGET = \
 	$(DIR_LANDRES)/m_dun0602_01_01.bin $(DIR_LANDRES)/m_dun0602_01_01.imd \
 	$(DIR_LANDRES)/m_dun0603_00_00.bin $(DIR_LANDRES)/m_dun0603_00_00.imd \
 	$(DIR_LANDRES)/m_dun0603_00_01.bin $(DIR_LANDRES)/m_dun0603_00_01.imd \
+	$(DIR_LANDRES)/m_ruin01_00_00.bin $(DIR_LANDRES)/m_ruin01_00_00.imd \
+	$(DIR_LANDRES)/m_gate01_00_00.bin $(DIR_LANDRES)/m_gate01_00_00.imd \
+	$(DIR_LANDRES)/m_pc01_00_00.bin $(DIR_LANDRES)/m_pc01_00_00.imd \
 	$(DIR_LANDRES)/m_buill01_00_00.bin $(DIR_LANDRES)/m_buill01_00_00.imd \
 	$(DIR_LANDRES)/m_buill02_00_00.bin $(DIR_LANDRES)/m_buill02_00_00.imd \
 	$(DIR_LANDRES)/m_grow01_00_00.bin $(DIR_LANDRES)/m_grow01_00_00.imd \
@@ -169,9 +174,4 @@ CONCAT_TARGET = \
 	$(DIR_LANDRES)/m_fhb02_00_00.bin $(DIR_LANDRES)/m_fhb02_00_00.imd \
 	$(DIR_LANDRES)/m_hh01_00_00.bin $(DIR_LANDRES)/m_hh01_00_00.imd \
 	$(DIR_LANDRES)/m_hh02_00_00.bin $(DIR_LANDRES)/m_hh02_00_00.imd \
-	$(DIR_LANDRES)/m_labo01_00_00.bin $(DIR_LANDRES)/m_labo01_00_00.imd \
-	$(DIR_LANDRES)/h01b_00_00.bin $(DIR_LANDRES)/h01b_00_00.imd \
-	$(DIR_LANDRES)/bctest_00_00.bin $(DIR_LANDRES)/bctest_00_00.imd \
-	$(DIR_LANDRES)/bctest_01_00.bin $(DIR_LANDRES)/bctest_01_00.imd \
-	$(DIR_LANDRES)/bctest_00_01.bin $(DIR_LANDRES)/bctest_00_01.imd \
-	$(DIR_LANDRES)/bctest_01_01.bin $(DIR_LANDRES)/bctest_01_01.imd
+	$(DIR_LANDRES)/m_labo01_00_00.bin $(DIR_LANDRES)/m_labo01_00_00.imd

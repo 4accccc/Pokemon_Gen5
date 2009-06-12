@@ -15,7 +15,8 @@ include $(PROJECT_RSCDIR)/macro_define
 LAND_ARCLIST	= land_arc_list
 XLS_DATA		= map_list.xls
 FLDCSV			= field_list.csv
-
+DUNCSV      = dungeon_list.csv
+ROOMCSV     = room_list.csv
 CSVCVTR	= $(PROJECT_ROOT)/tools/exceltool/ExcelSeetConv.exe
 
 #---------------------------------------------------------------
@@ -32,8 +33,10 @@ do-build: $(LAND_ARCLIST)
 #リスト作成
 $(LAND_ARCLIST): $(XLS_DATA)
 	@echo create $(LAND_ARCLIST)
-	$(CSVCVTR) -o $(FLDCSV) -p 1 -s csv $(XLS_DATA)	
-	ruby land_list.rb $(FLDCSV)
+	$(CSVCVTR) -o $(FLDCSV) -p 1 -s csv $(XLS_DATA)	#フィールド
+	$(CSVCVTR) -o $(DUNCSV) -p 2 -s csv $(XLS_DATA) #ダンジョン
+	$(CSVCVTR) -o $(ROOMCSV) -p 3 -s csv $(XLS_DATA) #ルーム
+	ruby land_list.rb $(FLDCSV) $(DUNCSV) $(ROOMCSV)
 else #非USERS
 do-build:
 endif
