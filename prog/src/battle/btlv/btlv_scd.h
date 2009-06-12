@@ -38,7 +38,16 @@ typedef enum {
   BTLV_SCD_SelAction_Warn_Kodawari, ///< こだわり中、出せないワザが選ばれた
   BTLV_SCD_SelAction_Warn_WazaLock, ///< 出せないワザが選ばれた
 
+  BTLV_SCD_SelAction_Fight,
+  BTLV_SCD_SelAction_Pokemon,
+  BTLV_SCD_SelAction_Item,
+  BTLV_SCD_SelAction_Escape,
+
 }BtlvScd_SelAction_Result;
+
+
+
+
 
 
 
