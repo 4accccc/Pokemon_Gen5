@@ -15,6 +15,7 @@
 #define KABI32 (0xa) //10 テスト三頭身
 #define BABYBOY1 (0xb) //11 幼児
 #define BABYGIRL1 (0xc) //12 幼女
-#define OBJCODEMAX (0xd) //13 最大
+#define CYCLEHERO (0xd) //13 主人公男自転車
+#define OBJCODEMAX (0xe) //14 最大
 
 #endif
