@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="taya" host="W00146" date="2009-06-12T17:56:41"/>
+	<create user="taya" host="W00146" date="2009-06-12T23:29:45"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -2474,6 +2474,31 @@
 ちょうはつに　のってしまった！</language>
 		<language name="JPN_KANJI" width="216">相手の　[1:02:ポケモンニックネーム:0]　は
 挑発に　乗ってしまった！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_ChouhatuWarn">
+		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]　は　ちょうはつ　されて
+[1:07:わざ名:1]が　だせない！</language>
+		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]　は　挑発されて
+[1:07:わざ名:1]が　出せない！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_ChouhatuWarn_Y">
+		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]　は
+ちょうはつ　されて[BE:00:ページ切り替え（行送り）]
+[1:07:わざ名:1]が　だせない！</language>
+		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]　は
+挑発されて[BE:00:ページ切り替え（行送り）]
+[1:07:わざ名:1]が　出せない！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_ChouhatuWarn_E">
+		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]　は
+ちょうはつ　されて[BE:00:ページ切り替え（行送り）]
+[1:07:わざ名:1]が　だせない！</language>
+		<language name="JPN_KANJI" width="216">相手の　[1:02:ポケモンニックネーム:0]　は
+挑発されて[BE:00:ページ切り替え（行送り）]
+[1:07:わざ名:1]が　出せない！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_PushOutChange">
