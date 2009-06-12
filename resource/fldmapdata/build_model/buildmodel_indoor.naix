@@ -79,7 +79,13 @@ enum {
 	NARC_buildmodel_indoor_d1shelf01_nsbmd = 65,
 	NARC_buildmodel_indoor_d1disk01_nsbmd = 66,
 	NARC_buildmodel_indoor_elboard_test_nsbmd = 67,
-	NARC_buildmodel_indoor_elboard2_test_nsbmd = 68
+	NARC_buildmodel_indoor_elboard2_test_nsbmd = 68,
+	NARC_buildmodel_indoor_d4pillar01_nsbmd = 69,
+	NARC_buildmodel_indoor_d4pillar02_nsbmd = 70,
+	NARC_buildmodel_indoor_d4shill01_nsbmd = 71,
+	NARC_buildmodel_indoor_d4shill02_nsbmd = 72,
+	NARC_buildmodel_indoor_win05_nsbmd = 73,
+	NARC_buildmodel_indoor_chair05_nsbmd = 74
 };
 
 /* NARC_BUILDMODEL_INDOOR_NAIX_ */

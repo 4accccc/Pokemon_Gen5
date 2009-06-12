@@ -88,4 +88,7 @@
 "nsbmdfiles/wf_tree_08.nsbmd"
 "nsbmdfiles/wf_tree_09.nsbmd"
 "nsbmdfiles/wf_tree_10.nsbmd"
+"nsbmdfiles/nschool_01.nsbmd"
+"nsbmdfiles/slide_01.nsbmd"
+"nsbmdfiles/sandbox_01.nsbmd"
 "nsbmdfiles/p_door.nsbmd"

@@ -68,4 +68,10 @@ DEP_INDOOR	=	\
 	$(RESDIR)/d1disk01.nsbmd \
 	$(RESDIR)/elboard_test.nsbmd \
 	$(RESDIR)/elboard2_test.nsbmd \
+	$(RESDIR)/d4pillar01.nsbmd \
+	$(RESDIR)/d4pillar02.nsbmd \
+	$(RESDIR)/d4shill01.nsbmd \
+	$(RESDIR)/d4shill02.nsbmd \
+	$(RESDIR)/win05.nsbmd \
+	$(RESDIR)/chair05.nsbmd \
 

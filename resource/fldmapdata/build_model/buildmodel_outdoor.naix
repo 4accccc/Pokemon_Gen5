@@ -101,7 +101,10 @@ enum {
 	NARC_buildmodel_outdoor_wf_tree_08_nsbmd = 87,
 	NARC_buildmodel_outdoor_wf_tree_09_nsbmd = 88,
 	NARC_buildmodel_outdoor_wf_tree_10_nsbmd = 89,
-	NARC_buildmodel_outdoor_p_door_nsbmd = 90
+	NARC_buildmodel_outdoor_nschool_01_nsbmd = 90,
+	NARC_buildmodel_outdoor_slide_01_nsbmd = 91,
+	NARC_buildmodel_outdoor_sandbox_01_nsbmd = 92,
+	NARC_buildmodel_outdoor_p_door_nsbmd = 93
 };
 
 /* NARC_BUILDMODEL_OUTDOOR_NAIX_ */
