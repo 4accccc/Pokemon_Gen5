@@ -101,6 +101,7 @@ FS_EXTERN_OVERLAY(ohno_debugapp);
 extern const GFL_PROC_DATA WifiClubProcData;
 extern const GFL_PROC_DATA DebugOhnoMainProcData;
 extern const GFL_PROC_DATA DebugLayoutMainProcData;
+extern const GFL_PROC_DATA G_SYNC_ProcData;
 
 //==============================================================================
 //	データ
@@ -121,9 +122,9 @@ static const D_MENULIST DebugMenuList[] = {
 	},
 	{//
 		DEBUG_OHNO_MSG0004, 
-		NULL,	
+		&G_SYNC_ProcData,
 		NULL,
-		NO_OVERLAY_ID
+		FS_OVERLAY_ID(ohno_debugapp)
 	},
 
 
@@ -181,11 +182,13 @@ static GFL_PROC_RESULT DebugOhnoMainProcInit( GFL_PROC * proc, int * seq, void *
     
 	
 	DEBUG_PerformanceSetActive(FALSE);
+	  //デバッグ
+	SaveControl_Load(SaveControl_GetPointer());
 	
-	GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_MATSUDA_DEBUG, 0x70000 );
-	wk = GFL_PROC_AllocWork( proc, sizeof(D_OHNO_WORK), HEAPID_MATSUDA_DEBUG );
+	GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_PROC, 0x70000 );
+	wk = GFL_PROC_AllocWork( proc, sizeof(D_OHNO_WORK), HEAPID_PROC );
 	MI_CpuClear8(wk, sizeof(D_OHNO_WORK));
-	wk->heapID = HEAPID_MATSUDA_DEBUG;
+	wk->heapID = HEAPID_PROC;
 
 	GFL_DISP_SetBank( &vramBank );
 
@@ -271,7 +274,7 @@ static GFL_PROC_RESULT DebugOhnoMainProcInit( GFL_PROC * proc, int * seq, void *
 
 	//フォントパレット転送
 	GFL_ARC_UTIL_TransVramPalette(ARCID_FONT, NARC_font_default_nclr, PALTYPE_MAIN_BG, 
-		0, 0x20, HEAPID_MATSUDA_DEBUG);
+		0, 0x20, HEAPID_PROC);
 
 	return GFL_PROC_RES_FINISH;
 }
@@ -363,7 +366,7 @@ static GFL_PROC_RESULT DebugOhnoMainProcEnd( GFL_PROC * proc, int * seq, void * 
 	GFL_BMPWIN_Exit();
 
 	GFL_PROC_FreeWork(proc);
-	GFL_HEAP_DeleteHeap(HEAPID_MATSUDA_DEBUG);
+	GFL_HEAP_DeleteHeap(HEAPID_PROC);
 	
 	return GFL_PROC_RES_FINISH;
 }

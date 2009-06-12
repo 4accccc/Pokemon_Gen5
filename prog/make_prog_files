@@ -553,12 +553,14 @@ SRCS_OVERLAY_DOWNLOAD_PLAY = test/dlplay/dlplay_parent_sample.c \
         test/dlplay/dlplay_disp_sys.c
 
 # 大野デバッグ
-#===> main
+#===> SRCS_OVERLAY_DEV_IRC
+#===> SRCS_OVERLAY_DEV_WIFI
 SRCS_OVERLAY_OHNO_DEBUG = test/ohno/d_ohno_list.c
 
 # 大野デバッグ
 #===> SRCS_OVERLAY_OHNO_DEBUG
 SRCS_OVERLAY_OHNO_DEBUGAPP  = test/ohno/debug_ohno.c \
+			  net_app/gsync/gsync_state.c \
         test/ohno/fatal_error.c \
         test/ohno/debug_field.c \
         test/ohno/test_layout.c

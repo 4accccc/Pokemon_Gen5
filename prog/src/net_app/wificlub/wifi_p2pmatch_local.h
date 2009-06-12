@@ -279,8 +279,8 @@ typedef struct {
 struct _WIFIP2PMATCH_WORK{
 	GFL_TCB					*vblankFunc;
   WIFI_LIST* pList;				// セーブデータ内のユーザーとフレンドデータ
-//  WIFI_STATUS* pMatch;		// サーバーと送受信する自分の状態
-  TEST_MATCH_WORK* pMatch;		// サーバーと送受信する自分の状態
+  WIFI_STATUS* pMatch;		// サーバーと送受信する自分の状態
+//  TEST_MATCH_WORK* pMatch;		// サーバーと送受信する自分の状態
 
   int friendMatchReadCount;		// ビーコンを受信した友達数
   u8 index2No[WIFIP2PMATCH_MEMBER_MAX];	// フレンドナンバー配列

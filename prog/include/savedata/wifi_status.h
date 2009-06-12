@@ -77,9 +77,21 @@ typedef enum{
 
 
 extern int WIFI_STATUS_GetSize(void);
-extern const MYSTATUS* WIFI_STATUS_GetMyStatus(const WIFI_STATUS* pStatus);
+extern MYSTATUS* WIFI_STATUS_GetMyStatus(WIFI_STATUS* pStatus);
+extern void WIFI_STATUS_SetMyStatus(WIFI_STATUS* pStatus, const MYSTATUS* pMy);
 extern u8 WIFI_STATUS_GetWifiMode(const WIFI_STATUS* pStatus);
+extern void WIFI_STATUS_SetWifiMode( WIFI_STATUS* pStatus, u8 mode);
 extern u8 WIFI_STATUS_GetVChatStatus(const WIFI_STATUS* pStatus);
+extern void WIFI_STATUS_SetVChatStatus(WIFI_STATUS* pStatus,u8 vct);
+
+extern void WIFI_STATUS_SetMonsNo(WIFI_STATUS* pStatus,int index,u16 no);
+extern void WIFI_STATUS_SetItemNo(WIFI_STATUS* pStatus,int index,u16 no);
+extern u16 WIFI_STATUS_GetMonsNo(WIFI_STATUS* pStatus,int index);
+extern u16 WIFI_STATUS_GetItemNo(WIFI_STATUS* pStatus,int index);
+extern void WIFI_STATUS_SetMyNation(WIFI_STATUS* pStatus,u8 no);
+extern void WIFI_STATUS_SetMyArea(WIFI_STATUS* pStatus,u8 no);
+
 extern u8 WIFI_STATUS_GetActive(const WIFI_STATUS* pStatus);
 extern BOOL WIFI_STATUS_IsVChatMac(const WIFI_STATUS* pStatus, const u8* SearchMacAddress);
+
 
