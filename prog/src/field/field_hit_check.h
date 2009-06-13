@@ -25,7 +25,7 @@ typedef struct {
 
 //--------------------------------------------------------------
 //--------------------------------------------------------------
-static inline BOOL FLDHIT_RECT_IsIntersectRect(const RECT * rect0, const RECT * rect1)
+static inline BOOL FLDHIT_RECT_IsIntersectRect(const FLDHIT_RECT * rect0, const FLDHIT_RECT * rect1)
 {
   if( (rect0->left <= rect1->right) && (rect1->left <= rect0->right)
       && (rect0->top <= rect1->bottom) && (rect1->top <= rect0->bottom)) {
@@ -37,7 +37,7 @@ static inline BOOL FLDHIT_RECT_IsIntersectRect(const RECT * rect0, const RECT * 
 
 //--------------------------------------------------------------
 //--------------------------------------------------------------
-static inline BOOL FLDHIT_RECT_IsIncludePos(const RECT * rect, fx32 x, fx32 y)
+static inline BOOL FLDHIT_RECT_IsIncludePos(const FLDHIT_RECT * rect, fx32 x, fx32 y)
 {
 	if( rect->left <= x && rect->right >= x && rect->top <= y && rect->bottom >= y ){
 		return( TRUE );
