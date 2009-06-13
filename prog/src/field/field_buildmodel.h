@@ -47,6 +47,10 @@ extern const FLDMAPPER_RESISTDATA_OBJTBL * FIELD_BMODEL_MAN_GetOBJTBL(const FIEL
 //------------------------------------------------------------------
 extern u16 FIELD_BMODEL_MAN_GetEntryIndex(const FIELD_BMODEL_MAN* man, BMODEL_ID id);
 
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+extern BOOL FIELD_BMODEL_MAN_GetSubModel(const FIELD_BMODEL_MAN * man, 
+    u16 bm_id, VecFx32 * ofs, u32 * entry_idx);
 
 //============================================================================================
 //    “dŒõŒfŽ¦”ÂŠÖ˜A

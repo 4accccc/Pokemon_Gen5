@@ -95,16 +95,26 @@ BOOL FieldLoadMapData_WBNormalFile( GFL_G3D_MAP* g3Dmap, void * exWork )
 				LayoutFormat* layout = (LayoutFormat*)((u32)mem + fileHeader->positionOffset);
 				PositionSt* objStatus = (PositionSt*)&layout->posData;
 				GFL_G3D_MAP_GLOBALOBJ_ST status;
-				int i, count = layout->count;
+				int i, j, count;
         FIELD_BMODEL_MAN * bm = FLD_G3D_MAP_EXWORK_GetBModelMan(p_exwork);
 
-				for( i=0; i<count; i++ ){
+				for( i=0, j = 0, count = layout->count; i<count; j++, i++ ){
 					status.id = FIELD_BMODEL_MAN_GetEntryIndex(bm, objStatus[i].resourceID);
 					VEC_Set( &status.trans, 
 							objStatus[i].xpos, objStatus[i].ypos, -objStatus[i].zpos );
 					status.rotate = (u16)(objStatus[i].rotate);
 					//OS_Printf("bm id = %d, rotate = %04x\n",i, status.rotate);
-					GFL_G3D_MAP_ResistGlobalObj( g3Dmap, &status, i );
+					GFL_G3D_MAP_ResistGlobalObj( g3Dmap, &status, j );
+          if (FIELD_BMODEL_MAN_GetSubModel(bm,
+                objStatus[i].resourceID, &status.trans, &status.id) == TRUE) 
+          {
+            j++;
+            status.trans.x += objStatus[i].xpos;
+            status.trans.y += objStatus[i].ypos;
+            status.trans.z += objStatus[i].zpos;
+					  GFL_G3D_MAP_ResistGlobalObj( g3Dmap, &status, j );
+          }
+
 				}
 			}
 		}

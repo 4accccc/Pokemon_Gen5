@@ -29,6 +29,9 @@
 
 typedef EL_SCOREBOARD_TEX ELBOARD_TEX;
 
+#include "../resource/fldmapdata/build_model/buildmodel_outdoor.naix"
+#include "../resource/fldmapdata/build_model/buildmodel_indoor.naix"
+
 //============================================================================================
 //============================================================================================
 
@@ -279,6 +282,20 @@ const FIELD_BMANIME_DATA * FIELD_BMODEL_MAN_GetAnimeData(FIELD_BMODEL_MAN * man,
   GF_ASSERT(bm_id < BMODEL_ID_MAX);
   GF_ASSERT(entry_id < man->entryCount);
   return &man->animeData[entry_id];
+}
+
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+BOOL FIELD_BMODEL_MAN_GetSubModel(const FIELD_BMODEL_MAN * man, 
+    u16 bm_id, VecFx32 * ofs, u32 * entry_idx)
+{
+  if (bm_id != NARC_buildmodel_outdoor_pc_01_nsbmd)
+  {
+    return FALSE;
+  }
+  *entry_idx = FIELD_BMODEL_MAN_GetEntryIndex(man, NARC_buildmodel_outdoor_p_door_nsbmd);
+  VEC_Set(ofs, 0, 0, 0 * FX32_ONE);
+  return TRUE;
 }
 
 //============================================================================================
