@@ -25,6 +25,9 @@
 #include "system/g3d_tool.h"
 
 #include "field_bmanime.h"  //FIELD_BMANIME_DATAなど
+
+#include "field_hit_check.h"
+
 //============================================================================================
 /**
  *
@@ -53,21 +56,12 @@
 
 
 #define GLOBAL_OBJ_COUNT	(64)
-#define GLOBAL_OBJ_ANMCOUNT	(4)
 #define GLOBAL_DDOBJ_COUNT	(32)
 //------------------------------------------------------------------
 typedef struct {
 	u32			blockIdx;
 	VecFx32		trans;
 }BLOCKINFO;
-
-//------------------------------------------------------------------
-typedef struct {
-	GFL_G3D_RES*	g3DresMdl;						//モデルリソース(High Q)
-	GFL_G3D_RES*	g3DresTex;						//テクスチャリソース
-	GFL_G3D_RES*	g3DresAnm[GLOBAL_OBJ_ANMCOUNT];	//アニメリソース
-	GFL_G3D_OBJ*	g3Dobj;							//オブジェクトハンドル
-}GLOBALOBJ_RES;
 
 //-------------------------------------
 // GFL_G3D_MAP拡張ワーク
@@ -156,8 +150,6 @@ static void CreateGlobalObject( FLDMAPPER* g3Dmapper, const FLDMAPPER_RESISTDATA
 static void DeleteGlobalObject( FLDMAPPER* g3Dmapper );
 
 static void CreateGlobalObj_forBModel(FLDMAPPER * g3Dmapper, FIELD_BMODEL_MAN * bmodel_man);
-static void CreateGrobalObj_forTbl( FLDMAPPER* g3Dmapper, const FLDMAPPER_RESISTDATA_OBJTBL* gobjTbl );
-static void CreateGrobalObj_forBin( FLDMAPPER* g3Dmapper, const FLDMAPPER_RESISTDATA_OBJBIN* gobjBin );
 
 static void CreateGlobalObj( GLOBALOBJ_RES* objRes, const MAKE_OBJ_PARAM* param );
 static void DeleteGlobalObj( GLOBALOBJ_RES* objRes );
@@ -323,13 +315,9 @@ void	FLDMAPPER_Main( FLDMAPPER* g3Dmapper )
 			objRes = &g3Dmapper->globalObjRes[i];
 
 			if( objRes->g3Dobj != NULL ){
-#if 1
 				for( j=0; j<GLOBAL_OBJ_ANMCOUNT; j++ ){
 					GFL_G3D_OBJECT_LoopAnimeFrame( objRes->g3Dobj, j, FX32_ONE ); 
 				}
-#else
-				GFL_G3D_OBJECT_LoopAnimeFrame( objRes->g3Dobj, 0, FX32_ONE ); 
-#endif
 			}
 		}
 	}
@@ -365,6 +353,8 @@ void	FLDMAPPER_Draw( const FLDMAPPER* g3Dmapper, GFL_G3D_CAMERA* g3Dcamera )
 		GFL_G3D_MAP_Draw( g3Dmapper->blockWk[i].g3Dmap, g3Dcamera );
 		GFL_G3D_MAP_SetTrans( g3Dmapper->blockWk[i].g3Dmap, &org_pos );
 	}
+
+  FIELD_BMODEL_MAN_Draw( g3Dmapper->bmodel_man );
 	GFL_G3D_MAP_EndDraw();
 }
 
@@ -381,6 +371,68 @@ BOOL FLDMAPPER_CheckTrans( const FLDMAPPER* g3Dmapper )
 		}
 	}
 	return TRUE;
+}
+
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+const GFL_G3D_MAP_GLOBALOBJ_ST * FLDMAPPER_CreateObjStatusList
+( const FLDMAPPER* g3Dmapper, const FLDHIT_RECT * rect, HEAPID heapID, u32 * num )
+{
+  enum { MAPOBJ_MAX = 32 };
+  int i, j, k;
+  int count = 0;
+  GFL_G3D_MAP_GLOBALOBJ_ST status;
+  VecFx32 map_pos;
+  u8 * set = GFL_HEAP_AllocClearMemory(heapID, g3Dmapper->blockNum * MAPOBJ_MAX );
+  GFL_G3D_MAP_GLOBALOBJ_ST * st;
+
+	for ( i=0; i<g3Dmapper->blockNum; i++ ){
+    GFL_G3D_MAP_GetTrans( g3Dmapper->blockWk[i].g3Dmap, &map_pos);
+    for ( j=0; j<MAPOBJ_MAX; j++)
+    {
+		  if (GFL_G3D_MAP_GetGlobalObj( g3Dmapper->blockWk[i].g3Dmap, &status, j ) == FALSE)
+      {
+        continue;
+      }
+      VEC_Add( &status.trans, &map_pos, &status.trans );
+      if (rect->top <= status.trans.z && status.trans.z <= rect->bottom
+          && rect->left <= status.trans.x && status.trans.x <= rect->right)
+      {
+        set[MAPOBJ_MAX * i + j] = 1;
+      }
+    }
+  }
+
+  for (i = 0; i < MAPOBJ_MAX * g3Dmapper->blockNum; i++)
+  {
+    if (set[i] ) count ++;
+  }
+  if (count == 0)
+  {
+    *num = 0;
+    GFL_HEAP_FreeMemory(set);
+    return NULL;
+  }
+
+  st = GFL_HEAP_AllocClearMemory(heapID, sizeof(GFL_G3D_MAP_GLOBALOBJ_ST) * count);
+  for (i=0, k=0; i<MAPOBJ_MAX * g3Dmapper->blockNum; i++)
+  {
+    if(set[i])
+    {
+      GFL_G3D_MAP_GetTrans( g3Dmapper->blockWk[i / MAPOBJ_MAX].g3Dmap, &map_pos);
+      j = i % MAPOBJ_MAX;
+		  if (GFL_G3D_MAP_GetGlobalObj( g3Dmapper->blockWk[i / MAPOBJ_MAX].g3Dmap, &st[k], j ) == FALSE)
+      {
+        GF_ASSERT(0);
+      }
+      VEC_Add( &st[k].trans, &map_pos, &st[k].trans );
+      k ++;
+    }
+  }
+  *num = count;
+
+  GFL_HEAP_FreeMemory(set);
+  return st;
 }
 
 //============================================================================================
@@ -495,6 +547,8 @@ void FLDMAPPER_ResistData( FLDMAPPER* g3Dmapper, const FLDMAPPER_RESISTDATA* res
 
 }
 
+//------------------------------------------------------------------
+//------------------------------------------------------------------
 void FLDMAPPER_ReleaseData( FLDMAPPER* g3Dmapper )
 {
 	int i;
@@ -575,19 +629,16 @@ static void CreateGlobalObject( FLDMAPPER* g3Dmapper, const FLDMAPPER_RESISTDATA
     CreateGlobalObj_forBModel( g3Dmapper, g3Dmapper->bmodel_man);
     break;
 	case FLDMAPPER_RESIST_OBJTYPE_TBL:
-		GF_ASSERT(resistData->gobjData);
-		CreateGrobalObj_forTbl( g3Dmapper, (const FLDMAPPER_RESISTDATA_OBJTBL*)resistData->gobjData );
-		break;
 	case FLDMAPPER_RESIST_OBJTYPE_BIN:
-		GF_ASSERT(resistData->gobjData);
-		CreateGrobalObj_forBin( g3Dmapper, (const FLDMAPPER_RESISTDATA_OBJBIN*)resistData->gobjData );
-		break;
+    GF_ASSERT(0);
 	case FLDMAPPER_RESIST_OBJTYPE_NONE:
 		/* do nothing */
 		break;
 	}
 }
 
+//------------------------------------------------------------------
+//------------------------------------------------------------------
 static void DeleteGlobalObject( FLDMAPPER* g3Dmapper )
 {
 	if( g3Dmapper->globalObj.gddobj != NULL ){
@@ -622,6 +673,7 @@ static void DeleteGlobalObject( FLDMAPPER* g3Dmapper )
 
 //------------------------------------------------------------------
 // オブジェクトリソースを作成
+//------------------------------------------------------------------
 //通常MDL
 static void CreateGlobalObj( GLOBALOBJ_RES* objRes, const MAKE_OBJ_PARAM* param )
 {
@@ -660,6 +712,8 @@ static void CreateGlobalObj( GLOBALOBJ_RES* objRes, const MAKE_OBJ_PARAM* param 
 	objRes->g3Dobj = GFL_G3D_OBJECT_Create( g3Drnd, anmTbl, GLOBAL_OBJ_ANMCOUNT );
 }
 
+//------------------------------------------------------------------
+//------------------------------------------------------------------
 static void DeleteGlobalObj( GLOBALOBJ_RES* objRes )
 {
 	GFL_G3D_RND*	g3Drnd;
@@ -705,6 +759,16 @@ static void DeleteGlobalObj( GLOBALOBJ_RES* objRes )
 		}
 	}
 }
+
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+const GLOBALOBJ_RES * FLDMAPPER_GetMapObjResource(const FLDMAPPER* g3Dmapper, u32 idx)
+{
+  GF_ASSERT( idx < g3Dmapper->globalObjResCount );
+  return &g3Dmapper->globalObjRes[idx];
+}
+
+
 
 //------------------------------------------------------------------
 //DirectDraw
@@ -804,6 +868,7 @@ static void GetMapperBlockIdxAll( const FLDMAPPER* g3Dmapper, const VecFx32* pos
 }
 
 //------------------------------------------------------------------
+//------------------------------------------------------------------
 static void GetMapperBlockIdxXZ( const FLDMAPPER* g3Dmapper, const VecFx32* pos, BLOCK_NEWREQ* new )
 {
 	u16		sizex, sizez;
@@ -863,6 +928,7 @@ static void GetMapperBlockIdxXZ( const FLDMAPPER* g3Dmapper, const VecFx32* pos,
   }
 }
 
+//------------------------------------------------------------------
 //------------------------------------------------------------------
 static void GetMapperBlockIdxY( const FLDMAPPER* g3Dmapper, const VecFx32* pos, BLOCK_NEWREQ* new )
 {
@@ -1354,21 +1420,29 @@ static const GFL_G3D_MAP_DDOBJ_DATA drawTreeData = {
 //============================================================================================
 //------------------------------------------------------------------
 //------------------------------------------------------------------
+static void MAKE_RES_PARAM_init(MAKE_RES_PARAM * resParam)
+{
+  resParam->arcID = MAKE_RES_NONPARAM;
+  resParam->datID = MAKE_RES_NONPARAM;
+  resParam->inDatNum = 0;
+}
+static void MAKE_RES_PARAM_set(MAKE_RES_PARAM * resParam, u32 arcID, u32 datID, u32 inDatNum)
+{
+  resParam->arcID = arcID;
+  resParam->datID = datID;
+  resParam->inDatNum = inDatNum;
+}
+//------------------------------------------------------------------
+//------------------------------------------------------------------
 static void MAKE_OBJ_PARAM_init(MAKE_OBJ_PARAM * objParam)
 { 
   int i;
-  objParam->mdl.arcID = MAKE_RES_NONPARAM;
-  objParam->mdl.datID = MAKE_RES_NONPARAM;
-  objParam->mdl.inDatNum = 0;
+  MAKE_RES_PARAM_init( &objParam->mdl );
+  MAKE_RES_PARAM_init( &objParam->tex );
 
-  objParam->tex.arcID = MAKE_RES_NONPARAM;
-  objParam->tex.datID = MAKE_RES_NONPARAM;
-  objParam->tex.inDatNum = 0;
 
   for( i=0; i<GLOBAL_OBJ_ANMCOUNT; i++ ){
-    objParam->anm[i].arcID = MAKE_RES_NONPARAM;
-    objParam->anm[i].datID = MAKE_RES_NONPARAM;
-    objParam->anm[i].inDatNum = 0;
+    MAKE_RES_PARAM_init( &objParam->anm[i] );
   }
 
 }
@@ -1378,199 +1452,70 @@ static void MAKE_OBJ_PARAM_init(MAKE_OBJ_PARAM * objParam)
 static void CreateGlobalObj_forBModel(FLDMAPPER * g3Dmapper, FIELD_BMODEL_MAN * bmodel_man)
 { 
 	int i;
+  MAKE_OBJ_PARAM objParam;
+  ARCID anmArcID;
   const FLDMAPPER_RESISTDATA_OBJTBL * gobjTbl;
   gobjTbl = FIELD_BMODEL_MAN_GetOBJTBL(bmodel_man);
 
-	if( gobjTbl->objCount ){
-		MAKE_OBJ_PARAM objParam;
-    MAKE_OBJ_PARAM_init(&objParam);
+	if( gobjTbl->objCount == 0 ){
+    return;
+  }
 
-	  g3Dmapper->globalObjResCount = gobjTbl->objCount;
-		g3Dmapper->globalObjRes = GFL_HEAP_AllocClearMemory
-						( g3Dmapper->heapID, sizeof(GLOBALOBJ_RES) * gobjTbl->objCount );
+  g3Dmapper->globalObjResCount = gobjTbl->objCount;
+  g3Dmapper->globalObjRes = GFL_HEAP_AllocClearMemory
+          ( g3Dmapper->heapID, sizeof(GLOBALOBJ_RES) * gobjTbl->objCount );
 
-	  g3Dmapper->globalObj.gobjCount = gobjTbl->objCount;
-		g3Dmapper->globalObj.gobj = GFL_HEAP_AllocClearMemory
-						( g3Dmapper->heapID, sizeof(GFL_G3D_MAP_OBJ) * gobjTbl->objCount );
+  g3Dmapper->globalObj.gobjCount = gobjTbl->objCount;
+  g3Dmapper->globalObj.gobj = GFL_HEAP_AllocClearMemory
+          ( g3Dmapper->heapID, sizeof(GFL_G3D_MAP_OBJ) * gobjTbl->objCount );
 
-		for( i=0 ; i<gobjTbl->objCount; i++ ){
-      GLOBALOBJ_RES * objRes = &g3Dmapper->globalObjRes[i];
-      ARCID arcID = FIELD_BMODEL_MAN_GetAnimeArcID(g3Dmapper->bmodel_man);
-      int j, count;
-      const u16 * anmIDs;
-      const FIELD_BMANIME_DATA * anmData;
-			objParam.mdl.arcID = gobjTbl->objArcID;
-			objParam.mdl.datID = gobjTbl->objData[i].highQ_ID;
-			objParam.mdl.inDatNum = 0;
-      
-      {//配置モデルに対応したアニメデータを取得 
-        anmData = FIELD_BMODEL_MAN_GetAnimeData(g3Dmapper->bmodel_man, objParam.mdl.datID);
-        count = FIELD_BMANIME_DATA_getAnimeCount(anmData);
-        anmIDs = FIELD_BMANIME_DATA_getAnimeFileID(anmData);
-      }
-			for( j=0; j<GLOBAL_OBJ_ANMCOUNT; j++ ){
-				if( j<count ) 
-        { 
-					objParam.anm[j].arcID = arcID;
-					objParam.anm[j].datID = anmIDs[j];
-					objParam.anm[j].inDatNum = 0;
-				} else {
-					objParam.anm[j].arcID = MAKE_RES_NONPARAM;
-					objParam.anm[j].datID = MAKE_RES_NONPARAM;
-					objParam.anm[j].inDatNum = 0;
-				}
-			}
-			CreateGlobalObj( objRes, &objParam );
+  MAKE_OBJ_PARAM_init(&objParam);
+  anmArcID = FIELD_BMODEL_MAN_GetAnimeArcID(g3Dmapper->bmodel_man);
+
+  for( i=0 ; i<gobjTbl->objCount; i++ )
+  {
+    GLOBALOBJ_RES * objRes = &g3Dmapper->globalObjRes[i];
+
+    int j, count;
+    const u16 * anmIDs;
+    const FIELD_BMANIME_DATA * anmData;
+
+    MAKE_RES_PARAM_set(&objParam.mdl, gobjTbl->objArcID, gobjTbl->objData[i].highQ_ID, 0);
+    
+    //配置モデルに対応したアニメデータを取得 
+    anmData = FIELD_BMODEL_MAN_GetAnimeData(g3Dmapper->bmodel_man, gobjTbl->objData[i].highQ_ID);
+    count = FIELD_BMANIME_DATA_getAnimeCount(anmData);
+    anmIDs = FIELD_BMANIME_DATA_getAnimeFileID(anmData);
+
+    for( j=0; j<GLOBAL_OBJ_ANMCOUNT; j++ )
+    {
+      if( j<count ) 
       { 
-        GFL_G3D_RES *g3DresTex;
-        g3DresTex =	GFL_G3D_RENDER_GetG3DresTex(GFL_G3D_OBJECT_GetG3Drnd(objRes->g3Dobj));
-        FIELD_BMANIME_DATA_entryTexData(g3Dmapper->bmodel_man, anmData, g3DresTex );
+        MAKE_RES_PARAM_set(&objParam.anm[j], anmArcID, anmIDs[j], 0);
+      } else {
+        MAKE_RES_PARAM_init( &objParam.anm[j] );
       }
+    }
 
-			g3Dmapper->globalObj.gobj[i].g3DobjHQ = objRes->g3Dobj;
-			g3Dmapper->globalObj.gobj[i].g3DobjLQ = NULL;
-			for( j=0; j<GLOBAL_OBJ_ANMCOUNT; j++ ){
-				GFL_G3D_OBJECT_EnableAnime( objRes->g3Dobj, j ); 
-				GFL_G3D_OBJECT_ResetAnimeFrame( objRes->g3Dobj, j ); 
-			}
-		}
-	}
+    CreateGlobalObj( objRes, &objParam );
+    { 
+      GFL_G3D_RES *g3DresTex;
+      g3DresTex =	GFL_G3D_RENDER_GetG3DresTex( GFL_G3D_OBJECT_GetG3Drnd(objRes->g3Dobj) );
+      FIELD_BMANIME_DATA_entryTexData( g3Dmapper->bmodel_man, anmData, g3DresTex );
+    }
+
+    g3Dmapper->globalObj.gobj[i].g3DobjHQ = objRes->g3Dobj;
+    g3Dmapper->globalObj.gobj[i].g3DobjLQ = NULL;
+    if (FIELD_BMANIME_DATA_getAnimeType(anmData) == BMANIME_TYPE_ETERNAL)
+    {
+      for( j=0; j<GLOBAL_OBJ_ANMCOUNT; j++ ){
+        GFL_G3D_OBJECT_EnableAnime( objRes->g3Dobj, j );  //renderとanimeの関連付け
+        GFL_G3D_OBJECT_ResetAnimeFrame( objRes->g3Dobj, j ); 
+      }
+    }
+  }
 }
 
-//------------------------------------------------------------------
-//テーブルデータより作成
-//------------------------------------------------------------------
-static void CreateGrobalObj_forTbl( FLDMAPPER* g3Dmapper, const FLDMAPPER_RESISTDATA_OBJTBL* gobjTbl )
-{
-	int i, resCount = 0;
-
-	if( gobjTbl->objCount ){
-		MAKE_OBJ_PARAM objParam;
-    MAKE_OBJ_PARAM_init(&objParam);
-		g3Dmapper->globalObjRes = GFL_HEAP_AllocClearMemory//HQ,LQ の２つ分確保
-						( g3Dmapper->heapID, sizeof(GLOBALOBJ_RES) * (gobjTbl->objCount*2) );
-		g3Dmapper->globalObj.gobj = GFL_HEAP_AllocClearMemory
-						( g3Dmapper->heapID, sizeof(GFL_G3D_MAP_OBJ) * gobjTbl->objCount );
-
-		for( i=0, resCount=0; i<gobjTbl->objCount; i++ ){
-			objParam.mdl.arcID = gobjTbl->objArcID;
-			objParam.mdl.inDatNum = 0;
-
-			objParam.mdl.datID = gobjTbl->objData[i].highQ_ID;
-			CreateGlobalObj( &g3Dmapper->globalObjRes[resCount], &objParam );
-			g3Dmapper->globalObj.gobj[i].g3DobjHQ = g3Dmapper->globalObjRes[resCount].g3Dobj;
-			resCount++;
-
-			if( gobjTbl->objData[i].lowQ_ID != NON_LOWQ ){
-				objParam.mdl.datID = gobjTbl->objData[i].lowQ_ID;
-				CreateGlobalObj( &g3Dmapper->globalObjRes[resCount], &objParam );
-				g3Dmapper->globalObj.gobj[i].g3DobjLQ = g3Dmapper->globalObjRes[resCount].g3Dobj;
-				resCount++;
-			} else {
-				g3Dmapper->globalObj.gobj[i].g3DobjLQ = NULL;
-			}
-		}
-		g3Dmapper->globalObj.gobjCount = gobjTbl->objCount;
-	}
-	g3Dmapper->globalObjResCount = resCount;
-
-	if( gobjTbl->ddobjCount ){
-	  FLDMAPPER_RESISTDATA_DDOBJ resistDDobj;
-
-		g3Dmapper->globalObj.gddobj = GFL_HEAP_AllocClearMemory
-					( g3Dmapper->heapID, sizeof(GFL_G3D_MAP_DDOBJ) * gobjTbl->ddobjCount );
-		resistDDobj.arcID = gobjTbl->ddobjArcID;
-		resistDDobj.data = gobjTbl->ddobjData;
-		resistDDobj.count = gobjTbl->ddobjCount;
-
-		CreateGlobalDDobj( g3Dmapper, &resistDDobj );
-	}
-}
-
-//------------------------------------------------------------------
-//バイナリデータより作成(ポケモンＧＳ方式)
-//------------------------------------------------------------------
-typedef struct {
-	u16			count;
-	u16			data;
-}GOBJ_BINDATA;
-
-typedef struct {
-	u8 Flg;			//アニメするかどうか
-	u8 Type;		//アニメタイプ
-	u8 Suicide;		//自殺フラグ
-	u8 RepeatEntry;	//重複登録フラグ
-	u8 Door;
-	u8 Dummy;
-	u8 AnmNum;
-	u8 SetNum;
-	int Code[4];	//アニメコード
-}GOBJ_ANMTBL_HEADER;
-
-static void CreateGrobalObj_forBin( FLDMAPPER* g3Dmapper, const FLDMAPPER_RESISTDATA_OBJBIN* gobjBin )
-{
-	GOBJ_BINDATA*					gobjListHeader;
-	u16*							gobjList;
-
-	gobjListHeader = GFL_ARC_LoadDataAlloc( gobjBin->areaObjArcID, 
-											gobjBin->areaObjDatID,
-											GetHeapLowID(g3Dmapper->heapID) );
-	gobjList = (u16*)&gobjListHeader->data;
-
-	g3Dmapper->globalObjResCount = gobjListHeader->count;
-
-	if( gobjListHeader->count ){
-		GOBJ_ANMTBL_HEADER	gobjAnmListHeader;
-		MAKE_OBJ_PARAM objParam;
-		int i, j;
-
-		g3Dmapper->globalObjRes = GFL_HEAP_AllocClearMemory
-				( g3Dmapper->heapID, sizeof(GLOBALOBJ_RES) * gobjListHeader->count );
-		g3Dmapper->globalObj.gobj = GFL_HEAP_AllocClearMemory
-				( g3Dmapper->heapID, sizeof(GFL_G3D_MAP_OBJ) * gobjListHeader->count );
-		g3Dmapper->globalObj.gobjIDexchange = GFL_HEAP_AllocClearMemory
-				( g3Dmapper->heapID, sizeof(u16) * gobjListHeader->count );
-
-		//オブジェクトレンダー作成
-		for( i=0; i<gobjListHeader->count; i++ ){
-			GFL_ARC_LoadDataOfs( &gobjAnmListHeader, gobjBin->areaObjAnmTblArcID, 
-									gobjList[i], 0, sizeof(GOBJ_ANMTBL_HEADER) );
-
-			objParam.mdl.arcID = gobjBin->objArcID;
-			objParam.mdl.datID = gobjList[i];
-			objParam.mdl.inDatNum = 0;
-
-			objParam.tex.arcID = MAKE_RES_NONPARAM;
-			objParam.tex.datID = MAKE_RES_NONPARAM;
-			objParam.tex.inDatNum = 0;
-
-			for( j=0; j<GLOBAL_OBJ_ANMCOUNT; j++ ){
-				if( j<gobjAnmListHeader.SetNum ){
-					objParam.anm[j].arcID = gobjBin->objanmArcID;
-					objParam.anm[j].datID = gobjAnmListHeader.Code[j];
-					objParam.anm[j].inDatNum = gobjAnmListHeader.AnmNum;
-				} else {
-					objParam.anm[j].arcID = MAKE_RES_NONPARAM;
-					objParam.anm[j].datID = MAKE_RES_NONPARAM;
-					objParam.anm[j].inDatNum = 0;
-				}
-			}
-
-			(g3Dmapper->globalObj.gobjIDexchange)[i] = gobjList[i];	//配置ＩＤ変換用
-
-			CreateGlobalObj( &g3Dmapper->globalObjRes[i], &objParam );
-			g3Dmapper->globalObj.gobj[i].g3DobjHQ = g3Dmapper->globalObjRes[i].g3Dobj;
-			g3Dmapper->globalObj.gobj[i].g3DobjLQ = NULL;
-
-			for( j=0; j<gobjAnmListHeader.SetNum; j++ ){
-				GFL_G3D_OBJECT_EnableAnime( g3Dmapper->globalObjRes[i].g3Dobj, j ); 
-				GFL_G3D_OBJECT_ResetAnimeFrame( g3Dmapper->globalObjRes[i].g3Dobj, j ); 
-			}
-		}
-		g3Dmapper->globalObj.gobjCount = gobjListHeader->count;
-	}
-	GFL_HEAP_FreeMemory( gobjListHeader );
-}
 
 //============================================================================================
 //============================================================================================

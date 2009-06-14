@@ -73,6 +73,13 @@ struct _FIELD_BMANIME_DATA
   u16 anm_id[BMANIME_ID_COUNT_MAX];
 
 };
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+typedef struct {
+  GFL_G3D_OBJ * gfl_obj;
+  BOOL suicide_flag;
+  GFL_G3D_OBJSTATUS status;
+}FIELD_BMODEL;
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
@@ -94,6 +101,8 @@ struct _FIELD_BMODEL_MAN
   
   STRBUF * elb_str[FIELD_BMODEL_ELBOARD_ID_MAX];
   ELBOARD_TEX * elb_tex[FIELD_BMODEL_ELBOARD_ID_MAX];
+
+  FIELD_BMODEL * entryObj;
 };
 
 //============================================================================================
@@ -137,6 +146,8 @@ FIELD_BMODEL_MAN * FIELD_BMODEL_MAN_Create(HEAPID heapID)
     man->elb_tex[i] = NULL;
   }
 
+  man->entryObj = NULL;
+
 	return man;
 }
 
@@ -177,7 +188,22 @@ void FIELD_BMODEL_MAN_Main(FIELD_BMODEL_MAN * man)
     }
   }
 
+  if (man->entryObj)
+  {
+  }
 
+}
+
+//------------------------------------------------------------------
+/**
+ * @brief   配置モデルマネジャー：描画処理
+ */
+//------------------------------------------------------------------
+void FIELD_BMODEL_MAN_Draw(FIELD_BMODEL_MAN * man)
+{
+  if (man->entryObj)
+  {
+  }
 }
 
 //------------------------------------------------------------------
@@ -630,5 +656,76 @@ void FIELD_BMANIME_DATA_entryTexData(FIELD_BMODEL_MAN* man, const FIELD_BMANIME_
     break;
   }
 }
+
+//============================================================================================
+//============================================================================================
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+void FIELD_BMODEL_Draw( const FIELD_BMODEL * bmodel )
+{
+  GFL_G3D_DRAW_DrawObject( bmodel->gfl_obj, &bmodel->status );
+#if 0
+  fx32 sin, cos;
+  NNSG3dRenderObj *NNSrnd;
+	MtxFx33				mtxRot;
+  static const VecFx32 scale = { FX32_ONE, FX32_ONE, FX32_ONE };
+
+  NNSrnd = GFL_G3D_RENDER_GetRenderObj( GFL_G3D_OBJECT_GetG3Drnd( bmodel->gfl_obj ) );
+  	
+  fx32 sin = FX_SinIdx(bmodel->rotate);
+  fx32 cos = FX_CosIdx(bmodel->rotate);
+  MTX_RotY33(&mtxRot, sin, cos);
+  NNS_G3dGlbSetBaseTrans( &bmodel->pos );		// 位置設定
+  NNS_G3dGlbSetBaseRot( &mtxRot );		// 角度設定
+  NNS_G3dGlbSetBaseScale( &scale );	// スケール設定
+  NNS_G3dGlbFlush();							//グローバルステート反映
+
+  NNS_G3dDraw( NNSrnd );
+#endif
+}
+
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+FIELD_BMODEL * FIELD_BMODEL_Create(FIELD_BMODEL_MAN * man,
+    const FLDMAPPER * g3Dmapper, const GFL_G3D_MAP_GLOBALOBJ_ST * status)
+{
+	MtxFx33				mtxRot;
+  GFL_G3D_OBJ * obj;
+  const GLOBALOBJ_RES * objRes;
+  FIELD_BMODEL * bmodel = GFL_HEAP_AllocMemory( man->heapID, sizeof(FIELD_BMODEL) );
+  fx32 sin = FX_SinIdx(status->rotate);
+  fx32 cos = FX_CosIdx(status->rotate);
+  MTX_RotY33( &bmodel->status.rotate, sin, cos );
+  bmodel->status.trans = status->trans;
+  VEC_Set( &bmodel->status.scale, FX32_ONE, FX32_ONE, FX32_ONE );
+  objRes = FLDMAPPER_GetMapObjResource(g3Dmapper, status->id);
+  {
+    int i, count;
+	  GFL_G3D_ANM* anmTbl[GLOBAL_OBJ_ANMCOUNT];
+	  GFL_G3D_RND* g3Drnd = GFL_G3D_RENDER_Create( objRes->g3DresMdl, 0, objRes->g3DresTex );
+    count = GFL_G3D_OBJECT_GetAnimeCount( objRes->g3Dobj );
+    for (i = 0; i < GLOBAL_OBJ_ANMCOUNT; i++)
+    {
+      if (i < count) 
+      {
+        anmTbl[i] = GFL_G3D_OBJECT_GetG3Danm( objRes->g3Dobj, i );
+      } else {
+        anmTbl[i] = NULL;
+      }
+    }
+    bmodel->gfl_obj = GFL_G3D_OBJECT_Create( g3Drnd, anmTbl, GLOBAL_OBJ_ANMCOUNT );
+  }
+  return bmodel;
+}
+
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+void FIELD_BMODEL_Delete(FIELD_BMODEL * bmodel)
+{
+	GFL_G3D_RND*	g3Drnd;
+  g3Drnd = GFL_G3D_OBJECT_GetG3Drnd( bmodel->gfl_obj );
+  GFL_G3D_OBJECT_Delete( bmodel->gfl_obj );
+}
+
 
 

@@ -33,28 +33,8 @@ extern GMEVENT * DEBUG_EVENT_GameEnd( GAMESYS_WORK * gsys, FIELD_MAIN_WORK * fie
 /**
  */
 //------------------------------------------------------------------
-extern GMEVENT * EVENT_ChangeMap(GAMESYS_WORK * gsys, FIELD_MAIN_WORK * fieldmap,
-		const LOCATION * loc_req);
-
-//------------------------------------------------------------------
-/**
- */
-//------------------------------------------------------------------
 extern GMEVENT * EVENT_ChangeMapByConnect(GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap,
     const CONNECT_DATA * cnct);
-
-//------------------------------------------------------------------
-/**
- * @brief	マップ遷移イベント生成（出入口指定）
- * @param	gsys		ゲームシステムへのポインタ
- * @param	fieldmap	フィールドシステムへのポインタ
- * @param	zone_id		遷移するマップのZONE指定
- * @param	exit_id		遷移するマップの出入口指定
- * @return	GMEVENT		生成したマップ遷移イベント
- */
-//------------------------------------------------------------------
-extern GMEVENT * DEBUG_EVENT_ChangeMap(GAMESYS_WORK * gsys, FIELD_MAIN_WORK * fieldmap,
-		u16 zone_id, s16 exit_id);
 
 //------------------------------------------------------------------
 /**

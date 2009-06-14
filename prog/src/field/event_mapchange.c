@@ -166,6 +166,7 @@ GMEVENT * DEBUG_EVENT_GameEnd( GAMESYS_WORK * gsys, FIELD_MAIN_WORK * fieldmap)
 //	イベント：マップ切り替え
 //
 //============================================================================================
+extern GMEVENT * EVENT_FieldDoorInAnime(GAMESYS_WORK * gsys, FIELDMAP_WORK *fieldmap);
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 typedef struct {
@@ -207,15 +208,19 @@ static GMEVENT_RESULT EVENT_FadeOut_ExitTypeDoor(GMEVENT * event, int *seq, void
   switch (*seq)
   {
   case 0:
+    GMEVENT_CallEvent( event, EVENT_FieldDoorInAnime(gsys, fieldmap) );
+    ++ *seq;
+    break;
+  case 1:
     setNextBGM(gamedata, mcw->loc_req.zone_id);
     GMEVENT_CallEvent( event, EVENT_PlayerOneStepAnime(gsys, fieldmap) );
     ++ *seq;
     break;
-  case 1:
+  case 2:
 		GMEVENT_CallEvent(event, EVENT_FieldFadeOut(gsys, fieldmap, 0));
     ++ *seq;
     break;
-  case 2:
+  case 3:
     return GMEVENT_RES_FINISH;
   }
   return GMEVENT_RES_CONTINUE;
@@ -390,7 +395,6 @@ static GMEVENT_RESULT EVENT_MapChange(GMEVENT * event, int *seq, void*work)
 		break;
 	case 5:
 		//フィールドマップをフェードイン
-		//GMEVENT_CallEvent(event, EVENT_FieldFadeIn(gsys, fieldmap, 0));
     {
       GMEVENT * sub_event;
       MAPCHANGE_WORK * sub_work;
@@ -441,23 +445,6 @@ GMEVENT * DEBUG_EVENT_ChangeMapPos(GAMESYS_WORK * gsys, FIELD_MAIN_WORK * fieldm
 	return event;
 }
 
-//------------------------------------------------------------------
-//------------------------------------------------------------------
-GMEVENT * DEBUG_EVENT_ChangeMap(GAMESYS_WORK * gsys,
-		FIELD_MAIN_WORK * fieldmap, u16 zone_id, s16 exit_id)
-{
-	MAPCHANGE_WORK * mcw;
-	GMEVENT * event;
-
-	event = GMEVENT_Create(gsys, NULL, EVENT_MapChange, sizeof(MAPCHANGE_WORK));
-	mcw = GMEVENT_GetEventWork(event);
-	mcw->gsys = gsys;
-	mcw->fieldmap = fieldmap;
-	mcw->gamedata = GAMESYSTEM_GetGameData(gsys);
-	LOCATION_SetID(&mcw->loc_req, zone_id, exit_id);
-  mcw->exit_type = EXIT_TYPE_NONE;
-	return event;
-}
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
@@ -477,24 +464,6 @@ GMEVENT * DEBUG_EVENT_ChangeMapDefaultPos(GAMESYS_WORK * gsys,
 	return event;
 }
 
-#if 0
-//------------------------------------------------------------------
-//------------------------------------------------------------------
-GMEVENT * EVENT_ChangeMap(GAMESYS_WORK * gsys, FIELD_MAIN_WORK * fieldmap,
-		const LOCATION * loc_req)
-{
-	MAPCHANGE_WORK * mcw;
-	GMEVENT * event;
-
-	event = GMEVENT_Create(gsys, NULL, EVENT_MapChange, sizeof(MAPCHANGE_WORK));
-	mcw = GMEVENT_GetEventWork(event);
-	mcw->gsys = gsys;
-	mcw->fieldmap = fieldmap;
-	mcw->gamedata = GAMESYSTEM_GetGameData(gsys);
-	mcw->loc_req = *loc_req;
-	return event;
-}
-#endif
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------

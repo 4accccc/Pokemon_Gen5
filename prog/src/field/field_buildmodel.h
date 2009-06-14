@@ -35,6 +35,8 @@ extern void FIELD_BMODEL_MAN_Delete(FIELD_BMODEL_MAN * man);
 
 extern void FIELD_BMODEL_MAN_Main(FIELD_BMODEL_MAN * man);
 
+extern void FIELD_BMODEL_MAN_Draw(FIELD_BMODEL_MAN * man);
+
 //------------------------------------------------------------------
 //  マップデータの読み込み処理
 //------------------------------------------------------------------
