@@ -97,6 +97,11 @@ static GFL_PROC_RESULT Sample4Proc_Init(GFL_PROC * proc, int * seq, void * pwk, 
 	//sw->scale = FX32_ONE;
 	DWS_SetG3DcamTarget(sw->dws, &sw->trans);
 
+	{
+		u16 light0col = GX_RGB(0,0,31);
+		GFL_G3D_LIGHT_SetColor(DWS_GetG3Dlight(sw->dws), 0, &light0col);
+	}
+
 	return GFL_PROC_RES_FINISH;
 }
 
@@ -170,6 +175,7 @@ static const GFL_G3D_OBJSTATUS g3DobjStatus1 = {
 static void	rotateCalc(SAMPLE4_WORK* sw, MtxFx33* pRotate);
 static void	cameraTargetMvCalc(SAMPLE4_WORK* sw);
 static void	cameraTargetScaleCalc(SAMPLE4_WORK* sw);
+static void	drawObject(GFL_G3D_OBJ* g3Dobj, GFL_G3D_OBJSTATUS* pStatus, int mode);
 //============================================================================================
 static BOOL	sample4(SAMPLE4_WORK* sw)
 {
@@ -182,10 +188,10 @@ static BOOL	sample4(SAMPLE4_WORK* sw)
 
 		//３Ｄオブジェクト作成
 		sw->g3DresMdl0 = GFL_G3D_CreateResourceArc
-										(ARCID_SHADOW_TEST, NARC_shadow_test_shadow_test_nsbmd);
+										(ARCID_SHADOW_TEST, NARC_shadow_test_shadow4_test_nsbmd);
 		sw->g3Dobj0 = GFL_G3D_OBJECT_Create(GFL_G3D_RENDER_Create(sw->g3DresMdl0, 0, NULL), NULL, 0); 
 		sw->g3DresMdl1 = GFL_G3D_CreateResourceArc
-										(ARCID_SHADOW_TEST, NARC_shadow_test_shadow2_test_nsbmd);
+										(ARCID_SHADOW_TEST, NARC_shadow_test_shadow4_test_nsbmd);
 		sw->g3Dobj1 = GFL_G3D_OBJECT_Create(GFL_G3D_RENDER_Create(sw->g3DresMdl1, 0, NULL), NULL, 0); 
 
 		sw->fldWipeObj = FLD_WIPEOBJ_Create(sw->heapID); 
@@ -197,7 +203,7 @@ static BOOL	sample4(SAMPLE4_WORK* sw)
 
 	case 1:
 		if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_START ){ sw->seq++; }
-		if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_SELECT ){ sw->target = (sw->target)? 0 : 1; }
+//		if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_SELECT ){ sw->target = (sw->target)? 0 : 1; }
 		if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_X ){ sw->mode = (sw->mode)? 0 : 1; }
 
 		cameraTargetMvCalc(sw);
@@ -208,52 +214,20 @@ static BOOL	sample4(SAMPLE4_WORK* sw)
 		GFL_G3D_DRAW_SetLookAt();	//カメラグローバルステート設定		
 
 		DWS_DrawLocalOriginBumpPlane(sw->dws, 64*FX32_ONE, GX_RGB(0,31,0), GX_RGB(0,24,0), 32);
-		{
-			GFL_G3D_OBJ*			g3Dobj;
-			NNSG3dRenderObj*	pRnd;
-			NNSG3dResMdl*			pMdl;
+
+		if(sw->target == 0){
+			FLD_WIPEOBJ_Main(sw->fldWipeObj, sw->scale);
+		} else {
 			GFL_G3D_OBJSTATUS status;
 
 			status = g3DobjStatus1;
-
-			if(sw->target == 0){
-				FLD_WIPEOBJ_Main(sw->fldWipeObj, sw->scale, FX32_ONE);
-			} else {
-				g3Dobj = sw->g3Dobj1;
-				status.trans.y = FX32_ONE*16;
-				rotateCalc(sw, &status.rotate);
-
-				pRnd = GFL_G3D_RENDER_GetRenderObj(GFL_G3D_OBJECT_GetG3Drnd(g3Dobj)); 
-				pMdl = NNS_G3dRenderObjGetResMdl(pRnd);
-
-				if(sw->mode == 0){
-					NNS_G3dMdlSetMdlLightEnableFlag( pMdl, 0, 0x0 );
-					NNS_G3dMdlSetMdlPolygonID( pMdl, 0, 63 );
-					NNS_G3dMdlSetMdlCullMode( pMdl, 0, GX_CULL_NONE ); 
-					NNS_G3dMdlSetMdlAlpha( pMdl, 0, 16 );
-					NNS_G3dMdlSetMdlPolygonMode( pMdl, 0, GX_POLYGONMODE_MODULATE );
-	
-					GFL_G3D_DRAW_DrawObject(g3Dobj, &status);
-				} else {
-					NNS_G3dMdlSetMdlLightEnableFlag( pMdl, 0, 0x0 );
-					NNS_G3dMdlSetMdlPolygonID( pMdl, 0, 0 );
-					NNS_G3dMdlSetMdlCullMode( pMdl, 0, GX_CULL_NONE ); 
-					NNS_G3dMdlSetMdlAlpha( pMdl, 0, 16 );
-					NNS_G3dMdlSetMdlPolygonMode( pMdl, 0, GX_POLYGONMODE_SHADOW );
-	
-					GFL_G3D_DRAW_DrawObject(g3Dobj, &status);
-	
-					NNS_G3dMdlSetMdlLightEnableFlag( pMdl, 0, 0x0 );
-					NNS_G3dMdlSetMdlPolygonID( pMdl, 0, 1 );
-					NNS_G3dMdlSetMdlCullMode( pMdl, 0, GX_CULL_NONE ); 
-					NNS_G3dMdlSetMdlAlpha( pMdl, 0, 0 );
-					NNS_G3dMdlSetMdlPolygonMode( pMdl, 0, GX_POLYGONMODE_SHADOW );
-	
-					GFL_G3D_DRAW_DrawObject(g3Dobj, &status);
-				}
-			}
+			status.trans = sw->trans;
+			//status.trans.y = FX32_ONE*16;
+			status.scale.y = FX32_ONE*8;
+			drawObject(sw->g3Dobj0, &status, sw->mode);
+			rotateCalc(sw, &status.rotate);
+			drawObject(sw->g3Dobj0, &status, sw->mode);
 		}
-
 		GFL_G3D_DRAW_End();				//描画終了（バッファスワップ）					
 		break;
 
@@ -279,8 +253,10 @@ static void	rotateCalc(SAMPLE4_WORK* sw, MtxFx33* pRotate)
 	MtxFx33 tmpMtx;
 
 	vecRot.x = 0;
-	vecRot.y = 0;
-	vecRot.z = sw->timer * 0x080;
+//	vecRot.y = 0;
+//	vecRot.z = sw->timer * 0x080;
+	vecRot.y = 0x8000;
+	vecRot.z = 0;
 
 	MTX_RotX33(pRotate, FX_SinIdx((u16)vecRot.x), FX_CosIdx((u16)vecRot.x));
 
@@ -326,3 +302,33 @@ static void	cameraTargetScaleCalc(SAMPLE4_WORK* sw)
 	}
 }
 
+//--------------------------------------------------------------
+static void	drawObject(GFL_G3D_OBJ* g3Dobj, GFL_G3D_OBJSTATUS* pStatus, int mode)
+{
+	NNSG3dRenderObj*	pRnd = GFL_G3D_RENDER_GetRenderObj(GFL_G3D_OBJECT_GetG3Drnd(g3Dobj));
+	NNSG3dResMdl*			pMdl = NNS_G3dRenderObjGetResMdl(pRnd);
+
+	if(mode == 0){
+		NNS_G3dMdlSetMdlLightEnableFlag( pMdl, 0, 0x0 );
+		NNS_G3dMdlSetMdlPolygonID( pMdl, 0, 1 );
+		NNS_G3dMdlSetMdlCullMode( pMdl, 0, GX_CULL_NONE ); 
+		NNS_G3dMdlSetMdlAlpha( pMdl, 0, 16 );
+		NNS_G3dMdlSetMdlPolygonMode( pMdl, 0, GX_POLYGONMODE_MODULATE );
+
+		GFL_G3D_DRAW_DrawObject(g3Dobj, pStatus);
+	} else {
+		NNS_G3dMdlSetMdlLightEnableFlag( pMdl, 0, 0x0 );
+		NNS_G3dMdlSetMdlPolygonID( pMdl, 0, 0 );
+		NNS_G3dMdlSetMdlCullMode( pMdl, 0, GX_CULL_FRONT ); 
+		NNS_G3dMdlSetMdlAlpha( pMdl, 0, 16 );
+		NNS_G3dMdlSetMdlPolygonMode( pMdl, 0, GX_POLYGONMODE_SHADOW );
+		GFL_G3D_DRAW_DrawObject(g3Dobj, pStatus);
+
+		NNS_G3dMdlSetMdlLightEnableFlag( pMdl, 0, 0x0 );
+		NNS_G3dMdlSetMdlPolygonID( pMdl, 0, 1 );
+		NNS_G3dMdlSetMdlCullMode( pMdl, 0, GX_CULL_BACK ); 
+		NNS_G3dMdlSetMdlAlpha( pMdl, 0, 16 );
+		NNS_G3dMdlSetMdlPolygonMode( pMdl, 0, GX_POLYGONMODE_SHADOW );
+		GFL_G3D_DRAW_DrawObject(g3Dobj, pStatus);
+	}
+}

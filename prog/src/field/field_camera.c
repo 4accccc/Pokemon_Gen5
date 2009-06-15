@@ -739,6 +739,7 @@ void FIELD_CAMERA_SetAngleLen(FIELD_CAMERA * camera, fx32 length )
 
 #ifdef  PM_DEBUG
 #include "test/camera_adjust_view.h"
+extern fx32	fldWipeScale;
 //------------------------------------------------------------------
 //  デバッグ用：下画面操作とのバインド
 //------------------------------------------------------------------
@@ -752,16 +753,26 @@ void FIELD_CAMERA_DEBUG_BindSubScreen(FIELD_CAMERA * camera, void * param, FIELD
   camera->debug_subscreen_type = type;
   if( type == FIELD_CAMERA_DEBUG_BIND_CAMERA_POS )
   {
-    GFL_CAMADJUST_SetCameraParam(gflCamAdjust,
-      &camera->angle_yaw, &camera->angle_pitch, &camera->angle_len, &camera->fovy, &camera->debug_far);  
+    GFL_CAMADJUST_SetCameraParam(	gflCamAdjust,
+																	&camera->angle_yaw, 
+																	&camera->angle_pitch, 
+																	&camera->angle_len, 
+																	&camera->fovy, 
+																	&camera->debug_far);  
+    GFL_CAMADJUST_SetWipeParam(		gflCamAdjust, &fldWipeScale );
   }
   else if( type == FIELD_CAMERA_DEBUG_BIND_TARGET_POS )
   {
     camera->debug_target_yaw    = camera->angle_yaw - 0x8000;
     camera->debug_target_pitch  = camera->angle_pitch - 0x4000;
     camera->debug_target_len    = camera->angle_len;
-    GFL_CAMADJUST_SetCameraParam(gflCamAdjust,
-      &camera->debug_target_yaw, &camera->debug_target_pitch, &camera->debug_target_len, &camera->fovy, &camera->debug_far);  
+    GFL_CAMADJUST_SetCameraParam(	gflCamAdjust,
+																	&camera->debug_target_yaw, 
+																	&camera->debug_target_pitch, 
+																	&camera->debug_target_len, 
+																	&camera->fovy, 
+																	&camera->debug_far);  
+    GFL_CAMADJUST_SetWipeParam(		gflCamAdjust, &fldWipeScale );
   }
 }
 

@@ -57,6 +57,8 @@
 
 #include "field_player_grid.h"
 
+#include "system/fld_wipe_3dobj.h"
+
 #include "arc/fieldmap/zone_id.h"
 #include "field/weather_no.h"
 #include "sound/pm_sndsys.h"
@@ -182,6 +184,7 @@ struct _FIELDMAP_WORK
 	FIELD_RAIL_MAN * railMan;
 	
 	FLDMAPPER *g3Dmapper;
+	FLD_WIPEOBJ *fldWipeObj;
 	MAP_MATRIX *pMapMatrix;
 	FLDMAPPER_RESISTDATA map_res;
 	FIELD_PLAYER *field_player;
@@ -210,6 +213,7 @@ struct _FIELDMAP_WORK
   int firstConnectEventID;
 };
 
+fx32	fldWipeScale;
 //--------------------------------------------------------------
 ///	MMDL_LIST
 //--------------------------------------------------------------
@@ -401,6 +405,8 @@ static MAINSEQ_RESULT mainSeqFunc_setup_system(GAMESYS_WORK *gsys, FIELDMAP_WORK
 	
 	//”z’u•¨Ý’è
 	fieldWork->g3Dmapper = FLDMAPPER_Create( fieldWork->heapID );
+	fieldWork->fldWipeObj = FLD_WIPEOBJ_Create( fieldWork->heapID );
+	fldWipeScale = 0;
 
 	TAMADA_Printf("TEX:%06x PLT:%04x\n",
 			DEBUG_GFL_G3D_GetBlankTextureSize(),
@@ -734,6 +740,7 @@ static MAINSEQ_RESULT mainSeqFunc_end(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWo
 
 	GFL_TCB_DeleteTask( fieldWork->g3dVintr );
 
+	FLD_WIPEOBJ_Delete( fieldWork->fldWipeObj );
 	FLDMAPPER_Delete( fieldWork->g3Dmapper );
 
 	fldmap_G3D_Unload( fieldWork );	//‚R‚cƒf[ƒ^”jŠü
@@ -1306,7 +1313,7 @@ static void fldmap_G3D_Draw( FIELDMAP_WORK * fieldWork )
   
 
 	FLDMAPPER_Draw( fieldWork->g3Dmapper, fieldWork->g3Dcamera );
- 
+	FLD_WIPEOBJ_Main( fieldWork->fldWipeObj, fldWipeScale ); 
   {
 	  MtxFx44 org_pm,pm;
 		const MtxFx44 *m;
