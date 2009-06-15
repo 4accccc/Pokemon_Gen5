@@ -408,6 +408,8 @@ static void setupRequest(EV_REQUEST * req, GAMESYS_WORK * gsys, FIELDMAP_WORK * 
 
   if( req->key_trg & PAD_BUTTON_Y ){
     req->convRequest = TRUE;
+  }else{
+    req->convRequest = FALSE;
   }
 
   req->debugRequest = ( (req->key_cont & PAD_BUTTON_R) != 0);
