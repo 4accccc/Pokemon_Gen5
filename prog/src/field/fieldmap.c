@@ -1425,11 +1425,9 @@ static void fldmapMain_FLDMMDL_Init( FIELDMAP_WORK *fieldWork )
 		fieldWork->fldMMdlSys, fieldWork->bbdActSys, 32 );
 	
 	{ //ビルボードリソース登録
-			int list_area_id = 0;
 			MMDL_LIST mlist;
+			int list_area_id = 0;
 			fldmap_FLDMMDL_InitList( &mlist, list_area_id, fieldWork->heapID );
-			FLDMMDL_BLACTCONT_AddOBJCodeRes( fieldWork->fldMMdlSys, HERO );
-			FLDMMDL_BLACTCONT_AddOBJCodeRes( fieldWork->fldMMdlSys, CYCLEHERO );
 			FLDMMDL_BLACTCONT_AddResourceTex(
 					fieldWork->fldMMdlSys, mlist.id_list, mlist.count );
 	}

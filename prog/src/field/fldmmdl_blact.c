@@ -18,6 +18,22 @@
 //======================================================================
 #define REGIDCODE_MAX (0xffff) ///<BBDRESID最大
 
+typedef enum
+{
+  BBDRESBIT_GUEST = (1<<0), ///<リソース識別 ゲスト登録 OFF時=レギュラー
+  BBDRESBIT_TRANS = (1<<1), ///<リソース識別 VRAM転送型
+  
+  ///リソース　VRAM常駐　レギュラー
+  BBDRES_VRAM_REGULAR =(0),
+  ///リソース　VRAM転送　レギュラー
+  BBDRES_TRANS_REGULAR =(BBDRESBIT_TRANS),
+  ///リソース　VRAM常駐　ゲスト
+  BBDRES_VRAM_GUEST=(BBDRESBIT_GUEST),
+  ///リソース　VRAM転送　ゲスト
+  BBDRES_TRANS_GUEST=(BBDRESBIT_TRANS|BBDRESBIT_GUEST),
+}BBDRESBIT;
+
+
 //======================================================================
 //	struct
 //======================================================================
@@ -28,6 +44,8 @@ typedef struct
 {
 	u16 code; ///<登録コード
 	u16 id; ///<登録コードから返すID
+  u16 flag; ///<登録内容を表すフラグ
+  u16 dmy;
 }IDCODE;
 
 //--------------------------------------------------------------
@@ -60,14 +78,18 @@ struct _TAG_FLDMMDL_BLACTCONT{
 static void BlActFunc( GFL_BBDACT_SYS *bbdActSys, int actIdx, void *work );
 
 static void IDCodeIndex_Init( IDCODEIDX *idx, int max, HEAPID heapID );
-static void IDCodeIndex_RegistCode( IDCODEIDX *idx, u16 code, u16 id );
+static void IDCodeIndex_RegistCode(
+    IDCODEIDX *idx, u16 code, u16 id, u16 flag );
 static void IDCodeIndex_DeleteCode( IDCODEIDX *idx, u16 code );
-static u16 IDCodeIndex_SearchCode( IDCODEIDX *idx, u16 code );
+static BOOL IDCodeIndex_SearchCode(
+    IDCODEIDX *idx, u16 code, u16 *outID, u16 *outFlag );
 static void BBDResUnitIndex_Init( FLDMMDLSYS *fmmdlsys, int max );
 static void BBDResUnitIndex_Delete( FLDMMDLSYS *fmmdlsys );
-static void BBDResUnitIndex_AddResUnit( FLDMMDLSYS *fmmdlsys, u16 obj_code );
+static void BBDResUnitIndex_AddResUnit(
+    FLDMMDLSYS *fmmdlsys, u16 obj_code, BBDRESBIT flag );
 static void BBDResUnitIndex_RemoveResUnit(FLDMMDLSYS *fmmdlsys,u16 obj_code);
-static u16 BBDResUnitIndex_SearchResID( FLDMMDLSYS *fmmdlsys, u16 obj_code );
+static BOOL BBDResUnitIndex_SearchResID(
+    FLDMMDLSYS *fmmdlsys, u16 obj_code, u16 *outID, u16 *outFlag );
 
 static const FLDMMDL_BBDACT_ANMTBL * BlActAnm_GetAnmTbl( u32 no );
 
@@ -166,10 +188,10 @@ void FLDMMDL_BLACTCONT_Release( FLDMMDLSYS *fmmdlsys )
 //======================================================================
 //--------------------------------------------------------------
 /**
- * FLDMMDL_BLACTCONT リソース追加 test
+ * FLDMMDL_BLACTCONT リソース追加 レギュラー、VRAM常駐型で登録
  * @param	fmmdlsys	FLDMMDLSYS
- * @param	code
- * @param	max
+ * @param	code 表示コード配列
+ * @param	max code要素数
  * @retval	nothing
  */
 //--------------------------------------------------------------
@@ -177,7 +199,7 @@ void FLDMMDL_BLACTCONT_AddResourceTex(
 	FLDMMDLSYS *fmmdlsys, const u16 *code, int max )
 {
 	while( max ){
-		BBDResUnitIndex_AddResUnit( fmmdlsys, *code );
+		BBDResUnitIndex_AddResUnit( fmmdlsys, *code, BBDRES_VRAM_REGULAR );
 		code++;
 		max--;
 	}
@@ -196,6 +218,7 @@ void FLDMMDL_BLACTCONT_AddResourceTex(
 //--------------------------------------------------------------
 GFL_BBDACT_ACTUNIT_ID FLDMMDL_BLACTCONT_AddActor( FLDMMDL *fmmdl, u32 code )
 {
+  u16 flag;
 	VecFx32 pos;
 	GFL_BBDACT_ACTDATA actData;
 	GFL_BBDACT_ACTUNIT_ID actID;
@@ -207,15 +230,18 @@ GFL_BBDACT_ACTUNIT_ID FLDMMDL_BLACTCONT_AddActor( FLDMMDL *fmmdl, u32 code )
 	prm = FLDMMDLSYS_GetOBJCodeParam( fmmdlsys, code );
 	FLDMMDL_GetDrawVectorPos( fmmdl, &pos );
 	
-	actData.resID = BBDResUnitIndex_SearchResID( fmmdlsys, code );
+	BBDResUnitIndex_SearchResID( fmmdlsys, code, &actData.resID, &flag );
 	
-	#ifdef DEBUG_FLDMMDL
-	if( actData.resID == REGIDCODE_MAX ){
-		OS_Printf( "code 0x%x\n", code );
-		GF_ASSERT( actData.resID != REGIDCODE_MAX );
-	}
-	#endif
-	
+  if( actData.resID == REGIDCODE_MAX ){ //非登録リソース
+    FLDMMDL_BLACTCONT_AddOBJCodeRes( fmmdlsys, code,  FALSE, TRUE );
+	  BBDResUnitIndex_SearchResID( fmmdlsys, code, &actData.resID, &flag );
+    GF_ASSERT( actData.resID != REGIDCODE_MAX );
+    
+    #ifdef DEBUG_FLDMMDL
+    KAGAYA_Printf( "FLDMMDL ADD GUEST RESOURCE %xH\n", code );
+    #endif
+  }
+  
 	actData.sizX = FX16_ONE*8-1;
 	actData.sizY = FX16_ONE*8-1;
 	actData.trans = pos;
@@ -257,8 +283,23 @@ GFL_BBDACT_ACTUNIT_ID FLDMMDL_BLACTCONT_AddActor( FLDMMDL *fmmdl, u32 code )
 //--------------------------------------------------------------
 void FLDMMDL_BLACTCONT_DeleteActor( FLDMMDL *fmmdl, u32 actID )
 {
+  u16 id,flag;
+  u16 code = FLDMMDL_GetOBJCode( fmmdl );
 	FLDMMDLSYS *pFMMdlSys = (FLDMMDLSYS*)FLDMMDL_GetFldMMdlSys( fmmdl );
 	FLDMMDL_BLACTCONT *pBlActCont = FLDMMDLSYS_GetBlActCont( pFMMdlSys );
+  
+  if( BBDResUnitIndex_SearchResID(pFMMdlSys,code,&id,&flag) == TRUE ){
+    if( (flag&BBDRESBIT_GUEST) ){ //ゲスト登録
+      if( FLDMMDL_SearchUseOBJCode(fmmdl,code) == FALSE ){
+        BBDResUnitIndex_RemoveResUnit( pFMMdlSys, code );
+        
+        #ifdef DEBUG_FLDMMDL
+        KAGAYA_Printf( "FLDMMDL DEL GUEST RESOURCE %xH\n", code );
+        #endif
+      }
+    }
+  }
+  
 	GFL_BBDACT_RemoveAct( pBlActCont->pBbdActSys, actID, 1 );
 }
 
@@ -349,14 +390,15 @@ static void IDCodeIndex_Delete( IDCODEIDX *idx )
 
 //--------------------------------------------------------------
 /**
- * IDCODEIDX 指定されたコードとIDを登録
+ * IDCODEIDX 指定されたコードとID、フラグを登録
  * @param	idx IDCODEIDX
  * @param	code コード
  * @param	id ID
  * @retval	nothing
  */
 //--------------------------------------------------------------
-static void IDCodeIndex_RegistCode( IDCODEIDX *idx, u16 code, u16 id  )
+static void IDCodeIndex_RegistCode(
+    IDCODEIDX *idx, u16 code, u16 id, u16 flag )
 {
 	int i = 0;
 	IDCODE *tbl = idx->pIDCodeBuf;
@@ -364,6 +406,7 @@ static void IDCodeIndex_RegistCode( IDCODEIDX *idx, u16 code, u16 id  )
 		if( tbl->code == REGIDCODE_MAX ){
 			tbl->code = code;
 			tbl->id = id;
+      tbl->flag = flag;
 			return;
 		}
 		tbl++;
@@ -388,6 +431,7 @@ static void IDCodeIndex_DeleteCode( IDCODEIDX *idx, u16 code )
 		if( tbl->code == code ){
 			tbl->code = REGIDCODE_MAX;
 			tbl->id = REGIDCODE_MAX;
+      tbl->flag = 0;
 			return;
 		}
 		tbl++;
@@ -398,24 +442,38 @@ static void IDCodeIndex_DeleteCode( IDCODEIDX *idx, u16 code )
 
 //--------------------------------------------------------------
 /**
- * IDCODEIDX 指定されたコードに一致するIDを返す
+ * IDCODEIDX 指定されたコードに一致するID、フラグを返す
  * @param	idx IDCODEIDX
  * @param	code OBJコード
- * @retval	u16 codeに一致したID REGIDCODE_MAX=一致無し
+ * @param outID ID格納先 NULL=格納しない
+ * @param outFlag フラグ格納先 NULL=格納しない
+ * @retval BOOL TRUE=一致有り、FALSE=コードが存在しない
  */
 //--------------------------------------------------------------
-static u16 IDCodeIndex_SearchCode( IDCODEIDX *idx, u16 code )
+static BOOL IDCodeIndex_SearchCode(
+    IDCODEIDX *idx, u16 code, u16 *outID, u16 *outFlag )
 {
 	int i = 0;
 	IDCODE *tbl = idx->pIDCodeBuf;
+  
+  if( outID != NULL ){
+    *outID = REGIDCODE_MAX;
+  }
+  
 	do{
 		if( tbl->code == code ){
-			return( tbl->id );
+      if( outID != NULL ){
+        *outID = tbl->id;
+      }
+      if( outFlag != NULL ){
+        *outFlag = tbl->flag;
+      }
+			return( TRUE );
 		}
 		tbl++;
 		i++;
 	}while( i < idx->max );
-	return( REGIDCODE_MAX );
+  return( FALSE );
 }
 
 //--------------------------------------------------------------
@@ -463,10 +521,12 @@ static void BBDResUnitIndex_Delete( FLDMMDLSYS *fmmdlsys )
  * IDCODEIDX BBDACT リソースユニット追加
  * @param	pBlActCont FLDMMDL_BLACTCONT
  * @param	code	OBJコード
+ * @param flag 登録フラグ BBDRESBIT_VRAM等
  * @retval	nothing
  */
 //--------------------------------------------------------------
-static void BBDResUnitIndex_AddResUnit( FLDMMDLSYS *fmmdlsys, u16 obj_code )
+static void BBDResUnitIndex_AddResUnit(
+    FLDMMDLSYS *fmmdlsys, u16 obj_code, BBDRESBIT flag )
 {
 	GFL_BBDACT_RESDATA data;
 	const OBJCODE_PARAM *prm;
@@ -502,7 +562,7 @@ static void BBDResUnitIndex_AddResUnit( FLDMMDLSYS *fmmdlsys, u16 obj_code )
   
 	id = GFL_BBDACT_AddResourceUnit( pBlActCont->pBbdActSys, &data, 1 );
   
-	IDCodeIndex_RegistCode( &pBlActCont->BBDResUnitIdx, obj_code, id );
+	IDCodeIndex_RegistCode( &pBlActCont->BBDResUnitIdx, obj_code, id, flag );
 }
 
 //--------------------------------------------------------------
@@ -518,8 +578,9 @@ static void BBDResUnitIndex_RemoveResUnit(
 {
 	GFL_BBDACT_RESUNIT_ID id;
 	FLDMMDL_BLACTCONT *pBlActCont = FLDMMDLSYS_GetBlActCont( fmmdlsys );
-	id = IDCodeIndex_SearchCode( &pBlActCont->BBDResUnitIdx, obj_code );
-	GF_ASSERT( id != REGIDCODE_MAX );
+  BOOL ret = IDCodeIndex_SearchCode(
+      &pBlActCont->BBDResUnitIdx, obj_code, &id, NULL );
+	GF_ASSERT( ret == TRUE );
 	GFL_BBDACT_RemoveResourceUnit( pBlActCont->pBbdActSys, id, 1 );
 	IDCodeIndex_DeleteCode( &pBlActCont->BBDResUnitIdx, obj_code );
 }
@@ -529,13 +590,16 @@ static void BBDResUnitIndex_RemoveResUnit(
  * IDCODEIDX BBDACT　指定コードのリソースIDを取得
  * @param	pBlActCont FLDMMDL_BLACTCONT
  * @param	code	OBJコード
- * @retval	u16	リソースID
+ * @retval	BOOL TRUE=指定コード登録有り
  */
 //--------------------------------------------------------------
-static u16 BBDResUnitIndex_SearchResID( FLDMMDLSYS *fmmdlsys, u16 obj_code )
+static BOOL BBDResUnitIndex_SearchResID(
+    FLDMMDLSYS *fmmdlsys, u16 obj_code, u16 *outID, u16 *outFlag )
 {
 	FLDMMDL_BLACTCONT *pBlActCont = FLDMMDLSYS_GetBlActCont( fmmdlsys );
-	return( IDCodeIndex_SearchCode(&pBlActCont->BBDResUnitIdx,obj_code) );
+  BOOL ret = IDCodeIndex_SearchCode(
+    &pBlActCont->BBDResUnitIdx, obj_code, outID, outFlag );
+  return( ret );
 }
 
 //--------------------------------------------------------------
@@ -551,13 +615,11 @@ BOOL FLDMMDL_BLACTCONT_CheckOBJCodeRes( FLDMMDLSYS *fmmdlsys, u16 code )
 	u16 res;
 	FLDMMDL_BLACTCONT *pBlActCont = FLDMMDLSYS_GetBlActCont( fmmdlsys );
 	
-	res = IDCodeIndex_SearchCode( &pBlActCont->BBDResUnitIdx, code );
-
-	if( res == REGIDCODE_MAX ){
-		return( FALSE );
-	}
-
-	return( TRUE );
+	if( IDCodeIndex_SearchCode(&pBlActCont->BBDResUnitIdx,code,NULL,NULL) ){
+    return( TRUE );
+  }
+  
+	return( FALSE );
 }
 
 //--------------------------------------------------------------
@@ -565,13 +627,19 @@ BOOL FLDMMDL_BLACTCONT_CheckOBJCodeRes( FLDMMDLSYS *fmmdlsys, u16 code )
  * IDCODEIDX BBDACT 指定コードのリソースを追加
  * @param	fmmdlssy	FLDMMDLSYS
  * @param	code	OBJコード
+ * @param trans TRUE=テクスチャ転送型で登録
+ * @param guest TRUE=使用されなくなると破棄されるゲストタイプで登録
  * @retval	BOOL	TRUE=追加した。FALSE=既に追加済み
  */
 //--------------------------------------------------------------
-BOOL FLDMMDL_BLACTCONT_AddOBJCodeRes( FLDMMDLSYS *fmmdlsys, u16 code )
+BOOL FLDMMDL_BLACTCONT_AddOBJCodeRes(
+    FLDMMDLSYS *fmmdlsys, u16 code, BOOL trans, BOOL guest )
 {
 	if( FLDMMDL_BLACTCONT_CheckOBJCodeRes(fmmdlsys,code) == FALSE ){
-		BBDResUnitIndex_AddResUnit( fmmdlsys, code );
+    BBDRESBIT flag = 0;
+    if( trans ){ flag |= BBDRESBIT_TRANS; }
+    if( guest ){ flag |= BBDRESBIT_GUEST; }
+		BBDResUnitIndex_AddResUnit( fmmdlsys, code, flag );
 		return( TRUE );
 	}
 	

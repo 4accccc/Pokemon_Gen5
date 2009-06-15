@@ -886,7 +886,8 @@ extern GFL_BBDACT_RESUNIT_ID FLDMMDL_BLACTCONT_GetResUnitID(
 
 extern BOOL FLDMMDL_BLACTCONT_CheckOBJCodeRes(
 		FLDMMDLSYS *fmmdlsys, u16 code );
-extern BOOL FLDMMDL_BLACTCONT_AddOBJCodeRes( FLDMMDLSYS *fmmdlsys, u16 code );
+extern BOOL FLDMMDL_BLACTCONT_AddOBJCodeRes(
+    FLDMMDLSYS *fmmdlsys, u16 code, BOOL trans, BOOL guest );
 extern void FLDMMDL_BLACTCONT_DeleteOBJCodeRes( FLDMMDLSYS *fmmdlsys, u16 code );
 
 #endif //FLDMMDL_H_FILE

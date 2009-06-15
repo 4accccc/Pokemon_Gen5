@@ -1729,9 +1729,10 @@ static GMEVENT_RESULT DMenuFldMMdlListEvent(
 			}
 			
 			work->obj_code = ret;
+#if 0 //—v‚ç‚È‚¢
 			work->res_add = FLDMMDL_BLACTCONT_AddOBJCodeRes(
 					work->fldmmdlsys, work->obj_code );
-			
+#endif			
 			{
 				//VecFx32 pos;
 				FLDMMDL *jiki;

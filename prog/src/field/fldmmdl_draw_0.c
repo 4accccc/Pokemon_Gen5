@@ -299,7 +299,6 @@ static void DrawCycleHero_Draw( FLDMMDL *fmmdl )
 		work->set_anm_status = status;
 	}
 	
-	OS_Printf( "Ž©‹@Ž©“]ŽÔƒAƒjƒ %d\n", GFL_BBDACT_GetAnimeFrmIdx(actSys,work->actID) );
 	FLDMMDL_GetDrawVectorPos( fmmdl, &pos );
   
 	#ifndef FLDMMDL_BLACT_HEAD3_TEST

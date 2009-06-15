@@ -3430,10 +3430,9 @@ int FLDMMDL_CheckMoveBitAttrGetOFF( const FLDMMDL * fmmdl )
  * @param	fos	FLDMMDLSYS *
  * @param	fmmdl	FLDMMDL*格納先
  * @param	no	検索開始ワークno。先頭から検索する際は初期値0を指定。
- * @retval	BOOL TRUE=動作モデル取得した FALSE=noから終端まで検索し取得無し。
- * 引数noは呼び出し後、取得位置+1の値になる。
- *
- * ※例：OBJ ID 1番の動作モデルを探す。
+ * @retval BOOL TRUE=動作モデル取得した FALSE=noから終端まで検索し取得無し
+ * @note 引数noは呼び出し後、取得位置+1の値になる。
+ * @note ※例：OBJ ID 1番の動作モデルを探す。
  * u32 no=0;
  * FLDMMDL *fmmdl;
  * while( FLDMMDLSYS_SearchUseFldMMdl(fos,&fmmdl,&no) == TRUE ){
