@@ -386,6 +386,10 @@ const GFL_G3D_MAP_GLOBALOBJ_ST * FLDMAPPER_CreateObjStatusList
   u8 * set = GFL_HEAP_AllocClearMemory(heapID, g3Dmapper->blockNum * MAPOBJ_MAX );
   GFL_G3D_MAP_GLOBALOBJ_ST * st;
 
+  *num = 0;
+  GFL_HEAP_FreeMemory(set);
+  return NULL;
+#if 0
 	for ( i=0; i<g3Dmapper->blockNum; i++ ){
     GFL_G3D_MAP_GetTrans( g3Dmapper->blockWk[i].g3Dmap, &map_pos);
     for ( j=0; j<MAPOBJ_MAX; j++)
@@ -433,6 +437,7 @@ const GFL_G3D_MAP_GLOBALOBJ_ST * FLDMAPPER_CreateObjStatusList
 
   GFL_HEAP_FreeMemory(set);
   return st;
+#endif
 }
 
 //============================================================================================
