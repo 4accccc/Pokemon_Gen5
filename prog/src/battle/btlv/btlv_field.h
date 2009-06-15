@@ -13,9 +13,9 @@
 
 enum{
 	BTLV_FIELD_GROUND = 0,		//地面
-	BTLV_FIELD_BG,				//背景
-//	BTLV_FIELD_SHADOW_LINE,		//影線
-	BTLV_FIELD_MAX				//フィールド構成OBJ数
+	BTLV_FIELD_BG,		    		//背景
+//	BTLV_FIELD_SHADOW_LINE,	//影線
+	BTLV_FIELD_MAX			    	//フィールド構成OBJ数
 };
 
 #define	BTLV_FIELD_SHADOW_LINE_START_POS	( FX32_ONE * 12 )	//影線の初期位置

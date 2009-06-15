@@ -96,6 +96,10 @@
 #define	BTLEFF_POKEMON_ROTATE_INTERPOLATION		( EFFTOOL_CALCTYPE_INTERPOLATION )
 #define	BTLEFF_POKEMON_ROTATE_ROUNDTRIP				( EFFTOOL_CALCTYPE_ROUNDTRIP )
 #define	BTLEFF_POKEMON_ROTATE_ROUNDTRIP_LONG	( EFFTOOL_CALCTYPE_ROUNDTRIP_LONG )
+#define	BTLEFF_POKEMON_ALPHA_DIRECT					  ( EFFTOOL_CALCTYPE_DIRECT )
+#define	BTLEFF_POKEMON_ALPHA_INTERPOLATION		( EFFTOOL_CALCTYPE_INTERPOLATION )
+#define	BTLEFF_POKEMON_ALPHA_ROUNDTRIP				( EFFTOOL_CALCTYPE_ROUNDTRIP )
+#define	BTLEFF_POKEMON_ALPHA_ROUNDTRIP_LONG	  ( EFFTOOL_CALCTYPE_ROUNDTRIP_LONG )
 #define	BTLEFF_MEPACHI_ON											( MCSS_MEPACHI_ON )
 #define	BTLEFF_MEPACHI_OFF										( MCSS_MEPACHI_OFF )
 #define	BTLEFF_MEPACHI_MABATAKI								( 2 )
@@ -208,22 +212,23 @@ ex)
 #define	EC_POKEMON_MOVE							( 10 )
 #define	EC_POKEMON_SCALE						( 11 )
 #define	EC_POKEMON_ROTATE						( 12 )
-#define	EC_POKEMON_SET_MEPACHI_FLAG	( 13 )
-#define	EC_POKEMON_SET_ANM_FLAG			( 14 )
-#define	EC_POKEMON_PAL_FADE					( 15 )
-#define	EC_TRAINER_SET							( 16 )
-#define	EC_TRAINER_MOVE							( 17 )
-#define	EC_TRAINER_ANIME_SET				( 18 )
-#define	EC_TRAINER_DEL							( 19 )
-#define	EC_BG_VISIBLE								( 20 )
-#define	EC_SE_PLAY									( 21 )
-#define	EC_SE_STOP									( 22 )
-#define	EC_EFFECT_END_WAIT					( 23 )
-#define	EC_WAIT											( 24 )
-#define	EC_CONTROL_MODE							( 25 )
+#define	EC_POKEMON_ALPHA						( 13 )
+#define	EC_POKEMON_SET_MEPACHI_FLAG	( 14 )
+#define	EC_POKEMON_SET_ANM_FLAG			( 15 )
+#define	EC_POKEMON_PAL_FADE					( 16 )
+#define	EC_TRAINER_SET							( 17 )
+#define	EC_TRAINER_MOVE							( 18 )
+#define	EC_TRAINER_ANIME_SET				( 19 )
+#define	EC_TRAINER_DEL							( 20 )
+#define	EC_BG_VISIBLE								( 21 )
+#define	EC_SE_PLAY									( 22 )
+#define	EC_SE_STOP									( 23 )
+#define	EC_EFFECT_END_WAIT					( 24 )
+#define	EC_WAIT											( 25 )
+#define	EC_CONTROL_MODE							( 26 )
 
 //終了コマンドは必ず一番下になるようにする
-#define	EC_SEQ_END									( 26 )
+#define	EC_SEQ_END									( 27 )
 
 #ifndef __C_NO_DEF_
 
@@ -606,6 +611,38 @@ ex)
 	.long		\pos
 	.long		\type
 	.long		\rotate
+	.long		\frame
+	.long		\wait
+	.long		\count
+	.endm
+
+//======================================================================
+/**
+ * @brief	ポケモンα値
+ *
+ * #param_num	6
+ * @param	pos			α値セットするポケモンの立ち位置
+ * @param	type		α値タイプ
+ * @param	alpha	  α値
+ * @param	frame		フレーム数（設定したα値まで何フレームで到達するか）
+ * @param	wait		ウエイト
+ * @param	count		往復カウント（α値タイプが往復のときだけ有効）
+ *
+ * #param	COMBOBOX_TEXT	攻撃側	攻撃側ペア	防御側	防御側ペア
+ * #param	COMBOBOX_VALUE	BTLEFF_POKEMON_SIDE_ATTACK BTLEFF_POKEMON_SIDE_ATTACK_PAIR BTLEFF_POKEMON_SIDE_DEFENCE BTLEFF_POKEMON_SIDE_DEFENCE_PAIR
+ * #param	COMBOBOX_TEXT	ダイレクト	追従	往復	往復ロング
+ * #param	COMBOBOX_VALUE	BTLEFF_POKEMON_ROTATE_DIRECT	BTLEFF_POKEMON_ROTATE_INTERPOLATION	BTLEFF_POKEMON_ROTATE_ROUNDTRIP	BTLEFF_POKEMON_ROTATE_ROUNDTRIP_LONG
+ * #param	VALUE_INT	  α値
+ * #param	VALUE_INT		フレーム数（設定したα値まで何フレームで到達するか）
+ * #param	VALUE_INT		ウエイト
+ * #param	VALUE_INT		往復カウント（往復時有効）
+ */
+//======================================================================
+	.macro	POKEMON_ALPHA	pos, type, alpha, frame, wait, count
+	.short	EC_POKEMON_ALPHA
+	.long		\pos
+	.long		\type
+	.long		\alpha
 	.long		\frame
 	.long		\wait
 	.long		\count

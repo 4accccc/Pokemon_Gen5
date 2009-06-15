@@ -10,6 +10,7 @@
 #include <gflib.h>
 
 #include "btlv_stage.h"
+#include "btlv_efftool.h"
 
 #include "arc_def.h"
 #include "battle/battgra_wb.naix"
@@ -36,13 +37,14 @@
 
 struct _BTLV_STAGE_WORK
 {
-	GFL_G3D_RES			*stage_resource;
-	GFL_G3D_RES			*stage_anm_resource;
-	GFL_G3D_ANM			*stage_anm;
-	GFL_G3D_RND			*stage_render;
-	GFL_G3D_OBJ			*stage_obj;
-	GFL_G3D_OBJSTATUS	stage_status[ BTLV_STAGE_MAX ];
-	HEAPID				heapID;
+	GFL_G3D_RES*      stage_resource;
+	GFL_G3D_RES*      stage_anm_resource;
+	GFL_G3D_ANM*      stage_anm;
+	GFL_G3D_RND*      stage_render;
+	GFL_G3D_OBJ*      stage_obj;
+	GFL_G3D_OBJSTATUS stage_status[ BTLV_STAGE_MAX ];
+  void*             pData_dst;
+	HEAPID		  	    heapID;
 };
 
 //============================================================================================
@@ -51,10 +53,10 @@ struct _BTLV_STAGE_WORK
  */
 //============================================================================================
 
-BTLV_STAGE_WORK	*BTLV_STAGE_Init( int index, HEAPID heapID );
-void			BTLV_STAGE_Exit( BTLV_STAGE_WORK *bsw );
-void			BTLV_STAGE_Main( BTLV_STAGE_WORK *bsw );
-void			BTLV_STAGE_Draw( BTLV_STAGE_WORK *bsw );
+BTLV_STAGE_WORK*  BTLV_STAGE_Init( int index, HEAPID heapID );
+void              BTLV_STAGE_Exit( BTLV_STAGE_WORK *bsw );
+void              BTLV_STAGE_Main( BTLV_STAGE_WORK *bsw );
+void              BTLV_STAGE_Draw( BTLV_STAGE_WORK *bsw );
 
 //============================================================================================
 /**
@@ -135,6 +137,15 @@ BTLV_STAGE_WORK	*BTLV_STAGE_Init( int index, HEAPID heapID )
 		bsw->stage_obj = GFL_G3D_OBJECT_Create( bsw->stage_render, NULL, 0 );
 	}
 
+  //パレットフェード用ワーク生成
+  { 
+  	NNSG3dResFileHeader*	header = GFL_G3D_GetResourceFileHeader( bsw->stage_resource );
+  	NNSG3dResTex*		    	pTex = NNS_G3dGetTex( header ); 
+    u32                   size = (u32)pTex->plttInfo.sizePltt << 3;
+    
+    bsw->pData_dst = GFL_HEAP_AllocMemory( bsw->heapID, size );
+  }
+
 	//自分側お盆
 	bsw->stage_status[ BTLV_STAGE_MINE ].trans.x = stage_pos_table[ BTLV_STAGE_MINE ].x;
 	bsw->stage_status[ BTLV_STAGE_MINE ].trans.y = stage_pos_table[ BTLV_STAGE_MINE ].y;
@@ -177,6 +188,8 @@ void	BTLV_STAGE_Exit( BTLV_STAGE_WORK *bsw )
 	if(	bsw->stage_anm_resource ){
 		GFL_G3D_DeleteResource( bsw->stage_anm_resource );
 	}
+
+  GFL_HEAP_FreeMemory( bsw->pData_dst );
 
 	GFL_HEAP_FreeMemory( bsw );
 }

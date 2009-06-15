@@ -8,11 +8,10 @@
  */
 //============================================================================================
 
+#pragma once
+
 #include "system/mcss.h"
 #include "poke_tool/poke_tool.h"
-
-#ifndef	__BTLV_MCSS_H_
-#define	__BTLV_MCSS_H_
 
 //ポケモンの立ち位置定義
 // 1vs1
@@ -87,6 +86,8 @@ extern	void						BTLV_MCSS_MoveScale( BTLV_MCSS_WORK *bmw, int position, int mov
 extern	void						BTLV_MCSS_MoveRotate( BTLV_MCSS_WORK *bmw, int position, int type,
 																							VecFx32 *rotate, int frame, int wait, int count );
 extern	void						BTLV_MCSS_MoveBlink( BTLV_MCSS_WORK *bmw, int position, int type, int wait, int count );
+extern  void	          BTLV_MCSS_MoveAlpha( BTLV_MCSS_WORK *bmw, int position, int type,
+                                             int alpha, int frame, int wait, int count );
 extern	BOOL						BTLV_MCSS_CheckTCBExecute( BTLV_MCSS_WORK *bmw, int position );
 extern	BOOL						BTLV_MCSS_CheckExistPokemon( BTLV_MCSS_WORK *bmw, int position );
 extern	void						BTLV_MCSS_SetPaletteFade( BTLV_MCSS_WORK *bmw, int position,
@@ -96,4 +97,3 @@ extern	void						BTLV_MCSS_SetPaletteFade( BTLV_MCSS_WORK *bmw, int position,
 extern	void						BTLV_MCSS_AddDebug( BTLV_MCSS_WORK *bmw, const MCSS_ADD_DEBUG_WORK *madw, int position );
 #endif
 
-#endif	//__BTLV_MCSS_H_

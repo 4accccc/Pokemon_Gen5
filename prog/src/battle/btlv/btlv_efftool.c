@@ -18,11 +18,6 @@
  */
 //============================================================================================
 
-void	BTLV_EFFTOOL_CalcMoveVector( VecFx32 *start, VecFx32 *end, VecFx32 *out, fx32 flame );
-void	BTLV_EFFTOOL_CheckMove( fx32 *now_pos, fx32 *vec, fx32 *move_pos, BOOL *ret );
-BOOL	BTLV_EFFTOOL_CalcParam( EFFTOOL_MOVE_WORK *emw, VecFx32 *now_value );
-u8		BTLV_EFFTOOL_Pos2Bit( BtlvMcssPos no );
-
 //============================================================================================
 /**
  *	移動量を計算
@@ -171,3 +166,33 @@ u8	BTLV_EFFTOOL_Pos2Bit( BtlvMcssPos pos )
 	return bit_table[ pos ];
 }
 
+//============================================================================================
+/**
+ *	3Dモデルのパレットフェードアニメ
+ *
+ *	@param[in]	g3DRES    3Dリソース
+ *	@param[in]  pData_dst フェード計算結果を格納するワーク（VBlank転送終了まで保持されている必要があるため、呼び出し側で確保）
+ *	@param[in]	evy 	    フェードの段階(0-16)
+ *	@param[in]	rgb       フェードの最終的な色
+ */
+//============================================================================================
+void  BTLV_EFFTOOL_CalcPaletteFade( GFL_G3D_RES *g3DRES, void* pData_dst, u8 evy, u16 rgb )
+{ 
+	NNSG3dResFileHeader*	header;
+	NNSG3dResTex*		    	pTex;
+  u32                   size;
+  const void*           pData_src;
+  u32                   from;
+
+	//テクスチャリソースポインタの取得
+	header = GFL_G3D_GetResourceFileHeader( g3DRES );
+	pTex = NNS_G3dGetTex( header ); 
+
+  size = (u32)pTex->plttInfo.sizePltt << 3;
+  pData_src = NNS_G3dGetPlttData(pTex);
+  from = NNS_GfdGetTexKeyAddr(pTex->plttInfo.vramKey);
+
+	SoftFade( pData_src, pData_dst, ( size / 2 ), evy, rgb );
+
+  NNS_GfdRegisterNewVramTransferTask( NNS_GFD_DST_3D_TEX_PLTT, from, pData_dst, size );
+}

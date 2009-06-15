@@ -107,6 +107,7 @@ static VMCMD_RESULT VMEC_EMITTER_MOVE_COORDINATE( VMHANDLE *vmh, void *context_w
 static VMCMD_RESULT VMEC_POKEMON_MOVE( VMHANDLE *vmh, void *context_work );
 static VMCMD_RESULT VMEC_POKEMON_SCALE( VMHANDLE *vmh, void *context_work );
 static VMCMD_RESULT VMEC_POKEMON_ROTATE( VMHANDLE *vmh, void *context_work );
+static VMCMD_RESULT VMEC_POKEMON_ALPHA( VMHANDLE *vmh, void *context_work );
 static VMCMD_RESULT VMEC_POKEMON_SET_MEPACHI_FLAG( VMHANDLE *vmh, void *context_work );
 static VMCMD_RESULT VMEC_POKEMON_SET_ANM_FLAG( VMHANDLE *vmh, void *context_work );
 static VMCMD_RESULT VMEC_POKEMON_PAL_FADE( VMHANDLE *vmh, void *context_work );
@@ -195,6 +196,7 @@ static const VMCMD_FUNC btlv_effect_command_table[]={
   VMEC_POKEMON_MOVE,
   VMEC_POKEMON_SCALE,
   VMEC_POKEMON_ROTATE,
+  VMEC_POKEMON_ALPHA,
   VMEC_POKEMON_SET_MEPACHI_FLAG,
   VMEC_POKEMON_SET_ANM_FLAG,
   VMEC_POKEMON_PAL_FADE,
@@ -861,6 +863,41 @@ static VMCMD_RESULT VMEC_POKEMON_ROTATE( VMHANDLE *vmh, void *context_work )
     count    = ( int )VMGetU32( vmh );
 
     BTLV_MCSS_MoveRotate( BTLV_EFFECT_GetMcssWork(), position, type, &rotate, frame, wait, count );
+  }
+
+  return bevw->control_mode;
+}
+
+//============================================================================================
+/**
+ *  ポケモンα値
+ *
+ * @param[in] vmh       仮想マシン制御構造体へのポインタ
+ * @param[in] context_work  コンテキストワークへのポインタ
+ */
+//============================================================================================
+static VMCMD_RESULT VMEC_POKEMON_ALPHA( VMHANDLE *vmh, void *context_work )
+{
+  BTLV_EFFVM_WORK *bevw = ( BTLV_EFFVM_WORK* )context_work;
+  int position;
+  int type;
+  int alpha;
+  int frame;
+  int wait;
+  int count;
+
+  position = EFFVM_GetPosition( vmh, ( int )VMGetU32( vmh ) );
+
+  //立ち位置情報がエラーのときは、コマンド実行しない
+  if( position != BTLV_MCSS_POS_ERROR )
+  {
+    type  = ( int )VMGetU32( vmh );
+    alpha = ( int )VMGetU32( vmh );
+    frame = ( int )VMGetU32( vmh );
+    wait  = ( int )VMGetU32( vmh );
+    count = ( int )VMGetU32( vmh );
+
+    BTLV_MCSS_MoveAlpha( BTLV_EFFECT_GetMcssWork(), position, type, alpha, frame, wait, count );
   }
 
   return bevw->control_mode;

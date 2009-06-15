@@ -48,7 +48,7 @@ struct _BTLV_MCSS_WORK
 	u8							poke_mcss_tcb_rotate_execute;
 
 	u8							poke_mcss_tcb_blink_execute;
-	u8							dummy;								//padding
+	u8							poke_mcss_tcb_alpha_execute;
 	HEAPID					heapID;
 };
 
@@ -85,6 +85,7 @@ static	void	TCB_BTLV_MCSS_Move( GFL_TCB *tcb, void *work );
 static	void	TCB_BTLV_MCSS_Scale( GFL_TCB *tcb, void *work );
 static	void	TCB_BTLV_MCSS_Rotate( GFL_TCB *tcb, void *work );
 static	void	TCB_BTLV_MCSS_Blink( GFL_TCB *tcb, void *work );
+static	void	TCB_BTLV_MCSS_Alpha( GFL_TCB *tcb, void *work );
 
 static	void	BTLV_MCSS_CallBackFunctorFrame( u32 data, fx32 currentFrame );
 
@@ -552,6 +553,35 @@ void	BTLV_MCSS_MoveBlink( BTLV_MCSS_WORK *bmw, int position, int type, int wait,
 
 //============================================================================================
 /**
+ *	ポケモンα値
+ *
+ * @param[in]	bmw       BTLV_MCSS管理ワークへのポインタ
+ * @param[in]	position  α値セットするポケモンの立ち位置
+ * @param[in]	type      α値タイプ
+ * @param[in]	alpha 		α値タイプにより意味が変化
+ *                      EFFTOOL_CALCTYPE_DIRECT EFFTOOL_CALCTYPE_INTERPOLATION	最終的なα値
+ *                      EFFTOOL_CALCTYPE_ROUNDTRIP　往復の長さ
+ * @param[in]	frame     フレーム数（設定したα値まで何フレームで到達するか）
+ * @param[in]	wait      ウエイト
+ * @param[in]	count     往復カウント（EFFTOOL_CALCTYPE_ROUNDTRIPでしか意味のないパラメータ）
+ */
+//============================================================================================
+void	BTLV_MCSS_MoveAlpha( BTLV_MCSS_WORK *bmw, int position, int type, int alpha, int frame, int wait, int count )
+{
+	VecFx32	start;
+	VecFx32	end;
+
+	start.x = MCSS_GetAlpha( bmw->mcss[ position ] );
+  start.y = 0;
+  start.z = 0;
+  end.x = alpha;
+  end.y = 0;
+  end.z = 0;
+	BTLV_MCSS_TCBInitialize( bmw, position, type, &start, &end, frame, wait, count, TCB_BTLV_MCSS_Alpha );
+	bmw->poke_mcss_tcb_alpha_execute |= BTLV_EFFTOOL_Pos2Bit( position );
+}
+//============================================================================================
+/**
  *	タスクが起動中かチェック
  *
  * @param[in]	bmw			BTLV_MCSS管理ワークへのポインタ
@@ -562,10 +592,19 @@ void	BTLV_MCSS_MoveBlink( BTLV_MCSS_WORK *bmw, int position, int type, int wait,
 //============================================================================================
 BOOL	BTLV_MCSS_CheckTCBExecute( BTLV_MCSS_WORK *bmw, int position )
 {
+  BOOL  pal_fade_flag = FALSE;
+
+  if(	BTLV_MCSS_CheckExistPokemon( bmw, position ) )
+  { 
+    pal_fade_flag = MCSS_CheckExecutePaletteFade( bmw->mcss[ position ] );
+  }
+
 	return ( ( bmw->poke_mcss_tcb_move_execute & BTLV_EFFTOOL_Pos2Bit( position ) ) ||
 			 ( bmw->poke_mcss_tcb_scale_execute & BTLV_EFFTOOL_Pos2Bit( position ) ) ||
 			 ( bmw->poke_mcss_tcb_rotate_execute & BTLV_EFFTOOL_Pos2Bit( position ) ) ||
-			 ( bmw->poke_mcss_tcb_blink_execute & BTLV_EFFTOOL_Pos2Bit( position ) ) );
+			 ( bmw->poke_mcss_tcb_blink_execute & BTLV_EFFTOOL_Pos2Bit( position ) ) ||
+			 ( bmw->poke_mcss_tcb_alpha_execute & BTLV_EFFTOOL_Pos2Bit( position ) ) ||
+       ( pal_fade_flag ) );
 }
 
 //============================================================================================
@@ -772,6 +811,30 @@ static	void	TCB_BTLV_MCSS_Blink( GFL_TCB *tcb, void *work )
 	}
 	else{
 		pmtw->emw.wait--;
+	}
+}
+
+//============================================================================================
+/**
+ *	ポケモンα値タスク
+ */
+//============================================================================================
+static	void	TCB_BTLV_MCSS_Alpha( GFL_TCB *tcb, void *work )
+{
+	BTLV_MCSS_TCB_WORK	*pmtw = ( BTLV_MCSS_TCB_WORK * )work;
+	BTLV_MCSS_WORK *bmw = pmtw->bmw;
+	VecFx32	now_alpha;
+	BOOL	ret;
+
+	now_alpha.x = MCSS_GetAlpha( bmw->mcss[ pmtw->position ] );
+	now_alpha.y = 0;
+	now_alpha.z = 0;
+	ret = BTLV_EFFTOOL_CalcParam( &pmtw->emw, &now_alpha );
+	MCSS_SetAlpha( bmw->mcss[ pmtw->position ], now_alpha.x );
+	if( ret == TRUE ){
+		bmw->poke_mcss_tcb_alpha_execute &= ( BTLV_EFFTOOL_Pos2Bit( pmtw->position ) ^ 0xff );
+		GFL_HEAP_FreeMemory( work );
+		GFL_TCB_DeleteTask( tcb );
 	}
 }
 

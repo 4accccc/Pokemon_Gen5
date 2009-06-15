@@ -8,22 +8,24 @@
  */
 //============================================================================================
 
-#ifndef	__BTLV_EFFTOOL_H_
-#define	__BTLV_EFFTOOL_H_
+#pragma once
 
 //タスクの種類
-#define	EFFTOOL_CALCTYPE_DIRECT			( 0 )	//直接値を代入
+#define	EFFTOOL_CALCTYPE_DIRECT		    	( 0 )	//直接値を代入
 #define	EFFTOOL_CALCTYPE_INTERPOLATION	( 1 )	//指定値までを補間しながら計算
-#define	EFFTOOL_CALCTYPE_ROUNDTRIP		( 2 )	//指定した区間を往復計算（スタート地点とゴール地点の往復）
+#define	EFFTOOL_CALCTYPE_ROUNDTRIP	  	( 2 )	//指定した区間を往復計算（スタート地点とゴール地点の往復）
 #define	EFFTOOL_CALCTYPE_ROUNDTRIP_LONG	( 3 )	//指定した区間を往復計算（スタート地点を基準に＋－方向の往復）
 
 #ifndef __ASM_NO_DEF_
+
+#include "btlv_mcss.h"
+
 typedef struct
 {
 	int				move_type;
-	VecFx32			start_value;
-	VecFx32			end_value;
-	VecFx32			vector;
+	VecFx32		start_value;
+	VecFx32		end_value;
+	VecFx32		vector;
 	int				vec_time;
 	int				vec_time_tmp;
 	int				wait;
@@ -35,6 +37,7 @@ extern	void	BTLV_EFFTOOL_CalcMoveVector( VecFx32 *start, VecFx32 *end, VecFx32 *
 extern	void	BTLV_EFFTOOL_CheckMove( fx32 *now_pos, fx32 *vec, fx32 *move_pos, BOOL *ret );
 extern	BOOL	BTLV_EFFTOOL_CalcParam( EFFTOOL_MOVE_WORK *emw, VecFx32 *now_param );
 extern	u8		BTLV_EFFTOOL_Pos2Bit( BtlvMcssPos no );
+void  BTLV_EFFTOOL_CalcPaletteFade( GFL_G3D_RES *g3DRES, void* pData_dst, u8 evy, u16 rgb );
 
 static	inline	u32	BTLV_EFFTOOL_No2Bit( u32 no )
 {	
@@ -44,5 +47,3 @@ static	inline	u32	BTLV_EFFTOOL_No2Bit( u32 no )
 }
 
 #endif __ASM_NO_DEF_
-
-#endif	//__BTLV_EFFTOOL_H_

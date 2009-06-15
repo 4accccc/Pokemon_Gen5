@@ -23,12 +23,13 @@
 
 struct _BTLV_FIELD_WORK
 {
-	GFL_TCBSYS			*tcb_sys;
-	GFL_G3D_RES			*field_resource[ BTLV_FIELD_MAX ];
-	GFL_G3D_RND			*field_render[ BTLV_FIELD_MAX ];
-	GFL_G3D_OBJ			*field_obj[ BTLV_FIELD_MAX ];
+	GFL_TCBSYS*       tcb_sys;
+	GFL_G3D_RES*      field_resource[ BTLV_FIELD_MAX ];
+	GFL_G3D_RND*      field_render[ BTLV_FIELD_MAX ];
+	GFL_G3D_OBJ*      field_obj[ BTLV_FIELD_MAX ];
 	GFL_G3D_OBJSTATUS	field_status[ BTLV_FIELD_MAX ];
-	HEAPID				heapID;
+  void*             pData_dst[ BTLV_FIELD_MAX ];
+	HEAPID            heapID;
 };
 
 typedef	struct
@@ -102,6 +103,15 @@ BTLV_FIELD_WORK	*BTLV_FIELD_Init( GFL_TCBSYS *tcb_sys, int index, HEAPID heapID 
 		bfw->field_status[ i ].scale.y = FX32_ONE;
 		bfw->field_status[ i ].scale.z = FX32_ONE;
 		MTX_Identity33( &bfw->field_status[ i ].rotate );
+
+    //パレットフェード用ワーク生成
+    { 
+      NNSG3dResFileHeader*	header = GFL_G3D_GetResourceFileHeader( bfw->field_resource[ i ] );
+      NNSG3dResTex*		    	pTex = NNS_G3dGetTex( header ); 
+      u32                   size = (u32)pTex->plttInfo.sizePltt << 3;
+    
+      bfw->pData_dst[ i ] = GFL_HEAP_AllocMemory( bfw->heapID, size );
+    }
 	}
 
 //	BTLV_FIELD_TCBAdd( bfw );
@@ -124,6 +134,7 @@ void	BTLV_FIELD_Exit( BTLV_FIELD_WORK *bfw )
 		GFL_G3D_DeleteResource( bfw->field_resource[ i ] );
 		GFL_G3D_RENDER_Delete( bfw->field_render[ i ] );
 		GFL_G3D_OBJECT_Delete( bfw->field_obj[ i ] );
+    GFL_HEAP_FreeMemory( bfw->pData_dst[ i ] );
 	}
 
 	GFL_HEAP_FreeMemory( bfw );

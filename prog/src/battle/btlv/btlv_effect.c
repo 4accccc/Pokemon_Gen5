@@ -117,7 +117,7 @@ void  BTLV_EFFECT_Init( int index, HEAPID heapID )
   PaletteFadeWorkAllocSet( bew->pfd, FADE_MAIN_BG, 0x200, heapID );
   PaletteFadeWorkAllocSet( bew->pfd, FADE_SUB_BG, 0x200, heapID );
   PaletteFadeWorkAllocSet( bew->pfd, FADE_MAIN_OBJ, 0x200, heapID );
-  PaletteFadeWorkAllocSet( bew->pfd, FADE_SUB_OBJ, 0x200, heapID );
+  PaletteFadeWorkAllocSet( bew->pfd, FADE_SUB_OBJ, 0x1e0, heapID );
 
   bew->bmw  = BTLV_MCSS_Init( bew->tcb_sys, heapID );
   bew->bsw  = BTLV_STAGE_Init( index, heapID );
