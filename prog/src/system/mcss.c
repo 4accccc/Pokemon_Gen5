@@ -520,13 +520,13 @@ static	void	MCSS_DrawAct( MCSS_WORK *mcss,
 
 	G3_TexPlttBase(mcss->mcss_palette_proxy.vramLocation.baseAddrOfVram[NNS_G2D_VRAM_TYPE_3DMAIN],
 				   mcss->mcss_palette_proxy.fmt);
-	G3_PolygonAttr(GX_LIGHTMASK_NONE,				// no lights
-				   GX_POLYGONMODE_MODULATE,			// modulation mode
-				   GX_CULL_NONE,					// cull back
-				   0,								// polygon ID(0 - 63)
-				   31,								// alpha(0 - 31)
-				   GX_POLYGON_ATTR_MISC_FOG			// OR of GXPolygonAttrMisc's value
-				   );
+	G3_PolygonAttr( GX_LIGHTMASK_NONE,				// no lights
+                  GX_POLYGONMODE_MODULATE,	// modulation mode
+                  GX_CULL_NONE,		    			// cull back
+                  0,        								// polygon ID(0 - 63)
+                  mcss->alpha,	       			// alpha(0 - 31)
+                  GX_POLYGON_ATTR_MISC_NONE	// OR of GXPolygonAttrMisc's value
+                );
 
 	//マルチセルデータから取得した位置で書き出し
 	pos.x = MCSS_CONST( mcss->mcss_mcanim.pMultiCellDataBank->pMultiCellDataArray[anim_SRT_mc->index].pHierDataArray[node].posX ) + MCSS_CONST( anim_SRT_c->px );
@@ -553,41 +553,41 @@ static	void	MCSS_DrawAct( MCSS_WORK *mcss,
 	G3_Vtx( 0, -MCSS_DEFAULT_LINE, 0 );
 	G3_End();
 
-	G3_MtxMode( GX_MTXMODE_PROJECTION );
-	G3_RestoreMtx( 0 );
-	G3_MtxMode( GX_MTXMODE_POSITION_VECTOR );
-	G3_RestoreMtx( MCSS_SHADOW_MTX );
+  //影描画
+ 	G3_MtxMode( GX_MTXMODE_PROJECTION );
+ 	G3_RestoreMtx( 0 );
+ 	G3_MtxMode( GX_MTXMODE_POSITION_VECTOR );
+ 	G3_RestoreMtx( MCSS_SHADOW_MTX );
 
-	G3_TexPlttBase( shadow_palette->vramLocation.baseAddrOfVram[NNS_G2D_VRAM_TYPE_3DMAIN],
-				   shadow_palette->fmt);
-	G3_PolygonAttr(GX_LIGHTMASK_NONE,				// no lights
-				   GX_POLYGONMODE_MODULATE,			// modulation mode
-				   GX_CULL_NONE,					// cull back
-				   1,								// polygon ID(0 - 63)
-				   15,								// alpha(0 - 31)
-				   GX_POLYGON_ATTR_MISC_FOG			// OR of GXPolygonAttrMisc's value
-				   );
+ 	G3_TexPlttBase( shadow_palette->vramLocation.baseAddrOfVram[NNS_G2D_VRAM_TYPE_3DMAIN], shadow_palette->fmt);
+ 	G3_PolygonAttr( GX_LIGHTMASK_NONE,				// no lights
+       				    GX_POLYGONMODE_MODULATE,	// modulation mode
+       				    GX_CULL_NONE,					    // cull back
+       				    1,								        // polygon ID(0 - 63)
+       				    ( mcss->alpha / 2 ),      // alpha(0 - 31)
+       				    GX_POLYGON_ATTR_MISC_FOG	// OR of GXPolygonAttrMisc's value
+       				   );
 
-	G3_Translate( pos.x, pos.y, 0 );
+ 	G3_Translate( pos.x, pos.y, 0 );
 
-	G3_RotZ( -FX_SinIdx( anim_SRT_c->rotZ ), FX_CosIdx( anim_SRT_c->rotZ ) );
+ 	G3_RotZ( -FX_SinIdx( anim_SRT_c->rotZ ), FX_CosIdx( anim_SRT_c->rotZ ) );
 
-	G3_Scale( anim_SRT_c->sx, anim_SRT_c->sy, FX32_ONE );
+ 	G3_Scale( anim_SRT_c->sx, anim_SRT_c->sy, FX32_ONE );
 
-	G3_Translate( pos_x, pos_y, 0 );
+ 	G3_Translate( pos_x, pos_y, 0 );
 
-	G3_Scale( scale_x, scale_y, FX32_ONE );
+ 	G3_Scale( scale_x, scale_y, FX32_ONE );
 
-	G3_Begin(GX_BEGIN_QUADS);
-	G3_TexCoord( tex_s,				tex_t );
-	G3_Vtx( 0, 0, 0 );
-	G3_TexCoord( tex_s + scale_x,	tex_t );
-	G3_Vtx( MCSS_DEFAULT_LINE, 0, 0 );
-	G3_TexCoord( tex_s + scale_x,	tex_t + scale_y );
-	G3_Vtx( MCSS_DEFAULT_LINE, -MCSS_DEFAULT_LINE, 0 );
-	G3_TexCoord( tex_s,				tex_t + scale_y );
-	G3_Vtx( 0, -MCSS_DEFAULT_LINE, 0 );
-	G3_End();
+ 	G3_Begin(GX_BEGIN_QUADS);
+ 	G3_TexCoord( tex_s,				tex_t );
+ 	G3_Vtx( 0, 0, 0 );
+ 	G3_TexCoord( tex_s + scale_x,	tex_t );
+ 	G3_Vtx( MCSS_DEFAULT_LINE, 0, 0 );
+ 	G3_TexCoord( tex_s + scale_x,	tex_t + scale_y );
+ 	G3_Vtx( MCSS_DEFAULT_LINE, -MCSS_DEFAULT_LINE, 0 );
+ 	G3_TexCoord( tex_s,				tex_t + scale_y );
+ 	G3_Vtx( 0, -MCSS_DEFAULT_LINE, 0 );
+ 	G3_End();
 
 	if( mcss_ortho_mode == 0 ){
 		*pos_z_default -= MCSS_DEFAULT_Z;
@@ -620,6 +620,7 @@ MCSS_WORK*	MCSS_Add( MCSS_SYS_WORK *mcss_sys, fx32	pos_x, fx32	pos_y, fx32	pos_z
 			mcss_sys->mcss[ count ]->ofs_scale.x = FX32_ONE;
 			mcss_sys->mcss[ count ]->ofs_scale.y = FX32_ONE;
 			mcss_sys->mcss[ count ]->ofs_scale.z = FX32_ONE;
+			mcss_sys->mcss[ count ]->alpha = 31;
 			MCSS_LoadResource( mcss_sys, count, maw );
 			break;
 		}
@@ -903,6 +904,45 @@ void	MCSS_SetPaletteFade( MCSS_WORK *mcss, u8 start_evy, u8 end_evy, u8 wait, u3
 }
 
 //--------------------------------------------------------------------------
+/**
+ * α値をゲット
+ *
+ * @param[in]	mcss		ゲットするマルチセルワーク構造体
+ */
+//--------------------------------------------------------------------------
+u8	MCSS_GetAlpha( MCSS_WORK *mcss )
+{ 
+  return mcss->alpha;
+}
+
+//--------------------------------------------------------------------------
+/**
+ * α値をセット
+ *
+ * @param[in]	mcss		セットするマルチセルワーク構造体
+ * @param[in]	alpha		セットするα値(0-31)
+ */
+//--------------------------------------------------------------------------
+void	MCSS_SetAlpha( MCSS_WORK *mcss, u8 alpha )
+{ 
+  mcss->alpha = alpha;
+}
+
+//--------------------------------------------------------------------------
+/**
+ * パレットフェード中かチェック
+ *
+ * @param[in]	mcss		チェックするマルチセルワーク構造体
+ *
+ * @retval  FALSE:フェード終了　TRUE:フェード中
+ */
+//--------------------------------------------------------------------------
+BOOL  MCSS_CheckExecutePaletteFade( MCSS_WORK*  mcss )
+{ 
+  return ( mcss->pal_fade_flag != 0 );
+}
+
+//--------------------------------------------------------------------------
 //--------------------------------------------------------------------------
 
 //--------------------------------------------------------------------------
@@ -1091,14 +1131,6 @@ static	void	MCSS_MaterialSetup(void)
 								GX_RGB( 0,  0,  0),		// emission
                                 FALSE					// use shininess table if TRUE
                                 );
-
-		G3_PolygonAttr(GX_LIGHTMASK_NONE,				// no lights
-					   GX_POLYGONMODE_MODULATE,			// modulation mode
-					   GX_CULL_NONE,					// cull back
-					   0,								// polygon ID(0 - 63)
-					   31,								// alpha(0 - 31)
-					   0								// OR of GXPolygonAttrMisc's value
-					   );
 	}
 }
 

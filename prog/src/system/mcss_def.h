@@ -80,11 +80,12 @@ struct _MCSS_WORK
 	u8														pal_fade_wait;				//パレットフェード　wait値
 	u8														pal_fade_wait_tmp;		//パレットフェード　wait_tmp値
 	u32														pal_fade_rgb;					//パレットフェード　end_evy時のrgb値
+	u32														alpha					:8;     //alpha値
 	u32														mepachi_flag	:1;			//メパチフラグ
 	u32														anm_stop_flag	:1;			//アニメストップフラグ
 	u32														vanish_flag		:1;			//バニッシュフラグ
 	u32														pal_fade_flag	:1;			//パレットフェードフラグ
-	u32																					:28;
+	u32																					:20;
 	int														index;								//登録INDEX
 	int														heapID;								//使用するヒープID
 };
