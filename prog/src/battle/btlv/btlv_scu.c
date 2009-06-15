@@ -1152,13 +1152,14 @@ void BTLV_SCU_StartHPGauge( BTLV_SCU* wk, BtlPokePos pos )
       min = max;
     }
     range = max - min;
-    twk->timer = (range * 180) / 100;
+    twk->timer = (range * 150) / 100;
     if( twk->timer < DAMAGE_FRAME_MIN )
     {
       twk->timer = DAMAGE_FRAME_MIN;
     }
 
-    twk->hpAddVal = FX32_CONST(max - min) / twk->timer;
+    twk->hpAddVal = FX32_CONST((int)(twk->hpEnd - twk->statWin->hp)) / twk->timer;
+    BTL_Printf("HP start=%d, end=%d, startVal=%08x, addVal=%08x, timer=%d\n", max, min, twk->hpVal, twk->hpAddVal, twk->timer);
   }
 
   (*(twk->taskCounter))++;

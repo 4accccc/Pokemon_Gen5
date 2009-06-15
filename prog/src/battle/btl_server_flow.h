@@ -10,6 +10,8 @@
 #ifndef __BTL_SERVER_FLOW_H__
 #define __BTL_SERVER_FLOW_H__
 
+#include "waza_tool/wazadata.h"
+
 #include "btl_main.h"
 #include "btl_adapter.h"
 #include "btl_server.h"
@@ -110,8 +112,6 @@ extern void BTL_SVFLOW_RECEPT_CurePokeSick( BTL_SVFLOW_WORK* wk, u8 pokeID );
 extern void BTL_SVFLOW_RECEPT_CureWazaSick( BTL_SVFLOW_WORK* wk, u8 pokeID, WazaSick sick );
 extern void BTL_SVFLOW_RECEPT_AddSick( BTL_SVFLOW_WORK* wk, u8 targetPokeID, u8 attackPokeID,
   WazaSick sick, BPP_SICK_CONT contParam, BOOL fAlmost );
-extern void BTL_SVFLOW_RECEPT_ChangePokeType( BTL_SVFLOW_WORK* wk, u8 pokeID, PokeType type );
-extern void BTL_SVFLOW_RECEPT_ChangePokeForm( BTL_SVFLOW_WORK* wk, u8 pokeID, u8 formNo );
 extern void BTL_SVFLOW_RECEPT_CantEscapeAdd( BTL_SVFLOW_WORK* wk, u8 pokeID, BtlCantEscapeCode code );
 extern void BTL_SVFLOW_RECEPT_CantEscapeSub( BTL_SVFLOW_WORK* wk, u8 pokeID, BtlCantEscapeCode code );
 extern void BTL_SVFLOW_RECEPT_TraceTokusei( BTL_SVFLOW_WORK* wk, u8 pokeID, u8 targetPokeID );
@@ -139,7 +139,17 @@ typedef enum {
 
 }BtlSpPriA;
 
+/**
+ *  状態異常指定の拡張コード
+ */
+typedef enum {
 
+  // 全ての WazaSick コードも対象となります
+
+  WAZASICK_EX_POKEFULL = WAZASICK_MAX,  ///< 全ポケモン系異常が対象
+  WAZASICK_EX_POKEFULL_PLUS,            ///< 全ポケモン系異常＋こんらんも対象
+
+}BtlWazaSickEx;
 
 /**
  *  状態異常化失敗コード
@@ -172,6 +182,7 @@ typedef enum {
   BTL_HANDEX_RESET_RANK,    ///< ランク増減効果をリセット
   BTL_HANDEX_RECOVER_RANK,  ///< マイナスランクをフラットに戻す
   BTL_HANDEX_DAMAGE,        ///< ダメージを与える
+  BTL_HANDEX_KILL,          ///< 瀕死にする
   BTL_HANDEX_CHANGE_TYPE,   ///< ポケモンのタイプを変える
   BTL_HANDEX_SET_TURNFLAG,  ///< ターンフラグセット
   BTL_HANDEX_RESET_TURNFLAG,///< ターンフラグ強制リセット
@@ -225,7 +236,7 @@ typedef struct {
 
 typedef struct {
  BTL_HANDEX_PARAM_HEADER   header;   ///< 共有ヘッダ
- WazaSick   sickID;                  ///< 対応する状態異常ID（WAZASICK_NULLでオールマイティ）
+ BtlWazaSickEx   sickCode;           ///< 対応する状態異常コード（拡張可）
  u8   pokeID;                        ///< 対象ポケモンID
 }BTL_HANDEX_PARAM_CURE_SICK;
 
@@ -246,6 +257,7 @@ typedef struct {
  BTL_HANDEX_PARAM_HEADER   header;   ///< 共有ヘッダ
  WazaRankEffect rankType;            ///< ランク増減種類
  s8   rankVolume;                    ///< ランク増減値(=0だと強制リセット）
+ u8   fStdMsgDisable;                ///< 標準メッセージを表示しないフラグ
  u8   fAlmost;                       ///< ほぼ確定フラグ（特殊要因で失敗した場合に原因メッセージを表示する）
  u8   poke_cnt;                      ///< 対象ポケモン数
  u8   pokeID[ BTL_POS_MAX ];         ///< 対象ポケモンID
@@ -268,6 +280,11 @@ typedef struct {
  u8   pokeID[ BTL_POS_MAX ];         ///< 対象ポケモンID
  u16  damage[ BTL_POS_MAX ];         ///< ダメージ量
 }BTL_HANDEX_PARAM_DAMAGE;
+
+typedef struct {
+ BTL_HANDEX_PARAM_HEADER   header;   ///< 共有ヘッダ
+ u32   pokeID;
+}BTL_HANDEX_PARAM_KILL;
 
 typedef struct {
   BTL_HANDEX_PARAM_DAMAGE  header;

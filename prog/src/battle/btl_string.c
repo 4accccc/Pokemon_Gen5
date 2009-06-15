@@ -452,6 +452,7 @@ void BTL_STR_MakeStringSet( STRBUF* buf, BtlStrID_SET strID, const int* args )
     { BTL_STRID_SET_UseItem_Rankup_ATK,   ms_set_kinomi_rankup },
     { BTL_STRID_SET_UseItem_RecoverPP,    ms_set_item_recover_pp },
     { BTL_STRID_SET_KaifukuFuji,          ms_set_waza_sp },
+    { BTL_STRID_SET_ChouhatuWarn,         ms_set_waza_sp },
 
   };
 
@@ -630,15 +631,10 @@ static void ms_set_kinomi_rankup( STRBUF* dst, u16 strID, const int* args )
 //--------------------------------------------------------------
 static void ms_set_waza_sp( STRBUF* dst, u16 strID, const int* args )
 {
-  u8 statusType = args[1] - WAZA_RANKEFF_ORIGIN;
-  if( args[2] > 1 )
-  {
-    strID += (SETTYPE_MAX * WAZA_RANKEFF_NUMS);
-  }
   register_PokeNickname( args[0], BUFIDX_POKE_1ST );
-  WORDSET_RegisterItemName( SysWork.wset, 1, args[3] );
+  WORDSET_RegisterWazaName( SysWork.wset, 1, args[1] );
 
-  strID = get_setPtnStrID( args[0], strID, statusType );
+  strID = get_setStrID( args[0], strID );
   GFL_MSG_GetString( SysWork.msg[MSGSRC_SET], strID, SysWork.tmpBuf );
   WORDSET_ExpandStr( SysWork.wset, dst, SysWork.tmpBuf );
 }

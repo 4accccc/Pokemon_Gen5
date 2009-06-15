@@ -48,6 +48,14 @@ typedef struct {
   u8  counter[ BTL_CANTESC_MAX ][ BTL_POKEID_MAX ];
 }CANT_ESC_CONTROL;
 
+/**
+ *  文字表示用パラメータ
+ */
+typedef struct {
+  u16  strID;
+  u16  stdFlag;
+  int  args[ BTL_STR_ARG_MAX ];
+}STR_PARAM;
 
 //--------------------------------------------------------------
 /**
@@ -56,39 +64,46 @@ typedef struct {
 //--------------------------------------------------------------
 struct _BTL_CLIENT {
 
-  BTL_MAIN_MODULE*  mainModule;
-  BTL_POKE_CONTAINER* pokeCon;
+  BTL_MAIN_MODULE*      mainModule;
+  BTL_POKE_CONTAINER*   pokeCon;
+  const BTL_POKEPARAM*  procPoke;
+  BTL_ACTION_PARAM*     procAction;
 
   BTL_ADAPTER*  adapter;
   BTLV_CORE*    viewCore;
+  STR_PARAM     strParam;
 
-  ClientSubProc subProc;
-  int       subSeq;
+  ClientSubProc  subProc;
+  int            subSeq;
 
-  const void*   returnDataPtr;
-  u32           returnDataSize;
+  const void*    returnDataPtr;
+  u32            returnDataSize;
 
   const BTL_PARTY*  myParty;
-  u8          frontPokeEmpty[ BTL_POSIDX_MAX ];       ///< 担当している戦闘位置にもう出せない時にTRUEにする
-  u8          numCoverPos;  ///< 担当する戦闘ポケモン数
-  u8          procPokeIdx;  ///< 処理中ポケモンインデックス
-  BtlPokePos  basePos;      ///< 戦闘ポケモンの位置ID
+  u8                frontPokeEmpty[ BTL_POSIDX_MAX ];       ///< 担当している戦闘位置にもう出せない時にTRUEにする
+  u8                numCoverPos;  ///< 担当する戦闘ポケモン数
+  u8                procPokeIdx;  ///< 処理中ポケモンインデックス
+  BtlPokePos        basePos;      ///< 戦闘ポケモンの位置ID
 
-  BTL_ACTION_PARAM    actionParam[ BTL_POSIDX_MAX ];
-  BTL_SERVER_CMD_QUE* cmdQue;
-  int             cmdArgs[ BTL_SERVERCMD_ARG_MAX ];
-  ServerCmd       serverCmd;
-  ServerCmdProc   scProc;
-  int             scSeq;
+  BTL_ACTION_PARAM     actionParam[ BTL_POSIDX_MAX ];
+  BTL_SERVER_CMD_QUE*  cmdQue;
+  int                  cmdArgs[ BTL_SERVERCMD_ARG_MAX ];
+  ServerCmd            serverCmd;
+  ServerCmdProc        scProc;
+  int                  scSeq;
+
 
   BTL_POKESELECT_PARAM    pokeSelParam;
   BTL_POKESELECT_RESULT   pokeSelResult;
   CANT_ESC_CONTROL        cantEscCtrl;
 
+
   u8  myID;
   u8  myType;
   u8  myState;
   u8  commWaitInfoOn;
+
+
 
 };
 
@@ -102,6 +117,10 @@ static BOOL SubProc_AI_NotifyPokeData( BTL_CLIENT* wk, int* seq );
 static BOOL SubProc_UI_Initialize( BTL_CLIENT* wk, int* seq );
 static BOOL SubProc_AI_Initialize( BTL_CLIENT* wk, int *seq );
 static BOOL SubProc_UI_SelectAction( BTL_CLIENT* wk, int* seq );
+static BOOL is_action_unselectable( BTL_CLIENT* wk, const BTL_POKEPARAM* bpp, BTL_ACTION_PARAM* action );
+static BOOL is_waza_unselectable( BTL_CLIENT* wk, const BTL_POKEPARAM* bpp, BTL_ACTION_PARAM* action );
+static void setWaruagakiAction( BTL_ACTION_PARAM* dst, BTL_CLIENT* wk, const BTL_POKEPARAM* bpp );
+static BOOL is_unselectable_waza( BTL_CLIENT* wk, const BTL_POKEPARAM* bpp, WazaID waza, STR_PARAM* strParam );
 static BtlCantEscapeCode is_prohibit_escape( BTL_CLIENT* wk, u8* pokeID );
 static BOOL SubProc_AI_SelectAction( BTL_CLIENT* wk, int* seq );
 static u8 calc_empty_pos( BTL_CLIENT* wk, u8* posIdxList );
@@ -137,6 +156,7 @@ static BOOL scProc_ACT_WeatherStart( BTL_CLIENT* wk, int* seq, const int* args )
 static BOOL scProc_ACT_WeatherEnd( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_ACT_SimpleHP( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_ACT_Kinomi( BTL_CLIENT* wk, int* seq, const int* args );
+static BOOL scProc_ACT_Kill( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_ACT_TraceTokusei( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_TOKWIN_In( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_TOKWIN_Out( BTL_CLIENT* wk, int* seq, const int* args );
@@ -262,13 +282,6 @@ BOOL BTL_CLIENT_Main( BTL_CLIENT* wk )
   }
   return FALSE;
 }
-
-
-
-//------------------------------------------------------------------------------------------------------
-//------------------------------------------------------------------------------------------------------
-
-
 static ClientSubProc getSubProc( BTL_CLIENT* wk, BtlAdapterCmd cmd )
 {
   static const struct {
@@ -297,6 +310,8 @@ static ClientSubProc getSubProc( BTL_CLIENT* wk, BtlAdapterCmd cmd )
   GF_ASSERT(0);
   return NULL;
 }
+//------------------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------------------------
 
 
 static BOOL SubProc_UI_NotifyPokeData( BTL_CLIENT* wk, int* seq )
@@ -336,75 +351,128 @@ static BOOL SubProc_UI_SelectAction( BTL_CLIENT* wk, int* seq )
 {
   enum {
     SEQ_INIT = 0,
+    SEQ_CHECK_UNSEL_ACTION,
     SEQ_SELECT_ACTION,
     SEQ_CHECK_ACTION,
     SEQ_SELECT_POKEMON,
     SEQ_CHECK_DONE,
     SEQ_CHECK_ESCAPE,
+    SEQ_CHECK_FIGHT,
+    SEQ_SELECT_WAZA_START,
+    SEQ_SELECT_WAZA_WAIT,
+    SEQ_CHECK_WAZA_TARGET,
+    SEQ_SELECT_TARGET_START,
+    SEQ_SELECT_TARGET_WAIT,
+    SEQ_WAIT_MSG,
     SEQ_CANT_ESCAPE,
     SEQ_RETURN_START,
     SEQ_RETURN_COMM_WAIT,
+    SEQ_WAIT_CAMERA_EFFECT,
   };
 
   switch( *seq ){
   case SEQ_INIT:
     setup_pokesel_param_change( wk, &wk->pokeSelParam );
     wk->procPokeIdx = 0;
+    wk->procPoke = BTL_POKECON_GetClientPokeData( wk->pokeCon, wk->myID, wk->procPokeIdx );
+    wk->procAction = &wk->actionParam[ wk->procPokeIdx ];
+    (*seq) = SEQ_CHECK_UNSEL_ACTION;
+    /* fallthru */
+  case SEQ_CHECK_UNSEL_ACTION:
+    if( is_action_unselectable(wk, wk->procPoke,  wk->procAction) ){
+      (*seq) = SEQ_CHECK_DONE;
+      break;
+    }
     (*seq) = SEQ_SELECT_ACTION;
     /* fallthru */
   case SEQ_SELECT_ACTION:
-    {
-      BTL_POKEPARAM* bpp = BTL_POKECON_GetClientPokeData( wk->pokeCon, wk->myID, wk->procPokeIdx );
-      if( BTL_POKEPARAM_IsDead(bpp) )
-      {
-        BTL_Printf("アクション選択(%d体目）しんでるのでスキップします\n", wk->procPokeIdx );
-        BTL_ACTION_SetNULL( &wk->actionParam[wk->procPokeIdx] );
-        (*seq) = SEQ_CHECK_DONE;
-        break;
-      }
-      if( BTL_POKEPARAM_GetActFlag(bpp, BPP_ACTFLG_CANT_ACTION) )
-      {
-        BTL_Printf("アクション選択(%d体目）動けないのでスキップします\n", wk->procPokeIdx );
-        BTL_ACTION_SetSkip( &wk->actionParam[wk->procPokeIdx] );
-        (*seq) = SEQ_CHECK_DONE;
-        break;
-      }
-      if( BTL_POKEPARAM_CheckSick(bpp, WAZASICK_WAZALOCK_HARD) )
-      {
-        WazaID waza = BTL_POKEPARAM_GetPrevWazaNumber( bpp );
-        BtlPokePos pos = BTL_POKEPARAM_GetPrevTargetPos( bpp );
-        BTL_ACTION_SetFightParam( &wk->actionParam[wk->procPokeIdx], waza, pos );
-        (*seq) = SEQ_CHECK_DONE;
-        break;
-      }
-
-      BTL_Printf("アクション選択(%d体目）開始します\n", wk->procPokeIdx );
-      BTLV_UI_SelectAction_Start( wk->viewCore, bpp, &wk->actionParam[wk->procPokeIdx] );
-      (*seq) = SEQ_CHECK_ACTION;
-      break;
-    }
+    BTL_Printf("アクション選択(%d体目）開始します\n", wk->procPokeIdx );
+    BTLV_UI_SelectAction_Start( wk->viewCore, wk->procPoke, wk->procAction );
+    (*seq) = SEQ_CHECK_ACTION;
     break;
   case SEQ_CHECK_ACTION:
-    if( BTLV_UI_SelectAction_Wait(wk->viewCore) )
     {
+      BtlAction action = BTLV_UI_SelectAction_Wait( wk->viewCore );
+
+      switch( action ){
       // 入れ替えポケモン選択の場合はまだアクションパラメータが不十分->ポケモン選択へ
-      u8 action = BTL_ACTION_GetAction( &wk->actionParam[wk->procPokeIdx] );
-      if( action == BTL_ACTION_CHANGE )
-      {
+      case BTL_ACTION_CHANGE:
         BTLV_StartPokeSelect( wk->viewCore, &wk->pokeSelParam, &wk->pokeSelResult );
         (*seq) = SEQ_SELECT_POKEMON;
         break;
-      }
       // 「にげる」を選んだら、反応の条件分岐へ
-      else if( action == BTL_ACTION_ESCAPE )
-      {
+      case BTL_ACTION_ESCAPE:
         (*seq) = SEQ_CHECK_ESCAPE;
+        break;
+      // 「たたかう」を選んだら、各種条件分岐
+      case BTL_ACTION_FIGHT:
+        (*seq) = SEQ_CHECK_FIGHT;
+        break;
       }
-      // それ以外は担当分の選択を終えてるかチェックへ
-      else
-      {
-        (*seq) = SEQ_CHECK_DONE;
+    }
+    break;
+
+  // 「たたかう」選択直後
+  case SEQ_CHECK_FIGHT:
+    if( is_waza_unselectable( wk, wk->procPoke, wk->procAction ) ){
+      (*seq) = SEQ_CHECK_DONE;
+    }else{
+      (*seq) = SEQ_SELECT_WAZA_START;
+    }
+    break;
+
+  case SEQ_SELECT_WAZA_START:
+    BTLV_UI_SelectWaza_Start( wk->viewCore, wk->procPoke, wk->procAction );
+    (*seq) = SEQ_SELECT_WAZA_WAIT;
+    break;
+  case SEQ_SELECT_WAZA_WAIT:
+    if( BTLV_UI_SelectWaza_Wait(wk->viewCore) )
+    {
+      if( BTL_ACTION_GetAction(wk->procAction) == BTL_ACTION_NULL ){
+        (*seq) = SEQ_SELECT_ACTION;
       }
+      else{
+        if( is_unselectable_waza(wk, wk->procPoke, wk->actionParam[wk->procPokeIdx].fight.waza, &wk->strParam) )
+        {
+          if( wk->strParam.stdFlag ){
+            BTL_Printf(" STR_STD, ID=%d\n", wk->strParam.strID);
+            BTLV_StartMsgStd( wk->viewCore, wk->strParam.strID, wk->strParam.args );
+          }else{
+            BTL_Printf(" STR_SET, ID=%d\n", wk->strParam.strID);
+            BTLV_StartMsgSet( wk->viewCore, wk->strParam.strID, wk->strParam.args );
+          }
+          (*seq) = SEQ_WAIT_MSG;
+        }
+        else{
+          (*seq) = SEQ_CHECK_WAZA_TARGET;
+        }
+      }
+    }
+    break;
+
+  case SEQ_CHECK_WAZA_TARGET:
+    if( BTL_MAIN_GetRule(wk->mainModule) == BTL_RULE_SINGLE ){
+      (*seq) = SEQ_CHECK_DONE;
+    }else{
+      (*seq) = SEQ_SELECT_TARGET_START;
+    }
+    break;
+
+  case SEQ_SELECT_TARGET_START:
+    BTLV_UI_SelectTarget_Start( wk->viewCore, wk->procPoke, wk->procAction );
+    (*seq) = SEQ_SELECT_TARGET_WAIT;
+    break;
+
+  case SEQ_SELECT_TARGET_WAIT:
+    if( BTLV_UI_SelectTarget_Wait(wk->viewCore) ){
+      (*seq) = SEQ_CHECK_DONE;
+    }
+    break;
+
+  case SEQ_WAIT_MSG:
+    if( BTLV_WaitMsg(wk->viewCore) ){
+      BTLV_UI_Cleanup( wk->viewCore );
+      (*seq) = SEQ_SELECT_ACTION;
     }
     break;
 
@@ -420,6 +488,7 @@ static BOOL SubProc_UI_SelectAction( BTL_CLIENT* wk, int* seq )
     break;
 
   case SEQ_CHECK_DONE:
+    BTLV_UI_Cleanup( wk->viewCore );
     wk->procPokeIdx++;
     if( wk->procPokeIdx >= wk->numCoverPos )
     {
@@ -427,8 +496,7 @@ static BOOL SubProc_UI_SelectAction( BTL_CLIENT* wk, int* seq )
       wk->returnDataSize = sizeof(wk->actionParam[0]) * wk->numCoverPos;
       (*seq) = SEQ_RETURN_START;
     }
-    else
-    {
+    else{
       (*seq) = SEQ_SELECT_ACTION;
     }
     break;
@@ -478,6 +546,8 @@ static BOOL SubProc_UI_SelectAction( BTL_CLIENT* wk, int* seq )
     break;
 
   case SEQ_RETURN_START:
+    BTLV_EFFECT_Stop();
+    BTLV_EFFECT_Add( BTLEFF_CAMERA_INIT );
     if( BTL_MAIN_GetCommMode(wk->mainModule) != BTL_COMM_NONE )
     {
       BTL_Printf("通信中なので待機中メッセージだすよ\n");
@@ -488,12 +558,19 @@ static BOOL SubProc_UI_SelectAction( BTL_CLIENT* wk, int* seq )
     else
     {
       BTL_Printf("通信中じゃないなので待機中メッセージだしません\n");
-      return TRUE;
+      (*seq) = SEQ_WAIT_CAMERA_EFFECT;
     }
     break;
 
   case SEQ_RETURN_COMM_WAIT:
     if( BTLV_WaitCommWait(wk->viewCore) )
+    {
+      (*seq) = SEQ_WAIT_CAMERA_EFFECT;
+    }
+    break;
+
+  case SEQ_WAIT_CAMERA_EFFECT:
+    if( !BTLV_EFFECT_CheckExecute() )
     {
       return TRUE;
     }
@@ -502,6 +579,150 @@ static BOOL SubProc_UI_SelectAction( BTL_CLIENT* wk, int* seq )
 
   return FALSE;
 }
+
+//----------------------------------------------------------------------------------
+/**
+ * アクション選択不可状態のポケモンかどうか判定
+ * 不可状態であれば、アクション内容を自動生成する
+ *
+ * @param   wk
+ * @param   bpp       判定対象ポケモンパラメータ
+ * @param   action    [out] アクション内容生成先
+ *
+ * @retval  BOOL      不可状態ならTRUE
+ */
+//----------------------------------------------------------------------------------
+static BOOL is_action_unselectable( BTL_CLIENT* wk, const BTL_POKEPARAM* bpp, BTL_ACTION_PARAM* action )
+{
+  // 死んでたらNULLデータを返す
+  if( BTL_POKEPARAM_IsDead(wk->procPoke) )
+  {
+    BTL_ACTION_SetNULL( action );
+    return TRUE;
+  }
+  // アクション選択できない（攻撃の反動など）場合はスキップ
+  if( BTL_POKEPARAM_GetActFlag(wk->procPoke, BPP_ACTFLG_CANT_ACTION) )
+  {
+    BTL_ACTION_SetSkip( action );
+    return TRUE;
+  }
+  // ワザロック状態（前回ワザをそのまま使う）は勝手にワザ選択処理してスキップ
+  if( BTL_POKEPARAM_CheckSick(wk->procPoke, WAZASICK_WAZALOCK_HARD) )
+  {
+    WazaID waza = BTL_POKEPARAM_GetPrevWazaNumber( wk->procPoke );
+    BtlPokePos pos = BTL_POKEPARAM_GetPrevTargetPos( wk->procPoke );
+    u8 waza_idx = BTL_POKEPARAM_GetWazaIdx( wk->procPoke, waza );
+    if( BTL_POKEPARAM_GetPP(wk->procPoke, waza_idx) ){
+      BTL_ACTION_SetFightParam( action, waza, pos );
+    }else{
+      // PPゼロならわるあがき
+      setWaruagakiAction( action, wk, wk->procPoke );
+    }
+    return TRUE;
+  }
+  return FALSE;
+}
+//----------------------------------------------------------------------------------
+/**
+ * ワザ選択不可状態のポケモンかどうか判定
+ * ワザ選択不可状態であれば、アクション内容を自動生成する
+ *
+ * @param   wk
+ * @param   bpp       判定対象ポケモンパラメータ
+ * @param   action    [out] アクション内容生成先
+ *
+ * @retval  BOOL      ワザ選択不可状態ならTRUE
+ */
+//----------------------------------------------------------------------------------
+static BOOL is_waza_unselectable( BTL_CLIENT* wk, const BTL_POKEPARAM* bpp, BTL_ACTION_PARAM* action )
+{
+  // ちょうはつ状態（ダメージワザしか選べない）は、選べるワザを持っていなければ「わるあがき」セットでスキップ
+  if( BTL_POKEPARAM_CheckSick(bpp, WAZASICK_TYOUHATSU) )
+  {
+    int i, cnt, max = BTL_POKEPARAM_GetWazaCount( bpp );
+    for(i=0; i<max; ++i){
+      if( BTL_POKEPARAM_GetPP(bpp, i) && WAZADATA_IsDamage(BTL_POKEPARAM_GetWazaNumber(bpp, i)) ){
+        break;
+      }
+    }
+    if( i == max ){
+      setWaruagakiAction( action, wk, bpp );
+      return TRUE;
+    }
+  }
+
+  return FALSE;
+}
+//----------------------------------------------------------------------------------
+/**
+ * 「わるあがき」用アクションパラメータセット
+ *
+ * @param   dst
+ * @param   wk
+ * @param   bpp
+ */
+//----------------------------------------------------------------------------------
+static void setWaruagakiAction( BTL_ACTION_PARAM* dst, BTL_CLIENT* wk, const BTL_POKEPARAM* bpp )
+{
+  BtlPokePos myPos = BTL_MAIN_PokeIDtoPokePos( wk->mainModule, BTL_POKEPARAM_GetID(bpp) );
+  BTL_ACTION_SetFightParam( dst, WAZANO_WARUAGAKI, myPos );
+}
+//----------------------------------------------------------------------------------
+/**
+ * 使用できないワザが選ばれたかどうか判定
+ *
+ * @param   wk
+ * @param   bpp       対象ポケモン
+ * @param   waza      ワザ
+ * @param   strParam  [out]警告メッセージパラメータ出力先
+ *
+ * @retval  BOOL    使用できないワザの場合TRUE
+ */
+//----------------------------------------------------------------------------------
+static BOOL is_unselectable_waza( BTL_CLIENT* wk, const BTL_POKEPARAM* bpp, WazaID waza, STR_PARAM* strParam )
+{
+  // こだわりアイテム効果（最初に使ったワザしか選べない）
+  if( BTL_POKEPARAM_GetContFlag(bpp, BPP_CONTFLG_KODAWARI_LOCK) )
+  {
+    if( waza != BTL_POKEPARAM_GetPrevWazaNumber(bpp) ){
+      strParam->strID = BTL_STRID_STD_KodawariLock;
+      strParam->stdFlag = FALSE;
+      strParam->args[0] = BTL_POKEPARAM_GetID( bpp );
+      strParam->args[1] = BTL_POKEPARAM_GetItem( bpp );
+      strParam->args[2] = waza;
+      return TRUE;
+    }
+  }
+
+  // ワザロック効果（前回と同じワザしか出せない）
+  if( BTL_POKEPARAM_CheckSick(bpp, WAZASICK_WAZALOCK) )
+  {
+    if( waza != BTL_POKEPARAM_GetPrevWazaNumber(bpp) ){
+      strParam->strID = BTL_STRID_STD_WazaLock;
+      strParam->stdFlag = FALSE;
+      strParam->args[0] = BTL_POKEPARAM_GetID( bpp );
+      strParam->args[1] = waza;
+      return TRUE;
+    }
+  }
+
+  // ちょうはつ状態（ダメージワザしか選べない）
+  if( BTL_POKEPARAM_CheckSick(bpp, WAZASICK_TYOUHATSU) )
+  {
+    if( !WAZADATA_IsDamage(waza) )
+    {
+      strParam->strID = BTL_STRID_SET_ChouhatuWarn;
+      strParam->stdFlag = FALSE;
+      strParam->args[0] = BTL_POKEPARAM_GetID( bpp );
+      strParam->args[1] = waza;
+      return TRUE;
+    }
+  }
+
+  // @@@ ふういんとかの処理
+  return FALSE;
+}
+
 
 //--------------------------------------------------------------------------
 /**
@@ -915,6 +1136,7 @@ static BOOL SubProc_UI_ServerCmd( BTL_CLIENT* wk, int* seq )
     { SC_OP_RESET_CONTFLAG,     scProc_OP_ResetContFlag   },
     { SC_OP_SET_ACTFLAG,        scProc_OP_SetActFlag      },
     { SC_OP_CLEAR_ACTFLAG,      scProc_OP_ClearActFlag    },
+    { SC_ACT_KILL,              scProc_ACT_Kill           },
   };
 
 restart:
@@ -1574,6 +1796,36 @@ static BOOL scProc_ACT_Kinomi( BTL_CLIENT* wk, int* seq, const int* args )
 }
 //---------------------------------------------------------------------------------------
 /**
+ *  強制ひんし演出
+ *  args .. [0]:対象ポケID  [1]:エフェクトタイプ
+ */
+//---------------------------------------------------------------------------------------
+static BOOL scProc_ACT_Kill( BTL_CLIENT* wk, int* seq, const int* args )
+{
+  // @@@ 今は単純なHP減エフェクトで代用
+  u8 pokeID = args[0];
+  u8 effType = args[1];
+
+  switch( *seq ){
+  case 0:
+    {
+      BtlPokePos pos = BTL_MAIN_PokeIDtoPokePosClient( wk->mainModule, pokeID );
+      BTLV_ACT_SimpleHPEffect_Start( wk->viewCore, pos );
+      (*seq)++;
+    }
+    break;
+  case 1:
+    if( BTLV_ACT_SimpleHPEffect_Wait(wk->viewCore) )
+    {
+      return TRUE;
+    }
+    break;
+  }
+  return FALSE;
+}
+
+//---------------------------------------------------------------------------------------
+/**
  *  とくせい「トレース」の発動処理
  *  args .. [0]:トレース持ちのポケID  [1]:コピー対象のポケID  [2]:コピーするとくせい
  */
@@ -1805,6 +2057,7 @@ static BOOL scProc_OP_ClearActFlag( BTL_CLIENT* wk, int* seq, const int* args )
   BTL_POKEPARAM_ClearActFlag( pp );
   return TRUE;
 }
+
 
 
 //------------------------------------------------------------------------------------------------------

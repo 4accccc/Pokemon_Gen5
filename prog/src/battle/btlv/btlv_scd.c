@@ -114,7 +114,7 @@ struct _BTLV_SCD {
   SEL_TARGET_WORK   selTargetWork;
   u8                selTargetDone;
 
-  BtlvScd_SelAction_Result  selActionResult;
+  BtlAction  selActionResult;
   const BTLV_CORE* vcore;
   const BTL_MAIN_MODULE* mainModule;
   const BTL_POKE_CONTAINER* pokeCon;
@@ -134,7 +134,9 @@ static BOOL spstack_call( BTLV_SCD* wk );
 static void printBtn( BTLV_SCD* wk, u16 posx, u16 posy, u16 sizx, u16 sizy, u16 col, u16 strID );
 static void printBtnWaza( BTLV_SCD* wk, u16 btnIdx, u16 col, const STRBUF* str );
 static BOOL selectAction_init( int* seq, void* wk_adrs );
-static BOOL selectAction_loop( int* seq, void* wk_adrs );
+static BOOL selectActionRoot_loop( int* seq, void* wk_adrs );
+static BOOL selectWaza_init( int* seq, void* wk_adrs );
+static BOOL selectWaza_loop( int* seq, void* wk_adrs );
 static BtlvScd_SelAction_Result  check_unselectable_waza( BTLV_SCD* wk, const BTL_POKEPARAM* bpp, u8 waza_idx );
 static void stw_init( SEL_TARGET_WORK* stw );
 static void stw_convert_pos_to_index( SEL_TARGET_WORK* stw, const BTL_MAIN_MODULE* mainModule, u8 num );
@@ -152,6 +154,8 @@ static void seltgt_init_setup_work( SEL_TARGET_WORK* stw, BTLV_SCD* wk );
 static BOOL selectPokemon_init( int* seq, void* wk_adrs );
 static BOOL selectPokemon_loop( int* seq, void* wk_adrs );
 static void printCommWait( BTLV_SCD* wk );
+static  inline  void  SePlayDecide( void );
+static  inline  void  SePlayCancel( void );
 
 static  inline  void  SePlayDecide( void );
 static  inline  void  SePlayCancel( void );
@@ -261,28 +265,69 @@ static BOOL spstack_call( BTLV_SCD* wk )
   }
 }
 //=============================================================================================
+//=============================================================================================
+
+//=============================================================================================
+/**
+ *
+ *
+ * @param   wk
+ */
+//=============================================================================================
+void BTLV_SCD_CleanupUI( BTLV_SCD* wk )
+{
+  Sub_TouchEndDelete( wk->bip, TRUE, TRUE );
+}
+
+//=============================================================================================
 //  アクション選択処理
 //=============================================================================================
 void BTLV_SCD_StartActionSelect( BTLV_SCD* wk, const BTL_POKEPARAM* bpp, BTL_ACTION_PARAM* dest )
 {
   wk->bpp = bpp;
   wk->destActionParam = dest;
-  wk->selActionResult = BTLV_SCD_SelAction_Still;
+  wk->selActionResult = BTL_ACTION_NULL;
 
-  spstack_push( wk, selectAction_init, selectAction_loop );
+  spstack_push( wk, selectAction_init, selectActionRoot_loop );
 }
 void BTLV_SCD_RestartActionSelect( BTLV_SCD* wk )
 {
-  wk->selActionResult = BTLV_SCD_SelAction_Still;
+  wk->selActionResult = BTL_ACTION_NULL;
 }
-BtlvScd_SelAction_Result BTLV_SCD_WaitActionSelect( BTLV_SCD* wk )
+BtlAction BTLV_SCD_WaitActionSelect( BTLV_SCD* wk )
 {
-  if( !spstack_call( wk ) ){
+  if( spstack_call( wk ) ){
     return wk->selActionResult;
   }else{
-    return BTLV_SCD_SelAction_Done;
+    return BTL_ACTION_NULL;
   }
 }
+
+void BTLV_SCD_StartWazaSelect( BTLV_SCD* wk, const BTL_POKEPARAM* bpp, BTL_ACTION_PARAM* dest )
+{
+  wk->bpp = bpp;
+  wk->destActionParam = dest;
+  wk->selActionResult = BTL_ACTION_NULL;
+
+  spstack_push( wk, selectWaza_init, selectWaza_loop );
+}
+BOOL BTLV_SCD_WaitWazaSelect( BTLV_SCD* wk )
+{
+  return spstack_call( wk );
+}
+
+void BTLV_SCD_StartTargetSelect( BTLV_SCD* wk, const BTL_POKEPARAM* bpp, BTL_ACTION_PARAM* dest )
+{
+  wk->bpp = bpp;
+  wk->destActionParam = dest;
+
+  spstack_push( wk, selectTarget_init, selectTarget_loop );
+}
+BOOL BTLV_SCD_WaitTargetSelect( BTLV_SCD* wk )
+{
+  return spstack_call( wk );
+}
+
 
 ///コマンド選択タッチパネル領域設定
 static const GFL_UI_TP_HITTBL BattleMenuTouchData[] = {
@@ -359,8 +404,8 @@ static BOOL selectAction_init( int* seq, void* wk_adrs )
     ARCHANDLE* hdl_bg;
     ARCHANDLE* hdl_obj;
 
-    hdl_bg  = GFL_ARC_OpenDataHandle( ARCID_BATT_BG,  wk->heapID );
-    hdl_obj = GFL_ARC_OpenDataHandle( ARCID_BATT_OBJ, wk->heapID );
+    hdl_bg  = GFL_ARC_OpenDataHandle( ARCID_BATT_BG,  GFL_HEAP_LOWID(wk->heapID) );
+    hdl_obj = GFL_ARC_OpenDataHandle( ARCID_BATT_OBJ, GFL_HEAP_LOWID(wk->heapID) );
     BINPUT_CreateBG( hdl_bg, hdl_obj, wk->bip, BINPUT_TYPE_A, FALSE, NULL );
 
     GFL_ARC_CloseDataHandle( hdl_bg );
@@ -369,8 +414,110 @@ static BOOL selectAction_init( int* seq, void* wk_adrs )
   return TRUE;
 }
 
-static BOOL selectAction_loop( int* seq, void* wk_adrs )
+static BOOL selectActionRoot_loop( int* seq, void* wk_adrs )
 {
+  BTLV_SCD* wk = wk_adrs;
+  int hit;
+
+  //カメラワークエフェクト
+  if( !BTLV_EFFECT_CheckExecute() ){
+    BTLV_EFFECT_Add( BTLEFF_CAMERA_WORK );
+  }
+
+  hit = GFL_UI_TP_HitTrg( BattleMenuTouchData );
+  if( hit != GFL_UI_TP_HIT_NONE )
+  {
+    static const u8 action[] = {
+      BTL_ACTION_FIGHT,   BTL_ACTION_ITEM,
+      BTL_ACTION_CHANGE,  BTL_ACTION_ESCAPE,
+    };
+
+    wk->selActionResult = action[ hit ];
+    SePlayDecide();
+    return TRUE;
+  }
+
+  return FALSE;
+}
+
+
+static BOOL selectWaza_init( int* seq, void* wk_adrs )
+{
+  BTLV_SCD* wk = wk_adrs;
+
+  Sub_TouchEndDelete( wk->bip, TRUE, TRUE );
+
+  {
+    BINPUT_WAZA_PARAM bwp;
+    BINPUT_SCENE_WAZA bsw;
+    ARCHANDLE* hdl_bg;
+    ARCHANDLE* hdl_obj;
+    u16 wazaCnt, wazaID, i;
+    u8 PP, PPMax;
+
+    wazaCnt = BTL_POKEPARAM_GetWazaCount( wk->bpp );
+    for(i=0; i<wazaCnt; i++)
+    {
+      wazaID = BTL_POKEPARAM_GetWazaParticular( wk->bpp, i, &PP, &PPMax );
+      bwp.wazano[ i ] = bsw.wazano[ i ] = wazaID;
+      bwp.pp[ i ] = bsw.pp[ i ] = PP;
+      bwp.ppmax[ i ] = bsw.ppmax[ i ] = PPMax;
+    }
+    for( ; i<PTL_WAZA_MAX; i++){
+      bwp.wazano[ i ] = bsw.wazano[ i ] = 0;
+      bwp.pp[ i ] = bsw.pp[ i ] = 0;
+      bwp.ppmax[ i ] = bsw.ppmax[ i ] = 0;
+    }
+    BINPUT_WazaParaMemoryDecord( wk->bip, 0, &bwp );
+    hdl_bg  = GFL_ARC_OpenDataHandle( ARCID_BATT_BG,  GFL_HEAP_LOWID(wk->heapID) );
+    hdl_obj = GFL_ARC_OpenDataHandle( ARCID_BATT_OBJ, GFL_HEAP_LOWID(wk->heapID) );
+    BINPUT_CreateBG( hdl_bg, hdl_obj, wk->bip, BINPUT_TYPE_WAZA, FALSE, &bsw );
+
+    GFL_ARC_CloseDataHandle( hdl_bg );
+    GFL_ARC_CloseDataHandle( hdl_obj );
+  }
+
+  return TRUE;
+}
+
+static BOOL selectWaza_loop( int* seq, void* wk_adrs )
+{
+  BTLV_SCD* wk = wk_adrs;
+  int hit;
+
+  //カメラワークエフェクト
+  if( !BTLV_EFFECT_CheckExecute() ){
+    BTLV_EFFECT_Add( BTLEFF_CAMERA_WORK );
+  }
+
+  hit = GFL_UI_TP_HitTrg( SkillMenuTouchData );
+  if( hit != GFL_UI_TP_HIT_NONE )
+  {
+    //キャンセルが押された
+    if( hit == 0 )
+    {
+      SePlayCancel();
+      BTL_ACTION_SetNULL( wk->destActionParam );
+      return TRUE;
+    }
+    else if( hit <= BTL_POKEPARAM_GetWazaCount( wk->bpp ) )
+    {
+      WazaID waza;
+
+      //キャンセルが先頭にはいっているので、デクリメントして正規の選択位置にする
+      waza = BTL_POKEPARAM_GetWazaNumber( wk->bpp, --hit );
+      BTL_ACTION_SetFightParam( wk->destActionParam, waza, 0 );
+
+      SePlayDecide();
+      return TRUE;
+    }
+  }
+  return FALSE;
+}
+
+
+
+#if 0
   enum {
     SEQ_START = 0,
     SEQ_RESTART = 10,
@@ -380,17 +527,6 @@ static BOOL selectAction_loop( int* seq, void* wk_adrs )
     SEQ_SEL_POKEMON = 300,
     SEQ_SEL_ESCAPE = 400,
   };
-
-  BTLV_SCD* wk = wk_adrs;
-
-  //カメラワークエフェクト
-  if( *seq < SEQ_SEL_FIGHT_FINISH )
-  {
-    if( !BTLV_EFFECT_CheckExecute() )
-    {
-      BTLV_EFFECT_Add( BTLEFF_CAMERA_WORK );
-    }
-  }
 
   switch( *seq ){
   case SEQ_START:
@@ -569,6 +705,7 @@ static BOOL selectAction_loop( int* seq, void* wk_adrs )
   }
   return FALSE;
 }
+#endif
 
 //----------------------------------------------------------------------------------
 /**
@@ -827,6 +964,8 @@ static BOOL stw_draw_wait( BTLV_SCD* wk )
 static BOOL selectTarget_init( int* seq, void* wk_adrs )
 {
   BTLV_SCD* wk = wk_adrs;
+
+  Sub_TouchEndDelete( wk->bip, TRUE, TRUE );
 
   seltgt_init_setup_work( &wk->selTargetWork, wk );
   stw_draw( &wk->selTargetWork, wk );

@@ -354,6 +354,21 @@ BPP_SICK_CONT BTL_CALC_MakeWazaSickCont_Turn( u8 turn_count )
   cont.turn.count = turn_count;
   return cont;
 }
+//=============================================================================================
+/**
+ * ワザ系状態異常の継続パラメータ（ポケモン依存型）を作成
+ *
+ * @param   pokeID
+ */
+//=============================================================================================
+BPP_SICK_CONT BTL_CALC_MakeWazaSickCont_Poke( u8 pokeID )
+{
+  BPP_SICK_CONT cont;
+  cont.raw = 0;
+  cont.type = WAZASICK_CONT_POKE;
+  cont.poke.ID = pokeID;
+  return cont;
+}
 
 
 //=============================================================================================

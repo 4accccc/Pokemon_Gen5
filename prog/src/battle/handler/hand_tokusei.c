@@ -1878,25 +1878,28 @@ BTL_EVENT_FACTOR*  HAND_TOK_ADD_TennoMegumi( u16 pri, u16 tokID, u8 pokeID )
 // 状態異常ダメージハンドラ
 static void handler_UruoiBody( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
-  if( pokeID == BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) )
+  if( BTL_FIELD_GetWeather() == BTL_WEATHER_RAIN )
   {
-    if( BTL_FIELD_GetWeather() == BTL_WEATHER_RAIN )
+    const BTL_POKEPARAM* bpp = BTL_SVFLOW_RECEPT_GetPokeParam( flowWk, pokeID );
+    if( BTL_POKEPARAM_GetPokeSick(bpp) != POKESICK_NULL )
     {
-      WazaSick sick = BTL_EVENTVAR_GetValue( BTL_EVAR_SICKID );
-      if( sick < POKESICK_MAX )
-      {
-        BTL_EVENTVAR_RewriteValue( BTL_EVAR_SICKID, POKESICK_NULL );
-        BTL_SERVER_RECEPT_TokuseiWinIn( flowWk, pokeID );
-        BTL_SVFLOW_RECEPT_CurePokeSick( flowWk, pokeID );
-        BTL_SERVER_RECEPT_TokuseiWinOut( flowWk, pokeID );
-      }
+      BTL_HANDEX_PARAM_CURE_SICK* param;
+
+      BTL_SVFLOW_HANDLERWORK_Push( flowWk, BTL_HANDEX_TOKWIN_IN, pokeID );
+
+      param = BTL_SVFLOW_HANDLERWORK_Push( flowWk, BTL_HANDEX_CURE_SICK, pokeID );
+      param->sickCode = WAZASICK_EX_POKEFULL;
+      param->pokeID = pokeID;
+
+      BTL_SVFLOW_HANDLERWORK_Push( flowWk, BTL_HANDEX_TOKWIN_OUT, pokeID );
+
     }
   }
 }
 BTL_EVENT_FACTOR*  HAND_TOK_ADD_UruoiBody( u16 pri, u16 tokID, u8 pokeID )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_SICK_DAMAGE,      handler_UruoiBody },  // 状態異常ダメージハンドラ
+    { BTL_EVENT_TURNCHECK_BEGIN,      handler_UruoiBody },  // ターンチェック開始
     { BTL_EVENT_NULL, NULL },
   };
   return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_TOKUSEI, tokID, pri, pokeID, HandlerTable );
@@ -1918,7 +1921,7 @@ static void handler_Dappi( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, 
       BTL_HANDEX_PARAM_CURE_SICK* param = BTL_SVFLOW_HANDLERWORK_Push( flowWk, BTL_HANDEX_CURE_SICK, pokeID );
 
       param->header.tokwin_flag = TRUE;
-      param->sickID = WAZASICK_NULL;
+      param->sickCode = WAZASICK_EX_POKEFULL;
       param->pokeID = pokeID;
     }
   }

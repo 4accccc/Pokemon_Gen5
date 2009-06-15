@@ -71,6 +71,7 @@ typedef enum {
   SC_ACT_SIMPLE_HP,         ///< シンプルなHPゲージ増減処理
   SC_ACT_TRACE_TOKUSEI,     ///< とくせいトレース[ pokeID, targetPokeID, tokusei ]
   SC_ACT_KINOMI,            ///< きのみを食べる
+  SC_ACT_KILL,              ///< 強制瀕死演出（みちづれ、一撃ワザなど）
   SC_TOKWIN_IN,             ///< とくせいウィンドウ表示イン [ClientID]
   SC_TOKWIN_OUT,            ///< とくせいウィンドウ表示アウト [ClientID]
 
@@ -321,6 +322,11 @@ static inline void SCQUE_PUT_ACT_RankDown( BTL_SERVER_CMD_QUE* que, u8 pokeID, u
 {
   SCQUE_PUT_Common( que, SC_ACT_RANKDOWN, pokeID, statusType, volume );
 }
+static inline void SCQUE_PUT_ACT_Kill( BTL_SERVER_CMD_QUE* que, u8 pokeID, u8 effectType )
+{
+  SCQUE_PUT_Common( que, SC_ACT_KILL, pokeID, effectType );
+}
+
 // 【アクション】ポケモンひんし
 static inline void SCQUE_PUT_ACT_Dead( BTL_SERVER_CMD_QUE* que, u8 pokeID )
 {

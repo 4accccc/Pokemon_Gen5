@@ -39,8 +39,8 @@ typedef enum {
   BTLV_SCD_SelAction_Warn_WazaLock, ///< o‚¹‚È‚¢ƒƒU‚ª‘I‚Î‚ê‚½
 
   BTLV_SCD_SelAction_Fight,
-  BTLV_SCD_SelAction_Pokemon,
   BTLV_SCD_SelAction_Item,
+  BTLV_SCD_SelAction_Pokemon,
   BTLV_SCD_SelAction_Escape,
 
 }BtlvScd_SelAction_Result;
@@ -57,9 +57,18 @@ extern void BTLV_SCD_Delete( BTLV_SCD* wk );
 
 extern void BTLV_SCD_Setup( BTLV_SCD* wk );
 
+extern void BTLV_SCD_CleanupUI( BTLV_SCD* wk );
+
 extern void BTLV_SCD_StartActionSelect( BTLV_SCD* wk, const BTL_POKEPARAM* bpp, BTL_ACTION_PARAM* dest );
-extern BtlvScd_SelAction_Result BTLV_SCD_WaitActionSelect( BTLV_SCD* wk );
+extern BtlAction BTLV_SCD_WaitActionSelect( BTLV_SCD* wk );
 extern void BTLV_SCD_RestartActionSelect( BTLV_SCD* wk );
+
+extern void BTLV_SCD_StartWazaSelect( BTLV_SCD* wk, const BTL_POKEPARAM* bpp, BTL_ACTION_PARAM* dest );
+extern BOOL BTLV_SCD_WaitWazaSelect( BTLV_SCD* wk );
+
+extern void BTLV_SCD_StartTargetSelect( BTLV_SCD* wk, const BTL_POKEPARAM* bpp, BTL_ACTION_PARAM* dest );
+extern BOOL BTLV_SCD_WaitTargetSelect( BTLV_SCD* wk );
+
 
 extern void BTLV_SCD_StartPokemonSelect( BTLV_SCD* wk );
 extern BOOL BTLV_SCD_WaitPokemonSelect( BTLV_SCD* wk );

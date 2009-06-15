@@ -48,6 +48,11 @@ typedef enum {
   BPP_TOKUSEI,
   BPP_SEX,
   BPP_FORM,
+  BPP_ATTACK_RANK,
+  BPP_DEFENCE_RANK,
+  BPP_SP_ATTACK_RANK,
+  BPP_SP_DEFENCE_RANK,
+  BPP_AGILITY_RANK,
 
   BPP_RANKTYPE_MAX = BPP_AVOID_RATIO+1,
 
@@ -257,6 +262,31 @@ extern BppHpBorder BTL_POKEPARAM_GetHPBorder( const BTL_POKEPARAM* pp );
  */
 //=============================================================================================
 extern BOOL BTL_POKEPARAM_IsRankEffectValid( const BTL_POKEPARAM* pp, BppValueID rankType, int volume );
+
+//=============================================================================================
+/**
+ * ランク増加効果があと何段階効くか判定
+ *
+ * @param   pp
+ * @param   rankType
+ *
+ * @retval  int   段階数
+ */
+//=============================================================================================
+extern int BTL_POKEPARAM_RankEffectUpLimit( const BTL_POKEPARAM* pp, BppValueID rankType );
+
+//=============================================================================================
+/**
+ * ランク減少効果があと何段階効くか判定
+ *
+ * @param   pp
+ * @param   rankType
+ *
+ * @retval  int   段階数（マイナス）
+ */
+//=============================================================================================
+extern int BTL_POKEPARAM_RankEffectDownLimit( const BTL_POKEPARAM* pp, BppValueID rankType );
+
 
 //-------------------------
 extern u8 BTL_POKEPARAM_RankUp( BTL_POKEPARAM* pp, BppValueID rankType, u8 volume );

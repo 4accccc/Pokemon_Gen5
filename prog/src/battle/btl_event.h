@@ -107,7 +107,8 @@ typedef enum {
   BTL_EVENT_TAME_START,             ///< 溜め開始
   BTL_EVENT_TAME_RELEASE,           ///< 溜め解放
   BTL_EVENT_CHECK_POKE_HIDE,        ///< ポケモンが消えている状態のワザ命中チェック
-  BTL_EVENT_UNCATEGORY_WAZA,        ///< 未分類ワザ処理
+  BTL_EVENT_UNCATEGORY_WAZA,            ///< 未分類ワザ処理
+  BTL_EVENT_UNCATEGORY_WAZA_NO_TARGET,  ///< 未分類ワザ処理（ターゲットいないワザ）
 
 
 }BtlEventType;

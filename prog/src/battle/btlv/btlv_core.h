@@ -49,7 +49,6 @@ typedef enum {
 }BtlvCmd;
 
 
-
 //=============================================================================================
 /**
  * ï`âÊÉÅÉCÉìÉÇÉWÉÖÅ[ÉãÇÃê∂ê¨
@@ -105,7 +104,15 @@ extern BOOL BTLV_WaitCommand( BTLV_CORE* btlv );
 
 
 extern void BTLV_UI_SelectAction_Start( BTLV_CORE* core, const BTL_POKEPARAM* bpp, BTL_ACTION_PARAM* dest );
-extern BOOL BTLV_UI_SelectAction_Wait( BTLV_CORE* core );
+extern BtlAction  BTLV_UI_SelectAction_Wait( BTLV_CORE* core );
+
+extern void BTLV_UI_SelectWaza_Start( BTLV_CORE* core, const BTL_POKEPARAM* bpp, BTL_ACTION_PARAM* dest );
+extern BOOL BTLV_UI_SelectWaza_Wait( BTLV_CORE* core );
+
+extern void BTLV_UI_SelectTarget_Start( BTLV_CORE* core, const BTL_POKEPARAM* bpp, BTL_ACTION_PARAM* dest );
+extern BOOL BTLV_UI_SelectTarget_Wait( BTLV_CORE* core );
+
+extern void BTLV_UI_Cleanup( BTLV_CORE* core );
 
 extern void BTLV_StartMemberChangeAct( BTLV_CORE* wk, BtlPokePos pos, u8 clientID, u8 memberIdx );
 extern BOOL BTLV_WaitMemberChangeAct( BTLV_CORE* wk );

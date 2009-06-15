@@ -63,6 +63,7 @@ struct _BTLV_CORE {
   BTL_ACTION_PARAM* actionParam;
   const BTL_POKEPARAM*  procPokeParam;
   u32                   procPokeID;
+  BtlAction             playerAction;
 
   GFL_TCBLSYS*  tcbl;
   BTLV_SCU*     scrnU;
@@ -77,6 +78,8 @@ struct _BTLV_CORE {
 static void* getGenericWork( BTLV_CORE* core, u32 size );
 static BOOL CmdProc_Setup( BTLV_CORE* core, int* seq, void* workBuffer );
 static BOOL CmdProc_SelectAction( BTLV_CORE* core, int* seq, void* workBufer );
+static BOOL CmdProc_SelectWaza( BTLV_CORE* core, int* seq, void* workBufer );
+static BOOL CmdProc_SelectTarget( BTLV_CORE* core, int* seq, void* workBufer );
 static BOOL CmdProc_SelectPokemon( BTLV_CORE* core, int* seq, void* workBufer );
 static void mainproc_setup( BTLV_CORE* core, pCmdProc proc );
 static BOOL mainproc_call( BTLV_CORE* core );
@@ -265,6 +268,74 @@ static BOOL CmdProc_Setup( BTLV_CORE* core, int* seq, void* workBuffer )
 
 static BOOL CmdProc_SelectAction( BTLV_CORE* core, int* seq, void* workBufer )
 {
+  switch( *seq ){
+  case 0:
+    BTL_STR_MakeStringStd( core->strBuf, BTL_STRID_STD_SelectAction, 1, core->procPokeID );
+    BTLV_SCU_StartMsg( core->scrnU, core->strBuf, BTLV_MSGWAIT_NONE );
+    (*seq)++;
+    break;
+  case 1:
+    if( BTLV_SCU_WaitMsg(core->scrnU) )
+    {
+      BTLV_SCD_StartActionSelect( core->scrnD, core->procPokeParam, core->actionParam );
+      (*seq)++;
+    }
+    break;
+  case 2:
+    core->playerAction = BTLV_SCD_WaitActionSelect( core->scrnD );
+    if( core->playerAction != BTL_ACTION_NULL ){
+      return TRUE;
+    }
+  }
+  return FALSE;
+}
+
+static BOOL CmdProc_SelectWaza( BTLV_CORE* core, int* seq, void* workBufer )
+{
+  switch( *seq ){
+  case 0:
+    BTLV_SCD_StartWazaSelect( core->scrnD, core->procPokeParam, core->actionParam );
+    (*seq)++;
+    break;
+  case 1:
+    if( BTLV_SCD_WaitWazaSelect( core->scrnD ) )
+    {
+      return TRUE;
+    }
+    break;
+  }
+  return FALSE;
+}
+//--------------------------------------------------------------------------
+/**
+ * ワザ対象選択
+ *
+ * @param   core
+ * @param   seq
+ * @param   workBufer
+ *
+ * @retval  BOOL
+ */
+//--------------------------------------------------------------------------
+static BOOL CmdProc_SelectTarget( BTLV_CORE* core, int* seq, void* workBufer )
+{
+  switch( *seq ){
+  case 0:
+    BTLV_SCD_StartPokemonSelect( core->scrnD );
+    (*seq)++;
+    break;
+  case 1:
+    if( BTLV_SCD_WaitPokemonSelect(core->scrnD) )
+    {
+      return TRUE;
+    }
+    break;
+  }
+  return FALSE;
+}
+
+
+#if 0
   enum {
     SEQ_INIT=0,
     SEQ_SELECT_MAIN,
@@ -281,22 +352,8 @@ static BOOL CmdProc_SelectAction( BTLV_CORE* core, int* seq, void* workBufer )
   }SEQ_WORK;
 
   SEQ_WORK* wk = workBufer;
-  BOOL ret = FALSE;
 
-  switch( *seq ){
-  case 0:
-    BTL_STR_MakeStringStd( core->strBuf, BTL_STRID_STD_SelectAction, 1, core->procPokeID );
-    BTLV_SCU_StartMsg( core->scrnU, core->strBuf, BTLV_MSGWAIT_NONE );
-    (*seq)++;
-    break;
-  case 1:
-    if( BTLV_SCU_WaitMsg(core->scrnU) )
-    {
-      BTLV_SCD_StartActionSelect( core->scrnD, core->procPokeParam, core->actionParam );
-      (*seq)++;
-    }
-    break;
-  case 2:
+    if(  != )
     {
       BtlvScd_SelAction_Result res = BTLV_SCD_WaitActionSelect( core->scrnD );
       switch( res ){
@@ -343,7 +400,9 @@ static BOOL CmdProc_SelectAction( BTLV_CORE* core, int* seq, void* workBufer )
     break;
   }
   return FALSE;
-}
+#endif
+
+
 //--------------------------------------------------------------------------
 /**
  * ポケモン選択
@@ -365,7 +424,7 @@ static BOOL CmdProc_SelectPokemon( BTLV_CORE* core, int* seq, void* workBufer )
   case 1:
     if( BTLV_SCD_WaitPokemonSelect(core->scrnD) )
     {
-//      BTLV_SCD_GetSelectAction( core->scrnD, core->actionParam );
+//    BTLV_SCD_GetSelectAction( core->scrnD, core->actionParam );
       return TRUE;
     }
     break;
@@ -416,6 +475,18 @@ static BOOL mainproc_call( BTLV_CORE* core )
 
 //=============================================================================================
 /**
+ * 下画面初期化
+ *
+ * @param   core
+ */
+//=============================================================================================
+void BTLV_UI_Cleanup( BTLV_CORE* core )
+{
+  BTLV_SCD_CleanupUI( core->scrnD );
+}
+
+//=============================================================================================
+/**
  * アクション選択開始
  *
  * @param   core
@@ -428,6 +499,7 @@ void BTLV_UI_SelectAction_Start( BTLV_CORE* core, const BTL_POKEPARAM* bpp, BTL_
   core->procPokeParam = bpp;
   core->procPokeID = BTL_POKEPARAM_GetID( bpp );
   core->actionParam = dest;
+  core->playerAction = BTL_ACTION_NULL;
   mainproc_setup( core, CmdProc_SelectAction );
 }
 //=============================================================================================
@@ -436,17 +508,74 @@ void BTLV_UI_SelectAction_Start( BTLV_CORE* core, const BTL_POKEPARAM* bpp, BTL_
  *
  * @param   core
  *
+ * @retval  BtlAction   選択アクション（選択されていなければ BTL_ACTION_NULL ）
+ */
+//=============================================================================================
+BtlAction BTLV_UI_SelectAction_Wait( BTLV_CORE* core )
+{
+  if( mainproc_call( core ) ){
+    return core->playerAction;
+  }
+  return BTL_ACTION_NULL;
+}
+//=============================================================================================
+/**
+ * ワザ選択開始
+ *
+ * @param   core
+ * @param   bpp
+ * @param   dest
+ */
+//=============================================================================================
+void BTLV_UI_SelectWaza_Start( BTLV_CORE* core, const BTL_POKEPARAM* bpp, BTL_ACTION_PARAM* dest )
+{
+  core->procPokeParam = bpp;
+  core->procPokeID = BTL_POKEPARAM_GetID( bpp );
+  core->actionParam = dest;
+  mainproc_setup( core, CmdProc_SelectWaza );
+}
+//=============================================================================================
+/**
+ * ワザ選択終了待ち
+ *
+ * @param   core
+ *
  * @retval  BOOL    終了していたらTRUE
  */
 //=============================================================================================
-BOOL BTLV_UI_SelectAction_Wait( BTLV_CORE* core )
+BOOL BTLV_UI_SelectWaza_Wait( BTLV_CORE* core )
 {
   return mainproc_call( core );
 }
-
-
-
-
+//=============================================================================================
+/**
+ * ワザ対象選択開始
+ *
+ * @param   core
+ * @param   bpp
+ * @param   dest
+ */
+//=============================================================================================
+void BTLV_UI_SelectTarget_Start( BTLV_CORE* core, const BTL_POKEPARAM* bpp, BTL_ACTION_PARAM* dest )
+{
+  core->procPokeParam = bpp;
+  core->procPokeID = BTL_POKEPARAM_GetID( bpp );
+  core->actionParam = dest;
+  mainproc_setup( core, CmdProc_SelectTarget );
+}
+//=============================================================================================
+/**
+ * ワザ選択終了待ち
+ *
+ * @param   core
+ *
+ * @retval  BOOL    終了していたらTRUE
+ */
+//=============================================================================================
+BOOL BTLV_UI_SelectTarget_Wait( BTLV_CORE* core )
+{
+  return mainproc_call( core );
+}
 
 
 void BTLV_StartPokeSelect( BTLV_CORE* core, const BTL_POKESELECT_PARAM* param, BTL_POKESELECT_RESULT* result )

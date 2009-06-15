@@ -583,7 +583,7 @@ static void common_sickExe( BTL_SVFLOW_WORK* flowWk, u8 pokeID, WazaSick sick )
   {
     BTL_HANDEX_PARAM_CURE_SICK* param = BTL_SVFLOW_HANDLERWORK_Push( flowWk, BTL_HANDEX_CURE_SICK, pokeID );
     param->pokeID = pokeID;
-    param->sickID = sick;
+    param->sickCode = sick;
   }
 }
 
@@ -610,7 +610,7 @@ static void handler_RamNomi_Exe( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* fl
   {
     BTL_HANDEX_PARAM_CURE_SICK* param = BTL_SVFLOW_HANDLERWORK_Push( flowWk, BTL_HANDEX_CURE_SICK, pokeID );
     param->pokeID = pokeID;
-    param->sickID = WAZASICK_NULL;
+    param->sickCode = WAZASICK_EX_POKEFULL_PLUS;
   }
 }
 static BTL_EVENT_FACTOR* HAND_ADD_ITEM_RamNomi( u16 pri, u16 itemID, u8 pokeID )
@@ -1445,7 +1445,7 @@ static void handler_MentalHerb_Use( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK*
   {
     BTL_HANDEX_PARAM_CURE_SICK* param = BTL_SVFLOW_HANDLERWORK_Push( flowWk, BTL_HANDEX_CURE_SICK, pokeID );
     param->pokeID = pokeID;
-    param->sickID = WAZASICK_MEROMERO;
+    param->sickCode = WAZASICK_MEROMERO;
   }
 }
 

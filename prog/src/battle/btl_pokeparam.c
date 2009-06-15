@@ -386,6 +386,12 @@ int BTL_POKEPARAM_GetValue( const BTL_POKEPARAM* pp, BppValueID vid )
   case BPP_SP_DEFENCE:  return pp->realParam.sp_defence;
   case BPP_AGILITY:   return pp->realParam.agility;
 
+  case BPP_ATTACK_RANK:     return pp->varyParam.attack;
+  case BPP_DEFENCE_RANK:    return pp->varyParam.defence;
+  case BPP_SP_ATTACK_RANK:  return pp->varyParam.sp_attack;
+  case BPP_SP_DEFENCE_RANK: return pp->varyParam.sp_defence;
+  case BPP_AGILITY_RANK:    return pp->varyParam.agility;
+
   case BPP_HIT_RATIO:     return pp->varyParam.hit;
   case BPP_AVOID_RATIO:   return pp->varyParam.avoid;
   case BPP_CRITICAL_RATIO:  return pp->varyParam.critical;
@@ -820,6 +826,43 @@ BOOL BTL_POKEPARAM_IsRankEffectValid( const BTL_POKEPARAM* pp, BppValueID rankTy
 }
 //=============================================================================================
 /**
+ * ランク増加効果があと何段階効くか判定
+ *
+ * @param   pp
+ * @param   rankType
+ *
+ * @retval  int   段階数
+ */
+//=============================================================================================
+int BTL_POKEPARAM_RankEffectUpLimit( const BTL_POKEPARAM* pp, BppValueID rankType )
+{
+  const s8* ptr;
+  s8  min, max;
+
+  ptr = getRankVaryStatusConst( pp, rankType, &min, &max );
+  return max - (*ptr);
+}
+//=============================================================================================
+/**
+ * ランク減少効果があと何段階効くか判定
+ *
+ * @param   pp
+ * @param   rankType
+ *
+ * @retval  int   段階数（マイナス）
+ */
+//=============================================================================================
+int BTL_POKEPARAM_RankEffectDownLimit( const BTL_POKEPARAM* pp, BppValueID rankType )
+{
+  const s8* ptr;
+  s8  min, max;
+
+  ptr = getRankVaryStatusConst( pp, rankType, &min, &max );
+  return (*ptr) - min;
+}
+
+//=============================================================================================
+/**
  * ランクアップ効果
  *
  * @param   pp
@@ -1157,7 +1200,9 @@ BOOL BTL_POKEPARAM_Nemuri_CheckWake( BTL_POKEPARAM* pp )
   {
     if( pp->sickCont[POKESICK_NEMURI].turn.count == 0 )
     {
-      pp->sickCont[POKESICK_NEMURI].type = WAZASICK_CONT_NONE;
+      // ねむりが覚めるのと同時にあくむも覚める
+      pp->sickCont[ POKESICK_NEMURI ].type = WAZASICK_CONT_NONE;
+      pp->sickCont[ WAZASICK_AKUMU ].type = WAZASICK_CONT_NONE;
       return TRUE;
     }
   }
@@ -1321,6 +1366,7 @@ void BTL_POKEPARAM_RemoveItem( BTL_POKEPARAM* pp )
 //=============================================================================================
 void BTL_POKEPARAM_UpdateUsedWazaNumber( BTL_POKEPARAM* pp, WazaID waza, BtlPokePos targetPos )
 {
+  // @@@ まもる・みきりの関係
   WazaID prev = pp->prevWazaID;
   if( prev != waza ){
     pp->prevWazaID = waza;
