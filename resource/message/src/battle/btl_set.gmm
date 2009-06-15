@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="taya" host="W00146" date="2009-06-15T13:32:52"/>
+	<create user="taya" host="W00146" date="2009-06-15T22:11:32"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -2522,6 +2522,48 @@
 体力を削って　パワー全開！</language>
 	</row>
 
+	<row id="BTL_STRID_SET_MichidureReady">
+		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]　は　あいてを
+みちづれに　しようとしている！</language>
+		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]　は　相手を
+道連れに　しようとしている！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_MichidureReady_Y">
+		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]　は　あいてを
+みちづれに　しようとしている！</language>
+		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]　は　相手を
+道連れに　しようとしている！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_MichidureReady_E">
+		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]　は　あいてを
+みちづれに　しようとしている！</language>
+		<language name="JPN_KANJI" width="216">相手の　[1:02:ポケモンニックネーム:0]　は　相手を
+道連れに　しようとしている！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_MichidureDone">
+		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]　は　あいてを
+みちづれに　した！</language>
+		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]　は　相手を
+道連れに　した！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_MichidureDone_Y">
+		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]　は　あいてを
+みちづれに　した！</language>
+		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]　は　相手を
+道連れに　した！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_MichidureDone_E">
+		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]　は　あいてを
+みちづれに　した！</language>
+		<language name="JPN_KANJI" width="216">相手の　[1:02:ポケモンニックネーム:0]　は　相手を
+道連れに　した！</language>
+	</row>
+
 	<row id="BTL_STRID_SET_PushOutChange">
 		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]　は
 せんとうに　ひきずりだされた！</language>
@@ -2590,6 +2632,27 @@
 		<language name="JPN_KANJI" width="216">相手の　[1:02:ポケモンニックネーム:0]　の　
 [1:06:とくせい名:1]　で
 にげることが　できない！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_CantEscWaza">
+		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]　は
+もう　にげられない！</language>
+		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]　は
+もう　逃げられない！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_CantEscWaza_Y">
+		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]　は
+もう　にげられない！</language>
+		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]　は
+もう　逃げられない！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_CantEscWaza_E">
+		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]　は
+もう　にげられない！</language>
+		<language name="JPN_KANJI" width="216">相手の　[1:02:ポケモンニックネーム:0]　は
+もう　逃げられない！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_CantChangeTok">
