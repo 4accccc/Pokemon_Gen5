@@ -2580,17 +2580,17 @@ void BINPUT_SystemFree(BI_PARAM_PTR bip)
 #endif
 	GFL_MSG_Delete( bip->msg );
 
-	//生成したセルユニットの解放
-	GFL_CLACT_UNIT_Delete( bip->fontclunit );
-	GFL_CLACT_UNIT_Delete( bip->wazatype_clunit );
-	GFL_CLACT_UNIT_Delete( bip->pokeicon_clunit );
-
 	Sub_SceneOBJDelete(bip);
 //	BINPUT_StockBallActorResourceFree(bip);
 	
 	BINPUT_DefaultDataFree(bip);
 	
 	BmpOam_Exit( bip->fontoam_sys );
+
+	//生成したセルユニットの解放
+	GFL_CLACT_UNIT_Delete( bip->fontclunit );
+	GFL_CLACT_UNIT_Delete( bip->wazatype_clunit );
+	GFL_CLACT_UNIT_Delete( bip->pokeicon_clunit );
 	
 	GFL_TCB_DeleteTask( bip->def_fade_tcb );
 	
