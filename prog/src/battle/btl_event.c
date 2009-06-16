@@ -407,13 +407,23 @@ static void varStack_Init( void )
     stack->label[i] = BTL_EVAR_NULL;
   }
 }
-
-
+/*
+0123456789
+Svvvv
+*/
 void BTL_EVENTVAR_Push( void )
 {
   VAR_STACK* stack = &VarStack;
 
-  if( stack->sp < NELEMS(stack->label) )
+  while( stack->sp < NELEMS(stack->label) )
+  {
+    if( stack->label[stack->sp] == BTL_EVAR_NULL ){
+      break;
+    }
+    stack->sp++;
+  }
+
+  if( stack->sp < (NELEMS(stack->label)-1) )
   {
     stack->label[ stack->sp++ ] = BTL_EVAR_SYS_SEPARATE;
     #ifdef PM_DEBUG
@@ -421,7 +431,6 @@ void BTL_EVENTVAR_Push( void )
       BTL_Printf("Var Stack sp=%d ŠëŒ¯…ˆæ‚Å‚·II\n", stack->sp);
     }
     #endif
-    BTL_Printf(" [EVENT] PUSH baseP=%d\n", stack->sp-1);
   }
   else
   {
@@ -443,10 +452,16 @@ void BTL_EVENTVAR_Pop( void )
     stack->sp--;
     stack->label[ stack->sp ] = BTL_EVAR_NULL;
 
-    while( stack->sp )
+    if( stack->sp )
     {
-      if( stack->label[stack->sp] == BTL_EVAR_SYS_SEPARATE ){ break; }
-      stack->sp--;
+      while( stack->sp )
+      {
+        stack->sp--;
+        if( stack->label[stack->sp] == BTL_EVAR_SYS_SEPARATE ){
+          stack->sp++;
+          break;
+        }
+      }
     }
   }
   else
@@ -543,11 +558,8 @@ void BTL_EVENTVAR_MulValue( BtlEvVarLabel label, fx32 value )
     int p = evar_getExistPoint( stack, label );
     if( p >= 0 )
     {
-      BTL_Printf("yæŽZz Šù‘¶’l:%08x, æŽZ’l:%08x, ", stack->value[p], value );
       value = FX_Mul( stack->value[p], value );
-      BTL_Printf("Œ‹‰Ê:%08x, ", value );
       value = evar_mulValueRound( stack, p, value );
-      BTL_Printf("ÅI:%08x, ", value );
       stack->value[p] = (int)value;
     }
   }

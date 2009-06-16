@@ -256,7 +256,7 @@ static void scproc_KillPokemon( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp );
 static void scproc_Fight_Damage_AddSick( BTL_SVFLOW_WORK* wk, WazaID waza, BTL_POKEPARAM* attacker, BTL_POKEPARAM* target );
 static void scproc_Fight_SimpleSick( BTL_SVFLOW_WORK* wk, WazaID waza, BTL_POKEPARAM* attacker, TARGET_POKE_REC* targetRec );
 static BOOL scproc_Fight_WazaSickCore( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, BTL_POKEPARAM* target,
-  WazaSick sick, BPP_SICK_CONT sickCont, BOOL fAlmost );
+  WazaID waza, WazaSick sick, BPP_SICK_CONT sickCont, BOOL fAlmost );
 static void scproc_Fight_Damage_AddEffect( BTL_SVFLOW_WORK* wk, WazaID waza, BTL_POKEPARAM* attacker, BTL_POKEPARAM* target );
 static void scproc_Fight_SimpleEffect( BTL_SVFLOW_WORK* wk, WazaID waza, BTL_POKEPARAM* attacker, TARGET_POKE_REC* targetRec );
 static BOOL scproc_WazaRankEffect_Common( BTL_SVFLOW_WORK* wk, WazaID waza, BTL_POKEPARAM* attacker, BTL_POKEPARAM* target, BOOL fAlmost );
@@ -1730,7 +1730,6 @@ static void scproc_Fight_Damage_side( BTL_SVFLOW_WORK* wk, WazaID waza, BTL_POKE
   TARGET_POKE_REC* targets, fx32 dmg_ratio )
 {
   BTL_POKEPARAM* bpp;
-  PokeType waza_type;
   u8 poke_cnt;
 
   // 命中チェック -> 命中しなかった場合は targets から除外
@@ -1758,7 +1757,6 @@ static void scproc_Fight_Damage_side( BTL_SVFLOW_WORK* wk, WazaID waza, BTL_POKE
     eventWork_Pop( &wk->eventWork, ewk );
   }
 
-  waza_type = WAZADATA_GetType( waza );
   TargetPokeRec_GetStart( targets );
   poke_cnt = TargetPokeRec_GetCount( targets );
   if( poke_cnt == 1 )
@@ -1766,7 +1764,7 @@ static void scproc_Fight_Damage_side( BTL_SVFLOW_WORK* wk, WazaID waza, BTL_POKE
     BTL_EVWK_CHECK_AFFINITY* evwk;
     bpp = TargetPokeRec_GetNext( targets );
     evwk = eventWork_Push( &wk->eventWork, sizeof(BTL_EVWK_CHECK_AFFINITY) );
-    scEvent_checkWazaDamageAffinity( wk, bpp, waza_type, evwk );
+    scEvent_checkWazaDamageAffinity( wk, bpp, wk->wazaParam.wazaType, evwk );
     scproc_Fight_Damage_side_single( wk, attacker, bpp, waza, dmg_ratio, evwk );
     eventWork_Pop( &wk->eventWork, evwk );
   }
@@ -1781,7 +1779,7 @@ static void scproc_Fight_Damage_side( BTL_SVFLOW_WORK* wk, WazaID waza, BTL_POKE
     {
       bpp = TargetPokeRec_Get( targets, i );
       evwkAry[i] = eventWork_Push( &wk->eventWork, sizeof(BTL_EVWK_CHECK_AFFINITY) );
-      scEvent_checkWazaDamageAffinity( wk, bpp, waza_type, evwkAry[i] );
+      scEvent_checkWazaDamageAffinity( wk, bpp, wk->wazaParam.wazaType, evwkAry[i] );
     }
 
   // 相性が別のヤツがいる or 相性がハンドラによって変化された場合は個別の処理
@@ -2464,6 +2462,7 @@ static u16 scEvent_CalcDamage( BTL_SVFLOW_WORK* wk,
   u32 rawDamage = 0;
 
   BTL_EVENTVAR_Push();
+
   BTL_EVENTVAR_SetValue( BTL_EVAR_TYPEAFF, typeAff );
   BTL_EVENTVAR_SetValue( BTL_EVAR_POKEID_ATK, BTL_POKEPARAM_GetID(attacker) );
   BTL_EVENTVAR_SetValue( BTL_EVAR_POKEID_DEF, BTL_POKEPARAM_GetID(defender) );
@@ -2525,9 +2524,16 @@ static u16 scEvent_CalcDamage( BTL_SVFLOW_WORK* wk,
 
   if( rawDamage == 0 ){ rawDamage = 1; }
 
-  BTL_EVENTVAR_SetValue( BTL_EVAR_DAMAGE, rawDamage );
+  BTL_EVENTVAR_SetMulValue( BTL_EVAR_RATIO, FX32_CONST(1), FX32_CONST(0.1f), FX32_CONST(32) );
+
+  BTL_EVENTVAR_RewriteValue( BTL_EVAR_DAMAGE, rawDamage );
   BTL_EVENT_CallHandlers( wk, BTL_EVENT_WAZA_DMG_PROC2 );
-  rawDamage = BTL_EVENTVAR_GetValue( BTL_EVAR_DAMAGE );
+
+  {
+    fx32 ratio = BTL_EVENTVAR_GetValue( BTL_EVAR_RATIO );
+    rawDamage = BTL_EVENTVAR_GetValue( BTL_EVAR_DAMAGE );
+    rawDamage = (rawDamage * ratio) >> FX32_SHIFT;
+  }
 
   // 最高で残りＨＰの範囲に収まるように最終補正
   if( rawDamage > BTL_POKEPARAM_GetValue(defender, BPP_HP) ){
@@ -2600,7 +2606,7 @@ static void scproc_Fight_Damage_AddSick( BTL_SVFLOW_WORK* wk, WazaID waza, BTL_P
     if( (!BTL_POKEPARAM_IsDead(target))
     &&  (!scEvent_AddSick_IsMustFail(wk, target, sick))
     ){
-      scproc_Fight_WazaSickCore( wk,  attacker, target, sick, sick_cont, FALSE );
+      scproc_Fight_WazaSickCore( wk,  attacker, target, waza, sick, sick_cont, FALSE );
     }
   }
 }
@@ -2626,7 +2632,7 @@ static void scproc_Fight_SimpleSick( BTL_SVFLOW_WORK* wk, WazaID waza, BTL_POKEP
       {
         BPP_SICK_CONT sickCont;
         BTL_CALC_WazaSickContToBppSickCont( contParam, attacker, &sickCont );
-        scproc_Fight_WazaSickCore( wk, attacker, target, sick, sickCont, TRUE );
+        scproc_Fight_WazaSickCore( wk, attacker, target, waza, sick, sickCont, TRUE );
       }
       else
       {
@@ -2643,9 +2649,10 @@ static void scproc_Fight_SimpleSick( BTL_SVFLOW_WORK* wk, WazaID waza, BTL_POKEP
 // サーバーフロー：ワザによる状態異常共通
 //---------------------------------------------------------------------------------------------
 static BOOL scproc_Fight_WazaSickCore( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, BTL_POKEPARAM* target,
-  WazaSick sick, BPP_SICK_CONT sickCont, BOOL fAlmost )
+  WazaID waza, WazaSick sick, BPP_SICK_CONT sickCont, BOOL fAlmost )
 {
   if( scEvent_AddSick_IsMustFail(wk, target, sick) ){
+    scPut_WazaFail( wk, attacker, waza );
     return FALSE;
   }
 
@@ -2802,7 +2809,7 @@ static void scproc_Fight_EffectSick( BTL_SVFLOW_WORK* wk, WazaID waza, BTL_POKEP
       if( scproc_WazaRankEffect_Common(wk, waza, attacker, target, TRUE) ){
         wazaEff_SetTarget( wk, target );
       }
-      if( scproc_Fight_WazaSickCore(wk, attacker, target, sick, sickCont, TRUE) ){
+      if( scproc_Fight_WazaSickCore(wk, attacker, target, waza, sick, sickCont, TRUE) ){
         wazaEff_SetTarget( wk, target );
       }
     }
@@ -3421,8 +3428,6 @@ static void scproc_turncheck_sick( BTL_SVFLOW_WORK* wk )
   int damage;
   u8 pokeID;
 
-  BTL_EVENTVAR_Push();
-
   FRONT_POKE_SEEK_InitWork( &fpsw, wk );
 
   while( FRONT_POKE_SEEK_GetNext( &fpsw, wk, &bpp ) )
@@ -3432,12 +3437,14 @@ static void scproc_turncheck_sick( BTL_SVFLOW_WORK* wk )
     damage = BTL_POKEPARAM_CalcSickDamage( bpp );
     if( sick != POKESICK_NULL && (damage!=0) )
     {
-      BTL_EVENTVAR_SetValue( BTL_EVAR_POKEID, pokeID );
-      BTL_EVENTVAR_SetValue( BTL_EVAR_SICKID, sick );
-      BTL_EVENTVAR_SetValue( BTL_EVAR_DAMAGE, damage );
-      BTL_EVENT_CallHandlers( wk, BTL_EVENT_SICK_DAMAGE );
-      damage = BTL_EVENTVAR_GetValue( BTL_EVAR_DAMAGE );
-      sick = BTL_EVENTVAR_GetValue( BTL_EVAR_SICKID );
+      BTL_EVENTVAR_Push();
+        BTL_EVENTVAR_SetValue( BTL_EVAR_POKEID, pokeID );
+        BTL_EVENTVAR_SetValue( BTL_EVAR_SICKID, sick );
+        BTL_EVENTVAR_SetValue( BTL_EVAR_DAMAGE, damage );
+        BTL_EVENT_CallHandlers( wk, BTL_EVENT_SICK_DAMAGE );
+        damage = BTL_EVENTVAR_GetValue( BTL_EVAR_DAMAGE );
+        sick = BTL_EVENTVAR_GetValue( BTL_EVAR_SICKID );
+      BTL_EVENTVAR_Pop();
       if( sick != POKESICK_NULL )
       {
         if( damage > 0 )
@@ -3460,8 +3467,6 @@ static void scproc_turncheck_sick( BTL_SVFLOW_WORK* wk )
     SCQUE_PUT_OP_WazaSickTurnCheck( wk->que, pokeID );
     scPut_CheckDeadCmd( wk, bpp );
   }
-
-  BTL_EVENTVAR_Pop();
 }
 //------------------------------------------------------------------
 // サーバーフロー下請け： ターンチェック > 天候
@@ -5228,7 +5233,7 @@ static u16 scEvent_getWazaPower( BTL_SVFLOW_WORK* wk,
     BTL_EVENTVAR_SetValue( BTL_EVAR_WAZAID, waza );
     BTL_EVENTVAR_SetValue( BTL_EVAR_WAZA_TYPE, wazaParam->wazaType );
     BTL_EVENTVAR_SetValue( BTL_EVAR_WAZA_POWER, power );
-    BTL_EVENTVAR_SetValue( BTL_EVAR_WAZA_POWER_RATIO, FX32_CONST(1.0) );
+    BTL_EVENTVAR_SetMulValue( BTL_EVAR_WAZA_POWER_RATIO, FX32_CONST(1.0), FX32_CONST(0.1f), FX32_CONST(32) );
     BTL_EVENT_CallHandlers( wk, BTL_EVENT_WAZA_POWER );
     power = BTL_EVENTVAR_GetValue( BTL_EVAR_WAZA_POWER );
     ratio = (fx32)BTL_EVENTVAR_GetValue( BTL_EVAR_WAZA_POWER_RATIO );
