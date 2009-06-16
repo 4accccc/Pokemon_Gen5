@@ -231,8 +231,9 @@ extern void	GFL_G3D_MAP_ResistGlobalObj
 extern u32	GFL_G3D_MAP_ResistAutoGlobalObj
 					( GFL_G3D_MAP* g3Dmap, GFL_G3D_MAP_GLOBALOBJ_ST* status );
 extern void	GFL_G3D_MAP_ReleaseGlobalObj( GFL_G3D_MAP* g3Dmap, u32 idx );
-extern BOOL GFL_G3D_MAP_GetGlobalObj
-          ( GFL_G3D_MAP* g3Dmap, GFL_G3D_MAP_GLOBALOBJ_ST* status, u32 idx );
+extern GFL_G3D_MAP_GLOBALOBJ_ST * GFL_G3D_MAP_GetGlobalObj
+          ( GFL_G3D_MAP* g3Dmap, u32 idx );
+
 //------------------------------------------------------------------
 extern void	GFL_G3D_MAP_ResistGlobalDDobj
 					( GFL_G3D_MAP* g3Dmap, GFL_G3D_MAP_GLOBALOBJ_ST* status, u32 idx );
