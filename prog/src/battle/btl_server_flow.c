@@ -540,6 +540,11 @@ SvflowResult BTL_SVFLOW_Start( BTL_SVFLOW_WORK* wk )
         }
         break;
       case BTL_ACTION_SKIP:
+        BTL_Printf("処理をスキップ\n");
+        scPut_CantAction( wk, clientID, pokeIdx );
+        break;
+      case BTL_ACTION_NULL:
+        BTL_Printf("不明な処理\n");
         scPut_CantAction( wk, clientID, pokeIdx );
         break;
       }
@@ -1568,7 +1573,9 @@ static void scproc_PokeSickCure_WazaCheck( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* a
     }
     break;
   case POKESICK_KOORI:
-    if( BTL_CALC_IsOccurPer(BTL_KORI_MELT_PER) ){
+    if( WAZADATA_IsImage(waza, WAZA_IMG_HEAT)
+    ||  BTL_CALC_IsOccurPer( BTL_KORI_MELT_PER )
+    ){
       f_cured = TRUE;
     }
     break;
@@ -5213,6 +5220,7 @@ static u16 scEvent_getWazaPower( BTL_SVFLOW_WORK* wk,
   const BTL_POKEPARAM* attacker, const BTL_POKEPARAM* defender, WazaID waza, SVFL_WAZAPARAM* wazaParam )
 {
   u16 power = WAZADATA_GetPower( waza );
+  fx32 ratio;
 
   BTL_EVENTVAR_Push();
     BTL_EVENTVAR_SetValue( BTL_EVAR_POKEID_ATK, BTL_POKEPARAM_GetID(attacker) );
@@ -5220,10 +5228,13 @@ static u16 scEvent_getWazaPower( BTL_SVFLOW_WORK* wk,
     BTL_EVENTVAR_SetValue( BTL_EVAR_WAZAID, waza );
     BTL_EVENTVAR_SetValue( BTL_EVAR_WAZA_TYPE, wazaParam->wazaType );
     BTL_EVENTVAR_SetValue( BTL_EVAR_WAZA_POWER, power );
+    BTL_EVENTVAR_SetValue( BTL_EVAR_WAZA_POWER_RATIO, FX32_CONST(1.0) );
     BTL_EVENT_CallHandlers( wk, BTL_EVENT_WAZA_POWER );
     power = BTL_EVENTVAR_GetValue( BTL_EVAR_WAZA_POWER );
+    ratio = (fx32)BTL_EVENTVAR_GetValue( BTL_EVAR_WAZA_POWER_RATIO );
   BTL_EVENTVAR_Pop();
 
+  power = ( power * ratio ) >> FX32_SHIFT;
   return power;
 }
 //--------------------------------------------------------------------------

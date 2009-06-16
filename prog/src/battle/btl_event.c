@@ -57,9 +57,11 @@ static u16 StackPtr;
 * イベント変数スタック
 */
 typedef struct {
-  u32 sp;
-  u16 label[ EVENTVAL_STACK_DEPTH ];
-  int value[ EVENTVAL_STACK_DEPTH ];
+  u32   sp;                                 ///< スタックポインタ
+  u16   label[ EVENTVAL_STACK_DEPTH ];      ///< 変数ラベル
+  int   value[ EVENTVAL_STACK_DEPTH ];      ///< 変数
+  fx32  mulMax[ EVENTVAL_STACK_DEPTH ];     ///< 乗算対応実数の最大値
+  fx32  mulMin[ EVENTVAL_STACK_DEPTH ];     ///< 乗算対応実数の最小値
 }VAR_STACK;
 
 static VAR_STACK VarStack = {0};
@@ -74,6 +76,9 @@ static void clearFactorWork( BTL_EVENT_FACTOR* factor );
 static inline u32 calcFactorPriority( BtlEventFactor factorType, u16 subPri );
 static void callHandlers( BTL_EVENT_FACTOR* factor, BtlEventType eventType, BTL_SVFLOW_WORK* flowWork );
 static void varStack_Init( void );
+static int evar_getNewPoint( const VAR_STACK* stack, BtlEvVarLabel label );
+static int evar_getExistPoint( const VAR_STACK* stack, BtlEvVarLabel label );
+static fx32 evar_mulValueRound( const VAR_STACK* stack, int ptr, fx32 value );
 
 
 //=============================================================================================
@@ -396,7 +401,6 @@ static void varStack_Init( void )
   VAR_STACK* stack = &VarStack;
   int i;
 
-  stack->label[0] = BTL_EVAR_SYS_SEPARATE;
   stack->sp = 0;
   for(i=0; i<NELEMS(stack->label); ++i)
   {
@@ -413,11 +417,11 @@ void BTL_EVENTVAR_Push( void )
   {
     stack->label[ stack->sp++ ] = BTL_EVAR_SYS_SEPARATE;
     #ifdef PM_DEBUG
-    if( stack->sp >= (NELEMS(stack->label)/8*7) )
-    {
+    if( stack->sp >= (NELEMS(stack->label)/8*7) ){
       BTL_Printf("Var Stack sp=%d 危険水域です！！\n", stack->sp);
     }
     #endif
+    BTL_Printf(" [EVENT] PUSH baseP=%d\n", stack->sp-1);
   }
   else
   {
@@ -429,13 +433,36 @@ void BTL_EVENTVAR_Pop( void )
 {
   VAR_STACK* stack = &VarStack;
 
-  while( stack->sp )
+  if( stack->sp > 0 )
   {
+    u16 p = stack->sp;
+    while( (p < NELEMS(stack->label)) && (stack->label[p] != BTL_EVAR_NULL) ){
+      stack->label[p++] = BTL_EVAR_NULL;
+    }
+
     stack->sp--;
-    if( stack->label[stack->sp] == BTL_EVAR_SYS_SEPARATE ){ break; }
+    stack->label[ stack->sp ] = BTL_EVAR_NULL;
+
+    while( stack->sp )
+    {
+      if( stack->label[stack->sp] == BTL_EVAR_SYS_SEPARATE ){ break; }
+      stack->sp--;
+    }
+  }
+  else
+  {
+    GF_ASSERT(0);
   }
 }
 
+//=============================================================================================
+/**
+ * ラベルの値を新規セット（サーバフロー用）
+ *
+ * @param   label
+ * @param   value
+ */
+//=============================================================================================
 void BTL_EVENTVAR_SetValue( BtlEvVarLabel label, int value )
 {
   GF_ASSERT(label!=BTL_EVAR_NULL);
@@ -443,34 +470,45 @@ void BTL_EVENTVAR_SetValue( BtlEvVarLabel label, int value )
 
   {
     VAR_STACK* stack = &VarStack;
-
-    int p = stack->sp;
-    while( p < NELEMS(stack->label) )
-    {
-      if( (stack->label[p] == BTL_EVAR_NULL)
-      ||  (stack->label[p] == label)
-      ){
-        break;
-      }
-      ++p;
-    }
-    if( p < NELEMS(stack->value) )
-    {
-      stack->label[p] = label;
-      stack->value[p] = value;
-      #ifdef PM_DEBUG
-      if( p >= (NELEMS(stack->label)/8*7) )
-      {
-        BTL_Printf("Var Stack sp=%d 危険水域です！！\n", p);
-      }
-      #endif
-    }
-    else
-    {
-      GF_ASSERT(0); // stack overflow
-    }
+    int p = evar_getNewPoint( stack, label );
+    stack->label[p] = label;
+    stack->value[p] = value;
+    stack->mulMin[p] = 0;
+    stack->mulMax[p] = 0;
   }
 }
+//=============================================================================================
+/**
+ * 乗算対応ラベルの値を新規セット（サーバフロー用）
+ *
+ * @param   label
+ * @param   value
+ * @param   mulMin
+ * @param   mulMax
+ */
+//=============================================================================================
+void BTL_EVENTVAR_SetMulValue( BtlEvVarLabel label, int value, fx32 mulMin, fx32 mulMax )
+{
+  GF_ASSERT(label!=BTL_EVAR_NULL);
+  GF_ASSERT(label!=BTL_EVAR_SYS_SEPARATE);
+
+  {
+    VAR_STACK* stack = &VarStack;
+    int p = evar_getNewPoint( stack, label );
+    stack->label[p] = label;
+    stack->value[p] = value;
+    stack->mulMin[p] = mulMin;
+    stack->mulMax[p] = mulMax;
+  }
+}
+//=============================================================================================
+/**
+ * 既存ラベルの値を上書き（ハンドラ用）
+ *
+ * @param   label
+ * @param   value
+ */
+//=============================================================================================
 void BTL_EVENTVAR_RewriteValue( BtlEvVarLabel label, int value )
 {
   GF_ASSERT(label!=BTL_EVAR_NULL);
@@ -478,33 +516,51 @@ void BTL_EVENTVAR_RewriteValue( BtlEvVarLabel label, int value )
 
   {
     VAR_STACK* stack = &VarStack;
-
-    int p = stack->sp;
-    while( p < NELEMS(stack->label) )
+    int p = evar_getExistPoint( stack, label );
+    if( p >= 0 )
     {
-      if(stack->label[p] == label)
-      {
-        break;
-      }
-      ++p;
-    }
-    if( p < NELEMS(stack->value) )
-    {
+      value = evar_mulValueRound( stack, p, value );
       stack->label[p] = label;
-      stack->value[p] = value;
-      #ifdef PM_DEBUG
-      if( p >= (NELEMS(stack->label)/8*7) )
-      {
-        BTL_Printf("Var Stack sp=%d 危険水域です！！\n", p);
-      }
-      #endif
-    }
-    else
-    {
-      GF_ASSERT(0); // stack overflow
+      stack->value[p] = (int)value;
     }
   }
 }
+//=============================================================================================
+/**
+ * 既存の乗算対応ラベルの値に数値を乗算する
+ *
+ * @param   label   ラベルID
+ * @param   value   乗算する値
+ */
+//=============================================================================================
+void BTL_EVENTVAR_MulValue( BtlEvVarLabel label, fx32 value )
+{
+  GF_ASSERT(label!=BTL_EVAR_NULL);
+  GF_ASSERT(label!=BTL_EVAR_SYS_SEPARATE);
+
+  {
+    VAR_STACK* stack = &VarStack;
+    int p = evar_getExistPoint( stack, label );
+    if( p >= 0 )
+    {
+      BTL_Printf("【乗算】 既存値:%08x, 乗算値:%08x, ", stack->value[p], value );
+      value = FX_Mul( stack->value[p], value );
+      BTL_Printf("結果:%08x, ", value );
+      value = evar_mulValueRound( stack, p, value );
+      BTL_Printf("最終:%08x, ", value );
+      stack->value[p] = (int)value;
+    }
+  }
+}
+//=============================================================================================
+/**
+ * 既存ラベルの値を取得
+ *
+ * @param   label
+ *
+ * @retval  int
+ */
+//=============================================================================================
 int BTL_EVENTVAR_GetValue( BtlEvVarLabel label )
 {
   GF_ASSERT(label!=BTL_EVAR_NULL);
@@ -527,8 +583,57 @@ int BTL_EVENTVAR_GetValue( BtlEvVarLabel label )
     return 0;
   }
 }
+// 新規ラベル用に確保した位置のポインタを返す
+static int evar_getNewPoint( const VAR_STACK* stack, BtlEvVarLabel label )
+{
+  int p = stack->sp;
+  while( p < NELEMS(stack->label) ){
+    if( stack->label[p] == BTL_EVAR_NULL ){ break; }
+    if( stack->label[p] == label ){
+      GF_ASSERT_MSG(0, "Find Same Label ID : %d\n", label);
+      break;
+    }
+    ++p;
+  }
 
-
-
-
+  if( p < NELEMS(stack->value) )
+  {
+    #ifdef PM_DEBUG
+    if( p >= (NELEMS(stack->label)/8*7) ){
+      BTL_Printf("Var Stack sp=%d 危険水域です！！\n", p);
+    }
+    #endif
+    return p;
+  }
+  GF_ASSERT(0); // stack overflow
+  return 0;
+}
+// 既存ラベル位置のポインタを返す
+static int evar_getExistPoint( const VAR_STACK* stack, BtlEvVarLabel label )
+{
+  int p = stack->sp;
+  while( (p < NELEMS(stack->label)) && (stack->label[p] != BTL_EVAR_NULL) )
+  {
+    if( stack->label[p] == label ){
+      return p;
+    }
+    ++p;
+  }
+  GF_ASSERT_MSG(0, "label[%d] not found", label);
+  return -1;
+}
+// 乗算対応変数の上下限を越えていたら丸めて返す
+static fx32 evar_mulValueRound( const VAR_STACK* stack, int ptr, fx32 value )
+{
+  if( stack->mulMax[ptr] || stack->mulMin[ptr] )  // どちらかが0以外なら乗算対応と見なす
+  {
+    if( stack->mulMin[ptr] > value ){
+      value = stack->mulMin[ptr];
+    }
+    if( stack->mulMax[ptr] < value ){
+      value = stack->mulMax[ptr];
+    }
+  }
+  return value;
+}
 

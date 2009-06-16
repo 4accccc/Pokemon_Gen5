@@ -375,7 +375,7 @@ void  BTLV_EFFECT_SetTrainer( int trtype, int position, int pos_x, int pos_y )
 void  BTLV_EFFECT_DelTrainer( int position )
 {
   GF_ASSERT( position < BTLV_MCSS_POS_MAX );
-  GF_ASSERT( bew->trainer_index[ position ] != BTLV_EFFECT_TRAINER_INDEX_NONE );
+  GF_ASSERT_MSG( bew->trainer_index[ position ] != BTLV_EFFECT_TRAINER_INDEX_NONE, "pos=%d", position );
 
   BTLV_CLACT_Delete( bew->bclw, bew->trainer_index[ position ] );
   bew->trainer_index[ position ] = BTLV_EFFECT_TRAINER_INDEX_NONE;

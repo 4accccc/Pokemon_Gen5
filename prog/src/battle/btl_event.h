@@ -175,6 +175,7 @@ typedef enum {
   BTL_EVAR_ITEMUSE_FLAG,
   BTL_EVAR_AGILITY,
   BTL_EVAR_WAZA_POWER,
+  BTL_EVAR_WAZA_POWER_RATIO,
   BTL_EVAR_DAMAGE,
   BTL_EVAR_POWER,
   BTL_EVAR_GUARD,
@@ -199,8 +200,11 @@ typedef enum {
 extern void BTL_EVENTVAR_Push( void );
 extern void BTL_EVENTVAR_Pop( void );
 extern void BTL_EVENTVAR_SetValue( BtlEvVarLabel label, int value );
+extern void BTL_EVENTVAR_SetMulValue( BtlEvVarLabel label, int value, fx32 mulMin, fx32 mulMax );
 extern void BTL_EVENTVAR_RewriteValue( BtlEvVarLabel label, int value );
-extern int BTL_EVENTVAR_GetValue( BtlEvVarLabel label );
+extern void BTL_EVENTVAR_MulValue( BtlEvVarLabel label, fx32 value );
+extern int  BTL_EVENTVAR_GetValue( BtlEvVarLabel label );
+
 
 
 //------------------------------------------------------------------------------------------

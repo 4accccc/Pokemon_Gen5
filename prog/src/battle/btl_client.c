@@ -402,6 +402,7 @@ static BOOL SubProc_UI_SelectAction( BTL_CLIENT* wk, int* seq )
         break;
       // 「にげる」を選んだら、反応の条件分岐へ
       case BTL_ACTION_ESCAPE:
+        BTL_Printf("「にげる」を選びました\n");
         (*seq) = SEQ_CHECK_ESCAPE;
         break;
       // 「たたかう」を選んだら、各種条件分岐
@@ -515,8 +516,9 @@ static BOOL SubProc_UI_SelectAction( BTL_CLIENT* wk, int* seq )
           // とくせい、ワザ効果等による禁止チェック
           if( code == BTL_CANTESC_NULL )
           {
-            wk->returnDataPtr = &(wk->actionParam[wk->procPokeIdx]);
+            wk->returnDataPtr = wk->procAction;
             wk->returnDataSize = sizeof(wk->actionParam[0]);
+            BTL_Printf("逃げコマンドのハズ=%d\n", wk->procAction->gen.cmd);
             (*seq) = SEQ_RETURN_START;
           }
           else
