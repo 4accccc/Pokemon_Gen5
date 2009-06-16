@@ -946,18 +946,26 @@ static BOOL SUBPROC_GoBattle( GFL_PROC* proc, int* seq, void* pwk, void* mywk )
       para->partyPlayer = PokeParty_AllocPartyWork( HEAPID_CORE );  ///< プレイヤーのパーティ
       para->partyEnemy1 = PokeParty_AllocPartyWork( HEAPID_CORE );  ///< 1vs1時の敵AI, 2vs2時の１番目敵AI用
       para->partyPartner = NULL;  ///< 2vs2時の味方AI（不要ならnull）
-      para->partyEnemy2 = NULL; ///< 2vs2時の２番目敵AI用（不要ならnull）
+      para->partyEnemy2 = NULL;   ///< 2vs2時の２番目敵AI用（不要ならnull）
       para->statusPlayer = SaveData_GetMyStatus( SaveControl_GetPointer() );
 
     #ifdef DEBUG_ONLY_FOR_taya
-      setup_party( HEAPID_CORE, para->partyPlayer, MONSNO_PORIGON, MONSNO_PIKATYUU, MONSNO_GURAADON, MONSNO_KAIOOGA, 0 );
+      setup_party( HEAPID_CORE, para->partyPlayer, MONSNO_YAMIKARASU, MONSNO_PIKATYUU, MONSNO_GURAADON, MONSNO_KAIOOGA, 0 );
       setup_party( HEAPID_CORE, para->partyEnemy1, MONSNO_METAGUROSU, MONSNO_AABOKKU, MONSNO_YADOKINGU, MONSNO_REKKUUZA, 0 );
       {
         POKEMON_PARAM* pp = PokeParty_GetMemberPointer( para->partyEnemy1, 0 );
-        PP_SetWazaPos( pp, WAZANO_HANERU, 0 );
+        PP_SetWazaPos( pp, WAZANO_DOKUNOKONA, 0 );
         PP_SetWazaPos( pp, WAZANO_NULL, 1 );
         PP_SetWazaPos( pp, WAZANO_NULL, 2 );
         PP_SetWazaPos( pp, WAZANO_NULL, 3 );
+
+        pp = PokeParty_GetMemberPointer( para->partyPlayer, 0 );
+        PP_SetWazaPos( pp, WAZANO_KARAGENKI, 0 );
+        PP_SetWazaPos( pp, WAZANO_MAMORU, 1 );
+        PP_SetWazaPos( pp, WAZANO_TYOUHATU, 3 );
+        PP_Put( pp, ID_PARA_agi_rnd, 31 );
+        PP_Put( pp, ID_PARA_agi_exp, 255 );
+//        PP_Put( pp, ID_PARA_item, ITEM_KIAINOTASUKI );
       }
     #else
       setup_party( HEAPID_CORE, para->partyPlayer, MONSNO_ARUSEUSU + 2, MONSNO_ARUSEUSU + 1, 0 );
@@ -973,6 +981,11 @@ static BOOL SUBPROC_GoBattle( GFL_PROC* proc, int* seq, void* pwk, void* mywk )
     }
     break;
   case 2:
+    {
+      BATTLE_SETUP_PARAM* para = getGenericWork( wk, sizeof(BATTLE_SETUP_PARAM) );
+      GFL_HEAP_FreeMemory( para->partyPlayer );
+      GFL_HEAP_FreeMemory( para->partyEnemy1 );
+    }
     changeScene_recover( wk );
     return TRUE;
   }
