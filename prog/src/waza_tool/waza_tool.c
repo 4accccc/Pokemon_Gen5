@@ -286,6 +286,8 @@ enum {
   WSEQ_EFF_SICK2 = 166,
   WSEQ_SIMPLE_RECOVER = 32,
   WSEQ_YUUWAKU = 265,
+  WSEQ_HEAT1 = 125,
+  WSEQ_HEAT2 = 253,
 
   WSEQ_REACT_HAKAI = 80,  ///< 次のターンアクションできない
 
@@ -571,7 +573,38 @@ static const SEQ_PARAM* getSeqParam( WazaID waza )
         WAZASICK_NULL, 0, 0, 0,
         { { WAZA_RANKEFF_SP_ATTACK, -2 }, { WAZA_RANKEFF_NULL, 0 } },
         FALSE, BTL_WEATHER_NONE, 0, 0,
+    },{
+        WSEQ_HEAT1, WAZADATA_CATEGORY_DAMAGE_SICK,
+        WAZASICK_YAKEDO, WAZASICK_CONT_PERMANENT, 0, 0,
+        { { WAZA_RANKEFF_NULL, 0 }, { WAZA_RANKEFF_NULL, 0 } },
+        FALSE, BTL_WEATHER_NONE, 0, 0,
+    },{
+        WSEQ_HEAT2, WAZADATA_CATEGORY_DAMAGE_SICK,
+        WAZASICK_YAKEDO, WAZASICK_CONT_PERMANENT, 0, 0,
+        { { WAZA_RANKEFF_NULL, 0 }, { WAZA_RANKEFF_NULL, 0 } },
+        FALSE, BTL_WEATHER_NONE, 0, 0,
     },
+/*
+  typedef struct {
+    u16 wseq;
+    u16 category;
+
+    WazaSick  sick;
+    u8        sickCont;
+    u8        sickTurnMin;
+    u8        sickTurnMax;
+    struct {
+      WazaRankEffect  type;
+      s8              value;
+    }rankEff[WAZA_RANKEFF_NUM_MAX];
+
+    u8 shrinkFlg;
+    u8 weather;
+    u8 reactionRatio;
+    u8 criticalRank;
+
+  }SEQ_PARAM;
+*/
   };
   u16 seq = WT_WazaDataParaGet( waza, ID_WTD_battleeffect );
   u16 i;
@@ -956,6 +989,32 @@ u8 WAZADATA_GetRecoverHPRatio( WazaID id )
 BOOL WAZADATA_IsImage( WazaID id, WazaImage img )
 {
   // @@@ 今はてきとー
+  switch( img ){
+  case WAZA_IMG_HEAT:
+    if( id == WAZANO_SEINARUHONOO ){ return TRUE; }
+    if( id == WAZANO_KAENGURUMA ){ return TRUE; }
+    if( id == WAZANO_HUREADORAIBU ){ return TRUE; }
+    break;
+  case WAZA_IMG_PUNCH:
+    if( id == WAZANO_MEGATONPANTI) { return TRUE; }
+    if( id == WAZANO_DOREINPANTI) { return TRUE; }
+    if( id == WAZANO_HONOONOPANTI) { return TRUE; }
+    if( id == WAZANO_REITOUPANTI) { return TRUE; }
+    if( id == WAZANO_KAMINARIPANTI) { return TRUE; }
+    if( id == WAZANO_SYADOOPANTI) { return TRUE; }
+    if( id == WAZANO_RENZOKUPANTI) { return TRUE; }
+    if( id == WAZANO_PIYOPIYOPANTI) { return TRUE; }
+    if( id == WAZANO_BAKURETUPANTI) { return TRUE; }
+    if( id == WAZANO_MAHHAPANTI) { return TRUE; }
+    if( id == WAZANO_BARETTOPANTI) { return TRUE; }
+    if( id == WAZANO_KOMETTOPANTI) { return TRUE; }
+    if( id == WAZANO_SUKAIAPPAA) { return TRUE; }
+
+    break;
+  case WAZA_IMG_SOUND:
+    break;
+  }
+
   return FALSE;
 }
 //=============================================================================================
