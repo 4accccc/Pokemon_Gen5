@@ -191,7 +191,7 @@ static const GFL_G3D_MAP_DDOBJ_DATA drawTreeData;
  */
 //------------------------------------------------------------------
 static const GFL_G3D_MAP_FILE_FUNC mapFileFuncTbl[] = {
-	{ DP3PACK_HEADER, FieldLoadMapData_WBNormalFile, FieldGetAttr_WBNormalFile },
+	{ WBGRIDPACK_HEADER, FieldLoadMapData_WBNormalFile, FieldGetAttr_WBNormalFile },
 	{ DP3PACK_HEADER, FieldLoadMapData_MapEditorFile, FieldGetAttr_MapEditorFile },
 	{ BRIDGEPACK_HEADER, FieldLoadMapData_BridgeFile, FieldGetAttr_BridgeFile },
 	{ MAPFILE_FUNC_DEFAULT, FieldLoadMapData_PMcustomFile, FieldGetAttr_PMcustomFile },	//TableEnd&default	
@@ -381,26 +381,24 @@ const GFL_G3D_MAP_GLOBALOBJ_ST * FLDMAPPER_CreateObjStatusList
   enum { MAPOBJ_MAX = 32 };
   int i, j, k;
   int count = 0;
-  GFL_G3D_MAP_GLOBALOBJ_ST status;
+  GFL_G3D_MAP_GLOBALOBJ_ST *status;
   VecFx32 map_pos;
   u8 * set = GFL_HEAP_AllocClearMemory(heapID, g3Dmapper->blockNum * MAPOBJ_MAX );
   GFL_G3D_MAP_GLOBALOBJ_ST * st;
 
-  *num = 0;
-  GFL_HEAP_FreeMemory(set);
-  return NULL;
-#if 0
 	for ( i=0; i<g3Dmapper->blockNum; i++ ){
     GFL_G3D_MAP_GetTrans( g3Dmapper->blockWk[i].g3Dmap, &map_pos);
     for ( j=0; j<MAPOBJ_MAX; j++)
     {
-		  if (GFL_G3D_MAP_GetGlobalObj( g3Dmapper->blockWk[i].g3Dmap, &status, j ) == FALSE)
+      VecFx32 trans;
+		  status = GFL_G3D_MAP_GetGlobalObj( g3Dmapper->blockWk[i].g3Dmap, j );
+      if (status == NULL)
       {
         continue;
       }
-      VEC_Add( &status.trans, &map_pos, &status.trans );
-      if (rect->top <= status.trans.z && status.trans.z <= rect->bottom
-          && rect->left <= status.trans.x && status.trans.x <= rect->right)
+      VEC_Add( &status->trans, &map_pos, &trans );
+      if (rect->top <= trans.z && trans.z <= rect->bottom
+          && rect->left <= trans.x && trans.x <= rect->right)
       {
         set[MAPOBJ_MAX * i + j] = 1;
       }
@@ -425,10 +423,12 @@ const GFL_G3D_MAP_GLOBALOBJ_ST * FLDMAPPER_CreateObjStatusList
     {
       GFL_G3D_MAP_GetTrans( g3Dmapper->blockWk[i / MAPOBJ_MAX].g3Dmap, &map_pos);
       j = i % MAPOBJ_MAX;
-		  if (GFL_G3D_MAP_GetGlobalObj( g3Dmapper->blockWk[i / MAPOBJ_MAX].g3Dmap, &st[k], j ) == FALSE)
+		  status = GFL_G3D_MAP_GetGlobalObj( g3Dmapper->blockWk[i / MAPOBJ_MAX].g3Dmap, j );
+      if (status == NULL)
       {
         GF_ASSERT(0);
       }
+      st[k] = *status;
       VEC_Add( &st[k].trans, &map_pos, &st[k].trans );
       k ++;
     }
@@ -437,7 +437,6 @@ const GFL_G3D_MAP_GLOBALOBJ_ST * FLDMAPPER_CreateObjStatusList
 
   GFL_HEAP_FreeMemory(set);
   return st;
-#endif
 }
 
 //============================================================================================

@@ -56,7 +56,7 @@ MK_GROUNDTOOL = mkmapdmy.rb
 #---------------------------------------------------------------
 #	データ生成ルール
 #---------------------------------------------------------------
-.SUFFIXES: .3dppack .nsbmd .nsbtx
+.SUFFIXES: .3dppack .nsbmd #.nsbtx
 
 #nsbmd
 %.nsbmd: ../$(DIR_LANDRES)/%.imd
@@ -64,19 +64,26 @@ MK_GROUNDTOOL = mkmapdmy.rb
 	$(G3DCVTR) $(subst $(DIR_G3DCVTR),$(DIR_LANDRES)/,$(@:.nsbmd=.imd)) -o $@
 
 #nsbtx
-%.nsbtx: ../$(DIR_LANDRES)/%.imd
-	@echo create nsbtx $@
-	$(G3DCVTR) $(subst $(DIR_G3DCVTR),$(DIR_LANDRES)/,$(@:.nsbtx=.imd)) -o $@ -etex
+#%.nsbtx: ../$(DIR_LANDRES)/%.imd
+#	@echo create nsbtx $@
+#	$(G3DCVTR) $(subst $(DIR_G3DCVTR),$(DIR_LANDRES)/,$(@:.nsbtx=.imd)) -o $@ -etex
 
 #3dppack 3dmd
-%.3dppack: ../$(DIR_LANDRES)/%.3dmd
-	@echo create 3dppack $@
-	$(BINLINKER) $(subst $(DIR_3DPPACK),$(DIR_G3DCVTR)/,$*.nsbmd) $(subst $(DIR_3DPPACK),$(DIR_G3DCVTR)/,$*.nsbtx) $(subst $(DIR_3DPPACK),$(DIR_G3DCVTR)/,$*.nsbtp) $(subst $(DIR_3DPPACK),$(DIR_LANDRES)/,$*.bin) $(subst $(DIR_3DPPACK),$(DIR_LANDRES)/,$*.3dmd) $*.3dppack 3D
+#%.3dppack: ../$(DIR_LANDRES)/%.3dmd
+#	@echo create 3dppack $@
+#	$(BINLINKER) $(subst $(DIR_3DPPACK),$(DIR_G3DCVTR)/,$*.nsbmd) $(subst $(DIR_3DPPACK),$(DIR_G3DCVTR)/,$*.nsbtx) $(subst $(DIR_3DPPACK),$(DIR_G3DCVTR)/,$*.nsbtp) $(subst $(DIR_3DPPACK),$(DIR_LANDRES)/,$*.bin) $(subst $(DIR_3DPPACK),$(DIR_LANDRES)/,$*.3dmd) $*.3dppack 3D
 
 #3dppack nsbmd,nsbtx,bin
-%.3dppack: ../$(DIR_G3DCVTR)/%.nsbmd ../$(DIR_G3DCVTR)/%.nsbtx ../$(DIR_LANDRES)/%.bin
+#%.3dppack: ../$(DIR_G3DCVTR)/%.nsbmd ../$(DIR_G3DCVTR)/%.nsbtx ../$(DIR_LANDRES)/%.bin
+#	@echo create 3dppack $@
+#	$(BINLINKER) $(subst $(DIR_3DPPACK),$(DIR_G3DCVTR)/,$*.nsbmd) $(subst $(DIR_3DPPACK),$(DIR_G3DCVTR)/,$*.nsbtx) $(subst $(DIR_3DPPACK),$(DIR_G3DCVTR)/,$*.nsbtp) $(subst $(DIR_3DPPACK),$(DIR_LANDRES)/,$*.bin) $(subst $(DIR_3DPPACK),$(DIR_LANDRES)/,$*.3dmd) $*.3dppack 3D
+
+%.3dppack: ../$(DIR_G3DCVTR)/%.nsbmd  ../$(DIR_LANDRES)/%.bin ../$(DIR_LANDRES)/%.3dmd
 	@echo create 3dppack $@
-	$(BINLINKER) $(subst $(DIR_3DPPACK),$(DIR_G3DCVTR)/,$*.nsbmd) $(subst $(DIR_3DPPACK),$(DIR_G3DCVTR)/,$*.nsbtx) $(subst $(DIR_3DPPACK),$(DIR_G3DCVTR)/,$*.nsbtp) $(subst $(DIR_3DPPACK),$(DIR_LANDRES)/,$*.bin) $(subst $(DIR_3DPPACK),$(DIR_LANDRES)/,$*.3dmd) $*.3dppack 3D
+	$(BINLINKER) $(subst $(DIR_3DPPACK),$(DIR_G3DCVTR)/,$*.nsbmd) \
+  $(subst $(DIR_3DPPACK),$(DIR_LANDRES)/,$*.bin) \
+  $(subst $(DIR_3DPPACK),$(DIR_LANDRES)/,$*.3dmd) \
+  $*.3dppack WB
 
 #---------------------------------------------------------------
 #	ターゲット
@@ -95,7 +102,8 @@ $(TARGET_DIR)/$(TARGET_ARC): $(TARGET_ARC)
 	
 #コンバート
 ifeq	($(CONVERTUSER),true) #CONVERTUSER
-$(TARGET_ARC): $(G3D_NSBMD) $(G3D_NSBTX) $(G3D_3DMD) $(G3D_3DPPACK)
+#$(TARGET_ARC): $(G3D_NSBMD) $(G3D_NSBTX) $(G3D_3DMD) $(G3D_3DPPACK)
+$(TARGET_ARC): $(G3D_NSBMD) $(G3D_3DMD) $(G3D_3DPPACK)
 	nnsarc -i -c -l -n $(TARGET_ARC) -S $(LAND_ARCLIST) > arc_result.txt
 	$(NAIXCUT) $(TARGET_ARCIDX)
 endif

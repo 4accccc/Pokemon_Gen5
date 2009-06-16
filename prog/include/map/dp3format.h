@@ -11,6 +11,7 @@
 #define _DP3FORMAT_H_
 
 #define DP3PACK_HEADER (0x4433)   //"3D"をひっくり返した
+#define WBGRIDPACK_HEADER 'BW'
 
 /// 高さデータ取得用
 typedef struct {
@@ -55,6 +56,7 @@ typedef struct{
 } LayoutFormat;
 
 /// 全部をパックしたファイルのヘッダー
+//サンプル版
 typedef struct {
     u16 DataID;         ////< DP3PACK_HEADER
     u16 dummy1;
@@ -65,6 +67,20 @@ typedef struct {
     u32 positionOffset; ///< ファイルの先頭からポジションの場所までのOFFSET
     u32 endPos;         ///< ファイルの先頭からポジションの最後までのOFFSET
 } Dp3packHeaderSt;
+
+
+/// 全部をパックしたファイルのヘッダー
+//WBグリッドマップ用
+typedef struct {
+    u16 DataID;         ////< DP3PACK_HEADER
+    u16 dummy1;
+    u32 nsbmdOffset;    ///< ファイルの先頭からnsbmdの場所までのOFFSET
+  //  u32 nsbtxOffset;    ///< ファイルの先頭からnsbtxの場所までのOFFSET
+  // u32 nsbtpOffset;    ///< ファイルの先頭からnsbtpの場所までのOFFSET
+    u32 vertexOffset;   ///< ファイルの先頭から法線＋アトリビュートの場所までのOFFSET
+    u32 positionOffset; ///< ファイルの先頭からポジションの場所までのOFFSET
+    u32 endPos;         ///< ファイルの先頭からポジションの最後までのOFFSET
+} WBGridMapPackHeaderSt;
 
 
 

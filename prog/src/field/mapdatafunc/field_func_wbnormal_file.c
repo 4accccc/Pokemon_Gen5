@@ -81,11 +81,11 @@ BOOL FieldLoadMapData_WBNormalFile( GFL_G3D_MAP* g3Dmap, void * exWork )
 		//レンダー作成
 		{
 			void*				mem;
-			Dp3packHeaderSt*	fileHeader;
+			WBGridMapPackHeaderSt*	fileHeader;
 
 			//ヘッダー設定
 			GFL_G3D_MAP_GetLoadMemoryPointer( g3Dmap, &mem );
-			fileHeader = (Dp3packHeaderSt*)mem;
+			fileHeader = (WBGridMapPackHeaderSt*)mem;
 			//モデルリソース設定
 			GFL_G3D_MAP_CreateResourceMdl(g3Dmap, (void*)((u32)mem + fileHeader->nsbmdOffset));
 			//テクスチャリソース設定
@@ -164,7 +164,7 @@ void FieldGetAttr_WBNormalFile( GFL_G3D_MAP_ATTRINFO* attrInfo, const void* mapd
 	VecFx32			pos, vecN;
 	fx32			by, valD;
 	NormalVtxSt*	nvs;
-	Dp3packHeaderSt* fileHeader = (Dp3packHeaderSt*)mapdata;
+	WBGridMapPackHeaderSt* fileHeader = (WBGridMapPackHeaderSt*)mapdata;
 	u32				attrAdrs = (u32)mapdata + fileHeader->vertexOffset;
 
 	VEC_Set( &pos, posInBlock->x + map_width/2, posInBlock->y, posInBlock->z + map_width/2 );

@@ -18,26 +18,28 @@ def map_file_check prefix
 	put_result( path + "\.3dmd" )
 end
 
-File.open("field_list.csv") {|file|
-	flag = false
-	while line = file.gets do
+Dir.glob("*.csv").each{|filename|
+  File.open(filename) {|file|
+    flag = false
+    while line = file.gets do
 
-		#　#ENDがきたら終了
-		if line =~ /\#END/ then
-			break
-		end
+      #　#ENDがきたら終了
+      if line =~ /\#END/ then
+        break
+      end
 
-		#No.から読み始め
-		if line =~ /^No\./ then
-			flag = true
-			next
-		end
-		if flag == false then next end
+      #No.から読み始め
+      if line =~ /^No\./ then
+        flag = true
+        next
+      end
+      if flag == false then next end
 
-		item = line.split(/,/)
-		#map_out～は読み飛ばし
-		if item[1] =~ /map_out/ then next end
+      item = line.split(/,/)
+      #map_out～は読み飛ばし
+      if item[1] =~ /map_out/ then next end
 
-		map_file_check item[1]
-	end
+      map_file_check item[1]
+    end
+  }
 }
