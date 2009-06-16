@@ -600,7 +600,7 @@ static void print_menu( MAIN_WORK* wk, const V_MENU_CTRL* menuCtrl )
 static void* getGenericWork( MAIN_WORK* mainWork, u32 size )
 {
   GF_ASSERT(size<GENERIC_WORK_SIZE);
-  GFL_STD_MemClear( mainWork->genericWork, size );
+//  GFL_STD_MemClear( mainWork->genericWork, size );
   {
     u32 adrs = (u32)(&mainWork->genericWork[0]);
     GF_ASSERT(adrs%4==0);
@@ -983,9 +983,13 @@ static BOOL SUBPROC_GoBattle( GFL_PROC* proc, int* seq, void* pwk, void* mywk )
   case 2:
     {
       BATTLE_SETUP_PARAM* para = getGenericWork( wk, sizeof(BATTLE_SETUP_PARAM) );
+      TAYA_Printf( "free adrs=%p & %p\n", para->partyPlayer, para->partyEnemy1);
       GFL_HEAP_FreeMemory( para->partyPlayer );
       GFL_HEAP_FreeMemory( para->partyEnemy1 );
     }
+    (*seq)++;
+    break;
+  case 3:
     changeScene_recover( wk );
     return TRUE;
   }
