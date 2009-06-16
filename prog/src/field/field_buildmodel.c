@@ -38,6 +38,7 @@ typedef EL_SCOREBOARD_TEX ELBOARD_TEX;
 enum {  
   BMANIME_ID_COUNT_MAX = 4,
 
+  BMODEL_USE_MAX = 4, 
 };
 
 enum{ 
@@ -75,11 +76,11 @@ struct _FIELD_BMANIME_DATA
 };
 //------------------------------------------------------------------
 //------------------------------------------------------------------
-typedef struct {
+struct _FIELD_BMODEL {
   GFL_G3D_OBJ * gfl_obj;
   BOOL suicide_flag;
   GFL_G3D_OBJSTATUS status;
-}FIELD_BMODEL;
+};
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
@@ -102,7 +103,7 @@ struct _FIELD_BMODEL_MAN
   STRBUF * elb_str[FIELD_BMODEL_ELBOARD_ID_MAX];
   ELBOARD_TEX * elb_tex[FIELD_BMODEL_ELBOARD_ID_MAX];
 
-  FIELD_BMODEL * entryObj;
+  FIELD_BMODEL * entryObj[BMODEL_USE_MAX];
 };
 
 //============================================================================================
@@ -146,7 +147,10 @@ FIELD_BMODEL_MAN * FIELD_BMODEL_MAN_Create(HEAPID heapID)
     man->elb_tex[i] = NULL;
   }
 
-  man->entryObj = NULL;
+  for (i = 0; i < BMODEL_USE_MAX; i++)
+  {
+    man->entryObj[i] = NULL;
+  }
 
 	return man;
 }
@@ -188,8 +192,12 @@ void FIELD_BMODEL_MAN_Main(FIELD_BMODEL_MAN * man)
     }
   }
 
-  if (man->entryObj)
+  for (i = 0; i < BMODEL_USE_MAX; i++)
   {
+    if (man->entryObj[i])
+    {
+      FIELD_BMODEL_RunAnime(man->entryObj[i]);
+    }
   }
 
 }
@@ -201,8 +209,13 @@ void FIELD_BMODEL_MAN_Main(FIELD_BMODEL_MAN * man)
 //------------------------------------------------------------------
 void FIELD_BMODEL_MAN_Draw(FIELD_BMODEL_MAN * man)
 {
-  if (man->entryObj)
+  int i;
+  for (i = 0; i < BMODEL_USE_MAX; i++)
   {
+    if (man->entryObj[i])
+    {
+      FIELD_BMODEL_Draw(man->entryObj[i]);
+    }
   }
 }
 
@@ -322,6 +335,37 @@ BOOL FIELD_BMODEL_MAN_GetSubModel(const FIELD_BMODEL_MAN * man,
   *entry_idx = FIELD_BMODEL_MAN_GetEntryIndex(man, NARC_buildmodel_outdoor_p_door_nsbmd);
   VEC_Set(ofs, 0, 0, 0 * FX32_ONE);
   return TRUE;
+}
+
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+void FIELD_BMODEL_MAN_releaseBuildModel(FIELD_BMODEL_MAN * man, FIELD_BMODEL * bmodel)
+{
+  int i;
+  for (i = 0; i < BMODEL_USE_MAX; i++)
+  {
+    if (man->entryObj[i] == bmodel)
+    {
+      man->entryObj[i] = NULL;
+      return;
+    }
+  }
+  GF_ASSERT(0);
+}
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+void FIELD_BMODEL_MAN_EntryBuildModel(FIELD_BMODEL_MAN * man, FIELD_BMODEL * bmodel)
+{
+  int i;
+  for (i = 0; i < BMODEL_USE_MAX; i++)
+  {
+    if (man->entryObj[i] == NULL)
+    {
+      man->entryObj[i] = bmodel;
+      return;
+    }
+  }
+  GF_ASSERT(0);
 }
 
 //============================================================================================
@@ -689,12 +733,12 @@ void FIELD_BMODEL_Draw( const FIELD_BMODEL * bmodel )
 FIELD_BMODEL * FIELD_BMODEL_Create(FIELD_BMODEL_MAN * man,
     const FLDMAPPER * g3Dmapper, const GFL_G3D_MAP_GLOBALOBJ_ST * status)
 {
-	MtxFx33				mtxRot;
-  GFL_G3D_OBJ * obj;
   const GLOBALOBJ_RES * objRes;
+
   FIELD_BMODEL * bmodel = GFL_HEAP_AllocMemory( man->heapID, sizeof(FIELD_BMODEL) );
   fx32 sin = FX_SinIdx(status->rotate);
   fx32 cos = FX_CosIdx(status->rotate);
+
   MTX_RotY33( &bmodel->status.rotate, sin, cos );
   bmodel->status.trans = status->trans;
   VEC_Set( &bmodel->status.scale, FX32_ONE, FX32_ONE, FX32_ONE );
@@ -702,19 +746,21 @@ FIELD_BMODEL * FIELD_BMODEL_Create(FIELD_BMODEL_MAN * man,
   {
     int i, count;
 	  GFL_G3D_ANM* anmTbl[GLOBAL_OBJ_ANMCOUNT];
-	  GFL_G3D_RND* g3Drnd = GFL_G3D_RENDER_Create( objRes->g3DresMdl, 0, objRes->g3DresTex );
+    GFL_G3D_RES* resTex = objRes->g3DresTex ? objRes->g3DresTex : objRes->g3DresMdl;
+	  GFL_G3D_RND* g3Drnd = GFL_G3D_RENDER_Create( objRes->g3DresMdl, 0, resTex );
     count = GFL_G3D_OBJECT_GetAnimeCount( objRes->g3Dobj );
     for (i = 0; i < GLOBAL_OBJ_ANMCOUNT; i++)
     {
-      if (i < count) 
+      if (i < count && objRes->g3DresAnm[i] != NULL) 
       {
-        anmTbl[i] = GFL_G3D_OBJECT_GetG3Danm( objRes->g3Dobj, i );
+        anmTbl[i] = GFL_G3D_ANIME_Create( g3Drnd, objRes->g3DresAnm[i], 0 );
       } else {
         anmTbl[i] = NULL;
       }
     }
     bmodel->gfl_obj = GFL_G3D_OBJECT_Create( g3Drnd, anmTbl, GLOBAL_OBJ_ANMCOUNT );
   }
+  bmodel->suicide_flag = FALSE;
   return bmodel;
 }
 
@@ -722,10 +768,55 @@ FIELD_BMODEL * FIELD_BMODEL_Create(FIELD_BMODEL_MAN * man,
 //------------------------------------------------------------------
 void FIELD_BMODEL_Delete(FIELD_BMODEL * bmodel)
 {
+  int i;
 	GFL_G3D_RND*	g3Drnd;
   g3Drnd = GFL_G3D_OBJECT_GetG3Drnd( bmodel->gfl_obj );
+  for (i = 0; i < GLOBAL_OBJ_ANMCOUNT; i++)
+  {
+    GFL_G3D_ANM * g3Danm = GFL_G3D_OBJECT_GetG3Danm( bmodel->gfl_obj, i );
+    if (g3Danm != NULL)
+    {
+      GFL_G3D_ANIME_Delete( g3Danm );
+    }
+  }
   GFL_G3D_OBJECT_Delete( bmodel->gfl_obj );
+  GFL_G3D_RENDER_Delete( g3Drnd );
+  //テクスチャ、モデリング、リソースは借り物なので解放しない
+
+  GFL_HEAP_FreeMemory(bmodel);
 }
 
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+void FIELD_BMODEL_SetAnime(FIELD_BMODEL * bmodel, u32 idx)
+{
+  GFL_G3D_OBJECT_EnableAnime(bmodel->gfl_obj, idx );
+  GFL_G3D_OBJECT_ResetAnimeFrame(bmodel->gfl_obj, idx );
+}
 
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+void FIELD_BMODEL_RunAnime(FIELD_BMODEL * bmodel)
+{
+  int i;
+  BOOL result;
+  for (i = 0; i < GLOBAL_OBJ_ANMCOUNT; i++)
+  {
+    GFL_G3D_ANM * g3Danm = GFL_G3D_OBJECT_GetG3Danm( bmodel->gfl_obj, i );
+    if (g3Danm == NULL) continue;
+    result = GFL_G3D_OBJECT_LoopAnimeFrame( bmodel->gfl_obj, i, FX32_ONE);
+    if (!result)
+    {
+      bmodel->suicide_flag = TRUE;
+      GFL_G3D_OBJECT_DisableAnime( bmodel->gfl_obj, i );
+    }
+  }
+}
+
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+BOOL FIELD_BMODEL_GetAnimeStatus(FIELD_BMODEL * bmodel)
+{
+  return bmodel->suicide_flag;
+}
 

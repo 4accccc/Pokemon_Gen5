@@ -15,6 +15,8 @@
 
 #include "fieldmap.h"
 #include "field_player.h"
+#include "field_buildmodel.h"
+#include "../resource/fldmapdata/build_model/buildmodel_outdoor.naix"
 
 
 //============================================================================================
@@ -26,7 +28,8 @@ typedef struct {
   GAMEDATA * gamedata;
   FIELDMAP_WORK * fieldmap;
   HEAPID heapID;
-  const GFL_G3D_MAP_GLOBALOBJ_ST * st;
+  GFL_G3D_MAP_GLOBALOBJ_ST * st;
+  FIELD_BMODEL * entry;
 }FIELD_DOOR_ANIME_WORK;
 
 
@@ -41,27 +44,54 @@ GMEVENT_RESULT FieldDoorInAnime(GMEVENT * event, int *seq, void * work)
   FLDHIT_RECT rect;
   u32 num;
   FLDMAPPER * fldmapper = FIELDMAP_GetFieldG3Dmapper(fdaw->fieldmap);
+  FIELD_BMODEL_MAN * bmodel_man = FLDMAPPER_GetBuildModelManager(fldmapper);
+  u32 idx = FIELD_BMODEL_MAN_GetEntryIndex(bmodel_man, NARC_buildmodel_outdoor_p_door_nsbmd);
   int i;
 
   switch (*seq) {
   case 0:
+    fdaw->entry = NULL;
     getPlayerFrontPos(fdaw->fieldmap, &pos);
     makeRect(&rect, &pos);
-    fdaw->st = FLDMAPPER_CreateObjStatusList( fldmapper, &rect, fdaw->heapID, &num);
+    (const GFL_G3D_MAP_GLOBALOBJ_ST *)fdaw->st =
+      FLDMAPPER_CreateObjStatusList( fldmapper, &rect, fdaw->heapID, &num);
     if (fdaw->st == NULL) return GMEVENT_RES_FINISH;
     for (i = 0; i < num; i++)
     {
-      TAMADA_Printf("id:%2d rotate:%04x\n", fdaw->st[i].id, fdaw->st[i].rotate);
-      TAMADA_Printf("x,y,z (%d,%d,%d)\n",
-          FX_Whole(fdaw->st[i].trans.x),
-          FX_Whole(fdaw->st[i].trans.y),
-          FX_Whole(fdaw->st[i].trans.z) );
+      FIELD_BMODEL * bmodel;
+      if (fdaw->st[i].id == idx)
+      {
+        fdaw->st[i].trans.z += 16 * FX32_ONE;
+        bmodel = FIELD_BMODEL_Create(bmodel_man, fldmapper, &fdaw->st[i]);
+        FIELD_BMODEL_MAN_EntryBuildModel(bmodel_man, bmodel);
+        FIELD_BMODEL_SetAnime(bmodel, 0);
+        fdaw->entry = bmodel;
+        TAMADA_Printf("id:%2d rotate:%04x\n", fdaw->st[i].id, fdaw->st[i].rotate);
+        TAMADA_Printf("x,y,z (%d,%d,%d)\n",
+            FX_Whole(fdaw->st[i].trans.x),
+            FX_Whole(fdaw->st[i].trans.y),
+            FX_Whole(fdaw->st[i].trans.z) );
+        break;
+      }
     }
     
 
     ++ *seq;
     break;
   case 1:
+    if (fdaw->entry == NULL)
+    {
+      ++ *seq;
+      break;
+    }
+    if (FIELD_BMODEL_GetAnimeStatus(fdaw->entry) == TRUE)
+    {
+      FIELD_BMODEL_MAN_releaseBuildModel(bmodel_man, fdaw->entry);
+      FIELD_BMODEL_Delete(fdaw->entry);
+      fdaw->entry = NULL;
+    }
+    break;
+  case 2:
     GFL_HEAP_FreeMemory((void*)fdaw->st);
     return GMEVENT_RES_FINISH;
 

@@ -83,6 +83,22 @@ extern void FIELD_BMODEL_MAN_EntryELStringID(const FIELD_BMODEL_MAN * man,
     ARCID msg_arc_id, u16 str_id);
 
 
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+typedef struct _FIELD_BMODEL FIELD_BMODEL;
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+extern FIELD_BMODEL * FIELD_BMODEL_Create(FIELD_BMODEL_MAN * man,
+    const FLDMAPPER * g3Dmapper, const GFL_G3D_MAP_GLOBALOBJ_ST * status);
+extern void FIELD_BMODEL_Delete(FIELD_BMODEL * bmodel);
+extern void FIELD_BMODEL_Draw( const FIELD_BMODEL * bmodel );
+extern void FIELD_BMODEL_SetAnime(FIELD_BMODEL * bmodel, u32 idx);
+extern void FIELD_BMODEL_RunAnime(FIELD_BMODEL * bmodel);
+extern BOOL FIELD_BMODEL_GetAnimeStatus(FIELD_BMODEL * bmodel);
+
+extern void FIELD_BMODEL_MAN_EntryBuildModel(FIELD_BMODEL_MAN * man, FIELD_BMODEL * bmodel);
+extern void FIELD_BMODEL_MAN_releaseBuildModel(FIELD_BMODEL_MAN * man, FIELD_BMODEL * bmodel);
+
 //============================================================================================
 //============================================================================================
 //------------------------------------------------------------------

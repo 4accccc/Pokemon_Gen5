@@ -1714,7 +1714,7 @@ static void fldmap_ClearMapCtrlWork( FIELDMAP_WORK *fieldWork )
 //--------------------------------------------------------------
 static const GFL_DISP_VRAM fldmapdata_dispVram =
 {
-	GX_VRAM_BG_128_C, //メイン2DエンジンのBGに割り当て 
+	GX_VRAM_BG_128_D, //メイン2DエンジンのBGに割り当て 
 	GX_VRAM_BGEXTPLTT_NONE, //メイン2DエンジンのBG拡張パレットに割り当て
 	GX_VRAM_SUB_BG_32_H, //サブ2DエンジンのBGに割り当て
 	GX_VRAM_SUB_BGEXTPLTT_NONE, //サブ2DエンジンのBG拡張パレットに割り当て
@@ -1722,7 +1722,7 @@ static const GFL_DISP_VRAM fldmapdata_dispVram =
 	GX_VRAM_OBJEXTPLTT_NONE, //メイン2DエンジンのOBJ拡張パレットにに割り当て
 	GX_VRAM_SUB_OBJ_16_I, //サブ2DエンジンのOBJに割り当て
 	GX_VRAM_SUB_OBJEXTPLTT_NONE, //サブ2DエンジンのOBJ拡張パレットにに割り当て
-	GX_VRAM_TEX_01_AB, //テクスチャイメージスロットに割り当て
+	GX_VRAM_TEX_012_ABC, //テクスチャイメージスロットに割り当て
 	GX_VRAM_TEXPLTT_0_G, //テクスチャパレットスロットに割り当て
 	GX_OBJVRAMMODE_CHAR_1D_64K, // メインOBJマッピングモード
 	GX_OBJVRAMMODE_CHAR_1D_32K, // サブOBJマッピングモード
