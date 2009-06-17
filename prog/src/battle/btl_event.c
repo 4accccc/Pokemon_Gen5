@@ -394,7 +394,9 @@ static void callHandlers( BTL_EVENT_FACTOR* factor, BtlEventType eventType, BTL_
 //======================================================================================================
 //  イベント変数スタック構造
 //======================================================================================================
-
+enum {
+  EVAR_PRINT_FLG = FALSE,
+};
 
 static void varStack_Init( void )
 {
@@ -407,10 +409,7 @@ static void varStack_Init( void )
     stack->label[i] = BTL_EVAR_NULL;
   }
 }
-/*
-0123456789
-Svvvv
-*/
+
 void BTL_EVENTVAR_Push( void )
 {
   VAR_STACK* stack = &VarStack;
@@ -425,6 +424,7 @@ void BTL_EVENTVAR_Push( void )
 
   if( stack->sp < (NELEMS(stack->label)-1) )
   {
+    BTL_PrintfEx( EVAR_PRINT_FLG, "[EVAR] PUSH sp:%d\n", stack->sp );
     stack->label[ stack->sp++ ] = BTL_EVAR_SYS_SEPARATE;
     #ifdef PM_DEBUG
     if( stack->sp >= (NELEMS(stack->label)/8*7) ){
@@ -446,11 +446,14 @@ void BTL_EVENTVAR_Pop( void )
   {
     u16 p = stack->sp;
     while( (p < NELEMS(stack->label)) && (stack->label[p] != BTL_EVAR_NULL) ){
+      BTL_PrintfEx( EVAR_PRINT_FLG, "[EVAR]  <prePOPv clear:%d\n", p);
       stack->label[p++] = BTL_EVAR_NULL;
     }
 
     stack->sp--;
     stack->label[ stack->sp ] = BTL_EVAR_NULL;
+    BTL_PrintfEx( EVAR_PRINT_FLG, "[EVAR]  <prePOPs clear:%d\n", stack->sp);
+
 
     if( stack->sp )
     {
@@ -463,6 +466,7 @@ void BTL_EVENTVAR_Pop( void )
         }
       }
     }
+    BTL_PrintfEx( EVAR_PRINT_FLG, "[EVAR] POP  sp:%d\n", stack->sp);
   }
   else
   {
@@ -615,6 +619,7 @@ static int evar_getNewPoint( const VAR_STACK* stack, BtlEvVarLabel label )
       BTL_Printf("Var Stack sp=%d 危険水域です！！\n", p);
     }
     #endif
+    BTL_PrintfEx( EVAR_PRINT_FLG, "[EVAR]  >regist pos:%d label=%d\n", p, label);
     return p;
   }
   GF_ASSERT(0); // stack overflow

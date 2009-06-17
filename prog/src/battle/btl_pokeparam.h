@@ -212,7 +212,7 @@ extern BOOL BTL_POKEPARAM_CheckSick( const BTL_POKEPARAM* pp, WazaSick sickType 
 extern BOOL BTL_POKEPARAM_IsPPFull( const BTL_POKEPARAM* pp, u8 wazaIdx );
 
 extern PokeSick BTL_POKEPARAM_GetPokeSick( const BTL_POKEPARAM* pp );
-extern int BTL_POKEPARAM_CalcSickDamage( const BTL_POKEPARAM* pp );
+extern int BTL_POKEPARAM_CalcSickDamage( const BTL_POKEPARAM* pp, WazaSick sickID );
 extern BOOL BTL_POKEPARAM_GetTurnFlag( const BTL_POKEPARAM* pp, BppTurnFlag flagID );
 extern BOOL BTL_POKEPARAM_GetActFlag( const BTL_POKEPARAM* pp, BppActFlag flagID );
 extern BOOL BTL_POKEPARAM_GetContFlag( const BTL_POKEPARAM* pp, BppContFlag flagID );

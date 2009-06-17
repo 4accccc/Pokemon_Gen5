@@ -380,6 +380,7 @@ static BOOL SubProc_UI_SelectAction( BTL_CLIENT* wk, int* seq )
     /* fallthru */
   case SEQ_CHECK_UNSEL_ACTION:
     if( is_action_unselectable(wk, wk->procPoke,  wk->procAction) ){
+      BTL_Printf("アクション選択(%d体目）スキップします\n", wk->procPokeIdx );
       (*seq) = SEQ_CHECK_DONE;
       break;
     }
@@ -1602,7 +1603,7 @@ static BOOL scProc_ACT_SickDamage( BTL_CLIENT* wk, int* seq, const int* args )
   case 0:
     {
       BtlPokePos pos = BTL_MAIN_PokeIDtoPokePosClient( wk->mainModule, args[0] );
-      PokeSick sick = args[1];
+      WazaSick sick = args[1];
       int damage = args[2];
       u16 msgID;
 
@@ -1610,10 +1611,11 @@ static BOOL scProc_ACT_SickDamage( BTL_CLIENT* wk, int* seq, const int* args )
       default:
         GF_ASSERT_MSG(0, "poke[%d], Illegal sick ID:%d\n", args[0], sick);
         /* fallthru */
-      case POKESICK_DOKU:   msgID = BTL_STRID_SET_DokuDamage; break;
+      case WAZASICK_DOKU:   msgID = BTL_STRID_SET_DokuDamage; break;
         break;
-      case POKESICK_YAKEDO: msgID = BTL_STRID_SET_YakedoDamage; break;
+      case WAZASICK_YAKEDO: msgID = BTL_STRID_SET_YakedoDamage; break;
         break;
+      case WAZASICK_AKUMU:  msgID = BTL_STRID_SET_AkumuDamage; break;
       }
 
       BTLV_StartMsgSet( wk->viewCore, msgID, args );  // この先ではargs[0]しか参照しないハズ…

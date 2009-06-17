@@ -448,9 +448,9 @@ int BTL_POKEPARAM_GetValue_Base( const BTL_POKEPARAM* pp, BppValueID vid )
 int BTL_POKEPARAM_GetValue_Critical( const BTL_POKEPARAM* pp, BppValueID vid )
 {
   switch( vid ){
-  case BPP_ATTACK:  return (pp->varyParam.attack < 0)? pp->baseParam.attack : pp->realParam.attack;
+  case BPP_ATTACK:    return (pp->varyParam.attack < 0)? pp->baseParam.attack : pp->realParam.attack;
   case BPP_SP_ATTACK: return (pp->varyParam.sp_attack < 0)? pp->baseParam.sp_attack : pp->realParam.sp_attack;
-  case BPP_DEFENCE: return (pp->varyParam.defence > 0)? pp->baseParam.defence : pp->realParam.defence;
+  case BPP_DEFENCE:   return (pp->varyParam.defence > 0)? pp->baseParam.defence : pp->realParam.defence;
   case BPP_SP_DEFENCE:return (pp->varyParam.sp_defence > 0)? pp->baseParam.sp_defence : pp->realParam.sp_defence;
 
   default:
@@ -564,28 +564,36 @@ BOOL BTL_POKEPARAM_CheckSick( const BTL_POKEPARAM* pp, WazaSick sickType )
  * @retval  int
  */
 //=============================================================================================
-int BTL_POKEPARAM_CalcSickDamage( const BTL_POKEPARAM* pp )
+int BTL_POKEPARAM_CalcSickDamage( const BTL_POKEPARAM* pp, WazaSick sick )
 {
-  switch( pp->pokeSick ){
-  case POKESICK_DOKU:
-    // カウンタが0なら通常の「どく」
-    if( pp->pokeSickCounter == 0 )
-    {
-      return BTL_CALC_QuotMaxHP( pp, 8 );;
-    }
-    // カウンタが1～なら「どくどく」
-    else
-    {
-      return (pp->baseParam.hpMax / 16) * pp->pokeSickCounter;
-    }
-    break;
+  if( BTL_POKEPARAM_CheckSick(pp, sick) )
+  {
+    switch( sick ){
+    case WAZASICK_DOKU:
+      // カウンタが0なら通常の「どく」
+      if( pp->pokeSickCounter == 0 ){
+        return BTL_CALC_QuotMaxHP( pp, 8 );;
+      }
+      // カウンタが1～なら「どくどく」
+      else{
+        return (pp->baseParam.hpMax / 16) * pp->pokeSickCounter;
+      }
+      break;
 
-  case POKESICK_YAKEDO:
+    case WAZASICK_YAKEDO:
       return BTL_CALC_QuotMaxHP( pp, 8 );
 
-  default:
-    return 0;
+    case WAZASICK_AKUMU:
+      if( BTL_POKEPARAM_CheckSick(pp, WAZASICK_NEMURI) ){
+        return BTL_CALC_QuotMaxHP( pp, 4 );
+      }
+      break;
+
+    default:
+      return 0;
+    }
   }
+  return 0;
 }
 //=============================================================================================
 /**
@@ -1087,6 +1095,7 @@ void BTL_POKEPARAM_SetWazaSick( BTL_POKEPARAM* pp, WazaSick sick, BPP_SICK_CONT 
     GF_ASSERT(pp->pokeSick == POKESICK_NULL);
     pp->pokeSick = sick;
     pp->pokeSickCounter = contParam.turn.count;
+    pp->sickCont[ sick ] = contParam;
   }
   else
   {
@@ -1199,9 +1208,9 @@ BOOL BTL_POKEPARAM_Nemuri_CheckWake( BTL_POKEPARAM* pp )
   {
     if( pp->sickCont[POKESICK_NEMURI].turn.count == 0 )
     {
-      // ねむりが覚めるのと同時にあくむも覚める
       pp->sickCont[ POKESICK_NEMURI ].type = WAZASICK_CONT_NONE;
       pp->sickCont[ WAZASICK_AKUMU ].type = WAZASICK_CONT_NONE;
+      pp->pokeSick = POKESICK_NULL;
       return TRUE;
     }
   }
@@ -1220,6 +1229,7 @@ BOOL BTL_POKEPARAM_WazaSick_TurnCheck( BTL_POKEPARAM* pp )
 {
   u32 i;
   BOOL ret = FALSE;
+
   for(i=0; i<NELEMS(pp->sickCont); ++i)
   {
     if( pp->sickCont[i].type == WAZASICK_CONT_TURN )
@@ -1235,14 +1245,19 @@ BOOL BTL_POKEPARAM_WazaSick_TurnCheck( BTL_POKEPARAM* pp )
         pp->sickCont[i].turn.count--;
       }else{
         pp->sickCont[i].turn.count = 0;
-        // 眠りのみ、目覚めチェックでオフにする
         if( i != WAZASICK_NEMURI ){
           pp->sickCont[i].type = WAZASICK_CONT_NONE;
+        }else{
+          // 眠り時は“あくむ”をオフにする。
+          // 眠り自体のオフは行動チェック時に行う
+          pp->sickCont[ WAZASICK_AKUMU ].type = WAZASICK_CONT_NONE;
+          BTL_Printf("ポケ[%d=%p]ねむりから覚めて悪夢も覚めた akumu=%d\n", pp->myID, pp, pp->sickCont[WAZASICK_AKUMU].type);
         }
         ret = TRUE;
       }
     }
   }
+
   if( pp->pokeSick == POKESICK_DOKU )
   {
     if( (pp->pokeSickCounter!=0) && (pp->pokeSickCounter < BTL_MOUDOKU_COUNT_MAX) )

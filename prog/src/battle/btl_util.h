@@ -1,10 +1,10 @@
 //=============================================================================================
 /**
- * @file	btl_util.h
- * @brief	ポケモンWB バトルシステム 共有ツール群
- * @author	taya
+ * @file  btl_util.h
+ * @brief ポケモンWB バトルシステム 共有ツール群
+ * @author  taya
  *
- * @date	2008.09.25	作成
+ * @date  2008.09.25  作成
  */
 //=============================================================================================
 #ifndef __BTL_UTIL_H__
@@ -20,55 +20,55 @@
 typedef BOOL (*BPFunc)(int*, void*);
 
 typedef struct {
-	BPFunc	initFunc;
-	BPFunc	loopFunc;
-	void*	work;
-	int		seq;
+  BPFunc  initFunc;
+  BPFunc  loopFunc;
+  void* work;
+  int   seq;
 }BTL_PROC;
 
 
 static inline void BTL_UTIL_ClearProc( BTL_PROC* proc )
 {
-	proc->initFunc	= NULL;
-	proc->loopFunc	= NULL;
-	proc->work		= NULL;
-	proc->seq		= 0;
+  proc->initFunc  = NULL;
+  proc->loopFunc  = NULL;
+  proc->work    = NULL;
+  proc->seq   = 0;
 }
 
 static inline BOOL BTL_UTIL_ProcIsCleared( const BTL_PROC* proc )
 {
-	return (proc->initFunc==NULL) && (proc->loopFunc==NULL);
+  return (proc->initFunc==NULL) && (proc->loopFunc==NULL);
 }
 
 static inline void BTL_UTIL_SetupProc( BTL_PROC* proc, void* work, BPFunc init, BPFunc loop )
 {
-	proc->initFunc = init;
-	proc->loopFunc = loop;
-	proc->work = work;
-	proc->seq = 0;
+  proc->initFunc = init;
+  proc->loopFunc = loop;
+  proc->work = work;
+  proc->seq = 0;
 }
 
 static inline BOOL BTL_UTIL_CallProc( BTL_PROC* proc )
 {
-	if( proc->initFunc )
-	{
-		if( proc->initFunc( &(proc->seq), proc->work ) )
-		{
-			proc->initFunc = NULL;
-			proc->seq = 0;
-		}
-		return FALSE;
-	}
-	else if( proc->loopFunc )
-	{
-		if( proc->loopFunc( &(proc->seq), proc->work ) )
-		{
-			proc->loopFunc = NULL;
-			return TRUE;
-		}
-		return FALSE;
-	}
-	return TRUE;
+  if( proc->initFunc )
+  {
+    if( proc->initFunc( &(proc->seq), proc->work ) )
+    {
+      proc->initFunc = NULL;
+      proc->seq = 0;
+    }
+    return FALSE;
+  }
+  else if( proc->loopFunc )
+  {
+    if( proc->loopFunc( &(proc->seq), proc->work ) )
+    {
+      proc->loopFunc = NULL;
+      return TRUE;
+    }
+    return FALSE;
+  }
+  return TRUE;
 }
 
 
@@ -79,42 +79,42 @@ typedef u16 PokeTypePair;
 
 static inline PokeTypePair PokeTypePair_Make( PokeType type1, PokeType type2 )
 {
-	return ( (((type1)&0xff)<<8) | (type2&0xff) );
+  return ( (((type1)&0xff)<<8) | (type2&0xff) );
 }
 static inline PokeTypePair PokeTypePair_MakePure( PokeType type )
 {
-	return PokeTypePair_Make( type, type );
+  return PokeTypePair_Make( type, type );
 }
 
 static inline PokeType PokeTypePair_GetType1( PokeTypePair pair )
 {
-	return (pair >> 8) & 0xff;
+  return (pair >> 8) & 0xff;
 }
 
 static inline PokeType PokeTypePair_GetType2( PokeTypePair pair )
 {
-	return pair & 0xff;
+  return pair & 0xff;
 }
 
 static inline void PokeTypePair_Split( PokeTypePair pair, PokeType* type1, PokeType* type2 )
 {
-	*type1 = PokeTypePair_GetType1( pair );
-	*type2 = PokeTypePair_GetType2( pair );
+  *type1 = PokeTypePair_GetType1( pair );
+  *type2 = PokeTypePair_GetType2( pair );
 }
 
 static inline BOOL PokeTypePair_IsMatch( PokeTypePair pair, PokeType type )
 {
-	if( PokeTypePair_GetType1(pair) == type ){
-		return TRUE;
-	}
-	if( PokeTypePair_GetType2(pair) == type ){
-		return TRUE;
-	}
-	return FALSE;
+  if( PokeTypePair_GetType1(pair) == type ){
+    return TRUE;
+  }
+  if( PokeTypePair_GetType2(pair) == type ){
+    return TRUE;
+  }
+  return FALSE;
 }
 static inline BOOL PokeTypePair_IsPure( PokeTypePair pair )
 {
-	return PokeTypePair_GetType1(pair) == PokeTypePair_GetType2(pair);
+  return PokeTypePair_GetType1(pair) == PokeTypePair_GetType2(pair);
 }
 
 
@@ -125,15 +125,15 @@ static inline BOOL PokeTypePair_IsPure( PokeTypePair pair )
 //===================================================================
 
 typedef enum {
-	BTL_PRINTTYPE_UNKNOWN,
-	BTL_PRINTTYPE_SERVER,
-	BTL_PRINTTYPE_CLIENT,
-	BTL_PRINTTYPE_STANDALONE,
+  BTL_PRINTTYPE_UNKNOWN,
+  BTL_PRINTTYPE_SERVER,
+  BTL_PRINTTYPE_CLIENT,
+  BTL_PRINTTYPE_STANDALONE,
 }BtlPrintType;
 
 #ifdef DEBUG_ONLY_FOR_taya
 #ifdef PM_DEBUG
-	#define BTL_PRINT_SYSTEM_ENABLE
+  #define BTL_PRINT_SYSTEM_ENABLE
 #endif
 #endif
 
@@ -144,15 +144,16 @@ extern void BTL_UTIL_SetPrintType( BtlPrintType type );
 extern void BTL_UTIL_Printf( const char* filename, int line, const char* fmt, ... );
 extern void BTL_UTIL_DumpPrintf( const char* caption, const void* data, u32 size );
 
-#define BTL_Printf( ... )	BTL_UTIL_Printf( __FILE__, __LINE__, __VA_ARGS__ )
-#define BTL_DUMP_Printf( cap, dat, siz )	BTL_UTIL_DumpPrintf( cap, dat, siz );
+#define BTL_Printf( ... ) BTL_UTIL_Printf( __FILE__, __LINE__, __VA_ARGS__ )
+#define BTL_PrintfEx( flg, ... )  if( flg ){ BTL_UTIL_Printf( __FILE__, __LINE__, __VA_ARGS__ ); }
+#define BTL_DUMP_Printf( cap, dat, siz )  BTL_UTIL_DumpPrintf( cap, dat, siz );
 
-#else	// #ifdef BTL_PRINT_SYSTEM_ENABLE
+#else // #ifdef BTL_PRINT_SYSTEM_ENABLE
 
-#define BTL_UTIL_SetPrintType(t)	/* */
-#define BTL_Printf( ... )					/* */
-#define BTL_DUMP_Printf( cap, dat, siz )	/* */
+#define BTL_UTIL_SetPrintType(t)  /* */
+#define BTL_Printf( ... )         /* */
+#define BTL_DUMP_Printf( cap, dat, siz )  /* */
 
-#endif	// #ifdef BTL_PRINT_SYSTEM_ENABLE
+#endif  // #ifdef BTL_PRINT_SYSTEM_ENABLE
 
 #endif

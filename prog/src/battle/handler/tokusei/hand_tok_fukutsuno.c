@@ -38,12 +38,17 @@ static void handler_WazaExeFix( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flo
   if( (BTL_EVENTVAR_GetValue(BTL_EVAR_FAIL_CAUSE) == SV_WAZAFAIL_SHRINK)
   &&  (BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID)
   ){
-    BTL_EVWK_WAZAEXE_FAIL* evwk = (BTL_EVWK_WAZAEXE_FAIL*) BTL_EVENTVAR_GetValue( BTL_EVAR_WORK_ADRS );
+    BTL_HANDEX_PARAM_RANK_EFFECT* param = BTL_SVFLOW_HANDLERWORK_Push( flowWk, BTL_HANDEX_RANK_EFFECT, pokeID );
+    BTL_HANDEX_PARAM_HEADER* header;
 
-    evwk->flag_rankEffect = TRUE;
-    evwk->rankType = BPP_AGILITY;
-    evwk->rankVolume = 1;
-    evwk->tokWinFlag = TRUE;
+    header = (BTL_HANDEX_PARAM_HEADER*)param;
+    header->tokwin_flag = TRUE;
+
+    param->rankType = BPP_AGILITY;
+    param->rankVolume = 1;
+    param->fAlmost = FALSE;
+    param->poke_cnt = 1;
+    param->pokeID[0] = pokeID;
   }
 }
 

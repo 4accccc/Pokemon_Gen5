@@ -16,6 +16,10 @@
 #include "btl_server.h"
 
 
+
+
+
+
 //--------------------------------------------------------------
 /**
 * イベントタイプ
@@ -33,6 +37,7 @@ typedef enum {
   BTL_EVENT_WAZA_EXECUTE_CHECK,     ///< ワザ実行チェック
   BTL_EVENT_WAZA_EXECUTE_FAIL,      ///< ワザ出し失敗
   BTL_EVENT_WAZA_EXECUTE_FIX,       ///< ワザ出し成功確定
+  BTL_EVENT_WAZA_EXECUTE_NO_EFFECT, ///< ワザ出し成功したが効果なし
   BTL_EVENT_WAZA_PARAM,             ///< ワザパラメータチェック
   BTL_EVENT_DECIDE_TARGET,          ///< ワザ対象決定
   BTL_EVENT_NOEFFECT_TYPE_CHECK,    ///< ワザ無効化（タイプによる）チェックハンドラ
@@ -64,12 +69,10 @@ typedef enum {
   BTL_EVENT_WAZA_DMG_AFTER_ATONCE,  ///< 一斉ダメージ処理後
   BTL_EVENT_DECREMENT_PP_VOLUME,    ///< 使用ワザの減少PP値を取得
   BTL_EVENT_DECREMENT_PP_DONE,      ///< 使用ワザのPP値を減少後
-
   BTL_EVENT_CALC_KICKBACK,          ///< 反動計算ハンドラ
   BTL_EVENT_ADD_RANK_TARGET,        ///< ワザを受けた側への追加効果
   BTL_EVENT_ADD_RANK_USER,          ///< ワザを使った側への追加効果
   BTL_EVENT_CHECK_RANKEFF,          ///< ランク増減効果の最終成否チェック
-
   BTL_EVENT_MEMBER_OUT,             ///< 個別ポケ退場直前
   BTL_EVENT_MEMBER_IN,              ///< 個別ポケ入場直後
   BTL_EVENT_MEMBER_COMP,            ///< 全参加ポケ登場後
@@ -89,7 +92,6 @@ typedef enum {
   BTL_EVENT_NOT_WAZA_DAMAGE,        ///< ワザ以外のダメージチェック
   BTL_EVENT_USE_ITEM_ENABLE,        ///< アイテム使用可否チェック
   BTL_EVENT_USE_ITEM,               ///< アイテム使用
-
   BTL_EVENT_TURNCHECK_BEGIN,        ///< ターンチェック（先頭）
   BTL_EVENT_TURNCHECK_END,          ///< ターンチェック（終端）
   BTL_EVENT_WEATHER_CHANGE,         ///< 天候の変化（直前）
@@ -126,6 +128,15 @@ enum {
 
   BTL_EVARG_MAX = 16,
 };
+
+
+
+
+
+
+
+
+
 
 
 
