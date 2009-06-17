@@ -134,12 +134,13 @@ SRCS  +=    $(SOUNDSRC) \
         net_app/union/union_gra_tool.c \
         net_app/union/union_beacon_tool.c \
         app/wifi_note/wifi_note.c \
+        app/pokelist/pokelist.c \
         test/camera_adjust_view.c \
         system/selbox.c \
         gamesystem/game_comm.c \
         field/field_comm/game_beacon_search.c \
         debug/debugwin_sys.c \
-				test/tetsu/debug_common.c \
+		test/tetsu/debug_common.c \
         system/fld_wipe_3dobj.c \
         debug/debug_system_group.c \
 
@@ -408,7 +409,9 @@ SRCS_OVERLAY_TESTMODE = test/testmode.c
 #===> SRCS_OVERLAY_DEV_IRC
 #===> SRCS_OVERLAY_DEV_WIRELESS
 #===> SRCS_OVERLAY_DEV_WIFI
-SRCS_OVERLAY_POKELIST = test/matsuda/easy_pokelist.c
+SRCS_OVERLAY_POKELIST = test/matsuda/easy_pokelist.c\
+		app/pokelist/plist_sys.c \
+		app/pokelist/plist_plate.c
 
 
 # ŒðŠ·‰æ–Ê

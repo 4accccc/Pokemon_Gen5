@@ -165,3 +165,4 @@
 	ARCID_TALKWIN_TEST "talkwin_test.narc" #会話ウインドウ（テスト）
 	ARCID_SHADOW_TEST "shadow_test.narc" #影描画（テスト）
   ARCID_FLDEFF "fieldmap/fldeff.narc" #フィールドエフェクト
+	ARCID_POKELIST "pokelist_gra.narc" #ポケモンリスト

@@ -64,7 +64,8 @@ SUBDIRS	=	wmi \
 			field_menu \
 			irc_rhythm \
 			irc_result \
-			worldtimer
+			worldtimer \
+			pokelist
 
 
 include $(RESOURCE_MACRO)
