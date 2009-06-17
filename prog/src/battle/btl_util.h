@@ -152,7 +152,9 @@ extern void BTL_UTIL_DumpPrintf( const char* caption, const void* data, u32 size
 
 #define BTL_UTIL_SetPrintType(t)  /* */
 #define BTL_Printf( ... )         /* */
+#define BTL_PrintfEx( flg, ... )  /* */
 #define BTL_DUMP_Printf( cap, dat, siz )  /* */
+
 
 #endif  // #ifdef BTL_PRINT_SYSTEM_ENABLE
 
