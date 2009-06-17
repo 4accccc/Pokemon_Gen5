@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="taya" host="W00146" date="2009-06-10T19:49:58"/>
+	<create user="taya" host="W00146" date="2009-06-17T21:59:40"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -582,6 +582,16 @@
 	<row id="BTL_STRID_STD_Magnitude7">
 		<language name="JPN" width="216">マグニチュード１０！！！</language>
 		<language name="JPN_KANJI" width="216">マグニチュード１０！！！</language>
+	</row>
+
+	<row id="BTL_STRID_STD_IyasinoSuzu">
+		<language name="JPN" width="216">すずのねが　ひびきわたった！</language>
+		<language name="JPN_KANJI" width="216">鈴の音が　響きわたった！</language>
+	</row>
+
+	<row id="BTL_STRID_STD_AlomaTherapy">
+		<language name="JPN" width="216">ここちよい　かおりが　ひろがった！</language>
+		<language name="JPN_KANJI" width="216">心地よい　香りが　広がった！</language>
 	</row>
 
 	<flowchart-group-list>
