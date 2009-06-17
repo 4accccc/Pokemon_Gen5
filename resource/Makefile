@@ -67,7 +67,9 @@ SUBDIRS	=	wmi \
 			worldtimer \
 			worldtimer \
 			pokelist \
-			wifi_earth
+			wifi_earth \
+			ballslow \
+			bucket
 
 
 include $(RESOURCE_MACRO)
