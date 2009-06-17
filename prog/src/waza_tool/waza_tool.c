@@ -290,6 +290,7 @@ enum {
   WSEQ_HEAT2 = 253,
   WSEQ_MARUKU = 156,
   WSEQ_FUMITUKE = 150,
+  WSEQ_AKUMU = 107,
 
   WSEQ_REACT_HAKAI = 80,  ///< 次のターンアクションできない
 
@@ -595,6 +596,11 @@ static const SEQ_PARAM* getSeqParam( WazaID waza )
         WAZASICK_NULL, 0, 0, 0,
         { { WAZA_RANKEFF_NULL, 0 }, { WAZA_RANKEFF_NULL, 0 } },
         TRUE, BTL_WEATHER_NONE, 0, 0,
+    },{
+        WSEQ_AKUMU, WAZADATA_CATEGORY_SIMPLE_SICK,
+        WAZASICK_AKUMU, WAZASICK_CONT_PERMANENT, 0, 0,
+        { { WAZA_RANKEFF_NULL, 0 }, { WAZA_RANKEFF_NULL, 0 } },
+        FALSE, BTL_WEATHER_NONE, 0, 0,
     },
 /*
   typedef struct {
