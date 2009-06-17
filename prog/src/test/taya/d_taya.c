@@ -931,10 +931,10 @@ static BOOL SUBPROC_GoBattle( GFL_PROC* proc, int* seq, void* pwk, void* mywk )
       BATTLE_SETUP_PARAM* para = getGenericWork( wk, sizeof(BATTLE_SETUP_PARAM) );
 
       para->engine = BTL_ENGINE_ALONE;
-      para->rule = BTL_RULE_DOUBLE;
+      para->rule = BTL_RULE_SINGLE;
       if( GFL_UI_KEY_GetCont() & PAD_BUTTON_L )
       {
-        para->rule = BTL_RULE_SINGLE;
+        para->rule = BTL_RULE_DOUBLE;
       }
       para->competitor = BTL_COMPETITOR_WILD;
 
@@ -954,15 +954,15 @@ static BOOL SUBPROC_GoBattle( GFL_PROC* proc, int* seq, void* pwk, void* mywk )
       setup_party( HEAPID_CORE, para->partyEnemy1, MONSNO_METAGUROSU, MONSNO_AABOKKU, MONSNO_YADOKINGU, MONSNO_REKKUUZA, 0 );
       {
         POKEMON_PARAM* pp = PokeParty_GetMemberPointer( para->partyEnemy1, 0 );
-        PP_SetWazaPos( pp, WAZANO_DOKUNOKONA, 0 );
+        PP_SetWazaPos( pp, WAZANO_HANERU, 0 );
         PP_SetWazaPos( pp, WAZANO_NULL, 1 );
         PP_SetWazaPos( pp, WAZANO_NULL, 2 );
         PP_SetWazaPos( pp, WAZANO_NULL, 3 );
 
         pp = PokeParty_GetMemberPointer( para->partyPlayer, 0 );
-        PP_SetWazaPos( pp, WAZANO_KARAGENKI, 0 );
+        PP_SetWazaPos( pp, WAZANO_KINOKONOHOUSI, 0 );
         PP_SetWazaPos( pp, WAZANO_MAMORU, 1 );
-        PP_SetWazaPos( pp, WAZANO_TYOUHATU, 3 );
+        PP_SetWazaPos( pp, WAZANO_AKUMU, 3 );
         PP_Put( pp, ID_PARA_agi_rnd, 31 );
         PP_Put( pp, ID_PARA_agi_exp, 255 );
 //        PP_Put( pp, ID_PARA_item, ITEM_KIAINOTASUKI );
@@ -970,6 +970,16 @@ static BOOL SUBPROC_GoBattle( GFL_PROC* proc, int* seq, void* pwk, void* mywk )
     #else
       setup_party( HEAPID_CORE, para->partyPlayer, MONSNO_ARUSEUSU + 2, MONSNO_ARUSEUSU + 1, 0 );
       setup_party( HEAPID_CORE, para->partyEnemy1, MONSNO_ARUSEUSU + 1, MONSNO_ARUSEUSU + 2, 0 );
+      {
+        POKEMON_PARAM* pp = PokeParty_GetMemberPointer( para->partyEnemy1, 0 );
+        PP_SetWazaPos( pp, WAZANO_HANERU, 0 );
+        PP_SetWazaPos( pp, WAZANO_NULL, 1 );
+        PP_SetWazaPos( pp, WAZANO_NULL, 2 );
+        PP_SetWazaPos( pp, WAZANO_NULL, 3 );
+
+        pp = PokeParty_GetMemberPointer( para->partyPlayer, 0 );
+        PP_SetWazaPos( pp, WAZANO_ABARERU, 0 );
+      }
     #endif
 
       if( wk->testPokeEditFlag )
