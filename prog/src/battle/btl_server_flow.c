@@ -3241,14 +3241,20 @@ static void scproc_HandEx_recoverPP( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM
 static void scproc_HandEx_cureSick( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header, u16 itemID )
 {
   const BTL_HANDEX_PARAM_CURE_SICK* param = (BTL_HANDEX_PARAM_CURE_SICK*)param_header;
-  BTL_POKEPARAM* pp_target = BTL_POKECON_GetPokeParam( wk->pokeCon, param->pokeID );
   BTL_POKEPARAM* pp_user = BTL_POKECON_GetPokeParam( wk->pokeCon, param_header->userPokeID );
 
   if( param_header->tokwin_flag ){
     scPut_TokWin_In( wk, pp_user );
   }
 
-  scPut_CureSick( wk, pp_target, param->sickCode, itemID );
+  {
+    BTL_POKEPARAM* pp_target;
+    u32 i;
+    for(i=0; i<param->poke_cnt; ++i){
+      pp_target = BTL_POKECON_GetPokeParam( wk->pokeCon, param->pokeID[i] );
+      scPut_CureSick( wk, pp_target, param->sickCode, itemID );
+    }
+  }
 
   if( param_header->tokwin_flag ){
     scPut_TokWin_Out( wk, pp_user );

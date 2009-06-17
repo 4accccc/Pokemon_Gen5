@@ -142,6 +142,11 @@ static BTL_EVENT_FACTOR*  ADD_Encore( u16 pri, WazaID waza, u8 pokeID );
 static void handler_Encore( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static BTL_EVENT_FACTOR*  ADD_Chouhatu( u16 pri, WazaID waza, u8 pokeID );
 static void handler_Chouhatu( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static BTL_EVENT_FACTOR*  ADD_Alomatherapy( u16 pri, WazaID waza, u8 pokeID );
+static void handler_Alomatherapy( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static BTL_EVENT_FACTOR*  ADD_IyasiNoSuzu( u16 pri, WazaID waza, u8 pokeID );
+static void handler_IyasiNoSuzu( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static void common_CureFriendPokeSick( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work, u16 strID );
 static BTL_EVENT_FACTOR*  ADD_Nekodamasi( u16 pri, WazaID waza, u8 pokeID );
 static void handler_Nekodamasi( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static BTL_EVENT_FACTOR*  ADD_AsaNoHizasi( u16 pri, WazaID waza, u8 pokeID );
@@ -278,6 +283,8 @@ BTL_EVENT_FACTOR*  BTL_HANDLER_Waza_Add( const BTL_POKEPARAM* pp, WazaID waza )
     { WAZANO_AKUMU,           ADD_Akumu         },
     { WAZANO_KOROGARU,        ADD_Korogaru      },
     { WAZANO_AISUBOORU,       ADD_Korogaru      },  // アイスボール=ころがる と等価
+    { WAZANO_AROMASERAPII,    ADD_Alomatherapy  },
+    { WAZANO_IYASINOSUZU,     ADD_IyasiNoSuzu   },
   };
 
   int i;
@@ -447,7 +454,8 @@ static void handler_Refresh( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk
     ){
       BTL_HANDEX_PARAM_CURE_SICK* param = BTL_SVFLOW_HANDLERWORK_Push( flowWk, BTL_HANDEX_CURE_SICK, pokeID );
       param->sickCode = sick;
-      param->pokeID = pokeID;
+      param->pokeID[0] = pokeID;
+      param->poke_cnt = 1;
       // @@@ メッセージいるか？
     }
   }
@@ -1008,7 +1016,8 @@ static void handler_Korogaru_ExeFail( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WOR
   {
     // 失敗したらワザロック解除＆貼り付き解除
     BTL_HANDEX_PARAM_CURE_SICK* param = BTL_SVFLOW_HANDLERWORK_Push( flowWk, BTL_HANDEX_CURE_SICK, pokeID );
-    param->pokeID = pokeID;
+    param->pokeID[0] = pokeID;
+    param->poke_cnt = 1;
     param->sickCode = WAZASICK_WAZALOCK_HARD;
 
     removeHandlerForce( pokeID, BTL_EVENT_FACTOR_GetSubID(myHandle) );
@@ -1240,7 +1249,8 @@ static void handler_MezamasiBinta_AfterDamage( BTL_EVENT_FACTOR* myHandle, BTL_S
     const BTL_POKEPARAM* bpp = BTL_SVFLOW_RECEPT_GetPokeParam( flowWk, target_pokeID );
     if( BTL_POKEPARAM_CheckSick(bpp, WAZASICK_NEMURI) ){
       BTL_HANDEX_PARAM_CURE_SICK* param = BTL_SVFLOW_HANDLERWORK_Push( flowWk, BTL_HANDEX_CURE_SICK, pokeID );
-      param->pokeID = target_pokeID;
+      param->pokeID[0] = target_pokeID;
+      param->poke_cnt = 1;
       param->sickCode = WAZASICK_NEMURI;
     }
   }
@@ -1279,7 +1289,8 @@ static void handler_Kituke_AfterDamage( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_W
     const BTL_POKEPARAM* bpp = BTL_SVFLOW_RECEPT_GetPokeParam( flowWk, target_pokeID );
     if( BTL_POKEPARAM_CheckSick(bpp, WAZASICK_MAHI) ){
       BTL_HANDEX_PARAM_CURE_SICK* param = BTL_SVFLOW_HANDLERWORK_Push( flowWk, BTL_HANDEX_CURE_SICK, pokeID );
-      param->pokeID = target_pokeID;
+      param->pokeID[0] = target_pokeID;
+      param->poke_cnt = 1;
       param->sickCode = WAZASICK_MAHI;
     }
   }
@@ -2045,6 +2056,59 @@ static void handler_Chouhatu( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowW
     }
   }
 }
+//----------------------------------------------------------------------------------
+/**
+ * アロマセラピー
+ */
+//----------------------------------------------------------------------------------
+static BTL_EVENT_FACTOR*  ADD_Alomatherapy( u16 pri, WazaID waza, u8 pokeID )
+{
+  static const BtlEventHandlerTable HandlerTable[] = {
+    { BTL_EVENT_UNCATEGORY_WAZA,  handler_Alomatherapy   },  // ワザ威力決定
+    { BTL_EVENT_NULL, NULL },
+  };
+  return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_WAZA, waza, pri, pokeID, HandlerTable );
+}
+static void handler_Alomatherapy( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+{
+  common_CureFriendPokeSick( myHandle, flowWk, pokeID, work, BTL_STRID_STD_AlomaTherapy );
+}
+//----------------------------------------------------------------------------------
+/**
+ * いやしのすず
+ */
+//----------------------------------------------------------------------------------
+static BTL_EVENT_FACTOR*  ADD_IyasiNoSuzu( u16 pri, WazaID waza, u8 pokeID )
+{
+  static const BtlEventHandlerTable HandlerTable[] = {
+    { BTL_EVENT_UNCATEGORY_WAZA,  handler_IyasiNoSuzu   },  // ワザ威力決定
+    { BTL_EVENT_NULL, NULL },
+  };
+  return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_WAZA, waza, pri, pokeID, HandlerTable );
+}
+static void handler_IyasiNoSuzu( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+{
+  common_CureFriendPokeSick( myHandle, flowWk, pokeID, work, BTL_STRID_STD_IyasinoSuzu );
+}
+
+static void common_CureFriendPokeSick( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work, u16 strID )
+{
+  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID )
+  {
+    BTL_HANDEX_PARAM_MESSAGE   *msg_param;
+    BTL_HANDEX_PARAM_CURE_SICK *cure_param;
+    BtlPokePos myPos = BTL_SVFLOW_CheckExistFrontPokeID( flowWk, pokeID );
+    BtlExPos   expos = EXPOS_MAKE( BTL_EXPOS_MYSIDE_ALL, myPos );
+
+    msg_param = BTL_SVFLOW_HANDLERWORK_Push( flowWk, BTL_HANDEX_MESSAGE_STD, pokeID );
+    msg_param->strID = strID;
+
+    cure_param = BTL_SVFLOW_HANDLERWORK_Push( flowWk, BTL_HANDEX_CURE_SICK, pokeID );
+    cure_param->poke_cnt = BTL_SERVERFLOW_RECEPT_GetTargetPokeID( flowWk, expos, cure_param->pokeID );
+    cure_param->sickCode = WAZASICK_EX_POKEFULL;
+  }
+}
+
 //----------------------------------------------------------------------------------
 /**
  * ねこだまし

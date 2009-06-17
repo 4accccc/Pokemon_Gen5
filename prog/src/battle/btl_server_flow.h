@@ -237,7 +237,8 @@ typedef struct {
 typedef struct {
  BTL_HANDEX_PARAM_HEADER   header;   ///< 共有ヘッダ
  BtlWazaSickEx   sickCode;           ///< 対応する状態異常コード（拡張可）
- u8   pokeID;                        ///< 対象ポケモンID
+ u8   poke_cnt;                      ///< 対象ポケモン数
+ u8   pokeID[ BTL_POS_MAX ];         ///< 対象ポケモンID
 }BTL_HANDEX_PARAM_CURE_SICK;
 
 typedef struct {

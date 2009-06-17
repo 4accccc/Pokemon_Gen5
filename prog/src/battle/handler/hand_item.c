@@ -582,7 +582,8 @@ static void common_sickExe( BTL_SVFLOW_WORK* flowWk, u8 pokeID, WazaSick sick )
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID )
   {
     BTL_HANDEX_PARAM_CURE_SICK* param = BTL_SVFLOW_HANDLERWORK_Push( flowWk, BTL_HANDEX_CURE_SICK, pokeID );
-    param->pokeID = pokeID;
+    param->pokeID[0] = pokeID;
+    param->poke_cnt = 1;
     param->sickCode = sick;
   }
 }
@@ -609,7 +610,8 @@ static void handler_RamNomi_Exe( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* fl
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID )
   {
     BTL_HANDEX_PARAM_CURE_SICK* param = BTL_SVFLOW_HANDLERWORK_Push( flowWk, BTL_HANDEX_CURE_SICK, pokeID );
-    param->pokeID = pokeID;
+    param->pokeID[0] = pokeID;
+    param->poke_cnt = 1;
     param->sickCode = WAZASICK_EX_POKEFULL_PLUS;
   }
 }
@@ -1444,7 +1446,8 @@ static void handler_MentalHerb_Use( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK*
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID )
   {
     BTL_HANDEX_PARAM_CURE_SICK* param = BTL_SVFLOW_HANDLERWORK_Push( flowWk, BTL_HANDEX_CURE_SICK, pokeID );
-    param->pokeID = pokeID;
+    param->pokeID[0] = pokeID;
+    param->poke_cnt = 1;
     param->sickCode = WAZASICK_MEROMERO;
   }
 }

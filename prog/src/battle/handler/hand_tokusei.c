@@ -1889,7 +1889,8 @@ static void handler_UruoiBody( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flow
 
       param = BTL_SVFLOW_HANDLERWORK_Push( flowWk, BTL_HANDEX_CURE_SICK, pokeID );
       param->sickCode = WAZASICK_EX_POKEFULL;
-      param->pokeID = pokeID;
+      param->pokeID[0] = pokeID;
+      param->poke_cnt = 1;
 
       BTL_SVFLOW_HANDLERWORK_Push( flowWk, BTL_HANDEX_TOKWIN_OUT, pokeID );
 
@@ -1922,7 +1923,8 @@ static void handler_Dappi( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, 
 
       param->header.tokwin_flag = TRUE;
       param->sickCode = WAZASICK_EX_POKEFULL;
-      param->pokeID = pokeID;
+      param->pokeID[0] = pokeID;
+      param->poke_cnt = 1;
     }
   }
 }
