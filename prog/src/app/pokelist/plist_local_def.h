@@ -11,6 +11,7 @@
 #include "app/pokelist.h"
 #include "print/gf_font.h"
 #include "print/printsys.h"
+#include "debug/debugwin_sys.h"
 
 #define PLIST_LIST_MAX (6)
 
@@ -26,6 +27,9 @@
 //BGパレット
 #define PLIST_BG_PLT_FONT (0x0e)
 
+//文字色
+#define PLIST_FONT_PARAM_LETTER (0xF)
+#define PLIST_FONT_PARAM_SHADOW (0x1)
 
 //OBJリソースIdx
 typedef enum
@@ -85,6 +89,7 @@ enum PLIST_CURCOR_ANIME
 
 
 typedef struct _PLIST_PLATE_WORK PLIST_PLATE_WORK;
+typedef struct _PLIST_DEBUG_WORK PLIST_DEBUG_WORK;
 
 typedef struct
 {
@@ -110,6 +115,8 @@ typedef struct
   
 
   PLIST_DATA *plData;
-  
+#if USE_DEBUGWIN_SYSTEM
+  PLIST_DEBUG_WORK *debWork;
+#endif
 }PLIST_WORK;
 

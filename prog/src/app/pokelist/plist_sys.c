@@ -78,6 +78,10 @@ static void PLIST_TermMessage( PLIST_WORK *work );
 //リソース系
 static void PLIST_LoadResource( PLIST_WORK *work );
 static void PLIST_ReleaseResource( PLIST_WORK *work );
+
+//デバッグメニュー
+static void PLIST_InitDebug( PLIST_WORK *work );
+static void PLIST_TermDebug( PLIST_WORK *work );
 //--------------------------------------------------------------
 //	初期化
 //--------------------------------------------------------------
@@ -118,7 +122,9 @@ const BOOL PLIST_InitPokeList( PLIST_WORK *work )
   GX_SetMasterBrightness(0);  
   GXS_SetMasterBrightness(0);
 
-  
+#if USE_DEBUGWIN_SYSTEM
+  PLIST_InitDebug( work );
+#endif
   return TRUE;
 }
 
@@ -128,6 +134,10 @@ const BOOL PLIST_InitPokeList( PLIST_WORK *work )
 const BOOL PLIST_TermPokeList( PLIST_WORK *work )
 {
   u8 i;
+#if USE_DEBUGWIN_SYSTEM
+  PLIST_TermDebug( work );
+#endif
+
   GFL_TCB_DeleteTask( work->vBlankTcb );
   
   for( i=0;i<PLIST_LIST_MAX;i++ )
@@ -246,7 +256,7 @@ static void PLIST_InitGraphic( PLIST_WORK *work )
     //とりあえず2Dで初期化
     PLIST_InitBG0_2DMenu( work );
     
-    G2_SetBlendAlpha( GX_BLEND_PLANEMASK_BG2 , 
+    G2_SetBlendAlpha( GX_BLEND_PLANEMASK_BG2|GX_BLEND_PLANEMASK_OBJ , 
                       GX_BLEND_PLANEMASK_BG3|GX_BLEND_PLANEMASK_OBJ ,
                       12 , 16 );
   }
@@ -499,5 +509,141 @@ static void PLIST_ReleaseResource( PLIST_WORK *work )
   for( i=PCR_ANM_START ; i<=PCR_ANM_END ; i++ )
   {
     GFL_CLGRP_CELLANIM_Release( work->cellRes[i] );
+  }
+}
+
+
+#pragma mark [>debug
+
+struct _PLIST_DEBUG_WORK
+{
+  u8 alpha1;
+  u8 alpha2;
+  u8 blend1;
+};
+
+#define PLIST_DEBUG_GROUP_NUMBER (50)
+static void PLIST_DEB_Update_Alpha1( void* userWork , DEBUGWIN_ITEM* item );
+static void PLIST_DEB_Draw_Alpha1( void* userWork , DEBUGWIN_ITEM* item );
+static void PLIST_DEB_Update_Alpha2( void* userWork , DEBUGWIN_ITEM* item );
+static void PLIST_DEB_Draw_Alpha2( void* userWork , DEBUGWIN_ITEM* item );
+static void PLIST_DEB_Update_Blend1( void* userWork , DEBUGWIN_ITEM* item );
+static void PLIST_DEB_Draw_Blend1( void* userWork , DEBUGWIN_ITEM* item );
+
+
+static void PLIST_InitDebug( PLIST_WORK *work )
+{
+  work->debWork = GFL_HEAP_AllocMemory( work->heapId , sizeof(PLIST_DEBUG_WORK) );
+  work->debWork->alpha1 = 12;
+  work->debWork->alpha2 = 16;
+  work->debWork->blend1 = 0;
+  DEBUGWIN_InitProc( PLIST_BG_MENU , work->fontHandle );
+  DEBUGWIN_ChangeLetterColor( 31,31,31 );
+  
+  DEBUGWIN_AddGroupToTop( PLIST_DEBUG_GROUP_NUMBER , "PokeList" , work->heapId );
+  
+  DEBUGWIN_AddItemToGroupEx( PLIST_DEB_Update_Alpha1   ,PLIST_DEB_Draw_Alpha1   , (void*)work , PLIST_DEBUG_GROUP_NUMBER , work->heapId );
+  DEBUGWIN_AddItemToGroupEx( PLIST_DEB_Update_Alpha2   ,PLIST_DEB_Draw_Alpha2   , (void*)work , PLIST_DEBUG_GROUP_NUMBER , work->heapId );
+  DEBUGWIN_AddItemToGroupEx( PLIST_DEB_Update_Blend1   ,PLIST_DEB_Draw_Blend1   , (void*)work , PLIST_DEBUG_GROUP_NUMBER , work->heapId );
+  
+}
+
+static void PLIST_TermDebug( PLIST_WORK *work )
+{
+  DEBUGWIN_RemoveGroup( PLIST_DEBUG_GROUP_NUMBER );
+  DEBUGWIN_ExitProc();
+  GFL_HEAP_FreeMemory( work->debWork );
+}
+
+//アルファ第1面光度
+static void PLIST_DEB_Update_Alpha1( void* userWork , DEBUGWIN_ITEM* item )
+{
+  PLIST_WORK *work = (PLIST_WORK*)userWork;
+
+  if( GFL_UI_KEY_GetRepeat() & PAD_KEY_LEFT && 
+      work->debWork->alpha1 > 0 )
+  {
+    work->debWork->alpha1--;
+    G2_ChangeBlendAlpha( work->debWork->alpha1 , work->debWork->alpha2 );
+    DEBUGWIN_RefreshScreen();
+  }
+  if( GFL_UI_KEY_GetRepeat() & PAD_KEY_RIGHT && 
+      work->debWork->alpha1 < 16 )
+  {
+    work->debWork->alpha1++;
+    G2_ChangeBlendAlpha( work->debWork->alpha1 , work->debWork->alpha2 );
+    DEBUGWIN_RefreshScreen();
+  }
+}
+
+static void PLIST_DEB_Draw_Alpha1( void* userWork , DEBUGWIN_ITEM* item )
+{
+  PLIST_WORK *work = (PLIST_WORK*)userWork;
+  DEBUGWIN_ITEM_SetNameV( item , "アルファ１[%2d]",work->debWork->alpha1 );
+}
+
+//アルファ第2面光度
+static void PLIST_DEB_Update_Alpha2( void* userWork , DEBUGWIN_ITEM* item )
+{
+  PLIST_WORK *work = (PLIST_WORK*)userWork;
+
+  if( GFL_UI_KEY_GetRepeat() & PAD_KEY_LEFT && 
+      work->debWork->alpha2 > 0 )
+  {
+    work->debWork->alpha2--;
+    G2_ChangeBlendAlpha( work->debWork->alpha1 , work->debWork->alpha2 );
+    DEBUGWIN_RefreshScreen();
+  }
+  if( GFL_UI_KEY_GetRepeat() & PAD_KEY_RIGHT && 
+      work->debWork->alpha2 < 16 )
+  {
+    work->debWork->alpha2++;
+    G2_ChangeBlendAlpha( work->debWork->alpha1 , work->debWork->alpha2 );
+    DEBUGWIN_RefreshScreen();
+  }
+}
+
+static void PLIST_DEB_Draw_Alpha2( void* userWork , DEBUGWIN_ITEM* item )
+{
+  PLIST_WORK *work = (PLIST_WORK*)userWork;
+  DEBUGWIN_ITEM_SetNameV( item , "アルファ２[%2d]",work->debWork->alpha2 );
+}
+
+//ブレンド1面
+static void PLIST_DEB_Update_Blend1( void* userWork , DEBUGWIN_ITEM* item )
+{
+  PLIST_WORK *work = (PLIST_WORK*)userWork;
+
+  if( GFL_UI_KEY_GetRepeat() & PAD_KEY_LEFT || 
+      GFL_UI_KEY_GetRepeat() & PAD_KEY_RIGHT )
+  {
+    if( work->debWork->blend1 == 0 )
+    {
+      work->debWork->blend1 = 1;
+      G2_SetBlendAlpha( GX_BLEND_PLANEMASK_BG2 , 
+                        GX_BLEND_PLANEMASK_BG3|GX_BLEND_PLANEMASK_OBJ ,
+                        work->debWork->alpha1 , work->debWork->alpha2 );
+    }
+    else
+    {
+      work->debWork->blend1 = 0;
+      G2_SetBlendAlpha( GX_BLEND_PLANEMASK_BG2|GX_BLEND_PLANEMASK_OBJ , 
+                        GX_BLEND_PLANEMASK_BG3|GX_BLEND_PLANEMASK_OBJ ,
+                        work->debWork->alpha1 , work->debWork->alpha2 );
+    }
+    DEBUGWIN_RefreshScreen();
+  }
+}
+
+static void PLIST_DEB_Draw_Blend1( void* userWork , DEBUGWIN_ITEM* item )
+{
+  PLIST_WORK *work = (PLIST_WORK*)userWork;
+  if( work->debWork->blend1 == 0 )
+  {
+    DEBUGWIN_ITEM_SetNameV( item , "ブレンド[BG2+OBJ]");
+  }
+  else
+  {
+    DEBUGWIN_ITEM_SetNameV( item , "ブレンド[BG2]");
   }
 }

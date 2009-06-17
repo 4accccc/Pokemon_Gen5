@@ -281,6 +281,7 @@ static void PLIST_PLATE_CreateCell( PLIST_WORK *work , PLIST_PLATE_WORK *plateWo
 //--------------------------------------------------------------
 static void PLIST_PLATE_DrawStr( PLIST_WORK *work , PLIST_PLATE_WORK *plateWork )
 {
+  const PRINTSYS_LSB fontCol = PRINTSYS_LSB_Make( PLIST_FONT_PARAM_LETTER , PLIST_FONT_PARAM_SHADOW , 0 );
   //–¼‘O
   {
     WORDSET *wordSet = WORDSET_Create( work->heapId );
@@ -290,8 +291,8 @@ static void PLIST_PLATE_DrawStr( PLIST_WORK *work , PLIST_PLATE_WORK *plateWork 
     WORDSET_RegisterPokeNickName( wordSet , 0 , plateWork->pp );
     srcStr = GFL_MSG_CreateString( work->msgHandle , mes_pokelist_01_09 ); 
     WORDSET_ExpandStr( wordSet , dstStr , srcStr );
-    PRINTSYS_PrintQue( work->printQue , GFL_BMPWIN_GetBmp( plateWork->bmpWin ) , 
-            PLIST_PLATE_STR_NAME_X , PLIST_PLATE_STR_NAME_Y , dstStr , work->fontHandle );
+    PRINTSYS_PrintQueColor( work->printQue , GFL_BMPWIN_GetBmp( plateWork->bmpWin ) , 
+            PLIST_PLATE_STR_NAME_X , PLIST_PLATE_STR_NAME_Y , dstStr , work->fontHandle , fontCol);
     GFL_STR_DeleteBuffer( srcStr );
     GFL_STR_DeleteBuffer( dstStr );
     WORDSET_Delete( wordSet );
@@ -307,8 +308,8 @@ static void PLIST_PLATE_DrawStr( PLIST_WORK *work , PLIST_PLATE_WORK *plateWork 
     WORDSET_RegisterNumber( wordSet , 0 , lv , 3 , STR_NUM_DISP_LEFT , STR_NUM_CODE_DEFAULT );
     srcStr = GFL_MSG_CreateString( work->msgHandle , mes_pokelist_01_03 ); 
     WORDSET_ExpandStr( wordSet , dstStr , srcStr );
-    PRINTSYS_PrintQue( work->printQue , GFL_BMPWIN_GetBmp( plateWork->bmpWin ) , 
-            PLIST_PLATE_STR_LEVEL_X , PLIST_PLATE_STR_LEVEL_Y , dstStr , work->sysFontHandle );
+    PRINTSYS_PrintQueColor( work->printQue , GFL_BMPWIN_GetBmp( plateWork->bmpWin ) , 
+            PLIST_PLATE_STR_LEVEL_X , PLIST_PLATE_STR_LEVEL_Y , dstStr , work->sysFontHandle , fontCol );
 
     GFL_STR_DeleteBuffer( srcStr );
     GFL_STR_DeleteBuffer( dstStr );
@@ -325,8 +326,8 @@ static void PLIST_PLATE_DrawStr( PLIST_WORK *work , PLIST_PLATE_WORK *plateWork 
     WORDSET_RegisterNumber( wordSet , 0 , hpMax , 3 , STR_NUM_DISP_LEFT , STR_NUM_CODE_DEFAULT );
     srcStr = GFL_MSG_CreateString( work->msgHandle , mes_pokelist_01_15 ); 
     WORDSET_ExpandStr( wordSet , dstStr , srcStr );
-    PRINTSYS_PrintQue( work->printQue , GFL_BMPWIN_GetBmp( plateWork->bmpWin ) , 
-            PLIST_PLATE_STR_HPMAX_X , PLIST_PLATE_STR_HPMAX_Y , dstStr , work->sysFontHandle );
+    PRINTSYS_PrintQueColor( work->printQue , GFL_BMPWIN_GetBmp( plateWork->bmpWin ) , 
+            PLIST_PLATE_STR_HPMAX_X , PLIST_PLATE_STR_HPMAX_Y , dstStr , work->sysFontHandle , fontCol );
 
     GFL_STR_DeleteBuffer( srcStr );
     GFL_STR_DeleteBuffer( dstStr );
@@ -342,8 +343,8 @@ static void PLIST_PLATE_DrawStr( PLIST_WORK *work , PLIST_PLATE_WORK *plateWork 
     WORDSET_RegisterNumber( wordSet , 0 , hp , 3 , STR_NUM_DISP_SPACE , STR_NUM_CODE_DEFAULT );
     srcStr = GFL_MSG_CreateString( work->msgHandle , mes_pokelist_01_21 ); 
     WORDSET_ExpandStr( wordSet , dstStr , srcStr );
-    PRINTSYS_PrintQue( work->printQue , GFL_BMPWIN_GetBmp( plateWork->bmpWin ) , 
-            PLIST_PLATE_STR_HP_X , PLIST_PLATE_STR_HP_Y , dstStr , work->sysFontHandle );
+    PRINTSYS_PrintQueColor( work->printQue , GFL_BMPWIN_GetBmp( plateWork->bmpWin ) , 
+            PLIST_PLATE_STR_HP_X , PLIST_PLATE_STR_HP_Y , dstStr , work->sysFontHandle , fontCol );
 
     GFL_STR_DeleteBuffer( srcStr );
     GFL_STR_DeleteBuffer( dstStr );
@@ -355,8 +356,8 @@ static void PLIST_PLATE_DrawStr( PLIST_WORK *work , PLIST_PLATE_WORK *plateWork 
     STRBUF *srcStr;
 
     srcStr = GFL_MSG_CreateString( work->msgHandle , mes_pokelist_01_27 ); 
-    PRINTSYS_PrintQue( work->printQue , GFL_BMPWIN_GetBmp( plateWork->bmpWin ) , 
-            PLIST_PLATE_STR_SLASH_X , PLIST_PLATE_STR_SLASH_Y , srcStr , work->sysFontHandle );
+    PRINTSYS_PrintQueColor( work->printQue , GFL_BMPWIN_GetBmp( plateWork->bmpWin ) , 
+            PLIST_PLATE_STR_SLASH_X , PLIST_PLATE_STR_SLASH_Y , srcStr , work->sysFontHandle , fontCol );
 
     GFL_STR_DeleteBuffer( srcStr );
     WORDSET_Delete( wordSet );
