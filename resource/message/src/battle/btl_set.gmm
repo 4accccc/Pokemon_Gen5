@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="taya" host="W00146" date="2009-06-15T22:11:32"/>
+	<create user="taya" host="W00146" date="2009-06-17T17:10:21"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -1792,6 +1792,48 @@
 めを　さました！</language>
 		<language name="JPN_KANJI" width="216">相手の　[1:02:ポケモンニックネーム:0]　は
 目を　さました！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_AkumuGet">
+		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]　は
+あくむを　みはじめた！</language>
+		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]　は
+悪夢を　見始めた！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_AkumuGet_Y">
+		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]　は
+あくむを　みはじめた！</language>
+		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]　は
+悪夢を　見始めた！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_AkumuGet_E">
+		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]　は
+あくむを　みはじめた！</language>
+		<language name="JPN_KANJI" width="216">相手の　[1:02:ポケモンニックネーム:0]は
+悪夢を　見始めた！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_AkumuDamage">
+		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]　は
+あくむに　うなされている！</language>
+		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]　は
+悪夢に　うなされている！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_AkumuDamage_Y">
+		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]　は
+あくむに　うなされている！</language>
+		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]　は
+悪夢に　うなされている！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_AkumuDamage_E">
+		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]　は
+あくむに　うなされている！</language>
+		<language name="JPN_KANJI" width="216">相手の　[1:02:ポケモンニックネーム:0]は
+悪夢に　うなされている！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_PokeSick_Cure">
