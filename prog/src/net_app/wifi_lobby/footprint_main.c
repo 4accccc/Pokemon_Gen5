@@ -718,7 +718,7 @@ GFL_PROC_RESULT FootPrintProc_Init( GFL_PROC * proc, int * seq, void * pwk, void
 	}
 
 	// 足跡ボードに入った音再生
-//	Snd_SePlay( WFLBY_SND_FOOTIN );
+//	PMSND_PlaySE( WFLBY_SND_FOOTIN );
 
 	// BG面表示ON
 	GFL_DISP_GX_SetVisibleControl(  GX_PLANEMASK_BG0, VISIBLE_ON );
@@ -774,6 +774,9 @@ GFL_PROC_RESULT FootPrintProc_Main( GFL_PROC * proc, int * seq, void * pwk, void
 		SEQ_OUT_INIT,
 		SEQ_OUT_WAIT,
 	};
+  u32 tp_x, tp_y, tp_trg;
+
+  tp_trg = GFL_UI_TP_GetPointTrg(&tp_x, &tp_y);
 	
 	//スタンプシステム更新
 	StampSys_Update(&fps->ssw, fps->camera, fps->game_status, fps->parent_work->board_type);
@@ -797,10 +800,20 @@ GFL_PROC_RESULT FootPrintProc_Main( GFL_PROC * proc, int * seq, void * pwk, void
 		}
 		break;
 	case SEQ_MAIN:
+	#if WB_FIX
 		if(sys.tp_trg && sys.tp_y < 160){
+  #else
+    if(tp_trg && tp_y < 160){
+  #endif
 			if(Footprint_InkGauge_Consume(fps, INK_GAUGE_CONSUME_STAMP) == TRUE){
+			#if WB_FIX
 				fps->my_stamp_param[fps->select_no].x = sys.tp_x;
 				fps->my_stamp_param[fps->select_no].y = sys.tp_y;
+		  #else
+				fps->my_stamp_param[fps->select_no].x = tp_x;
+				fps->my_stamp_param[fps->select_no].y = tp_y;
+		  #endif
+		  
 			#ifdef PM_DEBUG
 				if(DebugFoot.occ_seikaku){
 					DebugFoot.backup_personal_rnd 
@@ -839,7 +852,7 @@ GFL_PROC_RESULT FootPrintProc_Main( GFL_PROC * proc, int * seq, void * pwk, void
 				Footprint_TouchEffAdd(fps, hit);
 			}
 			else if((*seq) == SEQ_MAIN && hit == FOOT_TOUCH_RET_EXIT){	//「やめる」を押した
-				Snd_SePlay(FOOTPRINT_SE_TOUCH_EXIT);
+				PMSND_PlaySE(FOOTPRINT_SE_TOUCH_EXIT);
 				SoftFadePfd(fps->pfd, FADE_MAIN_BG, EXIT_BUTTON_COLOR_POS, 1, 
 					EXIT_BUTTON_COLOR_EVY, EXIT_BUTTON_COLOR_CODE);
 				SoftFadePfd(fps->pfd, FADE_MAIN_OBJ, fps->yameru_pal_pos * 16, 16, 
@@ -983,7 +996,7 @@ GFL_PROC_RESULT FootPrintProc_Main( GFL_PROC * proc, int * seq, void * pwk, void
 				(*seq) = SEQ_OUT_INIT;
 			}
 			else{	//タイムアップによる終了
-				Snd_SePlay(FOOTPRINT_SE_TIMEUP);
+				PMSND_PlaySE(FOOTPRINT_SE_TIMEUP);
 				WFLBY_SYSTEM_APLFLAG_SetForceEnd( fps->parent_work->wflby_sys );	// 強制終了したことをロビーシステムに通知2.18 tomoya takahashi
 				(*seq) = SEQ_TIMEUP_INIT;
 			}
@@ -2149,7 +2162,7 @@ BOOL Footprint_StampAdd(FOOTPRINT_SYS_PTR fps, const STAMP_PARAM *param, s32 use
 			}
 		}
 		
-		Snd_SePlay(FOOTPRINT_SE_STAMP);
+		PMSND_PlaySE(FOOTPRINT_SE_STAMP);
 	}
 	
 	return ret;
@@ -2236,11 +2249,11 @@ static FOOTPRINT_NAME_UPDATE_STATUS FootPrintTool_NameAllUpdate(FOOTPRINT_SYS *f
 	fps->ssw.player_max = player_max;
 	
 	if(entry_num > 0){
-		Snd_SePlay(FOOTPRINT_SE_ENTRY);
+		PMSND_PlaySE(FOOTPRINT_SE_ENTRY);
 		return FOOTPRINT_NAME_UPDATE_STATUS_ENTRY;
 	}
 	else if(out_num > 0){
-		Snd_SePlay(FOOTPRINT_SE_LEAVE_ROOM);
+		PMSND_PlaySE(FOOTPRINT_SE_LEAVE_ROOM);
 		return FOOTPRINT_NAME_UPDATE_STATUS_LEAVE_ROOM;
 	}
 	return FOOTPRINT_NAME_UPDATE_STATUS_NULL;
@@ -2300,7 +2313,7 @@ static void Footprint_TouchEffAdd(FOOTPRINT_SYS_PTR fps, int hit_pos)
 	
 	Footprint_SelectInkPaletteFade(fps, hit_pos);
 
-	Snd_SePlay(FOOTPRINT_SE_TOUCH_INK);
+	PMSND_PlaySE(FOOTPRINT_SE_TOUCH_INK);
 }
 
 //--------------------------------------------------------------

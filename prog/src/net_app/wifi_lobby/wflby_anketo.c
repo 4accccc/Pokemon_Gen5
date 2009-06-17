@@ -1495,7 +1495,7 @@ static BOOL ANKETO_INPUT_Main( ANKETO_INPUT* p_wk, ANKETO_MSGMAN* p_msg, ANKETO_
 #if 0
 	case ANKETO_INPUT_SEQ_ANKETO_RECV:		// 受信開始
 
-		Snd_SePlay( ANKETO_SND_RECV_WAIT );
+		PMSND_PlaySE( ANKETO_SND_RECV_WAIT );
 
 //		ANKETO_QUESTION_DATA_DebugInit( &p_wk->question_now );
 
@@ -1513,7 +1513,7 @@ static BOOL ANKETO_INPUT_Main( ANKETO_INPUT* p_wk, ANKETO_MSGMAN* p_msg, ANKETO_
 
 		if( (GFUser_GetPublicRand(100)) == 0 ){
 
-			Snd_SePlay( ANKETO_SND_RECV );
+			PMSND_PlaySE( ANKETO_SND_RECV );
 
 			ANKETO_TalkWin_StopTimeWait( p_talkwin );
 
@@ -1561,7 +1561,7 @@ static BOOL ANKETO_INPUT_Main( ANKETO_INPUT* p_wk, ANKETO_MSGMAN* p_msg, ANKETO_
 
 		// Aで選択
 		if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_DECIDE ){
-			Snd_SePlay( ANKETO_SND_SELECT );
+			PMSND_PlaySE( ANKETO_SND_SELECT );
 
 			p_wk->seq ++;
 			break;
@@ -1569,12 +1569,12 @@ static BOOL ANKETO_INPUT_Main( ANKETO_INPUT* p_wk, ANKETO_MSGMAN* p_msg, ANKETO_
 		
 		if( GFL_UI_KEY_GetTrg() & PAD_KEY_UP ){
 			if( (p_wk->cursor - 1) >= 0 ){
-				Snd_SePlay( ANKETO_SND_CURSOR );
+				PMSND_PlaySE( ANKETO_SND_CURSOR );
 				p_wk->cursor --;
 			}
 		}else if( GFL_UI_KEY_GetTrg() & PAD_KEY_DOWN ){
 			if( (p_wk->cursor + 1) < ANKETO_ANSWER_NUM ){
-				Snd_SePlay( ANKETO_SND_CURSOR );
+				PMSND_PlaySE( ANKETO_SND_CURSOR );
 				p_wk->cursor ++;
 			}
 		}
@@ -1598,7 +1598,7 @@ static BOOL ANKETO_INPUT_Main( ANKETO_INPUT* p_wk, ANKETO_MSGMAN* p_msg, ANKETO_
 		// タイムウエイト表示
 		ANKETO_TalkWin_StartTimeWait( p_talkwin );
 
-		Snd_SePlay( ANKETO_SND_SEND_WAIT );
+		PMSND_PlaySE( ANKETO_SND_SEND_WAIT );
 
 		p_wk->seq = ANKETO_INPUT_SEQ_ANKETO_SENDWAIT;
 		break;
@@ -1609,7 +1609,7 @@ static BOOL ANKETO_INPUT_Main( ANKETO_INPUT* p_wk, ANKETO_MSGMAN* p_msg, ANKETO_
 			send_result = OLDDWC_LOBBY_ANKETO_WaitSubMit();
 			if( send_result != OLDDWC_LOBBY_ANKETO_STATE_SENDING ){
 
-				Snd_SePlay( ANKETO_SND_SEND );
+				PMSND_PlaySE( ANKETO_SND_SEND );
 
 				ANKETO_TalkWin_StopTimeWait( p_talkwin );
 
@@ -2151,7 +2151,7 @@ static BOOL ANKETO_OUTPUT_Main( ANKETO_OUTPUT* p_wk, ANKETO_MSGMAN* p_msg, ANKET
 		// タイムウエイト表示
 		ANKETO_TalkWin_StartTimeWait( p_talkwin );
 
-		Snd_SePlay( ANKETO_SND_RECV_WAIT );
+		PMSND_PlaySE( ANKETO_SND_RECV_WAIT );
 
 		p_wk->seq ++;
 		break;
@@ -2161,7 +2161,7 @@ static BOOL ANKETO_OUTPUT_Main( ANKETO_OUTPUT* p_wk, ANKETO_MSGMAN* p_msg, ANKET
 		// 受信完了
 		if( (GFUser_GetPublicRand(100)) == 0 ){
 
-			Snd_SePlay( ANKETO_SND_RECV );
+			PMSND_PlaySE( ANKETO_SND_RECV );
 
 			// アンケート内容と結果を受信
 			{
@@ -2253,7 +2253,7 @@ static BOOL ANKETO_OUTPUT_Main( ANKETO_OUTPUT* p_wk, ANKETO_MSGMAN* p_msg, ANKET
 			// バー表示開始
 			ANKETO_OUTPUT_DrawBarStart( p_wk, &p_wk->result_now, p_drawsys, ANKETO_PLTT_MAIN_BACK01 );
 
-			Snd_SePlay( ANKETO_SND_BAR );
+			PMSND_PlaySE( ANKETO_SND_BAR );
 		}
 
 		p_wk->seq = ANKETO_OUTPUT_SEQ_ANKETO_NRESULT_MAIN;
@@ -2415,7 +2415,7 @@ static BOOL ANKETO_OUTPUT_Main( ANKETO_OUTPUT* p_wk, ANKETO_MSGMAN* p_msg, ANKET
 			// バー表示開始
 			ANKETO_OUTPUT_DrawBarStart( p_wk, &p_wk->result_last, p_drawsys, ANKETO_PLTT_MAIN_BACK02 );
 
-			Snd_SePlay( ANKETO_SND_BAR );
+			PMSND_PlaySE( ANKETO_SND_BAR );
 		}
 		p_wk->seq = ANKETO_OUTPUT_SEQ_ANKETO_LRESULT_MAIN;
 		break;

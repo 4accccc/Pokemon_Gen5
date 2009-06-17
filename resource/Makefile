@@ -65,7 +65,9 @@ SUBDIRS	=	wmi \
 			irc_rhythm \
 			irc_result \
 			worldtimer \
-			pokelist
+			worldtimer \
+			pokelist \
+			wifi_earth
 
 
 include $(RESOURCE_MACRO)

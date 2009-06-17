@@ -166,3 +166,5 @@
 	ARCID_SHADOW_TEST "shadow_test.narc" #影描画（テスト）
   ARCID_FLDEFF "fieldmap/fldeff.narc" #フィールドエフェクト
 	ARCID_POKELIST "pokelist_gra.narc" #ポケモンリスト
+  ARCID_WORLDTIMER "worldtimer.narc" #世界時計
+

@@ -668,14 +668,21 @@ SRCS_OVERLAY_WIFILOBBY_CONNECT    = net_app/wifi_lobby/wflby_connect.c
 #===> SRCS_OVERLAY_WIFILOBBY_COMMON
 SRCS_OVERLAY_LOBBYNEWS =	net_app/wifi_lobby/lobby_news.c 
 
+### #‘«Õƒ{[ƒh
+### #===> SRCS_OVERLAY_WIFILOBBY_COMMON
+### SRCS_OVERLAY_FOOTPRINT_BOARD =	net_app/wifi_lobby/footprint_main.c \
+### 								net_app/wifi_lobby/footprint_stamp.c \
+### 								net_app/wifi_lobby/footprint_tool.c \
+### 								net_app/wifi_lobby/footprint_comm.c
+
 ### #WIFILOBBY
 ### #===>SRCS_OVERLAY_WIFILOBBY_COMMON
 ### SRCS_OVERLAY_WIFILOBBY_ANKETO   = net_app/wifi_lobby/wflby_anketo.c
 
 
-### #WIFILOBBY
-### #===>SRCS_OVERLAY_WIFILOBBY_COMMON
-### SRCS_OVERLAY_WORLDTIMER   = net_app/wifi_lobby/worldtimer.c
+#WIFILOBBY
+#===>SRCS_OVERLAY_WIFILOBBY_COMMON
+SRCS_OVERLAY_WORLDTIMER   = net_app/wifi_lobby/worldtimer.c
 
 #WIFILOBBY
 #===>SRCS_OVERLAY_WIFILOBBY_COMMON

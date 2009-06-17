@@ -712,7 +712,6 @@ static void WFLBY_APLDATA_WORLDTIMER_Exit( WFLBY_APLDATA* p_data )
 //-----------------------------------------------------------------------------
 static void WFLBY_APLDATA_WORLDTIMER_Start( WFLBY_APL* p_sys, WFLBY_APLDATA* p_data )
 {
-#if WB_TEMP_FIX
 	WLDTIMER_PARAM* p_param;
 
 	// オーバーレイID宣言
@@ -731,7 +730,6 @@ static void WFLBY_APLDATA_WORLDTIMER_Start( WFLBY_APL* p_sys, WFLBY_APLDATA* p_d
 	p_param->worldtime	= *(WFLBY_SYSTEM_GetWldTime( p_sys->p_system ));
 
 	WFLBY_APL_PROC_Start( p_sys, p_data, &Proc, FS_OVERLAY_ID(worldtimer) );
-#endif
 }
 
 //----------------------------------------------------------------------------

@@ -2599,7 +2599,7 @@ static BOOL SpecialMove_Nijimi(STAMP_SYSTEM_WORK *ssw, STAMP_SPECIAL_WORK *sp, G
 	case 0:
 		sp_nijimi->default_len = GFC_GetCameraDistance(camera_ptr);
 		sp_nijimi->seq++;
-		Snd_SePlay(FOOTPRINT_SE_SP_NIJIMI);
+		PMSND_PlaySE(FOOTPRINT_SE_SP_NIJIMI);
 		//break;
 	case 1:
 		GFC_AddCameraDistance(SP_NIJIMI_FORWARD_ADD_LEN, camera_ptr);
@@ -2646,7 +2646,7 @@ static BOOL SpecialMove_Hajike(STAMP_SYSTEM_WORK *ssw, STAMP_SPECIAL_WORK *sp, G
 	
 	switch(sp_hajike->seq){
 	case 0:
-		Snd_SePlay(FOOTPRINT_SE_SP_HAJIKE);
+		PMSND_PlaySE(FOOTPRINT_SE_SP_HAJIKE);
 		sp_hajike->seq++;
 		//break;
 	case 1:
@@ -2712,7 +2712,7 @@ static BOOL SpecialMove_Zigzag(STAMP_SYSTEM_WORK *ssw, STAMP_SPECIAL_WORK *sp, G
 		sp_zigzag->default_angle = GFC_GetCameraAngle(camera_ptr);
 		sp_zigzag->calc_angle_y = sp_zigzag->default_angle.y;
 		sp_zigzag->seq++;
-		Snd_SePlay(FOOTPRINT_SE_SP_ZIGZAG);
+		PMSND_PlaySE(FOOTPRINT_SE_SP_ZIGZAG);
 		//break;
 	case 1:
 		angle.y += SP_ZIGZAG_ADD_ANGLE;
@@ -2763,7 +2763,7 @@ static BOOL SpecialMove_Dakou(STAMP_SYSTEM_WORK *ssw, STAMP_SPECIAL_WORK *sp, GF
 		sp_dakou->default_angle = GFC_GetCameraAngle(camera_ptr);
 		sp_dakou->calc_angle_y = sp_dakou->default_angle.y;
 		sp_dakou->seq++;
-		Snd_SePlay(FOOTPRINT_SE_SP_DAKOU);
+		PMSND_PlaySE(FOOTPRINT_SE_SP_DAKOU);
 		//break;
 	case 1:
 		angle.y += SP_DAKOU_ADD_ANGLE;
@@ -2813,7 +2813,7 @@ static BOOL SpecialMove_Kiseki(STAMP_SYSTEM_WORK *ssw, STAMP_SPECIAL_WORK *sp, G
 	case 0:
 		sp_kiseki->default_angle = GFC_GetCameraAngle(camera_ptr);
 		sp_kiseki->calc_angle_x = sp_kiseki->default_angle.x;
-		Snd_SePlay(FOOTPRINT_SE_SP_KISEKI);
+		PMSND_PlaySE(FOOTPRINT_SE_SP_KISEKI);
 		sp_kiseki->seq++;
 		//break;
 	case 1:
@@ -2865,7 +2865,7 @@ static BOOL SpecialMove_Yure(STAMP_SYSTEM_WORK *ssw, STAMP_SPECIAL_WORK *sp, GFL
 	case 0:
 		sp_yure->default_angle = GFC_GetCameraAngle(camera_ptr);
 		sp_yure->seq++;
-		Snd_SePlay(FOOTPRINT_SE_SP_YURE);
+		PMSND_PlaySE(FOOTPRINT_SE_SP_YURE);
 		//break;
 	case 1:
 		sp_yure->theta += SP_YURE_ADD_THETA;
@@ -2907,7 +2907,7 @@ static BOOL SpecialMove_Kakudai(STAMP_SYSTEM_WORK *ssw, STAMP_SPECIAL_WORK *sp, 
 	case 0:
 		sp_kakudai->default_len = GFC_GetCameraDistance(camera_ptr);
 		sp_kakudai->seq++;
-		Snd_SePlay(FOOTPRINT_SE_SP_KAKUDAI);
+		PMSND_PlaySE(FOOTPRINT_SE_SP_KAKUDAI);
 		//break;
 	case 1:
 		GFC_AddCameraDistance(SP_KAKUDAI_FORWARD_ADD_LEN, camera_ptr);
@@ -2958,7 +2958,7 @@ static BOOL SpecialMove_BrarX(STAMP_SYSTEM_WORK *ssw, STAMP_SPECIAL_WORK *sp, GF
 		sp_brar_x->default_pos = GFC_GetCameraPos(camera_ptr);
 		sp_brar_x->default_target = GFC_GetLookTarget(camera_ptr);
 		sp_brar_x->seq++;
-		Snd_SePlay(FOOTPRINT_SE_SP_BRAR_X);
+		PMSND_PlaySE(FOOTPRINT_SE_SP_BRAR_X);
 		//break;
 	case 1:
 		sp_brar_x->theta += SP_BRAR_X_ADD_THETA;
@@ -3004,7 +3004,7 @@ static BOOL SpecialMove_BrarY(STAMP_SYSTEM_WORK *ssw, STAMP_SPECIAL_WORK *sp, GF
 		sp_brar_y->default_pos = GFC_GetCameraPos(camera_ptr);
 		sp_brar_y->default_target = GFC_GetLookTarget(camera_ptr);
 		sp_brar_y->seq++;
-		Snd_SePlay(FOOTPRINT_SE_SP_BRAR_Y);
+		PMSND_PlaySE(FOOTPRINT_SE_SP_BRAR_Y);
 		//break;
 	case 1:
 		sp_brar_y->theta += SP_BRAR_Y_ADD_THETA;
@@ -3049,7 +3049,7 @@ static BOOL SpecialMove_Tare(STAMP_SYSTEM_WORK *ssw, STAMP_SPECIAL_WORK *sp, GFL
 		sp_tare->default_angle = GFC_GetCameraAngle(camera_ptr);
 		sp_tare->calc_angle_x = sp_tare->default_angle.x;
 		sp_tare->seq++;
-		Snd_SePlay(FOOTPRINT_SE_SP_TARE);
+		PMSND_PlaySE(FOOTPRINT_SE_SP_TARE);
 		//break;
 	case 1:
 		angle.x += SP_TARE_ADD_ANGLE;

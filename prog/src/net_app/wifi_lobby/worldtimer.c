@@ -13,22 +13,20 @@
 #include <gflib.h>
 
 //#include "system/d3dobj.h"
-#include "system/clact_util.h"
 #include "system/wipe.h"
-#include "system/render_oam.h"
 //#include "system/pm_overlay.h"
 //#include "system/fontproc.h"
 #include "print\gf_font.h"
-#include "system/window.h"
 #include "print/wordset.h"
 #include "system/touch_subwindow.h"
 
 #include "net\network_define.h"
+#include "net_app/net_bugfix.h"
 
 #include "savedata/wifihistory.h"
 #include "savedata/config.h"
 
-#include "graphic/worldtimer.naix"
+#include "worldtimer.naix"
 
 #include "message.naix"
 #include "msg/msg_worldtimer.h"
@@ -38,7 +36,7 @@
 #include "net_app/wifi_lobby/worldtimer.h"
 #include "net_app/wifi_lobby/wldtimer_snd.h"
 #include "wifi_earth_place.naix"
-#include "net_app/wifi_earth/wifi_earth.naix"
+#include "wifi_earth.naix"
 #include "net_app/wifi_country.h"
 
 #include "net_app/wifi_lobby/worldtimer_place.h"
@@ -46,6 +44,11 @@
 #include "wflby_snd.h"
 #include "system/gfl_use.h"
 #include "system/bmp_winframe.h"
+#include "system/actor_tool.h"
+#include "system/main.h"
+#include <calctool.h>
+#include "print/printsys.h"
+#include "gamesystem/msgspeed.h"
 
 
 //-----------------------------------------------------------------------------
@@ -262,7 +265,7 @@ static const GFL_DISP_VRAM sc_WLDTIMER_BANK = {
 	GX_VRAM_SUB_OBJ_16_I,			// サブ2DエンジンのOBJ
 	GX_VRAM_SUB_OBJEXTPLTT_NONE,	// サブ2DエンジンのOBJ拡張パレット
 	GX_VRAM_TEX_01_AB,				// テクスチャイメージスロット
-	GX_VRAM_TEXPLTT_0123_E			// テクスチャパレットスロット
+	GX_VRAM_TEXPLTT_0123_E,			// テクスチャパレットスロット
 	GX_OBJVRAMMODE_CHAR_1D_32K,		// メインOBJマッピングモード
 	GX_OBJVRAMMODE_CHAR_1D_32K,		// サブOBJマッピングモード
 };
@@ -292,7 +295,7 @@ static const u32 sc_WLDTIMER_BGCNT_FRM[ WLDTIMER_BGCNT_NUM ] = {
 static const GFL_BG_BGCNT_HEADER sc_WLDTIMER_BGCNT_DATA[ WLDTIMER_BGCNT_NUM ] = {
 	{	// GFL_BG_FRAME1_M
 		0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
-		GX_BG_SCRBASE_0x3800, GX_BG_CHARBASE_0x00000, 0x3800, jGX_BG_EXTPLTT_01,
+		GX_BG_SCRBASE_0x3800, GX_BG_CHARBASE_0x00000, 0x3800, GX_BG_EXTPLTT_01,
 		0, 0, 0, FALSE
 	},
 	{	// GFL_BG_FRAME2_S
@@ -366,13 +369,14 @@ enum{	// メイン
 #define WLDTIMER_OAM_CONTNUM	( 32 )
 #define WLDTIMER_RESMAN_NUM		( 4 )	// OAMリソースマネージャ数
 #define WLDTIMER_SF_MAT_Y		( FX32_CONST(256) )
+#if WB_FIX
 static const CHAR_MANAGER_MAKE sc_WLDTIMER_CHARMAN_INIT = {
 	WLDTIMER_OAM_CONTNUM,
 	16*1024,	// 16K
 	16*1024,	// 16K
 	HEAPID_WLDTIMER
 };
-
+#endif
 
 //-------------------------------------
 ///	カメラ
@@ -578,7 +582,7 @@ static const u8 WLDTIMER_VIEWER_ANM_FRAME[ WLDTIMER_ZONETYPE_NUM ] = {
 #define WLDTIMER_VIEWER_MSG_AREA_Y		( 32 )
 #define	WLDTIMER_VIEWER_MSG_NATION_COL	( GF_PRINTCOLOR_MAKE( 1, 2, 0 ) )
 #define	WLDTIMER_VIEWER_MSG_AREA_COL	( GF_PRINTCOLOR_MAKE( 1, 2, 0 ) )
-static const PRINTSYS_LSB WLDTIMER_VIEWER_MSG_TITLE_COL[ WLDTIMER_ZONETYPE_NUM ] = {
+static const GF_PRINTCOLOR WLDTIMER_VIEWER_MSG_TITLE_COL[ WLDTIMER_ZONETYPE_NUM ] = {
 	GF_PRINTCOLOR_MAKE( 5, 6, 0 ),
 	GF_PRINTCOLOR_MAKE( 7, 8, 0 ),
 	GF_PRINTCOLOR_MAKE( 9, 10, 0 ),
@@ -762,12 +766,14 @@ static const WLDTIMER_POKEBLN_MOVEDATA sc_WLDTIMER_POKEBLN_MOVEDATA_TBL[ WLDTIME
 #define WLDTIMER_MAIN_SUBBTTN_Y		( 6 )
 #define WLDTIMER_MAIN_SUBBTTN_CGXEND	( WLDTIMER_MAIN_SUBBTTN_CGX+TOUCH_SW_USE_CHAR_NUM )
 static const TOUCH_SW_PARAM sc_TOUCH_SW_PARAM = {
-	NULL,
 	GFL_BG_FRAME1_M,
 	WLDTIMER_MAIN_SUBBTTN_CGX,
 	WLDTIMER_MAIN_SUBBTTN_PLTT,
 	WLDTIMER_MAIN_SUBBTTN_X,
 	WLDTIMER_MAIN_SUBBTTN_Y,
+	GFL_APP_KTST_TOUCH,
+	0,
+	TOUCH_SW_TYPE_S,
 };
 
 
@@ -871,8 +877,11 @@ typedef struct {
 
 	// OAM
     GFL_CLUNIT*           p_clactset;		// セルアクターセット
+  	PLTTSLOT_SYS_PTR	plttslot;
+#if WB_FIX
     CLACT_U_EASYRENDER_DATA renddata;       // 簡易レンダーデータ
     CLACT_U_RES_MANAGER_PTR p_resman[WLDTIMER_RESMAN_NUM]; // キャラ・パレットリソースマネージャ
+#endif
 	
 	// アーカイブ
 	ARCHANDLE* p_handle;
@@ -890,8 +899,14 @@ typedef struct {
 
 	// グラフィック
     GFL_G3D_OBJSTATUS	obj;
-	GFL_G3D_OBJ	mdl;
-	
+    VecFx32 obj_rotate;
+#if WB_FIX
+	GFL_G3D_OBJ	  mdl;
+#else
+	GFL_G3D_OBJ*	g3dobj;
+  GFL_G3D_RES*  p_mdlres;
+  GFL_G3D_RND*  rnder;
+#endif
 } WLDTIMER_EARTH;
 
 
@@ -905,7 +920,14 @@ typedef struct {
 	// 表示データ
 	VecFx32	list_scale;
     GFL_G3D_OBJSTATUS	obj[WLDTIMER_PLACE_COL_NUM];
-	GFL_G3D_OBJ	mdl[WLDTIMER_PLACE_COL_NUM];
+    VecFx32 obj_rotate[WLDTIMER_PLACE_COL_NUM];
+#if WB_FIX
+	GFL_G3D_OBJ 	mdl[WLDTIMER_PLACE_COL_NUM];
+#else
+	GFL_G3D_OBJ* 	g3dobj[WLDTIMER_PLACE_COL_NUM];
+  GFL_G3D_RES*  p_mdlres[WLDTIMER_PLACE_COL_NUM];
+  GFL_G3D_RND*  rnder[WLDTIMER_PLACE_COL_NUM];
+#endif
 } WLDTIMER_PLACE;
 
 //-------------------------------------
@@ -913,7 +935,9 @@ typedef struct {
 //=====================================
 typedef struct {
 	GFL_G3D_CAMERA *	p_camera;	// カメラオブジェ
+#if WB_FIX    //このメンバ自体が使われていないので 2009.06.10(水)
 	CAMERA_ANGLE	angle;		// カメラアングル
+#endif
 	fx32			dist;		// カメラ距離
 	u16				status;		// カメラ状態
 	u16				move;		// 動作フラグ
@@ -1002,7 +1026,11 @@ typedef struct {
 
 	// グラフィック
 	GFL_CLWK*		p_act[ WLDTIMER_TIME_POKE_NUM ];
+#if WB_FIX
 	CLACT_U_RES_OBJ_PTR	p_res[ WLDTIMER_TIME_POKE_NUM ][ WLDTIMER_RESMAN_NUM ];
+#else
+  u32         p_resobj_index[ WLDTIMER_TIME_POKE_NUM ][ WLDTIMER_RESMAN_NUM ];
+#endif
 } WLDTIMER_POKEBALLOON;
 
 //-------------------------------------
@@ -1050,6 +1078,9 @@ typedef struct {
 	GFL_BMPWIN*			talkwin;						// 会話メッセージデータ
 	WLDTIMER_POKEBALLOON	poke;							// ポケモンBALLOON
 	WLDTIMER_VWND			wnd;							// ウィンドウ
+	
+	PRINT_UTIL print_util[WLDTIMER_VIEWER_DRAWNUM];
+	PRINT_UTIL print_util_talk;
 } WLDTIMER_VIEWER;
 
 
@@ -1068,7 +1099,8 @@ typedef struct {
 
 	// ボタン表示
 	GFL_BMPWIN *bttn;
-
+  
+  PRINT_UTIL print_util;
 } WLDTIMER_TOUCH;
 
 
@@ -1077,7 +1109,11 @@ typedef struct {
 //=====================================
 typedef struct {
 	u32				seq;
+#if WB_FIX
 	u32				msg_no;
+#else
+	PRINT_STREAM*	print_stream;
+#endif
 	int				msg_wait;
 	STRBUF*			p_str;
 	GFL_BMPWIN	*win;
@@ -1144,6 +1180,9 @@ typedef struct {
 	WLDTIMER_END_MSG end_msg;
 
 	GFL_TCB *vintr_tcb;
+	GFL_FONT *font_handle;
+	PRINT_QUE *printQue;
+  GFL_TCBLSYS *tcblsys;
 } WLDTIMER_WK;
 
 
@@ -1238,7 +1277,7 @@ static BOOL WLDTIMER_CameraMove( WLDTIMER_CAMERA* p_wk, WLDTIMER_PLACE* p_place 
 static u32	WLDTIMER_CameraGetStatus( const WLDTIMER_CAMERA* cp_wk );
 
 // タッチ管理
-static void WLDTIMER_TouchInit( WLDTIMER_TOUCH* p_wk, WLDTIMER_DRAWSYS* p_drawsys, WLDTIMER_MSGMAN* p_msgman, u32 heapID );
+static void WLDTIMER_TouchInit( WLDTIMER_TOUCH* p_wk, WLDTIMER_DRAWSYS* p_drawsys, WLDTIMER_MSGMAN* p_msgman, u32 heapID, PRINT_QUE *printQue, GFL_FONT *font_handle );
 static void WLDTIMER_TouchExit( WLDTIMER_TOUCH* p_wk );
 static void WLDTIMER_TouchSetParam( WLDTIMER_TOUCH* p_touch );
 static int WLDTIMER_TouchGetParam( const WLDTIMER_TOUCH* cp_touch, u32 type );
@@ -1248,15 +1287,15 @@ static void WLDTIMER_TouchBttnOn( WLDTIMER_TOUCH* p_wk );
 // 終了チェック管理
 static void WLDTIMER_EndMsgInit( WLDTIMER_END_MSG* p_wk, WLDTIMER_DRAWSYS* p_drawsys, WLDTIMER_MSGMAN* p_msgman, SAVE_CONTROL_WORK* p_save, u32 heapID );
 static void WLDTIMER_EndMsgExit( WLDTIMER_END_MSG* p_wk );
-static void WLDTIMER_EndMsgStart( WLDTIMER_END_MSG* p_wk );
+static void WLDTIMER_EndMsgStart( WLDTIMER_END_MSG* p_wk, GFL_FONT *font_handle, GFL_TCBLSYS *tcblsys, HEAPID heapID );
 static u32 WLDTIMER_EndMsgMain( WLDTIMER_END_MSG* p_wk );
 static void WLDTIMER_EndMsgEnd( WLDTIMER_END_MSG* p_wk );
 
 
 // サブ画面情報ウィンドウ
-static void WLDTIMER_ViewerInit( WLDTIMER_VIEWER* p_wk, WLDTIMER_DRAWSYS* p_drawsys, WLDTIMER_MSGMAN* p_msgman, u32 heapID );
+static void WLDTIMER_ViewerInit( WLDTIMER_VIEWER* p_wk, WLDTIMER_DRAWSYS* p_drawsys, WLDTIMER_MSGMAN* p_msgman, u32 heapID, GFL_FONT *font_handle, PRINT_QUE *printQue );
 static void WLDTIMER_ViewerExit( WLDTIMER_VIEWER* p_wk, WLDTIMER_DRAWSYS* p_drawsys );
-static void WLDTIMER_ViewerMain( WLDTIMER_VIEWER* p_wk, WLDTIMER_MSGMAN* p_msgman, WLDTIMER_DRAWSYS* p_drawsys );
+static void WLDTIMER_ViewerMain( WLDTIMER_VIEWER* p_wk, WLDTIMER_MSGMAN* p_msgman, WLDTIMER_DRAWSYS* p_drawsys, PRINT_QUE *printQue, GFL_FONT *font_handle );
 static void WLDTIMER_ViewerTalkWinOff( WLDTIMER_VIEWER* p_wk );
 static void WLDTIMER_ViewerTalkWinOn( WLDTIMER_VIEWER* p_wk );
 static BOOL WLDTIMER_ViewerPushData( WLDTIMER_VIEWER* p_wk, const WLDTIMER_POINTDATA* cp_data );
@@ -1267,7 +1306,7 @@ static void WLDTIMER_ViewerQPush( WLDTIMER_VIEWER* p_wk, const WLDTIMER_POINTDAT
 static void WLDTIMER_ViewerQPop( WLDTIMER_VIEWER* p_wk );
 static BOOL WLDTIMER_ViewerQGetData( const WLDTIMER_VIEWER* cp_wk, WLDTIMER_POINTDATA* p_data, u32 index );
 static void WLDTIMER_ViewerAnmCont( WLDTIMER_VIEWER* p_wk, WLDTIMER_DRAWSYS* p_drawsys );
-static void WLDTIMER_ViewerFadeInit( WLDTIMER_VIEWER* p_wk, WLDTIMER_MSGMAN* p_msgman, WLDTIMER_DRAWSYS* p_drawsys );
+static void WLDTIMER_ViewerFadeInit( WLDTIMER_VIEWER* p_wk, WLDTIMER_MSGMAN* p_msgman, WLDTIMER_DRAWSYS* p_drawsys, PRINT_QUE *printQue, GFL_FONT *font_handle );
 static BOOL WLDTIMER_ViewerFade( WLDTIMER_VIEWER* p_wk, WLDTIMER_DRAWSYS* p_drawsys );
 static void WLDTIMER_ViewerFade_SkipInit( WLDTIMER_VIEWER* p_wk );
 static BOOL WLDTIMER_ViewerFade_Skip( WLDTIMER_VIEWER* p_wk, WLDTIMER_DRAWSYS* p_drawsys );
@@ -1287,7 +1326,7 @@ static void WLDTIMER_ViewerWndTcb( GFL_TCB* p_tcb, void* p_work );
 // 国文字列書き込み
 static void WLDTIMER_ViewerMsgInit( WLDTIMER_VIEWER* p_wk, WLDTIMER_DRAWSYS* p_drawsys, u32 heapID );
 static void WLDTIMER_ViewerMsgExit( WLDTIMER_VIEWER* p_wk ); 
-static void WLDTIMER_ViewerMsgWrite( WLDTIMER_VIEWER* p_wk, u32 drawtype, const WLDTIMER_POINTDATA* cp_data, WLDTIMER_MSGMAN* p_msgman );
+static void WLDTIMER_ViewerMsgWrite( WLDTIMER_VIEWER* p_wk, u32 drawtype, const WLDTIMER_POINTDATA* cp_data, WLDTIMER_MSGMAN* p_msgman, PRINT_QUE *printQue, GFL_FONT *font_handle );
 static u8* WLDTIMER_ViewerMsgGetCharBuffPtr( WLDTIMER_VIEWER* p_wk, u32 drawtype, u32 y );
 static u8* WLDTIMER_ViewerDummyGetCharBuffPtr( WLDTIMER_VIEWER* p_wk, u32 y );
 static void WLDTIMER_ViewerMsgCharTrans( WLDTIMER_VIEWER* p_wk, u32 drawtype, u32 y, const u8* cp_buff );
@@ -1336,6 +1375,8 @@ static void WLDTIMER_MsgManGetStrBuff( WLDTIMER_MSGMAN* p_wk, u32 msg, STRBUF* p
 
 // 表示データベース
 static u32 WLDTIMER_WFLBYDATA_GetFirst( const WFLBY_WLDTIMER* cp_data );
+
+static void _SetCameraDistance(GFL_G3D_CAMERA *camera, fx32 distance);
 
 
 
@@ -1389,33 +1430,49 @@ GFL_PROC_RESULT WLDTIMER_Init(GFL_PROC* p_proc, int* p_seq, void * pwk, void * m
 
 //	OS_TPrintf( "world time hour[%d] minute[%d] second[%d]\n", p_wk->worldtime.hour, p_wk->worldtime.minute, p_wk->worldtime.second );
 
+  //フォント読み込み
+  p_wk->font_handle = GFL_FONT_Create( ARCID_FONT, NARC_font_large_nftr,
+			GFL_FONT_LOADTYPE_FILE, FALSE, HEAPID_WLDTIMER );
+	p_wk->printQue = PRINTSYS_QUE_Create(HEAPID_WLDTIMER);
+	p_wk->tcblsys = GFL_TCBL_Init(HEAPID_WLDTIMER, HEAPID_WLDTIMER, 8, 32);
+  OS_TPrintf("0 printQue = %x\n", p_wk->printQue);
+  
 	// フラグ初期化
 	WLDTIMER_FlagControl( p_wk, p_param );
+  OS_TPrintf("1 printQue = %x\n", p_wk->printQue);
 
 	// グラフィック初期化
 	WLDTIMER_DrawSysInit( &p_wk->drawsys, p_wk->p_config, HEAPID_WLDTIMER );
+  OS_TPrintf("2 printQue = %x\n", p_wk->printQue);
 
 	// 地球儀初期化
 	WLDTIMER_EarthInit( &p_wk->earth, &p_wk->drawsys, HEAPID_WLDTIMER );
+  OS_TPrintf("3 printQue = %x\n", p_wk->printQue);
 
 	// 文字システム初期化
 	WLDTIMER_MsgManInit( &p_wk->msgman, HEAPID_WLDTIMER );
+  OS_TPrintf("4 printQue = %x\n", p_wk->printQue);
 
 	// 地域初期化
 	WLDTIMER_PlaceInit( &p_wk->place, p_param->cp_data, &p_wk->drawsys, p_wk->flag, HEAPID_WLDTIMER );
+  OS_TPrintf("5 printQue = %x\n", p_wk->printQue);
 
 	// カメラ初期化
 	WLDTIMER_CameraInit( &p_wk->camera, p_wk->flag, HEAPID_WLDTIMER );
+  OS_TPrintf("6 printQue = %x\n", p_wk->printQue);
 
 	// タッチ初期化
-	WLDTIMER_TouchInit( &p_wk->touch, &p_wk->drawsys, &p_wk->msgman, HEAPID_WLDTIMER );
+	WLDTIMER_TouchInit( &p_wk->touch, &p_wk->drawsys, &p_wk->msgman, HEAPID_WLDTIMER, p_wk->printQue, p_wk->font_handle );
+  OS_TPrintf("6 printQue = %x\n", p_wk->printQue);
 
 	// 終了チェック初期化
 	WLDTIMER_EndMsgInit( &p_wk->end_msg, &p_wk->drawsys, &p_wk->msgman, p_param->p_save, HEAPID_WLDTIMER );
+  OS_TPrintf("7 printQue = %x\n", p_wk->printQue);
 
 	// ビューアー初期化
-	WLDTIMER_ViewerInit( &p_wk->view, &p_wk->drawsys, &p_wk->msgman, HEAPID_WLDTIMER );
-	
+	WLDTIMER_ViewerInit( &p_wk->view, &p_wk->drawsys, &p_wk->msgman, HEAPID_WLDTIMER, p_wk->font_handle, p_wk->printQue );
+  OS_TPrintf("8 printQue = %x\n", p_wk->printQue);
+
 	// 地球儀開始セットアップ
 	WLDTIMER_EarthStartSetUp( p_wk, p_param );
 
@@ -1449,6 +1506,16 @@ GFL_PROC_RESULT WLDTIMER_Main(GFL_PROC* p_proc, int* p_seq, void * pwk, void * m
 	GFL_UI_KEY_GetCont()	|= PAD_BUTTON_B;
 #endif
 	
+  GFL_TCBL_Main(p_wk->tcblsys);
+	PRINTSYS_QUE_Main(p_wk->printQue);
+	{
+    int i;
+    PRINT_UTIL_Trans(&p_wk->touch.print_util, p_wk->printQue);
+    for(i = 0; i < WLDTIMER_VIEWER_DRAWNUM; i++){
+      PRINT_UTIL_Trans(&p_wk->view.print_util[i], p_wk->printQue);
+    }
+    PRINT_UTIL_Trans(&p_wk->view.print_util_talk, p_wk->printQue);
+  }
 
 	switch( *p_seq ){
 	case WLDTIMER_SEQ_FADEIN:
@@ -1460,7 +1527,7 @@ GFL_PROC_RESULT WLDTIMER_Main(GFL_PROC* p_proc, int* p_seq, void * pwk, void * m
 		WFLBY_SYSTEM_SetBGMVolumeDown( p_param->p_system, TRUE );
 
 		// ロビーに入ってきた音を出す
-//		Snd_SePlay( WFLBY_SND_WLDTMIN );
+//		PMSND_PlaySE( WFLBY_SND_WLDTMIN );
 
 		(*p_seq) ++;
 		break;
@@ -1552,6 +1619,13 @@ GFL_PROC_RESULT WLDTIMER_Exit(GFL_PROC* p_proc, int* p_seq, void * pwk, void * m
 	// 描画システム破棄
 	WLDTIMER_DrawSysExit( &p_wk->drawsys );
 
+  //フォント破棄
+	GFL_FONT_Delete(p_wk->font_handle);
+	//PrintQue破棄
+	PRINTSYS_QUE_Delete(p_wk->printQue);
+	//TCBL破棄
+	GFL_TCBL_Exit(p_wk->tcblsys);
+
 	//ワーク破棄
 	GFL_PROC_FreeWork( p_proc );
 	
@@ -1568,14 +1642,14 @@ GFL_PROC_RESULT WLDTIMER_Exit(GFL_PROC* p_proc, int* p_seq, void * pwk, void * m
 GFL_PROC_RESULT WLDTIMER_DebugInit(GFL_PROC* p_proc, int* p_seq, void * pwk, void * mywk)
 {
 
-	return WLDTIMER_Init( p_proc, p_seq );
+	return WLDTIMER_Init( p_proc, p_seq, pwk, mywk );
 }
 
 GFL_PROC_RESULT WLDTIMER_DebugExit(GFL_PROC* p_proc, int* p_seq, void * pwk, void * mywk)
 {
 	GFL_PROC_RESULT result;
 
-	result = WLDTIMER_Exit( p_proc, p_seq );
+	result = WLDTIMER_Exit( p_proc, p_seq, pwk, mywk );
 
 	return result;
 }
@@ -1759,10 +1833,13 @@ static void WLDTIMER_Earth_TouchPanelParamGet( int prevx,int prevy,int* dirx_p,i
 	int y_dir = 0;
 	int x_len = 0;
 	int y_len = 0;
-
+  u32 tp_x = 0, tp_y = 0;
+  
+	GFL_UI_TP_GetPointCont(&tp_x, &tp_y);
+	
 	//Ｘ方向＆移動幅取得
-	if(sys.tp_x != 0xffff){
-		x_len = sys.tp_x - prevx;
+	if(tp_x != 0xffff){
+		x_len = tp_x - prevx;
 		if(x_len < 0){
 			x_len ^= -1;
 			x_dir = PAD_KEY_RIGHT;
@@ -1777,8 +1854,8 @@ static void WLDTIMER_Earth_TouchPanelParamGet( int prevx,int prevy,int* dirx_p,i
 	*lenx_p = x_len;
 
 	//Ｙ方向＆移動幅取得
-	if(sys.tp_y != 0xffff){
-		y_len = sys.tp_y - prevy;
+	if(tp_y != 0xffff){
+		y_len = tp_y - prevy;
 		if(y_len < 0){
 			y_len ^= -1;
 			y_dir = PAD_KEY_DOWN;
@@ -2010,7 +2087,7 @@ static BOOL WLDTIMER_WkMainControl( WLDTIMER_WK* p_wk )
 		break;
 
 	case WLDTIMER_MAINSEQ_ENDCHECK:
-		WLDTIMER_EndMsgStart( &p_wk->end_msg );
+		WLDTIMER_EndMsgStart( &p_wk->end_msg, p_wk->font_handle, p_wk->tcblsys, HEAPID_WLDTIMER );
 		WLDTIMER_ViewerTalkWinOff( &p_wk->view );
 		WLDTIMER_TouchBttnOff( &p_wk->touch );
 		p_wk->main_seq ++;
@@ -2058,7 +2135,7 @@ static void WLDTIMER_WkSubControl( WLDTIMER_WK* p_wk )
 {
 	switch( p_wk->sub_seq ){
 	case WLDTIMER_SUB_SEQ_CONTROL:
-		WLDTIMER_ViewerMain( &p_wk->view,  &p_wk->msgman, &p_wk->drawsys );
+		WLDTIMER_ViewerMain( &p_wk->view,  &p_wk->msgman, &p_wk->drawsys, p_wk->printQue, p_wk->font_handle );
 		break;
 	}
 
@@ -2127,7 +2204,7 @@ static u32 WLDTIMER_EarthControl( WLDTIMER_WK* p_wk )
 	//終了判定
 	if((p_wk->touch.tp_result & PAD_BUTTON_B))
 	{
-		Snd_SePlay( WLDTIMER_SND_YAMERU );
+		PMSND_PlaySE( WLDTIMER_SND_YAMERU );
 		return WLDTIMER_EARTHCONT_RET_END;
 	}
 	else{
@@ -2156,7 +2233,7 @@ static u32 WLDTIMER_EarthControl( WLDTIMER_WK* p_wk )
 							// その位置にあわせる
 							WLDTIMER_EarthSetNationAreaRotate( p_wk, 
 									draw_point.nation, draw_point.area );
-							Snd_SePlay( WLDTIMER_SND_XSELECT );
+							PMSND_PlaySE( WLDTIMER_SND_XSELECT );
 						}
 					}
 				}
@@ -2402,10 +2479,18 @@ static u32 WLDTIMER_EarthGetRotateDist( const VecFx32* cp_earth, const VecFx32* 
 	// 距離が近いほうを選ぶ
 	dif_x = MATH_ABS(cp_earth->x - cp_place->x);
 	dif_y = MATH_ABS(cp_earth->y - cp_place->y);
+#if WB_FIX
 	if( dif_x > RotKey(180) ){
+#else
+	if( dif_x > GFL_CALC_RotKey(180) ){
+#endif
 		dif_x = 0xffff - dif_x;
 	}
+#if WB_FIX
 	if( dif_y > RotKey(180) ){
+#else
+	if( dif_y > GFL_CALC_RotKey(180) ){
+#endif
 		dif_y = 0xffff - dif_y;
 	}
 
@@ -2560,7 +2645,7 @@ static void WLDTIMER_FlagControl( WLDTIMER_WK* p_wk, const WLDTIMER_PARAM* cp_pa
 static void WLDTIMER_DrawSysInit( WLDTIMER_DRAWSYS* p_wk, CONFIG* p_config, u32 heapID )
 {
 	// アーカイブハンドル
-	p_wk->p_handle = GFL_ARC_OpenDataHandle( ARC_WORLDTIMER, heapID );
+	p_wk->p_handle = GFL_ARC_OpenDataHandle( ARCID_WORLDTIMER, heapID );
 
 #if WB_FIX
 	// Vram転送マネージャ作成
@@ -2622,7 +2707,11 @@ static void WLDTIMER_DrawSysExit( WLDTIMER_DRAWSYS* p_wk )
 //-----------------------------------------------------------------------------
 static void WLDTIMER_DrawSysDraw( WLDTIMER_DRAWSYS* p_wk )
 {
+#if WB_FIX
 	CLACT_Draw( p_wk->p_clactset );
+#else
+  GFL_CLACT_SYS_Main();
+#endif
 }
 
 //----------------------------------------------------------------------------
@@ -2635,10 +2724,14 @@ static void WLDTIMER_DrawSysDraw( WLDTIMER_DRAWSYS* p_wk )
 static void WLDTIMER_DrawSysVBlank( WLDTIMER_DRAWSYS* p_wk )
 {
     // BG書き換え
-    GFL_BG_VBlankFunc( p_wk->p_bgl );
+    GFL_BG_VBlankFunc();
 
+#if WB_FIX
     // レンダラ共有OAMマネージャVram転送
     REND_OAMTrans();
+#else
+  	GFL_CLACT_SYS_VBlankFunc();
+#endif
 
 #if WB_TEMP_FIX
 	// Vram転送
@@ -2683,22 +2776,22 @@ static void WLDTIMER_DrawSysBgInit( WLDTIMER_DRAWSYS* p_wk, CONFIG* p_config, u3
 	// フレーム
 	{
 		GFL_ARCHDL_UTIL_TransVramBgCharacter( p_wk->p_handle, 
-				NARC_worldtimer_world_watch_frame_NCGR, p_wk->p_bgl,
+				NARC_worldtimer_world_watch_frame_NCGR, 
 				GFL_BG_FRAME0_S, 0, 0, FALSE, heapID );
 
 		GFL_ARCHDL_UTIL_TransVramScreen( p_wk->p_handle,
-				NARC_worldtimer_world_watch_frame_NSCR, p_wk->p_bgl,
+				NARC_worldtimer_world_watch_frame_NSCR, 
 				GFL_BG_FRAME0_S, 0, 0, FALSE, heapID );
 	}
 
 	// 背景
 	{
 		GFL_ARCHDL_UTIL_TransVramBgCharacter( p_wk->p_handle,
-				NARC_worldtimer_world_watch_NCGR, p_wk->p_bgl, 
+				NARC_worldtimer_world_watch_NCGR, 
 				GFL_BG_FRAME2_S, 0, 0, FALSE, heapID );
 
 		GFL_ARCHDL_UTIL_TransVramScreen( p_wk->p_handle,
-				NARC_worldtimer_world_watch_wall_NSCR, p_wk->p_bgl,
+				NARC_worldtimer_world_watch_wall_NSCR, 
 				GFL_BG_FRAME3_S, 0, 0, FALSE, heapID );
 	}
 	
@@ -2718,11 +2811,11 @@ static void WLDTIMER_DrawSysBgInit( WLDTIMER_DRAWSYS* p_wk, CONFIG* p_config, u3
 	// トークウィンドウ
 	{
 		u8 win_num = CONFIG_GetWindowType( p_config );
-		TalkWinFrame_GraphicSet( p_wk->p_bgl, GFL_BG_FRAME0_S,
+		TalkWinFrame_GraphicSet( GFL_BG_FRAME0_S,
 				WLDTIMER_SUB_TALKWIN_CGX, WLDTIMER_SUB_TALKWIN_PAL,
 				win_num, heapID );
 
-		TalkWinFrame_GraphicSet( p_wk->p_bgl, GFL_BG_FRAME1_M,
+		TalkWinFrame_GraphicSet( GFL_BG_FRAME1_M,
 				WLDTIMER_MAIN_TALKWIN_CGX, WLDTIMER_MAIN_TALKWIN_PAL,
 				win_num, heapID );
 	}
@@ -2737,7 +2830,7 @@ static void WLDTIMER_DrawSysBgExit( WLDTIMER_DRAWSYS* p_wk )
 		int i;
 
 		for( i=0; i<WLDTIMER_BGCNT_NUM; i++ ){
-			GFL_BG_FreeBGControl( p_wk->p_bgl, sc_WLDTIMER_BGCNT_FRM[i] );
+			GFL_BG_FreeBGControl( sc_WLDTIMER_BGCNT_FRM[i] );
 		}
 	}
 	
@@ -2768,7 +2861,6 @@ static void WLDTIMER_DrawSysOamInit( WLDTIMER_DRAWSYS* p_wk, u32 heapID )
         0, 126,     // サブ画面OAM管理領域
         0, 31,      // サブ画面アフィン管理領域
         heapID);
-#endif
 
     // キャラクタマネージャー初期化
     InitCharManagerReg(&sc_WLDTIMER_CHARMAN_INIT, GX_OBJVRAMMODE_CHAR_1D_32K, GX_OBJVRAMMODE_CHAR_1D_32K );
@@ -2782,8 +2874,10 @@ static void WLDTIMER_DrawSysOamInit( WLDTIMER_DRAWSYS* p_wk, u32 heapID )
     //通信アイコン用にキャラ＆パレット制限
     CLACT_U_WmIcon_SetReserveAreaCharManager(NNS_G2D_VRAM_TYPE_2DMAIN, GX_OBJVRAMMODE_CHAR_1D_32K);
     CLACT_U_WmIcon_SetReserveAreaPlttManager(NNS_G2D_VRAM_TYPE_2DMAIN);
+#endif
     
 
+#if WB_FIX
     // セルアクターセット作成
     p_wk->p_clactset = CLACT_U_SetEasyInit( WLDTIMER_OAM_CONTNUM, &p_wk->renddata, heapID );
 
@@ -2794,6 +2888,20 @@ static void WLDTIMER_DrawSysOamInit( WLDTIMER_DRAWSYS* p_wk, u32 heapID )
     for( i=0; i<WLDTIMER_RESMAN_NUM; i++ ){
         p_wk->p_resman[i] = CLACT_U_ResManagerInit(WLDTIMER_OAM_CONTNUM, i, heapID);
     }
+#else
+		{
+			GFL_CLSYS_INIT clsys_init = GFL_CLSYSINIT_DEF_DIVSCREEN;
+			
+			clsys_init.oamst_main = GFL_CLSYS_OAMMAN_INTERVAL;	//通信アイコンの分
+			clsys_init.oamnum_main = 128-GFL_CLSYS_OAMMAN_INTERVAL;
+			clsys_init.tr_cell = 32;	//セルVram転送管理数
+
+			GFL_CLACT_SYS_Create( &clsys_init, &sc_WLDTIMER_BANK, heapID );
+			p_wk->p_clactset = GFL_CLACT_UNIT_Create( WLDTIMER_OAM_CONTNUM, 0, heapID );
+			GFL_CLACT_UNIT_SetDefaultRend(p_wk->p_clactset);
+			p_wk->plttslot = PLTTSLOT_Init(heapID, 16, 16);
+		}
+#endif
 
 	// 下画面に通信アイコンを出す
 #if WB_TEMP_FIX
@@ -2807,6 +2915,7 @@ static void WLDTIMER_DrawSysOamInit( WLDTIMER_DRAWSYS* p_wk, u32 heapID )
 }
 static void WLDTIMER_DrawSysOamExit( WLDTIMER_DRAWSYS* p_wk )
 {
+#if WB_FIX
     int i;
 
     // アクターの破棄
@@ -2822,6 +2931,11 @@ static void WLDTIMER_DrawSysOamExit( WLDTIMER_DRAWSYS* p_wk )
 
     //OAMレンダラー破棄
     REND_OAM_Delete();
+#else
+		GFL_CLACT_UNIT_Delete(p_wk->p_clactset);
+		GFL_CLACT_SYS_Delete();
+		PLTTSLOT_Exit(p_wk->plttslot);
+#endif
 }
 
 // 3D
@@ -2893,11 +3007,25 @@ static void WLDTIMER_EarthInit( WLDTIMER_EARTH* p_wk, WLDTIMER_DRAWSYS* p_drawsy
 	}
 
 	// 表示リソース読み込み
+#if WB_FIX
 	{
 		D3DOBJ_MdlLoadH( &p_wk->mdl, p_drawsys->p_handle, 
 				NARC_worldtimer_wifi_earth_nsbmd, heapID );
 		D3DOBJ_Init( &p_wk->obj, &p_wk->mdl );
 	}
+#else
+  {
+    p_wk->p_mdlres = GFL_G3D_CreateResourceHandle( p_drawsys->p_handle, NARC_worldtimer_wifi_earth_nsbmd );
+    GFL_G3D_TransVramTexture(p_wk->p_mdlres);
+		p_wk->rnder = GFL_G3D_RENDER_Create( p_wk->p_mdlres, 0, p_wk->p_mdlres );
+    p_wk->g3dobj = GFL_G3D_OBJECT_Create(p_wk->rnder, NULL, 0);
+    
+  	VEC_Set(&p_wk->obj.trans, 0, 0, 0);
+  	VEC_Set(&p_wk->obj.scale, FX32_ONE, FX32_ONE, FX32_ONE);
+  	MTX_Identity33(&p_wk->obj.rotate);
+  	VEC_Set(&p_wk->obj_rotate, 0, 0, 0);
+  }
+#endif
 }
 
 //----------------------------------------------------------------------------
@@ -2911,7 +3039,13 @@ static void WLDTIMER_EarthExit( WLDTIMER_EARTH* p_wk )
 {
 	// リソースの破棄
 	{
+	#if WB_FIX
 		D3DOBJ_MdlDelete( &p_wk->mdl );
+	#else
+	  GFL_G3D_OBJECT_Delete(p_wk->g3dobj);
+	  GFL_G3D_DeleteResource(p_wk->p_mdlres);
+	  GFL_G3D_RENDER_Delete(p_wk->rnder);
+	#endif
 	}
 }
 
@@ -2931,15 +3065,25 @@ static void WLDTIMER_EarthDraw( WLDTIMER_EARTH* p_wk )
 	WLDTIMER_EarthGetRotMtx( p_wk, &rotmtx );
 	
 	// 座標、拡大を設定
+#if WB_FIX
 	D3DOBJ_SetMatrix( &p_wk->obj, 
 			p_wk->trans.x, p_wk->trans.y, p_wk->trans.z );
 	D3DOBJ_SetScale( &p_wk->obj, 
 			p_wk->scale.x, p_wk->scale.y, p_wk->scale.z );
+#else
+  VEC_Set(&p_wk->obj.trans, p_wk->trans.x, p_wk->trans.y, p_wk->trans.z );
+  VEC_Set(&p_wk->obj.scale, p_wk->scale.x, p_wk->scale.y, p_wk->scale.z );
+#endif
 
 
 	// 表示
+#if WB_FIX
 	D3DOBJ_DrawRMtx( &p_wk->obj,
 					 &rotmtx );
+#else
+  p_wk->obj.rotate = rotmtx;
+	GFL_G3D_DRAW_DrawObject(p_wk->g3dobj, &p_wk->obj);
+#endif
 }
 
 //----------------------------------------------------------------------------
@@ -3014,9 +3158,22 @@ static void WLDTIMER_PlaceInit( WLDTIMER_PLACE* p_wk, const WFLBY_WLDTIMER* cp_d
 
 	// 描画リソース読み込み
 	for( i=0; i<WLDTIMER_PLACE_COL_NUM; i++ ){
+	#if WB_FIX
 		D3DOBJ_MdlLoadH( &p_wk->mdl[i], p_drawsys->p_handle,// 読み込み
 				sc_WLDTIMER_PLACE_MDL[i], heapID );
 		D3DOBJ_Init( &p_wk->obj[i], &p_wk->mdl[i] );		// 表示オブジェ初期化
+	#else
+    p_wk->p_mdlres[i] = GFL_G3D_CreateResourceHandle( 
+      p_drawsys->p_handle, sc_WLDTIMER_PLACE_MDL[i] );
+    GFL_G3D_TransVramTexture(p_wk->p_mdlres[i]);
+		p_wk->rnder[i] = GFL_G3D_RENDER_Create( p_wk->p_mdlres[i], 0, p_wk->p_mdlres[i] );
+    p_wk->g3dobj[i] = GFL_G3D_OBJECT_Create(p_wk->rnder[i], NULL, 0);
+
+  	VEC_Set(&p_wk->obj[i].trans, 0, 0, 0);
+  	VEC_Set(&p_wk->obj[i].scale, FX32_ONE, FX32_ONE, FX32_ONE);
+  	MTX_Identity33(&p_wk->obj[i].rotate);
+  	VEC_Set(&p_wk->obj_rotate[i], 0, 0, 0);
+	#endif
 	}
 
 	// マークスケール初期化
@@ -3046,7 +3203,13 @@ static void WLDTIMER_PlaceExit( WLDTIMER_PLACE* p_wk )
 	
 	// 描画リソース破棄
 	for( i=0; i<WLDTIMER_PLACE_COL_NUM; i++ ){
+	#if WB_FIX
 		D3DOBJ_MdlDelete( &p_wk->mdl[i] );
+	#else
+	  GFL_G3D_OBJECT_Delete(p_wk->g3dobj[i]);
+	  GFL_G3D_DeleteResource(p_wk->p_mdlres[i]);
+	  GFL_G3D_RENDER_Delete(p_wk->rnder[i]);
+	#endif
 	}
 }
 
@@ -3071,6 +3234,7 @@ static void WLDTIMER_PlaceDraw( WLDTIMER_PLACE* p_wk, const WLDTIMER_EARTH* cp_e
 
 	// 表示モデルに表示データを格納
 	for( i=0; i<WLDTIMER_PLACE_COL_NUM; i++ ){
+	#if WB_FIX
 		D3DOBJ_SetMatrix( &p_wk->obj[i], trans.x, trans.y, trans.z );
 		// タッチマークは絶対に全部のマークの上に表示される
 		if( i==WLDTIMER_PLACE_COL_TOUCH ){
@@ -3082,13 +3246,31 @@ static void WLDTIMER_PlaceDraw( WLDTIMER_PLACE* p_wk, const WLDTIMER_EARTH* cp_e
 			D3DOBJ_SetScale( &p_wk->obj[i], 
 					p_wk->list_scale.x, p_wk->list_scale.y, p_wk->list_scale.z );
 		}
+	#else
+	  VEC_Set(&p_wk->obj[i].trans, trans.x, trans.y, trans.z );
+		// タッチマークは絶対に全部のマークの上に表示される
+		if( i==WLDTIMER_PLACE_COL_TOUCH ){
+			VEC_Set( &p_wk->obj[i].scale, 
+					p_wk->list_scale.x, 
+					p_wk->list_scale.y,
+					p_wk->list_scale.z+WLDTIMER_PLACE_TOUCH_SCALE_Z_ADD );
+		}else{
+			VEC_Set( &p_wk->obj[i].scale, 
+					p_wk->list_scale.x, p_wk->list_scale.y, p_wk->list_scale.z );
+		}
+	#endif
 	}
 
 	// 触っている位置の表示
 	{
 		MTX_Identity33( &rotate_tmp );
+	#if WB_FIX
 		D3DOBJ_DrawRMtx( &p_wk->obj[ WLDTIMER_PLACE_COL_TOUCH ],
 						 &rotate_tmp );
+	#else
+    p_wk->obj[WLDTIMER_PLACE_COL_TOUCH].rotate = rotate_tmp;
+  	GFL_G3D_DRAW_DrawObject(p_wk->g3dobj[WLDTIMER_PLACE_COL_TOUCH], &p_wk->obj[WLDTIMER_PLACE_COL_TOUCH]);
+	#endif
 	}
 	
 
@@ -3098,8 +3280,13 @@ static void WLDTIMER_PlaceDraw( WLDTIMER_PLACE* p_wk, const WLDTIMER_EARTH* cp_e
 			MTX_Concat33(&p_wk->placelist.place[i].rotate,&earthrotmtx,&rotate_tmp);
 
 			if(p_wk->placelist.place[i].col != WLDTIMER_PLACE_COL_NONE){
+			#if WB_FIX
 				D3DOBJ_DrawRMtx( &p_wk->obj[ p_wk->placelist.place[i].col ],
 								 &rotate_tmp );
+			#else
+        p_wk->obj[i].rotate = rotate_tmp;
+      	GFL_G3D_DRAW_DrawObject(p_wk->g3dobj[i], &p_wk->obj[i]);
+			#endif
 			}
 		}
 	}
@@ -3303,6 +3490,7 @@ static u32 WLDTIMER_PlaceGetListNum( const WLDTIMER_PLACE* cp_wk )
 //-----------------------------------------------------------------------------
 static void WLDTIMER_CameraInit( WLDTIMER_CAMERA* p_wk, WLDTIMER_FLAG flag, u32 heapID )
 {
+#if WB_FIX
 	// カメラ作成
 	p_wk->p_camera = GFC_AllocCamera( heapID );
 	
@@ -3318,6 +3506,18 @@ static void WLDTIMER_CameraInit( WLDTIMER_CAMERA* p_wk, WLDTIMER_FLAG flag, u32 
 	GFC_SetCameraView(GF_CAMERA_PERSPECTIV,p_wk->p_camera);
 	//カメラＯＮ
 	GFC_AttachCamera(p_wk->p_camera);
+#else
+	VecFx32 camUp = {0, FX32_ONE, 0};
+
+	// カメラ作成
+	p_wk->p_camera = GFL_G3D_CAMERA_Create(	GFL_G3D_PRJPERS, 
+		FX_SinIdx( INIT_CAMERA_PERSPWAY ), FX_CosIdx( INIT_CAMERA_PERSPWAY ),
+		defaultCameraAspect, 0, INIT_CAMERA_CLIP_NEAR, INIT_CAMERA_CLIP_FAR, 0,
+		&sc_WLDTIMER_CAMERA_POS, &camUp, &sc_WLDTIMER_CAMERA_TARGET, heapID );
+	
+	//カメラＯＮ
+	GFL_G3D_CAMERA_Switching(p_wk->p_camera);
+#endif
 
 	if(flag.world == JAPAN_MODE){
 		//世界modeじゃないので、近くから
@@ -3330,7 +3530,117 @@ static void WLDTIMER_CameraInit( WLDTIMER_CAMERA* p_wk, WLDTIMER_FLAG flag, u32 
 	}
 
 	// 初期カメラ設定
+#if WB_FIX
 	GFC_SetCameraDistance(p_wk->dist,p_wk->p_camera);
+#else
+  _SetCameraDistance(p_wk->p_camera, p_wk->dist);
+  GFL_G3D_CAMERA_Switching(p_wk->p_camera);
+#endif
+}
+
+//------------------------------------------------------------
+/**
+ *	方向ベクトルから回転角を計算（ＺＸ平面対応）
+ *	@param	*inVec1		基準方向ベクトル
+ *	@param	*inVec2		指定方向ベクトル
+ *
+ *	@retval	rad			回転角
+*/
+//------------------------------------------------------------
+static fx32 _GetRad(const VecFx32 *inVec1, const VecFx32 *inVec2 )
+{
+	VecFx32 vec1,vec2;
+	fx32 sin,cos;
+	fx32 rad;
+	VEC_Normalize(inVec1, &vec1);
+	VEC_Normalize(inVec2, &vec2);
+	//内積を使ってコサインを求める
+	//cos = VEC_DotProduct(&vec1, &vec2);
+	cos = FX_Mul(vec1.z, vec2.z) + FX_Mul(vec1.x, vec2.x); 
+	//外積を使ってサインを求める
+	sin = FX_Mul(vec1.z, vec2.x) - FX_Mul(vec1.x, vec2.z);
+	//XZ平面上での計算なので時計回りが正方向となる（反時計回りにするため、サインの向きを逆にする）
+	///sin = FX_Mul(sin, -FX32_ONE);
+	if (cos == 0){//アークコサインが使えない場合
+		if (sin > 0){
+			rad = 0x4000;
+		}else{
+			rad = 0xc000;
+		}
+	}else{
+		//アークタンジェントを使って角度を求める
+		rad = FX_Atan2Idx(sin, cos);
+	}
+	return rad;
+}
+
+//---------------------------------------------------------------------------
+/**
+ * @brief	カメラ位置を注視点、距離、アングルから算出する
+ * 
+ * @param	camera_ptr	カメラポインタ
+ * 
+ * @return	none
+ */
+//---------------------------------------------------------------------------
+static void _SetCameraDistance(GFL_G3D_CAMERA *camera, fx32 distance)
+{
+  VecFx32 dst, campos, target;
+  u16 angle_x, angle_y, angle_z;
+  
+  GFL_G3D_CAMERA_GetPos( camera, &campos );
+  GFL_G3D_CAMERA_GetTarget( camera, &target );
+  
+	//注視点からのカメラ位置の距離を設定
+	VEC_Subtract(&campos, &target , &dst);
+
+  //angle取得
+	{
+		VecFx32 x_vec = {0,0,0};
+		VecFx32 y_vec = {0,0,0};
+		VecFx32 vec;
+		VecFx32 base_vec = {0, 0, FX32_ONE};
+
+		vec = dst;
+		vec.y = 0;
+		angle_y = _GetRad(&base_vec, &vec );
+		
+		base_vec.x = FX32_ONE;
+		base_vec.y = 0;
+		base_vec.z = 0;
+		vec.x = dst.z;
+		vec.z = dst.y;
+		vec.y = 0;
+		angle_x = _GetRad(&base_vec, &vec );
+
+		angle_z = 0;
+
+		OS_Printf("ANGLE_%x,%x,%x\n",angle_x, angle_y, angle_z);
+		OS_TPrintf("distance = %x\n", distance);
+	}
+	
+	{
+    u16 calc_x;
+    
+  	//仰角⇒地面からの傾きに変換
+  	calc_x = -angle_x;
+  	
+  	/*== カメラ座標を求める ==*/
+  	campos.x 
+  	  = FX_Mul( FX_Mul( FX_SinIdx( angle_y ), distance ), FX_CosIdx( angle_x ) );
+  	
+  	campos.z = FX_Mul( FX_Mul(FX_CosIdx(angle_y), distance),
+  		   FX_CosIdx(angle_x) );
+  	
+  	campos.y = FX_Mul( FX_SinIdx( calc_x ), distance );
+  
+    OS_TPrintf("campos.x = %x, y = %x, z = %x\n", campos.x, campos.y, campos.z);
+  	/*== 視点からの距離にする ==*/
+  	VEC_Add(&campos, &target, &campos);
+  	GFL_G3D_CAMERA_SetPos(camera, &campos);
+    OS_TPrintf("target.x = %x, y = %x, z = %x\n", target.x, target.y, target.z);
+    OS_TPrintf("set campos.x = %x, y = %x, z = %x\n", campos.x, campos.y, campos.z);
+	}
 }
 
 //----------------------------------------------------------------------------
@@ -3368,10 +3678,10 @@ static void WLDTIMER_CameraMoveReq( WLDTIMER_CAMERA* p_wk )
 {
 	if( p_wk->status == CAMERA_FAR ){
 		p_wk->status = CAMERA_NEAR;
-		Snd_SePlay( WLDTIMER_SND_ZOMEIN );
+		PMSND_PlaySE( WLDTIMER_SND_ZOMEIN );
 	}else{
 		p_wk->status = CAMERA_FAR;
-		Snd_SePlay( WLDTIMER_SND_ZOMEOUT );
+		PMSND_PlaySE( WLDTIMER_SND_ZOMEOUT );
 	}
 	p_wk->move = TRUE;
 }
@@ -3416,7 +3726,12 @@ static BOOL WLDTIMER_CameraMove( WLDTIMER_CAMERA* p_wk, WLDTIMER_PLACE* p_place 
 		}
 		break;
 	}
+#if WB_FIX
 	GFC_SetCameraDistance(p_wk->dist,p_wk->p_camera);
+#else
+  _SetCameraDistance(p_wk->p_camera, p_wk->dist);
+  GFL_G3D_CAMERA_Switching(p_wk->p_camera);
+#endif
 
 	return FALSE;
 }
@@ -3444,7 +3759,7 @@ static u32	WLDTIMER_CameraGetStatus( const WLDTIMER_CAMERA* cp_wk )
  *	@param	p_wk	ワーク
  */
 //-----------------------------------------------------------------------------
-static void WLDTIMER_TouchInit( WLDTIMER_TOUCH* p_wk, WLDTIMER_DRAWSYS* p_drawsys, WLDTIMER_MSGMAN* p_msgman, u32 heapID )
+static void WLDTIMER_TouchInit( WLDTIMER_TOUCH* p_wk, WLDTIMER_DRAWSYS* p_drawsys, WLDTIMER_MSGMAN* p_msgman, u32 heapID, PRINT_QUE *printQue, GFL_FONT *font_handle )
 {
 	GFL_STD_MemFill( p_wk, 0, sizeof(WLDTIMER_TOUCH) );
 
@@ -3453,20 +3768,26 @@ static void WLDTIMER_TouchInit( WLDTIMER_TOUCH* p_wk, WLDTIMER_DRAWSYS* p_drawsy
 				GFL_BG_FRAME1_M,
 				WLDTIMER_MAIN_BTTNBMP_X, WLDTIMER_MAIN_BTTNBMP_Y,
 				WLDTIMER_MAIN_BTTNBMP_SIZX, WLDTIMER_MAIN_BTTNBMP_SIZY, 
-				WLDTIMER_MAIN_BTTNBMP_PAL, GFL_BMP_CHRAREA_GET_F );
+				WLDTIMER_MAIN_BTTNBMP_PAL, GFL_BMP_CHRAREA_GET_B );
 	
 	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(p_wk->bttn), 15 );
 	GFL_BMPWIN_MakeScreen(p_wk->bttn);
+  PRINT_UTIL_Setup( &p_wk->print_util, p_wk->bttn );
 	
 	// やめる描画
 	{
 		STRBUF* p_str;
 		p_str = WLDTIMER_MsgManGetStr( p_msgman, msg_01 );
 
+	#if WB_FIX
 		FontProc_LoadFont( NET_FONT_BUTTON, heapID );	//ボタンフォントのロード
 		PRINT_UTIL_PrintColor(/*引数内はまだ未移植*/&p_wk->bttn,NET_FONT_BUTTON,p_str,
 				4,0,MSG_NO_PUT, WLDTIMER_TOUCH_END_MSG_COL, NULL);
 		FontProc_UnloadFont( NET_FONT_BUTTON );				//ボタンフォントの破棄
+	#else
+		PRINT_UTIL_PrintColor(&p_wk->print_util, printQue, 
+		  4, 0, p_str, font_handle, WLDTIMER_TOUCH_END_MSG_COL);
+	#endif
 	}
 
 	// ウィンドウ描画
@@ -3484,7 +3805,7 @@ static void WLDTIMER_TouchInit( WLDTIMER_TOUCH* p_wk, WLDTIMER_DRAWSYS* p_drawsy
 static void WLDTIMER_TouchExit( WLDTIMER_TOUCH* p_wk )
 {
 	// ビットマップ破棄
-	GFL_BMPWIN_Delete( &p_wk->bttn );
+	GFL_BMPWIN_Delete( p_wk->bttn );
 	
 }
 
@@ -3498,14 +3819,19 @@ static void WLDTIMER_TouchExit( WLDTIMER_TOUCH* p_wk )
 static void WLDTIMER_TouchSetParam( WLDTIMER_TOUCH* p_touch )
 {
 	int dirx,lenx,diry,leny;
-
+  u32 tp_x, tp_y;
+  
 	p_touch->tp_result = 0;
 
+#if WB_FIX
 	if(sys.tp_trg){
-		if(	(sys.tp_x >= ((EARTH_ICON_WIN_PX) * DOTSIZE))&&
-			(sys.tp_x <= ((EARTH_ICON_WIN_PX + EARTH_ICON_WIN_SX) * DOTSIZE))&&
-			(sys.tp_y >= ((EARTH_ICON_WIN_PY) * DOTSIZE))&&
-			(sys.tp_y <= ((EARTH_ICON_WIN_PY + EARTH_ICON_WIN_SY) * DOTSIZE))){
+#else
+  if(GFL_UI_TP_GetPointTrg(&tp_x, &tp_y)){
+#endif
+		if(	(tp_x >= ((EARTH_ICON_WIN_PX) * DOTSIZE))&&
+			(tp_x <= ((EARTH_ICON_WIN_PX + EARTH_ICON_WIN_SX) * DOTSIZE))&&
+			(tp_y >= ((EARTH_ICON_WIN_PY) * DOTSIZE))&&
+			(tp_y <= ((EARTH_ICON_WIN_PY + EARTH_ICON_WIN_SY) * DOTSIZE))){
 			//「やめる」
 			p_touch->tp_result = PAD_BUTTON_B;
 			return;
@@ -3516,12 +3842,16 @@ static void WLDTIMER_TouchSetParam( WLDTIMER_TOUCH* p_touch )
 			p_touch->tp_count = 0;
 			p_touch->tp_result = 0;
 			//初回の検出位置を保存
-			p_touch->tp_x = sys.tp_x;
-			p_touch->tp_y = sys.tp_y;
+			p_touch->tp_x = tp_x;
+			p_touch->tp_y = tp_y;
 			p_touch->tp_count = WLDTIMER_TOUCH_ZOOMWAIT_COUNT;
 		}
 	}
+#if WB_FIX
 	if(sys.tp_cont){
+#else
+  if(GFL_UI_TP_GetPointCont(&tp_x, &tp_y)){
+#endif
 		switch(p_touch->tp_seq){
 		case 0:
 			//最初のカウントはトリガー認識用に無視
@@ -3535,8 +3865,8 @@ static void WLDTIMER_TouchSetParam( WLDTIMER_TOUCH* p_touch )
 			p_touch->tp_result = dirx | diry;
 			p_touch->tp_lenx = lenx;
 			p_touch->tp_leny = leny;
-			p_touch->tp_x = sys.tp_x;
-			p_touch->tp_y = sys.tp_y;
+			p_touch->tp_x = tp_x;
+			p_touch->tp_y = tp_y;
 			break;
 		}
 	}else{
@@ -3604,6 +3934,7 @@ static void WLDTIMER_TouchBttnOff( WLDTIMER_TOUCH* p_wk )
 //-----------------------------------------------------------------------------
 static void WLDTIMER_TouchBttnOn( WLDTIMER_TOUCH* p_wk )
 {
+  GFL_BMPWIN_MakeScreen(p_wk->bttn);
 	BmpWinFrame_TransScreen( p_wk->bttn ,WINDOW_TRANS_ON_V);
 	BmpWinFrame_Write(p_wk->bttn,WINDOW_TRANS_ON,
 			WLDTIMER_MAIN_SYSTEMWIN_CGX,WLDTIMER_MAIN_SYSTEMWIN_PAL);
@@ -3623,7 +3954,7 @@ static void WLDTIMER_TouchBttnOn( WLDTIMER_TOUCH* p_wk )
 //-----------------------------------------------------------------------------
 static void WLDTIMER_EndMsgInit( WLDTIMER_END_MSG* p_wk, WLDTIMER_DRAWSYS* p_drawsys, WLDTIMER_MSGMAN* p_msgman, SAVE_CONTROL_WORK* p_save, u32 heapID )
 {
-	GFL_STD_MemFill( p_wk, 0, sizeof(WLDTIMER_TOUCH) );
+	GFL_STD_MemFill( p_wk, 0, sizeof(WLDTIMER_END_MSG) );
 
 	// メッセージスピード
 	{
@@ -3640,7 +3971,7 @@ static void WLDTIMER_EndMsgInit( WLDTIMER_END_MSG* p_wk, WLDTIMER_DRAWSYS* p_dra
 				GFL_BG_FRAME1_M,
 				WLDTIMER_MAIN_TALKBMP_X, WLDTIMER_MAIN_TALKBMP_Y,
 				WLDTIMER_MAIN_TALKBMP_SIZX, WLDTIMER_MAIN_TALKBMP_SIZY, 
-				WLDTIMER_MAIN_TALKBMP_PAL, GFL_BMP_CHRAREA_GET_F );
+				WLDTIMER_MAIN_TALKBMP_PAL, GFL_BMP_CHRAREA_GET_B );
 	
 	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(p_wk->win), 15 );
 	GFL_BMPWIN_MakeScreen(p_wk->win);
@@ -3662,10 +3993,17 @@ static void WLDTIMER_EndMsgInit( WLDTIMER_END_MSG* p_wk, WLDTIMER_DRAWSYS* p_dra
 static void WLDTIMER_EndMsgExit( WLDTIMER_END_MSG* p_wk )
 {
 	// メッセージ表示中ならOFF
+#if WB_FIX
 	if( GF_MSG_PrintEndCheck( p_wk->msg_no ) != 0 ){
 		GF_STR_PrintForceStop( p_wk->msg_no  );
 	}
-	
+#else
+	if(p_wk->print_stream != NULL && PRINTSYS_PrintStreamGetState(p_wk->print_stream) != PRINTSTREAM_STATE_DONE){
+		PRINTSYS_PrintStreamDelete(p_wk->print_stream);
+		p_wk->print_stream = NULL;
+	}
+#endif
+
 	// メッセージバッファ破棄
 	GFL_STR_DeleteBuffer( p_wk->p_str );
 	
@@ -3673,7 +4011,7 @@ static void WLDTIMER_EndMsgExit( WLDTIMER_END_MSG* p_wk )
 	TOUCH_SW_FreeWork( p_wk->p_touch_sw );
 
 	// ビットマップ破棄
-	GFL_BMPWIN_Delete( &p_wk->win );
+	GFL_BMPWIN_Delete( p_wk->win );
 }
 
 //----------------------------------------------------------------------------
@@ -3683,16 +4021,26 @@ static void WLDTIMER_EndMsgExit( WLDTIMER_END_MSG* p_wk )
  *	@param	p_wk	ワーク
  */
 //-----------------------------------------------------------------------------
-static void WLDTIMER_EndMsgStart( WLDTIMER_END_MSG* p_wk )
+static void WLDTIMER_EndMsgStart( WLDTIMER_END_MSG* p_wk, GFL_FONT *font_handle, GFL_TCBLSYS *tcblsys, HEAPID heapID )
 {
 	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(p_wk->win), 15 );
+	GFL_BMPWIN_MakeScreen(p_wk->win);
 	// ボタンとメッセージ表示
 	TalkWinFrame_Write( p_wk->win, WINDOW_TRANS_OFF, 
 			WLDTIMER_MAIN_TALKWIN_CGX, WLDTIMER_MAIN_TALKWIN_PAL );
 	BmpWinFrame_TransScreen( p_wk->win ,WINDOW_TRANS_ON_V);
 
+#if WB_FIX
 	p_wk->msg_no = PRINTSYS_PrintStream(/*引数内はまだ未対応*/&p_wk->win,FONT_TALK,p_wk->p_str,
 			0,0,p_wk->msg_wait, NULL);
+#else
+  GF_ASSERT(p_wk->print_stream == NULL || PRINTSYS_PrintStreamGetState(p_wk->print_stream) == PRINTSTREAM_STATE_DONE);
+  if(p_wk->print_stream != NULL){
+    PRINTSYS_PrintStreamDelete(p_wk->print_stream);
+  }
+  p_wk->print_stream = PRINTSYS_PrintStream(p_wk->win, 0, 0, p_wk->p_str, font_handle, 
+    p_wk->msg_wait, tcblsys, 10, heapID, 15);
+#endif
 
 	p_wk->seq = 0;
 }
@@ -3715,11 +4063,22 @@ static u32 WLDTIMER_EndMsgMain( WLDTIMER_END_MSG* p_wk )
 	case 0:
 		ret = TOUCH_SW_RET_NORMAL;
 		// メッセージ終了待ち
+#if WB_FIX
 		if( GF_MSG_PrintEndCheck( p_wk->msg_no ) == 0 ){
+#else
+  	if(p_wk->print_stream == NULL || PRINTSYS_PrintStreamGetState(p_wk->print_stream) == PRINTSTREAM_STATE_DONE){
+#endif
 			TOUCH_SW_PARAM param;
 			param		= sc_TOUCH_SW_PARAM;
-			param.p_bgl = GF_BGL_BmpWinGet_BglIni( &p_wk->win );
 			TOUCH_SW_Init( p_wk->p_touch_sw, &param );
+#if WB_FIX
+      ;
+#else
+      if(p_wk->print_stream != NULL){
+        PRINTSYS_PrintStreamDelete(p_wk->print_stream);
+        p_wk->print_stream = NULL;
+      }
+#endif
 			p_wk->seq ++;
 		}
 		break;
@@ -3757,7 +4116,7 @@ static void WLDTIMER_EndMsgEnd( WLDTIMER_END_MSG* p_wk )
  *	@param	heapID		ヒープＩＤ
  */
 //-----------------------------------------------------------------------------
-static void WLDTIMER_ViewerInit( WLDTIMER_VIEWER* p_wk, WLDTIMER_DRAWSYS* p_drawsys, WLDTIMER_MSGMAN* p_msgman, u32 heapID )
+static void WLDTIMER_ViewerInit( WLDTIMER_VIEWER* p_wk, WLDTIMER_DRAWSYS* p_drawsys, WLDTIMER_MSGMAN* p_msgman, u32 heapID, GFL_FONT *font_handle, PRINT_QUE *printQue )
 {
 	p_wk->seq = WLDTIMER_VIEWER_SEQ_MAIN;
 
@@ -3781,12 +4140,17 @@ static void WLDTIMER_ViewerInit( WLDTIMER_VIEWER* p_wk, WLDTIMER_DRAWSYS* p_draw
 					GFL_BG_FRAME0_S,
 					WLDTIMER_SUB_TALKBMP_X, WLDTIMER_SUB_TALKBMP_Y,
 					WLDTIMER_SUB_TALKBMP_SIZX, WLDTIMER_SUB_TALKBMP_SIZY, 
-					WLDTIMER_SUB_TALKBMP_PAL, GFL_BMP_CHRAREA_GET_F );
+					WLDTIMER_SUB_TALKBMP_PAL, GFL_BMP_CHRAREA_GET_B );
 		GFL_BMP_Clear( GFL_BMPWIN_GetBmp(p_wk->talkwin), 15 );
 		GFL_BMPWIN_MakeScreen(p_wk->talkwin);
+		PRINT_UTIL_Setup( &p_wk->print_util_talk, p_wk->talkwin );
 		
 		p_str = WLDTIMER_MsgManGetStr( p_msgman, msg_00 );
+#if WB_FIX
 		GF_STR_PrintSimple(&p_wk->talkwin,FONT_TALK,p_str,0,0,MSG_NO_PUT,NULL);
+#else
+  	PRINT_UTIL_Print( &p_wk->print_util_talk, printQue, 0, 0, p_str, font_handle );
+#endif
 
 		TalkWinFrame_Write( p_wk->talkwin, WINDOW_TRANS_ON, 
 				WLDTIMER_SUB_TALKWIN_CGX, WLDTIMER_SUB_TALKWIN_PAL );
@@ -3834,7 +4198,7 @@ static void WLDTIMER_ViewerExit( WLDTIMER_VIEWER* p_wk, WLDTIMER_DRAWSYS* p_draw
 	WLDTIMER_ViewerMsgExit( p_wk );
 	
 	// メッセージ破棄
-	GFL_BMPWIN_Delete( &p_wk->talkwin );
+	GFL_BMPWIN_Delete( p_wk->talkwin );
 	
 	// キューパラメータ破棄
 	WLDTIMER_ViewerQExit( p_wk );
@@ -3856,7 +4220,7 @@ static void WLDTIMER_ViewerExit( WLDTIMER_VIEWER* p_wk, WLDTIMER_DRAWSYS* p_draw
  *	@param	p_wk	ワーク
  */
 //-----------------------------------------------------------------------------
-static void WLDTIMER_ViewerMain( WLDTIMER_VIEWER* p_wk, WLDTIMER_MSGMAN* p_msgman, WLDTIMER_DRAWSYS* p_drawsys )
+static void WLDTIMER_ViewerMain( WLDTIMER_VIEWER* p_wk, WLDTIMER_MSGMAN* p_msgman, WLDTIMER_DRAWSYS* p_drawsys, PRINT_QUE *printQue, GFL_FONT *font_handle )
 {
 	BOOL result;
 	
@@ -3873,7 +4237,7 @@ static void WLDTIMER_ViewerMain( WLDTIMER_VIEWER* p_wk, WLDTIMER_MSGMAN* p_msgma
 		
 	// フェード初期化
 	case WLDTIMER_VIEWER_SEQ_FADE_INIT:
-		WLDTIMER_ViewerFadeInit( p_wk, p_msgman, p_drawsys );
+		WLDTIMER_ViewerFadeInit( p_wk, p_msgman, p_drawsys, printQue, font_handle );
 		p_wk->seq = WLDTIMER_VIEWER_SEQ_FADE;
 		break;
 	
@@ -3924,6 +4288,7 @@ static void WLDTIMER_ViewerTalkWinOff( WLDTIMER_VIEWER* p_wk )
 //-----------------------------------------------------------------------------
 static void WLDTIMER_ViewerTalkWinOn( WLDTIMER_VIEWER* p_wk )
 {
+  GFL_BMPWIN_MakeScreen(p_wk->talkwin);
 	BmpWinFrame_TransScreen( p_wk->talkwin ,WINDOW_TRANS_ON_V);
 	TalkWinFrame_Write( p_wk->talkwin, WINDOW_TRANS_OFF, 
 			WLDTIMER_SUB_TALKWIN_CGX, WLDTIMER_SUB_TALKWIN_PAL );
@@ -4108,7 +4473,7 @@ static void WLDTIMER_ViewerAnmCont( WLDTIMER_VIEWER* p_wk, WLDTIMER_DRAWSYS* p_d
  *	@param	p_drawsys	描画システム
  */
 //-----------------------------------------------------------------------------
-static void WLDTIMER_ViewerFadeInit( WLDTIMER_VIEWER* p_wk, WLDTIMER_MSGMAN* p_msgman, WLDTIMER_DRAWSYS* p_drawsys )
+static void WLDTIMER_ViewerFadeInit( WLDTIMER_VIEWER* p_wk, WLDTIMER_MSGMAN* p_msgman, WLDTIMER_DRAWSYS* p_drawsys, PRINT_QUE *printQue, GFL_FONT *font_handle )
 {
 	// フェードワーク初期化
 	GFL_STD_MemFill( p_wk->fade, 0, sizeof(WLDTIMER_VIEWER_FADE)*WLDTIMER_VIEWER_FADE_DIV );
@@ -4150,7 +4515,7 @@ static void WLDTIMER_ViewerFadeInit( WLDTIMER_VIEWER* p_wk, WLDTIMER_MSGMAN* p_m
 				WLDTIMER_TimeZoneAnm_SetFlag( &p_wk->anm[ zonetype ], drawtype, TRUE );
 
 				// 地域データ書き込み
-				WLDTIMER_ViewerMsgWrite( p_wk, drawtype, &pointdata, p_msgman );
+				WLDTIMER_ViewerMsgWrite( p_wk, drawtype, &pointdata, p_msgman, printQue, font_handle );
 
 				// 描画タイプー＞タイムゾーンテーブルに格納
 				p_wk->drawtype_zonetype[ drawtype ] = zonetype;
@@ -4460,7 +4825,7 @@ static void WLDTIMER_ViewerFadeScrn_LineTrans( WLDTIMER_VIEWER* p_wk, u32 y, WLD
 			p_wk->p_fadescrndata->screenHeight/8 );
 
 	// 転送フラグを立てる
-	GFL_BG_LoadScreenV_Req( p_drawsys->p_bgl, GFL_BG_FRAME2_S );
+	GFL_BG_LoadScreenV_Req( GFL_BG_FRAME2_S );
 }
 
 //----------------------------------------------------------------------------
@@ -4574,14 +4939,19 @@ static void WLDTIMER_ViewerMsgInit( WLDTIMER_VIEWER* p_wk, WLDTIMER_DRAWSYS* p_d
 			WLDTIMER_VIEWER_MSGBMP_X, 
 			WLDTIMER_VIEWER_MSGBMP_Y + (WLDTIMER_VIEWER_MSGBMP_SIZY*i),
 			WLDTIMER_VIEWER_MSGBMP_SIZX, WLDTIMER_VIEWER_MSGBMP_SIZY,
-			WLDTIMER_VIEWER_MSGBMP_PAL, GFL_BMP_CHRAREA_GET_F );
+			WLDTIMER_VIEWER_MSGBMP_PAL, GFL_BMP_CHRAREA_GET_B );
 
 		cgx += WLDTIMER_VIEWER_MSGBMP_CGSIZ;
 
 		GFL_BMP_Clear( GFL_BMPWIN_GetBmp(p_wk->msg[i]), 0 );
-		GFL_BMPWIN_MakeScreen(p_wk->msg[i]);
-		
+		//GFL_BMPWIN_MakeScreen(p_wk->msg[i]);  GFL_BMPWIN_MakeTransWindowでやるので。
+		PRINT_UTIL_Setup(&p_wk->print_util[i], p_wk->msg[i]);
+	
+	#if WB_FIX
 		GF_BGL_BmpWinOn( &p_wk->msg[i] );
+	#else
+	  GFL_BMPWIN_MakeTransWindow(p_wk->msg[i]);
+	#endif
 	}
 
 	p_wk->dummy = GFL_BMPWIN_Create(
@@ -4589,7 +4959,7 @@ static void WLDTIMER_ViewerMsgInit( WLDTIMER_VIEWER* p_wk, WLDTIMER_DRAWSYS* p_d
 		WLDTIMER_VIEWER_MSGBMP_X, 
 		WLDTIMER_VIEWER_MSGBMP_Y,
 		WLDTIMER_VIEWER_MSGBMP_SIZX, WLDTIMER_VIEWER_MSGBMP_SIZY,
-		WLDTIMER_VIEWER_MSGBMP_PAL, GFL_BMP_CHRAREA_GET_F );
+		WLDTIMER_VIEWER_MSGBMP_PAL, GFL_BMP_CHRAREA_GET_B );
 	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(p_wk->dummy), 0 );
 	GFL_BMPWIN_MakeScreen(p_wk->dummy);
 }
@@ -4606,9 +4976,9 @@ static void WLDTIMER_ViewerMsgExit( WLDTIMER_VIEWER* p_wk )
 	int i;
 
 	for( i=0; i<WLDTIMER_VIEWER_DRAWNUM; i++ ){
-		GFL_BMPWIN_Delete( &p_wk->msg[i] );
+		GFL_BMPWIN_Delete( p_wk->msg[i] );
 	}
-	GFL_BMPWIN_Delete( &p_wk->dummy );
+	GFL_BMPWIN_Delete( p_wk->dummy );
 }
 
 //----------------------------------------------------------------------------
@@ -4621,15 +4991,17 @@ static void WLDTIMER_ViewerMsgExit( WLDTIMER_VIEWER* p_wk )
  *	@param	p_msgman	メッセージマネージャ
  */
 //-----------------------------------------------------------------------------
-static void WLDTIMER_ViewerMsgWrite( WLDTIMER_VIEWER* p_wk, u32 drawtype, const WLDTIMER_POINTDATA* cp_data, WLDTIMER_MSGMAN* p_msgman )
+static void WLDTIMER_ViewerMsgWrite( WLDTIMER_VIEWER* p_wk, u32 drawtype, const WLDTIMER_POINTDATA* cp_data, WLDTIMER_MSGMAN* p_msgman, PRINT_QUE *printQue, GFL_FONT *font_handle )
 {
 	STRBUF* p_str;
 	GFL_BMPWIN* p_bmp;
 	u32 zonetype;
+	PRINT_UTIL *p_printutil;
 	
 	GF_ASSERT( drawtype < WLDTIMER_VIEWER_DRAWNUM );
 	
-	p_bmp = &p_wk->msg[drawtype];
+	p_bmp = p_wk->msg[drawtype];
+	p_printutil = &p_wk->print_util[drawtype];
 	
 	// クリアカラーで初期化
 	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(p_bmp), 0 );
@@ -4640,25 +5012,31 @@ static void WLDTIMER_ViewerMsgWrite( WLDTIMER_VIEWER* p_wk, u32 drawtype, const 
 	// タイトル表示
 	{
 		p_str = WLDTIMER_MsgManGetStr( p_msgman, msg_02 );
+	#if WB_FIX
 		PRINT_UTIL_PrintColor(/*引数内はまだ未移植*/p_bmp,FONT_TALK,p_str,
 				WLDTIMER_VIEWER_MSG_TITLE_X,WLDTIMER_VIEWER_MSG_TITLE_Y,
 				MSG_NO_PUT, WLDTIMER_VIEWER_MSG_TITLE_COL[ zonetype ], NULL);
+	#else
+		PRINT_UTIL_PrintColor(p_printutil, printQue, 
+		  WLDTIMER_VIEWER_MSG_TITLE_X,WLDTIMER_VIEWER_MSG_TITLE_Y, 
+		  p_str, font_handle, WLDTIMER_VIEWER_MSG_TITLE_COL[ zonetype ]);
+	#endif
 	}
 
 	// 国表示
 	{
 		p_str = WLDTIMER_MsgManCountryGetStr( p_msgman, cp_data->nation );
-		PRINT_UTIL_PrintColor(/*引数内はまだ未移植*/p_bmp,FONT_TALK,p_str,
-				WLDTIMER_VIEWER_MSG_NATION_X,WLDTIMER_VIEWER_MSG_NATION_Y,
-				MSG_NO_PUT, WLDTIMER_VIEWER_MSG_NATION_COL, NULL);
+		PRINT_UTIL_PrintColor(p_printutil, printQue, 
+			WLDTIMER_VIEWER_MSG_NATION_X,WLDTIMER_VIEWER_MSG_NATION_Y,
+		  p_str, font_handle, WLDTIMER_VIEWER_MSG_NATION_COL);
 	}
 
 	// 地域表示
 	{
 		p_str = WLDTIMER_MsgManPlaceGetStr( p_msgman, cp_data->nation, cp_data->area );
-		PRINT_UTIL_PrintColor(/*引数内はまだ未移植*/p_bmp,FONT_TALK,p_str,
-				WLDTIMER_VIEWER_MSG_AREA_X,WLDTIMER_VIEWER_MSG_AREA_Y,
-				MSG_NO_PUT, WLDTIMER_VIEWER_MSG_NATION_COL, NULL);
+		PRINT_UTIL_PrintColor(p_printutil, printQue, 
+			WLDTIMER_VIEWER_MSG_AREA_X,WLDTIMER_VIEWER_MSG_AREA_Y,
+		  p_str, font_handle, WLDTIMER_VIEWER_MSG_NATION_COL);
 	}
 }
 
@@ -4678,7 +5056,11 @@ static u8* WLDTIMER_ViewerMsgGetCharBuffPtr( WLDTIMER_VIEWER* p_wk, u32 drawtype
 	GF_ASSERT( drawtype < WLDTIMER_VIEWER_DRAWNUM );
 
 	// キャラクタバッファ取得
+#if WB_FIX
 	p_buff = p_wk->msg[ drawtype ].chrbuf;
+#else
+  p_buff = GFL_BMP_GetCharacterAdrs(GFL_BMPWIN_GetBmp(p_wk->msg[drawtype]));
+#endif
 
 	// 目的位置のポインタを返す
 	return &p_buff[((WLDTIMER_VIEWER_MSGBMP_SIZX*y)*32)];
@@ -4698,7 +5080,11 @@ static u8* WLDTIMER_ViewerDummyGetCharBuffPtr( WLDTIMER_VIEWER* p_wk, u32 y )
 	u8* p_buff;
 
 	// キャラクタバッファ取得
+#if WB_FIX
 	p_buff = p_wk->dummy.chrbuf;
+#else
+  p_buff = GFL_BMP_GetCharacterAdrs(GFL_BMPWIN_GetBmp(p_wk->dummy));
+#endif
 
 	// 目的位置のポインタを返す
 	return &p_buff[((WLDTIMER_VIEWER_MSGBMP_SIZX*y)*32)];
@@ -4719,7 +5105,11 @@ static void WLDTIMER_ViewerMsgCharTrans( WLDTIMER_VIEWER* p_wk, u32 drawtype, u3
 	u16 cgx;
 
 	// 転送先オフセット取得
+#if WB_FIX
 	cgx = GF_BGL_BmpWinGet_Chrofs( &p_wk->msg[ drawtype ] );
+#else
+  cgx = GFL_BMPWIN_GetChrNum(p_wk->msg[drawtype]);
+#endif
 
 	// Y座標のオフセットにする
 	cgx += (WLDTIMER_VIEWER_MSGBMP_SIZX*y);
@@ -4838,7 +5228,7 @@ static void WLDTIMER_TimeZoneAnm_Main( WLDTIMER_TIMEZONEANM* p_wk, WLDTIMER_DRAW
 						p_wk->p_scrndata[ p_wk->scrnframe_now ]->screenHeight/8 );
 
 				// 転送フラグを立てる
-				GFL_BG_LoadScreenV_Req( p_drawsys->p_bgl, GFL_BG_FRAME2_S );
+				GFL_BG_LoadScreenV_Req( GFL_BG_FRAME2_S );
 			}
 		}
 	}
@@ -4915,7 +5305,7 @@ static void WLDTIMER_TimeZoneAnm_LineTrans( WLDTIMER_TIMEZONEANM* p_wk, u32 y, W
 				p_wk->p_scrndata[ p_wk->scrnframe_now ]->screenHeight/8 );
 
 		// 転送フラグを立てる
-		GFL_BG_LoadScreenV_Req( p_drawsys->p_bgl, GFL_BG_FRAME2_S );
+		GFL_BG_LoadScreenV_Req( GFL_BG_FRAME2_S );
 	}
 }
 
@@ -4934,9 +5324,11 @@ static void WLDTIMER_TimeZoneAnm_LineTrans( WLDTIMER_TIMEZONEANM* p_wk, u32 y, W
 static void WLDTIMER_PokeBaloon_Init( WLDTIMER_POKEBALLOON* p_wk, WLDTIMER_DRAWSYS* p_drawsys, WLDTIMER_VWND* p_wnd, u32 heapID )
 {
 	int i;
-	CLACT_HEADER header;
 	BOOL result;
+#if WB_FIX
+	CLACT_HEADER header;
 	CLACT_ADD_SIMPLE add = {NULL};
+#endif
 
 	// 0クリア
 	GFL_STD_MemFill( p_wk, 0, sizeof(WLDTIMER_POKEBALLOON) );
@@ -4946,14 +5338,17 @@ static void WLDTIMER_PokeBaloon_Init( WLDTIMER_POKEBALLOON* p_wk, WLDTIMER_DRAWS
 	p_wk->wait		= WLDTIMER_VIEWER_POKEBLN_WAIT;
 	
 
+#if WB_FIX
 	// 登録基本情報作成
 	add.ClActSet	= p_drawsys->p_clactset;
 	add.ClActHeader = &header;
 	add.pri			= WLDTIMER_VIEWER_POKEBLN_SFT_PRI;
 	add.DrawArea	= NNS_G2D_VRAM_TYPE_2DSUB;
 	add.heap		= heapID;
+#endif
 
 	// パレットは共通
+#if WB_FIX
 	p_wk->p_res[ 0 ][ 1 ] = CLACT_U_ResManagerResAddArcPltt_ArcHandle( 
 			p_drawsys->p_resman[1], p_drawsys->p_handle,
 			WLDTIMER_VIEWER_POKEBLN_NCLR_GET(i),
@@ -4962,12 +5357,17 @@ static void WLDTIMER_PokeBaloon_Init( WLDTIMER_POKEBALLOON* p_wk, WLDTIMER_DRAWS
 	result =CLACT_U_PlttManagerSetCleanArea( p_wk->p_res[ 0 ][ 1 ] );
 	GF_ASSERT( result );
 	CLACT_U_ResManagerResOnlyDelete( p_wk->p_res[ 0 ][ 1 ] );
-		
+#else
+  p_wk->p_resobj_index[0][1] = 
+    PLTTSLOT_ResourceSet(p_drawsys->plttslot, p_drawsys->p_handle, 
+    WLDTIMER_VIEWER_POKEBLN_NCLR_GET(i), CLSYS_DRAW_SUB, WLDTIMER_VIEWER_POKEBLN_PL_NUM, heapID);
+#endif
+	
 	
 	
 	// ポケモンのグラフィック読み込み
 	for( i=0; i<WLDTIMER_TIME_POKE_NUM; i++ ){
-
+#if WB_FIX
 		// キャラクタ読み込み
 		p_wk->p_res[ i ][ 0 ] = CLACT_U_ResManagerResAddArcChar_ArcHandle( 
 				p_drawsys->p_resman[0], p_drawsys->p_handle,
@@ -5006,7 +5406,34 @@ static void WLDTIMER_PokeBaloon_Init( WLDTIMER_POKEBALLOON* p_wk, WLDTIMER_DRAWS
 
 		// オートアニメON
 		GFL_CLACT_WK_SetAutoAnmFlag( p_wk->p_act[ i ], TRUE );
+#else
+    //キャラクタ読み込み
+    p_wk->p_resobj_index[i][0] = GFL_CLGRP_CGR_Register(p_drawsys->p_handle, 
+      WLDTIMER_VIEWER_POKEBLN_NCGR_GET(i), FALSE, CLSYS_DRAW_SUB, heapID);
+    //セル＆アニメ読み込み
+    p_wk->p_resobj_index[i][2] = GFL_CLGRP_CELLANIM_Register(p_drawsys->p_handle, WLDTIMER_VIEWER_POKEBLN_NCER_GET(i), WLDTIMER_VIEWER_POKEBLN_NANR_GET(i), heapID);
+
+    {
+      GFL_CLWK_DATA HeadClwkData;
+      
+      HeadClwkData.pos_x = 0;
+      HeadClwkData.pos_y = 0;
+      HeadClwkData.anmseq = 0;
+      HeadClwkData.softpri = WLDTIMER_VIEWER_POKEBLN_SFT_PRI;
+      HeadClwkData.bgpri = 0;
+
+      p_wk->p_act[i] = GFL_CLACT_WK_Create(p_drawsys->p_clactset, p_wk->p_resobj_index[i][0], 
+        p_wk->p_resobj_index[0][1], p_wk->p_resobj_index[i][2], 
+        &HeadClwkData, CLSYS_DEFREND_SUB, heapID);
+      GFL_CLACT_WK_SetAutoAnmFlag(p_wk->p_act[i], TRUE);
+    }
+#endif
+	
+	#if WB_FIX
 		CLACT_SetAnmFrame( p_wk->p_act[ i ], FX32_ONE );
+	#else
+	  GFL_CLACT_WK_SetAutoAnmSpeed(p_wk->p_act[i], FX32_ONE);
+	#endif
 	}
 
 	// OAM非表示
@@ -5027,10 +5454,13 @@ static void WLDTIMER_PokeBaloon_Exit( WLDTIMER_POKEBALLOON* p_wk, WLDTIMER_DRAWS
 	int i, j;
 
 	// 音がなってたら停止
+#if WB_TEMP_FIX
 	Snd_SeStopBySeqNo( WLDTIMER_SND_BALLOON, 0 );	// 風船音停止
+#endif
 
 
 	// リソースとワーク破棄
+#if WB_FIX
 	for( i=0; i<WLDTIMER_TIME_POKE_NUM; i++ ){
 		// ワーク破棄
 		GFL_CLACT_WK_Remove( p_wk->p_act[i] );
@@ -5050,6 +5480,14 @@ static void WLDTIMER_PokeBaloon_Exit( WLDTIMER_POKEBALLOON* p_wk, WLDTIMER_DRAWS
 			}
 		}
 	}
+#else
+	for( i=0; i<WLDTIMER_TIME_POKE_NUM; i++ ){
+	  GFL_CLACT_WK_Remove(p_wk->p_act[i]);
+	  GFL_CLGRP_CGR_Release(p_wk->p_resobj_index[i][0]);
+	  GFL_CLGRP_CELLANIM_Release(p_wk->p_resobj_index[i][2]);
+	}
+	PLTTSLOT_ResourceFree(p_drawsys->plttslot, p_wk->p_resobj_index[0][1], CLSYS_DRAW_SUB);
+#endif
 }
 
 //----------------------------------------------------------------------------
@@ -5136,7 +5574,7 @@ static void WLDTIMER_PokeBaloon_Main( WLDTIMER_POKEBALLOON* p_wk, WLDTIMER_VWND*
 		if( p_wk->wait == 0 ){
 			result = WLDTIMER_PokeBaloon_Start( p_wk, p_wk->drawtype, p_wnd );
 			if( result == TRUE ){
-				Snd_SePlay( WLDTIMER_SND_BALLOON );	// 風船音
+				PMSND_PlaySE( WLDTIMER_SND_BALLOON );	// 風船音
 			}
 		}
 		return ;
@@ -5150,7 +5588,9 @@ static void WLDTIMER_PokeBaloon_Main( WLDTIMER_POKEBALLOON* p_wk, WLDTIMER_VWND*
 			p_wk->drawtype--;
 			WLDTIMER_PokeBaloon_Start( p_wk, p_wk->drawtype, p_wnd );
 		}else{
+#if WB_TEMP_FIX
 			Snd_SeStopBySeqNo( WLDTIMER_SND_BALLOON, 0 );	// 風船音停止
+#endif
 			p_wk->drawtype = WLDTIMER_VIEWER_DRAW_UND;
 			p_wk->wait = WLDTIMER_VIEWER_POKEBLN_WAIT;
 		}
@@ -5409,11 +5849,18 @@ static void WLDTIMER_PokeBln_ActSetMatrix( WLDTIMER_POKEBALLOON* p_wk, u32 drawt
 {
 	VecFx32 pos;
 	GFL_CLWK* p_obj;
-
+  GFL_CLACTPOS actpos;
+  
 	WLDTIMER_PokeBln_MoveGetPos( &p_wk->move[ drawtype ], &pos );	// 座標設定
 	
 	p_obj = p_wk->p_act[ p_wk->pokegra[ drawtype ] ];
+#if WB_FIX
 	CLACT_SetMatrix( p_obj, &pos );
+#else
+  actpos.x = FX_Whole(pos.x);
+  actpos.y = FX_Whole(pos.y);
+  GFL_CLACT_WK_SetPos( p_obj, &actpos, CLSYS_DEFREND_SUB);
+#endif
 }
 
 

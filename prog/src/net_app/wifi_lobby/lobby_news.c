@@ -1243,9 +1243,9 @@ static void NEWSDRAW_DrawSysOamInit( NEWSDRAW_DRAWSYS* p_wk, u32 heapID )
 }
 static void NEWSDRAW_DrawSysOamExit( NEWSDRAW_DRAWSYS* p_wk )
 {
+#if WB_FIX
     int i;
 
-#if WB_FIX
     // アクターの破棄
     CLACT_DestSet( p_wk->p_clactset );
 

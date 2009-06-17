@@ -89,9 +89,9 @@ typedef struct{
  * à⁄êAÇ∑ÇÈèÍçáÇÕÇ±Ç±Ç…èWñÒÇµÇƒÇ®Ç≠
  */
 //--------------------------------------------------------------
-static inline void SystemFontPaletteLoad(u32 type, u32 offs, u32 heap)
+static inline void SystemFontPaletteLoad(PALTYPE type, u32 offs, u32 heap)
 {
-	GFL_ARC_UTIL_TransVramPalette(ARCID_FONT, NARC_font_default_nclr, PALTYPE_MAIN_BG, 
+	GFL_ARC_UTIL_TransVramPalette(ARCID_FONT, NARC_font_default_nclr, type, 
 		offs, 0x20, heap);
 }
 
@@ -107,9 +107,9 @@ static inline void SystemFontPaletteLoad(u32 type, u32 offs, u32 heap)
  * à⁄êAÇ∑ÇÈèÍçáÇÕÇ±Ç±Ç…èWñÒÇµÇƒÇ®Ç≠
  */
 //--------------------------------------------------------------
-static inline void TalkFontPaletteLoad(u32 type, u32 offs, u32 heap)
+static inline void TalkFontPaletteLoad(PALTYPE type, u32 offs, u32 heap)
 {
-	GFL_ARC_UTIL_TransVramPalette(ARCID_FONT, NARC_font_default_nclr, PALTYPE_MAIN_BG, 
+	GFL_ARC_UTIL_TransVramPalette(ARCID_FONT, NARC_font_default_nclr, type, 
 		offs, 0x20, heap);
 }
 
