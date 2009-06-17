@@ -103,13 +103,11 @@ typedef enum {
  */
 //------------------------------------------------------------------------------
 typedef enum {
+  WAZASICK_CONT_NONE = 0,
 
-  WAZASICK_CONT_PERMANENT = 0,  ///< ‚¸‚Á‚ÆŒp‘±
+  WAZASICK_CONT_PERMANENT,  ///< ‚¸‚Á‚ÆŒp‘±
   WAZASICK_CONT_TURN,       ///< ƒ^[ƒ“”Œp‘±
   WAZASICK_CONT_POKE,       ///< ƒƒU‚ð‚©‚¯‚½ƒ|ƒPƒ‚ƒ“‚ª‹‚éŠÔAŒp‘±
-
-  WAZASICK_CONT_MAX,
-  WAZASICK_CONT_NONE = WAZASICK_CONT_MAX,
 
 }WazaSickCont;
 
