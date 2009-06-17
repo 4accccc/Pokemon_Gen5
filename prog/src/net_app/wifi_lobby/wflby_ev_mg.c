@@ -1274,6 +1274,15 @@ BOOL WFLBY_EV_MG_End( WFLBY_EVENTWK* p_wk, WFLBY_ROOMWK* p_rmwk, u32 plno )
 			CommStateWifiP2PEnd();
 		}
 
+  	// tomoya takahashi
+  	// 090617	GS BTS:4108バグ対処
+  	// WFLBY_EV_MG_End　内で、
+  	// オートWiFiエラー切断機能をOFFにする。
+  	// しかし通信の遅延などにより、切断処理中にWiFiエラーが発生することもある。
+  	// なので、ここで通信エラーをONにしておく必要がある。
+  	// 通信エラーチェック　ON
+  	WFLBY_ROOM_SetErrorCheckFlag( p_rmwk, TRUE );
+
 		WFLBY_EVENTWK_SetSeq( p_wk, WFLBY_EV_MG_END_WAIT );
 		break;
 		
