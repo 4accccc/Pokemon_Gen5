@@ -253,6 +253,7 @@ static void fldmap_G3D_Unload( FIELDMAP_WORK * fieldWork );
 static void	fldmap_G3D_VBlank( GFL_TCB* tcb, void* work );
 static void	fldmap_G3D_BBDTrans(
 		GFL_BBDACT_TRANSTYPE type, u32 dst, u32 src, u32 siz );
+static void FIELD_EDGEMARK_Setup(const AREADATA * areadata);
 
 //fldmmdl
 static void fldmapMain_FLDMMDL_Init( FIELDMAP_WORK *fieldWork );
@@ -506,6 +507,9 @@ static MAINSEQ_RESULT mainSeqFunc_setup(GAMESYS_WORK *gsys, FIELDMAP_WORK *field
     TAMADA_Printf( "Start Dir = %04x\n", pw->direction );
   }
   
+  //エッジマーキング設定セットアップ
+  FIELD_EDGEMARK_Setup( fieldWork->areadata );
+
   // フォグシステム生成
   fieldWork->fog	= FIELD_FOG_Create( fieldWork->heapID );
 
@@ -1403,6 +1407,27 @@ static void	fldmap_G3D_BBDTrans(
 	}
 	
 	NNS_GfdRegisterNewVramTransferTask( transType, dst, (void*)src, siz );
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief エッジマーキング設定反映
+ * @param areadata
+ */
+//--------------------------------------------------------------
+static void FIELD_EDGEMARK_Setup(const AREADATA * areadata)
+{
+  static GXRgb edgeTable[8];
+  int edgemark_type = AREADATA_GetEdgeMarkingType(areadata);
+
+  if (edgemark_type == 0xff)
+  {
+    G3X_EdgeMarking(FALSE);
+    return;
+  }
+  G3X_EdgeMarking(TRUE);
+  GFL_ARC_LoadData((void *)edgeTable, ARCID_FIELD_EDGEMARK, edgemark_type);
+  G3X_SetEdgeColorTable( edgeTable );
 }
 
 //======================================================================

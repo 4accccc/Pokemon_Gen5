@@ -59,5 +59,9 @@ extern u8 AREADATA_GetInnerOuterSwitch(const AREADATA * areadata);
 //------------------------------------------------------------------
 extern u8 AREADATA_GetLightType(const AREADATA * areadata);
 
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+extern u8 AREADATA_GetEdgeMarkingType(const AREADATA * areadata);
+
 extern BOOL AREADATA_HasSeason(u16 area_id);
 
