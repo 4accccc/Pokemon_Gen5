@@ -14,8 +14,9 @@ enum {
 	NARC_fldeff_kage_nsbmd = 0,
 	NARC_fldeff_hero_kemu_nsbmd = 1,
 	NARC_fldeff_kusaeff_nsbmd = 2,
-	NARC_fldeff_hero_kemu_nsbtp = 3,
-	NARC_fldeff_kusaeff_nsbtp = 4
+	NARC_fldeff_sea_ride_nsbmd = 3,
+	NARC_fldeff_hero_kemu_nsbtp = 4,
+	NARC_fldeff_kusaeff_nsbtp = 5
 };
 
 /* NARC_FLDEFF_NAIX_ */
