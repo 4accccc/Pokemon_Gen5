@@ -17,10 +17,13 @@
 #include "pokelist_gra.naix"
 #include "message.naix"
 #include "font/font.naix"
+#include "msg/msg_pokelist.h"
+
 #include "pokeicon/pokeicon.h"
 
 #include "plist_sys.h"
 #include "plist_plate.h"
+#include "plist_message.h"
 
 #include "test/ariizumi/ari_debug.h"
 
@@ -29,10 +32,50 @@
 //======================================================================
 #pragma mark [> define
 
+#define PLIST_BARICON_Y (180)
+#define PLIST_BARICON_EXIT_X   (216)  //抜ける(×マーク
+#define PLIST_BARICON_RETURN_X (240)  //戻る(矢印
+
 //======================================================================
 //	enum
 //======================================================================
 #pragma mark [> enum
+//メインとなるシーケンス(work->mainSeq
+typedef enum
+{
+  PSMS_FADEIN,
+  PSMS_FADEIN_WAIT,
+  PSMS_SELECT_POKE, //ポケモン選択中
+  PSMS_MENU,        //メニュー処理中
+  PSMS_FADEOUT,
+  PSMS_FADEOUT_WAIT,
+
+  PSMS_MAX,
+}PLIST_SYS_MAIN_SEQ;
+
+//サブとなるシーケンス(work->subSeq
+typedef enum
+{
+  PSSS_INIT,
+  PSSS_MAIN,
+  PSSS_TERM,
+
+  PSSS_MAX,
+}PLIST_SYS_SUB_SEQ;
+
+//選択状態
+typedef enum
+{
+  PSSEL_DECIDE, //決定を押した(参加選択とか)
+  PSSEL_RETURN, //キャンセル(B)
+  PSSEL_EXIT, //戻る(X)
+
+  PSSEL_SELECT, //ポケモンを選んだ
+  PSSEL_NONE, //選択中
+
+  PSSEL_BUTTON_NUM = PSSEL_EXIT+1,  //TP判定でタッチテーブルに使う
+  PSSEL_MAX,  
+}PLIST_SYS_SELECT_STATE;
 
 
 //======================================================================
@@ -79,6 +122,13 @@ static void PLIST_TermMessage( PLIST_WORK *work );
 static void PLIST_LoadResource( PLIST_WORK *work );
 static void PLIST_ReleaseResource( PLIST_WORK *work );
 
+//モード別処理系
+static void PLIST_InitMode_Select( PLIST_WORK *work );
+static void PLIST_InitMode_Menu( PLIST_WORK *work );
+
+//ポケモン選択
+static void PLIST_SelectPoke( PLIST_WORK *work );
+
 //デバッグメニュー
 static void PLIST_InitDebug( PLIST_WORK *work );
 static void PLIST_TermDebug( PLIST_WORK *work );
@@ -90,6 +140,10 @@ const BOOL PLIST_InitPokeList( PLIST_WORK *work )
   u8 i;
   u8 partyMax = PokeParty_GetPokeCount( work->plData->pp );
   
+  work->ktst = GFL_UI_CheckTouchOrKey();
+  work->mainSeq = PSMS_FADEIN;
+  work->subSeq = PSSS_INIT;
+
   PLIST_InitGraphic( work );
   PLIST_LoadResource( work );
   PLIST_InitCell( work );
@@ -110,17 +164,20 @@ const BOOL PLIST_InitPokeList( PLIST_WORK *work )
     }
   }
   
-  PLIST_PLATE_ChangeColor( work , work->plateWork[0] , PPC_NORMAL_SELECT );
+//  PLIST_PLATE_ChangeColor( work , work->plateWork[0] , PPC_NORMAL_SELECT );
   work->vBlankTcb = GFUser_VIntr_CreateTCB( PLIST_VBlankFunc , work , 8 );
+
+  //メッセージシステム生成
+  work->msgWork = PLIST_MSG_CreateSystem( work );
+
+  
+  //モード別初期化
+  PLIST_InitMode_Select( work );
 
   //まとめて読み込む
   GFL_BG_LoadScreenV_Req(PLIST_BG_MAIN_BG);
   GFL_BG_LoadScreenV_Req(PLIST_BG_PLATE);
   GFL_BG_LoadScreenV_Req(PLIST_BG_SUB_BG);
-
-  //フェードないので仮処理
-  GX_SetMasterBrightness(0);  
-  GXS_SetMasterBrightness(0);
 
 #if USE_DEBUGWIN_SYSTEM
   PLIST_InitDebug( work );
@@ -140,6 +197,8 @@ const BOOL PLIST_TermPokeList( PLIST_WORK *work )
 
   GFL_TCB_DeleteTask( work->vBlankTcb );
   
+  PLIST_MSG_DeleteSystem( work , work->msgWork );
+
   for( i=0;i<PLIST_LIST_MAX;i++ )
   {
     PLIST_PLATE_DeletePlate( work , work->plateWork[i] );
@@ -150,6 +209,8 @@ const BOOL PLIST_TermPokeList( PLIST_WORK *work )
   PLIST_ReleaseResource( work );
   PLIST_TermGraphic( work );
 
+  GFL_UI_SetTouchOrKey( work->ktst );
+  
   return TRUE;
 }
 
@@ -160,14 +221,52 @@ const BOOL PLIST_UpdatePokeList( PLIST_WORK *work )
 {
   u8 i;
 
+  if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_START )
+  {
+    return TRUE;
+  }
+
   for( i=0;i<PLIST_LIST_MAX;i++ )
   {
     PLIST_PLATE_UpdatePlate( work , work->plateWork[i] );
   }
+  PLIST_MSG_UpdateSystem( work , work->msgWork );
 
-  if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_START )
+  switch( work->mainSeq )
   {
-    return TRUE;
+  case PSMS_FADEIN:
+//    WIPE_SYS_Start( WIPE_PATTERN_FSAM , WIPE_TYPE_SHUTTERIN_DOWN , WIPE_TYPE_SHUTTERIN_DOWN , 
+//                    WIPE_FADE_BLACK , WIPE_DEF_DIV , WIPE_DEF_SYNC , work->heapId );
+    WIPE_SYS_Start( WIPE_PATTERN_FSAM , WIPE_TYPE_FADEIN , WIPE_TYPE_FADEIN , 
+                    WIPE_FADE_BLACK , WIPE_DEF_DIV , WIPE_DEF_SYNC , work->heapId );
+    work->mainSeq = PSMS_FADEIN_WAIT;
+    break;
+  
+  case PSMS_FADEIN_WAIT:
+    if( WIPE_SYS_EndCheck() == TRUE )
+    {
+      work->mainSeq = PSMS_SELECT_POKE;
+    }
+    break;
+    
+  case PSMS_SELECT_POKE:
+    PLIST_SelectPoke( work );
+    break;
+
+  case PSMS_FADEOUT:
+//    WIPE_SYS_Start( WIPE_PATTERN_WMS , WIPE_TYPE_SPLITOUT_VSIDE , WIPE_TYPE_SPLITOUT_VSIDE , 
+//                    WIPE_FADE_BLACK , WIPE_DEF_DIV , WIPE_DEF_SYNC , work->heapId );
+    WIPE_SYS_Start( WIPE_PATTERN_WMS , WIPE_TYPE_FADEOUT , WIPE_TYPE_FADEOUT , 
+                    WIPE_FADE_BLACK , WIPE_DEF_DIV , WIPE_DEF_SYNC , work->heapId );
+    work->mainSeq = PSMS_FADEOUT_WAIT;
+    break;
+  
+  case PSMS_FADEOUT_WAIT:
+    if( WIPE_SYS_EndCheck() == TRUE )
+    {
+      return TRUE;
+    }
+    break;
   }
 
   //メッセージ
@@ -329,30 +428,54 @@ static void PLIST_SetupBgFunc( const GFL_BG_BGCNT_HEADER *bgCont , u8 bgPlane , 
 static void PLIST_InitCell( PLIST_WORK *work )
 {
   //セルの生成
-  GFL_CLWK_DATA cellInitData;
-  cellInitData.pos_x = 64;
-  cellInitData.pos_y = 32;
-  cellInitData.anmseq = PCA_NORMAL_A;
-  cellInitData.softpri = 0;
-  cellInitData.bgpri = 3;
-  work->clwkCursor[0] = GFL_CLACT_WK_Create( work->cellUnit ,
-            work->cellRes[PCR_NCG_CURSOR],
-            work->cellRes[PCR_PLT_OBJ_COMMON],
-            work->cellRes[PCR_ANM_CURSOR],
-            &cellInitData ,CLSYS_DEFREND_MAIN , work->heapId );
+  //カーソル
+  {
+    GFL_CLWK_DATA cellInitData;
+    cellInitData.pos_x = 0;
+    cellInitData.pos_y = 0;
+    cellInitData.anmseq = 0;
+    cellInitData.softpri = 0;
+    cellInitData.bgpri = 3;
+    work->clwkCursor[0] = GFL_CLACT_WK_Create( work->cellUnit ,
+              work->cellRes[PCR_NCG_CURSOR],
+              work->cellRes[PCR_PLT_OBJ_COMMON],
+              work->cellRes[PCR_ANM_CURSOR],
+              &cellInitData ,CLSYS_DEFREND_MAIN , work->heapId );
 
-  cellInitData.pos_x = 192;
-  cellInitData.pos_y = 40;
-  cellInitData.anmseq = PCA_NORMAL_B;
-  work->clwkCursor[1] = GFL_CLACT_WK_Create( work->cellUnit ,
-            work->cellRes[PCR_NCG_CURSOR],
-            work->cellRes[PCR_PLT_OBJ_COMMON],
-            work->cellRes[PCR_ANM_CURSOR],
-            &cellInitData ,CLSYS_DEFREND_MAIN , work->heapId );
+    work->clwkCursor[1] = GFL_CLACT_WK_Create( work->cellUnit ,
+              work->cellRes[PCR_NCG_CURSOR],
+              work->cellRes[PCR_PLT_OBJ_COMMON],
+              work->cellRes[PCR_ANM_CURSOR],
+              &cellInitData ,CLSYS_DEFREND_MAIN , work->heapId );
 
-  GFL_CLACT_WK_SetAutoAnmFlag( work->clwkCursor[0] , TRUE );
-  GFL_CLACT_WK_SetAutoAnmFlag( work->clwkCursor[1] , TRUE );
-  GFL_CLACT_WK_SetDrawEnable( work->clwkCursor[1] , FALSE );
+    GFL_CLACT_WK_SetAutoAnmFlag( work->clwkCursor[0] , TRUE );
+    GFL_CLACT_WK_SetAutoAnmFlag( work->clwkCursor[1] , TRUE );
+    GFL_CLACT_WK_SetDrawEnable( work->clwkCursor[0] , FALSE );
+    GFL_CLACT_WK_SetDrawEnable( work->clwkCursor[1] , FALSE );
+  }
+  //バーアイコン
+  {
+    GFL_CLWK_DATA cellInitData;
+    cellInitData.pos_x = PLIST_BARICON_RETURN_X;
+    cellInitData.pos_y = PLIST_BARICON_Y;
+    cellInitData.anmseq = PBA_RETURN_NORMAL;
+    cellInitData.softpri = 0;
+    cellInitData.bgpri = 1;
+    
+    work->clwkBarIcon[PBT_RETURN] = GFL_CLACT_WK_Create( work->cellUnit ,
+              work->cellRes[PCR_NCG_BAR_ICON],
+              work->cellRes[PCR_PLT_OBJ_COMMON],
+              work->cellRes[PCR_ANM_BAR_ICON],
+              &cellInitData ,CLSYS_DEFREND_MAIN , work->heapId );
+    
+    cellInitData.pos_x = PLIST_BARICON_EXIT_X;
+    cellInitData.anmseq = PBA_EXIT_NORMAL;
+    work->clwkBarIcon[PBT_EXIT] = GFL_CLACT_WK_Create( work->cellUnit ,
+              work->cellRes[PCR_NCG_BAR_ICON],
+              work->cellRes[PCR_PLT_OBJ_COMMON],
+              work->cellRes[PCR_ANM_BAR_ICON],
+              &cellInitData ,CLSYS_DEFREND_MAIN , work->heapId );
+  }
 }
 
 //--------------------------------------------------------------------------
@@ -360,6 +483,8 @@ static void PLIST_InitCell( PLIST_WORK *work )
 //--------------------------------------------------------------------------
 static void PLIST_TermCell( PLIST_WORK *work )
 {
+  GFL_CLACT_WK_Remove( work->clwkBarIcon[PBT_RETURN] );
+  GFL_CLACT_WK_Remove( work->clwkBarIcon[PBT_EXIT] );
   GFL_CLACT_WK_Remove( work->clwkCursor[0] );
   GFL_CLACT_WK_Remove( work->clwkCursor[1] );
   
@@ -509,6 +634,326 @@ static void PLIST_ReleaseResource( PLIST_WORK *work )
   for( i=PCR_ANM_START ; i<=PCR_ANM_END ; i++ )
   {
     GFL_CLGRP_CELLANIM_Release( work->cellRes[i] );
+  }
+}
+
+#pragma mark [>accorde mode
+//--------------------------------------------------------------------------
+//  モード別の初期化(ポケモン選択
+//--------------------------------------------------------------------------
+static void PLIST_InitMode_Select( PLIST_WORK *work )
+{
+  switch( work->plData->mode )
+  {
+  case PL_MODE_FIELD:
+    PLIST_MSG_OpenWindow( work , work->msgWork , PMT_BAR );
+    PLIST_MSG_DrawMessageNoWait( work , work->msgWork , mes_pokelist_02_01 );
+    break;
+    
+  default:
+    GF_ASSERT_MSG( NULL , "PLIST mode まだ作ってない！[%d]\n" , work->plData->mode );
+    break;
+  }
+}
+
+//--------------------------------------------------------------------------
+//  モード別の初期化(メニュー
+//--------------------------------------------------------------------------
+static void PLIST_InitMode_Menu( PLIST_WORK *work )
+{
+  switch( work->plData->mode )
+  {
+  case PL_MODE_FIELD:
+    
+    break;
+    
+  default:
+    GF_ASSERT_MSG( NULL , "PLIST mode まだ作ってない！[%d]\n" , work->plData->mode );
+    break;
+  }
+  
+}
+
+#pragma mark [>PokeSelect
+static void PLIST_SelectPokeInit( PLIST_WORK *work );
+static void PLIST_SelectPokeTerm( PLIST_WORK *work );
+static void PLIST_SelectPokeMain( PLIST_WORK *work );
+static void PLIST_SelectPokeUpdateKey( PLIST_WORK *work );
+static void PLIST_SelectPokeUpdateTP( PLIST_WORK *work );
+
+static void PLIST_SelectPokeSetCursor( PLIST_WORK *work , const PL_SELECT_POS pos );
+
+//--------------------------------------------------------------------------
+//  ポケモン選択画面
+//--------------------------------------------------------------------------
+static void PLIST_SelectPoke( PLIST_WORK *work )
+{
+  switch( work->subSeq )
+  {
+  case PSSS_INIT:
+    PLIST_SelectPokeInit( work );
+    break;
+    
+  case PSSS_MAIN:
+    PLIST_SelectPokeMain( work );
+    break;
+    
+  case PSSS_TERM:
+    PLIST_SelectPokeTerm( work );
+    break;
+  }
+}
+
+//--------------------------------------------------------------------------
+//  ポケモン選択画面初期化
+//--------------------------------------------------------------------------
+static void PLIST_SelectPokeInit( PLIST_WORK *work )
+{
+  work->pokeCursor = work->plData->ret_sel;
+  
+  if( work->ktst == GFL_APP_KTST_KEY )
+  {
+    if( work->pokeCursor <= PL_SEL_POS_POKE6 )
+    {
+      PLIST_SelectPokeSetCursor( work , work->pokeCursor );
+
+      PLIST_PLATE_SetActivePlate( work , work->plateWork[work->pokeCursor] , TRUE );
+    }
+  }
+  else
+  {
+    GFL_CLACT_WK_SetDrawEnable( work->clwkCursor[0] , FALSE );
+  }
+  
+  work->subSeq = PSSS_MAIN;
+  work->selectState = PSSEL_NONE;
+}
+
+//--------------------------------------------------------------------------
+//  ポケモン選択画面開放
+//--------------------------------------------------------------------------
+static void PLIST_SelectPokeTerm( PLIST_WORK *work )
+{
+  switch( work->selectState )
+  {
+  case PSSEL_SELECT:
+    work->plData->ret_sel = work->pokeCursor;
+    break;
+
+  case PSSEL_DECIDE:
+    work->mainSeq = PSMS_FADEOUT;
+    work->plData->ret_sel = PL_SEL_POS_ENTER;
+    break;
+    
+  case PSSEL_RETURN:
+    work->mainSeq = PSMS_FADEOUT;
+    work->plData->ret_sel = PL_SEL_POS_EXIT;
+    break;
+
+  case PSSEL_EXIT:
+    work->mainSeq = PSMS_FADEOUT;
+    work->plData->ret_sel = PL_SEL_POS_EXIT2;
+    break;
+  }
+}
+
+//--------------------------------------------------------------------------
+//  ポケモン選択画面更新
+//--------------------------------------------------------------------------
+static void PLIST_SelectPokeMain( PLIST_WORK *work )
+{
+  PLIST_SelectPokeUpdateKey( work );
+  //キーによる決定が無かったらTPも見る
+  if( work->selectState == PSSEL_NONE )
+  {
+    PLIST_SelectPokeUpdateTP( work );
+  }
+
+  if( work->selectState != PSSEL_NONE )
+  {
+    work->subSeq = PSSS_TERM;
+  }
+}
+
+//--------------------------------------------------------------------------
+//  ポケモン選択画面 キー操作
+//--------------------------------------------------------------------------
+static void PLIST_SelectPokeUpdateKey( PLIST_WORK *work )
+{
+  const int trg = GFL_UI_KEY_GetTrg();
+  const int repeat = GFL_UI_KEY_GetRepeat();
+  if( work->ktst == GFL_APP_KTST_TOUCH )
+  {
+    if( trg != 0 )
+    {
+      //カーソルを0の位置に表示
+      GFL_CLACTPOS curPos;
+      work->pokeCursor = PL_SEL_POS_POKE1;
+      PLIST_SelectPokeSetCursor( work , work->pokeCursor );
+      PLIST_PLATE_SetActivePlate( work , work->plateWork[work->pokeCursor] , TRUE );
+      
+      work->ktst = GFL_APP_KTST_KEY;
+    }
+  }
+  else
+  {
+    s8 moveVal = 0;
+    //キー分岐
+    if( repeat & PAD_KEY_UP )
+    {
+      moveVal = -2;
+    }
+    else
+    if( repeat & PAD_KEY_DOWN )
+    {
+      moveVal = 2;
+    }
+    else
+    if( repeat & PAD_KEY_LEFT )
+    {
+      moveVal = -1;
+    }
+    else
+    if( repeat & PAD_KEY_RIGHT )
+    {
+      moveVal = 1;
+    }
+    else if( trg & PAD_BUTTON_A )
+    {
+      work->selectState = PSSEL_SELECT;
+    }
+    else if( trg & PAD_BUTTON_B )
+    {
+      work->selectState = PSSEL_RETURN;
+    }
+    else if( trg & PAD_BUTTON_X )
+    {
+      work->selectState = PSSEL_EXIT;
+    }
+    
+    //十字キー移動処理
+    if( moveVal != 0 )
+    {
+      const PL_SELECT_POS befPos = work->pokeCursor;
+      BOOL isFinish = FALSE;
+      //プレートがある位置までループ
+      while( isFinish == FALSE )
+      {
+        if( work->pokeCursor + moveVal > PL_SEL_POS_POKE6 )
+        {
+          work->pokeCursor = work->pokeCursor+moveVal-(PL_SEL_POS_POKE6+1);
+        }
+        else
+        if( work->pokeCursor + moveVal < PL_SEL_POS_POKE1 )
+        {
+          work->pokeCursor = work->pokeCursor+(PL_SEL_POS_POKE6+1)+moveVal;
+        }
+        else
+        {
+          work->pokeCursor += moveVal;
+        }
+
+        if( PLIST_PLATE_CanSelect( work , work->plateWork[work->pokeCursor] ) == TRUE )
+        {
+          isFinish = TRUE;
+        }
+      }
+      //表示周り更新
+      if( befPos != work->pokeCursor )
+      {
+        PLIST_SelectPokeSetCursor( work , work->pokeCursor );
+        PLIST_PLATE_SetActivePlate( work , work->plateWork[work->pokeCursor] , TRUE );
+        PLIST_PLATE_SetActivePlate( work , work->plateWork[befPos] , FALSE );
+      }
+    }
+  }
+}
+
+//--------------------------------------------------------------------------
+//  ポケモン選択画面 TP操作
+//--------------------------------------------------------------------------
+static void PLIST_SelectPokeUpdateTP( PLIST_WORK *work )
+{
+  //プレートと当たり
+  int ret;
+  
+  {
+    //当たり判定作成
+    u8 i;
+    u8 cnt = 0;
+    u8 plateIdx[PLIST_LIST_MAX];
+    GFL_UI_TP_HITTBL hitTbl[PLIST_LIST_MAX+1];
+    
+    for( i=0;i<PLIST_LIST_MAX;i++ )
+    {
+      if( PLIST_PLATE_CanSelect( work , work->plateWork[i] ) == TRUE )
+      {
+        plateIdx[cnt] = i;
+        PLIST_PLATE_GetPlateRect( work , work->plateWork[i] , &hitTbl[cnt] );
+        cnt++;
+      }
+    }
+    hitTbl[cnt].circle.code = GFL_UI_TP_HIT_END;
+
+    ret = GFL_UI_TP_HitTrg( hitTbl );
+
+    if( ret != GFL_UI_TP_HIT_NONE )
+    {
+      work->selectState = PSSEL_SELECT;
+      work->pokeCursor = plateIdx[ret];
+
+      work->ktst = GFL_APP_KTST_TOUCH;
+    }
+  }
+  
+  //リターンキャンセルとかと当たり
+  if( ret == GFL_UI_TP_HIT_NONE )
+  {
+    //FIXME 本当はモード分岐がいる
+    GFL_UI_TP_HITTBL hitTbl[PSSEL_BUTTON_NUM+1] =
+    {
+      { 0,0,0,0 },
+      { 0,0,0,0 },
+      { 0,0,0,0 },
+      { GFL_UI_TP_HIT_END,0,0,0 },
+    };
+    hitTbl[PSSEL_RETURN].rect.top    = PLIST_BARICON_Y - 12;
+    hitTbl[PSSEL_RETURN].rect.bottom = PLIST_BARICON_Y + 12;
+    hitTbl[PSSEL_RETURN].rect.left   = PLIST_BARICON_RETURN_X - 12;
+    hitTbl[PSSEL_RETURN].rect.right  = PLIST_BARICON_RETURN_X + 12;
+    hitTbl[PSSEL_EXIT  ].rect.top    = PLIST_BARICON_Y - 12;
+    hitTbl[PSSEL_EXIT  ].rect.bottom = PLIST_BARICON_Y + 12;
+    hitTbl[PSSEL_EXIT  ].rect.left   = PLIST_BARICON_EXIT_X - 12;
+    hitTbl[PSSEL_EXIT  ].rect.right  = PLIST_BARICON_EXIT_X + 12;
+    
+    ret = GFL_UI_TP_HitTrg( hitTbl );
+
+    if( ret != GFL_UI_TP_HIT_NONE )
+    {
+      work->selectState = ret;
+      work->ktst = GFL_APP_KTST_TOUCH;
+    }
+  }
+  
+}
+
+//--------------------------------------------------------------------------
+//  ポケモン選択画面　カーソル設定
+//--------------------------------------------------------------------------
+static void PLIST_SelectPokeSetCursor( PLIST_WORK *work , const PL_SELECT_POS pos )
+{
+  GFL_CLACTPOS curPos;
+  PLIST_PLATE_GetPlatePosition(work , work->plateWork[pos] , &curPos );
+  GFL_CLACT_WK_SetPos( work->clwkCursor[0] , &curPos , CLSYS_DRAW_MAIN );
+  GFL_CLACT_WK_SetDrawEnable( work->clwkCursor[0] , TRUE );
+  
+  if( pos == PL_SEL_POS_POKE1 )
+  {
+    GFL_CLACT_WK_SetAnmSeq( work->clwkCursor[0] , PCA_NORMAL_A );
+  }
+  else
+  {
+    GFL_CLACT_WK_SetAnmSeq( work->clwkCursor[0] , PCA_NORMAL_B );
   }
 }
 

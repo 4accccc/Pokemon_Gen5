@@ -32,25 +32,28 @@
 
 //各表示物の位置
 //プレートの左上からの相対座標
-#define PLIST_PLATE_POKE_POS_X (32)
+#define PLIST_PLATE_POKE_POS_X (24)
 #define PLIST_PLATE_POKE_POS_Y (16)
 #define PLIST_PLATE_BALL_POS_X (16)
 #define PLIST_PLATE_BALL_POS_Y (16)
-#define PLIST_PLATE_HPBASE_POS_X (88)
+#define PLIST_PLATE_HPBASE_POS_X (84)
 #define PLIST_PLATE_HPBASE_POS_Y (28)
 
 //文字の位置
-#define PLIST_PLATE_NUM_BASAE_Y (34)  //
-#define PLIST_PLATE_STR_NAME_X (52)
+#define PLIST_PLATE_STR_NAME_X (48)
 #define PLIST_PLATE_STR_NAME_Y ( 8)
-#define PLIST_PLATE_STR_LEVEL_X (16)
+#define PLIST_PLATE_STR_SEX_X (112)
+#define PLIST_PLATE_STR_SEX_Y ( 8)
+
+#define PLIST_PLATE_NUM_BASAE_Y (34)  //LvとHpのY座標
+#define PLIST_PLATE_STR_LEVEL_X ( 8)
 #define PLIST_PLATE_STR_LEVEL_Y (PLIST_PLATE_NUM_BASAE_Y)
-#define PLIST_PLATE_STR_HPMAX_X (96)
-#define PLIST_PLATE_STR_HPMAX_Y (PLIST_PLATE_NUM_BASAE_Y)
 #define PLIST_PLATE_STR_HP_X (64)
 #define PLIST_PLATE_STR_HP_Y (PLIST_PLATE_NUM_BASAE_Y)
-#define PLIST_PLATE_STR_SLASH_X (88)
+#define PLIST_PLATE_STR_SLASH_X (PLIST_PLATE_STR_HP_X+24)
 #define PLIST_PLATE_STR_SLASH_Y (PLIST_PLATE_NUM_BASAE_Y)
+#define PLIST_PLATE_STR_HPMAX_X (PLIST_PLATE_STR_SLASH_X+8)
+#define PLIST_PLATE_STR_HPMAX_Y (PLIST_PLATE_NUM_BASAE_Y)
 
 #define PLIST_PLATE_CELLNUM (6)
 #define PLIST_RENDER_MAIN (0)
@@ -80,6 +83,7 @@ struct _PLIST_PLATE_WORK
 
   GFL_CLWK *pokeIcon;
   GFL_CLWK *ballIcon;
+  GFL_CLWK *hpBase;
   
 };
 //======================================================================
@@ -186,6 +190,8 @@ void PLIST_PLATE_DeletePlate( PLIST_WORK *work , PLIST_PLATE_WORK *plateWork )
     GFL_BMPWIN_Delete( plateWork->bmpWin );
     
     GFL_CLACT_WK_Remove( plateWork->pokeIcon );
+    GFL_CLACT_WK_Remove( plateWork->ballIcon );
+    GFL_CLACT_WK_Remove( plateWork->hpBase );
     GFL_CLACT_USERREND_Delete( plateWork->cellRender );
     GFL_CLACT_UNIT_Delete( plateWork->cellUnit );
   }
@@ -256,6 +262,7 @@ static void PLIST_PLATE_CreateCell( PLIST_WORK *work , PLIST_PLATE_WORK *plateWo
               work->cellRes[PCR_PLT_OBJ_COMMON],
               work->cellRes[PCR_ANM_BALL],
               &cellInitData ,PLIST_RENDER_MAIN , work->heapId );
+    GFL_CLACT_WK_SetAutoAnmFlag( plateWork->ballIcon , TRUE );
   }
   
   //HP土台
@@ -266,12 +273,11 @@ static void PLIST_PLATE_CreateCell( PLIST_WORK *work , PLIST_PLATE_WORK *plateWo
     cellInitData.anmseq = 0;
     cellInitData.softpri = 0;
     cellInitData.bgpri = 2;
-    plateWork->ballIcon = GFL_CLACT_WK_Create( plateWork->cellUnit ,
+    plateWork->hpBase = GFL_CLACT_WK_Create( plateWork->cellUnit ,
               work->cellRes[PCR_NCG_HP_BASE],
               work->cellRes[PCR_PLT_HP_BASE],
               work->cellRes[PCR_ANM_HP_BASE],
               &cellInitData ,PLIST_RENDER_MAIN , work->heapId );
-    GFL_CLACT_WK_SetAutoAnmFlag( plateWork->ballIcon , TRUE );
   }
     
 }
@@ -281,6 +287,7 @@ static void PLIST_PLATE_CreateCell( PLIST_WORK *work , PLIST_PLATE_WORK *plateWo
 //--------------------------------------------------------------
 static void PLIST_PLATE_DrawStr( PLIST_WORK *work , PLIST_PLATE_WORK *plateWork )
 {
+  //FIXME 今後Lvor状態異常とかHPor技覚え状況で分岐するので名前・Lv・Hpで描画関数を分けたほうが良い
   const PRINTSYS_LSB fontCol = PRINTSYS_LSB_Make( PLIST_FONT_PARAM_LETTER , PLIST_FONT_PARAM_SHADOW , 0 );
   //名前
   {
@@ -296,6 +303,25 @@ static void PLIST_PLATE_DrawStr( PLIST_WORK *work , PLIST_PLATE_WORK *plateWork 
     GFL_STR_DeleteBuffer( srcStr );
     GFL_STR_DeleteBuffer( dstStr );
     WORDSET_Delete( wordSet );
+  }
+  //性別
+  {
+    STRBUF *srcStr;
+    u32 sex = PP_Get( plateWork->pp , ID_PARA_sex , NULL );
+    if( sex == PTL_SEX_MALE )
+    {
+      srcStr = GFL_MSG_CreateString( work->msgHandle , mes_pokelist_01_28 ); 
+      PRINTSYS_PrintQueColor( work->printQue , GFL_BMPWIN_GetBmp( plateWork->bmpWin ) , 
+              PLIST_PLATE_STR_SEX_X , PLIST_PLATE_STR_SEX_Y , srcStr , work->fontHandle , fontCol );
+      GFL_STR_DeleteBuffer( srcStr );
+    }
+    else if( sex == PTL_SEX_FEMALE )
+    {
+      srcStr = GFL_MSG_CreateString( work->msgHandle , mes_pokelist_01_29 ); 
+      PRINTSYS_PrintQueColor( work->printQue , GFL_BMPWIN_GetBmp( plateWork->bmpWin ) , 
+              PLIST_PLATE_STR_SEX_X , PLIST_PLATE_STR_SEX_Y , srcStr , work->fontHandle , fontCol );
+      GFL_STR_DeleteBuffer( srcStr );
+    }
   }
 
   //レベル
@@ -352,7 +378,6 @@ static void PLIST_PLATE_DrawStr( PLIST_WORK *work , PLIST_PLATE_WORK *plateWork 
   }
   //HPのスラッシュ
   {
-    WORDSET *wordSet = WORDSET_Create( work->heapId );
     STRBUF *srcStr;
 
     srcStr = GFL_MSG_CreateString( work->msgHandle , mes_pokelist_01_27 ); 
@@ -360,13 +385,27 @@ static void PLIST_PLATE_DrawStr( PLIST_WORK *work , PLIST_PLATE_WORK *plateWork 
             PLIST_PLATE_STR_SLASH_X , PLIST_PLATE_STR_SLASH_Y , srcStr , work->sysFontHandle , fontCol );
 
     GFL_STR_DeleteBuffer( srcStr );
-    WORDSET_Delete( wordSet );
   }
-  
-  
   
   plateWork->isUpdateStr = TRUE;
   
+}
+
+//--------------------------------------------------------------
+//	プレート選択状態のON・OFF
+//--------------------------------------------------------------
+void PLIST_PLATE_SetActivePlate( PLIST_WORK *work , PLIST_PLATE_WORK *plateWork , const BOOL isActive )
+{
+  if( isActive == TRUE )
+  {
+    PLIST_PLATE_ChangeColor( work , plateWork , PPC_NORMAL_SELECT );
+    GFL_CLACT_WK_SetAnmSeq( plateWork->ballIcon , 1 );
+  }
+  else
+  {
+    PLIST_PLATE_ChangeColor( work , plateWork , PPC_NORMAL );
+    GFL_CLACT_WK_SetAnmSeq( plateWork->ballIcon , 0 );
+  }
 }
 
 //--------------------------------------------------------------
@@ -380,3 +419,36 @@ void PLIST_PLATE_ChangeColor( PLIST_WORK *work , PLIST_PLATE_WORK *plateWork , P
 
   GFL_BG_LoadScreenV_Req( PLIST_BG_PLATE );
 }
+
+//--------------------------------------------------------------
+//選択できるか？
+//--------------------------------------------------------------
+const BOOL PLIST_PLATE_CanSelect( PLIST_WORK *work , PLIST_PLATE_WORK *plateWork )
+{
+  if( plateWork->isBlank == TRUE )
+  {
+    return FALSE;
+  }
+  return TRUE;
+}
+
+//--------------------------------------------------------------
+//プレートの位置取得(clact用
+//--------------------------------------------------------------
+void PLIST_PLATE_GetPlatePosition( PLIST_WORK *work , PLIST_PLATE_WORK *plateWork , GFL_CLACTPOS *pos )
+{
+  pos->x = (PLIST_PLATE_POS_ARR[plateWork->idx][0] + (PLIST_PLATE_WIDTH/2))*8;
+  pos->y = (PLIST_PLATE_POS_ARR[plateWork->idx][1] + (PLIST_PLATE_HEIGHT/2))*8;
+}
+
+//--------------------------------------------------------------
+//プレートの位置取得(TP判定用
+//--------------------------------------------------------------
+void PLIST_PLATE_GetPlateRect( PLIST_WORK *work , PLIST_PLATE_WORK *plateWork , GFL_UI_TP_HITTBL *hitTbl )
+{
+  hitTbl->rect.left   = PLIST_PLATE_POS_ARR[plateWork->idx][0]*8;
+  hitTbl->rect.top    = PLIST_PLATE_POS_ARR[plateWork->idx][1]*8;
+  hitTbl->rect.right  = (PLIST_PLATE_POS_ARR[plateWork->idx][0]+PLIST_PLATE_WIDTH )*8;
+  hitTbl->rect.bottom = (PLIST_PLATE_POS_ARR[plateWork->idx][1]+PLIST_PLATE_HEIGHT)*8;
+}
+

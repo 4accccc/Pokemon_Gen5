@@ -69,6 +69,8 @@ typedef enum
   PL_SEL_POS_POKE6,   // ポケモン６
   PL_SEL_POS_ENTER,   // 決定
   PL_SEL_POS_EXIT,    // 戻る
+
+  PL_SEL_POS_EXIT2,   // 戻る(一気に戻るXボタンの方
 }PL_SELECT_POS;
 
 // 選択された処理
@@ -126,7 +128,7 @@ typedef struct
 
   PL_MODE_TYPE  mode;     // リストモード
   PL_LIST_TYPE  type;     // リストタイプ
-  PL_SELECT_POS  ret_sel;    // 選択されたポケモン or 決定 or 戻る
+  PL_SELECT_POS  ret_sel;    // 選択されたポケモン or 決定 or 戻る 兼 初期カーソル位置
   PL_RETURN_TYPE ret_mode;   // 選択された処理
 
   u16 item;     // アイテム

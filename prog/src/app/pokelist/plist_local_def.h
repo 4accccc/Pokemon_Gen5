@@ -25,9 +25,18 @@
 #define PLIST_BG_SUB_BG (GFL_BG_FRAME3_S)
 
 //BGパレット
+#define PLIST_BG_PLT_BMPWIN (0x0c)
 #define PLIST_BG_PLT_FONT (0x0e)
 
+
+//BGキャラ(BmpWin
+#define PLIST_BG_WINCHAR_TOP (1)
+
 //文字色
+#define PLIST_FONT_MSG_BACK (0xF)
+#define PLIST_FONT_MSG_LETTER (0x1)
+#define PLIST_FONT_MSG_SHADOW (0x2)
+
 #define PLIST_FONT_PARAM_LETTER (0xF)
 #define PLIST_FONT_PARAM_SHADOW (0x1)
 
@@ -74,6 +83,21 @@ typedef enum
 #define PLIST_OBJPLT_HP_BASE   (5)  //1本
 #define PLIST_OBJPLT_POKEICON  (6)  //3本
 
+//バーのアイコンの種類
+enum PLIST_BARICON_TYPE
+{
+  PBT_RETURN, //戻る(矢印
+  PBT_EXIT,   //抜ける(×マーク
+  
+  PBT_MAX,
+};
+//バーのアイコンのアニメ
+enum PLIST_BARICON_ANIME
+{
+  PBA_RETURN_NORMAL,  //戻る(通常
+  PBA_EXIT_NORMAL,    //抜ける(通常
+};
+
 //カーソルのアニメ
 enum PLIST_CURCOR_ANIME
 {
@@ -87,19 +111,29 @@ enum PLIST_CURCOR_ANIME
 
 };
 
-
 typedef struct _PLIST_PLATE_WORK PLIST_PLATE_WORK;
+typedef struct _PLIST_MSG_WORK   PLIST_MSG_WORK;
 typedef struct _PLIST_DEBUG_WORK PLIST_DEBUG_WORK;
 
 typedef struct
 {
   HEAPID heapId;
   GFL_TCB *vBlankTcb;
+  
+  int ktst;     //KeyToushState
+  u8  mainSeq;
+  u8  subSeq;
+  u8  selectState;
+
+  PL_SELECT_POS pokeCursor;
 
   GFL_MSGDATA *msgHandle;
   GFL_FONT *fontHandle;
   GFL_FONT *sysFontHandle;
   PRINT_QUE *printQue;
+  
+  //画面下ウィンドウ管理
+  PLIST_MSG_WORK  *msgWork;
   
   //プレートScr
   void  *plateScrRes;
@@ -112,7 +146,7 @@ typedef struct
   u32 cellRes[PCR_MAX];
   GFL_CLUNIT  *cellUnit;
   GFL_CLWK    *clwkCursor[2];
-  
+  GFL_CLWK    *clwkBarIcon[PBT_MAX];
 
   PLIST_DATA *plData;
 #if USE_DEBUGWIN_SYSTEM

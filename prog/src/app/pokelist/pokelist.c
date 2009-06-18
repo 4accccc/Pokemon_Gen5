@@ -70,13 +70,18 @@ static GFL_PROC_RESULT PokeListProc_Init( GFL_PROC * proc, int * seq , void *pwk
     u8 i;
     plData = GFL_HEAP_AllocMemory( HEAPID_POKELIST , sizeof(PLIST_DATA) );
     plData->pp = PokeParty_AllocPartyWork(HEAPID_POKELIST);
+    plData->ret_sel = PL_SEL_POS_POKE1;
     PokeParty_Init( plData->pp , 6 );
-    for( i=0;i<6;i++ )
+    for( i=0;i<5;i++ )
     {
-      POKEMON_PARAM *pPara = PP_Create( i+1 , 10 , 0 , HEAPID_POKELIST );
+      POKEMON_PARAM *pPara = PP_Create( i+1 , 10 , PTL_SETUP_POW_AUTO , HEAPID_POKELIST );
       PokeParty_Add( plData->pp , pPara );
       GFL_HEAP_FreeMemory( pPara );
     }
+    
+    plData->mode = PL_MODE_FIELD;
+    
+    GFL_UI_SetTouchOrKey( GFL_APP_KTST_TOUCH );
   }
   
   
