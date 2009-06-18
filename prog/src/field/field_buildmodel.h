@@ -42,7 +42,6 @@ extern void FIELD_BMODEL_MAN_Draw(FIELD_BMODEL_MAN * man);
 //------------------------------------------------------------------
 extern void FIELD_BMODEL_MAN_Load(FIELD_BMODEL_MAN * man, u16 zoneid, const AREADATA * areadata);
 
-extern const FLDMAPPER_RESISTDATA_OBJTBL * FIELD_BMODEL_MAN_GetOBJTBL(const FIELD_BMODEL_MAN * man);
 
 //------------------------------------------------------------------
 //  配置モデルIDを登録済み配置モデルのインデックスに変換する
@@ -53,6 +52,10 @@ extern u16 FIELD_BMODEL_MAN_GetEntryIndex(const FIELD_BMODEL_MAN* man, BMODEL_ID
 //------------------------------------------------------------------
 extern BOOL FIELD_BMODEL_MAN_GetSubModel(const FIELD_BMODEL_MAN * man, 
     u16 bm_id, VecFx32 * ofs, u32 * entry_idx);
+
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+extern GFL_G3D_MAP_GLOBALOBJ * FIELD_BMODEL_MAN_GetGlobalObjects(FIELD_BMODEL_MAN * man);
 
 //============================================================================================
 //    電光掲示板関連

@@ -55,8 +55,6 @@
 
 
 
-#define GLOBAL_OBJ_COUNT	(64)
-#define GLOBAL_DDOBJ_COUNT	(32)
 //------------------------------------------------------------------
 typedef struct {
 	u32			blockIdx;
@@ -119,43 +117,15 @@ struct _FLD_G3D_MAPPER {
 
 	GFL_G3D_RES*			globalTexture;					//共通地形テクスチャ
 
-	u32						globalObjResCount;				//共通オブジェクト数
-	GLOBALOBJ_RES*			globalObjRes;					//共通オブジェクト
-
-	GFL_G3D_MAP_GLOBALOBJ	globalObj;						//共通オブジェクト
-
   FIELD_BMODEL_MAN* bmodel_man; //配置モデルマネジャー
 	FIELD_GRANM*	granime;	// 地面アニメーションシステム
 };
 
-//------------------------------------------------------------------
-typedef struct {
-	u32 arcID;
-	u32	datID;
-	u32	inDatNum;
-}MAKE_RES_PARAM;
-
-enum {  MAKE_RES_NONPARAM = (0xffffffff) };
-
-typedef struct {
-	MAKE_RES_PARAM	mdl;
-	MAKE_RES_PARAM	tex;
-	MAKE_RES_PARAM	anm[GLOBAL_OBJ_ANMCOUNT];
-}MAKE_OBJ_PARAM;
 
 //------------------------------------------------------------------
 static void CreateGlobalTexture( FLDMAPPER* g3Dmapper, const FLDMAPPER_RESISTDATA* resistData );
 static void DeleteGlobalTexture( FLDMAPPER* g3Dmapper );
-static void CreateGlobalObject( FLDMAPPER* g3Dmapper, const FLDMAPPER_RESISTDATA* resistData );
-static void DeleteGlobalObject( FLDMAPPER* g3Dmapper );
 
-static void CreateGlobalObj_forBModel(FLDMAPPER * g3Dmapper, FIELD_BMODEL_MAN * bmodel_man);
-
-static void CreateGlobalObj( GLOBALOBJ_RES* objRes, const MAKE_OBJ_PARAM* param );
-static void DeleteGlobalObj( GLOBALOBJ_RES* objRes );
-
-static void CreateGlobalDDobj( FLDMAPPER* g3Dmapper, const FLDMAPPER_RESISTDATA_DDOBJ* resistData );
-static void DeleteGlobalDDobj( FLDMAPPER* g3Dmapper );
 
 static void GetMapperBlockIdxAll( const FLDMAPPER* g3Dmapper, const VecFx32* pos, BLOCK_NEWREQ* new );
 static void GetMapperBlockIdxXZ( const FLDMAPPER* g3Dmapper, const VecFx32* pos, BLOCK_NEWREQ* new );
@@ -184,7 +154,6 @@ static void BLOCKINFO_SetBlockTrans(BLOCKINFO * info, fx32 x, fx32 y, fx32 z );
 static void BLOCKINFO_SetBlockTransVec(BLOCKINFO * info, const VecFx32* trans);
 static void BLOCKINFO_GetBlockTrans(const BLOCKINFO * info, VecFx32* trans);
 
-static const GFL_G3D_MAP_DDOBJ_DATA drawTreeData;
 //------------------------------------------------------------------
 /**
  * @brief	セットアップ
@@ -224,17 +193,6 @@ FLDMAPPER*	FLDMAPPER_Create( HEAPID heapID )
 	g3Dmapper->blockHeight = 0;
 	g3Dmapper->mode = FLDMAPPER_MODE_SCROLL_XZ;
 	g3Dmapper->arcID = MAPARC_NULL;
-	
-	g3Dmapper->globalObjRes = NULL;
-	g3Dmapper->globalObjResCount = 0;
-
-	g3Dmapper->globalObj.gobj = NULL;
-	g3Dmapper->globalObj.gobjCount = 0;
-	g3Dmapper->globalObj.gobjIDexchange = NULL;
-
-	g3Dmapper->globalObj.gddobj = NULL;
-	g3Dmapper->globalObj.gddobjCount = 0;
-	g3Dmapper->globalObj.gddobjIDexchange = NULL;
 	
   g3Dmapper->granime = NULL;
   //  配置モデルマネジャー生成
@@ -305,21 +263,6 @@ void	FLDMAPPER_Main( FLDMAPPER* g3Dmapper )
 		u32 blockz = FX_Whole( FX_Div( g3Dmapper->posCont.z, g3Dmapper->blockWidth ) );
 
 		g3Dmapper->nowBlockIdx = blockz * g3Dmapper->sizex + blockx;
-	}
-	//アニメーションコントロール（暫定でフレームループさせているだけ）
-	{
-		GLOBALOBJ_RES* objRes;
-		int j;
-
-		for( i=0; i<g3Dmapper->globalObjResCount; i++ ){
-			objRes = &g3Dmapper->globalObjRes[i];
-
-			if( objRes->g3Dobj != NULL ){
-				for( j=0; j<GLOBAL_OBJ_ANMCOUNT; j++ ){
-					GFL_G3D_OBJECT_LoopAnimeFrame( objRes->g3Dobj, j, FX32_ONE ); 
-				}
-			}
-		}
 	}
   //配置モデル更新処理（現在は電光掲示板のみ）
   FIELD_BMODEL_MAN_Main( g3Dmapper->bmodel_man );
@@ -538,7 +481,8 @@ void FLDMAPPER_ResistData( FLDMAPPER* g3Dmapper, const FLDMAPPER_RESISTDATA* res
       if( g3Dmapper->globalTexture != NULL ){
         GFL_G3D_MAP_ResistGlobalTexResource( g3dmap, g3Dmapper->globalTexture );
       }
-      GFL_G3D_MAP_ResistGlobalObjResource( g3dmap, &g3Dmapper->globalObj );
+      GFL_G3D_MAP_ResistGlobalObjResource( g3dmap,
+          FIELD_BMODEL_MAN_GetGlobalObjects(g3Dmapper->bmodel_man) );
 
       //ファイル識別設定（仮）
       GFL_G3D_MAP_ResistFileType( g3dmap, resistData->g3DmapFileType );
@@ -547,7 +491,7 @@ void FLDMAPPER_ResistData( FLDMAPPER* g3Dmapper, const FLDMAPPER_RESISTDATA* res
 	}
 
 	//グローバルオブジェクト作成
-	CreateGlobalObject( g3Dmapper, resistData );
+	//CreateGlobalObject( g3Dmapper, resistData );
 
 }
 
@@ -587,7 +531,7 @@ void FLDMAPPER_ReleaseData( FLDMAPPER* g3Dmapper )
 		g3Dmapper->granime = NULL;
 	}
 	
-	DeleteGlobalObject( g3Dmapper );
+	//DeleteGlobalObject( g3Dmapper, FIELD_BMODEL_MAN_GetGlobalObjects(g3Dmapper->bmodel_man) );
 	DeleteGlobalTexture( g3Dmapper );
 }
 
@@ -620,201 +564,7 @@ static void DeleteGlobalTexture( FLDMAPPER* g3Dmapper )
 	}
 }
 
-//------------------------------------------------------------------
-/**
- * @brief	グローバルオブジェクト作成
- */
-//------------------------------------------------------------------
-static void CreateGlobalObject( FLDMAPPER* g3Dmapper, const FLDMAPPER_RESISTDATA* resistData )
-{
-	switch (resistData->gobjType) {
-  case FLDMAPPER_RESIST_OBJTYPE_BMODEL:
-		GF_ASSERT(g3Dmapper->bmodel_man);
-    CreateGlobalObj_forBModel( g3Dmapper, g3Dmapper->bmodel_man);
-    break;
-	case FLDMAPPER_RESIST_OBJTYPE_TBL:
-	case FLDMAPPER_RESIST_OBJTYPE_BIN:
-    GF_ASSERT(0);
-	case FLDMAPPER_RESIST_OBJTYPE_NONE:
-		/* do nothing */
-		break;
-	}
-}
 
-//------------------------------------------------------------------
-//------------------------------------------------------------------
-static void DeleteGlobalObject( FLDMAPPER* g3Dmapper )
-{
-	if( g3Dmapper->globalObj.gddobj != NULL ){
-		DeleteGlobalDDobj( g3Dmapper );
-		GFL_HEAP_FreeMemory( g3Dmapper->globalObj.gddobj );
-		g3Dmapper->globalObj.gddobj = NULL;
-	}
-	if( g3Dmapper->globalObj.gddobjIDexchange != NULL ){
-		GFL_HEAP_FreeMemory( g3Dmapper->globalObj.gddobjIDexchange );
-		g3Dmapper->globalObj.gddobjIDexchange = NULL;
-	}
-	if( g3Dmapper->globalObj.gobj != NULL ){
-		GFL_HEAP_FreeMemory( g3Dmapper->globalObj.gobj );
-		g3Dmapper->globalObj.gobj = NULL;
-	}
-	if( g3Dmapper->globalObj.gobjIDexchange != NULL ){
-		GFL_HEAP_FreeMemory( g3Dmapper->globalObj.gobjIDexchange );
-		g3Dmapper->globalObj.gobjIDexchange = NULL;
-	}
-
-	if( g3Dmapper->globalObjRes != NULL ){
-		int i;
-
-		for( i=0; i<g3Dmapper->globalObjResCount; i++ ){
-			DeleteGlobalObj( &g3Dmapper->globalObjRes[i] );
-		}
-		GFL_HEAP_FreeMemory( g3Dmapper->globalObjRes );
-		g3Dmapper->globalObjResCount = 0;
-		g3Dmapper->globalObjRes = NULL;
-	}
-}
-
-//------------------------------------------------------------------
-// オブジェクトリソースを作成
-//------------------------------------------------------------------
-//通常MDL
-static void CreateGlobalObj( GLOBALOBJ_RES* objRes, const MAKE_OBJ_PARAM* param )
-{
-	GFL_G3D_RND* g3Drnd;
-	GFL_G3D_RES* resTex;
-	GFL_G3D_ANM* anmTbl[GLOBAL_OBJ_ANMCOUNT];
-	int i;
-
-  //モデルデータ生成
-	objRes->g3DresMdl = GFL_G3D_CreateResourceArc( param->mdl.arcID, param->mdl.datID );
-
-  //テクスチャ登録
-	if( param->tex.arcID != MAKE_RES_NONPARAM ){
-		objRes->g3DresTex = GFL_G3D_CreateResourceArc( param->tex.arcID, param->tex.datID );
-		resTex = objRes->g3DresTex;
-	} else {
-		objRes->g3DresTex = NULL;
-		resTex = objRes->g3DresMdl;
-	}
-	GFL_G3D_TransVramTexture( resTex );
-
-  //レンダー生成
-	g3Drnd = GFL_G3D_RENDER_Create( objRes->g3DresMdl, 0, resTex );
-
-  //アニメオブジェクト生成
-	for( i=0; i<GLOBAL_OBJ_ANMCOUNT; i++ ){
-		if( param->anm[i].arcID != MAKE_RES_NONPARAM ){
-			objRes->g3DresAnm[i] = GFL_G3D_CreateResourceArc
-										( param->anm[i].arcID, param->anm[i].datID );
-			anmTbl[i] = GFL_G3D_ANIME_Create( g3Drnd, objRes->g3DresAnm[i], 0 );  
-		} else {
-			anmTbl[i] = NULL;
-		}
-	}
-  //GFL_G3D_OBJECT生成
-	objRes->g3Dobj = GFL_G3D_OBJECT_Create( g3Drnd, anmTbl, GLOBAL_OBJ_ANMCOUNT );
-}
-
-//------------------------------------------------------------------
-//------------------------------------------------------------------
-static void DeleteGlobalObj( GLOBALOBJ_RES* objRes )
-{
-	GFL_G3D_RND*	g3Drnd;
-	GFL_G3D_RES*	resTex;
-	GFL_G3D_ANM*	g3Danm[GLOBAL_OBJ_ANMCOUNT] = { NULL, NULL, NULL, NULL };
-	u16				g3DanmCount;
-	int i;
-
-	if( objRes->g3Dobj != NULL ){
-		//各種ハンドル取得
-		g3DanmCount = GFL_G3D_OBJECT_GetAnimeCount( objRes->g3Dobj );
-		for( i=0; i<g3DanmCount; i++ ){
-			g3Danm[i] = GFL_G3D_OBJECT_GetG3Danm( objRes->g3Dobj, i ); 
-		}
-		g3Drnd = GFL_G3D_OBJECT_GetG3Drnd( objRes->g3Dobj );
-	
-		//各種ハンドル＆リソース削除
-		GFL_G3D_OBJECT_Delete( objRes->g3Dobj );
-		objRes->g3Dobj = NULL;
-
-		for( i=0; i<GLOBAL_OBJ_ANMCOUNT; i++ ){
-			if( g3Danm[i] != NULL ){ 
-				GFL_G3D_ANIME_Delete( g3Danm[i] ); 
-			}
-			if( objRes->g3DresAnm[i] != NULL ){
-				GFL_G3D_DeleteResource( objRes->g3DresAnm[i] );
-				objRes->g3DresAnm[i] = NULL;
-			}
-		}
-		GFL_G3D_RENDER_Delete( g3Drnd );
-		if( objRes->g3DresTex == NULL ){
-			resTex = objRes->g3DresMdl;
-		} else {
-			resTex = objRes->g3DresTex;
-			GFL_G3D_DeleteResource( objRes->g3DresTex );
-			objRes->g3DresTex = NULL;
-		}
-		GFL_G3D_FreeVramTexture( resTex );
-
-		if( objRes->g3DresMdl != NULL ){
-			GFL_G3D_DeleteResource( objRes->g3DresMdl );
-			objRes->g3DresMdl = NULL;
-		}
-	}
-}
-
-//------------------------------------------------------------------
-//------------------------------------------------------------------
-const GLOBALOBJ_RES * FLDMAPPER_GetMapObjResource(const FLDMAPPER* g3Dmapper, u32 idx)
-{
-  GF_ASSERT( idx < g3Dmapper->globalObjResCount );
-  return &g3Dmapper->globalObjRes[idx];
-}
-
-
-
-//------------------------------------------------------------------
-//DirectDraw
-static void CreateGlobalDDobj( FLDMAPPER* g3Dmapper, const FLDMAPPER_RESISTDATA_DDOBJ* resistData )
-{
-	GFL_G3D_RES*	g3DresTex;
-	NNSG3dTexKey	texDataKey;
-	NNSG3dPlttKey	texPlttKey;
-	int i;
-
-	GF_ASSERT( resistData->count <= GLOBAL_DDOBJ_COUNT );
-	
-	for( i=0; i< resistData->count; i++ ){
-		g3DresTex = GFL_G3D_CreateResourceArc( resistData->arcID, resistData->data[i] );
-
-		g3Dmapper->globalObj.gddobj[i].g3Dres = g3DresTex;
-										
-		if( GFL_G3D_TransVramTexture( g3DresTex ) == FALSE ){
-			GF_ASSERT(0);
-		}
-		texDataKey = GFL_G3D_GetTextureDataVramKey( g3DresTex );
-		texPlttKey = GFL_G3D_GetTexturePlttVramKey( g3DresTex );
-
-		g3Dmapper->globalObj.gddobj[i].texDataAdrs = NNS_GfdGetTexKeyAddr( texDataKey );
-		g3Dmapper->globalObj.gddobj[i].texPlttAdrs = NNS_GfdGetPlttKeyAddr( texPlttKey );
-		g3Dmapper->globalObj.gddobj[i].data = &drawTreeData;
-	}
-	g3Dmapper->globalObj.gddobjCount = resistData->count;
-}
-
-static void DeleteGlobalDDobj( FLDMAPPER* g3Dmapper )
-{
-	int i;
-
-	for( i=0; i<g3Dmapper->globalObj.gddobjCount; i++ ){
-		if( g3Dmapper->globalObj.gddobj[i].g3Dres != NULL ){
-			GFL_G3D_FreeVramTexture( g3Dmapper->globalObj.gddobj[i].g3Dres );
-			GFL_G3D_DeleteResource( g3Dmapper->globalObj.gddobj[i].g3Dres );
-			g3Dmapper->globalObj.gddobj[i].g3Dres = NULL;
-		}
-	}
-}
 
 //============================================================================================
 //============================================================================================
@@ -1301,224 +1051,6 @@ FIELD_BMODEL_MAN * FLDMAPPER_GetBuildModelManager( FLDMAPPER* g3Dmapper)
   return g3Dmapper->bmodel_man;
 }
 
-//============================================================================================
-/**
- *
- *
- *
- * @brief	ジオメトリ直書き関数
- *
- *
- *
- */
-//============================================================================================
-static void	_drawTree0( u32 texDataAdrs, u32 texPlttAdrs, VecFx16* vecView, BOOL lodSt )
-{
-	GXTexFmt	texFmt = GX_TEXFMT_PLTT16;
-	GXTexSizeS	s;
-	GXTexSizeT	t;
-	fx32		smax, tmax;
-
-	if( lodSt == TRUE ){
-		s = GX_TEXSIZE_S64;
-		t = GX_TEXSIZE_T64;
-		smax = 64 * FX32_ONE;
-		tmax = 64 * FX32_ONE;
-
-		G3_TexImageParam(	texFmt, GX_TEXGEN_TEXCOORD, s, t, GX_TEXREPEAT_NONE, GX_TEXFLIP_NONE,
-						GX_TEXPLTTCOLOR0_TRNS, texDataAdrs + 0x200 );
-		G3_TexPlttBase( texPlttAdrs + 0x20, texFmt );
-
-		G3_Begin( GX_BEGIN_QUADS );
-
-		G3_Normal( 0.000 * FX16_ONE, 1.000 * FX16_ONE, 0.000 * FX16_ONE );
-		G3_Color( GX_RGB( 31, 31, 31 ) );
-		G3_TexCoord( FX_Mul(0.531 * FX32_ONE,smax), FX_Mul(0.000 * FX32_ONE,tmax) );
-		G3_Vtx( -1.600 * FX16_ONE, 0.200/*0.091*/ * FX16_ONE, -1.500 * FX16_ONE );	//vtx0
-		G3_TexCoord( FX_Mul(0.531 * FX32_ONE,smax), FX_Mul(0.437 * FX32_ONE,tmax) );
-		G3_Vtx( -1.600 * FX16_ONE, 0.200/*0.091*/ * FX16_ONE, 1.500 * FX16_ONE );	//vtx2
-		G3_TexCoord( FX_Mul(1.000 * FX32_ONE,smax), FX_Mul(0.437 * FX32_ONE,tmax) );
-		G3_Vtx( 1.600 * FX16_ONE, 0.200/*0.091*/ * FX16_ONE, 1.500 * FX16_ONE );	//vtx3
-		G3_TexCoord( FX_Mul(1.000 * FX32_ONE,smax), FX_Mul(0.000 * FX32_ONE,tmax) );
-		G3_Vtx( 1.600 * FX16_ONE, 0.200/*0.091*/ * FX16_ONE, -1.500 * FX16_ONE );	//vtx1
-
-		G3_Normal( 0.000 * FX16_ONE, 0.819 * FX16_ONE, 0.574 * FX16_ONE );
-		G3_Color( GX_RGB( 31, 31, 31 ) );
-		G3_TexCoord( FX_Mul(0.344 * FX32_ONE,smax), FX_Mul(0.437 * FX32_ONE,tmax) );
-		G3_Vtx( -2.000 * FX16_ONE, 2.675 * FX16_ONE, -1.793 * FX16_ONE );	//vtx0
-		G3_TexCoord( FX_Mul(0.344 * FX32_ONE,smax), FX_Mul(1.000 * FX32_ONE,tmax) );
-		G3_Vtx( -2.000 * FX16_ONE, 0.725 * FX16_ONE, 0.993 * FX16_ONE );	//vtx2
-		G3_TexCoord( FX_Mul(1.000 * FX32_ONE,smax), FX_Mul(1.000 * FX32_ONE,tmax) );
-		G3_Vtx( 2.000 * FX16_ONE, 0.725 * FX16_ONE, 0.993 * FX16_ONE );		//vtx3
-		G3_TexCoord( FX_Mul(1.000 * FX32_ONE,smax), FX_Mul(0.437 * FX32_ONE,tmax) );
-		G3_Vtx( 2.000 * FX16_ONE, 2.675 * FX16_ONE, -1.793 * FX16_ONE );	//vtx1
-
-		G3_Normal( 0.000 * FX16_ONE, 0.819 * FX16_ONE, 0.574 * FX16_ONE );
-		G3_Color( GX_RGB( 31, 31, 31 ) );
-		G3_TexCoord( FX_Mul(0.000 * FX32_ONE,smax), FX_Mul(0.000 * FX32_ONE,tmax) );
-		G3_Vtx( -1.650 * FX16_ONE, 3.560 * FX16_ONE, -1.729 * FX16_ONE );	//vtx0
-		G3_TexCoord( FX_Mul(0.000 * FX32_ONE,smax), FX_Mul(0.469 * FX32_ONE,tmax) );
-		G3_Vtx( -1.650 * FX16_ONE, 1.840 * FX16_ONE, 0.729 * FX16_ONE );	//vtx2
-		G3_TexCoord( FX_Mul(0.531 * FX32_ONE,smax), FX_Mul(0.469 * FX32_ONE,tmax) );
-		G3_Vtx( 1.650 * FX16_ONE, 1.840 * FX16_ONE, 0.729 * FX16_ONE );		//vtx3
-		G3_TexCoord( FX_Mul(0.531 * FX32_ONE,smax), FX_Mul(0.000 * FX32_ONE,tmax) );
-		G3_Vtx( 1.650 * FX16_ONE, 3.560 * FX16_ONE, -1.729 * FX16_ONE );	//vtx1
-
-		G3_Normal( 0.000 * FX16_ONE, 0.819 * FX16_ONE, 0.574 * FX16_ONE );
-		G3_Color( GX_RGB( 31, 31, 31 ) );
-		G3_TexCoord( FX_Mul(0.000 * FX32_ONE,smax), FX_Mul(0.656 * FX32_ONE,tmax) );
-		G3_Vtx( -1.100 * FX16_ONE, 4.231 * FX16_ONE, -1.601 * FX16_ONE );	//vtx0
-		G3_TexCoord( FX_Mul(0.000 * FX32_ONE,smax), FX_Mul(1.000 * FX32_ONE,tmax) );
-		G3_Vtx( -1.100 * FX16_ONE, 2.969 * FX16_ONE, 0.201 * FX16_ONE );	//vtx2
-		G3_TexCoord( FX_Mul(0.344 * FX32_ONE,smax), FX_Mul(1.000 * FX32_ONE,tmax) );
-		G3_Vtx( 1.100 * FX16_ONE, 2.969 * FX16_ONE, 0.201 * FX16_ONE );		//vtx3
-		G3_TexCoord( FX_Mul(0.344 * FX32_ONE,smax), FX_Mul(0.656 * FX32_ONE,tmax) );
-		G3_Vtx( 1.100 * FX16_ONE, 4.231 * FX16_ONE, -1.601 * FX16_ONE );	//vtx1
-
-		G3_End();
-	} else {
-		s = GX_TEXSIZE_S32;
-		t = GX_TEXSIZE_T32;
-		smax = 32 * FX32_ONE;
-		tmax = 32 * FX32_ONE;
-
-		G3_TexImageParam(	texFmt, GX_TEXGEN_TEXCOORD, s, t, GX_TEXREPEAT_NONE, GX_TEXFLIP_NONE,
-						GX_TEXPLTTCOLOR0_TRNS, texDataAdrs + 0x000 );
-		G3_TexPlttBase( texPlttAdrs + 0x00, texFmt );
-
-		G3_Begin( GX_BEGIN_QUADS );
-
-		G3_Normal( 0.000 * FX16_ONE, 1.000 * FX16_ONE, 0.000 * FX16_ONE );
-		G3_Color( GX_RGB( 31, 31, 31 ) );
-		G3_TexCoord( FX_Mul(0.000 * FX32_ONE,smax), FX_Mul(0.000 * FX32_ONE,tmax) );
-		G3_Vtx( -2.000 * FX16_ONE, 4.231 * FX16_ONE, 0 * FX16_ONE );	//vtx0
-		G3_TexCoord( FX_Mul(0.000 * FX32_ONE,smax), FX_Mul(1.000 * FX32_ONE,tmax) );
-		G3_Vtx( -2.000 * FX16_ONE, 0.000 * FX16_ONE, 0 * FX16_ONE );	//vtx2
-		G3_TexCoord( FX_Mul(1.000 * FX32_ONE,smax), FX_Mul(1.000 * FX32_ONE,tmax) );
-		G3_Vtx( 2.000 * FX16_ONE, 0.000 * FX16_ONE, 0 * FX16_ONE );	//vtx3
-		G3_TexCoord( FX_Mul(1.000 * FX32_ONE,smax), FX_Mul(0.000 * FX32_ONE,tmax) );
-		G3_Vtx( 2.000 * FX16_ONE, 4.231 * FX16_ONE, 0 * FX16_ONE );	//vtx1
-
-		G3_End();
-	}
-}
-
-static const GFL_G3D_MAP_DDOBJ_DATA drawTreeData = {
-	GFL_G3D_MAP_LIGHT_NONE,
-	GX_RGB(31,31,31), GX_RGB(16,16,16), GX_RGB(16,16,16), GX_RGB(0,0,0),
-	63, 31, GFL_G3D_MAP_DRAW_YBILLBOARD, 8,
-	_drawTree0,
-};
-
-
-//============================================================================================
-/**
- *
- *
- *
- * @brief	３Ｄグローバルオブジェクト読み込み
- *
- *
- *
- */
-//============================================================================================
-//------------------------------------------------------------------
-//------------------------------------------------------------------
-static void MAKE_RES_PARAM_init(MAKE_RES_PARAM * resParam)
-{
-  resParam->arcID = MAKE_RES_NONPARAM;
-  resParam->datID = MAKE_RES_NONPARAM;
-  resParam->inDatNum = 0;
-}
-static void MAKE_RES_PARAM_set(MAKE_RES_PARAM * resParam, u32 arcID, u32 datID, u32 inDatNum)
-{
-  resParam->arcID = arcID;
-  resParam->datID = datID;
-  resParam->inDatNum = inDatNum;
-}
-//------------------------------------------------------------------
-//------------------------------------------------------------------
-static void MAKE_OBJ_PARAM_init(MAKE_OBJ_PARAM * objParam)
-{ 
-  int i;
-  MAKE_RES_PARAM_init( &objParam->mdl );
-  MAKE_RES_PARAM_init( &objParam->tex );
-
-
-  for( i=0; i<GLOBAL_OBJ_ANMCOUNT; i++ ){
-    MAKE_RES_PARAM_init( &objParam->anm[i] );
-  }
-
-}
-//------------------------------------------------------------------
-//配置モデルマネジャーからの内容で生成
-//------------------------------------------------------------------
-static void CreateGlobalObj_forBModel(FLDMAPPER * g3Dmapper, FIELD_BMODEL_MAN * bmodel_man)
-{ 
-	int i;
-  MAKE_OBJ_PARAM objParam;
-  ARCID anmArcID;
-  const FLDMAPPER_RESISTDATA_OBJTBL * gobjTbl;
-  gobjTbl = FIELD_BMODEL_MAN_GetOBJTBL(bmodel_man);
-
-	if( gobjTbl->objCount == 0 ){
-    return;
-  }
-
-  g3Dmapper->globalObjResCount = gobjTbl->objCount;
-  g3Dmapper->globalObjRes = GFL_HEAP_AllocClearMemory
-          ( g3Dmapper->heapID, sizeof(GLOBALOBJ_RES) * gobjTbl->objCount );
-
-  g3Dmapper->globalObj.gobjCount = gobjTbl->objCount;
-  g3Dmapper->globalObj.gobj = GFL_HEAP_AllocClearMemory
-          ( g3Dmapper->heapID, sizeof(GFL_G3D_MAP_OBJ) * gobjTbl->objCount );
-
-  MAKE_OBJ_PARAM_init(&objParam);
-  anmArcID = FIELD_BMODEL_MAN_GetAnimeArcID(g3Dmapper->bmodel_man);
-
-  for( i=0 ; i<gobjTbl->objCount; i++ )
-  {
-    GLOBALOBJ_RES * objRes = &g3Dmapper->globalObjRes[i];
-
-    int j, count;
-    const u16 * anmIDs;
-    const FIELD_BMANIME_DATA * anmData;
-
-    MAKE_RES_PARAM_set(&objParam.mdl, gobjTbl->objArcID, gobjTbl->objData[i].highQ_ID, 0);
-    
-    //配置モデルに対応したアニメデータを取得 
-    anmData = FIELD_BMODEL_MAN_GetAnimeData(g3Dmapper->bmodel_man, gobjTbl->objData[i].highQ_ID);
-    count = FIELD_BMANIME_DATA_getAnimeCount(anmData);
-    anmIDs = FIELD_BMANIME_DATA_getAnimeFileID(anmData);
-
-    for( j=0; j<GLOBAL_OBJ_ANMCOUNT; j++ )
-    {
-      if( j<count ) 
-      { 
-        MAKE_RES_PARAM_set(&objParam.anm[j], anmArcID, anmIDs[j], 0);
-      } else {
-        MAKE_RES_PARAM_init( &objParam.anm[j] );
-      }
-    }
-
-    CreateGlobalObj( objRes, &objParam );
-    { 
-      GFL_G3D_RES *g3DresTex;
-      g3DresTex =	GFL_G3D_RENDER_GetG3DresTex( GFL_G3D_OBJECT_GetG3Drnd(objRes->g3Dobj) );
-      FIELD_BMANIME_DATA_entryTexData( g3Dmapper->bmodel_man, anmData, g3DresTex );
-    }
-
-    g3Dmapper->globalObj.gobj[i].g3DobjHQ = objRes->g3Dobj;
-    g3Dmapper->globalObj.gobj[i].g3DobjLQ = NULL;
-    if (FIELD_BMANIME_DATA_getAnimeType(anmData) == BMANIME_TYPE_ETERNAL)
-    {
-      for( j=0; j<GLOBAL_OBJ_ANMCOUNT; j++ ){
-        GFL_G3D_OBJECT_EnableAnime( objRes->g3Dobj, j );  //renderとanimeの関連付け
-        GFL_G3D_OBJECT_ResetAnimeFrame( objRes->g3Dobj, j ); 
-      }
-    }
-  }
-}
 
 
 //============================================================================================

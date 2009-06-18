@@ -43,9 +43,10 @@ enum {
 
 enum{ 
   FILEID_BMODEL_ANIMEDATA = NARC_buildmodel_info_buildmodel_anime_bin,
-
-
 };
+
+#define GLOBAL_OBJ_COUNT	(64)
+
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 enum {
@@ -104,6 +105,12 @@ struct _FIELD_BMODEL_MAN
   ELBOARD_TEX * elb_tex[FIELD_BMODEL_ELBOARD_ID_MAX];
 
   FIELD_BMODEL * entryObj[BMODEL_USE_MAX];
+
+
+	GFL_G3D_MAP_GLOBALOBJ	globalObj;						//共通オブジェクト
+
+	u32						globalObjResCount;				//共通オブジェクト数
+	GLOBALOBJ_RES*			globalObjRes;					//共通オブジェクト
 };
 
 //============================================================================================
@@ -126,6 +133,9 @@ static void loadAnimeData(FIELD_BMODEL_MAN * man, u16 file_id);
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 static void FIELD_BMANIME_DATA_init(FIELD_BMANIME_DATA * data);
+
+static void CreateGlobalObj_forBModel(FIELD_BMODEL_MAN * man);
+static void DeleteGlobalObject(FIELD_BMODEL_MAN * man, GFL_G3D_MAP_GLOBALOBJ * globalObj);
 
 //============================================================================================
 //============================================================================================
@@ -152,6 +162,17 @@ FIELD_BMODEL_MAN * FIELD_BMODEL_MAN_Create(HEAPID heapID)
     man->entryObj[i] = NULL;
   }
 
+	man->globalObj.gobj = NULL;
+	man->globalObj.gobjCount = 0;
+	man->globalObj.gobjIDexchange = NULL;
+
+	man->globalObj.gddobj = NULL;
+	man->globalObj.gddobjCount = 0;
+	man->globalObj.gddobjIDexchange = NULL;
+	
+  man->globalObjResCount = 0;
+  man->globalObjRes = NULL;
+
 	return man;
 }
 
@@ -172,6 +193,7 @@ void FIELD_BMODEL_MAN_Delete(FIELD_BMODEL_MAN * man)
       ELBOARD_TEX_Delete(man->elb_tex[i]);
     }
   }
+  DeleteGlobalObject(man, &man->globalObj);
 
 	GFL_HEAP_FreeMemory(man);
 }
@@ -199,6 +221,22 @@ void FIELD_BMODEL_MAN_Main(FIELD_BMODEL_MAN * man)
       FIELD_BMODEL_RunAnime(man->entryObj[i]);
     }
   }
+
+	//アニメーションコントロール（暫定でフレームループさせているだけ）
+	{
+		GLOBALOBJ_RES* objRes;
+		int j;
+
+		for( i=0; i<man->globalObjResCount; i++ ){
+			objRes = &man->globalObjRes[i];
+
+			if( objRes->g3Dobj != NULL ){
+				for( j=0; j<GLOBAL_OBJ_ANMCOUNT; j++ ){
+					GFL_G3D_OBJECT_LoopAnimeFrame( objRes->g3Dobj, j, FX32_ONE ); 
+				}
+			}
+		}
+	}
 
 }
 
@@ -264,21 +302,8 @@ void FIELD_BMODEL_MAN_Load(FIELD_BMODEL_MAN * man, u16 zoneid, const AREADATA * 
 
   //FLDMAPPERに引き渡すデータを生成
 	makeResistObjTable(man);
-}
 
-//------------------------------------------------------------------
-/**
- * @brief
- * @param man 配置モデルマネジャーへのポインタ
- * @return  FLDMAPPER_RESISTDATA_OBJTBL 生成したデータへのポインタ
- *
- * 生成データを保持するメモリははマネジャー管理下に置かれている。
- * このタイミングで確保しているわけではない
- */
-//------------------------------------------------------------------
-const FLDMAPPER_RESISTDATA_OBJTBL * FIELD_BMODEL_MAN_GetOBJTBL(const FIELD_BMODEL_MAN * man)
-{	
-	return &man->gobjData_Tbl;
+  CreateGlobalObj_forBModel(man);
 }
 
 //------------------------------------------------------------------
@@ -366,6 +391,13 @@ void FIELD_BMODEL_MAN_EntryBuildModel(FIELD_BMODEL_MAN * man, FIELD_BMODEL * bmo
     }
   }
   GF_ASSERT(0);
+}
+
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+GFL_G3D_MAP_GLOBALOBJ * FIELD_BMODEL_MAN_GetGlobalObjects(FIELD_BMODEL_MAN * man)
+{
+  return &man->globalObj;
 }
 
 //============================================================================================
@@ -742,7 +774,9 @@ FIELD_BMODEL * FIELD_BMODEL_Create(FIELD_BMODEL_MAN * man,
   MTX_RotY33( &bmodel->status.rotate, sin, cos );
   bmodel->status.trans = status->trans;
   VEC_Set( &bmodel->status.scale, FX32_ONE, FX32_ONE, FX32_ONE );
-  objRes = FLDMAPPER_GetMapObjResource(g3Dmapper, status->id);
+  //objRes = FLDMAPPER_GetMapObjResource(g3Dmapper, status->id);
+  GF_ASSERT( status->id < man->globalObjResCount );
+  objRes = &man->globalObjRes[status->id];
   {
     int i, count;
 	  GFL_G3D_ANM* anmTbl[GLOBAL_OBJ_ANMCOUNT];
@@ -819,4 +853,260 @@ BOOL FIELD_BMODEL_GetAnimeStatus(FIELD_BMODEL * bmodel)
 {
   return bmodel->suicide_flag;
 }
+
+//============================================================================================
+/**
+ *
+ *
+ *
+ * @brief	３Ｄグローバルオブジェクト読み込み
+ *
+ *
+ *
+ */
+//============================================================================================
+//------------------------------------------------------------------
+typedef struct {
+	u32 arcID;
+	u32	datID;
+	u32	inDatNum;
+}MAKE_RES_PARAM;
+
+enum {  MAKE_RES_NONPARAM = (0xffffffff) };
+
+typedef struct {
+	MAKE_RES_PARAM	mdl;
+	MAKE_RES_PARAM	tex;
+	MAKE_RES_PARAM	anm[GLOBAL_OBJ_ANMCOUNT];
+}MAKE_OBJ_PARAM;
+
+static void CreateGlobalObj( GLOBALOBJ_RES* objRes, const MAKE_OBJ_PARAM* param );
+static void DeleteGlobalObj( GLOBALOBJ_RES* objRes );
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+static void MAKE_RES_PARAM_init(MAKE_RES_PARAM * resParam)
+{
+  resParam->arcID = MAKE_RES_NONPARAM;
+  resParam->datID = MAKE_RES_NONPARAM;
+  resParam->inDatNum = 0;
+}
+
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+static void MAKE_RES_PARAM_set(MAKE_RES_PARAM * resParam, u32 arcID, u32 datID, u32 inDatNum)
+{
+  resParam->arcID = arcID;
+  resParam->datID = datID;
+  resParam->inDatNum = inDatNum;
+}
+
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+static void MAKE_OBJ_PARAM_init(MAKE_OBJ_PARAM * objParam)
+{ 
+  int i;
+  MAKE_RES_PARAM_init( &objParam->mdl );
+  MAKE_RES_PARAM_init( &objParam->tex );
+
+
+  for( i=0; i<GLOBAL_OBJ_ANMCOUNT; i++ ){
+    MAKE_RES_PARAM_init( &objParam->anm[i] );
+  }
+
+}
+//------------------------------------------------------------------
+//配置モデルマネジャーからの内容で生成
+//------------------------------------------------------------------
+static void CreateGlobalObj_forBModel(FIELD_BMODEL_MAN * man)
+{ 
+	int i;
+  MAKE_OBJ_PARAM objParam;
+  ARCID anmArcID;
+  GFL_G3D_MAP_GLOBALOBJ * globalObj = FIELD_BMODEL_MAN_GetGlobalObjects( man );
+  const FLDMAPPER_RESISTDATA_OBJTBL * gobjTbl = &man->gobjData_Tbl;
+
+	if( gobjTbl->objCount == 0 ){
+    return;
+  }
+
+  man->globalObjResCount = gobjTbl->objCount;
+  man->globalObjRes = GFL_HEAP_AllocClearMemory
+          ( man->heapID, sizeof(GLOBALOBJ_RES) * gobjTbl->objCount );
+
+  globalObj->gobjCount = gobjTbl->objCount;
+  globalObj->gobj = GFL_HEAP_AllocClearMemory
+          ( man->heapID, sizeof(GFL_G3D_MAP_OBJ) * gobjTbl->objCount );
+
+  MAKE_OBJ_PARAM_init(&objParam);
+  anmArcID = FIELD_BMODEL_MAN_GetAnimeArcID(man);
+
+  for( i=0 ; i<gobjTbl->objCount; i++ )
+  {
+    GLOBALOBJ_RES * objRes = &man->globalObjRes[i];
+
+    int j, count;
+    const u16 * anmIDs;
+    const FIELD_BMANIME_DATA * anmData;
+
+    MAKE_RES_PARAM_set(&objParam.mdl, gobjTbl->objArcID, gobjTbl->objData[i].highQ_ID, 0);
+    
+    //配置モデルに対応したアニメデータを取得 
+    anmData = FIELD_BMODEL_MAN_GetAnimeData(man, gobjTbl->objData[i].highQ_ID);
+    count = FIELD_BMANIME_DATA_getAnimeCount(anmData);
+    anmIDs = FIELD_BMANIME_DATA_getAnimeFileID(anmData);
+
+    for( j=0; j<GLOBAL_OBJ_ANMCOUNT; j++ )
+    {
+      if( j<count ) 
+      { 
+        MAKE_RES_PARAM_set(&objParam.anm[j], anmArcID, anmIDs[j], 0);
+      } else {
+        MAKE_RES_PARAM_init( &objParam.anm[j] );
+      }
+    }
+
+    CreateGlobalObj( objRes, &objParam );
+    { 
+      GFL_G3D_RES *g3DresTex;
+      g3DresTex =	GFL_G3D_RENDER_GetG3DresTex( GFL_G3D_OBJECT_GetG3Drnd(objRes->g3Dobj) );
+      FIELD_BMANIME_DATA_entryTexData( man, anmData, g3DresTex );
+    }
+
+    globalObj->gobj[i].g3DobjHQ = objRes->g3Dobj;
+    globalObj->gobj[i].g3DobjLQ = NULL;
+    if (FIELD_BMANIME_DATA_getAnimeType(anmData) == BMANIME_TYPE_ETERNAL)
+    {
+      for( j=0; j<GLOBAL_OBJ_ANMCOUNT; j++ ){
+        GFL_G3D_OBJECT_EnableAnime( objRes->g3Dobj, j );  //renderとanimeの関連付け
+        GFL_G3D_OBJECT_ResetAnimeFrame( objRes->g3Dobj, j ); 
+      }
+    }
+  }
+}
+#if 0
+//------------------------------------------------------------------
+/**
+ * @brief	グローバルオブジェクト作成
+ */
+//------------------------------------------------------------------
+static void CreateGlobalObject(const FLDMAPPER_RESISTDATA* resistData )
+{
+  CreateGlobalObj_forBModel(bmodel_man);
+}
+#endif
+
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+static void DeleteGlobalObject(FIELD_BMODEL_MAN * man, GFL_G3D_MAP_GLOBALOBJ * globalObj)
+{
+	if( globalObj->gobj != NULL ){
+		GFL_HEAP_FreeMemory( globalObj->gobj );
+		globalObj->gobj = NULL;
+	}
+	if( globalObj->gobjIDexchange != NULL ){
+		GFL_HEAP_FreeMemory( globalObj->gobjIDexchange );
+		globalObj->gobjIDexchange = NULL;
+	}
+
+	if( man->globalObjRes != NULL ){
+		int i;
+
+		for( i=0; i<man->globalObjResCount; i++ ){
+			DeleteGlobalObj( &man->globalObjRes[i] );
+		}
+		GFL_HEAP_FreeMemory( man->globalObjRes );
+		man->globalObjResCount = 0;
+		man->globalObjRes = NULL;
+	}
+}
+
+//------------------------------------------------------------------
+// オブジェクトリソースを作成
+//------------------------------------------------------------------
+//通常MDL
+static void CreateGlobalObj( GLOBALOBJ_RES* objRes, const MAKE_OBJ_PARAM* param )
+{
+	GFL_G3D_RND* g3Drnd;
+	GFL_G3D_RES* resTex;
+	GFL_G3D_ANM* anmTbl[GLOBAL_OBJ_ANMCOUNT];
+	int i;
+
+  //モデルデータ生成
+	objRes->g3DresMdl = GFL_G3D_CreateResourceArc( param->mdl.arcID, param->mdl.datID );
+
+  //テクスチャ登録
+	if( param->tex.arcID != MAKE_RES_NONPARAM ){
+		objRes->g3DresTex = GFL_G3D_CreateResourceArc( param->tex.arcID, param->tex.datID );
+		resTex = objRes->g3DresTex;
+	} else {
+		objRes->g3DresTex = NULL;
+		resTex = objRes->g3DresMdl;
+	}
+	GFL_G3D_TransVramTexture( resTex );
+
+  //レンダー生成
+	g3Drnd = GFL_G3D_RENDER_Create( objRes->g3DresMdl, 0, resTex );
+
+  //アニメオブジェクト生成
+	for( i=0; i<GLOBAL_OBJ_ANMCOUNT; i++ ){
+		if( param->anm[i].arcID != MAKE_RES_NONPARAM ){
+			objRes->g3DresAnm[i] = GFL_G3D_CreateResourceArc
+										( param->anm[i].arcID, param->anm[i].datID );
+			anmTbl[i] = GFL_G3D_ANIME_Create( g3Drnd, objRes->g3DresAnm[i], 0 );  
+		} else {
+			anmTbl[i] = NULL;
+		}
+	}
+  //GFL_G3D_OBJECT生成
+	objRes->g3Dobj = GFL_G3D_OBJECT_Create( g3Drnd, anmTbl, GLOBAL_OBJ_ANMCOUNT );
+}
+
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+static void DeleteGlobalObj( GLOBALOBJ_RES* objRes )
+{
+	GFL_G3D_RND*	g3Drnd;
+	GFL_G3D_RES*	resTex;
+	GFL_G3D_ANM*	g3Danm[GLOBAL_OBJ_ANMCOUNT] = { NULL, NULL, NULL, NULL };
+	u16				g3DanmCount;
+	int i;
+
+	if( objRes->g3Dobj != NULL ){
+		//各種ハンドル取得
+		g3DanmCount = GFL_G3D_OBJECT_GetAnimeCount( objRes->g3Dobj );
+		for( i=0; i<g3DanmCount; i++ ){
+			g3Danm[i] = GFL_G3D_OBJECT_GetG3Danm( objRes->g3Dobj, i ); 
+		}
+		g3Drnd = GFL_G3D_OBJECT_GetG3Drnd( objRes->g3Dobj );
+	
+		//各種ハンドル＆リソース削除
+		GFL_G3D_OBJECT_Delete( objRes->g3Dobj );
+		objRes->g3Dobj = NULL;
+
+		for( i=0; i<GLOBAL_OBJ_ANMCOUNT; i++ ){
+			if( g3Danm[i] != NULL ){ 
+				GFL_G3D_ANIME_Delete( g3Danm[i] ); 
+			}
+			if( objRes->g3DresAnm[i] != NULL ){
+				GFL_G3D_DeleteResource( objRes->g3DresAnm[i] );
+				objRes->g3DresAnm[i] = NULL;
+			}
+		}
+		GFL_G3D_RENDER_Delete( g3Drnd );
+		if( objRes->g3DresTex == NULL ){
+			resTex = objRes->g3DresMdl;
+		} else {
+			resTex = objRes->g3DresTex;
+			GFL_G3D_DeleteResource( objRes->g3DresTex );
+			objRes->g3DresTex = NULL;
+		}
+		GFL_G3D_FreeVramTexture( resTex );
+
+		if( objRes->g3DresMdl != NULL ){
+			GFL_G3D_DeleteResource( objRes->g3DresMdl );
+			objRes->g3DresMdl = NULL;
+		}
+	}
+}
+
 
