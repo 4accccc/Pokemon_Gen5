@@ -1373,6 +1373,11 @@ static void fldmap_G3D_Unload( FIELDMAP_WORK * fieldWork )
 static void	fldmap_G3D_VBlank( GFL_TCB *tcb, void *work )
 {
 	FIELDMAP_WORK * fieldWork = (FIELDMAP_WORK*)work;
+  
+  if( fieldWork->fldMMdlSys != NULL ){
+    FLDMMDLSYS_VBlankProc( fieldWork->fldMMdlSys );
+  }
+
 	GFL_CLACT_SYS_VBlankFunc();	//セルアクターVBlank
 }
 
@@ -1425,13 +1430,13 @@ static void fldmapMain_FLDMMDL_Init( FIELDMAP_WORK *fieldWork )
 		fieldWork->fldMMdlSys, fieldWork->bbdActSys, 32 );
 	
 	{ //ビルボードリソース登録
-			MMDL_LIST mlist;
-			int list_area_id = 0;
-			fldmap_FLDMMDL_InitList( &mlist, list_area_id, fieldWork->heapID );
-			FLDMMDL_BLACTCONT_AddResourceTex(
-					fieldWork->fldMMdlSys, mlist.id_list, mlist.count );
+	  MMDL_LIST mlist;
+	  int list_area_id = 0; //仮
+	  fldmap_FLDMMDL_InitList( &mlist, list_area_id, fieldWork->heapID );
+	  FLDMMDL_BLACTCONT_AddResourceTex(
+	    fieldWork->fldMMdlSys, mlist.id_list, mlist.count );
 	}
-
+  
 	//動作モデル描画　セットアップ
 	FLDMMDLSYS_SetupDrawProc( fieldWork->fldMMdlSys );
 	

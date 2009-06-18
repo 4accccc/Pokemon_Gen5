@@ -118,11 +118,17 @@ const FLDMMDL_DRAW_PROC_LIST DATA_FLDMMDL_DRAWPROCLIST_Non =
 //--------------------------------------------------------------
 static void DrawHero_Init( FLDMMDL *fmmdl )
 {
+  u16 code;
 	DRAW_BLACT_WORK *work;
+  
 	work = FLDMMDL_InitDrawProcWork( fmmdl, sizeof(DRAW_BLACT_WORK) );
 	work->set_anm_dir = DIR_NOT;
-	work->actID = FLDMMDL_BLACTCONT_AddActor(
-		fmmdl, FLDMMDL_GetOBJCode(fmmdl) );
+  
+  code = FLDMMDL_GetOBJCode( fmmdl );
+  
+	if( FLDMMDL_BLACTCONT_AddActor(fmmdl,code,&work->actID) == TRUE ){
+    FLDMMDL_CallDrawProc( fmmdl );
+  }
 }
 
 //--------------------------------------------------------------
@@ -155,6 +161,11 @@ static void DrawHero_Draw( FLDMMDL *fmmdl )
 	GFL_BBDACT_SYS *actSys;
 	
 	work = FLDMMDL_GetDrawProcWork( fmmdl );
+  
+  if( work->actID == FLDMMDL_BLACTID_NULL ){ //–¢“o˜^
+    return;
+  }
+  
 	actSys = FLDMMDL_BLACTCONT_GetBbdActSys( FLDMMDL_GetBlActCont(fmmdl) );
 	
 	dir = FLDMMDL_GetDirDisp( fmmdl );
@@ -265,6 +276,11 @@ static void DrawCycleHero_Draw( FLDMMDL *fmmdl )
 	GFL_BBDACT_SYS *actSys;
 	
 	work = FLDMMDL_GetDrawProcWork( fmmdl );
+  
+  if( work->actID == FLDMMDL_BLACTID_NULL ){ //–¢“o˜^
+    return;
+  }
+  
 	actSys = FLDMMDL_BLACTCONT_GetBbdActSys( FLDMMDL_GetBlActCont(fmmdl) );
 	
 	dir = FLDMMDL_GetDirDisp( fmmdl );
@@ -352,11 +368,17 @@ const FLDMMDL_DRAW_PROC_LIST DATA_FLDMMDL_DRAWPROCLIST_CycleHero =
 //--------------------------------------------------------------
 static void DrawBlAct_Init( FLDMMDL *fmmdl )
 {
+  u16 code;
 	DRAW_BLACT_WORK *work;
+  
 	work = FLDMMDL_InitDrawProcWork( fmmdl, sizeof(DRAW_BLACT_WORK) );
 	work->set_anm_dir = DIR_NOT;
-	work->actID = FLDMMDL_BLACTCONT_AddActor(
-			fmmdl, FLDMMDL_GetOBJCode(fmmdl) );
+  
+  code = FLDMMDL_GetOBJCode( fmmdl );
+
+	if( FLDMMDL_BLACTCONT_AddActor(fmmdl,code,&work->actID) == TRUE ){
+    FLDMMDL_CallDrawProc( fmmdl );
+  }
 }
 
 //--------------------------------------------------------------
@@ -389,6 +411,11 @@ static void DrawBlAct_Draw( FLDMMDL *fmmdl )
 	GFL_BBDACT_SYS *actSys;
 	
 	work = FLDMMDL_GetDrawProcWork( fmmdl );
+  
+  if( work->actID == FLDMMDL_BLACTID_NULL ){
+    return;
+  }
+
 	actSys = FLDMMDL_BLACTCONT_GetBbdActSys( FLDMMDL_GetBlActCont(fmmdl) );
 	
 	dir = FLDMMDL_GetDirDisp( fmmdl );

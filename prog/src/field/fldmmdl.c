@@ -354,6 +354,20 @@ void FLDMMDLSYS_UpdateProc( FLDMMDLSYS *fos )
 	GFL_TCB_Main( tcbsys );
 }
 
+//--------------------------------------------------------------
+/**
+ * FLDMMDLSYS Vブランク処理
+ * @param	fos	FLDMMDLSYS
+ * @retval	nothing
+ */
+//--------------------------------------------------------------
+void FLDMMDLSYS_VBlankProc( FLDMMDLSYS *fos )
+{
+  if( fos->pBlActCont != NULL ){
+    FLDMMDL_BLACTCONT_ProcVBlank( fos );
+  }
+}
+
 //======================================================================
 //	フィールド動作モデル　システム　描画プロセス
 //======================================================================
@@ -4071,6 +4085,7 @@ const OBJCODE_PARAM * FLDMMDLSYS_GetOBJCodeParam(
 		const FLDMMDLSYS *fmmdlsys, u16 code )
 {
 	GF_ASSERT( code < OBJCODEMAX );
+  GF_ASSERT( fmmdlsys->pOBJCodeParamTbl != NULL );
 	return( &(fmmdlsys->pOBJCodeParamTbl[code]) );
 }
 

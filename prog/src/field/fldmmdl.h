@@ -33,6 +33,11 @@
 
 #ifdef DEBUG_FLDMMDL
 #define DEBUG_FLDMMDL_PRINT //定義でデバッグ出力有効
+
+#ifdef DEBUG_ONLY_FOR_kagaya
+#define DEBUG_FLDMMDL_DEVELOP ///<作業者のみ有効なデバッグ処理
+#endif
+
 #endif
 
 #define DEBUG_OBJCODE_STR_LENGTH (16) //動作モデルOBJコード文字列長さ
@@ -307,6 +312,11 @@ enum
 //--------------------------------------------------------------
 #define FLDMMDL_MDL_MAX (48)
 
+//--------------------------------------------------------------
+/// ビルボードアクターID 無効なID
+//--------------------------------------------------------------
+#define FLDMMDL_BLACTID_NULL (0xffff)
+
 //======================================================================
 //	struct
 //======================================================================
@@ -485,6 +495,7 @@ extern void FLDMMDLSYS_SetupProc(
 	FLDMMDLSYS *fos, HEAPID heapID, const FLDMAPPER *pG3DMapper );
 extern void FLDMMDLSYS_DeleteProc( FLDMMDLSYS *fos );
 extern void FLDMMDLSYS_UpdateProc( FLDMMDLSYS *fos );
+extern void FLDMMDLSYS_VBlankProc( FLDMMDLSYS *fos );
 
 extern void FLDMMDLSYS_SetupDrawProc( FLDMMDLSYS *fos );
 
@@ -871,12 +882,13 @@ extern BOOL FLDMMDL_ActionLocalAcmd( FLDMMDL * fmmdl );
 extern void FLDMMDL_BLACTCONT_Setup( FLDMMDLSYS *fmmdlsys,
 	GFL_BBDACT_SYS *pBbdActSys, int res_max );
 extern void FLDMMDL_BLACTCONT_Release( FLDMMDLSYS *fmmdlsys );
+extern void FLDMMDL_BLACTCONT_ProcVBlank( FLDMMDLSYS *fmmdlsys );
 
 void FLDMMDL_BLACTCONT_AddResourceTex(
 	FLDMMDLSYS *fmmdlsys, const u16 *code, int max );
 
-extern GFL_BBDACT_ACTUNIT_ID FLDMMDL_BLACTCONT_AddActor(
-		FLDMMDL *fmmdl, u32 code );
+extern BOOL FLDMMDL_BLACTCONT_AddActor(
+    FLDMMDL *fmmdl, u16 code, GFL_BBDACT_ACTUNIT_ID *outID );
 extern void FLDMMDL_BLACTCONT_DeleteActor( FLDMMDL *fmmdl, u32 actID );
 
 extern GFL_BBDACT_SYS * FLDMMDL_BLACTCONT_GetBbdActSys(
