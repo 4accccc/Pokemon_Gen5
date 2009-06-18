@@ -129,6 +129,25 @@ def enum_search naix, name
   return index
 end
 
+def edge_enum_search naix, name
+  if name == "none" then return NO_ANIME_ID end
+  name += ".bin"
+  index = naix.getIndex(name.sub(/\./,"_"))
+  if index == nil then
+    puts "#{naix.getArchiveName}に#{name}がみつからない！"
+    return NO_ANIME_ID
+  end
+  return index
+end
+
+def roundup(num, div)
+  r = num % div
+  if r == 0 then
+    return num
+  else
+    return num + div - num % div
+  end
+end
 
 #------------------------------------------------------------------------------
 #	コンバート本体
@@ -138,6 +157,8 @@ begin
   ita_enum = NAIXReader.read("area_map_ita/area_map_ita.naix")
   itp_enum = NAIXReader.read("area_map_itp/area_map_itp_tbl.naix")
   light_enum = NAIXReader.read("../../field_light/field_light.naix")
+
+  edge_enum = NAIXReader.read("edgemarking/edgemarking.naix")
 
   area_tbl_file = File.open(ARGV[0],"r")
   id_file = AreaIDMaker.new(TARGET_HEADER_FILENAME)
@@ -151,9 +172,10 @@ begin
 	READTHROUGH_LINES.times{|| area_tbl_file.gets }
 
   area_count = 0
-  bin_out = ""
+  bin_out_total = ""
   area_tbl_file.each{|line|
     column = line.split "\t"
+    bin_out = ""
 
     #エリアＩＤ列挙
     id_file.putAreaName(column)
@@ -178,14 +200,20 @@ begin
     light_idx = enum_search( light_enum, column[COL_LIGHTTYPE] ) #ライト
     bin_out += [light_idx].pack("C") 
 
-    total_txt_file.printf("AREA:%3d BM:%2d TEX:%2d ANM:%2d IO:%d LIGHT:%d\n",
-                area_count, bm_id, tex_id, anm_ita_id, inout, light_idx);
+    edge_idx = edge_enum_search( edge_enum, column[COL_EDGEMARK] ) #エッジマーキング
+    bin_out += [edge_idx].pack("C")
 
+    total_txt_file.printf("AREA:%3d BM:%2d TEX:%2d ANM:%2d IO:%d LIGHT:%d EDGE:%d\n",
+                area_count, bm_id, tex_id, anm_ita_id, inout, light_idx, edge_idx);
+
+    bin_out += '0'    #padding
+    #bin_out +=  [0xaa].pack("C") * (roundup(bin_out.length, 4) - bin_out.length)
+    bin_out_total += bin_out
     area_count += 1
   }
 
   File.open(TARGET_BIN_FILENAME, "wb"){|file|
-    file.write(bin_out)
+    file.write(bin_out_total)
   }
 
   total_txt_file.close

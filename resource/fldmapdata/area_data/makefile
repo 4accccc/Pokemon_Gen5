@@ -54,12 +54,11 @@ TARGETDIR	= $(PROJECT_ARCDIR)fieldmap
 #------------------------------------------------------------------------------
 #※サブディレクトリでもMakeしたい場合、ここにディレクトリ名を書く
 #------------------------------------------------------------------------------
-SUBDIRS		=	area_map_tex area_map_ita area_map_itp
+SUBDIRS		=	edgemarking area_map_tex area_map_ita area_map_itp
 
 #共通ルールファイルのインクルード
 include $(PROJECT_RSCDIR)\macro_define
 
-#EXCEL2TAB	= $(PROJECT_ROOT)/tools/exceltool/exceltabconv.exe
 XLS2TAB		= ruby $(PROJECT_ROOT)/tools/exceltool/xls2xml/tab_out.rb
 
 #----------------------------------------------------------------------------
@@ -115,7 +114,6 @@ $(TARGETDIR)/$(TARGET):	$(TARGET)
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、バイナリ生成
 $(SRC_TXT_FILE):	$(SRC_XLS_FILE)
 	#エクセルコンバート
-	#$(EXCEL2TAB) $(SRC_XLS_FILE)
 	$(XLS2TAB) $(SRC_XLS_FILE) > $(SRC_TXT_FILE)
 
 $(TARGET):	$(SRC_TXT_FILE)

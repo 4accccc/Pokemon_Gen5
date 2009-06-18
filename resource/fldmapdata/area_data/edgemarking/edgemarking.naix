@@ -1,0 +1,20 @@
+/*****************************************************************************
+	Archive file index definition.
+	File: edgemarking.naix
+
+	This file was created by NINTENDO NITRO-System Archiver.
+
+	Update:2009-06-17T18:07:54
+ *****************************************************************************/
+
+#ifndef NARC_EDGEMARKING_NAIX_
+#define NARC_EDGEMARKING_NAIX_
+
+enum {
+	NARC_edgemarking_edge01_bin = 0,
+	NARC_edgemarking_edge02_bin = 1,
+	NARC_edgemarking_edge03_bin = 2
+};
+
+/* NARC_EDGEMARKING_NAIX_ */
+#endif

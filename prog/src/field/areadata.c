@@ -26,6 +26,7 @@ struct AREADATA{
   u8  anm_itp_id;	  		//地形ITPアニメセット指定
 	u8  inner_outer;			//金銀追加：配置モデル種類指定（屋内・屋外）
 	u8 light_type;				//ライト指定
+  u8 edgemark_type;      ///<エッジマーキング指定
 };
 
 //------------------------------------------------------------------
@@ -56,6 +57,19 @@ u16 AREADATA_GetAreaIDMax(void)
 	return AREA_ID_MAX;
 }
 
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+static void dumpAreaData(const AREADATA * areadata)
+{
+  OS_Printf("sizeof AREADATA=%d\n", sizeof(AREADATA) );
+	OS_Printf("model_set_index=%04x ",areadata->model_set_index);		//配置モデルセット指定
+	OS_Printf("tex_set_index=%04x ",areadata->tex_set_index);			//テクスチャセット指定
+	OS_Printf("anm_ita_id=%02x ",areadata->anm_ita_id);	  		//地形ITAアニメセット指定
+  OS_Printf("anm_itp_id=%02x \n",areadata->anm_itp_id);	  		//地形ITPアニメセット指定
+	OS_Printf("inner_outer=%02x ",areadata->inner_outer);			//金銀追加：配置モデル種類指定（屋内・屋外）
+	OS_Printf("light_type=%02x ",areadata->light_type);				//ライト指定
+  OS_Printf("edgemark_type=%02x\n",areadata->edgemark_type);      ///<エッジマーキング指定
+}
 
 //============================================================================================
 //============================================================================================
@@ -79,6 +93,7 @@ AREADATA * AREADATA_Create(u16 heapID, u16 area_id, u32 season_id)
       heapID,
       sizeof(AREADATA) * area_id,
       sizeof(AREADATA) );
+  dumpAreaData(areadata);
   return areadata;
 }
 
@@ -144,7 +159,12 @@ u8 AREADATA_GetLightType(const AREADATA * areadata)
 {
   return areadata->light_type;
 }
-
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+u8 AREADATA_GetEdgeMarkingType(const AREADATA * areadata)
+{
+  return areadata->edgemark_type;
+}
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 BOOL AREADATA_HasSeason(u16 area_id)
