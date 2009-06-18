@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="taya" host="W00146" date="2009-06-17T17:10:21"/>
+	<create user="taya" host="W00146" date="2009-06-18T13:15:50"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -2604,6 +2604,27 @@
 みちづれに　した！</language>
 		<language name="JPN_KANJI" width="216">相手の　[1:02:ポケモンニックネーム:0]　は　相手を
 道連れに　した！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_Urami">
+		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]　の
+[1:07:わざ名:1]を　[2:00:１桁:2]けずった！</language>
+		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]　の
+[1:07:わざ名:1]を　[2:00:１桁:2]削った！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_Urami_Y">
+		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]　の
+[1:07:わざ名:1]を　[2:00:１桁:2]けずった！</language>
+		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]　の
+[1:07:わざ名:1]を　[2:00:１桁:2]削った！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_Urami_E">
+		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]　の
+[1:07:わざ名:1]を　[2:00:１桁:2]けずった！</language>
+		<language name="JPN_KANJI" width="216">相手の　[1:02:ポケモンニックネーム:0]　の
+[1:07:わざ名:1]を　[2:00:１桁:2]削った！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_PushOutChange">
