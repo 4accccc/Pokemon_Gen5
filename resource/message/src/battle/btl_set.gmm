@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="taya" host="W00146" date="2009-06-18T13:15:50"/>
+	<create user="taya" host="W00146" date="2009-06-19T01:09:55"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -2246,6 +2246,7 @@
 	</row>
 
 	<row id="BTL_STRID_SET_Feint">
+		<comment>フェイント</comment>
 		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は
 フェイントに　ひっかかった！</language>
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
@@ -2267,6 +2268,7 @@
 	</row>
 
 	<row id="BTL_STRID_SET_Mamoru">
+		<comment>まもる、みきり</comment>
 		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は
 こうげきから　みを　まもった！</language>
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
@@ -2288,6 +2290,7 @@
 	</row>
 
 	<row id="BTL_STRID_SET_SoraWoTobu">
+		<comment>そらをとぶ</comment>
 		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は
 そらたかく　とびあがった！</language>
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
@@ -2309,6 +2312,7 @@
 	</row>
 
 	<row id="BTL_STRID_SET_Diving">
+		<comment>ダイビング</comment>
 		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は
 すいちゅうに　みをひそめた！</language>
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
@@ -2330,6 +2334,7 @@
 	</row>
 
 	<row id="BTL_STRID_SET_AnaWoHoru">
+		<comment>あなをほる</comment>
 		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は
 じめんに　もぐった！</language>
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
@@ -2351,6 +2356,7 @@
 	</row>
 
 	<row id="BTL_STRID_SET_ShadowDive">
+		<comment>シャドーダイブ</comment>
 		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]　のすがたが
 いっしゅんにして　きえた！</language>
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]　の姿が
@@ -2372,6 +2378,7 @@
 	</row>
 
 	<row id="BTL_STRID_SET_Tobihaneru">
+		<comment>とびはねる</comment>
 		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は
 たかく　とびはねた！</language>
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
@@ -2393,6 +2400,7 @@
 	</row>
 
 	<row id="BTL_STRID_SET_Kamaitati">
+		<comment>かまいたち</comment>
 		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]の　まわりで
 くうきが　うずをまく！</language>
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]の周りで
@@ -2414,6 +2422,7 @@
 	</row>
 
 	<row id="BTL_STRID_SET_GodBird">
+		<comment>ゴッドバード</comment>
 		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]を
 はげしい　ひかりが　つつむ！</language>
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]を
@@ -2435,6 +2444,7 @@
 	</row>
 
 	<row id="BTL_STRID_SET_SolarBeam">
+		<comment>こうごうせい</comment>
 		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は
 ひかりを　きゅうしゅうした！</language>
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
@@ -2456,6 +2466,7 @@
 	</row>
 
 	<row id="BTL_STRID_SET_RocketZutuki">
+		<comment>ロケットずつき</comment>
 		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は
 くびを　ひっこめた！</language>
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
@@ -2477,6 +2488,7 @@
 	</row>
 
 	<row id="BTL_STRID_SET_Encore">
+		<comment>アンコール</comment>
 		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]　は
 アンコールをうけた！</language>
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]　は
@@ -2498,6 +2510,7 @@
 	</row>
 
 	<row id="BTL_STRID_SET_Chouhatu">
+		<comment>ちょうはつ</comment>
 		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]　は
 ちょうはつに　のってしまった！</language>
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]　は
@@ -2544,6 +2557,7 @@
 	</row>
 
 	<row id="BTL_STRID_SET_Haradaiko">
+		<comment>はらだいこ</comment>
 		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]　は
 たいりょくを　けずって　パワーぜんかい！</language>
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]　は
@@ -2565,6 +2579,7 @@
 	</row>
 
 	<row id="BTL_STRID_SET_MichidureReady">
+		<comment>みちづれ</comment>
 		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]　は　あいてを
 みちづれに　しようとしている！</language>
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]　は　相手を
@@ -2606,7 +2621,30 @@
 道連れに　した！</language>
 	</row>
 
+	<row id="BTL_STRID_SET_Nemuru">
+		<comment>ねむる</comment>
+		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は　ねむって
+げんきに　なった！</language>
+		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は　眠って
+元気に　なった！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_Nemuru_Y">
+		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は　ねむって
+げんきに　なった！</language>
+		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]　は眠って
+元気に　なった！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_Nemuru_E">
+		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は　ねむって
+げんきに　なった！</language>
+		<language name="JPN_KANJI" width="216">あいての　[1:02:ポケモンニックネーム:0]は　眠って
+元気に　なった！</language>
+	</row>
+
 	<row id="BTL_STRID_SET_Urami">
+		<comment>うらみ</comment>
 		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]　の
 [1:07:わざ名:1]を　[2:00:１桁:2]けずった！</language>
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]　の
@@ -2625,6 +2663,28 @@
 [1:07:わざ名:1]を　[2:00:１桁:2]けずった！</language>
 		<language name="JPN_KANJI" width="216">相手の　[1:02:ポケモンニックネーム:0]　の
 [1:07:わざ名:1]を　[2:00:１桁:2]削った！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_LockOn">
+		<comment>ロックオン・こころのめ</comment>
+		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は　[1:02:ポケモンニックネーム:1]に
+ねらいを　さだめた！</language>
+		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は　[1:02:ポケモンニックネーム:1]に
+ねらいを　さだめた！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_LockOn_Y">
+		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は　[1:02:ポケモンニックネーム:1]に
+ねらいを　さだめた！</language>
+		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]は　[1:02:ポケモンニックネーム:1]に
+ねらいを　さだめた！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_LockOn_E">
+		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は　[1:02:ポケモンニックネーム:1]に
+ねらいを　さだめた！</language>
+		<language name="JPN_KANJI" width="216">相手の　[1:02:ポケモンニックネーム:0]は　[1:02:ポケモンニックネーム:1]に
+ねらいを　さだめた！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_PushOutChange">
@@ -2770,6 +2830,27 @@
 		<language name="JPN_KANJI" width="216">相手の　[1:02:ポケモンニックネーム:0]　は
 かいふくふうじで　[1:07:わざ名:1]が[BE:00:ページ切り替え（行送り）]
 だせない！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_HPFull">
+		<language name="JPN" width="216">しかし　[1:02:ポケモンニックネーム:0]は
+たいりょくが　まんたんだ！</language>
+		<language name="JPN_KANJI" width="216">しかし　[1:02:ポケモンニックネーム:0]は
+体力が　満タンだ！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_HPFull_Y">
+		<language name="JPN" width="216">しかし　やせいの　[1:02:ポケモンニックネーム:0]は
+たいりょくが　まんたんだ！</language>
+		<language name="JPN_KANJI" width="216">しかし　野生の　[1:02:ポケモンニックネーム:0]は
+体力が　満タンだ！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_HPFull_E">
+		<language name="JPN" width="216">しかし　相手の　[1:02:ポケモンニックネーム:0]は
+たいりょくが　まんたんだ！</language>
+		<language name="JPN_KANJI" width="216">しかし　相手の　[1:02:ポケモンニックネーム:0]は
+体力が　満タンだ！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_ChangePokeType">
@@ -3530,6 +3611,21 @@
 		<language name="JPN_KANJI" width="216">相手の　[1:02:ポケモンニックネーム:0]は
 [1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
 ステータスを　元に　戻した！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_Fumin">
+		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は ねむらない！</language>
+		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は 眠らない！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_Fumin_Y">
+		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は ねむらない！</language>
+		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]は 眠らない！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_Fumin_E">
+		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は ねむらない！</language>
+		<language name="JPN_KANJI" width="216">相手の　[1:02:ポケモンニックネーム:0]は 眠らない！</language>
 	</row>
 
 	<flowchart-group-list>
