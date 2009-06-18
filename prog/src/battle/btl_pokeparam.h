@@ -132,16 +132,16 @@ typedef struct  {
   union {
     u16    raw;
     struct {
-      u16  type : 4;
+      u16  type : 3;
       u16  _0   : 12;
     };
     struct {
-      u16  type_turn : 4;
-      u16  count     : 6;
-      u16  _1        : 6;
+      u16  type_turn : 3;
+      u16  count     : 5;
+      u16  param     : 8;
     }turn;
     struct {
-      u16  type_poke : 4;
+      u16  type_poke : 3;
       u16  ID        : 6;
       u16  _2        : 6;
     }poke;
@@ -163,17 +163,31 @@ typedef enum {
 
 }BppKoraeruCause;
 
-static inline void BPP_SICKCONT_Set_Turn( BPP_SICK_CONT* cont, u8 turns )
+static inline BPP_SICK_CONT BPP_SICKCONT_MakeTurn( u8 turns )
 {
-  cont->raw = 0;
-  cont->type = WAZASICK_CONT_TURN;
-  cont->turn.count = turns;
+  BPP_SICK_CONT  cont;
+  cont.raw = 0;
+  cont.type = WAZASICK_CONT_TURN;
+  cont.turn.count = turns;
+  cont.turn.param = 0;
+  return cont;
 }
-static inline void BPP_SICKCONT_Set_Poke( BPP_SICK_CONT* cont, u8 pokeID )
+static inline BPP_SICK_CONT BPP_SICKCONT_Set_TurnParam( u8 turns, u8 param )
 {
-  cont->raw = 0;
-  cont->type = WAZASICK_CONT_POKE;
-  cont->poke.ID = pokeID;
+  BPP_SICK_CONT  cont;
+  cont.raw = 0;
+  cont.type = WAZASICK_CONT_TURN;
+  cont.turn.count = turns;
+  cont.turn.param = param;
+  return cont;
+}
+static inline BPP_SICK_CONT BPP_SICKCONT_Set_Poke( u8 pokeID )
+{
+  BPP_SICK_CONT  cont;
+  cont.raw = 0;
+  cont.type = WAZASICK_CONT_POKE;
+  cont.poke.ID = pokeID;
+  return cont;
 }
 static inline void BPP_SICKCONT_Set_Permanent( BPP_SICK_CONT* cont )
 {
@@ -222,6 +236,8 @@ extern BtlPokePos BTL_POKEPARAM_GetPrevTargetPos( const BTL_POKEPARAM* pp );
 extern u32 BTL_POKEPARAM_GetSameWazaUsedCounter( const BTL_POKEPARAM* pp );
 extern fx32 BTL_POKEPARAM_GetHPRatio( const BTL_POKEPARAM* pp );
 extern u8 BTL_POKEPARAM_GetWazaIdx( const BTL_POKEPARAM* pp, WazaID waza );
+extern u8 BTL_POKEPARAM_GetSickParam( const BTL_POKEPARAM* pp, WazaSick sick );
+
 
 
 //=============================================================================================

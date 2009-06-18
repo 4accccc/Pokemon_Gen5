@@ -28,28 +28,20 @@
 /*--------------------------------------------------------------------------*/
 static s32 common_GetItemParam( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u16 paramID );
 static void handler_KuraboNomi( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
-static void handler_KuraboNomi_Exe( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static BTL_EVENT_FACTOR* HAND_ADD_ITEM_KuraboNomi( u16 pri, u16 itemID, u8 pokeID );
 static void handler_KagoNomi( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
-static void handler_KagoNomi_Exe( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static BTL_EVENT_FACTOR* HAND_ADD_ITEM_KagoNomi( u16 pri, u16 itemID, u8 pokeID );
 static void handler_ChigoNomi( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
-static void handler_ChigoNomi_Exe( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static BTL_EVENT_FACTOR* HAND_ADD_ITEM_ChigoNomi( u16 pri, u16 itemID, u8 pokeID );
 static void handler_NanashiNomi( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
-static void handler_NanashiNomi_Exe( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static BTL_EVENT_FACTOR* HAND_ADD_ITEM_NanashiNomi( u16 pri, u16 itemID, u8 pokeID );
 static void handler_KiiNomi( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
-static void handler_KiiiNomi_Exe( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static BTL_EVENT_FACTOR* HAND_ADD_ITEM_KiiNomi( u16 pri, u16 itemID, u8 pokeID );
 static void handler_MomonNomi( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
-static void handler_MomonNomi_Exe( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static BTL_EVENT_FACTOR* HAND_ADD_ITEM_MomonNomi( u16 pri, u16 itemID, u8 pokeID );
-static void common_sickReaction( BTL_SVFLOW_WORK* flowWk, u8 pokeID, WazaSick sickID );
-static void common_sickExe( BTL_SVFLOW_WORK* flowWk, u8 pokeID, WazaSick sick );
 static void handler_RamNomi( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
-static void handler_RamNomi_Exe( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static BTL_EVENT_FACTOR* HAND_ADD_ITEM_RamNomi( u16 pri, u16 itemID, u8 pokeID );
+static void common_sickReaction( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, BtlWazaSickEx sickCode );
 static BTL_EVENT_FACTOR* HAND_ADD_ITEM_HimeriNomi( u16 pri, u16 itemID, u8 pokeID );
 static void handler_HimeriNomi( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_HimeriNomi_Exe( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
@@ -124,7 +116,6 @@ static void handler_SiroiHerb_React( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK
 static void handler_SiroiHerb_Use( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static BTL_EVENT_FACTOR* HAND_ADD_ITEM_MentalHerb( u16 pri, u16 itemID, u8 pokeID );
 static void handler_MentalHerb_React( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
-static void handler_MentalHerb_Use( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static BTL_EVENT_FACTOR* HAND_ADD_ITEM_HikarinoKona( u16 pri, u16 itemID, u8 pokeID );
 static void handler_HikarinoKona( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static BTL_EVENT_FACTOR* HAND_ADD_ITEM_KyouseiGipusu( u16 pri, u16 itemID, u8 pokeID );
@@ -424,17 +415,12 @@ static s32 common_GetItemParam( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flo
 //------------------------------------------------------------------------------
 static void handler_KuraboNomi( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
-  common_sickReaction( flowWk, pokeID, WAZASICK_MAHI );
-}
-static void handler_KuraboNomi_Exe( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
-{
-  common_sickExe( flowWk, pokeID, WAZASICK_MAHI );
+  common_sickReaction( myHandle, flowWk, pokeID, WAZASICK_MAHI );
 }
 static BTL_EVENT_FACTOR* HAND_ADD_ITEM_KuraboNomi( u16 pri, u16 itemID, u8 pokeID )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_MAKE_POKESICK, handler_KuraboNomi },    // 状態異常チェックハンドラ
-    { BTL_EVENT_USE_ITEM,      handler_KuraboNomi_Exe },
+    { BTL_EVENT_ADDSICK_FIX,    handler_KuraboNomi },
     { BTL_EVENT_NULL, NULL },
   };
   return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_ITEM, itemID, pri, pokeID, HandlerTable );
@@ -446,17 +432,12 @@ static BTL_EVENT_FACTOR* HAND_ADD_ITEM_KuraboNomi( u16 pri, u16 itemID, u8 pokeI
 //------------------------------------------------------------------------------
 static void handler_KagoNomi( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
-  common_sickReaction( flowWk, pokeID, WAZASICK_NEMURI );
-}
-static void handler_KagoNomi_Exe( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
-{
-  common_sickExe( flowWk, pokeID, WAZASICK_NEMURI );
+  common_sickReaction( myHandle, flowWk, pokeID, WAZASICK_NEMURI );
 }
 static BTL_EVENT_FACTOR* HAND_ADD_ITEM_KagoNomi( u16 pri, u16 itemID, u8 pokeID )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_MAKE_POKESICK, handler_KagoNomi },    // 状態異常チェックハンドラ
-    { BTL_EVENT_USE_ITEM,      handler_KagoNomi_Exe },
+    { BTL_EVENT_ADDSICK_FIX, handler_KagoNomi },    // 状態異常チェックハンドラ
     { BTL_EVENT_NULL, NULL },
   };
   return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_ITEM, itemID, pri, pokeID, HandlerTable );
@@ -468,17 +449,12 @@ static BTL_EVENT_FACTOR* HAND_ADD_ITEM_KagoNomi( u16 pri, u16 itemID, u8 pokeID 
 //------------------------------------------------------------------------------
 static void handler_ChigoNomi( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
-  common_sickReaction( flowWk, pokeID, WAZASICK_YAKEDO );
-}
-static void handler_ChigoNomi_Exe( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
-{
-  common_sickExe( flowWk, pokeID, WAZASICK_YAKEDO );
+  common_sickReaction( myHandle, flowWk, pokeID, WAZASICK_YAKEDO );
 }
 static BTL_EVENT_FACTOR* HAND_ADD_ITEM_ChigoNomi( u16 pri, u16 itemID, u8 pokeID )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_MAKE_POKESICK, handler_ChigoNomi },   // 状態異常チェックハンドラ
-    { BTL_EVENT_USE_ITEM,      handler_ChigoNomi_Exe },
+    { BTL_EVENT_ADDSICK_FIX, handler_ChigoNomi },   // 状態異常チェックハンドラ
     { BTL_EVENT_NULL, NULL },
   };
   return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_ITEM, itemID, pri, pokeID, HandlerTable );
@@ -490,17 +466,12 @@ static BTL_EVENT_FACTOR* HAND_ADD_ITEM_ChigoNomi( u16 pri, u16 itemID, u8 pokeID
 //------------------------------------------------------------------------------
 static void handler_NanashiNomi( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
-  common_sickReaction( flowWk, pokeID, WAZASICK_KOORI );
-}
-static void handler_NanashiNomi_Exe( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
-{
-  common_sickExe( flowWk, pokeID, WAZASICK_KOORI );
+  common_sickReaction( myHandle, flowWk, pokeID, WAZASICK_KOORI );
 }
 static BTL_EVENT_FACTOR* HAND_ADD_ITEM_NanashiNomi( u16 pri, u16 itemID, u8 pokeID )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_MAKE_POKESICK, handler_NanashiNomi },   // 状態異常チェックハンドラ
-    { BTL_EVENT_USE_ITEM,      handler_NanashiNomi_Exe },
+    { BTL_EVENT_ADDSICK_FIX, handler_NanashiNomi },   // 状態異常チェックハンドラ
     { BTL_EVENT_NULL, NULL },
   };
   return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_ITEM, itemID, pri, pokeID, HandlerTable );
@@ -512,17 +483,12 @@ static BTL_EVENT_FACTOR* HAND_ADD_ITEM_NanashiNomi( u16 pri, u16 itemID, u8 poke
 //------------------------------------------------------------------------------
 static void handler_KiiNomi( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
-  common_sickReaction( flowWk, pokeID, WAZASICK_KONRAN );
-}
-static void handler_KiiiNomi_Exe( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
-{
-  common_sickExe( flowWk, pokeID, WAZASICK_KONRAN );
+  common_sickReaction( myHandle, flowWk, pokeID, WAZASICK_KONRAN );
 }
 static BTL_EVENT_FACTOR* HAND_ADD_ITEM_KiiNomi( u16 pri, u16 itemID, u8 pokeID )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_MAKE_WAZASICK, handler_KiiNomi },   // 状態異常チェックハンドラ
-    { BTL_EVENT_USE_ITEM,      handler_KiiiNomi_Exe },
+    { BTL_EVENT_ADDSICK_FIX, handler_KiiNomi },   // 状態異常チェックハンドラ
     { BTL_EVENT_NULL, NULL },
   };
   return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_ITEM, itemID, pri, pokeID, HandlerTable );
@@ -534,17 +500,29 @@ static BTL_EVENT_FACTOR* HAND_ADD_ITEM_KiiNomi( u16 pri, u16 itemID, u8 pokeID )
 //------------------------------------------------------------------------------
 static void handler_MomonNomi( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
-  common_sickReaction( flowWk, pokeID, WAZASICK_DOKU );
-}
-static void handler_MomonNomi_Exe( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
-{
-  common_sickExe( flowWk, pokeID, WAZASICK_DOKU );
+  common_sickReaction( myHandle, flowWk, pokeID, WAZASICK_DOKU );
 }
 static BTL_EVENT_FACTOR* HAND_ADD_ITEM_MomonNomi( u16 pri, u16 itemID, u8 pokeID )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_MAKE_POKESICK, handler_MomonNomi },   // 状態異常チェックハンドラ
-    { BTL_EVENT_USE_ITEM,      handler_MomonNomi_Exe },
+    { BTL_EVENT_ADDSICK_FIX, handler_MomonNomi },   // 状態異常チェックハンドラ
+    { BTL_EVENT_NULL, NULL },
+  };
+  return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_ITEM, itemID, pri, pokeID, HandlerTable );
+}
+//------------------------------------------------------------------------------
+/**
+ *  ラムのみ
+ */
+//------------------------------------------------------------------------------
+static void handler_RamNomi( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+{
+  common_sickReaction( myHandle, flowWk, pokeID, WAZASICK_EX_POKEFULL_PLUS );
+}
+static BTL_EVENT_FACTOR* HAND_ADD_ITEM_RamNomi( u16 pri, u16 itemID, u8 pokeID )
+{
+  static const BtlEventHandlerTable HandlerTable[] = {
+    { BTL_EVENT_ADDSICK_FIX, handler_RamNomi },   // 状態異常チェックハンドラ
     { BTL_EVENT_NULL, NULL },
   };
   return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_ITEM, itemID, pri, pokeID, HandlerTable );
@@ -555,74 +533,39 @@ static BTL_EVENT_FACTOR* HAND_ADD_ITEM_MomonNomi( u16 pri, u16 itemID, u8 pokeID
  *
  * @param   flowWk
  * @param   pokeID
- * @param   sickID    反応する状態異常ID
+ * @param   sickID    反応する状態異常
  *
  */
 //--------------------------------------------------------------------------
-static void common_sickReaction( BTL_SVFLOW_WORK* flowWk, u8 pokeID, WazaSick sickID )
+static void common_sickReaction( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, BtlWazaSickEx sickCode )
 {
-  if( (BTL_EVENTVAR_GetValue(BTL_EVAR_SICKID) == sickID)
-  &&  (BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_DEF) == pokeID)
-  ){
-    BTL_EVWK_ADDSICK* evwk = (BTL_EVWK_ADDSICK*) BTL_EVENTVAR_GetValue( BTL_EVAR_WORK_ADRS );
-    evwk->fItemResponce = TRUE;
-  }
-}
-//----------------------------------------------------------------------------------
-/**
- * 状態異常を回復するアイテム群の共通処理
- *
- * @param   flowWk
- * @param   pokeID
- * @param   sick
- */
-//----------------------------------------------------------------------------------
-static void common_sickExe( BTL_SVFLOW_WORK* flowWk, u8 pokeID, WazaSick sick )
-{
-  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID )
-  {
-    BTL_HANDEX_PARAM_CURE_SICK* param = BTL_SVFLOW_HANDLERWORK_Push( flowWk, BTL_HANDEX_CURE_SICK, pokeID );
-    param->pokeID[0] = pokeID;
-    param->poke_cnt = 1;
-    param->sickCode = sick;
-  }
-}
+  WazaSick sickID = BTL_EVENTVAR_GetValue( BTL_EVAR_SICKID );
 
-//------------------------------------------------------------------------------
-/**
- *  ラムのみ
- */
-//------------------------------------------------------------------------------
-static void handler_RamNomi( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
-{
-  if( pokeID == BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_DEF) )
+  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_DEF) == pokeID )
   {
-    WazaSick sickID = BTL_EVENTVAR_GetValue( BTL_EVAR_SICKID );
-    if( (sickID < POKESICK_MAX) || (sickID == WAZASICK_KONRAN) )
+    BOOL  fMatch = FALSE;
+    switch( sickCode ){
+    case WAZASICK_EX_POKEFULL_PLUS:
+      fMatch = ( (sickID < POKESICK_MAX) || (sickID == WAZASICK_KONRAN) );
+      break;
+    case WAZASICK_EX_POKEFULL:
+      fMatch = (sickID < POKESICK_MAX);
+      break;
+    default:
+      fMatch = (sickID == sickCode);
+      break;
+    }
+    if( fMatch )
     {
-      BTL_EVWK_ADDSICK* evwk = (BTL_EVWK_ADDSICK*) BTL_EVENTVAR_GetValue( BTL_EVAR_WORK_ADRS );
-      evwk->fItemResponce = TRUE;
+      BTL_HANDEX_PARAM_CURE_SICK* param;
+      param = BTL_SVFLOW_HANDLERWORK_Push( flowWk, BTL_HANDEX_CURE_SICK, pokeID );
+      param->sickCode = sickCode;
+      param->poke_cnt = 1;
+      param->pokeID[0] = pokeID;
+
+      BTL_EVENTVAR_RewriteValue( BTL_EVAR_ITEM, BTL_EVENT_FACTOR_GetSubID(myHandle) );
     }
   }
-}
-static void handler_RamNomi_Exe( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
-{
-  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID )
-  {
-    BTL_HANDEX_PARAM_CURE_SICK* param = BTL_SVFLOW_HANDLERWORK_Push( flowWk, BTL_HANDEX_CURE_SICK, pokeID );
-    param->pokeID[0] = pokeID;
-    param->poke_cnt = 1;
-    param->sickCode = WAZASICK_EX_POKEFULL_PLUS;
-  }
-}
-static BTL_EVENT_FACTOR* HAND_ADD_ITEM_RamNomi( u16 pri, u16 itemID, u8 pokeID )
-{
-  static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_MAKE_POKESICK, handler_RamNomi },   // 状態異常チェックハンドラ
-    { BTL_EVENT_USE_ITEM,      handler_RamNomi_Exe },
-    { BTL_EVENT_NULL, NULL },
-  };
-  return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_ITEM, itemID, pri, pokeID, HandlerTable );
 }
 //------------------------------------------------------------------------------
 /**
@@ -1417,13 +1360,11 @@ static void handler_SiroiHerb_Use( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* 
 static BTL_EVENT_FACTOR* HAND_ADD_ITEM_MentalHerb( u16 pri, u16 itemID, u8 pokeID )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_MAKE_POKESICK,  handler_MentalHerb_React },
-    { BTL_EVENT_USE_ITEM,       handler_MentalHerb_Use },
+    { BTL_EVENT_ADDSICK_FIX,  handler_MentalHerb_React },
     { BTL_EVENT_NULL, NULL },
   };
   return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_ITEM, itemID, pri, pokeID, HandlerTable );
 }
-
 static void handler_MentalHerb_React( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
   if( work[0] == 0 )
@@ -1433,22 +1374,14 @@ static void handler_MentalHerb_React( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WOR
       WazaSick sickID = BTL_EVENTVAR_GetValue( BTL_EVAR_SICKID );
       if( sickID == WAZASICK_MEROMERO )
       {
-        BTL_EVWK_ADDSICK* evwk = (BTL_EVWK_ADDSICK*) BTL_EVENTVAR_GetValue( BTL_EVAR_WORK_ADRS );
-        evwk->fItemResponce = TRUE;
+        BTL_HANDEX_PARAM_CURE_SICK* param = BTL_SVFLOW_HANDLERWORK_Push( flowWk, BTL_HANDEX_CURE_SICK, pokeID );
+        param->pokeID[0] = pokeID;
+        param->poke_cnt = 1;
+        param->sickCode = WAZASICK_MEROMERO;
+        BTL_EVENTVAR_RewriteValue( BTL_EVAR_ITEM, BTL_EVENT_FACTOR_GetSubID(myHandle) );
         work[0] = 1;
       }
     }
-  }
-}
-
-static void handler_MentalHerb_Use( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
-{
-  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID )
-  {
-    BTL_HANDEX_PARAM_CURE_SICK* param = BTL_SVFLOW_HANDLERWORK_Push( flowWk, BTL_HANDEX_CURE_SICK, pokeID );
-    param->pokeID[0] = pokeID;
-    param->poke_cnt = 1;
-    param->sickCode = WAZASICK_MEROMERO;
   }
 }
 

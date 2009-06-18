@@ -121,6 +121,7 @@ static void ms_set_std( STRBUF* dst, u16 strID, const int* args );
 static void ms_set_rankup( STRBUF* dst, u16 strID, const int* args );
 static void ms_set_rankdown( STRBUF* dst, u16 strID, const int* args );
 static void ms_set_rank_limit( STRBUF* dst, u16 strID, const int* args );
+static void ms_set_poke( STRBUF* dst, u16 strID, const int* args );
 static void ms_set_trace( STRBUF* dst, u16 strID, const int* args );
 static void ms_set_yotimu( STRBUF* dst, u16 strID, const int* args );
 static void ms_set_omitoosi( STRBUF* dst, u16 strID, const int* args );
@@ -455,6 +456,8 @@ void BTL_STR_MakeStringSet( STRBUF* buf, BtlStrID_SET strID, const int* args )
     { BTL_STRID_SET_KaifukuFuji,          ms_set_waza_sp },
     { BTL_STRID_SET_ChouhatuWarn,         ms_set_waza_sp },
     { BTL_STRID_SET_Urami,                ms_set_waza_num },
+    { BTL_STRID_SET_LockOn,               ms_set_poke },
+
 
   };
 
@@ -534,6 +537,22 @@ static void ms_set_rank_limit( STRBUF* dst, u16 strID, const int* args )
   strID = get_setPtnStrID( args[0], strID, statusType );
   GFL_MSG_GetString( SysWork.msg[MSGSRC_SET], strID, SysWork.tmpBuf );
   WORDSET_ExpandStr( SysWork.wset, dst, SysWork.tmpBuf );
+}
+//--------------------------------------------------------------
+/**
+ *  ÅõÅõÇÕÅ~Å~Ç…ÇÀÇÁÇ¢ÇÇ≥ÇæÇﬂÇΩÅIÅ@ìô
+ *  args... [0]:pokeID,  [1]:targetPokeID
+ */
+//--------------------------------------------------------------
+static void ms_set_poke( STRBUF* dst, u16 strID, const int* args )
+{
+  register_PokeNickname( args[0], BUFIDX_POKE_1ST );
+  register_PokeNickname( args[1], BUFIDX_POKE_2ND );
+
+  strID = get_setStrID( args[0], strID );
+  GFL_MSG_GetString( SysWork.msg[MSGSRC_SET], strID, SysWork.tmpBuf );
+  WORDSET_ExpandStr( SysWork.wset, dst, SysWork.tmpBuf );
+
 }
 //--------------------------------------------------------------
 /**

@@ -83,6 +83,9 @@ typedef enum {
   BTL_EVENT_BEFORE_RANKDOWN,        ///< 能力下げる（前）
   BTL_EVENT_AFTER_RANKDOWN,         ///< 能力下げた（後）
   BTL_EVENT_ADD_SICK,               ///< ワザの追加効果による状態異常の発生チェック
+  BTL_EVENT_ADDSICK_CHECKFAIL,      ///< 状態異常の失敗チェック
+  BTL_EVENT_ADDSICK_FIX,            ///< 状態異常確定
+  BTL_EVENT_ADDSICK_FAILED,         ///< 状態異常失敗
   BTL_EVENT_MAKE_POKESICK,          ///< ポケモン系の状態異常にする
   BTL_EVENT_MAKE_WAZASICK,          ///< ワザ系の状態異常にする
   BTL_EVENT_SICK_DAMAGE,            ///< 状態異常によるダメージ計算
@@ -187,6 +190,7 @@ typedef enum {
   BTL_EVAR_HITCOUNT,
   BTL_EVAR_CRITICAL_RANK,
   BTL_EVAR_CRITICAL_FLAG,
+  BTL_EVAR_ITEM,
   BTL_EVAR_ITEMUSE_FLAG,
   BTL_EVAR_AGILITY,
   BTL_EVAR_WAZA_POWER,

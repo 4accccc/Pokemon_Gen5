@@ -560,6 +560,29 @@ BOOL BTL_POKEPARAM_CheckSick( const BTL_POKEPARAM* pp, WazaSick sickType )
 }
 //=============================================================================================
 /**
+ * 特定状態異常に設定されたパラメータ値（8bit）を取得
+ *
+ * @param   pp
+ * @param   sick
+ *
+ * @retval  u8
+ */
+//=============================================================================================
+u8 BTL_POKEPARAM_GetSickParam( const BTL_POKEPARAM* pp, WazaSick sick )
+{
+  GF_ASSERT(sick < NELEMS(pp->sickCont));
+
+  if( pp->sickCont[sick].type == WAZASICK_CONT_TURN )
+  {
+    return pp->sickCont[sick].turn.param;
+  }
+
+  GF_ASSERT(0); // パラメ無いのに呼び出された
+  return 0;
+}
+
+//=============================================================================================
+/**
  * 状態異常のターンチェックで減るHPの量を計算
  *
  * @param   pp
@@ -777,7 +800,6 @@ u8 BTL_POKEPARAM_GetWazaIdx( const BTL_POKEPARAM* pp, WazaID waza )
   }
   return PTL_WAZA_MAX;
 }
-
 
 //-----------------------------
 static const s8* getRankVaryStatusConst( const BTL_POKEPARAM* pp, BppValueID type, s8* min, s8* max )
@@ -1095,7 +1117,7 @@ void BTL_POKEPARAM_SetWazaSick( BTL_POKEPARAM* pp, WazaSick sick, BPP_SICK_CONT 
 {
   if( sick < POKESICK_MAX )
   {
-    GF_ASSERT(pp->pokeSick == POKESICK_NULL);
+//    GF_ASSERT(pp->pokeSick == POKESICK_NULL);
     pp->pokeSick = sick;
     pp->pokeSickCounter = contParam.turn.count;
     pp->sickCont[ sick ] = contParam;
@@ -1406,8 +1428,6 @@ void BTL_POKEPARAM_ResetUsedWazaNumber( BTL_POKEPARAM* pp )
   pp->prevWazaID = WAZANO_NULL;
   pp->sameWazaCounter = 0;
 }
-
-
 
 //--------------------------------------------------------------------------
 /**

@@ -66,6 +66,7 @@ static void handler_SkillLink( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flow
 static void handler_Surudoime( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_Tanjun( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_ReafGuard( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static void handler_AddSickFailCommon( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_Juunan_PokeSick( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_Juunan_Swap( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_Fumin_PokeSick( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
@@ -1334,20 +1335,32 @@ static void handler_ReafGuard( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flow
     // 天候が晴れ
     if( BTL_FIELD_GetWeather() == BTL_WEATHER_SHINE )
     {
-      BTL_EVENTVAR_RewriteValue( BTL_EVAR_SICKID, POKESICK_NULL );
-      if( BTL_EVENTVAR_GetValue(BTL_EVAR_ALMOST_FLAG) )
+      // ポケモン系状態異常にはならない
+      if( BTL_EVENTVAR_GetValue(BTL_EVAR_SICKID) < POKESICK_MAX )
       {
-        BTL_SERVER_RECEPT_TokuseiWinIn( flowWk, pokeID );
-        BTL_SERVER_RECTPT_SetMessage( flowWk, BTL_STRID_SET_NoEffect, pokeID );
-        BTL_SERVER_RECEPT_TokuseiWinOut( flowWk, pokeID );
+        BTL_EVENTVAR_RewriteValue( BTL_EVAR_FAIL_FLAG, TRUE );
       }
     }
+  }
+}
+static void handler_AddSickFailCommon( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+{
+  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_DEF) == pokeID )
+  {
+    BTL_HANDEX_PARAM_MESSAGE* param;
+
+    BTL_SVFLOW_HANDLERWORK_Push( flowWk, BTL_HANDEX_TOKWIN_IN, pokeID );
+    param = BTL_SVFLOW_HANDLERWORK_Push( flowWk, BTL_HANDEX_MESSAGE_SET, pokeID );
+    param->pokeID = pokeID;
+    param->strID = BTL_STRID_SET_NoEffect;
+    BTL_SVFLOW_HANDLERWORK_Push( flowWk, BTL_HANDEX_TOKWIN_OUT, pokeID );
   }
 }
 BTL_EVENT_FACTOR*  HAND_TOK_ADD_ReafGuard( u16 pri, u16 tokID, u8 pokeID )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_MAKE_POKESICK, handler_ReafGuard }, // ポケモン系状態異常処理ハンドラ
+    { BTL_EVENT_ADDSICK_CHECKFAIL, handler_ReafGuard         }, // ポケモン系状態異常処理ハンドラ
+    { BTL_EVENT_ADDSICK_FAILED,    handler_AddSickFailCommon },
     { BTL_EVENT_NULL, NULL },
   };
   return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_TOKUSEI, tokID, pri, pokeID, HandlerTable );
@@ -1370,8 +1383,9 @@ static void handler_Juunan_Swap( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* fl
 BTL_EVENT_FACTOR*  HAND_TOK_ADD_Juunan( u16 pri, u16 tokID, u8 pokeID )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_MAKE_POKESICK,handler_Juunan_PokeSick },  // ポケモン系状態異常処理ハンドラ
-    { BTL_EVENT_SKILL_SWAP,   handler_Juunan_Swap },      // とくせい入れ替えハンドラ
+    { BTL_EVENT_ADDSICK_CHECKFAIL,  handler_Juunan_PokeSick },  // ポケモン系状態異常処理ハンドラ
+    { BTL_EVENT_SKILL_SWAP,         handler_Juunan_Swap },      // とくせい入れ替えハンドラ
+    { BTL_EVENT_ADDSICK_FAILED,     handler_AddSickFailCommon },
     { BTL_EVENT_NULL, NULL },
   };
   return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_TOKUSEI, tokID, pri, pokeID, HandlerTable );
@@ -1394,8 +1408,9 @@ static void handler_Fumin_Swap( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flo
 BTL_EVENT_FACTOR*  HAND_TOK_ADD_Fumin( u16 pri, u16 tokID, u8 pokeID )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_MAKE_POKESICK,handler_Fumin_PokeSick }, // ポケモン系状態異常処理ハンドラ
-    { BTL_EVENT_SKILL_SWAP,   handler_Fumin_Swap },     // とくせい入れ替えハンドラ
+    { BTL_EVENT_ADDSICK_CHECKFAIL,  handler_Fumin_PokeSick }, // ポケモン系状態異常処理ハンドラ
+    { BTL_EVENT_SKILL_SWAP,         handler_Fumin_Swap },     // とくせい入れ替えハンドラ
+    { BTL_EVENT_ADDSICK_FAILED,     handler_AddSickFailCommon },
     { BTL_EVENT_NULL, NULL },
   };
   return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_TOKUSEI, tokID, pri, pokeID, HandlerTable );
@@ -1418,8 +1433,9 @@ static void handler_MagumaNoYoroi_Swap( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_W
 BTL_EVENT_FACTOR*  HAND_TOK_ADD_MagumaNoYoroi( u16 pri, u16 tokID, u8 pokeID )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_MAKE_POKESICK,handler_MagumaNoYoroi_PokeSick }, // ポケモン系状態異常処理ハンドラ
-    { BTL_EVENT_SKILL_SWAP,   handler_MagumaNoYoroi_Swap },     // とくせい入れ替えハンドラ
+    { BTL_EVENT_ADDSICK_CHECKFAIL,    handler_MagumaNoYoroi_PokeSick }, // ポケモン系状態異常処理ハンドラ
+    { BTL_EVENT_SKILL_SWAP,           handler_MagumaNoYoroi_Swap },     // とくせい入れ替えハンドラ
+    { BTL_EVENT_ADDSICK_FAILED,       handler_AddSickFailCommon },
     { BTL_EVENT_NULL, NULL },
   };
   return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_TOKUSEI, tokID, pri, pokeID, HandlerTable );
@@ -1442,8 +1458,9 @@ static void handler_Meneki_Swap( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* fl
 BTL_EVENT_FACTOR*  HAND_TOK_ADD_Meneki( u16 pri, u16 tokID, u8 pokeID )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_MAKE_POKESICK,handler_Meneki_PokeSick },  // ポケモン系状態異常処理ハンドラ
-    { BTL_EVENT_SKILL_SWAP,   handler_Meneki_Swap },      // とくせい入れ替えハンドラ
+    { BTL_EVENT_ADDSICK_CHECKFAIL,  handler_Meneki_PokeSick },  // ポケモン系状態異常処理ハンドラ
+    { BTL_EVENT_SKILL_SWAP,         handler_Meneki_Swap },      // とくせい入れ替えハンドラ
+    { BTL_EVENT_ADDSICK_FAILED,     handler_AddSickFailCommon },
     { BTL_EVENT_NULL, NULL },
   };
   return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_TOKUSEI, tokID, pri, pokeID, HandlerTable );
@@ -1466,8 +1483,9 @@ static void handler_MyPace_Swap( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* fl
 BTL_EVENT_FACTOR*  HAND_TOK_ADD_MyPace( u16 pri, u16 tokID, u8 pokeID )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_MAKE_POKESICK,handler_MyPace_PokeSick },  // ポケモン系状態異常処理ハンドラ
-    { BTL_EVENT_SKILL_SWAP,   handler_MyPace_Swap },      // とくせい入れ替えハンドラ
+    { BTL_EVENT_MAKE_POKESICK,    handler_MyPace_PokeSick },  // ポケモン系状態異常処理ハンドラ
+    { BTL_EVENT_SKILL_SWAP,       handler_MyPace_Swap },      // とくせい入れ替えハンドラ
+    { BTL_EVENT_ADDSICK_FAILED,   handler_AddSickFailCommon },
     { BTL_EVENT_NULL, NULL },
   };
   return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_TOKUSEI, tokID, pri, pokeID, HandlerTable );
@@ -1490,8 +1508,9 @@ static void handler_MizuNoBale_Swap( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK
 BTL_EVENT_FACTOR*  HAND_TOK_ADD_MizuNoBale( u16 pri, u16 tokID, u8 pokeID )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_MAKE_POKESICK,handler_MizuNoBale_PokeSick },  // ポケモン系状態異常処理ハンドラ
-    { BTL_EVENT_SKILL_SWAP,   handler_MizuNoBale_Swap },      // とくせい入れ替えハンドラ
+    { BTL_EVENT_ADDSICK_CHECKFAIL,  handler_MizuNoBale_PokeSick },  // ポケモン系状態異常処理ハンドラ
+    { BTL_EVENT_SKILL_SWAP,         handler_MizuNoBale_Swap },      // とくせい入れ替えハンドラ
+    { BTL_EVENT_ADDSICK_FAILED,     handler_AddSickFailCommon },
     { BTL_EVENT_NULL, NULL },
   };
   return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_TOKUSEI, tokID, pri, pokeID, HandlerTable );
@@ -1515,12 +1534,7 @@ static void common_DiscardWazaSick( BTL_SVFLOW_WORK* flowWk, u8 pokeID, WazaSick
     // くらう病気が指定通り
     if( BTL_EVENTVAR_GetValue(BTL_EVAR_SICKID) == sick )
     {
-      BTL_EVWK_ADDSICK* evwk = (BTL_EVWK_ADDSICK*)BTL_EVENTVAR_GetValue( BTL_EVAR_WORK_ADRS );
-
-      evwk->reaction = BTL_EV_SICK_REACTION_DISCARD;
-      evwk->discardSickType = sick;
-      evwk->fDiscardByTokusei = TRUE;
-      evwk->discardPokeID = pokeID;
+      BTL_EVENTVAR_RewriteValue( BTL_EVAR_FAIL_FLAG, TRUE );
     }
   }
 }
@@ -1561,20 +1575,15 @@ static void handler_Donkan( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk,
     // メロメロ
     if( BTL_EVENTVAR_GetValue(BTL_EVAR_SICKID) == WAZASICK_MEROMERO )
     {
-      BTL_EVENTVAR_RewriteValue( BTL_EVAR_SICKID, WAZASICK_NULL );
-      if( BTL_EVENTVAR_GetValue(BTL_EVAR_ALMOST_FLAG) )
-      {
-        BTL_SERVER_RECEPT_TokuseiWinIn( flowWk, pokeID );
-        BTL_SERVER_RECTPT_SetMessage( flowWk, BTL_STRID_SET_NoEffect, pokeID );
-        BTL_SERVER_RECEPT_TokuseiWinOut( flowWk, pokeID );
-      }
+      BTL_EVENTVAR_RewriteValue( BTL_EVAR_FAIL_FLAG, TRUE );
     }
   }
 }
 BTL_EVENT_FACTOR*  HAND_TOK_ADD_Donkan( u16 pri, u16 tokID, u8 pokeID )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_MAKE_WAZASICK, handler_Donkan },  // ワザ系状態異常ハンドラ
+    { BTL_EVENT_ADDSICK_CHECKFAIL, handler_Donkan },  // 状態異常失敗チェックハンドラ
+    { BTL_EVENT_ADDSICK_FAILED,    handler_AddSickFailCommon },
     { BTL_EVENT_NULL, NULL },
   };
   return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_TOKUSEI, tokID, pri, pokeID, HandlerTable );
@@ -2964,8 +2973,7 @@ static void handler_NoGuard( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk
   const BTL_POKEPARAM* attacker = BTL_SVFLOW_RECEPT_GetPokeParam( flowWk, atkID );
   if( !BTL_POKEPARAM_CheckSick(attacker, WAZASICK_MUSTHIT) )
   {
-    BPP_SICK_CONT cont;
-    BPP_SICKCONT_Set_Turn( &cont, 1 );
+    BPP_SICK_CONT cont = BPP_SICKCONT_MakeTurn( 1 );
     BTL_SVFLOW_RECEPT_AddSick( flowWk, atkID, pokeID, WAZASICK_MUSTHIT, cont, TRUE );
   }
 }
