@@ -45,7 +45,7 @@ struct _EVDATA_SYS {
 	u16 connect_count;
 	u16 pos_count;
 	const BG_TALK_DATA * bg_data;
-	const FLDMMDL_HEADER *npc_data;
+	const MMDL_HEADER *npc_data;
 	const CONNECT_DATA * connect_data;
 	const POS_EVENT_DATA * pos_data;
 
@@ -423,10 +423,10 @@ EXIT_TYPE CONNECTDATA_GetExitType(const CONNECT_DATA * connect)
 /**
  * @brief	動作モデルヘッダーを取得
  * @param	evdata		イベントデータへのポインタ
- * @retval	FLDMMDL_HEADER*
+ * @retval	MMDL_HEADER*
  */
 //------------------------------------------------------------------
-const FLDMMDL_HEADER * EVENTDATA_GetNpcData( const EVENTDATA_SYSTEM *evdata )
+const MMDL_HEADER * EVENTDATA_GetNpcData( const EVENTDATA_SYSTEM *evdata )
 {
 	return( evdata->npc_data );
 }
@@ -666,7 +666,7 @@ u16 EVENTDATA_CheckTalkBoardEvent(
 //============================================================================================
 
 #if 0
-const FLDMMDL_HEADER SampleFldMMdlHeader_R01[] = {
+const MMDL_HEADER SampleFldMMdlHeader_R01[] = {
 	{
 		0,		///<識別ID
 		BOY1,	///<表示するOBJコード

@@ -197,7 +197,7 @@ typedef struct
  */
 //--------------------------------------------------------------
 extern GMEVENT * SCRIPT_SetScript(
-		GAMESYS_WORK *gsys, u16 scr_id, FLDMMDL *obj,
+		GAMESYS_WORK *gsys, u16 scr_id, MMDL *obj,
 		HEAPID heapID, const SCRIPT_FLDPARAM *fparam );
 
 //--------------------------------------------------------------
@@ -211,7 +211,7 @@ extern GMEVENT * SCRIPT_SetScript(
  */
 //--------------------------------------------------------------
 extern void SCRIPT_CallScript( GMEVENT *event,
-	u16 scr_id, FLDMMDL *obj, void *ret_script_wk, HEAPID heapID );
+	u16 scr_id, MMDL *obj, void *ret_script_wk, HEAPID heapID );
 
 //--------------------------------------------------------------
 /**
@@ -224,7 +224,7 @@ extern void SCRIPT_CallScript( GMEVENT *event,
  */
 //--------------------------------------------------------------
 extern void SCRIPT_ChangeScript( GMEVENT *event,
-		u16 scr_id, FLDMMDL *obj, HEAPID heapID );
+		u16 scr_id, MMDL *obj, HEAPID heapID );
 
 //--------------------------------------------------------------
 /**

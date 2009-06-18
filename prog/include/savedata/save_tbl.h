@@ -60,7 +60,7 @@ enum{
 	GMDATA_ID_SYSTEM_DATA,	//システムデータ
 	GMDATA_ID_RECORD,  		//レコード(スコア
 	GMDATA_ID_PMS,  		//簡易文
-	GMDATA_ID_FLDMMDL,		//動作モデル
+	GMDATA_ID_MMDL,		//動作モデル
 	GMDATA_ID_WFHIROBA,		//Wi-Fi広場
 	GMDATA_ID_MUSICAL,		//ミュージカル
   GMDATA_ID_RANDOMMAP,  //ランダム生成マップ

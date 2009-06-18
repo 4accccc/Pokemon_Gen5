@@ -179,7 +179,7 @@ struct _FIELDMAP_WORK
 	
 	FLDMSGBG *fldMsgBG;
 	
-	FLDMMDLSYS *fldMMdlSys;
+	MMDLSYS *fldMMdlSys;
 
 	FIELD_RAIL_MAN * railMan;
 	
@@ -256,9 +256,9 @@ static void	fldmap_G3D_BBDTrans(
 static void FIELD_EDGEMARK_Setup(const AREADATA * areadata);
 
 //fldmmdl
-static void fldmapMain_FLDMMDL_Init( FIELDMAP_WORK *fieldWork );
-static void fldmapMain_FLDMMDL_Finish( FIELDMAP_WORK *fieldWork );
-static void fldmap_FLDMMDL_InitList(
+static void fldmapMain_MMDL_Init( FIELDMAP_WORK *fieldWork );
+static void fldmapMain_MMDL_Finish( FIELDMAP_WORK *fieldWork );
+static void fldmap_MMDL_InitList(
 		MMDL_LIST *mlist, int list_id, HEAPID heapID );
 
 //zonechange
@@ -268,7 +268,7 @@ static BOOL fldmap_CheckMoveZoneChange( FIELDMAP_WORK *fieldWork );
 static void fldmap_ZoneChange( FIELDMAP_WORK *fieldWork );
 
 static void zoneChange_SetMMdl(
-		FLDMMDLSYS *fmmdlsys, EVENTDATA_SYSTEM *evdata, u32 zone_id );
+		MMDLSYS *fmmdlsys, EVENTDATA_SYSTEM *evdata, u32 zone_id );
 static void zoneChange_SetBGM( GAMEDATA *gdata, u32 zone_id );
 static void zoneChange_SetWeather( FIELDMAP_WORK *fieldWork, u32 zone_id );
 static void zoneChange_UpdatePlayerWork( GAMEDATA *gdata, u32 zone_id );
@@ -328,7 +328,7 @@ FIELDMAP_WORK * FIELDMAP_Create( GAMESYS_WORK *gsys, HEAPID heapID )
   fieldWork->commSys = FIELD_COMM_MAIN_InitSystem( heapID, GFL_HEAPID_APP, GAMESYSTEM_GetGameCommSysPtr(gsys) );
   FIELD_COMM_MAIN_CommFieldMapInit(FIELD_COMM_MAIN_GetCommFieldSysPtr(fieldWork->commSys));
 	FIELD_COMM_MAIN_SetCommActor(fieldWork->commSys,
-      GAMEDATA_GetFldMMdlSys(GAMESYSTEM_GetGameData(gsys)));
+      GAMEDATA_GetMMdlSys(GAMESYSTEM_GetGameData(gsys)));
   
 #if 0   //※check　超暫定
   //常時通信モード
@@ -465,7 +465,7 @@ static MAINSEQ_RESULT mainSeqFunc_setup(GAMESYS_WORK *gsys, FIELDMAP_WORK *field
   FLDMAPPER_ResistData( fieldWork->g3Dmapper, &fieldWork->map_res );
   
   //動作モデル初期化
-  fldmapMain_FLDMMDL_Init(fieldWork);
+  fldmapMain_MMDL_Init(fieldWork);
   
   //フィールドエフェクト初期化
   fieldWork->fldeff_ctrl = FLDEFF_CTRL_Create(
@@ -569,7 +569,7 @@ static MAINSEQ_RESULT mainSeqFunc_ready(GAMESYS_WORK *gsys, FIELDMAP_WORK *field
   FIELD_DEBUG_UpdateProc( fieldWork->debugWork );
   
   if( fieldWork->fldMMdlSys != NULL ){
-    FLDMMDLSYS_UpdateProc( fieldWork->fldMMdlSys );
+    MMDLSYS_UpdateProc( fieldWork->fldMMdlSys );
   }
   
   if( FLDMAPPER_CheckTrans(fieldWork->g3Dmapper) == FALSE ){
@@ -633,7 +633,7 @@ static MAINSEQ_RESULT mainSeqFunc_update_top(GAMESYS_WORK *gsys, FIELDMAP_WORK *
 	fldmap_G3D_Control( fieldWork );
   
   if( fieldWork->fldMMdlSys != NULL ){
-    FLDMMDLSYS_UpdateProc( fieldWork->fldMMdlSys );
+    MMDLSYS_UpdateProc( fieldWork->fldMMdlSys );
     
     if( fieldWork->func_tbl->type == FLDMAP_CTRLTYPE_GRID ){ //仮対処
       FIELD_PLAYER_GetPos( fieldWork->field_player, &fieldWork->now_pos );
@@ -715,7 +715,7 @@ static MAINSEQ_RESULT mainSeqFunc_free(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldW
   fieldWork->func_tbl->delete_func(fieldWork);
   fldmap_ClearMapCtrlWork( fieldWork );
   
-  fldmapMain_FLDMMDL_Finish(fieldWork);
+  fldmapMain_MMDL_Finish(fieldWork);
   
   //自機破棄
   FIELD_PLAYER_Delete( fieldWork->field_player );
@@ -975,12 +975,12 @@ FIELD_WEATHER * FIELDMAP_GetFieldWeather( FIELDMAP_WORK *fieldWork )
 
 //--------------------------------------------------------------
 /**
- * FIELDMAP_WORK FLDMMDLSYS取得
+ * FIELDMAP_WORK MMDLSYS取得
  * @param	fieldWork	FIELDMAP_WORK
- * @retval FLDMMDLSYS*
+ * @retval MMDLSYS*
  */
 //--------------------------------------------------------------
-FLDMMDLSYS * FIELDMAP_GetFldMMdlSys( FIELDMAP_WORK *fieldWork )
+MMDLSYS * FIELDMAP_GetMMdlSys( FIELDMAP_WORK *fieldWork )
 {
 	return fieldWork->fldMMdlSys;
 }
@@ -1379,7 +1379,7 @@ static void	fldmap_G3D_VBlank( GFL_TCB *tcb, void *work )
 	FIELDMAP_WORK * fieldWork = (FIELDMAP_WORK*)work;
   
   if( fieldWork->fldMMdlSys != NULL ){
-    FLDMMDLSYS_VBlankProc( fieldWork->fldMMdlSys );
+    MMDLSYS_VBlankProc( fieldWork->fldMMdlSys );
   }
 
 	GFL_CLACT_SYS_VBlankFunc();	//セルアクターVBlank
@@ -1440,38 +1440,38 @@ static void FIELD_EDGEMARK_Setup(const AREADATA * areadata)
  * @retval nothing
  */
 //--------------------------------------------------------------
-static void fldmapMain_FLDMMDL_Init( FIELDMAP_WORK *fieldWork )
+static void fldmapMain_MMDL_Init( FIELDMAP_WORK *fieldWork )
 {
 	GAMEDATA *gdata = GAMESYSTEM_GetGameData( fieldWork->gsys );
-	FLDMMDLSYS *fmmdlsys = GAMEDATA_GetFldMMdlSys( gdata );
+	MMDLSYS *fmmdlsys = GAMEDATA_GetMMdlSys( gdata );
 		
 	fieldWork->fldMMdlSys = fmmdlsys;
-	FLDMMDLSYS_SetFieldMapWork( fmmdlsys, fieldWork );
+	MMDLSYS_SetFieldMapWork( fmmdlsys, fieldWork );
 
-	FLDMMDLSYS_SetupProc( fmmdlsys,	//動作モデルシステム　セットアップ
+	MMDLSYS_SetupProc( fmmdlsys,	//動作モデルシステム　セットアップ
 		fieldWork->heapID, fieldWork->g3Dmapper );
 		
-	FLDMMDL_BLACTCONT_Setup(		//動作モデルビルボード　セットアップ
+	MMDL_BLACTCONT_Setup(		//動作モデルビルボード　セットアップ
 		fieldWork->fldMMdlSys, fieldWork->bbdActSys, 32 );
 	
 	{ //ビルボードリソース登録
 	  MMDL_LIST mlist;
 	  int list_area_id = 0; //仮
-	  fldmap_FLDMMDL_InitList( &mlist, list_area_id, fieldWork->heapID );
-	  FLDMMDL_BLACTCONT_AddResourceTex(
+	  fldmap_MMDL_InitList( &mlist, list_area_id, fieldWork->heapID );
+	  MMDL_BLACTCONT_AddResourceTex(
 	    fieldWork->fldMMdlSys, mlist.id_list, mlist.count );
 	}
   
 	//動作モデル描画　セットアップ
-	FLDMMDLSYS_SetupDrawProc( fieldWork->fldMMdlSys );
+	MMDLSYS_SetupDrawProc( fieldWork->fldMMdlSys );
 	
 	//動作モデル　復帰
-	FLDMMDLSYS_Pop( fieldWork->fldMMdlSys );
+	MMDLSYS_Pop( fieldWork->fldMMdlSys );
   
   if( fieldWork->func_tbl->type == FLDMAP_CTRLTYPE_GRID ){
-    FLDMMDLSYS_SetJoinShadow( fmmdlsys, TRUE );
+    MMDLSYS_SetJoinShadow( fmmdlsys, TRUE );
   }else{
-    FLDMMDLSYS_SetJoinShadow( fmmdlsys, FALSE );
+    MMDLSYS_SetJoinShadow( fmmdlsys, FALSE );
   }
 }
 
@@ -1482,10 +1482,10 @@ static void fldmapMain_FLDMMDL_Init( FIELDMAP_WORK *fieldWork )
  * @retval nothing
  */
 //--------------------------------------------------------------
-static void fldmapMain_FLDMMDL_Finish( FIELDMAP_WORK *fieldWork )
+static void fldmapMain_MMDL_Finish( FIELDMAP_WORK *fieldWork )
 {
-	FLDMMDLSYS_Push( fieldWork->fldMMdlSys );
-	FLDMMDLSYS_DeleteProc( fieldWork->fldMMdlSys );
+	MMDLSYS_Push( fieldWork->fldMMdlSys );
+	MMDLSYS_DeleteProc( fieldWork->fldMMdlSys );
 	fieldWork->fldMMdlSys = NULL;
 }
 
@@ -1498,12 +1498,12 @@ static void fldmapMain_FLDMMDL_Finish( FIELDMAP_WORK *fieldWork )
  * @retval nothing
  */
 //--------------------------------------------------------------
-static void fldmap_FLDMMDL_InitList(
+static void fldmap_MMDL_InitList(
 		MMDL_LIST *mlist, int list_id, HEAPID heapID )
 {
 	int i = 0;
 	u16 *pList;
-	pList = GFL_ARC_LoadDataAlloc( ARCID_FLDMMDL_LIST, list_id, heapID );
+	pList = GFL_ARC_LoadDataAlloc( ARCID_MMDL_LIST, list_id, heapID );
 	mlist->count = 0;
 	
 	while( pList[i] != OBJCODEMAX ){
@@ -1602,7 +1602,7 @@ static void fldmap_ZoneChange( FIELDMAP_WORK *fieldWork )
 	LOCATION *lc = &fieldWork->location;
 	GAMEDATA *gdata = GAMESYSTEM_GetGameData( fieldWork->gsys );
 	EVENTDATA_SYSTEM *evdata = GAMEDATA_GetEventData( gdata );
-	FLDMMDLSYS *fmmdlsys = fieldWork->fldMMdlSys;
+	MMDLSYS *fmmdlsys = fieldWork->fldMMdlSys;
 	
 	MAP_MATRIX *mat = fieldWork->pMapMatrix;
 	u32 new_zone_id = MAP_MATRIX_GetVectorPosZoneID(
@@ -1612,7 +1612,7 @@ static void fldmap_ZoneChange( FIELDMAP_WORK *fieldWork )
 	GF_ASSERT( new_zone_id != MAP_MATRIX_ZONE_ID_NON );
 	
 	//旧ゾーン配置動作モデル削除
-	FLDMMDLSYS_DeleteZoneUpdateFldMMdl( fmmdlsys );
+	MMDLSYS_DeleteZoneUpdateMMdl( fmmdlsys );
 	
 	//次のイベントデータをロード
 	EVENTDATA_SYS_Load( evdata, new_zone_id );
@@ -1638,20 +1638,20 @@ static void fldmap_ZoneChange( FIELDMAP_WORK *fieldWork )
 //--------------------------------------------------------------
 /**
  * ゾーン切り替え時の処理　新規ゾーン動作モデルセット
- * @param	fmmdlsys	FLDMMDLSYS
+ * @param	fmmdlsys	MMDLSYS
  * @param	evdata	EVENTDATA_SYSTEM
  * @param	zone_id	次のゾーンID
  * @retval	nothing
  */
 //--------------------------------------------------------------
 static void zoneChange_SetMMdl(
-		FLDMMDLSYS *fmmdlsys, EVENTDATA_SYSTEM *evdata, u32 zone_id )
+		MMDLSYS *fmmdlsys, EVENTDATA_SYSTEM *evdata, u32 zone_id )
 {
 	u16 count = EVENTDATA_GetNpcCount( evdata );
 	
 	if( count ){
-		const FLDMMDL_HEADER *header = EVENTDATA_GetNpcData( evdata );
-		FLDMMDLSYS_SetFldMMdl( fmmdlsys, header, zone_id, count );
+		const MMDL_HEADER *header = EVENTDATA_GetNpcData( evdata );
+		MMDLSYS_SetMMdl( fmmdlsys, header, zone_id, count );
 	}
 }
 

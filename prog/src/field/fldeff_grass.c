@@ -44,7 +44,7 @@ struct _TAG_FLDEFF_GRASS
 typedef struct
 {
   FLDEFF_GRASS *eff_grass;
-  FLDMMDL *fmmdl;
+  MMDL *fmmdl;
   int init_gx;
   int init_gz;
   u16 obj_id;
@@ -155,12 +155,12 @@ static void grass_DeleteResource( FLDEFF_GRASS *grass )
 //--------------------------------------------------------------
 /**
  * 動作モデル用草エフェクト　追加
- * @param fmmdl FLDMMDL
+ * @param fmmdl MMDL
  * @param FLDEFF_CTRL*
  * @retval nothing
  */
 //--------------------------------------------------------------
-void FLDEFF_GRASS_SetFldMMdl( FLDEFF_CTRL *fectrl, FLDMMDL *fmmdl, BOOL anm )
+void FLDEFF_GRASS_SetMMdl( FLDEFF_CTRL *fectrl, MMDL *fmmdl, BOOL anm )
 {
   fx32 h;
   VecFx32 pos;
@@ -170,15 +170,15 @@ void FLDEFF_GRASS_SetFldMMdl( FLDEFF_CTRL *fectrl, FLDMMDL *fmmdl, BOOL anm )
   grass = FLDEFF_CTRL_GetEffectWork( fectrl, FLDEFF_PROCID_GRASS );
   head.eff_grass = grass;
   head.fmmdl = fmmdl;
-  head.obj_id = FLDMMDL_GetOBJID( fmmdl );
-  head.zone_id = FLDMMDL_GetZoneID( fmmdl );
-  head.init_gx = FLDMMDL_GetGridPosX( fmmdl );
-  head.init_gz = FLDMMDL_GetGridPosZ( fmmdl );
+  head.obj_id = MMDL_GetOBJID( fmmdl );
+  head.zone_id = MMDL_GetZoneID( fmmdl );
+  head.init_gx = MMDL_GetGridPosX( fmmdl );
+  head.init_gz = MMDL_GetGridPosZ( fmmdl );
 //  KAGAYA_Printf( "草エフェクト GX=%d,GZ=%d\n", head.init_gx, head.init_gz );
-  FLDMMDL_TOOL_GetCenterGridPos( head.init_gx, head.init_gz, &pos );
-  pos.y = FLDMMDL_GetVectorPosY( fmmdl );
+  MMDL_TOOL_GetCenterGridPos( head.init_gx, head.init_gz, &pos );
+  pos.y = MMDL_GetVectorPosY( fmmdl );
   
-  FLDMMDL_GetMapPosHeight( fmmdl, &pos, &h );
+  MMDL_GetMapPosHeight( fmmdl, &pos, &h );
   pos.y = h;
   
   pos.y += NUM_FX32(4);
@@ -267,15 +267,15 @@ static void grassTask_Update( FLDEFF_TASK *task, void *wk )
     }
     work->seq_no++;
   case 2:
-    if( FLDMMDL_CheckSameID(work->head.fmmdl,
+    if( MMDL_CheckSameID(work->head.fmmdl,
           work->head.obj_id,work->head.zone_id) == FALSE ){
       FLDEFF_TASK_CallDelete( task );
       return;
     }
      
     {
-      int gx = FLDMMDL_GetGridPosX( work->head.fmmdl );
-      int gz = FLDMMDL_GetGridPosZ( work->head.fmmdl );
+      int gx = MMDL_GetGridPosX( work->head.fmmdl );
+      int gz = MMDL_GetGridPosZ( work->head.fmmdl );
       if( work->head.init_gx != gx || work->head.init_gz != gz ){
          FLDEFF_TASK_CallDelete( task );
          return;

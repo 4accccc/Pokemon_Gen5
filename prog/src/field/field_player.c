@@ -35,7 +35,7 @@ struct _FIELD_PLAYER
 	u16 padding0;
 	VecFx32 pos;
   
-	FLDMMDL *fldmmdl;
+	MMDL *fldmmdl;
 	FLDMAPPER_GRIDINFODATA gridInfoData;
   
 	//以下消します
@@ -46,7 +46,7 @@ struct _FIELD_PLAYER
 //======================================================================
 //	proto
 //======================================================================
-static const FLDMMDL_HEADER playerdata_FldMMdlHeader;
+static const MMDL_HEADER playerdata_MMdlHeader;
 
 //======================================================================
 //	フィールドプレイヤー
@@ -63,7 +63,7 @@ static const FLDMMDL_HEADER playerdata_FldMMdlHeader;
 FIELD_PLAYER * FIELD_PLAYER_Create(
 		FIELDMAP_WORK *fieldWork, const VecFx32 *pos, HEAPID heapID )
 {
-	FLDMMDLSYS *fmmdlsys;
+	MMDLSYS *fmmdlsys;
 	FIELD_PLAYER *fld_player;
 	
 	fld_player = GFL_HEAP_AllocClearMemory( heapID, sizeof(FIELD_PLAYER) );
@@ -72,37 +72,37 @@ FIELD_PLAYER * FIELD_PLAYER_Create(
 
 	FLDMAPPER_GRIDINFODATA_Init( &fld_player->gridInfoData );
 	
-	//FLDMMDLセットアップ
-	fmmdlsys = FIELDMAP_GetFldMMdlSys( fieldWork );
+	//MMDLセットアップ
+	fmmdlsys = FIELDMAP_GetMMdlSys( fieldWork );
 	
 	fld_player->fldmmdl =
-		FLDMMDLSYS_SearchOBJID( fmmdlsys, FLDMMDL_ID_PLAYER );
+		MMDLSYS_SearchOBJID( fmmdlsys, MMDL_ID_PLAYER );
 
 	if( fld_player->fldmmdl == NULL )	//新規
 	{
-		FLDMMDL_HEADER head;
-		head = playerdata_FldMMdlHeader;
+		MMDL_HEADER head;
+		head = playerdata_MMdlHeader;
 		head.gx = SIZE_GRID_FX32( pos->x );
 		head.gz = SIZE_GRID_FX32( pos->z );
 		head.y = pos->y;
-		fld_player->fldmmdl = FLDMMDLSYS_AddFldMMdl( fmmdlsys, &head, 0 );
+		fld_player->fldmmdl = MMDLSYS_AddMMdl( fmmdlsys, &head, 0 );
 	}
 	else //復帰
 	{
 		int gx = SIZE_GRID_FX32( pos->x );
 		int gy = SIZE_GRID_FX32( pos->y );
 		int gz = SIZE_GRID_FX32( pos->z );
-		FLDMMDL *fmmdl = fld_player->fldmmdl;
+		MMDL *fmmdl = fld_player->fldmmdl;
 		
-		FLDMMDL_SetGridPosX( fmmdl, gx );
-		FLDMMDL_SetGridPosY( fmmdl, gy );
-		FLDMMDL_SetGridPosZ( fmmdl, gz );
-		FLDMMDL_SetVectorPos( fmmdl, pos );
+		MMDL_SetGridPosX( fmmdl, gx );
+		MMDL_SetGridPosY( fmmdl, gy );
+		MMDL_SetGridPosZ( fmmdl, gz );
+		MMDL_SetVectorPos( fmmdl, pos );
 	}
 	
   { //OBJコードから動作フォームを設定
     PLAYER_MOVE_FORM form = PLAYER_MOVE_FORM_NORMAL;
-    u16 code = FLDMMDL_GetOBJCode( fld_player->fldmmdl );
+    u16 code = MMDL_GetOBJCode( fld_player->fldmmdl );
     switch( code )
     {
     case HERO:
@@ -118,7 +118,7 @@ FIELD_PLAYER * FIELD_PLAYER_Create(
     fld_player->move_form = form;
   }
 
-	FLDMMDL_SetStatusBitNotZoneDelete( fld_player->fldmmdl, TRUE );
+	MMDL_SetStatusBitNotZoneDelete( fld_player->fldmmdl, TRUE );
 	return( fld_player );
 }
 
@@ -160,13 +160,13 @@ void FIELD_PLAYER_Update( FIELD_PLAYER *fld_player )
 //--------------------------------------------------------------
 void FIELD_PLAYER_UpdateMoveStatus( FIELD_PLAYER *fld_player )
 {
-  FLDMMDL *fmmdl = fld_player->fldmmdl;
+  MMDL *fmmdl = fld_player->fldmmdl;
   PLAYER_MOVE_VALUE value = fld_player->move_value;
   PLAYER_MOVE_STATE state = fld_player->move_state;
 
   fld_player->move_state = PLAYER_MOVE_STATE_OFF;
 
-  if( FLDMMDL_CheckPossibleAcmd(fmmdl) == FALSE ){ //動作中
+  if( MMDL_CheckPossibleAcmd(fmmdl) == FALSE ){ //動作中
     switch( value ){
     case PLAYER_MOVE_VALUE_STOP:
       break;
@@ -186,7 +186,7 @@ void FIELD_PLAYER_UpdateMoveStatus( FIELD_PLAYER *fld_player )
     return;
   }
   
-  if( FLDMMDL_CheckEndAcmd(fmmdl) == TRUE ){ //動作終了
+  if( MMDL_CheckEndAcmd(fmmdl) == TRUE ){ //動作終了
     switch( value ){
     case PLAYER_MOVE_VALUE_STOP:
       break;
@@ -234,7 +234,7 @@ void FIELD_PLAYER_GetPos( const FIELD_PLAYER *fld_player, VecFx32 *pos )
 #if 0
 	*pos = fld_player->pos;
 #else //表示座標となるアクターから直に取得
-  FLDMMDL_GetVectorPos( fld_player->fldmmdl, pos );
+  MMDL_GetVectorPos( fld_player->fldmmdl, pos );
 #endif
 }
 
@@ -251,15 +251,15 @@ void FIELD_PLAYER_SetPos( FIELD_PLAYER *fld_player, const VecFx32 *pos )
 	int gx = SIZE_GRID_FX32( pos->x );
 	int gy = SIZE_GRID_FX32( pos->y );
 	int gz = SIZE_GRID_FX32( pos->z );
-	FLDMMDL *fmmdl = fld_player->fldmmdl;
+	MMDL *fmmdl = fld_player->fldmmdl;
 	
-	FLDMMDL_SetOldGridPosX( fmmdl, FLDMMDL_GetGridPosX(fmmdl) );
-	FLDMMDL_SetOldGridPosY( fmmdl, FLDMMDL_GetGridPosY(fmmdl) );
-	FLDMMDL_SetOldGridPosZ( fmmdl, FLDMMDL_GetGridPosZ(fmmdl) );
-	FLDMMDL_SetGridPosX( fmmdl, gx );
-	FLDMMDL_SetGridPosY( fmmdl, gy );
-	FLDMMDL_SetGridPosZ( fmmdl, gz );
-	FLDMMDL_SetVectorPos( fmmdl, pos );
+	MMDL_SetOldGridPosX( fmmdl, MMDL_GetGridPosX(fmmdl) );
+	MMDL_SetOldGridPosY( fmmdl, MMDL_GetGridPosY(fmmdl) );
+	MMDL_SetOldGridPosZ( fmmdl, MMDL_GetGridPosZ(fmmdl) );
+	MMDL_SetGridPosX( fmmdl, gx );
+	MMDL_SetGridPosY( fmmdl, gy );
+	MMDL_SetGridPosZ( fmmdl, gz );
+	MMDL_SetVectorPos( fmmdl, pos );
 	
 	fld_player->pos = *pos;
 }
@@ -303,12 +303,12 @@ FIELDMAP_WORK * FIELD_PLAYER_GetFieldMapWork( FIELD_PLAYER *fld_player )
 
 //--------------------------------------------------------------
 /**
- * FILED_PLAYER　FLDMMDL取得
+ * FILED_PLAYER　MMDL取得
  * @param fld_player FIELD_PLAYER
- * @retval FLDMMDL*
+ * @retval MMDL*
  */
 //--------------------------------------------------------------
-FLDMMDL * FIELD_PLAYER_GetFldMMdl( FIELD_PLAYER *fld_player )
+MMDL * FIELD_PLAYER_GetMMdl( FIELD_PLAYER *fld_player )
 {
 	return( fld_player->fldmmdl );
 }
@@ -408,15 +408,15 @@ void FIELD_PLAYER_GetFrontGridPos(
 		FIELD_PLAYER *fld_player, int *gx, int *gy, int *gz )
 {
 	int dir;
-	FLDMMDL *fmmdl = FIELD_PLAYER_GetFldMMdl( fld_player );
+	MMDL *fmmdl = FIELD_PLAYER_GetMMdl( fld_player );
 	
-	*gx = FLDMMDL_GetGridPosX( fmmdl );
-	*gy = FLDMMDL_GetGridPosY( fmmdl );
-	*gz = FLDMMDL_GetGridPosZ( fmmdl );
-	dir = FLDMMDL_GetDirDisp( fmmdl );
+	*gx = MMDL_GetGridPosX( fmmdl );
+	*gy = MMDL_GetGridPosY( fmmdl );
+	*gz = MMDL_GetGridPosZ( fmmdl );
+	dir = MMDL_GetDirDisp( fmmdl );
 	
-	*gx += FLDMMDL_TOOL_GetDirAddValueGridX( dir );
-	*gz += FLDMMDL_TOOL_GetDirAddValueGridZ( dir );
+	*gx += MMDL_TOOL_GetDirAddValueGridX( dir );
+	*gz += MMDL_TOOL_GetDirAddValueGridZ( dir );
 }
 
 //--------------------------------------------------------------
@@ -426,19 +426,19 @@ void FIELD_PLAYER_GetFrontGridPos(
  * @retval BOOL TRUE=生存
  */
 //--------------------------------------------------------------
-BOOL FIELD_PLAYER_CheckLiveFldMMdl( FIELD_PLAYER *fld_player )
+BOOL FIELD_PLAYER_CheckLiveMMdl( FIELD_PLAYER *fld_player )
 {
-  FLDMMDL *fmmdl = FIELD_PLAYER_GetFldMMdl( fld_player );
+  MMDL *fmmdl = FIELD_PLAYER_GetMMdl( fld_player );
   
   if( fmmdl == NULL ){
     return( FALSE );
   }
    
-  if( FLDMMDL_CheckStatusBitUse(fmmdl) == FALSE ){
+  if( MMDL_CheckStatusBitUse(fmmdl) == FALSE ){
     return( FALSE );
   }
   
-  if( FLDMMDL_GetOBJID(fmmdl) != FLDMMDL_ID_PLAYER ){
+  if( MMDL_GetOBJID(fmmdl) != MMDL_ID_PLAYER ){
     return( FALSE );
   }
   
@@ -451,9 +451,9 @@ BOOL FIELD_PLAYER_CheckLiveFldMMdl( FIELD_PLAYER *fld_player )
 //--------------------------------------------------------------
 /// 自機動作モデルヘッダー
 //--------------------------------------------------------------
-static const FLDMMDL_HEADER playerdata_FldMMdlHeader =
+static const MMDL_HEADER playerdata_MMdlHeader =
 {
-	FLDMMDL_ID_PLAYER,	///<識別ID
+	MMDL_ID_PLAYER,	///<識別ID
 	HERO,	///<表示するOBJコード
 	MV_DMY,	///<動作コード
 	0,	///<イベントタイプ
@@ -486,7 +486,7 @@ void PlayerActGrid_Update(
 	fld_player->pos = *pos;
 	
 	SetGridPlayerActTrans( fld_player, pos );
-	FLDMMDL_SetForceDirDisp( fld_player->fldmmdl, dir );
+	MMDL_SetForceDirDisp( fld_player->fldmmdl, dir );
 }
 #endif
 
@@ -497,17 +497,17 @@ void SetGridPlayerActTrans( FIELD_PLAYER* fld_player, const VecFx32* trans )
 	int gy = SIZE_GRID_FX32( trans->y );
 	int gz = SIZE_GRID_FX32( trans->z );
 	
-	FLDMMDL_SetOldGridPosX( fld_player->fldmmdl,
-		FLDMMDL_GetGridPosX(fld_player->fldmmdl) );
-	FLDMMDL_SetOldGridPosY( fld_player->fldmmdl,
-		FLDMMDL_GetGridPosY(fld_player->fldmmdl) );
-	FLDMMDL_SetOldGridPosZ( fld_player->fldmmdl,
-		FLDMMDL_GetGridPosZ(fld_player->fldmmdl) );
+	MMDL_SetOldGridPosX( fld_player->fldmmdl,
+		MMDL_GetGridPosX(fld_player->fldmmdl) );
+	MMDL_SetOldGridPosY( fld_player->fldmmdl,
+		MMDL_GetGridPosY(fld_player->fldmmdl) );
+	MMDL_SetOldGridPosZ( fld_player->fldmmdl,
+		MMDL_GetGridPosZ(fld_player->fldmmdl) );
 	
-	FLDMMDL_SetGridPosX( fld_player->fldmmdl, gx );
-	FLDMMDL_SetGridPosY( fld_player->fldmmdl, gy );
-	FLDMMDL_SetGridPosZ( fld_player->fldmmdl, gz );
-	FLDMMDL_SetVectorPos( fld_player->fldmmdl, trans );
+	MMDL_SetGridPosX( fld_player->fldmmdl, gx );
+	MMDL_SetGridPosY( fld_player->fldmmdl, gy );
+	MMDL_SetGridPosZ( fld_player->fldmmdl, gz );
+	MMDL_SetVectorPos( fld_player->fldmmdl, trans );
 	
 	VEC_Set( &fld_player->pos, trans->x, trans->y, trans->z );
 }
@@ -519,13 +519,13 @@ void PlayerActGrid_AnimeSet(
 {
 	switch( flag ){
 	case PLAYER_ANIME_FLAG_STOP:
-		FLDMMDL_SetDrawStatus( fld_player->fldmmdl, DRAW_STA_STOP );
+		MMDL_SetDrawStatus( fld_player->fldmmdl, DRAW_STA_STOP );
 		break;
 	case PLAYER_ANIME_FLAG_WALK:
-		FLDMMDL_SetDrawStatus( fld_player->fldmmdl, DRAW_STA_WALK_8F );
+		MMDL_SetDrawStatus( fld_player->fldmmdl, DRAW_STA_WALK_8F );
 		break;
 	default:
-		FLDMMDL_SetDrawStatus( fld_player->fldmmdl, DRAW_STA_WALK_4F );
+		MMDL_SetDrawStatus( fld_player->fldmmdl, DRAW_STA_WALK_4F );
 		break;
 	}
 }
@@ -556,14 +556,14 @@ void PLAYER_GRID_GetFrontGridPos(
 	FIELD_PLAYER *fld_player, int *gx, int *gy, int *gz )
 {
 	int dir;
-	FLDMMDL *fmmdl = FIELD_PLAYER_GetFldMMdl( fld_player );
+	MMDL *fmmdl = FIELD_PLAYER_GetMMdl( fld_player );
 	
-	*gx = FLDMMDL_GetGridPosX( fmmdl );
-	*gy = FLDMMDL_GetGridPosY( fmmdl );
-	*gz = FLDMMDL_GetGridPosZ( fmmdl );
-	dir = FLDMMDL_GetDirDisp( fmmdl );
+	*gx = MMDL_GetGridPosX( fmmdl );
+	*gy = MMDL_GetGridPosY( fmmdl );
+	*gz = MMDL_GetGridPosZ( fmmdl );
+	dir = MMDL_GetDirDisp( fmmdl );
 	
-	*gx += FLDMMDL_TOOL_GetDirAddValueGridX( dir );
-	*gz += FLDMMDL_TOOL_GetDirAddValueGridZ( dir );
+	*gx += MMDL_TOOL_GetDirAddValueGridX( dir );
+	*gz += MMDL_TOOL_GetDirAddValueGridZ( dir );
 }
 #endif

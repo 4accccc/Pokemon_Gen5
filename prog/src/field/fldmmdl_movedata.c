@@ -27,831 +27,831 @@
 //--------------------------------------------------------------
 ///	ダミー
 //--------------------------------------------------------------
-static const FLDMMDL_MOVE_PROC_LIST DATA_FieldOBJMove_Dummy =
+static const MMDL_MOVE_PROC_LIST DATA_FieldOBJMove_Dummy =
 {
 	MV_DMY,													///<動作コード
-	FLDMMDL_MoveInitProcDummy,								///<初期化関数
-	FLDMMDL_MoveProcDummy,									///<動作関数
-	FLDMMDL_MoveDeleteProcDummy,							///<削除関数
-	FLDMMDL_MoveReturnProcDummy,							///<復帰関数
+	MMDL_MoveInitProcDummy,								///<初期化関数
+	MMDL_MoveProcDummy,									///<動作関数
+	MMDL_MoveDeleteProcDummy,							///<削除関数
+	MMDL_MoveReturnProcDummy,							///<復帰関数
 };
 
 //--------------------------------------------------------------
 ///	MV_PLAYER	
 //--------------------------------------------------------------
-static const FLDMMDL_MOVE_PROC_LIST DATA_FieldOBJMove_Player =
+static const MMDL_MOVE_PROC_LIST DATA_FieldOBJMove_Player =
 {
 	MV_PLAYER,												///<動作コード
-	FLDMMDL_MoveInitProcDummy,								///<初期化関数
-	FLDMMDL_MoveProcDummy,									///<動作関数
-	FLDMMDL_MoveDeleteProcDummy,							///<削除関数
-	FLDMMDL_MoveReturnProcDummy,							///<復帰関数
+	MMDL_MoveInitProcDummy,								///<初期化関数
+	MMDL_MoveProcDummy,									///<動作関数
+	MMDL_MoveDeleteProcDummy,							///<削除関数
+	MMDL_MoveReturnProcDummy,							///<復帰関数
 };
 
 //--------------------------------------------------------------
 ///	MV_DIR_RND
 //--------------------------------------------------------------
-static const FLDMMDL_MOVE_PROC_LIST DATA_FieldOBJMove_DirRnd =
+static const MMDL_MOVE_PROC_LIST DATA_FieldOBJMove_DirRnd =
 {
 	MV_DIR_RND,												///<動作コード
-	FLDMMDL_MoveDirRnd_Init,								///<初期化関数
-	FLDMMDL_MoveDirRnd_Move,								///<動作関数
-	FLDMMDL_MoveDirRnd_Delete,								///<削除関数
-	FLDMMDL_MoveReturnProcDummy,							///<復帰関数
+	MMDL_MoveDirRnd_Init,								///<初期化関数
+	MMDL_MoveDirRnd_Move,								///<動作関数
+	MMDL_MoveDirRnd_Delete,								///<削除関数
+	MMDL_MoveReturnProcDummy,							///<復帰関数
 };
 
 //--------------------------------------------------------------
 ///	MV_RND
 //--------------------------------------------------------------
-static const FLDMMDL_MOVE_PROC_LIST DATA_FieldOBJMove_Rnd =
+static const MMDL_MOVE_PROC_LIST DATA_FieldOBJMove_Rnd =
 {
 	MV_RND,													///<動作コード
-	FLDMMDL_MoveRnd_Init,									///<初期化関数
-	FLDMMDL_MvRnd_Move,									///<動作関数
-	FLDMMDL_MoveDeleteProcDummy,							///<削除関数
-	FLDMMDL_MoveReturnProcDummy,							///<復帰関数
+	MMDL_MoveRnd_Init,									///<初期化関数
+	MMDL_MvRnd_Move,									///<動作関数
+	MMDL_MoveDeleteProcDummy,							///<削除関数
+	MMDL_MoveReturnProcDummy,							///<復帰関数
 };
 
 //--------------------------------------------------------------
 ///	MV_RND_V
 //--------------------------------------------------------------
-static const FLDMMDL_MOVE_PROC_LIST DATA_FieldOBJMove_RndV =
+static const MMDL_MOVE_PROC_LIST DATA_FieldOBJMove_RndV =
 {
 	MV_RND,													///<動作コード
-	FLDMMDL_MoveRndV_Init,									///<初期化関数
-	FLDMMDL_MvRnd_Move,									///<動作関数
-	FLDMMDL_MoveDeleteProcDummy,							///<削除関数
-	FLDMMDL_MoveReturnProcDummy,							///<復帰関数
+	MMDL_MoveRndV_Init,									///<初期化関数
+	MMDL_MvRnd_Move,									///<動作関数
+	MMDL_MoveDeleteProcDummy,							///<削除関数
+	MMDL_MoveReturnProcDummy,							///<復帰関数
 };
 
 //--------------------------------------------------------------
 ///	MV_RND_H
 //--------------------------------------------------------------
-static const FLDMMDL_MOVE_PROC_LIST DATA_FieldOBJMove_RndH =
+static const MMDL_MOVE_PROC_LIST DATA_FieldOBJMove_RndH =
 {
 	MV_RND,													///<動作コード
-	FLDMMDL_MoveRndH_Init,									///<初期化関数
-	FLDMMDL_MvRnd_Move,									///<動作関数
-	FLDMMDL_MoveDeleteProcDummy,							///<削除関数
-	FLDMMDL_MoveReturnProcDummy,							///<復帰関数
+	MMDL_MoveRndH_Init,									///<初期化関数
+	MMDL_MvRnd_Move,									///<動作関数
+	MMDL_MoveDeleteProcDummy,							///<削除関数
+	MMDL_MoveReturnProcDummy,							///<復帰関数
 };
 
 //--------------------------------------------------------------
 ///	MV_RND_H_LIM
 //--------------------------------------------------------------
-static const FLDMMDL_MOVE_PROC_LIST DATA_FieldOBJMove_RndHLim =
+static const MMDL_MOVE_PROC_LIST DATA_FieldOBJMove_RndHLim =
 {
 	MV_RND,													///<動作コード
-	FLDMMDL_MoveRndHLim_Init,								///<初期化関数
-	FLDMMDL_MvRnd_Move,									///<動作関数
-	FLDMMDL_MoveDeleteProcDummy,							///<削除関数
-	FLDMMDL_MoveReturnProcDummy,							///<復帰関数
+	MMDL_MoveRndHLim_Init,								///<初期化関数
+	MMDL_MvRnd_Move,									///<動作関数
+	MMDL_MoveDeleteProcDummy,							///<削除関数
+	MMDL_MoveReturnProcDummy,							///<復帰関数
 };
 
 //--------------------------------------------------------------
 ///	MV_RND_UL
 //--------------------------------------------------------------
-static const FLDMMDL_MOVE_PROC_LIST DATA_FieldOBJMove_RndUL =
+static const MMDL_MOVE_PROC_LIST DATA_FieldOBJMove_RndUL =
 {
 	MV_RND,													///<動作コード
-	FLDMMDL_MoveDirRndUL_Init,								///<初期化関数
-	FLDMMDL_MoveDirRnd_Move,									///<動作関数
-	FLDMMDL_MoveDirRnd_Delete,							///<削除関数
-	FLDMMDL_MoveReturnProcDummy,							///<復帰関数
+	MMDL_MoveDirRndUL_Init,								///<初期化関数
+	MMDL_MoveDirRnd_Move,									///<動作関数
+	MMDL_MoveDirRnd_Delete,							///<削除関数
+	MMDL_MoveReturnProcDummy,							///<復帰関数
 };
 
 //--------------------------------------------------------------
 ///	MV_RND_UR
 //--------------------------------------------------------------
-static const FLDMMDL_MOVE_PROC_LIST DATA_FieldOBJMove_RndUR =
+static const MMDL_MOVE_PROC_LIST DATA_FieldOBJMove_RndUR =
 {
 	MV_RND,													///<動作コード
-	FLDMMDL_MoveDirRndUR_Init,								///<初期化関数
-	FLDMMDL_MoveDirRnd_Move,									///<動作関数
-	FLDMMDL_MoveDirRnd_Delete,							///<削除関数
-	FLDMMDL_MoveReturnProcDummy,							///<復帰関数
+	MMDL_MoveDirRndUR_Init,								///<初期化関数
+	MMDL_MoveDirRnd_Move,									///<動作関数
+	MMDL_MoveDirRnd_Delete,							///<削除関数
+	MMDL_MoveReturnProcDummy,							///<復帰関数
 };
 
 //--------------------------------------------------------------
 ///	MV_RND_DL
 //--------------------------------------------------------------
-static const FLDMMDL_MOVE_PROC_LIST DATA_FieldOBJMove_RndDL =
+static const MMDL_MOVE_PROC_LIST DATA_FieldOBJMove_RndDL =
 {
 	MV_RND,													///<動作コード
-	FLDMMDL_MoveDirRndDL_Init,								///<初期化関数
-	FLDMMDL_MoveDirRnd_Move,									///<動作関数
-	FLDMMDL_MoveDirRnd_Delete,							///<削除関数
-	FLDMMDL_MoveReturnProcDummy,							///<復帰関数
+	MMDL_MoveDirRndDL_Init,								///<初期化関数
+	MMDL_MoveDirRnd_Move,									///<動作関数
+	MMDL_MoveDirRnd_Delete,							///<削除関数
+	MMDL_MoveReturnProcDummy,							///<復帰関数
 };
 
 //--------------------------------------------------------------
 ///	MV_RND_DR
 //--------------------------------------------------------------
-static const FLDMMDL_MOVE_PROC_LIST DATA_FieldOBJMove_RndDR =
+static const MMDL_MOVE_PROC_LIST DATA_FieldOBJMove_RndDR =
 {
 	MV_RND,													///<動作コード
-	FLDMMDL_MoveDirRndDR_Init,								///<初期化関数
-	FLDMMDL_MoveDirRnd_Move,									///<動作関数
-	FLDMMDL_MoveDirRnd_Delete,							///<削除関数
-	FLDMMDL_MoveReturnProcDummy,							///<復帰関数
+	MMDL_MoveDirRndDR_Init,								///<初期化関数
+	MMDL_MoveDirRnd_Move,									///<動作関数
+	MMDL_MoveDirRnd_Delete,							///<削除関数
+	MMDL_MoveReturnProcDummy,							///<復帰関数
 };
 
 //--------------------------------------------------------------
 ///	MV_RND_UDL
 //--------------------------------------------------------------
-static const FLDMMDL_MOVE_PROC_LIST DATA_FieldOBJMove_RndUDL =
+static const MMDL_MOVE_PROC_LIST DATA_FieldOBJMove_RndUDL =
 {
 	MV_RND,													///<動作コード
-	FLDMMDL_MoveDirRndUDL_Init,								///<初期化関数
-	FLDMMDL_MoveDirRnd_Move,									///<動作関数
-	FLDMMDL_MoveDirRnd_Delete,							///<削除関数
-	FLDMMDL_MoveReturnProcDummy,							///<復帰関数
+	MMDL_MoveDirRndUDL_Init,								///<初期化関数
+	MMDL_MoveDirRnd_Move,									///<動作関数
+	MMDL_MoveDirRnd_Delete,							///<削除関数
+	MMDL_MoveReturnProcDummy,							///<復帰関数
 };
 
 //--------------------------------------------------------------
 ///	MV_RND_UDR
 //--------------------------------------------------------------
-static const FLDMMDL_MOVE_PROC_LIST DATA_FieldOBJMove_RndUDR =
+static const MMDL_MOVE_PROC_LIST DATA_FieldOBJMove_RndUDR =
 {
 	MV_RND,													///<動作コード
-	FLDMMDL_MoveDirRndUDR_Init,								///<初期化関数
-	FLDMMDL_MoveDirRnd_Move,									///<動作関数
-	FLDMMDL_MoveDirRnd_Delete,							///<削除関数
-	FLDMMDL_MoveReturnProcDummy,							///<復帰関数
+	MMDL_MoveDirRndUDR_Init,								///<初期化関数
+	MMDL_MoveDirRnd_Move,									///<動作関数
+	MMDL_MoveDirRnd_Delete,							///<削除関数
+	MMDL_MoveReturnProcDummy,							///<復帰関数
 };
 
 //--------------------------------------------------------------
 ///	MV_RND_ULR
 //--------------------------------------------------------------
-static const FLDMMDL_MOVE_PROC_LIST DATA_FieldOBJMove_RndULR =
+static const MMDL_MOVE_PROC_LIST DATA_FieldOBJMove_RndULR =
 {
 	MV_RND,													///<動作コード
-	FLDMMDL_MoveDirRndULR_Init,								///<初期化関数
-	FLDMMDL_MoveDirRnd_Move,									///<動作関数
-	FLDMMDL_MoveDirRnd_Delete,							///<削除関数
-	FLDMMDL_MoveReturnProcDummy,							///<復帰関数
+	MMDL_MoveDirRndULR_Init,								///<初期化関数
+	MMDL_MoveDirRnd_Move,									///<動作関数
+	MMDL_MoveDirRnd_Delete,							///<削除関数
+	MMDL_MoveReturnProcDummy,							///<復帰関数
 };
 
 //--------------------------------------------------------------
 ///	MV_RND_DLR
 //--------------------------------------------------------------
-static const FLDMMDL_MOVE_PROC_LIST DATA_FieldOBJMove_RndDLR =
+static const MMDL_MOVE_PROC_LIST DATA_FieldOBJMove_RndDLR =
 {
 	MV_RND,													///<動作コード
-	FLDMMDL_MoveDirRndDLR_Init,								///<初期化関数
-	FLDMMDL_MoveDirRnd_Move,									///<動作関数
-	FLDMMDL_MoveDirRnd_Delete,							///<削除関数
-	FLDMMDL_MoveReturnProcDummy,							///<復帰関数
+	MMDL_MoveDirRndDLR_Init,								///<初期化関数
+	MMDL_MoveDirRnd_Move,									///<動作関数
+	MMDL_MoveDirRnd_Delete,							///<削除関数
+	MMDL_MoveReturnProcDummy,							///<復帰関数
 };
 
 //--------------------------------------------------------------
 ///	MV_RND_UD
 //--------------------------------------------------------------
-static const FLDMMDL_MOVE_PROC_LIST DATA_FieldOBJMove_RndUD =
+static const MMDL_MOVE_PROC_LIST DATA_FieldOBJMove_RndUD =
 {
 	MV_RND,													///<動作コード
-	FLDMMDL_MoveDirRndUD_Init,								///<初期化関数
-	FLDMMDL_MoveDirRnd_Move,									///<動作関数
-	FLDMMDL_MoveDirRnd_Delete,							///<削除関数
-	FLDMMDL_MoveReturnProcDummy,							///<復帰関数
+	MMDL_MoveDirRndUD_Init,								///<初期化関数
+	MMDL_MoveDirRnd_Move,									///<動作関数
+	MMDL_MoveDirRnd_Delete,							///<削除関数
+	MMDL_MoveReturnProcDummy,							///<復帰関数
 };
 
 //--------------------------------------------------------------
 ///	MV_RND_LR
 //--------------------------------------------------------------
-static const FLDMMDL_MOVE_PROC_LIST DATA_FieldOBJMove_RndLR =
+static const MMDL_MOVE_PROC_LIST DATA_FieldOBJMove_RndLR =
 {
 	MV_RND,													///<動作コード
-	FLDMMDL_MoveDirRndLR_Init,								///<初期化関数
-	FLDMMDL_MoveDirRnd_Move,									///<動作関数
-	FLDMMDL_MoveDirRnd_Delete,							///<削除関数
-	FLDMMDL_MoveReturnProcDummy,							///<復帰関数
+	MMDL_MoveDirRndLR_Init,								///<初期化関数
+	MMDL_MoveDirRnd_Move,									///<動作関数
+	MMDL_MoveDirRnd_Delete,							///<削除関数
+	MMDL_MoveReturnProcDummy,							///<復帰関数
 };
 
 //--------------------------------------------------------------
 ///	MV_UP
 //--------------------------------------------------------------
-static const FLDMMDL_MOVE_PROC_LIST DATA_FieldOBJMove_Up =
+static const MMDL_MOVE_PROC_LIST DATA_FieldOBJMove_Up =
 {
 	MV_RND,													///<動作コード
-	FLDMMDL_MoveUp_Init,									///<初期化関数
-	FLDMMDL_MoveDir_Move,									///<動作関数
-	FLDMMDL_MoveDeleteProcDummy,							///<削除関数
-	FLDMMDL_MoveReturnProcDummy,							///<復帰関数
+	MMDL_MoveUp_Init,									///<初期化関数
+	MMDL_MoveDir_Move,									///<動作関数
+	MMDL_MoveDeleteProcDummy,							///<削除関数
+	MMDL_MoveReturnProcDummy,							///<復帰関数
 };
 
 //--------------------------------------------------------------
 ///	MV_DOWN
 //--------------------------------------------------------------
-static const FLDMMDL_MOVE_PROC_LIST DATA_FieldOBJMove_Down =
+static const MMDL_MOVE_PROC_LIST DATA_FieldOBJMove_Down =
 {
 	MV_RND,													///<動作コード
-	FLDMMDL_MoveDown_Init,									///<初期化関数
-	FLDMMDL_MoveDir_Move,									///<動作関数
-	FLDMMDL_MoveDeleteProcDummy,							///<削除関数
-	FLDMMDL_MoveReturnProcDummy,							///<復帰関数
+	MMDL_MoveDown_Init,									///<初期化関数
+	MMDL_MoveDir_Move,									///<動作関数
+	MMDL_MoveDeleteProcDummy,							///<削除関数
+	MMDL_MoveReturnProcDummy,							///<復帰関数
 };
 
 //--------------------------------------------------------------
 ///	MV_LEFT
 //--------------------------------------------------------------
-static const FLDMMDL_MOVE_PROC_LIST DATA_FieldOBJMove_Left =
+static const MMDL_MOVE_PROC_LIST DATA_FieldOBJMove_Left =
 {
 	MV_RND,													///<動作コード
-	FLDMMDL_MoveLeft_Init,									///<初期化関数
-	FLDMMDL_MoveDir_Move,									///<動作関数
-	FLDMMDL_MoveDeleteProcDummy,							///<削除関数
-	FLDMMDL_MoveReturnProcDummy,							///<復帰関数
+	MMDL_MoveLeft_Init,									///<初期化関数
+	MMDL_MoveDir_Move,									///<動作関数
+	MMDL_MoveDeleteProcDummy,							///<削除関数
+	MMDL_MoveReturnProcDummy,							///<復帰関数
 };
 
 //--------------------------------------------------------------
 ///	MV_RIGHT
 //--------------------------------------------------------------
-static const FLDMMDL_MOVE_PROC_LIST DATA_FieldOBJMove_Right =
+static const MMDL_MOVE_PROC_LIST DATA_FieldOBJMove_Right =
 {
 	MV_RND,													///<動作コード
-	FLDMMDL_MoveRight_Init,								///<初期化関数
-	FLDMMDL_MoveDir_Move,									///<動作関数
-	FLDMMDL_MoveDeleteProcDummy,							///<削除関数
-	FLDMMDL_MoveReturnProcDummy,							///<復帰関数
+	MMDL_MoveRight_Init,								///<初期化関数
+	MMDL_MoveDir_Move,									///<動作関数
+	MMDL_MoveDeleteProcDummy,							///<削除関数
+	MMDL_MoveReturnProcDummy,							///<復帰関数
 };
 
 //--------------------------------------------------------------
 ///	MV_SPIN_L
 //--------------------------------------------------------------
-static const FLDMMDL_MOVE_PROC_LIST DATA_FieldOBJMove_SpinLeft =
+static const MMDL_MOVE_PROC_LIST DATA_FieldOBJMove_SpinLeft =
 {
 	MV_RND,													///<動作コード
-	FLDMMDL_MoveSpinLeft_Init,								///<初期化関数
-	FLDMMDL_MoveSpin_Move,									///<動作関数
-	FLDMMDL_MoveDeleteProcDummy,							///<削除関数
-	FLDMMDL_MoveReturnProcDummy,							///<復帰関数
+	MMDL_MoveSpinLeft_Init,								///<初期化関数
+	MMDL_MoveSpin_Move,									///<動作関数
+	MMDL_MoveDeleteProcDummy,							///<削除関数
+	MMDL_MoveReturnProcDummy,							///<復帰関数
 };
 
 //--------------------------------------------------------------
 ///	MV_SPIN_R
 //--------------------------------------------------------------
-static const FLDMMDL_MOVE_PROC_LIST DATA_FieldOBJMove_SpinRight =
+static const MMDL_MOVE_PROC_LIST DATA_FieldOBJMove_SpinRight =
 {
 	MV_RND,													///<動作コード
-	FLDMMDL_MoveSpinRight_Init,							///<初期化関数
-	FLDMMDL_MoveSpin_Move,									///<動作関数
-	FLDMMDL_MoveDeleteProcDummy,							///<削除関数
-	FLDMMDL_MoveReturnProcDummy,							///<復帰関数
+	MMDL_MoveSpinRight_Init,							///<初期化関数
+	MMDL_MoveSpin_Move,									///<動作関数
+	MMDL_MoveDeleteProcDummy,							///<削除関数
+	MMDL_MoveReturnProcDummy,							///<復帰関数
 };
 
 //--------------------------------------------------------------
 ///	MV_REWAR
 //--------------------------------------------------------------
-static const FLDMMDL_MOVE_PROC_LIST DATA_FieldOBJMove_Rewar =
+static const MMDL_MOVE_PROC_LIST DATA_FieldOBJMove_Rewar =
 {
 	MV_RND,													///<動作コード
-	FLDMMDL_MoveRewar_Init,								///<初期化関数
-	FLDMMDL_MoveRewar_Move,								///<動作関数
-	FLDMMDL_MoveDeleteProcDummy,							///<削除関数
-	FLDMMDL_MoveReturnProcDummy,							///<復帰関数
+	MMDL_MoveRewar_Init,								///<初期化関数
+	MMDL_MoveRewar_Move,								///<動作関数
+	MMDL_MoveDeleteProcDummy,							///<削除関数
+	MMDL_MoveReturnProcDummy,							///<復帰関数
 };
 
 //--------------------------------------------------------------
 ///	MV_RT2
 //--------------------------------------------------------------
-static const FLDMMDL_MOVE_PROC_LIST DATA_FieldOBJMove_Route2 =
+static const MMDL_MOVE_PROC_LIST DATA_FieldOBJMove_Route2 =
 {
 	MV_RND,													///<動作コード
-	FLDMMDL_MoveRoute2_Init,								///<初期化関数
-	FLDMMDL_MoveRoute2_Move,								///<動作関数
-	FLDMMDL_MoveDeleteProcDummy,							///<削除関数
-	FLDMMDL_MoveReturnProcDummy,							///<復帰関数
+	MMDL_MoveRoute2_Init,								///<初期化関数
+	MMDL_MoveRoute2_Move,								///<動作関数
+	MMDL_MoveDeleteProcDummy,							///<削除関数
+	MMDL_MoveReturnProcDummy,							///<復帰関数
 };
 
 //--------------------------------------------------------------
 ///	MV_RTURLD
 //--------------------------------------------------------------
-static const FLDMMDL_MOVE_PROC_LIST DATA_FieldOBJMove_RouteURLD =
+static const MMDL_MOVE_PROC_LIST DATA_FieldOBJMove_RouteURLD =
 {
 	MV_RND,													///<動作コード
-	FLDMMDL_MoveRouteURLD_Init,							///<初期化関数
-	FLDMMDL_MoveRoute3_Move,								///<動作関数
-	FLDMMDL_MoveDeleteProcDummy,							///<削除関数
-	FLDMMDL_MoveReturnProcDummy,							///<復帰関数
+	MMDL_MoveRouteURLD_Init,							///<初期化関数
+	MMDL_MoveRoute3_Move,								///<動作関数
+	MMDL_MoveDeleteProcDummy,							///<削除関数
+	MMDL_MoveReturnProcDummy,							///<復帰関数
 };
 
 //--------------------------------------------------------------
 ///	MV_RTRLDU
 //--------------------------------------------------------------
-static const FLDMMDL_MOVE_PROC_LIST DATA_FieldOBJMove_RouteRLDU =
+static const MMDL_MOVE_PROC_LIST DATA_FieldOBJMove_RouteRLDU =
 {
 	MV_RND,													///<動作コード
-	FLDMMDL_MoveRouteRLDU_Init,							///<初期化関数
-	FLDMMDL_MoveRoute3_Move,								///<動作関数
-	FLDMMDL_MoveDeleteProcDummy,							///<削除関数
-	FLDMMDL_MoveReturnProcDummy,							///<復帰関数
+	MMDL_MoveRouteRLDU_Init,							///<初期化関数
+	MMDL_MoveRoute3_Move,								///<動作関数
+	MMDL_MoveDeleteProcDummy,							///<削除関数
+	MMDL_MoveReturnProcDummy,							///<復帰関数
 };
 
 //--------------------------------------------------------------
 ///	MV_RTDURL
 //--------------------------------------------------------------
-static const FLDMMDL_MOVE_PROC_LIST DATA_FieldOBJMove_RouteDURL =
+static const MMDL_MOVE_PROC_LIST DATA_FieldOBJMove_RouteDURL =
 {
 	MV_RND,													///<動作コード
-	FLDMMDL_MoveRouteDURL_Init,							///<初期化関数
-	FLDMMDL_MoveRoute3_Move,								///<動作関数
-	FLDMMDL_MoveDeleteProcDummy,							///<削除関数
-	FLDMMDL_MoveReturnProcDummy,							///<復帰関数
+	MMDL_MoveRouteDURL_Init,							///<初期化関数
+	MMDL_MoveRoute3_Move,								///<動作関数
+	MMDL_MoveDeleteProcDummy,							///<削除関数
+	MMDL_MoveReturnProcDummy,							///<復帰関数
 };
 
 //--------------------------------------------------------------
 ///	MV_RTLDUR
 //--------------------------------------------------------------
-static const FLDMMDL_MOVE_PROC_LIST DATA_FieldOBJMove_RouteLDUR =
+static const MMDL_MOVE_PROC_LIST DATA_FieldOBJMove_RouteLDUR =
 {
 	MV_RND,													///<動作コード
-	FLDMMDL_MoveRouteLDUR_Init,							///<初期化関数
-	FLDMMDL_MoveRoute3_Move,								///<動作関数
-	FLDMMDL_MoveDeleteProcDummy,							///<削除関数
-	FLDMMDL_MoveReturnProcDummy,							///<復帰関数
+	MMDL_MoveRouteLDUR_Init,							///<初期化関数
+	MMDL_MoveRoute3_Move,								///<動作関数
+	MMDL_MoveDeleteProcDummy,							///<削除関数
+	MMDL_MoveReturnProcDummy,							///<復帰関数
 };
 
 //--------------------------------------------------------------
 ///	MV_RTULRD
 //--------------------------------------------------------------
-static const FLDMMDL_MOVE_PROC_LIST DATA_FieldOBJMove_RouteULRD =
+static const MMDL_MOVE_PROC_LIST DATA_FieldOBJMove_RouteULRD =
 {
 	MV_RND,													///<動作コード
-	FLDMMDL_MoveRouteULRD_Init,							///<初期化関数
-	FLDMMDL_MoveRoute3_Move,								///<動作関数
-	FLDMMDL_MoveDeleteProcDummy,							///<削除関数
-	FLDMMDL_MoveReturnProcDummy,							///<復帰関数
+	MMDL_MoveRouteULRD_Init,							///<初期化関数
+	MMDL_MoveRoute3_Move,								///<動作関数
+	MMDL_MoveDeleteProcDummy,							///<削除関数
+	MMDL_MoveReturnProcDummy,							///<復帰関数
 };
 
 //--------------------------------------------------------------
 ///	MV_RTLRDU
 //--------------------------------------------------------------
-static const FLDMMDL_MOVE_PROC_LIST DATA_FieldOBJMove_RouteLRDU =
+static const MMDL_MOVE_PROC_LIST DATA_FieldOBJMove_RouteLRDU =
 {
 	MV_RND,													///<動作コード
-	FLDMMDL_MoveRouteLRDU_Init,							///<初期化関数
-	FLDMMDL_MoveRoute3_Move,								///<動作関数
-	FLDMMDL_MoveDeleteProcDummy,							///<削除関数
-	FLDMMDL_MoveReturnProcDummy,							///<復帰関数
+	MMDL_MoveRouteLRDU_Init,							///<初期化関数
+	MMDL_MoveRoute3_Move,								///<動作関数
+	MMDL_MoveDeleteProcDummy,							///<削除関数
+	MMDL_MoveReturnProcDummy,							///<復帰関数
 };
 
 //--------------------------------------------------------------
 ///	MV_RTDULR
 //--------------------------------------------------------------
-static const FLDMMDL_MOVE_PROC_LIST DATA_FieldOBJMove_RouteDULR =
+static const MMDL_MOVE_PROC_LIST DATA_FieldOBJMove_RouteDULR =
 {
 	MV_RND,													///<動作コード
-	FLDMMDL_MoveRouteDULR_Init,							///<初期化関数
-	FLDMMDL_MoveRoute3_Move,								///<動作関数
-	FLDMMDL_MoveDeleteProcDummy,							///<削除関数
-	FLDMMDL_MoveReturnProcDummy,							///<復帰関数
+	MMDL_MoveRouteDULR_Init,							///<初期化関数
+	MMDL_MoveRoute3_Move,								///<動作関数
+	MMDL_MoveDeleteProcDummy,							///<削除関数
+	MMDL_MoveReturnProcDummy,							///<復帰関数
 };
 
 //--------------------------------------------------------------
 ///	MV_RTRDUL
 //--------------------------------------------------------------
-static const FLDMMDL_MOVE_PROC_LIST DATA_FieldOBJMove_RouteRDUL =
+static const MMDL_MOVE_PROC_LIST DATA_FieldOBJMove_RouteRDUL =
 {
 	MV_RND,													///<動作コード
-	FLDMMDL_MoveRouteRDUL_Init,							///<初期化関数
-	FLDMMDL_MoveRoute3_Move,								///<動作関数
-	FLDMMDL_MoveDeleteProcDummy,							///<削除関数
-	FLDMMDL_MoveReturnProcDummy,							///<復帰関数
+	MMDL_MoveRouteRDUL_Init,							///<初期化関数
+	MMDL_MoveRoute3_Move,								///<動作関数
+	MMDL_MoveDeleteProcDummy,							///<削除関数
+	MMDL_MoveReturnProcDummy,							///<復帰関数
 };
 
 //--------------------------------------------------------------
 ///	MV_RTLUDR
 //--------------------------------------------------------------
-static const FLDMMDL_MOVE_PROC_LIST DATA_FieldOBJMove_RouteLUDR =
+static const MMDL_MOVE_PROC_LIST DATA_FieldOBJMove_RouteLUDR =
 {
 	MV_RND,													///<動作コード
-	FLDMMDL_MoveRouteLUDR_Init,							///<初期化関数
-	FLDMMDL_MoveRoute3_Move,								///<動作関数
-	FLDMMDL_MoveDeleteProcDummy,							///<削除関数
-	FLDMMDL_MoveReturnProcDummy,							///<復帰関数
+	MMDL_MoveRouteLUDR_Init,							///<初期化関数
+	MMDL_MoveRoute3_Move,								///<動作関数
+	MMDL_MoveDeleteProcDummy,							///<削除関数
+	MMDL_MoveReturnProcDummy,							///<復帰関数
 };
 
 //--------------------------------------------------------------
 ///	MV_RTUDRL
 //--------------------------------------------------------------
-static const FLDMMDL_MOVE_PROC_LIST DATA_FieldOBJMove_RouteUDRL =
+static const MMDL_MOVE_PROC_LIST DATA_FieldOBJMove_RouteUDRL =
 {
 	MV_RND,													///<動作コード
-	FLDMMDL_MoveRouteUDRL_Init,							///<初期化関数
-	FLDMMDL_MoveRoute3_Move,								///<動作関数
-	FLDMMDL_MoveDeleteProcDummy,							///<削除関数
-	FLDMMDL_MoveReturnProcDummy,							///<復帰関数
+	MMDL_MoveRouteUDRL_Init,							///<初期化関数
+	MMDL_MoveRoute3_Move,								///<動作関数
+	MMDL_MoveDeleteProcDummy,							///<削除関数
+	MMDL_MoveReturnProcDummy,							///<復帰関数
 };
 
 //--------------------------------------------------------------
 ///	MV_RTRLUD
 //--------------------------------------------------------------
-static const FLDMMDL_MOVE_PROC_LIST DATA_FieldOBJMove_RouteRLUD =
+static const MMDL_MOVE_PROC_LIST DATA_FieldOBJMove_RouteRLUD =
 {
 	MV_RND,													///<動作コード
-	FLDMMDL_MoveRouteRLUD_Init,							///<初期化関数
-	FLDMMDL_MoveRoute3_Move,								///<動作関数
-	FLDMMDL_MoveDeleteProcDummy,							///<削除関数
-	FLDMMDL_MoveReturnProcDummy,							///<復帰関数
+	MMDL_MoveRouteRLUD_Init,							///<初期化関数
+	MMDL_MoveRoute3_Move,								///<動作関数
+	MMDL_MoveDeleteProcDummy,							///<削除関数
+	MMDL_MoveReturnProcDummy,							///<復帰関数
 };
 
 //--------------------------------------------------------------
 ///	MV_RTDRLU
 //--------------------------------------------------------------
-static const FLDMMDL_MOVE_PROC_LIST DATA_FieldOBJMove_RouteDRLU =
+static const MMDL_MOVE_PROC_LIST DATA_FieldOBJMove_RouteDRLU =
 {
 	MV_RND,													///<動作コード
-	FLDMMDL_MoveRouteDRLU_Init,							///<初期化関数
-	FLDMMDL_MoveRoute3_Move,								///<動作関数
-	FLDMMDL_MoveDeleteProcDummy,							///<削除関数
-	FLDMMDL_MoveReturnProcDummy,							///<復帰関数
+	MMDL_MoveRouteDRLU_Init,							///<初期化関数
+	MMDL_MoveRoute3_Move,								///<動作関数
+	MMDL_MoveDeleteProcDummy,							///<削除関数
+	MMDL_MoveReturnProcDummy,							///<復帰関数
 };
 
 //--------------------------------------------------------------
 ///	MV_RTRUDL
 //--------------------------------------------------------------
-static const FLDMMDL_MOVE_PROC_LIST DATA_FieldOBJMove_RouteRUDL =
+static const MMDL_MOVE_PROC_LIST DATA_FieldOBJMove_RouteRUDL =
 {
 	MV_RND,													///<動作コード
-	FLDMMDL_MoveRouteRUDL_Init,							///<初期化関数
-	FLDMMDL_MoveRoute3_Move,								///<動作関数
-	FLDMMDL_MoveDeleteProcDummy,							///<削除関数
-	FLDMMDL_MoveReturnProcDummy,							///<復帰関数
+	MMDL_MoveRouteRUDL_Init,							///<初期化関数
+	MMDL_MoveRoute3_Move,								///<動作関数
+	MMDL_MoveDeleteProcDummy,							///<削除関数
+	MMDL_MoveReturnProcDummy,							///<復帰関数
 };
 
 //--------------------------------------------------------------
 ///	MV_RTUDLR
 //--------------------------------------------------------------
-static const FLDMMDL_MOVE_PROC_LIST DATA_FieldOBJMove_RouteUDLR =
+static const MMDL_MOVE_PROC_LIST DATA_FieldOBJMove_RouteUDLR =
 {
 	MV_RND,													///<動作コード
-	FLDMMDL_MoveRouteUDLR_Init,							///<初期化関数
-	FLDMMDL_MoveRoute3_Move,								///<動作関数
-	FLDMMDL_MoveDeleteProcDummy,							///<削除関数
-	FLDMMDL_MoveReturnProcDummy,							///<復帰関数
+	MMDL_MoveRouteUDLR_Init,							///<初期化関数
+	MMDL_MoveRoute3_Move,								///<動作関数
+	MMDL_MoveDeleteProcDummy,							///<削除関数
+	MMDL_MoveReturnProcDummy,							///<復帰関数
 };
 
 //--------------------------------------------------------------
 ///	MV_RTLRUD
 //--------------------------------------------------------------
-static const FLDMMDL_MOVE_PROC_LIST DATA_FieldOBJMove_RouteLRUD =
+static const MMDL_MOVE_PROC_LIST DATA_FieldOBJMove_RouteLRUD =
 {
 	MV_RND,													///<動作コード
-	FLDMMDL_MoveRouteLRUD_Init,							///<初期化関数
-	FLDMMDL_MoveRoute3_Move,								///<動作関数
-	FLDMMDL_MoveDeleteProcDummy,							///<削除関数
-	FLDMMDL_MoveReturnProcDummy,							///<復帰関数
+	MMDL_MoveRouteLRUD_Init,							///<初期化関数
+	MMDL_MoveRoute3_Move,								///<動作関数
+	MMDL_MoveDeleteProcDummy,							///<削除関数
+	MMDL_MoveReturnProcDummy,							///<復帰関数
 };
 
 //--------------------------------------------------------------
 ///	MV_RTDLRU
 //--------------------------------------------------------------
-static const FLDMMDL_MOVE_PROC_LIST DATA_FieldOBJMove_RouteDLRU =
+static const MMDL_MOVE_PROC_LIST DATA_FieldOBJMove_RouteDLRU =
 {
 	MV_RND,													///<動作コード
-	FLDMMDL_MoveRouteDLRU_Init,							///<初期化関数
-	FLDMMDL_MoveRoute3_Move,								///<動作関数
-	FLDMMDL_MoveDeleteProcDummy,							///<削除関数
-	FLDMMDL_MoveReturnProcDummy,							///<復帰関数
+	MMDL_MoveRouteDLRU_Init,							///<初期化関数
+	MMDL_MoveRoute3_Move,								///<動作関数
+	MMDL_MoveDeleteProcDummy,							///<削除関数
+	MMDL_MoveReturnProcDummy,							///<復帰関数
 };
 
 //--------------------------------------------------------------
 ///	MV_RTUL
 //--------------------------------------------------------------
-static const FLDMMDL_MOVE_PROC_LIST DATA_FieldOBJMove_RouteUL =
+static const MMDL_MOVE_PROC_LIST DATA_FieldOBJMove_RouteUL =
 {
 	MV_RND,													///<動作コード
-	FLDMMDL_MoveRouteUL_Init,								///<初期化関数
-	FLDMMDL_MoveRoute4_Move,								///<動作関数
-	FLDMMDL_MoveDeleteProcDummy,							///<削除関数
-	FLDMMDL_MoveReturnProcDummy,							///<復帰関数
+	MMDL_MoveRouteUL_Init,								///<初期化関数
+	MMDL_MoveRoute4_Move,								///<動作関数
+	MMDL_MoveDeleteProcDummy,							///<削除関数
+	MMDL_MoveReturnProcDummy,							///<復帰関数
 };
 
 //--------------------------------------------------------------
 ///	MV_RTDR
 //--------------------------------------------------------------
-static const FLDMMDL_MOVE_PROC_LIST DATA_FieldOBJMove_RouteDR =
+static const MMDL_MOVE_PROC_LIST DATA_FieldOBJMove_RouteDR =
 {
 	MV_RND,													///<動作コード
-	FLDMMDL_MoveRouteDR_Init,								///<初期化関数
-	FLDMMDL_MoveRoute4_Move,								///<動作関数
-	FLDMMDL_MoveDeleteProcDummy,							///<削除関数
-	FLDMMDL_MoveReturnProcDummy,							///<復帰関数
+	MMDL_MoveRouteDR_Init,								///<初期化関数
+	MMDL_MoveRoute4_Move,								///<動作関数
+	MMDL_MoveDeleteProcDummy,							///<削除関数
+	MMDL_MoveReturnProcDummy,							///<復帰関数
 };
 
 //--------------------------------------------------------------
 ///	MV_RTLD
 //--------------------------------------------------------------
-static const FLDMMDL_MOVE_PROC_LIST DATA_FieldOBJMove_RouteLD =
+static const MMDL_MOVE_PROC_LIST DATA_FieldOBJMove_RouteLD =
 {
 	MV_RND,													///<動作コード
-	FLDMMDL_MoveRouteLD_Init,								///<初期化関数
-	FLDMMDL_MoveRoute4_Move,								///<動作関数
-	FLDMMDL_MoveDeleteProcDummy,							///<削除関数
-	FLDMMDL_MoveReturnProcDummy,							///<復帰関数
+	MMDL_MoveRouteLD_Init,								///<初期化関数
+	MMDL_MoveRoute4_Move,								///<動作関数
+	MMDL_MoveDeleteProcDummy,							///<削除関数
+	MMDL_MoveReturnProcDummy,							///<復帰関数
 };
 
 //--------------------------------------------------------------
 ///	MV_RTRU
 //--------------------------------------------------------------
-static const FLDMMDL_MOVE_PROC_LIST DATA_FieldOBJMove_RouteRU =
+static const MMDL_MOVE_PROC_LIST DATA_FieldOBJMove_RouteRU =
 {
 	MV_RND,													///<動作コード
-	FLDMMDL_MoveRouteRU_Init,								///<初期化関数
-	FLDMMDL_MoveRoute4_Move,								///<動作関数
-	FLDMMDL_MoveDeleteProcDummy,							///<削除関数
-	FLDMMDL_MoveReturnProcDummy,							///<復帰関数
+	MMDL_MoveRouteRU_Init,								///<初期化関数
+	MMDL_MoveRoute4_Move,								///<動作関数
+	MMDL_MoveDeleteProcDummy,							///<削除関数
+	MMDL_MoveReturnProcDummy,							///<復帰関数
 };
 
 //--------------------------------------------------------------
 ///	MV_RTUR
 //--------------------------------------------------------------
-static const FLDMMDL_MOVE_PROC_LIST DATA_FieldOBJMove_RouteUR =
+static const MMDL_MOVE_PROC_LIST DATA_FieldOBJMove_RouteUR =
 {
 	MV_RND,													///<動作コード
-	FLDMMDL_MoveRouteUR_Init,								///<初期化関数
-	FLDMMDL_MoveRoute4_Move,								///<動作関数
-	FLDMMDL_MoveDeleteProcDummy,							///<削除関数
-	FLDMMDL_MoveReturnProcDummy,							///<復帰関数
+	MMDL_MoveRouteUR_Init,								///<初期化関数
+	MMDL_MoveRoute4_Move,								///<動作関数
+	MMDL_MoveDeleteProcDummy,							///<削除関数
+	MMDL_MoveReturnProcDummy,							///<復帰関数
 };
 
 //--------------------------------------------------------------
 ///	MV_RTDL
 //--------------------------------------------------------------
-static const FLDMMDL_MOVE_PROC_LIST DATA_FieldOBJMove_RouteDL =
+static const MMDL_MOVE_PROC_LIST DATA_FieldOBJMove_RouteDL =
 {
 	MV_RND,													///<動作コード
-	FLDMMDL_MoveRouteDL_Init,								///<初期化関数
-	FLDMMDL_MoveRoute4_Move,								///<動作関数
-	FLDMMDL_MoveDeleteProcDummy,							///<削除関数
-	FLDMMDL_MoveReturnProcDummy,							///<復帰関数
+	MMDL_MoveRouteDL_Init,								///<初期化関数
+	MMDL_MoveRoute4_Move,								///<動作関数
+	MMDL_MoveDeleteProcDummy,							///<削除関数
+	MMDL_MoveReturnProcDummy,							///<復帰関数
 };
 
 //--------------------------------------------------------------
 ///	MV_RTLU
 //--------------------------------------------------------------
-static const FLDMMDL_MOVE_PROC_LIST DATA_FieldOBJMove_RouteLU =
+static const MMDL_MOVE_PROC_LIST DATA_FieldOBJMove_RouteLU =
 {
 	MV_RND,													///<動作コード
-	FLDMMDL_MoveRouteLU_Init,								///<初期化関数
-	FLDMMDL_MoveRoute4_Move,								///<動作関数
-	FLDMMDL_MoveDeleteProcDummy,							///<削除関数
-	FLDMMDL_MoveReturnProcDummy,							///<復帰関数
+	MMDL_MoveRouteLU_Init,								///<初期化関数
+	MMDL_MoveRoute4_Move,								///<動作関数
+	MMDL_MoveDeleteProcDummy,							///<削除関数
+	MMDL_MoveReturnProcDummy,							///<復帰関数
 };
 
 //--------------------------------------------------------------
 ///	MV_RTRD
 //--------------------------------------------------------------
-static const FLDMMDL_MOVE_PROC_LIST DATA_FieldOBJMove_RouteRD =
+static const MMDL_MOVE_PROC_LIST DATA_FieldOBJMove_RouteRD =
 {
 	MV_RND,													///<動作コード
-	FLDMMDL_MoveRouteRD_Init,								///<初期化関数
-	FLDMMDL_MoveRoute4_Move,								///<動作関数
-	FLDMMDL_MoveDeleteProcDummy,							///<削除関数
-	FLDMMDL_MoveReturnProcDummy,							///<復帰関数
+	MMDL_MoveRouteRD_Init,								///<初期化関数
+	MMDL_MoveRoute4_Move,								///<動作関数
+	MMDL_MoveDeleteProcDummy,							///<削除関数
+	MMDL_MoveReturnProcDummy,							///<復帰関数
 };
 
 #if 0
 //--------------------------------------------------------------
 ///	MV_SEED
 //--------------------------------------------------------------
-static const FLDMMDL_MOVE_PROC_LIST DATA_FieldOBJMove_Seed =
+static const MMDL_MOVE_PROC_LIST DATA_FieldOBJMove_Seed =
 {
 	MV_SEED,												///<動作コード
-	FLDMMDL_MoveSeed_Init,									///<初期化関数
-	FLDMMDL_MoveSeed_Move,									///<動作関数
-	FLDMMDL_MoveSeed_Delete,								///<削除関数
-	FLDMMDL_MoveReturnProcDummy,							///<復帰関数
+	MMDL_MoveSeed_Init,									///<初期化関数
+	MMDL_MoveSeed_Move,									///<動作関数
+	MMDL_MoveSeed_Delete,								///<削除関数
+	MMDL_MoveReturnProcDummy,							///<復帰関数
 };
 #endif
 
 //--------------------------------------------------------------
 ///	MV_PAIR
 //--------------------------------------------------------------
-static const FLDMMDL_MOVE_PROC_LIST DATA_FieldOBJMove_Pair =
+static const MMDL_MOVE_PROC_LIST DATA_FieldOBJMove_Pair =
 {
 	MV_RND,													///<動作コード
-	FLDMMDL_MovePair_Init,									///<初期化関数
-	FLDMMDL_MovePair_Move,									///<動作関数
-	FLDMMDL_MovePair_Delete,							///<削除関数
-	FLDMMDL_MoveReturnProcDummy,							///<復帰関数
+	MMDL_MovePair_Init,									///<初期化関数
+	MMDL_MovePair_Move,									///<動作関数
+	MMDL_MovePair_Delete,							///<削除関数
+	MMDL_MoveReturnProcDummy,							///<復帰関数
 };
 
 //--------------------------------------------------------------
 ///	MV_TR_PAIR
 //--------------------------------------------------------------
-static const FLDMMDL_MOVE_PROC_LIST DATA_FieldOBJMove_PairTr =
+static const MMDL_MOVE_PROC_LIST DATA_FieldOBJMove_PairTr =
 {
 	MV_RND,													///<動作コード
-	FLDMMDL_MovePairTr_Init,								///<初期化関数
-	FLDMMDL_MovePairTr_Move,								///<動作関数
-	FLDMMDL_MovePairTr_Delete,								///<削除関数
-	FLDMMDL_MovePairTr_Return,								///<復帰関数
+	MMDL_MovePairTr_Init,								///<初期化関数
+	MMDL_MovePairTr_Move,								///<動作関数
+	MMDL_MovePairTr_Delete,								///<削除関数
+	MMDL_MovePairTr_Return,								///<復帰関数
 };
 
 //--------------------------------------------------------------
 ///	MV_HIDE_SNOW
 //--------------------------------------------------------------
-static const FLDMMDL_MOVE_PROC_LIST DATA_FieldOBJMove_HideSnow =
+static const MMDL_MOVE_PROC_LIST DATA_FieldOBJMove_HideSnow =
 {
 	MV_HIDE_SNOW,												///<動作コード
-	FLDMMDL_MoveHideSnow_Init,								///<初期化関数
-	FLDMMDL_MoveHide_Move,								///<動作関数
-	FLDMMDL_MoveHide_Delete,								///<削除関数
-	FLDMMDL_MoveHide_Return,							///<復帰関数
+	MMDL_MoveHideSnow_Init,								///<初期化関数
+	MMDL_MoveHide_Move,								///<動作関数
+	MMDL_MoveHide_Delete,								///<削除関数
+	MMDL_MoveHide_Return,							///<復帰関数
 };
 
 //--------------------------------------------------------------
 ///	MV_HIDE_SAND
 //--------------------------------------------------------------
-static const FLDMMDL_MOVE_PROC_LIST DATA_FieldOBJMove_HideSand =
+static const MMDL_MOVE_PROC_LIST DATA_FieldOBJMove_HideSand =
 {
 	MV_HIDE_SAND,												///<動作コード
-	FLDMMDL_MoveHideSand_Init,								///<初期化関数
-	FLDMMDL_MoveHide_Move,								///<動作関数
-	FLDMMDL_MoveHide_Delete,								///<削除関数
-	FLDMMDL_MoveHide_Return,							///<復帰関数
+	MMDL_MoveHideSand_Init,								///<初期化関数
+	MMDL_MoveHide_Move,								///<動作関数
+	MMDL_MoveHide_Delete,								///<削除関数
+	MMDL_MoveHide_Return,							///<復帰関数
 };
 
 //--------------------------------------------------------------
 ///	MV_HIDE_GRND
 //--------------------------------------------------------------
-static const FLDMMDL_MOVE_PROC_LIST DATA_FieldOBJMove_HideGround =
+static const MMDL_MOVE_PROC_LIST DATA_FieldOBJMove_HideGround =
 {
 	MV_HIDE_GRND,												///<動作コード
-	FLDMMDL_MoveHideGround_Init,								///<初期化関数
-	FLDMMDL_MoveHide_Move,								///<動作関数
-	FLDMMDL_MoveHide_Delete,								///<削除関数
-	FLDMMDL_MoveHide_Return,							///<復帰関数
+	MMDL_MoveHideGround_Init,								///<初期化関数
+	MMDL_MoveHide_Move,								///<動作関数
+	MMDL_MoveHide_Delete,								///<削除関数
+	MMDL_MoveHide_Return,							///<復帰関数
 };
 
 //--------------------------------------------------------------
 ///	MV_HIDE_KUSA
 //--------------------------------------------------------------
-static const FLDMMDL_MOVE_PROC_LIST DATA_FieldOBJMove_HideKusa =
+static const MMDL_MOVE_PROC_LIST DATA_FieldOBJMove_HideKusa =
 {
 	MV_HIDE_KUSA,												///<動作コード
-	FLDMMDL_MoveHideKusa_Init,								///<初期化関数
-	FLDMMDL_MoveHide_Move,								///<動作関数
-	FLDMMDL_MoveHide_Delete,								///<削除関数
-	FLDMMDL_MoveHide_Return,							///<復帰関数
+	MMDL_MoveHideKusa_Init,								///<初期化関数
+	MMDL_MoveHide_Move,								///<動作関数
+	MMDL_MoveHide_Delete,								///<削除関数
+	MMDL_MoveHide_Return,							///<復帰関数
 };
 
 //--------------------------------------------------------------
 ///	MV_COPYU
 //--------------------------------------------------------------
-static const FLDMMDL_MOVE_PROC_LIST DATA_FieldOBJMove_CopyU =
+static const MMDL_MOVE_PROC_LIST DATA_FieldOBJMove_CopyU =
 {
 	MV_COPYU,												///<動作コード
-	FLDMMDL_MoveCopyU_Init,								///<初期化関数
-	FLDMMDL_MoveCopy_Move,									///<動作関数
-	FLDMMDL_MoveDeleteProcDummy,							///<削除関数
-	FLDMMDL_MoveReturnProcDummy,							///<復帰関数
+	MMDL_MoveCopyU_Init,								///<初期化関数
+	MMDL_MoveCopy_Move,									///<動作関数
+	MMDL_MoveDeleteProcDummy,							///<削除関数
+	MMDL_MoveReturnProcDummy,							///<復帰関数
 };
 
 //--------------------------------------------------------------
 ///	MV_COPYD
 //--------------------------------------------------------------
-static const FLDMMDL_MOVE_PROC_LIST DATA_FieldOBJMove_CopyD =
+static const MMDL_MOVE_PROC_LIST DATA_FieldOBJMove_CopyD =
 {
 	MV_COPYD,												///<動作コード
-	FLDMMDL_MoveCopyD_Init,								///<初期化関数
-	FLDMMDL_MoveCopy_Move,									///<動作関数
-	FLDMMDL_MoveDeleteProcDummy,							///<削除関数
-	FLDMMDL_MoveReturnProcDummy,							///<復帰関数
+	MMDL_MoveCopyD_Init,								///<初期化関数
+	MMDL_MoveCopy_Move,									///<動作関数
+	MMDL_MoveDeleteProcDummy,							///<削除関数
+	MMDL_MoveReturnProcDummy,							///<復帰関数
 };
 
 //--------------------------------------------------------------
 ///	MV_COPYL
 //--------------------------------------------------------------
-static const FLDMMDL_MOVE_PROC_LIST DATA_FieldOBJMove_CopyL =
+static const MMDL_MOVE_PROC_LIST DATA_FieldOBJMove_CopyL =
 {
 	MV_COPYL,												///<動作コード
-	FLDMMDL_MoveCopyL_Init,								///<初期化関数
-	FLDMMDL_MoveCopy_Move,									///<動作関数
-	FLDMMDL_MoveDeleteProcDummy,							///<削除関数
-	FLDMMDL_MoveReturnProcDummy,							///<復帰関数
+	MMDL_MoveCopyL_Init,								///<初期化関数
+	MMDL_MoveCopy_Move,									///<動作関数
+	MMDL_MoveDeleteProcDummy,							///<削除関数
+	MMDL_MoveReturnProcDummy,							///<復帰関数
 };
 
 //--------------------------------------------------------------
 ///	MV_COPYR
 //--------------------------------------------------------------
-static const FLDMMDL_MOVE_PROC_LIST DATA_FieldOBJMove_CopyR =
+static const MMDL_MOVE_PROC_LIST DATA_FieldOBJMove_CopyR =
 {
 	MV_COPYR,												///<動作コード
-	FLDMMDL_MoveCopyR_Init,								///<初期化関数
-	FLDMMDL_MoveCopy_Move,									///<動作関数
-	FLDMMDL_MoveDeleteProcDummy,							///<削除関数
-	FLDMMDL_MoveReturnProcDummy,							///<復帰関数
+	MMDL_MoveCopyR_Init,								///<初期化関数
+	MMDL_MoveCopy_Move,									///<動作関数
+	MMDL_MoveDeleteProcDummy,							///<削除関数
+	MMDL_MoveReturnProcDummy,							///<復帰関数
 };
 
 //--------------------------------------------------------------
 ///	MV_COPYLGRASSU
 //--------------------------------------------------------------
-static const FLDMMDL_MOVE_PROC_LIST DATA_FieldOBJMove_CopyLGrassU =
+static const MMDL_MOVE_PROC_LIST DATA_FieldOBJMove_CopyLGrassU =
 {
 	MV_COPYLGRASSU,											///<動作コード
-	FLDMMDL_MoveCopyLGrassU_Init,								///<初期化関数
-	FLDMMDL_MoveCopy_Move,									///<動作関数
-	FLDMMDL_MoveDeleteProcDummy,							///<削除関数
-	FLDMMDL_MoveReturnProcDummy,							///<復帰関数
+	MMDL_MoveCopyLGrassU_Init,								///<初期化関数
+	MMDL_MoveCopy_Move,									///<動作関数
+	MMDL_MoveDeleteProcDummy,							///<削除関数
+	MMDL_MoveReturnProcDummy,							///<復帰関数
 };
 
 //--------------------------------------------------------------
 ///	MV_COPYLGRASSD
 //--------------------------------------------------------------
-static const FLDMMDL_MOVE_PROC_LIST DATA_FieldOBJMove_CopyLGrassD =
+static const MMDL_MOVE_PROC_LIST DATA_FieldOBJMove_CopyLGrassD =
 {
 	MV_COPYLGRASSD,												///<動作コード
-	FLDMMDL_MoveCopyLGrassD_Init,								///<初期化関数
-	FLDMMDL_MoveCopy_Move,									///<動作関数
-	FLDMMDL_MoveDeleteProcDummy,							///<削除関数
-	FLDMMDL_MoveReturnProcDummy,							///<復帰関数
+	MMDL_MoveCopyLGrassD_Init,								///<初期化関数
+	MMDL_MoveCopy_Move,									///<動作関数
+	MMDL_MoveDeleteProcDummy,							///<削除関数
+	MMDL_MoveReturnProcDummy,							///<復帰関数
 };
 
 //--------------------------------------------------------------
 ///	MV_COPYLGRASSL
 //--------------------------------------------------------------
-static const FLDMMDL_MOVE_PROC_LIST DATA_FieldOBJMove_CopyLGrassL =
+static const MMDL_MOVE_PROC_LIST DATA_FieldOBJMove_CopyLGrassL =
 {
 	MV_COPYLGRASSL,												///<動作コード
-	FLDMMDL_MoveCopyLGrassL_Init,								///<初期化関数
-	FLDMMDL_MoveCopy_Move,									///<動作関数
-	FLDMMDL_MoveDeleteProcDummy,							///<削除関数
-	FLDMMDL_MoveReturnProcDummy,							///<復帰関数
+	MMDL_MoveCopyLGrassL_Init,								///<初期化関数
+	MMDL_MoveCopy_Move,									///<動作関数
+	MMDL_MoveDeleteProcDummy,							///<削除関数
+	MMDL_MoveReturnProcDummy,							///<復帰関数
 };
 
 //--------------------------------------------------------------
 ///	MV_COPYLGRASSR
 //--------------------------------------------------------------
-static const FLDMMDL_MOVE_PROC_LIST DATA_FieldOBJMove_CopyLGrassR =
+static const MMDL_MOVE_PROC_LIST DATA_FieldOBJMove_CopyLGrassR =
 {
 	MV_COPYLGRASSR,												///<動作コード
-	FLDMMDL_MoveCopyLGrassR_Init,								///<初期化関数
-	FLDMMDL_MoveCopy_Move,									///<動作関数
-	FLDMMDL_MoveDeleteProcDummy,							///<削除関数
-	FLDMMDL_MoveReturnProcDummy,							///<復帰関数
+	MMDL_MoveCopyLGrassR_Init,								///<初期化関数
+	MMDL_MoveCopy_Move,									///<動作関数
+	MMDL_MoveDeleteProcDummy,							///<削除関数
+	MMDL_MoveReturnProcDummy,							///<復帰関数
 };
 
 //--------------------------------------------------------------
 ///	MV_ALONGW_L
 //--------------------------------------------------------------
-static const FLDMMDL_MOVE_PROC_LIST DATA_FieldOBJMove_AlongWallL =
+static const MMDL_MOVE_PROC_LIST DATA_FieldOBJMove_AlongWallL =
 {
 	MV_ALONGW_L,												///<動作コード
-	FLDMMDL_AlongWallL_Init,								///<初期化関数
-	FLDMMDL_AlongWall_Move,									///<動作関数
-	FLDMMDL_MoveDeleteProcDummy,							///<削除関数
-	FLDMMDL_MoveReturnProcDummy,							///<復帰関数
+	MMDL_AlongWallL_Init,								///<初期化関数
+	MMDL_AlongWall_Move,									///<動作関数
+	MMDL_MoveDeleteProcDummy,							///<削除関数
+	MMDL_MoveReturnProcDummy,							///<復帰関数
 };
 
 //--------------------------------------------------------------
 ///	MV_ALONGW_R
 //--------------------------------------------------------------
-static const FLDMMDL_MOVE_PROC_LIST DATA_FieldOBJMove_AlongWallR =
+static const MMDL_MOVE_PROC_LIST DATA_FieldOBJMove_AlongWallR =
 {
 	MV_ALONGW_R,												///<動作コード
-	FLDMMDL_AlongWallR_Init,								///<初期化関数
-	FLDMMDL_AlongWall_Move,									///<動作関数
-	FLDMMDL_MoveDeleteProcDummy,							///<削除関数
-	FLDMMDL_MoveReturnProcDummy,							///<復帰関数
+	MMDL_AlongWallR_Init,								///<初期化関数
+	MMDL_AlongWall_Move,									///<動作関数
+	MMDL_MoveDeleteProcDummy,							///<削除関数
+	MMDL_MoveReturnProcDummy,							///<復帰関数
 };
 
 //--------------------------------------------------------------
 ///	MV_ALONGW_LRL
 //--------------------------------------------------------------
-static const FLDMMDL_MOVE_PROC_LIST DATA_FieldOBJMove_AlongWallLRL =
+static const MMDL_MOVE_PROC_LIST DATA_FieldOBJMove_AlongWallLRL =
 {
 	MV_ALONGW_LRL,												///<動作コード
-	FLDMMDL_AlongWallLRL_Init,								///<初期化関数
-	FLDMMDL_AlongWall_Move,									///<動作関数
-	FLDMMDL_MoveDeleteProcDummy,							///<削除関数
-	FLDMMDL_MoveReturnProcDummy,							///<復帰関数
+	MMDL_AlongWallLRL_Init,								///<初期化関数
+	MMDL_AlongWall_Move,									///<動作関数
+	MMDL_MoveDeleteProcDummy,							///<削除関数
+	MMDL_MoveReturnProcDummy,							///<復帰関数
 };
 
 //--------------------------------------------------------------
 ///	MV_ALONGW_LRR
 //--------------------------------------------------------------
-static const FLDMMDL_MOVE_PROC_LIST DATA_FieldOBJMove_AlongWallLRR =
+static const MMDL_MOVE_PROC_LIST DATA_FieldOBJMove_AlongWallLRR =
 {
 	MV_ALONGW_LRR,												///<動作コード
-	FLDMMDL_AlongWallLRR_Init,								///<初期化関数
-	FLDMMDL_AlongWall_Move,									///<動作関数
-	FLDMMDL_MoveDeleteProcDummy,							///<削除関数
-	FLDMMDL_MoveReturnProcDummy,							///<復帰関数
+	MMDL_AlongWallLRR_Init,								///<初期化関数
+	MMDL_AlongWall_Move,									///<動作関数
+	MMDL_MoveDeleteProcDummy,							///<削除関数
+	MMDL_MoveReturnProcDummy,							///<復帰関数
 };
 
 //--------------------------------------------------------------
 /// MV_COMM_ACTOR
 //--------------------------------------------------------------
-static const FLDMMDL_MOVE_PROC_LIST DATA_FieldOBJMove_CommActor =
+static const MMDL_MOVE_PROC_LIST DATA_FieldOBJMove_CommActor =
 {
 	MV_COMM_ACTOR,												///<動作コード
-	FLDMMDL_MoveCommActor_Init,						///<初期化関数
-	FLDMMDL_MoveCommActor_Move,						///<動作関数
-  FLDMMDL_MoveCommActor_Delete,					///<削除関数
-	FLDMMDL_MoveReturnProcDummy,					///<復帰関数
+	MMDL_MoveCommActor_Init,						///<初期化関数
+	MMDL_MoveCommActor_Move,						///<動作関数
+  MMDL_MoveCommActor_Delete,					///<削除関数
+	MMDL_MoveReturnProcDummy,					///<復帰関数
 };
 
 //==============================================================================
@@ -861,7 +861,7 @@ static const FLDMMDL_MOVE_PROC_LIST DATA_FieldOBJMove_CommActor =
 ///	動作関数まとめ
 ///	並びはfieldobj_code.h MV_DMY等のコードと一致
 //--------------------------------------------------------------
-const FLDMMDL_MOVE_PROC_LIST * const DATA_FieldOBJMoveProcListTbl[MV_CODE_MAX] =
+const MMDL_MOVE_PROC_LIST * const DATA_FieldOBJMoveProcListTbl[MV_CODE_MAX] =
 {
 	&DATA_FieldOBJMove_Dummy,								//MV_DMY
 	&DATA_FieldOBJMove_Player,								//MV_PLAYER
@@ -945,7 +945,7 @@ const FLDMMDL_MOVE_PROC_LIST * const DATA_FieldOBJMoveProcListTbl[MV_CODE_MAX] =
 ///	アニメーションコマンドテーブル。
 ///	並びはfieldobj_code.h AC_DIR_U等のコードと一致。
 //--------------------------------------------------------------
-int (* const * const DATA_AcmdActionTbl[ACMD_MAX])( FLDMMDL * ) =
+int (* const * const DATA_AcmdActionTbl[ACMD_MAX])( MMDL * ) =
 {
 	DATA_AC_DirU_Tbl,										//AC_DIR_U
 	DATA_AC_DirD_Tbl,										//AC_DIR_D
@@ -1217,7 +1217,7 @@ static const int DATA_CodeTbl_AC_JUMPGU_U_1G_8F[] =
 {AC_JUMPGU_U_1G_8F,AC_JUMPGU_D_1G_8F,AC_JUMPGU_L_1G_8F,AC_JUMPGU_R_1G_8F};
 
 //--------------------------------------------------------------
-///	FLDMMDL_ChangeDirAcmdCode()で対応するコード。
+///	MMDL_ChangeDirAcmdCode()で対応するコード。
 /// 並びは不順。
 //--------------------------------------------------------------
 const int * const DATA_AcmdCodeDirChangeTbl[] =

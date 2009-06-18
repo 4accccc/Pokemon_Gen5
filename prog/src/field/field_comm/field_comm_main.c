@@ -261,7 +261,7 @@ FIELD_COMM_TYPE FIELD_COMM_MAIN_GetCommType(FIELD_COMM_MAIN *commSys)
  * フィールド通信アクター設定
  */
 //==================================================================
-void FIELD_COMM_MAIN_SetCommActor(FIELD_COMM_MAIN *commSys, FLDMMDLSYS *fmmdlsys)
+void FIELD_COMM_MAIN_SetCommActor(FIELD_COMM_MAIN *commSys, MMDLSYS *fmmdlsys)
 {
   int max = 4;
   commSys->actCtrl_ = FIELD_COMM_ACTOR_CTRL_Create( max, fmmdlsys, commSys->heapID_ );

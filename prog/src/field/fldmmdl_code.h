@@ -7,8 +7,8 @@
  * @data	05.07.20
  */
 //======================================================================
-#ifndef FLDMMDL_CODE_H_FILE
-#define FLDMMDL_CODE_H_FILE
+#ifndef MMDL_CODE_H_FILE
+#define MMDL_CODE_H_FILE
 
 //======================================================================
 //	方向
@@ -31,10 +31,10 @@
 //--------------------------------------------------------------
 //	フィールド動作モデル 特殊ID
 //--------------------------------------------------------------
-#define FLDMMDL_ID_PLAYER 	(0xff)	///<自機専用ID
-#define FLDMMDL_ID_PAIR   	(0xfe)	///<連れ歩き専用ID
-#define FLDMMDL_ID_GIMMICK	(0xfd)	///<ジム等の仕掛け専用ID
-#define FLDMMDL_ID_COMMACTOR (0xfc) ///<通信アクター専用ID
+#define MMDL_ID_PLAYER 	(0xff)	///<自機専用ID
+#define MMDL_ID_PAIR   	(0xfe)	///<連れ歩き専用ID
+#define MMDL_ID_GIMMICK	(0xfd)	///<ジム等の仕掛け専用ID
+#define MMDL_ID_COMMACTOR (0xfc) ///<通信アクター専用ID
 
 //--------------------------------------------------------------
 //	エイリアスID 元:PL script_def.h
@@ -400,7 +400,7 @@
 //	フィールド動作モデル 表示コード
 //======================================================================
 /*
- * //FLDMMDL_PL_NULL
+ * //MMDL_PL_NULL
 #define OBJCODEMAX		0xffff		///<OBJコード最大
 
 //--------------------------------------------------------------
@@ -414,12 +414,12 @@
 /// ※マップエディタでの配置は禁止
 //--------------------------------------------------------------
 #define NONDRAW			(0x2000)
-*/	//FLDMMDL_PL_NULL
+*/	//MMDL_PL_NULL
 
 //======================================================================
 //	フィールド動作モデル モデルID
 //======================================================================
-/* //FLDMMDL_PL_NULL
+/* //MMDL_PL_NULL
 //--------------------------------------------------------------
 //	モデルID
 //--------------------------------------------------------------
@@ -474,6 +474,6 @@
 #define BLACT_ANMID_GIRATINA	0x0015
 #define BLACT_ANMID_BSHERO		0x0016
 #define BLACT_ANMID_MAX			0xffff		///<アニメID最大
-*/ //FLDMMDL_PL_NULL
+*/ //MMDL_PL_NULL
 
-#endif //FLDMMDL_CODE_H_FILE
+#endif //MMDL_CODE_H_FILE

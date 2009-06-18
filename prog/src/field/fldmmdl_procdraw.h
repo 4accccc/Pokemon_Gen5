@@ -8,15 +8,15 @@
  *
  */
 //======================================================================
-#ifndef FLDMMDL_PROCDRAW_H_FILE
-#define FLDMMDL_PROCDRAW_H_FILE
+#ifndef MMDL_PROCDRAW_H_FILE
+#define MMDL_PROCDRAW_H_FILE
 
 //--------------------------------------------------------------
 //	fldmmdl_draw_0.c
 //--------------------------------------------------------------
-extern const FLDMMDL_DRAW_PROC_LIST DATA_FLDMMDL_DRAWPROCLIST_Non;
-extern const FLDMMDL_DRAW_PROC_LIST DATA_FLDMMDL_DRAWPROCLIST_Hero;
-extern const FLDMMDL_DRAW_PROC_LIST DATA_FLDMMDL_DRAWPROCLIST_CycleHero;
-extern const FLDMMDL_DRAW_PROC_LIST DATA_FLDMMDL_DRAWPROCLIST_BlAct;
+extern const MMDL_DRAW_PROC_LIST DATA_MMDL_DRAWPROCLIST_Non;
+extern const MMDL_DRAW_PROC_LIST DATA_MMDL_DRAWPROCLIST_Hero;
+extern const MMDL_DRAW_PROC_LIST DATA_MMDL_DRAWPROCLIST_CycleHero;
+extern const MMDL_DRAW_PROC_LIST DATA_MMDL_DRAWPROCLIST_BlAct;
 
-#endif	//FLDMMDL_PROCDRAW_H_FILE
+#endif	//MMDL_PROCDRAW_H_FILE

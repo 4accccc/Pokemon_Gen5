@@ -27,7 +27,7 @@
 #include "event_fldmmdl_control.h"
 
 static void UpdateMapParams(GAMESYS_WORK * gsys, const LOCATION * loc_req);
-static void SetFldMMdl( GAMESYS_WORK *gsys, const LOCATION *loc_req, GAMEINIT_MODE mode );
+static void SetMMdl( GAMESYS_WORK *gsys, const LOCATION *loc_req, GAMEINIT_MODE mode );
 static void setNextBGM(GAMEDATA * gamedata, u16 zone_id);
 
 //============================================================================================
@@ -54,7 +54,7 @@ static GMEVENT_RESULT EVENT_FirstMapIn(GMEVENT * event, int *seq, void *work)
 	switch (*seq) {
 	case 0:
 		UpdateMapParams(gsys, &fmw->loc_req);
-		SetFldMMdl( gsys, &fmw->loc_req, game_init_work->mode );
+		SetMMdl( gsys, &fmw->loc_req, game_init_work->mode );
 		
     setNextBGM(fmw->gamedata, fmw->loc_req.zone_id);
 		
@@ -378,14 +378,14 @@ static GMEVENT_RESULT EVENT_MapChange(GMEVENT * event, int *seq, void*work)
 		//フィールドマップを終了待ち
 		GMEVENT_CallEvent(event, EVENT_FieldClose(gsys, fieldmap));
 		//配置していた動作モデルを削除
-		FLDMMDLSYS_DeleteMMdl( GAMEDATA_GetFldMMdlSys(gamedata) );
+		MMDLSYS_DeleteMMdl( GAMEDATA_GetMMdlSys(gamedata) );
 		(*seq)++;
 		break;
 	case 3:
 		//新しいマップID、初期位置をセット
 		UpdateMapParams(gsys, &mcw->loc_req);
 		//新規ゾーンに配置する動作モデルを追加
-		SetFldMMdl( gsys, &mcw->loc_req, GAMEINIT_MODE_FIRST );
+		SetMMdl( gsys, &mcw->loc_req, GAMEINIT_MODE_FIRST );
 		(*seq)++;
 		break;
 	case 4:
@@ -643,7 +643,7 @@ static void UpdateMapParams(GAMESYS_WORK * gsys, const LOCATION * loc_req)
 //--------------------------------------------------------------
 //	test
 //--------------------------------------------------------------
-static void SetFldMMdl( GAMESYS_WORK *gsys, const LOCATION *loc_req, GAMEINIT_MODE mode )
+static void SetMMdl( GAMESYS_WORK *gsys, const LOCATION *loc_req, GAMEINIT_MODE mode )
 {
 	if(	mode == GAMEINIT_MODE_FIRST || mode == GAMEINIT_MODE_DEBUG ){
 		GAMEDATA * gamedata = GAMESYSTEM_GetGameData(gsys);
@@ -651,9 +651,9 @@ static void SetFldMMdl( GAMESYS_WORK *gsys, const LOCATION *loc_req, GAMEINIT_MO
 		u16 count = EVENTDATA_GetNpcCount( evdata );
 		
 		if( count ){
-			FLDMMDLSYS *fmmdlsys = GAMEDATA_GetFldMMdlSys( gamedata );
-			const FLDMMDL_HEADER *header = EVENTDATA_GetNpcData( evdata );
-			FLDMMDLSYS_SetFldMMdl( fmmdlsys, header, loc_req->zone_id, count );
+			MMDLSYS *fmmdlsys = GAMEDATA_GetMMdlSys( gamedata );
+			const MMDL_HEADER *header = EVENTDATA_GetNpcData( evdata );
+			MMDLSYS_SetMMdl( fmmdlsys, header, loc_req->zone_id, count );
 		}
 	}
 }

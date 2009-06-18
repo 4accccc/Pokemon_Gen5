@@ -42,7 +42,7 @@ struct _TAG_SCRCMD_WORK
 //--------------------------------------------------------------
 //
 //--------------------------------------------------------------
-void SCRCMD_WORK_SetFldMMdlAnmTCB( SCRCMD_WORK *work, GFL_TCB *tcb )
+void SCRCMD_WORK_SetMMdlAnmTCB( SCRCMD_WORK *work, GFL_TCB *tcb )
 {
 	int i;
 	for( i = 0; i < SCRCMD_ACMD_MAX; i++ ){
@@ -54,14 +54,14 @@ void SCRCMD_WORK_SetFldMMdlAnmTCB( SCRCMD_WORK *work, GFL_TCB *tcb )
 	GF_ASSERT( 0 );
 }
 
-BOOL SCRCMD_WORK_CheckFldMMdlAnmTCB( SCRCMD_WORK *work )
+BOOL SCRCMD_WORK_CheckMMdlAnmTCB( SCRCMD_WORK *work )
 {
 	BOOL flag = FALSE;
 	int i;
 	for( i = 0; i < SCRCMD_ACMD_MAX; i++ ){
 		if( work->tcb_anm_tbl[i] != NULL ){
-			if( FLDMMDL_CheckEndAcmdList(work->tcb_anm_tbl[i]) == TRUE ){
-				FLDMMDL_EndAcmdList( work->tcb_anm_tbl[i] );
+			if( MMDL_CheckEndAcmdList(work->tcb_anm_tbl[i]) == TRUE ){
+				MMDL_EndAcmdList( work->tcb_anm_tbl[i] );
 				work->tcb_anm_tbl[i] = NULL;
 			}else{
 				flag = TRUE;
@@ -146,12 +146,12 @@ GAMEDATA * SCRCMD_WORK_GetGameData( SCRCMD_WORK *work )
 
 //--------------------------------------------------------------
 /**
- * SCRCMD_WORK FLDMMDLSYSŽæ“¾
+ * SCRCMD_WORK MMDLSYSŽæ“¾
  * @param	work	SCRCMD_WORK
- * @retval	FLDMMDLSYS
+ * @retval	MMDLSYS
  */
 //--------------------------------------------------------------
-FLDMMDLSYS * SCRCMD_WORK_GetFldMMdlSys( SCRCMD_WORK *work )
+MMDLSYS * SCRCMD_WORK_GetMMdlSys( SCRCMD_WORK *work )
 {
 	return( work->head.fldmmdlsys );
 }

@@ -85,30 +85,30 @@ static GMEVENT_RESULT EVENTFUNC_ObjPauseAll(GMEVENT * event, int *seq, void*work
   {
   case 0:
     {
-      FLDMMDLSYS *fmmdlsys = FIELDMAP_GetFldMMdlSys( fieldmap );
-      FLDMMDL *fmmdl = NULL;  //とりあえず
-      //FLDMMDL *player = PlayerGetFldMMdl( work );
-      FLDMMDL *player = FLDMMDLSYS_SearchOBJID( fmmdlsys, FLDMMDL_ID_PLAYER );
-      FLDMMDL *player_pair = FLDMMDLSYS_SearchMoveCode( fmmdlsys, MV_PAIR );
+      MMDLSYS *fmmdlsys = FIELDMAP_GetMMdlSys( fieldmap );
+      MMDL *fmmdl = NULL;  //とりあえず
+      //MMDL *player = PlayerGetMMdl( work );
+      MMDL *player = MMDLSYS_SearchOBJID( fmmdlsys, MMDL_ID_PLAYER );
+      MMDL *player_pair = MMDLSYS_SearchMoveCode( fmmdlsys, MV_PAIR );
       
 #ifndef SCRCMD_PL_NULL
-      FLDMMDL *other_pair = FieldOBJ_MovePairSearch(*fldobj);
+      MMDL *other_pair = FieldOBJ_MovePairSearch(*fldobj);
 #else
-      FLDMMDL *other_pair = NULL;
+      MMDL *other_pair = NULL;
 #endif
 
       InitStepWatchBit(opaw);
-      FLDMMDLSYS_PauseMoveProc( fmmdlsys );
+      MMDLSYS_PauseMoveProc( fmmdlsys );
       
-      if( FLDMMDL_CheckEndAcmd(player) == FALSE ){
+      if( MMDL_CheckEndAcmd(player) == FALSE ){
         SetStepWatchBit(opaw, PLAYER_BIT);
-        FLDMMDL_OffStatusBitMoveProcPause( player );
+        MMDL_OffStatusBitMoveProcPause( player );
       }
       
       if( fmmdl != NULL ){
-        if( FLDMMDL_CheckStatusBitMove(fmmdl) == TRUE ){
+        if( MMDL_CheckStatusBitMove(fmmdl) == TRUE ){
           SetStepWatchBit(opaw, OTHER_BIT);
-          FLDMMDL_OffStatusBitMoveProcPause( fmmdl );
+          MMDL_OffStatusBitMoveProcPause( fmmdl );
         }
       }
 
@@ -125,9 +125,9 @@ static GMEVENT_RESULT EVENTFUNC_ObjPauseAll(GMEVENT * event, int *seq, void*work
       }
       
       if( other_pair ){
-        if( FLDMMDL_CheckStatusBitMove(other_pair) == TRUE ){
+        if( MMDL_CheckStatusBitMove(other_pair) == TRUE ){
           SetStepWatchBit(opaw, OTHER_PAIR_BIT);
-          FLDMMDL_OffStatusBitMoveProcPause( other_pair );
+          MMDL_OffStatusBitMoveProcPause( other_pair );
         }
       }
       ++ *seq;
@@ -137,32 +137,32 @@ static GMEVENT_RESULT EVENTFUNC_ObjPauseAll(GMEVENT * event, int *seq, void*work
 
   case 1:
     {
-      	FLDMMDLSYS *fmmdlsys = FIELDMAP_GetFldMMdlSys( fieldmap );
-        FLDMMDL *fmmdl = NULL;  //とりあえず
-        //FLDMMDL *player = PlayerGetFldMMdl( work );
-        FLDMMDL *player = FLDMMDLSYS_SearchOBJID( fmmdlsys, FLDMMDL_ID_PLAYER );
-        FLDMMDL *player_pair = FLDMMDLSYS_SearchMoveCode( fmmdlsys, MV_PAIR );
+      	MMDLSYS *fmmdlsys = FIELDMAP_GetMMdlSys( fieldmap );
+        MMDL *fmmdl = NULL;  //とりあえず
+        //MMDL *player = PlayerGetMMdl( work );
+        MMDL *player = MMDLSYS_SearchOBJID( fmmdlsys, MMDL_ID_PLAYER );
+        MMDL *player_pair = MMDLSYS_SearchMoveCode( fmmdlsys, MV_PAIR );
         
      	//自機動作停止チェック
       if( CheckStepWatchBit(opaw, PLAYER_BIT) &&
-        FLDMMDL_CheckEndAcmd(player) == TRUE ){
-        FLDMMDL_OnStatusBitMoveProcPause( player );
+        MMDL_CheckEndAcmd(player) == TRUE ){
+        MMDL_OnStatusBitMoveProcPause( player );
         ResetStepWatchBit(opaw, PLAYER_BIT);
       }
       
       //話しかけ対象動作停止チェック
       if( CheckStepWatchBit(opaw, OTHER_BIT) &&
-        FLDMMDL_CheckStatusBitMove(fmmdl) == FALSE ){
-        FLDMMDL_OnStatusBitMoveProcPause( fmmdl );
+        MMDL_CheckStatusBitMove(fmmdl) == FALSE ){
+        MMDL_OnStatusBitMoveProcPause( fmmdl );
         ResetStepWatchBit(opaw, OTHER_BIT);
       }
       
       //自機の連れ歩き動作停止チェック
       if( CheckStepWatchBit(opaw, PLAYER_PAIR_BIT) ){
-        FLDMMDL *player_pair = FLDMMDLSYS_SearchMoveCode( fmmdlsys, MV_PAIR );
+        MMDL *player_pair = MMDLSYS_SearchMoveCode( fmmdlsys, MV_PAIR );
         
-        if( FLDMMDL_CheckStatusBitMove(player_pair) == FALSE ){
-          FLDMMDL_OnStatusBitMoveProcPause( player_pair );
+        if( MMDL_CheckStatusBitMove(player_pair) == FALSE ){
+          MMDL_OnStatusBitMoveProcPause( player_pair );
           ResetStepWatchBit(opaw, PLAYER_PAIR_BIT);
         }
       }
@@ -170,7 +170,7 @@ static GMEVENT_RESULT EVENTFUNC_ObjPauseAll(GMEVENT * event, int *seq, void*work
       //話しかけ対象の連れ歩き動作停止チェック
       if( CheckStepWatchBit(opaw, OTHER_PAIR_BIT) ){
         #ifndef SCRCMD_PL_NULL
-        FLDMMDL *other_pair = FieldOBJ_MovePairSearch(*fldobj);
+        MMDL *other_pair = FieldOBJ_MovePairSearch(*fldobj);
         if (FieldOBJ_StatusBitCheck_Move(other_pair) == 0) {
           FieldOBJ_MovePause(other_pair);
           ResetStepWatchBit(opaw, OTHER_PAIR_BIT);
@@ -226,7 +226,7 @@ typedef struct {
 }OBJ_ANIME_EVENT_WORK;
 
 
-static FLDMMDL * FieldObjPtrGetByObjId( FLDMMDLSYS * fmmdlsys, u16 obj_id );
+static MMDL * FieldObjPtrGetByObjId( MMDLSYS * fmmdlsys, u16 obj_id );
 static BOOL checkAnimeTCB( OBJ_ANIME_EVENT_WORK *work );
 static void setAnimeTCB( OBJ_ANIME_EVENT_WORK *work, GFL_TCB *tcb );
 static void initAnimeTCB( OBJ_ANIME_EVENT_WORK *work);
@@ -235,8 +235,8 @@ static void initAnimeTCB( OBJ_ANIME_EVENT_WORK *work);
 static GMEVENT_RESULT EVENTFUNC_ObjAnime( GMEVENT * event, int *seq, void*work)
 {
   OBJ_ANIME_EVENT_WORK * oaew = (OBJ_ANIME_EVENT_WORK *)work;
-  FLDMMDLSYS *fmmdlsys = FIELDMAP_GetFldMMdlSys( oaew->fieldmap );
-	FLDMMDL *fmmdl;
+  MMDLSYS *fmmdlsys = FIELDMAP_GetMMdlSys( oaew->fieldmap );
+	MMDL *fmmdl;
 	GFL_TCB *anm_tcb;
   //int * num;
   switch (*seq)
@@ -253,7 +253,7 @@ static GMEVENT_RESULT EVENTFUNC_ObjAnime( GMEVENT * event, int *seq, void*work)
     }
     
     //アニメーションコマンドリストセット
-    anm_tcb = FLDMMDL_SetAcmdList( fmmdl, (FLDMMDL_ACMD_LIST*)oaew->anm_tbl );
+    anm_tcb = MMDL_SetAcmdList( fmmdl, (MMDL_ACMD_LIST*)oaew->anm_tbl );
     
     //TCBセット
     setAnimeTCB( work, anm_tcb );
@@ -295,19 +295,19 @@ GMEVENT * EVENT_ObjAnime( GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap, u16 obj
 }
 //------------------------------------------------------------------
 //------------------------------------------------------------------
-static const FLDMMDL_ACMD_LIST anime_up_table[] = {
+static const MMDL_ACMD_LIST anime_up_table[] = {
   AC_WALK_U_8F, 1,
   ACMD_END, 0
 };
-static const FLDMMDL_ACMD_LIST anime_down_table[] = {
+static const MMDL_ACMD_LIST anime_down_table[] = {
   AC_WALK_D_8F, 1,
   ACMD_END, 0
 };
-static const FLDMMDL_ACMD_LIST anime_left_table[] = {
+static const MMDL_ACMD_LIST anime_left_table[] = {
   AC_WALK_L_8F, 1,
   ACMD_END, 0
 };
-static const FLDMMDL_ACMD_LIST anime_right_table[] = {
+static const MMDL_ACMD_LIST anime_right_table[] = {
   AC_WALK_R_8F, 1,
   ACMD_END, 0
 };
@@ -316,17 +316,17 @@ static const FLDMMDL_ACMD_LIST anime_right_table[] = {
 //------------------------------------------------------------------
 GMEVENT * EVENT_PlayerOneStepAnime( GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap)
 {
-  const FLDMMDL_ACMD_LIST * tbl;
+  const MMDL_ACMD_LIST * tbl;
   FIELD_PLAYER * player = FIELDMAP_GetFieldPlayer(fieldmap);
-  FLDMMDL *fmmdl = FIELD_PLAYER_GetFldMMdl( player );
-  u16 dir = FLDMMDL_GetDirDisp( fmmdl );
+  MMDL *fmmdl = FIELD_PLAYER_GetMMdl( player );
+  u16 dir = MMDL_GetDirDisp( fmmdl );
   switch (dir) {
   case DIR_UP:  tbl = anime_up_table; break;
   case DIR_DOWN:  tbl = anime_down_table; break;
   case DIR_LEFT:  tbl = anime_left_table; break;
   case DIR_RIGHT:  tbl = anime_right_table; break;
   }
-  return EVENT_ObjAnime(gsys, fieldmap, FLDMMDL_ID_PLAYER, (void*)tbl);
+  return EVENT_ObjAnime(gsys, fieldmap, MMDL_ID_PLAYER, (void*)tbl);
 }
 
 //--------------------------------------------------------------
@@ -337,24 +337,24 @@ GMEVENT * EVENT_PlayerOneStepAnime( GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldma
  * @retval	"FIELD_OBJ_PTR"
  */
 //--------------------------------------------------------------
-static FLDMMDL * FieldObjPtrGetByObjId( FLDMMDLSYS * fmmdlsys, u16 obj_id )
+static MMDL * FieldObjPtrGetByObjId( MMDLSYS * fmmdlsys, u16 obj_id )
 {
-	FLDMMDL *dummy;
-	FLDMMDL *fmmdl;
-	//FLDMMDLSYS *fmmdlsys;
+	MMDL *dummy;
+	MMDL *fmmdl;
+	//MMDLSYS *fmmdlsys;
 	
-	//fmmdlsys = SCRCMD_WORK_GetFldMMdlSys( work );
+	//fmmdlsys = SCRCMD_WORK_GetMMdlSys( work );
 	
 	//連れ歩きOBJ判別IDが渡された時
 	if( obj_id == SCR_OBJID_MV_PAIR ){
-		fmmdl = FLDMMDLSYS_SearchMoveCode( fmmdlsys, MV_PAIR );
+		fmmdl = MMDLSYS_SearchMoveCode( fmmdlsys, MV_PAIR );
 	//透明ダミーOBJ判別IDが渡された時
 	}else if( obj_id == SCR_OBJID_DUMMY ){
 		//SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
 		//dummy = SCRIPT_GetMemberWork( sc, ID_EVSCR_DUMMY_OBJ );
 	//対象のフィールドOBJのポインタ取得
 	}else{
-		fmmdl = FLDMMDLSYS_SearchOBJID( fmmdlsys, obj_id );
+		fmmdl = MMDLSYS_SearchOBJID( fmmdlsys, obj_id );
 	}
 	
 	return fmmdl;
@@ -391,8 +391,8 @@ static BOOL checkAnimeTCB( OBJ_ANIME_EVENT_WORK *work )
 	int i;
 	for( i = 0; i < SCRCMD_ACMD_MAX; i++ ){
 		if( work->tcb_anm_tbl[i] != NULL ){
-			if( FLDMMDL_CheckEndAcmdList(work->tcb_anm_tbl[i]) == TRUE ){
-				FLDMMDL_EndAcmdList( work->tcb_anm_tbl[i] );
+			if( MMDL_CheckEndAcmdList(work->tcb_anm_tbl[i]) == TRUE ){
+				MMDL_EndAcmdList( work->tcb_anm_tbl[i] );
 				work->tcb_anm_tbl[i] = NULL;
 			}else{
 				flag = TRUE;
@@ -407,7 +407,7 @@ static BOOL checkAnimeTCB( OBJ_ANIME_EVENT_WORK *work )
 //	動作モデル	
 //======================================================================
 static void EvAnmSetTCB(
-	SCRCMD_WORK *work, GFL_TCB *anm_tcb, FLDMMDL_ACMD_LIST *list );
+	SCRCMD_WORK *work, GFL_TCB *anm_tcb, MMDL_ACMD_LIST *list );
 
 //--------------------------------------------------------------
 /**
@@ -421,7 +421,7 @@ static VMCMD_RESULT EvCmdObjAnime( VMHANDLE *core, void *wk )
 	u8 *num;
 	VM_CODE *p;
 	GFL_TCB *anm_tcb;
-	FLDMMDL *fmmdl; //対象のフィールドOBJのポインタ
+	MMDL *fmmdl; //対象のフィールドOBJのポインタ
 	SCRCMD_WORK *work = wk;
 	SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
 	u16 obj_id = VMGetWorkValue(core,work); //obj ID
@@ -438,7 +438,7 @@ static VMCMD_RESULT EvCmdObjAnime( VMHANDLE *core, void *wk )
 	
 	//アニメーションコマンドリストセット
 	p = (VM_CODE*)(core->adrs+pos);
-	anm_tcb = FLDMMDL_SetAcmdList( fmmdl, (FLDMMDL_ACMD_LIST*)p );
+	anm_tcb = MMDL_SetAcmdList( fmmdl, (MMDL_ACMD_LIST*)p );
 	
 	//アニメーションの数を足す
 	num = SCRIPT_GetMemberWork( sc, ID_EVSCR_ANMCOUNT );
@@ -467,7 +467,7 @@ static BOOL EvObjAnimeWait(VMHANDLE * core, void *wk )
 {
 	SCRCMD_WORK *work = wk;
 	
-	if( SCRCMD_WORK_CheckFldMMdlAnmTCB(work) == FALSE ){
+	if( SCRCMD_WORK_CheckMMdlAnmTCB(work) == FALSE ){
 		return 1;
 	}
 	
@@ -482,24 +482,24 @@ static BOOL EvObjAnimeWait(VMHANDLE * core, void *wk )
  * @retval	"FIELD_OBJ_PTR"
  */
 //--------------------------------------------------------------
-static FLDMMDL * FieldObjPtrGetByObjId( SCRCMD_WORK *work, u16 obj_id )
+static MMDL * FieldObjPtrGetByObjId( SCRCMD_WORK *work, u16 obj_id )
 {
-	FLDMMDL *dummy;
-	FLDMMDL *fmmdl;
-	FLDMMDLSYS *fmmdlsys;
+	MMDL *dummy;
+	MMDL *fmmdl;
+	MMDLSYS *fmmdlsys;
 	
-	fmmdlsys = SCRCMD_WORK_GetFldMMdlSys( work );
+	fmmdlsys = SCRCMD_WORK_GetMMdlSys( work );
 	
 	//連れ歩きOBJ判別IDが渡された時
 	if( obj_id == SCR_OBJID_MV_PAIR ){
-		fmmdl = FLDMMDLSYS_SearchMoveCode( fmmdlsys, MV_PAIR );
+		fmmdl = MMDLSYS_SearchMoveCode( fmmdlsys, MV_PAIR );
 	//透明ダミーOBJ判別IDが渡された時
 	}else if( obj_id == SCR_OBJID_DUMMY ){
 		SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
 		dummy = SCRIPT_GetMemberWork( sc, ID_EVSCR_DUMMY_OBJ );
 	//対象のフィールドOBJのポインタ取得
 	}else{
-		fmmdl = FLDMMDLSYS_SearchOBJID( fmmdlsys, obj_id );
+		fmmdl = MMDLSYS_SearchOBJID( fmmdlsys, obj_id );
 	}
 	
 	return fmmdl;
@@ -514,7 +514,7 @@ static FLDMMDL * FieldObjPtrGetByObjId( SCRCMD_WORK *work, u16 obj_id )
  */
 //--------------------------------------------------------------
 static void EvAnmSetTCB(
-	SCRCMD_WORK *work, GFL_TCB *anm_tcb, FLDMMDL_ACMD_LIST *list )
+	SCRCMD_WORK *work, GFL_TCB *anm_tcb, MMDL_ACMD_LIST *list )
 {
 #if 0
 	EV_ANM_WORK* wk = NULL;
@@ -531,7 +531,7 @@ static void EvAnmSetTCB(
 	wk->tcb		= TCB_Add( EvAnmMainTCB, wk, 0 );
 	return;
 #else
-	SCRCMD_WORK_SetFldMMdlAnmTCB( work, anm_tcb );
+	SCRCMD_WORK_SetMMdlAnmTCB( work, anm_tcb );
 #endif
 }
 #endif

@@ -21,7 +21,7 @@
 
 #include "../../../resource/fldmapdata/script/common_scr_def.h"
 
-extern FLDMMDLSYS * FIELDMAP_GetFldMMdlSys( FIELD_MAIN_WORK *fieldWork );
+extern MMDLSYS * FIELDMAP_GetMMdlSys( FIELD_MAIN_WORK *fieldWork );
 
 //======================================================================
 //	define
@@ -37,8 +37,8 @@ typedef struct
 {
 	HEAPID heapID;
 	u32 scr_id;
-	FLDMMDL *fmmdl_player;
-	FLDMMDL *fmmdl_talk;
+	MMDL *fmmdl_player;
+	MMDL *fmmdl_talk;
 	FIELD_MAIN_WORK *fieldWork;
 
 	FLDMSGBG *msgBG;
@@ -68,7 +68,7 @@ static GMEVENT_RESULT FldTalkEvent( GMEVENT *event, int *seq, void *wk );
 //--------------------------------------------------------------
 GMEVENT * EVENT_FieldTalk(
 		GAMESYS_WORK *gsys, FIELD_MAIN_WORK *fieldWork, u32 scr_id,
-		FLDMMDL *fmmdl_player, FLDMMDL *fmmdl_talk, HEAPID heapID )
+		MMDL *fmmdl_player, MMDL *fmmdl_talk, HEAPID heapID )
 {
 	GMEVENT *event;
 	SCRIPT_FLDPARAM fparam;
@@ -83,7 +83,7 @@ GMEVENT * EVENT_FieldTalk(
 #if 0
 GMEVENT * EVENT_FieldTalk(
 		GAMESYS_WORK *gsys, FIELD_MAIN_WORK *fieldWork, u32 scr_id,
-		FLDMMDL *fmmdl_player, FLDMMDL *fmmdl_talk, HEAPID heapID )
+		MMDL *fmmdl_player, MMDL *fmmdl_talk, HEAPID heapID )
 {
 	FLDTALK_EVENT_WORK *ftalk_wk;
 	GMEVENT *event;
@@ -119,18 +119,18 @@ static GMEVENT_RESULT FldTalkEvent( GMEVENT *event, int *seq, void *wk )
 	switch( (*seq) ){
 	case 0:	//‘ÎÛMDL‚ÌˆÚ“®I—¹‘Ò‚¿
 		if( work->fmmdl_talk != NULL ){
-			if( FLDMMDL_CheckStatusBitMove(work->fmmdl_talk) == TRUE ){
-				FLDMMDL_UpdateMove( work->fmmdl_talk );
+			if( MMDL_CheckStatusBitMove(work->fmmdl_talk) == TRUE ){
+				MMDL_UpdateMove( work->fmmdl_talk );
 				
-				if( FLDMMDL_CheckStatusBitMove(work->fmmdl_talk) == TRUE ){
+				if( MMDL_CheckStatusBitMove(work->fmmdl_talk) == TRUE ){
 					break;
 				}
 			}
 		}
 		
 		{
-			FLDMMDLSYS *fmmdlsys = FIELDMAP_GetFldMMdlSys( work->fieldWork );
-			FLDMMDLSYS_PauseMoveProc( fmmdlsys );
+			MMDLSYS *fmmdlsys = FIELDMAP_GetMMdlSys( work->fieldWork );
+			MMDLSYS_PauseMoveProc( fmmdlsys );
 		}
 		(*seq)++;
 	case 1:
@@ -158,8 +158,8 @@ static GMEVENT_RESULT FldTalkEvent( GMEVENT *event, int *seq, void *wk )
 		GFL_MSG_Delete( work->msgData );
 
 		{
-			FLDMMDLSYS *fmmdlsys = FIELDMAP_GetFldMMdlSys( work->fieldWork );
-			FLDMMDLSYS_ClearPauseMoveProc( fmmdlsys );
+			MMDLSYS *fmmdlsys = FIELDMAP_GetMMdlSys( work->fieldWork );
+			MMDLSYS_ClearPauseMoveProc( fmmdlsys );
 		}
 		return( GMEVENT_RES_FINISH );
 	}

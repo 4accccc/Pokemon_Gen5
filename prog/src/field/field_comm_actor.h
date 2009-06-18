@@ -25,7 +25,7 @@ typedef struct _TAG_FIELD_COMM_ACTOR_CTRL FIELD_COMM_ACTOR_CTRL;
 //  extern 
 //======================================================================
 extern FIELD_COMM_ACTOR_CTRL * FIELD_COMM_ACTOR_CTRL_Create(
-    int max, FLDMMDLSYS *fmmdlsys, HEAPID heapID );
+    int max, MMDLSYS *fmmdlsys, HEAPID heapID );
 extern void FIELD_COMM_ACTOR_CTRL_Delete( FIELD_COMM_ACTOR_CTRL *act_ctrl );
 extern void FIELD_COMM_ACTOR_CTRL_AddActor(
     FIELD_COMM_ACTOR_CTRL *act_ctrl, u32 id, u16 code,
@@ -33,7 +33,7 @@ extern void FIELD_COMM_ACTOR_CTRL_AddActor(
 extern void FIELD_COMM_ACTOR_CTRL_DeleteActro(
     FIELD_COMM_ACTOR_CTRL *act_ctrl, u32 id );
 
-extern void FLDMMDL_MoveCommActor_Init( FLDMMDL *fmmdl );
-extern void FLDMMDL_MoveCommActor_Delete( FLDMMDL *fmmdl );
-extern void FLDMMDL_MoveCommActor_Move( FLDMMDL *fmmdl );
+extern void MMDL_MoveCommActor_Init( MMDL *fmmdl );
+extern void MMDL_MoveCommActor_Delete( MMDL *fmmdl );
+extern void MMDL_MoveCommActor_Move( MMDL *fmmdl );
 

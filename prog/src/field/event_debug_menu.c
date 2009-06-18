@@ -135,7 +135,7 @@ static BOOL DMenuCallProc_ControlTarget( DEBUG_MENU_EVENT_WORK *wk );
 
 static BOOL DMenuCallProc_CameraList( DEBUG_MENU_EVENT_WORK *wk );
 
-static BOOL DMenuCallProc_FldMMdlList( DEBUG_MENU_EVENT_WORK *wk );
+static BOOL DMenuCallProc_MMdlList( DEBUG_MENU_EVENT_WORK *wk );
 
 static BOOL DMenuCallProc_ControlLight( DEBUG_MENU_EVENT_WORK *wk );
 
@@ -159,7 +159,7 @@ static const FLDMENUFUNC_LIST DATA_DebugMenuList[] =
 	{ DEBUG_FIELD_STR05, DMenuCallProc_MapZoneSelect },
 	{ DEBUG_FIELD_STR06, DMenuCallProc_MapSeasonSelect},
 	{ DEBUG_FIELD_STR07, DMenuCallProc_CameraList },
-	{ DEBUG_FIELD_STR13, DMenuCallProc_FldMMdlList },
+	{ DEBUG_FIELD_STR13, DMenuCallProc_MMdlList },
 	{ DEBUG_FIELD_C_CHOICE00, DMenuCallProc_OpenCommDebugMenu },
 	{ DEBUG_FIELD_STR12, DMenuCallProc_OpenIRCBTLMenu },
 	{ DEBUG_FIELD_STR19, DMenuCallProc_OpenClubMenu },
@@ -198,7 +198,7 @@ static const FLDMENUFUNC_LIST DATA_DebugMenuListGrid[] =
 	{ DEBUG_FIELD_STR05, DMenuCallProc_MapZoneSelect },
 	{ DEBUG_FIELD_STR06, DMenuCallProc_MapSeasonSelect},
 	{ DEBUG_FIELD_STR07, DMenuCallProc_CameraList },
-	{ DEBUG_FIELD_STR13, DMenuCallProc_FldMMdlList },
+	{ DEBUG_FIELD_STR13, DMenuCallProc_MMdlList },
 	{ DEBUG_FIELD_C_CHOICE00, DMenuCallProc_OpenCommDebugMenu },
 	{ DEBUG_FIELD_STR12, DMenuCallProc_OpenIRCBTLMenu },
 	{ DEBUG_FIELD_STR19, DMenuCallProc_OpenClubMenu },
@@ -1594,7 +1594,7 @@ static GMEVENT_RESULT DMenuTestCameraListEvent(
 //	デバッグメニュー　動作モデル一覧
 //======================================================================
 //--------------------------------------------------------------
-///	DEBUG_FLDMMDL_LIST_EVENT_WORK 動作モデルリスト処理用ワーク
+///	DEBUG_MMDL_LIST_EVENT_WORK 動作モデルリスト処理用ワーク
 //--------------------------------------------------------------
 typedef struct
 {
@@ -1605,24 +1605,24 @@ typedef struct
 	FIELD_MAIN_WORK *fieldWork;
 	GFL_MSGDATA *msgData;
 	FLDMENUFUNC *menuFunc;
-	FLDMMDLSYS *fldmmdlsys;
+	MMDLSYS *fldmmdlsys;
 
 	u16 obj_code;
 	u16 res_add;
-	FLDMMDL *fmmdl;
-}DEBUG_FLDMMDLLIST_EVENT_WORK;
+	MMDL *fmmdl;
+}DEBUG_MMDLLIST_EVENT_WORK;
 
 //--------------------------------------------------------------
 ///	proto
 //--------------------------------------------------------------
-static GMEVENT_RESULT DMenuFldMMdlListEvent(
+static GMEVENT_RESULT DMenuMMdlListEvent(
 		GMEVENT *event, int *seq, void *wk );
 static u16 * DEBUG_GetOBJCodeStrBuf( HEAPID heapID, u16 code );
-static void DEBUG_SetMenuWorkFldMMdlList(
+static void DEBUG_SetMenuWorkMMdlList(
 		FLDMENUFUNC_LISTDATA *list, HEAPID heapID );
 
 ///	動作モデルリスト メニューヘッダー
-static const FLDMENUFUNC_HEADER DATA_DebugMenuList_FldMMdlList =
+static const FLDMENUFUNC_HEADER DATA_DebugMenuList_MMdlList =
 {
 	1,		//リスト項目数
 	10,		//表示最大項目数
@@ -1651,19 +1651,19 @@ static const FLDMENUFUNC_HEADER DATA_DebugMenuList_FldMMdlList =
  * @retval	BOOL	TRUE=イベント継続
  */
 //--------------------------------------------------------------
-static BOOL DMenuCallProc_FldMMdlList( DEBUG_MENU_EVENT_WORK *wk )
+static BOOL DMenuCallProc_MMdlList( DEBUG_MENU_EVENT_WORK *wk )
 {
 	GAMESYS_WORK *gsys = wk->gmSys;
 	GMEVENT *event = wk->gmEvent;
 	HEAPID heapID = wk->heapID;
 	FIELD_MAIN_WORK *fieldWork = wk->fieldWork;
-	DEBUG_FLDMMDLLIST_EVENT_WORK *work;
+	DEBUG_MMDLLIST_EVENT_WORK *work;
 	
 	GMEVENT_Change( event,
-		DMenuFldMMdlListEvent, sizeof(DEBUG_FLDMMDLLIST_EVENT_WORK) );
+		DMenuMMdlListEvent, sizeof(DEBUG_MMDLLIST_EVENT_WORK) );
 	
 	work = GMEVENT_GetEventWork( event );
-	MI_CpuClear8( work, sizeof(DEBUG_FLDMMDLLIST_EVENT_WORK) );
+	MI_CpuClear8( work, sizeof(DEBUG_MMDLLIST_EVENT_WORK) );
 	
 	work->gmSys = gsys;
 	work->gmEvent = event;
@@ -1672,7 +1672,7 @@ static BOOL DMenuCallProc_FldMMdlList( DEBUG_MENU_EVENT_WORK *wk )
 	
 	{
 		GAMEDATA *gdata = GAMESYSTEM_GetGameData( gsys );
-		work->fldmmdlsys = GAMEDATA_GetFldMMdlSys( gdata );
+		work->fldmmdlsys = GAMEDATA_GetMMdlSys( gdata );
 	}
 
 	return( TRUE );
@@ -1687,24 +1687,24 @@ static BOOL DMenuCallProc_FldMMdlList( DEBUG_MENU_EVENT_WORK *wk )
  * @retval	GMEVENT_RESULT
  */
 //--------------------------------------------------------------
-static GMEVENT_RESULT DMenuFldMMdlListEvent(
+static GMEVENT_RESULT DMenuMMdlListEvent(
 		GMEVENT *event, int *seq, void *wk )
 {
-	DEBUG_FLDMMDLLIST_EVENT_WORK *work = wk;
+	DEBUG_MMDLLIST_EVENT_WORK *work = wk;
 	
 	switch( (*seq) ){
 	case 0:
 		{
 			FLDMSGBG *msgBG;
 			u32 max = OBJCODEMAX;
-			FLDMENUFUNC_HEADER menuH = DATA_DebugMenuList_FldMMdlList;
+			FLDMENUFUNC_HEADER menuH = DATA_DebugMenuList_MMdlList;
 			FLDMENUFUNC_LISTDATA *pMenuListData;
 			
 			msgBG = FIELDMAP_GetFldMsgBG( work->fieldWork );
 			work->msgData = FLDMSGBG_CreateMSGDATA(
 					msgBG, NARC_message_d_field_dat );
 			pMenuListData = FLDMENUFUNC_CreateListData( max, work->heapID );
-			DEBUG_SetMenuWorkFldMMdlList( pMenuListData, work->heapID );
+			DEBUG_SetMenuWorkMMdlList( pMenuListData, work->heapID );
 			FLDMENUFUNC_InputHeaderListSize( &menuH, max, 1, 1, 11, 16 );
 			
 			work->menuFunc = FLDMENUFUNC_AddMenu(
@@ -1730,13 +1730,13 @@ static GMEVENT_RESULT DMenuFldMMdlListEvent(
 			
 			work->obj_code = ret;
 #if 0 //要らない
-			work->res_add = FLDMMDL_BLACTCONT_AddOBJCodeRes(
+			work->res_add = MMDL_BLACTCONT_AddOBJCodeRes(
 					work->fldmmdlsys, work->obj_code );
 #endif			
 			{
 				//VecFx32 pos;
-				FLDMMDL *jiki;
-				FLDMMDL_HEADER head = {
+				MMDL *jiki;
+				MMDL_HEADER head = {
 					0,	///<識別ID
 					0,	///<表示するOBJコード
 					MV_RND,	///<動作コード
@@ -1754,15 +1754,15 @@ static GMEVENT_RESULT DMenuFldMMdlListEvent(
 					0,	///<Y値 fx32型
 				};
 				
-				jiki = FLDMMDLSYS_SearchOBJID(
-					work->fldmmdlsys, FLDMMDL_ID_PLAYER );
+				jiki = MMDLSYS_SearchOBJID(
+					work->fldmmdlsys, MMDL_ID_PLAYER );
 				
 				head.id = 250;
-				head.gx = FLDMMDL_GetGridPosX( jiki ) + 2;
-				head.gz = FLDMMDL_GetGridPosZ( jiki );
-				head.y = FLDMMDL_GetVectorPosY( jiki );
+				head.gx = MMDL_GetGridPosX( jiki ) + 2;
+				head.gz = MMDL_GetGridPosZ( jiki );
+				head.y = MMDL_GetVectorPosY( jiki );
 				head.obj_code = work->obj_code;
-				work->fmmdl = FLDMMDLSYS_AddFldMMdl(
+				work->fmmdl = MMDLSYS_AddMMdl(
 					work->fldmmdlsys, &head, 0 );
 			}
 			
@@ -1771,13 +1771,13 @@ static GMEVENT_RESULT DMenuFldMMdlListEvent(
 		case 2:
 			{
 				int key_trg = GFL_UI_KEY_GetTrg();
-				FLDMMDL_UpdateMoveProc( work->fmmdl );
+				MMDL_UpdateMoveProc( work->fmmdl );
 
 				if( (key_trg & PAD_BUTTON_B) ){
-					FLDMMDL_Delete( work->fmmdl );
+					MMDL_Delete( work->fmmdl );
 					
 					if( work->res_add == TRUE ){
-						FLDMMDL_BLACTCONT_DeleteOBJCodeRes(
+						MMDL_BLACTCONT_DeleteOBJCodeRes(
 								work->fldmmdlsys, work->obj_code );
 					}
 					
@@ -1808,7 +1808,7 @@ static u16 * DEBUG_GetOBJCodeStrBuf( HEAPID heapID, u16 code )
 	
 	pStrBuf = GFL_HEAP_AllocClearMemory( heapID,
 			sizeof(u16)*DEBUG_OBJCODE_STR_LENGTH );
-	name8 = DEBUG_FLDMMDL_GetOBJCodeString( code, heapID );
+	name8 = DEBUG_MMDL_GetOBJCodeString( code, heapID );
 	utf16_eom = GFL_STR_GetEOMCode();
 //	OS_Printf( "変換 %s\n", name8 );
 	
@@ -1838,7 +1838,7 @@ static u16 * DEBUG_GetOBJCodeStrBuf( HEAPID heapID, u16 code )
  * @retval	nothing
  */
 //--------------------------------------------------------------
-static void DEBUG_SetMenuWorkFldMMdlList(
+static void DEBUG_SetMenuWorkMMdlList(
 		FLDMENUFUNC_LISTDATA *list, HEAPID heapID )
 {
 	u16 *str;

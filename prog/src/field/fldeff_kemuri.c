@@ -146,18 +146,18 @@ static void kemuri_DeleteResource( FLDEFF_KEMURI *kemu )
 //--------------------------------------------------------------
 /**
  * ìÆçÏÉÇÉfÉãópìyâåÅ@í«â¡
- * @param fmmdl FLDMMDL
+ * @param fmmdl MMDL
  * @param FLDEFF_CTRL*
  * @retval nothing
  */
 //--------------------------------------------------------------
-void FLDEFF_KEMURI_SetFldMMdl( FLDMMDL *fmmdl, FLDEFF_CTRL *fectrl )
+void FLDEFF_KEMURI_SetMMdl( MMDL *fmmdl, FLDEFF_CTRL *fectrl )
 {
   VecFx32 pos;
   FLDEFF_KEMURI *kemu;
   TASKHEADER_KEMURI head;
   
-  FLDMMDL_GetVectorPos( fmmdl, &pos );
+  MMDL_GetVectorPos( fmmdl, &pos );
   pos.y += FX32_ONE*1;
   pos.z += FX32_ONE*12;
   

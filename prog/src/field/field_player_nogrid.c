@@ -100,10 +100,10 @@ static void nogridPC_Move_SetValue( FIELD_PLAYER *fld_player,
 		FIELDMAP_WORK *fieldWork, u16 key, VecFx32 *vec )
 {
 	u16		dir;
-	FLDMMDL *fmmdl;
+	MMDL *fmmdl;
 	BOOL	mvFlag = FALSE;
 	
-	fmmdl = FIELD_PLAYER_GetFldMMdl( fld_player );
+	fmmdl = FIELD_PLAYER_GetMMdl( fld_player );
 	dir = FIELD_CAMERA_GetAngleYaw( FIELDMAP_GetFieldCamera(fieldWork) );
 	
 	if( key & PAD_KEY_UP )
@@ -112,7 +112,7 @@ static void nogridPC_Move_SetValue( FIELD_PLAYER *fld_player,
 		vec->x = FX_SinIdx( (u16)(dir + 0x8000) );
 		vec->z = FX_CosIdx( (u16)(dir + 0x8000) );
 		FIELD_PLAYER_SetDir( fld_player, dir );
-		FLDMMDL_SetDirDisp(fmmdl,DIR_UP);
+		MMDL_SetDirDisp(fmmdl,DIR_UP);
 	}
 
 	if( key & PAD_KEY_DOWN )
@@ -121,7 +121,7 @@ static void nogridPC_Move_SetValue( FIELD_PLAYER *fld_player,
 		vec->x = FX_SinIdx( (u16)(dir + 0x0000) );
 		vec->z = FX_CosIdx( (u16)(dir + 0x0000) );
 		FIELD_PLAYER_SetDir( fld_player, dir + 0x8000 );
-		FLDMMDL_SetDirDisp(fmmdl, DIR_DOWN);
+		MMDL_SetDirDisp(fmmdl, DIR_DOWN);
 	}
 
 	if( key & PAD_KEY_LEFT )
@@ -130,7 +130,7 @@ static void nogridPC_Move_SetValue( FIELD_PLAYER *fld_player,
 		vec->x = FX_SinIdx( (u16)(dir + 0xc000) );
 		vec->z = FX_CosIdx( (u16)(dir + 0xc000) );
 		FIELD_PLAYER_SetDir( fld_player, dir + 0x4000 );
-		FLDMMDL_SetDirDisp(fmmdl,DIR_LEFT);
+		MMDL_SetDirDisp(fmmdl,DIR_LEFT);
 	}
 
 	if( key & PAD_KEY_RIGHT )
@@ -139,7 +139,7 @@ static void nogridPC_Move_SetValue( FIELD_PLAYER *fld_player,
 		vec->x = FX_SinIdx( (u16)(dir + 0x4000) );
 		vec->z = FX_CosIdx( (u16)(dir + 0x4000) );
 		FIELD_PLAYER_SetDir( fld_player, dir + 0xc000 );
-		FLDMMDL_SetDirDisp(fmmdl,DIR_RIGHT);
+		MMDL_SetDirDisp(fmmdl,DIR_RIGHT);
 	}
 
 	if (key & PAD_BUTTON_Y) {
@@ -150,9 +150,9 @@ static void nogridPC_Move_SetValue( FIELD_PLAYER *fld_player,
 	}
 	
 	if( mvFlag == TRUE ){
-		FLDMMDL_SetDrawStatus(fmmdl,DRAW_STA_WALK_8F);
+		MMDL_SetDrawStatus(fmmdl,DRAW_STA_WALK_8F);
 	} else {
-		FLDMMDL_SetDrawStatus(fmmdl,DRAW_STA_STOP);
+		MMDL_SetDrawStatus(fmmdl,DRAW_STA_STOP);
 	}
 }
 

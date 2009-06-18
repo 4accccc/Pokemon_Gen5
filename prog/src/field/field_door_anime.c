@@ -144,8 +144,8 @@ static void getPlayerFrontPos(FIELDMAP_WORK * fieldmap, VecFx32 * pos)
 
   FIELD_PLAYER_GetPos(player, pos);
   {
-    FLDMMDL *fmmdl = FIELD_PLAYER_GetFldMMdl( player );
-    dir = FLDMMDL_GetDirDisp( fmmdl );
+    MMDL *fmmdl = FIELD_PLAYER_GetMMdl( player );
+    dir = MMDL_GetDirDisp( fmmdl );
   }
 	switch( dir ) {
 	case DIR_UP:		pos->z -= GRIDSIZE; break;

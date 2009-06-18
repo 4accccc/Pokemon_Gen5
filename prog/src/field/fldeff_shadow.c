@@ -72,7 +72,7 @@ typedef struct
 {
 	FLDEFF_CTRL *fectrl;			///<FLDEFF_CTRL *
 	FLDEFF_SHADOW *shadow;		///<FLDEFF_SHADOW
-	FLDMMDL *fmmdl;						///<‰e‚Ì‘ÎÛFLDMMDL *
+	MMDL *fmmdl;						///<‰e‚Ì‘ÎÛMMDL *
 }SHADOW_ADD_H;
 
 //--------------------------------------------------------------
@@ -81,7 +81,7 @@ typedef struct
 typedef struct
 {
   FLDEFF_SHADOW *eff_shadow;
-  FLDMMDL *fmmdl;
+  MMDL *fmmdl;
 }SHADOW_TASKHEADER;
 
 //--------------------------------------------------------------
@@ -90,7 +90,7 @@ typedef struct
 typedef struct
 {
   FLDEFF_SHADOW *eff_shadow;
-  FLDMMDL *fmmdl;
+  MMDL *fmmdl;
   u16 obj_id;
   u16 zone_id;
 }TASKWORK_SHADOW;
@@ -217,12 +217,12 @@ static void shadow_DeleteResource( FLDEFF_SHADOW *sd )
 //--------------------------------------------------------------
 /**
  * “®ìƒ‚ƒfƒ‹—p‰e@’Ç‰Á
- * @param fmmdl FLDMMDL
+ * @param fmmdl MMDL
  * @param FLDEFF_CTRL*
  * @retval nothing
  */
 //--------------------------------------------------------------
-void FLDEFF_SHADOW_SetFldMMdl( FLDMMDL *fmmdl, FLDEFF_CTRL *fectrl )
+void FLDEFF_SHADOW_SetMMdl( MMDL *fmmdl, FLDEFF_CTRL *fectrl )
 {
   FLDEFF_SHADOW *sd;
   SHADOW_TASKHEADER head;
@@ -251,8 +251,8 @@ static void shadowTask_Init( FLDEFF_TASK *task, void *wk )
   head = FLDEFF_TASK_GetAddPointer( task );
   work->eff_shadow = head->eff_shadow;
   work->fmmdl = head->fmmdl;
-  work->obj_id = FLDMMDL_GetOBJID( work->fmmdl );
-  work->zone_id = FLDMMDL_GetZoneID( work->fmmdl );
+  work->obj_id = MMDL_GetOBJID( work->fmmdl );
+  work->zone_id = MMDL_GetZoneID( work->fmmdl );
   
   FLDEFF_TASK_CallUpdate( task ); //‘¦AÀ•W‚ð”½‰f‚·‚é
 }
@@ -283,12 +283,12 @@ static void shadowTask_Update( FLDEFF_TASK *task, void *wk )
   VecFx32 pos;
   TASKWORK_SHADOW *work = wk;
   
-  if( FLDMMDL_CheckSameID(work->fmmdl,work->obj_id,work->zone_id) == FALSE ){
+  if( MMDL_CheckSameID(work->fmmdl,work->obj_id,work->zone_id) == FALSE ){
     FLDEFF_TASK_CallDelete( task );
     return;
   }
   
-  FLDMMDL_GetVectorPos( work->fmmdl, &pos );
+  MMDL_GetVectorPos( work->fmmdl, &pos );
 //  pos.x += NUM_FX32(1) / 8;
   pos.y += NUM_FX32(-4);
   pos.z += NUM_FX32(2)+0x800;

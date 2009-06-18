@@ -231,10 +231,10 @@ static GMEVENT_RESULT FldMapMenuEvent( GMEVENT *event, int *seq, void *wk )
   case FMENUSTATE_INIT:
     if( FIELD_SUBSCREEN_CanChange( FIELDMAP_GetFieldSubscreenWork(mwk->fieldWork) ) == TRUE )
     {
-      FLDMMDLSYS *fldMdlSys = FIELDMAP_GetFldMMdlSys( mwk->fieldWork );
+      MMDLSYS *fldMdlSys = FIELDMAP_GetMMdlSys( mwk->fieldWork );
       GAMESYS_WORK *gameSys = GMEVENT_GetGameSysWork( event );
       GAMEDATA *gameData = GAMESYSTEM_GetGameData( gameSys );
-      FLDMMDLSYS_PauseMoveProc( fldMdlSys );
+      MMDLSYS_PauseMoveProc( fldMdlSys );
       GAMEDATA_SetSubScreenType( gameData , FMIT_POKEMON );
       FIELD_SUBSCREEN_Change(FIELDMAP_GetFieldSubscreenWork(mwk->fieldWork), FIELD_SUBSCREEN_TOPMENU);
       (*seq) = FMENUSTATE_MAIN;
@@ -323,8 +323,8 @@ static GMEVENT_RESULT FldMapMenuEvent( GMEVENT *event, int *seq, void *wk )
   
   case FMENUSTATE_EXIT_MENU:
     {
-      FLDMMDLSYS *fldMdlSys = FIELDMAP_GetFldMMdlSys( mwk->fieldWork );
-      FLDMMDLSYS_ClearPauseMoveProc( fldMdlSys );
+      MMDLSYS *fldMdlSys = FIELDMAP_GetMMdlSys( mwk->fieldWork );
+      MMDLSYS_ClearPauseMoveProc( fldMdlSys );
       FIELD_SUBSCREEN_Change(FIELDMAP_GetFieldSubscreenWork(mwk->fieldWork), FIELD_SUBSCREEN_NORMAL);
     }
     return( GMEVENT_RES_FINISH );

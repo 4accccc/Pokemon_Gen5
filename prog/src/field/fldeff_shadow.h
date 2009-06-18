@@ -28,4 +28,4 @@
 extern void * FLDEFF_SHADOW_Init( FLDEFF_CTRL *fectrl, HEAPID heapID );
 extern void FLDEFF_SHADOW_Delete( FLDEFF_CTRL *fectrl, void *work );
 
-extern void FLDEFF_SHADOW_SetFldMMdl( FLDMMDL *fmmdl, FLDEFF_CTRL *fectrl );
+extern void FLDEFF_SHADOW_SetMMdl( MMDL *fmmdl, FLDEFF_CTRL *fectrl );

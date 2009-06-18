@@ -28,5 +28,5 @@
 extern void * FLDEFF_GRASS_Init( FLDEFF_CTRL *fectrl, HEAPID heapID );
 extern void FLDEFF_GRASS_Delete( FLDEFF_CTRL *fectrl, void *work );
 
-extern void FLDEFF_GRASS_SetFldMMdl(
-    FLDEFF_CTRL *fectrl, FLDMMDL *fmmdl, BOOL anm );
+extern void FLDEFF_GRASS_SetMMdl(
+    FLDEFF_CTRL *fectrl, MMDL *fmmdl, BOOL anm );

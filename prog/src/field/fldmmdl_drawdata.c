@@ -12,13 +12,13 @@
 //======================================================================
 //	フィールド動作モデル　描画関数テーブル
 //======================================================================
-const FLDMMDL_DRAW_PROC_LIST * const
-	DATA_FLDMMDL_DRAW_PROC_LIST_Tbl[FLDMMDL_DRAWPROCNO_MAX] =
+const MMDL_DRAW_PROC_LIST * const
+	DATA_MMDL_DRAW_PROC_LIST_Tbl[MMDL_DRAWPROCNO_MAX] =
 {
-	&DATA_FLDMMDL_DRAWPROCLIST_Non,		//描画無し
-	&DATA_FLDMMDL_DRAWPROCLIST_Hero,	//自機
-	&DATA_FLDMMDL_DRAWPROCLIST_BlAct,	//通常ビルボードアクター
-	&DATA_FLDMMDL_DRAWPROCLIST_CycleHero,	//自機自転車
+	&DATA_MMDL_DRAWPROCLIST_Non,		//描画無し
+	&DATA_MMDL_DRAWPROCLIST_Hero,	//自機
+	&DATA_MMDL_DRAWPROCLIST_BlAct,	//通常ビルボードアクター
+	&DATA_MMDL_DRAWPROCLIST_CycleHero,	//自機自転車
 };
 
 //======================================================================
@@ -265,7 +265,7 @@ static const GFL_BBDACT_ANM DATA_BlActHero_WalkR8F[] = {
 	{2,GFL_BBDACT_ANMFLIP_ON,GFL_BBDACT_ANMFLIP_OFF,4},
 	{GFL_BBDACT_ANMCOM_JMP,0,0,0},
 };
-#ifdef DEBUG_FLDMMDL_FRAME_60
+#ifdef DEBUG_MMDL_FRAME_60
 static const GFL_BBDACT_ANM DATA_BlActHero_DashU4F[] = {
 	{8,GFL_BBDACT_ANMFLIP_OFF,GFL_BBDACT_ANMFLIP_OFF,8},
 	{7,GFL_BBDACT_ANMFLIP_OFF,GFL_BBDACT_ANMFLIP_OFF,8},
@@ -565,11 +565,11 @@ static const GFL_BBDACT_ANM * DATA_BlActCycleHeroTbl[DRAW_STA_MAXDIR4] =
 //======================================================================
 //	ビルボードアクター　アニメーション　リストテーブル
 //======================================================================
-const FLDMMDL_BBDACT_ANMTBL
-	DATA_FLDMMDL_BBDACT_ANM_ListTable[FLDMMDL_BLACT_ANMTBLNO_MAX] =
+const MMDL_BBDACT_ANMTBL
+	DATA_MMDL_BBDACT_ANM_ListTable[MMDL_BLACT_ANMTBLNO_MAX] =
 {
-	{NULL,0},//FLDMMDL_BLACT_ANMTBLNO_NON
-	{DATA_BlActHeroTbl,DRAW_STA_MAXDIR4_HERO},//FLDMMDL_BLACT_ANMTBLNO_HERO
-	{DATA_BlActAnm00Tbl,DRAW_STA_MAXDIR4},//FLDMMDL_BLACT_ANMTBLNO_BLACT
-  {DATA_BlActCycleHeroTbl,DRAW_STA_MAXDIR4},//FLDMMDL_BLACT_ANMTBLNO_CYCLEHERO
+	{NULL,0},//MMDL_BLACT_ANMTBLNO_NON
+	{DATA_BlActHeroTbl,DRAW_STA_MAXDIR4_HERO},//MMDL_BLACT_ANMTBLNO_HERO
+	{DATA_BlActAnm00Tbl,DRAW_STA_MAXDIR4},//MMDL_BLACT_ANMTBLNO_BLACT
+  {DATA_BlActCycleHeroTbl,DRAW_STA_MAXDIR4},//MMDL_BLACT_ANMTBLNO_CYCLEHERO
 };

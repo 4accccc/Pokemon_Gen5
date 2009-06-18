@@ -214,11 +214,11 @@ GMEVENT * FIELD_EVENT_CheckNormal( GAMESYS_WORK *gsys, void *work )
       u16 id;
       VecFx32 pos;
       EVENTWORK *evwork = GAMEDATA_GetEventWork( req.gamedata );
-      FLDMMDL *fmmdl = FIELD_PLAYER_GetFldMMdl( req.field_player );
-      u16 dir = FLDMMDL_GetDirDisp( fmmdl );
+      MMDL *fmmdl = FIELD_PLAYER_GetMMdl( req.field_player );
+      u16 dir = MMDL_GetDirDisp( fmmdl );
     
       FIELD_PLAYER_GetPos( req.field_player, &pos );
-      FLDMMDL_TOOL_AddDirVector( dir, &pos, GRID_FX32 );
+      MMDL_TOOL_AddDirVector( dir, &pos, GRID_FX32 );
     
       {
         //OBJ看板チェック
@@ -245,15 +245,15 @@ GMEVENT * FIELD_EVENT_CheckNormal( GAMESYS_WORK *gsys, void *work )
 		{
       { //OBJ話し掛け
 			  int gx,gy,gz;
-			  FLDMMDL *fmmdl_talk;
+			  MMDL *fmmdl_talk;
 			  FIELD_PLAYER_GetFrontGridPos( req.field_player, &gx, &gy, &gz );
-	  		fmmdl_talk = FLDMMDLSYS_SearchGridPos(
-	  				FIELDMAP_GetFldMMdlSys(fieldWork), gx, gz, FALSE );
+	  		fmmdl_talk = MMDLSYS_SearchGridPos(
+	  				FIELDMAP_GetMMdlSys(fieldWork), gx, gz, FALSE );
 
 		  	if( fmmdl_talk != NULL )
 	  		{
-	  			u32 scr_id = FLDMMDL_GetEventID( fmmdl_talk );
-  				FLDMMDL *fmmdl_player = FIELD_PLAYER_GetFldMMdl( req.field_player );
+	  			u32 scr_id = MMDL_GetEventID( fmmdl_talk );
+  				MMDL *fmmdl_player = FIELD_PLAYER_GetMMdl( req.field_player );
           FIELD_PLAYER_GRID_ForceStop( req.field_player );
   				return EVENT_FieldTalk( gsys, fieldWork,
   					scr_id, fmmdl_player, fmmdl_talk, req.heapID );
@@ -264,11 +264,11 @@ GMEVENT * FIELD_EVENT_CheckNormal( GAMESYS_WORK *gsys, void *work )
         u16 id;
         VecFx32 pos;
         EVENTWORK *evwork = GAMEDATA_GetEventWork( req.gamedata );
-        FLDMMDL *fmmdl = FIELD_PLAYER_GetFldMMdl( req.field_player );
-        u16 dir = FLDMMDL_GetDirDisp( fmmdl );
+        MMDL *fmmdl = FIELD_PLAYER_GetMMdl( req.field_player );
+        u16 dir = MMDL_GetDirDisp( fmmdl );
         
         FIELD_PLAYER_GetPos( req.field_player, &pos );
-        FLDMMDL_TOOL_AddDirVector( dir, &pos, GRID_FX32 );
+        MMDL_TOOL_AddDirVector( dir, &pos, GRID_FX32 );
         id = EVENTDATA_CheckTalkBGEvent( req.evdata, evwork, &pos, dir );
         
         if( id != EVENTDATA_ID_NONE ){ //座標イベント起動
@@ -374,8 +374,8 @@ static void setupRequest(EV_REQUEST * req, GAMESYS_WORK * gsys, FIELDMAP_WORK * 
   req->player_value = FIELD_PLAYER_GetMoveValue( req->field_player );
   req->player_state = FIELD_PLAYER_GetMoveState( req->field_player );
   {
-    FLDMMDL *fmmdl = FIELD_PLAYER_GetFldMMdl( req->field_player );
-    req->player_dir = FLDMMDL_GetDirDisp( fmmdl );
+    MMDL *fmmdl = FIELD_PLAYER_GetMMdl( req->field_player );
+    req->player_dir = MMDL_GetDirDisp( fmmdl );
   }
 
   req->now_pos = FIELDMAP_GetNowPos( fieldWork );

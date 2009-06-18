@@ -82,8 +82,8 @@ struct _TAG_SCRIPT_WORK
 	FIELD_OBJ_PTR dummy_obj;		//透明ダミーOBJのポインタ
 #else
 	int player_dir;					//イベント起動時の主人公の向き
-	FLDMMDL *target_obj;
-	FLDMMDL *dummy_obj;
+	MMDL *target_obj;
+	MMDL *dummy_obj;
 #endif
 	
 	u16 *ret_script_wk;			//スクリプト結果を代入するワークのポインタ
@@ -158,7 +158,7 @@ typedef struct{
 static SCRIPT_WORK* EvScriptWork_Alloc( HEAPID heapID );
 static void script_del( VMHANDLE* core );
 static void EvScriptWork_Init( SCRIPT_WORK *sc, GAMESYS_WORK *gsys,
-	u16 scr_id, FLDMMDL *obj, void* ret_wk);
+	u16 scr_id, MMDL *obj, void* ret_wk);
 
 static void InitScript(
 	SCRCMD_WORK *work, VMHANDLE* core, u32 zone_id, u16 id, u8 type, HEAPID heapID );
@@ -262,7 +262,7 @@ static u16 SpScriptSearch_Sub( const u8 * p, u8 key );
  * @retval	none
  */
 //--------------------------------------------------------------
-GMEVENT * SCRIPT_SetScript( GAMESYS_WORK *gsys, u16 scr_id, FLDMMDL *obj,
+GMEVENT * SCRIPT_SetScript( GAMESYS_WORK *gsys, u16 scr_id, MMDL *obj,
 		HEAPID heapID, const SCRIPT_FLDPARAM *fparam )
 {
 	GMEVENT *event;
@@ -285,7 +285,7 @@ GMEVENT * SCRIPT_SetScript( GAMESYS_WORK *gsys, u16 scr_id, FLDMMDL *obj,
  */
 //--------------------------------------------------------------
 void SCRIPT_CallScript( GMEVENT *event,
-	u16 scr_id, FLDMMDL *obj, void *ret_script_wk, HEAPID heapID )
+	u16 scr_id, MMDL *obj, void *ret_script_wk, HEAPID heapID )
 {
 	SCRIPT_WORK *sc = EvScriptWork_Alloc( heapID );	//ワーク確保
 	EvScriptWork_Init( sc, GMEVENT_GetGameSysWork(event), scr_id, obj, ret_script_wk );	//初期設定
@@ -306,7 +306,7 @@ void SCRIPT_CallScript( GMEVENT *event,
  */
 //--------------------------------------------------------------
 void SCRIPT_ChangeScript( GMEVENT *event,
-		u16 scr_id, FLDMMDL *obj, HEAPID heapID )
+		u16 scr_id, MMDL *obj, HEAPID heapID )
 {
 	SCRIPT_WORK *sc = EvScriptWork_Alloc( heapID );	//ワーク確保
 	EvScriptWork_Init( sc, GMEVENT_GetGameSysWork(event), scr_id, obj, NULL );	//初期設定
@@ -461,7 +461,7 @@ static void script_del( VMHANDLE *core )
  */
 //--------------------------------------------------------------
 static void EvScriptWork_Init( SCRIPT_WORK *sc,
-	GAMESYS_WORK *gsys,	u16 scr_id, FLDMMDL *obj, void *ret_wk )
+	GAMESYS_WORK *gsys,	u16 scr_id, MMDL *obj, void *ret_wk )
 {
 	u16 *objid;
 	
@@ -482,7 +482,7 @@ static void EvScriptWork_Init( SCRIPT_WORK *sc,
   }
   
 	if( obj != NULL ){
-		*objid = FLDMMDL_GetOBJID( obj ); //話しかけ対象OBJIDのセット
+		*objid = MMDL_GetOBJID( obj ); //話しかけ対象OBJIDのセット
 	}
 
 #ifndef SCRIPT_PL_NULL
@@ -522,7 +522,7 @@ VMHANDLE * SCRIPT_AddVMachine(
 	
 	head.gsys = gsys;
 	head.gdata = GAMESYSTEM_GetGameData( gsys );
-	head.fldmmdlsys = GAMEDATA_GetFldMMdlSys( head.gdata );
+	head.fldmmdlsys = GAMEDATA_GetMMdlSys( head.gdata );
 	head.script = sc;
 	
 	work = SCRCMD_WORK_Create( &head, heapID );

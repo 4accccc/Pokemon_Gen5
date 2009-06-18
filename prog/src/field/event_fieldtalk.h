@@ -28,4 +28,4 @@
 //======================================================================
 extern GMEVENT * EVENT_FieldTalk(
 		GAMESYS_WORK *gsys, FIELD_MAIN_WORK *fieldWork, u32 scr_id,
-		FLDMMDL *fmmdl_player, FLDMMDL *fmmdl_talk, HEAPID heapID );
+		MMDL *fmmdl_player, MMDL *fmmdl_talk, HEAPID heapID );

@@ -72,7 +72,7 @@ extern u16 FIELD_PLAYER_GetDir( const FIELD_PLAYER *fld_player );
 extern void FIELD_PLAYER_SetDir( FIELD_PLAYER *fld_player, u16 dir );
 extern FIELDMAP_WORK * FIELD_PLAYER_GetFieldMapWork(
 		FIELD_PLAYER *fld_player );
-extern FLDMMDL * FIELD_PLAYER_GetFldMMdl( FIELD_PLAYER *fld_player );
+extern MMDL * FIELD_PLAYER_GetMMdl( FIELD_PLAYER *fld_player );
 extern FLDMAPPER_GRIDINFODATA * FIELD_PLAYER_GetGridInfoData(
 		FIELD_PLAYER *fld_player );
 extern void FIELD_PLAYER_SetMoveValue(
@@ -89,7 +89,7 @@ extern void FIELD_PLAYER_SetMoveForm(
 //ÉcÅ[Éã
 extern void FIELD_PLAYER_GetFrontGridPos(
 		FIELD_PLAYER *fld_player, int *gx, int *gy, int *gz );
-extern BOOL FIELD_PLAYER_CheckLiveFldMMdl( FIELD_PLAYER *fld_player );
+extern BOOL FIELD_PLAYER_CheckLiveMMdl( FIELD_PLAYER *fld_player );
 
 //======================================================================
 //	è¡ÇµÇ‹Ç∑

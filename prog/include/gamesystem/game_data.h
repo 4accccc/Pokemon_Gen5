@@ -193,12 +193,12 @@ extern MYSTATUS * GAMEDATA_GetMyStatusPlayer(GAMEDATA * gamedata, u32 player_id)
 
 //--------------------------------------------------------------
 /**
- * @brief
- * @param
- * @retval
+ * @brief 動作モデルへのポインタ取得
+ * @param gamedata GAMEDATAへのポインタ
+ * @retval MMDLSYSへのポインタ
  */
 //--------------------------------------------------------------
-extern FLDMMDLSYS * GAMEDATA_GetFldMMdlSys(GAMEDATA *gamedata);
+extern MMDLSYS * GAMEDATA_GetMMdlSys(GAMEDATA *gamedata);
 
 //--------------------------------------------------------------
 /**

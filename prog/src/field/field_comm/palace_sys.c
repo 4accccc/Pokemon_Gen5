@@ -191,7 +191,7 @@ static void PALACE_SYS_PosUpdate(PALACE_SYS_PTR palace, PLAYER_WORK *plwork, FIE
   int new_area, now_area;
   
   zone_id = PLAYERWORK_getZoneID(plwork);
-  if(zone_id != ZONE_ID_PALACETEST || FIELD_PLAYER_CheckLiveFldMMdl(fldply) == FALSE){
+  if(zone_id != ZONE_ID_PALACETEST || FIELD_PLAYER_CheckLiveMMdl(fldply) == FALSE){
     return;
   }
   
@@ -431,7 +431,7 @@ static void PALACE_DEBUG_UpdateNumber(PALACE_SYS_PTR palace)
 //==============================================================================
 typedef struct{
   FIELD_MAIN_WORK *fieldWork;
-  FLDMMDL *player_mmdl;
+  MMDL *player_mmdl;
   GFL_MSGDATA *msgData;
   FLDMSGWIN *msgWin;
   BOOL left_right;
@@ -450,7 +450,7 @@ GMEVENT * EVENT_DebugPalaceNGWin( GAMESYS_WORK *gsys, FIELD_MAIN_WORK *fieldWork
   GFL_STD_MemClear( ngwin, sizeof(DEBUG_PALACE_NGWIN) );
   
   ngwin->fieldWork = fieldWork;
-  ngwin->player_mmdl = FIELD_PLAYER_GetFldMMdl(fld_player);
+  ngwin->player_mmdl = FIELD_PLAYER_GetMMdl(fld_player);
   ngwin->left_right = left_right;
   
   return event;
@@ -491,15 +491,15 @@ static GMEVENT_RESULT DebugPalaceNGWinEvent( GMEVENT *event, int *seq, void *wk 
     (*seq)++;
     break;
   case 4:
-    if(FLDMMDL_CheckPossibleAcmd(ngwin->player_mmdl) == TRUE){
+    if(MMDL_CheckPossibleAcmd(ngwin->player_mmdl) == TRUE){
       u16 code = (ngwin->left_right == 0) ? AC_WALK_R_16F : AC_WALK_L_16F;
-      FLDMMDL_SetAcmd(ngwin->player_mmdl, code);
+      MMDL_SetAcmd(ngwin->player_mmdl, code);
       (*seq)++;
     }
     break;
   case 5:
-    if(FLDMMDL_CheckEndAcmd(ngwin->player_mmdl) == TRUE){
-      FLDMMDL_EndAcmd(ngwin->player_mmdl);
+    if(MMDL_CheckEndAcmd(ngwin->player_mmdl) == TRUE){
+      MMDL_EndAcmd(ngwin->player_mmdl);
       return( GMEVENT_RES_FINISH );
     }
     break;

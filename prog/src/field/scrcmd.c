@@ -790,7 +790,7 @@ static VMCMD_RESULT EvCmdObjIDJump( VMHANDLE *core, void *wk )
 	s32	pos;
 	SCRCMD_WORK *work = wk;
 	SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
-	FLDMMDL **fldobj;
+	MMDL **fldobj;
 	
 	//話し掛け対象OBJ
 	fldobj = SCRIPT_GetMemberWork( sc, ID_EVSCR_TARGET_OBJ );
@@ -802,7 +802,7 @@ static VMCMD_RESULT EvCmdObjIDJump( VMHANDLE *core, void *wk )
 	pos = (s32)VMGetU32(core);
 	
 	//話し掛け対象OBJと、比較する値が同じか
-	if( FLDMMDL_GetOBJID(*fldobj) == id ){
+	if( MMDL_GetOBJID(*fldobj) == id ){
 		VMCMD_Jump( core, (VM_CODE *)(core->adrs+pos) );	//JUMP
 	}
 	return 0;
@@ -1206,7 +1206,7 @@ static VMCMD_RESULT EvCmdTalkMsg( VMHANDLE *core, void *wk )
   WORDSET **wordset;
   STRBUF **msgbuf;
   STRBUF **tmpbuf;
-  FLDMMDL *fmmdl;
+  MMDL *fmmdl;
 	FLDTALKMSGWIN *tmsg;
 	SCRCMD_WORK *work = wk;
   SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
@@ -1214,10 +1214,10 @@ static VMCMD_RESULT EvCmdTalkMsg( VMHANDLE *core, void *wk )
   GFL_MSGDATA *msgData = SCRCMD_WORK_GetMsgData( work );
   SCRIPT_FLDPARAM *fparam = SCRIPT_GetMemberWork( sc, ID_EVSCR_WK_FLDPARAM );
 	
-  fmmdl = FLDMMDLSYS_SearchOBJID( SCRCMD_WORK_GetFldMMdlSys(work), 0xff );
-  FLDMMDL_GetVectorPos( fmmdl, &pos );
-  dir = FLDMMDL_GetDirDisp( fmmdl );
-  FLDMMDL_TOOL_AddDirVector( dir, &pos, GRID_FX32 );
+  fmmdl = MMDLSYS_SearchOBJID( SCRCMD_WORK_GetMMdlSys(work), 0xff );
+  MMDL_GetVectorPos( fmmdl, &pos );
+  dir = MMDL_GetDirDisp( fmmdl );
+  MMDL_TOOL_AddDirVector( dir, &pos, GRID_FX32 );
   
   if( dir == DIR_UP ){        //下から
     pos.x += FX32_ONE*8;
@@ -1370,9 +1370,9 @@ static VMCMD_RESULT EvCmdTalkWinClose( VMHANDLE *core, void *wk )
 //======================================================================
 //	動作モデル	
 //======================================================================
-static FLDMMDL * FieldObjPtrGetByObjId( SCRCMD_WORK *work, u16 obj_id );
+static MMDL * FieldObjPtrGetByObjId( SCRCMD_WORK *work, u16 obj_id );
 static void EvAnmSetTCB(
-	SCRCMD_WORK *work, GFL_TCB *anm_tcb, FLDMMDL_ACMD_LIST *list );
+	SCRCMD_WORK *work, GFL_TCB *anm_tcb, MMDL_ACMD_LIST *list );
 
 //--------------------------------------------------------------
 /**
@@ -1386,7 +1386,7 @@ static VMCMD_RESULT EvCmdObjAnime( VMHANDLE *core, void *wk )
 	u8 *num;
 	VM_CODE *p;
 	GFL_TCB *anm_tcb;
-	FLDMMDL *fmmdl; //対象のフィールドOBJのポインタ
+	MMDL *fmmdl; //対象のフィールドOBJのポインタ
 	SCRCMD_WORK *work = wk;
 	SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
 	u16 obj_id = VMGetWorkValue(core,work); //obj ID
@@ -1403,7 +1403,7 @@ static VMCMD_RESULT EvCmdObjAnime( VMHANDLE *core, void *wk )
 	
 	//アニメーションコマンドリストセット
 	p = (VM_CODE*)(core->adrs+pos);
-	anm_tcb = FLDMMDL_SetAcmdList( fmmdl, (FLDMMDL_ACMD_LIST*)p );
+	anm_tcb = MMDL_SetAcmdList( fmmdl, (MMDL_ACMD_LIST*)p );
 	
 	//アニメーションの数を足す
 	num = SCRIPT_GetMemberWork( sc, ID_EVSCR_ANMCOUNT );
@@ -1432,7 +1432,7 @@ static BOOL EvObjAnimeWait(VMHANDLE * core, void *wk )
 {
 	SCRCMD_WORK *work = wk;
 	
-	if( SCRCMD_WORK_CheckFldMMdlAnmTCB(work) == FALSE ){
+	if( SCRCMD_WORK_CheckMMdlAnmTCB(work) == FALSE ){
 		return 1;
 	}
 	
@@ -1447,24 +1447,24 @@ static BOOL EvObjAnimeWait(VMHANDLE * core, void *wk )
  * @retval	"FIELD_OBJ_PTR"
  */
 //--------------------------------------------------------------
-static FLDMMDL * FieldObjPtrGetByObjId( SCRCMD_WORK *work, u16 obj_id )
+static MMDL * FieldObjPtrGetByObjId( SCRCMD_WORK *work, u16 obj_id )
 {
-	FLDMMDL *dummy;
-	FLDMMDL *fmmdl;
-	FLDMMDLSYS *fmmdlsys;
+	MMDL *dummy;
+	MMDL *fmmdl;
+	MMDLSYS *fmmdlsys;
 	
-	fmmdlsys = SCRCMD_WORK_GetFldMMdlSys( work );
+	fmmdlsys = SCRCMD_WORK_GetMMdlSys( work );
 	
 	//連れ歩きOBJ判別IDが渡された時
 	if( obj_id == SCR_OBJID_MV_PAIR ){
-		fmmdl = FLDMMDLSYS_SearchMoveCode( fmmdlsys, MV_PAIR );
+		fmmdl = MMDLSYS_SearchMoveCode( fmmdlsys, MV_PAIR );
 	//透明ダミーOBJ判別IDが渡された時
 	}else if( obj_id == SCR_OBJID_DUMMY ){
 		SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
 		dummy = SCRIPT_GetMemberWork( sc, ID_EVSCR_DUMMY_OBJ );
 	//対象のフィールドOBJのポインタ取得
 	}else{
-		fmmdl = FLDMMDLSYS_SearchOBJID( fmmdlsys, obj_id );
+		fmmdl = MMDLSYS_SearchOBJID( fmmdlsys, obj_id );
 	}
 	
 	return fmmdl;
@@ -1479,7 +1479,7 @@ static FLDMMDL * FieldObjPtrGetByObjId( SCRCMD_WORK *work, u16 obj_id )
  */
 //--------------------------------------------------------------
 static void EvAnmSetTCB(
-	SCRCMD_WORK *work, GFL_TCB *anm_tcb, FLDMMDL_ACMD_LIST *list )
+	SCRCMD_WORK *work, GFL_TCB *anm_tcb, MMDL_ACMD_LIST *list )
 {
 #if 0
 	EV_ANM_WORK* wk = NULL;
@@ -1496,7 +1496,7 @@ static void EvAnmSetTCB(
 	wk->tcb		= TCB_Add( EvAnmMainTCB, wk, 0 );
 	return;
 #else
-	SCRCMD_WORK_SetFldMMdlAnmTCB( work, anm_tcb );
+	SCRCMD_WORK_SetMMdlAnmTCB( work, anm_tcb );
 #endif
 }
 
@@ -1505,15 +1505,15 @@ static void EvAnmSetTCB(
 //======================================================================
 //--------------------------------------------------------------
 /**
- * 自機FLDMMDL取得　仮
+ * 自機MMDL取得　仮
  * @param
  * @retval
  */
 //--------------------------------------------------------------
-static FLDMMDL * PlayerGetFldMMdl( SCRCMD_WORK *work )
+static MMDL * PlayerGetMMdl( SCRCMD_WORK *work )
 {
-	FLDMMDLSYS *fmmdlsys = SCRCMD_WORK_GetFldMMdlSys( work );
-	FLDMMDL *fmmdl = FLDMMDLSYS_SearchOBJID( fmmdlsys, FLDMMDL_ID_PLAYER );
+	MMDLSYS *fmmdlsys = SCRCMD_WORK_GetMMdlSys( work );
+	MMDL *fmmdl = MMDLSYS_SearchOBJID( fmmdlsys, MMDL_ID_PLAYER );
 	return( fmmdl );
 }
 
@@ -1528,15 +1528,15 @@ static VMCMD_RESULT EvCmdObjPauseAll( VMHANDLE *core, void *wk )
 {
 	SCRCMD_WORK *work = wk;
 	SCRIPT_WORK *sc;
-	FLDMMDL **fmmdl;
+	MMDL **fmmdl;
 	
 	sc = SCRCMD_WORK_GetScriptWork( work );
 	fmmdl = SCRIPT_GetMemberWork( sc, ID_EVSCR_TARGET_OBJ );
 	
 	if( (*fmmdl) == NULL ){
-		FLDMMDLSYS *fmmdlsys;
-		fmmdlsys = SCRCMD_WORK_GetFldMMdlSys( work );
-		FLDMMDLSYS_PauseMoveProc( fmmdlsys );
+		MMDLSYS *fmmdlsys;
+		fmmdlsys = SCRCMD_WORK_GetMMdlSys( work );
+		MMDLSYS_PauseMoveProc( fmmdlsys );
 		
 		#ifndef SCRCMD_PL_NULL
 		//08.06.18
@@ -1585,29 +1585,29 @@ static VMCMD_RESULT EvCmdTalkObjPauseAll( VMHANDLE *core, void *wk )
 {
 	SCRCMD_WORK *work = wk;
 	SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
-	FLDMMDLSYS *fmmdlsys = SCRCMD_WORK_GetFldMMdlSys( work );
-	FLDMMDL **fmmdl = SCRIPT_GetMemberWork( sc, ID_EVSCR_TARGET_OBJ );
-	FLDMMDL *player = PlayerGetFldMMdl( work );
-	FLDMMDL *player_pair = FLDMMDLSYS_SearchMoveCode( fmmdlsys, MV_PAIR );
+	MMDLSYS *fmmdlsys = SCRCMD_WORK_GetMMdlSys( work );
+	MMDL **fmmdl = SCRIPT_GetMemberWork( sc, ID_EVSCR_TARGET_OBJ );
+	MMDL *player = PlayerGetMMdl( work );
+	MMDL *player_pair = MMDLSYS_SearchMoveCode( fmmdlsys, MV_PAIR );
   
 #ifndef SCRCMD_PL_NULL
-	FLDMMDL *other_pair = FieldOBJ_MovePairSearch(*fldobj);
+	MMDL *other_pair = FieldOBJ_MovePairSearch(*fldobj);
 #else
-	FLDMMDL *other_pair = NULL;
+	MMDL *other_pair = NULL;
 #endif
 
 	InitStepWatchBit();
-	FLDMMDLSYS_PauseMoveProc( fmmdlsys );
+	MMDLSYS_PauseMoveProc( fmmdlsys );
 	
-	if( FLDMMDL_CheckEndAcmd(player) == FALSE ){
+	if( MMDL_CheckEndAcmd(player) == FALSE ){
 		SetStepWatchBit(PLAYER_BIT);
-		FLDMMDL_OffStatusBitMoveProcPause( player );
+		MMDL_OffStatusBitMoveProcPause( player );
 	}
 	
   if( *fmmdl != NULL ){
-	  if( FLDMMDL_CheckStatusBitMove(*fmmdl) == TRUE ){
+	  if( MMDL_CheckStatusBitMove(*fmmdl) == TRUE ){
 	  	SetStepWatchBit(OTHER_BIT);
-	  	FLDMMDL_OffStatusBitMoveProcPause( *fmmdl );
+	  	MMDL_OffStatusBitMoveProcPause( *fmmdl );
 	  }
   }
 
@@ -1624,9 +1624,9 @@ static VMCMD_RESULT EvCmdTalkObjPauseAll( VMHANDLE *core, void *wk )
 	}
 	
 	if( other_pair ){
-		if( FLDMMDL_CheckStatusBitMove(other_pair) == TRUE ){
+		if( MMDL_CheckStatusBitMove(other_pair) == TRUE ){
 			SetStepWatchBit(OTHER_PAIR_BIT);
-			FLDMMDL_OffStatusBitMoveProcPause( other_pair );
+			MMDL_OffStatusBitMoveProcPause( other_pair );
 		}
 	}
 	
@@ -1643,30 +1643,30 @@ static BOOL EvWaitTalkObj( VMHANDLE *core, void *wk )
 {
 	SCRCMD_WORK *work = wk;
 	SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
-	FLDMMDL **fmmdl = SCRIPT_GetMemberWork( sc, ID_EVSCR_TARGET_OBJ );
-	FLDMMDL *player = PlayerGetFldMMdl( work );
-	FLDMMDLSYS *fmmdlsys = SCRCMD_WORK_GetFldMMdlSys( work );
+	MMDL **fmmdl = SCRIPT_GetMemberWork( sc, ID_EVSCR_TARGET_OBJ );
+	MMDL *player = PlayerGetMMdl( work );
+	MMDLSYS *fmmdlsys = SCRCMD_WORK_GetMMdlSys( work );
 
 	//自機動作停止チェック
 	if( CheckStepWatchBit(PLAYER_BIT) &&
-		FLDMMDL_CheckEndAcmd(player) == TRUE ){
-		FLDMMDL_OnStatusBitMoveProcPause( player );
+		MMDL_CheckEndAcmd(player) == TRUE ){
+		MMDL_OnStatusBitMoveProcPause( player );
 		ResetStepWatchBit(PLAYER_BIT);
 	}
 	
 	//話しかけ対象動作停止チェック
 	if( CheckStepWatchBit(OTHER_BIT) &&
-		FLDMMDL_CheckStatusBitMove(*fmmdl) == FALSE ){
-		FLDMMDL_OnStatusBitMoveProcPause( *fmmdl );
+		MMDL_CheckStatusBitMove(*fmmdl) == FALSE ){
+		MMDL_OnStatusBitMoveProcPause( *fmmdl );
 		ResetStepWatchBit(OTHER_BIT);
 	}
 	
 	//自機の連れ歩き動作停止チェック
 	if( CheckStepWatchBit(PLAYER_PAIR_BIT) ){
-		FLDMMDL *player_pair = FLDMMDLSYS_SearchMoveCode( fmmdlsys, MV_PAIR );
+		MMDL *player_pair = MMDLSYS_SearchMoveCode( fmmdlsys, MV_PAIR );
 		
-		if( FLDMMDL_CheckStatusBitMove(player_pair) == FALSE ){
-			FLDMMDL_OnStatusBitMoveProcPause( player_pair );
+		if( MMDL_CheckStatusBitMove(player_pair) == FALSE ){
+			MMDL_OnStatusBitMoveProcPause( player_pair );
 			ResetStepWatchBit(PLAYER_PAIR_BIT);
 		}
 	}
@@ -1674,7 +1674,7 @@ static BOOL EvWaitTalkObj( VMHANDLE *core, void *wk )
 	//話しかけ対象の連れ歩き動作停止チェック
 	if( CheckStepWatchBit(OTHER_PAIR_BIT) ){
 		#ifndef SCRCMD_PL_NULL
-		FLDMMDL *other_pair = FieldOBJ_MovePairSearch(*fldobj);
+		MMDL *other_pair = FieldOBJ_MovePairSearch(*fldobj);
 		if (FieldOBJ_StatusBitCheck_Move(other_pair) == 0) {
 			FieldOBJ_MovePause(other_pair);
 			ResetStepWatchBit(OTHER_PAIR_BIT);
@@ -1701,8 +1701,8 @@ static BOOL EvWaitTalkObj( VMHANDLE *core, void *wk )
 static VMCMD_RESULT EvCmdObjPauseClearAll( VMHANDLE *core, void *wk )
 {
 	SCRCMD_WORK *work = wk;
-	FLDMMDLSYS *fmmdlsys = SCRCMD_WORK_GetFldMMdlSys( work );
-	FLDMMDLSYS_ClearPauseMoveProc( fmmdlsys );
+	MMDLSYS *fmmdlsys = SCRCMD_WORK_GetMMdlSys( work );
+	MMDLSYS_ClearPauseMoveProc( fmmdlsys );
 	return 1;
 }
 
@@ -1717,20 +1717,20 @@ static VMCMD_RESULT EvCmdObjTurn( VMHANDLE *core, void *wk )
 {
 	SCRCMD_WORK *work = wk;
 	SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
-	FLDMMDL *jiki,**fmmdl;
+	MMDL *jiki,**fmmdl;
 	u16 dir;
 	
-	jiki = PlayerGetFldMMdl( work );
-	dir = FLDMMDL_GetDirDisp( jiki );
+	jiki = PlayerGetMMdl( work );
+	dir = MMDL_GetDirDisp( jiki );
 	
-	dir = FLDMMDL_TOOL_FlipDir( dir );
+	dir = MMDL_TOOL_FlipDir( dir );
 	fmmdl = SCRIPT_GetMemberWork( sc, ID_EVSCR_TARGET_OBJ );
 	
 	if( (*fmmdl) == NULL ){
 		return 0;
 	}
 	
-	FLDMMDL_SetDirDisp( *fmmdl, dir );
+	MMDL_SetDirDisp( *fmmdl, dir );
 	return 0;
 }
 

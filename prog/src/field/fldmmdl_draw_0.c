@@ -38,46 +38,46 @@ typedef struct
 //--------------------------------------------------------------
 /**
  * 描画無し　初期化
- * @param	fmmdl		FLDMMDL * 
+ * @param	fmmdl		MMDL * 
  * @retval	nothing
  */
 //--------------------------------------------------------------
-static void FldMMdl_DrawNon_Init( FLDMMDL * fmmdl )
+static void MMdl_DrawNon_Init( MMDL * fmmdl )
 {
-	FLDMMDL_SetStatusBitVanish( fmmdl, TRUE );
-	FLDMMDL_OnStatusBit( fmmdl, FLDMMDL_STABIT_SHADOW_VANISH );
+	MMDL_SetStatusBitVanish( fmmdl, TRUE );
+	MMDL_OnStatusBit( fmmdl, MMDL_STABIT_SHADOW_VANISH );
 }
 
 //--------------------------------------------------------------
 /**
  * 描画無し　描画
- * @param	fmmdl		FLDMMDL * 
+ * @param	fmmdl		MMDL * 
  * @retval	nothing
  */
 //--------------------------------------------------------------
-static void FldMMdl_DrawNon_Draw( FLDMMDL * fmmdl )
+static void MMdl_DrawNon_Draw( MMDL * fmmdl )
 {
 }
 
 //--------------------------------------------------------------
 /**
  * 描画無し　削除
- * @param	fmmdl	FLDMMDL * 
+ * @param	fmmdl	MMDL * 
  * @retval	nothing
  */
 //--------------------------------------------------------------
-static void FldMMdl_DrawNon_Delete( FLDMMDL * fmmdl )
+static void MMdl_DrawNon_Delete( MMDL * fmmdl )
 {
 }
 
 //--------------------------------------------------------------
 /**
  * 描画無し　退避
- * @param	fmmdl		FLDMMDL * 
+ * @param	fmmdl		MMDL * 
  * @retval	int			TRUE=初期化成功
  */
 //--------------------------------------------------------------
-static void FldMMdl_DrawNon_Push( FLDMMDL * fmmdl )
+static void MMdl_DrawNon_Push( MMDL * fmmdl )
 {
 }
 
@@ -85,24 +85,24 @@ static void FldMMdl_DrawNon_Push( FLDMMDL * fmmdl )
 /**
  * 描画無し　復帰
  * 退避した情報を元に再描画。
- * @param	fmmdl		FLDMMDL * 
+ * @param	fmmdl		MMDL * 
  * @retval	int			TRUE=初期化成功
  */
 //--------------------------------------------------------------
-static void FldMMdl_DrawNon_Pop( FLDMMDL * fmmdl )
+static void MMdl_DrawNon_Pop( MMDL * fmmdl )
 {
 }
 
 //--------------------------------------------------------------
 ///	描画処理　描画なし　まとめ
 //--------------------------------------------------------------
-const FLDMMDL_DRAW_PROC_LIST DATA_FLDMMDL_DRAWPROCLIST_Non =
+const MMDL_DRAW_PROC_LIST DATA_MMDL_DRAWPROCLIST_Non =
 {
-	FldMMdl_DrawNon_Init,
-	FldMMdl_DrawNon_Draw,
-	FldMMdl_DrawNon_Delete,
-	FldMMdl_DrawNon_Push,
-	FldMMdl_DrawNon_Pop,
+	MMdl_DrawNon_Init,
+	MMdl_DrawNon_Draw,
+	MMdl_DrawNon_Delete,
+	MMdl_DrawNon_Push,
+	MMdl_DrawNon_Pop,
 	NULL,
 };
 
@@ -112,47 +112,47 @@ const FLDMMDL_DRAW_PROC_LIST DATA_FLDMMDL_DRAWPROCLIST_Non =
 //--------------------------------------------------------------
 /**
  * 描画処理　ビルボード　自機専用　初期化
- * @param	fmmdl	FLDMMDL
+ * @param	fmmdl	MMDL
  * @retval	nothing
  */
 //--------------------------------------------------------------
-static void DrawHero_Init( FLDMMDL *fmmdl )
+static void DrawHero_Init( MMDL *fmmdl )
 {
   u16 code;
 	DRAW_BLACT_WORK *work;
   
-	work = FLDMMDL_InitDrawProcWork( fmmdl, sizeof(DRAW_BLACT_WORK) );
+	work = MMDL_InitDrawProcWork( fmmdl, sizeof(DRAW_BLACT_WORK) );
 	work->set_anm_dir = DIR_NOT;
   
-  code = FLDMMDL_GetOBJCode( fmmdl );
+  code = MMDL_GetOBJCode( fmmdl );
   
-	if( FLDMMDL_BLACTCONT_AddActor(fmmdl,code,&work->actID) == TRUE ){
-    FLDMMDL_CallDrawProc( fmmdl );
+	if( MMDL_BLACTCONT_AddActor(fmmdl,code,&work->actID) == TRUE ){
+    MMDL_CallDrawProc( fmmdl );
   }
 }
 
 //--------------------------------------------------------------
 /**
  * 描画処理　ビルボード　自機専用　削除
- * @param	fmmdl	FLDMMDL
+ * @param	fmmdl	MMDL
  * @retval	nothing
  */
 //--------------------------------------------------------------
-static void DrawHero_Delete( FLDMMDL *fmmdl )
+static void DrawHero_Delete( MMDL *fmmdl )
 {
 	DRAW_BLACT_WORK *work;
-	work = FLDMMDL_GetDrawProcWork( fmmdl );
-	FLDMMDL_BLACTCONT_DeleteActor( fmmdl, work->actID );
+	work = MMDL_GetDrawProcWork( fmmdl );
+	MMDL_BLACTCONT_DeleteActor( fmmdl, work->actID );
 }
 
 //--------------------------------------------------------------
 /**
  * 描画処理　ビルボード　自機専用　描画
- * @param	fmmdl	FLDMMDL
+ * @param	fmmdl	MMDL
  * @retval	nothing
  */
 //--------------------------------------------------------------
-static void DrawHero_Draw( FLDMMDL *fmmdl )
+static void DrawHero_Draw( MMDL *fmmdl )
 {
 	VecFx32 pos;
 	BOOL chg_dir = FALSE;
@@ -160,16 +160,16 @@ static void DrawHero_Draw( FLDMMDL *fmmdl )
 	DRAW_BLACT_WORK *work;
 	GFL_BBDACT_SYS *actSys;
 	
-	work = FLDMMDL_GetDrawProcWork( fmmdl );
+	work = MMDL_GetDrawProcWork( fmmdl );
   
-  if( work->actID == FLDMMDL_BLACTID_NULL ){ //未登録
+  if( work->actID == MMDL_BLACTID_NULL ){ //未登録
     return;
   }
   
-	actSys = FLDMMDL_BLACTCONT_GetBbdActSys( FLDMMDL_GetBlActCont(fmmdl) );
+	actSys = MMDL_BLACTCONT_GetBbdActSys( MMDL_GetBlActCont(fmmdl) );
 	
-	dir = FLDMMDL_GetDirDisp( fmmdl );
-	status = FLDMMDL_GetDrawStatus( fmmdl );
+	dir = MMDL_GetDirDisp( fmmdl );
+	status = MMDL_GetDrawStatus( fmmdl );
 	GF_ASSERT( status < DRAW_STA_MAX_HERO );
 	anm_id = status * DIR_MAX4;
 	anm_id += dir;
@@ -200,9 +200,9 @@ static void DrawHero_Draw( FLDMMDL *fmmdl )
 		work->set_anm_status = status;
 	}
 	
-	FLDMMDL_GetDrawVectorPos( fmmdl, &pos );
+	MMDL_GetDrawVectorPos( fmmdl, &pos );
 
-	#ifndef FLDMMDL_BLACT_HEAD3_TEST
+	#ifndef MMDL_BLACT_HEAD3_TEST
 	pos.y += FX32_ONE * 4;
   pos.z -= NUM_FX32(8);
 	#else
@@ -213,14 +213,14 @@ static void DrawHero_Draw( FLDMMDL *fmmdl )
 		GFL_BBDACT_GetBBDSystem(actSys), work->actID, &pos );
 	{
 		BOOL flag = TRUE;
-		if( chg_dir == FALSE && FLDMMDL_CheckDrawPause(fmmdl) == TRUE ){
+		if( chg_dir == FALSE && MMDL_CheckDrawPause(fmmdl) == TRUE ){
 			flag = FALSE;
 		}
 		GFL_BBDACT_SetAnimeEnable( actSys, work->actID, flag );
     
     flag = TRUE; 
     
-    if( FLDMMDL_CheckStatusBitVanish(fmmdl) == TRUE ){
+    if( MMDL_CheckStatusBitVanish(fmmdl) == TRUE ){
       flag = FALSE;
     }
     
@@ -232,22 +232,22 @@ static void DrawHero_Draw( FLDMMDL *fmmdl )
 /**
  * 描画処理　ビルボード　自機専用　取得。
  * ビルボードアクターIDを返す。
- * @param	fmmdl	FLDMMDL
+ * @param	fmmdl	MMDL
  * @param	state	特に無し
  * @retval	u32	GFL_BBDACT_ACTUNIT_ID
  */
 //--------------------------------------------------------------
-static u32 DrawHero_GetBlActID( FLDMMDL *fmmdl, u32 state )
+static u32 DrawHero_GetBlActID( MMDL *fmmdl, u32 state )
 {
 	DRAW_BLACT_WORK *work;
-	work = FLDMMDL_GetDrawProcWork( fmmdl );
+	work = MMDL_GetDrawProcWork( fmmdl );
 	return( work->actID );
 }
 
 //--------------------------------------------------------------
 //	描画処理　ビルボード　自機　まとめ
 //--------------------------------------------------------------
-const FLDMMDL_DRAW_PROC_LIST DATA_FLDMMDL_DRAWPROCLIST_Hero =
+const MMDL_DRAW_PROC_LIST DATA_MMDL_DRAWPROCLIST_Hero =
 {
 	DrawHero_Init,
 	DrawHero_Draw,
@@ -263,11 +263,11 @@ const FLDMMDL_DRAW_PROC_LIST DATA_FLDMMDL_DRAWPROCLIST_Hero =
 //--------------------------------------------------------------
 /**
  * 描画処理　ビルボード　自転車自機専用　描画
- * @param	fmmdl	FLDMMDL
+ * @param	fmmdl	MMDL
  * @retval	nothing
  */
 //--------------------------------------------------------------
-static void DrawCycleHero_Draw( FLDMMDL *fmmdl )
+static void DrawCycleHero_Draw( MMDL *fmmdl )
 {
 	VecFx32 pos;
 	BOOL chg_dir = FALSE;
@@ -275,16 +275,16 @@ static void DrawCycleHero_Draw( FLDMMDL *fmmdl )
 	DRAW_BLACT_WORK *work;
 	GFL_BBDACT_SYS *actSys;
 	
-	work = FLDMMDL_GetDrawProcWork( fmmdl );
+	work = MMDL_GetDrawProcWork( fmmdl );
   
-  if( work->actID == FLDMMDL_BLACTID_NULL ){ //未登録
+  if( work->actID == MMDL_BLACTID_NULL ){ //未登録
     return;
   }
   
-	actSys = FLDMMDL_BLACTCONT_GetBbdActSys( FLDMMDL_GetBlActCont(fmmdl) );
+	actSys = MMDL_BLACTCONT_GetBbdActSys( MMDL_GetBlActCont(fmmdl) );
 	
-	dir = FLDMMDL_GetDirDisp( fmmdl );
-	status = FLDMMDL_GetDrawStatus( fmmdl );
+	dir = MMDL_GetDirDisp( fmmdl );
+	status = MMDL_GetDrawStatus( fmmdl );
 	GF_ASSERT( status < DRAW_STA_MAX_HERO );
 	anm_id = status * DIR_MAX4;
 	anm_id += dir;
@@ -315,9 +315,9 @@ static void DrawCycleHero_Draw( FLDMMDL *fmmdl )
 		work->set_anm_status = status;
 	}
 	
-	FLDMMDL_GetDrawVectorPos( fmmdl, &pos );
+	MMDL_GetDrawVectorPos( fmmdl, &pos );
   
-	#ifndef FLDMMDL_BLACT_HEAD3_TEST
+	#ifndef MMDL_BLACT_HEAD3_TEST
 	pos.y += FX32_ONE * 4;
   pos.z -= NUM_FX32(8);
 	#else
@@ -328,14 +328,14 @@ static void DrawCycleHero_Draw( FLDMMDL *fmmdl )
 		GFL_BBDACT_GetBBDSystem(actSys), work->actID, &pos );
 	{
 		BOOL flag = TRUE;
-		if( chg_dir == FALSE && FLDMMDL_CheckDrawPause(fmmdl) == TRUE ){
+		if( chg_dir == FALSE && MMDL_CheckDrawPause(fmmdl) == TRUE ){
 			flag = FALSE;
 		}
 		GFL_BBDACT_SetAnimeEnable( actSys, work->actID, flag );
     
     flag = TRUE; 
     
-    if( FLDMMDL_CheckStatusBitVanish(fmmdl) == TRUE ){
+    if( MMDL_CheckStatusBitVanish(fmmdl) == TRUE ){
       flag = FALSE;
     }
     
@@ -346,7 +346,7 @@ static void DrawCycleHero_Draw( FLDMMDL *fmmdl )
 //--------------------------------------------------------------
 /// 描画処理　自転車自機　まとめ
 //--------------------------------------------------------------
-const FLDMMDL_DRAW_PROC_LIST DATA_FLDMMDL_DRAWPROCLIST_CycleHero =
+const MMDL_DRAW_PROC_LIST DATA_MMDL_DRAWPROCLIST_CycleHero =
 {
   DrawHero_Init,
 	DrawCycleHero_Draw,
@@ -362,47 +362,47 @@ const FLDMMDL_DRAW_PROC_LIST DATA_FLDMMDL_DRAWPROCLIST_CycleHero =
 //--------------------------------------------------------------
 /**
  * 描画処理　ビルボード　汎用　初期化
- * @param	fmmdl	FLDMMDL
+ * @param	fmmdl	MMDL
  * @retval	nothing
  */
 //--------------------------------------------------------------
-static void DrawBlAct_Init( FLDMMDL *fmmdl )
+static void DrawBlAct_Init( MMDL *fmmdl )
 {
   u16 code;
 	DRAW_BLACT_WORK *work;
   
-	work = FLDMMDL_InitDrawProcWork( fmmdl, sizeof(DRAW_BLACT_WORK) );
+	work = MMDL_InitDrawProcWork( fmmdl, sizeof(DRAW_BLACT_WORK) );
 	work->set_anm_dir = DIR_NOT;
   
-  code = FLDMMDL_GetOBJCode( fmmdl );
+  code = MMDL_GetOBJCode( fmmdl );
 
-	if( FLDMMDL_BLACTCONT_AddActor(fmmdl,code,&work->actID) == TRUE ){
-    FLDMMDL_CallDrawProc( fmmdl );
+	if( MMDL_BLACTCONT_AddActor(fmmdl,code,&work->actID) == TRUE ){
+    MMDL_CallDrawProc( fmmdl );
   }
 }
 
 //--------------------------------------------------------------
 /**
  * 描画処理　ビルボード　汎用　削除
- * @param	fmmdl	FLDMMDL
+ * @param	fmmdl	MMDL
  * @retval	nothing
  */
 //--------------------------------------------------------------
-static void DrawBlAct_Delete( FLDMMDL *fmmdl )
+static void DrawBlAct_Delete( MMDL *fmmdl )
 {
 	DRAW_BLACT_WORK *work;
-	work = FLDMMDL_GetDrawProcWork( fmmdl );
-	FLDMMDL_BLACTCONT_DeleteActor( fmmdl, work->actID );
+	work = MMDL_GetDrawProcWork( fmmdl );
+	MMDL_BLACTCONT_DeleteActor( fmmdl, work->actID );
 }
 
 //--------------------------------------------------------------
 /**
  * 描画処理　ビルボード　汎用　描画
- * @param	fmmdl	FLDMMDL
+ * @param	fmmdl	MMDL
  * @retval	nothing
  */
 //--------------------------------------------------------------
-static void DrawBlAct_Draw( FLDMMDL *fmmdl )
+static void DrawBlAct_Draw( MMDL *fmmdl )
 {
 	VecFx32 pos;
 	BOOL chg_dir = FALSE;
@@ -410,16 +410,16 @@ static void DrawBlAct_Draw( FLDMMDL *fmmdl )
 	DRAW_BLACT_WORK *work;
 	GFL_BBDACT_SYS *actSys;
 	
-	work = FLDMMDL_GetDrawProcWork( fmmdl );
+	work = MMDL_GetDrawProcWork( fmmdl );
   
-  if( work->actID == FLDMMDL_BLACTID_NULL ){
+  if( work->actID == MMDL_BLACTID_NULL ){
     return;
   }
 
-	actSys = FLDMMDL_BLACTCONT_GetBbdActSys( FLDMMDL_GetBlActCont(fmmdl) );
+	actSys = MMDL_BLACTCONT_GetBbdActSys( MMDL_GetBlActCont(fmmdl) );
 	
-	dir = FLDMMDL_GetDirDisp( fmmdl );
-	status = FLDMMDL_GetDrawStatus( fmmdl );
+	dir = MMDL_GetDirDisp( fmmdl );
+	status = MMDL_GetDrawStatus( fmmdl );
 	GF_ASSERT( status < DRAW_STA_MAX );
 	anm_id = status * DIR_MAX4;
 	anm_id += dir;
@@ -447,8 +447,8 @@ static void DrawBlAct_Draw( FLDMMDL *fmmdl )
 		GFL_BBDACT_SetAnimeFrmIdx( actSys, work->actID, frame );
 	}
 	
-	FLDMMDL_GetDrawVectorPos( fmmdl, &pos );
-	#ifndef FLDMMDL_BLACT_HEAD3_TEST
+	MMDL_GetDrawVectorPos( fmmdl, &pos );
+	#ifndef MMDL_BLACT_HEAD3_TEST
 	pos.y += FX32_ONE * 4;
   pos.z -= NUM_FX32(8);
 	#else
@@ -460,14 +460,14 @@ static void DrawBlAct_Draw( FLDMMDL *fmmdl )
 
 	{
 		BOOL flag = TRUE;
-		if( chg_dir == FALSE && FLDMMDL_CheckDrawPause(fmmdl) == TRUE ){
+		if( chg_dir == FALSE && MMDL_CheckDrawPause(fmmdl) == TRUE ){
 			flag = FALSE;
 		}
 		GFL_BBDACT_SetAnimeEnable( actSys, work->actID, flag );
     
     flag = TRUE; 
     
-    if( FLDMMDL_CheckStatusBitVanish(fmmdl) == TRUE ){
+    if( MMDL_CheckStatusBitVanish(fmmdl) == TRUE ){
       flag = FALSE;
     }
     
@@ -479,22 +479,22 @@ static void DrawBlAct_Draw( FLDMMDL *fmmdl )
 /**
  * 描画処理　ビルボード　汎用　取得。
  * ビルボードアクターIDを返す。
- * @param	fmmdl	FLDMMDL
+ * @param	fmmdl	MMDL
  * @param	state	特に無し
  * @retval	u32	GFL_BBDACT_ACTUNIT_ID
  */
 //--------------------------------------------------------------
-static u32 DrawBlAct_GetBlActID( FLDMMDL *fmmdl, u32 state )
+static u32 DrawBlAct_GetBlActID( MMDL *fmmdl, u32 state )
 {
 	DRAW_BLACT_WORK *work;
-	work = FLDMMDL_GetDrawProcWork( fmmdl );
+	work = MMDL_GetDrawProcWork( fmmdl );
 	return( work->actID );
 }
 
 //--------------------------------------------------------------
 //	描画処理　ビルボード　汎用　まとめ
 //--------------------------------------------------------------
-const FLDMMDL_DRAW_PROC_LIST DATA_FLDMMDL_DRAWPROCLIST_BlAct =
+const MMDL_DRAW_PROC_LIST DATA_MMDL_DRAWPROCLIST_BlAct =
 {
 	DrawBlAct_Init,
 	DrawBlAct_Draw,

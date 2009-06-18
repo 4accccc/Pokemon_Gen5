@@ -109,9 +109,9 @@ static void mapCtrlGrid_Create(
 	
 	{ //Ž©‹@ì¬
 		FIELD_PLAYER *fld_player = FIELDMAP_GetFieldPlayer( fieldWork );
-    FLDMMDL *fmmdl = FIELD_PLAYER_GetFldMMdl( fld_player );
+    MMDL *fmmdl = FIELD_PLAYER_GetMMdl( fld_player );
 		u16 dir4 = grid_ChangeFourDir( dir );
-    FLDMMDL_SetDirDisp( fmmdl, dir4 );
+    MMDL_SetDirDisp( fmmdl, dir4 );
 //    KAGAYA_Printf( "‚í‚½‚³‚ê‚½•ûŒü %xH, %d\n", dir, dir4 );
 		gridWork->gridPlayer = FIELD_PLAYER_GRID_Init( fld_player, heapID );
 	}
@@ -156,11 +156,11 @@ static void mapCtrlGrid_Main( FIELDMAP_WORK *fieldWork, VecFx32 *pos )
 			GAMEDATA *gdata = GAMESYSTEM_GetGameData( gsys );
 			PLAYER_WORK *player = GAMEDATA_GetMyPlayerWork( gdata );
 			FIELD_PLAYER *fld_player = FIELDMAP_GetFieldPlayer( fieldWork );
-			FLDMMDL *fmmdl = FIELD_PLAYER_GetFldMMdl( fld_player );
+			MMDL *fmmdl = FIELD_PLAYER_GetMMdl( fld_player );
 			u16 tbl[DIR_MAX4] = { 0x0000, 0x8000, 0x4000, 0xc000 };
-			int dir = FLDMMDL_GetDirDisp( fmmdl );
+			int dir = MMDL_GetDirDisp( fmmdl );
 		
-			FLDMMDL_GetVectorPos( fmmdl, pos );
+			MMDL_GetVectorPos( fmmdl, pos );
 			PLAYERWORK_setDirection( player, tbl[dir] );
 			PLAYERWORK_setPosition( player, pos );
 			FIELD_PLAYER_SetDir( fld_player, tbl[dir] );

@@ -160,19 +160,19 @@ extern EXIT_TYPE CONNECTDATA_GetExitType(const CONNECT_DATA * connect);
 /**
  * @brief	動作モデルヘッダーを取得
  * @param	evdata		イベントデータへのポインタ
- * @retval	FLDMMDL_HEADER*
+ * @retval	MMDL_HEADER*
  */
 //------------------------------------------------------------------
-extern const FLDMMDL_HEADER * EVENTDATA_GetNpcData( const EVENTDATA_SYSTEM *evdata );
+extern const MMDL_HEADER * EVENTDATA_GetNpcData( const EVENTDATA_SYSTEM *evdata );
 
 //------------------------------------------------------------------
 /**
  * @brief	動作モデルヘッダーを取得
  * @param	evdata		イベントデータへのポインタ
- * @retval	FLDMMDL_HEADER*
+ * @retval	MMDL_HEADER*
  */
 //------------------------------------------------------------------
-extern const FLDMMDL_HEADER * EVENTDATA_GetNpcData( const EVENTDATA_SYSTEM *evdata );
+extern const MMDL_HEADER * EVENTDATA_GetNpcData( const EVENTDATA_SYSTEM *evdata );
 
 //------------------------------------------------------------------
 /**

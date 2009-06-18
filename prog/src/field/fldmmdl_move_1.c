@@ -23,28 +23,28 @@
 //======================================================================
 //	proto
 //======================================================================
-static void MoveSub_InitProcCall( FLDMMDL * fmmdl );
-static int MoveSub_StartCheckProcCall( FLDMMDL * fmmdl );
-static int MoveSub_MoveProcCall( FLDMMDL * fmmdl );
+static void MoveSub_InitProcCall( MMDL * fmmdl );
+static int MoveSub_StartCheckProcCall( MMDL * fmmdl );
+static int MoveSub_MoveProcCall( MMDL * fmmdl );
 
-static int MoveSub_PosUpdateStartCheck( FLDMMDL * fmmdl );
-static int MoveSub_PosUpdateEndCheck( FLDMMDL * fmmdl );
+static int MoveSub_PosUpdateStartCheck( MMDL * fmmdl );
+static int MoveSub_PosUpdateEndCheck( MMDL * fmmdl );
 
-static void SubMoveNon_Init( FLDMMDL * fmmdl );
-static int SubMoveNon_StartCheck( FLDMMDL * fmmdl );
-static int SubMoveNon_Move( FLDMMDL * fmmdl );
+static void SubMoveNon_Init( MMDL * fmmdl );
+static int SubMoveNon_StartCheck( MMDL * fmmdl );
+static int SubMoveNon_Move( MMDL * fmmdl );
 
-static void SubMoveKyoro_Init( FLDMMDL * fmmdl );
-static int SubMoveKyoro_StartCheck( FLDMMDL * fmmdl );
-static int SubMoveKyoro_Move( FLDMMDL * fmmdl );
+static void SubMoveKyoro_Init( MMDL * fmmdl );
+static int SubMoveKyoro_StartCheck( MMDL * fmmdl );
+static int SubMoveKyoro_Move( MMDL * fmmdl );
 
-static void SubMoveSpinStop_Init( FLDMMDL * fmmdl );
-static int SubMoveSpinStop_StartCheck( FLDMMDL * fmmdl );
-static int SubMoveSpinStop_Move( FLDMMDL * fmmdl );
+static void SubMoveSpinStop_Init( MMDL * fmmdl );
+static int SubMoveSpinStop_StartCheck( MMDL * fmmdl );
+static int SubMoveSpinStop_Move( MMDL * fmmdl );
 
-void (* const DATA_FldMMdl_EventTypeInitProcTbl[])( FLDMMDL * );
-int (* const DATA_FldMMdl_EventTypeStartCheckProcTbl[])( FLDMMDL * );
-int (* const DATA_FldMMdl_EventTypeMoveProcTbl[])( FLDMMDL * );
+void (* const DATA_MMdl_EventTypeInitProcTbl[])( MMDL * );
+int (* const DATA_MMdl_EventTypeStartCheckProcTbl[])( MMDL * );
+int (* const DATA_MMdl_EventTypeMoveProcTbl[])( MMDL * );
 
 //======================================================================
 //	サブ動作
@@ -52,11 +52,11 @@ int (* const DATA_FldMMdl_EventTypeMoveProcTbl[])( FLDMMDL * );
 //--------------------------------------------------------------
 /**
  * サブ動作初期化
- * @param	fmmdl	FLDMMDL *
+ * @param	fmmdl	MMDL *
  * @retval	nothing
  */
 //--------------------------------------------------------------
-void FLDMMDL_MoveSubProcInit( FLDMMDL * fmmdl )
+void MMDL_MoveSubProcInit( MMDL * fmmdl )
 {
 	MoveSub_InitProcCall( fmmdl );
 }
@@ -64,11 +64,11 @@ void FLDMMDL_MoveSubProcInit( FLDMMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * サブ動作
- * @param	fmmdl	FLDMMDL *
+ * @param	fmmdl	MMDL *
  * @retval	int		TRUE=サブ動作による移動アリ
  */
 //--------------------------------------------------------------
-int FLDMMDL_MoveSub( FLDMMDL * fmmdl )
+int MMDL_MoveSub( MMDL * fmmdl )
 {
 	if( MoveSub_StartCheckProcCall(fmmdl) == FALSE ){
 		return( FALSE );
@@ -87,40 +87,40 @@ int FLDMMDL_MoveSub( FLDMMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * 初期化関数呼び出し
- * @param	fmmdl	FLDMMDL *
+ * @param	fmmdl	MMDL *
  * @retval	nothing
  */
 //--------------------------------------------------------------
-static void MoveSub_InitProcCall( FLDMMDL * fmmdl )
+static void MoveSub_InitProcCall( MMDL * fmmdl )
 {
-	int type = FLDMMDL_GetEventType( fmmdl );
-	DATA_FldMMdl_EventTypeInitProcTbl[type]( fmmdl );
+	int type = MMDL_GetEventType( fmmdl );
+	DATA_MMdl_EventTypeInitProcTbl[type]( fmmdl );
 }
 
 //--------------------------------------------------------------
 /**
  * チェック関数呼び出し
- * @param	fmmdl	FLDMMDL *
+ * @param	fmmdl	MMDL *
  * @retval	int		TRUE=チェックに引っかかった
  */
 //--------------------------------------------------------------
-static int MoveSub_StartCheckProcCall( FLDMMDL * fmmdl )
+static int MoveSub_StartCheckProcCall( MMDL * fmmdl )
 {
-	int type = FLDMMDL_GetEventType( fmmdl );
-	return( DATA_FldMMdl_EventTypeStartCheckProcTbl[type](fmmdl) );
+	int type = MMDL_GetEventType( fmmdl );
+	return( DATA_MMdl_EventTypeStartCheckProcTbl[type](fmmdl) );
 }
 
 //--------------------------------------------------------------
 /**
  * 動作関数呼び出し
- * @param	fmmdl	FLDMMDL *
+ * @param	fmmdl	MMDL *
  * @retval	int		TRUE=動作中
  */
 //--------------------------------------------------------------
-static int MoveSub_MoveProcCall( FLDMMDL * fmmdl )
+static int MoveSub_MoveProcCall( MMDL * fmmdl )
 {
-	int type = FLDMMDL_GetEventType( fmmdl );
-	return( DATA_FldMMdl_EventTypeMoveProcTbl[type](fmmdl) );
+	int type = MMDL_GetEventType( fmmdl );
+	return( DATA_MMdl_EventTypeMoveProcTbl[type](fmmdl) );
 }
 
 //======================================================================
@@ -129,21 +129,21 @@ static int MoveSub_MoveProcCall( FLDMMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * 座標更新開始をチェック
- * @param	fmmdl	FLDMMDL *
+ * @param	fmmdl	MMDL *
  * @retval	int		TRUE=更新
  */
 //--------------------------------------------------------------
-static int MoveSub_PosUpdateStartCheck( FLDMMDL * fmmdl )
+static int MoveSub_PosUpdateStartCheck( MMDL * fmmdl )
 {
-	int now = FLDMMDL_GetGridPosX( fmmdl );
-	int old = FLDMMDL_GetOldGridPosX( fmmdl );
+	int now = MMDL_GetGridPosX( fmmdl );
+	int old = MMDL_GetOldGridPosX( fmmdl );
 	
 	if( now != old ){
 		return( TRUE );
 	}
 	
-	now = FLDMMDL_GetGridPosZ( fmmdl );
-	old = FLDMMDL_GetOldGridPosZ( fmmdl );
+	now = MMDL_GetGridPosZ( fmmdl );
+	old = MMDL_GetOldGridPosZ( fmmdl );
 	
 	if( now != old ){
 		return( TRUE );
@@ -155,21 +155,21 @@ static int MoveSub_PosUpdateStartCheck( FLDMMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * 座標更新終了をチェック
- * @param	fmmdl	FLDMMDL *
+ * @param	fmmdl	MMDL *
  * @retval	int		TRUE=終了
  */
 //--------------------------------------------------------------
-static int MoveSub_PosUpdateEndCheck( FLDMMDL * fmmdl )
+static int MoveSub_PosUpdateEndCheck( MMDL * fmmdl )
 {
-	int now = FLDMMDL_GetGridPosX( fmmdl );
-	int old = FLDMMDL_GetOldGridPosX( fmmdl );
+	int now = MMDL_GetGridPosX( fmmdl );
+	int old = MMDL_GetOldGridPosX( fmmdl );
 	
 	if( now != old ){
 		return( FALSE );
 	}
 	
-	now = FLDMMDL_GetGridPosZ( fmmdl );
-	old = FLDMMDL_GetOldGridPosZ( fmmdl );
+	now = MMDL_GetGridPosZ( fmmdl );
+	old = MMDL_GetOldGridPosZ( fmmdl );
 	
 	if( now != old ){
 		return( FALSE );
@@ -184,22 +184,22 @@ static int MoveSub_PosUpdateEndCheck( FLDMMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * サブ動作初期化　無し
- * @param	fmmdl	FLDMMDL *
+ * @param	fmmdl	MMDL *
  * @retval	nothing
  */
 //--------------------------------------------------------------
-static void SubMoveNon_Init( FLDMMDL * fmmdl )
+static void SubMoveNon_Init( MMDL * fmmdl )
 {
 }
 
 //--------------------------------------------------------------
 /**
  * サブ動作スタートチェック　無し
- * @param	fmmdl	FLDMMDL *
+ * @param	fmmdl	MMDL *
  * @retval	int		FALSE
  */
 //--------------------------------------------------------------
-static int SubMoveNon_StartCheck( FLDMMDL * fmmdl )
+static int SubMoveNon_StartCheck( MMDL * fmmdl )
 {
 	return( FALSE );
 }
@@ -207,11 +207,11 @@ static int SubMoveNon_StartCheck( FLDMMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * サブ動作　無し
- * @param	fmmdl	FLDMMDL *
+ * @param	fmmdl	MMDL *
  * @retval	int		TRUE=動作中
  */
 //--------------------------------------------------------------
-static int SubMoveNon_Move( FLDMMDL * fmmdl )
+static int SubMoveNon_Move( MMDL * fmmdl )
 {
 	return( FALSE );
 }
@@ -253,30 +253,30 @@ enum
 //--------------------------------------------------------------
 /**
  * 止まってきょろきょろ　初期化
- * @param	fmmdl	FLDMMDL *
+ * @param	fmmdl	MMDL *
  * @retval	nothing
  */
 //--------------------------------------------------------------
-static void SubMoveKyoro_Init( FLDMMDL * fmmdl )
+static void SubMoveKyoro_Init( MMDL * fmmdl )
 {
 	SUBWORK_KYORO *work;
 	
-	work = FLDMMDL_InitMoveSubProcWork( fmmdl, SUBWORK_KYORO_SIZE );
-	work->max_count = FLDMMDL_GetParam( fmmdl, FLDMMDL_PARAM_1 );
+	work = MMDL_InitMoveSubProcWork( fmmdl, SUBWORK_KYORO_SIZE );
+	work->max_count = MMDL_GetParam( fmmdl, MMDL_PARAM_1 );
 }
 
 //--------------------------------------------------------------
 /**
  * 止まってきょろきょろ　スタートチェック
- * @param	fmmdl	FLDMMDL *
+ * @param	fmmdl	MMDL *
  * @retval	int		TRUE=動作アリ
  */
 //--------------------------------------------------------------
-static int SubMoveKyoro_StartCheck( FLDMMDL * fmmdl )
+static int SubMoveKyoro_StartCheck( MMDL * fmmdl )
 {
 	SUBWORK_KYORO *work;
 	
-	work = FLDMMDL_GetMoveSubProcWork( fmmdl );
+	work = MMDL_GetMoveSubProcWork( fmmdl );
 	
 	switch( work->check_seq_no ){
 	case 0:														//移動開始監視
@@ -299,7 +299,7 @@ static int SubMoveKyoro_StartCheck( FLDMMDL * fmmdl )
 		
 		work->check_seq_no++;
 	case 2:														//移動完了監視
-		if( FLDMMDL_CheckStatusBitMove(fmmdl) == TRUE ){
+		if( MMDL_CheckStatusBitMove(fmmdl) == TRUE ){
 #ifdef DEBUG_IDO_ASSERT
 			GF_ASSERT( MoveSub_PosUpdateStartCheck(fmmdl) == TRUE &&
 					"SubMoveKyoro_StartCheck()ERROR" );
@@ -320,21 +320,21 @@ static int SubMoveKyoro_StartCheck( FLDMMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * 止まってきょろきょろ　動作
- * @param	fmmdl	FLDMMDL *
+ * @param	fmmdl	MMDL *
  * @retval	int		TRUE=動作中
  */
 //--------------------------------------------------------------
-static int SubMoveKyoro_Move( FLDMMDL * fmmdl )
+static int SubMoveKyoro_Move( MMDL * fmmdl )
 {
 	SUBWORK_KYORO *work;
 	
-	work = FLDMMDL_GetMoveSubProcWork( fmmdl );
+	work = MMDL_GetMoveSubProcWork( fmmdl );
 	
 	switch( work->move_seq_no ){
 	case 0:														//初期化
 		{
 			int type_tbl[4] = {DIR_H_TYPE,DIR_H_TYPE,DIR_V_TYPE,DIR_V_TYPE};
-			int dir = FLDMMDL_GetDirDisp( fmmdl );
+			int dir = MMDL_GetDirDisp( fmmdl );
 			work->origin_dir = dir;
 			work->dir_type = type_tbl[dir];
 			work->move_seq_no++;
@@ -343,13 +343,13 @@ static int SubMoveKyoro_Move( FLDMMDL * fmmdl )
 		{
 			int dir_tbl[2][2] = { {DIR_LEFT,DIR_RIGHT},{DIR_UP,DIR_DOWN} };
 			int dir = dir_tbl[work->dir_type][work->dir_no];
-			int code = FLDMMDL_ChangeDirAcmdCode( dir, AC_DIR_U );
-			FLDMMDL_SetLocalAcmd( fmmdl, code );
+			int code = MMDL_ChangeDirAcmdCode( dir, AC_DIR_U );
+			MMDL_SetLocalAcmd( fmmdl, code );
 			work->move_seq_no++;
 		}
 	case 2:
 		{
-			if( FLDMMDL_ActionLocalAcmd(fmmdl) == FALSE ){
+			if( MMDL_ActionLocalAcmd(fmmdl) == FALSE ){
 				return( TRUE );
 			}
 			
@@ -372,7 +372,7 @@ static int SubMoveKyoro_Move( FLDMMDL * fmmdl )
 				return( TRUE );
 			}
 			
-			FLDMMDL_SetDirDisp( fmmdl, work->origin_dir );
+			MMDL_SetDirDisp( fmmdl, work->origin_dir );
 			work->move_seq_no++;
 			work->dir_count = 0;
 			work->check_seq_no = 0;
@@ -419,19 +419,19 @@ enum
 //--------------------------------------------------------------
 /**
  * 止まってクルクル　初期化
- * @param	fmmdl	FLDMMDL *
+ * @param	fmmdl	MMDL *
  * @retval	nothing
  */
 //--------------------------------------------------------------
-static void SubMoveSpinStop_Init( FLDMMDL * fmmdl )
+static void SubMoveSpinStop_Init( MMDL * fmmdl )
 {
 	int type;
 	SUBWORK_SPIN_STOP *work;
 	
-	work = FLDMMDL_InitMoveSubProcWork( fmmdl, SUBWORK_SPIN_STOP_SIZE );
-	work->max_count = FLDMMDL_GetParam( fmmdl, FLDMMDL_PARAM_1 );
+	work = MMDL_InitMoveSubProcWork( fmmdl, SUBWORK_SPIN_STOP_SIZE );
+	work->max_count = MMDL_GetParam( fmmdl, MMDL_PARAM_1 );
 	
-	type = FLDMMDL_GetEventType( fmmdl );
+	type = MMDL_GetEventType( fmmdl );
 	
 	if( type == EV_TYPE_TRAINER_SPIN_STOP_L ){
 		type = SPIN_STOP_L_TYPE;
@@ -445,15 +445,15 @@ static void SubMoveSpinStop_Init( FLDMMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * 止まってクルクル　スタートチェック
- * @param	fmmdl	FLDMMDL *
+ * @param	fmmdl	MMDL *
  * @retval	int		TRUE=動作アリ
  */
 //--------------------------------------------------------------
-static int SubMoveSpinStop_StartCheck( FLDMMDL * fmmdl )
+static int SubMoveSpinStop_StartCheck( MMDL * fmmdl )
 {
 	SUBWORK_SPIN_STOP *work;
 	
-	work = FLDMMDL_GetMoveSubProcWork( fmmdl );
+	work = MMDL_GetMoveSubProcWork( fmmdl );
 	
 	switch( work->check_seq_no ){
 	case 0:														//移動開始監視
@@ -476,7 +476,7 @@ static int SubMoveSpinStop_StartCheck( FLDMMDL * fmmdl )
 		
 		work->check_seq_no++;
 	case 2:														//移動完了監視
-		if( FLDMMDL_CheckStatusBitMove(fmmdl) == TRUE ){
+		if( MMDL_CheckStatusBitMove(fmmdl) == TRUE ){
 #ifdef DEBUG_IDO_ASSERT
 			GF_ASSERT( MoveSub_PosUpdateStartCheck(fmmdl) == TRUE &&
 				"SubMoveKyoro_StartCheck()対象の移動方法が異常" );
@@ -497,22 +497,22 @@ static int SubMoveSpinStop_StartCheck( FLDMMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * 止まってクルクル　動作
- * @param	fmmdl	FLDMMDL *
+ * @param	fmmdl	MMDL *
  * @retval	int		TRUE=動作中
  */
 //--------------------------------------------------------------
-static int SubMoveSpinStop_Move( FLDMMDL * fmmdl )
+static int SubMoveSpinStop_Move( MMDL * fmmdl )
 {
 	SUBWORK_KYORO *work;
 	int spin_tbl[2][4] =
 	{ {DIR_UP,DIR_LEFT,DIR_DOWN,DIR_RIGHT},{DIR_UP,DIR_RIGHT,DIR_DOWN,DIR_LEFT} };
 	
-	work = FLDMMDL_GetMoveSubProcWork( fmmdl );
+	work = MMDL_GetMoveSubProcWork( fmmdl );
 	
 	switch( work->move_seq_no ){
 	case 0:														//初期化
 		{
-			int i,dir = FLDMMDL_GetDirDisp( fmmdl );
+			int i,dir = MMDL_GetDirDisp( fmmdl );
 			
 			for( i = 0; (i < DIR_MAX4 && dir != spin_tbl[work->dir_type][i]); i++ ){}
 			GF_ASSERT( i < DIR_MAX4 && "SubMoveKyoro_Move()方向異常" );
@@ -524,13 +524,13 @@ static int SubMoveSpinStop_Move( FLDMMDL * fmmdl )
 	case 1:														//方向セット	
 		{
 			int dir = spin_tbl[work->dir_type][work->dir_no];
-			int code = FLDMMDL_ChangeDirAcmdCode( dir, AC_DIR_U );
-			FLDMMDL_SetLocalAcmd( fmmdl, code );
+			int code = MMDL_ChangeDirAcmdCode( dir, AC_DIR_U );
+			MMDL_SetLocalAcmd( fmmdl, code );
 			work->move_seq_no++;
 		}
 	case 2:
 		{
-			if( FLDMMDL_ActionLocalAcmd(fmmdl) == FALSE ){
+			if( MMDL_ActionLocalAcmd(fmmdl) == FALSE ){
 				return( TRUE );
 			}
 			
@@ -553,7 +553,7 @@ static int SubMoveSpinStop_Move( FLDMMDL * fmmdl )
 				return( TRUE );
 			}
 			
-			FLDMMDL_SetDirDisp( fmmdl, work->origin_dir );
+			MMDL_SetDirDisp( fmmdl, work->origin_dir );
 			work->move_seq_no++;
 			work->dir_count = 0;
 			work->check_seq_no = 0;
@@ -569,7 +569,7 @@ static int SubMoveSpinStop_Move( FLDMMDL * fmmdl )
 //--------------------------------------------------------------
 //	イベントタイプ別初期化関数 EV_TYPE_NORMAL等の値に一致
 //--------------------------------------------------------------
-static void (* const DATA_FldMMdl_EventTypeInitProcTbl[])( FLDMMDL * ) =
+static void (* const DATA_MMdl_EventTypeInitProcTbl[])( MMDL * ) =
 {
 	SubMoveNon_Init, //EV_TYPE_NORMAL
 	SubMoveNon_Init, //EV_TYPE_TRAINER
@@ -589,7 +589,7 @@ static void (* const DATA_FldMMdl_EventTypeInitProcTbl[])( FLDMMDL * ) =
 //--------------------------------------------------------------
 //	イベントタイプ別スタートチェック関数　EV_TYPE_NORMAL等の値に一致
 //--------------------------------------------------------------
-static int (* const DATA_FldMMdl_EventTypeStartCheckProcTbl[])( FLDMMDL * ) =
+static int (* const DATA_MMdl_EventTypeStartCheckProcTbl[])( MMDL * ) =
 {
 	SubMoveNon_StartCheck, //EV_TYPE_NORMAL
 	SubMoveNon_StartCheck, //EV_TYPE_TRAINER
@@ -609,7 +609,7 @@ static int (* const DATA_FldMMdl_EventTypeStartCheckProcTbl[])( FLDMMDL * ) =
 //--------------------------------------------------------------
 //	イベントタイプ別動作関数 EV_TYPE_NORMAL等の値に一致
 //--------------------------------------------------------------
-static int (* const DATA_FldMMdl_EventTypeMoveProcTbl[])( FLDMMDL * ) =
+static int (* const DATA_MMdl_EventTypeMoveProcTbl[])( MMDL * ) =
 {
 	SubMoveNon_Move, //EV_TYPE_NORMAL
 	SubMoveNon_Move, //EV_TYPE_TRAINER

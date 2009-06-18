@@ -50,7 +50,7 @@ struct _GAMEDATA{
 
 	MYITEM_PTR myitem;			///<手持ちアイテムセーブデータへのポインタ
 	POKEPARTY *my_pokeparty;	///<手持ちポケモンセーブデータへのポインタ
-	FLDMMDLSYS *fldmmdlsys;
+	MMDLSYS *mmdlsys;
 	EVENTWORK *eventwork;
   int fieldmap_walk_count; ///<フィールドマップ歩数カウント
 	u8 season_id;				///<季節指定ID
@@ -125,7 +125,7 @@ GAMEDATA * GAMEDATA_Create(HEAPID heapID)
 	EVENTWORK_Init( gd->eventwork );
 
 	//動作モデル
-	gd->fldmmdlsys = FLDMMDLSYS_CreateSystem( heapID, FLDMMDL_MDL_MAX );
+	gd->mmdlsys = MMDLSYS_CreateSystem( heapID, MMDL_MDL_MAX );
 	
 	gd->myitem = SaveControl_DataPtrGet(gd->sv_control_ptr, GMDATA_ID_MYITEM);
 	gd->my_pokeparty = SaveControl_DataPtrGet(gd->sv_control_ptr, GMDATA_ID_MYPOKE);
@@ -144,7 +144,7 @@ GAMEDATA * GAMEDATA_Create(HEAPID heapID)
 //------------------------------------------------------------------
 void GAMEDATA_Delete(GAMEDATA * gamedata)
 {
-	FLDMMDLSYS_FreeSystem(gamedata->fldmmdlsys);
+	MMDLSYS_FreeSystem(gamedata->mmdlsys);
 	EVENTWORK_FreeWork(gamedata->eventwork);
 	EVENTDATA_SYS_Delete(gamedata->evdata);
 	GFL_HEAP_FreeMemory(gamedata);
@@ -282,14 +282,14 @@ MYSTATUS * GAMEDATA_GetMyStatusPlayer(GAMEDATA * gamedata, u32 player_id)
 
 //--------------------------------------------------------------
 /**
- * @brief	FLDMMDLSYSへのポインタ取得
+ * @brief	MMDLSYSへのポインタ取得
  * @param	gamedata	GAMEDATAへのポインタ
- * @retval	FLDMMDLSYSへのポインタ
+ * @retval	MMDLSYSへのポインタ
  */
 //--------------------------------------------------------------
-FLDMMDLSYS * GAMEDATA_GetFldMMdlSys(GAMEDATA *gamedata)
+MMDLSYS * GAMEDATA_GetMMdlSys(GAMEDATA *gamedata)
 {
-	return gamedata->fldmmdlsys;
+	return gamedata->mmdlsys;
 }
 
 //--------------------------------------------------------------
@@ -564,10 +564,10 @@ static void GAMEDATA_SaveDataLoad(GAMEDATA *gamedata)
 		SaveData_SituationDataLoad(gamedata->sv_control_ptr, pw);
 	}
 	
-	{	//FLDMMDL
-		FLDMMDLSYS *fldmmdlsys = GAMEDATA_GetFldMMdlSys(gamedata);
-		FLDMMDL_SAVEDATA *pw = SaveControl_DataPtrGet(gamedata->sv_control_ptr,GMDATA_ID_FLDMMDL);
-		FLDMMDL_SAVEDATA_Load( fldmmdlsys, pw );
+	{	//MMDL
+		MMDLSYS *mmdlsys = GAMEDATA_GetMMdlSys(gamedata);
+		MMDL_SAVEDATA *pw = SaveControl_DataPtrGet(gamedata->sv_control_ptr,GMDATA_ID_MMDL);
+		MMDL_SAVEDATA_Load( mmdlsys, pw );
 	}
 }
 
@@ -588,10 +588,10 @@ static void GAMEDATA_SaveDataUpdate(GAMEDATA *gamedata)
 		SaveData_SituationDataUpdate(gamedata->sv_control_ptr, pw);
 	}
 
-	{	//FLDMMDL
-		FLDMMDLSYS *fldmmdlsys = GAMEDATA_GetFldMMdlSys(gamedata);
-		FLDMMDL_SAVEDATA *pw = SaveControl_DataPtrGet(gamedata->sv_control_ptr,GMDATA_ID_FLDMMDL);
-		FLDMMDL_SAVEDATA_Save( fldmmdlsys, pw );
+	{	//MMDL
+		MMDLSYS *mmdlsys = GAMEDATA_GetMMdlSys(gamedata);
+		MMDL_SAVEDATA *pw = SaveControl_DataPtrGet(gamedata->sv_control_ptr,GMDATA_ID_MMDL);
+		MMDL_SAVEDATA_Save( mmdlsys, pw );
 	}
 }
 

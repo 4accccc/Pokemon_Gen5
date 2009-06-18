@@ -77,8 +77,8 @@ typedef struct
 	int seq_no;					///<処理番号
 	BOOL end_flag;				///<終了フラグ
 	int acmd_count;				///<アニメ実行回数を記録
-	FLDMMDL * fmmdl;			///<アニメ対象FLDMMDL *
-	const FLDMMDL_ACMD_LIST *list;	///<実行するコマンドリスト
+	MMDL * fmmdl;			///<アニメ対象MMDL *
+	const MMDL_ACMD_LIST *list;	///<実行するコマンドリスト
 }ACMD_LIST_WORK;
 
 #define ACMD_LIST_WORK_SIZE (sizeof(ACMD_LIST_WORK)) ///<ACMD_LIST_WORKサイズ
@@ -151,7 +151,7 @@ typedef struct
 typedef struct
 {
 	int type;
-	#ifndef FLDMMDL_PL_NULL
+	#ifndef MMDL_PL_NULL
 	EOA_PTR eoa_mark;
 	#endif
 }AC_MARK_WORK;
@@ -217,29 +217,29 @@ enum
 static void fmmdl_AcmdListProcTCB( GFL_TCB * tcb, void *wk );
 int (* const DATA_AcmdListProcTbl[])( ACMD_LIST_WORK *work );
 
-static int fmmdl_AcmdAction( FLDMMDL * fmmdl, int code, int seq );
+static int fmmdl_AcmdAction( MMDL * fmmdl, int code, int seq );
 
-static int AC_End( FLDMMDL * fmmdl );
+static int AC_End( MMDL * fmmdl );
 
-static void AcDirSet( FLDMMDL * fmmdl, int dir );
+static void AcDirSet( MMDL * fmmdl, int dir );
 
 static void AcWalkWorkInit(
-	FLDMMDL * fmmdl, int dir, fx32 val, s16 wait, u16 draw );
-static int AC_Walk_1( FLDMMDL * fmmdl );
-static int AC_Walk_End( FLDMMDL *fmmdl );
+	MMDL * fmmdl, int dir, fx32 val, s16 wait, u16 draw );
+static int AC_Walk_1( MMDL * fmmdl );
+static int AC_Walk_End( MMDL *fmmdl );
 
 static void AcStayWalkWorkInit(
-	FLDMMDL * fmmdl, int dir, s16 wait, u16 draw );
-static int AC_StayWalk_1( FLDMMDL * fmmdl );
+	MMDL * fmmdl, int dir, s16 wait, u16 draw );
+static int AC_StayWalk_1( MMDL * fmmdl );
 
-#ifndef FLDMMDL_PL_NULL
+#ifndef MMDL_PL_NULL
 static void AcMarkWorkInit(
-	FLDMMDL * fmmdl, GYOE_TYPE type, int trans );
+	MMDL * fmmdl, GYOE_TYPE type, int trans );
 #else
 static void AcMarkWorkInit(
-	FLDMMDL * fmmdl, int type, int trans );
+	MMDL * fmmdl, int type, int trans );
 #endif
-static int AC_Mark_1( FLDMMDL * fmmdl );
+static int AC_Mark_1( MMDL * fmmdl );
 
 const fx32 * DATA_AcJumpOffsetTbl[];
 
@@ -253,26 +253,26 @@ static const fx32 DATA_AcWalk3FMoveValueTbl[AC_WALK_3F_FRAME];
 //--------------------------------------------------------------
 /**
  * フィールド動作モデルアニメーションコマンドリストセット
- * @param	fmmdl		アニメを行うFLDMMDL *
- * @param	list		コマンドがまとめられたFLDMMDL_ACMD_LIST *
+ * @param	fmmdl		アニメを行うMMDL *
+ * @param	list		コマンドがまとめられたMMDL_ACMD_LIST *
  * @retval	GFL_TCB *		アニメーションコマンドを実行するGFL_TCB *
  */
 //--------------------------------------------------------------
-GFL_TCB * FLDMMDL_SetAcmdList(
-	FLDMMDL *fmmdl, const FLDMMDL_ACMD_LIST *list )
+GFL_TCB * MMDL_SetAcmdList(
+	MMDL *fmmdl, const MMDL_ACMD_LIST *list )
 {
 	GFL_TCB *tcb;
 	ACMD_LIST_WORK *work;
-	FLDMMDLSYS *fmmdlsys;
+	MMDLSYS *fmmdlsys;
 	
-	fmmdlsys = (FLDMMDLSYS*)FLDMMDL_GetFldMMdlSys( fmmdl );
+	fmmdlsys = (MMDLSYS*)MMDL_GetMMdlSys( fmmdl );
 	work = GFL_HEAP_AllocClearMemoryLo(
-		FLDMMDLSYS_GetHeapID(fmmdlsys), ACMD_LIST_WORK_SIZE );
+		MMDLSYS_GetHeapID(fmmdlsys), ACMD_LIST_WORK_SIZE );
 	
 	{
-		int pri = FLDMMDLSYS_GetTCBPriority(
-			FLDMMDL_GetFldMMdlSys(fmmdl) ) - 1;
-		tcb = GFL_TCB_AddTask( FLDMMDLSYS_GetTCBSYS(fmmdlsys),
+		int pri = MMDLSYS_GetTCBPriority(
+			MMDL_GetMMdlSys(fmmdl) ) - 1;
+		tcb = GFL_TCB_AddTask( MMDLSYS_GetTCBSYS(fmmdlsys),
 			fmmdl_AcmdListProcTCB, work, pri );
 		GF_ASSERT( tcb != NULL );
 	}
@@ -285,11 +285,11 @@ GFL_TCB * FLDMMDL_SetAcmdList(
 //--------------------------------------------------------------
 /**
  * アニメーションコマンドリスト終了チェック
- * @param	tcb	 チェックするアニメをセットしたFLDMMDL_SetAcmdList()の戻り値GFL_TCB *
+ * @param	tcb	 チェックするアニメをセットしたMMDL_SetAcmdList()の戻り値GFL_TCB *
  * @retval	BOOL TRUE=終了 FALSE=実行中
  */
 //--------------------------------------------------------------
-BOOL FLDMMDL_CheckEndAcmdList( GFL_TCB * tcb )
+BOOL MMDL_CheckEndAcmdList( GFL_TCB * tcb )
 {
 	ACMD_LIST_WORK *work;
 	GF_ASSERT( tcb != NULL );
@@ -300,16 +300,16 @@ BOOL FLDMMDL_CheckEndAcmdList( GFL_TCB * tcb )
 //--------------------------------------------------------------
 /**
  * アニメーションコマンドリスト終了
- * @param	tcb		終了するアニメをセットしたFLDMMDL_SetAcmdList()の戻り値GFL_TCB *
+ * @param	tcb		終了するアニメをセットしたMMDL_SetAcmdList()の戻り値GFL_TCB *
  * @retval	nothing
  */
 //--------------------------------------------------------------
-void FLDMMDL_EndAcmdList( GFL_TCB * tcb )
+void MMDL_EndAcmdList( GFL_TCB * tcb )
 {
 	ACMD_LIST_WORK *work;
 	work = GFL_TCB_GetWork( tcb );
-	GF_ASSERT( FLDMMDL_CheckEndAcmd(work->fmmdl) == TRUE );
-	FLDMMDL_EndAcmd( work->fmmdl );
+	GF_ASSERT( MMDL_CheckEndAcmd(work->fmmdl) == TRUE );
+	MMDL_EndAcmd( work->fmmdl );
 	GFL_HEAP_FreeMemory( work );
 	GFL_TCB_DeleteTask( tcb );
 }
@@ -353,7 +353,7 @@ static int AcmdListProc_Init( ACMD_LIST_WORK *work )
 //--------------------------------------------------------------
 static int AcmdListProc_AcmdSetCheck( ACMD_LIST_WORK *work )
 {
-	if( FLDMMDL_CheckPossibleAcmd(work->fmmdl) == FALSE ){
+	if( MMDL_CheckPossibleAcmd(work->fmmdl) == FALSE ){
 		return( FALSE );
 	}
 	
@@ -370,10 +370,10 @@ static int AcmdListProc_AcmdSetCheck( ACMD_LIST_WORK *work )
 //--------------------------------------------------------------
 static int AcmdListProc_AcmdSet( ACMD_LIST_WORK *work )
 {
-	const FLDMMDL_ACMD_LIST *list;
+	const MMDL_ACMD_LIST *list;
 		
 	list = work->list;
-	FLDMMDL_SetAcmd( work->fmmdl, list->code );
+	MMDL_SetAcmd( work->fmmdl, list->code );
 		
 	work->seq_no = SEQNO_AL_ACMD_END_CHECK;
 	
@@ -389,7 +389,7 @@ static int AcmdListProc_AcmdSet( ACMD_LIST_WORK *work )
 //--------------------------------------------------------------
 static int AcmdListProc_AcmdEndCheck( ACMD_LIST_WORK *work )
 {
-	if( FLDMMDL_CheckEndAcmd(work->fmmdl) == FALSE ){
+	if( MMDL_CheckEndAcmd(work->fmmdl) == FALSE ){
 		return( FALSE );
 	}
 	
@@ -406,7 +406,7 @@ static int AcmdListProc_AcmdEndCheck( ACMD_LIST_WORK *work )
 //--------------------------------------------------------------
 static int AcmdListProc_AcmdSetCount( ACMD_LIST_WORK *work )
 {
-	const FLDMMDL_ACMD_LIST *list;
+	const MMDL_ACMD_LIST *list;
 	
 	list = work->list;
 	work->acmd_count++;
@@ -466,7 +466,7 @@ static int (* const DATA_AcmdListProcTbl[])( ACMD_LIST_WORK *work ) =
  * @retval	int		dir別に変更されたcode　例：dir=DIR_LEFT,code=AC_DIR_U = return(AC_DIR_L)
  */
 //--------------------------------------------------------------
-u16 FLDMMDL_ChangeDirAcmdCode( u16 dir, u16 code )
+u16 MMDL_ChangeDirAcmdCode( u16 dir, u16 code )
 {
 	int i;
 	const int * const *tbl;
@@ -475,7 +475,7 @@ u16 FLDMMDL_ChangeDirAcmdCode( u16 dir, u16 code )
 	GF_ASSERT( dir < DIR_MAX4 );
 	tbl = DATA_AcmdCodeDirChangeTbl;
 	
-#ifdef DEBUG_FLDMMDL_FRAME_60
+#ifdef DEBUG_MMDL_FRAME_60
 	if( code >= AC_WALK_U_8F && code <= AC_WALK_R_8F ){
 		code = AC_WALK_U_16F;
 	}else if( code >= AC_WALK_U_4F && code <= AC_WALK_R_4F ){
@@ -495,7 +495,7 @@ u16 FLDMMDL_ChangeDirAcmdCode( u16 dir, u16 code )
 		tbl++;
 	}while( (*tbl) != NULL );
 	
-	GF_ASSERT( 0 && "FLDMMDL_ChangeDirAcmdCode(未対応コード)" );
+	GF_ASSERT( 0 && "MMDL_ChangeDirAcmdCode(未対応コード)" );
 	return( code );
 }
 
@@ -506,7 +506,7 @@ u16 FLDMMDL_ChangeDirAcmdCode( u16 dir, u16 code )
  * @retval	int		codeから得られた方向
  */
 //--------------------------------------------------------------
-u16 FLDMMDL_GetAcmdDir( u16 code )
+u16 MMDL_GetAcmdDir( u16 code )
 {
 	int dir;
 	const int * const *tbl;
@@ -535,22 +535,22 @@ u16 FLDMMDL_GetAcmdDir( u16 code )
 //--------------------------------------------------------------
 /**
  * アニメーションコマンドアクション
- * @param	fmmdl		FLDMMDL * 
+ * @param	fmmdl		MMDL * 
  * @retval	nothing
  */
 //--------------------------------------------------------------
-void FLDMMDL_ActionAcmd( FLDMMDL * fmmdl )
+void MMDL_ActionAcmd( MMDL * fmmdl )
 {
 	int code,seq;
 	
 	do{
-		code = FLDMMDL_GetAcmdCode( fmmdl );
+		code = MMDL_GetAcmdCode( fmmdl );
 		
 		if( code == ACMD_NOT ){
 			break;
 		}
 		
-		seq = FLDMMDL_GetAcmdSeq( fmmdl );
+		seq = MMDL_GetAcmdSeq( fmmdl );
 	}while( fmmdl_AcmdAction(fmmdl,code,seq) );
 }
 
@@ -561,32 +561,32 @@ void FLDMMDL_ActionAcmd( FLDMMDL * fmmdl )
  * AcmdAction()との違いはコマンド終了時に
  * ステータスビット、コマンドワークの初期化がある事と
  * 戻り値で終了判定が返る事。
- * @param	fmmdl		FLDMMDL * 
+ * @param	fmmdl		MMDL * 
  * @retval	int			TRUE=終了
  */
 //--------------------------------------------------------------
-BOOL FLDMMDL_ActionLocalAcmd( FLDMMDL * fmmdl )
+BOOL MMDL_ActionLocalAcmd( MMDL * fmmdl )
 {
-	FLDMMDL_ActionAcmd( fmmdl );
+	MMDL_ActionAcmd( fmmdl );
 	
-	if( FLDMMDL_CheckStatusBit(fmmdl,FLDMMDL_STABIT_ACMD_END) == 0 ){
+	if( MMDL_CheckStatusBit(fmmdl,MMDL_STABIT_ACMD_END) == 0 ){
 		return( FALSE );
 	}
 	
-	FLDMMDL_OffStatusBit( fmmdl, FLDMMDL_STABIT_ACMD_END );
-	FLDMMDL_SetAcmdCode( fmmdl, ACMD_NOT );
-	FLDMMDL_SetAcmdSeq( fmmdl, 0 );
+	MMDL_OffStatusBit( fmmdl, MMDL_STABIT_ACMD_END );
+	MMDL_SetAcmdCode( fmmdl, ACMD_NOT );
+	MMDL_SetAcmdSeq( fmmdl, 0 );
 	return( TRUE );
 }
 
 //--------------------------------------------------------------
 /**
  * アニメーションコマンドアクション
- * @param	fmmdl		FLDMMDL * 
+ * @param	fmmdl		MMDL * 
  * @retval	int			TRUE=再帰
  */
 //--------------------------------------------------------------
-static int fmmdl_AcmdAction( FLDMMDL * fmmdl, int code, int seq )
+static int fmmdl_AcmdAction( MMDL * fmmdl, int code, int seq )
 {
 	return( DATA_AcmdActionTbl[code][seq](fmmdl) );
 }
@@ -597,14 +597,14 @@ static int fmmdl_AcmdAction( FLDMMDL * fmmdl, int code, int seq )
 //--------------------------------------------------------------
 /**
  * AC系　コマンド終了
- * 常にFLDMMDL_STABIT_ACMD_ENDをセット
- * @param	fmmdl	FLDMMDL * 
+ * 常にMMDL_STABIT_ACMD_ENDをセット
+ * @param	fmmdl	MMDL * 
  * @retval	int		FALSE
  */
 //--------------------------------------------------------------
-static int AC_End( FLDMMDL * fmmdl )
+static int AC_End( MMDL * fmmdl )
 {
-	FLDMMDL_OnStatusBit( fmmdl, FLDMMDL_STABIT_ACMD_END );
+	MMDL_OnStatusBit( fmmdl, MMDL_STABIT_ACMD_END );
 	
 	return( FALSE );
 }
@@ -615,27 +615,27 @@ static int AC_End( FLDMMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_DIR系共通処理
- * @param	fmmdl	FLDMMDL * 
+ * @param	fmmdl	MMDL * 
  * @param	dir		表示方向。DIR_UP
  * @retval	nothing
  */
 //--------------------------------------------------------------
-static void AcDirSet( FLDMMDL * fmmdl, int dir )
+static void AcDirSet( MMDL * fmmdl, int dir )
 {
-	FLDMMDL_SetDirDisp( fmmdl, dir );
-	FLDMMDL_SetDrawStatus( fmmdl, DRAW_STA_STOP );
-	FLDMMDL_UpdateGridPosCurrent( fmmdl );
-	FLDMMDL_IncAcmdSeq( fmmdl );
+	MMDL_SetDirDisp( fmmdl, dir );
+	MMDL_SetDrawStatus( fmmdl, DRAW_STA_STOP );
+	MMDL_UpdateGridPosCurrent( fmmdl );
+	MMDL_IncAcmdSeq( fmmdl );
 }
 
 //--------------------------------------------------------------
 /**
  * AC_DIR_U 0
- * @param	fmmdl	FLDMMDL * 
+ * @param	fmmdl	MMDL * 
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_DirU_0( FLDMMDL * fmmdl )
+static int AC_DirU_0( MMDL * fmmdl )
 {
 	AcDirSet( fmmdl, DIR_UP );
 	
@@ -645,11 +645,11 @@ static int AC_DirU_0( FLDMMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_DIR_D 0
- * @param	fmmdl	FLDMMDL * 
+ * @param	fmmdl	MMDL * 
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_DirD_0( FLDMMDL * fmmdl )
+static int AC_DirD_0( MMDL * fmmdl )
 {
 	AcDirSet( fmmdl, DIR_DOWN );
 	
@@ -659,11 +659,11 @@ static int AC_DirD_0( FLDMMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_DIR_L 0
- * @param	fmmdl	FLDMMDL * 
+ * @param	fmmdl	MMDL * 
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_DirL_0( FLDMMDL * fmmdl )
+static int AC_DirL_0( MMDL * fmmdl )
 {
 	AcDirSet( fmmdl, DIR_LEFT );
 	
@@ -673,11 +673,11 @@ static int AC_DirL_0( FLDMMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_DIR_R 0
- * @param	fmmdl	FLDMMDL * 
+ * @param	fmmdl	MMDL * 
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_DirR_0( FLDMMDL * fmmdl )
+static int AC_DirR_0( MMDL * fmmdl )
 {
 	AcDirSet( fmmdl, DIR_RIGHT );
 	
@@ -690,7 +690,7 @@ static int AC_DirR_0( FLDMMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_WALK_WORK初期化
- * @param	fmmdl	FLDMMDL * 
+ * @param	fmmdl	MMDL * 
  * @param	dir		移動方向
  * @param	val		移動量
  * @param	wait	移動フレーム
@@ -698,37 +698,37 @@ static int AC_DirR_0( FLDMMDL * fmmdl )
  * @retval	nothing
  */
 //--------------------------------------------------------------
-static void AcWalkWorkInit( FLDMMDL * fmmdl, int dir, fx32 val, s16 wait, u16 draw )
+static void AcWalkWorkInit( MMDL * fmmdl, int dir, fx32 val, s16 wait, u16 draw )
 {
 	AC_WALK_WORK *work;
 	
-	work = FLDMMDL_InitMoveCmdWork( fmmdl, AC_WALK_WORK_SIZE );
+	work = MMDL_InitMoveCmdWork( fmmdl, AC_WALK_WORK_SIZE );
 	work->draw_state = draw;
 	work->wait = wait;
 	work->dir = dir;
 	work->val = val;
 	
-	FLDMMDL_UpdateGridPosDir( fmmdl, dir );
-	FLDMMDL_SetDirAll( fmmdl, dir );
-	FLDMMDL_SetDrawStatus( fmmdl, draw );
-	FLDMMDL_OnStatusBit( fmmdl, FLDMMDL_STABIT_MOVE_START );
-	FLDMMDL_IncAcmdSeq( fmmdl );
+	MMDL_UpdateGridPosDir( fmmdl, dir );
+	MMDL_SetDirAll( fmmdl, dir );
+	MMDL_SetDrawStatus( fmmdl, draw );
+	MMDL_OnStatusBit( fmmdl, MMDL_STABIT_MOVE_START );
+	MMDL_IncAcmdSeq( fmmdl );
 }
 
 //--------------------------------------------------------------
 /**
  * AC_WALK系　移動
- * @param	fmmdl	FLDMMDL * 
+ * @param	fmmdl	MMDL * 
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_Walk_1( FLDMMDL * fmmdl )
+static int AC_Walk_1( MMDL * fmmdl )
 {
 	AC_WALK_WORK *work;
 	
-	work = FLDMMDL_GetMoveCmdWork( fmmdl );
-	FLDMMDL_AddVectorPosDir( fmmdl, work->dir, work->val );
-	FLDMMDL_UpdateCurrentHeight( fmmdl );
+	work = MMDL_GetMoveCmdWork( fmmdl );
+	MMDL_AddVectorPosDir( fmmdl, work->dir, work->val );
+	MMDL_UpdateCurrentHeight( fmmdl );
 	
 	work->wait--;
 	
@@ -736,15 +736,15 @@ static int AC_Walk_1( FLDMMDL * fmmdl )
 		return( FALSE );
 	}
 	
-	FLDMMDL_OnStatusBit(
-		fmmdl, FLDMMDL_STABIT_MOVE_END|FLDMMDL_STABIT_ACMD_END );
-	FLDMMDL_UpdateGridPosCurrent( fmmdl );
+	MMDL_OnStatusBit(
+		fmmdl, MMDL_STABIT_MOVE_END|MMDL_STABIT_ACMD_END );
+	MMDL_UpdateGridPosCurrent( fmmdl );
 #if 0
-	FLDMMDL_CallDrawProc( fmmdl );						//1フレーム進める
-	FLDMMDL_SetDrawStatus( fmmdl, DRAW_STA_STOP );
+	MMDL_CallDrawProc( fmmdl );						//1フレーム進める
+	MMDL_SetDrawStatus( fmmdl, DRAW_STA_STOP );
 #else
 #endif
-	FLDMMDL_IncAcmdSeq( fmmdl );
+	MMDL_IncAcmdSeq( fmmdl );
 	
 #if 0
 	return( TRUE );
@@ -756,13 +756,13 @@ static int AC_Walk_1( FLDMMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_WALK系 移動完了
- * @param	fmmdl	FLDMMDL *
+ * @param	fmmdl	MMDL *
  * @retval	int	TRUE
  */
 //--------------------------------------------------------------
-static int AC_Walk_End( FLDMMDL *fmmdl )
+static int AC_Walk_End( MMDL *fmmdl )
 {
-	FLDMMDL_SetDrawStatus( fmmdl, DRAW_STA_STOP );
+	MMDL_SetDrawStatus( fmmdl, DRAW_STA_STOP );
 	return( FALSE );
 }
 
@@ -772,11 +772,11 @@ static int AC_Walk_End( FLDMMDL *fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_WALK_U_32F 0
- * @param	fmmdl	FLDMMDL * 
+ * @param	fmmdl	MMDL * 
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_WalkU32F_0( FLDMMDL * fmmdl )
+static int AC_WalkU32F_0( MMDL * fmmdl )
 {
 	AcWalkWorkInit( fmmdl, DIR_UP, GRID_VALUE_SPEED_32, GRID_FRAME_32, DRAW_STA_WALK_32F ); 
 	
@@ -786,11 +786,11 @@ static int AC_WalkU32F_0( FLDMMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_WALK_D_32F 0
- * @param	fmmdl	FLDMMDL * 
+ * @param	fmmdl	MMDL * 
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_WalkD32F_0( FLDMMDL * fmmdl )
+static int AC_WalkD32F_0( MMDL * fmmdl )
 {
 	AcWalkWorkInit( fmmdl, DIR_DOWN, GRID_VALUE_SPEED_32, GRID_FRAME_32, DRAW_STA_WALK_32F ); 
 	
@@ -800,11 +800,11 @@ static int AC_WalkD32F_0( FLDMMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_WALK_L_32F 0
- * @param	fmmdl	FLDMMDL * 
+ * @param	fmmdl	MMDL * 
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_WalkL32F_0( FLDMMDL * fmmdl )
+static int AC_WalkL32F_0( MMDL * fmmdl )
 {
 	AcWalkWorkInit( fmmdl, DIR_LEFT, GRID_VALUE_SPEED_32, GRID_FRAME_32, DRAW_STA_WALK_32F ); 
 	
@@ -814,11 +814,11 @@ static int AC_WalkL32F_0( FLDMMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_WALK_R_32F 0
- * @param	fmmdl	FLDMMDL * 
+ * @param	fmmdl	MMDL * 
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_WalkR32F_0( FLDMMDL * fmmdl )
+static int AC_WalkR32F_0( MMDL * fmmdl )
 {
 	AcWalkWorkInit( fmmdl, DIR_RIGHT, GRID_VALUE_SPEED_32, GRID_FRAME_32, DRAW_STA_WALK_32F ); 
 	
@@ -828,11 +828,11 @@ static int AC_WalkR32F_0( FLDMMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_WALK_U_16F 0
- * @param	fmmdl	FLDMMDL * 
+ * @param	fmmdl	MMDL * 
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_WalkU16F_0( FLDMMDL * fmmdl )
+static int AC_WalkU16F_0( MMDL * fmmdl )
 {
 	AcWalkWorkInit( fmmdl, DIR_UP, GRID_VALUE_SPEED_16, GRID_FRAME_16, DRAW_STA_WALK_16F ); 
 	
@@ -842,11 +842,11 @@ static int AC_WalkU16F_0( FLDMMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_WALK_D_16F 0
- * @param	fmmdl	FLDMMDL * 
+ * @param	fmmdl	MMDL * 
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_WalkD16F_0( FLDMMDL * fmmdl )
+static int AC_WalkD16F_0( MMDL * fmmdl )
 {
 	AcWalkWorkInit( fmmdl, DIR_DOWN, GRID_VALUE_SPEED_16, GRID_FRAME_16, DRAW_STA_WALK_16F ); 
 	
@@ -856,11 +856,11 @@ static int AC_WalkD16F_0( FLDMMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_WALK_L_16F 0
- * @param	fmmdl	FLDMMDL * 
+ * @param	fmmdl	MMDL * 
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_WalkL16F_0( FLDMMDL * fmmdl )
+static int AC_WalkL16F_0( MMDL * fmmdl )
 {
 	AcWalkWorkInit( fmmdl, DIR_LEFT, GRID_VALUE_SPEED_16, GRID_FRAME_16, DRAW_STA_WALK_16F ); 
 	
@@ -870,11 +870,11 @@ static int AC_WalkL16F_0( FLDMMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_WALK_R_16F 0
- * @param	fmmdl	FLDMMDL * 
+ * @param	fmmdl	MMDL * 
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_WalkR16F_0( FLDMMDL * fmmdl )
+static int AC_WalkR16F_0( MMDL * fmmdl )
 {
 	AcWalkWorkInit( fmmdl, DIR_RIGHT, GRID_VALUE_SPEED_16, GRID_FRAME_16, DRAW_STA_WALK_16F ); 
 	
@@ -884,11 +884,11 @@ static int AC_WalkR16F_0( FLDMMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_WALK_U_8F 0
- * @param	fmmdl	FLDMMDL * 
+ * @param	fmmdl	MMDL * 
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_WalkU8F_0( FLDMMDL * fmmdl )
+static int AC_WalkU8F_0( MMDL * fmmdl )
 {
 	AcWalkWorkInit( fmmdl, DIR_UP, GRID_VALUE_SPEED_8, GRID_FRAME_8, DRAW_STA_WALK_8F ); 
 	
@@ -898,11 +898,11 @@ static int AC_WalkU8F_0( FLDMMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_WALK_D_8F 0
- * @param	fmmdl	FLDMMDL * 
+ * @param	fmmdl	MMDL * 
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_WalkD8F_0( FLDMMDL * fmmdl )
+static int AC_WalkD8F_0( MMDL * fmmdl )
 {
 	AcWalkWorkInit( fmmdl, DIR_DOWN, GRID_VALUE_SPEED_8, GRID_FRAME_8, DRAW_STA_WALK_8F ); 
 	
@@ -912,11 +912,11 @@ static int AC_WalkD8F_0( FLDMMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_WALK_L_8F 0
- * @param	fmmdl	FLDMMDL * 
+ * @param	fmmdl	MMDL * 
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_WalkL8F_0( FLDMMDL * fmmdl )
+static int AC_WalkL8F_0( MMDL * fmmdl )
 {
 	AcWalkWorkInit( fmmdl, DIR_LEFT, GRID_VALUE_SPEED_8, GRID_FRAME_8, DRAW_STA_WALK_8F ); 
 	
@@ -926,11 +926,11 @@ static int AC_WalkL8F_0( FLDMMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_WALK_R_8F 0
- * @param	fmmdl	FLDMMDL * 
+ * @param	fmmdl	MMDL * 
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_WalkR8F_0( FLDMMDL * fmmdl )
+static int AC_WalkR8F_0( MMDL * fmmdl )
 {
 	AcWalkWorkInit( fmmdl, DIR_RIGHT, GRID_VALUE_SPEED_8, GRID_FRAME_8, DRAW_STA_WALK_8F ); 
 	
@@ -940,11 +940,11 @@ static int AC_WalkR8F_0( FLDMMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_WALK_U_4F 0
- * @param	fmmdl	FLDMMDL * 
+ * @param	fmmdl	MMDL * 
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_WalkU4F_0( FLDMMDL * fmmdl )
+static int AC_WalkU4F_0( MMDL * fmmdl )
 {
 	AcWalkWorkInit( fmmdl, DIR_UP, GRID_VALUE_SPEED_4, GRID_FRAME_4, DRAW_STA_WALK_4F ); 
 	
@@ -954,11 +954,11 @@ static int AC_WalkU4F_0( FLDMMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_WALK_D_4F 0
- * @param	fmmdl	FLDMMDL * 
+ * @param	fmmdl	MMDL * 
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_WalkD4F_0( FLDMMDL * fmmdl )
+static int AC_WalkD4F_0( MMDL * fmmdl )
 {
 	AcWalkWorkInit( fmmdl, DIR_DOWN, GRID_VALUE_SPEED_4, GRID_FRAME_4, DRAW_STA_WALK_4F ); 
 	
@@ -968,11 +968,11 @@ static int AC_WalkD4F_0( FLDMMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_WALK_L_4F 0
- * @param	fmmdl	FLDMMDL * 
+ * @param	fmmdl	MMDL * 
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_WalkL4F_0( FLDMMDL * fmmdl )
+static int AC_WalkL4F_0( MMDL * fmmdl )
 {
 	AcWalkWorkInit( fmmdl, DIR_LEFT, GRID_VALUE_SPEED_4, GRID_FRAME_4, DRAW_STA_WALK_4F ); 
 	
@@ -982,11 +982,11 @@ static int AC_WalkL4F_0( FLDMMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_WALK_R_4F 0
- * @param	fmmdl	FLDMMDL * 
+ * @param	fmmdl	MMDL * 
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_WalkR4F_0( FLDMMDL * fmmdl )
+static int AC_WalkR4F_0( MMDL * fmmdl )
 {
 	AcWalkWorkInit( fmmdl, DIR_RIGHT, GRID_VALUE_SPEED_4, GRID_FRAME_4, DRAW_STA_WALK_4F ); 
 	
@@ -996,11 +996,11 @@ static int AC_WalkR4F_0( FLDMMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_WALK_U_2F 0
- * @param	fmmdl	FLDMMDL * 
+ * @param	fmmdl	MMDL * 
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_WalkU2F_0( FLDMMDL * fmmdl )
+static int AC_WalkU2F_0( MMDL * fmmdl )
 {
 	AcWalkWorkInit( fmmdl, DIR_UP, GRID_VALUE_SPEED_2, GRID_FRAME_2, DRAW_STA_WALK_2F ); 
 	
@@ -1010,11 +1010,11 @@ static int AC_WalkU2F_0( FLDMMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_WALK_D_2F 0
- * @param	fmmdl	FLDMMDL * 
+ * @param	fmmdl	MMDL * 
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_WalkD2F_0( FLDMMDL * fmmdl )
+static int AC_WalkD2F_0( MMDL * fmmdl )
 {
 	AcWalkWorkInit( fmmdl, DIR_DOWN, GRID_VALUE_SPEED_2, GRID_FRAME_2, DRAW_STA_WALK_2F ); 
 	
@@ -1024,11 +1024,11 @@ static int AC_WalkD2F_0( FLDMMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_WALK_L_2F 0
- * @param	fmmdl	FLDMMDL * 
+ * @param	fmmdl	MMDL * 
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_WalkL2F_0( FLDMMDL * fmmdl )
+static int AC_WalkL2F_0( MMDL * fmmdl )
 {
 	AcWalkWorkInit( fmmdl, DIR_LEFT, GRID_VALUE_SPEED_2, GRID_FRAME_2, DRAW_STA_WALK_2F ); 
 	
@@ -1038,11 +1038,11 @@ static int AC_WalkL2F_0( FLDMMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_WALK_R_2F 0
- * @param	fmmdl	FLDMMDL * 
+ * @param	fmmdl	MMDL * 
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_WalkR2F_0( FLDMMDL * fmmdl )
+static int AC_WalkR2F_0( MMDL * fmmdl )
 {
 	AcWalkWorkInit( fmmdl, DIR_RIGHT, GRID_VALUE_SPEED_2, GRID_FRAME_2, DRAW_STA_WALK_2F ); 
 	
@@ -1052,11 +1052,11 @@ static int AC_WalkR2F_0( FLDMMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_WALK_U_1F 0
- * @param	fmmdl	FLDMMDL * 
+ * @param	fmmdl	MMDL * 
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_WalkU1F_0( FLDMMDL * fmmdl )
+static int AC_WalkU1F_0( MMDL * fmmdl )
 {
 	AcWalkWorkInit( fmmdl, DIR_UP, GRID_VALUE_SPEED_1, GRID_FRAME_1, DRAW_STA_STOP ); 
 	
@@ -1066,11 +1066,11 @@ static int AC_WalkU1F_0( FLDMMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_WALK_D_1F 0
- * @param	fmmdl	FLDMMDL * 
+ * @param	fmmdl	MMDL * 
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_WalkD1F_0( FLDMMDL * fmmdl )
+static int AC_WalkD1F_0( MMDL * fmmdl )
 {
 	AcWalkWorkInit( fmmdl, DIR_DOWN, GRID_VALUE_SPEED_1, GRID_FRAME_1, DRAW_STA_STOP ); 
 	
@@ -1080,11 +1080,11 @@ static int AC_WalkD1F_0( FLDMMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_WALK_L_1F 0
- * @param	fmmdl	FLDMMDL * 
+ * @param	fmmdl	MMDL * 
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_WalkL1F_0( FLDMMDL * fmmdl )
+static int AC_WalkL1F_0( MMDL * fmmdl )
 {
 	AcWalkWorkInit( fmmdl, DIR_LEFT, GRID_VALUE_SPEED_1, GRID_FRAME_1, DRAW_STA_STOP );
 	
@@ -1094,11 +1094,11 @@ static int AC_WalkL1F_0( FLDMMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_WALK_R_1F 0
- * @param	fmmdl	FLDMMDL * 
+ * @param	fmmdl	MMDL * 
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_WalkR1F_0( FLDMMDL * fmmdl )
+static int AC_WalkR1F_0( MMDL * fmmdl )
 {
 	AcWalkWorkInit( fmmdl, DIR_RIGHT, GRID_VALUE_SPEED_1, GRID_FRAME_1, DRAW_STA_STOP ); 
 	
@@ -1108,13 +1108,13 @@ static int AC_WalkR1F_0( FLDMMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_DASH_U_4F 0
- * @param	fmmdl	FLDMMDL * 
+ * @param	fmmdl	MMDL * 
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_DashU4F_0( FLDMMDL * fmmdl )
+static int AC_DashU4F_0( MMDL * fmmdl )
 {
-#ifdef DEBUG_FLDMMDL_FRAME_60
+#ifdef DEBUG_MMDL_FRAME_60
 	AcWalkWorkInit( fmmdl, DIR_UP, GRID_VALUE_SPEED_8, GRID_FRAME_8, DRAW_STA_DASH_4F ); 
 #else
 	AcWalkWorkInit( fmmdl, DIR_UP, GRID_VALUE_SPEED_4, GRID_FRAME_4, DRAW_STA_DASH_4F ); 
@@ -1125,13 +1125,13 @@ static int AC_DashU4F_0( FLDMMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_DASH_D_4F 0
- * @param	fmmdl	FLDMMDL * 
+ * @param	fmmdl	MMDL * 
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_DashD4F_0( FLDMMDL * fmmdl )
+static int AC_DashD4F_0( MMDL * fmmdl )
 {
-#ifdef DEBUG_FLDMMDL_FRAME_60
+#ifdef DEBUG_MMDL_FRAME_60
 	AcWalkWorkInit( fmmdl, DIR_DOWN, GRID_VALUE_SPEED_8, GRID_FRAME_8, DRAW_STA_DASH_4F ); 
 #else	
 	AcWalkWorkInit( fmmdl, DIR_DOWN, GRID_VALUE_SPEED_4, GRID_FRAME_4, DRAW_STA_DASH_4F ); 
@@ -1142,13 +1142,13 @@ static int AC_DashD4F_0( FLDMMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_DASH_L_4F 0
- * @param	fmmdl	FLDMMDL * 
+ * @param	fmmdl	MMDL * 
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_DashL4F_0( FLDMMDL * fmmdl )
+static int AC_DashL4F_0( MMDL * fmmdl )
 {
-#ifdef DEBUG_FLDMMDL_FRAME_60
+#ifdef DEBUG_MMDL_FRAME_60
 	AcWalkWorkInit( fmmdl, DIR_LEFT, GRID_VALUE_SPEED_8, GRID_FRAME_8, DRAW_STA_DASH_4F ); 
 #else
 	AcWalkWorkInit( fmmdl, DIR_LEFT, GRID_VALUE_SPEED_4, GRID_FRAME_4, DRAW_STA_DASH_4F ); 
@@ -1159,13 +1159,13 @@ static int AC_DashL4F_0( FLDMMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_DASH_R_4F 0
- * @param	fmmdl	FLDMMDL * 
+ * @param	fmmdl	MMDL * 
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_DashR4F_0( FLDMMDL * fmmdl )
+static int AC_DashR4F_0( MMDL * fmmdl )
 {
-#ifdef DEBUG_FLDMMDL_FRAME_60
+#ifdef DEBUG_MMDL_FRAME_60
 	AcWalkWorkInit( fmmdl, DIR_RIGHT, GRID_VALUE_SPEED_8, GRID_FRAME_8, DRAW_STA_DASH_4F ); 
 #else
 	AcWalkWorkInit( fmmdl, DIR_RIGHT, GRID_VALUE_SPEED_4, GRID_FRAME_4, DRAW_STA_DASH_4F ); 
@@ -1179,40 +1179,40 @@ static int AC_DashR4F_0( FLDMMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_STAY_WALK_WORK初期化
- * @param	fmmdl	FLDMMDL * 
+ * @param	fmmdl	MMDL * 
  * @param	dir		移動方向
  * @param	wait	表示フレーム
  * @param	draw	描画ステータス
  * @retval	nothing
  */
 //--------------------------------------------------------------
-static void AcStayWalkWorkInit( FLDMMDL * fmmdl, int dir, s16 wait, u16 draw )
+static void AcStayWalkWorkInit( MMDL * fmmdl, int dir, s16 wait, u16 draw )
 {
 	AC_STAY_WALK_WORK *work;
 	
-	work = FLDMMDL_InitMoveCmdWork( fmmdl, AC_WALK_WORK_SIZE );
+	work = MMDL_InitMoveCmdWork( fmmdl, AC_WALK_WORK_SIZE );
 	
 	work->draw_state = draw;
 	work->wait = wait + FRAME_1;	//FRAME_1=動作->アニメへの1フレーム
 	
-	FLDMMDL_SetDirDisp( fmmdl, dir );
-	FLDMMDL_SetDrawStatus( fmmdl, draw );
-	FLDMMDL_UpdateGridPosCurrent( fmmdl );
-	FLDMMDL_IncAcmdSeq( fmmdl );
+	MMDL_SetDirDisp( fmmdl, dir );
+	MMDL_SetDrawStatus( fmmdl, draw );
+	MMDL_UpdateGridPosCurrent( fmmdl );
+	MMDL_IncAcmdSeq( fmmdl );
 }
 
 //--------------------------------------------------------------
 /**
  * AC_STAY_WALK系　動作
- * @param	fmmdl	FLDMMDL * 
+ * @param	fmmdl	MMDL * 
  * @retval	nothing
  */
 //--------------------------------------------------------------
-static int AC_StayWalk_1( FLDMMDL * fmmdl )
+static int AC_StayWalk_1( MMDL * fmmdl )
 {
 	AC_STAY_WALK_WORK *work;
 	
-	work = FLDMMDL_GetMoveCmdWork( fmmdl );
+	work = MMDL_GetMoveCmdWork( fmmdl );
 	
 	work->wait--;
 	
@@ -1220,9 +1220,9 @@ static int AC_StayWalk_1( FLDMMDL * fmmdl )
 		return( FALSE );
 	}
 	
-	FLDMMDL_OnStatusBit( fmmdl, FLDMMDL_STABIT_ACMD_END );
-	FLDMMDL_SetDrawStatus( fmmdl, DRAW_STA_STOP );
-	FLDMMDL_IncAcmdSeq( fmmdl );
+	MMDL_OnStatusBit( fmmdl, MMDL_STABIT_ACMD_END );
+	MMDL_SetDrawStatus( fmmdl, DRAW_STA_STOP );
+	MMDL_IncAcmdSeq( fmmdl );
 	
 	return( TRUE );
 }
@@ -1233,11 +1233,11 @@ static int AC_StayWalk_1( FLDMMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_STAY_WALK_U_32F 0
- * @param	fmmdl	FLDMMDL * 
+ * @param	fmmdl	MMDL * 
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_StayWalkU32F_0( FLDMMDL * fmmdl )
+static int AC_StayWalkU32F_0( MMDL * fmmdl )
 {
 	AcStayWalkWorkInit( fmmdl, DIR_UP, GRID_FRAME_32, DRAW_STA_WALK_32F ); 
 	
@@ -1247,11 +1247,11 @@ static int AC_StayWalkU32F_0( FLDMMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_STAY_WALK_D_32F 0
- * @param	fmmdl	FLDMMDL * 
+ * @param	fmmdl	MMDL * 
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_StayWalkD32F_0( FLDMMDL * fmmdl )
+static int AC_StayWalkD32F_0( MMDL * fmmdl )
 {
 	AcStayWalkWorkInit( fmmdl, DIR_DOWN, GRID_FRAME_32, DRAW_STA_WALK_32F ); 
 	
@@ -1261,11 +1261,11 @@ static int AC_StayWalkD32F_0( FLDMMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_STAY_WALK_L_32F 0
- * @param	fmmdl	FLDMMDL * 
+ * @param	fmmdl	MMDL * 
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_StayWalkL32F_0( FLDMMDL * fmmdl )
+static int AC_StayWalkL32F_0( MMDL * fmmdl )
 {
 	AcStayWalkWorkInit( fmmdl, DIR_LEFT, GRID_FRAME_32, DRAW_STA_WALK_32F ); 
 	
@@ -1275,11 +1275,11 @@ static int AC_StayWalkL32F_0( FLDMMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_STAY_WALK_R_32F 0
- * @param	fmmdl	FLDMMDL * 
+ * @param	fmmdl	MMDL * 
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_StayWalkR32F_0( FLDMMDL * fmmdl )
+static int AC_StayWalkR32F_0( MMDL * fmmdl )
 {
 	AcStayWalkWorkInit( fmmdl, DIR_RIGHT, GRID_FRAME_32, DRAW_STA_WALK_32F ); 
 	
@@ -1289,11 +1289,11 @@ static int AC_StayWalkR32F_0( FLDMMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_STAY_WALK_U_16F 0
- * @param	fmmdl	FLDMMDL * 
+ * @param	fmmdl	MMDL * 
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_StayWalkU16F_0( FLDMMDL * fmmdl )
+static int AC_StayWalkU16F_0( MMDL * fmmdl )
 {
 	AcStayWalkWorkInit( fmmdl, DIR_UP, GRID_FRAME_16, DRAW_STA_WALK_16F ); 
 	
@@ -1303,11 +1303,11 @@ static int AC_StayWalkU16F_0( FLDMMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_STAY_WALK_D_16F 0
- * @param	fmmdl	FLDMMDL * 
+ * @param	fmmdl	MMDL * 
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_StayWalkD16F_0( FLDMMDL * fmmdl )
+static int AC_StayWalkD16F_0( MMDL * fmmdl )
 {
 	AcStayWalkWorkInit( fmmdl, DIR_DOWN, GRID_FRAME_16, DRAW_STA_WALK_16F ); 
 	
@@ -1317,11 +1317,11 @@ static int AC_StayWalkD16F_0( FLDMMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_STAY_WALK_L_16F 0
- * @param	fmmdl	FLDMMDL * 
+ * @param	fmmdl	MMDL * 
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_StayWalkL16F_0( FLDMMDL * fmmdl )
+static int AC_StayWalkL16F_0( MMDL * fmmdl )
 {
 	AcStayWalkWorkInit( fmmdl, DIR_LEFT, GRID_FRAME_16, DRAW_STA_WALK_16F ); 
 	
@@ -1331,11 +1331,11 @@ static int AC_StayWalkL16F_0( FLDMMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_STAY_WALK_R_16F 0
- * @param	fmmdl	FLDMMDL * 
+ * @param	fmmdl	MMDL * 
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_StayWalkR16F_0( FLDMMDL * fmmdl )
+static int AC_StayWalkR16F_0( MMDL * fmmdl )
 {
 	AcStayWalkWorkInit( fmmdl, DIR_RIGHT, GRID_FRAME_16, DRAW_STA_WALK_16F ); 
 	
@@ -1345,11 +1345,11 @@ static int AC_StayWalkR16F_0( FLDMMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_STAY_WALK_U_8F 0
- * @param	fmmdl	FLDMMDL * 
+ * @param	fmmdl	MMDL * 
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_StayWalkU8F_0( FLDMMDL * fmmdl )
+static int AC_StayWalkU8F_0( MMDL * fmmdl )
 {
 	AcStayWalkWorkInit( fmmdl, DIR_UP, GRID_FRAME_8, DRAW_STA_WALK_8F ); 
 	
@@ -1359,11 +1359,11 @@ static int AC_StayWalkU8F_0( FLDMMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_STAY_WALK_D_8F 0
- * @param	fmmdl	FLDMMDL * 
+ * @param	fmmdl	MMDL * 
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_StayWalkD8F_0( FLDMMDL * fmmdl )
+static int AC_StayWalkD8F_0( MMDL * fmmdl )
 {
 	AcStayWalkWorkInit( fmmdl, DIR_DOWN, GRID_FRAME_8, DRAW_STA_WALK_8F ); 
 	
@@ -1373,11 +1373,11 @@ static int AC_StayWalkD8F_0( FLDMMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_STAY_WALK_L_8F 0
- * @param	fmmdl	FLDMMDL * 
+ * @param	fmmdl	MMDL * 
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_StayWalkL8F_0( FLDMMDL * fmmdl )
+static int AC_StayWalkL8F_0( MMDL * fmmdl )
 {
 	AcStayWalkWorkInit( fmmdl, DIR_LEFT, GRID_FRAME_8, DRAW_STA_WALK_8F ); 
 	
@@ -1387,11 +1387,11 @@ static int AC_StayWalkL8F_0( FLDMMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_STAY_WALK_R_8F 0
- * @param	fmmdl	FLDMMDL * 
+ * @param	fmmdl	MMDL * 
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_StayWalkR8F_0( FLDMMDL * fmmdl )
+static int AC_StayWalkR8F_0( MMDL * fmmdl )
 {
 	AcStayWalkWorkInit( fmmdl, DIR_RIGHT, GRID_FRAME_8, DRAW_STA_WALK_8F ); 
 	
@@ -1401,11 +1401,11 @@ static int AC_StayWalkR8F_0( FLDMMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_STAY_WALK_U_4F 0
- * @param	fmmdl	FLDMMDL * 
+ * @param	fmmdl	MMDL * 
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_StayWalkU4F_0( FLDMMDL * fmmdl )
+static int AC_StayWalkU4F_0( MMDL * fmmdl )
 {
 	AcStayWalkWorkInit( fmmdl, DIR_UP, GRID_FRAME_4, DRAW_STA_WALK_4F ); 
 	
@@ -1415,11 +1415,11 @@ static int AC_StayWalkU4F_0( FLDMMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_STAY_WALK_D_4F 0
- * @param	fmmdl	FLDMMDL * 
+ * @param	fmmdl	MMDL * 
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_StayWalkD4F_0( FLDMMDL * fmmdl )
+static int AC_StayWalkD4F_0( MMDL * fmmdl )
 {
 	AcStayWalkWorkInit( fmmdl, DIR_DOWN, GRID_FRAME_4, DRAW_STA_WALK_4F ); 
 	
@@ -1429,11 +1429,11 @@ static int AC_StayWalkD4F_0( FLDMMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_STAY_WALK_L_4F 0
- * @param	fmmdl	FLDMMDL * 
+ * @param	fmmdl	MMDL * 
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_StayWalkL4F_0( FLDMMDL * fmmdl )
+static int AC_StayWalkL4F_0( MMDL * fmmdl )
 {
 	AcStayWalkWorkInit( fmmdl, DIR_LEFT, GRID_FRAME_4, DRAW_STA_WALK_4F ); 
 	
@@ -1443,11 +1443,11 @@ static int AC_StayWalkL4F_0( FLDMMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_STAY_WALK_R_4F 0
- * @param	fmmdl	FLDMMDL * 
+ * @param	fmmdl	MMDL * 
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_StayWalkR4F_0( FLDMMDL * fmmdl )
+static int AC_StayWalkR4F_0( MMDL * fmmdl )
 {
 	AcStayWalkWorkInit( fmmdl, DIR_RIGHT, GRID_FRAME_4, DRAW_STA_WALK_4F ); 
 	
@@ -1457,11 +1457,11 @@ static int AC_StayWalkR4F_0( FLDMMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_STAY_WALK_U_2F 0
- * @param	fmmdl	FLDMMDL * 
+ * @param	fmmdl	MMDL * 
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_StayWalkU2F_0( FLDMMDL * fmmdl )
+static int AC_StayWalkU2F_0( MMDL * fmmdl )
 {
 	AcStayWalkWorkInit( fmmdl, DIR_UP, GRID_FRAME_2, DRAW_STA_WALK_2F ); 
 	
@@ -1471,11 +1471,11 @@ static int AC_StayWalkU2F_0( FLDMMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_STAY_WALK_D_2F 0
- * @param	fmmdl	FLDMMDL * 
+ * @param	fmmdl	MMDL * 
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_StayWalkD2F_0( FLDMMDL * fmmdl )
+static int AC_StayWalkD2F_0( MMDL * fmmdl )
 {
 	AcStayWalkWorkInit( fmmdl, DIR_DOWN, GRID_FRAME_2, DRAW_STA_WALK_2F ); 
 	
@@ -1485,11 +1485,11 @@ static int AC_StayWalkD2F_0( FLDMMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_STAY_WALK_L_2F 0
- * @param	fmmdl	FLDMMDL * 
+ * @param	fmmdl	MMDL * 
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_StayWalkL2F_0( FLDMMDL * fmmdl )
+static int AC_StayWalkL2F_0( MMDL * fmmdl )
 {
 	AcStayWalkWorkInit( fmmdl, DIR_LEFT, GRID_FRAME_2, DRAW_STA_WALK_2F ); 
 	
@@ -1499,11 +1499,11 @@ static int AC_StayWalkL2F_0( FLDMMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_STAY_WALK_R_2F 0
- * @param	fmmdl	FLDMMDL * 
+ * @param	fmmdl	MMDL * 
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_StayWalkR2F_0( FLDMMDL * fmmdl )
+static int AC_StayWalkR2F_0( MMDL * fmmdl )
 {
 	AcStayWalkWorkInit( fmmdl, DIR_RIGHT, GRID_FRAME_2, DRAW_STA_WALK_2F ); 
 	
@@ -1516,7 +1516,7 @@ static int AC_StayWalkR2F_0( FLDMMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_JUMP_WORK初期化　メイン
- * @param	fmmdl	FLDMMDL *
+ * @param	fmmdl	MMDL *
  * @param	dir		移動方向 DIR_UP等
  * @param	val		移動量
  * @param	wait	移動フレーム
@@ -1528,12 +1528,12 @@ static int AC_StayWalkR2F_0( FLDMMDL * fmmdl )
  */
 //--------------------------------------------------------------
 static void AcJumpWorkInitMain(
-	FLDMMDL * fmmdl, int dir, fx32 val,
+	MMDL * fmmdl, int dir, fx32 val,
 	s16 wait, u16 draw, s16 h_type, u16 h_speed, u32 se )
 {
 	AC_JUMP_WORK *work;
 	
-	work = FLDMMDL_InitMoveCmdWork( fmmdl, AC_JUMP_WORK_SIZE );
+	work = MMDL_InitMoveCmdWork( fmmdl, AC_JUMP_WORK_SIZE );
 	work->dir = dir;
 	work->val = val;
 	work->wait = wait;
@@ -1542,18 +1542,18 @@ static void AcJumpWorkInitMain(
 	work->h_speed = h_speed;
 	
 	if( val == 0 ){												//その場
-		FLDMMDL_UpdateGridPosCurrent( fmmdl );
+		MMDL_UpdateGridPosCurrent( fmmdl );
 	}else{
-		FLDMMDL_UpdateGridPosDir( fmmdl, dir );					//移動
+		MMDL_UpdateGridPosDir( fmmdl, dir );					//移動
 	}
 	
-	FLDMMDL_OnStatusBit( fmmdl,
-			FLDMMDL_STABIT_MOVE_START |
-			FLDMMDL_STABIT_JUMP_START );
+	MMDL_OnStatusBit( fmmdl,
+			MMDL_STABIT_MOVE_START |
+			MMDL_STABIT_JUMP_START );
 	
-	FLDMMDL_SetDirAll( fmmdl, dir );
-	FLDMMDL_SetDrawStatus( fmmdl, draw );
-	FLDMMDL_IncAcmdSeq( fmmdl );
+	MMDL_SetDirAll( fmmdl, dir );
+	MMDL_SetDrawStatus( fmmdl, draw );
+	MMDL_IncAcmdSeq( fmmdl );
 	
 	if( se ){
 #if 0
@@ -1565,7 +1565,7 @@ static void AcJumpWorkInitMain(
 //--------------------------------------------------------------
 /**
  * AC_JUMP_WORK初期化 SE_JUMP固定
- * @param	fmmdl	FLDMMDL *
+ * @param	fmmdl	MMDL *
  * @param	dir		移動方向 DIR_UP等
  * @param	val		移動量
  * @param	wait	移動フレーム
@@ -1576,7 +1576,7 @@ static void AcJumpWorkInitMain(
  */
 //--------------------------------------------------------------
 static void AcJumpWorkInit(
-		FLDMMDL * fmmdl, int dir, fx32 val, s16 wait, u16 draw, s16 h_type, u16 h_speed )
+		MMDL * fmmdl, int dir, fx32 val, s16 wait, u16 draw, s16 h_type, u16 h_speed )
 {
 #if 0
 	AcJumpWorkInitMain( fmmdl, dir, val,
@@ -1590,24 +1590,24 @@ static void AcJumpWorkInit(
 //--------------------------------------------------------------
 /**
  * AC_JUMP系　移動
- * @param	fmmdl	FLDMMDL * 
+ * @param	fmmdl	MMDL * 
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_Jump_1( FLDMMDL * fmmdl )
+static int AC_Jump_1( MMDL * fmmdl )
 {
 	AC_JUMP_WORK *work;
 	
-	work = FLDMMDL_GetMoveCmdWork( fmmdl );
+	work = MMDL_GetMoveCmdWork( fmmdl );
 	
 	if( work->val ){
-		FLDMMDL_AddVectorPosDir( fmmdl, work->dir, work->val );
-		FLDMMDL_UpdateCurrentHeight( fmmdl );
+		MMDL_AddVectorPosDir( fmmdl, work->dir, work->val );
+		MMDL_UpdateCurrentHeight( fmmdl );
 			
 		if( work->dest_val >= GRID_FX32 ){						//１グリッド移動
 			work->dest_val = 0;
-			FLDMMDL_UpdateGridPosDir( fmmdl, work->dir );
-			FLDMMDL_OnStatusBit( fmmdl, FLDMMDL_STABIT_MOVE_START );
+			MMDL_UpdateGridPosDir( fmmdl, work->dir );
+			MMDL_OnStatusBit( fmmdl, MMDL_STABIT_MOVE_START );
 		}
 			
 		{
@@ -1635,7 +1635,7 @@ static int AC_Jump_1( FLDMMDL * fmmdl )
 			vec.x = 0;
 			vec.y = tbl[frame];
 			vec.z = 0;
-			FLDMMDL_SetVectorDrawOffsetPos( fmmdl, &vec );
+			MMDL_SetVectorDrawOffsetPos( fmmdl, &vec );
 		}
 	}
 	
@@ -1647,18 +1647,18 @@ static int AC_Jump_1( FLDMMDL * fmmdl )
 	
 	{
 		VecFx32 vec = { 0, 0, 0 };								//オフセットクリア
-		FLDMMDL_SetVectorDrawOffsetPos( fmmdl, &vec );
+		MMDL_SetVectorDrawOffsetPos( fmmdl, &vec );
 	}
 	
-	FLDMMDL_OnStatusBit( fmmdl,
-			FLDMMDL_STABIT_MOVE_END |
-			FLDMMDL_STABIT_JUMP_END |
-			FLDMMDL_STABIT_ACMD_END );
+	MMDL_OnStatusBit( fmmdl,
+			MMDL_STABIT_MOVE_END |
+			MMDL_STABIT_JUMP_END |
+			MMDL_STABIT_ACMD_END );
 	
-	FLDMMDL_UpdateGridPosCurrent( fmmdl );
-	FLDMMDL_CallDrawProc( fmmdl );						//1フレーム進める
-	FLDMMDL_SetDrawStatus( fmmdl, DRAW_STA_STOP );
-	FLDMMDL_IncAcmdSeq( fmmdl );
+	MMDL_UpdateGridPosCurrent( fmmdl );
+	MMDL_CallDrawProc( fmmdl );						//1フレーム進める
+	MMDL_SetDrawStatus( fmmdl, DRAW_STA_STOP );
+	MMDL_IncAcmdSeq( fmmdl );
 #if 0
 	Snd_SePlay( SE_SUTYA2 );
 #endif
@@ -1668,11 +1668,11 @@ static int AC_Jump_1( FLDMMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_STAY_JUMP_U_16F 0
- * @param	fmmdl	FLDMMDL *
+ * @param	fmmdl	MMDL *
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_StayJumpU16F_0( FLDMMDL * fmmdl )
+static int AC_StayJumpU16F_0( MMDL * fmmdl )
 {
 	AcJumpWorkInit( fmmdl, DIR_UP, 0,
 		GRID_FRAME_16, DRAW_STA_WALK_16F, AC_JUMP_HEIGHT_12, AC_JUMP_SPEED_UX16_1 );
@@ -1683,11 +1683,11 @@ static int AC_StayJumpU16F_0( FLDMMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_STAY_JUMP_D_16F 0
- * @param	fmmdl	FLDMMDL *
+ * @param	fmmdl	MMDL *
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_StayJumpD16F_0( FLDMMDL * fmmdl )
+static int AC_StayJumpD16F_0( MMDL * fmmdl )
 {
 	AcJumpWorkInit( fmmdl, DIR_DOWN, 0,
 		GRID_FRAME_16, DRAW_STA_WALK_16F, AC_JUMP_HEIGHT_12, AC_JUMP_SPEED_UX16_1 );
@@ -1698,11 +1698,11 @@ static int AC_StayJumpD16F_0( FLDMMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_STAY_JUMP_L_16F 0
- * @param	fmmdl	FLDMMDL *
+ * @param	fmmdl	MMDL *
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_StayJumpL16F_0( FLDMMDL * fmmdl )
+static int AC_StayJumpL16F_0( MMDL * fmmdl )
 {
 	AcJumpWorkInit( fmmdl, DIR_LEFT, 0,
 		GRID_FRAME_16, DRAW_STA_WALK_16F, AC_JUMP_HEIGHT_12, AC_JUMP_SPEED_UX16_1 );
@@ -1713,11 +1713,11 @@ static int AC_StayJumpL16F_0( FLDMMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_STAY_JUMP_R_16F 0
- * @param	fmmdl	FLDMMDL *
+ * @param	fmmdl	MMDL *
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_StayJumpR16F_0( FLDMMDL * fmmdl )
+static int AC_StayJumpR16F_0( MMDL * fmmdl )
 {
 	AcJumpWorkInit( fmmdl, DIR_RIGHT, 0,
 		GRID_FRAME_16, DRAW_STA_WALK_16F, AC_JUMP_HEIGHT_12, AC_JUMP_SPEED_UX16_1 );
@@ -1728,11 +1728,11 @@ static int AC_StayJumpR16F_0( FLDMMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_STAY_JUMP_U_8F 0
- * @param	fmmdl	FLDMMDL *
+ * @param	fmmdl	MMDL *
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_StayJumpU8F_0( FLDMMDL * fmmdl )
+static int AC_StayJumpU8F_0( MMDL * fmmdl )
 {
 	AcJumpWorkInit( fmmdl, DIR_UP, 0,
 		GRID_FRAME_8, DRAW_STA_WALK_8F, AC_JUMP_HEIGHT_12, AC_JUMP_SPEED_UX16_2 );
@@ -1743,11 +1743,11 @@ static int AC_StayJumpU8F_0( FLDMMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_STAY_JUMP_D_8F 0
- * @param	fmmdl	FLDMMDL *
+ * @param	fmmdl	MMDL *
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_StayJumpD8F_0( FLDMMDL * fmmdl )
+static int AC_StayJumpD8F_0( MMDL * fmmdl )
 {
 	AcJumpWorkInit( fmmdl, DIR_DOWN, 0,
 		GRID_FRAME_8, DRAW_STA_WALK_8F, AC_JUMP_HEIGHT_12, AC_JUMP_SPEED_UX16_2 );
@@ -1758,11 +1758,11 @@ static int AC_StayJumpD8F_0( FLDMMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_STAY_JUMP_L_8F 0
- * @param	fmmdl	FLDMMDL *
+ * @param	fmmdl	MMDL *
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_StayJumpL8F_0( FLDMMDL * fmmdl )
+static int AC_StayJumpL8F_0( MMDL * fmmdl )
 {
 	AcJumpWorkInit( fmmdl, DIR_LEFT, 0,
 		GRID_FRAME_8, DRAW_STA_WALK_8F, AC_JUMP_HEIGHT_12, AC_JUMP_SPEED_UX16_2 );
@@ -1773,11 +1773,11 @@ static int AC_StayJumpL8F_0( FLDMMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_STAY_JUMP_R_8F 0
- * @param	fmmdl	FLDMMDL *
+ * @param	fmmdl	MMDL *
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_StayJumpR8F_0( FLDMMDL * fmmdl )
+static int AC_StayJumpR8F_0( MMDL * fmmdl )
 {
 	AcJumpWorkInit( fmmdl, DIR_RIGHT, 0,
 		GRID_FRAME_8, DRAW_STA_WALK_8F, AC_JUMP_HEIGHT_12, AC_JUMP_SPEED_UX16_2 );
@@ -1788,11 +1788,11 @@ static int AC_StayJumpR8F_0( FLDMMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_JUMP_U_1G_8F 0
- * @param	fmmdl	FLDMMDL *
+ * @param	fmmdl	MMDL *
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_JumpU1G8F_0( FLDMMDL * fmmdl )
+static int AC_JumpU1G8F_0( MMDL * fmmdl )
 {
 	AcJumpWorkInit( fmmdl, DIR_UP, GRID_VALUE_SPEED_8,
 		GRID_FRAME_8, DRAW_STA_WALK_8F, AC_JUMP_HEIGHT_12, AC_JUMP_SPEED_UX16_2 );
@@ -1803,11 +1803,11 @@ static int AC_JumpU1G8F_0( FLDMMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_JDMP_D_1G_8F 0
- * @param	fmmdl	FLDMMDL *
+ * @param	fmmdl	MMDL *
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_JumpD1G8F_0( FLDMMDL * fmmdl )
+static int AC_JumpD1G8F_0( MMDL * fmmdl )
 {
 	AcJumpWorkInit( fmmdl, DIR_DOWN, GRID_VALUE_SPEED_8,
 		GRID_FRAME_8, DRAW_STA_WALK_8F, AC_JUMP_HEIGHT_12, AC_JUMP_SPEED_UX16_2 );
@@ -1818,11 +1818,11 @@ static int AC_JumpD1G8F_0( FLDMMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_JDMP_L_1G_8F 0
- * @param	fmmdl	FLDMMDL *
+ * @param	fmmdl	MMDL *
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_JumpL1G8F_0( FLDMMDL * fmmdl )
+static int AC_JumpL1G8F_0( MMDL * fmmdl )
 {
 	AcJumpWorkInit( fmmdl, DIR_LEFT, GRID_VALUE_SPEED_8,
 		GRID_FRAME_8, DRAW_STA_WALK_8F, AC_JUMP_HEIGHT_12, AC_JUMP_SPEED_UX16_2 );
@@ -1833,11 +1833,11 @@ static int AC_JumpL1G8F_0( FLDMMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_JDMP_R_1G_8F 0
- * @param	fmmdl	FLDMMDL *
+ * @param	fmmdl	MMDL *
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_JumpR1G8F_0( FLDMMDL * fmmdl )
+static int AC_JumpR1G8F_0( MMDL * fmmdl )
 {
 	AcJumpWorkInit( fmmdl, DIR_RIGHT, GRID_VALUE_SPEED_8,
 		GRID_FRAME_8, DRAW_STA_WALK_8F, AC_JUMP_HEIGHT_12, AC_JUMP_SPEED_UX16_2 );
@@ -1848,11 +1848,11 @@ static int AC_JumpR1G8F_0( FLDMMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_JUMP_U_2G_16F 0
- * @param	fmmdl	FLDMMDL *
+ * @param	fmmdl	MMDL *
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_JumpU2G8F_0( FLDMMDL * fmmdl )
+static int AC_JumpU2G8F_0( MMDL * fmmdl )
 {
 	AcJumpWorkInit( fmmdl, DIR_UP, GRID_VALUE_SPEED_8,
 		GRID_FRAME_8*2, DRAW_STA_WALK_8F, AC_JUMP_HEIGHT_12, AC_JUMP_SPEED_UX16_1 );
@@ -1863,11 +1863,11 @@ static int AC_JumpU2G8F_0( FLDMMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_JUMP_D_2G_16F 0
- * @param	fmmdl	FLDMMDL *
+ * @param	fmmdl	MMDL *
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_JumpD2G8F_0( FLDMMDL * fmmdl )
+static int AC_JumpD2G8F_0( MMDL * fmmdl )
 {
 	AcJumpWorkInit( fmmdl, DIR_DOWN, GRID_VALUE_SPEED_8,
 		GRID_FRAME_16, DRAW_STA_WALK_8F, AC_JUMP_HEIGHT_12, AC_JUMP_SPEED_UX16_1 );
@@ -1878,11 +1878,11 @@ static int AC_JumpD2G8F_0( FLDMMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_JUMP_L_2G_16F 0
- * @param	fmmdl	FLDMMDL *
+ * @param	fmmdl	MMDL *
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_JumpL2G8F_0( FLDMMDL * fmmdl )
+static int AC_JumpL2G8F_0( MMDL * fmmdl )
 {
 	AcJumpWorkInit( fmmdl, DIR_LEFT, GRID_VALUE_SPEED_8,
 		GRID_FRAME_16, DRAW_STA_WALK_8F, AC_JUMP_HEIGHT_12, AC_JUMP_SPEED_UX16_1 );
@@ -1893,11 +1893,11 @@ static int AC_JumpL2G8F_0( FLDMMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_JUMP_R_2G_16F 0
- * @param	fmmdl	FLDMMDL *
+ * @param	fmmdl	MMDL *
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_JumpR2G8F_0( FLDMMDL * fmmdl )
+static int AC_JumpR2G8F_0( MMDL * fmmdl )
 {
 	AcJumpWorkInit( fmmdl, DIR_RIGHT, GRID_VALUE_SPEED_8,
 		GRID_FRAME_16, DRAW_STA_WALK_8F, AC_JUMP_HEIGHT_12, AC_JUMP_SPEED_UX16_1 );
@@ -1908,11 +1908,11 @@ static int AC_JumpR2G8F_0( FLDMMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_JUMPHI_L_1G_16F 0
- * @param	fmmdl	FLDMMDL *
+ * @param	fmmdl	MMDL *
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_JumpHiL1G16F_0( FLDMMDL * fmmdl )
+static int AC_JumpHiL1G16F_0( MMDL * fmmdl )
 {
 	AcJumpWorkInit( fmmdl, DIR_LEFT, GRID_VALUE_SPEED_16,
 		GRID_FRAME_16, DRAW_STA_TAKE_OFF_16F, AC_JUMP_HEIGHT_12,
@@ -1924,11 +1924,11 @@ static int AC_JumpHiL1G16F_0( FLDMMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_JUMPHI_R_1G_16F 0
- * @param	fmmdl	FLDMMDL *
+ * @param	fmmdl	MMDL *
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_JumpHiR1G16F_0( FLDMMDL * fmmdl )
+static int AC_JumpHiR1G16F_0( MMDL * fmmdl )
 {
 	AcJumpWorkInit( fmmdl, DIR_RIGHT, GRID_VALUE_SPEED_16,
 		GRID_FRAME_16, DRAW_STA_TAKE_OFF_16F, AC_JUMP_HEIGHT_12,
@@ -1940,11 +1940,11 @@ static int AC_JumpHiR1G16F_0( FLDMMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_JUMPHI_L_3G_32F 0
- * @param	fmmdl	FLDMMDL *
+ * @param	fmmdl	MMDL *
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_JumpHiL3G32F_0( FLDMMDL * fmmdl )
+static int AC_JumpHiL3G32F_0( MMDL * fmmdl )
 {
 	AcJumpWorkInit( fmmdl, DIR_LEFT,
 		GRID_VALUE_SPEED_4,
@@ -1957,11 +1957,11 @@ static int AC_JumpHiL3G32F_0( FLDMMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_JUMPHI_R_3G_32F 0
- * @param	fmmdl	FLDMMDL *
+ * @param	fmmdl	MMDL *
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_JumpHiR3G32F_0( FLDMMDL * fmmdl )
+static int AC_JumpHiR3G32F_0( MMDL * fmmdl )
 {
 	AcJumpWorkInit( fmmdl, DIR_RIGHT,
 		GRID_VALUE_SPEED_4,
@@ -1974,11 +1974,11 @@ static int AC_JumpHiR3G32F_0( FLDMMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_JUMP_U_3G_24F 0
- * @param	fmmdl	FLDMMDL *
+ * @param	fmmdl	MMDL *
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_JumpU3G24F_0( FLDMMDL * fmmdl )
+static int AC_JumpU3G24F_0( MMDL * fmmdl )
 {
 #if 0
 	AcJumpWorkInitMain( fmmdl, DIR_UP, GRID_VALUE_SPEED_8,
@@ -1995,11 +1995,11 @@ static int AC_JumpU3G24F_0( FLDMMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_JUMP_D_3G_24F 0
- * @param	fmmdl	FLDMMDL *
+ * @param	fmmdl	MMDL *
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_JumpD3G24F_0( FLDMMDL * fmmdl )
+static int AC_JumpD3G24F_0( MMDL * fmmdl )
 {
 #if 0
 	AcJumpWorkInitMain( fmmdl, DIR_DOWN, GRID_VALUE_SPEED_8,
@@ -2017,11 +2017,11 @@ static int AC_JumpD3G24F_0( FLDMMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_JUMP_L_3G_24F 0
- * @param	fmmdl	FLDMMDL *
+ * @param	fmmdl	MMDL *
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_JumpL3G24F_0( FLDMMDL * fmmdl )
+static int AC_JumpL3G24F_0( MMDL * fmmdl )
 {
 #if 0
 	AcJumpWorkInitMain( fmmdl, DIR_LEFT, GRID_VALUE_SPEED_8,
@@ -2038,11 +2038,11 @@ static int AC_JumpL3G24F_0( FLDMMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_JUMP_R_3G_24F 0
- * @param	fmmdl	FLDMMDL *
+ * @param	fmmdl	MMDL *
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_JumpR3G24F_0( FLDMMDL * fmmdl )
+static int AC_JumpR3G24F_0( MMDL * fmmdl )
 {
 #if 0
 	AcJumpWorkInitMain( fmmdl, DIR_RIGHT, GRID_VALUE_SPEED_8,
@@ -2063,51 +2063,51 @@ static int AC_JumpR3G24F_0( FLDMMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_WAIT_WORK初期化
- * @param	fmmdl	FLDMMDL *
+ * @param	fmmdl	MMDL *
  * @param	wait	ウェイトフレーム
  * @retval	nothing
  */
 //--------------------------------------------------------------
-static void AcWaitWorkInit( FLDMMDL * fmmdl, int wait )
+static void AcWaitWorkInit( MMDL * fmmdl, int wait )
 {
 	AC_WAIT_WORK *work;
 	
-	work = FLDMMDL_InitMoveCmdWork( fmmdl, AC_WAIT_WORK_SIZE );
+	work = MMDL_InitMoveCmdWork( fmmdl, AC_WAIT_WORK_SIZE );
 	work->wait = wait;
 	
-	FLDMMDL_IncAcmdSeq( fmmdl );
+	MMDL_IncAcmdSeq( fmmdl );
 }
 
 //--------------------------------------------------------------
 /**
  * AC_WAIT系　待ち
- * @param	fmmdl	FLDMMDL *
+ * @param	fmmdl	MMDL *
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_Wait_1( FLDMMDL * fmmdl )
+static int AC_Wait_1( MMDL * fmmdl )
 {
 	AC_WAIT_WORK *work;
 	
-	work = FLDMMDL_GetMoveCmdWork( fmmdl );
+	work = MMDL_GetMoveCmdWork( fmmdl );
 	
 	if( work->wait ){
 		work->wait--;
 		return( FALSE );
 	}
 	
-	FLDMMDL_IncAcmdSeq( fmmdl );
+	MMDL_IncAcmdSeq( fmmdl );
 	return( TRUE );
 }
 
 //--------------------------------------------------------------
 /**
  * AC_WAIT_1F 0
- * @param	fmmdl	FLDMMDL *
+ * @param	fmmdl	MMDL *
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_Wait1F_0( FLDMMDL * fmmdl )
+static int AC_Wait1F_0( MMDL * fmmdl )
 {
 	AcWaitWorkInit( fmmdl, 1 );
 	return( TRUE );
@@ -2116,11 +2116,11 @@ static int AC_Wait1F_0( FLDMMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_WAIT_2F 0
- * @param	fmmdl	FLDMMDL *
+ * @param	fmmdl	MMDL *
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_Wait2F_0( FLDMMDL * fmmdl )
+static int AC_Wait2F_0( MMDL * fmmdl )
 {
 	AcWaitWorkInit( fmmdl, 2 );
 	return( TRUE );
@@ -2129,11 +2129,11 @@ static int AC_Wait2F_0( FLDMMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_WAIT_4F 0
- * @param	fmmdl	FLDMMDL *
+ * @param	fmmdl	MMDL *
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_Wait4F_0( FLDMMDL * fmmdl )
+static int AC_Wait4F_0( MMDL * fmmdl )
 {
 	AcWaitWorkInit( fmmdl, 4 );
 	return( TRUE );
@@ -2142,11 +2142,11 @@ static int AC_Wait4F_0( FLDMMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_WAIT_8F 0
- * @param	fmmdl	FLDMMDL *
+ * @param	fmmdl	MMDL *
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_Wait8F_0( FLDMMDL * fmmdl )
+static int AC_Wait8F_0( MMDL * fmmdl )
 {
 	AcWaitWorkInit( fmmdl, 8 );
 	return( TRUE );
@@ -2155,11 +2155,11 @@ static int AC_Wait8F_0( FLDMMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_WAIT_15F 0
- * @param	fmmdl	FLDMMDL *
+ * @param	fmmdl	MMDL *
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_Wait15F_0( FLDMMDL * fmmdl )
+static int AC_Wait15F_0( MMDL * fmmdl )
 {
 	AcWaitWorkInit( fmmdl, 15 );
 	return( TRUE );
@@ -2168,11 +2168,11 @@ static int AC_Wait15F_0( FLDMMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_WAIT_16F 0
- * @param	fmmdl	FLDMMDL *
+ * @param	fmmdl	MMDL *
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_Wait16F_0( FLDMMDL * fmmdl )
+static int AC_Wait16F_0( MMDL * fmmdl )
 {
 	AcWaitWorkInit( fmmdl, 16 );
 	return( TRUE );
@@ -2181,11 +2181,11 @@ static int AC_Wait16F_0( FLDMMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_WAIT_32F 0
- * @param	fmmdl	FLDMMDL *
+ * @param	fmmdl	MMDL *
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_Wait32F_0( FLDMMDL * fmmdl )
+static int AC_Wait32F_0( MMDL * fmmdl )
 {
 	AcWaitWorkInit( fmmdl, 32 );
 	return( TRUE );
@@ -2197,19 +2197,19 @@ static int AC_Wait32F_0( FLDMMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_WARP_UP 0
- * @param	fmmdl	FLDMMDL *
+ * @param	fmmdl	MMDL *
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_WarpUp_0( FLDMMDL * fmmdl )
+static int AC_WarpUp_0( MMDL * fmmdl )
 {
 	AC_WARP_WORK *work;
 	
-	work = FLDMMDL_InitMoveCmdWork( fmmdl, AC_WARP_WORK_SIZE );
+	work = MMDL_InitMoveCmdWork( fmmdl, AC_WARP_WORK_SIZE );
 	work->value = FX32_ONE * 16;
 	
-	FLDMMDL_SetDrawStatus( fmmdl, DRAW_STA_STOP );
-	FLDMMDL_IncAcmdSeq( fmmdl );
+	MMDL_SetDrawStatus( fmmdl, DRAW_STA_STOP );
+	MMDL_IncAcmdSeq( fmmdl );
 	
 	return( TRUE );
 }
@@ -2217,23 +2217,23 @@ static int AC_WarpUp_0( FLDMMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_WARP_UP 1
- * @param	fmmdl	FLDMMDL *
+ * @param	fmmdl	MMDL *
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_WarpUp_1( FLDMMDL * fmmdl )
+static int AC_WarpUp_1( MMDL * fmmdl )
 {
 	int grid;
 	AC_WARP_WORK *work;
 	
-	work = FLDMMDL_GetMoveCmdWork( fmmdl );
+	work = MMDL_GetMoveCmdWork( fmmdl );
 	
 	work->total_offset += work->value;
 	
 	{
 		VecFx32 vec = {0,0,0};
 		vec.y = work->total_offset;
-		FLDMMDL_SetVectorDrawOffsetPos( fmmdl, &vec );
+		MMDL_SetVectorDrawOffsetPos( fmmdl, &vec );
 	}
 	
 	grid = work->total_offset / GRID_HALF_FX32;
@@ -2242,27 +2242,27 @@ static int AC_WarpUp_1( FLDMMDL * fmmdl )
 		return( FALSE );
 	}
 	
-	FLDMMDL_IncAcmdSeq( fmmdl );
+	MMDL_IncAcmdSeq( fmmdl );
 	return( TRUE );
 }
 
 //--------------------------------------------------------------
 /**
  * AC_WARP_DOWN 0
- * @param	fmmdl	FLDMMDL *
+ * @param	fmmdl	MMDL *
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_WarpDown_0( FLDMMDL * fmmdl )
+static int AC_WarpDown_0( MMDL * fmmdl )
 {
 	AC_WARP_WORK *work;
 	
-	work = FLDMMDL_InitMoveCmdWork( fmmdl, AC_WARP_WORK_SIZE );
+	work = MMDL_InitMoveCmdWork( fmmdl, AC_WARP_WORK_SIZE );
 	work->total_offset = GRID_HALF_FX32 * 40;
 	work->value = -(FX32_ONE * 16);
 	
-	FLDMMDL_SetDrawStatus( fmmdl, DRAW_STA_STOP );
-	FLDMMDL_IncAcmdSeq( fmmdl );
+	MMDL_SetDrawStatus( fmmdl, DRAW_STA_STOP );
+	MMDL_IncAcmdSeq( fmmdl );
 	
 	return( TRUE );
 }
@@ -2270,15 +2270,15 @@ static int AC_WarpDown_0( FLDMMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_WARP_DOWN 1
- * @param	fmmdl	FLDMMDL *
+ * @param	fmmdl	MMDL *
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_WarpDown_1( FLDMMDL * fmmdl )
+static int AC_WarpDown_1( MMDL * fmmdl )
 {
 	AC_WARP_WORK *work;
 	
-	work = FLDMMDL_GetMoveCmdWork( fmmdl );
+	work = MMDL_GetMoveCmdWork( fmmdl );
 	
 	work->total_offset += work->value;
 	
@@ -2290,7 +2290,7 @@ static int AC_WarpDown_1( FLDMMDL * fmmdl )
 		VecFx32 vec = {0,0,0};
 		vec.y = work->total_offset;
 		
-		FLDMMDL_SetVectorDrawOffsetPos( fmmdl, &vec );
+		MMDL_SetVectorDrawOffsetPos( fmmdl, &vec );
 	}
 	
 	if( work->total_offset > 0 ){
@@ -2298,7 +2298,7 @@ static int AC_WarpDown_1( FLDMMDL * fmmdl )
 	}
 	
 	
-	FLDMMDL_IncAcmdSeq( fmmdl );
+	MMDL_IncAcmdSeq( fmmdl );
 	return( TRUE );
 }
 
@@ -2308,28 +2308,28 @@ static int AC_WarpDown_1( FLDMMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_VANISH_ON 0
- * @param	fmmdl	FLDMMDL *
+ * @param	fmmdl	MMDL *
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_VanishON_0( FLDMMDL * fmmdl )
+static int AC_VanishON_0( MMDL * fmmdl )
 {
-	FLDMMDL_OnStatusBit( fmmdl, FLDMMDL_STABIT_VANISH );
-	FLDMMDL_IncAcmdSeq( fmmdl );
+	MMDL_OnStatusBit( fmmdl, MMDL_STABIT_VANISH );
+	MMDL_IncAcmdSeq( fmmdl );
 	return( TRUE );
 }
 
 //--------------------------------------------------------------
 /**
  * AC_VANISH_OFF 0
- * @param	fmmdl	FLDMMDL *
+ * @param	fmmdl	MMDL *
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_VanishOFF_0( FLDMMDL * fmmdl )
+static int AC_VanishOFF_0( MMDL * fmmdl )
 {
-	FLDMMDL_OffStatusBit( fmmdl, FLDMMDL_STABIT_VANISH );
-	FLDMMDL_IncAcmdSeq( fmmdl );
+	MMDL_OffStatusBit( fmmdl, MMDL_STABIT_VANISH );
+	MMDL_IncAcmdSeq( fmmdl );
 	return( TRUE );
 }
 
@@ -2340,28 +2340,28 @@ static int AC_VanishOFF_0( FLDMMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_DIR_PAUSE_ON 0
- * @param	fmmdl	FLDMMDL *
+ * @param	fmmdl	MMDL *
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_DirPauseON_0( FLDMMDL * fmmdl )
+static int AC_DirPauseON_0( MMDL * fmmdl )
 {
-	FLDMMDL_OnStatusBit( fmmdl, FLDMMDL_STABIT_PAUSE_DIR );
-	FLDMMDL_IncAcmdSeq( fmmdl );
+	MMDL_OnStatusBit( fmmdl, MMDL_STABIT_PAUSE_DIR );
+	MMDL_IncAcmdSeq( fmmdl );
 	return( TRUE );
 }
 
 //--------------------------------------------------------------
 /**
  * AC_DIR_PAUSE_OFF 0
- * @param	fmmdl	FLDMMDL *
+ * @param	fmmdl	MMDL *
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_DirPauseOFF_0( FLDMMDL * fmmdl )
+static int AC_DirPauseOFF_0( MMDL * fmmdl )
 {
-	FLDMMDL_OffStatusBit( fmmdl, FLDMMDL_STABIT_PAUSE_DIR );
-	FLDMMDL_IncAcmdSeq( fmmdl );
+	MMDL_OffStatusBit( fmmdl, MMDL_STABIT_PAUSE_DIR );
+	MMDL_IncAcmdSeq( fmmdl );
 	return( TRUE );
 }
 
@@ -2371,28 +2371,28 @@ static int AC_DirPauseOFF_0( FLDMMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_ANM_PAUSE_ON 0
- * @param	fmmdl	FLDMMDL *
+ * @param	fmmdl	MMDL *
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_AnmPauseON_0( FLDMMDL * fmmdl )
+static int AC_AnmPauseON_0( MMDL * fmmdl )
 {
-	FLDMMDL_OnStatusBit( fmmdl, FLDMMDL_STABIT_PAUSE_ANM );
-	FLDMMDL_IncAcmdSeq( fmmdl );
+	MMDL_OnStatusBit( fmmdl, MMDL_STABIT_PAUSE_ANM );
+	MMDL_IncAcmdSeq( fmmdl );
 	return( TRUE );
 }
 
 //--------------------------------------------------------------
 /**
  * AC_ANM_PAUSE_OFF 0
- * @param	fmmdl	FLDMMDL *
+ * @param	fmmdl	MMDL *
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_AnmPauseOFF_0( FLDMMDL * fmmdl )
+static int AC_AnmPauseOFF_0( MMDL * fmmdl )
 {
-	FLDMMDL_OffStatusBit( fmmdl, FLDMMDL_STABIT_PAUSE_ANM );
-	FLDMMDL_IncAcmdSeq( fmmdl );
+	MMDL_OffStatusBit( fmmdl, MMDL_STABIT_PAUSE_ANM );
+	MMDL_IncAcmdSeq( fmmdl );
 	return( TRUE );
 }
 
@@ -2402,7 +2402,7 @@ static int AC_AnmPauseOFF_0( FLDMMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_MARK_WORK初期化
- * @param	fmmdl	FLDMMDL *
+ * @param	fmmdl	MMDL *
  * @param	type	マーク種類
  * @param	trans	TRUE=マークグラフィック転送待ち版
  * @retval	nothing
@@ -2410,40 +2410,40 @@ static int AC_AnmPauseOFF_0( FLDMMDL * fmmdl )
 //--------------------------------------------------------------
 #if 0
 static void AcMarkWorkInit(
-	FLDMMDL * fmmdl, GYOE_TYPE type, int trans )
+	MMDL * fmmdl, GYOE_TYPE type, int trans )
 #else
 static void AcMarkWorkInit(
-	FLDMMDL * fmmdl, int type, int trans )
+	MMDL * fmmdl, int type, int trans )
 #endif
 {
 	AC_MARK_WORK *work;
 	
-	work = FLDMMDL_InitMoveCmdWork( fmmdl, AC_MARK_WORK_SIZE );
+	work = MMDL_InitMoveCmdWork( fmmdl, AC_MARK_WORK_SIZE );
 	work->type = type;
 //	work->eoa_mark = FE_fmmdlGyoe_Add( fmmdl, type, TRUE, trans );
-	FLDMMDL_IncAcmdSeq( fmmdl );
+	MMDL_IncAcmdSeq( fmmdl );
 }
 
 //--------------------------------------------------------------
 /**
  * AC_MARK系　動作
- * @param	fmmdl	FLDMMDL *
+ * @param	fmmdl	MMDL *
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_Mark_1( FLDMMDL * fmmdl )
+static int AC_Mark_1( MMDL * fmmdl )
 {
 	AC_MARK_WORK *work;
 	
-	work = FLDMMDL_GetMoveCmdWork( fmmdl );
+	work = MMDL_GetMoveCmdWork( fmmdl );
 #if 0	
 	if( FE_Gyoe_EndCheck(work->eoa_mark) == TRUE ){
 		EOA_Delete( work->eoa_mark );
-		FLDMMDL_IncAcmdSeq( fmmdl );
+		MMDL_IncAcmdSeq( fmmdl );
 		return( TRUE );
 	}
 #else
-	FLDMMDL_IncAcmdSeq( fmmdl );
+	MMDL_IncAcmdSeq( fmmdl );
 	return( TRUE );
 #endif
 	return( FALSE );
@@ -2452,11 +2452,11 @@ static int AC_Mark_1( FLDMMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_MARK_GYOE 0
- * @param	fmmdl	FLDMMDL *
+ * @param	fmmdl	MMDL *
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_MarkGyoe_0( FLDMMDL * fmmdl )
+static int AC_MarkGyoe_0( MMDL * fmmdl )
 {
 #if 0
 	AcMarkWorkInit( fmmdl, GYOE_GYOE, FALSE );
@@ -2469,11 +2469,11 @@ static int AC_MarkGyoe_0( FLDMMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_MARK_SAISEN 1
- * @param	fmmdl	FLDMMDL *
+ * @param	fmmdl	MMDL *
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_MarkSaisen_0( FLDMMDL * fmmdl )
+static int AC_MarkSaisen_0( MMDL * fmmdl )
 {
 #if 0
 	AcMarkWorkInit( fmmdl, GYOE_SAISEN, FALSE );
@@ -2486,11 +2486,11 @@ static int AC_MarkSaisen_0( FLDMMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_MARK_GYOE_TWAIT 0
- * @param	fmmdl	FLDMMDL *
+ * @param	fmmdl	MMDL *
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_MarkGyoeTWait_0( FLDMMDL * fmmdl )
+static int AC_MarkGyoeTWait_0( MMDL * fmmdl )
 {
 #if 0
 	AcMarkWorkInit( fmmdl, GYOE_GYOE, TRUE );
@@ -2506,44 +2506,44 @@ static int AC_MarkGyoeTWait_0( FLDMMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_WALK_ODD_WORK初期化
- * @param	fmmdl	FLDMMDL *
+ * @param	fmmdl	MMDL *
  * @param	dir			移動方向
  * @param	max_frame	移動最大フレーム
  * @param	draw		描画ステータス
  * @retval	nothing
  */
 //--------------------------------------------------------------
-static void AcWalkOddWorkInit( FLDMMDL * fmmdl, int dir, s16 max_frame, u16 draw )
+static void AcWalkOddWorkInit( MMDL * fmmdl, int dir, s16 max_frame, u16 draw )
 {
 	AC_WALK_ODD_WORK *work;
 	
-	work = FLDMMDL_InitMoveCmdWork( fmmdl, AC_WALK_ODD_WORK_SIZE );
+	work = MMDL_InitMoveCmdWork( fmmdl, AC_WALK_ODD_WORK_SIZE );
 	work->dir = dir;
 	work->draw_state = draw;
 	work->max_frame = max_frame;
 	
-	FLDMMDL_UpdateGridPosDir( fmmdl, dir );
-	FLDMMDL_SetDirAll( fmmdl, dir );
-	FLDMMDL_SetDrawStatus( fmmdl, draw );
-	FLDMMDL_OnStatusBit( fmmdl, FLDMMDL_STABIT_MOVE_START );
-	FLDMMDL_IncAcmdSeq( fmmdl );
+	MMDL_UpdateGridPosDir( fmmdl, dir );
+	MMDL_SetDirAll( fmmdl, dir );
+	MMDL_SetDrawStatus( fmmdl, draw );
+	MMDL_OnStatusBit( fmmdl, MMDL_STABIT_MOVE_START );
+	MMDL_IncAcmdSeq( fmmdl );
 }
 
 //--------------------------------------------------------------
 /**
  * AC_WALK_ODD_WORK系　移動
- * @param	fmmdl	FLDMMDL *
+ * @param	fmmdl	MMDL *
  * @param	tbl		移動量が格納されているテーブル
  * @retval	int		TRUE=終了
  */
 //--------------------------------------------------------------
-static int AC_WalkOdd_Walk( FLDMMDL * fmmdl, const fx32 *tbl )
+static int AC_WalkOdd_Walk( MMDL * fmmdl, const fx32 *tbl )
 {
 	AC_WALK_ODD_WORK *work;
 	
-	work = FLDMMDL_GetMoveCmdWork( fmmdl );
-	FLDMMDL_AddVectorPosDir( fmmdl, work->dir, tbl[work->frame] );
-	FLDMMDL_UpdateCurrentHeight( fmmdl );
+	work = MMDL_GetMoveCmdWork( fmmdl );
+	MMDL_AddVectorPosDir( fmmdl, work->dir, tbl[work->frame] );
+	MMDL_UpdateCurrentHeight( fmmdl );
 	
 	work->frame++;
 	
@@ -2551,11 +2551,11 @@ static int AC_WalkOdd_Walk( FLDMMDL * fmmdl, const fx32 *tbl )
 		return( FALSE );
 	}
 	
-	FLDMMDL_OnStatusBit( fmmdl, FLDMMDL_STABIT_MOVE_END|FLDMMDL_STABIT_ACMD_END );
-	FLDMMDL_UpdateGridPosCurrent( fmmdl );
-	FLDMMDL_CallDrawProc( fmmdl );						//1フレーム進める
-	FLDMMDL_SetDrawStatus( fmmdl, DRAW_STA_STOP );
-	FLDMMDL_IncAcmdSeq( fmmdl );
+	MMDL_OnStatusBit( fmmdl, MMDL_STABIT_MOVE_END|MMDL_STABIT_ACMD_END );
+	MMDL_UpdateGridPosCurrent( fmmdl );
+	MMDL_CallDrawProc( fmmdl );						//1フレーム進める
+	MMDL_SetDrawStatus( fmmdl, DRAW_STA_STOP );
+	MMDL_IncAcmdSeq( fmmdl );
 	
 	return( TRUE );
 }
@@ -2566,11 +2566,11 @@ static int AC_WalkOdd_Walk( FLDMMDL * fmmdl, const fx32 *tbl )
 //--------------------------------------------------------------
 /**
  * AC_WALK_U_6F 0
- * @param	fmmdl	FLDMMDL *
+ * @param	fmmdl	MMDL *
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_WalkU6F_0( FLDMMDL * fmmdl )
+static int AC_WalkU6F_0( MMDL * fmmdl )
 {
 	AcWalkOddWorkInit( fmmdl, DIR_UP, AC_WALK_6F_FRAME, DRAW_STA_WALK_6F );
 	return( TRUE );
@@ -2579,11 +2579,11 @@ static int AC_WalkU6F_0( FLDMMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_WALK_D_6F 0
- * @param	fmmdl	FLDMMDL *
+ * @param	fmmdl	MMDL *
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_WalkD6F_0( FLDMMDL * fmmdl )
+static int AC_WalkD6F_0( MMDL * fmmdl )
 {
 	AcWalkOddWorkInit( fmmdl, DIR_DOWN, AC_WALK_6F_FRAME, DRAW_STA_WALK_6F );
 	return( TRUE );
@@ -2592,11 +2592,11 @@ static int AC_WalkD6F_0( FLDMMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_WALK_L_6F 0
- * @param	fmmdl	FLDMMDL *
+ * @param	fmmdl	MMDL *
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_WalkL6F_0( FLDMMDL * fmmdl )
+static int AC_WalkL6F_0( MMDL * fmmdl )
 {
 	AcWalkOddWorkInit( fmmdl, DIR_LEFT, AC_WALK_6F_FRAME, DRAW_STA_WALK_6F );
 	return( TRUE );
@@ -2605,11 +2605,11 @@ static int AC_WalkL6F_0( FLDMMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_WALK_R_6F 0
- * @param	fmmdl	FLDMMDL *
+ * @param	fmmdl	MMDL *
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_WalkR6F_0( FLDMMDL * fmmdl )
+static int AC_WalkR6F_0( MMDL * fmmdl )
 {
 	AcWalkOddWorkInit( fmmdl, DIR_RIGHT, AC_WALK_6F_FRAME, DRAW_STA_WALK_6F );
 	return( TRUE );
@@ -2618,11 +2618,11 @@ static int AC_WalkR6F_0( FLDMMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_WALK_*_6F 1
- * @param	fmmdl	FLDMMDL *
+ * @param	fmmdl	MMDL *
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_Walk6F_1( FLDMMDL * fmmdl )
+static int AC_Walk6F_1( MMDL * fmmdl )
 {
 	if( AC_WalkOdd_Walk(fmmdl,DATA_AcWalk6FMoveValueTbl) == TRUE ){
 		return( TRUE );
@@ -2634,11 +2634,11 @@ static int AC_Walk6F_1( FLDMMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_WALK_U_3F 0
- * @param	fmmdl	FLDMMDL *
+ * @param	fmmdl	MMDL *
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_WalkU3F_0( FLDMMDL * fmmdl )
+static int AC_WalkU3F_0( MMDL * fmmdl )
 {
 	AcWalkOddWorkInit( fmmdl, DIR_UP, AC_WALK_3F_FRAME, DRAW_STA_WALK_3F );
 	return( TRUE );
@@ -2647,11 +2647,11 @@ static int AC_WalkU3F_0( FLDMMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_WALK_D_3F 0
- * @param	fmmdl	FLDMMDL *
+ * @param	fmmdl	MMDL *
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_WalkD3F_0( FLDMMDL * fmmdl )
+static int AC_WalkD3F_0( MMDL * fmmdl )
 {
 	AcWalkOddWorkInit( fmmdl, DIR_DOWN, AC_WALK_3F_FRAME, DRAW_STA_WALK_3F );
 	return( TRUE );
@@ -2660,11 +2660,11 @@ static int AC_WalkD3F_0( FLDMMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_WALK_L_3F 0
- * @param	fmmdl	FLDMMDL *
+ * @param	fmmdl	MMDL *
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_WalkL3F_0( FLDMMDL * fmmdl )
+static int AC_WalkL3F_0( MMDL * fmmdl )
 {
 	AcWalkOddWorkInit( fmmdl, DIR_LEFT, AC_WALK_3F_FRAME, DRAW_STA_WALK_3F );
 	return( TRUE );
@@ -2673,11 +2673,11 @@ static int AC_WalkL3F_0( FLDMMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_WALK_R_3F 0
- * @param	fmmdl	FLDMMDL *
+ * @param	fmmdl	MMDL *
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_WalkR3F_0( FLDMMDL * fmmdl )
+static int AC_WalkR3F_0( MMDL * fmmdl )
 {
 	AcWalkOddWorkInit( fmmdl, DIR_RIGHT, AC_WALK_3F_FRAME, DRAW_STA_WALK_3F );
 	return( TRUE );
@@ -2686,11 +2686,11 @@ static int AC_WalkR3F_0( FLDMMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_WALK_*_3F 1
- * @param	fmmdl	FLDMMDL *
+ * @param	fmmdl	MMDL *
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_Walk3F_1( FLDMMDL * fmmdl )
+static int AC_Walk3F_1( MMDL * fmmdl )
 {
 	if( AC_WalkOdd_Walk(fmmdl,DATA_AcWalk3FMoveValueTbl) == TRUE ){
 		return( TRUE );
@@ -2702,11 +2702,11 @@ static int AC_Walk3F_1( FLDMMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_WALK_U_7F 0
- * @param	fmmdl	FLDMMDL *
+ * @param	fmmdl	MMDL *
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_WalkU7F_0( FLDMMDL * fmmdl )
+static int AC_WalkU7F_0( MMDL * fmmdl )
 {
 	AcWalkOddWorkInit( fmmdl, DIR_UP, AC_WALK_7F_FRAME, DRAW_STA_WALK_7F );
 	return( TRUE );
@@ -2715,11 +2715,11 @@ static int AC_WalkU7F_0( FLDMMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_WALK_D_7F 0
- * @param	fmmdl	FLDMMDL *
+ * @param	fmmdl	MMDL *
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_WalkD7F_0( FLDMMDL * fmmdl )
+static int AC_WalkD7F_0( MMDL * fmmdl )
 {
 	AcWalkOddWorkInit( fmmdl, DIR_DOWN, AC_WALK_7F_FRAME, DRAW_STA_WALK_7F );
 	return( TRUE );
@@ -2728,11 +2728,11 @@ static int AC_WalkD7F_0( FLDMMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_WALK_L_7F 0
- * @param	fmmdl	FLDMMDL *
+ * @param	fmmdl	MMDL *
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_WalkL7F_0( FLDMMDL * fmmdl )
+static int AC_WalkL7F_0( MMDL * fmmdl )
 {
 	AcWalkOddWorkInit( fmmdl, DIR_LEFT, AC_WALK_7F_FRAME, DRAW_STA_WALK_7F );
 	return( TRUE );
@@ -2741,11 +2741,11 @@ static int AC_WalkL7F_0( FLDMMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_WALK_R_7F 0
- * @param	fmmdl	FLDMMDL *
+ * @param	fmmdl	MMDL *
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_WalkR7F_0( FLDMMDL * fmmdl )
+static int AC_WalkR7F_0( MMDL * fmmdl )
 {
 	AcWalkOddWorkInit( fmmdl, DIR_RIGHT, AC_WALK_7F_FRAME, DRAW_STA_WALK_7F );
 	return( TRUE );
@@ -2754,11 +2754,11 @@ static int AC_WalkR7F_0( FLDMMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_WALK_*_7F 1
- * @param	fmmdl	FLDMMDL *
+ * @param	fmmdl	MMDL *
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_Walk7F_1( FLDMMDL * fmmdl )
+static int AC_Walk7F_1( MMDL * fmmdl )
 {
 	if( AC_WalkOdd_Walk(fmmdl,DATA_AcWalk7FMoveValueTbl) == TRUE ){
 		return( TRUE );
@@ -2783,15 +2783,15 @@ typedef struct
 //--------------------------------------------------------------
 /**
  * AC_PC_BOW	0
- * @param	fmmdl	FLDMMDL *
+ * @param	fmmdl	MMDL *
  * @retval	int		TRUE=再起
  */
 //--------------------------------------------------------------
-static int AC_PcBow_0( FLDMMDL * fmmdl )
+static int AC_PcBow_0( MMDL * fmmdl )
 {
-	AC_PC_BOW_WORK *work = FLDMMDL_InitMoveCmdWork( fmmdl, AC_PC_BOW_WORK_SIZE );
-	FLDMMDL_SetDrawStatus( fmmdl, DRAW_STA_PC_BOW );
-	FLDMMDL_IncAcmdSeq( fmmdl );
+	AC_PC_BOW_WORK *work = MMDL_InitMoveCmdWork( fmmdl, AC_PC_BOW_WORK_SIZE );
+	MMDL_SetDrawStatus( fmmdl, DRAW_STA_PC_BOW );
+	MMDL_IncAcmdSeq( fmmdl );
 	
 	return( FALSE );
 }
@@ -2799,20 +2799,20 @@ static int AC_PcBow_0( FLDMMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_PC_BOW	1
- * @param	fmmdl	FLDMMDL *
+ * @param	fmmdl	MMDL *
  * @retval	int		TRUE=再起
  */
 //--------------------------------------------------------------
-static int AC_PcBow_1( FLDMMDL * fmmdl )
+static int AC_PcBow_1( MMDL * fmmdl )
 {
-	AC_PC_BOW_WORK *work = FLDMMDL_GetMoveCmdWork( fmmdl );
+	AC_PC_BOW_WORK *work = MMDL_GetMoveCmdWork( fmmdl );
 	
 	work->frame++;
 	
 	if( work->frame >= 8 ){
-		FLDMMDL_SetDirDisp( fmmdl, DIR_DOWN );
-		FLDMMDL_SetDrawStatus( fmmdl, DRAW_STA_STOP );
-		FLDMMDL_IncAcmdSeq( fmmdl );
+		MMDL_SetDirDisp( fmmdl, DIR_DOWN );
+		MMDL_SetDrawStatus( fmmdl, DRAW_STA_STOP );
+		MMDL_IncAcmdSeq( fmmdl );
 	}
 	
 	return( FALSE );
@@ -2834,52 +2834,52 @@ typedef struct
 //--------------------------------------------------------------
 /**
  * AC_HIDE_PULLOFF 0
- * @param	fmmdl	FLDMMDL *
+ * @param	fmmdl	MMDL *
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_HidePullOFF_0( FLDMMDL * fmmdl )
+static int AC_HidePullOFF_0( MMDL * fmmdl )
 {
-	AC_HIDE_PULLOFF_WORK *work = FLDMMDL_InitMoveCmdWork( fmmdl, AC_HIDE_PULLOFF_WORK_SIZE );
+	AC_HIDE_PULLOFF_WORK *work = MMDL_InitMoveCmdWork( fmmdl, AC_HIDE_PULLOFF_WORK_SIZE );
 	
 	{
 #if 0
-		EOA_PTR eoa = FLDMMDL_MoveHideEoaPtrGet( fmmdl );
+		EOA_PTR eoa = MMDL_MoveHideEoaPtrGet( fmmdl );
 		if( eoa != NULL ){ EOA_Delete( eoa ); }
 #endif
 	}
 	
 	{
 		VecFx32 offs = { 0, 0, 0 };
-		FLDMMDL_SetVectorDrawOffsetPos( fmmdl, &offs );
+		MMDL_SetVectorDrawOffsetPos( fmmdl, &offs );
 	}
 	
 #if 0
 	FE_fmmdlHKemuri_Add( fmmdl );
 #endif
 
-	FLDMMDL_OnStatusBit( fmmdl, FLDMMDL_STABIT_MOVE_START|FLDMMDL_STABIT_JUMP_START );
-	FLDMMDL_OffStatusBit( fmmdl, FLDMMDL_STABIT_SHADOW_VANISH );
+	MMDL_OnStatusBit( fmmdl, MMDL_STABIT_MOVE_START|MMDL_STABIT_JUMP_START );
+	MMDL_OffStatusBit( fmmdl, MMDL_STABIT_SHADOW_VANISH );
 	
-	FLDMMDL_IncAcmdSeq( fmmdl );
+	MMDL_IncAcmdSeq( fmmdl );
 	return( FALSE );
 }
 
 //--------------------------------------------------------------
 /**
  * AC_HIDE_PULLOFF 1
- * @param	fmmdl	FLDMMDL *
+ * @param	fmmdl	MMDL *
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_HidePullOFF_1( FLDMMDL * fmmdl )
+static int AC_HidePullOFF_1( MMDL * fmmdl )
 {
-	AC_HIDE_PULLOFF_WORK *work = FLDMMDL_GetMoveCmdWork( fmmdl );
+	AC_HIDE_PULLOFF_WORK *work = MMDL_GetMoveCmdWork( fmmdl );
 	const fx32 *tbl = DATA_AcJumpOffsetTbl[AC_JUMP_HEIGHT_12];
 	VecFx32 offs = { 0, 0, 0 };
 	
 	offs.y = tbl[work->frame];
-	FLDMMDL_SetVectorDrawOffsetPos( fmmdl, &offs );
+	MMDL_SetVectorDrawOffsetPos( fmmdl, &offs );
 	
 	work->frame += 2;
  	
@@ -2888,13 +2888,13 @@ static int AC_HidePullOFF_1( FLDMMDL * fmmdl )
 	}
 	
 	offs.y = 0;
-	FLDMMDL_SetVectorDrawOffsetPos( fmmdl, &offs );
+	MMDL_SetVectorDrawOffsetPos( fmmdl, &offs );
 	
-	FLDMMDL_OnStatusBit( fmmdl,
-			FLDMMDL_STABIT_MOVE_END | FLDMMDL_STABIT_JUMP_END | FLDMMDL_STABIT_ACMD_END );
+	MMDL_OnStatusBit( fmmdl,
+			MMDL_STABIT_MOVE_END | MMDL_STABIT_JUMP_END | MMDL_STABIT_ACMD_END );
 	
-	FLDMMDL_MoveHidePullOffFlagSet( fmmdl );
-	FLDMMDL_IncAcmdSeq( fmmdl );
+	MMDL_MoveHidePullOffFlagSet( fmmdl );
+	MMDL_IncAcmdSeq( fmmdl );
 	return( TRUE );
 }
 
@@ -2914,30 +2914,30 @@ typedef struct
 //--------------------------------------------------------------
 /**
  * AC_HERO_BANZAI	0
- * @param	fmmdl	FLDMMDL *
+ * @param	fmmdl	MMDL *
  * @retval	int		TRUE=再起
  */
 //--------------------------------------------------------------
-static int AC_HeroBanzai_0( FLDMMDL * fmmdl )
+static int AC_HeroBanzai_0( MMDL * fmmdl )
 {
-	AC_HERO_BANZAI_WORK *work = FLDMMDL_InitMoveCmdWork( fmmdl, AC_HERO_BANZAI_WORK_SIZE );
-	FLDMMDL_SetDrawStatus( fmmdl, DRAW_STA_BANZAI );
-	FLDMMDL_IncAcmdSeq( fmmdl );
+	AC_HERO_BANZAI_WORK *work = MMDL_InitMoveCmdWork( fmmdl, AC_HERO_BANZAI_WORK_SIZE );
+	MMDL_SetDrawStatus( fmmdl, DRAW_STA_BANZAI );
+	MMDL_IncAcmdSeq( fmmdl );
 	return( FALSE );
 }
 
 //--------------------------------------------------------------
 /**
  * AC_HERO_BANZAI_UKE	0
- * @param	fmmdl	FLDMMDL *
+ * @param	fmmdl	MMDL *
  * @retval	int		TRUE=再起
  */
 //--------------------------------------------------------------
-static int AC_HeroBanzaiUke_0( FLDMMDL * fmmdl )
+static int AC_HeroBanzaiUke_0( MMDL * fmmdl )
 {
-	AC_HERO_BANZAI_WORK *work = FLDMMDL_InitMoveCmdWork( fmmdl, AC_HERO_BANZAI_WORK_SIZE );
-	FLDMMDL_SetDrawStatus( fmmdl, DRAW_STA_BANZAI_UKE );
-	FLDMMDL_IncAcmdSeq( fmmdl );
+	AC_HERO_BANZAI_WORK *work = MMDL_InitMoveCmdWork( fmmdl, AC_HERO_BANZAI_WORK_SIZE );
+	MMDL_SetDrawStatus( fmmdl, DRAW_STA_BANZAI_UKE );
+	MMDL_IncAcmdSeq( fmmdl );
 	
 	return( FALSE );
 }
@@ -2945,13 +2945,13 @@ static int AC_HeroBanzaiUke_0( FLDMMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_HERO_BANZAI 1
- * @param	fmmdl	FLDMMDL *
+ * @param	fmmdl	MMDL *
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_HeroBanzai_1( FLDMMDL * fmmdl )
+static int AC_HeroBanzai_1( MMDL * fmmdl )
 {
-	AC_HERO_BANZAI_WORK *work = FLDMMDL_GetMoveCmdWork( fmmdl );
+	AC_HERO_BANZAI_WORK *work = MMDL_GetMoveCmdWork( fmmdl );
 	
 	work->frame++;
  	
@@ -2959,8 +2959,8 @@ static int AC_HeroBanzai_1( FLDMMDL * fmmdl )
 		return( FALSE );
 	}
 	
-//	FLDMMDL_SetDrawStatus( fmmdl, DRAW_STA_BANZAI_STOP );
-	FLDMMDL_IncAcmdSeq( fmmdl );
+//	MMDL_SetDrawStatus( fmmdl, DRAW_STA_BANZAI_STOP );
+	MMDL_IncAcmdSeq( fmmdl );
 	return( TRUE );
 }
 
@@ -2970,7 +2970,7 @@ static int AC_HeroBanzai_1( FLDMMDL * fmmdl )
 //--------------------------------------------------------------
 /*
  * AC_WALKVEC_WORK初期化 1G限定
- * @param	fmmdl	FLDMMDL *
+ * @param	fmmdl	MMDL *
  * @param	vec		移動ベクトル*
  * @param	d_dir	表示方向
  * @param	m_dir	移動方向
@@ -2979,45 +2979,45 @@ static int AC_HeroBanzai_1( FLDMMDL * fmmdl )
  * @retval	nothing
  */
 //--------------------------------------------------------------
-static void AcWalkVecWorkInit( FLDMMDL * fmmdl,
+static void AcWalkVecWorkInit( MMDL * fmmdl,
 	const VecFx32 *vec, int d_dir, int m_dir, int wait, u8 draw )
 {
 	AC_WALKVEC_WORK *work;
-	work = FLDMMDL_InitMoveCmdWork( fmmdl, AC_WALKVEC_WORK_SIZE );
+	work = MMDL_InitMoveCmdWork( fmmdl, AC_WALKVEC_WORK_SIZE );
 	work->wait = wait;
 	work->vec = *vec;
 	
-	FLDMMDL_SetDirDisp( fmmdl, d_dir );
-	FLDMMDL_SetDirMove( fmmdl, m_dir );
-	FLDMMDL_SetDrawStatus( fmmdl, draw );
-	FLDMMDL_OnStatusBitMoveStart( fmmdl );
+	MMDL_SetDirDisp( fmmdl, d_dir );
+	MMDL_SetDirMove( fmmdl, m_dir );
+	MMDL_SetDrawStatus( fmmdl, draw );
+	MMDL_OnStatusBitMoveStart( fmmdl );
 	
-	FLDMMDL_SetOldGridPosX( fmmdl, FLDMMDL_GetGridPosX(fmmdl) );
-	FLDMMDL_SetOldGridPosY( fmmdl, FLDMMDL_GetGridPosY(fmmdl) );
-	FLDMMDL_SetOldGridPosZ( fmmdl, FLDMMDL_GetGridPosZ(fmmdl) );
-	if( vec->x < 0 ){ FLDMMDL_AddGridPosX( fmmdl, -GRID_ONE ); }
-	else if( vec->x > 0 ){ FLDMMDL_AddGridPosX( fmmdl, GRID_ONE ); }
-	if( vec->y < 0 ){ FLDMMDL_AddGridPosY( fmmdl, -GRID_ONE ); }
-	else if( vec->y > 0 ){ FLDMMDL_AddGridPosY( fmmdl, GRID_ONE ); }
-	if( vec->z < 0 ){ FLDMMDL_AddGridPosZ( fmmdl, -GRID_ONE ); }
-	else if( vec->z > 0 ){ FLDMMDL_AddGridPosZ( fmmdl, GRID_ONE ); }
+	MMDL_SetOldGridPosX( fmmdl, MMDL_GetGridPosX(fmmdl) );
+	MMDL_SetOldGridPosY( fmmdl, MMDL_GetGridPosY(fmmdl) );
+	MMDL_SetOldGridPosZ( fmmdl, MMDL_GetGridPosZ(fmmdl) );
+	if( vec->x < 0 ){ MMDL_AddGridPosX( fmmdl, -GRID_ONE ); }
+	else if( vec->x > 0 ){ MMDL_AddGridPosX( fmmdl, GRID_ONE ); }
+	if( vec->y < 0 ){ MMDL_AddGridPosY( fmmdl, -GRID_ONE ); }
+	else if( vec->y > 0 ){ MMDL_AddGridPosY( fmmdl, GRID_ONE ); }
+	if( vec->z < 0 ){ MMDL_AddGridPosZ( fmmdl, -GRID_ONE ); }
+	else if( vec->z > 0 ){ MMDL_AddGridPosZ( fmmdl, GRID_ONE ); }
 	
-	FLDMMDL_IncAcmdSeq( fmmdl );
+	MMDL_IncAcmdSeq( fmmdl );
 }
 
 //--------------------------------------------------------------
 /**
  * AC_WALKVEC　移動　高さ取得は行わない
- * @param	fmmdl	FLDMMDL *
+ * @param	fmmdl	MMDL *
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_WalkVec_1( FLDMMDL * fmmdl )
+static int AC_WalkVec_1( MMDL * fmmdl )
 {
 	AC_WALKVEC_WORK *work;
 	
-	work = FLDMMDL_GetMoveCmdWork( fmmdl );
-	FLDMMDL_AddVectorPos( fmmdl, &work->vec );
+	work = MMDL_GetMoveCmdWork( fmmdl );
+	MMDL_AddVectorPos( fmmdl, &work->vec );
 	
 	work->wait--;
 	
@@ -3025,13 +3025,13 @@ static int AC_WalkVec_1( FLDMMDL * fmmdl )
 		return( FALSE );
 	}
 	
-	FLDMMDL_OnStatusBit(
-		fmmdl, FLDMMDL_STABIT_MOVE_END|FLDMMDL_STABIT_ACMD_END );
+	MMDL_OnStatusBit(
+		fmmdl, MMDL_STABIT_MOVE_END|MMDL_STABIT_ACMD_END );
 	
-	FLDMMDL_UpdateGridPosCurrent( fmmdl );
-	FLDMMDL_CallDrawProc( fmmdl );
-	FLDMMDL_SetDrawStatus( fmmdl, DRAW_STA_STOP );
-	FLDMMDL_IncAcmdSeq( fmmdl );
+	MMDL_UpdateGridPosCurrent( fmmdl );
+	MMDL_CallDrawProc( fmmdl );
+	MMDL_SetDrawStatus( fmmdl, DRAW_STA_STOP );
+	MMDL_IncAcmdSeq( fmmdl );
 	
 	return( TRUE );
 }
@@ -3039,11 +3039,11 @@ static int AC_WalkVec_1( FLDMMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_WALKGL_U_8F 左壁　上移動(y+) 左表示
- * @param	fmmdl	FLDMMDL *
+ * @param	fmmdl	MMDL *
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_WalkGLU8F_0( FLDMMDL * fmmdl )
+static int AC_WalkGLU8F_0( MMDL * fmmdl )
 {
 	VecFx32 vec = { 0, GRID_VALUE_SPEED_8, 0 };
 	AcWalkVecWorkInit( fmmdl, &vec,
@@ -3054,11 +3054,11 @@ static int AC_WalkGLU8F_0( FLDMMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_WALKGL_D_8F 左壁　下移動(y-)　右表示
- * @param	fmmdl	FLDMMDL *
+ * @param	fmmdl	MMDL *
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_WalkGLD8F_0( FLDMMDL * fmmdl )
+static int AC_WalkGLD8F_0( MMDL * fmmdl )
 {
 	VecFx32 vec = { 0, -GRID_VALUE_SPEED_8, 0 };
 	AcWalkVecWorkInit( fmmdl, &vec,
@@ -3069,11 +3069,11 @@ static int AC_WalkGLD8F_0( FLDMMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_WALKGL_L_8F 左壁　左移動(z+)　下表示
- * @param	fmmdl	FLDMMDL *
+ * @param	fmmdl	MMDL *
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_WalkGLL8F_0( FLDMMDL * fmmdl )
+static int AC_WalkGLL8F_0( MMDL * fmmdl )
 {
 	VecFx32 vec = { 0, 0, GRID_VALUE_SPEED_8 };
 	AcWalkVecWorkInit( fmmdl, &vec,
@@ -3084,11 +3084,11 @@ static int AC_WalkGLL8F_0( FLDMMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_WALKGL_R_8F 左壁　右移動(z-)　上表示
- * @param	fmmdl	FLDMMDL *
+ * @param	fmmdl	MMDL *
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_WalkGLR8F_0( FLDMMDL * fmmdl )
+static int AC_WalkGLR8F_0( MMDL * fmmdl )
 {
 	VecFx32 vec = { 0, 0, -GRID_VALUE_SPEED_8 };
 	AcWalkVecWorkInit( fmmdl, &vec,
@@ -3099,11 +3099,11 @@ static int AC_WalkGLR8F_0( FLDMMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_WALKGR_U_8F 右壁　上移動(y+)　右表示
- * @param	fmmdl	FLDMMDL *
+ * @param	fmmdl	MMDL *
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_WalkGRU8F_0( FLDMMDL * fmmdl )
+static int AC_WalkGRU8F_0( MMDL * fmmdl )
 {
 	VecFx32 vec = { 0, GRID_VALUE_SPEED_8, 0 };
 	AcWalkVecWorkInit( fmmdl, &vec,
@@ -3114,11 +3114,11 @@ static int AC_WalkGRU8F_0( FLDMMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_WALKGR_D_8F 右壁　下移動(y-)　左表示
- * @param	fmmdl	FLDMMDL *
+ * @param	fmmdl	MMDL *
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_WalkGRD8F_0( FLDMMDL * fmmdl )
+static int AC_WalkGRD8F_0( MMDL * fmmdl )
 {
 	VecFx32 vec = { 0, -GRID_VALUE_SPEED_8, 0 };
 	AcWalkVecWorkInit( fmmdl, &vec,
@@ -3129,11 +3129,11 @@ static int AC_WalkGRD8F_0( FLDMMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_WALKGR_L_8F 右壁　左移動(z-)　上表示
- * @param	fmmdl	FLDMMDL *
+ * @param	fmmdl	MMDL *
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_WalkGRL8F_0( FLDMMDL * fmmdl )
+static int AC_WalkGRL8F_0( MMDL * fmmdl )
 {
 	VecFx32 vec = { 0, 0, -GRID_VALUE_SPEED_8 };
 	AcWalkVecWorkInit( fmmdl, &vec,
@@ -3144,11 +3144,11 @@ static int AC_WalkGRL8F_0( FLDMMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_WALKGR_R_8F 右壁　右移動(z+)　下表示
- * @param	fmmdl	FLDMMDL *
+ * @param	fmmdl	MMDL *
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_WalkGRR8F_0( FLDMMDL * fmmdl )
+static int AC_WalkGRR8F_0( MMDL * fmmdl )
 {
 	VecFx32 vec = { 0, 0, GRID_VALUE_SPEED_8 };
 	AcWalkVecWorkInit( fmmdl, &vec,
@@ -3159,11 +3159,11 @@ static int AC_WalkGRR8F_0( FLDMMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_WALKGU_L_8F 上壁　上移動(z+)　上表示
- * @param	fmmdl	FLDMMDL *
+ * @param	fmmdl	MMDL *
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_WalkGUU8F_0( FLDMMDL * fmmdl )
+static int AC_WalkGUU8F_0( MMDL * fmmdl )
 {
 	VecFx32 vec = { 0, 0, GRID_VALUE_SPEED_8 };
 	AcWalkVecWorkInit( fmmdl, &vec,
@@ -3174,11 +3174,11 @@ static int AC_WalkGUU8F_0( FLDMMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_WALKGU_L_8F 上壁　下移動(z-)　下表示
- * @param	fmmdl	FLDMMDL *
+ * @param	fmmdl	MMDL *
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_WalkGUD8F_0( FLDMMDL * fmmdl )
+static int AC_WalkGUD8F_0( MMDL * fmmdl )
 {
 	VecFx32 vec = { 0, 0, -GRID_VALUE_SPEED_8 };
 	AcWalkVecWorkInit( fmmdl, &vec,
@@ -3189,11 +3189,11 @@ static int AC_WalkGUD8F_0( FLDMMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_WALKGU_L_8F 上壁　左移動(x-)　右表示
- * @param	fmmdl	FLDMMDL *
+ * @param	fmmdl	MMDL *
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_WalkGUL8F_0( FLDMMDL * fmmdl )
+static int AC_WalkGUL8F_0( MMDL * fmmdl )
 {
 	VecFx32 vec = { -GRID_VALUE_SPEED_8, 0, 0 };
 	AcWalkVecWorkInit( fmmdl, &vec,
@@ -3204,11 +3204,11 @@ static int AC_WalkGUL8F_0( FLDMMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_WALKGU_L_8F 上壁　右移動(x+)　左表示
- * @param	fmmdl	FLDMMDL *
+ * @param	fmmdl	MMDL *
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_WalkGUR8F_0( FLDMMDL * fmmdl )
+static int AC_WalkGUR8F_0( MMDL * fmmdl )
 {
 	VecFx32 vec = { GRID_VALUE_SPEED_8, 0, 0 };
 	AcWalkVecWorkInit( fmmdl, &vec,
@@ -3219,11 +3219,11 @@ static int AC_WalkGUR8F_0( FLDMMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_WALKGU_L_4F 上壁　上移動(z+)　上表示
- * @param	fmmdl	FLDMMDL *
+ * @param	fmmdl	MMDL *
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_WalkGUU4F_0( FLDMMDL * fmmdl )
+static int AC_WalkGUU4F_0( MMDL * fmmdl )
 {
 	VecFx32 vec = { 0, 0, GRID_VALUE_SPEED_4 };
 	AcWalkVecWorkInit( fmmdl, &vec,
@@ -3234,11 +3234,11 @@ static int AC_WalkGUU4F_0( FLDMMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_WALKGU_L_4F 上壁　下移動(z-)　下表示
- * @param	fmmdl	FLDMMDL *
+ * @param	fmmdl	MMDL *
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_WalkGUD4F_0( FLDMMDL * fmmdl )
+static int AC_WalkGUD4F_0( MMDL * fmmdl )
 {
 	VecFx32 vec = { 0, 0, -GRID_VALUE_SPEED_4 };
 	AcWalkVecWorkInit( fmmdl, &vec,
@@ -3249,11 +3249,11 @@ static int AC_WalkGUD4F_0( FLDMMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_WALKGU_L_4F 上壁　左移動(x-)　右表示
- * @param	fmmdl	FLDMMDL *
+ * @param	fmmdl	MMDL *
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_WalkGUL4F_0( FLDMMDL * fmmdl )
+static int AC_WalkGUL4F_0( MMDL * fmmdl )
 {
 	VecFx32 vec = { -GRID_VALUE_SPEED_4, 0, 0 };
 	AcWalkVecWorkInit( fmmdl, &vec,
@@ -3264,11 +3264,11 @@ static int AC_WalkGUL4F_0( FLDMMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_WALKGU_L_4F 上壁　右移動(x+)　左表示
- * @param	fmmdl	FLDMMDL *
+ * @param	fmmdl	MMDL *
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_WalkGUR4F_0( FLDMMDL * fmmdl )
+static int AC_WalkGUR4F_0( MMDL * fmmdl )
 {
 	VecFx32 vec = { GRID_VALUE_SPEED_4, 0, 0 };
 	AcWalkVecWorkInit( fmmdl, &vec,
@@ -3279,11 +3279,11 @@ static int AC_WalkGUR4F_0( FLDMMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_WALKGU_L_2F 上壁　上移動(z+)　上表示
- * @param	fmmdl	FLDMMDL *
+ * @param	fmmdl	MMDL *
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_WalkGUU2F_0( FLDMMDL * fmmdl )
+static int AC_WalkGUU2F_0( MMDL * fmmdl )
 {
 	VecFx32 vec = { 0, 0, GRID_VALUE_SPEED_2 };
 	AcWalkVecWorkInit( fmmdl, &vec,
@@ -3294,11 +3294,11 @@ static int AC_WalkGUU2F_0( FLDMMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_WALKGU_L_2F 上壁　下移動(z-)　下表示
- * @param	fmmdl	FLDMMDL *
+ * @param	fmmdl	MMDL *
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_WalkGUD2F_0( FLDMMDL * fmmdl )
+static int AC_WalkGUD2F_0( MMDL * fmmdl )
 {
 	VecFx32 vec = { 0, 0, -GRID_VALUE_SPEED_2 };
 	AcWalkVecWorkInit( fmmdl, &vec,
@@ -3309,11 +3309,11 @@ static int AC_WalkGUD2F_0( FLDMMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_WALKGU_L_2F 上壁　左移動(x-)　右表示
- * @param	fmmdl	FLDMMDL *
+ * @param	fmmdl	MMDL *
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_WalkGUL2F_0( FLDMMDL * fmmdl )
+static int AC_WalkGUL2F_0( MMDL * fmmdl )
 {
 	VecFx32 vec = { -GRID_VALUE_SPEED_2, 0, 0 };
 	AcWalkVecWorkInit( fmmdl, &vec,
@@ -3324,11 +3324,11 @@ static int AC_WalkGUL2F_0( FLDMMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_WALKGU_L_2F 上壁　右移動(x+)　左表示
- * @param	fmmdl	FLDMMDL *
+ * @param	fmmdl	MMDL *
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_WalkGUR2F_0( FLDMMDL * fmmdl )
+static int AC_WalkGUR2F_0( MMDL * fmmdl )
 {
 	VecFx32 vec = { GRID_VALUE_SPEED_2, 0, 0 };
 	AcWalkVecWorkInit( fmmdl, &vec,
@@ -3339,11 +3339,11 @@ static int AC_WalkGUR2F_0( FLDMMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_DASHGL_U_4F 左壁　上移動(y+) 左表示
- * @param	fmmdl	FLDMMDL *
+ * @param	fmmdl	MMDL *
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_DashGLU4F_0( FLDMMDL * fmmdl )
+static int AC_DashGLU4F_0( MMDL * fmmdl )
 {
 	VecFx32 vec = { 0, GRID_VALUE_SPEED_4, 0 };
 	AcWalkVecWorkInit( fmmdl, &vec,
@@ -3354,11 +3354,11 @@ static int AC_DashGLU4F_0( FLDMMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_DASHGL_D_4F 左壁　下移動(y-)　右表示
- * @param	fmmdl	FLDMMDL *
+ * @param	fmmdl	MMDL *
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_DashGLD4F_0( FLDMMDL * fmmdl )
+static int AC_DashGLD4F_0( MMDL * fmmdl )
 {
 	VecFx32 vec = { 0, -GRID_VALUE_SPEED_4, 0 };
 	AcWalkVecWorkInit( fmmdl, &vec,
@@ -3369,11 +3369,11 @@ static int AC_DashGLD4F_0( FLDMMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_DASHGL_L_4F 左壁　左移動(z+)　下表示
- * @param	fmmdl	FLDMMDL *
+ * @param	fmmdl	MMDL *
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_DashGLL4F_0( FLDMMDL * fmmdl )
+static int AC_DashGLL4F_0( MMDL * fmmdl )
 {
 	VecFx32 vec = { 0, 0, GRID_VALUE_SPEED_4 };
 	AcWalkVecWorkInit( fmmdl, &vec,
@@ -3384,11 +3384,11 @@ static int AC_DashGLL4F_0( FLDMMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_DASHGL_R_4F 左壁　右移動(z-)　上表示
- * @param	fmmdl	FLDMMDL *
+ * @param	fmmdl	MMDL *
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_DashGLR4F_0( FLDMMDL * fmmdl )
+static int AC_DashGLR4F_0( MMDL * fmmdl )
 {
 	VecFx32 vec = { 0, 0, -GRID_VALUE_SPEED_4 };
 	AcWalkVecWorkInit( fmmdl, &vec,
@@ -3399,11 +3399,11 @@ static int AC_DashGLR4F_0( FLDMMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_DASHGR_U_4F 右壁　上移動(y+)　右表示
- * @param	fmmdl	FLDMMDL *
+ * @param	fmmdl	MMDL *
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_DashGRU4F_0( FLDMMDL * fmmdl )
+static int AC_DashGRU4F_0( MMDL * fmmdl )
 {
 	VecFx32 vec = { 0, GRID_VALUE_SPEED_4, 0 };
 	AcWalkVecWorkInit( fmmdl, &vec,
@@ -3414,11 +3414,11 @@ static int AC_DashGRU4F_0( FLDMMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_DASHGR_D_4F 右壁　下移動(y-)　左表示
- * @param	fmmdl	FLDMMDL *
+ * @param	fmmdl	MMDL *
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_DashGRD4F_0( FLDMMDL * fmmdl )
+static int AC_DashGRD4F_0( MMDL * fmmdl )
 {
 	VecFx32 vec = { 0, -GRID_VALUE_SPEED_4, 0 };
 	AcWalkVecWorkInit( fmmdl, &vec,
@@ -3429,11 +3429,11 @@ static int AC_DashGRD4F_0( FLDMMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_DASHGR_L_4F 右壁　左移動(z-)　上表示
- * @param	fmmdl	FLDMMDL *
+ * @param	fmmdl	MMDL *
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_DashGRL4F_0( FLDMMDL * fmmdl )
+static int AC_DashGRL4F_0( MMDL * fmmdl )
 {
 	VecFx32 vec = { 0, 0, -GRID_VALUE_SPEED_4 };
 	AcWalkVecWorkInit( fmmdl, &vec,
@@ -3444,11 +3444,11 @@ static int AC_DashGRL4F_0( FLDMMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_DASHGR_L_4F 右壁　右移動(z+)　下表示
- * @param	fmmdl	FLDMMDL *
+ * @param	fmmdl	MMDL *
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_DashGRR4F_0( FLDMMDL * fmmdl )
+static int AC_DashGRR4F_0( MMDL * fmmdl )
 {
 	VecFx32 vec = { 0, 0, GRID_VALUE_SPEED_4 };
 	AcWalkVecWorkInit( fmmdl, &vec,
@@ -3459,11 +3459,11 @@ static int AC_DashGRR4F_0( FLDMMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_DASHGU_L_4F 上壁　上移動(z+)　上表示
- * @param	fmmdl	FLDMMDL *
+ * @param	fmmdl	MMDL *
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_DashGUU4F_0( FLDMMDL * fmmdl )
+static int AC_DashGUU4F_0( MMDL * fmmdl )
 {
 	VecFx32 vec = { 0, 0, GRID_VALUE_SPEED_4 };
 	AcWalkVecWorkInit( fmmdl, &vec,
@@ -3474,11 +3474,11 @@ static int AC_DashGUU4F_0( FLDMMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_DASHGU_L_4F 上壁　下移動(z-)　下表示
- * @param	fmmdl	FLDMMDL *
+ * @param	fmmdl	MMDL *
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_DashGUD4F_0( FLDMMDL * fmmdl )
+static int AC_DashGUD4F_0( MMDL * fmmdl )
 {
 	VecFx32 vec = { 0, 0, -GRID_VALUE_SPEED_4 };
 	AcWalkVecWorkInit( fmmdl, &vec,
@@ -3489,11 +3489,11 @@ static int AC_DashGUD4F_0( FLDMMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_DASHGU_L_4F 上壁　左移動(x-)　右表示
- * @param	fmmdl	FLDMMDL *
+ * @param	fmmdl	MMDL *
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_DashGUL4F_0( FLDMMDL * fmmdl )
+static int AC_DashGUL4F_0( MMDL * fmmdl )
 {
 	VecFx32 vec = { -GRID_VALUE_SPEED_4, 0, 0 };
 	AcWalkVecWorkInit( fmmdl, &vec,
@@ -3504,11 +3504,11 @@ static int AC_DashGUL4F_0( FLDMMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_DASHGU_L_4F 上壁　右移動(x+)　左表示
- * @param	fmmdl	FLDMMDL *
+ * @param	fmmdl	MMDL *
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_DashGUR4F_0( FLDMMDL * fmmdl )
+static int AC_DashGUR4F_0( MMDL * fmmdl )
 {
 	VecFx32 vec = { GRID_VALUE_SPEED_4, 0, 0 };
 	AcWalkVecWorkInit( fmmdl, &vec,
@@ -3522,7 +3522,7 @@ static int AC_DashGUR4F_0( FLDMMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_JUMPVEC_WORK初期化
- * @param	fmmdl		FLDMMDL *
+ * @param	fmmdl		MMDL *
  * @param	val			移動量
  * @param	d_dir		表示方向
  * @param	m_dir		移動方向
@@ -3532,13 +3532,13 @@ static int AC_DashGUR4F_0( FLDMMDL * fmmdl )
  * @retval	nothing
  */
 //--------------------------------------------------------------
-static void AcJumpVecWorkInit( FLDMMDL * fmmdl,
+static void AcJumpVecWorkInit( MMDL * fmmdl,
 	fx32 val, int d_dir, int m_dir, u8 wait, u8 draw,
 	u8 vec_type, u8 jump_vec_type, u8 jump_flip )
 {
 	int grid = GRID_ONE;
 	AC_JUMPVEC_WORK *work;
-	work = FLDMMDL_InitMoveCmdWork( fmmdl, AC_JUMPVEC_WORK_SIZE );
+	work = MMDL_InitMoveCmdWork( fmmdl, AC_JUMPVEC_WORK_SIZE );
 	
 	work->wait = wait;
 	work->val = val;
@@ -3547,14 +3547,14 @@ static void AcJumpVecWorkInit( FLDMMDL * fmmdl,
 	work->jump_flip = jump_flip;
 	work->jump_frame_val = NUM_UX16(16) / work->wait;
 	
-	FLDMMDL_SetDirDisp( fmmdl, d_dir );
-	FLDMMDL_SetDirMove( fmmdl, m_dir );
-	FLDMMDL_SetDrawStatus( fmmdl, draw );
-	FLDMMDL_OnStatusBitMoveStart( fmmdl );
+	MMDL_SetDirDisp( fmmdl, d_dir );
+	MMDL_SetDirMove( fmmdl, m_dir );
+	MMDL_SetDrawStatus( fmmdl, draw );
+	MMDL_OnStatusBitMoveStart( fmmdl );
 	
-	FLDMMDL_SetOldGridPosX( fmmdl, FLDMMDL_GetGridPosX(fmmdl) );
-	FLDMMDL_SetOldGridPosY( fmmdl, FLDMMDL_GetGridPosY(fmmdl) );
-	FLDMMDL_SetOldGridPosZ( fmmdl, FLDMMDL_GetGridPosZ(fmmdl) );
+	MMDL_SetOldGridPosX( fmmdl, MMDL_GetGridPosX(fmmdl) );
+	MMDL_SetOldGridPosY( fmmdl, MMDL_GetGridPosY(fmmdl) );
+	MMDL_SetOldGridPosZ( fmmdl, MMDL_GetGridPosZ(fmmdl) );
 	
 	GF_ASSERT( vec_type <= VEC_Z );
 	
@@ -3562,37 +3562,37 @@ static void AcJumpVecWorkInit( FLDMMDL * fmmdl,
 		switch( vec_type ){
 		case VEC_X:
 			if( val < 0 ){ grid = -grid; }
-			FLDMMDL_AddGridPosX( fmmdl, grid );
+			MMDL_AddGridPosX( fmmdl, grid );
 			break;
 		case VEC_Y:
 			if( val < 0 ){ grid = -grid; }
-			FLDMMDL_AddGridPosY( fmmdl, grid*2 );
+			MMDL_AddGridPosY( fmmdl, grid*2 );
 			break;
 		case VEC_Z:
 			if( val < 0 ){ grid = -grid; }
-			FLDMMDL_AddGridPosZ( fmmdl, grid );
+			MMDL_AddGridPosZ( fmmdl, grid );
 			break;
 		}
 	}
 	
-	FLDMMDL_IncAcmdSeq( fmmdl );
+	MMDL_IncAcmdSeq( fmmdl );
 }
 
 //--------------------------------------------------------------
 /**
  * AC_JUMPVEC_WORK　移動　高さ取得は行わない
- * @param	fmmdl	FLDMMDL *
+ * @param	fmmdl	MMDL *
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_JumpVec_1( FLDMMDL * fmmdl )
+static int AC_JumpVec_1( MMDL * fmmdl )
 {
 	fx32 val;
 	VecFx32 pos;
 	AC_JUMPVEC_WORK *work;
 	
-	work = FLDMMDL_GetMoveCmdWork( fmmdl );
-	FLDMMDL_GetVectorPos( fmmdl, &pos );
+	work = MMDL_GetMoveCmdWork( fmmdl );
+	MMDL_GetVectorPos( fmmdl, &pos );
 	
 	switch( work->vec_type ){
 	case VEC_X:
@@ -3606,7 +3606,7 @@ static int AC_JumpVec_1( FLDMMDL * fmmdl )
 		break;
 	}
 	
-	FLDMMDL_SetVectorPos( fmmdl, &pos );
+	MMDL_SetVectorPos( fmmdl, &pos );
 	
 	val = work->val;
 	if( val < 0 ){ val = -val; }
@@ -3634,7 +3634,7 @@ static int AC_JumpVec_1( FLDMMDL * fmmdl )
 		case VEC_Z: offs.z = val; break;
 		}
 		
-		FLDMMDL_SetVectorDrawOffsetPos( fmmdl, &offs );
+		MMDL_SetVectorDrawOffsetPos( fmmdl, &offs );
 	}
 	
 	work->wait--;
@@ -3645,22 +3645,22 @@ static int AC_JumpVec_1( FLDMMDL * fmmdl )
 		work->count -= GRID_FX32;
 		val = work->val;
 		
-		FLDMMDL_SetOldGridPosX( fmmdl, FLDMMDL_GetGridPosX(fmmdl) );
-		FLDMMDL_SetOldGridPosY( fmmdl, FLDMMDL_GetGridPosY(fmmdl) );
-		FLDMMDL_SetOldGridPosZ( fmmdl, FLDMMDL_GetGridPosZ(fmmdl) );
+		MMDL_SetOldGridPosX( fmmdl, MMDL_GetGridPosX(fmmdl) );
+		MMDL_SetOldGridPosY( fmmdl, MMDL_GetGridPosY(fmmdl) );
+		MMDL_SetOldGridPosZ( fmmdl, MMDL_GetGridPosZ(fmmdl) );
 		
 		switch( work->vec_type ){
 		case VEC_X:
 			if( val < 0 ){ grid = -grid; }
-			FLDMMDL_AddGridPosX( fmmdl, grid );
+			MMDL_AddGridPosX( fmmdl, grid );
 			break;
 		case VEC_Y:
 			if( val < 0 ){ grid = -grid; }
-			FLDMMDL_AddGridPosY( fmmdl, grid*2 );
+			MMDL_AddGridPosY( fmmdl, grid*2 );
 			break;
 		case VEC_Z:
 			if( val < 0 ){ grid = -grid; }
-			FLDMMDL_AddGridPosZ( fmmdl, grid );
+			MMDL_AddGridPosZ( fmmdl, grid );
 			break;
 		}
 	}
@@ -3671,18 +3671,18 @@ static int AC_JumpVec_1( FLDMMDL * fmmdl )
 	
 	{
 		VecFx32 offs = {0,0,0};
-		FLDMMDL_SetVectorDrawOffsetPos( fmmdl, &offs );
+		MMDL_SetVectorDrawOffsetPos( fmmdl, &offs );
 	}
 	
-	FLDMMDL_OnStatusBit( fmmdl,
-			FLDMMDL_STABIT_MOVE_END |
-			FLDMMDL_STABIT_JUMP_END |
-			FLDMMDL_STABIT_ACMD_END );
+	MMDL_OnStatusBit( fmmdl,
+			MMDL_STABIT_MOVE_END |
+			MMDL_STABIT_JUMP_END |
+			MMDL_STABIT_ACMD_END );
 	
-	FLDMMDL_UpdateGridPosCurrent( fmmdl );
-	FLDMMDL_CallDrawProc( fmmdl );				//1フレーム進める
-	FLDMMDL_SetDrawStatus( fmmdl, DRAW_STA_STOP );
-	FLDMMDL_IncAcmdSeq( fmmdl );
+	MMDL_UpdateGridPosCurrent( fmmdl );
+	MMDL_CallDrawProc( fmmdl );				//1フレーム進める
+	MMDL_SetDrawStatus( fmmdl, DRAW_STA_STOP );
+	MMDL_IncAcmdSeq( fmmdl );
 	
 #if 0
 	Snd_SePlay( SE_SUTYA2 );
@@ -3693,11 +3693,11 @@ static int AC_JumpVec_1( FLDMMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_JUMPGL_U_1G_8F 左壁　上移動(y+) 左表示
- * @param	fmmdl	FLDMMDL *
+ * @param	fmmdl	MMDL *
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_JumpGLU1G_8F_0( FLDMMDL * fmmdl )
+static int AC_JumpGLU1G_8F_0( MMDL * fmmdl )
 {
 	AcJumpVecWorkInit( fmmdl, GRID_VALUE_SPEED_8,
 		DIR_LEFT,DIR_UP, GRID_FRAME_8, DRAW_STA_WALK_8F,
@@ -3708,11 +3708,11 @@ static int AC_JumpGLU1G_8F_0( FLDMMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_JUMPGL_D_1G_8F 左壁　下移動(y-)　右表示
- * @param	fmmdl	FLDMMDL *
+ * @param	fmmdl	MMDL *
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_JumpGLD1G_8F_0( FLDMMDL * fmmdl )
+static int AC_JumpGLD1G_8F_0( MMDL * fmmdl )
 {
 	AcJumpVecWorkInit( fmmdl, -GRID_VALUE_SPEED_8,
 		DIR_RIGHT,DIR_DOWN, GRID_FRAME_8, DRAW_STA_WALK_8F,
@@ -3723,11 +3723,11 @@ static int AC_JumpGLD1G_8F_0( FLDMMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_JUMPGL_L_1G_8F 左壁　左移動(z+)　下表示
- * @param	fmmdl	FLDMMDL *
+ * @param	fmmdl	MMDL *
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_JumpGLL1G_8F_0( FLDMMDL * fmmdl )
+static int AC_JumpGLL1G_8F_0( MMDL * fmmdl )
 {
 	AcJumpVecWorkInit( fmmdl, GRID_VALUE_SPEED_8,
 		DIR_DOWN,DIR_LEFT, GRID_FRAME_8, DRAW_STA_WALK_8F,
@@ -3738,11 +3738,11 @@ static int AC_JumpGLL1G_8F_0( FLDMMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_JUMPGL_R_1G_8F 左壁　右移動(z-)　上表示
- * @param	fmmdl	FLDMMDL *
+ * @param	fmmdl	MMDL *
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_JumpGLR1G_8F_0( FLDMMDL * fmmdl )
+static int AC_JumpGLR1G_8F_0( MMDL * fmmdl )
 {
 	AcJumpVecWorkInit( fmmdl, -GRID_VALUE_SPEED_8,
 		DIR_UP,DIR_RIGHT, GRID_FRAME_8, DRAW_STA_WALK_8F,
@@ -3753,11 +3753,11 @@ static int AC_JumpGLR1G_8F_0( FLDMMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_JUMPGR_U_1G_8F 右壁　上移動(y+)　右表示
- * @param	fmmdl	FLDMMDL *
+ * @param	fmmdl	MMDL *
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_JumpGRU1G_8F_0( FLDMMDL * fmmdl )
+static int AC_JumpGRU1G_8F_0( MMDL * fmmdl )
 {
 	AcJumpVecWorkInit( fmmdl, GRID_VALUE_SPEED_8,
 		DIR_RIGHT,DIR_UP, GRID_FRAME_8, DRAW_STA_WALK_8F,
@@ -3768,11 +3768,11 @@ static int AC_JumpGRU1G_8F_0( FLDMMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_JUMPGR_D_1G_8F 右壁　下移動(y-)　左表示
- * @param	fmmdl	FLDMMDL *
+ * @param	fmmdl	MMDL *
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_JumpGRD1G_8F_0( FLDMMDL * fmmdl )
+static int AC_JumpGRD1G_8F_0( MMDL * fmmdl )
 {
 	AcJumpVecWorkInit( fmmdl, -GRID_VALUE_SPEED_8,
 		DIR_LEFT,DIR_DOWN, GRID_FRAME_8, DRAW_STA_WALK_8F,
@@ -3783,11 +3783,11 @@ static int AC_JumpGRD1G_8F_0( FLDMMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_JUMPGR_L_1G_8F 右壁　左移動(z-)　上表示
- * @param	fmmdl	FLDMMDL *
+ * @param	fmmdl	MMDL *
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_JumpGRL1G_8F_0( FLDMMDL * fmmdl )
+static int AC_JumpGRL1G_8F_0( MMDL * fmmdl )
 {
 	AcJumpVecWorkInit( fmmdl, -GRID_VALUE_SPEED_8,
 		DIR_UP,DIR_LEFT, GRID_FRAME_8, DRAW_STA_WALK_8F,
@@ -3798,11 +3798,11 @@ static int AC_JumpGRL1G_8F_0( FLDMMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_JUMPGR_R_1G_8F 右壁　右移動(z+)　下表示
- * @param	fmmdl	FLDMMDL *
+ * @param	fmmdl	MMDL *
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_JumpGRR1G_8F_0( FLDMMDL * fmmdl )
+static int AC_JumpGRR1G_8F_0( MMDL * fmmdl )
 {
 	AcJumpVecWorkInit( fmmdl, GRID_VALUE_SPEED_8,
 		DIR_DOWN,DIR_LEFT, GRID_FRAME_8, DRAW_STA_WALK_8F,
@@ -3813,11 +3813,11 @@ static int AC_JumpGRR1G_8F_0( FLDMMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_JUMPGU_U_1G_8F 上壁　上移動(z+)　上表示
- * @param	fmmdl	FLDMMDL *
+ * @param	fmmdl	MMDL *
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_JumpGUU1G_8F_0( FLDMMDL * fmmdl )
+static int AC_JumpGUU1G_8F_0( MMDL * fmmdl )
 {
 	AcJumpVecWorkInit( fmmdl, GRID_VALUE_SPEED_8,
 		DIR_DOWN,DIR_UP, GRID_FRAME_8, DRAW_STA_WALK_8F,
@@ -3828,11 +3828,11 @@ static int AC_JumpGUU1G_8F_0( FLDMMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_JUMPGU_D_1G_8F 上壁　下移動(z-)　下表示
- * @param	fmmdl	FLDMMDL *
+ * @param	fmmdl	MMDL *
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_JumpGUD1G_8F_0( FLDMMDL * fmmdl )
+static int AC_JumpGUD1G_8F_0( MMDL * fmmdl )
 {
 	AcJumpVecWorkInit( fmmdl, -GRID_VALUE_SPEED_8,
 		DIR_UP,DIR_DOWN, GRID_FRAME_8, DRAW_STA_WALK_8F,
@@ -3843,11 +3843,11 @@ static int AC_JumpGUD1G_8F_0( FLDMMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_JUMPGU_L_1G_8F 上壁　左移動(x-)　右表示
- * @param	fmmdl	FLDMMDL *
+ * @param	fmmdl	MMDL *
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_JumpGUL1G_8F_0( FLDMMDL * fmmdl )
+static int AC_JumpGUL1G_8F_0( MMDL * fmmdl )
 {
 	AcJumpVecWorkInit( fmmdl, -GRID_VALUE_SPEED_8,
 		DIR_RIGHT,DIR_LEFT, GRID_FRAME_8, DRAW_STA_WALK_8F,
@@ -3858,11 +3858,11 @@ static int AC_JumpGUL1G_8F_0( FLDMMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_JUMPGU_R_1G_8F 上壁　右移動(x+)　左表示
- * @param	fmmdl	FLDMMDL *
+ * @param	fmmdl	MMDL *
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_JumpGUR1G_8F_0( FLDMMDL * fmmdl )
+static int AC_JumpGUR1G_8F_0( MMDL * fmmdl )
 {
 	AcJumpVecWorkInit( fmmdl, GRID_VALUE_SPEED_8,
 		DIR_LEFT,DIR_RIGHT, GRID_FRAME_8, DRAW_STA_WALK_8F,
@@ -3876,7 +3876,7 @@ static int AC_JumpGUR1G_8F_0( FLDMMDL * fmmdl )
 //--------------------------------------------------------------
 ///	AC_DIR_U
 //--------------------------------------------------------------
-int (* const DATA_AC_DirU_Tbl[])( FLDMMDL * ) =
+int (* const DATA_AC_DirU_Tbl[])( MMDL * ) =
 {
 	AC_DirU_0,
 	AC_End,
@@ -3885,7 +3885,7 @@ int (* const DATA_AC_DirU_Tbl[])( FLDMMDL * ) =
 //--------------------------------------------------------------
 ///	AC_DIR_D
 //--------------------------------------------------------------
-int (* const DATA_AC_DirD_Tbl[])( FLDMMDL * ) =
+int (* const DATA_AC_DirD_Tbl[])( MMDL * ) =
 {
 	AC_DirD_0,
 	AC_End,
@@ -3894,7 +3894,7 @@ int (* const DATA_AC_DirD_Tbl[])( FLDMMDL * ) =
 //--------------------------------------------------------------
 ///	AC_DIR_L
 //--------------------------------------------------------------
-int (* const DATA_AC_DirL_Tbl[])( FLDMMDL * ) =
+int (* const DATA_AC_DirL_Tbl[])( MMDL * ) =
 {
 	AC_DirL_0,
 	AC_End,
@@ -3903,7 +3903,7 @@ int (* const DATA_AC_DirL_Tbl[])( FLDMMDL * ) =
 //--------------------------------------------------------------
 ///	AC_DIR_R
 //--------------------------------------------------------------
-int (* const DATA_AC_DirR_Tbl[])( FLDMMDL * ) =
+int (* const DATA_AC_DirR_Tbl[])( MMDL * ) =
 {
 	AC_DirR_0,
 	AC_End,
@@ -3912,7 +3912,7 @@ int (* const DATA_AC_DirR_Tbl[])( FLDMMDL * ) =
 //--------------------------------------------------------------
 ///	AC_WALK_U_32F
 //--------------------------------------------------------------
-int (* const DATA_AC_WalkU_32F_Tbl[])( FLDMMDL * ) =
+int (* const DATA_AC_WalkU_32F_Tbl[])( MMDL * ) =
 {
 	AC_WalkU32F_0,
 	AC_Walk_1,
@@ -3922,7 +3922,7 @@ int (* const DATA_AC_WalkU_32F_Tbl[])( FLDMMDL * ) =
 //--------------------------------------------------------------
 ///	AC_WALK_D_32F
 //--------------------------------------------------------------
-int (* const DATA_AC_WalkD_32F_Tbl[])( FLDMMDL * ) =
+int (* const DATA_AC_WalkD_32F_Tbl[])( MMDL * ) =
 {
 	AC_WalkD32F_0,
 	AC_Walk_1,
@@ -3932,7 +3932,7 @@ int (* const DATA_AC_WalkD_32F_Tbl[])( FLDMMDL * ) =
 //--------------------------------------------------------------
 ///	AC_WALK_L_32F
 //--------------------------------------------------------------
-int (* const DATA_AC_WalkL_32F_Tbl[])( FLDMMDL * ) =
+int (* const DATA_AC_WalkL_32F_Tbl[])( MMDL * ) =
 {
 	AC_WalkL32F_0,
 	AC_Walk_1,
@@ -3942,7 +3942,7 @@ int (* const DATA_AC_WalkL_32F_Tbl[])( FLDMMDL * ) =
 //--------------------------------------------------------------
 ///	AC_WALK_R_32F
 //--------------------------------------------------------------
-int (* const DATA_AC_WalkR_32F_Tbl[])( FLDMMDL * ) =
+int (* const DATA_AC_WalkR_32F_Tbl[])( MMDL * ) =
 {
 	AC_WalkR32F_0,
 	AC_Walk_1,
@@ -3952,7 +3952,7 @@ int (* const DATA_AC_WalkR_32F_Tbl[])( FLDMMDL * ) =
 //--------------------------------------------------------------
 ///	AC_WALK_U_16F
 //--------------------------------------------------------------
-int (* const DATA_AC_WalkU_16F_Tbl[])( FLDMMDL * ) =
+int (* const DATA_AC_WalkU_16F_Tbl[])( MMDL * ) =
 {
 	AC_WalkU16F_0,
 	AC_Walk_1,
@@ -3962,7 +3962,7 @@ int (* const DATA_AC_WalkU_16F_Tbl[])( FLDMMDL * ) =
 //--------------------------------------------------------------
 ///	AC_WALK_D_16F
 //--------------------------------------------------------------
-int (* const DATA_AC_WalkD_16F_Tbl[])( FLDMMDL * ) =
+int (* const DATA_AC_WalkD_16F_Tbl[])( MMDL * ) =
 {
 	AC_WalkD16F_0,
 	AC_Walk_1,
@@ -3972,7 +3972,7 @@ int (* const DATA_AC_WalkD_16F_Tbl[])( FLDMMDL * ) =
 //--------------------------------------------------------------
 ///	AC_WALK_L_16F
 //--------------------------------------------------------------
-int (* const DATA_AC_WalkL_16F_Tbl[])( FLDMMDL * ) =
+int (* const DATA_AC_WalkL_16F_Tbl[])( MMDL * ) =
 {
 	AC_WalkL16F_0,
 	AC_Walk_1,
@@ -3982,7 +3982,7 @@ int (* const DATA_AC_WalkL_16F_Tbl[])( FLDMMDL * ) =
 //--------------------------------------------------------------
 ///	AC_WALK_R_16F
 //--------------------------------------------------------------
-int (* const DATA_AC_WalkR_16F_Tbl[])( FLDMMDL * ) =
+int (* const DATA_AC_WalkR_16F_Tbl[])( MMDL * ) =
 {
 	AC_WalkR16F_0,
 	AC_Walk_1,
@@ -3992,7 +3992,7 @@ int (* const DATA_AC_WalkR_16F_Tbl[])( FLDMMDL * ) =
 //--------------------------------------------------------------
 ///	AC_WALK_U_8F
 //--------------------------------------------------------------
-int (* const DATA_AC_WalkU_8F_Tbl[])( FLDMMDL * ) =
+int (* const DATA_AC_WalkU_8F_Tbl[])( MMDL * ) =
 {
 	AC_WalkU8F_0,
 	AC_Walk_1,
@@ -4002,7 +4002,7 @@ int (* const DATA_AC_WalkU_8F_Tbl[])( FLDMMDL * ) =
 //--------------------------------------------------------------
 ///	AC_WALK_D_8F
 //--------------------------------------------------------------
-int (* const DATA_AC_WalkD_8F_Tbl[])( FLDMMDL * ) =
+int (* const DATA_AC_WalkD_8F_Tbl[])( MMDL * ) =
 {
 	AC_WalkD8F_0,
 	AC_Walk_1,
@@ -4012,7 +4012,7 @@ int (* const DATA_AC_WalkD_8F_Tbl[])( FLDMMDL * ) =
 //--------------------------------------------------------------
 ///	AC_WALK_L_8F
 //--------------------------------------------------------------
-int (* const DATA_AC_WalkL_8F_Tbl[])( FLDMMDL * ) =
+int (* const DATA_AC_WalkL_8F_Tbl[])( MMDL * ) =
 {
 	AC_WalkL8F_0,
 	AC_Walk_1,
@@ -4022,7 +4022,7 @@ int (* const DATA_AC_WalkL_8F_Tbl[])( FLDMMDL * ) =
 //--------------------------------------------------------------
 ///	AC_WALK_R_8F
 //--------------------------------------------------------------
-int (* const DATA_AC_WalkR_8F_Tbl[])( FLDMMDL * ) =
+int (* const DATA_AC_WalkR_8F_Tbl[])( MMDL * ) =
 {
 	AC_WalkR8F_0,
 	AC_Walk_1,
@@ -4032,7 +4032,7 @@ int (* const DATA_AC_WalkR_8F_Tbl[])( FLDMMDL * ) =
 //--------------------------------------------------------------
 ///	AC_WALK_U_4F
 //--------------------------------------------------------------
-int (* const DATA_AC_WalkU_4F_Tbl[])( FLDMMDL * ) =
+int (* const DATA_AC_WalkU_4F_Tbl[])( MMDL * ) =
 {
 	AC_WalkU4F_0,
 	AC_Walk_1,
@@ -4042,7 +4042,7 @@ int (* const DATA_AC_WalkU_4F_Tbl[])( FLDMMDL * ) =
 //--------------------------------------------------------------
 ///	AC_WALK_D_4F
 //--------------------------------------------------------------
-int (* const DATA_AC_WalkD_4F_Tbl[])( FLDMMDL * ) =
+int (* const DATA_AC_WalkD_4F_Tbl[])( MMDL * ) =
 {
 	AC_WalkD4F_0,
 	AC_Walk_1,
@@ -4052,7 +4052,7 @@ int (* const DATA_AC_WalkD_4F_Tbl[])( FLDMMDL * ) =
 //--------------------------------------------------------------
 ///	AC_WALK_L_4F
 //--------------------------------------------------------------
-int (* const DATA_AC_WalkL_4F_Tbl[])( FLDMMDL * ) =
+int (* const DATA_AC_WalkL_4F_Tbl[])( MMDL * ) =
 {
 	AC_WalkL4F_0,
 	AC_Walk_1,
@@ -4062,7 +4062,7 @@ int (* const DATA_AC_WalkL_4F_Tbl[])( FLDMMDL * ) =
 //--------------------------------------------------------------
 ///	AC_WALK_R_4F
 //--------------------------------------------------------------
-int (* const DATA_AC_WalkR_4F_Tbl[])( FLDMMDL * ) =
+int (* const DATA_AC_WalkR_4F_Tbl[])( MMDL * ) =
 {
 	AC_WalkR4F_0,
 	AC_Walk_1,
@@ -4072,7 +4072,7 @@ int (* const DATA_AC_WalkR_4F_Tbl[])( FLDMMDL * ) =
 //--------------------------------------------------------------
 ///	AC_WALK_U_2F
 //--------------------------------------------------------------
-int (* const DATA_AC_WalkU_2F_Tbl[])( FLDMMDL * ) =
+int (* const DATA_AC_WalkU_2F_Tbl[])( MMDL * ) =
 {
 	AC_WalkU2F_0,
 	AC_Walk_1,
@@ -4082,7 +4082,7 @@ int (* const DATA_AC_WalkU_2F_Tbl[])( FLDMMDL * ) =
 //--------------------------------------------------------------
 ///	AC_WALK_D_2F
 //--------------------------------------------------------------
-int (* const DATA_AC_WalkD_2F_Tbl[])( FLDMMDL * ) =
+int (* const DATA_AC_WalkD_2F_Tbl[])( MMDL * ) =
 {
 	AC_WalkD2F_0,
 	AC_Walk_1,
@@ -4092,7 +4092,7 @@ int (* const DATA_AC_WalkD_2F_Tbl[])( FLDMMDL * ) =
 //--------------------------------------------------------------
 ///	AC_WALK_L_2F
 //--------------------------------------------------------------
-int (* const DATA_AC_WalkL_2F_Tbl[])( FLDMMDL * ) =
+int (* const DATA_AC_WalkL_2F_Tbl[])( MMDL * ) =
 {
 	AC_WalkL2F_0,
 	AC_Walk_1,
@@ -4102,7 +4102,7 @@ int (* const DATA_AC_WalkL_2F_Tbl[])( FLDMMDL * ) =
 //--------------------------------------------------------------
 ///	AC_WALK_R_2F
 //--------------------------------------------------------------
-int (* const DATA_AC_WalkR_2F_Tbl[])( FLDMMDL * ) =
+int (* const DATA_AC_WalkR_2F_Tbl[])( MMDL * ) =
 {
 	AC_WalkR2F_0,
 	AC_Walk_1,
@@ -4112,7 +4112,7 @@ int (* const DATA_AC_WalkR_2F_Tbl[])( FLDMMDL * ) =
 //--------------------------------------------------------------
 ///	AC_WALK_U_1F
 //--------------------------------------------------------------
-int (* const DATA_AC_WalkU_1F_Tbl[])( FLDMMDL * ) =
+int (* const DATA_AC_WalkU_1F_Tbl[])( MMDL * ) =
 {
 	AC_WalkU1F_0,
 	AC_Walk_1,
@@ -4122,7 +4122,7 @@ int (* const DATA_AC_WalkU_1F_Tbl[])( FLDMMDL * ) =
 //--------------------------------------------------------------
 ///	AC_WALK_D_1F
 //--------------------------------------------------------------
-int (* const DATA_AC_WalkD_1F_Tbl[])( FLDMMDL * ) =
+int (* const DATA_AC_WalkD_1F_Tbl[])( MMDL * ) =
 {
 	AC_WalkD1F_0,
 	AC_Walk_1,
@@ -4132,7 +4132,7 @@ int (* const DATA_AC_WalkD_1F_Tbl[])( FLDMMDL * ) =
 //--------------------------------------------------------------
 ///	AC_WALK_L_1F
 //--------------------------------------------------------------
-int (* const DATA_AC_WalkL_1F_Tbl[])( FLDMMDL * ) =
+int (* const DATA_AC_WalkL_1F_Tbl[])( MMDL * ) =
 {
 	AC_WalkL1F_0,
 	AC_Walk_1,
@@ -4142,7 +4142,7 @@ int (* const DATA_AC_WalkL_1F_Tbl[])( FLDMMDL * ) =
 //--------------------------------------------------------------
 ///	AC_WALK_R_1F
 //--------------------------------------------------------------
-int (* const DATA_AC_WalkR_1F_Tbl[])( FLDMMDL * ) =
+int (* const DATA_AC_WalkR_1F_Tbl[])( MMDL * ) =
 {
 	AC_WalkR1F_0,
 	AC_Walk_1,
@@ -4152,7 +4152,7 @@ int (* const DATA_AC_WalkR_1F_Tbl[])( FLDMMDL * ) =
 //--------------------------------------------------------------
 ///	AC_STAY_WALK_U_32F
 //--------------------------------------------------------------
-int (* const DATA_AC_StayWalkU_32F_Tbl[])( FLDMMDL * ) =
+int (* const DATA_AC_StayWalkU_32F_Tbl[])( MMDL * ) =
 {
 	AC_StayWalkU32F_0,
 	AC_StayWalk_1,
@@ -4162,7 +4162,7 @@ int (* const DATA_AC_StayWalkU_32F_Tbl[])( FLDMMDL * ) =
 //--------------------------------------------------------------
 ///	AC_STAY_WALK_D_32F
 //--------------------------------------------------------------
-int (* const DATA_AC_StayWalkD_32F_Tbl[])( FLDMMDL * ) =
+int (* const DATA_AC_StayWalkD_32F_Tbl[])( MMDL * ) =
 {
 	AC_StayWalkD32F_0,
 	AC_StayWalk_1,
@@ -4172,7 +4172,7 @@ int (* const DATA_AC_StayWalkD_32F_Tbl[])( FLDMMDL * ) =
 //--------------------------------------------------------------
 ///	AC_STAY_WALK_L_32F
 //--------------------------------------------------------------
-int (* const DATA_AC_StayWalkL_32F_Tbl[])( FLDMMDL * ) =
+int (* const DATA_AC_StayWalkL_32F_Tbl[])( MMDL * ) =
 {
 	AC_StayWalkL32F_0,
 	AC_StayWalk_1,
@@ -4182,7 +4182,7 @@ int (* const DATA_AC_StayWalkL_32F_Tbl[])( FLDMMDL * ) =
 //--------------------------------------------------------------
 ///	AC_STAY_WALK_R_32F
 //--------------------------------------------------------------
-int (* const DATA_AC_StayWalkR_32F_Tbl[])( FLDMMDL * ) =
+int (* const DATA_AC_StayWalkR_32F_Tbl[])( MMDL * ) =
 {
 	AC_StayWalkR32F_0,
 	AC_StayWalk_1,
@@ -4192,7 +4192,7 @@ int (* const DATA_AC_StayWalkR_32F_Tbl[])( FLDMMDL * ) =
 //--------------------------------------------------------------
 ///	AC_STAY_WALK_U_16F
 //--------------------------------------------------------------
-int (* const DATA_AC_StayWalkU_16F_Tbl[])( FLDMMDL * ) =
+int (* const DATA_AC_StayWalkU_16F_Tbl[])( MMDL * ) =
 {
 	AC_StayWalkU16F_0,
 	AC_StayWalk_1,
@@ -4202,7 +4202,7 @@ int (* const DATA_AC_StayWalkU_16F_Tbl[])( FLDMMDL * ) =
 //--------------------------------------------------------------
 ///	AC_STAY_WALK_D_16F
 //--------------------------------------------------------------
-int (* const DATA_AC_StayWalkD_16F_Tbl[])( FLDMMDL * ) =
+int (* const DATA_AC_StayWalkD_16F_Tbl[])( MMDL * ) =
 {
 	AC_StayWalkD16F_0,
 	AC_StayWalk_1,
@@ -4212,7 +4212,7 @@ int (* const DATA_AC_StayWalkD_16F_Tbl[])( FLDMMDL * ) =
 //--------------------------------------------------------------
 ///	AC_STAY_WALK_L_16F
 //--------------------------------------------------------------
-int (* const DATA_AC_StayWalkL_16F_Tbl[])( FLDMMDL * ) =
+int (* const DATA_AC_StayWalkL_16F_Tbl[])( MMDL * ) =
 {
 	AC_StayWalkL16F_0,
 	AC_StayWalk_1,
@@ -4222,7 +4222,7 @@ int (* const DATA_AC_StayWalkL_16F_Tbl[])( FLDMMDL * ) =
 //--------------------------------------------------------------
 ///	AC_STAY_WALK_R_16F
 //--------------------------------------------------------------
-int (* const DATA_AC_StayWalkR_16F_Tbl[])( FLDMMDL * ) =
+int (* const DATA_AC_StayWalkR_16F_Tbl[])( MMDL * ) =
 {
 	AC_StayWalkR16F_0,
 	AC_StayWalk_1,
@@ -4232,7 +4232,7 @@ int (* const DATA_AC_StayWalkR_16F_Tbl[])( FLDMMDL * ) =
 //--------------------------------------------------------------
 ///	AC_STAY_WALK_U_8F
 //--------------------------------------------------------------
-int (* const DATA_AC_StayWalkU_8F_Tbl[])( FLDMMDL * ) =
+int (* const DATA_AC_StayWalkU_8F_Tbl[])( MMDL * ) =
 {
 	AC_StayWalkU8F_0,
 	AC_StayWalk_1,
@@ -4242,7 +4242,7 @@ int (* const DATA_AC_StayWalkU_8F_Tbl[])( FLDMMDL * ) =
 //--------------------------------------------------------------
 ///	AC_STAY_WALK_D_8F
 //--------------------------------------------------------------
-int (* const DATA_AC_StayWalkD_8F_Tbl[])( FLDMMDL * ) =
+int (* const DATA_AC_StayWalkD_8F_Tbl[])( MMDL * ) =
 {
 	AC_StayWalkD8F_0,
 	AC_StayWalk_1,
@@ -4252,7 +4252,7 @@ int (* const DATA_AC_StayWalkD_8F_Tbl[])( FLDMMDL * ) =
 //--------------------------------------------------------------
 ///	AC_STAY_WALK_L_8F
 //--------------------------------------------------------------
-int (* const DATA_AC_StayWalkL_8F_Tbl[])( FLDMMDL * ) =
+int (* const DATA_AC_StayWalkL_8F_Tbl[])( MMDL * ) =
 {
 	AC_StayWalkL8F_0,
 	AC_StayWalk_1,
@@ -4262,7 +4262,7 @@ int (* const DATA_AC_StayWalkL_8F_Tbl[])( FLDMMDL * ) =
 //--------------------------------------------------------------
 ///	AC_STAY_WALK_R_8F
 //--------------------------------------------------------------
-int (* const DATA_AC_StayWalkR_8F_Tbl[])( FLDMMDL * ) =
+int (* const DATA_AC_StayWalkR_8F_Tbl[])( MMDL * ) =
 {
 	AC_StayWalkR8F_0,
 	AC_StayWalk_1,
@@ -4272,7 +4272,7 @@ int (* const DATA_AC_StayWalkR_8F_Tbl[])( FLDMMDL * ) =
 //--------------------------------------------------------------
 ///	AC_STAY_WALK_U_4F
 //--------------------------------------------------------------
-int (* const DATA_AC_StayWalkU_4F_Tbl[])( FLDMMDL * ) =
+int (* const DATA_AC_StayWalkU_4F_Tbl[])( MMDL * ) =
 {
 	AC_StayWalkU4F_0,
 	AC_StayWalk_1,
@@ -4282,7 +4282,7 @@ int (* const DATA_AC_StayWalkU_4F_Tbl[])( FLDMMDL * ) =
 //--------------------------------------------------------------
 ///	AC_STAY_WALK_D_4F
 //--------------------------------------------------------------
-int (* const DATA_AC_StayWalkD_4F_Tbl[])( FLDMMDL * ) =
+int (* const DATA_AC_StayWalkD_4F_Tbl[])( MMDL * ) =
 {
 	AC_StayWalkD4F_0,
 	AC_StayWalk_1,
@@ -4292,7 +4292,7 @@ int (* const DATA_AC_StayWalkD_4F_Tbl[])( FLDMMDL * ) =
 //--------------------------------------------------------------
 ///	AC_STAY_WALK_L_4F
 //--------------------------------------------------------------
-int (* const DATA_AC_StayWalkL_4F_Tbl[])( FLDMMDL * ) =
+int (* const DATA_AC_StayWalkL_4F_Tbl[])( MMDL * ) =
 {
 	AC_StayWalkL4F_0,
 	AC_StayWalk_1,
@@ -4302,7 +4302,7 @@ int (* const DATA_AC_StayWalkL_4F_Tbl[])( FLDMMDL * ) =
 //--------------------------------------------------------------
 ///	AC_STAY_WALK_R_4F
 //--------------------------------------------------------------
-int (* const DATA_AC_StayWalkR_4F_Tbl[])( FLDMMDL * ) =
+int (* const DATA_AC_StayWalkR_4F_Tbl[])( MMDL * ) =
 {
 	AC_StayWalkR4F_0,
 	AC_StayWalk_1,
@@ -4312,7 +4312,7 @@ int (* const DATA_AC_StayWalkR_4F_Tbl[])( FLDMMDL * ) =
 //--------------------------------------------------------------
 ///	AC_STAY_WALK_U_2F
 //--------------------------------------------------------------
-int (* const DATA_AC_StayWalkU_2F_Tbl[])( FLDMMDL * ) =
+int (* const DATA_AC_StayWalkU_2F_Tbl[])( MMDL * ) =
 {
 	AC_StayWalkU2F_0,
 	AC_StayWalk_1,
@@ -4322,7 +4322,7 @@ int (* const DATA_AC_StayWalkU_2F_Tbl[])( FLDMMDL * ) =
 //--------------------------------------------------------------
 ///	AC_STAY_WALK_D_2F
 //--------------------------------------------------------------
-int (* const DATA_AC_StayWalkD_2F_Tbl[])( FLDMMDL * ) =
+int (* const DATA_AC_StayWalkD_2F_Tbl[])( MMDL * ) =
 {
 	AC_StayWalkD2F_0,
 	AC_StayWalk_1,
@@ -4332,7 +4332,7 @@ int (* const DATA_AC_StayWalkD_2F_Tbl[])( FLDMMDL * ) =
 //--------------------------------------------------------------
 ///	AC_STAY_WALK_L_2F
 //--------------------------------------------------------------
-int (* const DATA_AC_StayWalkL_2F_Tbl[])( FLDMMDL * ) =
+int (* const DATA_AC_StayWalkL_2F_Tbl[])( MMDL * ) =
 {
 	AC_StayWalkL2F_0,
 	AC_StayWalk_1,
@@ -4342,7 +4342,7 @@ int (* const DATA_AC_StayWalkL_2F_Tbl[])( FLDMMDL * ) =
 //--------------------------------------------------------------
 ///	AC_STAY_WALK_R_2F
 //--------------------------------------------------------------
-int (* const DATA_AC_StayWalkR_2F_Tbl[])( FLDMMDL * ) =
+int (* const DATA_AC_StayWalkR_2F_Tbl[])( MMDL * ) =
 {
 	AC_StayWalkR2F_0,
 	AC_StayWalk_1,
@@ -4352,7 +4352,7 @@ int (* const DATA_AC_StayWalkR_2F_Tbl[])( FLDMMDL * ) =
 //--------------------------------------------------------------
 ///	AC_STAY_JUMP_U_16F
 //--------------------------------------------------------------
-int (* const DATA_AC_StayJumpU_16F_Tbl[])( FLDMMDL * ) =
+int (* const DATA_AC_StayJumpU_16F_Tbl[])( MMDL * ) =
 {
 	AC_StayJumpU16F_0,
 	AC_Jump_1,
@@ -4362,7 +4362,7 @@ int (* const DATA_AC_StayJumpU_16F_Tbl[])( FLDMMDL * ) =
 //--------------------------------------------------------------
 ///	AC_STAY_JUMP_D_16F
 //--------------------------------------------------------------
-int (* const DATA_AC_StayJumpD_16F_Tbl[])( FLDMMDL * ) =
+int (* const DATA_AC_StayJumpD_16F_Tbl[])( MMDL * ) =
 {
 	AC_StayJumpD16F_0,
 	AC_Jump_1,
@@ -4372,7 +4372,7 @@ int (* const DATA_AC_StayJumpD_16F_Tbl[])( FLDMMDL * ) =
 //--------------------------------------------------------------
 ///	AC_STAY_JUMP_L_16F
 //--------------------------------------------------------------
-int (* const DATA_AC_StayJumpL_16F_Tbl[])( FLDMMDL * ) =
+int (* const DATA_AC_StayJumpL_16F_Tbl[])( MMDL * ) =
 {
 	AC_StayJumpL16F_0,
 	AC_Jump_1,
@@ -4382,7 +4382,7 @@ int (* const DATA_AC_StayJumpL_16F_Tbl[])( FLDMMDL * ) =
 //--------------------------------------------------------------
 ///	AC_STAY_JUMP_R_16F
 //--------------------------------------------------------------
-int (* const DATA_AC_StayJumpR_16F_Tbl[])( FLDMMDL * ) =
+int (* const DATA_AC_StayJumpR_16F_Tbl[])( MMDL * ) =
 {
 	AC_StayJumpR16F_0,
 	AC_Jump_1,
@@ -4392,7 +4392,7 @@ int (* const DATA_AC_StayJumpR_16F_Tbl[])( FLDMMDL * ) =
 //--------------------------------------------------------------
 ///	AC_STAY_JUMP_U_8F
 //--------------------------------------------------------------
-int (* const DATA_AC_StayJumpU_8F_Tbl[])( FLDMMDL * ) =
+int (* const DATA_AC_StayJumpU_8F_Tbl[])( MMDL * ) =
 {
 	AC_StayJumpU8F_0,
 	AC_Jump_1,
@@ -4402,7 +4402,7 @@ int (* const DATA_AC_StayJumpU_8F_Tbl[])( FLDMMDL * ) =
 //--------------------------------------------------------------
 ///	AC_STAY_JUMP_D_8F
 //--------------------------------------------------------------
-int (* const DATA_AC_StayJumpD_8F_Tbl[])( FLDMMDL * ) =
+int (* const DATA_AC_StayJumpD_8F_Tbl[])( MMDL * ) =
 {
 	AC_StayJumpD8F_0,
 	AC_Jump_1,
@@ -4412,7 +4412,7 @@ int (* const DATA_AC_StayJumpD_8F_Tbl[])( FLDMMDL * ) =
 //--------------------------------------------------------------
 ///	AC_STAY_JUMP_L_8F
 //--------------------------------------------------------------
-int (* const DATA_AC_StayJumpL_8F_Tbl[])( FLDMMDL * ) =
+int (* const DATA_AC_StayJumpL_8F_Tbl[])( MMDL * ) =
 {
 	AC_StayJumpL8F_0,
 	AC_Jump_1,
@@ -4422,7 +4422,7 @@ int (* const DATA_AC_StayJumpL_8F_Tbl[])( FLDMMDL * ) =
 //--------------------------------------------------------------
 ///	AC_STAY_JUMP_R_8F
 //--------------------------------------------------------------
-int (* const DATA_AC_StayJumpR_8F_Tbl[])( FLDMMDL * ) =
+int (* const DATA_AC_StayJumpR_8F_Tbl[])( MMDL * ) =
 {
 	AC_StayJumpR8F_0,
 	AC_Jump_1,
@@ -4432,7 +4432,7 @@ int (* const DATA_AC_StayJumpR_8F_Tbl[])( FLDMMDL * ) =
 //--------------------------------------------------------------
 ///	AC_JUMP_U_1G_8F
 //--------------------------------------------------------------
-int (* const DATA_AC_JumpU_1G_8F_Tbl[])( FLDMMDL * ) =
+int (* const DATA_AC_JumpU_1G_8F_Tbl[])( MMDL * ) =
 {
 	AC_JumpU1G8F_0,
 	AC_Jump_1,
@@ -4442,7 +4442,7 @@ int (* const DATA_AC_JumpU_1G_8F_Tbl[])( FLDMMDL * ) =
 //--------------------------------------------------------------
 ///	AC_JUMP_D_1G_8F
 //--------------------------------------------------------------
-int (* const DATA_AC_JumpD_1G_8F_Tbl[])( FLDMMDL * ) =
+int (* const DATA_AC_JumpD_1G_8F_Tbl[])( MMDL * ) =
 {
 	AC_JumpD1G8F_0,
 	AC_Jump_1,
@@ -4452,7 +4452,7 @@ int (* const DATA_AC_JumpD_1G_8F_Tbl[])( FLDMMDL * ) =
 //--------------------------------------------------------------
 ///	AC_JUMP_L_1G_8F
 //--------------------------------------------------------------
-int (* const DATA_AC_JumpL_1G_8F_Tbl[])( FLDMMDL * ) =
+int (* const DATA_AC_JumpL_1G_8F_Tbl[])( MMDL * ) =
 {
 	AC_JumpL1G8F_0,
 	AC_Jump_1,
@@ -4462,7 +4462,7 @@ int (* const DATA_AC_JumpL_1G_8F_Tbl[])( FLDMMDL * ) =
 //--------------------------------------------------------------
 ///	AC_JUMP_R_1G_8F
 //--------------------------------------------------------------
-int (* const DATA_AC_JumpR_1G_8F_Tbl[])( FLDMMDL * ) =
+int (* const DATA_AC_JumpR_1G_8F_Tbl[])( MMDL * ) =
 {
 	AC_JumpR1G8F_0,
 	AC_Jump_1,
@@ -4472,7 +4472,7 @@ int (* const DATA_AC_JumpR_1G_8F_Tbl[])( FLDMMDL * ) =
 //--------------------------------------------------------------
 ///	AC_JUMP_U_2G_16F
 //--------------------------------------------------------------
-int (* const DATA_AC_JumpU_2G_16F_Tbl[])( FLDMMDL * ) =
+int (* const DATA_AC_JumpU_2G_16F_Tbl[])( MMDL * ) =
 {
 	AC_JumpU2G8F_0,
 	AC_Jump_1,
@@ -4482,7 +4482,7 @@ int (* const DATA_AC_JumpU_2G_16F_Tbl[])( FLDMMDL * ) =
 //--------------------------------------------------------------
 ///	AC_JUMP_D_2G_16F
 //--------------------------------------------------------------
-int (* const DATA_AC_JumpD_2G_16F_Tbl[])( FLDMMDL * ) =
+int (* const DATA_AC_JumpD_2G_16F_Tbl[])( MMDL * ) =
 {
 	AC_JumpD2G8F_0,
 	AC_Jump_1,
@@ -4492,7 +4492,7 @@ int (* const DATA_AC_JumpD_2G_16F_Tbl[])( FLDMMDL * ) =
 //--------------------------------------------------------------
 ///	AC_JUMP_L_2G_16F
 //--------------------------------------------------------------
-int (* const DATA_AC_JumpL_2G_16F_Tbl[])( FLDMMDL * ) =
+int (* const DATA_AC_JumpL_2G_16F_Tbl[])( MMDL * ) =
 {
 	AC_JumpL2G8F_0,
 	AC_Jump_1,
@@ -4502,7 +4502,7 @@ int (* const DATA_AC_JumpL_2G_16F_Tbl[])( FLDMMDL * ) =
 //--------------------------------------------------------------
 ///	AC_JUMP_R_2G_16F
 //--------------------------------------------------------------
-int (* const DATA_AC_JumpR_2G_16F_Tbl[])( FLDMMDL * ) =
+int (* const DATA_AC_JumpR_2G_16F_Tbl[])( MMDL * ) =
 {
 	AC_JumpR2G8F_0,
 	AC_Jump_1,
@@ -4512,7 +4512,7 @@ int (* const DATA_AC_JumpR_2G_16F_Tbl[])( FLDMMDL * ) =
 //--------------------------------------------------------------
 ///	AC_JUMPHI_L_1G_16F
 //--------------------------------------------------------------
-int (* const DATA_AC_JumpHiL_1G_16F_Tbl[])( FLDMMDL * ) =
+int (* const DATA_AC_JumpHiL_1G_16F_Tbl[])( MMDL * ) =
 {
 	AC_JumpHiL1G16F_0,
 	AC_Jump_1,
@@ -4522,7 +4522,7 @@ int (* const DATA_AC_JumpHiL_1G_16F_Tbl[])( FLDMMDL * ) =
 //--------------------------------------------------------------
 ///	AC_JUMPHI_R_1G_16F
 //--------------------------------------------------------------
-int (* const DATA_AC_JumpHiR_1G_16F_Tbl[])( FLDMMDL * ) =
+int (* const DATA_AC_JumpHiR_1G_16F_Tbl[])( MMDL * ) =
 {
 	AC_JumpHiR1G16F_0,
 	AC_Jump_1,
@@ -4532,7 +4532,7 @@ int (* const DATA_AC_JumpHiR_1G_16F_Tbl[])( FLDMMDL * ) =
 //--------------------------------------------------------------
 ///	AC_JUMPHI_L_3G_32F
 //--------------------------------------------------------------
-int (* const DATA_AC_JumpHiL_3G_32F_Tbl[])( FLDMMDL * ) =
+int (* const DATA_AC_JumpHiL_3G_32F_Tbl[])( MMDL * ) =
 {
 	AC_JumpHiL3G32F_0,
 	AC_Jump_1,
@@ -4542,7 +4542,7 @@ int (* const DATA_AC_JumpHiL_3G_32F_Tbl[])( FLDMMDL * ) =
 //--------------------------------------------------------------
 ///	AC_JUMPHI_R_3G_32F
 //--------------------------------------------------------------
-int (* const DATA_AC_JumpHiR_3G_32F_Tbl[])( FLDMMDL * ) =
+int (* const DATA_AC_JumpHiR_3G_32F_Tbl[])( MMDL * ) =
 {
 	AC_JumpHiR3G32F_0,
 	AC_Jump_1,
@@ -4552,7 +4552,7 @@ int (* const DATA_AC_JumpHiR_3G_32F_Tbl[])( FLDMMDL * ) =
 //--------------------------------------------------------------
 ///	AC_WAIT_1F
 //--------------------------------------------------------------
-int (* const DATA_AC_Wait_1F_Tbl[])( FLDMMDL * ) =
+int (* const DATA_AC_Wait_1F_Tbl[])( MMDL * ) =
 {
 	AC_Wait1F_0,
 	AC_Wait_1,
@@ -4562,7 +4562,7 @@ int (* const DATA_AC_Wait_1F_Tbl[])( FLDMMDL * ) =
 //--------------------------------------------------------------
 ///	AC_WAIT_2F
 //--------------------------------------------------------------
-int (* const DATA_AC_Wait_2F_Tbl[])( FLDMMDL * ) =
+int (* const DATA_AC_Wait_2F_Tbl[])( MMDL * ) =
 {
 	AC_Wait2F_0,
 	AC_Wait_1,
@@ -4572,7 +4572,7 @@ int (* const DATA_AC_Wait_2F_Tbl[])( FLDMMDL * ) =
 //--------------------------------------------------------------
 ///	AC_WAIT_4F
 //--------------------------------------------------------------
-int (* const DATA_AC_Wait_4F_Tbl[])( FLDMMDL * ) =
+int (* const DATA_AC_Wait_4F_Tbl[])( MMDL * ) =
 {
 	AC_Wait4F_0,
 	AC_Wait_1,
@@ -4582,7 +4582,7 @@ int (* const DATA_AC_Wait_4F_Tbl[])( FLDMMDL * ) =
 //--------------------------------------------------------------
 ///	AC_WAIT_8F
 //--------------------------------------------------------------
-int (* const DATA_AC_Wait_8F_Tbl[])( FLDMMDL * ) =
+int (* const DATA_AC_Wait_8F_Tbl[])( MMDL * ) =
 {
 	AC_Wait8F_0,
 	AC_Wait_1,
@@ -4592,7 +4592,7 @@ int (* const DATA_AC_Wait_8F_Tbl[])( FLDMMDL * ) =
 //--------------------------------------------------------------
 ///	AC_WAIT_15F
 //--------------------------------------------------------------
-int (* const DATA_AC_Wait_15F_Tbl[])( FLDMMDL * ) =
+int (* const DATA_AC_Wait_15F_Tbl[])( MMDL * ) =
 {
 	AC_Wait15F_0,
 	AC_Wait_1,
@@ -4602,7 +4602,7 @@ int (* const DATA_AC_Wait_15F_Tbl[])( FLDMMDL * ) =
 //--------------------------------------------------------------
 ///	AC_WAIT_16F
 //--------------------------------------------------------------
-int (* const DATA_AC_Wait_16F_Tbl[])( FLDMMDL * ) =
+int (* const DATA_AC_Wait_16F_Tbl[])( MMDL * ) =
 {
 	AC_Wait16F_0,
 	AC_Wait_1,
@@ -4612,7 +4612,7 @@ int (* const DATA_AC_Wait_16F_Tbl[])( FLDMMDL * ) =
 //--------------------------------------------------------------
 ///	AC_WAIT_32F
 //--------------------------------------------------------------
-int (* const DATA_AC_Wait_32F_Tbl[])( FLDMMDL * ) =
+int (* const DATA_AC_Wait_32F_Tbl[])( MMDL * ) =
 {
 	AC_Wait32F_0,
 	AC_Wait_1,
@@ -4622,7 +4622,7 @@ int (* const DATA_AC_Wait_32F_Tbl[])( FLDMMDL * ) =
 //--------------------------------------------------------------
 ///	AC_WARP_UP
 //--------------------------------------------------------------
-int (* const DATA_AC_WarpUp_Tbl[])( FLDMMDL * ) =
+int (* const DATA_AC_WarpUp_Tbl[])( MMDL * ) =
 {
 	AC_WarpUp_0,
 	AC_WarpUp_1,
@@ -4632,7 +4632,7 @@ int (* const DATA_AC_WarpUp_Tbl[])( FLDMMDL * ) =
 //--------------------------------------------------------------
 ///	AC_WARP_DOWN
 //--------------------------------------------------------------
-int (* const DATA_AC_WarpDown_Tbl[])( FLDMMDL * ) =
+int (* const DATA_AC_WarpDown_Tbl[])( MMDL * ) =
 {
 	AC_WarpDown_0,
 	AC_WarpDown_1,
@@ -4642,7 +4642,7 @@ int (* const DATA_AC_WarpDown_Tbl[])( FLDMMDL * ) =
 //--------------------------------------------------------------
 ///	AC_VANISH_ON
 //--------------------------------------------------------------
-int (* const DATA_AC_VanishON_Tbl[])( FLDMMDL * ) =
+int (* const DATA_AC_VanishON_Tbl[])( MMDL * ) =
 {
 	AC_VanishON_0,
 	AC_End,
@@ -4651,7 +4651,7 @@ int (* const DATA_AC_VanishON_Tbl[])( FLDMMDL * ) =
 //--------------------------------------------------------------
 ///	AC_VANISH_OFF
 //--------------------------------------------------------------
-int (* const DATA_AC_VanishOFF_Tbl[])( FLDMMDL * ) =
+int (* const DATA_AC_VanishOFF_Tbl[])( MMDL * ) =
 {
 	AC_VanishOFF_0,
 	AC_End,
@@ -4660,7 +4660,7 @@ int (* const DATA_AC_VanishOFF_Tbl[])( FLDMMDL * ) =
 //--------------------------------------------------------------
 ///	AC_DIR_PAUSE_ON
 //--------------------------------------------------------------
-int (* const DATA_AC_DirPauseON_Tbl[])( FLDMMDL * ) =
+int (* const DATA_AC_DirPauseON_Tbl[])( MMDL * ) =
 {
 	AC_DirPauseON_0,
 	AC_End,
@@ -4669,7 +4669,7 @@ int (* const DATA_AC_DirPauseON_Tbl[])( FLDMMDL * ) =
 //--------------------------------------------------------------
 ///	AC_DIR_PAUSE_OFF
 //--------------------------------------------------------------
-int (* const DATA_AC_DirPauseOFF_Tbl[])( FLDMMDL * ) =
+int (* const DATA_AC_DirPauseOFF_Tbl[])( MMDL * ) =
 {
 	AC_DirPauseOFF_0,
 	AC_End,
@@ -4678,7 +4678,7 @@ int (* const DATA_AC_DirPauseOFF_Tbl[])( FLDMMDL * ) =
 //--------------------------------------------------------------
 ///	AC_ANM_PAUSE_ON
 //--------------------------------------------------------------
-int (* const DATA_AC_AnmPauseON_Tbl[])( FLDMMDL * ) =
+int (* const DATA_AC_AnmPauseON_Tbl[])( MMDL * ) =
 {
 	AC_AnmPauseON_0,
 	AC_End,
@@ -4687,7 +4687,7 @@ int (* const DATA_AC_AnmPauseON_Tbl[])( FLDMMDL * ) =
 //--------------------------------------------------------------
 ///	AC_ANM_PAUSE_OFF
 //--------------------------------------------------------------
-int (* const DATA_AC_AnmPauseOFF_Tbl[])( FLDMMDL * ) =
+int (* const DATA_AC_AnmPauseOFF_Tbl[])( MMDL * ) =
 {
 	AC_AnmPauseOFF_0,
 	AC_End,
@@ -4696,7 +4696,7 @@ int (* const DATA_AC_AnmPauseOFF_Tbl[])( FLDMMDL * ) =
 //--------------------------------------------------------------
 ///	AC_MARK_GYOE 0
 //--------------------------------------------------------------
-int (* const DATA_AC_MarkGyoe_Tbl[])( FLDMMDL * ) =
+int (* const DATA_AC_MarkGyoe_Tbl[])( MMDL * ) =
 {
 	AC_MarkGyoe_0,
 	AC_Mark_1,
@@ -4706,7 +4706,7 @@ int (* const DATA_AC_MarkGyoe_Tbl[])( FLDMMDL * ) =
 //--------------------------------------------------------------
 ///	AC_MARK_SAISEN 0
 //--------------------------------------------------------------
-int (* const DATA_AC_MarkSaisen_Tbl[])( FLDMMDL * ) =
+int (* const DATA_AC_MarkSaisen_Tbl[])( MMDL * ) =
 {
 	AC_MarkSaisen_0,
 	AC_Mark_1,
@@ -4716,7 +4716,7 @@ int (* const DATA_AC_MarkSaisen_Tbl[])( FLDMMDL * ) =
 //--------------------------------------------------------------
 ///	AC_WALK_U_6F
 //--------------------------------------------------------------
-int (* const DATA_AC_WalkU6F_Tbl[])( FLDMMDL * ) =
+int (* const DATA_AC_WalkU6F_Tbl[])( MMDL * ) =
 {
 	AC_WalkU6F_0,
 	AC_Walk6F_1,
@@ -4726,7 +4726,7 @@ int (* const DATA_AC_WalkU6F_Tbl[])( FLDMMDL * ) =
 //--------------------------------------------------------------
 ///	AC_WALK_D_6F
 //--------------------------------------------------------------
-int (* const DATA_AC_WalkD6F_Tbl[])( FLDMMDL * ) =
+int (* const DATA_AC_WalkD6F_Tbl[])( MMDL * ) =
 {
 	AC_WalkD6F_0,
 	AC_Walk6F_1,
@@ -4736,7 +4736,7 @@ int (* const DATA_AC_WalkD6F_Tbl[])( FLDMMDL * ) =
 //--------------------------------------------------------------
 ///	AC_WALK_L_6F
 //--------------------------------------------------------------
-int (* const DATA_AC_WalkL6F_Tbl[])( FLDMMDL * ) =
+int (* const DATA_AC_WalkL6F_Tbl[])( MMDL * ) =
 {
 	AC_WalkL6F_0,
 	AC_Walk6F_1,
@@ -4746,7 +4746,7 @@ int (* const DATA_AC_WalkL6F_Tbl[])( FLDMMDL * ) =
 //--------------------------------------------------------------
 ///	AC_WALK_R_6F
 //--------------------------------------------------------------
-int (* const DATA_AC_WalkR6F_Tbl[])( FLDMMDL * ) =
+int (* const DATA_AC_WalkR6F_Tbl[])( MMDL * ) =
 {
 	AC_WalkR6F_0,
 	AC_Walk6F_1,
@@ -4756,7 +4756,7 @@ int (* const DATA_AC_WalkR6F_Tbl[])( FLDMMDL * ) =
 //--------------------------------------------------------------
 ///	AC_WALK_U_3F
 //--------------------------------------------------------------
-int (* const DATA_AC_WalkU3F_Tbl[])( FLDMMDL * ) =
+int (* const DATA_AC_WalkU3F_Tbl[])( MMDL * ) =
 {
 	AC_WalkU3F_0,
 	AC_Walk3F_1,
@@ -4766,7 +4766,7 @@ int (* const DATA_AC_WalkU3F_Tbl[])( FLDMMDL * ) =
 //--------------------------------------------------------------
 ///	AC_WALK_D_3F
 //--------------------------------------------------------------
-int (* const DATA_AC_WalkD3F_Tbl[])( FLDMMDL * ) =
+int (* const DATA_AC_WalkD3F_Tbl[])( MMDL * ) =
 {
 	AC_WalkD3F_0,
 	AC_Walk3F_1,
@@ -4776,7 +4776,7 @@ int (* const DATA_AC_WalkD3F_Tbl[])( FLDMMDL * ) =
 //--------------------------------------------------------------
 ///	AC_WALK_L_3F
 //--------------------------------------------------------------
-int (* const DATA_AC_WalkL3F_Tbl[])( FLDMMDL * ) =
+int (* const DATA_AC_WalkL3F_Tbl[])( MMDL * ) =
 {
 	AC_WalkL3F_0,
 	AC_Walk3F_1,
@@ -4786,7 +4786,7 @@ int (* const DATA_AC_WalkL3F_Tbl[])( FLDMMDL * ) =
 //--------------------------------------------------------------
 ///	AC_WALK_R_3F
 //--------------------------------------------------------------
-int (* const DATA_AC_WalkR3F_Tbl[])( FLDMMDL * ) =
+int (* const DATA_AC_WalkR3F_Tbl[])( MMDL * ) =
 {
 	AC_WalkR3F_0,
 	AC_Walk3F_1,
@@ -4796,7 +4796,7 @@ int (* const DATA_AC_WalkR3F_Tbl[])( FLDMMDL * ) =
 //--------------------------------------------------------------
 ///	AC_DASH_U_4F
 //--------------------------------------------------------------
-int (* const DATA_AC_DashU_4F_Tbl[])( FLDMMDL * ) =
+int (* const DATA_AC_DashU_4F_Tbl[])( MMDL * ) =
 {
 	AC_DashU4F_0,
 	AC_Walk_1,
@@ -4806,7 +4806,7 @@ int (* const DATA_AC_DashU_4F_Tbl[])( FLDMMDL * ) =
 //--------------------------------------------------------------
 ///	AC_DASH_D_4F
 //--------------------------------------------------------------
-int (* const DATA_AC_DashD_4F_Tbl[])( FLDMMDL * ) =
+int (* const DATA_AC_DashD_4F_Tbl[])( MMDL * ) =
 {
 	AC_DashD4F_0,
 	AC_Walk_1,
@@ -4816,7 +4816,7 @@ int (* const DATA_AC_DashD_4F_Tbl[])( FLDMMDL * ) =
 //--------------------------------------------------------------
 ///	AC_DASH_L_4F
 //--------------------------------------------------------------
-int (* const DATA_AC_DashL_4F_Tbl[])( FLDMMDL * ) =
+int (* const DATA_AC_DashL_4F_Tbl[])( MMDL * ) =
 {
 	AC_DashL4F_0,
 	AC_Walk_1,
@@ -4826,7 +4826,7 @@ int (* const DATA_AC_DashL_4F_Tbl[])( FLDMMDL * ) =
 //--------------------------------------------------------------
 ///	AC_DASH_R_4F
 //--------------------------------------------------------------
-int (* const DATA_AC_DashR_4F_Tbl[])( FLDMMDL * ) =
+int (* const DATA_AC_DashR_4F_Tbl[])( MMDL * ) =
 {
 	AC_DashR4F_0,
 	AC_Walk_1,
@@ -4836,7 +4836,7 @@ int (* const DATA_AC_DashR_4F_Tbl[])( FLDMMDL * ) =
 //--------------------------------------------------------------
 ///	AC_WALK_U_7F
 //--------------------------------------------------------------
-int (* const DATA_AC_WalkU7F_Tbl[])( FLDMMDL * ) =
+int (* const DATA_AC_WalkU7F_Tbl[])( MMDL * ) =
 {
 	AC_WalkU7F_0,
 	AC_Walk7F_1,
@@ -4846,7 +4846,7 @@ int (* const DATA_AC_WalkU7F_Tbl[])( FLDMMDL * ) =
 //--------------------------------------------------------------
 ///	AC_WALK_D_7F
 //--------------------------------------------------------------
-int (* const DATA_AC_WalkD7F_Tbl[])( FLDMMDL * ) =
+int (* const DATA_AC_WalkD7F_Tbl[])( MMDL * ) =
 {
 	AC_WalkD7F_0,
 	AC_Walk7F_1,
@@ -4856,7 +4856,7 @@ int (* const DATA_AC_WalkD7F_Tbl[])( FLDMMDL * ) =
 //--------------------------------------------------------------
 ///	AC_WALK_L_7F
 //--------------------------------------------------------------
-int (* const DATA_AC_WalkL7F_Tbl[])( FLDMMDL * ) =
+int (* const DATA_AC_WalkL7F_Tbl[])( MMDL * ) =
 {
 	AC_WalkL7F_0,
 	AC_Walk7F_1,
@@ -4866,7 +4866,7 @@ int (* const DATA_AC_WalkL7F_Tbl[])( FLDMMDL * ) =
 //--------------------------------------------------------------
 ///	AC_WALK_R_7F
 //--------------------------------------------------------------
-int (* const DATA_AC_WalkR7F_Tbl[])( FLDMMDL * ) =
+int (* const DATA_AC_WalkR7F_Tbl[])( MMDL * ) =
 {
 	AC_WalkR7F_0,
 	AC_Walk7F_1,
@@ -4876,7 +4876,7 @@ int (* const DATA_AC_WalkR7F_Tbl[])( FLDMMDL * ) =
 //--------------------------------------------------------------
 ///	AC_PC_BOW
 //--------------------------------------------------------------
-int (* const DATA_AC_PcBow_Tbl[])( FLDMMDL * ) =
+int (* const DATA_AC_PcBow_Tbl[])( MMDL * ) =
 {
 	AC_PcBow_0,
 	AC_PcBow_1,
@@ -4886,7 +4886,7 @@ int (* const DATA_AC_PcBow_Tbl[])( FLDMMDL * ) =
 //--------------------------------------------------------------
 ///	AC_HIDE_PULLOFF
 //--------------------------------------------------------------
-int (* const DATA_AC_HidePullOFF_Tbl[])( FLDMMDL * ) =
+int (* const DATA_AC_HidePullOFF_Tbl[])( MMDL * ) =
 {
 	AC_HidePullOFF_0,
 	AC_HidePullOFF_1,
@@ -4896,7 +4896,7 @@ int (* const DATA_AC_HidePullOFF_Tbl[])( FLDMMDL * ) =
 //--------------------------------------------------------------
 ///	AC_HERO_BANZAI
 //--------------------------------------------------------------
-int (* const DATA_AC_HeroBanzai_Tbl[])( FLDMMDL * ) =
+int (* const DATA_AC_HeroBanzai_Tbl[])( MMDL * ) =
 {
 	AC_HeroBanzai_0,
 	AC_HeroBanzai_1,
@@ -4906,7 +4906,7 @@ int (* const DATA_AC_HeroBanzai_Tbl[])( FLDMMDL * ) =
 //--------------------------------------------------------------
 ///	AC_HERO_BANZAI
 //--------------------------------------------------------------
-int (* const DATA_AC_HeroBanzaiUke_Tbl[])( FLDMMDL * ) =
+int (* const DATA_AC_HeroBanzaiUke_Tbl[])( MMDL * ) =
 {
 	AC_HeroBanzaiUke_0,
 	AC_HeroBanzai_1,
@@ -4916,7 +4916,7 @@ int (* const DATA_AC_HeroBanzaiUke_Tbl[])( FLDMMDL * ) =
 //--------------------------------------------------------------
 ///	AC_WALKGL_U_8F
 //--------------------------------------------------------------
-int (* const DATA_AC_WalkGLU8F_Tbl[])( FLDMMDL * ) =
+int (* const DATA_AC_WalkGLU8F_Tbl[])( MMDL * ) =
 {
 	AC_WalkGLU8F_0,
 	AC_WalkVec_1,
@@ -4926,7 +4926,7 @@ int (* const DATA_AC_WalkGLU8F_Tbl[])( FLDMMDL * ) =
 //--------------------------------------------------------------
 ///	AC_WALKGL_D_8F
 //--------------------------------------------------------------
-int (* const DATA_AC_WalkGLD8F_Tbl[])( FLDMMDL * ) =
+int (* const DATA_AC_WalkGLD8F_Tbl[])( MMDL * ) =
 {
 	AC_WalkGLD8F_0,
 	AC_WalkVec_1,
@@ -4936,7 +4936,7 @@ int (* const DATA_AC_WalkGLD8F_Tbl[])( FLDMMDL * ) =
 //--------------------------------------------------------------
 ///	AC_WALKGL_L_8F
 //--------------------------------------------------------------
-int (* const DATA_AC_WalkGLL8F_Tbl[])( FLDMMDL * ) =
+int (* const DATA_AC_WalkGLL8F_Tbl[])( MMDL * ) =
 {
 	AC_WalkGLL8F_0,
 	AC_WalkVec_1,
@@ -4946,7 +4946,7 @@ int (* const DATA_AC_WalkGLL8F_Tbl[])( FLDMMDL * ) =
 //--------------------------------------------------------------
 ///	AC_WALKGL_R_8F
 //--------------------------------------------------------------
-int (* const DATA_AC_WalkGLR8F_Tbl[])( FLDMMDL * ) =
+int (* const DATA_AC_WalkGLR8F_Tbl[])( MMDL * ) =
 {
 	AC_WalkGLR8F_0,
 	AC_WalkVec_1,
@@ -4956,7 +4956,7 @@ int (* const DATA_AC_WalkGLR8F_Tbl[])( FLDMMDL * ) =
 //--------------------------------------------------------------
 ///	AC_WALKGR_U_8F
 //--------------------------------------------------------------
-int (* const DATA_AC_WalkGRU8F_Tbl[])( FLDMMDL * ) =
+int (* const DATA_AC_WalkGRU8F_Tbl[])( MMDL * ) =
 {
 	AC_WalkGRU8F_0,
 	AC_WalkVec_1,
@@ -4966,7 +4966,7 @@ int (* const DATA_AC_WalkGRU8F_Tbl[])( FLDMMDL * ) =
 //--------------------------------------------------------------
 ///	AC_WALKGL_D_8F
 //--------------------------------------------------------------
-int (* const DATA_AC_WalkGRD8F_Tbl[])( FLDMMDL * ) =
+int (* const DATA_AC_WalkGRD8F_Tbl[])( MMDL * ) =
 {
 	AC_WalkGRD8F_0,
 	AC_WalkVec_1,
@@ -4976,7 +4976,7 @@ int (* const DATA_AC_WalkGRD8F_Tbl[])( FLDMMDL * ) =
 //--------------------------------------------------------------
 ///	AC_WALKGR_L_8F
 //--------------------------------------------------------------
-int (* const DATA_AC_WalkGRL8F_Tbl[])( FLDMMDL * ) =
+int (* const DATA_AC_WalkGRL8F_Tbl[])( MMDL * ) =
 {
 	AC_WalkGRL8F_0,
 	AC_WalkVec_1,
@@ -4986,7 +4986,7 @@ int (* const DATA_AC_WalkGRL8F_Tbl[])( FLDMMDL * ) =
 //--------------------------------------------------------------
 ///	AC_WALKGR_R_8F
 //--------------------------------------------------------------
-int (* const DATA_AC_WalkGRR8F_Tbl[])( FLDMMDL * ) =
+int (* const DATA_AC_WalkGRR8F_Tbl[])( MMDL * ) =
 {
 	AC_WalkGRR8F_0,
 	AC_WalkVec_1,
@@ -4996,7 +4996,7 @@ int (* const DATA_AC_WalkGRR8F_Tbl[])( FLDMMDL * ) =
 //--------------------------------------------------------------
 ///	AC_WALKGU_U_8F
 //--------------------------------------------------------------
-int (* const DATA_AC_WalkGUU8F_Tbl[])( FLDMMDL * ) =
+int (* const DATA_AC_WalkGUU8F_Tbl[])( MMDL * ) =
 {
 	AC_WalkGUU8F_0,
 	AC_WalkVec_1,
@@ -5006,7 +5006,7 @@ int (* const DATA_AC_WalkGUU8F_Tbl[])( FLDMMDL * ) =
 //--------------------------------------------------------------
 ///	AC_WALKGU_D_8F
 //--------------------------------------------------------------
-int (* const DATA_AC_WalkGUD8F_Tbl[])( FLDMMDL * ) =
+int (* const DATA_AC_WalkGUD8F_Tbl[])( MMDL * ) =
 {
 	AC_WalkGUD8F_0,
 	AC_WalkVec_1,
@@ -5016,7 +5016,7 @@ int (* const DATA_AC_WalkGUD8F_Tbl[])( FLDMMDL * ) =
 //--------------------------------------------------------------
 ///	AC_WALKGU_L_8F
 //--------------------------------------------------------------
-int (* const DATA_AC_WalkGUL8F_Tbl[])( FLDMMDL * ) =
+int (* const DATA_AC_WalkGUL8F_Tbl[])( MMDL * ) =
 {
 	AC_WalkGUL8F_0,
 	AC_WalkVec_1,
@@ -5026,7 +5026,7 @@ int (* const DATA_AC_WalkGUL8F_Tbl[])( FLDMMDL * ) =
 //--------------------------------------------------------------
 ///	AC_WALKGU_R_8F
 //--------------------------------------------------------------
-int (* const DATA_AC_WalkGUR8F_Tbl[])( FLDMMDL * ) =
+int (* const DATA_AC_WalkGUR8F_Tbl[])( MMDL * ) =
 {
 	AC_WalkGUR8F_0,
 	AC_WalkVec_1,
@@ -5035,7 +5035,7 @@ int (* const DATA_AC_WalkGUR8F_Tbl[])( FLDMMDL * ) =
 //--------------------------------------------------------------
 ///	AC_WALKGU_U_4F
 //--------------------------------------------------------------
-int (* const DATA_AC_WalkGUU4F_Tbl[])( FLDMMDL * ) =
+int (* const DATA_AC_WalkGUU4F_Tbl[])( MMDL * ) =
 {
 	AC_WalkGUU4F_0,
 	AC_WalkVec_1,
@@ -5045,7 +5045,7 @@ int (* const DATA_AC_WalkGUU4F_Tbl[])( FLDMMDL * ) =
 //--------------------------------------------------------------
 ///	AC_WALKGU_D_4F
 //--------------------------------------------------------------
-int (* const DATA_AC_WalkGUD4F_Tbl[])( FLDMMDL * ) =
+int (* const DATA_AC_WalkGUD4F_Tbl[])( MMDL * ) =
 {
 	AC_WalkGUD4F_0,
 	AC_WalkVec_1,
@@ -5055,7 +5055,7 @@ int (* const DATA_AC_WalkGUD4F_Tbl[])( FLDMMDL * ) =
 //--------------------------------------------------------------
 ///	AC_WALKGU_L_4F
 //--------------------------------------------------------------
-int (* const DATA_AC_WalkGUL4F_Tbl[])( FLDMMDL * ) =
+int (* const DATA_AC_WalkGUL4F_Tbl[])( MMDL * ) =
 {
 	AC_WalkGUL4F_0,
 	AC_WalkVec_1,
@@ -5065,7 +5065,7 @@ int (* const DATA_AC_WalkGUL4F_Tbl[])( FLDMMDL * ) =
 //--------------------------------------------------------------
 ///	AC_WALKGU_R_4F
 //--------------------------------------------------------------
-int (* const DATA_AC_WalkGUR4F_Tbl[])( FLDMMDL * ) =
+int (* const DATA_AC_WalkGUR4F_Tbl[])( MMDL * ) =
 {
 	AC_WalkGUR4F_0,
 	AC_WalkVec_1,
@@ -5075,7 +5075,7 @@ int (* const DATA_AC_WalkGUR4F_Tbl[])( FLDMMDL * ) =
 //--------------------------------------------------------------
 ///	AC_WALKGU_U_2F
 //--------------------------------------------------------------
-int (* const DATA_AC_WalkGUU2F_Tbl[])( FLDMMDL * ) =
+int (* const DATA_AC_WalkGUU2F_Tbl[])( MMDL * ) =
 {
 	AC_WalkGUU2F_0,
 	AC_WalkVec_1,
@@ -5085,7 +5085,7 @@ int (* const DATA_AC_WalkGUU2F_Tbl[])( FLDMMDL * ) =
 //--------------------------------------------------------------
 ///	AC_WALKGU_D_2F
 //--------------------------------------------------------------
-int (* const DATA_AC_WalkGUD2F_Tbl[])( FLDMMDL * ) =
+int (* const DATA_AC_WalkGUD2F_Tbl[])( MMDL * ) =
 {
 	AC_WalkGUD2F_0,
 	AC_WalkVec_1,
@@ -5095,7 +5095,7 @@ int (* const DATA_AC_WalkGUD2F_Tbl[])( FLDMMDL * ) =
 //--------------------------------------------------------------
 ///	AC_WALKGU_L_2F
 //--------------------------------------------------------------
-int (* const DATA_AC_WalkGUL2F_Tbl[])( FLDMMDL * ) =
+int (* const DATA_AC_WalkGUL2F_Tbl[])( MMDL * ) =
 {
 	AC_WalkGUL2F_0,
 	AC_WalkVec_1,
@@ -5105,7 +5105,7 @@ int (* const DATA_AC_WalkGUL2F_Tbl[])( FLDMMDL * ) =
 //--------------------------------------------------------------
 ///	AC_WALKGU_R_2F
 //--------------------------------------------------------------
-int (* const DATA_AC_WalkGUR2F_Tbl[])( FLDMMDL * ) =
+int (* const DATA_AC_WalkGUR2F_Tbl[])( MMDL * ) =
 {
 	AC_WalkGUR2F_0,
 	AC_WalkVec_1,
@@ -5115,7 +5115,7 @@ int (* const DATA_AC_WalkGUR2F_Tbl[])( FLDMMDL * ) =
 //--------------------------------------------------------------
 ///	AC_JUMP_U_3G_24F
 //--------------------------------------------------------------
-int (* const DATA_AC_JumpU_3G_24F_Tbl[])( FLDMMDL * ) =
+int (* const DATA_AC_JumpU_3G_24F_Tbl[])( MMDL * ) =
 {
 	AC_JumpU3G24F_0,
 	AC_Jump_1,
@@ -5125,7 +5125,7 @@ int (* const DATA_AC_JumpU_3G_24F_Tbl[])( FLDMMDL * ) =
 //--------------------------------------------------------------
 ///	AC_JUMP_D_3G_24F
 //--------------------------------------------------------------
-int (* const DATA_AC_JumpD_3G_24F_Tbl[])( FLDMMDL * ) =
+int (* const DATA_AC_JumpD_3G_24F_Tbl[])( MMDL * ) =
 {
 	AC_JumpD3G24F_0,
 	AC_Jump_1,
@@ -5135,7 +5135,7 @@ int (* const DATA_AC_JumpD_3G_24F_Tbl[])( FLDMMDL * ) =
 //--------------------------------------------------------------
 ///	AC_JUMP_L_3G_24F
 //--------------------------------------------------------------
-int (* const DATA_AC_JumpL_3G_24F_Tbl[])( FLDMMDL * ) =
+int (* const DATA_AC_JumpL_3G_24F_Tbl[])( MMDL * ) =
 {
 	AC_JumpL3G24F_0,
 	AC_Jump_1,
@@ -5145,7 +5145,7 @@ int (* const DATA_AC_JumpL_3G_24F_Tbl[])( FLDMMDL * ) =
 //--------------------------------------------------------------
 ///	AC_JUMP_R_3G_24F
 //--------------------------------------------------------------
-int (* const DATA_AC_JumpR_3G_24F_Tbl[])( FLDMMDL * ) =
+int (* const DATA_AC_JumpR_3G_24F_Tbl[])( MMDL * ) =
 {
 	AC_JumpR3G24F_0,
 	AC_Jump_1,
@@ -5155,7 +5155,7 @@ int (* const DATA_AC_JumpR_3G_24F_Tbl[])( FLDMMDL * ) =
 //--------------------------------------------------------------
 ///	AC_DASHGL_U_4F
 //--------------------------------------------------------------
-int (* const DATA_AC_DashGLU4F_Tbl[])( FLDMMDL * ) =
+int (* const DATA_AC_DashGLU4F_Tbl[])( MMDL * ) =
 {
 	AC_DashGLU4F_0,
 	AC_WalkVec_1,
@@ -5165,7 +5165,7 @@ int (* const DATA_AC_DashGLU4F_Tbl[])( FLDMMDL * ) =
 //--------------------------------------------------------------
 ///	AC_DASHGL_D_4F
 //--------------------------------------------------------------
-int (* const DATA_AC_DashGLD4F_Tbl[])( FLDMMDL * ) =
+int (* const DATA_AC_DashGLD4F_Tbl[])( MMDL * ) =
 {
 	AC_DashGLD4F_0,
 	AC_WalkVec_1,
@@ -5175,7 +5175,7 @@ int (* const DATA_AC_DashGLD4F_Tbl[])( FLDMMDL * ) =
 //--------------------------------------------------------------
 ///	AC_DASHGL_L_4F
 //--------------------------------------------------------------
-int (* const DATA_AC_DashGLL4F_Tbl[])( FLDMMDL * ) =
+int (* const DATA_AC_DashGLL4F_Tbl[])( MMDL * ) =
 {
 	AC_DashGLL4F_0,
 	AC_WalkVec_1,
@@ -5185,7 +5185,7 @@ int (* const DATA_AC_DashGLL4F_Tbl[])( FLDMMDL * ) =
 //--------------------------------------------------------------
 ///	AC_DASHGL_R_4F
 //--------------------------------------------------------------
-int (* const DATA_AC_DashGLR4F_Tbl[])( FLDMMDL * ) =
+int (* const DATA_AC_DashGLR4F_Tbl[])( MMDL * ) =
 {
 	AC_DashGLR4F_0,
 	AC_WalkVec_1,
@@ -5195,7 +5195,7 @@ int (* const DATA_AC_DashGLR4F_Tbl[])( FLDMMDL * ) =
 //--------------------------------------------------------------
 ///	AC_DASHGR_U_4F
 //--------------------------------------------------------------
-int (* const DATA_AC_DashGRU4F_Tbl[])( FLDMMDL * ) =
+int (* const DATA_AC_DashGRU4F_Tbl[])( MMDL * ) =
 {
 	AC_DashGRU4F_0,
 	AC_WalkVec_1,
@@ -5205,7 +5205,7 @@ int (* const DATA_AC_DashGRU4F_Tbl[])( FLDMMDL * ) =
 //--------------------------------------------------------------
 ///	AC_DASHGL_D_4F
 //--------------------------------------------------------------
-int (* const DATA_AC_DashGRD4F_Tbl[])( FLDMMDL * ) =
+int (* const DATA_AC_DashGRD4F_Tbl[])( MMDL * ) =
 {
 	AC_DashGRD4F_0,
 	AC_WalkVec_1,
@@ -5215,7 +5215,7 @@ int (* const DATA_AC_DashGRD4F_Tbl[])( FLDMMDL * ) =
 //--------------------------------------------------------------
 ///	AC_DASHGR_L_4F
 //--------------------------------------------------------------
-int (* const DATA_AC_DashGRL4F_Tbl[])( FLDMMDL * ) =
+int (* const DATA_AC_DashGRL4F_Tbl[])( MMDL * ) =
 {
 	AC_DashGRL4F_0,
 	AC_WalkVec_1,
@@ -5225,7 +5225,7 @@ int (* const DATA_AC_DashGRL4F_Tbl[])( FLDMMDL * ) =
 //--------------------------------------------------------------
 ///	AC_DASHGR_R_4F
 //--------------------------------------------------------------
-int (* const DATA_AC_DashGRR4F_Tbl[])( FLDMMDL * ) =
+int (* const DATA_AC_DashGRR4F_Tbl[])( MMDL * ) =
 {
 	AC_DashGRR4F_0,
 	AC_WalkVec_1,
@@ -5235,7 +5235,7 @@ int (* const DATA_AC_DashGRR4F_Tbl[])( FLDMMDL * ) =
 //--------------------------------------------------------------
 ///	AC_DASHGU_U_4F
 //--------------------------------------------------------------
-int (* const DATA_AC_DashGUU4F_Tbl[])( FLDMMDL * ) =
+int (* const DATA_AC_DashGUU4F_Tbl[])( MMDL * ) =
 {
 	AC_DashGUU4F_0,
 	AC_WalkVec_1,
@@ -5245,7 +5245,7 @@ int (* const DATA_AC_DashGUU4F_Tbl[])( FLDMMDL * ) =
 //--------------------------------------------------------------
 ///	AC_DASHGU_D_4F
 //--------------------------------------------------------------
-int (* const DATA_AC_DashGUD4F_Tbl[])( FLDMMDL * ) =
+int (* const DATA_AC_DashGUD4F_Tbl[])( MMDL * ) =
 {
 	AC_DashGUD4F_0,
 	AC_WalkVec_1,
@@ -5255,7 +5255,7 @@ int (* const DATA_AC_DashGUD4F_Tbl[])( FLDMMDL * ) =
 //--------------------------------------------------------------
 ///	AC_DASHGU_L_4F
 //--------------------------------------------------------------
-int (* const DATA_AC_DashGUL4F_Tbl[])( FLDMMDL * ) =
+int (* const DATA_AC_DashGUL4F_Tbl[])( MMDL * ) =
 {
 	AC_DashGUL4F_0,
 	AC_WalkVec_1,
@@ -5265,7 +5265,7 @@ int (* const DATA_AC_DashGUL4F_Tbl[])( FLDMMDL * ) =
 //--------------------------------------------------------------
 ///	AC_DASHGU_R_4F
 //--------------------------------------------------------------
-int (* const DATA_AC_DashGUR4F_Tbl[])( FLDMMDL * ) =
+int (* const DATA_AC_DashGUR4F_Tbl[])( MMDL * ) =
 {
 	AC_DashGUR4F_0,
 	AC_WalkVec_1,
@@ -5275,7 +5275,7 @@ int (* const DATA_AC_DashGUR4F_Tbl[])( FLDMMDL * ) =
 //--------------------------------------------------------------
 ///	AC_JUMPGL_U_1G_8F
 //--------------------------------------------------------------
-int (* const DATA_AC_JumpGLU1G_8F_Tbl[])( FLDMMDL * ) =
+int (* const DATA_AC_JumpGLU1G_8F_Tbl[])( MMDL * ) =
 {
 	AC_JumpGLU1G_8F_0,
 	AC_JumpVec_1,
@@ -5285,7 +5285,7 @@ int (* const DATA_AC_JumpGLU1G_8F_Tbl[])( FLDMMDL * ) =
 //--------------------------------------------------------------
 ///	AC_JUMPGL_D_1G_8F
 //--------------------------------------------------------------
-int (* const DATA_AC_JumpGLD1G_8F_Tbl[])( FLDMMDL * ) =
+int (* const DATA_AC_JumpGLD1G_8F_Tbl[])( MMDL * ) =
 {
 	AC_JumpGLD1G_8F_0,
 	AC_JumpVec_1,
@@ -5295,7 +5295,7 @@ int (* const DATA_AC_JumpGLD1G_8F_Tbl[])( FLDMMDL * ) =
 //--------------------------------------------------------------
 ///	AC_JUMPGL_L_1G_8F
 //--------------------------------------------------------------
-int (* const DATA_AC_JumpGLL1G_8F_Tbl[])( FLDMMDL * ) =
+int (* const DATA_AC_JumpGLL1G_8F_Tbl[])( MMDL * ) =
 {
 	AC_JumpGLL1G_8F_0,
 	AC_JumpVec_1,
@@ -5305,7 +5305,7 @@ int (* const DATA_AC_JumpGLL1G_8F_Tbl[])( FLDMMDL * ) =
 //--------------------------------------------------------------
 ///	AC_JUMPGL_R_1G_8F
 //--------------------------------------------------------------
-int (* const DATA_AC_JumpGLR1G_8F_Tbl[])( FLDMMDL * ) =
+int (* const DATA_AC_JumpGLR1G_8F_Tbl[])( MMDL * ) =
 {
 	AC_JumpGLR1G_8F_0,
 	AC_JumpVec_1,
@@ -5315,7 +5315,7 @@ int (* const DATA_AC_JumpGLR1G_8F_Tbl[])( FLDMMDL * ) =
 //--------------------------------------------------------------
 ///	AC_JUMPGR_U_1G_8F
 //--------------------------------------------------------------
-int (* const DATA_AC_JumpGRU1G_8F_Tbl[])( FLDMMDL * ) =
+int (* const DATA_AC_JumpGRU1G_8F_Tbl[])( MMDL * ) =
 {
 	AC_JumpGRU1G_8F_0,
 	AC_JumpVec_1,
@@ -5325,7 +5325,7 @@ int (* const DATA_AC_JumpGRU1G_8F_Tbl[])( FLDMMDL * ) =
 //--------------------------------------------------------------
 ///	AC_JUMPGL_D_1G_8F
 //--------------------------------------------------------------
-int (* const DATA_AC_JumpGRD1G_8F_Tbl[])( FLDMMDL * ) =
+int (* const DATA_AC_JumpGRD1G_8F_Tbl[])( MMDL * ) =
 {
 	AC_JumpGRD1G_8F_0,
 	AC_JumpVec_1,
@@ -5335,7 +5335,7 @@ int (* const DATA_AC_JumpGRD1G_8F_Tbl[])( FLDMMDL * ) =
 //--------------------------------------------------------------
 ///	AC_JUMPGR_L_1G_8F
 //--------------------------------------------------------------
-int (* const DATA_AC_JumpGRL1G_8F_Tbl[])( FLDMMDL * ) =
+int (* const DATA_AC_JumpGRL1G_8F_Tbl[])( MMDL * ) =
 {
 	AC_JumpGRL1G_8F_0,
 	AC_JumpVec_1,
@@ -5345,7 +5345,7 @@ int (* const DATA_AC_JumpGRL1G_8F_Tbl[])( FLDMMDL * ) =
 //--------------------------------------------------------------
 ///	AC_JUMPGR_R_1G_8F
 //--------------------------------------------------------------
-int (* const DATA_AC_JumpGRR1G_8F_Tbl[])( FLDMMDL * ) =
+int (* const DATA_AC_JumpGRR1G_8F_Tbl[])( MMDL * ) =
 {
 	AC_JumpGRR1G_8F_0,
 	AC_JumpVec_1,
@@ -5355,7 +5355,7 @@ int (* const DATA_AC_JumpGRR1G_8F_Tbl[])( FLDMMDL * ) =
 //--------------------------------------------------------------
 ///	AC_JUMPGU_U_1G_8F
 //--------------------------------------------------------------
-int (* const DATA_AC_JumpGUU1G_8F_Tbl[])( FLDMMDL * ) =
+int (* const DATA_AC_JumpGUU1G_8F_Tbl[])( MMDL * ) =
 {
 	AC_JumpGUU1G_8F_0,
 	AC_JumpVec_1,
@@ -5365,7 +5365,7 @@ int (* const DATA_AC_JumpGUU1G_8F_Tbl[])( FLDMMDL * ) =
 //--------------------------------------------------------------
 ///	AC_JUMPGU_D_1G_8F
 //--------------------------------------------------------------
-int (* const DATA_AC_JumpGUD1G_8F_Tbl[])( FLDMMDL * ) =
+int (* const DATA_AC_JumpGUD1G_8F_Tbl[])( MMDL * ) =
 {
 	AC_JumpGUD1G_8F_0,
 	AC_JumpVec_1,
@@ -5375,7 +5375,7 @@ int (* const DATA_AC_JumpGUD1G_8F_Tbl[])( FLDMMDL * ) =
 //--------------------------------------------------------------
 ///	AC_JUMPGU_L_1G_8F
 //--------------------------------------------------------------
-int (* const DATA_AC_JumpGUL1G_8F_Tbl[])( FLDMMDL * ) =
+int (* const DATA_AC_JumpGUL1G_8F_Tbl[])( MMDL * ) =
 {
 	AC_JumpGUL1G_8F_0,
 	AC_JumpVec_1,
@@ -5385,7 +5385,7 @@ int (* const DATA_AC_JumpGUL1G_8F_Tbl[])( FLDMMDL * ) =
 //--------------------------------------------------------------
 ///	AC_JUMPGU_R_1G_8F
 //--------------------------------------------------------------
-int (* const DATA_AC_JumpGUR1G_8F_Tbl[])( FLDMMDL * ) =
+int (* const DATA_AC_JumpGUR1G_8F_Tbl[])( MMDL * ) =
 {
 	AC_JumpGUR1G_8F_0,
 	AC_JumpVec_1,
@@ -5395,7 +5395,7 @@ int (* const DATA_AC_JumpGUR1G_8F_Tbl[])( FLDMMDL * ) =
 //--------------------------------------------------------------
 ///	AC_MARK_GYOE_TWAIT 0
 //--------------------------------------------------------------
-int (* const DATA_AC_MarkGyoeTWait_Tbl[])( FLDMMDL * ) =
+int (* const DATA_AC_MarkGyoeTWait_Tbl[])( MMDL * ) =
 {
 	AC_MarkGyoeTWait_0,
 	AC_Mark_1,

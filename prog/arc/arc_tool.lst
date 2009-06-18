@@ -103,7 +103,6 @@
 	ARCID_WIFIP2PMATCH		"wifip2pmatch.narc"
 	ARCID_MYSTERY		"mystery.narc"			#不思議な贈り物
 	ARCID_STARTMENU		"startmenu.narc"		#スタートメニュー
-	ARCID_FLDMMDL_BTX	"test_graphic/fldmmdl_btx.narc" #動作モデル
 	ARCID_PALACE		"palace.narc"			#パレス
 	ARCID_FLDMMLD		"test_graphic/mmodel.narc"
 	ARCID_YN_TOUCH		"yn_touch.narc"			#YesNoボタン
@@ -121,8 +120,8 @@
 	ARCID_DRESSUP_GRA	"dressup_gra.narc"		#ミュージカル　ドレスアップ
 	ARCID_STAGE_GRA		"stage_gra.narc"		#ミュージカル　ステージ
 	ARCID_STAGE_AUDIENCE	"stage_audience.narc"		#ミュージカル　ステージ・観客
-	ARCID_FLDMMDL_PARAM "fieldmap/fldmmdl_mdlparam.narc" #動作モデル パラメータ
-	ARCID_FLDMMDL_RES	"fieldmap/fldmmdl_mdlres.narc" #動作モデル リソース
+	ARCID_MMDL_PARAM "fieldmap/fldmmdl_mdlparam.narc" #動作モデル パラメータ
+	ARCID_MMDL_RES	"fieldmap/fldmmdl_mdlres.narc" #動作モデル リソース
 	ARCID_INFOWIN		"infowin.narc"		#情報ウィンドウ
 	ARCID_BMPOAM		"bmpoam.narc"			#BMPOAM
 	ARCID_POKEGRA_MUS	"pokegra_mus.narc"	#ミュージカル用ポケグラ
@@ -137,7 +136,7 @@
 	ARCID_LOBBY_TRGRA		"lobby_trfgra.narc"			#Wi-Fi広場用トレーナーグラフィック(PLのtrgra)
 	ARCID_FIELD_WEATHER	"field_weather.narc"	#フィールド天気グラフィック
 	ARCID_SCRSEQ		"fieldmap/script_seq.narc"		#スクリプトシーケンス
-	ARCID_FLDMMDL_LIST	"fieldmap/move_model_list.narc" #動作モデルリスト
+	ARCID_MMDL_LIST	"fieldmap/move_model_list.narc" #動作モデルリスト
 	ARCID_CODE_INPUT	"code_input.narc"				#コード入力画面
 	ARCID_FIELD_LIGHT	"field_light.narc"	#フィールドライトデータ
 	ARCID_FIELD_WEATHER_LIGHT	"field_weather_light.narc"	#フィールド天気ライトデータ
