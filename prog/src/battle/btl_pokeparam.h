@@ -68,7 +68,6 @@ typedef enum {
   BPP_TURNFLG_ACTION_DONE,  ///< 行動した
   BPP_TURNFLG_WAZA_EXE,     ///< ワザを出した
   BPP_TURNFLG_SHRINK,       ///< ひるまされた
-  BPP_TURNFLG_DEAD,         ///< このターンに死んだ
   BPP_TURNFLG_MAMORU,       ///< “まもる”発動
 
   BPP_TURNFLG_MAX,
@@ -97,7 +96,6 @@ typedef enum {
 typedef enum {
 
   BPP_CONTFLG_MEMBERIN_EFFECT,  ///< 入場直後
-  BPP_CONTFLG_DEAD_IGNORE,      ///< 既に死んでいるので場にいないものとして扱う
   BPP_CONTFLG_KODAWARI_LOCK,    ///< 最初に使ったワザしか出せなくなる
   BPP_CONTFLG_CANT_CHANGE,      ///< にげる・入れ替えが出来なくなる
   BPP_CONTFLG_TAME,

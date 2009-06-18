@@ -147,6 +147,10 @@ static void handler_Alomatherapy( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* f
 static BTL_EVENT_FACTOR*  ADD_IyasiNoSuzu( u16 pri, WazaID waza, u8 pokeID );
 static void handler_IyasiNoSuzu( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void common_CureFriendPokeSick( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work, u16 strID );
+static BTL_EVENT_FACTOR*  ADD_Okimiyage( u16 pri, WazaID waza, u8 pokeID );
+static void handler_Okimiyage( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static BTL_EVENT_FACTOR*  ADD_Urami( u16 pri, WazaID waza, u8 pokeID );
+static void handler_Urami( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static BTL_EVENT_FACTOR*  ADD_Nekodamasi( u16 pri, WazaID waza, u8 pokeID );
 static void handler_Nekodamasi( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static BTL_EVENT_FACTOR*  ADD_AsaNoHizasi( u16 pri, WazaID waza, u8 pokeID );
@@ -285,6 +289,8 @@ BTL_EVENT_FACTOR*  BTL_HANDLER_Waza_Add( const BTL_POKEPARAM* pp, WazaID waza )
     { WAZANO_AISUBOORU,       ADD_Korogaru      },  // アイスボール=ころがる と等価
     { WAZANO_AROMASERAPII,    ADD_Alomatherapy  },
     { WAZANO_IYASINOSUZU,     ADD_IyasiNoSuzu   },
+    { WAZANO_OKIMIYAGE,       ADD_Okimiyage     },
+    { WAZANO_URAMI,           ADD_Urami         },
   };
 
   int i;
@@ -982,7 +988,6 @@ static BTL_EVENT_FACTOR*  ADD_Korogaru( u16 pri, WazaID waza, u8 pokeID )
   };
   return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_WAZA, waza, pri, pokeID, HandlerTable );
 }
-
 static void handler_Korogaru_ExeFix( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID )
@@ -1046,8 +1051,6 @@ static void handler_Korogaru_Pow( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* f
     }
   }
 }
-
-
 //----------------------------------------------------------------------------------
 /**
  * じたばた、きしかいせい
@@ -1876,7 +1879,6 @@ static void handler_Haradaiko( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flow
     }
   }
 }
-
 //----------------------------------------------------------------------------------
 /**
  * フェイント
@@ -2093,7 +2095,7 @@ static void handler_IyasiNoSuzu( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* fl
 
 static void common_CureFriendPokeSick( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work, u16 strID )
 {
-  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID )
+  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
   {
     BTL_HANDEX_PARAM_MESSAGE   *msg_param;
     BTL_HANDEX_PARAM_CURE_SICK *cure_param;
@@ -2108,6 +2110,96 @@ static void common_CureFriendPokeSick( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WO
     cure_param->sickCode = WAZASICK_EX_POKEFULL;
   }
 }
+//----------------------------------------------------------------------------------
+/**
+ * おきみやげ
+ */
+//----------------------------------------------------------------------------------
+static BTL_EVENT_FACTOR*  ADD_Okimiyage( u16 pri, WazaID waza, u8 pokeID )
+{
+  static const BtlEventHandlerTable HandlerTable[] = {
+    { BTL_EVENT_UNCATEGORY_WAZA,  handler_Okimiyage   },  // ワザ威力決定
+    { BTL_EVENT_NULL, NULL },
+  };
+  return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_WAZA, waza, pri, pokeID, HandlerTable );
+}
+static void handler_Okimiyage( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+{
+  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
+  {
+    BTL_HANDEX_PARAM_KILL* kill_param;
+    BTL_HANDEX_PARAM_RANK_EFFECT* rank_param;
+    u8 targetPokeID = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID_TARGET1 );
+
+    kill_param = BTL_SVFLOW_HANDLERWORK_Push( flowWk, BTL_HANDEX_KILL, pokeID );
+    kill_param->pokeID = pokeID;
+
+    rank_param = BTL_SVFLOW_HANDLERWORK_Push( flowWk, BTL_HANDEX_RANK_EFFECT, pokeID );
+    rank_param->poke_cnt = 1;
+    rank_param->pokeID[0] = targetPokeID;
+    rank_param->rankType = BPP_ATTACK;
+    rank_param->rankVolume = -2;
+    rank_param->fAlmost = TRUE;
+
+    rank_param = BTL_SVFLOW_HANDLERWORK_Push( flowWk, BTL_HANDEX_RANK_EFFECT, pokeID );
+    rank_param->poke_cnt = 1;
+    rank_param->pokeID[0] = targetPokeID;
+    rank_param->rankType = BPP_SP_ATTACK;
+    rank_param->rankVolume = -2;
+    rank_param->fAlmost = TRUE;
+  }
+}
+//----------------------------------------------------------------------------------
+/**
+ * うらみ
+ */
+//----------------------------------------------------------------------------------
+static BTL_EVENT_FACTOR*  ADD_Urami( u16 pri, WazaID waza, u8 pokeID )
+{
+  static const BtlEventHandlerTable HandlerTable[] = {
+    { BTL_EVENT_UNCATEGORY_WAZA,  handler_Urami   },  // ワザ威力決定
+    { BTL_EVENT_NULL, NULL },
+  };
+  return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_WAZA, waza, pri, pokeID, HandlerTable );
+}
+static void handler_Urami( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+{
+  enum {
+    URAMI_DECREMENT_PP_VOLUME = 4,
+  };
+
+  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
+  {
+    u8 targetPokeID = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID_TARGET1 );
+    const BTL_POKEPARAM* bpp = BTL_SVFLOW_RECEPT_GetPokeParam( flowWk, targetPokeID );
+    WazaID prev_waza = BTL_POKEPARAM_GetPrevWazaNumber( bpp );
+    u8 wazaIdx = BTL_POKEPARAM_GetWazaIdx( bpp, prev_waza );
+
+    if( wazaIdx != PTL_WAZA_MAX )
+    {
+      u8 volume = BTL_POKEPARAM_GetPP( bpp, wazaIdx );
+      if( volume > URAMI_DECREMENT_PP_VOLUME ){ volume = URAMI_DECREMENT_PP_VOLUME; }
+      if( volume )
+      {
+        BTL_HANDEX_PARAM_PP*      decpp_param;
+        BTL_HANDEX_PARAM_MESSAGE* msg_param;
+
+        decpp_param = BTL_SVFLOW_HANDLERWORK_Push( flowWk, BTL_HANDEX_DECREMENT_PP, pokeID );
+        decpp_param->pokeID = targetPokeID;
+        decpp_param->volume = volume;
+        decpp_param->wazaIdx = wazaIdx;
+
+        msg_param = BTL_SVFLOW_HANDLERWORK_Push( flowWk, BTL_HANDEX_MESSAGE_SET, pokeID );
+        msg_param->pokeID = targetPokeID;
+        msg_param->strID = BTL_STRID_SET_Urami;
+        msg_param->args[0] = prev_waza;
+        msg_param->args[1] = volume;
+        msg_param->arg_cnt = 2;
+      }
+    }
+  }
+}
+
 
 //----------------------------------------------------------------------------------
 /**

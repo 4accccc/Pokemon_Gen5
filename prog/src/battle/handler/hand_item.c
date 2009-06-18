@@ -656,8 +656,8 @@ static void handler_HimeriNomi_Exe( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK*
 {
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID )
   {
-    BTL_HANDEX_PARAM_RECOVER_PP* param = BTL_SVFLOW_HANDLERWORK_Push( flowWk, BTL_HANDEX_RECOVER_PP, pokeID );
-    param->recoverPP = 10;
+    BTL_HANDEX_PARAM_PP* param = BTL_SVFLOW_HANDLERWORK_Push( flowWk, BTL_HANDEX_RECOVER_PP, pokeID );
+    param->volume = 10;
     param->pokeID = pokeID;
     param->wazaIdx = work[0];
   }

@@ -145,10 +145,13 @@ struct _BTL_SVFLOW_WORK {
   BTL_SERVER_CMD_QUE*     que;
   u32                     turnCount;
   SvflowResult            flowResult;
+  HEAPID  heapID;
+
   u8      numClient;
   u8      wazaEff_EnableFlag;
   u8      wazaEff_TargetPokeID;
-  HEAPID  heapID;
+  u8      pokeDeadFlag[ BTL_POKEID_MAX ];
+
 
   ACTION_ORDER_WORK   actOrder[ BTL_POS_MAX ];
   TARGET_POKE_REC     targetPokemon;
@@ -281,6 +284,7 @@ static void scproc_HandEx_TokWinOut( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM
 static void scproc_HandEx_useItem( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header );
 static void scproc_HandEx_recoverHP( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header, u16 itemID );
 static void scproc_HandEx_recoverPP( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header, u16 itemID );
+static void scproc_HandEx_decrementPP( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header, u16 itemID );
 static void scproc_HandEx_cureSick( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header, u16 itemID );
 static void scproc_HandEx_addSick( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header );
 static void handex_addsick_msg( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* target, void* arg );
@@ -442,6 +446,8 @@ BTL_SVFLOW_WORK* BTL_SVFLOW_InitSystem(
   wk->flowResult = SVFLOW_RESULT_DEFAULT;
   wk->que = que;
   wk->heapID = heapID;
+
+  GFL_STD_MemClear( wk->pokeDeadFlag, sizeof(wk->pokeDeadFlag) );
 
   Hem_Init( &wk->HEManager );
 
@@ -3163,6 +3169,7 @@ static void scproc_HandEx_Root( BTL_SVFLOW_WORK* wk, u16 useItemID )
     case BTL_HANDEX_USE_ITEM:      scproc_HandEx_useItem( wk, handEx_header ); break;
     case BTL_HANDEX_RECOVER_HP:    scproc_HandEx_recoverHP( wk, handEx_header, useItemID ); break;
     case BTL_HANDEX_RECOVER_PP:    scproc_HandEx_recoverPP( wk, handEx_header, useItemID ); break;
+    case BTL_HANDEX_DECREMENT_PP:  scproc_HandEx_decrementPP( wk, handEx_header, useItemID ); break;
     case BTL_HANDEX_CURE_SICK:     scproc_HandEx_cureSick( wk, handEx_header, useItemID ); break;
     case BTL_HANDEX_ADD_SICK:      scproc_HandEx_addSick( wk, handEx_header ); break;
     case BTL_HANDEX_RANK_EFFECT:   scproc_HandEx_rankEffect( wk, handEx_header, useItemID ); break;
@@ -3222,7 +3229,7 @@ static void scproc_HandEx_recoverHP( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM
 }
 static void scproc_HandEx_recoverPP( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header, u16 itemID )
 {
-  const BTL_HANDEX_PARAM_RECOVER_PP* param = (BTL_HANDEX_PARAM_RECOVER_PP*)param_header;
+  const BTL_HANDEX_PARAM_PP* param = (BTL_HANDEX_PARAM_PP*)param_header;
   BTL_POKEPARAM* pp_target = BTL_POKECON_GetPokeParam( wk->pokeCon, param->pokeID );
   BTL_POKEPARAM* pp_user = BTL_POKECON_GetPokeParam( wk->pokeCon, param_header->userPokeID );
 
@@ -3231,13 +3238,26 @@ static void scproc_HandEx_recoverPP( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM
   }
 
   if( !BTL_POKEPARAM_IsPPFull(pp_target, param->wazaIdx) ){
-    scPut_RecoverPP( wk, pp_target, param->wazaIdx, param->recoverPP, itemID );
+    scPut_RecoverPP( wk, pp_target, param->wazaIdx, param->volume, itemID );
   }
 
   if( param_header->tokwin_flag ){
     scPut_TokWin_Out( wk, pp_user );
   }
 }
+
+static void scproc_HandEx_decrementPP( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header, u16 itemID )
+{
+  const BTL_HANDEX_PARAM_PP* param = (BTL_HANDEX_PARAM_PP*)param_header;
+
+  BTL_POKEPARAM* targetPokemon = BTL_POKECON_GetPokeParam( wk->pokeCon, param->pokeID );
+
+  u8 restPP = BTL_POKEPARAM_GetPP( targetPokemon, param->wazaIdx );
+  u8 volume = ( param->volume < restPP )? param->volume : restPP;
+
+  scPut_DecrementPP( wk, targetPokemon, param->wazaIdx, volume );
+}
+
 static void scproc_HandEx_cureSick( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header, u16 itemID )
 {
   const BTL_HANDEX_PARAM_CURE_SICK* param = (BTL_HANDEX_PARAM_CURE_SICK*)param_header;
@@ -3960,16 +3980,17 @@ static void scput_DmgToRecover( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, BTL_EVW
 //--------------------------------------------------------------------------
 static void scPut_CheckDeadCmd( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* poke )
 {
-  if( !BTL_POKEPARAM_GetContFlag(poke, BPP_CONTFLG_DEAD_IGNORE) )
+  u8 pokeID = BTL_POKEPARAM_GetID( poke );
+
+  if( wk->pokeDeadFlag[pokeID] == 0 )
   {
     if( BTL_POKEPARAM_IsDead(poke) )
     {
-      u8 pokeID = BTL_POKEPARAM_GetID( poke );
+      wk->pokeDeadFlag[pokeID] = 1;
 
       BTL_HANDLER_TOKUSEI_Remove( poke );
-
-      BTL_POKEPARAM_SetContFlag( poke, BPP_CONTFLG_DEAD_IGNORE );
-      BTL_POKEPARAM_SetTurnFlag( poke, BPP_TURNFLG_DEAD );
+      BTL_HANDLER_ITEM_Remove( poke );
+//      BTL_HANDLER_Waza_RemoveForce( poke );
 
       SCQUE_PUT_MSG_SET( wk->que, BTL_STRID_SET_Dead, pokeID );
       SCQUE_PUT_ACT_Dead( wk->que, pokeID );
@@ -4292,6 +4313,9 @@ static void scPut_Message_SetEx( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp, 
     break;
   case 2:
     SCQUE_PUT_MSG_SET( wk->que, strID, pokeID, args[0], args[1] );
+    break;
+  case 3:
+    SCQUE_PUT_MSG_SET( wk->que, strID, pokeID, args[0], args[1], args[2] );
     break;
   }
 }
@@ -6398,7 +6422,8 @@ static BTL_HANDEX_PARAM_HEADER* Hem_PushWork( HANDLER_EXHIBISION_MANAGER* wk, Bt
   }work_size_table[] = {
     { BTL_HANDEX_USE_ITEM,       sizeof(BTL_HANDEX_PARAM_USE_ITEM)     },
     { BTL_HANDEX_RECOVER_HP,     sizeof(BTL_HANDEX_PARAM_RECOVER_HP)   },
-    { BTL_HANDEX_RECOVER_PP,     sizeof(BTL_HANDEX_PARAM_RECOVER_PP)   },
+    { BTL_HANDEX_RECOVER_PP,     sizeof(BTL_HANDEX_PARAM_PP)           },
+    { BTL_HANDEX_DECREMENT_PP,   sizeof(BTL_HANDEX_PARAM_PP)           },
     { BTL_HANDEX_CURE_SICK,      sizeof(BTL_HANDEX_PARAM_CURE_SICK)    },
     { BTL_HANDEX_ADD_SICK,       sizeof(BTL_HANDEX_PARAM_ADD_SICK)     },
     { BTL_HANDEX_RANK_EFFECT,    sizeof(BTL_HANDEX_PARAM_RANK_EFFECT)  },

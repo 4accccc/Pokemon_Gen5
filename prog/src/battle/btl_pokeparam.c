@@ -507,9 +507,12 @@ BOOL BTL_POKEPARAM_IsDead( const BTL_POKEPARAM* pp )
 //=============================================================================================
 u16 BTL_POKEPARAM_GetPP( const BTL_POKEPARAM* pp, u8 wazaIdx )
 {
-  GF_ASSERT(wazaIdx < pp->wazaCnt);
-
-  return  pp->waza[wazaIdx].pp;
+  if( wazaIdx < pp->wazaCnt ){
+    return  pp->waza[wazaIdx].pp;
+  }else{
+    GF_ASSERT(0);
+    return 0;
+  }
 }
 //=============================================================================================
 /**

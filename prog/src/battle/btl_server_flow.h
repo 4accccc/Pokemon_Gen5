@@ -176,6 +176,7 @@ typedef enum {
   BTL_HANDEX_MESSAGE_SET,   ///< SETメッセージ表示
   BTL_HANDEX_RECOVER_HP,    ///< HP回復
   BTL_HANDEX_RECOVER_PP,    ///< PP回復
+  BTL_HANDEX_DECREMENT_PP,  ///< PP減少
   BTL_HANDEX_CURE_SICK,     ///< 状態異常を回復
   BTL_HANDEX_ADD_SICK,      ///< 状態異常にする
   BTL_HANDEX_RANK_EFFECT,   ///< ランク増減効果
@@ -229,10 +230,10 @@ typedef struct {
 
 typedef struct {
  BTL_HANDEX_PARAM_HEADER   header;   ///< 共有ヘッダ
- u8   recoverPP;                     ///< 回復PP量
+ u8   volume;                        ///< PP量
  u8   pokeID;                        ///< 対象ポケモンID
  u8   wazaIdx;                       ///< 対象ワザインデックス
-}BTL_HANDEX_PARAM_RECOVER_PP;
+}BTL_HANDEX_PARAM_PP;
 
 typedef struct {
  BTL_HANDEX_PARAM_HEADER   header;   ///< 共有ヘッダ

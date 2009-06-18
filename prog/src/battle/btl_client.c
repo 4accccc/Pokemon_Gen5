@@ -756,6 +756,7 @@ static BtlCantEscapeCode is_prohibit_escape( BTL_CLIENT* wk, u8* pokeID )
 
 static BOOL SubProc_AI_SelectAction( BTL_CLIENT* wk, int* seq )
 {
+  // @@@ この関数は現在しぬほど適当に作られている。taya
   const BTL_POKEPARAM* pp;
   u8 i;
 
@@ -776,8 +777,24 @@ static BOOL SubProc_AI_SelectAction( BTL_CLIENT* wk, int* seq )
       }
 
       wazaCount = BTL_POKEPARAM_GetWazaCount( pp );
-      wazaIdx = GFL_STD_MtRand(wazaCount);
-      targetPos = BTL_MAIN_GetOpponentPokePos( wk->mainModule, mypos, 0 );
+      {
+        u8 usableWazaIdx[ PTL_WAZA_MAX ];
+        u8 j, cnt=0;
+        for(j=0, cnt=0; j<wazaCount; ++j){
+          if( BTL_POKEPARAM_GetPP(pp, j) ){
+            usableWazaIdx[cnt++] = j;
+          }
+        }
+        if( cnt ){
+          cnt = GFL_STD_MtRand( cnt );
+          wazaIdx = usableWazaIdx[ cnt ];
+          targetPos = BTL_MAIN_GetOpponentPokePos( wk->mainModule, mypos, 0 );
+        }else{
+          setWaruagakiAction( &wk->actionParam[i], wk, pp );
+          continue;
+        }
+      }
+
       // シングルでなければ、対象をランダムで決定する処理
       if( BTL_MAIN_GetRule(wk->mainModule) != BTL_RULE_SINGLE )
       {
