@@ -1632,7 +1632,7 @@ static void gjikiReq_SetSwim( FIELD_PLAYER_GRID *gjiki )
   
   sex = FIELD_PLAYER_GetSex( gjiki->fld_player );
   mmdl = FIELD_PLAYER_GetMMdl( gjiki->fld_player );
-  code = FIELD_PLAYER_GetDrawFormToOBJCode( sex, PLAYER_DRAW_FORM_CYCLE );
+  code = FIELD_PLAYER_GetDrawFormToOBJCode( sex, PLAYER_DRAW_FORM_SWIM );
 
   if( MMDL_GetOBJCode(mmdl) != code ){
     MMDL_ChangeOBJCode( mmdl, code );
