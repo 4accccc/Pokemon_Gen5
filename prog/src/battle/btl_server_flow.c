@@ -268,8 +268,6 @@ static void scproc_Fight_SimpleEffect( BTL_SVFLOW_WORK* wk, WazaID waza, BTL_POK
 static BOOL scproc_WazaRankEffect_Common( BTL_SVFLOW_WORK* wk, WazaID waza, BTL_POKEPARAM* attacker, BTL_POKEPARAM* target, BOOL fAlmost );
 static BOOL scproc_RankEffectCore( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* target,
   WazaRankEffect effect, int volume, u16 itemID, BOOL fAlmost, BOOL fStdMsg );
-static void scEvent_RankEffect_Failed( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp );
-static void scEvent_RankEffect_Fix( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp, WazaRankEffect rankType, int volume );
 static void scproc_Fight_EffectSick( BTL_SVFLOW_WORK* wk, WazaID waza, BTL_POKEPARAM* attacker, TARGET_POKE_REC* targetRec );
 static void scproc_Fight_SimpleRecover( BTL_SVFLOW_WORK* wk, WazaID waza, BTL_POKEPARAM* attacker );
 static void scproc_Fight_Ichigeki( BTL_SVFLOW_WORK* wk, WazaID waza, BTL_POKEPARAM* attacker, TARGET_POKE_REC* targets );
@@ -384,7 +382,8 @@ static BOOL scEvent_IchigekiCheck( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* att
 static BOOL scEvent_CheckNotEffect_byType( BTL_SVFLOW_WORK* wk, WazaID waza, const BTL_POKEPARAM* attacker, const BTL_POKEPARAM* defender );
 static BOOL scEvent_CheckNotEffect( BTL_SVFLOW_WORK* wk, WazaID waza, u8 lv,
     const BTL_POKEPARAM* attacker, const BTL_POKEPARAM* defender );
-static BOOL scEvent_DmgToRecover( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* defender, WazaID waza, BTL_EVWK_DMG_TO_RECOVER* evwk );
+static BOOL scEvent_CheckDmgToRecover( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, const BTL_POKEPARAM* defender, WazaID waza );
+static void scEvent_DmgToRecover( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, const BTL_POKEPARAM* defender );
 static BOOL scEvent_CheckCritical( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, const BTL_POKEPARAM* defender, WazaID waza );
 static BppKoraeruCause scEvent_CheckKoraeru( BTL_SVFLOW_WORK* wk,
   const BTL_POKEPARAM* attacker, const BTL_POKEPARAM* defender, u16* damage );
@@ -423,6 +422,8 @@ static void scEvent_GetWazaRankEffectValue( BTL_SVFLOW_WORK* wk, WazaID waza, u3
   const BTL_POKEPARAM* attacker, const BTL_POKEPARAM* target, WazaRankEffect* effect, int* volume );
 static BOOL scEvent_CheckRankEffectSuccess( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* target,
   WazaRankEffect effect, int volume );
+static void scEvent_RankEffect_Failed( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp );
+static void scEvent_RankEffect_Fix( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp, WazaRankEffect rankType, int volume );
 static int scEvent_CalcDrainVolume( BTL_SVFLOW_WORK* wk, WazaID waza,
   const BTL_POKEPARAM* attacker, const BTL_POKEPARAM* target, int damage );
 static void scEvent_CheckSpecialDrain( BTL_SVFLOW_WORK* wk, WazaID waza,
@@ -1791,18 +1792,22 @@ static void scproc_Fight_Damage_side( BTL_SVFLOW_WORK* wk, WazaID waza, BTL_POKE
     }
   }
   // 回復チェック -> 特定タイプのダメージを無効化、回復してしまうポケを targets から除外
+  TargetPokeRec_GetStart( targets );
+  while( (bpp = TargetPokeRec_GetNext(targets)) != NULL )
   {
-    BTL_EVWK_DMG_TO_RECOVER* ewk = eventWork_Push( &wk->eventWork, sizeof(BTL_EVWK_DMG_TO_RECOVER) );
-    TargetPokeRec_GetStart( targets );
-    while( (bpp = TargetPokeRec_GetNext(targets)) != NULL )
+    if( scEvent_CheckDmgToRecover(wk, attacker, bpp, waza) )
     {
-      if( scEvent_DmgToRecover(wk, bpp, waza, ewk) )
-      {
-        scput_DmgToRecover( wk, bpp, ewk );
-        TargetPokeRec_Remove( targets, bpp );
-      }
+      u32 hem_state;
+
+      wazaEff_SetTarget( wk, bpp );
+      hem_state = Hem_PushState( &wk->HEManager );
+//        scput_DmgToRecover( wk, bpp, ewk );
+      scEvent_DmgToRecover( wk, attacker, bpp );
+      scproc_HandEx_Root( wk, ITEM_DUMMY_DATA );
+
+      Hem_PopState( &wk->HEManager, hem_state );
+      TargetPokeRec_Remove( targets, bpp );
     }
-    eventWork_Pop( &wk->eventWork, ewk );
   }
 
   TargetPokeRec_GetStart( targets );
@@ -5087,25 +5092,44 @@ static BOOL scEvent_CheckNotEffect( BTL_SVFLOW_WORK* wk, WazaID waza, u8 lv,
  * @retval  BOOL
  */
 //--------------------------------------------------------------------------
-static BOOL scEvent_DmgToRecover( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* defender, WazaID waza, BTL_EVWK_DMG_TO_RECOVER* evwk )
+static BOOL scEvent_CheckDmgToRecover( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, const BTL_POKEPARAM* defender, WazaID waza )
 {
   BOOL ret = FALSE;
 
+/*
   evwk->pokeID = BTL_POKEPARAM_GetID( defender );
   evwk->recoverHP = 0;
   evwk->tokFlag = FALSE;
   evwk->rankEffect = WAZA_RANKEFF_NULL;
   evwk->rankVolume = 0;
-
+*/
   BTL_EVENTVAR_Push();
-    BTL_EVENTVAR_SetValue( BTL_EVAR_POKEID_DEF, evwk->pokeID );
-    BTL_EVENTVAR_SetValue( BTL_EVAR_WAZAID, waza );
-    BTL_EVENTVAR_SetValue( BTL_EVAR_WORK_ADRS, (int)evwk );
-    BTL_EVENTVAR_SetValue( BTL_EVAR_GEN_FLAG, ret );
-    BTL_EVENT_CallHandlers( wk, BTL_EVENT_DMG_TO_RECOVER );
+    BTL_EVENTVAR_SetValue( BTL_EVAR_POKEID_ATK, BTL_POKEPARAM_GetID(attacker) );
+    BTL_EVENTVAR_SetValue( BTL_EVAR_POKEID_DEF, BTL_POKEPARAM_GetID(defender) );
+//    BTL_EVENTVAR_SetValue( BTL_EVAR_WAZAID, waza );
+    BTL_EVENTVAR_SetValue( BTL_EVAR_WAZA_TYPE, wk->wazaParam.wazaType );
+    BTL_EVENTVAR_SetRewriteOnceValue( BTL_EVAR_GEN_FLAG, ret );
+    BTL_EVENT_CallHandlers( wk, BTL_EVENT_DMG_TO_RECOVER_CHECK );
     ret = BTL_EVENTVAR_GetValue( BTL_EVAR_GEN_FLAG );
   BTL_EVENTVAR_Pop();
   return ret;
+}
+//----------------------------------------------------------------------------------
+/**
+ * [Event] ダメージワザ回復化決定
+ *
+ * @param   wk
+ * @param   attacker
+ * @param   defender
+ */
+//----------------------------------------------------------------------------------
+static void scEvent_DmgToRecover( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, const BTL_POKEPARAM* defender )
+{
+  BTL_EVENTVAR_Push();
+    BTL_EVENTVAR_SetValue( BTL_EVAR_POKEID_ATK, BTL_POKEPARAM_GetID(attacker) );
+    BTL_EVENTVAR_SetValue( BTL_EVAR_POKEID_DEF, BTL_POKEPARAM_GetID(defender) );
+    BTL_EVENT_CallHandlers( wk, BTL_EVENT_DMG_TO_RECOVER_FIX );
+  BTL_EVENTVAR_Pop();
 }
 //--------------------------------------------------------------------------
 /**
