@@ -18,7 +18,7 @@ $KCODE = "SJIS"
 #
 #	パラメーターフォーマット
 #	0-1 OBJコード
-#	2-3 リソースアーカイブインデックス 
+#	2-3 リソースアーカイブインデックス
 #	4	表示タイプ
 #	5	処理関数
 #	6	影表示
@@ -27,6 +27,8 @@ $KCODE = "SJIS"
 #	9	モデルサイズ
 #	10	テクスチャサイズ
 #	11	アニメID
+#	12 性別
+#	13-15 4bit差分用ダミー
 #=======================================================================
 
 #=======================================================================
@@ -74,6 +76,8 @@ STRPRMNO_MDLSIZE = (14)
 STRPRMNO_TEXSIZE = (15)
 #管理表文字位置 アニメーションID
 STRPRMNO_ANMID = (16)
+#管理表文字位置 性別
+STRPRMNO_SEX = (4)
 
 #表示コード文字列 一文字列最長 ヌル文字含む
 CODESTRBUF = (16)
@@ -355,6 +359,25 @@ def convert_line( no, line, wfile, idxfile, symfile )
 	ary = Array( ret )
 	wfile.write( ary.pack("C*") )
 	
+  #性別 1 (13)
+  word = str[STRPRMNO_SEX]
+  if( word == "男" )
+    ret = 0
+  elsif( word == "女" )
+    ret = 1
+  else
+    ret = 2
+  end
+  ary = Array( ret )
+  wfile.write( ary.pack("C*") )
+  
+  #４ビット境界用ダミーデータ 3 (14-16)
+  ret = 0
+  ary = Array( ret )
+  wfile.write( ary.pack("C*") )
+  wfile.write( ary.pack("C*") )
+  wfile.write( ary.pack("C*") )
+  
 	return RET_TRUE
 end
 
