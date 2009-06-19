@@ -103,7 +103,6 @@ static struct {
 /* Prototypes                                                               */
 /*--------------------------------------------------------------------------*/
 static inline void register_PokeNickname( u8 pokeID, WordBufID bufID );
-static inline void register_PokeNickname_Old( BtlPokePos pos, WordBufID bufID );
 static inline SetStrFormat get_strFormat( u8 pokeID );
 static inline u16 get_setStrID( u8 pokeID, u16 defaultStrID );
 static inline u16 get_setPtnStrID( u8 pokeID, u16 originStrID, u8 ptnNum );
@@ -117,6 +116,7 @@ static void ms_select_action_ready( STRBUF* dst, BtlStrID_STD strID, const int* 
 static void ms_out_member1( STRBUF* dst, BtlStrID_STD strID, const int* args );
 static void ms_kodawari_lock( STRBUF* dst, BtlStrID_STD strID, const int* args );
 static void ms_waza_lock( STRBUF* dst, BtlStrID_STD strID, const int* args );
+static void ms_side_eff( STRBUF* dst, BtlStrID_STD strID, const int* args );
 static void ms_set_std( STRBUF* dst, u16 strID, const int* args );
 static void ms_set_rankup( STRBUF* dst, u16 strID, const int* args );
 static void ms_set_rankdown( STRBUF* dst, u16 strID, const int* args );
@@ -200,17 +200,6 @@ static inline void register_PokeNickname( u8 pokeID, WordBufID bufID )
   const POKEMON_PARAM* pp;
 
   bpp = BTL_POKECON_GetPokeParamConst( SysWork.pokeCon, pokeID );
-  pp = BTL_POKEPARAM_GetSrcData( bpp );
-
-  WORDSET_RegisterPokeNickName( SysWork.wset, bufID, pp );
-}
-// @@@ Ç”ÇÈÇ¢ÇŸÇ§ÅBÇ¢Ç∏ÇÍè¡Ç∑ÅB
-static inline void register_PokeNickname_Old( BtlPokePos pos, WordBufID bufID )
-{
-  const BTL_POKEPARAM* bpp;
-  const POKEMON_PARAM* pp;
-
-  bpp = BTL_POKECON_GetFrontPokeDataConst( SysWork.pokeCon, pos );
   pp = BTL_POKEPARAM_GetSrcData( bpp );
 
   WORDSET_RegisterPokeNickName( SysWork.wset, bufID, pp );
@@ -318,6 +307,16 @@ void BTL_STR_MakeStringStdWithArgArray( STRBUF* buf, BtlStrID_STD strID, const i
     { BTL_STRID_STD_SelectAction,     ms_select_action_ready },
     { BTL_STRID_STD_KodawariLock,     ms_kodawari_lock },
     { BTL_STRID_STD_WazaLock,         ms_waza_lock },
+    { BTL_STRID_STD_Reflector,        ms_side_eff },
+    { BTL_STRID_STD_ReflectorOff,     ms_side_eff },
+    { BTL_STRID_STD_HikariNoKabe,     ms_side_eff },
+    { BTL_STRID_STD_HikariNoKabeOff,  ms_side_eff },
+    { BTL_STRID_STD_SinpiNoMamori,    ms_side_eff },
+    { BTL_STRID_STD_SinpiNoMamoriOff, ms_side_eff },
+    { BTL_STRID_STD_SiroiKiri,        ms_side_eff },
+    { BTL_STRID_STD_SiroiKiriOff,     ms_side_eff },
+    { BTL_STRID_STD_Makibisi,         ms_side_eff },
+    { BTL_STRID_STD_Dokubisi,         ms_side_eff },
   };
   u32 i;
 
@@ -408,6 +407,14 @@ static void ms_waza_lock( STRBUF* dst, BtlStrID_STD strID, const int* args )
   WORDSET_RegisterWazaName( SysWork.wset, 1, args[1] );
   GFL_MSG_GetString( SysWork.msg[MSGSRC_STD], strID, SysWork.tmpBuf );
   WORDSET_ExpandStr( SysWork.wset, dst, SysWork.tmpBuf );
+}
+// arg[0]: SideIDÅAñ°ï˚ë§Ç∆ëäéËë§Ç≈ï∂éöóÒIDÇïœÇ¶ÇÈ
+static void ms_side_eff( STRBUF* dst, BtlStrID_STD strID, const int* args )
+{
+  if( BTL_MAIN_GetClientSide(SysWork.mainModule, SysWork.clientID) != args[0] ){
+    ++strID;
+  }
+  GFL_MSG_GetString( SysWork.msg[MSGSRC_STD], strID, dst );
 }
 
 

@@ -19,6 +19,7 @@
 #include "btl_event.h"
 #include "btl_string.h"
 
+
 /*--------------------------------------------------------------------------*/
 /* Consts                                                                   */
 /*--------------------------------------------------------------------------*/
@@ -163,6 +164,25 @@ typedef enum {
 }BtlAddSickFailCode;
 
 /**
+ *  サイドエフェクト種類
+ */
+typedef enum {
+
+  BTL_SIDEEFF_NULL = 0,
+  BTL_SIDEEFF_REFRECTOR,      ///< 物理攻撃を半減
+  BTL_SIDEEFF_HIKARINOKABE,   ///< 特殊攻撃を半減
+  BTL_SIDEEFF_SINPINOMAMORI,  ///< ポケ系状態異常にならない
+  BTL_SIDEEFF_SIROIKIRI,      ///< ランクダウン効果を受けない
+  BTL_SIDEEFF_OIKAZE,         ///< すばやさ２倍
+  BTL_SIDEEFF_MAKIBISI,       ///< 入れ替えて出てきたポケモンにダメージ
+  BTL_SIDEEFF_DOKUBISI,       ///< 入れ替えて出てきたポケモンに毒
+
+
+  BTL_SIDEEFF_MAX,
+
+}BtlSideEffect;
+
+/**
  *  ハンドラ挙動（効果が表出するもの）
  */
 typedef enum {
@@ -189,6 +209,7 @@ typedef enum {
   BTL_HANDEX_RESET_TURNFLAG,///< ターンフラグ強制リセット
   BTL_HANDEX_SET_CONTFLAG,  ///< 継続フラグセット
   BTL_HANDEX_RESET_CONTFLAG,///< 継続フラグリセット
+  BTL_HANDEX_SIDE_EFFECT,   ///< サイドエフェクト追加
 
   BTL_HANDEX_MAX,
 
@@ -306,6 +327,13 @@ typedef struct {
   BppContFlag     flag;
   u8              pokeID;
 }BTL_HANDEX_PARAM_SET_CONTFLAG;
+
+typedef struct {
+  BTL_HANDEX_PARAM_DAMAGE  header;
+  BtlSideEffect   effect;
+  BPP_SICK_CONT   cont;
+  u8              pokeID;
+}BTL_HANDEX_PARAM_SIDE_EFFECT;
 
 extern void* BTL_SVFLOW_HANDLERWORK_Push( BTL_SVFLOW_WORK* wk, BtlEventHandlerExhibition eq_type, u8 userPokeID );
 extern u8 BTL_SERVERFLOW_RECEPT_GetTargetPokeID( BTL_SVFLOW_WORK* wk, BtlExPos exPos, u8* dst_pokeID );

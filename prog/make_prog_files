@@ -445,11 +445,9 @@ SRCS_OVERLAY_BATTLE =	battle/btl_main.c \
 			battle/handler/hand_waza.c \
 			battle/handler/hand_side.c \
 			battle/handler/tokusei/hand_tok_ikaku.c \
-			battle/handler/tokusei/hand_tok_clearbody.c \
 			battle/handler/tokusei/hand_tok_seisinryoku.c \
 			battle/handler/tokusei/hand_tok_fukutsuno.c \
 			battle/handler/tokusei/hand_tok_atuisibou.c \
-			battle/handler/tokusei/hand_tok_kairikibasami.c \
 			battle/handler/tokusei/hand_tok_tikaramoti.c \
 			battle/btlv/btlv_core.c \
 			battle/btlv/btlv_scu.c \

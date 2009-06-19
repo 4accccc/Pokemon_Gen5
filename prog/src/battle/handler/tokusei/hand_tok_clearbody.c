@@ -23,14 +23,15 @@ static void handler_BeforeRankDown( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK*
  * ハンドラテーブル
 */
 //--------------------------------------------------------------
-static const BtlEventHandlerTable HandlerTable[] = {
-  { BTL_EVENT_RANKEFF_LAST_CHECK, handler_BeforeRankDown },
-  { BTL_EVENT_NULL, NULL },
-};
 
 
-BTL_EVENT_FACTOR*  HAND_TOK_ADD_ClearBody( u16 pri, u16 tokID, u8 pokeID )
+static BTL_EVENT_FACTOR*  HAND_TOK_ADD_ClearBody( u16 pri, u16 tokID, u8 pokeID )
 {
+  static const BtlEventHandlerTable HandlerTable[] = {
+    { BTL_EVENT_RANKEFF_LAST_CHECK, handler_BeforeRankDown },
+    { BTL_EVENT_NULL, NULL },
+  };
+
   return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_TOKUSEI, tokID, pri, pokeID, HandlerTable );
 }
 

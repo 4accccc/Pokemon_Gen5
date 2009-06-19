@@ -22,6 +22,7 @@
 #include "handler\hand_tokusei.h"
 #include "handler\hand_item.h"
 #include "handler\hand_waza.h"
+#include "handler\hand_side.h"
 
 #include "btl_server_flow.h"
 
@@ -202,6 +203,7 @@ static void scproc_MemberOut( BTL_SVFLOW_WORK* wk, u8 clientID, u8 posIdx );
 static void scproc_Fight( BTL_SVFLOW_WORK* wk, u8 attackClientID, u8 posIdx, const BTL_ACTION_PARAM* action );
 static void scproc_Fight_WazaExe( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, WazaID waza, const BTL_ACTION_PARAM* action_src );
 static u8 flowsub_registerWazaTargets( BTL_SVFLOW_WORK* wk, BtlPokePos atPos, WazaID waza, const BTL_ACTION_PARAM* action, TARGET_POKE_REC* rec );
+static BOOL IsMustHit( const BTL_POKEPARAM* attacker, const BTL_POKEPARAM* target );
 static void flowsub_checkNotEffect( BTL_SVFLOW_WORK* wk, WazaID waza, const BTL_POKEPARAM* attacker, TARGET_POKE_REC* targets );
 static void scproc_Fight_WazaEffective( BTL_SVFLOW_WORK* wk, WazaID waza, u8 atkPokeID, u8 defPokeID, u32 que_reserve_pos );
 static BOOL scproc_Fight_TameWazaExe( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, BtlPokePos atPos, WazaID waza, BTL_ACTION_PARAM* action );
@@ -266,6 +268,8 @@ static void scproc_Fight_SimpleEffect( BTL_SVFLOW_WORK* wk, WazaID waza, BTL_POK
 static BOOL scproc_WazaRankEffect_Common( BTL_SVFLOW_WORK* wk, WazaID waza, BTL_POKEPARAM* attacker, BTL_POKEPARAM* target, BOOL fAlmost );
 static BOOL scproc_RankEffectCore( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* target,
   WazaRankEffect effect, int volume, u16 itemID, BOOL fAlmost, BOOL fStdMsg );
+static void scEvent_RankEffect_Failed( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp );
+static void scEvent_RankEffect_Fix( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp, WazaRankEffect rankType, int volume );
 static void scproc_Fight_EffectSick( BTL_SVFLOW_WORK* wk, WazaID waza, BTL_POKEPARAM* attacker, TARGET_POKE_REC* targetRec );
 static void scproc_Fight_SimpleRecover( BTL_SVFLOW_WORK* wk, WazaID waza, BTL_POKEPARAM* attacker );
 static void scproc_Fight_Ichigeki( BTL_SVFLOW_WORK* wk, WazaID waza, BTL_POKEPARAM* attacker, TARGET_POKE_REC* targets );
@@ -302,10 +306,13 @@ static void scproc_HandEx_setTurnFlag( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PAR
 static void scproc_HandEx_resetTurnFlag( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header );
 static void scproc_HandEx_setContFlag( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header );
 static void scproc_HandEx_resetContFlag( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header );
+static void scproc_HandEx_sideEffect( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header );
 static void scproc_TurnCheck( BTL_SVFLOW_WORK* wk );
 static void scproc_turncheck_sub( BTL_SVFLOW_WORK* wk, BtlEventType event_type );
 static void scEvent_TurnCheck( BTL_SVFLOW_WORK* wk, BtlEventType event_type );
 static void scproc_turncheck_sick( BTL_SVFLOW_WORK* wk );
+static void scproc_turncheck_side( BTL_SVFLOW_WORK* wk );
+static void scproc_turncheck_side_callback( BtlSide side, BtlSideEffect sideEffect, void* arg );
 static void scproc_turncheck_weather( BTL_SVFLOW_WORK* wk );
 static int scEvent_CalcWeatherDamage( BTL_SVFLOW_WORK* wk, BtlWeather weather, BTL_POKEPARAM* bpp, u8 *tok_cause_flg );
 static inline int roundValue( int val, int min, int max );
@@ -343,8 +350,6 @@ static void scPut_TokWin_In( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp );
 static void scPut_TokWin_Out( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp );
 static void scPut_RankEffectLimit( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* target, WazaRankEffect effect, int volume );
 static void scPut_RankEffect( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* target, WazaRankEffect effect, int volume, u16 itemID, BOOL fStdMsg );
-static void scPut_RankEffectFail( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* target,
-  WazaRankEffect effect, const BTL_EVWK_CHECK_RANKEFF* evwk );
 static void scPut_Ichigeki( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* target );
 static void scPut_SimpleHp( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, int value );
 static void scPut_KillPokemon( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u8 effType );
@@ -417,7 +422,7 @@ static BOOL scEvent_CheckAddRankEffectOccur( BTL_SVFLOW_WORK* wk, WazaID waza, B
 static void scEvent_GetWazaRankEffectValue( BTL_SVFLOW_WORK* wk, WazaID waza, u32 idx,
   const BTL_POKEPARAM* attacker, const BTL_POKEPARAM* target, WazaRankEffect* effect, int* volume );
 static BOOL scEvent_CheckRankEffectSuccess( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* target,
-  WazaRankEffect effect, int volume, BTL_EVWK_CHECK_RANKEFF* evwk );
+  WazaRankEffect effect, int volume );
 static int scEvent_CalcDrainVolume( BTL_SVFLOW_WORK* wk, WazaID waza,
   const BTL_POKEPARAM* attacker, const BTL_POKEPARAM* target, int damage );
 static void scEvent_CheckSpecialDrain( BTL_SVFLOW_WORK* wk, WazaID waza,
@@ -455,6 +460,8 @@ BTL_SVFLOW_WORK* BTL_SVFLOW_InitSystem(
   Hem_Init( &wk->HEManager );
 
   eventWork_Init( &wk->eventWork );
+
+  BTL_HANDLER_SIDE_InitSystem();
 
   return wk;
 }
@@ -2283,7 +2290,7 @@ static BOOL scEvent_AddSick_CheckFail( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM*
   BTL_EVENTVAR_Push();
     BTL_EVENTVAR_SetValue( BTL_EVAR_POKEID_DEF, BTL_POKEPARAM_GetID(target) );
     BTL_EVENTVAR_SetValue( BTL_EVAR_SICKID, sick );
-    BTL_EVENTVAR_SetValue( BTL_EVAR_FAIL_FLAG, failFlag );
+    BTL_EVENTVAR_SetRewriteOnceValue( BTL_EVAR_FAIL_FLAG, failFlag );
     BTL_EVENT_CallHandlers( wk, BTL_EVENT_ADDSICK_CHECKFAIL );
     failFlag = BTL_EVENTVAR_GetValue( BTL_EVAR_FAIL_FLAG );
   BTL_EVENTVAR_Pop();
@@ -2505,7 +2512,9 @@ static u16 scEvent_CalcDamage( BTL_SVFLOW_WORK* wk,
     const BTL_POKEPARAM* attacker, const BTL_POKEPARAM* defender, WazaID waza,
     BtlTypeAff typeAff, fx32 targetDmgRatio, BOOL criticalFlag )
 {
+  WazaDamageType dmgType = WAZADATA_GetDamageType( waza );
   u32 rawDamage = 0;
+
 
   BTL_EVENTVAR_Push();
 
@@ -2513,6 +2522,7 @@ static u16 scEvent_CalcDamage( BTL_SVFLOW_WORK* wk,
   BTL_EVENTVAR_SetValue( BTL_EVAR_POKEID_ATK, BTL_POKEPARAM_GetID(attacker) );
   BTL_EVENTVAR_SetValue( BTL_EVAR_POKEID_DEF, BTL_POKEPARAM_GetID(defender) );
   BTL_EVENTVAR_SetValue( BTL_EVAR_CRITICAL_FLAG, criticalFlag );
+  BTL_EVENTVAR_SetValue( BTL_EVAR_DAMAGE_TYPE, dmgType );
 
   {
     u16 atkPower, defGuard, wazaPower;
@@ -2562,7 +2572,7 @@ static u16 scEvent_CalcDamage( BTL_SVFLOW_WORK* wk,
   rawDamage = BTL_CALC_AffDamage( rawDamage, typeAff );
   BTL_Printf("タイプ相性:%02d -> ダメージ値：%d\n", typeAff, rawDamage);
   // やけど補正
-  if( (WAZADATA_GetDamageType(waza) == WAZADATA_DMG_PHYSIC)
+  if( (dmgType == WAZADATA_DMG_PHYSIC)
   &&  (BTL_POKEPARAM_GetPokeSick(attacker) == POKESICK_YAKEDO)
   ){
     rawDamage = (rawDamage * BTL_YAKEDO_DAMAGE_RATIO) / 100;
@@ -2570,7 +2580,7 @@ static u16 scEvent_CalcDamage( BTL_SVFLOW_WORK* wk,
 
   if( rawDamage == 0 ){ rawDamage = 1; }
 
-  BTL_EVENTVAR_SetMulValue( BTL_EVAR_RATIO, FX32_CONST(1), FX32_CONST(0.1f), FX32_CONST(32) );
+  BTL_EVENTVAR_SetMulValue( BTL_EVAR_RATIO, FX32_CONST(1), FX32_CONST(0.01f), FX32_CONST(32) );
 
   BTL_EVENTVAR_RewriteValue( BTL_EVAR_DAMAGE, rawDamage );
   BTL_EVENT_CallHandlers( wk, BTL_EVENT_WAZA_DMG_PROC2 );
@@ -2579,6 +2589,8 @@ static u16 scEvent_CalcDamage( BTL_SVFLOW_WORK* wk,
     fx32 ratio = BTL_EVENTVAR_GetValue( BTL_EVAR_RATIO );
     rawDamage = BTL_EVENTVAR_GetValue( BTL_EVAR_DAMAGE );
     rawDamage = (rawDamage * ratio) >> FX32_SHIFT;
+    BTL_Printf("ダメ受けポケモン=%d, ratio=%08x, Damage=%d -> %d\n",
+          BTL_POKEPARAM_GetID(defender), ratio, BTL_EVENTVAR_GetValue( BTL_EVAR_DAMAGE ), rawDamage);
   }
 
   // 最高で残りＨＰの範囲に収まるように最終補正
@@ -2800,16 +2812,17 @@ static BOOL scproc_RankEffectCore( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* target,
   }
 
   {
-    BTL_EVWK_CHECK_RANKEFF* evwk = (BTL_EVWK_CHECK_RANKEFF*)eventWork_Push( &wk->eventWork, sizeof(BTL_EVWK_CHECK_RANKEFF) );
     BOOL ret = TRUE;
 
-    if( scEvent_CheckRankEffectSuccess(wk, target, effect, volume, evwk) )
+    if( scEvent_CheckRankEffectSuccess(wk, target, effect, volume) )
     {
       BTL_Printf("ランク効果発生：type=%d, volume=%d\n", effect, volume );
       scPut_RankEffect( wk, target, effect, volume, itemID, fStdMsg );
-      if( evwk->useItemFlag )
       {
-        scproc_UseItem( wk, target );
+        u32 hem_state = Hem_PushState( &wk->HEManager );
+        scEvent_RankEffect_Fix( wk, target, effect, volume );
+        scproc_HandEx_Root( wk, ITEM_DUMMY_DATA );
+        Hem_PopState( &wk->HEManager, hem_state );
       }
     }
     else
@@ -2817,21 +2830,34 @@ static BOOL scproc_RankEffectCore( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* target,
       BTL_Printf("ランク効果失敗した\n");
       if( fAlmost )
       {
-        if( evwk->failTokuseiFlag ){
-          scPut_TokWin_In( wk, target );
-        }
-        scPut_RankEffectFail( wk, target, effect, evwk );
-        if( evwk->failTokuseiFlag ){
-          scPut_TokWin_Out( wk, target );
-        }
+        u32 hem_state = Hem_PushState( &wk->HEManager );
+        scEvent_RankEffect_Failed( wk, target );
+        scproc_HandEx_Root( wk, ITEM_DUMMY_DATA );
+        Hem_PopState( &wk->HEManager, hem_state );
       }
       ret = FALSE;
     }
 
-    eventWork_Pop( &wk->eventWork, evwk );
     return ret;
   }
 }
+static void scEvent_RankEffect_Failed( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp )
+{
+  BTL_EVENTVAR_Push();
+    BTL_EVENTVAR_SetValue( BTL_EVAR_POKEID, BTL_POKEPARAM_GetID(bpp) );
+    BTL_EVENT_CallHandlers( wk, BTL_EVENT_RANKEFF_FAILED );
+  BTL_EVENTVAR_Pop();
+}
+static void scEvent_RankEffect_Fix( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp, WazaRankEffect rankType, int volume )
+{
+  BTL_EVENTVAR_Push();
+    BTL_EVENTVAR_SetValue( BTL_EVAR_POKEID, BTL_POKEPARAM_GetID(bpp) );
+    BTL_EVENTVAR_SetValue( BTL_EVAR_STATUS_TYPE, rankType );
+    BTL_EVENTVAR_SetValue( BTL_EVAR_VOLUME, volume );
+    BTL_EVENT_CallHandlers( wk, BTL_EVENT_RANKEFF_FIXED );
+  BTL_EVENTVAR_Pop();
+}
+
 //---------------------------------------------------------------------------------------------
 // サーバーフロー：ランク効果＆状態異常を同時に与えるワザ
 //---------------------------------------------------------------------------------------------
@@ -3199,26 +3225,27 @@ static void scproc_HandEx_Root( BTL_SVFLOW_WORK* wk, u16 useItemID )
   {
     BTL_Printf("ProcHandEX : ADRS=0x%p, type=%d\n", handEx_header, handEx_header->equip);
     switch( handEx_header->equip ){
-    case BTL_HANDEX_TOKWIN_IN:     scproc_HandEx_TokWinIn( wk, handEx_header ); break;
-    case BTL_HANDEX_TOKWIN_OUT:    scproc_HandEx_TokWinOut( wk, handEx_header ); break;
-    case BTL_HANDEX_USE_ITEM:      scproc_HandEx_useItem( wk, handEx_header ); break;
-    case BTL_HANDEX_RECOVER_HP:    scproc_HandEx_recoverHP( wk, handEx_header, useItemID ); break;
-    case BTL_HANDEX_RECOVER_PP:    scproc_HandEx_recoverPP( wk, handEx_header, useItemID ); break;
-    case BTL_HANDEX_DECREMENT_PP:  scproc_HandEx_decrementPP( wk, handEx_header, useItemID ); break;
-    case BTL_HANDEX_CURE_SICK:     scproc_HandEx_cureSick( wk, handEx_header, useItemID ); break;
-    case BTL_HANDEX_ADD_SICK:      scproc_HandEx_addSick( wk, handEx_header ); break;
-    case BTL_HANDEX_RANK_EFFECT:   scproc_HandEx_rankEffect( wk, handEx_header, useItemID ); break;
-    case BTL_HANDEX_RECOVER_RANK:  scproc_HandEx_recoverRank( wk, handEx_header ); break;
-    case BTL_HANDEX_RESET_RANK:    scproc_HandEx_resetRank( wk, handEx_header ); break;
-    case BTL_HANDEX_DAMAGE:        scproc_HandEx_damage( wk, handEx_header ); break;
-    case BTL_HANDEX_KILL:          scproc_HandEx_kill( wk, handEx_header ); break;
-    case BTL_HANDEX_CHANGE_TYPE:   scproc_HandEx_changeType( wk, handEx_header ); break;
-    case BTL_HANDEX_MESSAGE_SET:   scproc_HandEx_messageSet( wk, handEx_header ); break;
-    case BTL_HANDEX_MESSAGE_STD:   scproc_HandEx_messageStd( wk, handEx_header ); break;
-    case BTL_HANDEX_SET_TURNFLAG:  scproc_HandEx_setTurnFlag( wk, handEx_header ); break;
-    case BTL_HANDEX_RESET_TURNFLAG:scproc_HandEx_resetTurnFlag( wk, handEx_header ); break;
-    case BTL_HANDEX_SET_CONTFLAG:  scproc_HandEx_setContFlag( wk, handEx_header ); break;
-    case BTL_HANDEX_RESET_CONTFLAG:scproc_HandEx_resetContFlag( wk, handEx_header ); break;
+    case BTL_HANDEX_TOKWIN_IN:      scproc_HandEx_TokWinIn( wk, handEx_header ); break;
+    case BTL_HANDEX_TOKWIN_OUT:     scproc_HandEx_TokWinOut( wk, handEx_header ); break;
+    case BTL_HANDEX_USE_ITEM:       scproc_HandEx_useItem( wk, handEx_header ); break;
+    case BTL_HANDEX_RECOVER_HP:     scproc_HandEx_recoverHP( wk, handEx_header, useItemID ); break;
+    case BTL_HANDEX_RECOVER_PP:     scproc_HandEx_recoverPP( wk, handEx_header, useItemID ); break;
+    case BTL_HANDEX_DECREMENT_PP:   scproc_HandEx_decrementPP( wk, handEx_header, useItemID ); break;
+    case BTL_HANDEX_CURE_SICK:      scproc_HandEx_cureSick( wk, handEx_header, useItemID ); break;
+    case BTL_HANDEX_ADD_SICK:       scproc_HandEx_addSick( wk, handEx_header ); break;
+    case BTL_HANDEX_RANK_EFFECT:    scproc_HandEx_rankEffect( wk, handEx_header, useItemID ); break;
+    case BTL_HANDEX_RECOVER_RANK:   scproc_HandEx_recoverRank( wk, handEx_header ); break;
+    case BTL_HANDEX_RESET_RANK:     scproc_HandEx_resetRank( wk, handEx_header ); break;
+    case BTL_HANDEX_DAMAGE:         scproc_HandEx_damage( wk, handEx_header ); break;
+    case BTL_HANDEX_KILL:           scproc_HandEx_kill( wk, handEx_header ); break;
+    case BTL_HANDEX_CHANGE_TYPE:    scproc_HandEx_changeType( wk, handEx_header ); break;
+    case BTL_HANDEX_MESSAGE_SET:    scproc_HandEx_messageSet( wk, handEx_header ); break;
+    case BTL_HANDEX_MESSAGE_STD:    scproc_HandEx_messageStd( wk, handEx_header ); break;
+    case BTL_HANDEX_SET_TURNFLAG:   scproc_HandEx_setTurnFlag( wk, handEx_header ); break;
+    case BTL_HANDEX_RESET_TURNFLAG: scproc_HandEx_resetTurnFlag( wk, handEx_header ); break;
+    case BTL_HANDEX_SET_CONTFLAG:   scproc_HandEx_setContFlag( wk, handEx_header ); break;
+    case BTL_HANDEX_RESET_CONTFLAG: scproc_HandEx_resetContFlag( wk, handEx_header ); break;
+    case BTL_HANDEX_SIDE_EFFECT:    scproc_HandEx_sideEffect( wk, handEx_header ); break;
     default:
       GF_ASSERT_MSG(0, "illegal handEx type = %d, userPokeID=%d", handEx_header->equip, handEx_header->userPokeID);
     }
@@ -3417,9 +3444,18 @@ static void scproc_HandEx_messageSet( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARA
 static void scproc_HandEx_messageStd( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header )
 {
   const BTL_HANDEX_PARAM_MESSAGE* param = (const BTL_HANDEX_PARAM_MESSAGE*)(param_header);
-//  BTL_POKEPARAM* bpp = BTL_POKECON_GetPokeParam( wk->pokeCon, param->pokeID );
-//  scPut_Message_SetEx( wk, bpp, param->arg_cnt, param->args );
-  SCQUE_PUT_MSG_STD( wk->que, param->strID );
+
+  switch( param->arg_cnt ){
+  case 0:
+    SCQUE_PUT_MSG_STD( wk->que, param->strID );
+    break;
+  case 1:
+    SCQUE_PUT_MSG_STD( wk->que, param->strID, param->args[0] );
+    break;
+  case 2:
+    SCQUE_PUT_MSG_STD( wk->que, param->strID, param->args[0], param->args[1] );
+    break;
+  }
 }
 static void scproc_HandEx_setTurnFlag( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header )
 {
@@ -3449,6 +3485,12 @@ static void scproc_HandEx_resetContFlag( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_P
 
   scPut_ResetContFlag( wk, bpp, param->flag );
 }
+static void scproc_HandEx_sideEffect( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header )
+{
+  const BTL_HANDEX_PARAM_SIDE_EFFECT* param = (const BTL_HANDEX_PARAM_SIDE_EFFECT*)(param_header);
+  BTL_POKEPARAM* bpp = BTL_POKECON_GetPokeParam( wk->pokeCon, param->pokeID );
+}
+
 
 //==============================================================================
 // サーバーフロー：ターンチェックルート
@@ -3457,8 +3499,10 @@ static void scproc_TurnCheck( BTL_SVFLOW_WORK* wk )
 {
   scproc_turncheck_sub( wk, BTL_EVENT_TURNCHECK_BEGIN );
   scproc_turncheck_sick( wk );
+  scproc_turncheck_side( wk );
   scproc_turncheck_weather( wk );
   scproc_turncheck_sub( wk, BTL_EVENT_TURNCHECK_END );
+
 
   // 全ポケモンのターンフラグをクリア
   {
@@ -3536,6 +3580,30 @@ static void scproc_turncheck_sick( BTL_SVFLOW_WORK* wk )
     scPut_CheckDeadCmd( wk, bpp );
   }
 }
+//------------------------------------------------------------------
+// サーバーフロー下請け： ターンチェック > サイドエフェクト
+//------------------------------------------------------------------
+static void scproc_turncheck_side( BTL_SVFLOW_WORK* wk )
+{
+  BTL_HANDLER_SIDE_TurnCheck( scproc_turncheck_side_callback, wk );
+}
+static void scproc_turncheck_side_callback( BtlSide side, BtlSideEffect sideEffect, void* arg )
+{
+  BTL_SVFLOW_WORK* wk = arg;
+  int strID = -1;
+  switch( sideEffect ){
+  case BTL_SIDEEFF_REFRECTOR:     strID = BTL_STRID_STD_ReflectorOff; break;
+  case BTL_SIDEEFF_HIKARINOKABE:  strID = BTL_STRID_STD_HikariNoKabeOff; break;
+  case BTL_SIDEEFF_SINPINOMAMORI: strID = BTL_STRID_STD_SinpiNoMamoriOff; break;
+  case BTL_SIDEEFF_SIROIKIRI:     strID = BTL_STRID_STD_SiroiKiriOff; break;
+  case BTL_SIDEEFF_OIKAZE:        strID = BTL_STRID_STD_OikazeOff; break;
+  }
+  if( strID >= 0 )
+  {
+    SCQUE_PUT_MSG_STD( wk->que, strID, side );
+  }
+}
+
 //------------------------------------------------------------------
 // サーバーフロー下請け： ターンチェック > 天候
 //------------------------------------------------------------------
@@ -4264,27 +4332,6 @@ static void scPut_RankEffect( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* target, WazaRa
     SCQUE_PUT_ACT_RankDown( wk->que, pokeID, effect, volume );
     SCQUE_PUT_MSG_SET( wk->que, BTL_STRID_SET_Rankdown_ATK, pokeID, effect, volume );
   }
-}
-//--------------------------------------------------------------------------
-/**
- * [Put] ランク増減効果失敗メッセージ
- */
-//--------------------------------------------------------------------------
-static void scPut_RankEffectFail( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* target,
-  WazaRankEffect effect, const BTL_EVWK_CHECK_RANKEFF* evwk )
-{
-  u8 pokeID = BTL_POKEPARAM_GetID( target );
-  u16 strID = BTL_STRID_SET_RankdownFail;
-
-  if( effect == evwk->failSpecificType )
-  {
-    switch( effect ){
-    case WAZA_RANKEFF_ATTACK: strID = BTL_STRID_SET_RankdownFail_ATK; break;
-    case WAZA_RANKEFF_HIT:    strID = BTL_STRID_SET_RankdownFail_HIT; break;
-    }
-  }
-  BTL_Printf("ランク効果失敗メッセージ=%d\n", strID);
-  BTL_SERVER_RECTPT_SetMessage( wk, strID, pokeID );
 }
 //--------------------------------------------------------------------------
 /**
@@ -5829,28 +5876,26 @@ static void scEvent_GetWazaRankEffectValue( BTL_SVFLOW_WORK* wk, WazaID waza, u3
  * @param   target
  * @param   effect
  * @param   volume
- * @param   evwk      [out]
  *
  * @retval  BOOL      成功する場合TRUE
  */
 //--------------------------------------------------------------------------
 static BOOL scEvent_CheckRankEffectSuccess( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* target,
-  WazaRankEffect effect, int volume, BTL_EVWK_CHECK_RANKEFF* evwk )
+  WazaRankEffect effect, int volume )
 {
-  evwk->failFlag = FALSE;
-  evwk->failTokuseiFlag = FALSE;
-  evwk->failSpecificType = WAZA_RANKEFF_NULL;
-  evwk->useItemFlag = FALSE;
+  BOOL failFlag = FALSE;
 
   BTL_EVENTVAR_Push();
     BTL_EVENTVAR_SetValue( BTL_EVAR_POKEID, BTL_POKEPARAM_GetID(target) );
     BTL_EVENTVAR_SetValue( BTL_EVAR_STATUS_TYPE, effect );
     BTL_EVENTVAR_SetValue( BTL_EVAR_VOLUME, volume );
-    BTL_EVENTVAR_SetValue( BTL_EVAR_WORK_ADRS, (int)evwk );
+    BTL_EVENTVAR_SetRewriteOnceValue( BTL_EVAR_FAIL_FLAG, failFlag );
     BTL_EVENT_CallHandlers( wk, BTL_EVENT_RANKEFF_LAST_CHECK );
+    failFlag = BTL_EVENTVAR_GetValue( BTL_EVAR_FAIL_FLAG );
   BTL_EVENTVAR_Pop();
 
-  return evwk->failFlag == FALSE;
+  return !failFlag;
+//  return evwk->failFlag == FALSE;
 }
 //--------------------------------------------------------------------------
 /**
@@ -6504,6 +6549,7 @@ static BTL_HANDEX_PARAM_HEADER* Hem_PushWork( HANDLER_EXHIBISION_MANAGER* wk, Bt
     { BTL_HANDEX_RESET_TURNFLAG, sizeof(BTL_HANDEX_PARAM_TURNFLAG)     },
     { BTL_HANDEX_SET_CONTFLAG,   sizeof(BTL_HANDEX_PARAM_SET_CONTFLAG) },
     { BTL_HANDEX_RESET_CONTFLAG, sizeof(BTL_HANDEX_PARAM_SET_CONTFLAG) },
+    { BTL_HANDEX_SIDE_EFFECT,    sizeof(BTL_HANDEX_PARAM_SIDE_EFFECT)  },
   };
   u32 size, i;
 

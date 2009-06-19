@@ -18,6 +18,7 @@
 #include "..\btl_client.h"
 #include "..\btl_event_factor.h"
 
+#include "hand_side.h"
 #include "hand_waza.h"
 
 /*--------------------------------------------------------------------------*/
@@ -156,6 +157,18 @@ static BTL_EVENT_FACTOR*  ADD_Urami( u16 pri, WazaID waza, u8 pokeID );
 static void handler_Urami( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static BTL_EVENT_FACTOR*  ADD_LockON( u16 pri, WazaID waza, u8 pokeID );
 static void handler_LockON( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static BTL_EVENT_FACTOR*  ADD_Refrector( u16 pri, WazaID waza, u8 pokeID );
+static void handler_Refrector( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static BTL_EVENT_FACTOR*  ADD_HikariNoKabe( u16 pri, WazaID waza, u8 pokeID );
+static void handler_HikariNoKabe( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static BTL_EVENT_FACTOR*  ADD_SinpiNoMamori( u16 pri, WazaID waza, u8 pokeID );
+static void handler_SinpiNoMamori( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static BTL_EVENT_FACTOR*  ADD_SiroiKiri( u16 pri, WazaID waza, u8 pokeID );
+static void handler_SiroiKiri( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static BTL_EVENT_FACTOR*  ADD_Oikaze( u16 pri, WazaID waza, u8 pokeID );
+static void handler_Oikaze( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static void common_SideEffect( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work,
+  BtlSide side, BtlSideEffect effect, BPP_SICK_CONT cont, u16 strID );
 static BTL_EVENT_FACTOR*  ADD_Nekodamasi( u16 pri, WazaID waza, u8 pokeID );
 static void handler_Nekodamasi( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static BTL_EVENT_FACTOR*  ADD_AsaNoHizasi( u16 pri, WazaID waza, u8 pokeID );
@@ -299,6 +312,11 @@ BTL_EVENT_FACTOR*  BTL_HANDLER_Waza_Add( const BTL_POKEPARAM* pp, WazaID waza )
     { WAZANO_NEMURU,          ADD_Nemuru        },
     { WAZANO_ROKKUON,         ADD_LockON        },
     { WAZANO_KOKORONOME,      ADD_LockON        },  // こころのめ=ロックオンと等価
+    { WAZANO_RIHUREKUTAA,     ADD_Refrector     },
+    { WAZANO_HIKARINOKABE,    ADD_HikariNoKabe  },
+    { WAZANO_SINPINOMAMORI,   ADD_SinpiNoMamori },
+    { WAZANO_SIROIKIRI,       ADD_SiroiKiri     },
+    { WAZANO_OIKAZE,          ADD_Oikaze        },
   };
 
   int i;
@@ -2323,10 +2341,116 @@ static void handler_LockON( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk,
     param->exStrID = BTL_STRID_SET_LockOn;
     param->exStrArgs[0] = targetPokeID;
     param->exStrArgCnt = 1;
-    BTL_Printf("ロックオンきたよ\n");
   }
 }
+//----------------------------------------------------------------------------------
+/**
+ * リフレクター
+ */
+//----------------------------------------------------------------------------------
+static BTL_EVENT_FACTOR*  ADD_Refrector( u16 pri, WazaID waza, u8 pokeID )
+{
+  static const BtlEventHandlerTable HandlerTable[] = {
+    { BTL_EVENT_UNCATEGORY_WAZA_NO_TARGET,  handler_Refrector   },  // 未分類ワザ
+    { BTL_EVENT_NULL, NULL },
+  };
+  return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_WAZA, waza, pri, pokeID, HandlerTable );
+}
+static void handler_Refrector( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+{
+  BPP_SICK_CONT  cont = BPP_SICKCONT_MakeTurn( 5 );
+  BtlSide side = BTL_MAINUTIL_PokeIDtoSide( pokeID );
+  common_SideEffect( myHandle, flowWk, pokeID, work, side, BTL_SIDEEFF_REFRECTOR, cont, BTL_STRID_STD_Reflector );
+}
+//----------------------------------------------------------------------------------
+/**
+ * ひかりのかべ
+ */
+//----------------------------------------------------------------------------------
+static BTL_EVENT_FACTOR*  ADD_HikariNoKabe( u16 pri, WazaID waza, u8 pokeID )
+{
+  static const BtlEventHandlerTable HandlerTable[] = {
+    { BTL_EVENT_UNCATEGORY_WAZA_NO_TARGET,  handler_HikariNoKabe   },  // 未分類ワザ
+    { BTL_EVENT_NULL, NULL },
+  };
+  return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_WAZA, waza, pri, pokeID, HandlerTable );
+}
+static void handler_HikariNoKabe( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+{
+  BPP_SICK_CONT  cont = BPP_SICKCONT_MakeTurn( 5 );
+  BtlSide side = BTL_MAINUTIL_PokeIDtoSide( pokeID );
+  common_SideEffect( myHandle, flowWk, side, work, side, BTL_SIDEEFF_HIKARINOKABE, cont, BTL_STRID_STD_HikariNoKabe );
+}
+//----------------------------------------------------------------------------------
+/**
+ * しんぴのまもり
+ */
+//----------------------------------------------------------------------------------
+static BTL_EVENT_FACTOR*  ADD_SinpiNoMamori( u16 pri, WazaID waza, u8 pokeID )
+{
+  static const BtlEventHandlerTable HandlerTable[] = {
+    { BTL_EVENT_UNCATEGORY_WAZA_NO_TARGET,  handler_SinpiNoMamori   },  // 未分類ワザ
+    { BTL_EVENT_NULL, NULL },
+  };
+  return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_WAZA, waza, pri, pokeID, HandlerTable );
+}
+static void handler_SinpiNoMamori( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+{
+  BPP_SICK_CONT  cont = BPP_SICKCONT_MakeTurn( 5 );
+  BtlSide side = BTL_MAINUTIL_PokeIDtoSide( pokeID );
+  common_SideEffect( myHandle, flowWk, pokeID, work, side, BTL_SIDEEFF_SINPINOMAMORI, cont, BTL_STRID_STD_SinpiNoMamori );
+}
+//----------------------------------------------------------------------------------
+/**
+ * しろいきり
+ */
+//----------------------------------------------------------------------------------
+static BTL_EVENT_FACTOR*  ADD_SiroiKiri( u16 pri, WazaID waza, u8 pokeID )
+{
+  static const BtlEventHandlerTable HandlerTable[] = {
+    { BTL_EVENT_UNCATEGORY_WAZA_NO_TARGET,  handler_SiroiKiri   },  // 未分類ワザ
+    { BTL_EVENT_NULL, NULL },
+  };
+  return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_WAZA, waza, pri, pokeID, HandlerTable );
+}
+static void handler_SiroiKiri( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+{
+  BPP_SICK_CONT  cont = BPP_SICKCONT_MakeTurn( 5 );
+  BtlSide side = BTL_MAINUTIL_PokeIDtoSide( pokeID );
+  common_SideEffect( myHandle, flowWk, pokeID, work, side, BTL_SIDEEFF_SIROIKIRI, cont, BTL_STRID_STD_SiroiKiri );
+}
+//----------------------------------------------------------------------------------
+/**
+ * おいかぜ
+ */
+//----------------------------------------------------------------------------------
+static BTL_EVENT_FACTOR*  ADD_Oikaze( u16 pri, WazaID waza, u8 pokeID )
+{
+  static const BtlEventHandlerTable HandlerTable[] = {
+    { BTL_EVENT_UNCATEGORY_WAZA_NO_TARGET,  handler_Oikaze   },  // 未分類ワザ
+    { BTL_EVENT_NULL, NULL },
+  };
+  return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_WAZA, waza, pri, pokeID, HandlerTable );
+}
+static void handler_Oikaze( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+{
+  BPP_SICK_CONT  cont = BPP_SICKCONT_MakeTurn( 3 );
+  BtlSide side = BTL_MAINUTIL_PokeIDtoSide( pokeID );
+  common_SideEffect( myHandle, flowWk, pokeID, work, side, BTL_SIDEEFF_OIKAZE, cont, BTL_STRID_STD_Oikaze );
+}
 
+
+static void common_SideEffect( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work,
+  BtlSide side, BtlSideEffect effect, BPP_SICK_CONT cont, u16 strID )
+{
+  if( BTL_HANDLER_SIDE_Add(side, effect, cont) )
+  {
+    BTL_HANDEX_PARAM_MESSAGE* param = BTL_SVFLOW_HANDLERWORK_Push( flowWk, BTL_HANDEX_MESSAGE_STD, pokeID );
+    param->strID = strID;
+    param->args[0] = side;
+    param->arg_cnt = 1;
+  }
+}
 
 //----------------------------------------------------------------------------------
 /**

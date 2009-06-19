@@ -20,9 +20,21 @@
 /* Consts                                                                   */
 /*--------------------------------------------------------------------------*/
 enum {
-  FACTOR_REGISTER_MAX = 32,     ///< 登録できるイベントファクター最大数
+  FACTOR_REGISTER_MAX = 64,     ///< 登録できるイベントファクター最大数
   EVENTVAL_STACK_DEPTH = 128,   ///< イベント変数スタックの容量
 };
+
+/**
+ * 値の書き換え可否状態
+ */
+
+typedef enum {
+
+  REWRITE_FREE = 0,   ///< 自由に可能
+  REWRITE_ONCE,       ///< １回だけ可能
+  REWRITE_LOCK,       ///< 不可
+
+}RewriteState;
 
 /*--------------------------------------------------------------------------*/
 /* Structures                                                               */
@@ -62,6 +74,7 @@ typedef struct {
   int   value[ EVENTVAL_STACK_DEPTH ];      ///< 変数
   fx32  mulMax[ EVENTVAL_STACK_DEPTH ];     ///< 乗算対応実数の最大値
   fx32  mulMin[ EVENTVAL_STACK_DEPTH ];     ///< 乗算対応実数の最小値
+  u8    rewriteState[ EVENTVAL_STACK_DEPTH ];///< 書き換え可否状態
 }VAR_STACK;
 
 static VAR_STACK VarStack = {0};
@@ -507,6 +520,30 @@ void BTL_EVENTVAR_SetValue( BtlEvVarLabel label, int value )
     stack->value[p] = value;
     stack->mulMin[p] = 0;
     stack->mulMax[p] = 0;
+    stack->rewriteState[p] = REWRITE_FREE;
+  }
+}
+//=============================================================================================
+/**
+ * 上書き１回のみ有効なラベルの値を新規セット（サーバフロー用）
+ *
+ * @param   label
+ * @param   value
+ */
+//=============================================================================================
+void BTL_EVENTVAR_SetRewriteOnceValue( BtlEvVarLabel label, int value )
+{
+  GF_ASSERT(label!=BTL_EVAR_NULL);
+  GF_ASSERT(label!=BTL_EVAR_SYS_SEPARATE);
+
+  {
+    VAR_STACK* stack = &VarStack;
+    int p = evar_getNewPoint( stack, label );
+    stack->label[p] = label;
+    stack->value[p] = value;
+    stack->mulMin[p] = 0;
+    stack->mulMax[p] = 0;
+    stack->rewriteState[p] = REWRITE_ONCE;
   }
 }
 //=============================================================================================
@@ -531,6 +568,7 @@ void BTL_EVENTVAR_SetMulValue( BtlEvVarLabel label, int value, fx32 mulMin, fx32
     stack->value[p] = value;
     stack->mulMin[p] = mulMin;
     stack->mulMax[p] = mulMax;
+    stack->rewriteState[p] = REWRITE_FREE;
   }
 }
 //=============================================================================================
@@ -539,9 +577,11 @@ void BTL_EVENTVAR_SetMulValue( BtlEvVarLabel label, int value, fx32 mulMin, fx32
  *
  * @param   label
  * @param   value
+ *
+ * @retval  BOOL    上書き出来たらTRUE
  */
 //=============================================================================================
-void BTL_EVENTVAR_RewriteValue( BtlEvVarLabel label, int value )
+BOOL BTL_EVENTVAR_RewriteValue( BtlEvVarLabel label, int value )
 {
   GF_ASSERT(label!=BTL_EVAR_NULL);
   GF_ASSERT(label!=BTL_EVAR_SYS_SEPARATE);
@@ -551,10 +591,17 @@ void BTL_EVENTVAR_RewriteValue( BtlEvVarLabel label, int value )
     int p = evar_getExistPoint( stack, label );
     if( p >= 0 )
     {
-      value = evar_mulValueRound( stack, p, value );
-      stack->label[p] = label;
-      stack->value[p] = (int)value;
+      if( stack->rewriteState[p] != REWRITE_LOCK )
+      {
+        stack->label[p] = label;
+        stack->value[p] = (int)value;
+        if( stack->rewriteState[p] == REWRITE_ONCE ){
+          stack->rewriteState[p] = REWRITE_LOCK;
+        }
+        return TRUE;
+      }
     }
+    return FALSE;
   }
 }
 //=============================================================================================

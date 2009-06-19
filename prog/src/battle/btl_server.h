@@ -1,10 +1,10 @@
 //=============================================================================================
 /**
- * @file	btl_server.h
- * @brief	ポケモンWB バトルシステム	サーバモジュール
- * @author	taya
+ * @file  btl_server.h
+ * @brief ポケモンWB バトルシステム サーバモジュール
+ * @author  taya
  *
- * @date	2008.09.06	作成
+ * @date  2008.09.06  作成
  */
 //=============================================================================================
 #ifndef __BTL_SERVER_H__
@@ -14,15 +14,15 @@
 #include "btl_main.h"
 #include "btl_adapter.h"
 
-typedef struct _BTL_SERVER		BTL_SERVER;
+typedef struct _BTL_SERVER    BTL_SERVER;
 
 
 typedef enum {
 
-	SC_RES_CONTINUE,		///< 次のターンへ。
-	SC_RES_WAIT_CHANGE,		///< 入れ替え待ち
-	SC_RES_ESCAPE,			///< どちらかが逃げて終了
-	SC_RES_CLOSE,			///< どちらかが勝って終了
+  SC_RES_CONTINUE,    ///< 次のターンへ。
+  SC_RES_WAIT_CHANGE, ///< 入れ替え待ち
+  SC_RES_ESCAPE,      ///< どちらかが逃げて終了
+  SC_RES_CLOSE,       ///< どちらかが勝って終了
 
 
 }ServerCmdResult;

@@ -1317,8 +1317,8 @@ static void common_DamageReactCore( BTL_SVFLOW_WORK* flowWk, u8 pokeID, u8 n )
 static BTL_EVENT_FACTOR* HAND_ADD_ITEM_SiroiHerb( u16 pri, u16 itemID, u8 pokeID )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_RANKEFF_LAST_CHECK, handler_SiroiHerb_React },
-    { BTL_EVENT_USE_ITEM,           handler_SiroiHerb_Use   },
+    { BTL_EVENT_RANKEFF_FIXED, handler_SiroiHerb_React },
+    { BTL_EVENT_USE_ITEM,      handler_SiroiHerb_Use   },
     { BTL_EVENT_NULL, NULL },
   };
   return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_ITEM, itemID, pri, pokeID, HandlerTable );
@@ -1329,8 +1329,7 @@ static void handler_SiroiHerb_React( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK
   {
     if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID )
     {
-      BTL_EVWK_CHECK_RANKEFF* evwk = (BTL_EVWK_CHECK_RANKEFF*) BTL_EVENTVAR_GetValue(BTL_EVAR_WORK_ADRS);
-      evwk->useItemFlag = TRUE;
+      BTL_SVFLOW_HANDLERWORK_Push( flowWk, BTL_HANDEX_USE_ITEM, pokeID );
       work[0] = 1;
     }
   }

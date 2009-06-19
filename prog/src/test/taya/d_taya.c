@@ -954,15 +954,15 @@ static BOOL SUBPROC_GoBattle( GFL_PROC* proc, int* seq, void* pwk, void* mywk )
       setup_party( HEAPID_CORE, para->partyEnemy1, MONSNO_METAGUROSU, MONSNO_AABOKKU, MONSNO_YADOKINGU, MONSNO_REKKUUZA, 0 );
       {
         POKEMON_PARAM* pp = PokeParty_GetMemberPointer( para->partyEnemy1, 0 );
-        PP_SetWazaPos( pp, WAZANO_HANERU, 0 );
+        PP_SetWazaPos( pp, WAZANO_DOKUNOKONA, 0 );
         PP_SetWazaPos( pp, WAZANO_NULL, 1 );
         PP_SetWazaPos( pp, WAZANO_NULL, 2 );
         PP_SetWazaPos( pp, WAZANO_NULL, 3 );
 
         pp = PokeParty_GetMemberPointer( para->partyPlayer, 0 );
-        PP_SetWazaPos( pp, WAZANO_KINOKONOHOUSI, 0 );
-        PP_SetWazaPos( pp, WAZANO_MAMORU, 1 );
-        PP_SetWazaPos( pp, WAZANO_AKUMU, 3 );
+        PP_SetWazaPos( pp, WAZANO_SINPINOMAMORI, 0 );
+        PP_SetWazaPos( pp, WAZANO_SIROIKIRI, 1 );
+        PP_SetWazaPos( pp, WAZANO_HONOONOPANTI, 3 );
         PP_Put( pp, ID_PARA_agi_rnd, 31 );
         PP_Put( pp, ID_PARA_agi_exp, 255 );
 //        PP_Put( pp, ID_PARA_item, ITEM_KIAINOTASUKI );
