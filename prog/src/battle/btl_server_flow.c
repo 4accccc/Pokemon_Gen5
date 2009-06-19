@@ -2841,23 +2841,6 @@ static BOOL scproc_RankEffectCore( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* target,
     return ret;
   }
 }
-static void scEvent_RankEffect_Failed( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp )
-{
-  BTL_EVENTVAR_Push();
-    BTL_EVENTVAR_SetValue( BTL_EVAR_POKEID, BTL_POKEPARAM_GetID(bpp) );
-    BTL_EVENT_CallHandlers( wk, BTL_EVENT_RANKEFF_FAILED );
-  BTL_EVENTVAR_Pop();
-}
-static void scEvent_RankEffect_Fix( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp, WazaRankEffect rankType, int volume )
-{
-  BTL_EVENTVAR_Push();
-    BTL_EVENTVAR_SetValue( BTL_EVAR_POKEID, BTL_POKEPARAM_GetID(bpp) );
-    BTL_EVENTVAR_SetValue( BTL_EVAR_STATUS_TYPE, rankType );
-    BTL_EVENTVAR_SetValue( BTL_EVAR_VOLUME, volume );
-    BTL_EVENT_CallHandlers( wk, BTL_EVENT_RANKEFF_FIXED );
-  BTL_EVENTVAR_Pop();
-}
-
 //---------------------------------------------------------------------------------------------
 // サーバーフロー：ランク効果＆状態異常を同時に与えるワザ
 //---------------------------------------------------------------------------------------------
@@ -4605,8 +4588,13 @@ static u16 scEvent_CalcAgility( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attack
     BTL_EVENTVAR_SetValue( BTL_EVAR_AGILITY, agi );
     BTL_EVENTVAR_SetValue( BTL_EVAR_POKEID, BTL_POKEPARAM_GetID(attacker) );
     BTL_EVENTVAR_SetValue( BTL_EVAR_GEN_FLAG, TRUE ); // まひチェックフラグとして使っている
+    BTL_EVENTVAR_SetMulValue( BTL_EVAR_RATIO, FX32_CONST(1), FX32_CONST(0.1f), FX32_CONST(32) );
     BTL_EVENT_CallHandlers( wk, BTL_EVENT_CALC_AGILITY );
     agi = BTL_EVENTVAR_GetValue( BTL_EVAR_AGILITY );
+    {
+      fx32 ratio = BTL_EVENTVAR_GetValue( BTL_EVAR_RATIO );
+      agi = (agi * ratio) >> FX32_SHIFT;
+    }
     if( BTL_POKEPARAM_GetPokeSick(attacker) == POKESICK_MAHI )
     {
       if( BTL_EVENTVAR_GetValue(BTL_EVAR_GEN_FLAG) )
@@ -5897,6 +5885,41 @@ static BOOL scEvent_CheckRankEffectSuccess( BTL_SVFLOW_WORK* wk, const BTL_POKEP
   return !failFlag;
 //  return evwk->failFlag == FALSE;
 }
+//----------------------------------------------------------------------------------
+/**
+ * [Event] ランク増減効果の失敗確定
+ *
+ * @param   wk
+ * @param   bpp
+ */
+//----------------------------------------------------------------------------------
+static void scEvent_RankEffect_Failed( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp )
+{
+  BTL_EVENTVAR_Push();
+    BTL_EVENTVAR_SetValue( BTL_EVAR_POKEID, BTL_POKEPARAM_GetID(bpp) );
+    BTL_EVENT_CallHandlers( wk, BTL_EVENT_RANKEFF_FAILED );
+  BTL_EVENTVAR_Pop();
+}
+//----------------------------------------------------------------------------------
+/**
+ * [Event] ランク増減効果の成功確定
+ *
+ * @param   wk
+ * @param   bpp
+ * @param   rankType
+ * @param   volume
+ */
+//----------------------------------------------------------------------------------
+static void scEvent_RankEffect_Fix( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp, WazaRankEffect rankType, int volume )
+{
+  BTL_EVENTVAR_Push();
+    BTL_EVENTVAR_SetValue( BTL_EVAR_POKEID, BTL_POKEPARAM_GetID(bpp) );
+    BTL_EVENTVAR_SetValue( BTL_EVAR_STATUS_TYPE, rankType );
+    BTL_EVENTVAR_SetValue( BTL_EVAR_VOLUME, volume );
+    BTL_EVENT_CallHandlers( wk, BTL_EVENT_RANKEFF_FIXED );
+  BTL_EVENTVAR_Pop();
+}
+
 //--------------------------------------------------------------------------
 /**
  * [Event] ドレイン攻撃のドレインHP量を計算
