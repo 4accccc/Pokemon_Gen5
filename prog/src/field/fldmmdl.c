@@ -3988,7 +3988,7 @@ static void MMdl_ChangeOBJAlies(
  * @retval nothing
  */
 //--------------------------------------------------------------
-BOOL MMDL_InitCheckSameData( const MMDL *mmdl, MMDL_CHECKSAME_DATA *outData )
+void MMDL_InitCheckSameData( const MMDL *mmdl, MMDL_CHECKSAME_DATA *outData )
 {
   outData->id = MMDL_GetOBJID( mmdl );
   outData->code = MMDL_GetOBJCode( mmdl );

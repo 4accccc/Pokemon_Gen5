@@ -425,7 +425,9 @@ static MAINSEQ_RESULT mainSeqFunc_setup_system(GAMESYS_WORK *gsys, FIELDMAP_WORK
 //--------------------------------------------------------------
 //--------------------------------------------------------------
 static MAINSEQ_RESULT mainSeqFunc_setup(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork )
-{ 
+{
+  GAMEDATA *gdata = GAMESYSTEM_GetGameData( gsys );
+
   fieldWork->fldMsgBG = FLDMSGBG_Setup(
       fieldWork->heapID, fieldWork->g3Dcamera );
 
@@ -440,7 +442,6 @@ static MAINSEQ_RESULT mainSeqFunc_setup(GAMESYS_WORK *gsys, FIELDMAP_WORK *field
   fieldWork->railMan = FIELD_RAIL_MAN_Create( fieldWork->heapID, fieldWork->camera_control );
 
   {
-    GAMEDATA *gamedata = GAMESYSTEM_GetGameData( gsys );
     FIELD_BMODEL_MAN * bmodel_man = FLDMAPPER_GetBuildModelManager( fieldWork->g3Dmapper );
     
     FIELDDATA_SetMapperData(fieldWork->map_id,
@@ -484,9 +485,13 @@ static MAINSEQ_RESULT mainSeqFunc_setup(GAMESYS_WORK *gsys, FIELDMAP_WORK *field
     const VecFx32 *pos = &pw->position;
 
     //自機作成
-    fieldWork->field_player =
-      FIELD_PLAYER_Create( fieldWork, pos, fieldWork->heapID );
-    
+    {
+      MYSTATUS *mystatus = GAMEDATA_GetMyStatus( gdata );
+      int sex = MyStatus_GetMySex( mystatus );
+      fieldWork->field_player =
+        FIELD_PLAYER_Create( fieldWork, pos, sex, fieldWork->heapID );
+    }
+
     //登録テーブルごとに個別の初期化処理を呼び出し
     fieldWork->now_pos = *pos;
     fieldWork->func_tbl->create_func(fieldWork, &fieldWork->now_pos, dir);
@@ -495,8 +500,7 @@ static MAINSEQ_RESULT mainSeqFunc_setup(GAMESYS_WORK *gsys, FIELDMAP_WORK *field
     //保存した位置を反映する
     if (ZONEDATA_DEBUG_IsRailMap(fieldWork->map_id) == TRUE)
     { 
-      GAMEDATA *gamedata = GAMESYSTEM_GetGameData( gsys );
-      const RAIL_LOCATION * railLoc = GAMEDATA_GetRailLocation(gamedata);
+      const RAIL_LOCATION * railLoc = GAMEDATA_GetRailLocation( gdata );
       FIELD_RAIL_MAN_SetLocation(fieldWork->railMan, railLoc);
       FIELD_RAIL_MAN_GetPos( fieldWork->railMan, &fieldWork->now_pos );
     }
@@ -515,8 +519,6 @@ static MAINSEQ_RESULT mainSeqFunc_setup(GAMESYS_WORK *gsys, FIELDMAP_WORK *field
 
   // ライトシステム生成
   {
-    GAMEDATA * gamedata = GAMESYSTEM_GetGameData(gsys);
-
     fieldWork->light = FIELD_LIGHT_Create( AREADATA_GetLightType( fieldWork->areadata ), 
         14400, 
         fieldWork->fog, fieldWork->g3Dlightset, fieldWork->heapID );
@@ -535,8 +537,7 @@ static MAINSEQ_RESULT mainSeqFunc_setup(GAMESYS_WORK *gsys, FIELDMAP_WORK *field
   
   //情報バーの初期化
 	{
-		GAMEDATA *gamedata = GAMESYSTEM_GetGameData( gsys );
-		fieldWork->fieldSubscreenWork = FIELD_SUBSCREEN_Init(fieldWork->heapID, fieldWork, GAMEDATA_GetSubScreenMode(gamedata));
+		fieldWork->fieldSubscreenWork = FIELD_SUBSCREEN_Init(fieldWork->heapID, fieldWork, GAMEDATA_GetSubScreenMode(gdata));
 	}
   
   //フィールドエンカウント初期化

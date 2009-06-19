@@ -74,35 +74,35 @@ static void jikiMove_Normal(
     u16 dir, BOOL debug_flag );
 
 static PLAYER_SET gjiki_CheckMoveStart_Stop(
-	FIELD_PLAYER_GRID *gjiki, MMDL *fmmdl,
+	FIELD_PLAYER_GRID *gjiki, MMDL *mmdl,
 	u32 key_trg, u32 key_cont, u16 dir, BOOL debug_flag );
 static PLAYER_SET gjiki_CheckMoveStart_Walk(
-	FIELD_PLAYER_GRID *gjiki, MMDL *fmmdl,
+	FIELD_PLAYER_GRID *gjiki, MMDL *mmdl,
 	u32 key_trg, u32 key_cont, u16 dir, BOOL debug_flag );
 static PLAYER_SET gjiki_CheckMoveStart_Turn(
-	FIELD_PLAYER_GRID *gjiki, MMDL *fmmdl,
+	FIELD_PLAYER_GRID *gjiki, MMDL *mmdl,
 	u32 key_trg, u32 key_cont, u16 dir, BOOL debug_flag );
 static PLAYER_SET gjiki_CheckMoveStart_Hitch(
-	FIELD_PLAYER_GRID *gjiki, MMDL *fmmdl,
+	FIELD_PLAYER_GRID *gjiki, MMDL *mmdl,
 	u32 key_trg, u32 key_cont, u16 dir, BOOL debug_flag );
 
 static void gjiki_SetMove_Non(
-	FIELD_PLAYER_GRID *gjiki, MMDL *fmmdl,
+	FIELD_PLAYER_GRID *gjiki, MMDL *mmdl,
 	u32 key_trg, u32 key_cont, u16 dir, BOOL debug_flag );
 static void gjiki_SetMove_Stop(
-	FIELD_PLAYER_GRID *gjiki, MMDL *fmmdl,
+	FIELD_PLAYER_GRID *gjiki, MMDL *mmdl,
 	u32 key_trg, u32 key_cont, u16 dir, BOOL debug_flag );
 static void gjiki_SetMove_Walk(
-	FIELD_PLAYER_GRID *gjiki, MMDL *fmmdl,
+	FIELD_PLAYER_GRID *gjiki, MMDL *mmdl,
 	u32 key_trg, u32 key_cont, u16 dir, BOOL debug_flag );
 static void gjiki_SetMove_Turn(
-	FIELD_PLAYER_GRID *gjiki, MMDL *fmmdl,
+	FIELD_PLAYER_GRID *gjiki, MMDL *mmdl,
 	u32 key_trg, u32 key_cont, u16 dir, BOOL debug_flag );
 static void gjiki_SetMove_Hitch(
-	FIELD_PLAYER_GRID *gjiki, MMDL *fmmdl,
+	FIELD_PLAYER_GRID *gjiki, MMDL *mmdl,
 	u32 key_trg, u32 key_cont, u16 dir, BOOL debug_flag );
 static void gjiki_SetMove_Jump(
-	FIELD_PLAYER_GRID *gjiki, MMDL *fmmdl,
+	FIELD_PLAYER_GRID *gjiki, MMDL *mmdl,
 	u32 key_trg, u32 key_cont, u16 dir, BOOL debug_flag );
 
 //自転車移動
@@ -111,35 +111,35 @@ static void jikiMove_Cycle(
     u16 dir, BOOL debug_flag );
 
 static PLAYER_SET gjikiCycle_CheckMoveStart_Stop(
-	FIELD_PLAYER_GRID *gjiki, MMDL *fmmdl,
+	FIELD_PLAYER_GRID *gjiki, MMDL *mmdl,
 	u32 key_trg, u32 key_cont, u16 dir, BOOL debug_flag );
 static PLAYER_SET gjikiCycle_CheckMoveStart_Walk(
-	FIELD_PLAYER_GRID *gjiki, MMDL *fmmdl,
+	FIELD_PLAYER_GRID *gjiki, MMDL *mmdl,
 	u32 key_trg, u32 key_cont, u16 dir, BOOL debug_flag );
 static PLAYER_SET gjikiCycle_CheckMoveStart_Turn(
-	FIELD_PLAYER_GRID *gjiki, MMDL *fmmdl,
+	FIELD_PLAYER_GRID *gjiki, MMDL *mmdl,
 	u32 key_trg, u32 key_cont, u16 dir, BOOL debug_flag );
 static PLAYER_SET gjikiCycle_CheckMoveStart_Hitch(
-	FIELD_PLAYER_GRID *gjiki, MMDL *fmmdl,
+	FIELD_PLAYER_GRID *gjiki, MMDL *mmdl,
 	u32 key_trg, u32 key_cont, u16 dir, BOOL debug_flag );
 
 static void gjikiCycle_SetMove_Non(
-	FIELD_PLAYER_GRID *gjiki, MMDL *fmmdl,
+	FIELD_PLAYER_GRID *gjiki, MMDL *mmdl,
 	u32 key_trg, u32 key_cont, u16 dir, BOOL debug_flag );
 static void gjikiCycle_SetMove_Stop(
-	FIELD_PLAYER_GRID *gjiki, MMDL *fmmdl,
+	FIELD_PLAYER_GRID *gjiki, MMDL *mmdl,
 	u32 key_trg, u32 key_cont, u16 dir, BOOL debug_flag );
 static void gjikiCycle_SetMove_Walk(
-	FIELD_PLAYER_GRID *gjiki, MMDL *fmmdl,
+	FIELD_PLAYER_GRID *gjiki, MMDL *mmdl,
 	u32 key_trg, u32 key_cont, u16 dir, BOOL debug_flag );
 static void gjikiCycle_SetMove_Turn(
-	FIELD_PLAYER_GRID *gjiki, MMDL *fmmdl,
+	FIELD_PLAYER_GRID *gjiki, MMDL *mmdl,
 	u32 key_trg, u32 key_cont, u16 dir, BOOL debug_flag );
 static void gjikiCycle_SetMove_Hitch(
-	FIELD_PLAYER_GRID *gjiki, MMDL *fmmdl,
+	FIELD_PLAYER_GRID *gjiki, MMDL *mmdl,
 	u32 key_trg, u32 key_cont, u16 dir, BOOL debug_flag );
 static void gjikiCycle_SetMove_Jump(
-	FIELD_PLAYER_GRID *gjiki, MMDL *fmmdl,
+	FIELD_PLAYER_GRID *gjiki, MMDL *mmdl,
 	u32 key_trg, u32 key_cont, u16 dir, BOOL debug_flag );
 
 //波乗り移動
@@ -148,32 +148,32 @@ static void jikiMove_Swim(
     u16 dir, BOOL debug_flag );
 
 static PLAYER_SET gjikiSwim_CheckMoveStart_Stop(
-	FIELD_PLAYER_GRID *gjiki, MMDL *fmmdl,
+	FIELD_PLAYER_GRID *gjiki, MMDL *mmdl,
 	u32 key_trg, u32 key_cont, u16 dir, BOOL debug_flag );
 static PLAYER_SET gjikiSwim_CheckMoveStart_Walk(
-	FIELD_PLAYER_GRID *gjiki, MMDL *fmmdl,
+	FIELD_PLAYER_GRID *gjiki, MMDL *mmdl,
 	u32 key_trg, u32 key_cont, u16 dir, BOOL debug_flag );
 static PLAYER_SET gjikiSwim_CheckMoveStart_Turn(
-	FIELD_PLAYER_GRID *gjiki, MMDL *fmmdl,
+	FIELD_PLAYER_GRID *gjiki, MMDL *mmdl,
 	u32 key_trg, u32 key_cont, u16 dir, BOOL debug_flag );
 static PLAYER_SET gjikiSwim_CheckMoveStart_Hitch(
-	FIELD_PLAYER_GRID *gjiki, MMDL *fmmdl,
+	FIELD_PLAYER_GRID *gjiki, MMDL *mmdl,
 	u32 key_trg, u32 key_cont, u16 dir, BOOL debug_flag );
 
 static void gjikiSwim_SetMove_Non(
-	FIELD_PLAYER_GRID *gjiki, MMDL *fmmdl,
+	FIELD_PLAYER_GRID *gjiki, MMDL *mmdl,
 	u32 key_trg, u32 key_cont, u16 dir, BOOL debug_flag );
 static void gjikiSwim_SetMove_Stop(
-	FIELD_PLAYER_GRID *gjiki, MMDL *fmmdl,
+	FIELD_PLAYER_GRID *gjiki, MMDL *mmdl,
 	u32 key_trg, u32 key_cont, u16 dir, BOOL debug_flag );
 static void gjikiSwim_SetMove_Walk(
-	FIELD_PLAYER_GRID *gjiki, MMDL *fmmdl,
+	FIELD_PLAYER_GRID *gjiki, MMDL *mmdl,
 	u32 key_trg, u32 key_cont, u16 dir, BOOL debug_flag );
 static void gjikiSwim_SetMove_Turn(
-	FIELD_PLAYER_GRID *gjiki, MMDL *fmmdl,
+	FIELD_PLAYER_GRID *gjiki, MMDL *mmdl,
 	u32 key_trg, u32 key_cont, u16 dir, BOOL debug_flag );
 static void gjikiSwim_SetMove_Hitch(
-	FIELD_PLAYER_GRID *gjiki, MMDL *fmmdl,
+	FIELD_PLAYER_GRID *gjiki, MMDL *mmdl,
 	u32 key_trg, u32 key_cont, u16 dir, BOOL debug_flag );
 
 //サウンド
@@ -317,25 +317,25 @@ static void jikiMove_Normal(
     u16 dir, BOOL debug_flag )
 {
 	PLAYER_SET set;
-	MMDL *fmmdl = FIELD_PLAYER_GetMMdl( gjiki->fld_player );
+	MMDL *mmdl = FIELD_PLAYER_GetMMdl( gjiki->fld_player );
    
 	set = PLAYER_SET_NON;
 	switch( gjiki->move_state ){
 	case PLAYER_MOVE_STOP:
 		set = gjiki_CheckMoveStart_Stop(
-			gjiki, fmmdl, key_trg, key_cont, dir, debug_flag );
+			gjiki, mmdl, key_trg, key_cont, dir, debug_flag );
 		break;
 	case PLAYER_MOVE_WALK:
 		set = gjiki_CheckMoveStart_Walk(
-			gjiki, fmmdl, key_trg, key_cont, dir, debug_flag );
+			gjiki, mmdl, key_trg, key_cont, dir, debug_flag );
 		break;
 	case PLAYER_MOVE_TURN:
 		set = gjiki_CheckMoveStart_Turn(
-			gjiki, fmmdl, key_trg, key_cont, dir, debug_flag );
+			gjiki, mmdl, key_trg, key_cont, dir, debug_flag );
 		break;
 	case PLAYER_MOVE_HITCH:
 		set = gjiki_CheckMoveStart_Hitch(
-			gjiki, fmmdl, key_trg, key_cont, dir, debug_flag );
+			gjiki, mmdl, key_trg, key_cont, dir, debug_flag );
 		break;
 	default:
 		GF_ASSERT( 0 );
@@ -344,27 +344,27 @@ static void jikiMove_Normal(
 	switch( set ){
 	case PLAYER_SET_NON:
 		gjiki_SetMove_Non(
-			gjiki, fmmdl, key_trg, key_cont, dir, debug_flag );
+			gjiki, mmdl, key_trg, key_cont, dir, debug_flag );
 		break;
 	case PLAYER_SET_STOP:
 		gjiki_SetMove_Stop(
-			gjiki, fmmdl, key_trg, key_cont, dir, debug_flag );
+			gjiki, mmdl, key_trg, key_cont, dir, debug_flag );
 		break;
 	case PLAYER_SET_WALK:
 		gjiki_SetMove_Walk(
-			gjiki, fmmdl, key_trg, key_cont, dir, debug_flag );
+			gjiki, mmdl, key_trg, key_cont, dir, debug_flag );
 		break;
 	case PLAYER_SET_TURN:
 		gjiki_SetMove_Turn(
-			gjiki, fmmdl, key_trg, key_cont, dir, debug_flag );
+			gjiki, mmdl, key_trg, key_cont, dir, debug_flag );
 		break;
 	case PLAYER_SET_HITCH:
 		gjiki_SetMove_Hitch(
-			gjiki, fmmdl, key_trg, key_cont, dir, debug_flag );
+			gjiki, mmdl, key_trg, key_cont, dir, debug_flag );
 		break;
   case PLAYER_SET_JUMP:
 		gjiki_SetMove_Jump(
-			gjiki, fmmdl, key_trg, key_cont, dir, debug_flag );
+			gjiki, mmdl, key_trg, key_cont, dir, debug_flag );
     break;
 	}
 }
@@ -376,7 +376,7 @@ static void jikiMove_Normal(
 /**
  * 移動開始チェック　停止中
  * @param	gjiki FIELD_PLAYER_GRID
- * @param fmmdl MMDL*
+ * @param mmdl MMDL*
  * @param key_trg キートリガ
  * @param key_cont キーコンティニュー
  * @param dir 移動方向
@@ -385,20 +385,20 @@ static void jikiMove_Normal(
  */
 //--------------------------------------------------------------
 static PLAYER_SET gjiki_CheckMoveStart_Stop(
-	FIELD_PLAYER_GRID *gjiki, MMDL *fmmdl,
+	FIELD_PLAYER_GRID *gjiki, MMDL *mmdl,
 	u32 key_trg, u32 key_cont, u16 dir, BOOL debug_flag )
 {
-	if( MMDL_CheckPossibleAcmd(fmmdl) == TRUE ){
+	if( MMDL_CheckPossibleAcmd(mmdl) == TRUE ){
 		if( dir != DIR_NOT ){
 			u16 old_dir;
-			old_dir = MMDL_GetDirDisp( fmmdl );
+			old_dir = MMDL_GetDirDisp( mmdl );
 			
 			if( dir != old_dir && debug_flag == FALSE ){
 				return( PLAYER_SET_TURN );
 			}
 			
 			return( gjiki_CheckMoveStart_Walk(
-				gjiki,fmmdl,key_trg,key_cont,dir,debug_flag) );
+				gjiki,mmdl,key_trg,key_cont,dir,debug_flag) );
 		}
 		
 		return( PLAYER_SET_STOP );
@@ -411,7 +411,7 @@ static PLAYER_SET gjiki_CheckMoveStart_Stop(
 /**
  * 移動開始チェック　移動中
  * @param	gjiki FIELD_PLAYER_GRID
- * @param fmmdl MMDL*
+ * @param mmdl MMDL*
  * @param key_trg キートリガ
  * @param key_cont キーコンティニュー
  * @param dir 移動方向
@@ -420,21 +420,21 @@ static PLAYER_SET gjiki_CheckMoveStart_Stop(
  */
 //--------------------------------------------------------------
 static PLAYER_SET gjiki_CheckMoveStart_Walk(
-	FIELD_PLAYER_GRID *gjiki, MMDL *fmmdl,
+	FIELD_PLAYER_GRID *gjiki, MMDL *mmdl,
 	u32 key_trg, u32 key_cont, u16 dir, BOOL debug_flag )
 {
-	if( MMDL_CheckPossibleAcmd(fmmdl) == FALSE ){
+	if( MMDL_CheckPossibleAcmd(mmdl) == FALSE ){
 		return( PLAYER_SET_NON );
 	}
 	
 	if( dir == DIR_NOT )
   {
 		return( gjiki_CheckMoveStart_Stop(
-			gjiki,fmmdl,key_trg,key_cont,dir,debug_flag) );
+			gjiki,mmdl,key_trg,key_cont,dir,debug_flag) );
 	}
 	
 	{
-		u32 hit = MMDL_HitCheckMoveDir( fmmdl, dir );
+		u32 hit = MMDL_HitCheckMoveDir( mmdl, dir );
 		
 		if( debug_flag == TRUE )
     {
@@ -456,9 +456,9 @@ static PLAYER_SET gjiki_CheckMoveStart_Walk(
       u32 attr;
       VecFx32 pos;
       
-      MMDL_GetVectorPos( fmmdl, &pos );
+      MMDL_GetVectorPos( mmdl, &pos );
       MMDL_TOOL_AddDirVector( dir, &pos, GRID_FX32 );
-      ret = MMDL_GetMapPosAttr( fmmdl, &pos, &attr );
+      ret = MMDL_GetMapPosAttr( mmdl, &pos, &attr );
       
       if( ret == TRUE )
       {
@@ -491,7 +491,7 @@ static PLAYER_SET gjiki_CheckMoveStart_Walk(
 /**
  * 移動開始チェック　振り向き中
  * @param	gjiki FIELD_PLAYER_GRID
- * @param fmmdl MMDL*
+ * @param mmdl MMDL*
  * @param key_trg キートリガ
  * @param key_cont キーコンティニュー
  * @param dir 移動方向
@@ -500,27 +500,27 @@ static PLAYER_SET gjiki_CheckMoveStart_Walk(
  */
 //--------------------------------------------------------------
 static PLAYER_SET gjiki_CheckMoveStart_Turn(
-	FIELD_PLAYER_GRID *gjiki, MMDL *fmmdl,
+	FIELD_PLAYER_GRID *gjiki, MMDL *mmdl,
 	u32 key_trg, u32 key_cont, u16 dir, BOOL debug_flag )
 {
-	if( MMDL_CheckPossibleAcmd(fmmdl) == FALSE ){
+	if( MMDL_CheckPossibleAcmd(mmdl) == FALSE ){
 		return( PLAYER_SET_NON );
 	}
 	
 	if( dir == DIR_NOT ){
 		return( gjiki_CheckMoveStart_Stop(
-			gjiki,fmmdl,key_trg,key_cont,dir,debug_flag) );
+			gjiki,mmdl,key_trg,key_cont,dir,debug_flag) );
 	}
 	
 	return( gjiki_CheckMoveStart_Walk(
-		gjiki,fmmdl,key_trg,key_cont,dir,debug_flag) );
+		gjiki,mmdl,key_trg,key_cont,dir,debug_flag) );
 }
 
 //--------------------------------------------------------------
 /**
  * 移動開始チェック　障害物ヒット中
  * @param	gjiki FIELD_PLAYER_GRID
- * @param fmmdl MMDL*
+ * @param mmdl MMDL*
  * @param key_trg キートリガ
  * @param key_cont キーコンティニュー
  * @param dir 移動方向
@@ -529,28 +529,28 @@ static PLAYER_SET gjiki_CheckMoveStart_Turn(
  */
 //--------------------------------------------------------------
 static PLAYER_SET gjiki_CheckMoveStart_Hitch(
-	FIELD_PLAYER_GRID *gjiki, MMDL *fmmdl,
+	FIELD_PLAYER_GRID *gjiki, MMDL *mmdl,
 	u32 key_trg, u32 key_cont, u16 dir, BOOL debug_flag )
 {
-  u16 dir_now = MMDL_GetDirDisp( fmmdl );
+  u16 dir_now = MMDL_GetDirDisp( mmdl );
    
   if( dir != DIR_NOT && dir != dir_now ){
-    MMDL_FreeAcmd( fmmdl );
+    MMDL_FreeAcmd( mmdl );
 	  return( gjiki_CheckMoveStart_Walk(
-		  gjiki,fmmdl,key_trg,key_cont,dir,debug_flag) );
+		  gjiki,mmdl,key_trg,key_cont,dir,debug_flag) );
   }
   
-	if( MMDL_CheckPossibleAcmd(fmmdl) == FALSE ){
+	if( MMDL_CheckPossibleAcmd(mmdl) == FALSE ){
 		return( PLAYER_SET_NON );
 	}
 	
 	if( dir == DIR_NOT ){
 		return( gjiki_CheckMoveStart_Stop(
-			gjiki,fmmdl,key_trg,key_cont,dir,debug_flag) );
+			gjiki,mmdl,key_trg,key_cont,dir,debug_flag) );
 	}
 	
 	return( gjiki_CheckMoveStart_Walk(
-		gjiki,fmmdl,key_trg,key_cont,dir,debug_flag) );
+		gjiki,mmdl,key_trg,key_cont,dir,debug_flag) );
 }
 
 //======================================================================
@@ -560,7 +560,7 @@ static PLAYER_SET gjiki_CheckMoveStart_Hitch(
 /**
  * 移動開始セット 特に無し
  * @param	gjiki FIELD_PLAYER_GRID
- * @param fmmdl MMDL*
+ * @param mmdl MMDL*
  * @param key_trg キートリガ
  * @param key_cont キーコンティニュー
  * @param debug_flag デバッグ移動可能フラグ TRUE=可能
@@ -568,7 +568,7 @@ static PLAYER_SET gjiki_CheckMoveStart_Hitch(
  */
 //--------------------------------------------------------------
 static void gjiki_SetMove_Non(
-	FIELD_PLAYER_GRID *gjiki, MMDL *fmmdl,
+	FIELD_PLAYER_GRID *gjiki, MMDL *mmdl,
 	u32 key_trg, u32 key_cont, u16 dir, BOOL debug_flag )
 {
 }
@@ -577,7 +577,7 @@ static void gjiki_SetMove_Non(
 /**
  * 移動セット 停止
  * @param	gjiki FIELD_PLAYER_GRID
- * @param fmmdl MMDL*
+ * @param mmdl MMDL*
  * @param key_trg キートリガ
  * @param key_cont キーコンティニュー
  * @param debug_flag デバッグ移動可能フラグ TRUE=可能
@@ -585,17 +585,17 @@ static void gjiki_SetMove_Non(
  */
 //--------------------------------------------------------------
 static void gjiki_SetMove_Stop(
-	FIELD_PLAYER_GRID *gjiki, MMDL *fmmdl,
+	FIELD_PLAYER_GRID *gjiki, MMDL *mmdl,
 	u32 key_trg, u32 key_cont, u16 dir, BOOL debug_flag )
 {
 	u16 code;
 	
 	if( dir == DIR_NOT ){
-		dir = MMDL_GetDirDisp( fmmdl );
+		dir = MMDL_GetDirDisp( mmdl );
 	}
 	
 	code = MMDL_ChangeDirAcmdCode( dir, AC_DIR_U );
-	MMDL_SetAcmd( fmmdl, code );
+	MMDL_SetAcmd( mmdl, code );
 	gjiki->move_state = PLAYER_MOVE_STOP;
 	
   FIELD_PLAYER_SetMoveValue( gjiki->fld_player, PLAYER_MOVE_VALUE_STOP );
@@ -607,7 +607,7 @@ static void gjiki_SetMove_Stop(
 /**
  * 移動セット 移動
  * @param	gjiki FIELD_PLAYER_GRID
- * @param fmmdl MMDL*
+ * @param mmdl MMDL*
  * @param key_trg キートリガ
  * @param key_cont キーコンティニュー
  * @param debug_flag デバッグ移動可能フラグ TRUE=可能
@@ -615,7 +615,7 @@ static void gjiki_SetMove_Stop(
  */
 //--------------------------------------------------------------
 static void gjiki_SetMove_Walk(
-	FIELD_PLAYER_GRID *gjiki, MMDL *fmmdl,
+	FIELD_PLAYER_GRID *gjiki, MMDL *mmdl,
 	u32 key_trg, u32 key_cont, u16 dir, BOOL debug_flag )
 {
 	u16 code;
@@ -632,7 +632,7 @@ static void gjiki_SetMove_Walk(
   
 	code = MMDL_ChangeDirAcmdCode( dir, code );
 	
-	MMDL_SetAcmd( fmmdl, code );
+	MMDL_SetAcmd( mmdl, code );
 	gjiki->move_state = PLAYER_MOVE_WALK;
 
   FIELD_PLAYER_SetMoveValue( gjiki->fld_player, PLAYER_MOVE_VALUE_WALK );
@@ -644,7 +644,7 @@ static void gjiki_SetMove_Walk(
 /**
  * 移動セット 振り向き
  * @param	gjiki FIELD_PLAYER_GRID
- * @param fmmdl MMDL*
+ * @param mmdl MMDL*
  * @param key_trg キートリガ
  * @param key_cont キーコンティニュー
  * @param debug_flag デバッグ移動可能フラグ TRUE=可能
@@ -652,7 +652,7 @@ static void gjiki_SetMove_Walk(
  */
 //--------------------------------------------------------------
 static void gjiki_SetMove_Turn(
-	FIELD_PLAYER_GRID *gjiki, MMDL *fmmdl,
+	FIELD_PLAYER_GRID *gjiki, MMDL *mmdl,
 	u32 key_trg, u32 key_cont, u16 dir, BOOL debug_flag )
 {
 	u16 code;
@@ -660,7 +660,7 @@ static void gjiki_SetMove_Turn(
 	GF_ASSERT( dir != DIR_NOT );
 	code = MMDL_ChangeDirAcmdCode( dir, AC_STAY_WALK_U_2F );
 	
-	MMDL_SetAcmd( fmmdl, code );
+	MMDL_SetAcmd( mmdl, code );
 	gjiki->move_state = PLAYER_MOVE_TURN;
 	
   FIELD_PLAYER_SetMoveValue( gjiki->fld_player, PLAYER_MOVE_VALUE_TURN );
@@ -671,7 +671,7 @@ static void gjiki_SetMove_Turn(
 /**
  * 移動セット 障害物ヒット
  * @param	gjiki FIELD_PLAYER_GRID
- * @param fmmdl MMDL*
+ * @param mmdl MMDL*
  * @param key_trg キートリガ
  * @param key_cont キーコンティニュー
  * @param debug_flag デバッグ移動可能フラグ TRUE=可能
@@ -679,7 +679,7 @@ static void gjiki_SetMove_Turn(
  */
 //--------------------------------------------------------------
 static void gjiki_SetMove_Hitch(
-	FIELD_PLAYER_GRID *gjiki, MMDL *fmmdl,
+	FIELD_PLAYER_GRID *gjiki, MMDL *mmdl,
 	u32 key_trg, u32 key_cont, u16 dir, BOOL debug_flag )
 {
 	u16 code;
@@ -687,7 +687,7 @@ static void gjiki_SetMove_Hitch(
 	GF_ASSERT( dir != DIR_NOT );
 	code = MMDL_ChangeDirAcmdCode( dir, AC_STAY_WALK_U_16F );
 	
-	MMDL_SetAcmd( fmmdl, code );
+	MMDL_SetAcmd( mmdl, code );
 	gjiki->move_state = PLAYER_MOVE_HITCH;
 	
   FIELD_PLAYER_SetMoveValue( gjiki->fld_player, PLAYER_MOVE_VALUE_STOP );
@@ -699,7 +699,7 @@ static void gjiki_SetMove_Hitch(
 /**
  * 移動セット ジャンプ
  * @param	gjiki FIELD_PLAYER_GRID
- * @param fmmdl MMDL*
+ * @param mmdl MMDL*
  * @param key_trg キートリガ
  * @param key_cont キーコンティニュー
  * @param debug_flag デバッグ移動可能フラグ TRUE=可能
@@ -707,7 +707,7 @@ static void gjiki_SetMove_Hitch(
  */
 //--------------------------------------------------------------
 static void gjiki_SetMove_Jump(
-	FIELD_PLAYER_GRID *gjiki, MMDL *fmmdl,
+	FIELD_PLAYER_GRID *gjiki, MMDL *mmdl,
 	u32 key_trg, u32 key_cont, u16 dir, BOOL debug_flag )
 {
 	u16 code;
@@ -716,7 +716,7 @@ static void gjiki_SetMove_Jump(
 	
 	code = MMDL_ChangeDirAcmdCode( dir, AC_JUMP_U_2G_16F );
 	
-	MMDL_SetAcmd( fmmdl, code );
+	MMDL_SetAcmd( mmdl, code );
 	gjiki->move_state = PLAYER_MOVE_WALK;
   
   FIELD_PLAYER_SetMoveValue( gjiki->fld_player, PLAYER_MOVE_VALUE_WALK );
@@ -741,25 +741,25 @@ static void jikiMove_Swim(
     u16 dir, BOOL debug_flag )
 {
 	PLAYER_SET set;
-	MMDL *fmmdl = FIELD_PLAYER_GetMMdl( gjiki->fld_player );
+	MMDL *mmdl = FIELD_PLAYER_GetMMdl( gjiki->fld_player );
    
 	set = PLAYER_SET_NON;
 	switch( gjiki->move_state ){
 	case PLAYER_MOVE_STOP:
 		set = gjikiSwim_CheckMoveStart_Stop(
-			gjiki, fmmdl, key_trg, key_cont, dir, debug_flag );
+			gjiki, mmdl, key_trg, key_cont, dir, debug_flag );
 		break;
 	case PLAYER_MOVE_WALK:
 		set = gjikiSwim_CheckMoveStart_Walk(
-			gjiki, fmmdl, key_trg, key_cont, dir, debug_flag );
+			gjiki, mmdl, key_trg, key_cont, dir, debug_flag );
 		break;
 	case PLAYER_MOVE_TURN:
 		set = gjikiSwim_CheckMoveStart_Turn(
-			gjiki, fmmdl, key_trg, key_cont, dir, debug_flag );
+			gjiki, mmdl, key_trg, key_cont, dir, debug_flag );
 		break;
 	case PLAYER_MOVE_HITCH:
 		set = gjikiSwim_CheckMoveStart_Hitch(
-			gjiki, fmmdl, key_trg, key_cont, dir, debug_flag );
+			gjiki, mmdl, key_trg, key_cont, dir, debug_flag );
 		break;
 	default:
 		GF_ASSERT( 0 );
@@ -768,23 +768,23 @@ static void jikiMove_Swim(
 	switch( set ){
 	case PLAYER_SET_NON:
 		gjikiSwim_SetMove_Non(
-			gjiki, fmmdl, key_trg, key_cont, dir, debug_flag );
+			gjiki, mmdl, key_trg, key_cont, dir, debug_flag );
 		break;
 	case PLAYER_SET_STOP:
 		gjikiSwim_SetMove_Stop(
-			gjiki, fmmdl, key_trg, key_cont, dir, debug_flag );
+			gjiki, mmdl, key_trg, key_cont, dir, debug_flag );
 		break;
 	case PLAYER_SET_WALK:
 		gjikiSwim_SetMove_Walk(
-			gjiki, fmmdl, key_trg, key_cont, dir, debug_flag );
+			gjiki, mmdl, key_trg, key_cont, dir, debug_flag );
 		break;
 	case PLAYER_SET_TURN:
 		gjikiSwim_SetMove_Turn(
-			gjiki, fmmdl, key_trg, key_cont, dir, debug_flag );
+			gjiki, mmdl, key_trg, key_cont, dir, debug_flag );
 		break;
 	case PLAYER_SET_HITCH:
 		gjikiSwim_SetMove_Hitch(
-			gjiki, fmmdl, key_trg, key_cont, dir, debug_flag );
+			gjiki, mmdl, key_trg, key_cont, dir, debug_flag );
 		break;
   default:
     GF_ASSERT( 0 );
@@ -799,7 +799,7 @@ static void jikiMove_Swim(
 /**
  * 移動開始チェック　停止中
  * @param	gjiki FIELD_PLAYER_GRID
- * @param fmmdl MMDL*
+ * @param mmdl MMDL*
  * @param key_trg キートリガ
  * @param key_cont キーコンティニュー
  * @param dir 移動方向
@@ -808,20 +808,20 @@ static void jikiMove_Swim(
  */
 //--------------------------------------------------------------
 static PLAYER_SET gjikiSwim_CheckMoveStart_Stop(
-	FIELD_PLAYER_GRID *gjiki, MMDL *fmmdl,
+	FIELD_PLAYER_GRID *gjiki, MMDL *mmdl,
 	u32 key_trg, u32 key_cont, u16 dir, BOOL debug_flag )
 {
-	if( MMDL_CheckPossibleAcmd(fmmdl) == TRUE ){
+	if( MMDL_CheckPossibleAcmd(mmdl) == TRUE ){
 		if( dir != DIR_NOT ){
 			u16 old_dir;
-			old_dir = MMDL_GetDirDisp( fmmdl );
+			old_dir = MMDL_GetDirDisp( mmdl );
 			
 			if( dir != old_dir && debug_flag == FALSE ){
 				return( PLAYER_SET_TURN );
 			}
 			
 			return( gjikiSwim_CheckMoveStart_Walk(
-				gjiki,fmmdl,key_trg,key_cont,dir,debug_flag) );
+				gjiki,mmdl,key_trg,key_cont,dir,debug_flag) );
 		}
 		
 		return( PLAYER_SET_STOP );
@@ -834,7 +834,7 @@ static PLAYER_SET gjikiSwim_CheckMoveStart_Stop(
 /**
  * 移動開始チェック　移動中
  * @param	gjiki FIELD_PLAYER_GRID
- * @param fmmdl MMDL*
+ * @param mmdl MMDL*
  * @param key_trg キートリガ
  * @param key_cont キーコンティニュー
  * @param dir 移動方向
@@ -843,21 +843,21 @@ static PLAYER_SET gjikiSwim_CheckMoveStart_Stop(
  */
 //--------------------------------------------------------------
 static PLAYER_SET gjikiSwim_CheckMoveStart_Walk(
-	FIELD_PLAYER_GRID *gjiki, MMDL *fmmdl,
+	FIELD_PLAYER_GRID *gjiki, MMDL *mmdl,
 	u32 key_trg, u32 key_cont, u16 dir, BOOL debug_flag )
 {
-	if( MMDL_CheckPossibleAcmd(fmmdl) == FALSE ){
+	if( MMDL_CheckPossibleAcmd(mmdl) == FALSE ){
 		return( PLAYER_SET_NON );
 	}
 	
 	if( dir == DIR_NOT )
   {
 		return( gjikiSwim_CheckMoveStart_Stop(
-			gjiki,fmmdl,key_trg,key_cont,dir,debug_flag) );
+			gjiki,mmdl,key_trg,key_cont,dir,debug_flag) );
 	}
 	
 	{
-		u32 hit = MMDL_HitCheckMoveDir( fmmdl, dir );
+		u32 hit = MMDL_HitCheckMoveDir( mmdl, dir );
 		
 		if( debug_flag == TRUE )
     {
@@ -879,9 +879,9 @@ static PLAYER_SET gjikiSwim_CheckMoveStart_Walk(
       u32 attr;
       VecFx32 pos;
       
-      MMDL_GetVectorPos( fmmdl, &pos );
+      MMDL_GetVectorPos( mmdl, &pos );
       MMDL_TOOL_AddDirVector( dir, &pos, GRID_FX32 );
-      ret = MMDL_GetMapPosAttr( fmmdl, &pos, &attr );
+      ret = MMDL_GetMapPosAttr( mmdl, &pos, &attr );
       
       if( ret == TRUE )
       {
@@ -903,7 +903,7 @@ static PLAYER_SET gjikiSwim_CheckMoveStart_Walk(
 /**
  * 移動開始チェック　振り向き中
  * @param	gjiki FIELD_PLAYER_GRID
- * @param fmmdl MMDL*
+ * @param mmdl MMDL*
  * @param key_trg キートリガ
  * @param key_cont キーコンティニュー
  * @param dir 移動方向
@@ -912,27 +912,27 @@ static PLAYER_SET gjikiSwim_CheckMoveStart_Walk(
  */
 //--------------------------------------------------------------
 static PLAYER_SET gjikiSwim_CheckMoveStart_Turn(
-	FIELD_PLAYER_GRID *gjiki, MMDL *fmmdl,
+	FIELD_PLAYER_GRID *gjiki, MMDL *mmdl,
 	u32 key_trg, u32 key_cont, u16 dir, BOOL debug_flag )
 {
-	if( MMDL_CheckPossibleAcmd(fmmdl) == FALSE ){
+	if( MMDL_CheckPossibleAcmd(mmdl) == FALSE ){
 		return( PLAYER_SET_NON );
 	}
 	
 	if( dir == DIR_NOT ){
 		return( gjikiSwim_CheckMoveStart_Stop(
-			gjiki,fmmdl,key_trg,key_cont,dir,debug_flag) );
+			gjiki,mmdl,key_trg,key_cont,dir,debug_flag) );
 	}
 	
 	return( gjikiSwim_CheckMoveStart_Walk(
-		gjiki,fmmdl,key_trg,key_cont,dir,debug_flag) );
+		gjiki,mmdl,key_trg,key_cont,dir,debug_flag) );
 }
 
 //--------------------------------------------------------------
 /**
  * 移動開始チェック　障害物ヒット中
  * @param	gjiki FIELD_PLAYER_GRID
- * @param fmmdl MMDL*
+ * @param mmdl MMDL*
  * @param key_trg キートリガ
  * @param key_cont キーコンティニュー
  * @param dir 移動方向
@@ -941,28 +941,28 @@ static PLAYER_SET gjikiSwim_CheckMoveStart_Turn(
  */
 //--------------------------------------------------------------
 static PLAYER_SET gjikiSwim_CheckMoveStart_Hitch(
-	FIELD_PLAYER_GRID *gjiki, MMDL *fmmdl,
+	FIELD_PLAYER_GRID *gjiki, MMDL *mmdl,
 	u32 key_trg, u32 key_cont, u16 dir, BOOL debug_flag )
 {
-  u16 dir_now = MMDL_GetDirDisp( fmmdl );
+  u16 dir_now = MMDL_GetDirDisp( mmdl );
    
   if( dir != DIR_NOT && dir != dir_now ){
-    MMDL_FreeAcmd( fmmdl );
+    MMDL_FreeAcmd( mmdl );
 	  return( gjikiSwim_CheckMoveStart_Walk(
-		  gjiki,fmmdl,key_trg,key_cont,dir,debug_flag) );
+		  gjiki,mmdl,key_trg,key_cont,dir,debug_flag) );
   }
   
-	if( MMDL_CheckPossibleAcmd(fmmdl) == FALSE ){
+	if( MMDL_CheckPossibleAcmd(mmdl) == FALSE ){
 		return( PLAYER_SET_NON );
 	}
 	
 	if( dir == DIR_NOT ){
 		return( gjikiSwim_CheckMoveStart_Stop(
-			gjiki,fmmdl,key_trg,key_cont,dir,debug_flag) );
+			gjiki,mmdl,key_trg,key_cont,dir,debug_flag) );
 	}
 	
 	return( gjikiSwim_CheckMoveStart_Walk(
-		gjiki,fmmdl,key_trg,key_cont,dir,debug_flag) );
+		gjiki,mmdl,key_trg,key_cont,dir,debug_flag) );
 }
 
 //======================================================================
@@ -972,7 +972,7 @@ static PLAYER_SET gjikiSwim_CheckMoveStart_Hitch(
 /**
  * 移動開始セット 特に無し
  * @param	gjiki FIELD_PLAYER_GRID
- * @param fmmdl MMDL*
+ * @param mmdl MMDL*
  * @param key_trg キートリガ
  * @param key_cont キーコンティニュー
  * @param debug_flag デバッグ移動可能フラグ TRUE=可能
@@ -980,7 +980,7 @@ static PLAYER_SET gjikiSwim_CheckMoveStart_Hitch(
  */
 //--------------------------------------------------------------
 static void gjikiSwim_SetMove_Non(
-	FIELD_PLAYER_GRID *gjiki, MMDL *fmmdl,
+	FIELD_PLAYER_GRID *gjiki, MMDL *mmdl,
 	u32 key_trg, u32 key_cont, u16 dir, BOOL debug_flag )
 {
 }
@@ -989,7 +989,7 @@ static void gjikiSwim_SetMove_Non(
 /**
  * 移動セット 停止
  * @param	gjiki FIELD_PLAYER_GRID
- * @param fmmdl MMDL*
+ * @param mmdl MMDL*
  * @param key_trg キートリガ
  * @param key_cont キーコンティニュー
  * @param debug_flag デバッグ移動可能フラグ TRUE=可能
@@ -997,17 +997,17 @@ static void gjikiSwim_SetMove_Non(
  */
 //--------------------------------------------------------------
 static void gjikiSwim_SetMove_Stop(
-	FIELD_PLAYER_GRID *gjiki, MMDL *fmmdl,
+	FIELD_PLAYER_GRID *gjiki, MMDL *mmdl,
 	u32 key_trg, u32 key_cont, u16 dir, BOOL debug_flag )
 {
 	u16 code;
 	
 	if( dir == DIR_NOT ){
-		dir = MMDL_GetDirDisp( fmmdl );
+		dir = MMDL_GetDirDisp( mmdl );
 	}
 	
 	code = MMDL_ChangeDirAcmdCode( dir, AC_DIR_U );
-	MMDL_SetAcmd( fmmdl, code );
+	MMDL_SetAcmd( mmdl, code );
 	gjiki->move_state = PLAYER_MOVE_STOP;
 	
   FIELD_PLAYER_SetMoveValue( gjiki->fld_player, PLAYER_MOVE_VALUE_STOP );
@@ -1019,7 +1019,7 @@ static void gjikiSwim_SetMove_Stop(
 /**
  * 移動セット 移動
  * @param	gjiki FIELD_PLAYER_GRID
- * @param fmmdl MMDL*
+ * @param mmdl MMDL*
  * @param key_trg キートリガ
  * @param key_cont キーコンティニュー
  * @param debug_flag デバッグ移動可能フラグ TRUE=可能
@@ -1027,7 +1027,7 @@ static void gjikiSwim_SetMove_Stop(
  */
 //--------------------------------------------------------------
 static void gjikiSwim_SetMove_Walk(
-	FIELD_PLAYER_GRID *gjiki, MMDL *fmmdl,
+	FIELD_PLAYER_GRID *gjiki, MMDL *mmdl,
 	u32 key_trg, u32 key_cont, u16 dir, BOOL debug_flag )
 {
 	u16 code;
@@ -1036,15 +1036,13 @@ static void gjikiSwim_SetMove_Walk(
 	
 	if( debug_flag == TRUE ){
 		code = AC_WALK_U_2F;
-	}else if( key_cont & PAD_BUTTON_B ){
-		code = AC_DASH_U_4F;
 	}else{
-		code = AC_WALK_U_8F;
+		code = AC_WALK_U_4F;
 	}
   
 	code = MMDL_ChangeDirAcmdCode( dir, code );
 	
-	MMDL_SetAcmd( fmmdl, code );
+	MMDL_SetAcmd( mmdl, code );
 	gjiki->move_state = PLAYER_MOVE_WALK;
 
   FIELD_PLAYER_SetMoveValue( gjiki->fld_player, PLAYER_MOVE_VALUE_WALK );
@@ -1056,7 +1054,7 @@ static void gjikiSwim_SetMove_Walk(
 /**
  * 移動セット 振り向き
  * @param	gjiki FIELD_PLAYER_GRID
- * @param fmmdl MMDL*
+ * @param mmdl MMDL*
  * @param key_trg キートリガ
  * @param key_cont キーコンティニュー
  * @param debug_flag デバッグ移動可能フラグ TRUE=可能
@@ -1064,7 +1062,7 @@ static void gjikiSwim_SetMove_Walk(
  */
 //--------------------------------------------------------------
 static void gjikiSwim_SetMove_Turn(
-	FIELD_PLAYER_GRID *gjiki, MMDL *fmmdl,
+	FIELD_PLAYER_GRID *gjiki, MMDL *mmdl,
 	u32 key_trg, u32 key_cont, u16 dir, BOOL debug_flag )
 {
 	u16 code;
@@ -1072,7 +1070,7 @@ static void gjikiSwim_SetMove_Turn(
 	GF_ASSERT( dir != DIR_NOT );
 	code = MMDL_ChangeDirAcmdCode( dir, AC_STAY_WALK_U_2F );
 	
-	MMDL_SetAcmd( fmmdl, code );
+	MMDL_SetAcmd( mmdl, code );
 	gjiki->move_state = PLAYER_MOVE_TURN;
 	
   FIELD_PLAYER_SetMoveValue( gjiki->fld_player, PLAYER_MOVE_VALUE_TURN );
@@ -1083,7 +1081,7 @@ static void gjikiSwim_SetMove_Turn(
 /**
  * 移動セット 障害物ヒット
  * @param	gjiki FIELD_PLAYER_GRID
- * @param fmmdl MMDL*
+ * @param mmdl MMDL*
  * @param key_trg キートリガ
  * @param key_cont キーコンティニュー
  * @param debug_flag デバッグ移動可能フラグ TRUE=可能
@@ -1091,7 +1089,7 @@ static void gjikiSwim_SetMove_Turn(
  */
 //--------------------------------------------------------------
 static void gjikiSwim_SetMove_Hitch(
-	FIELD_PLAYER_GRID *gjiki, MMDL *fmmdl,
+	FIELD_PLAYER_GRID *gjiki, MMDL *mmdl,
 	u32 key_trg, u32 key_cont, u16 dir, BOOL debug_flag )
 {
 	u16 code;
@@ -1099,7 +1097,7 @@ static void gjikiSwim_SetMove_Hitch(
 	GF_ASSERT( dir != DIR_NOT );
 	code = MMDL_ChangeDirAcmdCode( dir, AC_STAY_WALK_U_16F );
 	
-	MMDL_SetAcmd( fmmdl, code );
+	MMDL_SetAcmd( mmdl, code );
 	gjiki->move_state = PLAYER_MOVE_HITCH;
 	
   FIELD_PLAYER_SetMoveValue( gjiki->fld_player, PLAYER_MOVE_VALUE_STOP );
@@ -1124,25 +1122,25 @@ static void jikiMove_Cycle(
     u16 dir, BOOL debug_flag )
 {
 	PLAYER_SET set;
-	MMDL *fmmdl = FIELD_PLAYER_GetMMdl( gjiki->fld_player );
+	MMDL *mmdl = FIELD_PLAYER_GetMMdl( gjiki->fld_player );
    
 	set = PLAYER_SET_NON;
 	switch( gjiki->move_state ){
 	case PLAYER_MOVE_STOP:
 		set = gjikiCycle_CheckMoveStart_Stop(
-			gjiki, fmmdl, key_trg, key_cont, dir, debug_flag );
+			gjiki, mmdl, key_trg, key_cont, dir, debug_flag );
 		break;
 	case PLAYER_MOVE_WALK:
 		set = gjikiCycle_CheckMoveStart_Walk(
-			gjiki, fmmdl, key_trg, key_cont, dir, debug_flag );
+			gjiki, mmdl, key_trg, key_cont, dir, debug_flag );
 		break;
 	case PLAYER_MOVE_TURN:
 		set = gjikiCycle_CheckMoveStart_Turn(
-			gjiki, fmmdl, key_trg, key_cont, dir, debug_flag );
+			gjiki, mmdl, key_trg, key_cont, dir, debug_flag );
 		break;
 	case PLAYER_MOVE_HITCH:
 		set = gjikiCycle_CheckMoveStart_Hitch(
-			gjiki, fmmdl, key_trg, key_cont, dir, debug_flag );
+			gjiki, mmdl, key_trg, key_cont, dir, debug_flag );
 		break;
 	default:
 		GF_ASSERT( 0 );
@@ -1151,27 +1149,27 @@ static void jikiMove_Cycle(
 	switch( set ){
 	case PLAYER_SET_NON:
 		gjikiCycle_SetMove_Non(
-			gjiki, fmmdl, key_trg, key_cont, dir, debug_flag );
+			gjiki, mmdl, key_trg, key_cont, dir, debug_flag );
 		break;
 	case PLAYER_SET_STOP:
 		gjikiCycle_SetMove_Stop(
-			gjiki, fmmdl, key_trg, key_cont, dir, debug_flag );
+			gjiki, mmdl, key_trg, key_cont, dir, debug_flag );
 		break;
 	case PLAYER_SET_WALK:
 		gjikiCycle_SetMove_Walk(
-			gjiki, fmmdl, key_trg, key_cont, dir, debug_flag );
+			gjiki, mmdl, key_trg, key_cont, dir, debug_flag );
 		break;
 	case PLAYER_SET_TURN:
 		gjikiCycle_SetMove_Turn(
-			gjiki, fmmdl, key_trg, key_cont, dir, debug_flag );
+			gjiki, mmdl, key_trg, key_cont, dir, debug_flag );
 		break;
 	case PLAYER_SET_HITCH:
 		gjikiCycle_SetMove_Hitch(
-			gjiki, fmmdl, key_trg, key_cont, dir, debug_flag );
+			gjiki, mmdl, key_trg, key_cont, dir, debug_flag );
 		break;
   case PLAYER_SET_JUMP:
 		gjikiCycle_SetMove_Jump(
-			gjiki, fmmdl, key_trg, key_cont, dir, debug_flag );
+			gjiki, mmdl, key_trg, key_cont, dir, debug_flag );
     break;
 	}
 }
@@ -1183,7 +1181,7 @@ static void jikiMove_Cycle(
 /**
  * 移動開始チェック　停止中
  * @param	gjiki FIELD_PLAYER_GRID
- * @param fmmdl MMDL*
+ * @param mmdl MMDL*
  * @param key_trg キートリガ
  * @param key_cont キーコンティニュー
  * @param dir 移動方向
@@ -1192,20 +1190,20 @@ static void jikiMove_Cycle(
  */
 //--------------------------------------------------------------
 static PLAYER_SET gjikiCycle_CheckMoveStart_Stop(
-	FIELD_PLAYER_GRID *gjiki, MMDL *fmmdl,
+	FIELD_PLAYER_GRID *gjiki, MMDL *mmdl,
 	u32 key_trg, u32 key_cont, u16 dir, BOOL debug_flag )
 {
-	if( MMDL_CheckPossibleAcmd(fmmdl) == TRUE ){
+	if( MMDL_CheckPossibleAcmd(mmdl) == TRUE ){
 		if( dir != DIR_NOT ){
 			u16 old_dir;
-			old_dir = MMDL_GetDirDisp( fmmdl );
+			old_dir = MMDL_GetDirDisp( mmdl );
 			
 			if( dir != old_dir && debug_flag == FALSE ){
 				return( PLAYER_SET_TURN );
 			}
 			
 			return( gjikiCycle_CheckMoveStart_Walk(
-				gjiki,fmmdl,key_trg,key_cont,dir,debug_flag) );
+				gjiki,mmdl,key_trg,key_cont,dir,debug_flag) );
 		}
 		
 		return( PLAYER_SET_STOP );
@@ -1218,7 +1216,7 @@ static PLAYER_SET gjikiCycle_CheckMoveStart_Stop(
 /**
  * 移動開始チェック　移動中
  * @param	gjiki FIELD_PLAYER_GRID
- * @param fmmdl MMDL*
+ * @param mmdl MMDL*
  * @param key_trg キートリガ
  * @param key_cont キーコンティニュー
  * @param dir 移動方向
@@ -1227,21 +1225,21 @@ static PLAYER_SET gjikiCycle_CheckMoveStart_Stop(
  */
 //--------------------------------------------------------------
 static PLAYER_SET gjikiCycle_CheckMoveStart_Walk(
-	FIELD_PLAYER_GRID *gjiki, MMDL *fmmdl,
+	FIELD_PLAYER_GRID *gjiki, MMDL *mmdl,
 	u32 key_trg, u32 key_cont, u16 dir, BOOL debug_flag )
 {
-	if( MMDL_CheckPossibleAcmd(fmmdl) == FALSE ){
+	if( MMDL_CheckPossibleAcmd(mmdl) == FALSE ){
 		return( PLAYER_SET_NON );
 	}
 	
 	if( dir == DIR_NOT )
   {
 		return( gjikiCycle_CheckMoveStart_Stop(
-			gjiki,fmmdl,key_trg,key_cont,dir,debug_flag) );
+			gjiki,mmdl,key_trg,key_cont,dir,debug_flag) );
 	}
 	
 	{
-		u32 hit = MMDL_HitCheckMoveDir( fmmdl, dir );
+		u32 hit = MMDL_HitCheckMoveDir( mmdl, dir );
 		
 		if( debug_flag == TRUE )
     {
@@ -1263,9 +1261,9 @@ static PLAYER_SET gjikiCycle_CheckMoveStart_Walk(
       u32 attr;
       VecFx32 pos;
       
-      MMDL_GetVectorPos( fmmdl, &pos );
+      MMDL_GetVectorPos( mmdl, &pos );
       MMDL_TOOL_AddDirVector( dir, &pos, GRID_FX32 );
-      ret = MMDL_GetMapPosAttr( fmmdl, &pos, &attr );
+      ret = MMDL_GetMapPosAttr( mmdl, &pos, &attr );
       
       if( ret == TRUE )
       {
@@ -1298,7 +1296,7 @@ static PLAYER_SET gjikiCycle_CheckMoveStart_Walk(
 /**
  * 移動開始チェック　振り向き中
  * @param	gjiki FIELD_PLAYER_GRID
- * @param fmmdl MMDL*
+ * @param mmdl MMDL*
  * @param key_trg キートリガ
  * @param key_cont キーコンティニュー
  * @param dir 移動方向
@@ -1307,27 +1305,27 @@ static PLAYER_SET gjikiCycle_CheckMoveStart_Walk(
  */
 //--------------------------------------------------------------
 static PLAYER_SET gjikiCycle_CheckMoveStart_Turn(
-	FIELD_PLAYER_GRID *gjiki, MMDL *fmmdl,
+	FIELD_PLAYER_GRID *gjiki, MMDL *mmdl,
 	u32 key_trg, u32 key_cont, u16 dir, BOOL debug_flag )
 {
-	if( MMDL_CheckPossibleAcmd(fmmdl) == FALSE ){
+	if( MMDL_CheckPossibleAcmd(mmdl) == FALSE ){
 		return( PLAYER_SET_NON );
 	}
 	
 	if( dir == DIR_NOT ){
 		return( gjikiCycle_CheckMoveStart_Stop(
-			gjiki,fmmdl,key_trg,key_cont,dir,debug_flag) );
+			gjiki,mmdl,key_trg,key_cont,dir,debug_flag) );
 	}
 	
 	return( gjikiCycle_CheckMoveStart_Walk(
-		gjiki,fmmdl,key_trg,key_cont,dir,debug_flag) );
+		gjiki,mmdl,key_trg,key_cont,dir,debug_flag) );
 }
 
 //--------------------------------------------------------------
 /**
  * 移動開始チェック　障害物ヒット中
  * @param	gjiki FIELD_PLAYER_GRID
- * @param fmmdl MMDL*
+ * @param mmdl MMDL*
  * @param key_trg キートリガ
  * @param key_cont キーコンティニュー
  * @param dir 移動方向
@@ -1336,28 +1334,28 @@ static PLAYER_SET gjikiCycle_CheckMoveStart_Turn(
  */
 //--------------------------------------------------------------
 static PLAYER_SET gjikiCycle_CheckMoveStart_Hitch(
-	FIELD_PLAYER_GRID *gjiki, MMDL *fmmdl,
+	FIELD_PLAYER_GRID *gjiki, MMDL *mmdl,
 	u32 key_trg, u32 key_cont, u16 dir, BOOL debug_flag )
 {
-  u16 dir_now = MMDL_GetDirDisp( fmmdl );
+  u16 dir_now = MMDL_GetDirDisp( mmdl );
    
   if( dir != DIR_NOT && dir != dir_now ){
-    MMDL_FreeAcmd( fmmdl );
+    MMDL_FreeAcmd( mmdl );
 	  return( gjikiCycle_CheckMoveStart_Walk(
-		  gjiki,fmmdl,key_trg,key_cont,dir,debug_flag) );
+		  gjiki,mmdl,key_trg,key_cont,dir,debug_flag) );
   }
   
-	if( MMDL_CheckPossibleAcmd(fmmdl) == FALSE ){
+	if( MMDL_CheckPossibleAcmd(mmdl) == FALSE ){
 		return( PLAYER_SET_NON );
 	}
 	
 	if( dir == DIR_NOT ){
 		return( gjikiCycle_CheckMoveStart_Stop(
-			gjiki,fmmdl,key_trg,key_cont,dir,debug_flag) );
+			gjiki,mmdl,key_trg,key_cont,dir,debug_flag) );
 	}
 	
 	return( gjikiCycle_CheckMoveStart_Walk(
-		gjiki,fmmdl,key_trg,key_cont,dir,debug_flag) );
+		gjiki,mmdl,key_trg,key_cont,dir,debug_flag) );
 }
 
 //======================================================================
@@ -1367,7 +1365,7 @@ static PLAYER_SET gjikiCycle_CheckMoveStart_Hitch(
 /**
  * 移動開始セット 特に無し
  * @param	gjiki FIELD_PLAYER_GRID
- * @param fmmdl MMDL*
+ * @param mmdl MMDL*
  * @param key_trg キートリガ
  * @param key_cont キーコンティニュー
  * @param debug_flag デバッグ移動可能フラグ TRUE=可能
@@ -1375,7 +1373,7 @@ static PLAYER_SET gjikiCycle_CheckMoveStart_Hitch(
  */
 //--------------------------------------------------------------
 static void gjikiCycle_SetMove_Non(
-	FIELD_PLAYER_GRID *gjiki, MMDL *fmmdl,
+	FIELD_PLAYER_GRID *gjiki, MMDL *mmdl,
 	u32 key_trg, u32 key_cont, u16 dir, BOOL debug_flag )
 {
 }
@@ -1384,7 +1382,7 @@ static void gjikiCycle_SetMove_Non(
 /**
  * 移動セット 停止
  * @param	gjiki FIELD_PLAYER_GRID
- * @param fmmdl MMDL*
+ * @param mmdl MMDL*
  * @param key_trg キートリガ
  * @param key_cont キーコンティニュー
  * @param debug_flag デバッグ移動可能フラグ TRUE=可能
@@ -1392,17 +1390,17 @@ static void gjikiCycle_SetMove_Non(
  */
 //--------------------------------------------------------------
 static void gjikiCycle_SetMove_Stop(
-	FIELD_PLAYER_GRID *gjiki, MMDL *fmmdl,
+	FIELD_PLAYER_GRID *gjiki, MMDL *mmdl,
 	u32 key_trg, u32 key_cont, u16 dir, BOOL debug_flag )
 {
 	u16 code;
 	
 	if( dir == DIR_NOT ){
-		dir = MMDL_GetDirDisp( fmmdl );
+		dir = MMDL_GetDirDisp( mmdl );
 	}
 	
 	code = MMDL_ChangeDirAcmdCode( dir, AC_DIR_U );
-	MMDL_SetAcmd( fmmdl, code );
+	MMDL_SetAcmd( mmdl, code );
 	gjiki->move_state = PLAYER_MOVE_STOP;
 	
   FIELD_PLAYER_SetMoveValue( gjiki->fld_player, PLAYER_MOVE_VALUE_STOP );
@@ -1414,7 +1412,7 @@ static void gjikiCycle_SetMove_Stop(
 /**
  * 移動セット 移動
  * @param	gjiki FIELD_PLAYER_GRID
- * @param fmmdl MMDL*
+ * @param mmdl MMDL*
  * @param key_trg キートリガ
  * @param key_cont キーコンティニュー
  * @param debug_flag デバッグ移動可能フラグ TRUE=可能
@@ -1422,7 +1420,7 @@ static void gjikiCycle_SetMove_Stop(
  */
 //--------------------------------------------------------------
 static void gjikiCycle_SetMove_Walk(
-	FIELD_PLAYER_GRID *gjiki, MMDL *fmmdl,
+	FIELD_PLAYER_GRID *gjiki, MMDL *mmdl,
 	u32 key_trg, u32 key_cont, u16 dir, BOOL debug_flag )
 {
 	u16 code;
@@ -1437,7 +1435,7 @@ static void gjikiCycle_SetMove_Walk(
   
 	code = MMDL_ChangeDirAcmdCode( dir, code );
 	
-	MMDL_SetAcmd( fmmdl, code );
+	MMDL_SetAcmd( mmdl, code );
 	gjiki->move_state = PLAYER_MOVE_WALK;
 
   FIELD_PLAYER_SetMoveValue( gjiki->fld_player, PLAYER_MOVE_VALUE_WALK );
@@ -1449,7 +1447,7 @@ static void gjikiCycle_SetMove_Walk(
 /**
  * 移動セット 振り向き
  * @param	gjiki FIELD_PLAYER_GRID
- * @param fmmdl MMDL*
+ * @param mmdl MMDL*
  * @param key_trg キートリガ
  * @param key_cont キーコンティニュー
  * @param debug_flag デバッグ移動可能フラグ TRUE=可能
@@ -1457,7 +1455,7 @@ static void gjikiCycle_SetMove_Walk(
  */
 //--------------------------------------------------------------
 static void gjikiCycle_SetMove_Turn(
-	FIELD_PLAYER_GRID *gjiki, MMDL *fmmdl,
+	FIELD_PLAYER_GRID *gjiki, MMDL *mmdl,
 	u32 key_trg, u32 key_cont, u16 dir, BOOL debug_flag )
 {
 	u16 code;
@@ -1465,7 +1463,7 @@ static void gjikiCycle_SetMove_Turn(
 	GF_ASSERT( dir != DIR_NOT );
 	code = MMDL_ChangeDirAcmdCode( dir, AC_STAY_WALK_U_2F );
 	
-	MMDL_SetAcmd( fmmdl, code );
+	MMDL_SetAcmd( mmdl, code );
 	gjiki->move_state = PLAYER_MOVE_TURN;
 	
   FIELD_PLAYER_SetMoveValue( gjiki->fld_player, PLAYER_MOVE_VALUE_TURN );
@@ -1476,7 +1474,7 @@ static void gjikiCycle_SetMove_Turn(
 /**
  * 移動セット 障害物ヒット
  * @param	gjiki FIELD_PLAYER_GRID
- * @param fmmdl MMDL*
+ * @param mmdl MMDL*
  * @param key_trg キートリガ
  * @param key_cont キーコンティニュー
  * @param debug_flag デバッグ移動可能フラグ TRUE=可能
@@ -1484,7 +1482,7 @@ static void gjikiCycle_SetMove_Turn(
  */
 //--------------------------------------------------------------
 static void gjikiCycle_SetMove_Hitch(
-	FIELD_PLAYER_GRID *gjiki, MMDL *fmmdl,
+	FIELD_PLAYER_GRID *gjiki, MMDL *mmdl,
 	u32 key_trg, u32 key_cont, u16 dir, BOOL debug_flag )
 {
 	u16 code;
@@ -1492,7 +1490,7 @@ static void gjikiCycle_SetMove_Hitch(
 	GF_ASSERT( dir != DIR_NOT );
 	code = MMDL_ChangeDirAcmdCode( dir, AC_STAY_WALK_U_16F );
 	
-	MMDL_SetAcmd( fmmdl, code );
+	MMDL_SetAcmd( mmdl, code );
 	gjiki->move_state = PLAYER_MOVE_HITCH;
 	
   FIELD_PLAYER_SetMoveValue( gjiki->fld_player, PLAYER_MOVE_VALUE_STOP );
@@ -1504,7 +1502,7 @@ static void gjikiCycle_SetMove_Hitch(
 /**
  * 移動セット ジャンプ
  * @param	gjiki FIELD_PLAYER_GRID
- * @param fmmdl MMDL*
+ * @param mmdl MMDL*
  * @param key_trg キートリガ
  * @param key_cont キーコンティニュー
  * @param debug_flag デバッグ移動可能フラグ TRUE=可能
@@ -1512,7 +1510,7 @@ static void gjikiCycle_SetMove_Hitch(
  */
 //--------------------------------------------------------------
 static void gjikiCycle_SetMove_Jump(
-	FIELD_PLAYER_GRID *gjiki, MMDL *fmmdl,
+	FIELD_PLAYER_GRID *gjiki, MMDL *mmdl,
 	u32 key_trg, u32 key_cont, u16 dir, BOOL debug_flag )
 {
 	u16 code;
@@ -1521,7 +1519,7 @@ static void gjikiCycle_SetMove_Jump(
 	
 	code = MMDL_ChangeDirAcmdCode( dir, AC_JUMP_U_2G_16F );
 	
-	MMDL_SetAcmd( fmmdl, code );
+	MMDL_SetAcmd( mmdl, code );
 	gjiki->move_state = PLAYER_MOVE_WALK;
   
   FIELD_PLAYER_SetMoveValue( gjiki->fld_player, PLAYER_MOVE_VALUE_WALK );
@@ -1580,12 +1578,16 @@ void FIELD_PLAYER_GRID_UpdateRequest( FIELD_PLAYER_GRID *gjiki )
 //--------------------------------------------------------------
 static void gjikiReq_SetNormal( FIELD_PLAYER_GRID *gjiki )
 {
-  MMDL *fmmdl;
+  int sex;
+  u16 code;
+  MMDL *mmdl;
   
-  fmmdl = FIELD_PLAYER_GetMMdl( gjiki->fld_player );
+  sex = FIELD_PLAYER_GetSex( gjiki->fld_player );
+  mmdl = FIELD_PLAYER_GetMMdl( gjiki->fld_player );
+  code = FIELD_PLAYER_GetDrawFormToOBJCode( sex, PLAYER_DRAW_FORM_NORMAL );
   
-  if( MMDL_GetOBJCode(fmmdl) != HERO ){
-    MMDL_ChangeOBJCode( fmmdl, HERO );
+  if( MMDL_GetOBJCode(mmdl) != code ){
+    MMDL_ChangeOBJCode( mmdl, code );
   }
 
   FIELD_PLAYER_SetMoveForm( gjiki->fld_player, PLAYER_MOVE_FORM_NORMAL );
@@ -1600,14 +1602,18 @@ static void gjikiReq_SetNormal( FIELD_PLAYER_GRID *gjiki )
 //--------------------------------------------------------------
 static void gjikiReq_SetCycle( FIELD_PLAYER_GRID *gjiki )
 {
-  MMDL *fmmdl;
+  int sex;
+  u16 code;
+  MMDL *mmdl;
   
-  fmmdl = FIELD_PLAYER_GetMMdl( gjiki->fld_player );
+  sex = FIELD_PLAYER_GetSex( gjiki->fld_player );
+  mmdl = FIELD_PLAYER_GetMMdl( gjiki->fld_player );
+  code = FIELD_PLAYER_GetDrawFormToOBJCode( sex, PLAYER_DRAW_FORM_CYCLE );
   
-  if( MMDL_GetOBJCode(fmmdl) != CYCLEHERO ){
-    MMDL_ChangeOBJCode( fmmdl, CYCLEHERO );
+  if( MMDL_GetOBJCode(mmdl) != code ){
+    MMDL_ChangeOBJCode( mmdl, code );
   }
-  
+   
   FIELD_PLAYER_SetMoveForm( gjiki->fld_player, PLAYER_MOVE_FORM_CYCLE );
 }
 
@@ -1620,12 +1626,16 @@ static void gjikiReq_SetCycle( FIELD_PLAYER_GRID *gjiki )
 //--------------------------------------------------------------
 static void gjikiReq_SetSwim( FIELD_PLAYER_GRID *gjiki )
 {
+  int sex;
+  u16 code;
   MMDL *mmdl;
   
+  sex = FIELD_PLAYER_GetSex( gjiki->fld_player );
   mmdl = FIELD_PLAYER_GetMMdl( gjiki->fld_player );
-  
-  if( MMDL_GetOBJCode(mmdl) != SWIMHERO ){
-    MMDL_ChangeOBJCode( mmdl, SWIMHERO );
+  code = FIELD_PLAYER_GetDrawFormToOBJCode( sex, PLAYER_DRAW_FORM_CYCLE );
+
+  if( MMDL_GetOBJCode(mmdl) != code ){
+    MMDL_ChangeOBJCode( mmdl, code );
   }
   
   FIELD_PLAYER_SetMoveForm( gjiki->fld_player, PLAYER_MOVE_FORM_SWIM );
@@ -1703,11 +1713,11 @@ void FIELD_PLAYER_GRID_ForceStop( FIELD_PLAYER *fld_player )
   FIELD_PLAYER_GRID *gjiki = FIELDMAP_CTRL_GRID_GetFieldPlayerGrid( gridMap );
 
   if( gjiki->move_state == PLAYER_MOVE_HITCH ){
-    MMDL *fmmdl = FIELD_PLAYER_GetMMdl( fld_player );
-    u16 dir = MMDL_GetDirDisp( fmmdl );
-    MMDL_FreeAcmd( fmmdl );
-    MMDL_SetDirDisp( fmmdl, dir );
-    MMDL_SetDrawStatus( fmmdl, DRAW_STA_STOP );
+    MMDL *mmdl = FIELD_PLAYER_GetMMdl( fld_player );
+    u16 dir = MMDL_GetDirDisp( mmdl );
+    MMDL_FreeAcmd( mmdl );
+    MMDL_SetDirDisp( mmdl, dir );
+    MMDL_SetDrawStatus( mmdl, DRAW_STA_STOP );
     FIELD_PLAYER_SetMoveValue( fld_player, PLAYER_MOVE_VALUE_STOP );
   }
 }
@@ -1748,12 +1758,16 @@ FLDEFF_TASK * FIELD_PLAYER_GRID_GetEffectTaskWork(
 //--------------------------------------------------------------
 void FIELD_PLAYER_SetNaminori( FIELD_PLAYER_GRID *gjiki )
 {
+  int sex;
+  u16 code;
   MMDL *mmdl;
    
+  sex = FIELD_PLAYER_GetSex( gjiki->fld_player );
   mmdl = FIELD_PLAYER_GetMMdl( gjiki->fld_player );
-  
-  if( MMDL_GetOBJCode(mmdl) != SWIMHERO ){
-    MMDL_ChangeOBJCode( mmdl, SWIMHERO );
+  code = FIELD_PLAYER_GetDrawFormToOBJCode( sex, PLAYER_DRAW_FORM_SWIM );
+
+  if( MMDL_GetOBJCode(mmdl) != code ){
+    MMDL_ChangeOBJCode( mmdl, code );
   }
   
   FIELD_PLAYER_SetMoveForm( gjiki->fld_player, PLAYER_MOVE_FORM_SWIM );
@@ -1770,12 +1784,16 @@ void FIELD_PLAYER_SetNaminori( FIELD_PLAYER_GRID *gjiki )
 void FIELD_PLAYER_SetNaminoriEnd( FIELD_PLAYER_GRID *gjiki )
 {
   VecFx32 offs = {0,0,0};
+  int sex;
+  u16 code;
   MMDL *mmdl;
   
+  sex = FIELD_PLAYER_GetSex( gjiki->fld_player );
   mmdl = FIELD_PLAYER_GetMMdl( gjiki->fld_player );
+  code = FIELD_PLAYER_GetDrawFormToOBJCode( sex, PLAYER_DRAW_FORM_NORMAL );
   
-  if( MMDL_GetOBJCode(mmdl) != HERO ){
-    MMDL_ChangeOBJCode( mmdl, HERO );
+  if( MMDL_GetOBJCode(mmdl) != code ){
+    MMDL_ChangeOBJCode( mmdl, code );
   }
   
   FIELD_PLAYER_SetMoveForm( gjiki->fld_player, PLAYER_MOVE_FORM_NORMAL );

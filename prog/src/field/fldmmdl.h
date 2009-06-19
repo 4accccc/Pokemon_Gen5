@@ -317,6 +317,17 @@ enum
 //--------------------------------------------------------------
 #define MMDL_BLACTID_NULL (0xffff)
 
+//--------------------------------------------------------------
+/// OBJコード性別
+//--------------------------------------------------------------
+typedef enum
+{
+  MMDL_OBJCODESEX_MALE = 0, ///<男性
+  MMDL_OBJCODESEX_FEMALE, ///<女性
+  MMDL_OBJCODESEX_NON, ///<性別無し
+  MMDL_OBJCODESEX_MAX, ///<最大
+}MMDL_OBJCODESEX;
+
 //======================================================================
 //	struct
 //======================================================================
@@ -470,6 +481,10 @@ typedef struct
 	u8 mdl_size;		///<モデルサイズ
 	u8 tex_size;		///<テクスチャサイズ
 	u8 anm_id;			///<MMDL_BLACT_ANMTBLNO
+  u8 sex; ///<MMDL_OBJCODESEX
+  u8 dmy0; ///<ダミー0
+  u8 dmy1; ///<ダミー1
+  u8 dmy2; ///<ダミー2
 }OBJCODE_PARAM;
 
 #define OBJCODE_PARAM_TOTAL_NUMBER_SIZE (sizeof(u32))
@@ -742,7 +757,7 @@ extern void MMDL_InitPosition(
 	MMDL * mmdl, const VecFx32 *vec, u16 dir );
 extern void MMDL_ChangeMoveCode( MMDL *mmdl, u16 code );
 extern void MMDL_ChangeOBJID( MMDL * mmdl, u16 id );
-extern BOOL MMDL_InitCheckSameData(
+extern void MMDL_InitCheckSameData(
     const MMDL *mmdl, MMDL_CHECKSAME_DATA *outData );
 extern BOOL MMDL_CheckSameData(
     const MMDL * mmdl, const MMDL_CHECKSAME_DATA *data );

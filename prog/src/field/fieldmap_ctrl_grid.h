@@ -11,6 +11,7 @@
 #include "system/gfl_use.h"
 
 #include "fieldmap.h"
+#include "field_player_grid.h"
 
 //======================================================================
 //	define

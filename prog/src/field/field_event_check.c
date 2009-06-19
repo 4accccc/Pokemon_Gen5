@@ -301,11 +301,19 @@ GMEVENT * FIELD_EVENT_CheckNormal( GAMESYS_WORK *gsys, void *work )
        }
       }
 #endif         
+      #ifdef PM_DEBUG
+      if( !(req.debugRequest) ){
+        event = checkEvent_PlayerNaminoriEnd( &req, gsys, fieldWork );
+        if( event != NULL ){
+         return event;
+       }
+      }
+      #else
       event = checkEvent_PlayerNaminoriEnd( &req, gsys, fieldWork );
-      
       if( event != NULL ){
         return event;
       }
+      #endif
     }
   }
   
@@ -866,6 +874,7 @@ static GMEVENT * checkEvent_ConvenienceButton( const EV_REQUEST *req,
 typedef struct
 {
   int wait;
+  u16 dir;
   GAMESYS_WORK *gsys;
   FIELDMAP_WORK *fieldWork;
 }EVWORK_NAMINORI;
@@ -1023,25 +1032,28 @@ static GMEVENT_RESULT event_NaminoriEnd(
   
   switch( *seq )
   {
-  case 0: //波乗りポケモン切り離し
+  case 0: //入力された方向に向く
+    MMDL_SetDirDisp( mmdl, work->dir );
+    (*seq)++;
+    break;
+  case 1: //波乗りポケモン切り離し
     task = FIELD_PLAYER_GRID_GetEffectTaskWork( gjiki );
     FLDEFF_NAMIPOKE_SetJointFlag( task, FALSE );
     FIELD_PLAYER_GRID_SetRequest( gjiki, FIELD_PLAYER_GRID_REQBIT_NORMAL );
     FIELD_PLAYER_GRID_UpdateRequest( gjiki );
     {
-      u16 dir = MMDL_GetDirDisp( mmdl );
-      u16 ac = MMDL_ChangeDirAcmdCode( dir, AC_JUMP_U_2G_16F );
+      u16 ac = MMDL_ChangeDirAcmdCode( work->dir, AC_JUMP_U_2G_16F );
       MMDL_SetAcmd( mmdl, ac );
     }
     (*seq)++;
     break;
-  case 1:
+  case 2:
     if( MMDL_CheckEndAcmd(mmdl) == TRUE ){
       FIELD_PLAYER_SetNaminoriEnd( gjiki );
       (*seq)++;
     }
     break;
-  case 2:
+  case 3:
     return GMEVENT_RES_FINISH;
   }
   
@@ -1049,7 +1061,7 @@ static GMEVENT_RESULT event_NaminoriEnd(
 }
 
 static GMEVENT * eventSet_NaminoriEnd( const EV_REQUEST *req,
-    GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork )
+    GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork, u16 dir )
 {
   GMEVENT *event;
   EVWORK_NAMINORI *work;
@@ -1059,6 +1071,7 @@ static GMEVENT * eventSet_NaminoriEnd( const EV_REQUEST *req,
   work = GMEVENT_GetEventWork( event );
   work->gsys = gsys;
   work->fieldWork = fieldWork;
+  work->dir = dir;
   return( event );
 }
 
@@ -1095,7 +1108,7 @@ static GMEVENT * checkEvent_PlayerNaminoriEnd( const EV_REQUEST *req,
       if( (attr_flag&MAPATTR_FLAGBIT_HITCH) == 0 && //進入可能で
           (attr_flag&MAPATTR_FLAGBIT_WATER) == 0 ){ //水以外
         GMEVENT *event;
-        event = eventSet_NaminoriEnd( req, gsys, fieldWork );
+        event = eventSet_NaminoriEnd( req, gsys, fieldWork, dir );
         return( event );
       }
     }

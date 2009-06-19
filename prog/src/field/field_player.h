@@ -48,6 +48,17 @@ typedef enum
   PLAYER_MOVE_FORM_MAX,
 }PLAYER_MOVE_FORM;
 
+//--------------------------------------------------------------
+/// PLAYER_DRAW_FORM
+//--------------------------------------------------------------
+typedef enum
+{
+  PLAYER_DRAW_FORM_NORMAL = 0, ///<自機二足歩行
+  PLAYER_DRAW_FORM_CYCLE, ///<自機自転車移動
+  PLAYER_DRAW_FORM_SWIM, ///<自機波乗り移動
+  PLAYER_DRAW_FORM_MAX,
+}PLAYER_DRAW_FORM;
+
 //======================================================================
 //	struct
 //======================================================================
@@ -59,7 +70,7 @@ typedef struct _FIELD_PLAYER FIELD_PLAYER;
 //======================================================================
 //作成、削除、更新
 extern FIELD_PLAYER * FIELD_PLAYER_Create(
-		FIELDMAP_WORK *fieldWork, const VecFx32 *pos, HEAPID heapID );
+		FIELDMAP_WORK *fieldWork, const VecFx32 *pos, int sex, HEAPID heapID );
 extern void FIELD_PLAYER_Delete( FIELD_PLAYER *fld_player );
 extern void FIELD_PLAYER_Update( FIELD_PLAYER *fld_player );
 extern void FIELD_PLAYER_UpdateMoveStatus( FIELD_PLAYER *fld_player );
@@ -86,6 +97,17 @@ extern PLAYER_MOVE_FORM FIELD_PLAYER_GetMoveForm(
     const FIELD_PLAYER *fld_player );
 extern void FIELD_PLAYER_SetMoveForm(
     FIELD_PLAYER *fld_player, PLAYER_MOVE_FORM form );
+extern int FIELD_PLAYER_GetSex( const FIELD_PLAYER *fld_player );
+
+//性別、OBJコード、各フォーム
+extern u16 FIELD_PLAYER_GetDrawFormToOBJCode(
+    int sex, PLAYER_DRAW_FORM form );
+extern PLAYER_MOVE_FORM FIELD_PLAYER_GetOBJCodeToMoveForm(
+    int sex, u16 code );
+extern u16 FIELD_PLAYER_GetMoveFormToOBJCode(
+    int sex, PLAYER_MOVE_FORM form );
+extern PLAYER_DRAW_FORM FIELD_PLAYER_GetOBJCodeToDrawForm(
+    int sex, u16 code );
 
 //ツール
 extern void FIELD_PLAYER_GetDirGridPos(
@@ -95,11 +117,3 @@ extern void FIELD_PLAYER_GetDirPos(
 extern void FIELD_PLAYER_GetFrontGridPos(
 		FIELD_PLAYER *fld_player, s16 *gx, s16 *gy, s16 *gz );
 extern BOOL FIELD_PLAYER_CheckLiveMMdl( FIELD_PLAYER *fld_player );
-
-//======================================================================
-//	消します
-//======================================================================
-extern GFL_BBDACT_RESUNIT_ID GetPlayerBBdActResUnitID(
-		FIELD_PLAYER *pcActCont );
-
-#include "field_player_grid.h"

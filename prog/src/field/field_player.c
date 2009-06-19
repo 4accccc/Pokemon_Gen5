@@ -20,6 +20,15 @@
 //	struct
 //======================================================================
 //--------------------------------------------------------------
+/// OBJCODE_FORM
+//--------------------------------------------------------------
+typedef struct
+{
+  u16 code;
+  u16 move_form;
+}OBJCODE_FORM;
+
+//--------------------------------------------------------------
 ///	FIELD_PLAYER
 //--------------------------------------------------------------
 struct _FIELD_PLAYER
@@ -31,9 +40,12 @@ struct _FIELD_PLAYER
   PLAYER_MOVE_STATE move_state;
   PLAYER_MOVE_VALUE move_value;
 	
+  int sex; //性別
+  
 	u16 dir;
 	u16 padding0;
-	VecFx32 pos;
+	
+  VecFx32 pos;
   
 	MMDL *fldmmdl;
 	FLDMAPPER_GRIDINFODATA gridInfoData;
@@ -46,7 +58,8 @@ struct _FIELD_PLAYER
 //======================================================================
 //	proto
 //======================================================================
-static const MMDL_HEADER playerdata_MMdlHeader;
+static const MMDL_HEADER data_MMdlHeader;
+static const OBJCODE_FORM dataOBJCodeForm[2][PLAYER_DRAW_FORM_MAX];
 
 //======================================================================
 //	フィールドプレイヤー
@@ -56,12 +69,13 @@ static const MMDL_HEADER playerdata_MMdlHeader;
  * フィールドプレイヤー　作成
  * @param FIELDMAP_WORK *fieldWork
  * @param pos 初期座標
+ * @param sex 性別
  * @param heapID HEAPID
  * @retval FIELD_PLAYER*
  */
 //--------------------------------------------------------------
 FIELD_PLAYER * FIELD_PLAYER_Create(
-		FIELDMAP_WORK *fieldWork, const VecFx32 *pos, HEAPID heapID )
+		FIELDMAP_WORK *fieldWork, const VecFx32 *pos, int sex, HEAPID heapID )
 {
 	MMDLSYS *fmmdlsys;
 	FIELD_PLAYER *fld_player;
@@ -69,7 +83,7 @@ FIELD_PLAYER * FIELD_PLAYER_Create(
 	fld_player = GFL_HEAP_AllocClearMemory( heapID, sizeof(FIELD_PLAYER) );
 	fld_player->fieldWork = fieldWork;
 	fld_player->pos = *pos;
-
+  
 	FLDMAPPER_GRIDINFODATA_Init( &fld_player->gridInfoData );
 	
 	//MMDLセットアップ
@@ -77,14 +91,18 @@ FIELD_PLAYER * FIELD_PLAYER_Create(
 	
 	fld_player->fldmmdl =
 		MMDLSYS_SearchOBJID( fmmdlsys, MMDL_ID_PLAYER );
-
+  
+  fld_player->sex = sex;
+  
 	if( fld_player->fldmmdl == NULL )	//新規
 	{
 		MMDL_HEADER head;
-		head = playerdata_MMdlHeader;
+		head = data_MMdlHeader;
 		head.gx = SIZE_GRID_FX32( pos->x );
 		head.gz = SIZE_GRID_FX32( pos->z );
 		head.y = pos->y;
+    head.obj_code = FIELD_PLAYER_GetMoveFormToOBJCode(
+        sex, PLAYER_MOVE_FORM_NORMAL ); 
 		fld_player->fldmmdl = MMDLSYS_AddMMdl( fmmdlsys, &head, 0 );
 	}
 	else //復帰
@@ -101,26 +119,11 @@ FIELD_PLAYER * FIELD_PLAYER_Create(
 	}
 	
   { //OBJコードから動作フォームを設定
-    PLAYER_MOVE_FORM form = PLAYER_MOVE_FORM_NORMAL;
     u16 code = MMDL_GetOBJCode( fld_player->fldmmdl );
-    switch( code )
-    {
-    case HERO:
-      form = PLAYER_MOVE_FORM_NORMAL;
-      break;
-    case CYCLEHERO:
-      form = PLAYER_MOVE_FORM_CYCLE;
-      break;
-    case SWIMHERO:
-      form = PLAYER_MOVE_FORM_SWIM;
-      break;
-    default:
-      GF_ASSERT( 0 );
-    }
-    
+    PLAYER_MOVE_FORM form = FIELD_PLAYER_GetOBJCodeToMoveForm( sex, code );
     fld_player->move_form = form;
   }
-
+  
 	MMDL_SetStatusBitNotZoneDelete( fld_player->fldmmdl, TRUE );
 	return( fld_player );
 }
@@ -394,6 +397,102 @@ void FIELD_PLAYER_SetMoveForm(
   fld_player->move_form = form;
 }
 
+//--------------------------------------------------------------
+/**
+ * FIELD_PLAYER FIELD_PLAYERにセットされている性別を取得
+ * @param fld_player FIELD_PLAYER
+ * @retval int PM_MALE,PM_FEMALE
+ */
+//--------------------------------------------------------------
+int FIELD_PLAYER_GetSex( const FIELD_PLAYER *fld_player )
+{
+  return( fld_player->sex );
+}
+
+//======================================================================
+/// 性別、OBJコード、各フォーム
+//======================================================================
+//--------------------------------------------------------------
+/**
+ * 性別とPLAYER_DRAW_FORMからOBJコード取得
+ * @param sex PM_MALE,PM_FEMALE
+ * @param form PLAYER_DRAW_FORM
+ * @retval OBJコード
+ */
+//--------------------------------------------------------------
+u16 FIELD_PLAYER_GetDrawFormToOBJCode( int sex, PLAYER_DRAW_FORM form )
+{
+  const OBJCODE_FORM *tbl = &dataOBJCodeForm[sex][form];
+  GF_ASSERT( sex < 2 ); //PM_FEMALE
+  GF_ASSERT( form < PLAYER_DRAW_FORM_MAX );
+  return( tbl->code );
+}
+
+//--------------------------------------------------------------
+/**
+ * 性別とOBJコードからからPLAYER_MOVE_FORM取得
+ * @param sex PM_MALE,PM_FEMALE
+ * @param code OBJコード
+ * @retval PLAYER_MOVE_FORM
+ * @note PLAYER_MOVE_FORM_MAX時はアサート
+ */
+//--------------------------------------------------------------
+PLAYER_MOVE_FORM FIELD_PLAYER_GetOBJCodeToMoveForm( int sex, u16 code )
+{
+  int i = 0;
+  const OBJCODE_FORM *tbl = dataOBJCodeForm[sex];
+  GF_ASSERT( sex < 2 ); //PM_FEMALE
+  for( ; i < PLAYER_DRAW_FORM_MAX; i++,tbl++ ){
+    if( tbl->code == code ){
+      GF_ASSERT( tbl->move_form != PLAYER_MOVE_FORM_MAX );
+      return(tbl->move_form);
+    }
+  }
+  GF_ASSERT( 0 );
+}
+
+//--------------------------------------------------------------
+/**
+ * 性別とPLAYER_MOVE_FORMからOBJコード取得
+ * @param sex PM_MALE,PM_FEMALE
+ * @param form PLAYER_MOVE_FORM
+ * @retval u16 OBJコード
+ */
+//--------------------------------------------------------------
+u16 FIELD_PLAYER_GetMoveFormToOBJCode( int sex, PLAYER_MOVE_FORM form )
+{
+  int i = 0;
+  const OBJCODE_FORM *tbl = dataOBJCodeForm[sex];
+  GF_ASSERT( sex < 2 ); //PM_FEMALE
+  for( ; i < PLAYER_DRAW_FORM_MAX; i++,tbl++ ){
+    if( tbl->move_form == form ){
+      return(tbl->code);
+    }
+  }
+  GF_ASSERT( 0 );
+}
+
+//--------------------------------------------------------------
+/**
+ * 性別とOBJコードからPLAYER_DRAW_FORM取得
+ * @param sex PM_MALE,PM_FEMALE
+ * @param code OBJコード
+ * @retval PLAYER_DRAW_FORM
+ */
+//--------------------------------------------------------------
+PLAYER_DRAW_FORM FIELD_PLAYER_GetOBJCodeToDrawForm( int sex, u16 code )
+{
+  int i = 0;
+  const OBJCODE_FORM *tbl = dataOBJCodeForm[sex];
+  GF_ASSERT( sex < 2 ); //PM_FEMALE
+  for( ; i < PLAYER_DRAW_FORM_MAX; i++,tbl++ ){
+    if( tbl->code == code ){
+      return( i );
+    }
+  }
+  GF_ASSERT( 0 );
+}
+
 //======================================================================
 //	FILED_PLAYER　ツール
 //======================================================================
@@ -486,7 +585,7 @@ BOOL FIELD_PLAYER_CheckLiveMMdl( FIELD_PLAYER *fld_player )
 //--------------------------------------------------------------
 /// 自機動作モデルヘッダー
 //--------------------------------------------------------------
-static const MMDL_HEADER playerdata_MMdlHeader =
+static const MMDL_HEADER data_MMdlHeader =
 {
 	MMDL_ID_PLAYER,	///<識別ID
 	HERO,	///<表示するOBJコード
@@ -505,13 +604,32 @@ static const MMDL_HEADER playerdata_MMdlHeader =
 	0,	///<Y値 fx32型
 };
 
+//--------------------------------------------------------------
+/// 性別、OBJコード、各フォーム
+//--------------------------------------------------------------
+static const OBJCODE_FORM dataOBJCodeForm[2][PLAYER_DRAW_FORM_MAX] =
+{
+  { //男主人公
+    {HERO,PLAYER_MOVE_FORM_NORMAL},
+    {CYCLEHERO,PLAYER_MOVE_FORM_CYCLE},
+    {SWIMHERO,PLAYER_MOVE_FORM_SWIM},
+  },
+  { //女主人公
+    {HEROINE,PLAYER_MOVE_FORM_NORMAL},
+    {CYCLEHEROINE,PLAYER_MOVE_FORM_CYCLE},
+    {SWIMHEROINE,PLAYER_MOVE_FORM_SWIM},
+  },
+};
+
 //======================================================================
 //	以下消します
 //======================================================================
+#if 0
 GFL_BBDACT_RESUNIT_ID GetPlayerBBdActResUnitID( FIELD_PLAYER *fld_player )
 {
 	return( fld_player->bbdActResUnitID );
 }
+#endif
 
 #if 0
 void PlayerActGrid_Update(
