@@ -91,8 +91,7 @@ typedef struct
 {
   FLDEFF_SHADOW *eff_shadow;
   MMDL *fmmdl;
-  u16 obj_id;
-  u16 zone_id;
+  MMDL_CHECKSAME_DATA samedata;
 }TASKWORK_SHADOW;
 
 //======================================================================
@@ -251,9 +250,8 @@ static void shadowTask_Init( FLDEFF_TASK *task, void *wk )
   head = FLDEFF_TASK_GetAddPointer( task );
   work->eff_shadow = head->eff_shadow;
   work->fmmdl = head->fmmdl;
-  work->obj_id = MMDL_GetOBJID( work->fmmdl );
-  work->zone_id = MMDL_GetZoneID( work->fmmdl );
-  
+  MMDL_InitCheckSameData( head->fmmdl, &work->samedata );
+
   FLDEFF_TASK_CallUpdate( task ); //‘¦AÀ•W‚ð”½‰f‚·‚é
 }
 
@@ -283,7 +281,7 @@ static void shadowTask_Update( FLDEFF_TASK *task, void *wk )
   VecFx32 pos;
   TASKWORK_SHADOW *work = wk;
   
-  if( MMDL_CheckSameID(work->fmmdl,work->obj_id,work->zone_id) == FALSE ){
+  if( MMDL_CheckSameData(work->fmmdl,&work->samedata) == FALSE ){
     FLDEFF_TASK_CallDelete( task );
     return;
   }

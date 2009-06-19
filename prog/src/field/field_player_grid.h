@@ -9,6 +9,8 @@
 #include <gflib.h>
 #include "field_player.h"
 
+#include "field_effect.h"
+
 //======================================================================
 //	define
 //======================================================================
@@ -21,9 +23,11 @@ typedef enum
   FIELD_PLAYER_GRID_REQBIT_NORMAL = (1<<0),
   ///Ž©‹@‚ðŽ©“]ŽÔ‚É
   FIELD_PLAYER_GRID_REQBIT_CYCLE  = (1<<1),
+  ///Ž©‹@‚ð”gæ‚èó‘Ô‚É
+  FIELD_PLAYER_GRID_REQBIT_SWIM = (1<<2),
 }FIELD_PLAYER_GRID_REQBIT;
 
-#define FIELD_PLAYER_GRID_REQBIT_MAX (2)
+#define FIELD_PLAYER_GRID_REQBIT_MAX (3)
 
 //======================================================================
 //	struct
@@ -46,3 +50,12 @@ extern void FIELD_PLAYER_GRID_ForceStop( FIELD_PLAYER *fld_player );
 extern void FIELD_PLAYER_GRID_SetRequest(
   FIELD_PLAYER_GRID *gjiki, FIELD_PLAYER_GRID_REQBIT req_bit );
 extern void FIELD_PLAYER_GRID_UpdateRequest( FIELD_PLAYER_GRID *gjiki );
+
+
+extern void FIELD_PLAYER_GRID_SetEffectTaskWork(
+    FIELD_PLAYER_GRID *gjiki, FLDEFF_TASK *task );
+extern FLDEFF_TASK * FIELD_PLAYER_GRID_GetEffectTaskWork(
+    FIELD_PLAYER_GRID *gjiki );
+extern void FIELD_PLAYER_SetNaminori( FIELD_PLAYER_GRID *gjiki );
+extern void FIELD_PLAYER_SetNaminoriEnd( FIELD_PLAYER_GRID *gjiki );
+extern u16 FIELD_PLAYER_GRID_GetKeyDir( FIELD_PLAYER_GRID *gjiki, int key );

@@ -468,7 +468,7 @@ static BOOL enc_CheckEncount(
   next_per = NEXT_PERCENT; //エンカウント基本確率
   
   { //確率変動
-    MAPATTR_VAL val = MAPATTR_GetAttrValue( attr );
+    MAPATTR_VALUE val = MAPATTR_GetAttrValue( attr );
     
     if( MAPATTR_CheckAttrValueLongGrass(val) == TRUE ){
       next_per += LONG_GRASS_PERCENT; //長い草の場合は+30%

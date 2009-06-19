@@ -19,6 +19,7 @@ const MMDL_DRAW_PROC_LIST * const
 	&DATA_MMDL_DRAWPROCLIST_Hero,	//自機
 	&DATA_MMDL_DRAWPROCLIST_BlAct,	//通常ビルボードアクター
 	&DATA_MMDL_DRAWPROCLIST_CycleHero,	//自機自転車
+	&DATA_MMDL_DRAWPROCLIST_SwimHero,	//自機自転車
 };
 
 //======================================================================
@@ -563,6 +564,56 @@ static const GFL_BBDACT_ANM * DATA_BlActCycleHeroTbl[DRAW_STA_MAXDIR4] =
 };
 
 //======================================================================
+//  自機波乗りアニメ
+//  0 up
+//  1 down
+//  2 left
+//  3 right
+//======================================================================
+//--------------------------------------------------------------
+//  自機波乗りアニメ 上
+//--------------------------------------------------------------
+static const GFL_BBDACT_ANM DATA_BlActSwimHero_U[] = {
+	{0,GFL_BBDACT_ANMFLIP_OFF,GFL_BBDACT_ANMFLIP_OFF,1},
+	{GFL_BBDACT_ANMCOM_END,0,0,0},
+};
+
+//--------------------------------------------------------------
+//  自機波乗りアニメ　下
+//--------------------------------------------------------------
+static const GFL_BBDACT_ANM DATA_BlActSwimHero_D[] = {
+	{1,GFL_BBDACT_ANMFLIP_OFF,GFL_BBDACT_ANMFLIP_OFF,1},
+	{GFL_BBDACT_ANMCOM_END,0,0,0},
+};
+
+//--------------------------------------------------------------
+//  自機波乗りアニメ　左
+//--------------------------------------------------------------
+static const GFL_BBDACT_ANM DATA_BlActSwimHero_L[] = {
+	{2,GFL_BBDACT_ANMFLIP_OFF,GFL_BBDACT_ANMFLIP_OFF,1},
+	{GFL_BBDACT_ANMCOM_END,0,0,0},
+};
+
+//--------------------------------------------------------------
+//  自機波乗りアニメ　右
+//--------------------------------------------------------------
+static const GFL_BBDACT_ANM DATA_BlActSwimHero_R[] = {
+	{2,GFL_BBDACT_ANMFLIP_ON,GFL_BBDACT_ANMFLIP_OFF,1},
+	{GFL_BBDACT_ANMCOM_END,0,0,0},
+};
+
+//--------------------------------------------------------------
+//  自機波乗りアニメ　データテーブル
+//--------------------------------------------------------------
+static const GFL_BBDACT_ANM * DATA_BlActSwimHeroTbl[DRAW_STA_SWIMHERO_MAX] =
+{
+	DATA_BlActSwimHero_U,	//DRAW_STA_STOP
+	DATA_BlActSwimHero_D,
+	DATA_BlActSwimHero_L,
+	DATA_BlActSwimHero_R,
+};
+
+//======================================================================
 //	ビルボードアクター　アニメーション　リストテーブル
 //======================================================================
 const MMDL_BBDACT_ANMTBL
@@ -572,4 +623,5 @@ const MMDL_BBDACT_ANMTBL
 	{DATA_BlActHeroTbl,DRAW_STA_MAXDIR4_HERO},//MMDL_BLACT_ANMTBLNO_HERO
 	{DATA_BlActAnm00Tbl,DRAW_STA_MAXDIR4},//MMDL_BLACT_ANMTBLNO_BLACT
   {DATA_BlActCycleHeroTbl,DRAW_STA_MAXDIR4},//MMDL_BLACT_ANMTBLNO_CYCLEHERO
+  {DATA_BlActSwimHeroTbl,DRAW_STA_SWIMHERO_MAX},//MMDL_BLACT_ANMTBLNO_SWIMHERO
 };

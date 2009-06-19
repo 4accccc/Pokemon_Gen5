@@ -21,7 +21,7 @@
 //--------------------------------------------------------------
 typedef enum
 {
-  MAPATTR_FLAGBIT_ENTER = (1<<0), ///<進入可能フラグ ON=可能
+  MAPATTR_FLAGBIT_HITCH = (1<<0), ///<進入不可フラグ ON=不可
   MAPATTR_FLAGBIT_WATER = (1<<1), ///<水アトリビュート ON=水
   MAPATTR_FLAGBIT_ENCOUNT = (1<<2), ///<敵出現フラグ ON=出現
   MAPATTR_FLAGBIT_FOOTMARK = (1<<3), ///<足跡表示フラグ ON=足跡有り
@@ -36,21 +36,21 @@ typedef enum
 //======================================================================
 ///MAPATTR
 typedef u32 MAPATTR;
-///MAPATTR_VAL
-typedef u16 MAPATTR_VAL;
+///MAPATTR_VALUE
+typedef u16 MAPATTR_VALUE;
 ///MAPATTR_FLAG
 typedef u16 MAPATTR_FLAG;
 
 //======================================================================
 //  proto
 //======================================================================
-extern MAPATTR MAPATTR_GetAttribute(FLDMAPPER *mapper, const VecFx32 *pos );
-extern MAPATTR_VAL MAPATTR_GetAttrValue( const MAPATTR attr );
+extern MAPATTR MAPATTR_GetAttribute(FLDMAPPER *mapper, const VecFx32 *pos);
+extern MAPATTR_VALUE MAPATTR_GetAttrValue( const MAPATTR attr );
 extern MAPATTR_FLAG MAPATTR_GetAttrFlag( const MAPATTR attr );
 
-extern BOOL MAPATTR_CheckAttrValueLongGrass( const MAPATTR_VAL val );
-extern BOOL MAPATTR_CheckAttrValueJumpUp( const MAPATTR_VAL val );
-extern BOOL MAPATTR_CheckAttrValueJumpDown( const MAPATTR_VAL val );
-extern BOOL MAPATTR_CheckAttrValueJumpLeft( const MAPATTR_VAL val );
-extern BOOL MAPATTR_CheckAttrValueJumpRight( const MAPATTR_VAL val );
+extern BOOL MAPATTR_CheckAttrValueLongGrass( const MAPATTR_VALUE val );
+extern BOOL MAPATTR_CheckAttrValueJumpUp( const MAPATTR_VALUE val );
+extern BOOL MAPATTR_CheckAttrValueJumpDown( const MAPATTR_VALUE val );
+extern BOOL MAPATTR_CheckAttrValueJumpLeft( const MAPATTR_VALUE val );
+extern BOOL MAPATTR_CheckAttrValueJumpRight( const MAPATTR_VALUE val );
 

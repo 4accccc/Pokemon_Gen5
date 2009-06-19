@@ -2,7 +2,7 @@
 /**
  *
  * @file	fieldobj_move.c
- * @brief	フィールド動作モデル 動作系
+ * @brief	動作モデル 動作系
  * @author	kagaya
  * @data	05.07.25
  *
@@ -1417,8 +1417,6 @@ BOOL MMDL_HitCheckMoveLimit( const MMDL * fmmdl, s16 x, s16 y, s16 z )
 	return( FALSE );
 }
 
-#define MAP_ATTR_FLAG_HITCH (1<<0)
-
 //--------------------------------------------------------------
 /**
  * フィールド動作モデルアトリビュートヒットチェック
@@ -1449,25 +1447,27 @@ static BOOL MMdl_HitCheckMoveAttr(
 	}
 	#else
 	if( MMDL_CheckMoveBitAttrGetOFF(fmmdl) == FALSE ){
-		u32 attr;
+		MAPATTR attr;
 		VecFx32 pos;
 		pos.x = GRID_SIZE_FX32( x );
 		pos.y = 0;
 		pos.z = GRID_SIZE_FX32( z );
 		
 		if( MMDL_GetMapPosAttr(fmmdl,&pos,&attr) == TRUE ){
-#if 0
-			if( attr == 0 ){
-				return( FALSE );
-			}
-#else
+      MAPATTR_FLAG attr_flag = MAPATTR_GetAttrFlag( attr );
+      
+      if( (attr_flag&MAPATTR_FLAGBIT_HITCH) == 0 ){
+        return( FALSE );
+      }
+      /*
+      #define MAP_ATTR_FLAG_HITCH (1<<0)
 			u16 val = attr & 0xffff;
 			u16 flag = (attr&0xffff0000) >> 16;
 			
 			if( (flag & MAP_ATTR_FLAG_HITCH) == 0 ){ //移動可能フラグ
 				return( FALSE );	//移動可能アトリビュート
 			}
-#endif
+      */
 		}
 	}
 	#endif

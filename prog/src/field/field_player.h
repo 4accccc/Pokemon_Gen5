@@ -44,6 +44,7 @@ typedef enum
 {
   PLAYER_MOVE_FORM_NORMAL = 0,   ///<自機二足歩行
   PLAYER_MOVE_FORM_CYCLE,  ///<自機自転車移動
+  PLAYER_MOVE_FORM_SWIM, ///<自機波乗り移動
   PLAYER_MOVE_FORM_MAX,
 }PLAYER_MOVE_FORM;
 
@@ -87,8 +88,12 @@ extern void FIELD_PLAYER_SetMoveForm(
     FIELD_PLAYER *fld_player, PLAYER_MOVE_FORM form );
 
 //ツール
+extern void FIELD_PLAYER_GetDirGridPos(
+		FIELD_PLAYER *fld_player, u16 dir, s16 *gx, s16 *gy, s16 *gz );
+extern void FIELD_PLAYER_GetDirPos(
+		FIELD_PLAYER *fld_player, u16 dir, VecFx32 *pos );
 extern void FIELD_PLAYER_GetFrontGridPos(
-		FIELD_PLAYER *fld_player, int *gx, int *gy, int *gz );
+		FIELD_PLAYER *fld_player, s16 *gx, s16 *gy, s16 *gz );
 extern BOOL FIELD_PLAYER_CheckLiveMMdl( FIELD_PLAYER *fld_player );
 
 //======================================================================

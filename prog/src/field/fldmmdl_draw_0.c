@@ -357,6 +357,98 @@ const MMDL_DRAW_PROC_LIST DATA_MMDL_DRAWPROCLIST_CycleHero =
 };
 
 //======================================================================
+//  描画処理　ビルボード　波乗り自機専用
+//======================================================================
+//--------------------------------------------------------------
+/**
+ * 描画処理　ビルボード　波乗り自機専用　描画
+ * @param	fmmdl	MMDL
+ * @retval	nothing
+ */
+//--------------------------------------------------------------
+static void DrawSwimHero_Draw( MMDL *fmmdl )
+{
+	VecFx32 pos;
+	BOOL chg_dir = FALSE;
+	u16 dir,anm_id,status;
+	DRAW_BLACT_WORK *work;
+	GFL_BBDACT_SYS *actSys;
+	
+	work = MMDL_GetDrawProcWork( fmmdl );
+  
+  if( work->actID == MMDL_BLACTID_NULL ){ //未登録
+    return;
+  }
+  
+	actSys = MMDL_BLACTCONT_GetBbdActSys( MMDL_GetBlActCont(fmmdl) );
+	
+	dir = MMDL_GetDirDisp( fmmdl );
+	status = MMDL_GetDrawStatus( fmmdl );
+  GF_ASSERT( dir < DIR_MAX4 );
+  anm_id = dir;
+
+#if 0
+  {
+    u16 idx = GFL_BBDACT_GetAnimeFrmIdx(actSys,work->actID);
+    KAGAYA_Printf("波乗りアニメ %d\n", idx );
+  }
+#endif
+
+	if( work->set_anm_dir != dir ){ //方向更新
+		work->set_anm_dir = dir;
+		work->set_anm_status = status;
+		GFL_BBDACT_SetAnimeIdx( actSys, work->actID, anm_id );
+		chg_dir = TRUE;
+	}else if( work->set_anm_status != status ){
+		u16 frame = 0;
+		GFL_BBDACT_SetAnimeIdx( actSys, work->actID, anm_id );
+		GFL_BBDACT_SetAnimeFrmIdx( actSys, work->actID, frame );
+		work->set_anm_status = status;
+	}
+	
+	MMDL_GetDrawVectorPos( fmmdl, &pos );
+  
+	#ifndef MMDL_BLACT_HEAD3_TEST
+	pos.y += FX32_ONE * 4;
+  pos.z -= NUM_FX32(8);
+	#else
+	pos.y += FX32_ONE * 7; //3
+	#endif
+	
+	GFL_BBD_SetObjectTrans(
+		GFL_BBDACT_GetBBDSystem(actSys), work->actID, &pos );
+
+	{
+		BOOL flag = TRUE;
+		if( chg_dir == FALSE && MMDL_CheckDrawPause(fmmdl) == TRUE ){
+			flag = FALSE;
+		}
+		GFL_BBDACT_SetAnimeEnable( actSys, work->actID, flag );
+    
+    flag = TRUE; 
+    
+    if( MMDL_CheckStatusBitVanish(fmmdl) == TRUE ){
+      flag = FALSE;
+    }
+    
+    GFL_BBDACT_SetDrawEnable( actSys, work->actID, flag );
+	}
+}
+
+//--------------------------------------------------------------
+/// 描画処理　波乗り自機　まとめ
+//--------------------------------------------------------------
+const MMDL_DRAW_PROC_LIST DATA_MMDL_DRAWPROCLIST_SwimHero =
+{
+  DrawHero_Init,
+	DrawSwimHero_Draw,
+	DrawHero_Delete,
+	DrawHero_Delete,	//退避
+	DrawHero_Init,    //本当は復帰
+	DrawHero_GetBlActID,
+};
+
+//======================================================================
 //	描画処理　ビルボード　汎用
 //======================================================================
 //--------------------------------------------------------------

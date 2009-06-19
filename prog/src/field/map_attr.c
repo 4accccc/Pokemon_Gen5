@@ -47,14 +47,14 @@ MAPATTR MAPATTR_GetAttribute( FLDMAPPER *mapper, const VecFx32 *pos )
 
 //--------------------------------------------------------------
 /**
- * MAPATTRからMAPATTR_VALを取得
+ * MAPATTRからMAPATTR_VALUEを取得
  * @param attr MAPATTR
- * @retval MAPATTR_VAL
+ * @retval MAPATTR_VALUE
  */
 //--------------------------------------------------------------
-MAPATTR_VAL MAPATTR_GetAttrValue( const MAPATTR attr )
+MAPATTR_VALUE MAPATTR_GetAttrValue( const MAPATTR attr )
 {
-  MAPATTR_VAL val = attr & 0xffff;
+  MAPATTR_VALUE val = attr & 0xffff;
   return( val );
 }
 
@@ -77,11 +77,11 @@ MAPATTR_FLAG MAPATTR_GetAttrFlag( const MAPATTR attr )
 //--------------------------------------------------------------
 /**
  * アトリビュートバリュー　チェック　長い草
- * @param val MAPATTR_VAL
+ * @param val MAPATTR_VALUE
  * @retval BOOL FALSE=違う
  */
 //--------------------------------------------------------------
-BOOL MAPATTR_CheckAttrValueLongGrass( const MAPATTR_VAL val )
+BOOL MAPATTR_CheckAttrValueLongGrass( const MAPATTR_VALUE val )
 {
   if( val == 0x06 || val == 0x07 ){
     return( TRUE );
@@ -92,11 +92,11 @@ BOOL MAPATTR_CheckAttrValueLongGrass( const MAPATTR_VAL val )
 //--------------------------------------------------------------
 /**
  * アトリビュートバリュー　チェック　上ジャンプアトリビュート
- * @param val MAPATTR_VAL
+ * @param val MAPATTR_VALUE
  * @retval BOOL FALSE=違う
  */
 //--------------------------------------------------------------
-BOOL MAPATTR_CheckAttrValueJumpUp( const MAPATTR_VAL val )
+BOOL MAPATTR_CheckAttrValueJumpUp( const MAPATTR_VALUE val )
 {
   if( val == 0x74 ){
     return( TRUE );
@@ -107,11 +107,11 @@ BOOL MAPATTR_CheckAttrValueJumpUp( const MAPATTR_VAL val )
 //--------------------------------------------------------------
 /**
  * アトリビュートバリュー　チェック　下ジャンプアトリビュート
- * @param val MAPATTR_VAL
+ * @param val MAPATTR_VALUE
  * @retval BOOL FALSE=違う
  */
 //--------------------------------------------------------------
-BOOL MAPATTR_CheckAttrValueJumpDown( const MAPATTR_VAL val )
+BOOL MAPATTR_CheckAttrValueJumpDown( const MAPATTR_VALUE val )
 {
   if( val == 0x75 ){
     return( TRUE );
@@ -122,11 +122,11 @@ BOOL MAPATTR_CheckAttrValueJumpDown( const MAPATTR_VAL val )
 //--------------------------------------------------------------
 /**
  * アトリビュートバリュー　チェック　左ジャンプアトリビュート
- * @param val MAPATTR_VAL
+ * @param val MAPATTR_VALUE
  * @retval BOOL FALSE=違う
  */
 //--------------------------------------------------------------
-BOOL MAPATTR_CheckAttrValueJumpLeft( const MAPATTR_VAL val )
+BOOL MAPATTR_CheckAttrValueJumpLeft( const MAPATTR_VALUE val )
 {
   if( val == 0x73 ){
     return( TRUE );
@@ -137,11 +137,11 @@ BOOL MAPATTR_CheckAttrValueJumpLeft( const MAPATTR_VAL val )
 //--------------------------------------------------------------
 /**
  * アトリビュートバリュー　チェック　右ジャンプアトリビュート
- * @param val MAPATTR_VAL
+ * @param val MAPATTR_VALUE
  * @retval BOOL FALSE=違う
  */
 //--------------------------------------------------------------
-BOOL MAPATTR_CheckAttrValueJumpRight( const MAPATTR_VAL val )
+BOOL MAPATTR_CheckAttrValueJumpRight( const MAPATTR_VALUE val )
 {
   if( val == 0x72 ){
     return( TRUE );

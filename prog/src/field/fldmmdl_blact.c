@@ -1,7 +1,7 @@
 //======================================================================
 /**
  * @file	fldmmdl_blact.c
- * @brief	フィールド動作モデル ビルボードアクター管理
+ * @brief	動作モデル ビルボードアクター管理
  * @author	kagaya
  * @data	05.07.13
  */
@@ -1142,6 +1142,7 @@ static BOOL BlActAddReserve_CancelResource(
   
   for( ; i < pReserve->resMax; i++, pRes++ ){
     if( pRes->pG3dRes != NULL && pRes->code == code ){
+      pRes->compFlag = FALSE;
       GFL_G3D_DeleteResource( pRes->pG3dRes );
       pRes->pG3dRes = NULL;
       KAGAYA_Printf( "MMDL BLACT RESERVE CANCEL CODE=%d\n", pRes->code );
@@ -1192,7 +1193,7 @@ static void BlActAddReserve_RegistActor(
           BlActAddReserve_RegistResource( pBlActCont, code, flag );
         }
       }
-
+      
       if( (flag&BBDRESBIT_TRANS) ){ //転送型 転送先リソース作成
         #if 0
         //転送用リソースデータを取得
@@ -1234,7 +1235,7 @@ static void BlActAddReserve_DigestActor( MMDL_BLACTCONT *pBlActCont )
       u16 resID,flag;
       u16 transID = BLACT_RESID_NULL;
       
-      if( pRes->pTransActRes != NULL ) //転送型
+      if( pRes->pTransActRes != NULL ) //VRAM転送型
       {
         resID = BlActRes_AddRes( pBlActCont, pRes->code,
             pRes->pTransActRes, GFL_BBDACT_RESTYPE_DATACUT );
@@ -1248,7 +1249,7 @@ static void BlActAddReserve_DigestActor( MMDL_BLACTCONT *pBlActCont )
         GF_ASSERT( (flag&BBDRESBIT_TRANS) &&
           "BLACT ADD RESERVE RESOURCE ERROR" ); //転送用リソースでは無い
       }
-      else
+      else //VRAM常駐型
       {
         ret = BBDResUnitIndex_SearchResID(
             pBlActCont, pRes->code, &resID, &flag );
@@ -1317,17 +1318,18 @@ static void BlActAddReserve_CancelActor(
     if( pRes->fmmdl == fmmdl )
     {
       u16 flag;
+      pRes->compFlag = FALSE;
       
       if( BlActAddReserve_SearchResource( //リソース予約有り
             pBlActCont,pRes->code,&flag) == TRUE )
       {
-        if( BlActAddReserve_SearchActorOBJCode( //予約中で使用無し
+        if( BlActAddReserve_SearchActorOBJCode( //他の予約で使用無し
               pBlActCont,pRes->code,pRes->fmmdl) == FALSE )
         {
           BlActAddReserve_CancelResource( pBlActCont, pRes->code );
         }
       }
-
+      
       if( pRes->pTransActRes != NULL ) //転送用リソース有り
       {
         GFL_G3D_DeleteResource( pRes->pTransActRes );

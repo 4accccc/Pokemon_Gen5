@@ -109,6 +109,12 @@ static GMEVENT * DEBUG_checkKeyEvent(EV_REQUEST * req, GAMESYS_WORK * gsys, FIEL
 static GMEVENT * checkEvent_ConvenienceButton( const EV_REQUEST *req,
     GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork );
 
+static GMEVENT * checkEvent_PlayerNaminoriStart( const EV_REQUEST *req,
+    GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork );
+
+static GMEVENT * checkEvent_PlayerNaminoriEnd( const EV_REQUEST *req,
+    GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork );
+
 //======================================================================
 //
 //
@@ -244,7 +250,7 @@ GMEVENT * FIELD_EVENT_CheckNormal( GAMESYS_WORK *gsys, void *work )
 		if( req.talkRequest )
 		{
       { //OBJ話し掛け
-			  int gx,gy,gz;
+			  s16 gx,gy,gz;
 			  MMDL *fmmdl_talk;
 			  FIELD_PLAYER_GetFrontGridPos( req.field_player, &gx, &gy, &gz );
 	  		fmmdl_talk = MMDLSYS_SearchGridPos(
@@ -279,7 +285,30 @@ GMEVENT * FIELD_EVENT_CheckNormal( GAMESYS_WORK *gsys, void *work )
         }
       }
     }
-	}
+  }
+
+
+  { //波乗りテスト
+
+    if( req.player_state == PLAYER_MOVE_STATE_END ||
+        req.player_state == PLAYER_MOVE_STATE_OFF )
+    {
+#if 0
+      if( req.key_trg & PAD_BUTTON_SELECT ){
+        event = checkEvent_PlayerNaminoriStart( &req, gsys, fieldWork );
+        if( event != NULL ){
+          return event;
+       }
+      }
+#endif         
+      event = checkEvent_PlayerNaminoriEnd( &req, gsys, fieldWork );
+      
+      if( event != NULL ){
+        return event;
+      }
+    }
+  }
+  
 //☆☆☆押し込み操作チェック（マットでのマップ遷移など）
 	//キー入力接続チェック
   if (req.pushRequest) {
@@ -768,6 +797,7 @@ typedef struct
 static GMEVENT_RESULT event_ConvenienceButton(
     GMEVENT *event, int *seq, void *wk )
 {
+  //仮 自転車テスト
   EVWORK_CONVBTN *work = wk;
   FIELD_PLAYER *fld_player;
   FIELDMAP_CTRL_GRID *gridMap;
@@ -787,6 +817,8 @@ static GMEVENT_RESULT event_ConvenienceButton(
   case PLAYER_MOVE_FORM_CYCLE:
     FIELD_PLAYER_GRID_SetRequest( gjiki, FIELD_PLAYER_GRID_REQBIT_NORMAL );
     break;
+  default:
+    GF_ASSERT( 0 ); //歩行,自転車ではないのにイベントが実行されている
   }
   
   return GMEVENT_RES_FINISH;
@@ -816,32 +848,258 @@ static GMEVENT * eventSet_ConvenienceButton( const EV_REQUEST *req,
 static GMEVENT * checkEvent_ConvenienceButton( const EV_REQUEST *req,
     GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork )
 {
-  //仮 自転車切り替え
-  GMEVENT *event;
-  event = eventSet_ConvenienceButton( req, gsys, fieldWork );
-  return( event );
-#if 0
-    GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork )
-  FIELD_PLAYER *fld_player;
-  FIELDMAP_CTRL_GRID *gridMap;
-  FIELD_PLAYER_GRID *gjiki;
-  PLAYER_MOVE_FORM form;
+  { //イベントチェック
+  }
+
+  { //イベント発行
+    GMEVENT *event;
+    event = eventSet_ConvenienceButton( req, gsys, fieldWork );
+    return( event );
+  }
+}
+
+//======================================================================
+//  波乗りイベント
+//======================================================================
+#include "fldeff_namipoke.h"
+
+typedef struct
+{
+  int wait;
+  GAMESYS_WORK *gsys;
+  FIELDMAP_WORK *fieldWork;
+}EVWORK_NAMINORI;
+
+static GMEVENT_RESULT event_NaminoriStart(
+    GMEVENT *event, int *seq, void *wk )
+{
+  EVWORK_NAMINORI *work = wk;
+
+  FIELD_PLAYER *fld_player =
+    FIELDMAP_GetFieldPlayer( work->fieldWork );
+  FIELDMAP_CTRL_GRID *gridMap =
+    FIELDMAP_GetMapCtrlWork( work->fieldWork );
+  FIELD_PLAYER_GRID *gjiki =
+    FIELDMAP_CTRL_GRID_GetFieldPlayerGrid( gridMap );
+  PLAYER_MOVE_FORM form =
+    FIELD_PLAYER_GetMoveForm( fld_player );
+  MMDL *mmdl =
+    FIELD_PLAYER_GetMMdl( fld_player );
   
-  gridMap = FIELDMAP_GetMapCtrlWork( fieldWork );
-  gjiki = FIELDMAP_CTRL_GRID_GetFieldPlayerGrid( gridMap );
+  FLDEFF_TASK *task;
   
-  fld_player = FIELDMAP_GetFieldPlayer( fieldWork );
-  form = FIELD_PLAYER_GetMoveForm( fld_player );
+  switch( *seq )
+  {
+  case 0: //波乗りポケモン出現
+    {
+      u16 dir;
+      s16 gx,gz;
+      fx32 height;
+      VecFx32 pos;
+      dir = MMDL_GetDirDisp( mmdl );
+      gx = MMDL_GetGridPosX( mmdl );
+      gz = MMDL_GetGridPosZ( mmdl );
+      MMDL_GetVectorPos( mmdl, &pos );
+      MMDL_TOOL_GetCenterGridPos( gx, gz, &pos );
+      MMDL_TOOL_AddDirVector( dir, &pos, GRID_FX32*2 ); //2マス先
   
-  switch( form ){
-  case PLAYER_MOVE_FORM_NORMAL:
-    FIELD_PLAYER_GRID_SetRequest( gjiki, FIELD_PLAYER_GRID_REQBIT_CYCLE );
+      height = 0;
+      MMDL_GetMapPosHeight( mmdl, &pos, &height );
+      pos.y = height;
+     
+      {
+        FLDEFF_CTRL *fectrl;
+        fectrl = FIELDMAP_GetFldEffCtrl( work->fieldWork );
+        
+        task = FLDEFF_NAMIPOKE_SetMMdl(
+            fectrl, dir, &pos, mmdl, FALSE );
+        
+        FIELD_PLAYER_GRID_SetEffectTaskWork( gjiki, task );
+      }
+    }
+    
+    (*seq)++;
     break;
-  case PLAYER_MOVE_FORM_CYCLE:
-    FIELD_PLAYER_GRID_SetRequest( gjiki, FIELD_PLAYER_GRID_REQBIT_NORMAL );
+  case 1:
+    work->wait++;
+    if( work->wait > 15 ){
+      (*seq)++;
+    }
     break;
+  case 2:
+    {
+      u16 dir = MMDL_GetDirDisp( mmdl );
+      u16 ac = MMDL_ChangeDirAcmdCode( dir, AC_JUMP_U_2G_16F );
+      MMDL_SetAcmd( mmdl, ac );
+    }
+    (*seq)++;
+    break;
+  case 3:
+    if( MMDL_CheckEndAcmd(mmdl) == TRUE ){
+      MMDL_EndAcmd( mmdl );
+      task = FIELD_PLAYER_GRID_GetEffectTaskWork( gjiki );
+      FLDEFF_NAMIPOKE_SetJointFlag( task, TRUE );
+      FIELD_PLAYER_SetNaminori( gjiki );
+      (*seq)++;
+    }
+    break;
+  case 4:
+    return GMEVENT_RES_FINISH;
   }
   
-  return( NULL );
-#endif
+  return GMEVENT_RES_CONTINUE;
+}
+
+static GMEVENT * eventSet_NaminoriStart( const EV_REQUEST *req,
+    GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork )
+{
+  GMEVENT *event;
+  EVWORK_NAMINORI *work;
+  
+  event = GMEVENT_Create(
+      gsys, NULL, event_NaminoriStart, sizeof(EVWORK_NAMINORI) );
+  work = GMEVENT_GetEventWork( event );
+  work->gsys = gsys;
+  work->fieldWork = fieldWork;
+  return( event );
+}
+
+void FIELD_EVENT_ChangeNaminoriStart( GMEVENT *event,
+    GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork )
+{
+  EVWORK_NAMINORI *work;
+  GMEVENT_Change( event, event_NaminoriStart, sizeof(EVWORK_NAMINORI) );
+  work = GMEVENT_GetEventWork( event );
+  work->gsys = gsys;
+  work->fieldWork = fieldWork;
+}
+
+//--------------------------------------------------------------
+/**
+ * @param
+ * @retval
+ */
+//--------------------------------------------------------------
+static GMEVENT * checkEvent_PlayerNaminoriStart( const EV_REQUEST *req,
+    GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork )
+{
+  { //イベントチェック
+    FIELD_PLAYER *fld_player;
+    PLAYER_MOVE_FORM form;
+    fld_player = FIELDMAP_GetFieldPlayer( fieldWork );
+    form = FIELD_PLAYER_GetMoveForm( fld_player );
+    if( form == PLAYER_MOVE_FORM_SWIM ){
+      return NULL;
+    }
+  }
+  
+  { //イベント発行
+    GMEVENT *event;
+    event = eventSet_NaminoriStart( req, gsys, fieldWork );
+    return( event );
+  }
+}
+
+//======================================================================
+//  波乗り上陸イベント
+//======================================================================
+static GMEVENT_RESULT event_NaminoriEnd(
+    GMEVENT *event, int *seq, void *wk )
+{
+  EVWORK_NAMINORI *work = wk;
+
+  FIELD_PLAYER *fld_player =
+    FIELDMAP_GetFieldPlayer( work->fieldWork );
+  FIELDMAP_CTRL_GRID *gridMap =
+    FIELDMAP_GetMapCtrlWork( work->fieldWork );
+  FIELD_PLAYER_GRID *gjiki =
+    FIELDMAP_CTRL_GRID_GetFieldPlayerGrid( gridMap );
+  PLAYER_MOVE_FORM form =
+    FIELD_PLAYER_GetMoveForm( fld_player );
+  MMDL *mmdl =
+    FIELD_PLAYER_GetMMdl( fld_player );
+  
+  FLDEFF_TASK *task;
+  
+  switch( *seq )
+  {
+  case 0: //波乗りポケモン切り離し
+    task = FIELD_PLAYER_GRID_GetEffectTaskWork( gjiki );
+    FLDEFF_NAMIPOKE_SetJointFlag( task, FALSE );
+    FIELD_PLAYER_GRID_SetRequest( gjiki, FIELD_PLAYER_GRID_REQBIT_NORMAL );
+    FIELD_PLAYER_GRID_UpdateRequest( gjiki );
+    {
+      u16 dir = MMDL_GetDirDisp( mmdl );
+      u16 ac = MMDL_ChangeDirAcmdCode( dir, AC_JUMP_U_2G_16F );
+      MMDL_SetAcmd( mmdl, ac );
+    }
+    (*seq)++;
+    break;
+  case 1:
+    if( MMDL_CheckEndAcmd(mmdl) == TRUE ){
+      FIELD_PLAYER_SetNaminoriEnd( gjiki );
+      (*seq)++;
+    }
+    break;
+  case 2:
+    return GMEVENT_RES_FINISH;
+  }
+  
+  return GMEVENT_RES_CONTINUE;
+}
+
+static GMEVENT * eventSet_NaminoriEnd( const EV_REQUEST *req,
+    GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork )
+{
+  GMEVENT *event;
+  EVWORK_NAMINORI *work;
+  
+  event = GMEVENT_Create(
+      gsys, NULL, event_NaminoriEnd, sizeof(EVWORK_NAMINORI) );
+  work = GMEVENT_GetEventWork( event );
+  work->gsys = gsys;
+  work->fieldWork = fieldWork;
+  return( event );
+}
+
+//--------------------------------------------------------------
+/**
+ * @param
+ * @retval
+ */
+//--------------------------------------------------------------
+static GMEVENT * checkEvent_PlayerNaminoriEnd( const EV_REQUEST *req,
+    GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork )
+{
+  FIELD_PLAYER *fld_player = FIELDMAP_GetFieldPlayer( fieldWork );
+  PLAYER_MOVE_FORM form = FIELD_PLAYER_GetMoveForm( fld_player );
+    
+  if( form == PLAYER_MOVE_FORM_SWIM ) //波乗り
+  {
+    VecFx32 pos;
+    MAPATTR attr;
+    MAPATTR_FLAG attr_flag;
+    FLDMAPPER *mapper = FIELDMAP_GetFieldG3Dmapper( fieldWork );
+    FIELDMAP_CTRL_GRID *gridMap =
+      FIELDMAP_GetMapCtrlWork( fieldWork );
+    FIELD_PLAYER_GRID *gjiki =
+      FIELDMAP_CTRL_GRID_GetFieldPlayerGrid( gridMap );
+    u16 dir = FIELD_PLAYER_GRID_GetKeyDir( gjiki, req->key_cont );
+    
+    if( dir != DIR_NOT )
+    {
+      FIELD_PLAYER_GetDirPos( fld_player, dir, &pos );
+      attr = MAPATTR_GetAttribute( mapper, &pos );
+      attr_flag = MAPATTR_GetAttrFlag( attr );
+    
+      if( (attr_flag&MAPATTR_FLAGBIT_HITCH) == 0 && //進入可能で
+          (attr_flag&MAPATTR_FLAGBIT_WATER) == 0 ){ //水以外
+        GMEVENT *event;
+        event = eventSet_NaminoriEnd( req, gsys, fieldWork );
+        return( event );
+      }
+    }
+  }
+
+  return NULL;
 }

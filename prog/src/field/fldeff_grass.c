@@ -59,6 +59,7 @@ typedef struct
 {
   int seq_no;
   TASKHEADER_GRASS head;
+  MMDL_CHECKSAME_DATA samedata;
   GFL_G3D_OBJ *obj;
   GFL_G3D_ANM *obj_anm;
   GFL_G3D_RND *obj_rnd;
@@ -204,6 +205,7 @@ static void grassTask_Init( FLDEFF_TASK *task, void *wk )
   
   head = FLDEFF_TASK_GetAddPointer( task );
   work->head = *head;
+  MMDL_InitCheckSameData( head->fmmdl, &work->samedata );
   FLDEFF_TASK_SetPos( task, &head->pos );
   
   work->obj_rnd =
@@ -267,8 +269,7 @@ static void grassTask_Update( FLDEFF_TASK *task, void *wk )
     }
     work->seq_no++;
   case 2:
-    if( MMDL_CheckSameID(work->head.fmmdl,
-          work->head.obj_id,work->head.zone_id) == FALSE ){
+    if( MMDL_CheckSameData(work->head.fmmdl,&work->samedata) == FALSE ){
       FLDEFF_TASK_CallDelete( task );
       return;
     }

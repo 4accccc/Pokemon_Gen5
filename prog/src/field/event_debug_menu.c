@@ -42,6 +42,7 @@
 
 #include "field_debug.h"
 
+#include "field_event_check.h"
 //======================================================================
 //	define
 //======================================================================
@@ -145,6 +146,11 @@ static BOOL DMenuCallProc_FieldPosData( DEBUG_MENU_EVENT_WORK *wk );
 
 static BOOL DMenuCallProc_ControlRtcList( DEBUG_MENU_EVENT_WORK *wk );
 
+static BOOL DMenuCallProc_Naminori( DEBUG_MENU_EVENT_WORK *wk );
+
+//======================================================================
+//  デバッグメニューリスト
+//======================================================================
 //--------------------------------------------------------------
 ///	デバッグメニューリスト　汎用
 ///	データを追加する事でメニューの項目も増えます。
@@ -168,20 +174,8 @@ static const FLDMENUFUNC_LIST DATA_DebugMenuList[] =
 	{ DEBUG_FIELD_STR16, DMenuCallProc_WeatherList },
   { DEBUG_FIELD_STR_SUBSCRN, DMenuCallProc_SubscreenSelect },
   { DEBUG_FIELD_STR21 , DMenuCallProc_MusicalSelect },
+  { DEBUG_FIELD_STR30, DMenuCallProc_Naminori },
 	{ DEBUG_FIELD_STR01, NULL },
-#if 0
-	{ DEBUG_FIELD_C_CHOICE00, DMenuCallProc_OpenCommDebugMenu },
-	{ DEBUG_FIELD_STR02, DMenuCallProc_ControlCamera },
-	{ DEBUG_FIELD_STR20, DMenuCallProc_ControlTarget },
-	{ DEBUG_FIELD_STR17, DMenuCallProc_FieldPosData },
-	{ DEBUG_FIELD_STR22, DMenuCallProc_ControlRtcList },
-	{ DEBUG_FIELD_STR16, DMenuCallProc_WeatherList },
-	{ DEBUG_FIELD_STR01, NULL },
-	{ DEBUG_FIELD_STR01, NULL },
-	{ DEBUG_FIELD_STR01, NULL },
-	{ DEBUG_FIELD_STR01, NULL },
-	{ DEBUG_FIELD_STR01, NULL },
-#endif
 };
 
 //--------------------------------------------------------------
@@ -207,6 +201,7 @@ static const FLDMENUFUNC_LIST DATA_DebugMenuListGrid[] =
 	{ DEBUG_FIELD_STR16, DMenuCallProc_WeatherList },
   { DEBUG_FIELD_STR_SUBSCRN, DMenuCallProc_SubscreenSelect },
   { DEBUG_FIELD_STR21 , DMenuCallProc_MusicalSelect },
+  { DEBUG_FIELD_STR31, DMenuCallProc_Naminori },
 	{ DEBUG_FIELD_STR01, NULL },
 };
 
@@ -469,7 +464,6 @@ static BOOL DMenuCallProc_OpenCommDebugMenu( DEBUG_MENU_EVENT_WORK *wk )
 
 	return( TRUE );
 }
-
 
 //--------------------------------------------------------------
 /**
@@ -2162,11 +2156,9 @@ static BOOL DMenuCallProc_FieldPosData( DEBUG_MENU_EVENT_WORK *wk )
 	return( FALSE );
 }
 
-
-
-//--------------------------------------------------------------
+//======================================================================
 ///	デバックメニュー　時間
-//--------------------------------------------------------------
+//======================================================================
 //--------------------------------------------------------------
 ///	DEBUG_CONTROL_TIME_LIST_EVENT_WORK
 //--------------------------------------------------------------
@@ -2355,4 +2347,20 @@ static GMEVENT_RESULT DMenuControlTimeListEvent(
 	}
 	
 	return( GMEVENT_RES_CONTINUE );
+}
+
+//======================================================================
+//  デバッグメニュー　波乗り
+//======================================================================
+//--------------------------------------------------------------
+/**
+ * 波乗りイベント呼び出し
+ * @param wk DEBUG_MENU_EVENT_WORK*
+ * @retval BOOL TRUE=イベント継続
+ */
+//--------------------------------------------------------------
+static BOOL DMenuCallProc_Naminori( DEBUG_MENU_EVENT_WORK *wk )
+{
+  FIELD_EVENT_ChangeNaminoriStart( wk->gmEvent, wk->gmSys, wk->fieldWork );
+  return( TRUE );
 }

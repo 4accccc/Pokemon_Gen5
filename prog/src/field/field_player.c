@@ -111,6 +111,9 @@ FIELD_PLAYER * FIELD_PLAYER_Create(
     case CYCLEHERO:
       form = PLAYER_MOVE_FORM_CYCLE;
       break;
+    case SWIMHERO:
+      form = PLAYER_MOVE_FORM_SWIM;
+      break;
     default:
       GF_ASSERT( 0 );
     }
@@ -163,9 +166,9 @@ void FIELD_PLAYER_UpdateMoveStatus( FIELD_PLAYER *fld_player )
   MMDL *fmmdl = fld_player->fldmmdl;
   PLAYER_MOVE_VALUE value = fld_player->move_value;
   PLAYER_MOVE_STATE state = fld_player->move_state;
-
+  
   fld_player->move_state = PLAYER_MOVE_STATE_OFF;
-
+  
   if( MMDL_CheckPossibleAcmd(fmmdl) == FALSE ){ //動作中
     switch( value ){
     case PLAYER_MOVE_VALUE_STOP:
@@ -396,6 +399,45 @@ void FIELD_PLAYER_SetMoveForm(
 //======================================================================
 //--------------------------------------------------------------
 /**
+ * 自機の指定方向先の位置をグリッド単位で取得
+ * @param fld_player FIELD_PLAYER
+ * @param gx X座標格納先
+ * @param gy Y座標格納先
+ * @param gz Z座標格納先
+ * @retval nothing
+ */
+//--------------------------------------------------------------
+void FIELD_PLAYER_GetDirGridPos(
+		FIELD_PLAYER *fld_player, u16 dir, s16 *gx, s16 *gy, s16 *gz )
+{
+	MMDL *fmmdl = FIELD_PLAYER_GetMMdl( fld_player );
+	
+	*gx = MMDL_GetGridPosX( fmmdl );
+	*gy = MMDL_GetGridPosY( fmmdl );
+	*gz = MMDL_GetGridPosZ( fmmdl );
+	*gx += MMDL_TOOL_GetDirAddValueGridX( dir );
+	*gz += MMDL_TOOL_GetDirAddValueGridZ( dir );
+}
+
+//--------------------------------------------------------------
+/**
+ * 自機の指定方向先の座標を取得
+ * @param fld_player FIELD_PLAYER
+ * @param pos 座標格納先
+ * @retval nothing
+ */
+//--------------------------------------------------------------
+void FIELD_PLAYER_GetDirPos(
+		FIELD_PLAYER *fld_player, u16 dir, VecFx32 *pos )
+{
+  s16 gx,gy,gz;
+  FIELD_PLAYER_GetDirGridPos( fld_player, dir, &gx, &gy, &gz );
+  MMDL_TOOL_GetCenterGridPos( gx, gz, pos );
+  pos->y = GRID_SIZE_FX32( gy );
+}
+
+//--------------------------------------------------------------
+/**
  * 自機の前方位置をグリッド単位で取得
  * @param fld_player FIELD_PLAYER
  * @param gx X座標格納先
@@ -405,18 +447,11 @@ void FIELD_PLAYER_SetMoveForm(
  */
 //--------------------------------------------------------------
 void FIELD_PLAYER_GetFrontGridPos(
-		FIELD_PLAYER *fld_player, int *gx, int *gy, int *gz )
+		FIELD_PLAYER *fld_player, s16 *gx, s16 *gy, s16 *gz )
 {
-	int dir;
 	MMDL *fmmdl = FIELD_PLAYER_GetMMdl( fld_player );
-	
-	*gx = MMDL_GetGridPosX( fmmdl );
-	*gy = MMDL_GetGridPosY( fmmdl );
-	*gz = MMDL_GetGridPosZ( fmmdl );
-	dir = MMDL_GetDirDisp( fmmdl );
-	
-	*gx += MMDL_TOOL_GetDirAddValueGridX( dir );
-	*gz += MMDL_TOOL_GetDirAddValueGridZ( dir );
+	u16 dir = MMDL_GetDirDisp( fmmdl );
+  FIELD_PLAYER_GetDirGridPos( fld_player, dir, gx, gy, gz );
 }
 
 //--------------------------------------------------------------

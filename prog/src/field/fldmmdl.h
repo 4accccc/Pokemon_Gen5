@@ -275,6 +275,7 @@ typedef enum
 	MMDL_BLACT_ANMTBLNO_HERO,	///<自機専用
 	MMDL_BLACT_ANMTBLNO_BLACT,	///<汎用アニメ
   MMDL_BLACT_ANMTBLNO_CYCLEHERO, ///<自転車自機専用
+  MMDL_BLACT_ANMTBLNO_SWIMHERO, ///<波乗り自機専用
 	MMDL_BLACT_ANMTBLNO_MAX,		///<最大
 }MMDL_BLACT_ANMTBLNO;
 
@@ -287,6 +288,7 @@ typedef enum
 	MMDL_DRAWPROCNO_HERO,	///<自機専用
 	MMDL_DRAWPROCNO_BLACT,	///<ビルボード汎用
   MMDL_DRAWPROCNO_CYCLEHERO, ///<自転車自機専用
+  MMDL_DRAWPROCNO_SWIMHERO, ///<波乗り自機専用
 	MMDL_DRAWPROCNO_MAX,		///<最大
 }MMDL_DRAWPROCNO;
 
@@ -481,6 +483,17 @@ typedef struct
 	u32 anm_max;
 }MMDL_BBDACT_ANMTBL;
 
+//--------------------------------------------------------------
+/// MMDL_CHECKSAME_DATA構造体
+//--------------------------------------------------------------
+typedef struct
+{
+  u16 id;
+  u16 code;
+  u16 zone_id;
+  u16 dmy;
+}MMDL_CHECKSAME_DATA;
+
 //======================================================================
 //	extern
 //======================================================================
@@ -505,218 +518,218 @@ extern MMDL * MMDLSYS_AddMMdl(
 	const MMDLSYS *fos, const MMDL_HEADER *header, int zone_id );
 extern void MMDLSYS_SetMMdl( const MMDLSYS *fos,
 	const MMDL_HEADER *header, int zone_id, int count );
-extern void MMDL_Delete( MMDL * fmmdl );
+extern void MMDL_Delete( MMDL * mmdl );
 extern void MMDLSYS_DeleteMMdl( const MMDLSYS *fos );
 
-extern void MMDLSYS_Push( MMDLSYS *fmmdlsys );
-extern void MMDLSYS_Pop( MMDLSYS *fmmdlsys );
+extern void MMDLSYS_Push( MMDLSYS *mmdlsys );
+extern void MMDLSYS_Pop( MMDLSYS *mmdlsys );
 
 extern u32 MMDL_SAVEDATA_GetWorkSize( void );
 extern void MMDL_SAVEDATA_Init( void *p );
 extern void MMDL_SAVEDATA_Save(
-	MMDLSYS *fmmdlsys, MMDL_SAVEDATA *savedata );
+	MMDLSYS *mmdlsys, MMDL_SAVEDATA *savedata );
 extern void MMDL_SAVEDATA_Load(
-	MMDLSYS *fmmdlsys, MMDL_SAVEDATA *savedata );
+	MMDLSYS *mmdlsys, MMDL_SAVEDATA *savedata );
 
-extern void MMDLSYS_Push( MMDLSYS *fmmdlsys );
-extern void MMDLSYS_Pop( MMDLSYS *fmmdlsys );
+extern void MMDLSYS_Push( MMDLSYS *mmdlsys );
+extern void MMDLSYS_Pop( MMDLSYS *mmdlsys );
 
-extern void MMDL_UpdateMoveProc( MMDL *fmmdl );
+extern void MMDL_UpdateMoveProc( MMDL *mmdl );
 
-extern BOOL MMDL_CheckPossibleAcmd( const MMDL * fmmdl );
-extern void MMDL_SetAcmd( MMDL * fmmdl, u16 code );
-extern void MMDL_SetLocalAcmd( MMDL * fmmdl, u16 code );
-extern BOOL MMDL_CheckEndAcmd( const MMDL * fmmdl );
-extern BOOL MMDL_EndAcmd( MMDL * fmmdl );
-extern void MMDL_FreeAcmd( MMDL * fmmdl );
+extern BOOL MMDL_CheckPossibleAcmd( const MMDL * mmdl );
+extern void MMDL_SetAcmd( MMDL * mmdl, u16 code );
+extern void MMDL_SetLocalAcmd( MMDL * mmdl, u16 code );
+extern BOOL MMDL_CheckEndAcmd( const MMDL * mmdl );
+extern BOOL MMDL_EndAcmd( MMDL * mmdl );
+extern void MMDL_FreeAcmd( MMDL * mmdl );
 
 extern u32 MMDLSYS_CheckStatusBit(
-	const MMDLSYS *fmmdlsys, MMDLSYS_STABIT bit );
-extern u16 MMDLSYS_GetMMdlMax( const MMDLSYS *fmmdlsys );
-extern u16 MMDLSYS_GetMMdlCount( const MMDLSYS *fmmdlsys );
-extern u16 MMDLSYS_GetTCBPriority( const MMDLSYS *fmmdlsys );
-extern HEAPID MMDLSYS_GetHeapID( const MMDLSYS *fmmdlsys );
+	const MMDLSYS *mmdlsys, MMDLSYS_STABIT bit );
+extern u16 MMDLSYS_GetMMdlMax( const MMDLSYS *mmdlsys );
+extern u16 MMDLSYS_GetMMdlCount( const MMDLSYS *mmdlsys );
+extern u16 MMDLSYS_GetTCBPriority( const MMDLSYS *mmdlsys );
+extern HEAPID MMDLSYS_GetHeapID( const MMDLSYS *mmdlsys );
 extern const MMDL * MMDLSYS_GetMMdlBuffer(
-		const MMDLSYS *fmmdlsys );
+		const MMDLSYS *mmdlsys );
 extern void MMDLSYS_SetArcHandle(
-		MMDLSYS *fmmdlsys, ARCHANDLE *handle );
-extern ARCHANDLE * MMDLSYS_GetArcHandle( MMDLSYS *fmmdlsys );
+		MMDLSYS *mmdlsys, ARCHANDLE *handle );
+extern ARCHANDLE * MMDLSYS_GetArcHandle( MMDLSYS *mmdlsys );
 extern GFL_TCBSYS * MMDLSYS_GetTCBSYS( MMDLSYS *fos );
 extern void MMDLSYS_SetBlActCont(
-		MMDLSYS *fmmdlsys, MMDL_BLACTCONT *pBlActCont );
-extern MMDL_BLACTCONT * MMDLSYS_GetBlActCont( MMDLSYS *fmmdlsys );
+		MMDLSYS *mmdlsys, MMDL_BLACTCONT *pBlActCont );
+extern MMDL_BLACTCONT * MMDLSYS_GetBlActCont( MMDLSYS *mmdlsys );
 extern const FLDMAPPER * MMDLSYS_GetG3DMapper( const MMDLSYS *fos );
 extern void MMDLSYS_SetFieldMapWork(
     MMDLSYS *fos, void *fieldMapWork );
 extern void * MMDLSYS_GetFieldMapWork( MMDLSYS *fos );
 
-extern void MMDL_OnStatusBit( MMDL *fmmdl, MMDL_STABIT bit );
-extern void MMDL_OffStatusBit( MMDL *fmmdl, MMDL_STABIT bit );
-extern MMDL_STABIT MMDL_GetStatusBit( const MMDL * fmmdl );
-extern u32 MMDL_CheckStatusBit(const MMDL *fmmdl, MMDL_STABIT bit);
-extern MMDL_MOVEBIT MMDL_GetMoveBit( const MMDL * fmmdl );
-extern void MMDL_OnMoveBit( MMDL * fmmdl, MMDL_MOVEBIT bit );
-extern void MMDL_OffMoveBit( MMDL * fmmdl, MMDL_MOVEBIT bit );
-extern u32 MMDL_CheckMoveBit(const MMDL *fmmdl,MMDL_MOVEBIT bit);
-extern void MMDL_SetOBJID( MMDL * fmmdl, u16 obj_id );
-extern u16 MMDL_GetOBJID( const MMDL * fmmdl );
-extern void MMDL_SetZoneID( MMDL * fmmdl, u16 zone_id );
-extern u16 MMDL_GetZoneID( const MMDL * fmmdl );
-extern void MMDL_SetOBJCode( MMDL * fmmdl, u16 code );
-extern u16 MMDL_GetOBJCode( const MMDL * fmmdl );
-extern void MMDL_SetMoveCode( MMDL * fmmdl, u16 code );
-extern u16 MMDL_GetMoveCode( const MMDL * fmmdl );
-extern void MMDL_SetEventType( MMDL * fmmdl, u16 type );
-extern u16 MMDL_GetEventType( const MMDL * fmmdl );
-extern void MMDL_SetEventFlag( MMDL * fmmdl, u16 flag );
-extern u16 MMDL_GetEventFlag( const MMDL * fmmdl );
-extern void MMDL_SetEventID( MMDL * fmmdl, u16 id );
-extern u16 MMDL_GetEventID( const MMDL * fmmdl );
-extern BOOL MMDL_CheckAliesEventID( const MMDL * fmmdl );
-extern u32 MMDL_GetDirHeader( const MMDL * fmmdl );
-extern void MMDL_SetForceDirDisp( MMDL * fmmdl, u16 dir );
-extern void MMDL_SetDirDisp( MMDL * fmmdl, u16 dir );
-extern u16 MMDL_GetDirDisp( const MMDL * fmmdl );
-extern u16 MMDL_GetDirDispOld( const MMDL * fmmdl );
-extern void MMDL_SetDirMove( MMDL * fmmdl, u16 dir );
-extern u16 MMDL_GetDirMove( const MMDL * fmmdl );
-extern u16 MMDL_GetDirMoveOld( const MMDL * fmmdl );
-extern void MMDL_SetDirAll( MMDL * fmmdl, u16 dir );
-extern void MMDL_SetParam(MMDL *fmmdl, u16 param, MMDL_H_PARAM no);
-extern u16 MMDL_GetParam(const MMDL * fmmdl, MMDL_H_PARAM param);
-extern void MMDL_SetMoveLimitX( MMDL * fmmdl, s16 x );
-extern s16 MMDL_GetMoveLimitX( const MMDL * fmmdl );
-extern void MMDL_SetMoveLimitZ( MMDL * fmmdl, s16 z );
-extern s16 MMDL_GetMoveLimitZ( const MMDL * fmmdl );
-extern void MMDL_SetDrawStatus( MMDL * fmmdl, u16 st );
-extern u16 MMDL_GetDrawStatus( const MMDL * fmmdl );
-extern const MMDLSYS * MMDL_GetMMdlSys( const MMDL * fmmdl );
-extern void * MMDL_InitMoveProcWork( MMDL * fmmdl, int size );
-extern void * MMDL_GetMoveProcWork( MMDL * fmmdl );
-extern void * MMDL_InitMoveSubProcWork( MMDL * fmmdl, int size );
-extern void * MMDL_GetMoveSubProcWork( MMDL * fmmdl );
-extern void * MMDL_InitMoveCmdWork( MMDL * fmmdl, int size );
-extern void * MMDL_GetMoveCmdWork( MMDL * fmmdl );
-extern void * MMDL_InitDrawProcWork( MMDL * fmmdl, int size );
-extern void * MMDL_GetDrawProcWork( MMDL * fmmdl );
-extern void MMDL_CallMoveInitProc( MMDL * fmmdl );
-extern void MMDL_CallMoveProc( MMDL * fmmdl );
-extern void MMDL_CallMoveDeleteProc( MMDL * fmmdl );
-extern void MMDL_CallMovePopProc( MMDL * fmmdl );
-extern void MMDL_CallDrawInitProc( MMDL * fmmdl );
-extern void MMDL_CallDrawProc( MMDL * fmmdl );
-extern void MMDL_CallDrawDeleteProc( MMDL * fmmdl );
-extern void MMDL_CallDrawPushProc( MMDL * fmmdl );
-extern void MMDL_CallDrawPopProc( MMDL * fmmdl );
-extern u32 MMDL_CallDrawGetProc( MMDL *fmmdl, u32 state );
-extern void MMDL_SetAcmdCode( MMDL * fmmdl, u16 code );
-extern u16 MMDL_GetAcmdCode( const MMDL * fmmdl );
-extern void MMDL_SetAcmdSeq( MMDL * fmmdl, u16 no );
-extern void MMDL_IncAcmdSeq( MMDL * fmmdl );
-extern u16 MMDL_GetAcmdSeq( const MMDL * fmmdl );
-extern void MMDL_SetMapAttr( MMDL * fmmdl, u32 attr );
-extern u32 MMDL_GetMapAttr( const MMDL * fmmdl );
-extern void MMDL_SetMapAttrOld( MMDL * fmmdl, u32 attr );
-extern u32 MMDL_GetMapAttrOld( const MMDL * fmmdl );
-extern const MMDLSYS * MMDL_GetMMdlSys( const MMDL *fmmdl );
-extern u16 MMDL_GetZoneIDAlies( const MMDL * fmmdl );
-extern s16 MMDL_GetInitGridPosX( const MMDL * fmmdl );
-extern void MMDL_SetInitGridPosX( MMDL * fmmdl, s16 x );
-extern s16 MMDL_GetInitGridPosY( const MMDL * fmmdl );
-extern void MMDL_SetInitGridPosY( MMDL * fmmdl, s16 y );
-extern s16 MMDL_GetInitGridPosZ( const MMDL * fmmdl );
-extern void MMDL_SetInitGridPosZ( MMDL * fmmdl, s16 z );
-extern s16 MMDL_GetOldGridPosX( const MMDL * fmmdl );
-extern void MMDL_SetOldGridPosX( MMDL * fmmdl, s16 x );
-extern s16 MMDL_GetOldGridPosY( const MMDL * fmmdl );
-extern void MMDL_SetOldGridPosY( MMDL * fmmdl, s16 y );
-extern s16 MMDL_GetOldGridPosZ( const MMDL * fmmdl );
-extern void MMDL_SetOldGridPosZ( MMDL * fmmdl, s16 z );
-extern s16 MMDL_GetGridPosX( const MMDL * fmmdl );
-extern void MMDL_SetGridPosX( MMDL * fmmdl, s16 x );
-extern void MMDL_AddGridPosX( MMDL * fmmdl, s16 x );
-extern s16 MMDL_GetGridPosY( const MMDL * fmmdl );
-extern void MMDL_SetGridPosY( MMDL * fmmdl, s16 y );
-extern void MMDL_AddGridPosY( MMDL * fmmdl, s16 y );
-extern s16 MMDL_GetGridPosZ( const MMDL * fmmdl );
-extern void MMDL_SetGridPosZ( MMDL * fmmdl, s16 z );
-extern void MMDL_AddGridPosZ( MMDL * fmmdl, s16 z );
-extern const VecFx32 * MMDL_GetVectorPosAddress( const MMDL * fmmdl );
-extern void MMDL_GetVectorPos( const MMDL * fmmdl, VecFx32 *vec );
-extern void MMDL_SetVectorPos( MMDL * fmmdl, const VecFx32 *vec );
-extern fx32 MMDL_GetVectorPosY( const MMDL * fmmdl );
+extern void MMDL_OnStatusBit( MMDL *mmdl, MMDL_STABIT bit );
+extern void MMDL_OffStatusBit( MMDL *mmdl, MMDL_STABIT bit );
+extern MMDL_STABIT MMDL_GetStatusBit( const MMDL * mmdl );
+extern u32 MMDL_CheckStatusBit(const MMDL *mmdl, MMDL_STABIT bit);
+extern MMDL_MOVEBIT MMDL_GetMoveBit( const MMDL * mmdl );
+extern void MMDL_OnMoveBit( MMDL * mmdl, MMDL_MOVEBIT bit );
+extern void MMDL_OffMoveBit( MMDL * mmdl, MMDL_MOVEBIT bit );
+extern u32 MMDL_CheckMoveBit(const MMDL *mmdl,MMDL_MOVEBIT bit);
+extern void MMDL_SetOBJID( MMDL * mmdl, u16 obj_id );
+extern u16 MMDL_GetOBJID( const MMDL * mmdl );
+extern void MMDL_SetZoneID( MMDL * mmdl, u16 zone_id );
+extern u16 MMDL_GetZoneID( const MMDL * mmdl );
+extern void MMDL_SetOBJCode( MMDL * mmdl, u16 code );
+extern u16 MMDL_GetOBJCode( const MMDL * mmdl );
+extern void MMDL_SetMoveCode( MMDL * mmdl, u16 code );
+extern u16 MMDL_GetMoveCode( const MMDL * mmdl );
+extern void MMDL_SetEventType( MMDL * mmdl, u16 type );
+extern u16 MMDL_GetEventType( const MMDL * mmdl );
+extern void MMDL_SetEventFlag( MMDL * mmdl, u16 flag );
+extern u16 MMDL_GetEventFlag( const MMDL * mmdl );
+extern void MMDL_SetEventID( MMDL * mmdl, u16 id );
+extern u16 MMDL_GetEventID( const MMDL * mmdl );
+extern BOOL MMDL_CheckAliesEventID( const MMDL * mmdl );
+extern u32 MMDL_GetDirHeader( const MMDL * mmdl );
+extern void MMDL_SetForceDirDisp( MMDL * mmdl, u16 dir );
+extern void MMDL_SetDirDisp( MMDL * mmdl, u16 dir );
+extern u16 MMDL_GetDirDisp( const MMDL * mmdl );
+extern u16 MMDL_GetDirDispOld( const MMDL * mmdl );
+extern void MMDL_SetDirMove( MMDL * mmdl, u16 dir );
+extern u16 MMDL_GetDirMove( const MMDL * mmdl );
+extern u16 MMDL_GetDirMoveOld( const MMDL * mmdl );
+extern void MMDL_SetDirAll( MMDL * mmdl, u16 dir );
+extern void MMDL_SetParam(MMDL *mmdl, u16 param, MMDL_H_PARAM no);
+extern u16 MMDL_GetParam(const MMDL * mmdl, MMDL_H_PARAM param);
+extern void MMDL_SetMoveLimitX( MMDL * mmdl, s16 x );
+extern s16 MMDL_GetMoveLimitX( const MMDL * mmdl );
+extern void MMDL_SetMoveLimitZ( MMDL * mmdl, s16 z );
+extern s16 MMDL_GetMoveLimitZ( const MMDL * mmdl );
+extern void MMDL_SetDrawStatus( MMDL * mmdl, u16 st );
+extern u16 MMDL_GetDrawStatus( const MMDL * mmdl );
+extern const MMDLSYS * MMDL_GetMMdlSys( const MMDL * mmdl );
+extern void * MMDL_InitMoveProcWork( MMDL * mmdl, int size );
+extern void * MMDL_GetMoveProcWork( MMDL * mmdl );
+extern void * MMDL_InitMoveSubProcWork( MMDL * mmdl, int size );
+extern void * MMDL_GetMoveSubProcWork( MMDL * mmdl );
+extern void * MMDL_InitMoveCmdWork( MMDL * mmdl, int size );
+extern void * MMDL_GetMoveCmdWork( MMDL * mmdl );
+extern void * MMDL_InitDrawProcWork( MMDL * mmdl, int size );
+extern void * MMDL_GetDrawProcWork( MMDL * mmdl );
+extern void MMDL_CallMoveInitProc( MMDL * mmdl );
+extern void MMDL_CallMoveProc( MMDL * mmdl );
+extern void MMDL_CallMoveDeleteProc( MMDL * mmdl );
+extern void MMDL_CallMovePopProc( MMDL * mmdl );
+extern void MMDL_CallDrawInitProc( MMDL * mmdl );
+extern void MMDL_CallDrawProc( MMDL * mmdl );
+extern void MMDL_CallDrawDeleteProc( MMDL * mmdl );
+extern void MMDL_CallDrawPushProc( MMDL * mmdl );
+extern void MMDL_CallDrawPopProc( MMDL * mmdl );
+extern u32 MMDL_CallDrawGetProc( MMDL *mmdl, u32 state );
+extern void MMDL_SetAcmdCode( MMDL * mmdl, u16 code );
+extern u16 MMDL_GetAcmdCode( const MMDL * mmdl );
+extern void MMDL_SetAcmdSeq( MMDL * mmdl, u16 no );
+extern void MMDL_IncAcmdSeq( MMDL * mmdl );
+extern u16 MMDL_GetAcmdSeq( const MMDL * mmdl );
+extern void MMDL_SetMapAttr( MMDL * mmdl, u32 attr );
+extern u32 MMDL_GetMapAttr( const MMDL * mmdl );
+extern void MMDL_SetMapAttrOld( MMDL * mmdl, u32 attr );
+extern u32 MMDL_GetMapAttrOld( const MMDL * mmdl );
+extern const MMDLSYS * MMDL_GetMMdlSys( const MMDL *mmdl );
+extern u16 MMDL_GetZoneIDAlies( const MMDL * mmdl );
+extern s16 MMDL_GetInitGridPosX( const MMDL * mmdl );
+extern void MMDL_SetInitGridPosX( MMDL * mmdl, s16 x );
+extern s16 MMDL_GetInitGridPosY( const MMDL * mmdl );
+extern void MMDL_SetInitGridPosY( MMDL * mmdl, s16 y );
+extern s16 MMDL_GetInitGridPosZ( const MMDL * mmdl );
+extern void MMDL_SetInitGridPosZ( MMDL * mmdl, s16 z );
+extern s16 MMDL_GetOldGridPosX( const MMDL * mmdl );
+extern void MMDL_SetOldGridPosX( MMDL * mmdl, s16 x );
+extern s16 MMDL_GetOldGridPosY( const MMDL * mmdl );
+extern void MMDL_SetOldGridPosY( MMDL * mmdl, s16 y );
+extern s16 MMDL_GetOldGridPosZ( const MMDL * mmdl );
+extern void MMDL_SetOldGridPosZ( MMDL * mmdl, s16 z );
+extern s16 MMDL_GetGridPosX( const MMDL * mmdl );
+extern void MMDL_SetGridPosX( MMDL * mmdl, s16 x );
+extern void MMDL_AddGridPosX( MMDL * mmdl, s16 x );
+extern s16 MMDL_GetGridPosY( const MMDL * mmdl );
+extern void MMDL_SetGridPosY( MMDL * mmdl, s16 y );
+extern void MMDL_AddGridPosY( MMDL * mmdl, s16 y );
+extern s16 MMDL_GetGridPosZ( const MMDL * mmdl );
+extern void MMDL_SetGridPosZ( MMDL * mmdl, s16 z );
+extern void MMDL_AddGridPosZ( MMDL * mmdl, s16 z );
+extern const VecFx32 * MMDL_GetVectorPosAddress( const MMDL * mmdl );
+extern void MMDL_GetVectorPos( const MMDL * mmdl, VecFx32 *vec );
+extern void MMDL_SetVectorPos( MMDL * mmdl, const VecFx32 *vec );
+extern fx32 MMDL_GetVectorPosY( const MMDL * mmdl );
 extern void MMDL_GetVectorDrawOffsetPos(
-		const MMDL * fmmdl, VecFx32 *vec );
+		const MMDL * mmdl, VecFx32 *vec );
 extern void MMDL_SetVectorDrawOffsetPos(
-		MMDL * fmmdl, const VecFx32 *vec );
+		MMDL * mmdl, const VecFx32 *vec );
 extern void MMDL_GetVectorOuterDrawOffsetPos(
-		const MMDL * fmmdl, VecFx32 *vec );
+		const MMDL * mmdl, VecFx32 *vec );
 extern void MMDL_SetVectorOuterDrawOffsetPos(
-		MMDL * fmmdl, const VecFx32 *vec );
+		MMDL * mmdl, const VecFx32 *vec );
 extern void MMDL_GetVectorAttrDrawOffsetPos(
-		const MMDL * fmmdl, VecFx32 *vec );
+		const MMDL * mmdl, VecFx32 *vec );
 extern void MMDL_SetVectorAttrDrawOffsetPos(
-		MMDL * fmmdl, const VecFx32 *vec );
-extern s16 MMDL_GetHeightGrid( const MMDL * fmmdl );
-extern MMDL_BLACTCONT * MMDL_GetBlActCont( MMDL *fmmdl );
+		MMDL * mmdl, const VecFx32 *vec );
+extern s16 MMDL_GetHeightGrid( const MMDL * mmdl );
+extern MMDL_BLACTCONT * MMDL_GetBlActCont( MMDL *mmdl );
 
-extern BOOL MMDLSYS_CheckCompleteDrawInit( const MMDLSYS *fmmdlsys );
-extern void MMDLSYS_SetCompleteDrawInit( MMDLSYS *fmmdlsys, BOOL flag );
+extern BOOL MMDLSYS_CheckCompleteDrawInit( const MMDLSYS *mmdlsys );
+extern void MMDLSYS_SetCompleteDrawInit( MMDLSYS *mmdlsys, BOOL flag );
 extern void MMDLSYS_SetJoinShadow( MMDLSYS *fos, BOOL flag );
 extern BOOL MMDLSYS_CheckJoinShadow( const MMDLSYS *fos );
 
-extern void MMDLSYS_StopProc( MMDLSYS *fmmdlsys );
-extern void MMDLSYS_PlayProc( MMDLSYS *fmmdlsys );
-extern void MMDLSYS_PauseMoveProc( MMDLSYS *fmmdlsys );
-extern void MMDLSYS_ClearPauseMoveProc( MMDLSYS *fmmdlsys );
+extern void MMDLSYS_StopProc( MMDLSYS *mmdlsys );
+extern void MMDLSYS_PlayProc( MMDLSYS *mmdlsys );
+extern void MMDLSYS_PauseMoveProc( MMDLSYS *mmdlsys );
+extern void MMDLSYS_ClearPauseMoveProc( MMDLSYS *mmdlsys );
 
 extern u32 MMDL_CheckMMdlSysStatusBit(
-	const MMDL *fmmdl, MMDLSYS_STABIT bit );
-extern BOOL MMDL_CheckStatusBitUse( const MMDL *fmmdl );
-extern void MMDL_OnStatusBitMove( MMDL *fmmdl );
-extern void MMDL_OffStatusBitMove( MMDL * fmmdl );
-extern BOOL MMDL_CheckStatusBitMove( const MMDL *fmmdl );
-extern void MMDL_OnStatusBitMoveStart( MMDL * fmmdl );
-extern void MMDL_OffStatusBitMoveStart( MMDL * fmmdl );
-extern BOOL MMDL_CheckStatusBitMoveStart( const MMDL * fmmdl );
-extern void MMDL_OnStatusBitMoveEnd( MMDL * fmmdl );
-extern void MMDL_OffStatusBitMoveEnd( MMDL * fmmdl );
-extern BOOL MMDL_CheckStatusBitMoveEnd( const MMDL * fmmdl );
-extern void MMDL_OnStatusBitCompletedDrawInit( MMDL * fmmdl );
-extern void MMDL_OffStatusBitCompletedDrawInit( MMDL * fmmdl );
-extern BOOL MMDL_CheckStatusBitCompletedDrawInit(const MMDL * fmmdl);
-extern BOOL MMDL_CheckStatusBitVanish( const MMDL * fmmdl );
-extern void MMDL_SetStatusBitVanish( MMDL * fmmdl, BOOL flag );
-extern void MMDL_SetStatusBitFellowHit( MMDL * fmmdl, BOOL flag );
-extern void MMDL_SetStatusBitMove( MMDL * fmmdl, int flag );
-extern BOOL MMDL_CheckStatusBitTalk( MMDL * fmmdl );
-extern void MMDL_SetStatusBitTalkOFF( MMDL * fmmdl, BOOL flag );
-extern void MMDL_OnStatusBitMoveProcPause( MMDL * fmmdl );
-extern void MMDL_OffStatusBitMoveProcPause( MMDL * fmmdl );
-extern BOOL MMDL_CheckStatusBitMoveProcPause( const MMDL * fmmdl );
-extern BOOL MMDL_CheckCompletedDrawInit( const MMDL * fmmdl );
-extern void MMDL_SetStatusBitHeightGetOFF( MMDL * fmmdl, BOOL flag );
-extern BOOL MMDL_CheckStatusBitHeightGetOFF( const MMDL * fmmdl );
-extern void MMDL_SetStatusBitNotZoneDelete( MMDL * fmmdl, BOOL flag );
-extern void MMDL_SetStatusBitAlies( MMDL * fmmdl, BOOL flag );
-extern BOOL MMDL_CheckStatusBitAlies( const MMDL * fmmdl );
-extern void MMDL_SetStatusBitShoalEffect( MMDL * fmmdl, BOOL flag );
-extern BOOL MMDL_CheckStatusBitShoalEffect( const MMDL * fmmdl );
-extern void MMDL_SetStatusBitAttrOffsetOFF( MMDL * fmmdl, BOOL flag );
-extern BOOL MMDL_CheckStatusBitAttrOffsetOFF( const MMDL * fmmdl );
-extern void MMDL_SetStatusBitBridge( MMDL * fmmdl, BOOL flag );
-extern BOOL MMDL_CheckStatusBitBridge( const MMDL * fmmdl );
-extern void MMDL_SetStatusBitReflect( MMDL * fmmdl, BOOL flag );
-extern BOOL MMDL_CheckStatusBitReflect( const MMDL * fmmdl );
-extern BOOL MMDL_CheckStatusBitAcmd( const MMDL * fmmdl );
-extern void MMDL_SetStatusBitHeightExpand( MMDL * fmmdl, BOOL flag );
-extern BOOL MMDL_CheckStatusBitHeightExpand( const MMDL * fmmdl );
+	const MMDL *mmdl, MMDLSYS_STABIT bit );
+extern BOOL MMDL_CheckStatusBitUse( const MMDL *mmdl );
+extern void MMDL_OnStatusBitMove( MMDL *mmdl );
+extern void MMDL_OffStatusBitMove( MMDL * mmdl );
+extern BOOL MMDL_CheckStatusBitMove( const MMDL *mmdl );
+extern void MMDL_OnStatusBitMoveStart( MMDL * mmdl );
+extern void MMDL_OffStatusBitMoveStart( MMDL * mmdl );
+extern BOOL MMDL_CheckStatusBitMoveStart( const MMDL * mmdl );
+extern void MMDL_OnStatusBitMoveEnd( MMDL * mmdl );
+extern void MMDL_OffStatusBitMoveEnd( MMDL * mmdl );
+extern BOOL MMDL_CheckStatusBitMoveEnd( const MMDL * mmdl );
+extern void MMDL_OnStatusBitCompletedDrawInit( MMDL * mmdl );
+extern void MMDL_OffStatusBitCompletedDrawInit( MMDL * mmdl );
+extern BOOL MMDL_CheckStatusBitCompletedDrawInit(const MMDL * mmdl);
+extern BOOL MMDL_CheckStatusBitVanish( const MMDL * mmdl );
+extern void MMDL_SetStatusBitVanish( MMDL * mmdl, BOOL flag );
+extern void MMDL_SetStatusBitFellowHit( MMDL * mmdl, BOOL flag );
+extern void MMDL_SetStatusBitMove( MMDL * mmdl, int flag );
+extern BOOL MMDL_CheckStatusBitTalk( MMDL * mmdl );
+extern void MMDL_SetStatusBitTalkOFF( MMDL * mmdl, BOOL flag );
+extern void MMDL_OnStatusBitMoveProcPause( MMDL * mmdl );
+extern void MMDL_OffStatusBitMoveProcPause( MMDL * mmdl );
+extern BOOL MMDL_CheckStatusBitMoveProcPause( const MMDL * mmdl );
+extern BOOL MMDL_CheckCompletedDrawInit( const MMDL * mmdl );
+extern void MMDL_SetStatusBitHeightGetOFF( MMDL * mmdl, BOOL flag );
+extern BOOL MMDL_CheckStatusBitHeightGetOFF( const MMDL * mmdl );
+extern void MMDL_SetStatusBitNotZoneDelete( MMDL * mmdl, BOOL flag );
+extern void MMDL_SetStatusBitAlies( MMDL * mmdl, BOOL flag );
+extern BOOL MMDL_CheckStatusBitAlies( const MMDL * mmdl );
+extern void MMDL_SetStatusBitShoalEffect( MMDL * mmdl, BOOL flag );
+extern BOOL MMDL_CheckStatusBitShoalEffect( const MMDL * mmdl );
+extern void MMDL_SetStatusBitAttrOffsetOFF( MMDL * mmdl, BOOL flag );
+extern BOOL MMDL_CheckStatusBitAttrOffsetOFF( const MMDL * mmdl );
+extern void MMDL_SetStatusBitBridge( MMDL * mmdl, BOOL flag );
+extern BOOL MMDL_CheckStatusBitBridge( const MMDL * mmdl );
+extern void MMDL_SetStatusBitReflect( MMDL * mmdl, BOOL flag );
+extern BOOL MMDL_CheckStatusBitReflect( const MMDL * mmdl );
+extern BOOL MMDL_CheckStatusBitAcmd( const MMDL * mmdl );
+extern void MMDL_SetStatusBitHeightExpand( MMDL * mmdl, BOOL flag );
+extern BOOL MMDL_CheckStatusBitHeightExpand( const MMDL * mmdl );
 
-extern void MMDL_SetMoveBitAttrGetOFF( MMDL * fmmdl, BOOL flag );
-extern int MMDL_CheckMoveBitAttrGetOFF( const MMDL * fmmdl );
+extern void MMDL_SetMoveBitAttrGetOFF( MMDL * mmdl, BOOL flag );
+extern int MMDL_CheckMoveBitAttrGetOFF( const MMDL * mmdl );
 
 extern BOOL MMDLSYS_SearchUseMMdl(
-	const MMDLSYS *fos, MMDL **fmmdl, u32 *no );
+	const MMDLSYS *fos, MMDL **mmdl, u32 *no );
 extern MMDL * MMDLSYS_SearchGridPos(
 	const MMDLSYS *sys, s16 x, s16 z, BOOL old_hit );
 extern MMDL * MMDLSYS_SearchMoveCode(
@@ -724,33 +737,35 @@ extern MMDL * MMDLSYS_SearchMoveCode(
 extern MMDL * MMDLSYS_SearchOBJID( const MMDLSYS *fos, u16 id );
 extern void MMDLSYS_DeleteZoneUpdateMMdl( MMDLSYS *fos );
 
-extern BOOL MMDL_SearchUseOBJCode( const MMDL *fmmdl, u16 code );
+extern BOOL MMDL_SearchUseOBJCode( const MMDL *mmdl, u16 code );
 extern void MMDL_InitPosition(
-	MMDL * fmmdl, const VecFx32 *vec, u16 dir );
-extern void MMDL_ChangeMoveCode( MMDL *fmmdl, u16 code );
-extern void MMDL_ChangeOBJID( MMDL * fmmdl, u16 id );
-extern BOOL MMDL_CheckSameID(
-	const MMDL * fmmdl, u16 obj_id, u16 zone_id );
-extern BOOL MMDL_CheckSameIDCode(
-	const MMDL * fmmdl, u16 code, u16 obj_id, u16 zone_id );
+	MMDL * mmdl, const VecFx32 *vec, u16 dir );
+extern void MMDL_ChangeMoveCode( MMDL *mmdl, u16 code );
+extern void MMDL_ChangeOBJID( MMDL * mmdl, u16 id );
+extern BOOL MMDL_InitCheckSameData(
+    const MMDL *mmdl, MMDL_CHECKSAME_DATA *outData );
+extern BOOL MMDL_CheckSameData(
+    const MMDL * mmdl, const MMDL_CHECKSAME_DATA *data );
+extern BOOL MMDL_CheckSameDataIDOnly(
+    const MMDL * mmdl, const MMDL_CHECKSAME_DATA *data );
 
 extern const OBJCODE_PARAM * MMDLSYS_GetOBJCodeParam(
-		const MMDLSYS *fmmdlsys, u16 code );
+		const MMDLSYS *mmdlsys, u16 code );
 extern const OBJCODE_PARAM * MMDL_GetOBJCodeParam(
-		const MMDL *fmmdl, u16 code );
+		const MMDL *mmdl, u16 code );
 
-extern void MMDL_MoveInitProcDummy( MMDL * fmmdl );
-extern void MMDL_MoveProcDummy( MMDL * fmmdl );
-extern void MMDL_MoveDeleteProcDummy( MMDL * fmmdl );
-extern void MMDL_MoveReturnProcDummy( MMDL * fmmdl );
+extern void MMDL_MoveInitProcDummy( MMDL * mmdl );
+extern void MMDL_MoveProcDummy( MMDL * mmdl );
+extern void MMDL_MoveDeleteProcDummy( MMDL * mmdl );
+extern void MMDL_MoveReturnProcDummy( MMDL * mmdl );
 
-extern void MMDL_DrawInitProcDummy( MMDL * fmmdl );
-extern void MMDL_DrawProcDummy( MMDL * fmmdl );
-extern void MMDL_DrawDeleteProcDummy( MMDL * fmmdl );
-extern void MMDL_DrawPushProcDummy( MMDL * fmmdl );
-extern void MMDL_DrawPopProcDummy( MMDL * fmmdl );
+extern void MMDL_DrawInitProcDummy( MMDL * mmdl );
+extern void MMDL_DrawProcDummy( MMDL * mmdl );
+extern void MMDL_DrawDeleteProcDummy( MMDL * mmdl );
+extern void MMDL_DrawPushProcDummy( MMDL * mmdl );
+extern void MMDL_DrawPopProcDummy( MMDL * mmdl );
 
-extern void MMDL_ChangeOBJCode( MMDL *fmmdl, u16 code );
+extern void MMDL_ChangeOBJCode( MMDL *mmdl, u16 code );
 
 #ifdef DEBUG_MMDL
 extern u8 * DEBUG_MMDL_GetOBJCodeString( u16 code, HEAPID heapID );
@@ -794,31 +809,31 @@ extern const int DATA_MMDL_BlActFogEnableOFFTbl[];
 //--------------------------------------------------------------
 //	fldmmdl_move.c
 //--------------------------------------------------------------
-extern void MMDL_InitMoveProc( MMDL * fmmdl );
-extern void MMDL_UpdateMove( MMDL * fmmdl );
+extern void MMDL_InitMoveProc( MMDL * mmdl );
+extern void MMDL_UpdateMove( MMDL * mmdl );
 
-extern u32 MMDL_HitCheckMove( const MMDL *fmmdl,
+extern u32 MMDL_HitCheckMove( const MMDL *mmdl,
 	const VecFx32 *vec, s16 x, s16 y, s16 z, u16 dir );
-extern u32 MMDL_HitCheckMoveDir( const MMDL * fmmdl, u16 dir );
+extern u32 MMDL_HitCheckMoveDir( const MMDL * mmdl, u16 dir );
 extern int MMDL_HitCheckMoveFellow(
-	const MMDL * fmmdl, s16 x, s16 y, s16 z );
+	const MMDL * mmdl, s16 x, s16 y, s16 z );
 extern int MMDL_HitCheckMoveLimit(
-	const MMDL * fmmdl, s16 x, s16 y, s16 z );
+	const MMDL * mmdl, s16 x, s16 y, s16 z );
 extern BOOL MMDL_GetMapPosAttr(
-	const MMDL *fmmdl, const VecFx32 *pos, u32 *attr );
+	const MMDL *mmdl, const VecFx32 *pos, u32 *attr );
 extern BOOL MMDL_GetMapPosHeight(
-	const MMDL *fmmdl, const VecFx32 *pos, fx32 *height );
+	const MMDL *mmdl, const VecFx32 *pos, fx32 *height );
 
-extern void MMDL_UpdateGridPosDir( MMDL * fmmdl, u16 dir );
-extern void MMDL_UpdateGridPosCurrent( MMDL * fmmdl );
-extern u32 MMDL_GetMapDirAttr( MMDL * fmmdl, u16 dir );
+extern void MMDL_UpdateGridPosDir( MMDL * mmdl, u16 dir );
+extern void MMDL_UpdateGridPosCurrent( MMDL * mmdl );
+extern u32 MMDL_GetMapDirAttr( MMDL * mmdl, u16 dir );
 
-extern void MMDL_AddVectorPos( MMDL * fmmdl, const VecFx32 *val );
-extern void MMDL_AddVectorPosDir( MMDL * fmmdl, u16 dir, fx32 val );
-extern BOOL MMDL_UpdateCurrentHeight( MMDL * fmmdl );
-extern BOOL MMDL_UpdateCurrentMapAttr( MMDL * fmmdl );
+extern void MMDL_AddVectorPos( MMDL * mmdl, const VecFx32 *val );
+extern void MMDL_AddVectorPosDir( MMDL * mmdl, u16 dir, fx32 val );
+extern BOOL MMDL_UpdateCurrentHeight( MMDL * mmdl );
+extern BOOL MMDL_UpdateCurrentMapAttr( MMDL * mmdl );
 
-extern void MMDL_CallMoveProcAfterDrawInit( MMDL * fmmdl );
+extern void MMDL_CallMoveProcAfterDrawInit( MMDL * mmdl );
 
 extern s16 MMDL_TOOL_GetDirAddValueGridX( u16 dir );
 extern s16 MMDL_TOOL_GetDirAddValueGridZ( u16 dir );
@@ -832,17 +847,17 @@ extern u16 MMDL_TOOL_GetRangeDir( int ax, int az, int bx, int bz );
 //--------------------------------------------------------------
 //	fldmmdl_move_1.c
 //--------------------------------------------------------------
-extern void MMDL_MoveSubProcInit( MMDL * fmmdl );
-extern int MMDL_MoveSub( MMDL * fmmdl );
+extern void MMDL_MoveSubProcInit( MMDL * mmdl );
+extern int MMDL_MoveSub( MMDL * mmdl );
 
 //--------------------------------------------------------------
 //	fldmmdl_move_2.c
 //--------------------------------------------------------------
-extern void MMDL_MoveHidePullOffFlagSet( MMDL * fmmdl );
+extern void MMDL_MoveHidePullOffFlagSet( MMDL * mmdl );
 
 #ifndef MMDL_PL_NULL
-extern void MMDL_MoveHideEoaPtrSet( MMDL * fmmdl, EOA_PTR eoa );
-extern EOA_PTR MMDL_MoveHideEoaPtrGet( MMDL * fmmdl );
+extern void MMDL_MoveHideEoaPtrSet( MMDL * mmdl, EOA_PTR eoa );
+extern EOA_PTR MMDL_MoveHideEoaPtrGet( MMDL * mmdl );
 #endif
 
 //--------------------------------------------------------------
@@ -851,47 +866,47 @@ extern EOA_PTR MMDL_MoveHideEoaPtrGet( MMDL * fmmdl );
 extern void MMDLSYS_InitDraw( MMDLSYS *fos );
 extern void MMDLSYS_DeleteDraw( MMDLSYS *fos );
 
-extern void MMDL_UpdateDraw( MMDL * fmmdl );
+extern void MMDL_UpdateDraw( MMDL * mmdl );
 
 #ifndef MMDL_PL_NULL
 extern const OBJCODE_STATE * MMDL_TOOL_GetOBJCodeState( u16 code );
-extern const OBJCODE_STATE * MMDL_GetOBJCodeState( const MMDL *fmmdl );
+extern const OBJCODE_STATE * MMDL_GetOBJCodeState( const MMDL *mmdl );
 #endif
 
-extern BOOL MMDL_CheckDrawPause( const MMDL * fmmdl );
+extern BOOL MMDL_CheckDrawPause( const MMDL * mmdl );
 extern void * MMDL_DrawArcDataAlloc(
 		const MMDLSYS *fos, u32 datID, int fb );
 extern void MMDL_GetDrawVectorPos(
-		const MMDL * fmmdl, VecFx32 *vec );
+		const MMDL * mmdl, VecFx32 *vec );
 
 //--------------------------------------------------------------
 //	fldmmdl_acmd.c
 //--------------------------------------------------------------
 extern GFL_TCB * MMDL_SetAcmdList(
-	MMDL * fmmdl, const MMDL_ACMD_LIST *list );
+	MMDL * mmdl, const MMDL_ACMD_LIST *list );
 extern BOOL MMDL_CheckEndAcmdList( GFL_TCB * tcb );
 extern void MMDL_EndAcmdList( GFL_TCB * tcb );
 
 extern u16 MMDL_ChangeDirAcmdCode( u16 dir, u16 code );
 extern u16 MMDL_GetAcmdDir( u16 code );
 
-extern void MMDL_ActionAcmd( MMDL * fmmdl );
-extern BOOL MMDL_ActionLocalAcmd( MMDL * fmmdl );
+extern void MMDL_ActionAcmd( MMDL * mmdl );
+extern BOOL MMDL_ActionLocalAcmd( MMDL * mmdl );
 
 //--------------------------------------------------------------
 ///	fldmmdl_blact.c
 //--------------------------------------------------------------
-extern void MMDL_BLACTCONT_Setup( MMDLSYS *fmmdlsys,
+extern void MMDL_BLACTCONT_Setup( MMDLSYS *mmdlsys,
 	GFL_BBDACT_SYS *pBbdActSys, int res_max );
-extern void MMDL_BLACTCONT_Release( MMDLSYS *fmmdlsys );
-extern void MMDL_BLACTCONT_ProcVBlank( MMDLSYS *fmmdlsys );
+extern void MMDL_BLACTCONT_Release( MMDLSYS *mmdlsys );
+extern void MMDL_BLACTCONT_ProcVBlank( MMDLSYS *mmdlsys );
 
-void MMDL_BLACTCONT_AddResourceTex(
-	MMDLSYS *fmmdlsys, const u16 *code, int max );
+extern void MMDL_BLACTCONT_AddResourceTex(
+	MMDLSYS *mmdlsys, const u16 *code, int max );
 
 extern BOOL MMDL_BLACTCONT_AddActor(
-    MMDL *fmmdl, u16 code, GFL_BBDACT_ACTUNIT_ID *outID );
-extern void MMDL_BLACTCONT_DeleteActor( MMDL *fmmdl, u32 actID );
+    MMDL *mmdl, u16 code, GFL_BBDACT_ACTUNIT_ID *outID );
+extern void MMDL_BLACTCONT_DeleteActor( MMDL *mmdl, u32 actID );
 
 extern GFL_BBDACT_SYS * MMDL_BLACTCONT_GetBbdActSys(
 		MMDL_BLACTCONT *pBlActCont );
@@ -899,9 +914,9 @@ extern GFL_BBDACT_RESUNIT_ID MMDL_BLACTCONT_GetResUnitID(
 		MMDL_BLACTCONT *pBlActCont );
 
 extern BOOL MMDL_BLACTCONT_CheckOBJCodeRes(
-		MMDLSYS *fmmdlsys, u16 code );
+		MMDLSYS *mmdlsys, u16 code );
 extern BOOL MMDL_BLACTCONT_AddOBJCodeRes(
-    MMDLSYS *fmmdlsys, u16 code, BOOL trans, BOOL guest );
-extern void MMDL_BLACTCONT_DeleteOBJCodeRes( MMDLSYS *fmmdlsys, u16 code );
+    MMDLSYS *mmdlsys, u16 code, BOOL trans, BOOL guest );
+extern void MMDL_BLACTCONT_DeleteOBJCodeRes( MMDLSYS *mmdlsys, u16 code );
 
 #endif //MMDL_H_FILE
