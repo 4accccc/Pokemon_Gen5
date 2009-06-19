@@ -332,6 +332,7 @@ extern void BTL_POKEPARAM_UpdateUsedWazaNumber( BTL_POKEPARAM* pp, WazaID waza, 
 extern void BTL_POKEPARAM_ResetUsedWazaNumber( BTL_POKEPARAM* pp );
 extern void BTL_POKEPARAM_RankRecover( BTL_POKEPARAM* pp );
 extern void BTL_POKEPARAM_RankReset( BTL_POKEPARAM* pp );
+extern void BTL_POKEPARM_DeadClear( BTL_POKEPARAM* pp );
 
 
 

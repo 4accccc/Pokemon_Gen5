@@ -1052,6 +1052,7 @@ BtlSide BTL_MAIN_GetClientSide( const BTL_MAIN_MODULE* wk, u8 clientID )
   return clientID_to_side( clientID );
 }
 
+
 //=============================================================================================
 /**
  * クライアントIDからポケモン戦闘位置を返す
@@ -1400,6 +1401,19 @@ BtlPokePos BTL_MAIN_ViewPosToBtlPos( const BTL_MAIN_MODULE* wk, u8 vpos )
 
 //=============================================================================================
 /**
+ *
+ *
+ * @param   pokeID
+ *
+ * @retval  BtlSide
+ */
+//=============================================================================================
+BtlSide BTL_MAINUTIL_PokeIDtoSide( u8 pokeID )
+{
+  return (pokeID < TEMOTI_POKEMAX*2)? BTL_SIDE_1ST : BTL_SIDE_2ND;
+}
+//=============================================================================================
+/**
  * 味方同士のポケモンIDかどうかを判定する
  *
  * @param   pokeID1
@@ -1410,8 +1424,8 @@ BtlPokePos BTL_MAIN_ViewPosToBtlPos( const BTL_MAIN_MODULE* wk, u8 vpos )
 //=============================================================================================
 BOOL BTL_MAINUTIL_IsFriendPokeID( u8 pokeID1, u8 pokeID2 )
 {
-  u8 side1 = (pokeID1 < (TEMOTI_POKEMAX*2));
-  u8 side2 = (pokeID2 < (TEMOTI_POKEMAX*2));
+  BtlSide side1 = BTL_MAINUTIL_PokeIDtoSide( pokeID1 );
+  BtlSide side2 = BTL_MAINUTIL_PokeIDtoSide( pokeID2 );
   return side1 == side2;
 }
 

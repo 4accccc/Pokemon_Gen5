@@ -1424,7 +1424,6 @@ static void flowsub_checkNotEffect( BTL_SVFLOW_WORK* wk, WazaID waza, const BTL_
   BTL_POKEPARAM* bpp;
 
   TargetPokeRec_GetStart( targets );
-
   // タイプ相性による無効化チェック
   while( (bpp = TargetPokeRec_GetNext(targets)) != NULL )
   {
@@ -4053,10 +4052,12 @@ static void scPut_CheckDeadCmd( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* poke )
 
       BTL_HANDLER_TOKUSEI_Remove( poke );
       BTL_HANDLER_ITEM_Remove( poke );
+      BTL_HANDLER_Waza_RemoveForceAll( poke );
 //      BTL_HANDLER_Waza_RemoveForce( poke );
 
       SCQUE_PUT_MSG_SET( wk->que, BTL_STRID_SET_Dead, pokeID );
       SCQUE_PUT_ACT_Dead( wk->que, pokeID );
+      BTL_POKEPARM_DeadClear( poke );
     }
   }
 }

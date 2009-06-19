@@ -1552,6 +1552,8 @@ static BOOL scProc_ACT_Dead( BTL_CLIENT* wk, int* seq, const int* args )
   case 1:
     if( BTLV_WaitDeadAct(wk->viewCore) )
     {
+      BTL_POKEPARAM* pp = BTL_POKECON_GetPokeParam( wk->pokeCon, args[0] );
+      BTL_POKEPARM_DeadClear( pp );
       return TRUE;
     }
     break;

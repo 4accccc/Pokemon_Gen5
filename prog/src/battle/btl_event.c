@@ -271,7 +271,20 @@ int BTL_EVENT_FACTOR_GetWorkValue( const BTL_EVENT_FACTOR* factor, u8 workIdx )
   GF_ASSERT(workIdx < EVENT_HANDLER_WORK_ELEMS);
   return factor->work[ workIdx ];
 }
-
+//=============================================================================================
+/**
+ * ÉèÅ[ÉNì‡óeÇê›íË
+ *
+ * @param   factor
+ * @param   workIdx
+ * @param   value
+ */
+//=============================================================================================
+void BTL_EVENT_FACTOR_SetWorkValue( BTL_EVENT_FACTOR* factor, u8 workIdx, int value )
+{
+  GF_ASSERT(workIdx < EVENT_HANDLER_WORK_ELEMS);
+  factor->work[ workIdx ] = value;
+}
 
 //=============================================================================================
 /**

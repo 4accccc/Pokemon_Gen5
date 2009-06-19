@@ -400,6 +400,22 @@ static void removeHandlerForce( u8 pokeID, WazaID waza )
     }
   }
 }
+//=============================================================================================
+/**
+ * 特定ポケモンのワザハンドラをシステムから全て強制削除（貼り付いているものも強制的に削除）
+ *
+ * @param   pp
+ */
+//=============================================================================================
+void BTL_HANDLER_Waza_RemoveForceAll( const BTL_POKEPARAM* pp )
+{
+  u8 pokeID = BTL_POKEPARAM_GetID( pp );
+  BTL_EVENT_FACTOR* factor;
+  while( (factor = BTL_EVENT_SeekFactor(BTL_EVENT_FACTOR_WAZA, pokeID)) != NULL )
+  {
+    BTL_EVENT_FACTOR_Remove( factor );
+  }
+}
 
 
 //----------------------------------------------------------------------------------
