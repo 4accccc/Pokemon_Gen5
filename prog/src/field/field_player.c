@@ -449,6 +449,7 @@ PLAYER_MOVE_FORM FIELD_PLAYER_GetOBJCodeToMoveForm( int sex, u16 code )
     }
   }
   GF_ASSERT( 0 );
+  return( PLAYER_MOVE_FORM_NORMAL );
 }
 
 //--------------------------------------------------------------
@@ -470,6 +471,7 @@ u16 FIELD_PLAYER_GetMoveFormToOBJCode( int sex, PLAYER_MOVE_FORM form )
     }
   }
   GF_ASSERT( 0 );
+  return( HERO );
 }
 
 //--------------------------------------------------------------
@@ -491,6 +493,7 @@ PLAYER_DRAW_FORM FIELD_PLAYER_GetOBJCodeToDrawForm( int sex, u16 code )
     }
   }
   GF_ASSERT( 0 );
+  return( PLAYER_DRAW_FORM_NORMAL );
 }
 
 //======================================================================
