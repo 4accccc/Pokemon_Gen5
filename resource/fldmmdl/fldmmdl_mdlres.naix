@@ -23,7 +23,8 @@ enum {
 	NARC_fldmmdl_mdlres_obj_kabi32_nsbtx = 9,
 	NARC_fldmmdl_mdlres_babyboy1_nsbtx = 10,
 	NARC_fldmmdl_mdlres_babygirl1_nsbtx = 11,
-	NARC_fldmmdl_mdlres_cyclehero_nsbtx = 12
+	NARC_fldmmdl_mdlres_cyclehero_nsbtx = 12,
+	NARC_fldmmdl_mdlres_swimhero_nsbtx = 13
 };
 
 /* NARC_FLDMMDL_MDLRES_NAIX_ */

@@ -16,6 +16,7 @@
 #define BABYBOY1 (0xb) //11 幼児
 #define BABYGIRL1 (0xc) //12 幼女
 #define CYCLEHERO (0xd) //13 主人公男自転車
-#define OBJCODEMAX (0xe) //14 最大
+#define SWIMHERO (0xe) //14 主人公男波乗り
+#define OBJCODEMAX (0xf) //15 最大
 
 #endif

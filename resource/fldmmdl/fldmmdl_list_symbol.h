@@ -12,6 +12,7 @@
 #define PROC_HERO 1 //自機専用
 #define PROC_BLACT 2 //汎用ビルボードアクター
 #define PROC_CYCLEHERO 3 //自転車自機専用
+#define PROC_SWIMHERO 4 //波乗り自機専用
 
 //FOOTMARK 足跡種類で指定するシンボルです。
 #define FOOTMARK_NON 0 //足跡無し
@@ -91,4 +92,5 @@
 #define ANMID_NON 0 //アニメ無し
 #define ANMID_HERO 1 //自機専用
 #define ANMID_BLACT 2 //汎用ビルボードアクター用
-#define ANMID_CYCLEHERO 3
+#define ANMID_CYCLEHERO 3 //自転車自機専用
+#define ANMID_SWIMHERO 4 //波乗り自機専用
