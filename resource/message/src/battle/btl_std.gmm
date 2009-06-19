@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="taya" host="W00146" date="2009-06-17T21:59:40"/>
+	<create user="taya" host="W00146" date="2009-06-19T19:36:20"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -592,6 +592,174 @@
 	<row id="BTL_STRID_STD_AlomaTherapy">
 		<language name="JPN" width="216">ここちよい　かおりが　ひろがった！</language>
 		<language name="JPN_KANJI" width="216">心地よい　香りが　広がった！</language>
+	</row>
+
+	<row id="BTL_STRID_STD_Reflector">
+		<language name="JPN" width="216">みかたは　リフレクターで
+ぶつりに　つよくなった！</language>
+		<language name="JPN_KANJI" width="216">味方は　リフレクターで
+物理に　強くなった！</language>
+	</row>
+
+	<row id="BTL_STRID_STD_Reflector_E">
+		<language name="JPN" width="216">あいては　リフレクターで
+ぶつりに　つよくなった！</language>
+		<language name="JPN_KANJI" width="216">相手は　リフレクターで
+物理に　強くなった！</language>
+	</row>
+
+	<row id="BTL_STRID_STD_ReflectorOff">
+		<language name="JPN" width="216">みかたの　リフレクターの
+こうかが　きれた！</language>
+		<language name="JPN_KANJI" width="216">味方の　リフレクターの
+効果が　切れた！</language>
+	</row>
+
+	<row id="BTL_STRID_STD_ReflectorOff_E">
+		<language name="JPN" width="216">あいての　リフレクターの
+こうかが　きれた！</language>
+		<language name="JPN_KANJI" width="216">相手の　リフレクターの
+効果が　切れた！</language>
+	</row>
+
+	<row id="BTL_STRID_STD_HikariNoKabe">
+		<language name="JPN" width="216">みかたは　ひかりのかべで
+とくしゅに　つよくなった！</language>
+		<language name="JPN_KANJI" width="216">味方は　ひかりのかべで
+特殊に　強くなった！</language>
+	</row>
+
+	<row id="BTL_STRID_STD_HikariNoKabe_E">
+		<language name="JPN" width="216">あいては　ひかりのかべで
+とくしゅに　つよくなった！</language>
+		<language name="JPN_KANJI" width="216">相手は　ひかりのかべで
+特殊に　強くなった！</language>
+	</row>
+
+	<row id="BTL_STRID_STD_HikariNoKabeOff">
+		<language name="JPN" width="216">みかたの　ひかりのかべの
+こうかが　きれた！</language>
+		<language name="JPN_KANJI" width="216">味方の　ひかりのかべの
+効果が　切れた！</language>
+	</row>
+
+	<row id="BTL_STRID_STD_HikariNoKabeOff_E">
+		<language name="JPN" width="216">あいての　ひかりのかべの
+こうかが　きれた！</language>
+		<language name="JPN_KANJI" width="216">相手の　ひかりのかべの
+効果が　切れた！</language>
+	</row>
+
+	<row id="BTL_STRID_STD_SinpiNoMamori">
+		<language name="JPN" width="216">みかたは
+しんぴのベールに　つつまれた！</language>
+		<language name="JPN_KANJI" width="216">味方は
+神秘のベールに　包まれた！</language>
+	</row>
+
+	<row id="BTL_STRID_STD_SinpiNoMamori_E">
+		<language name="JPN" width="216">あいては
+しんぴのベールに　つつまれた！</language>
+		<language name="JPN_KANJI" width="216">相手は
+神秘のベールに　包まれた！</language>
+	</row>
+
+	<row id="BTL_STRID_STD_SinpiNoMamoriOff">
+		<language name="JPN" width="216">みかたを　つつんでいた
+しんぴのベールが　なくなった！</language>
+		<language name="JPN_KANJI" width="216">味方を　包んでいた
+神秘のベールが　無くなった！</language>
+	</row>
+
+	<row id="BTL_STRID_STD_SinpiNoMamoriOff_E">
+		<language name="JPN" width="216">あいてを　つつんでいた
+しんぴのベールが　なくなった！</language>
+		<language name="JPN_KANJI" width="216">相手を　包んでいた
+神秘のベールが　無くなった！</language>
+	</row>
+
+	<row id="BTL_STRID_STD_SiroiKiri">
+		<language name="JPN" width="216">みかたは
+しろいきりに　つつまれた！</language>
+		<language name="JPN_KANJI" width="216">味方は
+白い霧に　包まれた！</language>
+	</row>
+
+	<row id="BTL_STRID_STD_SiroiKiri_E">
+		<language name="JPN" width="216">あいては
+しろいきりに　つつまれた！</language>
+		<language name="JPN_KANJI" width="216">相手は
+白い霧に　包まれた！</language>
+	</row>
+
+	<row id="BTL_STRID_STD_SiroiKiriOff">
+		<language name="JPN" width="216">みかたを　つつんでいた
+しろいきりが　なくなった！</language>
+		<language name="JPN_KANJI" width="216">味方を　包んでいた
+白い霧が　無くなった！</language>
+	</row>
+
+	<row id="BTL_STRID_STD_SiroiKiriOff_E">
+		<language name="JPN" width="216">あいてを　つつんでいた
+しろいきりが　なくなった！</language>
+		<language name="JPN_KANJI" width="216">相手を　包んでいた
+白い霧が　無くなった！</language>
+	</row>
+
+	<row id="BTL_STRID_STD_Oikaze">
+		<language name="JPN" width="216">みかたに
+おいかぜが　ふきはじめた！</language>
+		<language name="JPN_KANJI" width="216">味方に
+追い風が　吹き始めた！</language>
+	</row>
+
+	<row id="BTL_STRID_STD_Oikaze_E">
+		<language name="JPN" width="216">あいてに
+おいかぜが　ふきはじめた！</language>
+		<language name="JPN_KANJI" width="216">相手に
+追い風が　吹き始めた！</language>
+	</row>
+
+	<row id="BTL_STRID_STD_OikazeOff">
+		<language name="JPN" width="216">みかたの
+おいかぜが　やんだ！</language>
+		<language name="JPN_KANJI" width="216">味方の
+追い風が　止んだ！</language>
+	</row>
+
+	<row id="BTL_STRID_STD_OikazeOff_E">
+		<language name="JPN" width="216">あいての
+おいかぜが　やんだ！</language>
+		<language name="JPN_KANJI" width="216">相手の
+追い風が　止んだ！</language>
+	</row>
+
+	<row id="BTL_STRID_STD_Makibisi">
+		<language name="JPN" width="216">みかたの　あしもとに
+まきびしが　ちらばった！</language>
+		<language name="JPN_KANJI" width="216">味方の　足下に
+まきびしが　散らばった！</language>
+	</row>
+
+	<row id="BTL_STRID_STD_Makibisi_E">
+		<language name="JPN" width="216">あいての　あしもとに
+まきびしが　ちらばった！</language>
+		<language name="JPN_KANJI" width="216">相手の　足下に
+まきびしが　散らばった！</language>
+	</row>
+
+	<row id="BTL_STRID_STD_Dokubisi">
+		<language name="JPN" width="216">みかたの　あしもとに
+どくびしが　ちらばった！</language>
+		<language name="JPN_KANJI" width="216">味方の　足下に
+どくびしが　散らばった！</language>
+	</row>
+
+	<row id="BTL_STRID_STD_Dokubisi_E">
+		<language name="JPN" width="216">あいての　あしもとに
+どくびしが　ちらばった！</language>
+		<language name="JPN_KANJI" width="216">相手の　足下に
+どくびしが　散らばった！</language>
 	</row>
 
 	<flowchart-group-list>

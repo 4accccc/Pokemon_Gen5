@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="taya" host="W00146" date="2009-06-19T01:09:55"/>
+	<create user="taya" host="W00146" date="2009-06-19T20:44:58"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -2685,6 +2685,50 @@
 ねらいを　さだめた！</language>
 		<language name="JPN_KANJI" width="216">相手の　[1:02:ポケモンニックネーム:0]は　[1:02:ポケモンニックネーム:1]に
 ねらいを　さだめた！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_SinpiNoMamori_Exe">
+		<comment>しんぴのまもり( btl_std.gmm にも関連文字列があります）</comment>
+		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は　
+しんぴのベールに　まもられている！</language>
+		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は　
+神秘のベールに　守られている！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_SinpiNoMamori_Exe_Y">
+		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は　
+しんぴのベールに　まもられている！</language>
+		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]は　
+神秘のベールに　守られている！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_SinpiNoMamori_Exe_E">
+		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は　
+しんぴのベールに　まもられている！</language>
+		<language name="JPN_KANJI" width="216">相手の　[1:02:ポケモンニックネーム:0]は　
+神秘のベールに　守られている！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_SiroiKiri_Exe">
+		<comment>しろいきり（ btl_std.gmm にも関連文字列があります）</comment>
+		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は　
+しろいきりに　まもられている！</language>
+		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は　
+白い霧に　守られている！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_SiroiKiri_Exe_Y">
+		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は　
+しろいきりに　まもられている！</language>
+		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]は　
+白い霧に　守られている！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_SiroiKiri_Exe_E">
+		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は　
+しろいきりに　まもられている！</language>
+		<language name="JPN_KANJI" width="216">相手の　[1:02:ポケモンニックネーム:0]は　
+白い霧に　守られている！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_PushOutChange">
