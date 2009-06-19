@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ariizumi_nobuhiko" host="W00147" date="2009-06-16T20:25:30"/>
+	<create user="ariizumi_nobuhiko" host="W00147" date="2009-06-17T12:25:30"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -305,7 +305,7 @@
 		</language>
 	</columns>
 
-	<dialog left="116" top="176" right="821" bottom="796" maximized="no" rayout="Vertical2">
+	<dialog left="-16" top="176" right="689" bottom="796" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="0" style="0000" width="530"/>
@@ -355,7 +355,7 @@
 		<language name="JPN_KANJI" font=" 1:small" width="24">Lv[2:02:３桁:0]</language>
 	</row>
 
-	<row id="mes_pokelist_01_04">
+	<row id="mes_pokelist_01_04" back-color="#80ffff,,,,,,,,,,,,,,,,,">
 		<comment>リスト項目
 ２番目のポケモンのレベルを表示します
 0：レベル数</comment>
@@ -363,7 +363,7 @@
 		<language name="JPN_KANJI" font=" 1:small" width="24">[2:02:３桁:0]</language>
 	</row>
 
-	<row id="mes_pokelist_01_05">
+	<row id="mes_pokelist_01_05" back-color="#80ffff,,,,,,,,,,,,,,,,,">
 		<comment>リスト項目
 ３番目のポケモンのレベルを表示します
 0：レベル数</comment>
@@ -371,7 +371,7 @@
 		<language name="JPN_KANJI" font=" 1:small" width="24">[2:02:３桁:0]</language>
 	</row>
 
-	<row id="mes_pokelist_01_06">
+	<row id="mes_pokelist_01_06" back-color="#80ffff,,,,,,,,,,,,,,,,,">
 		<comment>リスト項目
 ４番目のポケモンのレベルを表示します
 0：レベル数</comment>
@@ -379,7 +379,7 @@
 		<language name="JPN_KANJI" font=" 1:small" width="24">[2:02:３桁:0]</language>
 	</row>
 
-	<row id="mes_pokelist_01_07">
+	<row id="mes_pokelist_01_07" back-color="#80ffff,,,,,,,,,,,,,,,,,">
 		<comment>リスト項目
 ５番目のポケモンのレベルを表示します
 0：レベル数</comment>
@@ -387,7 +387,7 @@
 		<language name="JPN_KANJI" font=" 1:small" width="24">[2:02:３桁:0]</language>
 	</row>
 
-	<row id="mes_pokelist_01_08">
+	<row id="mes_pokelist_01_08" back-color="#80ffff,,,,,,,,,,,,,,,,,">
 		<comment>リスト項目
 ６番目のポケモンのレベルを表示します
 0：レベル数</comment>
@@ -403,7 +403,7 @@
 		<language name="JPN_KANJI" font=" 1:small" width="60">[1:02:ポケモンニックネーム:0]</language>
 	</row>
 
-	<row id="mes_pokelist_01_10">
+	<row id="mes_pokelist_01_10" back-color="#80ffff,,,,,,,,,,,,,,,,,">
 		<comment>リスト項目
 ２番目のニックネームを表示します
 0：ニックネーム</comment>
@@ -411,7 +411,7 @@
 		<language name="JPN_KANJI" font=" 1:small" width="60">[1:02:ポケモンニックネーム:0]</language>
 	</row>
 
-	<row id="mes_pokelist_01_11">
+	<row id="mes_pokelist_01_11" back-color="#80ffff,,,,,,,,,,,,,,,,,">
 		<comment>リスト項目
 ３番目のニックネームを表示します
 0：ニックネーム</comment>
@@ -419,7 +419,7 @@
 		<language name="JPN_KANJI" font=" 1:small" width="60">[1:02:ポケモンニックネーム:0]</language>
 	</row>
 
-	<row id="mes_pokelist_01_12">
+	<row id="mes_pokelist_01_12" back-color="#80ffff,,,,,,,,,,,,,,,,,">
 		<comment>リスト項目
 ４番目のニックネームを表示します
 0：ニックネーム</comment>
@@ -427,7 +427,7 @@
 		<language name="JPN_KANJI" font=" 1:small" width="60">[1:02:ポケモンニックネーム:0]</language>
 	</row>
 
-	<row id="mes_pokelist_01_13">
+	<row id="mes_pokelist_01_13" back-color="#80ffff,,,,,,,,,,,,,,,,,">
 		<comment>リスト項目
 ５番目のニックネームを表示します
 0：ニックネーム</comment>
@@ -435,7 +435,7 @@
 		<language name="JPN_KANJI" font=" 1:small" width="60">[1:02:ポケモンニックネーム:0]</language>
 	</row>
 
-	<row id="mes_pokelist_01_14">
+	<row id="mes_pokelist_01_14" back-color="#80ffff,,,,,,,,,,,,,,,,,">
 		<comment>リスト項目
 ６番目のニックネームを表示します
 0：ニックネーム</comment>
@@ -451,7 +451,7 @@
 		<language name="JPN_KANJI" font=" 1:small" width="60">[2:02:３桁:0]</language>
 	</row>
 
-	<row id="mes_pokelist_01_16">
+	<row id="mes_pokelist_01_16" back-color="#80ffff,,,,,,,,,,,,,,,,,">
 		<comment>リスト項目
 ２番目のポケモンの最大ＨＰを表示します
 0：最大ＨＰ</comment>
@@ -459,7 +459,7 @@
 		<language name="JPN_KANJI" font=" 1:small" width="60">[2:02:３桁:0]</language>
 	</row>
 
-	<row id="mes_pokelist_01_17">
+	<row id="mes_pokelist_01_17" back-color="#80ffff,,,,,,,,,,,,,,,,,">
 		<comment>リスト項目
 ３番目のポケモンの最大ＨＰを表示します
 0：最大ＨＰ</comment>
@@ -467,7 +467,7 @@
 		<language name="JPN_KANJI" font=" 1:small" width="60">[2:02:３桁:0]</language>
 	</row>
 
-	<row id="mes_pokelist_01_18">
+	<row id="mes_pokelist_01_18" back-color="#80ffff,,,,,,,,,,,,,,,,,">
 		<comment>リスト項目
 ４番目のポケモンの最大ＨＰを表示します
 0：最大ＨＰ</comment>
@@ -475,7 +475,7 @@
 		<language name="JPN_KANJI" font=" 1:small" width="60">[2:02:３桁:0]</language>
 	</row>
 
-	<row id="mes_pokelist_01_19">
+	<row id="mes_pokelist_01_19" back-color="#80ffff,,,,,,,,,,,,,,,,,">
 		<comment>リスト項目
 ５番目のポケモンの最大ＨＰを表示します
 0：最大ＨＰ</comment>
@@ -483,7 +483,7 @@
 		<language name="JPN_KANJI" font=" 1:small" width="60">[2:02:３桁:0]</language>
 	</row>
 
-	<row id="mes_pokelist_01_20">
+	<row id="mes_pokelist_01_20" back-color="#80ffff,,,,,,,,,,,,,,,,,">
 		<comment>リスト項目
 ６番目のポケモンの最大ＨＰを表示します
 0：最大ＨＰ</comment>
@@ -499,7 +499,7 @@
 		<language name="JPN_KANJI" font=" 1:small" width="60">[2:02:３桁:0]</language>
 	</row>
 
-	<row id="mes_pokelist_01_22">
+	<row id="mes_pokelist_01_22" back-color="#80ffff,,,,,,,,,,,,,,,,,">
 		<comment>リスト項目
 ２番目のポケモンの現在のＨＰを表示します
 0：現在のＨＰ</comment>
@@ -507,7 +507,7 @@
 		<language name="JPN_KANJI" font=" 1:small" width="60">[2:02:３桁:0]</language>
 	</row>
 
-	<row id="mes_pokelist_01_23">
+	<row id="mes_pokelist_01_23" back-color="#80ffff,,,,,,,,,,,,,,,,,">
 		<comment>リスト項目
 ３番目のポケモンの現在のＨＰを表示します
 0：現在のＨＰ</comment>
@@ -515,7 +515,7 @@
 		<language name="JPN_KANJI" font=" 1:small" width="60">[2:02:３桁:0]</language>
 	</row>
 
-	<row id="mes_pokelist_01_24">
+	<row id="mes_pokelist_01_24" back-color="#80ffff,,,,,,,,,,,,,,,,,">
 		<comment>リスト項目
 ４番目のポケモンの現在のＨＰを表示します
 0：現在のＨＰ</comment>
@@ -523,7 +523,7 @@
 		<language name="JPN_KANJI" font=" 1:small" width="60">[2:02:３桁:0]</language>
 	</row>
 
-	<row id="mes_pokelist_01_25">
+	<row id="mes_pokelist_01_25" back-color="#80ffff,,,,,,,,,,,,,,,,,">
 		<comment>リスト項目
 ５番目のポケモンの現在のＨＰを表示します
 0：現在のＨＰ</comment>
@@ -531,7 +531,7 @@
 		<language name="JPN_KANJI" font=" 1:small" width="60">[2:02:３桁:0]</language>
 	</row>
 
-	<row id="mes_pokelist_01_26">
+	<row id="mes_pokelist_01_26" back-color="#80ffff,,,,,,,,,,,,,,,,,">
 		<comment>リスト項目
 ６番目のポケモンの現在のＨＰを表示します
 0：現在のＨＰ</comment>
@@ -828,11 +828,11 @@ PP値上昇アイテムで技選択するとき</comment>
 メッセージ
 0：選択したポケモンニックネーム
 1：技マシンの技名</comment>
-		<language name="JPN" width="216" line="2">１\[190:02:ウェイト変更（単発）:20\]　２の\[190:02:ウェイト変更（単発）:20\]　…\[190:02:ウェイト変更（単発）:20\]…\[190:02:ウェイト変更（単発）:20\]　ポカン！\[190:05:コールバック引数変更（単発）:3\]\[190:05:コールバック引数変更（単発）:5\][2:07:８桁:]
+		<language name="JPN" width="216" line="2">１\[190:02:ウェイト変更（単発）:20\]　２の\[190:02:ウェイト変更（単発）:20\]　…\[190:02:ウェイト変更（単発）:20\]…\[190:02:ウェイト変更（単発）:20\]　ポカン！\[190:05:コールバック引数変更（単発）:3\]\[190:05:コールバック引数変更（単発）:5\]\[2:07:８桁:\]
 [1:02:ポケモンニックネーム:0]は　[1:07:わざ名:1]の
 つかいかたを　きれいにわすれた！[2:07:８桁:]
 そして……！[2:07:８桁:]</language>
-		<language name="JPN_KANJI" width="216" line="2">１\[190:02:ウェイト変更（単発）:20\]　２の\[190:02:ウェイト変更（単発）:20\]　…\[190:02:ウェイト変更（単発）:20\]…\[190:02:ウェイト変更（単発）:20\]　ポカン！\[190:05:コールバック引数変更（単発）:3\]\[190:05:コールバック引数変更（単発）:5\][2:07:８桁:]
+		<language name="JPN_KANJI" width="216" line="2">１\[190:02:ウェイト変更（単発）:20\]　２の\[190:02:ウェイト変更（単発）:20\]　…\[190:02:ウェイト変更（単発）:20\]…\[190:02:ウェイト変更（単発）:20\]　ポカン！\[190:05:コールバック引数変更（単発）:3\]\[190:05:コールバック引数変更（単発）:5\]\[2:07:８桁:\]
 [1:02:ポケモンニックネーム:0]は　[1:07:わざ名:1]の
 つかいかたを　きれいにわすれた！[2:07:８桁:]
 そして……！[2:07:８桁:]</language>

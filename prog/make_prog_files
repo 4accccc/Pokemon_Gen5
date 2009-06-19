@@ -413,7 +413,8 @@ SRCS_OVERLAY_TESTMODE = test/testmode.c
 SRCS_OVERLAY_POKELIST = test/matsuda/easy_pokelist.c\
 		app/pokelist/plist_sys.c \
 		app/pokelist/plist_plate.c \
-		app/pokelist/plist_message.c
+		app/pokelist/plist_message.c \
+		app/pokelist/plist_menu.c
 
 
 # ŒðŠ·‰æ–Ê

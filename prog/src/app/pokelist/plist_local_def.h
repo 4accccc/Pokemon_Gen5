@@ -25,6 +25,8 @@
 #define PLIST_BG_SUB_BG (GFL_BG_FRAME3_S)
 
 //BGパレット
+#define PLIST_BG_PLT_MENU_ACTIVE (0x01)
+#define PLIST_BG_PLT_MENU_NORMAL (0x02)
 #define PLIST_BG_PLT_BMPWIN (0x0c)
 #define PLIST_BG_PLT_FONT (0x0e)
 
@@ -39,6 +41,12 @@
 
 #define PLIST_FONT_PARAM_LETTER (0xF)
 #define PLIST_FONT_PARAM_SHADOW (0x1)
+
+//メニューの文字はフォントパレットではなくメニュープレートのパレットを使う
+#define PLIST_FONT_MENU_BACK (0x0)
+#define PLIST_FONT_MENU_LETTER (0xe)
+#define PLIST_FONT_MENU_HIDEN_LETTER (0xd)
+#define PLIST_FONT_MENU_SHADOW (0xf)
 
 //OBJリソースIdx
 typedef enum
@@ -113,6 +121,7 @@ enum PLIST_CURCOR_ANIME
 
 typedef struct _PLIST_PLATE_WORK PLIST_PLATE_WORK;
 typedef struct _PLIST_MSG_WORK   PLIST_MSG_WORK;
+typedef struct _PLIST_MENU_WORK  PLIST_MENU_WORK;
 typedef struct _PLIST_DEBUG_WORK PLIST_DEBUG_WORK;
 
 typedef struct
@@ -134,6 +143,9 @@ typedef struct
   
   //画面下ウィンドウ管理
   PLIST_MSG_WORK  *msgWork;
+
+  //メニュー管理
+  PLIST_MENU_WORK *menuWork;
   
   //プレートScr
   void  *plateScrRes;
@@ -147,6 +159,7 @@ typedef struct
   GFL_CLUNIT  *cellUnit;
   GFL_CLWK    *clwkCursor[2];
   GFL_CLWK    *clwkBarIcon[PBT_MAX];
+
 
   PLIST_DATA *plData;
 #if USE_DEBUGWIN_SYSTEM
