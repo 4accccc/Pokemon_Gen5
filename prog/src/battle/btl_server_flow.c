@@ -305,6 +305,7 @@ static void scproc_HandEx_resetTurnFlag( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_P
 static void scproc_HandEx_setContFlag( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header );
 static void scproc_HandEx_resetContFlag( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header );
 static void scproc_HandEx_sideEffect( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header );
+static void scproc_HandEx_tokuseiChange( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header );
 static void scproc_TurnCheck( BTL_SVFLOW_WORK* wk );
 static void scproc_turncheck_sub( BTL_SVFLOW_WORK* wk, BtlEventType event_type );
 static void scEvent_TurnCheck( BTL_SVFLOW_WORK* wk, BtlEventType event_type );
@@ -3104,6 +3105,20 @@ static BOOL scproc_WeatherCore( BTL_SVFLOW_WORK* wk, BtlWeather weather, u8 turn
 //---------------------------------------------------------------------------------------------
 static void scput_Fight_Others( BTL_SVFLOW_WORK* wk, WazaID waza, BTL_POKEPARAM* attacker, TARGET_POKE_REC* targets )
 {
+  BTL_POKEPARAM* bpp;
+
+  // 命中チェック -> 命中しなかった場合は targets から除外
+  TargetPokeRec_GetStart( targets );
+  while( (bpp = TargetPokeRec_GetNext(targets)) != NULL )
+  {
+    if( !scEvent_checkHit(wk, attacker, bpp, waza) )
+    {
+      scPut_WazaAvoid( wk, bpp, waza );
+      TargetPokeRec_Remove( targets, bpp );
+    }
+  }
+
+
   switch( waza ){
   case WAZANO_SUKIRUSUWAPPU:
     scput_Fight_Others_SkillSwap( wk, attacker, targets );
@@ -3234,6 +3249,7 @@ static void scproc_HandEx_Root( BTL_SVFLOW_WORK* wk, u16 useItemID )
     case BTL_HANDEX_SET_CONTFLAG:   scproc_HandEx_setContFlag( wk, handEx_header ); break;
     case BTL_HANDEX_RESET_CONTFLAG: scproc_HandEx_resetContFlag( wk, handEx_header ); break;
     case BTL_HANDEX_SIDE_EFFECT:    scproc_HandEx_sideEffect( wk, handEx_header ); break;
+    case BTL_HANDEX_TOKUSEI_CHANGE: scproc_HandEx_tokuseiChange( wk, handEx_header ); break;
     default:
       GF_ASSERT_MSG(0, "illegal handEx type = %d, userPokeID=%d", handEx_header->equip, handEx_header->userPokeID);
     }
@@ -3478,6 +3494,22 @@ static void scproc_HandEx_sideEffect( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARA
   const BTL_HANDEX_PARAM_SIDE_EFFECT* param = (const BTL_HANDEX_PARAM_SIDE_EFFECT*)(param_header);
   BTL_POKEPARAM* bpp = BTL_POKECON_GetPokeParam( wk->pokeCon, param->pokeID );
 }
+static void scproc_HandEx_tokuseiChange( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header )
+{
+  const BTL_HANDEX_PARAM_TOKUSEI_CHANGE* param = (const BTL_HANDEX_PARAM_TOKUSEI_CHANGE*)(param_header);
+
+  BTL_POKEPARAM* bpp = BTL_POKECON_GetPokeParam( wk->pokeCon, param->pokeID );
+
+  BTL_HANDLER_TOKUSEI_Remove( bpp );
+  SCQUE_PUT_OP_ChangeTokusei( wk->que, param->pokeID, param->tokuseiID );
+  BTL_POKEPARAM_ChangeTokusei( bpp, param->tokuseiID );
+
+  if( param->tokuseiID != POKETOKUSEI_NULL )
+  {
+    BTL_HANDLER_TOKUSEI_Add( bpp );
+  }
+}
+
 
 
 //==============================================================================
@@ -3585,6 +3617,7 @@ static void scproc_turncheck_side_callback( BtlSide side, BtlSideEffect sideEffe
   case BTL_SIDEEFF_SINPINOMAMORI: strID = BTL_STRID_STD_SinpiNoMamoriOff; break;
   case BTL_SIDEEFF_SIROIKIRI:     strID = BTL_STRID_STD_SiroiKiriOff; break;
   case BTL_SIDEEFF_OIKAZE:        strID = BTL_STRID_STD_OikazeOff; break;
+  case BTL_SIDEEFF_OMAJINAI:      strID = BTL_STRID_STD_OmajinaiOff; break;
   }
   if( strID >= 0 )
   {
@@ -4007,6 +4040,9 @@ static void scPut_WazaExecuteFailMsg( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, W
     break;
   case SV_WAZAFAIL_TYOUHATSU:
     SCQUE_PUT_MSG_SET( wk->que, BTL_STRID_SET_ChouhatuWarn, pokeID, waza );
+    break;
+  case SV_WAZAFAIL_ICHAMON:
+    SCQUE_PUT_MSG_SET( wk->que, BTL_STRID_SET_IchamonWarn, pokeID, waza );
     break;
   case SV_WAZAFAIL_KAIHUKUHUUJI:
     SCQUE_PUT_MSG_SET( wk->que, BTL_STRID_SET_KaifukuFuji, pokeID, waza );
@@ -4688,6 +4724,23 @@ static SV_WazaFailCause scEvent_CheckWazaExecute( BTL_SVFLOW_WORK* wk, BTL_POKEP
     ){
       cause = SV_WAZAFAIL_TYOUHATSU;
       break;
+    }
+    // いちゃもんによる失敗チェック
+    if( BTL_POKEPARAM_CheckSick(attacker, WAZASICK_ICHAMON)
+    &&  (BTL_POKEPARAM_GetPrevWazaNumber(attacker) == waza)
+    ){
+      cause = SV_WAZAFAIL_ICHAMON;
+      break;
+    }
+    // ふういんによる失敗チェック
+    if( BTL_POKEPARAM_CheckSick(attacker, WAZASICK_FUUIN) )
+    {
+      u8 targetPokeID = BTL_POKEPARAM_GetSickParam( attacker, WAZASICK_FUUIN );
+      BTL_POKEPARAM* target = BTL_POKECON_GetPokeParam( wk->pokeCon, targetPokeID );
+      if( BTL_POKEPARAM_GetWazaIdx(target, waza) != PTL_WAZA_MAX ){
+        cause = SV_WAZAFAIL_FUUIN;
+        break;
+      }
     }
 
   }while(0);
@@ -6462,6 +6515,20 @@ void BTL_SVFLOW_RECEPT_ChangeWeather( BTL_SVFLOW_WORK* wk, BtlWeather weather )
     }
   }
 }
+
+//=============================================================================================
+/**
+ * [ハンドラ受信] バトルルール取得
+ *
+ * @param   wk
+ *
+ * @retval  BtlRule
+ */
+//=============================================================================================
+BtlRule BTL_SVFLOW_GetRule( BTL_SVFLOW_WORK* wk )
+{
+  return BTL_MAIN_GetRule( wk->mainModule );
+}
 //=============================================================================================
 /**
  * [ハンドラ受信] 逃げ交換禁止コードの追加を全クライアントに通知
@@ -6576,27 +6643,28 @@ static BTL_HANDEX_PARAM_HEADER* Hem_PushWork( HANDLER_EXHIBISION_MANAGER* wk, Bt
     u8 eq_type;
     u8 size;
   }work_size_table[] = {
-    { BTL_HANDEX_USE_ITEM,       sizeof(BTL_HANDEX_PARAM_USE_ITEM)     },
-    { BTL_HANDEX_RECOVER_HP,     sizeof(BTL_HANDEX_PARAM_RECOVER_HP)   },
-    { BTL_HANDEX_RECOVER_PP,     sizeof(BTL_HANDEX_PARAM_PP)           },
-    { BTL_HANDEX_DECREMENT_PP,   sizeof(BTL_HANDEX_PARAM_PP)           },
-    { BTL_HANDEX_CURE_SICK,      sizeof(BTL_HANDEX_PARAM_CURE_SICK)    },
-    { BTL_HANDEX_ADD_SICK,       sizeof(BTL_HANDEX_PARAM_ADD_SICK)     },
-    { BTL_HANDEX_RANK_EFFECT,    sizeof(BTL_HANDEX_PARAM_RANK_EFFECT)  },
-    { BTL_HANDEX_RECOVER_RANK,   sizeof(BTL_HANDEX_PARAM_RECOVER_RANK) },
-    { BTL_HANDEX_RESET_RANK,     sizeof(BTL_HANDEX_PARAM_RESET_RANK)   },
-    { BTL_HANDEX_DAMAGE,         sizeof(BTL_HANDEX_PARAM_DAMAGE)       },
-    { BTL_HANDEX_KILL,           sizeof(BTL_HANDEX_PARAM_KILL)         },
-    { BTL_HANDEX_CHANGE_TYPE,    sizeof(BTL_HANDEX_PARAM_CHANGE_TYPE)  },
-    { BTL_HANDEX_MESSAGE_STD,    sizeof(BTL_HANDEX_PARAM_MESSAGE)      },
-    { BTL_HANDEX_MESSAGE_SET,    sizeof(BTL_HANDEX_PARAM_MESSAGE)      },
-    { BTL_HANDEX_TOKWIN_IN,      sizeof(BTL_HANDEX_PARAM_HEADER)       },
-    { BTL_HANDEX_TOKWIN_OUT,     sizeof(BTL_HANDEX_PARAM_HEADER)       },
-    { BTL_HANDEX_SET_TURNFLAG,   sizeof(BTL_HANDEX_PARAM_TURNFLAG)     },
-    { BTL_HANDEX_RESET_TURNFLAG, sizeof(BTL_HANDEX_PARAM_TURNFLAG)     },
-    { BTL_HANDEX_SET_CONTFLAG,   sizeof(BTL_HANDEX_PARAM_SET_CONTFLAG) },
-    { BTL_HANDEX_RESET_CONTFLAG, sizeof(BTL_HANDEX_PARAM_SET_CONTFLAG) },
-    { BTL_HANDEX_SIDE_EFFECT,    sizeof(BTL_HANDEX_PARAM_SIDE_EFFECT)  },
+    { BTL_HANDEX_USE_ITEM,       sizeof(BTL_HANDEX_PARAM_USE_ITEM)        },
+    { BTL_HANDEX_RECOVER_HP,     sizeof(BTL_HANDEX_PARAM_RECOVER_HP)      },
+    { BTL_HANDEX_RECOVER_PP,     sizeof(BTL_HANDEX_PARAM_PP)              },
+    { BTL_HANDEX_DECREMENT_PP,   sizeof(BTL_HANDEX_PARAM_PP)              },
+    { BTL_HANDEX_CURE_SICK,      sizeof(BTL_HANDEX_PARAM_CURE_SICK)       },
+    { BTL_HANDEX_ADD_SICK,       sizeof(BTL_HANDEX_PARAM_ADD_SICK)        },
+    { BTL_HANDEX_RANK_EFFECT,    sizeof(BTL_HANDEX_PARAM_RANK_EFFECT)     },
+    { BTL_HANDEX_RECOVER_RANK,   sizeof(BTL_HANDEX_PARAM_RECOVER_RANK)    },
+    { BTL_HANDEX_RESET_RANK,     sizeof(BTL_HANDEX_PARAM_RESET_RANK)      },
+    { BTL_HANDEX_DAMAGE,         sizeof(BTL_HANDEX_PARAM_DAMAGE)          },
+    { BTL_HANDEX_KILL,           sizeof(BTL_HANDEX_PARAM_KILL)            },
+    { BTL_HANDEX_CHANGE_TYPE,    sizeof(BTL_HANDEX_PARAM_CHANGE_TYPE)     },
+    { BTL_HANDEX_MESSAGE_STD,    sizeof(BTL_HANDEX_PARAM_MESSAGE)         },
+    { BTL_HANDEX_MESSAGE_SET,    sizeof(BTL_HANDEX_PARAM_MESSAGE)         },
+    { BTL_HANDEX_TOKWIN_IN,      sizeof(BTL_HANDEX_PARAM_HEADER)          },
+    { BTL_HANDEX_TOKWIN_OUT,     sizeof(BTL_HANDEX_PARAM_HEADER)          },
+    { BTL_HANDEX_SET_TURNFLAG,   sizeof(BTL_HANDEX_PARAM_TURNFLAG)        },
+    { BTL_HANDEX_RESET_TURNFLAG, sizeof(BTL_HANDEX_PARAM_TURNFLAG)        },
+    { BTL_HANDEX_SET_CONTFLAG,   sizeof(BTL_HANDEX_PARAM_SET_CONTFLAG)    },
+    { BTL_HANDEX_RESET_CONTFLAG, sizeof(BTL_HANDEX_PARAM_SET_CONTFLAG)    },
+    { BTL_HANDEX_SIDE_EFFECT,    sizeof(BTL_HANDEX_PARAM_SIDE_EFFECT)     },
+    { BTL_HANDEX_TOKUSEI_CHANGE, sizeof(BTL_HANDEX_PARAM_TOKUSEI_CHANGE)  },
   };
   u32 size, i;
 

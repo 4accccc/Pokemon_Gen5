@@ -93,6 +93,7 @@ extern const BTL_ACTION_PARAM* BTL_SVCL_GetPokeAction( SVCL_WORK* clwk, u8 posId
 //------------------------------------------------
 // イベントハンドラとの連絡関数
 //------------------------------------------------
+extern BtlRule BTL_SVFLOW_GetRule( BTL_SVFLOW_WORK* wk );
 extern BtlPokePos BTL_SVFLOW_CheckExistFrontPokeID( BTL_SVFLOW_WORK* server, u8 pokeID );
 extern BOOL BTL_SVFLOW_RECEPT_CheckExistTokuseiPokemon( BTL_SVFLOW_WORK* wk, PokeTokusei tokusei );
 extern const BTL_POKEPARAM* BTL_SVFLOW_RECEPT_GetPokeParam( BTL_SVFLOW_WORK* wk, u8 pokeID );
@@ -174,6 +175,7 @@ typedef enum {
   BTL_SIDEEFF_SINPINOMAMORI,  ///< ポケ系状態異常にならない
   BTL_SIDEEFF_SIROIKIRI,      ///< ランクダウン効果を受けない
   BTL_SIDEEFF_OIKAZE,         ///< すばやさ２倍
+  BTL_SIDEEFF_OMAJINAI,       ///< 攻撃が急所に当たらない
   BTL_SIDEEFF_MAKIBISI,       ///< 入れ替えて出てきたポケモンにダメージ
   BTL_SIDEEFF_DOKUBISI,       ///< 入れ替えて出てきたポケモンに毒
 
@@ -210,6 +212,7 @@ typedef enum {
   BTL_HANDEX_SET_CONTFLAG,  ///< 継続フラグセット
   BTL_HANDEX_RESET_CONTFLAG,///< 継続フラグリセット
   BTL_HANDEX_SIDE_EFFECT,   ///< サイドエフェクト追加
+  BTL_HANDEX_TOKUSEI_CHANGE,///< とくせい書き換え
 
   BTL_HANDEX_MAX,
 
@@ -334,6 +337,12 @@ typedef struct {
   BPP_SICK_CONT   cont;
   u8              pokeID;
 }BTL_HANDEX_PARAM_SIDE_EFFECT;
+
+typedef struct {
+  BTL_HANDEX_PARAM_DAMAGE  header;
+  u16             tokuseiID;    ///< 書き換え後のとくせい（POKETOKUSEI_NULLならとくせいを消す）
+  u8              pokeID;       ///< 対象ポケモンID
+}BTL_HANDEX_PARAM_TOKUSEI_CHANGE;
 
 extern void* BTL_SVFLOW_HANDLERWORK_Push( BTL_SVFLOW_WORK* wk, BtlEventHandlerExhibition eq_type, u8 userPokeID );
 extern u8 BTL_SERVERFLOW_RECEPT_GetTargetPokeID( BTL_SVFLOW_WORK* wk, BtlExPos exPos, u8* dst_pokeID );

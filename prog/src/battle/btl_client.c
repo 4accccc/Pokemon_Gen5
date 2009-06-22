@@ -183,6 +183,7 @@ static BOOL scProc_OP_SetContFlag( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_OP_SetActFlag( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_OP_ResetContFlag( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_OP_ClearActFlag( BTL_CLIENT* wk, int* seq, const int* args );
+static BOOL scProc_OP_ChangeTokusei( BTL_CLIENT* wk, int* seq, const int* args );
 static void cec_addCode( CANT_ESC_CONTROL* ctrl, u8 pokeID, BtlCantEscapeCode code );
 static void cec_subCode( CANT_ESC_CONTROL* ctrl, u8 pokeID, BtlCantEscapeCode code );
 static u8 cec_isEnable( CANT_ESC_CONTROL* ctrl, BtlCantEscapeCode code, BTL_CLIENT* wk );
@@ -688,11 +689,14 @@ static BOOL is_unselectable_waza( BTL_CLIENT* wk, const BTL_POKEPARAM* bpp, Waza
   if( BTL_POKEPARAM_GetContFlag(bpp, BPP_CONTFLG_KODAWARI_LOCK) )
   {
     if( waza != BTL_POKEPARAM_GetPrevWazaNumber(bpp) ){
-      strParam->strID = BTL_STRID_STD_KodawariLock;
-      strParam->stdFlag = FALSE;
-      strParam->args[0] = BTL_POKEPARAM_GetID( bpp );
-      strParam->args[1] = BTL_POKEPARAM_GetItem( bpp );
-      strParam->args[2] = waza;
+      if( strParam != NULL )
+      {
+        strParam->strID = BTL_STRID_STD_KodawariLock;
+        strParam->stdFlag = FALSE;
+        strParam->args[0] = BTL_POKEPARAM_GetID( bpp );
+        strParam->args[1] = BTL_POKEPARAM_GetItem( bpp );
+        strParam->args[2] = waza;
+      }
       return TRUE;
     }
   }
@@ -701,10 +705,13 @@ static BOOL is_unselectable_waza( BTL_CLIENT* wk, const BTL_POKEPARAM* bpp, Waza
   if( BTL_POKEPARAM_CheckSick(bpp, WAZASICK_WAZALOCK) )
   {
     if( waza != BTL_POKEPARAM_GetPrevWazaNumber(bpp) ){
-      strParam->strID = BTL_STRID_STD_WazaLock;
-      strParam->stdFlag = FALSE;
-      strParam->args[0] = BTL_POKEPARAM_GetID( bpp );
-      strParam->args[1] = waza;
+      if( strParam != NULL )
+      {
+        strParam->strID = BTL_STRID_STD_WazaLock;
+        strParam->stdFlag = FALSE;
+        strParam->args[0] = BTL_POKEPARAM_GetID( bpp );
+        strParam->args[1] = waza;
+      }
       return TRUE;
     }
   }
@@ -714,10 +721,29 @@ static BOOL is_unselectable_waza( BTL_CLIENT* wk, const BTL_POKEPARAM* bpp, Waza
   {
     if( !WAZADATA_IsDamage(waza) )
     {
-      strParam->strID = BTL_STRID_SET_ChouhatuWarn;
-      strParam->stdFlag = FALSE;
-      strParam->args[0] = BTL_POKEPARAM_GetID( bpp );
-      strParam->args[1] = waza;
+      if( strParam != NULL )
+      {
+        strParam->strID = BTL_STRID_SET_ChouhatuWarn;
+        strParam->stdFlag = FALSE;
+        strParam->args[0] = BTL_POKEPARAM_GetID( bpp );
+        strParam->args[1] = waza;
+      }
+      return TRUE;
+    }
+  }
+
+  // いちゃもん状態（ダメージワザしか選べない）
+  if( BTL_POKEPARAM_CheckSick(bpp, WAZASICK_ICHAMON) )
+  {
+    if( BTL_POKEPARAM_GetPrevWazaNumber(bpp) == waza )
+    {
+      if( strParam != NULL )
+      {
+        strParam->strID = BTL_STRID_SET_IchamonWarn;
+        strParam->stdFlag = FALSE;
+        strParam->args[0] = BTL_POKEPARAM_GetID( bpp );
+        strParam->args[1] = waza;
+      }
       return TRUE;
     }
   }
@@ -779,10 +805,15 @@ static BOOL SubProc_AI_SelectAction( BTL_CLIENT* wk, int* seq )
       wazaCount = BTL_POKEPARAM_GetWazaCount( pp );
       {
         u8 usableWazaIdx[ PTL_WAZA_MAX ];
+        WazaID waza;
         u8 j, cnt=0;
         for(j=0, cnt=0; j<wazaCount; ++j){
-          if( BTL_POKEPARAM_GetPP(pp, j) ){
-            usableWazaIdx[cnt++] = j;
+          if( BTL_POKEPARAM_GetPP(pp, j) )
+          {
+            waza = BTL_POKEPARAM_GetWazaNumber( pp, j );
+            if( !is_unselectable_waza(wk, pp, waza, NULL) ){
+              usableWazaIdx[cnt++] = j;
+            }
           }
         }
         if( cnt ){
@@ -1156,6 +1187,7 @@ static BOOL SubProc_UI_ServerCmd( BTL_CLIENT* wk, int* seq )
     { SC_OP_RESET_CONTFLAG,     scProc_OP_ResetContFlag   },
     { SC_OP_SET_ACTFLAG,        scProc_OP_SetActFlag      },
     { SC_OP_CLEAR_ACTFLAG,      scProc_OP_ClearActFlag    },
+    { SC_OP_CHANGE_TOKUSEI,     scProc_OP_ChangeTokusei   },
     { SC_ACT_KILL,              scProc_ACT_Kill           },
   };
 
@@ -2078,6 +2110,12 @@ static BOOL scProc_OP_ClearActFlag( BTL_CLIENT* wk, int* seq, const int* args )
 {
   BTL_POKEPARAM* pp = BTL_POKECON_GetPokeParam( wk->pokeCon, args[0] );
   BTL_POKEPARAM_ClearActFlag( pp );
+  return TRUE;
+}
+static BOOL scProc_OP_ChangeTokusei( BTL_CLIENT* wk, int* seq, const int* args )
+{
+  BTL_POKEPARAM* pp = BTL_POKECON_GetPokeParam( wk->pokeCon, args[0] );
+  BTL_POKEPARAM_ChangeTokusei( pp, args[1] );
   return TRUE;
 }
 

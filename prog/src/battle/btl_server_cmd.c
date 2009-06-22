@@ -93,6 +93,7 @@ static const u8 ServerCmdToFmtTbl[] = {
   SC_ARGFMT_11byte,           // SC_OP_SET_ACTFLAG
   SC_ARGFMT_11byte,           // SC_OP_CLEAR_CONTFLAG
   SC_ARGFMT_1byte,            // SC_OP_CLEAR_ACTFLAG
+  SC_ARGFMT_12byte,           // SC_OP_CHANGE_TOKUSEI
   SC_ARGFMT_5_5_14bit,        // SC_ACT_WAZA_EFFECT
   SC_ARGFMT_5_5_14bit_1byte,  // SC_ACT_WAZA_EFFECT_EX
   SC_ARGFMT_5_5_14bit,        // SC_ACT_WAZA_DMG

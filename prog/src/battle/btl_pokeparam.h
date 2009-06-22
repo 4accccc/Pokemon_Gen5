@@ -189,10 +189,12 @@ static inline BPP_SICK_CONT BPP_SICKCONT_Set_Poke( u8 pokeID )
   cont.poke.ID = pokeID;
   return cont;
 }
-static inline void BPP_SICKCONT_Set_Permanent( BPP_SICK_CONT* cont )
+static inline BPP_SICK_CONT BPP_SICKCONT_MakePermanent( void )
 {
-  cont->raw = 0;
-  cont->type = WAZASICK_CONT_PERMANENT;
+  BPP_SICK_CONT cont;
+  cont.raw = 0;
+  cont.type = WAZASICK_CONT_PERMANENT;
+  return cont;
 }
 
 

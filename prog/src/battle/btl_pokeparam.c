@@ -119,6 +119,7 @@ struct _BTL_POKEPARAM {
   PokeTypePair  type;
   u16  item;
   u16  tokusei;
+  u16  default_tokusei;
   u16  hp;
 
   u16 turnCount;    ///< 継続して戦闘に出ているカウンタ
@@ -223,6 +224,7 @@ BTL_POKEPARAM*  BTL_POKEPARAM_Create( const POKEMON_PARAM* pp, u8 pokeID, HEAPID
   bpp->type = PokeTypePair_Make( bpp->baseParam.type1, bpp->baseParam.type2 );
   bpp->item = PP_Get( pp, ID_PARA_item, NULL );
   bpp->tokusei = PP_Get( pp, ID_PARA_speabino, 0 );
+  bpp->default_tokusei = bpp->tokusei;
   bpp->hp = PP_Get( pp, ID_PARA_hp, 0 );
   bpp->myID = pokeID;
 
@@ -595,10 +597,14 @@ u8 BTL_POKEPARAM_GetSickParam( const BTL_POKEPARAM* pp, WazaSick sick )
     return pp->sickCont[sick].turn.param;
   }
 
+  if( pp->sickCont[sick].type == WAZASICK_CONT_POKE )
+  {
+    return pp->sickCont[sick].poke.ID;
+  }
+
   GF_ASSERT(0); // パラメ無いのに呼び出された
   return 0;
 }
-
 //=============================================================================================
 /**
  * 状態異常のターンチェックで減るHPの量を計算

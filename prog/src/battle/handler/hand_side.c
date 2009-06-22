@@ -56,6 +56,8 @@ static void handler_SiroiKiri_CheckFail( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_
 static void handler_SiroiKiri_FixFail( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 mySide, int* work );
 static BTL_EVENT_FACTOR* ADD_Oikaze( u16 pri, BtlSide side, BtlSideEffect eff );
 static void handler_Oikaze( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 mySide, int* work );
+static BTL_EVENT_FACTOR* ADD_Omajinai( u16 pri, BtlSide side, BtlSideEffect eff );
+static void handler_Omajinai( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 mySide, int* work );
 static BTL_EVENT_FACTOR* ADD_Makibisi( u16 pri, BtlSide side, BtlSideEffect eff );
 static BTL_EVENT_FACTOR* ADD_Dokubisi( u16 pri, BtlSide side, BtlSideEffect eff );
 
@@ -98,6 +100,7 @@ BTL_EVENT_FACTOR*  BTL_HANDLER_SIDE_Add( BtlSide side, BtlSideEffect sideEffect,
     { BTL_SIDEEFF_SINPINOMAMORI,  ADD_Sinpinomamori },
     { BTL_SIDEEFF_SIROIKIRI,      ADD_SiroiKiri     },
     { BTL_SIDEEFF_OIKAZE,         ADD_Oikaze        },
+    { BTL_SIDEEFF_OMAJINAI,       ADD_Omajinai      },
     { BTL_SIDEEFF_MAKIBISI,       ADD_Makibisi      },
     { BTL_SIDEEFF_DOKUBISI,       ADD_Dokubisi      },
   };
@@ -301,6 +304,27 @@ static void handler_Oikaze( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk,
   if( (BTL_MAINUTIL_PokeIDtoSide(pokeID) == mySide)
   ){
     BTL_EVENTVAR_MulValue( BTL_EVAR_RATIO, FX32_CONST(2) );
+  }
+}
+//--------------------------------------------------------------------------------------
+/**
+ *  おまじない
+ */
+//--------------------------------------------------------------------------------------
+static BTL_EVENT_FACTOR* ADD_Omajinai( u16 pri, BtlSide side, BtlSideEffect eff )
+{
+  static const BtlEventHandlerTable HandlerTable[] = {
+    { BTL_EVENT_CRITICAL_CHECK,  handler_Omajinai  },  // ランク増減失敗チェック
+    { BTL_EVENT_NULL, NULL },
+  };
+  return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_WAZA, eff, pri, side, HandlerTable );
+}
+static void handler_Omajinai( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 mySide, int* work )
+{
+  u8 pokeID = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID );
+  if( (BTL_MAINUTIL_PokeIDtoSide(pokeID) == mySide)
+  ){
+    BTL_EVENTVAR_MulValue( BTL_EVAR_FAIL_FLAG, TRUE );
   }
 }
 
