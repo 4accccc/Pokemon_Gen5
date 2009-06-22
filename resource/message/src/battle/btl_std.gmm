@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="taya" host="W00146" date="2009-06-19T19:36:20"/>
+	<create user="taya" host="W00146" date="2009-06-22T20:43:12"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -595,6 +595,7 @@
 	</row>
 
 	<row id="BTL_STRID_STD_Reflector">
+		<comment>リフレクター</comment>
 		<language name="JPN" width="216">みかたは　リフレクターで
 ぶつりに　つよくなった！</language>
 		<language name="JPN_KANJI" width="216">味方は　リフレクターで
@@ -623,6 +624,7 @@
 	</row>
 
 	<row id="BTL_STRID_STD_HikariNoKabe">
+		<comment>ひかりのかべ</comment>
 		<language name="JPN" width="216">みかたは　ひかりのかべで
 とくしゅに　つよくなった！</language>
 		<language name="JPN_KANJI" width="216">味方は　ひかりのかべで
@@ -651,6 +653,7 @@
 	</row>
 
 	<row id="BTL_STRID_STD_SinpiNoMamori">
+		<comment>しんぴのまもり</comment>
 		<language name="JPN" width="216">みかたは
 しんぴのベールに　つつまれた！</language>
 		<language name="JPN_KANJI" width="216">味方は
@@ -679,6 +682,7 @@
 	</row>
 
 	<row id="BTL_STRID_STD_SiroiKiri">
+		<comment>しろいきり</comment>
 		<language name="JPN" width="216">みかたは
 しろいきりに　つつまれた！</language>
 		<language name="JPN_KANJI" width="216">味方は
@@ -707,6 +711,7 @@
 	</row>
 
 	<row id="BTL_STRID_STD_Oikaze">
+		<comment>おいかぜ</comment>
 		<language name="JPN" width="216">みかたに
 おいかぜが　ふきはじめた！</language>
 		<language name="JPN_KANJI" width="216">味方に
@@ -734,7 +739,33 @@
 追い風が　止んだ！</language>
 	</row>
 
+	<row id="BTL_STRID_STD_Omajinai">
+		<comment>おまじない</comment>
+		<language name="JPN" width="216">おまじないの　ちからで
+みかたの　きゅうしょが　かくれた！</language>
+		<language name="JPN_KANJI" width="216">おまじないの　力で
+味方の急所が　隠れた！</language>
+	</row>
+
+	<row id="BTL_STRID_STD_Omajinai_E">
+		<language name="JPN" width="216">おまじないの　ちからで
+あいての　きゅうしょが　かくれた！</language>
+		<language name="JPN_KANJI" width="216">おまじないの　力で
+相手の急所が　隠れた！</language>
+	</row>
+
+	<row id="BTL_STRID_STD_OmajinaiOff">
+		<language name="JPN" width="216">みかたの　おまじないが　とけた！</language>
+		<language name="JPN_KANJI" width="216">味方の　おまじないが解けた！</language>
+	</row>
+
+	<row id="BTL_STRID_STD_OmajinaiOff_E">
+		<language name="JPN" width="216">あいての　おまじないが　とけた！</language>
+		<language name="JPN_KANJI" width="216">相手の　おまじないが解けた！</language>
+	</row>
+
 	<row id="BTL_STRID_STD_Makibisi">
+		<comment>まきびし</comment>
 		<language name="JPN" width="216">みかたの　あしもとに
 まきびしが　ちらばった！</language>
 		<language name="JPN_KANJI" width="216">味方の　足下に
@@ -749,6 +780,7 @@
 	</row>
 
 	<row id="BTL_STRID_STD_Dokubisi">
+		<comment>どくびし</comment>
 		<language name="JPN" width="216">みかたの　あしもとに
 どくびしが　ちらばった！</language>
 		<language name="JPN_KANJI" width="216">味方の　足下に
