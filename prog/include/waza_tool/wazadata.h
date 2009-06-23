@@ -92,6 +92,7 @@ typedef enum {
   WAZASICK_HOROBINOUTA,
   WAZASICK_MUSTHIT,         ///< ワザ必中状態
   WAZASICK_MUSTHIT_TARGET,  ///< 特定相手に対してのみ必中状態
+  WAZASICK_FLYING,
   WAZASICK_WAZALOCK,        ///< 直前に使ったワザしか出せない
   WAZASICK_WAZALOCK_HARD,   ///< 直前に使ったワザしか出せない上、行動不可（行動を選択できない）
   WAZASICK_CANT_ESCAPE,     ///< にげる・いれかえが出来ない
