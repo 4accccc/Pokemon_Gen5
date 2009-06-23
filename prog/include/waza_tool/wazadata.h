@@ -87,6 +87,7 @@ typedef enum {
   WAZASICK_FUUIN,
   WAZASICK_KANASIBARI,
   WAZASICK_KAIHUKUHUUJI,
+  WAZASICK_IEKI,            ///< ‚Æ‚­‚¹‚¢–³Œø‰»
   WAZASICK_SASIOSAE,
   WAZASICK_HOROBINOUTA,
   WAZASICK_MUSTHIT,         ///< ƒƒU•K’†ó‘Ô
