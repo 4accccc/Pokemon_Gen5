@@ -80,7 +80,6 @@ static BOOL CmdProc_Setup( BTLV_CORE* core, int* seq, void* workBuffer );
 static BOOL CmdProc_SelectAction( BTLV_CORE* core, int* seq, void* workBufer );
 static BOOL CmdProc_SelectWaza( BTLV_CORE* core, int* seq, void* workBufer );
 static BOOL CmdProc_SelectTarget( BTLV_CORE* core, int* seq, void* workBufer );
-static BOOL CmdProc_SelectPokemon( BTLV_CORE* core, int* seq, void* workBufer );
 static void mainproc_setup( BTLV_CORE* core, pCmdProc proc );
 static BOOL mainproc_call( BTLV_CORE* core );
 static BOOL subprocDamageEffect( int* seq, void* wk_adrs );
@@ -185,7 +184,6 @@ void BTLV_StartCommand( BTLV_CORE* core, BtlvCmd cmd )
       pCmdProc  proc;
     }procTbl[] = {
       { BTLV_CMD_SETUP,           CmdProc_Setup },
-      { BTLV_CMD_SELECT_POKEMON,  CmdProc_SelectPokemon },
     };
 
     int i;
@@ -321,110 +319,12 @@ static BOOL CmdProc_SelectTarget( BTLV_CORE* core, int* seq, void* workBufer )
 {
   switch( *seq ){
   case 0:
-    BTLV_SCD_StartPokemonSelect( core->scrnD );
+    BTLV_SCD_StartTargetSelect( core->scrnD, core->procPokeParam, core->actionParam );
     (*seq)++;
     break;
   case 1:
-    if( BTLV_SCD_WaitPokemonSelect(core->scrnD) )
+    if( BTLV_SCD_WaitTargetSelect(core->scrnD) )
     {
-      return TRUE;
-    }
-    break;
-  }
-  return FALSE;
-}
-
-
-#if 0
-  enum {
-    SEQ_INIT=0,
-    SEQ_SELECT_MAIN,
-    SEQ_SEL_FIGHT  = 100,
-    SEQ_SEL_ITEM   = 200,
-    SEQ_SEL_CHANGE = 300,
-    SEQ_SEL_ESCAPE = 400,
-  };
-
-  typedef struct {
-    u16 idx1;
-    u16 idx2;
-    u16 maxElems;
-  }SEQ_WORK;
-
-  SEQ_WORK* wk = workBufer;
-
-    if(  != )
-    {
-      BtlvScd_SelAction_Result res = BTLV_SCD_WaitActionSelect( core->scrnD );
-      switch( res ){
-      case BTLV_SCD_SelAction_Still:  return FALSE;
-      case BTLV_SCD_SelAction_Done:
-        {
-          return TRUE;
-        }
-        break;
-      case BTLV_SCD_SelAction_Warn_Kodawari:
-        {
-          WazaID wazaID = BTL_POKEPARAM_GetPrevWazaNumber( core->procPokeParam );
-          u16    itemID = BTL_POKEPARAM_GetItem( core->procPokeParam );
-          BTL_STR_MakeStringStd( core->strBuf, BTL_STRID_STD_KodawariLock, 2, itemID, wazaID );
-          BTLV_SCU_StartMsg( core->scrnU, core->strBuf, BTLV_MSGWAIT_STD );
-          (*seq)++;
-        }
-        break;
-      case BTLV_SCD_SelAction_Warn_WazaLock:
-        {
-          WazaID wazaID = BTL_POKEPARAM_GetPrevWazaNumber( core->procPokeParam );
-          u8    pokeID  = BTL_POKEPARAM_GetID( core->procPokeParam );
-          BTL_STR_MakeStringStd( core->strBuf, BTL_STRID_STD_WazaLock, 2, pokeID, wazaID );
-          BTLV_SCU_StartMsg( core->scrnU, core->strBuf, BTLV_MSGWAIT_STD );
-          (*seq)++;
-        }
-        break;
-      }
-    }
-    break;
-  case 3:
-    if( BTLV_SCU_WaitMsg(core->scrnU) )
-    {
-      BTL_STR_MakeStringStd( core->strBuf, BTL_STRID_STD_SelectAction, 1, core->procPokeID );
-      BTLV_SCU_StartMsg( core->scrnU, core->strBuf, BTLV_MSGWAIT_NONE );
-      (*seq)++;
-    }
-    break;
-  case 4:
-    if( BTLV_SCU_WaitMsg(core->scrnU) ){
-      BTLV_SCD_RestartActionSelect( core->scrnD );
-      (*seq) = 2;
-    }
-    break;
-  }
-  return FALSE;
-#endif
-
-
-//--------------------------------------------------------------------------
-/**
- * ƒ|ƒPƒ‚ƒ“‘I‘ð
- *
- * @param   core
- * @param   seq
- * @param   workBufer
- *
- * @retval  BOOL
- */
-//--------------------------------------------------------------------------
-static BOOL CmdProc_SelectPokemon( BTLV_CORE* core, int* seq, void* workBufer )
-{
-  switch( *seq ){
-  case 0:
-    BTLV_SCD_StartPokemonSelect( core->scrnD );
-    (*seq)++;
-    break;
-  case 1:
-    if( BTLV_SCD_WaitPokemonSelect(core->scrnD) )
-    {
-//    BTLV_SCD_GetSelectAction( core->scrnD, core->actionParam );
       return TRUE;
     }
     break;

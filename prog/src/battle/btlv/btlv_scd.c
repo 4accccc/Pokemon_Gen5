@@ -875,26 +875,6 @@ static void seltgt_init_setup_work( SEL_TARGET_WORK* stw, BTLV_SCD* wk )
 //=============================================================================================
 
 
-//=============================================================================================
-/**
- * ポケモン選択開始
- *
- * @param   wk
- *
- */
-//=============================================================================================
-void BTLV_SCD_StartPokemonSelect( BTLV_SCD* wk )
-{
-//  BTL_UTIL_SetupProc( &wk->subProc, wk, selectPokemon_init, selectPokemon_loop );
-  spstack_push( wk, selectPokemon_init, selectPokemon_loop );
-}
-
-BOOL BTLV_SCD_WaitPokemonSelect( BTLV_SCD* wk )
-{
-//  return BTL_UTIL_CallProc( &wk->subProc );
-  return spstack_call( wk );
-}
-
 void BTLV_SCD_PokeSelect_Start( BTLV_SCD* wk, const BTL_POKESELECT_PARAM* param, BTL_POKESELECT_RESULT* result )
 {
   GF_ASSERT( wk->pokesel_param == NULL );
