@@ -72,6 +72,15 @@ DEP_INDOOR	=	\
 	$(RESDIR)/d4pillar02.nsbmd \
 	$(RESDIR)/d4shill01.nsbmd \
 	$(RESDIR)/d4shill02.nsbmd \
-	$(RESDIR)/win05.nsbmd \
-	$(RESDIR)/chair05.nsbmd \
+	$(RESDIR)/elboard01.nsbmd \
+	$(RESDIR)/desk02.nsbmd \
+	$(RESDIR)/piano01.nsbmd \
+	$(RESDIR)/desk03.nsbmd \
+	$(RESDIR)/art01.nsbmd \
+	$(RESDIR)/art02.nsbmd \
+	$(RESDIR)/object02.nsbmd \
+	$(RESDIR)/object03.nsbmd \
+	$(RESDIR)/machine01.nsbmd \
+	$(RESDIR)/machine02.nsbmd \
+	$(RESDIR)/drumset01.nsbmd \
 
