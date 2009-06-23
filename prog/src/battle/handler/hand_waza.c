@@ -185,6 +185,8 @@ static void common_SideEffect( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flow
   BtlSide side, BtlSideEffect effect, BPP_SICK_CONT cont, u16 strID );
 static BTL_EVENT_FACTOR*  ADD_Ieki( u16 pri, WazaID waza, u8 pokeID );
 static void handler_Ieki( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static BTL_EVENT_FACTOR*  ADD_Narikiri( u16 pri, WazaID waza, u8 pokeID );
+static void handler_Narikiri( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static BTL_EVENT_FACTOR*  ADD_Tedasuke( u16 pri, WazaID waza, u8 pokeID );
 static void handler_Tedasuke_Ready( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_Tedasuke_WazaPow( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
@@ -349,6 +351,7 @@ BTL_EVENT_FACTOR*  BTL_HANDLER_Waza_Add( const BTL_POKEPARAM* pp, WazaID waza )
     { WAZANO_ONNEN,           ADD_Onnen         },
     { WAZANO_TEDASUKE,        ADD_Tedasuke      },
     { WAZANO_IEKI,            ADD_Ieki          },
+    { WAZANO_NARIKIRI,        ADD_Narikiri      },
   };
 
   int i;
@@ -2711,9 +2714,16 @@ static void handler_Ieki( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u
 {
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
   {
+    BTL_HANDEX_PARAM_TOKUSEI_CHANGE *tok_param;
+    BTL_HANDEX_PARAM_MESSAGE        *msg_param;
+    BTL_HANDEX_PARAM_ADD_SICK       *sick_param;
     u8 target_pokeID = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID_TARGET1 );
-    BTL_HANDEX_PARAM_TOKUSEI_CHANGE*  tok_param;
-    BTL_HANDEX_PARAM_MESSAGE* msg_param;
+
+    sick_param = BTL_SVFLOW_HANDLERWORK_Push( flowWk, BTL_HANDEX_TOKUSEI_CHANGE, pokeID );
+    sick_param->poke_cnt = 1;
+    sick_param->pokeID[0] = pokeID;
+    sick_param->sickID = WAZASICK_IEKI;
+    sick_param->sickCont = BPP_SICKCONT_MakePermanent();
 
     tok_param = BTL_SVFLOW_HANDLERWORK_Push( flowWk, BTL_HANDEX_TOKUSEI_CHANGE, pokeID );
     tok_param->pokeID = target_pokeID;
@@ -2723,7 +2733,39 @@ static void handler_Ieki( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u
     msg_param->strID = BTL_STRID_SET_Ieki;
     msg_param->pokeID = target_pokeID;
   }
+}
+//----------------------------------------------------------------------------------
+/**
+ * ‚È‚è‚«‚è
+ */
+//----------------------------------------------------------------------------------
+static BTL_EVENT_FACTOR*  ADD_Narikiri( u16 pri, WazaID waza, u8 pokeID )
+{
+  static const BtlEventHandlerTable HandlerTable[] = {
+    { BTL_EVENT_UNCATEGORY_WAZA,  handler_Narikiri   },  // –¢•ª—ŞƒƒU
+    { BTL_EVENT_NULL, NULL },
+  };
+  return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_WAZA, waza, pri, pokeID, HandlerTable );
+}
+static void handler_Narikiri( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+{
+  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
+  {
+    u8 target_pokeID = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID_TARGET1 );
+    const BTL_POKEPARAM* target = BTL_SVFLOW_RECEPT_GetPokeParam( flowWk, pokeID );
+    BTL_HANDEX_PARAM_TOKUSEI_CHANGE*  tok_param;
+    BTL_HANDEX_PARAM_MESSAGE* msg_param;
 
+    tok_param = BTL_SVFLOW_HANDLERWORK_Push( flowWk, BTL_HANDEX_TOKUSEI_CHANGE, pokeID );
+    tok_param->pokeID = pokeID;
+    tok_param->tokuseiID = BTL_POKEPARAM_GetValue( target, BPP_TOKUSEI );
+
+    msg_param = BTL_SVFLOW_HANDLERWORK_Push( flowWk, BTL_HANDEX_MESSAGE_SET, pokeID );
+    msg_param->strID = BTL_STRID_SET_Narikiri;
+    msg_param->pokeID = pokeID;
+    msg_param->args[0] = target_pokeID;
+    msg_param->arg_cnt = 1;
+  }
 }
 
 

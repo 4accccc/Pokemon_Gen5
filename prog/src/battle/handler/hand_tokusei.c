@@ -307,22 +307,25 @@ BTL_EVENT_FACTOR*  BTL_HANDLER_TOKUSEI_Add( const BTL_POKEPARAM* pp )
 
   };
 
-  int i;
-  u16 tokusei = BTL_POKEPARAM_GetValue( pp, BPP_TOKUSEI );
 
-  for(i=0; i<NELEMS(funcTbl); i++)
+  if( !BTL_POKEPARAM_CheckSick(pp, WAZASICK_IEKI) ) // "いえき" 状態のポケモンはとくせい追加しない
   {
-    if( funcTbl[i].tokusei == tokusei )
+    u16 tokusei = BTL_POKEPARAM_GetValue( pp, BPP_TOKUSEI );
+    int i;
+
+    for(i=0; i<NELEMS(funcTbl); i++)
     {
-      u16 agi = BTL_POKEPARAM_GetValue( pp, BPP_AGILITY );
-      u8 pokeID = BTL_POKEPARAM_GetID( pp );
+      if( funcTbl[i].tokusei == tokusei )
+      {
+        u16 agi = BTL_POKEPARAM_GetValue( pp, BPP_AGILITY );
+        u8 pokeID = BTL_POKEPARAM_GetID( pp );
 
-      BTL_Printf("ポケモン[%d]の とくせい(%d)ハンドラを追加\n", pokeID, tokusei);
-      return funcTbl[i].func( agi, tokusei, pokeID );
+        BTL_Printf("ポケモン[%d]の とくせい(%d)ハンドラを追加\n", pokeID, tokusei);
+        return funcTbl[i].func( agi, tokusei, pokeID );
+      }
     }
+    BTL_Printf("とくせい(%d)はハンドラが用意されていない\n", tokusei);
   }
-
-  BTL_Printf("とくせい(%d)はハンドラが用意されていない\n", tokusei);
   return NULL;
 }
 
