@@ -3,9 +3,9 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="tamada" host="W00139" date="2009-05-15T16:26:23" source="untitled"/>
+	<create user="fuchino" host="W00152" date="2009-06-23T21:37:22"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
-	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
+	<generator name="NNS_3DMaterialEditor" version="2.8.0.20050620"/>
 </head>
 
 <body>
@@ -22,14 +22,14 @@
 	tex_matrix_mode="maya"
 	compress_node="merge" node_size="7 7"
 	compress_material="on" material_size="6 6"
-	output_texture="used"
+	output_texture="all"
 	force_full_weight="off"
 	use_primitive_strip="on"
 />
 
 <box_test pos_scale="4" xyz="-0.500000 0.000000 -0.500000" whd="6.000000 0.000000 1.000000"/>
 
-<tex_image_array size="6">
+<tex_image_array size="8">
 	<tex_image index="0" name="chip_counter"
 		width="8" height="8" original_width="8" original_height="8"
 		format="palette4"
@@ -41,7 +41,18 @@
 			0000 0000 0000 0000 5555 5555 5555 5555
 		</bitmap>
 	</tex_image>
-	<tex_image index="1" name="chip_kabe"
+	<tex_image index="1" name="chip_ent"
+		width="8" height="8" original_width="8" original_height="8"
+		format="palette4"
+		color0_mode="color"
+		palette_name="chip_ent_pl"
+		path="C:/home/wb_data3d/field/in00/chip/tex/chip_ent.tga"
+	>
+		<bitmap size="8">
+			aaaa aaaa aaaa 5555 5555 0000 0000 0000
+		</bitmap>
+	</tex_image>
+	<tex_image index="2" name="chip_kabe"
 		width="8" height="16" original_width="8" original_height="16"
 		format="palette4"
 		color0_mode="color"
@@ -53,7 +64,7 @@
 			5555 5555 5555 5555 5555 0000 5555 0000
 		</bitmap>
 	</tex_image>
-	<tex_image index="2" name="chip_kabe2"
+	<tex_image index="3" name="chip_kabe2"
 		width="8" height="8" original_width="8" original_height="8"
 		format="palette4"
 		color0_mode="color"
@@ -64,7 +75,7 @@
 			5555 5555 5555 5555 5555 5555 5555 0000
 		</bitmap>
 	</tex_image>
-	<tex_image index="3" name="chip_mat"
+	<tex_image index="4" name="chip_mat"
 		width="16" height="16" original_width="16" original_height="16"
 		format="palette4"
 		color0_mode="color"
@@ -78,7 +89,7 @@
 			aa94 16aa 5550 0555 0000 0000 0000 0000
 		</bitmap>
 	</tex_image>
-	<tex_image index="4" name="chip_yuka"
+	<tex_image index="5" name="chip_yuka"
 		width="16" height="16" original_width="16" original_height="16"
 		format="palette4"
 		color0_mode="color"
@@ -92,7 +103,21 @@
 			555b e555 555b e555 aaab eaaa ffff ffff
 		</bitmap>
 	</tex_image>
-	<tex_image index="5" name="d_hashi01"
+	<tex_image index="6" name="chip_yuka2"
+		width="16" height="16" original_width="16" original_height="16"
+		format="palette4"
+		color0_mode="color"
+		palette_name="chip_yuka2_pl"
+		path="C:/home/wb_data3d/field/in00/chip/tex/chip_yuka2.tga"
+	>
+		<bitmap size="32">
+			5555 5555 5555 5555 aa95 56aa a965 596a
+			fd65 597f eba5 5aeb aba5 5aea afa5 5afa
+			afa5 5afa aba5 5aea eba5 5aeb fd65 597f
+			a965 596a aa95 56aa 5555 5555 5555 5555
+		</bitmap>
+	</tex_image>
+	<tex_image index="7" name="d_hashi01"
 		width="32" height="32" original_width="32" original_height="32"
 		format="palette16"
 		color0_mode="color"
@@ -136,23 +161,29 @@
 	</tex_image>
 </tex_image_array>
 
-<tex_palette_array size="6">
+<tex_palette_array size="8">
 	<tex_palette index="0" name="chip_counter_pl" color_size="4">
 		62ec 675c 7fff 7fff
 	</tex_palette>
-	<tex_palette index="1" name="chip_kabe2_pl" color_size="4">
+	<tex_palette index="1" name="chip_ent_pl" color_size="4">
+		154f 1db3 21f6 7fff
+	</tex_palette>
+	<tex_palette index="2" name="chip_kabe2_pl" color_size="4">
 		2b17 0000 7fff 7fff
 	</tex_palette>
-	<tex_palette index="2" name="chip_kabe_pl" color_size="4">
+	<tex_palette index="3" name="chip_kabe_pl" color_size="4">
 		1e73 22d6 2b17 7fff
 	</tex_palette>
-	<tex_palette index="3" name="chip_mat_pl" color_size="4">
+	<tex_palette index="4" name="chip_mat_pl" color_size="4">
 		28f8 2d18 3539 7fff
 	</tex_palette>
-	<tex_palette index="4" name="chip_yuka_pl" color_size="4">
+	<tex_palette index="5" name="chip_yuka2_pl" color_size="4">
+		5a7f 565f 5ebf 6b1f
+	</tex_palette>
+	<tex_palette index="6" name="chip_yuka_pl" color_size="4">
 		6739 6739 5ef7 5ad6
 	</tex_palette>
-	<tex_palette index="5" name="d_hashi01_pl" color_size="16">
+	<tex_palette index="7" name="d_hashi01_pl" color_size="16">
 		52d8 46fa 52b7 4eb7 3a97 4a96 4675 4254
 		3e33 35f1 31d0 3654 46d9 3a12 4a75 31d1
 	</tex_palette>
@@ -200,7 +231,7 @@
 		specular="0 0 0"
 		emission="0 0 0"
 		shininess_table_flag="off"
-		tex_image_idx="1" tex_palette_idx="2"
+		tex_image_idx="2" tex_palette_idx="3"
 		tex_tiling="repeat repeat"
 		tex_scale="1.000000 1.000000"
 		tex_rotate="0.000000"
@@ -224,7 +255,7 @@
 		specular="0 0 0"
 		emission="0 0 0"
 		shininess_table_flag="off"
-		tex_image_idx="2" tex_palette_idx="1"
+		tex_image_idx="3" tex_palette_idx="2"
 		tex_tiling="repeat repeat"
 		tex_scale="1.000000 1.000000"
 		tex_rotate="0.000000"
@@ -248,7 +279,7 @@
 		specular="0 0 0"
 		emission="0 0 0"
 		shininess_table_flag="off"
-		tex_image_idx="3" tex_palette_idx="3"
+		tex_image_idx="4" tex_palette_idx="4"
 		tex_tiling="repeat repeat"
 		tex_scale="1.000000 1.000000"
 		tex_rotate="0.000000"
@@ -272,7 +303,7 @@
 		specular="0 0 0"
 		emission="0 0 0"
 		shininess_table_flag="off"
-		tex_image_idx="4" tex_palette_idx="4"
+		tex_image_idx="5" tex_palette_idx="6"
 		tex_tiling="repeat repeat"
 		tex_scale="1.000000 1.000000"
 		tex_rotate="0.000000"
@@ -296,7 +327,7 @@
 		specular="0 0 0"
 		emission="0 0 0"
 		shininess_table_flag="off"
-		tex_image_idx="5" tex_palette_idx="5"
+		tex_image_idx="7" tex_palette_idx="7"
 		tex_tiling="repeat repeat"
 		tex_scale="1.000000 1.000000"
 		tex_rotate="0.000000"
@@ -618,6 +649,55 @@
 
 <output_info vertex_size="24" polygon_size="6"
 	triangle_size="0" quad_size="6"/>
+
+<ex_nns_3dme>
+	<ex_model_info scene_name="デフォルトシーン" disp_pos="0.000000 60.000000"/>
+	<ex_tex_image_array size="8">
+		<ex_tex_image index="0" disp_pos="0.000000 0.000000"/>
+		<ex_tex_image index="1" disp_pos="0.000000 0.000000"/>
+		<ex_tex_image index="2" disp_pos="0.000000 0.000000"/>
+		<ex_tex_image index="3" disp_pos="0.000000 0.000000"/>
+		<ex_tex_image index="4" disp_pos="0.000000 0.000000"/>
+		<ex_tex_image index="5" disp_pos="0.000000 0.000000"/>
+		<ex_tex_image index="6" disp_pos="0.000000 0.000000"/>
+		<ex_tex_image index="7" disp_pos="0.000000 0.000000"/>
+	</ex_tex_image_array>
+	<ex_tex_palette_array size="8">
+		<ex_tex_palette index="0" disp_pos="0.000000 0.000000"/>
+		<ex_tex_palette index="1" disp_pos="0.000000 0.000000"/>
+		<ex_tex_palette index="2" disp_pos="0.000000 0.000000"/>
+		<ex_tex_palette index="3" disp_pos="0.000000 0.000000"/>
+		<ex_tex_palette index="4" disp_pos="0.000000 0.000000"/>
+		<ex_tex_palette index="5" disp_pos="0.000000 0.000000"/>
+		<ex_tex_palette index="6" disp_pos="0.000000 0.000000"/>
+		<ex_tex_palette index="7" disp_pos="0.000000 0.000000"/>
+	</ex_tex_palette_array>
+	<ex_material_array size="6">
+		<ex_material index="0" disp_pos="-300.000000 300.000000"/>
+		<ex_material index="1" disp_pos="-180.000000 300.000000"/>
+		<ex_material index="2" disp_pos="-60.000000 300.000000"/>
+		<ex_material index="3" disp_pos="60.000000 300.000000"/>
+		<ex_material index="4" disp_pos="180.000000 300.000000"/>
+		<ex_material index="5" disp_pos="300.000000 300.000000"/>
+	</ex_material_array>
+	<ex_polygon_array size="6">
+		<ex_polygon index="0" disp_pos="-300.000000 240.000000"/>
+		<ex_polygon index="1" disp_pos="-180.000000 240.000000"/>
+		<ex_polygon index="2" disp_pos="-60.000000 240.000000"/>
+		<ex_polygon index="3" disp_pos="60.000000 240.000000"/>
+		<ex_polygon index="4" disp_pos="180.000000 240.000000"/>
+		<ex_polygon index="5" disp_pos="300.000000 240.000000"/>
+	</ex_polygon_array>
+	<ex_node_array size="7">
+		<ex_node index="0" disp_pos="0.000000 120.000000"/>
+		<ex_node index="1" disp_pos="-300.000000 180.000000"/>
+		<ex_node index="2" disp_pos="-180.000000 180.000000"/>
+		<ex_node index="3" disp_pos="-60.000000 180.000000"/>
+		<ex_node index="4" disp_pos="60.000000 180.000000"/>
+		<ex_node index="5" disp_pos="180.000000 180.000000"/>
+		<ex_node index="6" disp_pos="300.000000 180.000000"/>
+	</ex_node_array>
+</ex_nns_3dme>
 
 </body>
 
