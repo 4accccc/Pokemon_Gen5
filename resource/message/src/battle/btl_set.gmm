@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="taya" host="W00146" date="2009-06-23T11:52:36"/>
+	<create user="taya" host="W00146" date="2009-06-23T16:45:31"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -2512,23 +2512,23 @@
 	<row id="BTL_STRID_SET_Ieki">
 		<comment>いえき</comment>
 		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は
-とくせいが　なくなった！</language>
+とくせいが　きかなくなった！</language>
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
-とくせいが　無くなった！</language>
+とくせいが　効かなくなった！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_Ieki_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は
-とくせいが　なくなった！</language>
+とくせいが　きかなくなった！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]は
-とくせいが　無くなった！</language>
+とくせいが　効かなくなった！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_Ieki_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は
-とくせいが　なくなった！</language>
+とくせいが　きかなくなった！</language>
 		<language name="JPN_KANJI" width="216">相手の　[1:02:ポケモンニックネーム:0]は
-とくせいが　無くなった！</language>
+とくせいが　効かなくなった！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_Chouhatu">
@@ -2956,6 +2956,50 @@
 こうげきの　はんどうで　うごけない！</language>
 		<language name="JPN_KANJI" width="216">相手の　[1:02:ポケモンニックネーム:0]　は
 攻撃の　反動で　動けない！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_MakibisiDamage">
+		<comment>まきびし（ btl_std.gmm にも関連文字列があります）</comment>
+		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は
+まきびしの　ダメージを　うけた！</language>
+		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
+まきびしの　ダメージを受けた！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_MakibisiDamage_Y">
+		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は
+まきびしの　ダメージを　うけた！</language>
+		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]は
+まきびしの　ダメージを受けた！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_MakibisiDamage_E">
+		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は
+まきびしの　ダメージを　うけた！</language>
+		<language name="JPN_KANJI" width="216">相手の　[1:02:ポケモンニックネーム:0]は
+まきびしの　ダメージを受けた！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_StealthRockDamage">
+		<comment>ステルスロック（ btl_std.gmm にも関連文字列があります）</comment>
+		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]に
+とがった　いわが　くいこんだ！</language>
+		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]に
+とがった岩が　食い込んだ！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_StealthRockDamage_Y">
+		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]に
+とがった　いわが　くいこんだ！</language>
+		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]に
+とがった岩が　食い込んだ！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_StealthRockDamage_E">
+		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]に
+とがった　いわが　くいこんだ！</language>
+		<language name="JPN_KANJI" width="216">相手の　[1:02:ポケモンニックネーム:0]に
+とがった岩が　食い込んだ！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_CantEscTok">

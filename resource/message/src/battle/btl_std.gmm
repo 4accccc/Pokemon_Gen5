@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="taya" host="W00146" date="2009-06-22T20:43:12"/>
+	<create user="taya" host="W00146" date="2009-06-23T16:30:35"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -792,6 +792,20 @@
 どくびしが　ちらばった！</language>
 		<language name="JPN_KANJI" width="216">相手の　足下に
 どくびしが　散らばった！</language>
+	</row>
+
+	<row id="BTL_STRID_STD_StealthRock">
+		<language name="JPN" width="216">みかたの　まわりに
+とがった　いわが　ただよいはじめた！</language>
+		<language name="JPN_KANJI" width="216">味方の　周りに
+とがった岩が　漂い始めた！</language>
+	</row>
+
+	<row id="BTL_STRID_STD_StealthRock_E">
+		<language name="JPN" width="216">あいての　まわりに
+とがった　いわが　ただよいはじめた！</language>
+		<language name="JPN_KANJI" width="216">相手の　周りに
+とがった岩が　漂い始めた！</language>
 	</row>
 
 	<flowchart-group-list>
