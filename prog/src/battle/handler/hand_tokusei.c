@@ -2073,7 +2073,7 @@ static void handler_PoisonHeal( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flo
   if( pokeID == BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) )
   {
     WazaSick sick = BTL_EVENTVAR_GetValue( BTL_EVAR_SICKID );
-    if( (sick == WAZASICK_DOKU) || (sick == WAZASICK_MOUDOKU) )
+    if( sick == WAZASICK_DOKU )
     {
       const BTL_POKEPARAM* bpp = BTL_SVFLOW_RECEPT_GetPokeParam( flowWk, pokeID );
       int recoverHP = BTL_CALC_QuotMaxHP( bpp, 8 );

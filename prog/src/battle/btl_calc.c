@@ -293,6 +293,10 @@ void BTL_CALC_WazaSickContToBppSickCont( WAZA_SICKCONT_PARAM wazaSickCont, const
       sickCont->turn.count = BTL_CALC_RandRange( wazaSickCont.turnMin, wazaSickCont.turnMax );
     }
     break;
+
+  case WAZASICK_CONT_PERMANENT:
+    sickCont->permanent.count_max = wazaSickCont.turnMax;
+    break;
   }
 }
 //=============================================================================================

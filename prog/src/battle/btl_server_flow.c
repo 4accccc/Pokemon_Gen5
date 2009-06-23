@@ -173,6 +173,7 @@ struct _BTL_SVFLOW_WORK {
 /* Prototypes                                                               */
 /*--------------------------------------------------------------------------*/
 static void clear_poke_actflags( BTL_SVFLOW_WORK* wk );
+static void scproc_SetFlyingFlag( BTL_SVFLOW_WORK* wk );
 static u8 sortClientAction( BTL_SVFLOW_WORK* wk, ACTION_ORDER_WORK* order );
 static u8 countAlivePokemon( BTL_SVFLOW_WORK* wk );
 static inline void FlowFlg_Set( BTL_SVFLOW_WORK* wk, FlowFlag flg );
@@ -363,6 +364,8 @@ static void scPut_ActFlag_Set( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, BppActFl
 static void scPut_ActFlag_Clear( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp );
 static void scPut_SetContFlag( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, BppContFlag flag );
 static void scPut_ResetContFlag( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, BppContFlag flag );
+static void scPut_SetTurnFlag( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, BppTurnFlag flag );
+static void scPut_ResetTurnFlag( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, BppTurnFlag flag );
 static void scEvent_CheckSpecialActPriority( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, u8* spePriA, u8* spePriB );
 static u16 scEvent_CalcAgility( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker );
 static u16 scEvent_CalcConfDamage( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker );
@@ -511,12 +514,16 @@ SvflowResult BTL_SVFLOW_Start( BTL_SVFLOW_WORK* wk )
   u8 numActPoke, alivePokeBefore, alivePokeAfter, clientID, pokeIdx, i;
 
   SCQUE_Init( wk->que );
+
   FlowFlg_ClearAll( wk );
   BTL_EVENT_StartTurn();
+
   wk->flowResult =  SVFLOW_RESULT_DEFAULT;
 
   alivePokeBefore = countAlivePokemon( wk );
   clear_poke_actflags( wk );
+
+  scproc_SetFlyingFlag( wk );
 
   numActPoke = sortClientAction( wk, wk->actOrder );
   for(i=0; i<numActPoke; i++)
@@ -620,6 +627,7 @@ SvflowResult BTL_SVFLOW_StartAfterPokeSelect( BTL_SVFLOW_WORK* wk )
   BTL_Printf("ひんしポケモン入れ替え選択後のサーバーコマンド生成\n");
 
   SCQUE_Init( wk->que );
+  scproc_SetFlyingFlag( wk );
 
   for(i=0; i<wk->numClient; ++i)
   {
@@ -643,6 +651,33 @@ SvflowResult BTL_SVFLOW_StartAfterPokeSelect( BTL_SVFLOW_WORK* wk )
   {
     // @@@ いずれ「まきびし」とかで死ぬこともある
     return SVFLOW_RESULT_DEFAULT;
+  }
+}
+
+//----------------------------------------------------------------------------------
+/**
+ * 場にいる全てのポケモンに可能かつ必要なら飛行フラグをセット
+ *
+ * @param   wk
+ */
+//----------------------------------------------------------------------------------
+static void scproc_SetFlyingFlag( BTL_SVFLOW_WORK* wk )
+{
+  if( !BTL_FIELD_CheckState(BTL_FLDSTATE_GRAVITY) )
+  {
+    FRONT_POKE_SEEK_WORK  fps;
+    BTL_POKEPARAM* bpp;
+
+    FRONT_POKE_SEEK_InitWork( &fps, wk );
+    while( FRONT_POKE_SEEK_GetNext(&fps, wk, &bpp) )
+    {
+      if( BTL_POKEPARAM_IsMatchType(bpp, POKETYPE_HIKOU)
+      ||  (BTL_POKEPARAM_GetValue(bpp, BPP_TOKUSEI) == POKETOKUSEI_FUYUU)
+      ||  (BTL_POKEPARAM_CheckSick(bpp, WAZASICK_FLYING))
+      ){
+        scPut_SetTurnFlag( wk, bpp, BPP_TURNFLG_FLYING );
+      }
+    }
   }
 }
 
@@ -834,7 +869,7 @@ static void FRONT_POKE_SEEK_InitWork( FRONT_POKE_SEEK_WORK* fpsw, BTL_SVFLOW_WOR
 
       for(j=0; j<cw->numCoverPos; ++j)
       {
-        if( !BTL_POKEPARAM_IsDead(cw->member[j]) )
+        if( !BTL_POKEPARAM_IsDead(cw->frontMember[j]) )
         {
           fpsw->clientIdx = i;
           fpsw->pokeIdx = j;
@@ -859,7 +894,7 @@ static BOOL FRONT_POKE_SEEK_GetNext( FRONT_POKE_SEEK_WORK* fpsw, BTL_SVFLOW_WORK
     BTL_POKEPARAM* nextPoke = NULL;
     SVCL_WORK* cw = BTL_SERVER_GetClientWork( wk->server, fpsw->clientIdx );
 
-    *bpp = cw->member[ fpsw->pokeIdx ];
+    *bpp = cw->frontMember[ fpsw->pokeIdx ];
     fpsw->pokeIdx++;
 
     while( fpsw->clientIdx < BTL_CLIENT_MAX )
@@ -869,7 +904,7 @@ static BOOL FRONT_POKE_SEEK_GetNext( FRONT_POKE_SEEK_WORK* fpsw, BTL_SVFLOW_WORK
       {
         while( fpsw->pokeIdx < cw->numCoverPos )
         {
-          nextPoke = cw->member[ fpsw->pokeIdx ];
+          nextPoke = cw->frontMember[ fpsw->pokeIdx ];
           if( !BTL_POKEPARAM_IsDead(nextPoke) )
           {
             return TRUE;
@@ -1098,6 +1133,7 @@ static void scproc_MemberIn( BTL_SVFLOW_WORK* wk, u8 clientID, u8 posIdx, u8 nex
   BTL_HANDLER_ITEM_Add( bpp );
   BTL_POKEPARAM_SetContFlag( bpp, BPP_CONTFLG_MEMBERIN_EFFECT );
   BTL_POKEPARAM_SetAppearTurn( bpp, wk->turnCount );
+  BTL_Printf(" ポケ[%p]の位置=%d, フラグ建てた=%d\n", bpp, posIdx, BTL_POKEPARAM_GetContFlag(bpp, BPP_CONTFLG_MEMBERIN_EFFECT));
 
   SCQUE_PUT_OP_MemberIn( wk->que, clientID, posIdx, next_poke_idx, wk->turnCount );
   if( !fBtlStart )
@@ -1114,6 +1150,7 @@ static void scproc_AfterMemberIn( BTL_SVFLOW_WORK* wk )
   FRONT_POKE_SEEK_InitWork( &fps, wk );
   while( FRONT_POKE_SEEK_GetNext(&fps, wk, &bpp) )
   {
+     BTL_Printf(" ポケ[%p]のフラグチェク=%d\n", bpp, BTL_POKEPARAM_GetContFlag(bpp, BPP_CONTFLG_MEMBERIN_EFFECT));
     if( BTL_POKEPARAM_GetContFlag(bpp, BPP_CONTFLG_MEMBERIN_EFFECT) )
     {
       scEvent_MemberIn( wk, bpp );
@@ -2630,19 +2667,16 @@ static BOOL scproc_SimpleDamage( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u32 da
 
     scPut_SimpleHp( wk, bpp, value );
 
-    if( strID != STRID_NULL )
-    {
+    if( strID != STRID_NULL ){
       scPut_Message_Set( wk, bpp, strID );
     }
 
-    if( scEvent_SimpleDamage_Reaction(wk, bpp) )
-    {
+    if( scEvent_SimpleDamage_Reaction(wk, bpp) ){
       scproc_UseItem( wk, bpp );
     }
 
     scPut_CheckDeadCmd( wk, bpp );
 
-    // @@@ 成功したらTRUE（今は常にTRUEにしている）
     return TRUE;
   }
   return FALSE;
@@ -3353,7 +3387,9 @@ static void scproc_HandEx_cureSick( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_
 static void scproc_HandEx_addSick( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header )
 {
   const BTL_HANDEX_PARAM_ADD_SICK* param = (BTL_HANDEX_PARAM_ADD_SICK*)param_header;
-  BTL_POKEPARAM* pp_user = BTL_POKECON_GetPokeParam( wk->pokeCon, param_header->userPokeID );
+  BTL_POKEPARAM* pp_user = (param_header->userPokeID != BTL_POKEID_NULL)?
+                      BTL_POKECON_GetPokeParam(wk->pokeCon, param_header->userPokeID) : NULL;
+
   BTL_POKEPARAM* pp_target;
   MSG_CALLBACK_PARAM  cbParam;
   u32 i;
@@ -3411,13 +3447,14 @@ static void scproc_HandEx_resetRank( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM
 static void scproc_HandEx_damage( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header )
 {
   BTL_HANDEX_PARAM_DAMAGE* param = (BTL_HANDEX_PARAM_DAMAGE*)param_header;
-  BTL_POKEPARAM* pp_user = BTL_POKECON_GetPokeParam( wk->pokeCon, param_header->userPokeID );
   BTL_POKEPARAM* pp_target;
   u32 i;
+  u16 strID = (param->fSucceedStrEx)? param->succeedStrID : STRID_NULL;
 
   for(i=0; i<param->poke_cnt; ++i){
     pp_target = BTL_POKECON_GetPokeParam( wk->pokeCon, param->pokeID[i] );
-    scproc_SimpleDamage( wk, pp_target, param->damage[i], STRID_NULL );
+
+    scproc_SimpleDamage( wk, pp_target, param->damage[i], strID );
   }
 }
 static void scproc_HandEx_kill( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header )
@@ -4507,13 +4544,19 @@ static void scPut_AddSickDefaultMsg( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* b
   u8 pokeID = BTL_POKEPARAM_GetID( bpp );
   u16 msgID;
   switch( sickID ){
-  case WAZASICK_DOKU:   msgID = BTL_STRID_SET_DokuGet; break;
   case WAZASICK_YAKEDO: msgID = BTL_STRID_SET_YakedoGet; break;
   case WAZASICK_MAHI:   msgID = BTL_STRID_SET_MahiGet; break;
   case WAZASICK_KOORI:  msgID = BTL_STRID_SET_KoriGet; break;
   case WAZASICK_NEMURI: msgID = BTL_STRID_SET_NemuriGet; break;
   case WAZASICK_KONRAN: msgID = BTL_STRID_SET_KonranGet; break;
   case WAZASICK_AKUMU:  msgID = BTL_STRID_SET_AkumuGet;  break;
+  case WAZASICK_DOKU:
+    if( BPP_SICKCONT_IsMoudokuCont(sickCont) ){
+      msgID = BTL_STRID_SET_MoudokuGet;
+    }else{
+      msgID = BTL_STRID_SET_DokuGet;
+    }
+    break;
   default:
     return;
   }
@@ -4576,6 +4619,34 @@ static void scPut_ResetContFlag( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, BppCon
 {
   BTL_POKEPARAM_ResetContFlag( bpp, flag );
   SCQUE_PUT_OP_ResetContFlag( wk->que, BTL_POKEPARAM_GetID(bpp), flag );
+}
+//----------------------------------------------------------------------------------
+/**
+ * [Put] ターンフラグセット
+ *
+ * @param   wk
+ * @param   bpp
+ * @param   flag
+ */
+//----------------------------------------------------------------------------------
+static void scPut_SetTurnFlag( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, BppTurnFlag flag )
+{
+  BTL_POKEPARAM_SetTurnFlag( bpp, flag );
+  SCQUE_PUT_OP_SetTurnFlag( wk->que, BTL_POKEPARAM_GetID(bpp), flag );
+}
+//----------------------------------------------------------------------------------
+/**
+ * [Put] ターンフラグセット
+ *
+ * @param   wk
+ * @param   bpp
+ * @param   flag
+ */
+//----------------------------------------------------------------------------------
+static void scPut_ResetTurnFlag( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, BppTurnFlag flag )
+{
+  BTL_POKEPARAM_ForceOffTurnFlag( bpp, flag );
+  SCQUE_PUT_OP_ResetTurnFlag( wk->que, BTL_POKEPARAM_GetID(bpp), flag );
 }
 
 //---------------------------------------------------------------------------------------------

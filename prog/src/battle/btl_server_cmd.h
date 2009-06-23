@@ -51,6 +51,8 @@ typedef enum {
   SC_OP_RESET_CONTFLAG,     ///< 永続フラグリセット
   SC_OP_SET_ACTFLAG,        ///< アクション毎フラグセット
   SC_OP_CLEAR_ACTFLAG,      ///< アクション毎フラグオールクリア
+  SC_OP_SET_TURNFLAG,       ///< ターンフラグセット
+  SC_OP_RESET_TURNFLAG,     ///< ターンフラグ強制リセット
   SC_OP_CHANGE_TOKUSEI,     ///< とくせい書き換え
   SC_ACT_WAZA_EFFECT,
   SC_ACT_WAZA_EFFECT_EX,    ///< 【アクション】ワザエフェクト拡張（溜めターンエフェクトなどに使用）
@@ -256,6 +258,17 @@ static inline void SCQUE_PUT_OP_ResetUsedWazaCounter( BTL_SERVER_CMD_QUE* que, u
 {
   SCQUE_PUT_Common( que, SC_OP_RESET_USED_WAZA, pokeID );
 }
+
+
+static inline void SCQUE_PUT_OP_SetTurnFlag( BTL_SERVER_CMD_QUE* que, u8 pokeID, BppTurnFlag flag )
+{
+  SCQUE_PUT_Common( que, SC_OP_SET_TURNFLAG, pokeID, flag );
+}
+static inline void SCQUE_PUT_OP_ResetTurnFlag( BTL_SERVER_CMD_QUE* que, u8 pokeID, BppTurnFlag flag )
+{
+  SCQUE_PUT_Common( que, SC_OP_RESET_TURNFLAG, pokeID, flag );
+}
+
 
 
 static inline void SCQUE_PUT_OP_SetContFlag( BTL_SERVER_CMD_QUE* que, u8 pokeID, BppContFlag flag )

@@ -1291,30 +1291,28 @@ BOOL BTL_POKEPARAM_WazaSick_TurnCheck( BTL_POKEPARAM* pp )
         n = 2;    // とくせい「はやおき」は眠りカウンタ２倍速
       }
 
-      if( pp->sickCont[i].turn.count > n ){
-        pp->sickCont[i].turn.count -= n;
-      }else{
-        pp->sickCont[i].turn.count = 0;
+      pp->wazaSickCounter[i] += n;
+
+      if( pp->wazaSickCounter[i] >= pp->sickCont[i].turn.count )
+      {
+        pp->wazaSickCounter[i] = 0;
         if( i != WAZASICK_NEMURI ){
           pp->sickCont[i].type = WAZASICK_CONT_NONE;
         }else{
           // 眠り時は“あくむ”をオフにする。
           // 眠り自体のオフは行動チェック時に行う
           pp->sickCont[ WAZASICK_AKUMU ].type = WAZASICK_CONT_NONE;
-          BTL_Printf("ポケ[%d=%p]ねむりから覚めて悪夢も覚めた akumu=%d\n", pp->myID, pp, pp->sickCont[WAZASICK_AKUMU].type);
         }
         ret = TRUE;
       }
     }
-  }
-
-  // もうどくカウンタ処理
-  if( BTL_POKEPARAM_CheckSick(pp, WAZASICK_DOKU) )
-  {
-    if( (pp->wazaSickCounter[WAZASICK_DOKU]!=0)
-    &&  (pp->wazaSickCounter[WAZASICK_DOKU] < BTL_MOUDOKU_COUNT_MAX)
-    ){
-      pp->wazaSickCounter[ WAZASICK_DOKU ]++;
+    if( pp->sickCont[i].type == WAZASICK_CONT_PERMANENT )
+    {
+      if( (pp->sickCont[i].permanent.count_max != 0 )
+      &&  (pp->wazaSickCounter[i] < pp->sickCont[i].permanent.count_max)
+      ){
+        pp->wazaSickCounter[i]++;
+      }
     }
   }
 

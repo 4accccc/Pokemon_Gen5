@@ -69,6 +69,7 @@ typedef enum {
   BPP_TURNFLG_WAZA_EXE,     ///< ƒƒU‚ðo‚µ‚½
   BPP_TURNFLG_SHRINK,       ///< ‚Ð‚é‚Ü‚³‚ê‚½
   BPP_TURNFLG_MAMORU,       ///< g‚Ü‚à‚éh”­“®
+  BPP_TURNFLG_FLYING,       ///< ’ˆ‚É•‚‚¢‚Ä‚éƒtƒ‰ƒO
 
   BPP_TURNFLG_MAX,
 
@@ -145,6 +146,11 @@ typedef struct  {
       u16  ID        : 6;
       u16  _2        : 6;
     }poke;
+    struct {
+      u16  type_perm : 3;
+      u16  count_max : 5;
+      u16  _2        : 8;
+    }permanent;
   };
 
 }BPP_SICK_CONT;
@@ -196,7 +202,19 @@ static inline BPP_SICK_CONT BPP_SICKCONT_MakePermanent( void )
   cont.type = WAZASICK_CONT_PERMANENT;
   return cont;
 }
+static inline BPP_SICK_CONT BPP_SICKCONT_MakePermanentInc( u8 count_max )
+{
+  BPP_SICK_CONT cont;
+  cont.raw = 0;
+  cont.type = WAZASICK_CONT_PERMANENT;
+  cont.permanent.count_max = count_max;
+  return cont;
+}
 
+static inline BOOL BPP_SICKCONT_IsMoudokuCont( BPP_SICK_CONT cont )
+{
+  return ((cont.type == WAZASICK_CONT_PERMANENT) && (cont.permanent.count_max > 0));
+}
 
 extern BTL_POKEPARAM*  BTL_POKEPARAM_Create( const POKEMON_PARAM* pp, u8 id, HEAPID heapID );
 extern void BTL_POKEPARAM_Delete( BTL_POKEPARAM* bpp );

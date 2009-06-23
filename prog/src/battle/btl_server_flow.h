@@ -176,8 +176,9 @@ typedef enum {
   BTL_SIDEEFF_SIROIKIRI,      ///< ランクダウン効果を受けない
   BTL_SIDEEFF_OIKAZE,         ///< すばやさ２倍
   BTL_SIDEEFF_OMAJINAI,       ///< 攻撃が急所に当たらない
-  BTL_SIDEEFF_MAKIBISI,       ///< 入れ替えて出てきたポケモンにダメージ
-  BTL_SIDEEFF_DOKUBISI,       ///< 入れ替えて出てきたポケモンに毒
+  BTL_SIDEEFF_MAKIBISI,       ///< 入れ替えて出てきたポケモンにダメージ（３段階）
+  BTL_SIDEEFF_DOKUBISI,       ///< 入れ替えて出てきたポケモンに毒（２段階）
+  BTL_SIDEEFF_STEALTHROCK,    ///< 入れ替えて出てきたポケモンにダメージ（相性計算あり）
 
 
   BTL_SIDEEFF_MAX,
@@ -304,6 +305,8 @@ typedef struct {
 typedef struct {
  BTL_HANDEX_PARAM_HEADER   header;   ///< 共有ヘッダ
  u8   poke_cnt;                      ///< 対象ポケモン数
+ u8   fSucceedStrEx;                 ///< 成功時メッセージ表示
+ u16  succeedStrID;                  ///< 成功時メッセージID
  u8   pokeID[ BTL_POS_MAX ];         ///< 対象ポケモンID
  u16  damage[ BTL_POS_MAX ];         ///< ダメージ量
 }BTL_HANDEX_PARAM_DAMAGE;

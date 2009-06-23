@@ -32,9 +32,10 @@ enum {
  */
 typedef struct {
 
-  BPP_SICK_CONT  contParam;
-  u16            counter;
-  u8             enableFlag;
+  BPP_SICK_CONT  contParam;       ///< 継続パラメータ
+  u16            turn_counter;    ///< ターン数カウンタ
+  u8             add_counter;     ///< 重ねがけカウンタ
+  u8             enableFlag;      ///< 稼働中フラグ
 
 }EXIST_EFFECT;
 
@@ -44,22 +45,27 @@ static EXIST_EFFECT ExistEffect[ BTL_SIDE_MAX ][ BTL_SIDEEFF_MAX ];
 /*--------------------------------------------------------------------------*/
 /* Prototypes                                                               */
 /*--------------------------------------------------------------------------*/
-static BTL_EVENT_FACTOR* ADD_Refrector( u16 pri, BtlSide side, BtlSideEffect eff );
-static void handler_Refrector( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 side, int* work );
-static BTL_EVENT_FACTOR* ADD_Hikarinokabe( u16 pri, BtlSide side, BtlSideEffect eff );
-static void handler_HikariNoKabe( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 mySide, int* work );
-static BTL_EVENT_FACTOR* ADD_Sinpinomamori( u16 pri, BtlSide side, BtlSideEffect eff );
-static void handler_SinpiNoMamori_CheckFail( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 mySide, int* work );
-static void handler_SinpiNoMamori_FixFail( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 mySide, int* work );
-static BTL_EVENT_FACTOR* ADD_SiroiKiri( u16 pri, BtlSide side, BtlSideEffect eff );
-static void handler_SiroiKiri_CheckFail( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 mySide, int* work );
-static void handler_SiroiKiri_FixFail( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 mySide, int* work );
-static BTL_EVENT_FACTOR* ADD_Oikaze( u16 pri, BtlSide side, BtlSideEffect eff );
-static void handler_Oikaze( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 mySide, int* work );
-static BTL_EVENT_FACTOR* ADD_Omajinai( u16 pri, BtlSide side, BtlSideEffect eff );
-static void handler_Omajinai( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 mySide, int* work );
-static BTL_EVENT_FACTOR* ADD_Makibisi( u16 pri, BtlSide side, BtlSideEffect eff );
-static BTL_EVENT_FACTOR* ADD_Dokubisi( u16 pri, BtlSide side, BtlSideEffect eff );
+static u8 getMyAddCounter( BTL_EVENT_FACTOR* myHandle, BtlSide side );
+static BTL_EVENT_FACTOR* ADD_SIDE_Refrector( u16 pri, BtlSide side, BtlSideEffect eff );
+static void handler_side_Refrector( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 side, int* work );
+static BTL_EVENT_FACTOR* ADD_SIDE_Hikarinokabe( u16 pri, BtlSide side, BtlSideEffect eff );
+static void handler_side_HikariNoKabe( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 mySide, int* work );
+static BTL_EVENT_FACTOR* ADD_SIDE_Sinpinomamori( u16 pri, BtlSide side, BtlSideEffect eff );
+static void handler_side_SinpiNoMamori_CheckFail( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 mySide, int* work );
+static void handler_side_SinpiNoMamori_FixFail( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 mySide, int* work );
+static BTL_EVENT_FACTOR* ADD_SIDE_SiroiKiri( u16 pri, BtlSide side, BtlSideEffect eff );
+static void handler_side_SiroiKiri_CheckFail( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 mySide, int* work );
+static void handler_side_SiroiKiri_FixFail( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 mySide, int* work );
+static BTL_EVENT_FACTOR* ADD_SIDE_Oikaze( u16 pri, BtlSide side, BtlSideEffect eff );
+static void handler_side_Oikaze( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 mySide, int* work );
+static BTL_EVENT_FACTOR* ADD_SIDE_Omajinai( u16 pri, BtlSide side, BtlSideEffect eff );
+static void handler_side_Omajinai( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 mySide, int* work );
+static BTL_EVENT_FACTOR* ADD_SIDE_StealthRock( u16 pri, BtlSide side, BtlSideEffect eff );
+static void handler_side_StealthRock( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 mySide, int* work );
+static BTL_EVENT_FACTOR* ADD_SIDE_Makibisi( u16 pri, BtlSide side, BtlSideEffect eff );
+static void handler_side_Makibisi( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 mySide, int* work );
+static BTL_EVENT_FACTOR* ADD_SIDE_Dokubisi( u16 pri, BtlSide side, BtlSideEffect eff );
+static void handler_side_Dokubisi( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 mySide, int* work );
 
 
 
@@ -94,34 +100,38 @@ BTL_EVENT_FACTOR*  BTL_HANDLER_SIDE_Add( BtlSide side, BtlSideEffect sideEffect,
   static const struct {
     BtlSideEffect  eff;
     pEventAddFunc  func;
+    u32            add_max;
   }funcTbl[] = {
-    { BTL_SIDEEFF_REFRECTOR,      ADD_Refrector     },
-    { BTL_SIDEEFF_HIKARINOKABE,   ADD_Hikarinokabe  },
-    { BTL_SIDEEFF_SINPINOMAMORI,  ADD_Sinpinomamori },
-    { BTL_SIDEEFF_SIROIKIRI,      ADD_SiroiKiri     },
-    { BTL_SIDEEFF_OIKAZE,         ADD_Oikaze        },
-    { BTL_SIDEEFF_OMAJINAI,       ADD_Omajinai      },
-    { BTL_SIDEEFF_MAKIBISI,       ADD_Makibisi      },
-    { BTL_SIDEEFF_DOKUBISI,       ADD_Dokubisi      },
+    { BTL_SIDEEFF_REFRECTOR,      ADD_SIDE_Refrector,      1   },
+    { BTL_SIDEEFF_HIKARINOKABE,   ADD_SIDE_Hikarinokabe,   1   },
+    { BTL_SIDEEFF_SINPINOMAMORI,  ADD_SIDE_Sinpinomamori,  1   },
+    { BTL_SIDEEFF_SIROIKIRI,      ADD_SIDE_SiroiKiri,      1   },
+    { BTL_SIDEEFF_OIKAZE,         ADD_SIDE_Oikaze,         1   },
+    { BTL_SIDEEFF_OMAJINAI,       ADD_SIDE_Omajinai,       1   },
+    { BTL_SIDEEFF_MAKIBISI,       ADD_SIDE_Makibisi,       3   },
+    { BTL_SIDEEFF_DOKUBISI,       ADD_SIDE_Dokubisi,       2   },
+    { BTL_SIDEEFF_STEALTHROCK,    ADD_SIDE_StealthRock,    1   },
   };
 
   GF_ASSERT(side < BTL_SIDE_MAX);
   GF_ASSERT(sideEffect < BTL_SIDEEFF_MAX);
 
-  if( ExistEffect[ side ][ sideEffect ].enableFlag == FALSE )
   {
     u32 i;
     for(i=0; i<NELEMS(funcTbl); ++i)
     {
       if( funcTbl[i].eff == sideEffect )
       {
-        BTL_EVENT_FACTOR* factor = funcTbl[i].func( 0, side, sideEffect );
-        BTL_EVENT_FACTOR_SetWorkValue( factor, WORKIDX_CONT, contParam.raw );
+        if( ExistEffect[ side ][ sideEffect ].add_counter < funcTbl[i].add_max )
+        {
+          BTL_EVENT_FACTOR* factor = funcTbl[i].func( 0, side, sideEffect );
+          BTL_EVENT_FACTOR_SetWorkValue( factor, WORKIDX_CONT, contParam.raw );
 
-        ExistEffect[ side ][ sideEffect ].enableFlag = TRUE;
-        ExistEffect[ side ][ sideEffect ].counter = 0;
-        ExistEffect[ side ][ sideEffect ].contParam = contParam;
-        return factor;
+          ExistEffect[ side ][ sideEffect ].add_counter++;
+          ExistEffect[ side ][ sideEffect ].turn_counter = 0;
+          ExistEffect[ side ][ sideEffect ].contParam = contParam;
+          return factor;
+        }
       }
     }
   }
@@ -129,10 +139,10 @@ BTL_EVENT_FACTOR*  BTL_HANDLER_SIDE_Add( BtlSide side, BtlSideEffect sideEffect,
 }
 //=============================================================================================
 /**
+ *  ターンチェック処理
  *
- *
- * @param   callBack
- * @param   callbackArg
+ * @param   callBack      終わった効果を通知するためのコールバック関数
+ * @param   callbackArg   コールバック関数に引き渡す汎用引数
  */
 //=============================================================================================
 void BTL_HANDLER_SIDE_TurnCheck( pSideEffEndCallBack callBack, void* callbackArg )
@@ -142,14 +152,14 @@ void BTL_HANDLER_SIDE_TurnCheck( pSideEffEndCallBack callBack, void* callbackArg
   {
     for(i=0; i<BTL_SIDEEFF_MAX; ++i)
     {
-      if( ExistEffect[side][i].enableFlag )
+      if( ExistEffect[side][i].add_counter )
       {
         EXIST_EFFECT* eff = &ExistEffect[ side ][ i ];
         if( eff->contParam.type == WAZASICK_CONT_TURN )
         {
-          if( ++(eff->counter) >= eff->contParam.turn.count )
+          if( ++(eff->turn_counter) >= eff->contParam.turn.count )
           {
-            eff->enableFlag = FALSE;
+            eff->add_counter = 0;
             eff->contParam.type = WAZASICK_CONT_NONE;
             callBack( side, i, callbackArg );
           }
@@ -158,7 +168,26 @@ void BTL_HANDLER_SIDE_TurnCheck( pSideEffEndCallBack callBack, void* callbackArg
     }
   }
 }
-
+//----------------------------------------------------------------------------------
+/**
+ * 自分の重ねがけカウンタ値を取得
+ *
+ * @param   myHandle
+ * @param   side
+ *
+ * @retval  u8
+ */
+//----------------------------------------------------------------------------------
+static u8 getMyAddCounter( BTL_EVENT_FACTOR* myHandle, BtlSide side )
+{
+  BtlSideEffect  eff = BTL_EVENT_FACTOR_GetSubID( myHandle );
+  if( (eff < BTL_SIDEEFF_MAX) && (side < BTL_SIDE_MAX) )
+  {
+    return ExistEffect[ side ][ eff ].add_counter;
+  }
+  GF_ASSERT_MSG(0, "effID=%d, side=%d\n", eff, side);
+  return 0;
+}
 
 
 
@@ -167,15 +196,15 @@ void BTL_HANDLER_SIDE_TurnCheck( pSideEffEndCallBack callBack, void* callbackArg
  *  リフレクター
  */
 //--------------------------------------------------------------------------------------
-static BTL_EVENT_FACTOR* ADD_Refrector( u16 pri, BtlSide side, BtlSideEffect eff )
+static BTL_EVENT_FACTOR* ADD_SIDE_Refrector( u16 pri, BtlSide side, BtlSideEffect eff )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_WAZA_DMG_PROC2,  handler_Refrector   },  // ダメージ補正
+    { BTL_EVENT_WAZA_DMG_PROC2,  handler_side_Refrector   },  // ダメージ補正
     { BTL_EVENT_NULL, NULL },
   };
   return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_WAZA, eff, pri, side, HandlerTable );
 }
-static void handler_Refrector( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 side, int* work )
+static void handler_side_Refrector( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 side, int* work )
 {
   u8 defPokeID = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID_DEF );
   if( BTL_MAINUTIL_PokeIDtoSide(defPokeID) == side )
@@ -192,15 +221,15 @@ static void handler_Refrector( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flow
  *  ひかりのかべ
  */
 //--------------------------------------------------------------------------------------
-static BTL_EVENT_FACTOR* ADD_Hikarinokabe( u16 pri, BtlSide side, BtlSideEffect eff )
+static BTL_EVENT_FACTOR* ADD_SIDE_Hikarinokabe( u16 pri, BtlSide side, BtlSideEffect eff )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_WAZA_DMG_PROC2,  handler_HikariNoKabe   },  // ダメージ補正
+    { BTL_EVENT_WAZA_DMG_PROC2,  handler_side_HikariNoKabe   },  // ダメージ補正
     { BTL_EVENT_NULL, NULL },
   };
   return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_WAZA, eff, pri, side, HandlerTable );
 }
-static void handler_HikariNoKabe( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 mySide, int* work )
+static void handler_side_HikariNoKabe( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 mySide, int* work )
 {
   u8 defPokeID = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID_DEF );
   if( BTL_MAINUTIL_PokeIDtoSide(defPokeID) == mySide )
@@ -216,16 +245,16 @@ static void handler_HikariNoKabe( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* f
  *  しんぴのまもり
  */
 //--------------------------------------------------------------------------------------
-static BTL_EVENT_FACTOR* ADD_Sinpinomamori( u16 pri, BtlSide side, BtlSideEffect eff )
+static BTL_EVENT_FACTOR* ADD_SIDE_Sinpinomamori( u16 pri, BtlSide side, BtlSideEffect eff )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_ADDSICK_CHECKFAIL,  handler_SinpiNoMamori_CheckFail   },  // 状態異常失敗チェック
-    { BTL_EVENT_ADDSICK_FAILED,     handler_SinpiNoMamori_FixFail     },  // 失敗確定
+    { BTL_EVENT_ADDSICK_CHECKFAIL,  handler_side_SinpiNoMamori_CheckFail   },  // 状態異常失敗チェック
+    { BTL_EVENT_ADDSICK_FAILED,     handler_side_SinpiNoMamori_FixFail     },  // 失敗確定
     { BTL_EVENT_NULL, NULL },
   };
   return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_WAZA, eff, pri, side, HandlerTable );
 }
-static void handler_SinpiNoMamori_CheckFail( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 mySide, int* work )
+static void handler_side_SinpiNoMamori_CheckFail( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 mySide, int* work )
 {
   u8 pokeID = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID_DEF );
   if( (BTL_MAINUTIL_PokeIDtoSide(pokeID) == mySide)
@@ -237,7 +266,7 @@ static void handler_SinpiNoMamori_CheckFail( BTL_EVENT_FACTOR* myHandle, BTL_SVF
     }
   }
 }
-static void handler_SinpiNoMamori_FixFail( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 mySide, int* work )
+static void handler_side_SinpiNoMamori_FixFail( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 mySide, int* work )
 {
   if( work[0] )
   {
@@ -253,16 +282,16 @@ static void handler_SinpiNoMamori_FixFail( BTL_EVENT_FACTOR* myHandle, BTL_SVFLO
  *  しろいきり
  */
 //--------------------------------------------------------------------------------------
-static BTL_EVENT_FACTOR* ADD_SiroiKiri( u16 pri, BtlSide side, BtlSideEffect eff )
+static BTL_EVENT_FACTOR* ADD_SIDE_SiroiKiri( u16 pri, BtlSide side, BtlSideEffect eff )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_RANKEFF_LAST_CHECK,  handler_SiroiKiri_CheckFail   },  // ランク増減失敗チェック
-    { BTL_EVENT_RANKEFF_FAILED,      handler_SiroiKiri_FixFail     },   // 失敗確定
+    { BTL_EVENT_RANKEFF_LAST_CHECK,  handler_side_SiroiKiri_CheckFail   },  // ランク増減失敗チェック
+    { BTL_EVENT_RANKEFF_FAILED,      handler_side_SiroiKiri_FixFail     },   // 失敗確定
     { BTL_EVENT_NULL, NULL },
   };
   return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_WAZA, eff, pri, side, HandlerTable );
 }
-static void handler_SiroiKiri_CheckFail( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 mySide, int* work )
+static void handler_side_SiroiKiri_CheckFail( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 mySide, int* work )
 {
   u8 pokeID = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID );
   if( (BTL_MAINUTIL_PokeIDtoSide(pokeID) == mySide)
@@ -274,7 +303,7 @@ static void handler_SiroiKiri_CheckFail( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_
     }
   }
 }
-static void handler_SiroiKiri_FixFail( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 mySide, int* work )
+static void handler_side_SiroiKiri_FixFail( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 mySide, int* work )
 {
   if( work[0] )
   {
@@ -290,15 +319,15 @@ static void handler_SiroiKiri_FixFail( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WO
  *  おいかぜ
  */
 //--------------------------------------------------------------------------------------
-static BTL_EVENT_FACTOR* ADD_Oikaze( u16 pri, BtlSide side, BtlSideEffect eff )
+static BTL_EVENT_FACTOR* ADD_SIDE_Oikaze( u16 pri, BtlSide side, BtlSideEffect eff )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_RANKEFF_LAST_CHECK,  handler_Oikaze  },  // ランク増減失敗チェック
+    { BTL_EVENT_RANKEFF_LAST_CHECK,  handler_side_Oikaze  },  // ランク増減失敗チェック
     { BTL_EVENT_NULL, NULL },
   };
   return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_WAZA, eff, pri, side, HandlerTable );
 }
-static void handler_Oikaze( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 mySide, int* work )
+static void handler_side_Oikaze( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 mySide, int* work )
 {
   u8 pokeID = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID );
   if( (BTL_MAINUTIL_PokeIDtoSide(pokeID) == mySide)
@@ -311,15 +340,15 @@ static void handler_Oikaze( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk,
  *  おまじない
  */
 //--------------------------------------------------------------------------------------
-static BTL_EVENT_FACTOR* ADD_Omajinai( u16 pri, BtlSide side, BtlSideEffect eff )
+static BTL_EVENT_FACTOR* ADD_SIDE_Omajinai( u16 pri, BtlSide side, BtlSideEffect eff )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_CRITICAL_CHECK,  handler_Omajinai  },  // ランク増減失敗チェック
+    { BTL_EVENT_CRITICAL_CHECK,  handler_side_Omajinai  },  // ランク増減失敗チェック
     { BTL_EVENT_NULL, NULL },
   };
   return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_WAZA, eff, pri, side, HandlerTable );
 }
-static void handler_Omajinai( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 mySide, int* work )
+static void handler_side_Omajinai( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 mySide, int* work )
 {
   u8 pokeID = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID );
   if( (BTL_MAINUTIL_PokeIDtoSide(pokeID) == mySide)
@@ -327,14 +356,128 @@ static void handler_Omajinai( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowW
     BTL_EVENTVAR_MulValue( BTL_EVAR_FAIL_FLAG, TRUE );
   }
 }
-
-
-
-static BTL_EVENT_FACTOR* ADD_Makibisi( u16 pri, BtlSide side, BtlSideEffect eff )
+//--------------------------------------------------------------------------------------
+/**
+ *  ステルスロック
+ */
+//--------------------------------------------------------------------------------------
+static BTL_EVENT_FACTOR* ADD_SIDE_StealthRock( u16 pri, BtlSide side, BtlSideEffect eff )
 {
-  return NULL;
+  static const BtlEventHandlerTable HandlerTable[] = {
+    { BTL_EVENT_MEMBER_IN,  handler_side_StealthRock  },  // メンバー入場ハンドラ
+    { BTL_EVENT_NULL, NULL },
+  };
+  return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_WAZA, eff, pri, side, HandlerTable );
 }
-static BTL_EVENT_FACTOR* ADD_Dokubisi( u16 pri, BtlSide side, BtlSideEffect eff )
+static void handler_side_StealthRock( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 mySide, int* work )
 {
-  return NULL;
+  u8 pokeID = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID );
+  if( (BTL_MAINUTIL_PokeIDtoSide(pokeID) == mySide)
+  ){
+    const BTL_POKEPARAM* bpp = BTL_SVFLOW_RECEPT_GetPokeParam( flowWk, pokeID );
+    BtlTypeAff  affinity = BTL_CALC_TypeAff( POKETYPE_IWA, BTL_POKEPARAM_GetPokeType(bpp) );
+    u8 denom = 8;
+    switch( affinity ){
+    case BTL_TYPEAFF_25:
+    default:
+      denom = 32;
+      break;
+    case BTL_TYPEAFF_50:    denom = 16; break;
+    case BTL_TYPEAFF_100:   denom =  8; break;
+    case BTL_TYPEAFF_200:   denom =  4; break;
+    case BTL_TYPEAFF_400:   denom =  2; break;
+    }
+
+    {
+      BTL_HANDEX_PARAM_DAMAGE* param = BTL_SVFLOW_HANDLERWORK_Push( flowWk, BTL_HANDEX_DAMAGE, BTL_POKEID_NULL );
+
+      param->poke_cnt = 1;
+      param->pokeID[0] = pokeID;
+      param->damage[0] = BTL_CALC_QuotMaxHP( bpp, denom );
+      param->fSucceedStrEx = TRUE;
+      param->succeedStrID = BTL_STRID_SET_StealthRockDamage;
+    }
+  }
 }
+//--------------------------------------------------------------------------------------
+/**
+ *  まきびし
+ */
+//--------------------------------------------------------------------------------------
+static BTL_EVENT_FACTOR* ADD_SIDE_Makibisi( u16 pri, BtlSide side, BtlSideEffect eff )
+{
+  static const BtlEventHandlerTable HandlerTable[] = {
+    { BTL_EVENT_MEMBER_IN,  handler_side_Makibisi  },  // 入場チェックハンドラ
+    { BTL_EVENT_NULL, NULL },
+  };
+  return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_WAZA, eff, pri, side, HandlerTable );
+}
+static void handler_side_Makibisi( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 mySide, int* work )
+{
+  u8 pokeID = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID );
+  if( (BTL_MAINUTIL_PokeIDtoSide(pokeID) == mySide)
+  ){
+    const BTL_POKEPARAM* bpp = BTL_SVFLOW_RECEPT_GetPokeParam( flowWk, pokeID );
+
+    if( !BTL_POKEPARAM_GetTurnFlag(bpp, BPP_TURNFLG_FLYING) )
+    {
+      u8 add_counter = getMyAddCounter( myHandle, mySide );
+      u8 denom;
+      switch( add_counter) {
+      case 1:
+      default:
+        denom = 8; break;
+      case 2:
+        denom = 6; break;
+      case 3:
+        denom = 4; break;
+      }
+      {
+        BTL_HANDEX_PARAM_DAMAGE* param = BTL_SVFLOW_HANDLERWORK_Push( flowWk, BTL_HANDEX_DAMAGE, BTL_POKEID_NULL );
+
+        param->poke_cnt = 1;
+        param->pokeID[0] = pokeID;
+        param->damage[0] = BTL_CALC_QuotMaxHP( bpp, denom );
+        param->fSucceedStrEx = TRUE;
+        param->succeedStrID = BTL_STRID_SET_MakibisiDamage;
+      }
+    }
+  }
+}
+//--------------------------------------------------------------------------------------
+/**
+ *  どくびし
+ */
+//--------------------------------------------------------------------------------------
+static BTL_EVENT_FACTOR* ADD_SIDE_Dokubisi( u16 pri, BtlSide side, BtlSideEffect eff )
+{
+  static const BtlEventHandlerTable HandlerTable[] = {
+    { BTL_EVENT_MEMBER_IN,  handler_side_Dokubisi  },  // 入場チェックハンドラ
+    { BTL_EVENT_NULL, NULL },
+  };
+  return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_WAZA, eff, pri, side, HandlerTable );
+}
+static void handler_side_Dokubisi( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 mySide, int* work )
+{
+  u8 pokeID = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID );
+  if( (BTL_MAINUTIL_PokeIDtoSide(pokeID) == mySide)
+  ){
+    const BTL_POKEPARAM* bpp = BTL_SVFLOW_RECEPT_GetPokeParam( flowWk, pokeID );
+
+    if( !BTL_POKEPARAM_GetTurnFlag(bpp, BPP_TURNFLG_FLYING) )
+    {
+      BTL_HANDEX_PARAM_ADD_SICK* param = BTL_SVFLOW_HANDLERWORK_Push( flowWk, BTL_HANDEX_ADD_SICK, BTL_POKEID_NULL );
+
+      param->sickID = WAZASICK_DOKU;
+      if( getMyAddCounter(myHandle, mySide) > 1 ){
+        param->sickCont = BPP_SICKCONT_MakePermanentInc( BTL_MOUDOKU_COUNT_MAX );
+      }else{
+        param->sickCont = BPP_SICKCONT_MakePermanent();
+      }
+
+      param->poke_cnt = 1;
+      param->pokeID[0] = pokeID;
+    }
+  }
+}
+

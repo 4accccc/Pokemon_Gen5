@@ -315,6 +315,11 @@ void BTL_STR_MakeStringStdWithArgArray( STRBUF* buf, BtlStrID_STD strID, const i
     { BTL_STRID_STD_SinpiNoMamoriOff, ms_side_eff },
     { BTL_STRID_STD_SiroiKiri,        ms_side_eff },
     { BTL_STRID_STD_SiroiKiriOff,     ms_side_eff },
+    { BTL_STRID_STD_Oikaze,           ms_side_eff },
+    { BTL_STRID_STD_OikazeOff,        ms_side_eff },
+    { BTL_STRID_STD_Omajinai,         ms_side_eff },
+    { BTL_STRID_STD_OmajinaiOff,      ms_side_eff },
+    { BTL_STRID_STD_StealthRock,      ms_side_eff },
     { BTL_STRID_STD_Makibisi,         ms_side_eff },
     { BTL_STRID_STD_Dokubisi,         ms_side_eff },
   };
