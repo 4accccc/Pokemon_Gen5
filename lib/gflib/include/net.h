@@ -915,6 +915,14 @@ extern int GFL_NET_SystemIsError(void);
 //--------------------------------------------------------------
 extern int GFL_NET_SystemIsLobbyError(void);
 
+//----------------------------------------------------------------
+/**
+ * @brief   通信可能状態の人数を返す
+ * @param   none
+ * @retval  接続人数
+ */
+//----------------------------------------------------------------
+extern int GFL_NET_SystemGetConnectNum(void);
 
 
 

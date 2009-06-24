@@ -42,6 +42,7 @@ static	void	SkeltonVBlankFunc(void);
 static	void	GameInit(void);
 static	void	GameMain(void);
 static	void	GameExit(void);
+static  void  GameVBlankFunc(void);
 
 #ifdef PM_DEBUG
 static void DEBUG_StackOverCheck(void);
@@ -109,27 +110,26 @@ void NitroMain(void)
 		// ※gflibに適切な関数が出来たら置き換えてください
 		//G3_SwapBuffers(GX_SORTMODE_AUTO, GX_BUFFERMODE_Z);
 
-#ifdef PM_DEBUG
-	//DEBUG_PerformanceDisp();
-	DEBUG_PerformanceEndLine(PERFORMANCE_ID_MAIN);
-#endif //PM_DEBUG
+  #ifdef PM_DEBUG
+  	//DEBUG_PerformanceDisp();
+  	DEBUG_PerformanceEndLine(PERFORMANCE_ID_MAIN);
+  #endif //PM_DEBUG
 
-        // VBLANK待ち
-		// ※gflibに適切な関数が出来たら置き換えてください
-	#if 0   //※check　ビーコンサーチ中のマップチラつき対策
-		OS_WaitIrq(TRUE,OS_IE_V_BLANK);
-	#else
-		while( !(GX_GetVCount() > 188 && GX_GetVCount() < 192) ){
-      ;   //通信の為、ARM7優先期間を極力長くする為、VBlank直前まで待つ
-  	}
- 		MI_SetMainMemoryPriority(MI_PROCESSOR_ARM9);
-		OS_WaitIrq(TRUE,OS_IE_V_BLANK);
-		MI_SetMainMemoryPriority(MI_PROCESSOR_ARM7);
-	#endif
+    // VBLANK待ち
+    GFL_G3D_SwapBuffers();
+    if(GFL_NET_SystemGetConnectNum() > 1){
+  		OS_WaitIrq(TRUE, OS_IE_V_BLANK);
+      GameVBlankFunc();
+    }
+    else{
+   		MI_SetMainMemoryPriority(MI_PROCESSOR_ARM9);
+  		OS_WaitIrq(TRUE, OS_IE_V_BLANK);
+      GameVBlankFunc();
+  		MI_SetMainMemoryPriority(MI_PROCESSOR_ARM7);
+    }
 	}
 
-    GameExit();
-    
+  GameExit();
 }
 
 //------------------------------------------------------------------
@@ -149,13 +149,17 @@ static	void	SkeltonHBlankFunc(void)
 //------------------------------------------------------------------
 static	void	SkeltonVBlankFunc(void)
 {
-	CPContext context;
-	CP_SaveContext( &context );	// 除算器の状態を保存
-
 	OS_SetIrqCheckFlag(OS_IE_V_BLANK);
-
 	MI_WaitDma(GX_DEFAULT_DMAID);
+}
 
+//--------------------------------------------------------------
+/**
+ * VBlank期間中に行う処理
+ */
+//--------------------------------------------------------------
+static void GameVBlankFunc(void)
+{
 #ifdef PM_DEBUG
 	DEBUG_PerformanceStartLine(PERFORMANCE_ID_VBLANK);
 #endif
@@ -166,7 +170,6 @@ static	void	SkeltonVBlankFunc(void)
 #ifdef PM_DEBUG
 	DEBUG_PerformanceEndLine(PERFORMANCE_ID_VBLANK);
 #endif
-	CP_RestoreContext( &context );	// 除算器の状態を復元
 }
 
 //------------------------------------------------------------------
