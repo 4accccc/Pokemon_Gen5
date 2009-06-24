@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="taya" host="W00146" date="2009-06-23T16:45:31"/>
+	<create user="taya" host="W00146" date="2009-06-24T12:02:14"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -2872,6 +2872,50 @@
 ねらいを　さだめた！</language>
 	</row>
 
+	<row id="BTL_STRID_SET_DenjiFuyu">
+		<comment>でんじふゆう</comment>
+		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は
+でんじりょくで　うかびあがった！</language>
+		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
+電磁力で　浮かびあがった！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_DenjiFuyu_Y">
+		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は
+でんじりょくで　うかびあがった！</language>
+		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]は
+電磁力で　浮かびあがった！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_DenjiFuyu_E">
+		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は
+でんじりょくで　うかびあがった！</language>
+		<language name="JPN_KANJI" width="216">相手の　[1:02:ポケモンニックネーム:0]は
+電磁力で　浮かびあがった！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_Juuden">
+		<comment>じゅうでん</comment>
+		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は
+じゅうでんを　はじめた！</language>
+		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
+充電を始めた！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_Juuden_Y">
+		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は
+じゅうでんを　はじめた！</language>
+		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]は
+充電を始めた！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_Juuden_E">
+		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は
+じゅうでんを　はじめた！</language>
+		<language name="JPN_KANJI" width="216">相手の　[1:02:ポケモンニックネーム:0]は
+充電を始めた！</language>
+	</row>
+
 	<row id="BTL_STRID_SET_SinpiNoMamori_Exe">
 		<comment>しんぴのまもり( btl_std.gmm にも関連文字列があります）</comment>
 		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は　
@@ -3902,6 +3946,7 @@
 	</row>
 
 	<row id="BTL_STRID_SET_Tedasuke">
+		<comment>てだすけ</comment>
 		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は [1:02:ポケモンニックネーム:1]を
 てだすけする　たいせいに　はいった！</language>
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は [1:02:ポケモンニックネーム:1]を
