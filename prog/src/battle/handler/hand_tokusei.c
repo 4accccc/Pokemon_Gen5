@@ -2179,8 +2179,7 @@ BTL_EVENT_FACTOR*  HAND_TOK_ADD_IkarinoTubo( u16 pri, u16 tokID, u8 pokeID )
 static void handler_DokunoToge( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
   PokeSick sick = POKESICK_DOKU;
-  BPP_SICK_CONT cont;
-  BTL_CALC_MakeDefaultPokeSickCont( sick, &cont );
+  BPP_SICK_CONT cont = BTL_CALC_MakeDefaultPokeSickCont( sick );
   common_touchAddSick( flowWk, pokeID, sick, cont, BTL_CALC_TOK_DOKUNOTOGE_PER );
 }
 BTL_EVENT_FACTOR*  HAND_TOK_ADD_DokunoToge( u16 pri, u16 tokID, u8 pokeID )
@@ -2200,8 +2199,7 @@ BTL_EVENT_FACTOR*  HAND_TOK_ADD_DokunoToge( u16 pri, u16 tokID, u8 pokeID )
 static void handler_Seidenki( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
   PokeSick sick = POKESICK_MAHI;
-  BPP_SICK_CONT cont;
-  BTL_CALC_MakeDefaultPokeSickCont( sick, &cont );
+  BPP_SICK_CONT cont = BTL_CALC_MakeDefaultPokeSickCont( sick );
   common_touchAddSick( flowWk, pokeID, sick, cont, BTL_CALC_TOK_DOKUNOTOGE_PER );
 }
 BTL_EVENT_FACTOR*  HAND_TOK_ADD_Seidenki( u16 pri, u16 tokID, u8 pokeID )
@@ -2221,8 +2219,7 @@ BTL_EVENT_FACTOR*  HAND_TOK_ADD_Seidenki( u16 pri, u16 tokID, u8 pokeID )
 static void handler_HonoNoKarada( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
   PokeSick sick = POKESICK_YAKEDO;
-  BPP_SICK_CONT cont;
-  BTL_CALC_MakeDefaultPokeSickCont( sick, &cont );
+  BPP_SICK_CONT cont = BTL_CALC_MakeDefaultPokeSickCont( sick );
   common_touchAddSick( flowWk, pokeID, sick, cont, BTL_CALC_TOK_DOKUNOTOGE_PER );
 }
 BTL_EVENT_FACTOR*  HAND_TOK_ADD_HonoNoKarada( u16 pri, u16 tokID, u8 pokeID )
@@ -2287,7 +2284,7 @@ static void handler_Housi( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, 
     }else{
       sick = WAZASICK_YAKEDO;
     }
-    BTL_CALC_MakeDefaultPokeSickCont( sick, &cont );
+    cont = BTL_CALC_MakeDefaultPokeSickCont( sick );
     common_touchAddSick( flowWk, pokeID, sick, cont, BTL_CALC_TOK_HOUSI_PER );
   }
 }

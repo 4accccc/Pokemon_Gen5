@@ -2366,7 +2366,7 @@ static void handler_KaenDama( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowW
   BTL_HANDEX_PARAM_ADD_SICK* param = BTL_SVFLOW_HANDLERWORK_Push( flowWk, BTL_HANDEX_ADD_SICK, pokeID );
 
   param->sickID = WAZASICK_YAKEDO;
-  BTL_CALC_MakeDefaultPokeSickCont( WAZASICK_YAKEDO, &param->sickCont );
+  param->sickCont = BTL_CALC_MakeDefaultPokeSickCont( WAZASICK_YAKEDO );
   param->fAlmost = FALSE;
   param->poke_cnt = 1;
   param->pokeID[0] = pokeID;

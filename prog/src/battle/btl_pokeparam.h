@@ -66,10 +66,11 @@ typedef enum {
 typedef enum {
 
   BPP_TURNFLG_ACTION_DONE,  ///< 行動した
+  BPP_TURNFLG_DAMAGED,      ///< ダメージ喰らった
   BPP_TURNFLG_WAZA_EXE,     ///< ワザを出した
   BPP_TURNFLG_SHRINK,       ///< ひるまされた
   BPP_TURNFLG_MAMORU,       ///< “まもる”発動
-  BPP_TURNFLG_FLYING,       ///< 宙に浮いてるフラグ
+  BPP_TURNFLG_FLYING,       ///< 宙に浮いてる
 
   BPP_TURNFLG_MAX,
 

@@ -106,26 +106,22 @@ BOOL BTL_CALC_CheckCritical( u8 rank )
 
 //--------------------------------------------------------------
 /**
- *  タイプ相性テーブル
+ *  タイプ相性値
  */
 //--------------------------------------------------------------
-BtlTypeAff BTL_CALC_TypeAff( PokeType wazaType, PokeTypePair defenderType )
-{
-  enum {
+typedef enum {
     x0 = 0,
     xH = 2,
     x1 = 4,
     x2 = 8,
+}TypeAffValue;
 
-    RESULT_0   = 0,
-    RESULT_25  = 1,
-    RESULT_50  = 2,
-    RESULT_100 = 4,
-    RESULT_200 = 8,
-    RESULT_400 = 16,
-  };
-
-  static const u8 affTbl[ POKETYPE_NUMS ][ POKETYPE_NUMS ] = {
+//--------------------------------------------------------------
+/**
+ *  タイプ相性テーブル
+ */
+//--------------------------------------------------------------
+static const u8 TypeAffTbl[ POKETYPE_NUMS ][ POKETYPE_NUMS ] = {
 //          ノ,  格,  飛,  毒,  地,  岩,  虫,  幽,  鋼,  ？,  炎,  水,  草,  電,  超,  氷,  竜,  悪,
 /* ノ */ {  x1,  x1,  x1,  x1,  x1,  xH,  x1,  x0,  xH,  x1,  x1,  x1,  x1,  x1,  x1,  x1,  x1,  x1, },
 /* 格 */ {  x2,  x1,  xH,  xH,  x1,  x2,  xH,  x0,  x2,  x1,  x1,  x1,  x1,  x1,  xH,  x2,  x1,  x2, },
@@ -145,16 +141,33 @@ BtlTypeAff BTL_CALC_TypeAff( PokeType wazaType, PokeTypePair defenderType )
 /* 氷 */ {  x1,  x1,  x2,  x1,  x2,  x1,  x1,  x1,  xH,  x1,  xH,  xH,  x2,  x1,  x1,  xH,  x2,  x1, },
 /* 竜 */ {  x1,  x1,  x1,  x1,  x1,  x1,  x1,  x1,  xH,  x1,  x1,  x1,  x1,  x1,  x1,  x1,  x2,  x1, },
 /* 悪 */ {  x1,  xH,  x1,  x1,  x1,  x1,  x1,  x2,  xH,  x1,  x1,  x1,  x1,  x1,  x2,  x1,  x1,  xH, },
+};
+
+//--------------------------------------------------------------
+/**
+ *  タイプ相性計算
+ */
+//--------------------------------------------------------------
+BtlTypeAff BTL_CALC_TypeAff( PokeType wazaType, PokeTypePair defenderType )
+{
+  enum {
+    RESULT_0   = 0,
+    RESULT_25  = 1,
+    RESULT_50  = 2,
+    RESULT_100 = 4,
+    RESULT_200 = 8,
+    RESULT_400 = 16,
   };
+
 
   PokeType defType1, defType2;
   u8 result;
 
   PokeTypePair_Split( defenderType, &defType1, &defType2 );
-  result = affTbl[ wazaType ][ defType1 ];
+  result = TypeAffTbl[ wazaType ][ defType1 ];
   if( defType2 != defType1 )
   {
-    result = (result * affTbl[ wazaType ][ defType2 ]) / x1;
+    result = (result * TypeAffTbl[ wazaType ][ defType2 ]) / x1;
   }
 
   switch( result ){
@@ -172,6 +185,11 @@ BtlTypeAff BTL_CALC_TypeAff( PokeType wazaType, PokeTypePair defenderType )
   }
   return BTL_TYPEAFF_100;
 }
+//--------------------------------------------------------------
+/**
+ *  相性ダメージ計算
+ */
+//--------------------------------------------------------------
 u32 BTL_CALC_AffDamage( u32 rawDamage, BtlTypeAff aff )
 {
   switch( aff ){
@@ -185,6 +203,26 @@ u32 BTL_CALC_AffDamage( u32 rawDamage, BtlTypeAff aff )
     GF_ASSERT(0);
     return rawDamage;
   }
+}
+//--------------------------------------------------------------
+/**
+ *  抵抗相性ランダム取得
+ */
+//--------------------------------------------------------------
+PokeType  BTL_CALC_RandomResistType( PokeType type )
+{
+  u8  types[ POKETYPE_NUMS ];
+  u8  cnt, i;
+
+  for(i=0, cnt=0; i<POKETYPE_NUMS; ++i)
+  {
+    if( (TypeAffTbl[type][i] == x0) || (TypeAffTbl[type][i] == xH) ){
+      types[cnt++] = i;
+    }
+  }
+
+  i = GFL_STD_MtRand(cnt);
+  return types[ i ];
 }
 
 
@@ -308,24 +346,29 @@ void BTL_CALC_WazaSickContToBppSickCont( WAZA_SICKCONT_PARAM wazaSickCont, const
  *
  */
 //=============================================================================================
-void BTL_CALC_MakeDefaultPokeSickCont( PokeSick sick, BPP_SICK_CONT* cont )
+BPP_SICK_CONT BTL_CALC_MakeDefaultPokeSickCont( PokeSick sick )
 {
-  cont->raw = 0;
+  BPP_SICK_CONT  cont;
+
+  cont.raw = 0;
   switch( sick ){
   case POKESICK_DOKU:
   case POKESICK_YAKEDO:
   case POKESICK_MAHI:
   case POKESICK_KOORI:
-    cont->type = WAZASICK_CONT_PERMANENT;
+    cont.type = WAZASICK_CONT_PERMANENT;
     break;
   case POKESICK_NEMURI:
-    cont->type = WAZASICK_CONT_TURN;
-    cont->turn.count = BTL_CALC_RandRange( BTL_NEMURI_TURN_MIN, BTL_NEMURI_TURN_MAX );
+    cont.type = WAZASICK_CONT_TURN;
+    cont.turn.count = BTL_CALC_RandRange( BTL_NEMURI_TURN_MIN, BTL_NEMURI_TURN_MAX );
     break;
   default:
     GF_ASSERT_MSG(0, "illegal sick ID(%d)\n", sick);
+    cont.type = WAZASICK_CONT_NONE;
     break;
   }
+
+  return cont;
 }
 //=============================================================================================
 /**
@@ -387,7 +430,7 @@ BPP_SICK_CONT BTL_CALC_MakeWazaSickCont_Poke( u8 pokeID )
 void BTL_CALC_MakeDefaultWazaSickCont( WazaSick sick, const BTL_POKEPARAM* attacker, BPP_SICK_CONT* cont )
 {
   if( sick < POKESICK_MAX ){
-    BTL_CALC_MakeDefaultPokeSickCont( sick, cont );
+    *cont = BTL_CALC_MakeDefaultPokeSickCont( sick );
     return;
   }
 

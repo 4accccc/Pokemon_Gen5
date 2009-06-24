@@ -754,21 +754,29 @@ WazaTarget WAZADATA_GetTarget( WazaID id )
     OLD_RANGE_SAKIDORI  = 1024,
   };
 
-  u32 old_range = WT_WazaDataParaGet( id, ID_WTD_attackrange );
+  switch( id ){
+  case WAZANO_TEKUSUTYAA2:  return WAZA_TARGET_OTHER_SELECT;
+  default:
+    break;
+  }
 
-  switch( old_range ){
-  case OLD_RANGE_NORMAL:    return WAZA_TARGET_OTHER_SELECT;
-  case OLD_RANGE_NONE:      return WAZA_TARGET_UNKNOWN;
-  case OLD_RANGE_ENEMY2:    return WAZA_TARGET_ENEMY_ALL;
-  case OLD_RANGE_OTHER_ALL: return WAZA_TARGET_OTHER_ALL;
-  case OLD_RANGE_USER:      return WAZA_TARGET_USER;
-  case OLD_RANGE_FRIEND_ALL:return WAZA_TARGET_SIDE_FRIEND;
-  case OLD_RANGE_RANDOM:    return WAZA_TARGET_ENEMY_RANDOM;
-  case OLD_RANGE_WEATHER:   return WAZA_TARGET_FIELD;
-  case OLD_RANGE_MAKIBISI:  return WAZA_TARGET_SIDE_ENEMY;
-  case OLD_RANGE_TEDASUKE:  return WAZA_TARGET_FRIEND_SELECT;
-  case OLD_RANGE_TUBO:      return WAZA_TARGET_FRIEND_USER_SELECT;
-  case OLD_RANGE_SAKIDORI:  return WAZA_TARGET_ENEMY_SELECT;
+  {
+    u32 old_range = WT_WazaDataParaGet( id, ID_WTD_attackrange );
+
+    switch( old_range ){
+    case OLD_RANGE_NORMAL:    return WAZA_TARGET_OTHER_SELECT;
+    case OLD_RANGE_NONE:      return WAZA_TARGET_UNKNOWN;
+    case OLD_RANGE_ENEMY2:    return WAZA_TARGET_ENEMY_ALL;
+    case OLD_RANGE_OTHER_ALL: return WAZA_TARGET_OTHER_ALL;
+    case OLD_RANGE_USER:      return WAZA_TARGET_USER;
+    case OLD_RANGE_FRIEND_ALL:return WAZA_TARGET_SIDE_FRIEND;
+    case OLD_RANGE_RANDOM:    return WAZA_TARGET_ENEMY_RANDOM;
+    case OLD_RANGE_WEATHER:   return WAZA_TARGET_FIELD;
+    case OLD_RANGE_MAKIBISI:  return WAZA_TARGET_SIDE_ENEMY;
+    case OLD_RANGE_TEDASUKE:  return WAZA_TARGET_FRIEND_SELECT;
+    case OLD_RANGE_TUBO:      return WAZA_TARGET_FRIEND_USER_SELECT;
+    case OLD_RANGE_SAKIDORI:  return WAZA_TARGET_ENEMY_SELECT;
+    }
   }
 
   return WAZA_TARGET_OTHER_SELECT;///< 自分以外の１体（選択）

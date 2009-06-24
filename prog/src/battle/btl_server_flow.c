@@ -1994,6 +1994,9 @@ static void svflowsub_damage_act_singular(  BTL_SVFLOW_WORK* wk,
   }
 
   TargetPokeRec_AddWithDamage( &wk->damagedPokemon, defender, damage_sum );
+  if( damage_sum ){
+    BTL_POKEPARAM_SetTurnFlag( defender, BPP_TURNFLG_DAMAGED );
+  }
 
   if( plural_flag )
   {
@@ -2025,6 +2028,9 @@ static void scproc_Fight_damage_side_plural( BTL_SVFLOW_WORK* wk,
     koraeru_cause[i] = scEvent_CheckKoraeru( wk, attacker, bpp[i], &dmg[i] );
     dmg_sum += dmg[i];
     TargetPokeRec_AddWithDamage( &wk->damagedPokemon, bpp[i], dmg[i] );
+    if( dmg[i] ){
+      BTL_POKEPARAM_SetTurnFlag( bpp[i], BPP_TURNFLG_DAMAGED );
+    }
   }
 
   scPut_WazaDamagePlural( wk, poke_cnt, evwkAry[0]->aff, bpp, dmg, critical_flg );
@@ -2665,19 +2671,23 @@ static BOOL scproc_SimpleDamage( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u32 da
   {
     int value = -damage;
 
-    scPut_SimpleHp( wk, bpp, value );
+    if( value )
+    {
+      scPut_SimpleHp( wk, bpp, value );
+      BTL_POKEPARAM_SetTurnFlag( bpp, BPP_TURNFLG_DAMAGED );
 
-    if( strID != STRID_NULL ){
-      scPut_Message_Set( wk, bpp, strID );
+      if( strID != STRID_NULL ){
+        scPut_Message_Set( wk, bpp, strID );
+      }
+
+      if( scEvent_SimpleDamage_Reaction(wk, bpp) ){
+        scproc_UseItem( wk, bpp );
+      }
+
+      scPut_CheckDeadCmd( wk, bpp );
+
+      return TRUE;
     }
-
-    if( scEvent_SimpleDamage_Reaction(wk, bpp) ){
-      scproc_UseItem( wk, bpp );
-    }
-
-    scPut_CheckDeadCmd( wk, bpp );
-
-    return TRUE;
   }
   return FALSE;
 }
@@ -2763,7 +2773,7 @@ static void scproc_Fight_Damage_AddEffect( BTL_SVFLOW_WORK* wk, WazaID waza, BTL
 {
   if( !BTL_POKEPARAM_IsDead(target) )
   {
-    if( scEvent_CheckAddRankEffectOccur(wk, waza, attacker, target) )
+    if(   scEvent_CheckAddRankEffectOccur(wk, waza, attacker, target) )
     {
       scproc_WazaRankEffect_Common( wk, waza, attacker, target, FALSE );
     }
@@ -5505,7 +5515,7 @@ static u16 scEvent_getWazaPower( BTL_SVFLOW_WORK* wk,
     BTL_EVENTVAR_SetValue( BTL_EVAR_WAZAID, waza );
     BTL_EVENTVAR_SetValue( BTL_EVAR_WAZA_TYPE, wazaParam->wazaType );
     BTL_EVENTVAR_SetValue( BTL_EVAR_WAZA_POWER, power );
-    BTL_EVENTVAR_SetMulValue( BTL_EVAR_WAZA_POWER_RATIO, FX32_CONST(1.0), FX32_CONST(0.1f), FX32_CONST(128) );
+    BTL_EVENTVAR_SetMulValue( BTL_EVAR_WAZA_POWER_RATIO, FX32_CONST(1.0), FX32_CONST(0.1f), FX32_CONST(512) );
     BTL_EVENT_CallHandlers( wk, BTL_EVENT_WAZA_POWER );
     power = BTL_EVENTVAR_GetValue( BTL_EVAR_WAZA_POWER );
     ratio = (fx32)BTL_EVENTVAR_GetValue( BTL_EVAR_WAZA_POWER_RATIO );

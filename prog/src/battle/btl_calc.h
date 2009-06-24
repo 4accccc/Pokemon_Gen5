@@ -190,7 +190,7 @@ extern u32 BTL_CALC_AffDamage( u32 rawDamage, BtlTypeAff aff );
 
 extern u8 BTL_CALC_HitCountMax( u8 numHitMax );
 extern u16 BTL_CALC_RecvWeatherDamage( const BTL_POKEPARAM* bpp, BtlWeather weather );
-
+extern PokeType  BTL_CALC_RandomResistType( PokeType type );
 
 
 
@@ -206,7 +206,7 @@ extern u16 BTL_CALC_RecvWeatherDamage( const BTL_POKEPARAM* bpp, BtlWeather weat
 //=============================================================================================
 extern void BTL_CALC_WazaSickContToBppSickCont( WAZA_SICKCONT_PARAM wazaSickCont, const BTL_POKEPARAM* attacker, BPP_SICK_CONT* sickCont );
 
-extern void BTL_CALC_MakeDefaultPokeSickCont( PokeSick sick, BPP_SICK_CONT* cont );
+BPP_SICK_CONT BTL_CALC_MakeDefaultPokeSickCont( PokeSick sick );
 extern void BTL_CALC_MakeDefaultWazaSickCont( WazaSick sick, const BTL_POKEPARAM* attacker, BPP_SICK_CONT* cont );
 extern BPP_SICK_CONT BTL_CALC_MakeMoudokuSickCont( void );
 extern BPP_SICK_CONT BTL_CALC_MakeWazaSickCont_Turn( u8 turn_count );
