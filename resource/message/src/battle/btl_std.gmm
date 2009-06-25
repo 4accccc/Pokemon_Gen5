@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="taya" host="W00146" date="2009-06-23T16:30:35"/>
+	<create user="taya" host="W00146" date="2009-06-25T18:30:17"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -585,13 +585,21 @@
 	</row>
 
 	<row id="BTL_STRID_STD_IyasinoSuzu">
+		<comment>いやしのすず</comment>
 		<language name="JPN" width="216">すずのねが　ひびきわたった！</language>
 		<language name="JPN_KANJI" width="216">鈴の音が　響きわたった！</language>
 	</row>
 
 	<row id="BTL_STRID_STD_AlomaTherapy">
+		<comment>アロマセラピー</comment>
 		<language name="JPN" width="216">ここちよい　かおりが　ひろがった！</language>
 		<language name="JPN_KANJI" width="216">心地よい　香りが　広がった！</language>
+	</row>
+
+	<row id="BTL_STRID_STD_Itamiwake">
+		<comment>いたみわけ</comment>
+		<language name="JPN" width="216">おたがいの　たいりょくを　わかちあった！</language>
+		<language name="JPN_KANJI" width="216">お互いの体力を　分かちあった！</language>
 	</row>
 
 	<row id="BTL_STRID_STD_Reflector">
