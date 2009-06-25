@@ -758,6 +758,7 @@ WazaTarget WAZADATA_GetTarget( WazaID id )
   case WAZANO_TEKUSUTYAA2:  return WAZA_TARGET_OTHER_SELECT;
   case WAZANO_KAUNTAA:
   case WAZANO_MIRAAKOOTO:
+  case WAZANO_METARUBAASUTO:
      return WAZA_TARGET_UNKNOWN;
   default:
     break;
