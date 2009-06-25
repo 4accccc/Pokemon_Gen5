@@ -44,6 +44,8 @@ NITRO_COMP = ../../tools/nitro_comp
 #Ç∆ÇËÇ†Ç¶Ç∏íºâ∫ÇÃ*.imdÇàÀë∂ëŒè€Ç∆Ç∑ÇÈ
 IMDFILE	:= $(wildcard $(RES_3DDIR)*.imd)
 ICAFILE	:= $(wildcard $(RES_3DDIR)*.ica)
+IMAFILE	:= $(wildcard $(RES_3DDIR)*.ima)
+ITAFILE	:= $(wildcard $(RES_3DDIR)*.ita)
 BGNCGFILE := $(wildcard $(RES_BGDIR)*.ncg)
 BGNCLFILE := $(wildcard $(RES_BGDIR)*.ncl)
 
@@ -71,6 +73,14 @@ nsbmd: $(notdir $(IMDFILE:.imd=.nsbmd))
 
 nsbca: $(notdir $(ICAFILE:.ica=.nsbca))
 %.nsbca: $(RES_3DDIR)%.ica
+	g3dcvtr $<
+
+nsbca: $(notdir $(IMAFILE:.ima=.nsbma))
+%.nsbma: $(RES_3DDIR)%.ima
+	g3dcvtr $<
+
+nsbca: $(notdir $(ITAFILE:.ita=.nsbta))
+%.nsbta: $(RES_3DDIR)%.ita
 	g3dcvtr $<
 
 ncgr: $(notdir $(BGNCGFILE:.ncg=.NCGR))

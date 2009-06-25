@@ -19,9 +19,12 @@ enum {
 	NARC_battgra_wb_batt_stage02_nsbmd = 5,
 	NARC_battgra_wb_batt_stage02_nsbca = 6,
 	NARC_battgra_wb_batt_stage03_nsbmd = 7,
-	NARC_battgra_wb_shadow_NCLR = 8,
-	NARC_battgra_wb_msgwin_frm_NCGR = 9,
-	NARC_battgra_wb_msgwin_frm_NCLR = 10
+	NARC_battgra_wb_batt_stage04_nsbmd = 8,
+	NARC_battgra_wb_batt_stage04_nsbma = 9,
+	NARC_battgra_wb_batt_stage04_nsbta = 10,
+	NARC_battgra_wb_shadow_NCLR = 11,
+	NARC_battgra_wb_msgwin_frm_NCGR = 12,
+	NARC_battgra_wb_msgwin_frm_NCLR = 13
 };
 
 /* NARC_BATTGRA_WB_NAIX_ */
