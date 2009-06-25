@@ -105,6 +105,7 @@ static VMCMD_RESULT VMEC_PARTICLE_DELETE( VMHANDLE *vmh, void *context_work );
 static VMCMD_RESULT VMEC_EMITTER_MOVE( VMHANDLE *vmh, void *context_work );
 static VMCMD_RESULT VMEC_EMITTER_MOVE_COORDINATE( VMHANDLE *vmh, void *context_work );
 static VMCMD_RESULT VMEC_POKEMON_MOVE( VMHANDLE *vmh, void *context_work );
+static VMCMD_RESULT VMEC_POKEMON_CIRCLE_MOVE( VMHANDLE *vmh, void *context_work );
 static VMCMD_RESULT VMEC_POKEMON_SCALE( VMHANDLE *vmh, void *context_work );
 static VMCMD_RESULT VMEC_POKEMON_ROTATE( VMHANDLE *vmh, void *context_work );
 static VMCMD_RESULT VMEC_POKEMON_ALPHA( VMHANDLE *vmh, void *context_work );
@@ -115,7 +116,8 @@ static VMCMD_RESULT VMEC_TRAINER_SET( VMHANDLE *vmh, void *context_work );
 static VMCMD_RESULT VMEC_TRAINER_MOVE( VMHANDLE *vmh, void *context_work );
 static VMCMD_RESULT VMEC_TRAINER_ANIME_SET( VMHANDLE *vmh, void *context_work );
 static VMCMD_RESULT VMEC_TRAINER_DEL( VMHANDLE *vmh, void *context_work );
-static VMCMD_RESULT VMEC_BG_VISIBLE( VMHANDLE *vmh, void *context_work );
+static VMCMD_RESULT VMEC_BG_PAL_FADE( VMHANDLE *vmh, void *context_work );
+static VMCMD_RESULT VMEC_BG_VANISH( VMHANDLE *vmh, void *context_work );
 static VMCMD_RESULT VMEC_SE_PLAY( VMHANDLE *vmh, void *context_work );
 static VMCMD_RESULT VMEC_SE_STOP( VMHANDLE *vmh, void *context_work );
 static VMCMD_RESULT VMEC_EFFECT_END_WAIT( VMHANDLE *vmh, void *context_work );
@@ -194,6 +196,7 @@ static const VMCMD_FUNC btlv_effect_command_table[]={
   VMEC_EMITTER_MOVE,
   VMEC_EMITTER_MOVE_COORDINATE,
   VMEC_POKEMON_MOVE,
+  VMEC_POKEMON_CIRCLE_MOVE,
   VMEC_POKEMON_SCALE,
   VMEC_POKEMON_ROTATE,
   VMEC_POKEMON_ALPHA,
@@ -204,7 +207,8 @@ static const VMCMD_FUNC btlv_effect_command_table[]={
   VMEC_TRAINER_MOVE,
   VMEC_TRAINER_ANIME_SET,
   VMEC_TRAINER_DEL,
-  VMEC_BG_VISIBLE,
+  VMEC_BG_PAL_FADE,
+  VMEC_BG_VANISH,
   VMEC_SE_PLAY,
   VMEC_SE_STOP,
   VMEC_EFFECT_END_WAIT,
@@ -341,7 +345,6 @@ void      BTLV_EFFVM_Stop( VMHANDLE *vmh )
   BTLV_EFFVM_WORK *bevw = (BTLV_EFFVM_WORK *)VM_GetContext( vmh );
 
   VMEC_SEQ_END( vmh, VM_GetContext( vmh ) );
-
   if( bevw->sequence )
   { 
     GFL_HEAP_FreeMemory( bevw->sequence );
@@ -800,6 +803,21 @@ static VMCMD_RESULT VMEC_POKEMON_MOVE( VMHANDLE *vmh, void *context_work )
 
 //============================================================================================
 /**
+ *  ポケモン円運動
+ *
+ * @param[in] vmh       仮想マシン制御構造体へのポインタ
+ * @param[in] context_work  コンテキストワークへのポインタ
+ */
+//============================================================================================
+static VMCMD_RESULT VMEC_POKEMON_CIRCLE_MOVE( VMHANDLE *vmh, void *context_work )
+{ 
+  BTLV_EFFVM_WORK *bevw = ( BTLV_EFFVM_WORK* )context_work;
+
+  return bevw->control_mode;
+}
+
+//============================================================================================
+/**
  *  ポケモン拡縮
  *
  * @param[in] vmh       仮想マシン制御構造体へのポインタ
@@ -1084,19 +1102,41 @@ static VMCMD_RESULT VMEC_TRAINER_DEL( VMHANDLE *vmh, void *context_work )
 
 //============================================================================================
 /**
+ *  BGパレットフェード
+ *
+ * @param[in] vmh       仮想マシン制御構造体へのポインタ
+ * @param[in] context_work  コンテキストワークへのポインタ
+ */
+//============================================================================================
+static VMCMD_RESULT VMEC_BG_PAL_FADE( VMHANDLE *vmh, void *context_work )
+{ 
+  BTLV_EFFVM_WORK *bevw = ( BTLV_EFFVM_WORK* )context_work;
+  int   flag      = ( int )VMGetU32( vmh );
+  int   start_evy = ( int )VMGetU32( vmh );
+  int   end_evy   = ( int )VMGetU32( vmh );
+  int   wait      = ( int )VMGetU32( vmh );
+  int   rgb       = ( int )VMGetU32( vmh );
+
+  BTLV_EFFECT_SetPaletteFade( flag, start_evy, end_evy, wait, rgb );
+
+  return bevw->control_mode;
+}
+
+//============================================================================================
+/**
  * BGの表示/非表示
  *
  * @param[in] vmh       仮想マシン制御構造体へのポインタ
  * @param[in] context_work  コンテキストワークへのポインタ
  */
 //============================================================================================
-static VMCMD_RESULT VMEC_BG_VISIBLE( VMHANDLE *vmh, void *context_work )
+static VMCMD_RESULT VMEC_BG_VANISH( VMHANDLE *vmh, void *context_work )
 {
   BTLV_EFFVM_WORK *bevw = ( BTLV_EFFVM_WORK* )context_work;
-  int bg_num = ( int )VMGetU32( vmh );
-  int sw = ( int )VMGetU32( vmh );
+  int model = ( int )VMGetU32( vmh );
+  int flag = ( int )VMGetU32( vmh );
 
-//  GFL_BG_SetVisible( bg_num, sw );
+  BTLV_EFFECT_SetVanishFlag( model, flag );
 
   return bevw->control_mode;
 }
@@ -1311,6 +1351,25 @@ static  BOOL  VWF_EFFECT_END_CHECK( VMHANDLE *vmh, void *context_work )
           return FALSE;
         }
       }
+    }
+  }
+  //パレットフェード終了？
+  if( ( bevw->effect_end_wait_kind == BTLEFF_EFFENDWAIT_ALL ) ||
+      ( bevw->effect_end_wait_kind == BTLEFF_EFFENDWAIT_PALFADE_STAGE ) ||
+      ( bevw->effect_end_wait_kind == BTLEFF_EFFENDWAIT_PALFADE_3D ) )
+  { 
+    if( BTLV_EFFECT_CheckExecutePaletteFade( BTLEFF_PAL_FADE_STAGE ) )
+    { 
+      return FALSE;
+    }
+  }
+  if( ( bevw->effect_end_wait_kind == BTLEFF_EFFENDWAIT_ALL ) ||
+      ( bevw->effect_end_wait_kind == BTLEFF_EFFENDWAIT_PALFADE_FIELD ) ||
+      ( bevw->effect_end_wait_kind == BTLEFF_EFFENDWAIT_PALFADE_3D ) )
+  { 
+    if( BTLV_EFFECT_CheckExecutePaletteFade( BTLEFF_PAL_FADE_FIELD ) )
+    { 
+      return FALSE;
     }
   }
 
@@ -1554,6 +1613,7 @@ static  void  EFFVM_InitEmitterPos( GFL_EMIT_PTR emit )
   case BTLEFF_CAMERA_POS_DEFENCE_PAIR:
     beeiw->dst = EFFVM_GetPosition( beeiw->vmh, beeiw->dst - BTLEFF_CAMERA_POS_ATTACK );
     GF_ASSERT( beeiw->dst != BTLV_MCSS_POS_ERROR );
+    break;
   case BTLEFF_CAMERA_POS_NONE:
     dst.x = beeiw->dst_pos.x;
     dst.y = beeiw->dst_pos.y;

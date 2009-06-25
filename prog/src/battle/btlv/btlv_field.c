@@ -23,13 +23,14 @@
 
 struct _BTLV_FIELD_WORK
 {
-	GFL_TCBSYS*       tcb_sys;
-	GFL_G3D_RES*      field_resource[ BTLV_FIELD_MAX ];
-	GFL_G3D_RND*      field_render[ BTLV_FIELD_MAX ];
-	GFL_G3D_OBJ*      field_obj[ BTLV_FIELD_MAX ];
-	GFL_G3D_OBJSTATUS	field_status[ BTLV_FIELD_MAX ];
-  void*             pData_dst[ BTLV_FIELD_MAX ];
-	HEAPID            heapID;
+	GFL_G3D_RES*          field_resource[ BTLV_FIELD_MAX ];
+	GFL_G3D_RND*          field_render[ BTLV_FIELD_MAX ];
+	GFL_G3D_OBJ*          field_obj[ BTLV_FIELD_MAX ];
+	GFL_G3D_OBJSTATUS     field_status[ BTLV_FIELD_MAX ];
+  EFFTOOL_PAL_FADE_WORK epfw;
+  u32                   vanish_flag :1;
+  u32                               :31;
+	HEAPID                heapID;
 };
 
 typedef	struct
@@ -44,15 +45,6 @@ typedef	struct
  */
 //============================================================================================
 
-BTLV_FIELD_WORK	*BTLV_FIELD_Init( GFL_TCBSYS *tcb_sys, int index, HEAPID heapID );
-void			BTLV_FIELD_Exit( BTLV_FIELD_WORK *bfw );
-void			BTLV_FIELD_Main( BTLV_FIELD_WORK *bfw );
-void			BTLV_FIELD_Draw( BTLV_FIELD_WORK *bfw );
-
-//TCB関数群
-//static	void	BTLV_FIELD_TCBAdd( BTLV_FIELD_WORK *bfw );
-//static	void	BTLV_FIELD_TCB_MoveShadowLine( GFL_TCB *tcb, void *work );
-
 //============================================================================================
 /**
  *	背景のリソーステーブル
@@ -60,7 +52,6 @@ void			BTLV_FIELD_Draw( BTLV_FIELD_WORK *bfw );
 //============================================================================================
 //モデルデータ
 static	const	int	field_resource_table[][BTLV_FIELD_MAX]={
-//	{ NARC_battgra_wb_batt_field01_nsbmd, NARC_battgra_wb_batt_bg01_nsbmd, NARC_battgra_wb_batt_field02_nsbmd },
 	{ NARC_battgra_wb_batt_field01_nsbmd, NARC_battgra_wb_batt_bg01_nsbmd },
 };
 
@@ -68,12 +59,11 @@ static	const	int	field_resource_table[][BTLV_FIELD_MAX]={
 /**
  *	システム初期化
  *
- * @param[in]	tcb_sys	システム内で使用するTCBSYS構造体へのポインタ
  * @param[in]	index	読み込むリソースのINDEX
  * @param[in]	heapID	ヒープID
  */
 //============================================================================================
-BTLV_FIELD_WORK	*BTLV_FIELD_Init( GFL_TCBSYS *tcb_sys, int index, HEAPID heapID )
+BTLV_FIELD_WORK	*BTLV_FIELD_Init( int index, HEAPID heapID )
 {
 	BTLV_FIELD_WORK *bfw = GFL_HEAP_AllocClearMemory( heapID, sizeof( BTLV_FIELD_WORK ) );
 	BOOL	ret;
@@ -81,8 +71,12 @@ BTLV_FIELD_WORK	*BTLV_FIELD_Init( GFL_TCBSYS *tcb_sys, int index, HEAPID heapID 
 
 	GF_ASSERT( index < NELEMS( field_resource_table ) );
 
-	bfw->tcb_sys = tcb_sys;
 	bfw->heapID = heapID;
+
+  bfw->epfw.g3DRES          = GFL_HEAP_AllocMemory( bfw->heapID, 4 * BTLV_FIELD_MAX );
+  bfw->epfw.pData_dst       = GFL_HEAP_AllocMemory( bfw->heapID, 4 * BTLV_FIELD_MAX );
+  bfw->epfw.pal_fade_flag   = 0;
+  bfw->epfw.pal_fade_count  = BTLV_FIELD_MAX;
 
 	for( i = 0 ; i < BTLV_FIELD_MAX ; i++ ){
 		//リソース読み込み
@@ -110,11 +104,10 @@ BTLV_FIELD_WORK	*BTLV_FIELD_Init( GFL_TCBSYS *tcb_sys, int index, HEAPID heapID 
       NNSG3dResTex*		    	pTex = NNS_G3dGetTex( header ); 
       u32                   size = (u32)pTex->plttInfo.sizePltt << 3;
     
-      bfw->pData_dst[ i ] = GFL_HEAP_AllocMemory( bfw->heapID, size );
+      bfw->epfw.g3DRES[ i ]     = bfw->field_resource[ i ];
+      bfw->epfw.pData_dst[ i ]  = GFL_HEAP_AllocMemory( bfw->heapID, size );
     }
 	}
-
-//	BTLV_FIELD_TCBAdd( bfw );
 
 	return bfw;
 }
@@ -134,8 +127,11 @@ void	BTLV_FIELD_Exit( BTLV_FIELD_WORK *bfw )
 		GFL_G3D_DeleteResource( bfw->field_resource[ i ] );
 		GFL_G3D_RENDER_Delete( bfw->field_render[ i ] );
 		GFL_G3D_OBJECT_Delete( bfw->field_obj[ i ] );
-    GFL_HEAP_FreeMemory( bfw->pData_dst[ i ] );
+    GFL_HEAP_FreeMemory( bfw->epfw.pData_dst[ i ] );
 	}
+
+  GFL_HEAP_FreeMemory( bfw->epfw.g3DRES );
+  GFL_HEAP_FreeMemory( bfw->epfw.pData_dst );
 
 	GFL_HEAP_FreeMemory( bfw );
 }
@@ -149,6 +145,8 @@ void	BTLV_FIELD_Exit( BTLV_FIELD_WORK *bfw )
 //============================================================================================
 void	BTLV_FIELD_Main( BTLV_FIELD_WORK *bfw )
 {
+  //パレットフェード
+  BTLV_EFFTOOL_CalcPaletteFade( &bfw->epfw );
 }
 
 //============================================================================================
@@ -162,53 +160,63 @@ void	BTLV_FIELD_Draw( BTLV_FIELD_WORK *bfw )
 {
 	int	i;
 
+  if( bfw->vanish_flag )
+  { 
+    return;
+  }
+
 	for( i = 0 ; i < BTLV_FIELD_MAX ; i++ ){
 		GFL_G3D_DRAW_DrawObject( bfw->field_obj[ i ], &bfw->field_status[ i ] );
 	}
 }
 
-#if 0
-//TCB関数群
-static	void	BTLV_FIELD_TCBAdd( BTLV_FIELD_WORK *bfw )
-{
-	BTLV_FIELD_TCB_WORK *bftw = GFL_HEAP_AllocClearMemory( bfw->heapID, sizeof( BTLV_FIELD_TCB_WORK ) );
+//============================================================================================
+/**
+ *	パレットフェードセット
+ *
+ * @param[in]	bfw	      BTLV_FIELD管理ワークへのポインタ
+ * @param[in]	start_evy	セットするパラメータ（フェードさせる色に対する開始割合16段階）
+ * @param[in]	end_evy		セットするパラメータ（フェードさせる色に対する終了割合16段階）
+ * @param[in]	wait			セットするパラメータ（ウェイト）
+ * @param[in]	rgb				セットするパラメータ（フェードさせる色）
+ */
+//============================================================================================
+void	BTLV_FIELD_SetPaletteFade( BTLV_FIELD_WORK *bfw, u8 start_evy, u8 end_evy, u8 wait, u16 rgb )
+{ 
+	GF_ASSERT( bfw );
 
-	//影線移動エフェクトセット
-	bftw->bfw = bfw;
-	bftw->emw.move_type		= EFFTOOL_CALCTYPE_INTERPOLATION;
-	bftw->emw.vec_time		= BTLV_FIELD_SHADOW_LINE_MOVE_FRAME;
-	bftw->emw.vec_time_tmp	= BTLV_FIELD_SHADOW_LINE_MOVE_FRAME;
-	bftw->emw.wait			= 0;
-	bftw->emw.wait_tmp		= BTLV_FIELD_SHADOW_LINE_MOVE_WAIT;
-	bftw->emw.count			= 0;
-	bftw->emw.start_value.x	= 0;
-	bftw->emw.start_value.y	= 0;
-	bftw->emw.start_value.z	= BTLV_FIELD_SHADOW_LINE_START_POS;
-	bftw->emw.end_value.x	= 0;
-	bftw->emw.end_value.y	= 0;
-	bftw->emw.end_value.z	= 0;
-	bfw->field_status[ BTLV_FIELD_SHADOW_LINE ].trans.z =  BTLV_FIELD_SHADOW_LINE_START_POS;
-	BTLV_EFFTOOL_CalcMoveVector( &bftw->emw.start_value, 
-								&bftw->emw.end_value, 
-								&bftw->emw.vector, 
-								FX32_CONST( BTLV_FIELD_SHADOW_LINE_MOVE_FRAME ) );
-	GFL_TCB_AddTask( bfw->tcb_sys, BTLV_FIELD_TCB_MoveShadowLine, bftw, 0 );
+	bfw->epfw.pal_fade_flag      = 1;
+	bfw->epfw.pal_fade_start_evy = start_evy;
+	bfw->epfw.pal_fade_end_evy   = end_evy;
+	bfw->epfw.pal_fade_wait      = 0;
+	bfw->epfw.pal_fade_wait_tmp  = wait;
+	bfw->epfw.pal_fade_rgb       = rgb;
 }
 
 //============================================================================================
 /**
- *	影線の移動
+ *	パレットフェード実行中かチェックする
+ *
+ * @param[in]	bfw  BTLV_FIELD管理ワークへのポインタ
+ *
+ * @retval  TRUE:実行中　FALSE:終了
  */
 //============================================================================================
-static	void	BTLV_FIELD_TCB_MoveShadowLine( GFL_TCB *tcb, void *work )
-{
-	BTLV_FIELD_TCB_WORK *bftw = ( BTLV_FIELD_TCB_WORK * )work;
-	BOOL	ret;
-
-	ret = BTLV_EFFTOOL_CalcParam( &bftw->emw, &bftw->bfw->field_status[ BTLV_FIELD_SHADOW_LINE ].trans );
-	if( ret == TRUE ){
-		GFL_HEAP_FreeMemory( work );
-		GFL_TCB_DeleteTask( tcb );
-	}
+BOOL	BTLV_FIELD_CheckExecutePaletteFade( BTLV_FIELD_WORK* bfw )
+{ 
+  return ( bfw->epfw.pal_fade_flag != 0 );
 }
-#endif
+
+//============================================================================================
+/**
+ *	バニッシュフラグセット
+ *
+ * @param[in]	bsw   BTLV_STAGE管理ワークへのポインタ
+ * @param[in]	flag  セットするフラグ( BTLV_FIELD_VANISH_ON BTLV_FIELD_VANISH_OFF )
+ */
+//============================================================================================
+void	BTLV_FIELD_SetVanishFlag( BTLV_FIELD_WORK* bfw, BTLV_FIELD_VANISH flag )
+{ 
+  bfw->vanish_flag = flag;
+}
+

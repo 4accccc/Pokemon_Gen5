@@ -118,6 +118,10 @@
 #define	BTLEFF_EFFENDWAIT_PARTICLE						( 2 )
 #define	BTLEFF_EFFENDWAIT_POKEMON							( 3 )
 #define	BTLEFF_EFFENDWAIT_TRAINER							( 4 )
+#define	BTLEFF_EFFENDWAIT_PALFADE_STAGE		  	( 5 )
+#define	BTLEFF_EFFENDWAIT_PALFADE_FIELD		  	( 6 )
+#define	BTLEFF_EFFENDWAIT_PALFADE_3D			    ( 7 )
+#define	BTLEFF_EFFENDWAIT_PALFADE_EFFECT	    ( 8 )
 
 //制御モード
 #define	BTLEFF_CONTROL_MODE_CONTINUE					( 0 )
@@ -125,14 +129,20 @@
 
 #define BTLEFF_FX32_SHIFT											( 12 )
 
-//BG表示/非表示（display.h　bg_sys.hで定義されている値にあわせる）
-#define	BTLEFF_FRAME0_M			( 0 )
-#define	BTLEFF_FRAME1_M			( 1 )
-#define	BTLEFF_FRAME2_M			( 2 )
-#define	BTLEFF_FRAME3_M			( 3 )
+//BGパレットフェード対象定義
+#define BTLEFF_PAL_FADE_STAGE                 ( 0 )
+#define BTLEFF_PAL_FADE_FIELD                 ( 1 )
+#define BTLEFF_PAL_FADE_3D                    ( 2 )
+#define BTLEFF_PAL_FADE_EFFECT                ( 3 )
+#define BTLEFF_PAL_FADE_ALL                   ( 4 )
 
-#define	BTLEFF_VISIBLE_OFF	( 0 )
-#define	BTLEFF_VISIBLE_ON		( 1 )
+//BG表示/非表示
+#define	BTLEFF_STAGE			( 0 )
+#define	BTLEFF_FIELD			( 1 )
+#define	BTLEFF_EFFECT			( 2 )
+
+#define	BTLEFF_VANISH_OFF	( 0 )
+#define	BTLEFF_VANISH_ON	( 1 )
 
 #endif //__BTLV_EFFVM_DEF_H_
 
@@ -210,25 +220,27 @@ ex)
 #define	EC_EMITTER_MOVE							( 8 )
 #define	EC_EMITTER_MOVE_COORDINATE	( 9 )
 #define	EC_POKEMON_MOVE							( 10 )
-#define	EC_POKEMON_SCALE						( 11 )
-#define	EC_POKEMON_ROTATE						( 12 )
-#define	EC_POKEMON_ALPHA						( 13 )
-#define	EC_POKEMON_SET_MEPACHI_FLAG	( 14 )
-#define	EC_POKEMON_SET_ANM_FLAG			( 15 )
-#define	EC_POKEMON_PAL_FADE					( 16 )
-#define	EC_TRAINER_SET							( 17 )
-#define	EC_TRAINER_MOVE							( 18 )
-#define	EC_TRAINER_ANIME_SET				( 19 )
-#define	EC_TRAINER_DEL							( 20 )
-#define	EC_BG_VISIBLE								( 21 )
-#define	EC_SE_PLAY									( 22 )
-#define	EC_SE_STOP									( 23 )
-#define	EC_EFFECT_END_WAIT					( 24 )
-#define	EC_WAIT											( 25 )
-#define	EC_CONTROL_MODE							( 26 )
+#define	EC_POKEMON_CIRCLE_MOVE			( 11 )
+#define	EC_POKEMON_SCALE						( 12 )
+#define	EC_POKEMON_ROTATE						( 13 )
+#define	EC_POKEMON_ALPHA						( 14 )
+#define	EC_POKEMON_SET_MEPACHI_FLAG	( 15 )
+#define	EC_POKEMON_SET_ANM_FLAG			( 16 )
+#define	EC_POKEMON_PAL_FADE					( 17 )
+#define	EC_TRAINER_SET							( 18 )
+#define	EC_TRAINER_MOVE							( 19 )
+#define	EC_TRAINER_ANIME_SET				( 20 )
+#define	EC_TRAINER_DEL							( 21 )
+#define	EC_BG_PAL_FADE		   				( 22 )
+#define	EC_BG_VANISH								( 23 )
+#define	EC_SE_PLAY									( 24 )
+#define	EC_SE_STOP									( 25 )
+#define	EC_EFFECT_END_WAIT					( 26 )
+#define	EC_WAIT											( 27 )
+#define	EC_CONTROL_MODE							( 28 )
 
 //終了コマンドは必ず一番下になるようにする
-#define	EC_SEQ_END									( 27 )
+#define	EC_SEQ_END									( 29 )
 
 #ifndef __C_NO_DEF_
 
@@ -551,6 +563,40 @@ ex)
 
 //======================================================================
 /**
+ * @brief	ポケモン円移動
+ *
+ * #param_num	6
+ * @param	pos				      	円移動させるポケモンの立ち位置
+ * @param	axis			      	回転軸
+ * @param	radius_h	        横方向半径
+ * @param	radius_v	        縦方向半径
+ * @param	rotate_param			回転フレーム数（1回転何フレームでするか） 移動ウエイト  回転カウント
+ * @param	rotate_after_wait	1回転したあとのウエイト（2回転以上で意味のある値です）
+ *
+ * #param	COMBOBOX_TEXT	攻撃側	攻撃側ペア	防御側	防御側ペア
+ * #param	COMBOBOX_VALUE	BTLEFF_POKEMON_SIDE_ATTACK BTLEFF_POKEMON_SIDE_ATTACK_PAIR BTLEFF_POKEMON_SIDE_DEFENCE BTLEFF_POKEMON_SIDE_DEFENCE_PAIR
+ * #param	COMBOBOX_TEXT	Ｘ軸  Ｙ軸  Ｚ軸
+ * #param	COMBOBOX_VALUE	BTLEFF_AXIS_X BTLEFF_AXIS_Y BTLEFF_AXIS_Z
+ * #param	VALUE_FX32	横方向半径
+ * #param	VALUE_FX32	縦方向半径
+ * #param	VALUE_VECFX32		回転フレーム数  移動ウエイト  回転カウント
+ * #param	VALUE_INT   1回転したあとのウエイト
+ */
+//======================================================================
+	.macro	POKEMON_CIRCLE_MOVE	pos, axis, radius_h, radius_v, frame, rotate_wait, count, rotate_after_wait
+	.short	EC_POKEMON_CIRCLE_MOVE
+	.long		\pos
+	.long		\type
+	.long		\move_pos_x
+	.long		\move_pos_y
+	.long		\frame
+	.long		\rotate_wait
+	.long		\count
+	.long		\rotate_after_wait
+	.endm
+
+//======================================================================
+/**
  * @brief	ポケモン拡縮
  *
  * #param_num	7
@@ -815,20 +861,48 @@ ex)
 
 //======================================================================
 /**
+ * @brief	BGのパレットフェード
+ *
+ * #param_num	5
+ * @param	bg_num    操作するBG
+ * @param	start_evy	START_EVY値
+ * @param	end_evy		END_EVY値
+ * @param	wait			ウエイト
+ * @param	rgb				開始or終了時の色
+ *
+ * #param	COMBOBOX_TEXT お盆  フィールド  お盆＋フィールド  エフェクト面  すべて
+ * #param	COMBOBOX_VALUE  BTLEFF_PAL_FADE_STAGE BTLEFF_PAL_FADE_FIELD BTLEFF_PAL_FADE_3D  BTLEFF_PAL_FADE_EFFECT BTLEFF_PAL_FADE_ALL
+ * #param	VALUE_INT	START_EVY値
+ * #param	VALUE_INT	END_EVY値
+ * #param	VALUE_INT	ウエイト
+ * #param	VALUE_VECFX32	R値(0-31)	G値(0-31)	B値(0-31)
+ */
+//======================================================================
+	.macro	BG_PAL_FADE bg_num, start_evy, end_evy, wait, r, g, b
+	.short	EC_BG_PAL_FADE
+	.long		\bg_num
+	.long		\start_evy
+	.long		\end_evy
+	.long		\wait
+	.long		( ( ( \b >> BTLEFF_FX32_SHIFT ) & 0x1f ) << 10 ) | ( ( ( \g >> BTLEFF_FX32_SHIFT ) & 0x1f ) << 5 ) | ( ( \r >> BTLEFF_FX32_SHIFT ) & 0x1f )
+	.endm
+
+//======================================================================
+/**
  * @brief	BGの表示/非表示
  *
  * #param_num	2
  * @param	bg_num	操作するBG
  * @param	sw			表示/非表示を指定
  *
- * #param	COMBOBOX_TEXT	BG0	BG1	BG2	BG3
- * #param	COMBOBOX_VALUE	BTLEFF_FRAME0_M	BTLEFF_FRAME1_M	BTLEFF_FRAME2_M	BTLEFF_FRAME3_M
- * #param	COMBOBOX_TEXT	表示	非表示
- * #param	COMBOBOX_VALUE	BTLEFF_VISIBLE_ON	BTLEFF_VISIBLE_OFF
+ * #param	COMBOBOX_TEXT	お盆  フィールド  エフェクト
+ * #param	COMBOBOX_VALUE  BTLEFF_STAGE  BTLEFF_FIELD  BTLEFF_EFFECT
+ * #param	COMBOBOX_TEXT 非表示  表示
+ * #param	COMBOBOX_VALUE  BTLEFF_VANISH_ON BTLEFF_VANISH_OFF
  */
 //======================================================================
 	.macro	BG_VISIBLE	bg_num, sw
-	.short	EC_BG_VISIBLE
+	.short	EC_BG_VANISH
 	.long		\bg_num
 	.long		\sw
 	.endm
@@ -866,8 +940,8 @@ ex)
  * #param_num	1
  * @param	kind	終了待ちする種類
  *
- * #param	COMBOBOX_TEXT	すべて	カメラ	パーティクル	ポケモン	トレーナー
- * #param COMBOBOX_VALUE	BTLEFF_EFFENDWAIT_ALL	BTLEFF_EFFENDWAIT_CAMERA	BTLEFF_EFFENDWAIT_PARTICLE	BTLEFF_EFFENDWAIT_POKEMON	BTLEFF_EFFENDWAIT_TRAINER
+ * #param	COMBOBOX_TEXT	すべて	カメラ	パーティクル	ポケモン	トレーナー  PALFADEお盆  PALFADEフィールド PALFADEお盆＋フィールド  PALFADEエフェクト
+ * #param COMBOBOX_VALUE	BTLEFF_EFFENDWAIT_ALL	BTLEFF_EFFENDWAIT_CAMERA	BTLEFF_EFFENDWAIT_PARTICLE	BTLEFF_EFFENDWAIT_POKEMON	BTLEFF_EFFENDWAIT_TRAINER BTLEFF_EFFENDWAIT_PALFADE_STAGE  BTLEFF_EFFENDWAIT_PALFADE_FIELD  BTLEFF_EFFENDWAIT_PALFADE_3D BTLEFF_EFFENDWAIT_PALFADE_EFFECT
  */
 //======================================================================
 	.macro	EFFECT_END_WAIT	kind

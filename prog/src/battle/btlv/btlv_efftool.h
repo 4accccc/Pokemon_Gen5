@@ -33,11 +33,24 @@ typedef struct
 	int				count;
 }EFFTOOL_MOVE_WORK;
 
+typedef struct
+{ 
+  GFL_G3D_RES** g3DRES;             //パレットフェード  対象3Dモデルリソースへのポインタ
+  void**        pData_dst;          //パレットフェード  転送用ワーク
+	u8            pal_fade_flag;      //パレットフェード  起動フラグ
+  u8            pal_fade_count;     //パレットフェード  対象リソース数
+	u8            pal_fade_start_evy; //パレットフェード　START_EVY値
+	u8            pal_fade_end_evy;		//パレットフェード　END_EVY値
+	u8            pal_fade_wait;			//パレットフェード　wait値
+	u8            pal_fade_wait_tmp;	//パレットフェード　wait_tmp値
+	u16           pal_fade_rgb;				//パレットフェード　end_evy時のrgb値
+}EFFTOOL_PAL_FADE_WORK;
+
 extern	void	BTLV_EFFTOOL_CalcMoveVector( VecFx32 *start, VecFx32 *end, VecFx32 *out, fx32 flame );
 extern	void	BTLV_EFFTOOL_CheckMove( fx32 *now_pos, fx32 *vec, fx32 *move_pos, BOOL *ret );
 extern	BOOL	BTLV_EFFTOOL_CalcParam( EFFTOOL_MOVE_WORK *emw, VecFx32 *now_param );
 extern	u8		BTLV_EFFTOOL_Pos2Bit( BtlvMcssPos no );
-void  BTLV_EFFTOOL_CalcPaletteFade( GFL_G3D_RES *g3DRES, void* pData_dst, u8 evy, u16 rgb );
+extern  void  BTLV_EFFTOOL_CalcPaletteFade( EFFTOOL_PAL_FADE_WORK* epfw );
 
 static	inline	u32	BTLV_EFFTOOL_No2Bit( u32 no )
 {	

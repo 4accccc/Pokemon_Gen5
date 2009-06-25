@@ -60,8 +60,6 @@ typedef struct {
   u8           continue_count;  ///< 連続して出すとエフェクトが異なる場合の連続カウンタ（ex. ころがる）
 }BTLV_WAZAEFFECT_PARAM;
 
-
-
 extern  void              BTLV_EFFECT_Init( int index, HEAPID heapID );
 extern  void              BTLV_EFFECT_Exit( void );
 extern  void              BTLV_EFFECT_Main( void );
@@ -79,6 +77,9 @@ extern  void              BTLV_EFFECT_DelPokemon( int position );
 extern  BOOL              BTLV_EFFECT_CheckExistPokemon( int position );
 extern  void              BTLV_EFFECT_SetTrainer( int trtype, int position, int pos_x, int pos_y );
 extern  void              BTLV_EFFECT_DelTrainer( int position );
+extern  void              BTLV_EFFECT_SetPaletteFade( int model, u8 start_evy, u8 end_evy, u8 wait, u16 rgb );
+extern  BOOL              BTLV_EFFECT_CheckExecutePaletteFade( int model );
+extern  void              BTLV_EFFECT_SetVanishFlag( int model, int flag );
 extern  int               BTLV_EFFECT_GetTrainerIndex( int position );
 extern  BTLV_CAMERA_WORK* BTLV_EFFECT_GetCameraWork( void );
 extern  BTLV_MCSS_WORK*   BTLV_EFFECT_GetMcssWork( void );
@@ -86,9 +87,6 @@ extern  VMHANDLE*         BTLV_EFFECT_GetVMHandle( void );
 extern  GFL_TCBSYS*       BTLV_EFFECT_GetTCBSYS( void );
 extern  PALETTE_FADE_PTR  BTLV_EFFECT_GetPfd( void );
 extern  BTLV_CLACT_WORK*  BTLV_EFFECT_GetCLWK( void );
-
-
-
 
 #ifdef PM_DEBUG
 extern  void        BTLV_EFFECT_SetPokemonDebug( const MCSS_ADD_DEBUG_WORK *madw, int position );

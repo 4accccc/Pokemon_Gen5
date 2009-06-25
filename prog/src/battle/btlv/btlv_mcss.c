@@ -698,7 +698,7 @@ static  void  BTLV_MCSS_TCBInitialize( BTLV_MCSS_WORK *bmw, int position, int ty
   pmtw->emw.vec_time_tmp  = frame;
   pmtw->emw.wait          = 0;
   pmtw->emw.wait_tmp      = wait;
-  pmtw->emw.count         = count;
+  pmtw->emw.count         = count * 2;
   pmtw->emw.start_value.x = start->x;
   pmtw->emw.start_value.y = start->y;
   pmtw->emw.start_value.z = start->z;
@@ -713,7 +713,8 @@ static  void  BTLV_MCSS_TCBInitialize( BTLV_MCSS_WORK *bmw, int position, int ty
     BTLV_EFFTOOL_CalcMoveVector( &pmtw->emw.start_value, end, &pmtw->emw.vector, FX32_CONST( frame ) );
     break;
   case EFFTOOL_CALCTYPE_ROUNDTRIP_LONG: //Žw’è‚µ‚½‹æŠÔ‚ð‰•œˆÚ“®
-    pmtw->emw.vec_time_tmp  *= 2;
+    pmtw->emw.count         *= 2;
+    //fall through
   case EFFTOOL_CALCTYPE_ROUNDTRIP:      //Žw’è‚µ‚½‹æŠÔ‚ð‰•œˆÚ“®
     pmtw->emw.vector.x = FX_Div( end->x, FX32_CONST( frame ) );
     pmtw->emw.vector.y = FX_Div( end->y, FX32_CONST( frame ) );

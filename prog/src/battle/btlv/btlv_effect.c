@@ -121,7 +121,7 @@ void  BTLV_EFFECT_Init( int index, HEAPID heapID )
 
   bew->bmw  = BTLV_MCSS_Init( bew->tcb_sys, heapID );
   bew->bsw  = BTLV_STAGE_Init( index, heapID );
-  bew->bfw  = BTLV_FIELD_Init( bew->tcb_sys, index, heapID );
+  bew->bfw  = BTLV_FIELD_Init( index, heapID );
   bew->bcw  = BTLV_CAMERA_Init( bew->tcb_sys, heapID );
   bew->bclw = BTLV_CLACT_Init( bew->tcb_sys, heapID );
 
@@ -379,6 +379,79 @@ void  BTLV_EFFECT_DelTrainer( int position )
 
   BTLV_CLACT_Delete( bew->bclw, bew->trainer_index[ position ] );
   bew->trainer_index[ position ] = BTLV_EFFECT_TRAINER_INDEX_NONE;
+}
+
+//============================================================================================
+/**
+ *  指定された3Dモデルに対するパレットフェードをセット
+ *
+ * @param[in] model       対象とする3Dモデル
+ * @param[in]	start_evy   セットするパラメータ（フェードさせる色に対する開始割合16段階）
+ * @param[in]	end_evy   	セットするパラメータ（フェードさせる色に対する終了割合16段階）
+ * @param[in]	wait	    	セットするパラメータ（ウェイト）
+ * @param[in]	rgb		    	セットするパラメータ（フェードさせる色）
+ */
+//============================================================================================
+void  BTLV_EFFECT_SetPaletteFade( int model, u8 start_evy, u8 end_evy, u8 wait, u16 rgb )
+{ 
+  if( ( model == BTLEFF_PAL_FADE_STAGE ) || 
+      ( model == BTLEFF_PAL_FADE_3D ) || 
+      ( model == BTLEFF_PAL_FADE_ALL ) )
+  { 
+    BTLV_STAGE_SetPaletteFade( bew->bsw, start_evy, end_evy, wait, rgb );
+  }
+  if( ( model == BTLEFF_PAL_FADE_FIELD ) || 
+      ( model == BTLEFF_PAL_FADE_3D ) || 
+      ( model == BTLEFF_PAL_FADE_ALL ) )
+  { 
+    BTLV_FIELD_SetPaletteFade( bew->bfw, start_evy, end_evy, wait, rgb );
+  }
+}
+
+//============================================================================================
+/**
+ *  指定された3Dモデルに対するパレットフェードの実行チェック
+ *
+ * @param[in] model       対象とする3Dモデル
+ */
+//============================================================================================
+BOOL  BTLV_EFFECT_CheckExecutePaletteFade( int model )
+{ 
+  if( ( model == BTLEFF_PAL_FADE_STAGE ) || 
+      ( model == BTLEFF_PAL_FADE_3D ) || 
+      ( model == BTLEFF_PAL_FADE_ALL ) )
+  { 
+    return BTLV_STAGE_CheckExecutePaletteFade( bew->bsw );
+  }
+  if( ( model == BTLEFF_PAL_FADE_FIELD ) || 
+      ( model == BTLEFF_PAL_FADE_3D ) || 
+      ( model == BTLEFF_PAL_FADE_ALL ) )
+  { 
+    return BTLV_FIELD_CheckExecutePaletteFade( bew->bfw );
+  }
+}
+
+//============================================================================================
+/**
+ *  指定された3Dモデルに対するバニッシュフラグセット
+ *
+ * @param[in] model  対象とする3Dモデル
+ * @param[in] flag   セットするフラグ
+ */
+//============================================================================================
+void  BTLV_EFFECT_SetVanishFlag( int model, int flag )
+{ 
+  switch( model )
+  { 
+  case BTLEFF_STAGE:
+    BTLV_STAGE_SetVanishFlag( bew->bsw, flag );
+    break;
+  case BTLEFF_FIELD:
+    BTLV_FIELD_SetVanishFlag( bew->bfw, flag );
+    break;
+  case BTLEFF_EFFECT:
+    break;
+  }
 }
 
 //============================================================================================

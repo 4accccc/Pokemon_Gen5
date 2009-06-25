@@ -307,7 +307,7 @@ static  void  BTLV_CLACT_TCBInitialize( BTLV_CLACT_WORK *bclw, int index, int ty
   bctw->emw.vec_time_tmp  = frame;
   bctw->emw.wait          = 0;
   bctw->emw.wait_tmp      = wait;
-  bctw->emw.count         = count;
+  bctw->emw.count         = count * 2;
   bctw->emw.start_value.x = start->x;
   bctw->emw.start_value.y = start->y;
   bctw->emw.start_value.z = start->z;
@@ -323,6 +323,8 @@ static  void  BTLV_CLACT_TCBInitialize( BTLV_CLACT_WORK *bclw, int index, int ty
     break;
   case EFFTOOL_CALCTYPE_ROUNDTRIP_LONG: //Žw’è‚µ‚½‹æŠÔ‚ð‰•œˆÚ“®
     bctw->emw.vec_time_tmp  *= 2;
+    bctw->emw.count         *= 2;
+    //fall through
   case EFFTOOL_CALCTYPE_ROUNDTRIP:      //Žw’è‚µ‚½‹æŠÔ‚ð‰•œˆÚ“®
     bctw->emw.vector.x = FX_Div( end->x, FX32_CONST( frame ) );
     bctw->emw.vector.y = FX_Div( end->y, FX32_CONST( frame ) );

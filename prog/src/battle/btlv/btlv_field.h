@@ -8,25 +8,27 @@
  */
 //============================================================================================
 
-#ifndef	__BTLV_FIELD_H_
-#define	__BTLV_FIELD_H_
+#pragma once
 
 enum{
 	BTLV_FIELD_GROUND = 0,		//地面
 	BTLV_FIELD_BG,		    		//背景
-//	BTLV_FIELD_SHADOW_LINE,	//影線
 	BTLV_FIELD_MAX			    	//フィールド構成OBJ数
 };
 
-#define	BTLV_FIELD_SHADOW_LINE_START_POS	( FX32_ONE * 12 )	//影線の初期位置
-#define	BTLV_FIELD_SHADOW_LINE_MOVE_FRAME	( 32 )				//影線の移動フレーム数
-#define	BTLV_FIELD_SHADOW_LINE_MOVE_WAIT	( 2 )				//影線の移動ウェイト
+typedef enum
+{ 
+  BTLV_FIELD_VANISH_OFF = 0,
+  BTLV_FIELD_VANISH_ON,
+}BTLV_FIELD_VANISH;
 
 typedef struct _BTLV_FIELD_WORK BTLV_FIELD_WORK;
 
-extern	BTLV_FIELD_WORK	*BTLV_FIELD_Init( GFL_TCBSYS *tcb_sys, int index, HEAPID heapID );
-extern	void			BTLV_FIELD_Exit( BTLV_FIELD_WORK *bsw );
-extern	void			BTLV_FIELD_Main( BTLV_FIELD_WORK *bsw );
-extern	void			BTLV_FIELD_Draw( BTLV_FIELD_WORK *bsw );
+extern	BTLV_FIELD_WORK*  BTLV_FIELD_Init( int index, HEAPID heapID );
+extern	void              BTLV_FIELD_Exit( BTLV_FIELD_WORK *bsw );
+extern	void              BTLV_FIELD_Main( BTLV_FIELD_WORK *bsw );
+extern	void              BTLV_FIELD_Draw( BTLV_FIELD_WORK *bsw );
+extern  void              BTLV_FIELD_SetPaletteFade( BTLV_FIELD_WORK *bfw, u8 start_evy, u8 end_evy, u8 wait, u16 rgb );
+extern  BOOL              BTLV_FIELD_CheckExecutePaletteFade( BTLV_FIELD_WORK* bfw );
+extern  void              BTLV_FIELD_SetVanishFlag( BTLV_FIELD_WORK* bfw, BTLV_FIELD_VANISH flag );
 
-#endif	//__BTLV_FIELD_H_

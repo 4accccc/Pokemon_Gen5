@@ -125,11 +125,15 @@ BOOL	BTLV_EFFTOOL_CalcParam( EFFTOOL_MOVE_WORK *emw, VecFx32 *now_value )
 			now_value->y += emw->vector.y;
 			now_value->z += emw->vector.z;
 			if( --emw->vec_time == 0 ){
-				emw->vector.x *= -1;
-				emw->vector.y *= -1;
-				emw->vector.z *= -1;
-				emw->vec_time = emw->vec_time_tmp;
 				emw->count--;
+ 				emw->vec_time = emw->vec_time_tmp;
+        if( ( emw->move_type == EFFTOOL_CALCTYPE_ROUNDTRIP ) ||
+            ( ( emw->move_type == EFFTOOL_CALCTYPE_ROUNDTRIP_LONG ) && ( emw->count & 1 ) ) )
+        { 
+  				emw->vector.x *= -1;
+  				emw->vector.y *= -1;
+  				emw->vector.z *= -1;
+        }
 			}
 		}
 		else{
@@ -159,7 +163,7 @@ BOOL	BTLV_EFFTOOL_CalcParam( EFFTOOL_MOVE_WORK *emw, VecFx32 *now_value )
 //============================================================================================
 u8	BTLV_EFFTOOL_Pos2Bit( BtlvMcssPos pos )
 {
-	static	u8 bit_table[ BTLV_MCSS_POS_MAX ]={ 0x01, 0x02, 0x04, 0x08, 0x10, 0x20, 0x40, 0x80 };
+	static	u8 bit_table[ BTLV_MCSS_POS_MAX ] = { 0x01, 0x02, 0x04, 0x08, 0x10, 0x20, 0x40, 0x80 };
 
 	GF_ASSERT( pos < BTLV_MCSS_POS_MAX );
 
@@ -170,29 +174,56 @@ u8	BTLV_EFFTOOL_Pos2Bit( BtlvMcssPos pos )
 /**
  *	3Dモデルのパレットフェードアニメ
  *
- *	@param[in]	g3DRES    3Dリソース
- *	@param[in]  pData_dst フェード計算結果を格納するワーク（VBlank転送終了まで保持されている必要があるため、呼び出し側で確保）
- *	@param[in]	evy 	    フェードの段階(0-16)
- *	@param[in]	rgb       フェードの最終的な色
+ *	@param[in]	epfw  パレットフェード管理構造体へのポインタ
  */
 //============================================================================================
-void  BTLV_EFFTOOL_CalcPaletteFade( GFL_G3D_RES *g3DRES, void* pData_dst, u8 evy, u16 rgb )
+void  BTLV_EFFTOOL_CalcPaletteFade( EFFTOOL_PAL_FADE_WORK *epfw )
 { 
-	NNSG3dResFileHeader*	header;
-	NNSG3dResTex*		    	pTex;
-  u32                   size;
-  const void*           pData_src;
-  u32                   from;
 
-	//テクスチャリソースポインタの取得
-	header = GFL_G3D_GetResourceFileHeader( g3DRES );
-	pTex = NNS_G3dGetTex( header ); 
+	if(	epfw->pal_fade_flag == 0 )
+  { 
+    return;
+  }
+	if( epfw->pal_fade_wait == 0 )
+  { 
+  	NNSG3dResFileHeader*	header;
+  	NNSG3dResTex*		    	pTex;
+    u32                   size;
+    const void*           pData_src;
+    u32                   from;
+    int                   i;
 
-  size = (u32)pTex->plttInfo.sizePltt << 3;
-  pData_src = NNS_G3dGetPlttData(pTex);
-  from = NNS_GfdGetTexKeyAddr(pTex->plttInfo.vramKey);
+	  epfw->pal_fade_wait = epfw->pal_fade_wait_tmp;
 
-	SoftFade( pData_src, pData_dst, ( size / 2 ), evy, rgb );
+    for( i = 0 ; i < epfw->pal_fade_count ; i++ )
+    { 
+    	//テクスチャリソースポインタの取得
+      header = GFL_G3D_GetResourceFileHeader( epfw->g3DRES[ i ] );
+      pTex = NNS_G3dGetTex( header ); 
+  
+      size = ( u32 )pTex->plttInfo.sizePltt << 3;
+      pData_src = NNS_G3dGetPlttData( pTex );
+      from = NNS_GfdGetTexKeyAddr( pTex->plttInfo.vramKey );
 
-  NNS_GfdRegisterNewVramTransferTask( NNS_GFD_DST_3D_TEX_PLTT, from, pData_dst, size );
+      SoftFade( pData_src, epfw->pData_dst[ i ], ( size / 2 ), epfw->pal_fade_start_evy, epfw->pal_fade_rgb );
+
+      NNS_GfdRegisterNewVramTransferTask( NNS_GFD_DST_3D_TEX_PLTT, from, epfw->pData_dst[ i ], size );
+    }
+  	if( epfw->pal_fade_start_evy == epfw->pal_fade_end_evy )
+ 		{	
+ 			epfw->pal_fade_flag = 0;
+ 		}
+ 		else if( epfw->pal_fade_start_evy > epfw->pal_fade_end_evy )
+ 		{	
+ 			epfw->pal_fade_start_evy--;
+ 		}
+ 		else
+ 		{	
+ 			epfw->pal_fade_start_evy++;
+ 		}
+  }
+  else
+  { 
+ 	  epfw->pal_fade_wait--;
+  }
 }
