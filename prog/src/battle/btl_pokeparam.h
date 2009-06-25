@@ -126,6 +126,20 @@ typedef enum {
 
 //--------------------------------------------------------------
 /**
+ *  「こらえる（ワザダメージでHPが最低１残る）」ケース
+ */
+//--------------------------------------------------------------
+typedef enum {
+
+  BPP_KORAE_NONE = 0,       ///< こらえない
+  BPP_KORAE_WAZA_DEFENDER,  ///< 防御側のワザによる（「こらえる」を使用など）
+  BPP_KORAE_WAZA_ATTACKER,  ///< 攻撃側のワザによる（「みねうち」を使用など）
+  BPP_KORAE_ITEM,           ///< 防御側の装備アイテム効果（きあいのタスキなど）
+
+}BppKoraeruCause;
+
+//--------------------------------------------------------------
+/**
  *  状態異常継続パラメータ
  */
 //--------------------------------------------------------------
@@ -156,19 +170,6 @@ typedef struct  {
 
 }BPP_SICK_CONT;
 
-//--------------------------------------------------------------
-/**
- *  「こらえる（ワザダメージでHPが最低１残る）」理由
- */
-//--------------------------------------------------------------
-typedef enum {
-
-  BPP_KORAE_NONE = 0,       ///< こらえない
-  BPP_KORAE_WAZA_DEFENDER,  ///< 防御側のワザによる（「こらえる」を使用など）
-  BPP_KORAE_WAZA_ATTACKER,  ///< 攻撃側のワザによる（「みねうち」を使用など）
-  BPP_KORAE_ITEM,           ///< 防御側の装備アイテム効果（きあいのタスキなど）
-
-}BppKoraeruCause;
 
 static inline BPP_SICK_CONT BPP_SICKCONT_MakeTurn( u8 turns )
 {
@@ -217,47 +218,81 @@ static inline BOOL BPP_SICKCONT_IsMoudokuCont( BPP_SICK_CONT cont )
   return ((cont.type == WAZASICK_CONT_PERMANENT) && (cont.permanent.count_max > 0));
 }
 
+//--------------------------------------------------------------
+/**
+ *  ワザダメージレコード関連定数
+ */
+//--------------------------------------------------------------
+enum {
+  BPP_WAZADMG_REC_TURN_MAX = 3,   ///< 何ターン分の記録を取るか？
+  BPP_WAZADMG_REC_MAX = 6,        ///< １ターンにつき、何件分まで記録するか？
+};
+//--------------------------------------------------------------
+/**
+ *  ワザダメージレコード構造体
+ */
+//--------------------------------------------------------------
+typedef struct {
+  u16      wazaID;    ///< ワザID
+  u16      damage;    ///< ダメージ量
+  u8       wazaType;  ///< ほのお、みず等のタイプ
+  u8       pokeID;    ///< 攻撃したポケモンID
+}BPP_WAZADMG_REC;
+
+static inline void BPP_WAZADMG_REC_Setup( BPP_WAZADMG_REC* rec, u8 pokeID, u16 wazaID, u8 wazaType, u16 damage )
+{
+  rec->wazaID = wazaID;
+  rec->damage = damage;
+  rec->wazaType = wazaType;
+  rec->pokeID = pokeID;
+}
+
+//--------------------------------------------------------------
+/**
+ *  関数プロトタイプ
+ */
+//--------------------------------------------------------------
 extern BTL_POKEPARAM*  BTL_POKEPARAM_Create( const POKEMON_PARAM* pp, u8 id, HEAPID heapID );
 extern void BTL_POKEPARAM_Delete( BTL_POKEPARAM* bpp );
 extern void BTL_POKEPARAM_Copy( BTL_POKEPARAM* dst, const BTL_POKEPARAM* src );
 
-
 extern u8 BTL_POKEPARAM_GetID( const BTL_POKEPARAM* pp );
-extern const POKEMON_PARAM* BTL_POKEPARAM_GetSrcData( const BTL_POKEPARAM* bpp );
-extern u16 BTL_POKEPARAM_GetPP( const BTL_POKEPARAM* pp, u8 wazaIdx );
-
 extern u16 BTL_POKEPARAM_GetMonsNo( const BTL_POKEPARAM* pp );
+extern PokeTypePair BTL_POKEPARAM_GetPokeType( const BTL_POKEPARAM* pp );
+extern u32 BTL_POKEPARAM_GetItem( const BTL_POKEPARAM* pp );
+extern BOOL BTL_POKEPARAM_IsMatchType( const BTL_POKEPARAM* pp, PokeType type );
+extern const POKEMON_PARAM* BTL_POKEPARAM_GetSrcData( const BTL_POKEPARAM* bpp );
+
 extern u8 BTL_POKEPARAM_GetWazaCount( const BTL_POKEPARAM* pp );
 extern WazaID BTL_POKEPARAM_GetWazaNumber( const BTL_POKEPARAM* pp, u8 idx );
 extern WazaID BTL_POKEPARAM_GetWazaParticular( const BTL_POKEPARAM* pp, u8 idx, u8* PP, u8* PPMax );
-
-extern PokeTypePair BTL_POKEPARAM_GetPokeType( const BTL_POKEPARAM* pp );
-extern BOOL BTL_POKEPARAM_IsMatchType( const BTL_POKEPARAM* pp, PokeType type );
+extern u8 BTL_POKEPARAM_GetWazaIdx( const BTL_POKEPARAM* pp, WazaID waza );
+extern u16 BTL_POKEPARAM_GetPP( const BTL_POKEPARAM* pp, u8 wazaIdx );
 
 extern int BTL_POKEPARAM_GetValue( const BTL_POKEPARAM* pp, BppValueID vid );
 extern int BTL_POKEPARAM_GetValue_Base( const BTL_POKEPARAM* pp, BppValueID vid );
 extern int BTL_POKEPARAM_GetValue_Critical( const BTL_POKEPARAM* pp, BppValueID vid );
-extern u32 BTL_POKEPARAM_GetItem( const BTL_POKEPARAM* pp );
+
+extern BOOL BTL_POKEPARAM_CheckSick( const BTL_POKEPARAM* pp, WazaSick sickType );
+extern PokeSick BTL_POKEPARAM_GetPokeSick( const BTL_POKEPARAM* pp );
+extern u8 BTL_POKEPARAM_GetSickParam( const BTL_POKEPARAM* pp, WazaSick sick );
 
 extern BOOL BTL_POKEPARAM_IsDead( const BTL_POKEPARAM* pp );
 extern BOOL BTL_POKEPARAM_IsHPFull( const BTL_POKEPARAM* pp );
-extern BOOL BTL_POKEPARAM_CheckSick( const BTL_POKEPARAM* pp, WazaSick sickType );
 extern BOOL BTL_POKEPARAM_IsPPFull( const BTL_POKEPARAM* pp, u8 wazaIdx );
 
-extern PokeSick BTL_POKEPARAM_GetPokeSick( const BTL_POKEPARAM* pp );
-extern int BTL_POKEPARAM_CalcSickDamage( const BTL_POKEPARAM* pp, WazaSick sickID );
 extern BOOL BTL_POKEPARAM_GetTurnFlag( const BTL_POKEPARAM* pp, BppTurnFlag flagID );
 extern BOOL BTL_POKEPARAM_GetActFlag( const BTL_POKEPARAM* pp, BppActFlag flagID );
 extern BOOL BTL_POKEPARAM_GetContFlag( const BTL_POKEPARAM* pp, BppContFlag flagID );
 extern u16 BTL_POKEPARAM_GetTurnCount( const BTL_POKEPARAM* pp );
 extern u16 BTL_POKEPARAM_GetAppearTurn( const BTL_POKEPARAM* pp );
 
-extern WazaID BTL_POKEPARAM_GetPrevWazaNumber( const BTL_POKEPARAM* pp );
-extern BtlPokePos BTL_POKEPARAM_GetPrevTargetPos( const BTL_POKEPARAM* pp );
-extern u32 BTL_POKEPARAM_GetSameWazaUsedCounter( const BTL_POKEPARAM* pp );
-extern fx32 BTL_POKEPARAM_GetHPRatio( const BTL_POKEPARAM* pp );
-extern u8 BTL_POKEPARAM_GetWazaIdx( const BTL_POKEPARAM* pp, WazaID waza );
-extern u8 BTL_POKEPARAM_GetSickParam( const BTL_POKEPARAM* pp, WazaSick sick );
+extern int  BTL_POKEPARAM_CalcSickDamage( const BTL_POKEPARAM* pp, WazaSick sickID );
+extern WazaID  BTL_POKEPARAM_GetPrevWazaNumber( const BTL_POKEPARAM* pp );
+extern BtlPokePos  BTL_POKEPARAM_GetPrevTargetPos( const BTL_POKEPARAM* pp );
+extern u32  BTL_POKEPARAM_GetSameWazaUsedCounter( const BTL_POKEPARAM* pp );
+extern fx32  BTL_POKEPARAM_GetHPRatio( const BTL_POKEPARAM* pp );
+
 
 
 
@@ -339,7 +374,7 @@ extern BOOL BTL_POKEPARAM_WazaSick_TurnCheck( BTL_POKEPARAM* pp );
 extern void BTL_POKEPARAM_SetShrink( BTL_POKEPARAM* pp );
 extern void BTL_POKEPARAM_SetTurnFlag( BTL_POKEPARAM* pp, BppTurnFlag flagID );
 extern void BTL_POKEPARAM_ForceOffTurnFlag( BTL_POKEPARAM* pp, BppTurnFlag flagID );
-extern void BTL_POKEPARAM_ClearTurnFlag( BTL_POKEPARAM* pp );
+extern void BTL_POKEPARAM_TurnCheck( BTL_POKEPARAM* pp );
 extern void BTL_POKEPARAM_SetActFlag( BTL_POKEPARAM* pp, BppActFlag flagID );
 extern void BTL_POKEPARAM_ClearActFlag( BTL_POKEPARAM* pp );
 extern void BTL_POKEPARAM_SetContFlag( BTL_POKEPARAM* pp, BppContFlag flagID );
@@ -355,6 +390,9 @@ extern void BTL_POKEPARAM_RankRecover( BTL_POKEPARAM* pp );
 extern void BTL_POKEPARAM_RankReset( BTL_POKEPARAM* pp );
 extern void BTL_POKEPARM_DeadClear( BTL_POKEPARAM* pp );
 
+extern void BTL_POKEPARAM_WAZADMG_REC_Add( BTL_POKEPARAM* pp, const BPP_WAZADMG_REC* rec );
+extern u8   BTL_POKEPARAM_WAZADMG_REC_GetCount( const BTL_POKEPARAM* pp, u8 turn_ridx );
+extern BOOL BTL_POKEPARAM_WAZADMG_REC_Get( const BTL_POKEPARAM* pp, u8 turn_ridx, u8 rec_ridx, BPP_WAZADMG_REC* dst );
 
 
 #endif

@@ -56,6 +56,7 @@ struct _SVCL_WORK {
 
 typedef struct {
 
+  WazaID        wazaID;
   PokeTypePair  userType;
   PokeType      wazaType;
 
@@ -198,6 +199,8 @@ typedef enum {
   BTL_HANDEX_MESSAGE_STD,   ///< STDメッセージ表示
   BTL_HANDEX_MESSAGE_SET,   ///< SETメッセージ表示
   BTL_HANDEX_RECOVER_HP,    ///< HP回復
+  BTL_HANDEX_DAMAGE,        ///< ダメージを与える
+  BTL_HANDEX_SHIFT_HP,      ///< HPを変更（ダメージ・回復として扱わない）
   BTL_HANDEX_RECOVER_PP,    ///< PP回復
   BTL_HANDEX_DECREMENT_PP,  ///< PP減少
   BTL_HANDEX_CURE_SICK,     ///< 状態異常を回復
@@ -205,7 +208,6 @@ typedef enum {
   BTL_HANDEX_RANK_EFFECT,   ///< ランク増減効果
   BTL_HANDEX_RESET_RANK,    ///< ランク増減効果をリセット
   BTL_HANDEX_RECOVER_RANK,  ///< マイナスランクをフラットに戻す
-  BTL_HANDEX_DAMAGE,        ///< ダメージを与える
   BTL_HANDEX_KILL,          ///< 瀕死にする
   BTL_HANDEX_CHANGE_TYPE,   ///< ポケモンのタイプを変える
   BTL_HANDEX_SET_TURNFLAG,  ///< ターンフラグセット
@@ -255,6 +257,23 @@ typedef struct {
 
 typedef struct {
  BTL_HANDEX_PARAM_HEADER   header;   ///< 共有ヘッダ
+ u8   poke_cnt;                      ///< 対象ポケモン数
+ u8   fSucceedStrEx;                 ///< 成功時メッセージ表示
+ u16  succeedStrID;                  ///< 成功時メッセージID
+ u8   pokeID[ BTL_POS_MAX ];         ///< 対象ポケモンID
+ u16  damage[ BTL_POS_MAX ];         ///< ダメージ量
+}BTL_HANDEX_PARAM_DAMAGE;
+
+
+typedef struct {
+  BTL_HANDEX_PARAM_HEADER   header;   ///< 共有ヘッダ
+  u8     poke_cnt;
+  u8     pokeID[ BTL_POS_MAX ];
+  int    volume[ BTL_POS_MAX ];
+}BTL_HANDEX_PARAM_SHIFT_HP;
+
+typedef struct {
+ BTL_HANDEX_PARAM_HEADER   header;   ///< 共有ヘッダ
  u8   volume;                        ///< PP量
  u8   pokeID;                        ///< 対象ポケモンID
  u8   wazaIdx;                       ///< 対象ワザインデックス
@@ -301,15 +320,6 @@ typedef struct {
  u8   poke_cnt;                      ///< 対象ポケモン数
  u8   pokeID[ BTL_POS_MAX ];         ///< 対象ポケモンID
 }BTL_HANDEX_PARAM_RESET_RANK;
-
-typedef struct {
- BTL_HANDEX_PARAM_HEADER   header;   ///< 共有ヘッダ
- u8   poke_cnt;                      ///< 対象ポケモン数
- u8   fSucceedStrEx;                 ///< 成功時メッセージ表示
- u16  succeedStrID;                  ///< 成功時メッセージID
- u8   pokeID[ BTL_POS_MAX ];         ///< 対象ポケモンID
- u16  damage[ BTL_POS_MAX ];         ///< ダメージ量
-}BTL_HANDEX_PARAM_DAMAGE;
 
 typedef struct {
  BTL_HANDEX_PARAM_HEADER   header;   ///< 共有ヘッダ

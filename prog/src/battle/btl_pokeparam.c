@@ -34,6 +34,9 @@ enum {
   CONTFLG_BUF_SIZE = (BPP_CONTFLG_MAX/8)+(BPP_CONTFLG_MAX%8!=0),
 
   TURNCOUNT_NULL = BTL_TURNCOUNT_MAX+1,
+
+  WAZADMG_REC_TURN_MAX = BPP_WAZADMG_REC_TURN_MAX,  ///< ワザダメージレコード：何ターン分の記録を取るか？
+  WAZADMG_REC_MAX = BPP_WAZADMG_REC_MAX,            ///< ワザダメージレコード：１ターンにつき、何件分まで記録するか？
 };
 
 
@@ -140,7 +143,12 @@ struct _BTL_POKEPARAM {
   u8  actFlag [ ACTFLG_BUF_SIZE ];
   u8  contFlag[ CONTFLG_BUF_SIZE ];
 
-  u32 dmy;
+  BPP_WAZADMG_REC  wazaDamageRec[ WAZADMG_REC_TURN_MAX ][ WAZADMG_REC_MAX ];
+  u8               dmgrecCount[ WAZADMG_REC_TURN_MAX ];
+  u8               dmgrecTurnPtr;
+  u8               dmgrecPtr;
+
+//  u32 dmy;
 };
 
 
@@ -153,6 +161,8 @@ static void Effrank_Reset( BPP_VARIABLE_PARAM* rank );
 static void Effrank_Recover( BPP_VARIABLE_PARAM* rank );
 static const s8* getRankVaryStatusConst( const BTL_POKEPARAM* pp, BppValueID type, s8* min, s8* max );
 static s8* getRankVaryStatus( BTL_POKEPARAM* pp, BppValueID type, s8* min, s8* max );
+static void dmgrecClearWork( BTL_POKEPARAM* bpp );
+static void dmgrecFwdTurn( BTL_POKEPARAM* pp );
 static void update_RealParam( BTL_POKEPARAM* pp );
 static inline void flgbuf_clear( u8* buf, u32 size );
 static inline void flgbuf_set( u8* buf, u32 flagID );
@@ -249,6 +259,8 @@ BTL_POKEPARAM*  BTL_POKEPARAM_Create( const POKEMON_PARAM* pp, u8 pokeID, HEAPID
 
   flgbuf_clear( bpp->turnFlag, sizeof(bpp->turnFlag) );
   flgbuf_clear( bpp->contFlag, sizeof(bpp->contFlag) );
+
+  dmgrecClearWork( bpp );
 
   return bpp;
 }
@@ -713,8 +725,6 @@ BOOL BTL_POKEPARAM_GetContFlag( const BTL_POKEPARAM* pp, BppContFlag flagID )
 {
   return flgbuf_get( pp->contFlag, flagID );
 }
-
-
 //=============================================================================================
 /**
  * HP残量のめやす（普通・半減・ピンチとか）を返す
@@ -763,46 +773,6 @@ fx32 BTL_POKEPARAM_GetHPRatio( const BTL_POKEPARAM* pp )
 {
   double r = (double)(pp->hp * 100) / (double)(pp->baseParam.hpMax);
   return FX32_CONST( r );
-}
-
-//=============================================================================================
-/**
- * 直前に使ったワザナンバーを返す（場に出てから使ったワザが無い場合は WAZANO_NULL ）
- *
- * @param   pp
- *
- * @retval  WazaID
- */
-//=============================================================================================
-WazaID BTL_POKEPARAM_GetPrevWazaNumber( const BTL_POKEPARAM* pp )
-{
-  return pp->prevWazaID;
-}
-//=============================================================================================
-/**
- * 直前に狙った相手の位置を返す
- *
- * @param   pp
- *
- * @retval  BtlPokePos
- */
-//=============================================================================================
-BtlPokePos BTL_POKEPARAM_GetPrevTargetPos( const BTL_POKEPARAM* pp )
-{
-  return pp->prevTargetPos;
-}
-//=============================================================================================
-/**
- * 同じワザを連続何回出しているか返す（連続していない場合は0、連続中は1オリジンの値が返る）
- *
- * @param   pp
- *
- * @retval  u32
- */
-//=============================================================================================
-u32 BTL_POKEPARAM_GetSameWazaUsedCounter( const BTL_POKEPARAM* pp )
-{
-  return pp->sameWazaCounter;
 }
 //=============================================================================================
 /**
@@ -1332,22 +1302,26 @@ void BTL_POKEPARAM_SetAppearTurn( BTL_POKEPARAM* pp, u16 turn )
   GF_ASSERT(turn < BTL_TURNCOUNT_MAX);
   pp->appearedTurn = turn;
   pp->turnCount = 0;
+  dmgrecClearWork( pp );
 }
 //=============================================================================================
 /**
- * ターンフラグの全クリア
+ * ターン終了処理
  *
  * @param   pp
  *
  */
 //=============================================================================================
-void BTL_POKEPARAM_ClearTurnFlag( BTL_POKEPARAM* pp )
+void BTL_POKEPARAM_TurnCheck( BTL_POKEPARAM* pp )
 {
   flgbuf_clear( pp->turnFlag, sizeof(pp->turnFlag) );
+
   if( pp->turnCount < BTL_TURNCOUNT_MAX )
   {
     pp->turnCount++;
   }
+
+  dmgrecFwdTurn( pp );
 }
 //=============================================================================================
 /**
@@ -1435,6 +1409,8 @@ void BTL_POKEPARAM_RemoveItem( BTL_POKEPARAM* pp )
 {
   pp->item = ITEM_DUMMY_DATA;
 }
+
+
 //=============================================================================================
 /**
  * 直前に使ったワザナンバーを記録
@@ -1467,6 +1443,160 @@ void BTL_POKEPARAM_ResetUsedWazaNumber( BTL_POKEPARAM* pp )
 {
   pp->prevWazaID = WAZANO_NULL;
   pp->sameWazaCounter = 0;
+}
+//=============================================================================================
+/**
+ * 直前に使ったワザナンバーを返す（場に出てから使ったワザが無い場合は WAZANO_NULL ）
+ *
+ * @param   pp
+ *
+ * @retval  WazaID
+ */
+//=============================================================================================
+WazaID BTL_POKEPARAM_GetPrevWazaNumber( const BTL_POKEPARAM* pp )
+{
+  return pp->prevWazaID;
+}
+//=============================================================================================
+/**
+ * 直前に狙った相手の位置を返す
+ *
+ * @param   pp
+ *
+ * @retval  BtlPokePos
+ */
+//=============================================================================================
+BtlPokePos BTL_POKEPARAM_GetPrevTargetPos( const BTL_POKEPARAM* pp )
+{
+  return pp->prevTargetPos;
+}
+//=============================================================================================
+/**
+ * 同じワザを連続何回出しているか返す（連続していない場合は0、連続中は1オリジンの値が返る）
+ *
+ * @param   pp
+ *
+ * @retval  u32
+ */
+//=============================================================================================
+u32 BTL_POKEPARAM_GetSameWazaUsedCounter( const BTL_POKEPARAM* pp )
+{
+  return pp->sameWazaCounter;
+}
+
+
+
+//----------------------------------------------------------------------------------
+/**
+ * ワザダメージレコード：ワーク初期化
+ *
+ * @param   bpp
+ */
+//----------------------------------------------------------------------------------
+static void dmgrecClearWork( BTL_POKEPARAM* bpp )
+{
+  GFL_STD_MemClear( bpp->wazaDamageRec, sizeof(bpp->wazaDamageRec) );
+  GFL_STD_MemClear( bpp->dmgrecCount, sizeof(bpp->dmgrecCount) );
+  bpp->dmgrecTurnPtr = 0;
+  bpp->dmgrecPtr = 0;
+}
+//----------------------------------------------------------------------------------
+/**
+ * ワザダメージレコード：ターンチェック
+ *
+ * @param   pp
+ */
+//----------------------------------------------------------------------------------
+static void dmgrecFwdTurn( BTL_POKEPARAM* bpp )
+{
+  if( ++(bpp->dmgrecTurnPtr) >= WAZADMG_REC_TURN_MAX ){
+    bpp->dmgrecTurnPtr = 0;
+  }
+  bpp->dmgrecCount[ bpp->dmgrecTurnPtr ] = 0;
+}
+//=============================================================================================
+/**
+ * ワザダメージレコード：１件記録
+ *
+ * @param   pp
+ * @param   rec
+ */
+//=============================================================================================
+void BTL_POKEPARAM_WAZADMG_REC_Add( BTL_POKEPARAM* bpp, const BPP_WAZADMG_REC* rec )
+{
+  u8 turn, idx;
+
+  turn = bpp->dmgrecTurnPtr;
+  idx = bpp->dmgrecCount[ turn ];
+
+  // 最大記録数を超えていたら古いものを破棄する
+  if( idx == WAZADMG_REC_MAX )
+  {
+    u32 i;
+    for(i=0; i<(WAZADMG_REC_MAX-1); ++i){
+      bpp->wazaDamageRec[ turn ][ i ] = bpp->wazaDamageRec[ turn ][ i+1 ];
+    }
+    --idx;
+  }
+
+  bpp->wazaDamageRec[ turn ][ idx ] = *rec;
+
+  if( bpp->dmgrecCount[ turn ] < WAZADMG_REC_MAX ){
+    bpp->dmgrecCount[ turn ]++;
+  }
+}
+//=============================================================================================
+/**
+ * ワザダメージレコード：指定ターンの記録件数を取得
+ *
+ * @param   pp
+ * @param   turn_ridx   遡るターン数（0なら当該ターンの記録）
+ */
+//=============================================================================================
+u8 BTL_POKEPARAM_WAZADMG_REC_GetCount( const BTL_POKEPARAM* bpp, u8 turn_ridx )
+{
+  if( turn_ridx < WAZADMG_REC_TURN_MAX )
+  {
+    int turn = bpp->dmgrecTurnPtr - turn_ridx;
+    if( turn < 0 ){
+      turn += WAZADMG_REC_TURN_MAX;
+    }
+    return bpp->dmgrecCount[ turn ];
+  }
+  else
+  {
+    GF_ASSERT( 0 );
+    return 0;
+  }
+}
+//=============================================================================================
+/**
+ * ワザダメージレコード：レコードを取得
+ *
+ * @param   bpp
+ * @param   turn_ridx   遡るターン数（0なら当該ターンの記録）
+ * @param   rec_ridx    何件目のレコードか？（0=最新）
+ * @param   dst         [out] 取得先ワークアドレス
+ *
+ * @retval  BOOL        レコードを取得できたらTRUE／それ以上の記録が無い場合などFALSE
+ */
+//=============================================================================================
+BOOL BTL_POKEPARAM_WAZADMG_REC_Get( const BTL_POKEPARAM* bpp, u8 turn_ridx, u8 rec_ridx, BPP_WAZADMG_REC* dst )
+{
+  if( turn_ridx < WAZADMG_REC_TURN_MAX )
+  {
+    int turn = bpp->dmgrecTurnPtr - turn_ridx;
+    if( turn < 0 ){
+      turn += WAZADMG_REC_TURN_MAX;
+    }
+    if( rec_ridx < bpp->dmgrecCount[ turn ] )
+    {
+      u8 idx = bpp->dmgrecCount[ turn ] - rec_ridx - 1;
+      *dst = bpp->wazaDamageRec[ turn ][ idx ];
+      return TRUE;
+    }
+  }
+  return FALSE;
 }
 
 //--------------------------------------------------------------------------
