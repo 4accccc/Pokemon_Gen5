@@ -93,4 +93,8 @@ DEP_OUTDOOR	=	\
 	$(RESDIR)/slide_01.nsbmd \
 	$(RESDIR)/sandbox_01.nsbmd \
 	$(RESDIR)/p_door.nsbmd \
+	$(RESDIR)/buill_01.nsbmd \
+	$(RESDIR)/buill_02.nsbmd \
+	$(RESDIR)/buill_03.nsbmd \
+	$(RESDIR)/buill_04.nsbmd \
 

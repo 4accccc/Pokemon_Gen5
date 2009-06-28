@@ -92,3 +92,7 @@
 "nsbmdfiles/slide_01.nsbmd"
 "nsbmdfiles/sandbox_01.nsbmd"
 "nsbmdfiles/p_door.nsbmd"
+"nsbmdfiles/buill_01.nsbmd"
+"nsbmdfiles/buill_02.nsbmd"
+"nsbmdfiles/buill_03.nsbmd"
+"nsbmdfiles/buill_04.nsbmd"
