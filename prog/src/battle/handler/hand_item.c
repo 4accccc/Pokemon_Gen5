@@ -403,8 +403,7 @@ void BTL_HANDLER_ITEM_Remove( const BTL_POKEPARAM* pp )
 static s32 common_GetItemParam( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u16 paramID )
 {
   u16     itemID = BTL_EVENT_FACTOR_GetSubID( myHandle );
-  HEAPID  heapID = BTL_SVFLOW_RECEPT_GetHeapID( flowWk );
-  return ITEM_GetParam( itemID, paramID, GFL_HEAP_LOWID(heapID) );
+  return BTL_CALC_ITEM_GetParam( itemID, paramID );
 }
 
 

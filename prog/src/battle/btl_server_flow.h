@@ -206,8 +206,9 @@ typedef enum {
   BTL_HANDEX_CURE_SICK,     ///< 状態異常を回復
   BTL_HANDEX_ADD_SICK,      ///< 状態異常にする
   BTL_HANDEX_RANK_EFFECT,   ///< ランク増減効果
-  BTL_HANDEX_RESET_RANK,    ///< ランク増減効果をリセット
-  BTL_HANDEX_RECOVER_RANK,  ///< マイナスランクをフラットに戻す
+  BTL_HANDEX_SET_RANK,      ///< ランクを指定地に強制書き換え
+  BTL_HANDEX_RESET_RANK,    ///< ランク効果を全てフラットに
+  BTL_HANDEX_RECOVER_RANK,  ///< マイナスランク効果のみをフラットに
   BTL_HANDEX_KILL,          ///< 瀕死にする
   BTL_HANDEX_CHANGE_TYPE,   ///< ポケモンのタイプを変える
   BTL_HANDEX_SET_TURNFLAG,  ///< ターンフラグセット
@@ -215,7 +216,8 @@ typedef enum {
   BTL_HANDEX_SET_CONTFLAG,  ///< 継続フラグセット
   BTL_HANDEX_RESET_CONTFLAG,///< 継続フラグリセット
   BTL_HANDEX_SIDE_EFFECT,   ///< サイドエフェクト追加
-  BTL_HANDEX_TOKUSEI_CHANGE,///< とくせい書き換え
+  BTL_HANDEX_CHANGE_TOKUSEI,///< とくせい書き換え
+  BTL_HANDEX_SET_ITEM,      ///< アイテム書き換え
 
   BTL_HANDEX_MAX,
 
@@ -313,6 +315,17 @@ typedef struct {
 typedef struct {
  BTL_HANDEX_PARAM_HEADER   header;   ///< 共有ヘッダ
  u8 pokeID;                          ///< 対象ポケモンID
+ s8 attack;
+ s8 defence;
+ s8 sp_attack;
+ s8 sp_defence;
+ s8 agility;
+}BTL_HANDEX_PARAM_SET_RANK;
+
+
+typedef struct {
+ BTL_HANDEX_PARAM_HEADER   header;   ///< 共有ヘッダ
+ u8 pokeID;                          ///< 対象ポケモンID
 }BTL_HANDEX_PARAM_RECOVER_RANK;
 
 typedef struct {
@@ -355,7 +368,20 @@ typedef struct {
   BTL_HANDEX_PARAM_DAMAGE  header;
   u16             tokuseiID;    ///< 書き換え後のとくせい（POKETOKUSEI_NULLならとくせいを消す）
   u8              pokeID;       ///< 対象ポケモンID
-}BTL_HANDEX_PARAM_TOKUSEI_CHANGE;
+}BTL_HANDEX_PARAM_CHANGE_TOKUSEI;
+
+typedef struct {
+  BTL_HANDEX_PARAM_DAMAGE  header;
+  u16             itemID;       ///< 書き換え後のアイテム（ITEM_DUMMY_DATA ならアイテムを消す）
+  u8              pokeID;       ///< 対象ポケモンID
+  u8              fSucceedMsg;
+  u8              succeedStrArgCnt;
+  u16             succeedStrID;
+  int             succeedStrArgs[ BTL_STR_ARG_MAX ];
+
+}BTL_HANDEX_PARAM_SET_ITEM;
+
+
 
 extern void* BTL_SVFLOW_HANDLERWORK_Push( BTL_SVFLOW_WORK* wk, BtlEventHandlerExhibition eq_type, u8 userPokeID );
 extern u8 BTL_SERVERFLOW_RECEPT_GetTargetPokeID( BTL_SVFLOW_WORK* wk, BtlExPos exPos, u8* dst_pokeID );

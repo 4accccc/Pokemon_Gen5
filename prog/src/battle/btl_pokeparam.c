@@ -495,6 +495,11 @@ u32 BTL_POKEPARAM_GetItem( const BTL_POKEPARAM* pp )
 {
   return pp->item;
 }
+void BTL_POKEPARAM_SetItem( BTL_POKEPARAM* pp, u16 itemID )
+{
+  pp->item = itemID;
+}
+
 //=============================================================================================
 /**
  * HP満タンかチェック
@@ -926,7 +931,6 @@ u8 BTL_POKEPARAM_RankUp( BTL_POKEPARAM* pp, BppValueID rankType, u8 volume )
       volume = max - (*ptr);
     }
     *ptr += volume;
-    BTL_Printf( "要素[%d] を %d 段階アップ -> %d に。\n", rankType, volume, (*ptr) );
     update_RealParam( pp );
     return volume;
   }
@@ -968,18 +972,56 @@ u8 BTL_POKEPARAM_RankDown( BTL_POKEPARAM* pp, BppValueID rankType, u8 volume )
 
   if( *ptr > min )
   {
-    BTL_Printf(" [BPP] RankDown ptr=%d, vol=%d, min=%d\n", *ptr, volume, min );
     if( (*ptr - volume) < min ){
       volume = (*ptr) - min;
-      BTL_Printf(" [BPP] change vol=%d\n", volume );
     }
     *ptr -= volume;
-    BTL_Printf(" [BPP] change ptr=%d\n", *ptr );
     update_RealParam( pp );
     return volume;
   }
   return 0;
 }
+//=============================================================================================
+/**
+ * ランク値強制セット
+ *
+ * @param   pp
+ * @param   rankType
+ * @param   volume
+ *
+ */
+//=============================================================================================
+void BTL_POKEPARAM_RankSet( BTL_POKEPARAM* pp, BppValueID rankType, u8 value )
+{
+  s8 *ptr;
+  u8 min = RANK_STATUS_MIN;
+  u8 max = RANK_STATUS_MAX;
+
+  switch( rankType ){
+  case BPP_ATTACK:        ptr = &pp->varyParam.attack; break;
+  case BPP_DEFENCE:       ptr = &pp->varyParam.defence; break;
+  case BPP_SP_ATTACK:     ptr = &pp->varyParam.sp_attack; break;
+  case BPP_SP_DEFENCE:    ptr = &pp->varyParam.sp_defence; break;
+  case BPP_AGILITY:       ptr = &pp->varyParam.agility; break;
+  case BPP_HIT_RATIO:     ptr = &pp->varyParam.hit; break;
+  case BPP_AVOID_RATIO:   ptr = &pp->varyParam.avoid; break;
+  case BPP_CRITICAL_RATIO:
+    ptr = &pp->varyParam.critical;
+    min = RANK_CRITICAL_MIN;
+    max = RANK_CRITICAL_MAX;
+    break;
+  default:
+    GF_ASSERT(0);
+    return;
+  }
+
+  if( (min <= value) && (value <=max) ){
+    *ptr = value;
+  }else{
+    GF_ASSERT_MSG(0, "value=%d", value);
+  }
+}
+
 //=============================================================================================
 /**
  * 下がっているランク効果をフラットに戻す
@@ -1156,6 +1198,26 @@ void BTL_POKEPARAM_CureWazaSick( BTL_POKEPARAM* pp, WazaSick sick )
   else
   {
     pp->sickCont[ sick ].type = WAZASICK_CONT_NONE;
+  }
+}
+//=============================================================================================
+/**
+ * 特定ポケモンに依存している状態異常を回復させる
+ *
+ * @param   pp
+ * @param   depend_pokeID
+ */
+//=============================================================================================
+void BTL_POKEPARAM_CureWazaSickDependPoke( BTL_POKEPARAM* pp, u8 depend_pokeID )
+{
+  u32 i;
+  for(i=0; i<WAZASICK_MAX; ++i)
+  {
+    if( ( pp->sickCont[i].type == WAZASICK_CONT_POKE)
+    &&  ( pp->sickCont[i].poke.ID == depend_pokeID )
+    ){
+      pp->sickCont[i].type = WAZASICK_CONT_NONE;
+    }
   }
 }
 //=============================================================================================

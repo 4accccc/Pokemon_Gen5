@@ -55,6 +55,9 @@ typedef enum {
   // à¯êîÇTå¬ÇÃå^
   SC_ARGFMT_5_5_5bit_22byte = SC_ARGFMT(5,0),
 
+  // à¯êîÇUå¬ÇÃå^
+  SC_ARGFMT_555555bit = SC_ARGFMT(6,0),
+
   // ÉÅÉbÉZÅ[ÉWå^Åiâ¬ïœà¯êîÅj
   SC_ARGFMT_MSG   = SC_ARGFMT(0,0),
   SC_ARGFMT_POINT = SC_ARGFMT(0,1),
@@ -77,6 +80,7 @@ static const u8 ServerCmdToFmtTbl[] = {
   SC_ARGFMT_53bit_1byte,      // SC_OP_PP_PLUS
   SC_ARGFMT_53bit_1byte,      // SC_OP_RANK_UP
   SC_ARGFMT_53bit_1byte,      // SC_OP_RANK_DOWN
+  SC_ARGFMT_555555bit,        // SC_OP_RANK_SET5
   SC_ARGFMT_112byte,          // SC_OP_SICK_SET
   SC_ARGFMT_1byte,            // SC_OP_CURE_POKESICK
   SC_ARGFMT_12byte,           // SC_OP_CURE_WAZASICK
@@ -96,6 +100,7 @@ static const u8 ServerCmdToFmtTbl[] = {
   SC_ARGFMT_11byte,           // SC_OP_SET_TURNFLAG
   SC_ARGFMT_11byte,           // SC_OP_RESET_TURNFLAG
   SC_ARGFMT_12byte,           // SC_OP_CHANGE_TOKUSEI
+  SC_ARGFMT_12byte,           // SC_OP_SET_ITEM
   SC_ARGFMT_5_5_14bit,        // SC_ACT_WAZA_EFFECT
   SC_ARGFMT_5_5_14bit_1byte,  // SC_ACT_WAZA_EFFECT_EX
   SC_ARGFMT_5_5_14bit,        // SC_ACT_WAZA_DMG
@@ -288,6 +293,15 @@ static void put_core( BTL_SERVER_CMD_QUE* que, ServerCmd cmd, ScArgFormat fmt, c
       scque_put2byte( que, args[4] );
     }
     break;
+  case SC_ARGFMT_555555bit:
+    {
+      u16 pack1 = pack_3args( 2, args[0],args[1],args[2], 5,5,5 );
+      u16 pack2 = pack_3args( 2, args[3],args[4],args[5], 5,5,5 );
+      scque_put2byte( que, pack1 );
+      scque_put2byte( que, pack2 );
+    }
+    break;
+
   case SC_ARGFMT_POINT:
     break;
   default:
@@ -378,6 +392,14 @@ static void read_core( BTL_SERVER_CMD_QUE* que, ScArgFormat fmt, int* args )
       unpack_3args( 2, pack, 5, 5, 5, args, 0 );
       args[3] = scque_read2byte( que );
       args[4] = scque_read2byte( que );
+    }
+    break;
+  case SC_ARGFMT_555555bit:
+    {
+      u16 pack1 = scque_read2byte( que );
+      u16 pack2 = scque_read2byte( que );
+      unpack_3args( 2, pack1, 5, 5, 5, args, 0 );
+      unpack_3args( 2, pack2, 5, 5, 5, args, 3 );
     }
     break;
   case SC_ARGFMT_POINT:

@@ -167,6 +167,7 @@ static BOOL scProc_OP_HpZero( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_OP_PPPlus( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_OP_RankUp( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_OP_RankDown( BTL_CLIENT* wk, int* seq, const int* args );
+static BOOL scProc_OP_RankSet5( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_OP_SickSet( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_OP_CurePokeSick( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_OP_CureWazaSick( BTL_CLIENT* wk, int* seq, const int* args );
@@ -186,6 +187,7 @@ static BOOL scProc_OP_ResetTurnFlag( BTL_CLIENT* wk, int* seq, const int* args )
 static BOOL scProc_OP_SetActFlag( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_OP_ClearActFlag( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_OP_ChangeTokusei( BTL_CLIENT* wk, int* seq, const int* args );
+static BOOL scProc_OP_SetItem( BTL_CLIENT* wk, int* seq, const int* args );
 static void cec_addCode( CANT_ESC_CONTROL* ctrl, u8 pokeID, BtlCantEscapeCode code );
 static void cec_subCode( CANT_ESC_CONTROL* ctrl, u8 pokeID, BtlCantEscapeCode code );
 static u8 cec_isEnable( CANT_ESC_CONTROL* ctrl, BtlCantEscapeCode code, BTL_CLIENT* wk );
@@ -377,11 +379,11 @@ static BOOL SubProc_UI_SelectAction( BTL_CLIENT* wk, int* seq )
   case SEQ_INIT:
     setup_pokesel_param_change( wk, &wk->pokeSelParam );
     wk->procPokeIdx = 0;
-    wk->procPoke = BTL_POKECON_GetClientPokeData( wk->pokeCon, wk->myID, wk->procPokeIdx );
-    wk->procAction = &wk->actionParam[ wk->procPokeIdx ];
     (*seq) = SEQ_CHECK_UNSEL_ACTION;
     /* fallthru */
   case SEQ_CHECK_UNSEL_ACTION:
+    wk->procPoke = BTL_POKECON_GetClientPokeData( wk->pokeCon, wk->myID, wk->procPokeIdx );
+    wk->procAction = &wk->actionParam[ wk->procPokeIdx ];
     if( is_action_unselectable(wk, wk->procPoke,  wk->procAction) ){
       BTL_Printf("アクション選択(%d体目）スキップします\n", wk->procPokeIdx );
       (*seq) = SEQ_CHECK_DONE;
@@ -390,7 +392,7 @@ static BOOL SubProc_UI_SelectAction( BTL_CLIENT* wk, int* seq )
     (*seq) = SEQ_SELECT_ACTION;
     /* fallthru */
   case SEQ_SELECT_ACTION:
-    BTL_Printf("アクション選択(%d体目）開始します\n", wk->procPokeIdx );
+    BTL_Printf("アクション選択(%d体目=ID:%d）開始します\n", wk->procPokeIdx, BTL_POKEPARAM_GetID(wk->procPoke));
     BTLV_UI_SelectAction_Start( wk->viewCore, wk->procPoke, wk->procAction );
     (*seq) = SEQ_CHECK_ACTION;
     break;
@@ -502,7 +504,7 @@ static BOOL SubProc_UI_SelectAction( BTL_CLIENT* wk, int* seq )
       (*seq) = SEQ_RETURN_START;
     }
     else{
-      (*seq) = SEQ_SELECT_ACTION;
+      (*seq) = SEQ_CHECK_UNSEL_ACTION;
     }
     break;
 
@@ -1173,6 +1175,7 @@ static BOOL SubProc_UI_ServerCmd( BTL_CLIENT* wk, int* seq )
     { SC_OP_PP_PLUS,            scProc_OP_PPPlus          },
     { SC_OP_RANK_UP,            scProc_OP_RankUp          },
     { SC_OP_RANK_DOWN,          scProc_OP_RankDown        },
+    { SC_OP_RANK_SET5,          scProc_OP_RankSet5        },
     { SC_OP_SICK_SET,           scProc_OP_SickSet         },
     { SC_OP_CURE_POKESICK,      scProc_OP_CurePokeSick    },
     { SC_OP_CURE_WAZASICK,      scProc_OP_CureWazaSick    },
@@ -1192,6 +1195,7 @@ static BOOL SubProc_UI_ServerCmd( BTL_CLIENT* wk, int* seq )
     { SC_OP_SET_TURNFLAG,       scProc_OP_SetTurnFlag     },
     { SC_OP_RESET_TURNFLAG,     scProc_OP_ResetTurnFlag   },
     { SC_OP_CHANGE_TOKUSEI,     scProc_OP_ChangeTokusei   },
+    { SC_OP_SET_ITEM,           scProc_OP_SetItem         },
     { SC_ACT_KILL,              scProc_ACT_Kill           },
   };
 
@@ -2007,6 +2011,16 @@ static BOOL scProc_OP_RankDown( BTL_CLIENT* wk, int* seq, const int* args )
   BTL_POKEPARAM_RankDown( pp, args[1], args[2] );
   return TRUE;
 }
+static BOOL scProc_OP_RankSet5( BTL_CLIENT* wk, int* seq, const int* args )
+{
+  BTL_POKEPARAM* pp = BTL_POKECON_GetPokeParam( wk->pokeCon, args[0] );
+  BTL_POKEPARAM_RankSet( pp, BPP_ATTACK,      args[1] );
+  BTL_POKEPARAM_RankSet( pp, BPP_DEFENCE,     args[2] );
+  BTL_POKEPARAM_RankSet( pp, BPP_SP_ATTACK,   args[3] );
+  BTL_POKEPARAM_RankSet( pp, BPP_SP_DEFENCE,  args[4] );
+  BTL_POKEPARAM_RankSet( pp, BPP_AGILITY,     args[5] );
+  return TRUE;
+}
 static BOOL scProc_OP_SickSet( BTL_CLIENT* wk, int* seq, const int* args )
 {
   BTL_POKEPARAM* pp = BTL_POKECON_GetPokeParam( wk->pokeCon, args[0] );
@@ -2133,6 +2147,12 @@ static BOOL scProc_OP_ChangeTokusei( BTL_CLIENT* wk, int* seq, const int* args )
 {
   BTL_POKEPARAM* pp = BTL_POKECON_GetPokeParam( wk->pokeCon, args[0] );
   BTL_POKEPARAM_ChangeTokusei( pp, args[1] );
+  return TRUE;
+}
+static BOOL scProc_OP_SetItem( BTL_CLIENT* wk, int* seq, const int* args )
+{
+  BTL_POKEPARAM* pp = BTL_POKECON_GetPokeParam( wk->pokeCon, args[0] );
+  BTL_POKEPARAM_SetItem( pp, args[1] );
   return TRUE;
 }
 

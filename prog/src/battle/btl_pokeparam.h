@@ -361,6 +361,7 @@ extern int BTL_POKEPARAM_RankEffectDownLimit( const BTL_POKEPARAM* pp, BppValueI
 //-------------------------
 extern u8 BTL_POKEPARAM_RankUp( BTL_POKEPARAM* pp, BppValueID rankType, u8 volume );
 extern u8 BTL_POKEPARAM_RankDown( BTL_POKEPARAM* pp, BppValueID rankType, u8 volume );
+extern void BTL_POKEPARAM_RankSet( BTL_POKEPARAM* pp, BppValueID rankType, u8 value );
 extern void BTL_POKEPARAM_HpMinus( BTL_POKEPARAM* pp, u16 value );
 extern void BTL_POKEPARAM_HpPlus( BTL_POKEPARAM* pp, u16 value );
 extern void BTL_POKEPARAM_HpZero( BTL_POKEPARAM* pp );
@@ -369,6 +370,7 @@ extern void BTL_POKEPARAM_PPPlus( BTL_POKEPARAM* pp, u8 wazaIdx, u8 value );
 extern void BTL_POKEPARAM_SetWazaSick( BTL_POKEPARAM* pp, WazaSick sick, BPP_SICK_CONT contParam );
 extern void BTL_POKEPARAM_CurePokeSick( BTL_POKEPARAM* pp );
 extern void BTL_POKEPARAM_CureWazaSick( BTL_POKEPARAM* pp, WazaSick sick );
+extern void BTL_POKEPARAM_CureWazaSickDependPoke( BTL_POKEPARAM* pp, u8 depend_pokeID );
 extern BOOL BTL_POKEPARAM_Nemuri_CheckWake( BTL_POKEPARAM* pp );
 extern BOOL BTL_POKEPARAM_WazaSick_TurnCheck( BTL_POKEPARAM* pp );
 extern void BTL_POKEPARAM_SetShrink( BTL_POKEPARAM* pp );
@@ -389,6 +391,7 @@ extern void BTL_POKEPARAM_ResetUsedWazaNumber( BTL_POKEPARAM* pp );
 extern void BTL_POKEPARAM_RankRecover( BTL_POKEPARAM* pp );
 extern void BTL_POKEPARAM_RankReset( BTL_POKEPARAM* pp );
 extern void BTL_POKEPARM_DeadClear( BTL_POKEPARAM* pp );
+extern void BTL_POKEPARAM_SetItem( BTL_POKEPARAM* pp, u16 itemID );
 
 extern void BTL_POKEPARAM_WAZADMG_REC_Add( BTL_POKEPARAM* pp, const BPP_WAZADMG_REC* rec );
 extern u8   BTL_POKEPARAM_WAZADMG_REC_GetCount( const BTL_POKEPARAM* pp, u8 turn_ridx );

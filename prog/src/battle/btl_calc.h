@@ -2,6 +2,8 @@
 #ifndef __BTL_CALC_H__
 #define __BTL_CALC_H__
 
+#include "item\item.h"
+
 #include "battle\battle.h"
 #include "btl_util.h"
 #include "btl_pokeparam.h"
@@ -234,6 +236,9 @@ extern BOOL BTL_CALC_TOK_CheckCant_Trace( PokeTokusei tok );
 //=============================================================================================
 extern BOOL BTL_CALC_TOK_CheckCant_Swap( PokeTokusei tok );
 
+extern void BTL_CALC_ITEM_InitSystem( HEAPID heapID );
+extern void BTL_CALC_ITEM_QuitSystem(void);
+extern s32  BTL_CALC_ITEM_GetParam( u16 item, u16 paramID );
 
 #endif
 

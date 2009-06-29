@@ -35,6 +35,7 @@ typedef enum {
   SC_OP_PP_PLUS,            ///< 【計算】PPプラス    [ClientID, プラス量]
   SC_OP_RANK_UP,            ///< 【計算】ステータスランクアップ  [ClientID, StatusType, プラス量]
   SC_OP_RANK_DOWN,          ///< 【計算】ステータスランクダウン  [ClientID, StatusType, マイナス量]
+  SC_OP_RANK_SET5,          ///< 【計算】ステータスランク主要５種セット[ pokeID, atk, def, sp_atk, sp_def, agi ]
   SC_OP_SICK_SET,           ///< 【計算】状態異常 [PokeID, Sick, contParam]
   SC_OP_CURE_POKESICK,      ///< 【計算】ポケモン系状態異常を回復 [PokeID ]
   SC_OP_CURE_WAZASICK,      ///< 【計算】ワザ系状態異常を回復 [PokeID, SickID ]
@@ -54,6 +55,7 @@ typedef enum {
   SC_OP_SET_TURNFLAG,       ///< ターンフラグセット
   SC_OP_RESET_TURNFLAG,     ///< ターンフラグ強制リセット
   SC_OP_CHANGE_TOKUSEI,     ///< とくせい書き換え
+  SC_OP_SET_ITEM,           ///< アイテム書き換え
   SC_ACT_WAZA_EFFECT,
   SC_ACT_WAZA_EFFECT_EX,    ///< 【アクション】ワザエフェクト拡張（溜めターンエフェクトなどに使用）
   SC_ACT_WAZA_DMG,          ///< 【アクション】[ AtClient, DefClient, wazaIdx, Affinity ]
@@ -206,6 +208,12 @@ static inline void SCQUE_PUT_OP_RankDown( BTL_SERVER_CMD_QUE* que, u8 pokeID, u8
   SCQUE_PUT_Common( que, SC_OP_RANK_DOWN, pokeID, statusType, volume );
 }
 
+static inline void SCQUE_PUT_OP_RankSet5( BTL_SERVER_CMD_QUE* que, u8 pokeID, u8 atk, u8 def, u8 sp_atk, u8 sp_def, u8 agi )
+{
+  SCQUE_PUT_Common( que, SC_OP_RANK_SET5, pokeID, atk, def, sp_atk, sp_def, agi );
+}
+
+
 static inline void SCQUE_PUT_OP_SetSick( BTL_SERVER_CMD_QUE* que, u8 pokeID, u16 sick, u16 contParam )
 {
   SCQUE_PUT_Common( que, SC_OP_SICK_SET, pokeID, sick, contParam );
@@ -290,8 +298,13 @@ static inline void SCQUE_PUT_OP_ClearActFlag( BTL_SERVER_CMD_QUE* que, u8 pokeID
 
 static inline void SCQUE_PUT_OP_ChangeTokusei( BTL_SERVER_CMD_QUE* que, u8 pokeID, u16 tokID )
 {
-  SCQUE_PUT_Common( que, SC_OP_CHANGE_TOKUSEI, pokeID );
+  SCQUE_PUT_Common( que, SC_OP_CHANGE_TOKUSEI, pokeID, tokID );
 }
+static inline void SCQUE_PUT_OP_SetItem( BTL_SERVER_CMD_QUE* que, u8 pokeID, u16 itemID )
+{
+  SCQUE_PUT_Common( que, SC_OP_CHANGE_TOKUSEI, pokeID, itemID );
+}
+
 
 
 //---------------------------------------------

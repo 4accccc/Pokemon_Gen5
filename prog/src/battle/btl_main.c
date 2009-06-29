@@ -159,6 +159,7 @@ static GFL_PROC_RESULT BTL_PROC_Init( GFL_PROC* proc, int* seq, void* pwk, void*
       wk->setupParam = setup_param;
 
       BTL_NET_InitSystem( setup_param->netHandle, HEAPID_BTL_NET );
+      BTL_CALC_ITEM_InitSystem( HEAPID_BTL_SYSTEM );
 
 //      WAZADATA_PrintDebug();
       (*seq)++;
@@ -225,6 +226,7 @@ static GFL_PROC_RESULT BTL_PROC_Quit( GFL_PROC* proc, int* seq, void* pwk, void*
       BTL_Printf("クリーンアッププロセス２－２\n");
       BTL_NET_QuitSystem();
       BTL_Printf("クリーンアッププロセス２－３\n");
+      BTL_CALC_ITEM_QuitSystem();
       (*seq)++;
     }
     break;
