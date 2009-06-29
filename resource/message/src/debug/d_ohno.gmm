@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ohno" host="W00141" date="2009-06-11T15:58:49"/>
+	<create user="ohno" host="W00141" date="2009-06-18T17:07:31"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -312,7 +312,7 @@
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="697"/>
 		<band id="3" index="3" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -356,6 +356,41 @@
 	<row id="DEBUG_OHNO_MSG0005">
 		<language name="JPN" width="256">●</language>
 		<language name="JPN_KANJI" width="256">●</language>
+	</row>
+
+	<row id="DEBUG_OHNO_MSG0006">
+		<language name="JPN" width="256">せつぞくちゅう</language>
+		<language name="JPN_KANJI" width="256">接続中</language>
+	</row>
+
+	<row id="DEBUG_OHNO_MSG0007">
+		<language name="JPN" width="256">たいきちゅう</language>
+		<language name="JPN_KANJI" width="256">待機中</language>
+	</row>
+
+	<row id="DEBUG_OHNO_MSG0008">
+		<language name="JPN" width="256">そうしんちゅう</language>
+		<language name="JPN_KANJI" width="256">送信中</language>
+	</row>
+
+	<row id="DEBUG_OHNO_MSG0009">
+		<language name="JPN" width="256">[2:04:５桁:0]びょうで　そうしんしました</language>
+		<language name="JPN_KANJI" width="256">[2:04:５桁:0]秒で送信しました</language>
+	</row>
+
+	<row id="DEBUG_OHNO_MSG0010">
+		<language name="JPN" width="256">じゅしんちゅう</language>
+		<language name="JPN_KANJI" width="256">受信中</language>
+	</row>
+
+	<row id="DEBUG_OHNO_MSG0011">
+		<language name="JPN" width="256">[2:04:５桁:0]びょうで　じゅしんしました</language>
+		<language name="JPN_KANJI" width="256">[2:04:５桁:0]秒で受信しました</language>
+	</row>
+
+	<row id="DEBUG_OHNO_MSG0012">
+		<language name="JPN" width="256">せつだんちゅう</language>
+		<language name="JPN_KANJI" width="256">切断中</language>
 	</row>
 
 	<flowchart-group-list>

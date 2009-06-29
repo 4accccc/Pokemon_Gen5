@@ -42,7 +42,7 @@
 typedef struct{
 	GFL_BMPWIN		*win;
 	GFL_BMP_DATA	*bmp;
-	PRINT_UTIL		printUtil[1];
+//	PRINT_UTIL		printUtil[1];
 	BOOL			message_req;		///<TRUE:メッセージリクエストがあった
 }DM_MSG_DRAW_WIN;
 
@@ -169,16 +169,6 @@ static GFL_PROC_RESULT DebugOhnoMainProcInit( GFL_PROC * proc, int * seq, void *
 	D_OHNO_WORK* wk;
 
 
-    {
-        float a = 42.49;
-        float b = -21.99;
-
-        int c = FX32_CONST(a);
-        int d = FX32_CONST(b);
-
-        OS_TPrintf("ans %4x %4x\n",c,d);
-        
-    }
     
 	
 	DEBUG_PerformanceSetActive(FALSE);
@@ -247,12 +237,12 @@ static GFL_PROC_RESULT DebugOhnoMainProcInit( GFL_PROC * proc, int * seq, void *
 	{//メッセージ描画の為の準備
 		int i;
 
-		wk->drawwin.win = GFL_BMPWIN_Create( GFL_BG_FRAME0_M, 4, 0, 24, 20, 0, GFL_BMP_CHRAREA_GET_F );
+		wk->drawwin.win = GFL_BMPWIN_Create( GFL_BG_FRAME0_M, 4, 0, 24, 16, 0, GFL_BMP_CHRAREA_GET_F );
 		wk->drawwin.bmp = GFL_BMPWIN_GetBmp(wk->drawwin.win);
 		GFL_BMP_Clear( wk->drawwin.bmp, 0xff );
 		GFL_BMPWIN_MakeScreen( wk->drawwin.win );
 		GFL_BMPWIN_TransVramCharacter( wk->drawwin.win );
-		PRINT_UTIL_Setup( wk->drawwin.printUtil, wk->drawwin.win );
+//		PRINT_UTIL_Setup( wk->drawwin.printUtil, wk->drawwin.win );
 
 		GFL_BG_LoadScreenReq( GFL_BG_FRAME0_M );
 

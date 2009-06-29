@@ -22,13 +22,20 @@
 #include "system/wipe.h"
 #include "net/network_define.h"
 #include "savedata/wifilist.h"
+#include "msg\msg_d_ohno.h"
+
 
 typedef struct _G_SYNC_WORK G_SYNC_WORK;
 
 typedef void (StateFunc)(G_SYNC_WORK* pState);
 
 #define POSTURL "http://219.118.175.21:10610/cgi-bin/cgeartest/gsync.cgi"
-#define GETURL "http://219.118.175.21:10610/cgi-bin/cgeartest/getsync.cgi"
+#define GETURL1 "http://219.118.175.21:10610/cgi-bin/cgeartest/gsyncget.cgi?name=data1&mac=1"
+#define GETURL2 "http://219.118.175.21:10610/cgi-bin/cgeartest/gsyncget.cgi?name=data2&mac=1"
+#define GETURL3 "http://219.118.175.21:10610/cgi-bin/cgeartest/gsyncget.cgi?name=data3&mac=1"
+#define GETURL4 "http://219.118.175.21:10610/cgi-bin/cgeartest/gsyncget.cgi?name=data4&mac=1"
+#define GETURL5 "http://219.118.175.21:10610/cgi-bin/cgeartest/gsyncget.cgi?name=data5&mac=1"
+#define GETURL6 "http://219.118.175.21:10610/cgi-bin/cgeartest/gsyncget.cgi?name=data6&mac=1"
 
 
 static void _changeState(G_SYNC_WORK* pWork,StateFunc* state);
@@ -45,9 +52,20 @@ static void _changeStateDebug(G_SYNC_WORK* pWork,StateFunc* state, int line);
 
 
 struct _G_SYNC_WORK {
+	GFL_FONT		  *fontHandle;
+	GFL_MSGDATA		*mm;
+	GFL_BMPWIN		*win;
+	GFL_BMP_DATA	*bmp;
+	HEAPID heapID;
+	STRBUF			*strbuf;
+	STRBUF			*strbufEx;
+  WORDSET			*WordSet;								// メッセージ展開用ワークマネージャー
+
 	SAVE_CONTROL_WORK* pSaveData;
 	StateFunc* state;      ///< ハンドルのプログラム状態
+	vu32 count;
 	int req;
+	int getdataCount;
 	BOOL bEnd;
 	DWCGHTTPPost post;
 	u8 mac[6];
@@ -59,6 +77,7 @@ static void _ghttpGetting(G_SYNC_WORK* pWork);
 static void _ghttpPost(G_SYNC_WORK* pWork);
 static void _ghttpPosting(G_SYNC_WORK* pWork);
 static void _ghttpGet(G_SYNC_WORK* pWork);
+static void _ghttpKeyWait(G_SYNC_WORK* pWork);
 static void GETCallback(const char* buf, int buflen, DWCGHTTPResult result, void* param);
 
 
@@ -96,7 +115,7 @@ static GFLNetInitializeStruct aGFLNetInit = {
   NULL,  ///< wifiフレンドリスト削除コールバック
   _getFriendData,   ///< DWC形式の友達リスト
   _getMyUserData,  ///< DWCのユーザデータ（自分のデータ）
-  GFL_NET_DWC_HEAPSIZE,   ///< DWCへのHEAPサイズ
+  GFL_NET_DWC_HEAPSIZE + 0x80000,   ///< DWCへのHEAPサイズ
   TRUE,        ///< デバック用サーバにつなぐかどうか
   0x444,  //ggid  DP=0x333,RANGER=0x178,WII=0x346
   GFL_HEAPID_APP,  //元になるheapid
@@ -118,6 +137,27 @@ static GFLNetInitializeStruct aGFLNetInit = {
 };
 
 
+static void _msgPrint(G_SYNC_WORK* pWork,int msg)
+{
+	GFL_BMP_Clear( pWork->bmp, 0xff );
+	GFL_MSG_GetString(pWork->mm, msg, pWork->strbuf);
+	PRINTSYS_Print( pWork->bmp, 0, 0, pWork->strbuf, pWork->fontHandle);
+	GFL_BMPWIN_TransVramCharacter( pWork->win );
+}
+
+static void _msgPrintNo(G_SYNC_WORK* pWork,int msg,int no)
+{
+	GFL_BMP_Clear( pWork->bmp, 0xff );
+	GFL_MSG_GetString(pWork->mm, msg, pWork->strbufEx);
+
+	WORDSET_RegisterNumber(pWork->WordSet, 0, no,
+												 5, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT);
+	WORDSET_ExpandStr( pWork->WordSet, pWork->strbuf,pWork->strbufEx );
+
+
+	PRINTSYS_Print( pWork->bmp, 0, 0, pWork->strbuf, pWork->fontHandle);
+	GFL_BMPWIN_TransVramCharacter( pWork->win );
+}
 
 //=============================================================================
 /*!
@@ -133,18 +173,11 @@ static GFLNetInitializeStruct aGFLNetInit = {
 //=============================================================================
 static void GETCallback(const char* buf, int buflen, DWCGHTTPResult result, void* param)
 {
-	char*	g_data;	//! 受信データのバッファ
-#if 0
-	g_data = param;
+	G_SYNC_WORK* pWork = param;
 
-	if(buf){
-		MI_CpuCopy8(buf, g_data, (u32)buflen);
-	}
-
-	g_pending = 0;
-#endif
-	OS_Printf("Recv Result : %d\n", result);
-
+	pWork->bEnd = TRUE;
+	OS_Printf("Recv Result : %d length %d\n", result,buflen);
+	OS_Printf("Recv msg : %s \n", buf);
 }
 
 //------------------------------------------------------------------------------
@@ -204,7 +237,7 @@ static void POSTCallback(const char* buf, int buflen, DWCGHTTPResult result, voi
  */
 //------------------------------------------------------------------------------
 
-static void _ghttpPost(G_SYNC_WORK* pWork)
+static void _ghttpConnecting(G_SYNC_WORK* pWork)
 {
 	int len;
 
@@ -217,7 +250,15 @@ static void _ghttpPost(G_SYNC_WORK* pWork)
 	if(DWC_InitGHTTP(NULL) != TRUE){
 		OS_Printf("error at SCInitialize()\n");
 	}
+	_msgPrint(pWork, DEBUG_OHNO_MSG0007);
+	
+	_CHANGE_STATE(_ghttpKeyWait);
+}
 
+
+static void _ghttpPost(G_SYNC_WORK* pWork)
+{
+	
 	// send data
 	//-------------------------------------------
 	GFL_STD_MemClear(pWork->mac, 6);
@@ -225,6 +266,7 @@ static void _ghttpPost(G_SYNC_WORK* pWork)
 	OS_GetMacAddress(pWork->mac);
 
 
+	_msgPrint(pWork, DEBUG_OHNO_MSG0008);
 	
 
 	// post data
@@ -245,7 +287,8 @@ static void _ghttpPost(G_SYNC_WORK* pWork)
 	//																 "mac.bin","application/octet-stream");
 
 	}
-	
+
+	pWork->count = OS_GetVBlankCount();
 	OS_TPrintf("start %d\n",OS_GetVBlankCount());
 
 	OS_TPrintf("DWC_GHTTP_HOST_LOOKUP       %d\n",DWC_GHTTP_HOST_LOOKUP       );
@@ -264,8 +307,10 @@ static void _ghttpPost(G_SYNC_WORK* pWork)
 
 	
 	pWork->req = DWC_PostGHTTPData(POSTURL, &pWork->post, POSTCallback, pWork);
-	
+
 	if( 0 <= pWork->req){
+		_msgPrint(pWork, DEBUG_OHNO_MSG0008);
+
 		_CHANGE_STATE(_ghttpPosting);
 	}
 }
@@ -281,11 +326,23 @@ static void _ghttpPost(G_SYNC_WORK* pWork)
 
 static void _ghttpKeyWait(G_SYNC_WORK* pWork)
 {
-	if(GFL_UI_KEY_GetTrg()==PAD_BUTTON_X){
+	switch(GFL_UI_KEY_GetTrg())
+	{
+	case PAD_BUTTON_X:
 		_CHANGE_STATE(_ghttpPost);
-	}
-	else if(GFL_UI_KEY_GetTrg()==PAD_BUTTON_Y){
+		break;
+	case PAD_BUTTON_Y:
+
+		pWork->count = OS_GetVBlankCount();
+		OS_TPrintf("start %d  count %d\n",OS_GetVBlankCount(), pWork->getdataCount);
+		pWork->getdataCount = 0;//読み込み時は分割しないとヒープが足りない
+
 		_CHANGE_STATE(_ghttpGet);
+		break;
+	case PAD_BUTTON_B:
+		_CHANGE_STATE(NULL);
+		DWC_ShutdownGHTTP();
+		break;
 	}
 }
 
@@ -303,8 +360,13 @@ static void _ghttpPosting(G_SYNC_WORK* pWork)
 	//OS_TPrintf("state %d\n",DWC_GetGHTTPState(pWork->req));
 	
 	if(	pWork->bEnd ){
+		vu32 ans = OS_GetVBlankCount() - pWork->count;
+		int ansint = ans / 60;
+		
 		OS_TPrintf("end %d\n",OS_GetVBlankCount());
+		
 		pWork->bEnd = FALSE;
+		_msgPrintNo(pWork, DEBUG_OHNO_MSG0009, ansint);
 		_CHANGE_STATE(_ghttpKeyWait);
 	}
 }
@@ -318,8 +380,15 @@ static void _ghttpPosting(G_SYNC_WORK* pWork)
 
 static void _ghttpGet(G_SYNC_WORK* pWork)
 {
+	char* bufadd[]={GETURL1,GETURL2,GETURL3,GETURL4,GETURL4,GETURL6};
+
+
 	pWork->bEnd = FALSE;
-	if( 0 <= DWC_GetGHTTPData("URL", GETCallback, (void*)pWork->buffer)){
+
+	if( 0 <= DWC_GetGHTTPData(bufadd[pWork->getdataCount], GETCallback, (void*)pWork)){
+
+
+		_msgPrint(pWork, DEBUG_OHNO_MSG0010);
 		_CHANGE_STATE(_ghttpGetting);
 	}
 
@@ -337,9 +406,17 @@ static void _ghttpGetting(G_SYNC_WORK* pWork)
 
 	DWC_ProcessGHTTP();
 	if(	pWork->bEnd ){
-
-		DWC_ShutdownGHTTP();
-		_CHANGE_STATE(NULL);
+		pWork->getdataCount++;
+		if(pWork->getdataCount < 6){   //710703バイトは一回131072なので 6回
+			_CHANGE_STATE(_ghttpGet);
+		}
+		else{
+			vu32 ans = OS_GetVBlankCount() - pWork->count;
+			int ansint = ans / 60;
+			OS_TPrintf("end %d\n",OS_GetVBlankCount());
+			_msgPrintNo(pWork, DEBUG_OHNO_MSG0011, ansint);
+			_CHANGE_STATE(_ghttpKeyWait);
+		}
 	}
 }
 
@@ -355,11 +432,28 @@ static void _ghttpInit(G_SYNC_WORK* pWork)
 
 	GFL_NET_Init(&aGFLNetInit, NULL, pWork);
 	GFL_NET_StateWifiEnterLogin();
-	_CHANGE_STATE(_ghttpPost);
+
+	_msgPrint(pWork, DEBUG_OHNO_MSG0006);
+
+	_CHANGE_STATE(_ghttpConnecting);
 
 	
 }
 
+static const GFL_DISP_VRAM vramBank = {
+		GX_VRAM_BG_128_A,				// メイン2DエンジンのBG
+		GX_VRAM_BGEXTPLTT_NONE,			// メイン2DエンジンのBG拡張パレット
+		GX_VRAM_SUB_BG_128_C,			// サブ2DエンジンのBG
+		GX_VRAM_SUB_BGEXTPLTT_NONE,		// サブ2DエンジンのBG拡張パレット
+		GX_VRAM_OBJ_128_B,				// メイン2DエンジンのOBJ
+		GX_VRAM_OBJEXTPLTT_0_F,			// メイン2DエンジンのOBJ拡張パレット
+		GX_VRAM_SUB_OBJ_16_I,			// サブ2DエンジンのOBJ
+		GX_VRAM_SUB_OBJEXTPLTT_NONE,	// サブ2DエンジンのOBJ拡張パレット
+		GX_VRAM_TEX_NONE,				// テクスチャイメージスロット
+		GX_VRAM_TEXPLTT_0123_E,			// テクスチャパレットスロット
+		GX_OBJVRAMMODE_CHAR_1D_32K,	// メインOBJマッピングモード
+		GX_OBJVRAMMODE_CHAR_1D_32K,		// サブOBJマッピングモード
+};
 
 
 static GFL_PROC_RESULT GSYNCProc_Init( GFL_PROC * proc, int * seq, void * pwk, void * mywk )
@@ -368,7 +462,85 @@ static GFL_PROC_RESULT GSYNCProc_Init( GFL_PROC * proc, int * seq, void * pwk, v
 
 	{
 		G_SYNC_WORK* pWork = GFL_PROC_AllocWork( proc, sizeof(G_SYNC_WORK), HEAPID_PROC );
+
 		pWork->pSaveData = SaveControl_GetPointer();  //デバッグ
+		pWork->heapID = HEAPID_PROC;
+
+		GFL_DISP_SetBank( &vramBank );
+
+		//バックグラウンドの色を入れておく
+		GFL_STD_MemFill16((void*)HW_BG_PLTT, 0x5ad6, 2);
+	
+		// 各種効果レジスタ初期化
+		G2_BlendNone();
+
+		// BGsystem初期化
+		GFL_BG_Init( pWork->heapID );
+		GFL_BMPWIN_Init( pWork->heapID );
+		GFL_FONTSYS_Init();
+
+			//ＢＧモード設定
+	{
+		static const GFL_BG_SYS_HEADER sysHeader = {
+			GX_DISPMODE_GRAPHICS, GX_BGMODE_0, GX_BGMODE_3, GX_BG0_AS_2D,
+		};
+		GFL_BG_SetBGMode( &sysHeader );
+	}
+
+	// 個別フレーム設定
+	{
+		static const GFL_BG_BGCNT_HEADER bgcntText = {
+			0, 0, 0x800, 0,
+			GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
+			GX_BG_SCRBASE_0x5800, GX_BG_CHARBASE_0x10000, 0x8000,
+			GX_BG_EXTPLTT_01, 0, 0, 0, FALSE
+		};
+
+		GFL_BG_SetBGControl( GFL_BG_FRAME0_M,   &bgcntText,   GFL_BG_MODE_TEXT );
+		GFL_BG_SetBGControl( GFL_BG_FRAME0_S,   &bgcntText,   GFL_BG_MODE_TEXT );
+
+		GFL_BG_SetVisible( GFL_BG_FRAME0_M,   VISIBLE_ON );
+		GFL_BG_SetVisible( GFL_BG_FRAME1_M,   VISIBLE_OFF );
+		GFL_BG_SetVisible( GFL_BG_FRAME2_M,   VISIBLE_OFF );
+		GFL_BG_SetVisible( GFL_BG_FRAME3_M,   VISIBLE_OFF );
+
+//		GFL_BG_SetClearCharacter( GFL_BG_FRAME0_M, 0x20, 0x22, wk->heapID );
+		GFL_BG_FillCharacter( GFL_BG_FRAME0_M, 0xff, 1, 0 );
+
+//		void GFL_BG_FillScreen( u8 frmnum, u16 dat, u8 px, u8 py, u8 sx, u8 sy, u8 mode )
+		GFL_BG_FillScreen( GFL_BG_FRAME0_M, 0x0000, 0, 0, 32, 32, GFL_BG_SCRWRT_PALIN );
+
+		GFL_BG_FillCharacter( GFL_BG_FRAME0_S, 0x00, 1, 0 );
+		GFL_BG_FillScreen( GFL_BG_FRAME0_S, 0x0000, 0, 0, 32, 32, GFL_BG_SCRWRT_PALIN );
+		GFL_BG_LoadScreenReq( GFL_BG_FRAME0_S );
+	}
+
+	// 上下画面設定
+		GX_SetDispSelect( GX_DISP_SELECT_SUB_MAIN );
+
+		GFL_BG_LoadScreenReq( GFL_BG_FRAME0_M );
+
+		pWork->win = GFL_BMPWIN_Create( GFL_BG_FRAME0_M, 4, 12, 24, 16, 0, GFL_BMP_CHRAREA_GET_F );
+		pWork->bmp = GFL_BMPWIN_GetBmp( pWork->win);
+		GFL_BMP_Clear( pWork->bmp, 0xff );
+		GFL_BMPWIN_MakeScreen( pWork->win );
+		GFL_BMPWIN_TransVramCharacter( pWork->win );
+
+		GFL_BG_LoadScreenReq( GFL_BG_FRAME0_M );
+
+		pWork->fontHandle = GFL_FONT_Create( ARCID_FONT, NARC_font_large_nftr,
+																			GFL_FONT_LOADTYPE_FILE, FALSE, pWork->heapID );
+
+		pWork->mm = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_d_ohno_dat, pWork->heapID );
+		pWork->strbuf = GFL_STR_CreateBuffer(64, pWork->heapID);
+		pWork->strbufEx = GFL_STR_CreateBuffer(64, pWork->heapID);
+		pWork->WordSet    = WORDSET_Create( pWork->heapID );
+
+	//フォントパレット転送
+		GFL_ARC_UTIL_TransVramPalette(ARCID_FONT, NARC_font_default_nclr, PALTYPE_MAIN_BG, 
+																	0, 0x20, HEAPID_PROC);
+
+		
 		_CHANGE_STATE(_ghttpInit);
 	}
   return GFL_PROC_RES_FINISH;
@@ -387,7 +559,16 @@ static GFL_PROC_RESULT GSYNCProc_Main( GFL_PROC * proc, int * seq, void * pwk, v
 
 static GFL_PROC_RESULT GSYNCProc_End( GFL_PROC * proc, int * seq, void * pwk, void * mywk )
 {
-	GFL_PROC_FreeWork(mywk);
+	G_SYNC_WORK* pWork = mywk;
+
+	GFL_STR_DeleteBuffer(pWork->strbuf);
+	GFL_STR_DeleteBuffer(pWork->strbufEx);
+	GFL_MSG_Delete(pWork->mm);
+	GFL_FONT_Delete(pWork->fontHandle);
+
+	WORDSET_Delete( pWork->WordSet );
+
+	GFL_PROC_FreeWork(proc);
 	GFL_HEAP_DeleteHeap(HEAPID_PROC);  //テスト
   return GFL_PROC_RES_FINISH;
 }
