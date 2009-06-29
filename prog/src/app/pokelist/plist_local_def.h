@@ -45,7 +45,7 @@
 //メニューの文字はフォントパレットではなくメニュープレートのパレットを使う
 #define PLIST_FONT_MENU_BACK (0x0)
 #define PLIST_FONT_MENU_LETTER (0xe)
-#define PLIST_FONT_MENU_HIDEN_LETTER (0xd)
+#define PLIST_FONT_MENU_WAZA_LETTER (0xd)
 #define PLIST_FONT_MENU_SHADOW (0xf)
 
 //OBJリソースIdx
@@ -135,6 +135,7 @@ typedef struct
   u8  selectState;
 
   PL_SELECT_POS pokeCursor;
+  POKEMON_PARAM *selectPokePara;
 
   GFL_MSGDATA *msgHandle;
   GFL_FONT *fontHandle;

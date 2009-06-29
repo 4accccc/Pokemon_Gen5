@@ -20,6 +20,7 @@
 #include "msg/msg_pokelist.h"
 
 #include "pokeicon/pokeicon.h"
+#include "waza_tool/wazano_def.h"
 
 #include "plist_sys.h"
 #include "plist_plate.h"
@@ -146,6 +147,7 @@ const BOOL PLIST_InitPokeList( PLIST_WORK *work )
   work->ktst = GFL_UI_CheckTouchOrKey();
   work->mainSeq = PSMS_FADEIN;
   work->subSeq = PSSS_INIT;
+  work->selectPokePara = NULL;
 
   PLIST_InitGraphic( work );
   PLIST_LoadResource( work );
@@ -675,17 +677,35 @@ static void PLIST_InitMode_Select( PLIST_WORK *work )
 //--------------------------------------------------------------------------
 static void PLIST_InitMode_Menu( PLIST_WORK *work )
 {
+  PLIST_MENU_ITEM_TYPE itemArr[8];
   switch( work->plData->mode )
   {
   case PL_MODE_FIELD:
+    itemArr[0] = PMIT_STATSU;
+    itemArr[1] = PMIT_HIDEN;
+    itemArr[2] = PMIT_CHANGE;
+    itemArr[3] = PMIT_ITEM;
+    itemArr[4] = PMIT_CLOSE;
+    itemArr[5] = PMIT_END_LIST;
     
+    PLIST_MSG_CreateWordSet( work , work->msgWork );
+    PLIST_MSG_AddWordSet_PokeName( work , work->msgWork , 0 , work->selectPokePara );
+    
+    PLIST_MSG_OpenWindow( work , work->msgWork , PMT_MENU );
+    PLIST_MSG_DrawMessageNoWait( work , work->msgWork , mes_pokelist_03_01 );
+    
+    PLIST_MSG_DeleteWordSet( work , work->msgWork );
+
     break;
     
   default:
     GF_ASSERT_MSG( NULL , "PLIST mode まだ作ってない！[%d]\n" , work->plData->mode );
+    itemArr[0] = PMIT_STATSU;
+    itemArr[1] = PMIT_CLOSE;
+    itemArr[2] = PMIT_END_LIST;
     break;
   }
-  PLIST_MENU_OpenMenu( work , work->menuWork , NULL );
+  PLIST_MENU_OpenMenu( work , work->menuWork , itemArr );
 
 }
 
@@ -726,7 +746,8 @@ static void PLIST_SelectPokeInit( PLIST_WORK *work )
 {
   work->pokeCursor = work->plData->ret_sel;
   
-  if( work->ktst == GFL_APP_KTST_KEY )
+  if( work->ktst == GFL_APP_KTST_KEY || 
+      GFL_CLACT_WK_GetDrawEnable( work->clwkCursor[0] ) == TRUE )
   {
     if( work->pokeCursor <= PL_SEL_POS_POKE6 )
     {
@@ -799,12 +820,14 @@ static void PLIST_SelectPokeUpdateKey( PLIST_WORK *work )
 {
   const int trg = GFL_UI_KEY_GetTrg();
   const int repeat = GFL_UI_KEY_GetRepeat();
-  if( work->ktst == GFL_APP_KTST_TOUCH )
+  if( work->ktst == GFL_APP_KTST_TOUCH && 
+      GFL_CLACT_WK_GetDrawEnable( work->clwkCursor[0] ) == FALSE )
   {
+    //非表示のときだけ0に表示するように
     if( trg != 0 )
     {
       //カーソルを0の位置に表示
-      GFL_CLACTPOS curPos;
+      PLIST_PLATE_SetActivePlate( work , work->plateWork[work->pokeCursor] , FALSE );
       work->pokeCursor = PL_SEL_POS_POKE1;
       PLIST_SelectPokeSetCursor( work , work->pokeCursor );
       PLIST_PLATE_SetActivePlate( work , work->plateWork[work->pokeCursor] , TRUE );
@@ -815,6 +838,10 @@ static void PLIST_SelectPokeUpdateKey( PLIST_WORK *work )
   else
   {
     s8 moveVal = 0;
+    if( trg != 0 )
+    {
+      work->ktst = GFL_APP_KTST_KEY;
+    }
     //キー分岐
     if( repeat & PAD_KEY_UP )
     {
@@ -916,8 +943,13 @@ static void PLIST_SelectPokeUpdateTP( PLIST_WORK *work )
 
     if( ret != GFL_UI_TP_HIT_NONE )
     {
+      const PL_SELECT_POS befPos = work->pokeCursor;
       work->selectState = PSSEL_SELECT;
       work->pokeCursor = plateIdx[ret];
+
+      PLIST_SelectPokeSetCursor( work , work->pokeCursor );
+      PLIST_PLATE_SetActivePlate( work , work->plateWork[work->pokeCursor] , TRUE );
+      PLIST_PLATE_SetActivePlate( work , work->plateWork[befPos] , FALSE );
 
       work->ktst = GFL_APP_KTST_TOUCH;
     }
@@ -984,8 +1016,9 @@ static void PLIST_SelectMenu( PLIST_WORK *work )
   switch( work->subSeq )
   {
   case PSSS_INIT:
-    //中で一緒にメニューを開く
     PLIST_MSG_CloseWindow( work , work->msgWork );
+
+    work->selectPokePara = PokeParty_GetMemberPointer(work->plData->pp, work->pokeCursor );
 
     //BG・プレート・パラメータを見えにくくする
     G2_SetBlendBrightness( GX_BLEND_PLANEMASK_BG3 | GX_BLEND_PLANEMASK_BG2 | GX_BLEND_PLANEMASK_BG1 | GX_BLEND_PLANEMASK_OBJ , 8 );
@@ -1008,6 +1041,7 @@ static void PLIST_SelectMenu( PLIST_WORK *work )
     }
     GFL_CLACT_WK_SetBgPri( work->clwkCursor[0] , 2 );
     
+    //中で一緒にメニューを開く
     PLIST_InitMode_Menu( work );
     
     work->subSeq = PSSS_MAIN;
@@ -1018,21 +1052,25 @@ static void PLIST_SelectMenu( PLIST_WORK *work )
     
   case PSSS_MAIN:
     PLIST_MENU_UpdateMenu( work , work->menuWork );
-    if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_B )
     {
-      work->subSeq = PSSS_TERM;
+      const PLIST_MENU_ITEM_TYPE ret = PLIST_MENU_IsFinish( work , work->menuWork );
+      if( ret != PMIT_NONE )
+      {
+        work->subSeq = PSSS_TERM;
+      }
     }
-    
     break;
     
   case PSSS_TERM:
     PLIST_MENU_CloseMenu( work , work->menuWork );
+    PLIST_MSG_CloseWindow( work , work->msgWork );
     PLIST_SelectPokeSetCursor( work , work->pokeCursor );
     G2_SetBlendAlpha( GX_BLEND_PLANEMASK_BG2|GX_BLEND_PLANEMASK_OBJ , 
                       GX_BLEND_PLANEMASK_BG3|GX_BLEND_PLANEMASK_OBJ ,
                       12 , 16 );
     GX_SetVisibleWnd( GX_WNDMASK_NONE );
     GFL_BG_ClearScreen(PLIST_BG_MENU);
+    work->selectPokePara = NULL;
     work->mainSeq = PSMS_SELECT_POKE;
     work->subSeq  = PSSS_INIT;
     PLIST_InitMode_Select( work );
@@ -1040,6 +1078,71 @@ static void PLIST_SelectMenu( PLIST_WORK *work )
   }
   
 }
+
+#pragma mark [>util
+
+//--------------------------------------------------------------
+//	指定技箇所にフィールド技があるか？
+//--------------------------------------------------------------
+u32 PLIST_UTIL_CheckFieldWaza( const POKEMON_PARAM *pp , const u8 wazaPos )
+{
+  const u32 wazaID = PP_Get( pp , ID_PARA_waza1+wazaPos , NULL );
+  
+  switch( wazaID )
+  {
+  case WAZANO_IAIGIRI: //いあいぎり(15)
+    return PL_RET_IAIGIRI;
+    break;
+  case WAZANO_SORAWOTOBU: //そらをとぶ(19)
+    return PL_RET_SORAWOTOBU;
+    break;
+  case WAZANO_NAMINORI: //なみのり(57)
+    return PL_RET_NAMINORI;
+    break;
+  case WAZANO_KAIRIKI: //かいりき(70)
+    return PL_RET_KAIRIKI;
+    break;
+  case WAZANO_KIRIBARAI: //きりばらい(432)
+    return PL_RET_KIRIBARAI;
+    break;
+  case WAZANO_IWAKUDAKI: //いわくだき(249)
+    return PL_RET_IWAKUDAKI;
+    break;
+  case WAZANO_TAKINOBORI: //たきのぼり(127)
+    return PL_RET_TAKINOBORI;
+    break;
+  case WAZANO_ROKKUKURAIMU: //ロッククライム(431)
+    return PL_RET_ROCKCLIMB;
+    break;
+
+  case WAZANO_HURASSYU: //フラッシュ(148)
+    return PL_RET_FLASH;
+    break;
+  case WAZANO_TEREPOOTO: //テレポート(100)
+    return PL_RET_TELEPORT;
+    break;
+  case WAZANO_ANAWOHORU: //あなをほる(91)
+    return PL_RET_ANAWOHORU;
+    break;
+  case WAZANO_AMAIKAORI: //あまいかおり(230)
+    return PL_RET_AMAIKAORI;
+    break;
+  case WAZANO_OSYABERI: //おしゃべり(448)
+    return PL_RET_OSYABERI;
+    break;
+  case WAZANO_MIRUKUNOMI: //ミルクのみ(208)
+    return PL_RET_MILKNOMI;
+    break;
+  case WAZANO_TAMAGOUMI: //タマゴうみ(135)
+    return PL_RET_TAMAGOUMI;
+    break;
+
+  default:
+    return 0;
+    break;
+  }
+}
+
 
 #pragma mark [>debug
 

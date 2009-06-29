@@ -14,11 +14,14 @@
 
 #include "arc_def.h"
 #include "pokelist_gra.naix"
+#include "message.naix"
 #include "msg/msg_pokelist.h"
+#include "msg/msg_wazaname.h"
 
 #include "print/wordset.h"
 #include "system/bmp_winframe.h"
 
+#include "plist_sys.h"
 #include "plist_menu.h"
 
 #include "test/ariizumi/ari_debug.h"
@@ -28,9 +31,15 @@
 //======================================================================
 #pragma mark [> define
 
+#define PLIST_MENU_ITEM_MAX (8)
+
 #define PLIST_MENU_PLATE_LEFT (19)
 #define PLIST_MENU_PLATE_WIDTH (13)
 #define PLIST_MENU_PLATE_HEIGHT (3)
+
+//決定時点滅アニメ
+#define PLIST_MENU_ANM_CNT (24)
+#define PLIST_MENU_ANM_INTERVAL (4)
 
 //======================================================================
 //	enum
@@ -44,10 +53,13 @@
 struct _PLIST_MENU_WORK
 {
   u8 itemNum;
+  u8 cursorPos;
+  u8 anmCnt;
   BOOL isUpdateMsg;
+  BOOL isDecide;
 
-  GFL_BMPWIN *menuWin[8];
-
+  GFL_BMPWIN *menuWin[PLIST_MENU_ITEM_MAX];
+  u16        itemArr[PLIST_MENU_ITEM_MAX];
   //メニュー土台
   NNSG2dCharacterData *ncgData;
   void *ncgRes; 
@@ -58,6 +70,14 @@ struct _PLIST_MENU_WORK
 //======================================================================
 #pragma mark [> proto
 
+static void PLIST_MENU_CreateItem( PLIST_WORK *work , PLIST_MENU_WORK *menuWork , PLIST_MENU_ITEM_TYPE *itemArr );
+static void PLIST_MENU_CreateMenuWin( PLIST_WORK *work , PLIST_MENU_WORK *menuWork );
+static STRBUF* PLIST_MENU_CreateMenuStr( PLIST_WORK *work , PLIST_MENU_WORK *menuWork , const PLIST_MENU_ITEM_TYPE type );
+
+static void PLIST_MENU_UpdateKey( PLIST_WORK *work , PLIST_MENU_WORK *menuWork );
+static void PLIST_MENU_UpdateTP( PLIST_WORK *work , PLIST_MENU_WORK *menuWork );
+
+static void PLIST_MENU_SetActiveItem( PLIST_MENU_WORK *menuWork , const u8 idx , const BOOL isActive );
 
 //--------------------------------------------------------------
 //	メニューシステム初期化
@@ -97,22 +117,18 @@ void PLIST_MENU_OpenMenu( PLIST_WORK *work , PLIST_MENU_WORK *menuWork , PLIST_M
 {
   u8 i;
   
-  for(i=0;i<8;i++)
+  PLIST_MENU_CreateItem( work,menuWork,itemArr );
+  PLIST_MENU_CreateMenuWin( work,menuWork );
+
+  menuWork->isDecide = FALSE;
+  menuWork->cursorPos = menuWork->itemNum-1;
+  menuWork->anmCnt = 0;
+  
+  if( work->ktst == GFL_APP_KTST_KEY )
   {
-    STRBUF *str = GFL_MSG_CreateString( work->msgHandle , mes_pokelist_05_01+i );
-    menuWork->menuWin[i] = GFL_BMPWIN_Create( PLIST_BG_MENU ,
-                        PLIST_MENU_PLATE_LEFT , 24-((i+1)*PLIST_MENU_PLATE_HEIGHT) , 
-                        PLIST_MENU_PLATE_WIDTH , PLIST_MENU_PLATE_HEIGHT , 
-                        PLIST_BG_PLT_MENU_NORMAL , GFL_BMP_CHRAREA_GET_B );
-    //プレートの絵を送る
-    GFL_STD_MemCopy32( menuWork->ncgData->pRawData , GFL_BMP_GetCharacterAdrs(GFL_BMPWIN_GetBmp( menuWork->menuWin[i] )) ,
-                     0x20*PLIST_MENU_PLATE_WIDTH*PLIST_MENU_PLATE_HEIGHT );
-    PRINTSYS_PrintQueColor( work->printQue , GFL_BMPWIN_GetBmp( menuWork->menuWin[i] ), 
-                        8 , 4 , str , work->fontHandle , 
-                        PRINTSYS_LSB_Make( PLIST_FONT_MENU_LETTER,PLIST_FONT_MENU_HIDEN_LETTER,PLIST_FONT_MENU_BACK) );
-    GFL_STR_DeleteBuffer( str );
+    PLIST_MENU_SetActiveItem( menuWork , menuWork->cursorPos , TRUE );
   }
-  menuWork->itemNum = 8;
+  
   menuWork->isUpdateMsg = TRUE;
 }
 
@@ -157,9 +173,297 @@ void PLIST_MENU_UpdateMenu( PLIST_WORK *work , PLIST_MENU_WORK *menuWork )
       menuWork->isUpdateMsg = FALSE;
     }
   }
+  
+  if( menuWork->isDecide == FALSE )
+  {
+    PLIST_MENU_UpdateKey( work , menuWork );
+    if( menuWork->isDecide == FALSE )
+    {
+      PLIST_MENU_UpdateTP( work , menuWork );
+    }
+  }
+  else
+  {
+    //決定時アニメ
+    const u8 isBlink = (menuWork->anmCnt/PLIST_MENU_ANM_INTERVAL)%2;
+    if( isBlink == 0 )
+    {
+      PLIST_MENU_SetActiveItem( menuWork , menuWork->cursorPos , TRUE );
+    }
+    else
+    {
+      PLIST_MENU_SetActiveItem( menuWork , menuWork->cursorPos , FALSE );
+    }
+    menuWork->anmCnt++;
+  }
+}
+
+const PLIST_MENU_ITEM_TYPE PLIST_MENU_IsFinish( PLIST_WORK *work , PLIST_MENU_WORK *menuWork )
+{
+  if( menuWork->anmCnt < PLIST_MENU_ANM_CNT )
+  {
+    return PMIT_NONE;
+  }
+  else
+  {
+    return menuWork->itemArr[menuWork->cursorPos];
+  }
+}
+
+#pragma mark [>init func
+//--------------------------------------------------------------
+//	メニューの項目を作る
+//--------------------------------------------------------------
+static void PLIST_MENU_CreateItem(  PLIST_WORK *work , PLIST_MENU_WORK *menuWork , PLIST_MENU_ITEM_TYPE *itemArr )
+{
+  int i;
+  int arrNum = 0;
+  
+  //個数チェック
+  while( itemArr[arrNum] != PMIT_END_LIST )
+  {
+    arrNum++;
+    
+    if( arrNum >= PLIST_MENU_ITEM_MAX )
+    {
+      GF_ASSERT_MSG(NULL,"PLIST_MENU Item num is over!!\n")
+      break;
+    }
+  }
+  
+  menuWork->itemNum = 0;
+  for( i=0;i<arrNum;i++ )
+  {
+    switch( itemArr[arrNum-(i+1)] )
+    {
+    case PMIT_STATSU:  //強さを見る
+      menuWork->itemArr[menuWork->itemNum] = PMIT_STATSU;
+      menuWork->itemNum += 1;
+      break;
+
+    case PMIT_HIDEN:   //秘伝技。自動で個数分追加します
+      {
+        u8 idx;
+        for( idx=0;idx<4;idx++ )
+        {
+          const u32 ret = PLIST_UTIL_CheckFieldWaza( work->selectPokePara , idx );
+          if( ret != 0 )
+          {
+            menuWork->itemArr[menuWork->itemNum] = PMIT_WAZA_1+idx;
+            menuWork->itemNum += 1;
+          }
+        }
+      }
+      break;
+
+    case PMIT_CHANGE:  //入れ替え
+      menuWork->itemArr[menuWork->itemNum] = PMIT_CHANGE;
+      menuWork->itemNum += 1;
+      break;
+
+    case PMIT_ITEM:    //持ち物
+      menuWork->itemArr[menuWork->itemNum] = PMIT_ITEM;
+      menuWork->itemNum += 1;
+      break;
+
+    case PMIT_CLOSE:   //閉じる
+      menuWork->itemArr[menuWork->itemNum] = PMIT_CLOSE;
+      menuWork->itemNum += 1;
+      break;
+
+    case PMIT_LEAVE:   //預ける(育てや
+      menuWork->itemArr[menuWork->itemNum] = PMIT_LEAVE;
+      menuWork->itemNum += 1;
+      break;
+
+    case PMIT_SET_JOIN:    //参加する・参加しない
+      //FIXME 取り消し処理チェック
+      menuWork->itemArr[menuWork->itemNum] = PMIT_RET_JOIN;
+      menuWork->itemNum += 1;
+      break;
+    
+    default:
+      GF_ASSERT_MSG(0,"PLIST_MENU Invalid item type!![%d]\n",itemArr[arrNum-(i+1)] );
+      break;
+    }
+  }
+}
+
+//--------------------------------------------------------------
+//	メニューのBmpWinと文字を作る
+//--------------------------------------------------------------
+static void PLIST_MENU_CreateMenuWin(  PLIST_WORK *work , PLIST_MENU_WORK *menuWork )
+{
+  u8 i;
+  
   for(i=0;i<menuWork->itemNum;i++)
   {
+    PRINTSYS_LSB col;
+    STRBUF *str = PLIST_MENU_CreateMenuStr( work , menuWork , menuWork->itemArr[i] );
+
+    menuWork->menuWin[i] = GFL_BMPWIN_Create( PLIST_BG_MENU ,
+                        PLIST_MENU_PLATE_LEFT , 24-((i+1)*PLIST_MENU_PLATE_HEIGHT) , 
+                        PLIST_MENU_PLATE_WIDTH , PLIST_MENU_PLATE_HEIGHT , 
+                        PLIST_BG_PLT_MENU_NORMAL , GFL_BMP_CHRAREA_GET_B );
+    //プレートの絵を送る
+    GFL_STD_MemCopy32( menuWork->ncgData->pRawData , GFL_BMP_GetCharacterAdrs(GFL_BMPWIN_GetBmp( menuWork->menuWin[i] )) ,
+                     0x20*PLIST_MENU_PLATE_WIDTH*PLIST_MENU_PLATE_HEIGHT );
+    if( menuWork->itemArr[i] >= PMIT_WAZA_1 && menuWork->itemArr[i] <= PMIT_WAZA_4 )
+    {
+      col = PRINTSYS_LSB_Make( PLIST_FONT_MENU_WAZA_LETTER,PLIST_FONT_MENU_SHADOW,PLIST_FONT_MENU_BACK);
+    }
+    else
+    {
+      col = PRINTSYS_LSB_Make( PLIST_FONT_MENU_LETTER,PLIST_FONT_MENU_SHADOW,PLIST_FONT_MENU_BACK);
+    }
+    PRINTSYS_PrintQueColor( work->printQue , GFL_BMPWIN_GetBmp( menuWork->menuWin[i] ), 
+                        8 , 4 , str , work->fontHandle , col );
+    GFL_STR_DeleteBuffer( str );
+  }
+}
+
+//--------------------------------------------------------------
+//	アイテムごとの文字の作成
+//--------------------------------------------------------------
+static STRBUF* PLIST_MENU_CreateMenuStr( PLIST_WORK *work , PLIST_MENU_WORK *menuWork , const PLIST_MENU_ITEM_TYPE type )
+{
+  static const u32 msgArr[PMIT_MAX] =
+  {
+    mes_pokelist_05_02 ,  //PMIT_STATSU,  //強さを見る
+    0 ,          //PMIT_HIDEN,   //秘伝技。自動で個数分追加します
+    mes_pokelist_05_01 ,  //PMIT_CHANGE,  //入れ替え
+    mes_pokelist_05_03 ,  //PMIT_ITEM,    //持ち物
+    mes_pokelist_05_08 ,  //PMIT_CLOSE,   //閉じる
+    mes_pokelist_05_07 ,  //PMIT_LEAVE,   //預ける(育てや
+    0 ,          //PMIT_SET_JOIN,    //参加する(参加しない)
+    0 ,          //PMIT_WAZA_1,   //秘伝用技スロット１
+    0 ,          //PMIT_WAZA_2,   //秘伝用技スロット２
+    0 ,          //PMIT_WAZA_3,   //秘伝用技スロット３
+    0 ,          //PMIT_WAZA_4,   //秘伝用技スロット４
+    mes_pokelist_05_10 ,  //PMIT_RET_JOIN,      //参加する
+    mes_pokelist_05_11 ,  //PMIT_JOIN_CANCEL,   //参加しない
+  };
+  STRBUF *str;
+  
+  if( type >= PMIT_WAZA_1 && type <= PMIT_WAZA_4 )
+  {
+    const u32 wazaID = PP_Get( work->selectPokePara , ID_PARA_waza1+(type-PMIT_WAZA_1) , NULL );
+    GFL_MSGDATA *msgHandle = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL , ARCID_MESSAGE , NARC_message_wazaname_dat , work->heapId );
+    
+    //秘伝技は特殊処理
+    str = GFL_MSG_CreateString( msgHandle , wazaID );
+  }
+  else
+  {
+    GF_ASSERT_MSG( msgArr[type] != 0 , "PLIST_MENU CreateMenuStr type error!![%d]\n",type );
+    str = GFL_MSG_CreateString( work->msgHandle , msgArr[type] );
+  }
+  return str;
+}
+
+#pragma mark [>main func
+static void PLIST_MENU_UpdateKey( PLIST_WORK *work , PLIST_MENU_WORK *menuWork )
+{
+  const int trg = GFL_UI_KEY_GetTrg();
+  const int repeat = GFL_UI_KEY_GetRepeat();
+
+  if( work->ktst == GFL_APP_KTST_TOUCH )
+  {
+    if( trg != 0 )
+    {
+      PLIST_MENU_SetActiveItem( menuWork , menuWork->cursorPos , TRUE );
+      work->ktst = GFL_APP_KTST_KEY;
+    }
+  }
+  else
+  {
+    const u8 befPos = menuWork->cursorPos;
+    if( repeat & PAD_KEY_UP )
+    {
+      if( menuWork->cursorPos == menuWork->itemNum-1 )
+      {
+        menuWork->cursorPos = 0;
+      }
+      else
+      {
+        menuWork->cursorPos++;
+      }
+    }
+    else
+    if( repeat & PAD_KEY_DOWN )
+    {
+      if( menuWork->cursorPos == 0 )
+      {
+        menuWork->cursorPos = menuWork->itemNum-1;
+      }
+      else
+      {
+        menuWork->cursorPos--;
+      }
+    }
+    else
+    if( trg & PAD_BUTTON_A )
+    {
+      menuWork->isDecide = TRUE;
+    }
+    else
+    if( trg & PAD_BUTTON_B )
+    {
+      menuWork->cursorPos = 0;
+      menuWork->isDecide = TRUE;
+    }
+    
+    if( befPos != menuWork->cursorPos )
+    {
+      PLIST_MENU_SetActiveItem( menuWork , befPos , FALSE );
+      PLIST_MENU_SetActiveItem( menuWork , menuWork->cursorPos , TRUE );
+    }
+  }
+}
+
+static void PLIST_MENU_UpdateTP( PLIST_WORK *work , PLIST_MENU_WORK *menuWork )
+{
+  u8 i;
+  int ret;
+  GFL_UI_TP_HITTBL hitTbl[PLIST_MENU_ITEM_MAX+1];
+  
+  //テーブルの作成
+  for( i=0 ; i<menuWork->itemNum ; i++ )
+  {
+    hitTbl[i].rect.top    = 192 - (PLIST_MENU_PLATE_HEIGHT*8*(i+1));
+    hitTbl[i].rect.bottom = 192 - (PLIST_MENU_PLATE_HEIGHT*8*i) - 1;
+    hitTbl[i].rect.left   = PLIST_MENU_PLATE_LEFT*8;
+    hitTbl[i].rect.right  = (PLIST_MENU_PLATE_LEFT+PLIST_MENU_PLATE_WIDTH)*8 - 1;
+  }
+  hitTbl[i].circle.code = GFL_UI_TP_HIT_END;
+  
+  ret = GFL_UI_TP_HitTrg( hitTbl );
+  
+  if( ret != GFL_UI_TP_HIT_NONE )
+  {
+    work->ktst = GFL_APP_KTST_TOUCH;
+    PLIST_MENU_SetActiveItem( menuWork , menuWork->cursorPos , FALSE );
+    menuWork->cursorPos = ret;
+    menuWork->isDecide = TRUE;
+    PLIST_MENU_SetActiveItem( menuWork , menuWork->cursorPos , TRUE );
     
   }
 }
+
+
+#pragma mark [>util
+static void PLIST_MENU_SetActiveItem( PLIST_MENU_WORK *menuWork , const u8 idx , const BOOL isActive )
+{
+  if( isActive == TRUE )
+  {
+    GFL_BMPWIN_SetPalette( menuWork->menuWin[idx] , PLIST_BG_PLT_MENU_ACTIVE );
+  }
+  else if( isActive == FALSE )
+  {
+    GFL_BMPWIN_SetPalette( menuWork->menuWin[idx] , PLIST_BG_PLT_MENU_NORMAL );
+  }
+	GFL_BMPWIN_MakeScreen( menuWork->menuWin[idx] );
+  GFL_BG_LoadScreenV_Req( GFL_BMPWIN_GetFrame(menuWork->menuWin[idx]) );
+}
+
 

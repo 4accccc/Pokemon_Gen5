@@ -68,6 +68,8 @@ struct _PLIST_MSG_WORK
   
   //Que用(瞬間メッセージ
   BOOL  isUpdateMsg;
+  
+  WORDSET *wordSet;
 };
 //======================================================================
 //	proto
@@ -91,6 +93,7 @@ PLIST_MSG_WORK* PLIST_MSG_CreateSystem( PLIST_WORK *work )
   msgWork->printHandle = NULL;
   msgWork->winType = PMT_NONE;
   msgWork->isUpdateMsg = FALSE;
+  msgWork->wordSet = NULL;
   return msgWork;
 }
 
@@ -195,6 +198,13 @@ void PLIST_MSG_CloseWindow( PLIST_WORK *work , PLIST_MSG_WORK *msgWork )
 void PLIST_MSG_DrawMessageNoWait( PLIST_WORK *work , PLIST_MSG_WORK *msgWork , const u32 msgId )
 {
   STRBUF *str = GFL_MSG_CreateString( work->msgHandle , msgId ); 
+  if( msgWork->wordSet != NULL )
+  {
+    STRBUF *workStr = GFL_STR_CreateBuffer( 128 , work->heapId );
+    WORDSET_ExpandStr( msgWork->wordSet , workStr , str );
+    GFL_STR_DeleteBuffer( str );
+    str = workStr;
+  }
 
   //Queは親のものを使う
   PLIST_MSG_ClearWindow( work , msgWork );
@@ -219,6 +229,29 @@ void PLIST_MSG_DrawMessageNoWait( PLIST_WORK *work , PLIST_MSG_WORK *msgWork , c
   msgWork->printHandle = PRINTSYS_PrintStream( msgWork->bmpWin , 0 , 0 , msgWork->streamStr ,
             work->fontHandle , -64 , msgWork->tcblSys , 0 , work->heapId , PLIST_FONT_MSG_BACK );
 */
+}
+
+#pragma mark [> wordset
+void PLIST_MSG_CreateWordSet( PLIST_WORK *work , PLIST_MSG_WORK *msgWork )
+{
+  GF_ASSERT( msgWork->wordSet == NULL );
+
+  msgWork->wordSet = WORDSET_Create( work->heapId );
+}
+
+void PLIST_MSG_DeleteWordSet( PLIST_WORK *work , PLIST_MSG_WORK *msgWork )
+{
+  GF_ASSERT( msgWork->wordSet != NULL );
+
+  WORDSET_Delete( msgWork->wordSet );
+  msgWork->wordSet = NULL;
+}
+
+void PLIST_MSG_AddWordSet_PokeName( PLIST_WORK *work , PLIST_MSG_WORK *msgWork , u8 wordSetIdx , POKEMON_PARAM *pp )
+{
+  GF_ASSERT( msgWork->wordSet != NULL );
+
+  WORDSET_RegisterPokeNickName( msgWork->wordSet , wordSetIdx , pp );
 }
 
 #pragma mark [> util
