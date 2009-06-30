@@ -214,7 +214,8 @@ typedef struct
   GFL_CLWK    *clwkBarIcon[PBT_MAX];
 
   //Vram“]‘—ƒAƒjƒ
-  NNSGfdVramTransferTask  transTask[PLIST_VTRANS_TASK_NUM];
+  //machineuse ‚Å‰Šú‰»‚µ‚Ä‚½
+//  NNSGfdVramTransferTask  transTask[PLIST_VTRANS_TASK_NUM];
 
   PLIST_DATA *plData;
 #if USE_DEBUGWIN_SYSTEM

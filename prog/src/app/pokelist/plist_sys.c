@@ -421,7 +421,8 @@ static void PLIST_InitGraphic( PLIST_WORK *work )
   }
   
   //Vram“]‘—ƒAƒjƒ
-  NNS_GfdInitVramTransferManager( work->transTask , PLIST_VTRANS_TASK_NUM );
+  //machineuse ‚Å‰Šú‰»‚µ‚Ä‚½
+//  NNS_GfdInitVramTransferManager( work->transTask , PLIST_VTRANS_TASK_NUM );
   NNS_GfdClearVramTransferManagerTask();
 }
 
@@ -452,8 +453,6 @@ static void PLIST_InitBG0_3DParticle( PLIST_WORK *work )
 static void PLIST_TermGraphic( PLIST_WORK *work )
 {
   NNS_GfdClearVramTransferManagerTask();
-
-  GFL_CLACT_UNIT_Delete( work->cellUnit );
   GFL_CLACT_SYS_Delete();
   
   GFL_BG_FreeBGControl( PLIST_BG_MAIN_BG );
@@ -548,7 +547,8 @@ static void PLIST_TermCell( PLIST_WORK *work )
   GFL_CLACT_WK_Remove( work->clwkBarIcon[PBT_EXIT] );
   GFL_CLACT_WK_Remove( work->clwkCursor[0] );
   GFL_CLACT_WK_Remove( work->clwkCursor[1] );
-  
+
+  GFL_CLACT_UNIT_Delete( work->cellUnit );
 }
 
 //--------------------------------------------------------------------------
