@@ -64,7 +64,8 @@ struct _MUS_ITEM_DRAW_SYSTEM
 	u16	itemMax;
 	//‰e—pƒpƒŒƒbƒg
 	u16 shadowPallet[16];
-	NNSGfdVramTransferTask vramTransTask[VRAM_TRANS_TASK_NUM];
+  //machineuse ‚Å‰Šú‰»‚µ‚Ä‚½
+//	NNSGfdVramTransferTask vramTransTask[VRAM_TRANS_TASK_NUM];
 };
 
 //======================================================================
@@ -92,7 +93,8 @@ MUS_ITEM_DRAW_SYSTEM*	MUS_ITEM_DRAW_InitSystem( GFL_BBD_SYS *bbdSys , u16 itemMa
 	work->itemDataSys = MUS_ITEM_DATA_InitSystem( heapId );
 	
 	//‰e—pVRAM“]‘—Mng
-	NNS_GfdInitVramTransferManager( work->vramTransTask , VRAM_TRANS_TASK_NUM );
+  //machineuse ‚Å‰Šú‰»‚µ‚Ä‚½
+//	NNS_GfdInitVramTransferManager( work->vramTransTask , VRAM_TRANS_TASK_NUM );
 	for( i=0;i<16;i++ )
 	{
 		work->shadowPallet[i] = 0x5a56;
