@@ -38,9 +38,17 @@
 #define PLIST_MENU_PLATE_HEIGHT (3)
 
 //決定時点滅アニメ
-#define PLIST_MENU_ANM_CNT (24)
+#define PLIST_MENU_ANM_CNT (16)
 #define PLIST_MENU_ANM_INTERVAL (4)
 
+//プレートのアニメ。sin使うので0～0xFFFFのループ
+#define PLIST_MENU_ANIME_VALUE (0x400)
+#define PLIST_MENU_ANIME_S_R (27)
+#define PLIST_MENU_ANIME_S_G (13)
+#define PLIST_MENU_ANIME_S_B (13)
+#define PLIST_MENU_ANIME_E_R (31)
+#define PLIST_MENU_ANIME_E_G (24)
+#define PLIST_MENU_ANIME_E_B (24)
 //======================================================================
 //	enum
 //======================================================================
@@ -55,6 +63,8 @@ struct _PLIST_MENU_WORK
   u8 itemNum;
   u8 cursorPos;
   u8 anmCnt;
+  u16 transAnmCnt;
+  GXRgb transCol;
   BOOL isUpdateMsg;
   BOOL isDecide;
 
@@ -123,6 +133,7 @@ void PLIST_MENU_OpenMenu( PLIST_WORK *work , PLIST_MENU_WORK *menuWork , PLIST_M
   menuWork->isDecide = FALSE;
   menuWork->cursorPos = menuWork->itemNum-1;
   menuWork->anmCnt = 0;
+  menuWork->transAnmCnt = 0;
   
   if( work->ktst == GFL_APP_KTST_KEY )
   {
@@ -196,6 +207,30 @@ void PLIST_MENU_UpdateMenu( PLIST_WORK *work , PLIST_MENU_WORK *menuWork )
     }
     menuWork->anmCnt++;
   }
+  
+  //プレートアニメ
+  if( menuWork->transAnmCnt + PLIST_MENU_ANIME_VALUE >= 0x10000 )
+  {
+    menuWork->transAnmCnt = menuWork->transAnmCnt+PLIST_MENU_ANIME_VALUE-0x10000;
+  }
+  else
+  {
+    menuWork->transAnmCnt += PLIST_MENU_ANIME_VALUE;
+  }
+  {
+    //1～0に変換
+    const fx16 cos = (FX_CosIdx(menuWork->transAnmCnt)+FX16_ONE)/2;
+    const u8 r = PLIST_MENU_ANIME_S_R + (((PLIST_MENU_ANIME_E_R-PLIST_MENU_ANIME_S_R)*cos)>>FX16_SHIFT);
+    const u8 g = PLIST_MENU_ANIME_S_G + (((PLIST_MENU_ANIME_E_G-PLIST_MENU_ANIME_S_G)*cos)>>FX16_SHIFT);
+    const u8 b = PLIST_MENU_ANIME_S_B + (((PLIST_MENU_ANIME_E_B-PLIST_MENU_ANIME_S_B)*cos)>>FX16_SHIFT);
+    
+    menuWork->transCol = GX_RGB(r, g, b);
+    
+    NNS_GfdRegisterNewVramTransferTask( NNS_GFD_DST_2D_BG_PLTT_MAIN ,
+                                        PLIST_BG_PLT_MENU_ACTIVE * 32 + PLIST_MENU_ANIME_COL*2 ,
+                                        &menuWork->transCol , 2 );
+  }
+
 }
 
 const PLIST_MENU_ITEM_TYPE PLIST_MENU_IsFinish( PLIST_WORK *work , PLIST_MENU_WORK *menuWork )
@@ -317,8 +352,9 @@ static void PLIST_MENU_CreateMenuWin(  PLIST_WORK *work , PLIST_MENU_WORK *menuW
       col = PRINTSYS_LSB_Make( PLIST_FONT_MENU_LETTER,PLIST_FONT_MENU_SHADOW,PLIST_FONT_MENU_BACK);
     }
     PRINTSYS_PrintQueColor( work->printQue , GFL_BMPWIN_GetBmp( menuWork->menuWin[i] ), 
-                        8 , 4 , str , work->fontHandle , col );
+                        8+PLIST_MSG_STR_OFS_X , 4+PLIST_MSG_STR_OFS_Y , str , work->fontHandle , col );
     GFL_STR_DeleteBuffer( str );
+    GFL_BMPWIN_MakeTransWindow_VBlank( menuWork->menuWin[i] );
   }
 }
 
@@ -446,7 +482,6 @@ static void PLIST_MENU_UpdateTP( PLIST_WORK *work , PLIST_MENU_WORK *menuWork )
     menuWork->cursorPos = ret;
     menuWork->isDecide = TRUE;
     PLIST_MENU_SetActiveItem( menuWork , menuWork->cursorPos , TRUE );
-    
   }
 }
 

@@ -71,6 +71,9 @@ typedef enum
   PL_SEL_POS_EXIT,    // 戻る
 
   PL_SEL_POS_EXIT2,   // 戻る(一気に戻るXボタンの方
+  
+  PL_SEL_POS_MAX,
+  
 }PL_SELECT_POS;
 
 // 選択された処理

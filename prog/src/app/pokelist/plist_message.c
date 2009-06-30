@@ -42,10 +42,6 @@
 #define PLIST_MSG_FULLWIN_WIDTH  (28)
 #define PLIST_MSG_FULLWIN_HEIGHT ( 4)
 
-//•¶Žš•\Ž¦ˆÊ’u
-#define PLIST_MSG_STR_OFS_X (1)
-#define PLIST_MSG_STR_OFS_Y (1)
-
 //======================================================================
 //	enum
 //======================================================================
