@@ -736,7 +736,7 @@ static BOOL is_unselectable_waza( BTL_CLIENT* wk, const BTL_POKEPARAM* bpp, Waza
     }
   }
 
-  // いちゃもん状態（ダメージワザしか選べない）
+  // いちゃもん状態（２ターン続けて同じワザを選べない）
   if( BTL_POKEPARAM_CheckSick(bpp, WAZASICK_ICHAMON) )
   {
     if( BTL_POKEPARAM_GetPrevWazaNumber(bpp) == waza )
@@ -751,6 +751,24 @@ static BOOL is_unselectable_waza( BTL_CLIENT* wk, const BTL_POKEPARAM* bpp, Waza
       return TRUE;
     }
   }
+
+  // かなしばり状態（かなしばり直前に出していたワザを選べない）
+  if( BTL_POKEPARAM_CheckSick(bpp, WAZASICK_KANASIBARI) )
+  {
+    u8 idx = BTL_POKEPARAM_GetSickParam( bpp, WAZASICK_KANASIBARI );
+    if( BTL_POKEPARAM_GetWazaIdx(bpp, waza) == idx )
+    {
+      if( strParam != NULL )
+      {
+        strParam->strID = BTL_STRID_SET_KanasibariWarn;
+        strParam->stdFlag = FALSE;
+        strParam->args[0] = BTL_POKEPARAM_GetID( bpp );
+        strParam->args[1] = waza;
+      }
+      return TRUE;
+    }
+  }
+
 
   // @@@ ふういんとかの処理
   return FALSE;

@@ -180,7 +180,7 @@ static inline BPP_SICK_CONT BPP_SICKCONT_MakeTurn( u8 turns )
   cont.turn.param = 0;
   return cont;
 }
-static inline BPP_SICK_CONT BPP_SICKCONT_Set_TurnParam( u8 turns, u8 param )
+static inline BPP_SICK_CONT BPP_SICKCONT_MakeTurnParam( u8 turns, u8 param )
 {
   BPP_SICK_CONT  cont;
   cont.raw = 0;
@@ -189,7 +189,7 @@ static inline BPP_SICK_CONT BPP_SICKCONT_Set_TurnParam( u8 turns, u8 param )
   cont.turn.param = param;
   return cont;
 }
-static inline BPP_SICK_CONT BPP_SICKCONT_Set_Poke( u8 pokeID )
+static inline BPP_SICK_CONT BPP_SICKCONT_MakePoke( u8 pokeID )
 {
   BPP_SICK_CONT  cont;
   cont.raw = 0;

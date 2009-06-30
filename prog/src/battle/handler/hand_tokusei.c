@@ -172,6 +172,11 @@ static void handler_Hiraisin( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowW
 static void common_WazaTargetChangeToMe( BTL_SVFLOW_WORK* flowWk, u8 pokeID, PokeType wazaType );
 static void handler_Kyuuban( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_HedoroEki( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static void handler_Bukiyou( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static BTL_EVENT_FACTOR*  HAND_TOK_ADD_Bukiyou( u16 pri, u16 tokID, u8 pokeID );
+static void handler_Nenchaku_NoEff( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static void handler_Nenchaku( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static BTL_EVENT_FACTOR*  HAND_TOK_ADD_Nenchaku( u16 pri, u16 tokID, u8 pokeID );
 
 
 
@@ -304,6 +309,8 @@ BTL_EVENT_FACTOR*  BTL_HANDLER_TOKUSEI_Add( const BTL_POKEPARAM* pp )
     { POKETOKUSEI_TENKIYA,        HAND_TOK_ADD_Tenkiya },
     { POKETOKUSEI_KYUUBAN,        HAND_TOK_ADD_Kyuuban },
     { POKETOKUSEI_HEDOROEKI,      HAND_TOK_ADD_HedoroEki },
+    { POKETOKUSEI_BUKIYOU,        HAND_TOK_ADD_Bukiyou },
+    { POKETOKUSEI_NENCHAKU,       HAND_TOK_ADD_Nenchaku },
 
   };
 
@@ -3627,7 +3634,6 @@ BTL_EVENT_FACTOR*  HAND_TOK_ADD_Kyuuban( u16 pri, u16 tokID, u8 pokeID )
   };
   return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_TOKUSEI, tokID, pri, pokeID, HandlerTable );
 }
-
 //------------------------------------------------------------------------------
 /**
  *  とくせい「ヘドロえき」
@@ -3657,4 +3663,60 @@ BTL_EVENT_FACTOR*  HAND_TOK_ADD_HedoroEki( u16 pri, u16 tokID, u8 pokeID )
   };
   return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_TOKUSEI, tokID, pri, pokeID, HandlerTable );
 }
+//------------------------------------------------------------------------------
+/**
+ *  とくせい「ぶきよう」
+ */
+//------------------------------------------------------------------------------
+static void handler_Bukiyou( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+{
+  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID )
+  {
+    BTL_EVENTVAR_RewriteValue( BTL_EVAR_FAIL_FLAG, TRUE );
+  }
+}
+static BTL_EVENT_FACTOR*  HAND_TOK_ADD_Bukiyou( u16 pri, u16 tokID, u8 pokeID )
+{
+  static const BtlEventHandlerTable HandlerTable[] = {
+    { BTL_EVENT_USE_ITEM_ENABLE,    handler_Bukiyou   },
+    { BTL_EVENT_NULL, NULL },
+  };
+  return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_TOKUSEI, tokID, pri, pokeID, HandlerTable );
+}
+//------------------------------------------------------------------------------
+/**
+ *  とくせい「ねんちゃく」
+ */
+//------------------------------------------------------------------------------
+static void handler_Nenchaku_NoEff( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+{
+  // 自分が防御側のとき
+  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_DEF) == pokeID )
+  {
+    // トリック・すりかえは無効
+    WazaID waza = BTL_EVENTVAR_GetValue( BTL_EVAR_WAZAID );
+    if( (waza == WAZANO_TORIKKU)
+    ||  (waza == WAZANO_SURIKAE)
+    ){
+      BTL_EVENTVAR_RewriteValue( BTL_EVAR_NOEFFECT_FLAG, TRUE );
+    }
+  }
+}
+static void handler_Nenchaku( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+{
+  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID )
+  {
+    BTL_EVENTVAR_RewriteValue( BTL_EVAR_FAIL_FLAG, TRUE );
+  }
+}
+static BTL_EVENT_FACTOR*  HAND_TOK_ADD_Nenchaku( u16 pri, u16 tokID, u8 pokeID )
+{
+  static const BtlEventHandlerTable HandlerTable[] = {
+    { BTL_EVENT_NOEFFECT_CHECK_L2,    handler_Nenchaku_NoEff },  // 無効化チェックLv2ハンドラ
+    { BTL_EVENT_SET_ITEM_BEFORE,      handler_Nenchaku   },
+    { BTL_EVENT_NULL, NULL },
+  };
+  return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_TOKUSEI, tokID, pri, pokeID, HandlerTable );
+}
+
 

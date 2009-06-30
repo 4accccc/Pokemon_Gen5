@@ -218,6 +218,7 @@ typedef enum {
   BTL_HANDEX_SIDE_EFFECT,   ///< サイドエフェクト追加
   BTL_HANDEX_CHANGE_TOKUSEI,///< とくせい書き換え
   BTL_HANDEX_SET_ITEM,      ///< アイテム書き換え
+  BTL_HANDEX_SWAP_ITEM,     ///< アイテム入れ替え
 
   BTL_HANDEX_MAX,
 
@@ -380,6 +381,18 @@ typedef struct {
   int             succeedStrArgs[ BTL_STR_ARG_MAX ];
 
 }BTL_HANDEX_PARAM_SET_ITEM;
+
+/**
+ *  アイテム入れ替え（ヘッダの使用ポケモンと）
+ */
+typedef struct {
+  BTL_HANDEX_PARAM_DAMAGE  header;
+  u8              pokeID;            ///< 対象ポケモンID
+  u8              fSucceedMsg;
+  u8              succeedStrArgCnt;
+  u16             succeedStrID;
+  int             succeedStrArgs[ BTL_STR_ARG_MAX ];
+}BTL_HANDEX_PARAM_SWAP_ITEM;
 
 
 

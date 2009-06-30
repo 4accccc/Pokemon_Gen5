@@ -34,6 +34,7 @@ enum {
   BTL_MAHI_EXE_PER = 25,        ///< 「まひ」でしびれて動けない確率
   BTL_MAHI_AGILITY_RATIO = 25,  ///< 「まひ」時のすばやさ減衰率
   BTL_KORI_MELT_PER = 20,       ///< 「こおり」が溶ける確率
+  BTL_MEROMERO_EXE_PER = 50,    ///< 「メロメロ」で動けない確率
 
   BTL_DOKU_SPLIT_DENOM = 8,         ///< 「どく」で最大HPの何分の１減るか
   BTL_YAKEDO_SPLIT_DENOM = 8,       ///< 「やけど」で最大HPの何分の１減るか
