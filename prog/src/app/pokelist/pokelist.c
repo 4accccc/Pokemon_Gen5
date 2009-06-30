@@ -19,6 +19,8 @@
 #include  "poke_tool/pokeparty.h"
 #include  "poke_tool/poke_tool.h"
 
+//デバッグメータ消し
+#include "test/performance.h"
 
 //======================================================================
 //	define
@@ -63,7 +65,8 @@ static GFL_PROC_RESULT PokeListProc_Init( GFL_PROC * proc, int * seq , void *pwk
   
   plWork = GFL_PROC_AllocWork( proc, sizeof(PLIST_WORK), HEAPID_POKELIST );
   plWork->heapId = HEAPID_POKELIST;
-  
+
+  DEBUG_PerformanceSetActive( FALSE );
   //デバグ
   if( pwk == NULL )
   {
@@ -75,6 +78,24 @@ static GFL_PROC_RESULT PokeListProc_Init( GFL_PROC * proc, int * seq , void *pwk
     for( i=0;i<5;i++ )
     {
       POKEMON_PARAM *pPara = PP_Create( i+1 , 10 , PTL_SETUP_POW_AUTO , HEAPID_POKELIST );
+      switch( i )
+      {
+      case 1:
+        PP_Put( pPara , ID_PARA_hp , 20 );
+        break;
+      case 2:
+        PP_Put( pPara , ID_PARA_hp , 10 );
+        PP_SetSick( pPara , POKESICK_DOKU );
+        break;
+      case 3:
+        PP_Put( pPara , ID_PARA_hp , 0 );
+        PP_Put( pPara , ID_PARA_item , 1 );
+        break;
+      case 4:
+        PP_Put( pPara , ID_PARA_item , 1 );
+        break;
+      }
+      
       PokeParty_Add( plData->pp , pPara );
       GFL_HEAP_FreeMemory( pPara );
     }

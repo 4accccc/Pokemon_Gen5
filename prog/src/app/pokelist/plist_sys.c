@@ -75,6 +75,18 @@ typedef enum
 }PLIST_SYS_SELECT_STATE;
 
 
+//カーソルのアニメ
+enum PLIST_CURCOR_ANIME
+{
+  PCA_NORMAL_A, //通常0番用
+  PCA_NORMAL_B, //通常
+  PCA_CHANGE_A, //入れ替え0番用
+  PCA_CHANGE_B, //入れ替え
+  PCA_SELECT_A, //選択0番用
+  PCA_SELECT_B, //選択
+  PCA_MENU,   //メニュー用
+};
+
 //======================================================================
 //	typedef struct
 //======================================================================

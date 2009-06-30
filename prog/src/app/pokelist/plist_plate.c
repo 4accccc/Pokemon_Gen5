@@ -38,6 +38,10 @@
 #define PLIST_PLATE_BALL_POS_Y (16)
 #define PLIST_PLATE_HPBASE_POS_X (84)
 #define PLIST_PLATE_HPBASE_POS_Y (28)
+#define PLIST_PLATE_ITEM_POS_X (PLIST_PLATE_POKE_POS_X+8)
+#define PLIST_PLATE_ITEM_POS_Y (PLIST_PLATE_POKE_POS_Y+8)
+#define PLIST_PLATE_CONDITION_POS_X (32)
+#define PLIST_PLATE_CONDITION_POS_Y (42)
 
 //文字の位置
 #define PLIST_PLATE_STR_NAME_X (40)
@@ -67,7 +71,17 @@
 //	enum
 //======================================================================
 #pragma mark [> enum
-
+//状態異常アイコンのIDX
+enum
+{
+  POKE_CONICON_POKERUSU,
+  POKE_CONICON_MAHI,
+  POKE_CONICON_KOORI,
+  POKE_CONICON_NEMURI,
+  POKE_CONICON_DOKU,
+  POKE_CONICON_YAKEDO,
+  POKE_CONICON_HINSI,
+};
 
 //======================================================================
 //	typedef struct
@@ -90,6 +104,8 @@ struct _PLIST_PLATE_WORK
   GFL_CLWK *pokeIcon;
   GFL_CLWK *ballIcon;
   GFL_CLWK *hpBase;
+  GFL_CLWK *itemIcon;
+  GFL_CLWK *conditionIcon;
   
 };
 //======================================================================
@@ -110,8 +126,9 @@ static const u8 PLATE_SCR_POS_ARR[2][2] ={{0,1},{16,2}};
 
 static void PLIST_PLATE_CreateCell( PLIST_WORK *work , PLIST_PLATE_WORK *plateWork );
 static void PLIST_PLATE_CreatePokeIcon( PLIST_WORK *work , PLIST_PLATE_WORK *plateWork );
-static void PLIST_PLATE_DrawStr( PLIST_WORK *work , PLIST_PLATE_WORK *plateWork );
+static void PLIST_PLATE_DrawParam( PLIST_WORK *work , PLIST_PLATE_WORK *plateWork );
 static void PLIST_PLATE_DrawHPBar( PLIST_WORK *work , PLIST_PLATE_WORK *plateWork );
+static const u8 PLIST_PLATE_GetHPRate( PLIST_PLATE_WORK *plateWork );
 
 //--------------------------------------------------------------
 //	プレート作成
@@ -163,7 +180,7 @@ PLIST_PLATE_WORK* PLIST_PLATE_CreatePlate( PLIST_WORK *work , const u8 idx , POK
   plateWork->bmpWin = GFL_BMPWIN_Create( PLIST_BG_PARAM , baseX+PLIST_BG_SCROLL_X_CHAR , baseY , 
           PLIST_PLATE_WIDTH , PLIST_PLATE_HEIGHT , PLIST_BG_PLT_HP_BAR , GFL_BMP_CHRAREA_GET_B );
   
-  PLIST_PLATE_DrawStr( work , plateWork );
+  PLIST_PLATE_DrawParam( work , plateWork );
   PLIST_PLATE_DrawHPBar( work , plateWork );
   return plateWork;
 }
@@ -234,7 +251,6 @@ void PLIST_PLATE_UpdatePlate( PLIST_WORK *work , PLIST_PLATE_WORK *plateWork )
 //--------------------------------------------------------------
 static void PLIST_PLATE_CreateCell( PLIST_WORK *work , PLIST_PLATE_WORK *plateWork )
 {
-
   //ボールアイコン
   {
     GFL_CLWK_DATA cellInitData;
@@ -264,6 +280,37 @@ static void PLIST_PLATE_CreateCell( PLIST_WORK *work , PLIST_PLATE_WORK *plateWo
               work->cellRes[PCR_PLT_HP_BASE],
               work->cellRes[PCR_ANM_HP_BASE],
               &cellInitData ,PLIST_RENDER_MAIN , work->heapId );
+  }
+  //アイテムアイコン
+  {
+    GFL_CLWK_DATA cellInitData;
+    cellInitData.pos_x = PLIST_PLATE_ITEM_POS_X;
+    cellInitData.pos_y = PLIST_PLATE_ITEM_POS_Y;
+    cellInitData.anmseq = 0;
+    cellInitData.softpri = 0;
+    cellInitData.bgpri = 2;
+    plateWork->itemIcon = GFL_CLACT_WK_Create( plateWork->cellUnit ,
+              work->cellRes[PCR_NCG_ITEM_ICON],
+              work->cellRes[PCR_PLT_ITEM_ICON],
+              work->cellRes[PCR_ANM_ITEM_ICON],
+              &cellInitData ,PLIST_RENDER_MAIN , work->heapId );
+    GFL_CLACT_WK_SetDrawEnable( plateWork->itemIcon , FALSE );
+  }
+
+  //状態異常アイコン
+  {
+    GFL_CLWK_DATA cellInitData;
+    cellInitData.pos_x = PLIST_PLATE_CONDITION_POS_X;
+    cellInitData.pos_y = PLIST_PLATE_CONDITION_POS_Y;
+    cellInitData.anmseq = 0;
+    cellInitData.softpri = 0;
+    cellInitData.bgpri = 2;
+    plateWork->conditionIcon = GFL_CLACT_WK_Create( plateWork->cellUnit ,
+              work->cellRes[PCR_NCG_CONDITION],
+              work->cellRes[PCR_PLT_CONDITION],
+              work->cellRes[PCR_ANM_CONDITION],
+              &cellInitData ,PLIST_RENDER_MAIN , work->heapId );
+    GFL_CLACT_WK_SetDrawEnable( plateWork->conditionIcon , FALSE );
   }
 }
 //--------------------------------------------------------------
@@ -303,9 +350,8 @@ static void PLIST_PLATE_CreatePokeIcon( PLIST_WORK *work , PLIST_PLATE_WORK *pla
 //--------------------------------------------------------------
 //	文字列描画
 //--------------------------------------------------------------
-static void PLIST_PLATE_DrawStr( PLIST_WORK *work , PLIST_PLATE_WORK *plateWork )
+static void PLIST_PLATE_DrawParam( PLIST_WORK *work , PLIST_PLATE_WORK *plateWork )
 {
-  //FIXME 今後Lvor状態異常とかHPor技覚え状況で分岐するので名前・Lv・Hpで描画関数を分けたほうが良い
   const PRINTSYS_LSB fontCol = PRINTSYS_LSB_Make( PLIST_FONT_PARAM_LETTER , PLIST_FONT_PARAM_SHADOW , 0 );
   //名前
   {
@@ -346,6 +392,8 @@ static void PLIST_PLATE_DrawStr( PLIST_WORK *work , PLIST_PLATE_WORK *plateWork 
   }
 
   //レベル
+  if( PP_GetSick( plateWork->pp ) == POKESICK_NULL &&
+      PP_Get( plateWork->pp , ID_PARA_hp , NULL ) != 0 )
   {
     WORDSET *wordSet = WORDSET_Create( work->heapId );
     STRBUF *srcStr;
@@ -362,6 +410,36 @@ static void PLIST_PLATE_DrawStr( PLIST_WORK *work , PLIST_PLATE_WORK *plateWork 
     GFL_STR_DeleteBuffer( srcStr );
     GFL_STR_DeleteBuffer( dstStr );
     WORDSET_Delete( wordSet );
+  }
+  else
+  {
+    //レベルの代わりに状態異常アイコン
+    if( PP_Get( plateWork->pp , ID_PARA_hp , NULL ) == 0 )
+    {
+      GFL_CLACT_WK_SetAnmSeq( plateWork->conditionIcon , POKE_CONICON_HINSI );
+    }
+    else
+    {
+      switch(PP_GetSick( plateWork->pp ))
+      {
+      case POKESICK_MAHI:   ///< まひ
+        GFL_CLACT_WK_SetAnmSeq( plateWork->conditionIcon , POKE_CONICON_MAHI );
+        break;
+      case POKESICK_NEMURI: ///< ねむり
+        GFL_CLACT_WK_SetAnmSeq( plateWork->conditionIcon , POKE_CONICON_NEMURI );
+        break;
+      case POKESICK_KOORI:  ///< こおり
+        GFL_CLACT_WK_SetAnmSeq( plateWork->conditionIcon , POKE_CONICON_KOORI );
+        break;
+      case POKESICK_YAKEDO: ///< やけど
+        GFL_CLACT_WK_SetAnmSeq( plateWork->conditionIcon , POKE_CONICON_YAKEDO );
+        break;
+      case POKESICK_DOKU:   ///< どく
+        GFL_CLACT_WK_SetAnmSeq( plateWork->conditionIcon , POKE_CONICON_DOKU );
+        break;
+      }
+    }
+    GFL_CLACT_WK_SetDrawEnable( plateWork->conditionIcon , TRUE );
   }
   
   //HP最大
@@ -412,6 +490,49 @@ static void PLIST_PLATE_DrawStr( PLIST_WORK *work , PLIST_PLATE_WORK *plateWork 
     GFL_STR_DeleteBuffer( srcStr );
   }
   
+  //アイテムアイコン
+  {
+    u32 itemId = PP_Get( plateWork->pp , ID_PARA_item , NULL );
+    //TODO メールチェック
+    if( itemId != 0 )
+    {
+      GFL_CLACT_WK_SetDrawEnable( plateWork->itemIcon , TRUE );
+    }
+  }
+ 
+  //ポケアイコンアニメ
+  {
+    const u8 rate = PLIST_PLATE_GetHPRate( plateWork );
+    u16 anmSeq = POKEICON_ANM_HPMAX;
+    if( rate == 0 )
+    {
+      anmSeq = POKEICON_ANM_DEATH;
+    }
+    else
+    if( PP_GetSick( plateWork->pp ) != POKESICK_NULL )
+    {
+      anmSeq = POKEICON_ANM_STCHG;
+    }
+    else
+    if( rate <= 25 )
+    {
+      anmSeq = POKEICON_ANM_HPRED;
+    }
+    else
+    if( rate <= 50 )
+    {
+      anmSeq = POKEICON_ANM_HPYERROW;
+    }
+    else
+    if( rate < 100 )
+    {
+      anmSeq = POKEICON_ANM_HPGREEN;
+    }
+    
+    GFL_CLACT_WK_SetAnmSeq( plateWork->pokeIcon , anmSeq );
+      
+  }
+
   plateWork->isUpdateStr = TRUE;
   
 }
@@ -421,33 +542,22 @@ static void PLIST_PLATE_DrawStr( PLIST_WORK *work , PLIST_PLATE_WORK *plateWork 
 //--------------------------------------------------------------
 static void PLIST_PLATE_DrawHPBar( PLIST_WORK *work , PLIST_PLATE_WORK *plateWork )
 {
-  const u32 hpmax = PP_Get( plateWork->pp , ID_PARA_hpmax , NULL );
-  const u32 hp = PP_Get( plateWork->pp , ID_PARA_hp , NULL );
-  u8 len = PLIST_PLATE_HPBAR_LEN*hp/hpmax;
+  const u8 rate = PLIST_PLATE_GetHPRate( plateWork );
+  u8 len = PLIST_PLATE_HPBAR_LEN*rate/100;
   u8 inCol,outCol;
   GFL_BMP_DATA *bmp = GFL_BMPWIN_GetBmp( plateWork->bmpWin );
   
-  //見た目の調整
-  if( hp < hpmax && len == PLIST_PLATE_HPBAR_LEN )
-  {
-    len = PLIST_PLATE_HPBAR_LEN -1;
-  }
-  if( hp > 0 && len == 0 )
-  {
-    len = 1;
-  }
-  
   //色決定
-  if( len < len/2 )
-  {
-    inCol  = PLIST_HPBAR_COL_YELLOW_IN;
-    outCol = PLIST_HPBAR_COL_YELLOW_OUT;
-  }
-  else
-  if( len < len/4 )
+  if( rate <= 25 )
   {
     inCol  = PLIST_HPBAR_COL_RED_IN;
     outCol = PLIST_HPBAR_COL_RED_OUT;
+  }
+  else
+  if( rate <= 50 )
+  {
+    inCol  = PLIST_HPBAR_COL_YELLOW_IN;
+    outCol = PLIST_HPBAR_COL_YELLOW_OUT;
   }
   else
   {
@@ -461,7 +571,7 @@ static void PLIST_PLATE_DrawHPBar( PLIST_WORK *work , PLIST_PLATE_WORK *plateWor
                 len , 2 , inCol );
   GFL_BMP_Fill( bmp , PLIST_PLATE_HPBAR_LEFT , PLIST_PLATE_HPBAR_TOP+3 ,
                 len , 1 , outCol );
-  
+
 }
 
 //--------------------------------------------------------------
@@ -498,10 +608,30 @@ void PLIST_PLATE_SetActivePlate( PLIST_WORK *work , PLIST_PLATE_WORK *plateWork 
 //--------------------------------------------------------------
 void PLIST_PLATE_ChangeColor( PLIST_WORK *work , PLIST_PLATE_WORK *plateWork , PLIST_PLATE_COLTYPE col )
 {
-  GFL_BG_ChangeScreenPalette( PLIST_BG_PLATE , 
-              PLIST_PLATE_POS_ARR[plateWork->idx][0]+PLIST_BG_SCROLL_X_CHAR ,
-              PLIST_PLATE_POS_ARR[plateWork->idx][1] ,
-              PLIST_PLATE_WIDTH , PLIST_PLATE_HEIGHT , col );
+  if( col == PPC_NORMAL && 
+      PLIST_PLATE_GetHPRate( plateWork ) == 0 )
+  {
+    GFL_BG_ChangeScreenPalette( PLIST_BG_PLATE , 
+                PLIST_PLATE_POS_ARR[plateWork->idx][0]+PLIST_BG_SCROLL_X_CHAR ,
+                PLIST_PLATE_POS_ARR[plateWork->idx][1] ,
+                PLIST_PLATE_WIDTH , PLIST_PLATE_HEIGHT , PPC_DEATH );
+  }
+  else
+  if( col == PPC_NORMAL_SELECT && 
+      PLIST_PLATE_GetHPRate( plateWork ) == 0 )
+  {
+    GFL_BG_ChangeScreenPalette( PLIST_BG_PLATE , 
+                PLIST_PLATE_POS_ARR[plateWork->idx][0]+PLIST_BG_SCROLL_X_CHAR ,
+                PLIST_PLATE_POS_ARR[plateWork->idx][1] ,
+                PLIST_PLATE_WIDTH , PLIST_PLATE_HEIGHT , PPC_DEATH_SELECT );
+  }
+  else
+  {
+    GFL_BG_ChangeScreenPalette( PLIST_BG_PLATE , 
+                PLIST_PLATE_POS_ARR[plateWork->idx][0]+PLIST_BG_SCROLL_X_CHAR ,
+                PLIST_PLATE_POS_ARR[plateWork->idx][1] ,
+                PLIST_PLATE_WIDTH , PLIST_PLATE_HEIGHT , col );
+  }
 
   GFL_BG_LoadScreenV_Req( PLIST_BG_PLATE );
 }
@@ -576,6 +706,8 @@ void PLIST_PLATE_ResetParam( PLIST_WORK *work , PLIST_PLATE_WORK *plateWork , PO
   GFL_CLACT_WK_Remove( plateWork->pokeIcon );
   GFL_CLGRP_CGR_Release( plateWork->pokeIconNcgRes );
   GFL_BMP_Clear( GFL_BMPWIN_GetBmp( plateWork->bmpWin ) , 0 );
+  GFL_CLACT_WK_SetDrawEnable( plateWork->itemIcon , FALSE );
+  GFL_CLACT_WK_SetDrawEnable( plateWork->conditionIcon , FALSE );
   
   {
     //設定が終わったらレンダラを一回戻す
@@ -594,7 +726,7 @@ void PLIST_PLATE_ResetParam( PLIST_WORK *work , PLIST_PLATE_WORK *plateWork , PO
     GFL_CLACT_USERREND_SetSurfacePos( plateWork->cellRender , PLIST_RENDER_MAIN , &surfacePos );
   }
   
-  PLIST_PLATE_DrawStr( work , plateWork );
+  PLIST_PLATE_DrawParam( work , plateWork );
   PLIST_PLATE_DrawHPBar( work , plateWork );
   
 }
@@ -629,5 +761,25 @@ void PLIST_PLATE_GetPlateRect( PLIST_WORK *work , PLIST_PLATE_WORK *plateWork , 
   hitTbl->rect.top    = PLIST_PLATE_POS_ARR[plateWork->idx][1]*8;
   hitTbl->rect.right  = (PLIST_PLATE_POS_ARR[plateWork->idx][0]+PLIST_PLATE_WIDTH )*8;
   hitTbl->rect.bottom = (PLIST_PLATE_POS_ARR[plateWork->idx][1]+PLIST_PLATE_HEIGHT)*8;
+}
+
+//--------------------------------------------------------------
+//HPの割合の計算0～100
+//--------------------------------------------------------------
+static const u8 PLIST_PLATE_GetHPRate( PLIST_PLATE_WORK *plateWork )
+{
+  const u32 hpmax = PP_Get( plateWork->pp , ID_PARA_hpmax , NULL );
+  const u32 hp = PP_Get( plateWork->pp , ID_PARA_hp , NULL );
+  u8 rate = 100*hp/hpmax;
+  
+  if( hp != 0 && rate == 0 )
+  {
+    rate = 1;
+  }
+  if( hp != hpmax && rate == 100 )
+  {
+    rate = 99;
+  }
+  return rate;
 }
 

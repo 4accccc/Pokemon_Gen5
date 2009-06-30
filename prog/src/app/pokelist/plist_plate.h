@@ -19,6 +19,10 @@ typedef enum
   PPC_NORMAL        = 3,  //’Êí
   PPC_NORMAL_SELECT = 7,  //’Êí(‘I‘ð
   PPC_CHANGE        = 6,  //“ü‚ê‘Ö‚¦
+
+  //ˆÈ‰º‚ÍŽ©“®Ý’è
+  PPC_DEATH        = 5,  //Ž€–S
+  PPC_DEATH_SELECT = 9,  //Ž€–S(‘I‘ð
 }PLIST_PLATE_COLTYPE;
 
 extern PLIST_PLATE_WORK* PLIST_PLATE_CreatePlate( PLIST_WORK *work , const u8 idx , POKEMON_PARAM *pp );
