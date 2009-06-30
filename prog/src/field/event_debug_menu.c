@@ -43,6 +43,8 @@
 #include "field_debug.h"
 
 #include "field_event_check.h"
+#include "event_debug_item.h" //EVENT_DebugItemMake
+
 //======================================================================
 //	define
 //======================================================================
@@ -147,6 +149,7 @@ static BOOL DMenuCallProc_FieldPosData( DEBUG_MENU_EVENT_WORK *wk );
 static BOOL DMenuCallProc_ControlRtcList( DEBUG_MENU_EVENT_WORK *wk );
 
 static BOOL DMenuCallProc_Naminori( DEBUG_MENU_EVENT_WORK *wk );
+static BOOL DMenuCallProc_DebugItem( DEBUG_MENU_EVENT_WORK *wk );
 
 //======================================================================
 //  デバッグメニューリスト
@@ -175,6 +178,7 @@ static const FLDMENUFUNC_LIST DATA_DebugMenuList[] =
   { DEBUG_FIELD_STR_SUBSCRN, DMenuCallProc_SubscreenSelect },
   { DEBUG_FIELD_STR21 , DMenuCallProc_MusicalSelect },
   { DEBUG_FIELD_STR30, DMenuCallProc_Naminori },
+  { DEBUG_FIELD_STR32, DMenuCallProc_DebugItem },
 	{ DEBUG_FIELD_STR01, NULL },
 };
 
@@ -202,6 +206,7 @@ static const FLDMENUFUNC_LIST DATA_DebugMenuListGrid[] =
   { DEBUG_FIELD_STR_SUBSCRN, DMenuCallProc_SubscreenSelect },
   { DEBUG_FIELD_STR21 , DMenuCallProc_MusicalSelect },
   { DEBUG_FIELD_STR31, DMenuCallProc_Naminori },
+  { DEBUG_FIELD_STR32, DMenuCallProc_DebugItem },
 	{ DEBUG_FIELD_STR01, NULL },
 };
 
@@ -2364,3 +2369,25 @@ static BOOL DMenuCallProc_Naminori( DEBUG_MENU_EVENT_WORK *wk )
   FIELD_EVENT_ChangeNaminoriStart( wk->gmEvent, wk->gmSys, wk->fieldWork );
   return( TRUE );
 }
+
+//--------------------------------------------------------------
+/**
+ * @brief   デバッグアイテム作成
+ * @param   wk DEBUG_MENU_EVENT_WORK*
+ * @retval  BOOL TRUE=イベント継続
+ */
+//--------------------------------------------------------------
+static BOOL DMenuCallProc_DebugItem( DEBUG_MENU_EVENT_WORK *wk )
+{
+	GMEVENT *event = wk->gmEvent;
+	FIELD_MAIN_WORK *fieldWork = wk->fieldWork;
+	GAMESYS_WORK	*gameSys	= wk->gmSys;
+
+	EVENT_DebugItemMake(gameSys, fieldWork, event, wk->heapID);
+
+	return( TRUE );
+}
+
+
+
+
