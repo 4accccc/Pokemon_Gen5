@@ -243,6 +243,8 @@ extern u16  WAZADATA_GetPower( WazaID id );
 extern s8   WAZADATA_GetPriority( WazaID id );
 
 
+// MaxPPíl
+extern u8 WAZADATA_GetMaxPP( WazaID id, u8 upCnt );
 
 // ÉJÉeÉSÉä
 extern WazaCategory  WAZADATA_GetCategory( WazaID id );

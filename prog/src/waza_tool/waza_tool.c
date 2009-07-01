@@ -656,6 +656,11 @@ static const SEQ_PARAM* getSeqParam( WazaID waza )
   return NULL;
 }
 
+u8 WAZADATA_GetMaxPP( WazaID id, u8 upCnt )
+{
+  return WT_PPMaxGet( id, upCnt );
+}
+
 // ÉèÉUóDêÊìx
 s8   WAZADATA_GetPriority( WazaID id )
 {
