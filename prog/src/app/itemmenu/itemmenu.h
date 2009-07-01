@@ -1,7 +1,7 @@
 //======================================================================
 /**
- * @file	  field_itemmenu.h
- * @brief	  フィールドアイテムメニュー
+ * @file	  itemmenu.h
+ * @brief	  アイテムメニュー
  * @author	k.ohno
  * @date	  2009.06.30
  */
@@ -29,7 +29,7 @@
 #include "font/font.naix" //NARC_font_large_nftr
 #include "sound/pm_sndsys.h"
 
-extern const GFL_PROC_DATA FieldItemMenuProcData;
+extern const GFL_PROC_DATA ItemMenuProcData;
 
 typedef struct _DEBUGITEM_PARAM FIELD_ITEMMENU_WORK;
 typedef void (StateFunc)(FIELD_ITEMMENU_WORK* wk);

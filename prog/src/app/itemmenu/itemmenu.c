@@ -1,7 +1,7 @@
 //============================================================================================
 /**
- * @file	  field_itemmenu.h
- * @brief	  フィールドアイテムメニュー
+ * @file	  itemmenu.h
+ * @brief	  アイテムメニュー
  * @author	k.ohno
  * @date	  2009.06.30
  */
@@ -28,7 +28,7 @@
 #include "font/font.naix" //NARC_font_large_nftr
 #include "sound/pm_sndsys.h"
 
-#include "field_itemmenu.h"
+#include "itemmenu.h"
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
@@ -221,7 +221,7 @@ void _itemKindSelectMenu(FIELD_ITEMMENU_WORK* wk)
 
 //------------------------------------------------------------------------------
 /**
- * @brief   デバッグプロセス初期化
+ * @brief   プロセス初期化
  * @retval  none
  */
 //------------------------------------------------------------------------------
@@ -255,7 +255,7 @@ static GFL_PROC_RESULT FieldItemMenuProc_Init( GFL_PROC * proc, int * seq, void 
 
 //------------------------------------------------------------------------------
 /**
- * @brief   デバッグプロセスMain
+ * @brief   プロセスMain
  * @retval  none
  */
 //------------------------------------------------------------------------------
@@ -276,7 +276,7 @@ static GFL_PROC_RESULT FieldItemMenuProc_Main( GFL_PROC * proc, int * seq, void 
 
 //------------------------------------------------------------------------------
 /**
- * @brief   デバッグプロセスEnd
+ * @brief   プロセスEnd
  * @retval  none
  */
 //------------------------------------------------------------------------------
@@ -303,7 +303,7 @@ static GFL_PROC_RESULT FieldItemMenuProc_End( GFL_PROC * proc, int * seq, void *
 
 
 // プロセス定義データ
-const GFL_PROC_DATA FieldItemMenuProcData = {
+const GFL_PROC_DATA ItemMenuProcData = {
   FieldItemMenuProc_Init,
   FieldItemMenuProc_Main,
   FieldItemMenuProc_End,
