@@ -81,6 +81,7 @@ typedef struct {
   BTL_POKEPARAM*  pp[ BTL_POS_MAX ];
   u16             damage[ BTL_POS_MAX ];
   u8              count;
+  u8              countMax;
   u8              idx;
 
 }TARGET_POKE_REC;
@@ -195,6 +196,7 @@ static inline u32 TargetPokeRec_GetDamage( const TARGET_POKE_REC* rec, const BTL
 static inline BTL_POKEPARAM* TargetPokeRec_Get( const TARGET_POKE_REC* rec, u32 idx );
 static inline int TargetPokeRec_SeekFriendIdx( const TARGET_POKE_REC* rec, const BTL_POKEPARAM* pp, u32 start_idx );
 static inline u32 TargetPokeRec_GetCount( const TARGET_POKE_REC* rec );
+static inline u32 TargetPokeRec_GetCountMax( const TARGET_POKE_REC* rec );
 static u32 TargetPokeRec_CopyFriends( const TARGET_POKE_REC* rec, const BTL_POKEPARAM* pp, TARGET_POKE_REC* dst );
 static u32 TargetPokeRec_CopyEnemys( const TARGET_POKE_REC* rec, const BTL_POKEPARAM* pp, TARGET_POKE_REC* dst );
 static void TargetPokeRec_RemoveDeadPokemon( TARGET_POKE_REC* rec );
@@ -286,6 +288,7 @@ static BOOL scproc_WeatherCore( BTL_SVFLOW_WORK* wk, BtlWeather weather, u8 turn
 static void scput_Fight_Others( BTL_SVFLOW_WORK* wk, WazaID waza, BTL_POKEPARAM* attacker, TARGET_POKE_REC* targets );
 static BOOL scEvent_UnCategoryWaza( BTL_SVFLOW_WORK* wk, WazaID waza, const BTL_POKEPARAM* attacker, TARGET_POKE_REC* targets );
 static void scput_Fight_Others_SkillSwap( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, TARGET_POKE_REC* targetRec );
+static void scput_Fight_Uncategory_Hensin( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, TARGET_POKE_REC* targetRec );
 static void scproc_HandEx_Root( BTL_SVFLOW_WORK* wk, u16 useItemID );
 static void scproc_HandEx_TokWinIn( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header );
 static void scproc_HandEx_TokWinOut( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header );
@@ -314,6 +317,7 @@ static void scproc_HandEx_sideEffect( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARA
 static void scproc_HandEx_tokuseiChange( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header );
 static void scproc_HandEx_setItem( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header );
 static void scproc_HandEx_swapItem( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header );
+static void scproc_HandEx_updateWaza( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header );
 static void handexSub_itemSet( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 itemID );
 static BOOL scEventSetItem( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp );
 static void scproc_TurnCheck( BTL_SVFLOW_WORK* wk );
@@ -936,14 +940,18 @@ static BOOL FRONT_POKE_SEEK_GetNext( FRONT_POKE_SEEK_WORK* fpsw, BTL_SVFLOW_WORK
 static inline void TargetPokeRec_Clear( TARGET_POKE_REC* rec )
 {
   rec->count = 0;
+  rec->countMax = 0;
 }
 static inline void TargetPokeRec_AddWithDamage( TARGET_POKE_REC* rec, BTL_POKEPARAM* pp, u16 damage )
 {
   if( rec->count < NELEMS(rec->pp) )
   {
-    rec->pp[rec->count] = pp;
-    rec->damage[rec->count] = damage;
+    rec->pp[ rec->count ] = pp;
+    rec->damage[ rec->count ] = damage;
     rec->count++;
+    if( rec->count > rec->countMax ){
+      rec->countMax = rec->count;
+    }
   }
   else
   {
@@ -1028,6 +1036,11 @@ static inline int TargetPokeRec_SeekFriendIdx( const TARGET_POKE_REC* rec, const
 static inline u32 TargetPokeRec_GetCount( const TARGET_POKE_REC* rec )
 {
   return rec->count;
+}
+// このターンに記録されたポケモン総数を返す
+static inline u32 TargetPokeRec_GetCountMax( const TARGET_POKE_REC* rec )
+{
+  return rec->countMax;
 }
 // 指定ポケモンと同チームのポケモンのみを別ワークにコピー
 // return : コピーしたポケモン数
@@ -3229,10 +3242,20 @@ static void scput_Fight_Others( BTL_SVFLOW_WORK* wk, WazaID waza, BTL_POKEPARAM*
     }
   }
 
+  // ターゲットは居たはずだがモロモロの理由で残っていない場合は終了
+  if( (TargetPokeRec_GetCountMax(targets) > 0)
+  &&  (TargetPokeRec_GetCount(targets) == 0)
+  ){
+    return;
+  }
+
 
   switch( waza ){
   case WAZANO_SUKIRUSUWAPPU:
     scput_Fight_Others_SkillSwap( wk, attacker, targets );
+    break;
+  case WAZANO_HENSIN:
+    scput_Fight_Uncategory_Hensin( wk, attacker, targets );
     break;
   default:
     {
@@ -3318,6 +3341,26 @@ static void scput_Fight_Others_SkillSwap( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* at
     SCQUE_PUT_MSG_SET( wk->que, BTL_STRID_STD_WazaFail );
   }
 }
+// へんしん
+static void scput_Fight_Uncategory_Hensin( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, TARGET_POKE_REC* targetRec )
+{
+  BTL_POKEPARAM* target = TargetPokeRec_Get( targetRec, 0 );
+
+  if( BTL_POKEPARAM_HENSIN_Set(attacker, target) )
+  {
+    u8 atkPokeID = BTL_POKEPARAM_GetID( attacker );
+    u8 tgtPokeID = BTL_POKEPARAM_GetID( target );
+
+    scPut_WazaEffectOn( wk, attacker, target, WAZANO_HENSIN );
+    SCQUE_PUT_MSG_SET( wk->que, BTL_STRID_SET_Hensin, atkPokeID, tgtPokeID );
+
+    BTL_HANDLER_Waza_RemoveForceAll( attacker );
+    BTL_HANDLER_TOKUSEI_Remove( attacker );
+    BTL_HANDLER_TOKUSEI_Add( attacker );
+
+    SCQUE_PUT_OP_Hensin( wk->que, atkPokeID, tgtPokeID );
+  }
+}
 //---------------------------------------------------------------------------------------------
 //---------------------------------------------------------------------------------------------
 //----------------------------------------------------------------------------------
@@ -3362,6 +3405,7 @@ static void scproc_HandEx_Root( BTL_SVFLOW_WORK* wk, u16 useItemID )
     case BTL_HANDEX_CHANGE_TOKUSEI: scproc_HandEx_tokuseiChange( wk, handEx_header ); break;
     case BTL_HANDEX_SET_ITEM:       scproc_HandEx_setItem( wk, handEx_header ); break;
     case BTL_HANDEX_SWAP_ITEM:      scproc_HandEx_swapItem( wk, handEx_header ); break;
+    case BTL_HANDEX_UPDATE_WAZA:    scproc_HandEx_updateWaza( wk, handEx_header ); break;
     default:
       GF_ASSERT_MSG(0, "illegal handEx type = %d, userPokeID=%d", handEx_header->equip, handEx_header->userPokeID);
     }
@@ -3705,6 +3749,14 @@ static void scproc_HandEx_swapItem( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_
   if( param->fSucceedMsg ){
     scPut_Message_SetEx( wk, self, param->succeedStrID, param->succeedStrArgCnt, param->succeedStrArgs );
   }
+}
+static void scproc_HandEx_updateWaza( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header )
+{
+  const BTL_HANDEX_PARAM_UPDATE_WAZA* param = (const BTL_HANDEX_PARAM_UPDATE_WAZA*)(param_header);
+
+  BTL_POKEPARAM* target = BTL_POKECON_GetPokeParam( wk->pokeCon, param->pokeID );
+  SCQUE_PUT_OP_UpdateWaza( wk->que, param->pokeID, param->wazaIdx, param->waza, param->ppMax, param->fPermanent );
+  BTL_POKEPARAM_UpdateWazaNumber( target, param->wazaIdx, param->waza, param->ppMax, param->fPermanent );
 }
 //----------------------------------------------------------------------------------
 /**
@@ -4725,6 +4777,7 @@ static void scPut_DecrementPP( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, u8 
 {
   u8 pokeID = BTL_POKEPARAM_GetID( attacker );
   BTL_POKEPARAM_PPMinus( attacker, wazaIdx, vol );
+  BTL_POKEPARAM_SetWazaUsed( attacker, wazaIdx );
   SCQUE_PUT_OP_PPMinus( wk->que, pokeID, wazaIdx, vol );
 }
 //----------------------------------------------------------------------------------
@@ -7008,6 +7061,7 @@ static BTL_HANDEX_PARAM_HEADER* Hem_PushWork( HANDLER_EXHIBISION_MANAGER* wk, Bt
     { BTL_HANDEX_CHANGE_TOKUSEI, sizeof(BTL_HANDEX_PARAM_CHANGE_TOKUSEI)  },
     { BTL_HANDEX_SET_ITEM,       sizeof(BTL_HANDEX_PARAM_SET_ITEM)        },
     { BTL_HANDEX_SWAP_ITEM,      sizeof(BTL_HANDEX_PARAM_SWAP_ITEM)       },
+    { BTL_HANDEX_UPDATE_WAZA,    sizeof(BTL_HANDEX_PARAM_UPDATE_WAZA)     },
   };
   u32 size, i;
 

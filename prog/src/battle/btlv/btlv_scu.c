@@ -807,6 +807,7 @@ void BTLV_SCU_StartWazaEffect( BTLV_SCU* wk, BtlvMcssPos atPos, BtlvMcssPos defP
   param.turn_count = turnType;
   param.continue_count = continueCount;
 
+//  @@@ ターゲットの居ないワザを出すと止まることがあるのでコメントアウトしている  taya
 //  BTLV_EFFECT_AddWazaEffect( &param );
 }
 

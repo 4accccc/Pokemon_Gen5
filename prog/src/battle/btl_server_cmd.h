@@ -56,6 +56,8 @@ typedef enum {
   SC_OP_RESET_TURNFLAG,     ///< ターンフラグ強制リセット
   SC_OP_CHANGE_TOKUSEI,     ///< とくせい書き換え
   SC_OP_SET_ITEM,           ///< アイテム書き換え
+  SC_OP_UPDATE_WAZANUMBER,  ///< ワザ書き換え
+  SC_OP_HENSIN,             ///< へんしん
   SC_ACT_WAZA_EFFECT,
   SC_ACT_WAZA_EFFECT_EX,    ///< 【アクション】ワザエフェクト拡張（溜めターンエフェクトなどに使用）
   SC_ACT_WAZA_DMG,          ///< 【アクション】[ AtClient, DefClient, wazaIdx, Affinity ]
@@ -302,7 +304,15 @@ static inline void SCQUE_PUT_OP_ChangeTokusei( BTL_SERVER_CMD_QUE* que, u8 pokeI
 }
 static inline void SCQUE_PUT_OP_SetItem( BTL_SERVER_CMD_QUE* que, u8 pokeID, u16 itemID )
 {
-  SCQUE_PUT_Common( que, SC_OP_CHANGE_TOKUSEI, pokeID, itemID );
+  SCQUE_PUT_Common( que, SC_OP_SET_ITEM, pokeID, itemID );
+}
+static inline void SCQUE_PUT_OP_UpdateWaza( BTL_SERVER_CMD_QUE* que, u8 pokeID, u8 wazaIdx, u16 wazaID, u8 ppMax, u8 fPermanent )
+{
+  SCQUE_PUT_Common( que, SC_OP_UPDATE_WAZANUMBER, pokeID, wazaIdx, ppMax, fPermanent, wazaID );
+}
+static inline void SCQUE_PUT_OP_Hensin( BTL_SERVER_CMD_QUE* que, u8 atkPokeID, u8 tgtPokeID )
+{
+  SCQUE_PUT_Common( que, SC_OP_HENSIN, atkPokeID, tgtPokeID );
 }
 
 

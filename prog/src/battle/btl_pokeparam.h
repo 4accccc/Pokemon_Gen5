@@ -392,6 +392,12 @@ extern void BTL_POKEPARAM_RankRecover( BTL_POKEPARAM* pp );
 extern void BTL_POKEPARAM_RankReset( BTL_POKEPARAM* pp );
 extern void BTL_POKEPARM_DeadClear( BTL_POKEPARAM* pp );
 extern void BTL_POKEPARAM_SetItem( BTL_POKEPARAM* pp, u16 itemID );
+extern void BTL_POKEPARAM_SetWazaUsed( BTL_POKEPARAM* pp, u8 wazaIdx );
+extern void BTL_POKEPARAM_UpdateWazaNumber( BTL_POKEPARAM* pp, u8 wazaIdx, WazaID waza, u8 ppMax, BOOL fPermenent );
+
+extern BOOL BTL_POKEPARAM_HENSIN_Set( BTL_POKEPARAM* bpp, const BTL_POKEPARAM* target );
+extern void BTL_POKEPARAM_HENSIN_Reset( BTL_POKEPARAM* bpp );
+extern BOOL BTL_POKEPARAM_HENSIN_Check( const BTL_POKEPARAM* bpp );
 
 extern void BTL_POKEPARAM_WAZADMG_REC_Add( BTL_POKEPARAM* pp, const BPP_WAZADMG_REC* rec );
 extern u8   BTL_POKEPARAM_WAZADMG_REC_GetCount( const BTL_POKEPARAM* pp, u8 turn_ridx );

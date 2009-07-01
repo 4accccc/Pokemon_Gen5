@@ -40,6 +40,18 @@ enum {
 };
 
 
+//--------------------------------------------------------------
+/**
+ *  基本パラメータ  --バトル中、不変な要素--
+ */
+//--------------------------------------------------------------
+typedef struct {
+  const POKEMON_PARAM*  ppSrc;
+  const POKEMON_PARAM*  hensinSrc;
+  u16   hp;
+  u16   item;
+  u8    myID;
+}BPP_CORE_PARAM;
 
 //--------------------------------------------------------------
 /**
@@ -104,15 +116,21 @@ typedef struct {
  */
 //--------------------------------------------------------------
 typedef struct {
-  u16  number;
-  u8   pp;
-  u8   ppMax;
+  u16  number;            ///< ワザナンバー
+  u16  recoverNumber;     ///< バトル中にワザが書き換わった時に、巻き戻し用に前のワザを保存
+  u8   pp;                ///< PP値
+  u8   ppMax;             ///< PP最大値
+  u8   usedFlag;          ///< 使用したフラグ
 }BPP_WAZA;
 
 
 struct _BTL_POKEPARAM {
 
+  BPP_CORE_PARAM      coreParam;
+
   const POKEMON_PARAM*  ppSrc;
+  u16  hp;
+  u8   myID;
 
   BPP_BASE_PARAM      baseParam;
   BPP_VARIABLE_PARAM  varyParam;
@@ -120,21 +138,14 @@ struct _BTL_POKEPARAM {
   BPP_WAZA            waza[ PTL_WAZA_MAX ];
 
   PokeTypePair  type;
-  u16  item;
   u16  tokusei;
-  u16  default_tokusei;
-  u16  hp;
 
-  u16 turnCount;    ///< 継続して戦闘に出ているカウンタ
-  u16 appearedTurn; ///< 戦闘に出たターンを記録
+  u16 turnCount;        ///< 継続して戦闘に出ているカウンタ
+  u16 appearedTurn;     ///< 戦闘に出たターンを記録
 
-  u16 prevWazaID;       ///< 直前に使ったワザナンバー
-  u16 sameWazaCounter;  ///< 同じワザを何連続で出しているかカウンタ
+  u16 prevWazaID;             ///< 直前に使ったワザナンバー
+  u16 sameWazaCounter;        ///< 同じワザを何連続で出しているかカウンタ
   BtlPokePos  prevTargetPos;  ///< 直前に狙った相手
-
-  u8  myID;
-  u8  wazaCnt;
-  u8  formNo;
 
   BPP_SICK_CONT   sickCont[ WAZASICK_MAX ];
   u8  wazaSickCounter[ WAZASICK_MAX ];
@@ -148,6 +159,9 @@ struct _BTL_POKEPARAM {
   u8               dmgrecTurnPtr;
   u8               dmgrecPtr;
 
+  u8  wazaCnt;
+  u8  formNo;
+
 //  u32 dmy;
 };
 
@@ -155,6 +169,7 @@ struct _BTL_POKEPARAM {
 /*--------------------------------------------------------------------------*/
 /* Prototypes                                                               */
 /*--------------------------------------------------------------------------*/
+static void setupBySrcData( BTL_POKEPARAM* bpp, const POKEMON_PARAM* srcPP );
 static void clearWazaSickWork( BTL_POKEPARAM* pp );
 static void Effrank_Init( BPP_VARIABLE_PARAM* rank );
 static void Effrank_Reset( BPP_VARIABLE_PARAM* rank );
@@ -162,12 +177,13 @@ static void Effrank_Recover( BPP_VARIABLE_PARAM* rank );
 static const s8* getRankVaryStatusConst( const BTL_POKEPARAM* pp, BppValueID type, s8* min, s8* max );
 static s8* getRankVaryStatus( BTL_POKEPARAM* pp, BppValueID type, s8* min, s8* max );
 static void dmgrecClearWork( BTL_POKEPARAM* bpp );
-static void dmgrecFwdTurn( BTL_POKEPARAM* pp );
+static void dmgrecFwdTurn( BTL_POKEPARAM* bpp );
 static void update_RealParam( BTL_POKEPARAM* pp );
 static inline void flgbuf_clear( u8* buf, u32 size );
 static inline void flgbuf_set( u8* buf, u32 flagID );
 static inline void flgbuf_reset( u8* buf, u32 flagID );
 static inline BOOL flgbuf_get( const u8* buf, u32 flagID );
+static void HensinWork_Init( BTL_POKEPARAM* bpp );
 
 
 
@@ -185,26 +201,70 @@ static inline BOOL flgbuf_get( const u8* buf, u32 flagID );
 BTL_POKEPARAM*  BTL_POKEPARAM_Create( const POKEMON_PARAM* pp, u8 pokeID, HEAPID heapID )
 {
   BTL_POKEPARAM* bpp = GFL_HEAP_AllocClearMemory( heapID, sizeof(BTL_POKEPARAM) );
-  int i;
-  u16 monsno;
 
-  // 基本パラメタ初期化
-  monsno = PP_Get( pp, ID_PARA_monsno, 0 );
+  bpp->coreParam.myID = pokeID;
+  bpp->coreParam.ppSrc = pp;
+  bpp->coreParam.hp = PP_Get( pp, ID_PARA_hp, 0 );
+  bpp->coreParam.item = PP_Get( pp, ID_PARA_item, NULL );
+  bpp->coreParam.hensinSrc = NULL;
 
-  bpp->baseParam.monsno = monsno;
-  bpp->baseParam.level = PP_Get( pp, ID_PARA_level, 0 );
-  bpp->baseParam.hpMax = PP_Get( pp, ID_PARA_hpmax, 0 );
-  bpp->baseParam.attack = PP_Get( pp, ID_PARA_pow, 0 );
-  bpp->baseParam.defence = PP_Get( pp, ID_PARA_def, 0 );
-  bpp->baseParam.sp_attack = PP_Get( pp, ID_PARA_spepow, 0 );
-  bpp->baseParam.sp_defence = PP_Get( pp, ID_PARA_spedef, 0 );
-  bpp->baseParam.agility = PP_Get( pp, ID_PARA_agi, 0 );
-  bpp->baseParam.type1 = PP_Get( pp, ID_PARA_type1, 0 );
-  bpp->baseParam.type2 = PP_Get( pp, ID_PARA_type2, 0 );
-  bpp->baseParam.sex = PP_GetSex( pp );
+  setupBySrcData( bpp, pp );
 
   // ランク効果初期化
   Effrank_Init( &bpp->varyParam );
+
+  // 状態異常ワーク初期化
+  clearWazaSickWork( bpp );
+
+  // この時点でポケモン用状態異常になっていれば引き継ぎ
+  {
+    PokeSick sick = PP_GetSick( pp );
+    if( sick == POKESICK_NEMURI )
+    {
+      u32 turns = BTL_CALC_RandRange( BTL_NEMURI_TURN_MIN, BTL_NEMURI_TURN_MIN );
+      bpp->sickCont[WAZASICK_NEMURI] = BPP_SICKCONT_MakeTurn( turns );
+      bpp->wazaSickCounter[WAZASICK_NEMURI] = turns;
+    }
+  }
+
+  // 各種ワーク領域初期化
+  bpp->appearedTurn = TURNCOUNT_NULL;
+  bpp->turnCount = 0;
+  bpp->prevWazaID = WAZANO_NULL;
+  bpp->sameWazaCounter = 0;
+
+  flgbuf_clear( bpp->turnFlag, sizeof(bpp->turnFlag) );
+  flgbuf_clear( bpp->contFlag, sizeof(bpp->contFlag) );
+
+  dmgrecClearWork( bpp );
+
+  return bpp;
+}
+//----------------------------------------------------------------------------------
+/**
+ * 元になるポケモンパラメータ構造体から必要部分を構築
+ *
+ * @param   bpp
+ * @param   srcPP
+ */
+//----------------------------------------------------------------------------------
+static void setupBySrcData( BTL_POKEPARAM* bpp, const POKEMON_PARAM* srcPP )
+{
+  u16 monsno = PP_Get( srcPP, ID_PARA_monsno, 0 );
+  int i;
+
+  // 基本パラメタ初期化
+  bpp->baseParam.monsno = monsno;
+  bpp->baseParam.level = PP_Get( srcPP, ID_PARA_level, 0 );
+  bpp->baseParam.hpMax = PP_Get( srcPP, ID_PARA_hpmax, 0 );
+  bpp->baseParam.attack = PP_Get( srcPP, ID_PARA_pow, 0 );
+  bpp->baseParam.defence = PP_Get( srcPP, ID_PARA_def, 0 );
+  bpp->baseParam.sp_attack = PP_Get( srcPP, ID_PARA_spepow, 0 );
+  bpp->baseParam.sp_defence = PP_Get( srcPP, ID_PARA_spedef, 0 );
+  bpp->baseParam.agility = PP_Get( srcPP, ID_PARA_agi, 0 );
+  bpp->baseParam.type1 = PP_Get( srcPP, ID_PARA_type1, 0 );
+  bpp->baseParam.type2 = PP_Get( srcPP, ID_PARA_type2, 0 );
+  bpp->baseParam.sex = PP_GetSex( srcPP );
 
   // 実パラメータ初期化
   bpp->realParam.attack = bpp->baseParam.attack;
@@ -217,11 +277,11 @@ BTL_POKEPARAM*  BTL_POKEPARAM_Create( const POKEMON_PARAM* pp, u8 pokeID, HEAPID
   bpp->wazaCnt = 0;
   for(i=0; i<PTL_WAZA_MAX; i++)
   {
-    bpp->waza[i].number = PP_Get( pp, ID_PARA_waza1+i, 0 );
-    if( bpp->waza[i].number )
+    bpp->waza[i].number = PP_Get( srcPP, ID_PARA_waza1+i, 0 );
+    if( bpp->waza[i].number != WAZANO_NULL )
     {
-      bpp->waza[i].pp = PP_Get( pp, ID_PARA_pp1+i, 0 );
-      bpp->waza[i].ppMax = PP_Get( pp, ID_PARA_pp_max1+i, 0 );
+      bpp->waza[i].pp = PP_Get( srcPP, ID_PARA_pp1+i, 0 );
+      bpp->waza[i].ppMax = PP_Get( srcPP, ID_PARA_pp_max1+i, 0 );
       bpp->wazaCnt++;
     }
     else
@@ -229,41 +289,17 @@ BTL_POKEPARAM*  BTL_POKEPARAM_Create( const POKEMON_PARAM* pp, u8 pokeID, HEAPID
       bpp->waza[i].pp = 0;
       bpp->waza[i].ppMax = 0;
     }
+    bpp->waza[i].usedFlag = FALSE;
+    bpp->waza[i].recoverNumber = bpp->waza[i].number;
   }
 
   bpp->type = PokeTypePair_Make( bpp->baseParam.type1, bpp->baseParam.type2 );
-  bpp->item = PP_Get( pp, ID_PARA_item, NULL );
-  bpp->tokusei = PP_Get( pp, ID_PARA_speabino, 0 );
-  bpp->default_tokusei = bpp->tokusei;
-  bpp->hp = PP_Get( pp, ID_PARA_hp, 0 );
-  bpp->myID = pokeID;
+  bpp->tokusei = PP_Get( srcPP, ID_PARA_speabino, 0 );
 
-  clearWazaSickWork( bpp );
-  {
-    PokeSick sick = PP_GetSick( pp );
-    if( sick == POKESICK_NEMURI )
-    {
-      u32 turns = BTL_CALC_RandRange( BTL_NEMURI_TURN_MIN, BTL_NEMURI_TURN_MIN );
-      bpp->sickCont[WAZASICK_NEMURI] = BPP_SICKCONT_MakeTurn( turns );
-      bpp->wazaSickCounter[WAZASICK_NEMURI] = turns;
-    }
-  }
+  bpp->formNo = PP_Get( srcPP, ID_PARA_form_no, 0 );
 
-
-  bpp->ppSrc = pp;
-  bpp->appearedTurn = TURNCOUNT_NULL;
-  bpp->turnCount = 0;
-  bpp->formNo = PP_Get( pp, ID_PARA_form_no, 0 );
-  bpp->prevWazaID = WAZANO_NULL;
-  bpp->sameWazaCounter = 0;
-
-  flgbuf_clear( bpp->turnFlag, sizeof(bpp->turnFlag) );
-  flgbuf_clear( bpp->contFlag, sizeof(bpp->contFlag) );
-
-  dmgrecClearWork( bpp );
-
-  return bpp;
 }
+
 //----------------------------------------------------------------------------------
 /**
  * ワザ系状態異常のカウンタクリア
@@ -293,7 +329,6 @@ void BTL_POKEPARAM_Delete( BTL_POKEPARAM* bpp )
 {
   GFL_HEAP_FreeMemory( bpp );
 }
-
 
 //=============================================================================================
 /**
@@ -493,11 +528,11 @@ int BTL_POKEPARAM_GetValue_Critical( const BTL_POKEPARAM* pp, BppValueID vid )
 //=============================================================================================
 u32 BTL_POKEPARAM_GetItem( const BTL_POKEPARAM* pp )
 {
-  return pp->item;
+  return pp->coreParam.item;
 }
 void BTL_POKEPARAM_SetItem( BTL_POKEPARAM* pp, u16 itemID )
 {
-  pp->item = itemID;
+  pp->coreParam.item = itemID;
 }
 
 //=============================================================================================
@@ -1141,6 +1176,48 @@ void BTL_POKEPARAM_PPPlus( BTL_POKEPARAM* pp, u8 wazaIdx, u8 value )
 }
 //=============================================================================================
 /**
+ *
+ *
+ * @param   pp
+ * @param   wazaIdx
+ */
+//=============================================================================================
+void BTL_POKEPARAM_SetWazaUsed( BTL_POKEPARAM* pp, u8 wazaIdx )
+{
+  pp->waza[ wazaIdx ].usedFlag = TRUE;
+}
+//=============================================================================================
+/**
+ * ワザナンバー上書き
+ *
+ * @param   pp
+ * @param   wazaIdx		    何番目のワザ[0-3]？
+ * @param   waza		      上書き後ワザナンバー
+ * @param   ppMax		      PP最大値の上限（0ならデフォルト値）
+ * @param   fPermenent		永続フラグ（TRUEならバトル後まで引き継ぐ／FALSEなら瀕死・入れかえで元に戻る）
+ */
+//=============================================================================================
+void BTL_POKEPARAM_UpdateWazaNumber( BTL_POKEPARAM* pp, u8 wazaIdx, WazaID waza, u8 ppMax, BOOL fPermenent )
+{
+  BPP_WAZA* pWaza = &pp->waza[ wazaIdx ];
+
+  if( !fPermenent ){
+    pWaza->recoverNumber = pWaza->number;
+  }else{
+    pWaza->recoverNumber = waza;
+  }
+  pWaza->number = waza;
+  pWaza->usedFlag = FALSE;
+  pWaza->ppMax = WAZADATA_GetMaxPP( waza, 0 );
+  if( (ppMax != 0)
+  &&  (pWaza->ppMax < ppMax)
+  ){
+    pWaza->ppMax = ppMax;
+  }
+  pWaza->pp = pWaza->ppMax;
+}
+//=============================================================================================
+/**
  * 状態異常を設定
  *
  * @param   pp
@@ -1469,7 +1546,7 @@ void BTL_POKEPARAM_ChangeForm( BTL_POKEPARAM* pp, u8 formNo )
 //=============================================================================================
 void BTL_POKEPARAM_RemoveItem( BTL_POKEPARAM* pp )
 {
-  pp->item = ITEM_DUMMY_DATA;
+  pp->coreParam.item = ITEM_DUMMY_DATA;
 }
 
 
@@ -1545,7 +1622,6 @@ u32 BTL_POKEPARAM_GetSameWazaUsedCounter( const BTL_POKEPARAM* pp )
 {
   return pp->sameWazaCounter;
 }
-
 
 
 //----------------------------------------------------------------------------------
@@ -1708,6 +1784,53 @@ static inline BOOL flgbuf_get( const u8* buf, u32 flagID )
     u8 bit = (1 << (flagID%8));
     return (buf[ byte ] & bit) != 0;
   }
+}
+
+//---------------------------------------------------------------------------------------------
+// 変身用ワーク処理
+//---------------------------------------------------------------------------------------------
+
+BOOL BTL_POKEPARAM_HENSIN_Set( BTL_POKEPARAM* bpp, const BTL_POKEPARAM* target )
+{
+  if( (bpp->coreParam.hensinSrc == NULL)
+  &&  (target->coreParam.hensinSrc == NULL)
+  ){
+    static BPP_CORE_PARAM  core = {0};
+    int i;
+
+    core = bpp->coreParam;
+
+    *bpp = *target;
+    bpp->coreParam = core;
+
+    // ワザのMAXPPは最大5に揃える
+    for(i=0; i<PTL_WAZA_MAX; ++i)
+    {
+      if( bpp->waza[i].number != WAZANO_NULL )
+      {
+        if( bpp->waza[i].ppMax > 5 ){
+          bpp->waza[i].ppMax = 5;
+        }
+        bpp->waza[i].pp = bpp->waza[i].ppMax;
+        bpp->waza[i].usedFlag = TRUE;
+      }
+    }
+
+    clearWazaSickWork( bpp );
+    flgbuf_clear( bpp->turnFlag, sizeof(bpp->turnFlag) );
+    flgbuf_clear( bpp->contFlag, sizeof(bpp->contFlag) );
+
+    bpp->appearedTurn = TURNCOUNT_NULL;
+    bpp->turnCount = 0;
+    bpp->prevWazaID = WAZANO_NULL;
+    bpp->sameWazaCounter = 0;
+
+    bpp->coreParam.hensinSrc = target->coreParam.ppSrc;
+
+    return TRUE;
+  }
+
+  return FALSE;
 }
 
 

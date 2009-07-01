@@ -219,6 +219,7 @@ typedef enum {
   BTL_HANDEX_CHANGE_TOKUSEI,///< とくせい書き換え
   BTL_HANDEX_SET_ITEM,      ///< アイテム書き換え
   BTL_HANDEX_SWAP_ITEM,     ///< アイテム入れ替え
+  BTL_HANDEX_UPDATE_WAZA,   ///< ワザ書き換え
 
   BTL_HANDEX_MAX,
 
@@ -393,6 +394,15 @@ typedef struct {
   u16             succeedStrID;
   int             succeedStrArgs[ BTL_STR_ARG_MAX ];
 }BTL_HANDEX_PARAM_SWAP_ITEM;
+
+typedef struct {
+  BTL_HANDEX_PARAM_DAMAGE  header;
+  u8              pokeID;            ///< 対象ポケモンID
+  u8              wazaIdx;
+  u8              ppMax;             ///< PPMax値:0ならデフォルト
+  u8              fPermanent;        ///< バトル後まで書き換えが残るフラグ
+  WazaID          waza;
+}BTL_HANDEX_PARAM_UPDATE_WAZA;
 
 
 

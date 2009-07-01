@@ -188,6 +188,8 @@ static BOOL scProc_OP_SetActFlag( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_OP_ClearActFlag( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_OP_ChangeTokusei( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_OP_SetItem( BTL_CLIENT* wk, int* seq, const int* args );
+static BOOL scProc_OP_UpdateWazaNumber( BTL_CLIENT* wk, int* seq, const int* args );
+static BOOL scProc_OP_Hensin( BTL_CLIENT* wk, int* seq, const int* args );
 static void cec_addCode( CANT_ESC_CONTROL* ctrl, u8 pokeID, BtlCantEscapeCode code );
 static void cec_subCode( CANT_ESC_CONTROL* ctrl, u8 pokeID, BtlCantEscapeCode code );
 static u8 cec_isEnable( CANT_ESC_CONTROL* ctrl, BtlCantEscapeCode code, BTL_CLIENT* wk );
@@ -1214,6 +1216,8 @@ static BOOL SubProc_UI_ServerCmd( BTL_CLIENT* wk, int* seq )
     { SC_OP_RESET_TURNFLAG,     scProc_OP_ResetTurnFlag   },
     { SC_OP_CHANGE_TOKUSEI,     scProc_OP_ChangeTokusei   },
     { SC_OP_SET_ITEM,           scProc_OP_SetItem         },
+    { SC_OP_UPDATE_WAZANUMBER,  scProc_OP_UpdateWazaNumber},
+    { SC_OP_HENSIN,             scProc_OP_Hensin          },
     { SC_ACT_KILL,              scProc_ACT_Kill           },
   };
 
@@ -2171,6 +2175,21 @@ static BOOL scProc_OP_SetItem( BTL_CLIENT* wk, int* seq, const int* args )
 {
   BTL_POKEPARAM* pp = BTL_POKECON_GetPokeParam( wk->pokeCon, args[0] );
   BTL_POKEPARAM_SetItem( pp, args[1] );
+  return TRUE;
+}
+static BOOL scProc_OP_UpdateWazaNumber( BTL_CLIENT* wk, int* seq, const int* args )
+{
+  BTL_POKEPARAM* pp = BTL_POKECON_GetPokeParam( wk->pokeCon, args[0] );
+  // サーバコマンド送信時の都合で引数がヘンな並びになってる…
+  BTL_POKEPARAM_UpdateWazaNumber( pp, args[1], args[4], args[2], args[3] );
+  return TRUE;
+}
+static BOOL scProc_OP_Hensin( BTL_CLIENT* wk, int* seq, const int* args )
+{
+  BTL_POKEPARAM* atkPoke = BTL_POKECON_GetPokeParam( wk->pokeCon, args[0] );
+  BTL_POKEPARAM* tgtPoke = BTL_POKECON_GetPokeParam( wk->pokeCon, args[1] );
+
+  BTL_POKEPARAM_HENSIN_Set( atkPoke, tgtPoke );
   return TRUE;
 }
 

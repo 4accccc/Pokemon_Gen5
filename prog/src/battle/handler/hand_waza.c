@@ -37,6 +37,8 @@ static BOOL is_registerd( u8 pokeID, WazaID waza );
 static void removeHandlerForce( u8 pokeID, WazaID waza );
 static BTL_EVENT_FACTOR*  ADD_Texture( u16 pri, WazaID waza, u8 pokeID );
 static void handler_Texture( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static BTL_EVENT_FACTOR*  ADD_Monomane( u16 pri, WazaID waza, u8 pokeID );
+static void handler_Monomane( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static BTL_EVENT_FACTOR*  ADD_KonoyubiTomare( u16 pri, WazaID waza, u8 pokeID );
 static void handler_KonoyubiTomare_ExeCheck( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_KonoyubiTomare_Exe( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
@@ -456,6 +458,7 @@ BTL_EVENT_FACTOR*  BTL_HANDLER_Waza_Add( const BTL_POKEPARAM* pp, WazaID waza )
     { WAZANO_HOSIGARU,        ADD_Dorobou       },  // ほしがる=どろぼう と等価
     { WAZANO_TORIKKU,         ADD_Trick         },
     { WAZANO_SURIKAE,         ADD_Trick         },  // すりかえ=トリックと等価
+    { WAZANO_MONOMANE,        ADD_Monomane      },
   };
 
   int i;
@@ -586,7 +589,6 @@ static BTL_EVENT_FACTOR*  ADD_Texture( u16 pri, WazaID waza, u8 pokeID )
   };
   return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_WAZA, waza, pri, pokeID, HandlerTable );
 }
-
 static void handler_Texture( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
@@ -608,6 +610,50 @@ static void handler_Texture( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk
       BTL_HANDEX_PARAM_CHANGE_TYPE* param = BTL_SVFLOW_HANDLERWORK_Push( flowWk, BTL_HANDEX_CHANGE_TYPE, pokeID );
       param->next_type = next_type;
       param->pokeID = pokeID;
+    }
+  }
+}
+//----------------------------------------------------------------------------------
+/**
+ * ものまね
+ */
+//----------------------------------------------------------------------------------
+static BTL_EVENT_FACTOR*  ADD_Monomane( u16 pri, WazaID waza, u8 pokeID )
+{
+  static const BtlEventHandlerTable HandlerTable[] = {
+    { BTL_EVENT_UNCATEGORY_WAZA, handler_Monomane },    // 未分類ワザハンドラ
+    { BTL_EVENT_NULL, NULL },
+  };
+  return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_WAZA, waza, pri, pokeID, HandlerTable );
+}
+
+static void handler_Monomane( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+{
+  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
+  {
+    const BTL_POKEPARAM* self = BTL_SVFLOW_RECEPT_GetPokeParam( flowWk, pokeID );
+    const BTL_POKEPARAM* target = BTL_SVFLOW_RECEPT_GetPokeParam( flowWk, BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_TARGET1) );
+    WazaID waza = BTL_POKEPARAM_GetPrevWazaNumber( target );
+    if( waza != WAZANO_NULL)
+    {
+      u8 wazaIdx = BTL_POKEPARAM_GetWazaIdx( self, BTL_EVENT_FACTOR_GetSubID(myHandle) );
+      if( wazaIdx != PTL_WAZA_MAX )
+      {
+        BTL_HANDEX_PARAM_UPDATE_WAZA*  param;
+        BTL_HANDEX_PARAM_MESSAGE* msg_param;
+
+        param = BTL_SVFLOW_HANDLERWORK_Push( flowWk, BTL_HANDEX_UPDATE_WAZA, pokeID );
+        param->pokeID = pokeID;
+        param->wazaIdx = wazaIdx;
+        param->waza = waza;
+        param->fPermanent = FALSE;
+
+        msg_param = BTL_SVFLOW_HANDLERWORK_Push( flowWk, BTL_HANDEX_MESSAGE_SET, pokeID );
+        msg_param->pokeID = pokeID;
+        msg_param->strID = BTL_STRID_SET_Monomane;
+        msg_param->arg_cnt = 1;
+        msg_param->args[0] = waza;
+      }
     }
   }
 }
