@@ -34,6 +34,8 @@
 //プレートの左上からの相対座標
 #define PLIST_PLATE_POKE_POS_X (24)
 #define PLIST_PLATE_POKE_POS_Y (16)
+#define PLIST_PLATE_POKE_ACTIVE_POS_X (26)
+#define PLIST_PLATE_POKE_ACTIVE_POS_Y (19)
 #define PLIST_PLATE_BALL_POS_X (16)
 #define PLIST_PLATE_BALL_POS_Y (16)
 #define PLIST_PLATE_HPBASE_POS_X (84)
@@ -91,6 +93,7 @@ struct _PLIST_PLATE_WORK
 {
   POKEMON_PARAM *pp;
   u8 idx;
+  BOOL isActive;
   BOOL isBlank;
   BOOL isUpdateStr;
 
@@ -129,6 +132,7 @@ static void PLIST_PLATE_CreatePokeIcon( PLIST_WORK *work , PLIST_PLATE_WORK *pla
 static void PLIST_PLATE_DrawParam( PLIST_WORK *work , PLIST_PLATE_WORK *plateWork );
 static void PLIST_PLATE_DrawHPBar( PLIST_WORK *work , PLIST_PLATE_WORK *plateWork );
 static const u8 PLIST_PLATE_GetHPRate( PLIST_PLATE_WORK *plateWork );
+static void PLIST_PLATE_CalcCellPos( PLIST_PLATE_WORK *plateWork , const s16 x , const s16 y , GFL_CLACTPOS *pos );
 
 //--------------------------------------------------------------
 //	プレート作成
@@ -142,6 +146,7 @@ PLIST_PLATE_WORK* PLIST_PLATE_CreatePlate( PLIST_WORK *work , const u8 idx , POK
   plateWork->idx = idx;
   plateWork->pp = pp;
   plateWork->isBlank = FALSE;
+  plateWork->isActive = FALSE;
   plateWork->isUpdateStr = FALSE;
   
   //BG系
@@ -241,6 +246,25 @@ void PLIST_PLATE_UpdatePlate( PLIST_WORK *work , PLIST_PLATE_WORK *plateWork )
       {
         plateWork->isUpdateStr = FALSE;
         GFL_BMPWIN_MakeTransWindow_VBlank( plateWork->bmpWin );
+      }
+    }
+    
+    if( plateWork->isActive == TRUE )
+    {
+      //選択中アイコンのアニメ
+      if( PP_GetSick( plateWork->pp ) == POKESICK_NULL &&
+          PP_Get( plateWork->pp , ID_PARA_hp , NULL ) != 0 )
+      {
+        GFL_CLACTPOS cellPos;
+        PLIST_PLATE_CalcCellPos( plateWork , 
+                                 PLIST_PLATE_POKE_ACTIVE_POS_X,
+                                 PLIST_PLATE_POKE_ACTIVE_POS_Y,
+                                 &cellPos );
+        if( GFL_CLACT_WK_GetAnmFrame(plateWork->pokeIcon) == 1 )
+        {
+          cellPos.y -= 6;
+        }
+        GFL_CLACT_WK_SetPos( plateWork->pokeIcon , &cellPos , CLSYS_DRAW_MAIN );
       }
     }
   }
@@ -590,6 +614,14 @@ void PLIST_PLATE_SetActivePlate( PLIST_WORK *work , PLIST_PLATE_WORK *plateWork 
       PLIST_PLATE_ChangeColor( work , plateWork , PPC_NORMAL_SELECT );
     }
     GFL_CLACT_WK_SetAnmSeq( plateWork->ballIcon , 1 );
+    {
+      GFL_CLACTPOS cellPos;
+      PLIST_PLATE_CalcCellPos( plateWork , 
+                               PLIST_PLATE_POKE_ACTIVE_POS_X,
+                               PLIST_PLATE_POKE_ACTIVE_POS_Y,
+                               &cellPos );
+      GFL_CLACT_WK_SetPos( plateWork->pokeIcon , &cellPos , CLSYS_DRAW_MAIN );
+    }
   }
   else
   {
@@ -600,7 +632,16 @@ void PLIST_PLATE_SetActivePlate( PLIST_WORK *work , PLIST_PLATE_WORK *plateWork 
       PLIST_PLATE_ChangeColor( work , plateWork , PPC_NORMAL );
     }
     GFL_CLACT_WK_SetAnmSeq( plateWork->ballIcon , 0 );
+    {
+      GFL_CLACTPOS cellPos;
+      PLIST_PLATE_CalcCellPos( plateWork , 
+                               PLIST_PLATE_POKE_POS_X,
+                               PLIST_PLATE_POKE_POS_Y,
+                               &cellPos );
+      GFL_CLACT_WK_SetPos( plateWork->pokeIcon , &cellPos , CLSYS_DRAW_MAIN );
+    }
   }
+  plateWork->isActive = isActive;
 }
 
 //--------------------------------------------------------------
@@ -783,3 +824,14 @@ static const u8 PLIST_PLATE_GetHPRate( PLIST_PLATE_WORK *plateWork )
   return rate;
 }
 
+//--------------------------------------------------------------
+//レンダラーに対応したセルの位置の計算
+//--------------------------------------------------------------
+static void PLIST_PLATE_CalcCellPos( PLIST_PLATE_WORK *plateWork , const s16 x , const s16 y , GFL_CLACTPOS *pos )
+{
+  GFL_CLACTPOS rendPos;
+  GFL_CLACT_USERREND_GetSurfacePos( plateWork->cellRender , PLIST_RENDER_MAIN , &rendPos );
+  
+  pos->x = -rendPos.x + x;
+  pos->y = -rendPos.y + y;
+}
