@@ -74,6 +74,7 @@ struct _MCSS_WORK
 	VecFx32												scale;								//マルチセルのスケール
 	VecFx32												rotate;								//マルチセルの回転
 	VecFx32												shadow_scale;					//影のスケール
+	VecFx32												ofs_pos;							//ポジションオフセット
 	VecFx32												ofs_scale;						//スケールオフセット
 	u8														pal_fade_start_evy;		//パレットフェード　START_EVY値
 	u8														pal_fade_end_evy;			//パレットフェード　END_EVY値

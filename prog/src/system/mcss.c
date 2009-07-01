@@ -167,15 +167,18 @@ void	MCSS_Main( MCSS_SYS_WORK *mcss_sys )
 	int	index;
 
 	for( index = 0 ; index < mcss_sys->mcss_max ; index++ ){
-		if( ( mcss_sys->mcss[ index ] != NULL ) && ( mcss_sys->mcss[ index ]->anm_stop_flag == 0 ) ){
-			// アニメーションを更新します
-			NNS_G2dTickMCAnimation( &mcss_sys->mcss[ index ]->mcss_mcanim, FX32_ONE );
+		if( ( mcss_sys->mcss[ index ] != NULL ) )
+    { 
+      if( mcss_sys->mcss[ index ]->anm_stop_flag == 0 ){
+  			// アニメーションを更新します
+  			NNS_G2dTickMCAnimation( &mcss_sys->mcss[ index ]->mcss_mcanim, FX32_ONE );
+      }
 			//パレットフェードチェック
 			if( mcss_sys->mcss[ index ]->pal_fade_flag )
 			{	
 				MCSS_CalcPaletteFade( mcss_sys->mcss[ index ] );
 			}
-		}
+    }
 	}
 }
 
@@ -274,9 +277,9 @@ void	MCSS_Draw( MCSS_SYS_WORK *mcss_sys )
 				break;
 			}
 
-			pos.x = mcss->pos.x;
-			pos.y = mcss->pos.y;
-			pos.z = mcss->pos.z;
+			pos.x = mcss->pos.x + mcss->ofs_pos.x;
+			pos.y = mcss->pos.y + mcss->ofs_pos.y;
+			pos.z = mcss->pos.z + mcss->ofs_pos.z;
 
 			if( mcss_sys->mcss_ortho_mode == 0 ){
 				anim_pos.x = MCSS_CONST( anim_SRT_mc.px );
@@ -343,7 +346,7 @@ void	MCSS_Draw( MCSS_SYS_WORK *mcss_sys )
 			G3_LookAt( NNS_G3dGlbGetCameraPos(), NNS_G3dGlbGetCameraUp(), NNS_G3dGlbGetCameraTarget(), NULL );
 
 			//前もって、不変なマルチセルデータをカレント行列にかけておく
-			G3_Translate( mcss->pos.x, mcss->pos.y, mcss->pos.z + SHADOW_OFFSET );
+			G3_Translate( mcss->pos.x + mcss->ofs_pos.x, mcss->pos.y, mcss->pos.z  + mcss->ofs_pos.z + SHADOW_OFFSET );
 
 			//影用の回転
 			G3_RotX( FX_SinIdx( 65536 / 64 * 49 ), FX_CosIdx( 65536 / 64 * 49 ) );
@@ -617,6 +620,9 @@ MCSS_WORK*	MCSS_Add( MCSS_SYS_WORK *mcss_sys, fx32	pos_x, fx32	pos_y, fx32	pos_z
 			mcss_sys->mcss[ count ]->scale.x = FX32_ONE;
 			mcss_sys->mcss[ count ]->scale.y = FX32_ONE;
 			mcss_sys->mcss[ count ]->scale.z = FX32_ONE;
+			mcss_sys->mcss[ count ]->ofs_pos.x = 0;
+			mcss_sys->mcss[ count ]->ofs_pos.y = 0;
+			mcss_sys->mcss[ count ]->ofs_pos.z = 0;
 			mcss_sys->mcss[ count ]->ofs_scale.x = FX32_ONE;
 			mcss_sys->mcss[ count ]->ofs_scale.y = FX32_ONE;
 			mcss_sys->mcss[ count ]->ofs_scale.z = FX32_ONE;
@@ -692,6 +698,30 @@ void	MCSS_SetPosition( MCSS_WORK *mcss, VecFx32 *pos )
 	mcss->pos.x = pos->x;
 	mcss->pos.y = pos->y;
 	mcss->pos.z = pos->z;
+}
+
+//--------------------------------------------------------------------------
+/**
+ * オフセットポジションゲット
+ */
+//--------------------------------------------------------------------------
+void	MCSS_GetOfsPosition( MCSS_WORK *mcss, VecFx32 *pos )
+{
+	pos->x = mcss->ofs_pos.x;
+	pos->y = mcss->ofs_pos.y;
+	pos->z = mcss->ofs_pos.z;
+}
+
+//--------------------------------------------------------------------------
+/**
+ * オフセットポジションセット
+ */
+//--------------------------------------------------------------------------
+void	MCSS_SetOfsPosition( MCSS_WORK *mcss, VecFx32 *pos )
+{
+	mcss->ofs_pos.x = pos->x;
+	mcss->ofs_pos.y = pos->y;
+	mcss->ofs_pos.z = pos->z;
 }
 
 //--------------------------------------------------------------------------
@@ -1283,6 +1313,7 @@ MCSS_WORK*	MCSS_AddDebug( MCSS_SYS_WORK *mcss_sys, fx32	pos_x, fx32	pos_y, fx32	
 			mcss_sys->mcss[ count ]->ofs_scale.x = FX32_ONE;
 			mcss_sys->mcss[ count ]->ofs_scale.y = FX32_ONE;
 			mcss_sys->mcss[ count ]->ofs_scale.z = FX32_ONE;
+			mcss_sys->mcss[ count ]->alpha = 31;
 			MCSS_LoadResourceDebug( mcss_sys, count, madw );
 			break;
 		}
@@ -1346,10 +1377,10 @@ static	void	MCSS_LoadResourceDebug( MCSS_SYS_WORK *mcss_sys, int count, const MC
 	//1枚の板ポリで表示するための情報の読み込み（独自フォーマット）
 	mcss->mcss_ncec = madw->ncec;
 
-    //
-    // VRAM 関連の初期化
-    //
-    {
+  //
+  // VRAM 関連の初期化
+  //
+  {
 		TCB_LOADRESOURCE_WORK *tlw = GFL_HEAP_AllocClearMemory( mcss->heapID, sizeof( TCB_LOADRESOURCE_WORK ) );
 		tlw->image_p = &mcss->mcss_image_proxy;
 		tlw->palette_p = &mcss->mcss_palette_proxy;
@@ -1361,17 +1392,21 @@ static	void	MCSS_LoadResourceDebug( MCSS_SYS_WORK *mcss_sys, int count, const MC
 			NNS_G2dGetUnpackedBGCharacterData( madw->ncbr, &tlw->pCharData );
 			tlw->pBufChar = madw->ncbr;
 			GF_ASSERT( tlw->pBufChar != NULL);
-        }
+    }
 
 		// load palette data
 		{
 			NNS_G2dGetUnpackedPaletteData( madw->nclr, &tlw->pPlttData );
 			tlw->pBufPltt = madw->nclr;
 			GF_ASSERT( tlw->pBufPltt != NULL);
-
-        }
-		GFUser_VIntr_CreateTCB( TCB_LoadResource, tlw, 0 );
+			mcss->pltt_data = GFL_HEAP_AllocMemory( mcss->heapID, tlw->pPlttData->szByte );
+			mcss->pltt_data_size = tlw->pPlttData->szByte;
+			MI_CpuCopy16( tlw->pPlttData->pRawData, mcss->pltt_data, tlw->pPlttData->szByte );
     }
+
+    GFUser_VIntr_CreateTCB( TCB_LoadResource, tlw, 0 );
+
+  }
 }
 
 #endif
