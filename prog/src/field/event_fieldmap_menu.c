@@ -30,6 +30,7 @@
 #include "event_fieldmap_control.h" //EVENT_FieldSubProc
 #include "app/config_panel.h"   //ConfigPanelProcData
 #include "app/trainer_card.h"   //TrainerCardSysProcData
+#include "app/itemmenu/itemmenu.h" //ItemMenuProcData
 #include "app/pokelist.h"   //PokeList_ProcData・PLIST_DATA
 
 extern const GFL_PROC_DATA DebugAriizumiMainProcData;
@@ -470,12 +471,26 @@ static BOOL FMenuCallProc_PokeStatus( FMENU_EVENT_WORK *mwk )
  * @retval  BOOL  TRUE=イベント切り替え
  */
 //--------------------------------------------------------------
+FS_EXTERN_OVERLAY(itemmenu);
+
 static BOOL FMenuCallProc_Bag( FMENU_EVENT_WORK *mwk )
 {
-  GMEVENT * subevent = createFMenuMsgWinEvent(mwk->gmSys, mwk->heapID,
-      FLDMAPMENU_STR10, FIELDMAP_GetFldMsgBG(mwk->fieldWork) );
-  GMEVENT_CallEvent(mwk->gmEvent, subevent);
-  return( TRUE );
+//  GMEVENT * subevent = createFMenuMsgWinEvent(mwk->gmSys, mwk->heapID,
+//      FLDMAPMENU_STR10, FIELDMAP_GetFldMsgBG(mwk->fieldWork) );
+//  GMEVENT_CallEvent(mwk->gmEvent, subevent);
+
+
+  GMEVENT * newEvent;
+  EASY_POKELIST_PARENT *epp;
+  
+  epp = GFL_HEAP_AllocClearMemory(GFL_HEAPID_APP, sizeof(FIELD_ITEMMENU_WORK));
+  epp->party = GAMEDATA_GetMyPokemon(GAMESYSTEM_GetGameData(mwk->gmSys));
+  mwk->sub_proc_parent = epp;
+  newEvent = EVENT_FieldSubProc(mwk->gmSys, mwk->fieldWork,
+      FS_OVERLAY_ID(itemmenu), &ItemMenuProcData, epp);
+  GMEVENT_CallEvent(mwk->gmEvent, newEvent);
+
+	return( TRUE );
 }
 
 //--------------------------------------------------------------
