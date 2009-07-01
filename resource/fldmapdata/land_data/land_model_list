@@ -113,6 +113,7 @@ G3D_IMD = \
 	$(DIR_LANDRES)/bctest_01_00.imd \
 	$(DIR_LANDRES)/bctest_00_01.imd \
 	$(DIR_LANDRES)/bctest_01_01.imd \
+	$(DIR_LANDRES)/pl_00_00.imd \
 	$(DIR_LANDRES)/m_dun0101_00_00.imd \
 	$(DIR_LANDRES)/m_dun0101_01_00.imd \
 	$(DIR_LANDRES)/m_dun0101_00_01.imd \
