@@ -26,6 +26,10 @@ typedef enum
   PMIT_LEAVE,   //預ける(育てや
   PMIT_SET_JOIN,    //参加する(参加しない)
 
+  PMIT_GIVE,    //持たせる
+  PMIT_TAKE,    //預かる
+  
+
   PMIT_END_LIST,    //リスト終端用
   
   //以下戻り値専用

@@ -11,6 +11,7 @@
 #include "app/pokelist.h"
 #include "print/gf_font.h"
 #include "print/printsys.h"
+#include "sound/pm_sndsys.h"
 #include "debug/debugwin_sys.h"
 
 #define PLIST_LIST_MAX (6)

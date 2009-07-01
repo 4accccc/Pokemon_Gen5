@@ -21,6 +21,7 @@
 
 //デバッグメータ消し
 #include "test/performance.h"
+#include "test/ariizumi/ari_debug.h"
 
 //======================================================================
 //	define
@@ -78,6 +79,7 @@ static GFL_PROC_RESULT PokeListProc_Init( GFL_PROC * proc, int * seq , void *pwk
     for( i=0;i<5;i++ )
     {
       POKEMON_PARAM *pPara = PP_Create( i+1 , 10 , PTL_SETUP_POW_AUTO , HEAPID_POKELIST );
+#if DEB_ARI
       switch( i )
       {
       case 1:
@@ -92,10 +94,11 @@ static GFL_PROC_RESULT PokeListProc_Init( GFL_PROC * proc, int * seq , void *pwk
         PP_Put( pPara , ID_PARA_item , 1 );
         break;
       case 4:
+        PP_Put( pPara , ID_PARA_hp , 1 );
         PP_Put( pPara , ID_PARA_item , 1 );
         break;
       }
-      
+#endif      
       PokeParty_Add( plData->pp , pPara );
       GFL_HEAP_FreeMemory( pPara );
     }

@@ -23,6 +23,7 @@
 
 #include "plist_sys.h"
 #include "plist_menu.h"
+#include "plist_snd_def.h"
 
 #include "test/ariizumi/ari_debug.h"
 
@@ -316,6 +317,17 @@ static void PLIST_MENU_CreateItem(  PLIST_WORK *work , PLIST_MENU_WORK *menuWork
       menuWork->itemArr[menuWork->itemNum] = PMIT_RET_JOIN;
       menuWork->itemNum += 1;
       break;
+      
+    case PMIT_GIVE:    //Ž‚½‚¹‚é
+      menuWork->itemArr[menuWork->itemNum] = PMIT_GIVE;
+      menuWork->itemNum += 1;
+      break;
+
+    case PMIT_TAKE:   //—a‚©‚é
+      menuWork->itemArr[menuWork->itemNum] = PMIT_TAKE;
+      menuWork->itemNum += 1;
+      break;
+
     
     default:
       GF_ASSERT_MSG(0,"PLIST_MENU Invalid item type!![%d]\n",itemArr[arrNum-(i+1)] );
@@ -372,6 +384,8 @@ static STRBUF* PLIST_MENU_CreateMenuStr( PLIST_WORK *work , PLIST_MENU_WORK *men
     mes_pokelist_05_08 ,  //PMIT_CLOSE,   //•Â‚¶‚é
     mes_pokelist_05_07 ,  //PMIT_LEAVE,   //—a‚¯‚é(ˆç‚Ä‚â
     0 ,          //PMIT_SET_JOIN,    //ŽQ‰Á‚·‚é(ŽQ‰Á‚µ‚È‚¢)
+    mes_pokelist_05_16 ,  //  PMIT_GIVE,    //Ž‚½‚¹‚é
+    mes_pokelist_05_17 ,  //  PMIT_TAKE,    //—a‚©‚é
     0 ,          //PMIT_WAZA_1,   //”é“`—p‹ZƒXƒƒbƒg‚P
     0 ,          //PMIT_WAZA_2,   //”é“`—p‹ZƒXƒƒbƒg‚Q
     0 ,          //PMIT_WAZA_3,   //”é“`—p‹ZƒXƒƒbƒg‚R
@@ -424,6 +438,7 @@ static void PLIST_MENU_UpdateKey( PLIST_WORK *work , PLIST_MENU_WORK *menuWork )
       {
         menuWork->cursorPos++;
       }
+      PMSND_PlaySystemSE( PLIST_SND_CURSOR );
     }
     else
     if( repeat & PAD_KEY_DOWN )
@@ -436,17 +451,20 @@ static void PLIST_MENU_UpdateKey( PLIST_WORK *work , PLIST_MENU_WORK *menuWork )
       {
         menuWork->cursorPos--;
       }
+      PMSND_PlaySystemSE( PLIST_SND_CURSOR );
     }
     else
     if( trg & PAD_BUTTON_A )
     {
       menuWork->isDecide = TRUE;
+      PMSND_PlaySystemSE( PLIST_SND_DECIDE );
     }
     else
     if( trg & PAD_BUTTON_B )
     {
       menuWork->cursorPos = 0;
       menuWork->isDecide = TRUE;
+      PMSND_PlaySystemSE( PLIST_SND_CANCEL );
     }
     
     if( befPos != menuWork->cursorPos )
@@ -482,6 +500,14 @@ static void PLIST_MENU_UpdateTP( PLIST_WORK *work , PLIST_MENU_WORK *menuWork )
     menuWork->cursorPos = ret;
     menuWork->isDecide = TRUE;
     PLIST_MENU_SetActiveItem( menuWork , menuWork->cursorPos , TRUE );
+    if( menuWork->cursorPos == 0 )
+    {
+      PMSND_PlaySystemSE( PLIST_SND_DECIDE );
+    }
+    else
+    {
+      PMSND_PlaySystemSE( PLIST_SND_CANCEL );
+    }
   }
 }
 

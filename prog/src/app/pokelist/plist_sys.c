@@ -26,6 +26,7 @@
 #include "plist_plate.h"
 #include "plist_message.h"
 #include "plist_menu.h"
+#include "plist_snd_def.h"
 
 #include "test/ariizumi/ari_debug.h"
 
@@ -35,8 +36,9 @@
 #pragma mark [> define
 
 #define PLIST_BARICON_Y (180)
-#define PLIST_BARICON_EXIT_X   (216)  //抜ける(×マーク
-#define PLIST_BARICON_RETURN_X (240)  //戻る(矢印
+#define PLIST_BARICON_EXIT_X   (212)  //抜ける(×マーク
+#define PLIST_BARICON_RETURN_X_MENU (240)  //戻る(矢印
+#define PLIST_BARICON_RETURN_X_BAR (236)  //戻る(矢印
 
 #define PLIST_CHANGE_ANM_COUNT (16)
 #define PLIST_CHANGE_ANM_VALUE (1)    //移動量(キャラ単位
@@ -525,7 +527,7 @@ static void PLIST_InitCell( PLIST_WORK *work )
   //バーアイコン
   {
     GFL_CLWK_DATA cellInitData;
-    cellInitData.pos_x = PLIST_BARICON_RETURN_X-8;
+    cellInitData.pos_x = PLIST_BARICON_RETURN_X_BAR;
     cellInitData.pos_y = PLIST_BARICON_Y;
     cellInitData.anmseq = PBA_RETURN_NORMAL;
     cellInitData.softpri = 0;
@@ -853,23 +855,28 @@ static void PLIST_SelectPokeTerm( PLIST_WORK *work )
     work->selectPokePara = PokeParty_GetMemberPointer(work->plData->pp, work->pokeCursor );
 
     work->plData->ret_sel = work->pokeCursor;
-    work->mainSeq = PSMS_MENU;
-    work->subSeq  = PSSS_INIT;
+    PLIST_InitSelectMenu( work );
+    //中で一緒にメニューを開く
+    PLIST_InitMode_Menu( work );
+    PMSND_PlaySystemSE( PLIST_SND_DECIDE );
     break;
 
   case PSSEL_DECIDE:
     work->mainSeq = PSMS_FADEOUT;
     work->plData->ret_sel = PL_SEL_POS_ENTER;
+    PMSND_PlaySystemSE( PLIST_SND_DECIDE );
     break;
     
   case PSSEL_RETURN:
     work->mainSeq = PSMS_FADEOUT;
     work->plData->ret_sel = PL_SEL_POS_EXIT;
+    PMSND_PlaySystemSE( PLIST_SND_CANCEL );
     break;
 
   case PSSEL_EXIT:
     work->mainSeq = PSMS_FADEOUT;
     work->plData->ret_sel = PL_SEL_POS_EXIT2;
+    PMSND_PlaySystemSE( PLIST_SND_CANCEL );
     break;
   }
 }
@@ -892,6 +899,7 @@ static void PLIST_SelectPokeTerm_Change( PLIST_WORK *work )
   {
   case PSSEL_SELECT:
     PLIST_ChangeAnimeInit( work );
+    PMSND_PlaySystemSE( PLIST_SND_CHANGE );
     break;
     
   case PSSEL_RETURN:
@@ -905,6 +913,7 @@ static void PLIST_SelectPokeTerm_Change( PLIST_WORK *work )
     work->plData->ret_sel = work->pokeCursor;
 
     PLIST_InitMode_Select( work );
+    PMSND_PlaySystemSE( PLIST_SND_CANCEL );
     break;
 
   }
@@ -998,6 +1007,7 @@ static void PLIST_SelectPokeUpdateKey( PLIST_WORK *work )
     {
       const PL_SELECT_POS befPos = work->pokeCursor;
       BOOL isFinish = FALSE;
+      PMSND_PlaySystemSE( PLIST_SND_CURSOR );
       //プレートがある位置までループ
       while( isFinish == FALSE )
       {
@@ -1086,8 +1096,8 @@ static void PLIST_SelectPokeUpdateTP( PLIST_WORK *work )
     };
     hitTbl[PSSEL_RETURN].rect.top    = PLIST_BARICON_Y - 12;
     hitTbl[PSSEL_RETURN].rect.bottom = PLIST_BARICON_Y + 12;
-    hitTbl[PSSEL_RETURN].rect.left   = PLIST_BARICON_RETURN_X - 12;
-    hitTbl[PSSEL_RETURN].rect.right  = PLIST_BARICON_RETURN_X + 12;
+    hitTbl[PSSEL_RETURN].rect.left   = PLIST_BARICON_RETURN_X_BAR - 12;
+    hitTbl[PSSEL_RETURN].rect.right  = PLIST_BARICON_RETURN_X_BAR + 12;
     if( work->canExit == TRUE )
     {
       hitTbl[PSSEL_EXIT  ].rect.top    = PLIST_BARICON_Y - 12;
@@ -1159,7 +1169,6 @@ static void PLIST_SelectMenu( PLIST_WORK *work )
   {
   case PSSS_INIT:
     PLIST_InitSelectMenu( work );
-    GFL_BG_LoadScreenV_Req(PLIST_BG_MENU);
     work->subSeq = PSSS_MAIN;
     break;
     
@@ -1189,27 +1198,27 @@ static void PLIST_SelectMenu( PLIST_WORK *work )
 //--------------------------------------------------------------
 static void PLIST_InitSelectMenu( PLIST_WORK *work )
 {
+  work->mainSeq = PSMS_MENU;
+  work->subSeq  = PSSS_INIT;
+
   //BG・プレート・パラメータを見えにくくする
   G2_SetBlendBrightness( GX_BLEND_PLANEMASK_BG3 | GX_BLEND_PLANEMASK_BG2 | GX_BLEND_PLANEMASK_BG1 | GX_BLEND_PLANEMASK_OBJ , 8 );
   //戻るアイコンだけカラー効果がかからないようにWindowを使う
   //FIXME 通信アイコン対応
-  G2_SetWnd0Position( PLIST_BARICON_RETURN_X - 8 , PLIST_BARICON_Y - 8 ,
-                      PLIST_BARICON_RETURN_X + 9 , PLIST_BARICON_Y + 9 );
+  G2_SetWnd0Position( PLIST_BARICON_RETURN_X_MENU - 12 , PLIST_BARICON_Y - 12 ,
+                      PLIST_BARICON_RETURN_X_MENU + 12 , PLIST_BARICON_Y + 12 );
   G2_SetWnd0InsidePlane( GX_WND_PLANEMASK_BG0 | GX_WND_PLANEMASK_BG1 | GX_WND_PLANEMASK_BG2 | GX_WND_PLANEMASK_BG3 | GX_WND_PLANEMASK_OBJ , FALSE );
   G2_SetWndOutsidePlane( GX_WND_PLANEMASK_BG0 | GX_WND_PLANEMASK_BG1 | GX_WND_PLANEMASK_BG2 | GX_WND_PLANEMASK_BG3 | GX_WND_PLANEMASK_OBJ , TRUE );
   work->isActiveWindowMask = TRUE;
 
-  //中で一緒にメニューを開く
-  PLIST_InitMode_Menu( work );
-
   {
     GFL_CLACTPOS curPos;
-    curPos.x = PLIST_BARICON_RETURN_X;
+    curPos.x = PLIST_BARICON_RETURN_X_MENU;
     curPos.y = PLIST_BARICON_Y;
     GFL_CLACT_WK_SetPos( work->clwkBarIcon[PBT_RETURN] , &curPos , CLSYS_DRAW_MAIN );
     GFL_CLACT_WK_SetDrawEnable( work->clwkBarIcon[PBT_EXIT] , FALSE );
   }
-
+  GFL_BG_LoadScreenV_Req(PLIST_BG_MENU);
 }
 
 //--------------------------------------------------------------
@@ -1221,7 +1230,7 @@ static void PLIST_TermSelectMenu( PLIST_WORK *work )
   PLIST_MSG_CloseWindow( work , work->msgWork );
   {
     GFL_CLACTPOS curPos;
-    curPos.x = PLIST_BARICON_RETURN_X-4;
+    curPos.x = PLIST_BARICON_RETURN_X_BAR;
     curPos.y = PLIST_BARICON_Y;
     GFL_CLACT_WK_SetPos( work->clwkBarIcon[PBT_RETURN] , &curPos , CLSYS_DRAW_MAIN );
   }
@@ -1262,12 +1271,23 @@ static void PLIST_ExitSelectMenu( PLIST_WORK *work )
     
     break;
 
+  case PMIT_ITEM:
+    {
+      PLIST_MENU_ITEM_TYPE itemArr[4] = {PMIT_GIVE,PMIT_TAKE,PMIT_CLOSE,PMIT_END_LIST};
+      PLIST_InitSelectMenu( work );
+      PLIST_MSG_OpenWindow( work , work->msgWork , PMT_MENU );
+      PLIST_MSG_DrawMessageNoWait( work , work->msgWork , mes_pokelist_03_02 );
+      PLIST_MENU_OpenMenu( work , work->menuWork , itemArr );
+    }
+    break;
+
   case PMIT_STATSU:
   case PMIT_WAZA_1:
   case PMIT_WAZA_2:
   case PMIT_WAZA_3:
   case PMIT_WAZA_4:
-  case PMIT_ITEM:
+  case PMIT_GIVE:
+  case PMIT_TAKE:
     OS_TPrintf("まだ作ってない！\n");
     PLIST_SelectPokeSetCursor( work , work->pokeCursor );
     work->selectPokePara = NULL;
