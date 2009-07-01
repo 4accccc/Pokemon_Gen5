@@ -27,6 +27,7 @@
 #include "field/fieldmap.h"
 #include "font/font.naix" //NARC_font_large_nftr
 #include "sound/pm_sndsys.h"
+#include "system/wipe.h"
 
 #include "itemmenu.h"
 
@@ -37,17 +38,20 @@
 //============================================================================================
 //============================================================================================
 
-#define DEBUG_ITEMDISP_FRAME (GFL_BG_FRAME1_M)
+#define DEBUG_ITEMDISP_FRAME (GFL_BG_FRAME1_S)
 
 
 #define _DISP_INITX (1)
-#define _DISP_INITY (18)
+#define _DISP_INITY (1)
 #define _DISP_SIZEX (30)
-#define _DISP_SIZEY (4)
+#define _DISP_SIZEY (20)
 #define _BUTTON_WIN_PAL   (12)  // ウインドウ
 #define _BUTTON_MSG_PAL   (11)  // メッセージフォント
 #define	FBMP_COL_WHITE		(15)
 #define WINCLR_COL(col)	(((col)<<4)|(col))
+
+#define FLD_SUBSCR_FADE_DIV (1)
+#define FLD_SUBSCR_FADE_SYNC (1)
 
 //-----------------------------------------------
 //static 定義
@@ -180,6 +184,7 @@ static GFL_DISP_VRAM _defVBTbl = {
 
 static void _graphicInit(FIELD_ITEMMENU_WORK* wk)
 {
+	G2_BlendNone();
 
 	GFL_BG_Init(wk->heapID);
 	GFL_BMPWIN_Init(wk->heapID);
@@ -202,8 +207,55 @@ static void _graphicInit(FIELD_ITEMMENU_WORK* wk)
 	
 	wk->bgchar = BmpWinFrame_GraphicSetAreaMan(DEBUG_ITEMDISP_FRAME,
 																						 _BUTTON_WIN_PAL, MENU_TYPE_SYSTEM, wk->heapID);
+	GFL_ARC_UTIL_TransVramPalette(ARCID_FONT, NARC_font_default_nclr, PALTYPE_SUB_BG,
+																0x20*_BUTTON_MSG_PAL, 0x20, wk->heapID);
 	GFL_ARC_UTIL_TransVramPalette(ARCID_FONT, NARC_font_default_nclr, PALTYPE_MAIN_BG,
 																0x20*_BUTTON_MSG_PAL, 0x20, wk->heapID);
+}
+
+
+static void _windowCreate(FIELD_ITEMMENU_WORK* wk)
+{
+
+	wk->win = GFL_BMPWIN_Create(
+		DEBUG_ITEMDISP_FRAME,
+    _DISP_INITX, _DISP_INITY,
+    _DISP_SIZEX, _DISP_SIZEY,
+    _BUTTON_MSG_PAL, GFL_BMP_CHRAREA_GET_B );
+
+  GFL_BMP_Clear(GFL_BMPWIN_GetBmp(wk->win), WINCLR_COL(FBMP_COL_WHITE) );
+  GFL_BMPWIN_MakeScreen( wk->win );
+	BmpWinFrame_Write( wk->win, WINDOW_TRANS_ON, GFL_ARCUTIL_TRANSINFO_GetPos(wk->bgchar), _BUTTON_WIN_PAL );
+
+}
+
+
+
+static void _windowRewrite(FIELD_ITEMMENU_WORK* wk, int type)
+{
+	int i;
+	ITEM_ST * item;
+	MYITEM_PTR pMyItem = GAMEDATA_GetMyItem(GAMESYSTEM_GetGameData(wk->gsys));
+	
+	GFL_BMP_Clear(GFL_BMPWIN_GetBmp(wk->win), WINCLR_COL(FBMP_COL_WHITE) );
+
+	for(i = 0 ; i < 9; i++){
+		item = MYITEM_PosItemGet( pMyItem, wk->itemtype, i );
+		if(item==NULL){
+			break;
+		}
+		ITEM_GetItemName(wk->pStrBuf, item->id, wk->heapID);
+		PRINTSYS_Print( GFL_BMPWIN_GetBmp(wk->win), 10, (i+1)*16, wk->pStrBuf, wk->fontHandle);		
+
+		GFL_MSG_GetString(  wk->MsgManager, DEBUG_FIELD_STR34, wk->pStrBuf );
+		WORDSET_RegisterNumber(wk->WordSet, 2, item->no,
+													 3, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT);
+		WORDSET_ExpandStr( wk->WordSet, wk->pExpStrBuf, wk->pStrBuf );
+		PRINTSYS_Print( GFL_BMPWIN_GetBmp(wk->win), 160, (i+1)*16, wk->pExpStrBuf, wk->fontHandle);
+
+	}
+
+	GFL_BMPWIN_TransVramCharacter(wk->win);
 }
 
 
@@ -212,9 +264,29 @@ static void _graphicInit(FIELD_ITEMMENU_WORK* wk)
 
 
 
-
-void _itemKindSelectMenu(FIELD_ITEMMENU_WORK* wk)
+static void _itemKindSelectMenu(FIELD_ITEMMENU_WORK* wk)
 {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
+	if(GFL_UI_KEY_GetTrg()== PAD_BUTTON_START){
+		_CHANGE_STATE(wk, NULL);
+	}
+
+	
 }
 
 
@@ -230,13 +302,13 @@ static GFL_PROC_RESULT FieldItemMenuProc_Init( GFL_PROC * proc, int * seq, void 
 {
   FIELD_ITEMMENU_WORK* wk = pwk;
 
-  GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_ITEMMENU, 0x18000 );
+  GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_ITEMMENU, 0x28000 );
+	wk->heapID = HEAPID_ITEMMENU;
 
 	_graphicInit(wk);
 
 
 	
-	wk->heapID = HEAPID_ITEMMENU;
   wk->MsgManager = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE,
 																	 NARC_message_d_field_dat, wk->heapID );
 	wk->pStrBuf = GFL_STR_CreateBuffer(100,wk->heapID);
@@ -246,9 +318,12 @@ static GFL_PROC_RESULT FieldItemMenuProc_Init( GFL_PROC * proc, int * seq, void 
 																		GFL_FONT_LOADTYPE_FILE , FALSE , wk->heapID );
 
 	GFL_UI_KEY_SetRepeatSpeed(1,6);
-	//_graphicInit(wk);
-	//_windowCreate(wk);
-	//_windowRewrite(wk,0);
+	_windowCreate(wk);
+	_windowRewrite(wk,0);
+	
+	WIPE_SYS_Start( WIPE_PATTERN_S , WIPE_TYPE_FADEIN , WIPE_TYPE_FADEIN , 
+									WIPE_FADE_BLACK , FLD_SUBSCR_FADE_DIV , FLD_SUBSCR_FADE_SYNC , wk->heapID );
+	
 	_CHANGE_STATE(wk, _itemKindSelectMenu);
 	return GFL_PROC_RES_FINISH;
 }
@@ -263,14 +338,16 @@ static GFL_PROC_RESULT FieldItemMenuProc_Init( GFL_PROC * proc, int * seq, void 
 static GFL_PROC_RESULT FieldItemMenuProc_Main( GFL_PROC * proc, int * seq, void * pwk, void * mywk )
 {
   FIELD_ITEMMENU_WORK* wk = pwk;
-	int retCode = GFL_PROC_RES_FINISH;
   StateFunc* state = wk->state;
 
-	if(state != NULL){
-    state(wk);
-    retCode = GFL_PROC_RES_CONTINUE;
-  }
-	return retCode;
+	if(state == NULL){
+		return GFL_PROC_RES_FINISH;
+	}
+	if( WIPE_SYS_EndCheck() != TRUE ){
+		return GFL_PROC_RES_CONTINUE;
+	}
+	state(wk);
+	return GFL_PROC_RES_CONTINUE;
 	
 }
 
@@ -296,6 +373,13 @@ static GFL_PROC_RESULT FieldItemMenuProc_End( GFL_PROC * proc, int * seq, void *
 	GFL_STR_DeleteBuffer(wk->pExpStrBuf);
   WORDSET_Delete(wk->WordSet);
   GFL_FONT_Delete(wk->fontHandle);
+
+	GFL_BMPWIN_Exit();
+	GFL_BG_Exit();
+
+
+	GFL_HEAP_DeleteHeap(  HEAPID_ITEMMENU );
+	
 	return GFL_PROC_RES_FINISH;
 
 }

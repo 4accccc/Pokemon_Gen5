@@ -475,20 +475,24 @@ FS_EXTERN_OVERLAY(itemmenu);
 
 static BOOL FMenuCallProc_Bag( FMENU_EVENT_WORK *mwk )
 {
-//  GMEVENT * subevent = createFMenuMsgWinEvent(mwk->gmSys, mwk->heapID,
-//      FLDMAPMENU_STR10, FIELDMAP_GetFldMsgBG(mwk->fieldWork) );
-//  GMEVENT_CallEvent(mwk->gmEvent, subevent);
 
 
   GMEVENT * newEvent;
-  EASY_POKELIST_PARENT *epp;
+  FIELD_ITEMMENU_WORK *epp;
   
   epp = GFL_HEAP_AllocClearMemory(GFL_HEAPID_APP, sizeof(FIELD_ITEMMENU_WORK));
-  epp->party = GAMEDATA_GetMyPokemon(GAMESYSTEM_GetGameData(mwk->gmSys));
+  epp->ctrl = SaveControl_GetPointer();
+  epp->gsys = mwk->gmSys;
+  epp->fieldmap = mwk->fieldWork;
+	epp->heapID = GFL_HEAPID_APP;
   mwk->sub_proc_parent = epp;
-  newEvent = EVENT_FieldSubProc(mwk->gmSys, mwk->fieldWork,
+
+	newEvent = EVENT_FieldSubProc(mwk->gmSys, mwk->fieldWork,
       FS_OVERLAY_ID(itemmenu), &ItemMenuProcData, epp);
-  GMEVENT_CallEvent(mwk->gmEvent, newEvent);
+  epp->event = newEvent;
+
+
+	GMEVENT_CallEvent(mwk->gmEvent, newEvent);
 
 	return( TRUE );
 }

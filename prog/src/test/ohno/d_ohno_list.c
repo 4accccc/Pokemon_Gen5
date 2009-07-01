@@ -169,8 +169,6 @@ static GFL_PROC_RESULT DebugOhnoMainProcInit( GFL_PROC * proc, int * seq, void *
 	D_OHNO_WORK* wk;
 
 
-    
-	
 	DEBUG_PerformanceSetActive(FALSE);
 	  //デバッグ
 	SaveControl_Load(SaveControl_GetPointer());

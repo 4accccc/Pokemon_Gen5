@@ -49,7 +49,7 @@ struct _DEBUGITEM_PARAM {
   STRBUF*  pStrBuf;
 	STRBUF*  pExpStrBuf;
   GFL_FONT 			*fontHandle;
-	int itemid;
+	int itemtype;
 	int itemnum;
 	int curpos;
 	HEAPID heapID;
