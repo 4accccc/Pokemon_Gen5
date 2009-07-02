@@ -44,15 +44,14 @@ extern void				SOUNDMAN_UpdateHierarchyPlayerSoundHeapLv( void );
 extern void	SOUNDMAN_RecoverHierarchyPlayerState( void );
 
 // 階層プレーヤーサウンド操作
-extern BOOL	SOUNDMAN_PlayHierarchyPlayer( u32 soundIdx );
-extern void	SOUNDMAN_StopHierarchyPlayer( void );
-extern void	SOUNDMAN_PauseHierarchyPlayer( BOOL flag );
+extern BOOL	SOUNDMAN_LoadHierarchyPlayer( u32 soundIdx );
+extern void	SOUNDMAN_UnloadHierarchyPlayer( void );
 extern BOOL	SOUNDMAN_PushHierarchyPlayer( void );
 extern BOOL	SOUNDMAN_PopHierarchyPlayer( void );
 
 // 階層プレーヤーサウンド操作(スレッド再生用)
-extern void	SOUNDMAN_PlayHierarchyPlayer_forThread_heapsv( void );
-extern BOOL	SOUNDMAN_PlayHierarchyPlayer_forThread_play( u32 soundIdx );
+extern void	SOUNDMAN_LoadHierarchyPlayer_forThread_heapsvSB( void );
+extern BOOL	SOUNDMAN_LoadHierarchyPlayer_forThread_end( u32 soundIdx );
 
 //============================================================================================
 /**

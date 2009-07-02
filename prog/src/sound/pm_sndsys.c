@@ -365,6 +365,23 @@ void PMSND_ChangeCaptureReverb( u32 depth, u32 samplingRate, int volume, int sto
 //============================================================================================
 //------------------------------------------------------------------
 /**
+ * @brief	サウンド停止
+ */
+//------------------------------------------------------------------
+static void	PMSND_StopBGM_CORE( void )
+{
+	NNS_SndPlayerStopSeq(SOUNDMAN_GetHierarchyPlayerSndHandle(), 0);
+	SOUNDMAN_UnloadHierarchyPlayer();
+}
+//------------------------------------------------------------------
+void	PMSND_StopBGM( void )
+{
+	PMSND_ResetSystemFadeBGM();
+	PMSND_StopBGM_CORE();
+}
+
+//------------------------------------------------------------------
+/**
  * @brief	サウンド再生
  */
 //------------------------------------------------------------------
@@ -372,8 +389,15 @@ static BOOL PMSND_PlayBGM_CORE( u32 soundIdx, u16 trackBit )
 {
 	BOOL result;
 
-	SOUNDMAN_StopHierarchyPlayer();
-	result = SOUNDMAN_PlayHierarchyPlayer(soundIdx);
+	PMSND_StopBGM_CORE();
+	result = SOUNDMAN_LoadHierarchyPlayer(soundIdx);
+	if( result == FALSE){ return FALSE; }
+
+	// サウンド再生開始
+	result = NNS_SndArcPlayerStartSeqEx
+					(SOUNDMAN_GetHierarchyPlayerSndHandle(), PLAYER_BGM, -1, -1, soundIdx);
+	if( result == FALSE){ return FALSE; }
+
 	if( trackBit != 0xffff ){ PMSND_ChangeBGMtrack( trackBit ); }
 
 	return result;
@@ -395,24 +419,13 @@ void	PMSND_PlayNextBGM_EX( u32 soundIdx, u16 trackBit, u8 fadeOutFrame, u8 fadeI
 
 //------------------------------------------------------------------
 /**
- * @brief	サウンド停止
- */
-//------------------------------------------------------------------
-void	PMSND_StopBGM( void )
-{
-	PMSND_ResetSystemFadeBGM();
-	SOUNDMAN_StopHierarchyPlayer();
-}
-
-//------------------------------------------------------------------
-/**
  * @brief	サウンド一時停止
  */
 //------------------------------------------------------------------
 void	PMSND_PauseBGM( BOOL pauseFlag )
 {
 	PMSND_CancelSystemFadeBGM();
-	SOUNDMAN_PauseHierarchyPlayer(pauseFlag);
+	NNS_SndPlayerPause(SOUNDMAN_GetHierarchyPlayerSndHandle(), pauseFlag);
 }
 
 //------------------------------------------------------------------
@@ -486,6 +499,9 @@ void	PMSND_PushBGM( void )
 void	PMSND_PopBGM( void )
 {
 	PMSND_CancelSystemFadeBGM();
+	if( SOUNDMAN_GetHierarchyPlayerPlayerNoIdx() == 0 ){ return; }
+
+	PMSND_StopBGM_CORE();
 	SOUNDMAN_PopHierarchyPlayer();
 }
 
@@ -626,7 +642,7 @@ static void PMSND_SystemFadeBGM( void )
 				return;			//終了
 			}
 		}
-		SOUNDMAN_StopHierarchyPlayer();
+		PMSND_StopBGM_CORE();
 
 		if(fadeStatus.nextSoundIdx == 0){
 			PMSND_ResetSystemFadeBGM();
@@ -640,7 +656,7 @@ static void PMSND_SystemFadeBGM( void )
 		break;
 	case 1:
 		if(checkEndSoundPlayThread() == TRUE){
-			SOUNDMAN_PlayHierarchyPlayer_forThread_heapsv();// サウンド階層構造用設定
+			SOUNDMAN_LoadHierarchyPlayer_forThread_heapsvSB();// サウンド階層構造用設定
 
 			createSoundPlayThread( fadeStatus.nextSoundIdx, THREADLOAD_WAVE );
 			fadeStatus.seq = 2;
@@ -651,7 +667,11 @@ static void PMSND_SystemFadeBGM( void )
 		if(checkEndSoundPlayThread() == TRUE){
 			NNS_SndArcSetLoadBlockSize(0);	//分割ロードなしに復帰
 
-			SOUNDMAN_PlayHierarchyPlayer_forThread_play( fadeStatus.nextSoundIdx );
+			SOUNDMAN_LoadHierarchyPlayer_forThread_end( fadeStatus.nextSoundIdx );
+
+			// サウンド再生開始
+			NNS_SndArcPlayerStartSeqEx
+					(SOUNDMAN_GetHierarchyPlayerSndHandle(), PLAYER_BGM, -1, -1, fadeStatus.nextSoundIdx );
 			NNS_SndPlayerSetVolume(pBgmHandle, 0);
 			fadeStatus.seq = 0;
 		} else {
@@ -833,6 +853,8 @@ void	PMSND_PresetGroup( u32 groupIdx )
 
 void PMSND_ReleasePreset( void )
 {
+	PMSND_StopBGM_CORE();
+
 	if( usrPresetHandle1 != NULL ){
 		SOUNDMAN_ReleasePresetData(usrPresetHandle1);
 		usrPresetHandle1 = NULL;

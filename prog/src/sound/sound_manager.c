@@ -220,11 +220,11 @@ void	SOUNDMAN_RecoverHierarchyPlayerState( void )
 //--------------------------------------------------------------------------------------------
 /**
  *
- * @brief	サウンド再生
+ * @brief	階層データロード
  *
  */
 //--------------------------------------------------------------------------------------------
-BOOL	SOUNDMAN_PlayHierarchyPlayer( u32 soundIdx )
+BOOL	SOUNDMAN_LoadHierarchyPlayer( u32 soundIdx )
 {
 	PLAYER_HIERARCHY* player = &sndHierarchyArray[sndHierarchyArrayPos];
 	BOOL result;
@@ -234,7 +234,7 @@ BOOL	SOUNDMAN_PlayHierarchyPlayer( u32 soundIdx )
 	GF_ASSERT(pSndHeapHandle);
 
 	// 現在の階層に関連付けされているサウンドの停止
-	SOUNDMAN_StopHierarchyPlayer();
+	//SOUNDMAN_StopHierarchyPlayer();
 #ifdef STATUS_PRINT
 	heapSize = NNS_SndHeapGetFreeSize(*pSndHeapHandle);
 #endif
@@ -249,23 +249,20 @@ BOOL	SOUNDMAN_PlayHierarchyPlayer( u32 soundIdx )
 	result = NNS_SndArcLoadSeqEx(soundIdx, NNS_SND_ARC_LOAD_WAVE, *pSndHeapHandle);
 	if( result == FALSE){ return FALSE; }
 
-	// サウンド再生開始
-	result = NNS_SndArcPlayerStartSeqEx(&player->sndHandle, sndHierarchyPlayerNo, -1, -1, soundIdx);
-	if( result == FALSE){ return FALSE; }
-
 	player->heapLvFull = NNS_SndHeapSaveState(*pSndHeapHandle);
+	player->soundIdx = soundIdx;
+
 #ifdef STATUS_PRINT
 	OS_Printf("sound hierarchy start player(%d), seqno(%d), ", sndHierarchyArrayPos, soundIdx);
 	OS_Printf("soundHeap(%d->%d), ", heapSize, NNS_SndHeapGetFreeSize(*pSndHeapHandle));
 	OS_Printf("soundHeapSaveLv delete(%d), reset(%d), push(%d), full(%d)\n", 
 			player->heapLvDelete, player->heapLvReset, player->heapLvPush, player->heapLvFull);
 #endif
-	player->soundIdx = soundIdx;
 	return result;
 }
 
 //--------------------------------------------------------------------------------------------
-void	SOUNDMAN_PlayHierarchyPlayer_forThread_heapsv( void )
+void	SOUNDMAN_LoadHierarchyPlayer_forThread_heapsvSB( void )
 {
 	PLAYER_HIERARCHY* player = &sndHierarchyArray[sndHierarchyArrayPos];
 	GF_ASSERT(pSndHeapHandle);
@@ -273,16 +270,12 @@ void	SOUNDMAN_PlayHierarchyPlayer_forThread_heapsv( void )
 	player->heapLvPush = NNS_SndHeapSaveState(*pSndHeapHandle);
 }
 
-BOOL	SOUNDMAN_PlayHierarchyPlayer_forThread_play( u32 soundIdx )
+BOOL	SOUNDMAN_LoadHierarchyPlayer_forThread_end( u32 soundIdx )
 {
 	PLAYER_HIERARCHY* player = &sndHierarchyArray[sndHierarchyArrayPos];
 	BOOL result;
 
 	GF_ASSERT(pSndHeapHandle);
-
-	// サウンド再生開始
-	result = NNS_SndArcPlayerStartSeqEx(&player->sndHandle, sndHierarchyPlayerNo, -1, -1, soundIdx);
-	if( result == FALSE){ return FALSE; }
 
 	player->heapLvFull = NNS_SndHeapSaveState(*pSndHeapHandle);
 	player->soundIdx = soundIdx;
@@ -293,11 +286,11 @@ BOOL	SOUNDMAN_PlayHierarchyPlayer_forThread_play( u32 soundIdx )
 //--------------------------------------------------------------------------------------------
 /**
  *
- * @brief	サウンド停止
+ * @brief	階層データアンロード
  *
  */
 //--------------------------------------------------------------------------------------------
-void	SOUNDMAN_StopHierarchyPlayer( void )
+void	SOUNDMAN_UnloadHierarchyPlayer( void )
 {
 	PLAYER_HIERARCHY* player = &sndHierarchyArray[sndHierarchyArrayPos];
 
@@ -305,28 +298,8 @@ void	SOUNDMAN_StopHierarchyPlayer( void )
 
 	if( player->active == FALSE ){ return; }
 
-	// 現在のサウンドハンドルに結び付けられたシーケンスを即時停止
-	NNS_SndPlayerStopSeq(&player->sndHandle, 0);
 	player->soundIdx = PLAYER_HIERARCHY_EMPTY;
 	NNS_SndHeapLoadState(*pSndHeapHandle, player->heapLvReset);
-}
-
-//--------------------------------------------------------------------------------------------
-/**
- *
- * @brief	サウンド一時停止
- *
- */
-//--------------------------------------------------------------------------------------------
-void	SOUNDMAN_PauseHierarchyPlayer( BOOL flag )
-{
-	PLAYER_HIERARCHY* player = &sndHierarchyArray[sndHierarchyArrayPos];
-
-	GF_ASSERT(pSndHeapHandle);
-
-	if( player->active == FALSE ){ return; }
-	// 現在のサウンドハンドルに結び付けられたシーケンスを一時停止
-	NNS_SndPlayerPause(&player->sndHandle, flag);
 }
 
 //--------------------------------------------------------------------------------------------
@@ -369,9 +342,6 @@ BOOL	SOUNDMAN_PopHierarchyPlayer( void )
 
 	if( sndHierarchyArrayPos <= 0 ){ return FALSE; }	// 階層最少
 
-	// 現在の階層に関連付けされているサウンドの停止
-	SOUNDMAN_StopHierarchyPlayer();
-	
 	// 階層Down
 	deleteHierarchyPlayer();
 	sndHierarchyArrayPos--;
@@ -423,9 +393,6 @@ SOUNDMAN_PRESET_HANDLE* SOUNDMAN_PresetSoundTbl( const u32* soundIdxTbl, u32 tbl
 
 	GF_ASSERT(pSndHeapHandle);
 
-	// 現状再生されているＢＧＭは強制停止
-	SOUNDMAN_StopHierarchyPlayer();
-
 	handle = NNS_SndHeapAlloc(*pSndHeapHandle, sizeof(SOUNDMAN_PRESET_HANDLE), NULL, 0, 0);
 
 	for( i=0; i<tblNum; i++ ){ NNS_SndArcLoadSeq(soundIdxTbl[i], *pSndHeapHandle); }
@@ -448,9 +415,6 @@ SOUNDMAN_PRESET_HANDLE* SOUNDMAN_PresetGroup( u32 groupIdx )
 	int heapLvRelease, heapLvNew;
 
 	GF_ASSERT(pSndHeapHandle);
-
-	// 現状再生されているＢＧＭは強制停止
-	SOUNDMAN_StopHierarchyPlayer();
 
 	handle = NNS_SndHeapAlloc(*pSndHeapHandle, sizeof(SOUNDMAN_PRESET_HANDLE), NULL, 0, 0);
 
