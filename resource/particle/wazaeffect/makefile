@@ -31,7 +31,8 @@ include $(PROJECT_RSCDIR)\macro_define
 #※サブディレクトリでもMakeしたい場合、ここにディレクトリ名を書く
 #------------------------------------------------------------------------------
 ifeq ($(CONVERTUSER),true)
-SUBDIRS	= ../../../../pokemon_wb_doc/particle/wazaeffect
+SUBDIRS	= ../../../../pokemon_wb_doc/particle/battleeffect \
+					../../../../pokemon_wb_doc/particle/wazaeffect
 endif
 
 #コンバート対象のファイルツリーを生成
@@ -45,21 +46,9 @@ endif
 #------------------------------------------------------------------------------
 #	make do-build ルール
 #------------------------------------------------------------------------------
-do-build:	sub_dir $(TARGETDIR)/$(NARCNAME)
-
-$(TARGETDIR)/$(NARCNAME):	$(NARCNAME)
-	$(COPY)	$(NARCNAME) $(TARGETDIR)
-	$(COPY) $(NAIXNAME) $(TARGETDIR)
-	$(COPY) $(HEADNAME) $(TARGETDIR)
-
-sub_dir:
+do-build:
 	@$(MAKE_SUBDIR)
-
-ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
-$(NARCNAME): *.spa
-	nnsarc -c -l -n -i $(NARCNAME) *.spa
-	$(NAIXCUT) $(NAIXNAME)
-endif
+	$(MAKE) -f mkwe.mk
 
 #------------------------------------------------------------------------------
 #	make cleanルール
@@ -67,6 +56,8 @@ endif
 clean:
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
 	@$(MAKE_SUBDIR) clean
+	-rm -f *.spa
+	-rm -f *.h
 	-rm -f $(NARCNAME)
 	-rm -f $(NAIXNAME)
 endif
