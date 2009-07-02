@@ -28,7 +28,7 @@ typedef struct{
     u8 listNo;
 }_ListResult;
 
-typedef struct _COMM_TOOL_WORK_t{
+struct _COMM_TOOL_WORK_t{
     // リスト
     _ListResult listNo[COMM_MACHINE_MAX];     // 同期コマンド用
     u8 timingSync[COMM_MACHINE_MAX];     // 同期コマンド用

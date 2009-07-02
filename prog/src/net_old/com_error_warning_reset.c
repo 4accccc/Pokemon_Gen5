@@ -181,7 +181,9 @@ void ComErrorWarningResetCall( int heapID, int type, int code )
 	msgtmp = GFL_STR_CreateBuffer( COMERRRST_STRBUF_SIZE, heapID);
 	//MSG_PrintInit();//メッセージ表示システム初期化
 	wordset = WORDSET_Create( heapID );
-
+  fontHandle = GFL_FONT_Create( 
+    ARCID_FONT, NARC_font_large_nftr, GFL_FONT_LOADTYPE_FILE, FALSE, heapID );
+  
 	//	GF_BGL_BmpWinAddEx( bgl, &msgwin,&windata );//ビットマップ作成
 	msgwin = GFL_BMPWIN_CreateFixPos(
 		COMERRRST_TEXT_FRAME,			//ウインドウ使用フレーム
