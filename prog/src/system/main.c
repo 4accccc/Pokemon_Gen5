@@ -24,6 +24,7 @@
 #include "system/net_err.h"
 #include "savedata/config.h"
 #include "system/wipe.h"
+#include "system/brightness.h"
 #include "gamesystem\msgspeed.h"
 
 #include "sound\pm_sndsys.h"
@@ -228,6 +229,7 @@ static	void	GameMain(void)
 {
 	/* ユーザーレベルで必要なメイン処理をここに記述する */
 
+	BrightnessChgMain();
 	WIPE_SYS_Main();
 
 	NetErr_Main();
