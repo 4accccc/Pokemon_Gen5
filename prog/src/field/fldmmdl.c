@@ -4214,6 +4214,7 @@ static BOOL MMdlSys_CheckEventFlag( const MMDLSYS *mmdlsys, u16 flag_no )
   if( fieldMap == NULL ){
     return( FALSE );
   }
+  return; //FIELDMAP_WORKÇÃàµÇ¢Ç™ämíËÇµÇƒÇ¢Ç»Ç¢ÅB
 #endif
   {
     GAMESYS_WORK *gsys = FIELDMAP_GetGameSysWork( fieldMap );
