@@ -70,7 +70,8 @@ SUBDIRS	=	wmi \
 			pokelist \
 			wifi_earth \
 			ballslow \
-			bucket
+			bucket \
+			p_status
 
 
 include $(RESOURCE_MACRO)

@@ -169,4 +169,5 @@
   ARCID_WORLDTIMER "worldtimer.narc" #世界時計
   ARCID_BUCKET_DATA       "ballslow_data.narc"  #タマ投げデータ
 	ARCID_BUCKET_GRAPHIC		"bucket.narc"         #WiFiバケットミニゲームグラフィック
+	ARCID_P_STATUS		"p_status_gra.narc"         #WiFiバケットミニゲームグラフィック
 

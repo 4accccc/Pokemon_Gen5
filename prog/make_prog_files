@@ -136,6 +136,7 @@ SRCS  +=    $(SOUNDSRC) \
         net_app/union/union_beacon_tool.c \
         app/wifi_note/wifi_note.c \
         app/pokelist/pokelist.c \
+		app/p_status/p_status.c \
         test/camera_adjust_view.c \
         system/selbox.c \
         gamesystem/game_comm.c \
@@ -424,6 +425,13 @@ SRCS_OVERLAY_POKELIST = test/matsuda/easy_pokelist.c\
 		app/pokelist/plist_plate.c \
 		app/pokelist/plist_message.c \
 		app/pokelist/plist_menu.c
+
+#ポケモンステータス
+#===> SRCS_OVERLAY_DEV_IRC
+#===> SRCS_OVERLAY_DEV_WIRELESS
+#===> SRCS_OVERLAY_DEV_WIFI
+SRCS_OVERLAY_POKE_STATUS = app/p_status/p_sta_sys.c \
+		app/p_status/p_sta_sub.c 
 
 
 # 交換画面

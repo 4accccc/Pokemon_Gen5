@@ -68,19 +68,23 @@ static BOOL TESTMODE_ITEM_SelectFuncStage( TESTMODE_WORK *work , const int idx )
 #include "app/codein.h"
 #include "app/wifi_note.h"
 #include "app/pokelist.h"
+#include "app/p_status.h"
 #include "test/ariizumi/musical_editor.h"
 FS_EXTERN_OVERLAY(pmsinput);
 FS_EXTERN_OVERLAY(pokelist);
+FS_EXTERN_OVERLAY(poke_status);
 extern const GFL_PROC_DATA ProcData_PMSInput;
 static BOOL TESTMODE_ITEM_SelectDebWifiNote( TESTMODE_WORK *work , const int idx );
 static BOOL TESTMODE_ITEM_SelectDebPmsInput( TESTMODE_WORK *work , const int idx );
 static BOOL TESTMODE_ITEM_SelectDebPokeList( TESTMODE_WORK *work , const int idx );
+static BOOL TESTMODE_ITEM_SelectDebPokeStatus( TESTMODE_WORK *work , const int idx );
 #if USE_MUSICAL_EDIT
 static BOOL TESTMODE_ITEM_SelectMusicalEditor( TESTMODE_WORK *work , const int idx );
 #endif //USE_MUSICAL_EDIT
 
 static TESTMODE_MENU_LIST menuAriizumi[] = 
 {
+	{L"ポケステータス"  ,TESTMODE_ITEM_SelectDebPokeStatus },
 	{L"ポケリスト"		  ,TESTMODE_ITEM_SelectDebPokeList },
 	{L"ミュージカル"		,TESTMODE_ITEM_ChangeMusicalMenu },
 #if USE_MUSICAL_EDIT
@@ -113,7 +117,12 @@ static BOOL TESTMODE_ITEM_SelectDebPokeList( TESTMODE_WORK *work , const int idx
 {
 	TESTMODE_COMMAND_ChangeProc(work,FS_OVERLAY_ID(pokelist), &PokeList_ProcData, NULL );
 	return TRUE;
-  
+}
+
+static BOOL TESTMODE_ITEM_SelectDebPokeStatus( TESTMODE_WORK *work , const int idx )
+{
+	TESTMODE_COMMAND_ChangeProc(work,FS_OVERLAY_ID(poke_status), &PokeStatus_ProcData, NULL );
+	return TRUE;
 }
 
 #if USE_MUSICAL_EDIT

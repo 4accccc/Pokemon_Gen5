@@ -1,0 +1,23 @@
+/*****************************************************************************
+	Archive file index definition.
+	File: p_status_gra.naix
+
+	This file was created by NINTENDO NITRO-System Archiver.
+
+
+ *****************************************************************************/
+
+#ifndef NARC_P_STATUS_GRA_NAIX_
+#define NARC_P_STATUS_GRA_NAIX_
+
+enum {
+	NARC_p_status_gra_p_status_d_NCLR = 0,
+	NARC_p_status_gra_p_status_bg_NCGR = 1,
+	NARC_p_status_gra_p_status_d_NCGR = 2,
+	NARC_p_status_gra_p_status_bg_NSCR = 3,
+	NARC_p_status_gra_p_status_info_NSCR = 4,
+	NARC_p_status_gra_p_status_sub_NSCR = 5
+};
+
+/* NARC_P_STATUS_GRA_NAIX_ */
+#endif
