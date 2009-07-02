@@ -91,7 +91,7 @@ GAMEDATA * GAMEDATA_Create(HEAPID heapID)
 	{
 		RTCDate date;
 		GFL_RTC_GetDate(&date);
-		gd->season_id = date.month % PMSEASON_TOTAL;
+		gd->season_id = (date.month + 2) % PMSEASON_TOTAL;
 	}
 
 	//
