@@ -79,6 +79,8 @@ extern	void						MCSS_SetOrthoMode( MCSS_SYS_WORK *mcss_sys );
 extern	void						MCSS_ResetOrthoMode( MCSS_SYS_WORK *mcss_sys );
 extern	void						MCSS_GetPosition( MCSS_WORK *mcss, VecFx32 *pos );
 extern	void						MCSS_SetPosition( MCSS_WORK *mcss, VecFx32 *pos );
+extern	void						MCSS_GetOfsPosition( MCSS_WORK *mcss, VecFx32 *pos );
+extern	void						MCSS_SetOfsPosition( MCSS_WORK *mcss, VecFx32 *pos );
 extern	void						MCSS_GetScale( MCSS_WORK *mcss, VecFx32 *scale );
 extern	void						MCSS_SetScale( MCSS_WORK *mcss, VecFx32 *scale );
 extern	void						MCSS_GetOfsScale( MCSS_WORK *mcss, VecFx32 *scale );
