@@ -128,10 +128,6 @@ struct _BTL_POKEPARAM {
 
   BPP_CORE_PARAM      coreParam;
 
-  const POKEMON_PARAM*  ppSrc;
-  u16  hp;
-  u8   myID;
-
   BPP_BASE_PARAM      baseParam;
   BPP_VARIABLE_PARAM  varyParam;
   BPP_REAL_PARAM      realParam;
@@ -380,7 +376,7 @@ static void Effrank_Recover( BPP_VARIABLE_PARAM* rank )
 
 u8 BTL_POKEPARAM_GetID( const BTL_POKEPARAM* pp )
 {
-  return pp->myID;
+  return pp->coreParam.myID;
 }
 
 u16 BTL_POKEPARAM_GetMonsNo( const BTL_POKEPARAM* pp )
@@ -422,7 +418,7 @@ BOOL BTL_POKEPARAM_IsMatchType( const BTL_POKEPARAM* pp, PokeType type )
 
 const POKEMON_PARAM* BTL_POKEPARAM_GetSrcData( const BTL_POKEPARAM* bpp )
 {
-  return bpp->ppSrc;
+  return bpp->coreParam.ppSrc;
 }
 
 
@@ -456,7 +452,7 @@ int BTL_POKEPARAM_GetValue( const BTL_POKEPARAM* pp, BppValueID vid )
   case BPP_CRITICAL_RATIO:  return pp->varyParam.critical;
 
   case BPP_LEVEL:     return pp->baseParam.level;
-  case BPP_HP:        return pp->hp;
+  case BPP_HP:        return pp->coreParam.hp;
   case BPP_MAX_HP:    return pp->baseParam.hpMax;
   case BPP_SEX:       return pp->baseParam.sex;
 
@@ -797,7 +793,7 @@ BppHpBorder BTL_POKEPARAM_CheckHPBorder( const BTL_POKEPARAM* pp, u32 hp )
 //=============================================================================================
 BppHpBorder BTL_POKEPARAM_GetHPBorder( const BTL_POKEPARAM* pp )
 {
-  return BTL_POKEPARAM_CheckHPBorder( pp, pp->hp );
+  return BTL_POKEPARAM_CheckHPBorder( pp, pp->coreParam.hp );
 }
 
 //=============================================================================================
@@ -811,7 +807,7 @@ BppHpBorder BTL_POKEPARAM_GetHPBorder( const BTL_POKEPARAM* pp )
 //=============================================================================================
 fx32 BTL_POKEPARAM_GetHPRatio( const BTL_POKEPARAM* pp )
 {
-  double r = (double)(pp->hp * 100) / (double)(pp->baseParam.hpMax);
+  double r = (double)(pp->coreParam.hp * 100) / (double)(pp->baseParam.hpMax);
   return FX32_CONST( r );
 }
 //=============================================================================================
@@ -1093,13 +1089,13 @@ void BTL_POKEPARAM_RankReset( BTL_POKEPARAM* pp )
 //=============================================================================================
 void BTL_POKEPARAM_HpMinus( BTL_POKEPARAM* pp, u16 value )
 {
-  if( pp->hp > value )
+  if( pp->coreParam.hp > value )
   {
-    pp->hp -= value;
+    pp->coreParam.hp -= value;
   }
   else
   {
-    pp->hp = 0;
+    pp->coreParam.hp = 0;
   }
 }
 //=============================================================================================
@@ -1113,10 +1109,10 @@ void BTL_POKEPARAM_HpMinus( BTL_POKEPARAM* pp, u16 value )
 //=============================================================================================
 void BTL_POKEPARAM_HpPlus( BTL_POKEPARAM* pp, u16 value )
 {
-  pp->hp += value;
-  if( pp->hp > pp->baseParam.hpMax )
+  pp->coreParam.hp += value;
+  if( pp->coreParam.hp > pp->baseParam.hpMax )
   {
-    pp->hp = pp->baseParam.hpMax;
+    pp->coreParam.hp = pp->baseParam.hpMax;
   }
 }
 //=============================================================================================
@@ -1129,7 +1125,7 @@ void BTL_POKEPARAM_HpPlus( BTL_POKEPARAM* pp, u16 value )
 //=============================================================================================
 void BTL_POKEPARAM_HpZero( BTL_POKEPARAM* pp )
 {
-  pp->hp = 0;
+  pp->coreParam.hp = 0;
 }
 //=============================================================================================
 /**
@@ -1191,10 +1187,10 @@ void BTL_POKEPARAM_SetWazaUsed( BTL_POKEPARAM* pp, u8 wazaIdx )
  * ワザナンバー上書き
  *
  * @param   pp
- * @param   wazaIdx		    何番目のワザ[0-3]？
- * @param   waza		      上書き後ワザナンバー
- * @param   ppMax		      PP最大値の上限（0ならデフォルト値）
- * @param   fPermenent		永続フラグ（TRUEならバトル後まで引き継ぐ／FALSEなら瀕死・入れかえで元に戻る）
+ * @param   wazaIdx       何番目のワザ[0-3]？
+ * @param   waza          上書き後ワザナンバー
+ * @param   ppMax         PP最大値の上限（0ならデフォルト値）
+ * @param   fPermenent    永続フラグ（TRUEならバトル後まで引き継ぐ／FALSEなら瀕死・入れかえで元に戻る）
  */
 //=============================================================================================
 void BTL_POKEPARAM_UpdateWazaNumber( BTL_POKEPARAM* pp, u8 wazaIdx, WazaID waza, u8 ppMax, BOOL fPermenent )

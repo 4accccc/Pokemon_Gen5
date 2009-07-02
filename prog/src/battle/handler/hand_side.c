@@ -32,6 +32,7 @@ enum {
  */
 typedef struct {
 
+  BTL_EVENT_FACTOR*  factor;      ///< 本体ハンドラ
   BPP_SICK_CONT  contParam;       ///< 継続パラメータ
   u16            turn_counter;    ///< ターン数カウンタ
   u8             add_counter;     ///< 重ねがけカウンタ
@@ -122,21 +123,49 @@ BTL_EVENT_FACTOR*  BTL_HANDLER_SIDE_Add( BtlSide side, BtlSideEffect sideEffect,
     {
       if( funcTbl[i].eff == sideEffect )
       {
-        if( ExistEffect[ side ][ sideEffect ].add_counter < funcTbl[i].add_max )
+        if( ExistEffect[ side ][ sideEffect ].add_counter == 0 )
         {
           BTL_EVENT_FACTOR* factor = funcTbl[i].func( 0, side, sideEffect );
           BTL_EVENT_FACTOR_SetWorkValue( factor, WORKIDX_CONT, contParam.raw );
 
-          ExistEffect[ side ][ sideEffect ].add_counter++;
+          ExistEffect[ side ][ sideEffect ].add_counter = 1;
           ExistEffect[ side ][ sideEffect ].turn_counter = 0;
           ExistEffect[ side ][ sideEffect ].contParam = contParam;
+          ExistEffect[ side ][ sideEffect ].factor = factor;
           return factor;
+        }
+        else if( ExistEffect[ side ][ sideEffect ].add_counter < funcTbl[i].add_max )
+        {
+          ExistEffect[ side ][ sideEffect ].add_counter++;
+          return ExistEffect[ side ][ sideEffect ].factor;
         }
       }
     }
   }
   return NULL;
 }
+
+//=============================================================================================
+/**
+ * ハンドラ削除
+ *
+ * @param   side
+ * @param   sideEffect
+ */
+//=============================================================================================
+void BTL_HANDLER_SIDE_Remove( BtlSide side, BtlSideEffect sideEffect )
+{
+  EXIST_EFFECT* eff = &ExistEffect[ side ][ sideEffect ];
+
+  if( eff->factor )
+  {
+    BTL_EVENT_FACTOR_Remove( eff->factor );
+    eff->factor = NULL;
+    eff->add_counter = 0;
+    eff->contParam.type = WAZASICK_CONT_NONE;
+  }
+}
+
 //=============================================================================================
 /**
  *  ターンチェック処理
@@ -161,6 +190,8 @@ void BTL_HANDLER_SIDE_TurnCheck( pSideEffEndCallBack callBack, void* callbackArg
           {
             eff->add_counter = 0;
             eff->contParam.type = WAZASICK_CONT_NONE;
+            BTL_EVENT_FACTOR_Remove( eff->factor );
+            eff->factor = NULL;
             callBack( side, i, callbackArg );
           }
         }

@@ -119,6 +119,8 @@ extern void BTL_SVFLOW_RECEPT_CantEscapeAdd( BTL_SVFLOW_WORK* wk, u8 pokeID, Btl
 extern void BTL_SVFLOW_RECEPT_CantEscapeSub( BTL_SVFLOW_WORK* wk, u8 pokeID, BtlCantEscapeCode code );
 extern void BTL_SVFLOW_RECEPT_TraceTokusei( BTL_SVFLOW_WORK* wk, u8 pokeID, u8 targetPokeID );
 extern HEAPID BTL_SVFLOW_RECEPT_GetHeapID( BTL_SVFLOW_WORK* wk );
+extern u32 BTL_SVFLOW_SimulationDamage( BTL_SVFLOW_WORK* flowWk, u8 atkPokeID, u8 defPokeID, WazaID waza, BOOL fAffinity, BOOL fCritical );
+
 
 /**
  * 特殊優先順コードA（ワザ優先順より上位）
@@ -171,7 +173,9 @@ typedef enum {
 typedef enum {
 
   BTL_SIDEEFF_NULL = 0,
-  BTL_SIDEEFF_REFRECTOR,      ///< 物理攻撃を半減
+  BTL_SIDEEFF_START,
+
+  BTL_SIDEEFF_REFRECTOR=BTL_SIDEEFF_START,      ///< 物理攻撃を半減
   BTL_SIDEEFF_HIKARINOKABE,   ///< 特殊攻撃を半減
   BTL_SIDEEFF_SINPINOMAMORI,  ///< ポケ系状態異常にならない
   BTL_SIDEEFF_SIROIKIRI,      ///< ランクダウン効果を受けない
@@ -181,10 +185,13 @@ typedef enum {
   BTL_SIDEEFF_DOKUBISI,       ///< 入れ替えて出てきたポケモンに毒（２段階）
   BTL_SIDEEFF_STEALTHROCK,    ///< 入れ替えて出てきたポケモンにダメージ（相性計算あり）
 
-
   BTL_SIDEEFF_MAX,
 
+  BTL_SIDEEFF_BITFLG_BYTES = 1 + (BTL_SIDEEFF_MAX/8) + ((BTL_SIDEEFF_MAX%8)!=0),
+
 }BtlSideEffect;
+
+
 
 /**
  *  ハンドラ挙動（効果が表出するもの）
@@ -216,6 +223,7 @@ typedef enum {
   BTL_HANDEX_SET_CONTFLAG,  ///< 継続フラグセット
   BTL_HANDEX_RESET_CONTFLAG,///< 継続フラグリセット
   BTL_HANDEX_SIDE_EFFECT,   ///< サイドエフェクト追加
+  BTL_HANDEX_SIDEEFF_REMOVE, ///< サイドエフェクト削除
   BTL_HANDEX_CHANGE_TOKUSEI,///< とくせい書き換え
   BTL_HANDEX_SET_ITEM,      ///< アイテム書き換え
   BTL_HANDEX_SWAP_ITEM,     ///< アイテム入れ替え
@@ -365,6 +373,12 @@ typedef struct {
   BPP_SICK_CONT   cont;
   u8              pokeID;
 }BTL_HANDEX_PARAM_SIDE_EFFECT;
+
+typedef struct {
+  BTL_HANDEX_PARAM_DAMAGE  header;
+  u8              flags[ BTL_SIDEEFF_BITFLG_BYTES ];
+  u8              side;
+}BTL_HANDEX_PARAM_SIDEEFF_REMOVE;
 
 typedef struct {
   BTL_HANDEX_PARAM_DAMAGE  header;

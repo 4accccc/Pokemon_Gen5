@@ -129,6 +129,24 @@ static inline u32 BTL_CALC_RandRange( u32 min, u32 max )
     return min + GFL_STD_MtRand( range );
   }
 }
+static inline void BTL_CALC_BITFLG_Setup( u8* flags, u8 bufsize )
+{
+  flags[0] = bufsize;
+}
+static inline void BTL_CALC_BITFLG_Set( u8* flags, u32 index )
+{
+  u8 byte = 1 + index / 8;
+  u8 bit = index & 8;
+  flags[ byte ] |= (1 << bit);
+}
+static inline BOOL BTL_CALC_BITFLG_Check( const u8* flags, u32 index )
+{
+  u8 byte = 1 + index / 8;
+  u8 bit = index & 8;
+  return (flags[ byte ] & (1 << bit)) != 0;
+}
+
+
 
 //--------------------------------------------------------------------
 /**
