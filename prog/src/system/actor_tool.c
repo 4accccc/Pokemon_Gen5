@@ -185,6 +185,55 @@ u32 PLTTSLOT_ResourceSet(PLTTSLOT_SYS_PTR pssp, ARCHANDLE *handle, u32 data_id, 
 
 //--------------------------------------------------------------
 /**
+ * @brief   圧縮パレットリソースの転送(と領域確保) ※-pcmオプションがついているパレットが対象
+ *
+ * @param   pssp			パレットスロットへのポインタ
+ * @param   handle			アーカイブハンドル
+ * @param   data_id			実データへのデータIndex
+ * @param   pltt_num		転送するパレット本数
+ * @param   draw_type		CLSYS_DRAW_MAIN or CLSYS_DRAW_SUB
+ * @param   heap_id			テンポラリで使用するヒープID
+ *
+ * @retval  登録INDEX(パレット番号ではありません。削除時に必要になります)
+ */
+//--------------------------------------------------------------
+u32 PLTTSLOT_ResourceCompSet(PLTTSLOT_SYS_PTR pssp, ARCHANDLE *handle, u32 data_id, CLSYS_DRAW_TYPE draw_type, int pltt_num, int heap_id)
+{
+	int pal_no, index;
+
+#ifdef PM_DEBUG
+  {//圧縮パレット登録に本数指定が無い為、pltt_numと展開本数が一致しているか調べる
+    BOOL cmpFlag;
+    NNSG2dPaletteCompressInfo*  cmpData;
+    NNSG2dPaletteData*  palData;
+    void* loadPtr;
+    
+    loadPtr = GFL_ARC_LoadDataAllocByHandle(handle, data_id, GFL_HEAP_LOWID(heap_id));
+    
+    cmpFlag = NNS_G2dGetUnpackedPaletteCompressInfo( loadPtr, &cmpData );
+    GF_ASSERT(cmpFlag); //-pcmオプションがついたパレットではない
+    
+    if( NNS_G2dGetUnpackedPaletteData( loadPtr, &palData ) ){
+      //展開サイズとpltt_numが不一致。
+      //現状GFL_CLGRP_PLTT_RegisterCompには本数指定が無い為、このASSERTを入れておく
+      OS_TPrintf("pcm palData->szByte = 0x%x, pltt_num = 0x%x\n", palData->szByte, pltt_num*0x20);
+      GF_ASSERT(palData->szByte == pltt_num*0x20);
+    }
+    else{
+      GF_ASSERT("unpacked faile");
+    }
+    
+    GFL_HEAP_FreeMemory(loadPtr);
+  }
+#endif
+
+	pal_no = PLTTSLOT_Get(pssp, pltt_num, draw_type);
+	index = GFL_CLGRP_PLTT_RegisterComp( handle, data_id, draw_type, pal_no * 0x20, heap_id );
+	return index;
+}
+
+//--------------------------------------------------------------
+/**
  * @brief   エントリー番号からパレット番号を取得
  * @param   pssp		パレットスロットへのポインタ
  * @param   index		登録INDEX (PLTTSLOT_ResourceSet関数の戻り値)

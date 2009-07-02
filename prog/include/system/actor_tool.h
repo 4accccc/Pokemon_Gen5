@@ -26,6 +26,8 @@ extern PLTTSLOT_SYS_PTR PLTTSLOT_Init(int heap_id, int main_num, int sub_num);
 extern void PLTTSLOT_Exit(PLTTSLOT_SYS_PTR pssp);
 extern u32 PLTTSLOT_ResourceSet(PLTTSLOT_SYS_PTR pssp, ARCHANDLE *handle, u32 data_id, 
 	CLSYS_DRAW_TYPE draw_type, int pltt_num, int heap_id);
+extern u32 PLTTSLOT_ResourceCompSet(PLTTSLOT_SYS_PTR pssp, ARCHANDLE *handle, u32 data_id, 
+  CLSYS_DRAW_TYPE draw_type, int pltt_num, int heap_id);
 extern u32 PLTTSLOT_GetPalNo(PLTTSLOT_SYS_PTR pssp, u32 index, CLSYS_DRAW_TYPE draw_type);
 extern void PLTTSLOT_ResourceFree(PLTTSLOT_SYS_PTR pssp, u32 index, CLSYS_DRAW_TYPE draw_type);
 #endif
