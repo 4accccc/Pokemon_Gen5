@@ -58,7 +58,11 @@ endif
 #------------------------------------------------------------------------------
 #	make do-build ルール
 #------------------------------------------------------------------------------
+ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
+do-build:	$(NARCNAME) $(TARGETDIR)/$(NARCNAME)
+else
 do-build:	$(TARGETDIR)/$(NARCNAME)
+endif
 
 $(TARGETDIR)/$(NARCNAME):	$(NARCNAME)
 	$(COPY)	$(NARCNAME) $(TARGETDIR)
@@ -76,7 +80,7 @@ endif
 clean:
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
 #	-rm -f *.N*R
-#	-rm -f *.N*C
+	-rm -f *.bin
 	-rm -f $(NARCNAME)
 	-rm -f $(NAIXNAME)
 endif
