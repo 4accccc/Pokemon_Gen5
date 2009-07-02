@@ -4212,7 +4212,7 @@ static BOOL MMdlSys_CheckEventFlag( const MMDLSYS *mmdlsys, u16 flag_no )
   GF_ASSERT( fieldMap != NULL );
 #else
   if( fieldMap == NULL ){
-    return;
+    return( FALSE );
   }
 #endif
   {
