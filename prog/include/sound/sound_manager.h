@@ -29,21 +29,8 @@ extern void	SOUNDMAN_Init(NNSSndHeapHandle* pHeapHandle);
  * @brief	階層構造プレーヤー関数
  */
 //============================================================================================
-// 階層プレーヤー設定構造体
-typedef struct {
-	u16	hierarchyPlayerSize;
-	u16	hierarchyPlayerStartNo;
-	u16	playerPlayableChannel;
-}SOUNDMAN_HIERARCHY_PLAYER_DATA;
-
-// スレッド使用引数構造体
-typedef struct {
-	u32	soundIdx;
-}SOUNDMAN_HIERARCHY_PLAYTHREAD_ARG;
-
-//------------------------------------------------------------------
 // 階層プレーヤー初期化
-extern void	SOUNDMAN_InitHierarchyPlayer( const SOUNDMAN_HIERARCHY_PLAYER_DATA* playerData );
+extern void	SOUNDMAN_InitHierarchyPlayer( u16	hierarchyPlayerNo );
 
 // 階層プレーヤー状態取得
 extern u32				SOUNDMAN_GetHierarchyPlayerSoundIdx( void );

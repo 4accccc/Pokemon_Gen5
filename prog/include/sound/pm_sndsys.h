@@ -17,22 +17,24 @@
  */
 //------------------------------------------------------------------
 #define PMSND_BGM_START		(BGM_START)
-#define PMSND_BGM_END		(SEQ_MUS_END)
+#define PMSND_BGM_END			(SEQ_MUS_END)
 #define PMSND_SE_START		(SE_START)
-#define PMSND_SE_END		(SEQ_SE_END)
+#define PMSND_SE_END			(SEQ_SE_END)
 
 //------------------------------------------------------------------
 /**
- * @brief	プレーヤー設定定義
+ * @brief	ＳＥプレーヤー設定定義
  */
 //------------------------------------------------------------------
-enum {
-	PLAYER_SYSSE = 0,
-	PLAYER_SEVOICE,
+typedef enum {
+	SEPLAYER_SYS = 0,
+	SEPLAYER_SE1,
+	SEPLAYER_SE2,
 
-	PLAYER_DEFAULT_MAX,
-};
+	SEPLAYER_MAXID,
+}SEPLAYER_ID;
 
+#define SEPLAYER_MAX ((int)SEPLAYER_MAXID)
 //------------------------------------------------------------------
 /**
  * @brief	関数引数用定義
@@ -52,12 +54,12 @@ extern void	PMSND_Main( void );
 extern void	PMSND_Exit( void );
 
 //	情報取得
-extern u32				PMSND_GetSndHeapFreeSize( void );
+extern u32						PMSND_GetSndHeapFreeSize( void );
 extern NNSSndHandle*	PMSND_GetBGMhandlePointer( void );
-extern u32				PMSND_GetBGMsoundNo( void );
-extern u32				PMSND_GetNextBGMsoundNo( void );	//再生予定or再生中のIDX取得
-extern u32				PMSND_GetBGMplayerNoIdx( void );
-extern BOOL				PMSND_CheckOnReverb( void );
+extern u32						PMSND_GetBGMsoundNo( void );
+extern u32						PMSND_GetNextBGMsoundNo( void );	//再生予定or再生中のIDX取得
+extern u32						PMSND_GetBGMplayerNoIdx( void );
+extern BOOL						PMSND_CheckOnReverb( void );
 
 //	リバーブ設定
 extern void PMSND_EnableCaptureReverb( u32 depth, u32 samplingRate, int volume, int stopFrames );
@@ -112,11 +114,27 @@ extern void PMSND_SetSystemFadeFrames( int fadeOutFrame, int fadeInFrame );
  *
  */
 //============================================================================================
-extern void	PMSND_PlaySystemSE( u32 soundNum );	//システムＳＥを再生
-extern void	PMSND_PlaySE( u32 soundNum );		//ＳＥを再生
-extern void	PMSND_StopSE( void );						//ＳＥを停止
-extern BOOL	PMSND_CheckPlaySE( void );			//ＳＥ終了検出(TRUE実行中)
-extern void	PMSND_SetStatusSE( int tempoRatio, int pitch, int pan );//ＳＥステータス変更
+//ＳＥ初期設定SEPLAYER_ID取得
+extern SEPLAYER_ID	PMSND_GetSE_DefaultPlayerID( u32 soundIdx );
+
+void	PMSND_PlaySE_byPlayerID( u32 soundIdx, SEPLAYER_ID sePlayerID );
+#define PMSND_PlaySystemSE( soundNum ) PMSND_PlaySE( soundNum )
+//ＳＥを再生
+extern void	PMSND_PlaySE( u32 soundIdx );
+//ＳＥをプレーヤーを指定して再生
+extern void	PMSND_PlaySE_byPlayerID( u32 soundIdx, SEPLAYER_ID sePlayerID );
+//全ＳＥを停止
+extern void	PMSND_StopSE( void );
+//ＳＥをプレーヤーを指定して停止
+extern void	PMSND_StopSE_byPlayerID( SEPLAYER_ID sePlayerID );
+//全ＳＥの終了を検出(TRUE実行中)
+extern BOOL	PMSND_CheckPlaySE( void );
+//ＳＥの終了をプレーヤーを指定して終了検出(TRUE実行中)
+extern BOOL	PMSND_CheckPlaySE_byPlayerID( SEPLAYER_ID sePlayerID );
+//ＳＥのステータスを変更
+extern void	PMSND_SetStatusSE( int tempoRatio, int pitch, int pan );
+//ＳＥのステータスをプレーヤーを指定して変更
+extern void	PMSND_SetStatusSE_byPlayerID(SEPLAYER_ID sePlayerID,int tempoRatio,int pitch,int pan);
 
 //============================================================================================
 /**
