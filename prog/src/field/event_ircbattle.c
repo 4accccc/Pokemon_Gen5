@@ -252,8 +252,11 @@ static GMEVENT_RESULT EVENT_IrcBattleMain(GMEVENT * event, int *  seq, void * wo
     (*seq)++;
 		break;
 	case _CALL_IRCCOMMPATIBLE:	//相性チェック画面へ
-		dbw->compatible_param.p_gamesys	= dbw->gsys;
-		GAMESYSTEM_CallProc(gsys, FS_OVERLAY_ID(irc_compatible), &IrcCompatible_ProcData, gsys );
+		dbw->compatible_param.p_gamesys		= dbw->gsys;
+#ifdef DEBUG_IRC_COMPATIBLE_ONLYPLAY
+		dbw->compatible_param.is_only_play	= FALSE;
+#endif //DEBUG_IRC_COMPATIBLE_ONLYPLAY
+		GAMESYSTEM_CallProc(gsys, FS_OVERLAY_ID(irc_compatible), &IrcCompatible_ProcData, &dbw->compatible_param );
     (*seq)++;
 		break;
 	case _WAIT_IRCCOMMPATIBLE:
