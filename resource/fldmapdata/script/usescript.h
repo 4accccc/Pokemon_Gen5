@@ -75,7 +75,7 @@
 //スクリプトに答えを返す汎用ワーク
 #define SCWK_ANSWER		( 0x800c )
 
-//話しかけ対象OBJIDワーク(変更不可)
+//話しかけ対象OBJIDワーク(変更不可。話し掛けイベント時に自動でOBJIDがセットされている）
 #define SCWK_TARGET_OBJID	( 0x800d )
 
 /*
