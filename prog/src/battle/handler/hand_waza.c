@@ -37,6 +37,10 @@ static BOOL is_registerd( u8 pokeID, WazaID waza );
 static void removeHandlerForce( u8 pokeID, WazaID waza );
 static BTL_EVENT_FACTOR*  ADD_Texture( u16 pri, WazaID waza, u8 pokeID );
 static void handler_Texture( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static BTL_EVENT_FACTOR*  ADD_Kiribarai( u16 pri, WazaID waza, u8 pokeID );
+static void handler_Kiribarai( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static BTL_EVENT_FACTOR*  ADD_Kawarawari( u16 pri, WazaID waza, u8 pokeID );
+static void handler_Kawarawari( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static BTL_EVENT_FACTOR*  ADD_Tobigeri( u16 pri, WazaID waza, u8 pokeID );
 static void handler_Tobigeri( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static BTL_EVENT_FACTOR*  ADD_Monomane( u16 pri, WazaID waza, u8 pokeID );
@@ -469,6 +473,8 @@ BTL_EVENT_FACTOR*  BTL_HANDLER_Waza_Add( const BTL_POKEPARAM* pp, WazaID waza )
     { WAZANO_SUKETTI,         ADD_Sketch        },
     { WAZANO_TOBIGERI,        ADD_Tobigeri      },
     { WAZANO_TOBIHIZAGERI,    ADD_Tobigeri      },
+    { WAZANO_KIRIBARAI,       ADD_Kiribarai     },
+    { WAZANO_KAWARAWARI,      ADD_Kawarawari    },
   };
 
   int i;
@@ -620,6 +626,86 @@ static void handler_Texture( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk
       BTL_HANDEX_PARAM_CHANGE_TYPE* param = BTL_SVFLOW_HANDLERWORK_Push( flowWk, BTL_HANDEX_CHANGE_TYPE, pokeID );
       param->next_type = next_type;
       param->pokeID = pokeID;
+    }
+  }
+}
+//----------------------------------------------------------------------------------
+/**
+ * きりばらい
+ */
+//----------------------------------------------------------------------------------
+static BTL_EVENT_FACTOR*  ADD_Kiribarai( u16 pri, WazaID waza, u8 pokeID )
+{
+  static const BtlEventHandlerTable HandlerTable[] = {
+    { BTL_EVENT_UNCATEGORY_WAZA, handler_Kiribarai },    // 未分類ワザハンドラ
+    { BTL_EVENT_NULL, NULL },
+  };
+  return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_WAZA, waza, pri, pokeID, HandlerTable );
+}
+static void handler_Kiribarai( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+{
+  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
+  {
+    u8 targetPokeID = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID_TARGET1 );
+
+    BTL_HANDEX_PARAM_RANK_EFFECT* rank_param;
+    BTL_HANDEX_PARAM_SIDEEFF_REMOVE* remove_param;
+
+    rank_param = BTL_SVFLOW_HANDLERWORK_Push( flowWk, BTL_HANDEX_RANK_EFFECT, pokeID );
+    rank_param->rankType = WAZA_RANKEFF_AVOID;
+    rank_param->rankVolume = -1;
+    rank_param->fAlmost = TRUE;
+    rank_param->poke_cnt = 1;
+    rank_param->pokeID[0] = targetPokeID;
+
+    remove_param = BTL_SVFLOW_HANDLERWORK_Push( flowWk, BTL_HANDEX_SIDEEFF_REMOVE, pokeID );
+    remove_param->side = BTL_MAINUTIL_PokeIDtoSide( targetPokeID );
+    BTL_CALC_BITFLG_Construction( remove_param->flags, sizeof(remove_param->flags) );
+    BTL_CALC_BITFLG_Set( remove_param->flags, BTL_SIDEEFF_REFRECTOR );
+    BTL_CALC_BITFLG_Set( remove_param->flags, BTL_SIDEEFF_HIKARINOKABE );
+    BTL_CALC_BITFLG_Set( remove_param->flags, BTL_SIDEEFF_SIROIKIRI );
+    BTL_CALC_BITFLG_Set( remove_param->flags, BTL_SIDEEFF_SINPINOMAMORI );
+    BTL_CALC_BITFLG_Set( remove_param->flags, BTL_SIDEEFF_MAKIBISI );
+    BTL_CALC_BITFLG_Set( remove_param->flags, BTL_SIDEEFF_DOKUBISI );
+    BTL_CALC_BITFLG_Set( remove_param->flags, BTL_SIDEEFF_STEALTHROCK );
+    remove_param->fExMsg = TRUE;
+    remove_param->exStrID = BTL_STRID_SET_Kiribarai;
+  }
+}
+//----------------------------------------------------------------------------------
+/**
+ * かわらわり
+ */
+//----------------------------------------------------------------------------------
+static BTL_EVENT_FACTOR*  ADD_Kawarawari( u16 pri, WazaID waza, u8 pokeID )
+{
+  static const BtlEventHandlerTable HandlerTable[] = {
+    { BTL_EVENT_WAZA_DMG_DETERMINE, handler_Kawarawari },    // 未分類ワザハンドラ
+    { BTL_EVENT_NULL, NULL },
+  };
+  return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_WAZA, waza, pri, pokeID, HandlerTable );
+}
+static void handler_Kawarawari( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+{
+  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
+  {
+    u8 targetPokeID = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID_TARGET1 );
+    BtlSide side = BTL_MAINUTIL_PokeIDtoSide( targetPokeID );
+
+    if( BTL_HANDER_SIDE_IsExist(side, BTL_SIDEEFF_REFRECTOR)
+    ||  BTL_HANDER_SIDE_IsExist(side, BTL_SIDEEFF_HIKARINOKABE)
+    ){
+      BTL_HANDEX_PARAM_SIDEEFF_REMOVE* param;
+      BTL_HANDEX_PARAM_MESSAGE* msg_param;
+
+      param = BTL_SVFLOW_HANDLERWORK_Push( flowWk, BTL_HANDEX_SIDEEFF_REMOVE, pokeID );
+      param->side = side;
+      BTL_CALC_BITFLG_Construction( param->flags, sizeof(param->flags) );
+      BTL_CALC_BITFLG_Set( param->flags, BTL_SIDEEFF_REFRECTOR );
+      BTL_CALC_BITFLG_Set( param->flags, BTL_SIDEEFF_HIKARINOKABE );
+
+      msg_param = BTL_SVFLOW_HANDLERWORK_Push( flowWk, BTL_HANDEX_MESSAGE_STD, pokeID );
+      msg_param->strID = BTL_STRID_STD_Kawarawari_Break;
     }
   }
 }

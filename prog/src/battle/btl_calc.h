@@ -3,10 +3,12 @@
 #define __BTL_CALC_H__
 
 #include "item\item.h"
+#include "waza_tool\wazano_def.h"
 
 #include "battle\battle.h"
 #include "btl_util.h"
 #include "btl_pokeparam.h"
+#include "btl_sideeff.h"
 
 enum {
   BTL_CALC_BASERANK_DEFAULT = 0,
@@ -129,21 +131,30 @@ static inline u32 BTL_CALC_RandRange( u32 min, u32 max )
     return min + GFL_STD_MtRand( range );
   }
 }
-static inline void BTL_CALC_BITFLG_Setup( u8* flags, u8 bufsize )
+static inline void BTL_CALC_BITFLG_Construction( u8* flags, u8 bufsize )
 {
+  u32 i;
   flags[0] = bufsize;
+  for(i=1; i<bufsize; ++i){
+    flags[i] = 0;
+  }
 }
 static inline void BTL_CALC_BITFLG_Set( u8* flags, u32 index )
 {
   u8 byte = 1 + index / 8;
   u8 bit = index & 8;
-  flags[ byte ] |= (1 << bit);
+  if( byte < flags[0] ){
+    flags[ byte ] |= (1 << bit);
+  }
 }
 static inline BOOL BTL_CALC_BITFLG_Check( const u8* flags, u32 index )
 {
   u8 byte = 1 + index / 8;
   u8 bit = index & 8;
-  return (flags[ byte ] & (1 << bit)) != 0;
+  if( byte < flags[0] ){
+    return (flags[ byte ] & (1 << bit)) != 0;
+  }
+  return 0;
 }
 
 
@@ -232,6 +243,10 @@ extern void BTL_CALC_MakeDefaultWazaSickCont( WazaSick sick, const BTL_POKEPARAM
 extern BPP_SICK_CONT BTL_CALC_MakeMoudokuSickCont( void );
 extern BPP_SICK_CONT BTL_CALC_MakeWazaSickCont_Turn( u8 turn_count );
 extern BPP_SICK_CONT BTL_CALC_MakeWazaSickCont_Poke( u8 pokeID );
+
+extern BtlSideEffect  BTL_CALC_WazaIDtoSideEffectID( WazaID waza );
+extern WazaID  BTL_CALC_SideEffectIDtoWazaID( BtlSideEffect sideEffect );
+
 
 //=============================================================================================
 /**

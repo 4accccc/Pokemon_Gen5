@@ -490,6 +490,47 @@ BOOL BTL_CALC_TOK_CheckCant_Swap( PokeTokusei tok )
   // @@@ 今のところトレースと一緒にしておく
   return BTL_CALC_TOK_CheckCant_Trace( tok );
 }
+//=============================================================================================
+// サイドエフェクト関連
+//=============================================================================================
+static const struct {
+  u16  waza;
+  u16  side;
+}WazaSideDispatchTbl[] = {
+  { WAZANO_RIHUREKUTAA,    BTL_SIDEEFF_REFRECTOR },      ///< 物理攻撃を半減
+  { WAZANO_HIKARINOKABE,   BTL_SIDEEFF_HIKARINOKABE },   ///< 特殊攻撃を半減
+  { WAZANO_SINPINOMAMORI,  BTL_SIDEEFF_SINPINOMAMORI },  ///< ポケ系状態異常にならない
+  { WAZANO_SIROIKIRI,      BTL_SIDEEFF_SIROIKIRI },      ///< ランクダウン効果を受けない
+  { WAZANO_OIKAZE,         BTL_SIDEEFF_OIKAZE },         ///< すばやさ２倍
+  { WAZANO_OMAZINAI,       BTL_SIDEEFF_OMAJINAI },       ///< 攻撃が急所に当たらない
+  { WAZANO_MAKIBISI,       BTL_SIDEEFF_MAKIBISI },       ///< 入れ替えて出てきたポケモンにダメージ（３段階）
+  { WAZANO_DOKUBISI,       BTL_SIDEEFF_DOKUBISI },       ///< 入れ替えて出てきたポケモンに毒（２段階）
+  { WAZANO_SUTERUSUROKKU,  BTL_SIDEEFF_STEALTHROCK },    ///< 入れ替えて出てきたポケモンにダメージ（相性計算あり）
+};
+
+
+BtlSideEffect  BTL_CALC_WazaIDtoSideEffectID( WazaID waza )
+{
+  u32 i;
+  for(i=0; i<NELEMS(WazaSideDispatchTbl); ++i){
+    if( WazaSideDispatchTbl[i].waza == waza ){
+      return WazaSideDispatchTbl[i].side;
+    }
+  }
+  return BTL_SIDEEFF_NULL;
+}
+WazaID  BTL_CALC_SideEffectIDtoWazaID( BtlSideEffect sideEffect )
+{
+  u32 i;
+  for(i=0; i<NELEMS(WazaSideDispatchTbl); ++i){
+    if( WazaSideDispatchTbl[i].side == sideEffect ){
+      return WazaSideDispatchTbl[i].waza;
+    }
+  }
+  return WAZANO_NULL;
+}
+
+
 
 //=============================================================================================
 // アイテムデータ取得関連

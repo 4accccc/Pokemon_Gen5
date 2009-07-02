@@ -223,6 +223,9 @@ static BTL_POKEPARAM* get_next_pokeparam( BTL_SVFLOW_WORK* wk, BtlPokePos pos );
 static void scproc_decrementPP( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, u8 wazaIdx, TARGET_POKE_REC* rec );
 static void scproc_Fight_Damage( BTL_SVFLOW_WORK* wk, WazaID waza,
    BTL_POKEPARAM* attacker, TARGET_POKE_REC* targets );
+static void scproc_Fight_Damage_ToRecover( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, WazaID waza, TARGET_POKE_REC* targets );
+static void scproc_Fight_Damage_ToRecover( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, WazaID waza, TARGET_POKE_REC* targets );
+static void scEvent_WazaDamageDetermine( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, WazaID waza, TARGET_POKE_REC* targets );
 static void scproc_Fight_Damage_side( BTL_SVFLOW_WORK* wk, WazaID waza, BTL_POKEPARAM* attacker,
   TARGET_POKE_REC* targets, fx32 dmg_ratio );
 static void scproc_Fight_Damage_side_single( BTL_SVFLOW_WORK* wk,
@@ -251,7 +254,7 @@ static BOOL scEvent_AddSick_CheckFail( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM*
 static u16 scEvent_AddSick_Fix( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* target, const BTL_POKEPARAM* attacker,
   WazaSick sick, BPP_SICK_CONT sickCont );
 static void scEvent_AddSick_Failed( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* target, WazaSick sick );
-static void scproc_UseItem( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp );
+static BOOL scproc_UseItemEquip( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp );
 static void scPut_EatNutsAct( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp );
 static void scPut_UseItem_RecoverHP( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 itemID );
 static void scPut_RemoveItem( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp );
@@ -285,41 +288,10 @@ static u8 get_pushout_nextpoke_idx( BTL_SVFLOW_WORK* wk, const SVCL_WORK* clwk )
 static BOOL scEvent_CheckPushOutFail( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, const BTL_POKEPARAM* target );
 static void scproc_Fight_Weather( BTL_SVFLOW_WORK* wk, WazaID waza, BTL_POKEPARAM* attacker, const BTL_ACTION_PARAM* action );
 static BOOL scproc_WeatherCore( BTL_SVFLOW_WORK* wk, BtlWeather weather, u8 turn );
-static void scput_Fight_Others( BTL_SVFLOW_WORK* wk, WazaID waza, BTL_POKEPARAM* attacker, TARGET_POKE_REC* targets );
+static void scput_Fight_Uncategory( BTL_SVFLOW_WORK* wk, WazaID waza, BTL_POKEPARAM* attacker, TARGET_POKE_REC* targets );
 static BOOL scEvent_UnCategoryWaza( BTL_SVFLOW_WORK* wk, WazaID waza, const BTL_POKEPARAM* attacker, TARGET_POKE_REC* targets );
-static void scput_Fight_Others_SkillSwap( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, TARGET_POKE_REC* targetRec );
+static void scput_Fight_Uncategory_SkillSwap( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, TARGET_POKE_REC* targetRec );
 static void scput_Fight_Uncategory_Hensin( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, TARGET_POKE_REC* targetRec );
-static void scproc_HandEx_Root( BTL_SVFLOW_WORK* wk, u16 useItemID );
-static void scproc_HandEx_TokWinIn( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header );
-static void scproc_HandEx_TokWinOut( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header );
-static void scproc_HandEx_useItem( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header );
-static void scproc_HandEx_recoverHP( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header, u16 itemID );
-static void scproc_HandEx_damage( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header );
-static void scproc_HandEx_shiftHP( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header );
-static void scproc_HandEx_recoverPP( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header, u16 itemID );
-static void scproc_HandEx_decrementPP( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header, u16 itemID );
-static void scproc_HandEx_cureSick( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header, u16 itemID );
-static void scproc_HandEx_addSick( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header );
-static void handex_addsick_msg( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* target, void* arg );
-static void scproc_HandEx_rankEffect( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header, u16 itemID );
-static void scproc_HandEx_setRank( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header );
-static void scproc_HandEx_recoverRank( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header );
-static void scproc_HandEx_resetRank( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header );
-static void scproc_HandEx_kill( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header );
-static void scproc_HandEx_changeType( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header );
-static void scproc_HandEx_messageSet( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header );
-static void scproc_HandEx_messageStd( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header );
-static void scproc_HandEx_setTurnFlag( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header );
-static void scproc_HandEx_resetTurnFlag( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header );
-static void scproc_HandEx_setContFlag( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header );
-static void scproc_HandEx_resetContFlag( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header );
-static void scproc_HandEx_sideEffect( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header );
-static void scproc_HandEx_sideEffectRemove( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header );
-static void scproc_HandEx_tokuseiChange( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header );
-static void scproc_HandEx_setItem( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header );
-static void scproc_HandEx_swapItem( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header );
-static void scproc_HandEx_updateWaza( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header );
-static void handexSub_itemSet( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 itemID );
 static BOOL scEventSetItem( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp );
 static void scproc_TurnCheck( BTL_SVFLOW_WORK* wk );
 static void scproc_turncheck_sub( BTL_SVFLOW_WORK* wk, BtlEventType event_type );
@@ -460,6 +432,36 @@ static void Hem_PopState( HANDLER_EXHIBISION_MANAGER* wk, u32 state );
 static u16 Hem_GetStackPtr( const HANDLER_EXHIBISION_MANAGER* wk );
 static BTL_HANDEX_PARAM_HEADER* Hem_ReadWork( HANDLER_EXHIBISION_MANAGER* wk );
 static BTL_HANDEX_PARAM_HEADER* Hem_PushWork( HANDLER_EXHIBISION_MANAGER* wk, BtlEventHandlerExhibition eq_type, u8 userPokeID );
+static BOOL scproc_HandEx_Root( BTL_SVFLOW_WORK* wk, u16 useItemID );
+static u8 scproc_HandEx_TokWinIn( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header );
+static u8 scproc_HandEx_TokWinOut( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header );
+static u8 scproc_HandEx_useItem( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header );
+static u8 scproc_HandEx_recoverHP( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header, u16 itemID );
+static u8 scproc_HandEx_damage( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header );
+static u8 scproc_HandEx_shiftHP( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header );
+static u8 scproc_HandEx_recoverPP( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header, u16 itemID );
+static u8 scproc_HandEx_decrementPP( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header, u16 itemID );
+static u8 scproc_HandEx_cureSick( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header, u16 itemID );
+static u8 scproc_HandEx_addSick( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header );
+static void handex_addsick_msg( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* target, void* arg );
+static u8 scproc_HandEx_rankEffect( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header, u16 itemID );
+static u8 scproc_HandEx_setRank( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header );
+static u8 scproc_HandEx_recoverRank( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header );
+static u8 scproc_HandEx_resetRank( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header );
+static u8 scproc_HandEx_kill( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header );
+static u8 scproc_HandEx_changeType( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header );
+static u8 scproc_HandEx_messageSet( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header );
+static u8 scproc_HandEx_messageStd( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header );
+static u8 scproc_HandEx_setTurnFlag( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header );
+static u8 scproc_HandEx_resetTurnFlag( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header );
+static u8 scproc_HandEx_setContFlag( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header );
+static u8 scproc_HandEx_resetContFlag( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header );
+static u8 scproc_HandEx_sideEffectRemove( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header );
+static u8 scproc_HandEx_tokuseiChange( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header );
+static u8 scproc_HandEx_setItem( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header );
+static u8 scproc_HandEx_swapItem( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header );
+static void handexSub_itemSet( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 itemID );
+static u8 scproc_HandEx_updateWaza( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header );
 
 
 
@@ -1314,7 +1316,7 @@ static void scproc_Fight_WazaExe( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, 
 //  case WAZADATA_CATEGORY_FIELD_EFFECT:
 //  case WAZADATA_CATEGORY_SIDE_EFFECT:
   case WAZADATA_CATEGORY_OTHERS:
-    scput_Fight_Others( wk, waza, attacker, &wk->targetPokemon );
+    scput_Fight_Uncategory( wk, waza, attacker, &wk->targetPokemon );
     break;
   default:
     SCQUE_PUT_MSG_STD( wk->que, BTL_STRID_STD_WazaFail );
@@ -1882,7 +1884,7 @@ static void scproc_decrementPP( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, u8
 
     if( scEvent_DecrementPP_Reaction(wk, attacker, wazaIdx) )
     {
-      scproc_UseItem( wk, attacker );
+      scproc_UseItemEquip( wk, attacker );
     }
   }
 }
@@ -1916,11 +1918,9 @@ static void scproc_Fight_Damage( BTL_SVFLOW_WORK* wk, WazaID waza,
 
   scproc_Fight_Damage_After( wk, waza, attacker, &wk->damagedPokemon );
 }
-static void scproc_Fight_Damage_side( BTL_SVFLOW_WORK* wk, WazaID waza, BTL_POKEPARAM* attacker,
-  TARGET_POKE_REC* targets, fx32 dmg_ratio )
+static void scproc_Fight_Damage_ToRecover( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, WazaID waza, TARGET_POKE_REC* targets )
 {
   BTL_POKEPARAM* bpp;
-  u8 poke_cnt;
 
   // 回復チェック -> 特定タイプのダメージを無効化、回復してしまうポケを targets から除外
   TargetPokeRec_GetStart( targets );
@@ -1940,6 +1940,44 @@ static void scproc_Fight_Damage_side( BTL_SVFLOW_WORK* wk, WazaID waza, BTL_POKE
       TargetPokeRec_Remove( targets, bpp );
     }
   }
+}
+static void scproc_Fight_Damage_Determine( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, WazaID waza, TARGET_POKE_REC* targets )
+{
+  u32 hem_state = Hem_PushState( &wk->HEManager );
+
+  scEvent_WazaDamageDetermine( wk, attacker, waza, targets );
+  scproc_HandEx_Root( wk, ITEM_DUMMY_DATA );
+
+  Hem_PopState( &wk->HEManager, hem_state );
+}
+static void scEvent_WazaDamageDetermine( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, WazaID waza, TARGET_POKE_REC* targets )
+{
+  u8 target_cnt = TargetPokeRec_GetCount( targets );
+
+  if( target_cnt )
+  {
+    const BTL_POKEPARAM* bpp;
+    u32 i;
+    BTL_EVENTVAR_Push();
+      BTL_EVENTVAR_SetValue( BTL_EVAR_TARGET_POKECNT, target_cnt );
+      BTL_EVENTVAR_SetValue( BTL_EVAR_POKEID_ATK, BTL_POKEPARAM_GetID(attacker) );
+      for(i=0; i<target_cnt; ++i)
+      {
+        bpp = TargetPokeRec_Get( targets, i );
+        BTL_EVENTVAR_SetValue( BTL_EVAR_POKEID_TARGET1+i, BTL_POKEPARAM_GetID(bpp) );
+      }
+      BTL_EVENT_CallHandlers( wk, BTL_EVENT_WAZA_DMG_DETERMINE );
+    BTL_EVENTVAR_Pop();
+  }
+}
+static void scproc_Fight_Damage_side( BTL_SVFLOW_WORK* wk, WazaID waza, BTL_POKEPARAM* attacker,
+  TARGET_POKE_REC* targets, fx32 dmg_ratio )
+{
+  BTL_POKEPARAM* bpp;
+  u8 poke_cnt;
+
+  scproc_Fight_Damage_ToRecover( wk, attacker, waza, targets );
+  scproc_Fight_Damage_Determine( wk, attacker, waza, targets );
 
   TargetPokeRec_GetStart( targets );
   poke_cnt = TargetPokeRec_GetCount( targets );
@@ -2484,10 +2522,17 @@ static void scEvent_AddSick_Failed( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* ta
   BTL_EVENTVAR_Pop();
 }
 
-//------------------------------------------------------------------
-// サーバーフロー：アイテム使用
-//------------------------------------------------------------------
-static void scproc_UseItem( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp )
+//----------------------------------------------------------------------------------
+/**
+ * [Proc] 装備アイテム使用
+ *
+ * @param   wk
+ * @param   bpp
+ *
+ * @retval  BOOL  特殊要因により装備アイテムの使用が出来なければFALSE／それ以外TRUE
+ */
+//----------------------------------------------------------------------------------
+static BOOL scproc_UseItemEquip( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp )
 {
   if( scEvent_CheckItemUseEnable(wk, bpp) )
   {
@@ -2506,7 +2551,9 @@ static void scproc_UseItem( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp )
     if( ITEM_CheckNuts(itemID) ){
       scPut_RemoveItem( wk, bpp );
     }
+    return TRUE;
   }
+  return FALSE;
 }
 
 
@@ -2771,7 +2818,7 @@ static BOOL scproc_SimpleDamage( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u32 da
       }
 
       if( scEvent_SimpleDamage_Reaction(wk, bpp) ){
-        scproc_UseItem( wk, bpp );
+        scproc_UseItemEquip( wk, bpp );
       }
 
       scproc_CheckDeadCmd( wk, bpp );
@@ -3212,7 +3259,7 @@ static BOOL scproc_WeatherCore( BTL_SVFLOW_WORK* wk, BtlWeather weather, u8 turn
 //---------------------------------------------------------------------------------------------
 // サーバーフロー：分類しきれないワザ
 //---------------------------------------------------------------------------------------------
-static void scput_Fight_Others( BTL_SVFLOW_WORK* wk, WazaID waza, BTL_POKEPARAM* attacker, TARGET_POKE_REC* targets )
+static void scput_Fight_Uncategory( BTL_SVFLOW_WORK* wk, WazaID waza, BTL_POKEPARAM* attacker, TARGET_POKE_REC* targets )
 {
   BTL_POKEPARAM* bpp;
 
@@ -3225,7 +3272,7 @@ static void scput_Fight_Others( BTL_SVFLOW_WORK* wk, WazaID waza, BTL_POKEPARAM*
 
   switch( waza ){
   case WAZANO_SUKIRUSUWAPPU:
-    scput_Fight_Others_SkillSwap( wk, attacker, targets );
+    scput_Fight_Uncategory_SkillSwap( wk, attacker, targets );
     break;
   case WAZANO_HENSIN:
     scput_Fight_Uncategory_Hensin( wk, attacker, targets );
@@ -3234,8 +3281,9 @@ static void scput_Fight_Others( BTL_SVFLOW_WORK* wk, WazaID waza, BTL_POKEPARAM*
     {
       u32 hem_state = Hem_PushState( &wk->HEManager );
       if( scEvent_UnCategoryWaza(wk, waza, attacker, targets) ){
-        wazaEff_SetNoTarget( wk );
-        scproc_HandEx_Root( wk, ITEM_DUMMY_DATA );
+        if( scproc_HandEx_Root( wk, ITEM_DUMMY_DATA ) ){
+          wazaEff_SetNoTarget( wk );
+        }
       }
       Hem_PopState( &wk->HEManager, hem_state );
     }
@@ -3281,7 +3329,7 @@ static BOOL scEvent_UnCategoryWaza( BTL_SVFLOW_WORK* wk, WazaID waza, const BTL_
   return (sp != Hem_GetStackPtr(&wk->HEManager));
 }
 // スキルスワップ
-static void scput_Fight_Others_SkillSwap( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, TARGET_POKE_REC* targetRec )
+static void scput_Fight_Uncategory_SkillSwap( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, TARGET_POKE_REC* targetRec )
 {
   BTL_POKEPARAM* target = TargetPokeRec_Get( targetRec, 0 );
   PokeTokusei atk_tok, tgt_tok;
@@ -3331,437 +3379,6 @@ static void scput_Fight_Uncategory_Hensin( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* a
     SCQUE_PUT_OP_Hensin( wk->que, atkPokeID, tgtPokeID );
   }
 }
-//---------------------------------------------------------------------------------------------
-//---------------------------------------------------------------------------------------------
-//----------------------------------------------------------------------------------
-/**
- * ハンドラ反応スタック処理ルート
- *
- * @param   wk
- * @param   useItemID   アイテム使用による呼び出しの場合、そのアイテムID／それ以外、ITEM_DUMMY_DATA
- */
-//----------------------------------------------------------------------------------
-static void scproc_HandEx_Root( BTL_SVFLOW_WORK* wk, u16 useItemID )
-{
-  BTL_HANDEX_PARAM_HEADER* handEx_header;
-
-  while( (handEx_header = Hem_ReadWork(&wk->HEManager)) != NULL )
-  {
-    BTL_Printf("ProcHandEX : ADRS=0x%p, type=%d\n", handEx_header, handEx_header->equip);
-    switch( handEx_header->equip ){
-    case BTL_HANDEX_TOKWIN_IN:      scproc_HandEx_TokWinIn( wk, handEx_header ); break;
-    case BTL_HANDEX_TOKWIN_OUT:     scproc_HandEx_TokWinOut( wk, handEx_header ); break;
-    case BTL_HANDEX_USE_ITEM:       scproc_HandEx_useItem( wk, handEx_header ); break;
-    case BTL_HANDEX_RECOVER_HP:     scproc_HandEx_recoverHP( wk, handEx_header, useItemID ); break;
-    case BTL_HANDEX_DAMAGE:         scproc_HandEx_damage( wk, handEx_header ); break;
-    case BTL_HANDEX_SHIFT_HP:       scproc_HandEx_shiftHP( wk, handEx_header ); break;
-    case BTL_HANDEX_RECOVER_PP:     scproc_HandEx_recoverPP( wk, handEx_header, useItemID ); break;
-    case BTL_HANDEX_DECREMENT_PP:   scproc_HandEx_decrementPP( wk, handEx_header, useItemID ); break;
-    case BTL_HANDEX_CURE_SICK:      scproc_HandEx_cureSick( wk, handEx_header, useItemID ); break;
-    case BTL_HANDEX_ADD_SICK:       scproc_HandEx_addSick( wk, handEx_header ); break;
-    case BTL_HANDEX_RANK_EFFECT:    scproc_HandEx_rankEffect( wk, handEx_header, useItemID ); break;
-    case BTL_HANDEX_SET_RANK:       scproc_HandEx_setRank( wk, handEx_header ); break;
-    case BTL_HANDEX_RECOVER_RANK:   scproc_HandEx_recoverRank( wk, handEx_header ); break;
-    case BTL_HANDEX_RESET_RANK:     scproc_HandEx_resetRank( wk, handEx_header ); break;
-    case BTL_HANDEX_KILL:           scproc_HandEx_kill( wk, handEx_header ); break;
-    case BTL_HANDEX_CHANGE_TYPE:    scproc_HandEx_changeType( wk, handEx_header ); break;
-    case BTL_HANDEX_MESSAGE_SET:    scproc_HandEx_messageSet( wk, handEx_header ); break;
-    case BTL_HANDEX_MESSAGE_STD:    scproc_HandEx_messageStd( wk, handEx_header ); break;
-    case BTL_HANDEX_SET_TURNFLAG:   scproc_HandEx_setTurnFlag( wk, handEx_header ); break;
-    case BTL_HANDEX_RESET_TURNFLAG: scproc_HandEx_resetTurnFlag( wk, handEx_header ); break;
-    case BTL_HANDEX_SET_CONTFLAG:   scproc_HandEx_setContFlag( wk, handEx_header ); break;
-    case BTL_HANDEX_RESET_CONTFLAG: scproc_HandEx_resetContFlag( wk, handEx_header ); break;
-    case BTL_HANDEX_SIDE_EFFECT:    scproc_HandEx_sideEffect( wk, handEx_header ); break;
-    case BTL_HANDEX_SIDEEFF_REMOVE: scproc_HandEx_sideEffectRemove( wk, handEx_header ); break;
-    case BTL_HANDEX_CHANGE_TOKUSEI: scproc_HandEx_tokuseiChange( wk, handEx_header ); break;
-    case BTL_HANDEX_SET_ITEM:       scproc_HandEx_setItem( wk, handEx_header ); break;
-    case BTL_HANDEX_SWAP_ITEM:      scproc_HandEx_swapItem( wk, handEx_header ); break;
-    case BTL_HANDEX_UPDATE_WAZA:    scproc_HandEx_updateWaza( wk, handEx_header ); break;
-    default:
-      GF_ASSERT_MSG(0, "illegal handEx type = %d, userPokeID=%d", handEx_header->equip, handEx_header->userPokeID);
-    }
-  }
-}
-static void scproc_HandEx_TokWinIn( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header )
-{
-  BTL_POKEPARAM* pp_user = BTL_POKECON_GetPokeParam( wk->pokeCon, param_header->userPokeID );
-  scPut_TokWin_In( wk, pp_user );
-}
-static void scproc_HandEx_TokWinOut( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header )
-{
-  BTL_POKEPARAM* pp_user = BTL_POKECON_GetPokeParam( wk->pokeCon, param_header->userPokeID );
-  scPut_TokWin_Out( wk, pp_user );
-}
-
-static void scproc_HandEx_useItem( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header )
-{
-  BTL_POKEPARAM* pp_user = BTL_POKECON_GetPokeParam( wk->pokeCon, param_header->userPokeID );
-  scproc_UseItem( wk, pp_user );
-}
-static void scproc_HandEx_recoverHP( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header, u16 itemID )
-{
-  const BTL_HANDEX_PARAM_RECOVER_HP* param = (BTL_HANDEX_PARAM_RECOVER_HP*)param_header;
-  BTL_POKEPARAM* pp_target = BTL_POKECON_GetPokeParam( wk->pokeCon, param->pokeID );
-  BTL_POKEPARAM* pp_user = BTL_POKECON_GetPokeParam( wk->pokeCon, param_header->userPokeID );
-
-  if( !BTL_POKEPARAM_IsHPFull(pp_target) )
-  {
-    if( param_header->tokwin_flag ){
-      scPut_TokWin_In( wk, pp_user );
-    }
-
-    scPut_SimpleHp( wk, pp_target, param->recoverHP );
-    if( itemID != ITEM_DUMMY_DATA ){
-      scPut_UseItem_RecoverHP( wk, pp_target, itemID );
-    }
-
-    if( param_header->tokwin_flag ){
-      scPut_TokWin_Out( wk, pp_user );
-    }
-  }
-}
-static void scproc_HandEx_damage( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header )
-{
-  BTL_HANDEX_PARAM_DAMAGE* param = (BTL_HANDEX_PARAM_DAMAGE*)param_header;
-  BTL_POKEPARAM* pp_target;
-  u32 i;
-  u16 strID = (param->fSucceedStrEx)? param->succeedStrID : STRID_NULL;
-
-  for(i=0; i<param->poke_cnt; ++i){
-    pp_target = BTL_POKECON_GetPokeParam( wk->pokeCon, param->pokeID[i] );
-
-    scproc_SimpleDamage( wk, pp_target, param->damage[i], strID );
-  }
-}
-static void scproc_HandEx_shiftHP( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header )
-{
-  BTL_HANDEX_PARAM_SHIFT_HP* param = (BTL_HANDEX_PARAM_SHIFT_HP*)param_header;
-  BTL_POKEPARAM* pp_target;
-  u32 i;
-
-  for(i=0; i<param->poke_cnt; ++i)
-  {
-    pp_target = BTL_POKECON_GetPokeParam( wk->pokeCon, param->pokeID[i] );
-    scPut_SimpleHp( wk, pp_target, param->volume[i] );
-  }
-}
-
-
-static void scproc_HandEx_recoverPP( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header, u16 itemID )
-{
-  const BTL_HANDEX_PARAM_PP* param = (BTL_HANDEX_PARAM_PP*)param_header;
-  BTL_POKEPARAM* pp_target = BTL_POKECON_GetPokeParam( wk->pokeCon, param->pokeID );
-  BTL_POKEPARAM* pp_user = BTL_POKECON_GetPokeParam( wk->pokeCon, param_header->userPokeID );
-
-  if( param_header->tokwin_flag ){
-    scPut_TokWin_In( wk, pp_user );
-  }
-
-  if( !BTL_POKEPARAM_IsPPFull(pp_target, param->wazaIdx) ){
-    scPut_RecoverPP( wk, pp_target, param->wazaIdx, param->volume, itemID );
-  }
-
-  if( param_header->tokwin_flag ){
-    scPut_TokWin_Out( wk, pp_user );
-  }
-}
-
-static void scproc_HandEx_decrementPP( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header, u16 itemID )
-{
-  const BTL_HANDEX_PARAM_PP* param = (BTL_HANDEX_PARAM_PP*)param_header;
-
-  BTL_POKEPARAM* targetPokemon = BTL_POKECON_GetPokeParam( wk->pokeCon, param->pokeID );
-
-  u8 restPP = BTL_POKEPARAM_GetPP( targetPokemon, param->wazaIdx );
-  u8 volume = ( param->volume < restPP )? param->volume : restPP;
-
-  scPut_DecrementPP( wk, targetPokemon, param->wazaIdx, volume );
-}
-
-static void scproc_HandEx_cureSick( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header, u16 itemID )
-{
-  const BTL_HANDEX_PARAM_CURE_SICK* param = (BTL_HANDEX_PARAM_CURE_SICK*)param_header;
-  BTL_POKEPARAM* pp_user = BTL_POKECON_GetPokeParam( wk->pokeCon, param_header->userPokeID );
-
-  if( param_header->tokwin_flag ){
-    scPut_TokWin_In( wk, pp_user );
-  }
-
-  {
-    BTL_POKEPARAM* pp_target;
-    WazaSick cured_sick;
-    u32 i;
-    for(i=0; i<param->poke_cnt; ++i){
-      pp_target = BTL_POKECON_GetPokeParam( wk->pokeCon, param->pokeID[i] );
-      cured_sick = scPut_CureSick( wk, pp_target, param->sickCode );
-      if( !param->fStdMsgDisable ){
-        scPut_CureSickMsg( wk, pp_target, cured_sick, itemID );
-      }
-    }
-  }
-
-  if( param_header->tokwin_flag ){
-    scPut_TokWin_Out( wk, pp_user );
-  }
-}
-static void scproc_HandEx_addSick( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header )
-{
-  const BTL_HANDEX_PARAM_ADD_SICK* param = (BTL_HANDEX_PARAM_ADD_SICK*)param_header;
-  BTL_POKEPARAM* pp_user = (param_header->userPokeID != BTL_POKEID_NULL)?
-                      BTL_POKECON_GetPokeParam(wk->pokeCon, param_header->userPokeID) : NULL;
-
-  BTL_POKEPARAM* pp_target;
-  MSG_CALLBACK_PARAM  cbParam;
-  u32 i;
-
-  cbParam.func = handex_addsick_msg;
-  cbParam.arg = (void*)param;
-
-  for(i=0; i<param->poke_cnt; ++i)
-  {
-    pp_target = BTL_POKECON_GetPokeParam( wk->pokeCon, param->pokeID[i] );
-    scproc_AddSick( wk, pp_target, pp_user, param->sickID, param->sickCont, param->fAlmost, &cbParam );
-  }
-}
-// 状態異常成功時のメッセージ表示コールバック
-static void handex_addsick_msg( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* target, void* arg )
-{
-  const BTL_HANDEX_PARAM_ADD_SICK* param = arg;
-
-  if( param->fExMsg ){
-    scPut_Message_SetEx( wk, target, param->exStrID, param->exStrArgCnt, param->exStrArgs );
-  }else{
-    scPut_AddSickDefaultMsg( wk, target, param->sickID, param->sickCont );
-  }
-}
-
-static void scproc_HandEx_rankEffect( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header, u16 itemID )
-{
-  const BTL_HANDEX_PARAM_RANK_EFFECT* param = (BTL_HANDEX_PARAM_RANK_EFFECT*)param_header;
-  BTL_POKEPARAM* pp_user = BTL_POKECON_GetPokeParam( wk->pokeCon, param_header->userPokeID );
-  BTL_POKEPARAM* pp_target;
-  u32 i;
-
-  for(i=0; i<param->poke_cnt; ++i){
-    pp_target = BTL_POKECON_GetPokeParam( wk->pokeCon, param->pokeID[i] );
-    scproc_RankEffectCore( wk, pp_target, param->rankType, param->rankVolume, itemID, param->fAlmost, !(param->fStdMsgDisable) );
-  }
-}
-static void scproc_HandEx_setRank( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header )
-{
-  const BTL_HANDEX_PARAM_SET_RANK* param = (BTL_HANDEX_PARAM_SET_RANK*)param_header;
-  BTL_POKEPARAM* pp_target = BTL_POKECON_GetPokeParam( wk->pokeCon, param->pokeID );
-
-  BTL_POKEPARAM_RankSet( pp_target, BPP_ATTACK,     param->attack );
-  BTL_POKEPARAM_RankSet( pp_target, BPP_DEFENCE,    param->defence );
-  BTL_POKEPARAM_RankSet( pp_target, BPP_SP_ATTACK,  param->sp_attack );
-  BTL_POKEPARAM_RankSet( pp_target, BPP_SP_DEFENCE, param->sp_defence );
-  BTL_POKEPARAM_RankSet( pp_target, BPP_AGILITY,    param->agility );
-  SCQUE_PUT_OP_RankSet5( wk->que,
-    param->pokeID, param->attack, param->defence, param->sp_attack, param->sp_defence, param->agility );
-}
-static void scproc_HandEx_recoverRank( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header )
-{
-  BTL_HANDEX_PARAM_RECOVER_RANK* param = (BTL_HANDEX_PARAM_RECOVER_RANK*)param_header;
-  BTL_POKEPARAM* pp_user = BTL_POKECON_GetPokeParam( wk->pokeCon, param_header->userPokeID );
-  BTL_POKEPARAM_RankRecover( pp_user );
-}
-static void scproc_HandEx_resetRank( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header )
-{
-  BTL_HANDEX_PARAM_RESET_RANK* param = (BTL_HANDEX_PARAM_RESET_RANK*)param_header;
-  BTL_POKEPARAM* pp_target;
-  u32 i;
-
-  for(i=0; i<param->poke_cnt; ++i){
-    pp_target = BTL_POKECON_GetPokeParam( wk->pokeCon, param->pokeID[i] );
-    BTL_POKEPARAM_RankReset( pp_target );
-  }
-}
-
-static void scproc_HandEx_kill( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header )
-{
-  BTL_HANDEX_PARAM_KILL* param = (BTL_HANDEX_PARAM_KILL*)param_header;
-  BTL_POKEPARAM* pp_target = BTL_POKECON_GetPokeParam( wk->pokeCon, param->pokeID );
-  scproc_KillPokemon( wk, pp_target );
-}
-static void scproc_HandEx_changeType( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header )
-{
-  const BTL_HANDEX_PARAM_CHANGE_TYPE* param= (const BTL_HANDEX_PARAM_CHANGE_TYPE*)param_header;
-
-  BTL_POKEPARAM* bpp = BTL_POKECON_GetPokeParam( wk->pokeCon, param->pokeID );
-  PokeType type_pure = PokeTypePair_GetType1( param->next_type );
-
-  SCQUE_PUT_OP_ChangePokeType( wk->que, param->pokeID, param->next_type );
-  SCQUE_PUT_MSG_SET( wk->que, BTL_STRID_SET_ChangePokeType, param->pokeID, type_pure );
-  BTL_POKEPARAM_ChangePokeType( bpp, param->next_type );
-}
-static void scproc_HandEx_messageSet( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header )
-{
-  const BTL_HANDEX_PARAM_MESSAGE* param = (const BTL_HANDEX_PARAM_MESSAGE*)(param_header);
-  BTL_POKEPARAM* bpp = BTL_POKECON_GetPokeParam( wk->pokeCon, param->pokeID );
-
-  scPut_Message_SetEx( wk, bpp, param->strID, param->arg_cnt, param->args );
-}
-
-static void scproc_HandEx_messageStd( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header )
-{
-  const BTL_HANDEX_PARAM_MESSAGE* param = (const BTL_HANDEX_PARAM_MESSAGE*)(param_header);
-
-  switch( param->arg_cnt ){
-  case 0:
-    SCQUE_PUT_MSG_STD( wk->que, param->strID );
-    break;
-  case 1:
-    SCQUE_PUT_MSG_STD( wk->que, param->strID, param->args[0] );
-    break;
-  case 2:
-    SCQUE_PUT_MSG_STD( wk->que, param->strID, param->args[0], param->args[1] );
-    break;
-  }
-}
-static void scproc_HandEx_setTurnFlag( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header )
-{
-  const BTL_HANDEX_PARAM_TURNFLAG* param = (const BTL_HANDEX_PARAM_TURNFLAG*)(param_header);
-  BTL_POKEPARAM* bpp = BTL_POKECON_GetPokeParam( wk->pokeCon, param->pokeID );
-
-  BTL_POKEPARAM_SetTurnFlag( bpp, param->flag );
-}
-static void scproc_HandEx_resetTurnFlag( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header )
-{
-  const BTL_HANDEX_PARAM_TURNFLAG* param = (const BTL_HANDEX_PARAM_TURNFLAG*)(param_header);
-  BTL_POKEPARAM* bpp = BTL_POKECON_GetPokeParam( wk->pokeCon, param->pokeID );
-
-  BTL_POKEPARAM_ForceOffTurnFlag( bpp, param->flag );
-}
-static void scproc_HandEx_setContFlag( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header )
-{
-  const BTL_HANDEX_PARAM_SET_CONTFLAG* param = (const BTL_HANDEX_PARAM_SET_CONTFLAG*)(param_header);
-  BTL_POKEPARAM* bpp = BTL_POKECON_GetPokeParam( wk->pokeCon, param->pokeID );
-
-  scPut_SetContFlag( wk, bpp, param->flag );
-}
-static void scproc_HandEx_resetContFlag( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header )
-{
-  const BTL_HANDEX_PARAM_SET_CONTFLAG* param = (const BTL_HANDEX_PARAM_SET_CONTFLAG*)(param_header);
-  BTL_POKEPARAM* bpp = BTL_POKECON_GetPokeParam( wk->pokeCon, param->pokeID );
-
-  scPut_ResetContFlag( wk, bpp, param->flag );
-}
-static void scproc_HandEx_sideEffect( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header )
-{
-  const BTL_HANDEX_PARAM_SIDE_EFFECT* param = (const BTL_HANDEX_PARAM_SIDE_EFFECT*)(param_header);
-  BTL_POKEPARAM* bpp = BTL_POKECON_GetPokeParam( wk->pokeCon, param->pokeID );
-}
-static void scproc_HandEx_sideEffectRemove( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header )
-{
-  const BTL_HANDEX_PARAM_SIDEEFF_REMOVE* param = (const BTL_HANDEX_PARAM_SIDEEFF_REMOVE*)(param_header);
-  u32 i;
-  for(i=BTL_SIDEEFF_START; i<BTL_SIDEEFF_MAX; ++i)
-  {
-    if( BTL_CALC_BITFLG_Check(param->flags, i) ){
-      BTL_HANDLER_SIDE_Remove( param->side, i );
-    }
-  }
-}
-static void scproc_HandEx_tokuseiChange( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header )
-{
-  const BTL_HANDEX_PARAM_CHANGE_TOKUSEI* param = (const BTL_HANDEX_PARAM_CHANGE_TOKUSEI*)(param_header);
-
-  BTL_POKEPARAM* bpp = BTL_POKECON_GetPokeParam( wk->pokeCon, param->pokeID );
-
-  BTL_HANDLER_TOKUSEI_Remove( bpp );
-  SCQUE_PUT_OP_ChangeTokusei( wk->que, param->pokeID, param->tokuseiID );
-  BTL_POKEPARAM_ChangeTokusei( bpp, param->tokuseiID );
-
-  if( param->tokuseiID != POKETOKUSEI_NULL )
-  {
-    BTL_HANDLER_TOKUSEI_Add( bpp );
-  }
-}
-static void scproc_HandEx_setItem( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header )
-{
-  const BTL_HANDEX_PARAM_SET_ITEM* param = (const BTL_HANDEX_PARAM_SET_ITEM*)(param_header);
-
-  BTL_POKEPARAM* bpp = BTL_POKECON_GetPokeParam( wk->pokeCon, param->pokeID );
-
-  if( param_header->userPokeID != param->pokeID )
-  {
-    u32 hem_state = Hem_PushState( &wk->HEManager );
-    u8  failed = scEventSetItem( wk, bpp );
-    scproc_HandEx_Root( wk, ITEM_DUMMY_DATA );
-    Hem_PopState( &wk->HEManager, hem_state );
-
-    if( failed ){
-      return;
-    }
-  }
-
-  handexSub_itemSet( wk, bpp, param->itemID );
-
-  if( param->fSucceedMsg ){
-    const BTL_POKEPARAM* pp_user = BTL_POKECON_GetPokeParam( wk->pokeCon, param_header->userPokeID );
-    scPut_Message_SetEx( wk, pp_user, param->succeedStrID, param->succeedStrArgCnt, param->succeedStrArgs );
-  }
-}
-static void scproc_HandEx_swapItem( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header )
-{
-  const BTL_HANDEX_PARAM_SWAP_ITEM* param = (const BTL_HANDEX_PARAM_SWAP_ITEM*)(param_header);
-
-  BTL_POKEPARAM* target = BTL_POKECON_GetPokeParam( wk->pokeCon, param->pokeID );
-  BTL_POKEPARAM* self = BTL_POKECON_GetPokeParam( wk->pokeCon, param_header->userPokeID );
-
-  {
-    u32 hem_state = Hem_PushState( &wk->HEManager );
-    u8  failed = scEventSetItem( wk, target );
-    scproc_HandEx_Root( wk, ITEM_DUMMY_DATA );
-    Hem_PopState( &wk->HEManager, hem_state );
-    if( failed ){
-      return;
-    }
-  }
-
-  {
-    u16 targetItem = BTL_POKEPARAM_GetItem( target );
-    u16 selfItem = BTL_POKEPARAM_GetItem( self );
-
-    handexSub_itemSet( wk, target, selfItem );
-    handexSub_itemSet( wk, self, targetItem );
-  }
-
-  if( param->fSucceedMsg ){
-    scPut_Message_SetEx( wk, self, param->succeedStrID, param->succeedStrArgCnt, param->succeedStrArgs );
-  }
-}
-static void scproc_HandEx_updateWaza( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header )
-{
-  const BTL_HANDEX_PARAM_UPDATE_WAZA* param = (const BTL_HANDEX_PARAM_UPDATE_WAZA*)(param_header);
-
-  BTL_POKEPARAM* target = BTL_POKECON_GetPokeParam( wk->pokeCon, param->pokeID );
-  SCQUE_PUT_OP_UpdateWaza( wk->que, param->pokeID, param->wazaIdx, param->waza, param->ppMax, param->fPermanent );
-  BTL_POKEPARAM_UpdateWazaNumber( target, param->wazaIdx, param->waza, param->ppMax, param->fPermanent );
-}
-//----------------------------------------------------------------------------------
-/**
- * アイテム書き換え共通処理
- *
- * @param   wk
- * @param   bpp
- * @param   itemID
- */
-//----------------------------------------------------------------------------------
-static void handexSub_itemSet( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 itemID )
-{
-  u8 pokeID = BTL_POKEPARAM_GetID( bpp );
-
-  BTL_HANDLER_ITEM_Remove( bpp );
-  SCQUE_PUT_OP_SetItem( wk->que, pokeID, itemID );
-  BTL_POKEPARAM_SetItem( bpp, itemID );
-
-  if( itemID != ITEM_DUMMY_DATA ){
-    BTL_HANDLER_ITEM_Add( bpp );
-  }
-}
-
 //----------------------------------------------------------------------------------
 /**
  * [Event] アイテムを強制的にセット（あるいは消去）される
@@ -7108,7 +6725,6 @@ static BTL_HANDEX_PARAM_HEADER* Hem_PushWork( HANDLER_EXHIBISION_MANAGER* wk, Bt
     { BTL_HANDEX_RESET_TURNFLAG, sizeof(BTL_HANDEX_PARAM_TURNFLAG)        },
     { BTL_HANDEX_SET_CONTFLAG,   sizeof(BTL_HANDEX_PARAM_SET_CONTFLAG)    },
     { BTL_HANDEX_RESET_CONTFLAG, sizeof(BTL_HANDEX_PARAM_SET_CONTFLAG)    },
-    { BTL_HANDEX_SIDE_EFFECT,    sizeof(BTL_HANDEX_PARAM_SIDE_EFFECT)     },
     { BTL_HANDEX_SIDEEFF_REMOVE, sizeof(BTL_HANDEX_PARAM_SIDEEFF_REMOVE)  },
     { BTL_HANDEX_CHANGE_TOKUSEI, sizeof(BTL_HANDEX_PARAM_CHANGE_TOKUSEI)  },
     { BTL_HANDEX_SET_ITEM,       sizeof(BTL_HANDEX_PARAM_SET_ITEM)        },
@@ -7161,3 +6777,574 @@ void* BTL_SVFLOW_HANDLERWORK_Push( BTL_SVFLOW_WORK* wk, BtlEventHandlerExhibitio
   return Hem_PushWork( &wk->HEManager, eq_type, userPokeID );
 }
 
+//---------------------------------------------------------------------------------------------
+//---------------------------------------------------------------------------------------------
+//----------------------------------------------------------------------------------
+/**
+ * ハンドラ反応スタック処理ルート
+ *
+ * @param   wk
+ * @param   useItemID   アイテム使用による呼び出しの場合、そのアイテムID／それ以外、ITEM_DUMMY_DATA
+ */
+//----------------------------------------------------------------------------------
+static BOOL scproc_HandEx_Root( BTL_SVFLOW_WORK* wk, u16 useItemID )
+{
+  BTL_HANDEX_PARAM_HEADER* handEx_header;
+  u32 succeed_cnt = 0;
+
+  while( (handEx_header = Hem_ReadWork(&wk->HEManager)) != NULL )
+  {
+    BTL_Printf("ProcHandEX : ADRS=0x%p, type=%d\n", handEx_header, handEx_header->equip);
+    switch( handEx_header->equip ){
+    case BTL_HANDEX_TOKWIN_IN:      succeed_cnt += scproc_HandEx_TokWinIn( wk, handEx_header ); break;
+    case BTL_HANDEX_TOKWIN_OUT:     succeed_cnt += scproc_HandEx_TokWinOut( wk, handEx_header ); break;
+    case BTL_HANDEX_USE_ITEM:       succeed_cnt += scproc_HandEx_useItem( wk, handEx_header ); break;
+    case BTL_HANDEX_RECOVER_HP:     succeed_cnt += scproc_HandEx_recoverHP( wk, handEx_header, useItemID ); break;
+    case BTL_HANDEX_DAMAGE:         succeed_cnt += scproc_HandEx_damage( wk, handEx_header ); break;
+    case BTL_HANDEX_SHIFT_HP:       succeed_cnt += scproc_HandEx_shiftHP( wk, handEx_header ); break;
+    case BTL_HANDEX_RECOVER_PP:     succeed_cnt += scproc_HandEx_recoverPP( wk, handEx_header, useItemID ); break;
+    case BTL_HANDEX_DECREMENT_PP:   succeed_cnt += scproc_HandEx_decrementPP( wk, handEx_header, useItemID ); break;
+    case BTL_HANDEX_CURE_SICK:      succeed_cnt += scproc_HandEx_cureSick( wk, handEx_header, useItemID ); break;
+    case BTL_HANDEX_ADD_SICK:       succeed_cnt += scproc_HandEx_addSick( wk, handEx_header ); break;
+    case BTL_HANDEX_RANK_EFFECT:    succeed_cnt += scproc_HandEx_rankEffect( wk, handEx_header, useItemID ); break;
+    case BTL_HANDEX_SET_RANK:       succeed_cnt += scproc_HandEx_setRank( wk, handEx_header ); break;
+    case BTL_HANDEX_RECOVER_RANK:   succeed_cnt += scproc_HandEx_recoverRank( wk, handEx_header ); break;
+    case BTL_HANDEX_RESET_RANK:     succeed_cnt += scproc_HandEx_resetRank( wk, handEx_header ); break;
+    case BTL_HANDEX_KILL:           succeed_cnt += scproc_HandEx_kill( wk, handEx_header ); break;
+    case BTL_HANDEX_CHANGE_TYPE:    succeed_cnt += scproc_HandEx_changeType( wk, handEx_header ); break;
+    case BTL_HANDEX_MESSAGE_SET:    succeed_cnt += scproc_HandEx_messageSet( wk, handEx_header ); break;
+    case BTL_HANDEX_MESSAGE_STD:    succeed_cnt += scproc_HandEx_messageStd( wk, handEx_header ); break;
+    case BTL_HANDEX_SET_TURNFLAG:   succeed_cnt += scproc_HandEx_setTurnFlag( wk, handEx_header ); break;
+    case BTL_HANDEX_RESET_TURNFLAG: succeed_cnt += scproc_HandEx_resetTurnFlag( wk, handEx_header ); break;
+    case BTL_HANDEX_SET_CONTFLAG:   succeed_cnt += scproc_HandEx_setContFlag( wk, handEx_header ); break;
+    case BTL_HANDEX_RESET_CONTFLAG: succeed_cnt += scproc_HandEx_resetContFlag( wk, handEx_header ); break;
+    case BTL_HANDEX_SIDEEFF_REMOVE: succeed_cnt += scproc_HandEx_sideEffectRemove( wk, handEx_header ); break;
+    case BTL_HANDEX_CHANGE_TOKUSEI: succeed_cnt += scproc_HandEx_tokuseiChange( wk, handEx_header ); break;
+    case BTL_HANDEX_SET_ITEM:       succeed_cnt += scproc_HandEx_setItem( wk, handEx_header ); break;
+    case BTL_HANDEX_SWAP_ITEM:      succeed_cnt += scproc_HandEx_swapItem( wk, handEx_header ); break;
+    case BTL_HANDEX_UPDATE_WAZA:    succeed_cnt += scproc_HandEx_updateWaza( wk, handEx_header ); break;
+    default:
+      GF_ASSERT_MSG(0, "illegal handEx type = %d, userPokeID=%d", handEx_header->equip, handEx_header->userPokeID);
+    }
+  }
+  return succeed_cnt != 0;
+}
+/**
+ * とくせいウィンドウ表示
+ * @return 成功時 1 / 失敗時 0
+ */
+static u8 scproc_HandEx_TokWinIn( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header )
+{
+  BTL_POKEPARAM* pp_user = BTL_POKECON_GetPokeParam( wk->pokeCon, param_header->userPokeID );
+  scPut_TokWin_In( wk, pp_user );
+  return 1;
+}
+/**
+ * とくせいウィンドウ消去
+ * @return 成功時 1 / 失敗時 0
+ */
+static u8 scproc_HandEx_TokWinOut( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header )
+{
+  BTL_POKEPARAM* pp_user = BTL_POKECON_GetPokeParam( wk->pokeCon, param_header->userPokeID );
+  scPut_TokWin_Out( wk, pp_user );
+  return 1;
+}
+/**
+ * 装備アイテム使用
+ * @return 成功時 1 / 失敗時 0
+ */
+static u8 scproc_HandEx_useItem( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header )
+{
+  BTL_POKEPARAM* pp_user = BTL_POKECON_GetPokeParam( wk->pokeCon, param_header->userPokeID );
+  if( scproc_UseItemEquip(wk, pp_user) ){
+    return 1;
+  }
+  return 0;
+}
+/**
+ * ポケモンHP回復
+ * @return 成功時 1 / 失敗時 0
+ */
+static u8 scproc_HandEx_recoverHP( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header, u16 itemID )
+{
+  const BTL_HANDEX_PARAM_RECOVER_HP* param = (BTL_HANDEX_PARAM_RECOVER_HP*)param_header;
+  BTL_POKEPARAM* pp_target = BTL_POKECON_GetPokeParam( wk->pokeCon, param->pokeID );
+  BTL_POKEPARAM* pp_user = BTL_POKECON_GetPokeParam( wk->pokeCon, param_header->userPokeID );
+
+  if( !BTL_POKEPARAM_IsHPFull(pp_target) )
+  {
+    if( param_header->tokwin_flag ){
+      scPut_TokWin_In( wk, pp_user );
+    }
+
+    scPut_SimpleHp( wk, pp_target, param->recoverHP );
+    if( itemID != ITEM_DUMMY_DATA ){
+      scPut_UseItem_RecoverHP( wk, pp_target, itemID );
+    }
+
+    if( param_header->tokwin_flag ){
+      scPut_TokWin_Out( wk, pp_user );
+    }
+    return 1;
+  }
+  return 0;
+}
+/**
+ * ポケモンにダメージ
+ * @return 成功時 1 / 失敗時 0
+ */
+static u8 scproc_HandEx_damage( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header )
+{
+  BTL_HANDEX_PARAM_DAMAGE* param = (BTL_HANDEX_PARAM_DAMAGE*)param_header;
+  BTL_POKEPARAM* pp_target;
+  u32 i;
+  u16 strID = (param->fSucceedStrEx)? param->succeedStrID : STRID_NULL;
+  u8 result = 0;
+
+  for(i=0; i<param->poke_cnt; ++i){
+    pp_target = BTL_POKECON_GetPokeParam( wk->pokeCon, param->pokeID[i] );
+    if( scproc_SimpleDamage(wk, pp_target, param->damage[i], strID) ){
+      result = 1;
+    }
+  }
+
+  return result;
+}
+/**
+ * ポケモンHP増減（回復／ダメージと見なさない）
+ * @return 成功時 1 / 失敗時 0
+ */
+static u8 scproc_HandEx_shiftHP( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header )
+{
+  BTL_HANDEX_PARAM_SHIFT_HP* param = (BTL_HANDEX_PARAM_SHIFT_HP*)param_header;
+  BTL_POKEPARAM* pp_target;
+  u32 i;
+
+  for(i=0; i<param->poke_cnt; ++i)
+  {
+    pp_target = BTL_POKECON_GetPokeParam( wk->pokeCon, param->pokeID[i] );
+    scPut_SimpleHp( wk, pp_target, param->volume[i] );
+  }
+  return 1;
+}
+/**
+ * ポケモンPP回復
+ * @return 成功時 1 / 失敗時 0
+ */
+static u8 scproc_HandEx_recoverPP( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header, u16 itemID )
+{
+  const BTL_HANDEX_PARAM_PP* param = (BTL_HANDEX_PARAM_PP*)param_header;
+  BTL_POKEPARAM* pp_target = BTL_POKECON_GetPokeParam( wk->pokeCon, param->pokeID );
+  BTL_POKEPARAM* pp_user = BTL_POKECON_GetPokeParam( wk->pokeCon, param_header->userPokeID );
+
+  if( param_header->tokwin_flag ){
+    scPut_TokWin_In( wk, pp_user );
+  }
+  if( !BTL_POKEPARAM_IsPPFull(pp_target, param->wazaIdx) ){
+    scPut_RecoverPP( wk, pp_target, param->wazaIdx, param->volume, itemID );
+  }
+  if( param_header->tokwin_flag ){
+    scPut_TokWin_Out( wk, pp_user );
+  }
+  return 1;
+}
+/**
+ * ポケモンPP減少
+ * @return 成功時 1 / 失敗時 0
+ */
+static u8 scproc_HandEx_decrementPP( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header, u16 itemID )
+{
+  const BTL_HANDEX_PARAM_PP* param = (BTL_HANDEX_PARAM_PP*)param_header;
+
+  BTL_POKEPARAM* targetPokemon = BTL_POKECON_GetPokeParam( wk->pokeCon, param->pokeID );
+
+  u8 restPP = BTL_POKEPARAM_GetPP( targetPokemon, param->wazaIdx );
+  u8 volume = ( param->volume < restPP )? param->volume : restPP;
+
+  scPut_DecrementPP( wk, targetPokemon, param->wazaIdx, volume );
+  return 1;
+}
+/**
+ * ポケモン状態異常回復
+ * @return 成功時 1 / 失敗時 0
+ */
+static u8 scproc_HandEx_cureSick( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header, u16 itemID )
+{
+  const BTL_HANDEX_PARAM_CURE_SICK* param = (BTL_HANDEX_PARAM_CURE_SICK*)param_header;
+  BTL_POKEPARAM* pp_user = BTL_POKECON_GetPokeParam( wk->pokeCon, param_header->userPokeID );
+
+  if( param_header->tokwin_flag ){
+    scPut_TokWin_In( wk, pp_user );
+  }
+
+  {
+    BTL_POKEPARAM* pp_target;
+    WazaSick cured_sick;
+    u32 i;
+    for(i=0; i<param->poke_cnt; ++i){
+      pp_target = BTL_POKECON_GetPokeParam( wk->pokeCon, param->pokeID[i] );
+      cured_sick = scPut_CureSick( wk, pp_target, param->sickCode );
+      if( !param->fStdMsgDisable ){
+        scPut_CureSickMsg( wk, pp_target, cured_sick, itemID );
+      }
+    }
+  }
+
+  if( param_header->tokwin_flag ){
+    scPut_TokWin_Out( wk, pp_user );
+  }
+  return 1;
+}
+/**
+ * ポケモン状態異常化
+ * @return 成功時 1 / 失敗時 0
+ */
+static u8 scproc_HandEx_addSick( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header )
+{
+  const BTL_HANDEX_PARAM_ADD_SICK* param = (BTL_HANDEX_PARAM_ADD_SICK*)param_header;
+  BTL_POKEPARAM* pp_user = (param_header->userPokeID != BTL_POKEID_NULL)?
+                      BTL_POKECON_GetPokeParam(wk->pokeCon, param_header->userPokeID) : NULL;
+
+  BTL_POKEPARAM* pp_target;
+  MSG_CALLBACK_PARAM  cbParam;
+  u32 i;
+  u8 result = 0;
+
+  cbParam.func = handex_addsick_msg;
+  cbParam.arg = (void*)param;
+
+  for(i=0; i<param->poke_cnt; ++i)
+  {
+    pp_target = BTL_POKECON_GetPokeParam( wk->pokeCon, param->pokeID[i] );
+    if( scproc_AddSick( wk, pp_target, pp_user, param->sickID, param->sickCont, param->fAlmost, &cbParam ) ){
+      result = 1;
+    }
+  }
+  return result;
+}
+//----------------------------------------------------------------------------------
+// 状態異常成功時のメッセージ表示コールバック
+//----------------------------------------------------------------------------------
+static void handex_addsick_msg( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* target, void* arg )
+{
+  const BTL_HANDEX_PARAM_ADD_SICK* param = arg;
+
+  if( param->fExMsg ){
+    scPut_Message_SetEx( wk, target, param->exStrID, param->exStrArgCnt, param->exStrArgs );
+  }else{
+    scPut_AddSickDefaultMsg( wk, target, param->sickID, param->sickCont );
+  }
+}
+/**
+ * ポケモンランク効果（段階数を指定し、上昇または下降させる。相手のとくせい等により失敗することがあり得る）
+ * @return 成功時 1 / 失敗時 0
+ */
+static u8 scproc_HandEx_rankEffect( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header, u16 itemID )
+{
+  const BTL_HANDEX_PARAM_RANK_EFFECT* param = (BTL_HANDEX_PARAM_RANK_EFFECT*)param_header;
+  BTL_POKEPARAM* pp_user = BTL_POKECON_GetPokeParam( wk->pokeCon, param_header->userPokeID );
+  BTL_POKEPARAM* pp_target;
+  u32 i;
+  u8 result = 0;
+
+  for(i=0; i<param->poke_cnt; ++i){
+    pp_target = BTL_POKECON_GetPokeParam( wk->pokeCon, param->pokeID[i] );
+    if( scproc_RankEffectCore(wk, pp_target, param->rankType, param->rankVolume,
+      itemID, param->fAlmost, !(param->fStdMsgDisable))
+    ){
+      result = 1;
+    }
+  }
+  return result;
+}
+/**
+ * ポケモンランク強制セット（指定値に強制的に書き換える。失敗しない）
+ * @return 成功時 1 / 失敗時 0
+ */
+static u8 scproc_HandEx_setRank( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header )
+{
+  const BTL_HANDEX_PARAM_SET_RANK* param = (BTL_HANDEX_PARAM_SET_RANK*)param_header;
+  BTL_POKEPARAM* pp_target = BTL_POKECON_GetPokeParam( wk->pokeCon, param->pokeID );
+
+  BTL_POKEPARAM_RankSet( pp_target, BPP_ATTACK,     param->attack );
+  BTL_POKEPARAM_RankSet( pp_target, BPP_DEFENCE,    param->defence );
+  BTL_POKEPARAM_RankSet( pp_target, BPP_SP_ATTACK,  param->sp_attack );
+  BTL_POKEPARAM_RankSet( pp_target, BPP_SP_DEFENCE, param->sp_defence );
+  BTL_POKEPARAM_RankSet( pp_target, BPP_AGILITY,    param->agility );
+  SCQUE_PUT_OP_RankSet5( wk->que,
+    param->pokeID, param->attack, param->defence, param->sp_attack, param->sp_defence, param->agility );
+  return 1;
+}
+/**
+ * ポケモンランクの内、マイナスになっているもののみフラットに戻す
+ * @return 成功時 1 / 失敗時 0
+ */
+static u8 scproc_HandEx_recoverRank( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header )
+{
+  BTL_HANDEX_PARAM_RECOVER_RANK* param = (BTL_HANDEX_PARAM_RECOVER_RANK*)param_header;
+  BTL_POKEPARAM* pp_user = BTL_POKECON_GetPokeParam( wk->pokeCon, param_header->userPokeID );
+  BTL_POKEPARAM_RankRecover( pp_user );
+  return 1;
+}
+/**
+ * ポケモンランクを全てフラットに戻す
+ * @return 成功時 1 / 失敗時 0
+ */
+static u8 scproc_HandEx_resetRank( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header )
+{
+  BTL_HANDEX_PARAM_RESET_RANK* param = (BTL_HANDEX_PARAM_RESET_RANK*)param_header;
+  BTL_POKEPARAM* pp_target;
+  u32 i;
+
+  for(i=0; i<param->poke_cnt; ++i){
+    pp_target = BTL_POKECON_GetPokeParam( wk->pokeCon, param->pokeID[i] );
+    BTL_POKEPARAM_RankReset( pp_target );
+  }
+  return 1;
+}
+/**
+ * ポケモンランクを全てフラットに戻す
+ * @return 成功時 1 / 失敗時 0
+ */
+static u8 scproc_HandEx_kill( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header )
+{
+  BTL_HANDEX_PARAM_KILL* param = (BTL_HANDEX_PARAM_KILL*)param_header;
+  BTL_POKEPARAM* pp_target = BTL_POKECON_GetPokeParam( wk->pokeCon, param->pokeID );
+  scproc_KillPokemon( wk, pp_target );
+  return 1;
+}
+/**
+ * ポケモンタイプ変更
+ * @return 成功時 1 / 失敗時 0
+ */
+static u8 scproc_HandEx_changeType( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header )
+{
+  const BTL_HANDEX_PARAM_CHANGE_TYPE* param= (const BTL_HANDEX_PARAM_CHANGE_TYPE*)param_header;
+
+  BTL_POKEPARAM* bpp = BTL_POKECON_GetPokeParam( wk->pokeCon, param->pokeID );
+  PokeType type_pure = PokeTypePair_GetType1( param->next_type );
+
+  SCQUE_PUT_OP_ChangePokeType( wk->que, param->pokeID, param->next_type );
+  SCQUE_PUT_MSG_SET( wk->que, BTL_STRID_SET_ChangePokeType, param->pokeID, type_pure );
+  BTL_POKEPARAM_ChangePokeType( bpp, param->next_type );
+
+  return 1;
+}
+/**
+ * SETメッセージ表示
+ * @return 成功時 1 / 失敗時 0
+ */
+static u8 scproc_HandEx_messageSet( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header )
+{
+  const BTL_HANDEX_PARAM_MESSAGE* param = (const BTL_HANDEX_PARAM_MESSAGE*)(param_header);
+  BTL_POKEPARAM* bpp = BTL_POKECON_GetPokeParam( wk->pokeCon, param->pokeID );
+
+  scPut_Message_SetEx( wk, bpp, param->strID, param->arg_cnt, param->args );
+  return 1;
+}
+/**
+ * STDメッセージ表示
+ * @return 成功時 1 / 失敗時 0
+ */
+static u8 scproc_HandEx_messageStd( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header )
+{
+  const BTL_HANDEX_PARAM_MESSAGE* param = (const BTL_HANDEX_PARAM_MESSAGE*)(param_header);
+
+  switch( param->arg_cnt ){
+  case 0:
+    SCQUE_PUT_MSG_STD( wk->que, param->strID );
+    break;
+  case 1:
+    SCQUE_PUT_MSG_STD( wk->que, param->strID, param->args[0] );
+    break;
+  case 2:
+    SCQUE_PUT_MSG_STD( wk->que, param->strID, param->args[0], param->args[1] );
+    break;
+  }
+  return 1;
+}
+/**
+ * ポケモンターンフラグセット
+ * @return 成功時 1 / 失敗時 0
+ */
+static u8 scproc_HandEx_setTurnFlag( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header )
+{
+  const BTL_HANDEX_PARAM_TURNFLAG* param = (const BTL_HANDEX_PARAM_TURNFLAG*)(param_header);
+  BTL_POKEPARAM* bpp = BTL_POKECON_GetPokeParam( wk->pokeCon, param->pokeID );
+
+  BTL_POKEPARAM_SetTurnFlag( bpp, param->flag );
+  return 1;
+}
+/**
+ * ポケモンターンフラグリセット
+ * @return 成功時 1 / 失敗時 0
+ */
+static u8 scproc_HandEx_resetTurnFlag( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header )
+{
+  const BTL_HANDEX_PARAM_TURNFLAG* param = (const BTL_HANDEX_PARAM_TURNFLAG*)(param_header);
+  BTL_POKEPARAM* bpp = BTL_POKECON_GetPokeParam( wk->pokeCon, param->pokeID );
+
+  BTL_POKEPARAM_ForceOffTurnFlag( bpp, param->flag );
+  return 1;
+}
+/**
+ * ポケモン継続フラグセット
+ * @return 成功時 1 / 失敗時 0
+ */
+static u8 scproc_HandEx_setContFlag( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header )
+{
+  const BTL_HANDEX_PARAM_SET_CONTFLAG* param = (const BTL_HANDEX_PARAM_SET_CONTFLAG*)(param_header);
+  BTL_POKEPARAM* bpp = BTL_POKECON_GetPokeParam( wk->pokeCon, param->pokeID );
+
+  scPut_SetContFlag( wk, bpp, param->flag );
+  return 1;
+}
+/**
+ * ポケモン継続フラグリセット
+ * @return 成功時 1 / 失敗時 0
+ */
+static u8 scproc_HandEx_resetContFlag( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header )
+{
+  const BTL_HANDEX_PARAM_SET_CONTFLAG* param = (const BTL_HANDEX_PARAM_SET_CONTFLAG*)(param_header);
+  BTL_POKEPARAM* bpp = BTL_POKECON_GetPokeParam( wk->pokeCon, param->pokeID );
+
+  scPut_ResetContFlag( wk, bpp, param->flag );
+  return 1;
+}
+/**
+ * サイドエフェクトハンドラ消去
+ * @return 成功時 1 / 失敗時 0
+ */
+static u8 scproc_HandEx_sideEffectRemove( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header )
+{
+  const BTL_HANDEX_PARAM_SIDEEFF_REMOVE* param = (const BTL_HANDEX_PARAM_SIDEEFF_REMOVE*)(param_header);
+  u32 i;
+  u8 result = 0;
+  for(i=BTL_SIDEEFF_START; i<BTL_SIDEEFF_MAX; ++i)
+  {
+    if( BTL_CALC_BITFLG_Check(param->flags, i) ){
+      if( BTL_HANDLER_SIDE_Remove(param->side, i) ){
+        if( param->fExMsg )
+        {
+          WazaID waza = BTL_CALC_SideEffectIDtoWazaID( i );
+          SCQUE_PUT_MSG_SET( wk->que, param->exStrID, param_header->userPokeID, waza );
+        }
+        result = 1;
+      }
+    }
+  }
+  return result;
+}
+/**
+ * ポケモンとくせい書き換え
+ * @return 成功時 1 / 失敗時 0
+ */
+static u8 scproc_HandEx_tokuseiChange( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header )
+{
+  const BTL_HANDEX_PARAM_CHANGE_TOKUSEI* param = (const BTL_HANDEX_PARAM_CHANGE_TOKUSEI*)(param_header);
+
+  BTL_POKEPARAM* bpp = BTL_POKECON_GetPokeParam( wk->pokeCon, param->pokeID );
+
+  BTL_HANDLER_TOKUSEI_Remove( bpp );
+  SCQUE_PUT_OP_ChangeTokusei( wk->que, param->pokeID, param->tokuseiID );
+  BTL_POKEPARAM_ChangeTokusei( bpp, param->tokuseiID );
+
+  if( param->tokuseiID != POKETOKUSEI_NULL )
+  {
+    BTL_HANDLER_TOKUSEI_Add( bpp );
+  }
+  return 1;
+}
+/**
+ * ポケモン装備アイテム書き換え
+ * @return 成功時 1 / 失敗時 0
+ */
+static u8 scproc_HandEx_setItem( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header )
+{
+  const BTL_HANDEX_PARAM_SET_ITEM* param = (const BTL_HANDEX_PARAM_SET_ITEM*)(param_header);
+
+  BTL_POKEPARAM* bpp = BTL_POKECON_GetPokeParam( wk->pokeCon, param->pokeID );
+
+  if( param_header->userPokeID != param->pokeID )
+  {
+    u32 hem_state = Hem_PushState( &wk->HEManager );
+    u8  failed = scEventSetItem( wk, bpp );
+    scproc_HandEx_Root( wk, ITEM_DUMMY_DATA );
+    Hem_PopState( &wk->HEManager, hem_state );
+
+    if( failed ){
+      return 0;
+    }
+  }
+
+  handexSub_itemSet( wk, bpp, param->itemID );
+
+  if( param->fSucceedMsg ){
+    const BTL_POKEPARAM* pp_user = BTL_POKECON_GetPokeParam( wk->pokeCon, param_header->userPokeID );
+    scPut_Message_SetEx( wk, pp_user, param->succeedStrID, param->succeedStrArgCnt, param->succeedStrArgs );
+  }
+
+  return 1;
+}
+/**
+ * ポケモン装備アイテム交換
+ * @return 成功時 1 / 失敗時 0
+ */
+static u8 scproc_HandEx_swapItem( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header )
+{
+  const BTL_HANDEX_PARAM_SWAP_ITEM* param = (const BTL_HANDEX_PARAM_SWAP_ITEM*)(param_header);
+
+  BTL_POKEPARAM* target = BTL_POKECON_GetPokeParam( wk->pokeCon, param->pokeID );
+  BTL_POKEPARAM* self = BTL_POKECON_GetPokeParam( wk->pokeCon, param_header->userPokeID );
+
+  {
+    u32 hem_state = Hem_PushState( &wk->HEManager );
+    u8  failed = scEventSetItem( wk, target );
+    scproc_HandEx_Root( wk, ITEM_DUMMY_DATA );
+    Hem_PopState( &wk->HEManager, hem_state );
+    if( failed ){
+      return 0;
+    }
+  }
+
+  {
+    u16 targetItem = BTL_POKEPARAM_GetItem( target );
+    u16 selfItem = BTL_POKEPARAM_GetItem( self );
+
+    handexSub_itemSet( wk, target, selfItem );
+    handexSub_itemSet( wk, self, targetItem );
+  }
+
+  if( param->fSucceedMsg ){
+    scPut_Message_SetEx( wk, self, param->succeedStrID, param->succeedStrArgCnt, param->succeedStrArgs );
+  }
+  return 1;
+}
+//----------------------------------------------------------------------------------
+// アイテム書き換え共通処理
+//----------------------------------------------------------------------------------
+static void handexSub_itemSet( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 itemID )
+{
+  u8 pokeID = BTL_POKEPARAM_GetID( bpp );
+
+  BTL_HANDLER_ITEM_Remove( bpp );
+  SCQUE_PUT_OP_SetItem( wk->que, pokeID, itemID );
+  BTL_POKEPARAM_SetItem( bpp, itemID );
+
+  if( itemID != ITEM_DUMMY_DATA ){
+    BTL_HANDLER_ITEM_Add( bpp );
+  }
+}
+/**
+ * ポケモンわざ書き換え
+ * @return 成功時 1 / 失敗時 0
+ */
+static u8 scproc_HandEx_updateWaza( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header )
+{
+  const BTL_HANDEX_PARAM_UPDATE_WAZA* param = (const BTL_HANDEX_PARAM_UPDATE_WAZA*)(param_header);
+
+  BTL_POKEPARAM* target = BTL_POKECON_GetPokeParam( wk->pokeCon, param->pokeID );
+  SCQUE_PUT_OP_UpdateWaza( wk->que, param->pokeID, param->wazaIdx, param->waza, param->ppMax, param->fPermanent );
+  BTL_POKEPARAM_UpdateWazaNumber( target, param->wazaIdx, param->waza, param->ppMax, param->fPermanent );
+  return 1;
+}

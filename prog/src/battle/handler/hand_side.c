@@ -144,16 +144,33 @@ BTL_EVENT_FACTOR*  BTL_HANDLER_SIDE_Add( BtlSide side, BtlSideEffect sideEffect,
   }
   return NULL;
 }
+//=============================================================================================
+/**
+ * 特定サイドエフェクトが存在しているか判定
+ *
+ * @param   side
+ * @param   effect
+ *
+ * @retval  BOOL
+ */
+//=============================================================================================
+BOOL BTL_HANDER_SIDE_IsExist( BtlSide side, BtlSideEffect effect )
+{
+  EXIST_EFFECT* eff = &ExistEffect[ side ][ effect ];
 
+  return  (eff->factor != NULL);
+}
 //=============================================================================================
 /**
  * ハンドラ削除
  *
  * @param   side
  * @param   sideEffect
+ *
+ * @retval  BOOL    指定されたサイドエフェクトが有効だった場合TRUE
  */
 //=============================================================================================
-void BTL_HANDLER_SIDE_Remove( BtlSide side, BtlSideEffect sideEffect )
+BOOL BTL_HANDLER_SIDE_Remove( BtlSide side, BtlSideEffect sideEffect )
 {
   EXIST_EFFECT* eff = &ExistEffect[ side ][ sideEffect ];
 
@@ -163,7 +180,9 @@ void BTL_HANDLER_SIDE_Remove( BtlSide side, BtlSideEffect sideEffect )
     eff->factor = NULL;
     eff->add_counter = 0;
     eff->contParam.type = WAZASICK_CONT_NONE;
+    return TRUE;
   }
+  return FALSE;
 }
 
 //=============================================================================================

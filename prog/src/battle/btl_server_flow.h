@@ -18,7 +18,7 @@
 #include "btl_server_cmd.h"
 #include "btl_event.h"
 #include "btl_string.h"
-
+#include "btl_sideeff.h"
 
 /*--------------------------------------------------------------------------*/
 /* Consts                                                                   */
@@ -167,31 +167,6 @@ typedef enum {
 
 }BtlAddSickFailCode;
 
-/**
- *  サイドエフェクト種類
- */
-typedef enum {
-
-  BTL_SIDEEFF_NULL = 0,
-  BTL_SIDEEFF_START,
-
-  BTL_SIDEEFF_REFRECTOR=BTL_SIDEEFF_START,      ///< 物理攻撃を半減
-  BTL_SIDEEFF_HIKARINOKABE,   ///< 特殊攻撃を半減
-  BTL_SIDEEFF_SINPINOMAMORI,  ///< ポケ系状態異常にならない
-  BTL_SIDEEFF_SIROIKIRI,      ///< ランクダウン効果を受けない
-  BTL_SIDEEFF_OIKAZE,         ///< すばやさ２倍
-  BTL_SIDEEFF_OMAJINAI,       ///< 攻撃が急所に当たらない
-  BTL_SIDEEFF_MAKIBISI,       ///< 入れ替えて出てきたポケモンにダメージ（３段階）
-  BTL_SIDEEFF_DOKUBISI,       ///< 入れ替えて出てきたポケモンに毒（２段階）
-  BTL_SIDEEFF_STEALTHROCK,    ///< 入れ替えて出てきたポケモンにダメージ（相性計算あり）
-
-  BTL_SIDEEFF_MAX,
-
-  BTL_SIDEEFF_BITFLG_BYTES = 1 + (BTL_SIDEEFF_MAX/8) + ((BTL_SIDEEFF_MAX%8)!=0),
-
-}BtlSideEffect;
-
-
 
 /**
  *  ハンドラ挙動（効果が表出するもの）
@@ -222,7 +197,6 @@ typedef enum {
   BTL_HANDEX_RESET_TURNFLAG,///< ターンフラグ強制リセット
   BTL_HANDEX_SET_CONTFLAG,  ///< 継続フラグセット
   BTL_HANDEX_RESET_CONTFLAG,///< 継続フラグリセット
-  BTL_HANDEX_SIDE_EFFECT,   ///< サイドエフェクト追加
   BTL_HANDEX_SIDEEFF_REMOVE, ///< サイドエフェクト削除
   BTL_HANDEX_CHANGE_TOKUSEI,///< とくせい書き換え
   BTL_HANDEX_SET_ITEM,      ///< アイテム書き換え
@@ -378,6 +352,8 @@ typedef struct {
   BTL_HANDEX_PARAM_DAMAGE  header;
   u8              flags[ BTL_SIDEEFF_BITFLG_BYTES ];
   u8              side;
+  u8              fExMsg;
+  u16             exStrID;
 }BTL_HANDEX_PARAM_SIDEEFF_REMOVE;
 
 typedef struct {

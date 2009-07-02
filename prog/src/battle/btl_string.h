@@ -1,10 +1,10 @@
 //=============================================================================================
 /**
- * @file	btl_string.h
- * @brief	ポケモンWB バトル 文字列生成処理
- * @author	taya
+ * @file  btl_string.h
+ * @brief ポケモンWB バトル 文字列生成処理
+ * @author  taya
  *
- * @date	2008.10.06	作成
+ * @date  2008.10.06  作成
  */
 //=============================================================================================
 #ifndef __BTL_STRING_H__
@@ -14,8 +14,14 @@
 #include "btl_client.h"
 #include "btl_pokeparam.h"
 
+typedef enum {
+  BTL_STRTYPE_STD,
+  BTL_STRTYPE_SET,
+  BTL_STRTYPE_WAZA,
+}BtlStrType;
+
 enum {
-	BTL_STR_ARG_MAX = 8,
+  BTL_STR_ARG_MAX = 8,
 };
 
 
@@ -33,7 +39,7 @@ extern void BTL_STR_QuitSystem( void );
 #include "msg/msg_btl_std.h"
 
 enum {
-	BTL_STRID_STD_MAX = msg_btl_std_max,
+  BTL_STRID_STD_MAX = msg_btl_std_max,
 };
 
 typedef u16 BtlStrID_STD;
@@ -63,11 +69,11 @@ extern void BTL_STR_MakeStringSet( STRBUF* buf, BtlStrID_SET strID, const int* a
  * ワザメッセージの生成
  * ※ワザメッセージ：○○の××こうげき！とか。セットメッセージと同様、必ず３つセット。
  *
- * @param   buf		
- * @param   pokeID		
- * @param   waza		
+ * @param   buf
+ * @param   pokeID
+ * @param   waza
  *
- * @retval  extern void		
+ * @retval  extern void
  */
 //=============================================================================================
 extern void BTL_STR_MakeStringWaza( STRBUF* buf, u8 pokeID, u16 waza );
