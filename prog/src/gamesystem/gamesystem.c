@@ -21,6 +21,9 @@
 #include "src/field/event_mapchange.h"
 
 #include "poke_tool/monsno_def.h"
+#ifdef PM_DEBUG
+#include "item/item.h"  //デバッグアイテム生成用
+#endif
 
 //============================================================================================
 //============================================================================================
@@ -58,6 +61,7 @@ static BOOL GameSystem_Main(GAMESYS_WORK * gsys);
 static void GameSystem_End(GAMESYS_WORK * gsys);
 static u32 GAMESYS_WORK_GetSize(void);
 static void DEBUG_MyPokeAdd(GAMESYS_WORK * gsys);
+static void DEBUG_MYITEM_MakeBag(MYITEM_PTR myitem, int heapID);
 
 
 //============================================================================================
@@ -96,10 +100,14 @@ static GFL_PROC_RESULT GameMainProcInit(GFL_PROC * proc, int * seq, void * pwk, 
 	case GAMEINIT_MODE_FIRST:
 	case GAMEINIT_MODE_DEBUG:
 		{
+#ifdef PM_DEBUG
 			GMEVENT * event = DEBUG_EVENT_SetFirstMapIn(gsys, game_init);
 			GAMESYSTEM_SetEvent(gsys, event);
 			//適当に手持ちポケモンをAdd
 			DEBUG_MyPokeAdd(gsys);
+			//デバッグアイテム追加
+			DEBUG_MYITEM_MakeBag(GAMEDATA_GetMyItem(GAMESYSTEM_GetGameData(gsys)), GFL_HEAPID_APP);
+#endif //PM_DEBUG
 		}
 		break;
 	}
@@ -429,3 +437,73 @@ static void DEBUG_MyPokeAdd(GAMESYS_WORK * gsys)
 	
 	GFL_HEAP_FreeMemory(pp);
 }
+
+#ifdef PM_DEBUG
+//------------------------------------------------------------------
+/**
+ * @brief	デバッグ用：適当に手持ちを生成する
+ * @param	myitem	手持ちアイテム構造体へのポインタ
+ */
+//------------------------------------------------------------------
+static const ITEM_ST DebugItem[] = {
+	{ ITEM_MASUTAABOORU,	111 },
+	{ ITEM_MONSUTAABOORU,	222 },
+	{ ITEM_SUUPAABOORU,		333 },
+	{ ITEM_HAIPAABOORU,		444 },
+	{ ITEM_PUREMIABOORU,	555 },
+	{ ITEM_DAIBUBOORU,		666 },
+	{ ITEM_TAIMAABOORU,		777 },
+	{ ITEM_RIPIITOBOORU,	888 },
+	{ ITEM_NESUTOBOORU,		999 },
+	{ ITEM_GOOZYASUBOORU,	100 },
+	{ ITEM_KIZUGUSURI,		123 },
+	{ ITEM_NEMUKEZAMASI,	456 },
+	{ ITEM_BATORUREKOODAA,  1},  // バトルレコーダー
+	{ ITEM_TAUNMAPPU,		1 },
+	{ ITEM_TANKENSETTO,		1 },
+	{ ITEM_ZITENSYA,		1 },
+	{ ITEM_NANDEMONAOSI,	18 },
+	{ ITEM_PIIPIIRIKABAA,	18 },
+	{ ITEM_PIIPIIMAKKUSU,	18 },
+	{ ITEM_ANANUKENOHIMO, 50 },
+	{ ITEM_GOORUDOSUPUREE, 50 },
+	{ ITEM_DOKUKESI,		18 },		// どくけし
+	{ ITEM_YAKEDONAOSI,		19 },		// やけどなおし
+	{ ITEM_KOORINAOSI,		20 },		// こおりなおし
+	{ ITEM_MAHINAOSI,		22 },		// まひなおし
+	{ ITEM_EFEKUTOGAADO,	54 },		// エフェクトガード
+	{ ITEM_KURITHIKATTAA,	55 },		// クリティカッター
+	{ ITEM_PURASUPAWAA,		56 },		// プラスパワー
+	{ ITEM_DHIFENDAA,		57 },		// ディフェンダー
+	{ ITEM_SUPIIDAA,		58 },		// スピーダー
+	{ ITEM_YOKUATAARU,		59 },		// ヨクアタール
+	{ ITEM_SUPESYARUAPPU,	60 },		// スペシャルアップ
+	{ ITEM_SUPESYARUGAADO,	61 },		// スペシャルガード
+	{ ITEM_PIPPININGYOU,	62 },		// ピッピにんぎょう
+	{ ITEM_ENEKONOSIPPO,	63 },		// エネコのシッポ
+	{ ITEM_GENKINOKAKERA,	28 },		// げんきのかけら
+	{ ITEM_KAIHUKUNOKUSURI,	28 },		// げんきのかけら
+	{ ITEM_PIIPIIEIDO,	28 },
+	{ ITEM_PIIPIIEIDAA,	28 },
+	{ ITEM_DAAKUBOORU,	13 },		// ダークボール
+	{ ITEM_HIIRUBOORU,  14 },		// ヒールボール
+	{ ITEM_KUIKKUBOORU,	15 },		// クイックボール
+	{ ITEM_PURESYASUBOORU,	16 },	// プレシアボール
+	{ ITEM_TOMODATITETYOU,  1},  // ともだち手帳
+	{ ITEM_POFINKEESU,  1},  // ポルトケース
+	{ ITEM_MOKOSINOMI,	50},	//モコシのみ
+	{ ITEM_GOSUNOMI,	50},	//ゴスのみ
+	{ ITEM_RABUTANOMI,	50},	//ラブタのみ
+};
+
+static void DEBUG_MYITEM_MakeBag(MYITEM_PTR myitem, int heapID)
+{
+	u32	i;
+
+	MYITEM_Init( myitem );
+	for( i=0; i<NELEMS(DebugItem); i++ ){
+		MYITEM_AddItem( myitem, DebugItem[i].id, DebugItem[i].no, heapID );
+	}
+}
+
+#endif //PM_DEBUG

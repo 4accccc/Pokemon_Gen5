@@ -148,18 +148,16 @@ void MYITEM_CnvButtonItemSet( MYITEM_PTR myitem, u32 setitem )
 
 //------------------------------------------------------------------
 /**
- * @brief	MYITEMと最大数取得
- * @param	id		アイテム番号
+ * @brief	各ポケットのITEM_STと最大数取得
+ * @param	pocket		ポケット番号
  * @param	item	MYITEM取得場所
  * @param	max		最大数取得場所
  * @param	heap		ヒープID
- * @return	ポケット番号
+ * @return none
  */
 //------------------------------------------------------------------
-static u32 MyItemDataGet( MYITEM_PTR myitem, u16 id, ITEM_ST ** item, u32 * max, u32 heap )
+static u32 MyPocketDataGet( MYITEM_PTR myitem, s32 pocket, ITEM_ST ** item, u32 * max)
 {
-	s32 pocket = ITEM_GetParam( id, ITEM_PRM_POCKET, heap );
-	
 	switch( pocket ){
 	case BAG_POKE_EVENT:	// 大切な物
 		*item = myitem->MyEventItem;
@@ -193,7 +191,29 @@ static u32 MyItemDataGet( MYITEM_PTR myitem, u16 id, ITEM_ST ** item, u32 * max,
 		*item = myitem->MySkillItem;
 		*max = BAG_WAZA_ITEM_MAX;
 		break;
+	default:
+		GF_ASSERT(0);
+		*item = NULL;
+		break;
 	}
+	return pocket;
+}
+
+//------------------------------------------------------------------
+/**
+ * @brief	MYITEMと最大数取得
+ * @param	id		アイテム番号
+ * @param	item	MYITEM取得場所
+ * @param	max		最大数取得場所
+ * @param	heap		ヒープID
+ * @return	ポケット番号
+ */
+//------------------------------------------------------------------
+static u32 MyItemDataGet( MYITEM_PTR myitem, u16 id, ITEM_ST ** item, u32 * max, u32 heap )
+{
+	s32 pocket = ITEM_GetParam( id, ITEM_PRM_POCKET, heap );
+
+	MyPocketDataGet(myitem, pocket, item, max);
 	return pocket;
 }
 
@@ -494,47 +514,46 @@ BOOL MYITEM_CheckItemPocket( MYITEM_PTR myitem, u32 pocket )
 	u32	max;
 	u32	i;
 
-	switch( pocket ){
-	case BAG_POKE_EVENT:	// 大切な物
-		item = myitem->MyEventItem;
-		max  = BAG_EVENT_ITEM_MAX;
-		break;
-	case BAG_POKE_NORMAL:	// 道具
-		item = myitem->MyNormalItem;
-		max  = BAG_NORMAL_ITEM_MAX;
-		break;
-	case BAG_POKE_NUTS:		// 木の実
-		item = myitem->MyNutsItem;
-		max  = BAG_NUTS_ITEM_MAX;
-		break;
-	case BAG_POKE_DRUG:		// 薬
-		item = myitem->MyDrugItem;
-		max  = BAG_DRUG_ITEM_MAX;
-		break;
-	case BAG_POKE_BALL:		// ボール
-		item = myitem->MyBallItem;
-		max  = BAG_BALL_ITEM_MAX;
-		break;
-	case BAG_POKE_BATTLE:	// 戦闘用
-		item = myitem->MyBattleItem;
-		max  = BAG_BATTLE_ITEM_MAX;
-		break;
-	case BAG_POKE_SEAL:		// シール
-		item = myitem->MySealItem;
-		max  = BAG_SEAL_ITEM_MAX;
-		break;
-	case BAG_POKE_WAZA:		// 技マシン
-		item = myitem->MySkillItem;
-		max  = BAG_WAZA_ITEM_MAX;
-		break;
-	default:
-		return FALSE;
-	}
-
-	for( i=0; i<max; i++ ){
-		if( item[i].id != 0 ){ return TRUE; }
+	MyPocketDataGet(myitem, pocket, &item, &max);	
+	if(item)
+	{
+		for( i=0; i<max; i++ )
+		{
+			if( item[i].id != 0 )
+			{
+				return TRUE;
+			}
+		}
 	}
 	return FALSE;
+}
+
+//------------------------------------------------------------------
+/**
+ * @brief	ポケットのアイテム数
+ * @param	myitem		手持ちアイテム構造体へのポインタ
+ * @param	pocket		ポケット番号
+ * @return     数
+ */
+//------------------------------------------------------------------
+u32 MYITEM_GetItemPocketNumber( MYITEM_PTR myitem, u32 pocket )
+{
+	ITEM_ST * item;
+	u32	max,num=0;
+	u32	i;
+
+	MyPocketDataGet(myitem, pocket, &item, &max);	
+	if(item)
+	{
+		for( i=0; i<max; i++ )
+		{
+			if( item[i].id != ITEM_DUMMY_DATA )
+			{
+				num++;
+			}
+		}
+	}
+	return num;
 }
 
 //------------------------------------------------------------------
@@ -737,81 +756,6 @@ ITEM_ST * MYITEM_PosItemGet( MYITEM_PTR myitem, u16 pocket, u16 pos )
 
 	return &item[pos];
 }
-
-
-//------------------------------------------------------------------
-/**
- * @brief	デバッグ用：適当に手持ちを生成する
- * @param	myitem	手持ちアイテム構造体へのポインタ
- */
-//------------------------------------------------------------------
-static const ITEM_ST DebugItem[] = {
-	{ ITEM_MASUTAABOORU,	111 },
-	{ ITEM_MONSUTAABOORU,	222 },
-	{ ITEM_SUUPAABOORU,		333 },
-	{ ITEM_HAIPAABOORU,		444 },
-	{ ITEM_PUREMIABOORU,	555 },
-	{ ITEM_DAIBUBOORU,		666 },
-	{ ITEM_TAIMAABOORU,		777 },
-	{ ITEM_RIPIITOBOORU,	888 },
-	{ ITEM_NESUTOBOORU,		999 },
-	{ ITEM_GOOZYASUBOORU,	100 },
-	{ ITEM_KIZUGUSURI,		123 },
-	{ ITEM_NEMUKEZAMASI,	456 },
-	{ ITEM_BATORUREKOODAA,  1},  // バトルレコーダー
-	{ ITEM_TAUNMAPPU,		1 },
-	{ ITEM_TANKENSETTO,		1 },
-	{ ITEM_ZITENSYA,		1 },
-	{ ITEM_NANDEMONAOSI,	18 },
-	{ ITEM_PIIPIIRIKABAA,	18 },
-	{ ITEM_PIIPIIMAKKUSU,	18 },
-	{ ITEM_DOKUKESI,		18 },		// どくけし
-	{ ITEM_YAKEDONAOSI,		19 },		// やけどなおし
-	{ ITEM_KOORINAOSI,		20 },		// こおりなおし
-	{ ITEM_MAHINAOSI,		22 },		// まひなおし
-	{ ITEM_EFEKUTOGAADO,	54 },		// エフェクトガード
-	{ ITEM_KURITHIKATTAA,	55 },		// クリティカッター
-	{ ITEM_PURASUPAWAA,		56 },		// プラスパワー
-	{ ITEM_DHIFENDAA,		57 },		// ディフェンダー
-	{ ITEM_SUPIIDAA,		58 },		// スピーダー
-	{ ITEM_YOKUATAARU,		59 },		// ヨクアタール
-	{ ITEM_SUPESYARUAPPU,	60 },		// スペシャルアップ
-	{ ITEM_SUPESYARUGAADO,	61 },		// スペシャルガード
-	{ ITEM_PIPPININGYOU,	62 },		// ピッピにんぎょう
-	{ ITEM_ENEKONOSIPPO,	63 },		// エネコのシッポ
-	{ ITEM_GENKINOKAKERA,	28 },		// げんきのかけら
-	{ ITEM_KAIHUKUNOKUSURI,	28 },		// げんきのかけら
-	{ ITEM_PIIPIIEIDO,	28 },
-	{ ITEM_PIIPIIEIDAA,	28 },
-	{ ITEM_DAAKUBOORU,	13 },		// ダークボール
-	{ ITEM_HIIRUBOORU,  14 },		// ヒールボール
-	{ ITEM_KUIKKUBOORU,	15 },		// クイックボール
-	{ ITEM_PURESYASUBOORU,	16 },	// プレシアボール
-	{ ITEM_TOMODATITETYOU,  1},  // ともだち手帳
-	{ ITEM_POFINKEESU,  1},  // ポルトケース
-	{ ITEM_MOKOSINOMI,	50},	//モコシのみ
-	{ ITEM_GOSUNOMI,	50},	//ゴスのみ
-	{ ITEM_RABUTANOMI,	50},	//ラブタのみ
-};
-
-void Debug_MYITEM_MakeBag(MYITEM_PTR myitem, int heapID)
-{
-	u32	i;
-
-	GFL_STD_MemClear( myitem->MyEventItem, sizeof(ITEM_ST) * BAG_EVENT_ITEM_MAX );
-	GFL_STD_MemClear( myitem->MyNormalItem, sizeof(ITEM_ST) * BAG_NORMAL_ITEM_MAX );
-	GFL_STD_MemClear( myitem->MyNutsItem, sizeof(ITEM_ST) * BAG_NUTS_ITEM_MAX );
-	GFL_STD_MemClear( myitem->MyDrugItem, sizeof(ITEM_ST) * BAG_DRUG_ITEM_MAX );
-	GFL_STD_MemClear( myitem->MyBallItem, sizeof(ITEM_ST) * BAG_BALL_ITEM_MAX );
-	GFL_STD_MemClear( myitem->MyBattleItem, sizeof(ITEM_ST) * BAG_BATTLE_ITEM_MAX );
-	GFL_STD_MemClear( myitem->MySealItem, sizeof(ITEM_ST) * BAG_SEAL_ITEM_MAX );
-	GFL_STD_MemClear( myitem->MySkillItem, sizeof(ITEM_ST) * BAG_WAZA_ITEM_MAX );
-
-	for( i=0; i<NELEMS(DebugItem); i++ ){
-		MYITEM_AddItem( myitem, DebugItem[i].id, DebugItem[i].no, heapID );
-	}
-}
-
 
 //------------------------------------------------------------------
 /**

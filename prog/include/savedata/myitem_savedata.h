@@ -81,6 +81,7 @@ extern u16 MYITEM_GetItemNumDirect( ITEM_ST * myitem, u32 max, u16 item_no, u32 
 extern void MYITEM_SortSpace( ITEM_ST * item, const u32 max );
 extern void MYITEM_SortNumber( ITEM_ST * item, const u32 max );
 extern BOOL MYITEM_CheckItemPocket( MYITEM_PTR myitem, u32 pocket );
+extern u32 MYITEM_GetItemPocketNumber( MYITEM_PTR myitem, u32 pocket );
 extern ITEM_ST * MYITEM_PosItemGet( MYITEM_PTR myitem, u16 pocket, u16 pos );
 extern void MYITEM_BattlePocketItemMake( MYITEM_PTR myitem, ITEM_ST * make[], u32 heap );
 extern u32 MYITEM_CnvButtonItemGet( const MYITEM_PTR myitem );
@@ -113,9 +114,6 @@ extern void MYITEM_BattleBagLastItemSet( BAG_CURSOR * wk, u16 item, u16 page );
 extern void MYITEM_BattleBagPocketPagePosSet( BAG_CURSOR * wk, u16 pocket );
 extern void MYITEM_BattleBagCursorPosInit( BAG_CURSOR * wk );
 
-
-//	デバッグ用適当に手持ちアイテム生成関数
-extern void Debug_MYITEM_MakeBag(MYITEM_PTR myitem, int heapID);
 
 #ifdef CREATE_INDEX
 extern void *Index_Get_Myitem_Offset(MYITEM_PTRitem, int type);

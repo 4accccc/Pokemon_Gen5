@@ -412,4 +412,11 @@ extern void BmpMenuList_SetCursorString( BMPMENULIST_WORK *lw, u32 strID );
 //--------------------------------------------------------------
 extern void BmpMenuList_SetCursorBmp( BMPMENULIST_WORK *lw, u32 heapID );
 
+//--------------------------------------------------------------
+/**
+ * ヘッダーにセットしたワークを取り出す
+ */
+//--------------------------------------------------------------
+extern void* BmpMenuList_GetWorkPtr( BMPMENULIST_WORK *lw );
+
 #endif //__BMP_LIST_H__

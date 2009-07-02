@@ -1300,3 +1300,14 @@ void BmpMenuList_SetCursorBmp( BMPMENULIST_WORK *lw, u32 heapID )
 	BmpCursor_SetCursorBitmap( lw->cursor, heapID );
 	ListCursorPut( lw );
 }
+
+//--------------------------------------------------------------
+/**
+ * ヘッダーにセットしたワークを取り出す
+ */
+//--------------------------------------------------------------
+void* BmpMenuList_GetWorkPtr( BMPMENULIST_WORK *lw )
+{
+	return lw->hed.work;
+}
+

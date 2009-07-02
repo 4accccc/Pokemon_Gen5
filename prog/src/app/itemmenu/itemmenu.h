@@ -20,6 +20,7 @@
 #include "gamesystem/game_event.h"
 #include "gamesystem/game_data.h"
 #include "system/bmp_winframe.h"
+#include "system/bmp_menulist.h"
 
 #include "message.naix"
 #include "msg/msg_d_field.h"
@@ -40,18 +41,23 @@ struct _DEBUGITEM_PARAM {
   GAMESYS_WORK * gsys;
   FIELD_MAIN_WORK * fieldmap;
   SAVE_CONTROL_WORK *ctrl;
-
+  MYITEM_PTR pMyItem;
 	GFL_BMPWIN* win;
- // BMPMENULIST_WORK* lw;		// BMPメニューワーク
+  PRINT_UTIL            SysMsgPrintUtil;    // システムウインドウPrintUtil
+  PRINT_QUE*            SysMsgQue;
+  // BMPMENULIST_WORK* lw;		// BMPメニューワーク
 //  BMP_MENULIST_DATA*   menulist;
   GFL_MSGDATA *MsgManager;			// 名前入力メッセージデータマネージャー
   WORDSET			*WordSet;								// メッセージ展開用ワークマネージャー
   STRBUF*  pStrBuf;
 	STRBUF*  pExpStrBuf;
+  BMP_MENULIST_DATA*   submenulist;
   GFL_FONT 			*fontHandle;
-	int itemtype;
+  BMPMENULIST_WORK* sublw;
+	int pocketno;
 	int itemnum;
 	int curpos;
+  int pagetop;
 	HEAPID heapID;
 	u32 bgchar;
 };
