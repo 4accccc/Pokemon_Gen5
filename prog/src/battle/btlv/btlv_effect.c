@@ -413,22 +413,29 @@ void  BTLV_EFFECT_SetPaletteFade( int model, u8 start_evy, u8 end_evy, u8 wait, 
  *  指定された3Dモデルに対するパレットフェードの実行チェック
  *
  * @param[in] model       対象とする3Dモデル
+ *
+ * @retval  TRUE:実行中　FALSE:終了
  */
 //============================================================================================
 BOOL  BTLV_EFFECT_CheckExecutePaletteFade( int model )
 { 
+  BOOL  ret_stage = FALSE;
+  BOOL  ret_field = FALSE;
+
   if( ( model == BTLEFF_PAL_FADE_STAGE ) || 
       ( model == BTLEFF_PAL_FADE_3D ) || 
       ( model == BTLEFF_PAL_FADE_ALL ) )
   { 
-    return BTLV_STAGE_CheckExecutePaletteFade( bew->bsw );
+    ret_stage = BTLV_STAGE_CheckExecutePaletteFade( bew->bsw );
   }
   if( ( model == BTLEFF_PAL_FADE_FIELD ) || 
       ( model == BTLEFF_PAL_FADE_3D ) || 
       ( model == BTLEFF_PAL_FADE_ALL ) )
   { 
-    return BTLV_FIELD_CheckExecutePaletteFade( bew->bfw );
+    ret_field = BTLV_FIELD_CheckExecutePaletteFade( bew->bfw );
   }
+
+  return ( ( ret_stage == TRUE ) || ( ret_field == TRUE ) );
 }
 
 //============================================================================================
