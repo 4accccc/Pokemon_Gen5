@@ -21,7 +21,7 @@
 #endif
 #include <gflib.h>
 
-#include "./wipe_dummy.h"
+#include "system/brightness.h"
 #include "system/sdkdef.h"
 #include "system/gfl_use.h"
 

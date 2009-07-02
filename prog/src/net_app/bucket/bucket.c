@@ -28,6 +28,8 @@
 #include "net_app/bucket/bct_local.h"
 #include "net_app/bucket.h"
 #include "system/gfl_use.h"
+#include "system/main.h"
+#include "net_old/comm_def.h"
 
 
 //-----------------------------------------------------------------------------
@@ -103,7 +105,7 @@ static int DEBUG_ENTRY_COUNT = 0;
 //-------------------------------------
 ///	バケットゲームワーク
 //=====================================
-typedef struct _BUCKET_WK{
+struct _BUCKET_WK{
 	MNGM_ENTRYWK*		p_entry;
 	MNGM_RESULTWK*		p_result;
 	MNGM_ENRES_PARAM	enres_param;
@@ -129,7 +131,7 @@ typedef struct _BUCKET_WK{
 	void				*tcb_work;		///<TCBシステムで使用するワーク
 	GFL_TCBSYS			*tcbsys;		///<TCBシステム
 	GFL_TCB *vintr_tcb;
-} ;
+};
 
 //-----------------------------------------------------------------------------
 /**
@@ -198,7 +200,7 @@ GFL_PROC_RESULT BucketProc_Init( GFL_PROC * p_proc, int * p_seq, void * pwk, voi
 	GFL_STD_MemFill( p_wk, 0, sizeof(BUCKET_WK) );
 
     //TCBシステム作成
-    p_wk->tcb_work = GFL_HEAP_AllocClearMemory(HEAPID_BALLOON, GFL_TCB_CalcSystemWorkSize( 64 ));
+    p_wk->tcb_work = GFL_HEAP_AllocClearMemory(HEAPID_BUCKET, GFL_TCB_CalcSystemWorkSize( 64 ));
     p_wk->tcbsys = GFL_TCB_Init(64, p_wk->tcb_work);
 
 	// エントリー・結果画面パラメータ作成
@@ -270,17 +272,17 @@ GFL_PROC_RESULT BucketProc_Main( GFL_PROC* p_proc, int* p_seq, void * pwk, void 
 #ifdef BCT_DEBUG_ENTRY_CHG
 		switch(DEBUG_ENTRY_COUNT){
 		case 0:
-			TOMOYA_PRINT( "slow\n" );
+			//TOMOYA_PRINT( "slow\n" );
 			p_wk->p_entry = MNGM_ENTRY_InitBallSlow( &p_wk->enres_param, HEAPID_BUCKET );
 			break;
 
 		case 1:
-			TOMOYA_PRINT( "balance\n" );
+			//TOMOYA_PRINT( "balance\n" );
 			p_wk->p_entry = MNGM_ENTRY_InitBalanceBall( &p_wk->enres_param, HEAPID_BUCKET );
 			break;
 
 		case 2:
-			TOMOYA_PRINT( "balloon\n" );
+			//TOMOYA_PRINT( "balloon\n" );
 			p_wk->p_entry = MNGM_ENTRY_InitBalloon( &p_wk->enres_param, HEAPID_BUCKET );
 			break;
 		}
@@ -330,11 +332,11 @@ GFL_PROC_RESULT BucketProc_Main( GFL_PROC* p_proc, int* p_seq, void * pwk, void 
 		GF_ASSERT( p_wk->comm_num > 1 );
 
 		// 通信ID取得
-		p_wk->netid = GFL_NET_SystemGetCurrentID();
+		p_wk->netid = CommGetCurrentID();
 		p_wk->plno = MNGM_ENRES_PARAM_GetNetIDtoPlNO( &p_wk->enres_param, p_wk->netid );
 
 		// サーバー初期化
-		if( p_wk->netid == GFL_NET_NO_PARENTMACHINE ){
+		if( p_wk->netid == COMM_PARENT_ID ){
 			p_wk->p_surver = BCT_SURVER_Init( HEAPID_BUCKET, BCT_TIME_LIMIT, p_wk->comm_num, &p_wk->gamedata );
 
 			// 途中経過スコア　カウンタ値を設定
@@ -349,15 +351,15 @@ GFL_PROC_RESULT BucketProc_Main( GFL_PROC* p_proc, int* p_seq, void * pwk, void 
 		// VChatOn
 		if( pp->vchat ){
 			// ボイスチャット開始
-			GFL_NET_DWC_StartVChat( HEAPID_BUCKET );
-			TOMOYA_PRINT( "vct on\n" );
+			mydwc_startvchat( HEAPID_BUCKET );
+			//TOMOYA_PRINT( "vct on\n" );
 		}
 
 		// レアゲームチェックを行う
 		{
 			BCT_GAME_TYPE_WK gametype;
 
-			TOMOYA_PRINT( "p_wk->raregame = %d\n", p_wk->raregame );
+			//TOMOYA_PRINT( "p_wk->raregame = %d\n", p_wk->raregame );
 
 			switch( p_wk->raregame ){
 			case MNGM_RAREGAME_BUCKET_NORMAL:
@@ -388,16 +390,16 @@ GFL_PROC_RESULT BucketProc_Main( GFL_PROC* p_proc, int* p_seq, void * pwk, void 
 //		Snd_DataSetByScene( SND_SCENE_BCT, SEQ_KINOMI1, 1 );
 
 
-		GFL_NET_HANDLE_TimingSyncStart(GFL_NET_HANDLE_GetCurrentHandle(), BCT_SYNCID_GAMESTART);
+		CommTimingSyncStart(BCT_SYNCID_GAMESTART);
 
-		TOMOYA_PRINT( "init\n" );
+		//TOMOYA_PRINT( "init\n" );
 		(*p_seq) ++;
 		break;
 
 	case BCT_MAINSEQ_WIPE_IN:
 
 		// 同期が完了するまで待つ
-		if(!GFL_NET_HANDLE_IsTimingSync(GFL_NET_HANDLE_GetCurrentHandle(),BCT_SYNCID_GAMESTART)){
+		if(!CommIsTimingSync(BCT_SYNCID_GAMESTART)){
 			break;
 		}
 
@@ -411,7 +413,7 @@ GFL_PROC_RESULT BucketProc_Main( GFL_PROC* p_proc, int* p_seq, void * pwk, void 
 		BCT_CLIENT_StartMain( p_wk->p_client, BCT_CLIENT_STARTEVENT_NONE );	// マルノームをまわしておく
 		if( WIPE_SYS_EndCheck() ){
 			// 親ならゲームスタートを送信
-			if( p_wk->netid == GFL_NET_NO_PARENTMACHINE ){
+			if( p_wk->netid == COMM_PARENT_ID ){
 				result = CommSendData( CNM_BCT_START, NULL,  0 );
 				if( result ){
 					(*p_seq) ++;
@@ -450,7 +452,7 @@ GFL_PROC_RESULT BucketProc_Main( GFL_PROC* p_proc, int* p_seq, void * pwk, void 
 		}
 
 		
-		if( p_wk->netid == GFL_NET_NO_PARENTMACHINE ){
+		if( p_wk->netid == COMM_PARENT_ID ){
 			result = BCT_SURVER_Main( p_wk->p_surver );
 
 			// ゲームレベルの変更を送信
@@ -488,7 +490,7 @@ GFL_PROC_RESULT BucketProc_Main( GFL_PROC* p_proc, int* p_seq, void * pwk, void 
 
 	case BCT_MAINSEQ_SCORECOMM:
 		BCT_CLIENT_EndMain( p_wk->p_client, BCT_CLIENT_STARTEVENT_NONE );	
-		if( p_wk->netid == GFL_NET_NO_PARENTMACHINE ){
+		if( p_wk->netid == COMM_PARENT_ID ){
 			// 親はみんなから得点を収集してみんなに送る
 			result = BCT_SURVER_ScoreAllUserGetCheck( p_wk->p_surver );
 			if( result == TRUE ){
@@ -533,15 +535,15 @@ GFL_PROC_RESULT BucketProc_Main( GFL_PROC* p_proc, int* p_seq, void * pwk, void 
 		if( WIPE_SYS_EndCheck() ){
 
 			// 終了同期開始
-			GFL_NET_HANDLE_TimingSyncStart(GFL_NET_HANDLE_GetCurrentHandle(), BCT_SYNCID_END);
+			CommTimingSyncStart(BCT_SYNCID_END);
 			(*p_seq) ++;
 		}
 		break;
 
 	case BCT_MAINSEQ_DELETE:
 		// 同期が完了するまで待つ
-		if(!GFL_NET_HANDLE_IsTimingSync(GFL_NET_HANDLE_GetCurrentHandle(),BCT_SYNCID_END)){
-			TOMOYA_PRINT( "sync_wait\n" );
+		if(!CommIsTimingSync(BCT_SYNCID_END)){
+			//TOMOYA_PRINT( "sync_wait\n" );
 			GFL_TCB_Main(p_wk->tcbsys);
 			return GFL_PROC_RES_CONTINUE;
 		}
@@ -549,11 +551,11 @@ GFL_PROC_RESULT BucketProc_Main( GFL_PROC* p_proc, int* p_seq, void * pwk, void 
 		// VChatOff
 		if( pp->vchat ){
 			// ボイスチャット終了
-			GFL_NET_DWC_StopVChat();
-			TOMOYA_PRINT( "vct off\n" );
+			mydwc_stopvchat();
+			//TOMOYA_PRINT( "vct off\n" );
 		}
 
-		if( p_wk->netid == GFL_NET_NO_PARENTMACHINE ){
+		if( p_wk->netid == COMM_PARENT_ID ){
 			BCT_SURVER_Delete( p_wk->p_surver );
 			p_wk->p_surver = NULL;
 		}
@@ -586,17 +588,17 @@ GFL_PROC_RESULT BucketProc_Main( GFL_PROC* p_proc, int* p_seq, void * pwk, void 
 #ifdef BCT_DEBUG_ENTRY_CHG
 		switch(DEBUG_ENTRY_COUNT){
 		case 0:
-			TOMOYA_PRINT( "slow\n" );
+			//TOMOYA_PRINT( "slow\n" );
 			p_wk->p_result = MNGM_RESULT_InitBallSlow( &p_wk->enres_param, &p_wk->result_param, HEAPID_BUCKET );
 			break;
 
 		case 1:
-			TOMOYA_PRINT( "balance\n" );
+			//TOMOYA_PRINT( "balance\n" );
 			p_wk->p_result = MNGM_RESULT_InitBalanceBall( &p_wk->enres_param, &p_wk->result_param, HEAPID_BUCKET );
 			break;
 
 		case 2:
-			TOMOYA_PRINT( "balloon\n" );
+			//TOMOYA_PRINT( "balloon\n" );
 			p_wk->result_param.balloon = 14;
 			p_wk->p_result = MNGM_RESULT_InitBalloon( &p_wk->enres_param, &p_wk->result_param, HEAPID_BUCKET );
 			break;
@@ -679,13 +681,14 @@ GFL_PROC_RESULT BucketProc_End( GFL_PROC* p_proc, int* p_seq, void * pwk, void *
 		
 
 		// 通信同期
-		GFL_NET_HANDLE_TimingSyncStart(GFL_NET_HANDLE_GetCurrentHandle(), BCT_SYNCID_ERR_END);
+		CommTimingSyncStart(BCT_SYNCID_ERR_END);
 		(*p_seq)++;
 		break;
 
 	case 1:
-		if(	GFL_NET_HANDLE_IsTimingSync(GFL_NET_HANDLE_GetCurrentHandle(),BCT_SYNCID_ERR_END) || 
+		if(	CommIsTimingSync(BCT_SYNCID_ERR_END) || 
 			(CommGetConnectNum() < CommInfoGetEntryNum()) ){	// 人数が少なくなったらそのまま抜ける
+			OS_TPrintf("bucket Finish!\n");
 			return GFL_PROC_RES_FINISH;
 		}
 		break;
@@ -829,7 +832,7 @@ void Bucket_ClientMiddleScoreSet( BUCKET_WK* p_wk, u32 score, u32 netid )
 	p_wk->middle_score_get_count[ pl_no ] ++;
 
 	// 親なら全員から途中経過がきたら子機に通信許可を出す
-	if( p_wk->netid == GFL_NET_NO_PARENTMACHINE ){
+	if( p_wk->netid == COMM_PARENT_ID ){
 		BOOL send_ok = TRUE;
 
 		for( i=0; i<p_wk->comm_num; i++ ){
@@ -862,7 +865,7 @@ void Bucket_ClientMiddleScoreOkSet( BUCKET_WK* p_wk )
 	// クライアントシステムのタイムカウントを進める
 	// OFF
 /*	BCT_CLIENT_TimeCountFlagSet( p_wk->p_client, TRUE );
-	if( p_wk->netid == GFL_NET_NO_PARENTMACHINE ){
+	if( p_wk->netid == COMM_PARENT_ID ){
 		BCT_SURVER_SetCountDown( p_wk->p_surver, TRUE );
 	}//*/
 }
@@ -967,7 +970,7 @@ static void BCT_ClientMiddleScoreSend( BUCKET_WK* p_wk )
 			// OFF
 /*			// クライアントシステムのタイムカウントを停止
 			BCT_CLIENT_TimeCountFlagSet( p_wk->p_client, FALSE );
-			if( p_wk->netid == GFL_NET_NO_PARENTMACHINE ){
+			if( p_wk->netid == COMM_PARENT_ID ){
 				BCT_SURVER_SetCountDown( p_wk->p_surver, FALSE );
 			}
 //*/
@@ -993,7 +996,7 @@ static void BCT_GAMEDATA_Load( BUCKET_WK* p_wk, u32 heapID )
 	u32 size;
 	int i;
 	
-	p_wk->gamedata.p_tbl	= GFL_ARC_UTIL_LoadEx( ARC_BUCKET_DATA, NARC_ballslow_data_bucket_data_bin, FALSE, heapID, &size );
+	p_wk->gamedata.p_tbl	= GFL_ARC_UTIL_LoadEx( ARCID_BUCKET_DATA, NARC_ballslow_data_bucket_data_bin, FALSE, heapID, &size );
 	p_wk->gamedata.tblnum	= size / sizeof(BCT_GAMEDATA_ONE);
 
 	// MYSTATUSTBL
@@ -1036,7 +1039,7 @@ static void BCT_ErrAllSysEnd( BUCKET_WK* p_wk, BUCKET_PROC_WORK* pp )
 		p_wk->p_entry = NULL;
 	}
 	if( p_wk->p_client ){
-		if( p_wk->netid == GFL_NET_NO_PARENTMACHINE ){
+		if( p_wk->netid == COMM_PARENT_ID ){
 			BCT_SURVER_Delete( p_wk->p_surver );
 		}
 		BCT_CLIENT_Delete( p_wk->p_client );
@@ -1047,7 +1050,7 @@ static void BCT_ErrAllSysEnd( BUCKET_WK* p_wk, BUCKET_PROC_WORK* pp )
 	}
 	if( pp->vchat ){
 		// ボイスチャット終了
-		GFL_NET_DWC_StopVChat();
+		mydwc_stopvchat();
 	}
 	if( p_wk->p_result != NULL ){
 		MNGM_RESULT_Exit( p_wk->p_result );

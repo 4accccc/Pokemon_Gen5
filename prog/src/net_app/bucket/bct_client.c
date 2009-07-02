@@ -18,27 +18,16 @@
 #include "bct_client.h"
 #include "bct_snd.h"
 
-#include "gflib/g3d_system.h"
-
 #include "print/wordset.h"
 #include "print\gf_font.h"
-#include "system/clact_util.h"
-#include "system/render_oam.h"
-#include "system/window.h"
-//#include "system/fontproc.h"
-//#include "system/brightness.h"
-//#include "system/fontoam.h"
-#include "system/font_arc.h"
 
 #include "net\network_define.h"
 
 #include "net_app/wifi_lobby/minigame_tool.h"
 
-#include "src/graphic/bucket.naix"
+#include "bucket.naix"
 #include "wlmngm_tool.naix"
 //#include "system/d3dobj.h"
-
-#include "gflib/calctool.h"
 
 #include "message.naix"
 #include "msg/msg_debug_hiroba.h"
@@ -48,6 +37,13 @@
 #include "font/font.naix"
 #include <calctool.h>
 #include "system/bmp_winframe.h"
+#include "system/main.h"
+#include "net_app/net_bugfix.h"
+#include "system/actor_tool.h"
+#include "system/bmp_oam.h"
+#include "system/brightness.h"
+#include "print/printsys.h"
+#include "system/gfl_use.h"
 
 //-----------------------------------------------------------------------------
 /**
@@ -590,6 +586,10 @@ enum{	// MAIN面OAMパレット
 #define BCT_START_NAME_STRBUF_NUM			( 128 )
 // キャラクタ単位　位置
 //											// plno				commnum			 draw plno
+typedef struct Vec2DS32_tag{
+	s32 x;
+	s32 y;
+}Vec2DS32;
 static const Vec2DS32 sc_BCT_START_NAME_TBL[ BCT_PLAYER_NUM ][ BCT_PLAYER_NUM ][ BCT_PLAYER_NUM ] = {
 	// 自分のPLNOが0
 	{	
@@ -710,7 +710,7 @@ enum{
 	BCT_MAINBACK_MDL_NUM,
 };
 #define BCT_MAINBACK_SCALE	( FX32_CONST(1.50f) )
-#define BCT_MAINBACK_ROT	( RotKey( 180 ) )
+#define BCT_MAINBACK_ROT	( GFL_CALC_RotKey( 180 ) )
 enum{
 	BCT_MAINBACK_ANM_WALL_N,
 	BCT_MAINBACK_ANM_WALL_F,
@@ -915,6 +915,7 @@ typedef struct {
     s32 count;
 	s32 wait;
     GFL_BMPWIN*   helpwin;    // ゲーム説明ウィンドウ
+    PRINT_UTIL    printutil_helpwin;
 } BCT_COUNTDOWN_DRAW;
 
 
@@ -964,15 +965,24 @@ typedef struct {
 /// マルノーム描画データ
 //=====================================
 typedef struct {
-    GFL_G3D_OBJSTATUS      obj[BCT_MARUNOMU_MDL_NUM];
-    GFL_G3D_OBJ  mdl[BCT_MARUNOMU_MDL_NUM];
-    GFL_G3D_ANM  anm[BCT_MARUNOMU_ANM_NUM];
+  GFL_G3D_OBJSTATUS      obj[BCT_MARUNOMU_MDL_NUM];
+  GFL_G3D_OBJ  *mdl[BCT_MARUNOMU_MDL_NUM];
+  GFL_G3D_ANM*  anm[BCT_MARUNOMU_ANM_NUM + BCT_MARUNOMU_ANM_COLANM_NUM];
+  GFL_G3D_RES*  p_mdlres[BCT_MARUNOMU_MDL_NUM];
+  GFL_G3D_RND*  rnder[BCT_MARUNOMU_MDL_NUM];
+  BOOL          draw_flag[BCT_MARUNOMU_MDL_NUM];
+	VecFx32 scale[BCT_MARUNOMU_MDL_NUM];
+	VecFx32	rotate[BCT_MARUNOMU_MDL_NUM];
+  VecFx32 obj_rotate[BCT_MARUNOMU_MDL_NUM];
+  GFL_G3D_RES*  p_anmres[BCT_MARUNOMU_ANM_NUM + BCT_MARUNOMU_ANM_COLANM_NUM];
 
 	u16 set_mouthanm;	// 現在設定している口の動きのアニメデータ
 	u16	walk_anm_flag;
 
 	// カラーアニメ
-	GFL_G3D_ANM	colanm[BCT_MARUNOMU_ANM_COLANM_NUM];// カラーアニメ
+#if WB_FIX
+	GFL_G3D_ANM*	colanm[BCT_MARUNOMU_ANM_COLANM_NUM];// カラーアニメ
+#endif
 	fx32 colanm_frame;	// カラーアニメフレーム
 	u16 col_top;		// カラー表示するトップのplno	BCT_PLAYER_NUMなら黒
 	u16 col_rand;		// ランダムカラー表示するのか
@@ -1022,11 +1032,15 @@ typedef struct {
 /// 木の実描画データ
 //=====================================
 typedef struct {
-    GFL_G3D_OBJ  mdl[ BCT_NUTSRES_MDLNUM ];
-    GFL_G3D_OBJ  shadowmdl;	// 影
+    GFL_G3D_RES*  p_mdlres[ BCT_NUTSRES_MDLNUM ];
+    GFL_G3D_RES*  p_shadow_mdlres;
 
+#if WB_FIX
     CLACT_U_RES_OBJ_PTR     resobj[4];      // 読み込んだりソースのオブジェクト
     CLACT_HEADER            header;         // アクター作成用ヘッダー
+#else
+    u32           resobj[4];      // 読み込んだりソースのオブジェクト
+#endif
 } BCT_CLIENT_NUTS_RES;
 
 
@@ -1034,11 +1048,18 @@ typedef struct {
 /// OAM木の実描画
 //=====================================
 typedef struct {
-    GFL_CLWK* p_clwk;
-    GFL_G3D_OBJSTATUS      obj;
-    GFL_G3D_OBJSTATUS      shadow;	// かげよう
-    BOOL draw2d;                    // 2d描画させるか
-    const BCT_CLIENT_NUTS* cp_data;
+  GFL_CLWK* p_clwk;
+  GFL_G3D_OBJ  *mdl;
+  GFL_G3D_OBJSTATUS      obj;
+  GFL_G3D_OBJSTATUS      shadow_obj;	// かげよう
+  GFL_G3D_RND*  rnder;
+  GFL_G3D_OBJ  *shadowmdl;	// 影
+  GFL_G3D_RND*  shadow_rnder;
+  VecFx32 obj_rotate;
+  BOOL draw_flag;
+  BOOL shadow_draw_flag;
+  BOOL draw2d;                    // 2d描画させるか
+  const BCT_CLIENT_NUTS* cp_data;
 	u16 rota_x;
 	u16 rota_z;
 	u16 rota_speed_x;
@@ -1098,9 +1119,14 @@ typedef struct {
 ///	背景表示グラフィック
 //=====================================
 typedef struct {
-    GFL_G3D_OBJSTATUS      obj[BCT_MAINBACK_MDL_NUM];
-    GFL_G3D_OBJ  mdl[BCT_MAINBACK_MDL_NUM];
-	GFL_G3D_ANM	anm[BCT_MAINBACK_ANM_NUM];
+  GFL_G3D_OBJSTATUS      obj[BCT_MAINBACK_MDL_NUM];
+  GFL_G3D_OBJ  *mdl[BCT_MAINBACK_MDL_NUM];
+  GFL_G3D_RES*  p_mdlres[BCT_MAINBACK_MDL_NUM];
+  GFL_G3D_RND*  rnder[BCT_MAINBACK_MDL_NUM];
+	GFL_G3D_ANM*	anm[BCT_MAINBACK_ANM_NUM];
+  GFL_G3D_RES*  p_anmres[BCT_MAINBACK_ANM_NUM];
+  BOOL  draw_flag[BCT_MAINBACK_MDL_NUM];
+  VecFx32 obj_rotate[BCT_MAINBACK_MDL_NUM];
 	fx32 anm_speed;
 	u8 fever;
 	u8	fever_anm_seq;
@@ -1136,8 +1162,12 @@ typedef struct {
 ///	タッチペンワーク
 //=====================================
 typedef struct {
+#if WB_FIX
     CLACT_U_RES_OBJ_PTR     resobj[4];      // 読み込んだりソースのオブジェクト
     CLACT_HEADER            header;         // アクター作成用ヘッダー
+#else
+    u32                     resobj[4];      // 読み込んだりソースのオブジェクト
+#endif
     GFL_CLWK* p_clwk;
 
 	u8					move;			// 動作フラグ
@@ -1162,16 +1192,30 @@ typedef struct {
 //=====================================
 typedef struct {
 
+#if WB_FIX
     CLACT_U_RES_OBJ_PTR     resobj[4];			// 読み込んだりソースのオブジェクト
     CLACT_HEADER            header;				// アクター作成用ヘッダー
+#else
+    u32     resobj[4];			// 読み込んだりソースのオブジェクト
+#endif
 	GFL_CLWK*			p_tblwk;			// テーブルワーク
 	
-	GFL_BMPWIN*			objbmp;				// 文字列ビットマップデータ
+	GFL_BMP_DATA*			objbmp;				// 文字列ビットマップデータ
+#if WB_FIX
 	FONTOAM_OBJ_PTR			p_fontoam;			// フォントOAMワーク
 	FONTOAM_OAM_DATA_PTR	p_fontoam_data;		// フォントOAM構成データ
 	CHAR_MANAGER_ALLOCDATA	fontoam_chardata;	// キャラクタ確保データ
+#else
+  BMPOAM_ACT_PTR      p_fontoam;      // フォントOAMワーク
+#endif
+
 	STRBUF*					p_str;				// 文字列データ
+
+#if WB_FIX
 	CLACT_U_RES_OBJ_PTR		p_fontoam_pltt;		// パレットリソース
+#else
+  u32 p_fontoam_pltt;		// パレットリソース
+#endif
 
 	BCT_ADDMOVE_WORK		inout_data;		// 入出移動データ
 	BCT_ADDMOVE_WORK		yure_data;		// ゆれ移動データ
@@ -1183,6 +1227,8 @@ typedef struct {
 
 	u32 heapID;
 	
+	u8 objbmp_trans_req;
+	u8 padding[3];
 } BCT_CLIENT_NUTS_COUNT;
 
 
@@ -1210,15 +1256,25 @@ typedef struct {
     u16                 msg_speed;          // メッセージスピード
 
     GFL_CLUNIT*           clactSet;                       // セルアクターセット
+    PLTTSLOT_SYS_PTR      plttslot;
+#if WB_FIX
     CLACT_U_EASYRENDER_DATA renddata;                       // 簡易レンダーデータ
     CLACT_U_RES_MANAGER_PTR resMan[BCT_GRA_RESMAN_NUM]; // キャラ・パレットリソースマネージャ
     CLACT_HEADER            mainoamheader;      // アクター作成用ヘッダー
     CLACT_U_RES_OBJ_PTR     mainoamresobj[BCT_GRA_RESMAN_NUM];
+#else
+    u32     mainoamresobj[BCT_GRA_RESMAN_NUM];
+#endif
 
+#if WB_FIX
 	FONTOAM_SYS_PTR	p_fontoam_sys;	// FONTOAMのシステム
+#else
+	BMPOAM_SYS_PTR p_fontoam_sys;	// FONTOAMのシステム
+#endif
 
     GFL_G3D_CAMERA * p_camera;
-    VecFx32 target;
+    VecFx32 camera_target;
+    VecFx32 camera_angle;
 
 	// メイン画面背景
 	BCT_CLIENT_MAINBACK mainback;
@@ -1252,9 +1308,10 @@ typedef struct {
 	BCT_CLIENT_NUTS_COUNT nutscount;
 
 
+#if WB_FIX
     // アロケータ
     NNSFndAllocator allocator;
-
+#endif
 
 } BCT_CLIENT_GRAPHIC;
 
@@ -1264,7 +1321,7 @@ typedef struct {
 //-------------------------------------
 /// クライアントワーク
 //=====================================
-typedef struct _BCT_CLIENT{
+struct _BCT_CLIENT{
 	u32	move_type;	// 動作タイプ		時間で遷移する動作のタイプ	BCT_MARUNOMU_MOVE_TYPE
 	BOOL time_count_flag;
     s32 time;
@@ -1294,7 +1351,11 @@ typedef struct _BCT_CLIENT{
 	BCT_CLIENT_FEVER_EFF_WK fever_eff;
 
 	GFL_TCBSYS *tcbsys;							//BUCKET_WKが持つtcbsysのポインタ
-} ;
+
+  GFL_FONT *fontHandle;
+  PRINT_QUE *printQue;
+  GFL_TCBLSYS *tcblsys;
+};
 
 
 
@@ -1309,7 +1370,7 @@ typedef struct _BCT_CLIENT{
 /// 当たり判定位置表示オブジェクト
 //=====================================
 typedef struct {
-    GFL_G3D_OBJ  mdl;
+    GFL_G3D_OBJ  *mdl;
     GFL_G3D_OBJSTATUS      obj[4];
 } BCT_DEBUG_POSITION;
 
@@ -1329,6 +1390,22 @@ static void BCT_DEBUG_AutoSlow( BCT_CLIENT* p_wk );
 #ifdef PM_DEBUG
 static int BCT_DEBUG_in_num = 0;
 #endif
+
+
+static const GFL_DISP_VRAM vramSetTable = {
+    GX_VRAM_BG_32_FG,               // メイン2DエンジンのBG
+    GX_VRAM_BGEXTPLTT_NONE,         // メイン2DエンジンのBG拡張パレット
+    GX_VRAM_SUB_BG_128_C,           // サブ2DエンジンのBG
+    GX_VRAM_SUB_BGEXTPLTT_NONE,     // サブ2DエンジンのBG拡張パレット
+    GX_VRAM_OBJ_128_B,              // メイン2DエンジンのOBJ
+    GX_VRAM_OBJEXTPLTT_NONE,        // メイン2DエンジンのOBJ拡張パレット
+    GX_VRAM_SUB_OBJ_16_I,           // サブ2DエンジンのOBJ
+    GX_VRAM_SUB_OBJEXTPLTT_NONE,    // サブ2DエンジンのOBJ拡張パレット
+    GX_VRAM_TEX_0_A,                // テクスチャイメージスロット
+    GX_VRAM_TEXPLTT_0123_E,          // テクスチャパレットスロット
+    GX_OBJVRAMMODE_CHAR_1D_128K,	// メインOBJマッピングモード
+    GX_OBJVRAMMODE_CHAR_1D_128K,	// サブOBJマッピングモード
+};
 
 
 //-----------------------------------------------------------------------------
@@ -1354,7 +1431,7 @@ static void BCT_CLIENT_ScoreEffectInit( BCT_CLIENT_SCORE_EFFECT* p_wk, BCT_CLIEN
 static void BCT_CLIENT_ScoreEffectExit( BCT_CLIENT_SCORE_EFFECT* p_wk, BCT_CLIENT_GRAPHIC* p_drawsys);
 static void BCT_CLIENT_ScoreEffectStart( BCT_CLIENT_SCORE_EFFECT* p_wk, u32 plno, u32 bonus, BCT_MARUNOMU_MOVE_TYPE movetype );
 static void BCT_CLIENT_ScoreEffectMain( BCT_CLIENT_SCORE_EFFECT* p_wk );
-static void BCT_CLIENT_ScoreEffectWkInit( BCT_CLIENT_SCORE_EFFECT_WK* p_wk, CLACT_ADD* p_ad, BCT_CLIENT_GRAPHIC* p_drawsys, u32 comm_num, u32 plno, u32 myplno, u32 heapID );
+static void BCT_CLIENT_ScoreEffectWkInit( BCT_CLIENT_SCORE_EFFECT_WK* p_wk, GFL_CLWK_DATA* p_ad, BCT_CLIENT_GRAPHIC* p_drawsys, u32 comm_num, u32 plno, u32 myplno, u32 heapID );
 static void BCT_CLIENT_ScoreEffectWkExit( BCT_CLIENT_SCORE_EFFECT_WK* p_wk );
 static void BCT_CLIENT_ScoreEffectWkStart( BCT_CLIENT_SCORE_EFFECT_WK* p_wk, u32 plno, u32 bonus, BCT_MARUNOMU_MOVE_TYPE movetype );
 static void BCT_CLIENT_ScoreEffectWkMain( BCT_CLIENT_SCORE_EFFECT_WK* p_wk );
@@ -1362,7 +1439,7 @@ static void BCT_CLIENT_ScoreEffectWkSetMatrix( BCT_CLIENT_SCORE_EFFECT_WK* p_wk,
 static void BCT_CLIENT_ScoreEffectWkEnd( BCT_CLIENT_SCORE_EFFECT_WK* p_wk, u32 idx );
 
 // 開始ワーク
-static void BCT_CLIENT_StartSysInit( BCT_COUNTDOWN_DRAW* p_graphic, BCT_CLIENT_GRAPHIC* p_drawsys, const BCT_GAMEDATA* cp_param, u32 commnum, u32 myplno, ARCHANDLE* p_handle, u32 heapID );
+static void BCT_CLIENT_StartSysInit( BCT_COUNTDOWN_DRAW* p_graphic, BCT_CLIENT_GRAPHIC* p_drawsys, const BCT_GAMEDATA* cp_param, u32 commnum, u32 myplno, ARCHANDLE* p_handle, u32 heapID, GFL_FONT *font_handle, PRINT_QUE *printQue );
 static void BCT_CLIENT_StartSysExit( BCT_COUNTDOWN_DRAW* p_graphic, BCT_CLIENT_GRAPHIC* p_drawsys );
 static void BCT_CLIENT_StartSysCountDownInit( BCT_COUNTDOWN_DRAW* p_graphic, BCT_CLIENT_GRAPHIC* p_drawsys, GFL_TCBSYS *tcbsys );
 static BOOL BCT_CLIENT_StartSysCountDown( BCT_COUNTDOWN_DRAW* p_graphic, BCT_CLIENT_GRAPHIC* p_drawsys );
@@ -1494,6 +1571,7 @@ static void BCT_CLIENT_OamExit( BCT_CLIENT_GRAPHIC* p_wk );
 static void BCT_CLIENT_MsgInit( BCT_CLIENT_GRAPHIC* p_wk, u32 heapID );
 static void BCT_CLIENT_MsgExit( BCT_CLIENT_GRAPHIC* p_wk );
 static void BCT_CLIENT_CameraInit( BCT_CLIENT_GRAPHIC* p_wk, u32 comm_num, u32 plno, u32 heapID );
+static void SetCamPosByTarget_Dist_Ang(VecFx32 *pos, u16 angle_x, u16 angle_y, u16 angle_z, fx32 distance, VecFx32 *target);
 static void BCT_CLIENT_CameraExit( BCT_CLIENT_GRAPHIC* p_wk );
 static void BCT_CLIENT_CameraMain( BCT_CLIENT_GRAPHIC* p_wk );
 static void BCT_CLIENT_BgResLoad( BCT_CLIENT_GRAPHIC* p_wk, ARCHANDLE* p_handle, u32 plno, u32 heapID );
@@ -1502,8 +1580,8 @@ static void BCT_CLIENT_BgResRelease( BCT_CLIENT_GRAPHIC* p_wk );
 static void BCT_CLIENT_MainOamInit( BCT_CLIENT_GRAPHIC* p_wk, ARCHANDLE* p_handle, u32 heapID );
 static void BCT_CLIENT_MainOamExit( BCT_CLIENT_GRAPHIC* p_wk );
 
-static void BCT_CLIENT_MarunomuDrawInit( BCT_MARUNOMU_DRAW* p_wk, ARCHANDLE* p_handle, u32 heapID, NNSFndAllocator* p_allocator );
-static void BCT_CLIENT_MarunomuDrawExit( BCT_MARUNOMU_DRAW* p_wk, NNSFndAllocator* p_allocator );
+static void BCT_CLIENT_MarunomuDrawInit( BCT_MARUNOMU_DRAW* p_wk, ARCHANDLE* p_handle, u32 heapID );
+static void BCT_CLIENT_MarunomuDrawExit( BCT_MARUNOMU_DRAW* p_wk );
 static void BCT_CLIENT_MarunomuDrawMain( BCT_MARUNOMU_DRAW* p_wk, const BCT_MARUNOMU* cp_data, BCT_MARUNOMU_MOVE_TYPE movetype );
 static void BCT_CLIENT_MarunomuDrawAnmMain( BCT_MARUNOMU_DRAW* p_wk, const BCT_MARUNOMU* cp_data, BCT_MARUNOMU_MOVE_TYPE movetype );
 static void BCT_CLIENT_MarunomuDrawMatrixSet( BCT_MARUNOMU_DRAW* p_wk, const BCT_MARUNOMU* cp_data );
@@ -1542,7 +1620,7 @@ static void BCT_CLIENT_NutsDrawEnd( BCT_CLIENT_NUTS_DRAW* p_data );
 static BCT_CLIENT_NUTS_DRAW* BCT_CLIENT_NutsDrawWkGet( BCT_CLIENT_GRAPHIC* p_wk );
 static BOOL BCT_CLIENT_NutsDrawMatrixSet( BCT_CLIENT_NUTS_DRAW* p_data, const BCT_CLIENT_NUTS* cp_data, u32 comm_num );
 static void BCT_CLIENT_Nuts3DDrawOn( BCT_CLIENT_NUTS_DRAW* p_data, BCT_CLIENT_GRAPHIC* p_wk );
-static GFL_G3D_OBJ* BCT_CLIENT_Nuts3DMdlGet( const BCT_CLIENT_NUTS* cp_data, BCT_CLIENT_NUTS_RES* p_nutsres );
+static GFL_G3D_RES* BCT_CLIENT_Nuts3DMdlGet( const BCT_CLIENT_NUTS* cp_data, BCT_CLIENT_NUTS_RES* p_nutsres );
 static void BCT_CLIENT_NutsDrawRotaSet( BCT_CLIENT_NUTS_DRAW* p_data );
 
 static void BCT_CLIENT_HandNutsDrawInit( BCT_CLIENT_GRAPHIC* p_wk, BCT_CLIENT_HANDNUTS_DRAW* p_nuts, u32 plno, u32 heapID );
@@ -1558,8 +1636,8 @@ static void BCT_CLIENT_OamAwayNutsMain( BCT_CLIENT_OAMAWAYNUTS_DRAW* p_wk );
 static void BCT_CLIENT_OamAwayNutsStart( BCT_CLIENT_OAMAWAYNUTS_DRAW* p_wk, s32 x, s32 y );
 static void BCT_CLIENT_OamAwayNutsMoveXY( int count, int countmax, int speed, int srota, int erota, s32* p_x, s32* p_y );
 
-static void BCT_CLIENT_MainBackInit( BCT_CLIENT_MAINBACK* p_wk, BCT_CLIENT_GRAPHIC* p_graphic, ARCHANDLE* p_handle, int comm_num, u32 plno, u32 heapID, NNSFndAllocator* p_allocator );
-static void BCT_CLIENT_MainBackExit( BCT_CLIENT_MAINBACK* p_wk, BCT_CLIENT_GRAPHIC* p_graphic, NNSFndAllocator* p_allocator );
+static void BCT_CLIENT_MainBackInit( BCT_CLIENT_MAINBACK* p_wk, BCT_CLIENT_GRAPHIC* p_graphic, ARCHANDLE* p_handle, int comm_num, u32 plno, u32 heapID );
+static void BCT_CLIENT_MainBackExit( BCT_CLIENT_MAINBACK* p_wk, BCT_CLIENT_GRAPHIC* p_graphic );
 static void BCT_CLIENT_MainBackDraw( BCT_CLIENT_MAINBACK* p_wk );
 static void BCT_CLIENT_MainBackSetDrawFever( BCT_CLIENT_MAINBACK* p_wk );
 static void BCT_CLIENT_MainBackSetAnmSpeed( BCT_CLIENT_MAINBACK* p_wk, fx32 speed );
@@ -1580,16 +1658,18 @@ static void BCT_CLIENT_BGPRISCRL_SetPri( BCT_CLIENT_GRAPHIC* p_gra, s16 most_bac
 // 木の実カウンター
 static void BCT_CLIENT_NUTS_COUNT_Init( BCT_CLIENT_NUTS_COUNT* p_wk, BCT_CLIENT_GRAPHIC* p_gra, ARCHANDLE* p_handle, u32 heapID );
 static void BCT_CLIENT_NUTS_COUNT_Exit( BCT_CLIENT_NUTS_COUNT* p_wk, BCT_CLIENT_GRAPHIC* p_gra );
-static void BCT_CLIENT_NUTS_COUNT_Start( BCT_CLIENT_NUTS_COUNT* p_wk, BCT_CLIENT_GRAPHIC* p_gra, u32 count );
+static void BCT_CLIENT_NUTS_COUNT_Start( BCT_CLIENT_NUTS_COUNT* p_wk, BCT_CLIENT_GRAPHIC* p_gra, u32 count, PRINT_QUE *printQue, GFL_FONT *font_handle );
 static void BCT_CLIENT_NUTS_COUNT_End( BCT_CLIENT_NUTS_COUNT* p_wk );
-static void BCT_CLIENT_NUTS_COUNT_SetData( BCT_CLIENT_NUTS_COUNT* p_wk, BCT_CLIENT_GRAPHIC* p_gra, u32 count );
-static void BCT_CLIENT_NUTS_COUNT_Main( BCT_CLIENT_NUTS_COUNT* p_wk );
+static void BCT_CLIENT_NUTS_COUNT_SetData( BCT_CLIENT_NUTS_COUNT* p_wk, BCT_CLIENT_GRAPHIC* p_gra, u32 count, PRINT_QUE *printQue, GFL_FONT *font_handle );
+static void BCT_CLIENT_NUTS_COUNT_Main( BCT_CLIENT_NUTS_COUNT* p_wk, PRINT_QUE *printQue );
 
 
 // FEVERエフェクト
 static void BCT_CLIENT_FEVER_EFF_Start( BCT_CLIENT_FEVER_EFF_WK* p_wk );
 static void BCT_CLIENT_FEVER_EFF_Main( BCT_CLIENT_FEVER_EFF_WK* p_wk, BCT_CLIENT_MAINBACK* p_mainback, BCT_MARUNOMU_DRAW* p_marunomudraw );
 static void BCT_CLIENT_FEVER_EFF_Reset( BCT_CLIENT_FEVER_EFF_WK* p_wk );
+
+static void BCT_RotateMtx(VecFx32 *rotate, MtxFx33 *dst_mtx);
 
 //----------------------------------------------------------------------------
 /**
@@ -1605,25 +1685,31 @@ static void BCT_CLIENT_FEVER_EFF_Reset( BCT_CLIENT_FEVER_EFF_WK* p_wk );
 //-----------------------------------------------------------------------------
 BCT_CLIENT* BCT_CLIENT_Init( u32 heapID, u32 timeover, u32 comm_num, u32 plno, BCT_GAMEDATA* cp_gamedata, GFL_TCBSYS *tcbsys )
 {
-    BCT_CLIENT* p_wk;
+  BCT_CLIENT* p_wk;
 	u32 check;
 
-    p_wk = GFL_HEAP_AllocMemory( heapID, sizeof(BCT_CLIENT) );
-    GFL_STD_MemFill( p_wk, 0, sizeof(BCT_CLIENT) );
+  p_wk = GFL_HEAP_AllocMemory( heapID, sizeof(BCT_CLIENT) );
+  GFL_STD_MemFill( p_wk, 0, sizeof(BCT_CLIENT) );
 
 	p_wk->time_count_flag	= TRUE;
-    p_wk->time				= 0;
-    p_wk->time_max			= timeover;
-    p_wk->comm_num			= comm_num;
+  p_wk->time				= 0;
+  p_wk->time_max			= timeover;
+  p_wk->comm_num			= comm_num;
 	p_wk->plno				= plno;
 	p_wk->cp_gamedata		= cp_gamedata;
-    p_wk->tcbsys			= tcbsys;
+  p_wk->tcbsys			= tcbsys;
 
-    // マルノーム初期化
-    BCT_CLIENT_MarunomuInit( p_wk, &p_wk->marunomu );
+  //フォント読み込み
+  p_wk->fontHandle = GFL_FONT_Create( ARCID_FONT, NARC_font_large_nftr,
+			GFL_FONT_LOADTYPE_FILE, FALSE, heapID );
+	p_wk->printQue = PRINTSYS_QUE_Create(heapID);
+	p_wk->tcblsys = GFL_TCBL_Init(heapID, heapID, 8, 32);
 
-    // グラフィック初期化
-    BCT_CLIENT_GraphicInit( p_wk, heapID );
+  // マルノーム初期化
+  BCT_CLIENT_MarunomuInit( p_wk, &p_wk->marunomu );
+
+  // グラフィック初期化
+  BCT_CLIENT_GraphicInit( p_wk, heapID );
 
 	// タッチペンシステム初期化
 	BCT_CLIENT_TOUCHPEN_Init( &p_wk->touchpen_wk, &p_wk->graphic, heapID );
@@ -1631,12 +1717,15 @@ BCT_CLIENT* BCT_CLIENT_Init( u32 heapID, u32 timeover, u32 comm_num, u32 plno, B
 	// 途中経過データ	初期化
 	BCT_CLIENT_MDLSCR_Init( &p_wk->middle_score );
 
+#if WB_FIX
 	// タッチパネル
 	check = InitTP( BCT_TOUCH_BUFF, BCT_TOUCH_BUFFNUM, 4 );
+#else
+  check = GFL_UI_TP_AutoStart( BCT_TOUCH_BUFF, BCT_TOUCH_BUFFNUM );
+#endif
 	GF_ASSERT( check == TP_OK );
-
-    
-    return p_wk;
+  
+  return p_wk;
 }
 
 //----------------------------------------------------------------------------
@@ -1648,18 +1737,28 @@ BCT_CLIENT* BCT_CLIENT_Init( u32 heapID, u32 timeover, u32 comm_num, u32 plno, B
 //-----------------------------------------------------------------------------
 void BCT_CLIENT_Delete( BCT_CLIENT* p_wk )
 {
-#if WB_TEMP_FIX
 	u32 check;
+
 	// タッチパネルサンプリング終了
+#if WB_TEMP_FIX
 	check = StopTP();
-	GF_ASSERT( check == TP_OK );
+#else
+  check = GFL_UI_TP_AutoStop();
 #endif
+	GF_ASSERT( check == TP_OK );
 
 	// タッチペンシステム破棄
 	BCT_CLIENT_TOUCHPEN_Exit( &p_wk->touchpen_wk, &p_wk->graphic );
 
     // グラフィック破棄
     BCT_CLIENT_GraphicDelete( p_wk );
+
+  //フォント破棄
+	GFL_FONT_Delete(p_wk->fontHandle);
+	//PrintQue破棄
+	PRINTSYS_QUE_Delete(p_wk->printQue);
+	//TCBL破棄
+	GFL_TCBL_Exit(p_wk->tcblsys);
     
     GFL_HEAP_FreeMemory( p_wk );
 
@@ -1667,6 +1766,22 @@ void BCT_CLIENT_Delete( BCT_CLIENT* p_wk )
 	// 食った数を表示
 	OS_Printf( "今回の食べた数	%d\n", BCT_DEBUG_in_num );
 #endif
+}
+
+//--------------------------------------------------------------
+/**
+ * 各メインで共通で実行する処理
+ *
+ * @param   p_wk		
+ */
+//--------------------------------------------------------------
+static void BCT_CLIENT_CommonMain(BCT_CLIENT* p_wk)
+{
+  GFL_TCBL_Main(p_wk->tcblsys);
+	PRINTSYS_QUE_Main(p_wk->printQue);
+	{
+    PRINT_UTIL_Trans(&p_wk->graphic.start.printutil_helpwin, p_wk->printQue);
+  }
 }
 
 //----------------------------------------------------------------------------
@@ -1689,6 +1804,8 @@ BOOL BCT_CLIENT_StartMain( BCT_CLIENT* p_wk, u32 event )
     BOOL result;
     BOOL ret = TRUE;
 	s32 speed;
+
+  BCT_CLIENT_CommonMain(p_wk);
 
     // マルノームを常にゆっくり動かす
     if(  p_wk->graphic.start.seq >= BCT_STARTSEQ_WAIT ){
@@ -1717,14 +1834,14 @@ BOOL BCT_CLIENT_StartMain( BCT_CLIENT* p_wk, u32 event )
 			p_wk->graphic.start.seq ++;
 
 			// 同期開始
-			GFL_NET_HANDLE_TimingSyncStart(GFL_NET_HANDLE_GetCurrentHandle(), BCT_SYNCID_CLIENT_TOUCHPEN_END);
+			CommTimingSyncStart(BCT_SYNCID_CLIENT_TOUCHPEN_END);
 		}
 		break;
 
 	case BCT_STARTSEQ_MARUNOMU_SND:   // 音を鳴らす
 
 		// 同期が完了するまで待つ
-		if(!GFL_NET_HANDLE_IsTimingSync(GFL_NET_HANDLE_GetCurrentHandle(),BCT_SYNCID_CLIENT_TOUCHPEN_END)){
+		if(!CommIsTimingSync(BCT_SYNCID_CLIENT_TOUCHPEN_END)){
 			break;
 		}
 
@@ -1736,10 +1853,10 @@ BOOL BCT_CLIENT_StartMain( BCT_CLIENT* p_wk, u32 event )
 
 		p_wk->graphic.start.wait--;
 		if( p_wk->graphic.start.wait == 50 ){
-			Snd_SePlay( BCT_SND_MARUIN3 );	// はまる
+			PMSND_PlaySE( BCT_SND_MARUIN3 );	// はまる
 		}
 		if( p_wk->graphic.start.wait == 20 ){
-			Snd_SePlay( BCT_SND_MARUIN2 );	// 口開き
+			PMSND_PlaySE( BCT_SND_MARUIN2 );	// 口開き
 		}
 		
 		// １回アニメ
@@ -1758,7 +1875,7 @@ BOOL BCT_CLIENT_StartMain( BCT_CLIENT* p_wk, u32 event )
 
     case BCT_STARTSEQ_TEXTINIT:     // テキストの準備
         BCT_CLIENT_StartSysCountDownInit( &p_wk->graphic.start, &p_wk->graphic, p_wk->tcbsys );
-		Snd_SePlay( BCT_SND_COUNT );
+		PMSND_PlaySE( BCT_SND_COUNT );
         p_wk->graphic.start.seq = BCT_STARTSEQ_COUNTDOWNWAIT;
         break;
         
@@ -1806,6 +1923,8 @@ BOOL BCT_CLIENT_EndMain( BCT_CLIENT* p_wk, u32 event )
     BOOL result;
     BOOL ret = TRUE;
 	s32 speed;
+
+  BCT_CLIENT_CommonMain(p_wk);
 
     switch( p_wk->graphic.result.seq ){
     case BCT_RESULT_SEQ_ENDINIT:
@@ -1895,7 +2014,7 @@ BOOL BCT_CLIENT_EndMain( BCT_CLIENT* p_wk, u32 event )
 	BCT_CLIENT_GraphicDrawCore( p_wk, &p_wk->graphic );
 
 	// 木の実カウンター
-	BCT_CLIENT_NUTS_COUNT_Main( &p_wk->graphic.nutscount );
+	BCT_CLIENT_NUTS_COUNT_Main( &p_wk->graphic.nutscount, p_wk->printQue );
 	
     return ret;
 }
@@ -1914,6 +2033,8 @@ BOOL BCT_CLIENT_Main( BCT_CLIENT* p_wk )
 {
 	BOOL result;
 		
+  BCT_CLIENT_CommonMain(p_wk);
+  
 	// ゲーム状態チェック
 	if( p_wk->move_type < BCT_MARUNOMU_MOVE_NUM-1 ){
 		if( sc_BCT_MARUNOMU_MOVE_STARTTIME[ p_wk->move_type+1 ] <= p_wk->time ){
@@ -1930,8 +2051,12 @@ BOOL BCT_CLIENT_Main( BCT_CLIENT* p_wk )
 	
 	
 	// タッチメイン
+#if WB_FIX
 	MainTP( &p_wk->tp_one, TP_BUFFERING, 0 );
-	
+#else
+  GFL_UI_TP_AutoSamplingMain( &p_wk->tp_one, TP_BUFFERING, 0 );
+#endif
+
     // タッチパネル動作
     BCT_CLIENT_NutsSlow( p_wk );
 
@@ -2001,7 +2126,7 @@ void BCT_CLIENT_VBlank( BCT_CLIENT* p_wk )
 {
     
     // BG書き換え
-    GFL_BG_VBlankFunc( p_wk->graphic.p_bgl );
+    GFL_BG_VBlankFunc();
 
 #if WB_TEMP_FIX
     // Vram転送マネージャー実行
@@ -2009,7 +2134,11 @@ void BCT_CLIENT_VBlank( BCT_CLIENT* p_wk )
 #endif
 
     // レンダラ共有OAMマネージャVram転送
+#if WB_FIX
     REND_OAMTrans();
+#else
+  	GFL_CLACT_SYS_VBlankFunc();
+#endif
 }
 
 //----------------------------------------------------------------------------
@@ -2493,6 +2622,7 @@ static u32 BCT_AddScoreGet( BCT_CLIENT* cp_wk )
 //-----------------------------------------------------------------------------
 static void BCT_CLIENT_ScoreEffectInit( BCT_CLIENT_SCORE_EFFECT* p_wk, BCT_CLIENT_GRAPHIC* p_drawsys, u32 comm_num, u32 plno, u32 heapID )
 {
+#if WB_FIX
     CLACT_ADD add;
     int i, j;
     u32 myplno;
@@ -2510,8 +2640,25 @@ static void BCT_CLIENT_ScoreEffectInit( BCT_CLIENT_SCORE_EFFECT* p_wk, BCT_CLIEN
     // 通信人数分追加
     myplno = plno;
     for( i=0; i<BCT_PLAYER_NUM; i++ ){
-		BCT_CLIENT_ScoreEffectWkInit( &p_wk->wk[i], &add, p_drawsys, comm_num, i, myplno, heapID );
+      BCT_CLIENT_ScoreEffectWkInit( &p_wk->wk[i], &add, p_drawsys, comm_num, i, myplno, heapID );
     }
+#else
+    GFL_CLWK_DATA add;
+    int i, j;
+    u32 myplno;
+
+    add.pos_x = 0;
+    add.pos_y = 0;
+    add.anmseq = 0;
+    add.softpri = 0;
+    add.bgpri = BCT_MAINOAM_BGPRI;
+
+    // 通信人数分追加
+    myplno = plno;
+    for( i=0; i<BCT_PLAYER_NUM; i++ ){
+      BCT_CLIENT_ScoreEffectWkInit( &p_wk->wk[i], &add, p_drawsys, comm_num, i, myplno, heapID );
+    }
+#endif
 }
 
 //----------------------------------------------------------------------------
@@ -2575,13 +2722,14 @@ static void BCT_CLIENT_ScoreEffectMain( BCT_CLIENT_SCORE_EFFECT* p_wk )
  *	@param	heapID		ヒープID
  */
 //-----------------------------------------------------------------------------
-static void BCT_CLIENT_ScoreEffectWkInit( BCT_CLIENT_SCORE_EFFECT_WK* p_wk, CLACT_ADD* p_ad, BCT_CLIENT_GRAPHIC* p_drawsys, u32 comm_num, u32 plno, u32 myplno, u32 heapID )
+static void BCT_CLIENT_ScoreEffectWkInit( BCT_CLIENT_SCORE_EFFECT_WK* p_wk, GFL_CLWK_DATA* p_ad, BCT_CLIENT_GRAPHIC* p_drawsys, u32 comm_num, u32 plno, u32 myplno, u32 heapID )
 {
 	int i;
     s32 x, y;
 
 	for( i=0; i<BCT_SCORE_EFFECT_BUF; i++ ){
 		BCT_netID2DMatrixGet( comm_num, myplno, plno, &x, &y );
+#if WB_FIX
 		p_ad->mat.x = x << FX32_SHIFT; 
 		p_ad->mat.y = y << FX32_SHIFT; 
 		p_wk->mat[i] = p_ad->mat;
@@ -2596,6 +2744,26 @@ static void BCT_CLIENT_ScoreEffectWkInit( BCT_CLIENT_SCORE_EFFECT_WK* p_wk, CLAC
 		// オートアニメ設定
 		GFL_CLACT_WK_SetAutoAnmFlag( p_wk->p_clwk[i], TRUE );
 		CLACT_SetAnmFrame( p_wk->p_clwk[i], FX32_CONST(1.5) );
+#else
+		p_ad->pos_x = x;
+		p_ad->pos_y = y;
+		p_wk->mat[i].x = (fx32)p_ad->pos_x << FX32_SHIFT;
+		p_wk->mat[i].y = (fx32)p_ad->pos_y << FX32_SHIFT;
+		p_wk->mat[i].z = 0;
+    p_wk->p_clwk[i] = GFL_CLACT_WK_Create(p_drawsys->clactSet, p_drawsys->mainoamresobj[ 0 ], 
+        p_drawsys->mainoamresobj[ 1 ], p_drawsys->mainoamresobj[ 2 ], 
+        p_ad, CLSYS_DEFREND_MAIN, heapID);
+
+		// アニメ設定
+		GFL_CLACT_WK_SetAnmSeq( p_wk->p_clwk[i], BCT_GRA_OAMMAIN_ANM_100 );
+
+		// 表示OFF
+		GFL_CLACT_WK_SetDrawEnable( p_wk->p_clwk[i], FALSE );
+
+		// オートアニメ設定
+		GFL_CLACT_WK_SetAutoAnmFlag( p_wk->p_clwk[i], TRUE );
+		GFL_CLACT_WK_SetAutoAnmSpeed( p_wk->p_clwk[i], FX32_CONST(1.5) );
+#endif
 
 		// 動作カウンタ
 		p_wk->count[i] = 0;
@@ -2653,15 +2821,25 @@ static void BCT_CLIENT_ScoreEffectWkStart( BCT_CLIENT_SCORE_EFFECT_WK* p_wk, u32
 	max_pri = 0;
 	idx = -1;
 	for( i=0; i<BCT_SCORE_EFFECT_BUF; i++ ){
+	#if WB_FIX
 		if( CLACT_GetDrawFlag( p_wk->p_clwk[i] ) == FALSE ){
+	#else
+	  if( GFL_CLACT_WK_GetDrawEnable( p_wk->p_clwk[i] ) == FALSE ){
+	#endif
 			idx = i;	// これを使う
 			clean_in = TRUE;
 		}else{
 			// 優先順位を１つ下げる
+		#if WB_FIX
 			pri = CLACT_DrawPriorityGet( p_wk->p_clwk[i] );
 			pri ++;
 			CLACT_DrawPriorityChg( p_wk->p_clwk[i], pri );
-
+    #else
+			pri = GFL_CLACT_WK_GetSoftPri( p_wk->p_clwk[i] );
+			pri ++;
+			GFL_CLACT_WK_SetSoftPri( p_wk->p_clwk[i], pri );
+    #endif
+    
 			// 空きワークが見つかってないなら
 			// 最大プライオリティワークを設定
 			if( (clean_in == FALSE) && (max_pri <= pri) ){
@@ -2696,9 +2874,13 @@ static void BCT_CLIENT_ScoreEffectWkStart( BCT_CLIENT_SCORE_EFFECT_WK* p_wk, u32
 	p_wk->count[idx] = 0;
 	GFL_CLACT_WK_SetDrawEnable( p_wk->p_clwk[idx], TRUE );	// 描画開始
 	BCT_CLIENT_ScoreEffectWkSetMatrix( p_wk, idx );	// 座標
+#if WB_FIX
 	CLACT_DrawPriorityChg( p_wk->p_clwk[idx], BCT_SCORE_EFFECT_PRI_START );	// 優先順位
 	CLACT_PaletteNoChg( p_wk->p_clwk[idx], palno );	// パレット
-
+#else
+	GFL_CLACT_WK_SetSoftPri( p_wk->p_clwk[idx], BCT_SCORE_EFFECT_PRI_START );	// 優先順位
+	GFL_CLACT_WK_SetPlttOffs( p_wk->p_clwk[idx], palno, CLWK_PLTTOFFS_MODE_PLTT_TOP );
+#endif
 }
 
 //----------------------------------------------------------------------------
@@ -2713,7 +2895,11 @@ static void BCT_CLIENT_ScoreEffectWkMain( BCT_CLIENT_SCORE_EFFECT_WK* p_wk )
 	int i;
 
 	for( i=0; i<BCT_SCORE_EFFECT_BUF; i++ ){
+	#if WB_FIX
 		if( CLACT_GetDrawFlag( p_wk->p_clwk[i] ) == TRUE ){
+	#else
+		if( GFL_CLACT_WK_GetDrawEnable( p_wk->p_clwk[i] ) == TRUE ){
+	#endif
 			p_wk->count[i] ++;
 			if( p_wk->count[i] > BCT_SCORE_EFFECT_MOVE_COUTN ){
 				// 破棄
@@ -2737,12 +2923,19 @@ static void BCT_CLIENT_ScoreEffectWkSetMatrix( BCT_CLIENT_SCORE_EFFECT_WK* p_wk,
 {
 	fx32 move_y;
 	VecFx32 mat;
-
+  GFL_CLACTPOS pos;
+  
 	move_y = FX_Div( FX_Mul( FX32_ONE * p_wk->count[idx], BCT_SCORE_EFFECT_MOVE_Y ), FX32_CONST(BCT_SCORE_EFFECT_MOVE_COUTN) );
 
 	mat = p_wk->mat[idx];
 	mat.y += move_y;
+#if WB_FIX
 	CLACT_SetMatrix( p_wk->p_clwk[idx], &mat );
+#else
+  pos.x = FX_Whole(mat.x);
+  pos.y = FX_Whole(mat.y);
+  GFL_CLACT_WK_SetPos( p_wk->p_clwk[idx], &pos, CLWK_SETSF_NONE );
+#endif
 }
 
 //----------------------------------------------------------------------------
@@ -2771,10 +2964,9 @@ static void BCT_CLIENT_ScoreEffectWkEnd( BCT_CLIENT_SCORE_EFFECT_WK* p_wk, u32 i
  *  @param  heapID          ヒープID
  */
 //-----------------------------------------------------------------------------
-static void BCT_CLIENT_StartSysInit( BCT_COUNTDOWN_DRAW* p_graphic, BCT_CLIENT_GRAPHIC* p_drawsys, const BCT_GAMEDATA* cp_param, u32 commnum, u32 myplno, ARCHANDLE* p_handle, u32 heapID )
+static void BCT_CLIENT_StartSysInit( BCT_COUNTDOWN_DRAW* p_graphic, BCT_CLIENT_GRAPHIC* p_drawsys, const BCT_GAMEDATA* cp_param, u32 commnum, u32 myplno, ARCHANDLE* p_handle, u32 heapID, GFL_FONT *font_handle, PRINT_QUE *printQue )
 {
     STRBUF* p_str;
-    CLACT_ADD add;
 
     GFL_STD_MemFill( p_graphic, 0, sizeof(BCT_COUNTDOWN_DRAW) );
 
@@ -2782,26 +2974,27 @@ static void BCT_CLIENT_StartSysInit( BCT_COUNTDOWN_DRAW* p_graphic, BCT_CLIENT_G
     p_graphic->helpwin = GFL_BMPWIN_Create( GFL_BG_FRAME1_M,
             BCT_GRA_STARTWIN_X, BCT_GRA_STARTWIN_Y,
             BCT_GRA_STARTWIN_SIZX, BCT_GRA_STARTWIN_SIZY, 
-            BCT_GRA_BGMAIN_PAL_FONT, GFL_BMP_CHRAREA_GET_F );
+            BCT_GRA_BGMAIN_PAL_FONT, GFL_BMP_CHRAREA_GET_B );
 
     GFL_BMPWIN_MakeScreen(p_graphic->helpwin);
-    GFL_BMP_Fill( GFL_BMPWIN_GetBmp(&p_graphic->helpwin), 0, 0, 
+    GFL_BMP_Fill( GFL_BMPWIN_GetBmp(p_graphic->helpwin), 0, 0, 
             BCT_GRA_STARTWIN_SIZX*8, BCT_GRA_STARTWIN_SIZY*8, 15 );
+		PRINT_UTIL_Setup( &p_graphic->printutil_helpwin, p_graphic->helpwin );
 
     // メッセージを書き込む
     p_str = GFL_STR_CreateBuffer( BCT_STRBUF_NUM, heapID );
     GFL_MSG_GetString( p_drawsys->p_msgman, msg_a_001, p_str );
-    PRINT_UTIL_PrintColor(/*引数内はまだ未移植*/ &p_graphic->helpwin, NET_FONT_SYSTEM, p_str, 
+    PRINT_UTIL_PrintColor(&p_graphic->printutil_helpwin, printQue, 
             BCT_GRA_STARTWIN_MSGX, BCT_GRA_STARTWIN_MSGY,
-            MSG_NO_PUT, BCT_COL_N_BLACK, NULL);
+            p_str, font_handle, BCT_COL_N_BLACK);
     GFL_STR_DeleteBuffer( p_str );
 
 
 	// 名前スクリーン読み込み
 	GFL_ARCHDL_UTIL_TransVramBgCharacter( p_handle, NARC_bucket_ent_win_bg_NCGR, 
-			p_drawsys->p_bgl, GFL_BG_FRAME2_M, 0, 0, FALSE, heapID );
+			GFL_BG_FRAME2_M, 0, 0, FALSE, heapID );
 	GFL_ARCHDL_UTIL_TransVramScreen( p_handle, NARC_bucket_ent_win_bg02_NSCR+(commnum-2),
-			p_drawsys->p_bgl, GFL_BG_FRAME2_M, 0, 0, FALSE, heapID);
+			GFL_BG_FRAME2_M, 0, 0, FALSE, heapID);
 	GFL_ARCHDL_UTIL_TransVramPalette( p_handle, NARC_bucket_ent_win_bg_NCLR,
 			PALTYPE_MAIN_BG, BCT_GRA_BGMAIN_PAL_NAME_PL00*32, (BCT_GRA_BGMAIN_PAL_NAME_PL03+1)*32,
 			heapID );
@@ -2811,56 +3004,63 @@ static void BCT_CLIENT_StartSysInit( BCT_COUNTDOWN_DRAW* p_graphic, BCT_CLIENT_G
 	{
 		int i;
 		s32 name_x, name_y;
-		GFL_BMPWIN* namebmpwin;
-		u32 namebmp_cgx;
+		GFL_BMPWIN* namebmpwin[WFLBY_MINIGAME_MAX];
 		STRBUF* p_namestr;
 		u32 col;
 		u32 namestrsize;
 		u32 draw_x;
-
-		namebmpwin = GFL_BMPWIN_Create( GFL_BG_FRAME2_M,
-						0, 0, BCT_START_NAME_BMP_WINSIZ_X, BCT_START_NAME_BMP_WINSIZ_Y, 
-						BCT_GRA_BGMAIN_PAL_FONT, GFL_BMP_CHRAREA_GET_F );
-		GFL_BMPWIN_MakeScreen(namebmpwin);
-		namebmp_cgx = BCT_START_NAME_BMP_WINCGX_START;
-
+    
 		p_namestr = GFL_STR_CreateBuffer( BCT_START_NAME_STRBUF_NUM, heapID );
 
+    for(i = 0; i < WFLBY_MINIGAME_MAX; i++){
+      namebmpwin[i] = NULL;
+    }
+    
 		for( i=0; i<commnum; i++ ){
 			// 自分の名前はださない
 			if( i != myplno ){
+    		namebmpwin[i] = GFL_BMPWIN_Create( GFL_BG_FRAME2_M,
+    						0, 0, BCT_START_NAME_BMP_WINSIZ_X, BCT_START_NAME_BMP_WINSIZ_Y, 
+    						BCT_GRA_BGMAIN_PAL_FONT, GFL_BMP_CHRAREA_GET_B );
+
 				name_x = sc_BCT_START_NAME_TBL[ myplno ][ commnum-1 ][ i ].x;
 				name_y = sc_BCT_START_NAME_TBL[ myplno ][ commnum-1 ][ i ].y;
 //				OS_TPrintf( "my_plno=%d comm_num=%d plno=%d name_x=%d name_y=%d\n", myplno, commnum, i, name_x, name_y );
 				// 名前の書き込みとフレームカラー変更
-				GFL_BG_ChangeScreenPalette( p_drawsys->p_bgl, GFL_BG_FRAME2_M, name_x-1, name_y-1,
+				GFL_BG_ChangeScreenPalette( GFL_BG_FRAME2_M, name_x-1, name_y-1,
 						BCT_START_NAME_FRAMESIZ_X, BCT_START_NAME_FRAMESIZ_Y, BCT_GRA_BGMAIN_PAL_NAME_PL00+i );
 
 				// 名前書き込み
-				GFL_BMP_Clear( GFL_BMPWIN_GetBmp(namebmpwin), 15 );
+				GFL_BMP_Clear( GFL_BMPWIN_GetBmp(namebmpwin[i]), 15 );
 				if( cp_param->vip[i] == TRUE ){	// 文字列カラー決定
 					col = BCT_COL_N_BLUE;
 				}else{
 					col = BCT_COL_N_BLACK;
 				}
 				MyStatus_CopyNameString( cp_param->cp_status[i], p_namestr );	// 名前取得
-				GFL_BMPWIN_SetPosX( &namebmpwin, name_x );	// 位置設定
-				GFL_BMPWIN_SetPosY( &namebmpwin, name_y );
-				namebmpwin.chrofs = namebmp_cgx;				// cgx設定
-				namestrsize = PRINTSYS_GetStrWidth( p_namestr, GFL_FONT* font/*NET_FONT_SYSTEM*/, 0 );	// 表示位置設定
+				GFL_BMPWIN_SetPosX( namebmpwin[i], name_x );	// 位置設定
+				GFL_BMPWIN_SetPosY( namebmpwin[i], name_y );
+    		GFL_BMPWIN_MakeScreen(namebmpwin[i]);
+				namestrsize = PRINTSYS_GetStrWidth( p_namestr, font_handle, 0 );	// 表示位置設定
 				draw_x		= ((BCT_START_NAME_BMP_WINSIZ_X*8) - namestrsize) / 2;	// 中央表示
-				PRINT_UTIL_PrintColor(/*引数内はまだ未移植*/ &namebmpwin, NET_FONT_SYSTEM, p_namestr, 
+			#if WB_TEMP_FIX
+				PRINT_UTIL_PrintColor(/*引数内はまだ未移植*/ namebmpwin, NET_FONT_SYSTEM, p_namestr, 
 						draw_x, 0,
 						MSG_ALLPUT, col, NULL);
-
-				namebmp_cgx += BCT_START_NAME_BMP_WINCGX_ONENUM;
-				
+      #else //※check　真下でnamebmpwinを即解放しているので、一括描画にしてしまう
+                       //通信で落ちるようになるならprintQueに変更する
+        PRINTSYS_Print( GFL_BMPWIN_GetBmp(namebmpwin[i]), draw_x, 0, p_namestr, font_handle );
+      #endif
 			}
 		}
 
-		GFL_STR_DeleteBuffer( p_namestr );
+    for(i = 0; i < WFLBY_MINIGAME_MAX; i++){
+      if(namebmpwin[i] != NULL){
+      	GFL_BMPWIN_Delete( namebmpwin[i] );
+      }
+    }
 
-		GFL_BMPWIN_Delete( &namebmpwin );
+		GFL_STR_DeleteBuffer( p_namestr );
 	}
 
 
@@ -2887,7 +3087,7 @@ static void BCT_CLIENT_StartSysInit( BCT_COUNTDOWN_DRAW* p_graphic, BCT_CLIENT_G
 static void BCT_CLIENT_StartSysExit( BCT_COUNTDOWN_DRAW* p_graphic, BCT_CLIENT_GRAPHIC* p_drawsys )
 {
     // BMP破棄
-    GFL_BMPWIN_Delete( &p_graphic->helpwin );
+    GFL_BMPWIN_Delete( p_graphic->helpwin );
 }
 
 //----------------------------------------------------------------------------
@@ -2965,7 +3165,16 @@ static void BCT_CLIENT_StartSysMarunomuChange( BCT_COUNTDOWN_DRAW* p_graphic, BC
 	BCT_CLIENT_MarunomuDrawSetMouthAnm( &p_drawsys->marunomu, BCT_MARUNOMU_ANM_ROTA );
 
 	// 角度は全快
+#if WB_FIX
 	D3DOBJ_AnmSet( &p_drawsys->marunomu.anm[ BCT_MARUNOMU_ANM_ROTA ], BCT_MARUNOMU_ANM_FRAME_MAX );
+#else
+  {
+		int set_anmframe = BCT_MARUNOMU_ANM_FRAME_MAX;
+		GFL_G3D_OBJECT_SetAnimeFrame( 
+		  p_drawsys->marunomu.mdl[sc_BCT_MARUNOMU_ANM_MDL[BCT_MARUNOMU_ANM_ROTA]], 
+		  BCT_MARUNOMU_ANM_ROTA, &set_anmframe );
+  }
+#endif
 
 	// 歩きアニメ設定
 	BCT_CLIENT_MarunomuDrawSetWalkAnm( &p_drawsys->marunomu, TRUE );
@@ -3076,11 +3285,20 @@ static BOOL BCT_CLIENT_EndSysMarunomuAnm( BCT_CLIENT_GRAPHIC* p_graphic )
     // BCT_RESULT_MARUNOMU_MOVE_TIMINGまで待機
     // anmtimeの値でアニメさせる
     if( p_graphic->result.count >= BCT_RESULT_MARUNOMU_MOVE_TIMING ){
-		result = D3DOBJ_AnmNoLoop( &p_graphic->marunomu.anm[BCT_MARUNOMU_ANM_CLOSE],
+  	#if WB_FIX
+  		result = D3DOBJ_AnmNoLoop( &p_graphic->marunomu.anm[BCT_MARUNOMU_ANM_CLOSE],
 				BCT_MARUNOMU_ANM_SPEED );	
-        if( result == TRUE ){
-            return TRUE;
-        }
+      if( result == TRUE ){
+          return TRUE;
+      }
+    #else
+    	result = GFL_G3D_OBJECT_IncAnimeFrame(
+    	  p_graphic->marunomu.mdl[sc_BCT_MARUNOMU_ANM_MDL[BCT_MARUNOMU_ANM_CLOSE]], 
+    	  BCT_MARUNOMU_ANM_CLOSE, BCT_MARUNOMU_ANM_SPEED);
+      if( result == FALSE ){
+          return TRUE;
+      }
+    #endif
     }
     return FALSE;
 }
@@ -4159,16 +4377,16 @@ static void BCT_CLIENT_NutsMove( BCT_CLIENT* p_wk, BCT_CLIENT_NUTS* p_nuts )
 
 		switch( p_wk->bonus ){
 		case 0:
-			Snd_SePlay( BCT_SND_EAT );
-			Snd_SePlay( BCT_SND_EAT100 );
+			PMSND_PlaySE( BCT_SND_EAT );
+			PMSND_PlaySE( BCT_SND_EAT100 );
 			break;
 		case 1:
-			Snd_SePlay( BCT_SND_EAT );
-			Snd_SePlay( BCT_SND_EAT200 );
+			PMSND_PlaySE( BCT_SND_EAT );
+			PMSND_PlaySE( BCT_SND_EAT200 );
 			break;
 		default:
-			Snd_SePlay( BCT_SND_EAT );
-			Snd_SePlay( BCT_SND_EAT300 );
+			PMSND_PlaySE( BCT_SND_EAT );
+			PMSND_PlaySE( BCT_SND_EAT300 );
 			break;
 		}
 
@@ -4186,10 +4404,10 @@ static void BCT_CLIENT_NutsMove( BCT_CLIENT* p_wk, BCT_CLIENT_NUTS* p_nuts )
 
 		// 木の実カウンタを出すかチェック
 		if( p_wk->bonus == BCT_NUTS_COUNT_START_BONUS_NUM ){
-			BCT_CLIENT_NUTS_COUNT_Start( &p_wk->graphic.nutscount, &p_wk->graphic, p_wk->bonus );
+			BCT_CLIENT_NUTS_COUNT_Start( &p_wk->graphic.nutscount, &p_wk->graphic, p_wk->bonus, p_wk->printQue, p_wk->fontHandle );
 		}else{
 			// 木の実カウンタ値設定
-			BCT_CLIENT_NUTS_COUNT_SetData( &p_wk->graphic.nutscount, &p_wk->graphic, p_wk->bonus );
+			BCT_CLIENT_NUTS_COUNT_SetData( &p_wk->graphic.nutscount, &p_wk->graphic, p_wk->bonus, p_wk->printQue, p_wk->fontHandle );
 		}
 
     }else{
@@ -4203,7 +4421,7 @@ static void BCT_CLIENT_NutsMove( BCT_CLIENT* p_wk, BCT_CLIENT_NUTS* p_nuts )
 
 
 			if( last_seq == BCT_NUTSSEQ_MOVE ){
-				Snd_SePlay( BCT_SND_BOUND );
+				PMSND_PlaySE( BCT_SND_BOUND );
 			}
 			
 			BCT_CLIENT_NutsAwayStart( p_nuts, p_wk, TRUE );
@@ -4745,7 +4963,7 @@ static void BCT_CLIENT_NutsSlow( BCT_CLIENT* p_wk )
 	return ;
 #endif
     // タッチしているか
-    if( sys.tp_cont == FALSE ){
+    if( GFL_UI_TP_GetCont() == FALSE ){
         // 離したときの処理
         BCT_CLIENT_NutsSlowEnd( p_wk );
     }else{
@@ -4866,7 +5084,7 @@ static void BCT_CLIENT_NutsSlowEnd( BCT_CLIENT* p_wk )
 			
 			// 登録
 			BCT_CLIENT_NutsSet( p_wk, &data, BCT_NUTSSEQ_MOVE );
-			Snd_SePlay( BCT_SND_SLOW );
+			PMSND_PlaySE( BCT_SND_SLOW );
 
 		}
     }else{
@@ -4931,8 +5149,15 @@ static void BCT_CLIENT_NutsSlowMain( BCT_CLIENT* p_wk )
 			BCT_CLIENT_NutsSlowQPush( &p_wk->slow, data );
 		}else{
 			// １つも無いならtp_x tp_yをしよう
+		#if WB_FIX
 			data.x = sys.tp_x;
 			data.y = sys.tp_y;
+		#else
+			u32 x = 0, y = 0;
+ 			GFL_UI_TP_GetPointCont( &x, &y );
+			data.x = x;
+			data.y = y;
+		#endif
 			BCT_CLIENT_NutsSlowQPush( &p_wk->slow, data );
 		}
 	}
@@ -4950,15 +5175,17 @@ static BOOL BCT_CLIENT_NutsSlowStartCheck( BCT_CLIENT* p_wk )
 	s32 x;
 	s32 y;
 	s32 dist;
-
+  u32 tp_x = 0, tp_y = 0;
+  
 	// ボールを離してから一定時間たたないと出せない
 	if( p_wk->slow.time < BCT_NUTS_SLOW_RENSYA_TIME ){
 		return FALSE;
 	}
 	
 	// 中心からの距離を求める
-	x = BCT_NUTS_SLOW_TOUCH_AREA_CENTER_X - sys.tp_x;
-	y = BCT_NUTS_SLOW_TOUCH_AREA_CENTER_Y - sys.tp_y;
+	GFL_UI_TP_GetPointTrg( &tp_x, &tp_y );
+	x = BCT_NUTS_SLOW_TOUCH_AREA_CENTER_X - tp_x;
+	y = BCT_NUTS_SLOW_TOUCH_AREA_CENTER_Y - tp_y;
 	dist = FX_Sqrt( ((x*x)+(y*y))<<FX32_SHIFT ) >> FX32_SHIFT;
 	
 	// 範囲の当たり判定
@@ -5322,37 +5549,38 @@ static void BCT_CLIENT_TOUCHPEN_Init( BCT_CLIENT_TOUCHPEN_MOVE* p_wk, BCT_CLIENT
 	
 
 	// グラフィックの読み込み
+  #if WB_FIX
 	{
-        // OAMリソース読込み
-        p_wk->resobj[ 0 ] = CLACT_U_ResManagerResAddArcChar_ArcHandle(
-                    p_graphic->resMan[ 0 ], p_handle,
-                    NARC_wlmngm_tool_touchpen_NCGR,
-                    FALSE, BCT_TOUCHPEN_OAM_RESID, NNS_G2D_VRAM_TYPE_2DSUB, heapID );
+    // OAMリソース読込み
+    p_wk->resobj[ 0 ] = CLACT_U_ResManagerResAddArcChar_ArcHandle(
+                p_graphic->resMan[ 0 ], p_handle,
+                NARC_wlmngm_tool_touchpen_NCGR,
+                FALSE, BCT_TOUCHPEN_OAM_RESID, NNS_G2D_VRAM_TYPE_2DSUB, heapID );
 
-        p_wk->resobj[ 1 ] = CLACT_U_ResManagerResAddArcPltt_ArcHandle(
-                    p_graphic->resMan[ 1 ], p_handle,
-                    NARC_wlmngm_tool_touchpen_NCLR,
-                    FALSE, BCT_TOUCHPEN_OAM_RESID, NNS_G2D_VRAM_TYPE_2DSUB, 2, heapID );
+    p_wk->resobj[ 1 ] = CLACT_U_ResManagerResAddArcPltt_ArcHandle(
+                p_graphic->resMan[ 1 ], p_handle,
+                NARC_wlmngm_tool_touchpen_NCLR,
+                FALSE, BCT_TOUCHPEN_OAM_RESID, NNS_G2D_VRAM_TYPE_2DSUB, 2, heapID );
 
-        p_wk->resobj[ 2 ] = CLACT_U_ResManagerResAddArcKindCell_ArcHandle(
-                p_graphic->resMan[ 2 ], p_handle,
-                NARC_wlmngm_tool_touchpen_NCER, FALSE,
-                BCT_TOUCHPEN_OAM_RESID, CLACT_U_CELL_RES, heapID );
+    p_wk->resobj[ 2 ] = CLACT_U_ResManagerResAddArcKindCell_ArcHandle(
+            p_graphic->resMan[ 2 ], p_handle,
+            NARC_wlmngm_tool_touchpen_NCER, FALSE,
+            BCT_TOUCHPEN_OAM_RESID, CLACT_U_CELL_RES, heapID );
 
-        p_wk->resobj[ 3 ] = CLACT_U_ResManagerResAddArcKindCell_ArcHandle(
-                p_graphic->resMan[ 3 ], p_handle,
-                NARC_wlmngm_tool_touchpen_NANR, FALSE,
-                BCT_TOUCHPEN_OAM_RESID, CLACT_U_CELLANM_RES, heapID );
+    p_wk->resobj[ 3 ] = CLACT_U_ResManagerResAddArcKindCell_ArcHandle(
+            p_graphic->resMan[ 3 ], p_handle,
+            NARC_wlmngm_tool_touchpen_NANR, FALSE,
+            BCT_TOUCHPEN_OAM_RESID, CLACT_U_CELLANM_RES, heapID );
 
-        // 転送
-        result = CLACT_U_CharManagerSetCharModeAdjustAreaCont( p_wk->resobj[ 0 ] );
-        GF_ASSERT( result );
-        result = CLACT_U_PlttManagerSetCleanArea( p_wk->resobj[ 1 ] );
-        GF_ASSERT( result );
+    // 転送
+    result = CLACT_U_CharManagerSetCharModeAdjustAreaCont( p_wk->resobj[ 0 ] );
+    GF_ASSERT( result );
+    result = CLACT_U_PlttManagerSetCleanArea( p_wk->resobj[ 1 ] );
+    GF_ASSERT( result );
 
-        // リソースだけ破棄
-        CLACT_U_ResManagerResOnlyDelete( p_wk->resobj[ 0 ] );
-        CLACT_U_ResManagerResOnlyDelete( p_wk->resobj[ 1 ] );
+    // リソースだけ破棄
+    CLACT_U_ResManagerResOnlyDelete( p_wk->resobj[ 0 ] );
+    CLACT_U_ResManagerResOnlyDelete( p_wk->resobj[ 1 ] );
 
 		// セルアクターヘッダー作成
 		CLACT_U_MakeHeader( &p_wk->header, 
@@ -5363,7 +5591,6 @@ static void BCT_CLIENT_TOUCHPEN_Init( BCT_CLIENT_TOUCHPEN_MOVE* p_wk, BCT_CLIENT
 				p_graphic->resMan[0], p_graphic->resMan[1], 
 				p_graphic->resMan[2], p_graphic->resMan[3],
 				NULL, NULL );
-
 	}
 
 	// タッチペンアクター登録
@@ -5382,7 +5609,37 @@ static void BCT_CLIENT_TOUCHPEN_Init( BCT_CLIENT_TOUCHPEN_MOVE* p_wk, BCT_CLIENT
 		GFL_CLACT_WK_SetDrawEnable( p_wk->p_clwk, FALSE );
 	}
 
-    GFL_ARC_CloseDataHandle( p_handle );
+  #else
+  {
+    p_wk->resobj[0] = GFL_CLGRP_CGR_Register(p_handle, 
+      NARC_wlmngm_tool_touchpen_NCGR, FALSE, CLSYS_DRAW_SUB, heapID);
+    
+    p_wk->resobj[1] = 
+      PLTTSLOT_ResourceSet(p_graphic->plttslot, p_handle, 
+      NARC_wlmngm_tool_touchpen_NCLR, CLSYS_DRAW_SUB, 2, heapID);
+    
+    p_wk->resobj[2] = GFL_CLGRP_CELLANIM_Register(
+      p_handle, NARC_wlmngm_tool_touchpen_NCER, NARC_wlmngm_tool_touchpen_NANR, heapID);
+
+  	// タッチペンアクター登録
+    {
+      GFL_CLWK_DATA HeadClwkData;
+      
+      HeadClwkData.pos_x = BCT_TOUCHPEN_OAM_X;
+      HeadClwkData.pos_y = BCT_TOUCHPEN_OAM_Y;
+      HeadClwkData.anmseq = 0;
+      HeadClwkData.softpri = BCT_TOUCHPEN_OAM_SOFPRI;
+      HeadClwkData.bgpri = BCT_TOUCHPEN_OAM_BGPRI;
+
+      p_wk->p_clwk = GFL_CLACT_WK_Create(p_graphic->clactSet, p_wk->resobj[0], 
+        p_wk->resobj[1], p_wk->resobj[2], 
+        &HeadClwkData, CLSYS_DEFREND_SUB, heapID);
+      GFL_CLACT_WK_SetDrawEnable(p_wk->p_clwk, FALSE);
+    }
+  }
+  #endif
+
+  GFL_ARC_CloseDataHandle( p_handle );
 }
 
 //----------------------------------------------------------------------------
@@ -5401,17 +5658,23 @@ static void BCT_CLIENT_TOUCHPEN_Exit( BCT_CLIENT_TOUCHPEN_MOVE* p_wk, BCT_CLIENT
 	}
 
 	// リソース破棄
+#if WB_FIX
 	{
-        // VRAM管理から破棄
-        CLACT_U_CharManagerDelete( p_wk->resobj[0] );
-        CLACT_U_PlttManagerDelete( p_wk->resobj[1] );
-        
-        // リソース破棄
-        CLACT_U_ResManagerResDelete( p_graphic->resMan[0], p_wk->resobj[0] );
-        CLACT_U_ResManagerResDelete( p_graphic->resMan[1], p_wk->resobj[1] );
-        CLACT_U_ResManagerResDelete( p_graphic->resMan[2], p_wk->resobj[2] );
-        CLACT_U_ResManagerResDelete( p_graphic->resMan[3], p_wk->resobj[3] );
+    // VRAM管理から破棄
+    CLACT_U_CharManagerDelete( p_wk->resobj[0] );
+    CLACT_U_PlttManagerDelete( p_wk->resobj[1] );
+    
+    // リソース破棄
+    CLACT_U_ResManagerResDelete( p_graphic->resMan[0], p_wk->resobj[0] );
+    CLACT_U_ResManagerResDelete( p_graphic->resMan[1], p_wk->resobj[1] );
+    CLACT_U_ResManagerResDelete( p_graphic->resMan[2], p_wk->resobj[2] );
+    CLACT_U_ResManagerResDelete( p_graphic->resMan[3], p_wk->resobj[3] );
 	}
+#else
+	GFL_CLGRP_CGR_Release(p_wk->resobj[0]);
+	PLTTSLOT_ResourceFree(p_graphic->plttslot, p_wk->resobj[1], CLSYS_DRAW_SUB);
+	GFL_CLGRP_CELLANIM_Release(p_wk->resobj[2]);
+#endif
 
 	//クリア
 	GFL_STD_MemFill( p_wk, 0, sizeof(BCT_CLIENT_TOUCHPEN_MOVE) );
@@ -5451,8 +5714,12 @@ static BOOL BCT_CLIENT_TOUCHPEN_Main( BCT_CLIENT_TOUCHPEN_MOVE* p_wk, BCT_CLIENT
 	// 動作開始
 	case BCT_TOUCHPEN_ANM_SEQ_MOVE_START:
 		// タッチペンの動きをなぞって持っている木の実を描画する
+	#if WB_FIX
 		CLACT_AnmFrameSet( p_wk->p_clwk, BCT_TOUCHPEN_ANM_FRAME_START );
-
+  #else
+    GFL_CLACT_WK_SetAnmFrame( p_wk->p_clwk, BCT_TOUCHPEN_ANM_FRAME_START );
+  #endif
+  
 		// アニメフレームにあわせて持っている木の実を出す
 		BCT_CLIENT_HandNutsDrawStart( &p_sys->graphic.handnuts );
 		BCT_CLIENT_HandNutsDrawSetMatrix( &p_sys->graphic.handnuts, 
@@ -5488,7 +5755,7 @@ static BOOL BCT_CLIENT_TOUCHPEN_Main( BCT_CLIENT_TOUCHPEN_MOVE* p_wk, BCT_CLIENT
 			case BCT_TOUCHPEN_ANM_FRAME_FADEOUT:
 				if( p_wk->nut_set == FALSE ){
 					BCT_EasyNutsSet( p_sys, 128, 96, 128, 64, BCT_NUTSSEQ_MOVEOTHER );
-					Snd_SePlay( BCT_SND_SLOW );
+					PMSND_PlaySE( BCT_SND_SLOW );
 					p_wk->nut_set = TRUE;
 				}
 				break;
@@ -5659,21 +5926,7 @@ static BOOL BCT_CLIENT_MDLSCR_CheckInNum( const BCT_CLIENT_MIDDLE_SCORE* cp_wk, 
 //-----------------------------------------------------------------------------
 static void BCT_CLIENT_BankSet( void )
 {
-    GFL_DISP_VRAM vramSetTable = {
-        GX_VRAM_BG_32_FG,               // メイン2DエンジンのBG
-        GX_VRAM_BGEXTPLTT_NONE,         // メイン2DエンジンのBG拡張パレット
-        GX_VRAM_SUB_BG_128_C,           // サブ2DエンジンのBG
-        GX_VRAM_SUB_BGEXTPLTT_NONE,     // サブ2DエンジンのBG拡張パレット
-        GX_VRAM_OBJ_128_B,              // メイン2DエンジンのOBJ
-        GX_VRAM_OBJEXTPLTT_NONE,        // メイン2DエンジンのOBJ拡張パレット
-        GX_VRAM_SUB_OBJ_16_I,           // サブ2DエンジンのOBJ
-        GX_VRAM_SUB_OBJEXTPLTT_NONE,    // サブ2DエンジンのOBJ拡張パレット
-        GX_VRAM_TEX_0_A,                // テクスチャイメージスロット
-        GX_VRAM_TEXPLTT_0123_E          // テクスチャパレットスロット
-		GX_OBJVRAMMODE_CHAR_1D_128K,	// メインOBJマッピングモード
-		GX_OBJVRAMMODE_CHAR_1D_128K,	// サブOBJマッピングモード
-    };
-    GFL_DISP_SetBank( &vramSetTable );
+  GFL_DISP_SetBank( &vramSetTable );
 	//VRAMクリア	2009.03.28(土) 追加 matsuda
 	GFL_STD_MemClear32((void*)HW_BG_VRAM, HW_BG_VRAM_SIZE);
 	GFL_STD_MemClear32((void*)HW_DB_BG_VRAM, HW_DB_BG_VRAM_SIZE);
@@ -5751,9 +6004,11 @@ static void BCT_CLIENT_GraphicInit( BCT_CLIENT* p_wk, u32 heapID )
 {
     ARCHANDLE* p_handle;
 
+#if WB_FIX
     // アロケータ作成
     sys_InitAllocator( &p_wk->graphic.allocator, heapID, 32 );
-    
+#endif
+
     // バンク設定
     BCT_CLIENT_BankSet();
 
@@ -5770,16 +6025,16 @@ static void BCT_CLIENT_GraphicInit( BCT_CLIENT* p_wk, u32 heapID )
     BCT_CLIENT_MsgInit( &p_wk->graphic, heapID );
 
     // アーカイブハンドルオープン
-    p_handle = GFL_ARC_OpenDataHandle( ARC_BUCKET_GRAPHIC, heapID );
+    p_handle = GFL_ARC_OpenDataHandle( ARCID_BUCKET_GRAPHIC, heapID );
 
     // メイン面OAMリソース初期化
     BCT_CLIENT_MainOamInit( &p_wk->graphic, p_handle, heapID );
 
 	// メイン面背景初期化
-	BCT_CLIENT_MainBackInit( &p_wk->graphic.mainback, &p_wk->graphic, p_handle, p_wk->comm_num, p_wk->plno, heapID, &p_wk->graphic.allocator );
+	BCT_CLIENT_MainBackInit( &p_wk->graphic.mainback, &p_wk->graphic, p_handle, p_wk->comm_num, p_wk->plno, heapID );
 
     // マルノーム初期化
-    BCT_CLIENT_MarunomuDrawInit( &p_wk->graphic.marunomu, p_handle, heapID, &p_wk->graphic.allocator );
+    BCT_CLIENT_MarunomuDrawInit( &p_wk->graphic.marunomu, p_handle, heapID );
 
     // 木の実初期化
     BCT_CLIENT_NutsDrawSysInit( &p_wk->graphic, p_handle, heapID );
@@ -5794,7 +6049,7 @@ static void BCT_CLIENT_GraphicInit( BCT_CLIENT* p_wk, u32 heapID )
     BCT_CLIENT_BgResLoad( &p_wk->graphic, p_handle, p_wk->plno, heapID );
 
     // 開始画面ワーク初期化
-    BCT_CLIENT_StartSysInit( &p_wk->graphic.start, &p_wk->graphic, p_wk->cp_gamedata, p_wk->comm_num, p_wk->plno, p_handle, heapID );
+    BCT_CLIENT_StartSysInit( &p_wk->graphic.start, &p_wk->graphic, p_wk->cp_gamedata, p_wk->comm_num, p_wk->plno, p_handle, heapID, p_wk->fontHandle, p_wk->printQue );
 
     // 終了ワーク初期化
     BCT_CLIENT_EndSysInit( &p_wk->graphic, p_wk->comm_num, p_wk->plno, heapID );
@@ -5816,7 +6071,7 @@ static void BCT_CLIENT_GraphicInit( BCT_CLIENT* p_wk, u32 heapID )
 
 
 	// カウントワーク初期化
-	p_wk->graphic.p_countwk = MNGM_COUNT_Init( p_wk->graphic.clactSet, heapID );
+	p_wk->graphic.p_countwk = MNGM_COUNT_Init( p_wk->graphic.clactSet, heapID, p_wk->graphic.plttslot );
 
 }
 
@@ -5859,16 +6114,16 @@ static void BCT_CLIENT_GraphicDelete( BCT_CLIENT* p_wk )
     BCT_CLIENT_NutsDrawSysExit( &p_wk->graphic );
     
     // マルノーム破棄
-    BCT_CLIENT_MarunomuDrawExit( &p_wk->graphic.marunomu, &p_wk->graphic.allocator );
+    BCT_CLIENT_MarunomuDrawExit( &p_wk->graphic.marunomu );
 
 	// メイン面背景破棄
-	BCT_CLIENT_MainBackExit( &p_wk->graphic.mainback, &p_wk->graphic, &p_wk->graphic.allocator );
+	BCT_CLIENT_MainBackExit( &p_wk->graphic.mainback, &p_wk->graphic );
 
     // メイン面OAMリソース破棄
     BCT_CLIENT_MainOamExit( &p_wk->graphic );
 
 	// カウントワーク破棄
-	MNGM_COUNT_Exit( p_wk->graphic.p_countwk );
+	MNGM_COUNT_Exit( p_wk->graphic.p_countwk, p_wk->graphic.plttslot );
     
     // BG破棄
     BCT_CLIENT_BgExit( &p_wk->graphic );
@@ -5911,7 +6166,7 @@ static void BCT_CLIENT_GraphicMain( const BCT_CLIENT* cp_wk, BCT_CLIENT_GRAPHIC*
 	BCT_CLIENT_BGPRISCRL_Main( &p_wk->bgpri_scrl, p_wk );
 
 	// 木の実カウンター
-	BCT_CLIENT_NUTS_COUNT_Main( &p_wk->nutscount );
+	BCT_CLIENT_NUTS_COUNT_Main( &p_wk->nutscount, cp_wk->printQue );
 }
 
 //----------------------------------------------------------------------------
@@ -5980,7 +6235,11 @@ static void BCT_CLIENT_GraphicDrawCore( const BCT_CLIENT* cp_wk, BCT_CLIENT_GRAP
 #endif
 
     // セルアクター描画
+#if WB_FIX
     CLACT_Draw( p_wk->clactSet );
+#else
+    GFL_CLACT_SYS_Main();
+#endif
 }
 
 //----------------------------------------------------------------------------
@@ -6114,12 +6373,12 @@ static void BCT_CLIENT_BgInit( BCT_CLIENT_GRAPHIC* p_wk, u32 heapID )
 //-----------------------------------------------------------------------------
 static void BCT_CLIENT_BgExit( BCT_CLIENT_GRAPHIC* p_wk )
 {
-    GFL_BG_FreeBGControl( p_wk->p_bgl, GFL_BG_FRAME1_M );
-    GFL_BG_FreeBGControl( p_wk->p_bgl, GFL_BG_FRAME2_M );
-    GFL_BG_FreeBGControl( p_wk->p_bgl, GFL_BG_FRAME0_S );
-    GFL_BG_FreeBGControl( p_wk->p_bgl, GFL_BG_FRAME1_S );
-    GFL_BG_FreeBGControl( p_wk->p_bgl, GFL_BG_FRAME2_S );
-    GFL_BG_FreeBGControl( p_wk->p_bgl, GFL_BG_FRAME3_S );
+    GFL_BG_FreeBGControl( GFL_BG_FRAME1_M );
+    GFL_BG_FreeBGControl( GFL_BG_FRAME2_M );
+    GFL_BG_FreeBGControl( GFL_BG_FRAME0_S );
+    GFL_BG_FreeBGControl( GFL_BG_FRAME1_S );
+    GFL_BG_FreeBGControl( GFL_BG_FRAME2_S );
+    GFL_BG_FreeBGControl( GFL_BG_FRAME3_S );
 
     GFL_BG_Exit();
     GFL_BMPWIN_Exit();
@@ -6150,8 +6409,6 @@ static void BCT_CLIENT_OamInit( BCT_CLIENT_GRAPHIC* p_wk, u32 heapID )
         0, 126,     // サブ画面OAM管理領域
         0, 31,      // サブ画面アフィン管理領域
         heapID);
-#endif
-
 
     // キャラクタマネージャー初期化
     {
@@ -6174,8 +6431,9 @@ static void BCT_CLIENT_OamInit( BCT_CLIENT_GRAPHIC* p_wk, u32 heapID )
     //通信アイコン用にキャラ＆パレット制限
     CLACT_U_WmIcon_SetReserveAreaCharManager(NNS_G2D_VRAM_TYPE_2DMAIN, GX_OBJVRAMMODE_CHAR_1D_128K);
     CLACT_U_WmIcon_SetReserveAreaPlttManager(NNS_G2D_VRAM_TYPE_2DMAIN);
-    
+#endif
 
+#if WB_FIX
     // セルアクターセット作成
     p_wk->clactSet = CLACT_U_SetEasyInit( BCT_GRA_CLACTNUM, &p_wk->renddata, heapID );
 
@@ -6186,10 +6444,27 @@ static void BCT_CLIENT_OamInit( BCT_CLIENT_GRAPHIC* p_wk, u32 heapID )
     for( i=0; i<BCT_GRA_RESMAN_NUM; i++ ){
         p_wk->resMan[i] = CLACT_U_ResManagerInit(BCT_GRA_RESMAN_LOADNUM, i, heapID);
     }
+#else
+		{
+			GFL_CLSYS_INIT clsys_init = GFL_CLSYSINIT_DEF_DIVSCREEN;
+			
+			clsys_init.oamst_main = GFL_CLSYS_OAMMAN_INTERVAL;	//通信アイコンの分
+			clsys_init.oamnum_main = 128-GFL_CLSYS_OAMMAN_INTERVAL;
+			clsys_init.tr_cell = 32;	//セルVram転送管理数
 
+			GFL_CLACT_SYS_Create( &clsys_init, &vramSetTable, heapID );
+			p_wk->clactSet = GFL_CLACT_UNIT_Create( BCT_GRA_CLACTNUM, 0, heapID );
+			GFL_CLACT_UNIT_SetDefaultRend(p_wk->clactSet);
+			p_wk->plttslot = PLTTSLOT_Init(heapID, 16, 16);
+		}
+#endif
 
 	// フォントOAM
+#if WB_FIX
 	p_wk->p_fontoam_sys = FONTOAM_SysInit( BCT_FONTOAM_WKNUM, heapID );
+#else
+	p_wk->p_fontoam_sys = BmpOam_Init(heapID, p_wk->clactSet);
+#endif
 }
 
 //----------------------------------------------------------------------------
@@ -6204,8 +6479,13 @@ static void BCT_CLIENT_OamExit( BCT_CLIENT_GRAPHIC* p_wk )
     int i;
 
 	// フォントOAM
+#if WB_FIX
 	FONTOAM_SysDelete( p_wk->p_fontoam_sys );
+#else
+	BmpOam_Exit( p_wk->p_fontoam_sys );
+#endif
 
+#if WB_FIX
     // アクターの破棄
     CLACT_DestSet( p_wk->clactSet );
 
@@ -6220,6 +6500,11 @@ static void BCT_CLIENT_OamExit( BCT_CLIENT_GRAPHIC* p_wk )
 
     //OAMレンダラー破棄
     REND_OAM_Delete();
+#else
+		GFL_CLACT_UNIT_Delete(p_wk->clactSet);
+		GFL_CLACT_SYS_Delete();
+		PLTTSLOT_Exit(p_wk->plttslot);
+#endif
 }
 
 //----------------------------------------------------------------------------
@@ -6233,6 +6518,7 @@ static void BCT_CLIENT_OamExit( BCT_CLIENT_GRAPHIC* p_wk )
 //-----------------------------------------------------------------------------
 static void BCT_CLIENT_MainOamInit( BCT_CLIENT_GRAPHIC* p_wk, ARCHANDLE* p_handle, u32 heapID )
 {
+#if WB_FIX
     BOOL result;
     // メイン画面OAMリソース読み込み
     {
@@ -6278,6 +6564,17 @@ static void BCT_CLIENT_MainOamInit( BCT_CLIENT_GRAPHIC* p_wk, ARCHANDLE* p_handl
                 p_wk->resMan[2], p_wk->resMan[3],
                 NULL, NULL );
     }
+#else
+  p_wk->mainoamresobj[0] = GFL_CLGRP_CGR_Register(p_handle, 
+    NARC_bucket_font_boad_NCGR, FALSE, CLSYS_DRAW_MAIN, heapID);
+
+  p_wk->mainoamresobj[1] = 
+    PLTTSLOT_ResourceSet(p_wk->plttslot, p_handle, 
+    NARC_bucket_font_boad_NCLR, CLSYS_DRAW_MAIN, BCT_GRA_OAMMAIN_PAL_NUM, heapID);
+
+  p_wk->mainoamresobj[2] = GFL_CLGRP_CELLANIM_Register(
+    p_handle, NARC_bucket_font_boad_NCER, NARC_bucket_font_boad_NANR, heapID);
+#endif
 }
 
 //----------------------------------------------------------------------------
@@ -6289,6 +6586,7 @@ static void BCT_CLIENT_MainOamInit( BCT_CLIENT_GRAPHIC* p_wk, ARCHANDLE* p_handl
 //-----------------------------------------------------------------------------
 static void BCT_CLIENT_MainOamExit( BCT_CLIENT_GRAPHIC* p_wk )
 {
+#if WB_FIX
     // メイン画面OAMリソース破棄
     {
         // VRAM管理から破棄
@@ -6301,7 +6599,11 @@ static void BCT_CLIENT_MainOamExit( BCT_CLIENT_GRAPHIC* p_wk )
         CLACT_U_ResManagerResDelete( p_wk->resMan[2], p_wk->mainoamresobj[2] );
         CLACT_U_ResManagerResDelete( p_wk->resMan[3], p_wk->mainoamresobj[3] );
     }
-    
+#else
+  GFL_CLGRP_CGR_Release(p_wk->mainoamresobj[0]);
+	PLTTSLOT_ResourceFree(p_wk->plttslot, p_wk->mainoamresobj[1], CLSYS_DRAW_MAIN);
+	GFL_CLGRP_CELLANIM_Release(p_wk->mainoamresobj[2]);
+#endif
 }
 
 //----------------------------------------------------------------------------
@@ -6348,6 +6650,7 @@ static void BCT_CLIENT_MsgExit( BCT_CLIENT_GRAPHIC* p_wk )
 //-----------------------------------------------------------------------------
 static void BCT_CLIENT_CameraInit( BCT_CLIENT_GRAPHIC* p_wk, u32 comm_num, u32 plno, u32 heapID )
 {
+#if WB_FIX
     CAMERA_ANGLE angle;
     VecFx32 up;
     MtxFx33 rot;
@@ -6380,6 +6683,57 @@ static void BCT_CLIENT_CameraInit( BCT_CLIENT_GRAPHIC* p_wk, u32 comm_num, u32 p
 
 	// Near Far設定
 	GFC_SetCameraClip( BCT_CAMERA_NEAR, BCT_CAMERA_FAR, p_wk->p_camera );
+#else
+	VecFx32	target = { BCT_CAMERA_TARGET_X, BCT_CAMERA_TARGET_Y, BCT_CAMERA_TARGET_Z };
+	VecFx32	pos;
+	VecFx32	camup  = { 0, BCT_CAMERA_UP, 0 };
+	fx32		fovySin;			// 視野角/2の正弦をとった値
+  fx32		fovyCos;			// 視野角/2の余弦をとった値
+	fx32	height, width;			// 高さと幅
+	fx32 aspect;
+
+	fovySin  = FX_SinIdx( BCT_CAMERA_PEARCE );
+	fovyCos  = FX_CosIdx( BCT_CAMERA_PEARCE );
+	aspect = FX32_ONE * 4 / 3;
+	height = FX_Mul(FX_Div(fovySin, fovyCos), BCT_CAMERA_DISTANCE);
+	width  = FX_Mul(height, aspect);
+	SetCamPosByTarget_Dist_Ang(&pos, 
+		BCT_CAMERA_ANGLE_X, BCT_CAMERA_ANGLEY_NetID[comm_num-1][ plno ], BCT_CAMERA_ANGLE_Z, 
+		BCT_CAMERA_DISTANCE, &target);
+	p_wk->p_camera = GFL_G3D_CAMERA_CreateOrtho(height, -height, -width, width, 
+			BCT_CAMERA_NEAR, BCT_CAMERA_FAR, 0, 
+			&pos, &camup, &target, heapID);
+	GFL_G3D_CAMERA_Switching(p_wk->p_camera);
+	
+	p_wk->camera_target = target;
+	p_wk->camera_angle.x = BCT_CAMERA_ANGLE_X;
+	p_wk->camera_angle.y = BCT_CAMERA_ANGLEY_NetID[comm_num-1][ plno ];
+	p_wk->camera_angle.z = BCT_CAMERA_ANGLE_Z;
+#endif
+}
+
+//---------------------------------------------------------------------------
+/**
+ * @brief	カメラ位置を注視点、距離、アングルから算出する
+ * 
+ * プラチナのcamera.cから移植
+ */
+//---------------------------------------------------------------------------
+static void SetCamPosByTarget_Dist_Ang(VecFx32 *pos, u16 angle_x, u16 angle_y, u16 angle_z, fx32 distance, VecFx32 *target)
+{
+	u16 f_angle_x;
+	
+	//仰角⇒地面からの傾きに変換
+	f_angle_x = -angle_x;
+	/*== カメラ座標を求める ==*/
+	pos->x = FX_Mul( FX_Mul( FX_SinIdx(angle_y), distance ), FX_CosIdx( angle_x ) );
+	
+	pos->z = FX_Mul(FX_Mul(FX_CosIdx(angle_y), distance), FX_CosIdx(angle_x));
+	
+	pos->y = FX_Mul( FX_SinIdx( f_angle_x ), distance );
+
+	/*== 視点からの距離にする ==*/
+	VEC_Add(pos, target, pos);
 }
 
 //----------------------------------------------------------------------------
@@ -6427,23 +6781,23 @@ static void BCT_CLIENT_BgResLoad( BCT_CLIENT_GRAPHIC* p_wk, ARCHANDLE* p_handle,
 	};
 	
     // サブ画面のBG
-    GFL_ARCHDL_UTIL_TransVramBgCharacter( p_handle, NARC_bucket_tamaire_bg_NCGR, p_wk->p_bgl, GFL_BG_FRAME0_S, 0, 0, FALSE, heapID );
-    GFL_ARCHDL_UTIL_TransVramScreen( p_handle, NARC_bucket_tamaire_bg0_NSCR, p_wk->p_bgl,GFL_BG_FRAME3_S, 0, 0, FALSE, heapID );
-    GFL_ARCHDL_UTIL_TransVramScreen( p_handle, NARC_bucket_tamaire_bg1_NSCR, p_wk->p_bgl,GFL_BG_FRAME2_S, 0, 0, FALSE, heapID );
-    GFL_ARCHDL_UTIL_TransVramScreen( p_handle, NARC_bucket_tamaire_bg2_NSCR, p_wk->p_bgl,GFL_BG_FRAME1_S, 0, 0, FALSE, heapID );
-    GFL_ARCHDL_UTIL_TransVramScreen( p_handle, NARC_bucket_tamaire_bg3_NSCR, p_wk->p_bgl,GFL_BG_FRAME0_S, 0, 0, FALSE, heapID );
+    GFL_ARCHDL_UTIL_TransVramBgCharacter( p_handle, NARC_bucket_tamaire_bg_NCGR, GFL_BG_FRAME0_S, 0, 0, FALSE, heapID );
+    GFL_ARCHDL_UTIL_TransVramScreen( p_handle, NARC_bucket_tamaire_bg0_NSCR, GFL_BG_FRAME3_S, 0, 0, FALSE, heapID );
+    GFL_ARCHDL_UTIL_TransVramScreen( p_handle, NARC_bucket_tamaire_bg1_NSCR, GFL_BG_FRAME2_S, 0, 0, FALSE, heapID );
+    GFL_ARCHDL_UTIL_TransVramScreen( p_handle, NARC_bucket_tamaire_bg2_NSCR, GFL_BG_FRAME1_S, 0, 0, FALSE, heapID );
+    GFL_ARCHDL_UTIL_TransVramScreen( p_handle, NARC_bucket_tamaire_bg3_NSCR, GFL_BG_FRAME0_S, 0, 0, FALSE, heapID );
     GFL_ARCHDL_UTIL_TransVramPalette( p_handle, NARC_bucket_tamaire_bg_NCLR, PALTYPE_SUB_BG, 0, BCT_GRA_BGSUB_PAL_NUM*32, heapID );
 
 	// パレットを合わせる
-	GFL_BG_ChangeScreenPalette( p_wk->p_bgl, GFL_BG_FRAME3_S, 0, 0, 32, 32, sc_SubPal[plno] );	
-	GFL_BG_ChangeScreenPalette( p_wk->p_bgl, GFL_BG_FRAME2_S, 0, 0, 32, 32, BCT_GRA_BGSUB_PAL_NETID0_BACK+(plno*2) );	
-	GFL_BG_ChangeScreenPalette( p_wk->p_bgl, GFL_BG_FRAME1_S, 0, 0, 32, 32, BCT_GRA_BGSUB_PAL_NETID0_TOP+(plno*2) );	
-	GFL_BG_ChangeScreenPalette( p_wk->p_bgl, GFL_BG_FRAME0_S, 0, 0, 32, 32, BCT_GRA_BGSUB_PAL_NETID0_TOP+(plno*2) );
+	GFL_BG_ChangeScreenPalette( GFL_BG_FRAME3_S, 0, 0, 32, 32, sc_SubPal[plno] );	
+	GFL_BG_ChangeScreenPalette( GFL_BG_FRAME2_S, 0, 0, 32, 32, BCT_GRA_BGSUB_PAL_NETID0_BACK+(plno*2) );	
+	GFL_BG_ChangeScreenPalette( GFL_BG_FRAME1_S, 0, 0, 32, 32, BCT_GRA_BGSUB_PAL_NETID0_TOP+(plno*2) );	
+	GFL_BG_ChangeScreenPalette( GFL_BG_FRAME0_S, 0, 0, 32, 32, BCT_GRA_BGSUB_PAL_NETID0_TOP+(plno*2) );
 
-	GF_BGL_LoadScreenReq( p_wk->p_bgl, GFL_BG_FRAME0_S );
-	GF_BGL_LoadScreenReq( p_wk->p_bgl, GFL_BG_FRAME1_S );
-	GF_BGL_LoadScreenReq( p_wk->p_bgl, GFL_BG_FRAME2_S );
-	GF_BGL_LoadScreenReq( p_wk->p_bgl, GFL_BG_FRAME3_S );
+	GFL_BG_LoadScreenReq( GFL_BG_FRAME0_S );
+	GFL_BG_LoadScreenReq( GFL_BG_FRAME1_S );
+	GFL_BG_LoadScreenReq( GFL_BG_FRAME2_S );
+	GFL_BG_LoadScreenReq( GFL_BG_FRAME3_S );
 }
 
 //----------------------------------------------------------------------------
@@ -6466,22 +6820,22 @@ static void BCT_CLIENT_BgResRelease( BCT_CLIENT_GRAPHIC* p_wk )
  *  @param  heapID      ヒープID
  */
 //-----------------------------------------------------------------------------
-static void BCT_CLIENT_MarunomuDrawInit( BCT_MARUNOMU_DRAW* p_wk, ARCHANDLE* p_handle, u32 heapID, NNSFndAllocator* p_allocator )
+static void BCT_CLIENT_MarunomuDrawInit( BCT_MARUNOMU_DRAW* p_wk, ARCHANDLE* p_handle, u32 heapID )
 {
-    static const u16 Anm[ BCT_MARUNOMU_ANM_NUM ] = {
-        NARC_bucket_maru_robo_ani01_nsbca,
-        NARC_bucket_maru_robo_ani02_nsbca,
-        NARC_bucket_maru_robo_ani03_nsbca,
-        NARC_bucket_maru_robo_ani04_nsbca,
-        NARC_bucket_maru_robo_ani05_nsbca,
-        NARC_bucket_maru_robo_ani06_nsbca,
-    };
+  static const u16 Anm[ BCT_MARUNOMU_ANM_NUM ] = {
+      NARC_bucket_maru_robo_ani01_nsbca,
+      NARC_bucket_maru_robo_ani02_nsbca,
+      NARC_bucket_maru_robo_ani03_nsbca,
+      NARC_bucket_maru_robo_ani04_nsbca,
+      NARC_bucket_maru_robo_ani05_nsbca,
+      NARC_bucket_maru_robo_ani06_nsbca,
+  };
 	static const u16 Mdl[ BCT_MARUNOMU_MDL_NUM ] = {
 		NARC_bucket_maru_robo_col_nsbmd,
 		NARC_bucket_maru_robo_ani05_nsbmd,
 		NARC_bucket_maru_robo_ani04_nsbmd,
 	};
-    int i, j, k, idx;
+  int i, j, k, idx;
 	const NNSG3dResName* cp_node_name;
 	const NNSG3dResNodeInfo* cp_nodeinfo;
 
@@ -6489,7 +6843,8 @@ static void BCT_CLIENT_MarunomuDrawInit( BCT_MARUNOMU_DRAW* p_wk, ARCHANDLE* p_h
     
     // モデルﾃﾞｰﾀ読み込み
 	for( i=0; i<BCT_MARUNOMU_MDL_NUM; i++ ){
-	    D3DOBJ_MdlLoadH( &p_wk->mdl[i], p_handle, Mdl[i], heapID );
+#if WB_FIX
+	  D3DOBJ_MdlLoadH( &p_wk->mdl[i], p_handle, Mdl[i], heapID );
 
 		// レンダーオブジェクトに登録
 		D3DOBJ_Init( &p_wk->obj[i], &p_wk->mdl[i] );
@@ -6498,17 +6853,36 @@ static void BCT_CLIENT_MarunomuDrawInit( BCT_MARUNOMU_DRAW* p_wk, ARCHANDLE* p_h
 		D3DOBJ_SetDraw( &p_wk->obj[i], FALSE );
 
 		// 座標、拡大率の設定
-	    D3DOBJ_SetMatrix( &p_wk->obj[i], sc_MARUNOMU_MAT.x, sc_MARUNOMU_MAT.y + BCT_START_SCRLL3D_Y_S, sc_MARUNOMU_MAT.z );
+	  D3DOBJ_SetMatrix( &p_wk->obj[i], 
+	    sc_MARUNOMU_MAT.x, sc_MARUNOMU_MAT.y + BCT_START_SCRLL3D_Y_S, sc_MARUNOMU_MAT.z );
 		D3DOBJ_SetScale( &p_wk->obj[i], BCT_MARUNOMU_SCALE, BCT_MARUNOMU_SCALE, BCT_MARUNOMU_SCALE );
-
-	}
-        
-
+#else
+    p_wk->p_mdlres[i] = GFL_G3D_CreateResourceHandle( p_handle, Mdl[i] );
+    GFL_G3D_TransVramTexture(p_wk->p_mdlres[i]);
+    p_wk->draw_flag[i] = FALSE;
     
-    // アニメﾃﾞｰﾀ読み込み
-    for( i=0; i<BCT_MARUNOMU_ANM_NUM; i++ ){
-        D3DOBJ_AnmLoadH( &p_wk->anm[i], &p_wk->mdl[ sc_BCT_MARUNOMU_ANM_MDL[i] ], p_handle, 
-                Anm[i], heapID, p_allocator );
+		// レンダーオブジェクトに登録
+		p_wk->rnder[i] = GFL_G3D_RENDER_Create( p_wk->p_mdlres[i], 0, p_wk->p_mdlres[i] );
+//アニメ後にやる    p_wk->mdl[i] = GFL_G3D_OBJECT_Create(p_wk->rnder[i], NULL, 0);
+
+		// 描画OFF
+		p_wk->draw_flag[i] = FALSE;
+
+		// 座標、拡大率の設定
+  	VEC_Set(&p_wk->obj[i].trans, 0, 0, 0);
+  	VEC_Set(&p_wk->obj[i].scale, BCT_MARUNOMU_SCALE, BCT_MARUNOMU_SCALE, BCT_MARUNOMU_SCALE);
+  	MTX_Identity33(&p_wk->obj[i].rotate);
+  	VEC_Set(&p_wk->obj_rotate[i], 0, 0, 0);
+#endif
+	}
+
+
+  
+  // アニメﾃﾞｰﾀ読み込み
+  for( i=0; i<BCT_MARUNOMU_ANM_NUM; i++ ){
+  #if WB_FIX
+    D3DOBJ_AnmLoadH( &p_wk->anm[i], &p_wk->mdl[ sc_BCT_MARUNOMU_ANM_MDL[i] ], p_handle, 
+            Anm[i], heapID, p_allocator );
 		// アニメ状態を設定
 		D3DOBJ_AnmSet( &p_wk->anm[i], 0 );
 
@@ -6529,8 +6903,40 @@ static void BCT_CLIENT_MarunomuDrawInit( BCT_MARUNOMU_DRAW* p_wk, ARCHANDLE* p_h
 			}
 //			OS_TPrintf( "node name %s  idx %d\n", sc_AnmNodeName[i][j].name, idx );
 		}
-    }
+	#else
+		p_wk->p_anmres[i] = GFL_G3D_CreateResourceHandle( p_handle, Anm[i] );
+		p_wk->anm[i] = GFL_G3D_ANIME_Create( p_wk->rnder[sc_BCT_MARUNOMU_ANM_MDL[i]],
+			p_wk->p_anmres[i], 0 ); 
 
+  	{
+      NNSG3dResFileHeader *file_head;
+    	NNSG3dResMdlSet*		pMdlset;
+    	NNSG3dResMdl*			pMdl = NULL;
+      
+  		// アニメの反映ノード設定
+  		// まず全ノードへのアニメの影響をOFF
+  		j = 0;
+  		file_head = GFL_G3D_GetResourceFileHeader(p_wk->p_mdlres[ sc_BCT_MARUNOMU_ANM_MDL[i] ]);
+    	pMdlset = NNS_G3dGetMdlSet( file_head );
+    	pMdl = NNS_G3dGetMdlByIdx( pMdlset, 0 );
+  		cp_nodeinfo = NNS_G3dGetNodeInfo( pMdl );
+  		while( (cp_node_name = NNS_G3dGetNodeNameByIdx( cp_nodeinfo, j )) != NULL ){
+  			NNS_G3dAnmObjDisableID( GFL_G3D_ANIME_GetAnmObj(p_wk->anm[i]), j );
+  			j++;
+  		}
+
+  		// 反映すべきノードを設定
+  		for( j=0; j<BCT_MARUNOMU_ANM_NODE_NUM; j++ ){
+  			idx = NNS_G3dGetNodeIdxByName( cp_nodeinfo, &sc_AnmNodeName[i][j] );
+  			if( idx != -1 ){
+  				NNS_G3dAnmObjEnableID( GFL_G3D_ANIME_GetAnmObj(p_wk->anm[i]), idx );
+  			}
+  		}
+  	}
+	#endif
+  }
+
+#if WB_FIX
 	// カラーアニメ読み込み
 	for( i=0; i<BCT_MARUNOMU_ANM_COLANM_NUM; i++ ){
 		D3DOBJ_AnmLoadH( &p_wk->colanm[i], &p_wk->mdl[ sc_BCT_MARUNOMU_COLANM_MDL[i] ], p_handle, 
@@ -6539,20 +6945,46 @@ static void BCT_CLIENT_MarunomuDrawInit( BCT_MARUNOMU_DRAW* p_wk, ARCHANDLE* p_h
 		// カラーアニメ設定
 		D3DOBJ_AddAnm( &p_wk->obj[ sc_BCT_MARUNOMU_COLANM_MDL[i] ], &p_wk->colanm[i] );
 	}
-
+#else
+	// カラーアニメ読み込み
+	for( i=BCT_MARUNOMU_ANM_NUM; i<BCT_MARUNOMU_ANM_NUM+BCT_MARUNOMU_ANM_COLANM_NUM; i++ ){
+		p_wk->p_anmres[i] = GFL_G3D_CreateResourceHandle( p_handle, NARC_bucket_maru_robo_col_nsbtp );
+		p_wk->anm[i] = GFL_G3D_ANIME_Create( 
+		  p_wk->rnder[sc_BCT_MARUNOMU_ANM_MDL[i - BCT_MARUNOMU_ANM_NUM]],
+			p_wk->p_anmres[i], 0 ); 
+	}
+#endif
 
 	// カラーアニメパラメータ初期化
 	p_wk->col_top	= BCT_PLAYER_NUM;
 	p_wk->col_rand	= FALSE;
 
 
+#if WB_FIX
+  ;
+#else
+	for( i=0; i<BCT_MARUNOMU_MDL_NUM; i++ ){
+    p_wk->mdl[i] = GFL_G3D_OBJECT_Create(p_wk->rnder[i], p_wk->anm, BCT_MARUNOMU_ANM_NUM + BCT_MARUNOMU_ANM_COLANM_NUM);
+  }
+
+	for( i=BCT_MARUNOMU_ANM_NUM; i<BCT_MARUNOMU_ANM_NUM+BCT_MARUNOMU_ANM_COLANM_NUM; i++ ){
+		// カラーアニメ設定
+  	GFL_G3D_OBJECT_EnableAnime(p_wk->mdl[i - BCT_MARUNOMU_ANM_NUM], i);
+	}
+#endif
+
 	// 歩きアニメ設定
 	BCT_CLIENT_MarunomuDrawSetWalkAnm( p_wk, FALSE );
 
 	// オープンアニメを登録
+#if WB_FIX
 	D3DOBJ_AddAnm( &p_wk->obj[ BCT_MARUNOMU_MDL_OPEN ], &p_wk->anm[ BCT_MARUNOMU_ANM_OPEN ] );
 	D3DOBJ_AnmSet( &p_wk->anm[ BCT_MARUNOMU_ANM_OPEN ], 0 );
 	D3DOBJ_SetDraw( &p_wk->obj[ BCT_MARUNOMU_MDL_OPEN ], TRUE );	
+#else
+  GFL_G3D_OBJECT_EnableAnime(p_wk->mdl[BCT_MARUNOMU_MDL_OPEN], BCT_MARUNOMU_ANM_OPEN);
+	p_wk->draw_flag[BCT_MARUNOMU_MDL_OPEN] = TRUE;
+#endif
 	p_wk->set_mouthanm = BCT_MARUNOMU_ANM_OPEN;
 }
 
@@ -6563,26 +6995,38 @@ static void BCT_CLIENT_MarunomuDrawInit( BCT_MARUNOMU_DRAW* p_wk, ARCHANDLE* p_h
  *  @param  p_wk    ワーク
  */
 //-----------------------------------------------------------------------------
-static void BCT_CLIENT_MarunomuDrawExit( BCT_MARUNOMU_DRAW* p_wk, NNSFndAllocator* p_allocator )
+static void BCT_CLIENT_MarunomuDrawExit( BCT_MARUNOMU_DRAW* p_wk )
 {
-    int i;
+  int i;
 	
-    
-    // 全リソース破棄
+#if WB_FIX
+  // 全リソース破棄
 	for( i=0; i<BCT_MARUNOMU_MDL_NUM; i++ ){
-	    D3DOBJ_MdlDelete( &p_wk->mdl[i] ); 
+   D3DOBJ_MdlDelete( &p_wk->mdl[i] ); 
 	}
 
-    for( i=0; i<BCT_MARUNOMU_ANM_NUM; i++ ){
-        D3DOBJ_AnmDelete( &p_wk->anm[i], p_allocator );
-    }
+  for( i=0; i<BCT_MARUNOMU_ANM_NUM; i++ ){
+    D3DOBJ_AnmDelete( &p_wk->anm[i], p_allocator );
+  }
 
 	for( i=0; i<BCT_MARUNOMU_ANM_COLANM_NUM; i++ ){
 	    D3DOBJ_AnmDelete( &p_wk->colanm[i], p_allocator );
 	}
+#else
+  // 全リソース破棄
+	for( i=0; i<BCT_MARUNOMU_MDL_NUM; i++ ){
+	  GFL_G3D_OBJECT_Delete(p_wk->mdl[i]);
+	  GFL_G3D_DeleteResource(p_wk->p_mdlres[i]);
+	  GFL_G3D_RENDER_Delete(p_wk->rnder[i]);
+	}
 
+  for( i=0; i<BCT_MARUNOMU_ANM_NUM + BCT_MARUNOMU_ANM_COLANM_NUM; i++ ){
+    GFL_G3D_ANIME_Delete(p_wk->anm[i]);
+		GFL_G3D_DeleteResource( p_wk->p_anmres[i] );
+	}
+#endif
 
-    GFL_STD_MemFill( p_wk, 0, sizeof(BCT_MARUNOMU_DRAW) );   
+  GFL_STD_MemFill( p_wk, 0, sizeof(BCT_MARUNOMU_DRAW) );
 }
 
 //----------------------------------------------------------------------------
@@ -6639,7 +7083,12 @@ static void BCT_CLIENT_MarunomuDrawMain( BCT_MARUNOMU_DRAW* p_wk, const BCT_MARU
 static void BCT_CLIENT_MarunomuDrawAnmMain( BCT_MARUNOMU_DRAW* p_wk, const BCT_MARUNOMU* cp_data, BCT_MARUNOMU_MOVE_TYPE movetype )
 {
 	// 常に歩きアニメ
+#if WB_FIX
 	D3DOBJ_AnmLoop( &p_wk->anm[ BCT_MARUNOMU_ANM_WALK ], BCT_MARUNOMU_ANM_SLOWSPEED );
+#else
+  GFL_G3D_OBJECT_LoopAnimeFrame(p_wk->mdl[sc_BCT_MARUNOMU_ANM_MDL[BCT_MARUNOMU_ANM_WALK]], 
+    BCT_MARUNOMU_ANM_WALK, BCT_MARUNOMU_ANM_SLOWSPEED);
+#endif
 
 	BCT_CLIENT_MarunomuDrawColAnmMain( p_wk );
 }
@@ -6658,7 +7107,11 @@ static void BCT_CLIENT_MarunomuDrawMatrixSet( BCT_MARUNOMU_DRAW* p_wk, const BCT
 
     // 座標を設定
 	for( i=0; i<BCT_MARUNOMU_MDL_NUM; i++ ){
+	#if WB_FIX
 	    D3DOBJ_SetMatrix( &p_wk->obj[i], cp_data->matrix.x, cp_data->matrix.y, cp_data->matrix.z );
+	#else
+      VEC_Set(&p_wk->obj[i].trans, cp_data->matrix.x, cp_data->matrix.y, cp_data->matrix.z );
+	#endif
 	}
 
 }
@@ -6681,7 +7134,12 @@ static void BCT_CLIENT_MarunomuDrawRotaSet( BCT_MARUNOMU_DRAW* p_wk, const BCT_M
     setrota = cp_data->rota + BCT_MARUNOMU_DRAWROTA_ADD;
 
 	for( i=0; i<BCT_MARUNOMU_MDL_NUM; i++ ){
+	#if WB_FIX
 	    D3DOBJ_SetRota( &p_wk->obj[i], (u16)setrota, D3DOBJ_ROTA_WAY_Y );
+	#else
+			p_wk->obj_rotate[i].y = (u16)setrota;
+			BCT_RotateMtx(&p_wk->obj_rotate[i], &p_wk->obj[i].rotate);
+	#endif
 	}
 }
 
@@ -6699,7 +7157,11 @@ static void BCT_CLIENT_MarunomuDrawScaleSet( BCT_MARUNOMU_DRAW* p_wk, const BCT_
 	
 	// マルノームの描画に反映
 	for( i=0; i<BCT_MARUNOMU_MDL_NUM; i++ ){
+	#if WB_FIX
 	    D3DOBJ_SetScale( &p_wk->obj[i], cp_data->draw_scale, cp_data->draw_scale, cp_data->draw_scale );
+	#else
+    	VEC_Set(&p_wk->obj[i].scale, cp_data->draw_scale, cp_data->draw_scale, cp_data->draw_scale );
+	#endif
 	}
 }
 
@@ -6732,7 +7194,13 @@ static void BCT_CLIENT_MarunomuDrawDraw( BCT_MARUNOMU_DRAW* p_wk, const BCT_MARU
 	D3DOBJ_DrawRMtx( &p_wk->obj, &mtx );
 //*/	
 	for( i=0; i<BCT_MARUNOMU_MDL_NUM; i++ ){
+	#if WB_FIX
 		D3DOBJ_Draw( &p_wk->obj[i] );	
+	#else
+	  if(p_wk->draw_flag[i] == TRUE){
+      GFL_G3D_DRAW_DrawObjectCullingON(p_wk->mdl[i], &p_wk->obj[i]);
+    }
+	#endif
 	}
 }
 
@@ -6755,7 +7223,16 @@ static void BCT_CLIENT_MarunomuDrawAnmRotaSet( BCT_MARUNOMU_DRAW* p_wk, u32 rota
     frame = (rotax * 90) / GFL_CALC_RotKey( BCT_MARUNOMU_ROTA_X_MAX_360-BCT_MARUNOMU_ROTA_X_MIN );	// 0～90の値にする
 	frame = (frame * BCT_MARUNOMU_ANM_FRAME_MAX) / 90;
 	frame = BCT_MARUNOMU_ANM_FRAME_MAX - frame;
-    D3DOBJ_AnmSet( &p_wk->anm[BCT_MARUNOMU_ANM_ROTA], frame );
+#if WB_FIX
+  D3DOBJ_AnmSet( &p_wk->anm[BCT_MARUNOMU_ANM_ROTA], frame );
+#else
+  {
+  	int set_anmframe = BCT_MARUNOMU_ANM_FRAME_MAX;
+  	GFL_G3D_OBJECT_SetAnimeFrame( 
+  	  p_wk->mdl[sc_BCT_MARUNOMU_ANM_MDL[BCT_MARUNOMU_ANM_ROTA]], 
+  	  BCT_MARUNOMU_ANM_ROTA, &set_anmframe );
+  }
+#endif
 }
 
 //----------------------------------------------------------------------------
@@ -6774,17 +7251,32 @@ static void BCT_CLIENT_MarunomuDrawSetMouthAnm( BCT_MARUNOMU_DRAW* p_wk, u32 anm
 		
 	#if WB_FIX
 		D3DOBJ_DelAnm( &p_wk->obj[ sc_BCT_MARUNOMU_ANM_MDL[p_wk->set_mouthanm] ], &p_wk->anm[ p_wk->set_mouthanm ] );
-	#else
-		GFL_G3D_OBJECT_DisableAnime( 引数はまだ未対応 );
-	#endif
 		D3DOBJ_AddAnm( &p_wk->obj[ sc_BCT_MARUNOMU_ANM_MDL[anmno] ], &p_wk->anm[ anmno ] );
+	#else
+		GFL_G3D_OBJECT_DisableAnime( p_wk->mdl[ sc_BCT_MARUNOMU_ANM_MDL[p_wk->set_mouthanm] ], p_wk->set_mouthanm );
+		GFL_G3D_OBJECT_EnableAnime( p_wk->mdl[ sc_BCT_MARUNOMU_ANM_MDL[anmno] ], anmno );
+	#endif
 
+  #if WB_FIX
 		D3DOBJ_AnmSet( &p_wk->anm[ anmno ], 0 );
-
+  #else
+  	{
+  		int set_anmframe = 0;
+  		GFL_G3D_OBJECT_SetAnimeFrame( 
+  		  p_wk->mdl[sc_BCT_MARUNOMU_ANM_MDL[anmno]], 
+  		  anmno, &set_anmframe );
+  	}
+  #endif
+  
 		// オブジェの表示ONOFF
+	#if WB_FIX
 		D3DOBJ_SetDraw( &p_wk->obj[ sc_BCT_MARUNOMU_ANM_MDL[p_wk->set_mouthanm] ], FALSE );	
 		D3DOBJ_SetDraw( &p_wk->obj[ sc_BCT_MARUNOMU_ANM_MDL[anmno] ], TRUE );	
-
+  #else
+    p_wk->draw_flag[sc_BCT_MARUNOMU_ANM_MDL[p_wk->set_mouthanm]] = FALSE;
+    p_wk->draw_flag[sc_BCT_MARUNOMU_ANM_MDL[anmno]] = TRUE;
+  #endif
+  
 		p_wk->set_mouthanm = anmno;
 	}
 }
@@ -6798,7 +7290,12 @@ static void BCT_CLIENT_MarunomuDrawSetMouthAnm( BCT_MARUNOMU_DRAW* p_wk, u32 anm
 //-----------------------------------------------------------------------------
 static void BCT_CLIENT_MarunomuDrawLoopMouthAnm( BCT_MARUNOMU_DRAW* p_wk )
 {
+#if WB_FIX
 	D3DOBJ_AnmLoop( &p_wk->anm[ p_wk->set_mouthanm ], BCT_MARUNOMU_ANM_SPEED );
+#else
+  GFL_G3D_OBJECT_LoopAnimeFrame(p_wk->mdl[sc_BCT_MARUNOMU_ANM_MDL[p_wk->set_mouthanm]], 
+    p_wk->set_mouthanm, BCT_MARUNOMU_ANM_SPEED);
+#endif
 }
 
 //----------------------------------------------------------------------------
@@ -6813,7 +7310,19 @@ static void BCT_CLIENT_MarunomuDrawLoopMouthAnm( BCT_MARUNOMU_DRAW* p_wk )
 //-----------------------------------------------------------------------------
 static BOOL BCT_CLIENT_MarunomuDrawNoLoopMouthAnm( BCT_MARUNOMU_DRAW* p_wk )
 {
+#if WB_FIX
 	return D3DOBJ_AnmNoLoop( &p_wk->anm[ p_wk->set_mouthanm ], BCT_MARUNOMU_ANM_SPEED );
+#else
+	BOOL result;
+	
+	result = GFL_G3D_OBJECT_IncAnimeFrame(
+	  p_wk->mdl[sc_BCT_MARUNOMU_ANM_MDL[p_wk->set_mouthanm]], 
+	  p_wk->set_mouthanm, BCT_MARUNOMU_ANM_SPEED);
+	if(result == TRUE){
+    return FALSE;
+  }
+  return TRUE;
+#endif
 }
 
 //----------------------------------------------------------------------------
@@ -6826,7 +7335,19 @@ static BOOL BCT_CLIENT_MarunomuDrawNoLoopMouthAnm( BCT_MARUNOMU_DRAW* p_wk )
 //-----------------------------------------------------------------------------
 static BOOL BCT_CLIENT_MarunomuDrawNoLoopMouthAnm_Speed( BCT_MARUNOMU_DRAW* p_wk, fx32 speed )
 {
+#if WB_FIX
 	return D3DOBJ_AnmNoLoop( &p_wk->anm[ p_wk->set_mouthanm ], speed );
+#else
+  BOOL result;
+  
+	result = GFL_G3D_OBJECT_IncAnimeFrame(
+	  p_wk->mdl[sc_BCT_MARUNOMU_ANM_MDL[p_wk->set_mouthanm]], 
+	  p_wk->set_mouthanm, speed);
+	if(result == TRUE){
+    return FALSE;
+  }
+  return TRUE;
+#endif
 }
 
 //----------------------------------------------------------------------------
@@ -6842,12 +7363,18 @@ static void BCT_CLIENT_MarunomuDrawSetWalkAnm( BCT_MARUNOMU_DRAW* p_wk, BOOL fla
 	if( p_wk->walk_anm_flag != flag ){
 
 		if( flag == TRUE ){
+    #if WB_FIX
 			D3DOBJ_AddAnm( &p_wk->obj[ sc_BCT_MARUNOMU_ANM_MDL[BCT_MARUNOMU_ANM_WALK] ], &p_wk->anm[ BCT_MARUNOMU_ANM_WALK ] );
+		#else
+    	GFL_G3D_OBJECT_EnableAnime( 
+    	  p_wk->mdl[sc_BCT_MARUNOMU_ANM_MDL[BCT_MARUNOMU_ANM_WALK]], BCT_MARUNOMU_ANM_WALK);
+		#endif
 		}else{
 		#if WB_FIX
 			D3DOBJ_DelAnm( &p_wk->obj[ sc_BCT_MARUNOMU_ANM_MDL[BCT_MARUNOMU_ANM_WALK] ], &p_wk->anm[ BCT_MARUNOMU_ANM_WALK ] );
 		#else
-			GFL_G3D_OBJECT_DisableAnime( 引数はまだ未対応 );
+			GFL_G3D_OBJECT_DisableAnime( 
+			  p_wk->mdl[sc_BCT_MARUNOMU_ANM_MDL[BCT_MARUNOMU_ANM_WALK]], BCT_MARUNOMU_ANM_WALK);
 		#endif
 		}
 
@@ -6922,9 +7449,16 @@ static void BCT_CLIENT_MarunomuDrawColAnmMain( BCT_MARUNOMU_DRAW* p_wk )
 		}
 	}
 
+	#if WB_FIX
 	for( i=0; i<BCT_MARUNOMU_ANM_COLANM_NUM; i++ ){
 		D3DOBJ_AnmSet( &p_wk->colanm[i], p_wk->colanm_frame );
 	}
+	#else
+	for( i=BCT_MARUNOMU_ANM_NUM; i<BCT_MARUNOMU_ANM_NUM+BCT_MARUNOMU_ANM_COLANM_NUM; i++ ){
+		int set_anmframe = p_wk->colanm_frame;
+		GFL_G3D_OBJECT_SetAnimeFrame( p_wk->mdl[i - BCT_MARUNOMU_ANM_NUM], i, &set_anmframe );
+	}
+	#endif
 }
 
 //----------------------------------------------------------------------------
@@ -7018,60 +7552,93 @@ static void BCT_CLIENT_NutsDrawSysInit( BCT_CLIENT_GRAPHIC* p_wk, ARCHANDLE* p_h
     
     // 描画データ作成
 	for( i=0; i<BCT_NUTSRES_MDLNUM; i++ ){
+	#if WB_FIX
 	    D3DOBJ_MdlLoadH( &p_wk->nutsres.mdl[i], p_handle, sc_BCT_NUTSRES_MDL_TBL[i], heapID );
+	#else
+      p_wk->nutsres.p_mdlres[i] 
+        = GFL_G3D_CreateResourceHandle( p_handle, sc_BCT_NUTSRES_MDL_TBL[i] );
+      GFL_G3D_TransVramTexture(p_wk->nutsres.p_mdlres[i]);
+	#endif
 	}
 
 	// 陰読み込み
+#if WB_FIX
 	D3DOBJ_MdlLoadH( &p_wk->nutsres.shadowmdl, p_handle, NARC_bucket_maru_kage_nsbmd, heapID );
 	NNS_G3dMdlUseGlbAlpha( p_wk->nutsres.shadowmdl.pModel );	// アルファ値はプログラムのものを参照
+#else
+  p_wk->nutsres.p_shadow_mdlres = GFL_G3D_CreateResourceHandle( p_handle, NARC_bucket_maru_kage_nsbmd );
+  GFL_G3D_TransVramTexture(p_wk->nutsres.p_shadow_mdlres);
+  {
+      NNSG3dResFileHeader *file_head;
+    	NNSG3dResMdlSet*		pMdlset;
+    	NNSG3dResMdl*			pMdl = NULL;
+  		
+  		file_head = GFL_G3D_GetResourceFileHeader(p_wk->nutsres.p_shadow_mdlres);
+    	pMdlset = NNS_G3dGetMdlSet( file_head );
+    	pMdl = NNS_G3dGetMdlByIdx( pMdlset, 0 );
+    	NNS_G3dMdlUseGlbAlpha( pMdl );	// アルファ値はプログラムのものを参照
+  }
+#endif
 
-    {
-        // OAMリソース読込み
-        p_wk->nutsres.resobj[ 0 ] = CLACT_U_ResManagerResAddArcChar_ArcHandle(
-                    p_wk->resMan[ 0 ], p_handle,
-                    NARC_bucket_kinomi_01_NCGR,
-                    FALSE, BCT_GRA_NUTS_OAM_RESID, NNS_G2D_VRAM_TYPE_2DSUB, heapID );
+#if WB_FIX
+  {
+      // OAMリソース読込み
+      p_wk->nutsres.resobj[ 0 ] = CLACT_U_ResManagerResAddArcChar_ArcHandle(
+                  p_wk->resMan[ 0 ], p_handle,
+                  NARC_bucket_kinomi_01_NCGR,
+                  FALSE, BCT_GRA_NUTS_OAM_RESID, NNS_G2D_VRAM_TYPE_2DSUB, heapID );
 
-        p_wk->nutsres.resobj[ 1 ] = CLACT_U_ResManagerResAddArcPltt_ArcHandle(
-                    p_wk->resMan[ 1 ], p_handle,
-                    NARC_bucket_kinomi_NCLR,
-                    FALSE, BCT_GRA_NUTS_OAM_RESID, NNS_G2D_VRAM_TYPE_2DSUB, 4, heapID );
+      p_wk->nutsres.resobj[ 1 ] = CLACT_U_ResManagerResAddArcPltt_ArcHandle(
+                  p_wk->resMan[ 1 ], p_handle,
+                  NARC_bucket_kinomi_NCLR,
+                  FALSE, BCT_GRA_NUTS_OAM_RESID, NNS_G2D_VRAM_TYPE_2DSUB, 4, heapID );
 
-        p_wk->nutsres.resobj[ 2 ] = CLACT_U_ResManagerResAddArcKindCell_ArcHandle(
-                p_wk->resMan[ 2 ], p_handle,
-                NARC_bucket_kinomi_01_NCER, FALSE,
-                BCT_GRA_NUTS_OAM_RESID, CLACT_U_CELL_RES, heapID );
+      p_wk->nutsres.resobj[ 2 ] = CLACT_U_ResManagerResAddArcKindCell_ArcHandle(
+              p_wk->resMan[ 2 ], p_handle,
+              NARC_bucket_kinomi_01_NCER, FALSE,
+              BCT_GRA_NUTS_OAM_RESID, CLACT_U_CELL_RES, heapID );
 
-        p_wk->nutsres.resobj[ 3 ] = CLACT_U_ResManagerResAddArcKindCell_ArcHandle(
-                p_wk->resMan[ 3 ], p_handle,
-                NARC_bucket_kinomi_01_NANR, FALSE,
-                BCT_GRA_NUTS_OAM_RESID, CLACT_U_CELLANM_RES, heapID );
+      p_wk->nutsres.resobj[ 3 ] = CLACT_U_ResManagerResAddArcKindCell_ArcHandle(
+              p_wk->resMan[ 3 ], p_handle,
+              NARC_bucket_kinomi_01_NANR, FALSE,
+              BCT_GRA_NUTS_OAM_RESID, CLACT_U_CELLANM_RES, heapID );
 
-        // 転送
-        result = CLACT_U_CharManagerSetCharModeAdjustAreaCont( p_wk->nutsres.resobj[ 0 ] );
-        GF_ASSERT( result );
-        result = CLACT_U_PlttManagerSetCleanArea( p_wk->nutsres.resobj[ 1 ] );
-        GF_ASSERT( result );
+      // 転送
+      result = CLACT_U_CharManagerSetCharModeAdjustAreaCont( p_wk->nutsres.resobj[ 0 ] );
+      GF_ASSERT( result );
+      result = CLACT_U_PlttManagerSetCleanArea( p_wk->nutsres.resobj[ 1 ] );
+      GF_ASSERT( result );
 
-        // リソースだけ破棄
-        CLACT_U_ResManagerResOnlyDelete( p_wk->nutsres.resobj[ 0 ] );
-        CLACT_U_ResManagerResOnlyDelete( p_wk->nutsres.resobj[ 1 ] );
-    }
+      // リソースだけ破棄
+      CLACT_U_ResManagerResOnlyDelete( p_wk->nutsres.resobj[ 0 ] );
+      CLACT_U_ResManagerResOnlyDelete( p_wk->nutsres.resobj[ 1 ] );
+  }
 
-    // セルアクターヘッダー作成
-    CLACT_U_MakeHeader( &p_wk->nutsres.header, 
-            BCT_GRA_NUTS_OAM_RESID, BCT_GRA_NUTS_OAM_RESID,
-            BCT_GRA_NUTS_OAM_RESID, BCT_GRA_NUTS_OAM_RESID,
-            CLACT_U_HEADER_DATA_NONE, CLACT_U_HEADER_DATA_NONE,0,
-            BCT_GRA_NUTS_OAM_BGPRI,
-            p_wk->resMan[0], p_wk->resMan[1], 
-            p_wk->resMan[2], p_wk->resMan[3],
-            NULL, NULL );
+  // セルアクターヘッダー作成
+  CLACT_U_MakeHeader( &p_wk->nutsres.header, 
+          BCT_GRA_NUTS_OAM_RESID, BCT_GRA_NUTS_OAM_RESID,
+          BCT_GRA_NUTS_OAM_RESID, BCT_GRA_NUTS_OAM_RESID,
+          CLACT_U_HEADER_DATA_NONE, CLACT_U_HEADER_DATA_NONE,0,
+          BCT_GRA_NUTS_OAM_BGPRI,
+          p_wk->resMan[0], p_wk->resMan[1], 
+          p_wk->resMan[2], p_wk->resMan[3],
+          NULL, NULL );
+#else
+  p_wk->nutsres.resobj[0] = GFL_CLGRP_CGR_Register(p_handle, 
+    NARC_bucket_kinomi_01_NCGR, FALSE, CLSYS_DRAW_SUB, heapID);
 
-    // 各ワークの初期化
-    for( i=0; i<BCT_NUTSBUFFOAM_NUM; i++ ){
-        BCT_CLIENT_NutsDrawInit( p_wk, &p_wk->nuts[i], heapID );
-    }
+  p_wk->nutsres.resobj[1] = 
+    PLTTSLOT_ResourceSet(p_wk->plttslot, p_handle, 
+    NARC_bucket_kinomi_NCLR, CLSYS_DRAW_SUB, 4, heapID);
+
+  p_wk->nutsres.resobj[2] = GFL_CLGRP_CELLANIM_Register(
+    p_handle, NARC_bucket_kinomi_01_NCER, NARC_bucket_kinomi_01_NANR, heapID);
+#endif
+
+  // 各ワークの初期化
+  for( i=0; i<BCT_NUTSBUFFOAM_NUM; i++ ){
+      BCT_CLIENT_NutsDrawInit( p_wk, &p_wk->nuts[i], heapID );
+  }
 }
 
 //----------------------------------------------------------------------------
@@ -7091,8 +7658,8 @@ static void BCT_CLIENT_NutsDrawSysExit( BCT_CLIENT_GRAPHIC* p_wk )
     }
 
     // リソース破棄
+#if WB_FIX
     {
-
         // VRAM管理から破棄
         CLACT_U_CharManagerDelete( p_wk->nutsres.resobj[0] );
         CLACT_U_PlttManagerDelete( p_wk->nutsres.resobj[1] );
@@ -7103,10 +7670,25 @@ static void BCT_CLIENT_NutsDrawSysExit( BCT_CLIENT_GRAPHIC* p_wk )
         CLACT_U_ResManagerResDelete( p_wk->resMan[2], p_wk->nutsres.resobj[2] );
         CLACT_U_ResManagerResDelete( p_wk->resMan[3], p_wk->nutsres.resobj[3] );
     }
+#else
+    GFL_CLGRP_CGR_Release(p_wk->nutsres.resobj[0]);
+  	PLTTSLOT_ResourceFree(p_wk->plttslot, p_wk->nutsres.resobj[1], CLSYS_DRAW_SUB);
+  	GFL_CLGRP_CELLANIM_Release(p_wk->nutsres.resobj[2]);
+#endif
     for( i=0; i<BCT_NUTSRES_MDLNUM; i++ ){
+    #if WB_FIX
         D3DOBJ_MdlDelete( &p_wk->nutsres.mdl[i] );
+    #else
+        //rnderとobjの削除はBCT_CLIENT_NutsDrawExitの中で行っている
+        GFL_G3D_DeleteResource(p_wk->nutsres.p_mdlres[i]);
+    #endif
     }
+#if WB_FIX
     D3DOBJ_MdlDelete( &p_wk->nutsres.shadowmdl );
+#else
+    //rnderとobjの削除はBCT_CLIENT_NutsDrawExitの中で行っている
+	  GFL_G3D_DeleteResource(p_wk->nutsres.p_shadow_mdlres);
+#endif
 
     // 全データ破棄
     GFL_STD_MemFill( &p_wk->nutsres, 0, sizeof(BCT_CLIENT_NUTS_RES) );
@@ -7188,25 +7770,52 @@ static void BCT_CLIENT_NutsDrawSysMain( BCT_CLIENT_GRAPHIC* p_wk, u32 comm_num )
 //-----------------------------------------------------------------------------
 static void BCT_CLIENT_NutsDrawInit( BCT_CLIENT_GRAPHIC* p_wk, BCT_CLIENT_NUTS_DRAW* p_data, u32 heapID )
 {
-    // OAM作成
-    {
-        CLACT_ADD add = {0};
+  // OAM作成
+#if WB_FIX
+  {
+      CLACT_ADD add = {0};
 
-        add.ClActSet = p_wk->clactSet;
-        add.ClActHeader = &p_wk->nutsres.header;
-        add.sca.x = FX32_ONE;
-        add.sca.y = FX32_ONE;
-        add.sca.z = FX32_ONE;
-        add.pri   = BCT_GRA_NUTS_OAM_PRI;
-        add.DrawArea = NNS_G2D_VRAM_TYPE_2DSUB;
-        add.heap  = heapID;
-        p_data->p_clwk = CLACT_Add( &add );
-        GFL_CLACT_WK_SetDrawEnable( p_data->p_clwk, FALSE );
-    }
+      add.ClActSet = p_wk->clactSet;
+      add.ClActHeader = &p_wk->nutsres.header;
+      add.sca.x = FX32_ONE;
+      add.sca.y = FX32_ONE;
+      add.sca.z = FX32_ONE;
+      add.pri   = BCT_GRA_NUTS_OAM_PRI;
+      add.DrawArea = NNS_G2D_VRAM_TYPE_2DSUB;
+      add.heap  = heapID;
+      p_data->p_clwk = CLACT_Add( &add );
+      GFL_CLACT_WK_SetDrawEnable( p_data->p_clwk, FALSE );
+  }
+#else
+  {
+    GFL_CLWK_DATA add;
+
+    add.pos_x = 0;
+    add.pos_y = 0;
+    add.anmseq = 0;
+    add.softpri = BCT_GRA_NUTS_OAM_PRI;
+    add.bgpri = BCT_GRA_NUTS_OAM_BGPRI;
+
+    p_data->p_clwk = GFL_CLACT_WK_Create(p_wk->clactSet, p_wk->nutsres.resobj[0], 
+      p_wk->nutsres.resobj[1], p_wk->nutsres.resobj[2], &add, CLSYS_DEFREND_SUB, heapID);
+    GFL_CLACT_WK_SetDrawEnable(p_data->p_clwk, FALSE);
+  }
+#endif
 
 	// 陰グラフィック設定
-    D3DOBJ_Init( &p_data->shadow, &p_wk->nutsres.shadowmdl );
+#if WB_FIX
+  D3DOBJ_Init( &p_data->shadow, &p_wk->nutsres.shadowmdl );
 	D3DOBJ_SetDraw( &p_data->shadow, FALSE );
+#else
+  if(p_data->shadow_rnder == NULL){
+    p_data->shadow_rnder = GFL_G3D_RENDER_Create( p_wk->nutsres.p_shadow_mdlres, 0, p_wk->nutsres.p_shadow_mdlres );
+    p_data->shadowmdl = GFL_G3D_OBJECT_Create(p_data->shadow_rnder, NULL, 0);
+  }
+  p_data->shadow_draw_flag = FALSE;
+	VEC_Set(&p_data->shadow_obj.trans, 0, 0, 0);
+	VEC_Set(&p_data->shadow_obj.scale, FX32_ONE, FX32_ONE, FX32_ONE);
+	MTX_Identity33(&p_data->shadow_obj.rotate);
+#endif
 }
 
 //----------------------------------------------------------------------------
@@ -7219,8 +7828,25 @@ static void BCT_CLIENT_NutsDrawInit( BCT_CLIENT_GRAPHIC* p_wk, BCT_CLIENT_NUTS_D
 //-----------------------------------------------------------------------------
 static void BCT_CLIENT_NutsDrawExit( BCT_CLIENT_GRAPHIC* p_wk, BCT_CLIENT_NUTS_DRAW* p_data )
 {
-    GFL_CLACT_WK_Remove( p_data->p_clwk );
-    GFL_STD_MemFill( p_data, 0, sizeof(BCT_CLIENT_NUTS_DRAW) );
+  if(p_data->mdl != NULL){
+    GFL_G3D_OBJECT_Delete(p_data->mdl);
+    p_data->mdl = NULL;
+  }
+  if(p_data->rnder != NULL){
+    GFL_G3D_RENDER_Delete(p_data->rnder);
+    p_data->rnder = NULL;
+  }
+  if(p_data->shadowmdl != NULL){
+    GFL_G3D_OBJECT_Delete(p_data->shadowmdl);
+    p_data->shadowmdl = NULL;
+  }
+  if(p_data->shadow_rnder != NULL){
+    GFL_G3D_RENDER_Delete(p_data->shadow_rnder);
+    p_data->shadow_rnder = NULL;
+  }
+
+  GFL_CLACT_WK_Remove( p_data->p_clwk );
+  GFL_STD_MemFill( p_data, 0, sizeof(BCT_CLIENT_NUTS_DRAW) );
 }
 
 //----------------------------------------------------------------------------
@@ -7235,25 +7861,29 @@ static void BCT_CLIENT_NutsDrawExit( BCT_CLIENT_GRAPHIC* p_wk, BCT_CLIENT_NUTS_D
 //-----------------------------------------------------------------------------
 static void BCT_CLIENT_NutsDrawStart( BCT_CLIENT_GRAPHIC* p_wk, BCT_CLIENT_NUTS_DRAW* p_data, const BCT_CLIENT_NUTS* cp_data, u32 comm_num )
 {
-    // 関連付ける木の実データ保存
-    p_data->cp_data = cp_data;
-    p_data->draw2d = TRUE;
+  // 関連付ける木の実データ保存
+  p_data->cp_data = cp_data;
+  p_data->draw2d = TRUE;
 
 	p_data->rota_chg_count = 0;
 
 	// パレットオフセット設定
+#if WB_FIX
 	CLACT_PaletteNoChg( p_data->p_clwk, cp_data->data.plno );
-    
-    // 座標設定
-    BCT_CLIENT_NutsDrawMatrixSet( p_data, cp_data, comm_num );
+#else
+  GFL_CLACT_WK_SetPlttOffs( p_data->p_clwk, cp_data->data.plno, CLWK_PLTTOFFS_MODE_PLTT_TOP );
+#endif
 
-    // 表示開始
-    GFL_CLACT_WK_SetDrawEnable( p_data->p_clwk, TRUE );
+  // 座標設定
+  BCT_CLIENT_NutsDrawMatrixSet( p_data, cp_data, comm_num );
+
+  // 表示開始
+  GFL_CLACT_WK_SetDrawEnable( p_data->p_clwk, TRUE );
 
 
 #ifdef BCT_DEBUG
-    BCT_DEBUG_NutsDrawNum++;
-    OS_Printf( "nuts draw %d\n", BCT_DEBUG_NutsDrawNum );
+  BCT_DEBUG_NutsDrawNum++;
+  OS_Printf( "nuts draw %d\n", BCT_DEBUG_NutsDrawNum );
 #endif
 }
 
@@ -7293,32 +7923,39 @@ static void BCT_CLIENT_NutsDrawStartNoOam( BCT_CLIENT_GRAPHIC* p_wk, BCT_CLIENT_
 //-----------------------------------------------------------------------------
 static void BCT_CLIENT_NutsDrawMain( BCT_CLIENT_NUTS_DRAW* p_data, BCT_CLIENT_GRAPHIC* p_wk, u32 comm_num )
 {
-    BOOL result;
-	GFL_G3D_OBJ* p_mdl;
+  BOOL result;
 
-    // 2D表示か３d表示か
-    if( p_data->draw2d == TRUE ){
-        // 座標をあわせる
-        result = BCT_CLIENT_NutsDrawMatrixSet( p_data, p_data->cp_data, comm_num );
+  // 2D表示か３d表示か
+  if( p_data->draw2d == TRUE ){
+      // 座標をあわせる
+      result = BCT_CLIENT_NutsDrawMatrixSet( p_data, p_data->cp_data, comm_num );
 
-        //  2D座標が０以下になったら３D表示に切り替える
-        if( result == FALSE ){
-            BCT_CLIENT_Nuts3DDrawOn( p_data, p_wk );
-        }
-    }
+      //  2D座標が０以下になったら３D表示に切り替える
+      if( result == FALSE ){
+          BCT_CLIENT_Nuts3DDrawOn( p_data, p_wk );
+      }
+  }
 
 	if( p_data->draw2d == FALSE ){
-		p_mdl = BCT_CLIENT_Nuts3DMdlGet( p_data->cp_data, &p_wk->nutsres );
+    GFL_G3D_RES *p_mdlres;
+    NNSG3dResFileHeader *file_head;
+  	NNSG3dResMdlSet*		pMdlset;
+  	NNSG3dResMdl*			pMdl = NULL;
+
+		p_mdlres = BCT_CLIENT_Nuts3DMdlGet( p_data->cp_data, &p_wk->nutsres );
+  	file_head = GFL_G3D_GetResourceFileHeader(p_mdlres);
+  	pMdlset = NNS_G3dGetMdlSet( file_head );
+  	pMdl = NNS_G3dGetMdlByIdx( pMdlset, 0 );
 
 		// 木の実が場外動作なら暗く表示、そうでなければ明るく表示
 		if( p_data->cp_data->seq == BCT_NUTSSEQ_MOVEAWAY ){
 			
 			// 暗くする
-			NNS_G3dMdlSetMdlAmbAll( p_mdl->pModel, GX_RGB( 31,31,31 ) );
+			NNS_G3dMdlSetMdlAmbAll( pMdl, GX_RGB( 31,31,31 ) );
 //			NNS_G3dMdlSetMdlAmbAll( p_mdl->pModel, GX_RGB( 24,24,24 ) );
 		}else{
 			// 明るくする
-			NNS_G3dMdlSetMdlAmbAll( p_mdl->pModel, GX_RGB( 18,18,18 ) );
+			NNS_G3dMdlSetMdlAmbAll( pMdl, GX_RGB( 18,18,18 ) );
 		}
 		
 
@@ -7326,17 +7963,32 @@ static void BCT_CLIENT_NutsDrawMain( BCT_CLIENT_NUTS_DRAW* p_data, BCT_CLIENT_GR
 		// 進んでいる方向に回転をかける
 		BCT_CLIENT_NutsDrawRotaSet( p_data );
 		// 座標の設定
+	#if WB_FIX
 		D3DOBJ_SetMatrix( &p_data->obj, 
 				p_data->cp_data->mat.x, p_data->cp_data->mat.y, p_data->cp_data->mat.z  );
 		D3DOBJ_Draw( &p_data->obj );
-
+  #else
+  	VEC_Set(&p_data->obj.trans, 
+  	  p_data->cp_data->mat.x, p_data->cp_data->mat.y, p_data->cp_data->mat.z  );
+  	if(p_data->draw_flag == TRUE){
+      GFL_G3D_DRAW_DrawObjectCullingON(p_data->mdl, &p_data->obj);
+    }
+  #endif
+  
 		// 陰の表示
+	#if WB_FIX
 		if( D3DOBJ_GetDraw( &p_data->shadow ) == TRUE ){
 			BCT_CLIENT_NutsDrawShadowMatrixSet( p_data );
 			D3DOBJ_Draw( &p_data->shadow );
 			BCT_CLIENT_NutsDrawShadowAlpahReset( p_data );
-
 		}
+	#else
+		if( p_data->shadow_draw_flag == TRUE ){
+			BCT_CLIENT_NutsDrawShadowMatrixSet( p_data );
+			GFL_G3D_DRAW_DrawObjectCullingON(p_data->shadowmdl, &p_data->shadow_obj);
+			BCT_CLIENT_NutsDrawShadowAlpahReset( p_data );
+		}
+	#endif
 	}
 }
 
@@ -7373,14 +8025,21 @@ static void BCT_CLIENT_NutsDrawShadowMatrixSet( BCT_CLIENT_NUTS_DRAW* p_data )
 		}
 	}
 
+#if WB_FIX
 	D3DOBJ_SetMatrix( &p_data->shadow, 
 			p_data->cp_data->mat.x, y, p_data->cp_data->mat.z  );
+#else
+  VEC_Set(&p_data->shadow_obj.trans, p_data->cp_data->mat.x, y, p_data->cp_data->mat.z  );
+#endif
 
 	// 床からの高さで大きさを決める
 	y_dif = p_data->cp_data->mat.y - y;
 	scale = FX32_ONE + (FX_Div(FX_Mul( y_dif, BCT_SHADOW_SIZE_DIV ), BCT_SHADOW_Y_SIZE_DIF));
-	D3DOBJ_SetScale( &p_data->shadow, 
-			scale, scale, scale );
+#if WB_FIX
+	D3DOBJ_SetScale( &p_data->shadow, scale, scale, scale );
+#else
+  VEC_Set(&p_data->shadow_obj.scale, scale, scale, scale );
+#endif
 
 	alpha = (FX_Div(FX_Mul( y_dif, FX32_CONST(BCT_SHADOW_ALPHA_DIV) ), BCT_SHADOW_Y_SIZE_DIF)) >> FX32_SHIFT;
 	alpha = BCT_SHADOW_ALPHA_MIN + BCT_SHADOW_ALPHA_DIV - alpha;
@@ -7426,7 +8085,11 @@ static void BCT_CLIENT_NutsDrawEnd( BCT_CLIENT_NUTS_DRAW* p_data )
     p_data->draw2d = FALSE;
     GFL_CLACT_WK_SetDrawEnable( p_data->p_clwk, FALSE );
 
+#if WB_FIX
 	D3DOBJ_SetDraw( &p_data->shadow, FALSE );
+#else
+  p_data->shadow_draw_flag = FALSE;
+#endif
 
 #ifdef BCT_DEBUG
     BCT_DEBUG_NutsDrawNum--;
@@ -7472,6 +8135,7 @@ static BOOL BCT_CLIENT_NutsDrawMatrixSet( BCT_CLIENT_NUTS_DRAW* p_data, const BC
 {
     VecFx32 mat;
     NNSG2dSVec2 vec2d;
+    GFL_CLACTPOS pos;
 
     mat = p_data->cp_data->mat;
     BCT_CLIENT_VecNetIDRetRot( &mat, &mat, p_data->cp_data->data.plno, comm_num ); // 回転しているのを元に戻す
@@ -7481,7 +8145,13 @@ static BOOL BCT_CLIENT_NutsDrawMatrixSet( BCT_CLIENT_NUTS_DRAW* p_data, const BC
     mat.y = (vec2d.y << FX32_SHIFT) + BCT_GRA_OAMSUBSURFACE_Y;
     mat.z = 0;
 
+#if WB_FIX
     CLACT_SetMatrix( p_data->p_clwk, &mat );
+#else
+    pos.x = FX_Whole(mat.x);
+    pos.y = FX_Whole(mat.y);
+    GFL_CLACT_WK_SetPos( p_data->p_clwk, &pos, CLWK_SETSF_NONE );
+#endif
 
     if( (vec2d.x < 0) || (vec2d.y < 0) ){
         return FALSE;
@@ -7498,19 +8168,36 @@ static BOOL BCT_CLIENT_NutsDrawMatrixSet( BCT_CLIENT_NUTS_DRAW* p_data, const BC
 //-----------------------------------------------------------------------------
 static void BCT_CLIENT_Nuts3DDrawOn( BCT_CLIENT_NUTS_DRAW* p_data, BCT_CLIENT_GRAPHIC* p_wk )
 {
-	GFL_G3D_OBJ* p_mdl;
+//	GFL_G3D_OBJ* p_mdl;
+	GFL_G3D_RES *p_mdlres;
 	
-    GFL_CLACT_WK_SetDrawEnable( p_data->p_clwk, FALSE );
-    p_data->draw2d = FALSE;
+  GFL_CLACT_WK_SetDrawEnable( p_data->p_clwk, FALSE );
+  p_data->draw2d = FALSE;
 
-	p_mdl = BCT_CLIENT_Nuts3DMdlGet( p_data->cp_data, &p_wk->nutsres );
+	p_mdlres = BCT_CLIENT_Nuts3DMdlGet( p_data->cp_data, &p_wk->nutsres );
 
+#if WB_FIX
 	D3DOBJ_Init( &p_data->obj, p_mdl );
 	D3DOBJ_SetDraw( &p_data->obj, TRUE );
+#else
+  if(p_data->rnder == NULL){
+    p_data->rnder = GFL_G3D_RENDER_Create( p_mdlres, 0, p_mdlres );
+  	p_data->mdl = GFL_G3D_OBJECT_Create(p_data->rnder, NULL, 0);
+  }
+	VEC_Set(&p_data->obj.trans, 0, 0, 0);
+	VEC_Set(&p_data->obj.scale, FX32_ONE, FX32_ONE, FX32_ONE);
+	MTX_Identity33(&p_data->obj.rotate);
+	VEC_Set(&p_data->obj_rotate, 0, 0, 0);
+	p_data->draw_flag = TRUE;
+#endif
 
 	// 自分の木の実なら影を出す
 	if( p_data->cp_data->seq == BCT_NUTSSEQ_MOVE ){
+	#if WB_FIX
 		D3DOBJ_SetDraw( &p_data->shadow, TRUE );
+	#else
+	  p_data->shadow_draw_flag = TRUE;
+	#endif
 	}
 }
 
@@ -7524,11 +8211,12 @@ static void BCT_CLIENT_Nuts3DDrawOn( BCT_CLIENT_NUTS_DRAW* p_data, BCT_CLIENT_GR
  *	@return	モデルワーク
  */
 //-----------------------------------------------------------------------------
-static GFL_G3D_OBJ* BCT_CLIENT_Nuts3DMdlGet( const BCT_CLIENT_NUTS* cp_data, BCT_CLIENT_NUTS_RES* p_nutsres )
+static GFL_G3D_RES* BCT_CLIENT_Nuts3DMdlGet( const BCT_CLIENT_NUTS* cp_data, BCT_CLIENT_NUTS_RES* p_nutsres )
 {
+#if WB_FIX
 	u32 mdlno;
 
-    // 3D作成
+  // 3D作成
 	// レンダーオブジェクトに登録
 	if( cp_data->data.special == TRUE ){	// 特殊木の実
 		mdlno = BCT_NUTSRES_MDLSPECIAL;
@@ -7537,6 +8225,22 @@ static GFL_G3D_OBJ* BCT_CLIENT_Nuts3DMdlGet( const BCT_CLIENT_NUTS* cp_data, BCT
 	}
 
 	return &p_nutsres->mdl[ mdlno ];
+#else
+  NNSG3dResFileHeader *file_head;
+	NNSG3dResMdlSet*		pMdlset;
+	NNSG3dResMdl*			pMdl = NULL;
+	u32 mdlno;
+
+  // 3D作成
+	// レンダーオブジェクトに登録
+	if( cp_data->data.special == TRUE ){	// 特殊木の実
+		mdlno = BCT_NUTSRES_MDLSPECIAL;
+	}else{
+		mdlno = cp_data->data.plno;
+	}
+  
+  return p_nutsres->p_mdlres[mdlno];
+#endif
 }
 
 //----------------------------------------------------------------------------
@@ -7569,8 +8273,14 @@ static void BCT_CLIENT_NutsDrawRotaSet( BCT_CLIENT_NUTS_DRAW* p_data )
 	
 	p_data->rota_x += p_data->rota_speed_x;
 	p_data->rota_z += p_data->rota_speed_z;
+#if WB_FIX
 	D3DOBJ_SetRota( &p_data->obj, p_data->rota_x, D3DOBJ_ROTA_WAY_X );
 	D3DOBJ_SetRota( &p_data->obj, p_data->rota_z, D3DOBJ_ROTA_WAY_Z );
+#else
+	p_data->obj_rotate.x = p_data->rota_x;
+	p_data->obj_rotate.z = p_data->rota_z;
+	BCT_RotateMtx(&p_data->obj_rotate, &p_data->obj.rotate);
+#endif
 }
 
 //----------------------------------------------------------------------------
@@ -7585,6 +8295,7 @@ static void BCT_CLIENT_NutsDrawRotaSet( BCT_CLIENT_NUTS_DRAW* p_data )
 //-----------------------------------------------------------------------------
 static void BCT_CLIENT_HandNutsDrawInit( BCT_CLIENT_GRAPHIC* p_wk, BCT_CLIENT_HANDNUTS_DRAW* p_nuts, u32 plno, u32 heapID )
 {
+#if WB_FIX
     CLACT_ADD add = {0};
 
     add.ClActSet = p_wk->clactSet;
@@ -7597,8 +8308,23 @@ static void BCT_CLIENT_HandNutsDrawInit( BCT_CLIENT_GRAPHIC* p_wk, BCT_CLIENT_HA
     add.heap  = heapID;
     p_nuts->p_clwk = CLACT_Add( &add );
     GFL_CLACT_WK_SetDrawEnable( p_nuts->p_clwk, FALSE );
-	CLACT_PaletteNoChg( p_nuts->p_clwk, plno );
-    p_nuts->draw = FALSE;
+  	CLACT_PaletteNoChg( p_nuts->p_clwk, plno );
+#else
+  GFL_CLWK_DATA add;
+
+  add.pos_x = 0;
+  add.pos_y = 0;
+  add.anmseq = 0;
+  add.softpri = BCT_GRA_NUTS_OAM_PRI;
+  add.bgpri = BCT_GRA_NUTS_OAM_BGPRI;
+
+  p_nuts->p_clwk = GFL_CLACT_WK_Create(p_wk->clactSet, p_wk->nutsres.resobj[0], 
+    p_wk->nutsres.resobj[1], p_wk->nutsres.resobj[2], &add, CLSYS_DEFREND_SUB, heapID);
+  GFL_CLACT_WK_SetDrawEnable(p_nuts->p_clwk, FALSE);
+  GFL_CLACT_WK_SetPlttOffs( p_nuts->p_clwk, plno, CLWK_PLTTOFFS_MODE_PLTT_TOP );
+#endif
+
+  p_nuts->draw = FALSE;
 }
 
 //----------------------------------------------------------------------------
@@ -7636,6 +8362,7 @@ static void BCT_CLIENT_HandNutsDrawStart( BCT_CLIENT_HANDNUTS_DRAW* p_nuts )
 static void BCT_CLIENT_HandNutsDrawMain( BCT_CLIENT_HANDNUTS_DRAW* p_nuts )
 {   
     VecFx32 mat;
+    u32 tp_x = 0, tp_y = 0;
     
     // 表示中しか動かない
     if( p_nuts->draw == FALSE ){
@@ -7643,7 +8370,12 @@ static void BCT_CLIENT_HandNutsDrawMain( BCT_CLIENT_HANDNUTS_DRAW* p_nuts )
     }
 
     // 今のタッチパネル座標に設定する
+#if WB_FIX
 	BCT_CLIENT_HandNutsDrawSetMatrix( p_nuts, sys.tp_x, sys.tp_y );
+#else
+  GFL_UI_TP_GetPointTrg( &tp_x, &tp_y );
+	BCT_CLIENT_HandNutsDrawSetMatrix( p_nuts, tp_x, tp_y );
+#endif
 }
 
 //----------------------------------------------------------------------------
@@ -7658,10 +8390,17 @@ static void BCT_CLIENT_HandNutsDrawMain( BCT_CLIENT_HANDNUTS_DRAW* p_nuts )
 static void BCT_CLIENT_HandNutsDrawSetMatrix( BCT_CLIENT_HANDNUTS_DRAW* p_nuts, s32 x, s32 y )
 {
     VecFx32 mat;
+    GFL_CLACTPOS pos;
 
     mat.x = x << FX32_SHIFT;
     mat.y = (y << FX32_SHIFT) + BCT_GRA_OAMSUBSURFACE_Y;
+#if WB_FIX
     CLACT_SetMatrix( p_nuts->p_clwk, &mat );
+#else
+    pos.x = FX_Whole(mat.x);
+    pos.y = FX_Whole(mat.y);
+    GFL_CLACT_WK_SetPos( p_nuts->p_clwk, &pos, CLWK_SETSF_NONE );
+#endif
 }
 
 //----------------------------------------------------------------------------
@@ -7689,24 +8428,44 @@ static void BCT_CLIENT_HandNutsDrawEnd( BCT_CLIENT_HANDNUTS_DRAW* p_nuts )
 static void BCT_CLIENT_OamAwayNutsInit( BCT_CLIENT_GRAPHIC* p_drawsys, BCT_CLIENT_OAMAWAYNUTS_DRAW* p_wk, u32 plno, u32 heapID )
 {
 	int i;
-    CLACT_ADD add = {0};
+#if WB_FIX
+  CLACT_ADD add = {0};
 
-    add.ClActSet = p_drawsys->clactSet;
-    add.ClActHeader = &p_drawsys->nutsres.header;
-    add.sca.x = BCT_OAMAWAYNUTS_SCALE;
-    add.sca.y = BCT_OAMAWAYNUTS_SCALE;
-    add.sca.z = BCT_OAMAWAYNUTS_SCALE;
-    add.pri   = BCT_GRA_NUTS_OAM_PRI;
-    add.DrawArea = NNS_G2D_VRAM_TYPE_2DSUB;
-    add.heap  = heapID;
+  add.ClActSet = p_drawsys->clactSet;
+  add.ClActHeader = &p_drawsys->nutsres.header;
+  add.sca.x = BCT_OAMAWAYNUTS_SCALE;
+  add.sca.y = BCT_OAMAWAYNUTS_SCALE;
+  add.sca.z = BCT_OAMAWAYNUTS_SCALE;
+  add.pri   = BCT_GRA_NUTS_OAM_PRI;
+  add.DrawArea = NNS_G2D_VRAM_TYPE_2DSUB;
+  add.heap  = heapID;
 
 	for( i=0; i<BCT_OAMAWAYNUTS_BUFFNUM; i++ ){
-	    p_wk->nutsbuff[i].p_clwk = CLACT_Add( &add );
+    p_wk->nutsbuff[i].p_clwk = CLACT_Add( &add );
 		GFL_CLACT_WK_SetDrawEnable( p_wk->nutsbuff[i].p_clwk, FALSE );
 		CLACT_SetAffineParam( p_wk->nutsbuff[i].p_clwk, CLACT_AFFINE_NORMAL );
 		CLACT_PaletteNoChg( p_wk->nutsbuff[i].p_clwk, plno );
-	    p_wk->nutsbuff[i].draw = FALSE;
+    p_wk->nutsbuff[i].draw = FALSE;
 	}
+#else
+  GFL_CLWK_DATA add;
+
+  add.pos_x = 0;
+  add.pos_y = 0;
+  add.anmseq = 0;
+  add.softpri = BCT_GRA_NUTS_OAM_PRI;
+  add.bgpri = BCT_GRA_NUTS_OAM_BGPRI;
+
+	for( i=0; i<BCT_OAMAWAYNUTS_BUFFNUM; i++ ){
+    p_wk->nutsbuff[i].p_clwk = GFL_CLACT_WK_Create(p_drawsys->clactSet, 
+      p_drawsys->nutsres.resobj[0], p_drawsys->nutsres.resobj[1], 
+      p_drawsys->nutsres.resobj[2], &add, CLSYS_DEFREND_SUB, heapID);
+    GFL_CLACT_WK_SetDrawEnable(p_wk->nutsbuff[i].p_clwk, FALSE);
+    GFL_CLACT_WK_SetPlttOffs( p_wk->nutsbuff[i].p_clwk, plno, CLWK_PLTTOFFS_MODE_PLTT_TOP );
+    GFL_CLACT_WK_SetAffineParam( p_wk->nutsbuff[i].p_clwk, CLSYS_AFFINETYPE_NORMAL );
+    p_wk->nutsbuff[i].draw = FALSE;
+  }
+#endif
 }
 
 //----------------------------------------------------------------------------
@@ -7739,8 +8498,12 @@ static void BCT_CLIENT_OamAwayNutsMain( BCT_CLIENT_OAMAWAYNUTS_DRAW* p_wk )
 	s32 count_sub;
 	s32 x, y;
 	fx32 scale;
+#if WB_FIX
 	VecFx32 scale_vec;
-	
+#else
+  GFL_CLSCALE scale_vec;
+#endif
+
 	// power分毎回座標を足して、画面外へ言ったら終わり	
 	for( i=0; i<BCT_OAMAWAYNUTS_BUFFNUM; i++ ){
 		if( p_wk->nutsbuff[i].draw == TRUE ){
@@ -7771,8 +8534,11 @@ static void BCT_CLIENT_OamAwayNutsMain( BCT_CLIENT_OAMAWAYNUTS_DRAW* p_wk )
 			scale = FX_Div( scale << FX32_SHIFT, FX32_CONST(10) ); 
 			scale_vec.x = scale;
 			scale_vec.y = scale;
+		#if WB_FIX
 			CLACT_SetScale( p_wk->nutsbuff[i].p_clwk, &scale_vec );	
-
+    #else
+      GFL_CLACT_WK_SetScale(p_wk->nutsbuff[i].p_clwk, &scale_vec);
+    #endif
 			
 			if( p_wk->nutsbuff[i].left ){
 				p_wk->nutsbuff[i].mat.x += x << FX32_SHIFT;
@@ -7780,8 +8546,16 @@ static void BCT_CLIENT_OamAwayNutsMain( BCT_CLIENT_OAMAWAYNUTS_DRAW* p_wk )
 				p_wk->nutsbuff[i].mat.x -= x << FX32_SHIFT;
 			}
 			p_wk->nutsbuff[i].mat.y += y << FX32_SHIFT;
+#if WB_FIX
 			CLACT_SetMatrix( p_wk->nutsbuff[i].p_clwk, &p_wk->nutsbuff[i].mat );
-
+#else
+      {
+        GFL_CLACTPOS pos;
+        pos.x = FX_Whole(p_wk->nutsbuff[i].mat.x);
+        pos.y = FX_Whole(p_wk->nutsbuff[i].mat.y);
+        GFL_CLACT_WK_SetPos( p_wk->nutsbuff[i].p_clwk, &pos, CLWK_SETSF_NONE );
+      }
+#endif
 			if( (p_wk->nutsbuff[i].mat.x < BCT_OAMAWAYNUTS_DEL_XMIN) ||
 				(p_wk->nutsbuff[i].mat.x > BCT_OAMAWAYNUTS_DEL_XMAX) ||
 				(p_wk->nutsbuff[i].mat.y < BCT_OAMAWAYNUTS_DEL_YMIN + BCT_GRA_OAMSUBSURFACE_Y) ||
@@ -7804,6 +8578,7 @@ static void BCT_CLIENT_OamAwayNutsStart( BCT_CLIENT_OAMAWAYNUTS_DRAW* p_wk, s32 
 {
 	int i;
 	BCT_CLIENT_OAMAWAYNUTS* p_obj = NULL;
+  GFL_CLACTPOS pos;
 
 	// 空いてるワーク取得
 	for( i=0; i<BCT_OAMAWAYNUTS_BUFFNUM; i++ ){
@@ -7827,7 +8602,13 @@ static void BCT_CLIENT_OamAwayNutsStart( BCT_CLIENT_OAMAWAYNUTS_DRAW* p_wk, s32 
 	// 座標を設定
 	p_obj->mat.x = x << FX32_SHIFT;
 	p_obj->mat.y = (y << FX32_SHIFT) + BCT_GRA_OAMSUBSURFACE_Y;
+#if WB_FIX
 	CLACT_SetMatrix( p_obj->p_clwk, &p_obj->mat );
+#else
+  pos.x = FX_Whole(p_obj->mat.x);
+  pos.y = FX_Whole(p_obj->mat.y);
+  GFL_CLACT_WK_SetPos( p_obj->p_clwk, &pos, CLWK_SETSF_NONE );
+#endif
 
 	// 表示、動作開始
 	p_obj->draw = TRUE;
@@ -7878,7 +8659,7 @@ static void BCT_CLIENT_OamAwayNutsMoveXY( int count, int countmax, int speed, in
  *	@param	heapID		ヒープID
  */
 //-----------------------------------------------------------------------------
-static void BCT_CLIENT_MainBackInit( BCT_CLIENT_MAINBACK* p_wk, BCT_CLIENT_GRAPHIC* p_graphic, ARCHANDLE* p_handle, int comm_num, u32 plno, u32 heapID, NNSFndAllocator* p_allocator )
+static void BCT_CLIENT_MainBackInit( BCT_CLIENT_MAINBACK* p_wk, BCT_CLIENT_GRAPHIC* p_graphic, ARCHANDLE* p_handle, int comm_num, u32 plno, u32 heapID )
 {
 	static const u16 CommNumNSBMD[ BCT_PLAYER_NUM ] = {
 		NARC_bucket_maru_stage_2p_nsbmd,	// 1人用
@@ -7910,6 +8691,7 @@ static void BCT_CLIENT_MainBackInit( BCT_CLIENT_MAINBACK* p_wk, BCT_CLIENT_GRAPH
 			idx = CommNumNSBMD[ comm_num-1 ];
 		}
 		
+  #if WB_FIX
 		// モデルﾃﾞｰﾀ読み込み
 		D3DOBJ_MdlLoadH( &p_wk->mdl[ i ], p_handle, idx, heapID );
 		// レンダーオブジェクトに登録
@@ -7929,19 +8711,72 @@ static void BCT_CLIENT_MainBackInit( BCT_CLIENT_MAINBACK* p_wk, BCT_CLIENT_GRAPH
 		}else{
 			D3DOBJ_SetRota( &p_wk->obj[ i ], BCT_MAINBACK_ROT, D3DOBJ_ROTA_WAY_Y );	// １程の角度
 		}
+	#else
+		// モデルﾃﾞｰﾀ読み込み
+    p_wk->p_mdlres[i] = GFL_G3D_CreateResourceHandle( p_handle, idx );
+    GFL_G3D_TransVramTexture(p_wk->p_mdlres[i]);
+
+		// レンダーオブジェクトに登録
+		p_wk->rnder[i] = GFL_G3D_RENDER_Create( p_wk->p_mdlres[i], 0, p_wk->p_mdlres[i] );
+//アニメ後にやる    p_wk->mdl[i] = GFL_G3D_OBJECT_Create(p_wk->rnder[i], NULL, 0);
+
+		//　座標設定
+  	VEC_Set(&p_wk->obj[i].trans, 0, BCT_FIELD_YUKA_DRAW_Y, 0);
+  	VEC_Set(&p_wk->obj[i].scale, BCT_MAINBACK_SCALE, BCT_MAINBACK_SCALE, BCT_MAINBACK_SCALE);
+  	MTX_Identity33(&p_wk->obj[i].rotate);
+  	VEC_Set(&p_wk->obj_rotate[i], 0, 0, 0);
+
+		// FEVER用の壁だけ非表示
+		if( i == BCT_MAINBACK_MDL_WALL_F ){
+			p_wk->draw_flag[i] = FALSE;
+		}
+		else{
+      p_wk->draw_flag[i] = TRUE;
+    }
+
+		// 壁はみんな共通の表示角度で写るようにする
+		if( (i==BCT_MAINBACK_MDL_WALL_N) || (i==BCT_MAINBACK_MDL_WALL_F) ){
+			p_wk->obj_rotate[i].y = BCT_CAMERA_ANGLEY_NetID[ comm_num-1 ][ plno ];  // １程の角度
+			BCT_RotateMtx(&p_wk->obj_rotate[i], &p_wk->obj[i].rotate);
+		}else{
+			p_wk->obj_rotate[i].y = BCT_MAINBACK_ROT; // １程の角度
+			BCT_RotateMtx(&p_wk->obj_rotate[i], &p_wk->obj[i].rotate);
+		}
+	#endif
 	}
 
 	// アニメ読み込み
 	for( i=0; i<BCT_MAINBACK_ANM_NUM; i++ ){
+	#if WB_FIX
 		D3DOBJ_AnmLoadH( &p_wk->anm[i], &p_wk->mdl[sc_AnmSetModel[i]], p_handle, 
 				sc_MainBackAnm[i], heapID, p_allocator );
-
+  #else
+		p_wk->p_anmres[i] = GFL_G3D_CreateResourceHandle( p_handle, sc_MainBackAnm[i] );
+		p_wk->anm[i] = GFL_G3D_ANIME_Create( 
+		  p_wk->rnder[sc_AnmSetModel[i]], p_wk->p_anmres[i], 0 ); 
+  #endif
+  
 		// 登録
+	#if WB_FIX
 		D3DOBJ_AddAnm( &p_wk->obj[sc_AnmSetModel[i]], &p_wk->anm[i] );
+	#else
+    //obj生成後にやる　GFL_G3D_OBJECT_EnableAnime(p_wk->mdl[sc_AnmSetModel[i]], i);
+	#endif
 	}
 
 	// アニメスピード設定
 	p_wk->anm_speed = BCT_FEVER_BACK_ANM_SPEED_START;
+
+#if WB_FIX
+  ;
+#else
+	for( i=0; i<BCT_MAINBACK_MDL_NUM; i++ ){
+    p_wk->mdl[i] = GFL_G3D_OBJECT_Create(p_wk->rnder[i], p_wk->anm, BCT_MAINBACK_ANM_NUM);
+  }
+	for( i=0; i<BCT_MAINBACK_ANM_NUM; i++ ){
+    GFL_G3D_OBJECT_EnableAnime(p_wk->mdl[sc_AnmSetModel[i]], i);
+  }
+#endif
 }
 
 //----------------------------------------------------------------------------
@@ -7952,17 +8787,32 @@ static void BCT_CLIENT_MainBackInit( BCT_CLIENT_MAINBACK* p_wk, BCT_CLIENT_GRAPH
  *	@param	p_graphic	描画システム
  */
 //-----------------------------------------------------------------------------
-static void BCT_CLIENT_MainBackExit( BCT_CLIENT_MAINBACK* p_wk, BCT_CLIENT_GRAPHIC* p_graphic, NNSFndAllocator* p_allocator )
+static void BCT_CLIENT_MainBackExit( BCT_CLIENT_MAINBACK* p_wk, BCT_CLIENT_GRAPHIC* p_graphic )
 {
 	int i;
 
+#if WB_FIX
 	for( i=0; i<BCT_MAINBACK_ANM_NUM; i++ ){
 		D3DOBJ_AnmDelete( &p_wk->anm[i], p_allocator );
 	}
+#else
+	for( i=0; i<BCT_MAINBACK_ANM_NUM; i++ ){
+    GFL_G3D_ANIME_Delete(p_wk->anm[i]);
+		GFL_G3D_DeleteResource( p_wk->p_anmres[i] );
+	}
+#endif
 
+#if WB_FIX
 	for( i=0; i<BCT_MAINBACK_MDL_NUM; i++ ){
 	    D3DOBJ_MdlDelete( &p_wk->mdl[i] ); 
 	}
+#else
+	for( i=0; i<BCT_MAINBACK_MDL_NUM; i++ ){
+	  GFL_G3D_OBJECT_Delete(p_wk->mdl[i]);
+	  GFL_G3D_DeleteResource(p_wk->p_mdlres[i]);
+	  GFL_G3D_RENDER_Delete(p_wk->rnder[i]);
+	}
+#endif
 }
 
 //----------------------------------------------------------------------------
@@ -7977,7 +8827,12 @@ static void BCT_CLIENT_MainBackDraw( BCT_CLIENT_MAINBACK* p_wk )
 	int i;
 
 	// 常にループアニメ
+#if WB_FIX
 	D3DOBJ_AnmLoop( &p_wk->anm[BCT_MAINBACK_ANM_WALL_N], p_wk->anm_speed );
+#else
+  GFL_G3D_OBJECT_LoopAnimeFrame(p_wk->mdl[sc_BCT_MARUNOMU_ANM_MDL[BCT_MAINBACK_ANM_WALL_N]], 
+    BCT_MAINBACK_ANM_WALL_N, p_wk->anm_speed);
+#endif
 
 	// 今の状態に合わせてアニメ
 	if( p_wk->fever ){
@@ -8036,12 +8891,32 @@ static void BCT_CLIENT_MainBackDraw( BCT_CLIENT_MAINBACK* p_wk )
 			break;
 		}
 
+#if WB_FIX
 		D3DOBJ_AnmSet( &p_wk->anm[BCT_MAINBACK_ANM_WALL_F], p_wk->fever_anm_frame );
 		D3DOBJ_AnmSet( &p_wk->anm[BCT_MAINBACK_ANM_WALL_F_TP], p_wk->fever_anm_frame );
+#else
+  	{
+  		int set_anmframe = p_wk->fever_anm_frame;
+  		GFL_G3D_OBJECT_SetAnimeFrame( 
+  		  p_wk->mdl[sc_BCT_MARUNOMU_ANM_MDL[BCT_MAINBACK_ANM_WALL_F]], 
+  		  BCT_MAINBACK_ANM_WALL_F, &set_anmframe );
+
+  		set_anmframe = p_wk->fever_anm_frame;
+  		GFL_G3D_OBJECT_SetAnimeFrame( 
+  		  p_wk->mdl[sc_BCT_MARUNOMU_ANM_MDL[BCT_MAINBACK_ANM_WALL_F_TP]], 
+  		  BCT_MAINBACK_ANM_WALL_F_TP, &set_anmframe );
+    }
+#endif
 	}
 
 	for( i=0; i<BCT_MAINBACK_MDL_NUM; i++ ){
+	#if WB_FIX
 	    D3DOBJ_Draw( &p_wk->obj[i] );
+	#else
+	    if(p_wk->draw_flag[i] == TRUE){
+        GFL_G3D_DRAW_DrawObjectCullingON(p_wk->mdl[i], &p_wk->obj[i]);
+      }
+	#endif
 	}
 }
 
@@ -8055,8 +8930,13 @@ static void BCT_CLIENT_MainBackDraw( BCT_CLIENT_MAINBACK* p_wk )
 static void BCT_CLIENT_MainBackSetDrawFever( BCT_CLIENT_MAINBACK* p_wk )
 {
 	// 壁を切り替える
+#if WB_FIX
 	D3DOBJ_SetDraw( &p_wk->obj[BCT_MAINBACK_MDL_WALL_N], FALSE );
 	D3DOBJ_SetDraw( &p_wk->obj[BCT_MAINBACK_MDL_WALL_F], TRUE );
+#else
+	p_wk->draw_flag[BCT_MAINBACK_MDL_WALL_N] = FALSE;
+	p_wk->draw_flag[BCT_MAINBACK_MDL_WALL_F] = TRUE;
+#endif
 
 //	p_wk->fever_anm_frame = BCT_MAINBACK_FEVER_ANM_FRAME_LOOPS;
 	p_wk->fever_anm_frame = 0;
@@ -8147,7 +9027,7 @@ static void BCT_CLIENT_CalcPlaneVecHitCheck( const VecFx32* cp_mat, const VecFx3
 //-----------------------------------------------------------------------------
 static void BCT_CLIENT_CameraTargetYSet( BCT_CLIENT_GRAPHIC* p_gra, fx32 y )
 {
-	p_gra->target.y	= y;
+	p_gra->camera_target.y	= y;
 }
 
 //----------------------------------------------------------------------------
@@ -8160,11 +9040,22 @@ static void BCT_CLIENT_CameraTargetYSet( BCT_CLIENT_GRAPHIC* p_gra, fx32 y )
 //-----------------------------------------------------------------------------
 static void BCT_CLIENT_CameraAngleXSet( BCT_CLIENT_GRAPHIC* p_gra, u16 angle )
 {
+#if WB_FIX
 	CAMERA_ANGLE ca_angle;
 
 	ca_angle	= GFC_GetCameraAngle( p_gra->p_camera );
 	ca_angle.x	= angle;
 	GFC_SetCameraAngleRev( &ca_angle, p_gra->p_camera );
+#else
+  VecFx32 pos;
+	VecFx32	target = { BCT_CAMERA_TARGET_X, BCT_CAMERA_TARGET_Y, BCT_CAMERA_TARGET_Z };
+  
+  p_gra->camera_angle.x = angle;
+	SetCamPosByTarget_Dist_Ang(&pos, 
+		p_gra->camera_angle.x, p_gra->camera_angle.y, p_gra->camera_angle.z,
+		BCT_CAMERA_DISTANCE, &target);  //camera_targetは反映されていない気がする　&p_gra->camera_target);
+	GFL_G3D_CAMERA_SetPos( p_gra->p_camera, &pos );
+#endif
 }
 
 //----------------------------------------------------------------------------
@@ -8321,13 +9212,13 @@ static void BCT_CLIENT_BGPRISCRL_SetPri( BCT_CLIENT_GRAPHIC* p_gra, s16 most_bac
 		// パレット設定
 		if( i==0 ){
 			// 一番下
-			GFL_BG_ChangeScreenPalette( p_gra->p_bgl, bgno, 0, 0, 32, 32, BCT_GRA_BGSUB_PAL_NETID0_BACK+(plno*2) );
+			GFL_BG_ChangeScreenPalette( bgno, 0, 0, 32, 32, BCT_GRA_BGSUB_PAL_NETID0_BACK+(plno*2) );
 		}else{
 			// それ以外
-			GFL_BG_ChangeScreenPalette( p_gra->p_bgl, bgno, 0, 0, 32, 32, BCT_GRA_BGSUB_PAL_NETID0_TOP+(plno*2) );
+			GFL_BG_ChangeScreenPalette( bgno, 0, 0, 32, 32, BCT_GRA_BGSUB_PAL_NETID0_TOP+(plno*2) );
 		}
 
-		GF_BGL_LoadScreenReq( p_gra->p_bgl, bgno );
+		GFL_BG_LoadScreenReq( bgno );
 	}
 }
 
@@ -8352,38 +9243,39 @@ static void BCT_CLIENT_NUTS_COUNT_Init( BCT_CLIENT_NUTS_COUNT* p_wk, BCT_CLIENT_
 	
 	// テーブルとなるOAMの読み込み
 	{
+#if WB_FIX
 		BOOL result;
 
-        // OAMリソース読込み
-        p_wk->resobj[ 0 ] = CLACT_U_ResManagerResAddArcChar_ArcHandle(
-                    p_gra->resMan[ 0 ], p_handle,
-                    NARC_bucket_counter_NCGR,
-                    FALSE, BCT_NUTS_COUNT_DRAW_RESID, NNS_G2D_VRAM_TYPE_2DMAIN, heapID );
+    // OAMリソース読込み
+    p_wk->resobj[ 0 ] = CLACT_U_ResManagerResAddArcChar_ArcHandle(
+                p_gra->resMan[ 0 ], p_handle,
+                NARC_bucket_counter_NCGR,
+                FALSE, BCT_NUTS_COUNT_DRAW_RESID, NNS_G2D_VRAM_TYPE_2DMAIN, heapID );
 
-        p_wk->resobj[ 1 ] = CLACT_U_ResManagerResAddArcPltt_ArcHandle(
-                    p_gra->resMan[ 1 ], p_handle,
-                    NARC_bucket_counter_NCLR,
-                    FALSE, BCT_NUTS_COUNT_DRAW_RESID, NNS_G2D_VRAM_TYPE_2DMAIN, 1, heapID );
+    p_wk->resobj[ 1 ] = CLACT_U_ResManagerResAddArcPltt_ArcHandle(
+                p_gra->resMan[ 1 ], p_handle,
+                NARC_bucket_counter_NCLR,
+                FALSE, BCT_NUTS_COUNT_DRAW_RESID, NNS_G2D_VRAM_TYPE_2DMAIN, 1, heapID );
 
-        p_wk->resobj[ 2 ] = CLACT_U_ResManagerResAddArcKindCell_ArcHandle(
-                p_gra->resMan[ 2 ], p_handle,
-                NARC_bucket_counter_NCER, FALSE,
-                BCT_NUTS_COUNT_DRAW_RESID, CLACT_U_CELL_RES, heapID );
+    p_wk->resobj[ 2 ] = CLACT_U_ResManagerResAddArcKindCell_ArcHandle(
+            p_gra->resMan[ 2 ], p_handle,
+            NARC_bucket_counter_NCER, FALSE,
+            BCT_NUTS_COUNT_DRAW_RESID, CLACT_U_CELL_RES, heapID );
 
-        p_wk->resobj[ 3 ] = CLACT_U_ResManagerResAddArcKindCell_ArcHandle(
-                p_gra->resMan[ 3 ], p_handle,
-                NARC_bucket_counter_NANR, FALSE,
-                BCT_NUTS_COUNT_DRAW_RESID, CLACT_U_CELLANM_RES, heapID );
+    p_wk->resobj[ 3 ] = CLACT_U_ResManagerResAddArcKindCell_ArcHandle(
+            p_gra->resMan[ 3 ], p_handle,
+            NARC_bucket_counter_NANR, FALSE,
+            BCT_NUTS_COUNT_DRAW_RESID, CLACT_U_CELLANM_RES, heapID );
 
-        // 転送
-        result = CLACT_U_CharManagerSetCharModeAdjustAreaCont( p_wk->resobj[ 0 ] );
-        GF_ASSERT( result );
-        result = CLACT_U_PlttManagerSetCleanArea( p_wk->resobj[ 1 ] );
-        GF_ASSERT( result );
+    // 転送
+    result = CLACT_U_CharManagerSetCharModeAdjustAreaCont( p_wk->resobj[ 0 ] );
+    GF_ASSERT( result );
+    result = CLACT_U_PlttManagerSetCleanArea( p_wk->resobj[ 1 ] );
+    GF_ASSERT( result );
 
-        // リソースだけ破棄
-        CLACT_U_ResManagerResOnlyDelete( p_wk->resobj[ 0 ] );
-        CLACT_U_ResManagerResOnlyDelete( p_wk->resobj[ 1 ] );
+    // リソースだけ破棄
+    CLACT_U_ResManagerResOnlyDelete( p_wk->resobj[ 0 ] );
+    CLACT_U_ResManagerResOnlyDelete( p_wk->resobj[ 1 ] );
 
 		// セルアクターヘッダー作成
 		CLACT_U_MakeHeader( &p_wk->header, 
@@ -8394,10 +9286,22 @@ static void BCT_CLIENT_NUTS_COUNT_Init( BCT_CLIENT_NUTS_COUNT* p_wk, BCT_CLIENT_
 				p_gra->resMan[0], p_gra->resMan[1], 
 				p_gra->resMan[2], p_gra->resMan[3],
 				NULL, NULL );
+#else
+  p_wk->resobj[0] = GFL_CLGRP_CGR_Register(p_handle, 
+    NARC_bucket_counter_NCGR, FALSE, CLSYS_DRAW_MAIN, heapID);
+
+  p_wk->resobj[1] = 
+    PLTTSLOT_ResourceSet(p_gra->plttslot, p_handle, 
+    NARC_bucket_counter_NCLR, CLSYS_DRAW_MAIN, 1, heapID);
+
+  p_wk->resobj[2] = GFL_CLGRP_CELLANIM_Register(
+    p_handle, NARC_bucket_counter_NCER, NARC_bucket_counter_NANR, heapID);
+#endif
 	}
 
 	// テーブル部分のOAM作成
 	{
+#if WB_FIX
 		CLACT_ADD_SIMPLE add;
 		
 		add.ClActSet		= p_gra->clactSet;
@@ -8410,10 +9314,25 @@ static void BCT_CLIENT_NUTS_COUNT_Init( BCT_CLIENT_NUTS_COUNT* p_wk, BCT_CLIENT_
 
 		p_wk->p_tblwk = CLACT_AddSimple( &add );
 		GFL_CLACT_WK_SetDrawEnable( p_wk->p_tblwk, FALSE );
+#else
+    GFL_CLWK_DATA add;
+    
+    add.pos_x = FX_Whole(BCT_NUTS_COUNT_INOUT_SX);
+    add.pos_y = FX_Whole(BCT_NUTS_COUNT_YURE_SY);
+    add.anmseq = 0;
+    add.softpri = BCT_NUTS_COUNT_DRAW_SFPRI;
+    add.bgpri = BCT_NUTS_COUNT_DRAW_BGPRI;
+
+    p_wk->p_tblwk = GFL_CLACT_WK_Create(p_gra->clactSet, p_wk->resobj[0], 
+      p_wk->resobj[1], p_wk->resobj[2], 
+      &add, CLSYS_DEFREND_MAIN, heapID);
+    GFL_CLACT_WK_SetDrawEnable(p_wk->p_tblwk, FALSE);
+#endif
 	}
 	
 	// フォントOAMデータ作成
 	{
+#if WB_FIX
 		int char_size;
 		BOOL result;
 		FONTOAM_INIT fontoam_init;
@@ -8422,7 +9341,7 @@ static void BCT_CLIENT_NUTS_COUNT_Init( BCT_CLIENT_NUTS_COUNT* p_wk, BCT_CLIENT_
 		p_wk->p_str = GFL_STR_CreateBuffer( 16, heapID );
 		
 		// ビットマップ
-		GF_BGL_BmpWinObjAdd( p_gra->p_bgl, 
+		GF_BGL_BmpWinObjAdd( 
 				&p_wk->objbmp, 
 				BCT_NUTS_COUNT_BMP_SIZX, BCT_NUTS_COUNT_BMP_SIZY, 
 				0, 0 );
@@ -8471,7 +9390,39 @@ static void BCT_CLIENT_NUTS_COUNT_Init( BCT_CLIENT_NUTS_COUNT* p_wk, BCT_CLIENT_
 
 		// ビットマップ
 		GFL_BMPWIN_Delete( &p_wk->objbmp );
+#else
+  	BMPOAM_ACT_DATA head;
+    ARCHANDLE *pltt_handle;
+    
+		// 文字列バッファ作成
+		p_wk->p_str = GFL_STR_CreateBuffer( 16, heapID );
+  	
+  	//BMP作成
+  	GF_ASSERT(p_wk->objbmp == NULL);
+  	p_wk->objbmp = GFL_BMP_Create(
+  	  BCT_NUTS_COUNT_BMP_SIZX, BCT_NUTS_COUNT_BMP_SIZY, GFL_BMP_16_COLOR, heapID);
 
+    //フォント用パレット
+    pltt_handle = GFL_ARC_OpenDataHandle(ARCID_FONT, heapID);
+    p_wk->p_fontoam_pltt = PLTTSLOT_ResourceCompSet(p_gra->plttslot, pltt_handle, 
+      NARC_font_default_nclr, CLSYS_DRAW_MAIN, 1, heapID);
+    GFL_ARC_CloseDataHandle(pltt_handle);
+    
+  	//フォントアクター作成
+  	head.bmp = p_wk->objbmp;
+  	head.x = BCT_NUTS_COUNT_FONTOAM_X;
+  	head.y = BCT_NUTS_COUNT_FONTOAM_Y;
+  	head.pltt_index = p_wk->p_fontoam_pltt;
+  	head.pal_offset = 0;
+  	head.soft_pri = BCT_NUTS_COUNT_FONTOAM_SF_PRI;
+  	head.bg_pri = BCT_NUTS_COUNT_FONTOAM_BG_PRI;
+  	head.setSerface = CLWK_SETSF_NONE;
+  	head.draw_type = CLSYS_DRAW_MAIN;
+  	p_wk->p_fontoam = BmpOam_ActorAdd(p_gra->p_fontoam_sys, &head);
+  	
+  	//表示OFF
+  	BmpOam_ActorSetDrawEnable(p_wk->p_fontoam, FALSE);
+#endif
 	}
 
 	// 動作パラメータ初期化
@@ -8499,23 +9450,34 @@ static void BCT_CLIENT_NUTS_COUNT_Exit( BCT_CLIENT_NUTS_COUNT* p_wk, BCT_CLIENT_
 {
 	// フォントOAMデータ作成
 	{
-		
+#if WB_FIX
 		// FONTOAMワークを破棄
 		FONTOAM_OAMDATA_Delete( p_wk->p_fontoam ); 
 
 		// パレット破棄
-        CLACT_U_PlttManagerDelete( p_wk->p_fontoam_pltt );
-        CLACT_U_ResManagerResDelete( p_gra->resMan[1], p_wk->p_fontoam_pltt );
-
+    CLACT_U_PlttManagerDelete( p_wk->p_fontoam_pltt );
+    CLACT_U_ResManagerResDelete( p_gra->resMan[1], p_wk->p_fontoam_pltt );
 
 		// キャラクタ領域を破棄
 		CharVramAreaFree( &p_wk->fontoam_chardata );
 
 		// OAM構成データを作成
-		FONTOAM_OAMDATA_Free( p_wk->p_fontoam_data );
-		
+
 		// 文字列バッファ破棄
 		GFL_STR_DeleteBuffer( p_wk->p_str );
+		FONTOAM_OAMDATA_Free( p_wk->p_fontoam_data );
+#else
+		// FONTOAMワークを破棄
+    BmpOam_ActorDel(p_wk->p_fontoam);
+		// パレット破棄
+  	PLTTSLOT_ResourceFree(p_gra->plttslot, p_wk->p_fontoam_pltt, CLSYS_DRAW_MAIN);
+  	
+		GFL_STR_DeleteBuffer( p_wk->p_str );
+
+  	GFL_BMP_Delete(p_wk->objbmp);
+  	p_wk->objbmp = NULL;
+#endif
+
 	}
 
 	// テーブル破棄
@@ -8523,15 +9485,37 @@ static void BCT_CLIENT_NUTS_COUNT_Exit( BCT_CLIENT_NUTS_COUNT* p_wk, BCT_CLIENT_
 
 	// テーブルとなるOAMのリソース破棄
 	{
-        // VRAM管理から破棄
-        CLACT_U_CharManagerDelete( p_wk->resobj[0] );
-        CLACT_U_PlttManagerDelete( p_wk->resobj[1] );
-        
-        // リソース破棄
-        CLACT_U_ResManagerResDelete( p_gra->resMan[0], p_wk->resobj[0] );
-        CLACT_U_ResManagerResDelete( p_gra->resMan[1], p_wk->resobj[1] );
-        CLACT_U_ResManagerResDelete( p_gra->resMan[2], p_wk->resobj[2] );
-        CLACT_U_ResManagerResDelete( p_gra->resMan[3], p_wk->resobj[3] );
+#if WB_FIX
+    // VRAM管理から破棄
+    CLACT_U_CharManagerDelete( p_wk->resobj[0] );
+    CLACT_U_PlttManagerDelete( p_wk->resobj[1] );
+    
+    // リソース破棄
+    CLACT_U_ResManagerResDelete( p_gra->resMan[0], p_wk->resobj[0] );
+    CLACT_U_ResManagerResDelete( p_gra->resMan[1], p_wk->resobj[1] );
+    CLACT_U_ResManagerResDelete( p_gra->resMan[2], p_wk->resobj[2] );
+    CLACT_U_ResManagerResDelete( p_gra->resMan[3], p_wk->resobj[3] );
+#else
+    GFL_CLGRP_CGR_Release(p_wk->resobj[0]);
+  	PLTTSLOT_ResourceFree(p_gra->plttslot, p_wk->resobj[1], CLSYS_DRAW_MAIN);
+  	GFL_CLGRP_CELLANIM_Release(p_wk->resobj[2]);
+#endif
+	}
+}
+
+//--------------------------------------------------------------
+/**
+ * フォントOAMの転送制御
+ *
+ * @param   p_wk		
+ * @param   p_gra		
+ */
+//--------------------------------------------------------------
+static void BCT_CLIENT_NUTS_COUNT_FontOamBmpTrans(BCT_CLIENT_NUTS_COUNT* p_wk, PRINT_QUE *printQue)
+{
+	if(p_wk->objbmp_trans_req > 0 && p_wk->objbmp != NULL && PRINTSYS_QUE_IsExistTarget(printQue, p_wk->objbmp) == FALSE){
+		BmpOam_ActorBmpTrans(p_wk->p_fontoam);
+		p_wk->objbmp_trans_req--;
 	}
 }
 
@@ -8543,15 +9527,20 @@ static void BCT_CLIENT_NUTS_COUNT_Exit( BCT_CLIENT_NUTS_COUNT* p_wk, BCT_CLIENT_
  *	@param	count		開始時のカウント値
  */
 //-----------------------------------------------------------------------------
-static void BCT_CLIENT_NUTS_COUNT_Start( BCT_CLIENT_NUTS_COUNT* p_wk, BCT_CLIENT_GRAPHIC* p_gra, u32 count )
+static void BCT_CLIENT_NUTS_COUNT_Start( BCT_CLIENT_NUTS_COUNT* p_wk, BCT_CLIENT_GRAPHIC* p_gra, u32 count, PRINT_QUE *printQue, GFL_FONT *font_handle )
 {
 	// 数字を書き込んで転送
 	{
-		STRBUF_SetNumber( p_wk->p_str, count, 2, 
-				STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT );
-
+	#if WB_FIX
+		STRBUF_SetNumber( p_wk->p_str, count, 2, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT );
+  #else
+		STRTOOL_SetNumber( p_wk->p_str, count, 2, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT );
+  #endif
+  
+		// 転送
+	#if WB_FIX
 		// ビットマップ
-		GF_BGL_BmpWinObjAdd( p_gra->p_bgl, 
+		GF_BGL_BmpWinObjAdd( 
 				&p_wk->objbmp, 
 				BCT_NUTS_COUNT_BMP_SIZX, BCT_NUTS_COUNT_BMP_SIZY, 
 				0, 0 );
@@ -8560,16 +9549,28 @@ static void BCT_CLIENT_NUTS_COUNT_Start( BCT_CLIENT_NUTS_COUNT* p_wk, BCT_CLIENT
 		PRINT_UTIL_PrintColor(/*引数内はまだ未移植*/ &p_wk->objbmp, NET_FONT_SYSTEM, p_wk->p_str,
 				0, 0, MSG_NO_PUT, BCT_COL_OAM_BLACK, NULL );
 
-		// 転送
 		FONTOAM_OAMDATA_ResetBmp( p_wk->p_fontoam, p_wk->p_fontoam_data, &p_wk->objbmp, p_wk->heapID );
-
 
 		// ビットマップ
 		GFL_BMPWIN_Delete( &p_wk->objbmp );
+  #else
+    GF_ASSERT(p_wk->objbmp != NULL);
+		// 書き込む
+		PRINTSYS_PrintQueColor(printQue, p_wk->objbmp, 
+		    0, 0, p_wk->p_str, font_handle, BCT_COL_OAM_BLACK);
+
+    //転送自体はBCT_CLIENT_NUTS_COUNT_FontOamBmpTransで行う
+    p_wk->objbmp_trans_req++;
+  #endif
+
 	}
 
 	// 描画開始
+#if WB_FIX
 	FONTOAM_SetDrawFlag( p_wk->p_fontoam, TRUE );
+#else
+ 	BmpOam_ActorSetDrawEnable(p_wk->p_fontoam, TRUE);
+#endif
 	GFL_CLACT_WK_SetDrawEnable( p_wk->p_tblwk, TRUE );
 
 	// 
@@ -8608,18 +9609,24 @@ static void BCT_CLIENT_NUTS_COUNT_End( BCT_CLIENT_NUTS_COUNT* p_wk )
  *	@param	count		カウント値
  */
 //-----------------------------------------------------------------------------
-static void BCT_CLIENT_NUTS_COUNT_SetData( BCT_CLIENT_NUTS_COUNT* p_wk, BCT_CLIENT_GRAPHIC* p_gra, u32 count )
+static void BCT_CLIENT_NUTS_COUNT_SetData( BCT_CLIENT_NUTS_COUNT* p_wk, BCT_CLIENT_GRAPHIC* p_gra, u32 count, PRINT_QUE *printQue, GFL_FONT *font_handle )
 {
 	// 退室中でなければ設定
 	if( p_wk->seq != BCT_NUTS_COUNT_SEQ_OUT ){
 		
 		// 数字を更新
 		{
+		#if WB_FIX
 			STRBUF_SetNumber( p_wk->p_str, count, 2, 
 					STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT );
-
+    #else
+			STRTOOL_SetNumber( p_wk->p_str, count, 2, 
+					STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT );
+    #endif
+    
+    #if WB_FIX
 			// ビットマップ
-			GF_BGL_BmpWinObjAdd( p_gra->p_bgl, 
+			GF_BGL_BmpWinObjAdd( 
 					&p_wk->objbmp, 
 					BCT_NUTS_COUNT_BMP_SIZX, BCT_NUTS_COUNT_BMP_SIZY, 
 					0, 0 );
@@ -8633,6 +9640,15 @@ static void BCT_CLIENT_NUTS_COUNT_SetData( BCT_CLIENT_NUTS_COUNT* p_wk, BCT_CLIE
 
 			// ビットマップ
 			GFL_BMPWIN_Delete( &p_wk->objbmp );
+	  #else
+      GF_ASSERT(p_wk->objbmp != NULL);
+  		// 書き込む
+  		PRINTSYS_PrintQueColor(printQue, p_wk->objbmp, 
+  		    0, 0, p_wk->p_str, font_handle, BCT_COL_OAM_BLACK);
+
+      //転送自体はBCT_CLIENT_NUTS_COUNT_FontOamBmpTransで行う
+      p_wk->objbmp_trans_req++;
+	  #endif
 		}
 
 		// ゆれアニメ開始
@@ -8647,7 +9663,7 @@ static void BCT_CLIENT_NUTS_COUNT_SetData( BCT_CLIENT_NUTS_COUNT* p_wk, BCT_CLIE
  *	@param	p_wk		ワーク
  */
 //-----------------------------------------------------------------------------
-static void BCT_CLIENT_NUTS_COUNT_Main( BCT_CLIENT_NUTS_COUNT* p_wk )
+static void BCT_CLIENT_NUTS_COUNT_Main( BCT_CLIENT_NUTS_COUNT* p_wk, PRINT_QUE *printQue )
 {
 	switch( p_wk->seq ){
 	// 待機状態
@@ -8676,7 +9692,11 @@ static void BCT_CLIENT_NUTS_COUNT_Main( BCT_CLIENT_NUTS_COUNT* p_wk )
 		}else{
 			p_wk->seq = BCT_NUTS_COUNT_SEQ_WAIT;
 			// 表示OFF
+#if WB_FIX
 			FONTOAM_SetDrawFlag( p_wk->p_fontoam, FALSE );
+#else
+    	BmpOam_ActorSetDrawEnable(p_wk->p_fontoam, FALSE);
+#endif
 			GFL_CLACT_WK_SetDrawEnable( p_wk->p_tblwk, FALSE );
 		}
 		break;
@@ -8703,12 +9723,27 @@ static void BCT_CLIENT_NUTS_COUNT_Main( BCT_CLIENT_NUTS_COUNT* p_wk )
 	// 座標設定
 	{
 		VecFx32 matrix;
+    GFL_CLACTPOS pos;
 		matrix.x = p_wk->inout_data.x;
 		matrix.y = p_wk->yure_data.x;
-		
+	#if WB_FIX
 		CLACT_SetMatrix( p_wk->p_tblwk, &matrix );
+	#else
+    pos.x = FX_Whole(matrix.x);
+    pos.y = FX_Whole(matrix.y);
+    GFL_CLACT_WK_SetPos( p_wk->p_tblwk, &pos, CLWK_SETSF_NONE );
+	#endif
+	
+	#if WB_FIX
 		FONTOAM_ReflectParentMat( p_wk->p_fontoam );
+	#else
+  	BmpOam_ActorSetPos(p_wk->p_fontoam, 
+  	    pos.x + BCT_NUTS_COUNT_FONTOAM_X, pos.y + BCT_NUTS_COUNT_FONTOAM_Y);
+	#endif
 	}
+
+  //フォントOAM更新
+  BCT_CLIENT_NUTS_COUNT_FontOamBmpTrans(p_wk, printQue);
 }
 
 
@@ -8724,7 +9759,7 @@ static void BCT_CLIENT_FEVER_EFF_Start( BCT_CLIENT_FEVER_EFF_WK* p_wk )
 	p_wk->seq	= 0;
 	p_wk->move	= TRUE;
 	p_wk->wait	= 0; 
-	Snd_SePlay( BCT_SND_FEVER_CHIME );// FEVERチャイム
+	PMSND_PlaySE( BCT_SND_FEVER_CHIME );// FEVERチャイム
 
 }
 
@@ -8760,11 +9795,13 @@ static void BCT_CLIENT_FEVER_EFF_Main( BCT_CLIENT_FEVER_EFF_WK* p_wk, BCT_CLIENT
 		// BGMのテンポアップ
 		tempo = (p_wk->wait*BCT_FEVER_EFF_BGM_TEMPO_DIF) / BCT_FEVER_EFF_FLASHOUT_FLASHOUT_WAIT;
 		tempo += BCT_FEVER_EFF_BGM_TEMPO_START;
+#if WB_TEMP_FIX
 		Snd_PlayerSetTempoRatio( SND_HANDLE_BGM, tempo );
+#endif
 
 		// マルノームが動く音
 		if( BCT_FEVER_EFF_SE_MARUNOMUMOVE == p_wk->wait ){
-			Snd_SePlay( BCT_SND_FEVER_MOVE );
+			PMSND_PlaySE( BCT_SND_FEVER_MOVE );
 		}
 
 		
@@ -8822,7 +9859,9 @@ static void BCT_CLIENT_FEVER_EFF_Main( BCT_CLIENT_FEVER_EFF_WK* p_wk, BCT_CLIENT
 //-----------------------------------------------------------------------------
 static void BCT_CLIENT_FEVER_EFF_Reset( BCT_CLIENT_FEVER_EFF_WK* p_wk )
 {
+#if WB_TEMP_FIX
 	Snd_PlayerSetTempoRatio( SND_HANDLE_BGM, 256 );
+#endif
 }
 
 
@@ -9114,3 +10153,27 @@ static void BCT_DEBUG_AutoSlow( BCT_CLIENT* p_wk )
 }
 
 #endif
+
+
+//--------------------------------------------------------------
+/**
+ * @brief   回転行列の計算
+ *
+ * @param   status		
+ * @param   rotate		
+ */
+//--------------------------------------------------------------
+static void BCT_RotateMtx(VecFx32 *rotate, MtxFx33 *dst_mtx)
+{
+	MtxFx33 mtx, calc_mtx;
+	
+	MTX_Identity33( &mtx );
+	MTX_RotX33( &calc_mtx, FX_SinIdx( rotate->x ), FX_CosIdx( rotate->x ) );
+	MTX_Concat33( &calc_mtx, &mtx, &mtx );
+	MTX_RotZ33( &calc_mtx, FX_SinIdx( rotate->z ), FX_CosIdx( rotate->z ) );
+	MTX_Concat33( &calc_mtx, &mtx, &mtx );
+	MTX_RotY33( &calc_mtx, FX_SinIdx( rotate->y ), FX_CosIdx( rotate->y ) );
+	MTX_Concat33( &calc_mtx, &mtx, &mtx );
+	
+	*dst_mtx = mtx;
+}

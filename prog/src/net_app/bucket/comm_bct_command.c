@@ -14,6 +14,7 @@
 #include "net\network_define.h"
 #include "comm_bct_command_func.h"
 #include "comm_bct_command.h"
+#include "system/main.h"
 
 
 //-----------------------------------------------------------------------------
@@ -52,7 +53,7 @@
 //-----------------------------------------------------------------------------
 
 // 対応するコールバック関数
-static const NetRecvFuncTable _CommBucketTbl[] = {
+static const CommPacketTbl _CommBucketTbl[] = {
 	//-------------------------------------
 	//　ゲーム用
 	//=====================================
@@ -71,7 +72,7 @@ static const NetRecvFuncTable _CommBucketTbl[] = {
  *	@brief		コマンドテーブルを取得
  */
 //-----------------------------------------------------------------------------
-const NetRecvFuncTable* BCT_CommCommandTclGet( void )
+const CommPacketTbl* BCT_CommCommandTclGet( void )
 {
 	return _CommBucketTbl;
 }
@@ -83,6 +84,6 @@ const NetRecvFuncTable* BCT_CommCommandTclGet( void )
 //-----------------------------------------------------------------------------
 int BCT_CommCommandTblNumGet( void )
 {
-    return sizeof(_CommBucketTbl)/sizeof(NetRecvFuncTable);
+    return sizeof(_CommBucketTbl)/sizeof(CommPacketTbl);
 }
 

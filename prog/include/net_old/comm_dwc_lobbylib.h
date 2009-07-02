@@ -167,8 +167,11 @@ typedef enum {
 //-------------------------------------
 ///	ミニゲームタイムリミット
 //=====================================
-#define OLDDWC_LOBBY_MG_TIMELIMIT	15  //(60)
-
+#ifdef PM_DEBUG
+#define OLDDWC_LOBBY_MG_TIMELIMIT	20    //(60)
+#else //PM_DEBUG
+#define OLDDWC_LOBBY_MG_TIMELIMIT	(60)
+#endif  //PM_DEBUG
 
 //-------------------------------------
 ///	VIP情報

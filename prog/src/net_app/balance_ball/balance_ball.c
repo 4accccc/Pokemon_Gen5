@@ -21,6 +21,7 @@
 #include "bb_server.h"
 #include "bb_client.h"
 #include "system/gfl_use.h"
+#include "net_old/comm_def.h"
 
 #define BB_COMM_END_CMD	( 999 )
 
@@ -120,7 +121,7 @@ static void BalanceBall_MainInit( BB_WORK* wk )
 	///< ’ÊM•”•ª
 	{
 		int comm_num = CommInfoGetEntryNum();		
-		wk->netid = GFL_NET_SystemGetCurrentID();		
+		wk->netid = CommGetCurrentID();		
 		BB_CommCommandInit( wk );		
 		if ( IsParentID( wk ) == TRUE ){			
 			wk->p_server = BB_Server_AllocMemory( comm_num, &wk->sys );
@@ -282,7 +283,7 @@ static void BalanceBall_MainInit( BB_WORK* wk )
 	PaletteWorkSet_VramCopy( wk->sys.pfd, FADE_MAIN_OBJ, 0 * 16, 16 * 0x20 );
 	
 	if ( wk->parent_wk->vchat ){
-		GFL_NET_DWC_StartVChat( HEAPID_BB );
+		mydwc_startvchat( HEAPID_BB );
 	}
 }
 
@@ -719,7 +720,7 @@ GFL_PROC_RESULT BalanceBallProc_Main( GFL_PROC* proc, int* seq, void * pwk, void
 				Reset_GameData( wk );				
 				BB_MainSeq_Change( wk, bEnd, eBB_SEQ_ENTRY_INIT, seq );
 				if ( wk->parent_wk->vchat ){
-					GFL_NET_DWC_StopVChat();
+					mydwc_stopvchat();
 				}
 				break;
 			}
@@ -730,10 +731,10 @@ GFL_PROC_RESULT BalanceBallProc_Main( GFL_PROC* proc, int* seq, void * pwk, void
 	case eBB_SEQ_END:
 		bEnd = TRUE;
 		
-		GFL_NET_HANDLE_TimingSyncStart(GFL_NET_HANDLE_GetCurrentHandle(),  CCMD_BB_CONNECT_END );
-			
+		CommTimingSyncStart( CCMD_BB_CONNECT_END );
+	
 		if ( wk->parent_wk->vchat ){
-			GFL_NET_DWC_StopVChat();
+			mydwc_stopvchat();
 		}
 		BB_MainSeq_Change( wk, bEnd, eBB_SEQ_END_WAIT, seq );
 		break;
@@ -741,7 +742,7 @@ GFL_PROC_RESULT BalanceBallProc_Main( GFL_PROC* proc, int* seq, void * pwk, void
 		
 	case eBB_SEQ_END_WAIT:
 	default:
-		bEnd = GFL_NET_HANDLE_IsTimingSync(GFL_NET_HANDLE_GetCurrentHandle(), CCMD_BB_CONNECT_END );
+		bEnd = CommIsTimingSync( CCMD_BB_CONNECT_END );
 		if(bEnd == TRUE){
 			return GFL_PROC_RES_FINISH;
 		}
@@ -886,13 +887,13 @@ GFL_PROC_RESULT BalanceBallProc_Exit( GFL_PROC* proc, int* seq, void * pwk, void
 				return GFL_PROC_RES_FINISH;
 			}
 
-			GFL_NET_HANDLE_TimingSyncStart(GFL_NET_HANDLE_GetCurrentHandle(),  BB_COMM_END_CMD );
+			CommTimingSyncStart( BB_COMM_END_CMD );
 			(*seq)++;
 		}
 		break;
 
 	default:
-		if( (GFL_NET_HANDLE_IsTimingSync(GFL_NET_HANDLE_GetCurrentHandle(), BB_COMM_END_CMD ) == TRUE) || 
+		if( (CommIsTimingSync( BB_COMM_END_CMD ) == TRUE) || 
 			(CommGetConnectNum() < CommInfoGetEntryNum()) ){	// l”‚ª­‚È‚­‚È‚Á‚½‚ç‚»‚Ì‚Ü‚Ü”²‚¯‚é
 			return GFL_PROC_RES_FINISH;
 		}
@@ -1331,7 +1332,7 @@ static void BB_VBlank(GFL_TCB *tcb, void *work)
 //--------------------------------------------------------------
 BOOL IsParentID( BB_WORK* wk )
 {	
-	return ( wk->netid == GFL_NET_NO_PARENTMACHINE ) ? TRUE : FALSE;
+	return ( wk->netid == COMM_PARENT_ID ) ? TRUE : FALSE;
 }
 
 

@@ -14,6 +14,10 @@
 
 #include "savedata/mystatus.h"
 #include <tcb.h>
+#include "net_old\comm_system.h"
+#include "net_old\comm_state.h"
+#include "net_old\comm_info.h"
+#include "net_old\comm_tool.h"
 
 // デバック定数
 #ifdef PM_DEBUG

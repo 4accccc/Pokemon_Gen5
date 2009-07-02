@@ -16,6 +16,9 @@
 #include "comm_bct_command.h"
 
 #include "comm_bct_command_func.h"
+#include "system/main.h"
+#include "net_old/comm_def.h"
+
 
 //-----------------------------------------------------------------------------
 /**
@@ -86,7 +89,7 @@ void CommBCTGameStart( int netID, int size, void* pBuff, void* pWork )
 	BUCKET_WK* p_wk = pWork;
 	
 	Bucket_StartSet( p_wk );
-	TOMOYA_PRINT( "recv start\n" );
+//	TOMOYA_PRINT( "recv start\n" );
 }
 
 //----------------------------------------------------------------------------
@@ -104,7 +107,7 @@ void CommBCTGameEnd( int netID, int size, void* pBuff, void* pWork )
 	BUCKET_WK* p_wk = pWork;
 
 	Bucket_EndSet( p_wk );
-	TOMOYA_PRINT( "recv end\n" );
+//	TOMOYA_PRINT( "recv end\n" );
 }
 
 //----------------------------------------------------------------------------
@@ -123,7 +126,7 @@ void CommBCTNuts( int netID, int size, void* pBuff, void* pWork )
 
 	Bucket_ClientNutsSet( p_wk, pBuff, netID );
 
-	if( GFL_NET_SystemGetCurrentID() == GFL_NET_NO_PARENTMACHINE ){
+	if( CommGetCurrentID() == COMM_PARENT_ID ){
 		Bucket_SurverNutsSet( p_wk, pBuff, netID );
 	}
 }
@@ -220,7 +223,7 @@ void CommBCTGameDataIdx( int netID, int size, void* pBuff, void* pWork )
 
 	idx = *((u32*)pBuff);
 	// 親からかチェック
-	if( netID == GFL_NET_NO_PARENTMACHINE ){
+	if( netID == COMM_PARENT_ID ){
 		Bucket_ClientGameDataIdxSet( p_wk, idx );
 		OS_Printf( "game level get[%d] level[%d]\n", netID, idx );
 	}

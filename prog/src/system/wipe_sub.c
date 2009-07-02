@@ -30,7 +30,7 @@
 #include "system/wipe_sub.h"
 
 #include "system/gfl_use.h"
-#include "./wipe_dummy.h"
+#include "system/brightness.h"
 //-----------------------------------------------------------------------------
 /**
  *					’è”éŒ¾

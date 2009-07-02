@@ -100,6 +100,7 @@ SRCS  +=    $(SOUNDSRC) \
         system/wipe.c \
         system/wipe_sub.c \
         system/wipe_wnd.c \
+        system/brightness.c \
         system/touch_subwindow.c \
         app/trainercard/trcard_sys.c \
         app/name_input/name_input.c \
@@ -740,6 +741,14 @@ SRCS_OVERLAY_BALLOON =  net_app/balloon/balloon.c \
             net_app/balloon/balloon_entry.c \
             net_app/balloon/comm_command_balloon.c \
             net_app/balloon/balloon_send_recv.c
+
+#wifiバケットゲーム
+#===> SRCS_OVERLAY_MINIGAME_COMMON
+SRCS_OVERLAY_BUCKET =	net_app/bucket/bucket.c \
+						net_app/bucket/bct_surver.c \
+						net_app/bucket/bct_client.c \
+						net_app/bucket/comm_bct_command.c \
+						net_app/bucket/comm_bct_command_func.c
 
 # 松田デバッグ
 #===> SRCS_OVERLAY_NETOLD
