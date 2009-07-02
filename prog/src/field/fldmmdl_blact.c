@@ -22,7 +22,7 @@
 typedef enum
 {
   BBDRESBIT_GUEST = (1<<0), ///<リソース識別 ゲスト登録 OFF時=レギュラー
-  BBDRESBIT_TRANS = (1<<1), ///<リソース識別 VRAM転送用リソース
+  BBDRESBIT_TRANS = (1<<1), ///<リソース識別 ON=VRAM転送用リソース
   
   ///リソース　VRAM常駐　レギュラー
   BBDRES_VRAM_REGULAR =(0),
@@ -1003,8 +1003,8 @@ static void BlActAddReserve_Delete( MMDL_BLACTCONT *pBlActCont )
       GFL_HEAP_FreeMemory( pReserve->pReserveAct );
     }
     
-    GFL_HEAP_FreeMemory( pReserve );
     pBlActCont->pReserve = NULL;
+    GFL_HEAP_FreeMemory( pReserve );
   }
 }
 
@@ -1302,8 +1302,8 @@ static BOOL BlActAddReserve_SearchActorOBJCode(
  * @param pBlActCont MMDL_BLACTCONT
  * @param fmmdl 予約したMMDL*
  * @retval nothing
- * @note 追加時に指定されたコードがリソース追加予約に入っていた際は
- * リソース予約キャンセルも合わせて行う。
+ * @note 追加時に指定されたコードがゲストリソースとして
+ * 追加予約に入っていた際はリソース予約キャンセルも合わせて行う。
  */
 //--------------------------------------------------------------
 static void BlActAddReserve_CancelActor(
@@ -1323,10 +1323,12 @@ static void BlActAddReserve_CancelActor(
       if( BlActAddReserve_SearchResource( //リソース予約有り
             pBlActCont,pRes->code,&flag) == TRUE )
       {
-        if( BlActAddReserve_SearchActorOBJCode( //他の予約で使用無し
-              pBlActCont,pRes->code,pRes->fmmdl) == FALSE )
-        {
-          BlActAddReserve_CancelResource( pBlActCont, pRes->code );
+        if( (flag&BBDRESBIT_GUEST) ){ //ゲストリソース
+          if( BlActAddReserve_SearchActorOBJCode( //他の予約で使用無し
+                pBlActCont,pRes->code,pRes->fmmdl) == FALSE )
+          {
+            BlActAddReserve_CancelResource( pBlActCont, pRes->code );
+          }
         }
       }
       

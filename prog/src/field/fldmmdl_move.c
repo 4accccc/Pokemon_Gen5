@@ -113,8 +113,6 @@ static void MMdl_MapAttrBridgeProc_01(
 static void MMdl_MapAttrSEProc_1(
 		MMDL * fmmdl, MATR now, MATR old, const OBJCODE_PARAM *prm );
 
-static u32 MMdl_HitCheckMoveCurrent(
-	const MMDL * fmmdl, s16 x, s16 y, s16 z, u16 dir );
 static BOOL MMdl_HitCheckMoveAttr(
 	const MMDL * fmmdl, s16 x, s16 z, u16 dir );
 
@@ -1257,13 +1255,13 @@ u32 MMDL_HitCheckMove(
  * フィールド動作モデル移動チェック　現在位置から判定
  * @param	fmmdl	MMDL * 
  * @param	x		移動先X座標	グリッド
- * @param	y		移動先X座標
- * @param	z		移動先X座標	グリッド
+ * @param	y		移動先Y座標
+ * @param	z		移動先Z座標	グリッド
  * @param	dir		移動方向 DIR_UP等
  * @retval	u32		ヒットビット。MMDL_MOVEHITBIT_LIM等
  */
 //--------------------------------------------------------------
-static u32 MMdl_HitCheckMoveCurrent(
+u32 MMDL_HitCheckMoveCurrent(
 	const MMDL * fmmdl, s16 x, s16 y, s16 z, u16 dir )
 {
 	VecFx32 vec;
@@ -1285,7 +1283,7 @@ u32 MMDL_HitCheckMoveDir( const MMDL * fmmdl, u16 dir )
 	x = MMDL_GetGridPosX( fmmdl ) + MMDL_TOOL_GetDirAddValueGridX( dir );
 	y = MMDL_GetHeightGrid( fmmdl );
 	z = MMDL_GetGridPosZ( fmmdl ) + MMDL_TOOL_GetDirAddValueGridZ( dir );
-	return( MMdl_HitCheckMoveCurrent(fmmdl,x,y,z,dir) );
+	return( MMDL_HitCheckMoveCurrent(fmmdl,x,y,z,dir) );
 }
 
 //--------------------------------------------------------------

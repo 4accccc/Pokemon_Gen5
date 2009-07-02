@@ -19,6 +19,9 @@
 #include "system/vm.h"
 #include "eventwork.h"
 
+#include "script_def.h"
+
+#include "field/fieldmap_proc.h"
 #include "field/field_msgbg.h"
 
 #if 0
@@ -182,6 +185,7 @@ typedef	struct _TAG_SCRIPT_WORK SCRIPT_WORK;
 typedef struct
 {
 	FLDMSGBG *msgBG;
+  FIELDMAP_WORK *fieldMap;
 }SCRIPT_FLDPARAM;
 
 //======================================================================
@@ -196,9 +200,12 @@ typedef struct
  * @retval	none
  */
 //--------------------------------------------------------------
-extern GMEVENT * SCRIPT_SetScript(
+extern GMEVENT * SCRIPT_SetEventScript(
 		GAMESYS_WORK *gsys, u16 scr_id, MMDL *obj,
 		HEAPID heapID, const SCRIPT_FLDPARAM *fparam );
+
+extern void SCRIPT_SetTrainerEyeData( GMEVENT *event, MMDL *mmdl,
+    s16 range, u16 dir, u16 scr_id, u16 tr_id, int tr_type, int tr_no );
 
 //--------------------------------------------------------------
 /**
@@ -445,7 +452,11 @@ extern void TimeEventFlagClear( FLDCOMMON_WORK* fsys );
  * @retval  "トレーナーID = フラグインデックス"
  */
 //--------------------------------------------------------------
+#ifndef SCRIPT_PL_NULL
 extern u16 GetTrainerIdByScriptId( u16 scr_id );
+#else
+extern u16 SCRIPT_GetTrainerID_ByScriptID( u16 scr_id );
+#endif
 
 //--------------------------------------------------------------
 /**
@@ -456,7 +467,11 @@ extern u16 GetTrainerIdByScriptId( u16 scr_id );
  * @retval  "0=左、1=右"
  */
 //--------------------------------------------------------------
+#ifndef SCRIPT_PL_NULL
 extern BOOL GetTrainerLRByScriptId( u16 scr_id );
+#else
+extern BOOL SCRIPT_GetTrainerLR_ByScriptID( u16 scr_id );
+#endif
 
 //--------------------------------------------------------------
 /**
@@ -467,7 +482,11 @@ extern BOOL GetTrainerLRByScriptId( u16 scr_id );
  * @retval  "0=シングルバトル、1=ダブルバトル"
  */
 //--------------------------------------------------------------
+#ifndef SCRIPT_PL_NULL
 extern BOOL CheckTrainer2vs2Type( u16 tr_id );
+#else
+extern BOOL SCRIPT_CheckTrainer2vs2Type( u16 tr_id );
+#endif
 
 //------------------------------------------------------------------
 /**
@@ -480,7 +499,11 @@ extern BOOL CheckTrainer2vs2Type( u16 tr_id );
  * @retval	"0 = フラグOFF"
  */
 //------------------------------------------------------------------
+#ifndef SCRIPT_PL_NULL
 extern BOOL CheckEventFlagTrainer( FLDCOMMON_WORK* fsys, u16 tr_id );
+#else
+extern BOOL SCRIPT_CheckEventFlagTrainer( EVENTWORK *ev, u16 tr_id );
+#endif
 
 //------------------------------------------------------------------
 /**

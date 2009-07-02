@@ -130,21 +130,27 @@ void MMDL_UpdateDraw( MMDL * fmmdl )
 	const MMDLSYS *fos = MMDL_GetMMdlSys( fmmdl );
 	
 	if( MMDLSYS_CheckStatusBit(fos,MMDLSYS_STABIT_DRAW_PROC_STOP) ){
-		return;
+		return; //システムで描画停止が発生している
 	}
 	
 	if( MMDL_CheckStatusBitCompletedDrawInit(fmmdl) == FALSE ){
-		return;
+		return; //初期化が完了していない
 	}
-
-#if 0 //old dp	
+  
+  #if 0 //old dp	
+  /*
+   * 旧来、動作ポーズ中は描画処理もポーズしていたが
+   * ポーズを呼び出すイベント側としては色々と不都合が多く
+   * 使い勝手が悪かった為これを廃止。
+   * 描画処理は常に呼び出し、ポーズは各描画処理側で対応する。
+   */
 	if( MMDL_CheckStatusBitMoveProcPause(fmmdl) == FALSE ||
 		MMDL_CheckStatusBitAcmd(fmmdl) ){
 		MMDL_CallDrawProc( fmmdl );
 	}
-#else //wb ポーズ状態でも常に描画関数を呼ぶ様にする。
+  #else //new wb
 	MMDL_CallDrawProc( fmmdl );
-#endif
+  #endif
 }
 
 //======================================================================

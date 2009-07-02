@@ -318,7 +318,7 @@ enum
 #define MMDL_BLACTID_NULL (0xffff)
 
 //--------------------------------------------------------------
-/// OBJコード性別
+/// OBJコード性別 外部パラメタと一致
 //--------------------------------------------------------------
 typedef enum
 {
@@ -831,6 +831,8 @@ extern void MMDL_UpdateMove( MMDL * mmdl );
 
 extern u32 MMDL_HitCheckMove( const MMDL *mmdl,
 	const VecFx32 *vec, s16 x, s16 y, s16 z, u16 dir );
+extern u32 MMDL_HitCheckMoveCurrent(
+	const MMDL * fmmdl, s16 x, s16 y, s16 z, u16 dir );
 extern u32 MMDL_HitCheckMoveDir( const MMDL * mmdl, u16 dir );
 extern int MMDL_HitCheckMoveFellow(
 	const MMDL * mmdl, s16 x, s16 y, s16 z );

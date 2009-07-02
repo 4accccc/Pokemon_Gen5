@@ -38,12 +38,36 @@
 //VM_CODE* sp_script;
 
 //======================================================================
-//	struct
+//  define
 //======================================================================
+#define TRAINER_EYE_HITMAX (2) ///<トレーナー視線データ最大数
+
+enum
+{
+	WORDSET_SCRIPT_SETNUM = 8,		//デフォルトバッファ数
+	WORDSET_SCRIPT_BUFLEN = 64,		//デフォルトバッファ長（文字数）
+};
+
 #define SCR_MSG_BUF_SIZE	(1024)				//メッセージバッファサイズ
 
+//======================================================================
+//	struct
+//======================================================================
 //関数ポインタ型
 typedef void (*SCRIPT_EVENTFUNC)(GMEVENT *fsys);
+
+//--------------------------------------------------------------
+//  トレーナー視線データ構造体
+//--------------------------------------------------------------
+typedef struct {
+	s16 range;				//視線距離
+	u16 dir;					//移動方向
+	u16 scr_id;				//スクリプトID
+	u16 tr_id;				//トレーナーID
+	int tr_type;			//トレーナータイプ
+	MMDL *mmdl;
+  GMEVENT *ev_eye_move;
+}EV_TRAINER_EYE_HITDATA;
 
 //--------------------------------------------------------------
 //	スクリプト制御ワーク構造体
@@ -85,7 +109,6 @@ struct _TAG_SCRIPT_WORK
 	MMDL *target_obj;
 	MMDL *dummy_obj;
 #endif
-	
 	u16 *ret_script_wk;			//スクリプト結果を代入するワークのポインタ
 	VMHANDLE *vm[VMHANDLE_MAX];	//仮想マシンへのポインタ
 
@@ -97,10 +120,8 @@ struct _TAG_SCRIPT_WORK
 	void * waiticon;				///<待機アイコンのポインタ
 #endif
 	
-#ifndef SCRIPT_PL_NULL
 	//トレーナー視線情報
 	EV_TRAINER_EYE_HITDATA eye_hitdata[TRAINER_EYE_HITMAX];
-#endif
 	
 	u16 work[EVSCR_WORK_MAX];		//ワーク(ANSWORK,TMPWORKなどの代わり)
 	
@@ -131,11 +152,14 @@ struct _TAG_SCRIPT_WORK
 	SCRIPT_FLDPARAM fld_param;
 };
 
-enum
+//--------------------------------------------------------------
+//	スクリプトイベント用ワーク
+//--------------------------------------------------------------
+typedef struct
 {
-	WORDSET_SCRIPT_SETNUM = 8,		//デフォルトバッファ数
-	WORDSET_SCRIPT_BUFLEN = 64,		//デフォルトバッファ長（文字数）
-};
+	SCRIPT_WORK *sc; //スクリプト用ワーク
+	SCRCMD_WORK *cmd_wk; //スクリプトコマンド用ワーク
+}EVENT_SCRIPT_WORK;
 
 //======================================================================
 //	隠しアイテムデータ
@@ -262,7 +286,7 @@ static u16 SpScriptSearch_Sub( const u8 * p, u8 key );
  * @retval	none
  */
 //--------------------------------------------------------------
-GMEVENT * SCRIPT_SetScript( GAMESYS_WORK *gsys, u16 scr_id, MMDL *obj,
+GMEVENT * SCRIPT_SetEventScript( GAMESYS_WORK *gsys, u16 scr_id, MMDL *obj,
 		HEAPID heapID, const SCRIPT_FLDPARAM *fparam )
 {
 	GMEVENT *event;
@@ -272,6 +296,35 @@ GMEVENT * SCRIPT_SetScript( GAMESYS_WORK *gsys, u16 scr_id, MMDL *obj,
 	EvScriptWork_Init( sc, gsys, scr_id, obj, NULL );	//初期設定
 	event = FldScript_CreateControlEvent( sc );
 	return( event );
+}
+
+//--------------------------------------------------------------
+/**
+ * トレーナー視線情報を格納 事前にSCRIPT_SetEventScript()を起動しておく事
+ * @param	event SCRIPT_SetEventScript()戻り値。
+ * @param	mmdl 視線がヒットしたFIELD_OBJ_PTR
+ * @param	range		グリッド単位の視線距離
+ * @param	dir			移動方向
+ * @param	scr_id		視線ヒットしたスクリプトID
+ * @param	tr_id		視線ヒットしたトレーナーID
+ * @param	tr_type		トレーナータイプ　シングル、ダブル、タッグ識別
+ * @param	tr_no		何番目にヒットしたトレーナーなのか
+ */
+//--------------------------------------------------------------
+void SCRIPT_SetTrainerEyeData( GMEVENT *event, MMDL *mmdl,
+    s16 range, u16 dir, u16 scr_id, u16 tr_id, int tr_type, int tr_no )
+{
+  EVENT_SCRIPT_WORK *ev_sc = GMEVENT_GetEventWork( event );
+  SCRIPT_WORK *sc = ev_sc->sc;
+	EV_TRAINER_EYE_HITDATA *eye = &sc->eye_hitdata[tr_no];
+  
+  eye->range = range;
+	eye->dir = dir;
+	eye->scr_id = scr_id;
+	eye->tr_id = tr_id;
+	eye->tr_type = tr_type;
+	eye->mmdl = mmdl;
+  eye->ev_eye_move = NULL;
 }
 
 //--------------------------------------------------------------
@@ -447,7 +500,7 @@ static void script_del( VMHANDLE *core )
 	#endif
 }
 
-//--------------------------------------------------------------
+//-----------------ON=---------------------------------------------
 /**
  * @brief	スクリプト制御ワーク初期設定
  *
@@ -874,9 +927,7 @@ static void SetZoneScriptData( FLDCOMMON_WORK* fsys, VMHANDLE* core )
 //--------------------------------------------------------------
 void * SCRIPT_GetSubMemberWork( SCRIPT_WORK *sc, u32 id )
 {
-	#ifndef SCRIPT_PL_NULL
 	EV_TRAINER_EYE_HITDATA *eye;
-	#endif
 	
 	switch( id ){
 	//会話ウィンドウメッセージインデックスのポインタ
@@ -966,22 +1017,6 @@ void * SCRIPT_GetSubMemberWork( SCRIPT_WORK *sc, u32 id )
 	//テンポラリバッファのポインタ
 	case ID_EVSCR_TMPBUF:
 		return &sc->tmp_buf;
-#ifndef SCRIPT_PL_NULL
-	//イベントウィンドウワークのポインタ
-	case ID_EVSCR_EVWIN:
-		return &sc->ev_win;
-	//会話ウィンドウビットマップデータのポインタ
-	case ID_EVSCR_MSGWINDAT:
-		return &sc->MsgWinDat;
-	//待機アイコンのポインタ
-	case ID_EVSCR_WAITICON:
-		return &sc->waiticon;
-	//フィールドエフェクトへのポインタ
-	case ID_EVSCR_EOA:
-		return &sc->eoa;
-	//自機形態レポートTCBのポインタ
-	case ID_EVSCR_PLAYER_TCB:
-		return &sc->player_tcb;
 	//視線(0)：視線距離
 	case ID_EVSCR_TR0_RANGE:
 		eye = &sc->eye_hitdata[0];
@@ -1007,11 +1042,11 @@ void * SCRIPT_GetSubMemberWork( SCRIPT_WORK *sc, u32 id )
 	//視線(0)：トレーナーOBJ
 	case ID_EVSCR_TR0_FLDOBJ:
 		eye = &sc->eye_hitdata[0];
-		return &eye->fldobj;
+		return &eye->mmdl;
 	//視線(0)：TCB
 	case ID_EVSCR_TR0_TCB:
 		eye = &sc->eye_hitdata[0];
-		return &eye->tcb;
+		return &eye->ev_eye_move;
 	//視線(1)：視線距離
 	case ID_EVSCR_TR1_RANGE:
 		eye = &sc->eye_hitdata[1];
@@ -1035,11 +1070,28 @@ void * SCRIPT_GetSubMemberWork( SCRIPT_WORK *sc, u32 id )
 	//視線(1)：トレーナーOBJ
 	case ID_EVSCR_TR1_FLDOBJ:
 		eye = &sc->eye_hitdata[1];
-		return &eye->fldobj;
+		return &eye->mmdl;
 	//視線(1)：TCB
 	case ID_EVSCR_TR1_TCB:
 		eye = &sc->eye_hitdata[1];
-		return &eye->tcb;
+		return &eye->ev_eye_move;
+
+#ifndef SCRIPT_PL_NULL
+	//イベントウィンドウワークのポインタ
+	case ID_EVSCR_EVWIN:
+		return &sc->ev_win;
+	//会話ウィンドウビットマップデータのポインタ
+	case ID_EVSCR_MSGWINDAT:
+		return &sc->MsgWinDat;
+	//待機アイコンのポインタ
+	case ID_EVSCR_WAITICON:
+		return &sc->waiticon;
+	//フィールドエフェクトへのポインタ
+	case ID_EVSCR_EOA:
+		return &sc->eoa;
+	//自機形態レポートTCBのポインタ
+	case ID_EVSCR_PLAYER_TCB:
+		return &sc->player_tcb;
 	//コインウィンドウビットマップデータのポインタ
 	case ID_EVSCR_COINWINDAT:
 		return &sc->CoinWinDat;
@@ -1156,15 +1208,6 @@ static u32 LoadZoneMsgNo(int zone_id)
 //======================================================================
 //	イベント
 //======================================================================
-//--------------------------------------------------------------
-//	スクリプトイベント用ワーク
-//--------------------------------------------------------------
-typedef struct
-{
-	SCRIPT_WORK *sc;
-	SCRCMD_WORK *cmd_wk;
-}EVENT_SCRIPT_WORK;
-
 //--------------------------------------------------------------
 /**
  * スクリプト制御イベント
@@ -1574,6 +1617,15 @@ u16 GetTrainerIdByScriptId( u16 scr_id )
 		return (scr_id - ID_TRAINER_2VS2_OFFSET + 1);		//1オリジン
 	}
 }
+#else
+u16 SCRIPT_GetTrainerID_ByScriptID( u16 scr_id )
+{
+	if( scr_id < ID_TRAINER_2VS2_OFFSET ){
+		return (scr_id - ID_TRAINER_OFFSET + 1);		//1オリジン
+	}else{
+		return (scr_id - ID_TRAINER_2VS2_OFFSET + 1);		//1オリジン
+	}
+}
 #endif
 
 //--------------------------------------------------------------
@@ -1585,6 +1637,15 @@ u16 GetTrainerIdByScriptId( u16 scr_id )
 //--------------------------------------------------------------
 #ifndef SCRIPT_PL_NULL
 BOOL GetTrainerLRByScriptId( u16 scr_id )
+{
+	if( scr_id < ID_TRAINER_2VS2_OFFSET ){
+		return 0;
+	}else{
+		return 1;
+	}
+}
+#else
+BOOL SCRIPT_GetTrainerLR_ByScriptID( u16 scr_id )
 {
 	if( scr_id < ID_TRAINER_2VS2_OFFSET ){
 		return 0;
@@ -1614,6 +1675,23 @@ BOOL CheckTrainer2vs2Type( u16 tr_id )
 	return 1;
 	//return SCR_EYE_TR_TYPE_DOUBLE;
 }
+#else
+BOOL SCRIPT_CheckTrainer2vs2Type( u16 tr_id )
+{
+  #if 0 //wb 現状無効
+	if( TT_TrainerDataParaGet(tr_id, ID_TD_fight_type) == FIGHT_TYPE_1vs1 ){	//1vs1
+		OS_Printf( "trainer_type = 1vs1 " );
+		return 0;
+		//return SCR_EYE_TR_TYPE_SINGLE;
+	}
+
+	OS_Printf( "trainer_type = 2vs2 " );
+	return 1;
+	//return SCR_EYE_TR_TYPE_DOUBLE;
+  #else
+  return 0; //仮でシングル固定
+  #endif
+}
 #endif
 
 //------------------------------------------------------------------
@@ -1630,6 +1708,11 @@ BOOL CheckEventFlagTrainer( FLDCOMMON_WORK* fsys, u16 tr_id )
 {
 	return EventWork_CheckEventFlag( 
 		SaveData_GetEventWork(fsys->savedata), GET_TRAINER_FLAG(tr_id) );
+}
+#else
+BOOL SCRIPT_CheckEventFlagTrainer( EVENTWORK *ev, u16 tr_id )
+{
+  return EVENTWORK_CheckEventFlag(ev,GET_TRAINER_FLAG(tr_id) );
 }
 #endif
 

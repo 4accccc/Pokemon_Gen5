@@ -12,6 +12,9 @@
 #include "arc_def.h"
 #include "arc/fieldmap/fldmmdl_mdlparam.naix"
 
+#include "fieldmap.h"
+#include "eventwork.h"
+
 //======================================================================
 //	define
 //======================================================================
@@ -249,6 +252,7 @@ static const MMDL_DRAW_PROC_LIST * DrawProcList_GetList(
 		MMDL_DRAWPROCNO no );
 static BOOL MMdlHeader_CheckAlies( const MMDL_HEADER *head );
 static int MMdlHeader_GetAliesZoneID( const MMDL_HEADER *head );
+static BOOL MMdlSys_CheckEventFlag( const MMDLSYS *mmdlsys, u16 flag_no );
 
 //======================================================================
 //	フィールド動作モデル　システム
@@ -432,6 +436,7 @@ MMDL * MMDLSYS_AddMMdl(
  * @param	zone_id		ゾーンID
  * @param	count		header要素数
  * @retval	nothing
+ * @note イベントフラグが立っているヘッダーは追加しない。
  */
 //--------------------------------------------------------------
 void MMDLSYS_SetMMdl( const MMDLSYS *fos,
@@ -443,7 +448,16 @@ void MMDLSYS_SetMMdl( const MMDLSYS *fos,
 	KAGAYA_Printf( "MMDLSYS_SetMMdl Count %d\n", count );
 	
 	do{
-		MMDLSYS_AddMMdl( fos, header, zone_id );
+    if( MMdlHeader_CheckAlies(header) == TRUE ||
+        MMdlSys_CheckEventFlag(fos,header->event_flag) == FALSE ){
+		  MMDLSYS_AddMMdl( fos, header, zone_id );
+    }
+#ifdef PM_DEBUG
+    else{
+      OS_Printf( "ADD STOP MMDL OBJID=%d,EVENT FLAG=%xH\n",
+          header->id, header->event_flag );
+    }
+#endif
 		header++;
 		count--;
 	}while( count );
@@ -4182,6 +4196,26 @@ static int MMdlHeader_GetAliesZoneID( const MMDL_HEADER *head )
 {
 	GF_ASSERT( MMdlHeader_CheckAlies(head) == TRUE );
 	return( (int)head->event_flag );
+}
+
+//--------------------------------------------------------------
+/**
+ * イベントフラグチェック
+ * @param
+ * @retval
+ */
+//--------------------------------------------------------------
+static BOOL MMdlSys_CheckEventFlag( const MMDLSYS *mmdlsys, u16 flag_no )
+{
+  FIELDMAP_WORK *fieldMap = mmdlsys->fieldMapWork;
+  GF_ASSERT( fieldMap != NULL );
+  
+  {
+    GAMESYS_WORK *gsys = FIELDMAP_GetGameSysWork( fieldMap );
+    GAMEDATA *gdata = GAMESYSTEM_GetGameData( gsys );
+    EVENTWORK *ev = GAMEDATA_GetEventWork( gdata );
+    return( EVENTWORK_CheckEventFlag(ev,flag_no) );
+  }
 }
 
 //======================================================================

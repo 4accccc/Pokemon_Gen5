@@ -33,7 +33,7 @@
 #include "event_battle.h"         //EVENT_Battle
 #include "event_fieldtalk.h"      //EVENT_FieldTalk
 #include "event_fieldmap_menu.h"  //EVENT_FieldMapMenu
-#include "script.h"     //SCRIPT_SetScript
+#include "script.h"     //SCRIPT_SetEventScript
 
 
 #include "field_encount.h"      //FIELD_ENCOUNT_CheckEncount
@@ -167,8 +167,9 @@ GMEVENT * FIELD_EVENT_CheckNormal( GAMESYS_WORK *gsys, void *work )
     
     if( id != EVENTDATA_ID_NONE ){ //座標イベント起動
       SCRIPT_FLDPARAM fparam;
+      fparam.fieldMap = fieldWork;
       fparam.msgBG = FIELDMAP_GetFldMsgBG(fieldWork);
-      event = SCRIPT_SetScript( gsys, id, NULL, req.heapID, &fparam );
+      event = SCRIPT_SetEventScript( gsys, id, NULL, req.heapID, &fparam );
       return event;
     }
 
@@ -234,8 +235,9 @@ GMEVENT * FIELD_EVENT_CheckNormal( GAMESYS_WORK *gsys, void *work )
       
       if( id != EVENTDATA_ID_NONE ){
         SCRIPT_FLDPARAM fparam;
+        fparam.fieldMap = fieldWork;
         fparam.msgBG = FIELDMAP_GetFldMsgBG(fieldWork);
-        event = SCRIPT_SetScript( gsys, id, NULL, req.heapID, &fparam );
+        event = SCRIPT_SetEventScript( gsys, id, NULL, req.heapID, &fparam );
       }
     }
   }
@@ -279,8 +281,9 @@ GMEVENT * FIELD_EVENT_CheckNormal( GAMESYS_WORK *gsys, void *work )
         
         if( id != EVENTDATA_ID_NONE ){ //座標イベント起動
           SCRIPT_FLDPARAM fparam;
+          fparam.fieldMap = fieldWork;
           fparam.msgBG = FIELDMAP_GetFldMsgBG(fieldWork);
-          event = SCRIPT_SetScript( gsys, id, NULL, req.heapID, &fparam );
+          event = SCRIPT_SetEventScript( gsys, id, NULL, req.heapID, &fparam );
           return event;
         }
       }

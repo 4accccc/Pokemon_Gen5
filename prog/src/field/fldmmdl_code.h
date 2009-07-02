@@ -152,17 +152,17 @@
 //--------------------------------------------------------------
 //	フィールド動作モデル イベントタイプ
 //--------------------------------------------------------------
-#define EV_TYPE_NORMAL 				0x00 ///<通常タイプ
-#define EV_TYPE_TRAINER				0x01 ///<トレーナータイプ
-#define EV_TYPE_TRAINER_EYEALL		0x02 ///<トレーナー全方位検知タイプ
-#define EV_TYPE_ITEM				0x03 ///<アイテムタイプ
-#define EV_TYPE_TRAINER_KYORO		0x04 ///<トレーナータイプ　きょろきょろ
-#define EV_TYPE_TRAINER_SPIN_STOP_L	0x05 ///<トレーナータイプ停止回転左周り
-#define EV_TYPE_TRAINER_SPIN_STOP_R	0x06 ///<トレーナータイプ停止回転右回り
-#define EV_TYPE_TRAINER_SPIN_MOVE_L	0x07 ///<トレーナータイプ移動回転左周り
-#define EV_TYPE_TRAINER_SPIN_MOVE_R	0x08 ///<トレーナータイプ移動回転右回り
-#define EV_TYPE_MSG 				0x09 ///<通常タイプ メッセージID指定
-#define EV_TYPE_TRAINER_ESCAPE		0x0a ///<トレーナータイプ逃げる
+#define EV_TYPE_NORMAL 0x00 ///<通常タイプ
+#define EV_TYPE_TRAINER 0x01 ///<トレーナータイプ
+#define EV_TYPE_TRAINER_EYEALL 0x02 ///<トレーナー全方位検知タイプ
+#define EV_TYPE_ITEM 0x03 ///<アイテムタイプ
+#define EV_TYPE_TRAINER_KYORO 0x04 ///<トレーナータイプ　きょろきょろ
+#define EV_TYPE_TRAINER_SPIN_STOP_L 0x05 ///<トレーナータイプ停止回転左周り
+#define EV_TYPE_TRAINER_SPIN_STOP_R 0x06 ///<トレーナータイプ停止回転右回り
+#define EV_TYPE_TRAINER_SPIN_MOVE_L 0x07 ///<トレーナータイプ移動回転左周り
+#define EV_TYPE_TRAINER_SPIN_MOVE_R 0x08 ///<トレーナータイプ移動回転右回り
+#define EV_TYPE_MSG 0x09 ///<通常タイプ メッセージID指定
+#define EV_TYPE_TRAINER_ESCAPE 0x0a ///<トレーナータイプ逃げる
 
 /*
 #define EV_TYPE_TRAINER_ESCAPE		0x09	///<トレーナータイプ　逃げる

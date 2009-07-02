@@ -75,7 +75,7 @@ GMEVENT * EVENT_FieldTalk(
 	FLDMSGBG *msgBG = FIELDMAP_GetFldMsgBG( fieldWork );
 	
 	fparam.msgBG = msgBG;
-	event = SCRIPT_SetScript(
+	event = SCRIPT_SetEventScript(
 		gsys, scr_id, fmmdl_talk, heapID, &fparam );
 	return( event );
 }

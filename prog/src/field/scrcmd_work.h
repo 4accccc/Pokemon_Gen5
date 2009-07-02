@@ -34,12 +34,13 @@ typedef struct _TAG_SCRCMD_WORK SCRCMD_WORK;
 //--------------------------------------------------------------
 typedef struct
 {
+	SCRIPT_WORK *script;
 	GAMESYS_WORK *gsys;
 	GAMEDATA *gdata;
-	SCRIPT_WORK *script;
 	MMDLSYS *fldmmdlsys;
-
-	FLDMSGBG *fldMsgBG;
+	
+  FLDMSGBG *fldMsgBG;
+  FIELDMAP_WORK *fieldMap;
 }SCRCMD_WORK_HEADER;
 
 //======================================================================

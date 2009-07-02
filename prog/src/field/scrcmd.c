@@ -25,6 +25,8 @@
 #include "sound/pm_sndsys.h"
 #include "sound/wb_sound_data.sadl"
 
+#include "scrcmd_trainer.h"
+
 //======================================================================
 //	定義
 //======================================================================
@@ -117,6 +119,8 @@ static VMCMD_RESULT EvCmdLoadWkValue( VMHANDLE *core, void *wk );
 static VMCMD_RESULT EvCmdLoadWkWk( VMHANDLE *core, void *wk );
 static VMCMD_RESULT EvCmdLoadWkWkValue( VMHANDLE *core, void *wk );
 
+static VMCMD_RESULT EvCmdMoveCodeGet( VMHANDLE *core, void *wk );
+
 //======================================================================
 //	グローバル変数
 //======================================================================
@@ -208,48 +212,36 @@ const VMCMD_FUNC ScriptCmdTbl[] = {
   EvCmdLoadWkValue,
   EvCmdLoadWkWk,
   EvCmdLoadWkWkValue,
+  
+  //scrcmd_trainer.c 視線トレーナー関連
+  EvCmdEyeTrainerMoveSet,
+  EvCmdEyeTrainerMoveSingle,
+  EvCmdEyeTrainerMoveDouble,
+  EvCmdEyeTrainerTypeGet,
+  EvCmdEyeTrainerIdGet,
+  //scrcmd_trainer.c トレーナーバトル関連
+  EvCmdTrainerIdGet,
+  EvCmdTrainerBattleSet,
+  EvCmdTrainerMultiBattleSet,
+  EvCmdTrainerTalkTypeGet,
+  EvCmdRevengeTrainerTalkTypeGet,
+  EvCmdTrainerTypeGet,
+  EvCmdTrainerBgmSet,
+  EvCmdTrainerLose,
+  EvCmdTrainerLoseCheck,
+  EvCmdSeacretPokeRetryCheck,
+  EvCmdHaifuPokeRetryCheck,
+  EvCmd2vs2BattleCheck,
+  EvCmdDebugBattleSet,
+  EvCmdBattleResultGet,
+  
+  EvCmdMoveCodeGet,
 };
 
 //--------------------------------------------------------------
 ///	スクリプトコマンドの最大数
 //--------------------------------------------------------------
 const u32 ScriptCmdMax = NELEMS(ScriptCmdTbl);
-
-//======================================================================
-//	スクリプトコマンドを使用するのに必要なインライン関数定義
-//======================================================================
-//--------------------------------------------------------------
-/**
- * インライン関数：ワークを取得する
- * @param	core	仮想マシン制御ワークへのポインタ
- * @retval	u16 *	ワークへのポインタ
- *
- * 次の2バイトをワークを指定するIDとみなして、ワークへのポインタを取得する
- */
-//--------------------------------------------------------------
-static inline u16 * VMGetWork(VMHANDLE *core, SCRCMD_WORK *work )
-{
-	GAMEDATA *gdata = SCRCMD_WORK_GetGameData( work );
-	SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
-	return SCRIPT_GetEventWork( sc, gdata, VMGetU16(core) );
-}
-
-//--------------------------------------------------------------
-/**
- * インライン関数：ワークから値を取得する
- * @param	core	仮想マシン制御ワークへのポインタ
- * @retval	u16		値
- *
- * 次の2バイトがSVWK_START（0x4000以下）であれば値として受け取る。
- * それ以上の場合はワークを指定するIDとみなして、そのワークから値を取得する
- */
-//--------------------------------------------------------------
-static inline u16 VMGetWorkValue(VMHANDLE * core, SCRCMD_WORK *work)
-{
-	GAMEDATA *gdata = SCRCMD_WORK_GetGameData( work );
-	SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
-	return SCRIPT_GetEventWorkValue( sc, gdata, VMGetU16(core) );
-}
 
 //======================================================================
 ///	動作モデル監視に使用するインライン関数定義
@@ -1498,6 +1490,27 @@ static void EvAnmSetTCB(
 #else
 	SCRCMD_WORK_SetMMdlAnmTCB( work, anm_tcb );
 #endif
+}
+
+//--------------------------------------------------------------
+/**
+ * 動作コード取得
+ * @param	core		仮想マシン制御構造体へのポインタ
+ * @return	"0"
+ */
+//--------------------------------------------------------------
+static VMCMD_RESULT EvCmdMoveCodeGet( VMHANDLE *core, void *wk )
+{
+	MMDL *mmdl;
+  SCRCMD_WORK *work = wk;
+  MMDLSYS *mmdlsys = SCRCMD_WORK_GetMMdlSys( work );
+	u16 *ret_wk	= VMGetWork( core, work );
+  
+	*ret_wk = 0;
+  mmdl = MMDLSYS_SearchOBJID( mmdlsys, VMGetWorkValue(core,work) );
+  GF_ASSERT( mmdl != NULL && "SCRCMD GET MOVECODE NON OBJ" );
+	*ret_wk = MMDL_GetMoveCode( mmdl );
+	return 0;
 }
 
 //======================================================================
