@@ -4208,8 +4208,13 @@ static int MMdlHeader_GetAliesZoneID( const MMDL_HEADER *head )
 static BOOL MMdlSys_CheckEventFlag( const MMDLSYS *mmdlsys, u16 flag_no )
 {
   FIELDMAP_WORK *fieldMap = mmdlsys->fieldMapWork;
+#if 0
   GF_ASSERT( fieldMap != NULL );
-  
+#else
+  if( fieldMap == NULL ){
+    return;
+  }
+#endif
   {
     GAMESYS_WORK *gsys = FIELDMAP_GetGameSysWork( fieldMap );
     GAMEDATA *gdata = GAMESYSTEM_GetGameData( gsys );
