@@ -14,6 +14,7 @@
 #include "field_g3d_mapper.h"
 #include "fieldmap_resist.h"
 
+#include "map/dp3format.h"
 //============================================================================================
 //============================================================================================
 //------------------------------------------------------------------
@@ -101,6 +102,11 @@ extern BOOL FIELD_BMODEL_GetAnimeStatus(FIELD_BMODEL * bmodel);
 
 extern void FIELD_BMODEL_MAN_EntryBuildModel(FIELD_BMODEL_MAN * man, FIELD_BMODEL * bmodel);
 extern void FIELD_BMODEL_MAN_releaseBuildModel(FIELD_BMODEL_MAN * man, FIELD_BMODEL * bmodel);
+
+extern void FIELD_BMODEL_MAN_ResistGlobalObj
+(FIELD_BMODEL_MAN * man, GFL_G3D_MAP * g3Dmap, const PositionSt* objStatus, u32 objCount);
+extern void FIELD_BMODEL_MAN_ReleaseGlobalObj
+(FIELD_BMODEL_MAN * man, GFL_G3D_MAP * g3Dmap);
 
 //============================================================================================
 //============================================================================================

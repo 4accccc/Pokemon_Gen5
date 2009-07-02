@@ -94,9 +94,11 @@ BOOL FieldLoadMapData_WBNormalFile( GFL_G3D_MAP* g3Dmap, void * exWork )
 			if( fileHeader->positionOffset != fileHeader->endPos ){
 				LayoutFormat* layout = (LayoutFormat*)((u32)mem + fileHeader->positionOffset);
 				PositionSt* objStatus = (PositionSt*)&layout->posData;
+        FIELD_BMODEL_MAN * bm = FLD_G3D_MAP_EXWORK_GetBModelMan(p_exwork);
+        FIELD_BMODEL_MAN_ResistGlobalObj(bm, g3Dmap, objStatus, layout->count);
+#if 0
 				GFL_G3D_MAP_GLOBALOBJ_ST status;
 				int i, j, count;
-        FIELD_BMODEL_MAN * bm = FLD_G3D_MAP_EXWORK_GetBModelMan(p_exwork);
 
 				for( i=0, j = 0, count = layout->count; i<count; j++, i++ ){
 					status.id = FIELD_BMODEL_MAN_GetEntryIndex(bm, objStatus[i].resourceID);
@@ -116,6 +118,7 @@ BOOL FieldLoadMapData_WBNormalFile( GFL_G3D_MAP* g3Dmap, void * exWork )
           }
 
 				}
+#endif
 			}
 		}
 		//>>GFL_G3D_MAP_SetTransVramParam( g3Dmap );	//テクスチャ転送設定

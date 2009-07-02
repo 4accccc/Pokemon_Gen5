@@ -27,19 +27,6 @@ typedef struct {
 	u16						count;
 }FLDMAPPER_GRIDINFO;
 
-//------------------------------------------------------------------
-//------------------------------------------------------------------
-enum { GLOBAL_OBJ_ANMCOUNT	= 4 };
-
-//------------------------------------------------------------------
-//------------------------------------------------------------------
-typedef struct {
-	GFL_G3D_RES*	g3DresMdl;						//モデルリソース(High Q)
-	GFL_G3D_RES*	g3DresTex;						//テクスチャリソース
-	GFL_G3D_RES*	g3DresAnm[GLOBAL_OBJ_ANMCOUNT];	//アニメリソース
-	GFL_G3D_OBJ*	g3Dobj;							//オブジェクトハンドル
-}GLOBALOBJ_RES;
-
 //============================================================================================
 //
 //
@@ -126,7 +113,4 @@ extern void FLDMAPPER_GetDrawOffset( const FLDMAPPER *g3Dmapper, VecFx32 *offs )
 extern const GFL_G3D_MAP_GLOBALOBJ_ST * FLDMAPPER_CreateObjStatusList
 ( const FLDMAPPER* g3Dmapper, const FLDHIT_RECT * rect, HEAPID heapID, u32 * num );
 
-//------------------------------------------------------------------
-//------------------------------------------------------------------
-extern const GLOBALOBJ_RES * FLDMAPPER_GetMapObjResource(const FLDMAPPER* g3Dmapper, u32 idx);
 

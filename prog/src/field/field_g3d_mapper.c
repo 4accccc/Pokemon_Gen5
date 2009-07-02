@@ -772,6 +772,7 @@ static BOOL	ReloadMapperBlock( FLDMAPPER* g3Dmapper, BLOCK_NEWREQ* new )
         BLOCKINFO_init( &g3Dmapper->blockWk[i].blockInfo );
 				GFL_G3D_MAP_SetDrawSw( g3Dmapper->blockWk[i].g3Dmap, FALSE );
 
+        FIELD_BMODEL_MAN_ReleaseGlobalObj( g3Dmapper->bmodel_man, g3Dmapper->blockWk[i].g3Dmap );
 				// 拡張ワークの情報もクリア
 				FLD_G3D_MAP_ExWork_ClearBlockData( &g3Dmapper->blockWk[i].g3DmapExWork );
 				delProcFlag = TRUE;
