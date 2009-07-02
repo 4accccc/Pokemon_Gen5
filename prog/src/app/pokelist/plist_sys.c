@@ -346,7 +346,7 @@ static void PLIST_VBlankFunc(GFL_TCB *tcb, void *wk )
 
   //OBJÇÃçXêV
   GFL_CLACT_SYS_VBlankFunc();
-  NNS_GfdDoVramTransfer();
+//  NNS_GfdDoVramTransfer();
 }
 
 

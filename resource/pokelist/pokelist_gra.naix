@@ -41,15 +41,13 @@ enum {
 	NARC_pokelist_gra_item_icon_NCER = 27,
 	NARC_pokelist_gra_list_ball_NCER = 28,
 	NARC_pokelist_gra_list_cursor_NCER = 29,
-	NARC_pokelist_gra_list_sel_NCER = 30,
-	NARC_pokelist_gra_p_st_ijou_NCER = 31,
-	NARC_pokelist_gra_bar_icon_NANR = 32,
-	NARC_pokelist_gra_hp_dodai_NANR = 33,
-	NARC_pokelist_gra_item_icon_NANR = 34,
-	NARC_pokelist_gra_list_ball_NANR = 35,
-	NARC_pokelist_gra_list_cursor_NANR = 36,
-	NARC_pokelist_gra_list_sel_NANR = 37,
-	NARC_pokelist_gra_p_st_ijou_NANR = 38
+	NARC_pokelist_gra_p_st_ijou_NCER = 30,
+	NARC_pokelist_gra_bar_icon_NANR = 31,
+	NARC_pokelist_gra_hp_dodai_NANR = 32,
+	NARC_pokelist_gra_item_icon_NANR = 33,
+	NARC_pokelist_gra_list_ball_NANR = 34,
+	NARC_pokelist_gra_list_cursor_NANR = 35,
+	NARC_pokelist_gra_p_st_ijou_NANR = 36
 };
 
 /* NARC_POKELIST_GRA_NAIX_ */
