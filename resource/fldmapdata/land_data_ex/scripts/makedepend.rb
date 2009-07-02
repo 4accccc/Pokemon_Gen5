@@ -1,7 +1,7 @@
 
 OUTDIR		= "output"
 SRCDIR		= "srcdata"
-TARGETEXT	= '3dppack'
+TARGETEXT	= 'ngpack'
 DEPENDFILE	= OUTDIR + "/dependfile"
 ARCLIST		= OUTDIR + "/arcfilelist"
 

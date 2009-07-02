@@ -50,14 +50,15 @@ enum {
 };
 
 enum {
-	NOGRID_BRIDGE = 0,
-	GRID_DEFAULT = 1,
-	//NO_GRID_SAMPLE = 2,
-	GRID_GS_SAMPLE = 3,
-	NOGRID_C03 = 4,
-  GRID_PALACE = 5,
-  GRID_RANDOM_MAP = 6,
+	RSC_GRID_DEFAULT = 0,
+	RSC_NOGRID_BRIDGE = 1,
+	RSC_NOGRID_C03 = 2,
+  RSC_GRID_PALACE = 3,
+  RSC_GRID_RANDOM_MAP = 4,
+  RSC_NOGRID_LEAGUE = 5,
 
+	//NO_GRID_SAMPLE = 2,
+	//GRID_GS_SAMPLE = 3,
 	RSC_TYPE_END
 };
 #include "../area_data/area_id.h"

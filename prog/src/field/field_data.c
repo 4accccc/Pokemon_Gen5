@@ -108,62 +108,62 @@ static const FLDMAPPER_MAPDATA sampleMap[] = {
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
-#define	NARC_nogrid_mapblock_h01a_dummy	NARC_nogrid_mapblock_h01a_00_01_3dppack
+#define	NARC_nogrid_mapblock_h01a_dummy	NARC_nogrid_mapblock_h01a_00_01_ngpack
 #include "fieldmap/nogrid_mapblock.naix"
 static const FLDMAPPER_MAPDATA newbridgemap[] = {
-	{ NARC_nogrid_mapblock_h01a_00_00_3dppack }, //{ NARC_nogrid_mapblock_h01a_dummy },
-	{ NARC_nogrid_mapblock_h01a_01_00_3dppack },
+	{ NARC_nogrid_mapblock_h01a_00_00_ngpack }, //{ NARC_nogrid_mapblock_h01a_dummy },
+	{ NARC_nogrid_mapblock_h01a_01_00_ngpack },
 
-	{ NARC_nogrid_mapblock_h01a_00_01_3dppack },
-	{ NARC_nogrid_mapblock_h01a_01_01_3dppack },
+	{ NARC_nogrid_mapblock_h01a_00_01_ngpack },
+	{ NARC_nogrid_mapblock_h01a_01_01_ngpack },
 
-	{ NARC_nogrid_mapblock_h01a_00_02_3dppack },
-	{ NARC_nogrid_mapblock_h01a_01_02_3dppack },
+	{ NARC_nogrid_mapblock_h01a_00_02_ngpack },
+	{ NARC_nogrid_mapblock_h01a_01_02_ngpack },
 };
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 static const FLDMAPPER_MAPDATA test_c3map[] = {
-	{ NARC_nogrid_mapblock_C3_00_01_3dppack },
-	{ NARC_nogrid_mapblock_C3_00_02_3dppack },
-	{ NARC_nogrid_mapblock_C3_01_01_3dppack },
-	{ NARC_nogrid_mapblock_C3_01_02_3dppack },
+	{ NARC_nogrid_mapblock_C3_00_01_ngpack },
+	{ NARC_nogrid_mapblock_C3_00_02_ngpack },
+	{ NARC_nogrid_mapblock_C3_01_01_ngpack },
+	{ NARC_nogrid_mapblock_C3_01_02_ngpack },
 };
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 static const FLDMAPPER_MAPDATA loopbridgemap[] = {
-	{ NARC_nogrid_mapblock_m_test2_01_01_3dppack },
-	{ NARC_nogrid_mapblock_m_test2_02_01_3dppack },
-	{ NARC_nogrid_mapblock_m_test2_03_01_3dppack },
-	{ NARC_nogrid_mapblock_m_test2_04_01_3dppack },
-	{ NARC_nogrid_mapblock_m_test2_01_02_3dppack },
-	{ NARC_nogrid_mapblock_m_test2_02_02_3dppack },
-	{ NARC_nogrid_mapblock_m_test2_03_02_3dppack },
-	{ NARC_nogrid_mapblock_m_test2_04_02_3dppack },
-	{ NARC_nogrid_mapblock_m_test2_01_03_3dppack },
-	{ NARC_nogrid_mapblock_m_test2_02_03_3dppack },
-	{ NARC_nogrid_mapblock_m_test2_03_03_3dppack },
-	{ NARC_nogrid_mapblock_m_test2_04_03_3dppack },
-	{ NARC_nogrid_mapblock_m_test2_01_04_3dppack },
-	{ NARC_nogrid_mapblock_m_test2_02_04_3dppack },
-	{ NARC_nogrid_mapblock_m_test2_03_04_3dppack },
-	{ NARC_nogrid_mapblock_m_test2_04_04_3dppack },
+	{ NARC_nogrid_mapblock_m_test2_01_01_ngpack },
+	{ NARC_nogrid_mapblock_m_test2_02_01_ngpack },
+	{ NARC_nogrid_mapblock_m_test2_03_01_ngpack },
+	{ NARC_nogrid_mapblock_m_test2_04_01_ngpack },
+	{ NARC_nogrid_mapblock_m_test2_01_02_ngpack },
+	{ NARC_nogrid_mapblock_m_test2_02_02_ngpack },
+	{ NARC_nogrid_mapblock_m_test2_03_02_ngpack },
+	{ NARC_nogrid_mapblock_m_test2_04_02_ngpack },
+	{ NARC_nogrid_mapblock_m_test2_01_03_ngpack },
+	{ NARC_nogrid_mapblock_m_test2_02_03_ngpack },
+	{ NARC_nogrid_mapblock_m_test2_03_03_ngpack },
+	{ NARC_nogrid_mapblock_m_test2_04_03_ngpack },
+	{ NARC_nogrid_mapblock_m_test2_01_04_ngpack },
+	{ NARC_nogrid_mapblock_m_test2_02_04_ngpack },
+	{ NARC_nogrid_mapblock_m_test2_03_04_ngpack },
+	{ NARC_nogrid_mapblock_m_test2_04_04_ngpack },
 };
 
 static const FLDMAPPER_MAPDATA samplebridge[] = {
-	{ NARC_nogrid_mapblock_m_test_01_01_3dppack },
-	{ NARC_nogrid_mapblock_m_test_02_01_3dppack },
-	{ NARC_nogrid_mapblock_m_test_01_02_3dppack },
-	{ NARC_nogrid_mapblock_m_test_02_02_3dppack },
-	{ NARC_nogrid_mapblock_m_test_01_03_3dppack },
-	{ NARC_nogrid_mapblock_m_test_02_03_3dppack },
-	{ NARC_nogrid_mapblock_m_test_01_04_3dppack },
-	{ NARC_nogrid_mapblock_m_test_02_04_3dppack },
-	{ NARC_nogrid_mapblock_m_test_01_05_3dppack },
-	{ NARC_nogrid_mapblock_m_test_02_05_3dppack },
-	{ NARC_nogrid_mapblock_m_test_01_06_3dppack },
-	{ NARC_nogrid_mapblock_m_test_02_06_3dppack },
+	{ NARC_nogrid_mapblock_m_test_01_01_ngpack },
+	{ NARC_nogrid_mapblock_m_test_02_01_ngpack },
+	{ NARC_nogrid_mapblock_m_test_01_02_ngpack },
+	{ NARC_nogrid_mapblock_m_test_02_02_ngpack },
+	{ NARC_nogrid_mapblock_m_test_01_03_ngpack },
+	{ NARC_nogrid_mapblock_m_test_02_03_ngpack },
+	{ NARC_nogrid_mapblock_m_test_01_04_ngpack },
+	{ NARC_nogrid_mapblock_m_test_02_04_ngpack },
+	{ NARC_nogrid_mapblock_m_test_01_05_ngpack },
+	{ NARC_nogrid_mapblock_m_test_02_05_ngpack },
+	{ NARC_nogrid_mapblock_m_test_01_06_ngpack },
+	{ NARC_nogrid_mapblock_m_test_02_06_ngpack },
 };
 
 //------------------------------------------------------------------
@@ -204,6 +204,26 @@ static const FLDMAPPER_MAPDATA GSMap[] = {
 #define MAP_HEIGHT (128 * FX32_ONE)
 
 const SCENE_DATA resistMapTbl[] = {
+  //RSC_GRID_DEFAULT = 0,
+	{	//実験マップ グリッド移動
+		{
+			FLDMAPPER_FILETYPE_NORMAL,
+			MAP_XZ_SIZE, 1024*FX32_ONE, 
+      3,3,
+      FLDMAPPER_MODE_SCROLL_XZ, 
+			ARCID_FLDMAP_LANDDATA,
+
+			1,  1, 1,		//dummy map matrix data
+			NULL, 
+
+			FLDMAPPER_TEXTYPE_NONE,	{ 0, 0 },
+			FLDMAPPER_RESIST_OBJTYPE_BMODEL,	NULL,
+			{0,2},	// 地面アニメーション
+		},
+		&FieldMapCtrl_GridFunctions,
+		TRUE,
+	},
+  //RSC_NOGRID_BRIDGE = 1,
 	{	//実験マップ　橋
 		{
 			FLDMAPPER_FILETYPE_NORMAL,
@@ -224,62 +244,7 @@ const SCENE_DATA resistMapTbl[] = {
 		&FieldMapCtrl_NoGridFunctions,
 		FALSE,
 	},
-	{	//実験マップ グリッド移動
-		{
-			FLDMAPPER_FILETYPE_NORMAL,
-			MAP_XZ_SIZE, 1024*FX32_ONE, 
-      3,3,
-      FLDMAPPER_MODE_SCROLL_XZ, 
-			ARCID_FLDMAP_LANDDATA,
-
-			1,  1, 1,		//dummy map matrix data
-			NULL, 
-
-			FLDMAPPER_TEXTYPE_NONE,	{ 0, 0 },
-			FLDMAPPER_RESIST_OBJTYPE_BMODEL,	NULL,
-			{0,2},	// 地面アニメーション
-		},
-		&FieldMapCtrl_GridFunctions,
-		TRUE,
-	},
-	{	//実験マップ　橋
-		{	
-			FLDMAPPER_FILETYPE_NORMAL,
-			MAP_XZ_SIZE, 1024*FX32_ONE, 
-      3,3,
-      FLDMAPPER_MODE_SCROLL_XZ, 
-			ARCID_FLDMAP_LAND_EX,
-
-			2,  6, NELEMS(samplebridge),
-			samplebridge, 
-
-			FLDMAPPER_TEXTYPE_NONE,	{ 0, 0 },
-			FLDMAPPER_RESIST_OBJTYPE_BMODEL,	NULL,
-			{FLDMAPPER_MAPDATA_NULL,FLDMAPPER_MAPDATA_NULL},	// 地面アニメーション
-		}, 
-		&FieldMapCtrl_NoGridFunctions,
-		FALSE,
-	},
-	{
-		//実験マップ　グリッド移動 金銀
-		{	
-			FLDMAPPER_FILETYPE_PKGS,
-			MAP_XZ_SIZE, 1024*FX32_ONE, 
-      3,3,
-      FLDMAPPER_MODE_SCROLL_XZ, 
-			ARCID_AREA_MAPTEX,//ARCID_GSMAP, 
-
-			2,  6, NELEMS(GSMap),
-			GSMap, 
-
-			//FLDMAPPER_TEXTYPE_USE,	{ ARCID_GSTEX, DATID_GSMAP_GTEX, },
-			FLDMAPPER_TEXTYPE_NONE,	{ 0, 0 },
-			FLDMAPPER_RESIST_OBJTYPE_BIN,	(void*)&gobjData_Bin,
-			{FLDMAPPER_MAPDATA_NULL,FLDMAPPER_MAPDATA_NULL},	// 地面アニメーション
-		},
-		&FieldMapCtrl_GridFunctions,
-		FALSE,
-	},
+  //RSC_NOGRID_C3 = 2,
 	{	//実験マップ　C3
 		{	
 			FLDMAPPER_FILETYPE_NORMAL,
@@ -298,6 +263,7 @@ const SCENE_DATA resistMapTbl[] = {
 		&FieldMapCtrl_C3Functions,
 		FALSE,
 	},
+  //RSC_GRID_PALACE = 3,
 	{	//実験マップ グリッド移動   パレス
 		{
 			FLDMAPPER_FILETYPE_NORMAL,
@@ -316,9 +282,29 @@ const SCENE_DATA resistMapTbl[] = {
 		&FieldMapCtrl_GridFunctions,
 		TRUE,
 	},
+  //RSC_GRID_RANDOMMAP = 4,
 	{	//実験マップ グリッド移動   ランダム生成マップ
 		{
 			FLDMAPPER_FILETYPE_RANDOM,
+			MAP_XZ_SIZE, 1024*FX32_ONE, 
+      3,3,
+      FLDMAPPER_MODE_SCROLL_XZ, 
+			ARCID_FLDMAP_LANDDATA,
+
+			1,  1, 1,		//dummy map matrix data
+			NULL, 
+
+			FLDMAPPER_TEXTYPE_NONE,	{ 0, 0 },
+			FLDMAPPER_RESIST_OBJTYPE_BMODEL,	NULL,
+			{0,2},	// 地面アニメーション
+		},
+		&FieldMapCtrl_GridFunctions,
+		TRUE,
+	},
+  //RSC_NOGRID_LEAGUE = 5,
+	{	//実験マップ チャンピオンリーグ
+		{
+			FLDMAPPER_FILETYPE_NORMAL,
 			MAP_XZ_SIZE, 1024*FX32_ONE, 
       3,3,
       FLDMAPPER_MODE_SCROLL_XZ, 

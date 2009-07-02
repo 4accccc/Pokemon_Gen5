@@ -17,7 +17,7 @@ TARGETNAME	= nogrid_mapblock
 NARCNAME	= $(TARGETNAME).narc
 NAIXNAME	= $(TARGETNAME).naix
 
-EXTNAME		= 3dppack
+EXTNAME		= ngpack
 OUTDIR		= output
 #------------------------------------------------------------------------------
 #※コピー先へのパスを書く（通常はPROJECT_ARCDIRでよい）

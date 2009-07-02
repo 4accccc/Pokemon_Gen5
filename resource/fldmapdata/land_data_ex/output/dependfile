@@ -1,5 +1,5 @@
-output/C3_00_01.3dppack: output/C3_00_01.nsbmd output/C3_00_01.bhc srcdata/C3_00_01.3dmd
-	@$(BINLINKER) $*.nsbmd $*.bhc output/C3_00_01.3dmd $*.3dppack BR
+output/C3_00_01.ngpack: output/C3_00_01.nsbmd output/C3_00_01.bhc srcdata/C3_00_01.3dmd
+	@$(BINLINKER) $*.nsbmd $*.bhc output/C3_00_01.3dmd $*.ngpack BR
 
 output/C3_00_01.nsbmd: srcdata/C3_00_01.imd
 	@g3dcvtr srcdata/C3_00_01.imd -emdl -o output/C3_00_01.nsbmd
@@ -18,8 +18,8 @@ output/C3_00_01.bhc: srcdata/C3_00_01h.imd
 srcdata/C3_00_01.3dmd:
 	@echo C3_00_01.3dmdが存在しないためダミーデータを生成します
 	@cp dummy_file/dummy.3dmd srcdata/C3_00_01.3dmd
-output/C3_00_02.3dppack: output/C3_00_02.nsbmd output/C3_00_02.bhc srcdata/C3_00_02.3dmd
-	@$(BINLINKER) $*.nsbmd $*.bhc output/C3_00_02.3dmd $*.3dppack BR
+output/C3_00_02.ngpack: output/C3_00_02.nsbmd output/C3_00_02.bhc srcdata/C3_00_02.3dmd
+	@$(BINLINKER) $*.nsbmd $*.bhc output/C3_00_02.3dmd $*.ngpack BR
 
 output/C3_00_02.nsbmd: srcdata/C3_00_02.imd
 	@g3dcvtr srcdata/C3_00_02.imd -emdl -o output/C3_00_02.nsbmd
@@ -38,8 +38,8 @@ output/C3_00_02.bhc: srcdata/C3_00_02h.imd
 srcdata/C3_00_02.3dmd:
 	@echo C3_00_02.3dmdが存在しないためダミーデータを生成します
 	@cp dummy_file/dummy.3dmd srcdata/C3_00_02.3dmd
-output/C3_01_01.3dppack: output/C3_01_01.nsbmd output/C3_01_01.bhc srcdata/C3_01_01.3dmd
-	@$(BINLINKER) $*.nsbmd $*.bhc output/C3_01_01.3dmd $*.3dppack BR
+output/C3_01_01.ngpack: output/C3_01_01.nsbmd output/C3_01_01.bhc srcdata/C3_01_01.3dmd
+	@$(BINLINKER) $*.nsbmd $*.bhc output/C3_01_01.3dmd $*.ngpack BR
 
 output/C3_01_01.nsbmd: srcdata/C3_01_01.imd
 	@g3dcvtr srcdata/C3_01_01.imd -emdl -o output/C3_01_01.nsbmd
@@ -58,8 +58,8 @@ output/C3_01_01.bhc: srcdata/C3_01_01h.imd
 srcdata/C3_01_01.3dmd:
 	@echo C3_01_01.3dmdが存在しないためダミーデータを生成します
 	@cp dummy_file/dummy.3dmd srcdata/C3_01_01.3dmd
-output/C3_01_02.3dppack: output/C3_01_02.nsbmd output/C3_01_02.bhc srcdata/C3_01_02.3dmd
-	@$(BINLINKER) $*.nsbmd $*.bhc output/C3_01_02.3dmd $*.3dppack BR
+output/C3_01_02.ngpack: output/C3_01_02.nsbmd output/C3_01_02.bhc srcdata/C3_01_02.3dmd
+	@$(BINLINKER) $*.nsbmd $*.bhc output/C3_01_02.3dmd $*.ngpack BR
 
 output/C3_01_02.nsbmd: srcdata/C3_01_02.imd
 	@g3dcvtr srcdata/C3_01_02.imd -emdl -o output/C3_01_02.nsbmd
@@ -78,8 +78,8 @@ output/C3_01_02.bhc: srcdata/C3_01_02h.imd
 srcdata/C3_01_02.3dmd:
 	@echo C3_01_02.3dmdが存在しないためダミーデータを生成します
 	@cp dummy_file/dummy.3dmd srcdata/C3_01_02.3dmd
-output/h01a_00_00.3dppack: output/h01a_00_00.nsbmd output/h01a_00_00.bhc srcdata/h01a_00_00.3dmd
-	@$(BINLINKER) $*.nsbmd $*.bhc output/h01a_00_00.3dmd $*.3dppack BR
+output/h01a_00_00.ngpack: output/h01a_00_00.nsbmd output/h01a_00_00.bhc srcdata/h01a_00_00.3dmd
+	@$(BINLINKER) $*.nsbmd $*.bhc output/h01a_00_00.3dmd $*.ngpack BR
 
 output/h01a_00_00.nsbmd: srcdata/h01a_00_00.imd
 	@g3dcvtr srcdata/h01a_00_00.imd -emdl -o output/h01a_00_00.nsbmd
@@ -98,8 +98,8 @@ output/h01a_00_00.bhc: srcdata/h01a_00_00h.imd
 srcdata/h01a_00_00.3dmd:
 	@echo h01a_00_00.3dmdが存在しないためダミーデータを生成します
 	@cp dummy_file/dummy.3dmd srcdata/h01a_00_00.3dmd
-output/h01a_00_01.3dppack: output/h01a_00_01.nsbmd output/h01a_00_01.bhc srcdata/h01a_00_01.3dmd
-	@$(BINLINKER) $*.nsbmd $*.bhc output/h01a_00_01.3dmd $*.3dppack BR
+output/h01a_00_01.ngpack: output/h01a_00_01.nsbmd output/h01a_00_01.bhc srcdata/h01a_00_01.3dmd
+	@$(BINLINKER) $*.nsbmd $*.bhc output/h01a_00_01.3dmd $*.ngpack BR
 
 output/h01a_00_01.nsbmd: srcdata/h01a_00_01.imd
 	@g3dcvtr srcdata/h01a_00_01.imd -emdl -o output/h01a_00_01.nsbmd
@@ -118,8 +118,8 @@ output/h01a_00_01.bhc: srcdata/h01a_00_01h.imd
 srcdata/h01a_00_01.3dmd:
 	@echo h01a_00_01.3dmdが存在しないためダミーデータを生成します
 	@cp dummy_file/dummy.3dmd srcdata/h01a_00_01.3dmd
-output/h01a_00_02.3dppack: output/h01a_00_02.nsbmd output/h01a_00_02.bhc srcdata/h01a_00_02.3dmd
-	@$(BINLINKER) $*.nsbmd $*.bhc output/h01a_00_02.3dmd $*.3dppack BR
+output/h01a_00_02.ngpack: output/h01a_00_02.nsbmd output/h01a_00_02.bhc srcdata/h01a_00_02.3dmd
+	@$(BINLINKER) $*.nsbmd $*.bhc output/h01a_00_02.3dmd $*.ngpack BR
 
 output/h01a_00_02.nsbmd: srcdata/h01a_00_02.imd
 	@g3dcvtr srcdata/h01a_00_02.imd -emdl -o output/h01a_00_02.nsbmd
@@ -138,8 +138,8 @@ output/h01a_00_02.bhc: srcdata/h01a_00_02h.imd
 srcdata/h01a_00_02.3dmd:
 	@echo h01a_00_02.3dmdが存在しないためダミーデータを生成します
 	@cp dummy_file/dummy.3dmd srcdata/h01a_00_02.3dmd
-output/h01a_01_00.3dppack: output/h01a_01_00.nsbmd output/h01a_01_00.bhc srcdata/h01a_01_00.3dmd
-	@$(BINLINKER) $*.nsbmd $*.bhc output/h01a_01_00.3dmd $*.3dppack BR
+output/h01a_01_00.ngpack: output/h01a_01_00.nsbmd output/h01a_01_00.bhc srcdata/h01a_01_00.3dmd
+	@$(BINLINKER) $*.nsbmd $*.bhc output/h01a_01_00.3dmd $*.ngpack BR
 
 output/h01a_01_00.nsbmd: srcdata/h01a_01_00.imd
 	@g3dcvtr srcdata/h01a_01_00.imd -emdl -o output/h01a_01_00.nsbmd
@@ -158,8 +158,8 @@ output/h01a_01_00.bhc: srcdata/h01a_01_00h.imd
 srcdata/h01a_01_00.3dmd:
 	@echo h01a_01_00.3dmdが存在しないためダミーデータを生成します
 	@cp dummy_file/dummy.3dmd srcdata/h01a_01_00.3dmd
-output/h01a_01_01.3dppack: output/h01a_01_01.nsbmd output/h01a_01_01.bhc srcdata/h01a_01_01.3dmd
-	@$(BINLINKER) $*.nsbmd $*.bhc output/h01a_01_01.3dmd $*.3dppack BR
+output/h01a_01_01.ngpack: output/h01a_01_01.nsbmd output/h01a_01_01.bhc srcdata/h01a_01_01.3dmd
+	@$(BINLINKER) $*.nsbmd $*.bhc output/h01a_01_01.3dmd $*.ngpack BR
 
 output/h01a_01_01.nsbmd: srcdata/h01a_01_01.imd
 	@g3dcvtr srcdata/h01a_01_01.imd -emdl -o output/h01a_01_01.nsbmd
@@ -178,8 +178,8 @@ output/h01a_01_01.bhc: srcdata/h01a_01_01h.imd
 srcdata/h01a_01_01.3dmd:
 	@echo h01a_01_01.3dmdが存在しないためダミーデータを生成します
 	@cp dummy_file/dummy.3dmd srcdata/h01a_01_01.3dmd
-output/h01a_01_02.3dppack: output/h01a_01_02.nsbmd output/h01a_01_02.bhc srcdata/h01a_01_02.3dmd
-	@$(BINLINKER) $*.nsbmd $*.bhc output/h01a_01_02.3dmd $*.3dppack BR
+output/h01a_01_02.ngpack: output/h01a_01_02.nsbmd output/h01a_01_02.bhc srcdata/h01a_01_02.3dmd
+	@$(BINLINKER) $*.nsbmd $*.bhc output/h01a_01_02.3dmd $*.ngpack BR
 
 output/h01a_01_02.nsbmd: srcdata/h01a_01_02.imd
 	@g3dcvtr srcdata/h01a_01_02.imd -emdl -o output/h01a_01_02.nsbmd
@@ -198,8 +198,8 @@ output/h01a_01_02.bhc: srcdata/h01a_01_02h.imd
 srcdata/h01a_01_02.3dmd:
 	@echo h01a_01_02.3dmdが存在しないためダミーデータを生成します
 	@cp dummy_file/dummy.3dmd srcdata/h01a_01_02.3dmd
-output/m_test2_01_01.3dppack: output/m_test2_01_01.nsbmd output/m_test2_01_01.bhc srcdata/m_test2_01_01.3dmd
-	@$(BINLINKER) $*.nsbmd $*.bhc output/m_test2_01_01.3dmd $*.3dppack BR
+output/m_test2_01_01.ngpack: output/m_test2_01_01.nsbmd output/m_test2_01_01.bhc srcdata/m_test2_01_01.3dmd
+	@$(BINLINKER) $*.nsbmd $*.bhc output/m_test2_01_01.3dmd $*.ngpack BR
 
 output/m_test2_01_01.nsbmd: srcdata/m_test2_01_01.imd
 	@g3dcvtr srcdata/m_test2_01_01.imd -emdl -o output/m_test2_01_01.nsbmd
@@ -218,8 +218,8 @@ output/m_test2_01_01.bhc: srcdata/m_test2_01_01h.imd
 srcdata/m_test2_01_01.3dmd:
 	@echo m_test2_01_01.3dmdが存在しないためダミーデータを生成します
 	@cp dummy_file/dummy.3dmd srcdata/m_test2_01_01.3dmd
-output/m_test2_01_02.3dppack: output/m_test2_01_02.nsbmd output/m_test2_01_02.bhc srcdata/m_test2_01_02.3dmd
-	@$(BINLINKER) $*.nsbmd $*.bhc output/m_test2_01_02.3dmd $*.3dppack BR
+output/m_test2_01_02.ngpack: output/m_test2_01_02.nsbmd output/m_test2_01_02.bhc srcdata/m_test2_01_02.3dmd
+	@$(BINLINKER) $*.nsbmd $*.bhc output/m_test2_01_02.3dmd $*.ngpack BR
 
 output/m_test2_01_02.nsbmd: srcdata/m_test2_01_02.imd
 	@g3dcvtr srcdata/m_test2_01_02.imd -emdl -o output/m_test2_01_02.nsbmd
@@ -238,8 +238,8 @@ output/m_test2_01_02.bhc: srcdata/m_test2_01_02h.imd
 srcdata/m_test2_01_02.3dmd:
 	@echo m_test2_01_02.3dmdが存在しないためダミーデータを生成します
 	@cp dummy_file/dummy.3dmd srcdata/m_test2_01_02.3dmd
-output/m_test2_01_03.3dppack: output/m_test2_01_03.nsbmd output/m_test2_01_03.bhc srcdata/m_test2_01_03.3dmd
-	@$(BINLINKER) $*.nsbmd $*.bhc output/m_test2_01_03.3dmd $*.3dppack BR
+output/m_test2_01_03.ngpack: output/m_test2_01_03.nsbmd output/m_test2_01_03.bhc srcdata/m_test2_01_03.3dmd
+	@$(BINLINKER) $*.nsbmd $*.bhc output/m_test2_01_03.3dmd $*.ngpack BR
 
 output/m_test2_01_03.nsbmd: srcdata/m_test2_01_03.imd
 	@g3dcvtr srcdata/m_test2_01_03.imd -emdl -o output/m_test2_01_03.nsbmd
@@ -258,8 +258,8 @@ output/m_test2_01_03.bhc: srcdata/m_test2_01_03h.imd
 srcdata/m_test2_01_03.3dmd:
 	@echo m_test2_01_03.3dmdが存在しないためダミーデータを生成します
 	@cp dummy_file/dummy.3dmd srcdata/m_test2_01_03.3dmd
-output/m_test2_01_04.3dppack: output/m_test2_01_04.nsbmd output/m_test2_01_04.bhc srcdata/m_test2_01_04.3dmd
-	@$(BINLINKER) $*.nsbmd $*.bhc output/m_test2_01_04.3dmd $*.3dppack BR
+output/m_test2_01_04.ngpack: output/m_test2_01_04.nsbmd output/m_test2_01_04.bhc srcdata/m_test2_01_04.3dmd
+	@$(BINLINKER) $*.nsbmd $*.bhc output/m_test2_01_04.3dmd $*.ngpack BR
 
 output/m_test2_01_04.nsbmd: srcdata/m_test2_01_04.imd
 	@g3dcvtr srcdata/m_test2_01_04.imd -emdl -o output/m_test2_01_04.nsbmd
@@ -278,8 +278,8 @@ output/m_test2_01_04.bhc: srcdata/m_test2_01_04h.imd
 srcdata/m_test2_01_04.3dmd:
 	@echo m_test2_01_04.3dmdが存在しないためダミーデータを生成します
 	@cp dummy_file/dummy.3dmd srcdata/m_test2_01_04.3dmd
-output/m_test2_02_01.3dppack: output/m_test2_02_01.nsbmd output/m_test2_02_01.bhc srcdata/m_test2_02_01.3dmd
-	@$(BINLINKER) $*.nsbmd $*.bhc output/m_test2_02_01.3dmd $*.3dppack BR
+output/m_test2_02_01.ngpack: output/m_test2_02_01.nsbmd output/m_test2_02_01.bhc srcdata/m_test2_02_01.3dmd
+	@$(BINLINKER) $*.nsbmd $*.bhc output/m_test2_02_01.3dmd $*.ngpack BR
 
 output/m_test2_02_01.nsbmd: srcdata/m_test2_02_01.imd
 	@g3dcvtr srcdata/m_test2_02_01.imd -emdl -o output/m_test2_02_01.nsbmd
@@ -298,8 +298,8 @@ output/m_test2_02_01.bhc: srcdata/m_test2_02_01h.imd
 srcdata/m_test2_02_01.3dmd:
 	@echo m_test2_02_01.3dmdが存在しないためダミーデータを生成します
 	@cp dummy_file/dummy.3dmd srcdata/m_test2_02_01.3dmd
-output/m_test2_02_02.3dppack: output/m_test2_02_02.nsbmd output/m_test2_02_02.bhc srcdata/m_test2_02_02.3dmd
-	@$(BINLINKER) $*.nsbmd $*.bhc output/m_test2_02_02.3dmd $*.3dppack BR
+output/m_test2_02_02.ngpack: output/m_test2_02_02.nsbmd output/m_test2_02_02.bhc srcdata/m_test2_02_02.3dmd
+	@$(BINLINKER) $*.nsbmd $*.bhc output/m_test2_02_02.3dmd $*.ngpack BR
 
 output/m_test2_02_02.nsbmd: srcdata/m_test2_02_02.imd
 	@g3dcvtr srcdata/m_test2_02_02.imd -emdl -o output/m_test2_02_02.nsbmd
@@ -318,8 +318,8 @@ output/m_test2_02_02.bhc: srcdata/m_test2_02_02h.imd
 srcdata/m_test2_02_02.3dmd:
 	@echo m_test2_02_02.3dmdが存在しないためダミーデータを生成します
 	@cp dummy_file/dummy.3dmd srcdata/m_test2_02_02.3dmd
-output/m_test2_02_03.3dppack: output/m_test2_02_03.nsbmd output/m_test2_02_03.bhc srcdata/m_test2_02_03.3dmd
-	@$(BINLINKER) $*.nsbmd $*.bhc output/m_test2_02_03.3dmd $*.3dppack BR
+output/m_test2_02_03.ngpack: output/m_test2_02_03.nsbmd output/m_test2_02_03.bhc srcdata/m_test2_02_03.3dmd
+	@$(BINLINKER) $*.nsbmd $*.bhc output/m_test2_02_03.3dmd $*.ngpack BR
 
 output/m_test2_02_03.nsbmd: srcdata/m_test2_02_03.imd
 	@g3dcvtr srcdata/m_test2_02_03.imd -emdl -o output/m_test2_02_03.nsbmd
@@ -338,8 +338,8 @@ output/m_test2_02_03.bhc: srcdata/m_test2_02_03h.imd
 srcdata/m_test2_02_03.3dmd:
 	@echo m_test2_02_03.3dmdが存在しないためダミーデータを生成します
 	@cp dummy_file/dummy.3dmd srcdata/m_test2_02_03.3dmd
-output/m_test2_02_04.3dppack: output/m_test2_02_04.nsbmd output/m_test2_02_04.bhc srcdata/m_test2_02_04.3dmd
-	@$(BINLINKER) $*.nsbmd $*.bhc output/m_test2_02_04.3dmd $*.3dppack BR
+output/m_test2_02_04.ngpack: output/m_test2_02_04.nsbmd output/m_test2_02_04.bhc srcdata/m_test2_02_04.3dmd
+	@$(BINLINKER) $*.nsbmd $*.bhc output/m_test2_02_04.3dmd $*.ngpack BR
 
 output/m_test2_02_04.nsbmd: srcdata/m_test2_02_04.imd
 	@g3dcvtr srcdata/m_test2_02_04.imd -emdl -o output/m_test2_02_04.nsbmd
@@ -358,8 +358,8 @@ output/m_test2_02_04.bhc: srcdata/m_test2_02_04h.imd
 srcdata/m_test2_02_04.3dmd:
 	@echo m_test2_02_04.3dmdが存在しないためダミーデータを生成します
 	@cp dummy_file/dummy.3dmd srcdata/m_test2_02_04.3dmd
-output/m_test2_03_01.3dppack: output/m_test2_03_01.nsbmd output/m_test2_03_01.bhc srcdata/m_test2_03_01.3dmd
-	@$(BINLINKER) $*.nsbmd $*.bhc output/m_test2_03_01.3dmd $*.3dppack BR
+output/m_test2_03_01.ngpack: output/m_test2_03_01.nsbmd output/m_test2_03_01.bhc srcdata/m_test2_03_01.3dmd
+	@$(BINLINKER) $*.nsbmd $*.bhc output/m_test2_03_01.3dmd $*.ngpack BR
 
 output/m_test2_03_01.nsbmd: srcdata/m_test2_03_01.imd
 	@g3dcvtr srcdata/m_test2_03_01.imd -emdl -o output/m_test2_03_01.nsbmd
@@ -378,8 +378,8 @@ output/m_test2_03_01.bhc: srcdata/m_test2_03_01h.imd
 srcdata/m_test2_03_01.3dmd:
 	@echo m_test2_03_01.3dmdが存在しないためダミーデータを生成します
 	@cp dummy_file/dummy.3dmd srcdata/m_test2_03_01.3dmd
-output/m_test2_03_02.3dppack: output/m_test2_03_02.nsbmd output/m_test2_03_02.bhc srcdata/m_test2_03_02.3dmd
-	@$(BINLINKER) $*.nsbmd $*.bhc output/m_test2_03_02.3dmd $*.3dppack BR
+output/m_test2_03_02.ngpack: output/m_test2_03_02.nsbmd output/m_test2_03_02.bhc srcdata/m_test2_03_02.3dmd
+	@$(BINLINKER) $*.nsbmd $*.bhc output/m_test2_03_02.3dmd $*.ngpack BR
 
 output/m_test2_03_02.nsbmd: srcdata/m_test2_03_02.imd
 	@g3dcvtr srcdata/m_test2_03_02.imd -emdl -o output/m_test2_03_02.nsbmd
@@ -398,8 +398,8 @@ output/m_test2_03_02.bhc: srcdata/m_test2_03_02h.imd
 srcdata/m_test2_03_02.3dmd:
 	@echo m_test2_03_02.3dmdが存在しないためダミーデータを生成します
 	@cp dummy_file/dummy.3dmd srcdata/m_test2_03_02.3dmd
-output/m_test2_03_03.3dppack: output/m_test2_03_03.nsbmd output/m_test2_03_03.bhc srcdata/m_test2_03_03.3dmd
-	@$(BINLINKER) $*.nsbmd $*.bhc output/m_test2_03_03.3dmd $*.3dppack BR
+output/m_test2_03_03.ngpack: output/m_test2_03_03.nsbmd output/m_test2_03_03.bhc srcdata/m_test2_03_03.3dmd
+	@$(BINLINKER) $*.nsbmd $*.bhc output/m_test2_03_03.3dmd $*.ngpack BR
 
 output/m_test2_03_03.nsbmd: srcdata/m_test2_03_03.imd
 	@g3dcvtr srcdata/m_test2_03_03.imd -emdl -o output/m_test2_03_03.nsbmd
@@ -418,8 +418,8 @@ output/m_test2_03_03.bhc: srcdata/m_test2_03_03h.imd
 srcdata/m_test2_03_03.3dmd:
 	@echo m_test2_03_03.3dmdが存在しないためダミーデータを生成します
 	@cp dummy_file/dummy.3dmd srcdata/m_test2_03_03.3dmd
-output/m_test2_03_04.3dppack: output/m_test2_03_04.nsbmd output/m_test2_03_04.bhc srcdata/m_test2_03_04.3dmd
-	@$(BINLINKER) $*.nsbmd $*.bhc output/m_test2_03_04.3dmd $*.3dppack BR
+output/m_test2_03_04.ngpack: output/m_test2_03_04.nsbmd output/m_test2_03_04.bhc srcdata/m_test2_03_04.3dmd
+	@$(BINLINKER) $*.nsbmd $*.bhc output/m_test2_03_04.3dmd $*.ngpack BR
 
 output/m_test2_03_04.nsbmd: srcdata/m_test2_03_04.imd
 	@g3dcvtr srcdata/m_test2_03_04.imd -emdl -o output/m_test2_03_04.nsbmd
@@ -438,8 +438,8 @@ output/m_test2_03_04.bhc: srcdata/m_test2_03_04h.imd
 srcdata/m_test2_03_04.3dmd:
 	@echo m_test2_03_04.3dmdが存在しないためダミーデータを生成します
 	@cp dummy_file/dummy.3dmd srcdata/m_test2_03_04.3dmd
-output/m_test2_04_01.3dppack: output/m_test2_04_01.nsbmd output/m_test2_04_01.bhc srcdata/m_test2_04_01.3dmd
-	@$(BINLINKER) $*.nsbmd $*.bhc output/m_test2_04_01.3dmd $*.3dppack BR
+output/m_test2_04_01.ngpack: output/m_test2_04_01.nsbmd output/m_test2_04_01.bhc srcdata/m_test2_04_01.3dmd
+	@$(BINLINKER) $*.nsbmd $*.bhc output/m_test2_04_01.3dmd $*.ngpack BR
 
 output/m_test2_04_01.nsbmd: srcdata/m_test2_04_01.imd
 	@g3dcvtr srcdata/m_test2_04_01.imd -emdl -o output/m_test2_04_01.nsbmd
@@ -458,8 +458,8 @@ output/m_test2_04_01.bhc: srcdata/m_test2_04_01h.imd
 srcdata/m_test2_04_01.3dmd:
 	@echo m_test2_04_01.3dmdが存在しないためダミーデータを生成します
 	@cp dummy_file/dummy.3dmd srcdata/m_test2_04_01.3dmd
-output/m_test2_04_02.3dppack: output/m_test2_04_02.nsbmd output/m_test2_04_02.bhc srcdata/m_test2_04_02.3dmd
-	@$(BINLINKER) $*.nsbmd $*.bhc output/m_test2_04_02.3dmd $*.3dppack BR
+output/m_test2_04_02.ngpack: output/m_test2_04_02.nsbmd output/m_test2_04_02.bhc srcdata/m_test2_04_02.3dmd
+	@$(BINLINKER) $*.nsbmd $*.bhc output/m_test2_04_02.3dmd $*.ngpack BR
 
 output/m_test2_04_02.nsbmd: srcdata/m_test2_04_02.imd
 	@g3dcvtr srcdata/m_test2_04_02.imd -emdl -o output/m_test2_04_02.nsbmd
@@ -478,8 +478,8 @@ output/m_test2_04_02.bhc: srcdata/m_test2_04_02h.imd
 srcdata/m_test2_04_02.3dmd:
 	@echo m_test2_04_02.3dmdが存在しないためダミーデータを生成します
 	@cp dummy_file/dummy.3dmd srcdata/m_test2_04_02.3dmd
-output/m_test2_04_03.3dppack: output/m_test2_04_03.nsbmd output/m_test2_04_03.bhc srcdata/m_test2_04_03.3dmd
-	@$(BINLINKER) $*.nsbmd $*.bhc output/m_test2_04_03.3dmd $*.3dppack BR
+output/m_test2_04_03.ngpack: output/m_test2_04_03.nsbmd output/m_test2_04_03.bhc srcdata/m_test2_04_03.3dmd
+	@$(BINLINKER) $*.nsbmd $*.bhc output/m_test2_04_03.3dmd $*.ngpack BR
 
 output/m_test2_04_03.nsbmd: srcdata/m_test2_04_03.imd
 	@g3dcvtr srcdata/m_test2_04_03.imd -emdl -o output/m_test2_04_03.nsbmd
@@ -498,8 +498,8 @@ output/m_test2_04_03.bhc: srcdata/m_test2_04_03h.imd
 srcdata/m_test2_04_03.3dmd:
 	@echo m_test2_04_03.3dmdが存在しないためダミーデータを生成します
 	@cp dummy_file/dummy.3dmd srcdata/m_test2_04_03.3dmd
-output/m_test2_04_04.3dppack: output/m_test2_04_04.nsbmd output/m_test2_04_04.bhc srcdata/m_test2_04_04.3dmd
-	@$(BINLINKER) $*.nsbmd $*.bhc output/m_test2_04_04.3dmd $*.3dppack BR
+output/m_test2_04_04.ngpack: output/m_test2_04_04.nsbmd output/m_test2_04_04.bhc srcdata/m_test2_04_04.3dmd
+	@$(BINLINKER) $*.nsbmd $*.bhc output/m_test2_04_04.3dmd $*.ngpack BR
 
 output/m_test2_04_04.nsbmd: srcdata/m_test2_04_04.imd
 	@g3dcvtr srcdata/m_test2_04_04.imd -emdl -o output/m_test2_04_04.nsbmd
@@ -518,8 +518,8 @@ output/m_test2_04_04.bhc: srcdata/m_test2_04_04h.imd
 srcdata/m_test2_04_04.3dmd:
 	@echo m_test2_04_04.3dmdが存在しないためダミーデータを生成します
 	@cp dummy_file/dummy.3dmd srcdata/m_test2_04_04.3dmd
-output/m_test_01_01.3dppack: output/m_test_01_01.nsbmd output/m_test_01_01.bhc srcdata/m_test_01_01.3dmd
-	@$(BINLINKER) $*.nsbmd $*.bhc output/m_test_01_01.3dmd $*.3dppack BR
+output/m_test_01_01.ngpack: output/m_test_01_01.nsbmd output/m_test_01_01.bhc srcdata/m_test_01_01.3dmd
+	@$(BINLINKER) $*.nsbmd $*.bhc output/m_test_01_01.3dmd $*.ngpack BR
 
 output/m_test_01_01.nsbmd: srcdata/m_test_01_01.imd
 	@g3dcvtr srcdata/m_test_01_01.imd -emdl -o output/m_test_01_01.nsbmd
@@ -538,8 +538,8 @@ output/m_test_01_01.bhc: srcdata/m_test_01_01h.imd
 srcdata/m_test_01_01.3dmd:
 	@echo m_test_01_01.3dmdが存在しないためダミーデータを生成します
 	@cp dummy_file/dummy.3dmd srcdata/m_test_01_01.3dmd
-output/m_test_01_02.3dppack: output/m_test_01_02.nsbmd output/m_test_01_02.bhc srcdata/m_test_01_02.3dmd
-	@$(BINLINKER) $*.nsbmd $*.bhc output/m_test_01_02.3dmd $*.3dppack BR
+output/m_test_01_02.ngpack: output/m_test_01_02.nsbmd output/m_test_01_02.bhc srcdata/m_test_01_02.3dmd
+	@$(BINLINKER) $*.nsbmd $*.bhc output/m_test_01_02.3dmd $*.ngpack BR
 
 output/m_test_01_02.nsbmd: srcdata/m_test_01_02.imd
 	@g3dcvtr srcdata/m_test_01_02.imd -emdl -o output/m_test_01_02.nsbmd
@@ -558,8 +558,8 @@ output/m_test_01_02.bhc: srcdata/m_test_01_02h.imd
 srcdata/m_test_01_02.3dmd:
 	@echo m_test_01_02.3dmdが存在しないためダミーデータを生成します
 	@cp dummy_file/dummy.3dmd srcdata/m_test_01_02.3dmd
-output/m_test_01_03.3dppack: output/m_test_01_03.nsbmd output/m_test_01_03.bhc srcdata/m_test_01_03.3dmd
-	@$(BINLINKER) $*.nsbmd $*.bhc output/m_test_01_03.3dmd $*.3dppack BR
+output/m_test_01_03.ngpack: output/m_test_01_03.nsbmd output/m_test_01_03.bhc srcdata/m_test_01_03.3dmd
+	@$(BINLINKER) $*.nsbmd $*.bhc output/m_test_01_03.3dmd $*.ngpack BR
 
 output/m_test_01_03.nsbmd: srcdata/m_test_01_03.imd
 	@g3dcvtr srcdata/m_test_01_03.imd -emdl -o output/m_test_01_03.nsbmd
@@ -578,8 +578,8 @@ output/m_test_01_03.bhc: srcdata/m_test_01_03h.imd
 srcdata/m_test_01_03.3dmd:
 	@echo m_test_01_03.3dmdが存在しないためダミーデータを生成します
 	@cp dummy_file/dummy.3dmd srcdata/m_test_01_03.3dmd
-output/m_test_01_04.3dppack: output/m_test_01_04.nsbmd output/m_test_01_04.bhc srcdata/m_test_01_04.3dmd
-	@$(BINLINKER) $*.nsbmd $*.bhc output/m_test_01_04.3dmd $*.3dppack BR
+output/m_test_01_04.ngpack: output/m_test_01_04.nsbmd output/m_test_01_04.bhc srcdata/m_test_01_04.3dmd
+	@$(BINLINKER) $*.nsbmd $*.bhc output/m_test_01_04.3dmd $*.ngpack BR
 
 output/m_test_01_04.nsbmd: srcdata/m_test_01_04.imd
 	@g3dcvtr srcdata/m_test_01_04.imd -emdl -o output/m_test_01_04.nsbmd
@@ -598,8 +598,8 @@ output/m_test_01_04.bhc: srcdata/m_test_01_04h.imd
 srcdata/m_test_01_04.3dmd:
 	@echo m_test_01_04.3dmdが存在しないためダミーデータを生成します
 	@cp dummy_file/dummy.3dmd srcdata/m_test_01_04.3dmd
-output/m_test_01_05.3dppack: output/m_test_01_05.nsbmd output/m_test_01_05.bhc srcdata/m_test_01_05.3dmd
-	@$(BINLINKER) $*.nsbmd $*.bhc output/m_test_01_05.3dmd $*.3dppack BR
+output/m_test_01_05.ngpack: output/m_test_01_05.nsbmd output/m_test_01_05.bhc srcdata/m_test_01_05.3dmd
+	@$(BINLINKER) $*.nsbmd $*.bhc output/m_test_01_05.3dmd $*.ngpack BR
 
 output/m_test_01_05.nsbmd: srcdata/m_test_01_05.imd
 	@g3dcvtr srcdata/m_test_01_05.imd -emdl -o output/m_test_01_05.nsbmd
@@ -618,8 +618,8 @@ output/m_test_01_05.bhc: srcdata/m_test_01_05h.imd
 srcdata/m_test_01_05.3dmd:
 	@echo m_test_01_05.3dmdが存在しないためダミーデータを生成します
 	@cp dummy_file/dummy.3dmd srcdata/m_test_01_05.3dmd
-output/m_test_01_06.3dppack: output/m_test_01_06.nsbmd output/m_test_01_06.bhc srcdata/m_test_01_06.3dmd
-	@$(BINLINKER) $*.nsbmd $*.bhc output/m_test_01_06.3dmd $*.3dppack BR
+output/m_test_01_06.ngpack: output/m_test_01_06.nsbmd output/m_test_01_06.bhc srcdata/m_test_01_06.3dmd
+	@$(BINLINKER) $*.nsbmd $*.bhc output/m_test_01_06.3dmd $*.ngpack BR
 
 output/m_test_01_06.nsbmd: srcdata/m_test_01_06.imd
 	@g3dcvtr srcdata/m_test_01_06.imd -emdl -o output/m_test_01_06.nsbmd
@@ -638,8 +638,8 @@ output/m_test_01_06.bhc: srcdata/m_test_01_06h.imd
 srcdata/m_test_01_06.3dmd:
 	@echo m_test_01_06.3dmdが存在しないためダミーデータを生成します
 	@cp dummy_file/dummy.3dmd srcdata/m_test_01_06.3dmd
-output/m_test_02_01.3dppack: output/m_test_02_01.nsbmd output/m_test_02_01.bhc srcdata/m_test_02_01.3dmd
-	@$(BINLINKER) $*.nsbmd $*.bhc output/m_test_02_01.3dmd $*.3dppack BR
+output/m_test_02_01.ngpack: output/m_test_02_01.nsbmd output/m_test_02_01.bhc srcdata/m_test_02_01.3dmd
+	@$(BINLINKER) $*.nsbmd $*.bhc output/m_test_02_01.3dmd $*.ngpack BR
 
 output/m_test_02_01.nsbmd: srcdata/m_test_02_01.imd
 	@g3dcvtr srcdata/m_test_02_01.imd -emdl -o output/m_test_02_01.nsbmd
@@ -658,8 +658,8 @@ output/m_test_02_01.bhc: srcdata/m_test_02_01h.imd
 srcdata/m_test_02_01.3dmd:
 	@echo m_test_02_01.3dmdが存在しないためダミーデータを生成します
 	@cp dummy_file/dummy.3dmd srcdata/m_test_02_01.3dmd
-output/m_test_02_02.3dppack: output/m_test_02_02.nsbmd output/m_test_02_02.bhc srcdata/m_test_02_02.3dmd
-	@$(BINLINKER) $*.nsbmd $*.bhc output/m_test_02_02.3dmd $*.3dppack BR
+output/m_test_02_02.ngpack: output/m_test_02_02.nsbmd output/m_test_02_02.bhc srcdata/m_test_02_02.3dmd
+	@$(BINLINKER) $*.nsbmd $*.bhc output/m_test_02_02.3dmd $*.ngpack BR
 
 output/m_test_02_02.nsbmd: srcdata/m_test_02_02.imd
 	@g3dcvtr srcdata/m_test_02_02.imd -emdl -o output/m_test_02_02.nsbmd
@@ -678,8 +678,8 @@ output/m_test_02_02.bhc: srcdata/m_test_02_02h.imd
 srcdata/m_test_02_02.3dmd:
 	@echo m_test_02_02.3dmdが存在しないためダミーデータを生成します
 	@cp dummy_file/dummy.3dmd srcdata/m_test_02_02.3dmd
-output/m_test_02_03.3dppack: output/m_test_02_03.nsbmd output/m_test_02_03.bhc srcdata/m_test_02_03.3dmd
-	@$(BINLINKER) $*.nsbmd $*.bhc output/m_test_02_03.3dmd $*.3dppack BR
+output/m_test_02_03.ngpack: output/m_test_02_03.nsbmd output/m_test_02_03.bhc srcdata/m_test_02_03.3dmd
+	@$(BINLINKER) $*.nsbmd $*.bhc output/m_test_02_03.3dmd $*.ngpack BR
 
 output/m_test_02_03.nsbmd: srcdata/m_test_02_03.imd
 	@g3dcvtr srcdata/m_test_02_03.imd -emdl -o output/m_test_02_03.nsbmd
@@ -698,8 +698,8 @@ output/m_test_02_03.bhc: srcdata/m_test_02_03h.imd
 srcdata/m_test_02_03.3dmd:
 	@echo m_test_02_03.3dmdが存在しないためダミーデータを生成します
 	@cp dummy_file/dummy.3dmd srcdata/m_test_02_03.3dmd
-output/m_test_02_04.3dppack: output/m_test_02_04.nsbmd output/m_test_02_04.bhc srcdata/m_test_02_04.3dmd
-	@$(BINLINKER) $*.nsbmd $*.bhc output/m_test_02_04.3dmd $*.3dppack BR
+output/m_test_02_04.ngpack: output/m_test_02_04.nsbmd output/m_test_02_04.bhc srcdata/m_test_02_04.3dmd
+	@$(BINLINKER) $*.nsbmd $*.bhc output/m_test_02_04.3dmd $*.ngpack BR
 
 output/m_test_02_04.nsbmd: srcdata/m_test_02_04.imd
 	@g3dcvtr srcdata/m_test_02_04.imd -emdl -o output/m_test_02_04.nsbmd
@@ -718,8 +718,8 @@ output/m_test_02_04.bhc: srcdata/m_test_02_04h.imd
 srcdata/m_test_02_04.3dmd:
 	@echo m_test_02_04.3dmdが存在しないためダミーデータを生成します
 	@cp dummy_file/dummy.3dmd srcdata/m_test_02_04.3dmd
-output/m_test_02_05.3dppack: output/m_test_02_05.nsbmd output/m_test_02_05.bhc srcdata/m_test_02_05.3dmd
-	@$(BINLINKER) $*.nsbmd $*.bhc output/m_test_02_05.3dmd $*.3dppack BR
+output/m_test_02_05.ngpack: output/m_test_02_05.nsbmd output/m_test_02_05.bhc srcdata/m_test_02_05.3dmd
+	@$(BINLINKER) $*.nsbmd $*.bhc output/m_test_02_05.3dmd $*.ngpack BR
 
 output/m_test_02_05.nsbmd: srcdata/m_test_02_05.imd
 	@g3dcvtr srcdata/m_test_02_05.imd -emdl -o output/m_test_02_05.nsbmd
@@ -738,8 +738,8 @@ output/m_test_02_05.bhc: srcdata/m_test_02_05h.imd
 srcdata/m_test_02_05.3dmd:
 	@echo m_test_02_05.3dmdが存在しないためダミーデータを生成します
 	@cp dummy_file/dummy.3dmd srcdata/m_test_02_05.3dmd
-output/m_test_02_06.3dppack: output/m_test_02_06.nsbmd output/m_test_02_06.bhc srcdata/m_test_02_06.3dmd
-	@$(BINLINKER) $*.nsbmd $*.bhc output/m_test_02_06.3dmd $*.3dppack BR
+output/m_test_02_06.ngpack: output/m_test_02_06.nsbmd output/m_test_02_06.bhc srcdata/m_test_02_06.3dmd
+	@$(BINLINKER) $*.nsbmd $*.bhc output/m_test_02_06.3dmd $*.ngpack BR
 
 output/m_test_02_06.nsbmd: srcdata/m_test_02_06.imd
 	@g3dcvtr srcdata/m_test_02_06.imd -emdl -o output/m_test_02_06.nsbmd
@@ -760,41 +760,41 @@ srcdata/m_test_02_06.3dmd:
 	@cp dummy_file/dummy.3dmd srcdata/m_test_02_06.3dmd
 
 ARCDEPENDS	= \
-	output/C3_00_01.3dppack \
-	output/C3_00_02.3dppack \
-	output/C3_01_01.3dppack \
-	output/C3_01_02.3dppack \
-	output/h01a_00_00.3dppack \
-	output/h01a_00_01.3dppack \
-	output/h01a_00_02.3dppack \
-	output/h01a_01_00.3dppack \
-	output/h01a_01_01.3dppack \
-	output/h01a_01_02.3dppack \
-	output/m_test2_01_01.3dppack \
-	output/m_test2_01_02.3dppack \
-	output/m_test2_01_03.3dppack \
-	output/m_test2_01_04.3dppack \
-	output/m_test2_02_01.3dppack \
-	output/m_test2_02_02.3dppack \
-	output/m_test2_02_03.3dppack \
-	output/m_test2_02_04.3dppack \
-	output/m_test2_03_01.3dppack \
-	output/m_test2_03_02.3dppack \
-	output/m_test2_03_03.3dppack \
-	output/m_test2_03_04.3dppack \
-	output/m_test2_04_01.3dppack \
-	output/m_test2_04_02.3dppack \
-	output/m_test2_04_03.3dppack \
-	output/m_test2_04_04.3dppack \
-	output/m_test_01_01.3dppack \
-	output/m_test_01_02.3dppack \
-	output/m_test_01_03.3dppack \
-	output/m_test_01_04.3dppack \
-	output/m_test_01_05.3dppack \
-	output/m_test_01_06.3dppack \
-	output/m_test_02_01.3dppack \
-	output/m_test_02_02.3dppack \
-	output/m_test_02_03.3dppack \
-	output/m_test_02_04.3dppack \
-	output/m_test_02_05.3dppack \
-	output/m_test_02_06.3dppack \
+	output/C3_00_01.ngpack \
+	output/C3_00_02.ngpack \
+	output/C3_01_01.ngpack \
+	output/C3_01_02.ngpack \
+	output/h01a_00_00.ngpack \
+	output/h01a_00_01.ngpack \
+	output/h01a_00_02.ngpack \
+	output/h01a_01_00.ngpack \
+	output/h01a_01_01.ngpack \
+	output/h01a_01_02.ngpack \
+	output/m_test2_01_01.ngpack \
+	output/m_test2_01_02.ngpack \
+	output/m_test2_01_03.ngpack \
+	output/m_test2_01_04.ngpack \
+	output/m_test2_02_01.ngpack \
+	output/m_test2_02_02.ngpack \
+	output/m_test2_02_03.ngpack \
+	output/m_test2_02_04.ngpack \
+	output/m_test2_03_01.ngpack \
+	output/m_test2_03_02.ngpack \
+	output/m_test2_03_03.ngpack \
+	output/m_test2_03_04.ngpack \
+	output/m_test2_04_01.ngpack \
+	output/m_test2_04_02.ngpack \
+	output/m_test2_04_03.ngpack \
+	output/m_test2_04_04.ngpack \
+	output/m_test_01_01.ngpack \
+	output/m_test_01_02.ngpack \
+	output/m_test_01_03.ngpack \
+	output/m_test_01_04.ngpack \
+	output/m_test_01_05.ngpack \
+	output/m_test_01_06.ngpack \
+	output/m_test_02_01.ngpack \
+	output/m_test_02_02.ngpack \
+	output/m_test_02_03.ngpack \
+	output/m_test_02_04.ngpack \
+	output/m_test_02_05.ngpack \
+	output/m_test_02_06.ngpack \
