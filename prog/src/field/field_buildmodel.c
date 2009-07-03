@@ -375,7 +375,8 @@ const FIELD_BMANIME_DATA * FIELD_BMODEL_MAN_GetAnimeData(FIELD_BMODEL_MAN * man,
 BOOL FIELD_BMODEL_MAN_GetSubModel(const FIELD_BMODEL_MAN * man, 
     u16 bm_id, VecFx32 * ofs, u32 * entry_idx)
 {
-  if (bm_id != NARC_buildmodel_outdoor_pc_01_nsbmd)
+  if (bm_id != NARC_buildmodel_outdoor_pc_01_nsbmd
+    || man->model_arcid != ARCID_BMODEL_OUTDOOR )
   {
     return FALSE;
   }
@@ -1187,6 +1188,7 @@ void FIELD_BMODEL_MAN_ResistGlobalObj
     if (FIELD_BMODEL_MAN_GetSubModel(man,
           objStatus[i].resourceID, &status.trans, &status.id) == TRUE) 
     {
+      TAMADA_Printf("Resist Sub Model:index(%d) model id(%d)\n", i, status.id);
       j++;
       status.trans.x += objStatus[i].xpos;
       status.trans.y += objStatus[i].ypos;
