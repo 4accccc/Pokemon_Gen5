@@ -33,6 +33,7 @@ enum {
 static BTL_EVENT_FACTOR* ADD_Weather( u16 pri, BtlFieldEffect effect, u8 subParam );
 static void handler_fld_Weather( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 subParam, int* work );
 static BTL_EVENT_FACTOR* ADD_TrickRoom( u16 pri, BtlFieldEffect effect, u8 subParam );
+static void handler_fld_TrickRoom( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 subParam, int* work );
 static BTL_EVENT_FACTOR* ADD_Juryoku( u16 pri, BtlFieldEffect effect, u8 subParam );
 static BTL_EVENT_FACTOR* ADD_Fuin( u16 pri, BtlFieldEffect effect, u8 subParam );
 static BTL_EVENT_FACTOR* ADD_Sawagu( u16 pri, BtlFieldEffect effect, u8 subParam );
@@ -119,10 +120,16 @@ static void handler_fld_Weather( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* fl
 static BTL_EVENT_FACTOR* ADD_TrickRoom( u16 pri, BtlFieldEffect effect, u8 subParam )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_WAZA_DMG_PROC2,  handler_fld_Weather   },  // ダメージ補正
+    { BTL_EVENT_CALC_AGILITY,  handler_fld_TrickRoom   },  // ダメージ補正
     { BTL_EVENT_NULL, NULL },
   };
   return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_FIELD, effect, pri, subParam, HandlerTable );
+}
+static void handler_fld_TrickRoom( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 subParam, int* work )
+{
+  u16 agi = BTL_EVENTVAR_GetValue( BTL_EVAR_AGILITY );
+  agi = BTL_CALC_AGILITY_MAX - agi;
+  BTL_EVENTVAR_RewriteValue( BTL_EVAR_AGILITY, agi );
 }
 //--------------------------------------------------------------------------------------
 /**

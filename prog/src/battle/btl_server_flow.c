@@ -1586,8 +1586,6 @@ static void flowsub_checkWazaAvoid( BTL_SVFLOW_WORK* wk, WazaID waza, const BTL_
       pokeID[count++] = BTL_POKEPARAM_GetID( bpp );
       scPut_WazaAvoid( wk, bpp, waza );
       TargetPokeRec_Remove( targets, bpp );
-    }
-    else{
       scPut_WazaAvoid( wk, bpp, waza );
     }
   }
@@ -4583,16 +4581,18 @@ static u16 scEvent_CalcAgility( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attack
     {
       fx32 ratio = BTL_EVENTVAR_GetValue( BTL_EVAR_RATIO );
       agi = (agi * ratio) >> FX32_SHIFT;
+      BTL_Printf("  ÉnÉìÉhÉâèàóùå„ÇÃëfëÅÇ≥=%d, î{ó¶=%08x, åãâ =%d\n",
+          BTL_EVENTVAR_GetValue(BTL_EVAR_AGILITY), ratio, agi);
     }
     if( BTL_POKEPARAM_GetPokeSick(attacker) == POKESICK_MAHI )
     {
-      if( BTL_EVENTVAR_GetValue(BTL_EVAR_GEN_FLAG) )
-      {
+      if( BTL_EVENTVAR_GetValue(BTL_EVAR_GEN_FLAG) ){
         agi = (agi * BTL_MAHI_AGILITY_RATIO) / 100;
+        BTL_Printf("    Ç≥ÇÁÇ…É}ÉqÇ≈%d\n", agi);
       }
     }
   BTL_EVENTVAR_Pop();
-  BTL_Printf("ï‘Ç¡ÇƒÇ´ÇΩëfëÅÇ≥ÇÕ %d ÇæÇ¡ÇΩ\n", agi);
+
   return agi;
 }
 //--------------------------------------------------------------------------

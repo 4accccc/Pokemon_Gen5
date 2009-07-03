@@ -1423,9 +1423,7 @@ static void handler_KyouseiGipusu( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* 
 {
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID )
   {
-    u32 agi = BTL_EVENTVAR_GetValue( BTL_EVAR_AGILITY );
-    agi /= 2;
-    BTL_EVENTVAR_RewriteValue( BTL_EVAR_AGILITY, agi );
+    BTL_EVENTVAR_MulValue( BTL_EVAR_RATIO, FX32_CONST(0.5) );
   }
 }
 //------------------------------------------------------------------------------
@@ -1866,9 +1864,7 @@ static void handler_SpeedPowder( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* fl
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID )
   {
     // Ç∑ÇŒÇ‚Ç≥è„è∏
-    u32 agi = BTL_EVENTVAR_GetValue( BTL_EVAR_AGILITY );
-    agi *= 2;
-    BTL_EVENTVAR_RewriteValue( BTL_EVAR_AGILITY, agi );
+    BTL_EVENTVAR_MulValue( BTL_EVAR_RATIO, FX32_CONST(2) );
   }
 }
 //------------------------------------------------------------------------------
@@ -2072,9 +2068,7 @@ static void handler_KodawariScarf( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* 
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID )
   {
     // Ç∑ÇŒÇ‚Ç≥è„è∏
-    u32 agi = BTL_EVENTVAR_GetValue( BTL_EVAR_AGILITY );
-    agi *= 2;
-    BTL_EVENTVAR_RewriteValue( BTL_EVAR_AGILITY, agi );
+    BTL_EVENTVAR_MulValue( BTL_EVAR_AGILITY, FX32_CONST(2) );
   }
 }
 // Ç±ÇæÇÌÇËånã§í 

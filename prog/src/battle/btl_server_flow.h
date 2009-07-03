@@ -124,7 +124,7 @@ extern u32 BTL_SVFLOW_SimulationDamage( BTL_SVFLOW_WORK* flowWk, u8 atkPokeID, u
 
 
 /**
- * 特殊優先順コードA（ワザ優先順より上位）
+ * 特殊優先順コードA（ワザ優先順より上位：0～7に収まるように！）
  */
 typedef enum {
 
@@ -135,7 +135,7 @@ typedef enum {
 }BtlSpecialPriA;
 
 /**
- * 特殊優先順コードB（ワザ優先順より下位）
+ * 特殊優先順コードB（ワザ優先順より下位：：0～7に収まるように！）
  */
 typedef enum {
 

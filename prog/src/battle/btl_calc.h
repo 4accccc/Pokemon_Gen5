@@ -84,6 +84,8 @@ enum {
   BTL_CALC_TOK_HOUSI_PER        = 30,   ///「ほうし」発生確率
   BTL_CALC_TOK_MEROMEROBODY_PER = 30,   ///「メロメロボディ」発生確率
 
+  // 素早さ補正関連
+  BTL_CALC_AGILITY_MAX = 10000,
 
 };
 
