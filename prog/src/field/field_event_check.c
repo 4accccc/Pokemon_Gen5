@@ -456,6 +456,15 @@ static void setupRequest(EV_REQUEST * req, GAMESYS_WORK * gsys, FIELDMAP_WORK * 
   }
 
   req->debugRequest = ( (req->key_cont & PAD_BUTTON_R) != 0);
+  if (req->debugRequest)
+  {
+    req->talkRequest = FALSE;
+    //req->menuRequest = FALSE;
+    req->stepRequest = FALSE;
+    req->moveRequest = FALSE;
+    req->pushRequest = FALSE;
+    req->convRequest = FALSE;
+  }
     
 }
 
