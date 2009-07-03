@@ -87,6 +87,7 @@ $(SRC_TXT_FILE):	$(SRC_XLS_FILE)
 $(TARGET):	$(SRC_TXT_FILE)
 	ruby make_edgemark.rb $(SRC_TXT_FILE)
 	nnsarc -c -l -n -i $(TARGET) -S $(LIST_FILE)
+	$(NAIXCUT) $(TARGET:.narc=.naix)
 
 endif
 
