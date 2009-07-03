@@ -123,7 +123,6 @@ void * GameBeacon_Init(int *seq, void *pwk)
 	
 	gbs = GFL_HEAP_AllocClearMemory(GFL_HEAP_LOWID(GFL_HEAPID_APP), sizeof(GAME_BEACON_SYS));
 	GFL_NET_Init(&aGFLNetInit, GameBeacon_InitCallback, gbs);
-	GFL_DMA_GXDmaEnable(FALSE);
 	return gbs;
 }
 
@@ -192,7 +191,6 @@ BOOL GameBeacon_ExitWait(int *seq, void *pwk, void *pWork)
 
   if(gbs->status == GBS_STATUS_NULL){
     GFL_HEAP_FreeMemory(gbs);
-		GFL_DMA_GXDmaEnable(TRUE);
     return TRUE;
   }
   return FALSE;
