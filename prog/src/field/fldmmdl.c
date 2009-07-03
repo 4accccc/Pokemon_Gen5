@@ -67,7 +67,7 @@ struct _TAG_MMDLSYS
 	u8 *pOBJCodeParamBuf;			///<OBJCODE_PARAMバッファ
 	const OBJCODE_PARAM *pOBJCodeParamTbl; ///<OBJCODE_PARAM
   
-  void *fieldMapWork; ///<FIELDMAP_WORK
+  void *fieldMapWork; ///<FIELDMAP_WORK <-各ワーク単位での接続が良い。
 };
 
 #define MMDLSYS_SIZE (sizeof(MMDLSYS)) ///<MMDLSYSサイズ
@@ -4214,7 +4214,7 @@ static BOOL MMdlSys_CheckEventFlag( const MMDLSYS *mmdlsys, u16 flag_no )
   if( fieldMap == NULL ){
     return( FALSE );
   }
-  return; //FIELDMAP_WORKの扱いが確定していない。
+  return( FALSE ); //FIELDMAP_WORKの扱いが確定していない。
 #endif
   {
     GAMESYS_WORK *gsys = FIELDMAP_GetGameSysWork( fieldMap );
