@@ -74,3 +74,7 @@ extern GMEVENT * DEBUG_EVENT_ChangeToNextMap(GAMESYS_WORK * gsys, FIELD_MAIN_WOR
 //------------------------------------------------------------------
 extern void DEBUG_EVENT_ChangeEventMapChange( GAMESYS_WORK *gsys, GMEVENT *event,FIELD_MAIN_WORK *fieldmap, ZONEID zone_id );
 
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+extern GMEVENT * EVENT_FieldDoorInAnime(GAMESYS_WORK * gsys, FIELDMAP_WORK *fieldmap);
+

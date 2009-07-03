@@ -166,7 +166,6 @@ GMEVENT * DEBUG_EVENT_GameEnd( GAMESYS_WORK * gsys, FIELD_MAIN_WORK * fieldmap)
 //	イベント：マップ切り替え
 //
 //============================================================================================
-extern GMEVENT * EVENT_FieldDoorInAnime(GAMESYS_WORK * gsys, FIELDMAP_WORK *fieldmap);
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 typedef struct {
