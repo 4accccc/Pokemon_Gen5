@@ -1,29 +1,36 @@
 //=============================================================================================
 /**
- * @file	btl_field.h
- * @brief	ポケモンWB バトルシステム	天候など「場」に対する効果に関する処理
- * @author	taya
+ * @file  btl_field.h
+ * @brief ポケモンWB バトルシステム 天候など「場」に対する効果に関する処理
+ * @author  taya
  *
- * @date	2009.03.04	作成
+ * @date  2009.03.04  作成
  */
 //=============================================================================================
 #ifndef __BTL_FIELD_H__
 #define __BTL_FIELD_H__
 
 #include "battle\battle.h"
+#include "btl_util.h"
+
 
 /**
- *	バトル独自のフィールド状態（重複発動あり）
+ *  バトル独自のフィールド状態（重複発動あり）
  */
 typedef enum {
-	BTL_FLDSTATE_NONE = 0,
+  BTL_FLDEFF_NULL = 0,
 
-	BTL_FLDSTATE_TRICKROOM,		///< トリックルーム
-	BTL_FLDSTATE_GRAVITY,			///< じゅうりょく
+  BTL_FLDEFF_WEATHER,     ///< 各種天候
+  BTL_FLDEFF_TRICKROOM,   ///< トリックルーム
+  BTL_FLDEFF_JURYOKU,     ///< じゅうりょく
+  BTL_FLDEFF_FUIN,        ///< ふういん
+  BTL_FLDEFF_SAWAGU,      ///< 騒ぐ
+  BTL_FLDEFF_MIZUASOBI,   ///< みずあそび
+  BTL_FLDEFF_DOROASOBI,   ///< どろあそび
 
-	BTL_FLDSTATE_MAX,
+  BTL_FLDEFF_MAX,
 
-}BtlFieldState;
+}BtlFieldEffect;
 
 
 /*--------------------------------------------------------------------------*/
@@ -35,20 +42,30 @@ extern BtlWeather BTL_FIELD_GetWeather( void );
 extern void BTL_FIELD_SetWeather( BtlWeather weather, u16 turn );
 extern void BTL_FIELD_ClearWeather( void );
 
-extern BOOL BTL_FIELD_CheckState( BtlFieldState state );
+extern BOOL BTL_FIELD_AddEffect( BtlFieldEffect effect, BPP_SICK_CONT cont );
+extern void BTL_FIELD_RemoveEffect( BtlFieldEffect state );
+extern void BTL_FIELD_RemoveDependPokeEffect( u8 pokeID );
+extern BOOL BTL_FIELD_CheckEffect( BtlFieldEffect state );
+
+
 
 //=============================================================================================
 /**
  * 天候によってダメージが増加・減少するワザの増減率を返す
  *
- * @param   waza		ワザID
+ * @param   waza    ワザID
  *
- * @retval  fx32		増減率（パーセンテージ）
+ * @retval  fx32    増減率（パーセンテージ）
  */
 //=============================================================================================
 extern fx32 BTL_FIELD_GetWeatherDmgRatio( WazaID waza );
 
 
 extern BtlWeather BTL_FIELD_TurnCheckWeather( void );
+
+
+typedef void (*pFieldTurnCheckCallback)( BtlFieldEffect, void* );
+extern void BTL_FIELD_TurnCheck( pFieldTurnCheckCallback callbackFunc, void* callbackArg);
+
 
 #endif

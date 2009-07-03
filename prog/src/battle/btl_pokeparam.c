@@ -640,14 +640,16 @@ u8 BTL_POKEPARAM_GetSickParam( const BTL_POKEPARAM* pp, WazaSick sick )
 {
   GF_ASSERT(sick < NELEMS(pp->sickCont));
 
-  if( pp->sickCont[sick].type == WAZASICK_CONT_TURN )
-  {
+  switch(  pp->sickCont[sick].type ){
+  case WAZASICK_CONT_TURN:
     return pp->sickCont[sick].turn.param;
-  }
 
-  if( pp->sickCont[sick].type == WAZASICK_CONT_POKE )
-  {
+  case WAZASICK_CONT_POKE:
     return pp->sickCont[sick].poke.ID;
+
+  case WAZASICK_CONT_POKETURN:
+    return pp->sickCont[sick].poketurn.pokeID;
+
   }
 
   GF_ASSERT(0); // パラメ無いのに呼び出された
@@ -1284,11 +1286,20 @@ void BTL_POKEPARAM_CureWazaSick( BTL_POKEPARAM* pp, WazaSick sick )
 void BTL_POKEPARAM_CureWazaSickDependPoke( BTL_POKEPARAM* pp, u8 depend_pokeID )
 {
   u32 i;
+  u8 fCure;
   for(i=0; i<WAZASICK_MAX; ++i)
   {
-    if( ( pp->sickCont[i].type == WAZASICK_CONT_POKE)
-    &&  ( pp->sickCont[i].poke.ID == depend_pokeID )
-    ){
+    switch( pp->sickCont[i].type ){
+    case WAZASICK_CONT_POKE:
+      fCure = ( pp->sickCont[i].poke.ID == depend_pokeID );
+      break;
+    case WAZASICK_CONT_POKETURN:
+      fCure = ( pp->sickCont[i].poketurn.pokeID == depend_pokeID );
+      break;
+    default:
+      fCure = FALSE;
+    }
+    if( fCure ){
       pp->sickCont[i].type = WAZASICK_CONT_NONE;
     }
   }
@@ -1382,12 +1393,22 @@ BOOL BTL_POKEPARAM_Nemuri_CheckWake( BTL_POKEPARAM* pp )
 //=============================================================================================
 BOOL BTL_POKEPARAM_WazaSick_TurnCheck( BTL_POKEPARAM* pp )
 {
-  u32 i;
+  u32 i, turnMax;
   BOOL ret = FALSE;
 
   for(i=0; i<NELEMS(pp->sickCont); ++i)
   {
-    if( pp->sickCont[i].type == WAZASICK_CONT_TURN )
+    switch( pp->sickCont[i].type ){
+    case WAZASICK_CONT_TURN:
+      turnMax = pp->sickCont[i].turn.count;
+      break;
+    case WAZASICK_CONT_POKETURN:
+      turnMax = pp->sickCont[i].poketurn.count;
+    default:
+      turnMax = 0;
+      break;
+    }
+    if( turnMax )
     {
       u8 n = 1;
       if( (i == WAZASICK_NEMURI)
@@ -1398,7 +1419,7 @@ BOOL BTL_POKEPARAM_WazaSick_TurnCheck( BTL_POKEPARAM* pp )
 
       pp->wazaSickCounter[i] += n;
 
-      if( pp->wazaSickCounter[i] >= pp->sickCont[i].turn.count )
+      if( pp->wazaSickCounter[i] >= turnMax )
       {
         pp->wazaSickCounter[i] = 0;
         if( i != WAZASICK_NEMURI ){
@@ -1406,11 +1427,14 @@ BOOL BTL_POKEPARAM_WazaSick_TurnCheck( BTL_POKEPARAM* pp )
         }else{
           // 眠り時は“あくむ”をオフにする。
           // 眠り自体のオフは行動チェック時に行う
+          // @@@ あくむのオフも眠りと一致させるべきかも？
           pp->sickCont[ WAZASICK_AKUMU ].type = WAZASICK_CONT_NONE;
         }
         ret = TRUE;
       }
     }
+
+
     if( pp->sickCont[i].type == WAZASICK_CONT_PERMANENT )
     {
       if( (pp->sickCont[i].permanent.count_max != 0 )

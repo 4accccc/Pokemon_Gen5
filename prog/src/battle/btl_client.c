@@ -2255,7 +2255,7 @@ static BOOL _cec_check_kagefumi( BTL_CLIENT* wk )
 // とくせい「ありじごく」が自分に効くかチェック
 static BOOL _cec_check_arijigoku( BTL_CLIENT* wk )
 {
-  if( BTL_FIELD_CheckState(BTL_FLDSTATE_GRAVITY) )
+  if( BTL_FIELD_CheckEffect(BTL_FLDEFF_JURYOKU) )
   {
     return TRUE;
   }

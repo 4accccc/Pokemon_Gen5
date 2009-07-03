@@ -92,6 +92,23 @@ typedef enum {
 
 }BtlWeather;
 
+//--------------------------------------------------------------
+/**
+ *  ínå`
+ */
+//--------------------------------------------------------------
+typedef enum {
+  BTL_LANDFORM_GRASS,   ///< ëêÇﬁÇÁ
+  BTL_LANDFORM_SAND,    ///< çªín
+  BTL_LANDFORM_SEA,     ///< äC
+  BTL_LANDFORM_RIVER,   ///< êÏ
+  BTL_LANDFORM_SNOW,    ///< ê·å¥
+  BTL_LANDFORM_CAVE,    ///< ì¥åA
+  BTL_LANDFORM_ROCK,    ///< ä‚èÍ
+  BTL_LANDFORM_ROOM,    ///< é∫ì‡
+
+  BTL_LANDFORM_MAX,
+}BtlLandForm;
 
 typedef struct {
 

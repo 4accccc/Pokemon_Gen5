@@ -21,6 +21,7 @@
 #include "..\btl_event_factor.h"
 
 #include "hand_side.h"
+#include "hand_field.h"
 #include "hand_waza.h"
 
 /*--------------------------------------------------------------------------*/
@@ -37,6 +38,8 @@ static BOOL is_registerd( u8 pokeID, WazaID waza );
 static void removeHandlerForce( u8 pokeID, WazaID waza );
 static BTL_EVENT_FACTOR*  ADD_Texture( u16 pri, WazaID waza, u8 pokeID );
 static void handler_Texture( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static BTL_EVENT_FACTOR*  ADD_TrickRoom( u16 pri, WazaID waza, u8 pokeID );
+static void handler_TrickRoom( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static BTL_EVENT_FACTOR*  ADD_Kiribarai( u16 pri, WazaID waza, u8 pokeID );
 static void handler_Kiribarai( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static BTL_EVENT_FACTOR*  ADD_Kawarawari( u16 pri, WazaID waza, u8 pokeID );
@@ -475,6 +478,7 @@ BTL_EVENT_FACTOR*  BTL_HANDLER_Waza_Add( const BTL_POKEPARAM* pp, WazaID waza )
     { WAZANO_TOBIHIZAGERI,    ADD_Tobigeri      },
     { WAZANO_KIRIBARAI,       ADD_Kiribarai     },
     { WAZANO_KAWARAWARI,      ADD_Kawarawari    },
+    { WAZANO_TORIKKURUUMU,    ADD_TrickRoom     },
   };
 
   int i;
@@ -626,6 +630,50 @@ static void handler_Texture( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk
       BTL_HANDEX_PARAM_CHANGE_TYPE* param = BTL_SVFLOW_HANDLERWORK_Push( flowWk, BTL_HANDEX_CHANGE_TYPE, pokeID );
       param->next_type = next_type;
       param->pokeID = pokeID;
+    }
+  }
+}
+//----------------------------------------------------------------------------------
+/**
+ * トリックルーム
+ */
+//----------------------------------------------------------------------------------
+static BTL_EVENT_FACTOR*  ADD_TrickRoom( u16 pri, WazaID waza, u8 pokeID )
+{
+  static const BtlEventHandlerTable HandlerTable[] = {
+    { BTL_EVENT_UNCATEGORY_WAZA, handler_TrickRoom },    // 未分類ワザハンドラ
+    { BTL_EVENT_NULL, NULL },
+  };
+  return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_WAZA, waza, pri, pokeID, HandlerTable );
+}
+static void handler_TrickRoom( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+{
+  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
+  {
+    if( !BTL_FIELD_CheckEffect(BTL_FLDEFF_TRICKROOM) )
+    {
+      BTL_HANDEX_PARAM_ADD_FLDEFF* param;
+      BTL_HANDEX_PARAM_MESSAGE*  msg_param;
+
+      param = BTL_SVFLOW_HANDLERWORK_Push( flowWk, BTL_HANDEX_ADD_FLDEFF, pokeID );
+      param->effect = BTL_FLDEFF_TRICKROOM;
+      param->cont = BPP_SICKCONT_MakeTurn( 5 );
+
+      msg_param = BTL_SVFLOW_HANDLERWORK_Push( flowWk, BTL_HANDEX_MESSAGE_SET, pokeID );
+      msg_param->pokeID = pokeID;
+      msg_param->strID = BTL_STRID_SET_TrickRoom;
+    }
+    else
+    {
+      BTL_HANDEX_PARAM_REMOVE_FLDEFF* param;
+      BTL_HANDEX_PARAM_MESSAGE*  msg_param;
+
+      param = BTL_SVFLOW_HANDLERWORK_Push( flowWk, BTL_HANDEX_REMOVE_FLDEFF, pokeID );
+      param->effect = BTL_FLDEFF_TRICKROOM;
+
+      msg_param = BTL_SVFLOW_HANDLERWORK_Push( flowWk, BTL_HANDEX_MESSAGE_SET, pokeID );
+      msg_param->pokeID = pokeID;
+      msg_param->strID = BTL_STRID_SET_TrickRoomOff;
     }
   }
 }

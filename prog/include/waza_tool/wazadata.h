@@ -113,6 +113,7 @@ typedef enum {
   WAZASICK_CONT_PERMANENT,  ///< ずっと継続
   WAZASICK_CONT_TURN,       ///< ターン数継続
   WAZASICK_CONT_POKE,       ///< ワザをかけたポケモンが居る間、継続
+  WAZASICK_CONT_POKETURN,   ///< ターン数経過か＆ポケモンが場から消えるまでを両方チェック
 
 }WazaSickCont;
 

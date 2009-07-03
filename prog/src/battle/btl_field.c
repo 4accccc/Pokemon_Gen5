@@ -1,156 +1,257 @@
 //=============================================================================================
 /**
- * @file	btl_field.c
- * @brief	ポケモンWB バトルシステム	天候など「場」に対する効果に関する処理
- * @author	taya
+ * @file  btl_field.c
+ * @brief ポケモンWB バトルシステム 天候など「場」に対する効果に関する処理
+ * @author  taya
  *
- * @date	2009.03.04	作成
+ * @date  2009.03.04  作成
  */
 //=============================================================================================
 #include <gflib.h>
 
 #include "btl_common.h"
 #include "btl_calc.h"
+#include "btl_event_factor.h"
 
+#include "handler\hand_field.h"
 #include "btl_field.h"
 
 //--------------------------------------------------------------
 /**
- *	定数
+ *  定数
  */
 //--------------------------------------------------------------
 enum {
-	TURN_MAX = 16,
+  TURN_MAX = 16,
 };
 //--------------------------------------------------------------
 /**
- *	グローバルワーク
+ *  グローバルワーク
  */
 //--------------------------------------------------------------
 static struct {
 
-	BtlWeather		weather;
-	u16						weatherTurn;
+  BtlWeather    weather;
+  u16           weatherTurn;
+
+  BTL_EVENT_FACTOR*  factor[ BTL_FLDEFF_MAX ];
+  BPP_SICK_CONT      cont[ BTL_FLDEFF_MAX ];
+  u8                 turnCount[ BTL_FLDEFF_MAX ];
 
 }Work;
 
 
 
-
+static void clearFactorWork( BtlFieldEffect effect )
+{
+  Work.factor[ effect ] = NULL;
+  Work.cont[ effect ] = BPP_SICKCONT_MakeNull();
+  Work.turnCount[ effect ] = 0;
+}
 
 
 void BTL_FIELD_Init( BtlWeather weather )
 {
-	Work.weather = weather;
-	Work.weatherTurn = BTL_WEATHER_TURN_PERMANENT;
+  u32 i;
+
+  for(i=0; i<BTL_FLDEFF_MAX; ++i){
+    clearFactorWork( i );
+  }
+
+  Work.weather = weather;
+  Work.weatherTurn = BTL_WEATHER_TURN_PERMANENT;
 }
 
 BtlWeather BTL_FIELD_GetWeather( void )
 {
-	return Work.weather;
+  return Work.weather;
 }
 
 //=============================================================================================
 /**
- * 
  *
- * @param   weather		
- * @param   turn		
+ *
+ * @param   weather
+ * @param   turn
  *
  */
 //=============================================================================================
 void BTL_FIELD_SetWeather( BtlWeather weather, u16 turn )
 {
-	Work.weather = weather;
-	Work.weatherTurn = turn;
-	BTL_Printf("天候変化=%d\n", weather);
+  Work.weather = weather;
+  Work.weatherTurn = turn;
+  BTL_Printf("天候変化=%d\n", weather);
 }
 
 void BTL_FIELD_ClearWeather( void )
 {
-	Work.weather = BTL_WEATHER_NONE;
-	Work.weatherTurn = 0;
-	BTL_Printf("天候フラットに\n");
+  Work.weather = BTL_WEATHER_NONE;
+  Work.weatherTurn = 0;
+  BTL_Printf("天候フラットに\n");
 }
 
 //=============================================================================================
 /**
  * 天候によってダメージが増加・減少するワザの増減率を返す
  *
- * @param   waza		ワザID
+ * @param   waza    ワザID
  *
- * @retval  fx32		増減率（パーセンテージ）
+ * @retval  fx32    増減率（パーセンテージ）
  */
 //=============================================================================================
 fx32 BTL_FIELD_GetWeatherDmgRatio( WazaID waza )
 {
-	switch( Work.weather ){
-	case BTL_WEATHER_SHINE:
-		{
-			PokeType type = WAZADATA_GetType( waza );
-			if( type == POKETYPE_HONOO ){
-				return BTL_CALC_DMG_WEATHER_RATIO_ADVANTAGE;
-			}
-			if( type == POKETYPE_MIZU ){
-				return BTL_CALC_DMG_WEATHER_RATIO_DISADVANTAGE;
-			}
-		}
-		break;
-	case BTL_WEATHER_RAIN:
-		{
-			PokeType type = WAZADATA_GetType( waza );
-			if( type == POKETYPE_HONOO ){
-				return BTL_CALC_DMG_WEATHER_RATIO_DISADVANTAGE;
-			}
-			if( type == POKETYPE_MIZU ){
-				return BTL_CALC_DMG_WEATHER_RATIO_ADVANTAGE;
-			}
-		}
-		break;
-	default:
-		break;
-	}
-	return BTL_CALC_DMG_WEATHER_RATIO_NONE;
+  switch( Work.weather ){
+  case BTL_WEATHER_SHINE:
+    {
+      PokeType type = WAZADATA_GetType( waza );
+      if( type == POKETYPE_HONOO ){
+        return BTL_CALC_DMG_WEATHER_RATIO_ADVANTAGE;
+      }
+      if( type == POKETYPE_MIZU ){
+        return BTL_CALC_DMG_WEATHER_RATIO_DISADVANTAGE;
+      }
+    }
+    break;
+  case BTL_WEATHER_RAIN:
+    {
+      PokeType type = WAZADATA_GetType( waza );
+      if( type == POKETYPE_HONOO ){
+        return BTL_CALC_DMG_WEATHER_RATIO_DISADVANTAGE;
+      }
+      if( type == POKETYPE_MIZU ){
+        return BTL_CALC_DMG_WEATHER_RATIO_ADVANTAGE;
+      }
+    }
+    break;
+  default:
+    break;
+  }
+  return BTL_CALC_DMG_WEATHER_RATIO_NONE;
 }
 
 //=============================================================================================
 /**
  * ターンチェック
  *
- * @retval  BtlWeather		ターンチェックにより終わった天候
+ * @retval  BtlWeather    ターンチェックにより終わった天候
  */
 //=============================================================================================
 BtlWeather BTL_FIELD_TurnCheckWeather( void )
 {
-	if( Work.weather != BTL_WEATHER_NONE )
-	{
-		if( Work.weatherTurn != BTL_WEATHER_TURN_PERMANENT )
-		{
-			Work.weatherTurn--;
-			if( Work.weatherTurn == 0 )
-			{
-				BtlWeather endWeather = Work.weather;
-				Work.weather = BTL_WEATHER_NONE;
-				return endWeather;
-			}
-		}
-	}
-	return BTL_WEATHER_NONE;
+  if( Work.weather != BTL_WEATHER_NONE )
+  {
+    if( Work.weatherTurn != BTL_WEATHER_TURN_PERMANENT )
+    {
+      Work.weatherTurn--;
+      if( Work.weatherTurn == 0 )
+      {
+        BtlWeather endWeather = Work.weather;
+        Work.weather = BTL_WEATHER_NONE;
+        return endWeather;
+      }
+    }
+  }
+  return BTL_WEATHER_NONE;
 }
 
 
 //=============================================================================================
 /**
- * 場がとくていの状態にあるかどうか判定
+ * フィールドエフェクト追加
  *
- * @param   state		
+ * @param   state
  *
- * @retval  BOOL		
+ * @retval  BOOL
  */
 //=============================================================================================
-BOOL BTL_FIELD_CheckState( BtlFieldState state )
+BOOL BTL_FIELD_AddEffect( BtlFieldEffect effect, BPP_SICK_CONT cont )
 {
-	// @@@ とりあえず
-	return FALSE;
+  GF_ASSERT(effect < BTL_FLDEFF_MAX);
+
+  if( Work.factor[effect] == NULL )
+  {
+    Work.factor[ effect ] = BTL_HANDLER_FLD_Add( effect, 0 );
+    if( Work.factor[ effect ] ){
+      Work.cont[ effect ] = cont;
+      Work.turnCount[ effect ] = 0;
+    }
+  }
+  return FALSE;
+}
+//=============================================================================================
+/**
+ * フィールドエフェクト除去
+ *
+ * @param   effect
+ */
+//=============================================================================================
+void BTL_FIELD_RemoveEffect( BtlFieldEffect effect )
+{
+
+}
+//=============================================================================================
+/**
+ * ターンチェック
+ */
+//=============================================================================================
+void BTL_FIELD_TurnCheck( pFieldTurnCheckCallback callbackFunc, void* callbackArg )
+{
+  u32 i;
+  for(i=0; i<BTL_FLDEFF_MAX; ++i)
+  {
+    if( Work.factor[i] )
+    {
+      u8 turnMax = BPP_SICCONT_GetTurnMax( Work.cont[i] );
+      if( turnMax )
+      {
+        if( ++(Work.turnCount[i]) >= turnMax )
+        {
+          BTL_HANDLER_FLD_Remove( Work.factor[i] );
+          clearFactorWork( i );
+          callbackFunc( i, callbackArg );
+        }
+      }
+    }
+  }
+}
+
+//=============================================================================================
+/**
+ * 特定ポケモン依存のエフェクトを除去
+ *
+ * @param   pokeID
+ */
+//=============================================================================================
+void BTL_FIELD_RemoveDependPokeEffect( u8 pokeID )
+{
+  u32 i;
+  for(i=0; i<BTL_FLDEFF_MAX; ++i)
+  {
+    if( Work.factor[i] )
+    {
+      if( BPP_SICCONT_GetPokeID(Work.cont[i]) == pokeID )
+      {
+        BTL_HANDLER_FLD_Remove( Work.factor[i] );
+        clearFactorWork( i );
+      }
+    }
+  }
+}
+
+//=============================================================================================
+/**
+ * 特定のフィールドエフェクトが働いているかチェック
+ *
+ * @param   effect
+ *
+ * @retval  BOOL
+ */
+//=============================================================================================
+BOOL BTL_FIELD_CheckEffect( BtlFieldEffect effect )
+{
+  GF_ASSERT(effect < BTL_FLDEFF_MAX);
+
+  return Work.factor[ effect ] != NULL;
 }
 

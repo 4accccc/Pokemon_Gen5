@@ -3171,7 +3171,7 @@ static void handler_Fuyuu( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, 
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_DEF) == pokeID )
   {
     // 場に「じゅうりょく」が効いていなければ
-    if( BTL_FIELD_CheckState(BTL_FLDSTATE_GRAVITY) )
+    if( BTL_FIELD_CheckEffect(BTL_FLDEFF_JURYOKU) )
     {
       // じめんタイプワザ無効
       WazaID waza = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID_DEF );

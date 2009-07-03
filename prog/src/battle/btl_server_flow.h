@@ -19,6 +19,7 @@
 #include "btl_event.h"
 #include "btl_string.h"
 #include "btl_sideeff.h"
+#include "btl_field.h"
 
 /*--------------------------------------------------------------------------*/
 /* Consts                                                                   */
@@ -198,6 +199,8 @@ typedef enum {
   BTL_HANDEX_SET_CONTFLAG,  ///< 継続フラグセット
   BTL_HANDEX_RESET_CONTFLAG,///< 継続フラグリセット
   BTL_HANDEX_SIDEEFF_REMOVE, ///< サイドエフェクト削除
+  BTL_HANDEX_ADD_FLDEFF,    ///< フィールドエフェクト追加
+  BTL_HANDEX_REMOVE_FLDEFF, ///< フィールドエフェクト追加
   BTL_HANDEX_CHANGE_TOKUSEI,///< とくせい書き換え
   BTL_HANDEX_SET_ITEM,      ///< アイテム書き換え
   BTL_HANDEX_SWAP_ITEM,     ///< アイテム入れ替え
@@ -355,6 +358,18 @@ typedef struct {
   u8              fExMsg;
   u16             exStrID;
 }BTL_HANDEX_PARAM_SIDEEFF_REMOVE;
+
+typedef struct {
+  BTL_HANDEX_PARAM_DAMAGE  header;
+  BtlFieldEffect           effect;
+  BPP_SICK_CONT            cont;
+  u8                       sub_param;
+}BTL_HANDEX_PARAM_ADD_FLDEFF;
+
+typedef struct {
+  BTL_HANDEX_PARAM_DAMAGE  header;
+  BtlFieldEffect           effect;
+}BTL_HANDEX_PARAM_REMOVE_FLDEFF;
 
 typedef struct {
   BTL_HANDEX_PARAM_DAMAGE  header;
