@@ -174,7 +174,8 @@ void MUS_ITEM_DRAW_UpdateSystem( MUS_ITEM_DRAW_SYSTEM* work )
 
 void MUS_ITEM_DRAW_UpdateSystem_VBlank( MUS_ITEM_DRAW_SYSTEM* work )
 {
-	NNS_GfdDoVramTransfer();
+  //machine_use‚Å‚â‚Á‚Ä‚½
+//	NNS_GfdDoVramTransfer();
 }
 
 //ƒAƒCƒeƒ€”Ô†‚©‚çARC‚Ì”Ô†‚ğ’²‚×‚é

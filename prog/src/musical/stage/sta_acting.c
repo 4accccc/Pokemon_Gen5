@@ -295,13 +295,18 @@ ACTING_RETURN STA_ACT_LoopActing( ACTING_WORK *work )
       STA_ACT_StartScript( work );
     }
   }
+/*
   if( work->initWork->commWork != NULL )
   {
-    static BOOL isStartCnt = 0;
+    static u32 isStartCnt = 0;
+    static BOOL isWait = FALSE;
     MUS_COMM_WORK *commWork = work->initWork->commWork;
-    if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_X )
+    //if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_X )
+    if( STA_SCRIPT_GetRunningScriptNum( work->scriptSys ) == 0 &&
+        isWait == FALSE )
     {
       MUS_COMM_SendTimingCommand( commWork , MUS_COMM_TIMMING_START_SCRIPT+isStartCnt );
+      isWait = TRUE;
     }
     
     if( STA_SCRIPT_GetRunningScriptNum( work->scriptSys ) == 0 )
@@ -323,10 +328,14 @@ ACTING_RETURN STA_ACT_LoopActing( ACTING_WORK *work )
         STA_ACT_StartScript( work );
         vcount = OS_GetVBlankCount(); 
         isStartCnt++;
+        isWait = FALSE;
+        OS_TPrintf("-------------------------------\n");
+        OS_TPrintf("Start script[%d]\n",isStartCnt);
+        OS_TPrintf("-------------------------------\n");
       }
     }
   }
-
+*/
 
 #endif
 
