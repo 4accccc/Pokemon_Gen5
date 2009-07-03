@@ -330,8 +330,22 @@ GAME_COMM_STATUS GameCommSys_GetCommStatus(GAME_COMM_SYS_PTR gcsp)
 	switch(aNetStruct->bNetType){
   case GFL_NET_TYPE_WIRELESS:		///<ワイヤレス通信
   case GFL_NET_TYPE_IRC_WIRELESS:	///<赤外線通信でマッチング後、ワイヤレス通信へ移行
-  case GFL_NET_TYPE_WIRELESS_SCANONLY:	///<ワイヤレス通信(スキャン専用・電源ランプ非点滅)
     gcsp->comm_status = GAME_COMM_STATUS_WIRELESS;
+    break;
+
+  case GFL_NET_TYPE_WIRELESS_SCANONLY:	///<ワイヤレス通信(スキャン専用・電源ランプ非点滅)
+    {
+      //FIXME 正しいビーコン数のチェックを
+      u8 i;
+      gcsp->comm_status = GAME_COMM_STATUS_NULL;
+      for( i=0;i<4;i++ )
+      {
+        if( GFL_NET_GetBeaconData( i ) != NULL )
+        {
+          gcsp->comm_status = GAME_COMM_STATUS_WIRELESS;
+        }
+      }
+    }
     break;
   case GFL_NET_TYPE_WIFI:			///<WIFI通信
   case GFL_NET_TYPE_WIFI_LOBBY:	///<WIFI広場通信
