@@ -363,7 +363,8 @@ static const RAIL_POINT point_d02_loop_03 =
   },
   //VecFx32 pos;
   {
-    0x002bf7fa, 0x000cf96f, 0x008d2807,
+    0x002bf7fa, 0x000cf974, 0x008d2807,
+    ////0x002bf7fa, 0x000cf96f, 0x008d2807,
   },
   //const RAIL_CAMERA_SET * camera;
   &camera_point_d02_loop_03,
@@ -385,7 +386,8 @@ static const RAIL_POINT point_d02_loop_02 =
   },
   //VecFx32 pos;
   {
-    0x0032b422, 0x000b106b, 0x0093ec33,
+    0x00324057, 0x000b106b, 0x009454c3,
+    ////0x0032b422, 0x000b106b, 0x0093ec33,
   },
   //const RAIL_CAMERA_SET * camera;
   &camera_point_d02_loop_02,
@@ -407,7 +409,8 @@ static const RAIL_POINT point_d02_loop_01 =
   },
   //VecFx32 pos;
   {
-    0x00392cb0, 0x00085f20, 0x0089a7e7,
+    0x003940e7, 0x00085f20, 0x008a2b83,
+    ////0x00392cb0, 0x00085f20, 0x0089a7e7,
     //0x003a4c22, 0x0008f5cb, 0x008cc224,
   },
   //const RAIL_CAMERA_SET * camera;
@@ -430,7 +433,8 @@ static const RAIL_POINT point_d02_start_02 =
   },
   //VecFx32 pos;
   {
-    0x0031ffcc, 0x0006f167, 0x0085f618,
+    0x003285e2, 0x0006f167, 0x0086a9af,
+    ////0x0031ffcc, 0x0006f167, 0x0085f618,
   },
   //const RAIL_CAMERA_SET * camera;
   &camera_point_d02_start_02,
@@ -452,7 +456,8 @@ static const RAIL_POINT point_d02_start_01 =
   },
   //VecFx32 pos;
   {
-    0x0029bf6c, 0x00063f53, 0x0085f618,
+    0x002a2c90, 0x00063f70, 0x00867618,
+    ////0x0029bf6c, 0x00063f53, 0x0085f618,
   },
   //const RAIL_CAMERA_SET * camera;
   &camera_point_d02_start_01,
@@ -474,12 +479,13 @@ static const RAIL_POINT point_d02_start_00 =
   },
   //VecFx32 pos;
   {
-    0x0022f76c, 0x00008000, 0x0085f618,
+    0x0022f76c, 0x00008000, 0x00867618,
+    ////0x0022f76c, 0x00008000, 0x0085f618,
   },
   //const RAIL_CAMERA_SET * camera;
   &camera_point_d02_start_00,
   //const char * name;
-  "point_d02_start_02",
+  "point_d02_start_00",
 };
 
 
