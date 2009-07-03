@@ -349,10 +349,12 @@ GMEVENT * FIELD_EVENT_CheckNormal( GAMESYS_WORK *gsys, void *work )
 //☆☆☆自機位置に関係ないキー入力イベントチェック
   //便利ボタンチェック
   if( req.convRequest ){
-    event = checkEvent_ConvenienceButton( &req, gsys, fieldWork );
+    if( req.isGridMap ){
+      event = checkEvent_ConvenienceButton( &req, gsys, fieldWork );
     
-    if( event != NULL ){
-      return event;
+      if( event != NULL ){
+        return event;
+      }
     }
   }
   
@@ -816,6 +818,7 @@ static GMEVENT_RESULT event_ConvenienceButton(
   FIELD_PLAYER_GRID *gjiki;
   PLAYER_MOVE_FORM form;
   
+  OS_Printf( "べんりぼたんイベントstart work=0x%x\n", work );
   gridMap = FIELDMAP_GetMapCtrlWork( work->fieldWork );
   gjiki = FIELDMAP_CTRL_GRID_GetFieldPlayerGrid( gridMap );
   
@@ -836,16 +839,16 @@ static GMEVENT_RESULT event_ConvenienceButton(
   return GMEVENT_RES_FINISH;
 } 
 
-
 static GMEVENT * eventSet_ConvenienceButton( const EV_REQUEST *req,
     GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork )
 {
   GMEVENT *event;
   EVWORK_CONVBTN *work;
-  
+  GF_ASSERT( fieldWork != NULL );
   event = GMEVENT_Create(
       gsys, NULL, event_ConvenienceButton, sizeof(EVWORK_CONVBTN) );
   work = GMEVENT_GetEventWork( event );
+  OS_Printf( "べんりぼたんイベント work=0x%x\n", work );
   work->gsys = gsys;
   work->fieldWork = fieldWork;
   return( event );
@@ -862,7 +865,7 @@ static GMEVENT * checkEvent_ConvenienceButton( const EV_REQUEST *req,
 {
   { //イベントチェック
   }
-
+  
   { //イベント発行
     GMEVENT *event;
     event = eventSet_ConvenienceButton( req, gsys, fieldWork );
