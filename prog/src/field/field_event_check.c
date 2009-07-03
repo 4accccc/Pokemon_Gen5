@@ -246,6 +246,23 @@ GMEVENT * FIELD_EVENT_CheckNormal( GAMESYS_WORK *gsys, void *work )
     /* 今はない */
 
 //☆☆☆会話チェック
+
+	///通信用会話処理(仮
+  {
+    FIELD_COMM_MAIN * commSys = FIELDMAP_GetCommSys(fieldWork);
+    //話しかける側
+    if( req.talkRequest ){
+      if( FIELD_COMM_MAIN_CanTalk( commSys ) == TRUE ){
+        return FIELD_COMM_EVENT_StartTalk( gsys , fieldWork , commSys );
+      }
+    }
+
+    //話しかけられる側(中で一緒に話せる状態かのチェックもしてしまう
+    if( FIELD_COMM_MAIN_CheckReserveTalk( commSys ) == TRUE ){
+      return FIELD_COMM_EVENT_StartTalkPartner( gsys , fieldWork , commSys );
+    }
+  }
+
 	//フィールド話し掛けチェック
 	if(	req.isGridMap )
 	{
@@ -353,22 +370,6 @@ GMEVENT * FIELD_EVENT_CheckNormal( GAMESYS_WORK *gsys, void *work )
 		return event;
 	}
   
-	///通信用会話処理(仮
-  {
-    FIELD_COMM_MAIN * commSys = FIELDMAP_GetCommSys(fieldWork);
-    //話しかける側
-    if( req.talkRequest ){
-      if( FIELD_COMM_MAIN_CanTalk( commSys ) == TRUE ){
-        return FIELD_COMM_EVENT_StartTalk( gsys , fieldWork , commSys );
-      }
-    }
-
-    //話しかけられる側(中で一緒に話せる状態かのチェックもしてしまう
-    if( FIELD_COMM_MAIN_CheckReserveTalk( commSys ) == TRUE ){
-      return FIELD_COMM_EVENT_StartTalkPartner( gsys , fieldWork , commSys );
-    }
-  }
-	
 	
 	//デバッグ：パレスで木に触れたらワープ
   {
