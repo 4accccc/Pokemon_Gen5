@@ -558,28 +558,28 @@ static const EVENTDATA_TABLE event_d02r0101 = {
 };
 const CONNECT_DATA DOOR_EVENT_H01P01[] = {
 	{//DOOR_ID_H01P01_EXIT01 = 0
-		{256, 0, 448},
+		{256, 16, 480},
 		ZONE_ID_D02R0101, DOOR_ID_D02R0101_EXIT08,
-		1,//direction
-		0 //type
+		EXIT_DIR_UP,//direction
+		EXIT_TYPE_MAT //type
 	},
 	{//DOOR_ID_H01P01_EXIT02 = 1
-		{272, 0, 448},
+		{272, 16, 480},
 		ZONE_ID_D02R0101, DOOR_ID_D02R0101_EXIT08,
-		1,//direction
-		0 //type
+		EXIT_DIR_UP,//direction
+		EXIT_TYPE_MAT //type
 	},
 	{//DOOR_ID_H01P01_EXIT03 = 2
-		{288, 0, 448},
+		{288, 16, 480},
 		ZONE_ID_D02R0101, DOOR_ID_D02R0101_EXIT08,
-		1,//direction
-		0 //type
+		EXIT_DIR_UP,//direction
+		EXIT_TYPE_MAT //type
 	},
 	{//DOOR_ID_H01P01_EXIT04 = 3
-		{336, 0, 400},
+		{336, 16, 400},
 		ZONE_ID_H01, 0,
-		3,//direction
-		0 //type
+		EXIT_DIR_LEFT,//direction
+		EXIT_TYPE_DOOR //type
 	},
 };
 const int ConnectCount_H01P01 = NELEMS(DOOR_EVENT_H01P01);
@@ -1166,8 +1166,8 @@ const CONNECT_DATA DOOR_EVENT_T02[] = {
 	{//DOOR_ID_T02_EXIT01 = 0
 		{12160, 0, 11536},
 		ZONE_ID_T02PC0101, DOOR_ID_T02PC0101_EXIT02,
-		2,//direction
-		0 //type
+		EXIT_DIR_DOWN,//direction
+		EXIT_TYPE_DOOR //type
 	},
 	{//DOOR_ID_T02_EXIT02 = 1
 		{11840, -80, 11584},
