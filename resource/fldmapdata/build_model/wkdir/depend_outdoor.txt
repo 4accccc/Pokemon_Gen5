@@ -97,4 +97,8 @@ DEP_OUTDOOR	=	\
 	$(RESDIR)/buill_02.nsbmd \
 	$(RESDIR)/buill_03.nsbmd \
 	$(RESDIR)/buill_04.nsbmd \
+	$(RESDIR)/r3fence_01.nsbmd \
+	$(RESDIR)/r3fence_02.nsbmd \
+	$(RESDIR)/mall_01.nsbmd \
+	$(RESDIR)/door01.nsbmd \
 
