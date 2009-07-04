@@ -387,7 +387,8 @@ TRCARD_CALL_PARAM* TRAINERCASR_CreateCallParam_SelfData( GAMEDATA *gameData , HE
 TRCARD_CALL_PARAM*  TRAINERCASR_CreateCallParam_CommData( GAMEDATA *gameData , void* pCardData , HEAPID heapId )
 {
   TRCARD_CALL_PARAM* callParam;
-  callParam = GFL_HEAP_AllocMemory( heapId , sizeof( callParam ) );
+  
+  callParam = GFL_HEAP_AllocMemory( heapId , sizeof( TRCARD_CALL_PARAM ) );
   callParam->TrCardData = pCardData;
   callParam->gameData = gameData;
 
