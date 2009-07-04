@@ -110,7 +110,14 @@ enum {
 	NARC_map_matrix_dun0422_mat_bin = 96,
 	NARC_map_matrix_dun0423_mat_bin = 97,
 	NARC_map_matrix_dun0501_mat_bin = 98,
-	NARC_map_matrix_pl01_mat_bin = 99
+	NARC_map_matrix_pl01_mat_bin = 99,
+	NARC_map_matrix_union01_mat_bin = 100,
+	NARC_map_matrix_closseum01_mat_bin = 101,
+	NARC_map_matrix_mall01_mat_bin = 102,
+	NARC_map_matrix_ph01_mat_bin = 103,
+	NARC_map_matrix_h05_mat_bin = 104,
+	NARC_map_matrix_h06_mat_bin = 105,
+	NARC_map_matrix_wlabo01_mat_bin = 106
 };
 
 /* NARC_MAP_MATRIX_NAIX_ */

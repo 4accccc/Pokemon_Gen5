@@ -236,7 +236,14 @@ enum {
 	NARC_map_land_data_m_gym0801_00_00_3dppack = 222,
 	NARC_map_land_data_m_wbuill01_00_00_3dppack = 223,
 	NARC_map_land_data_m_bbuill01_00_00_3dppack = 224,
-	NARC_map_land_data_m_container01_00_00_3dppack = 225
+	NARC_map_land_data_m_container01_00_00_3dppack = 225,
+	NARC_map_land_data_m_union01_00_00_3dppack = 226,
+	NARC_map_land_data_m_closseum01_00_00_3dppack = 227,
+	NARC_map_land_data_m_mall01_00_00_3dppack = 228,
+	NARC_map_land_data_m_ph01_00_00_3dppack = 229,
+	NARC_map_land_data_m_h05_00_00_3dppack = 230,
+	NARC_map_land_data_m_h06_00_00_3dppack = 231,
+	NARC_map_land_data_m_wlabo01_00_00_3dppack = 232
 };
 
 /* NARC_MAP_LAND_DATA_NAIX_ */

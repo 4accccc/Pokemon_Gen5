@@ -226,4 +226,11 @@ CONCAT_TARGET = \
 	$(DIR_LANDRES)/m_gym0801_00_00.bin $(DIR_LANDRES)/m_gym0801_00_00.imd \
 	$(DIR_LANDRES)/m_wbuill01_00_00.bin $(DIR_LANDRES)/m_wbuill01_00_00.imd \
 	$(DIR_LANDRES)/m_bbuill01_00_00.bin $(DIR_LANDRES)/m_bbuill01_00_00.imd \
-	$(DIR_LANDRES)/m_container01_00_00.bin $(DIR_LANDRES)/m_container01_00_00.imd
+	$(DIR_LANDRES)/m_container01_00_00.bin $(DIR_LANDRES)/m_container01_00_00.imd \
+	$(DIR_LANDRES)/m_union01_00_00.bin $(DIR_LANDRES)/m_union01_00_00.imd \
+	$(DIR_LANDRES)/m_closseum01_00_00.bin $(DIR_LANDRES)/m_closseum01_00_00.imd \
+	$(DIR_LANDRES)/m_mall01_00_00.bin $(DIR_LANDRES)/m_mall01_00_00.imd \
+	$(DIR_LANDRES)/m_ph01_00_00.bin $(DIR_LANDRES)/m_ph01_00_00.imd \
+	$(DIR_LANDRES)/m_h05_00_00.bin $(DIR_LANDRES)/m_h05_00_00.imd \
+	$(DIR_LANDRES)/m_h06_00_00.bin $(DIR_LANDRES)/m_h06_00_00.imd \
+	$(DIR_LANDRES)/m_wlabo01_00_00.bin $(DIR_LANDRES)/m_wlabo01_00_00.imd
