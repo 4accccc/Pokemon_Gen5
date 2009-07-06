@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00179" date="2009-05-27T22:28:02"/>
+	<create user="matsumiya" host="W00207" date="2009-07-06T15:31:58"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -237,7 +237,7 @@
 		<number position="-1" width="100"/>
 		<comment position="4" width="211"/>
 		<erase position="-1" width="100"/>
-		<attribute japanese="キャラ指定" english="キャラ指定" type="string" default="" position="1" width="100">
+		<attribute japanese="キャラ指定" english="キャラ指定" type="string" default="" position="1" width="149">
 		</attribute>
 		<language japanese="JPN" english="JPN">
 			<message position="2" width="274"/>
@@ -360,17 +360,17 @@
 		<language name="JPN_KANJI" width="256">１番道路</language>
 	</row>
 
-	<row id="msg_r01_sign1_02">
+	<row id="msg_r01_sign2_01">
 		<comment>看板分類：タウンマップ</comment>
 		<attribute name="キャラ指定">看板：道路</attribute>
 		<language name="JPN" width="256">１ばんどうろ</language>
 		<language name="JPN_KANJI" width="256">１番道路</language>
 	</row>
 
-	<row id="msg_r01_sign1_03">
+	<row id="msg_r01_sign3_01">
 		<attribute name="キャラ指定">看板：お得な掲示板</attribute>
-		<language name="JPN" width="256">？？？</language>
-		<language name="JPN_KANJI" width="256">？？？</language>
+		<language name="JPN" width="256">おとくな　けいじばん</language>
+		<language name="JPN_KANJI" width="256">お得な　掲示板</language>
 	</row>
 
 	<flowchart-group-list>
