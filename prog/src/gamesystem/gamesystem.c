@@ -460,7 +460,6 @@ static const ITEM_ST DebugItem[] = {
 	{ ITEM_NEMUKEZAMASI,	456 },
 	{ ITEM_BATORUREKOODAA,  1},  // バトルレコーダー
 	{ ITEM_TAUNMAPPU,		1 },
-	{ ITEM_TANKENSETTO,		1 },
 	{ ITEM_ZITENSYA,		1 },
 	{ ITEM_NANDEMONAOSI,	18 },
 	{ ITEM_PIIPIIRIKABAA,	18 },
