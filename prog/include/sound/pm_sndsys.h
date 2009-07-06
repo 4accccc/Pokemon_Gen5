@@ -31,10 +31,9 @@ typedef enum {
 	SEPLAYER_SE1,
 	SEPLAYER_SE2,
 
-	SEPLAYER_MAXID,
 }SEPLAYER_ID;
 
-#define SEPLAYER_MAX ((int)SEPLAYER_MAXID)
+#define SEPLAYER_MAX (3)
 //------------------------------------------------------------------
 /**
  * @brief	関数引数用定義
@@ -116,8 +115,10 @@ extern void PMSND_SetSystemFadeFrames( int fadeOutFrame, int fadeInFrame );
 //============================================================================================
 //ＳＥ初期設定SEPLAYER_ID取得
 extern SEPLAYER_ID	PMSND_GetSE_DefaultPlayerID( u32 soundIdx );
+//ＳＥプレーヤーハンドル取得
+extern NNSSndHandle* PMSND_GetSE_SndHandle( SEPLAYER_ID sePlayerID );
 
-void	PMSND_PlaySE_byPlayerID( u32 soundIdx, SEPLAYER_ID sePlayerID );
+extern void	PMSND_PlaySE_byPlayerID( u32 soundIdx, SEPLAYER_ID sePlayerID );
 #define PMSND_PlaySystemSE( soundNum ) PMSND_PlaySE( soundNum )
 //ＳＥを再生
 extern void	PMSND_PlaySE( u32 soundIdx );
