@@ -18,8 +18,9 @@
 
 #include    "poke_tool_def.h"
 #include    "poke_personal_local.h"
-
 #include    "arc_def.h"
+
+
 
 /*--------------------------------------------------------------------------*/
 /* Consts                                                                   */
@@ -125,14 +126,14 @@ u32   POKETOOL_GetWorkSize( void )
  * ポケモンパラメータ実体を生成
  *
  * @param   mons_no       ポケモンナンバー
- * @param   level       レベル
- * @param   id          ID
+ * @param   level         レベル
+ * @param   id            ID
  * @param   heapID        実体確保用のヒープID
  *
  * @retval  POKEMON_PARAM*
  */
 //=============================================================================================
-POKEMON_PARAM* PP_Create( u16 mons_no, u16 level, u32 id, HEAPID heapID )
+POKEMON_PARAM* PP_Create( u16 mons_no, u16 level, u64 id, HEAPID heapID )
 {
   POKEMON_PARAM* pp = GFL_HEAP_AllocClearMemory( heapID, POKETOOL_GetWorkSize() );
 
@@ -184,7 +185,7 @@ void  PPP_Clear( POKEMON_PASO_PARAM *ppp )
  * @param[in]  id       ID
  */
 //=============================================================================================
-void PP_Setup( POKEMON_PARAM *pp, u16 mons_no, u16 level, u32 ID )
+void PP_Setup( POKEMON_PARAM *pp, u16 mons_no, u16 level, u64 ID )
 {
   PP_SetupEx( pp, mons_no, level, ID, PTL_SETUP_POW_AUTO, PTL_SETUP_RND_AUTO );
 }
@@ -244,14 +245,14 @@ void  PP_SetupEx( POKEMON_PARAM *pp, u16 mons_no, u16 level, u64 ID, PtlSetupPow
 /**
  *  ボックスポケモンパラメータ構造体の内容を構築
  *
- * @param[out]  pp    構築先構造体アドレス
- * @param[in] mons_no ポケモンナンバー
- * @param[in] level レベル
- * @param[in] id    ID
+ * @param[out]  pp      構築先構造体アドレス
+ * @param[in]   mons_no ポケモンナンバー
+ * @param[in]   level   レベル
+ * @param[in]   id      ID
  *
  */
 //=============================================================================================
-void  PPP_Setup( POKEMON_PASO_PARAM *ppp, u16 mons_no, u16 level, u32 id )
+void  PPP_Setup( POKEMON_PASO_PARAM *ppp, u16 mons_no, u16 level, u64 id )
 {
   PPP_SetupEx( ppp, mons_no, level, id, PTL_SETUP_POW_AUTO, PTL_SETUP_RND_AUTO );
 }

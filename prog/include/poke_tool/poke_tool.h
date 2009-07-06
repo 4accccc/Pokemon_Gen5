@@ -574,7 +574,7 @@ extern  u32   POKETOOL_GetWorkSize( void );     ///< POKEMON_PARAM１体分のサイズ
 //ポケモンパラメータ操作関数系
 
 
-extern  POKEMON_PARAM*  PP_Create( u16 mons_no, u16 level, u32 id, HEAPID heapID ); ///<
+extern  POKEMON_PARAM*  PP_Create( u16 mons_no, u16 level, u64 id, HEAPID heapID ); ///<
 
 
 // 動作高速化
@@ -587,9 +587,9 @@ extern  BOOL  PPP_FastModeOn( POKEMON_PASO_PARAM *ppp );
 extern  BOOL  PPP_FastModeOff( POKEMON_PASO_PARAM *ppp, BOOL flag );
 
 
-extern  void  PP_Setup( POKEMON_PARAM *pp, u16 mons_no, u16 level, u32 ID );
+extern  void  PP_Setup( POKEMON_PARAM *pp, u16 mons_no, u16 level, u64 ID );
 extern  void  PP_SetupEx( POKEMON_PARAM *pp, u16 mons_no, u16 level, u64 ID, PtlSetupPow pow, u64 rnd );
-extern  void  PPP_Setup( POKEMON_PASO_PARAM *ppp, u16 mons_no, u16 level, u32 ID );
+extern  void  PPP_Setup( POKEMON_PASO_PARAM *ppp, u16 mons_no, u16 level, u64 ID );
 extern  void  PPP_SetupEx( POKEMON_PASO_PARAM *ppp, u16 mons_no, u16 level, u64 id, PtlSetupPow pow, u64 rnd );
 
 // パラメータ取得系
