@@ -30,7 +30,7 @@
 #include "event_fieldmap_control.h" //EVENT_FieldSubProc
 #include "app/config_panel.h"   //ConfigPanelProcData
 #include "app/trainer_card.h"   //TrainerCardSysProcData
-#include "app/itemmenu/itemmenu.h" //ItemMenuProcData
+#include "app/itemmenu/itemmenu_local.h" //ItemMenuProcData
 #include "app/pokelist.h"   //PokeList_ProcDataÅEPLIST_DATA
 
 extern const GFL_PROC_DATA DebugAriizumiMainProcData;

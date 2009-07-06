@@ -30,6 +30,7 @@
 #include "system/wipe.h"
 
 #include "itemmenu.h"
+#include "itemmenu_local.h"
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
@@ -50,6 +51,14 @@
 #define	FBMP_COL_WHITE		(15)
 #define WINCLR_COL(col)	(((col)<<4)|(col))
 
+
+#define _ITEMUSE_DISP_INITX (10)
+#define _ITEMUSE_DISP_INITY (10)
+#define _ITEMUSE_DISP_SIZEX (10)
+#define _ITEMUSE_DISP_SIZEY (10)
+
+
+
 #define FLD_SUBSCR_FADE_DIV (1)
 #define FLD_SUBSCR_FADE_SYNC (1)
 
@@ -60,6 +69,10 @@ static void _changeState(FIELD_ITEMMENU_WORK* pWork,StateFunc* state);
 static void _changeStateDebug(FIELD_ITEMMENU_WORK* pWork,StateFunc* state, int line);
 static void _itemNumSelectMenu(FIELD_ITEMMENU_WORK* wk);
 static void _lineCallback(BMPMENULIST_WORK * mwk,u32 param,u8 y);
+static void _windowRewrite(FIELD_ITEMMENU_WORK* wk);
+static void _itemUseWindowCreate(FIELD_ITEMMENU_WORK* wk);
+static void _itemUseWindowRewrite(FIELD_ITEMMENU_WORK* wk);
+static void _itemUseMenu(FIELD_ITEMMENU_WORK* wk);
 
 
 #ifdef _NET_DEBUG
@@ -79,7 +92,7 @@ static void _lineCallback(BMPMENULIST_WORK * mwk,u32 param,u8 y);
 
 static void _changeState(FIELD_ITEMMENU_WORK* wk,StateFunc state)
 {
-  wk->state = state;
+	wk->state = state;
 }
 
 //------------------------------------------------------------------------------
@@ -91,8 +104,8 @@ static void _changeState(FIELD_ITEMMENU_WORK* wk,StateFunc state)
 #ifdef GFL_NET_DEBUG
 static void _changeStateDebug(FIELD_ITEMMENU_WORK* wk,StateFunc state, int line)
 {
-  NET_PRINT("EvDebugItem: %d\n",line);
-  _changeState(wk, state);
+	NET_PRINT("EvDebugItem: %d\n",line);
+	_changeState(wk, state);
 }
 #endif
 
@@ -106,80 +119,80 @@ static void _changeStateDebug(FIELD_ITEMMENU_WORK* wk,StateFunc state, int line)
 static void _createSubBg(void)
 {
 
-  // 背景面
-  {
-    GFL_BG_BGCNT_HEADER TextBgCntDat = {
-      0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
-      GX_BG_SCRBASE_0x6800, GX_BG_CHARBASE_0x00000,
-      0x8000,
-      GX_BG_EXTPLTT_01,
-      0, 0, 0, FALSE
-      };
-    GFL_BG_SetBGControl( GFL_BG_FRAME0_M, &TextBgCntDat, GFL_BG_MODE_TEXT );
-    GFL_BG_ClearFrame( GFL_BG_FRAME0_M );
-    GFL_BG_LoadScreenReq( GFL_BG_FRAME0_M );
-    GFL_BG_SetPriority( GFL_BG_FRAME0_M, 0 );
+	// 背景面
+	{
+		GFL_BG_BGCNT_HEADER TextBgCntDat = {
+			0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
+			GX_BG_SCRBASE_0x6800, GX_BG_CHARBASE_0x00000,
+			0x8000,
+			GX_BG_EXTPLTT_01,
+			0, 0, 0, FALSE
+			};
+		GFL_BG_SetBGControl( GFL_BG_FRAME0_M, &TextBgCntDat, GFL_BG_MODE_TEXT );
+		GFL_BG_ClearFrame( GFL_BG_FRAME0_M );
+		GFL_BG_LoadScreenReq( GFL_BG_FRAME0_M );
+		GFL_BG_SetPriority( GFL_BG_FRAME0_M, 0 );
 		GFL_BG_SetVisible( GFL_BG_FRAME0_M, VISIBLE_ON );
 
-  }
+	}
 
-  {
-    int frame = GFL_BG_FRAME0_S;
-    GFL_BG_BGCNT_HEADER TextBgCntDat = {
-      0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
-      GX_BG_SCRBASE_0xf800, GX_BG_CHARBASE_0x00000, 0x8000,GX_BG_EXTPLTT_01,
-      3, 0, 0, FALSE
-      };
+	{
+		int frame = GFL_BG_FRAME0_S;
+		GFL_BG_BGCNT_HEADER TextBgCntDat = {
+			0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
+			GX_BG_SCRBASE_0xf800, GX_BG_CHARBASE_0x00000, 0x8000,GX_BG_EXTPLTT_01,
+			3, 0, 0, FALSE
+			};
 
-    GFL_BG_SetBGControl(
-      frame, &TextBgCntDat, GFL_BG_MODE_TEXT );
-    GFL_BG_SetVisible( frame, VISIBLE_ON );
-    GFL_BG_LoadScreenReq( frame );
-  }
-  {
-    int frame = GFL_BG_FRAME1_S;
-    GFL_BG_BGCNT_HEADER TextBgCntDat = {
-      0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
-      GX_BG_SCRBASE_0xf000, GX_BG_CHARBASE_0x08000, 0x8000,GX_BG_EXTPLTT_01,
-      2, 0, 0, FALSE
-      };
+		GFL_BG_SetBGControl(
+			frame, &TextBgCntDat, GFL_BG_MODE_TEXT );
+		GFL_BG_SetVisible( frame, VISIBLE_ON );
+		GFL_BG_LoadScreenReq( frame );
+	}
+	{
+		int frame = GFL_BG_FRAME1_S;
+		GFL_BG_BGCNT_HEADER TextBgCntDat = {
+			0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
+			GX_BG_SCRBASE_0xf000, GX_BG_CHARBASE_0x08000, 0x8000,GX_BG_EXTPLTT_01,
+			2, 0, 0, FALSE
+			};
 
-    GFL_BG_SetBGControl(
-      frame, &TextBgCntDat, GFL_BG_MODE_TEXT );
+		GFL_BG_SetBGControl(
+			frame, &TextBgCntDat, GFL_BG_MODE_TEXT );
 
-    GFL_BG_SetVisible( frame, VISIBLE_ON );
-    GFL_BG_FillCharacter( frame, 0x00, 1, 0 );
-    GFL_BG_FillScreen( frame,	0x0000, 0, 0, 32, 32, GFL_BG_SCRWRT_PALIN );
-    GFL_BG_LoadScreenReq( frame );
-  }
-  {
-    int frame = GFL_BG_FRAME3_S;
-    GFL_BG_BGCNT_HEADER TextBgCntDat = {
-      0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
-      GX_BG_SCRBASE_0xe800, GX_BG_CHARBASE_0x08000, 0x8000,GX_BG_EXTPLTT_01,
-      0, 0, 0, FALSE
-      };
-    GFL_BG_SetBGControl(
-      frame, &TextBgCntDat, GFL_BG_MODE_TEXT );
-    GFL_BG_SetVisible( frame, VISIBLE_ON );
-    GFL_BG_LoadScreenReq( frame );
-  }
+		GFL_BG_SetVisible( frame, VISIBLE_ON );
+		GFL_BG_FillCharacter( frame, 0x00, 1, 0 );
+		GFL_BG_FillScreen( frame,	0x0000, 0, 0, 32, 32, GFL_BG_SCRWRT_PALIN );
+		GFL_BG_LoadScreenReq( frame );
+	}
+	{
+		int frame = GFL_BG_FRAME3_S;
+		GFL_BG_BGCNT_HEADER TextBgCntDat = {
+			0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
+			GX_BG_SCRBASE_0xe800, GX_BG_CHARBASE_0x08000, 0x8000,GX_BG_EXTPLTT_01,
+			0, 0, 0, FALSE
+			};
+		GFL_BG_SetBGControl(
+			frame, &TextBgCntDat, GFL_BG_MODE_TEXT );
+		GFL_BG_SetVisible( frame, VISIBLE_ON );
+		GFL_BG_LoadScreenReq( frame );
+	}
 }
 
 
 static GFL_DISP_VRAM _defVBTbl = {
-  GX_VRAM_BG_128_A,				// メイン2DエンジンのBG
-  GX_VRAM_BGEXTPLTT_NONE,			// メイン2DエンジンのBG拡張パレット
-  GX_VRAM_SUB_BG_128_C,			// サブ2DエンジンのBG
-  GX_VRAM_SUB_BGEXTPLTT_NONE,		// サブ2DエンジンのBG拡張パレット
-  GX_VRAM_OBJ_128_B,				// メイン2DエンジンのOBJ
-  GX_VRAM_OBJEXTPLTT_NONE,		// メイン2DエンジンのOBJ拡張パレット
-  GX_VRAM_SUB_OBJ_16_I,			// サブ2DエンジンのOBJ
-  GX_VRAM_SUB_OBJEXTPLTT_NONE,	// サブ2DエンジンのOBJ拡張パレット
-  GX_VRAM_TEX_NONE,				// テクスチャイメージスロット
-  GX_VRAM_TEXPLTT_NONE,			// テクスチャパレットスロット
-  GX_OBJVRAMMODE_CHAR_1D_128K,
-  GX_OBJVRAMMODE_CHAR_1D_32K,
+	GX_VRAM_BG_128_A,				// メイン2DエンジンのBG
+	GX_VRAM_BGEXTPLTT_NONE,			// メイン2DエンジンのBG拡張パレット
+	GX_VRAM_SUB_BG_128_C,			// サブ2DエンジンのBG
+	GX_VRAM_SUB_BGEXTPLTT_NONE,		// サブ2DエンジンのBG拡張パレット
+	GX_VRAM_OBJ_128_B,				// メイン2DエンジンのOBJ
+	GX_VRAM_OBJEXTPLTT_NONE,		// メイン2DエンジンのOBJ拡張パレット
+	GX_VRAM_SUB_OBJ_16_I,			// サブ2DエンジンのOBJ
+	GX_VRAM_SUB_OBJEXTPLTT_NONE,	// サブ2DエンジンのOBJ拡張パレット
+	GX_VRAM_TEX_NONE,				// テクスチャイメージスロット
+	GX_VRAM_TEXPLTT_NONE,			// テクスチャパレットスロット
+	GX_OBJVRAMMODE_CHAR_1D_128K,
+	GX_OBJVRAMMODE_CHAR_1D_32K,
 };
 
 
@@ -202,11 +215,11 @@ static void _graphicInit(FIELD_ITEMMENU_WORK* wk)
 	GFL_DISP_GXS_SetVisibleControlDirect(0);
 	_createSubBg();
 
-	
-	GFL_FONTSYS_SetDefaultColor();
-  wk->SysMsgQue = PRINTSYS_QUE_Create( wk->heapID );
 
-	
+	GFL_FONTSYS_SetDefaultColor();
+	wk->SysMsgQue = PRINTSYS_QUE_Create( wk->heapID );
+
+
 	wk->bgchar = BmpWinFrame_GraphicSetAreaMan(DEBUG_ITEMDISP_FRAME,
 																						 _BUTTON_WIN_PAL, MENU_TYPE_SYSTEM, wk->heapID);
 	GFL_ARC_UTIL_TransVramPalette(ARCID_FONT, NARC_font_default_nclr, PALTYPE_SUB_BG,
@@ -236,91 +249,111 @@ static void _graphicInit(FIELD_ITEMMENU_WORK* wk)
 
 ///選択メニューのリスト
 static BMPMENULIST_HEADER _itemMenuListHeader = {
-  NULL,			// 表示文字データポインタ
-  NULL,					// カーソル移動ごとのコールバック関数
-  NULL,					// 一列表示ごとのコールバック関数
-  NULL,                      // GF_BGL_BMPWIN* win
-  9,// リスト項目数
-  9,// 表示最大項目数
-  0,						// ラベル表示Ｘ座標
-  16,						// 項目表示Ｘ座標
-  0,						// カーソル表示Ｘ座標
-  0,						// 表示Ｙ座標
-  FBMP_COL_BLACK,			// 文字色
-  FBMP_COL_WHITE,			// 背景色
-  FBMP_COL_BLK_SDW,		// 文字影色
-  0,						// 文字間隔Ｘ
-  18,						// 文字間隔Ｙ
-  BMPMENULIST_NO_SKIP,		// ページスキップタイプ
-  0,//FONT_SYSTEM,				// 文字指定
-  0,						// ＢＧカーソル(allow)表示フラグ(0:ON,1:OFF)
-  NULL,                   // work
-  _BMPMENULIST_FONTSIZE,			//文字サイズX(ドット
-  _BMPMENULIST_FONTSIZE,			//文字サイズY(ドット
-  NULL,		//表示に使用するメッセージバッフ
-  NULL,		//表示に使用するプリントユーティ
-  NULL,		//表示に使用するプリントキュー
-  NULL,		//表示に使用するフォントハンドル
+	NULL,			// 表示文字データポインタ
+	NULL,					// カーソル移動ごとのコールバック関数
+	NULL,					// 一列表示ごとのコールバック関数
+	NULL,                      // GF_BGL_BMPWIN* win
+	9,// リスト項目数
+	9,// 表示最大項目数
+	0,						// ラベル表示Ｘ座標
+	16,						// 項目表示Ｘ座標
+	0,						// カーソル表示Ｘ座標
+	0,						// 表示Ｙ座標
+	FBMP_COL_BLACK,			// 文字色
+	FBMP_COL_WHITE,			// 背景色
+	FBMP_COL_BLK_SDW,		// 文字影色
+	0,						// 文字間隔Ｘ
+	18,						// 文字間隔Ｙ
+	BMPMENULIST_NO_SKIP,		// ページスキップタイプ
+	0,//FONT_SYSTEM,				// 文字指定
+	0,						// ＢＧカーソル(allow)表示フラグ(0:ON,1:OFF)
+	NULL,                   // work
+	_BMPMENULIST_FONTSIZE,			//文字サイズX(ドット
+	_BMPMENULIST_FONTSIZE,			//文字サイズY(ドット
+	NULL,		//表示に使用するメッセージバッフ
+	NULL,		//表示に使用するプリントユーティ
+	NULL,		//表示に使用するプリントキュー
+	NULL,		//表示に使用するフォントハンドル
 };
 
 static void _windowCreate(FIELD_ITEMMENU_WORK* wk)
 {
-  BMPMENULIST_HEADER list_h = _itemMenuListHeader;
-	int length,i;
 
 	wk->win = GFL_BMPWIN_Create(
 		DEBUG_ITEMDISP_FRAME,
-    _DISP_INITX, _DISP_INITY,
-    _DISP_SIZEX, _DISP_SIZEY,
-    _BUTTON_MSG_PAL, GFL_BMP_CHRAREA_GET_B );
+		_DISP_INITX, _DISP_INITY,
+		_DISP_SIZEX, _DISP_SIZEY,
+		_BUTTON_MSG_PAL, GFL_BMP_CHRAREA_GET_B );
 
-  GFL_BMP_Clear(GFL_BMPWIN_GetBmp(wk->win), WINCLR_COL(FBMP_COL_WHITE) );
-  GFL_BMPWIN_MakeScreen( wk->win );
+	//  GFL_BMP_Clear(GFL_BMPWIN_GetBmp(wk->win), WINCLR_COL(FBMP_COL_WHITE) );
+	GFL_BMPWIN_MakeScreen( wk->win );
 	BmpWinFrame_Write( wk->win, WINDOW_TRANS_ON, GFL_ARCUTIL_TRANSINFO_GetPos(wk->bgchar), _BUTTON_WIN_PAL );
+	_windowRewrite(wk);
+}
+
+
+static void _windowRewrite(FIELD_ITEMMENU_WORK* wk)
+{
+	BMPMENULIST_HEADER list_h = _itemMenuListHeader;
+	int length,i;
+
+	GFL_BMP_Clear(GFL_BMPWIN_GetBmp(wk->win), WINCLR_COL(FBMP_COL_WHITE) );
+
 	length = MYITEM_GetItemPocketNumber( wk->pMyItem, wk->pocketno);
 
-  wk->submenulist = BmpMenuWork_ListCreate(  length, wk->heapID );
-  for(i=0; i< length ; i++){
+	if(wk->submenulist){
+		BmpMenuWork_ListDelete(wk->submenulist);
+	}
+	wk->submenulist = BmpMenuWork_ListCreate(  length, wk->heapID );
+	GF_ASSERT(wk->submenulist);
+	for(i=0; i< length ; i++){
 		ITEM_ST * item;
 		item = MYITEM_PosItemGet( wk->pMyItem, wk->pocketno, i );
 		if((item==NULL) || (item->id==ITEM_DUMMY_DATA)){
 			break;
 		}
-		OS_TPrintf("item no %d num %d\n",item->id,item->no);
+		//OS_TPrintf("item no %d num %d\n",item->id,item->no);
 
 		GFL_MSG_GetString(  wk->MsgManager, DEBUG_FIELD_STR36, wk->pStrBuf );
 
-		WORDSET_RegisterItemName(wk->WordSet, 1, item->id);
-		WORDSET_ExpandStr( wk->WordSet, wk->pExpStrBuf, wk->pStrBuf );
 		WORDSET_RegisterNumber(wk->WordSet, 0, item->no,
 													 3, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT);
-		WORDSET_ExpandStr( wk->WordSet, wk->pStrBuf, wk->pExpStrBuf );
-		BmpMenuWork_ListAddString( wk->submenulist, wk->pStrBuf, 0,wk->heapID );
-  }
+		WORDSET_RegisterItemName(wk->WordSet, 1, item->id);
+		WORDSET_ExpandStr( wk->WordSet, wk->pExpStrBuf, wk->pStrBuf  );
+
+		BmpMenuWork_ListAddString( wk->submenulist, wk->pExpStrBuf, 0,wk->heapID );
+	}
 
 
-  list_h.list = wk->submenulist;
+	list_h.list = wk->submenulist;
 	list_h.work = wk;
 	list_h.win = wk->win;
 	list_h.count = length;
 
 	list_h.print_que = wk->SysMsgQue;
-  PRINT_UTIL_Setup( &wk->SysMsgPrintUtil , wk->win );
-  list_h.print_util = &wk->SysMsgPrintUtil;
-  list_h.font_handle = wk->fontHandle;
-	
-  wk->sublw = BmpMenuList_Set(&list_h, 0, 0, wk->heapID);
+	PRINT_UTIL_Setup( &wk->SysMsgPrintUtil , wk->win );
+	list_h.print_util = &wk->SysMsgPrintUtil;
+	list_h.font_handle = wk->fontHandle;
+
+	if(wk->sublw){
+		BmpMenuList_Exit(wk->sublw,NULL,NULL);
+	}
+	wk->sublw = BmpMenuList_Set(&list_h, 0, 0, wk->heapID);
 
 }
 
 
-
-
+//------------------------------------------------------------------------------
+/**
+ * @brief   キーの処理
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
 
 static void _itemKindSelectMenu(FIELD_ITEMMENU_WORK* wk)
 {
-  u32	ret;
-	
+	u32	ret;
+
 	ret = BmpMenuList_Main(wk->sublw);
 
 
@@ -343,25 +376,233 @@ static void _itemKindSelectMenu(FIELD_ITEMMENU_WORK* wk)
 			wk->pocketno = BAG_POKE_MAX-1;
 		}
 		if(oldpoket != wk->pocketno){
-			//_windowRewrite(wk,0);
+			_windowRewrite(wk);
 		}
 	}
 
 
-  switch(ret){
-		
-  case BMPMENULIST_NULL:
-    return;
-  case BMPMENULIST_CANCEL:
+	switch(ret){
+	case BMPMENULIST_NULL:
+		return;
+	case BMPMENULIST_CANCEL:
 		BmpMenuList_Exit(wk->sublw, NULL, NULL);
 		_CHANGE_STATE(wk, NULL);
-    break;
-  default:
+		break;
+	default:
+		_itemUseWindowCreate(wk);
+		_itemUseWindowRewrite(wk);
+		_CHANGE_STATE(wk, _itemUseMenu);
+
 		OS_TPrintf("ret %d \n",ret);
-    break;
-  }
+		break;
+	}
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * Useメニュー作成
+ * @param	wk		バッグ画面のワーク
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
+#if 0
+static void ItemMenuMake( FIELD_ITEMMENU_WORK * wk )
+{
+	int	 i;
+	void * itemdata;
+	u8	pocket;
+	u8	tbl[BAG_MENUTBL_MAX]={255, 255, 255, 255, 255};
+
+	itemdata = ITEM_GetItemArcData( wk->ret_item, ITEM_GET_DATA, wk->heapID );
+	pocket   = wk->pocketno;
+
+	for(i=0;i<BAG_MENUTBL_MAX;i++){
+		wk->menu_func[i] = NULL;
+	}
+
+	// フィールド
+
+	// コロシアム・ユニオンルームでは「みる」のみ
+	if( wk->mode == BAG_MODE_COLOSSEUM || wk->mode == BAG_MODE_UNION )
+	{
+		tbl[BAG_MENU_USE] = BAG_MENU_MIRU;
+	}
+	else if( wk->mode == BAG_MODE_FIELD )
+	{
+		// つかう
+		// おりる
+		// みる
+		// ひらく
+		// うめる
+		// とめる
+		if( ITEM_GetParam( itemdata, ITEM_PRM_FIELD, wk->heapID ) != 0 )
+		{
+			if( wk->ret_item == ITEM_ZITENSYA && wk->cycle_flg == 1 )
+			{
+				tbl[BAG_MENU_USE] = BAG_MENU_ORIRU;
+			}
+			else if( wk->p_data[wk->p_now].type == BAG_POKE_SEAL )
+			{
+				tbl[BAG_MENU_USE] = BAG_MENU_MIRU;
+			}
+			else if( wk->ret_item == ITEM_POFINKEESU )
+			{
+				tbl[BAG_MENU_USE] = BAG_MENU_HIRAKU;
+			}
+			else if( wk->p_data[wk->p_now].type == BAG_POKE_NUTS &&
+								ItemUse_KinomiTypeCheck( wk->icwk ) == TRUE )
+			{
+				tbl[BAG_MENU_USE] = BAG_MENU_UMERU;
+			}
+			else if( wk->ret_item == ITEM_gbPUREIYAA && Snd_GameBoyFlagCheck() == 1 )
+			{
+				tbl[BAG_MENU_USE] = BAG_MENU_TOMERU;
+			}
+			else
+			{
+				tbl[BAG_MENU_USE] = BAG_MENU_TSUKAU;
+			}
+		}
+	}
+	// もたせる
+	// すてる
+	if( ITEM_GetParam( itemdata, ITEM_PRM_EVENT,wk->heapID ) == 0 ){
+		if( ItemPokeAddCheck( wk->ret_item ) == TRUE ){
+			tbl[BAG_MENU_GIVE] = BAG_MENU_MOTASERU;
+		}
+		if( pocket != BAG_POKE_WAZA ){
+			// 技マシンじゃない場合は捨てるを登録
+			tbl[BAG_MENU_SUB] = BAG_MENU_SUTERU;
+		}
+	}
+	// とうろく
+	// かいじょ
+	if( ITEM_GetParam( itemdata, ITEM_PRM_CNV,wk->heapID ) != 0 ){
+		if( MyItem_CnvButtonItemGet( wk->myitem ) == wk->ret_item
+				|| MyItem_CnvButton2ItemGet( wk->myitem ) == wk->ret_item ){
+			tbl[BAG_MENU_SUB] = BAG_MENU_KAIZYO;
+		}else{
+			tbl[BAG_MENU_SUB] = BAG_MENU_TOUROKU;
+		}
+	}
+	// 木の実プランター
+	else if( wk->mode == BAG_MODE_N_PLANTER ){
+		if( BAGMAIN_NPlanterUseCheck( pocket, wk->ret_item ) == TRUE ){
+			tbl[BAG_MENU_USE] = BAG_MENU_TSUKAU_NP;
+		}
+	}
+
+	// わざマシンときのみでなければどうぐ移動メニューを登録
+	if( wk->mode != BAG_MODE_N_PLANTER ){
+		if(pocket!=BAG_POKE_WAZA && pocket!=BAG_POKE_NUTS){
+			tbl[BAG_MENU_ITEMMOVE] = BAG_MENU_IDOU;
+		}
+	}
+	// やめる
+	tbl[BAG_MENU_CANCEL] = BAG_MENU_YAMERU;
+
+	OS_Printf("pocket=%d\n",   pocket);
+	OS_Printf("tbl[BAG_MENU_USE]=%d\n",   tbl[BAG_MENU_USE]);
+	OS_Printf("tbl[BAG_MENU_GIVE]=%d\n",  tbl[BAG_MENU_GIVE]);
+	OS_Printf("tbl[BAG_MENU_SUB]=%d\n",   tbl[BAG_MENU_SUB]);
+	OS_Printf("tbl[BAG_MENU_MOVE]=%d\n",   tbl[BAG_MENU_ITEMMOVE]);
+//	OS_Printf("tbl[BAG_MENU_CANCEL]=%d\n",tbl[BAG_MENU_CANCEL]);
+
+	for(i=0;i<BAG_MENUTBL_MAX;i++){
+		if(tbl[i]!=255){
+			wk->menu_func[i] = MenuFuncTbl[tbl[i]];
+		}
+		OS_Printf("menu_func[%d]=%08x\n", i,wk->menu_func[i]);
+	}
+
+	// メニュー作成
+	Bag_ItemMenuSet( wk, tbl, 5 );
+	// 選択メニューの初期化
+	SelectMenuInit(wk, tbl);
+
+	sys_FreeMemoryEz( itemdata );
+}
+
+#endif
+
+static void _itemUseWindowCreate(FIELD_ITEMMENU_WORK* wk)
+{
+
+	wk->itemUseWin = GFL_BMPWIN_Create(
+		DEBUG_ITEMDISP_FRAME,
+		_ITEMUSE_DISP_INITX, _ITEMUSE_DISP_INITY,
+		_ITEMUSE_DISP_SIZEX, _ITEMUSE_DISP_SIZEY,
+		_BUTTON_MSG_PAL, GFL_BMP_CHRAREA_GET_B );
+
+	GFL_BMPWIN_MakeScreen( wk->itemUseWin );
+	BmpWinFrame_Write( wk->itemUseWin, WINDOW_TRANS_ON, GFL_ARCUTIL_TRANSINFO_GetPos(wk->bgchar), _BUTTON_WIN_PAL );
+	_windowRewrite(wk);
+}
+
+
+static void _itemUseWindowRewrite(FIELD_ITEMMENU_WORK* wk)
+{
+	BMPMENULIST_HEADER list_h = _itemMenuListHeader;
+	int length,i;
+
+	GFL_BMP_Clear(GFL_BMPWIN_GetBmp(wk->itemUseWin), WINCLR_COL(FBMP_COL_WHITE) );
+
+	length = MYITEM_GetItemPocketNumber( wk->pMyItem, wk->pocketno);
+
+	if(wk->itemUseMenuList){
+		BmpMenuWork_ListDelete(wk->itemUseMenuList);
+	}
+	wk->itemUseMenuList = BmpMenuWork_ListCreate(  length, wk->heapID );
+	GF_ASSERT(wk->submenulist);
+	for(i=0; i< length ; i++){
+		ITEM_ST * item;
+		item = MYITEM_PosItemGet( wk->pMyItem, wk->pocketno, i );
+		if((item==NULL) || (item->id==ITEM_DUMMY_DATA)){
+			break;
+		}
+		//OS_TPrintf("item no %d num %d\n",item->id,item->no);
+
+		GFL_MSG_GetString(  wk->MsgManager, DEBUG_FIELD_STR36, wk->pStrBuf );
+
+		WORDSET_RegisterNumber(wk->WordSet, 0, item->no,
+													 3, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT);
+		WORDSET_RegisterItemName(wk->WordSet, 1, item->id);
+		WORDSET_ExpandStr( wk->WordSet, wk->pExpStrBuf, wk->pStrBuf  );
+
+		BmpMenuWork_ListAddString( wk->submenulist, wk->pExpStrBuf, 0,wk->heapID );
+	}
+
+
+	list_h.list = wk->itemUseMenuList;
+	list_h.work = wk;
+	list_h.win = wk->itemUseWin;
+	list_h.count = length;
+
+	list_h.print_que = wk->SysMsgQue;
+	PRINT_UTIL_Setup( &wk->SysMsgPrintUtil , wk->itemUseWin );
+	list_h.print_util = &wk->SysMsgPrintUtil;
+	list_h.font_handle = wk->fontHandle;
+
+	if(wk->lwItemUse){
+		BmpMenuList_Exit(wk->lwItemUse,NULL,NULL);
+	}
+	wk->lwItemUse = BmpMenuList_Set(&list_h, 0, 0, wk->heapID);
+
+}
+
+
+
+
+//------------------------------------------------------------------------------
+/**
+ * @brief   アイテムをどう使うかのメニュー
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+
+static void _itemUseMenu(FIELD_ITEMMENU_WORK* wk)
+{
+}
 
 
 //------------------------------------------------------------------------------
@@ -373,20 +614,20 @@ static void _itemKindSelectMenu(FIELD_ITEMMENU_WORK* wk)
 
 static GFL_PROC_RESULT FieldItemMenuProc_Init( GFL_PROC * proc, int * seq, void * pwk, void * mywk )
 {
-  FIELD_ITEMMENU_WORK* wk = pwk;
+	FIELD_ITEMMENU_WORK* wk = pwk;
 
-  GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_ITEMMENU, 0x28000 );
+	GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_ITEMMENU, 0x28000 );
 	wk->heapID = HEAPID_ITEMMENU;
 
 	_graphicInit(wk);
 
 	wk->pMyItem = GAMEDATA_GetMyItem(GAMESYSTEM_GetGameData(wk->gsys));
-  wk->MsgManager = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE,
+	wk->MsgManager = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE,
 																	 NARC_message_d_field_dat, wk->heapID );
 	wk->pStrBuf = GFL_STR_CreateBuffer(100,wk->heapID);
 	wk->pExpStrBuf = GFL_STR_CreateBuffer(100,wk->heapID);
-  wk->WordSet    = WORDSET_Create( wk->heapID );
-  wk->fontHandle = GFL_FONT_Create( ARCID_FONT , NARC_font_large_nftr ,
+	wk->WordSet    = WORDSET_Create( wk->heapID );
+	wk->fontHandle = GFL_FONT_Create( ARCID_FONT , NARC_font_large_nftr ,
 																		GFL_FONT_LOADTYPE_FILE , FALSE , wk->heapID );
 
 	GFL_UI_KEY_SetRepeatSpeed(1,6);
@@ -396,10 +637,10 @@ static GFL_PROC_RESULT FieldItemMenuProc_Init( GFL_PROC * proc, int * seq, void 
 	GFL_BMPWIN_TransVramCharacter(wk->win);
 
 	//_windowRewrite(wk,0);
-	
-	WIPE_SYS_Start( WIPE_PATTERN_S , WIPE_TYPE_FADEIN , WIPE_TYPE_FADEIN , 
+
+	WIPE_SYS_Start( WIPE_PATTERN_S , WIPE_TYPE_FADEIN , WIPE_TYPE_FADEIN ,
 									WIPE_FADE_BLACK , FLD_SUBSCR_FADE_DIV , FLD_SUBSCR_FADE_SYNC , wk->heapID );
-	
+
 	_CHANGE_STATE(wk, _itemKindSelectMenu);
 	return GFL_PROC_RES_FINISH;
 }
@@ -413,8 +654,8 @@ static GFL_PROC_RESULT FieldItemMenuProc_Init( GFL_PROC * proc, int * seq, void 
 
 static GFL_PROC_RESULT FieldItemMenuProc_Main( GFL_PROC * proc, int * seq, void * pwk, void * mywk )
 {
-  FIELD_ITEMMENU_WORK* wk = pwk;
-  StateFunc* state = wk->state;
+	FIELD_ITEMMENU_WORK* wk = pwk;
+	StateFunc* state = wk->state;
 
 	if(state == NULL){
 		return GFL_PROC_RES_FINISH;
@@ -424,7 +665,7 @@ static GFL_PROC_RESULT FieldItemMenuProc_Main( GFL_PROC * proc, int * seq, void 
 	}
 	state(wk);
 	return GFL_PROC_RES_CONTINUE;
-	
+
 }
 
 //------------------------------------------------------------------------------
@@ -436,10 +677,10 @@ static GFL_PROC_RESULT FieldItemMenuProc_Main( GFL_PROC * proc, int * seq, void 
 
 static GFL_PROC_RESULT FieldItemMenuProc_End( GFL_PROC * proc, int * seq, void * pwk, void * mywk )
 {
-  FIELD_ITEMMENU_WORK* wk = pwk;
+	FIELD_ITEMMENU_WORK* wk = pwk;
 
 	GFL_BG_FreeCharacterArea(DEBUG_ITEMDISP_FRAME,GFL_ARCUTIL_TRANSINFO_GetPos(wk->bgchar),
-                           GFL_ARCUTIL_TRANSINFO_GetSize(wk->bgchar));
+													 GFL_ARCUTIL_TRANSINFO_GetSize(wk->bgchar));
 	GFL_BMPWIN_ClearScreen(wk->win);
 	BmpWinFrame_Clear(wk->win, WINDOW_TRANS_OFF);
 	GFL_BG_LoadScreenV_Req(DEBUG_ITEMDISP_FRAME);
@@ -447,18 +688,18 @@ static GFL_PROC_RESULT FieldItemMenuProc_End( GFL_PROC * proc, int * seq, void *
 	GFL_MSG_Delete(wk->MsgManager);
 	GFL_STR_DeleteBuffer(wk->pStrBuf);
 	GFL_STR_DeleteBuffer(wk->pExpStrBuf);
-  WORDSET_Delete(wk->WordSet);
+	WORDSET_Delete(wk->WordSet);
 	BmpMenuWork_ListDelete(wk->submenulist);
-  GFL_FONT_Delete(wk->fontHandle);
-  PRINTSYS_QUE_Clear(wk->SysMsgQue);
-  PRINTSYS_QUE_Delete(wk->SysMsgQue);
+	GFL_FONT_Delete(wk->fontHandle);
+	PRINTSYS_QUE_Clear(wk->SysMsgQue);
+	PRINTSYS_QUE_Delete(wk->SysMsgQue);
 
 	GFL_BMPWIN_Exit();
 	GFL_BG_Exit();
 
 
 	GFL_HEAP_DeleteHeap(  HEAPID_ITEMMENU );
-	
+
 	return GFL_PROC_RES_FINISH;
 
 }
@@ -467,7 +708,7 @@ static GFL_PROC_RESULT FieldItemMenuProc_End( GFL_PROC * proc, int * seq, void *
 
 // プロセス定義データ
 const GFL_PROC_DATA ItemMenuProcData = {
-  FieldItemMenuProc_Init,
-  FieldItemMenuProc_Main,
-  FieldItemMenuProc_End,
+	FieldItemMenuProc_Init,
+	FieldItemMenuProc_Main,
+	FieldItemMenuProc_End,
 };

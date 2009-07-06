@@ -10,55 +10,47 @@
 #pragma once
 
 #include <gflib.h>
-#include "net/network_define.h"
-#include "arc_def.h"
-
-#include "item/item.h"
-
-#include "gamesystem/gamesystem.h"
-#include "gamesystem/game_init.h"
-#include "gamesystem/game_event.h"
-#include "gamesystem/game_data.h"
-#include "system/bmp_winframe.h"
-#include "system/bmp_menulist.h"
-
-#include "message.naix"
-#include "msg/msg_d_field.h"
-#include "print/printsys.h"
-#include "print/wordset.h"
-#include "field/fieldmap.h"
-#include "font/font.naix" //NARC_font_large_nftr
-#include "sound/pm_sndsys.h"
 
 extern const GFL_PROC_DATA ItemMenuProcData;
 
-typedef struct _DEBUGITEM_PARAM FIELD_ITEMMENU_WORK;
-typedef void (StateFunc)(FIELD_ITEMMENU_WORK* wk);
+//バッグをどういう風に呼ぶかを定義
+enum {
+  BAG_MODE_FIELD,
+  BAG_MODE_UNION,
+  BAG_MODE_POKELIST,
+  BAG_MODE_COLOSSEUM,
+  BAG_MODE_N_PLANTER,
 
-struct _DEBUGITEM_PARAM {
-  StateFunc* state;      ///< ハンドルのプログラム状態
-  GMEVENT * event;
-  GAMESYS_WORK * gsys;
-  FIELD_MAIN_WORK * fieldmap;
-  SAVE_CONTROL_WORK *ctrl;
-  MYITEM_PTR pMyItem;
-	GFL_BMPWIN* win;
-  PRINT_UTIL            SysMsgPrintUtil;    // システムウインドウPrintUtil
-  PRINT_QUE*            SysMsgQue;
-  // BMPMENULIST_WORK* lw;		// BMPメニューワーク
-//  BMP_MENULIST_DATA*   menulist;
-  GFL_MSGDATA *MsgManager;			// 名前入力メッセージデータマネージャー
-  WORDSET			*WordSet;								// メッセージ展開用ワークマネージャー
-  STRBUF*  pStrBuf;
-	STRBUF*  pExpStrBuf;
-  BMP_MENULIST_DATA*   submenulist;
-  GFL_FONT 			*fontHandle;
-  BMPMENULIST_WORK* sublw;
-	int pocketno;
-	int itemnum;
-	int curpos;
-  int pagetop;
-	HEAPID heapID;
-	u32 bgchar;
 };
 
+
+// メニュー項目
+enum {
+	BAG_MENU_TSUKAU = 0,	// つかう
+	BAG_MENU_ORIRU,			// おりる
+	BAG_MENU_MIRU,			// みる
+	BAG_MENU_UMERU,			// うめる
+	BAG_MENU_HIRAKU,		// ひらく
+	BAG_MENU_SUTERU,		// すてる
+	BAG_MENU_TOUROKU,		// とうろく
+	BAG_MENU_KAIZYO,		// かいじょ
+	BAG_MENU_MOTASERU,		// もたせる
+	BAG_MENU_TAGUWOMIRU,	// タグをみる
+	BAG_MENU_KETTEI,		// けってい
+	BAG_MENU_YAMERU,		// やめる
+	BAG_MENU_IDOU,		    // いどう
+	BAG_MENU_URU,			// うる
+	BAG_MENU_TSUKAU_NP,		// つかう（木の実プランター用）
+	BAG_MENU_TOMERU,		// とめる（ＧＢプレイヤー終了用）
+
+	BAG_MENU_MAX
+};
+
+enum{
+	BAG_MENU_USE=0,		// つかう・みる・おりる
+	BAG_MENU_SUB,		// すてる・とうろく・かいじょ
+	BAG_MENU_GIVE,		// もたせる
+	BAG_MENU_ITEMMOVE,	// いどう
+	BAG_MENU_CANCEL,
+	BAG_MENUTBL_MAX,
+};

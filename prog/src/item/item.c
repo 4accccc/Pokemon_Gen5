@@ -708,3 +708,31 @@ ITEMDATA	*ITEM_GetDataPointer(ITEMDATA *item,u16 index)
 	return (ITEMDATA *)ret_item;
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * アイテムをポケモンに持たせられるか
+ *
+ * @param	item	アイテム番号
+ *
+ * @retval	"TRUE = 可"
+ * @retval	"FALSE = 不可"
+ *
+ *	基本、金銀で追加されたもの
+ */
+//--------------------------------------------------------------------------------------------
+BOOL ITEM_CheckPokeAdd( u16 item )
+{
+	if( item == ITEM_SUPIIDOBOORU ||
+		item == ITEM_REBERUBOORU ||
+		item == ITEM_RUAABOORU ||
+		item == ITEM_HEBIIBOORU ||
+		item == ITEM_RABURABUBOORU ||
+		item == ITEM_HURENDOBOORU ||
+		item == ITEM_MUUNBOORU ||
+		item == ITEM_KONPEBOORU ||
+		item == ITEM_PAAKUBOORU ){
+		return FALSE;
+	}
+
+	return TRUE;
+}

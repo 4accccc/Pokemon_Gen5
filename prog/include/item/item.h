@@ -6,8 +6,9 @@
  * @date	05.09.06
  */
 //============================================================================================
-#ifndef ITEM_H
-#define ITEM_H
+
+#pragma once
+
 #undef GLOBAL
 #ifdef ITEM_H_GLOBAL
 #define GLOBAL	/*	*/
@@ -394,5 +395,19 @@ GLOBAL	void	*ITEM_LoadDataTable(int heapID);
 //--------------------------------------------------------------------------------------------
 GLOBAL	ITEMDATA	*ITEM_GetDataPointer(ITEMDATA *item,u16 index);
 
+//--------------------------------------------------------------------------------------------
+/**
+ * アイテムをポケモンに持たせられるか
+ *
+ * @param	item	アイテム番号
+ *
+ * @retval	"TRUE = 可"
+ * @retval	"FALSE = 不可"
+ *
+ *	基本、金銀で追加されたもの
+ */
+//--------------------------------------------------------------------------------------------
+GLOBAL BOOL ITEM_CheckPokeAdd( u16 item );
+
 #undef GLOBAL
-#endif	/* ITEM_H */
+
