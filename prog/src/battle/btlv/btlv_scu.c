@@ -436,13 +436,13 @@ static BOOL btlin_wild_single( int* seq, void* wk_adrs )
     if( BTLV_SCU_WaitMsg(wk) )
     {
       BTLV_EFFECT_SetPokemon( BTL_POKEPARAM_GetSrcData(subwk->pp), subwk->viewPos );
+      BTLV_EFFECT_Add( BTLEFF_SINGLE_ENCOUNT_3 );
       msgWinVisible_Hide( &wk->msgwinVisibleWork );
       (*seq)++;
     }
     break;
   case 7:
     if( msgWinVisible_Update(&wk->msgwinVisibleWork) ){
-      BTLV_EFFECT_Add( BTLEFF_SINGLE_ENCOUNT_3 );
       (*seq)++;
     }
     break;
@@ -808,7 +808,7 @@ void BTLV_SCU_StartWazaEffect( BTLV_SCU* wk, BtlvMcssPos atPos, BtlvMcssPos defP
   param.continue_count = continueCount;
 
 //  @@@ ターゲットの居ないワザを出すと止まることがあるのでコメントアウトしている  taya
-//  BTLV_EFFECT_AddWazaEffect( &param );
+  BTLV_EFFECT_AddWazaEffect( &param );
 }
 
 //=============================================================================================

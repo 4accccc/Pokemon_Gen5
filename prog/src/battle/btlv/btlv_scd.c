@@ -927,6 +927,7 @@ static BOOL selectPokemon_init( int* seq, void* wk_adrs )
         BTL_STR_MakeStatusWinStr( wk->strbuf, bpp, hp );
         GFL_BMP_Fill( wk->bmp, winpos[i].x, winpos[i].y, POKEWIN_WIDTH, POKEWIN_HEIGHT, col );
         PRINT_UTIL_Print( &wk->printUtil, wk->printQue, winpos[i].x+2, winpos[i].y+2, wk->strbuf, wk->font );
+        GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_OBJ, VISIBLE_OFF );
       }
       (*seq)++;
     }
@@ -1039,6 +1040,7 @@ static BOOL selectPokemon_loop( int* seq, void* wk_adrs )
               wk->pokesel_param = NULL;
               wk->pokesel_result = NULL;
               GFL_BG_SetVisible( GFL_BG_FRAME3_S, VISIBLE_OFF );
+              GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_OBJ, VISIBLE_ON );
               return TRUE;
             }
             else
