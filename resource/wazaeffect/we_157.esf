@@ -6,7 +6,6 @@ C:\home\pokemon_wb\resource\particle\wazaeffect\w_157.spa
 カメラ移動	追従	防御側	20	0	18
 エフェクト終了待ち	すべて
 パーティクルデータロード	w_157
-SE再生	SEQ_SE_W088
 パーティクル再生	w_157	W_157_157_IWA_DOWN	防御側	方向無し	0	0
 タイマーによるウエイト	30
 パーティクル再生	w_157	W_157_157_IWA_BURN	防御側	方向無し	0	0
