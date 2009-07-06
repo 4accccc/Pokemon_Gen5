@@ -6,15 +6,14 @@
  * @date    	2006.03.16
  */
 //=============================================================================
-
-#ifndef __UNION_BEACON_TOOL_H__
-#define __UNION_BEACON_TOOL_H__
+#pragma once
 
 enum UNION_VIEW_INFO {
-  UNIONVIEW_ICONINDEX,	// ２Ｄ画像用(人物ＯＢＪ）のテーブルの場所（0-18)
+  UNIONVIEW_OBJCODE,  // フィールドOBJコード
   UNIONVIEW_TRTYPE,		// トレーナーグラフィックのＩＤ（バトルやカード時のグラフィック）
   UNIONVIEW_MSGTYPE,	// トレーナータイプのメッセージＮＯ(msg_trtype_name_dat)
 
+  UNIONVIEW_ICONINDEX,	// ２Ｄ画像用(人物ＯＢＪ）のテーブルの場所（0-18)
 };
 
 // トレーナーVIEWTYPEと性別から情報を引き出す
@@ -44,4 +43,3 @@ typedef struct{
 extern void	TrCLACTGraDataGet(int trtype,int dir,TR_CLACT_GRA *tcg);
 extern void	TrCLACTGraDataGetEx(int trtype,int dir,BOOL non_throw,TR_CLACT_GRA *tcg);
 
-#endif

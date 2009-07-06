@@ -30,6 +30,7 @@ typedef enum{
   
   GAME_COMM_NO_FIELD_BEACON_SEARCH,   ///<フィールド上でビーコンサーチ
   GAME_COMM_NO_INVASION,              ///<侵入
+  GAME_COMM_NO_UNION,                 ///<ユニオンルーム
 }GAME_COMM_NO;
 
 

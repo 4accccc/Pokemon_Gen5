@@ -30,7 +30,8 @@ SAVEDATASRC =   savedata/save_tbl.c \
         savedata/mystery_data.c \
         savedata/wifi_hiroba_save.c \
         savedata/musical_save.c \
-		savedata/randommap_save.c
+        savedata/randommap_save.c
+
 
 #通信の常駐
 NETWORKSRC =  net/net_icondata.c \
@@ -38,7 +39,8 @@ NETWORKSRC =  net/net_icondata.c \
         net/dwc_rapfriend.c \
         net/net_exchange.c \
         system/net_err.c \
-        net_old/net_old.c
+        net_old/net_old.c \
+        net_app/union/union_comm.c
 
 
 
@@ -144,7 +146,7 @@ SRCS  +=    $(SOUNDSRC) \
         debug/debugwin_sys.c \
 		test/tetsu/debug_common.c \
         system/fld_wipe_3dobj.c \
-        debug/debug_system_group.c \
+        debug/debug_system_group.c
 
 
 #================================================
@@ -330,6 +332,9 @@ SRCS_OVERLAY_FIELD_WEATHER_RAIN = field/weather_rain.c
 #===> SRCS_OVERLAY_FIELDMAP
 SRCS_OVERLAY_FIELD_WEATHER_STORM = field/weather_storm.c \
                   field/weather_mirage.c
+
+#===> SRCS_OVERLAY_FIELDMAP
+SRCS_OVERLAY_UNION_ROOM = net_app/union/union_main.c
 
 # マッパーサンプル
 #===> main

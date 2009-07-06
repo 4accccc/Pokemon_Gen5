@@ -18,6 +18,7 @@
 #include "field/fldmmdl_pl_code.h"
 
 #include "net_app/union/union_beacon_tool.h"
+#include "field/fldmmdl.h"
 
 #define UNION_VIEW_TYPE_NUM	( 16 )
 
@@ -26,7 +27,11 @@
 #define DUMMY_GRA_TYPE (0)
 
 // ユニオンルームで表示するトレーナーのタイプ見た目＆名前＆トレーナーグラフィックテーブル
-static const int UnionViewTable[][3]={
+static const struct{
+  u16 objcode;
+  u8 msg_type;
+  u8 tr_type;
+}UnionViewTable[] = {
 #if 0	//トレーナーデータ変更に伴いコメントアウト　saito	
 	{ BOY1,			MSG_TRTYPE_SCHOOLB, 	TRTYPE_SCHOOLB	  },	///< じゅくがえり
 	{ BOY3,			MSG_TRTYPE_MUSHI,		TRTYPE_MUSHI	  },	///< むしとりしょうねん
@@ -46,23 +51,23 @@ static const int UnionViewTable[][3]={
 	{ COWGIRL,		MSG_TRTYPE_COWGIRL, 	TRTYPE_COWGIRL	  },	///< カウガール
 	{ GORGGEOUSW,	MSG_TRTYPE_PRINCESS,	TRTYPE_PRINCESS   },	///< おじょうさま
 #else
-	{ PLBOY1,		DUMMY_MSG_TYPE,		DUMMY_GRA_TYPE	},	///< じゅくがえり
-	{ PLBOY3,		DUMMY_MSG_TYPE,		DUMMY_GRA_TYPE	},	///< むしとりしょうねん
-	{ PLMAN3,		DUMMY_MSG_TYPE,		DUMMY_GRA_TYPE	},	///< エリートトレーナー♂
-	{ PLBADMAN,		DUMMY_MSG_TYPE,		DUMMY_GRA_TYPE	},	///< スキンヘッズ
-	{ PLEXPLORE,	DUMMY_MSG_TYPE,		DUMMY_GRA_TYPE	},	///< いせきマニア
-	{ PLFIGHTER,	DUMMY_MSG_TYPE,		DUMMY_GRA_TYPE	},	///< からておう
-	{ PLGORGGEOUSM,	DUMMY_MSG_TYPE,		DUMMY_GRA_TYPE	},	///< おぼっちゃま
-	{ PLMYSTERY,	DUMMY_MSG_TYPE,		DUMMY_GRA_TYPE	},	///< サイキッカー
+	{ BOY1,		DUMMY_MSG_TYPE,		DUMMY_GRA_TYPE	},	///< じゅくがえり
+	{ MAN1,		DUMMY_MSG_TYPE,		DUMMY_GRA_TYPE	},	///< むしとりしょうねん
+	{ MIDDLEMAN1,		DUMMY_MSG_TYPE,		DUMMY_GRA_TYPE	},	///< エリートトレーナー♂
+	{ OLDMAN1,		DUMMY_MSG_TYPE,		DUMMY_GRA_TYPE	},	///< スキンヘッズ
+	{ BABYBOY1,	DUMMY_MSG_TYPE,		DUMMY_GRA_TYPE	},	///< いせきマニア
+	{ BOY1,	DUMMY_MSG_TYPE,		DUMMY_GRA_TYPE	},	///< からておう
+	{ MAN1,	DUMMY_MSG_TYPE,		DUMMY_GRA_TYPE	},	///< おぼっちゃま
+	{ MIDDLEMAN1,	DUMMY_MSG_TYPE,		DUMMY_GRA_TYPE	},	///< サイキッカー
 
-	{ PLGIRL1,		DUMMY_MSG_TYPE,		DUMMY_GRA_TYPE	},	///< ミニスカート
-	{ PLGIRL2,		DUMMY_MSG_TYPE,		DUMMY_GRA_TYPE	},	///< バトルガール
-	{ PLWOMAN2,		DUMMY_MSG_TYPE,		DUMMY_GRA_TYPE	},	///< おとなのおねえさん
-	{ PLWOMAN3,		DUMMY_MSG_TYPE,		DUMMY_GRA_TYPE	},	///< エリートトレーナー♀
-	{ PLIDOL,		DUMMY_MSG_TYPE,		DUMMY_GRA_TYPE	},	///< アイドル
-	{ PLLADY,		DUMMY_MSG_TYPE,		DUMMY_GRA_TYPE	},	///< マダム
-	{ PLCOWGIRL,	DUMMY_MSG_TYPE,		DUMMY_GRA_TYPE	},	///< カウガール
-	{ PLGORGGEOUSW,	DUMMY_MSG_TYPE,		DUMMY_GRA_TYPE	},	///< おじょうさま
+	{ GIRL1,		DUMMY_MSG_TYPE,		DUMMY_GRA_TYPE	},	///< ミニスカート
+	{ WOMAN1,		DUMMY_MSG_TYPE,		DUMMY_GRA_TYPE	},	///< バトルガール
+	{ MIDDLEWOMAN1,		DUMMY_MSG_TYPE,		DUMMY_GRA_TYPE	},	///< おとなのおねえさん
+	{ OLDWOMAN1,		DUMMY_MSG_TYPE,		DUMMY_GRA_TYPE	},	///< エリートトレーナー♀
+	{ BABYGIRL1,		DUMMY_MSG_TYPE,		DUMMY_GRA_TYPE	},	///< アイドル
+	{ GIRL1,		DUMMY_MSG_TYPE,		DUMMY_GRA_TYPE	},	///< マダム
+	{ WOMAN1,	DUMMY_MSG_TYPE,		DUMMY_GRA_TYPE	},	///< カウガール
+	{ MIDDLEWOMAN1,	DUMMY_MSG_TYPE,		DUMMY_GRA_TYPE	},	///< おじょうさま
 #endif
 };
 
@@ -127,7 +132,7 @@ int UnionView_GetTrainerType( u32 id, int sex, u32 select )
 	int key    = id%8;
 	int patern = UnionViewNameTable[key][select] + UNION_VIEW_SELECT_TYPE * sex;
 
-	return UnionViewTable[patern][0];
+	return UnionViewTable[patern].objcode;
 }
 
 //------------------------------------------------------------------
@@ -144,7 +149,7 @@ static int Search_ViewNo( int sex, int view_type )
 {
 	int i;
 	for(i=0;i<UNION_VIEW_TYPE_NUM/2;i++){
-		if(UnionViewTable[i+(sex*(UNION_VIEW_TYPE_NUM/2))][0]==view_type){
+		if(UnionViewTable[i+(sex*(UNION_VIEW_TYPE_NUM/2))].objcode==view_type){
 			return i + (sex*(UNION_VIEW_TYPE_NUM/2));
 		}	
 	}
@@ -186,16 +191,13 @@ int UnionView_GetTrainerInfo( int sex, int view_type, int info )
 	int i = Search_ViewNo( sex, view_type );
 
 	switch(info){
-	  case UNIONVIEW_ICONINDEX:
+  case UNIONVIEW_ICONINDEX:
 		return i;
-		break;
-	  case UNIONVIEW_MSGTYPE:
-		return UnionViewTable[i][1];
-		break;
-	  case UNIONVIEW_TRTYPE:
-		return UnionViewTable[i][2];
-		break;
-	  default:
+  case UNIONVIEW_MSGTYPE:
+		return UnionViewTable[i].msg_type;
+  case UNIONVIEW_TRTYPE:
+		return UnionViewTable[i].tr_type;
+  default:
 		GF_ASSERT(0);
 	}
 

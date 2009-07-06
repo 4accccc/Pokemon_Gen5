@@ -85,6 +85,8 @@ enum NetworkServiceID_e {
 	WB_NET_IRCRHYTHM,				///相性チェック　RHYTHMチェック
 	WB_NET_IRCMENU,				///相性チェック　RHYTHMチェック
 	WB_NET_MUSICAL,       ///ミュージカル
+	WB_NET_UNION,           ///<ユニオンルーム
+	
   WB_NET_SERVICEID_MAX   // 終端
 };
 
@@ -113,6 +115,7 @@ enum NetworkCommandHeaderNo_e {
 	GFL_NET_CMD_IRCRHYTHM	= (WB_NET_IRCRHYTHM<<8),	///<相性チェック　リズムチェック
 	GFL_NET_CMD_IRCMENU	= (WB_NET_IRCMENU<<8),	///<相性チェック　メニュー
 	GFL_NET_CMD_MUSICAL = (WB_NET_MUSICAL<<8),  ///ミュージカル
+	GFL_NET_CMD_UNION = (WB_NET_UNION<<8),      ///<ユニオンルーム
 };
 
 

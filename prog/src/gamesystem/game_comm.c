@@ -15,6 +15,7 @@
 #include "fieldmap/zone_id.h"
 #include "message.naix"
 #include "msg/msg_invasion.h"
+#include "net_app/union/union_main.h"
 
 
 //==============================================================================
@@ -134,6 +135,14 @@ static const GAME_FUNC_TBL GameFuncTbl[] = {
     FIELD_COMM_FUNC_UpdateSystem,         //update
     FIELD_COMM_FUNC_TermCommSystem,       //exit
     FIELD_COMM_FUNC_TermCommSystemWait,   //exit_wait
+  },
+  //GAME_COMM_NO_UNION
+  {
+    UnionComm_Init,       //init
+    UnionComm_InitWait,   //init_wait
+    UnionComm_Update,     //update
+    UnionComm_Exit,       //exit
+    UnionComm_ExitWait,   //exit_wait
   },
 };
 
