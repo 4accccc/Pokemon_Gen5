@@ -36,7 +36,8 @@ enum{
 typedef struct{
   u32           position_reverse_flag :1;     //立ち位置反転フラグ
   u32           camera_ortho_on_flag  :1;     //カメラ移動後、正射影に戻すフラグ
-  u32                                 :30;
+  u32           se_play_wait_flag     :1;     //SE再生ウエイト中
+  u32                                 :29;
   GFL_TCBSYS*   tcbsys;
   GFL_PTC_PTR   ptc[ PARTICLE_GLOBAL_MAX ];
   u16           ptc_no[ PARTICLE_GLOBAL_MAX ];
@@ -80,6 +81,19 @@ typedef struct{
   fx32    speed;      //スピード
   int     move_frame; //移動するフレーム数
 }BTLV_EFFVM_EMITTER_MOVE_WORK;
+
+//SE再生用パラメータ構造体
+typedef struct
+{ 
+  BTLV_EFFVM_WORK*  bevw;
+	int               se_no;
+	int               player;
+	int               wait;
+  int               pitch;
+  int               pan;
+  int               mod_depth;
+  int               mod_speed;
+}BTLV_EFFVM_SEPLAY;
 
 //============================================================================================
 /**
@@ -139,6 +153,10 @@ static  void  EFFVM_InitEmitterPos( GFL_EMIT_PTR emit );
 static  void  EFFVM_MoveEmitter( GFL_EMIT_PTR emit, unsigned int flag );
 static  void  EFFVM_DeleteEmitter( GFL_PTC_PTR ptc );
 static  void  EFFVM_ChangeCameraProjection( BTLV_EFFVM_WORK *bevw );
+static  void  EFFVM_SePlay( int se_no, int player, int pitch, int pan, int mod_depth, int mod_speed );
+
+//TCB関数
+static  void  TCB_EFFVM_SEPLAY( GFL_TCB* tcb, void* work );
 
 #ifdef PM_DEBUG
 //デバッグ用関数
@@ -584,7 +602,7 @@ static VMCMD_RESULT VMEC_PARTICLE_LOAD( VMHANDLE *vmh, void *context_work )
   BTLV_EFFVM_WORK *bevw = ( BTLV_EFFVM_WORK* )context_work;
   void      *heap;
   void      *resource;
-  ARCDATID    datID = ( ARCDATID )VMGetU32( vmh );
+  ARCDATID  datID = ( ARCDATID )VMGetU32( vmh );
   int       ptc_no = EFFVM_RegistPtcNo( bevw, datID );
 
 #ifdef PM_DEBUG
@@ -1152,9 +1170,37 @@ static VMCMD_RESULT VMEC_BG_VANISH( VMHANDLE *vmh, void *context_work )
 static VMCMD_RESULT VMEC_SE_PLAY( VMHANDLE *vmh, void *context_work )
 {
   BTLV_EFFVM_WORK *bevw = ( BTLV_EFFVM_WORK* )context_work;
-  int se_no = ( int )VMGetU32( vmh );
+  int se_no     = ( int )VMGetU32( vmh );
+  int player    = ( int )VMGetU32( vmh );
+  int wait      = ( int )VMGetU32( vmh );
+  int pitch     = ( int )VMGetU32( vmh );
+  int pan       = ( int )VMGetU32( vmh );
+  int mod_depth = ( int )VMGetU32( vmh );
+  int mod_speed = ( int )VMGetU32( vmh );
 
-  PMSND_PlaySE( se_no );
+  if( mod_depth > 255 ) { mod_depth = 255; }
+  if( mod_speed > 255 ) { mod_speed = 255; }
+
+  if( wait == 0 )
+  { 
+    EFFVM_SePlay( se_no, player, pitch, pan, mod_depth, mod_speed );
+  }
+  else
+  { 
+    BTLV_EFFVM_SEPLAY*  bes = GFL_HEAP_AllocMemory( bevw->heapID, sizeof( BTLV_EFFVM_SEPLAY ) );
+    bes->bevw       = bevw;
+    bes->se_no      = se_no;
+    bes->player     = player;
+    bes->wait       = wait;
+    bes->pitch      = pitch;
+    bes->pan        = pan;
+    bes->mod_depth  = mod_depth;
+    bes->mod_speed  = mod_speed;
+
+    bevw->se_play_wait_flag = 1;
+
+    GFL_TCB_AddTask( bevw->tcbsys, TCB_EFFVM_SEPLAY, bes, 0 );
+  }
 
   return bevw->control_mode;
 }
@@ -1170,8 +1216,16 @@ static VMCMD_RESULT VMEC_SE_PLAY( VMHANDLE *vmh, void *context_work )
 static VMCMD_RESULT VMEC_SE_STOP( VMHANDLE *vmh, void *context_work )
 {
   BTLV_EFFVM_WORK *bevw = ( BTLV_EFFVM_WORK* )context_work;
+  int player      = ( int )VMGetU32( vmh );
 
-  PMSND_StopSE();
+  if( player == BTLEFF_SESTOP_ALL )
+  { 
+    PMSND_StopSE();
+  }
+  else
+  { 
+    PMSND_StopSE_byPlayerID( player );
+  }
 
   return bevw->control_mode;
 }
@@ -1368,6 +1422,29 @@ static  BOOL  VWF_EFFECT_END_CHECK( VMHANDLE *vmh, void *context_work )
       ( bevw->effect_end_wait_kind == BTLEFF_EFFENDWAIT_PALFADE_3D ) )
   { 
     if( BTLV_EFFECT_CheckExecutePaletteFade( BTLEFF_PAL_FADE_FIELD ) )
+    { 
+      return FALSE;
+    }
+  }
+  //SE再生
+  if( ( bevw->effect_end_wait_kind == BTLEFF_EFFENDWAIT_ALL ) ||
+      ( bevw->effect_end_wait_kind == BTLEFF_EFFENDWAIT_SEALL ) )
+  { 
+    if( ( PMSND_CheckPlaySE() ) || ( bevw->se_play_wait_flag ) )
+    { 
+      return FALSE;
+    }
+  }
+  if( bevw->effect_end_wait_kind == BTLEFF_EFFENDWAIT_SE1 )
+  { 
+    if( ( PMSND_CheckPlaySE_byPlayerID( SEPLAYER_SE1 ) ) || ( bevw->se_play_wait_flag ) )
+    { 
+      return FALSE;
+    }
+  }
+  if( bevw->effect_end_wait_kind == BTLEFF_EFFENDWAIT_SE2 )
+  { 
+    if( ( PMSND_CheckPlaySE_byPlayerID( SEPLAYER_SE2 ) ) || ( bevw->se_play_wait_flag ) )
     { 
       return FALSE;
     }
@@ -1783,6 +1860,54 @@ static  void  EFFVM_ChangeCameraProjection( BTLV_EFFVM_WORK *bevw )
   else
   {
     BTLV_MCSS_SetOrthoMode( BTLV_EFFECT_GetMcssWork() );
+  }
+}
+
+//============================================================================================
+/**
+ *  SE再生
+ *
+ * @param[in]	se_no	      再生するSEナンバー
+ * @param[in] player      再生するPlayerNo
+ * @param[in] pitch       再生ピッチ
+ * @param[in] pan         再生パン
+ * @param[in] mod_depth   再生モジュレーションデプス
+ * @param[in] mod_speed   再生モジュレーションスピード
+ */
+//============================================================================================
+static  void  EFFVM_SePlay( int se_no, int player, int pitch, int pan, int mod_depth, int mod_speed )
+{ 
+  if( player == BTLEFF_SEPLAY_DEFAULT )
+  { 
+    PMSND_PlaySE( se_no );
+    player = PMSND_GetSE_DefaultPlayerID( se_no );
+  }
+  else
+  { 
+    PMSND_PlaySE_byPlayerID( se_no, player );
+  }
+  //現状ではPANには対応しない
+  PMSND_SetStatusSE_byPlayerID( player, PMSND_NOEFFECT, pitch, PMSND_NOEFFECT );
+  NNS_SndPlayerSetTrackModDepth( PMSND_GetSE_SndHandle( player ), 0xffff, mod_depth );
+  NNS_SndPlayerSetTrackModSpeed( PMSND_GetSE_SndHandle( player ), 0xffff, mod_speed );
+}
+
+//TCB関数
+//============================================================================================
+/**
+ *  SE再生
+ */
+//============================================================================================
+static  void  TCB_EFFVM_SEPLAY( GFL_TCB* tcb, void* work )
+{ 
+  BTLV_EFFVM_SEPLAY*  bes = ( BTLV_EFFVM_SEPLAY* )work;
+
+  if( --bes->wait == 0 )
+  { 
+    bes->bevw->se_play_wait_flag = 0;
+    EFFVM_SePlay( bes->se_no, bes->player, bes->pitch, bes->pan, bes->mod_depth, bes->mod_speed );
+    GFL_HEAP_FreeMemory( bes );
+    GFL_TCB_DeleteTask( tcb );
   }
 }
 

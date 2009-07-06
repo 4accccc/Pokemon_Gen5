@@ -112,6 +112,17 @@
 #define	BTLEFF_TRAINER_MOVE_ROUNDTRIP					( EFFTOOL_CALCTYPE_ROUNDTRIP )
 #define	BTLEFF_TRAINER_MOVE_ROUNDTRIP_LONG		( EFFTOOL_CALCTYPE_ROUNDTRIP_LONG )
 
+
+//SE再生プレーヤー定義
+#define BTLEFF_SEPLAY_DEFAULT                 ( 0 )
+#define BTLEFF_SEPLAY_SE1                     ( 1 )
+#define BTLEFF_SEPLAY_SE2                     ( 2 )
+
+//SEストッププレーヤー定義
+#define BTLEFF_SESTOP_ALL                     ( 0 )
+#define BTLEFF_SESTOP_SE1                     ( 1 )
+#define BTLEFF_SESTOP_SE2                     ( 2 )
+
 //エフェクト終了待ち
 #define	BTLEFF_EFFENDWAIT_ALL									( 0 )
 #define	BTLEFF_EFFENDWAIT_CAMERA							( 1 )
@@ -122,6 +133,9 @@
 #define	BTLEFF_EFFENDWAIT_PALFADE_FIELD		  	( 6 )
 #define	BTLEFF_EFFENDWAIT_PALFADE_3D			    ( 7 )
 #define	BTLEFF_EFFENDWAIT_PALFADE_EFFECT	    ( 8 )
+#define BTLEFF_EFFENDWAIT_SEALL               ( 9 )
+#define BTLEFF_EFFENDWAIT_SE1                 ( 10 )
+#define BTLEFF_EFFENDWAIT_SE2                 ( 11 )
 
 //制御モード
 #define	BTLEFF_CONTROL_MODE_CONTINUE					( 0 )
@@ -565,30 +579,34 @@ ex)
 /**
  * @brief	ポケモン円移動
  *
- * #param_num	6
+ * #param_num	7
  * @param	pos				      	円移動させるポケモンの立ち位置
  * @param	axis			      	回転軸
+ * @param	shift			      	回転シフト
  * @param	radius_h	        横方向半径
  * @param	radius_v	        縦方向半径
  * @param	rotate_param			回転フレーム数（1回転何フレームでするか） 移動ウエイト  回転カウント
- * @param	rotate_after_wait	1回転したあとのウエイト（2回転以上で意味のある値です）
+ * @param	rotate_after_wait 1回転したあとのウエイト（2回転以上で意味のある値です）
  *
  * #param	COMBOBOX_TEXT	攻撃側	攻撃側ペア	防御側	防御側ペア
  * #param	COMBOBOX_VALUE	BTLEFF_POKEMON_SIDE_ATTACK BTLEFF_POKEMON_SIDE_ATTACK_PAIR BTLEFF_POKEMON_SIDE_DEFENCE BTLEFF_POKEMON_SIDE_DEFENCE_PAIR
- * #param	COMBOBOX_TEXT	Ｘ軸  Ｙ軸  Ｚ軸
- * #param	COMBOBOX_VALUE	BTLEFF_AXIS_X BTLEFF_AXIS_Y BTLEFF_AXIS_Z
+ * #param	COMBOBOX_TEXT	Ｘ軸左  Ｘ軸右  Ｙ軸左  Ｙ軸右  Ｚ軸左  Ｚ軸右
+ * #param	COMBOBOX_VALUE	BTLEFF_AXIS_X_L BTLEFF_AXIS_X_R BTLEFF_AXIS_Y_L BTLEFF_AXIS_Y_R BTLEFF_AXIS_Z_L BTLEFF_AXIS_Z_R
+ * #param	COMBOBOX_TEXT シフトＨ＋  シフトＨ－  シフトＶ＋  シフトＶ－
+ * #param	COMBOBOX_VALUE	BTLEFF_SHIFT_H_P BTLEFF_SHIFT_H_M BTLEFF_SHIFT_V_P BTLEFF_SHIFT_V_M
  * #param	VALUE_FX32	横方向半径
  * #param	VALUE_FX32	縦方向半径
  * #param	VALUE_VECFX32		回転フレーム数  移動ウエイト  回転カウント
- * #param	VALUE_INT   1回転したあとのウエイト
+ * #param	VALUE_INT 1回転したあとのウエイト（2回転以上で意味のある値です）
  */
 //======================================================================
-	.macro	POKEMON_CIRCLE_MOVE	pos, axis, radius_h, radius_v, frame, rotate_wait, count, rotate_after_wait
+	.macro	POKEMON_CIRCLE_MOVE	pos, axis, shift, radius_h, radius_v, frame, rotate_wait, count, rotate_after_wait
 	.short	EC_POKEMON_CIRCLE_MOVE
 	.long		\pos
-	.long		\type
-	.long		\move_pos_x
-	.long		\move_pos_y
+	.long		\axis
+	.long		\shift
+	.long		\radius_h
+	.long		\radius_v
 	.long		\frame
 	.long		\rotate_wait
 	.long		\count
@@ -911,26 +929,50 @@ ex)
 /**
  * @brief	SE再生
  *
- * #param_num	1
- * @param	se_no		再生するSEナンバー
+ * #param_num	7
+ * @param	se_no	      再生するSEナンバー
+ * @param player      再生するPlayerNo
+ * @param wait        再生までのウエイト
+ * @param pitch       再生ピッチ
+ * @param pan         再生パン
+ * @param mod_depth   再生モジュレーションデプス
+ * @param mod_speed   再生モジュレーションスピード
  *
- * #param	VALUE_INT		再生するSEナンバー
+ * #param	VALUE_INT   再生するSEナンバー
+ * #param COMBOBOX_TEXT デフォルト  SE1 SE2
+ * #param COMBOBOX_VALUE BTLEFF_SEPLAY_DEFAULT  BTLEFF_SEPLAY_SE1 BTLEFF_SEPLAY_SE2
+ * #param VALUE_INT   再生までのウエイト
+ * #param VALUE_INT   再生ピッチ
+ * #param VALUE_INT   再生パン
+ * #param VALUE_INT   再生モジュレーションデプス
+ * #param VALUE_INT   再生モジュレーションスピード
  */
 //======================================================================
-	.macro	SE_PLAY	se_no
+	.macro	SE_PLAY	se_no, player, wait, pitch, pan, mod_depth, mod_speed
 	.short	EC_SE_PLAY
 	.long		\se_no
+	.long   \player
+	.long   \wait
+  .long   \pitch
+  .long   \pan
+  .long   \mod_depth
+  .long   \mod_speed
 	.endm
 
 //======================================================================
 /**
  * @brief	SEストップ
  *
- * #param_num	0
+ * #param_num	1
+ * @param player  ストップするPlayerNo
+ *
+ * #param COMBOBOX_TEXT すべて  SE1 SE2
+ * #param COMBOBOX_VALUE BTLEFF_SESTOP_ALL  BTLEFF_SESTOP_SE1 BTLEFF_SESTOP_SE2
  */
 //======================================================================
-	.macro	SE_STOP
+	.macro	SE_STOP player
 	.short	EC_SE_STOP
+  .long   \player
 	.endm
 
 //======================================================================
@@ -940,8 +982,8 @@ ex)
  * #param_num	1
  * @param	kind	終了待ちする種類
  *
- * #param	COMBOBOX_TEXT	すべて	カメラ	パーティクル	ポケモン	トレーナー  PALFADEお盆  PALFADEフィールド PALFADEお盆＋フィールド  PALFADEエフェクト
- * #param COMBOBOX_VALUE	BTLEFF_EFFENDWAIT_ALL	BTLEFF_EFFENDWAIT_CAMERA	BTLEFF_EFFENDWAIT_PARTICLE	BTLEFF_EFFENDWAIT_POKEMON	BTLEFF_EFFENDWAIT_TRAINER BTLEFF_EFFENDWAIT_PALFADE_STAGE  BTLEFF_EFFENDWAIT_PALFADE_FIELD  BTLEFF_EFFENDWAIT_PALFADE_3D BTLEFF_EFFENDWAIT_PALFADE_EFFECT
+ * #param	COMBOBOX_TEXT	すべて	カメラ	パーティクル	ポケモン	トレーナー  PALFADEお盆  PALFADEフィールド PALFADEお盆＋フィールド  PALFADEエフェクト SEPLAYすべて  SEPLAY1 SEPLAY2  
+ * #param COMBOBOX_VALUE	BTLEFF_EFFENDWAIT_ALL	BTLEFF_EFFENDWAIT_CAMERA	BTLEFF_EFFENDWAIT_PARTICLE	BTLEFF_EFFENDWAIT_POKEMON	BTLEFF_EFFENDWAIT_TRAINER BTLEFF_EFFENDWAIT_PALFADE_STAGE  BTLEFF_EFFENDWAIT_PALFADE_FIELD  BTLEFF_EFFENDWAIT_PALFADE_3D BTLEFF_EFFENDWAIT_PALFADE_EFFECT BTLEFF_EFFENDWAIT_SEALL  BTLEFF_EFFENDWAIT_SE1  BTLEFF_EFFENDWAIT_SE2  
  */
 //======================================================================
 	.macro	EFFECT_END_WAIT	kind
