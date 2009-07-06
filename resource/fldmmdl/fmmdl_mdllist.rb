@@ -50,9 +50,10 @@ RET_ERROR = (0xfffffffe)
 FLDMMDL_LIST_H = "fldmmdl_list.h"
 
 #固定文字列
-STR_NULL = ""
-STR_END = "#END"
-STR_CODEMAX = "OBJCODEMAX"
+STR_NULL = "" #NULL文字
+STR_END = "#END" #終端文字列
+STR_CODEMAX = "OBJCODEMAX" #コード最大
+STR_DRAWTYPE_NON = "DRAWTYPE_NON" #表示タイプ無し
 
 #管理表文字位置 名称
 STRPRMNO_CODENAME = (3)
@@ -261,15 +262,19 @@ def convert_line( no, line, wfile, idxfile, symfile )
 	#OBJコード 2
 	ary = Array( no )
 	wfile.write( ary.pack("S*") )
-	
+  
 	#アーカイブインデックス テクスチャ 2 (4)
 	word = str[STRPRMNO_DRAWTYPE]
-	if( word == "DRAWTYPE_NON" ) #表示タイプ　無し
+	if( word == STR_DRAWTYPE_NON ) #表示タイプ　無し
 		ret = 0
 	else
 		word = str[STRPRMNO_MDLFILENAME]
-		/(\A.*[^\.imd])/ =~ word
-		mdlname = $1
+    
+    #文字列".imd"を削除する。が、何故か'm'文字まで削除してしまう
+		#/(\A.*[^\.imd])/ =~ word
+		#mdlname = $1
+    mdlname = word.gsub( "\.imd", "" )
+    
 		ret = arcidx_search( idxfile, mdlname )
 		if( ret == RET_ERROR )
 			printf( "ERROR モデルファイル名異常 %s\n", word )
