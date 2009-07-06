@@ -11,6 +11,9 @@
 #
 ###############################################################
 
+$KCODE="SJIS"
+
+class ZoneIDError < Exception; end
 #------------------------------------------------
 #------------------------------------------------
 class ColumnID
@@ -464,6 +467,9 @@ class ZoneNameBinaryFile < OutputFile
 	end
 
 	def put	zone_id
+    if zone_id =~ /[^a-zA-Z0-9]/ then
+      raise ZoneIDError, "[#{zone_id}]‚É–¢‘Î‰ž‚Ì•¶Žš‚ªŠÜ‚Ü‚ê‚Ä‚¢‚Ü‚·"
+    end
 		if zone_id.length <= 16 then
 			@fp.syswrite zone_id
 			blank = ""
