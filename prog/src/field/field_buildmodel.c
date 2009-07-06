@@ -36,8 +36,11 @@ typedef EL_SCOREBOARD_TEX ELBOARD_TEX;
 //============================================================================================
 //============================================================================================
 
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+enum { GLOBAL_OBJ_ANMCOUNT	= 4 };
+
 enum {  
-  BMANIME_ID_COUNT_MAX = 4,
 
   BMODEL_USE_MAX = 4, 
 };
@@ -73,7 +76,7 @@ struct _FIELD_BMANIME_DATA
   u8 set_count; //
 
   ///アニメアーカイブ指定ID
-  u16 anm_id[BMANIME_ID_COUNT_MAX];
+  u16 anm_id[GLOBAL_OBJ_ANMCOUNT];
 
 };
 //------------------------------------------------------------------
@@ -84,9 +87,14 @@ struct _FIELD_BMODEL {
   GFL_G3D_OBJSTATUS status;
 };
 
+
 //------------------------------------------------------------------
 //------------------------------------------------------------------
-enum { GLOBAL_OBJ_ANMCOUNT	= 4 };
+typedef struct {
+  u16 anime_id;
+  u16 prog_id;
+  u16 submodel_id;
+}BM_INFO;
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
@@ -111,6 +119,8 @@ struct _FIELD_BMODEL_MAN
 	u16 entryCount;
 	BMODEL_ID entryToIDTable[BMODEL_ENTRY_MAX];
   FIELD_BMANIME_DATA animeData[BMODEL_ENTRY_MAX];
+  u16 prog_id[BMODEL_ENTRY_MAX];
+  BMODEL_ID subModels[BMODEL_ENTRY_MAX];
 
 	ARCID model_arcid;
 
@@ -148,7 +158,7 @@ static u16 calcArcIndex(u16 area_id);
 
 static void loadBModelIDList(FIELD_BMODEL_MAN * man, u16 arc_id, u16 file_id);
 
-static void loadAnimeData(FIELD_BMODEL_MAN * man, u16 file_id);
+static void loadBmInfo(FIELD_BMODEL_MAN * man, u16 file_id);
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 static void FIELD_BMANIME_DATA_init(FIELD_BMANIME_DATA * data);
@@ -298,6 +308,8 @@ void FIELD_BMODEL_MAN_Load(FIELD_BMODEL_MAN * man, u16 zoneid, const AREADATA * 
   for (i = 0; i < BMODEL_ENTRY_MAX; i++)
   { 
     FIELD_BMANIME_DATA_init(&man->animeData[i]);
+    man->subModels[i] = 0xffff;
+    man->prog_id[i] = 0;
   }
 
   if (AREADATA_GetInnerOuterSwitch(areadata) != 0) 
@@ -319,8 +331,8 @@ void FIELD_BMODEL_MAN_Load(FIELD_BMODEL_MAN * man, u16 zoneid, const AREADATA * 
 	//ID→登録順序の変換データテーブル生成
 	makeIDToEntryTable(man);
 
-  //必要な配置モデルアニメデータの読み込み
-  loadAnimeData(man, model_info_dataid);
+  //必要な配置モデルデータの読み込み
+  loadBmInfo(man, model_info_dataid);
 
   //FLDMAPPERに引き渡すデータを生成
 	makeResistObjTable(man);
@@ -375,13 +387,27 @@ const FIELD_BMANIME_DATA * FIELD_BMODEL_MAN_GetAnimeData(FIELD_BMODEL_MAN * man,
 BOOL FIELD_BMODEL_MAN_GetSubModel(const FIELD_BMODEL_MAN * man, 
     u16 bm_id, VecFx32 * ofs, u32 * entry_idx)
 {
+  u16 submodel_id;
+#if 1
+  //とりあえず、ポケセン以外の扉は出さない
   if (bm_id != NARC_buildmodel_outdoor_pc_01_nsbmd
     || man->model_arcid != ARCID_BMODEL_OUTDOOR )
   {
     return FALSE;
   }
-  *entry_idx = FIELD_BMODEL_MAN_GetEntryIndex(man, NARC_buildmodel_outdoor_p_door_nsbmd);
-  VEC_Set(ofs, 0, 0, 0 * FX32_ONE);
+#endif
+  
+  if (man->model_arcid != ARCID_BMODEL_OUTDOOR)
+  {
+    return FALSE;
+  }
+  submodel_id = man->subModels[FIELD_BMODEL_MAN_GetEntryIndex(man, bm_id)];
+  if (submodel_id == 0xffff)
+  {
+    return FALSE;
+  }
+  *entry_idx = FIELD_BMODEL_MAN_GetEntryIndex(man, submodel_id);
+  VEC_Set(ofs, 0, 0, 0);
   return TRUE;
 }
 
@@ -568,7 +594,7 @@ const u16 * FIELD_BMANIME_DATA_getAnimeFileID(const FIELD_BMANIME_DATA * data)
 u32 FIELD_BMANIME_DATA_getAnimeCount(const FIELD_BMANIME_DATA * data)
 { 
   u32 i,count;
-  for (i = 0, count = 0; i < BMANIME_ID_COUNT_MAX; i++)
+  for (i = 0, count = 0; i < GLOBAL_OBJ_ANMCOUNT; i++)
   { 
     if (data->anm_id[i] != BMANIME_NULL_ID)
     { 
@@ -634,7 +660,7 @@ static void FIELD_BMANIME_DATA_dump(const FIELD_BMANIME_DATA * data)
   //TAMADA_Printf("FIELD_BMANIME_DATA:");
   //TAMADA_Printf("%s, %d\n", animetype[data->anm_type], type);
   //TAMADA_Printf("%d %d %d\n",data->prg_type, data->anm_count, data->set_count);
-  for (i = 0; i < BMANIME_ID_COUNT_MAX; i++)
+  for (i = 0; i < GLOBAL_OBJ_ANMCOUNT; i++)
   {
     //TAMADA_Printf("%04x ", data->anm_id[i]);
   }
@@ -644,29 +670,25 @@ static void FIELD_BMANIME_DATA_dump(const FIELD_BMANIME_DATA * data)
 
 //------------------------------------------------------------------
 /**
- * @brief 配置モデル用アニメデータの読み込み
+ * @brief 配置モデル用データの読み込み
  */
 //------------------------------------------------------------------
-static void loadAnimeData(FIELD_BMODEL_MAN * man, u16 file_id)
-{ 
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+static void loadBmInfo(FIELD_BMODEL_MAN * man, u16 file_id)
+{
   ARCHANDLE * info_hdl = GFL_ARC_OpenDataHandle(ARCID_BMODEL_INFO, man->heapID);
   u16 anime_id;
+  BM_INFO * bminfo = GFL_HEAP_AllocMemory(man->heapID, sizeof(BM_INFO));
   int i;
+  enum { DATASIZE = sizeof(BM_INFO) };
 
-  { 
-    int count = GFL_ARC_GetDataSizeByHandle(info_hdl, file_id) / sizeof(u16);
-    //TAMADA_Printf("BModel <--> anime table (%d)\n",count);
-    for (i = 0; i < count ; i++)
-    { 
-      GFL_ARC_LoadDataOfsByHandle(info_hdl, file_id, i * sizeof(u16), sizeof(u16), &anime_id);
-      //TAMADA_Printf("%03d %04x\n", i, anime_id);
-    }
-  }
   for (i = 0; i < man->entryCount; i++)
   { 
     BMODEL_ID id = man->entryToIDTable[i];
-    GFL_ARC_LoadDataOfsByHandle(info_hdl, file_id, id * sizeof(u16), sizeof(u16), &anime_id);
-    //TAMADA_Printf("bmodel: entry ID(%d) --> anime_id(%d)\n", id, anime_id);
+    GFL_ARC_LoadDataOfsByHandle(info_hdl, file_id, id * DATASIZE, DATASIZE, bminfo);
+    anime_id = bminfo->anime_id;
+    TAMADA_Printf("bmodel: entry ID(%d) --> anime_id(%d)\n", id, anime_id);
     if (anime_id != 0xffff)
     { 
       GFL_ARC_LoadDataOfsByHandle(info_hdl, FILEID_BMODEL_ANIMEDATA,
@@ -674,10 +696,12 @@ static void loadAnimeData(FIELD_BMODEL_MAN * man, u16 file_id)
           &man->animeData[i]);
       FIELD_BMANIME_DATA_dump(&man->animeData[i]);
     }
+    man->prog_id[i] = bminfo->prog_id;
+    man->subModels[i] = bminfo->submodel_id;
   }
+  GFL_HEAP_FreeMemory(bminfo);
   GFL_ARC_CloseDataHandle(info_hdl);
 }
-
 
 //============================================================================================
 //
@@ -1178,7 +1202,7 @@ void FIELD_BMODEL_MAN_ResistGlobalObj
   GFL_G3D_MAP_GLOBALOBJ_ST status;
   int i, j, count;
 
-  for( i=0, j = 0, count = objCount; i<count; j++, i++ ){
+  for( i=0, j = 0, count = objCount; i<count && j < 32; j++, i++ ){
     status.id = FIELD_BMODEL_MAN_GetEntryIndex(man, objStatus[i].resourceID);
     VEC_Set( &status.trans, 
         objStatus[i].xpos, objStatus[i].ypos, -objStatus[i].zpos );
