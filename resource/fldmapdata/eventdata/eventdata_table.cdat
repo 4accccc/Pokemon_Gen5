@@ -82,6 +82,8 @@
 #define DOOR_ID_H01P01_EXIT02             1
 #define DOOR_ID_H01P01_EXIT03             2
 #define DOOR_ID_H01P01_EXIT04             3
+#define DOOR_ID_H01P01_EXIT06             4
+#define DOOR_ID_H01P01_EXIT05             5
 
 #endif //ZONE_H01P01_EVD_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕdata/h01p01.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
@@ -581,13 +583,25 @@ const CONNECT_DATA DOOR_EVENT_H01P01[] = {
 		EXIT_DIR_LEFT,//direction
 		EXIT_TYPE_DOOR //type
 	},
+	{//DOOR_ID_H01P01_EXIT06 = 4
+		{336, 16, 384},
+		ZONE_ID_H01, 0,
+		EXIT_DIR_LEFT,//direction
+		EXIT_TYPE_DOOR //type
+	},
+	{//DOOR_ID_H01P01_EXIT05 = 5
+		{336, 16, 416},
+		ZONE_ID_H01, 0,
+		EXIT_DIR_LEFT,//direction
+		EXIT_TYPE_DOOR //type
+	},
 };
 const int ConnectCount_H01P01 = NELEMS(DOOR_EVENT_H01P01);
 
 static const EVENTDATA_TABLE event_h01p01 = {
 	0,
 	0,
-	4,
+	6,
 	0,
 	(void *)NULL,
 	(void *)NULL,
