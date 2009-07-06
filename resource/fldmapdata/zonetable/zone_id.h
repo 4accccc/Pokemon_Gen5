@@ -189,7 +189,7 @@
 #define ZONE_ID_R04R0201         (185)
 #define ZONE_ID_R04R0202         (186)
 #define ZONE_ID_UNION            (187)
-#define ZONE_ID_COLOSSEUM        (188)
+#define ZONE_ID_CLOSSEUM         (188)
 #define ZONE_ID_TGR0101          (189)
 #define ZONE_ID_TGR0201          (190)
 #define ZONE_ID_TGR0301          (191)
