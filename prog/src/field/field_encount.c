@@ -557,6 +557,15 @@ static void enc_CreateBattleParam(
   
   { //ˆê‘Ì–Ú‚Ìƒ|ƒPƒ‚ƒ“’Ç‰Á
     param->partyEnemy1 = PokeParty_AllocPartyWork( heapID );
+    
+    //MonsNo 0 ‰¼‘Îˆ
+    if( monsNo == 0 ){
+#ifdef DEBUG_ONLY_FOR_kagaya
+      GF_ASSERT( 0 );
+#endif
+      monsNo = 513;
+    }
+    
     enc_AddPartyPokemon( param->partyEnemy1, monsNo, lv, id, heapID );
   }
   
