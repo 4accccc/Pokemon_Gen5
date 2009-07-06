@@ -1187,9 +1187,13 @@ static u16 DEBUG_ASCIICODE_UTF16( u8 code )
 		code -= ASCII_A;
 		return( UTF16H_A + code );
 	}
-	
-	GF_ASSERT( 0 ); 					//–¢‘Î‰ž•¶Žš
+  
+  //–¢‘Î‰ž•¶Žš
+#if 0	
+	GF_ASSERT( 0 );
+#else
 	return( GFL_STR_GetEOMCode() );
+#endif
 }
 
 //--------------------------------------------------------------
