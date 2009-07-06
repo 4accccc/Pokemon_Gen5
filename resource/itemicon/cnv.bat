@@ -335,6 +335,49 @@ g2dcvtr item_600.nce -br
 g2dcvtr item_601.nce -br
 g2dcvtr item_602.nce -br
 g2dcvtr item_603.nce -br
+g2dcvtr item_604.nce -br
+g2dcvtr item_605.nce -br
+g2dcvtr item_606.nce -br
+g2dcvtr item_607.nce -br
+g2dcvtr item_608.nce -br
+g2dcvtr item_609.nce -br
+g2dcvtr item_610.nce -br
+g2dcvtr item_611.nce -br
+g2dcvtr item_612.nce -br
+g2dcvtr item_613.nce -br
+g2dcvtr item_614.nce -br
+g2dcvtr item_615.nce -br
+g2dcvtr item_616.nce -br
+g2dcvtr item_617.nce -br
+g2dcvtr item_618.nce -br
+g2dcvtr item_619.nce -br
+g2dcvtr item_620.nce -br
+g2dcvtr item_621.nce -br
+g2dcvtr item_622.nce -br
+g2dcvtr item_623.nce -br
+g2dcvtr item_624.nce -br
+g2dcvtr item_625.nce -br
+g2dcvtr item_626.nce -br
+g2dcvtr item_627.nce -br
+g2dcvtr item_628.nce -br
+g2dcvtr item_629.nce -br
+g2dcvtr item_630.nce -br
+g2dcvtr item_631.nce -br
+g2dcvtr item_632.nce -br
+g2dcvtr item_633.nce -br
+g2dcvtr item_634.nce -br
+g2dcvtr item_635.nce -br
+g2dcvtr item_636.nce -br
+g2dcvtr item_637.nce -br
+g2dcvtr item_638.nce -br
+g2dcvtr item_639.nce -br
+g2dcvtr item_640.nce -br
+g2dcvtr item_641.nce -br
+g2dcvtr item_642.nce -br
+g2dcvtr item_643.nce -br
+g2dcvtr item_644.nce -br
+g2dcvtr item_645.nce -br
+g2dcvtr item_646.nce -br
 g2dcvtr item_dumy.nce -br
 g2dcvtr item_yaji.nce -br
 g2dcvtr item_001.ncl -pcm
@@ -716,6 +759,49 @@ g2dcvtr item_600.ncl -pcm
 g2dcvtr item_601.ncl -pcm
 g2dcvtr item_602.ncl -pcm
 g2dcvtr item_603.ncl -pcm
+g2dcvtr item_604.ncl -pcm
+g2dcvtr item_605.ncl -pcm
+g2dcvtr item_606.ncl -pcm
+g2dcvtr item_607.ncl -pcm
+g2dcvtr item_608.ncl -pcm
+g2dcvtr item_609.ncl -pcm
+g2dcvtr item_610.ncl -pcm
+g2dcvtr item_611.ncl -pcm
+g2dcvtr item_612.ncl -pcm
+g2dcvtr item_613.ncl -pcm
+g2dcvtr item_614.ncl -pcm
+g2dcvtr item_615.ncl -pcm
+g2dcvtr item_616.ncl -pcm
+g2dcvtr item_617.ncl -pcm
+g2dcvtr item_618.ncl -pcm
+g2dcvtr item_619.ncl -pcm
+g2dcvtr item_620.ncl -pcm
+g2dcvtr item_621.ncl -pcm
+g2dcvtr item_622.ncl -pcm
+g2dcvtr item_623.ncl -pcm
+g2dcvtr item_624.ncl -pcm
+g2dcvtr item_625.ncl -pcm
+g2dcvtr item_626.ncl -pcm
+g2dcvtr item_627.ncl -pcm
+g2dcvtr item_628.ncl -pcm
+g2dcvtr item_629.ncl -pcm
+g2dcvtr item_630.ncl -pcm
+g2dcvtr item_631.ncl -pcm
+g2dcvtr item_632.ncl -pcm
+g2dcvtr item_633.ncl -pcm
+g2dcvtr item_634.ncl -pcm
+g2dcvtr item_635.ncl -pcm
+g2dcvtr item_636.ncl -pcm
+g2dcvtr item_637.ncl -pcm
+g2dcvtr item_638.ncl -pcm
+g2dcvtr item_639.ncl -pcm
+g2dcvtr item_640.ncl -pcm
+g2dcvtr item_641.ncl -pcm
+g2dcvtr item_642.ncl -pcm
+g2dcvtr item_643.ncl -pcm
+g2dcvtr item_644.ncl -pcm
+g2dcvtr item_645.ncl -pcm
+g2dcvtr item_646.ncl -pcm
 g2dcvtr item_dumy.ncl -pcm
 g2dcvtr item_yaji.ncl -pcm
 
@@ -727,5 +813,6 @@ nnsarc -c -l -n -i item_icon -S itemicon.txt
 echo g2dÉtÉ@ÉCÉãçÌèú
 del *.NCLR
 del *.NCGR
+
 del *.NCER
 del *.NANR

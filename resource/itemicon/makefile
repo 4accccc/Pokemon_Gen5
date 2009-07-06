@@ -7,7 +7,7 @@
 #------------------------------------------------------------------------------
 #※コンバートを行う人のユーザーIDをここに書く
 #------------------------------------------------------------------------------
-USERS	= matsuda
+USERS	= matsuda ohno
 
 #------------------------------------------------------------------------------
 #※ここに作成するnarc名を書く
@@ -29,15 +29,28 @@ include	$(PROJECT_RSCDIR)\macro_define
 
 # 自動でリソースを集める
 lsources:=$(wildcard *.ncl)
-gsources:=$(wildcard *.ncg)
 esources:=$(wildcard *.nce)
+
+# リソースが吐き出すファイルを自動でつくる
+lobjects = $(subst .ncl,.NCLR,$(lsources))
+eobjects = $(subst .nce,.NCER,$(esources))
 
 
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
 # サフィックスルールを定義することで 依存関係を自動で判断してくれる
-.SUFFIXES: .NCLR .ncl .NCGR .ncg .NCER .nce
+.SUFFIXES: .NCLR .ncl .NCER .nce
+
+.ncl.NCLR:
+	g2dcvtr $< -pcm
+
+
+.nce.NCER:
+	ruby exec.rb g2dcvtr $< -br -pcm
+
 
 endif
+
+
 
 .PHONY:	do-build clean subdir
 
@@ -57,8 +70,8 @@ $(TARGETDIR)/$(targetname).narc: $(targetname).narc
 
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、元ファイルからコンバートするルールを有効にする
 # コピー先のnarcが古い場合実行する
-$(targetname).narc: $(lsources) $(gsources) $(esources)
-	cnv.bat
+$(targetname).narc: $(lobjects) $(eobjects) itemicon.txt makefile
+	nnsarc -c -l -n -i item_icon -S itemicon.txt
 	$(NAIXCUT) $(targetname).naix
 endif
 
