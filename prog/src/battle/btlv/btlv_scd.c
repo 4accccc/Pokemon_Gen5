@@ -475,6 +475,7 @@ static BOOL selectWaza_init( int* seq, void* wk_adrs )
       bwp.pp[ i ] = bsw.pp[ i ] = 0;
       bwp.ppmax[ i ] = bsw.ppmax[ i ] = 0;
     }
+    bsw.client_type = 0;
     BINPUT_WazaParaMemoryDecord( wk->bip, 0, &bwp );
     hdl_bg  = GFL_ARC_OpenDataHandle( ARCID_BATT_BG,  GFL_HEAP_LOWID(wk->heapID) );
     hdl_obj = GFL_ARC_OpenDataHandle( ARCID_BATT_OBJ, GFL_HEAP_LOWID(wk->heapID) );
