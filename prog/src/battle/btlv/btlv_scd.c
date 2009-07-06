@@ -435,6 +435,10 @@ static BOOL selectActionRoot_loop( int* seq, void* wk_adrs )
     wk->selActionResult = action[ hit ];
 
     switch( wk->selActionResult ){
+    // @@@ 現状アイテム選択は実装されていないので
+    case BTL_ACTION_ITEM:
+      return FALSE;
+
     case BTL_ACTION_ESCAPE:
       BTL_ACTION_SetEscapeParam( wk->destActionParam );
       break;
