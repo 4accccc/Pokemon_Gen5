@@ -188,6 +188,17 @@
 #define ZONE_ID_R04R0101         (184)
 #define ZONE_ID_R04R0201         (185)
 #define ZONE_ID_R04R0202         (186)
-#define ZONE_ID_MAX	(187)
+#define ZONE_ID_UNION            (187)
+#define ZONE_ID_COLOSSEUM        (188)
+#define ZONE_ID_TGR0101          (189)
+#define ZONE_ID_TGR0201          (190)
+#define ZONE_ID_TGR0301          (191)
+#define ZONE_ID_TGR0401          (192)
+#define ZONE_ID_TGPC0101         (193)
+#define ZONE_ID_STR0101          (194)
+#define ZONE_ID_TTR0101          (195)
+#define ZONE_ID_TTR0201          (196)
+#define ZONE_ID_TTR0301          (197)
+#define ZONE_ID_MAX	(198)
 #endif // __ZONE_ID_H__
 
