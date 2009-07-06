@@ -181,123 +181,6 @@ static const FLD_SCENEAREA_DATA sc_SCENE[] =
 
 
 //======================================================================
-//	rail情報
-//======================================================================
-
-// 出発と終端
-static const RAIL_POINT sc_POINT_C3_START;
-static const RAIL_POINT sc_POINT_C3_END;
-
-// 分岐地点
-static const RAIL_POINT sc_POINT_C3_JOINT00;
-static const RAIL_POINT sc_POINT_C3_JOINT01;
-static const RAIL_POINT sc_POINT_C3_JOINT02;
-static const RAIL_POINT sc_POINT_C3_JOINT03;
-static const RAIL_POINT sc_POINT_C3_JOINT04;
-
-// ベイエリア
-static const RAIL_POINT sc_POINT_C3_BEACH00;
-static const RAIL_POINT sc_POINT_C3_BEACH01;
-static const RAIL_POINT sc_POINT_C3_BEACH02;
-static const RAIL_POINT sc_POINT_C3_BEACH03;
-static const RAIL_POINT sc_POINT_C3_BEACH04;
-
-// 路地カメラズーム用
-static const RAIL_POINT sc_POINT_C3_CA_ALLAY00;
-static const RAIL_POINT sc_POINT_C3_CA_ALLAY01;
-static const RAIL_POINT sc_POINT_C3_CA_ALLAY02;
-static const RAIL_POINT sc_POINT_C3_CA_ALLAY03;
-static const RAIL_POINT sc_POINT_C3_CA_ALLAY04;
-
-// ライン
-static const RAIL_LINE sc_LINE_C3_STARTtoJOINT00;
-static const RAIL_LINE sc_LINE_C3_JOINT00toEND;
-static const RAIL_LINE sc_LINE_C3_JOINT00toCA_ALLAY00;
-static const RAIL_LINE sc_LINE_C3_JOINT00toBEACH00;
-static const RAIL_LINE sc_LINE_C3_JOINT00toJOINT01;
-static const RAIL_LINE sc_LINE_C3_JOINT01toCA_ALLAY01;
-static const RAIL_LINE sc_LINE_C3_JOINT01toBEACH01;
-static const RAIL_LINE sc_LINE_C3_JOINT01toJOINT02;
-static const RAIL_LINE sc_LINE_C3_JOINT02toCA_ALLAY02;
-static const RAIL_LINE sc_LINE_C3_JOINT02toBEACH02;
-static const RAIL_LINE sc_LINE_C3_JOINT02toJOINT03;
-static const RAIL_LINE sc_LINE_C3_JOINT03toCA_ALLAY03;
-static const RAIL_LINE sc_LINE_C3_JOINT03toBEACH03;
-static const RAIL_LINE sc_LINE_C3_JOINT03toJOINT04;
-static const RAIL_LINE sc_LINE_C3_JOINT04toCA_ALLAY04;
-static const RAIL_LINE sc_LINE_C3_JOINT04toBEACH04;
-
-
-// カメラ
-static const RAIL_CAMERA_SET sc_CAMERA_C3_NORMAL;
-static const RAIL_CAMERA_SET sc_CAMERA_C3_FIRST;
-static const RAIL_CAMERA_SET sc_CAMERA_C3_END;
-static const RAIL_CAMERA_SET sc_CAMERA_C3_JOINT04; 
-
-// 位置
-static const RAIL_LINEPOS_SET sc_LINEPOS_C3_NORMAL;
-static const RAIL_LINEPOS_SET sc_LINEPOS_C3_Strait;
-
-// レール情報
-static const RAIL_POINT* scp_RAIL_POINT[] = {
-  &sc_POINT_C3_START,
-  &sc_POINT_C3_END,
-                          
-  &sc_POINT_C3_JOINT00,
-  &sc_POINT_C3_JOINT01,
-  &sc_POINT_C3_JOINT02,
-  &sc_POINT_C3_JOINT03,
-  &sc_POINT_C3_JOINT04,
-                          
-                          
-  &sc_POINT_C3_BEACH00,
-  &sc_POINT_C3_BEACH01,
-  &sc_POINT_C3_BEACH02,
-  &sc_POINT_C3_BEACH03,
-  &sc_POINT_C3_BEACH04,
-                          
-                          
-  &sc_POINT_C3_CA_ALLAY00,
-  &sc_POINT_C3_CA_ALLAY01,
-  &sc_POINT_C3_CA_ALLAY02,
-  &sc_POINT_C3_CA_ALLAY03,
-  &sc_POINT_C3_CA_ALLAY04,
-};
-static const RAIL_LINE* scp_RAIL_LINE[] = {
-  &sc_LINE_C3_STARTtoJOINT00,
-  &sc_LINE_C3_JOINT00toEND,
-  &sc_LINE_C3_JOINT00toCA_ALLAY00,
-  &sc_LINE_C3_JOINT00toBEACH00,
-  &sc_LINE_C3_JOINT00toJOINT01,
-  &sc_LINE_C3_JOINT01toCA_ALLAY01,
-  &sc_LINE_C3_JOINT01toBEACH01,
-  &sc_LINE_C3_JOINT01toJOINT02,
-  &sc_LINE_C3_JOINT02toCA_ALLAY02,
-  &sc_LINE_C3_JOINT02toBEACH02,
-  &sc_LINE_C3_JOINT02toJOINT03,
-  &sc_LINE_C3_JOINT03toCA_ALLAY03,
-  &sc_LINE_C3_JOINT03toBEACH03,
-  &sc_LINE_C3_JOINT03toJOINT04,
-  &sc_LINE_C3_JOINT04toCA_ALLAY04,
-  &sc_LINE_C3_JOINT04toBEACH04,
-};
-static const RAIL_SETTING sc_RAIL_SETTING = {
-  NELEMS( scp_RAIL_POINT ),
-  NELEMS( scp_RAIL_LINE ),
-  scp_RAIL_POINT,
-  scp_RAIL_LINE,
-  16,
-  2*FX32_ONE
-};
-
-// レール位置情報
-static const RAIL_LOCATION sc_RAIL_START_LOCATION = {
-  FIELD_RAIL_TYPE_POINT,
-  0,
-};
-
-
-//======================================================================
 //	define
 //======================================================================
 #define HEIGHT	(0x3000)
@@ -311,6 +194,736 @@ static const RAIL_LOCATION sc_RAIL_START_LOCATION = {
 // C3カメラ可動範囲
 static const VecFx32 sc_RAIL_CAMERA_MOVE_AREA_START = { 0x464cf6, 0, 0x202210 };
 static const VecFx32 sc_RAIL_CAMERA_MOVE_AREA_END = { 0x177042, 0, 0x21e54a };
+
+
+//======================================================================
+//	rail情報
+//======================================================================
+
+// ポイント
+enum
+{
+	// 出発と終端
+	POINT_C3_START,
+	POINT_C3_END,
+
+	// 分岐地点
+	POINT_C3_JOINT00,
+	POINT_C3_JOINT01,
+	POINT_C3_JOINT02,
+	POINT_C3_JOINT03,
+	POINT_C3_JOINT04,
+
+	// ベイエリア
+	POINT_C3_BEACH00,
+	POINT_C3_BEACH01,
+	POINT_C3_BEACH02,
+	POINT_C3_BEACH03,
+	POINT_C3_BEACH04,
+
+	// 路地カメラズーム用
+	POINT_C3_CA_ALLAY00,
+	POINT_C3_CA_ALLAY01,
+	POINT_C3_CA_ALLAY02,
+	POINT_C3_CA_ALLAY03,
+	POINT_C3_CA_ALLAY04,
+
+	POINT_C3_CA_MAX,
+};
+
+// ライン
+enum
+{
+	LINE_C3_STARTtoJOINT00,
+	LINE_C3_JOINT00toEND,
+	LINE_C3_JOINT00toCA_ALLAY00,
+	LINE_C3_JOINT00toBEACH00,
+	LINE_C3_JOINT00toJOINT01,
+	LINE_C3_JOINT01toCA_ALLAY01,
+	LINE_C3_JOINT01toBEACH01,
+	LINE_C3_JOINT01toJOINT02,
+	LINE_C3_JOINT02toCA_ALLAY02,
+	LINE_C3_JOINT02toBEACH02,
+	LINE_C3_JOINT02toJOINT03,
+	LINE_C3_JOINT03toCA_ALLAY03,
+	LINE_C3_JOINT03toBEACH03,
+	LINE_C3_JOINT03toJOINT04,
+	LINE_C3_JOINT04toCA_ALLAY04,
+	LINE_C3_JOINT04toBEACH04,
+
+	LINE_C3_MAX,
+};
+
+
+// カメラ
+enum
+{
+	CAMERA_C3_NORMAL,
+	CAMERA_C3_FIRST,
+	CAMERA_C3_END,
+	CAMERA_C3_JOINT04, 
+
+	CAMERA_C3_MAX, 
+};
+
+// 位置
+enum
+{
+	LINEPOS_C3_NORMAL,
+	LINEPOS_C3_STRAIT,
+
+	LINEPOS_C3_MAX,
+};
+
+// カメラ動作関数テーブル
+enum
+{
+	CAMERAFUNC_C3_CIRCLE,
+	CAMERAFUNC_C3_FIXALL,
+	CAMERAFUNC_C3_FIXLEN,
+
+	CAMERAFUNC_C3_MAX,
+};
+
+// 座標動作関数テーブル
+enum
+{
+	LINEPOSFUNC_C3_CURVE,
+	LINEPOSFUNC_C3_STRAIT,
+
+	LINEPOSFUNC_C3_MAX,
+};
+
+// ライン距離計算関数テーブル
+enum
+{
+	LINEDISTFUNC_C3_CURVE,
+	LINEDISTFUNC_C3_STRAIT,
+
+	LINEDISTFUNC_C3_MAX,
+};
+
+// レール情報
+static const RAIL_POINT sc_RAIL_POINT[POINT_C3_CA_MAX] = {
+	// 出発と終端
+	{
+		//const RAIL_LINE * lines[RAIL_CONNECT_LINE_MAX];
+		{
+			LINE_C3_STARTtoJOINT00, RAIL_TBL_NULL, RAIL_TBL_NULL, RAIL_TBL_NULL,
+		},
+		//RAIL_KEY keys[RAIL_CONNECT_LINE_MAX];
+		{
+			RAIL_KEY_LEFT, RAIL_KEY_NULL, RAIL_KEY_NULL, RAIL_KEY_NULL,
+		},
+		//VecFx32 pos;
+		{
+			0x46992b, 0x7000, 0x203cfa
+		},
+		//const RAIL_CAMERA_SET * camera;
+		CAMERA_C3_FIRST,
+		//const char * name;
+		"sc_POINT_C3_START",
+	},
+	{
+		//const RAIL_LINE * lines[RAIL_CONNECT_LINE_MAX];
+		{
+			LINE_C3_JOINT00toEND, RAIL_TBL_NULL, RAIL_TBL_NULL, RAIL_TBL_NULL,
+		},
+		//RAIL_KEY keys[RAIL_CONNECT_LINE_MAX];
+		{
+			RAIL_KEY_LEFT, RAIL_KEY_NULL, RAIL_KEY_NULL, RAIL_KEY_NULL,
+		},
+		//VecFx32 pos;
+		{
+			0x447656, 0x6000, 0x1f24d2
+		},
+		//const RAIL_CAMERA_SET * camera;
+		CAMERA_C3_END,
+		//const char * name;
+		"sc_POINT_C3_END",
+	},
+                          
+	// 分岐地点
+  {
+		//const RAIL_LINE * lines[RAIL_CONNECT_LINE_MAX];
+		{
+			LINE_C3_JOINT00toEND, LINE_C3_JOINT00toJOINT01, LINE_C3_JOINT00toCA_ALLAY00, LINE_C3_JOINT00toBEACH00,
+		},
+		//RAIL_KEY keys[RAIL_CONNECT_LINE_MAX];
+		{
+			RAIL_KEY_RIGHT, RAIL_KEY_LEFT, RAIL_KEY_UP, RAIL_KEY_DOWN,
+		},
+		//VecFx32 pos;
+		{
+			0x47aa2e, 0x6000, 0x231482
+		},
+		//const RAIL_CAMERA_SET * camera;
+		CAMERA_C3_NORMAL,
+		//const char * name;
+		"sc_POINT_C3_JOINT00",
+	},
+  {
+		//const RAIL_LINE * lines[RAIL_CONNECT_LINE_MAX];
+		{
+			LINE_C3_JOINT00toJOINT01, LINE_C3_JOINT01toJOINT02, LINE_C3_JOINT01toCA_ALLAY01, LINE_C3_JOINT01toBEACH01,
+		},
+		//RAIL_KEY keys[RAIL_CONNECT_LINE_MAX];
+		{
+			RAIL_KEY_RIGHT, RAIL_KEY_LEFT, RAIL_KEY_UP, RAIL_KEY_DOWN,
+		},
+		//VecFx32 pos;
+		{
+			0x475286, 0x6000, 0x3db512
+		},
+		//const RAIL_CAMERA_SET * camera;
+		CAMERA_C3_NORMAL,
+		//const char * name;
+		"sc_POINT_C3_JOINT01",
+	},
+  {
+		//const RAIL_LINE * lines[RAIL_CONNECT_LINE_MAX];
+		{
+			LINE_C3_JOINT01toJOINT02, LINE_C3_JOINT02toJOINT03, LINE_C3_JOINT02toCA_ALLAY02, LINE_C3_JOINT02toBEACH02,
+		},
+		//RAIL_KEY keys[RAIL_CONNECT_LINE_MAX];
+		{
+			RAIL_KEY_RIGHT, RAIL_KEY_LEFT, RAIL_KEY_UP, RAIL_KEY_DOWN,
+		},
+		//VecFx32 pos;
+		{
+			0x2fa47e, 0x6000, 0x4b9402
+		},
+		//const RAIL_CAMERA_SET * camera;
+		CAMERA_C3_NORMAL,
+		//const char * name;
+		"sc_POINT_C3_JOINT02",
+	},
+	{
+		//const RAIL_LINE * lines[RAIL_CONNECT_LINE_MAX];
+		{
+			LINE_C3_JOINT02toJOINT03, LINE_C3_JOINT03toJOINT04, LINE_C3_JOINT03toCA_ALLAY03, LINE_C3_JOINT03toBEACH03,
+		},
+		//RAIL_KEY keys[RAIL_CONNECT_LINE_MAX];
+		{
+			RAIL_KEY_RIGHT, RAIL_KEY_LEFT, RAIL_KEY_UP, RAIL_KEY_DOWN,
+		},
+		//VecFx32 pos;
+		{
+			0x17b1b6, 0x6000, 0x3df662
+		},
+		//const RAIL_CAMERA_SET * camera;
+		CAMERA_C3_NORMAL,
+		//const char * name;
+		"sc_POINT_C3_JOINT03",
+	},
+	{
+		//const RAIL_LINE * lines[RAIL_CONNECT_LINE_MAX];
+		{
+			LINE_C3_JOINT03toJOINT04, LINE_C3_JOINT04toCA_ALLAY04, LINE_C3_JOINT04toBEACH04, RAIL_TBL_NULL,
+		},
+		//RAIL_KEY keys[RAIL_CONNECT_LINE_MAX];
+		{
+			RAIL_KEY_RIGHT, RAIL_KEY_UP, RAIL_KEY_DOWN, RAIL_KEY_NULL, 
+		},
+		//VecFx32 pos;
+		{
+			0x17ef96, 0x6000, 0x21cc3a
+		},
+		//const RAIL_CAMERA_SET * camera;
+		CAMERA_C3_NORMAL,
+		//const char * name;
+		"sc_POINT_C3_JOINT04",
+	},
+                          
+	// ベイエリア
+  {
+		//const RAIL_LINE * lines[RAIL_CONNECT_LINE_MAX];
+		{
+			LINE_C3_JOINT00toBEACH00, RAIL_TBL_NULL, RAIL_TBL_NULL, RAIL_TBL_NULL,
+		},
+		//RAIL_KEY keys[RAIL_CONNECT_LINE_MAX];
+		{
+			RAIL_KEY_UP, RAIL_KEY_NULL, RAIL_KEY_NULL, RAIL_KEY_NULL,
+		},
+		//VecFx32 pos;
+		{
+			0x4d1dd9, 0x6000, 0x2027d2
+		},
+		//const RAIL_CAMERA_SET * camera;
+		CAMERA_C3_NORMAL,
+		//const char * name;
+		"sc_POINT_C3_BEACH00",
+	},
+	{
+		//const RAIL_LINE * lines[RAIL_CONNECT_LINE_MAX];
+		{
+			LINE_C3_JOINT01toBEACH01, RAIL_TBL_NULL, RAIL_TBL_NULL, RAIL_TBL_NULL,
+		},
+		//RAIL_KEY keys[RAIL_CONNECT_LINE_MAX];
+		{
+			RAIL_KEY_UP, RAIL_KEY_NULL, RAIL_KEY_NULL, RAIL_KEY_NULL,
+		},
+		//VecFx32 pos;
+		{
+			0x4d3d74, 0x6000, 0x411568
+		},
+		//const RAIL_CAMERA_SET * camera;
+		CAMERA_C3_NORMAL,
+		//const char * name;
+		"sc_POINT_C3_BEACH01",
+	},
+	{
+		//const RAIL_LINE * lines[RAIL_CONNECT_LINE_MAX];
+		{
+			LINE_C3_JOINT02toBEACH02, RAIL_TBL_NULL, RAIL_TBL_NULL, RAIL_TBL_NULL,
+		},
+		//RAIL_KEY keys[RAIL_CONNECT_LINE_MAX];
+		{
+			RAIL_KEY_UP, RAIL_KEY_NULL, RAIL_KEY_NULL, RAIL_KEY_NULL,
+		},
+		//VecFx32 pos;
+		{
+			0x2fb0b9, 0x6000, 0x51e402
+		},
+		//const RAIL_CAMERA_SET * camera;
+		CAMERA_C3_NORMAL,
+		//const char * name;
+		"sc_POINT_C3_BEACH02",
+	},
+	{
+		//const RAIL_LINE * lines[RAIL_CONNECT_LINE_MAX];
+		{
+			LINE_C3_JOINT03toBEACH03, RAIL_TBL_NULL, RAIL_TBL_NULL, RAIL_TBL_NULL,
+		},
+		//RAIL_KEY keys[RAIL_CONNECT_LINE_MAX];
+		{
+			RAIL_KEY_UP, RAIL_KEY_NULL, RAIL_KEY_NULL, RAIL_KEY_NULL,
+		},
+		//VecFx32 pos;
+		{
+			0x13a5c6, 0x6000, 0x40543e
+		},
+		//const RAIL_CAMERA_SET * camera;
+		CAMERA_C3_NORMAL,
+		//const char * name;
+		"sc_POINT_C3_BEACH03",
+	},
+	{
+		//const RAIL_LINE * lines[RAIL_CONNECT_LINE_MAX];
+		{
+			LINE_C3_JOINT04toBEACH04, RAIL_TBL_NULL, RAIL_TBL_NULL, RAIL_TBL_NULL,
+		},
+		//RAIL_KEY keys[RAIL_CONNECT_LINE_MAX];
+		{
+			RAIL_KEY_UP, RAIL_KEY_NULL, RAIL_KEY_NULL, RAIL_KEY_NULL,
+		},
+		//VecFx32 pos;
+		{
+			0x1261b6, 0x6000, 0x1e6c22
+		},
+		//const RAIL_CAMERA_SET * camera;
+		CAMERA_C3_NORMAL,
+		//const char * name;
+		"sc_POINT_C3_BEACH04",
+	},
+                          
+                          
+	// 路地カメラズーム用
+	{
+		//const RAIL_LINE * lines[RAIL_CONNECT_LINE_MAX];
+		{
+			LINE_C3_JOINT00toCA_ALLAY00, RAIL_TBL_NULL, RAIL_TBL_NULL, RAIL_TBL_NULL,
+		},
+		//RAIL_KEY keys[RAIL_CONNECT_LINE_MAX];
+		{
+			RAIL_KEY_DOWN, RAIL_KEY_NULL, RAIL_KEY_NULL, RAIL_KEY_NULL,
+		},
+		//VecFx32 pos;
+		{
+			0x43b326, 0x6000, 0x253502
+		},
+		//const RAIL_CAMERA_SET * camera;
+		CAMERA_C3_NORMAL,
+		//const char * name;
+		"sc_POINT_C3_CA_ALLAY00",
+	},
+	{
+		//const RAIL_LINE * lines[RAIL_CONNECT_LINE_MAX];
+		{
+			LINE_C3_JOINT01toCA_ALLAY01, RAIL_TBL_NULL, RAIL_TBL_NULL, RAIL_TBL_NULL,
+		},
+		//RAIL_KEY keys[RAIL_CONNECT_LINE_MAX];
+		{
+			RAIL_KEY_DOWN, RAIL_KEY_NULL, RAIL_KEY_NULL, RAIL_KEY_NULL,
+		},
+		//VecFx32 pos;
+		{
+			0x427d90, 0x6000, 0x3af354
+		},
+		//const RAIL_CAMERA_SET * camera;
+		CAMERA_C3_NORMAL,
+		//const char * name;
+		"sc_POINT_C3_CA_ALLAY01",
+	},
+	{
+		//const RAIL_LINE * lines[RAIL_CONNECT_LINE_MAX];
+		{
+			LINE_C3_JOINT02toCA_ALLAY02, RAIL_TBL_NULL, RAIL_TBL_NULL, RAIL_TBL_NULL, 
+		},
+		//RAIL_KEY keys[RAIL_CONNECT_LINE_MAX];
+		{
+			RAIL_KEY_DOWN, RAIL_KEY_NULL, RAIL_KEY_NULL, RAIL_KEY_NULL,
+		},
+		//VecFx32 pos;
+		{
+			0x2f9a52, 0x6000, 0x465402
+		},
+		//const RAIL_CAMERA_SET * camera;
+		CAMERA_C3_NORMAL,
+		//const char * name;
+		"sc_POINT_C3_CA_ALLAY02",
+	},
+	{
+		//const RAIL_LINE * lines[RAIL_CONNECT_LINE_MAX];
+		{
+			LINE_C3_JOINT03toCA_ALLAY03, RAIL_TBL_NULL, RAIL_TBL_NULL, RAIL_TBL_NULL,
+		},
+		//RAIL_KEY keys[RAIL_CONNECT_LINE_MAX];
+		{
+			RAIL_KEY_DOWN, RAIL_KEY_NULL, RAIL_KEY_NULL, RAIL_KEY_NULL,
+		},
+		//VecFx32 pos;
+		{
+			0x1ca876, 0x6000, 0x3b0f32
+		},
+		//const RAIL_CAMERA_SET * camera;
+		CAMERA_C3_NORMAL,
+		//const char * name;
+		"sc_POINT_C3_CA_ALLAY03",
+	},
+	{
+		//const RAIL_LINE * lines[RAIL_CONNECT_LINE_MAX];
+		{
+			LINE_C3_JOINT04toCA_ALLAY04, RAIL_TBL_NULL, RAIL_TBL_NULL, RAIL_TBL_NULL,
+		},
+		//RAIL_KEY keys[RAIL_CONNECT_LINE_MAX];
+		{
+			RAIL_KEY_DOWN, RAIL_KEY_NULL, RAIL_KEY_NULL, RAIL_KEY_NULL, 
+		},
+		//VecFx32 pos;
+		{
+			0x1d1016, 0x6000, 0x24e9da
+		},
+		//const RAIL_CAMERA_SET * camera;
+		CAMERA_C3_NORMAL,
+		//const char * name;
+		"sc_POINT_C3_CA_ALLAY04",
+	},
+};
+static const RAIL_LINE sc_RAIL_LINE[LINE_C3_MAX] = {
+	{
+		//const RAIL_POINT * point_s
+		//const RAIL_POINT * point_e
+		POINT_C3_START, POINT_C3_JOINT00,
+		//RAIL_KEY key;
+		RAIL_KEY_LEFT,
+		//const RAIL_LINEPOS_SET * line_pos_set;
+		LINEPOS_C3_NORMAL,
+		//const RAIL_CAMERA_SET * camera;
+		CAMERA_C3_FIRST,
+		//const char * name;
+		"sc_LINE_C3_STARTtoJOINT00",
+	},
+	{
+		//const RAIL_POINT * point_s
+		//const RAIL_POINT * point_e
+		POINT_C3_END, POINT_C3_JOINT00,
+		//RAIL_KEY key;
+		RAIL_KEY_LEFT,
+		//const RAIL_LINEPOS_SET * line_pos_set;
+		LINEPOS_C3_NORMAL,
+		//const RAIL_CAMERA_SET * camera;
+		CAMERA_C3_END,
+		//const char * name;
+		"sc_LINE_C3_JOINT00toEND",
+	},
+	{
+		//const RAIL_POINT * point_s
+		//const RAIL_POINT * point_e
+		POINT_C3_JOINT00, POINT_C3_CA_ALLAY00,
+		//RAIL_KEY key;
+		RAIL_KEY_UP,
+		//const RAIL_LINEPOS_SET * line_pos_set;
+		LINEPOS_C3_STRAIT,//LINEPOS_C3_NORMAL,
+		//const RAIL_CAMERA_SET * camera;
+		CAMERA_C3_NORMAL,
+		//const char * name;
+		"sc_LINE_C3_JOINT00toCA_ALLAY00",
+	},
+	{
+		//const RAIL_POINT * point_s
+		//const RAIL_POINT * point_e
+		POINT_C3_BEACH00,POINT_C3_JOINT00, 
+		//RAIL_KEY key;
+		RAIL_KEY_UP,//RAIL_KEY_DOWN,
+		//const RAIL_LINEPOS_SET * line_pos_set;
+		LINEPOS_C3_STRAIT,//LINEPOS_C3_NORMAL,
+		//const RAIL_CAMERA_SET * camera;
+		CAMERA_C3_NORMAL,
+		//const char * name;
+		"sc_LINE_C3_JOINT00toBEACH00",
+	},
+	{
+		//const RAIL_POINT * point_s
+		//const RAIL_POINT * point_e
+		POINT_C3_JOINT00, POINT_C3_JOINT01,
+		//RAIL_KEY key;
+		RAIL_KEY_LEFT,
+		//const RAIL_LINEPOS_SET * line_pos_set;
+		LINEPOS_C3_NORMAL,
+		//const RAIL_CAMERA_SET * camera;
+		CAMERA_C3_NORMAL,
+		//const char * name;
+		"sc_LINE_C3_JOINT00toJOINT01",
+	},
+	{
+		//const RAIL_POINT * point_s
+		//const RAIL_POINT * point_e
+		POINT_C3_JOINT01, POINT_C3_CA_ALLAY01,
+		//RAIL_KEY key;
+		RAIL_KEY_UP,
+		//const RAIL_LINEPOS_SET * line_pos_set;
+		LINEPOS_C3_STRAIT,//LINEPOS_C3_NORMAL,
+		//const RAIL_CAMERA_SET * camera;
+		CAMERA_C3_NORMAL,
+		//const char * name;
+		"sc_LINE_C3_JOINT01toCA_ALLAY01",
+	},
+	{
+		//const RAIL_POINT * point_s
+		//const RAIL_POINT * point_e
+		POINT_C3_BEACH01,POINT_C3_JOINT01, 
+		//RAIL_KEY key;
+		RAIL_KEY_UP,//RAIL_KEY_DOWN,
+		//const RAIL_LINEPOS_SET * line_pos_set;
+		LINEPOS_C3_STRAIT,//LINEPOS_C3_NORMAL,
+		//const RAIL_CAMERA_SET * camera;
+		CAMERA_C3_NORMAL,
+		//const char * name;
+		"sc_LINE_C3_JOINT01toBEACH01",
+	},
+	{
+		//const RAIL_POINT * point_s
+		//const RAIL_POINT * point_e
+		POINT_C3_JOINT01, POINT_C3_JOINT02,
+		//RAIL_KEY key;
+		RAIL_KEY_LEFT,
+		//const RAIL_LINEPOS_SET * line_pos_set;
+		LINEPOS_C3_NORMAL,
+		//const RAIL_CAMERA_SET * camera;
+		CAMERA_C3_NORMAL,
+		//const char * name;
+		"sc_LINE_C3_JOINT01toJOINT02",
+	},
+	{
+		//const RAIL_POINT * point_s
+		//const RAIL_POINT * point_e
+		POINT_C3_JOINT02, POINT_C3_CA_ALLAY02,
+		//RAIL_KEY key;
+		RAIL_KEY_UP,
+		//const RAIL_LINEPOS_SET * line_pos_set;
+		LINEPOS_C3_STRAIT,//LINEPOS_C3_NORMAL,
+		//const RAIL_CAMERA_SET * camera;
+		CAMERA_C3_NORMAL,
+		//const char * name;
+		"sc_LINE_C3_JOINT02toCA_ALLAY02",
+	},
+  {
+		//const RAIL_POINT * point_s
+		//const RAIL_POINT * point_e
+		POINT_C3_BEACH02,POINT_C3_JOINT02, 
+		//RAIL_KEY key;
+		RAIL_KEY_UP,//RAIL_KEY_DOWN,
+		//const RAIL_LINEPOS_SET * line_pos_set;
+		LINEPOS_C3_STRAIT,//LINEPOS_C3_NORMAL,
+		//const RAIL_CAMERA_SET * camera;
+		CAMERA_C3_NORMAL,
+		//const char * name;
+		"sc_LINE_C3_JOINT02toBEACH02",
+	},
+	{
+		//const RAIL_POINT * point_s
+		//const RAIL_POINT * point_e
+		POINT_C3_JOINT02, POINT_C3_JOINT03,
+		//RAIL_KEY key;
+		RAIL_KEY_LEFT,
+		//const RAIL_LINEPOS_SET * line_pos_set;
+		LINEPOS_C3_NORMAL,
+		//const RAIL_CAMERA_SET * camera;
+		CAMERA_C3_NORMAL,
+		//const char * name;
+		"sc_LINE_C3_JOINT02toJOINT03",
+	},
+  {
+		//const RAIL_POINT * point_s
+		//const RAIL_POINT * point_e
+		POINT_C3_JOINT03, POINT_C3_CA_ALLAY03,
+		//RAIL_KEY key;
+		RAIL_KEY_UP,
+		//const RAIL_LINEPOS_SET * line_pos_set;
+		LINEPOS_C3_STRAIT,//LINEPOS_C3_NORMAL,
+		//const RAIL_CAMERA_SET * camera;
+		CAMERA_C3_NORMAL,
+		//const char * name;
+		"sc_LINE_C3_JOINT03toCA_ALLAY03",
+	},
+	{
+		//const RAIL_POINT * point_s
+		//const RAIL_POINT * point_e
+		POINT_C3_BEACH03,POINT_C3_JOINT03, 
+		//RAIL_KEY key;
+		RAIL_KEY_UP,//RAIL_KEY_DOWN,
+		//const RAIL_LINEPOS_SET * line_pos_set;
+		LINEPOS_C3_STRAIT,//LINEPOS_C3_NORMAL,
+		//const RAIL_CAMERA_SET * camera;
+		CAMERA_C3_NORMAL,
+		//const char * name;
+		"sc_LINE_C3_JOINT03toBEACH03",
+	},
+	{
+		//const RAIL_POINT * point_s
+		//const RAIL_POINT * point_e
+		POINT_C3_JOINT03, POINT_C3_JOINT04,
+		//RAIL_KEY key;
+		RAIL_KEY_LEFT,
+		//const RAIL_LINEPOS_SET * line_pos_set;
+		LINEPOS_C3_NORMAL,
+		//const RAIL_CAMERA_SET * camera;
+		CAMERA_C3_NORMAL,
+		//const char * name;
+		"sc_LINE_C3_JOINT03toJOINT04",
+	},
+	{
+		//const RAIL_POINT * point_s
+		//const RAIL_POINT * point_e
+		POINT_C3_JOINT04, POINT_C3_CA_ALLAY04,
+		//RAIL_KEY key;
+		RAIL_KEY_UP,
+		//const RAIL_LINEPOS_SET * line_pos_set;
+		LINEPOS_C3_STRAIT,//LINEPOS_C3_NORMAL,
+		//const RAIL_CAMERA_SET * camera;
+		CAMERA_C3_NORMAL,
+		//const char * name;
+		"sc_LINE_C3_JOINT04toCA_ALLAY04",
+	},
+	{
+		//const RAIL_POINT * point_s
+		//const RAIL_POINT * point_e
+		 POINT_C3_BEACH04,POINT_C3_JOINT04,
+		//RAIL_KEY key;
+		RAIL_KEY_UP,//RAIL_KEY_DOWN,
+		//const RAIL_LINEPOS_SET * line_pos_set;
+		LINEPOS_C3_STRAIT,//LINEPOS_C3_NORMAL,
+		//const RAIL_CAMERA_SET * camera;
+		CAMERA_C3_NORMAL,
+		//const char * name;
+		"sc_LINE_C3_JOINT04toBEACH04",
+	},
+};
+
+// カメラテーブル
+static const RAIL_CAMERA_SET sc_RAIL_CAMERA_SET[CAMERA_C3_MAX] = 
+{
+	{
+		CAMERAFUNC_C3_CIRCLE,
+		0x700,
+		0x2B1000,
+		0x2f6f36,
+		HEIGHT,
+		0x301402,
+	},
+	{
+		CAMERAFUNC_C3_FIXALL,
+		0x5e6375, 0x2a357, 0x1f4628,
+		0x2fcf14, 0xa8c3c, 0x2d6876,
+	},
+	{
+		CAMERAFUNC_C3_FIXLEN,
+		0x600,
+		0x26D000,
+		0x2f6f36,
+		HEIGHT,
+		0x301402,
+	},
+};
+
+
+// カメラ動作関数テーブル
+static RAIL_CAMERA_FUNC* sp_RAIL_CAMERA_FUNC[CAMERAFUNC_C3_MAX] = {
+	FIELD_RAIL_POSFUNC_CircleCamera,
+	FIELD_RAIL_CAMERAFUNC_FixAllCamera,
+	FIELD_RAIL_POSFUNC_FixLenCircleCamera,
+};
+
+// 位置
+static const RAIL_LINEPOS_SET sc_RAIL_LINEPOS_SET[LINEPOS_C3_MAX] = 
+{
+	{
+		LINEPOSFUNC_C3_CURVE,
+		LINEDISTFUNC_C3_CURVE,
+		0x2f6f36,
+		HEIGHT,
+		0x301402,
+	},
+	{
+		LINEPOSFUNC_C3_STRAIT,
+		LINEDISTFUNC_C3_STRAIT,
+		0,
+		0,
+		0,
+	},
+};
+
+// 座標動作関数テーブル
+static RAIL_POS_FUNC* sp_RAIL_POS_FUNC[LINEPOSFUNC_C3_MAX] = 
+{
+	FIELD_RAIL_POSFUNC_CurveLine,
+	FIELD_RAIL_POSFUNC_StraitLine,
+};
+
+// 座標動作関数テーブル
+static RAIL_LINE_DIST_FUNC* sp_RAIL_LINE_DIST_FUNC[LINEDISTFUNC_C3_MAX] = 
+{
+	FIELD_RAIL_LINE_DIST_FUNC_CircleLine,
+	FIELD_RAIL_LINE_DIST_FUNC_StraitLine,
+};
+
+static const RAIL_SETTING sc_RAIL_SETTING = {
+  POINT_C3_CA_MAX,
+  LINE_C3_MAX,
+	CAMERA_C3_MAX,
+	LINEPOS_C3_MAX,
+	CAMERAFUNC_C3_MAX,
+	LINEPOSFUNC_C3_MAX,
+	LINEDISTFUNC_C3_MAX,
+	0,
+  sc_RAIL_POINT,
+  sc_RAIL_LINE,
+  sc_RAIL_CAMERA_SET,
+  sc_RAIL_LINEPOS_SET,
+	sp_RAIL_CAMERA_FUNC,
+	sp_RAIL_POS_FUNC,
+	sp_RAIL_LINE_DIST_FUNC,
+  16,
+  2*FX32_ONE
+};
+
+// レール位置情報
+static const RAIL_LOCATION sc_RAIL_START_LOCATION = {
+  FIELD_RAIL_TYPE_POINT,
+  0,
+};
+
 
 //======================================================================
 //	struct
@@ -866,609 +1479,4 @@ static void C3_SCENEAREA_OutsideFxCamera( const FLD_SCENEAREA* cp_sys, const FLD
 }
 
 
-
-//======================================================================
-//	RAIL情報
-//======================================================================
-// 出発と終端
-static const RAIL_POINT sc_POINT_C3_START = 
-{
-  //const RAIL_LINE * lines[RAIL_CONNECT_LINE_MAX];
-  {
-    &sc_LINE_C3_STARTtoJOINT00, NULL, NULL, NULL,
-  },
-  //RAIL_KEY keys[RAIL_CONNECT_LINE_MAX];
-  {
-    RAIL_KEY_LEFT, RAIL_KEY_NULL, RAIL_KEY_NULL, RAIL_KEY_NULL,
-  },
-  //VecFx32 pos;
-  {
-    0x46992b, 0x7000, 0x203cfa
-  },
-  //const RAIL_CAMERA_SET * camera;
-  &sc_CAMERA_C3_FIRST,
-  //const char * name;
-  "sc_POINT_C3_START",
-};
-
-static const RAIL_POINT sc_POINT_C3_END = 
-{
-  //const RAIL_LINE * lines[RAIL_CONNECT_LINE_MAX];
-  {
-    &sc_LINE_C3_JOINT00toEND, NULL, NULL, NULL,
-  },
-  //RAIL_KEY keys[RAIL_CONNECT_LINE_MAX];
-  {
-    RAIL_KEY_LEFT, RAIL_KEY_NULL, RAIL_KEY_NULL, RAIL_KEY_NULL,
-  },
-  //VecFx32 pos;
-  {
-    0x447656, 0x6000, 0x1f24d2
-  },
-  //const RAIL_CAMERA_SET * camera;
-  &sc_CAMERA_C3_END,
-  //const char * name;
-  "sc_POINT_C3_END",
-};
-
-// 分岐地点
-static const RAIL_POINT sc_POINT_C3_JOINT00 = 
-{
-  //const RAIL_LINE * lines[RAIL_CONNECT_LINE_MAX];
-  {
-    &sc_LINE_C3_JOINT00toEND, &sc_LINE_C3_JOINT00toJOINT01, &sc_LINE_C3_JOINT00toCA_ALLAY00, &sc_LINE_C3_JOINT00toBEACH00,
-  },
-  //RAIL_KEY keys[RAIL_CONNECT_LINE_MAX];
-  {
-    RAIL_KEY_RIGHT, RAIL_KEY_LEFT, RAIL_KEY_UP, RAIL_KEY_DOWN,
-  },
-  //VecFx32 pos;
-  {
-    0x47aa2e, 0x6000, 0x231482
-  },
-  //const RAIL_CAMERA_SET * camera;
-  &sc_CAMERA_C3_NORMAL,
-  //const char * name;
-  "sc_POINT_C3_JOINT00",
-};
-static const RAIL_POINT sc_POINT_C3_JOINT01 = 
-{
-  //const RAIL_LINE * lines[RAIL_CONNECT_LINE_MAX];
-  {
-    &sc_LINE_C3_JOINT00toJOINT01, &sc_LINE_C3_JOINT01toJOINT02, &sc_LINE_C3_JOINT01toCA_ALLAY01, &sc_LINE_C3_JOINT01toBEACH01,
-  },
-  //RAIL_KEY keys[RAIL_CONNECT_LINE_MAX];
-  {
-    RAIL_KEY_RIGHT, RAIL_KEY_LEFT, RAIL_KEY_UP, RAIL_KEY_DOWN,
-  },
-  //VecFx32 pos;
-  {
-    0x475286, 0x6000, 0x3db512
-  },
-  //const RAIL_CAMERA_SET * camera;
-  &sc_CAMERA_C3_NORMAL,
-  //const char * name;
-  "sc_POINT_C3_JOINT01",
-};
-static const RAIL_POINT sc_POINT_C3_JOINT02 = 
-{
-  //const RAIL_LINE * lines[RAIL_CONNECT_LINE_MAX];
-  {
-    &sc_LINE_C3_JOINT01toJOINT02, &sc_LINE_C3_JOINT02toJOINT03, &sc_LINE_C3_JOINT02toCA_ALLAY02, &sc_LINE_C3_JOINT02toBEACH02,
-  },
-  //RAIL_KEY keys[RAIL_CONNECT_LINE_MAX];
-  {
-    RAIL_KEY_RIGHT, RAIL_KEY_LEFT, RAIL_KEY_UP, RAIL_KEY_DOWN,
-  },
-  //VecFx32 pos;
-  {
-    0x2fa47e, 0x6000, 0x4b9402
-  },
-  //const RAIL_CAMERA_SET * camera;
-  &sc_CAMERA_C3_NORMAL,
-  //const char * name;
-  "sc_POINT_C3_JOINT02",
-};
-static const RAIL_POINT sc_POINT_C3_JOINT03 = 
-{
-  //const RAIL_LINE * lines[RAIL_CONNECT_LINE_MAX];
-  {
-    &sc_LINE_C3_JOINT02toJOINT03, &sc_LINE_C3_JOINT03toJOINT04, &sc_LINE_C3_JOINT03toCA_ALLAY03, &sc_LINE_C3_JOINT03toBEACH03,
-  },
-  //RAIL_KEY keys[RAIL_CONNECT_LINE_MAX];
-  {
-    RAIL_KEY_RIGHT, RAIL_KEY_LEFT, RAIL_KEY_UP, RAIL_KEY_DOWN,
-  },
-  //VecFx32 pos;
-  {
-    0x17b1b6, 0x6000, 0x3df662
-  },
-  //const RAIL_CAMERA_SET * camera;
-  &sc_CAMERA_C3_NORMAL,
-  //const char * name;
-  "sc_POINT_C3_JOINT03",
-};
-static const RAIL_POINT sc_POINT_C3_JOINT04 = 
-{
-  //const RAIL_LINE * lines[RAIL_CONNECT_LINE_MAX];
-  {
-    &sc_LINE_C3_JOINT03toJOINT04, &sc_LINE_C3_JOINT04toCA_ALLAY04, &sc_LINE_C3_JOINT04toBEACH04, NULL,
-  },
-  //RAIL_KEY keys[RAIL_CONNECT_LINE_MAX];
-  {
-    RAIL_KEY_RIGHT, RAIL_KEY_UP, RAIL_KEY_DOWN, RAIL_KEY_NULL, 
-  },
-  //VecFx32 pos;
-  {
-    0x17ef96, 0x6000, 0x21cc3a
-  },
-  //const RAIL_CAMERA_SET * camera;
-  &sc_CAMERA_C3_NORMAL,
-  //const char * name;
-  "sc_POINT_C3_JOINT04",
-};
-
-// ベイエリア
-static const RAIL_POINT sc_POINT_C3_BEACH00 = 
-{
-  //const RAIL_LINE * lines[RAIL_CONNECT_LINE_MAX];
-  {
-    &sc_LINE_C3_JOINT00toBEACH00, NULL, NULL, NULL,
-  },
-  //RAIL_KEY keys[RAIL_CONNECT_LINE_MAX];
-  {
-    RAIL_KEY_UP, RAIL_KEY_NULL, RAIL_KEY_NULL, RAIL_KEY_NULL,
-  },
-  //VecFx32 pos;
-  {
-    0x4d1dd9, 0x6000, 0x2027d2
-  },
-  //const RAIL_CAMERA_SET * camera;
-  &sc_CAMERA_C3_NORMAL,
-  //const char * name;
-  "sc_POINT_C3_BEACH00",
-};
-static const RAIL_POINT sc_POINT_C3_BEACH01 = 
-{
-  //const RAIL_LINE * lines[RAIL_CONNECT_LINE_MAX];
-  {
-    &sc_LINE_C3_JOINT01toBEACH01, NULL, NULL, NULL,
-  },
-  //RAIL_KEY keys[RAIL_CONNECT_LINE_MAX];
-  {
-    RAIL_KEY_UP, RAIL_KEY_NULL, RAIL_KEY_NULL, RAIL_KEY_NULL,
-  },
-  //VecFx32 pos;
-  {
-    0x4d3d74, 0x6000, 0x411568
-  },
-  //const RAIL_CAMERA_SET * camera;
-  &sc_CAMERA_C3_NORMAL,
-  //const char * name;
-  "sc_POINT_C3_BEACH01",
-};
-static const RAIL_POINT sc_POINT_C3_BEACH02 = 
-{
-  //const RAIL_LINE * lines[RAIL_CONNECT_LINE_MAX];
-  {
-    &sc_LINE_C3_JOINT02toBEACH02, NULL, NULL, NULL,
-  },
-  //RAIL_KEY keys[RAIL_CONNECT_LINE_MAX];
-  {
-    RAIL_KEY_UP, RAIL_KEY_NULL, RAIL_KEY_NULL, RAIL_KEY_NULL,
-  },
-  //VecFx32 pos;
-  {
-    0x2fb0b9, 0x6000, 0x51e402
-  },
-  //const RAIL_CAMERA_SET * camera;
-  &sc_CAMERA_C3_NORMAL,
-  //const char * name;
-  "sc_POINT_C3_BEACH02",
-};
-static const RAIL_POINT sc_POINT_C3_BEACH03 = 
-{
-  //const RAIL_LINE * lines[RAIL_CONNECT_LINE_MAX];
-  {
-    &sc_LINE_C3_JOINT03toBEACH03, NULL, NULL, NULL,
-  },
-  //RAIL_KEY keys[RAIL_CONNECT_LINE_MAX];
-  {
-    RAIL_KEY_UP, RAIL_KEY_NULL, RAIL_KEY_NULL, RAIL_KEY_NULL,
-  },
-  //VecFx32 pos;
-  {
-    0x13a5c6, 0x6000, 0x40543e
-  },
-  //const RAIL_CAMERA_SET * camera;
-  &sc_CAMERA_C3_NORMAL,
-  //const char * name;
-  "sc_POINT_C3_BEACH03",
-};
-static const RAIL_POINT sc_POINT_C3_BEACH04 = 
-{
-  //const RAIL_LINE * lines[RAIL_CONNECT_LINE_MAX];
-  {
-    &sc_LINE_C3_JOINT04toBEACH04, NULL, NULL, NULL,
-  },
-  //RAIL_KEY keys[RAIL_CONNECT_LINE_MAX];
-  {
-    RAIL_KEY_UP, RAIL_KEY_NULL, RAIL_KEY_NULL, RAIL_KEY_NULL,
-  },
-  //VecFx32 pos;
-  {
-    0x1261b6, 0x6000, 0x1e6c22
-  },
-  //const RAIL_CAMERA_SET * camera;
-  &sc_CAMERA_C3_NORMAL,
-  //const char * name;
-  "sc_POINT_C3_BEACH04",
-};
-
-// 路地カメラズーム用
-static const RAIL_POINT sc_POINT_C3_CA_ALLAY00 = 
-{
-  //const RAIL_LINE * lines[RAIL_CONNECT_LINE_MAX];
-  {
-    &sc_LINE_C3_JOINT00toCA_ALLAY00, NULL, NULL, NULL,
-  },
-  //RAIL_KEY keys[RAIL_CONNECT_LINE_MAX];
-  {
-    RAIL_KEY_DOWN, RAIL_KEY_NULL, RAIL_KEY_NULL, RAIL_KEY_NULL,
-  },
-  //VecFx32 pos;
-  {
-    0x43b326, 0x6000, 0x253502
-  },
-  //const RAIL_CAMERA_SET * camera;
-  &sc_CAMERA_C3_NORMAL,
-  //const char * name;
-  "sc_POINT_C3_CA_ALLAY00",
-};
-static const RAIL_POINT sc_POINT_C3_CA_ALLAY01 = 
-{
-  //const RAIL_LINE * lines[RAIL_CONNECT_LINE_MAX];
-  {
-    &sc_LINE_C3_JOINT01toCA_ALLAY01, NULL, NULL, NULL,
-  },
-  //RAIL_KEY keys[RAIL_CONNECT_LINE_MAX];
-  {
-    RAIL_KEY_DOWN, RAIL_KEY_NULL, RAIL_KEY_NULL, RAIL_KEY_NULL,
-  },
-  //VecFx32 pos;
-  {
-    0x427d90, 0x6000, 0x3af354
-  },
-  //const RAIL_CAMERA_SET * camera;
-  &sc_CAMERA_C3_NORMAL,
-  //const char * name;
-  "sc_POINT_C3_CA_ALLAY01",
-};
-static const RAIL_POINT sc_POINT_C3_CA_ALLAY02 = 
-{
-  //const RAIL_LINE * lines[RAIL_CONNECT_LINE_MAX];
-  {
-    &sc_LINE_C3_JOINT02toCA_ALLAY02, NULL, NULL, NULL, 
-  },
-  //RAIL_KEY keys[RAIL_CONNECT_LINE_MAX];
-  {
-    RAIL_KEY_DOWN, RAIL_KEY_NULL, RAIL_KEY_NULL, RAIL_KEY_NULL,
-  },
-  //VecFx32 pos;
-  {
-    0x2f9a52, 0x6000, 0x465402
-  },
-  //const RAIL_CAMERA_SET * camera;
-  &sc_CAMERA_C3_NORMAL,
-  //const char * name;
-  "sc_POINT_C3_CA_ALLAY02",
-};
-static const RAIL_POINT sc_POINT_C3_CA_ALLAY03 = 
-{
-  //const RAIL_LINE * lines[RAIL_CONNECT_LINE_MAX];
-  {
-    &sc_LINE_C3_JOINT03toCA_ALLAY03, NULL, NULL, NULL,
-  },
-  //RAIL_KEY keys[RAIL_CONNECT_LINE_MAX];
-  {
-    RAIL_KEY_DOWN, RAIL_KEY_NULL, RAIL_KEY_NULL, RAIL_KEY_NULL,
-  },
-  //VecFx32 pos;
-  {
-    0x1ca876, 0x6000, 0x3b0f32
-  },
-  //const RAIL_CAMERA_SET * camera;
-  &sc_CAMERA_C3_NORMAL,
-  //const char * name;
-  "sc_POINT_C3_CA_ALLAY03",
-};
-static const RAIL_POINT sc_POINT_C3_CA_ALLAY04 = 
-{
-  //const RAIL_LINE * lines[RAIL_CONNECT_LINE_MAX];
-  {
-    &sc_LINE_C3_JOINT04toCA_ALLAY04, NULL, NULL, NULL,
-  },
-  //RAIL_KEY keys[RAIL_CONNECT_LINE_MAX];
-  {
-    RAIL_KEY_DOWN, RAIL_KEY_NULL, RAIL_KEY_NULL, RAIL_KEY_NULL, 
-  },
-  //VecFx32 pos;
-  {
-    0x1d1016, 0x6000, 0x24e9da
-  },
-  //const RAIL_CAMERA_SET * camera;
-  &sc_CAMERA_C3_NORMAL,
-  //const char * name;
-  "sc_POINT_C3_CA_ALLAY04",
-};
-
-// ライン
-static const RAIL_LINE sc_LINE_C3_STARTtoJOINT00 =
-{
-  //const RAIL_POINT * point_s
-  //const RAIL_POINT * point_e
-  &sc_POINT_C3_START, &sc_POINT_C3_JOINT00,
-  //RAIL_KEY key;
-  RAIL_KEY_LEFT,
-  //const RAIL_LINEPOS_SET * line_pos_set;
-  &sc_LINEPOS_C3_NORMAL,
-  //const RAIL_CAMERA_SET * camera;
-  &sc_CAMERA_C3_FIRST,
-  //const char * name;
-  "sc_LINE_C3_STARTtoJOINT00",
-};
-static const RAIL_LINE sc_LINE_C3_JOINT00toEND =
-{
-  //const RAIL_POINT * point_s
-  //const RAIL_POINT * point_e
-  &sc_POINT_C3_END, &sc_POINT_C3_JOINT00,
-  //RAIL_KEY key;
-  RAIL_KEY_LEFT,
-  //const RAIL_LINEPOS_SET * line_pos_set;
-  &sc_LINEPOS_C3_NORMAL,
-  //const RAIL_CAMERA_SET * camera;
-  &sc_CAMERA_C3_END,
-  //const char * name;
-  "sc_LINE_C3_JOINT00toEND",
-};
-static const RAIL_LINE sc_LINE_C3_JOINT00toCA_ALLAY00 =
-{
-  //const RAIL_POINT * point_s
-  //const RAIL_POINT * point_e
-  &sc_POINT_C3_JOINT00, &sc_POINT_C3_CA_ALLAY00,
-  //RAIL_KEY key;
-  RAIL_KEY_UP,
-  //const RAIL_LINEPOS_SET * line_pos_set;
-  &sc_LINEPOS_C3_Strait,//&sc_LINEPOS_C3_NORMAL,
-  //const RAIL_CAMERA_SET * camera;
-  &sc_CAMERA_C3_NORMAL,
-  //const char * name;
-  "sc_LINE_C3_JOINT00toCA_ALLAY00",
-};
-static const RAIL_LINE sc_LINE_C3_JOINT00toBEACH00 =
-{
-  //const RAIL_POINT * point_s
-  //const RAIL_POINT * point_e
-  &sc_POINT_C3_BEACH00,&sc_POINT_C3_JOINT00, 
-  //RAIL_KEY key;
-  RAIL_KEY_UP,//RAIL_KEY_DOWN,
-  //const RAIL_LINEPOS_SET * line_pos_set;
-  &sc_LINEPOS_C3_Strait,//&sc_LINEPOS_C3_NORMAL,
-  //const RAIL_CAMERA_SET * camera;
-  &sc_CAMERA_C3_NORMAL,
-  //const char * name;
-  "sc_LINE_C3_JOINT00toBEACH00",
-};
-static const RAIL_LINE sc_LINE_C3_JOINT00toJOINT01 =
-{
-  //const RAIL_POINT * point_s
-  //const RAIL_POINT * point_e
-  &sc_POINT_C3_JOINT00, &sc_POINT_C3_JOINT01,
-  //RAIL_KEY key;
-  RAIL_KEY_LEFT,
-  //const RAIL_LINEPOS_SET * line_pos_set;
-  &sc_LINEPOS_C3_NORMAL,
-  //const RAIL_CAMERA_SET * camera;
-  &sc_CAMERA_C3_NORMAL,
-  //const char * name;
-  "sc_LINE_C3_JOINT00toJOINT01",
-};
-static const RAIL_LINE sc_LINE_C3_JOINT01toCA_ALLAY01 =
-{
-  //const RAIL_POINT * point_s
-  //const RAIL_POINT * point_e
-  &sc_POINT_C3_JOINT01, &sc_POINT_C3_CA_ALLAY01,
-  //RAIL_KEY key;
-  RAIL_KEY_UP,
-  //const RAIL_LINEPOS_SET * line_pos_set;
-  &sc_LINEPOS_C3_Strait,//&sc_LINEPOS_C3_NORMAL,
-  //const RAIL_CAMERA_SET * camera;
-  &sc_CAMERA_C3_NORMAL,
-  //const char * name;
-  "sc_LINE_C3_JOINT01toCA_ALLAY01",
-};
-static const RAIL_LINE sc_LINE_C3_JOINT01toBEACH01 =
-{
-  //const RAIL_POINT * point_s
-  //const RAIL_POINT * point_e
-  &sc_POINT_C3_BEACH01,&sc_POINT_C3_JOINT01, 
-  //RAIL_KEY key;
-  RAIL_KEY_UP,//RAIL_KEY_DOWN,
-  //const RAIL_LINEPOS_SET * line_pos_set;
-  &sc_LINEPOS_C3_Strait,//&sc_LINEPOS_C3_NORMAL,
-  //const RAIL_CAMERA_SET * camera;
-  &sc_CAMERA_C3_NORMAL,
-  //const char * name;
-  "sc_LINE_C3_JOINT01toBEACH01",
-};
-static const RAIL_LINE sc_LINE_C3_JOINT01toJOINT02 =
-{
-  //const RAIL_POINT * point_s
-  //const RAIL_POINT * point_e
-  &sc_POINT_C3_JOINT01, &sc_POINT_C3_JOINT02,
-  //RAIL_KEY key;
-  RAIL_KEY_LEFT,
-  //const RAIL_LINEPOS_SET * line_pos_set;
-  &sc_LINEPOS_C3_NORMAL,
-  //const RAIL_CAMERA_SET * camera;
-  &sc_CAMERA_C3_NORMAL,
-  //const char * name;
-  "sc_LINE_C3_JOINT01toJOINT02",
-};
-static const RAIL_LINE sc_LINE_C3_JOINT02toCA_ALLAY02 =
-{
-  //const RAIL_POINT * point_s
-  //const RAIL_POINT * point_e
-  &sc_POINT_C3_JOINT02, &sc_POINT_C3_CA_ALLAY02,
-  //RAIL_KEY key;
-  RAIL_KEY_UP,
-  //const RAIL_LINEPOS_SET * line_pos_set;
-  &sc_LINEPOS_C3_Strait,//&sc_LINEPOS_C3_NORMAL,
-  //const RAIL_CAMERA_SET * camera;
-  &sc_CAMERA_C3_NORMAL,
-  //const char * name;
-  "sc_LINE_C3_JOINT02toCA_ALLAY02",
-};
-static const RAIL_LINE sc_LINE_C3_JOINT02toBEACH02 =
-{
-  //const RAIL_POINT * point_s
-  //const RAIL_POINT * point_e
-  &sc_POINT_C3_BEACH02,&sc_POINT_C3_JOINT02, 
-  //RAIL_KEY key;
-  RAIL_KEY_UP,//RAIL_KEY_DOWN,
-  //const RAIL_LINEPOS_SET * line_pos_set;
-  &sc_LINEPOS_C3_Strait,//&sc_LINEPOS_C3_NORMAL,
-  //const RAIL_CAMERA_SET * camera;
-  &sc_CAMERA_C3_NORMAL,
-  //const char * name;
-  "sc_LINE_C3_JOINT02toBEACH02",
-};
-static const RAIL_LINE sc_LINE_C3_JOINT02toJOINT03 =
-{
-  //const RAIL_POINT * point_s
-  //const RAIL_POINT * point_e
-  &sc_POINT_C3_JOINT02, &sc_POINT_C3_JOINT03,
-  //RAIL_KEY key;
-  RAIL_KEY_LEFT,
-  //const RAIL_LINEPOS_SET * line_pos_set;
-  &sc_LINEPOS_C3_NORMAL,
-  //const RAIL_CAMERA_SET * camera;
-  &sc_CAMERA_C3_NORMAL,
-  //const char * name;
-  "sc_LINE_C3_JOINT02toJOINT03",
-};
-static const RAIL_LINE sc_LINE_C3_JOINT03toCA_ALLAY03 =
-{
-  //const RAIL_POINT * point_s
-  //const RAIL_POINT * point_e
-  &sc_POINT_C3_JOINT03, &sc_POINT_C3_CA_ALLAY03,
-  //RAIL_KEY key;
-  RAIL_KEY_UP,
-  //const RAIL_LINEPOS_SET * line_pos_set;
-  &sc_LINEPOS_C3_Strait,//&sc_LINEPOS_C3_NORMAL,
-  //const RAIL_CAMERA_SET * camera;
-  &sc_CAMERA_C3_NORMAL,
-  //const char * name;
-  "sc_LINE_C3_JOINT03toCA_ALLAY03",
-};
-static const RAIL_LINE sc_LINE_C3_JOINT03toBEACH03 =
-{
-  //const RAIL_POINT * point_s
-  //const RAIL_POINT * point_e
-  &sc_POINT_C3_BEACH03,&sc_POINT_C3_JOINT03, 
-  //RAIL_KEY key;
-  RAIL_KEY_UP,//RAIL_KEY_DOWN,
-  //const RAIL_LINEPOS_SET * line_pos_set;
-  &sc_LINEPOS_C3_Strait,//&sc_LINEPOS_C3_NORMAL,
-  //const RAIL_CAMERA_SET * camera;
-  &sc_CAMERA_C3_NORMAL,
-  //const char * name;
-  "sc_LINE_C3_JOINT03toBEACH03",
-};
-static const RAIL_LINE sc_LINE_C3_JOINT03toJOINT04 =
-{
-  //const RAIL_POINT * point_s
-  //const RAIL_POINT * point_e
-  &sc_POINT_C3_JOINT03, &sc_POINT_C3_JOINT04,
-  //RAIL_KEY key;
-  RAIL_KEY_LEFT,
-  //const RAIL_LINEPOS_SET * line_pos_set;
-  &sc_LINEPOS_C3_NORMAL,
-  //const RAIL_CAMERA_SET * camera;
-  &sc_CAMERA_C3_NORMAL,
-  //const char * name;
-  "sc_LINE_C3_JOINT03toJOINT04",
-};
-static const RAIL_LINE sc_LINE_C3_JOINT04toCA_ALLAY04 =
-{
-  //const RAIL_POINT * point_s
-  //const RAIL_POINT * point_e
-  &sc_POINT_C3_JOINT04, &sc_POINT_C3_CA_ALLAY04,
-  //RAIL_KEY key;
-  RAIL_KEY_UP,
-  //const RAIL_LINEPOS_SET * line_pos_set;
-  &sc_LINEPOS_C3_Strait,//&sc_LINEPOS_C3_NORMAL,
-  //const RAIL_CAMERA_SET * camera;
-  &sc_CAMERA_C3_NORMAL,
-  //const char * name;
-  "sc_LINE_C3_JOINT04toCA_ALLAY04",
-};
-static const RAIL_LINE sc_LINE_C3_JOINT04toBEACH04 =
-{
-  //const RAIL_POINT * point_s
-  //const RAIL_POINT * point_e
-   &sc_POINT_C3_BEACH04,&sc_POINT_C3_JOINT04,
-  //RAIL_KEY key;
-  RAIL_KEY_UP,//RAIL_KEY_DOWN,
-  //const RAIL_LINEPOS_SET * line_pos_set;
-  &sc_LINEPOS_C3_Strait,//&sc_LINEPOS_C3_NORMAL,
-  //const RAIL_CAMERA_SET * camera;
-  &sc_CAMERA_C3_NORMAL,
-  //const char * name;
-  "sc_LINE_C3_JOINT04toBEACH04",
-};
-
-
-// カメラ
-static const RAIL_CAMERA_SET sc_CAMERA_C3_NORMAL = 
-{
-  FIELD_RAIL_POSFUNC_CircleCamera,
-  0x700,
-  0x2B1000,
-  0x2f6f36,
-  HEIGHT,
-  0x301402,
-};
-static const RAIL_CAMERA_SET sc_CAMERA_C3_FIRST = 
-{
-  FIELD_RAIL_CAMERAFUNC_FixAllCamera,
-  0x5e6375, 0x2a357, 0x1f4628,
-  0x2fcf14, 0xa8c3c, 0x2d6876,
-};
-
-static const RAIL_CAMERA_SET sc_CAMERA_C3_END = 
-{
-  FIELD_RAIL_POSFUNC_FixLenCircleCamera,
-  0x600,
-  0x26D000,
-  0x2f6f36,
-  HEIGHT,
-  0x301402,
-};
-
-// 位置
-static const RAIL_LINEPOS_SET sc_LINEPOS_C3_NORMAL = 
-{
-  FIELD_RAIL_POSFUNC_CurveLine,
-  0x2f6f36,
-  HEIGHT,
-  0x301402,
-};
-static const RAIL_LINEPOS_SET sc_LINEPOS_C3_Strait =
-{
-  FIELD_RAIL_POSFUNC_StraitLine,
-  0,
-  0,
-  0,
-};
 
