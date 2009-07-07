@@ -1073,6 +1073,8 @@ static u8 ListMoveUpDownCheck( BMPMENULIST_WORK * lw, u8 print_f, u8 req_line, u
 			CallBackSet( lw, 0 );
 #if 0	//old dp
 			GF_BGL_BmpWinOn( lw->hed.win );
+#else
+			GFL_BMPWIN_TransVramCharacter(lw->hed.win);
 #endif
 			break;
 		//表示リスト移動 or リスト＋カーソル移動

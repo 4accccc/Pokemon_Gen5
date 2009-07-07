@@ -60,7 +60,7 @@
 #define GMDATA_ID_EMAIL (0)
 #define ID_PARA_monsno (0)
 #define ID_PARA_item (0)
-#define NUMBER_DISPTYPE_ZERO (0)
+#define NUMBER_DISPTYPE_ZERO (STR_NUM_DISP_ZERO)
 #define NUMBER_CODETYPE_DEFAULT (0)
 #define _SE_CURSOR (0)
 #define _SE_INOUT  (0)

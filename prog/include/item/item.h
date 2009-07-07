@@ -30,6 +30,21 @@ typedef struct _ITEM_DATA	ITEMDATA;		// アイテムデータ
 #define	ITEM_DUMMY_ID	( 0 )				// ダミーID
 #define	ITEM_RETURN_ID	( 0xffff )			// 戻る
 
+
+// メールアイテムのスタートナンバー
+#define MAIL_START_ITEMNUM	(ITEM_GURASUMEERU)
+#define MAIL_END_ITEMNUM	(MAIL_START_ITEMNUM+ITEM_MAIL_MAX-1)
+
+//木の実・こやしアイテムのスタートナンバー他
+#define	NUTS_START_ITEMNUM	( ITEM_KURABONOMI )		// アイテム番号の最初の木の実
+#define NUTS_END_ITEMNUM	( NUTS_START_ITEMNUM+ITEM_NUTS_MAX-1 )	//アイテム番号の最後の木の実
+#define COMPOST_START_ITEMNUM	(ITEM_SUKUSUKUKOYASI)
+#define ITEM_COMPOST_MAX		(ITEM_NEBANEBAKOYASI-ITEM_SUKUSUKUKOYASI+1)
+#define ITEMNO_TO_KINOMINO(no)	((no)-NUTS_START_ITEMNUM)
+#define KINOMINO_TO_ITEMNO(no)	((no)+NUTS_START_ITEMNUM)
+
+
+
 // インデックス取得定義
 enum {
 	ITEM_GET_DATA = 0,		// アイテムデータ
@@ -106,6 +121,39 @@ enum {
 	ITEM_WKTYPE_DUMMY = 0,		// ダミー
 	ITEM_WKTYPE_POKEUSE,		// ポケモンに使う
 };
+
+
+///ボールID定義
+typedef enum{
+ BALLID_NULL,			// NULL
+ BALLID_MASUTAABOORU,	//01 マスターボール
+ BALLID_HAIPAABOORU,	//02 ハイパーボール
+ BALLID_SUUPAABOORU,	//03 スーパーボール
+ BALLID_MONSUTAABOORU,	//04 モンスターボール
+ BALLID_SAFARIBOORU,	//05 サファリボール
+ BALLID_NETTOBOORU,		//06 ネットボール
+ BALLID_DAIBUBOORU,		//07 ダイブボール
+ BALLID_NESUTOBOORU,		//08 ネストボール
+ BALLID_RIPIITOBOORU,	//09 リピートボール
+ BALLID_TAIMAABOORU,		//10 タイマーボール
+ BALLID_GOOZYASUBOORU,	//11 ゴージャスボール
+ BALLID_PUREMIABOORU,	//12 プレミアボール
+ BALLID_DAAKUBOORU,		//13 ダークボール
+ BALLID_HIIRUBOORU,		//14 ヒールボール
+ BALLID_KUIKKUBOORU,		//15 クイックボール
+ BALLID_PURESYASUBOORU,	//16 プレシャスボール
+ 
+ BALLID_SUPIIDOBOORU,	//17 スピードボール
+ BALLID_REBERUBOORU,		//18 レベルボール
+ BALLID_RUAABOORU,		//19 ルアーボール
+ BALLID_HEBIIBOORU,		//20 ヘビーボール
+ BALLID_RABURABUBOORU,	//21 ラブラブボール
+ BALLID_HURENDOBOORU,	//22 フレンドボール
+ BALLID_MUUNBOORU,		//23 ムーンボール
+ BALLID_KONPEBOORU,		//24 コンペボール
+ BALLID_MAX = BALLID_KONPEBOORU,	//パークボールは実体のないボールなのでIDに含めません
+}BALL_ID;
+
 
 //============================================================================================
 //	プロトタイプ宣言
