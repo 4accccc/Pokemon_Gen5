@@ -255,13 +255,13 @@ static void gyoeTask_Update( FLDEFF_TASK *task, void *wk )
       work->move_y = 0;
       work->seq_no++;
     }
+    break;
   case 1:
     work->frame++;
     
-    if( work->frame < GYOE_END_FRAME ){
+    if( work->frame >= GYOE_END_FRAME ){
       work->seq_no++;
       work->end_flag = TRUE;
-      break;
     }
   }
   

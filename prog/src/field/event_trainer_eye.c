@@ -12,10 +12,11 @@
 #include "fieldmap.h"
 #include "fldmmdl.h"
 #include "script.h"
-
+#include "fldeff_gyoe.h"
 #include "event_trainer_eye.h"
 
-#include "../../../resource/fldmapdata/script/trainer_def.h" //SCRID_TRAINER_MOVE_BATTLE 
+//SCRID_TRAINER_MOVE_BATTLE 
+#include "../../../resource/fldmapdata/script/trainer_def.h"
 
 //======================================================================
 //  define
@@ -560,11 +561,9 @@ static int eyeMeetMove_DirChangeWait( EV_EYEMEET_MOVE_WORK *work )
 //--------------------------------------------------------------
 static int eyeMeetMove_GyoeSet( EV_EYEMEET_MOVE_WORK *work )
 {
-#if 0 //pl null
-  work->gyoe = FE_FldOBJGyoe_Add( work->fldobj, GYOE_GYOE, FALSE, FALSE );
-#else //wb kari
-  work->task_gyoe = NULL;
-#endif
+  FLDEFF_CTRL *fectrl =  FIELDMAP_GetFldEffCtrl( work->fieldMap );
+  work->task_gyoe = FLDEFF_GYOE_SetMMdl(
+      fectrl, work->mmdl, FLDEFF_GYOETYPE_GYOE, TRUE  );
   work->seq_no = SEQNO_TRMOVE_GYOE_WAIT;
   return( FALSE );
 }
@@ -578,14 +577,10 @@ static int eyeMeetMove_GyoeSet( EV_EYEMEET_MOVE_WORK *work )
 //--------------------------------------------------------------
 static int eyeMeetMove_GyoeWait( EV_EYEMEET_MOVE_WORK *work )
 {
-#if 0 //pl null
-  if( FE_Gyoe_EndCheck(work->gyoe) == TRUE ){
-    EOA_Delete( work->gyoe );
+  if( FLDEFF_GYOE_CheckEnd(work->task_gyoe) == TRUE ){
+    FLDEFF_TASK_CallDelete( work->task_gyoe );
     work->seq_no = SEQNO_TRMOVE_GYOE_END_WAIT;
   }
-#else //wb kari
-  work->seq_no = SEQNO_TRMOVE_GYOE_END_WAIT;
-#endif
   return( FALSE );
 }
 
