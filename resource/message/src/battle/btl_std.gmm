@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="taya" host="W00146" date="2009-07-03T17:01:55"/>
+	<create user="taya" host="W00146" date="2009-07-03T19:19:19"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -327,7 +327,7 @@
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="673"/>
 		<band id="3" index="3" style="0000" width="673"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -606,6 +606,18 @@
 		<comment>かわらわり</comment>
 		<language name="JPN" width="216">かべが　こわれた！</language>
 		<language name="JPN_KANJI" width="216">壁が壊れた！</language>
+	</row>
+
+	<row id="BTL_STRID_STD_Mizuasobi">
+		<comment>みずあそび</comment>
+		<language name="JPN" width="216">ほのおの　いりょくが　よわまった！</language>
+		<language name="JPN_KANJI" width="216">炎の威力が　弱まった！</language>
+	</row>
+
+	<row id="BTL_STRID_STD_Doroasobi">
+		<comment>どろあそび</comment>
+		<language name="JPN" width="216">でんきの　いりょくが　よわまった！</language>
+		<language name="JPN_KANJI" width="216">電気の威力が　弱まった！</language>
 	</row>
 
 	<row id="BTL_STRID_STD_TrickRoomOff">
