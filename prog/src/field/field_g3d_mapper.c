@@ -167,7 +167,7 @@ static const GFL_G3D_MAP_FILE_FUNC mapFileFuncTbl[] = {
 };
 
 static const GFL_G3D_MAP_FILE_FUNC randommapFileFuncTbl[] = {
-	{ DP3PACK_HEADER, FieldLoadMapData_RandomGenerate, FieldGetAttr_RandomGenerate },
+	{ WBGRIDPACK_HEADER, FieldLoadMapData_RandomGenerate, FieldGetAttr_RandomGenerate },
 	{ DP3PACK_HEADER, FieldLoadMapData_MapEditorFile, FieldGetAttr_MapEditorFile },
 	{ BRIDGEPACK_HEADER, FieldLoadMapData_BridgeFile, FieldGetAttr_BridgeFile },
 	{ MAPFILE_FUNC_DEFAULT, FieldLoadMapData_PMcustomFile, FieldGetAttr_PMcustomFile },	//TableEnd&default	
@@ -772,7 +772,7 @@ static BOOL	ReloadMapperBlock( FLDMAPPER* g3Dmapper, BLOCK_NEWREQ* new )
         BLOCKINFO_init( &g3Dmapper->blockWk[i].blockInfo );
 				GFL_G3D_MAP_SetDrawSw( g3Dmapper->blockWk[i].g3Dmap, FALSE );
 
-        FIELD_BMODEL_MAN_ReleaseGlobalObj( g3Dmapper->bmodel_man, g3Dmapper->blockWk[i].g3Dmap );
+        FIELD_BMODEL_MAN_ReleaseAllMapObjects( g3Dmapper->bmodel_man, g3Dmapper->blockWk[i].g3Dmap );
 				// 拡張ワークの情報もクリア
 				FLD_G3D_MAP_ExWork_ClearBlockData( &g3Dmapper->blockWk[i].g3DmapExWork );
 				delProcFlag = TRUE;

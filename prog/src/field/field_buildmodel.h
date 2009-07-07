@@ -103,10 +103,14 @@ extern BOOL FIELD_BMODEL_GetAnimeStatus(FIELD_BMODEL * bmodel);
 extern void FIELD_BMODEL_MAN_EntryBuildModel(FIELD_BMODEL_MAN * man, FIELD_BMODEL * bmodel);
 extern void FIELD_BMODEL_MAN_releaseBuildModel(FIELD_BMODEL_MAN * man, FIELD_BMODEL * bmodel);
 
-extern void FIELD_BMODEL_MAN_ResistGlobalObj
+extern void FIELD_BMODEL_MAN_ResistAllMapObjects
 (FIELD_BMODEL_MAN * man, GFL_G3D_MAP * g3Dmap, const PositionSt* objStatus, u32 objCount);
-extern void FIELD_BMODEL_MAN_ReleaseGlobalObj
+
+extern void FIELD_BMODEL_MAN_ReleaseAllMapObjects
 (FIELD_BMODEL_MAN * man, GFL_G3D_MAP * g3Dmap);
+
+extern void FIELD_BMODEL_MAN_ResistMapObject
+(FIELD_BMODEL_MAN * man, GFL_G3D_MAP * g3Dmap, const PositionSt* objStatus, u32 objCount);
 
 //============================================================================================
 //============================================================================================

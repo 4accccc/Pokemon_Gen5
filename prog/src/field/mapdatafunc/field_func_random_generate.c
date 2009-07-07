@@ -171,28 +171,18 @@ BOOL FieldLoadMapData_RandomGenerate( GFL_G3D_MAP* g3Dmap, void * exWork )
             if( height > 0 )
             {
               const u32 resId = FieldFuncRandom_GetBilduingResId( height );
-              status.id = FIELD_BMODEL_MAN_GetEntryIndex(bm, resId);
-    					VEC_Set( &status.trans, 
-    							left+FX32_CONST( x*160.0f ), 0, top+FX32_CONST( z*160.0f) );
-  					  status.rotate = 0;
-  					  GFL_G3D_MAP_ResistGlobalObj( g3Dmap, &status, i );
+              PositionSt objStatus;
+              objStatus.resourceID = resId;
+              objStatus.rotate = 0;
+              objStatus.billboard = 0;
+              objStatus.xpos = left+FX32_CONST( x*160.0f );
+              objStatus.ypos = 0;
+              objStatus.zpos = - (top+FX32_CONST( z*160.0f) );
+              FIELD_BMODEL_MAN_ResistMapObject( bm, g3Dmap, &objStatus, i );
   					  i++;
   					}
           }
         }
-        /*
-				for( i=0; i<count; i++ )
-				{
-					//status.id = FIELD_BMODEL_MAN_GetEntryIndex(bm, objStatus[i].resourceID);
-					status.id = GFL_STD_MtRand0(15);
-					VEC_Set( &status.trans, 
-							objStatus[i].xpos, objStatus[i].ypos, -objStatus[i].zpos );
-					status.rotate = (u16)(objStatus[i].rotate);
-					OS_Printf("[%f:%f:%f]\n",FX_FX32_TO_F32(status.trans.x),FX_FX32_TO_F32(status.trans.y),FX_FX32_TO_F32(status.trans.z));
-					//OS_Printf("bm id = %d, rotate = %04x\n",i, status.rotate);
-					GFL_G3D_MAP_ResistGlobalObj( g3Dmap, &status, i );
-				}
-				*/
 			}
 		}
 		//>>GFL_G3D_MAP_SetTransVramParam( g3Dmap );	//テクスチャ転送設定

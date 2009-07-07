@@ -117,15 +117,13 @@ BOOL FieldLoadMapData_BridgeFile( GFL_G3D_MAP* g3Dmap, void * exWork )
 			if( fileHeader->positionOffset != fileHeader->endPos ){
 				LayoutFormat* layout = (LayoutFormat*)((u32)mem + fileHeader->positionOffset);
 				PositionSt* objStatus = (PositionSt*)&layout->posData;
+        FIELD_BMODEL_MAN * bm = FLD_G3D_MAP_EXWORK_GetBModelMan(p_exwork);
 				GFL_G3D_MAP_GLOBALOBJ_ST status;
 				int i, count = layout->count;
 
 				for( i=0; i<count; i++ ){
-					status.id = objStatus[i].resourceID;
-					VEC_Set( &status.trans, 
-							objStatus[i].xpos, objStatus[i].ypos, -objStatus[i].zpos );
-					status.rotate = objStatus[i].rotate;
-					GFL_G3D_MAP_ResistGlobalObj( g3Dmap, &status, i );
+					FIELD_BMODEL_MAN_ResistMapObject( bm, g3Dmap, &objStatus[i], i );
+
 				}
 			//===========
 			} else {

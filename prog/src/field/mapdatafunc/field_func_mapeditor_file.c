@@ -8,6 +8,8 @@
 //============================================================================================
 #include "gflib.h"
 
+#include "../field_buildmodel.h"
+#include "../field_g3dmap_exwork.h"	// GFL_G3D_MAPŠg’£ƒ[ƒN
 #include "field_func_mapeditor_file.h"
 
 //============================================================================================
@@ -41,6 +43,7 @@ enum {
 
 BOOL FieldLoadMapData_MapEditorFile( GFL_G3D_MAP* g3Dmap, void * exWork )
 {
+	FLD_G3D_MAP_EXWORK* p_exwork = exWork;	// GFL_G3D_MAPŠg’£ƒ[ƒN
 	GFL_G3D_MAP_LOAD_STATUS* ldst;
 
 	GFL_G3D_MAP_GetLoadStatusPointer( g3Dmap, &ldst );
@@ -88,15 +91,10 @@ BOOL FieldLoadMapData_MapEditorFile( GFL_G3D_MAP* g3Dmap, void * exWork )
 				PositionSt* objStatus = (PositionSt*)&layout->posData;
 				GFL_G3D_MAP_GLOBALOBJ_ST status;
 				int i, count = layout->count;
+        FIELD_BMODEL_MAN * bm = FLD_G3D_MAP_EXWORK_GetBModelMan(p_exwork);
 
 				for( i=0; i<count; i++ ){
-					status.id = objStatus[i].resourceID;
-					VEC_Set( &status.trans, 
-							objStatus[i].xpos, objStatus[i].ypos, -objStatus[i].zpos );
-					//DirectX‚ÆDS‚ÅÀ•WŒn‚ª‹t‚¾‚©‚çH‚Æ‚è‚ ‚¦‚¸•ÏŠ·
-					status.rotate = 0x10000 - objStatus[i].rotate;
-					//OS_Printf("bm id = %d, rotate = %04x\n",i, status.rotate);
-					GFL_G3D_MAP_ResistGlobalObj( g3Dmap, &status, i );
+          FIELD_BMODEL_MAN_ResistMapObject(bm, g3Dmap, &objStatus[i], i);
 				}
 			}
 		}
