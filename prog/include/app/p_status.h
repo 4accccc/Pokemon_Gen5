@@ -13,6 +13,7 @@
 #include "poke_tool/pokeparty.h"
 #include "savedata/config.h"
 
+
 //-----------------------------------------------
 //ˆÈ‰ºGS‚æ‚èˆÚA(09/07/01)
 //enum‚Étypedef‚ÅŒ^’Ç‰Á
