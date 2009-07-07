@@ -1,14 +1,26 @@
 CONCAT_TARGET = \
-	$(DIR_LANDRES)/map23_25.bin $(DIR_LANDRES)/map23_25.imd \
-	$(DIR_LANDRES)/map22_25.bin $(DIR_LANDRES)/map22_25.imd \
-	$(DIR_LANDRES)/map22_24.bin $(DIR_LANDRES)/map22_24.imd \
-	$(DIR_LANDRES)/map23_24.bin $(DIR_LANDRES)/map23_24.imd \
+	$(DIR_LANDRES)/map24_23.bin $(DIR_LANDRES)/map24_23.imd \
 	$(DIR_LANDRES)/map23_23.bin $(DIR_LANDRES)/map23_23.imd \
 	$(DIR_LANDRES)/map23_22.bin $(DIR_LANDRES)/map23_22.imd \
-	$(DIR_LANDRES)/map22_22.bin $(DIR_LANDRES)/map22_22.imd \
-	$(DIR_LANDRES)/map22_21.bin $(DIR_LANDRES)/map22_21.imd \
-	$(DIR_LANDRES)/map23_21.bin $(DIR_LANDRES)/map23_21.imd \
+	$(DIR_LANDRES)/map24_22.bin $(DIR_LANDRES)/map24_22.imd \
+	$(DIR_LANDRES)/map24_21.bin $(DIR_LANDRES)/map24_21.imd \
+	$(DIR_LANDRES)/map24_20.bin $(DIR_LANDRES)/map24_20.imd \
 	$(DIR_LANDRES)/map23_20.bin $(DIR_LANDRES)/map23_20.imd \
+	$(DIR_LANDRES)/map23_19.bin $(DIR_LANDRES)/map23_19.imd \
+	$(DIR_LANDRES)/map24_19.bin $(DIR_LANDRES)/map24_19.imd \
+	$(DIR_LANDRES)/map25_18.bin $(DIR_LANDRES)/map25_18.imd \
+	$(DIR_LANDRES)/map24_18.bin $(DIR_LANDRES)/map24_18.imd \
+	$(DIR_LANDRES)/map23_18.bin $(DIR_LANDRES)/map23_18.imd \
+	$(DIR_LANDRES)/map23_17.bin $(DIR_LANDRES)/map23_17.imd \
+	$(DIR_LANDRES)/map22_17.bin $(DIR_LANDRES)/map22_17.imd \
+	$(DIR_LANDRES)/map21_17.bin $(DIR_LANDRES)/map21_17.imd \
+	$(DIR_LANDRES)/map21_18.bin $(DIR_LANDRES)/map21_18.imd \
+	$(DIR_LANDRES)/map22_18.bin $(DIR_LANDRES)/map22_18.imd \
+	$(DIR_LANDRES)/map20_18.bin $(DIR_LANDRES)/map20_18.imd \
+	$(DIR_LANDRES)/map19_18.bin $(DIR_LANDRES)/map19_18.imd \
+	$(DIR_LANDRES)/map18_18.bin $(DIR_LANDRES)/map18_18.imd \
+	$(DIR_LANDRES)/map19_19.bin $(DIR_LANDRES)/map19_19.imd \
+	$(DIR_LANDRES)/map18_19.bin $(DIR_LANDRES)/map18_19.imd \
 	$(DIR_LANDRES)/map22_20.bin $(DIR_LANDRES)/map22_20.imd \
 	$(DIR_LANDRES)/map21_20.bin $(DIR_LANDRES)/map21_20.imd \
 	$(DIR_LANDRES)/map20_20.bin $(DIR_LANDRES)/map20_20.imd \
@@ -19,14 +31,34 @@ CONCAT_TARGET = \
 	$(DIR_LANDRES)/map16_19.bin $(DIR_LANDRES)/map16_19.imd \
 	$(DIR_LANDRES)/map15_19.bin $(DIR_LANDRES)/map15_19.imd \
 	$(DIR_LANDRES)/map15_20.bin $(DIR_LANDRES)/map15_20.imd \
+	$(DIR_LANDRES)/map23_25.bin $(DIR_LANDRES)/map23_25.imd \
+	$(DIR_LANDRES)/map22_25.bin $(DIR_LANDRES)/map22_25.imd \
+	$(DIR_LANDRES)/map22_24.bin $(DIR_LANDRES)/map22_24.imd \
+	$(DIR_LANDRES)/map23_24.bin $(DIR_LANDRES)/map23_24.imd \
+	$(DIR_LANDRES)/map23_22.bin $(DIR_LANDRES)/map23_22.imd \
+	$(DIR_LANDRES)/map22_22.bin $(DIR_LANDRES)/map22_22.imd \
+	$(DIR_LANDRES)/map22_23.bin $(DIR_LANDRES)/map22_23.imd \
+	$(DIR_LANDRES)/map21_22.bin $(DIR_LANDRES)/map21_22.imd \
+	$(DIR_LANDRES)/map21_23.bin $(DIR_LANDRES)/map21_23.imd \
+	$(DIR_LANDRES)/map19_22.bin $(DIR_LANDRES)/map19_22.imd \
+	$(DIR_LANDRES)/map20_22.bin $(DIR_LANDRES)/map20_22.imd \
+	$(DIR_LANDRES)/map19_23.bin $(DIR_LANDRES)/map19_23.imd \
+	$(DIR_LANDRES)/map20_23.bin $(DIR_LANDRES)/map20_23.imd \
+	$(DIR_LANDRES)/map22_21.bin $(DIR_LANDRES)/map22_21.imd \
+	$(DIR_LANDRES)/map23_21.bin $(DIR_LANDRES)/map23_21.imd \
 	$(DIR_LANDRES)/map12_16.bin $(DIR_LANDRES)/map12_16.imd \
-	$(DIR_LANDRES)/map12_17.bin $(DIR_LANDRES)/map12_17.imd \
 	$(DIR_LANDRES)/map13_16.bin $(DIR_LANDRES)/map13_16.imd \
-	$(DIR_LANDRES)/map13_17.bin $(DIR_LANDRES)/map13_17.imd \
-	$(DIR_LANDRES)/map12_15.bin $(DIR_LANDRES)/map12_15.imd \
 	$(DIR_LANDRES)/map13_15.bin $(DIR_LANDRES)/map13_15.imd \
-	$(DIR_LANDRES)/map13_14.bin $(DIR_LANDRES)/map13_14.imd \
+	$(DIR_LANDRES)/map12_17.bin $(DIR_LANDRES)/map12_17.imd \
+	$(DIR_LANDRES)/map13_17.bin $(DIR_LANDRES)/map13_17.imd \
+	$(DIR_LANDRES)/map13_18.bin $(DIR_LANDRES)/map13_18.imd \
+	$(DIR_LANDRES)/map12_18.bin $(DIR_LANDRES)/map12_18.imd \
+	$(DIR_LANDRES)/map12_15.bin $(DIR_LANDRES)/map12_15.imd \
+	$(DIR_LANDRES)/map11_15.bin $(DIR_LANDRES)/map11_15.imd \
+	$(DIR_LANDRES)/map12_13.bin $(DIR_LANDRES)/map12_13.imd \
+	$(DIR_LANDRES)/map13_13.bin $(DIR_LANDRES)/map13_13.imd \
 	$(DIR_LANDRES)/map12_14.bin $(DIR_LANDRES)/map12_14.imd \
+	$(DIR_LANDRES)/map13_14.bin $(DIR_LANDRES)/map13_14.imd \
 	$(DIR_LANDRES)/map11_14.bin $(DIR_LANDRES)/map11_14.imd \
 	$(DIR_LANDRES)/map11_13.bin $(DIR_LANDRES)/map11_13.imd \
 	$(DIR_LANDRES)/map10_13.bin $(DIR_LANDRES)/map10_13.imd \
@@ -34,13 +66,13 @@ CONCAT_TARGET = \
 	$(DIR_LANDRES)/map15_13.bin $(DIR_LANDRES)/map15_13.imd \
 	$(DIR_LANDRES)/map12_12.bin $(DIR_LANDRES)/map12_12.imd \
 	$(DIR_LANDRES)/map13_12.bin $(DIR_LANDRES)/map13_12.imd \
-	$(DIR_LANDRES)/map12_13.bin $(DIR_LANDRES)/map12_13.imd \
-	$(DIR_LANDRES)/map13_13.bin $(DIR_LANDRES)/map13_13.imd \
 	$(DIR_LANDRES)/map07_14.bin $(DIR_LANDRES)/map07_14.imd \
 	$(DIR_LANDRES)/map07_13.bin $(DIR_LANDRES)/map07_13.imd \
 	$(DIR_LANDRES)/map06_13.bin $(DIR_LANDRES)/map06_13.imd \
 	$(DIR_LANDRES)/map05_12.bin $(DIR_LANDRES)/map05_12.imd \
 	$(DIR_LANDRES)/map05_13.bin $(DIR_LANDRES)/map05_13.imd \
+	$(DIR_LANDRES)/map06_12.bin $(DIR_LANDRES)/map06_12.imd \
+	$(DIR_LANDRES)/map05_14.bin $(DIR_LANDRES)/map05_14.imd \
 	$(DIR_LANDRES)/map04_12.bin $(DIR_LANDRES)/map04_12.imd \
 	$(DIR_LANDRES)/map04_11.bin $(DIR_LANDRES)/map04_11.imd \
 	$(DIR_LANDRES)/map03_11.bin $(DIR_LANDRES)/map03_11.imd \
@@ -67,6 +99,37 @@ CONCAT_TARGET = \
 	$(DIR_LANDRES)/map12_05.bin $(DIR_LANDRES)/map12_05.imd \
 	$(DIR_LANDRES)/map13_04.bin $(DIR_LANDRES)/map13_04.imd \
 	$(DIR_LANDRES)/map13_05.bin $(DIR_LANDRES)/map13_05.imd \
+	$(DIR_LANDRES)/map12_03.bin $(DIR_LANDRES)/map12_03.imd \
+	$(DIR_LANDRES)/map13_03.bin $(DIR_LANDRES)/map13_03.imd \
+	$(DIR_LANDRES)/map14_03.bin $(DIR_LANDRES)/map14_03.imd \
+	$(DIR_LANDRES)/map15_03.bin $(DIR_LANDRES)/map15_03.imd \
+	$(DIR_LANDRES)/map18_05.bin $(DIR_LANDRES)/map18_05.imd \
+	$(DIR_LANDRES)/map19_05.bin $(DIR_LANDRES)/map19_05.imd \
+	$(DIR_LANDRES)/map20_05.bin $(DIR_LANDRES)/map20_05.imd \
+	$(DIR_LANDRES)/map21_04.bin $(DIR_LANDRES)/map21_04.imd \
+	$(DIR_LANDRES)/map21_05.bin $(DIR_LANDRES)/map21_05.imd \
+	$(DIR_LANDRES)/map21_06.bin $(DIR_LANDRES)/map21_06.imd \
+	$(DIR_LANDRES)/map21_07.bin $(DIR_LANDRES)/map21_07.imd \
+	$(DIR_LANDRES)/map21_08.bin $(DIR_LANDRES)/map21_08.imd \
+	$(DIR_LANDRES)/map20_06.bin $(DIR_LANDRES)/map20_06.imd \
+	$(DIR_LANDRES)/map22_07.bin $(DIR_LANDRES)/map22_07.imd \
+	$(DIR_LANDRES)/map22_08.bin $(DIR_LANDRES)/map22_08.imd \
+	$(DIR_LANDRES)/map23_08.bin $(DIR_LANDRES)/map23_08.imd \
+	$(DIR_LANDRES)/map22_09.bin $(DIR_LANDRES)/map22_09.imd \
+	$(DIR_LANDRES)/map23_09.bin $(DIR_LANDRES)/map23_09.imd \
+	$(DIR_LANDRES)/map22_10.bin $(DIR_LANDRES)/map22_10.imd \
+	$(DIR_LANDRES)/map23_10.bin $(DIR_LANDRES)/map23_10.imd \
+	$(DIR_LANDRES)/map21_11.bin $(DIR_LANDRES)/map21_11.imd \
+	$(DIR_LANDRES)/map22_11.bin $(DIR_LANDRES)/map22_11.imd \
+	$(DIR_LANDRES)/map19_13.bin $(DIR_LANDRES)/map19_13.imd \
+	$(DIR_LANDRES)/map18_13.bin $(DIR_LANDRES)/map18_13.imd \
+	$(DIR_LANDRES)/map09_23.bin $(DIR_LANDRES)/map09_23.imd \
+	$(DIR_LANDRES)/map12_23.bin $(DIR_LANDRES)/map12_23.imd \
+	$(DIR_LANDRES)/map01_01.bin $(DIR_LANDRES)/map01_01.imd \
+	$(DIR_LANDRES)/map01_02.bin $(DIR_LANDRES)/map01_02.imd \
+	$(DIR_LANDRES)/map01_03.bin $(DIR_LANDRES)/map01_03.imd \
+	$(DIR_LANDRES)/map01_04.bin $(DIR_LANDRES)/map01_04.imd \
+	$(DIR_LANDRES)/map01_05.bin $(DIR_LANDRES)/map01_05.imd \
 	$(DIR_LANDRES)/map_outgrass.bin $(DIR_LANDRES)/map_outgrass.imd \
 	$(DIR_LANDRES)/map_outtree.bin $(DIR_LANDRES)/map_outtree.imd \
 	$(DIR_LANDRES)/testroom00_00.bin $(DIR_LANDRES)/testroom00_00.imd \
@@ -106,8 +169,6 @@ CONCAT_TARGET = \
 	$(DIR_LANDRES)/palace_test00_00.bin $(DIR_LANDRES)/palace_test00_00.imd \
 	$(DIR_LANDRES)/palace_test01_00.bin $(DIR_LANDRES)/palace_test01_00.imd \
 	$(DIR_LANDRES)/palace_test02_00.bin $(DIR_LANDRES)/palace_test02_00.imd \
-	$(DIR_LANDRES)/map12_03.bin $(DIR_LANDRES)/map12_03.imd \
-	$(DIR_LANDRES)/map13_03.bin $(DIR_LANDRES)/map13_03.imd \
 	$(DIR_LANDRES)/h01b_00_00.bin $(DIR_LANDRES)/h01b_00_00.imd \
 	$(DIR_LANDRES)/bctest_00_00.bin $(DIR_LANDRES)/bctest_00_00.imd \
 	$(DIR_LANDRES)/bctest_01_00.bin $(DIR_LANDRES)/bctest_01_00.imd \
@@ -176,6 +237,27 @@ CONCAT_TARGET = \
 	$(DIR_LANDRES)/m_dun0501_01_00.bin $(DIR_LANDRES)/m_dun0501_01_00.imd \
 	$(DIR_LANDRES)/m_dun0501_00_01.bin $(DIR_LANDRES)/m_dun0501_00_01.imd \
 	$(DIR_LANDRES)/m_dun0501_01_01.bin $(DIR_LANDRES)/m_dun0501_01_01.imd \
+	$(DIR_LANDRES)/m_dun0701_00_00.bin $(DIR_LANDRES)/m_dun0701_00_00.imd \
+	$(DIR_LANDRES)/m_dun0701_01_00.bin $(DIR_LANDRES)/m_dun0701_01_00.imd \
+	$(DIR_LANDRES)/m_dun0701_00_01.bin $(DIR_LANDRES)/m_dun0701_00_01.imd \
+	$(DIR_LANDRES)/m_dun0701_01_01.bin $(DIR_LANDRES)/m_dun0701_01_01.imd \
+	$(DIR_LANDRES)/m_dun0702_00_00.bin $(DIR_LANDRES)/m_dun0702_00_00.imd \
+	$(DIR_LANDRES)/m_dun0702_01_00.bin $(DIR_LANDRES)/m_dun0702_01_00.imd \
+	$(DIR_LANDRES)/m_dun0702_00_01.bin $(DIR_LANDRES)/m_dun0702_00_01.imd \
+	$(DIR_LANDRES)/m_dun0702_01_01.bin $(DIR_LANDRES)/m_dun0702_01_01.imd \
+	$(DIR_LANDRES)/m_dun0703_00_00.bin $(DIR_LANDRES)/m_dun0703_00_00.imd \
+	$(DIR_LANDRES)/m_dun0703_01_00.bin $(DIR_LANDRES)/m_dun0703_01_00.imd \
+	$(DIR_LANDRES)/m_dun0703_00_01.bin $(DIR_LANDRES)/m_dun0703_00_01.imd \
+	$(DIR_LANDRES)/m_dun0703_01_01.bin $(DIR_LANDRES)/m_dun0703_01_01.imd \
+	$(DIR_LANDRES)/m_dun0704_00_00.bin $(DIR_LANDRES)/m_dun0704_00_00.imd \
+	$(DIR_LANDRES)/m_dun0704_01_00.bin $(DIR_LANDRES)/m_dun0704_01_00.imd \
+	$(DIR_LANDRES)/m_dun0704_00_01.bin $(DIR_LANDRES)/m_dun0704_00_01.imd \
+	$(DIR_LANDRES)/m_dun0704_01_01.bin $(DIR_LANDRES)/m_dun0704_01_01.imd \
+	$(DIR_LANDRES)/m_dun0705_00_00.bin $(DIR_LANDRES)/m_dun0705_00_00.imd \
+	$(DIR_LANDRES)/m_dun0706_00_00.bin $(DIR_LANDRES)/m_dun0706_00_00.imd \
+	$(DIR_LANDRES)/m_dun0706_01_00.bin $(DIR_LANDRES)/m_dun0706_01_00.imd \
+	$(DIR_LANDRES)/m_dun0706_00_01.bin $(DIR_LANDRES)/m_dun0706_00_01.imd \
+	$(DIR_LANDRES)/m_dun0706_01_01.bin $(DIR_LANDRES)/m_dun0706_01_01.imd \
 	$(DIR_LANDRES)/m_ruin01_00_00.bin $(DIR_LANDRES)/m_ruin01_00_00.imd \
 	$(DIR_LANDRES)/m_gate01_00_00.bin $(DIR_LANDRES)/m_gate01_00_00.imd \
 	$(DIR_LANDRES)/m_pc01_00_00.bin $(DIR_LANDRES)/m_pc01_00_00.imd \
