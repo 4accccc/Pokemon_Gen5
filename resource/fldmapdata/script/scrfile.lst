@@ -18,4 +18,5 @@ SCRSRCS	=\
 	t01r0301.ev	\
 	t01r0401.ev	\
 	t02.ev	\
-	t02pc0101.ev	
+	t02pc0101.ev	\
+	trainer.ev	

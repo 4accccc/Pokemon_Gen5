@@ -124,8 +124,6 @@ DEF_CMD_COUNT	=	( DEF_CMD_COUNT + 1 )
 	DEF_CMD	EV_SEQ_TRAINER_BGM_SET
 	DEF_CMD	EV_SEQ_LOSE
 	DEF_CMD	EV_SEQ_LOSE_CHECK
-	DEF_CMD	EV_SEQ_LOSE
-	DEF_CMD	EV_SEQ_LOSE_CHECK
 	DEF_CMD	EV_SEQ_SEACRET_POKE_RETRY_CHECK
 	DEF_CMD	EV_SEQ_HAIFU_POKE_RETRY_CHECK
 	DEF_CMD	EV_SEQ_2VS2_BATTLE_CHECK
@@ -133,6 +131,11 @@ DEF_CMD_COUNT	=	( DEF_CMD_COUNT + 1 )
 	DEF_CMD	EV_SEQ_BATTLE_RESULT_GET
   
   DEF_CMD EV_SEQ_MOVE_CODE_GET
+  
+  //trainer flag
+	DEF_CMD EV_SEQ_TRAINER_FLAG_SET
+	DEF_CMD EV_SEQ_TRAINER_FLAG_RESET
+	DEF_CMD EV_SEQ_TRAINER_FLAG_CHECK
 
 //======================================================================
 /**
@@ -706,6 +709,25 @@ DEF_CMD_COUNT	=	( DEF_CMD_COUNT + 1 )
 
 //--------------------------------------------------------------
 /**
+ *	POS,SCENE_CHANGE_LABELに対して開始
+ *	(TALK_STARTを使用すると、会話開始の音がなってしまうので分けた)
+ */
+//--------------------------------------------------------------
+	.macro	_EVENT_START
+	_OBJ_PAUSE_ALL
+	.endm
+
+//--------------------------------------------------------------
+/**
+ *	POS,SCENE_CHANGE_LABELに対して終了
+ */
+//--------------------------------------------------------------
+	.macro	_EVENT_END
+	_OBJ_PAUSE_CLEAR_ALL
+	.endm
+
+//--------------------------------------------------------------
+/**
  *	OBJに対して話し掛け開始(主人公に対して振り向き無し)
  */
 //--------------------------------------------------------------
@@ -1215,4 +1237,62 @@ DEF_CMD_COUNT	=	( DEF_CMD_COUNT + 1 )
 	.short	EV_SEQ_MOVE_CODE_GET
 	.short	\ret_wk
 	.short	\obj_id
+	.endm
+
+
+//======================================================================
+//  トレーナーフラグ
+//======================================================================
+//-----------------------------------------------------------------------------
+/**
+ *	トレーナーフラグのセット
+ */
+//-----------------------------------------------------------------------------
+	.macro	_TRAINER_FLAG_SET tr_id
+	.short	EV_SEQ_TRAINER_FLAG_SET
+	.short	\tr_id
+	.endm
+
+//-----------------------------------------------------------------------------
+/**
+ *	トレーナーフラグのリセット
+ */
+//-----------------------------------------------------------------------------
+	.macro	_TRAINER_FLAG_RESET tr_id
+	.short	EV_SEQ_TRAINER_FLAG_RESET
+	.short	\tr_id
+	.endm
+
+//-----------------------------------------------------------------------------
+/**
+ *	トレーナーフラグチェック
+ */
+//-----------------------------------------------------------------------------
+	.macro	_TRAINER_FLAG_CHECK tr_id
+	.short	EV_SEQ_TRAINER_FLAG_CHECK
+	.short	\tr_id
+	.endm
+
+	//フラグONの時に分岐(JUMP)
+	.macro	_IF_TR_FLAGON_JUMP tr_id,adrs
+	_TRAINER_FLAG_CHECK \tr_id
+	_IF_JUMP	FLGON,\adrs
+	.endm
+
+	//フラグOFFの時に分岐(JUMP)
+	.macro	_IF_TR_FLAGOFF_JUMP tr_id,adrs
+	_TRAINER_FLAG_CHECK \tr_id
+	_IF_JUMP	FLGOFF,\adrs
+	.endm
+
+	//フラグONの時に分岐(CALL)
+	.macro	_IF_TR_FLAGON_CALL tr_id,adrs
+	_TRAINER_FLAG_CHECK \tr_id
+	_IF_CALL	FLGON,\adrs
+	.endm
+
+	//フラグOFFの時に分岐(CALL)
+	.macro	_IF_TR_FLAGOFF_CALL tr_id,adrs
+	_TRAINER_FLAG_CHECK \tr_id
+	_IF_CALL	FLGOFF,\adrs
 	.endm

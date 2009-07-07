@@ -30,7 +30,8 @@ enum {
 	NARC_script_seq_t01r0301_bin = 16,
 	NARC_script_seq_t01r0401_bin = 17,
 	NARC_script_seq_t02_bin = 18,
-	NARC_script_seq_t02pc0101_bin = 19
+	NARC_script_seq_t02pc0101_bin = 19,
+	NARC_script_seq_trainer_bin = 20
 };
 
 /* NARC_SCRIPT_SEQ_NAIX_ */
