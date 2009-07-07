@@ -7,6 +7,7 @@
  */
 //======================================================================
 #include <gflib.h>
+#include "system/main.h"
 
 #include "fieldmap.h"
 #include "fldmmdl.h"
@@ -14,12 +15,12 @@
 
 #include "event_trainer_eye.h"
 
+#include "../../../resource/fldmapdata/script/trainer_def.h" //SCRID_TRAINER_MOVE_BATTLE 
+
 //======================================================================
 //  define
 //======================================================================
 #define EYE_CHECK_NOHIT (-1) ///<視線範囲チェック ヒット無し
-
-#define SCRID_TRAINER_MOVE_BATTLE 0 //kari
 
 #define EYE_MEET_GYOE_END_WAIT (30) ///<!マーク出現後の間　フレーム単位
 #define EYE_MEET_MOVE_END_WAIT (8) ///<視線移動後の間　フレーム単位
@@ -208,6 +209,10 @@ static BOOL treye_CheckEyeMeet(
       {
         if( tr_CheckEventFlag(fieldMap,mmdl) == FALSE )
         {
+#ifdef DEBUG_ONLY_FOR_kagaya
+          KAGAYA_Printf( "視線ヒット ヒットしたトレーナーID =%d\n",
+              tr_GetTrainerID(mmdl) );
+#endif
           tr_InitEyeMeetHitData( hit, mmdl, range, dir );
           return( TRUE );
         }
@@ -485,22 +490,26 @@ static int eyeMeetMove_JikiMoveWait( EV_EYEMEET_MOVE_WORK *work )
 {
   MMDL *j_mmdl = FIELD_PLAYER_GetMMdl( work->fieldPlayer );
   
-  if( MMDL_CheckEndAcmd(j_mmdl) == TRUE )
+  if( MMDL_CheckEndAcmd(j_mmdl) == FALSE ){
+    return( FALSE );
+  }
+  
+  work->seq_no = SEQNO_TRMOVE_DIR_CHANGE;
+
   {
     u32 code = MMDL_GetMoveCode( work->mmdl );
     KAGAYA_Printf( "トレーナー動作コード=0x%x\n", code );
     
-    switch( code ){
+    switch( code )
+    {
     case MV_HIDE_SNOW:
     case MV_HIDE_SAND:
     case MV_HIDE_GRND:
     case MV_HIDE_KUSA:
       work->seq_no = SEQNO_TRMOVE_HIDE_PULLOFF_SET;
-      return( TRUE );
     }
   }
-  
-  work->seq_no = SEQNO_TRMOVE_DIR_CHANGE;
+   
   return( TRUE );
 }
 
@@ -756,7 +765,7 @@ static int eyeMeetMove_JikiTurn( EV_EYEMEET_MOVE_WORK *work )
 {
   MMDL *j_mmdl = FIELD_PLAYER_GetMMdl( work->fieldPlayer );
   
-  if( MMDL_CheckEndAcmd(j_mmdl) == TRUE ){
+  if( MMDL_CheckEndAcmd(j_mmdl) == FALSE ){
     return( FALSE );
   }
   
@@ -1022,7 +1031,7 @@ static GMEVENT * tr_SetEventScript( FIELDMAP_WORK *fieldMap, MMDL *mmdl )
   param.fieldMap = fieldMap;
   param.msgBG = FIELDMAP_GetFldMsgBG( fieldMap );
   event = SCRIPT_SetEventScript(
-      gsys, SCRID_TRAINER_MOVE_BATTLE, mmdl, heapID, &param );
+      gsys, SCRID_TRAINER_MOVE_BATTLE, mmdl, GFL_HEAPID_APP, &param );
   return( event );
 }
 

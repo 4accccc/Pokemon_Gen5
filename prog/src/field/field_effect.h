@@ -25,11 +25,12 @@
 //--------------------------------------------------------------
 typedef enum
 {
-  FLDEFF_PROCID_SHADOW = 0,
-  FLDEFF_PROCID_KEMURI,
-  FLDEFF_PROCID_GRASS,
-  FLDEFF_PROCID_NAMIPOKE,
-  FLDEFF_PROCID_MAX,
+  FLDEFF_PROCID_SHADOW = 0, ///<影
+  FLDEFF_PROCID_KEMURI, ///<土煙エフェクト
+  FLDEFF_PROCID_GRASS, ///<草エフェクト
+  FLDEFF_PROCID_NAMIPOKE, ///<波乗りポケモン
+  FLDEFF_PROCID_GYOE, ///<びっくりマーク
+  FLDEFF_PROCID_MAX, ///<最大
 }FLDEFF_PROCID;
 
 //======================================================================

@@ -19,30 +19,15 @@
 //  script.cの読み込むスクリプトファイル、
 //  メッセージファイルを対応させて下さい。
 //======================================================================
-//ダミースクリプトID
-//#define SCRID_NULL                 (0)
-
-//開始スクリプトIDのオフセット
-#define ID_START_SCR_OFFSET          (1)
-
-//共通スクリプトIDのオフセット
-#define ID_COMMON_SCR_OFFSET         (2000)
-//共通スクリプトIDのオフセット終了
-#define ID_COMMON_SCR_OFFSET_END     (2499)
-
-//トレーナースクリプトIDのオフセット
-#define ID_TRAINER_OFFSET            (3000)
-//トレーナースクリプトIDのオフセット終了
-#define ID_TRAINER_OFFSET_END        (4999)
-
-//2vs2トレーナースクリプトIDのオフセット
-#define ID_TRAINER_2VS2_OFFSET       (5000)
-//2vs2トレーナースクリプトIDのオフセット終了
-#define ID_TRAINER_2VS2_OFFSET_END   (6999)
-
-//隠しアイテムスクリプトIDのオフセット
-#define ID_HIDE_ITEM_OFFSET          (8000)
-//隠しアイテムスクリプトIDのオフセット終了
-#define ID_HIDE_ITEM_OFFSET_END      (8799)
+//#define SCRID_NULL                 (0) //ダミースクリプトID
+#define ID_START_SCR_OFFSET          (1) //開始スクリプトIDのオフセット
+#define ID_COMMON_SCR_OFFSET         (2000) //共通スクリプトIDのオフセット
+#define ID_COMMON_SCR_OFFSET_END     (2499) //共通スクリプトIDのオフセット終了
+#define ID_TRAINER_OFFSET            (3000) //トレーナースクリプトIDのオフセット
+#define ID_TRAINER_OFFSET_END        (4999) //トレーナースクリプトIDのオフセット終了
+#define ID_TRAINER_2VS2_OFFSET       (5000) //2vs2トレーナースクリプトIDのオフセット
+#define ID_TRAINER_2VS2_OFFSET_END   (6999) //2vs2トレーナースクリプトIDのオフセット終了
+#define ID_HIDE_ITEM_OFFSET          (8000) //隠しアイテムスクリプトIDのオフセット
+#define ID_HIDE_ITEM_OFFSET_END      (8799) //隠しアイテムスクリプトIDのオフセット終了
 
 #endif  /* SCR_OFFSET_H */

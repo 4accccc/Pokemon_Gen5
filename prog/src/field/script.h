@@ -144,7 +144,9 @@ enum{
 	ID_EVSCR_WK_HEAPID,
 	//SCRIPT_FLDPARAM
 	ID_EVSCR_WK_FLDPARAM,
-	
+	//GMEVENT
+  ID_EVSCR_WK_GMEVENT,
+
 	ID_EVSCR_WK_END,				//ÉèÅ[ÉNÇÃèIóπID
 };
 
@@ -515,7 +517,11 @@ extern BOOL SCRIPT_CheckEventFlagTrainer( EVENTWORK *ev, u16 tr_id );
  * @return	none
  */
 //------------------------------------------------------------------
+#ifndef SCRIPT_PL_NULL
 extern void SetEventFlagTrainer( FLDCOMMON_WORK* fsys, u16 tr_id );
+#else
+extern void SCRIPT_SetEventFlagTrainer( EVENTWORK *ev, u16 tr_id );
+#endif
 
 //------------------------------------------------------------------
 /**
@@ -527,8 +533,11 @@ extern void SetEventFlagTrainer( FLDCOMMON_WORK* fsys, u16 tr_id );
  * @return	none
  */
 //------------------------------------------------------------------
+#ifndef SCRIPT_PL_NULL
 extern void ResetEventFlagTrainer( FLDCOMMON_WORK* fsys, u16 tr_id );
-
+#else
+extern void SCRIPT_ResetEventFlagTrainer( EVENTWORK *ev, u16 tr_id );
+#endif
 
 //======================================================================
 //

@@ -1474,6 +1474,33 @@ static void fldmapMain_MMDL_Init( FIELDMAP_WORK *fieldWork )
   }else{
     MMDLSYS_SetJoinShadow( fmmdlsys, FALSE );
   }
+  
+#ifdef DEBUG_ONLY_FOR_kagaya
+  #define OBJID_TEST_TRAINER (128)
+  #include "../../../resource/fldmapdata/script/trainer_def.h"
+  
+  if( fieldWork->location.zone_id == ZONE_ID_T01 )
+  {
+    MMDLSYS *mmdlsys = fieldWork->fldMMdlSys;
+    
+    if( MMDLSYS_SearchOBJID(mmdlsys,OBJID_TEST_TRAINER) == NULL )
+    {
+      MMDL_HEADER head =
+      {
+        OBJID_TEST_TRAINER,
+        BOY1,
+        MV_DOWN,
+        EV_TYPE_TRAINER, 0, SCRID_TANPAN_01,
+        DIR_DOWN,
+        4, 0, 0,
+        0, 0,
+        753,814,0,
+      };
+      
+      MMDLSYS_AddMMdl( mmdlsys, &head, ZONE_ID_T01 );
+    }
+  }
+#endif
 }
 
 //--------------------------------------------------------------

@@ -1192,6 +1192,7 @@ static u16 DEBUG_ASCIICODE_UTF16( u8 code )
 #if 0	
 	GF_ASSERT( 0 );
 #else
+  OS_Printf( "–¢‘Î‰ž•¶Žš CODE=%d\n", code );
 	return( GFL_STR_GetEOMCode() );
 #endif
 }

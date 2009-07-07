@@ -10,6 +10,9 @@
 #include "system/gfl_use.h"
 #include "system/vm_cmd.h"
 
+#include "gamesystem/gamesystem.h"
+#include "gamesystem/game_event.h"
+
 #include "fieldmap.h"
 
 #include "script.h"
@@ -22,6 +25,8 @@
 #include "event_trainer_eye.h"
 
 #include "poke_tool/trainer_tool.h"		//TT_TrainerMessageGet
+
+#include "event_battle.h"
 
 #if 0
 #include "battle/battle_common.h"	//↓インクルードに必要
@@ -275,6 +280,7 @@ VMCMD_RESULT EvCmdEyeTrainerIdGet( VMHANDLE *core, void *wk )
 	u16 pos = VMGetWorkValue( core, work ); //視線データの0,1か？
 	u16 *ret_wk		= VMGetWork( core, work );
 	*ret_wk = (pos == SCR_EYE_TR_0) ? (*tr_id_0) : (*tr_id_1);
+  KAGAYA_Printf( "視線トレーナーID取得 %d\n", *ret_wk );
 	return 0;
 }
 
@@ -310,7 +316,7 @@ VMCMD_RESULT EvCmdTrainerIdGet( VMHANDLE *core, void *wk )
 //--------------------------------------------------------------
 VMCMD_RESULT EvCmdTrainerBattleSet( VMHANDLE *core, void *wk )
 {
-#if 0
+#if 0 //pl null
 	u32 fight_type;
 	FIELDSYS_WORK * fsys	= core->fsys;
 	u16* script_id			= SCRIPT_GetMemberWork( sc, ID_EVSCR_SCRIPT_ID );
@@ -318,7 +324,7 @@ VMCMD_RESULT EvCmdTrainerBattleSet( VMHANDLE *core, void *wk )
 	u16 tr_id_0				= VMGetWorkValue(core);
 	u16 tr_id_1				= VMGetWorkValue(core);
 	u16 partner_id;
-
+  
 	partner_id = 0;
 	if (SysFlag_PairCheck(SaveData_GetEventWork(core->fsys->savedata)) == 1) {
 		partner_id = SysWork_PairTrainerIDGet( SaveData_GetEventWork(fsys->savedata) );
@@ -327,7 +333,30 @@ VMCMD_RESULT EvCmdTrainerBattleSet( VMHANDLE *core, void *wk )
 	EventCmd_TrainerBattle(core->event_work, tr_id_0, tr_id_1, partner_id, HEAPID_WORLD, win_flag);
 	return 1;
 #else
-  return 0;
+  u32 fight_type;
+  SCRCMD_WORK *work = wk;
+  SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
+	u16 *script_id = SCRIPT_GetMemberWork( sc, ID_EVSCR_SCRIPT_ID );
+	VMCMD_RESULT *win_flag = SCRIPT_GetMemberWork( sc, ID_EVSCR_WIN_FLAG );
+	u16 tr_id_0 = VMGetWorkValue( core, work );
+	u16 tr_id_1 = VMGetWorkValue( core, work );
+	u16 partner_id;
+  
+	partner_id = 0;
+	
+  {
+    GAMESYS_WORK **gsys =
+      SCRIPT_GetMemberWork( sc, ID_EVSCR_WK_GAMESYS_WORK );
+    GMEVENT **event =
+      SCRIPT_GetMemberWork( sc, ID_EVSCR_WK_GMEVENT );
+    SCRIPT_FLDPARAM *fparam =
+      SCRIPT_GetMemberWork( sc, ID_EVSCR_WK_FLDPARAM );
+    GMEVENT *ev_battle =
+      DEBUG_EVENT_Battle( *gsys, fparam->fieldMap );
+    
+    GMEVENT_CallEvent( *event, ev_battle );
+  }
+	return 0;
 #endif
 }
 
@@ -493,6 +522,7 @@ VMCMD_RESULT EvCmdTrainerBgmSet( VMHANDLE *core, void *wk )
 	Snd_EyeBgmSet( Snd_EyeBgmGet(tr_id) );
 	return 1;
 #else //wb kari
+  u16 tr_id = VMGetWorkValue(core,wk);
   return 0;
 #endif
 }
@@ -532,7 +562,7 @@ VMCMD_RESULT EvCmdTrainerLoseCheck( VMHANDLE *core, void *wk )
 	OS_Printf( "*ret_wk = %d\n", *ret_wk );
 	return 1;
 #else //wb kari
-  *ret_wk = 0;
+  *ret_wk = 1; //仮で勝利固定
   return 0;
 #endif
 }

@@ -43,6 +43,8 @@
 
 #include "map_attr.h"
 
+#include "event_trainer_eye.h"
+
 //======================================================================
 //======================================================================
 
@@ -152,7 +154,12 @@ GMEVENT * FIELD_EVENT_CheckNormal( GAMESYS_WORK *gsys, void *work )
     /* 今はない */
 
 //☆☆☆トレーナー視線チェックがここに入る
-    /* 今はない */
+  if( !(req.debugRequest) ){
+    event = EVENT_CheckTrainerEye( fieldWork, FALSE );
+    if( event != NULL ){
+      return event;
+    }
+  }
 
 //☆☆☆一歩移動チェックがここから
   //座標イベントチェック

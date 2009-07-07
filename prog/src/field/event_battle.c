@@ -277,7 +277,10 @@ GMEVENT * DEBUG_EVENT_Battle( GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldmap )
     para->partyPartner = NULL;
     //2vs2時の２番目敵AI用（不要ならnull）
     para->partyEnemy2 = NULL;
-
+    
+    //プレイヤーステータス add
+    para->statusPlayer = SaveData_GetMyStatus( SaveControl_GetPointer() );
+    
     //デフォルト時のBGMナンバー
     para->musicDefault = SEQ_WB_BA_TEST_250KB;
     //ピンチ時のBGMナンバー

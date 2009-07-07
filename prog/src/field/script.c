@@ -60,10 +60,10 @@ typedef void (*SCRIPT_EVENTFUNC)(GMEVENT *fsys);
 //  トレーナー視線データ構造体
 //--------------------------------------------------------------
 typedef struct {
-	s16 range;				//視線距離
-	u16 dir;					//移動方向
-	u16 scr_id;				//スクリプトID
-	u16 tr_id;				//トレーナーID
+	int range;				//視線距離
+	int dir;					//移動方向
+	int scr_id;				//スクリプトID
+	int tr_id;				//トレーナーID
 	int tr_type;			//トレーナータイプ
 	MMDL *mmdl;
   GMEVENT *ev_eye_move;
@@ -150,6 +150,8 @@ struct _TAG_SCRIPT_WORK
   u32 zone_id;
 
 	SCRIPT_FLDPARAM fld_param;
+  
+  GMEVENT *gmevent; //スクリプトを実行しているGMEVENT*
 };
 
 //--------------------------------------------------------------
@@ -634,48 +636,36 @@ static u16 SetScriptDataSub( SCRCMD_WORK *work, VMHANDLE* core, u32 zone_id, u16
 {
 	u16 scr_id = id;
 	
-	if( scr_id >= ID_COMMON_SCR_OFFSET ){		//共通スクリプトID
+  if( scr_id >= ID_TRAINER_OFFSET ) //トレーナースクリプトID
+  {
+		SetScriptData( work, core,
+        NARC_script_seq_trainer_bin,
+        NARC_script_message_common_scr_dat, heapID );
+    OS_Printf( "トレーナースクリプトきました\n" );
+		scr_id -= ID_TRAINER_OFFSET;
+  }
+  else if( scr_id >= ID_COMMON_SCR_OFFSET )		//共通スクリプトID
+  {
 		SetScriptData( work, core,
 			NARC_script_seq_common_scr_bin,
 			NARC_script_message_common_scr_dat,
 			heapID );
 		scr_id -= ID_COMMON_SCR_OFFSET;
-	}else if( scr_id >= ID_START_SCR_OFFSET ){ //ローカルスクリプトID
-		#ifndef SCRIPT_PL_NULL
-		SetZoneScriptData( fsys, core );	//ゾーンスクリプトデータセット
-		scr_id -= ID_START_SCR_OFFSET;
-		#else //wb 仮
+	}
+  else if( scr_id >= ID_START_SCR_OFFSET ) //ローカルスクリプトID
+  {
     {
-#if 0
-      u32 idx_script = NARC_script_seq_dummy_scr_bin;
-      u32 idx_msg = NARC_message_common_scr_dat;
-      
-      switch( zone_id ){
-      case ZONE_ID_T01:
-        idx_script = NARC_script_seq_t01_bin;
-        idx_msg = NARC_message_t01_dat;
-        break;
-      case ZONE_ID_MAPSPRING:
-      case ZONE_ID_MAPSUMMER:
-      case ZONE_ID_MAPAUTUMN:
-      case ZONE_ID_MAPWINTER:
-        idx_script = NARC_script_seq_c99_bin;
-        idx_msg = NARC_message_c99_dat;
-        break;
-      }
-#else
       u16 idx_script = ZONEDATA_GetScriptArcID( zone_id );
       u16 idx_msg = ZONEDATA_GetMessageArcID( zone_id );
+	  	SetScriptData( work, core, idx_script, idx_msg, heapID );
+		  scr_id -= ID_START_SCR_OFFSET;
       
       OS_Printf( "ゾーンスクリプト起動 scr_idx = %d, msg_idx = %d\n",
           idx_script, idx_msg );
-      
-#endif
-	  	SetScriptData( work, core, idx_script, idx_msg, heapID );
-		  scr_id -= ID_START_SCR_OFFSET;
     }
-		#endif
-	}else{										//SCRID_NULL(0)が渡された時
+	}
+  else										//SCRID_NULL(0)が渡された時
+  {
 		SetScriptData( work, core,
 			NARC_script_seq_dummy_scr_bin,
 			NARC_script_message_common_scr_dat,
@@ -1005,6 +995,9 @@ void * SCRIPT_GetSubMemberWork( SCRIPT_WORK *sc, u32 id )
 	//SCRIPT_FLDPARAM wb
 	case ID_EVSCR_WK_FLDPARAM:
 		return &sc->fld_param;
+  //GMEVENT   
+  case ID_EVSCR_WK_GMEVENT:
+    return &sc->gmevent;
 	//ビットマップメニューワークのポインタ
 	case ID_EVSCR_MENUWORK:
 		return &sc->mw;
@@ -1227,6 +1220,9 @@ static GMEVENT_RESULT FldScriptEvent_ControlScript(
 	
 	switch( *seq ){
 	case 0:
+    //ワークセット
+    sc->gmevent = event; //イベントセット時に初期化してるが念のため
+
 		//仮想マシン追加
 		sc->vm[VMHANDLE_MAIN] = SCRIPT_AddVMachine(
 				sc->gsys, sc, sc->heapID, sc->script_id );
@@ -1304,6 +1300,7 @@ static GMEVENT * FldScript_CreateControlEvent( SCRIPT_WORK *sc )
 	MI_CpuClear8( ev_sc, sizeof(EVENT_SCRIPT_WORK) );
 	
 	ev_sc->sc = sc;
+  ev_sc->sc->gmevent = event;
 	return event;
 }
 
@@ -1726,13 +1723,18 @@ BOOL SCRIPT_CheckEventFlagTrainer( EVENTWORK *ev, u16 tr_id )
  * @return	none
  */
 //------------------------------------------------------------------
+#ifndef SCRIPT_PL_NULL
 void SetEventFlagTrainer( FLDCOMMON_WORK* fsys, u16 tr_id )
 {
-#ifndef SCRIPT_PL_NULL
 	EventWork_SetEventFlag( SaveData_GetEventWork(fsys->savedata), GET_TRAINER_FLAG(tr_id) );
 	return;
-#endif
 }
+#else
+void SCRIPT_SetEventFlagTrainer( EVENTWORK *ev, u16 tr_id )
+{
+  EVENTWORK_SetEventFlag( ev, GET_TRAINER_FLAG(tr_id) );
+}
+#endif
 
 //------------------------------------------------------------------
 /**
@@ -1750,8 +1752,12 @@ void ResetEventFlagTrainer( FLDCOMMON_WORK* fsys, u16 tr_id )
 	EventWork_ResetEventFlag( SaveData_GetEventWork(fsys->savedata), GET_TRAINER_FLAG(tr_id) );
 	return;
 }
+#else
+void SCRIPT_ResetEventFlagTrainer( EVENTWORK *ev, u16 tr_id )
+{
+	EVENTWORK_ResetEventFlag( ev, GET_TRAINER_FLAG(tr_id) );
+}
 #endif
-
 
 //======================================================================
 //	隠しアイテム関連

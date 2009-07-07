@@ -121,6 +121,12 @@ static VMCMD_RESULT EvCmdLoadWkWkValue( VMHANDLE *core, void *wk );
 
 static VMCMD_RESULT EvCmdMoveCodeGet( VMHANDLE *core, void *wk );
 
+static VMCMD_RESULT EvCmdTrainerFlagSet( VMHANDLE * core, void *wk );
+static VMCMD_RESULT EvCmdTrainerFlagReset( VMHANDLE * core, void *wk );
+static VMCMD_RESULT EvCmdTrainerFlagCheck( VMHANDLE * core, void *wk );
+
+static VMCMD_RESULT EvCmdTrainerMessageSet( VMHANDLE *core, void *wk );
+
 //======================================================================
 //	グローバル変数
 //======================================================================
@@ -223,6 +229,7 @@ const VMCMD_FUNC ScriptCmdTbl[] = {
   EvCmdTrainerIdGet,
   EvCmdTrainerBattleSet,
   EvCmdTrainerMultiBattleSet,
+  EvCmdTrainerMessageSet,
   EvCmdTrainerTalkTypeGet,
   EvCmdRevengeTrainerTalkTypeGet,
   EvCmdTrainerTypeGet,
@@ -236,6 +243,10 @@ const VMCMD_FUNC ScriptCmdTbl[] = {
   EvCmdBattleResultGet,
   
   EvCmdMoveCodeGet,
+  
+  EvCmdTrainerFlagSet,
+  EvCmdTrainerFlagReset,
+  EvCmdTrainerFlagCheck,
 };
 
 //--------------------------------------------------------------
@@ -1821,3 +1832,141 @@ static VMCMD_RESULT EvCmdPlayerName( VMHANDLE * core, void *wk )
 	WORDSET_RegisterPlayerName( *wordset, idx, mystatus );
 	return 0;
 }
+
+//======================================================================
+// トレーナーフラグ関連
+//======================================================================
+//--------------------------------------------------------------
+/**
+ * トレーナーフラグのセット(トレーナーIDを渡す)
+ * @param	core		仮想マシン制御構造体へのポインタ
+ * @return	"0"
+ */
+//--------------------------------------------------------------
+static VMCMD_RESULT EvCmdTrainerFlagSet( VMHANDLE * core, void *wk )
+{
+  SCRCMD_WORK *work = wk;
+  GAMEDATA *gdata = SCRCMD_WORK_GetGameData( work );
+  EVENTWORK *ev = GAMEDATA_GetEventWork( gdata );
+	u16 flag = VMGetWorkValue(core,work);	//トレーナーIDを渡す！　ワークナンバーを渡すのはダメ！
+  SCRIPT_SetEventFlagTrainer( ev, flag );
+  OS_Printf( "トレーナーフラグセット ID=%d", flag );
+	return 0;
+}
+
+//--------------------------------------------------------------
+/**
+ * トレーナーフラグのリセット(トレーナーIDを渡す)
+ * @param	core		仮想マシン制御構造体へのポインタ
+ * @return	"0"
+ */
+//--------------------------------------------------------------
+static VMCMD_RESULT EvCmdTrainerFlagReset( VMHANDLE * core, void *wk )
+{
+  SCRCMD_WORK *work = wk;
+  GAMEDATA *gdata = SCRCMD_WORK_GetGameData( work );
+  EVENTWORK *ev = GAMEDATA_GetEventWork( gdata );
+	u16 flag = VMGetWorkValue(core,work);	//トレーナーIDを渡す！　ワークナンバーを渡すのはダメ！
+	SCRIPT_ResetEventFlagTrainer( ev, flag );
+	return 0;
+}
+
+//--------------------------------------------------------------
+/**
+ * トレーナーフラグのチェック(トレーナーIDを渡す)
+ * @param	core		仮想マシン制御構造体へのポインタ
+ * @return	"0"
+ */
+//--------------------------------------------------------------
+static VMCMD_RESULT EvCmdTrainerFlagCheck( VMHANDLE * core, void *wk )
+{
+  SCRCMD_WORK *work = wk;
+  GAMEDATA *gdata = SCRCMD_WORK_GetGameData( work );
+  EVENTWORK *ev = GAMEDATA_GetEventWork( gdata );
+	u16 flag = VMGetWorkValue(core,work);	//トレーナーIDを渡す！ ワークナンバーを渡すのはダメ！
+	core->cmp_flag = SCRIPT_CheckEventFlagTrainer( ev, flag );
+	return 0;
+}
+
+//======================================================================
+//  トレーナーメッセージ
+//======================================================================
+//--------------------------------------------------------------
+/**
+ * トレーナー会話呼び出し
+ * @param	core		仮想マシン制御構造体へのポインタ
+ * @return	"1"
+ */
+//--------------------------------------------------------------
+static VMCMD_RESULT EvCmdTrainerMessageSet( VMHANDLE *core, void *wk )
+{
+  SCRCMD_WORK *work = wk;
+  SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
+	u16 *script_id = SCRIPT_GetMemberWork( sc, ID_EVSCR_SCRIPT_ID );
+  
+	u16 tr_id = VMGetWorkValue( core, work );
+	u16 kind_id = VMGetWorkValue( core, work );
+  
+  WORDSET **wordset = SCRIPT_GetMemberWork( sc, ID_EVSCR_WORDSET );
+  STRBUF **msgbuf = SCRIPT_GetMemberWork( sc, ID_EVSCR_MSGBUF );
+  STRBUF **tmpbuf = SCRIPT_GetMemberWork( sc, ID_EVSCR_TMPBUF );
+  GFL_MSGDATA *msgData = SCRCMD_WORK_GetMsgData( work );
+	u8 *win_open_flag = SCRIPT_GetMemberWork( sc, ID_EVSCR_WIN_OPEN_FLAG );
+	u8 *msg_index			= SCRIPT_GetMemberWork( sc, ID_EVSCR_MSGINDEX );
+
+#if 0 //pl null
+	TT_TrainerMessageGet( tr_id, kind_id, *pbuf, HEAPID_WORLD );
+#else //wb kari
+  GFL_MSG_GetString( msgData, 0, *tmpbuf );
+  WORDSET_ExpandStr( *wordset, *msgbuf, *tmpbuf );
+#endif
+  
+  {
+    u16 dir;
+    VecFx32 pos;
+    const VecFx32 *pos_p;
+    MMDL *fmmdl;
+    
+    fmmdl = MMDLSYS_SearchOBJID( SCRCMD_WORK_GetMMdlSys(work), 0xff );
+    MMDL_GetVectorPos( fmmdl, &pos );
+    dir = MMDL_GetDirDisp( fmmdl );
+    MMDL_TOOL_AddDirVector( dir, &pos, GRID_FX32 );
+    
+    if( dir == DIR_UP ){        //下から
+      pos.x += FX32_ONE*8;
+      pos.z -= FX32_ONE*8;
+    }else if( dir == DIR_DOWN ){ //上から
+      pos.x += FX32_ONE*8;
+      pos.z -= FX32_ONE*8;
+    }else if( dir == DIR_LEFT ){ //右から
+      pos.x += -FX32_ONE*8;
+      pos.z += FX32_ONE*16;
+    }else{                       //左から
+      pos.x += FX32_ONE*8;
+      pos.z += FX32_ONE*16;
+    }
+    
+    SCRCMD_WORK_SetTalkMsgWinTailPos( work, &pos );
+    pos_p = SCRCMD_WORK_GetTalkMsgWinTailPos( work );
+    
+    {
+	    FLDTALKMSGWIN *tmsg;
+      FLDTALKMSGWIN_IDX idx = FLDTALKMSGWIN_IDX_LOWER;
+      SCRIPT_FLDPARAM *fparam = SCRIPT_GetMemberWork(
+          sc, ID_EVSCR_WK_FLDPARAM );
+      
+      if( dir == DIR_UP ){
+        idx = FLDTALKMSGWIN_IDX_UPPER;
+      }
+      
+      tmsg = FLDTALKMSGWIN_AddStrBuf( fparam->msgBG, idx, pos_p, *msgbuf );
+	    
+      SCRCMD_WORK_SetFldMsgWinStream( work, (FLDMSGWIN_STREAM*)tmsg );
+      PMSND_PlaySystemSE( SEQ_SE_MESSAGE );
+      
+      VMCMD_SetWait( core, TalkMsgWait );
+	    return 1;
+    }
+  }
+}
+

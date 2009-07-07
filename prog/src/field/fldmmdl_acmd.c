@@ -11,6 +11,9 @@
 #include "fldmmdl.h"
 #include "fldmmdl_procacmd.h"
 
+#include "fieldmap.h"
+#include "fldeff_gyoe.h"
+
 //======================================================================
 //	define
 //======================================================================
@@ -77,7 +80,7 @@ typedef struct
 	int seq_no;					///<処理番号
 	BOOL end_flag;				///<終了フラグ
 	int acmd_count;				///<アニメ実行回数を記録
-	MMDL * fmmdl;			///<アニメ対象MMDL *
+	MMDL * mmdl;			///<アニメ対象MMDL *
 	const MMDL_ACMD_LIST *list;	///<実行するコマンドリスト
 }ACMD_LIST_WORK;
 
@@ -151,9 +154,7 @@ typedef struct
 typedef struct
 {
 	int type;
-	#ifndef MMDL_PL_NULL
-	EOA_PTR eoa_mark;
-	#endif
+	FLDEFF_TASK *task_mark;
 }AC_MARK_WORK;
 
 #define AC_MARK_WORK_SIZE (sizeof(AC_MARK_WORK))
@@ -214,32 +215,32 @@ enum
 //======================================================================
 //	proto
 //======================================================================
-static void fmmdl_AcmdListProcTCB( GFL_TCB * tcb, void *wk );
+static void mmdl_AcmdListProcTCB( GFL_TCB * tcb, void *wk );
 int (* const DATA_AcmdListProcTbl[])( ACMD_LIST_WORK *work );
 
-static int fmmdl_AcmdAction( MMDL * fmmdl, int code, int seq );
+static int mmdl_AcmdAction( MMDL * mmdl, int code, int seq );
 
-static int AC_End( MMDL * fmmdl );
+static int AC_End( MMDL * mmdl );
 
-static void AcDirSet( MMDL * fmmdl, int dir );
+static void AcDirSet( MMDL * mmdl, int dir );
 
 static void AcWalkWorkInit(
-	MMDL * fmmdl, int dir, fx32 val, s16 wait, u16 draw );
-static int AC_Walk_1( MMDL * fmmdl );
-static int AC_Walk_End( MMDL *fmmdl );
+	MMDL * mmdl, int dir, fx32 val, s16 wait, u16 draw );
+static int AC_Walk_1( MMDL * mmdl );
+static int AC_Walk_End( MMDL *mmdl );
 
 static void AcStayWalkWorkInit(
-	MMDL * fmmdl, int dir, s16 wait, u16 draw );
-static int AC_StayWalk_1( MMDL * fmmdl );
+	MMDL * mmdl, int dir, s16 wait, u16 draw );
+static int AC_StayWalk_1( MMDL * mmdl );
 
 #ifndef MMDL_PL_NULL
 static void AcMarkWorkInit(
-	MMDL * fmmdl, GYOE_TYPE type, int trans );
+	MMDL * mmdl, GYOE_TYPE type, int trans );
 #else
 static void AcMarkWorkInit(
-	MMDL * fmmdl, int type, int trans );
+	MMDL * mmdl, int type, int trans );
 #endif
-static int AC_Mark_1( MMDL * fmmdl );
+static int AC_Mark_1( MMDL * mmdl );
 
 const fx32 * DATA_AcJumpOffsetTbl[];
 
@@ -253,31 +254,31 @@ static const fx32 DATA_AcWalk3FMoveValueTbl[AC_WALK_3F_FRAME];
 //--------------------------------------------------------------
 /**
  * フィールド動作モデルアニメーションコマンドリストセット
- * @param	fmmdl		アニメを行うMMDL *
+ * @param	mmdl		アニメを行うMMDL *
  * @param	list		コマンドがまとめられたMMDL_ACMD_LIST *
  * @retval	GFL_TCB *		アニメーションコマンドを実行するGFL_TCB *
  */
 //--------------------------------------------------------------
 GFL_TCB * MMDL_SetAcmdList(
-	MMDL *fmmdl, const MMDL_ACMD_LIST *list )
+	MMDL *mmdl, const MMDL_ACMD_LIST *list )
 {
 	GFL_TCB *tcb;
 	ACMD_LIST_WORK *work;
-	MMDLSYS *fmmdlsys;
+	MMDLSYS *mmdlsys;
 	
-	fmmdlsys = (MMDLSYS*)MMDL_GetMMdlSys( fmmdl );
+	mmdlsys = (MMDLSYS*)MMDL_GetMMdlSys( mmdl );
 	work = GFL_HEAP_AllocClearMemoryLo(
-		MMDLSYS_GetHeapID(fmmdlsys), ACMD_LIST_WORK_SIZE );
+		MMDLSYS_GetHeapID(mmdlsys), ACMD_LIST_WORK_SIZE );
 	
 	{
 		int pri = MMDLSYS_GetTCBPriority(
-			MMDL_GetMMdlSys(fmmdl) ) - 1;
-		tcb = GFL_TCB_AddTask( MMDLSYS_GetTCBSYS(fmmdlsys),
-			fmmdl_AcmdListProcTCB, work, pri );
+			MMDL_GetMMdlSys(mmdl) ) - 1;
+		tcb = GFL_TCB_AddTask( MMDLSYS_GetTCBSYS(mmdlsys),
+			mmdl_AcmdListProcTCB, work, pri );
 		GF_ASSERT( tcb != NULL );
 	}
 	
-	work->fmmdl = fmmdl;
+	work->mmdl = mmdl;
 	work->list = list;
 	return( tcb );
 }
@@ -308,8 +309,8 @@ void MMDL_EndAcmdList( GFL_TCB * tcb )
 {
 	ACMD_LIST_WORK *work;
 	work = GFL_TCB_GetWork( tcb );
-	GF_ASSERT( MMDL_CheckEndAcmd(work->fmmdl) == TRUE );
-	MMDL_EndAcmd( work->fmmdl );
+	GF_ASSERT( MMDL_CheckEndAcmd(work->mmdl) == TRUE );
+	MMDL_EndAcmd( work->mmdl );
 	GFL_HEAP_FreeMemory( work );
 	GFL_TCB_DeleteTask( tcb );
 }
@@ -322,7 +323,7 @@ void MMDL_EndAcmdList( GFL_TCB * tcb )
  * @retval	nothing
  */
 //--------------------------------------------------------------
-static void fmmdl_AcmdListProcTCB( GFL_TCB * tcb, void *wk )
+static void mmdl_AcmdListProcTCB( GFL_TCB * tcb, void *wk )
 {
 	ACMD_LIST_WORK *work;
 	work = wk;
@@ -353,7 +354,7 @@ static int AcmdListProc_Init( ACMD_LIST_WORK *work )
 //--------------------------------------------------------------
 static int AcmdListProc_AcmdSetCheck( ACMD_LIST_WORK *work )
 {
-	if( MMDL_CheckPossibleAcmd(work->fmmdl) == FALSE ){
+	if( MMDL_CheckPossibleAcmd(work->mmdl) == FALSE ){
 		return( FALSE );
 	}
 	
@@ -373,7 +374,7 @@ static int AcmdListProc_AcmdSet( ACMD_LIST_WORK *work )
 	const MMDL_ACMD_LIST *list;
 		
 	list = work->list;
-	MMDL_SetAcmd( work->fmmdl, list->code );
+	MMDL_SetAcmd( work->mmdl, list->code );
 		
 	work->seq_no = SEQNO_AL_ACMD_END_CHECK;
 	
@@ -389,7 +390,7 @@ static int AcmdListProc_AcmdSet( ACMD_LIST_WORK *work )
 //--------------------------------------------------------------
 static int AcmdListProc_AcmdEndCheck( ACMD_LIST_WORK *work )
 {
-	if( MMDL_CheckEndAcmd(work->fmmdl) == FALSE ){
+	if( MMDL_CheckEndAcmd(work->mmdl) == FALSE ){
 		return( FALSE );
 	}
 	
@@ -535,23 +536,23 @@ u16 MMDL_GetAcmdDir( u16 code )
 //--------------------------------------------------------------
 /**
  * アニメーションコマンドアクション
- * @param	fmmdl		MMDL * 
+ * @param	mmdl		MMDL * 
  * @retval	nothing
  */
 //--------------------------------------------------------------
-void MMDL_ActionAcmd( MMDL * fmmdl )
+void MMDL_ActionAcmd( MMDL * mmdl )
 {
 	int code,seq;
 	
 	do{
-		code = MMDL_GetAcmdCode( fmmdl );
+		code = MMDL_GetAcmdCode( mmdl );
 		
 		if( code == ACMD_NOT ){
 			break;
 		}
 		
-		seq = MMDL_GetAcmdSeq( fmmdl );
-	}while( fmmdl_AcmdAction(fmmdl,code,seq) );
+		seq = MMDL_GetAcmdSeq( mmdl );
+	}while( mmdl_AcmdAction(mmdl,code,seq) );
 }
 
 //--------------------------------------------------------------
@@ -561,34 +562,34 @@ void MMDL_ActionAcmd( MMDL * fmmdl )
  * AcmdAction()との違いはコマンド終了時に
  * ステータスビット、コマンドワークの初期化がある事と
  * 戻り値で終了判定が返る事。
- * @param	fmmdl		MMDL * 
+ * @param	mmdl		MMDL * 
  * @retval	int			TRUE=終了
  */
 //--------------------------------------------------------------
-BOOL MMDL_ActionLocalAcmd( MMDL * fmmdl )
+BOOL MMDL_ActionLocalAcmd( MMDL * mmdl )
 {
-	MMDL_ActionAcmd( fmmdl );
+	MMDL_ActionAcmd( mmdl );
 	
-	if( MMDL_CheckStatusBit(fmmdl,MMDL_STABIT_ACMD_END) == 0 ){
+	if( MMDL_CheckStatusBit(mmdl,MMDL_STABIT_ACMD_END) == 0 ){
 		return( FALSE );
 	}
 	
-	MMDL_OffStatusBit( fmmdl, MMDL_STABIT_ACMD_END );
-	MMDL_SetAcmdCode( fmmdl, ACMD_NOT );
-	MMDL_SetAcmdSeq( fmmdl, 0 );
+	MMDL_OffStatusBit( mmdl, MMDL_STABIT_ACMD_END );
+	MMDL_SetAcmdCode( mmdl, ACMD_NOT );
+	MMDL_SetAcmdSeq( mmdl, 0 );
 	return( TRUE );
 }
 
 //--------------------------------------------------------------
 /**
  * アニメーションコマンドアクション
- * @param	fmmdl		MMDL * 
+ * @param	mmdl		MMDL * 
  * @retval	int			TRUE=再帰
  */
 //--------------------------------------------------------------
-static int fmmdl_AcmdAction( MMDL * fmmdl, int code, int seq )
+static int mmdl_AcmdAction( MMDL * mmdl, int code, int seq )
 {
-	return( DATA_AcmdActionTbl[code][seq](fmmdl) );
+	return( DATA_AcmdActionTbl[code][seq](mmdl) );
 }
 
 //======================================================================
@@ -598,13 +599,13 @@ static int fmmdl_AcmdAction( MMDL * fmmdl, int code, int seq )
 /**
  * AC系　コマンド終了
  * 常にMMDL_STABIT_ACMD_ENDをセット
- * @param	fmmdl	MMDL * 
+ * @param	mmdl	MMDL * 
  * @retval	int		FALSE
  */
 //--------------------------------------------------------------
-static int AC_End( MMDL * fmmdl )
+static int AC_End( MMDL * mmdl )
 {
-	MMDL_OnStatusBit( fmmdl, MMDL_STABIT_ACMD_END );
+	MMDL_OnStatusBit( mmdl, MMDL_STABIT_ACMD_END );
 	
 	return( FALSE );
 }
@@ -615,29 +616,29 @@ static int AC_End( MMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_DIR系共通処理
- * @param	fmmdl	MMDL * 
+ * @param	mmdl	MMDL * 
  * @param	dir		表示方向。DIR_UP
  * @retval	nothing
  */
 //--------------------------------------------------------------
-static void AcDirSet( MMDL * fmmdl, int dir )
+static void AcDirSet( MMDL * mmdl, int dir )
 {
-	MMDL_SetDirDisp( fmmdl, dir );
-	MMDL_SetDrawStatus( fmmdl, DRAW_STA_STOP );
-	MMDL_UpdateGridPosCurrent( fmmdl );
-	MMDL_IncAcmdSeq( fmmdl );
+	MMDL_SetDirDisp( mmdl, dir );
+	MMDL_SetDrawStatus( mmdl, DRAW_STA_STOP );
+	MMDL_UpdateGridPosCurrent( mmdl );
+	MMDL_IncAcmdSeq( mmdl );
 }
 
 //--------------------------------------------------------------
 /**
  * AC_DIR_U 0
- * @param	fmmdl	MMDL * 
+ * @param	mmdl	MMDL * 
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_DirU_0( MMDL * fmmdl )
+static int AC_DirU_0( MMDL * mmdl )
 {
-	AcDirSet( fmmdl, DIR_UP );
+	AcDirSet( mmdl, DIR_UP );
 	
 	return( TRUE );
 }
@@ -645,13 +646,13 @@ static int AC_DirU_0( MMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_DIR_D 0
- * @param	fmmdl	MMDL * 
+ * @param	mmdl	MMDL * 
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_DirD_0( MMDL * fmmdl )
+static int AC_DirD_0( MMDL * mmdl )
 {
-	AcDirSet( fmmdl, DIR_DOWN );
+	AcDirSet( mmdl, DIR_DOWN );
 	
 	return( TRUE );
 }
@@ -659,13 +660,13 @@ static int AC_DirD_0( MMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_DIR_L 0
- * @param	fmmdl	MMDL * 
+ * @param	mmdl	MMDL * 
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_DirL_0( MMDL * fmmdl )
+static int AC_DirL_0( MMDL * mmdl )
 {
-	AcDirSet( fmmdl, DIR_LEFT );
+	AcDirSet( mmdl, DIR_LEFT );
 	
 	return( TRUE );
 }
@@ -673,13 +674,13 @@ static int AC_DirL_0( MMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_DIR_R 0
- * @param	fmmdl	MMDL * 
+ * @param	mmdl	MMDL * 
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_DirR_0( MMDL * fmmdl )
+static int AC_DirR_0( MMDL * mmdl )
 {
-	AcDirSet( fmmdl, DIR_RIGHT );
+	AcDirSet( mmdl, DIR_RIGHT );
 	
 	return( TRUE );
 }
@@ -690,7 +691,7 @@ static int AC_DirR_0( MMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_WALK_WORK初期化
- * @param	fmmdl	MMDL * 
+ * @param	mmdl	MMDL * 
  * @param	dir		移動方向
  * @param	val		移動量
  * @param	wait	移動フレーム
@@ -698,37 +699,37 @@ static int AC_DirR_0( MMDL * fmmdl )
  * @retval	nothing
  */
 //--------------------------------------------------------------
-static void AcWalkWorkInit( MMDL * fmmdl, int dir, fx32 val, s16 wait, u16 draw )
+static void AcWalkWorkInit( MMDL * mmdl, int dir, fx32 val, s16 wait, u16 draw )
 {
 	AC_WALK_WORK *work;
 	
-	work = MMDL_InitMoveCmdWork( fmmdl, AC_WALK_WORK_SIZE );
+	work = MMDL_InitMoveCmdWork( mmdl, AC_WALK_WORK_SIZE );
 	work->draw_state = draw;
 	work->wait = wait;
 	work->dir = dir;
 	work->val = val;
 	
-	MMDL_UpdateGridPosDir( fmmdl, dir );
-	MMDL_SetDirAll( fmmdl, dir );
-	MMDL_SetDrawStatus( fmmdl, draw );
-	MMDL_OnStatusBit( fmmdl, MMDL_STABIT_MOVE_START );
-	MMDL_IncAcmdSeq( fmmdl );
+	MMDL_UpdateGridPosDir( mmdl, dir );
+	MMDL_SetDirAll( mmdl, dir );
+	MMDL_SetDrawStatus( mmdl, draw );
+	MMDL_OnStatusBit( mmdl, MMDL_STABIT_MOVE_START );
+	MMDL_IncAcmdSeq( mmdl );
 }
 
 //--------------------------------------------------------------
 /**
  * AC_WALK系　移動
- * @param	fmmdl	MMDL * 
+ * @param	mmdl	MMDL * 
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_Walk_1( MMDL * fmmdl )
+static int AC_Walk_1( MMDL * mmdl )
 {
 	AC_WALK_WORK *work;
 	
-	work = MMDL_GetMoveCmdWork( fmmdl );
-	MMDL_AddVectorPosDir( fmmdl, work->dir, work->val );
-	MMDL_UpdateCurrentHeight( fmmdl );
+	work = MMDL_GetMoveCmdWork( mmdl );
+	MMDL_AddVectorPosDir( mmdl, work->dir, work->val );
+	MMDL_UpdateCurrentHeight( mmdl );
 	
 	work->wait--;
 	
@@ -737,14 +738,14 @@ static int AC_Walk_1( MMDL * fmmdl )
 	}
 	
 	MMDL_OnStatusBit(
-		fmmdl, MMDL_STABIT_MOVE_END|MMDL_STABIT_ACMD_END );
-	MMDL_UpdateGridPosCurrent( fmmdl );
+		mmdl, MMDL_STABIT_MOVE_END|MMDL_STABIT_ACMD_END );
+	MMDL_UpdateGridPosCurrent( mmdl );
 #if 0
-	MMDL_CallDrawProc( fmmdl );						//1フレーム進める
-	MMDL_SetDrawStatus( fmmdl, DRAW_STA_STOP );
+	MMDL_CallDrawProc( mmdl );						//1フレーム進める
+	MMDL_SetDrawStatus( mmdl, DRAW_STA_STOP );
 #else
 #endif
-	MMDL_IncAcmdSeq( fmmdl );
+	MMDL_IncAcmdSeq( mmdl );
 	
 #if 0
 	return( TRUE );
@@ -756,13 +757,13 @@ static int AC_Walk_1( MMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_WALK系 移動完了
- * @param	fmmdl	MMDL *
+ * @param	mmdl	MMDL *
  * @retval	int	TRUE
  */
 //--------------------------------------------------------------
-static int AC_Walk_End( MMDL *fmmdl )
+static int AC_Walk_End( MMDL *mmdl )
 {
-	MMDL_SetDrawStatus( fmmdl, DRAW_STA_STOP );
+	MMDL_SetDrawStatus( mmdl, DRAW_STA_STOP );
 	return( FALSE );
 }
 
@@ -772,13 +773,13 @@ static int AC_Walk_End( MMDL *fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_WALK_U_32F 0
- * @param	fmmdl	MMDL * 
+ * @param	mmdl	MMDL * 
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_WalkU32F_0( MMDL * fmmdl )
+static int AC_WalkU32F_0( MMDL * mmdl )
 {
-	AcWalkWorkInit( fmmdl, DIR_UP, GRID_VALUE_SPEED_32, GRID_FRAME_32, DRAW_STA_WALK_32F ); 
+	AcWalkWorkInit( mmdl, DIR_UP, GRID_VALUE_SPEED_32, GRID_FRAME_32, DRAW_STA_WALK_32F ); 
 	
 	return( TRUE );
 }
@@ -786,13 +787,13 @@ static int AC_WalkU32F_0( MMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_WALK_D_32F 0
- * @param	fmmdl	MMDL * 
+ * @param	mmdl	MMDL * 
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_WalkD32F_0( MMDL * fmmdl )
+static int AC_WalkD32F_0( MMDL * mmdl )
 {
-	AcWalkWorkInit( fmmdl, DIR_DOWN, GRID_VALUE_SPEED_32, GRID_FRAME_32, DRAW_STA_WALK_32F ); 
+	AcWalkWorkInit( mmdl, DIR_DOWN, GRID_VALUE_SPEED_32, GRID_FRAME_32, DRAW_STA_WALK_32F ); 
 	
 	return( TRUE );
 }
@@ -800,13 +801,13 @@ static int AC_WalkD32F_0( MMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_WALK_L_32F 0
- * @param	fmmdl	MMDL * 
+ * @param	mmdl	MMDL * 
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_WalkL32F_0( MMDL * fmmdl )
+static int AC_WalkL32F_0( MMDL * mmdl )
 {
-	AcWalkWorkInit( fmmdl, DIR_LEFT, GRID_VALUE_SPEED_32, GRID_FRAME_32, DRAW_STA_WALK_32F ); 
+	AcWalkWorkInit( mmdl, DIR_LEFT, GRID_VALUE_SPEED_32, GRID_FRAME_32, DRAW_STA_WALK_32F ); 
 	
 	return( TRUE );
 }
@@ -814,13 +815,13 @@ static int AC_WalkL32F_0( MMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_WALK_R_32F 0
- * @param	fmmdl	MMDL * 
+ * @param	mmdl	MMDL * 
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_WalkR32F_0( MMDL * fmmdl )
+static int AC_WalkR32F_0( MMDL * mmdl )
 {
-	AcWalkWorkInit( fmmdl, DIR_RIGHT, GRID_VALUE_SPEED_32, GRID_FRAME_32, DRAW_STA_WALK_32F ); 
+	AcWalkWorkInit( mmdl, DIR_RIGHT, GRID_VALUE_SPEED_32, GRID_FRAME_32, DRAW_STA_WALK_32F ); 
 	
 	return( TRUE );
 }
@@ -828,13 +829,13 @@ static int AC_WalkR32F_0( MMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_WALK_U_16F 0
- * @param	fmmdl	MMDL * 
+ * @param	mmdl	MMDL * 
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_WalkU16F_0( MMDL * fmmdl )
+static int AC_WalkU16F_0( MMDL * mmdl )
 {
-	AcWalkWorkInit( fmmdl, DIR_UP, GRID_VALUE_SPEED_16, GRID_FRAME_16, DRAW_STA_WALK_16F ); 
+	AcWalkWorkInit( mmdl, DIR_UP, GRID_VALUE_SPEED_16, GRID_FRAME_16, DRAW_STA_WALK_16F ); 
 	
 	return( TRUE );
 }
@@ -842,13 +843,13 @@ static int AC_WalkU16F_0( MMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_WALK_D_16F 0
- * @param	fmmdl	MMDL * 
+ * @param	mmdl	MMDL * 
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_WalkD16F_0( MMDL * fmmdl )
+static int AC_WalkD16F_0( MMDL * mmdl )
 {
-	AcWalkWorkInit( fmmdl, DIR_DOWN, GRID_VALUE_SPEED_16, GRID_FRAME_16, DRAW_STA_WALK_16F ); 
+	AcWalkWorkInit( mmdl, DIR_DOWN, GRID_VALUE_SPEED_16, GRID_FRAME_16, DRAW_STA_WALK_16F ); 
 	
 	return( TRUE );
 }
@@ -856,13 +857,13 @@ static int AC_WalkD16F_0( MMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_WALK_L_16F 0
- * @param	fmmdl	MMDL * 
+ * @param	mmdl	MMDL * 
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_WalkL16F_0( MMDL * fmmdl )
+static int AC_WalkL16F_0( MMDL * mmdl )
 {
-	AcWalkWorkInit( fmmdl, DIR_LEFT, GRID_VALUE_SPEED_16, GRID_FRAME_16, DRAW_STA_WALK_16F ); 
+	AcWalkWorkInit( mmdl, DIR_LEFT, GRID_VALUE_SPEED_16, GRID_FRAME_16, DRAW_STA_WALK_16F ); 
 	
 	return( TRUE );
 }
@@ -870,13 +871,13 @@ static int AC_WalkL16F_0( MMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_WALK_R_16F 0
- * @param	fmmdl	MMDL * 
+ * @param	mmdl	MMDL * 
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_WalkR16F_0( MMDL * fmmdl )
+static int AC_WalkR16F_0( MMDL * mmdl )
 {
-	AcWalkWorkInit( fmmdl, DIR_RIGHT, GRID_VALUE_SPEED_16, GRID_FRAME_16, DRAW_STA_WALK_16F ); 
+	AcWalkWorkInit( mmdl, DIR_RIGHT, GRID_VALUE_SPEED_16, GRID_FRAME_16, DRAW_STA_WALK_16F ); 
 	
 	return( TRUE );
 }
@@ -884,13 +885,13 @@ static int AC_WalkR16F_0( MMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_WALK_U_8F 0
- * @param	fmmdl	MMDL * 
+ * @param	mmdl	MMDL * 
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_WalkU8F_0( MMDL * fmmdl )
+static int AC_WalkU8F_0( MMDL * mmdl )
 {
-	AcWalkWorkInit( fmmdl, DIR_UP, GRID_VALUE_SPEED_8, GRID_FRAME_8, DRAW_STA_WALK_8F ); 
+	AcWalkWorkInit( mmdl, DIR_UP, GRID_VALUE_SPEED_8, GRID_FRAME_8, DRAW_STA_WALK_8F ); 
 	
 	return( TRUE );
 }
@@ -898,13 +899,13 @@ static int AC_WalkU8F_0( MMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_WALK_D_8F 0
- * @param	fmmdl	MMDL * 
+ * @param	mmdl	MMDL * 
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_WalkD8F_0( MMDL * fmmdl )
+static int AC_WalkD8F_0( MMDL * mmdl )
 {
-	AcWalkWorkInit( fmmdl, DIR_DOWN, GRID_VALUE_SPEED_8, GRID_FRAME_8, DRAW_STA_WALK_8F ); 
+	AcWalkWorkInit( mmdl, DIR_DOWN, GRID_VALUE_SPEED_8, GRID_FRAME_8, DRAW_STA_WALK_8F ); 
 	
 	return( TRUE );
 }
@@ -912,13 +913,13 @@ static int AC_WalkD8F_0( MMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_WALK_L_8F 0
- * @param	fmmdl	MMDL * 
+ * @param	mmdl	MMDL * 
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_WalkL8F_0( MMDL * fmmdl )
+static int AC_WalkL8F_0( MMDL * mmdl )
 {
-	AcWalkWorkInit( fmmdl, DIR_LEFT, GRID_VALUE_SPEED_8, GRID_FRAME_8, DRAW_STA_WALK_8F ); 
+	AcWalkWorkInit( mmdl, DIR_LEFT, GRID_VALUE_SPEED_8, GRID_FRAME_8, DRAW_STA_WALK_8F ); 
 	
 	return( TRUE );
 }
@@ -926,13 +927,13 @@ static int AC_WalkL8F_0( MMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_WALK_R_8F 0
- * @param	fmmdl	MMDL * 
+ * @param	mmdl	MMDL * 
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_WalkR8F_0( MMDL * fmmdl )
+static int AC_WalkR8F_0( MMDL * mmdl )
 {
-	AcWalkWorkInit( fmmdl, DIR_RIGHT, GRID_VALUE_SPEED_8, GRID_FRAME_8, DRAW_STA_WALK_8F ); 
+	AcWalkWorkInit( mmdl, DIR_RIGHT, GRID_VALUE_SPEED_8, GRID_FRAME_8, DRAW_STA_WALK_8F ); 
 	
 	return( TRUE );
 }
@@ -940,13 +941,13 @@ static int AC_WalkR8F_0( MMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_WALK_U_4F 0
- * @param	fmmdl	MMDL * 
+ * @param	mmdl	MMDL * 
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_WalkU4F_0( MMDL * fmmdl )
+static int AC_WalkU4F_0( MMDL * mmdl )
 {
-	AcWalkWorkInit( fmmdl, DIR_UP, GRID_VALUE_SPEED_4, GRID_FRAME_4, DRAW_STA_WALK_4F ); 
+	AcWalkWorkInit( mmdl, DIR_UP, GRID_VALUE_SPEED_4, GRID_FRAME_4, DRAW_STA_WALK_4F ); 
 	
 	return( TRUE );
 }
@@ -954,13 +955,13 @@ static int AC_WalkU4F_0( MMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_WALK_D_4F 0
- * @param	fmmdl	MMDL * 
+ * @param	mmdl	MMDL * 
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_WalkD4F_0( MMDL * fmmdl )
+static int AC_WalkD4F_0( MMDL * mmdl )
 {
-	AcWalkWorkInit( fmmdl, DIR_DOWN, GRID_VALUE_SPEED_4, GRID_FRAME_4, DRAW_STA_WALK_4F ); 
+	AcWalkWorkInit( mmdl, DIR_DOWN, GRID_VALUE_SPEED_4, GRID_FRAME_4, DRAW_STA_WALK_4F ); 
 	
 	return( TRUE );
 }
@@ -968,13 +969,13 @@ static int AC_WalkD4F_0( MMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_WALK_L_4F 0
- * @param	fmmdl	MMDL * 
+ * @param	mmdl	MMDL * 
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_WalkL4F_0( MMDL * fmmdl )
+static int AC_WalkL4F_0( MMDL * mmdl )
 {
-	AcWalkWorkInit( fmmdl, DIR_LEFT, GRID_VALUE_SPEED_4, GRID_FRAME_4, DRAW_STA_WALK_4F ); 
+	AcWalkWorkInit( mmdl, DIR_LEFT, GRID_VALUE_SPEED_4, GRID_FRAME_4, DRAW_STA_WALK_4F ); 
 	
 	return( TRUE );
 }
@@ -982,13 +983,13 @@ static int AC_WalkL4F_0( MMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_WALK_R_4F 0
- * @param	fmmdl	MMDL * 
+ * @param	mmdl	MMDL * 
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_WalkR4F_0( MMDL * fmmdl )
+static int AC_WalkR4F_0( MMDL * mmdl )
 {
-	AcWalkWorkInit( fmmdl, DIR_RIGHT, GRID_VALUE_SPEED_4, GRID_FRAME_4, DRAW_STA_WALK_4F ); 
+	AcWalkWorkInit( mmdl, DIR_RIGHT, GRID_VALUE_SPEED_4, GRID_FRAME_4, DRAW_STA_WALK_4F ); 
 	
 	return( TRUE );
 }
@@ -996,13 +997,13 @@ static int AC_WalkR4F_0( MMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_WALK_U_2F 0
- * @param	fmmdl	MMDL * 
+ * @param	mmdl	MMDL * 
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_WalkU2F_0( MMDL * fmmdl )
+static int AC_WalkU2F_0( MMDL * mmdl )
 {
-	AcWalkWorkInit( fmmdl, DIR_UP, GRID_VALUE_SPEED_2, GRID_FRAME_2, DRAW_STA_WALK_2F ); 
+	AcWalkWorkInit( mmdl, DIR_UP, GRID_VALUE_SPEED_2, GRID_FRAME_2, DRAW_STA_WALK_2F ); 
 	
 	return( TRUE );
 }
@@ -1010,13 +1011,13 @@ static int AC_WalkU2F_0( MMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_WALK_D_2F 0
- * @param	fmmdl	MMDL * 
+ * @param	mmdl	MMDL * 
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_WalkD2F_0( MMDL * fmmdl )
+static int AC_WalkD2F_0( MMDL * mmdl )
 {
-	AcWalkWorkInit( fmmdl, DIR_DOWN, GRID_VALUE_SPEED_2, GRID_FRAME_2, DRAW_STA_WALK_2F ); 
+	AcWalkWorkInit( mmdl, DIR_DOWN, GRID_VALUE_SPEED_2, GRID_FRAME_2, DRAW_STA_WALK_2F ); 
 	
 	return( TRUE );
 }
@@ -1024,13 +1025,13 @@ static int AC_WalkD2F_0( MMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_WALK_L_2F 0
- * @param	fmmdl	MMDL * 
+ * @param	mmdl	MMDL * 
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_WalkL2F_0( MMDL * fmmdl )
+static int AC_WalkL2F_0( MMDL * mmdl )
 {
-	AcWalkWorkInit( fmmdl, DIR_LEFT, GRID_VALUE_SPEED_2, GRID_FRAME_2, DRAW_STA_WALK_2F ); 
+	AcWalkWorkInit( mmdl, DIR_LEFT, GRID_VALUE_SPEED_2, GRID_FRAME_2, DRAW_STA_WALK_2F ); 
 	
 	return( TRUE );
 }
@@ -1038,13 +1039,13 @@ static int AC_WalkL2F_0( MMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_WALK_R_2F 0
- * @param	fmmdl	MMDL * 
+ * @param	mmdl	MMDL * 
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_WalkR2F_0( MMDL * fmmdl )
+static int AC_WalkR2F_0( MMDL * mmdl )
 {
-	AcWalkWorkInit( fmmdl, DIR_RIGHT, GRID_VALUE_SPEED_2, GRID_FRAME_2, DRAW_STA_WALK_2F ); 
+	AcWalkWorkInit( mmdl, DIR_RIGHT, GRID_VALUE_SPEED_2, GRID_FRAME_2, DRAW_STA_WALK_2F ); 
 	
 	return( TRUE );
 }
@@ -1052,13 +1053,13 @@ static int AC_WalkR2F_0( MMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_WALK_U_1F 0
- * @param	fmmdl	MMDL * 
+ * @param	mmdl	MMDL * 
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_WalkU1F_0( MMDL * fmmdl )
+static int AC_WalkU1F_0( MMDL * mmdl )
 {
-	AcWalkWorkInit( fmmdl, DIR_UP, GRID_VALUE_SPEED_1, GRID_FRAME_1, DRAW_STA_STOP ); 
+	AcWalkWorkInit( mmdl, DIR_UP, GRID_VALUE_SPEED_1, GRID_FRAME_1, DRAW_STA_STOP ); 
 	
 	return( TRUE );
 }
@@ -1066,13 +1067,13 @@ static int AC_WalkU1F_0( MMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_WALK_D_1F 0
- * @param	fmmdl	MMDL * 
+ * @param	mmdl	MMDL * 
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_WalkD1F_0( MMDL * fmmdl )
+static int AC_WalkD1F_0( MMDL * mmdl )
 {
-	AcWalkWorkInit( fmmdl, DIR_DOWN, GRID_VALUE_SPEED_1, GRID_FRAME_1, DRAW_STA_STOP ); 
+	AcWalkWorkInit( mmdl, DIR_DOWN, GRID_VALUE_SPEED_1, GRID_FRAME_1, DRAW_STA_STOP ); 
 	
 	return( TRUE );
 }
@@ -1080,13 +1081,13 @@ static int AC_WalkD1F_0( MMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_WALK_L_1F 0
- * @param	fmmdl	MMDL * 
+ * @param	mmdl	MMDL * 
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_WalkL1F_0( MMDL * fmmdl )
+static int AC_WalkL1F_0( MMDL * mmdl )
 {
-	AcWalkWorkInit( fmmdl, DIR_LEFT, GRID_VALUE_SPEED_1, GRID_FRAME_1, DRAW_STA_STOP );
+	AcWalkWorkInit( mmdl, DIR_LEFT, GRID_VALUE_SPEED_1, GRID_FRAME_1, DRAW_STA_STOP );
 	
 	return( TRUE );
 }
@@ -1094,13 +1095,13 @@ static int AC_WalkL1F_0( MMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_WALK_R_1F 0
- * @param	fmmdl	MMDL * 
+ * @param	mmdl	MMDL * 
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_WalkR1F_0( MMDL * fmmdl )
+static int AC_WalkR1F_0( MMDL * mmdl )
 {
-	AcWalkWorkInit( fmmdl, DIR_RIGHT, GRID_VALUE_SPEED_1, GRID_FRAME_1, DRAW_STA_STOP ); 
+	AcWalkWorkInit( mmdl, DIR_RIGHT, GRID_VALUE_SPEED_1, GRID_FRAME_1, DRAW_STA_STOP ); 
 	
 	return( TRUE );
 }
@@ -1108,16 +1109,16 @@ static int AC_WalkR1F_0( MMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_DASH_U_4F 0
- * @param	fmmdl	MMDL * 
+ * @param	mmdl	MMDL * 
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_DashU4F_0( MMDL * fmmdl )
+static int AC_DashU4F_0( MMDL * mmdl )
 {
 #ifdef DEBUG_MMDL_FRAME_60
-	AcWalkWorkInit( fmmdl, DIR_UP, GRID_VALUE_SPEED_8, GRID_FRAME_8, DRAW_STA_DASH_4F ); 
+	AcWalkWorkInit( mmdl, DIR_UP, GRID_VALUE_SPEED_8, GRID_FRAME_8, DRAW_STA_DASH_4F ); 
 #else
-	AcWalkWorkInit( fmmdl, DIR_UP, GRID_VALUE_SPEED_4, GRID_FRAME_4, DRAW_STA_DASH_4F ); 
+	AcWalkWorkInit( mmdl, DIR_UP, GRID_VALUE_SPEED_4, GRID_FRAME_4, DRAW_STA_DASH_4F ); 
 #endif
 	return( TRUE );
 }
@@ -1125,16 +1126,16 @@ static int AC_DashU4F_0( MMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_DASH_D_4F 0
- * @param	fmmdl	MMDL * 
+ * @param	mmdl	MMDL * 
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_DashD4F_0( MMDL * fmmdl )
+static int AC_DashD4F_0( MMDL * mmdl )
 {
 #ifdef DEBUG_MMDL_FRAME_60
-	AcWalkWorkInit( fmmdl, DIR_DOWN, GRID_VALUE_SPEED_8, GRID_FRAME_8, DRAW_STA_DASH_4F ); 
+	AcWalkWorkInit( mmdl, DIR_DOWN, GRID_VALUE_SPEED_8, GRID_FRAME_8, DRAW_STA_DASH_4F ); 
 #else	
-	AcWalkWorkInit( fmmdl, DIR_DOWN, GRID_VALUE_SPEED_4, GRID_FRAME_4, DRAW_STA_DASH_4F ); 
+	AcWalkWorkInit( mmdl, DIR_DOWN, GRID_VALUE_SPEED_4, GRID_FRAME_4, DRAW_STA_DASH_4F ); 
 #endif
 	return( TRUE );
 }
@@ -1142,16 +1143,16 @@ static int AC_DashD4F_0( MMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_DASH_L_4F 0
- * @param	fmmdl	MMDL * 
+ * @param	mmdl	MMDL * 
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_DashL4F_0( MMDL * fmmdl )
+static int AC_DashL4F_0( MMDL * mmdl )
 {
 #ifdef DEBUG_MMDL_FRAME_60
-	AcWalkWorkInit( fmmdl, DIR_LEFT, GRID_VALUE_SPEED_8, GRID_FRAME_8, DRAW_STA_DASH_4F ); 
+	AcWalkWorkInit( mmdl, DIR_LEFT, GRID_VALUE_SPEED_8, GRID_FRAME_8, DRAW_STA_DASH_4F ); 
 #else
-	AcWalkWorkInit( fmmdl, DIR_LEFT, GRID_VALUE_SPEED_4, GRID_FRAME_4, DRAW_STA_DASH_4F ); 
+	AcWalkWorkInit( mmdl, DIR_LEFT, GRID_VALUE_SPEED_4, GRID_FRAME_4, DRAW_STA_DASH_4F ); 
 #endif
 	return( TRUE );
 }
@@ -1159,16 +1160,16 @@ static int AC_DashL4F_0( MMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_DASH_R_4F 0
- * @param	fmmdl	MMDL * 
+ * @param	mmdl	MMDL * 
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_DashR4F_0( MMDL * fmmdl )
+static int AC_DashR4F_0( MMDL * mmdl )
 {
 #ifdef DEBUG_MMDL_FRAME_60
-	AcWalkWorkInit( fmmdl, DIR_RIGHT, GRID_VALUE_SPEED_8, GRID_FRAME_8, DRAW_STA_DASH_4F ); 
+	AcWalkWorkInit( mmdl, DIR_RIGHT, GRID_VALUE_SPEED_8, GRID_FRAME_8, DRAW_STA_DASH_4F ); 
 #else
-	AcWalkWorkInit( fmmdl, DIR_RIGHT, GRID_VALUE_SPEED_4, GRID_FRAME_4, DRAW_STA_DASH_4F ); 
+	AcWalkWorkInit( mmdl, DIR_RIGHT, GRID_VALUE_SPEED_4, GRID_FRAME_4, DRAW_STA_DASH_4F ); 
 #endif
 	return( TRUE );
 }
@@ -1179,40 +1180,40 @@ static int AC_DashR4F_0( MMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_STAY_WALK_WORK初期化
- * @param	fmmdl	MMDL * 
+ * @param	mmdl	MMDL * 
  * @param	dir		移動方向
  * @param	wait	表示フレーム
  * @param	draw	描画ステータス
  * @retval	nothing
  */
 //--------------------------------------------------------------
-static void AcStayWalkWorkInit( MMDL * fmmdl, int dir, s16 wait, u16 draw )
+static void AcStayWalkWorkInit( MMDL * mmdl, int dir, s16 wait, u16 draw )
 {
 	AC_STAY_WALK_WORK *work;
 	
-	work = MMDL_InitMoveCmdWork( fmmdl, AC_WALK_WORK_SIZE );
+	work = MMDL_InitMoveCmdWork( mmdl, AC_WALK_WORK_SIZE );
 	
 	work->draw_state = draw;
 	work->wait = wait + FRAME_1;	//FRAME_1=動作->アニメへの1フレーム
 	
-	MMDL_SetDirDisp( fmmdl, dir );
-	MMDL_SetDrawStatus( fmmdl, draw );
-	MMDL_UpdateGridPosCurrent( fmmdl );
-	MMDL_IncAcmdSeq( fmmdl );
+	MMDL_SetDirDisp( mmdl, dir );
+	MMDL_SetDrawStatus( mmdl, draw );
+	MMDL_UpdateGridPosCurrent( mmdl );
+	MMDL_IncAcmdSeq( mmdl );
 }
 
 //--------------------------------------------------------------
 /**
  * AC_STAY_WALK系　動作
- * @param	fmmdl	MMDL * 
+ * @param	mmdl	MMDL * 
  * @retval	nothing
  */
 //--------------------------------------------------------------
-static int AC_StayWalk_1( MMDL * fmmdl )
+static int AC_StayWalk_1( MMDL * mmdl )
 {
 	AC_STAY_WALK_WORK *work;
 	
-	work = MMDL_GetMoveCmdWork( fmmdl );
+	work = MMDL_GetMoveCmdWork( mmdl );
 	
 	work->wait--;
 	
@@ -1220,9 +1221,9 @@ static int AC_StayWalk_1( MMDL * fmmdl )
 		return( FALSE );
 	}
 	
-	MMDL_OnStatusBit( fmmdl, MMDL_STABIT_ACMD_END );
-	MMDL_SetDrawStatus( fmmdl, DRAW_STA_STOP );
-	MMDL_IncAcmdSeq( fmmdl );
+	MMDL_OnStatusBit( mmdl, MMDL_STABIT_ACMD_END );
+	MMDL_SetDrawStatus( mmdl, DRAW_STA_STOP );
+	MMDL_IncAcmdSeq( mmdl );
 	
 	return( TRUE );
 }
@@ -1233,13 +1234,13 @@ static int AC_StayWalk_1( MMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_STAY_WALK_U_32F 0
- * @param	fmmdl	MMDL * 
+ * @param	mmdl	MMDL * 
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_StayWalkU32F_0( MMDL * fmmdl )
+static int AC_StayWalkU32F_0( MMDL * mmdl )
 {
-	AcStayWalkWorkInit( fmmdl, DIR_UP, GRID_FRAME_32, DRAW_STA_WALK_32F ); 
+	AcStayWalkWorkInit( mmdl, DIR_UP, GRID_FRAME_32, DRAW_STA_WALK_32F ); 
 	
 	return( TRUE );
 }
@@ -1247,13 +1248,13 @@ static int AC_StayWalkU32F_0( MMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_STAY_WALK_D_32F 0
- * @param	fmmdl	MMDL * 
+ * @param	mmdl	MMDL * 
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_StayWalkD32F_0( MMDL * fmmdl )
+static int AC_StayWalkD32F_0( MMDL * mmdl )
 {
-	AcStayWalkWorkInit( fmmdl, DIR_DOWN, GRID_FRAME_32, DRAW_STA_WALK_32F ); 
+	AcStayWalkWorkInit( mmdl, DIR_DOWN, GRID_FRAME_32, DRAW_STA_WALK_32F ); 
 	
 	return( TRUE );
 }
@@ -1261,13 +1262,13 @@ static int AC_StayWalkD32F_0( MMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_STAY_WALK_L_32F 0
- * @param	fmmdl	MMDL * 
+ * @param	mmdl	MMDL * 
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_StayWalkL32F_0( MMDL * fmmdl )
+static int AC_StayWalkL32F_0( MMDL * mmdl )
 {
-	AcStayWalkWorkInit( fmmdl, DIR_LEFT, GRID_FRAME_32, DRAW_STA_WALK_32F ); 
+	AcStayWalkWorkInit( mmdl, DIR_LEFT, GRID_FRAME_32, DRAW_STA_WALK_32F ); 
 	
 	return( TRUE );
 }
@@ -1275,13 +1276,13 @@ static int AC_StayWalkL32F_0( MMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_STAY_WALK_R_32F 0
- * @param	fmmdl	MMDL * 
+ * @param	mmdl	MMDL * 
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_StayWalkR32F_0( MMDL * fmmdl )
+static int AC_StayWalkR32F_0( MMDL * mmdl )
 {
-	AcStayWalkWorkInit( fmmdl, DIR_RIGHT, GRID_FRAME_32, DRAW_STA_WALK_32F ); 
+	AcStayWalkWorkInit( mmdl, DIR_RIGHT, GRID_FRAME_32, DRAW_STA_WALK_32F ); 
 	
 	return( TRUE );
 }
@@ -1289,13 +1290,13 @@ static int AC_StayWalkR32F_0( MMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_STAY_WALK_U_16F 0
- * @param	fmmdl	MMDL * 
+ * @param	mmdl	MMDL * 
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_StayWalkU16F_0( MMDL * fmmdl )
+static int AC_StayWalkU16F_0( MMDL * mmdl )
 {
-	AcStayWalkWorkInit( fmmdl, DIR_UP, GRID_FRAME_16, DRAW_STA_WALK_16F ); 
+	AcStayWalkWorkInit( mmdl, DIR_UP, GRID_FRAME_16, DRAW_STA_WALK_16F ); 
 	
 	return( TRUE );
 }
@@ -1303,13 +1304,13 @@ static int AC_StayWalkU16F_0( MMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_STAY_WALK_D_16F 0
- * @param	fmmdl	MMDL * 
+ * @param	mmdl	MMDL * 
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_StayWalkD16F_0( MMDL * fmmdl )
+static int AC_StayWalkD16F_0( MMDL * mmdl )
 {
-	AcStayWalkWorkInit( fmmdl, DIR_DOWN, GRID_FRAME_16, DRAW_STA_WALK_16F ); 
+	AcStayWalkWorkInit( mmdl, DIR_DOWN, GRID_FRAME_16, DRAW_STA_WALK_16F ); 
 	
 	return( TRUE );
 }
@@ -1317,13 +1318,13 @@ static int AC_StayWalkD16F_0( MMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_STAY_WALK_L_16F 0
- * @param	fmmdl	MMDL * 
+ * @param	mmdl	MMDL * 
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_StayWalkL16F_0( MMDL * fmmdl )
+static int AC_StayWalkL16F_0( MMDL * mmdl )
 {
-	AcStayWalkWorkInit( fmmdl, DIR_LEFT, GRID_FRAME_16, DRAW_STA_WALK_16F ); 
+	AcStayWalkWorkInit( mmdl, DIR_LEFT, GRID_FRAME_16, DRAW_STA_WALK_16F ); 
 	
 	return( TRUE );
 }
@@ -1331,13 +1332,13 @@ static int AC_StayWalkL16F_0( MMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_STAY_WALK_R_16F 0
- * @param	fmmdl	MMDL * 
+ * @param	mmdl	MMDL * 
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_StayWalkR16F_0( MMDL * fmmdl )
+static int AC_StayWalkR16F_0( MMDL * mmdl )
 {
-	AcStayWalkWorkInit( fmmdl, DIR_RIGHT, GRID_FRAME_16, DRAW_STA_WALK_16F ); 
+	AcStayWalkWorkInit( mmdl, DIR_RIGHT, GRID_FRAME_16, DRAW_STA_WALK_16F ); 
 	
 	return( TRUE );
 }
@@ -1345,13 +1346,13 @@ static int AC_StayWalkR16F_0( MMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_STAY_WALK_U_8F 0
- * @param	fmmdl	MMDL * 
+ * @param	mmdl	MMDL * 
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_StayWalkU8F_0( MMDL * fmmdl )
+static int AC_StayWalkU8F_0( MMDL * mmdl )
 {
-	AcStayWalkWorkInit( fmmdl, DIR_UP, GRID_FRAME_8, DRAW_STA_WALK_8F ); 
+	AcStayWalkWorkInit( mmdl, DIR_UP, GRID_FRAME_8, DRAW_STA_WALK_8F ); 
 	
 	return( TRUE );
 }
@@ -1359,13 +1360,13 @@ static int AC_StayWalkU8F_0( MMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_STAY_WALK_D_8F 0
- * @param	fmmdl	MMDL * 
+ * @param	mmdl	MMDL * 
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_StayWalkD8F_0( MMDL * fmmdl )
+static int AC_StayWalkD8F_0( MMDL * mmdl )
 {
-	AcStayWalkWorkInit( fmmdl, DIR_DOWN, GRID_FRAME_8, DRAW_STA_WALK_8F ); 
+	AcStayWalkWorkInit( mmdl, DIR_DOWN, GRID_FRAME_8, DRAW_STA_WALK_8F ); 
 	
 	return( TRUE );
 }
@@ -1373,13 +1374,13 @@ static int AC_StayWalkD8F_0( MMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_STAY_WALK_L_8F 0
- * @param	fmmdl	MMDL * 
+ * @param	mmdl	MMDL * 
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_StayWalkL8F_0( MMDL * fmmdl )
+static int AC_StayWalkL8F_0( MMDL * mmdl )
 {
-	AcStayWalkWorkInit( fmmdl, DIR_LEFT, GRID_FRAME_8, DRAW_STA_WALK_8F ); 
+	AcStayWalkWorkInit( mmdl, DIR_LEFT, GRID_FRAME_8, DRAW_STA_WALK_8F ); 
 	
 	return( TRUE );
 }
@@ -1387,13 +1388,13 @@ static int AC_StayWalkL8F_0( MMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_STAY_WALK_R_8F 0
- * @param	fmmdl	MMDL * 
+ * @param	mmdl	MMDL * 
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_StayWalkR8F_0( MMDL * fmmdl )
+static int AC_StayWalkR8F_0( MMDL * mmdl )
 {
-	AcStayWalkWorkInit( fmmdl, DIR_RIGHT, GRID_FRAME_8, DRAW_STA_WALK_8F ); 
+	AcStayWalkWorkInit( mmdl, DIR_RIGHT, GRID_FRAME_8, DRAW_STA_WALK_8F ); 
 	
 	return( TRUE );
 }
@@ -1401,13 +1402,13 @@ static int AC_StayWalkR8F_0( MMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_STAY_WALK_U_4F 0
- * @param	fmmdl	MMDL * 
+ * @param	mmdl	MMDL * 
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_StayWalkU4F_0( MMDL * fmmdl )
+static int AC_StayWalkU4F_0( MMDL * mmdl )
 {
-	AcStayWalkWorkInit( fmmdl, DIR_UP, GRID_FRAME_4, DRAW_STA_WALK_4F ); 
+	AcStayWalkWorkInit( mmdl, DIR_UP, GRID_FRAME_4, DRAW_STA_WALK_4F ); 
 	
 	return( TRUE );
 }
@@ -1415,13 +1416,13 @@ static int AC_StayWalkU4F_0( MMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_STAY_WALK_D_4F 0
- * @param	fmmdl	MMDL * 
+ * @param	mmdl	MMDL * 
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_StayWalkD4F_0( MMDL * fmmdl )
+static int AC_StayWalkD4F_0( MMDL * mmdl )
 {
-	AcStayWalkWorkInit( fmmdl, DIR_DOWN, GRID_FRAME_4, DRAW_STA_WALK_4F ); 
+	AcStayWalkWorkInit( mmdl, DIR_DOWN, GRID_FRAME_4, DRAW_STA_WALK_4F ); 
 	
 	return( TRUE );
 }
@@ -1429,13 +1430,13 @@ static int AC_StayWalkD4F_0( MMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_STAY_WALK_L_4F 0
- * @param	fmmdl	MMDL * 
+ * @param	mmdl	MMDL * 
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_StayWalkL4F_0( MMDL * fmmdl )
+static int AC_StayWalkL4F_0( MMDL * mmdl )
 {
-	AcStayWalkWorkInit( fmmdl, DIR_LEFT, GRID_FRAME_4, DRAW_STA_WALK_4F ); 
+	AcStayWalkWorkInit( mmdl, DIR_LEFT, GRID_FRAME_4, DRAW_STA_WALK_4F ); 
 	
 	return( TRUE );
 }
@@ -1443,13 +1444,13 @@ static int AC_StayWalkL4F_0( MMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_STAY_WALK_R_4F 0
- * @param	fmmdl	MMDL * 
+ * @param	mmdl	MMDL * 
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_StayWalkR4F_0( MMDL * fmmdl )
+static int AC_StayWalkR4F_0( MMDL * mmdl )
 {
-	AcStayWalkWorkInit( fmmdl, DIR_RIGHT, GRID_FRAME_4, DRAW_STA_WALK_4F ); 
+	AcStayWalkWorkInit( mmdl, DIR_RIGHT, GRID_FRAME_4, DRAW_STA_WALK_4F ); 
 	
 	return( TRUE );
 }
@@ -1457,13 +1458,13 @@ static int AC_StayWalkR4F_0( MMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_STAY_WALK_U_2F 0
- * @param	fmmdl	MMDL * 
+ * @param	mmdl	MMDL * 
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_StayWalkU2F_0( MMDL * fmmdl )
+static int AC_StayWalkU2F_0( MMDL * mmdl )
 {
-	AcStayWalkWorkInit( fmmdl, DIR_UP, GRID_FRAME_2, DRAW_STA_WALK_2F ); 
+	AcStayWalkWorkInit( mmdl, DIR_UP, GRID_FRAME_2, DRAW_STA_WALK_2F ); 
 	
 	return( TRUE );
 }
@@ -1471,13 +1472,13 @@ static int AC_StayWalkU2F_0( MMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_STAY_WALK_D_2F 0
- * @param	fmmdl	MMDL * 
+ * @param	mmdl	MMDL * 
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_StayWalkD2F_0( MMDL * fmmdl )
+static int AC_StayWalkD2F_0( MMDL * mmdl )
 {
-	AcStayWalkWorkInit( fmmdl, DIR_DOWN, GRID_FRAME_2, DRAW_STA_WALK_2F ); 
+	AcStayWalkWorkInit( mmdl, DIR_DOWN, GRID_FRAME_2, DRAW_STA_WALK_2F ); 
 	
 	return( TRUE );
 }
@@ -1485,13 +1486,13 @@ static int AC_StayWalkD2F_0( MMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_STAY_WALK_L_2F 0
- * @param	fmmdl	MMDL * 
+ * @param	mmdl	MMDL * 
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_StayWalkL2F_0( MMDL * fmmdl )
+static int AC_StayWalkL2F_0( MMDL * mmdl )
 {
-	AcStayWalkWorkInit( fmmdl, DIR_LEFT, GRID_FRAME_2, DRAW_STA_WALK_2F ); 
+	AcStayWalkWorkInit( mmdl, DIR_LEFT, GRID_FRAME_2, DRAW_STA_WALK_2F ); 
 	
 	return( TRUE );
 }
@@ -1499,13 +1500,13 @@ static int AC_StayWalkL2F_0( MMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_STAY_WALK_R_2F 0
- * @param	fmmdl	MMDL * 
+ * @param	mmdl	MMDL * 
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_StayWalkR2F_0( MMDL * fmmdl )
+static int AC_StayWalkR2F_0( MMDL * mmdl )
 {
-	AcStayWalkWorkInit( fmmdl, DIR_RIGHT, GRID_FRAME_2, DRAW_STA_WALK_2F ); 
+	AcStayWalkWorkInit( mmdl, DIR_RIGHT, GRID_FRAME_2, DRAW_STA_WALK_2F ); 
 	
 	return( TRUE );
 }
@@ -1516,7 +1517,7 @@ static int AC_StayWalkR2F_0( MMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_JUMP_WORK初期化　メイン
- * @param	fmmdl	MMDL *
+ * @param	mmdl	MMDL *
  * @param	dir		移動方向 DIR_UP等
  * @param	val		移動量
  * @param	wait	移動フレーム
@@ -1528,12 +1529,12 @@ static int AC_StayWalkR2F_0( MMDL * fmmdl )
  */
 //--------------------------------------------------------------
 static void AcJumpWorkInitMain(
-	MMDL * fmmdl, int dir, fx32 val,
+	MMDL * mmdl, int dir, fx32 val,
 	s16 wait, u16 draw, s16 h_type, u16 h_speed, u32 se )
 {
 	AC_JUMP_WORK *work;
 	
-	work = MMDL_InitMoveCmdWork( fmmdl, AC_JUMP_WORK_SIZE );
+	work = MMDL_InitMoveCmdWork( mmdl, AC_JUMP_WORK_SIZE );
 	work->dir = dir;
 	work->val = val;
 	work->wait = wait;
@@ -1542,18 +1543,18 @@ static void AcJumpWorkInitMain(
 	work->h_speed = h_speed;
 	
 	if( val == 0 ){												//その場
-		MMDL_UpdateGridPosCurrent( fmmdl );
+		MMDL_UpdateGridPosCurrent( mmdl );
 	}else{
-		MMDL_UpdateGridPosDir( fmmdl, dir );					//移動
+		MMDL_UpdateGridPosDir( mmdl, dir );					//移動
 	}
 	
-	MMDL_OnStatusBit( fmmdl,
+	MMDL_OnStatusBit( mmdl,
 			MMDL_STABIT_MOVE_START |
 			MMDL_STABIT_JUMP_START );
 	
-	MMDL_SetDirAll( fmmdl, dir );
-	MMDL_SetDrawStatus( fmmdl, draw );
-	MMDL_IncAcmdSeq( fmmdl );
+	MMDL_SetDirAll( mmdl, dir );
+	MMDL_SetDrawStatus( mmdl, draw );
+	MMDL_IncAcmdSeq( mmdl );
 	
 	if( se ){
 #if 0
@@ -1565,7 +1566,7 @@ static void AcJumpWorkInitMain(
 //--------------------------------------------------------------
 /**
  * AC_JUMP_WORK初期化 SE_JUMP固定
- * @param	fmmdl	MMDL *
+ * @param	mmdl	MMDL *
  * @param	dir		移動方向 DIR_UP等
  * @param	val		移動量
  * @param	wait	移動フレーム
@@ -1576,13 +1577,13 @@ static void AcJumpWorkInitMain(
  */
 //--------------------------------------------------------------
 static void AcJumpWorkInit(
-		MMDL * fmmdl, int dir, fx32 val, s16 wait, u16 draw, s16 h_type, u16 h_speed )
+		MMDL * mmdl, int dir, fx32 val, s16 wait, u16 draw, s16 h_type, u16 h_speed )
 {
 #if 0
-	AcJumpWorkInitMain( fmmdl, dir, val,
+	AcJumpWorkInitMain( mmdl, dir, val,
 			wait, draw, h_type, h_speed, SE_JUMP );
 #else
-	AcJumpWorkInitMain( fmmdl, dir, val,
+	AcJumpWorkInitMain( mmdl, dir, val,
 			wait, draw, h_type, h_speed, 0 );
 #endif
 }
@@ -1590,24 +1591,24 @@ static void AcJumpWorkInit(
 //--------------------------------------------------------------
 /**
  * AC_JUMP系　移動
- * @param	fmmdl	MMDL * 
+ * @param	mmdl	MMDL * 
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_Jump_1( MMDL * fmmdl )
+static int AC_Jump_1( MMDL * mmdl )
 {
 	AC_JUMP_WORK *work;
 	
-	work = MMDL_GetMoveCmdWork( fmmdl );
+	work = MMDL_GetMoveCmdWork( mmdl );
 	
 	if( work->val ){
-		MMDL_AddVectorPosDir( fmmdl, work->dir, work->val );
-		MMDL_UpdateCurrentHeight( fmmdl );
+		MMDL_AddVectorPosDir( mmdl, work->dir, work->val );
+		MMDL_UpdateCurrentHeight( mmdl );
 			
 		if( work->dest_val >= GRID_FX32 ){						//１グリッド移動
 			work->dest_val = 0;
-			MMDL_UpdateGridPosDir( fmmdl, work->dir );
-			MMDL_OnStatusBit( fmmdl, MMDL_STABIT_MOVE_START );
+			MMDL_UpdateGridPosDir( mmdl, work->dir );
+			MMDL_OnStatusBit( mmdl, MMDL_STABIT_MOVE_START );
 		}
 			
 		{
@@ -1635,7 +1636,7 @@ static int AC_Jump_1( MMDL * fmmdl )
 			vec.x = 0;
 			vec.y = tbl[frame];
 			vec.z = 0;
-			MMDL_SetVectorDrawOffsetPos( fmmdl, &vec );
+			MMDL_SetVectorDrawOffsetPos( mmdl, &vec );
 		}
 	}
 	
@@ -1647,18 +1648,18 @@ static int AC_Jump_1( MMDL * fmmdl )
 	
 	{
 		VecFx32 vec = { 0, 0, 0 };								//オフセットクリア
-		MMDL_SetVectorDrawOffsetPos( fmmdl, &vec );
+		MMDL_SetVectorDrawOffsetPos( mmdl, &vec );
 	}
 	
-	MMDL_OnStatusBit( fmmdl,
+	MMDL_OnStatusBit( mmdl,
 			MMDL_STABIT_MOVE_END |
 			MMDL_STABIT_JUMP_END |
 			MMDL_STABIT_ACMD_END );
 	
-	MMDL_UpdateGridPosCurrent( fmmdl );
-	MMDL_CallDrawProc( fmmdl );						//1フレーム進める
-	MMDL_SetDrawStatus( fmmdl, DRAW_STA_STOP );
-	MMDL_IncAcmdSeq( fmmdl );
+	MMDL_UpdateGridPosCurrent( mmdl );
+	MMDL_CallDrawProc( mmdl );						//1フレーム進める
+	MMDL_SetDrawStatus( mmdl, DRAW_STA_STOP );
+	MMDL_IncAcmdSeq( mmdl );
 #if 0
 	Snd_SePlay( SE_SUTYA2 );
 #endif
@@ -1668,13 +1669,13 @@ static int AC_Jump_1( MMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_STAY_JUMP_U_16F 0
- * @param	fmmdl	MMDL *
+ * @param	mmdl	MMDL *
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_StayJumpU16F_0( MMDL * fmmdl )
+static int AC_StayJumpU16F_0( MMDL * mmdl )
 {
-	AcJumpWorkInit( fmmdl, DIR_UP, 0,
+	AcJumpWorkInit( mmdl, DIR_UP, 0,
 		GRID_FRAME_16, DRAW_STA_WALK_16F, AC_JUMP_HEIGHT_12, AC_JUMP_SPEED_UX16_1 );
 	
 	return( TRUE );
@@ -1683,13 +1684,13 @@ static int AC_StayJumpU16F_0( MMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_STAY_JUMP_D_16F 0
- * @param	fmmdl	MMDL *
+ * @param	mmdl	MMDL *
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_StayJumpD16F_0( MMDL * fmmdl )
+static int AC_StayJumpD16F_0( MMDL * mmdl )
 {
-	AcJumpWorkInit( fmmdl, DIR_DOWN, 0,
+	AcJumpWorkInit( mmdl, DIR_DOWN, 0,
 		GRID_FRAME_16, DRAW_STA_WALK_16F, AC_JUMP_HEIGHT_12, AC_JUMP_SPEED_UX16_1 );
 	
 	return( TRUE );
@@ -1698,13 +1699,13 @@ static int AC_StayJumpD16F_0( MMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_STAY_JUMP_L_16F 0
- * @param	fmmdl	MMDL *
+ * @param	mmdl	MMDL *
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_StayJumpL16F_0( MMDL * fmmdl )
+static int AC_StayJumpL16F_0( MMDL * mmdl )
 {
-	AcJumpWorkInit( fmmdl, DIR_LEFT, 0,
+	AcJumpWorkInit( mmdl, DIR_LEFT, 0,
 		GRID_FRAME_16, DRAW_STA_WALK_16F, AC_JUMP_HEIGHT_12, AC_JUMP_SPEED_UX16_1 );
 	
 	return( TRUE );
@@ -1713,13 +1714,13 @@ static int AC_StayJumpL16F_0( MMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_STAY_JUMP_R_16F 0
- * @param	fmmdl	MMDL *
+ * @param	mmdl	MMDL *
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_StayJumpR16F_0( MMDL * fmmdl )
+static int AC_StayJumpR16F_0( MMDL * mmdl )
 {
-	AcJumpWorkInit( fmmdl, DIR_RIGHT, 0,
+	AcJumpWorkInit( mmdl, DIR_RIGHT, 0,
 		GRID_FRAME_16, DRAW_STA_WALK_16F, AC_JUMP_HEIGHT_12, AC_JUMP_SPEED_UX16_1 );
 	
 	return( TRUE );
@@ -1728,13 +1729,13 @@ static int AC_StayJumpR16F_0( MMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_STAY_JUMP_U_8F 0
- * @param	fmmdl	MMDL *
+ * @param	mmdl	MMDL *
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_StayJumpU8F_0( MMDL * fmmdl )
+static int AC_StayJumpU8F_0( MMDL * mmdl )
 {
-	AcJumpWorkInit( fmmdl, DIR_UP, 0,
+	AcJumpWorkInit( mmdl, DIR_UP, 0,
 		GRID_FRAME_8, DRAW_STA_WALK_8F, AC_JUMP_HEIGHT_12, AC_JUMP_SPEED_UX16_2 );
 	
 	return( TRUE );
@@ -1743,13 +1744,13 @@ static int AC_StayJumpU8F_0( MMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_STAY_JUMP_D_8F 0
- * @param	fmmdl	MMDL *
+ * @param	mmdl	MMDL *
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_StayJumpD8F_0( MMDL * fmmdl )
+static int AC_StayJumpD8F_0( MMDL * mmdl )
 {
-	AcJumpWorkInit( fmmdl, DIR_DOWN, 0,
+	AcJumpWorkInit( mmdl, DIR_DOWN, 0,
 		GRID_FRAME_8, DRAW_STA_WALK_8F, AC_JUMP_HEIGHT_12, AC_JUMP_SPEED_UX16_2 );
 	
 	return( TRUE );
@@ -1758,13 +1759,13 @@ static int AC_StayJumpD8F_0( MMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_STAY_JUMP_L_8F 0
- * @param	fmmdl	MMDL *
+ * @param	mmdl	MMDL *
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_StayJumpL8F_0( MMDL * fmmdl )
+static int AC_StayJumpL8F_0( MMDL * mmdl )
 {
-	AcJumpWorkInit( fmmdl, DIR_LEFT, 0,
+	AcJumpWorkInit( mmdl, DIR_LEFT, 0,
 		GRID_FRAME_8, DRAW_STA_WALK_8F, AC_JUMP_HEIGHT_12, AC_JUMP_SPEED_UX16_2 );
 	
 	return( TRUE );
@@ -1773,13 +1774,13 @@ static int AC_StayJumpL8F_0( MMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_STAY_JUMP_R_8F 0
- * @param	fmmdl	MMDL *
+ * @param	mmdl	MMDL *
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_StayJumpR8F_0( MMDL * fmmdl )
+static int AC_StayJumpR8F_0( MMDL * mmdl )
 {
-	AcJumpWorkInit( fmmdl, DIR_RIGHT, 0,
+	AcJumpWorkInit( mmdl, DIR_RIGHT, 0,
 		GRID_FRAME_8, DRAW_STA_WALK_8F, AC_JUMP_HEIGHT_12, AC_JUMP_SPEED_UX16_2 );
 	
 	return( TRUE );
@@ -1788,13 +1789,13 @@ static int AC_StayJumpR8F_0( MMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_JUMP_U_1G_8F 0
- * @param	fmmdl	MMDL *
+ * @param	mmdl	MMDL *
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_JumpU1G8F_0( MMDL * fmmdl )
+static int AC_JumpU1G8F_0( MMDL * mmdl )
 {
-	AcJumpWorkInit( fmmdl, DIR_UP, GRID_VALUE_SPEED_8,
+	AcJumpWorkInit( mmdl, DIR_UP, GRID_VALUE_SPEED_8,
 		GRID_FRAME_8, DRAW_STA_WALK_8F, AC_JUMP_HEIGHT_12, AC_JUMP_SPEED_UX16_2 );
 	
 	return( TRUE );
@@ -1803,13 +1804,13 @@ static int AC_JumpU1G8F_0( MMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_JDMP_D_1G_8F 0
- * @param	fmmdl	MMDL *
+ * @param	mmdl	MMDL *
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_JumpD1G8F_0( MMDL * fmmdl )
+static int AC_JumpD1G8F_0( MMDL * mmdl )
 {
-	AcJumpWorkInit( fmmdl, DIR_DOWN, GRID_VALUE_SPEED_8,
+	AcJumpWorkInit( mmdl, DIR_DOWN, GRID_VALUE_SPEED_8,
 		GRID_FRAME_8, DRAW_STA_WALK_8F, AC_JUMP_HEIGHT_12, AC_JUMP_SPEED_UX16_2 );
 	
 	return( TRUE );
@@ -1818,13 +1819,13 @@ static int AC_JumpD1G8F_0( MMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_JDMP_L_1G_8F 0
- * @param	fmmdl	MMDL *
+ * @param	mmdl	MMDL *
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_JumpL1G8F_0( MMDL * fmmdl )
+static int AC_JumpL1G8F_0( MMDL * mmdl )
 {
-	AcJumpWorkInit( fmmdl, DIR_LEFT, GRID_VALUE_SPEED_8,
+	AcJumpWorkInit( mmdl, DIR_LEFT, GRID_VALUE_SPEED_8,
 		GRID_FRAME_8, DRAW_STA_WALK_8F, AC_JUMP_HEIGHT_12, AC_JUMP_SPEED_UX16_2 );
 	
 	return( TRUE );
@@ -1833,13 +1834,13 @@ static int AC_JumpL1G8F_0( MMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_JDMP_R_1G_8F 0
- * @param	fmmdl	MMDL *
+ * @param	mmdl	MMDL *
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_JumpR1G8F_0( MMDL * fmmdl )
+static int AC_JumpR1G8F_0( MMDL * mmdl )
 {
-	AcJumpWorkInit( fmmdl, DIR_RIGHT, GRID_VALUE_SPEED_8,
+	AcJumpWorkInit( mmdl, DIR_RIGHT, GRID_VALUE_SPEED_8,
 		GRID_FRAME_8, DRAW_STA_WALK_8F, AC_JUMP_HEIGHT_12, AC_JUMP_SPEED_UX16_2 );
 	
 	return( TRUE );
@@ -1848,13 +1849,13 @@ static int AC_JumpR1G8F_0( MMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_JUMP_U_2G_16F 0
- * @param	fmmdl	MMDL *
+ * @param	mmdl	MMDL *
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_JumpU2G8F_0( MMDL * fmmdl )
+static int AC_JumpU2G8F_0( MMDL * mmdl )
 {
-	AcJumpWorkInit( fmmdl, DIR_UP, GRID_VALUE_SPEED_8,
+	AcJumpWorkInit( mmdl, DIR_UP, GRID_VALUE_SPEED_8,
 		GRID_FRAME_8*2, DRAW_STA_WALK_8F, AC_JUMP_HEIGHT_12, AC_JUMP_SPEED_UX16_1 );
 	
 	return( TRUE );
@@ -1863,13 +1864,13 @@ static int AC_JumpU2G8F_0( MMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_JUMP_D_2G_16F 0
- * @param	fmmdl	MMDL *
+ * @param	mmdl	MMDL *
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_JumpD2G8F_0( MMDL * fmmdl )
+static int AC_JumpD2G8F_0( MMDL * mmdl )
 {
-	AcJumpWorkInit( fmmdl, DIR_DOWN, GRID_VALUE_SPEED_8,
+	AcJumpWorkInit( mmdl, DIR_DOWN, GRID_VALUE_SPEED_8,
 		GRID_FRAME_16, DRAW_STA_WALK_8F, AC_JUMP_HEIGHT_12, AC_JUMP_SPEED_UX16_1 );
 	
 	return( TRUE );
@@ -1878,13 +1879,13 @@ static int AC_JumpD2G8F_0( MMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_JUMP_L_2G_16F 0
- * @param	fmmdl	MMDL *
+ * @param	mmdl	MMDL *
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_JumpL2G8F_0( MMDL * fmmdl )
+static int AC_JumpL2G8F_0( MMDL * mmdl )
 {
-	AcJumpWorkInit( fmmdl, DIR_LEFT, GRID_VALUE_SPEED_8,
+	AcJumpWorkInit( mmdl, DIR_LEFT, GRID_VALUE_SPEED_8,
 		GRID_FRAME_16, DRAW_STA_WALK_8F, AC_JUMP_HEIGHT_12, AC_JUMP_SPEED_UX16_1 );
 	
 	return( TRUE );
@@ -1893,13 +1894,13 @@ static int AC_JumpL2G8F_0( MMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_JUMP_R_2G_16F 0
- * @param	fmmdl	MMDL *
+ * @param	mmdl	MMDL *
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_JumpR2G8F_0( MMDL * fmmdl )
+static int AC_JumpR2G8F_0( MMDL * mmdl )
 {
-	AcJumpWorkInit( fmmdl, DIR_RIGHT, GRID_VALUE_SPEED_8,
+	AcJumpWorkInit( mmdl, DIR_RIGHT, GRID_VALUE_SPEED_8,
 		GRID_FRAME_16, DRAW_STA_WALK_8F, AC_JUMP_HEIGHT_12, AC_JUMP_SPEED_UX16_1 );
 	
 	return( TRUE );
@@ -1908,13 +1909,13 @@ static int AC_JumpR2G8F_0( MMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_JUMPHI_L_1G_16F 0
- * @param	fmmdl	MMDL *
+ * @param	mmdl	MMDL *
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_JumpHiL1G16F_0( MMDL * fmmdl )
+static int AC_JumpHiL1G16F_0( MMDL * mmdl )
 {
-	AcJumpWorkInit( fmmdl, DIR_LEFT, GRID_VALUE_SPEED_16,
+	AcJumpWorkInit( mmdl, DIR_LEFT, GRID_VALUE_SPEED_16,
 		GRID_FRAME_16, DRAW_STA_TAKE_OFF_16F, AC_JUMP_HEIGHT_12,
 		AC_JUMP_SPEED_UX16_TBL(GRID_FRAME_16) );
 	
@@ -1924,13 +1925,13 @@ static int AC_JumpHiL1G16F_0( MMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_JUMPHI_R_1G_16F 0
- * @param	fmmdl	MMDL *
+ * @param	mmdl	MMDL *
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_JumpHiR1G16F_0( MMDL * fmmdl )
+static int AC_JumpHiR1G16F_0( MMDL * mmdl )
 {
-	AcJumpWorkInit( fmmdl, DIR_RIGHT, GRID_VALUE_SPEED_16,
+	AcJumpWorkInit( mmdl, DIR_RIGHT, GRID_VALUE_SPEED_16,
 		GRID_FRAME_16, DRAW_STA_TAKE_OFF_16F, AC_JUMP_HEIGHT_12,
 		AC_JUMP_SPEED_UX16_TBL(GRID_FRAME_16) );
 	
@@ -1940,13 +1941,13 @@ static int AC_JumpHiR1G16F_0( MMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_JUMPHI_L_3G_32F 0
- * @param	fmmdl	MMDL *
+ * @param	mmdl	MMDL *
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_JumpHiL3G32F_0( MMDL * fmmdl )
+static int AC_JumpHiL3G32F_0( MMDL * mmdl )
 {
-	AcJumpWorkInit( fmmdl, DIR_LEFT,
+	AcJumpWorkInit( mmdl, DIR_LEFT,
 		GRID_VALUE_SPEED_4,
 		12, DRAW_STA_TAKE_OFF_8F, AC_JUMP_HEIGHT_12,
 		AC_JUMP_SPEED_UX16_TBL(12) );
@@ -1957,13 +1958,13 @@ static int AC_JumpHiL3G32F_0( MMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_JUMPHI_R_3G_32F 0
- * @param	fmmdl	MMDL *
+ * @param	mmdl	MMDL *
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_JumpHiR3G32F_0( MMDL * fmmdl )
+static int AC_JumpHiR3G32F_0( MMDL * mmdl )
 {
-	AcJumpWorkInit( fmmdl, DIR_RIGHT,
+	AcJumpWorkInit( mmdl, DIR_RIGHT,
 		GRID_VALUE_SPEED_4,
 		12, DRAW_STA_TAKE_OFF_8F, AC_JUMP_HEIGHT_12,
 		AC_JUMP_SPEED_UX16_TBL(12) );
@@ -1974,18 +1975,18 @@ static int AC_JumpHiR3G32F_0( MMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_JUMP_U_3G_24F 0
- * @param	fmmdl	MMDL *
+ * @param	mmdl	MMDL *
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_JumpU3G24F_0( MMDL * fmmdl )
+static int AC_JumpU3G24F_0( MMDL * mmdl )
 {
 #if 0
-	AcJumpWorkInitMain( fmmdl, DIR_UP, GRID_VALUE_SPEED_8,
+	AcJumpWorkInitMain( mmdl, DIR_UP, GRID_VALUE_SPEED_8,
 		GRID_FRAME_8*3, DRAW_STA_WALK_8F, AC_JUMP_HEIGHT_12,
 		AC_JUMP_SPEED_UX16_TBL(24), SE_TWORLD_JUMP );
 #else
-	AcJumpWorkInitMain( fmmdl, DIR_UP, GRID_VALUE_SPEED_8,
+	AcJumpWorkInitMain( mmdl, DIR_UP, GRID_VALUE_SPEED_8,
 		GRID_FRAME_8*3, DRAW_STA_WALK_8F, AC_JUMP_HEIGHT_12,
 		AC_JUMP_SPEED_UX16_TBL(24), 0 );
 #endif
@@ -1995,18 +1996,18 @@ static int AC_JumpU3G24F_0( MMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_JUMP_D_3G_24F 0
- * @param	fmmdl	MMDL *
+ * @param	mmdl	MMDL *
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_JumpD3G24F_0( MMDL * fmmdl )
+static int AC_JumpD3G24F_0( MMDL * mmdl )
 {
 #if 0
-	AcJumpWorkInitMain( fmmdl, DIR_DOWN, GRID_VALUE_SPEED_8,
+	AcJumpWorkInitMain( mmdl, DIR_DOWN, GRID_VALUE_SPEED_8,
 		GRID_FRAME_8*3, DRAW_STA_WALK_8F, AC_JUMP_HEIGHT_12,
 		AC_JUMP_SPEED_UX16_TBL(24), SE_TWORLD_JUMP );
 #else
-	AcJumpWorkInitMain( fmmdl, DIR_DOWN, GRID_VALUE_SPEED_8,
+	AcJumpWorkInitMain( mmdl, DIR_DOWN, GRID_VALUE_SPEED_8,
 		GRID_FRAME_8*3, DRAW_STA_WALK_8F, AC_JUMP_HEIGHT_12,
 		AC_JUMP_SPEED_UX16_TBL(24), 0 );
 #endif
@@ -2017,18 +2018,18 @@ static int AC_JumpD3G24F_0( MMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_JUMP_L_3G_24F 0
- * @param	fmmdl	MMDL *
+ * @param	mmdl	MMDL *
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_JumpL3G24F_0( MMDL * fmmdl )
+static int AC_JumpL3G24F_0( MMDL * mmdl )
 {
 #if 0
-	AcJumpWorkInitMain( fmmdl, DIR_LEFT, GRID_VALUE_SPEED_8,
+	AcJumpWorkInitMain( mmdl, DIR_LEFT, GRID_VALUE_SPEED_8,
 		GRID_FRAME_8*3, DRAW_STA_WALK_8F, AC_JUMP_HEIGHT_12,
 		AC_JUMP_SPEED_UX16_TBL(24), SE_TWORLD_JUMP );
 #else
-	AcJumpWorkInitMain( fmmdl, DIR_LEFT, GRID_VALUE_SPEED_8,
+	AcJumpWorkInitMain( mmdl, DIR_LEFT, GRID_VALUE_SPEED_8,
 		GRID_FRAME_8*3, DRAW_STA_WALK_8F, AC_JUMP_HEIGHT_12,
 		AC_JUMP_SPEED_UX16_TBL(24), 0 );
 #endif
@@ -2038,18 +2039,18 @@ static int AC_JumpL3G24F_0( MMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_JUMP_R_3G_24F 0
- * @param	fmmdl	MMDL *
+ * @param	mmdl	MMDL *
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_JumpR3G24F_0( MMDL * fmmdl )
+static int AC_JumpR3G24F_0( MMDL * mmdl )
 {
 #if 0
-	AcJumpWorkInitMain( fmmdl, DIR_RIGHT, GRID_VALUE_SPEED_8,
+	AcJumpWorkInitMain( mmdl, DIR_RIGHT, GRID_VALUE_SPEED_8,
 		GRID_FRAME_8*3, DRAW_STA_WALK_8F, AC_JUMP_HEIGHT_12,
 		AC_JUMP_SPEED_UX16_TBL(24), SE_TWORLD_JUMP );
 #else
-	AcJumpWorkInitMain( fmmdl, DIR_RIGHT, GRID_VALUE_SPEED_8,
+	AcJumpWorkInitMain( mmdl, DIR_RIGHT, GRID_VALUE_SPEED_8,
 		GRID_FRAME_8*3, DRAW_STA_WALK_8F, AC_JUMP_HEIGHT_12,
 		AC_JUMP_SPEED_UX16_TBL(24), 0 );
 #endif
@@ -2063,131 +2064,131 @@ static int AC_JumpR3G24F_0( MMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_WAIT_WORK初期化
- * @param	fmmdl	MMDL *
+ * @param	mmdl	MMDL *
  * @param	wait	ウェイトフレーム
  * @retval	nothing
  */
 //--------------------------------------------------------------
-static void AcWaitWorkInit( MMDL * fmmdl, int wait )
+static void AcWaitWorkInit( MMDL * mmdl, int wait )
 {
 	AC_WAIT_WORK *work;
 	
-	work = MMDL_InitMoveCmdWork( fmmdl, AC_WAIT_WORK_SIZE );
+	work = MMDL_InitMoveCmdWork( mmdl, AC_WAIT_WORK_SIZE );
 	work->wait = wait;
 	
-	MMDL_IncAcmdSeq( fmmdl );
+	MMDL_IncAcmdSeq( mmdl );
 }
 
 //--------------------------------------------------------------
 /**
  * AC_WAIT系　待ち
- * @param	fmmdl	MMDL *
+ * @param	mmdl	MMDL *
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_Wait_1( MMDL * fmmdl )
+static int AC_Wait_1( MMDL * mmdl )
 {
 	AC_WAIT_WORK *work;
 	
-	work = MMDL_GetMoveCmdWork( fmmdl );
+	work = MMDL_GetMoveCmdWork( mmdl );
 	
 	if( work->wait ){
 		work->wait--;
 		return( FALSE );
 	}
 	
-	MMDL_IncAcmdSeq( fmmdl );
+	MMDL_IncAcmdSeq( mmdl );
 	return( TRUE );
 }
 
 //--------------------------------------------------------------
 /**
  * AC_WAIT_1F 0
- * @param	fmmdl	MMDL *
+ * @param	mmdl	MMDL *
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_Wait1F_0( MMDL * fmmdl )
+static int AC_Wait1F_0( MMDL * mmdl )
 {
-	AcWaitWorkInit( fmmdl, 1 );
+	AcWaitWorkInit( mmdl, 1 );
 	return( TRUE );
 }
 
 //--------------------------------------------------------------
 /**
  * AC_WAIT_2F 0
- * @param	fmmdl	MMDL *
+ * @param	mmdl	MMDL *
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_Wait2F_0( MMDL * fmmdl )
+static int AC_Wait2F_0( MMDL * mmdl )
 {
-	AcWaitWorkInit( fmmdl, 2 );
+	AcWaitWorkInit( mmdl, 2 );
 	return( TRUE );
 }
 
 //--------------------------------------------------------------
 /**
  * AC_WAIT_4F 0
- * @param	fmmdl	MMDL *
+ * @param	mmdl	MMDL *
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_Wait4F_0( MMDL * fmmdl )
+static int AC_Wait4F_0( MMDL * mmdl )
 {
-	AcWaitWorkInit( fmmdl, 4 );
+	AcWaitWorkInit( mmdl, 4 );
 	return( TRUE );
 }
 
 //--------------------------------------------------------------
 /**
  * AC_WAIT_8F 0
- * @param	fmmdl	MMDL *
+ * @param	mmdl	MMDL *
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_Wait8F_0( MMDL * fmmdl )
+static int AC_Wait8F_0( MMDL * mmdl )
 {
-	AcWaitWorkInit( fmmdl, 8 );
+	AcWaitWorkInit( mmdl, 8 );
 	return( TRUE );
 }
 
 //--------------------------------------------------------------
 /**
  * AC_WAIT_15F 0
- * @param	fmmdl	MMDL *
+ * @param	mmdl	MMDL *
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_Wait15F_0( MMDL * fmmdl )
+static int AC_Wait15F_0( MMDL * mmdl )
 {
-	AcWaitWorkInit( fmmdl, 15 );
+	AcWaitWorkInit( mmdl, 15 );
 	return( TRUE );
 }
 
 //--------------------------------------------------------------
 /**
  * AC_WAIT_16F 0
- * @param	fmmdl	MMDL *
+ * @param	mmdl	MMDL *
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_Wait16F_0( MMDL * fmmdl )
+static int AC_Wait16F_0( MMDL * mmdl )
 {
-	AcWaitWorkInit( fmmdl, 16 );
+	AcWaitWorkInit( mmdl, 16 );
 	return( TRUE );
 }
 
 //--------------------------------------------------------------
 /**
  * AC_WAIT_32F 0
- * @param	fmmdl	MMDL *
+ * @param	mmdl	MMDL *
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_Wait32F_0( MMDL * fmmdl )
+static int AC_Wait32F_0( MMDL * mmdl )
 {
-	AcWaitWorkInit( fmmdl, 32 );
+	AcWaitWorkInit( mmdl, 32 );
 	return( TRUE );
 }
 
@@ -2197,19 +2198,19 @@ static int AC_Wait32F_0( MMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_WARP_UP 0
- * @param	fmmdl	MMDL *
+ * @param	mmdl	MMDL *
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_WarpUp_0( MMDL * fmmdl )
+static int AC_WarpUp_0( MMDL * mmdl )
 {
 	AC_WARP_WORK *work;
 	
-	work = MMDL_InitMoveCmdWork( fmmdl, AC_WARP_WORK_SIZE );
+	work = MMDL_InitMoveCmdWork( mmdl, AC_WARP_WORK_SIZE );
 	work->value = FX32_ONE * 16;
 	
-	MMDL_SetDrawStatus( fmmdl, DRAW_STA_STOP );
-	MMDL_IncAcmdSeq( fmmdl );
+	MMDL_SetDrawStatus( mmdl, DRAW_STA_STOP );
+	MMDL_IncAcmdSeq( mmdl );
 	
 	return( TRUE );
 }
@@ -2217,23 +2218,23 @@ static int AC_WarpUp_0( MMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_WARP_UP 1
- * @param	fmmdl	MMDL *
+ * @param	mmdl	MMDL *
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_WarpUp_1( MMDL * fmmdl )
+static int AC_WarpUp_1( MMDL * mmdl )
 {
 	int grid;
 	AC_WARP_WORK *work;
 	
-	work = MMDL_GetMoveCmdWork( fmmdl );
+	work = MMDL_GetMoveCmdWork( mmdl );
 	
 	work->total_offset += work->value;
 	
 	{
 		VecFx32 vec = {0,0,0};
 		vec.y = work->total_offset;
-		MMDL_SetVectorDrawOffsetPos( fmmdl, &vec );
+		MMDL_SetVectorDrawOffsetPos( mmdl, &vec );
 	}
 	
 	grid = work->total_offset / GRID_HALF_FX32;
@@ -2242,27 +2243,27 @@ static int AC_WarpUp_1( MMDL * fmmdl )
 		return( FALSE );
 	}
 	
-	MMDL_IncAcmdSeq( fmmdl );
+	MMDL_IncAcmdSeq( mmdl );
 	return( TRUE );
 }
 
 //--------------------------------------------------------------
 /**
  * AC_WARP_DOWN 0
- * @param	fmmdl	MMDL *
+ * @param	mmdl	MMDL *
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_WarpDown_0( MMDL * fmmdl )
+static int AC_WarpDown_0( MMDL * mmdl )
 {
 	AC_WARP_WORK *work;
 	
-	work = MMDL_InitMoveCmdWork( fmmdl, AC_WARP_WORK_SIZE );
+	work = MMDL_InitMoveCmdWork( mmdl, AC_WARP_WORK_SIZE );
 	work->total_offset = GRID_HALF_FX32 * 40;
 	work->value = -(FX32_ONE * 16);
 	
-	MMDL_SetDrawStatus( fmmdl, DRAW_STA_STOP );
-	MMDL_IncAcmdSeq( fmmdl );
+	MMDL_SetDrawStatus( mmdl, DRAW_STA_STOP );
+	MMDL_IncAcmdSeq( mmdl );
 	
 	return( TRUE );
 }
@@ -2270,15 +2271,15 @@ static int AC_WarpDown_0( MMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_WARP_DOWN 1
- * @param	fmmdl	MMDL *
+ * @param	mmdl	MMDL *
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_WarpDown_1( MMDL * fmmdl )
+static int AC_WarpDown_1( MMDL * mmdl )
 {
 	AC_WARP_WORK *work;
 	
-	work = MMDL_GetMoveCmdWork( fmmdl );
+	work = MMDL_GetMoveCmdWork( mmdl );
 	
 	work->total_offset += work->value;
 	
@@ -2290,7 +2291,7 @@ static int AC_WarpDown_1( MMDL * fmmdl )
 		VecFx32 vec = {0,0,0};
 		vec.y = work->total_offset;
 		
-		MMDL_SetVectorDrawOffsetPos( fmmdl, &vec );
+		MMDL_SetVectorDrawOffsetPos( mmdl, &vec );
 	}
 	
 	if( work->total_offset > 0 ){
@@ -2298,7 +2299,7 @@ static int AC_WarpDown_1( MMDL * fmmdl )
 	}
 	
 	
-	MMDL_IncAcmdSeq( fmmdl );
+	MMDL_IncAcmdSeq( mmdl );
 	return( TRUE );
 }
 
@@ -2308,28 +2309,28 @@ static int AC_WarpDown_1( MMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_VANISH_ON 0
- * @param	fmmdl	MMDL *
+ * @param	mmdl	MMDL *
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_VanishON_0( MMDL * fmmdl )
+static int AC_VanishON_0( MMDL * mmdl )
 {
-	MMDL_OnStatusBit( fmmdl, MMDL_STABIT_VANISH );
-	MMDL_IncAcmdSeq( fmmdl );
+	MMDL_OnStatusBit( mmdl, MMDL_STABIT_VANISH );
+	MMDL_IncAcmdSeq( mmdl );
 	return( TRUE );
 }
 
 //--------------------------------------------------------------
 /**
  * AC_VANISH_OFF 0
- * @param	fmmdl	MMDL *
+ * @param	mmdl	MMDL *
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_VanishOFF_0( MMDL * fmmdl )
+static int AC_VanishOFF_0( MMDL * mmdl )
 {
-	MMDL_OffStatusBit( fmmdl, MMDL_STABIT_VANISH );
-	MMDL_IncAcmdSeq( fmmdl );
+	MMDL_OffStatusBit( mmdl, MMDL_STABIT_VANISH );
+	MMDL_IncAcmdSeq( mmdl );
 	return( TRUE );
 }
 
@@ -2340,28 +2341,28 @@ static int AC_VanishOFF_0( MMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_DIR_PAUSE_ON 0
- * @param	fmmdl	MMDL *
+ * @param	mmdl	MMDL *
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_DirPauseON_0( MMDL * fmmdl )
+static int AC_DirPauseON_0( MMDL * mmdl )
 {
-	MMDL_OnStatusBit( fmmdl, MMDL_STABIT_PAUSE_DIR );
-	MMDL_IncAcmdSeq( fmmdl );
+	MMDL_OnStatusBit( mmdl, MMDL_STABIT_PAUSE_DIR );
+	MMDL_IncAcmdSeq( mmdl );
 	return( TRUE );
 }
 
 //--------------------------------------------------------------
 /**
  * AC_DIR_PAUSE_OFF 0
- * @param	fmmdl	MMDL *
+ * @param	mmdl	MMDL *
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_DirPauseOFF_0( MMDL * fmmdl )
+static int AC_DirPauseOFF_0( MMDL * mmdl )
 {
-	MMDL_OffStatusBit( fmmdl, MMDL_STABIT_PAUSE_DIR );
-	MMDL_IncAcmdSeq( fmmdl );
+	MMDL_OffStatusBit( mmdl, MMDL_STABIT_PAUSE_DIR );
+	MMDL_IncAcmdSeq( mmdl );
 	return( TRUE );
 }
 
@@ -2371,28 +2372,28 @@ static int AC_DirPauseOFF_0( MMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_ANM_PAUSE_ON 0
- * @param	fmmdl	MMDL *
+ * @param	mmdl	MMDL *
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_AnmPauseON_0( MMDL * fmmdl )
+static int AC_AnmPauseON_0( MMDL * mmdl )
 {
-	MMDL_OnStatusBit( fmmdl, MMDL_STABIT_PAUSE_ANM );
-	MMDL_IncAcmdSeq( fmmdl );
+	MMDL_OnStatusBit( mmdl, MMDL_STABIT_PAUSE_ANM );
+	MMDL_IncAcmdSeq( mmdl );
 	return( TRUE );
 }
 
 //--------------------------------------------------------------
 /**
  * AC_ANM_PAUSE_OFF 0
- * @param	fmmdl	MMDL *
+ * @param	mmdl	MMDL *
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_AnmPauseOFF_0( MMDL * fmmdl )
+static int AC_AnmPauseOFF_0( MMDL * mmdl )
 {
-	MMDL_OffStatusBit( fmmdl, MMDL_STABIT_PAUSE_ANM );
-	MMDL_IncAcmdSeq( fmmdl );
+	MMDL_OffStatusBit( mmdl, MMDL_STABIT_PAUSE_ANM );
+	MMDL_IncAcmdSeq( mmdl );
 	return( TRUE );
 }
 
@@ -2402,101 +2403,87 @@ static int AC_AnmPauseOFF_0( MMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_MARK_WORK初期化
- * @param	fmmdl	MMDL *
+ * @param	mmdl	MMDL *
  * @param	type	マーク種類
  * @param	trans	TRUE=マークグラフィック転送待ち版
  * @retval	nothing
  */
 //--------------------------------------------------------------
-#if 0
 static void AcMarkWorkInit(
-	MMDL * fmmdl, GYOE_TYPE type, int trans )
-#else
-static void AcMarkWorkInit(
-	MMDL * fmmdl, int type, int trans )
-#endif
+	MMDL * mmdl, int type, int trans )
 {
 	AC_MARK_WORK *work;
-	
-	work = MMDL_InitMoveCmdWork( fmmdl, AC_MARK_WORK_SIZE );
+
+	work = MMDL_InitMoveCmdWork( mmdl, AC_MARK_WORK_SIZE );
 	work->type = type;
-//	work->eoa_mark = FE_fmmdlGyoe_Add( fmmdl, type, TRUE, trans );
-	MMDL_IncAcmdSeq( fmmdl );
+	
+  {
+    MMDLSYS *mmdlsys =  (MMDLSYS*)MMDL_GetMMdlSys( mmdl );
+    FIELDMAP_WORK *fieldMap = MMDLSYS_GetFieldMapWork( mmdlsys );
+	  FLDEFF_CTRL *fectrl = FIELDMAP_GetFldEffCtrl( fieldMap );
+    work->task_mark = FLDEFF_GYOE_SetMMdl( fectrl, mmdl, type, TRUE );
+  }
+
+	MMDL_IncAcmdSeq( mmdl );
 }
 
 //--------------------------------------------------------------
 /**
  * AC_MARK系　動作
- * @param	fmmdl	MMDL *
+ * @param	mmdl	MMDL *
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_Mark_1( MMDL * fmmdl )
+static int AC_Mark_1( MMDL * mmdl )
 {
 	AC_MARK_WORK *work;
-	
-	work = MMDL_GetMoveCmdWork( fmmdl );
-#if 0	
-	if( FE_Gyoe_EndCheck(work->eoa_mark) == TRUE ){
-		EOA_Delete( work->eoa_mark );
-		MMDL_IncAcmdSeq( fmmdl );
+	work = MMDL_GetMoveCmdWork( mmdl );
+
+	if( FLDEFF_GYOE_CheckEnd(work->task_mark) == TRUE ){
+    FLDEFF_TASK_CallDelete( work->task_mark );
+		MMDL_IncAcmdSeq( mmdl );
 		return( TRUE );
 	}
-#else
-	MMDL_IncAcmdSeq( fmmdl );
-	return( TRUE );
-#endif
 	return( FALSE );
 }
 
 //--------------------------------------------------------------
 /**
  * AC_MARK_GYOE 0
- * @param	fmmdl	MMDL *
+ * @param	mmdl	MMDL *
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_MarkGyoe_0( MMDL * fmmdl )
+static int AC_MarkGyoe_0( MMDL * mmdl )
 {
-#if 0
-	AcMarkWorkInit( fmmdl, GYOE_GYOE, FALSE );
-#else
-	AcMarkWorkInit( fmmdl, 0, FALSE );
-#endif
+	AcMarkWorkInit( mmdl, FLDEFF_GYOETYPE_GYOE, FALSE );
 	return( FALSE );
 }
 
 //--------------------------------------------------------------
 /**
  * AC_MARK_SAISEN 1
- * @param	fmmdl	MMDL *
+ * @param	mmdl	MMDL *
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_MarkSaisen_0( MMDL * fmmdl )
+static int AC_MarkSaisen_0( MMDL * mmdl )
 {
-#if 0
-	AcMarkWorkInit( fmmdl, GYOE_SAISEN, FALSE );
-#else
-	AcMarkWorkInit( fmmdl, 0, FALSE );
-#endif
+//	AcMarkWorkInit( mmdl, FLDEFF_GYOETYOE_SAISEN, FALSE );
+	AcMarkWorkInit( mmdl, FLDEFF_GYOETYPE_GYOE, FALSE );
 	return( FALSE );
 }
 
 //--------------------------------------------------------------
 /**
  * AC_MARK_GYOE_TWAIT 0
- * @param	fmmdl	MMDL *
+ * @param	mmdl	MMDL *
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_MarkGyoeTWait_0( MMDL * fmmdl )
+static int AC_MarkGyoeTWait_0( MMDL * mmdl )
 {
-#if 0
-	AcMarkWorkInit( fmmdl, GYOE_GYOE, TRUE );
-#else
-	AcMarkWorkInit( fmmdl, 0, TRUE );
-#endif
+	AcMarkWorkInit( mmdl, FLDEFF_GYOETYPE_GYOE, FALSE );
 	return( FALSE );
 }
 
@@ -2506,44 +2493,44 @@ static int AC_MarkGyoeTWait_0( MMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_WALK_ODD_WORK初期化
- * @param	fmmdl	MMDL *
+ * @param	mmdl	MMDL *
  * @param	dir			移動方向
  * @param	max_frame	移動最大フレーム
  * @param	draw		描画ステータス
  * @retval	nothing
  */
 //--------------------------------------------------------------
-static void AcWalkOddWorkInit( MMDL * fmmdl, int dir, s16 max_frame, u16 draw )
+static void AcWalkOddWorkInit( MMDL * mmdl, int dir, s16 max_frame, u16 draw )
 {
 	AC_WALK_ODD_WORK *work;
 	
-	work = MMDL_InitMoveCmdWork( fmmdl, AC_WALK_ODD_WORK_SIZE );
+	work = MMDL_InitMoveCmdWork( mmdl, AC_WALK_ODD_WORK_SIZE );
 	work->dir = dir;
 	work->draw_state = draw;
 	work->max_frame = max_frame;
 	
-	MMDL_UpdateGridPosDir( fmmdl, dir );
-	MMDL_SetDirAll( fmmdl, dir );
-	MMDL_SetDrawStatus( fmmdl, draw );
-	MMDL_OnStatusBit( fmmdl, MMDL_STABIT_MOVE_START );
-	MMDL_IncAcmdSeq( fmmdl );
+	MMDL_UpdateGridPosDir( mmdl, dir );
+	MMDL_SetDirAll( mmdl, dir );
+	MMDL_SetDrawStatus( mmdl, draw );
+	MMDL_OnStatusBit( mmdl, MMDL_STABIT_MOVE_START );
+	MMDL_IncAcmdSeq( mmdl );
 }
 
 //--------------------------------------------------------------
 /**
  * AC_WALK_ODD_WORK系　移動
- * @param	fmmdl	MMDL *
+ * @param	mmdl	MMDL *
  * @param	tbl		移動量が格納されているテーブル
  * @retval	int		TRUE=終了
  */
 //--------------------------------------------------------------
-static int AC_WalkOdd_Walk( MMDL * fmmdl, const fx32 *tbl )
+static int AC_WalkOdd_Walk( MMDL * mmdl, const fx32 *tbl )
 {
 	AC_WALK_ODD_WORK *work;
 	
-	work = MMDL_GetMoveCmdWork( fmmdl );
-	MMDL_AddVectorPosDir( fmmdl, work->dir, tbl[work->frame] );
-	MMDL_UpdateCurrentHeight( fmmdl );
+	work = MMDL_GetMoveCmdWork( mmdl );
+	MMDL_AddVectorPosDir( mmdl, work->dir, tbl[work->frame] );
+	MMDL_UpdateCurrentHeight( mmdl );
 	
 	work->frame++;
 	
@@ -2551,11 +2538,11 @@ static int AC_WalkOdd_Walk( MMDL * fmmdl, const fx32 *tbl )
 		return( FALSE );
 	}
 	
-	MMDL_OnStatusBit( fmmdl, MMDL_STABIT_MOVE_END|MMDL_STABIT_ACMD_END );
-	MMDL_UpdateGridPosCurrent( fmmdl );
-	MMDL_CallDrawProc( fmmdl );						//1フレーム進める
-	MMDL_SetDrawStatus( fmmdl, DRAW_STA_STOP );
-	MMDL_IncAcmdSeq( fmmdl );
+	MMDL_OnStatusBit( mmdl, MMDL_STABIT_MOVE_END|MMDL_STABIT_ACMD_END );
+	MMDL_UpdateGridPosCurrent( mmdl );
+	MMDL_CallDrawProc( mmdl );						//1フレーム進める
+	MMDL_SetDrawStatus( mmdl, DRAW_STA_STOP );
+	MMDL_IncAcmdSeq( mmdl );
 	
 	return( TRUE );
 }
@@ -2566,65 +2553,65 @@ static int AC_WalkOdd_Walk( MMDL * fmmdl, const fx32 *tbl )
 //--------------------------------------------------------------
 /**
  * AC_WALK_U_6F 0
- * @param	fmmdl	MMDL *
+ * @param	mmdl	MMDL *
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_WalkU6F_0( MMDL * fmmdl )
+static int AC_WalkU6F_0( MMDL * mmdl )
 {
-	AcWalkOddWorkInit( fmmdl, DIR_UP, AC_WALK_6F_FRAME, DRAW_STA_WALK_6F );
+	AcWalkOddWorkInit( mmdl, DIR_UP, AC_WALK_6F_FRAME, DRAW_STA_WALK_6F );
 	return( TRUE );
 }
 
 //--------------------------------------------------------------
 /**
  * AC_WALK_D_6F 0
- * @param	fmmdl	MMDL *
+ * @param	mmdl	MMDL *
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_WalkD6F_0( MMDL * fmmdl )
+static int AC_WalkD6F_0( MMDL * mmdl )
 {
-	AcWalkOddWorkInit( fmmdl, DIR_DOWN, AC_WALK_6F_FRAME, DRAW_STA_WALK_6F );
+	AcWalkOddWorkInit( mmdl, DIR_DOWN, AC_WALK_6F_FRAME, DRAW_STA_WALK_6F );
 	return( TRUE );
 }
 
 //--------------------------------------------------------------
 /**
  * AC_WALK_L_6F 0
- * @param	fmmdl	MMDL *
+ * @param	mmdl	MMDL *
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_WalkL6F_0( MMDL * fmmdl )
+static int AC_WalkL6F_0( MMDL * mmdl )
 {
-	AcWalkOddWorkInit( fmmdl, DIR_LEFT, AC_WALK_6F_FRAME, DRAW_STA_WALK_6F );
+	AcWalkOddWorkInit( mmdl, DIR_LEFT, AC_WALK_6F_FRAME, DRAW_STA_WALK_6F );
 	return( TRUE );
 }
 
 //--------------------------------------------------------------
 /**
  * AC_WALK_R_6F 0
- * @param	fmmdl	MMDL *
+ * @param	mmdl	MMDL *
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_WalkR6F_0( MMDL * fmmdl )
+static int AC_WalkR6F_0( MMDL * mmdl )
 {
-	AcWalkOddWorkInit( fmmdl, DIR_RIGHT, AC_WALK_6F_FRAME, DRAW_STA_WALK_6F );
+	AcWalkOddWorkInit( mmdl, DIR_RIGHT, AC_WALK_6F_FRAME, DRAW_STA_WALK_6F );
 	return( TRUE );
 }
 
 //--------------------------------------------------------------
 /**
  * AC_WALK_*_6F 1
- * @param	fmmdl	MMDL *
+ * @param	mmdl	MMDL *
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_Walk6F_1( MMDL * fmmdl )
+static int AC_Walk6F_1( MMDL * mmdl )
 {
-	if( AC_WalkOdd_Walk(fmmdl,DATA_AcWalk6FMoveValueTbl) == TRUE ){
+	if( AC_WalkOdd_Walk(mmdl,DATA_AcWalk6FMoveValueTbl) == TRUE ){
 		return( TRUE );
 	}
 	
@@ -2634,65 +2621,65 @@ static int AC_Walk6F_1( MMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_WALK_U_3F 0
- * @param	fmmdl	MMDL *
+ * @param	mmdl	MMDL *
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_WalkU3F_0( MMDL * fmmdl )
+static int AC_WalkU3F_0( MMDL * mmdl )
 {
-	AcWalkOddWorkInit( fmmdl, DIR_UP, AC_WALK_3F_FRAME, DRAW_STA_WALK_3F );
+	AcWalkOddWorkInit( mmdl, DIR_UP, AC_WALK_3F_FRAME, DRAW_STA_WALK_3F );
 	return( TRUE );
 }
 
 //--------------------------------------------------------------
 /**
  * AC_WALK_D_3F 0
- * @param	fmmdl	MMDL *
+ * @param	mmdl	MMDL *
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_WalkD3F_0( MMDL * fmmdl )
+static int AC_WalkD3F_0( MMDL * mmdl )
 {
-	AcWalkOddWorkInit( fmmdl, DIR_DOWN, AC_WALK_3F_FRAME, DRAW_STA_WALK_3F );
+	AcWalkOddWorkInit( mmdl, DIR_DOWN, AC_WALK_3F_FRAME, DRAW_STA_WALK_3F );
 	return( TRUE );
 }
 
 //--------------------------------------------------------------
 /**
  * AC_WALK_L_3F 0
- * @param	fmmdl	MMDL *
+ * @param	mmdl	MMDL *
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_WalkL3F_0( MMDL * fmmdl )
+static int AC_WalkL3F_0( MMDL * mmdl )
 {
-	AcWalkOddWorkInit( fmmdl, DIR_LEFT, AC_WALK_3F_FRAME, DRAW_STA_WALK_3F );
+	AcWalkOddWorkInit( mmdl, DIR_LEFT, AC_WALK_3F_FRAME, DRAW_STA_WALK_3F );
 	return( TRUE );
 }
 
 //--------------------------------------------------------------
 /**
  * AC_WALK_R_3F 0
- * @param	fmmdl	MMDL *
+ * @param	mmdl	MMDL *
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_WalkR3F_0( MMDL * fmmdl )
+static int AC_WalkR3F_0( MMDL * mmdl )
 {
-	AcWalkOddWorkInit( fmmdl, DIR_RIGHT, AC_WALK_3F_FRAME, DRAW_STA_WALK_3F );
+	AcWalkOddWorkInit( mmdl, DIR_RIGHT, AC_WALK_3F_FRAME, DRAW_STA_WALK_3F );
 	return( TRUE );
 }
 
 //--------------------------------------------------------------
 /**
  * AC_WALK_*_3F 1
- * @param	fmmdl	MMDL *
+ * @param	mmdl	MMDL *
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_Walk3F_1( MMDL * fmmdl )
+static int AC_Walk3F_1( MMDL * mmdl )
 {
-	if( AC_WalkOdd_Walk(fmmdl,DATA_AcWalk3FMoveValueTbl) == TRUE ){
+	if( AC_WalkOdd_Walk(mmdl,DATA_AcWalk3FMoveValueTbl) == TRUE ){
 		return( TRUE );
 	}
 	
@@ -2702,65 +2689,65 @@ static int AC_Walk3F_1( MMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_WALK_U_7F 0
- * @param	fmmdl	MMDL *
+ * @param	mmdl	MMDL *
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_WalkU7F_0( MMDL * fmmdl )
+static int AC_WalkU7F_0( MMDL * mmdl )
 {
-	AcWalkOddWorkInit( fmmdl, DIR_UP, AC_WALK_7F_FRAME, DRAW_STA_WALK_7F );
+	AcWalkOddWorkInit( mmdl, DIR_UP, AC_WALK_7F_FRAME, DRAW_STA_WALK_7F );
 	return( TRUE );
 }
 
 //--------------------------------------------------------------
 /**
  * AC_WALK_D_7F 0
- * @param	fmmdl	MMDL *
+ * @param	mmdl	MMDL *
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_WalkD7F_0( MMDL * fmmdl )
+static int AC_WalkD7F_0( MMDL * mmdl )
 {
-	AcWalkOddWorkInit( fmmdl, DIR_DOWN, AC_WALK_7F_FRAME, DRAW_STA_WALK_7F );
+	AcWalkOddWorkInit( mmdl, DIR_DOWN, AC_WALK_7F_FRAME, DRAW_STA_WALK_7F );
 	return( TRUE );
 }
 
 //--------------------------------------------------------------
 /**
  * AC_WALK_L_7F 0
- * @param	fmmdl	MMDL *
+ * @param	mmdl	MMDL *
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_WalkL7F_0( MMDL * fmmdl )
+static int AC_WalkL7F_0( MMDL * mmdl )
 {
-	AcWalkOddWorkInit( fmmdl, DIR_LEFT, AC_WALK_7F_FRAME, DRAW_STA_WALK_7F );
+	AcWalkOddWorkInit( mmdl, DIR_LEFT, AC_WALK_7F_FRAME, DRAW_STA_WALK_7F );
 	return( TRUE );
 }
 
 //--------------------------------------------------------------
 /**
  * AC_WALK_R_7F 0
- * @param	fmmdl	MMDL *
+ * @param	mmdl	MMDL *
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_WalkR7F_0( MMDL * fmmdl )
+static int AC_WalkR7F_0( MMDL * mmdl )
 {
-	AcWalkOddWorkInit( fmmdl, DIR_RIGHT, AC_WALK_7F_FRAME, DRAW_STA_WALK_7F );
+	AcWalkOddWorkInit( mmdl, DIR_RIGHT, AC_WALK_7F_FRAME, DRAW_STA_WALK_7F );
 	return( TRUE );
 }
 
 //--------------------------------------------------------------
 /**
  * AC_WALK_*_7F 1
- * @param	fmmdl	MMDL *
+ * @param	mmdl	MMDL *
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_Walk7F_1( MMDL * fmmdl )
+static int AC_Walk7F_1( MMDL * mmdl )
 {
-	if( AC_WalkOdd_Walk(fmmdl,DATA_AcWalk7FMoveValueTbl) == TRUE ){
+	if( AC_WalkOdd_Walk(mmdl,DATA_AcWalk7FMoveValueTbl) == TRUE ){
 		return( TRUE );
 	}
 	
@@ -2783,15 +2770,15 @@ typedef struct
 //--------------------------------------------------------------
 /**
  * AC_PC_BOW	0
- * @param	fmmdl	MMDL *
+ * @param	mmdl	MMDL *
  * @retval	int		TRUE=再起
  */
 //--------------------------------------------------------------
-static int AC_PcBow_0( MMDL * fmmdl )
+static int AC_PcBow_0( MMDL * mmdl )
 {
-	AC_PC_BOW_WORK *work = MMDL_InitMoveCmdWork( fmmdl, AC_PC_BOW_WORK_SIZE );
-	MMDL_SetDrawStatus( fmmdl, DRAW_STA_PC_BOW );
-	MMDL_IncAcmdSeq( fmmdl );
+	AC_PC_BOW_WORK *work = MMDL_InitMoveCmdWork( mmdl, AC_PC_BOW_WORK_SIZE );
+	MMDL_SetDrawStatus( mmdl, DRAW_STA_PC_BOW );
+	MMDL_IncAcmdSeq( mmdl );
 	
 	return( FALSE );
 }
@@ -2799,20 +2786,20 @@ static int AC_PcBow_0( MMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_PC_BOW	1
- * @param	fmmdl	MMDL *
+ * @param	mmdl	MMDL *
  * @retval	int		TRUE=再起
  */
 //--------------------------------------------------------------
-static int AC_PcBow_1( MMDL * fmmdl )
+static int AC_PcBow_1( MMDL * mmdl )
 {
-	AC_PC_BOW_WORK *work = MMDL_GetMoveCmdWork( fmmdl );
+	AC_PC_BOW_WORK *work = MMDL_GetMoveCmdWork( mmdl );
 	
 	work->frame++;
 	
 	if( work->frame >= 8 ){
-		MMDL_SetDirDisp( fmmdl, DIR_DOWN );
-		MMDL_SetDrawStatus( fmmdl, DRAW_STA_STOP );
-		MMDL_IncAcmdSeq( fmmdl );
+		MMDL_SetDirDisp( mmdl, DIR_DOWN );
+		MMDL_SetDrawStatus( mmdl, DRAW_STA_STOP );
+		MMDL_IncAcmdSeq( mmdl );
 	}
 	
 	return( FALSE );
@@ -2834,52 +2821,52 @@ typedef struct
 //--------------------------------------------------------------
 /**
  * AC_HIDE_PULLOFF 0
- * @param	fmmdl	MMDL *
+ * @param	mmdl	MMDL *
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_HidePullOFF_0( MMDL * fmmdl )
+static int AC_HidePullOFF_0( MMDL * mmdl )
 {
-	AC_HIDE_PULLOFF_WORK *work = MMDL_InitMoveCmdWork( fmmdl, AC_HIDE_PULLOFF_WORK_SIZE );
+	AC_HIDE_PULLOFF_WORK *work = MMDL_InitMoveCmdWork( mmdl, AC_HIDE_PULLOFF_WORK_SIZE );
 	
 	{
 #if 0
-		EOA_PTR eoa = MMDL_MoveHideEoaPtrGet( fmmdl );
+		EOA_PTR eoa = MMDL_MoveHideEoaPtrGet( mmdl );
 		if( eoa != NULL ){ EOA_Delete( eoa ); }
 #endif
 	}
 	
 	{
 		VecFx32 offs = { 0, 0, 0 };
-		MMDL_SetVectorDrawOffsetPos( fmmdl, &offs );
+		MMDL_SetVectorDrawOffsetPos( mmdl, &offs );
 	}
 	
 #if 0
-	FE_fmmdlHKemuri_Add( fmmdl );
+	FE_mmdlHKemuri_Add( mmdl );
 #endif
 
-	MMDL_OnStatusBit( fmmdl, MMDL_STABIT_MOVE_START|MMDL_STABIT_JUMP_START );
-	MMDL_OffStatusBit( fmmdl, MMDL_STABIT_SHADOW_VANISH );
+	MMDL_OnStatusBit( mmdl, MMDL_STABIT_MOVE_START|MMDL_STABIT_JUMP_START );
+	MMDL_OffStatusBit( mmdl, MMDL_STABIT_SHADOW_VANISH );
 	
-	MMDL_IncAcmdSeq( fmmdl );
+	MMDL_IncAcmdSeq( mmdl );
 	return( FALSE );
 }
 
 //--------------------------------------------------------------
 /**
  * AC_HIDE_PULLOFF 1
- * @param	fmmdl	MMDL *
+ * @param	mmdl	MMDL *
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_HidePullOFF_1( MMDL * fmmdl )
+static int AC_HidePullOFF_1( MMDL * mmdl )
 {
-	AC_HIDE_PULLOFF_WORK *work = MMDL_GetMoveCmdWork( fmmdl );
+	AC_HIDE_PULLOFF_WORK *work = MMDL_GetMoveCmdWork( mmdl );
 	const fx32 *tbl = DATA_AcJumpOffsetTbl[AC_JUMP_HEIGHT_12];
 	VecFx32 offs = { 0, 0, 0 };
 	
 	offs.y = tbl[work->frame];
-	MMDL_SetVectorDrawOffsetPos( fmmdl, &offs );
+	MMDL_SetVectorDrawOffsetPos( mmdl, &offs );
 	
 	work->frame += 2;
  	
@@ -2888,13 +2875,13 @@ static int AC_HidePullOFF_1( MMDL * fmmdl )
 	}
 	
 	offs.y = 0;
-	MMDL_SetVectorDrawOffsetPos( fmmdl, &offs );
+	MMDL_SetVectorDrawOffsetPos( mmdl, &offs );
 	
-	MMDL_OnStatusBit( fmmdl,
+	MMDL_OnStatusBit( mmdl,
 			MMDL_STABIT_MOVE_END | MMDL_STABIT_JUMP_END | MMDL_STABIT_ACMD_END );
 	
-	MMDL_MoveHidePullOffFlagSet( fmmdl );
-	MMDL_IncAcmdSeq( fmmdl );
+	MMDL_MoveHidePullOffFlagSet( mmdl );
+	MMDL_IncAcmdSeq( mmdl );
 	return( TRUE );
 }
 
@@ -2914,30 +2901,30 @@ typedef struct
 //--------------------------------------------------------------
 /**
  * AC_HERO_BANZAI	0
- * @param	fmmdl	MMDL *
+ * @param	mmdl	MMDL *
  * @retval	int		TRUE=再起
  */
 //--------------------------------------------------------------
-static int AC_HeroBanzai_0( MMDL * fmmdl )
+static int AC_HeroBanzai_0( MMDL * mmdl )
 {
-	AC_HERO_BANZAI_WORK *work = MMDL_InitMoveCmdWork( fmmdl, AC_HERO_BANZAI_WORK_SIZE );
-	MMDL_SetDrawStatus( fmmdl, DRAW_STA_BANZAI );
-	MMDL_IncAcmdSeq( fmmdl );
+	AC_HERO_BANZAI_WORK *work = MMDL_InitMoveCmdWork( mmdl, AC_HERO_BANZAI_WORK_SIZE );
+	MMDL_SetDrawStatus( mmdl, DRAW_STA_BANZAI );
+	MMDL_IncAcmdSeq( mmdl );
 	return( FALSE );
 }
 
 //--------------------------------------------------------------
 /**
  * AC_HERO_BANZAI_UKE	0
- * @param	fmmdl	MMDL *
+ * @param	mmdl	MMDL *
  * @retval	int		TRUE=再起
  */
 //--------------------------------------------------------------
-static int AC_HeroBanzaiUke_0( MMDL * fmmdl )
+static int AC_HeroBanzaiUke_0( MMDL * mmdl )
 {
-	AC_HERO_BANZAI_WORK *work = MMDL_InitMoveCmdWork( fmmdl, AC_HERO_BANZAI_WORK_SIZE );
-	MMDL_SetDrawStatus( fmmdl, DRAW_STA_BANZAI_UKE );
-	MMDL_IncAcmdSeq( fmmdl );
+	AC_HERO_BANZAI_WORK *work = MMDL_InitMoveCmdWork( mmdl, AC_HERO_BANZAI_WORK_SIZE );
+	MMDL_SetDrawStatus( mmdl, DRAW_STA_BANZAI_UKE );
+	MMDL_IncAcmdSeq( mmdl );
 	
 	return( FALSE );
 }
@@ -2945,13 +2932,13 @@ static int AC_HeroBanzaiUke_0( MMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_HERO_BANZAI 1
- * @param	fmmdl	MMDL *
+ * @param	mmdl	MMDL *
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_HeroBanzai_1( MMDL * fmmdl )
+static int AC_HeroBanzai_1( MMDL * mmdl )
 {
-	AC_HERO_BANZAI_WORK *work = MMDL_GetMoveCmdWork( fmmdl );
+	AC_HERO_BANZAI_WORK *work = MMDL_GetMoveCmdWork( mmdl );
 	
 	work->frame++;
  	
@@ -2959,8 +2946,8 @@ static int AC_HeroBanzai_1( MMDL * fmmdl )
 		return( FALSE );
 	}
 	
-//	MMDL_SetDrawStatus( fmmdl, DRAW_STA_BANZAI_STOP );
-	MMDL_IncAcmdSeq( fmmdl );
+//	MMDL_SetDrawStatus( mmdl, DRAW_STA_BANZAI_STOP );
+	MMDL_IncAcmdSeq( mmdl );
 	return( TRUE );
 }
 
@@ -2970,7 +2957,7 @@ static int AC_HeroBanzai_1( MMDL * fmmdl )
 //--------------------------------------------------------------
 /*
  * AC_WALKVEC_WORK初期化 1G限定
- * @param	fmmdl	MMDL *
+ * @param	mmdl	MMDL *
  * @param	vec		移動ベクトル*
  * @param	d_dir	表示方向
  * @param	m_dir	移動方向
@@ -2979,45 +2966,45 @@ static int AC_HeroBanzai_1( MMDL * fmmdl )
  * @retval	nothing
  */
 //--------------------------------------------------------------
-static void AcWalkVecWorkInit( MMDL * fmmdl,
+static void AcWalkVecWorkInit( MMDL * mmdl,
 	const VecFx32 *vec, int d_dir, int m_dir, int wait, u8 draw )
 {
 	AC_WALKVEC_WORK *work;
-	work = MMDL_InitMoveCmdWork( fmmdl, AC_WALKVEC_WORK_SIZE );
+	work = MMDL_InitMoveCmdWork( mmdl, AC_WALKVEC_WORK_SIZE );
 	work->wait = wait;
 	work->vec = *vec;
 	
-	MMDL_SetDirDisp( fmmdl, d_dir );
-	MMDL_SetDirMove( fmmdl, m_dir );
-	MMDL_SetDrawStatus( fmmdl, draw );
-	MMDL_OnStatusBitMoveStart( fmmdl );
+	MMDL_SetDirDisp( mmdl, d_dir );
+	MMDL_SetDirMove( mmdl, m_dir );
+	MMDL_SetDrawStatus( mmdl, draw );
+	MMDL_OnStatusBitMoveStart( mmdl );
 	
-	MMDL_SetOldGridPosX( fmmdl, MMDL_GetGridPosX(fmmdl) );
-	MMDL_SetOldGridPosY( fmmdl, MMDL_GetGridPosY(fmmdl) );
-	MMDL_SetOldGridPosZ( fmmdl, MMDL_GetGridPosZ(fmmdl) );
-	if( vec->x < 0 ){ MMDL_AddGridPosX( fmmdl, -GRID_ONE ); }
-	else if( vec->x > 0 ){ MMDL_AddGridPosX( fmmdl, GRID_ONE ); }
-	if( vec->y < 0 ){ MMDL_AddGridPosY( fmmdl, -GRID_ONE ); }
-	else if( vec->y > 0 ){ MMDL_AddGridPosY( fmmdl, GRID_ONE ); }
-	if( vec->z < 0 ){ MMDL_AddGridPosZ( fmmdl, -GRID_ONE ); }
-	else if( vec->z > 0 ){ MMDL_AddGridPosZ( fmmdl, GRID_ONE ); }
+	MMDL_SetOldGridPosX( mmdl, MMDL_GetGridPosX(mmdl) );
+	MMDL_SetOldGridPosY( mmdl, MMDL_GetGridPosY(mmdl) );
+	MMDL_SetOldGridPosZ( mmdl, MMDL_GetGridPosZ(mmdl) );
+	if( vec->x < 0 ){ MMDL_AddGridPosX( mmdl, -GRID_ONE ); }
+	else if( vec->x > 0 ){ MMDL_AddGridPosX( mmdl, GRID_ONE ); }
+	if( vec->y < 0 ){ MMDL_AddGridPosY( mmdl, -GRID_ONE ); }
+	else if( vec->y > 0 ){ MMDL_AddGridPosY( mmdl, GRID_ONE ); }
+	if( vec->z < 0 ){ MMDL_AddGridPosZ( mmdl, -GRID_ONE ); }
+	else if( vec->z > 0 ){ MMDL_AddGridPosZ( mmdl, GRID_ONE ); }
 	
-	MMDL_IncAcmdSeq( fmmdl );
+	MMDL_IncAcmdSeq( mmdl );
 }
 
 //--------------------------------------------------------------
 /**
  * AC_WALKVEC　移動　高さ取得は行わない
- * @param	fmmdl	MMDL *
+ * @param	mmdl	MMDL *
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_WalkVec_1( MMDL * fmmdl )
+static int AC_WalkVec_1( MMDL * mmdl )
 {
 	AC_WALKVEC_WORK *work;
 	
-	work = MMDL_GetMoveCmdWork( fmmdl );
-	MMDL_AddVectorPos( fmmdl, &work->vec );
+	work = MMDL_GetMoveCmdWork( mmdl );
+	MMDL_AddVectorPos( mmdl, &work->vec );
 	
 	work->wait--;
 	
@@ -3026,12 +3013,12 @@ static int AC_WalkVec_1( MMDL * fmmdl )
 	}
 	
 	MMDL_OnStatusBit(
-		fmmdl, MMDL_STABIT_MOVE_END|MMDL_STABIT_ACMD_END );
+		mmdl, MMDL_STABIT_MOVE_END|MMDL_STABIT_ACMD_END );
 	
-	MMDL_UpdateGridPosCurrent( fmmdl );
-	MMDL_CallDrawProc( fmmdl );
-	MMDL_SetDrawStatus( fmmdl, DRAW_STA_STOP );
-	MMDL_IncAcmdSeq( fmmdl );
+	MMDL_UpdateGridPosCurrent( mmdl );
+	MMDL_CallDrawProc( mmdl );
+	MMDL_SetDrawStatus( mmdl, DRAW_STA_STOP );
+	MMDL_IncAcmdSeq( mmdl );
 	
 	return( TRUE );
 }
@@ -3039,14 +3026,14 @@ static int AC_WalkVec_1( MMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_WALKGL_U_8F 左壁　上移動(y+) 左表示
- * @param	fmmdl	MMDL *
+ * @param	mmdl	MMDL *
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_WalkGLU8F_0( MMDL * fmmdl )
+static int AC_WalkGLU8F_0( MMDL * mmdl )
 {
 	VecFx32 vec = { 0, GRID_VALUE_SPEED_8, 0 };
-	AcWalkVecWorkInit( fmmdl, &vec,
+	AcWalkVecWorkInit( mmdl, &vec,
 		DIR_LEFT, DIR_UP, GRID_FRAME_8, DRAW_STA_WALK_8F );
 	return( TRUE );
 }
@@ -3054,14 +3041,14 @@ static int AC_WalkGLU8F_0( MMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_WALKGL_D_8F 左壁　下移動(y-)　右表示
- * @param	fmmdl	MMDL *
+ * @param	mmdl	MMDL *
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_WalkGLD8F_0( MMDL * fmmdl )
+static int AC_WalkGLD8F_0( MMDL * mmdl )
 {
 	VecFx32 vec = { 0, -GRID_VALUE_SPEED_8, 0 };
-	AcWalkVecWorkInit( fmmdl, &vec,
+	AcWalkVecWorkInit( mmdl, &vec,
 		DIR_RIGHT, DIR_DOWN, GRID_FRAME_8, DRAW_STA_WALK_8F );
 	return( TRUE );
 }
@@ -3069,14 +3056,14 @@ static int AC_WalkGLD8F_0( MMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_WALKGL_L_8F 左壁　左移動(z+)　下表示
- * @param	fmmdl	MMDL *
+ * @param	mmdl	MMDL *
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_WalkGLL8F_0( MMDL * fmmdl )
+static int AC_WalkGLL8F_0( MMDL * mmdl )
 {
 	VecFx32 vec = { 0, 0, GRID_VALUE_SPEED_8 };
-	AcWalkVecWorkInit( fmmdl, &vec,
+	AcWalkVecWorkInit( mmdl, &vec,
 		DIR_DOWN, DIR_LEFT, GRID_FRAME_8, DRAW_STA_WALK_8F );
 	return( TRUE );
 }
@@ -3084,14 +3071,14 @@ static int AC_WalkGLL8F_0( MMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_WALKGL_R_8F 左壁　右移動(z-)　上表示
- * @param	fmmdl	MMDL *
+ * @param	mmdl	MMDL *
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_WalkGLR8F_0( MMDL * fmmdl )
+static int AC_WalkGLR8F_0( MMDL * mmdl )
 {
 	VecFx32 vec = { 0, 0, -GRID_VALUE_SPEED_8 };
-	AcWalkVecWorkInit( fmmdl, &vec,
+	AcWalkVecWorkInit( mmdl, &vec,
 		DIR_UP, DIR_RIGHT, GRID_FRAME_8, DRAW_STA_WALK_8F );
 	return( TRUE );
 }
@@ -3099,14 +3086,14 @@ static int AC_WalkGLR8F_0( MMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_WALKGR_U_8F 右壁　上移動(y+)　右表示
- * @param	fmmdl	MMDL *
+ * @param	mmdl	MMDL *
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_WalkGRU8F_0( MMDL * fmmdl )
+static int AC_WalkGRU8F_0( MMDL * mmdl )
 {
 	VecFx32 vec = { 0, GRID_VALUE_SPEED_8, 0 };
-	AcWalkVecWorkInit( fmmdl, &vec,
+	AcWalkVecWorkInit( mmdl, &vec,
 		DIR_RIGHT, DIR_UP, GRID_FRAME_8, DRAW_STA_WALK_8F );
 	return( TRUE );
 }
@@ -3114,14 +3101,14 @@ static int AC_WalkGRU8F_0( MMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_WALKGR_D_8F 右壁　下移動(y-)　左表示
- * @param	fmmdl	MMDL *
+ * @param	mmdl	MMDL *
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_WalkGRD8F_0( MMDL * fmmdl )
+static int AC_WalkGRD8F_0( MMDL * mmdl )
 {
 	VecFx32 vec = { 0, -GRID_VALUE_SPEED_8, 0 };
-	AcWalkVecWorkInit( fmmdl, &vec,
+	AcWalkVecWorkInit( mmdl, &vec,
 		DIR_LEFT, DIR_DOWN, GRID_FRAME_8, DRAW_STA_WALK_8F );
 	return( TRUE );
 }
@@ -3129,14 +3116,14 @@ static int AC_WalkGRD8F_0( MMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_WALKGR_L_8F 右壁　左移動(z-)　上表示
- * @param	fmmdl	MMDL *
+ * @param	mmdl	MMDL *
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_WalkGRL8F_0( MMDL * fmmdl )
+static int AC_WalkGRL8F_0( MMDL * mmdl )
 {
 	VecFx32 vec = { 0, 0, -GRID_VALUE_SPEED_8 };
-	AcWalkVecWorkInit( fmmdl, &vec,
+	AcWalkVecWorkInit( mmdl, &vec,
 		DIR_UP, DIR_LEFT, GRID_FRAME_8, DRAW_STA_WALK_8F );
 	return( TRUE );
 }
@@ -3144,14 +3131,14 @@ static int AC_WalkGRL8F_0( MMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_WALKGR_R_8F 右壁　右移動(z+)　下表示
- * @param	fmmdl	MMDL *
+ * @param	mmdl	MMDL *
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_WalkGRR8F_0( MMDL * fmmdl )
+static int AC_WalkGRR8F_0( MMDL * mmdl )
 {
 	VecFx32 vec = { 0, 0, GRID_VALUE_SPEED_8 };
-	AcWalkVecWorkInit( fmmdl, &vec,
+	AcWalkVecWorkInit( mmdl, &vec,
 		DIR_DOWN, DIR_LEFT, GRID_FRAME_8, DRAW_STA_WALK_8F );
 	return( TRUE );
 }
@@ -3159,14 +3146,14 @@ static int AC_WalkGRR8F_0( MMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_WALKGU_L_8F 上壁　上移動(z+)　上表示
- * @param	fmmdl	MMDL *
+ * @param	mmdl	MMDL *
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_WalkGUU8F_0( MMDL * fmmdl )
+static int AC_WalkGUU8F_0( MMDL * mmdl )
 {
 	VecFx32 vec = { 0, 0, GRID_VALUE_SPEED_8 };
-	AcWalkVecWorkInit( fmmdl, &vec,
+	AcWalkVecWorkInit( mmdl, &vec,
 		DIR_DOWN, DIR_UP, GRID_FRAME_8, DRAW_STA_WALK_8F );
 	return( TRUE );
 }
@@ -3174,14 +3161,14 @@ static int AC_WalkGUU8F_0( MMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_WALKGU_L_8F 上壁　下移動(z-)　下表示
- * @param	fmmdl	MMDL *
+ * @param	mmdl	MMDL *
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_WalkGUD8F_0( MMDL * fmmdl )
+static int AC_WalkGUD8F_0( MMDL * mmdl )
 {
 	VecFx32 vec = { 0, 0, -GRID_VALUE_SPEED_8 };
-	AcWalkVecWorkInit( fmmdl, &vec,
+	AcWalkVecWorkInit( mmdl, &vec,
 		DIR_UP, DIR_DOWN, GRID_FRAME_8, DRAW_STA_WALK_8F );
 	return( TRUE );
 }
@@ -3189,14 +3176,14 @@ static int AC_WalkGUD8F_0( MMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_WALKGU_L_8F 上壁　左移動(x-)　右表示
- * @param	fmmdl	MMDL *
+ * @param	mmdl	MMDL *
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_WalkGUL8F_0( MMDL * fmmdl )
+static int AC_WalkGUL8F_0( MMDL * mmdl )
 {
 	VecFx32 vec = { -GRID_VALUE_SPEED_8, 0, 0 };
-	AcWalkVecWorkInit( fmmdl, &vec,
+	AcWalkVecWorkInit( mmdl, &vec,
 		DIR_RIGHT, DIR_LEFT, GRID_FRAME_8, DRAW_STA_WALK_8F );
 	return( TRUE );
 }
@@ -3204,14 +3191,14 @@ static int AC_WalkGUL8F_0( MMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_WALKGU_L_8F 上壁　右移動(x+)　左表示
- * @param	fmmdl	MMDL *
+ * @param	mmdl	MMDL *
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_WalkGUR8F_0( MMDL * fmmdl )
+static int AC_WalkGUR8F_0( MMDL * mmdl )
 {
 	VecFx32 vec = { GRID_VALUE_SPEED_8, 0, 0 };
-	AcWalkVecWorkInit( fmmdl, &vec,
+	AcWalkVecWorkInit( mmdl, &vec,
 		DIR_LEFT, DIR_RIGHT, GRID_FRAME_8, DRAW_STA_WALK_8F );
 	return( TRUE );
 }
@@ -3219,14 +3206,14 @@ static int AC_WalkGUR8F_0( MMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_WALKGU_L_4F 上壁　上移動(z+)　上表示
- * @param	fmmdl	MMDL *
+ * @param	mmdl	MMDL *
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_WalkGUU4F_0( MMDL * fmmdl )
+static int AC_WalkGUU4F_0( MMDL * mmdl )
 {
 	VecFx32 vec = { 0, 0, GRID_VALUE_SPEED_4 };
-	AcWalkVecWorkInit( fmmdl, &vec,
+	AcWalkVecWorkInit( mmdl, &vec,
 		DIR_DOWN, DIR_UP, GRID_FRAME_4, DRAW_STA_WALK_4F );
 	return( TRUE );
 }
@@ -3234,14 +3221,14 @@ static int AC_WalkGUU4F_0( MMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_WALKGU_L_4F 上壁　下移動(z-)　下表示
- * @param	fmmdl	MMDL *
+ * @param	mmdl	MMDL *
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_WalkGUD4F_0( MMDL * fmmdl )
+static int AC_WalkGUD4F_0( MMDL * mmdl )
 {
 	VecFx32 vec = { 0, 0, -GRID_VALUE_SPEED_4 };
-	AcWalkVecWorkInit( fmmdl, &vec,
+	AcWalkVecWorkInit( mmdl, &vec,
 		DIR_UP, DIR_DOWN, GRID_FRAME_4, DRAW_STA_WALK_4F );
 	return( TRUE );
 }
@@ -3249,14 +3236,14 @@ static int AC_WalkGUD4F_0( MMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_WALKGU_L_4F 上壁　左移動(x-)　右表示
- * @param	fmmdl	MMDL *
+ * @param	mmdl	MMDL *
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_WalkGUL4F_0( MMDL * fmmdl )
+static int AC_WalkGUL4F_0( MMDL * mmdl )
 {
 	VecFx32 vec = { -GRID_VALUE_SPEED_4, 0, 0 };
-	AcWalkVecWorkInit( fmmdl, &vec,
+	AcWalkVecWorkInit( mmdl, &vec,
 		DIR_RIGHT, DIR_LEFT, GRID_FRAME_4, DRAW_STA_WALK_4F );
 	return( TRUE );
 }
@@ -3264,14 +3251,14 @@ static int AC_WalkGUL4F_0( MMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_WALKGU_L_4F 上壁　右移動(x+)　左表示
- * @param	fmmdl	MMDL *
+ * @param	mmdl	MMDL *
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_WalkGUR4F_0( MMDL * fmmdl )
+static int AC_WalkGUR4F_0( MMDL * mmdl )
 {
 	VecFx32 vec = { GRID_VALUE_SPEED_4, 0, 0 };
-	AcWalkVecWorkInit( fmmdl, &vec,
+	AcWalkVecWorkInit( mmdl, &vec,
 		DIR_LEFT, DIR_RIGHT, GRID_FRAME_4, DRAW_STA_WALK_4F );
 	return( TRUE );
 }
@@ -3279,14 +3266,14 @@ static int AC_WalkGUR4F_0( MMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_WALKGU_L_2F 上壁　上移動(z+)　上表示
- * @param	fmmdl	MMDL *
+ * @param	mmdl	MMDL *
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_WalkGUU2F_0( MMDL * fmmdl )
+static int AC_WalkGUU2F_0( MMDL * mmdl )
 {
 	VecFx32 vec = { 0, 0, GRID_VALUE_SPEED_2 };
-	AcWalkVecWorkInit( fmmdl, &vec,
+	AcWalkVecWorkInit( mmdl, &vec,
 		DIR_DOWN, DIR_UP, GRID_FRAME_2, DRAW_STA_WALK_2F );
 	return( TRUE );
 }
@@ -3294,14 +3281,14 @@ static int AC_WalkGUU2F_0( MMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_WALKGU_L_2F 上壁　下移動(z-)　下表示
- * @param	fmmdl	MMDL *
+ * @param	mmdl	MMDL *
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_WalkGUD2F_0( MMDL * fmmdl )
+static int AC_WalkGUD2F_0( MMDL * mmdl )
 {
 	VecFx32 vec = { 0, 0, -GRID_VALUE_SPEED_2 };
-	AcWalkVecWorkInit( fmmdl, &vec,
+	AcWalkVecWorkInit( mmdl, &vec,
 		DIR_UP, DIR_DOWN, GRID_FRAME_2, DRAW_STA_WALK_2F );
 	return( TRUE );
 }
@@ -3309,14 +3296,14 @@ static int AC_WalkGUD2F_0( MMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_WALKGU_L_2F 上壁　左移動(x-)　右表示
- * @param	fmmdl	MMDL *
+ * @param	mmdl	MMDL *
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_WalkGUL2F_0( MMDL * fmmdl )
+static int AC_WalkGUL2F_0( MMDL * mmdl )
 {
 	VecFx32 vec = { -GRID_VALUE_SPEED_2, 0, 0 };
-	AcWalkVecWorkInit( fmmdl, &vec,
+	AcWalkVecWorkInit( mmdl, &vec,
 		DIR_RIGHT, DIR_LEFT, GRID_FRAME_2, DRAW_STA_WALK_2F );
 	return( TRUE );
 }
@@ -3324,14 +3311,14 @@ static int AC_WalkGUL2F_0( MMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_WALKGU_L_2F 上壁　右移動(x+)　左表示
- * @param	fmmdl	MMDL *
+ * @param	mmdl	MMDL *
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_WalkGUR2F_0( MMDL * fmmdl )
+static int AC_WalkGUR2F_0( MMDL * mmdl )
 {
 	VecFx32 vec = { GRID_VALUE_SPEED_2, 0, 0 };
-	AcWalkVecWorkInit( fmmdl, &vec,
+	AcWalkVecWorkInit( mmdl, &vec,
 		DIR_LEFT, DIR_RIGHT, GRID_FRAME_2, DRAW_STA_WALK_2F );
 	return( TRUE );
 }
@@ -3339,14 +3326,14 @@ static int AC_WalkGUR2F_0( MMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_DASHGL_U_4F 左壁　上移動(y+) 左表示
- * @param	fmmdl	MMDL *
+ * @param	mmdl	MMDL *
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_DashGLU4F_0( MMDL * fmmdl )
+static int AC_DashGLU4F_0( MMDL * mmdl )
 {
 	VecFx32 vec = { 0, GRID_VALUE_SPEED_4, 0 };
-	AcWalkVecWorkInit( fmmdl, &vec,
+	AcWalkVecWorkInit( mmdl, &vec,
 		DIR_LEFT, DIR_UP, GRID_FRAME_4, DRAW_STA_DASH_4F );
 	return( TRUE );
 }
@@ -3354,14 +3341,14 @@ static int AC_DashGLU4F_0( MMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_DASHGL_D_4F 左壁　下移動(y-)　右表示
- * @param	fmmdl	MMDL *
+ * @param	mmdl	MMDL *
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_DashGLD4F_0( MMDL * fmmdl )
+static int AC_DashGLD4F_0( MMDL * mmdl )
 {
 	VecFx32 vec = { 0, -GRID_VALUE_SPEED_4, 0 };
-	AcWalkVecWorkInit( fmmdl, &vec,
+	AcWalkVecWorkInit( mmdl, &vec,
 		DIR_RIGHT, DIR_DOWN, GRID_FRAME_4, DRAW_STA_DASH_4F );
 	return( TRUE );
 }
@@ -3369,14 +3356,14 @@ static int AC_DashGLD4F_0( MMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_DASHGL_L_4F 左壁　左移動(z+)　下表示
- * @param	fmmdl	MMDL *
+ * @param	mmdl	MMDL *
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_DashGLL4F_0( MMDL * fmmdl )
+static int AC_DashGLL4F_0( MMDL * mmdl )
 {
 	VecFx32 vec = { 0, 0, GRID_VALUE_SPEED_4 };
-	AcWalkVecWorkInit( fmmdl, &vec,
+	AcWalkVecWorkInit( mmdl, &vec,
 		DIR_DOWN, DIR_LEFT, GRID_FRAME_4, DRAW_STA_DASH_4F );
 	return( TRUE );
 }
@@ -3384,14 +3371,14 @@ static int AC_DashGLL4F_0( MMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_DASHGL_R_4F 左壁　右移動(z-)　上表示
- * @param	fmmdl	MMDL *
+ * @param	mmdl	MMDL *
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_DashGLR4F_0( MMDL * fmmdl )
+static int AC_DashGLR4F_0( MMDL * mmdl )
 {
 	VecFx32 vec = { 0, 0, -GRID_VALUE_SPEED_4 };
-	AcWalkVecWorkInit( fmmdl, &vec,
+	AcWalkVecWorkInit( mmdl, &vec,
 		DIR_UP, DIR_RIGHT, GRID_FRAME_4, DRAW_STA_DASH_4F );
 	return( TRUE );
 }
@@ -3399,14 +3386,14 @@ static int AC_DashGLR4F_0( MMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_DASHGR_U_4F 右壁　上移動(y+)　右表示
- * @param	fmmdl	MMDL *
+ * @param	mmdl	MMDL *
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_DashGRU4F_0( MMDL * fmmdl )
+static int AC_DashGRU4F_0( MMDL * mmdl )
 {
 	VecFx32 vec = { 0, GRID_VALUE_SPEED_4, 0 };
-	AcWalkVecWorkInit( fmmdl, &vec,
+	AcWalkVecWorkInit( mmdl, &vec,
 		DIR_RIGHT, DIR_UP, GRID_FRAME_4, DRAW_STA_DASH_4F );
 	return( TRUE );
 }
@@ -3414,14 +3401,14 @@ static int AC_DashGRU4F_0( MMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_DASHGR_D_4F 右壁　下移動(y-)　左表示
- * @param	fmmdl	MMDL *
+ * @param	mmdl	MMDL *
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_DashGRD4F_0( MMDL * fmmdl )
+static int AC_DashGRD4F_0( MMDL * mmdl )
 {
 	VecFx32 vec = { 0, -GRID_VALUE_SPEED_4, 0 };
-	AcWalkVecWorkInit( fmmdl, &vec,
+	AcWalkVecWorkInit( mmdl, &vec,
 		DIR_LEFT, DIR_DOWN, GRID_FRAME_4, DRAW_STA_DASH_4F );
 	return( TRUE );
 }
@@ -3429,14 +3416,14 @@ static int AC_DashGRD4F_0( MMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_DASHGR_L_4F 右壁　左移動(z-)　上表示
- * @param	fmmdl	MMDL *
+ * @param	mmdl	MMDL *
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_DashGRL4F_0( MMDL * fmmdl )
+static int AC_DashGRL4F_0( MMDL * mmdl )
 {
 	VecFx32 vec = { 0, 0, -GRID_VALUE_SPEED_4 };
-	AcWalkVecWorkInit( fmmdl, &vec,
+	AcWalkVecWorkInit( mmdl, &vec,
 		DIR_UP, DIR_LEFT, GRID_FRAME_4, DRAW_STA_DASH_4F );
 	return( TRUE );
 }
@@ -3444,14 +3431,14 @@ static int AC_DashGRL4F_0( MMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_DASHGR_L_4F 右壁　右移動(z+)　下表示
- * @param	fmmdl	MMDL *
+ * @param	mmdl	MMDL *
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_DashGRR4F_0( MMDL * fmmdl )
+static int AC_DashGRR4F_0( MMDL * mmdl )
 {
 	VecFx32 vec = { 0, 0, GRID_VALUE_SPEED_4 };
-	AcWalkVecWorkInit( fmmdl, &vec,
+	AcWalkVecWorkInit( mmdl, &vec,
 		DIR_DOWN, DIR_LEFT, GRID_FRAME_4, DRAW_STA_DASH_4F );
 	return( TRUE );
 }
@@ -3459,14 +3446,14 @@ static int AC_DashGRR4F_0( MMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_DASHGU_L_4F 上壁　上移動(z+)　上表示
- * @param	fmmdl	MMDL *
+ * @param	mmdl	MMDL *
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_DashGUU4F_0( MMDL * fmmdl )
+static int AC_DashGUU4F_0( MMDL * mmdl )
 {
 	VecFx32 vec = { 0, 0, GRID_VALUE_SPEED_4 };
-	AcWalkVecWorkInit( fmmdl, &vec,
+	AcWalkVecWorkInit( mmdl, &vec,
 		DIR_DOWN, DIR_UP, GRID_FRAME_4, DRAW_STA_DASH_4F );
 	return( TRUE );
 }
@@ -3474,14 +3461,14 @@ static int AC_DashGUU4F_0( MMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_DASHGU_L_4F 上壁　下移動(z-)　下表示
- * @param	fmmdl	MMDL *
+ * @param	mmdl	MMDL *
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_DashGUD4F_0( MMDL * fmmdl )
+static int AC_DashGUD4F_0( MMDL * mmdl )
 {
 	VecFx32 vec = { 0, 0, -GRID_VALUE_SPEED_4 };
-	AcWalkVecWorkInit( fmmdl, &vec,
+	AcWalkVecWorkInit( mmdl, &vec,
 		DIR_UP, DIR_DOWN, GRID_FRAME_4, DRAW_STA_DASH_4F );
 	return( TRUE );
 }
@@ -3489,14 +3476,14 @@ static int AC_DashGUD4F_0( MMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_DASHGU_L_4F 上壁　左移動(x-)　右表示
- * @param	fmmdl	MMDL *
+ * @param	mmdl	MMDL *
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_DashGUL4F_0( MMDL * fmmdl )
+static int AC_DashGUL4F_0( MMDL * mmdl )
 {
 	VecFx32 vec = { -GRID_VALUE_SPEED_4, 0, 0 };
-	AcWalkVecWorkInit( fmmdl, &vec,
+	AcWalkVecWorkInit( mmdl, &vec,
 		DIR_RIGHT, DIR_LEFT, GRID_FRAME_4, DRAW_STA_DASH_4F );
 	return( TRUE );
 }
@@ -3504,14 +3491,14 @@ static int AC_DashGUL4F_0( MMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_DASHGU_L_4F 上壁　右移動(x+)　左表示
- * @param	fmmdl	MMDL *
+ * @param	mmdl	MMDL *
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_DashGUR4F_0( MMDL * fmmdl )
+static int AC_DashGUR4F_0( MMDL * mmdl )
 {
 	VecFx32 vec = { GRID_VALUE_SPEED_4, 0, 0 };
-	AcWalkVecWorkInit( fmmdl, &vec,
+	AcWalkVecWorkInit( mmdl, &vec,
 		DIR_LEFT, DIR_RIGHT, GRID_FRAME_4, DRAW_STA_DASH_4F );
 	return( TRUE );
 }
@@ -3522,7 +3509,7 @@ static int AC_DashGUR4F_0( MMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_JUMPVEC_WORK初期化
- * @param	fmmdl		MMDL *
+ * @param	mmdl		MMDL *
  * @param	val			移動量
  * @param	d_dir		表示方向
  * @param	m_dir		移動方向
@@ -3532,13 +3519,13 @@ static int AC_DashGUR4F_0( MMDL * fmmdl )
  * @retval	nothing
  */
 //--------------------------------------------------------------
-static void AcJumpVecWorkInit( MMDL * fmmdl,
+static void AcJumpVecWorkInit( MMDL * mmdl,
 	fx32 val, int d_dir, int m_dir, u8 wait, u8 draw,
 	u8 vec_type, u8 jump_vec_type, u8 jump_flip )
 {
 	int grid = GRID_ONE;
 	AC_JUMPVEC_WORK *work;
-	work = MMDL_InitMoveCmdWork( fmmdl, AC_JUMPVEC_WORK_SIZE );
+	work = MMDL_InitMoveCmdWork( mmdl, AC_JUMPVEC_WORK_SIZE );
 	
 	work->wait = wait;
 	work->val = val;
@@ -3547,14 +3534,14 @@ static void AcJumpVecWorkInit( MMDL * fmmdl,
 	work->jump_flip = jump_flip;
 	work->jump_frame_val = NUM_UX16(16) / work->wait;
 	
-	MMDL_SetDirDisp( fmmdl, d_dir );
-	MMDL_SetDirMove( fmmdl, m_dir );
-	MMDL_SetDrawStatus( fmmdl, draw );
-	MMDL_OnStatusBitMoveStart( fmmdl );
+	MMDL_SetDirDisp( mmdl, d_dir );
+	MMDL_SetDirMove( mmdl, m_dir );
+	MMDL_SetDrawStatus( mmdl, draw );
+	MMDL_OnStatusBitMoveStart( mmdl );
 	
-	MMDL_SetOldGridPosX( fmmdl, MMDL_GetGridPosX(fmmdl) );
-	MMDL_SetOldGridPosY( fmmdl, MMDL_GetGridPosY(fmmdl) );
-	MMDL_SetOldGridPosZ( fmmdl, MMDL_GetGridPosZ(fmmdl) );
+	MMDL_SetOldGridPosX( mmdl, MMDL_GetGridPosX(mmdl) );
+	MMDL_SetOldGridPosY( mmdl, MMDL_GetGridPosY(mmdl) );
+	MMDL_SetOldGridPosZ( mmdl, MMDL_GetGridPosZ(mmdl) );
 	
 	GF_ASSERT( vec_type <= VEC_Z );
 	
@@ -3562,37 +3549,37 @@ static void AcJumpVecWorkInit( MMDL * fmmdl,
 		switch( vec_type ){
 		case VEC_X:
 			if( val < 0 ){ grid = -grid; }
-			MMDL_AddGridPosX( fmmdl, grid );
+			MMDL_AddGridPosX( mmdl, grid );
 			break;
 		case VEC_Y:
 			if( val < 0 ){ grid = -grid; }
-			MMDL_AddGridPosY( fmmdl, grid*2 );
+			MMDL_AddGridPosY( mmdl, grid*2 );
 			break;
 		case VEC_Z:
 			if( val < 0 ){ grid = -grid; }
-			MMDL_AddGridPosZ( fmmdl, grid );
+			MMDL_AddGridPosZ( mmdl, grid );
 			break;
 		}
 	}
 	
-	MMDL_IncAcmdSeq( fmmdl );
+	MMDL_IncAcmdSeq( mmdl );
 }
 
 //--------------------------------------------------------------
 /**
  * AC_JUMPVEC_WORK　移動　高さ取得は行わない
- * @param	fmmdl	MMDL *
+ * @param	mmdl	MMDL *
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_JumpVec_1( MMDL * fmmdl )
+static int AC_JumpVec_1( MMDL * mmdl )
 {
 	fx32 val;
 	VecFx32 pos;
 	AC_JUMPVEC_WORK *work;
 	
-	work = MMDL_GetMoveCmdWork( fmmdl );
-	MMDL_GetVectorPos( fmmdl, &pos );
+	work = MMDL_GetMoveCmdWork( mmdl );
+	MMDL_GetVectorPos( mmdl, &pos );
 	
 	switch( work->vec_type ){
 	case VEC_X:
@@ -3606,7 +3593,7 @@ static int AC_JumpVec_1( MMDL * fmmdl )
 		break;
 	}
 	
-	MMDL_SetVectorPos( fmmdl, &pos );
+	MMDL_SetVectorPos( mmdl, &pos );
 	
 	val = work->val;
 	if( val < 0 ){ val = -val; }
@@ -3634,7 +3621,7 @@ static int AC_JumpVec_1( MMDL * fmmdl )
 		case VEC_Z: offs.z = val; break;
 		}
 		
-		MMDL_SetVectorDrawOffsetPos( fmmdl, &offs );
+		MMDL_SetVectorDrawOffsetPos( mmdl, &offs );
 	}
 	
 	work->wait--;
@@ -3645,22 +3632,22 @@ static int AC_JumpVec_1( MMDL * fmmdl )
 		work->count -= GRID_FX32;
 		val = work->val;
 		
-		MMDL_SetOldGridPosX( fmmdl, MMDL_GetGridPosX(fmmdl) );
-		MMDL_SetOldGridPosY( fmmdl, MMDL_GetGridPosY(fmmdl) );
-		MMDL_SetOldGridPosZ( fmmdl, MMDL_GetGridPosZ(fmmdl) );
+		MMDL_SetOldGridPosX( mmdl, MMDL_GetGridPosX(mmdl) );
+		MMDL_SetOldGridPosY( mmdl, MMDL_GetGridPosY(mmdl) );
+		MMDL_SetOldGridPosZ( mmdl, MMDL_GetGridPosZ(mmdl) );
 		
 		switch( work->vec_type ){
 		case VEC_X:
 			if( val < 0 ){ grid = -grid; }
-			MMDL_AddGridPosX( fmmdl, grid );
+			MMDL_AddGridPosX( mmdl, grid );
 			break;
 		case VEC_Y:
 			if( val < 0 ){ grid = -grid; }
-			MMDL_AddGridPosY( fmmdl, grid*2 );
+			MMDL_AddGridPosY( mmdl, grid*2 );
 			break;
 		case VEC_Z:
 			if( val < 0 ){ grid = -grid; }
-			MMDL_AddGridPosZ( fmmdl, grid );
+			MMDL_AddGridPosZ( mmdl, grid );
 			break;
 		}
 	}
@@ -3671,18 +3658,18 @@ static int AC_JumpVec_1( MMDL * fmmdl )
 	
 	{
 		VecFx32 offs = {0,0,0};
-		MMDL_SetVectorDrawOffsetPos( fmmdl, &offs );
+		MMDL_SetVectorDrawOffsetPos( mmdl, &offs );
 	}
 	
-	MMDL_OnStatusBit( fmmdl,
+	MMDL_OnStatusBit( mmdl,
 			MMDL_STABIT_MOVE_END |
 			MMDL_STABIT_JUMP_END |
 			MMDL_STABIT_ACMD_END );
 	
-	MMDL_UpdateGridPosCurrent( fmmdl );
-	MMDL_CallDrawProc( fmmdl );				//1フレーム進める
-	MMDL_SetDrawStatus( fmmdl, DRAW_STA_STOP );
-	MMDL_IncAcmdSeq( fmmdl );
+	MMDL_UpdateGridPosCurrent( mmdl );
+	MMDL_CallDrawProc( mmdl );				//1フレーム進める
+	MMDL_SetDrawStatus( mmdl, DRAW_STA_STOP );
+	MMDL_IncAcmdSeq( mmdl );
 	
 #if 0
 	Snd_SePlay( SE_SUTYA2 );
@@ -3693,13 +3680,13 @@ static int AC_JumpVec_1( MMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_JUMPGL_U_1G_8F 左壁　上移動(y+) 左表示
- * @param	fmmdl	MMDL *
+ * @param	mmdl	MMDL *
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_JumpGLU1G_8F_0( MMDL * fmmdl )
+static int AC_JumpGLU1G_8F_0( MMDL * mmdl )
 {
-	AcJumpVecWorkInit( fmmdl, GRID_VALUE_SPEED_8,
+	AcJumpVecWorkInit( mmdl, GRID_VALUE_SPEED_8,
 		DIR_LEFT,DIR_UP, GRID_FRAME_8, DRAW_STA_WALK_8F,
 		VEC_Y, VEC_Y, FALSE );
 	return( TRUE );
@@ -3708,13 +3695,13 @@ static int AC_JumpGLU1G_8F_0( MMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_JUMPGL_D_1G_8F 左壁　下移動(y-)　右表示
- * @param	fmmdl	MMDL *
+ * @param	mmdl	MMDL *
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_JumpGLD1G_8F_0( MMDL * fmmdl )
+static int AC_JumpGLD1G_8F_0( MMDL * mmdl )
 {
-	AcJumpVecWorkInit( fmmdl, -GRID_VALUE_SPEED_8,
+	AcJumpVecWorkInit( mmdl, -GRID_VALUE_SPEED_8,
 		DIR_RIGHT,DIR_DOWN, GRID_FRAME_8, DRAW_STA_WALK_8F,
 		VEC_Y, VEC_Y, FALSE );
 	return( TRUE );
@@ -3723,13 +3710,13 @@ static int AC_JumpGLD1G_8F_0( MMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_JUMPGL_L_1G_8F 左壁　左移動(z+)　下表示
- * @param	fmmdl	MMDL *
+ * @param	mmdl	MMDL *
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_JumpGLL1G_8F_0( MMDL * fmmdl )
+static int AC_JumpGLL1G_8F_0( MMDL * mmdl )
 {
-	AcJumpVecWorkInit( fmmdl, GRID_VALUE_SPEED_8,
+	AcJumpVecWorkInit( mmdl, GRID_VALUE_SPEED_8,
 		DIR_DOWN,DIR_LEFT, GRID_FRAME_8, DRAW_STA_WALK_8F,
 		VEC_Z, VEC_Y, FALSE );
 	return( TRUE );
@@ -3738,13 +3725,13 @@ static int AC_JumpGLL1G_8F_0( MMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_JUMPGL_R_1G_8F 左壁　右移動(z-)　上表示
- * @param	fmmdl	MMDL *
+ * @param	mmdl	MMDL *
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_JumpGLR1G_8F_0( MMDL * fmmdl )
+static int AC_JumpGLR1G_8F_0( MMDL * mmdl )
 {
-	AcJumpVecWorkInit( fmmdl, -GRID_VALUE_SPEED_8,
+	AcJumpVecWorkInit( mmdl, -GRID_VALUE_SPEED_8,
 		DIR_UP,DIR_RIGHT, GRID_FRAME_8, DRAW_STA_WALK_8F,
 		VEC_Z, VEC_Y, FALSE );
 	return( TRUE );
@@ -3753,13 +3740,13 @@ static int AC_JumpGLR1G_8F_0( MMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_JUMPGR_U_1G_8F 右壁　上移動(y+)　右表示
- * @param	fmmdl	MMDL *
+ * @param	mmdl	MMDL *
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_JumpGRU1G_8F_0( MMDL * fmmdl )
+static int AC_JumpGRU1G_8F_0( MMDL * mmdl )
 {
-	AcJumpVecWorkInit( fmmdl, GRID_VALUE_SPEED_8,
+	AcJumpVecWorkInit( mmdl, GRID_VALUE_SPEED_8,
 		DIR_RIGHT,DIR_UP, GRID_FRAME_8, DRAW_STA_WALK_8F,
 		VEC_Y, VEC_Y, FALSE );
 	return( TRUE );
@@ -3768,13 +3755,13 @@ static int AC_JumpGRU1G_8F_0( MMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_JUMPGR_D_1G_8F 右壁　下移動(y-)　左表示
- * @param	fmmdl	MMDL *
+ * @param	mmdl	MMDL *
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_JumpGRD1G_8F_0( MMDL * fmmdl )
+static int AC_JumpGRD1G_8F_0( MMDL * mmdl )
 {
-	AcJumpVecWorkInit( fmmdl, -GRID_VALUE_SPEED_8,
+	AcJumpVecWorkInit( mmdl, -GRID_VALUE_SPEED_8,
 		DIR_LEFT,DIR_DOWN, GRID_FRAME_8, DRAW_STA_WALK_8F,
 		VEC_Y, VEC_Y, FALSE );
 	return( TRUE );
@@ -3783,13 +3770,13 @@ static int AC_JumpGRD1G_8F_0( MMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_JUMPGR_L_1G_8F 右壁　左移動(z-)　上表示
- * @param	fmmdl	MMDL *
+ * @param	mmdl	MMDL *
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_JumpGRL1G_8F_0( MMDL * fmmdl )
+static int AC_JumpGRL1G_8F_0( MMDL * mmdl )
 {
-	AcJumpVecWorkInit( fmmdl, -GRID_VALUE_SPEED_8,
+	AcJumpVecWorkInit( mmdl, -GRID_VALUE_SPEED_8,
 		DIR_UP,DIR_LEFT, GRID_FRAME_8, DRAW_STA_WALK_8F,
 		VEC_Z, VEC_Y, FALSE );
 	return( TRUE );
@@ -3798,13 +3785,13 @@ static int AC_JumpGRL1G_8F_0( MMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_JUMPGR_R_1G_8F 右壁　右移動(z+)　下表示
- * @param	fmmdl	MMDL *
+ * @param	mmdl	MMDL *
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_JumpGRR1G_8F_0( MMDL * fmmdl )
+static int AC_JumpGRR1G_8F_0( MMDL * mmdl )
 {
-	AcJumpVecWorkInit( fmmdl, GRID_VALUE_SPEED_8,
+	AcJumpVecWorkInit( mmdl, GRID_VALUE_SPEED_8,
 		DIR_DOWN,DIR_LEFT, GRID_FRAME_8, DRAW_STA_WALK_8F,
 		VEC_Z, VEC_Y, FALSE );
 	return( TRUE );
@@ -3813,13 +3800,13 @@ static int AC_JumpGRR1G_8F_0( MMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_JUMPGU_U_1G_8F 上壁　上移動(z+)　上表示
- * @param	fmmdl	MMDL *
+ * @param	mmdl	MMDL *
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_JumpGUU1G_8F_0( MMDL * fmmdl )
+static int AC_JumpGUU1G_8F_0( MMDL * mmdl )
 {
-	AcJumpVecWorkInit( fmmdl, GRID_VALUE_SPEED_8,
+	AcJumpVecWorkInit( mmdl, GRID_VALUE_SPEED_8,
 		DIR_DOWN,DIR_UP, GRID_FRAME_8, DRAW_STA_WALK_8F,
 		VEC_Z, VEC_Y, FALSE );
 	return( TRUE );
@@ -3828,13 +3815,13 @@ static int AC_JumpGUU1G_8F_0( MMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_JUMPGU_D_1G_8F 上壁　下移動(z-)　下表示
- * @param	fmmdl	MMDL *
+ * @param	mmdl	MMDL *
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_JumpGUD1G_8F_0( MMDL * fmmdl )
+static int AC_JumpGUD1G_8F_0( MMDL * mmdl )
 {
-	AcJumpVecWorkInit( fmmdl, -GRID_VALUE_SPEED_8,
+	AcJumpVecWorkInit( mmdl, -GRID_VALUE_SPEED_8,
 		DIR_UP,DIR_DOWN, GRID_FRAME_8, DRAW_STA_WALK_8F,
 		VEC_Z, VEC_Y, FALSE );
 	return( TRUE );
@@ -3843,13 +3830,13 @@ static int AC_JumpGUD1G_8F_0( MMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_JUMPGU_L_1G_8F 上壁　左移動(x-)　右表示
- * @param	fmmdl	MMDL *
+ * @param	mmdl	MMDL *
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_JumpGUL1G_8F_0( MMDL * fmmdl )
+static int AC_JumpGUL1G_8F_0( MMDL * mmdl )
 {
-	AcJumpVecWorkInit( fmmdl, -GRID_VALUE_SPEED_8,
+	AcJumpVecWorkInit( mmdl, -GRID_VALUE_SPEED_8,
 		DIR_RIGHT,DIR_LEFT, GRID_FRAME_8, DRAW_STA_WALK_8F,
 		VEC_X, VEC_Y, FALSE );
 	return( TRUE );
@@ -3858,13 +3845,13 @@ static int AC_JumpGUL1G_8F_0( MMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * AC_JUMPGU_R_1G_8F 上壁　右移動(x+)　左表示
- * @param	fmmdl	MMDL *
+ * @param	mmdl	MMDL *
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_JumpGUR1G_8F_0( MMDL * fmmdl )
+static int AC_JumpGUR1G_8F_0( MMDL * mmdl )
 {
-	AcJumpVecWorkInit( fmmdl, GRID_VALUE_SPEED_8,
+	AcJumpVecWorkInit( mmdl, GRID_VALUE_SPEED_8,
 		DIR_LEFT,DIR_RIGHT, GRID_FRAME_8, DRAW_STA_WALK_8F,
 		VEC_X, VEC_Y, FALSE );
 	return( TRUE );
