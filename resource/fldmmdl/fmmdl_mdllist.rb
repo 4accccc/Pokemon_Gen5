@@ -270,9 +270,11 @@ def convert_line( no, line, wfile, idxfile, symfile )
 	else
 		word = str[STRPRMNO_MDLFILENAME]
     
-    #文字列".imd"を削除する。が、何故か'm'文字まで削除してしまう
+    #正規表現で文字列".imd"を削除する。が、何故か'm'文字まで削除してしまう
 		#/(\A.*[^\.imd])/ =~ word
 		#mdlname = $1
+    #
+    #代わりとしてgsubで".imd"を削除する。
     mdlname = word.gsub( "\.imd", "" )
     
 		ret = arcidx_search( idxfile, mdlname )
