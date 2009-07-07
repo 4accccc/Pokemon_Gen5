@@ -102,20 +102,21 @@ extern void DEBUG_Printf( AUTHOR_ID author_id, const char * fmt, ... );
 //-----------------------------------------------------------
 // かんたん記述用マクロ
 //-----------------------------------------------------------
-#define   TAYA_Printf( ... )      DEBUG_Printf( AUTHOR_TAYA, __VA_ARGS__ )
 #define   WATANABE_Printf( ... )  DEBUG_Printf( AUTHOR_WATANABE, __VA_ARGS__ )
 #define   TAMADA_Printf( ...)     DEBUG_Printf( AUTHOR_TAMADA, __VA_ARGS__ )
 #define   SOGABE_Printf( ...)     DEBUG_Printf( AUTHOR_SOGABE, __VA_ARGS__ )
-#define   OHNO_Printf( ...)       DEBUG_Printf( AUTHOR_OHNO, __VA_ARGS__ )
+#define   MORI_Printf( ... )      DEBUG_Printf( AUTHOR_MORI, __VA_ARGS__ )
 #define   MATSUDA_Printf( ...)    DEBUG_Printf( AUTHOR_MATSUDA, __VA_ARGS__ )
 #define   KAGAYA_Printf( ...)     DEBUG_Printf( AUTHOR_KAGAYA, __VA_ARGS__ )
-#define   ARIIZUMI_Printf( ...)   DEBUG_Printf( AUTHOR_ARIIZUMI, __VA_ARGS__ )
-#define   NAGI_Printf( ... )      DEBUG_Printf( AUTHOR_NAGI, __VA_ARGS__ )
+#define   NAKAHIRO_Printf( ... )  DEBUG_Printf( AUTHOR_NAKAHIRO, __VA_ARGS__ )
+#define   TAYA_Printf( ... )      DEBUG_Printf( AUTHOR_TAYA, __VA_ARGS__ )
+#define   OHNO_Printf( ...)       DEBUG_Printf( AUTHOR_OHNO, __VA_ARGS__ )
 #define   TOMOYA_Printf( ... )    DEBUG_Printf( AUTHOR_TOMOYA, __VA_ARGS__ )
-#define   OBATA_Printf( ... )     DEBUG_Printf( AUTHOR_OBATA, __VA_ARGS__ )
-#define   MORI_Printf( ... )      DEBUG_Printf( AUTHOR_MORI, __VA_ARGS__ )
 #define   IWASAWA_Printf( ... )   DEBUG_Printf( AUTHOR_IWASAWA, __VA_ARGS__ )
 #define   NOZOMU_Printf( ... )    DEBUG_Printf( AUTHOR_NOZOMU, __VA_ARGS__ )
-
+#define   NAGI_Printf( ... )      DEBUG_Printf( AUTHOR_NAGI, __VA_ARGS__ )
+#define   HOSAKA_Printf( ... )    DEBUG_Printf( AUTHOR_HOSAKA, __VA_ARGS__ )
+#define   ARIIZUMI_Printf( ...)   DEBUG_Printf( AUTHOR_ARIIZUMI, __VA_ARGS__ )
+#define   OBATA_Printf( ... )     DEBUG_Printf( AUTHOR_OBATA, __VA_ARGS__ )
 
 #endif
