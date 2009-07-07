@@ -14,7 +14,7 @@ ARC_DIR = ./prog/arc
 LIB_DIR = ./lib
 
 
-.PHONY : do-build clean	prog resource arc test landdata dmyfmmdl build_model area_data
+.PHONY : do-build rom force clean	prog resource arc test landdata dmyfmmdl build_model area_data
 
 #  makeした場合にすべて作られるように記述してください
 #--------------------------------------- ----------------------------
@@ -25,6 +25,15 @@ do-build:
 	$(MAKE) -C $(MULTIBOOT_DIR) installsrl
 	$(MAKE) -C $(ARC_DIR)
 	$(MAKE) -C $(PROG_DIR)
+
+
+rom:
+	touch prog/src/test/testmode.c
+	$(MAKE)
+
+force:
+	rm -rf prog/src/depend/*
+	$(MAKE)
 
 
 # cleanした場合にすべて消えるように記述してください
