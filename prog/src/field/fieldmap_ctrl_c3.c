@@ -15,6 +15,7 @@
 #include "fieldmap_ctrl_c3.h"
 
 #include "field_rail.h"
+#include "field_rail_func.h"
 #include "fld_scenearea.h"
 
 
@@ -860,9 +861,9 @@ static const RAIL_CAMERA_SET sc_RAIL_CAMERA_SET[CAMERA_C3_MAX] =
 
 // カメラ動作関数テーブル
 static RAIL_CAMERA_FUNC* sp_RAIL_CAMERA_FUNC[CAMERAFUNC_C3_MAX] = {
-	FIELD_RAIL_POSFUNC_CircleCamera,
+	FIELD_RAIL_CAMERAFUNC_CircleCamera,
 	FIELD_RAIL_CAMERAFUNC_FixAllCamera,
-	FIELD_RAIL_POSFUNC_FixLenCircleCamera,
+	FIELD_RAIL_CAMERAFUNC_FixLenCircleCamera,
 };
 
 // 位置

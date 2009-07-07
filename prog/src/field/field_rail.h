@@ -35,27 +35,49 @@ typedef struct _RAIL_LINE RAIL_LINE;
 /**
  */
 //------------------------------------------------------------------
+#define RAIL_CAMERA_SET_WORK_SIZ	(32)
 typedef struct _RAIL_CAMERA_SET{
   u32 func_index;
-  u32 param0;
-  u32 param1;
-  u32 param2;
-  u32 param3;
-  u32 param4;
-  u32 param5;
+	union
+	{
+		struct
+		{
+			u32 param0;
+			u32 param1;
+			u32 param2;
+			u32 param3;
+			u32 param4;
+			u32 param5;
+			u32 param6;
+			u32 param7;
+		};
+		u8 work[RAIL_CAMERA_SET_WORK_SIZ];
+	};
 }RAIL_CAMERA_SET;
 
 //------------------------------------------------------------------
 /**
  */
 //------------------------------------------------------------------
+#define RAIL_LINEPOS_SET_WORK_SIZ	(32)
 typedef struct _RAIL_LINEPOS_SET{
   u32 func_index;
   u32 func_dist_index;
-  u32 param0;
-  u32 param1;
-  u32 param2;
-  u32 param3;
+	union
+	{
+		struct
+		{
+			u32 param0;
+			u32 param1;
+			u32 param2;
+			u32 param3;
+			u32 param4;
+			u32 param5;
+			u32 param6;
+			u32 param7;
+		};
+		u8 work[RAIL_CAMERA_SET_WORK_SIZ];
+	};
 }RAIL_LINEPOS_SET;
 
 
@@ -105,6 +127,14 @@ typedef enum {
 //------------------------------------------------------------------
 #define RAIL_TBL_NULL	( 0xffffffff )
 
+
+//-----------------------------------------------------------------------------
+/**
+ *		名称サイズ
+ */
+//-----------------------------------------------------------------------------
+#define RAIL_NAME_BUF_SIZ	( 48 )
+
 //------------------------------------------------------------------
 /**
  */
@@ -128,7 +158,7 @@ struct _RAIL_POINT {
   VecFx32 pos;
 
 	u32 camera_set;
-  const char * name;
+  char name[ RAIL_NAME_BUF_SIZ ];
 };
 
 
@@ -146,7 +176,7 @@ struct _RAIL_LINE {
 	u32 camera_set;
 
 
-  const char * name;
+  char name[ RAIL_NAME_BUF_SIZ ];
   //いずれ必要になるが今考えると混乱する
   //fx32 width_margin;  ///<LINEに対して動ける幅
   //u32 width_divider;
@@ -222,27 +252,3 @@ extern void FIELD_RAIL_MAN_UpdateCamera(const FIELD_RAIL_MAN * man);
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 extern void FIELD_RAIL_MAN_GetDirection(const FIELD_RAIL_MAN * man, VecFx32 * dir);
-
-
-//------------------------------------------------------------------
-//  LINE移動関数
-//------------------------------------------------------------------
-extern void FIELD_RAIL_POSFUNC_StraitLine(const FIELD_RAIL * rail, VecFx32 * pos);
-extern void FIELD_RAIL_POSFUNC_CurveLine(const FIELD_RAIL * rail, VecFx32 * pos);
-
-extern const RAIL_LINEPOS_SET RAIL_LINEPOS_SET_Default;
-extern const RAIL_CAMERA_SET RAIL_CAMERA_SET_Default;
-extern void FIELD_RAIL_CAMERAFUNC_FixPosCamera(const FIELD_RAIL_MAN* man);
-extern void FIELD_RAIL_CAMERAFUNC_FixAngleCamera(const FIELD_RAIL_MAN* man);
-extern void FIELD_RAIL_CAMERAFUNC_OfsAngleCamera(const FIELD_RAIL_MAN* man);
-extern void FIELD_RAIL_CAMERAFUNC_FixAllCamera(const FIELD_RAIL_MAN* man);
-
-extern fx32 FIELD_RAIL_LINE_DIST_FUNC_StraitLine( const RAIL_POINT * point_s, const RAIL_POINT * point_e, const RAIL_LINEPOS_SET * line_pos_set );
-
-//-----------------------------------------------------------------------------
-//  円動作
-//-----------------------------------------------------------------------------
-extern void FIELD_RAIL_POSFUNC_CircleCamera( const FIELD_RAIL_MAN * man );
-extern void FIELD_RAIL_POSFUNC_FixLenCircleCamera( const FIELD_RAIL_MAN * man );
-
-extern fx32 FIELD_RAIL_LINE_DIST_FUNC_CircleLine( const RAIL_POINT * point_s, const RAIL_POINT * point_e, const RAIL_LINEPOS_SET * line_pos_set );

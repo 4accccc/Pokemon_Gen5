@@ -14,6 +14,7 @@
 #include "fieldmap_ctrl_nogrid.h"
 
 #include "field_rail.h"
+#include "field_rail_func.h"
 
 //======================================================================
 //	define
@@ -76,6 +77,7 @@ enum
 
 enum
 {
+	NOGRID_RAIL_Strait,
 	NOGRID_RAIL_LoopLinePosSet,
 	NOGRID_RAIL_linepos_MAX,
 };
@@ -90,6 +92,7 @@ enum
 
 enum
 {
+	NOGRID_RAIL_LINEPOSFUNC_STRAIT,
 	NOGRID_RAIL_LINEPOSFUNC_CURVE,
 
 	NOGRID_RAIL_LINEPOSFUNC_MAX,
@@ -97,6 +100,7 @@ enum
 
 enum
 {
+	NOGRID_RAIL_LINEDISTFUNC_STRAIT,
 	NOGRID_RAIL_LINEDISTFUNC_CURVE,
 
 	NOGRID_RAIL_LINEDISTFUNC_MAX,
@@ -359,7 +363,7 @@ static const RAIL_LINE lineTable[NOGRID_RAIL_line_MAX] = {
 		//RAIL_KEY key;
 		RAIL_KEY_UP,
 		//const RAIL_LINEPOS_SET * line_pos_set;
-		RAIL_TBL_NULL,
+		NOGRID_RAIL_Strait, 
 		//const RAIL_CAMERA_SET * camera;
 		NOGRID_RAIL_camera_changeAngle,
 		//const char * name;
@@ -372,7 +376,7 @@ static const RAIL_LINE lineTable[NOGRID_RAIL_line_MAX] = {
 		//RAIL_KEY key;
 		RAIL_KEY_UP,
 		//const RAIL_LINEPOS_SET * line_pos_set;
-		RAIL_TBL_NULL,
+		NOGRID_RAIL_Strait, 
 		//const RAIL_CAMERA_SET * camera;
 		NOGRID_RAIL_camera_changeAngle,
 		//const char * name;
@@ -385,7 +389,7 @@ static const RAIL_LINE lineTable[NOGRID_RAIL_line_MAX] = {
 		//RAIL_KEY key;
 		RAIL_KEY_UP,
 		//const RAIL_LINEPOS_SET * line_pos_set;
-		RAIL_TBL_NULL,
+		NOGRID_RAIL_Strait, 
 		//const RAIL_CAMERA_SET * camera;
 		NOGRID_RAIL_camera_changeAngle,
 		//const char * name;
@@ -398,7 +402,7 @@ static const RAIL_LINE lineTable[NOGRID_RAIL_line_MAX] = {
 		//RAIL_KEY key;
 		RAIL_KEY_UP,
 		//const RAIL_LINEPOS_SET * line_pos_set;
-		RAIL_TBL_NULL,
+		NOGRID_RAIL_Strait, 
 		//const RAIL_CAMERA_SET * camera;
 		NOGRID_RAIL_camera_changeAngle,
 		//const char * name;
@@ -411,7 +415,7 @@ static const RAIL_LINE lineTable[NOGRID_RAIL_line_MAX] = {
 		//RAIL_KEY key;
 		RAIL_KEY_UP,
 		//const RAIL_LINEPOS_SET * line_pos_set;
-		RAIL_TBL_NULL,
+		NOGRID_RAIL_Strait, 
 		//const RAIL_CAMERA_SET * camera;
 		NOGRID_RAIL_camera_changeAngle,
 		//const char * name;
@@ -424,7 +428,7 @@ static const RAIL_LINE lineTable[NOGRID_RAIL_line_MAX] = {
 		//RAIL_KEY key;
 		RAIL_KEY_UP,
 		//const RAIL_LINEPOS_SET * line_pos_set;
-		RAIL_TBL_NULL,
+		NOGRID_RAIL_Strait, 
 		//const RAIL_CAMERA_SET * camera;
 		NOGRID_RAIL_camera_changeAngle,
 		//const char * name;
@@ -437,7 +441,7 @@ static const RAIL_LINE lineTable[NOGRID_RAIL_line_MAX] = {
 		//RAIL_KEY key;
 		RAIL_KEY_UP,
 		//const RAIL_LINEPOS_SET * line_pos_set;
-		RAIL_TBL_NULL,
+		NOGRID_RAIL_Strait, 
 		//const RAIL_CAMERA_SET * camera;
 		NOGRID_RAIL_camera_changeAngle,
 		//const char * name;
@@ -531,6 +535,11 @@ static RAIL_CAMERA_FUNC* camera_func[NOGRID_RAIL_CAMERAFUNC_MAX] =
 static const RAIL_LINEPOS_SET lineposTbl[NOGRID_RAIL_linepos_MAX] = 
 {
 	{
+		NOGRID_RAIL_LINEPOSFUNC_STRAIT,
+		NOGRID_RAIL_LINEDISTFUNC_STRAIT,
+		0,
+	},
+	{
 		NOGRID_RAIL_LINEPOSFUNC_CURVE,
 		NOGRID_RAIL_LINEDISTFUNC_CURVE,
 		0x00329c22,
@@ -541,10 +550,12 @@ static const RAIL_LINEPOS_SET lineposTbl[NOGRID_RAIL_linepos_MAX] =
 };
 static RAIL_POS_FUNC* linepos_func[NOGRID_RAIL_LINEPOSFUNC_MAX] = 
 {
+	FIELD_RAIL_POSFUNC_StraitLine,
 	FIELD_RAIL_POSFUNC_CurveLine,
 };
 static RAIL_LINE_DIST_FUNC* linedist_func[NOGRID_RAIL_LINEDISTFUNC_MAX] = 
 {
+	FIELD_RAIL_LINE_DIST_FUNC_StraitLine,
 	FIELD_RAIL_LINE_DIST_FUNC_CircleLine,
 };
 
