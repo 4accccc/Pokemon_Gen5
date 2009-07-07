@@ -102,6 +102,8 @@ extern	void						MCSS_SetPaletteFade( MCSS_WORK *mcss, u8 start_evy, u8 end_evy,
 extern  u8              MCSS_GetAlpha( MCSS_WORK *mcss );
 extern  void	          MCSS_SetAlpha( MCSS_WORK *mcss, u8 alpha );
 extern  BOOL            MCSS_CheckExecutePaletteFade( MCSS_WORK*  mcss );
+extern  void            MCSS_SetTextureTransAdrs( MCSS_SYS_WORK* mcss_sys, u32 adrs );
+extern  void            MCSS_SetTexPaletteTransAdrs( MCSS_SYS_WORK* mcss_sys, u32 adrs );
 
 #ifdef PM_DEBUG
 extern	MCSS_WORK*			MCSS_AddDebug( MCSS_SYS_WORK *mcss_sys, fx32	pos_x, fx32	pos_y, fx32	pos_z, const MCSS_ADD_DEBUG_WORK *madw );
