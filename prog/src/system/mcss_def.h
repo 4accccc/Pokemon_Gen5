@@ -30,7 +30,6 @@
 //--------------------------------------------------------------------------
 struct _MCSS_NCEC
 {
-
 	fx32	pos_x;		//セル描画X座標
 	fx32	pos_y;		//セル描画Y座標
 	fx32	size_x;		//セルサイズX
@@ -49,7 +48,7 @@ struct _MCSS_NCEC
 
 struct _MCSS_NCEC_WORK
 {
-	u32			cells;		//セル枚数
+	u32       cells;		//セル枚数
 	MCSS_NCEC	ncec[1];	//セル情報（可変なので、1個分だけ確保）
 };
 
@@ -102,8 +101,8 @@ struct _MCSS_SYS_WORK
 	NNSG2dImagePaletteProxy	shadow_palette_proxy;	//パレットプロキシ（影用）
 	u32											mcss_ortho_mode	:1;		//正射影描画モードフラグ
 	u32																			:31;
-	int											texAdrs;							//テクスチャ転送開始アドレス
-	int											palAdrs;							//テクスチャパレット転送開始アドレス
+	u32											texAdrs;							//テクスチャ転送開始アドレス
+	u32											palAdrs;							//テクスチャパレット転送開始アドレス
 	int											heapID;								//使用するヒープID
 };
 

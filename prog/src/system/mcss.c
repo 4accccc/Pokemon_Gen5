@@ -49,8 +49,8 @@ typedef struct
 	NNSG2dImagePaletteProxy*	palette_p;
 	void*											pBufChar;			//テクスチャキャラバッファ
 	void*											pBufPltt;			//テクスチャパレットバッファ
-	int												chr_ofs;
-	int												pal_ofs;
+	u32												chr_ofs;
+	u32												pal_ofs;
 	MCSS_WORK*								mcss;
 }TCB_LOADRESOURCE_WORK;
 
@@ -96,7 +96,12 @@ static	void	MCSS_LoadResourceDebug( MCSS_SYS_WORK *mcss_sys, int count, const MC
 
 //--------------------------------------------------------------------------
 /**
- * システム初期化
+ * @brief システム初期化
+ *
+ * @param[in] max     システムで使用できるMCSSのMAX値
+ * @param[in] heapID  システムで使用するヒープID
+ *
+ * @retval  MCSSシステム管理構造体のポインタ
  */
 //--------------------------------------------------------------------------
 MCSS_SYS_WORK*	MCSS_Init( int max, HEAPID heapID )
@@ -114,10 +119,7 @@ MCSS_SYS_WORK*	MCSS_Init( int max, HEAPID heapID )
 	MCSS_InitRenderer( mcss_sys );
 #endif //USE_RENDER
 
-	//テクスチャ系の転送先アドレスをセット（可変に出来る予定）
-#ifdef DEBUG_ONLY_FOR_sogabe
-#warning MCSS TEX PAL ADRS Not Changeability
-#endif
+	//テクスチャ系の転送先アドレスをセット
 	mcss_sys->texAdrs = MCSS_TEX_ADRS;
 	mcss_sys->palAdrs = MCSS_PAL_ADRS;
 
@@ -141,7 +143,9 @@ MCSS_SYS_WORK*	MCSS_Init( int max, HEAPID heapID )
 
 //--------------------------------------------------------------------------
 /**
- * システム終了
+ * @brief システム終了
+ *
+ * @param[in]  mcss_sys MCSSシステム管理構造体のポインタ
  */
 //--------------------------------------------------------------------------
 void	MCSS_Exit( MCSS_SYS_WORK *mcss_sys )
@@ -159,7 +163,9 @@ void	MCSS_Exit( MCSS_SYS_WORK *mcss_sys )
 
 //--------------------------------------------------------------------------
 /**
- * システムメイン
+ * @brief システムメイン
+ *
+ * @param[in]  mcss_sys MCSSシステム管理構造体のポインタ
  */
 //--------------------------------------------------------------------------
 void	MCSS_Main( MCSS_SYS_WORK *mcss_sys )
@@ -186,7 +192,9 @@ void	MCSS_Main( MCSS_SYS_WORK *mcss_sys )
 //独自描画
 //--------------------------------------------------------------------------
 /**
- * 描画システム
+ * @brief 描画システム
+ *
+ * @param[in]  mcss_sys MCSSシステム管理構造体のポインタ
  */
 //--------------------------------------------------------------------------
 void	MCSS_Draw( MCSS_SYS_WORK *mcss_sys )
@@ -451,7 +459,9 @@ void	MCSS_Draw( MCSS_SYS_WORK *mcss_sys )
 //レンダラシステムを用いた描画
 //--------------------------------------------------------------------------
 /**
- * 描画システム
+ * @brief 描画システム
+ *
+ * @param[in]  mcss_sys MCSSシステム管理構造体のポインタ
  */
 //--------------------------------------------------------------------------
 void	MCSS_Draw( MCSS_SYS_WORK *mcss_sys )
@@ -488,7 +498,21 @@ void	MCSS_Draw( MCSS_SYS_WORK *mcss_sys )
 
 //--------------------------------------------------------------------------
 /**
- * マルチセルを描画
+ * @brief マルチセルを描画
+ *
+ * @param[in]  mcss             MCSSワーク構造体のポインタ
+ * @param[in]  pos_x            描画X座標
+ * @param[in]  pos_y            描画Y座標
+ * @param[in]  scale_x          X方向スケール
+ * @param[in]  scale_y          Y方向スケール
+ * @param[in]  tex_s            テクスチャS値
+ * @param[in]  tex_t            テクスチャT値
+ * @param[in]  anm_SRT_c        セルアニメデータ構造体のポインタ
+ * @param[in]  anm_SRT_mc       マルチセルアニメデータ構造体のポインタ
+ * @param[in]  shadow_palette   影パレットプロキシ
+ * @param[in]  node             マルチセルのノード
+ * @param[in]  mcss_ortho_mode  射影モードフラグ（0:透視射影　1:正射影）
+ * @param[in]  pos_z_default    セルを描画する度にずらずZ方向のオフセット値
  */
 //--------------------------------------------------------------------------
 static	void	MCSS_DrawAct( MCSS_WORK *mcss,
@@ -602,7 +626,15 @@ static	void	MCSS_DrawAct( MCSS_WORK *mcss,
 
 //--------------------------------------------------------------------------
 /**
- * マルチセル登録
+ * @brief マルチセル登録
+ *
+ * @param[in]  mcss_sys MCSSシステム管理構造体のポインタ
+ * @param[in]  pos_x    描画X座標
+ * @param[in]  pos_y    描画Y座標
+ * @param[in]  pos_Z    描画Z座標
+ * @param[in]  maw      マルチセル登録用パラメータ構造体のポインタ
+ *
+ * @retval  MCSSワーク構造体のポインタ
  */
 //--------------------------------------------------------------------------
 MCSS_WORK*	MCSS_Add( MCSS_SYS_WORK *mcss_sys, fx32	pos_x, fx32	pos_y, fx32	pos_z, const MCSS_ADD_WORK *maw )
@@ -639,7 +671,10 @@ MCSS_WORK*	MCSS_Add( MCSS_SYS_WORK *mcss_sys, fx32	pos_x, fx32	pos_y, fx32	pos_z
 
 //--------------------------------------------------------------------------
 /**
- * マルチセル削除
+ * @brief マルチセル削除
+ *
+ * @param[in]  mcss_sys MCSSシステム管理構造体のポインタ
+ * @param[in]  mcss     MCSSワーク構造体のポインタ
  */
 //--------------------------------------------------------------------------
 void	MCSS_Del( MCSS_SYS_WORK *mcss_sys, MCSS_WORK *mcss )
@@ -658,7 +693,9 @@ void	MCSS_Del( MCSS_SYS_WORK *mcss_sys, MCSS_WORK *mcss )
 
 //--------------------------------------------------------------------------
 /**
- * 正射影描画モードをセット
+ * @brief 正射影描画モードをセット
+ *
+ * @param[in]  mcss_sys MCSSシステム管理構造体のポインタ
  */
 //--------------------------------------------------------------------------
 void	MCSS_SetOrthoMode( MCSS_SYS_WORK *mcss_sys )
@@ -668,7 +705,9 @@ void	MCSS_SetOrthoMode( MCSS_SYS_WORK *mcss_sys )
 
 //--------------------------------------------------------------------------
 /**
- * 正射影描画モードをリセット
+ * @brief 正射影描画モードをリセット
+ *
+ * @param[in]  mcss_sys MCSSシステム管理構造体のポインタ
  */
 //--------------------------------------------------------------------------
 void	MCSS_ResetOrthoMode( MCSS_SYS_WORK *mcss_sys )
@@ -678,7 +717,10 @@ void	MCSS_ResetOrthoMode( MCSS_SYS_WORK *mcss_sys )
 
 //--------------------------------------------------------------------------
 /**
- * ポジションゲット
+ * @brief ポジションゲット
+ *
+ * @param[in]  mcss MCSSワーク構造体のポインタ
+ * @param[in]  pos  取得したポジションを格納するワークのポインタ
  */
 //--------------------------------------------------------------------------
 void	MCSS_GetPosition( MCSS_WORK *mcss, VecFx32 *pos )
@@ -690,7 +732,10 @@ void	MCSS_GetPosition( MCSS_WORK *mcss, VecFx32 *pos )
 
 //--------------------------------------------------------------------------
 /**
- * ポジションセット
+ * @brief ポジションセット
+ *
+ * @param[in]  mcss MCSSワーク構造体のポインタ
+ * @param[in]  pos  セットするポジションが格納されたワークのポインタ
  */
 //--------------------------------------------------------------------------
 void	MCSS_SetPosition( MCSS_WORK *mcss, VecFx32 *pos )
@@ -702,7 +747,10 @@ void	MCSS_SetPosition( MCSS_WORK *mcss, VecFx32 *pos )
 
 //--------------------------------------------------------------------------
 /**
- * オフセットポジションゲット
+ * @brief オフセットポジションゲット
+ *
+ * @param[in]  mcss MCSSワーク構造体のポインタ
+ * @param[in]  pos  取得したポジションを格納するワークのポインタ
  */
 //--------------------------------------------------------------------------
 void	MCSS_GetOfsPosition( MCSS_WORK *mcss, VecFx32 *pos )
@@ -714,7 +762,10 @@ void	MCSS_GetOfsPosition( MCSS_WORK *mcss, VecFx32 *pos )
 
 //--------------------------------------------------------------------------
 /**
- * オフセットポジションセット
+ * @brief オフセットポジションセット
+ *
+ * @param[in]  mcss MCSSワーク構造体のポインタ
+ * @param[in]  pos  セットするポジションが格納されたワークのポインタ
  */
 //--------------------------------------------------------------------------
 void	MCSS_SetOfsPosition( MCSS_WORK *mcss, VecFx32 *pos )
@@ -726,7 +777,10 @@ void	MCSS_SetOfsPosition( MCSS_WORK *mcss, VecFx32 *pos )
 
 //--------------------------------------------------------------------------
 /**
- * スケールゲット
+ * @brief スケールゲット
+ *
+ * @param[in]  mcss MCSSワーク構造体のポインタ
+ * @param[in]  pos  取得したスケール値を格納するワークのポインタ
  */
 //--------------------------------------------------------------------------
 void	MCSS_GetScale( MCSS_WORK *mcss, VecFx32 *scale )
@@ -738,7 +792,10 @@ void	MCSS_GetScale( MCSS_WORK *mcss, VecFx32 *scale )
 
 //--------------------------------------------------------------------------
 /**
- * スケールセット
+ * @brief スケールセット
+ *
+ * @param[in]  mcss MCSSワーク構造体のポインタ
+ * @param[in]  pos  セットするスケール値が格納されたワークのポインタ
  */
 //--------------------------------------------------------------------------
 void	MCSS_SetScale( MCSS_WORK *mcss, VecFx32 *scale )
@@ -750,7 +807,10 @@ void	MCSS_SetScale( MCSS_WORK *mcss, VecFx32 *scale )
 
 //--------------------------------------------------------------------------
 /**
- * オフセットスケールゲット
+ * @brief オフセットスケールゲット
+ *
+ * @param[in]  mcss MCSSワーク構造体のポインタ
+ * @param[in]  pos  取得したスケール値を格納するワークのポインタ
  */
 //--------------------------------------------------------------------------
 void	MCSS_GetOfsScale( MCSS_WORK *mcss, VecFx32 *scale )
@@ -762,7 +822,10 @@ void	MCSS_GetOfsScale( MCSS_WORK *mcss, VecFx32 *scale )
 
 //--------------------------------------------------------------------------
 /**
- * オフセットスケールセット
+ * @brief オフセットスケールセット
+ *
+ * @param[in]  mcss MCSSワーク構造体のポインタ
+ * @param[in]  pos  セットするスケール値が格納されたワークのポインタ
  */
 //--------------------------------------------------------------------------
 void	MCSS_SetOfsScale( MCSS_WORK *mcss, VecFx32 *scale )
@@ -774,7 +837,10 @@ void	MCSS_SetOfsScale( MCSS_WORK *mcss, VecFx32 *scale )
 
 //--------------------------------------------------------------------------
 /**
- * ローテートゲット
+ * @brief ローテートゲット
+ *
+ * @param[in]  mcss MCSSワーク構造体のポインタ
+ * @param[in]  pos  取得したローテート値を格納するワークのポインタ
  */
 //--------------------------------------------------------------------------
 void	MCSS_GetRotate( MCSS_WORK *mcss, VecFx32 *rotate )
@@ -786,7 +852,10 @@ void	MCSS_GetRotate( MCSS_WORK *mcss, VecFx32 *rotate )
 
 //--------------------------------------------------------------------------
 /**
- * ローテートセット
+ * @brief ローテートセット
+ *
+ * @param[in]  mcss MCSSワーク構造体のポインタ
+ * @param[in]  pos  セットするローテート値が格納されたワークのポインタ
  */
 //--------------------------------------------------------------------------
 void	MCSS_SetRotate( MCSS_WORK *mcss, VecFx32 *rotate )
@@ -798,7 +867,10 @@ void	MCSS_SetRotate( MCSS_WORK *mcss, VecFx32 *rotate )
 
 //--------------------------------------------------------------------------
 /**
- * 影描画用スケールセット
+ * @brief 影描画用スケールセット
+ *
+ * @param[in]  mcss MCSSワーク構造体のポインタ
+ * @param[in]  pos  セットするスケール値が格納されたワークのポインタ
  */
 //--------------------------------------------------------------------------
 void	MCSS_SetShadowScale( MCSS_WORK *mcss, VecFx32 *scale )
@@ -810,7 +882,9 @@ void	MCSS_SetShadowScale( MCSS_WORK *mcss, VecFx32 *scale )
 
 //--------------------------------------------------------------------------
 /**
- * メパチフラグセット
+ * @brief メパチフラグセット
+ *
+ * @param[in]  mcss MCSSワーク構造体のポインタ
  */
 //--------------------------------------------------------------------------
 void	MCSS_SetMepachiFlag( MCSS_WORK *mcss )
@@ -820,7 +894,9 @@ void	MCSS_SetMepachiFlag( MCSS_WORK *mcss )
 
 //--------------------------------------------------------------------------
 /**
- * メパチフラグリセット
+ * @brief メパチフラグリセット
+ *
+ * @param[in]  mcss MCSSワーク構造体のポインタ
  */
 //--------------------------------------------------------------------------
 void	MCSS_ResetMepachiFlag( MCSS_WORK *mcss )
@@ -830,7 +906,9 @@ void	MCSS_ResetMepachiFlag( MCSS_WORK *mcss )
 
 //--------------------------------------------------------------------------
 /**
- * メパチフラグフリップ
+ * @brief メパチフラグフリップ
+ *
+ * @param[in]  mcss MCSSワーク構造体のポインタ
  */
 //--------------------------------------------------------------------------
 void	MCSS_FlipMepachiFlag( MCSS_WORK *mcss )
@@ -840,7 +918,9 @@ void	MCSS_FlipMepachiFlag( MCSS_WORK *mcss )
 
 //--------------------------------------------------------------------------
 /**
- * アニメストップフラグセット
+ * @brief アニメストップフラグセット
+ *
+ * @param[in]  mcss MCSSワーク構造体のポインタ
  */
 //--------------------------------------------------------------------------
 void	MCSS_SetAnmStopFlag( MCSS_WORK *mcss )
@@ -850,7 +930,9 @@ void	MCSS_SetAnmStopFlag( MCSS_WORK *mcss )
 
 //--------------------------------------------------------------------------
 /**
- * アニメストップフラグリセット
+ * @brief アニメストップフラグリセット
+ *
+ * @param[in]  mcss MCSSワーク構造体のポインタ
  */
 //--------------------------------------------------------------------------
 void	MCSS_ResetAnmStopFlag( MCSS_WORK *mcss )
@@ -860,7 +942,9 @@ void	MCSS_ResetAnmStopFlag( MCSS_WORK *mcss )
 
 //--------------------------------------------------------------------------
 /**
- * バニッシュフラグゲット
+ * @brief バニッシュフラグゲット
+ *
+ * @param[in]  mcss MCSSワーク構造体のポインタ
  */
 //--------------------------------------------------------------------------
 int		MCSS_GetVanishFlag( MCSS_WORK *mcss )
@@ -870,7 +954,9 @@ int		MCSS_GetVanishFlag( MCSS_WORK *mcss )
 
 //--------------------------------------------------------------------------
 /**
- * バニッシュフラグセット
+ * @brief バニッシュフラグセット
+ *
+ * @param[in]  mcss MCSSワーク構造体のポインタ
  */
 //--------------------------------------------------------------------------
 void	MCSS_SetVanishFlag( MCSS_WORK *mcss )
@@ -880,7 +966,9 @@ void	MCSS_SetVanishFlag( MCSS_WORK *mcss )
 
 //--------------------------------------------------------------------------
 /**
- * バニッシュフラグリセット
+ * @brief バニッシュフラグリセット
+ *
+ * @param[in]  mcss MCSSワーク構造体のポインタ
  */
 //--------------------------------------------------------------------------
 void	MCSS_ResetVanishFlag( MCSS_WORK *mcss )
@@ -890,7 +978,9 @@ void	MCSS_ResetVanishFlag( MCSS_WORK *mcss )
 
 //--------------------------------------------------------------------------
 /**
- * バニッシュフラグフリップ
+ * @brief バニッシュフラグフリップ
+ *
+ * @param[in]  mcss MCSSワーク構造体のポインタ
  */
 //--------------------------------------------------------------------------
 void	MCSS_FlipVanishFlag( MCSS_WORK *mcss )
@@ -900,7 +990,11 @@ void	MCSS_FlipVanishFlag( MCSS_WORK *mcss )
 
 //--------------------------------------------------------------------------
 /**
- * 指定したフレームになったらコールバック関数を呼ぶようにAnmCtrlに登録
+ * @brief 指定したフレームになったらコールバック関数を呼ぶようにAnmCtrlに登録
+ *
+ * @param[in]  mcss     MCSSワーク構造体のポインタ
+ * @param[in]  pFunc    呼ばれるコールバック関数のポインタ
+ * @param[in]  frameIdx コールバックを呼ぶフレーム
  */
 //--------------------------------------------------------------------------
 void	MCSS_SetAnimCtrlCallBack( MCSS_WORK *mcss, u32 param, NNSG2dAnmCallBackPtr pFunc, u16 frameIdx )
@@ -912,9 +1006,9 @@ void	MCSS_SetAnimCtrlCallBack( MCSS_WORK *mcss, u32 param, NNSG2dAnmCallBackPtr 
 
 //--------------------------------------------------------------------------
 /**
- * パレットフェードセット
+ * @brief パレットフェードセット
  *
- * @param[in]	mcss			セットするマルチセルワーク構造体
+ * @param[in] mcss      MCSSワーク構造体のポインタ
  * @param[in]	start_evy	セットするパラメータ（フェードさせる色に対する開始割合16段階）
  * @param[in]	end_evy		セットするパラメータ（フェードさせる色に対する終了割合16段階）
  * @param[in]	wait			セットするパラメータ（ウェイト）
@@ -935,9 +1029,9 @@ void	MCSS_SetPaletteFade( MCSS_WORK *mcss, u8 start_evy, u8 end_evy, u8 wait, u3
 
 //--------------------------------------------------------------------------
 /**
- * α値をゲット
+ * @brief α値をゲット
  *
- * @param[in]	mcss		ゲットするマルチセルワーク構造体
+ * @param[in] mcss MCSSワーク構造体のポインタ
  */
 //--------------------------------------------------------------------------
 u8	MCSS_GetAlpha( MCSS_WORK *mcss )
@@ -947,7 +1041,7 @@ u8	MCSS_GetAlpha( MCSS_WORK *mcss )
 
 //--------------------------------------------------------------------------
 /**
- * α値をセット
+ * @brief α値をセット
  *
  * @param[in]	mcss		セットするマルチセルワーク構造体
  * @param[in]	alpha		セットするα値(0-31)
@@ -960,7 +1054,7 @@ void	MCSS_SetAlpha( MCSS_WORK *mcss, u8 alpha )
 
 //--------------------------------------------------------------------------
 /**
- * パレットフェード中かチェック
+ * @brief パレットフェード中かチェック
  *
  * @param[in]	mcss		チェックするマルチセルワーク構造体
  *
@@ -973,11 +1067,41 @@ BOOL  MCSS_CheckExecutePaletteFade( MCSS_WORK*  mcss )
 }
 
 //--------------------------------------------------------------------------
+/**
+ * @brief テクスチャ転送開始アドレスセット
+ *
+ * @param[in]	mcss_sys  MCSSシステム管理構造体のポインタ
+ * @param[in]	adrs      セットするアドレス
+ */
+//--------------------------------------------------------------------------
+void  MCSS_SetTextureTransAdrs( MCSS_SYS_WORK* mcss_sys, u32 adrs )
+{ 
+	mcss_sys->texAdrs = adrs;
+}
+
+//--------------------------------------------------------------------------
+/**
+ * @brief テクスチャパレット転送開始アドレスセット
+ *
+ * @param[in]	mcss_sys  MCSSシステム管理構造体のポインタ
+ * @param[in]	adrs      セットするアドレス
+ */
+//--------------------------------------------------------------------------
+void  MCSS_SetTexPaletteTransAdrs( MCSS_SYS_WORK* mcss_sys, u32 adrs )
+{ 
+	mcss_sys->palAdrs = adrs;
+}
+
+//--------------------------------------------------------------------------
 //--------------------------------------------------------------------------
 
 //--------------------------------------------------------------------------
 /**
- * リソースロード
+ * @brief リソースロード
+ *
+ * @param[in]  mcss_sys MCSSシステム管理構造体のポインタ
+ * @param[in]  count    登録場所指定
+ * @param[in]  maw      マルチセル登録用パラメータ構造体のポインタ
  */
 //--------------------------------------------------------------------------
 static	void	MCSS_LoadResource( MCSS_SYS_WORK *mcss_sys, int count, const MCSS_ADD_WORK *maw )
@@ -1051,7 +1175,7 @@ static	void	MCSS_LoadResource( MCSS_SYS_WORK *mcss_sys, int count, const MCSS_AD
 
 //--------------------------------------------------------------------------
 /**
- * リソースをVRAMに転送
+ * @brief リソースをVRAMに転送
  */
 //--------------------------------------------------------------------------
 static	void	TCB_LoadResource( GFL_TCB *tcb, void *work )
@@ -1090,7 +1214,7 @@ static	void	TCB_LoadResource( GFL_TCB *tcb, void *work )
 
 //--------------------------------------------------------------------------
 /**
- * パレットをVRAMに転送
+ * @brief パレットをVRAMに転送
  */
 //--------------------------------------------------------------------------
 static	void	TCB_LoadPalette( GFL_TCB *tcb, void *work )
@@ -1166,7 +1290,7 @@ static	void	MCSS_MaterialSetup(void)
 
 //--------------------------------------------------------------------------
 /**
- * パレットフェードアニメ計算
+ * @brief パレットフェードアニメ計算
  *
  * @param[in]	mcss	マルチセルワーク構造体
  */
@@ -1292,7 +1416,7 @@ static	void MTX_MultVec44( const VecFx32 *cp_src, const MtxFx44 *cp_m, VecFx32 *
 #ifdef PM_DEBUG
 //--------------------------------------------------------------------------
 /**
- * マルチセル登録（デバッグ用）
+ * @brief マルチセル登録（デバッグ用）
  */
 //--------------------------------------------------------------------------
 MCSS_WORK*	MCSS_AddDebug( MCSS_SYS_WORK *mcss_sys, fx32	pos_x, fx32	pos_y, fx32	pos_z, const MCSS_ADD_DEBUG_WORK *madw )
@@ -1326,7 +1450,7 @@ MCSS_WORK*	MCSS_AddDebug( MCSS_SYS_WORK *mcss_sys, fx32	pos_x, fx32	pos_y, fx32	
 
 //--------------------------------------------------------------------------
 /**
- * リソースロード（デバッグ用）
+ * @brief リソースロード（デバッグ用）
  */
 //--------------------------------------------------------------------------
 static	void	MCSS_LoadResourceDebug( MCSS_SYS_WORK *mcss_sys, int count, const MCSS_ADD_DEBUG_WORK *madw )
