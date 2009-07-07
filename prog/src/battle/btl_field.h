@@ -24,7 +24,6 @@ typedef enum {
   BTL_FLDEFF_TRICKROOM,   ///< トリックルーム
   BTL_FLDEFF_JURYOKU,     ///< じゅうりょく
   BTL_FLDEFF_FUIN,        ///< ふういん
-  BTL_FLDEFF_SAWAGU,      ///< 騒ぐ
   BTL_FLDEFF_MIZUASOBI,   ///< みずあそび
   BTL_FLDEFF_DOROASOBI,   ///< どろあそび
 

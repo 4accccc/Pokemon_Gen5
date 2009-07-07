@@ -184,6 +184,7 @@ extern BOOL BTL_POKEPARAM_IsMatchType( const BTL_POKEPARAM* pp, PokeType type );
 extern const POKEMON_PARAM* BTL_POKEPARAM_GetSrcData( const BTL_POKEPARAM* bpp );
 
 extern u8 BTL_POKEPARAM_GetWazaCount( const BTL_POKEPARAM* pp );
+extern u8 BTL_POKEPARAM_GetUsedWazaCount( const BTL_POKEPARAM* pp );
 extern WazaID BTL_POKEPARAM_GetWazaNumber( const BTL_POKEPARAM* pp, u8 idx );
 extern WazaID BTL_POKEPARAM_GetWazaParticular( const BTL_POKEPARAM* pp, u8 idx, u8* PP, u8* PPMax );
 extern u8 BTL_POKEPARAM_GetWazaIdx( const BTL_POKEPARAM* pp, WazaID waza );
@@ -311,6 +312,7 @@ extern void BTL_POKEPARAM_ResetUsedWazaNumber( BTL_POKEPARAM* pp );
 extern void BTL_POKEPARAM_RankRecover( BTL_POKEPARAM* pp );
 extern void BTL_POKEPARAM_RankReset( BTL_POKEPARAM* pp );
 extern void BTL_POKEPARM_DeadClear( BTL_POKEPARAM* pp );
+extern void BTL_POKEPARAM_OutClear( BTL_POKEPARAM* bpp );
 extern void BTL_POKEPARAM_SetItem( BTL_POKEPARAM* pp, u16 itemID );
 extern void BTL_POKEPARAM_SetWazaUsed( BTL_POKEPARAM* pp, u8 wazaIdx );
 extern void BTL_POKEPARAM_UpdateWazaNumber( BTL_POKEPARAM* pp, u8 wazaIdx, WazaID waza, u8 ppMax, BOOL fPermenent );

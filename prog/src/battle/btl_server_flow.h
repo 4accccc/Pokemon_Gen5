@@ -214,11 +214,12 @@ typedef enum {
  *  ハンドラ挙動ワーク共有ヘッダ
  */
 typedef struct {
-  u8    equip;            ///< ハンドラ挙動（BtlEventHandlerEquip）
-  u8    userPokeID;       ///< ハンドラ主体のポケモンID
-  u8    size;             ///< 構造体サイズ
-  u8    tokwin_flag  : 1; ///< 主体ポケモンのとくせい効果であることを表示する
-  u8    _padding     : 7; ///< パディング
+  u8    equip;             ///< ハンドラ挙動（BtlEventHandlerEquip）
+  u8    userPokeID;        ///< ハンドラ主体のポケモンID
+  u8    size;              ///< 構造体サイズ
+  u8    tokwin_flag  : 1;  ///< 主体ポケモンのとくせい効果であることを表示する
+  u8    failSkipFlag : 1;  ///< 直前の命令が失敗したらスキップされる
+  u8    padding : 6;       ///< パディング
 }BTL_HANDEX_PARAM_HEADER;
 
 typedef struct {
@@ -253,7 +254,6 @@ typedef struct {
  u16  damage[ BTL_POS_MAX ];         ///< ダメージ量
 }BTL_HANDEX_PARAM_DAMAGE;
 
-
 typedef struct {
   BTL_HANDEX_PARAM_HEADER   header;   ///< 共有ヘッダ
   u8     poke_cnt;
@@ -273,7 +273,9 @@ typedef struct {
  BtlWazaSickEx   sickCode;           ///< 対応する状態異常コード（拡張可）
  u8   pokeID[ BTL_POS_MAX ];         ///< 対象ポケモンID
  u8   poke_cnt;                      ///< 対象ポケモン数
- u8   fStdMsgDisable;                ///< 標準メッセージを出力しない
+ u8   fStdMsgDisable;                ///< 成功時、標準メッセージを出力しない
+ u8   fExMsg;                        ///< 成功時、指定メッセージを出力する
+ u16  exStrID;
 }BTL_HANDEX_PARAM_CURE_SICK;
 
 typedef struct {
@@ -327,32 +329,32 @@ typedef struct {
 }BTL_HANDEX_PARAM_KILL;
 
 typedef struct {
-  BTL_HANDEX_PARAM_DAMAGE  header;
+  BTL_HANDEX_PARAM_HEADER  header;
   PokeTypePair    next_type;
   u8              pokeID;
 }BTL_HANDEX_PARAM_CHANGE_TYPE;
 
 typedef struct {
-  BTL_HANDEX_PARAM_DAMAGE  header;
+  BTL_HANDEX_PARAM_HEADER  header;
   BppTurnFlag     flag;
   u8              pokeID;
 }BTL_HANDEX_PARAM_TURNFLAG;
 
 typedef struct {
-  BTL_HANDEX_PARAM_DAMAGE  header;
+  BTL_HANDEX_PARAM_HEADER  header;
   BppContFlag     flag;
   u8              pokeID;
 }BTL_HANDEX_PARAM_SET_CONTFLAG;
 
 typedef struct {
-  BTL_HANDEX_PARAM_DAMAGE  header;
+  BTL_HANDEX_PARAM_HEADER  header;
   BtlSideEffect   effect;
   BPP_SICK_CONT   cont;
   u8              pokeID;
 }BTL_HANDEX_PARAM_SIDE_EFFECT;
 
 typedef struct {
-  BTL_HANDEX_PARAM_DAMAGE  header;
+  BTL_HANDEX_PARAM_HEADER  header;
   u8              flags[ BTL_SIDEEFF_BITFLG_BYTES ];
   u8              side;
   u8              fExMsg;
@@ -360,25 +362,27 @@ typedef struct {
 }BTL_HANDEX_PARAM_SIDEEFF_REMOVE;
 
 typedef struct {
-  BTL_HANDEX_PARAM_DAMAGE  header;
+  BTL_HANDEX_PARAM_HEADER  header;
   BtlFieldEffect           effect;
   BPP_SICK_CONT            cont;
   u8                       sub_param;
+  u8                       fExMsg;
+  u16                      exStrID;
 }BTL_HANDEX_PARAM_ADD_FLDEFF;
 
 typedef struct {
-  BTL_HANDEX_PARAM_DAMAGE  header;
+  BTL_HANDEX_PARAM_HEADER  header;
   BtlFieldEffect           effect;
 }BTL_HANDEX_PARAM_REMOVE_FLDEFF;
 
 typedef struct {
-  BTL_HANDEX_PARAM_DAMAGE  header;
+  BTL_HANDEX_PARAM_HEADER  header;
   u16             tokuseiID;    ///< 書き換え後のとくせい（POKETOKUSEI_NULLならとくせいを消す）
   u8              pokeID;       ///< 対象ポケモンID
 }BTL_HANDEX_PARAM_CHANGE_TOKUSEI;
 
 typedef struct {
-  BTL_HANDEX_PARAM_DAMAGE  header;
+  BTL_HANDEX_PARAM_HEADER  header;
   u16             itemID;       ///< 書き換え後のアイテム（ITEM_DUMMY_DATA ならアイテムを消す）
   u8              pokeID;       ///< 対象ポケモンID
   u8              fSucceedMsg;
@@ -392,7 +396,7 @@ typedef struct {
  *  アイテム入れ替え（ヘッダの使用ポケモンと）
  */
 typedef struct {
-  BTL_HANDEX_PARAM_DAMAGE  header;
+  BTL_HANDEX_PARAM_HEADER  header;
   u8              pokeID;            ///< 対象ポケモンID
   u8              fSucceedMsg;
   u8              succeedStrArgCnt;
@@ -401,7 +405,7 @@ typedef struct {
 }BTL_HANDEX_PARAM_SWAP_ITEM;
 
 typedef struct {
-  BTL_HANDEX_PARAM_DAMAGE  header;
+  BTL_HANDEX_PARAM_HEADER  header;
   u8              pokeID;            ///< 対象ポケモンID
   u8              wazaIdx;
   u8              ppMax;             ///< PPMax値:0ならデフォルト

@@ -58,6 +58,7 @@ typedef enum {
   SC_OP_SET_ITEM,           ///< アイテム書き換え
   SC_OP_UPDATE_WAZANUMBER,  ///< ワザ書き換え
   SC_OP_HENSIN,             ///< へんしん
+  SC_OP_OUTCLEAR,           ///< 退場時クリア
   SC_ACT_WAZA_EFFECT,
   SC_ACT_WAZA_EFFECT_EX,    ///< 【アクション】ワザエフェクト拡張（溜めターンエフェクトなどに使用）
   SC_ACT_WAZA_DMG,          ///< 【アクション】[ AtClient, DefClient, wazaIdx, Affinity ]
@@ -313,6 +314,10 @@ static inline void SCQUE_PUT_OP_UpdateWaza( BTL_SERVER_CMD_QUE* que, u8 pokeID, 
 static inline void SCQUE_PUT_OP_Hensin( BTL_SERVER_CMD_QUE* que, u8 atkPokeID, u8 tgtPokeID )
 {
   SCQUE_PUT_Common( que, SC_OP_HENSIN, atkPokeID, tgtPokeID );
+}
+static inline void SCQUE_PUT_OP_OutClear( BTL_SERVER_CMD_QUE* que, u8 pokeID )
+{
+  SCQUE_PUT_Common( que, SC_OP_OUTCLEAR, pokeID );
 }
 
 

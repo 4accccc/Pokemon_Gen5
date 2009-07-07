@@ -38,7 +38,9 @@ static BTL_EVENT_FACTOR* ADD_Juryoku( u16 pri, BtlFieldEffect effect, u8 subPara
 static BTL_EVENT_FACTOR* ADD_Fuin( u16 pri, BtlFieldEffect effect, u8 subParam );
 static BTL_EVENT_FACTOR* ADD_Sawagu( u16 pri, BtlFieldEffect effect, u8 subParam );
 static BTL_EVENT_FACTOR* ADD_MizuAsobi( u16 pri, BtlFieldEffect effect, u8 subParam );
+static void handler_fld_MizuAsobi( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 subParam, int* work );
 static BTL_EVENT_FACTOR* ADD_DoroAsobi( u16 pri, BtlFieldEffect effect, u8 subParam );
+static void handler_fld_DoroAsobi( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 subParam, int* work );
 
 
 
@@ -65,7 +67,6 @@ BTL_EVENT_FACTOR*  BTL_HANDLER_FLD_Add( BtlFieldEffect effect, u8 sub_param )
     { BTL_FLDEFF_TRICKROOM,  ADD_TrickRoom   }, ///< トリックルーム
     { BTL_FLDEFF_JURYOKU,    ADD_Juryoku     }, ///< じゅうりょく
     { BTL_FLDEFF_FUIN ,      ADD_Fuin        }, ///< ふういん
-    { BTL_FLDEFF_SAWAGU,     ADD_Sawagu      }, ///< 騒ぐ
     { BTL_FLDEFF_MIZUASOBI,  ADD_MizuAsobi   }, ///< みずあそび
     { BTL_FLDEFF_DOROASOBI,  ADD_DoroAsobi   }, ///< どろあそび
   };
@@ -178,10 +179,16 @@ static BTL_EVENT_FACTOR* ADD_Sawagu( u16 pri, BtlFieldEffect effect, u8 subParam
 static BTL_EVENT_FACTOR* ADD_MizuAsobi( u16 pri, BtlFieldEffect effect, u8 subParam )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_WAZA_DMG_PROC2,  handler_fld_Weather   },  // ダメージ補正
+    { BTL_EVENT_WAZA_POWER,  handler_fld_MizuAsobi   },  // ダメージ補正
     { BTL_EVENT_NULL, NULL },
   };
   return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_FIELD, effect, pri, subParam, HandlerTable );
+}
+static void handler_fld_MizuAsobi( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 subParam, int* work )
+{
+  if( BTL_EVENTVAR_GetValue(BTL_EVAR_WAZA_TYPE) == POKETYPE_MIZU ){
+    BTL_EVENTVAR_MulValue( BTL_EVAR_WAZA_POWER_RATIO, FX32_CONST(0.5) );
+  }
 }
 //--------------------------------------------------------------------------------------
 /**
@@ -191,9 +198,15 @@ static BTL_EVENT_FACTOR* ADD_MizuAsobi( u16 pri, BtlFieldEffect effect, u8 subPa
 static BTL_EVENT_FACTOR* ADD_DoroAsobi( u16 pri, BtlFieldEffect effect, u8 subParam )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_WAZA_DMG_PROC2,  handler_fld_Weather   },  // ダメージ補正
+    { BTL_EVENT_WAZA_POWER,  handler_fld_DoroAsobi   },  // ダメージ補正
     { BTL_EVENT_NULL, NULL },
   };
   return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_FIELD, effect, pri, subParam, HandlerTable );
+}
+static void handler_fld_DoroAsobi( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 subParam, int* work )
+{
+  if( BTL_EVENTVAR_GetValue(BTL_EVAR_WAZA_TYPE) == POKETYPE_DENKI ){
+    BTL_EVENTVAR_MulValue( BTL_EVAR_WAZA_POWER_RATIO, FX32_CONST(0.5) );
+  }
 }
 

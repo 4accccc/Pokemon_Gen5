@@ -190,6 +190,7 @@ static BOOL scProc_OP_ChangeTokusei( BTL_CLIENT* wk, int* seq, const int* args )
 static BOOL scProc_OP_SetItem( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_OP_UpdateWazaNumber( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_OP_Hensin( BTL_CLIENT* wk, int* seq, const int* args );
+static BOOL scProc_OP_OutClear( BTL_CLIENT* wk, int* seq, const int* args );
 static void cec_addCode( CANT_ESC_CONTROL* ctrl, u8 pokeID, BtlCantEscapeCode code );
 static void cec_subCode( CANT_ESC_CONTROL* ctrl, u8 pokeID, BtlCantEscapeCode code );
 static u8 cec_isEnable( CANT_ESC_CONTROL* ctrl, BtlCantEscapeCode code, BTL_CLIENT* wk );
@@ -1218,6 +1219,7 @@ static BOOL SubProc_UI_ServerCmd( BTL_CLIENT* wk, int* seq )
     { SC_OP_SET_ITEM,           scProc_OP_SetItem         },
     { SC_OP_UPDATE_WAZANUMBER,  scProc_OP_UpdateWazaNumber},
     { SC_OP_HENSIN,             scProc_OP_Hensin          },
+    { SC_OP_OUTCLEAR,           scProc_OP_OutClear        },
     { SC_ACT_KILL,              scProc_ACT_Kill           },
   };
 
@@ -1693,10 +1695,9 @@ static BOOL scProc_ACT_SickDamage( BTL_CLIENT* wk, int* seq, const int* args )
         GF_ASSERT_MSG(0, "poke[%d], Illegal sick ID:%d\n", args[0], sick);
         /* fallthru */
       case WAZASICK_DOKU:   msgID = BTL_STRID_SET_DokuDamage; break;
-        break;
       case WAZASICK_YAKEDO: msgID = BTL_STRID_SET_YakedoDamage; break;
-        break;
       case WAZASICK_AKUMU:  msgID = BTL_STRID_SET_AkumuDamage; break;
+      case WAZASICK_NOROI:  msgID = BTL_STRID_SET_NoroiDamage; break;
       }
 
       BTLV_StartMsgSet( wk->viewCore, msgID, args );  // この先ではargs[0]しか参照しないハズ…
@@ -2190,6 +2191,12 @@ static BOOL scProc_OP_Hensin( BTL_CLIENT* wk, int* seq, const int* args )
   BTL_POKEPARAM* tgtPoke = BTL_POKECON_GetPokeParam( wk->pokeCon, args[1] );
 
   BTL_POKEPARAM_HENSIN_Set( atkPoke, tgtPoke );
+  return TRUE;
+}
+static BOOL scProc_OP_OutClear( BTL_CLIENT* wk, int* seq, const int* args )
+{
+  BTL_POKEPARAM* pp = BTL_POKECON_GetPokeParam( wk->pokeCon, args[0] );
+  BTL_POKEPARAM_OutClear( pp );
   return TRUE;
 }
 

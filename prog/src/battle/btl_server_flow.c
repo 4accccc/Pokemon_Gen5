@@ -1196,7 +1196,18 @@ static void scproc_AfterMemberIn( BTL_SVFLOW_WORK* wk )
 //-----------------------------------------------------------------------------------
 static void scproc_MemberOut( BTL_SVFLOW_WORK* wk, u8 clientID, u8 posIdx )
 {
+  SVCL_WORK *client;
+  BTL_POKEPARAM  *poke;
+
+  client = BTL_SERVER_GetClientWork( wk->server, clientID );
+  poke = client->frontMember[posIdx];
+
   scEvent_MemberOut( wk, clientID, posIdx );
+
+  BTL_POKEPARAM_OutClear( poke );
+  SCQUE_PUT_OP_OutClear( wk->que, BTL_POKEPARAM_GetID(poke) );
+
+  scproc_ClearPokeDependEffect( wk, poke );
 }
 //-----------------------------------------------------------------------------------
 // サーバーフロー：「たたかう」ルート
@@ -2753,6 +2764,9 @@ static u16 scEvent_CalcDamage( BTL_SVFLOW_WORK* wk,
   {
     fx32 ratio = scEvent_CalcTypeMatchRatio( wk, attacker, wk->wazaParam.wazaType );
     rawDamage = (rawDamage * ratio) >> FX32_SHIFT;
+    if( ratio != FX32_ONE ){
+      BTL_Printf("タイプ一致補正:%d%%  -> 素ダメ=%d\n", (ratio*100>>FX32_SHIFT), rawDamage);
+    }
   }
   // タイプ相性計算
   rawDamage = BTL_CALC_AffDamage( rawDamage, typeAff );
@@ -3475,6 +3489,9 @@ static void scproc_turncheck_sick( BTL_SVFLOW_WORK* wk )
           BTL_POKEPARAM_HpMinus( bpp, damage );
           SCQUE_PUT_OP_HpMinus( wk->que, pokeID, damage );
           SCQUE_PUT_SickDamage( wk->que, pokeID, sick, damage );
+          if( BTL_POKEPARAM_IsDead(bpp) ){
+            break;
+          }
         }
         else if( damage < 0 )
         {
@@ -3485,8 +3502,10 @@ static void scproc_turncheck_sick( BTL_SVFLOW_WORK* wk )
         }
       }
     }
-    BTL_POKEPARAM_WazaSick_TurnCheck( bpp );
-    SCQUE_PUT_OP_WazaSickTurnCheck( wk->que, pokeID );
+    if( !BTL_POKEPARAM_IsDead(bpp) ){
+      BTL_POKEPARAM_WazaSick_TurnCheck( bpp );
+      SCQUE_PUT_OP_WazaSickTurnCheck( wk->que, pokeID );
+    }
     scproc_CheckDeadCmd( wk, bpp );
   }
 }
@@ -6796,46 +6815,52 @@ void* BTL_SVFLOW_HANDLERWORK_Push( BTL_SVFLOW_WORK* wk, BtlEventHandlerExhibitio
 static BOOL scproc_HandEx_Root( BTL_SVFLOW_WORK* wk, u16 useItemID )
 {
   BTL_HANDEX_PARAM_HEADER* handEx_header;
-  u32 succeed_cnt = 0;
+  u8 fSucceed, fPrevSucceed;
+
+  fSucceed = FALSE;
+  fPrevSucceed = TRUE;
 
   while( (handEx_header = Hem_ReadWork(&wk->HEManager)) != NULL )
   {
     BTL_Printf("ProcHandEX : ADRS=0x%p, type=%d\n", handEx_header, handEx_header->equip);
+    if( handEx_header->failSkipFlag && (fPrevSucceed == FALSE) ){
+      continue;
+    }
     switch( handEx_header->equip ){
-    case BTL_HANDEX_TOKWIN_IN:      succeed_cnt += scproc_HandEx_TokWinIn( wk, handEx_header ); break;
-    case BTL_HANDEX_TOKWIN_OUT:     succeed_cnt += scproc_HandEx_TokWinOut( wk, handEx_header ); break;
-    case BTL_HANDEX_USE_ITEM:       succeed_cnt += scproc_HandEx_useItem( wk, handEx_header ); break;
-    case BTL_HANDEX_RECOVER_HP:     succeed_cnt += scproc_HandEx_recoverHP( wk, handEx_header, useItemID ); break;
-    case BTL_HANDEX_DAMAGE:         succeed_cnt += scproc_HandEx_damage( wk, handEx_header ); break;
-    case BTL_HANDEX_SHIFT_HP:       succeed_cnt += scproc_HandEx_shiftHP( wk, handEx_header ); break;
-    case BTL_HANDEX_RECOVER_PP:     succeed_cnt += scproc_HandEx_recoverPP( wk, handEx_header, useItemID ); break;
-    case BTL_HANDEX_DECREMENT_PP:   succeed_cnt += scproc_HandEx_decrementPP( wk, handEx_header, useItemID ); break;
-    case BTL_HANDEX_CURE_SICK:      succeed_cnt += scproc_HandEx_cureSick( wk, handEx_header, useItemID ); break;
-    case BTL_HANDEX_ADD_SICK:       succeed_cnt += scproc_HandEx_addSick( wk, handEx_header ); break;
-    case BTL_HANDEX_RANK_EFFECT:    succeed_cnt += scproc_HandEx_rankEffect( wk, handEx_header, useItemID ); break;
-    case BTL_HANDEX_SET_RANK:       succeed_cnt += scproc_HandEx_setRank( wk, handEx_header ); break;
-    case BTL_HANDEX_RECOVER_RANK:   succeed_cnt += scproc_HandEx_recoverRank( wk, handEx_header ); break;
-    case BTL_HANDEX_RESET_RANK:     succeed_cnt += scproc_HandEx_resetRank( wk, handEx_header ); break;
-    case BTL_HANDEX_KILL:           succeed_cnt += scproc_HandEx_kill( wk, handEx_header ); break;
-    case BTL_HANDEX_CHANGE_TYPE:    succeed_cnt += scproc_HandEx_changeType( wk, handEx_header ); break;
-    case BTL_HANDEX_MESSAGE_SET:    succeed_cnt += scproc_HandEx_messageSet( wk, handEx_header ); break;
-    case BTL_HANDEX_MESSAGE_STD:    succeed_cnt += scproc_HandEx_messageStd( wk, handEx_header ); break;
-    case BTL_HANDEX_SET_TURNFLAG:   succeed_cnt += scproc_HandEx_setTurnFlag( wk, handEx_header ); break;
-    case BTL_HANDEX_RESET_TURNFLAG: succeed_cnt += scproc_HandEx_resetTurnFlag( wk, handEx_header ); break;
-    case BTL_HANDEX_SET_CONTFLAG:   succeed_cnt += scproc_HandEx_setContFlag( wk, handEx_header ); break;
-    case BTL_HANDEX_RESET_CONTFLAG: succeed_cnt += scproc_HandEx_resetContFlag( wk, handEx_header ); break;
-    case BTL_HANDEX_SIDEEFF_REMOVE: succeed_cnt += scproc_HandEx_sideEffectRemove( wk, handEx_header ); break;
-    case BTL_HANDEX_ADD_FLDEFF:     succeed_cnt += scproc_HandEx_addFieldEffect( wk, handEx_header ); break;
-    case BTL_HANDEX_REMOVE_FLDEFF:  succeed_cnt += scproc_HandEx_removeFieldEffect( wk, handEx_header ); break;
-    case BTL_HANDEX_CHANGE_TOKUSEI: succeed_cnt += scproc_HandEx_tokuseiChange( wk, handEx_header ); break;
-    case BTL_HANDEX_SET_ITEM:       succeed_cnt += scproc_HandEx_setItem( wk, handEx_header ); break;
-    case BTL_HANDEX_SWAP_ITEM:      succeed_cnt += scproc_HandEx_swapItem( wk, handEx_header ); break;
-    case BTL_HANDEX_UPDATE_WAZA:    succeed_cnt += scproc_HandEx_updateWaza( wk, handEx_header ); break;
+    case BTL_HANDEX_TOKWIN_IN:      fPrevSucceed = scproc_HandEx_TokWinIn( wk, handEx_header ); break;
+    case BTL_HANDEX_TOKWIN_OUT:     fPrevSucceed = scproc_HandEx_TokWinOut( wk, handEx_header ); break;
+    case BTL_HANDEX_USE_ITEM:       fPrevSucceed = scproc_HandEx_useItem( wk, handEx_header ); break;
+    case BTL_HANDEX_RECOVER_HP:     fPrevSucceed = scproc_HandEx_recoverHP( wk, handEx_header, useItemID ); break;
+    case BTL_HANDEX_DAMAGE:         fPrevSucceed = scproc_HandEx_damage( wk, handEx_header ); break;
+    case BTL_HANDEX_SHIFT_HP:       fPrevSucceed = scproc_HandEx_shiftHP( wk, handEx_header ); break;
+    case BTL_HANDEX_RECOVER_PP:     fPrevSucceed = scproc_HandEx_recoverPP( wk, handEx_header, useItemID ); break;
+    case BTL_HANDEX_DECREMENT_PP:   fPrevSucceed = scproc_HandEx_decrementPP( wk, handEx_header, useItemID ); break;
+    case BTL_HANDEX_CURE_SICK:      fPrevSucceed = scproc_HandEx_cureSick( wk, handEx_header, useItemID ); break;
+    case BTL_HANDEX_ADD_SICK:       fPrevSucceed = scproc_HandEx_addSick( wk, handEx_header ); break;
+    case BTL_HANDEX_RANK_EFFECT:    fPrevSucceed = scproc_HandEx_rankEffect( wk, handEx_header, useItemID ); break;
+    case BTL_HANDEX_SET_RANK:       fPrevSucceed = scproc_HandEx_setRank( wk, handEx_header ); break;
+    case BTL_HANDEX_RECOVER_RANK:   fPrevSucceed = scproc_HandEx_recoverRank( wk, handEx_header ); break;
+    case BTL_HANDEX_RESET_RANK:     fPrevSucceed = scproc_HandEx_resetRank( wk, handEx_header ); break;
+    case BTL_HANDEX_KILL:           fPrevSucceed = scproc_HandEx_kill( wk, handEx_header ); break;
+    case BTL_HANDEX_CHANGE_TYPE:    fPrevSucceed = scproc_HandEx_changeType( wk, handEx_header ); break;
+    case BTL_HANDEX_MESSAGE_SET:    fPrevSucceed = scproc_HandEx_messageSet( wk, handEx_header ); break;
+    case BTL_HANDEX_MESSAGE_STD:    fPrevSucceed = scproc_HandEx_messageStd( wk, handEx_header ); break;
+    case BTL_HANDEX_SET_TURNFLAG:   fPrevSucceed = scproc_HandEx_setTurnFlag( wk, handEx_header ); break;
+    case BTL_HANDEX_RESET_TURNFLAG: fPrevSucceed = scproc_HandEx_resetTurnFlag( wk, handEx_header ); break;
+    case BTL_HANDEX_SET_CONTFLAG:   fPrevSucceed = scproc_HandEx_setContFlag( wk, handEx_header ); break;
+    case BTL_HANDEX_RESET_CONTFLAG: fPrevSucceed = scproc_HandEx_resetContFlag( wk, handEx_header ); break;
+    case BTL_HANDEX_SIDEEFF_REMOVE: fPrevSucceed = scproc_HandEx_sideEffectRemove( wk, handEx_header ); break;
+    case BTL_HANDEX_ADD_FLDEFF:     fPrevSucceed = scproc_HandEx_addFieldEffect( wk, handEx_header ); break;
+    case BTL_HANDEX_REMOVE_FLDEFF:  fPrevSucceed = scproc_HandEx_removeFieldEffect( wk, handEx_header ); break;
+    case BTL_HANDEX_CHANGE_TOKUSEI: fPrevSucceed = scproc_HandEx_tokuseiChange( wk, handEx_header ); break;
+    case BTL_HANDEX_SET_ITEM:       fPrevSucceed = scproc_HandEx_setItem( wk, handEx_header ); break;
+    case BTL_HANDEX_SWAP_ITEM:      fPrevSucceed = scproc_HandEx_swapItem( wk, handEx_header ); break;
+    case BTL_HANDEX_UPDATE_WAZA:    fPrevSucceed = scproc_HandEx_updateWaza( wk, handEx_header ); break;
     default:
       GF_ASSERT_MSG(0, "illegal handEx type = %d, userPokeID=%d", handEx_header->equip, handEx_header->userPokeID);
     }
   }
-  return succeed_cnt != 0;
+  return fSucceed;
 }
 /**
  * とくせいウィンドウ表示
@@ -6994,6 +7019,9 @@ static u8 scproc_HandEx_cureSick( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HE
       cured_sick = scPut_CureSick( wk, pp_target, param->sickCode );
       if( !param->fStdMsgDisable ){
         scPut_CureSickMsg( wk, pp_target, cured_sick, itemID );
+      }
+      else if( param->fExMsg ){
+        scPut_Message_Set( wk, pp_target, param->exStrID );
       }
     }
   }
@@ -7251,8 +7279,10 @@ static u8 scproc_HandEx_addFieldEffect( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PA
 {
   const BTL_HANDEX_PARAM_ADD_FLDEFF* param = (const BTL_HANDEX_PARAM_ADD_FLDEFF*)(param_header);
 
-  BTL_FIELD_AddEffect( param->effect, param->cont );
-  return 1;
+  if( BTL_FIELD_AddEffect(param->effect, param->cont) ){
+    return 1;
+  }
+  return 0;
 }
 /**
  * フィールドエフェクトハンドラ削除

@@ -166,7 +166,8 @@ struct _BTL_POKEPARAM {
 /* Prototypes                                                               */
 /*--------------------------------------------------------------------------*/
 static void setupBySrcData( BTL_POKEPARAM* bpp, const POKEMON_PARAM* srcPP );
-static void clearWazaSickWork( BTL_POKEPARAM* pp );
+static void clearWazaSickWork( BTL_POKEPARAM* pp, BOOL fPokeSickInclude );
+static void clearUsedWazaFlag( BTL_POKEPARAM* bpp );
 static void Effrank_Init( BPP_VARIABLE_PARAM* rank );
 static void Effrank_Reset( BPP_VARIABLE_PARAM* rank );
 static void Effrank_Recover( BPP_VARIABLE_PARAM* rank );
@@ -179,7 +180,6 @@ static inline void flgbuf_clear( u8* buf, u32 size );
 static inline void flgbuf_set( u8* buf, u32 flagID );
 static inline void flgbuf_reset( u8* buf, u32 flagID );
 static inline BOOL flgbuf_get( const u8* buf, u32 flagID );
-static void HensinWork_Init( BTL_POKEPARAM* bpp );
 
 
 
@@ -210,7 +210,7 @@ BTL_POKEPARAM*  BTL_POKEPARAM_Create( const POKEMON_PARAM* pp, u8 pokeID, HEAPID
   Effrank_Init( &bpp->varyParam );
 
   // 状態異常ワーク初期化
-  clearWazaSickWork( bpp );
+  clearWazaSickWork( bpp, TRUE );
 
   // この時点でポケモン用状態異常になっていれば引き継ぎ
   {
@@ -303,14 +303,31 @@ static void setupBySrcData( BTL_POKEPARAM* bpp, const POKEMON_PARAM* srcPP )
  * @param   pp
  */
 //----------------------------------------------------------------------------------
-static void clearWazaSickWork( BTL_POKEPARAM* pp )
+static void clearWazaSickWork( BTL_POKEPARAM* pp, BOOL fPokeSickInclude )
 {
-  u32 i;
-  for(i=0; i<NELEMS(pp->sickCont); ++i){
+  u32 i, start;
+
+  start = (fPokeSickInclude)? 0 : POKESICK_MAX;
+
+  for(i=start; i<NELEMS(pp->sickCont); ++i){
     pp->sickCont[i].raw = 0;
     pp->sickCont[i].type = WAZASICK_CONT_NONE;
   }
   GFL_STD_MemClear( pp->wazaSickCounter, sizeof(pp->wazaSickCounter) );
+}
+//----------------------------------------------------------------------------------
+/**
+ * ワザ使用フラグのクリア
+ *
+ * @param   bpp
+ */
+//----------------------------------------------------------------------------------
+static void clearUsedWazaFlag( BTL_POKEPARAM* bpp )
+{
+  u8 i;
+  for(i=0; i<NELEMS(bpp->waza); ++i){
+    bpp->waza[i].usedFlag = FALSE;
+  }
 }
 
 //=============================================================================================
@@ -387,6 +404,18 @@ u16 BTL_POKEPARAM_GetMonsNo( const BTL_POKEPARAM* pp )
 u8 BTL_POKEPARAM_GetWazaCount( const BTL_POKEPARAM* pp )
 {
   return pp->wazaCnt;
+}
+
+u8 BTL_POKEPARAM_GetUsedWazaCount( const BTL_POKEPARAM* pp )
+{
+  u8 cnt, i;
+  for(i=0, cnt=0; i<pp->wazaCnt; ++i)
+  {
+    if( pp->waza[i].usedFlag ){
+      ++cnt;
+    }
+  }
+  return cnt;
 }
 
 WazaID BTL_POKEPARAM_GetWazaNumber( const BTL_POKEPARAM* pp, u8 idx )
@@ -688,6 +717,9 @@ int BTL_POKEPARAM_CalcSickDamage( const BTL_POKEPARAM* pp, WazaSick sick )
         return BTL_CALC_QuotMaxHP( pp, 4 );
       }
       break;
+
+    case WAZASICK_NOROI:
+      return BTL_CALC_QuotMaxHP( pp, 4 );
 
     default:
       return 0;
@@ -1491,21 +1523,22 @@ void BTL_POKEPARAM_TurnCheck( BTL_POKEPARAM* pp )
  *
  */
 //=============================================================================================
-void BTL_POKEPARAM_ForceOffTurnFlag( BTL_POKEPARAM* pp, BppTurnFlag flagID )
+void BTL_POKEPARAM_ForceOffTurnFlag( BTL_POKEPARAM* bpp, BppTurnFlag flagID )
 {
-  flgbuf_reset( pp->turnFlag, flagID );
+  flgbuf_reset( bpp->turnFlag, flagID );
 }
 //=============================================================================================
 /**
  * アクションごとフラグのクリア
  *
- * @param   pp
+ * @param   bpp
  */
 //=============================================================================================
-void BTL_POKEPARAM_ClearActFlag( BTL_POKEPARAM* pp )
+void BTL_POKEPARAM_ClearActFlag( BTL_POKEPARAM* bpp )
 {
-  flgbuf_clear( pp->actFlag, sizeof(pp->actFlag) );
+  flgbuf_clear( bpp->actFlag, sizeof(bpp->actFlag) );
 }
+
 //=============================================================================================
 /**
  * 死亡による各種状態クリア
@@ -1513,13 +1546,30 @@ void BTL_POKEPARAM_ClearActFlag( BTL_POKEPARAM* pp )
  * @param   pp
  */
 //=============================================================================================
-void BTL_POKEPARM_DeadClear( BTL_POKEPARAM* pp )
+void BTL_POKEPARM_DeadClear( BTL_POKEPARAM* bpp )
 {
-  flgbuf_clear( pp->actFlag, sizeof(pp->actFlag) );
-  flgbuf_clear( pp->turnFlag, sizeof(pp->turnFlag) );
-  flgbuf_clear( pp->contFlag, sizeof(pp->contFlag) );
+  flgbuf_clear( bpp->actFlag, sizeof(bpp->actFlag) );
+  flgbuf_clear( bpp->turnFlag, sizeof(bpp->turnFlag) );
+  flgbuf_clear( bpp->contFlag, sizeof(bpp->contFlag) );
 
-  clearWazaSickWork( pp );
+  clearWazaSickWork( bpp, TRUE );
+  clearUsedWazaFlag( bpp );
+}
+//=============================================================================================
+/**
+ * 退場による各種状態クリア
+ *
+ * @param   bpp
+ */
+//=============================================================================================
+void BTL_POKEPARAM_OutClear( BTL_POKEPARAM* bpp )
+{
+  flgbuf_clear( bpp->actFlag, sizeof(bpp->actFlag) );
+  flgbuf_clear( bpp->turnFlag, sizeof(bpp->turnFlag) );
+  flgbuf_clear( bpp->contFlag, sizeof(bpp->contFlag) );
+
+  clearWazaSickWork( bpp, FALSE );
+  clearUsedWazaFlag( bpp );
 }
 //=============================================================================================
 /**
@@ -1832,11 +1882,11 @@ BOOL BTL_POKEPARAM_HENSIN_Set( BTL_POKEPARAM* bpp, const BTL_POKEPARAM* target )
           bpp->waza[i].ppMax = 5;
         }
         bpp->waza[i].pp = bpp->waza[i].ppMax;
-        bpp->waza[i].usedFlag = TRUE;
+        bpp->waza[i].usedFlag = FALSE;
       }
     }
 
-    clearWazaSickWork( bpp );
+    clearWazaSickWork( bpp, TRUE );
     flgbuf_clear( bpp->turnFlag, sizeof(bpp->turnFlag) );
     flgbuf_clear( bpp->contFlag, sizeof(bpp->contFlag) );
 
