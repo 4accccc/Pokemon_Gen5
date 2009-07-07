@@ -33,7 +33,8 @@ G3D_FE_ANMIVA =
 G3D_FE_MDL = kage.imd \
   hero_kemu.imd \
   kusaeff.imd \
-  sea_ride.imd
+  sea_ride.imd \
+  sisen_ef.imd \
 
 #---------------------------------------------------------------
 #	フィールドエフェクト　テクスチャ定義
