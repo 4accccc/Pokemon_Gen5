@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00179" date="2009-05-13T11:30:32"/>
+	<create user="matsumiya" host="W00207" date="2009-07-08T21:19:09"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -297,14 +297,14 @@
 （仮：プラチナと同じ）
 0＝主人公名</comment>
 		<attribute name="キャラ指定">パソコン</attribute>
-		<language name="JPN" width="256">[1:03:ポケモンタイプ:0]は
+		<language name="JPN" width="256">[1:00:トレーナー名:0]は
 パソコンを　チェックした！▼
 ポケモン　きそちしき▼
 この　せかいでは　ポケモンと
 ひとが　いっしょに　くらしています▼
 ポケモンを　たたかわせる　ひとを
 ポケモントレーナーと　いいます</language>
-		<language name="JPN_KANJI" width="256">[1:03:ポケモンタイプ:0]は
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]は
 パソコンを　チェックした！▼
 ポケモン　基礎知識▼
 この世界では　ポケモンと
