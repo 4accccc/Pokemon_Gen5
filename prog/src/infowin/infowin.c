@@ -189,8 +189,7 @@ static inline void INFOWIN_ResetBit( const u16 bit );
 
 INFOWIN_WORK *infoWk = NULL;
 //初期化
-//	@param bgplane	BG面
-//	@param bgOfs	NCGの読み込むVRAMアドレス(0x1000必要)
+//	@param bgplane	BG面 (CHARのVRAMが0x1000必要)
 //	@param pltNo	パレット番号(1本必要)
 //	@param commSys	通信システム
 //	@param heapId	ヒープID
