@@ -134,6 +134,7 @@ static VMCMD_RESULT VMEC_BG_PAL_FADE( VMHANDLE *vmh, void *context_work );
 static VMCMD_RESULT VMEC_BG_VANISH( VMHANDLE *vmh, void *context_work );
 static VMCMD_RESULT VMEC_SE_PLAY( VMHANDLE *vmh, void *context_work );
 static VMCMD_RESULT VMEC_SE_STOP( VMHANDLE *vmh, void *context_work );
+static VMCMD_RESULT VMEC_SE_PITCH( VMHANDLE *vmh, void *context_work );
 static VMCMD_RESULT VMEC_EFFECT_END_WAIT( VMHANDLE *vmh, void *context_work );
 static VMCMD_RESULT VMEC_WAIT( VMHANDLE *vmh, void *context_work );
 static VMCMD_RESULT VMEC_CONTROL_MODE( VMHANDLE *vmh, void *context_work );
@@ -229,6 +230,7 @@ static const VMCMD_FUNC btlv_effect_command_table[]={
   VMEC_BG_VANISH,
   VMEC_SE_PLAY,
   VMEC_SE_STOP,
+  VMEC_SE_PITCH,
   VMEC_EFFECT_END_WAIT,
   VMEC_WAIT,
   VMEC_CONTROL_MODE,
@@ -1226,6 +1228,21 @@ static VMCMD_RESULT VMEC_SE_STOP( VMHANDLE *vmh, void *context_work )
   { 
     PMSND_StopSE_byPlayerID( player );
   }
+
+  return bevw->control_mode;
+}
+
+//============================================================================================
+/**
+ *  SEピッチ変更
+ *
+ * @param[in] vmh       仮想マシン制御構造体へのポインタ
+ * @param[in] context_work  コンテキストワークへのポインタ
+ */
+//============================================================================================
+static VMCMD_RESULT VMEC_SE_PITCH( VMHANDLE *vmh, void *context_work )
+{ 
+  BTLV_EFFVM_WORK *bevw = ( BTLV_EFFVM_WORK* )context_work;
 
   return bevw->control_mode;
 }

@@ -249,12 +249,13 @@ ex)
 #define	EC_BG_VANISH								( 23 )
 #define	EC_SE_PLAY									( 24 )
 #define	EC_SE_STOP									( 25 )
-#define	EC_EFFECT_END_WAIT					( 26 )
-#define	EC_WAIT											( 27 )
-#define	EC_CONTROL_MODE							( 28 )
+#define	EC_SE_PITCH									( 26 )
+#define	EC_EFFECT_END_WAIT					( 27 )
+#define	EC_WAIT											( 28 )
+#define	EC_CONTROL_MODE							( 29 )
 
 //終了コマンドは必ず一番下になるようにする
-#define	EC_SEQ_END									( 29 )
+#define	EC_SEQ_END									( 30 )
 
 #ifndef __C_NO_DEF_
 
@@ -974,6 +975,26 @@ ex)
 	.short	EC_SE_STOP
   .long   \player
 	.endm
+
+//======================================================================
+/**
+ * @brief	SEピッチ変更
+ *
+ * #param_num	1
+ * @param player  変更するPlayerNo
+ * @param start   開始ピッチ
+ * @param end     終了ピッチ
+ *
+ * #param COMBOBOX_TEXT SE1 SE2
+ * #param COMBOBOX_VALUE BTLEFF_SEPLAY_SE1 BTLEFF_SEPLAY_SE2
+ */
+//======================================================================
+  .macro  SE_PITCH player, start, end
+  .short  EC_SE_PITCH	
+  .long   \player
+  .long   \start
+  .long   \end
+  .endm
 
 //======================================================================
 /**
