@@ -301,6 +301,13 @@ static void PSTATUS_InitGraphic( PSTATUS_WORK *work )
       GX_BG_EXTPLTT_23, 3, 0, 0, FALSE  // pal, pri, areaover, dmy, mosaic
     };
 
+    // BG1 SUB (Info
+    static const GFL_BG_BGCNT_HEADER header_sub1 = {
+      0, 0, 0x800, 0,  // scrX, scrY, scrbufSize, scrbufofs,
+      GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
+      GX_BG_SCRBASE_0x6800, GX_BG_CHARBASE_0x00000,0x00000,
+      GX_BG_EXTPLTT_23, 1, 0, 0, FALSE  // pal, pri, areaover, dmy, mosaic
+    };
     // BG2 SUB (土台
     static const GFL_BG_BGCNT_HEADER header_sub2 = {
       0, 0, 0x800, 0,  // scrX, scrY, scrbufSize, scrbufofs,
@@ -326,6 +333,7 @@ static void PSTATUS_InitGraphic( PSTATUS_WORK *work )
     
     PSTATUS_SetupBgFunc( &header_sub3 , PSTATUS_BG_SUB_BG , GFL_BG_MODE_TEXT );
     PSTATUS_SetupBgFunc( &header_sub2 , PSTATUS_BG_SUB_PLATE , GFL_BG_MODE_TEXT );
+    PSTATUS_SetupBgFunc( &header_sub1 , PSTATUS_BG_SUB_INFO , GFL_BG_MODE_TEXT );
   }
   
   //WindowMask設定
@@ -335,8 +343,8 @@ static void PSTATUS_InitGraphic( PSTATUS_WORK *work )
     G2_SetWndOutsidePlane( GX_WND_PLANEMASK_BG0 | GX_WND_PLANEMASK_BG1 | GX_WND_PLANEMASK_BG2 | GX_WND_PLANEMASK_BG3 | GX_WND_PLANEMASK_OBJ , FALSE );
     GX_SetVisibleWnd( GX_WNDMASK_W0 );
 
-    G2_SetBlendAlpha( GX_BLEND_PLANEMASK_BG2 , GX_BLEND_PLANEMASK_BG3 , 12 , 16 );
-    G2S_SetBlendAlpha( GX_BLEND_PLANEMASK_BG2 , GX_BLEND_PLANEMASK_BG3 , 12 , 16 );
+    G2_SetBlendAlpha( GX_BLEND_PLANEMASK_BG2 , GX_BLEND_PLANEMASK_BG3 , 13 , 16 );
+    G2S_SetBlendAlpha( GX_BLEND_PLANEMASK_BG2 , GX_BLEND_PLANEMASK_BG3 , 13 , 16 );
   }
   
   //OBJ系の初期化
@@ -402,12 +410,13 @@ static void PSTATUS_TermGraphic( PSTATUS_WORK *work )
   GFL_CLACT_UNIT_Delete( work->cellUnit );
   GFL_CLACT_SYS_Delete();
 
-  GFL_BG_FreeBGControl( PSTATUS_BG_MAIN_BG );
+  GFL_BG_FreeBGControl( PSTATUS_BG_SUB_INFO );
   GFL_BG_FreeBGControl( PSTATUS_BG_SUB_PLATE );
+  GFL_BG_FreeBGControl( PSTATUS_BG_SUB_BG );
+  GFL_BG_FreeBGControl( PSTATUS_BG_MAIN_BG );
   GFL_BG_FreeBGControl( PSTATUS_BG_PLATE );
   GFL_BG_FreeBGControl( PSTATUS_BG_PARAM );
   GFL_BG_FreeBGControl( PSTATUS_BG_3D );
-  GFL_BG_FreeBGControl( PSTATUS_BG_SUB_BG );
   GFL_BMPWIN_Exit();
   GFL_BG_Exit();
 
@@ -433,20 +442,20 @@ static void PSTATUS_LoadResource( PSTATUS_WORK *work )
   ARCHANDLE *archandle = GFL_ARC_OpenDataHandle( ARCID_P_STATUS , work->heapId );
 
   //下画面共通パレット
-  GFL_ARCHDL_UTIL_TransVramPalette( archandle , NARC_p_status_gra_p_status_d_NCLR , 
-                    PALTYPE_MAIN_BG , 0 , 0 , work->heapId );
+  GFL_ARCHDL_UTIL_TransVramPalette( archandle , NARC_p_status_gra_p_st_bg_d_NCLR , 
+                    PALTYPE_MAIN_BG , PSTATUS_BG_PLT_MAIN*16*2 , 0 , work->heapId );
   //BARパレット
   GFL_ARCHDL_UTIL_TransVramPalette( archandle , NARC_p_status_gra_menu_bar_NCLR , 
                     PALTYPE_MAIN_BG , PSTATUS_BG_PLT_BAR*16*2 , 16*2 , work->heapId );
   
   //下画面背景
-  GFL_ARCHDL_UTIL_TransVramBgCharacter( archandle , NARC_p_status_gra_p_status_bg_NCGR ,
+  GFL_ARCHDL_UTIL_TransVramBgCharacter( archandle , NARC_p_status_gra_p_st_bg_d_NCGR ,
                     PSTATUS_BG_MAIN_BG , 0 , 0, FALSE , work->heapId );
-  GFL_ARCHDL_UTIL_TransVramScreen( archandle , NARC_p_status_gra_p_status_bg_NSCR , 
+  GFL_ARCHDL_UTIL_TransVramScreen( archandle , NARC_p_status_gra_p_st_scroll_d_NSCR , 
                     PSTATUS_BG_MAIN_BG , 0 , 0, FALSE , work->heapId );
 
   //下画面土台共通キャラ
-  GFL_ARCHDL_UTIL_TransVramBgCharacter( archandle , NARC_p_status_gra_p_status_d_NCGR ,
+  GFL_ARCHDL_UTIL_TransVramBgCharacter( archandle , NARC_p_status_gra_p_st_bg_d_NCGR ,
                     PSTATUS_BG_PLATE , 0 , 0, FALSE , work->heapId );
 
   //下画面バー
@@ -458,31 +467,34 @@ static void PSTATUS_LoadResource( PSTATUS_WORK *work )
 
 
   //上画面共通パレット
-  GFL_ARCHDL_UTIL_TransVramPalette( archandle , NARC_p_status_gra_p_status_u_NCLR , 
+  GFL_ARCHDL_UTIL_TransVramPalette( archandle , NARC_p_status_gra_p_st_bg_u_NCLR , 
                     PALTYPE_SUB_BG , 0 , 0 , work->heapId );
   //上画面背景
-  GFL_ARCHDL_UTIL_TransVramBgCharacter( archandle , NARC_p_status_gra_p_status_bg_NCGR ,
+  GFL_ARCHDL_UTIL_TransVramBgCharacter( archandle , NARC_p_status_gra_p_st_bg_u_NCGR ,
                     PSTATUS_BG_SUB_BG , 0 , 0, FALSE , work->heapId );
-  GFL_ARCHDL_UTIL_TransVramScreen( archandle , NARC_p_status_gra_p_status_bg_NSCR , 
+  GFL_ARCHDL_UTIL_TransVramScreen( archandle , NARC_p_status_gra_p_st_scroll_u_NSCR , 
                     PSTATUS_BG_SUB_BG ,  0 , 0, FALSE , work->heapId );
   //上画面土台共通キャラ
-  GFL_ARCHDL_UTIL_TransVramBgCharacter( archandle , NARC_p_status_gra_p_status_u_NCGR ,
+  GFL_ARCHDL_UTIL_TransVramBgCharacter( archandle , NARC_p_status_gra_p_st_bg_u_NCGR ,
                     PSTATUS_BG_SUB_PLATE , 0 , 0, FALSE , work->heapId );
+  //上画面info
+  GFL_ARCHDL_UTIL_TransVramScreen( archandle , NARC_p_status_gra_p_st_infotitle_u_NSCR , 
+                    PSTATUS_BG_SUB_INFO ,  0 , 0, FALSE , work->heapId );
 
 
   //OBJリソース
   //パレット
   work->cellRes[SCR_PLT_ICON] = GFL_CLGRP_PLTT_Register( archandle , 
-        NARC_p_status_gra_menu_button_NCLR , CLSYS_DRAW_MAIN , 
+        NARC_p_status_gra_p_st_obj_d_NCLR , CLSYS_DRAW_MAIN , 
         PSTATUS_OBJPLT_ICON*32 , work->heapId  );
         
   //キャラクタ
   work->cellRes[SCR_NCG_ICON] = GFL_CLGRP_CGR_Register( archandle , 
-        NARC_p_status_gra_menu_button_NCGR , FALSE , CLSYS_DRAW_MAIN , work->heapId  );
+        NARC_p_status_gra_p_st_obj_d_NCGR , FALSE , CLSYS_DRAW_MAIN , work->heapId  );
   
   //セル・アニメ
   work->cellRes[SCR_ANM_ICON] = GFL_CLGRP_CELLANIM_Register( archandle , 
-        NARC_p_status_gra_menu_button_NCER , NARC_p_status_gra_menu_button_NANR, work->heapId  );
+        NARC_p_status_gra_p_st_obj_d_NCER , NARC_p_status_gra_p_st_obj_d_NANR, work->heapId  );
 
 
 

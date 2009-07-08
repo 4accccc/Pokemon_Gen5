@@ -177,9 +177,9 @@ void PSTATUS_RIBBON_LoadResource( PSTATUS_WORK *work , PSTATUS_RIBBON_WORK *ribb
 {
   u8 i;
   //書き換え用スクリーン読み込み
-  ribbonWork->scrResDown = GFL_ARCHDL_UTIL_LoadScreen( archandle , NARC_p_status_gra_p_status_ribbon_NSCR ,
+  ribbonWork->scrResDown = GFL_ARCHDL_UTIL_LoadScreen( archandle , NARC_p_status_gra_p_st_info_d_NSCR ,
                     FALSE , &ribbonWork->scrDataDown , work->heapId );
-  ribbonWork->scrResUp = GFL_ARCHDL_UTIL_LoadScreen( archandle , NARC_p_status_gra_p_status_ribbon_u_NSCR ,
+  ribbonWork->scrResUp = GFL_ARCHDL_UTIL_LoadScreen( archandle , NARC_p_status_gra_p_st_info_u_NSCR ,
                     FALSE , &ribbonWork->scrDataUp , work->heapId );
 
   //書き換え用OBJキャラクタ読み込み

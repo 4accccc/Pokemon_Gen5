@@ -156,7 +156,7 @@ void PSTATUS_SUB_Draw( PSTATUS_WORK *work , PSTATUS_SUB_WORK *subWork )
 //--------------------------------------------------------------
 void PSTATUS_SUB_LoadResource( PSTATUS_WORK *work , PSTATUS_SUB_WORK *subWork , ARCHANDLE *archandle )
 {
-  GFL_ARCHDL_UTIL_TransVramScreen( archandle , NARC_p_status_gra_p_status_sub_NSCR , 
+  GFL_ARCHDL_UTIL_TransVramScreen( archandle , NARC_p_status_gra_p_st_bg_d_NSCR , 
                     PSTATUS_BG_PLATE ,  0 , 0, FALSE , work->heapId );
   
 }
