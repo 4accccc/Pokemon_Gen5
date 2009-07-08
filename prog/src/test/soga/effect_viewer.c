@@ -20,6 +20,8 @@
 #include "poke_tool/poke_tool.h"
 #include "poke_tool/monsno_def.h"
 
+#include "sound/pm_sndsys.h"
+
 #include "gf_mcs.h"
 
 #include "font/font.naix"
@@ -115,6 +117,7 @@ typedef struct
   void        *resource_data;
 
   GFL_PTC_PTR     ptc;
+
 }EFFECT_VIEWER_WORK;
 
 static  void  EffectViewerSequence( EFFECT_VIEWER_WORK *evw );
@@ -225,6 +228,7 @@ static GFL_PROC_RESULT EffectViewerProcInit( GFL_PROC * proc, int * seq, void * 
     GFL_G3D_Init( GFL_G3D_VMANLNK, GFL_G3D_TEX128K, GFL_G3D_VMANLNK, GFL_G3D_PLT16K, 0, evw->heapID, NULL );
     GFL_G3D_SetSystemSwapBufferMode( GX_SORTMODE_AUTO, GX_BUFFERMODE_Z );
     G3X_AlphaBlend( TRUE );
+//    G3X_AlphaTest( TRUE, 31 );
     G3X_EdgeMarking( TRUE );
     G3X_AntiAlias( TRUE );
     GFL_BG_SetBGControl3D( 1 );
@@ -341,6 +345,20 @@ static GFL_PROC_RESULT EffectViewerProcMain( GFL_PROC * proc, int * seq, void * 
     {
       MCS_Init( evw->heapID );
     }
+    else
+    { 
+      MCS_Exit();
+    }
+  }
+
+  if( trg & PAD_BUTTON_SELECT )
+  { 
+    VecFx32 cam_pos, cam_target;
+
+    PMSND_StopSE();
+    BTLV_EFFVM_Stop( BTLV_EFFECT_GetVMHandle() );
+    BTLV_CAMERA_GetDefaultCameraPosition( &cam_pos, &cam_target );
+    BTLV_CAMERA_MoveCameraPosition( BTLV_EFFECT_GetCameraWork(), &cam_pos, &cam_target );
   }
 
   EffectViewerSequence( evw );
