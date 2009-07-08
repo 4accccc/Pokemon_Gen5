@@ -369,6 +369,7 @@ sub convData
 		for( $i=0; $i<@POINT_NAME; $i++ )
 		{
 			#リンク情報の整合性チェック
+			&isLinkPoint( \@filedata, $POINT_NAME[$i] );
 			
 			#LINES
 			$line = &getPeaceParamForName( \@filedata, $POINT_NAME[$i], "LINES00");
@@ -423,6 +424,8 @@ sub convData
 		for( $i=0; $i<@LINE_NAME; $i++ )
 		{
 			#リンク情報の整合性チェック
+			&isLinkLine( \@filedata, $LINE_NAME[$i] );
+		
 
 			#POINT
 			$point = &getPeaceParamForName( \@filedata, $LINE_NAME[$i], "POINT_S");
@@ -825,3 +828,111 @@ sub getPeaceParamByteWorkSizeForName
 	print( "#getPeaceParamByteWorkSizeForName $name not found\n" );
 	exit( 1 );
 }
+
+
+
+
+##-----------------------------------------------------------------------------
+#		リンク情報確認　ポイント
+##-----------------------------------------------------------------------------
+sub isLinkPoint
+{
+	my( $data, $point ) = @_;
+	my( $line, $key, $line_point_s, $line_point_e, $i );
+
+	for( $i=0; $i<4; $i++ )
+	{
+		$line						= &getPeaceParamForName( \@$data, $point, "LINES0".$i );
+		$key						= &getPeaceParamForName( \@$data, $point, "KEYS0".$i );
+		if( $line =~ /RAIL_TBL_NULL/ )
+		{
+			if( !($key =~ /RAIL_KEY_NULL/) )
+			{
+				print( "point[$point] line-key error $line to $key\n" );
+				exit(1);
+			}
+		}
+		else
+		{
+			$line_point_s		= &getPeaceParamForName( \@$data, $line, "POINT_S" );
+			$line_point_e		= &getPeaceParamForName( \@$data, $line, "POINT_E" );
+
+			#接続ラインに自分の情報があるかチェック
+			if( !($line_point_s =~ /$point/) && !($line_point_e =~ /$point/) )
+			{
+				print( "point[$point] line link error $line に $point と接続している情報はありません。\n" );
+				exit(1);
+			}
+			#キーが割り振られているかチェック
+			if( $key =~ /RAIL_KEY_NULL/ )
+			{
+				print( "point[$point] line-key error $line to $key\n" );
+				exit(1);
+			}
+		}
+	}
+}
+
+
+##-----------------------------------------------------------------------------
+#		リンク情報確認　ライン
+##-----------------------------------------------------------------------------
+sub isLinkLine
+{
+	my( $data, $line ) = @_;
+	my( $point_s, $point_e, $i, $point_line, $link_ok_s, $link_ok_e );
+	my( $camera_set );
+
+	$point_s = &getPeaceParamForName( \@$data, $line, "POINT_S" );
+	$point_e = &getPeaceParamForName( \@$data, $line, "POINT_E" );
+	
+	#ラインの開始と終了のポイントに自分の情報があるか。
+	$link_ok_s = 0;
+	$link_ok_e = 0;
+	for( $i=0; $i<4; $i++ )
+	{
+		$point_line	= &getPeaceParamForName( \@$data, $point_s, "LINES0".$i );
+		if( $point_line eq $line )
+		{
+			$link_ok_s = 1;
+		}
+
+		$point_line	= &getPeaceParamForName( \@$data, $point_e, "LINES0".$i );
+		if( $point_line eq $line )
+		{
+			$link_ok_e = 1;
+		}
+	}
+	if(($link_ok_s != 1) || ($link_ok_e != 1))
+	{
+		print( "line[$line] linkerr $point_s or $point_e に $line がありません。\n" );
+#		exit(1);	#強制ではない
+	}
+
+	#オフセットangleカメラ　両サイドポイントのカメラがFixAngleCameraである必要がある
+	$camera_set = &getPeaceParamForName( \@$data, $line, "CAMERA_SET" );
+	$camera_set = &getPeaceParamForName( \@$data, $camera_set, "FUNCINDEX" );
+	if( $camera_set =~ /FIELD_RAIL_LOADER_CAMERA_FUNC_OFSANGLE/ )
+	{
+		$camera_set = &getPeaceParamForName( \@$data, $point_s, "CAMERA_SET" );
+		$camera_set = &getPeaceParamForName( \@$data, $camera_set, "FUNCINDEX" );
+		if( !($camera_set =~ /FIELD_RAIL_LOADER_CAMERA_FUNC_FIXANGLE/) )
+		{
+			print( "line[$line] camera_set err $point_s が FIELD_RAIL_LOADER_CAMERA_FUNC_FIXANGLE を使用していません。\n" );
+#			exit(1);
+		}
+		$camera_set = &getPeaceParamForName( \@$data, $point_e, "CAMERA_SET" );
+		$camera_set = &getPeaceParamForName( \@$data, $camera_set, "FUNCINDEX" );
+		if( !($camera_set =~ /FIELD_RAIL_LOADER_CAMERA_FUNC_FIXANGLE/) )
+		{
+			print( "line[$line] camera_set err $point_s が FIELD_RAIL_LOADER_CAMERA_FUNC_FIXANGLE を使用していません。\n" );
+#			exit(1);
+		}
+	}
+}
+
+
+
+
+
+
