@@ -80,17 +80,17 @@ void NitroMain(void)
 	DEBUG_PerformanceInit();
 	DEBUG_PAUSE_Init();
 	{
-    //デバッグし捨ての初期化＋アドレスを渡す
-    u8 *charArea;
-    u16 *scrnArea,*plttArea;
-    NetErr_GetTempArea( &charArea , &scrnArea , &plttArea );
-    DEBUGWIN_InitSystem(charArea , scrnArea , plttArea);
-  }
+		//デバッグし捨ての初期化＋アドレスを渡す
+		u8 *charArea;
+		u16 *scrnArea,*plttArea;
+		NetErr_GetTempArea( &charArea , &scrnArea , &plttArea );
+		DEBUGWIN_InitSystem(charArea , scrnArea , plttArea);
+	}
 #endif
 
 	while(TRUE){
 #ifdef PM_DEBUG
-	//	DEBUG_PerformanceStart();
+		//	DEBUG_PerformanceStart();
 		DEBUG_PerformanceMain();
 		DEBUG_PerformanceStartLine(PERFORMANCE_ID_MAIN);
 #endif //PM_DEBUG
@@ -99,7 +99,7 @@ void NitroMain(void)
 		DEBUG_StackOverCheck();
 #endif	//PM_DEBUG
 
-        MachineSystem_Main();
+		MachineSystem_Main();
 		// メイン処理して…
 		GFLUser_Main();
 		GameMain();
@@ -111,26 +111,26 @@ void NitroMain(void)
 		// ※gflibに適切な関数が出来たら置き換えてください
 		//G3_SwapBuffers(GX_SORTMODE_AUTO, GX_BUFFERMODE_Z);
 
-  #ifdef PM_DEBUG
-  	//DEBUG_PerformanceDisp();
-  	DEBUG_PerformanceEndLine(PERFORMANCE_ID_MAIN);
-  #endif //PM_DEBUG
+#ifdef PM_DEBUG
+		//DEBUG_PerformanceDisp();
+		DEBUG_PerformanceEndLine(PERFORMANCE_ID_MAIN);
+#endif //PM_DEBUG
 
-    // VBLANK待ち
-    GFL_G3D_SwapBuffers();
-    if(GFL_NET_SystemGetConnectNum() > 1){
-  		OS_WaitIrq(TRUE, OS_IE_V_BLANK);
-      GameVBlankFunc();
-    }
-    else{
-   		MI_SetMainMemoryPriority(MI_PROCESSOR_ARM9);
-  		OS_WaitIrq(TRUE, OS_IE_V_BLANK);
-      GameVBlankFunc();
-  		MI_SetMainMemoryPriority(MI_PROCESSOR_ARM7);
-    }
+		// VBLANK待ち
+		GFL_G3D_SwapBuffers();
+		if(GFL_NET_SystemGetConnectNum() > 1){
+			OS_WaitIrq(TRUE, OS_IE_V_BLANK);
+			GameVBlankFunc();
+		}
+		else{
+			MI_SetMainMemoryPriority(MI_PROCESSOR_ARM9);
+			OS_WaitIrq(TRUE, OS_IE_V_BLANK);
+			GameVBlankFunc();
+			MI_SetMainMemoryPriority(MI_PROCESSOR_ARM7);
+		}
 	}
 
-  GameExit();
+	GameExit();
 }
 
 //------------------------------------------------------------------
@@ -184,9 +184,9 @@ static	void	GameInit(void)
 
 	//セーブ関連初期化
 	SaveControl_SystemInit(GFL_HEAPID_APP);	//※check 使用しているヒープIDは暫定
-	
-    // 通信ブート処理 VBlank割り込み後に行うためここに記述、第二引数は表示用関数ポインタ
-    GFL_NET_Boot( GFL_HEAPID_APP, NULL, GFL_HEAPID_APP, HEAPID_NETWORK_FIX);
+
+	// 通信ブート処理 VBlank割り込み後に行うためここに記述、第二引数は表示用関数ポインタ
+	GFL_NET_Boot( GFL_HEAPID_APP, NULL, GFL_HEAPID_APP, HEAPID_NETWORK_FIX);
 	/* 起動プロセスの設定 */
 #if 0
 	TestModeSet();	//←サンプルデバッグモード
@@ -208,9 +208,9 @@ static	void	GameInit(void)
 	/* poketoolシステム初期化 */
 	POKETOOL_InitSystem( GFL_HEAPID_SYSTEM );
 
-    //サウンドの設定
+	//サウンドの設定
 	PMSND_Init();
-    //鳴き声システムの設定
+	//鳴き声システムの設定
 	PMVOICE_Init(GFL_HEAPID_APP, PMV_GetVoiceWaveIdx, PMV_CustomVoiceWave);
 	//サウンドストリーミング再生システム
 	SND_STRM_Init(GFL_HEAPID_SYSTEM);
@@ -250,8 +250,8 @@ static	void	GameMain(void)
 static	void	GameExit(void)
 {
 #ifdef PM_DEBUG
-  //デバッグシステム
-  DEBUGWIN_ExitSystem();
+	//デバッグシステム
+	DEBUGWIN_ExitSystem();
 #endif PM_DEBUG
 	SND_STRM_Exit();
 	PMVOICE_Exit();
@@ -267,7 +267,7 @@ static	void	GameExit(void)
 static void DEBUG_StackOverCheck(void)
 {
 	OSStackStatus stack_status;
-	
+
 	stack_status = OS_GetStackStatus(OS_GetCurrentThread());
 	switch(stack_status){
 	case OS_STACK_OVERFLOW:
@@ -280,7 +280,7 @@ static void DEBUG_StackOverCheck(void)
 		OS_TPrintf("スタック溢れの警戒水準に達しています\n");
 		break;
 	}
-	
+
 	stack_status = OS_GetIrqStackStatus();
 	switch(stack_status){
 	case OS_STACK_OVERFLOW:
