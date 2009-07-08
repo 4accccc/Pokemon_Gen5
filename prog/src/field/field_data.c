@@ -305,9 +305,9 @@ const SCENE_DATA resistMapTbl[] = {
 	{	//実験マップ チャンピオンリーグ
 		{
 			FLDMAPPER_FILETYPE_NORMAL,
-			MAP_XZ_SIZE, 1024*FX32_ONE, 
-      3,3,
-      FLDMAPPER_MODE_SCROLL_XZ, 
+			1024*FX32_ONE, 1024*FX32_ONE, 
+      1,1,
+      FLDMAPPER_MODE_SCROLL_NONE, 
 			ARCID_FLDMAP_LANDDATA,
 
 			1,  1, 1,		//dummy map matrix data
