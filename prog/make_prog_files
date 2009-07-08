@@ -362,7 +362,8 @@ SRCS_OVERLAY_CONFIG_PANEL = app/config_panel/config_panel.c
 # アイテム画面
 #===> SRCS_OVERLAY_DEV_WIFI
 #===> SRCS_OVERLAY_DEV_IRC
-SRCS_OVERLAY_ITEMMENU = app/itemmenu/itemmenu.c
+SRCS_OVERLAY_ITEMMENU = app/itemmenu/itemmenu.c \
+												app/itemmenu/itemuse.c
 
 # サウンドデバッグ画面
 #===> main

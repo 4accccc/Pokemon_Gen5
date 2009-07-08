@@ -26,6 +26,7 @@
 #include "field/field_msgbg.h"
 #include "field/event_fieldmap_menu.h"
 #include "field/fieldmap.h"
+#include "field/map_attr.h"
 
 #include "event_fieldmap_control.h" //EVENT_FieldSubProc
 #include "app/config_panel.h"   //ConfigPanelProcData
@@ -479,12 +480,21 @@ static BOOL FMenuCallProc_Bag( FMENU_EVENT_WORK *mwk )
 
   GMEVENT * newEvent;
   FIELD_ITEMMENU_WORK *epp;
+	VecFx32 aPos;
+	const FIELD_PLAYER *fld_player = FIELDMAP_GetFieldPlayer(mwk->fieldWork);
+	FLDMAPPER *g3Dmapper = FIELDMAP_GetFieldG3Dmapper(mwk->fieldWork);
   
   epp = GFL_HEAP_AllocClearMemory(GFL_HEAPID_APP, sizeof(FIELD_ITEMMENU_WORK));
   epp->ctrl = SaveControl_GetPointer();
   epp->gsys = mwk->gmSys;
   epp->fieldmap = mwk->fieldWork;
 	epp->heapID = GFL_HEAPID_APP;
+	epp->mode = BAG_MODE_FIELD;
+	FIELD_PLAYER_GetPos(fld_player, &aPos);
+	epp->NowAttr = MAPATTR_GetAttribute(g3Dmapper, &aPos);
+	FIELD_PLAYER_GetDirPos((FIELD_PLAYER*)fld_player, FIELD_PLAYER_GetDir(fld_player), &aPos);
+	epp->FrontAttr = MAPATTR_GetAttribute(g3Dmapper, &aPos);
+	
   mwk->sub_proc_parent = epp;
 
 	newEvent = EVENT_FieldSubProc(mwk->gmSys, mwk->fieldWork,

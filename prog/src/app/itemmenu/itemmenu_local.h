@@ -67,6 +67,8 @@ struct _DEBUGITEM_PARAM {
   int mode;
   int ret_item;
   int cycle_flg;
+  u32 NowAttr;
+  u32 FrontAttr;
 	HEAPID heapID;
 	u32 bgchar;
 };

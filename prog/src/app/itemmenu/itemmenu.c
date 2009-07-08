@@ -418,12 +418,6 @@ static int Bag_MenuUse( FIELD_ITEMMENU_WORK * wk )
 	ITEMCHECK_FUNC	check;
 	s32	id;
 
-	// どうぐ使用メニュー描画状態解放
-//	Bag_ItemMenuExit( wk );
-
-	BackButtonOnOffChange( wk, FALSE );
-	BagObj_CursorDisappear( wk );
-
 	// どうぐ使用処理取得
 	id    = ItemParamGet( wk->dat->ret_item, ITEM_PRM_FIELD, HEAPID_BAG );
 	check = (ITEMCHECK_FUNC)ItemUse_FuncGet( ITEMUSE_PRM_CHECKFUNC, id );
