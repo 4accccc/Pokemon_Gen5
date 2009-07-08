@@ -73,7 +73,8 @@ typedef struct _FIELD_PLAYER FIELD_PLAYER;
 //======================================================================
 //作成、削除、更新
 extern FIELD_PLAYER * FIELD_PLAYER_Create(
-		FIELDMAP_WORK *fieldWork, const VecFx32 *pos, int sex, HEAPID heapID );
+    PLAYER_WORK *playerWork, FIELDMAP_WORK *fieldWork,
+		const VecFx32 *pos, int sex, HEAPID heapID );
 extern void FIELD_PLAYER_Delete( FIELD_PLAYER *fld_player );
 extern void FIELD_PLAYER_Update( FIELD_PLAYER *fld_player );
 extern void FIELD_PLAYER_UpdateMoveStatus( FIELD_PLAYER *fld_player );

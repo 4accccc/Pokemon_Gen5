@@ -480,7 +480,7 @@ static MAINSEQ_RESULT mainSeqFunc_setup(GAMESYS_WORK *gsys, FIELDMAP_WORK *field
     DATA_FLDEFF_RegistEffectGroundTbl, DATA_FLDEFF_RegistEffectGroundTblNum );
   
   {
-    const PLAYER_WORK *pw = GAMESYSTEM_GetMyPlayerWork(gsys);
+    PLAYER_WORK *pw = GAMESYSTEM_GetMyPlayerWork(gsys);
     const u16 dir = pw->direction;
     const VecFx32 *pos = &pw->position;
 
@@ -489,7 +489,7 @@ static MAINSEQ_RESULT mainSeqFunc_setup(GAMESYS_WORK *gsys, FIELDMAP_WORK *field
       MYSTATUS *mystatus = GAMEDATA_GetMyStatus( gdata );
       int sex = MyStatus_GetMySex( mystatus );
       fieldWork->field_player =
-        FIELD_PLAYER_Create( fieldWork, pos, sex, fieldWork->heapID );
+        FIELD_PLAYER_Create( pw, fieldWork, pos, sex, fieldWork->heapID );
     }
 
     //登録テーブルごとに個別の初期化処理を呼び出し

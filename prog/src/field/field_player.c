@@ -71,7 +71,8 @@ static const OBJCODE_FORM dataOBJCodeForm[2][PLAYER_DRAW_FORM_MAX];
 //--------------------------------------------------------------
 /**
  * フィールドプレイヤー　作成
- * @param FIELDMAP_WORK *fieldWork
+ * @param playerWork 使用するPLAYER_WOKR
+ * @param *fieldWork 参照するFIELDMAP_WORK
  * @param pos 初期座標
  * @param sex 性別
  * @param heapID HEAPID
@@ -79,20 +80,16 @@ static const OBJCODE_FORM dataOBJCodeForm[2][PLAYER_DRAW_FORM_MAX];
  */
 //--------------------------------------------------------------
 FIELD_PLAYER * FIELD_PLAYER_Create(
-		FIELDMAP_WORK *fieldWork, const VecFx32 *pos, int sex, HEAPID heapID )
+    PLAYER_WORK *playerWork, FIELDMAP_WORK *fieldWork,
+		const VecFx32 *pos, int sex, HEAPID heapID )
 {
 	MMDLSYS *fmmdlsys;
 	FIELD_PLAYER *fld_player;
 	
 	fld_player = GFL_HEAP_AllocClearMemory( heapID, sizeof(FIELD_PLAYER) );
+  fld_player->playerWork = playerWork;
 	fld_player->fieldWork = fieldWork;
 	fld_player->pos = *pos;
-
-  { 
-    GAMESYS_WORK *gsys = FIELDMAP_GetGameSysWork( fieldWork );
-    GAMEDATA *gdata = GAMESYSTEM_GetGameData( gsys );
-    fld_player->playerWork = GAMEDATA_GetPlayerWork( gdata, 0 );
-  }
 
 	FLDMAPPER_GRIDINFODATA_Init( &fld_player->gridInfoData );
 	
