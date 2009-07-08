@@ -147,7 +147,8 @@ SRCS  +=    $(SOUNDSRC) \
         debug/debugwin_sys.c \
 		test/tetsu/debug_common.c \
         system/fld_wipe_3dobj.c \
-        debug/debug_system_group.c
+        debug/debug_system_group.c \
+		field/field_place_name.c
 
 
 #================================================

@@ -73,6 +73,7 @@
 #include "mapdatafunc/field_func_random_generate.h" //デバッグ登録のため
 #endif //USE_DEBUGWIN_SYSTEM
 
+#include "field_place_name.h"
 
 //======================================================================
 //	define
@@ -178,6 +179,8 @@ struct _FIELDMAP_WORK
 	FIELD_COMM_MAIN *commSys;
 	
 	FLDMSGBG *fldMsgBG;
+
+	FIELD_PLACE_NAME* placeNameSys;
 	
 	MMDLSYS *fldMMdlSys;
 
@@ -431,6 +434,9 @@ static MAINSEQ_RESULT mainSeqFunc_setup(GAMESYS_WORK *gsys, FIELDMAP_WORK *field
   fieldWork->fldMsgBG = FLDMSGBG_Setup(
       fieldWork->heapID, fieldWork->g3Dcamera );
 
+  // 地名表示システム作成
+  fieldWork->placeNameSys = FIELD_PLACE_NAME_Create( fieldWork->heapID );
+
   fieldWork->camera_control = FIELD_CAMERA_Create(
       fieldWork,
       ZONEDATA_GetCameraID(fieldWork->map_id),
@@ -620,6 +626,9 @@ static MAINSEQ_RESULT mainSeqFunc_update_top(GAMESYS_WORK *gsys, FIELDMAP_WORK *
     //これがないとマップ移動しないので注意
     FLDMAPPER_SetPos( fieldWork->g3Dmapper, &fieldWork->now_pos );
   }
+
+  // 地名表示システム動作処理
+  FIELD_PLACE_NAME_Process( fieldWork->placeNameSys );
   
   //自機更新
   FIELD_PLAYER_Update( fieldWork->field_player );
@@ -652,6 +661,8 @@ static MAINSEQ_RESULT mainSeqFunc_update_tail(GAMESYS_WORK *gsys, FIELDMAP_WORK 
   FIELD_CAMERA_Main( fieldWork->camera_control, GFL_UI_KEY_GetCont() );
   
   FLDMSGBG_PrintMain( fieldWork->fldMsgBG );
+
+  FIELD_PLACE_NAME_Draw( fieldWork->placeNameSys );
   
 	fldmap_G3D_Draw( fieldWork );
 	GFL_CLACT_SYS_Main(); // CLSYSメイン
@@ -724,6 +735,9 @@ static MAINSEQ_RESULT mainSeqFunc_free(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldW
   FLDMAPPER_ReleaseData( fieldWork->g3Dmapper );
   
   FLDMSGBG_Delete( fieldWork->fldMsgBG );
+
+  // 地名表示システム破棄
+  FIELD_PLACE_NAME_Destroy( fieldWork->placeNameSys );
   
   FIELD_DEBUG_Delete( fieldWork->debugWork );
 
