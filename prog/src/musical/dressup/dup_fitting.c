@@ -135,6 +135,10 @@ static const u8 ITEM_LIST_NEW_BLINK = 45;
 //ポケモン        -40000  //たぶんmcssで座標変換が入ってる・・・これで一番下に出る
 //↓
 
+//スクロール系
+#define DUP_CURTAIN_SCROLL_MAX (128)
+#define DUP_CURTAIN_SCROLL_VALUE (8)
+
 #pragma mark [> define check
 //チェック画面
 #define BUTTON_SIZE_X (64)
@@ -159,6 +163,9 @@ typedef enum
   DUS_GO_CHECK,
   DUS_CHECK_MAIN,
   DUS_RETURN_FITTING,
+  
+  DUS_FADEIN_WAIT,
+  DUS_FADEOUT_WAIT,
   
 }DUP_STATE;
 
@@ -194,6 +201,10 @@ struct _FITTING_WORK
   
   DUP_STATE state;
   int     animeCnt; 
+  
+  //上画面カーテン系
+  u8      scrollCnt;
+  BOOL    isOpenCurtain;
   
   //TP系
   BOOL tpIsTrg;
@@ -352,7 +363,7 @@ FITTING_WORK* DUP_FIT_InitFitting( FITTING_INIT_WORK *initWork , HEAPID heapId )
 
   work->heapId = heapId;
   work->initWork = initWork;
-  work->state = DUS_FITTING_MAIN;
+  work->state = DUS_FADEIN_WAIT;
   work->animeCnt = 0;
   work->tpIsTrg = FALSE;
   work->tpIsTouch = FALSE;
@@ -364,6 +375,8 @@ FITTING_WORK* DUP_FIT_InitFitting( FITTING_INIT_WORK *initWork , HEAPID heapId )
   work->sortType = MUS_POKE_EQUIP_USER_MAX;
   work->listAngle = 0;
   work->isDemo = FALSE;
+  work->scrollCnt = 0;
+  work->isOpenCurtain = FALSE;
 
   work->listSpeed = 0;
   work->snapPos = MUS_POKE_EQU_INVALID;
@@ -375,15 +388,9 @@ FITTING_WORK* DUP_FIT_InitFitting( FITTING_INIT_WORK *initWork , HEAPID heapId )
   INFOWIN_Init( FIT_FRAME_MAIN_INFO,FIT_PAL_INFO,NULL,work->heapId);
   work->vBlankTcb = GFUser_VIntr_CreateTCB( DUP_FIT_VBlankFunc , work , 8 );
   
-  //フェードないので仮処理
-  GX_SetMasterBrightness(0);  
-  GXS_SetMasterBrightness(0);
+  WIPE_SYS_Start( WIPE_PATTERN_FSAM , WIPE_TYPE_FADEIN , WIPE_TYPE_FADEIN , 
+                  WIPE_FADE_WHITE , 18 , WIPE_DEF_SYNC , work->heapId );
   
-  if( DUP_FIT_ITEMGROUP_GetItemNum(work->itemGroupField) == 0 )
-  {
-    //フィールドにアイテム無かったらデモ
-    DUP_DEMO_DemoStart( work );
-  }
   return work;
 }
 
@@ -436,6 +443,28 @@ FITTING_RETURN  DUP_FIT_LoopFitting( FITTING_WORK *work )
   FITTING_RETURN ret = FIT_RET_CONTINUE;
   switch( work->state )
   {
+  case DUS_FADEIN_WAIT:
+    if( WIPE_SYS_EndCheck() == TRUE )
+    {
+      if( DUP_FIT_ITEMGROUP_GetItemNum(work->itemGroupField) == 0 )
+      {
+        //フィールドにアイテム無かったらデモ
+        DUP_DEMO_DemoStart( work );
+      }
+      else
+      {
+        work->state = DUS_FITTING_MAIN;
+      }
+    }
+    break;
+    
+  case DUS_FADEOUT_WAIT:
+    if( WIPE_SYS_EndCheck() == TRUE )
+    {
+      return FIT_RET_GO_END;
+    }
+    break;
+    
   case DUS_FITTING_DEMO:
     DUP_DEMO_DemoMain(work);
     break;
@@ -467,7 +496,13 @@ FITTING_RETURN  DUP_FIT_LoopFitting( FITTING_WORK *work )
     break;
 
   case DUS_CHECK_MAIN:
-    ret = DUP_CHECK_CheckMain( work );
+    if( DUP_CHECK_CheckMain( work ) == FIT_RET_GO_END )
+    {
+      WIPE_SYS_Start( WIPE_PATTERN_WMS , WIPE_TYPE_FADEOUT , WIPE_TYPE_FADEOUT , 
+                      WIPE_FADE_WHITE , 18 , WIPE_DEF_SYNC , work->heapId );
+      work->state = DUS_FADEOUT_WAIT;
+      
+    }
     break;
   }
 
@@ -490,8 +525,28 @@ FITTING_RETURN  DUP_FIT_LoopFitting( FITTING_WORK *work )
   GFL_G3D_DRAW_End();
 
 
+  //スクロール系
   GFL_BG_SetScrollReq( FIT_FRAME_MAIN_BG , GFL_BG_SCROLL_X_INC , 1 );
   GFL_BG_SetScrollReq( FIT_FRAME_MAIN_BG , GFL_BG_SCROLL_Y_DEC , 1 );
+  
+  if( work->isOpenCurtain == FALSE )
+  {
+    if( work->scrollCnt < DUP_CURTAIN_SCROLL_MAX )
+    {
+      work->scrollCnt += DUP_CURTAIN_SCROLL_VALUE;
+      GFL_BG_SetScrollReq( FIT_FRAME_SUB_CURTAIN_L , GFL_BG_SCROLL_X_SET , 128 - work->scrollCnt );
+      GFL_BG_SetScrollReq( FIT_FRAME_SUB_CURTAIN_R , GFL_BG_SCROLL_X_SET , -128 + work->scrollCnt );
+    }
+  }
+  else
+  {
+    if( work->scrollCnt > 0 )
+    {
+      work->scrollCnt -= DUP_CURTAIN_SCROLL_VALUE;
+      GFL_BG_SetScrollReq( FIT_FRAME_SUB_CURTAIN_L , GFL_BG_SCROLL_X_SET , 128 - work->scrollCnt );
+      GFL_BG_SetScrollReq( FIT_FRAME_SUB_CURTAIN_R , GFL_BG_SCROLL_X_SET , -128 + work->scrollCnt );
+    }
+  }
 
 #if DEB_ARI
   if( GFL_UI_KEY_GetCont() & PAD_BUTTON_SELECT &&
@@ -718,7 +773,7 @@ static void DUP_FIT_SetupBgObj( FITTING_WORK *work )
   ARCHANDLE *arcHandle = GFL_ARC_OpenDataHandle( ARCID_DRESSUP_GRA , work->heapId );
 
   //下画面
-  GFL_ARCHDL_UTIL_TransVramPalette( arcHandle , NARC_dressup_gra_test_bg_NCLR , 
+  GFL_ARCHDL_UTIL_TransVramPalette( arcHandle , NARC_dressup_gra_obj_main_NCLR , 
                     PALTYPE_MAIN_BG , 0 , 0 , work->heapId );
   GFL_ARCHDL_UTIL_TransVramBgCharacter( arcHandle , NARC_dressup_gra_test_bg_NCGR ,
                     FIT_FRAME_MAIN_BG , 0 , 0, FALSE , work->heapId );
@@ -731,7 +786,7 @@ static void DUP_FIT_SetupBgObj( FITTING_WORK *work )
                     FIT_FRAME_MAIN_MIRROR ,  0 , 0, FALSE , work->heapId );
 
   //上画面
-  GFL_ARCHDL_UTIL_TransVramPalette( arcHandle , NARC_dressup_gra_obj_main_NCLR , 
+  GFL_ARCHDL_UTIL_TransVramPalette( arcHandle , NARC_dressup_gra_test_bg_NCLR , 
                     PALTYPE_SUB_BG , 0 , 0 , work->heapId );
   GFL_ARCHDL_UTIL_TransVramBgCharacter( arcHandle , NARC_dressup_gra_test_bg_u3_NCGR ,
                     FIT_FRAME_SUB_BG , 0 , 0, FALSE , work->heapId );
@@ -744,6 +799,9 @@ static void DUP_FIT_SetupBgObj( FITTING_WORK *work )
                     FIT_FRAME_SUB_CURTAIN_R ,  0 , 0, FALSE , work->heapId );
   GFL_ARCHDL_UTIL_TransVramScreen( arcHandle , NARC_dressup_gra_test_bg_u_NSCR , 
                     FIT_FRAME_SUB_BG ,  0 , 0, FALSE , work->heapId );
+
+  GFL_BG_SetScrollReq( FIT_FRAME_SUB_CURTAIN_L , GFL_BG_SCROLL_X_SET ,  128 );
+  GFL_BG_SetScrollReq( FIT_FRAME_SUB_CURTAIN_R , GFL_BG_SCROLL_X_SET , -128 );
 
   //Obj用Res
   work->objResIdx[DOR_BUTTON_PLT] = GFL_CLGRP_PLTT_Register( arcHandle , NARC_dressup_gra_obj_main_NCLR , CLSYS_DRAW_MAIN , 0 , work->heapId  );
@@ -2389,6 +2447,7 @@ static FITTING_RETURN DUP_CHECK_CheckMain(  FITTING_WORK *work )
   case 0: //決定ボタン
     DUP_CHECK_SaveNowEquip( work );
     PMSND_PlaySystemSE( SEQ_SE_DECIDE1 );
+    work->isOpenCurtain = TRUE;
     return FIT_RET_GO_END;
     break;
   case 1: //戻るボタン
