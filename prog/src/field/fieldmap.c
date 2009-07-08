@@ -737,7 +737,7 @@ static MAINSEQ_RESULT mainSeqFunc_free(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldW
   FLDMSGBG_Delete( fieldWork->fldMsgBG );
 
   // 地名表示システム破棄
-  FIELD_PLACE_NAME_Destroy( fieldWork->placeNameSys );
+  FIELD_PLACE_NAME_Delete( fieldWork->placeNameSys );
   
   FIELD_DEBUG_Delete( fieldWork->debugWork );
 
