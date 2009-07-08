@@ -28,6 +28,8 @@
 #include "plist_menu.h"
 #include "plist_snd_def.h"
 
+#include "app/p_status.h" //Proc切り替え用
+
 #include "test/ariizumi/ari_debug.h"
 
 //======================================================================
@@ -58,6 +60,10 @@ typedef enum
   //入れ替えアニメ用
   PSSS_MOVE_OUT,
   PSSS_MOVE_IN,
+
+  //Proc切り替え用
+  PSSS_FADEOUT,
+  PSSS_FADEIN,
 
   PSSS_MAX,
 }PLIST_SYS_SUB_SEQ;
@@ -114,6 +120,8 @@ static const GFL_DISP_VRAM vramBank = {
   GX_OBJVRAMMODE_CHAR_1D_128K
 };
 
+FS_EXTERN_OVERLAY(poke_status);
+
 static void PLIST_VBlankFunc(GFL_TCB *tcb, void *wk );
 
 //グラフィック系
@@ -150,15 +158,19 @@ static void PLIST_SelectPokeSetCursor_Change( PLIST_WORK *work , const PL_SELECT
 
 //メニュー選択
 static void PLIST_SelectMenu( PLIST_WORK *work );
-static void PLIST_InitSelectMenu( PLIST_WORK *work );
-static void PLIST_TermSelectMenu( PLIST_WORK *work );
-static void PLIST_ExitSelectMenu( PLIST_WORK *work );
+static void PLIST_SelectMenuInit( PLIST_WORK *work );
+static void PLIST_SelectMenuTerm( PLIST_WORK *work );
+static void PLIST_SelectMenuExit( PLIST_WORK *work );
 
 //入れ替えアニメ
 static void PLIST_ChangeAnime( PLIST_WORK *work );
 static void PLIST_ChangeAnimeInit( PLIST_WORK *work );
 static void PLIST_ChangeAnimeTerm( PLIST_WORK *work );
 static void PLIST_ChangeAnimeUpdatePlate( PLIST_WORK *work );
+
+//Proc切り替え
+static void PLIST_ChangeProcInit( PLIST_WORK *work , GFL_PROC_DATA *procData , FSOverlayID overlayId , void *parentWork );
+static void PLIST_ChangeProcUpdate( PLIST_WORK *work );
 
 //デバッグメニュー
 static void PLIST_InitDebug( PLIST_WORK *work );
@@ -179,6 +191,8 @@ const BOOL PLIST_InitPokeList( PLIST_WORK *work )
   work->changeTarget = PL_SEL_POS_MAX;
   work->canExit = FALSE;
   work->isActiveWindowMask = FALSE;
+  work->reqChangeProc = FALSE;
+  work->changeProcSeq = PSCS_INIT;
   
   PLIST_InitGraphic( work );
   PLIST_LoadResource( work );
@@ -262,17 +276,6 @@ const BOOL PLIST_UpdatePokeList( PLIST_WORK *work )
 {
   u8 i;
 
-  if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_START )
-  {
-    return TRUE;
-  }
-
-  for( i=0;i<PLIST_LIST_MAX;i++ )
-  {
-    PLIST_PLATE_UpdatePlate( work , work->plateWork[i] );
-  }
-  PLIST_MSG_UpdateSystem( work , work->msgWork );
-
   switch( work->mainSeq )
   {
   case PSMS_FADEIN:
@@ -317,7 +320,17 @@ const BOOL PLIST_UpdatePokeList( PLIST_WORK *work )
       return TRUE;
     }
     break;
+
+  case PSMS_CHANGEPROC:
+    PLIST_ChangeProcUpdate( work );
+    break;
   }
+  
+  for( i=0;i<PLIST_LIST_MAX;i++ )
+  {
+    PLIST_PLATE_UpdatePlate( work , work->plateWork[i] );
+  }
+  PLIST_MSG_UpdateSystem( work , work->msgWork );
 
   //メッセージ
   PRINTSYS_QUE_Main( work->printQue );
@@ -855,7 +868,7 @@ static void PLIST_SelectPokeTerm( PLIST_WORK *work )
     work->selectPokePara = PokeParty_GetMemberPointer(work->plData->pp, work->pokeCursor );
 
     work->plData->ret_sel = work->pokeCursor;
-    PLIST_InitSelectMenu( work );
+    PLIST_SelectMenuInit( work );
     //中で一緒にメニューを開く
     PLIST_InitMode_Menu( work );
     PMSND_PlaySystemSE( PLIST_SND_DECIDE );
@@ -1168,7 +1181,7 @@ static void PLIST_SelectMenu( PLIST_WORK *work )
   switch( work->subSeq )
   {
   case PSSS_INIT:
-    PLIST_InitSelectMenu( work );
+    PLIST_SelectMenuInit( work );
     work->subSeq = PSSS_MAIN;
     break;
     
@@ -1185,9 +1198,9 @@ static void PLIST_SelectMenu( PLIST_WORK *work )
     break;
     
   case PSSS_TERM:
-    PLIST_TermSelectMenu( work );
+    PLIST_SelectMenuTerm( work );
     
-    PLIST_ExitSelectMenu( work );
+    PLIST_SelectMenuExit( work );
     break;
   }
   
@@ -1196,7 +1209,7 @@ static void PLIST_SelectMenu( PLIST_WORK *work )
 //--------------------------------------------------------------
 //	メニュー初期化
 //--------------------------------------------------------------
-static void PLIST_InitSelectMenu( PLIST_WORK *work )
+static void PLIST_SelectMenuInit( PLIST_WORK *work )
 {
   work->mainSeq = PSMS_MENU;
   work->subSeq  = PSSS_INIT;
@@ -1224,7 +1237,7 @@ static void PLIST_InitSelectMenu( PLIST_WORK *work )
 //--------------------------------------------------------------
 //	メニュー開放
 //--------------------------------------------------------------
-static void PLIST_TermSelectMenu( PLIST_WORK *work )
+static void PLIST_SelectMenuTerm( PLIST_WORK *work )
 {
   PLIST_MENU_CloseMenu( work , work->menuWork );
   PLIST_MSG_CloseWindow( work , work->msgWork );
@@ -1246,7 +1259,7 @@ static void PLIST_TermSelectMenu( PLIST_WORK *work )
 //--------------------------------------------------------------
 //	メニュー戻り分岐
 //--------------------------------------------------------------
-static void PLIST_ExitSelectMenu( PLIST_WORK *work )
+static void PLIST_SelectMenuExit( PLIST_WORK *work )
 {
   switch( work->menuRet )
   {
@@ -1274,7 +1287,7 @@ static void PLIST_ExitSelectMenu( PLIST_WORK *work )
   case PMIT_ITEM:
     {
       PLIST_MENU_ITEM_TYPE itemArr[4] = {PMIT_GIVE,PMIT_TAKE,PMIT_CLOSE,PMIT_END_LIST};
-      PLIST_InitSelectMenu( work );
+      PLIST_SelectMenuInit( work );
       PLIST_MSG_OpenWindow( work , work->msgWork , PMT_MENU );
       PLIST_MSG_DrawMessageNoWait( work , work->msgWork , mes_pokelist_03_02 );
       PLIST_MENU_OpenMenu( work , work->menuWork , itemArr );
@@ -1282,6 +1295,11 @@ static void PLIST_ExitSelectMenu( PLIST_WORK *work )
     break;
 
   case PMIT_STATSU:
+    {
+      PLIST_ChangeProcInit( work , &PokeStatus_ProcData , FS_OVERLAY_ID(poke_status) , NULL );
+    }
+    break;
+    
   case PMIT_WAZA_1:
   case PMIT_WAZA_2:
   case PMIT_WAZA_3:
@@ -1392,8 +1410,56 @@ static void PLIST_ChangeAnimeTerm( PLIST_WORK *work )
 static void PLIST_ChangeAnimeUpdatePlate( PLIST_WORK *work )
 {
 }
-#pragma mark [>util
 
+#pragma mark [>changeProc
+//--------------------------------------------------------------
+//	Proc変更初期化
+//--------------------------------------------------------------
+static void PLIST_ChangeProcInit( PLIST_WORK *work , GFL_PROC_DATA *procData , FSOverlayID overlayId , void *parentWork )
+{
+  work->procData = procData;
+  work->procOverlayId = overlayId;
+  work->procParentWork = parentWork;
+  work->changeProcSeq = PSCS_INIT;
+
+  work->mainSeq = PSMS_CHANGEPROC;
+  work->subSeq = PSSS_FADEOUT;
+}
+
+//--------------------------------------------------------------
+//	Proc変更メイン
+//--------------------------------------------------------------
+static void PLIST_ChangeProcUpdate( PLIST_WORK *work )
+{
+  switch( work->subSeq )
+  {   
+  case PSSS_FADEOUT:
+    WIPE_SYS_Start( WIPE_PATTERN_WMS , WIPE_TYPE_FADEOUT , WIPE_TYPE_FADEOUT , 
+                    WIPE_FADE_BLACK , WIPE_DEF_DIV , WIPE_DEF_SYNC , work->heapId );
+    work->subSeq = PSSS_INIT;
+  
+    break;
+    
+  case PSSS_INIT:
+    if( WIPE_SYS_EndCheck() == TRUE )
+    {
+      work->reqChangeProc = TRUE;
+    }
+    break;
+/*    
+  case PSSS_MAIN:
+    if( work->procParentWork != NULL )
+    {
+      GFL_HEAP_FreeMemory( work->procParentWork );
+    }
+    PLIST_InitPokeList( work );
+    //上でmainSeqが切り替わるのでここで終了。
+    break;
+*/    
+  }
+}
+
+#pragma mark [>util
 //--------------------------------------------------------------
 //	指定技箇所にフィールド技があるか？
 //--------------------------------------------------------------

@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ariizumi_nobuhiko" host="W00147" date="2009-07-06T12:15:27"/>
+	<create user="ariizumi_nobuhiko" host="W00147" date="2009-07-07T20:33:15"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -305,7 +305,7 @@
 		</language>
 	</columns>
 
-	<dialog left="116" top="176" right="821" bottom="796" maximized="no" rayout="Vertical2">
+	<dialog left="221" top="154" right="926" bottom="774" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="0" style="0000" width="530"/>
@@ -2038,6 +2038,11 @@
 	<row id="mes_status_14" back-color=",,,,,,#ffff00,#ffff00,,#ffff00,#ffff00,,,,,,,">
 		<language name="JPN" width="80">[BD:02:Ｘセンタリング]いれかえ</language>
 		<language name="JPN_KANJI" width="80">[BD:02:Ｘセンタリング]いれかえ</language>
+	</row>
+
+	<row id="mes_status_test_1" back-color=",,,,,,#ffff00,#ffff00,,#ffff00,#ffff00,,,,,,,">
+		<language name="JPN" width="80">イベントリボン[2:01:２桁:0]</language>
+		<language name="JPN_KANJI" width="80">イベントリボン[2:01:２桁:0]</language>
 	</row>
 
 	<flowchart-group-list>

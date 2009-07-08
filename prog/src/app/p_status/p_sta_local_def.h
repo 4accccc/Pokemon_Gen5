@@ -43,6 +43,7 @@
 
 #pragma mark[>define OBJ
 #define PSTATUS_OBJPLT_ICON (0x0)
+#define PSTATUS_OBJPLT_RIBBON_BAR (0xA)
 
 //OBJÉäÉ\Å[ÉXIdx
 enum PSTATUS_CEL_RESOURCE

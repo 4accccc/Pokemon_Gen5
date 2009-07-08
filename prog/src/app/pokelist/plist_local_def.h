@@ -147,9 +147,21 @@ typedef enum
   PSMS_MENU,        //メニュー処理中
   PSMS_FADEOUT,
   PSMS_FADEOUT_WAIT,
+  
+  PSMS_CHANGEPROC,
 
   PSMS_MAX,
 }PLIST_SYS_MAIN_SEQ;
+
+//Proc切り替え用シーケンス(work->changeProcSeq
+typedef enum
+{
+  PSCS_INIT,
+  PSCS_MAIN,
+  PSCS_TERM,
+  
+  PSCS_MAX,
+}PLIST_SYS_CHANGEPROC_SEQ;
 
 typedef struct _PLIST_PLATE_WORK PLIST_PLATE_WORK;
 typedef struct _PLIST_MSG_WORK   PLIST_MSG_WORK;
@@ -201,9 +213,12 @@ typedef struct
   GFL_CLWK    *clwkCursor[2];
   GFL_CLWK    *clwkBarIcon[PBT_MAX];
 
-  //Vram転送アニメ
-  //machineuse で初期化してた
-//  NNSGfdVramTransferTask  transTask[PLIST_VTRANS_TASK_NUM];
+  //Proc切り替え用
+  PLIST_SYS_CHANGEPROC_SEQ changeProcSeq;
+  BOOL reqChangeProc;
+  FSOverlayID   procOverlayId;
+  GFL_PROC_DATA *procData;
+  void          *procParentWork;
 
   PLIST_DATA *plData;
 #if USE_DEBUGWIN_SYSTEM

@@ -95,11 +95,12 @@ const BOOL PSTATUS_InitPokeStatus( PSTATUS_WORK *work )
   work->debPp = NULL;
 #endif
 
+  PSTATUS_InitGraphic( work );
+
   work->subWork = PSTATUS_SUB_Init( work );
   work->infoWork = PSTATUS_INFO_Init( work );
   work->ribbonWork = PSTATUS_RIBBON_Init( work );
 
-  PSTATUS_InitGraphic( work );
   PSTATUS_LoadResource( work );
   PSTATUS_InitMessage( work );
 
@@ -113,6 +114,7 @@ const BOOL PSTATUS_InitPokeStatus( PSTATUS_WORK *work )
   
   PSTATUS_SUB_DispPage( work , work->subWork );
   PSTATUS_INFO_DispPage( work , work->infoWork );
+  PSTATUS_RIBBON_CreateRibbonBar( work , work->ribbonWork );
   
   return TRUE;
 }
@@ -128,11 +130,13 @@ const BOOL PSTATUS_TermPokeStatus( PSTATUS_WORK *work )
 
   PSTATUS_TermMessage( work );
   PSTATUS_ReleaseResource( work );
-  PSTATUS_TermGraphic( work );
 
+  PSTATUS_RIBBON_DeleteRibbonBar( work , work->ribbonWork );
   PSTATUS_RIBBON_Term( work , work->ribbonWork );
   PSTATUS_INFO_Term( work , work->infoWork );
   PSTATUS_SUB_Term( work , work->subWork );
+
+  PSTATUS_TermGraphic( work );
 
 #if PM_DEBUG
   if( work->debPp != NULL )
@@ -149,9 +153,21 @@ const BOOL PSTATUS_TermPokeStatus( PSTATUS_WORK *work )
 const BOOL PSTATUS_UpdatePokeStatus( PSTATUS_WORK *work )
 {
   PSTATUS_SUB_Main( work , work->subWork );
-  PSTATUS_INFO_Main( work , work->infoWork );
+  switch( work->befPage )
+  {
+  case PPT_INFO:
+    PSTATUS_INFO_Main( work , work->infoWork );
+    break;
+  case PPT_SKILL:
+    break;
+  case PPT_RIBBON:
+    PSTATUS_RIBBON_Main( work , work->ribbonWork );
+    break;
+  }
 
-  if( GFL_UI_KEY_GetRepeat() & PAD_KEY_DOWN )
+
+  if( GFL_UI_KEY_GetRepeat() & PAD_KEY_DOWN &&
+      !(GFL_UI_KEY_GetCont() & PAD_BUTTON_R))
   {
     if( work->dataPos < work->psData->max-1 )
     {
@@ -160,7 +176,8 @@ const BOOL PSTATUS_UpdatePokeStatus( PSTATUS_WORK *work )
     }
   }
   else
-  if( GFL_UI_KEY_GetRepeat() & PAD_KEY_UP )
+  if( GFL_UI_KEY_GetRepeat() & PAD_KEY_UP &&
+      !(GFL_UI_KEY_GetCont() & PAD_BUTTON_R))
   {
     if( work->dataPos != 0 )
     {
@@ -325,7 +342,12 @@ static void PSTATUS_InitGraphic( PSTATUS_WORK *work )
   //OBJ系の初期化
   {
     GFL_CLSYS_INIT cellSysInitData = GFL_CLSYSINIT_DEF_DIVSCREEN;
+    cellSysInitData.CGR_RegisterMax = 110;
     GFL_CLACT_SYS_Create( &cellSysInitData , &vramBank ,work->heapId );
+
+    //TODO 個数は適当
+    work->cellUnit  = GFL_CLACT_UNIT_Create( 110 , 0, work->heapId );
+    GFL_CLACT_UNIT_SetDefaultRend( work->cellUnit );
     
     GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_OBJ , TRUE );
   }
@@ -377,6 +399,7 @@ static void PSTATUS_TermGraphic( PSTATUS_WORK *work )
   GFL_G3D_CAMERA_Delete( work->camera );
   GFL_G3D_Exit();
 
+  GFL_CLACT_UNIT_Delete( work->cellUnit );
   GFL_CLACT_SYS_Delete();
 
   GFL_BG_FreeBGControl( PSTATUS_BG_MAIN_BG );
@@ -503,10 +526,6 @@ static void PSTATUS_ReleaseResource( PSTATUS_WORK *work )
 //--------------------------------------------------------------------------
 static void PSTATUS_InitCell( PSTATUS_WORK *work )
 {
-  //TODO 個数は適当
-  work->cellUnit  = GFL_CLACT_UNIT_Create( 10 , 0, work->heapId );
-  GFL_CLACT_UNIT_SetDefaultRend( work->cellUnit );
-  
   //バーのボタン
   {
     const u8 anmIdxArr[SBT_MAX] =
@@ -562,8 +581,6 @@ static void PSTATUS_TermCell( PSTATUS_WORK *work )
   {
     GFL_CLACT_WK_Remove( work->clwkBarIcon[i] );
   }
-
-  GFL_CLACT_UNIT_Delete( work->cellUnit );
 }
 
 //--------------------------------------------------------------------------
@@ -578,7 +595,7 @@ static void PSTATUS_InitMessage( PSTATUS_WORK *work )
 
   GFL_ARC_UTIL_TransVramPalette( ARCID_FONT , NARC_font_default_nclr , PALTYPE_MAIN_BG , PSTATUS_BG_PLT_FONT*16*2, 16*2, work->heapId );
   
-  work->printQue = PRINTSYS_QUE_Create( work->heapId );
+  work->printQue = PRINTSYS_QUE_CreateEx( 4096 , work->heapId );
 }
 
 //--------------------------------------------------------------------------
@@ -602,6 +619,10 @@ static void PSTATUS_RefreshDisp( PSTATUS_WORK *work )
   {
     PSTATUS_SUB_ClearPage( work , work->subWork );
     PSTATUS_SUB_DispPage( work , work->subWork );
+    
+    PSTATUS_RIBBON_DeleteRibbonBar( work , work->ribbonWork );
+    PSTATUS_RIBBON_CreateRibbonBar( work , work->ribbonWork );
+
     work->befDataPos = work->dataPos;
   }
 

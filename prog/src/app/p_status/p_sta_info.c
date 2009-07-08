@@ -98,7 +98,8 @@ enum STATUS_INFO_BMPWIN
 struct _PSTATUS_INFO_WORK
 {
   BOOL isUpdateStr;
-  
+  BOOL isDisp;
+
   GFL_BMPWIN  *bmpWin[SIB_MAX];
 
   NNSG2dScreenData *scrDataDown;
@@ -140,6 +141,7 @@ PSTATUS_INFO_WORK* PSTATUS_INFO_Init( PSTATUS_WORK *work )
   
   infoWork = GFL_HEAP_AllocMemory( work->heapId , sizeof(PSTATUS_INFO_WORK) );
   infoWork->isUpdateStr = FALSE;
+  infoWork->isDisp = FALSE;
 
 
   return infoWork;
@@ -201,7 +203,10 @@ void PSTATUS_INFO_LoadResource( PSTATUS_WORK *work , PSTATUS_INFO_WORK *infoWork
 void PSTATUS_INFO_ReleaseResource( PSTATUS_WORK *work , PSTATUS_INFO_WORK *infoWork )
 {
   //‚±‚±‚Å•`‰æ•¨‚ÌŠJ•ú‚à‚µ‚Ä‚¨‚­
-  PSTATUS_INFO_ClearPage( work , infoWork );
+  if( infoWork->isDisp == TRUE )
+  {
+    PSTATUS_INFO_ClearPage( work , infoWork );
+  }
 
   GFL_HEAP_FreeMemory( infoWork->scrResDown );
   GFL_HEAP_FreeMemory( infoWork->scrResUp );
@@ -241,6 +246,9 @@ void PSTATUS_INFO_DispPage( PSTATUS_WORK *work , PSTATUS_INFO_WORK *infoWork )
   }
   
   PSTATUS_INFO_DrawStr( work , infoWork , ppp );
+
+  infoWork->isDisp = TRUE;
+
 }
 
 //--------------------------------------------------------------
@@ -255,9 +263,12 @@ void PSTATUS_INFO_ClearPage( PSTATUS_WORK *work , PSTATUS_INFO_WORK *infoWork )
   }
   
   GFL_BG_FillScreen( PSTATUS_BG_PARAM , 0 , 0 , 0 , 
-                     PSTATUS_MAIN_PAGE_WIDTH , 24 ,
+                     PSTATUS_MAIN_PAGE_WIDTH , 21 ,
                      GFL_BG_SCRWRT_PALNL );
   GFL_BG_LoadScreenV_Req( PSTATUS_BG_PARAM );
+  
+  infoWork->isDisp = FALSE;
+
 }
 
 //--------------------------------------------------------------
