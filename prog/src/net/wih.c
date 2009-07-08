@@ -1655,12 +1655,12 @@ static void WH_StateOutStartScan(void *arg)
 							 bd->bssid[3], bd->bssid[4], bd->bssid[5]);
 			WH_TRACE("parent find\n");
 
-			// コールバックが必要ならば呼び出し
-			MI_CpuCopy8(bd, &_pWmInfo->sBssDesc, sizeof(WMBssDesc)); // キャッシュセーフなバッファへコピー
-			found = TRUE;
-			GF_ASSERT(_pWmInfo->sScanCallback);
-
-			_pWmInfo->sScanCallback(&_pWmInfo->sBssDesc);
+ 			GF_ASSERT(_pWmInfo->sScanCallback);
+			if(_pWmInfo->sScanCallback(bd)){
+  			// コールバックが必要ならば呼び出し
+  			MI_CpuCopy8(bd, &_pWmInfo->sBssDesc, sizeof(WMBssDesc)); // キャッシュセーフなバッファへコピー
+  			found = TRUE;
+  		}
 		}
 
 		if (_pWmInfo->sAutoConnectFlag && found){
