@@ -87,4 +87,8 @@ area_data:
 	$(MAKE) -C $(RESOURCE_DIR)/fldmapdata/area_data clean
 	$(MAKE)
 
+eventdata:
+	$(MAKE) -C $(RESOURCE_DIR)/fldmapdata/eventdata clean
+	$(MAKE)
+
 
