@@ -35,8 +35,12 @@ struct _FIELD_PLAYER
 {
 	HEAPID heapID;
 	FIELDMAP_WORK *fieldWork;
-  
+  PLAYER_WORK *playerWork;
+
+#if 0 //PLAYER_WORKへ移動
   PLAYER_MOVE_FORM move_form;
+#endif
+
   PLAYER_MOVE_STATE move_state;
   PLAYER_MOVE_VALUE move_value;
 	
@@ -83,7 +87,13 @@ FIELD_PLAYER * FIELD_PLAYER_Create(
 	fld_player = GFL_HEAP_AllocClearMemory( heapID, sizeof(FIELD_PLAYER) );
 	fld_player->fieldWork = fieldWork;
 	fld_player->pos = *pos;
-  
+
+  { 
+    GAMESYS_WORK *gsys = FIELDMAP_GetGameSysWork( fieldWork );
+    GAMEDATA *gdata = GAMESYSTEM_GetGameData( gsys );
+    fld_player->playerWork = GAMEDATA_GetPlayerWork( gdata, 0 );
+  }
+
 	FLDMAPPER_GRIDINFODATA_Init( &fld_player->gridInfoData );
 	
 	//MMDLセットアップ
@@ -121,7 +131,11 @@ FIELD_PLAYER * FIELD_PLAYER_Create(
   { //OBJコードから動作フォームを設定
     u16 code = MMDL_GetOBJCode( fld_player->fldmmdl );
     PLAYER_MOVE_FORM form = FIELD_PLAYER_GetOBJCodeToMoveForm( sex, code );
+#if 0
     fld_player->move_form = form;
+#else
+    PLAYERWORK_SetMoveForm( fld_player->playerWork, form );
+#endif
   }
   
 	MMDL_SetStatusBitNotZoneDelete( fld_player->fldmmdl, TRUE );
@@ -381,7 +395,8 @@ PLAYER_MOVE_STATE FIELD_PLAYER_GetMoveState(
 PLAYER_MOVE_FORM FIELD_PLAYER_GetMoveForm(
     const FIELD_PLAYER *fld_player )
 {
-  return( fld_player->move_form );
+  PLAYER_MOVE_FORM form = PLAYERWORK_GetMoveForm( fld_player->playerWork );
+  return( form );
 }
 
 //--------------------------------------------------------------
@@ -394,7 +409,7 @@ PLAYER_MOVE_FORM FIELD_PLAYER_GetMoveForm(
 void FIELD_PLAYER_SetMoveForm(
     FIELD_PLAYER *fld_player, PLAYER_MOVE_FORM form )
 {
-  fld_player->move_form = form;
+  PLAYERWORK_SetMoveForm( fld_player->playerWork, form );
 }
 
 //--------------------------------------------------------------

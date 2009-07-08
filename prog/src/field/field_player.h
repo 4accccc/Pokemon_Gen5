@@ -8,6 +8,7 @@
 #pragma once
 #include <gflib.h>
 #include "system/gfl_use.h"
+#include "gamesystem/game_data.h"
 
 #include "field/fieldmap_proc.h"
 #include "fldmmdl.h"
@@ -37,6 +38,7 @@ typedef enum
   PLAYER_MOVE_STATE_END,    ///<“®ìI—¹
 }PLAYER_MOVE_STATE;
 
+#if 0 //PLAYER_WORK‚ÖˆÚ“®
 //--------------------------------------------------------------
 /// PLAYER_MOVE_FORM
 //--------------------------------------------------------------
@@ -47,6 +49,7 @@ typedef enum
   PLAYER_MOVE_FORM_SWIM, ///<Ž©‹@”gæ‚èˆÚ“®
   PLAYER_MOVE_FORM_MAX,
 }PLAYER_MOVE_FORM;
+#endif
 
 //--------------------------------------------------------------
 /// PLAYER_DRAW_FORM

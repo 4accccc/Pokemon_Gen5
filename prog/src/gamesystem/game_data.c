@@ -542,6 +542,20 @@ u8 PLAYERWORK_getPalaceArea(const PLAYER_WORK * player)
 	return player->palace_area;
 }
 
+//--------------------------------------------------------------
+//--------------------------------------------------------------
+PLAYER_MOVE_FORM PLAYERWORK_GetMoveForm( const PLAYER_WORK *player )
+{
+  return player->move_form;
+}
+
+//--------------------------------------------------------------
+//--------------------------------------------------------------
+void PLAYERWORK_SetMoveForm( PLAYER_WORK *player, PLAYER_MOVE_FORM form )
+{
+  player->move_form = form;
+}
+
 //==============================================================================
 //	ゲームデータが持つ情報を元にセーブ
 //==============================================================================
