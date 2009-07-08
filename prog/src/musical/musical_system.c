@@ -94,6 +94,8 @@ static const u16 musPokeArr[]=
   MONSNO_EREBUU,
   494,
   495,
+  
+  1000, //プルンセス
   0xFFFF,
 };
 //ミュージカルの参加資格があるか調べる(仮)

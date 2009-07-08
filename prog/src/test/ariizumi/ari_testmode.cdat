@@ -26,7 +26,7 @@ static BOOL TESTMODE_ITEM_SelectFuncMusical( TESTMODE_WORK *work , const int idx
   MUSICAL_INIT_WORK *initWork;
 	initWork = GFL_HEAP_AllocMemory( GFL_HEAPID_APP|HEAPDIR_MASK , sizeof(MUSICAL_INIT_WORK));
 	initWork->saveCtrl = SaveControl_GetPointer();
-	initWork->pokePara = PP_Create( MONSNO_PIKUSII , 20 , PTL_SETUP_POW_AUTO , GFL_HEAPID_APP|HEAPDIR_MASK );
+	initWork->pokePara = PP_Create( MONSNO_MOKOUMORI , 20 , PTL_SETUP_POW_AUTO , GFL_HEAPID_APP|HEAPDIR_MASK );
   initWork->isComm = FALSE;
   initWork->gameComm = NULL;
 	TESTMODE_COMMAND_ChangeProc(work,NO_OVERLAY_ID, &Musical_ProcData, initWork);
@@ -49,7 +49,7 @@ static BOOL TESTMODE_ITEM_SelectFuncMusical_Comm( TESTMODE_WORK *work , const in
 static BOOL TESTMODE_ITEM_SelectFuncDressUp( TESTMODE_WORK *work , const int idx )
 {
 	DRESSUP_INIT_WORK *initWork;
-  POKEMON_PARAM *pokePara = PP_Create( MONSNO_PIKUSII , 20 , PTL_SETUP_POW_AUTO , GFL_HEAPID_APP );
+  POKEMON_PARAM *pokePara = PP_Create( MONSNO_MOKOUMORI , 20 , PTL_SETUP_POW_AUTO , GFL_HEAPID_APP );
   MUSICAL_POKE_PARAM *musPoke = MUSICAL_SYSTEM_InitMusPoke( pokePara , GFL_HEAPID_APP );
   initWork = MUSICAL_DRESSUP_CreateInitWork( GFL_HEAPID_APP , musPoke , SaveControl_GetPointer() );
 

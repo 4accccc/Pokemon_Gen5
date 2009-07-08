@@ -39,6 +39,9 @@
 #define FIT_FRAME_MAIN_MIRROR GFL_BG_FRAME2_M //読み替えて共用？
 #define FIT_FRAME_MAIN_BG   GFL_BG_FRAME3_M
 #define FIT_FRAME_SUB_BG    GFL_BG_FRAME3_S
+#define FIT_FRAME_SUB_CURTAIN_L    GFL_BG_FRAME2_S
+#define FIT_FRAME_SUB_CURTAIN_R    GFL_BG_FRAME1_S
+#define FIT_FRAME_SUB_TOP    GFL_BG_FRAME0_S
 
 #define FIT_PAL_INFO    (0xE)
 
@@ -416,6 +419,9 @@ void  DUP_FIT_TermFitting( FITTING_WORK *work )
   GFL_BG_FreeBGControl( FIT_FRAME_MAIN_INFO );
   GFL_BG_FreeBGControl( FIT_FRAME_MAIN_CASE );
   GFL_BG_FreeBGControl( FIT_FRAME_MAIN_BG );
+  GFL_BG_FreeBGControl( FIT_FRAME_SUB_TOP );
+  GFL_BG_FreeBGControl( FIT_FRAME_SUB_CURTAIN_L );
+  GFL_BG_FreeBGControl( FIT_FRAME_SUB_CURTAIN_R );
   GFL_BG_FreeBGControl( FIT_FRAME_SUB_BG );
   GFL_BMPWIN_Exit();
   GFL_BG_Exit();
@@ -482,6 +488,10 @@ FITTING_RETURN  DUP_FIT_LoopFitting( FITTING_WORK *work )
     GFL_BBD_Draw( work->bbdSys , work->camera , NULL );
   }
   GFL_G3D_DRAW_End();
+
+
+  GFL_BG_SetScrollReq( FIT_FRAME_MAIN_BG , GFL_BG_SCROLL_X_INC , 1 );
+  GFL_BG_SetScrollReq( FIT_FRAME_MAIN_BG , GFL_BG_SCROLL_Y_DEC , 1 );
 
 #if DEB_ARI
   if( GFL_UI_KEY_GetCont() & PAD_BUTTON_SELECT &&
@@ -630,11 +640,32 @@ static void DUP_FIT_SetupGraphic( FITTING_WORK *work )
       GX_BG_EXTPLTT_01, 3, 0, 0, FALSE  // pal, pri, areaover, dmy, mosaic
     };
 
+    // BG0 SUB (トップのカーテン
+    static const GFL_BG_BGCNT_HEADER header_sub0 = {
+      0, 0, 0x800, 0, // scrX, scrY, scrbufSize, scrbufofs,
+      GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
+      GX_BG_SCRBASE_0x7000, GX_BG_CHARBASE_0x08000,0x0000,
+      GX_BG_EXTPLTT_01, 0, 0, 0, FALSE  // pal, pri, areaover, dmy, mosaic
+    };
+    // BG1 SUB (カーテン右
+    static const GFL_BG_BGCNT_HEADER header_sub1 = {
+      0, 0, 0x1000, 0, // scrX, scrY, scrbufSize, scrbufofs,
+      GFL_BG_SCRSIZ_512x256, GX_BG_COLORMODE_16,
+      GX_BG_SCRBASE_0x6000, GX_BG_CHARBASE_0x08000,0x0000,
+      GX_BG_EXTPLTT_01, 0, 0, 0, FALSE  // pal, pri, areaover, dmy, mosaic
+    };
+    // BG2 SUB (カーテン左
+    static const GFL_BG_BGCNT_HEADER header_sub2 = {
+      0, 0, 0x1000, 0, // scrX, scrY, scrbufSize, scrbufofs,
+      GFL_BG_SCRSIZ_512x256, GX_BG_COLORMODE_16,
+      GX_BG_SCRBASE_0x5000, GX_BG_CHARBASE_0x08000,0x0000,
+      GX_BG_EXTPLTT_01, 0, 0, 0, FALSE  // pal, pri, areaover, dmy, mosaic
+    };
     // BG3 SUB (背景
     static const GFL_BG_BGCNT_HEADER header_sub3 = {
       0, 0, 0x800, 0, // scrX, scrY, scrbufSize, scrbufofs,
       GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
-      GX_BG_SCRBASE_0x6000, GX_BG_CHARBASE_0x00000,0x6000,
+      GX_BG_SCRBASE_0x7800, GX_BG_CHARBASE_0x08000,0x8000,
       GX_BG_EXTPLTT_01, 0, 0, 0, FALSE  // pal, pri, areaover, dmy, mosaic
     };
 
@@ -645,6 +676,9 @@ static void DUP_FIT_SetupGraphic( FITTING_WORK *work )
     DUP_FIT_SetupBgFunc( &header_main3, FIT_FRAME_MAIN_BG);
 
     DUP_FIT_SetupBgFunc( &header_sub3 , FIT_FRAME_SUB_BG );
+    DUP_FIT_SetupBgFunc( &header_sub0 , FIT_FRAME_SUB_TOP );
+    DUP_FIT_SetupBgFunc( &header_sub1 , FIT_FRAME_SUB_CURTAIN_R );
+    DUP_FIT_SetupBgFunc( &header_sub2 , FIT_FRAME_SUB_CURTAIN_L );
     
     GFL_BG_SetVisible( FIT_FRAME_MAIN_3D , TRUE );
   }
@@ -683,6 +717,7 @@ static void DUP_FIT_SetupBgObj( FITTING_WORK *work )
   
   ARCHANDLE *arcHandle = GFL_ARC_OpenDataHandle( ARCID_DRESSUP_GRA , work->heapId );
 
+  //下画面
   GFL_ARCHDL_UTIL_TransVramPalette( arcHandle , NARC_dressup_gra_test_bg_NCLR , 
                     PALTYPE_MAIN_BG , 0 , 0 , work->heapId );
   GFL_ARCHDL_UTIL_TransVramBgCharacter( arcHandle , NARC_dressup_gra_test_bg_NCGR ,
@@ -695,10 +730,18 @@ static void DUP_FIT_SetupBgObj( FITTING_WORK *work )
   GFL_ARCHDL_UTIL_TransVramScreen( arcHandle , NARC_dressup_gra_bg_mirror_NSCR , 
                     FIT_FRAME_MAIN_MIRROR ,  0 , 0, FALSE , work->heapId );
 
-  GFL_ARCHDL_UTIL_TransVramPalette( arcHandle , NARC_dressup_gra_test_bg_NCLR , 
+  //上画面
+  GFL_ARCHDL_UTIL_TransVramPalette( arcHandle , NARC_dressup_gra_obj_main_NCLR , 
                     PALTYPE_SUB_BG , 0 , 0 , work->heapId );
-  GFL_ARCHDL_UTIL_TransVramBgCharacter( arcHandle , NARC_dressup_gra_test_bg_NCGR ,
+  GFL_ARCHDL_UTIL_TransVramBgCharacter( arcHandle , NARC_dressup_gra_test_bg_u3_NCGR ,
                     FIT_FRAME_SUB_BG , 0 , 0, FALSE , work->heapId );
+
+  GFL_ARCHDL_UTIL_TransVramScreen( arcHandle , NARC_dressup_gra_test_bg_u3_NSCR , 
+                    FIT_FRAME_SUB_TOP ,  0 , 0, FALSE , work->heapId );
+  GFL_ARCHDL_UTIL_TransVramScreen( arcHandle , NARC_dressup_gra_test_bg_u2_2_NSCR , 
+                    FIT_FRAME_SUB_CURTAIN_L ,  0 , 0, FALSE , work->heapId );
+  GFL_ARCHDL_UTIL_TransVramScreen( arcHandle , NARC_dressup_gra_test_bg_u2_NSCR , 
+                    FIT_FRAME_SUB_CURTAIN_R ,  0 , 0, FALSE , work->heapId );
   GFL_ARCHDL_UTIL_TransVramScreen( arcHandle , NARC_dressup_gra_test_bg_u_NSCR , 
                     FIT_FRAME_SUB_BG ,  0 , 0, FALSE , work->heapId );
 
