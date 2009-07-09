@@ -288,6 +288,8 @@ extern BOOL BTL_POKEPARAM_CheckSick( const BTL_POKEPARAM* pp, WazaSick sickType 
 extern PokeSick BTL_POKEPARAM_GetPokeSick( const BTL_POKEPARAM* pp );
 extern u8 BTL_POKEPARAM_GetSickParam( const BTL_POKEPARAM* pp, WazaSick sick );
 extern int  BTL_POKEPARAM_CalcSickDamage( const BTL_POKEPARAM* pp, WazaSick sickID );
+extern BPP_SICK_CONT BTL_POKEPARAM_GetSickCont( const BTL_POKEPARAM* bpp, WazaSick sick );
+extern u8 BTL_POKEPARAM_GetSickTurnCount( const BTL_POKEPARAM* bpp, WazaSick sick );
 
 //-------------------------
 extern u8 BTL_POKEPARAM_RankUp( BTL_POKEPARAM* pp, BppValueID rankType, u8 volume );

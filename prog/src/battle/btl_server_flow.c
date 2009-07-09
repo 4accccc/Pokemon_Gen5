@@ -1402,6 +1402,11 @@ static u8 flowsub_registerWazaTargets( BTL_SVFLOW_WORK* wk, BtlPokePos atPos, Wa
       TargetPokeRec_Add( rec, attacker );
       break;
 
+    case WAZA_TARGET_ALL:
+      TargetPokeRec_Add( rec, attacker );
+      TargetPokeRec_Add( rec, get_opponent_pokeparam(wk, atPos, 0) );
+      break;
+
     case WAZA_TARGET_UNKNOWN:
       {
         u8 pokeID = scEvent_GetWazaTarget( wk, attacker, &wk->wazaParam );
@@ -1444,6 +1449,12 @@ static u8 flowsub_registerWazaTargets( BTL_SVFLOW_WORK* wk, BtlPokePos atPos, Wa
       TargetPokeRec_Add( rec, get_opponent_pokeparam(wk, atPos, 1) );
       return 2;
     case WAZA_TARGET_OTHER_ALL:           ///< Ž©•ªˆÈŠO‘S•”
+      TargetPokeRec_Add( rec, get_next_pokeparam( wk, atPos ) );
+      TargetPokeRec_Add( rec, get_opponent_pokeparam( wk, atPos, 0 ) );
+      TargetPokeRec_Add( rec, get_opponent_pokeparam( wk, atPos, 1 ) );
+      return 3;
+    case WAZA_TARGET_ALL:                ///< ‘S•”
+      TargetPokeRec_Add( rec, attacker );
       TargetPokeRec_Add( rec, get_next_pokeparam( wk, atPos ) );
       TargetPokeRec_Add( rec, get_opponent_pokeparam( wk, atPos, 0 ) );
       TargetPokeRec_Add( rec, get_opponent_pokeparam( wk, atPos, 1 ) );

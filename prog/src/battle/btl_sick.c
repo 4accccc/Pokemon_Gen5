@@ -9,7 +9,11 @@
 /* Prototypes                                                               */
 /*--------------------------------------------------------------------------*/
 static void cureProc( BTL_SVFLOW_WORK* flowWk, BTL_POKEPARAM* bpp, WazaSick sick );
+static void contProc( BTL_SVFLOW_WORK* flowWk, BTL_POKEPARAM* bpp, WazaSick sick );
 static void cure_Akubi( BTL_SVFLOW_WORK* flowWk, BTL_POKEPARAM* bpp );
+static void cont_HorobiNoUta( BTL_SVFLOW_WORK* flowWk, BTL_POKEPARAM* bpp );
+static void cure_HorobiNoUta( BTL_SVFLOW_WORK* flowWk, BTL_POKEPARAM* bpp );
+static void putHorobiCounter( BTL_SVFLOW_WORK* flowWk, const BTL_POKEPARAM* bpp, u8 count );
 static int getCureStrID( WazaSick sick, BOOL fUseItem );
 
 
@@ -19,6 +23,8 @@ void BTL_SICK_TurnCheckCallback( BTL_POKEPARAM* bpp, WazaSick sick, BOOL fCure, 
 {
   if( fCure ){
     cureProc( work, bpp, sick );
+  }else{
+    contProc( work, bpp, sick );
   }
 }
 
@@ -35,7 +41,15 @@ static void cureProc( BTL_SVFLOW_WORK* flowWk, BTL_POKEPARAM* bpp, WazaSick sick
   }
 
   switch( sick ){
-  case WAZASICK_AKUBI:    cure_Akubi( flowWk, bpp ); break;
+  case WAZASICK_AKUBI:       cure_Akubi( flowWk, bpp ); break;
+  case WAZASICK_HOROBINOUTA: cure_HorobiNoUta( flowWk, bpp ); break;
+  }
+}
+
+static void contProc( BTL_SVFLOW_WORK* flowWk, BTL_POKEPARAM* bpp, WazaSick sick )
+{
+  switch( sick ){
+  case WAZASICK_HOROBINOUTA:    cont_HorobiNoUta( flowWk, bpp ); break;
   }
 }
 
@@ -53,6 +67,37 @@ static void cure_Akubi( BTL_SVFLOW_WORK* flowWk, BTL_POKEPARAM* bpp )
     param->pokeID[0] = pokeID;
     param->poke_cnt = 1;
   }
+}
+
+static void cont_HorobiNoUta( BTL_SVFLOW_WORK* flowWk, BTL_POKEPARAM* bpp )
+{
+  BPP_SICK_CONT cont = BTL_POKEPARAM_GetSickCont( bpp, WAZASICK_HOROBINOUTA );
+  u8 turnMax = BPP_SICCONT_GetTurnMax( cont );
+  u8 turnNow = BTL_POKEPARAM_GetSickTurnCount( bpp, WAZASICK_HOROBINOUTA );
+  int turnDiff = turnMax - turnNow;
+  BTL_Printf("‚Ù‚ë‚Ñ: max=%d, now=%d, diff=%d‚¾[‚æ\n", turnMax, turnNow, turnDiff);
+  if( turnDiff > 0 ){
+    putHorobiCounter( flowWk, bpp, turnDiff );
+  }
+}
+static void cure_HorobiNoUta( BTL_SVFLOW_WORK* flowWk, BTL_POKEPARAM* bpp )
+{
+  putHorobiCounter( flowWk, bpp, 0 );
+  {
+    u8 pokeID = BTL_POKEPARAM_GetID( bpp );
+    BTL_HANDEX_PARAM_KILL* param = BTL_SVFLOW_HANDLERWORK_Push( flowWk, BTL_HANDEX_KILL, pokeID );
+    param->pokeID = pokeID;
+  }
+}
+
+static void putHorobiCounter( BTL_SVFLOW_WORK* flowWk, const BTL_POKEPARAM* bpp, u8 count )
+{
+  u8 pokeID = BTL_POKEPARAM_GetID( bpp );
+  BTL_HANDEX_PARAM_MESSAGE* param = BTL_SVFLOW_HANDLERWORK_Push( flowWk, BTL_HANDEX_MESSAGE, pokeID );
+  HANDEX_STR_Setup( &param->str, BTL_STRTYPE_SET, BTL_STRID_SET_HorobiCountDown );
+  HANDEX_STR_AddArg( &param->str, pokeID );
+  HANDEX_STR_AddArg( &param->str, count );
+
 }
 
 

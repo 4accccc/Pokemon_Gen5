@@ -122,6 +122,8 @@ static void handler_Daibakuhatsu_ExeFix( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_
 static BTL_EVENT_FACTOR*  ADD_Juden( u16 pri, WazaID waza, u8 pokeID );
 static void handler_Juden_Exe( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_Juden_Pow( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static BTL_EVENT_FACTOR*  ADD_HorobiNoUta( u16 pri, WazaID waza, u8 pokeID );
+static void handler_HorobiNoUta_Exe( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static BTL_EVENT_FACTOR*  ADD_Ikari( u16 pri, WazaID waza, u8 pokeID );
 static void handler_Ikari_Exe( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_Ikari_React( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
@@ -512,6 +514,7 @@ BTL_EVENT_FACTOR*  BTL_HANDLER_Waza_Add( const BTL_POKEPARAM* pp, WazaID waza )
     { WAZANO_MIZUASOBI,       ADD_MizuAsobi     },
     { WAZANO_DOROASOBI,       ADD_DoroAsobi     },
     { WAZANO_ZYUUDEN,         ADD_Juden         },
+    { WAZANO_HOROBINOUTA,     ADD_HorobiNoUta   },
   };
 
   int i;
@@ -1832,8 +1835,6 @@ static void handler_Daibakuhatsu_ExeFix( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_
     param->pokeID = pokeID;
   }
 }
-
-
 //----------------------------------------------------------------------------------
 /**
  * じゅうでん
@@ -1874,6 +1875,28 @@ static void handler_Juden_Pow( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flow
         BTL_EVENT_FACTOR_Remove( myHandle );
       }
     }
+  }
+}
+//----------------------------------------------------------------------------------
+/**
+ * ほろびのうた
+ */
+//----------------------------------------------------------------------------------
+static BTL_EVENT_FACTOR*  ADD_HorobiNoUta( u16 pri, WazaID waza, u8 pokeID )
+{
+  static const BtlEventHandlerTable HandlerTable[] = {
+    { BTL_EVENT_WAZA_EXECUTE_FIX, handler_HorobiNoUta_Exe },    // ワザ出し確定ハンドラ
+    { BTL_EVENT_NULL, NULL },
+  };
+  return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_WAZA, waza, pri, pokeID, HandlerTable );
+}
+
+static void handler_HorobiNoUta_Exe( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+{
+  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID )
+  {
+    BTL_HANDEX_PARAM_MESSAGE* param = BTL_SVFLOW_HANDLERWORK_Push( flowWk, BTL_HANDEX_MESSAGE, pokeID );
+    HANDEX_STR_Setup( &param->str, BTL_STRTYPE_STD, BTL_STRID_STD_HorobiNoUta );
   }
 }
 //----------------------------------------------------------------------------------

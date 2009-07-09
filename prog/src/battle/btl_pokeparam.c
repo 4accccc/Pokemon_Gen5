@@ -1195,9 +1195,8 @@ void BTL_POKEPARAM_SetWazaSick( BTL_POKEPARAM* bpp, WazaSick sick, BPP_SICK_CONT
     GF_ASSERT(pokeSick == POKESICK_NULL);
   }
 
-    bpp->sickCont[ sick ] = contParam;
+  bpp->sickCont[ sick ] = contParam;
   bpp->wazaSickCounter[sick] = 0;
-  BTL_Printf("ポケ[%d - %p] に状態[%d]がセットされた\n", bpp->coreParam.myID, bpp, sick );
 }
 
 
@@ -1419,6 +1418,36 @@ u8 BTL_POKEPARAM_GetSickParam( const BTL_POKEPARAM* pp, WazaSick sick )
 
   GF_ASSERT(0); // パラメ無いのに呼び出された
   return 0;
+}
+//=============================================================================================
+/**
+ * 特定状態異常の継続パラメータ取得
+ *
+ * @param   bpp
+ * @param   sick
+ *
+ * @retval  BPP_SICK_CONT
+ */
+//=============================================================================================
+BPP_SICK_CONT BTL_POKEPARAM_GetSickCont( const BTL_POKEPARAM* bpp, WazaSick sick )
+{
+  GF_ASSERT(sick < NELEMS(bpp->sickCont));
+  return bpp->sickCont[ sick ];
+}
+//=============================================================================================
+/**
+ * 特定状態異常の継続ターンカウンタを取得
+ *
+ * @param   bpp
+ * @param   sick
+ *
+ * @retval  u8
+ */
+//=============================================================================================
+u8 BTL_POKEPARAM_GetSickTurnCount( const BTL_POKEPARAM* bpp, WazaSick sick )
+{
+  GF_ASSERT(sick < NELEMS(bpp->sickCont));
+  return bpp->wazaSickCounter[ sick ];
 }
 //=============================================================================================
 /**
