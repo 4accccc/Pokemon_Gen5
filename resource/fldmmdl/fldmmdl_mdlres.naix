@@ -138,7 +138,26 @@ enum {
 	NARC_fldmmdl_mdlres_breakrock_nsbtx = 124,
 	NARC_fldmmdl_mdlres_monsterball_nsbtx = 125,
 	NARC_fldmmdl_mdlres_pikachu_nsbtx = 126,
-	NARC_fldmmdl_mdlres_obj_kabi32_nsbtx = 127
+	NARC_fldmmdl_mdlres_obj_kabi32_nsbtx = 127,
+	NARC_fldmmdl_mdlres_poke2_nsbtx = 128,
+	NARC_fldmmdl_mdlres_poke3_nsbtx = 129,
+	NARC_fldmmdl_mdlres_poke4_nsbtx = 130,
+	NARC_fldmmdl_mdlres_poke5_nsbtx = 131,
+	NARC_fldmmdl_mdlres_poke6_nsbtx = 132,
+	NARC_fldmmdl_mdlres_poke7_nsbtx = 133,
+	NARC_fldmmdl_mdlres_poke8_nsbtx = 134,
+	NARC_fldmmdl_mdlres_poke9_nsbtx = 135,
+	NARC_fldmmdl_mdlres_poke10_nsbtx = 136,
+	NARC_fldmmdl_mdlres_poke11_nsbtx = 137,
+	NARC_fldmmdl_mdlres_poke12_nsbtx = 138,
+	NARC_fldmmdl_mdlres_poke13_nsbtx = 139,
+	NARC_fldmmdl_mdlres_poke14_nsbtx = 140,
+	NARC_fldmmdl_mdlres_poke15_nsbtx = 141,
+	NARC_fldmmdl_mdlres_poke16_nsbtx = 142,
+	NARC_fldmmdl_mdlres_poke17_nsbtx = 143,
+	NARC_fldmmdl_mdlres_poke18_nsbtx = 144,
+	NARC_fldmmdl_mdlres_poke19_nsbtx = 145,
+	NARC_fldmmdl_mdlres_poke20_nsbtx = 146
 };
 
 /* NARC_FLDMMDL_MDLRES_NAIX_ */

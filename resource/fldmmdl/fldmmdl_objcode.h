@@ -131,6 +131,25 @@
 #define MONSTERBALL (0x7e) //126 アイテムカプセル
 #define PIKACHU (0x7f) //127 ピカチュウ
 #define KABI32 (0x80) //128 テスト三頭身
-#define OBJCODEMAX (0x81) //129 最大
+#define POKE2 (0x81) //129 ポケモン２
+#define POKE3 (0x82) //130 ポケモン３
+#define POKE4 (0x83) //131 ポケモン４
+#define POKE5 (0x84) //132 ポケモン５
+#define POKE6 (0x85) //133 ポケモン６
+#define POKE7 (0x86) //134 ポケモン７
+#define POKE8 (0x87) //135 ポケモン８
+#define POKE9 (0x88) //136 ポケモン９
+#define POKE10 (0x89) //137 ポケモン１０
+#define POKE11 (0x8a) //138 ポケモン１１
+#define POKE12 (0x8b) //139 ポケモン１２
+#define POKE13 (0x8c) //140 ポケモン１３
+#define POKE14 (0x8d) //141 ポケモン１４
+#define POKE15 (0x8e) //142 ポケモン１５
+#define POKE16 (0x8f) //143 ポケモン１６
+#define POKE17 (0x90) //144 ポケモン１７
+#define POKE18 (0x91) //145 ポケモン１８
+#define POKE19 (0x92) //146 ポケモン１９
+#define POKE20 (0x93) //147 ポケモン２０
+#define OBJCODEMAX (0x94) //148 最大
 
 #endif
