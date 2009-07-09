@@ -1,0 +1,52 @@
+
+//============================================================================================
+/**
+ * @file	btlv_input.cdat
+ * @brief	戦闘下画面
+ * @author	soga
+ * @date	2009.06.30
+ */
+//============================================================================================
+
+///戦闘入力画面用のBGフレーム構成
+typedef struct
+{ 
+  const GFL_BG_BGCNT_HEADER bgcnt_table;
+  int                       bgcnt_mode;
+}BTLV_INPUT_BG_FRAME;
+
+static  const BTLV_INPUT_BG_FRAME bibf[] = {  
+  { 
+    {//GF_BGL_FRAME0_S
+      0, 0, 0x2000, 0, GFL_BG_SCRSIZ_512x512, GX_BG_COLORMODE_16,
+      GX_BG_SCRBASE_0x0000, GX_BG_CHARBASE_0x10000, 0x08000,
+      GX_BG_EXTPLTT_01, 0, 0, 0, FALSE
+    },
+    GFL_BG_MODE_TEXT,
+  },
+  { 
+    {//GF_BGL_FRAME1_S
+      0, 0, 0x2000, 0, GFL_BG_SCRSIZ_512x512, GX_BG_COLORMODE_16,
+      GX_BG_SCRBASE_0x2000, GX_BG_CHARBASE_0x10000, 0x08000,
+      GX_BG_EXTPLTT_01, 0, 0, 0, FALSE
+    },
+    GFL_BG_MODE_TEXT,
+  },
+  { 
+    {//GF_BGL_FRAME2_S
+      0, 0, 0x0800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
+      GX_BG_SCRBASE_0x4000, GX_BG_CHARBASE_0x18000, 0x08000,
+      GX_BG_EXTPLTT_01, 0, 0, 0, FALSE
+    },
+    GFL_BG_MODE_TEXT,
+  },
+  { 
+    {//GF_BGL_FRAME3_S
+      0, 0, 0x2000, 0, GFL_BG_SCRSIZ_512x512, GX_BG_COLORMODE_256,
+      GX_BG_SCRBASE_0x6000, GX_BG_CHARBASE_0x08000, 0x8000,
+      GX_BG_EXTPLTT_01, 0, 0, 0, FALSE
+    },
+    GFL_BG_MODE_256X16,
+  },
+};
+
