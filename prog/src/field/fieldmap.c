@@ -1327,6 +1327,10 @@ static void fldmap_G3D_Control( FIELDMAP_WORK * fieldWork )
 #define	PRO_MAT_Z_OFS	(310)
 static void fldmap_G3D_Draw( FIELDMAP_WORK * fieldWork )
 {
+
+	FIELD_FOG_Reflect( fieldWork->fog );
+	FIELD_LIGHT_Reflect( fieldWork->light );
+	
 	GFL_G3D_CAMERA_Switching( fieldWork->g3Dcamera );
 	GFL_G3D_LIGHT_Switching( fieldWork->g3Dlightset );
   

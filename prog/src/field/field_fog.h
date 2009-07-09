@@ -78,6 +78,7 @@ extern void FIELD_FOG_Delete( FIELD_FOG_WORK* p_wk );
 ///	ÉÅÉCÉììÆçÏ
 //=====================================
 extern void FIELD_FOG_Main( FIELD_FOG_WORK* p_wk );
+extern void FIELD_FOG_Reflect( FIELD_FOG_WORK* p_wk );
 
 
 //-------------------------------------

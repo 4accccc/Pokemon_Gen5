@@ -138,6 +138,7 @@ enum {
 // そのた管理
 enum {
 	DEBUG_CONT_OTHER_FOG,
+	DEBUG_CONT_OTHER_BG,
 
 	DEBUG_CONT_OTHER_NUM,
 };
@@ -167,8 +168,8 @@ typedef struct {
 	GXRgb		specular;
 	GXRgb		emission;
 	GXRgb		fog_color;
+	GXRgb		bg_color;
 
-	u16			pad;
 } LIGHT_DATA;
 
 //-------------------------------------
@@ -211,6 +212,7 @@ typedef struct {
 	RGB_FADE		specular;
 	RGB_FADE		emission;
 	RGB_FADE		fog_color;
+	RGB_FADE		bg_color;
 
 	u16				count;
 	u16				count_max;
@@ -289,7 +291,7 @@ struct _FIELD_LIGHT {
 //-------------------------------------
 ///	システム
 //=====================================
-static void FIELD_LIGHT_Reflect( const FIELD_LIGHT* cp_sys, FIELD_FOG_WORK* p_fog, GFL_G3D_LIGHTSET* p_liblight );
+static void FIELD_LIGHT_ReflectSub( const FIELD_LIGHT* cp_sys, FIELD_FOG_WORK* p_fog, GFL_G3D_LIGHTSET* p_liblight );
 static void FIELD_LIGHT_ForceReflect( const FIELD_LIGHT* cp_sys, FIELD_FOG_WORK* p_fog, GFL_G3D_LIGHTSET* p_liblight );
 static void FIELD_LIGHT_LoadData( FIELD_LIGHT* p_sys, u32 light_no, u32 heapID );
 static void FIELD_LIGHT_LoadDataEx( FIELD_LIGHT* p_sys, u32 arcid, u32 dataid, u32 heapID );
@@ -478,16 +480,25 @@ void FIELD_LIGHT_Main( FIELD_LIGHT* p_sys, int rtc_second )
 		p_sys->change = TRUE;
 	}
 
-	// データ設定処理へ
-	p_sys->change = TRUE;
-	if( p_sys->change ){
-		FIELD_LIGHT_Reflect( p_sys, p_sys->p_fog, p_sys->p_liblight );
-		p_sys->change = FALSE;
-	}
-
 	// rtc時間を保存
 	p_sys->time_second = rtc_second;
 
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	データ反映関数
+ *
+ *	@param	p_sys 
+ */
+//-----------------------------------------------------------------------------
+void FIELD_LIGHT_Reflect( FIELD_LIGHT* p_sys )
+{
+	// データ設定処理へ
+	if( p_sys->change ){
+		FIELD_LIGHT_ReflectSub( p_sys, p_sys->p_fog, p_sys->p_liblight );
+		p_sys->change = FALSE;
+	}
 }
 
 
@@ -1010,6 +1021,15 @@ static void DEBUG_LIGHT_ContOther( FIELD_LIGHT* p_wk )
 		}
 		break;
 
+	case DEBUG_CONT_OTHER_BG:
+		change_rgb = DEBUG_LIGHT_ContRgb( p_wk->reflect_data.bg_color );
+		if( change_rgb != p_wk->reflect_data.bg_color ){
+			p_wk->reflect_data.bg_color = change_rgb;
+			p_wk->change = TRUE;
+			p_wk->debug_print_req = TRUE;
+		}
+		break;
+
 	default:
 		GF_ASSERT(0);
 		break;
@@ -1126,6 +1146,12 @@ static void DEBUG_LIGHT_PrintOther( FIELD_LIGHT* p_wk, GFL_BMPWIN* p_win )
 	//  フォグ
 	DEBUG_LIGHT_SetWordsetRgb( p_wk, 0, p_wk->reflect_data.fog_color );
 	GFL_MSG_GetString( p_wk->p_debug_msgdata, D_TOMOYA_FOG, p_wk->p_debug_strbuff_tmp );
+	WORDSET_ExpandStr( p_wk->p_debug_wordset, p_wk->p_debug_strbuff, p_wk->p_debug_strbuff_tmp );
+	PRINTSYS_Print( GFL_BMPWIN_GetBmp( p_win ), DEBUG_PRINT_X, 0, p_wk->p_debug_strbuff, p_wk->p_debug_font );
+
+	// 背面
+	DEBUG_LIGHT_SetWordsetRgb( p_wk, 0, p_wk->reflect_data.bg_color );
+	GFL_MSG_GetString( p_wk->p_debug_msgdata, D_TOMOYA_BG, p_wk->p_debug_strbuff_tmp );
 	WORDSET_ExpandStr( p_wk->p_debug_wordset, p_wk->p_debug_strbuff, p_wk->p_debug_strbuff_tmp );
 	PRINTSYS_Print( GFL_BMPWIN_GetBmp( p_win ), DEBUG_PRINT_X, 0, p_wk->p_debug_strbuff, p_wk->p_debug_font );
 
@@ -1308,7 +1334,7 @@ static void DEBUG_LIGHT_SetWordsetVec( FIELD_LIGHT* p_wk, u32 bufstart, const Ve
  *	@param	cp_sys	システムワーク
  */
 //-----------------------------------------------------------------------------
-static void FIELD_LIGHT_Reflect( const FIELD_LIGHT* cp_sys, FIELD_FOG_WORK* p_fog, GFL_G3D_LIGHTSET* p_liblight )
+static void FIELD_LIGHT_ReflectSub( const FIELD_LIGHT* cp_sys, FIELD_FOG_WORK* p_fog, GFL_G3D_LIGHTSET* p_liblight )
 {
 	int i;
 	VecFx16 dummy_vec = {0};
@@ -1335,7 +1361,7 @@ static void FIELD_LIGHT_Reflect( const FIELD_LIGHT* cp_sys, FIELD_FOG_WORK* p_fo
 
 		FIELD_FOG_SetColorRgb( p_fog, cp_sys->reflect_data.fog_color );
 
-		G3X_SetClearColor(cp_sys->reflect_data.light_color[2],31,0x7fff,63,FALSE);
+		G3X_SetClearColor(cp_sys->reflect_data.bg_color,31,0x7fff,63,FALSE);
 		
 	}
 }
@@ -1373,6 +1399,8 @@ static void FIELD_LIGHT_ForceReflect( const FIELD_LIGHT* cp_sys, FIELD_FOG_WORK*
 			cp_sys->reflect_data.emission, FALSE );
 
 	FIELD_FOG_SetColorRgb( p_fog, cp_sys->reflect_data.fog_color );
+
+	G3X_SetClearColor(cp_sys->reflect_data.bg_color,31,0x7fff,63,FALSE);
 }
 
 //----------------------------------------------------------------------------
@@ -1651,6 +1679,7 @@ static void LIGHT_FADE_InitEx( LIGHT_FADE* p_wk, const LIGHT_DATA* cp_start, con
 	RGB_FADE_Init( &p_wk->specular, cp_start->specular, cp_end->specular );
 	RGB_FADE_Init( &p_wk->emission, cp_start->emission, cp_end->emission );
 	RGB_FADE_Init( &p_wk->fog_color, cp_start->fog_color, cp_end->fog_color );
+	RGB_FADE_Init( &p_wk->bg_color, cp_start->bg_color, cp_end->bg_color );
 }
 
 //----------------------------------------------------------------------------
@@ -1686,6 +1715,7 @@ static void LIGHT_FADE_InitColor( LIGHT_FADE* p_wk, const LIGHT_DATA* cp_start, 
 	RGB_FADE_Init( &p_wk->specular, cp_start->specular, end_color );
 	RGB_FADE_Init( &p_wk->emission, cp_start->emission, end_color );
 	RGB_FADE_Init( &p_wk->fog_color, cp_start->fog_color, cp_start->fog_color );
+	RGB_FADE_Init( &p_wk->bg_color, cp_start->bg_color, cp_start->bg_color );
 }
 
 //----------------------------------------------------------------------------
@@ -1746,6 +1776,7 @@ static void LIGHT_FADE_GetData( const LIGHT_FADE* cp_wk, LIGHT_DATA* p_data )
 	p_data->specular	= RGB_FADE_Calc( &cp_wk->specular, cp_wk->count, cp_wk->count_max );
 	p_data->emission	= RGB_FADE_Calc( &cp_wk->emission, cp_wk->count, cp_wk->count_max );
 	p_data->fog_color	= RGB_FADE_Calc( &cp_wk->fog_color, cp_wk->count, cp_wk->count_max );
+	p_data->bg_color	= RGB_FADE_Calc( &cp_wk->bg_color, cp_wk->count, cp_wk->count_max );
 
 }
 

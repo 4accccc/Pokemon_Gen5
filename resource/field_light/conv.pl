@@ -68,6 +68,9 @@ $FRAME_NUM		= 0;		#フレーム数
 @FOG_R			= undef;	#フォグカラー
 @FOG_G			= undef;	#フォグカラー
 @FOG_B			= undef;	#フォグカラー
+@BG_R			= undef;	#背面カラー
+@BG_G			= undef;	#背面カラー
+@BG_B			= undef;	#背面カラー
 
 
 #データ取得
@@ -347,6 +350,24 @@ foreach $one ( @CSVFILE ){
 			}
 		}
 		elsif( $datacount == 43 ){
+
+			for( $i=0; $i<$FRAME_NUM; $i++ ){
+				@BG_R[ $i ] = $line[ $i+1 ]
+			}
+		}
+		elsif( $datacount == 44 ){
+
+			for( $i=0; $i<$FRAME_NUM; $i++ ){
+				@BG_G[ $i ] = $line[ $i+1 ]
+			}
+		}
+		elsif( $datacount == 45 ){
+
+			for( $i=0; $i<$FRAME_NUM; $i++ ){
+				@BG_B[ $i ] = $line[ $i+1 ]
+			}
+		}
+		elsif( $datacount == 46 ){
 			#終了
 			$inputdata = 0;
 		}
@@ -393,8 +414,7 @@ for( $i=0; $i<$FRAME_NUM; $i++ ){
 	print( FILE pack( "S", &CONV_GetRgb( $SPECULAR_R[$i], $SPECULAR_G[$i], $SPECULAR_B[$i] ) ) );
 	print( FILE pack( "S", &CONV_GetRgb( $EMISSION_R[$i], $EMISSION_G[$i], $EMISSION_B[$i] ) ) );
 	print( FILE pack( "S", &CONV_GetRgb( $FOG_R[$i], $FOG_G[$i], $FOG_B[$i] ) ) );
-
-	print( FILE pack( "S", 0 ) );	#パディング
+	print( FILE pack( "S", &CONV_GetRgb( $BG_R[$i], $BG_G[$i], $BG_B[$i] ) ) );
 
 }
 
