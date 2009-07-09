@@ -152,7 +152,7 @@ enum {
 struct _RAIL_POINT {  
   //keys[n]にマッチしたらlines[n]に移動する
 	u32 lines[RAIL_CONNECT_LINE_MAX];
-  RAIL_KEY keys[RAIL_CONNECT_LINE_MAX];
+  u32 keys[RAIL_CONNECT_LINE_MAX];
 
   ///POINTの位置座標
   VecFx32 pos;
@@ -170,7 +170,7 @@ struct _RAIL_LINE {
   //point_s --> point_eへの動きをkey方向を正として制御する
 	u32 point_s;
 	u32 point_e;
-  RAIL_KEY key;
+  u32 key;
 	u32 line_pos_set;
 
 	u32 camera_set;

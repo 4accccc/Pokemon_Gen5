@@ -41,6 +41,8 @@ LIST_FILE 	= list.txt
 #------------------------------------------------------------------------------
 HEADERDIR = $(PROJECT_PROGDIR)src/field/
 
+HEADERDUMMY_TARGET = headerdummy.txt
+
 #------------------------------------------------------------------------------
 #	#サフィックス
 #	#コンバート対象者のみ、コンバートのルールを有効にする
@@ -71,7 +73,7 @@ subdir:
 	@$(MAKE_SUBDIR)
 
 # narc のコピーだけ実行する
-$(TARGETDIR)/$(targetname).narc: $(targetname).narc
+$(TARGETDIR)/$(targetname).narc: $(HEADERDUMMY_TARGET) $(targetname).narc 
 	$(COPY) $(targetname).narc $(TARGETDIR)
 	$(COPY) $(targetname).naix $(TARGETDIR)
 
@@ -90,6 +92,10 @@ $(targetname).narc: $(OBJ_FILE)
 	rm -f *.line
 	rm -f *.linepos
 	rm -f *.camera
+
+$(HEADERDUMMY_TARGET):$(HEADERDIR)field_rail_loader_func.h $(HEADERDIR)field_rail.h
+	rm -f *.dat
+	echo このファイルは、headerが更新されたときにdatを作り直すために用意されています。 > $(HEADERDUMMY_TARGET)
 endif
 
 #------------------------------------------------------------------------------

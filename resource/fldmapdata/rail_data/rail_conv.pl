@@ -392,9 +392,9 @@ sub convData
 			print( FILEOUT_POINT pack( "i", &getRAIL_KeyNameToNo( $key ) ) );
 
 			#POS
-			print( FILEOUT_OFS pack( "i", oct(&getPeaceParamForName( \@filedata, $POINT_NAME[$i], "VECX")) ) );
-			print( FILEOUT_OFS pack( "i", oct(&getPeaceParamForName( \@filedata, $POINT_NAME[$i], "VECY")) ) );
-			print( FILEOUT_OFS pack( "i", oct(&getPeaceParamForName( \@filedata, $POINT_NAME[$i], "VECZ")) ) );
+			print( FILEOUT_POINT pack( "i", oct(&getPeaceParamForName( \@filedata, $POINT_NAME[$i], "VECX")) ) );
+			print( FILEOUT_POINT pack( "i", oct(&getPeaceParamForName( \@filedata, $POINT_NAME[$i], "VECY")) ) );
+			print( FILEOUT_POINT pack( "i", oct(&getPeaceParamForName( \@filedata, $POINT_NAME[$i], "VECZ")) ) );
 
 			#CAMERA_SET
 			$camera_set = &getPeaceParamForName( \@filedata, $POINT_NAME[$i], "CAMERA_SET");
@@ -402,12 +402,14 @@ sub convData
 
 			#NAME
 			$len = length($POINT_NAME[$i]);
-			if( $len > $RAIL_NAMEBUF_SIZ )
+			print( $POINT_NAME[$i]."len = $len\n" );
+			if( $len >= $RAIL_NAMEBUF_SIZ )
 			{
 				print( "point_name size over ".$POINT_NAME[$i]." limit=$RAIL_NAMEBUF_SIZ\n" );
 				exit(1);
 			}
-			print( FILEOUT_POINT pack( "a$RAIL_NAMEBUF_SIZ", $POINT_NAME[$i] ) );
+			$len = $RAIL_NAMEBUF_SIZ;
+			print( FILEOUT_POINT pack( "A$len", $POINT_NAME[$i] ) );
 		}
 		
 		close( FILEOUT_POINT );
@@ -439,7 +441,7 @@ sub convData
 
 			#LINEPOS
 			$linepos = &getPeaceParamForName( \@filedata, $LINE_NAME[$i], "LINEPOS_SET");
-			print( FILEOUT_OFS pack( "i", &getNameIndex( \@LINEPOS_NAME, $linepos ) ) );
+			print( FILEOUT_LINE pack( "i", &getNameIndex( \@LINEPOS_NAME, $linepos ) ) );
 
 			#CAMERA_SET
 			$camera_set = &getPeaceParamForName( \@filedata, $LINE_NAME[$i], "CAMERA_SET");
@@ -595,7 +597,7 @@ sub getNameIndex
 	#NULLチェック
 	if( $name =~ /RAIL_TBL_NULL/ )
 	{
-		return $RAIL_TBL_NULL;
+		return oct($RAIL_TBL_NULL);
 	}
 
 	$roopnum = @$data;

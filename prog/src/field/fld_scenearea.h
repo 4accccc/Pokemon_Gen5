@@ -32,6 +32,9 @@ extern "C"{
 // Updateの戻り値
 #define FLD_SCENEAREA_UPDATE_NONE ( 0xffffffff )
 
+//  関数ID　NULL
+#define FLD_SCENEAREA_FUNC_NULL	( 0xffff )
+
 //-----------------------------------------------------------------------------
 /**
  *					構造体宣言
@@ -60,12 +63,21 @@ struct _FLD_SCENEAREA_DATA{
   // シーンパラメータ
   u32 area[FLD_SCENEAREA_SCENEPARAM_SIZE/4];
 
-  // コールバック関数
-  FLD_SCENEAREA_CHECK_AREA_FUNC* p_checkArea;   // 範囲内チェック
-  FLD_SCENEAREA_UPDATA_FUNC* p_update;      // 情報の更新（エリア内の場合マイフレーム行う処理）
-  FLD_SCENEAREA_UPDATA_FUNC* p_inside;      // 範囲に入った瞬間の処理
-  FLD_SCENEAREA_UPDATA_FUNC* p_outside;     // 範囲を抜けた瞬間の処理
+  // コールバック関数ID
+	u16 checkArea_func;
+	u16 update_func;
+	u16 inside_func;
+	u16 outside_func;
 };
+
+//  関数テーブル
+typedef struct
+{
+  FLD_SCENEAREA_CHECK_AREA_FUNC*const* cpp_checkArea;   // 範囲内チェック
+  FLD_SCENEAREA_UPDATA_FUNC*const* cpp_update;					// 更新関数
+	u16 checkarea_count;
+	u16 update_count;
+} FLD_SCENEAREA_FUNC;
 
 
 //-----------------------------------------------------------------------------
@@ -77,7 +89,7 @@ struct _FLD_SCENEAREA_DATA{
 extern FLD_SCENEAREA* FLD_SCENEAREA_Create( u32 heapID, FIELD_CAMERA * p_camera );
 extern void FLD_SCENEAREA_Delete( FLD_SCENEAREA* p_sys );
 
-extern void FLD_SCENEAREA_Load( FLD_SCENEAREA* p_sys, const FLD_SCENEAREA_DATA* cp_data, u32 datanum );
+extern void FLD_SCENEAREA_Load( FLD_SCENEAREA* p_sys, const FLD_SCENEAREA_DATA* cp_data, u32 datanum, const FLD_SCENEAREA_FUNC* cp_func );
 extern void FLD_SCENEAREA_Release( FLD_SCENEAREA* p_sys );
 extern u32 FLD_SCENEAREA_Update( FLD_SCENEAREA* p_sys, const VecFx32* cp_pos );
 
