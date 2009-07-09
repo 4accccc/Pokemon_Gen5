@@ -1,153 +1,40 @@
 #event data
-#save date:2009/06/05 20:30:29
+#save date:2009/07/09 12:28:32
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\t01.wms
 #SECTION START:OBJ_EVENT
 #Map Event List data
-#save date:2009/06/05 20:30:29
+#save date:2009/07/09 12:28:32
 2
 #hold event type:
 1
 #hold event number:
-3
-#event number: 0
-#type
-1
-#ID name
-T01_MAN1
-#OBJ CODE Number
-MAN1
-#MOVE CODE Number
-MV_RND
-#EVENT TYPE Number
-EV_TYPE_NORMAL
-#Flag Name
 0
-#Event Script Name
-1
-#Direction Type Number
-DIR_DOWN
-#Parameter 0 Number
-0
-#Parameter 1 Number
-0
-#Parameter 2 Number
-0
-#Move Limit X Number
-2
-#Move Limit Z Number
-2
-#position
-112 0 48
-#event number: 1
-#type
-1
-#ID name
-T01_WOMAN1
-#OBJ CODE Number
-WOMAN1
-#MOVE CODE Number
-MV_RND
-#EVENT TYPE Number
-EV_TYPE_NORMAL
-#Flag Name
-0
-#Event Script Name
-2
-#Direction Type Number
-DIR_DOWN
-#Parameter 0 Number
-0
-#Parameter 1 Number
-0
-#Parameter 2 Number
-0
-#Move Limit X Number
-2
-#Move Limit Z Number
-2
-#position
-16 0 192
-#event number: 2
-#type
-1
-#ID name
-T01_BABYGIRL1
-#OBJ CODE Number
-BABYGIRL1
-#MOVE CODE Number
-MV_RND
-#EVENT TYPE Number
-EV_TYPE_NORMAL
-#Flag Name
-0
-#Event Script Name
-3
-#Direction Type Number
-DIR_DOWN
-#Parameter 0 Number
-0
-#Parameter 1 Number
-0
-#Parameter 2 Number
-0
-#Move Limit X Number
-2
-#Move Limit Z Number
-2
-#position
-0 0 -64
 #Map Event List Data End
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT
 #Map Event List data
-#save date:2009/06/05 20:30:29
+#save date:2009/07/09 12:28:32
 2
 #hold event type:
 1
 #hold event number:
-1
-#event number: 0
-#Bg Event Label
-BGID_TEST01
-#Bg Event Type
-BG_TALK_TYPE_NORMAL
-#Bg Event Reaction Direction ID
-BG_TALK_DIR_ALL
-#Bg Script Name
-SCRID_T01_BGEVENT_TEST1
-#position
-32 0 -80
+0
 #Map Event List Data End
 #SECTION End:BG_EVENT
 #SECTION START:POS_EVENT
 #Map Event List data
-#save date:2009/06/05 20:30:29
+#save date:2009/07/09 12:28:32
 2
 #hold event type:
 1
 #hold event number:
-1
-#event number: 0
-#Pos Event Label
-POSID_TEST01
-#Pos Script Name
-SCRID_T01_POSEVENT_TEST1
-#Event Trigger Work Name
-SVSCRWK_START
-#Event Trigger Work Value
 0
-#Pos Event Size X
-1
-#Pos Event Size Z
-1
-#position
-16 0 -144
 #Map Event List Data End
 #SECTION End:POS_EVENT
 #SECTION START:DOOR_EVENT
 #Map Event List data
-#save date:2009/06/05 20:30:29
+#save date:2009/07/09 12:28:32
 2
 #hold event type:
 1
@@ -157,6 +44,19 @@ SVSCRWK_START
 #Door Event Label
 DOOR_ID_T01_EXIT01
 #Next Zone ID Name
+ZONE_ID_T01R0101
+#Next Door ID Name
+DOOR_ID_T01R0101_EXIT02
+#Door Direction
+EXIT_DIR_DOWN
+#Door Type
+EXIT_TYPE_DOOR
+#position
+0 0 80
+#event number: 1
+#Door Event Label
+DOOR_ID_T01_EXIT02
+#Next Zone ID Name
 ZONE_ID_T01R0201
 #Next Door ID Name
 DOOR_ID_T01R0201_EXIT02
@@ -165,10 +65,10 @@ EXIT_DIR_DOWN
 #Door Type
 EXIT_TYPE_DOOR
 #position
--80 0 -64
-#event number: 1
+-80 0 -80
+#event number: 2
 #Door Event Label
-DOOR_ID_T01_EXIT02
+DOOR_ID_T01_EXIT03
 #Next Zone ID Name
 ZONE_ID_T01R0301
 #Next Door ID Name
@@ -178,20 +78,7 @@ EXIT_DIR_DOWN
 #Door Type
 EXIT_TYPE_DOOR
 #position
-80 0 -64
-#event number: 2
-#Door Event Label
-DOOR_ID_T01_EXIT03
-#Next Zone ID Name
-ZONE_ID_T01R0101
-#Next Door ID Name
-DOOR_ID_T01R0101_EXIT02
-#Door Direction
-EXIT_DIR_DOWN
-#Door Type
-EXIT_TYPE_DOOR
-#position
-0 0 64
+64 0 -80
 #event number: 3
 #Door Event Label
 DOOR_ID_T01_EXIT04
@@ -204,6 +91,6 @@ EXIT_DIR_DOWN
 #Door Type
 EXIT_TYPE_DOOR
 #position
--80 0 160
+-80 0 192
 #Map Event List Data End
 #SECTION End:DOOR_EVENT
