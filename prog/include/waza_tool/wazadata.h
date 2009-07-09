@@ -85,8 +85,8 @@ typedef enum {
   WAZASICK_NOROI,
   WAZASICK_TYOUHATSU,
   WAZASICK_ICHAMON,
-  WAZASICK_FUUIN,
   WAZASICK_KANASIBARI,
+  WAZASICK_AKUBI,
   WAZASICK_KAIHUKUHUUJI,
   WAZASICK_IEKI,            ///< とくせい無効化
   WAZASICK_SASIOSAE,
@@ -94,8 +94,8 @@ typedef enum {
   WAZASICK_MUSTHIT,         ///< ワザ必中状態
   WAZASICK_MUSTHIT_TARGET,  ///< 特定相手に対してのみ必中状態
   WAZASICK_FLYING,
-  WAZASICK_WAZALOCK,        ///< 直前に使ったワザしか出せない
-  WAZASICK_WAZALOCK_HARD,   ///< 直前に使ったワザしか出せない上、行動不可（行動を選択できない）
+  WAZASICK_ENCORE,          ///< 直前に使ったワザしか出せない
+  WAZASICK_WAZALOCK,        ///< 直前に使ったワザしか出せない上、行動も選択できない
   WAZASICK_CANT_ESCAPE,     ///< にげる・いれかえが出来ない
 
   WAZASICK_MAX,
