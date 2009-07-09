@@ -583,9 +583,7 @@ static void handler_Tidoriasi( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flow
     const BTL_POKEPARAM* bpp = BTL_SVFLOW_RECEPT_GetPokeParam( flowWk, pokeID );
     if( BTL_POKEPARAM_CheckSick(bpp, WAZASICK_KONRAN) )
     {
-      u32 hitRatio = BTL_EVENTVAR_GetValue( BTL_EVAR_RATIO );
-      hitRatio = BTL_CALC_MulRatio( hitRatio, BTL_CALC_TOK_CHIDORI_HITRATIO );
-      BTL_EVENTVAR_RewriteValue( BTL_EVAR_RATIO, hitRatio );
+      BTL_EVENTVAR_MulValue( BTL_EVAR_RATIO, BTL_CALC_TOK_CHIDORI_HITRATIO );
     }
   }
 }
@@ -611,9 +609,7 @@ static void handler_Harikiri_HitRatio( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WO
     WazaID waza = BTL_EVENTVAR_GetValue( BTL_EVAR_WAZAID );
     if( WAZADATA_GetDamageType(waza) == WAZADATA_DMG_PHYSIC )
     {
-      u32 hit_ratio = BTL_EVENTVAR_GetValue( BTL_EVAR_RATIO );
-      hit_ratio = BTL_CALC_MulRatio( hit_ratio, BTL_CALC_TOK_HARIKIRI_HITRATIO );
-      BTL_EVENTVAR_RewriteValue( BTL_EVAR_RATIO, hit_ratio );
+      BTL_EVENTVAR_MulValue( BTL_EVAR_RATIO, BTL_CALC_TOK_HARIKIRI_HITRATIO );
     }
   }
 }
@@ -719,10 +715,7 @@ static void handler_Fukugan( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk
 {
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
   {
-    u32 hit_ratio = BTL_EVENTVAR_GetValue( BTL_EVAR_RATIO );
-    hit_ratio = BTL_CALC_MulRatio( hit_ratio, BTL_CALC_TOK_FUKUGAN_HITRATIO );
-    if( hit_ratio > 100 ){ hit_ratio = 100; }
-    BTL_EVENTVAR_RewriteValue( BTL_EVAR_RATIO, hit_ratio );
+    BTL_EVENTVAR_MulValue( BTL_EVAR_RATIO, BTL_CALC_TOK_FUKUGAN_HITRATIO );
   }
 }
 static BTL_EVENT_FACTOR*  HAND_TOK_ADD_Fukugan( u16 pri, u16 tokID, u8 pokeID )
@@ -745,10 +738,7 @@ static void handler_Sunagakure( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flo
   {
     if( BTL_FIELD_GetWeather() == BTL_WEATHER_SAND )
     {
-      u32 hit_ratio = BTL_EVENTVAR_GetValue( BTL_EVAR_RATIO );
-      hit_ratio = BTL_CALC_MulRatio( hit_ratio, BTL_CALC_TOK_SUNAGAKURE_HITRATIO );
-      BTL_EVENTVAR_RewriteValue( BTL_EVAR_RATIO, hit_ratio );
-      BTL_Printf("ポケ[%d] の すながくれにより命中率減 ... %d%%\n", hit_ratio);
+      BTL_EVENTVAR_MulValue( BTL_EVAR_RATIO, BTL_CALC_TOK_SUNAGAKURE_HITRATIO );
     }
   }
 }
@@ -772,10 +762,7 @@ static void handler_Yukigakure( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flo
   {
     if( BTL_FIELD_GetWeather() == BTL_WEATHER_SNOW )
     {
-      u32 hit_ratio = BTL_EVENTVAR_GetValue( BTL_EVAR_RATIO );
-      hit_ratio = BTL_CALC_MulRatio( hit_ratio, BTL_CALC_TOK_SUNAGAKURE_HITRATIO );
-      BTL_EVENTVAR_RewriteValue( BTL_EVAR_RATIO, hit_ratio );
-      BTL_Printf("ポケ[%d] の ゆきがくれにより命中率減 ... %d%%\n", hit_ratio);
+      BTL_EVENTVAR_MulValue( BTL_EVAR_RATIO, BTL_CALC_TOK_SUNAGAKURE_HITRATIO );
     }
   }
 }

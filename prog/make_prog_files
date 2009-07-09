@@ -477,6 +477,7 @@ SRCS_OVERLAY_BATTLE =	battle/btl_main.c \
 			battle/btl_util.c \
 			battle/btl_field.c \
 			battle/btl_pokeselect.c \
+			battle/btl_sick.c \
 			battle/handler/hand_tokusei.c \
 			battle/handler/hand_item.c \
 			battle/handler/hand_waza.c \

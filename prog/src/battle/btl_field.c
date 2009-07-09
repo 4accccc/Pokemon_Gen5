@@ -175,6 +175,7 @@ BOOL BTL_FIELD_AddEffect( BtlFieldEffect effect, BPP_SICK_CONT cont )
     if( Work.factor[ effect ] ){
       Work.cont[ effect ] = cont;
       Work.turnCount[ effect ] = 0;
+      return TRUE;
     }
   }
   return FALSE;
@@ -230,7 +231,7 @@ void BTL_FIELD_RemoveDependPokeEffect( u8 pokeID )
   {
     if( Work.factor[i] )
     {
-      if( BPP_SICCONT_GetPokeID(Work.cont[i]) == pokeID )
+      if( BPP_SICKCONT_GetPokeID(Work.cont[i]) == pokeID )
       {
         BTL_HANDLER_FLD_Remove( Work.factor[i] );
         clearFactorWork( i );
@@ -253,5 +254,26 @@ BOOL BTL_FIELD_CheckEffect( BtlFieldEffect effect )
   GF_ASSERT(effect < BTL_FLDEFF_MAX);
 
   return Work.factor[ effect ] != NULL;
+}
+
+//=============================================================================================
+/**
+ * Œp‘±ˆË‘¶ƒ|ƒPƒ‚ƒ“ID‚ð•Ô‚·
+ *
+ * @param   effect
+ *
+ * @retval  u8
+ */
+//=============================================================================================
+u8 BTL_FIELD_GetDependPokeID( BtlFieldEffect effect )
+{
+  GF_ASSERT(effect < BTL_FLDEFF_MAX);
+
+  if( Work.factor[ effect ] )
+  {
+    return BPP_SICKCONT_GetPokeID( Work.cont[effect] );
+  }
+
+  return BTL_POKEID_NULL;
 }
 

@@ -86,6 +86,7 @@ struct _BTL_MAIN_MODULE {
   u8        numClients;
   u8        myClientID;
   u8        myOrgPos;
+  u8        ImServer;
 
   BTL_PROC    subProc;
   pMainLoop   mainLoop;
@@ -351,6 +352,7 @@ static BOOL setup_alone_single( int* seq, void* work )
 
   // Server 作成
   wk->server = BTL_SERVER_Create( wk, &wk->pokeconForServer, wk->heapID );
+  wk->ImServer = TRUE;
 
   // Client 作成
   wk->client[0] = BTL_CLIENT_Create( wk, &wk->pokeconForClient, BTL_COMM_NONE, sp->netHandle, 0, 1, BTL_THINKER_UI, wk->heapID );
@@ -511,6 +513,7 @@ static BOOL setup_comm_single( int* seq, void* work )
       BTL_Printf("サーバ用のパーティデータセット\n");
 
       wk->server = BTL_SERVER_Create( wk, &wk->pokeconForServer, wk->heapID );
+      wk->ImServer = TRUE;
       wk->client[netID] = BTL_CLIENT_Create( wk, &wk->pokeconForClient, sp->commMode, sp->netHandle,
           netID, 1, BTL_THINKER_UI, wk->heapID );
       BTL_SERVER_AttachLocalClient( wk->server, BTL_CLIENT_GetAdapter(wk->client[netID]), netID, 1 );
@@ -531,6 +534,7 @@ static BOOL setup_comm_single( int* seq, void* work )
       u8 netID = GFL_NET_GetNetID( sp->netHandle );
 
       BTL_Printf("サーバではない用のパーティデータセット\n");
+      wk->ImServer = FALSE;
 
       wk->client[ netID ] = BTL_CLIENT_Create( wk, &wk->pokeconForClient, sp->commMode, sp->netHandle, netID, 1, BTL_THINKER_UI, wk->heapID  );
 
@@ -1700,4 +1704,16 @@ void BTL_MAIN_SyncServerCalcData( BTL_MAIN_MODULE* wk )
   }
 }
 
-
+//=============================================================================================
+/**
+ * 自分がサーバマシンかどうかを返す
+ *
+ * @param   wk
+ *
+ * @retval  BOOL
+ */
+//=============================================================================================
+BOOL BTL_MAIN_IsServerMachine( BTL_MAIN_MODULE * wk )
+{
+  return wk->ImServer;
+}

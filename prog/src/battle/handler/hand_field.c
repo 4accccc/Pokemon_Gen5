@@ -30,16 +30,17 @@ enum {
 /*--------------------------------------------------------------------------*/
 /* Prototypes                                                               */
 /*--------------------------------------------------------------------------*/
-static BTL_EVENT_FACTOR* ADD_Weather( u16 pri, BtlFieldEffect effect, u8 subParam );
+static BTL_EVENT_FACTOR* ADD_Fld_Weather( u16 pri, BtlFieldEffect effect, u8 subParam );
 static void handler_fld_Weather( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 subParam, int* work );
-static BTL_EVENT_FACTOR* ADD_TrickRoom( u16 pri, BtlFieldEffect effect, u8 subParam );
+static BTL_EVENT_FACTOR* ADD_Fld_TrickRoom( u16 pri, BtlFieldEffect effect, u8 subParam );
 static void handler_fld_TrickRoom( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 subParam, int* work );
-static BTL_EVENT_FACTOR* ADD_Juryoku( u16 pri, BtlFieldEffect effect, u8 subParam );
-static BTL_EVENT_FACTOR* ADD_Fuin( u16 pri, BtlFieldEffect effect, u8 subParam );
-static BTL_EVENT_FACTOR* ADD_Sawagu( u16 pri, BtlFieldEffect effect, u8 subParam );
-static BTL_EVENT_FACTOR* ADD_MizuAsobi( u16 pri, BtlFieldEffect effect, u8 subParam );
+static BTL_EVENT_FACTOR* ADD_Fld_Juryoku( u16 pri, BtlFieldEffect effect, u8 subParam );
+static void handler_fld_Jyuryoku( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 subParam, int* work );
+static BTL_EVENT_FACTOR* ADD_Fld_Fuin( u16 pri, BtlFieldEffect effect, u8 subParam );
+static BTL_EVENT_FACTOR* ADD_Fld_Sawagu( u16 pri, BtlFieldEffect effect, u8 subParam );
+static BTL_EVENT_FACTOR* ADD_Fld_MizuAsobi( u16 pri, BtlFieldEffect effect, u8 subParam );
 static void handler_fld_MizuAsobi( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 subParam, int* work );
-static BTL_EVENT_FACTOR* ADD_DoroAsobi( u16 pri, BtlFieldEffect effect, u8 subParam );
+static BTL_EVENT_FACTOR* ADD_Fld_DoroAsobi( u16 pri, BtlFieldEffect effect, u8 subParam );
 static void handler_fld_DoroAsobi( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 subParam, int* work );
 
 
@@ -63,12 +64,12 @@ BTL_EVENT_FACTOR*  BTL_HANDLER_FLD_Add( BtlFieldEffect effect, u8 sub_param )
     BtlFieldEffect eff;
     pEventAddFunc  func;
   }funcTbl[] = {
-    { BTL_FLDEFF_WEATHER,    ADD_Weather     }, ///< 各種天候
-    { BTL_FLDEFF_TRICKROOM,  ADD_TrickRoom   }, ///< トリックルーム
-    { BTL_FLDEFF_JURYOKU,    ADD_Juryoku     }, ///< じゅうりょく
-    { BTL_FLDEFF_FUIN ,      ADD_Fuin        }, ///< ふういん
-    { BTL_FLDEFF_MIZUASOBI,  ADD_MizuAsobi   }, ///< みずあそび
-    { BTL_FLDEFF_DOROASOBI,  ADD_DoroAsobi   }, ///< どろあそび
+    { BTL_FLDEFF_WEATHER,    ADD_Fld_Weather     }, ///< 各種天候
+    { BTL_FLDEFF_TRICKROOM,  ADD_Fld_TrickRoom   }, ///< トリックルーム
+    { BTL_FLDEFF_JURYOKU,    ADD_Fld_Juryoku     }, ///< じゅうりょく
+    { BTL_FLDEFF_FUIN ,      ADD_Fld_Fuin        }, ///< ふういん
+    { BTL_FLDEFF_MIZUASOBI,  ADD_Fld_MizuAsobi   }, ///< みずあそび
+    { BTL_FLDEFF_DOROASOBI,  ADD_Fld_DoroAsobi   }, ///< どろあそび
   };
 
   {
@@ -96,12 +97,13 @@ void BTL_HANDLER_FLD_Remove( BTL_EVENT_FACTOR* factor )
   BTL_EVENT_FACTOR_Remove( factor );
 }
 
+
 //--------------------------------------------------------------------------------------
 /**
  *  天候
  */
 //--------------------------------------------------------------------------------------
-static BTL_EVENT_FACTOR* ADD_Weather( u16 pri, BtlFieldEffect effect, u8 subParam )
+static BTL_EVENT_FACTOR* ADD_Fld_Weather( u16 pri, BtlFieldEffect effect, u8 subParam )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
     { BTL_EVENT_WAZA_DMG_PROC2,  handler_fld_Weather   },  // ダメージ補正
@@ -118,7 +120,7 @@ static void handler_fld_Weather( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* fl
  *  トリックルーム
  */
 //--------------------------------------------------------------------------------------
-static BTL_EVENT_FACTOR* ADD_TrickRoom( u16 pri, BtlFieldEffect effect, u8 subParam )
+static BTL_EVENT_FACTOR* ADD_Fld_TrickRoom( u16 pri, BtlFieldEffect effect, u8 subParam )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
     { BTL_EVENT_CALC_AGILITY,  handler_fld_TrickRoom   },  // ダメージ補正
@@ -137,23 +139,27 @@ static void handler_fld_TrickRoom( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* 
  *  じゅうりょく
  */
 //--------------------------------------------------------------------------------------
-static BTL_EVENT_FACTOR* ADD_Juryoku( u16 pri, BtlFieldEffect effect, u8 subParam )
+static BTL_EVENT_FACTOR* ADD_Fld_Juryoku( u16 pri, BtlFieldEffect effect, u8 subParam )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_WAZA_DMG_PROC2,  handler_fld_Weather   },  // ダメージ補正
+    { BTL_EVENT_WAZA_HIT_RATIO,  handler_fld_Jyuryoku   },  // ダメージ補正
     { BTL_EVENT_NULL, NULL },
   };
   return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_FIELD, effect, pri, subParam, HandlerTable );
+}
+static void handler_fld_Jyuryoku( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 subParam, int* work )
+{
+  BTL_EVENTVAR_MulValue( BTL_EVAR_RATIO, FX32_CONST(1.67) );
 }
 //--------------------------------------------------------------------------------------
 /**
  *  ふういん
  */
 //--------------------------------------------------------------------------------------
-static BTL_EVENT_FACTOR* ADD_Fuin( u16 pri, BtlFieldEffect effect, u8 subParam )
+static BTL_EVENT_FACTOR* ADD_Fld_Fuin( u16 pri, BtlFieldEffect effect, u8 subParam )
 {
+  // 今のところ、何もハンドラを用意する必要が無くなってしまった…
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_WAZA_DMG_PROC2,  handler_fld_Weather   },  // ダメージ補正
     { BTL_EVENT_NULL, NULL },
   };
   return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_FIELD, effect, pri, subParam, HandlerTable );
@@ -163,7 +169,7 @@ static BTL_EVENT_FACTOR* ADD_Fuin( u16 pri, BtlFieldEffect effect, u8 subParam )
  *  さわぐ
  */
 //--------------------------------------------------------------------------------------
-static BTL_EVENT_FACTOR* ADD_Sawagu( u16 pri, BtlFieldEffect effect, u8 subParam )
+static BTL_EVENT_FACTOR* ADD_Fld_Sawagu( u16 pri, BtlFieldEffect effect, u8 subParam )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
     { BTL_EVENT_WAZA_DMG_PROC2,  handler_fld_Weather   },  // ダメージ補正
@@ -176,7 +182,7 @@ static BTL_EVENT_FACTOR* ADD_Sawagu( u16 pri, BtlFieldEffect effect, u8 subParam
  *  みずあそび
  */
 //--------------------------------------------------------------------------------------
-static BTL_EVENT_FACTOR* ADD_MizuAsobi( u16 pri, BtlFieldEffect effect, u8 subParam )
+static BTL_EVENT_FACTOR* ADD_Fld_MizuAsobi( u16 pri, BtlFieldEffect effect, u8 subParam )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
     { BTL_EVENT_WAZA_POWER,  handler_fld_MizuAsobi   },  // ダメージ補正
@@ -195,7 +201,7 @@ static void handler_fld_MizuAsobi( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* 
  *  どろあそび
  */
 //--------------------------------------------------------------------------------------
-static BTL_EVENT_FACTOR* ADD_DoroAsobi( u16 pri, BtlFieldEffect effect, u8 subParam )
+static BTL_EVENT_FACTOR* ADD_Fld_DoroAsobi( u16 pri, BtlFieldEffect effect, u8 subParam )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
     { BTL_EVENT_WAZA_POWER,  handler_fld_DoroAsobi   },  // ダメージ補正

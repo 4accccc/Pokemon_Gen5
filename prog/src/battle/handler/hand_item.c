@@ -1400,10 +1400,9 @@ static void handler_HikarinoKona( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* f
 {
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_DEF) == pokeID )
   {
-    u32 per = BTL_EVENTVAR_GetValue( BTL_EVAR_RATIO );
-    s32 r = 100 - common_GetItemParam( myHandle, flowWk, ITEM_PRM_ATTACK );
-    per = (per * r) / 100;
-    BTL_EVENTVAR_RewriteValue( BTL_EVAR_RATIO, per );
+    u32 per = 100 - common_GetItemParam( myHandle, flowWk, ITEM_PRM_ATTACK );
+    fx32 r = FX32_CONST(per) / 100;
+    BTL_EVENTVAR_MulValue( BTL_EVAR_RATIO, r );
   }
 }
 //------------------------------------------------------------------------------
@@ -1520,13 +1519,9 @@ static void handler_KoukakuLens( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* fl
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
   {
     // –½’†—¦ã¸
-    u32 per = BTL_EVENTVAR_GetValue( BTL_EVAR_RATIO );
-    u32 ratio = 100 + common_GetItemParam( myHandle, flowWk, ITEM_PRM_ATTACK );
-    per = (ratio * per) / 100;
-    if( per > 100 ){
-      per = 100;
-    }
-    BTL_EVENTVAR_RewriteValue( BTL_EVAR_RATIO, per );
+    u32 r = 100 + common_GetItemParam( myHandle, flowWk, ITEM_PRM_ATTACK );
+    fx32 fx_ratio = FX32_CONST(r) / 100;
+    BTL_EVENTVAR_MulValue( BTL_EVAR_RATIO, fx_ratio );
   }
 }
 //------------------------------------------------------------------------------
@@ -1634,10 +1629,9 @@ static void handler_FocusLens( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flow
 
     if( BTL_POKEPARAM_GetTurnFlag(defender, BPP_TURNFLG_ACTION_DONE) )
     {
-      u16 per = BTL_EVENTVAR_GetValue( BTL_EVAR_RATIO );
-      u16 ratio = 100 + common_GetItemParam( myHandle, flowWk, ITEM_PRM_ATTACK );
-      per = (per * ratio) / 100;
-      BTL_EVENTVAR_RewriteValue( BTL_EVAR_RATIO, per );
+      u32 ratio = 100 + common_GetItemParam( myHandle, flowWk, ITEM_PRM_ATTACK );
+      fx32 fx_ratio = FX32_CONST(ratio) / 100;
+      BTL_EVENTVAR_MulValue( BTL_EVAR_RATIO, fx_ratio );
     }
   }
 }
@@ -1658,10 +1652,9 @@ static void handler_NonkiNoOkou( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* fl
 {
   if( pokeID == BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_DEF) )
   {
-    u16 hit_per = BTL_EVENTVAR_GetValue( BTL_EVAR_RATIO );
     u16 ratio = 100 - common_GetItemParam( myHandle, flowWk, ITEM_PRM_ATTACK );
-    hit_per = (hit_per * ratio) / 100;
-    BTL_EVENTVAR_RewriteValue( BTL_EVAR_RATIO, hit_per );
+    fx32 fx_ratio = FX32_CONST(ratio) / 100;
+    BTL_EVENTVAR_MulValue( BTL_EVAR_RATIO, fx_ratio );
   }
 }
 //------------------------------------------------------------------------------
@@ -2336,10 +2329,13 @@ static void handler_DokudokuDama( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* f
   param->fAlmost = FALSE;
   param->poke_cnt = 1;
   param->pokeID[0] = pokeID;
+
   param->fExMsg = TRUE;
-  param->exStrID = BTL_STRID_SET_MoudokuGetSP;
-  param->exStrArgCnt = 1;
-  param->exStrArgs[0] = BTL_EVENT_FACTOR_GetSubID( myHandle );
+  param->exStr.type = BTL_STRTYPE_SET;
+  param->exStr.ID = BTL_STRID_SET_MoudokuGetSP;
+  param->exStr.argCnt = 2;
+  param->exStr.args[0] = pokeID;
+  param->exStr.args[1] = BTL_EVENT_FACTOR_GetSubID( myHandle );;
 }
 //------------------------------------------------------------------------------
 /**
@@ -2364,13 +2360,13 @@ static void handler_KaenDama( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowW
   param->poke_cnt = 1;
   param->pokeID[0] = pokeID;
   param->fExMsg = TRUE;
-  param->exStrID = BTL_STRID_SET_YakedoGetSP;
-  param->exStrArgCnt = 1;
-  param->exStrArgs[0] = BTL_EVENT_FACTOR_GetSubID( myHandle );
 
+  param->exStr.type = BTL_STRTYPE_SET;
+  param->exStr.ID = BTL_STRID_SET_YakedoGetSP;
+  param->exStr.argCnt = 2;
+  param->exStr.args[0] = pokeID;
+  param->exStr.args[1] = BTL_EVENT_FACTOR_GetSubID( myHandle );;
 }
-
-
 //------------------------------------------------------------------------------
 /**
  *  ‚¬‚ñ‚Ì‚±‚È

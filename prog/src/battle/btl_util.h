@@ -224,7 +224,7 @@ static inline BOOL BPP_SICKCONT_IsMoudokuCont( BPP_SICK_CONT cont )
   return ((cont.type == WAZASICK_CONT_PERMANENT) && (cont.permanent.count_max > 0));
 }
 
-static inline u8 BPP_SICCONT_GetPokeID( BPP_SICK_CONT cont )
+static inline u8 BPP_SICKCONT_GetPokeID( BPP_SICK_CONT cont )
 {
   if( cont.type == WAZASICK_CONT_POKE ){
     return cont.poke.ID;

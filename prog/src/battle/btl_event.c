@@ -20,8 +20,16 @@
 /* Consts                                                                   */
 /*--------------------------------------------------------------------------*/
 enum {
-  FACTOR_REGISTER_MAX = 64,     ///< 登録できるイベントファクター最大数
+  FACTOR_REGISTER_MAX = 64,     ///< 登録できるイベントファクター最大数（※）
   EVENTVAL_STACK_DEPTH = 128,   ///< イベント変数スタックの容量
+
+  /* ※ イベントファクター数の根拠
+  ( ワザ2+とくせい1+アイテム1 ) × 場に存在するポケモン数の最大(6) = 24
+  サイドエフェクト(9) × 陣営数(2) = 18
+  フィールドエフェクト（6)
+  24 + 18 + 6 = 48 ... 少なくともこれを上回るようにしておく
+  */
+
 };
 
 /**
@@ -320,6 +328,18 @@ void BTL_EVENT_CallHandlers( BTL_SVFLOW_WORK* flowWork, BtlEventType eventID )
   }
 }
 
+BTL_EVENT_FACTOR* BTL_EVENT_SeekFactorCore( BtlEventFactor factorType )
+{
+  BTL_EVENT_FACTOR* factor;
+
+  for( factor=FirstFactorPtr; factor!=NULL; factor=factor->next )
+  {
+    if( factor->factorType == factorType ){
+      return factor;
+    }
+  }
+  return NULL;
+}
 BTL_EVENT_FACTOR* BTL_EVENT_SeekFactor( BtlEventFactor factorType, u8 pokeID )
 {
   BTL_EVENT_FACTOR* factor;

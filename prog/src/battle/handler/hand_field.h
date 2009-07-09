@@ -14,4 +14,6 @@
 
 extern BTL_EVENT_FACTOR*  BTL_HANDLER_FLD_Add( BtlFieldEffect effect, u8 sub_param );
 extern void BTL_HANDLER_FLD_Remove( BTL_EVENT_FACTOR* factor );
+extern BOOL BTL_HANDLER_FLD_IsExist( BtlFieldEffect effect );
+extern BOOL BTL_HANDLER_FLD_GetSubParam( BtlFieldEffect effect, u8* subParam );
 

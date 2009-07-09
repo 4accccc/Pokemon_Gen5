@@ -135,6 +135,7 @@ struct _BTL_POKEPARAM {
 
   PokeTypePair  type;
   u16  tokusei;
+  u16  actionAgility;
 
   u16 turnCount;        ///< 継続して戦闘に出ているカウンタ
   u16 appearedTurn;     ///< 戦闘に出たターンを記録
@@ -228,6 +229,7 @@ BTL_POKEPARAM*  BTL_POKEPARAM_Create( const POKEMON_PARAM* pp, u8 pokeID, HEAPID
   bpp->turnCount = 0;
   bpp->prevWazaID = WAZANO_NULL;
   bpp->sameWazaCounter = 0;
+  bpp->actionAgility = 0;
 
   flgbuf_clear( bpp->turnFlag, sizeof(bpp->turnFlag) );
   flgbuf_clear( bpp->contFlag, sizeof(bpp->contFlag) );
@@ -294,26 +296,6 @@ static void setupBySrcData( BTL_POKEPARAM* bpp, const POKEMON_PARAM* srcPP )
 
   bpp->formNo = PP_Get( srcPP, ID_PARA_form_no, 0 );
 
-}
-
-//----------------------------------------------------------------------------------
-/**
- * ワザ系状態異常のカウンタクリア
- *
- * @param   pp
- */
-//----------------------------------------------------------------------------------
-static void clearWazaSickWork( BTL_POKEPARAM* pp, BOOL fPokeSickInclude )
-{
-  u32 i, start;
-
-  start = (fPokeSickInclude)? 0 : POKESICK_MAX;
-
-  for(i=start; i<NELEMS(pp->sickCont); ++i){
-    pp->sickCont[i].raw = 0;
-    pp->sickCont[i].type = WAZASICK_CONT_NONE;
-  }
-  GFL_STD_MemClear( pp->wazaSickCounter, sizeof(pp->wazaSickCounter) );
 }
 //----------------------------------------------------------------------------------
 /**
@@ -618,114 +600,6 @@ BOOL BTL_POKEPARAM_IsPPFull( const BTL_POKEPARAM* pp, u8 wazaIdx )
 {
   GF_ASSERT(wazaIdx < pp->wazaCnt);
   return  pp->waza[wazaIdx].pp == pp->waza[wazaIdx].ppMax;
-}
-//=============================================================================================
-/**
- * ポケモン状態異常にかかっているかチェック
- *
- * @param   pp
- *
- * @retval  PokeSick    かかっている状態異常の識別子（かかっていない場合 POKESICK_NULL）
- */
-//=============================================================================================
-PokeSick BTL_POKEPARAM_GetPokeSick( const BTL_POKEPARAM* pp )
-{
-  u32 i;
-  for(i=POKESICK_ORIGIN; i<POKESICK_MAX; ++i)
-  {
-    if( pp->sickCont[i].type != WAZASICK_CONT_NONE ){
-      return i;
-    }
-  }
-  return POKESICK_NULL;
-}
-//=============================================================================================
-/**
- * 特定の状態異常にかかっているかチェック
- *
- * @param   pp
- * @param   sickType
- *
- * @retval  BOOL
- */
-//=============================================================================================
-BOOL BTL_POKEPARAM_CheckSick( const BTL_POKEPARAM* pp, WazaSick sickType )
-{
-  GF_ASSERT(sickType < NELEMS(pp->sickCont));
-
-  return pp->sickCont[ sickType ].type != WAZASICK_CONT_NONE;
-}
-//=============================================================================================
-/**
- * 特定状態異常に設定されたパラメータ値（8bit）を取得
- *
- * @param   pp
- * @param   sick
- *
- * @retval  u8
- */
-//=============================================================================================
-u8 BTL_POKEPARAM_GetSickParam( const BTL_POKEPARAM* pp, WazaSick sick )
-{
-  GF_ASSERT(sick < NELEMS(pp->sickCont));
-
-  switch(  pp->sickCont[sick].type ){
-  case WAZASICK_CONT_TURN:
-    return pp->sickCont[sick].turn.param;
-
-  case WAZASICK_CONT_POKE:
-    return pp->sickCont[sick].poke.ID;
-
-  case WAZASICK_CONT_POKETURN:
-    return pp->sickCont[sick].poketurn.pokeID;
-
-  }
-
-  GF_ASSERT(0); // パラメ無いのに呼び出された
-  return 0;
-}
-//=============================================================================================
-/**
- * 状態異常のターンチェックで減るHPの量を計算
- *
- * @param   pp
- *
- * @retval  int
- */
-//=============================================================================================
-int BTL_POKEPARAM_CalcSickDamage( const BTL_POKEPARAM* pp, WazaSick sick )
-{
-  if( BTL_POKEPARAM_CheckSick(pp, sick) )
-  {
-    switch( sick ){
-    case WAZASICK_DOKU:
-      // カウンタが0なら通常の「どく」
-      if( pp->wazaSickCounter[sick] == 0 ){
-        return BTL_CALC_QuotMaxHP( pp, 8 );
-      }
-      // カウンタが1～なら「どくどく」
-      else{
-        return (pp->baseParam.hpMax / 16) * pp->wazaSickCounter[sick];
-      }
-      break;
-
-    case WAZASICK_YAKEDO:
-      return BTL_CALC_QuotMaxHP( pp, 8 );
-
-    case WAZASICK_AKUMU:
-      if( BTL_POKEPARAM_CheckSick(pp, WAZASICK_NEMURI) ){
-        return BTL_CALC_QuotMaxHP( pp, 4 );
-      }
-      break;
-
-    case WAZASICK_NOROI:
-      return BTL_CALC_QuotMaxHP( pp, 4 );
-
-    default:
-      return 0;
-    }
-  }
-  return 0;
 }
 //=============================================================================================
 /**
@@ -1206,7 +1080,7 @@ void BTL_POKEPARAM_PPPlus( BTL_POKEPARAM* pp, u8 wazaIdx, u8 value )
 }
 //=============================================================================================
 /**
- *
+ * 使用したワザフラグを立てる
  *
  * @param   pp
  * @param   wazaIdx
@@ -1245,96 +1119,6 @@ void BTL_POKEPARAM_UpdateWazaNumber( BTL_POKEPARAM* pp, u8 wazaIdx, WazaID waza,
     pWaza->ppMax = ppMax;
   }
   pWaza->pp = pWaza->ppMax;
-}
-//=============================================================================================
-/**
- * 状態異常を設定
- *
- * @param   pp
- * @param   sick
- * @param   contParam   継続パラメータ
- *
- */
-//=============================================================================================
-void BTL_POKEPARAM_SetWazaSick( BTL_POKEPARAM* pp, WazaSick sick, BPP_SICK_CONT contParam )
-{
-  if( sick < POKESICK_MAX )
-  {
-    PokeSick pokeSick = BTL_POKEPARAM_GetPokeSick( pp );
-    GF_ASSERT(pokeSick == POKESICK_NULL);
-  }
-
-  pp->sickCont[ sick ] = contParam;
-  if( contParam.type == WAZASICK_CONT_TURN ){
-    pp->wazaSickCounter[sick] = contParam.turn.count;
-  }else{
-    pp->wazaSickCounter[sick] = 0;
-  }
-}
-//=============================================================================================
-/**
- * ポケモン系状態異常を回復させる
- *
- * @param   pp
- *
- */
-//=============================================================================================
-void BTL_POKEPARAM_CurePokeSick( BTL_POKEPARAM* pp )
-{
-  u32 i;
-  for(i=POKESICK_ORIGIN; i<POKESICK_MAX; ++i)
-  {
-    pp->sickCont[ i ].type = WAZASICK_CONT_NONE;
-  }
-}
-//=============================================================================================
-/**
- * ワザ系状態異常を回復させる
- *
- * @param   pp
- * @param   sick
- *
- */
-//=============================================================================================
-void BTL_POKEPARAM_CureWazaSick( BTL_POKEPARAM* pp, WazaSick sick )
-{
-  if( sick < POKESICK_MAX )
-  {
-    BTL_POKEPARAM_CurePokeSick( pp );
-  }
-  else
-  {
-    pp->sickCont[ sick ].type = WAZASICK_CONT_NONE;
-  }
-}
-//=============================================================================================
-/**
- * 特定ポケモンに依存している状態異常を回復させる
- *
- * @param   pp
- * @param   depend_pokeID
- */
-//=============================================================================================
-void BTL_POKEPARAM_CureWazaSickDependPoke( BTL_POKEPARAM* pp, u8 depend_pokeID )
-{
-  u32 i;
-  u8 fCure;
-  for(i=0; i<WAZASICK_MAX; ++i)
-  {
-    switch( pp->sickCont[i].type ){
-    case WAZASICK_CONT_POKE:
-      fCure = ( pp->sickCont[i].poke.ID == depend_pokeID );
-      break;
-    case WAZASICK_CONT_POKETURN:
-      fCure = ( pp->sickCont[i].poketurn.pokeID == depend_pokeID );
-      break;
-    default:
-      fCure = FALSE;
-    }
-    if( fCure ){
-      pp->sickCont[i].type = WAZASICK_CONT_NONE;
-    }
-  }
 }
 //=============================================================================================
 /**
@@ -1387,6 +1171,158 @@ void BTL_POKEPARAM_ResetContFlag( BTL_POKEPARAM* pp, BppContFlag flagID )
 {
   flgbuf_reset( pp->contFlag, flagID );
 }
+
+//==================================================================================================
+// 状態異常関連
+//==================================================================================================
+
+
+//=============================================================================================
+/**
+ * 状態異常を設定
+ *
+ * @param   pp
+ * @param   sick
+ * @param   contParam   継続パラメータ
+ *
+ */
+//=============================================================================================
+void BTL_POKEPARAM_SetWazaSick( BTL_POKEPARAM* bpp, WazaSick sick, BPP_SICK_CONT contParam )
+{
+  if( sick < POKESICK_MAX )
+  {
+    PokeSick pokeSick = BTL_POKEPARAM_GetPokeSick( bpp );
+    GF_ASSERT(pokeSick == POKESICK_NULL);
+  }
+
+  bpp->sickCont[ sick ] = contParam;
+  bpp->wazaSickCounter[sick] = 0;
+}
+
+
+//=============================================================================================
+/**
+ * 全状態異常のターンチェック処理
+ *
+ * @param   bpp
+ * @param   callbackFunc    かかっている状態異常ごとに呼び出されるコールバック関数
+ * @param   callbackArg     コールバックに引き渡す任意引数
+ */
+//=============================================================================================
+void BTL_POKEPARAM_WazaSick_TurnCheck( BTL_POKEPARAM* bpp, BtlSickTurnCheckFunc callbackFunc, void* callbackWork )
+{
+  WazaSick  sick;
+
+  for(sick=0; sick<NELEMS(bpp->sickCont); ++sick)
+  {
+    if( bpp->sickCont[sick].type != WAZASICK_CONT_NONE )
+    {
+      u32 turnMax = BPP_SICCONT_GetTurnMax( bpp->sickCont[sick] );
+      BOOL fCure = FALSE;
+      // 継続ターン経過チェック
+      if( turnMax )
+      {
+        u8 n = 1;
+        if( (sick == WAZASICK_NEMURI) && (bpp->tokusei == POKETOKUSEI_HAYAOKI) ){
+          n = 2;    // とくせい「はやおき」は眠りカウンタ２倍速
+        }
+
+        bpp->wazaSickCounter[sick] += n;
+        if( bpp->wazaSickCounter[sick] >= turnMax )
+        {
+          bpp->wazaSickCounter[sick] = 0;
+          // 眠り自体のオフは行動チェック時に行う
+          if( sick != WAZASICK_NEMURI ){
+            bpp->sickCont[sick].type = WAZASICK_CONT_NONE;
+            fCure = TRUE;
+          }
+        }
+      }
+      // 永続型で最大ターン数が指定されているものはカウンタをインクリメント
+      // （現状、この機構を利用しているのは「もうどく」のみ）
+      else if( bpp->sickCont[sick].type == WAZASICK_CONT_PERMANENT )
+      {
+        if( (bpp->sickCont[sick].permanent.count_max != 0 )
+        &&  (bpp->wazaSickCounter[sick] < bpp->sickCont[sick].permanent.count_max)
+        ){
+          bpp->wazaSickCounter[sick]++;
+        }
+      }
+      if( callbackFunc != NULL ){
+        callbackFunc( bpp, sick, fCure, callbackWork );
+      }
+    }
+  }
+}
+//=============================================================================================
+/**
+ * ポケモン系状態異常を回復させる
+ *
+ * @param   pp
+ *
+ */
+//=============================================================================================
+void BTL_POKEPARAM_CurePokeSick( BTL_POKEPARAM* pp )
+{
+  u32 i;
+  for(i=POKESICK_ORIGIN; i<POKESICK_MAX; ++i)
+  {
+    pp->sickCont[ i ] = BPP_SICKCONT_MakeNull();
+  }
+  pp->sickCont[WAZASICK_AKUMU] = BPP_SICKCONT_MakeNull();  // 眠りが治れば“あくむ”も治る
+}
+//=============================================================================================
+/**
+ * ワザ系状態異常を回復させる
+ *
+ * @param   pp
+ * @param   sick
+ *
+ */
+//=============================================================================================
+void BTL_POKEPARAM_CureWazaSick( BTL_POKEPARAM* pp, WazaSick sick )
+{
+  if( sick < POKESICK_MAX )
+  {
+    BTL_POKEPARAM_CurePokeSick( pp );
+  }
+  else
+  {
+    pp->sickCont[ sick ] = BPP_SICKCONT_MakeNull();
+  }
+}
+//=============================================================================================
+/**
+ * 特定ポケモンに依存している状態異常を回復させる
+ *
+ * @param   pp
+ * @param   depend_pokeID
+ */
+//=============================================================================================
+void BTL_POKEPARAM_CureWazaSickDependPoke( BTL_POKEPARAM* pp, u8 depend_pokeID )
+{
+  u32 i;
+  u8 fCure;
+  for(i=0; i<WAZASICK_MAX; ++i)
+  {
+    switch( pp->sickCont[i].type ){
+    case WAZASICK_CONT_POKE:
+      fCure = ( pp->sickCont[i].poke.ID == depend_pokeID );
+      break;
+    case WAZASICK_CONT_POKETURN:
+      fCure = ( pp->sickCont[i].poketurn.pokeID == depend_pokeID );
+      break;
+    default:
+      fCure = FALSE;
+    }
+    if( fCure ){
+      pp->sickCont[i] = BPP_SICKCONT_MakeNull();
+      if( i == WAZASICK_NEMURI ){
+        pp->sickCont[WAZASICK_AKUMU] = BPP_SICKCONT_MakeNull();
+      }
+    }
+  }
+}
 //=============================================================================================
 /**
  * 「ねむり」ターン進行　※ポケモン状態異常チェックは、「たたかう」を選んだ場合にのみ行う
@@ -1404,8 +1340,8 @@ BOOL BTL_POKEPARAM_Nemuri_CheckWake( BTL_POKEPARAM* pp )
     {
       if( pp->sickCont[POKESICK_NEMURI].turn.count == 0 )
       {
-        pp->sickCont[ POKESICK_NEMURI ].type = WAZASICK_CONT_NONE;
-        pp->sickCont[ WAZASICK_AKUMU ].type = WAZASICK_CONT_NONE;
+        pp->sickCont[ POKESICK_NEMURI ] = BPP_SICKCONT_MakeNull();
+        pp->sickCont[ WAZASICK_AKUMU ] = BPP_SICKCONT_MakeNull();
         return TRUE;
       }
     }
@@ -1416,69 +1352,136 @@ BOOL BTL_POKEPARAM_Nemuri_CheckWake( BTL_POKEPARAM* pp )
 }
 //=============================================================================================
 /**
- * 全状態異常のターンチェック処理
+ * ポケモン状態異常にかかっているかチェック
  *
  * @param   pp
  *
- * @retval  BOOL    何かこのチェックで治った状態異常があればTRUE
+ * @retval  PokeSick    かかっている状態異常の識別子（かかっていない場合 POKESICK_NULL）
  */
 //=============================================================================================
-BOOL BTL_POKEPARAM_WazaSick_TurnCheck( BTL_POKEPARAM* pp )
+PokeSick BTL_POKEPARAM_GetPokeSick( const BTL_POKEPARAM* pp )
 {
-  u32 i, turnMax;
-  BOOL ret = FALSE;
-
-  for(i=0; i<NELEMS(pp->sickCont); ++i)
+  u32 i;
+  for(i=POKESICK_ORIGIN; i<POKESICK_MAX; ++i)
   {
-    switch( pp->sickCont[i].type ){
-    case WAZASICK_CONT_TURN:
-      turnMax = pp->sickCont[i].turn.count;
-      break;
-    case WAZASICK_CONT_POKETURN:
-      turnMax = pp->sickCont[i].poketurn.count;
-    default:
-      turnMax = 0;
-      break;
-    }
-    if( turnMax )
-    {
-      u8 n = 1;
-      if( (i == WAZASICK_NEMURI)
-      &&  (pp->tokusei == POKETOKUSEI_HAYAOKI )
-      ){
-        n = 2;    // とくせい「はやおき」は眠りカウンタ２倍速
-      }
-
-      pp->wazaSickCounter[i] += n;
-
-      if( pp->wazaSickCounter[i] >= turnMax )
-      {
-        pp->wazaSickCounter[i] = 0;
-        if( i != WAZASICK_NEMURI ){
-          pp->sickCont[i].type = WAZASICK_CONT_NONE;
-        }else{
-          // 眠り時は“あくむ”をオフにする。
-          // 眠り自体のオフは行動チェック時に行う
-          // @@@ あくむのオフも眠りと一致させるべきかも？
-          pp->sickCont[ WAZASICK_AKUMU ].type = WAZASICK_CONT_NONE;
-        }
-        ret = TRUE;
-      }
-    }
-
-
-    if( pp->sickCont[i].type == WAZASICK_CONT_PERMANENT )
-    {
-      if( (pp->sickCont[i].permanent.count_max != 0 )
-      &&  (pp->wazaSickCounter[i] < pp->sickCont[i].permanent.count_max)
-      ){
-        pp->wazaSickCounter[i]++;
-      }
+    if( pp->sickCont[i].type != WAZASICK_CONT_NONE ){
+      return i;
     }
   }
-
-  return ret;
+  return POKESICK_NULL;
 }
+//=============================================================================================
+/**
+ * 特定の状態異常にかかっているかチェック
+ *
+ * @param   pp
+ * @param   sickType
+ *
+ * @retval  BOOL
+ */
+//=============================================================================================
+BOOL BTL_POKEPARAM_CheckSick( const BTL_POKEPARAM* pp, WazaSick sickType )
+{
+  GF_ASSERT(sickType < NELEMS(pp->sickCont));
+
+  return pp->sickCont[ sickType ].type != WAZASICK_CONT_NONE;
+}
+//=============================================================================================
+/**
+ * 特定状態異常に設定されたパラメータ値（8bit）を取得
+ *
+ * @param   pp
+ * @param   sick
+ *
+ * @retval  u8
+ */
+//=============================================================================================
+u8 BTL_POKEPARAM_GetSickParam( const BTL_POKEPARAM* pp, WazaSick sick )
+{
+  GF_ASSERT(sick < NELEMS(pp->sickCont));
+
+  switch(  pp->sickCont[sick].type ){
+  case WAZASICK_CONT_TURN:
+    return pp->sickCont[sick].turn.param;
+
+  case WAZASICK_CONT_POKE:
+    return pp->sickCont[sick].poke.ID;
+
+  case WAZASICK_CONT_POKETURN:
+    return pp->sickCont[sick].poketurn.pokeID;
+
+  }
+
+  GF_ASSERT(0); // パラメ無いのに呼び出された
+  return 0;
+}
+//=============================================================================================
+/**
+ * 状態異常のターンチェックで減るHPの量を計算
+ *
+ * @param   pp
+ *
+ * @retval  int
+ */
+//=============================================================================================
+int BTL_POKEPARAM_CalcSickDamage( const BTL_POKEPARAM* pp, WazaSick sick )
+{
+  if( BTL_POKEPARAM_CheckSick(pp, sick) )
+  {
+    switch( sick ){
+    case WAZASICK_DOKU:
+      // カウンタが0なら通常の「どく」
+      if( pp->wazaSickCounter[sick] == 0 ){
+        return BTL_CALC_QuotMaxHP( pp, 8 );
+      }
+      // カウンタが1～なら「どくどく」
+      else{
+        return (pp->baseParam.hpMax / 16) * pp->wazaSickCounter[sick];
+      }
+      break;
+
+    case WAZASICK_YAKEDO:
+      return BTL_CALC_QuotMaxHP( pp, 8 );
+
+    case WAZASICK_AKUMU:
+      if( BTL_POKEPARAM_CheckSick(pp, WAZASICK_NEMURI) ){
+        return BTL_CALC_QuotMaxHP( pp, 4 );
+      }
+      break;
+
+    case WAZASICK_NOROI:
+      return BTL_CALC_QuotMaxHP( pp, 4 );
+
+    default:
+      return 0;
+    }
+  }
+  return 0;
+}
+//----------------------------------------------------------------------------------
+/**
+ * ワザ系状態異常のカウンタクリア
+ *
+ * @param   pp
+ */
+//----------------------------------------------------------------------------------
+static void clearWazaSickWork( BTL_POKEPARAM* pp, BOOL fPokeSickInclude )
+{
+  u32 i, start;
+
+  start = (fPokeSickInclude)? 0 : POKESICK_MAX;
+
+  for(i=start; i<NELEMS(pp->sickCont); ++i){
+    pp->sickCont[i].raw = 0;
+    pp->sickCont[i].type = WAZASICK_CONT_NONE;
+  }
+  GFL_STD_MemClear( pp->wazaSickCounter, sizeof(pp->wazaSickCounter) );
+}
+
+
+
+
+
 //=============================================================================================
 /**
  * 場に入場した時のターンナンバーをセット
@@ -1806,6 +1809,33 @@ BOOL BTL_POKEPARAM_WAZADMG_REC_Get( const BTL_POKEPARAM* bpp, u8 turn_ridx, u8 r
   }
   return FALSE;
 }
+//=============================================================================================
+/**
+ * 行動順ソートの時に使用された「すばやさ」を記録しておく
+ *（とくせい、ランク効果、アイテム装備効果などが反映されたもの）
+ *
+ * @param   bpp
+ * @param   actionAgility
+ */
+//=============================================================================================
+void BTL_POKEPARAM_SetActionAgility( BTL_POKEPARAM* bpp, u16 actionAgility )
+{
+  bpp->actionAgility = actionAgility;
+}
+//=============================================================================================
+/**
+ * 行動順ソートの時に使用された「すばやさ」を取得
+ *（とくせい、ランク効果、アイテム装備効果などが反映されたもの）
+ *
+ * @param   bpp
+ *
+ * @retval  u16
+ */
+//=============================================================================================
+u16 BTL_POKEPARAM_GetActionAgility( const BTL_POKEPARAM* bpp )
+{
+  return bpp->actionAgility;
+}
 
 //--------------------------------------------------------------------------
 /**
@@ -1894,6 +1924,7 @@ BOOL BTL_POKEPARAM_HENSIN_Set( BTL_POKEPARAM* bpp, const BTL_POKEPARAM* target )
     bpp->turnCount = 0;
     bpp->prevWazaID = WAZANO_NULL;
     bpp->sameWazaCounter = 0;
+    bpp->actionAgility = 0;
 
     bpp->coreParam.hensinSrc = target->coreParam.ppSrc;
 

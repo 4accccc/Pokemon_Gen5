@@ -12,8 +12,8 @@
 
 #include "waza_tool/wazadata.h"
 
-#include "btl_server_flow.h"
 #include "btl_server.h"
+#include "btl_server_flow.h"
 
 
 
@@ -177,6 +177,7 @@ typedef enum {
   BTL_EVAR_AVOID_RANK,
   BTL_EVAR_HITCOUNT_MAX,
   BTL_EVAR_HITCOUNT,
+  BTL_EVAR_HIT_PER,
   BTL_EVAR_CRITICAL_RANK,
   BTL_EVAR_CRITICAL_FLAG,
   BTL_EVAR_ITEM,

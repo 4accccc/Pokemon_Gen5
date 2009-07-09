@@ -45,6 +45,7 @@ extern BOOL BTL_FIELD_AddEffect( BtlFieldEffect effect, BPP_SICK_CONT cont );
 extern void BTL_FIELD_RemoveEffect( BtlFieldEffect state );
 extern void BTL_FIELD_RemoveDependPokeEffect( u8 pokeID );
 extern BOOL BTL_FIELD_CheckEffect( BtlFieldEffect state );
+extern u8 BTL_FIELD_GetDependPokeID( BtlFieldEffect effect );
 
 
 

@@ -15,6 +15,7 @@
 #include "btl_pokeparam.h"
 
 typedef enum {
+  BTL_STRTYPE_NULL = 0,
   BTL_STRTYPE_STD,
   BTL_STRTYPE_SET,
   BTL_STRTYPE_WAZA,

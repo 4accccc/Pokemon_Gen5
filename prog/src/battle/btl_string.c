@@ -467,6 +467,8 @@ void BTL_STR_MakeStringSet( STRBUF* buf, BtlStrID_SET strID, const int* args )
     { BTL_STRID_SET_UseItem_RecoverPP,    ms_set_item_recover_pp },
     { BTL_STRID_SET_KaifukuFuji,          ms_set_waza_sp },
     { BTL_STRID_SET_ChouhatuWarn,         ms_set_waza_sp },
+    { BTL_STRID_SET_FuuinWarn,            ms_set_waza_sp },
+    { BTL_STRID_SET_Kanasibari,           ms_set_waza_sp },
     { BTL_STRID_SET_Urami,                ms_set_waza_num },
     { BTL_STRID_SET_LockOn,               ms_set_poke },
     { BTL_STRID_SET_Tedasuke,             ms_set_poke },

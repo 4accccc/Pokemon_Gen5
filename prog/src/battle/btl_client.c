@@ -191,6 +191,8 @@ static BOOL scProc_OP_SetItem( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_OP_UpdateWazaNumber( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_OP_Hensin( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_OP_OutClear( BTL_CLIENT* wk, int* seq, const int* args );
+static BOOL scProc_OP_AddFldEff( BTL_CLIENT* wk, int* seq, const int* args );
+static BOOL scProc_OP_RemoveFldEff( BTL_CLIENT* wk, int* seq, const int* args );
 static void cec_addCode( CANT_ESC_CONTROL* ctrl, u8 pokeID, BtlCantEscapeCode code );
 static void cec_subCode( CANT_ESC_CONTROL* ctrl, u8 pokeID, BtlCantEscapeCode code );
 static u8 cec_isEnable( CANT_ESC_CONTROL* ctrl, BtlCantEscapeCode code, BTL_CLIENT* wk );
@@ -772,8 +774,30 @@ static BOOL is_unselectable_waza( BTL_CLIENT* wk, const BTL_POKEPARAM* bpp, Waza
     }
   }
 
-
-  // @@@ ふういんとかの処理
+// ふういんチェック（ふういんをかけたポケが持ってるワザを出せない）
+  if( BTL_FIELD_CheckEffect(BTL_FLDEFF_FUIN) )
+  {
+    u8 fuinPokeID = BTL_FIELD_GetDependPokeID( BTL_FLDEFF_FUIN );
+    u8 myPokeID = BTL_POKEPARAM_GetID( bpp );
+    BTL_Printf("ふういん実施中です\n");
+    if( myPokeID != fuinPokeID )
+    {
+      const BTL_POKEPARAM* fuinPoke = BTL_POKECON_GetPokeParam( wk->pokeCon, fuinPokeID );
+      BTL_Printf("自分はふういんポケじゃありません\n");
+      if( BTL_POKEPARAM_GetWazaIdx(fuinPoke, waza) != PTL_WAZA_MAX )
+      {
+        BTL_Printf("そのワザはふういんポケが持ってますので使えません\n");
+        if( strParam != NULL )
+        {
+          strParam->strID = BTL_STRID_SET_FuuinWarn;
+          strParam->stdFlag = FALSE;
+          strParam->args[0] = myPokeID;
+          strParam->args[1] = waza;
+        }
+        return TRUE;
+      }
+    }
+  }
   return FALSE;
 }
 
@@ -1220,6 +1244,8 @@ static BOOL SubProc_UI_ServerCmd( BTL_CLIENT* wk, int* seq )
     { SC_OP_UPDATE_WAZANUMBER,  scProc_OP_UpdateWazaNumber},
     { SC_OP_HENSIN,             scProc_OP_Hensin          },
     { SC_OP_OUTCLEAR,           scProc_OP_OutClear        },
+    { SC_OP_ADD_FLDEFF,         scProc_OP_AddFldEff       },
+    { SC_OP_REMOVE_FLDEFF,      scProc_OP_RemoveFldEff    },
     { SC_ACT_KILL,              scProc_ACT_Kill           },
   };
 
@@ -2107,8 +2133,8 @@ static BOOL scProc_OP_ChangePokeForm( BTL_CLIENT* wk, int* seq, const int* args 
 }
 static BOOL scProc_OP_WSTurnCheck( BTL_CLIENT* wk, int* seq, const int* args )
 {
-  BTL_POKEPARAM* pp = BTL_POKECON_GetPokeParam( wk->pokeCon, args[0] );
-  BTL_POKEPARAM_WazaSick_TurnCheck( pp );
+  BTL_POKEPARAM* bpp = BTL_POKECON_GetPokeParam( wk->pokeCon, args[0] );
+  BTL_POKEPARAM_WazaSick_TurnCheck( bpp, NULL, NULL );
   return TRUE;
 }
 static BOOL scProc_OP_RemoveItem( BTL_CLIENT* wk, int* seq, const int* args )
@@ -2199,6 +2225,29 @@ static BOOL scProc_OP_OutClear( BTL_CLIENT* wk, int* seq, const int* args )
   BTL_POKEPARAM_OutClear( pp );
   return TRUE;
 }
+static BOOL scProc_OP_AddFldEff( BTL_CLIENT* wk, int* seq, const int* args )
+{
+  // @@@ サーバマシンなら既に天候を操作しているハズなので行わない
+  //     ただしこの措置は全マシンにサーバ計算機能が乗るようになったらハズすと思う
+  //     （というかこのコマンド自体、要らなくなるハズ）
+  if( !BTL_MAIN_IsServerMachine(wk->mainModule) ){
+    BPP_SICK_CONT  cont;
+    cont.raw = args[1];
+    BTL_FIELD_AddEffect( args[0], cont );
+  }
+  return TRUE;
+}
+static BOOL scProc_OP_RemoveFldEff( BTL_CLIENT* wk, int* seq, const int* args )
+{
+  // @@@ サーバマシンなら既に天候を操作しているハズなので行わない
+  //     ただしこの措置は全マシンにサーバ計算機能が乗るようになったらハズすと思う
+  //     （というかこのコマンド自体、要らなくなるハズ）
+  if( !BTL_MAIN_IsServerMachine(wk->mainModule) ){
+    BTL_FIELD_RemoveEffect( args[0] );
+  }
+  return TRUE;
+}
+
 
 
 

@@ -16,7 +16,6 @@
 #include "btl_adapter.h"
 #include "btl_server.h"
 #include "btl_server_cmd.h"
-#include "btl_event.h"
 #include "btl_string.h"
 #include "btl_sideeff.h"
 #include "btl_field.h"
@@ -222,6 +221,18 @@ typedef struct {
   u8    padding : 6;       ///< パディング
 }BTL_HANDEX_PARAM_HEADER;
 
+/**
+ *  ハンドラ用メッセージ出力パラメータ
+ */
+typedef struct {
+
+  u8    type;    ///< 文字列タイプ（ BtlStrType  (btl_string.h) )
+  u8    argCnt;  ///< 引数の数
+  u16   ID;      ///< 文字列ID
+  int   args[ BTL_STR_ARG_MAX ];  ///< 引数
+
+}BTL_HANDEX_STR_PARAMS;
+
 typedef struct {
  BTL_HANDEX_PARAM_HEADER   header;   ///< 共有ヘッダ
 }BTL_HANDEX_PARAM_USE_ITEM;
@@ -286,9 +297,7 @@ typedef struct {
  u8   poke_cnt;                      ///< 対象ポケモン数
  u8   pokeID[ BTL_POS_MAX ];         ///< 対象ポケモンID
  u8   fExMsg;                        ///< 成功時、特殊メッセージ表示
- u8   exStrArgCnt;                   ///< 成功時の特殊メッセージ引数の数
- u16  exStrID;                       ///< 成功時の特殊メッセージID
- int  exStrArgs[ BTL_STR_ARG_MAX ];  ///< 成功時の特殊メッセージ引数
+ BTL_HANDEX_STR_PARAMS  exStr;       ///< 特殊メッセージ詳細
 }BTL_HANDEX_PARAM_ADD_SICK;
 
 typedef struct {
@@ -366,8 +375,9 @@ typedef struct {
   BtlFieldEffect           effect;
   BPP_SICK_CONT            cont;
   u8                       sub_param;
-  u8                       fExMsg;
-  u16                      exStrID;
+
+  BTL_HANDEX_STR_PARAMS    exStr;
+
 }BTL_HANDEX_PARAM_ADD_FLDEFF;
 
 typedef struct {
