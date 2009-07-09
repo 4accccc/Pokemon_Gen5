@@ -41,6 +41,9 @@ struct _FLD_SCENEAREA {
 
   // 起動フラグ
   u32 active_area;
+
+	// コール関数ID
+	u32 call_funcID;
 };
 
 //-----------------------------------------------------------------------------
@@ -146,6 +149,8 @@ u32 FLD_SCENEAREA_Update( FLD_SCENEAREA* p_sys, const VecFx32* cp_pos )
   int i;
   u32 now_active;
 	BOOL result;
+
+	p_sys->call_funcID = FLD_SCENEAREA_FUNC_NULL;
   
   // エリアチェック
   now_active = FLD_SCENEAREA_ACTIVE_NONE;
@@ -172,6 +177,7 @@ u32 FLD_SCENEAREA_Update( FLD_SCENEAREA* p_sys, const VecFx32* cp_pos )
 			FUNC_CallUpdateFunc( p_sys->cp_func, 
 					p_sys->cp_data[now_active].inside_func, 
 					p_sys, &p_sys->cp_data[now_active], cp_pos );
+			p_sys->call_funcID = p_sys->cp_data[now_active].inside_func;
     }
 
     if( p_sys->active_area != FLD_SCENEAREA_ACTIVE_NONE ){
@@ -179,6 +185,7 @@ u32 FLD_SCENEAREA_Update( FLD_SCENEAREA* p_sys, const VecFx32* cp_pos )
 			FUNC_CallUpdateFunc( p_sys->cp_func, 
 					p_sys->cp_data[p_sys->active_area].outside_func, 
 					p_sys, &p_sys->cp_data[p_sys->active_area], cp_pos );
+			p_sys->call_funcID = p_sys->cp_data[p_sys->active_area].outside_func;
     }
 
     p_sys->active_area = now_active;
@@ -190,9 +197,26 @@ u32 FLD_SCENEAREA_Update( FLD_SCENEAREA* p_sys, const VecFx32* cp_pos )
 		FUNC_CallUpdateFunc( p_sys->cp_func, 
 				p_sys->cp_data[p_sys->active_area].update_func, 
 				p_sys, &p_sys->cp_data[p_sys->active_area], cp_pos );
+		p_sys->call_funcID = p_sys->cp_data[p_sys->active_area].update_func;
   }
 
   return p_sys->active_area;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	更新処理で使用した関数のIDの取得
+ *
+ *	@param	cp_sys	システム
+ *
+ *	@retval	関数ID
+ *	@retval	FLD_SCENEAREA_FUNC_NULL	何もコールしてない
+ */
+//-----------------------------------------------------------------------------
+u32 FLD_SCENEAREA_GetUpdateFuncID( const FLD_SCENEAREA* cp_sys )
+{
+	GF_ASSERT( cp_sys );
+	return cp_sys->call_funcID;
 }
 
 

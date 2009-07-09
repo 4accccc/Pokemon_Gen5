@@ -93,6 +93,8 @@ extern void FLD_SCENEAREA_Load( FLD_SCENEAREA* p_sys, const FLD_SCENEAREA_DATA* 
 extern void FLD_SCENEAREA_Release( FLD_SCENEAREA* p_sys );
 extern u32 FLD_SCENEAREA_Update( FLD_SCENEAREA* p_sys, const VecFx32* cp_pos );
 
+extern u32 FLD_SCENEAREA_GetUpdateFuncID( const FLD_SCENEAREA* cp_sys );
+
 // äeéÌèÓïÒÇÃéÛÇØìnÇµ
 extern FIELD_CAMERA* FLD_SCENEAREA_GetFieldCamera( const FLD_SCENEAREA* cp_sys );
 

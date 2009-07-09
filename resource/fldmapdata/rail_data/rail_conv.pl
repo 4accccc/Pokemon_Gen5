@@ -511,7 +511,7 @@ sub convData
 
 					$work_index ++;
 				}
-			}while( ($work_number != $BYTEWORK_INDEX_OVER) && ($work_number != $BYTEWORK_INDEX_OVER) );
+			}while( ($work_number != $BYTEWORK_INDEX_OVER) && ($one_datasiz != $BYTEWORK_INDEX_OVER) );
 
 			#足りないワークを出力
 			while( $datasiz < $RAIL_LINEPOS_SET_WORK_SIZ )
@@ -546,7 +546,7 @@ sub convData
 			{
 				$work_number = &getPeaceParamByteWorkNumberForName( \@filedata, $CAMERA_NAME[$i], $work_index );
 				$one_datasiz = &getPeaceParamByteWorkSizeForName( \@filedata, $CAMERA_NAME[$i], $work_index );
-				if( ($work_number != $BYTEWORK_INDEX_OVER) && ($work_number != $BYTEWORK_INDEX_OVER) )
+				if( ($work_number != $BYTEWORK_INDEX_OVER) && ($one_datasiz != $BYTEWORK_INDEX_OVER) )
 				{
 					#出力
 					if( $one_datasiz == 1 )
@@ -571,7 +571,7 @@ sub convData
 					}
 					$work_index ++;
 				}
-			}while( ($work_number != $BYTEWORK_INDEX_OVER) && ($work_number != $BYTEWORK_INDEX_OVER) );
+			}while( ($work_number != $BYTEWORK_INDEX_OVER) && ($one_datasiz != $BYTEWORK_INDEX_OVER) );
 
 			#足りないワークを出力
 			while( $datasiz < $RAIL_CAMERA_SET_WORK_SIZ )

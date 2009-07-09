@@ -17,203 +17,13 @@
 #include "field_rail.h"
 #include "field_rail_loader.h"
 #include "fld_scenearea.h"
+#include "fld_scenearea_loader.h"
+#include "fld_scenearea_loader_func.h"
 
 
 //======================================================================
 //	シーンエリア情報
 //======================================================================
-enum
-{
-	C3_SCENEAREA_FUNC_AREACHECK = 0,
-	C3_SCENEAREA_FUNC_AREACHECK_MAX,
-
-	C3_SCENEAREA_FUNC_UPDATE = 0,
-	C3_SCENEAREA_FUNC_INSIDE,
-	C3_SCENEAREA_FUNC_OUTSIDE,
-	C3_SCENEAREA_FUNC_INSIDEFXCAMERA,
-	C3_SCENEAREA_FUNC_OUTSIDEFXCAMERA,
-	C3_SCENEAREA_FUNC_UPDATE_MAX,
-};
-
-static BOOL C3_SCENEAREA_CheckArea( const FLD_SCENEAREA* cp_sys, const FLD_SCENEAREA_DATA* cp_data, const VecFx32* cp_pos );
-static void C3_SCENEAREA_Update( const FLD_SCENEAREA* cp_sys, const FLD_SCENEAREA_DATA* cp_data, const VecFx32* cp_pos );
-static void C3_SCENEAREA_Inside( const FLD_SCENEAREA* cp_sys, const FLD_SCENEAREA_DATA* cp_data, const VecFx32* cp_pos );
-static void C3_SCENEAREA_Outside( const FLD_SCENEAREA* cp_sys, const FLD_SCENEAREA_DATA* cp_data, const VecFx32* cp_pos );
-static void C3_SCENEAREA_InsideFxCamera( const FLD_SCENEAREA* cp_sys, const FLD_SCENEAREA_DATA* cp_data, const VecFx32* cp_pos );
-static void C3_SCENEAREA_OutsideFxCamera( const FLD_SCENEAREA* cp_sys, const FLD_SCENEAREA_DATA* cp_data, const VecFx32* cp_pos );
-
-//-------------------------------------
-///	エリアパラメータ構造体
-//=====================================
-typedef struct {
-  u32   rot_start;
-  u32   rot_end;
-  fx32  dist_min;
-  fx32  dist_max;
-  u32   pitch;
-  fx32  length;
-
-  // 固定カメラに必要なパラメータ
-  fx32  target_x;
-  fx32  target_y;
-  fx32  target_z;
-  fx32  camera_x;
-  fx32  camera_y;
-  fx32  camera_z;
-} C3_SCENEAREA_PARAM;
-
-#define SCENE_AREA_DIST_MIN ( 0xfc024 )
-#define SCENE_AREA_DIST_MAX ( 0x1a8fea )
-//#define SCENE_AREA_DIST_MAX ( 0x2000000 )
-
-static const FLD_SCENEAREA_DATA sc_SCENE[] = 
-{
-  // ALLAY00
-  {
-    { 
-      // エリア
-      // rot_start, rot_end, dist_min, dist_max
-      // (基準を{0,0,-FX32_ONE}としたときの角度)
-      0x2598, 0x3048, SCENE_AREA_DIST_MIN, SCENE_AREA_DIST_MAX,
-      // カメラ
-      // pitch len
-      0x600, 0x26D000,
-    },
-    C3_SCENEAREA_FUNC_AREACHECK,
-    C3_SCENEAREA_FUNC_UPDATE,
-    C3_SCENEAREA_FUNC_INSIDE,
-    C3_SCENEAREA_FUNC_OUTSIDE,
-  },
-
-  // ALLAY01
-  {
-    { 
-      // エリア
-      // rot_start, rot_end, dist_min, dist_max
-      // (基準を{0,0,-FX32_ONE}としたときの角度)
-      0x4f28, 0x6868, SCENE_AREA_DIST_MIN, SCENE_AREA_DIST_MAX,
-      // カメラ
-      // pitch len
-      0x600, 0x26D000,
-    },
-    C3_SCENEAREA_FUNC_AREACHECK,
-    C3_SCENEAREA_FUNC_UPDATE,
-    C3_SCENEAREA_FUNC_INSIDE,
-    C3_SCENEAREA_FUNC_OUTSIDE,
-  },
-
-  // ALLAY02
-  {
-    { 
-      // エリア
-      // rot_start, rot_end, dist_min, dist_max
-      // (基準を{0,0,-FX32_ONE}としたときの角度)
-      0x7a28, 0x9298, SCENE_AREA_DIST_MIN, SCENE_AREA_DIST_MAX,
-      // カメラ
-      // pitch len
-      0x600, 0x26D000,
-    },
-    C3_SCENEAREA_FUNC_AREACHECK,
-    C3_SCENEAREA_FUNC_UPDATE,
-    C3_SCENEAREA_FUNC_INSIDE,
-    C3_SCENEAREA_FUNC_OUTSIDE,
-  },
-
-  // ALLAY03
-  {
-    { 
-      // エリア
-      // rot_start, rot_end, dist_min, dist_max
-      // (基準を{0,0,-FX32_ONE}としたときの角度)
-      0xa638, 0xaff8, SCENE_AREA_DIST_MIN, SCENE_AREA_DIST_MAX,
-      // カメラ
-      // pitch len
-      0x600, 0x26D000,
-    },
-    C3_SCENEAREA_FUNC_AREACHECK,
-    C3_SCENEAREA_FUNC_UPDATE,
-    C3_SCENEAREA_FUNC_INSIDE,
-    C3_SCENEAREA_FUNC_OUTSIDE,
-  },
-
-  // ALLAY04
-  {
-    { 
-      // エリア
-      // rot_start, rot_end, dist_min, dist_max
-      // (基準を{0,0,-FX32_ONE}としたときの角度)
-      0xcfb8, 0xe148, SCENE_AREA_DIST_MIN, SCENE_AREA_DIST_MAX,
-      // カメラ
-      // pitch len
-      0x600, 0x26D000,
-    },
-    C3_SCENEAREA_FUNC_AREACHECK,
-    C3_SCENEAREA_FUNC_UPDATE,
-    C3_SCENEAREA_FUNC_INSIDE,
-    C3_SCENEAREA_FUNC_OUTSIDE,
-  },
-
-  // ピカチューのビルの固定カメラ
-  {
-    { 
-      // エリア
-      // rot_start, rot_end, dist_min, dist_max
-      // (基準を{0,0,-FX32_ONE}としたときの角度)
-//      0xc268, 0xcfb8, SCENE_AREA_DIST_MIN, 0x1a5001,
-      0xc268, 0xcfb8, SCENE_AREA_DIST_MIN, SCENE_AREA_DIST_MAX,
-      // カメラ
-      // dummy, dummy,
-      0, 0,
-      // target x,y,z
-      0x3e2504,0xfff1ee7f,0x10d83a,
-      // camera x,y,z
-      0xb573b,0x76e53,0x30e81c,
-    },
-    C3_SCENEAREA_FUNC_AREACHECK,
-    C3_SCENEAREA_FUNC_INSIDEFXCAMERA,
-    C3_SCENEAREA_FUNC_INSIDEFXCAMERA,
-    C3_SCENEAREA_FUNC_OUTSIDEFXCAMERA,
-  },
-
-  // 外周エリア
-  {
-    { 
-      // エリア
-      // rot_start, rot_end, dist_min, dist_max
-      // (基準を{0,0,-FX32_ONE}としたときの角度)
-      0x1ca8, 0xe398, 0x1c8f6b, 0x300000,
-      // カメラ
-      // pitch len
-      0x800, 0x38D000,
-    },
-    C3_SCENEAREA_FUNC_AREACHECK,
-    C3_SCENEAREA_FUNC_UPDATE,
-    C3_SCENEAREA_FUNC_INSIDE,
-    C3_SCENEAREA_FUNC_OUTSIDE,
-  },
-};
-
-static FLD_SCENEAREA_CHECK_AREA_FUNC* sp_FLD_SCENEAREA_CHECK_AREA_FUNC[C3_SCENEAREA_FUNC_AREACHECK_MAX] = 
-{
-	C3_SCENEAREA_CheckArea,
-};
-
-static FLD_SCENEAREA_UPDATA_FUNC* sp_FLD_SCENEAREA_UPDATA_FUNC[C3_SCENEAREA_FUNC_UPDATE_MAX] = 
-{
-	C3_SCENEAREA_Update,
-	C3_SCENEAREA_Inside,
-	C3_SCENEAREA_Outside,
-	C3_SCENEAREA_InsideFxCamera,
-	C3_SCENEAREA_OutsideFxCamera,
-};
-
-static const FLD_SCENEAREA_FUNC sc_FLD_SCENEAREA_FUNC = 
-{
-	sp_FLD_SCENEAREA_CHECK_AREA_FUNC,
-	sp_FLD_SCENEAREA_UPDATA_FUNC,
-	C3_SCENEAREA_FUNC_AREACHECK_MAX,
-	C3_SCENEAREA_FUNC_UPDATE_MAX,
-};
 
 
 //======================================================================
@@ -255,6 +65,7 @@ typedef struct {
   u16   camera_pitch;
 
   FLD_SCENEAREA* p_sceneArea;
+	FLD_SCENEAREA_LOADER* p_scenearealoader;
 
 }C3_MOVE_WORK;
 
@@ -332,7 +143,12 @@ static void mapCtrlC3_Create(
 
   // シーンエリア
   work->p_sceneArea = FLD_SCENEAREA_Create( FIELDMAP_GetHeapID(fieldWork), camera );
-  FLD_SCENEAREA_Load( work->p_sceneArea, sc_SCENE, NELEMS(sc_SCENE), &sc_FLD_SCENEAREA_FUNC );
+	work->p_scenearealoader = FLD_SCENEAREA_LOADER_Create( FIELDMAP_GetHeapID(fieldWork) );
+	FLD_SCENEAREA_LOADER_Load( work->p_scenearealoader, 0, FIELDMAP_GetHeapID(fieldWork) );
+  FLD_SCENEAREA_Load( work->p_sceneArea, 
+			FLD_SCENEAREA_LOADER_GetData(work->p_scenearealoader),
+			FLD_SCENEAREA_LOADER_GetDataNum(work->p_scenearealoader),
+			FLD_SCENEAREA_LOADER_GetFunc(work->p_scenearealoader) );
 	
 	{	//ビルボード設定
 		VecFx32 scale = {
@@ -360,6 +176,8 @@ static void mapCtrlC3_Delete( FIELDMAP_WORK *fieldWork )
 	C3_MOVE_WORK *work = FIELDMAP_GetMapCtrlWork( fieldWork );
 	FIELD_RAIL_LOADER* p_rail_loader = FIELDMAP_GetFieldRailLoader(fieldWork);
   FLD_SCENEAREA_Delete( work->p_sceneArea );
+
+	FLD_SCENEAREA_LOADER_Delete( work->p_scenearealoader );
 
 	FIELD_RAIL_LOADER_Clear( p_rail_loader );
 
@@ -400,7 +218,8 @@ static void mapCtrlC3_Main( FIELDMAP_WORK *fieldWork, VecFx32 *pos )
     FIELD_PLAYER_SetPos( fld_player, pos );
     
     // シーンエリア処理でカメラ上書き
-    if( FLD_SCENEAREA_Update( mwk->p_sceneArea, pos ) == FLD_SCENEAREA_UPDATE_NONE ){
+		FLD_SCENEAREA_Update( mwk->p_sceneArea, pos );
+    if( FLD_SCENEAREA_GetUpdateFuncID( mwk->p_sceneArea ) == FLD_SCENEAREA_UPDATE_CIRCLE ){
       // カメラ動作限界管理
       cameraRailAreaControl( FIELDMAP_GetFieldCamera( fieldWork ) );
     }
@@ -632,173 +451,6 @@ static void cameraRailAreaControl( FIELD_CAMERA * p_camera )
 
 
 
-
-
-
-//======================================================================
-//	SCENEAREA情報
-//======================================================================
-//----------------------------------------------------------------------------
-/**
- *	@brief  シーンエリア情報  エリア判定
- *
- *	@param	cp_sys      システム
- *	@param	cp_data     データ
- *	@param	cp_pos      自機位置
- *
- *	@retval TRUE    エリア内
- *	@retval FALSE   エリア外
- */
-//-----------------------------------------------------------------------------
-static BOOL C3_SCENEAREA_CheckArea( const FLD_SCENEAREA* cp_sys, const FLD_SCENEAREA_DATA* cp_data, const VecFx32* cp_pos )
-{
-  VecFx32 normal_vec = {0,0,-FX32_ONE};
-  VecFx32 npos;
-  fx32 dist;
-  u32 rotate;
-  VecFx32 target, normal;
-  const C3_SCENEAREA_PARAM* cp_param = (C3_SCENEAREA_PARAM*)cp_data->area;
-
-  VEC_Set( &target, CAMERA_DEF_TARGET_X, 0, CAMERA_DEF_TARGET_Z );
-  
-
-  VEC_Subtract( cp_pos, &target, &npos );
-  npos.y  = 0;
-  dist    = VEC_Mag( &npos );
-  VEC_Normalize( &npos, &npos );
-  rotate  = FX_AcosIdx( VEC_DotProduct( &npos, &normal_vec ) );
-  VEC_CrossProduct( &npos, &normal_vec, &normal );
-  if( normal.y < 0 ){
-    rotate = 0x10000 - rotate;
-  }
-
-  // エリア内判定
-  if( (cp_param->rot_start <= rotate) && (cp_param->rot_end > rotate) ){
-    if( (cp_param->dist_min <= dist) && (cp_param->dist_max > dist) ){
-      return TRUE;
-    }
-  }
-
-  return FALSE;
-}
-
-//----------------------------------------------------------------------------
-/**
- *	@brief  更新処理
- *
- *	@param	cp_sys      システム
- *	@param	cp_data     データ
- *	@param	cp_pos      位置情報
- */
-//-----------------------------------------------------------------------------
-static void C3_SCENEAREA_Update( const FLD_SCENEAREA* cp_sys, const FLD_SCENEAREA_DATA* cp_data, const VecFx32* cp_pos )
-{
-  VecFx32 pos, target, n0, camera_pos;
-  FIELD_CAMERA* p_camera;
-  fx32 xz_dist;
-  fx32 target_y;
-  const C3_SCENEAREA_PARAM* cp_param = (const C3_SCENEAREA_PARAM*)cp_data->area;
-
-  p_camera = FLD_SCENEAREA_GetFieldCamera( cp_sys );
-	FIELD_CAMERA_GetTargetPos( p_camera, &target);
-  target_y  = target.y;
-  target.y  = 0;
-  
-  pos     = *cp_pos;
-  pos.y   = 0;
-
-  VEC_Subtract( &pos, &target, &pos );
-  VEC_Normalize( &pos, &n0 );
-
-  // 方向ベクトルから、カメラangleを求める
-  camera_pos.y = FX_Mul( FX_SinIdx( cp_param->pitch ), cp_param->length );
-  xz_dist      = FX_Mul( FX_CosIdx( cp_param->pitch ), cp_param->length );
-  camera_pos.x = FX_Mul( n0.x, xz_dist );
-  camera_pos.z = FX_Mul( n0.z, xz_dist );
-  camera_pos.x += target.x;
-  camera_pos.y += target_y;
-  camera_pos.z += target.z;
-  
-	FIELD_CAMERA_SetCameraPos( p_camera, &camera_pos );
-
-  // カメラ動作限界管理
-  cameraRailAreaControl( p_camera );
-}
-
-//----------------------------------------------------------------------------
-/**
- *	@brief  範囲に入った瞬間の処理
- *
- *	@param	cp_sys      システム
- *	@param	cp_data     データ
- *	@param	cp_pos      位置情報
- */
-//-----------------------------------------------------------------------------
-static void C3_SCENEAREA_Inside( const FLD_SCENEAREA* cp_sys, const FLD_SCENEAREA_DATA* cp_data, const VecFx32* cp_pos )
-{
-  C3_SCENEAREA_Update( cp_sys, cp_data, cp_pos );
-}
-
-//----------------------------------------------------------------------------
-/**
- *	@brief  範囲から出た瞬間の処理
- *
- *	@param	cp_sys      システム
- *	@param	cp_data     データ
- *	@param	cp_pos      位置情報
- */
-//-----------------------------------------------------------------------------
-static void C3_SCENEAREA_Outside( const FLD_SCENEAREA* cp_sys, const FLD_SCENEAREA_DATA* cp_data, const VecFx32* cp_pos )
-{
-}
-
-//----------------------------------------------------------------------------
-/**
- *	@brief  固定カメラの　設定処理
- *  
- *	@param	cp_sys    システムワーク
- *	@param	cp_data   データ
- *	@param	cp_pos    位置情報
- */
-//-----------------------------------------------------------------------------
-static void C3_SCENEAREA_InsideFxCamera( const FLD_SCENEAREA* cp_sys, const FLD_SCENEAREA_DATA* cp_data, const VecFx32* cp_pos )
-{
-  FIELD_CAMERA* p_camera;
-  const C3_SCENEAREA_PARAM* cp_param = (const C3_SCENEAREA_PARAM*)cp_data->area;
-  VecFx32 target, camera_pos;
-
-  p_camera = FLD_SCENEAREA_GetFieldCamera( cp_sys );
-
-  // ターゲット位置設定
-  VEC_Set( &target, cp_param->target_x, cp_param->target_y, cp_param->target_z );
-  VEC_Set( &camera_pos, cp_param->camera_x, cp_param->camera_y, cp_param->camera_z );
-  FIELD_CAMERA_SetTargetPos( p_camera, &target );
-  FIELD_CAMERA_SetCameraPos( p_camera, &camera_pos );
-}
-
-//----------------------------------------------------------------------------
-/**
- *	@brief  固定カメラの　回避処理
- *  
- *	@param	cp_sys    システムワーク
- *	@param	cp_data   データ
- *	@param	cp_pos    位置情報
- */
-//-----------------------------------------------------------------------------
-static void C3_SCENEAREA_OutsideFxCamera( const FLD_SCENEAREA* cp_sys, const FLD_SCENEAREA_DATA* cp_data, const VecFx32* cp_pos )
-{
-  FIELD_CAMERA* p_camera;
-  VecFx32 target, camera_pos;
-
-  p_camera = FLD_SCENEAREA_GetFieldCamera( cp_sys );
-
-  // ターゲット位置設定
-  VEC_Set( &target, CAMERA_DEF_TARGET_X, CAMERA_DEF_TARGET_Y, CAMERA_DEF_TARGET_Z );
-  FIELD_CAMERA_SetTargetPos( p_camera, &target );
-
-  // カメラーパラメータ設定
-  cameraMain( p_camera, cp_pos, 0x600, 0x26D000 );
-}
 
 
 
