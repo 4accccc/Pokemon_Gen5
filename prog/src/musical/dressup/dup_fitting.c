@@ -51,6 +51,11 @@
 #define DEG_TO_U16(val) ((val)*0x10000/360)
 #define U16_TO_DEG(val) ((val)*360/0x10000)
 
+#define FIT_CHECK_BUTTON_TOP    (192-24)
+#define FIT_CHECK_BUTTON_BOTTOM (192)
+#define FIT_CHECK_BUTTON_LEFT   (128-32)
+#define FIT_CHECK_BUTTON_RIGHT  (128+32)
+
 //BBD用座標変換(カメラの幅から計算
 #define FIT_POS_X(val)    MUSICAL_POS_X(val)  
 #define FIT_POS_Y(val)    MUSICAL_POS_Y(val)  
@@ -773,7 +778,7 @@ static void DUP_FIT_SetupBgObj( FITTING_WORK *work )
   ARCHANDLE *arcHandle = GFL_ARC_OpenDataHandle( ARCID_DRESSUP_GRA , work->heapId );
 
   //下画面
-  GFL_ARCHDL_UTIL_TransVramPalette( arcHandle , NARC_dressup_gra_obj_main_NCLR , 
+  GFL_ARCHDL_UTIL_TransVramPalette( arcHandle , NARC_dressup_gra_test_bg_d_NCLR , 
                     PALTYPE_MAIN_BG , 0 , 0 , work->heapId );
   GFL_ARCHDL_UTIL_TransVramBgCharacter( arcHandle , NARC_dressup_gra_test_bg_NCGR ,
                     FIT_FRAME_MAIN_BG , 0 , 0, FALSE , work->heapId );
@@ -1381,7 +1386,10 @@ static void DUP_FIT_UpdateTpMain( FITTING_WORK *work )
   }
   if( work->tpIsTrg || work->tpIsTouch )
   {
-    if( work->tpIsTrg && (work->tpy > 192-16) )
+    if( work->tpIsTrg && 
+        work->tpy > FIT_CHECK_BUTTON_TOP &&
+        work->tpx > FIT_CHECK_BUTTON_LEFT &&
+        work->tpx < FIT_CHECK_BUTTON_RIGHT )
     {
       //チェックボタン
       work->state = DUS_GO_CHECK;
