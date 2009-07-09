@@ -501,10 +501,6 @@ SRCS_OVERLAY_BATTLE =	battle/btl_main.c \
 			battle/btlv/btlv_mcss.c \
 			battle/btlv/btlv_clact.c \
 			battle/btlv/btlv_input.c \
-			battle/btlv/battle_cursor.c \
-			battle/btlv/battle_cursor_disp.c \
-			battle/btlv/battle_input.c \
-			battle/btlv/battle_playbackstop.c \
 			battle/btlv/wazatype_panel.c
 
 #			battle/btlv/b_app_tool.c \
