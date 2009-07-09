@@ -178,8 +178,7 @@ typedef enum {
   /*--- 以下、アイテム使用以外の効果に使う ---*/
   BTL_HANDEX_TOKWIN_IN,     ///< とくせいウィンドウイン
   BTL_HANDEX_TOKWIN_OUT,    ///< とくせいウィンドウアウト
-  BTL_HANDEX_MESSAGE_STD,   ///< STDメッセージ表示
-  BTL_HANDEX_MESSAGE_SET,   ///< SETメッセージ表示
+  BTL_HANDEX_MESSAGE,       ///< メッセージ表示
   BTL_HANDEX_RECOVER_HP,    ///< HP回復
   BTL_HANDEX_DAMAGE,        ///< ダメージを与える
   BTL_HANDEX_SHIFT_HP,      ///< HPを変更（ダメージ・回復として扱わない）
@@ -233,6 +232,21 @@ typedef struct {
 
 }BTL_HANDEX_STR_PARAMS;
 
+static inline void HANDEX_STR_Setup( BTL_HANDEX_STR_PARAMS* param, BtlStrType type, u16 strID )
+{
+  param->type = type;
+  param->ID = strID;
+  param->argCnt = 0;
+}
+static inline void HANDEX_STR_AddArg( BTL_HANDEX_STR_PARAMS* param, int arg )
+{
+  if( param->argCnt < BTL_STR_ARG_MAX )
+  {
+    param->args[ param->argCnt++ ] = arg;
+  }
+}
+
+
 typedef struct {
  BTL_HANDEX_PARAM_HEADER   header;   ///< 共有ヘッダ
 }BTL_HANDEX_PARAM_USE_ITEM;
@@ -243,10 +257,7 @@ typedef struct {
 
 typedef struct {
  BTL_HANDEX_PARAM_HEADER   header;   ///< 共有ヘッダ
- int  args[ BTL_STR_ARG_MAX ];
- u16  strID;
- u8   pokeID;
- u8   arg_cnt;
+ BTL_HANDEX_STR_PARAMS  str;
 }BTL_HANDEX_PARAM_MESSAGE;
 
 

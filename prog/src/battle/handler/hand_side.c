@@ -311,9 +311,6 @@ static void handler_side_SinpiNoMamori_CheckFail( BTL_EVENT_FACTOR* myHandle, BT
   &&  (BTL_EVENTVAR_GetValue(BTL_EVAR_SICKID) < POKESICK_MAX)
   ){
     work[0] = BTL_EVENTVAR_RewriteValue( BTL_EVAR_FAIL_FLAG, TRUE );
-    if( work[0] ){
-      BTL_Printf("‚µ‚ñ‚Ò‚Ì‚Ü‚à‚è‚Å–h‚®‚¼\n");
-    }
   }
 }
 static void handler_side_SinpiNoMamori_FixFail( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 mySide, int* work )
@@ -321,9 +318,9 @@ static void handler_side_SinpiNoMamori_FixFail( BTL_EVENT_FACTOR* myHandle, BTL_
   if( work[0] )
   {
     u8 pokeID = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID_DEF );
-    BTL_HANDEX_PARAM_MESSAGE* param = BTL_SVFLOW_HANDLERWORK_Push( flowWk, BTL_HANDEX_MESSAGE_SET, pokeID );
-    param->pokeID = pokeID;
-    param->strID = BTL_STRID_SET_SinpiNoMamori_Exe;
+    BTL_HANDEX_PARAM_MESSAGE* param = BTL_SVFLOW_HANDLERWORK_Push( flowWk, BTL_HANDEX_MESSAGE, pokeID );
+    HANDEX_STR_Setup( &param->str, BTL_STRTYPE_SET, BTL_STRID_SET_SinpiNoMamori_Exe );
+    HANDEX_STR_AddArg( &param->str, pokeID );
     work[0] = 0;
   }
 }
@@ -358,10 +355,9 @@ static void handler_side_SiroiKiri_FixFail( BTL_EVENT_FACTOR* myHandle, BTL_SVFL
   if( work[0] )
   {
     u8 pokeID = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID );
-    BTL_HANDEX_PARAM_MESSAGE* param = BTL_SVFLOW_HANDLERWORK_Push( flowWk, BTL_HANDEX_MESSAGE_SET, pokeID );
-    param->pokeID = pokeID;
-    param->strID = BTL_STRID_SET_SiroiKiri_Exe;
-    work[0] = 0;
+    BTL_HANDEX_PARAM_MESSAGE* param = BTL_SVFLOW_HANDLERWORK_Push( flowWk, BTL_HANDEX_MESSAGE, pokeID );
+    HANDEX_STR_Setup( &param->str, BTL_STRTYPE_SET, BTL_STRID_SET_SiroiKiri_Exe );
+    HANDEX_STR_AddArg( &param->str, pokeID );
   }
 }
 //--------------------------------------------------------------------------------------

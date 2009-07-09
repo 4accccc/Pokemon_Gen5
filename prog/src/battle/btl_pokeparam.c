@@ -218,9 +218,9 @@ BTL_POKEPARAM*  BTL_POKEPARAM_Create( const POKEMON_PARAM* pp, u8 pokeID, HEAPID
     PokeSick sick = PP_GetSick( pp );
     if( sick == POKESICK_NEMURI )
     {
-      u32 turns = BTL_CALC_RandRange( BTL_NEMURI_TURN_MIN, BTL_NEMURI_TURN_MIN );
+      u32 turns = BTL_CALC_RandRange( BTL_NEMURI_TURN_MIN, BTL_NEMURI_TURN_MAX );
       bpp->sickCont[WAZASICK_NEMURI] = BPP_SICKCONT_MakeTurn( turns );
-      bpp->wazaSickCounter[WAZASICK_NEMURI] = turns;
+      bpp->wazaSickCounter[WAZASICK_NEMURI] = 0;
     }
   }
 
@@ -1195,8 +1195,9 @@ void BTL_POKEPARAM_SetWazaSick( BTL_POKEPARAM* bpp, WazaSick sick, BPP_SICK_CONT
     GF_ASSERT(pokeSick == POKESICK_NULL);
   }
 
-  bpp->sickCont[ sick ] = contParam;
+    bpp->sickCont[ sick ] = contParam;
   bpp->wazaSickCounter[sick] = 0;
+  BTL_Printf("ポケ[%d - %p] に状態[%d]がセットされた\n", bpp->coreParam.myID, bpp, sick );
 }
 
 
@@ -1219,6 +1220,7 @@ void BTL_POKEPARAM_WazaSick_TurnCheck( BTL_POKEPARAM* bpp, BtlSickTurnCheckFunc 
     {
       u32 turnMax = BPP_SICCONT_GetTurnMax( bpp->sickCont[sick] );
       BOOL fCure = FALSE;
+
       // 継続ターン経過チェック
       if( turnMax )
       {
@@ -1226,8 +1228,11 @@ void BTL_POKEPARAM_WazaSick_TurnCheck( BTL_POKEPARAM* bpp, BtlSickTurnCheckFunc 
         if( (sick == WAZASICK_NEMURI) && (bpp->tokusei == POKETOKUSEI_HAYAOKI) ){
           n = 2;    // とくせい「はやおき」は眠りカウンタ２倍速
         }
-
+        BTL_Printf("ポケ[%d - %p], 状態異常[%d] 最大ターン=%d, counter=%d ->",
+          bpp->coreParam.myID, bpp, sick, turnMax, bpp->wazaSickCounter[sick] );
         bpp->wazaSickCounter[sick] += n;
+        OS_TPrintf(" %d (adrs=%p)\n", bpp->wazaSickCounter[sick], &(bpp->wazaSickCounter[sick]));
+
         if( bpp->wazaSickCounter[sick] >= turnMax )
         {
           bpp->wazaSickCounter[sick] = 0;
@@ -1465,17 +1470,18 @@ int BTL_POKEPARAM_CalcSickDamage( const BTL_POKEPARAM* pp, WazaSick sick )
  * @param   pp
  */
 //----------------------------------------------------------------------------------
-static void clearWazaSickWork( BTL_POKEPARAM* pp, BOOL fPokeSickInclude )
+static void clearWazaSickWork( BTL_POKEPARAM* bpp, BOOL fPokeSickInclude )
 {
   u32 i, start;
 
   start = (fPokeSickInclude)? 0 : POKESICK_MAX;
 
-  for(i=start; i<NELEMS(pp->sickCont); ++i){
-    pp->sickCont[i].raw = 0;
-    pp->sickCont[i].type = WAZASICK_CONT_NONE;
+  for(i=start; i<NELEMS(bpp->sickCont); ++i){
+    bpp->sickCont[i].raw = 0;
+    bpp->sickCont[i].type = WAZASICK_CONT_NONE;
   }
-  GFL_STD_MemClear( pp->wazaSickCounter, sizeof(pp->wazaSickCounter) );
+  GFL_STD_MemClear( bpp->wazaSickCounter, sizeof(bpp->wazaSickCounter) );
+  BTL_Printf("ポケ[%d]の状態異常カウンタがクリアされた\n", bpp->coreParam.myID);
 }
 
 

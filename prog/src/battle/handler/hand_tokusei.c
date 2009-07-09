@@ -1485,9 +1485,11 @@ static void common_RankDownGuard_Fixed( BTL_SVFLOW_WORK* flowWk, u8 pokeID, int*
     BTL_HANDEX_PARAM_MESSAGE* param;
 
     BTL_SVFLOW_HANDLERWORK_Push( flowWk, BTL_HANDEX_TOKWIN_IN, pokeID );
-    param = BTL_SVFLOW_HANDLERWORK_Push( flowWk, BTL_HANDEX_MESSAGE_SET, pokeID );
-    param->pokeID = pokeID;
-    param->strID = strID;
+    param = BTL_SVFLOW_HANDLERWORK_Push( flowWk, BTL_HANDEX_MESSAGE, pokeID );
+
+    HANDEX_STR_Setup( &param->str, BTL_STRTYPE_SET, strID );
+    HANDEX_STR_AddArg( &param->str, pokeID );
+
     BTL_SVFLOW_HANDLERWORK_Push( flowWk, BTL_HANDEX_TOKWIN_OUT, pokeID );
 
     work[0] = 0;
@@ -1550,9 +1552,11 @@ static void handler_AddSickFailCommon( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WO
     BTL_HANDEX_PARAM_MESSAGE* param;
 
     BTL_SVFLOW_HANDLERWORK_Push( flowWk, BTL_HANDEX_TOKWIN_IN, pokeID );
-    param = BTL_SVFLOW_HANDLERWORK_Push( flowWk, BTL_HANDEX_MESSAGE_SET, pokeID );
-    param->pokeID = pokeID;
-    param->strID = BTL_STRID_SET_NoEffect;
+    param = BTL_SVFLOW_HANDLERWORK_Push( flowWk, BTL_HANDEX_MESSAGE, pokeID );
+
+    HANDEX_STR_Setup( &param->str, BTL_STRTYPE_SET, BTL_STRID_SET_NoEffect );
+    HANDEX_STR_AddArg( &param->str, pokeID );
+
     BTL_SVFLOW_HANDLERWORK_Push( flowWk, BTL_HANDEX_TOKWIN_OUT, pokeID );
     work[0] = FALSE;
   }
@@ -1599,7 +1603,10 @@ static BTL_EVENT_FACTOR*  HAND_TOK_ADD_Juunan( u16 pri, u16 tokID, u8 pokeID )
 // ポケモン系状態異常処理ハンドラ
 static void handler_Fumin_PokeSick( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
-  work[0] = common_DiscardWazaSick( flowWk, pokeID, POKESICK_NEMURI );
+  work[0] = common_DiscardWazaSick( flowWk, pokeID, WAZASICK_NEMURI );
+  if( work[0] == 0 ){
+    work[0] = common_DiscardWazaSick( flowWk, pokeID, WAZASICK_AKUBI );
+  }
 }
 // とくせい入れ替えハンドラ
 static void handler_Fumin_Swap( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
@@ -3020,15 +3027,15 @@ static void common_DmgToRecover_Fix( BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* wo
       param->pokeID = pokeID;
       param->recoverHP = BTL_CALC_QuotMaxHP( bpp, denomHP );
 
-      msg_param = BTL_SVFLOW_HANDLERWORK_Push( flowWk, BTL_HANDEX_MESSAGE_SET, pokeID );
-      msg_param->pokeID = pokeID;
-      msg_param->strID = BTL_STRID_SET_HP_Recover;
+      msg_param = BTL_SVFLOW_HANDLERWORK_Push( flowWk, BTL_HANDEX_MESSAGE, pokeID );
+      HANDEX_STR_Setup( &msg_param->str, BTL_STRTYPE_SET, BTL_STRID_SET_HP_Recover );
+      HANDEX_STR_AddArg( &msg_param->str, pokeID );
     }
     else
     {
-      msg_param = BTL_SVFLOW_HANDLERWORK_Push( flowWk, BTL_HANDEX_MESSAGE_SET, pokeID );
-      msg_param->pokeID = pokeID;
-      msg_param->strID = BTL_STRID_SET_NoEffect;
+      msg_param = BTL_SVFLOW_HANDLERWORK_Push( flowWk, BTL_HANDEX_MESSAGE, pokeID );
+      HANDEX_STR_Setup( &msg_param->str, BTL_STRTYPE_SET, BTL_STRID_SET_NoEffect );
+      HANDEX_STR_AddArg( &msg_param->str, pokeID );
     }
 
     BTL_SVFLOW_HANDLERWORK_Push( flowWk, BTL_HANDEX_TOKWIN_OUT, pokeID );

@@ -1692,6 +1692,7 @@ s16 BTL_PARTY_FindMember( const BTL_PARTY* party, const BTL_POKEPARAM* param )
 //=============================================================================================
 void BTL_MAIN_SyncServerCalcData( BTL_MAIN_MODULE* wk )
 {
+  #if 0
   u32 i;
   for(i=0; i<NELEMS(wk->pokeconForServer.pokeParam); ++i)
   {
@@ -1702,6 +1703,7 @@ void BTL_MAIN_SyncServerCalcData( BTL_MAIN_MODULE* wk )
         wk->pokeconForClient.pokeParam[i] );
     }
   }
+  #endif
 }
 
 //=============================================================================================

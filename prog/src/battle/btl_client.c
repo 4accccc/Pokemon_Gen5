@@ -620,7 +620,7 @@ static BOOL is_action_unselectable( BTL_CLIENT* wk, const BTL_POKEPARAM* bpp, BT
     return TRUE;
   }
   // ワザロック状態（前回ワザをそのまま使う）は勝手にワザ選択処理してスキップ
-  if( BTL_POKEPARAM_CheckSick(wk->procPoke, WAZASICK_WAZALOCK_HARD) )
+  if( BTL_POKEPARAM_CheckSick(wk->procPoke, WAZASICK_WAZALOCK) )
   {
     WazaID waza = BTL_POKEPARAM_GetPrevWazaNumber( wk->procPoke );
     BtlPokePos pos = BTL_POKEPARAM_GetPrevTargetPos( wk->procPoke );
@@ -711,7 +711,7 @@ static BOOL is_unselectable_waza( BTL_CLIENT* wk, const BTL_POKEPARAM* bpp, Waza
   }
 
   // ワザロック効果（前回と同じワザしか出せない）
-  if( BTL_POKEPARAM_CheckSick(bpp, WAZASICK_WAZALOCK) )
+  if( BTL_POKEPARAM_CheckSick(bpp, WAZASICK_ENCORE) )
   {
     if( waza != BTL_POKEPARAM_GetPrevWazaNumber(bpp) ){
       if( strParam != NULL )
@@ -842,8 +842,8 @@ static BOOL SubProc_AI_SelectAction( BTL_CLIENT* wk, int* seq )
     {
       u8 wazaCount, wazaIdx, mypos, targetPos;
 
-      if( BTL_POKEPARAM_CheckSick(pp, WAZASICK_WAZALOCK)
-      ||  BTL_POKEPARAM_CheckSick(pp, WAZASICK_WAZALOCK_HARD)
+      if( BTL_POKEPARAM_CheckSick(pp, WAZASICK_ENCORE)
+      ||  BTL_POKEPARAM_CheckSick(pp, WAZASICK_WAZALOCK)
       ){
         WazaID waza = BTL_POKEPARAM_GetPrevWazaNumber( pp );
         BtlPokePos pos = BTL_POKEPARAM_GetPrevTargetPos( pp );

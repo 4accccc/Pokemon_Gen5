@@ -547,7 +547,7 @@ static BtlvScd_SelAction_Result  check_unselectable_waza( BTLV_SCD* wk, const BT
     }
   }
 
-  if( BTL_POKEPARAM_CheckSick(bpp, WAZASICK_WAZALOCK) )
+  if( BTL_POKEPARAM_CheckSick(bpp, WAZASICK_ENCORE) )
   {
     WazaID  select_waza = BTL_POKEPARAM_GetWazaNumber( bpp, waza_idx );
     if( select_waza != BTL_POKEPARAM_GetPrevWazaNumber(bpp) ){
