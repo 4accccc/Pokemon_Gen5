@@ -19,6 +19,14 @@ typedef struct{
   u16 ppmax[ PTL_WAZA_MAX ];
 }BTLV_INPUT_WAZA_PARAM;
 
+///攻撃対象選択画面構成用のデータ
+typedef struct{
+  u8    sex   :2;
+  u8    exist :1;
+  u8          :5;
+  u8    status;
+}BTLV_INPUT_DIR_PARAM;
+
 typedef enum
 { 
   BTLV_INPUT_TYPE_SINGLE = 0,

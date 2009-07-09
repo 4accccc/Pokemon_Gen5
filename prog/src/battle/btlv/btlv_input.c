@@ -10,6 +10,7 @@
 
 #include "btlv_effect.h"
 #include "print/printsys.h"
+#include "print/wordset.h"
 #include "system/palanm.h"
 #include "system/bmp_oam.h"
 #include "infowin/infowin.h"
@@ -19,6 +20,9 @@
 
 #include "arc_def.h"
 #include "battle/battgra_wb.naix"
+
+#include "message.naix"
+#include "msg/msg_btlv_input.h"
 
 //============================================================================================
 /**
@@ -30,6 +34,14 @@
 #define BG_CLEAR_CODE     (0x8000 / 0x20 - 1)   ///BGスクリーンのクリアコード（キャラクタの一番後ろを指定）
 
 #define INFOWIN_PAL_NO  ( 0x0f )  //情報ステータスバーパレット
+
+#define WAZATYPEICON_OAMSIZE  ( 32 * 8 )
+
+//PP表示用カラー定義
+#define MSGCOLOR_PP_WHITE   ( PRINTSYS_LSB_Make( 1, 2, 0 ) )
+#define MSGCOLOR_PP_YELLOW  ( PRINTSYS_LSB_Make( 3, 4, 0 ) )
+#define MSGCOLOR_PP_ORANGE  ( PRINTSYS_LSB_Make( 5, 6, 0 ) )
+#define MSGCOLOR_PP_RED     ( PRINTSYS_LSB_Make( 7, 8, 0 ) )
 
 //TCB_TransformStandby2Command
 #define TTS2C_SCROLL_COUNT ( 8 )
@@ -143,11 +155,42 @@ typedef enum
   BUTTON_ANIME_TYPE_MAX,
 }BUTTON_ANIME_TYPE;
 
-typedef struct
+//技選択ボタン表示位置定義
+enum
 { 
-  const GFL_CLACTPOS  pos[ BUTTON_ANIME_MAX ];          //座標
-  int                 anm_no[ BUTTON_ANIME_TYPE_MAX ];  //アニメーションナンバー
-}BUTTON_ANIME_PARAM;
+  BUTTON_UP_Y1 = 8 + 2,
+  BUTTON_UP_Y2 = 24 + 2,
+  
+  BUTTON_DOWN_Y1 = 56 + 2,
+  BUTTON_DOWN_Y2 = 72 + 2,
+
+  WAZANAME_X1 = 64,
+  WAZANAME_Y1 = BUTTON_UP_Y1,
+  WAZANAME_X2 = 128 + WAZANAME_X1,
+  WAZANAME_Y2 = BUTTON_UP_Y1,
+  WAZANAME_X3 = WAZANAME_X1,
+  WAZANAME_Y3 = BUTTON_DOWN_Y1,
+  WAZANAME_X4 = 128 + WAZANAME_X1,
+  WAZANAME_Y4 = BUTTON_DOWN_Y1,
+
+  PPMSG_X1 = 40,
+  PPMSG_Y1 = BUTTON_UP_Y2,
+  PPMSG_X2 = 128 + PPMSG_X1,
+  PPMSG_Y2 = BUTTON_UP_Y2,
+  PPMSG_X3 = PPMSG_X1,
+  PPMSG_Y3 = BUTTON_DOWN_Y2,
+  PPMSG_X4 = 128 + PPMSG_X1,
+  PPMSG_Y4 = BUTTON_DOWN_Y2,
+
+  PP_X1 = 88,
+  PP_Y1 = BUTTON_UP_Y2,
+  PP_X2 = 128 + PP_X1,
+  PP_Y2 = BUTTON_UP_Y2,
+  PP_X3 = PP_X1,
+  PP_Y3 = BUTTON_DOWN_Y2,
+  PP_X4 = 128 + PP_X1,
+  PP_Y4 = BUTTON_DOWN_Y2,
+};
 
 //============================================================================================
 /**
@@ -177,6 +220,13 @@ struct _BTLV_INPUT_WORK
 
   //フォント
   GFL_FONT*           font;
+
+  //BMP
+  GFL_BMPWIN*         bmp_win;
+  GFL_BMP_DATA*       bmp_data;
+
+  //メインループTCB
+  GFL_TCB*            main_loop;      //scdにメインループが存在しないのでBTLV_EFFECTのTCBを間借りしてメインを回す
 
 	HEAPID              heapID;
 };
@@ -218,13 +268,18 @@ typedef struct
   GFL_CLWK*         clwk[ BUTTON_ANIME_MAX ];
 }TCB_BUTTON_ANIME;
 
+typedef struct
+{ 
+  const GFL_CLACTPOS  pos[ BUTTON_ANIME_MAX ];          //座標
+  int                 anm_no[ BUTTON_ANIME_TYPE_MAX ];  //アニメーションナンバー
+}BUTTON_ANIME_PARAM;
+
 //============================================================================================
 /**
  *	プロトタイプ宣言
  */
 //============================================================================================
 static  void  BTLV_INPUT_LoadResource( BTLV_INPUT_WORK* biw );
-static  void  FontLenGet( const STRBUF *str, GFL_FONT *font, int *ret_dot_len, int *ret_char_len );
 static  void  TCB_TransformStandby2Command( GFL_TCB* tcb, void* work );
 static  void  TCB_TransformCommand2Waza( GFL_TCB* tcb, void* work );
 static  void  TCB_TransformWaza2Command( GFL_TCB* tcb, void* work );
@@ -240,6 +295,11 @@ static  void  SetupScreenAnime( BTLV_INPUT_WORK* biw, int index, SCREEN_ANIME_DI
 static  void  TCB_ScreenAnime( GFL_TCB* tcb, void* work );
 static  void  SetupButtonAnime( BTLV_INPUT_WORK* biw, BUTTON_TYPE type, BUTTON_ANIME_TYPE anm_type );
 static  void  TCB_ButtonAnime( GFL_TCB* tcb, void* work );
+
+static  void	BTLV_INPUT_MainTCB( GFL_TCB* tcb, void* work );
+static  void  FontLenGet( const STRBUF *str, GFL_FONT *font, int *ret_dot_len, int *ret_char_len );
+static  void  BTLV_INPUT_CreateWazaScreen( BTLV_INPUT_WORK* biw, const BTLV_INPUT_WAZA_PARAM *biwp );
+static  PRINTSYS_LSB  PP_FontColorGet( int pp, int pp_max );
 
 //============================================================================================
 /**
@@ -268,10 +328,22 @@ BTLV_INPUT_WORK*  BTLV_INPUT_Init( BTLV_INPUT_TYPE type, GFL_FONT* font, HEAPID 
 
   BTLV_INPUT_SetFrame();
   BTLV_INPUT_LoadResource( biw );
-  BTLV_INPUT_CreateScreen( biw, BTLV_INPUT_SCRTYPE_STANDBY );
+
+  //ビットマップ初期化
+  biw->bmp_win = GFL_BMPWIN_Create( GFL_BG_FRAME0_S, 32, 4, 32, 12, 0, GFL_BMP_CHRAREA_GET_B );
+  biw->bmp_data = GFL_BMPWIN_GetBmp( biw->bmp_win );
+  GFL_BMP_Clear( biw->bmp_data, 0x00 );
+  GFL_BMPWIN_MakeScreen( biw->bmp_win );
+  GFL_BMPWIN_TransVramCharacter( biw->bmp_win );
+  GFL_BG_LoadScreenReq( GFL_BG_FRAME0_S );
 
   //情報ステータスバー初期化
   INFOWIN_Init( GFL_BG_FRAME2_S, INFOWIN_PAL_NO, NULL, biw->heapID );
+
+  //メインループはTCBで行う
+  biw->main_loop = GFL_TCB_AddTask( BTLV_EFFECT_GetTCBSYS(), BTLV_INPUT_MainTCB, biw, 0 );
+
+  BTLV_INPUT_CreateScreen( biw, BTLV_INPUT_SCRTYPE_STANDBY, NULL );
 
 	return biw;
 }
@@ -288,9 +360,20 @@ void	BTLV_INPUT_Exit( BTLV_INPUT_WORK* biw )
   GFL_CLGRP_CGR_Release( biw->objcharID );
   GFL_CLGRP_CELLANIM_Release( biw->objcellID );
   GFL_CLGRP_PLTT_Release( biw->objplttID );
+
+  GFL_CLACT_UNIT_Delete( biw->wazatype_clunit );
+
+  GFL_BMPWIN_Delete( biw->bmp_win );
+
+  INFOWIN_Exit();
+
   GFL_TCB_Exit( biw->tcbsys );
+  GFL_TCB_DeleteTask( biw->main_loop );
+
   GFL_HEAP_FreeMemory( biw->tcbwork );
+
   GFL_ARC_CloseDataHandle( biw->handle );
+
 	GFL_HEAP_FreeMemory( biw );
 }
 
@@ -303,6 +386,20 @@ void	BTLV_INPUT_Exit( BTLV_INPUT_WORK* biw )
 //============================================================================================
 void	BTLV_INPUT_Main( BTLV_INPUT_WORK* biw )
 {
+//  GFL_TCB_Main( biw->tcbsys );
+//  INFOWIN_Update();
+}
+
+//============================================================================================
+/**
+ *  @brief  システムメインループ（TCB版）
+ *
+ *  @param[in]  biw システム管理構造体のポインタ
+ */
+//============================================================================================
+static  void	BTLV_INPUT_MainTCB( GFL_TCB* tcb, void* work )
+{
+  BTLV_INPUT_WORK* biw = (BTLV_INPUT_WORK *)work;
   GFL_TCB_Main( biw->tcbsys );
   INFOWIN_Update();
 }
@@ -346,10 +443,14 @@ void BTLV_INPUT_FreeFrame( void )
  *
  *  @param[in]  biw   システム管理構造体のポインタ
  *	@param[in]  type  生成するスクリーンタイプ
+ *	@param[in]  param 生成に必要なパラメータ構造体のポインタ
  */
 //============================================================================================
-void BTLV_INPUT_CreateScreen( BTLV_INPUT_WORK* biw, BTLV_INPUT_SCRTYPE type )
+void BTLV_INPUT_CreateScreen( BTLV_INPUT_WORK* biw, BTLV_INPUT_SCRTYPE type, void* param )
 {
+  GFL_BMP_Clear( biw->bmp_data, 0x00 );
+  GFL_BMPWIN_TransVramCharacter( biw->bmp_win );
+
   switch( type ){ 
   case BTLV_INPUT_SCRTYPE_STANDBY:
     if( biw->scr_type == BTLV_INPUT_SCRTYPE_STANDBY )
@@ -400,6 +501,8 @@ void BTLV_INPUT_CreateScreen( BTLV_INPUT_WORK* biw, BTLV_INPUT_SCRTYPE type )
   case BTLV_INPUT_SCRTYPE_WAZA:
     { 
       TCB_TRANSFORM_WORK* ttw = GFL_HEAP_AllocClearMemory( biw->heapID, sizeof( TCB_TRANSFORM_WORK ) );
+
+      BTLV_INPUT_CreateWazaScreen( biw, ( const BTLV_INPUT_WAZA_PARAM * )param );
       biw->tcb_execute_flag = 1;
       ttw->biw = biw;
       GFL_TCB_AddTask( biw->tcbsys, TCB_TransformCommand2Waza, ttw, 1 );
@@ -413,6 +516,26 @@ void BTLV_INPUT_CreateScreen( BTLV_INPUT_WORK* biw, BTLV_INPUT_SCRTYPE type )
     break;
   }
   biw->scr_type = type;
+}
+
+//============================================================================================
+/**
+ *	@brief  入力チェック
+ *
+ *  @param[in]  tp_tbl  タッチパネルテーブル
+ */
+//============================================================================================
+int BTLV_INPUT_CheckInput( BTLV_INPUT_WORK* biw, const GFL_UI_TP_HITTBL* tp_tbl )
+{ 
+  //下画面変形中は入力を無視
+  if( biw->tcb_execute_flag )
+  { 
+    return  GFL_UI_TP_HIT_NONE;
+  }
+
+  //本来はここでキー入力の方も処理したい
+
+  return GFL_UI_TP_HitTrg( tp_tbl );
 }
 
 //============================================================================================
@@ -447,31 +570,6 @@ static  void  BTLV_INPUT_LoadResource( BTLV_INPUT_WORK* biw )
   biw->objplttID = GFL_CLGRP_PLTT_Register( biw->handle, NARC_battgra_wb_battle_w_obj_NCLR, CLSYS_DRAW_SUB, 0, biw->heapID );
   PaletteWorkSet_VramCopy( BTLV_EFFECT_GetPfd(), FADE_SUB_OBJ,
                            GFL_CLGRP_PLTT_GetAddr( biw->objplttID, CLSYS_DRAW_SUB ) / 2, 0x20 * 3 );
-}
-
-//--------------------------------------------------------------
-/**
- * @brief 文字列の長さを取得する
- *
- * @param[in] str           文字列へのポインタ
- * @param[in] font          フォントタイプ
- * @param[in] ret_dot_len   ドット幅代入先
- * @param[in] ret_char_len  キャラ幅代入先
- */
-//--------------------------------------------------------------
-static void FontLenGet( const STRBUF *str, GFL_FONT *font, int *ret_dot_len, int *ret_char_len )
-{
-  int dot_len, char_len;
-
-  //文字列のドット幅から、使用するキャラ数を算出する
-  dot_len = PRINTSYS_GetStrWidth( str, font, 0 );
-  char_len = dot_len / 8;
-  if( FX_ModS32( dot_len, 8 ) != 0 ){
-    char_len++;
-  }
-
-  *ret_dot_len = dot_len;
-  *ret_char_len = char_len;
 }
 
 //============================================================================================
@@ -530,6 +628,7 @@ static  void  TCB_TransformCommand2Waza( GFL_TCB* tcb, void* work )
   case 1:
     if( ttw->biw->tcb_execute_count == 0 )
     { 
+      GFL_BMPWIN_TransVramCharacter( ttw->biw->bmp_win );
       GFL_BG_SetScroll( GFL_BG_FRAME1_S, GFL_BG_SCROLL_X_SET, TSA_SCROLL_X3 );
       GFL_BG_SetScroll( GFL_BG_FRAME1_S, GFL_BG_SCROLL_Y_SET, TSA_SCROLL_Y3 );
       ttw->biw->tcb_execute_flag = 0;
@@ -562,8 +661,6 @@ static  void  TCB_TransformWaza2Command( GFL_TCB* tcb, void* work )
   case 1:
     if( ttw->biw->tcb_execute_count == 0 )
     { 
-      GFL_BG_SetScroll( GFL_BG_FRAME1_S, GFL_BG_SCROLL_X_SET, TSA_SCROLL_X0 );
-      GFL_BG_SetScroll( GFL_BG_FRAME1_S, GFL_BG_SCROLL_Y_SET, TSA_SCROLL_Y0 );
       ttw->biw->tcb_execute_flag = 0;
       GFL_HEAP_FreeMemory( ttw );
       GFL_TCB_DeleteTask( tcb );
@@ -777,8 +874,8 @@ static  void  TCB_ScreenAnime( GFL_TCB* tcb, void* work )
       { TSA_SCROLL_X2, TSA_SCROLL_Y2 },
     },
     { 
-      { TSA_SCROLL_X2, TSA_SCROLL_Y2 },
       { TSA_SCROLL_X1, TSA_SCROLL_Y1 },
+      { TSA_SCROLL_X0, TSA_SCROLL_Y0 },
     }
   };
 
@@ -905,8 +1002,173 @@ static  void  TCB_ButtonAnime( GFL_TCB* tcb, void* work )
       GFL_CLACT_WK_Remove( tba->clwk[ i ] );
     }
   }
+  GFL_CLACT_UNIT_Delete( tba->clunit );
   tba->biw->tcb_execute_count--;
   GFL_HEAP_FreeMemory( tba );
   GFL_TCB_DeleteTask( tcb );
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief 文字列の長さを取得する
+ *
+ * @param[in] str           文字列へのポインタ
+ * @param[in] font          フォントタイプ
+ * @param[in] ret_dot_len   ドット幅代入先
+ * @param[in] ret_char_len  キャラ幅代入先
+ */
+//--------------------------------------------------------------
+static void FontLenGet( const STRBUF *str, GFL_FONT *font, int *ret_dot_len, int *ret_char_len )
+{
+  int dot_len, char_len;
+
+  //文字列のドット幅から、使用するキャラ数を算出する
+  dot_len = PRINTSYS_GetStrWidth( str, font, 0 );
+  char_len = dot_len / 8;
+  if( FX_ModS32( dot_len, 8 ) != 0 ){
+    char_len++;
+  }
+
+  *ret_dot_len = dot_len;
+  *ret_char_len = char_len;
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief   技選択画面BG生成
+ */
+//--------------------------------------------------------------
+static  void  BTLV_INPUT_CreateWazaScreen( BTLV_INPUT_WORK* biw, const BTLV_INPUT_WAZA_PARAM *biwp )
+{
+  void *arc_data;
+  NNSG2dCharacterData *char_data;
+  int char_size, i, waza_type;
+  int dot_len, char_len;
+  STRBUF *wazaname_p;
+  STRBUF *wazaname_src;
+  STRBUF *pp_p;
+  STRBUF *pp_src;
+  STRBUF *ppmsg_src;
+  WORDSET *wordset;
+  PRINTSYS_LSB color;
+  GFL_MSGDATA *msg = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_btlv_input_dat, biw->heapID );
+  static  const int wazaname_pos[ PTL_WAZA_MAX ][ 2 ] = 
+  { 
+    { WAZANAME_X1, WAZANAME_Y1 },
+    { WAZANAME_X2, WAZANAME_Y2 },
+    { WAZANAME_X3, WAZANAME_Y3 },
+    { WAZANAME_X4, WAZANAME_Y4 },
+  };
+  static  const int ppmsg_pos[ PTL_WAZA_MAX ][ 2 ] = 
+  { 
+    { PPMSG_X1, PPMSG_Y1 },
+    { PPMSG_X2, PPMSG_Y2 },
+    { PPMSG_X3, PPMSG_Y3 },
+    { PPMSG_X4, PPMSG_Y4 },
+  };
+  static  const int pp_pos[ PTL_WAZA_MAX ][ 2 ] = 
+  { 
+    { PP_X1, PP_Y1 },
+    { PP_X2, PP_Y2 },
+    { PP_X3, PP_Y3 },
+    { PP_X4, PP_Y4 },
+  };
+
+  char_size = WAZATYPEICON_OAMSIZE;
+
+  wazaname_p = GFL_STR_CreateBuffer( BUFLEN_WAZA_NAME, biw->heapID );
+  wazaname_src = GFL_MSG_CreateString( msg, BI_WazaNameMsg );
+  ppmsg_src = GFL_MSG_CreateString( msg, BI_PPMsg );
+  wordset = WORDSET_Create( biw->heapID );
+  pp_p = GFL_STR_CreateBuffer( BUFLEN_BI_WAZAPP, biw->heapID );
+  pp_src = GFL_MSG_CreateString( msg,  BI_PPNowMaxMsg );
+
+  for(i = 0; i < PTL_WAZA_MAX; i++){
+    if( biwp->wazano[ i ] ){
+      //技タイプアイコン
+#if 0 //後回し
+      waza_type = WT_WazaDataParaGet(wazapara->wazano[i], ID_WTD_wazatype);
+      arc_data = GFL_ARC_UTIL_LoadOBJCharacter( WazaTypeIcon_ArcIDGet(),
+        WazaTypeIcon_CgrIDGet( waza_type ), WAZATYPEICON_COMP_CHAR,
+        &char_data, bip->heapID );
+      MI_CpuCopy32(char_data->pRawData, mdw->typeicon_cgx[i], char_size);
+      GFL_HEAP_FreeMemory( arc_data );
+#endif
+      //BMPWIN：技名
+      WORDSET_RegisterWazaName( wordset, 0, biwp->wazano[ i ] );
+      WORDSET_ExpandStr( wordset, wazaname_p, wazaname_src );
+      FontLenGet( wazaname_p, biw->font, &dot_len, &char_len );
+      PRINTSYS_Print( biw->bmp_data, wazaname_pos[ i ][ 0 ] - ( dot_len / 2 ), wazaname_pos[ i ][ 1 ], wazaname_p, biw->font );
+
+      WORDSET_RegisterNumber(wordset, 0, biwp->pp[ i ],     2, STR_NUM_DISP_SPACE, STR_NUM_CODE_ZENKAKU );
+      WORDSET_RegisterNumber(wordset, 1, biwp->ppmax[ i ],  2, STR_NUM_DISP_SPACE, STR_NUM_CODE_ZENKAKU );
+      WORDSET_ExpandStr(wordset, pp_p, pp_src);
+      color = PP_FontColorGet( biwp->pp[ i ], biwp->ppmax[ i ] );
+
+      { 
+        u8 letter, shadow, back;
+
+        GFL_FONTSYS_GetColor( &letter, &shadow, &back );
+        GFL_FONTSYS_SetColor( PRINTSYS_LSB_GetL( color ), PRINTSYS_LSB_GetS( color ), PRINTSYS_LSB_GetB( color ) );
+
+        //BMPWIN：PP
+        PRINTSYS_Print( biw->bmp_data, ppmsg_pos[ i ][ 0 ], ppmsg_pos[ i ][ 1 ], ppmsg_src, biw->font );
+        FontLenGet( pp_p, biw->font, &dot_len, &char_len );
+        PRINTSYS_Print( biw->bmp_data, pp_pos[ i ][ 0 ] - ( dot_len / 2 ), pp_pos[ i ][ 1 ], pp_p, biw->font );
+        GFL_FONTSYS_SetColor( letter, shadow, back );
+      }
+    }
+  }
+
+  WORDSET_Delete( wordset );
+  GFL_STR_DeleteBuffer( wazaname_p );
+  GFL_STR_DeleteBuffer(ppmsg_src);
+  GFL_STR_DeleteBuffer(wazaname_src);
+  GFL_STR_DeleteBuffer(pp_src);
+  GFL_STR_DeleteBuffer(pp_p);
+
+  GFL_MSG_Delete( msg );
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief   PPの表示色を取得する
+ *
+ * @param   pp      現在のPP
+ * @param   pp_max    最大PP
+ *
+ * @retval  カラー
+ */
+//--------------------------------------------------------------
+static PRINTSYS_LSB PP_FontColorGet(int pp, int pp_max)
+{
+  if(pp == 0){
+    return MSGCOLOR_PP_RED;
+  }
+  if(pp_max == pp){
+    return MSGCOLOR_PP_WHITE;
+  }
+  if(pp_max <= 2){
+    if(pp == 1){
+      return MSGCOLOR_PP_ORANGE;
+    }
+  }
+  else if(pp_max <= 7){
+    switch(pp){
+    case 1:
+      return MSGCOLOR_PP_ORANGE;
+    case 2:
+      return MSGCOLOR_PP_YELLOW;
+    }
+  }
+  else{
+    if(pp <= pp_max / 4){
+      return MSGCOLOR_PP_ORANGE;
+    }
+    if(pp <= pp_max / 2){
+      return MSGCOLOR_PP_YELLOW;
+    }
+  }
+  return MSGCOLOR_PP_WHITE;
 }
 
