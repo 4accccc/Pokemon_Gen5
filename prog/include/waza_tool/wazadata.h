@@ -178,6 +178,7 @@ typedef enum {
   WAZA_TARGET_FRIEND_USER_SELECT, ///< Ž©•ª‚ðŠÜ‚Þ–¡•û‚P‘Ìi‘I‘ðj
   WAZA_TARGET_FRIEND_SELECT,      ///< Ž©•ªˆÈŠO‚Ì–¡•û‚P‘Ìi‘I‘ðj
   WAZA_TARGET_USER,               ///< Ž©•ª‚Ì‚Ý
+  WAZA_TARGET_ALL,                ///< ê‚Éo‚Ä‚¢‚éƒ|ƒPƒ‚ƒ“‘S‚Ä
   // ƒ|ƒPƒ‚ƒ“ˆÈŠO‘ÎÛ
   WAZA_TARGET_SIDE_FRIEND,        ///< Ž©•ª‘¤w‰c
   WAZA_TARGET_SIDE_ENEMY,         ///< “G‘¤w‰c
