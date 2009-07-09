@@ -113,6 +113,7 @@ struct _BTLV_SCD {
   const BTLV_CORE* vcore;
   const BTL_MAIN_MODULE* mainModule;
   const BTL_POKE_CONTAINER* pokeCon;
+  const BTL_PARTY*          playerParty;
   HEAPID  heapID;
 
   BTLV_INPUT_WORK     *biw;
@@ -165,6 +166,7 @@ BTLV_SCD*  BTLV_SCD_Create( const BTLV_CORE* vcore, const BTL_MAIN_MODULE* mainM
   wk->pokeCon = pokeCon;
   wk->heapID = heapID;
   wk->font = font;
+  wk->playerParty = BTL_POKECON_GetPartyDataConst( pokeCon, playerClientID );
   wk->strbuf = GFL_STR_CreateBuffer( 128, heapID );
   wk->pokesel_param = NULL;
 
