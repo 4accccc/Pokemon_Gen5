@@ -193,6 +193,24 @@ typedef enum {
 //=====================================
 #define GFL_BBD_NON_ALPHA	(31)
 
+//-------------------------------------
+///	原点タイプ
+//=====================================
+typedef enum {
+	GFL_BBD_ORIGIN_CENTER,
+	GFL_BBD_ORIGIN_TOP,
+	GFL_BBD_ORIGIN_BOTTOM,
+	GFL_BBD_ORIGIN_LEFT,
+	GFL_BBD_ORIGIN_RIGHT,
+
+	GFL_BBD_ORIGIN_TOP_LEFT,
+	GFL_BBD_ORIGIN_TOP_RIGHT,
+	GFL_BBD_ORIGIN_BOTTOM_LEFT,
+	GFL_BBD_ORIGIN_BOTTOM_RIGHT,
+
+	GFL_BBD_ORIGIN_MAX,	// モジュール内で使用
+}GFL_BBD_ORIGIN;
+
 //=============================================================================
 /**
  *					構造体宣言
@@ -215,6 +233,7 @@ typedef struct {
 	GXRgb						specular;
     GXRgb						emission;
 	u8							polID;
+	u8							origin;
 }GFL_BBD_SETUP;
 
 //-------------------------------------
@@ -253,6 +272,8 @@ extern void	GFL_BBD_GetEmission( GFL_BBD_SYS* billboardSys, GXRgb* emission );
 extern void	GFL_BBD_SetEmission( GFL_BBD_SYS* billboardSys, GXRgb* emission );
 extern void	GFL_BBD_GetPolID( GFL_BBD_SYS* billboardSys, u8* polID );
 extern void	GFL_BBD_SetPolID( GFL_BBD_SYS* billboardSys, u8* polID );
+extern void	GFL_BBD_GetOrigin( GFL_BBD_SYS* billboardSys, u8* origin );
+extern void	GFL_BBD_SetOrigin( GFL_BBD_SYS* billboardSys, u8 origin  );
 
 //GFL_BBD_TEXSIZからSとTの実数値を取得
 extern void GFL_BBD_GetTexSize( GFL_BBD_TEXSIZ texSiz, u16 * s, u16 * t );

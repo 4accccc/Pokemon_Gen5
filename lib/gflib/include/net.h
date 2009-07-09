@@ -924,6 +924,14 @@ extern int GFL_NET_SystemIsLobbyError(void);
 //----------------------------------------------------------------
 extern int GFL_NET_SystemGetConnectNum(void);
 
+//----------------------------------------------------------------
+/**
+ * @brief		特定のコマンドを送信し終えたかどうかを調べる クライアント側
+ * @param   command 調べるコマンド
+ * @retval  コマンドが在ったらTRUE
+ */
+//----------------------------------------------------------------
+extern BOOL GFL_NET_SystemIsSendCommand(int command, int myID);
 
 
 #include "net_devicetbl.h"
