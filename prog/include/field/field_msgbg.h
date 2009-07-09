@@ -130,6 +130,8 @@ extern FLDMSGPRINT * FLDMSGPRINT_SetupPrint(
 extern void FLDMSGPRINT_Delete( FLDMSGPRINT *msgPrint );
 extern void FLDMSGPRINT_Print(
 	FLDMSGPRINT *msgPrint, u32 x, u32 y, u32 strID );
+extern void FLDMSGPRINT_PrintColor(
+    FLDMSGPRINT *msgPrint, u32 x, u32 y, u32 strID, PRINTSYS_LSB color );
 extern void FLDMSGPRINT_PrintStrBuf(
 	FLDMSGPRINT *msgPrint, u32 x, u32 y, STRBUF *strBuf );
 extern BOOL FLDMSGPRINT_CheckPrintTrans( FLDMSGPRINT *msgPrint );
