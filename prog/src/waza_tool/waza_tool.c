@@ -788,6 +788,8 @@ WazaTarget WAZADATA_GetTarget( WazaID id )
   case WAZANO_MIRAAKOOTO:
   case WAZANO_METARUBAASUTO:
      return WAZA_TARGET_UNKNOWN;
+  case WAZANO_HOROBINOUTA:
+     return WAZA_TARGET_ALL;
   default:
     break;
   }
@@ -1066,6 +1068,7 @@ BOOL WAZADATA_IsImage( WazaID id, WazaImage img )
     if( id == WAZANO_KAENGURUMA ){ return TRUE; }
     if( id == WAZANO_HUREADORAIBU ){ return TRUE; }
     break;
+
   case WAZA_IMG_PUNCH:
     if( id == WAZANO_MEGATONPANTI) { return TRUE; }
     if( id == WAZANO_DOREINPANTI) { return TRUE; }
@@ -1080,9 +1083,10 @@ BOOL WAZADATA_IsImage( WazaID id, WazaImage img )
     if( id == WAZANO_BARETTOPANTI) { return TRUE; }
     if( id == WAZANO_KOMETTOPANTI) { return TRUE; }
     if( id == WAZANO_SUKAIAPPAA) { return TRUE; }
-
     break;
+
   case WAZA_IMG_SOUND:
+    if( id == WAZANO_HOROBINOUTA ){ return TRUE; }
     break;
   }
 
