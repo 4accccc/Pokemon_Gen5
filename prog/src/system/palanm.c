@@ -250,6 +250,58 @@ void PaletteWorkSet_Arc(PALETTE_FADE_PTR pfd, u32 fileIdx, u32 dataIdx, u32 heap
 
 //--------------------------------------------------------------
 /**
+ * @brief   アーカイブされているパレットデータをロードしてワークに展開します(ハンドル拡張版)
+ *
+ * @param   pfd		パレットフェードシステムワークへのポインタ
+ * @param   fileIdx			アーカイブファイルインデックス
+ * @param   dataIdx			アーカイブデータインデックス
+ * @param   heap			データ読み込みテンポラリとして使うヒープID
+ * @param   req				リクエストデータ番号
+ * @param   trans_size		転送サイズ(バイト単位　※2バイトアライメントされていること)
+ * @param   pos				パレット転送開始位置(カラー単位)
+ * @param   read_pos		ロードしたパレットの読み込み開始位置(カラー単位)
+ */
+//--------------------------------------------------------------
+void PaletteWorkSetEx_ArcHandle(PALETTE_FADE_PTR pfd, ARCHANDLE* handle, ARCDATID dataIdx, HEAPID heap, 
+	FADEREQ req, u32 trans_size, u16 pos, u16 read_pos)
+{
+	NNSG2dPaletteData *pal_data;
+	void *arc_data;
+	
+	arc_data = GFL_ARCHDL_UTIL_LoadPalette( handle, dataIdx, &pal_data, heap );
+	GF_ASSERT(arc_data != NULL);
+	
+	if(trans_size == 0){
+		trans_size = pal_data->szByte;
+	}
+	
+	GF_ASSERT(pos * sizeof(pos) + trans_size <= pfd->dat[req].siz);
+	PaletteWorkSet(pfd, &(((u16*)(pal_data->pRawData))[read_pos]), req, pos, trans_size);
+	
+	GFL_HEAP_FreeMemory(arc_data);
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief   アーカイブされているパレットデータをロードしてワークに展開します（ハンドル版）
+ *
+ * @param   pfd		パレットフェードシステムワークへのポインタ
+ * @param   fileIdx			アーカイブファイルインデックス
+ * @param   dataIdx			アーカイブデータインデックス
+ * @param   heap			データ読み込みテンポラリとして使うヒープID
+ * @param   req				リクエストデータ番号
+ * @param   trans_size		転送サイズ(バイト単位　※2バイトアライメントされていること)
+ * @param   pos				パレット転送開始位置(カラー単位)
+ */
+//--------------------------------------------------------------
+void PaletteWorkSet_ArcHandle(PALETTE_FADE_PTR pfd, ARCHANDLE* handle, ARCDATID dataIdx, HEAPID heap, 
+	FADEREQ req, u32 trans_size, u16 pos)
+{
+	PaletteWorkSetEx_ArcHandle(pfd, handle, dataIdx, heap, req, trans_size, pos, 0);
+}
+
+//--------------------------------------------------------------
+/**
  * @brief   パレットVRAMからワークへデータコピーをします
  *
  * @param   pfd		パレットフェードシステムワークへのポインタ
