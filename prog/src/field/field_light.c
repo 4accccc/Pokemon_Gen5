@@ -1153,7 +1153,7 @@ static void DEBUG_LIGHT_PrintOther( FIELD_LIGHT* p_wk, GFL_BMPWIN* p_win )
 	DEBUG_LIGHT_SetWordsetRgb( p_wk, 0, p_wk->reflect_data.bg_color );
 	GFL_MSG_GetString( p_wk->p_debug_msgdata, D_TOMOYA_BG, p_wk->p_debug_strbuff_tmp );
 	WORDSET_ExpandStr( p_wk->p_debug_wordset, p_wk->p_debug_strbuff, p_wk->p_debug_strbuff_tmp );
-	PRINTSYS_Print( GFL_BMPWIN_GetBmp( p_win ), DEBUG_PRINT_X, 0, p_wk->p_debug_strbuff, p_wk->p_debug_font );
+	PRINTSYS_Print( GFL_BMPWIN_GetBmp( p_win ), DEBUG_PRINT_X, 16, p_wk->p_debug_strbuff, p_wk->p_debug_font );
 
 	// ƒJ[ƒ\ƒ‹•`‰æ
 	GFL_BMP_Fill( GFL_BMPWIN_GetBmp( p_win ), 1, p_wk->debug_cont_select*16+2, 8, 8, 1 );
