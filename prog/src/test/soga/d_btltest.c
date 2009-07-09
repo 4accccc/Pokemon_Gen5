@@ -17,8 +17,6 @@
 
 #include "system\gfl_use.h"
 #include "battle/btlv/btlv_effect.h"
-#include "battle/btlv/battle_input.h"
-#include "battle/btlv/battle_cursor.h"
 #include "pokegra/pokegra_wb.naix"
 #include "battle/battgra_wb.naix"
 
@@ -32,6 +30,8 @@
 #include "print/printsys.h"
 #include "font/font.naix"
 #include "message.naix"
+
+#include "battle/btlv/btlv_input.h"
 
 #define BTLV_MCSS_1vs1    //1vs1描画
 
@@ -82,11 +82,11 @@ typedef struct
   int                 key_repeat_speed;
   int                 key_repeat_wait;
   int                 ortho_mode;
-  VecFx32             scale;
-  void                *bip;
-  BATTLE_CURSOR_DISP  cursor_disp;
+  BTLV_INPUT_WORK*    biw;
   GFL_MSGDATA         *msg;
   GFL_FONT            *font;
+  fx32                scale;
+  fx32                scale_value;
 }SOGA_WORK;
 
 static  void  MoveCamera( SOGA_WORK *wk );
@@ -113,15 +113,15 @@ static GFL_PROC_RESULT DebugBattleTestProcInit( GFL_PROC * proc, int * seq, void
 {
   SOGA_WORK* wk;
   static const GFL_DISP_VRAM dispvramBank = {
-    GX_VRAM_BG_128_A,       // メイン2DエンジンのBG
+    GX_VRAM_BG_128_D,       // メイン2DエンジンのBG
     GX_VRAM_BGEXTPLTT_NONE,     // メイン2DエンジンのBG拡張パレット
-    GX_VRAM_SUB_BG_32_H,      // サブ2DエンジンのBG
+    GX_VRAM_SUB_BG_128_C,      // サブ2DエンジンのBG
     GX_VRAM_SUB_BGEXTPLTT_NONE,   // サブ2DエンジンのBG拡張パレット
     GX_VRAM_OBJ_64_E,       // メイン2DエンジンのOBJ
     GX_VRAM_OBJEXTPLTT_NONE,    // メイン2DエンジンのOBJ拡張パレット
     GX_VRAM_SUB_OBJ_16_I,     // サブ2DエンジンのOBJ
     GX_VRAM_SUB_OBJEXTPLTT_NONE,  // サブ2DエンジンのOBJ拡張パレット
-    GX_VRAM_TEX_01_BC,        // テクスチャイメージスロット
+    GX_VRAM_TEX_01_AB,        // テクスチャイメージスロット
     GX_VRAM_TEXPLTT_01_FG,      // テクスチャパレットスロット
     GX_OBJVRAMMODE_CHAR_1D_64K,   // メインOBJマッピングモード
     GX_OBJVRAMMODE_CHAR_1D_32K,   // サブOBJマッピングモード
@@ -199,7 +199,6 @@ static GFL_PROC_RESULT DebugBattleTestProcInit( GFL_PROC * proc, int * seq, void
   }
 
   wk->seq_no = 0;
-#if 1
   {
     GFL_CLACT_SYS_Create( &GFL_CLSYSINIT_DEF_DIVSCREEN, &dispvramBank, wk->heapID );
     BTLV_EFFECT_Init( 0, wk->heapID );
@@ -207,16 +206,6 @@ static GFL_PROC_RESULT DebugBattleTestProcInit( GFL_PROC * proc, int * seq, void
   }
 
   set_pokemon( wk );
-
-#else
-  {
-    wk->bew = BTLV_EFFECT_Init( 0, &dispvramBank, wk->heapID );
-    wk->bcw = BTLV_EFFECT_GetCameraWork( wk->bew );
-  }
-
-  set_pokemon( wk );
-
-#endif
 
   //2D画面初期化
   {
@@ -263,41 +252,18 @@ static GFL_PROC_RESULT DebugBattleTestProcInit( GFL_PROC * proc, int * seq, void
 
   GFL_BG_SetBackGroundColor( GFL_BG_FRAME0_M, 0x0000 );
 
+  wk->font = GFL_FONT_Create( ARCID_FONT, NARC_font_large_nftr, GFL_FONT_LOADTYPE_FILE, FALSE, wk->heapID );
+
+  wk->biw = BTLV_INPUT_Init( BTLV_INPUT_TYPE_SINGLE, wk->font, wk->heapID );
+
   //フェードイン
   GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT_MAIN, 16, 0, 2 );
 
   GFL_UI_KEY_GetRepeatSpeed( &wk->key_repeat_speed, &wk->key_repeat_wait );
   GFL_UI_KEY_SetRepeatSpeed( wk->key_repeat_speed / 4, wk->key_repeat_wait );
 
-#if 0
-  //メッセージ系初期化
-  GFL_FONTSYS_Init();
-  wk->msg = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_d_soga_dat, wk->heapID );
-  wk->font = GFL_FONT_Create( ARCID_FONT, NARC_font_large_nftr, GFL_FONT_LOADTYPE_FILE, TRUE, wk->heapID );
-
-  //サブ画面
-  {
-    ARCHANDLE* hdl_bg;
-    ARCHANDLE* hdl_obj;
-
-    hdl_bg  = GFL_ARC_OpenDataHandle( ARCID_BATT_BG,  wk->heapID );
-    hdl_obj = GFL_ARC_OpenDataHandle( ARCID_BATT_OBJ, wk->heapID );
-
-    wk->bip = BINPUT_SystemInit( hdl_bg, hdl_obj, wk->msg, wk->font, BTLV_EFFECT_GetTCBSYS(), BTLV_EFFECT_GetPfd(), &wk->cursor_disp, 0, wk->heapID );
-    BINPUT_DefaultFrameSet();
-    BINPUT_DefaultDataSet( wk->bip );
-
-    BINPUT_CreateBG( hdl_bg, hdl_obj, wk->bip, BINPUT_TYPE_WALL, TRUE, NULL );
-    BINPUT_CreateBG( hdl_bg, hdl_obj, wk->bip, BINPUT_TYPE_A, FALSE, NULL );
-    BINPUT_StockBallActorResourceLoad( hdl_obj, wk->bip );
-
-    GFL_ARC_CloseDataHandle( hdl_bg );
-    GFL_ARC_CloseDataHandle( hdl_obj );
-  }
-#endif
-
-  BTLV_EFFECT_SetTrainer( 0, BTLV_MCSS_POS_AA, 128, 80 );
-  BTLV_MCSS_SetPaletteFade( BTLV_EFFECT_GetMcssWork(), BTLV_MCSS_POS_BB, 16, 0, 8, 0 );
+  wk->scale = FX32_ONE * 3;
+  wk->scale_value = -0x100;
 
   return GFL_PROC_RES_FINISH;
 }
@@ -343,7 +309,38 @@ static GFL_PROC_RESULT DebugBattleTestProcMain( GFL_PROC * proc, int * seq, void
 
   MoveCamera( wk );
 
+  if( trg & PAD_BUTTON_SELECT )
+  { 
+    BTLV_INPUT_CreateScreen( wk->biw, BTLV_INPUT_SCRTYPE_STANDBY );
+  }
+  if( trg & PAD_BUTTON_A )
+  {
+    BTLV_INPUT_CreateScreen( wk->biw, BTLV_INPUT_SCRTYPE_COMMAND );
+  }
+  if( trg & PAD_BUTTON_B )
+  {
+    BTLV_INPUT_CreateScreen( wk->biw, BTLV_INPUT_SCRTYPE_WAZA );
+  }
+
   BTLV_EFFECT_Main();
+  BTLV_INPUT_Main( wk->biw );
+
+#if 0
+  { 
+    MtxFx22 mtx;
+
+    MTX_Scale22( &mtx, wk->scale, wk->scale );
+    GFL_BG_SetAffineScroll( GFL_BG_FRAME3_S, GFL_BG_SCROLL_X_SET, 128, &mtx, 256, 256 );
+    GFL_BG_SetAffineScroll( GFL_BG_FRAME3_S, GFL_BG_SCROLL_Y_SET, 128 + 40, &mtx, 256, 256 );
+
+    wk->scale += wk->scale_value;
+
+    if( ( wk->scale == FX32_ONE ) || ( wk->scale == FX32_ONE * 3 ) )
+    { 
+      wk->scale_value *= -1;
+    }
+  }
+#endif
 
   if( pad == PAD_BUTTON_EXIT ){
     GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT_MAIN, 0, 16, 2 );
