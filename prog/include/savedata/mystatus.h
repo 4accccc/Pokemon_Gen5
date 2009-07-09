@@ -46,6 +46,7 @@ extern BOOL MyStatus_CheckNameClear( const MYSTATUS * my );
 //–¼‘O
 extern void MyStatus_SetMyName(MYSTATUS * my, const STRCODE * name);
 extern const STRCODE * MyStatus_GetMyName(const MYSTATUS * my);
+extern void MyStatus_CopyNameStrCode( const MYSTATUS * my, STRCODE *buf, int dest_length );
 extern STRBUF * MyStatus_CreateNameString(const MYSTATUS * my, int heapID);
 extern void MyStatus_CopyNameString( const MYSTATUS * my, STRBUF *buf );
 extern void MyStatus_SetMyNameFromString(MYSTATUS * my, const STRBUF * str);

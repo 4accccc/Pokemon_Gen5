@@ -10,6 +10,7 @@
 #include "savedata/mystatus.h"
 #include "mystatus_local.h"
 #include "system/main.h"
+#include "print/str_tool.h"
 
 #define TR_LOW_MASK		(0xffff)
 
@@ -143,20 +144,7 @@ BOOL MyStatus_CheckNameClear( const MYSTATUS * my )
 //----------------------------------------------------------
 void MyStatus_SetMyName(MYSTATUS * my, const STRCODE * name)
 {
-#if 0
-	int len;
-	len = PM_strlen(name);
-	GF_ASSERT(len < PERSON_NAME_SIZE + EOM_SIZE)
-	PM_strcpy(my->name, name);
-#else
-  //※check　STRCODE同士のコピーが出来るようになったら作り直す
-  STRBUF *namebuf;
-  
-  namebuf = GFL_STR_CreateBuffer(BUFLEN_PERSON_NAME, GFL_HEAPID_APP);  //一時バッファ
-  GFL_STR_SetStringCode(namebuf, name);
-  GFL_STR_GetStringCode(namebuf, my->name, PERSON_NAME_SIZE + EOM_SIZE);
-  GFL_STR_DeleteBuffer(namebuf);
-#endif
+  STRTOOL_Copy( name, my->name, PERSON_NAME_SIZE + EOM_SIZE );
 }
 
 //----------------------------------------------------------
@@ -181,6 +169,20 @@ void MyStatus_SetMyNameFromString(MYSTATUS * my, const STRBUF * str)
 const STRCODE * MyStatus_GetMyName(const MYSTATUS * my)
 {
 	return my->name;
+}
+
+//----------------------------------------------------------
+/**
+ * @brief	自分の名前取得（STRBUFにコピー）
+ * @param	my		自分状態保持ワークへのポインタ
+ * @param	buf		コピーする先のSTRBUFへのポインタ（各自で内容は確保してある事が前提）
+ * @return	none
+ */
+//----------------------------------------------------------
+void MyStatus_CopyNameStrCode( const MYSTATUS * my, STRCODE *buf, int dest_length )
+{
+  GF_ASSERT(dest_length >= PERSON_NAME_SIZE + EOM_SIZE);
+  STRTOOL_Copy(my->name, buf, dest_length);
 }
 
 //----------------------------------------------------------
