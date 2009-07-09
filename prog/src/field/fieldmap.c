@@ -1284,7 +1284,10 @@ static void fldmap_G3D_Load( FIELDMAP_WORK *fieldWork )
 	fieldWork->bbdActSys = GFL_BBDACT_CreateSys(
 			FIELD_G3D_BBDACT_RESMAX, FIELD_G3D_BBDACT_ACTMAX,
 			fldmap_G3D_BBDTrans, fieldWork->heapID );
-
+  {
+    GFL_BBD_SYS * bbdsys = GFL_BBDACT_GetBBDSystem(fieldWork->bbdActSys);
+    GFL_BBD_SetOrigin(bbdsys, GFL_BBD_ORIGIN_BOTTOM);
+  }
 	//ƒJƒƒ‰ì¬
 	fieldWork->g3Dcamera = GFL_G3D_CAMERA_CreateDefault(
 			&fldmapdata_cameraPos, &fldmapdata_cameraTarget, fieldWork->heapID );
