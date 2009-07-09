@@ -64,6 +64,7 @@
 #include "field/weather_no.h"
 #include "sound/pm_sndsys.h"
 //#include "sound/wb_sound_data.sadl"
+#include "net_app/union/union_main.h"
 
 #include "message.naix" //NARC_message_d_field_dat
 #include "msg/msg_d_field.h"  //DEBUG_FIELD_STR00 DEBUG_FIELD_C_STR10
@@ -293,6 +294,8 @@ static const u32 fldmapdata_fogColorTable[8];
 
 static const u16 fldmapdata_bgColorTable[16];
 
+static void FIELDMAP_CommBoot(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork, HEAPID heapID);
+
 //======================================================================
 //	フィールドマップ　生成　削除
 //======================================================================
@@ -330,21 +333,8 @@ FIELDMAP_WORK * FIELDMAP_Create( GAMESYS_WORK *gsys, HEAPID heapID )
 	fieldWork->pMapMatrix = MAP_MATRIX_Create( heapID );
 	
 	//通信用処理 
-  fieldWork->commSys = FIELD_COMM_MAIN_InitSystem( heapID, GFL_HEAPID_APP, GAMESYSTEM_GetGameCommSysPtr(gsys) );
-  FIELD_COMM_MAIN_CommFieldMapInit(FIELD_COMM_MAIN_GetCommFieldSysPtr(fieldWork->commSys));
-	FIELD_COMM_MAIN_SetCommActor(fieldWork->commSys,
-      GAMEDATA_GetMMdlSys(GAMESYSTEM_GetGameData(gsys)));
-  
-#if 0   //※check　超暫定
-  //常時通信モード
-  {
-    GAME_COMM_SYS_PTR gcsp = GAMESYSTEM_GetGameCommSysPtr(gsys);
-    if(GAMESYSTEM_GetAlwaysNetFlag(gsys) == TRUE 
-        && GameCommSys_BootCheck(gcsp) == GAME_COMM_NO_NULL){
-      GameCommSys_Boot(gcsp, GAME_COMM_NO_FIELD_BEACON_SEARCH, gcsp);
-    }
-  }
-#endif
+  FIELDMAP_CommBoot(gsys, fieldWork, heapID);
+	
 	return fieldWork;
 }
 
@@ -598,8 +588,12 @@ static MAINSEQ_RESULT mainSeqFunc_ready(GAMESYS_WORK *gsys, FIELDMAP_WORK *field
       EVENTDATA_SearchConnectIDBySphere(evdata, &fieldWork->now_pos);
   }
   //フィールドマップ用イベント起動チェックをセットする
-  GAMESYSTEM_EVENT_EntryCheckFunc(
-      gsys, FIELD_EVENT_CheckNormal, fieldWork );
+  if(fieldWork->map_id == ZONE_ID_UNION || fieldWork->map_id == ZONE_ID_CLOSSEUM){
+    GAMESYSTEM_EVENT_EntryCheckFunc( gsys, FIELD_EVENT_CheckUnion, fieldWork );
+  }
+  else{
+    GAMESYSTEM_EVENT_EntryCheckFunc( gsys, FIELD_EVENT_CheckNormal, fieldWork );
+  }
   
   fieldWork->gamemode = GAMEMODE_NORMAL;
 	GAMEDATA_SetFrameSpritEnable(GAMESYSTEM_GetGameData(gsys), TRUE);
@@ -641,6 +635,7 @@ static MAINSEQ_RESULT mainSeqFunc_update_top(GAMESYS_WORK *gsys, FIELDMAP_WORK *
   //通信用処理(プレイヤーの座標の設定とか
   FIELD_COMM_MAIN_UpdateCommSystem( fieldWork,
       fieldWork->gsys, fieldWork->field_player, fieldWork->commSys );
+  Union_Main(GAMESYSTEM_GetGameCommSysPtr(gsys), fieldWork);
   
   FIELD_SUBSCREEN_Main(fieldWork->fieldSubscreenWork);
   FIELD_DEBUG_UpdateProc( fieldWork->debugWork );
@@ -1791,6 +1786,56 @@ static void zoneChange_UpdatePlayerWork( GAMEDATA *gdata, u32 zone_id )
 static void fldmap_ClearMapCtrlWork( FIELDMAP_WORK *fieldWork )
 {
 	fieldWork->mapCtrlWork = NULL;
+}
+
+//==================================================================
+/**
+ * フィールドマップ作成と同時に起動する通信プログラム
+ *
+ * @param   gsys		
+ * @param   fieldWork		
+ */
+//==================================================================
+static void FIELDMAP_CommBoot(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork, HEAPID heapID)
+{
+  GAME_COMM_SYS_PTR game_comm;
+  GAME_COMM_NO comm_no;
+  GAMEDATA *gdata;
+  
+  game_comm = GAMESYSTEM_GetGameCommSysPtr(gsys);
+  comm_no = GameCommSys_BootCheck(game_comm);
+  gdata = GAMESYSTEM_GetGameData( gsys );
+  
+	switch(fieldWork->map_id){    //※check　どこかのタイミングで一度整理
+	case ZONE_ID_UNION:
+	case ZONE_ID_CLOSSEUM:
+	  {
+      UNION_PARENT_WORK *upw;
+      
+      if(comm_no != GAME_COMM_NO_UNION){
+        upw = GFL_HEAP_AllocClearMemory(GFL_HEAP_LOWID(GFL_HEAPID_APP), sizeof(UNION_PARENT_WORK));
+        upw->mystatus = GAMEDATA_GetMyStatus(gdata);
+        upw->game_comm = game_comm;
+        upw->game_data = gdata;
+        if(comm_no == GAME_COMM_NO_NULL){
+    	    GameCommSys_Boot(game_comm, GAME_COMM_NO_UNION, upw);
+    	  }
+    	  else{
+          GameCommSys_ChangeReq(game_comm, GAME_COMM_NO_UNION, upw);
+        }
+      }
+  	}
+    break;
+  default:  //パレス
+  fieldWork->commSys = FIELD_COMM_MAIN_InitSystem( heapID, GFL_HEAPID_APP, GAMESYSTEM_GetGameCommSysPtr(gsys) );
+  FIELD_COMM_MAIN_CommFieldMapInit(FIELD_COMM_MAIN_GetCommFieldSysPtr(fieldWork->commSys));
+	FIELD_COMM_MAIN_SetCommActor(fieldWork->commSys,
+      GAMEDATA_GetMMdlSys(GAMESYSTEM_GetGameData(gsys)));
+//    fieldWork->commSys = FIELD_COMM_MAIN_InitSystem( heapID, GFL_HEAPID_APP, game_comm );
+  //  FIELD_COMM_MAIN_CommFieldMapInit(FIELD_COMM_MAIN_GetCommFieldSysPtr(fieldWork->commSys));
+  	//FIELD_COMM_MAIN_SetCommActor(fieldWork->commSys, GAMEDATA_GetMMdlSys(gdata));
+    break;
+  }
 }
 
 //======================================================================

@@ -55,6 +55,9 @@ enum{
   UNION_BATTLE_MODE_MULTI,      ///<2vs2 マルチバトル
 };
 
+///ユニオンルームのキャラクタ寿命(フレーム単位)
+#define UNION_CHAR_LIFE         (30 * 15)  //フィールドの為、1/30
+
 
 //==============================================================================
 //  構造体定義
@@ -83,7 +86,6 @@ typedef struct{
 
 ///ユニオンで送受信するビーコンデータ
 typedef struct{
-  u8 mac_address[6];          ///<自分のMacAddress
   u8 connect_mac_address[6];  ///<接続したい人へのMacAddress
 
   u8 pm_version;              ///<PM_VERSION
@@ -94,8 +96,9 @@ typedef struct{
   STRCODE name[PERSON_NAME_SIZE + EOM_SIZE];  ///<名前
   
   u8 data_valid;              ///<UNION_BEACON_VALID:このビーコンデータは有効なものである
-  u8 trainer_type;            ///<トレーナータイプ
-  u8 padding[2];
+  u8 trainer_view;            ///<トレーナータイプ(ユニオンルーム内での見た目)
+  u8 sex;                     ///<性別
+  u8 padding;
   
   union{
     UNION_BEACON_CHAT chat;
@@ -105,12 +108,21 @@ typedef struct{
   u8 reserve[16];             ///<将来の為の予約
 }UNION_BEACON;
 
-///受信したビーコンデータ
+///受信したビーコンデータから作成されたPCパラメータ
 typedef struct{
   UNION_BEACON beacon;
+  u8 mac_address[6];          ///<送信相手のMacAddress
   u8 new_data;                ///<TRUE:新規のビーコンデータ
-  u8 padding[3];
-}UNION_RECEIVE_BEACON;
+  u8 padding;
+  
+  u16 life;                    ///<寿命(フレーム単位)　新しくビーコンを受信しなければ消える
+  u8 padding2[2];
+  
+  u8 event_status;            ///<イベントステータス(BPC_EVENT_STATUS_???)
+  u8 next_event_status;       ///<次に実行するイベントステータス(BPC_EVENT_STATUS_???)
+  u8 func_proc;               ///<動作プロセスNo(BPC_SUBPROC_???)
+  u8 func_seq;                ///<動作プロセスシーケンス
+}UNION_BEACON_PC;
 
 //--------------------------------------------------------------
 //  自分データ

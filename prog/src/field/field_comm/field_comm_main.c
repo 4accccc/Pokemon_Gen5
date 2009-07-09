@@ -154,6 +154,10 @@ FIELD_COMM_MAIN* FIELD_COMM_MAIN_InitSystem( HEAPID heapID , HEAPID commHeapID, 
 //--------------------------------------------------------------
 void FIELD_COMM_MAIN_TermSystem( FIELD_MAIN_WORK *fieldWork, FIELD_COMM_MAIN *commSys )
 {
+  if(commSys == NULL){
+    return; //※check　パレスとユニオンの場合の為
+  }
+  
   if(commSys->commField_ != NULL){
     if(GameCommSys_BootCheck(commSys->game_comm) != GAME_COMM_NO_INVASION){
       //通信監視ワークが存在しているのに切断されているのは通信エラーが発生して強制切断された場合
@@ -637,6 +641,10 @@ static void DEBUG_PalaceMapInCheck(FIELD_MAIN_WORK *fieldWork, GAMESYS_WORK *gam
 void  FIELD_COMM_MAIN_UpdateCommSystem( FIELD_MAIN_WORK *fieldWork ,
         GAMESYS_WORK *gameSys , FIELD_PLAYER *pcActor , FIELD_COMM_MAIN *commSys )
 {
+  if(commSys == NULL){  //パレスではなくユニオンの場合。とてもやっつけなので後でちゃんとする
+    return;             //※check
+  }
+  
   //パレスマップに来たかチェック
   DEBUG_PalaceMapInCheck(fieldWork, gameSys, commSys, pcActor);
 

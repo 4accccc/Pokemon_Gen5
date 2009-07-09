@@ -118,6 +118,26 @@ void UnionView_SetUpTrainerTypeSelect( u32 id, int sex, WORDSET *wordset )
 
 //==============================================================================
 /**
+ * $brief	選択結果から決定したトレーナータイプのテーブルIndexを取得する
+ *
+ * @param	id			ユーザーID
+ * @param	sex			性別
+ * @param	select		選択結果（0-3)
+ *
+ * @retval	int		
+ */
+//==============================================================================
+int UnionView_GetTrainerTypeIndex( u32 id, int sex, u32 select )
+{
+	int key    = id%8;
+	int patern = UnionViewNameTable[key][select] + UNION_VIEW_SELECT_TYPE * sex;
+
+  return patern;
+}
+
+
+//==============================================================================
+/**
  * $brief	選択結果から決定したトレーナータイプの番号そのものを算出する
  *
  * @param	id			ユーザーID
@@ -129,9 +149,7 @@ void UnionView_SetUpTrainerTypeSelect( u32 id, int sex, WORDSET *wordset )
 //==============================================================================
 int UnionView_GetTrainerType( u32 id, int sex, u32 select )
 {
-	int key    = id%8;
-	int patern = UnionViewNameTable[key][select] + UNION_VIEW_SELECT_TYPE * sex;
-
+  int patern = UnionView_GetTrainerTypeIndex(id, sex, select);
 	return UnionViewTable[patern].objcode;
 }
 
@@ -169,6 +187,22 @@ int UnionView_GetCharaNo( int sex, int view_type )
 {
 
 	return Search_ViewNo( sex, view_type );
+}
+
+//==================================================================
+/**
+ * トレーナータイプのテーブルINDEXからOBJCODEを取得する
+ * @param   view_index		テーブルINDEX
+ * @retval  int		OBJCODE
+ */
+//==================================================================
+int UnionView_GetObjCode(int view_index)
+{
+  if(view_index >= NELEMS(UnionViewTable)){
+    GF_ASSERT(0);
+    return BOY1;
+  }
+  return UnionViewTable[view_index].objcode;
 }
 
 

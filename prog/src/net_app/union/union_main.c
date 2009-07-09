@@ -13,6 +13,8 @@
 #include "savedata/mystatus.h"
 #include "net_app/union/union_main.h"
 #include "union_local.h"
+#include "union_receive.h"
+#include "union_chara.h"
 
 
 void Union_Main(GAME_COMM_SYS_PTR game_comm, FIELD_MAIN_WORK *fieldmap)
@@ -27,10 +29,12 @@ void Union_Main(GAME_COMM_SYS_PTR game_comm, FIELD_MAIN_WORK *fieldmap)
   GF_ASSERT(unisys != NULL);
   
   //データ受信によるイベント起動
+  UnionReceive_BeaconInterpret(unisys);
   
   //キー操作によるイベント起動
   
   //OBJ反映
+  UNION_CHAR_Update(unisys, unisys->uniparent->game_data);
   
   //下画面反映
 }

@@ -257,16 +257,19 @@ GMEVENT * FIELD_EVENT_CheckNormal( GAMESYS_WORK *gsys, void *work )
 	///通信用会話処理(仮
   {
     FIELD_COMM_MAIN * commSys = FIELDMAP_GetCommSys(fieldWork);
-    //話しかける側
-    if( req.talkRequest ){
-      if( FIELD_COMM_MAIN_CanTalk( commSys ) == TRUE ){
-        return FIELD_COMM_EVENT_StartTalk( gsys , fieldWork , commSys );
+    
+    if(commSys != NULL){
+      //話しかける側
+      if( req.talkRequest ){
+        if( FIELD_COMM_MAIN_CanTalk( commSys ) == TRUE ){
+          return FIELD_COMM_EVENT_StartTalk( gsys , fieldWork , commSys );
+        }
       }
-    }
 
-    //話しかけられる側(中で一緒に話せる状態かのチェックもしてしまう
-    if( FIELD_COMM_MAIN_CheckReserveTalk( commSys ) == TRUE ){
-      return FIELD_COMM_EVENT_StartTalkPartner( gsys , fieldWork , commSys );
+      //話しかけられる側(中で一緒に話せる状態かのチェックもしてしまう
+      if( FIELD_COMM_MAIN_CheckReserveTalk( commSys ) == TRUE ){
+        return FIELD_COMM_EVENT_StartTalkPartner( gsys , fieldWork , commSys );
+      }
     }
   }
 
@@ -389,6 +392,85 @@ GMEVENT * FIELD_EVENT_CheckNormal( GAMESYS_WORK *gsys, void *work )
       return ev;
     }
 	}
+	return NULL;
+}
+
+//==================================================================
+/**
+ * イベント起動チェック：ユニオンorコロシアム
+ *
+ * @param   gsys		
+ * @param   work		
+ *
+ * @retval  GMEVENT *		
+ */
+//==================================================================
+GMEVENT * FIELD_EVENT_CheckUnion( GAMESYS_WORK *gsys, void *work )
+{
+  EV_REQUEST req;
+	GMEVENT *event;
+	FIELDMAP_WORK *fieldWork = work;
+  
+  setupRequest( &req, gsys, fieldWork );
+
+  
+//☆☆☆一歩移動チェックがここから
+  //座標イベントチェック
+  if( req.moveRequest )
+  {
+    VecFx32 pos;
+    u16 id;
+    EVENTWORK *evwork = GAMEDATA_GetEventWork( req.gamedata );
+    FIELD_PLAYER_GetPos( req.field_player, &pos );
+    
+    id = EVENTDATA_CheckPosEvent( req.evdata, evwork, &pos );
+    
+    if( id != EVENTDATA_ID_NONE ){ //座標イベント起動
+      SCRIPT_FLDPARAM fparam;
+      fparam.fieldMap = fieldWork;
+      fparam.msgBG = FIELDMAP_GetFldMsgBG(fieldWork);
+      event = SCRIPT_SetEventScript( gsys, id, NULL, req.heapID, &fparam );
+      return event;
+    }
+
+   //座標接続チェック
+    event = checkExit(&req, fieldWork, req.now_pos);
+    if( event != NULL ){
+      return event;
+    }
+  }
+
+//☆☆☆自機状態イベントチェックがここから
+    /* 今はない */
+
+//☆☆☆会話チェック
+
+	///通信用会話処理(仮
+  {
+    FIELD_COMM_MAIN * commSys = FIELDMAP_GetCommSys(fieldWork);
+    
+    if(commSys != NULL){
+      //話しかける側
+      if( req.talkRequest ){
+        if( FIELD_COMM_MAIN_CanTalk( commSys ) == TRUE ){
+          return FIELD_COMM_EVENT_StartTalk( gsys , fieldWork , commSys );
+        }
+      }
+
+      //話しかけられる側(中で一緒に話せる状態かのチェックもしてしまう
+      if( FIELD_COMM_MAIN_CheckReserveTalk( commSys ) == TRUE ){
+        return FIELD_COMM_EVENT_StartTalkPartner( gsys , fieldWork , commSys );
+      }
+    }
+  }
+
+	//メニュー起動チェック
+	if( req.menuRequest ){
+		if(WIPE_SYS_EndCheck()){
+  			return EVENT_FieldMapMenu( gsys, fieldWork, req.heapID );
+		}
+	}
+
 	return NULL;
 }
 

@@ -14,6 +14,7 @@
 #include "field/fieldmap_proc.h"
 
 extern GMEVENT * FIELD_EVENT_CheckNormal( GAMESYS_WORK *gsys, void *work );
+extern GMEVENT * FIELD_EVENT_CheckUnion( GAMESYS_WORK *gsys, void *work );
 
 extern void FIELD_EVENT_ChangeNaminoriStart( GMEVENT *event,
     GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork );

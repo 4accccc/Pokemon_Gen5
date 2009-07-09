@@ -68,8 +68,8 @@ extern u32 Mystatus_AddGold(MYSTATUS * my, u32 add);
 extern u32 Mystatus_SubGold(MYSTATUS * my, u32 sub);
 
 // ユニオンルームで使う自分の見た目
-extern void MyStatus_SetTrainerView( MYSTATUS *my, u8 view );
 extern u8 MyStatus_GetTrainerView( const MYSTATUS *my );
+extern void MyStatus_SetTrainerView( MYSTATUS *my, u8 view );
 
 // ROMコード（0:ダイヤ 1:パール）
 // DP では、0=ダイヤ 1=パールで扱う予定だったみたいだが

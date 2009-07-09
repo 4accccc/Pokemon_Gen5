@@ -46,7 +46,7 @@ FS_EXTERN_OVERLAY(union_room);
 static void UnionComm_InitCallback(void *pWork);
 static void	UnionComm_ExitCallback(void* pWork);
 static void UnionComm_BeaconSearch(UNION_SYSTEM_PTR unisys);
-static BOOL UnionBeacon_SetReceiveData(UNION_SYSTEM_PTR unisys, const UNION_BEACON *beacon);
+static BOOL UnionBeacon_SetReceiveData(UNION_SYSTEM_PTR unisys, const UNION_BEACON *beacon, const u8 *beacon_mac_address);
 static void* UnionComm_GetBeaconData(void* pWork);
 static void UnionComm_SetBeaconParam(UNION_SYSTEM_PTR unisys, UNION_BEACON *beacon);
 static int UnionComm_GetBeaconSize(void *pWork);
@@ -181,7 +181,8 @@ BOOL UnionComm_InitWait(int *seq, void *pwk, void *pWork)
   if(unisys->comm_status >= UNION_COMM_STATUS_INIT){
     GF_ASSERT(unisys->comm_status < UNION_COMM_STATUS_UPDATE);
     unisys->comm_status = UNION_COMM_STATUS_UPDATE;
-    GFL_NET_StartBeaconScan();
+//    GFL_NET_StartBeaconScan();
+    GFL_NET_Changeover(NULL);
     return TRUE;
   }
   return FALSE;
@@ -282,11 +283,15 @@ static void UnionComm_BeaconSearch(UNION_SYSTEM_PTR unisys)
 {
   int i;
   UNION_BEACON *bcon_buff;
+  const u8 *mac_address_ptr;
   
   for(i = 0; i < UNION_RECEIVE_BEACON_MAX; i++){
   	bcon_buff = GFL_NET_GetBeaconData(i);
   	if(bcon_buff != NULL){
-      UnionBeacon_SetReceiveData(unisys, bcon_buff);
+      mac_address_ptr = GFL_NET_GetBeaconMacAddress(i);
+      if(mac_address_ptr != NULL){
+        UnionBeacon_SetReceiveData(unisys, bcon_buff, mac_address_ptr);
+      }
   	}
   }
 }
@@ -301,10 +306,10 @@ static void UnionComm_BeaconSearch(UNION_SYSTEM_PTR unisys)
  * @retval  BOOL		TRUE:成功。　FALSE:失敗
  */
 //--------------------------------------------------------------
-static BOOL UnionBeacon_SetReceiveData(UNION_SYSTEM_PTR unisys, const UNION_BEACON *beacon)
+static BOOL UnionBeacon_SetReceiveData(UNION_SYSTEM_PTR unisys, const UNION_BEACON *beacon, const u8 *beacon_mac_address)
 {
   int i;
-  UNION_RECEIVE_BEACON *dest;
+  UNION_BEACON_PC *dest;
   
   dest = unisys->receive_beacon;
   
@@ -315,11 +320,13 @@ static BOOL UnionBeacon_SetReceiveData(UNION_SYSTEM_PTR unisys, const UNION_BEAC
   //既に受信済みのビーコンデータか確認
   for(i = 0; i < UNION_RECEIVE_BEACON_MAX; i++){
     if(dest[i].beacon.data_valid == UNION_BEACON_VALID
-        && GFL_STD_MemComp(dest[i].beacon.mac_address, beacon->mac_address, 6) == 0){
+        && GFL_STD_MemComp(beacon_mac_address, dest[i].mac_address, 6) == 0){
       GFL_STD_MemCopy(beacon, &dest[i].beacon, sizeof(UNION_BEACON));
     #if 0 //一度に同じマシンからの連続受信を考えてここでFALSEはしない
       dest[i].new_data = FALSE;
     #endif
+      dest[i].life = UNION_CHAR_LIFE;   //ビーコンの更新があったので寿命を元に戻す
+      OS_TPrintf("ビーコン更新 %d\n", i);
       return TRUE;
     }
   }
@@ -328,7 +335,10 @@ static BOOL UnionBeacon_SetReceiveData(UNION_SYSTEM_PTR unisys, const UNION_BEAC
   for(i = 0; i < UNION_RECEIVE_BEACON_MAX; i++){
     if(dest[i].beacon.data_valid != UNION_BEACON_VALID){
       GFL_STD_MemCopy(beacon, &dest[i].beacon, sizeof(UNION_BEACON));
+      GFL_STD_MemCopy(beacon_mac_address, dest[i].mac_address, 6);
       dest[i].new_data = TRUE;
+      dest[i].life = UNION_CHAR_LIFE;
+      OS_TPrintf("新規ビーコン更新 %d\n", i);
       return TRUE;
     }
   }
@@ -366,7 +376,6 @@ static void UnionComm_SetBeaconParam(UNION_SYSTEM_PTR unisys, UNION_BEACON *beac
   
   GFL_STD_MemClear(beacon, sizeof(UNION_BEACON));
   
-  OS_GetMacAddress(beacon->mac_address);
   GFL_STD_MemCopy(situ->connect_mac_address, beacon->connect_mac_address, 6);
   
   beacon->pm_version = PM_VERSION;
@@ -377,7 +386,8 @@ static void UnionComm_SetBeaconParam(UNION_SYSTEM_PTR unisys, UNION_BEACON *beac
   //※check　名前コピーがないので後で。
   //name
   
-  beacon->trainer_type = MyStatus_GetTrainerView( unisys->uniparent->mystatus );
+  beacon->trainer_view = MyStatus_GetTrainerView( unisys->uniparent->mystatus );
+  beacon->sex = MyStatus_GetMySex(unisys->uniparent->mystatus);
   
   
   //送信データ完成

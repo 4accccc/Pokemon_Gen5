@@ -24,6 +24,7 @@
 #include "savedata/mystatus.h"
 #include "app/config_panel.h"		//ConfigPanelProcData参照
 #include "infowin/infowin.h"
+#include "net_app/union/union_beacon_tool.h"
 
 //======================================================================
 //	define
@@ -1021,6 +1022,9 @@ static BOOL TESTMODE_ITEM_SelectFuncSelectName( TESTMODE_WORK *work , const int 
 	//名前のセット
 	myStatus = SaveData_GetMyStatus( SaveControl_GetPointer() );
 	MyStatus_SetMyNameFromString( myStatus , str );
+	MyStatus_SetID(myStatus, GFL_STD_MtRand(GFL_STD_RAND_MAX));
+	MyStatus_SetTrainerView(myStatus, 
+	  UnionView_GetTrainerTypeIndex(MyStatus_GetID(myStatus), MyStatus_GetMySex(myStatus), 0));
 
 	GFL_STR_DeleteBuffer( str );
 	

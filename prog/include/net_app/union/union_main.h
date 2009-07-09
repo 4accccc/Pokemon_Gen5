@@ -19,6 +19,7 @@
 typedef struct{
   MYSTATUS *mystatus;
   GAME_COMM_SYS_PTR game_comm;
+  GAMEDATA *game_data;
 }UNION_PARENT_WORK;
 
 

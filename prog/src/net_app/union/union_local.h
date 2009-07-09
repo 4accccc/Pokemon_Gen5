@@ -27,7 +27,7 @@ typedef struct _UNION_SYSTEM{
   
   UNION_MY_SITUATION my_situation;    ///<自分の状況
   UNION_BEACON my_beacon;             ///<自分の送信ビーコン
-  UNION_RECEIVE_BEACON receive_beacon[UNION_RECEIVE_BEACON_MAX];  ///<受信ビーコン
+  UNION_BEACON_PC receive_beacon[UNION_RECEIVE_BEACON_MAX];  ///<受信ビーコン
   
   u8 comm_status;
 }UNION_SYSTEM;

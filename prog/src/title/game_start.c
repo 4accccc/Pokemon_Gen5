@@ -19,6 +19,7 @@
 #include "select_moji_mode.h"
 #include "message.naix"
 #include "msg/msg_debugname.h"
+#include "net_app/union/union_beacon_tool.h"
 
 //==============================================================================
 //	
@@ -233,6 +234,9 @@ static GFL_PROC_RESULT GameStart_FirstProcEnd( GFL_PROC * proc, int * seq, void 
 	//名前のセット
 	myStatus = SaveData_GetMyStatus( SaveControl_GetPointer() );
 	MyStatus_SetMyNameFromString( myStatus , work->nameInParam->strbuf );
+	MyStatus_SetID(myStatus, GFL_STD_MtRand(GFL_STD_RAND_MAX));
+	MyStatus_SetTrainerView(myStatus, 
+	  UnionView_GetTrainerTypeIndex(MyStatus_GetID(myStatus), MyStatus_GetMySex(myStatus), 0));
 	init_param = DEBUG_GetGameInitWork(GAMEINIT_MODE_FIRST, 0, &pos, 0, work->selModeParam.isComm);
 
 	NameIn_ParamDelete(work->nameInParam);
@@ -384,6 +388,9 @@ static GFL_PROC_RESULT GameStart_DebugProcEnd( GFL_PROC * proc, int * seq, void 
   	
   	myStatus = SaveData_GetMyStatus( SaveControl_GetPointer() );
   	MyStatus_SetMyNameFromString( myStatus , namebuf );
+  	MyStatus_SetID(myStatus, GFL_STD_MtRand(GFL_STD_RAND_MAX));
+  	MyStatus_SetTrainerView(myStatus, 
+  	  UnionView_GetTrainerTypeIndex(MyStatus_GetID(myStatus), MyStatus_GetMySex(myStatus), 0));
   	
   	GFL_STR_DeleteBuffer(namebuf);
   	GFL_MSG_Delete(msgman);

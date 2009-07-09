@@ -8,6 +8,9 @@
 //=============================================================================
 #pragma once
 
+#include "print/wordset.h"
+
+
 enum UNION_VIEW_INFO {
   UNIONVIEW_OBJCODE,  // フィールドOBJコード
   UNIONVIEW_TRTYPE,		// トレーナーグラフィックのＩＤ（バトルやカード時のグラフィック）
@@ -19,9 +22,11 @@ enum UNION_VIEW_INFO {
 // トレーナーVIEWTYPEと性別から情報を引き出す
 extern int  UnionView_GetTrainerInfo( int view_type, int sex, int info );
 
+extern int UnionView_GetTrainerTypeIndex( u32 id, int sex, u32 select );
 extern int  UnionView_GetTrainerType( u32 id, int sex, u32 select );
 extern void UnionView_SetUpTrainerTypeSelect( u32 id, int sex, WORDSET *wordset );
 extern int UnionView_GetCharaNo( int sex, int view_type );
+extern int UnionView_GetObjCode(int view_index);
 extern u16 *UnionView_GetPalNo( u16 * table, int sex, int view_type );
 extern u16 *UnionView_PalleteTableAlloc( int heapID );
 
