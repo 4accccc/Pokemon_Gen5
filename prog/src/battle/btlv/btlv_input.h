@@ -12,6 +12,13 @@
 
 typedef struct _BTLV_INPUT_WORK BTLV_INPUT_WORK;
 
+///技選択画面構成用のデータ
+typedef struct{
+  u16 wazano[ PTL_WAZA_MAX ];
+  u16 pp[ PTL_WAZA_MAX ];
+  u16 ppmax[ PTL_WAZA_MAX ];
+}BTLV_INPUT_WAZA_PARAM;
+
 typedef enum
 { 
   BTLV_INPUT_TYPE_SINGLE = 0,
@@ -35,5 +42,6 @@ extern	void			        BTLV_INPUT_Exit( BTLV_INPUT_WORK* biw );
 extern	void			        BTLV_INPUT_Main( BTLV_INPUT_WORK* biw );
 extern  void              BTLV_INPUT_SetFrame( void );
 extern  void              BTLV_INPUT_FreeFrame( void );
-extern  void              BTLV_INPUT_CreateScreen( BTLV_INPUT_WORK* biw, BTLV_INPUT_SCRTYPE type );
+extern  void              BTLV_INPUT_CreateScreen( BTLV_INPUT_WORK* biw, BTLV_INPUT_SCRTYPE type, void* param );
+extern  int               BTLV_INPUT_CheckInput( BTLV_INPUT_WORK* biw, const GFL_UI_TP_HITTBL* tp_tbl );
 

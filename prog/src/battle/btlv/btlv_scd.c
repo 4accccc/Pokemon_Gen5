@@ -17,9 +17,6 @@
 
 #include "msg/msg_btl_ui.h"
 
-#include "battle_input.h"
-#include "battle_input_type.h"
-
 #include "battle/btl_common.h"
 #include "battle/btl_util.h"
 #include "battle/btl_string.h"
@@ -30,9 +27,7 @@
 #include "btlv_mcss.h"
 #include "btlv_scd.h"
 
-
-
-#define PLATINUM_UNDER_SCREEN //有効にすることでプラチナ下画面Verになる
+#include "btlv_input.h"
 
 /*--------------------------------------------------------------------------*/
 /* Consts                                                                   */
@@ -120,8 +115,7 @@ struct _BTLV_SCD {
   const BTL_POKE_CONTAINER* pokeCon;
   HEAPID  heapID;
 
-  void  *bip;
-  BATTLE_CURSOR_DISP  cursor_disp;
+  BTLV_INPUT_WORK     *biw;
 };
 
 
@@ -183,34 +177,21 @@ BTLV_SCD*  BTLV_SCD_Create( const BTLV_CORE* vcore, const BTL_MAIN_MODULE* mainM
 
 void BTLV_SCD_Setup( BTLV_SCD* wk )
 {
-  ARCHANDLE* hdl_bg;
-  ARCHANDLE* hdl_obj;
-
-  hdl_bg  = GFL_ARC_OpenDataHandle( ARCID_BATT_BG,  wk->heapID );
-  hdl_obj = GFL_ARC_OpenDataHandle( ARCID_BATT_OBJ, wk->heapID );
-
-  wk->bip = BINPUT_SystemInit( hdl_bg, hdl_obj, NULL, wk->font, BTLV_EFFECT_GetTCBSYS(), BTLV_EFFECT_GetPfd(), &wk->cursor_disp, 0, wk->heapID );
-  BINPUT_DefaultFrameSet();
-  BINPUT_DefaultDataSet( wk->bip );
-
-  BINPUT_CreateBG( hdl_bg, hdl_obj, wk->bip, BINPUT_TYPE_WALL, TRUE, NULL );
-
-  GFL_ARC_CloseDataHandle( hdl_bg );
-  GFL_ARC_CloseDataHandle( hdl_obj );
+  wk->biw = BTLV_INPUT_Init( BTLV_INPUT_TYPE_SINGLE, wk->font, wk->heapID );
 
   ///<obj
   GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_OBJ, VISIBLE_ON );
 
   //GFL_ARC_UTIL_TransVramPalette( ARCID_FONT, NARC_font_default_nclr, PALTYPE_SUB_BG, 0, 0, wk->heapID );
-  PaletteWorkSet_Arc( BTLV_EFFECT_GetPfd(), ARCID_FONT, NARC_font_default_nclr, wk->heapID, FADE_SUB_BG, 0x10 * 8, 0x20 );
+//  PaletteWorkSet_Arc( BTLV_EFFECT_GetPfd(), ARCID_FONT, NARC_font_default_nclr, wk->heapID, FADE_SUB_BG, 0x10, 0xe0 );
 
-  wk->win = GFL_BMPWIN_Create( GFL_BG_FRAME3_S, 0, 0, 32, 24, 8, GFL_BMP_CHRAREA_GET_F );
+  wk->win = GFL_BMPWIN_Create( GFL_BG_FRAME2_S, 0, 2, 32, 22, 0x0e, GFL_BMP_CHRAREA_GET_F );
   wk->bmp = GFL_BMPWIN_GetBmp( wk->win );
-  GFL_BMP_Clear( wk->bmp, 0x0f );
+  GFL_BMP_Clear( wk->bmp, 0x00 );
   PRINT_UTIL_Setup( &wk->printUtil, wk->win );
   GFL_BMPWIN_MakeScreen( wk->win );
   GFL_BMPWIN_TransVramCharacter( wk->win );
-  GFL_BG_LoadScreenReq( GFL_BG_FRAME3_S );
+  GFL_BG_LoadScreenReq( GFL_BG_FRAME2_S );
 
 }
 
@@ -220,7 +201,7 @@ void BTLV_SCD_Delete( BTLV_SCD* wk )
 
   PRINTSYS_QUE_Delete( wk->printQue );
   GFL_STR_DeleteBuffer( wk->strbuf );
-  BINPUT_SystemFree( wk->bip );
+  BTLV_INPUT_Exit( wk->biw );
   GFL_HEAP_FreeMemory( wk );
 }
 
@@ -276,7 +257,8 @@ static BOOL spstack_call( BTLV_SCD* wk )
 //=============================================================================================
 void BTLV_SCD_CleanupUI( BTLV_SCD* wk )
 {
-  Sub_TouchEndDelete( wk->bip, TRUE, TRUE );
+//  Sub_TouchEndDelete( wk->bip, TRUE, TRUE );
+  BTLV_INPUT_CreateScreen( wk->biw, BTLV_INPUT_SCRTYPE_STANDBY, NULL );
 }
 
 //=============================================================================================
@@ -400,17 +382,8 @@ static BOOL selectAction_init( int* seq, void* wk_adrs )
 {
   BTLV_SCD* wk = wk_adrs;
 
-  {
-    ARCHANDLE* hdl_bg;
-    ARCHANDLE* hdl_obj;
+  BTLV_INPUT_CreateScreen( wk->biw, BTLV_INPUT_SCRTYPE_COMMAND, NULL );
 
-    hdl_bg  = GFL_ARC_OpenDataHandle( ARCID_BATT_BG,  GFL_HEAP_LOWID(wk->heapID) );
-    hdl_obj = GFL_ARC_OpenDataHandle( ARCID_BATT_OBJ, GFL_HEAP_LOWID(wk->heapID) );
-    BINPUT_CreateBG( hdl_bg, hdl_obj, wk->bip, BINPUT_TYPE_A, FALSE, NULL );
-
-    GFL_ARC_CloseDataHandle( hdl_bg );
-    GFL_ARC_CloseDataHandle( hdl_obj );
-  }
   return TRUE;
 }
 
@@ -424,7 +397,8 @@ static BOOL selectActionRoot_loop( int* seq, void* wk_adrs )
     BTLV_EFFECT_Add( BTLEFF_CAMERA_WORK );
   }
 
-  hit = GFL_UI_TP_HitTrg( BattleMenuTouchData );
+//  hit = GFL_UI_TP_HitTrg( BattleMenuTouchData );
+  hit = BTLV_INPUT_CheckInput( wk->biw, BattleMenuTouchData );
   if( hit != GFL_UI_TP_HIT_NONE )
   {
     static const u8 action[] = {
@@ -456,6 +430,7 @@ static BOOL selectWaza_init( int* seq, void* wk_adrs )
 {
   BTLV_SCD* wk = wk_adrs;
 
+#if 0
   Sub_TouchEndDelete( wk->bip, TRUE, TRUE );
 
   {
@@ -488,6 +463,26 @@ static BOOL selectWaza_init( int* seq, void* wk_adrs )
     GFL_ARC_CloseDataHandle( hdl_bg );
     GFL_ARC_CloseDataHandle( hdl_obj );
   }
+#endif
+  BTLV_INPUT_WAZA_PARAM biwp;
+  u16 wazaCnt, wazaID, i;
+  u8 PP, PPMax;
+
+  wazaCnt = BTL_POKEPARAM_GetWazaCount( wk->bpp );
+  for(i=0; i<wazaCnt; i++)
+  {
+    wazaID = BTL_POKEPARAM_GetWazaParticular( wk->bpp, i, &PP, &PPMax );
+    biwp.wazano[ i ] = wazaID;
+    biwp.pp[ i ]     = PP;
+    biwp.ppmax[ i ]  = PPMax;
+  }
+  for( ; i<PTL_WAZA_MAX; i++){
+    biwp.wazano[ i ]  = 0;
+    biwp.pp[ i ]      = 0;
+    biwp.ppmax[ i ]   = 0;
+  }
+
+  BTLV_INPUT_CreateScreen( wk->biw, BTLV_INPUT_SCRTYPE_WAZA, &biwp );
 
   return TRUE;
 }
@@ -502,7 +497,8 @@ static BOOL selectWaza_loop( int* seq, void* wk_adrs )
     BTLV_EFFECT_Add( BTLEFF_CAMERA_WORK );
   }
 
-  hit = GFL_UI_TP_HitTrg( SkillMenuTouchData );
+//  hit = GFL_UI_TP_HitTrg( SkillMenuTouchData );
+  hit = BTLV_INPUT_CheckInput( wk->biw, SkillMenuTouchData );
   if( hit != GFL_UI_TP_HIT_NONE )
   {
     //キャンセルが押された
@@ -687,6 +683,7 @@ static inline u8 stwdraw_vpos_to_tblidx( u8 vpos )
 
 static void stwdraw_button( const u8* pos, u8 count, u8 format, BTLV_SCD* wk )
 {
+#if 0
   const BTL_POKEPARAM* bpp;
   const POKEMON_PARAM* pp;
   BINPUT_SCENE_POKE bsp;
@@ -748,6 +745,7 @@ static void stwdraw_button( const u8* pos, u8 count, u8 format, BTLV_SCD* wk )
     GFL_ARC_CloseDataHandle( hdl_bg );
     GFL_ARC_CloseDataHandle( hdl_obj );
   }
+#endif
 }
 static void stw_draw( const SEL_TARGET_WORK* stw, BTLV_SCD* work )
 {
@@ -784,7 +782,7 @@ static BOOL selectTarget_init( int* seq, void* wk_adrs )
 {
   BTLV_SCD* wk = wk_adrs;
 
-  Sub_TouchEndDelete( wk->bip, TRUE, TRUE );
+//  Sub_TouchEndDelete( wk->bip, TRUE, TRUE );
 
   seltgt_init_setup_work( &wk->selTargetWork, wk );
   stw_draw( &wk->selTargetWork, wk );
@@ -800,7 +798,7 @@ static BOOL selectTarget_loop( int* seq, void* wk_adrs )
       int hit = GFL_UI_TP_HitTrg( PokeSeleMenuTouchData );
       if( hit != GFL_UI_TP_HIT_NONE )
       {
-        Sub_TouchEndDelete( wk->bip, TRUE, TRUE );
+//        Sub_TouchEndDelete( wk->bip, TRUE, TRUE );
         if( hit < BTL_CLIENT_MAX )
         {
           u8 target_idx;
@@ -884,6 +882,8 @@ void BTLV_SCD_PokeSelect_Start( BTLV_SCD* wk, const BTL_POKESELECT_PARAM* param,
 {
   GF_ASSERT( wk->pokesel_param == NULL );
 
+  BTLV_INPUT_CreateScreen( wk->biw, BTLV_INPUT_SCRTYPE_STANDBY, NULL );
+
   wk->pokesel_param = param;
   wk->pokesel_result = result;
   BTL_Printf("ポケモン選択開始 : %d 体えらぶ\n", param->numSelect );
@@ -944,7 +944,7 @@ static BOOL selectPokemon_init( int* seq, void* wk_adrs )
     {
       GFL_BMPWIN_MakeScreen( wk->win );
       GFL_BMPWIN_TransVramCharacter( wk->win );
-      GFL_BG_SetVisible( GFL_BG_FRAME3_S, VISIBLE_ON );
+      GFL_BG_SetVisible( GFL_BG_FRAME2_S, VISIBLE_ON );
       return TRUE;
     }
     break;
@@ -981,7 +981,7 @@ static BOOL selectPokemon_loop( int* seq, void* wk_adrs )
     WARNWIN_WIDTH = 256-(8*2),
     WARNWIN_HEIGHT = 32,
     WARNWIN_X = 8,
-    WARNWIN_Y = 192-8-WARNWIN_HEIGHT,
+    WARNWIN_Y = 192-8-16-WARNWIN_HEIGHT,
   };
 
   static const GFL_UI_TP_HITTBL hitTbl[] = {
@@ -1044,7 +1044,8 @@ static BOOL selectPokemon_loop( int* seq, void* wk_adrs )
               // 次回に正しく初期化されずに呼び出されたら止まるようにNULLクリアしておく
               wk->pokesel_param = NULL;
               wk->pokesel_result = NULL;
-              GFL_BG_SetVisible( GFL_BG_FRAME3_S, VISIBLE_OFF );
+              GFL_BMP_Clear( wk->bmp, 0x00 );
+              GFL_BMPWIN_TransVramCharacter( wk->win );
               GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_OBJ, VISIBLE_ON );
               return TRUE;
             }
