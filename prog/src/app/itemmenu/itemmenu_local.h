@@ -32,6 +32,7 @@
 #include "font/font.naix" //NARC_font_large_nftr
 #include "sound/pm_sndsys.h"
 #include "itemmenu.h"
+#include "app/itemuse.h"
 
 extern const GFL_PROC_DATA ItemMenuProcData;
 
@@ -46,6 +47,7 @@ struct _DEBUGITEM_PARAM {
   FIELD_MAIN_WORK * fieldmap;
   SAVE_CONTROL_WORK *ctrl;
   MYITEM_PTR pMyItem;
+  MYSTATUS* mystatus;
 	GFL_BMPWIN* win;
   GFL_BMPWIN* itemUseWin;
   PRINT_UTIL            SysMsgPrintUtil;    // システムウインドウPrintUtil
@@ -60,6 +62,7 @@ struct _DEBUGITEM_PARAM {
   BMPMENULIST_WORK* sublw;
   BMPMENULIST_WORK* lwItemUse;
   MenuFunc* menu_func[BAG_MENUTBL_MAX];
+  ITEMCHECK_WORK icwk;
 	int pocketno;
 	int itemnum;
 	int curpos;

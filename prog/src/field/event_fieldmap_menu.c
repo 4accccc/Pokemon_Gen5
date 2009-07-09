@@ -476,13 +476,12 @@ FS_EXTERN_OVERLAY(itemmenu);
 
 static BOOL FMenuCallProc_Bag( FMENU_EVENT_WORK *mwk )
 {
-
-
   GMEVENT * newEvent;
   FIELD_ITEMMENU_WORK *epp;
 	VecFx32 aPos;
 	const FIELD_PLAYER *fld_player = FIELDMAP_GetFieldPlayer(mwk->fieldWork);
 	FLDMAPPER *g3Dmapper = FIELDMAP_GetFieldG3Dmapper(mwk->fieldWork);
+	GAMEDATA* pGameData = GAMESYSTEM_GetGameData(mwk->gmSys);
   
   epp = GFL_HEAP_AllocClearMemory(GFL_HEAPID_APP, sizeof(FIELD_ITEMMENU_WORK));
   epp->ctrl = SaveControl_GetPointer();
@@ -491,16 +490,20 @@ static BOOL FMenuCallProc_Bag( FMENU_EVENT_WORK *mwk )
 	epp->heapID = GFL_HEAPID_APP;
 	epp->mode = BAG_MODE_FIELD;
 	FIELD_PLAYER_GetPos(fld_player, &aPos);
-	epp->NowAttr = MAPATTR_GetAttribute(g3Dmapper, &aPos);
+	epp->icwk.NowAttr = MAPATTR_GetAttribute(g3Dmapper, &aPos);
 	FIELD_PLAYER_GetDirPos((FIELD_PLAYER*)fld_player, FIELD_PLAYER_GetDir(fld_player), &aPos);
-	epp->FrontAttr = MAPATTR_GetAttribute(g3Dmapper, &aPos);
-	
+	epp->icwk.FrontAttr = MAPATTR_GetAttribute(g3Dmapper, &aPos);
+	epp->icwk.gsys = mwk->gmSys;
+	//ƒ][ƒ“‚h‚c
+	epp->icwk.zone_id = PLAYERWORK_getZoneID(GAMEDATA_GetMyPlayerWork(pGameData ));
+	//˜A‚ê•à‚«
+	epp->icwk.Companion = FALSE;
+	epp->mystatus = GAMEDATA_GetMyStatus(pGameData);
+
   mwk->sub_proc_parent = epp;
 
-	newEvent = EVENT_FieldSubProc(mwk->gmSys, mwk->fieldWork,
-      FS_OVERLAY_ID(itemmenu), &ItemMenuProcData, epp);
+	newEvent = EVENT_FieldSubProc(mwk->gmSys, mwk->fieldWork, FS_OVERLAY_ID(itemmenu), &ItemMenuProcData, epp);
   epp->event = newEvent;
-
 
 	GMEVENT_CallEvent(mwk->gmEvent, newEvent);
 

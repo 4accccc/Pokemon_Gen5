@@ -269,7 +269,7 @@ static const ITEMUSE_FUNC_DATA ItemFuncTable[] =
 
 //--------------------------------------------------------------------------------------------
 /**
- * 使用関数取得
+ * アイテム使用関数取得
  *
  * @param	prm		取得パラメータ
  * @param	id		関数ID
@@ -277,7 +277,7 @@ static const ITEMUSE_FUNC_DATA ItemFuncTable[] =
  * @return	使用関数
  */
 //--------------------------------------------------------------------------------------------
-u32 ItemUse_FuncGet( u16 prm, u16 id )
+u32 ITEMUSE_GetUseFunc( u16 prm, u16 id )
 {
 	if( prm == ITEMUSE_PRM_USEFUNC ){
 		return (u32)ItemFuncTable[id].use_func;
@@ -1706,6 +1706,8 @@ static void * ConvCall_Grashidea( void * fsys )
 {
 #if 0
 	return FieldFormChangePokeList_SetProc(fsys, HEAPID_WORLD, ITEM_GURASIDEANOHANA);
+#else
+	return NULL;
 #endif
 }
 

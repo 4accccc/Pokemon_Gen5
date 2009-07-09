@@ -12,29 +12,3 @@
 #include "app/itemuse.h"
 #include "gamesystem/gamesystem.h"
 
-//============================================================================================
-//	定数定義
-//============================================================================================
-// アイテム使用ワーク
-struct _ITEMUSE_WORK{
-	GMEVENT * event;	// イベント
-	u16	item;					// アイテム番号
-	u8	use_poke;				// 使用するポケモン
-} ;
-
-// アイテム使用チェックワーク
- struct _ITEMCHECK_WORK{
-	int	zone_id;	// ゾーンID
-	int PlayerForm;	//　自機の形状（自転車に乗っているかとか）
-	
-	u16 Companion:1;	//　連れ歩き状態か？
-	u16 Disguise:1;		//　ロケット団変装中か？
-	u16 dmy:14;		//　ロケット団変装中か？
-
-	u16 FrontAttr;	//　自機前方アトリビュート
-	u16 NowAttr;	//　自機現在アトリビュート
-	u16 SeedInfo;	//使用可能なアイテム情報（きのみ関連）
-//	PLAYER_STATE_PTR player;	//自機情報参照ポインタ
-   GAMESYS_WORK * gsys;
-} ;
-

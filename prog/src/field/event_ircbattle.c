@@ -66,6 +66,8 @@ enum _EVENT_IRCBATTLE {
   _WAIT_BATTLE,
   _CALL_IRCBATTLE_FRIEND,
   _WAIT_IRCBATTLE_FRIEND,
+  _CALL_TRADE,
+  _WAIT_TRADE,
   _CALL_NET_END,
   _WAIT_NET_END,
   _FIELD_OPEN,
@@ -153,6 +155,10 @@ static GMEVENT_RESULT EVENT_IrcBattleMain(GMEVENT * event, int *  seq, void * wo
         *seq = _CALL_IRCBATTLE_FRIEND;
         return GMEVENT_RES_CONTINUE;
       }
+			else if(dbw->selectType == EVENTIRCBTL_ENTRYMODE_TRADE){
+        *seq = _CALL_TRADE;
+        return GMEVENT_RES_CONTINUE;
+			}
       (*seq) ++;
       GFL_OVERLAY_Load( FS_OVERLAY_ID( battle ) );
       GFL_NET_AddCommandTable(GFL_NET_CMD_BATTLE, BtlRecvFuncTable, 5, NULL);
@@ -212,7 +218,20 @@ static GMEVENT_RESULT EVENT_IrcBattleMain(GMEVENT * event, int *  seq, void * wo
       (*seq) = _CALL_NET_END;
     }
     break;
-  case _CALL_NET_END:
+
+  case _CALL_TRADE:  //  ポケモン交換
+    GAMESYSTEM_CallProc(gsys, FS_OVERLAY_ID(ircbattlematch), &IrcBattleFriendProcData, dbw);
+    (*seq)++;
+    break;
+  case _WAIT_TRADE:
+    if (!GAMESYSTEM_IsProcExists(gsys)){
+      NET_PRINT("ポケモン交換おわり\n");
+      (*seq) = _CALL_NET_END;
+    }
+    break;
+
+
+	case _CALL_NET_END:
     if(GFL_NET_IsParentMachine()){
       GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(),GFL_NET_CMD_EXIT_REQ,0,NULL);
     }

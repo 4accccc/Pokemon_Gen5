@@ -15,11 +15,29 @@
 //============================================================================================
 //	定数定義
 //============================================================================================
+//============================================================================================
+//	定数定義
+//============================================================================================
 // アイテム使用ワーク
-typedef struct _ITEMUSE_WORK ITEMUSE_WORK;
+typedef struct {
+	GMEVENT * event;	// イベント
+	u16	item;					// アイテム番号
+	u8	use_poke;				// 使用するポケモン
+} ITEMUSE_WORK;
 
 // アイテム使用チェックワーク
-typedef struct _ITEMCHECK_WORK ITEMCHECK_WORK;
+typedef struct {
+	int	zone_id;	// ゾーンID
+	int PlayerForm;	//　自機の形状（自転車に乗っているかとか）
+	
+	u16 Companion;	//　連れ歩き状態か？
+	u16 FrontAttr;	//　自機前方アトリビュート
+	u16 NowAttr;	//　自機現在アトリビュート
+	u16 SeedInfo;	//使用可能なアイテム情報（きのみ関連）
+   GAMESYS_WORK * gsys;
+}ITEMCHECK_WORK;
+
+
 
 // アイテム使用チェック関数
 typedef u32 (*ITEMCHECK_FUNC)(const ITEMCHECK_WORK*);
@@ -46,6 +64,7 @@ enum {
 };
 
 
+
 //============================================================================================
 //	プロトタイプ宣言
 //============================================================================================
@@ -60,7 +79,7 @@ enum {
  * @return	使用関数
  */
 //--------------------------------------------------------------------------------------------
-extern u32 ItemUse_FuncGet( u16 prm, u16 id );
+extern u32 ITEMUSE_GetFunc( u16 prm, u16 id );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -84,7 +103,7 @@ extern void ItemUse_CheckWorkMake( GAMESYS_WORK * fsys, ITEMCHECK_WORK * icwk );
  * @retval	"FALSE = それ以外"
  */
 //--------------------------------------------------------------------------------------------
-//extern BOOL ItemUse_KinomiTypeCheck( const ITEMCHECK_WORK * icwk );
+extern BOOL ItemUse_KinomiTypeCheck( const ITEMCHECK_WORK * icwk );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -96,5 +115,8 @@ extern void ItemUse_CheckWorkMake( GAMESYS_WORK * fsys, ITEMCHECK_WORK * icwk );
  */
 //--------------------------------------------------------------------------------------------
 //extern int FieldConvButtonEventInit( GAMESYS_WORK * repw, int no );
+
+
+extern u32 ITEMUSE_GetUseFunc( u16 prm, u16 id );
 
 

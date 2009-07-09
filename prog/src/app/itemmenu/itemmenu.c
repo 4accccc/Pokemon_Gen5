@@ -32,6 +32,8 @@
 
 #include "itemmenu.h"
 #include "itemmenu_local.h"
+#include "app/itemuse.h"
+#include "savedata/mystatus.h"
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
@@ -366,10 +368,10 @@ static void _itemKindSelectMenu(FIELD_ITEMMENU_WORK* wk)
 
 	{
 		int oldpoket = wk->pocketno;
-		if(GFL_UI_KEY_GetTrg()== PAD_BUTTON_X){
+		if(GFL_UI_KEY_GetTrg()== PAD_BUTTON_R){
 			wk->pocketno++;
 		}
-		if(GFL_UI_KEY_GetTrg()== PAD_BUTTON_Y){
+		if(GFL_UI_KEY_GetTrg()== PAD_BUTTON_L){
 			wk->pocketno--;
 		}
 		if(wk->pocketno >= BAG_POKE_MAX){
@@ -392,18 +394,96 @@ static void _itemKindSelectMenu(FIELD_ITEMMENU_WORK* wk)
 		_CHANGE_STATE(wk, NULL);
 		break;
 	default:
-		_itemUseWindowCreate(wk);
-		BmpMenuList_Rewrite(wk->lwItemUse);
-		GFL_BMPWIN_TransVramCharacter(wk->itemUseWin);
-
-		_CHANGE_STATE(wk, _itemUseMenu);
-
+		{
+			ITEM_ST* item = MYITEM_PosItemGet(wk->pMyItem, wk->pocketno, ret);
+			wk->ret_item = item->id;
+		
+			_itemUseWindowCreate(wk);
+			BmpMenuList_Rewrite(wk->lwItemUse);
+			GFL_BMPWIN_TransVramCharacter(wk->itemUseWin);
+			
+			_CHANGE_STATE(wk, _itemUseMenu);
+		}
 		OS_TPrintf("ret %d \n",ret);
 		break;
 	}
 }
 
 #if 0
+//--------------------------------------------------------------------------------------------
+/**
+ * アイテム使用エラーメッセージセット
+ *
+ * @param	myst	プレーヤーデータ
+ * @param	buf		メッセージ展開場所
+ * @param	item	アイテム番号
+ * @param	err		エラーID
+ * @param	heap	ヒープID
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
+static void BAG_ItemUseErrorMsgSet( MYSTATUS * myst, STRBUF * buf, u16 item, u32 err, FIELD_ITEMMENU_WORK * wk )
+{
+	WORDSET * wset;
+	STRBUF * str;
+
+	switch( err ){
+	case ITEMCHECK_ERR_CYCLE_OFF:		// 自転車を降りれない
+		GFL_MSG_GetString( wk->MsgManager, msg_bag_058, buf );
+		break;
+	case ITEMCHECK_ERR_COMPANION:		// 使用不可・連れ歩き
+		GFL_MSG_GetString( wk->MsgManager, msg_bag_err_pair, buf );
+		break;
+	case ITEMCHECK_ERR_DISGUISE:		// 使用不可・ロケット団変装中
+		GFL_MSG_GetString( wk->MsgManager, msg_bag_err_disguise, buf );
+		break;
+	default:							// 使用不可・博士の言葉
+		wset = WORDSET_Create( wk->heapID );
+		str  = GFL_MSG_CreateString( wk->MsgManager, msg_bag_059 );
+		WORDSET_RegisterPlayerName( wset, 0, myst );
+		WORDSET_ExpandStr( wset, buf, str );
+		GFL_STR_DeleteBuffer( str );
+		WORDSET_Delete( wset );
+	}
+}
+
+
+//--------------------------------------------------------------------------------------------
+/**
+ * 会話（風）メッセージ表示
+ *
+ * @param	wk		バッグ画面ワーク
+ * @param	type	BAG_TALK_FULL=画面一杯, BAG_TALK_MINI=画面2/3
+ *
+ * @return	メッセージID
+ */
+//--------------------------------------------------------------------------------------------
+u8 Bag_TalkMsgPrint( BAG_WORK * wk, int type )
+{
+	u8	idx;
+	GF_BGL_BMPWIN *win;
+	if(type==BAG_TALK_FULL){
+		win = &wk->win[WIN_TALK];
+	}else{
+		// 呼び出せない時がある
+		GF_ASSERT( wk->sub_win[ADD_WIN_MINITALK].ini!=NULL );
+		win = &wk->sub_win[ADD_WIN_MINITALK];
+	}
+
+	GF_BGL_BmpWinDataFill( win, 15 );
+	BmpTalkWinWrite( win, WINDOW_TRANS_OFF, TALK_SUB_WIN_CGX_NUM, TALKWIN_PAL );
+	GF_BGL_BmpWinOnVReq( win );
+
+	MsgPrintSkipFlagSet( MSG_SKIP_ON );
+	MsgPrintAutoFlagSet( MSG_AUTO_OFF );
+
+	idx = GF_STR_PrintSimple(	win, FONT_TALK,wk->expb, 0, 0,
+								CONFIG_GetMsgPrintSpeed( wk->cfg ), BAG_TalkMsgCallBack );
+
+	return idx;
+}
+
 //--------------------------------------------------------------------------------------------
 /**
  * メニュー：つかう
@@ -419,14 +499,15 @@ static int Bag_MenuUse( FIELD_ITEMMENU_WORK * wk )
 	s32	id;
 
 	// どうぐ使用処理取得
-	id    = ItemParamGet( wk->dat->ret_item, ITEM_PRM_FIELD, HEAPID_BAG );
-	check = (ITEMCHECK_FUNC)ItemUse_FuncGet( ITEMUSE_PRM_CHECKFUNC, id );
+	id    = ITEM_GetParam( wk->ret_item, ITEM_PRM_FIELD, wk->heapID );
+	// 使うチェックをする関数
+	check = (ITEMCHECK_FUNC)ITEMUSE_GetFunc( ITEMUSE_PRM_CHECKFUNC, id );
 
 	// どうぐ使用チェック
 	if( check != NULL ){
-		u32	ret = check( wk->dat->icwk );
+		u32	ret = check( &wk->icwk );
 		if( ret != ITEMCHECK_TRUE ){
-			BAG_ItemUseErrorMsgSet( wk->myst, wk->expb, wk->dat->ret_item, ret, HEAPID_BAG );
+			BAG_ItemUseErrorMsgSet( wk->mystatus, wk->expb, wk->ret_item, ret, wk );
 			wk->midx = Bag_TalkMsgPrint( wk, BAG_TALK_FULL );
 			return SEQ_ITEM_ERR_WAIT;
 		}
@@ -488,62 +569,63 @@ static void ItemMenuMake( FIELD_ITEMMENU_WORK * wk, u8* tbl )
 	}
 
 	// フィールド
-
-	// コロシアム・ユニオンルームでは「みる」のみ
-	if( wk->mode == BAG_MODE_COLOSSEUM || wk->mode == BAG_MODE_UNION )
-	{
-		tbl[BAG_MENU_USE] = BAG_MENU_MIRU;
-	}
-	else if( wk->mode == BAG_MODE_FIELD )
-	{
-		// つかう
-		// おりる
-		// みる
-		// ひらく
-		// うめる
-		// とめる
-		if( ITEM_GetBufParam( itemdata,  wk->heapID ) != 0 )
+	if( wk->mode == BAG_MODE_FIELD ){
+		// コロシアム・ユニオンルームでは「みる」のみ
+		if( wk->mode == BAG_MODE_COLOSSEUM || wk->mode == BAG_MODE_UNION )
 		{
-			if( wk->ret_item == ITEM_ZITENSYA && wk->cycle_flg == 1 )
+			tbl[BAG_MENU_USE] = BAG_MENU_MIRU;
+		}
+		else
+		{
+			// つかう
+			// おりる
+			// みる
+			// ひらく
+			// うめる
+			// とめる
+			if( ITEM_GetBufParam( itemdata,  ITEM_PRM_FIELD ) != 0 )
 			{
-				tbl[BAG_MENU_USE] = BAG_MENU_ORIRU;
-			}
-			else if( wk->pocketno == BAG_POKE_SEAL )
-			{
-				tbl[BAG_MENU_USE] = BAG_MENU_MIRU;
-			}
-			else if( wk->ret_item == ITEM_POFINKEESU )
-			{
-				tbl[BAG_MENU_USE] = BAG_MENU_HIRAKU;
-			}
-//			else if( wk->ret_item == ITEM_gbPUREIYAA && Snd_GameBoyFlagCheck() == 1 )
-	//		{
-		//		tbl[BAG_MENU_USE] = BAG_MENU_TOMERU;
-			//}
-			else
-			{
-				tbl[BAG_MENU_USE] = BAG_MENU_TSUKAU;
+				if( wk->ret_item == ITEM_ZITENSYA && wk->cycle_flg == 1 )
+				{
+					tbl[BAG_MENU_USE] = BAG_MENU_ORIRU;
+				}
+				else if( wk->pocketno == BAG_POKE_SEAL )
+				{
+					tbl[BAG_MENU_USE] = BAG_MENU_MIRU;
+				}
+				else if( wk->ret_item == ITEM_POFINKEESU )
+				{
+					tbl[BAG_MENU_USE] = BAG_MENU_HIRAKU;
+				}
+				//			else if( wk->ret_item == ITEM_gbPUREIYAA && Snd_GameBoyFlagCheck() == 1 )
+				//		{
+				//		tbl[BAG_MENU_USE] = BAG_MENU_TOMERU;
+				//}
+				else
+				{
+					tbl[BAG_MENU_USE] = BAG_MENU_TSUKAU;
+				}
 			}
 		}
-	}
-	// もたせる
-	// すてる
-	if( ITEM_GetBufParam( itemdata, wk->heapID ) == 0 ){
-		if( ITEM_CheckPokeAdd( wk->ret_item ) == TRUE ){
-			tbl[BAG_MENU_GIVE] = BAG_MENU_MOTASERU;
+		// もたせる
+		// すてる
+		if( ITEM_GetBufParam( itemdata, ITEM_PRM_EVENT ) == 0 ){
+			if( ITEM_CheckPokeAdd( wk->ret_item ) == TRUE ){
+				tbl[BAG_MENU_GIVE] = BAG_MENU_MOTASERU;
+			}
+			if( pocket != BAG_POKE_WAZA ){
+				// 技マシンじゃない場合は捨てるを登録
+				tbl[BAG_MENU_SUB] = BAG_MENU_SUTERU;
+			}
 		}
-		if( pocket != BAG_POKE_WAZA ){
-			// 技マシンじゃない場合は捨てるを登録
-			tbl[BAG_MENU_SUB] = BAG_MENU_SUTERU;
-		}
-	}
-	// とうろく
-	// かいじょ
-	if( ITEM_GetBufParam( itemdata, wk->heapID ) != 0 ){
-		if( MYITEM_CnvButtonItemGet( wk->pMyItem ) == wk->ret_item ){
-			tbl[BAG_MENU_SUB] = BAG_MENU_KAIZYO;
-		}else{
-			tbl[BAG_MENU_SUB] = BAG_MENU_TOUROKU;
+		// とうろく
+		// かいじょ
+		if( ITEM_GetBufParam( itemdata, ITEM_PRM_CNV ) != 0 ){
+			if( MYITEM_CnvButtonItemGet( wk->pMyItem ) == wk->ret_item ){
+				tbl[BAG_MENU_SUB] = BAG_MENU_KAIZYO;
+			}else{
+				tbl[BAG_MENU_SUB] = BAG_MENU_TOUROKU;
+			}
 		}
 	}
 	// 木の実プランター
@@ -621,6 +703,7 @@ static void _itemUseWindowRewrite(FIELD_ITEMMENU_WORK* wk)
 		int strtbl[]={msg_bag_001,msg_bag_007,msg_bag_017,mes_bag_104,mes_bag_105,
 			msg_bag_002,msg_bag_003,msg_bag_019,msg_bag_004,msg_bag_005,msg_bag_006,
 			msg_bag_009, msg_bag_094, mes_shop_103,msg_bag_001,msg_bag_menu_ex_01};
+
 		
 		ItemMenuMake(wk, tbl);
 		

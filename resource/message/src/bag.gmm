@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ohno" host="W00141" date="2009-07-07T15:43:58"/>
+	<create user="ohno" host="W00141" date="2009-07-09T15:18:00"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -305,7 +305,7 @@
 		</language>
 	</columns>
 
-	<dialog left="248" top="176" right="953" bottom="796" maximized="no" rayout="Vertical2">
+	<dialog left="1396" top="187" right="2101" bottom="807" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="0" style="0000" width="530"/>
@@ -772,6 +772,16 @@ const u8 msg_item_use_error[]
 const u8 msg_cycling_road_error[]</comment>
 		<language name="JPN" font=" 1:small">ここでは　おりられない！</language>
 		<language name="JPN_KANJI" font=" 1:small">ここでは　おりられない！</language>
+	</row>
+
+	<row id="msg_bag_059">
+		<comment>・イベント配布では窓口で同じものをはねつける</comment>
+		<language name="JPN" font=" 1:small">オーキドの　ことば……
+[1:00:トレーナー名:0]よ！　こういう　ものには▽
+つかいどきが　あるのじゃ！</language>
+		<language name="JPN_KANJI" font=" 1:small">オーキドの　ことば……
+[1:00:トレーナー名:0]よ！　こういう　ものには▽
+つかいどきが　あるのじゃ！</language>
 	</row>
 
 	<row id="msg_bag_062">

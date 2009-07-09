@@ -153,7 +153,8 @@ enum _IBMODE_ENTRY {
 };
 
 enum _IBMODE_CHANGE {
-  _CHANGE_FRIENDCHANGE = 0,
+	_CHANGE_TRADE=0,
+  _CHANGE_FRIENDCHANGE,
   _CHANGE_EXIT,
 };
 
@@ -583,7 +584,7 @@ static void _modeSelectMenuWait(IRC_BATTLE_MENU* pWork)
 //------------------------------------------------------------------------------
 static void _modeSelectChangeInit(IRC_BATTLE_MENU* pWork)
 {
-  int aMsgBuff[]={IRCBTL_STR_14, IRCBTL_STR_03};
+  int aMsgBuff[]={IRCBTL_STR_18, IRCBTL_STR_14, IRCBTL_STR_03};
 
   _buttonWindowCreate(NELEMS(aMsgBuff),aMsgBuff,pWork);
 
@@ -603,7 +604,12 @@ static void _modeSelectChangeInit(IRC_BATTLE_MENU* pWork)
 static BOOL _modeSelectChangeButtonCallback(int bttnid,IRC_BATTLE_MENU* pWork)
 {
   switch(bttnid){
-  case _CHANGE_FRIENDCHANGE:
+	case _CHANGE_TRADE:
+		PMSND_PlaySystemSE(SEQ_SE_DECIDE1);
+    pWork->selectType = EVENTIRCBTL_ENTRYMODE_TRADE;
+    _CHANGE_STATE(pWork,_modeReportInit);
+    return TRUE;
+	case _CHANGE_FRIENDCHANGE:
 		PMSND_PlaySystemSE(SEQ_SE_DECIDE1);
     pWork->selectType = EVENTIRCBTL_ENTRYMODE_FRIEND;
     _CHANGE_STATE(pWork,_modeReportInit);

@@ -534,7 +534,8 @@ SRCS_OVERLAY_WIFICLUB =   net_app/wificlub/wifi_p2pmatchroom.c \
 # IRCBATTLEマッチング
 #===> SRCS_OVERLAY_DEV_IRC
 SRCS_OVERLAY_IRCBATTLEMATCH = field/ircbattle/ircbattlematch.c \
-                field/ircbattle/ircbattlefriend.c
+                field/ircbattle/ircbattlefriend.c \
+								field/ircbattle/ircpokemontrade.c
 
 # 不思議な贈り物
 #===> SRCS_OVERLAY_DEV_WIFI

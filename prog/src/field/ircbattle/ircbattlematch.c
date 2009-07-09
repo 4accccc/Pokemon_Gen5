@@ -538,7 +538,7 @@ static void _modeInit(IRC_BATTLE_MATCH* pWork)
   GFL_FADE_SetMasterBrightReq(GFL_FADE_MASTER_BRIGHT_BLACKOUT, 16, 0, _BRIGHTNESS_SYNC);
 
   {
-		if(pWork->selectType==EVENTIRCBTL_ENTRYMODE_FRIEND)
+		if(pWork->selectType==EVENTIRCBTL_ENTRYMODE_FRIEND || pWork->selectType==EVENTIRCBTL_ENTRYMODE_TRADE)
 		{
 			int aMsgBuff[]={IRCBTL_STR_17};
 			_msgWindowCreate(aMsgBuff, pWork);
@@ -598,6 +598,8 @@ static void _ircMatchStart(IRC_BATTLE_MATCH* pWork)
       net_ini_data.maxConnectNum = 4;
       break;
     case EVENTIRCBTL_ENTRYMODE_FRIEND:
+      break;
+    case EVENTIRCBTL_ENTRYMODE_TRADE:
       break;
     default:
       GF_ASSERT(0);
