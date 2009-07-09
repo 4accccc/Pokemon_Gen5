@@ -104,8 +104,6 @@ void  BTLV_EFFECT_Init( int index, HEAPID heapID )
 
   bew->heapID = heapID;
 
-  //本来はスクリプトエンジンを載せて、動作させるが、暫定でTCBを利用する
-  //最終的にはエフェクトで使用するTCBをBTLV_MCSS、BTLV_CAMERA、BTLV_EFFECTでシェアする形にする
   bew->tcb_work = GFL_HEAP_AllocClearMemory( heapID, GFL_TCB_CalcSystemWorkSize( BTLV_EFFECT_TCB_MAX ) );
   bew->tcb_sys = GFL_TCB_Init( BTLV_EFFECT_TCB_MAX, bew->tcb_work );
 
@@ -115,7 +113,7 @@ void  BTLV_EFFECT_Init( int index, HEAPID heapID )
   bew->pfd = PaletteFadeInit( heapID );
   PaletteTrans_AutoSet( bew->pfd, TRUE );
   PaletteFadeWorkAllocSet( bew->pfd, FADE_MAIN_BG, 0x200, heapID );
-  PaletteFadeWorkAllocSet( bew->pfd, FADE_SUB_BG, 0x200, heapID );
+  PaletteFadeWorkAllocSet( bew->pfd, FADE_SUB_BG, 0x1e0, heapID );
   PaletteFadeWorkAllocSet( bew->pfd, FADE_MAIN_OBJ, 0x200, heapID );
   PaletteFadeWorkAllocSet( bew->pfd, FADE_SUB_OBJ, 0x1e0, heapID );
 
