@@ -44,7 +44,7 @@
 */
 //-----------------------------------------------------------------------------
 #ifdef PM_DEBUG
-#define DEBUG_LIGHT_AUTO  // ライトを昼多めに
+//#define DEBUG_LIGHT_AUTO  // ライトを昼多めに
 #endif
 
 #ifdef DEBUG_LIGHT_AUTO
@@ -479,6 +479,7 @@ void FIELD_LIGHT_Main( FIELD_LIGHT* p_sys, int rtc_second )
 	}
 
 	// データ設定処理へ
+	p_sys->change = TRUE;
 	if( p_sys->change ){
 		FIELD_LIGHT_Reflect( p_sys, p_sys->p_fog, p_sys->p_liblight );
 		p_sys->change = FALSE;
@@ -1333,6 +1334,9 @@ static void FIELD_LIGHT_Reflect( const FIELD_LIGHT* cp_sys, FIELD_FOG_WORK* p_fo
 				cp_sys->reflect_data.emission, FALSE );
 
 		FIELD_FOG_SetColorRgb( p_fog, cp_sys->reflect_data.fog_color );
+
+		G3X_SetClearColor(cp_sys->reflect_data.light_color[2],31,0x7fff,63,FALSE);
+		
 	}
 }
 

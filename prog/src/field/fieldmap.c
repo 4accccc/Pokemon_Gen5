@@ -1256,7 +1256,7 @@ static void fldmap_G3D_CallBackSetUp( void )
 	G3X_AlphaBlend( TRUE );
 
 	// フォグセットアップ
-  G3X_SetFog(TRUE, GX_FOGBLEND_COLOR_ALPHA, GX_FOGSLOPE_0x0400, 0x00e00 );
+  G3X_SetFog(FALSE, GX_FOGBLEND_COLOR_ALPHA, GX_FOGSLOPE_0x0400, 0x00e00 );
   G3X_SetFogColor(FIELD_DEFAULT_FOG_COLOR, 0);
   G3X_SetFogTable(fldmapdata_fogColorTable);
 	
@@ -1313,12 +1313,7 @@ static void fldmap_G3D_Control( FIELDMAP_WORK * fieldWork )
 	
 	FIELD_WEATHER_Main( fieldWork->weather_sys, fieldWork->heapID );
 	FIELD_FOG_Main( fieldWork->fog );
-  {
-		static int time = 14400;
-		time += 30;
-		time %= 24*3600;
-		FIELD_LIGHT_Main( fieldWork->light, time );
-	}
+	FIELD_LIGHT_Main( fieldWork->light, GFL_RTC_GetTimeBySecond() );
 }
 
 //--------------------------------------------------------------
