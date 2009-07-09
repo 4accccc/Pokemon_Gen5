@@ -32,7 +32,7 @@
 #include "musical/stage/sta_act_poke.h"
 #include "musical/musical_camera_def.h"
 
-#include "test/soga/gf_mcs.h"
+#include "debug/gf_mcs.h"
 #include "test/ariizumi/ari_debug.h"
 
 #if USE_MUSICAL_EDIT

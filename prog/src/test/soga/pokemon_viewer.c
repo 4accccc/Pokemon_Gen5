@@ -19,7 +19,7 @@
 #include "poke_tool/poke_tool.h"
 #include "poke_tool/monsno_def.h"
 
-#include "gf_mcs.h"
+#include "debug/gf_mcs.h"
 
 #include "print/printsys.h"
 #include "print/wordset.h"

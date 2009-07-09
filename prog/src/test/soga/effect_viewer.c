@@ -22,7 +22,7 @@
 
 #include "sound/pm_sndsys.h"
 
-#include "gf_mcs.h"
+#include "debug/gf_mcs.h"
 
 #include "font/font.naix"
 #include "message.naix"

@@ -150,6 +150,7 @@ SRCS  +=    $(SOUNDSRC) \
 		test/tetsu/debug_common.c \
         system/fld_wipe_3dobj.c \
         debug/debug_system_group.c \
+				debug/gf_mcs.c \
 		field/field_place_name.c
 
 
@@ -413,7 +414,6 @@ SRCS_OVERLAY_DEBUG_MAKEPOKE = debug/debug_makepoke.c
 #endif
 SRCS_OVERLAY_SOGABE_DEBUG		= test/soga/d_soga.c \
 								  test/soga/d_btltest.c \
-								  test/soga/gf_mcs.c \
 								  test/soga/capture.c \
 								  test/soga/effect_viewer.c \
 								  test/soga/pokemon_viewer.c
