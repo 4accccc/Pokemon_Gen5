@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-06-25T15:59:10"/>
+	<create user="matsumiya" host="W00207" date="2009-07-09T21:08:00"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -229,7 +229,7 @@
 	</tag-table>
 
 	<columns>
-		<id position="0" width="189"/>
+		<id position="0" width="176"/>
 		<group default=" 0:デフォルト" position="-1" width="100">
 			<list entry="0" japanese="デフォルト" english="Default" colorID="0"/>
 			<list entry="1" japanese="グループ 1" english="グループ 1" colorID="0"/>
@@ -237,7 +237,7 @@
 		<number position="-1" width="100"/>
 		<comment position="4" width="124"/>
 		<erase position="-1" width="100"/>
-		<attribute japanese="キャラ指定" english="キャラ指定" type="string" default="" position="1" width="100">
+		<attribute japanese="キャラ指定" english="キャラ指定" type="string" default="" position="1" width="113">
 		</attribute>
 		<language japanese="JPN" english="JPN">
 			<message position="2" width="274"/>
@@ -263,9 +263,9 @@
 		</language>
 	</columns>
 
-	<dialog left="248" top="176" right="953" bottom="796" maximized="no" rayout="Vertical2">
+	<dialog left="26" top="258" right="731" bottom="878" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
-		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
+		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
 		<band id="1" index="2" style="0000" width="165"/>
 		<band id="2" index="3" style="0000" width="543"/>
@@ -292,11 +292,44 @@
 	</lock>
 
 
-	<row id="msg_c01r0301_test1_01">
-		<comment>？？？</comment>
-		<attribute name="キャラ指定">？？？</attribute>
-		<language name="JPN" width="256">テストメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+	<row id="msg_c01r0301_middlewoman2_01">
+		<comment>♀</comment>
+		<attribute name="キャラ指定">MIDDLEWOMAN2
+太ったおばさん</attribute>
+		<language name="JPN" width="256">ポケモンしょうぶを　しなくても
+もっている　ジムバッジの　かずで[BE:00:ページ切り替え（行送り）]
+トレーナーの　つよさが　わかるのよ</language>
+		<language name="JPN_KANJI" width="256">ポケモン勝負を　しなくても
+持っている　ジムバッジの　数で[BE:00:ページ切り替え（行送り）]
+トレーナーの　強さが　わかるのよ</language>
+	</row>
+
+	<row id="msg_c01r0301_man1_01">
+		<comment>♂</comment>
+		<attribute name="キャラ指定">MAN1
+青年</attribute>
+		<language name="JPN" width="256">イッシュちほうに　ある
+８つの　ポケモンジム[BE:01:ページ切り替え（クリア）]
+どれだけ　つよくなったか
+うでだめしに　ぴったりの　ばしょさ</language>
+		<language name="JPN_KANJI" width="256">イッシュ地方に　ある
+８つの　ポケモンジム[BE:01:ページ切り替え（クリア）]
+どれだけ　強くなったか
+腕試しに　ぴったりの　場所さ</language>
+	</row>
+
+	<row id="msg_c01r0301_boy2_01">
+		<comment>♂</comment>
+		<attribute name="キャラ指定">BOY2
+少年（活発）</attribute>
+		<language name="JPN" width="256">さいきん　おきにいりの
+モデルが　いるんだ[BE:01:ページ切り替え（クリア）]
+カミツレさん　っていうんだけど
+ポケモンも　つよいんだぜ！</language>
+		<language name="JPN_KANJI" width="256">最近　お気に入りの
+モデルが　いるんだ[BE:01:ページ切り替え（クリア）]
+カミツレさん　っていうんだけど
+ポケモンも　強いんだぜ！</language>
 	</row>
 
 	<flowchart-group-list>
