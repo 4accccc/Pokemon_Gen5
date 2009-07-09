@@ -24,7 +24,19 @@ enum {
 	NARC_battgra_wb_batt_stage04_nsbta = 10,
 	NARC_battgra_wb_shadow_NCLR = 11,
 	NARC_battgra_wb_msgwin_frm_NCGR = 12,
-	NARC_battgra_wb_msgwin_frm_NCLR = 13
+	NARC_battgra_wb_msgwin_frm_NCLR = 13,
+	NARC_battgra_wb_battle_w_bg_NCGR = 14,
+	NARC_battgra_wb_battle_w_bg_NCLR = 15,
+	NARC_battgra_wb_battle_w_bg0_NSCR = 16,
+	NARC_battgra_wb_battle_w_bg1a_NSCR = 17,
+	NARC_battgra_wb_battle_w_bg1b_NSCR = 18,
+	NARC_battgra_wb_battle_w_bg2_NSCR = 19,
+	NARC_battgra_wb_battle_w_bg3_NCGR = 20,
+	NARC_battgra_wb_battle_w_bg3_NSCR = 21,
+	NARC_battgra_wb_battle_w_obj_NCGR = 22,
+	NARC_battgra_wb_battle_w_obj_NCLR = 23,
+	NARC_battgra_wb_battle_w_obj_NCER = 24,
+	NARC_battgra_wb_battle_w_obj_NANR = 25
 };
 
 /* NARC_BATTGRA_WB_NAIX_ */

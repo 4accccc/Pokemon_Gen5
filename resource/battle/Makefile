@@ -47,7 +47,11 @@ ICAFILE	:= $(wildcard $(RES_3DDIR)*.ica)
 IMAFILE	:= $(wildcard $(RES_3DDIR)*.ima)
 ITAFILE	:= $(wildcard $(RES_3DDIR)*.ita)
 BGNCGFILE := $(wildcard $(RES_BGDIR)*.ncg)
+BGNSCFILE := $(wildcard $(RES_BGDIR)*.nsc)
 BGNCLFILE := $(wildcard $(RES_BGDIR)*.ncl)
+OBJNCGFILE := $(wildcard $(RES_OBJDIR)*.ncg)
+OBJNCEFILE := $(wildcard $(RES_OBJDIR)*.nce)
+OBJNCLFILE := $(wildcard $(RES_OBJDIR)*.ncl)
 
 .PHONY:	do-build clean subdir
 
@@ -56,7 +60,7 @@ BGNCLFILE := $(wildcard $(RES_BGDIR)*.ncl)
 #------------------------------------------------------------------------------
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
 #do-build: pl_batt_obj.narc $(TARGETDIR)/$(NARCNAME)
-do-build: nsbmd nsbca ncgr nclr $(NARCNAME) $(TARGETDIR)/$(NARCNAME)
+do-build: nsbmd nsbca nsbma nsbta ncgr ncer bg_nclr obj_nclr $(NARCNAME) $(TARGETDIR)/$(NARCNAME)
 else
 do-build: $(TARGETDIR)/$(NARCNAME)
 endif
@@ -75,23 +79,35 @@ nsbca: $(notdir $(ICAFILE:.ica=.nsbca))
 %.nsbca: $(RES_3DDIR)%.ica
 	g3dcvtr $<
 
-nsbca: $(notdir $(IMAFILE:.ima=.nsbma))
+nsbma: $(notdir $(IMAFILE:.ima=.nsbma))
 %.nsbma: $(RES_3DDIR)%.ima
 	g3dcvtr $<
 
-nsbca: $(notdir $(ITAFILE:.ita=.nsbta))
+nsbta: $(notdir $(ITAFILE:.ita=.nsbta))
 %.nsbta: $(RES_3DDIR)%.ita
 	g3dcvtr $<
+
+ncer: $(notdir $(OBJNCEFILE:.nce=.NCER))
+%.NCER: $(RES_OBJDIR)%.nce
+	g2dcvtr $< -o/./
+
+obj_nclr: $(notdir $(OBJNCLFILE:.ncl=.NCLR))
+%.NCLR: $(RES_OBJDIR)%.ncl
+	g2dcvtr $< -pcm -o/./
+
+nscr: $(notdir $(BGNSCFILE:.nsc=.NSCR))
+%.NSCR: $(RES_BGDIR)%.nsc
+	g2dcvtr $< -bg -o/./
 
 ncgr: $(notdir $(BGNCGFILE:.ncg=.NCGR))
 %.NCGR: $(RES_BGDIR)%.ncg
 	g2dcvtr $< -bg -o/./
 
-nclr: $(notdir $(BGNCLFILE:.ncl=.NCLR))
+bg_nclr: $(notdir $(BGNCLFILE:.ncl=.NCLR))
 %.NCLR: $(RES_BGDIR)%.ncl
 	g2dcvtr $< -pcm -o/./
 
-$(NARCNAME):	$(notdir $(IMDFILE:.imd=.nsbmd)) $(notdir $(ICAFILE:.ica=.nsbca)) $(notdir $(BGNCGFILE:.ncg=.NCGR)) $(notdir $(BGNCLFILE:.ncl=.NCLR)) battgra_wb.scr
+$(NARCNAME): $(notdir $(IMDFILE:.imd=.nsbmd)) $(notdir $(ICAFILE:.ica=.nsbca)) $(notdir $(IMAFILE:.ima=.nsbma)) $(notdir $(ITAFILE:.ita=.nsbta)) $(notdir $(BGNSCFILE:.nsc=.NSCR)) $(notdir $(BGNCGFILE:.ncg=.NCGR)) $(notdir $(BGNCLFILE:.ncl=.NCLR)) battgra_wb.scr
 	nnsarc -c -l -n -i $(NARCNAME) -S battgra_wb.scr > error
 	$(NAIXCUT) $(NAIXNAME)
 
@@ -109,6 +125,8 @@ clean:
 	-rm -f *.N*R
 	-rm -f *.nsbmd
 	-rm -f *.nsbca
+	-rm -f *.nsbma
+	-rm -f *.nsbta
 	-rm -f $(TARGETDIR)/$(NARCNAME)
 	-rm -f $(TARGETDIR)/$(NAIXNAME)
 
