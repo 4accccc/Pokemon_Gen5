@@ -467,6 +467,26 @@ void FLDMSGPRINT_Print( FLDMSGPRINT *msgPrint, u32 x, u32 y, u32 strID )
 
 //--------------------------------------------------------------
 /**
+ * FLDMSGPRINT プリント カラー指定有り
+ * @param	msgPrint	FLDMSGPRINT
+ * @param	x		表示X座標
+ * @param	y		表示Y座標
+ * @param	strID	メッセージデータ 文字列ID
+ * @param color PRINTSYS_LSB
+ * @retval	nothing
+ */
+//--------------------------------------------------------------
+void FLDMSGPRINT_PrintColor(
+    FLDMSGPRINT *msgPrint, u32 x, u32 y, u32 strID, PRINTSYS_LSB color )
+{
+	GF_ASSERT( msgPrint->msgData );
+	GFL_MSG_GetString( msgPrint->msgData, strID, msgPrint->strBuf );
+  PRINT_UTIL_PrintColor( &msgPrint->printUtil, msgPrint->printQue,
+		x, y, msgPrint->strBuf, msgPrint->fontHandle, color );		
+}
+
+//--------------------------------------------------------------
+/**
  * FLDMSGPRINT プリント　STRBUF指定
  * @param	msgPrint	FLDMSGPRINT
  * @param	x		表示X座標
