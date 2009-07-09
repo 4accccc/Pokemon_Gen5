@@ -101,5 +101,5 @@ DEP_OUTDOOR	=	\
 	$(RESDIR)/r3fence_02.nsbmd \
 	$(RESDIR)/mall_01.nsbmd \
 	$(RESDIR)/door01.nsbmd \
-	$(RESDIR)/Rgata_01.nsbmd \
+	$(RESDIR)/rgata_01.nsbmd \
 

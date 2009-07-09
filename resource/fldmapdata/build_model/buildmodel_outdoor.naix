@@ -113,7 +113,7 @@ enum {
 	NARC_buildmodel_outdoor_r3fence_02_nsbmd = 99,
 	NARC_buildmodel_outdoor_mall_01_nsbmd = 100,
 	NARC_buildmodel_outdoor_door01_nsbmd = 101,
-	NARC_buildmodel_outdoor_Rgata_01_nsbmd = 102
+	NARC_buildmodel_outdoor_rgata_01_nsbmd = 102
 };
 
 /* NARC_BUILDMODEL_OUTDOOR_NAIX_ */

@@ -100,4 +100,4 @@
 "nsbmdfiles/r3fence_02.nsbmd"
 "nsbmdfiles/mall_01.nsbmd"
 "nsbmdfiles/door01.nsbmd"
-"nsbmdfiles/Rgata_01.nsbmd"
+"nsbmdfiles/rgata_01.nsbmd"
