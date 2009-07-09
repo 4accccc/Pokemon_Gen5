@@ -282,6 +282,8 @@ static void loadEventDataTable(EVENTDATA_SYSTEM * evdata, u16 zone_id)
 		OFS_X = -8,
 		OFS_Y = 0,
 		OFS_Z = 8,
+
+    RANGE = 2,
 	};
 //------------------------------------------------------------------
 //------------------------------------------------------------------
@@ -295,7 +297,8 @@ int EVENTDATA_SearchConnectIDByPos(const EVENTDATA_SYSTEM * evdata, const VecFx3
 	z = FX_Whole(pos->z) - OFS_Z;
 	for (i = 0; i < evdata->connect_count; i++, cnct++ ) {
 		if (cnct->pos.x != x) continue;
-		if (cnct->pos.y != y) continue;
+		//if (cnct->pos.y != y) continue;
+		if (!(cnct->pos.y - RANGE < y && y < cnct->pos.y + RANGE) ) continue;
 		if (cnct->pos.z != z) continue;
 		TAMADA_Printf("CNCT:zone,exit,type=%d,%d,%d\n",cnct->link_zone_id,cnct->link_exit_id,cnct->exit_type);
 		TAMADA_Printf("CNCT:x %d(%08x), y %d(%08x), z %d(%08x)\n",x,pos->x, y,pos->y, z,pos->z);
