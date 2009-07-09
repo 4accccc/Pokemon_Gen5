@@ -622,6 +622,7 @@ extern  void  PP_SetWazaPush( POKEMON_PARAM *pp, u16 wazano );
 extern  void  PPP_SetWazaPush( POKEMON_PASO_PARAM *ppp, u16 wazano );
 extern  void  PP_SetWazaPos( POKEMON_PARAM *pp, u16 wazano, u8 pos );
 extern  void  PPP_SetWazaPos( POKEMON_PASO_PARAM *ppp, u16 wazano, u8 pos );
+extern  void  PP_RecoverWazaPPAll( POKEMON_PARAM* pp );
 
 // パラメータ設定系（その他）
 extern  void  PP_SetSick( POKEMON_PARAM* pp, PokeSick sick );
