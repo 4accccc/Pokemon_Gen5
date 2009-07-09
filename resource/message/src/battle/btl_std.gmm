@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="taya" host="W00146" date="2009-07-08T19:37:52"/>
+	<create user="taya" host="W00146" date="2009-07-09T19:23:35"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -630,6 +630,14 @@
 		<comment>じゅうりょく</comment>
 		<language name="JPN" width="216">じゅうりょくが　つよくなった！</language>
 		<language name="JPN_KANJI" width="216">重力が　強くなった！</language>
+	</row>
+
+	<row id="BTL_STRID_STD_HorobiNoUta">
+		<comment>ほろびのうた</comment>
+		<language name="JPN" width="216">ほろびのうたを　きいた　ポケモンは
+３ターンごに　ほろびてしまう！</language>
+		<language name="JPN_KANJI" width="216">ほろびのうたを　聴いたポケモンは
+３ターン後に　滅びてしまう！</language>
 	</row>
 
 	<row id="BTL_STRID_STD_Reflector">
