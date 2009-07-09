@@ -113,7 +113,7 @@ void  BTLV_EFFECT_Init( int index, HEAPID heapID )
   bew->pfd = PaletteFadeInit( heapID );
   PaletteTrans_AutoSet( bew->pfd, TRUE );
   PaletteFadeWorkAllocSet( bew->pfd, FADE_MAIN_BG, 0x200, heapID );
-  PaletteFadeWorkAllocSet( bew->pfd, FADE_SUB_BG, 0x1e0, heapID );
+  PaletteFadeWorkAllocSet( bew->pfd, FADE_SUB_BG, 0x200, heapID );
   PaletteFadeWorkAllocSet( bew->pfd, FADE_MAIN_OBJ, 0x200, heapID );
   PaletteFadeWorkAllocSet( bew->pfd, FADE_SUB_OBJ, 0x1e0, heapID );
 
