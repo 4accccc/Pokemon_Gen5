@@ -14,6 +14,11 @@
 //======================================================================
 //	define
 //======================================================================
+//--------------------------------------------------------------
+/// ビルボード共通オフセット表示座標
+//--------------------------------------------------------------
+#define MMDL_BBD_OFFS_POS_Y (FX32_ONE*4)
+#define MMDL_BBD_OFFS_POS_Z (-FX32_ONE*8)
 
 //======================================================================
 //	struct
@@ -202,12 +207,8 @@ static void DrawHero_Draw( MMDL *fmmdl )
 	
 	MMDL_GetDrawVectorPos( fmmdl, &pos );
 
-	#ifndef MMDL_BLACT_HEAD3_TEST
-	pos.y += FX32_ONE * 4;
-  pos.z -= NUM_FX32(8);
-	#else
-	pos.y += FX32_ONE * 7; //3
-	#endif
+	pos.y += MMDL_BBD_OFFS_POS_Y;
+  pos.z += MMDL_BBD_OFFS_POS_Z;
 	
 	GFL_BBD_SetObjectTrans(
 		GFL_BBDACT_GetBBDSystem(actSys), work->actID, &pos );
@@ -317,12 +318,8 @@ static void DrawCycleHero_Draw( MMDL *fmmdl )
 	
 	MMDL_GetDrawVectorPos( fmmdl, &pos );
   
-	#ifndef MMDL_BLACT_HEAD3_TEST
-	pos.y += FX32_ONE * 4;
-  pos.z -= NUM_FX32(8);
-	#else
-	pos.y += FX32_ONE * 7; //3
-	#endif
+	pos.y += MMDL_BBD_OFFS_POS_Y;
+  pos.z += MMDL_BBD_OFFS_POS_Z;
 	
 	GFL_BBD_SetObjectTrans(
 		GFL_BBDACT_GetBBDSystem(actSys), work->actID, &pos );
@@ -408,12 +405,8 @@ static void DrawSwimHero_Draw( MMDL *fmmdl )
 	
 	MMDL_GetDrawVectorPos( fmmdl, &pos );
   
-	#ifndef MMDL_BLACT_HEAD3_TEST
-	pos.y += FX32_ONE * 4;
-  pos.z -= NUM_FX32(8);
-	#else
-	pos.y += FX32_ONE * 7; //3
-	#endif
+	pos.y += MMDL_BBD_OFFS_POS_Y;
+  pos.z += MMDL_BBD_OFFS_POS_Z;
 	
 	GFL_BBD_SetObjectTrans(
 		GFL_BBDACT_GetBBDSystem(actSys), work->actID, &pos );
@@ -540,12 +533,9 @@ static void DrawBlAct_Draw( MMDL *fmmdl )
 	}
 	
 	MMDL_GetDrawVectorPos( fmmdl, &pos );
-	#ifndef MMDL_BLACT_HEAD3_TEST
-	pos.y += FX32_ONE * 4;
-  pos.z -= NUM_FX32(8);
-	#else
-	pos.y += FX32_ONE * 7; //3
-	#endif
+	
+  pos.y += MMDL_BBD_OFFS_POS_Y;
+  pos.z += MMDL_BBD_OFFS_POS_Z;
 	
 	GFL_BBD_SetObjectTrans(
 		GFL_BBDACT_GetBBDSystem(actSys), work->actID, &pos );
