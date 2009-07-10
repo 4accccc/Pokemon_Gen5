@@ -56,8 +56,8 @@ enum {
   POKEWIN_6_X = 256-POKEWIN_WIDTH,
   POKEWIN_6_Y = POKEWIN_5_Y,
 
-  POKEWIN_BACK_X = POKEWIN_6_X,
-  POKEWIN_BACK_Y = POKEWIN_6_Y + POKEWIN_HEIGHT + 8,
+  POKEWIN_BACK_X = POKEWIN_6_X + 64,
+  POKEWIN_BACK_Y = POKEWIN_6_Y + POKEWIN_HEIGHT + 24,
 
   SUBPROC_STACK_DEPTH = 4,
 };
@@ -748,6 +748,67 @@ static void stwdraw_button( const u8* pos, u8 count, u8 format, BTLV_SCD* wk )
     GFL_ARC_CloseDataHandle( hdl_bg );
     GFL_ARC_CloseDataHandle( hdl_obj );
   }
+  const BTL_POKEPARAM*  bpp;
+  const POKEMON_PARAM*  pp;
+  BTLV_INPUT_SCENE_POKE bisp;
+  u8 vpos;
+  WazaID waza = wk->destActionParam->fight.waza;
+
+  MI_CpuClear16( &bisp, sizeof( BTLV_INPUT_SCENE_POKE ) );
+
+  bisp.pokesele_type = WAZADATA_GetTarget( waza );
+  bisp.client_type = BTL_MAIN_PokeIDtoPokePosClient( wk->mainModule, BTL_POKEPARAM_GetID(wk->bpp) );
+
+  while( count-- )
+  {
+    bpp = BTL_POKECON_GetFrontPokeDataConst( wk->pokeCon, *pos );
+    pp  = BTL_POKEPARAM_GetSrcData( bpp );
+    vpos = BTL_MAIN_BtlPosToViewPos( wk->mainModule, *pos );
+
+    bisp.bidp[ *pos ].hp = PP_Get( pp, ID_PARA_hp, NULL );
+    if( bsp.dspp[ *pos ].hp )
+    {
+      int mons_no = PP_Get( pp, ID_PARA_monsno, NULL );
+      bsp.dspp[ *pos ].pp = pp;
+      bsp.dspp[ *pos ].hpmax = PP_Get( pp, ID_PARA_hpmax, NULL );
+      bsp.dspp[ *pos ].exist = 1;
+      if( ( mons_no == MONSNO_NIDORAN_M ) || ( mons_no == MONSNO_NIDORAN_F ) )
+      {
+        bsp.dspp[ *pos ].sex = PTL_SEX_UNKNOWN;
+      }
+      else
+      {
+        bsp.dspp[ *pos ].sex = PP_Get( pp, ID_PARA_sex, NULL );
+      }
+
+      if( PP_Get( pp, ID_PARA_condition, NULL ) )
+      {
+        bsp.dspp[ *pos ].status = COMSEL_STATUS_NG;
+      }
+      else
+      {
+        bsp.dspp[ *pos ].status = COMSEL_STATUS_ALIVE;
+      }
+    }
+    else
+    {
+      bsp.dspp[ *pos ].exist = 0;
+      bsp.dspp[ *pos ].status = COMSEL_STATUS_DEAD;
+    }
+    pos++;
+  }
+
+  {
+    ARCHANDLE* hdl_bg;
+    ARCHANDLE* hdl_obj;
+
+    hdl_bg  = GFL_ARC_OpenDataHandle( ARCID_BATT_BG,  wk->heapID );
+    hdl_obj = GFL_ARC_OpenDataHandle( ARCID_BATT_OBJ, wk->heapID );
+    BINPUT_CreateBG( hdl_bg, hdl_obj, wk->bip, BINPUT_TYPE_POKE, FALSE, &bsp );
+
+    GFL_ARC_CloseDataHandle( hdl_bg );
+    GFL_ARC_CloseDataHandle( hdl_obj );
+  }
 #endif
 }
 static void stw_draw( const SEL_TARGET_WORK* stw, BTLV_SCD* work )
@@ -993,7 +1054,7 @@ static BOOL selectPokemon_loop( int* seq, void* wk_adrs )
     POKEWIN_BACK_BTM = POKEWIN_BACK_Y + POKEWIN_HEIGHT-1,
     POKEWIN_BACK_RGT = POKEWIN_BACK_X + POKEWIN_WIDTH-1,
 
-    WARNWIN_WIDTH = 256-(8*2),
+    WARNWIN_WIDTH = 256-(8*8),
     WARNWIN_HEIGHT = 32,
     WARNWIN_X = 8,
     WARNWIN_Y = 192-8-16-WARNWIN_HEIGHT,
@@ -1030,6 +1091,7 @@ static BOOL selectPokemon_loop( int* seq, void* wk_adrs )
         const BTL_PARTY* party = param->party;
 
         if( hitpos == (NELEMS(hitTbl)-2) ){
+          SePlayCancel();
           BTL_POKESELECT_RESULT_Init( res, param );
           wk->pokesel_param = NULL;
           wk->pokesel_result = NULL;
@@ -1066,6 +1128,7 @@ static BOOL selectPokemon_loop( int* seq, void* wk_adrs )
             BTL_POKESELECT_RESULT_Push( res, hitpos );
             if( BTL_POKESELECT_IsDone(res) )
             {
+              SePlayDecide();
               // ŽŸ‰ñ‚É³‚µ‚­‰Šú‰»‚³‚ê‚¸‚ÉŒÄ‚Ño‚³‚ê‚½‚çŽ~‚Ü‚é‚æ‚¤‚ÉNULLƒNƒŠƒA‚µ‚Ä‚¨‚­
               wk->pokesel_param = NULL;
               wk->pokesel_result = NULL;
