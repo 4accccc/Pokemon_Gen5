@@ -23,6 +23,7 @@
 #include "poke_tool/monsno_def.h"
 #ifdef PM_DEBUG
 #include "item/item.h"  //デバッグアイテム生成用
+#include "savedata/box_savedata.h"  //デバッグアイテム生成用
 #endif
 
 //============================================================================================
@@ -434,6 +435,18 @@ static void DEBUG_MyPokeAdd(GAMESYS_WORK * gsys)
 	PokeParty_Add(party, pp);
 	PP_Setup(pp, MONSNO_BANBIINA, 100, 123456);
 	PokeParty_Add(party, pp);
+
+	{
+		int i,j;
+		BOX_DATA* pBox = SaveData_GetBoxData(GAMEDATA_GetSaveControlWork(GAMESYSTEM_GetGameData(gsys)));
+
+		for(i=0;i<10;i++){
+			for(j=0;j<30;j++){
+				PP_Setup(pp, MONSNO_ZENIGAME+i+j, 100, 123456);
+				BOXDAT_PutPokemonBox(pBox, i, (POKEMON_PASO_PARAM*)PP_GetPPPPointerConst(pp));
+			}
+		}
+	}
 	
 	GFL_HEAP_FreeMemory(pp);
 }

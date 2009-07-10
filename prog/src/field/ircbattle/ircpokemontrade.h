@@ -1,6 +1,6 @@
 //=============================================================================
 /**
- * @file	  ircpokmeontrade.h
+ * @file	  ircpokemontrade.h
  * @bfief	  ポケモン交換して通信を終了する
  * @author	ohno_katsumi@gamefreak.co.jp
  * @date	  09/07/09

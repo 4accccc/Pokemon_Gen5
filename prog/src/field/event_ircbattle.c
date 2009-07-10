@@ -26,6 +26,7 @@
 #include "ircbattle/ircbattlematch.h"
 #include "ircbattle/ircbattlemenu.h"
 #include "ircbattle/ircbattlefriend.h"
+#include "ircbattle/ircpokemontrade.h"
 #include "net_app/irc_compatible.h"
 #include "sound/pm_sndsys.h"
 #include "battle/battle.h"
@@ -220,7 +221,7 @@ static GMEVENT_RESULT EVENT_IrcBattleMain(GMEVENT * event, int *  seq, void * wo
     break;
 
   case _CALL_TRADE:  //  ƒ|ƒPƒ‚ƒ“ŒðŠ·
-    GAMESYSTEM_CallProc(gsys, FS_OVERLAY_ID(ircbattlematch), &IrcBattleFriendProcData, dbw);
+    GAMESYSTEM_CallProc(gsys, FS_OVERLAY_ID(ircbattlematch), &IrcPokemonTradeProcData, dbw);
     (*seq)++;
     break;
   case _WAIT_TRADE:
