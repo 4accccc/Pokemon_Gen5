@@ -66,9 +66,18 @@
 #define PSTATUS_INFO_STR_NEXTEXP_VAL_X (32+ PSTATUS_STR_OFS_X)
 #define PSTATUS_INFO_STR_NEXTEXP_VAL_Y ( 0+ PSTATUS_STR_OFS_Y)
 
+#define PSTATUS_INFO_EXPBAR_TOP  (3)
+#define PSTATUS_INFO_EXPBAR_LEFT (0)
+#define PSTATUS_INFO_EXPBAR_HEIGHT  (3)
+#define PSTATUS_INFO_EXPBAR_WIDTH (64)
 //フォントカラー(表題と数値用
 #define PSTATUS_INFO_STR_COL_TITLE (PRINTSYS_LSB_Make(0xf,2,0))
 #define PSTATUS_INFO_STR_COL_VALUE (PRINTSYS_LSB_Make(1,2,0))
+//名前男女用
+#define PSTATUS_INFO_STR_COL_BLUE (PRINTSYS_LSB_Make(5,6,0))
+#define PSTATUS_INFO_STR_COL_RED (PRINTSYS_LSB_Make(3,4,0))
+
+#define PSTATUS_INFO_EXPBAR_COL (5) //とりあえずフォントの青
 
 //======================================================================
 //	enum
@@ -101,6 +110,7 @@ struct _PSTATUS_INFO_WORK
   BOOL isDisp;
 
   GFL_BMPWIN  *bmpWin[SIB_MAX];
+  GFL_BMPWIN  *bmpWinUp;
 
   NNSG2dScreenData *scrDataDown;
   void *scrResDown;
@@ -129,7 +139,7 @@ static const u8 winPos[SIB_MAX][4] =
   { 10, 13,  8,  2},  //↑数値
   {  2, 15, 16,  2},  //次までの経験地
   {  6, 17, 12,  2},  //↑数値
-  {  9, 19,  9,  1},  //経験地バー
+  { 10, 19,  8,  1},  //経験地バー
 };
 
 //--------------------------------------------------------------
@@ -160,6 +170,8 @@ void PSTATUS_INFO_Term( PSTATUS_WORK *work , PSTATUS_INFO_WORK *infoWork )
 //--------------------------------------------------------------
 void PSTATUS_INFO_Main( PSTATUS_WORK *work , PSTATUS_INFO_WORK *infoWork )
 {
+  
+  
   if( infoWork->isUpdateStr == TRUE )
   {
     u8 i;
@@ -315,10 +327,21 @@ void PSTATUS_INFO_DrawStr( PSTATUS_WORK *work , PSTATUS_INFO_WORK *infoWork , co
   {
     STRBUF *parentName  = GFL_STR_CreateBuffer( 32, work->heapId );
     WORDSET *wordSet = WORDSET_Create( work->heapId );
+    const u32 sex = PPP_Get( ppp , ID_PARA_oyasex , parentName );
+    PRINTSYS_LSB col = PSTATUS_INFO_STR_COL_VALUE;
+    if( sex == PTL_SEX_MALE )
+    {
+      col = PSTATUS_INFO_STR_COL_BLUE;
+    }
+    else if( sex == PTL_SEX_FEMALE )
+    {
+      col = PSTATUS_INFO_STR_COL_RED;
+    }
+
     PPP_Get( ppp , ID_PARA_oyaname , parentName );
     WORDSET_RegisterWord( wordSet , 0 , parentName , 0,TRUE,PM_LANG );
     PSTATUS_INFO_DrawValueStrFunc( work , infoWork , infoWork->bmpWin[SIB_PARENT] , wordSet , mes_status_02_08 , 
-                                   PSTATUS_INFO_STR_PARENT_VAL_X , PSTATUS_INFO_STR_PARENT_VAL_Y , PSTATUS_INFO_STR_COL_VALUE );
+                                   PSTATUS_INFO_STR_PARENT_VAL_X , PSTATUS_INFO_STR_PARENT_VAL_Y , col );
     WORDSET_Delete( wordSet );
     GFL_STR_DeleteBuffer( parentName );
   }
@@ -336,29 +359,56 @@ void PSTATUS_INFO_DrawStr( PSTATUS_WORK *work , PSTATUS_INFO_WORK *infoWork , co
   }
 
   //経験値
-  PSTATUS_INFO_DrawStrFunc( work , infoWork , infoWork->bmpWin[SIB_NOWEXP] , mes_status_02_11 ,
-                            PSTATUS_INFO_STR_NOWEXP_X , PSTATUS_INFO_STR_NOWEXP_Y , PSTATUS_INFO_STR_COL_TITLE );
   {
-    WORDSET *wordSet = WORDSET_Create( work->heapId );
-    u32 exp = PPP_Get( ppp , ID_PARA_exp , NULL );
-    WORDSET_RegisterNumber( wordSet , 0 , exp , 7 , STR_NUM_DISP_LEFT , STR_NUM_CODE_DEFAULT );
-    PSTATUS_INFO_DrawValueStrFunc( work , infoWork , infoWork->bmpWin[SIB_NOWEXP_NUM] , wordSet , mes_status_02_12 , 
-                                   PSTATUS_INFO_STR_NOWEXP_VAL_X , PSTATUS_INFO_STR_NOWEXP_VAL_Y , PSTATUS_INFO_STR_COL_VALUE );
-    WORDSET_Delete( wordSet );
-  }
+    const u32 exp = PPP_Get( ppp , ID_PARA_exp , NULL );
+    const u32 nextLvExp = POKETOOL_GetMinExp(PPP_Get( ppp, ID_PARA_monsno, NULL ),
+                                    PPP_Get( ppp, ID_PARA_form_no, NULL ),
+                                    PPP_Get( ppp, ID_PARA_level, NULL )+1) ;
+    const u32 nowLvExp = POKETOOL_GetMinExp(PPP_Get( ppp, ID_PARA_monsno, NULL ),
+                                    PPP_Get( ppp, ID_PARA_form_no, NULL ),
+                                    PPP_Get( ppp, ID_PARA_level, NULL )) ;
+    const u32 minExp = nextLvExp - exp;
+    //現在の経験値
+    PSTATUS_INFO_DrawStrFunc( work , infoWork , infoWork->bmpWin[SIB_NOWEXP] , mes_status_02_11 ,
+                              PSTATUS_INFO_STR_NOWEXP_X , PSTATUS_INFO_STR_NOWEXP_Y , PSTATUS_INFO_STR_COL_TITLE );
+    {
+      WORDSET *wordSet = WORDSET_Create( work->heapId );
+      WORDSET_RegisterNumber( wordSet , 0 , exp , 7 , STR_NUM_DISP_LEFT , STR_NUM_CODE_DEFAULT );
+      PSTATUS_INFO_DrawValueStrFunc( work , infoWork , infoWork->bmpWin[SIB_NOWEXP_NUM] , wordSet , mes_status_02_12 , 
+                                     PSTATUS_INFO_STR_NOWEXP_VAL_X , PSTATUS_INFO_STR_NOWEXP_VAL_Y , PSTATUS_INFO_STR_COL_VALUE );
+      WORDSET_Delete( wordSet );
+    }
 
-  //次までの経験値
-  PSTATUS_INFO_DrawStrFunc( work , infoWork , infoWork->bmpWin[SIB_NEXTEXP] , mes_status_02_13 ,
-                            PSTATUS_INFO_STR_NEXTEXP_X , PSTATUS_INFO_STR_NEXTEXP_Y , PSTATUS_INFO_STR_COL_TITLE );
-  PSTATUS_INFO_DrawStrFunc( work , infoWork , infoWork->bmpWin[SIB_NEXTEXP_NUM] , mes_status_02_14 ,
-                            PSTATUS_INFO_STR_NEXTEXP_ATO_X , PSTATUS_INFO_STR_NEXTEXP_ATO_Y , PSTATUS_INFO_STR_COL_VALUE );
-  {
-    WORDSET *wordSet = WORDSET_Create( work->heapId );
-    u32 minExp = PPP_GetMinExp( ppp );
-    WORDSET_RegisterNumber( wordSet , 0 , minExp , 6 , STR_NUM_DISP_LEFT , STR_NUM_CODE_DEFAULT );
-    PSTATUS_INFO_DrawValueStrFunc( work , infoWork , infoWork->bmpWin[SIB_NEXTEXP_NUM] , wordSet , mes_status_02_15 , 
-                                   PSTATUS_INFO_STR_NEXTEXP_VAL_X , PSTATUS_INFO_STR_NEXTEXP_VAL_Y , PSTATUS_INFO_STR_COL_VALUE );
-    WORDSET_Delete( wordSet );
+    //次までの経験値
+    PSTATUS_INFO_DrawStrFunc( work , infoWork , infoWork->bmpWin[SIB_NEXTEXP] , mes_status_02_13 ,
+                              PSTATUS_INFO_STR_NEXTEXP_X , PSTATUS_INFO_STR_NEXTEXP_Y , PSTATUS_INFO_STR_COL_TITLE );
+    PSTATUS_INFO_DrawStrFunc( work , infoWork , infoWork->bmpWin[SIB_NEXTEXP_NUM] , mes_status_02_14 ,
+                              PSTATUS_INFO_STR_NEXTEXP_ATO_X , PSTATUS_INFO_STR_NEXTEXP_ATO_Y , PSTATUS_INFO_STR_COL_VALUE );
+    {
+      WORDSET *wordSet = WORDSET_Create( work->heapId );
+      WORDSET_RegisterNumber( wordSet , 0 , minExp , 6 , STR_NUM_DISP_LEFT , STR_NUM_CODE_DEFAULT );
+      PSTATUS_INFO_DrawValueStrFunc( work , infoWork , infoWork->bmpWin[SIB_NEXTEXP_NUM] , wordSet , mes_status_02_15 , 
+                                     PSTATUS_INFO_STR_NEXTEXP_VAL_X , PSTATUS_INFO_STR_NEXTEXP_VAL_Y , PSTATUS_INFO_STR_COL_VALUE );
+      WORDSET_Delete( wordSet );
+    }
+    
+    //経験値バー
+    {
+      const u32 modLvExp = (nextLvExp-nowLvExp);
+      u32 len = PSTATUS_INFO_EXPBAR_WIDTH * (modLvExp-minExp) / modLvExp;
+      if( (modLvExp-minExp) != 0 && len == 0 )
+      {
+        len = 1;
+      }
+      if( len == PSTATUS_INFO_EXPBAR_WIDTH )
+      {
+        len--;
+      }
+      GFL_BMP_Fill( GFL_BMPWIN_GetBmp(infoWork->bmpWin[SIB_EXP_BAR]) , 
+                    PSTATUS_INFO_EXPBAR_LEFT , PSTATUS_INFO_EXPBAR_TOP ,
+                    len , PSTATUS_INFO_EXPBAR_HEIGHT , PSTATUS_INFO_EXPBAR_COL );
+
+    }
   }
 
   infoWork->isUpdateStr = TRUE;

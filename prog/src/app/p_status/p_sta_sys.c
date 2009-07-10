@@ -76,8 +76,10 @@ static void PSTATUS_TermCell( PSTATUS_WORK *work );
 static void PSTATUS_InitMessage( PSTATUS_WORK *work );
 static void PSTATUS_TermMessage( PSTATUS_WORK *work );
 
+static void PSTATUS_UpdateBarButton( PSTATUS_WORK *work );
+
 static void PSTATUS_RefreshDisp( PSTATUS_WORK *work );
-const POKEMON_PASO_PARAM* PSTATUS_UTIL_GetCurrentPPP(  PSTATUS_WORK *work );
+static void PSTATUS_UTIL_SetCurrentPPPFast( PSTATUS_WORK *work , const BOOL isFast );
 
 
 //--------------------------------------------------------------
@@ -91,6 +93,8 @@ const BOOL PSTATUS_InitPokeStatus( PSTATUS_WORK *work )
   work->befVCount = OS_GetVBlankCount();
   work->page = PPT_INFO;
   work->befPage = PPT_INFO;
+  work->isActiveBarButton = TRUE;
+
 #if PM_DEBUG
   work->debPp = NULL;
 #endif
@@ -152,7 +156,52 @@ const BOOL PSTATUS_TermPokeStatus( PSTATUS_WORK *work )
 //--------------------------------------------------------------
 const BOOL PSTATUS_UpdatePokeStatus( PSTATUS_WORK *work )
 {
+  PSTATUS_UpdateBarButton( work );
+  
   PSTATUS_SUB_Main( work , work->subWork );
+  //FIXME 仮キー処理
+  if( work->isActiveBarButton == TRUE )
+  {
+    if( GFL_UI_KEY_GetRepeat() & PAD_KEY_DOWN &&
+        !(GFL_UI_KEY_GetCont() & PAD_BUTTON_R))
+    {
+      if( work->dataPos < work->psData->max-1 )
+      {
+        work->dataPos++;
+        PSTATUS_RefreshDisp( work );
+      }
+    }
+    else
+    if( GFL_UI_KEY_GetRepeat() & PAD_KEY_UP &&
+        !(GFL_UI_KEY_GetCont() & PAD_BUTTON_R))
+    {
+      if( work->dataPos != 0 )
+      {
+        work->dataPos--;
+        PSTATUS_RefreshDisp( work );
+      }
+    }
+    else
+    if( (GFL_UI_KEY_GetRepeat() & PAD_KEY_RIGHT) ||
+        (GFL_UI_KEY_GetRepeat() & PAD_KEY_LEFT) )
+    {
+      if( work->page == PPT_INFO )
+      {
+        work->page = PPT_RIBBON;
+      }
+      else
+      {
+        work->page = PPT_INFO;
+      }
+      PSTATUS_RefreshDisp( work );
+    }
+    else
+    if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_B )
+    {
+      return TRUE;
+    }
+  }
+
   switch( work->befPage )
   {
   case PPT_INFO:
@@ -163,46 +212,6 @@ const BOOL PSTATUS_UpdatePokeStatus( PSTATUS_WORK *work )
   case PPT_RIBBON:
     PSTATUS_RIBBON_Main( work , work->ribbonWork );
     break;
-  }
-
-
-  if( GFL_UI_KEY_GetRepeat() & PAD_KEY_DOWN &&
-      !(GFL_UI_KEY_GetCont() & PAD_BUTTON_R))
-  {
-    if( work->dataPos < work->psData->max-1 )
-    {
-      work->dataPos++;
-      PSTATUS_RefreshDisp( work );
-    }
-  }
-  else
-  if( GFL_UI_KEY_GetRepeat() & PAD_KEY_UP &&
-      !(GFL_UI_KEY_GetCont() & PAD_BUTTON_R))
-  {
-    if( work->dataPos != 0 )
-    {
-      work->dataPos--;
-      PSTATUS_RefreshDisp( work );
-    }
-  }
-  else
-  if( (GFL_UI_KEY_GetRepeat() & PAD_KEY_RIGHT) ||
-      (GFL_UI_KEY_GetRepeat() & PAD_KEY_LEFT) )
-  {
-    if( work->page == PPT_INFO )
-    {
-      work->page = PPT_RIBBON;
-    }
-    else
-    {
-      work->page = PPT_INFO;
-    }
-    PSTATUS_RefreshDisp( work );
-  }
-  else
-  if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_B )
-  {
-    return TRUE;
   }
 
 
@@ -297,43 +306,51 @@ static void PSTATUS_InitGraphic( PSTATUS_WORK *work )
     static const GFL_BG_BGCNT_HEADER header_main3 = {
       0, 0, 0x800, 0,  // scrX, scrY, scrbufSize, scrbufofs,
       GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
-      GX_BG_SCRBASE_0x7000, GX_BG_CHARBASE_0x00000,0x06000,
+      GX_BG_SCRBASE_0x7000, GX_BG_CHARBASE_0x10000,0x00000,
       GX_BG_EXTPLTT_23, 3, 0, 0, FALSE  // pal, pri, areaover, dmy, mosaic
     };
 
+    // BG0 SUB (文字
+    static const GFL_BG_BGCNT_HEADER header_sub0 = {
+      0, 0, 0x800, 0,  // scrX, scrY, scrbufSize, scrbufofs,
+      GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
+      GX_BG_SCRBASE_0x6000, GX_BG_CHARBASE_0x00000,0x06000,
+      GX_BG_EXTPLTT_23, 1, 0, 0, FALSE  // pal, pri, areaover, dmy, mosaic
+    };
     // BG1 SUB (Info
     static const GFL_BG_BGCNT_HEADER header_sub1 = {
       0, 0, 0x800, 0,  // scrX, scrY, scrbufSize, scrbufofs,
       GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
-      GX_BG_SCRBASE_0x6800, GX_BG_CHARBASE_0x00000,0x00000,
+      GX_BG_SCRBASE_0x6800, GX_BG_CHARBASE_0x08000,0x08000,
       GX_BG_EXTPLTT_23, 1, 0, 0, FALSE  // pal, pri, areaover, dmy, mosaic
     };
     // BG2 SUB (土台
     static const GFL_BG_BGCNT_HEADER header_sub2 = {
       0, 0, 0x800, 0,  // scrX, scrY, scrbufSize, scrbufofs,
       GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
-      GX_BG_SCRBASE_0x7800, GX_BG_CHARBASE_0x00000,0x04000,
+      GX_BG_SCRBASE_0x7000, GX_BG_CHARBASE_0x08000,0x00000,
       GX_BG_EXTPLTT_23, 2, 0, 0, FALSE  // pal, pri, areaover, dmy, mosaic
     };
     // BG3 SUB (背景
     static const GFL_BG_BGCNT_HEADER header_sub3 = {
       0, 0, 0x800, 0,  // scrX, scrY, scrbufSize, scrbufofs,
       GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
-      GX_BG_SCRBASE_0x7000, GX_BG_CHARBASE_0x04000,0x03000,
+      GX_BG_SCRBASE_0x7800, GX_BG_CHARBASE_0x08000,0x00000,
       GX_BG_EXTPLTT_23, 3, 0, 0, FALSE  // pal, pri, areaover, dmy, mosaic
     };
     GFL_BG_SetBGMode( &sys_data );
 
-    PSTATUS_SetupBgFunc( &header_main3 , PSTATUS_BG_MAIN_BG , GFL_BG_MODE_TEXT );
-    PSTATUS_SetupBgFunc( &header_main2 , PSTATUS_BG_PLATE , GFL_BG_MODE_TEXT );
     PSTATUS_SetupBgFunc( &header_main1 , PSTATUS_BG_PARAM , GFL_BG_MODE_TEXT );
+    PSTATUS_SetupBgFunc( &header_main2 , PSTATUS_BG_PLATE , GFL_BG_MODE_TEXT );
+    PSTATUS_SetupBgFunc( &header_main3 , PSTATUS_BG_MAIN_BG , GFL_BG_MODE_TEXT );
     
     GFL_BG_SetBGControl3D( 0 );
     GFL_BG_SetVisible( PSTATUS_BG_3D , TRUE );
     
-    PSTATUS_SetupBgFunc( &header_sub3 , PSTATUS_BG_SUB_BG , GFL_BG_MODE_TEXT );
-    PSTATUS_SetupBgFunc( &header_sub2 , PSTATUS_BG_SUB_PLATE , GFL_BG_MODE_TEXT );
+    PSTATUS_SetupBgFunc( &header_sub0 , PSTATUS_BG_SUB_STR  , GFL_BG_MODE_TEXT );
     PSTATUS_SetupBgFunc( &header_sub1 , PSTATUS_BG_SUB_INFO , GFL_BG_MODE_TEXT );
+    PSTATUS_SetupBgFunc( &header_sub2 , PSTATUS_BG_SUB_PLATE , GFL_BG_MODE_TEXT );
+    PSTATUS_SetupBgFunc( &header_sub3 , PSTATUS_BG_SUB_BG , GFL_BG_MODE_TEXT );
   }
   
   //WindowMask設定
@@ -448,15 +465,12 @@ static void PSTATUS_LoadResource( PSTATUS_WORK *work )
   GFL_ARCHDL_UTIL_TransVramPalette( archandle , NARC_p_status_gra_menu_bar_NCLR , 
                     PALTYPE_MAIN_BG , PSTATUS_BG_PLT_BAR*16*2 , 16*2 , work->heapId );
   
-  //下画面背景
-  GFL_ARCHDL_UTIL_TransVramBgCharacter( archandle , NARC_p_status_gra_p_st_bg_d_NCGR ,
-                    PSTATUS_BG_MAIN_BG , 0 , 0, FALSE , work->heapId );
-  GFL_ARCHDL_UTIL_TransVramScreen( archandle , NARC_p_status_gra_p_st_scroll_d_NSCR , 
-                    PSTATUS_BG_MAIN_BG , 0 , 0, FALSE , work->heapId );
-
-  //下画面土台共通キャラ
+  //下画面共通キャラ
   GFL_ARCHDL_UTIL_TransVramBgCharacter( archandle , NARC_p_status_gra_p_st_bg_d_NCGR ,
                     PSTATUS_BG_PLATE , 0 , 0, FALSE , work->heapId );
+  //下画面背景
+  GFL_ARCHDL_UTIL_TransVramScreen( archandle , NARC_p_status_gra_p_st_scroll_d_NSCR , 
+                    PSTATUS_BG_MAIN_BG , 0 , 0, FALSE , work->heapId );
 
   //下画面バー
   GFL_ARCHDL_UTIL_TransVramBgCharacter( archandle , NARC_p_status_gra_menu_bar_NCGR ,
@@ -469,14 +483,13 @@ static void PSTATUS_LoadResource( PSTATUS_WORK *work )
   //上画面共通パレット
   GFL_ARCHDL_UTIL_TransVramPalette( archandle , NARC_p_status_gra_p_st_bg_u_NCLR , 
                     PALTYPE_SUB_BG , 0 , 0 , work->heapId );
-  //上画面背景
-  GFL_ARCHDL_UTIL_TransVramBgCharacter( archandle , NARC_p_status_gra_p_st_bg_u_NCGR ,
-                    PSTATUS_BG_SUB_BG , 0 , 0, FALSE , work->heapId );
-  GFL_ARCHDL_UTIL_TransVramScreen( archandle , NARC_p_status_gra_p_st_scroll_u_NSCR , 
-                    PSTATUS_BG_SUB_BG ,  0 , 0, FALSE , work->heapId );
-  //上画面土台共通キャラ
+  //上画面共通キャラ
   GFL_ARCHDL_UTIL_TransVramBgCharacter( archandle , NARC_p_status_gra_p_st_bg_u_NCGR ,
                     PSTATUS_BG_SUB_PLATE , 0 , 0, FALSE , work->heapId );
+
+  //上画面背景
+  GFL_ARCHDL_UTIL_TransVramScreen( archandle , NARC_p_status_gra_p_st_scroll_u_NSCR , 
+                    PSTATUS_BG_SUB_BG ,  0 , 0, FALSE , work->heapId );
   //上画面info
   GFL_ARCHDL_UTIL_TransVramScreen( archandle , NARC_p_status_gra_p_st_infotitle_u_NSCR , 
                     PSTATUS_BG_SUB_INFO ,  0 , 0, FALSE , work->heapId );
@@ -487,14 +500,24 @@ static void PSTATUS_LoadResource( PSTATUS_WORK *work )
   work->cellRes[SCR_PLT_ICON] = GFL_CLGRP_PLTT_Register( archandle , 
         NARC_p_status_gra_p_st_obj_d_NCLR , CLSYS_DRAW_MAIN , 
         PSTATUS_OBJPLT_ICON*32 , work->heapId  );
+  work->cellRes[SCR_PLT_RIBBON_BAR] = GFL_CLGRP_PLTT_Register( archandle , 
+        NARC_p_status_gra_p_status_ribbon_bar_NCLR , CLSYS_DRAW_MAIN , 
+        PSTATUS_OBJPLT_RIBBON_BAR*32 , work->heapId  );
+  work->cellRes[SCR_PLT_RIBBON_CUR] = GFL_CLGRP_PLTT_Register( archandle , 
+        NARC_p_status_gra_p_st_ribbon_cur_NCLR , CLSYS_DRAW_MAIN , 
+        PSTATUS_OBJPLT_RIBBON_CUR*32 , work->heapId  );
         
   //キャラクタ
   work->cellRes[SCR_NCG_ICON] = GFL_CLGRP_CGR_Register( archandle , 
         NARC_p_status_gra_p_st_obj_d_NCGR , FALSE , CLSYS_DRAW_MAIN , work->heapId  );
+  work->cellRes[SCR_NCG_RIBBON_CUR] = GFL_CLGRP_CGR_Register( archandle , 
+        NARC_p_status_gra_p_st_ribbon_cur_NCGR , FALSE , CLSYS_DRAW_MAIN , work->heapId  );
   
   //セル・アニメ
   work->cellRes[SCR_ANM_ICON] = GFL_CLGRP_CELLANIM_Register( archandle , 
         NARC_p_status_gra_p_st_obj_d_NCER , NARC_p_status_gra_p_st_obj_d_NANR, work->heapId  );
+  work->cellRes[SCR_ANM_RIBBON_CUR] = GFL_CLGRP_CELLANIM_Register( archandle , 
+        NARC_p_status_gra_p_st_ribbon_cur_NCER , NARC_p_status_gra_p_st_ribbon_cur_NANR, work->heapId  );
 
 
 
@@ -581,6 +604,8 @@ static void PSTATUS_InitCell( PSTATUS_WORK *work )
       GFL_CLACT_WK_SetDrawEnable( work->clwkBarIcon[i] , TRUE );
     }
   }
+  
+  PSTATUS_RIBBON_InitCell( work , work->ribbonWork );
 }
 
 //--------------------------------------------------------------------------
@@ -589,6 +614,8 @@ static void PSTATUS_InitCell( PSTATUS_WORK *work )
 static void PSTATUS_TermCell( PSTATUS_WORK *work )
 {
   u8 i;
+  PSTATUS_RIBBON_TermCell( work , work->ribbonWork );
+
   for( i=0;i<SBT_MAX;i++ )
   {
     GFL_CLACT_WK_Remove( work->clwkBarIcon[i] );
@@ -620,6 +647,40 @@ static void PSTATUS_TermMessage( PSTATUS_WORK *work )
   GFL_FONT_Delete( work->fontHandle );
 }
 
+
+#pragma mark [>UI
+//--------------------------------------------------------------------------
+//  バーのボタンの一括チェック
+//--------------------------------------------------------------------------
+static void PSTATUS_UpdateBarButton( PSTATUS_WORK *work )
+{
+  //当たり判定作成
+  GFL_UI_TP_HITTBL hitTbl[SBT_MAX+1] =
+  {
+    { PSTATUS_BAR_CELL_Y , PSTATUS_BAR_CELL_Y+24 , PSTATUS_BAR_CELL_PAGE1_X , PSTATUS_BAR_CELL_PAGE1_X+40 },
+    { PSTATUS_BAR_CELL_Y , PSTATUS_BAR_CELL_Y+24 , PSTATUS_BAR_CELL_PAGE2_X , PSTATUS_BAR_CELL_PAGE2_X+40 },
+    { PSTATUS_BAR_CELL_Y , PSTATUS_BAR_CELL_Y+24 , PSTATUS_BAR_CELL_PAGE3_X , PSTATUS_BAR_CELL_PAGE3_X+40 },
+    { PSTATUS_BAR_CELL_Y , PSTATUS_BAR_CELL_Y+24 , PSTATUS_BAR_CELL_CHECK_X , PSTATUS_BAR_CELL_CHECK_X+24 },
+    { PSTATUS_BAR_CELL_Y , PSTATUS_BAR_CELL_Y+24 , PSTATUS_BAR_CELL_CURSOR_UP_X , PSTATUS_BAR_CELL_CURSOR_UP_X+24 },
+    { PSTATUS_BAR_CELL_Y , PSTATUS_BAR_CELL_Y+24 , PSTATUS_BAR_CELL_CURSOR_DOWN_X , PSTATUS_BAR_CELL_CURSOR_DOWN_X+24 },
+    { PSTATUS_BAR_CELL_Y , PSTATUS_BAR_CELL_Y+24 , PSTATUS_BAR_CELL_CURSOR_EXIT , PSTATUS_BAR_CELL_CURSOR_EXIT+24 },
+    { PSTATUS_BAR_CELL_Y , PSTATUS_BAR_CELL_Y+24 , PSTATUS_BAR_CELL_CURSOR_RETURN , PSTATUS_BAR_CELL_CURSOR_RETURN+24 },
+    { GFL_UI_TP_HIT_END ,0,0,0 },
+  };
+  
+  work->barButtonHit = GFL_UI_TP_HitTrg( hitTbl );
+}
+
+//外部からの操作関数
+#pragma mark [>Outer
+//--------------------------------------------------------------------------
+//  バー操作(キーのページ切り替えも)の有効設定
+//--------------------------------------------------------------------------
+void PSTATUS_SetActiveBarButton( PSTATUS_WORK *work , const BOOL isActive )
+{
+  work->isActiveBarButton = isActive;
+}
+
 #pragma mark [>util
 
 //--------------------------------------------------------------
@@ -627,6 +688,9 @@ static void PSTATUS_TermMessage( PSTATUS_WORK *work )
 //--------------------------------------------------------------
 static void PSTATUS_RefreshDisp( PSTATUS_WORK *work )
 {
+  //PPP暗号解除
+  PSTATUS_UTIL_SetCurrentPPPFast( work , TRUE );
+  
   if( work->befDataPos != work->dataPos )
   {
     PSTATUS_SUB_ClearPage( work , work->subWork );
@@ -662,6 +726,8 @@ static void PSTATUS_RefreshDisp( PSTATUS_WORK *work )
     break;
   }
   
+  //PPP暗号化
+  PSTATUS_UTIL_SetCurrentPPPFast( work , FALSE );
   work->befPage = work->page;
 }
 
@@ -700,12 +766,69 @@ const POKEMON_PASO_PARAM* PSTATUS_UTIL_GetCurrentPPP( PSTATUS_WORK *work )
       u16 oyaName[5] = {L'ブ',L'ラ',L'ッ',L'ク',0xFFFF};
       work->debPp = PP_Create( work->dataPos+1 , 50 , PTL_SETUP_POW_AUTO , HEAPID_POKE_STATUS );
       PP_Put( work->debPp , ID_PARA_oyaname_raw , (u32)&oyaName[0] );
+      PP_Put( work->debPp , ID_PARA_oyasex , PTL_SEX_MALE );
     }
     return PP_GetPPPPointerConst( work->debPp );
     break;
 #endif
-
-
   }
   return NULL;
+}
+
+//--------------------------------------------------------------
+//PP・PPPの暗号・複合切り替え
+//--------------------------------------------------------------
+static void PSTATUS_UTIL_SetCurrentPPPFast( PSTATUS_WORK *work , const BOOL isFast )
+{
+  switch( work->psData->ppt )
+  {
+  case PST_PP_TYPE_POKEPARAM:
+
+    break;
+
+  case PST_PP_TYPE_POKEPARTY:
+    {
+      POKEMON_PARAM *pp = PokeParty_GetMemberPointer( (POKEPARTY*)work->psData->ppd , work->dataPos );
+      if( isFast == TRUE )
+      {
+        PP_FastModeOn( pp );
+      }
+      else
+      {
+        PP_FastModeOff( pp , TRUE );
+      }
+    }
+    break;
+
+  case PST_PP_TYPE_POKEPASO:
+
+    break;
+
+#if PM_DEBUG
+  case PST_PP_TYPE_DEBUG:
+    if( work->debPp != NULL &&
+        PP_Get( work->debPp , ID_PARA_monsno , NULL ) != work->dataPos+1 )
+    {
+      GFL_HEAP_FreeMemory( work->debPp );
+      work->debPp = NULL;
+    }
+    if( work->debPp == NULL )
+    {
+      u16 oyaName[5] = {L'ブ',L'ラ',L'ッ',L'ク',0xFFFF};
+      work->debPp = PP_Create( work->dataPos+1 , 50 , PTL_SETUP_POW_AUTO , HEAPID_POKE_STATUS );
+      PP_Put( work->debPp , ID_PARA_oyaname_raw , (u32)&oyaName[0] );
+      PP_Put( work->debPp , ID_PARA_oyasex , PTL_SEX_MALE );
+    }
+
+    if( isFast == TRUE )
+    {
+      PP_FastModeOn( work->debPp );
+    }
+    else
+    {
+      PP_FastModeOff( work->debPp , TRUE );
+    }
+    break;
+#endif
+  }
 }

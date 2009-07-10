@@ -29,6 +29,7 @@
 #define PSTATUS_BG_SUB_BG     (GFL_BG_FRAME3_S)
 #define PSTATUS_BG_SUB_PLATE  (GFL_BG_FRAME2_S)
 #define PSTATUS_BG_SUB_INFO   (GFL_BG_FRAME1_S)
+#define PSTATUS_BG_SUB_STR    (GFL_BG_FRAME0_S)
 
 //BGパレット
 #define PSTATUS_BG_PLT_MAIN (0x0)
@@ -46,24 +47,29 @@
 #pragma mark[>define OBJ
 #define PSTATUS_OBJPLT_ICON (0x0)
 #define PSTATUS_OBJPLT_RIBBON_BAR (0xA)
+#define PSTATUS_OBJPLT_RIBBON_CUR (0xB)
 
 //OBJリソースIdx
 enum PSTATUS_CEL_RESOURCE
 {
   SCR_PLT_ICON,
+  SCR_PLT_RIBBON_BAR,
+  SCR_PLT_RIBBON_CUR,
   
   SCR_NCG_ICON,
+  SCR_NCG_RIBBON_CUR,
   
   SCR_ANM_ICON,
+  SCR_ANM_RIBBON_CUR,
   
   SCR_MAX ,
   
   SCR_PLT_START = SCR_PLT_ICON,
-  SCR_PLT_END = SCR_PLT_ICON,
+  SCR_PLT_END = SCR_PLT_RIBBON_CUR,
   SCR_NCG_START = SCR_NCG_ICON,
-  SCR_NCG_END = SCR_NCG_ICON,
+  SCR_NCG_END = SCR_NCG_RIBBON_CUR,
   SCR_ANM_START = SCR_ANM_ICON,
-  SCR_ANM_END = SCR_ANM_ICON,
+  SCR_ANM_END = SCR_ANM_RIBBON_CUR,
   
 };
 
@@ -137,6 +143,10 @@ typedef struct
   u8  befDataPos;
   u8  scrollCnt;
   u32 befVCount;
+  int barButtonHit; //バーのボタンが押されているか？
+  u8  ktst;
+  
+  BOOL isActiveBarButton;
     
   PSTATUS_PAGE_TYPE page;
   PSTATUS_PAGE_TYPE befPage;

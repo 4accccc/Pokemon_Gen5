@@ -65,6 +65,9 @@
 
 //フォントカラー
 #define PSTATUS_SUB_STR_COL (PRINTSYS_LSB_Make(1,2,0))
+//名前男女用
+#define PSTATUS_SUB_STR_BLUE (PRINTSYS_LSB_Make(5,6,0))
+#define PSTATUS_SUB_STR_RED (PRINTSYS_LSB_Make(3,4,0))
 
 //======================================================================
 //	enum
@@ -245,7 +248,7 @@ void PSTATUS_SUB_DrawStr( PSTATUS_WORK *work , PSTATUS_SUB_WORK *subWork , const
       srcStr = GFL_MSG_CreateString( work->msgHandle , mes_status_01_02 ); 
       PRINTSYS_PrintQueColor( work->printQue , GFL_BMPWIN_GetBmp( subWork->bmpWinUpper ) , 
               PSTATUS_SUB_STR_SEX_X , PSTATUS_SUB_STR_SEX_Y ,
-              srcStr , work->fontHandle , PSTATUS_SUB_STR_COL );
+              srcStr , work->fontHandle , PSTATUS_SUB_STR_BLUE );
       GFL_STR_DeleteBuffer( srcStr );
     }
     else if( sex == PTL_SEX_FEMALE )
@@ -253,7 +256,7 @@ void PSTATUS_SUB_DrawStr( PSTATUS_WORK *work , PSTATUS_SUB_WORK *subWork , const
       srcStr = GFL_MSG_CreateString( work->msgHandle , mes_status_01_03 ); 
       PRINTSYS_PrintQueColor( work->printQue , GFL_BMPWIN_GetBmp( subWork->bmpWinUpper ) , 
               PSTATUS_SUB_STR_SEX_X , PSTATUS_SUB_STR_SEX_Y ,
-              srcStr , work->fontHandle , PSTATUS_SUB_STR_COL );
+              srcStr , work->fontHandle , PSTATUS_SUB_STR_RED );
       GFL_STR_DeleteBuffer( srcStr );
     }
   }

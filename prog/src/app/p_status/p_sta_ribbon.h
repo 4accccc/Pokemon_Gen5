@@ -21,6 +21,10 @@ extern void PSTATUS_RIBBON_Draw( PSTATUS_WORK *work , PSTATUS_RIBBON_WORK *ribbo
 void PSTATUS_RIBBON_LoadResource( PSTATUS_WORK *work , PSTATUS_RIBBON_WORK *ribbonWork , ARCHANDLE *archandle );
 void PSTATUS_RIBBON_ReleaseResource( PSTATUS_WORK *work , PSTATUS_RIBBON_WORK *ribbonWork );
 
+//ÉZÉãèâä˙âª
+void PSTATUS_RIBBON_InitCell( PSTATUS_WORK *work , PSTATUS_RIBBON_WORK *ribbonWork );
+void PSTATUS_RIBBON_TermCell( PSTATUS_WORK *work , PSTATUS_RIBBON_WORK *ribbonWork );
+
 //ï\é¶îÒï\é¶êÿÇËë÷Ç¶
 void PSTATUS_RIBBON_DispPage( PSTATUS_WORK *work , PSTATUS_RIBBON_WORK *ribbonWork );
 void PSTATUS_RIBBON_ClearPage( PSTATUS_WORK *work , PSTATUS_RIBBON_WORK *ribbonWork );
