@@ -94,7 +94,7 @@ typedef enum {
 
 //--------------------------------------------------------------
 /**
- *  地形
+ *  地形（@@@ まだ暫定的なものです。不明な場合、GRASSを指定してください）
  */
 //--------------------------------------------------------------
 typedef enum {
@@ -110,11 +110,18 @@ typedef enum {
   BTL_LANDFORM_MAX,
 }BtlLandForm;
 
+
+//-----------------------------------------------------------------------------------
+/**
+ *  地形
+ */
+//-----------------------------------------------------------------------------------
 typedef struct {
 
   BtlEngineType   engine;
   BtlCompetitor   competitor;
   BtlRule         rule;
+  BtlLandForm     landForm;
 
   GFL_NETHANDLE*  netHandle;
   BtlCommMode     commMode;
