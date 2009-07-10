@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00179" date="2009-05-13T15:19:39"/>
+	<create user="matsumiya" host="W00207" date="2009-07-10T16:04:40"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -229,13 +229,13 @@
 	</tag-table>
 
 	<columns>
-		<id position="0" width="167"/>
+		<id position="0" width="207"/>
 		<group default=" 0:デフォルト" position="-1" width="100">
 			<list entry="0" japanese="デフォルト" english="Default" colorID="0"/>
 			<list entry="1" japanese="グループ 1" english="グループ 1" colorID="0"/>
 		</group>
 		<number position="-1" width="100"/>
-		<comment position="4" width="100"/>
+		<comment position="4" width="155"/>
 		<erase position="-1" width="100"/>
 		<attribute japanese="キャラ指定" english="キャラ指定" type="string" default="" position="1" width="100">
 		</attribute>
@@ -263,9 +263,9 @@
 		</language>
 	</columns>
 
-	<dialog left="248" top="176" right="953" bottom="796" maximized="no" rayout="Vertical2">
+	<dialog left="26" top="195" right="731" bottom="795" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
-		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
+		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
 		<band id="1" index="2" style="0000" width="165"/>
 		<band id="2" index="3" style="0000" width="543"/>
@@ -293,15 +293,46 @@
 
 
 	<row id="msg_t02r0301_man1_01">
-		<attribute name="キャラ指定">青年１</attribute>
-		<language name="JPN" width="256">かべの　らくがきも
-グラフィティと　いえるまで▼
-げいじゅつせいが　たかまれば
-ひとびとは　よろこぶもの　なんだな</language>
-		<language name="JPN_KANJI" width="256">壁の　落書きも
-グラフィティと　いえるまで▼
-芸術性が　高まれば
-人々は　喜ぶもの　なんだな</language>
+		<comment>♂</comment>
+		<attribute name="キャラ指定">MAN1
+青年１</attribute>
+		<language name="JPN" width="256">でんせつの　ポケモンね……[BE:01:ページ切り替え（クリア）]
+イッシュちほうの　まもりがみ　なんだ
+ぜったい　いるに　きまってるよ</language>
+		<language name="JPN_KANJI" width="256">でんせつの　ポケモンね……[BE:01:ページ切り替え（クリア）]
+イッシュちほうの　まもりがみ　なんだ
+ぜったい　いるに　きまってるよ</language>
+	</row>
+
+	<row id="msg_t02r0301_middlewoman2_01">
+		<comment>♀</comment>
+		<attribute name="キャラ指定">MIDDLEWOMAN2
+太ったおばさん</attribute>
+		<language name="JPN" width="256">でんせつの　ポケモンと　であうべく
+おのれを　きたえる　トレーナーたち……[BE:01:ページ切り替え（クリア）]
+ひとが　つよくなりたい　りゆうなんて
+それこそ　ほしのかずほど　あるわね</language>
+		<language name="JPN_KANJI" width="256">伝説の　ポケモンと　出会うべく
+己を　鍛える　トレーナーたち……[BE:01:ページ切り替え（クリア）]
+人が　強くなりたい　理由なんて
+それこそ　星の数ほど　あるわね</language>
+	</row>
+
+	<row id="msg_t02r0301_babyboy1_01">
+		<comment>♂</comment>
+		<attribute name="キャラ指定">男の子１</attribute>
+		<language name="JPN" width="256">つよい　トレーナーの　もと
+その　ポケモン　すがたを　あらわし[BE:00:ページ切り替え（行送り）]
+せかいを　みちびく　たすけとなる……[BE:01:ページ切り替え（クリア）]
+これが　イッシュちほうの　おはなし[BE:01:ページ切り替え（クリア）]
+どれだけ　つよくなれば
+でんせつの　ポケモンに　あえるのかな？</language>
+		<language name="JPN_KANJI" width="256">強い　トレーナーの　もと
+その　ポケモン　姿を　現し
+世界を　導く　助けとなる……[BE:01:ページ切り替え（クリア）]
+これが　イッシュ地方の　お話[BE:01:ページ切り替え（クリア）]
+どれだけ　強くなれば
+伝説の　ポケモンに　会えるのかな？</language>
 	</row>
 
 	<flowchart-group-list>
