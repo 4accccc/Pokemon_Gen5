@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-07-10T19:16:16"/>
+	<create user="matsumiya" host="W00207" date="2009-07-10T19:18:42"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="541"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="695"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -338,7 +338,7 @@
 しょうぶを　していたのね！[BE:00:ページ切り替え（行送り）]
 すごーい！　よかったじゃない！[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">みんな　ポケモンを　もらって
-しょうぶを　していたのね！[BE:00:ページ切り替え（行送り）]
+勝負を　していたのね！[BE:00:ページ切り替え（行送り）]
 すごーい！　よかったじゃない！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
@@ -349,8 +349,8 @@
 		<attribute name="キャラ指定">主人公ママ</attribute>
 		<language name="JPN" width="256">そうだ！　しょうぶをした　ポケモンを
 やすませて　あげないと！[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">そうだ！　しょうぶをした　ポケモンを
-やすませて　あげないと！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">そうだ！　勝負をした　ポケモンを
+休ませて　あげないと！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_t01r0101_mama_04">
@@ -359,8 +359,8 @@
 		<attribute name="キャラ指定">主人公ママ</attribute>
 		<language name="JPN" width="256">ママ『アララギはかせに
 おれいを　いわないとね</language>
-		<language name="JPN_KANJI" width="256">ママ『アララギはかせに
-おれいを　いわないとね</language>
+		<language name="JPN_KANJI" width="256">ママ『アララギ博士に
+お礼を　いわないとね</language>
 	</row>
 
 	<row id="msg_t01r0101_mama_05">
@@ -371,15 +371,15 @@
 　画面暗転して回復処理</comment>
 		<attribute name="キャラ指定">主人公ママ</attribute>
 		<language name="JPN" width="256">ママ『[1:00:トレーナー名:0]
-ポケモンは　げんき？[BE:01:ページ切り替え（クリア）]
+ポケモンは　げんき　なの？[BE:01:ページ切り替え（クリア）]
 ちょっと　やすんでいきなさいな[BE:01:ページ切り替え（クリア）]
 いい　トレーナーは
 ポケモンに　むりさせないのよ[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">ママ『[1:00:トレーナー名:0]
-ポケモンは　げんき？[BE:01:ページ切り替え（クリア）]
-ちょっと　やすんでいきなさいな[BE:01:ページ切り替え（クリア）]
+ポケモンは　元気なの？[BE:01:ページ切り替え（クリア）]
+ちょっと　休んでいきなさいな[BE:01:ページ切り替え（クリア）]
 いい　トレーナーは
-ポケモンに　むりさせないのよ[BE:01:ページ切り替え（クリア）]</language>
+ポケモンに　無理させないのよ[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_t01r0101_mama_06">
@@ -390,8 +390,8 @@
 ポケモンも　げんきいっぱい！[BE:00:ページ切り替え（行送り）]
 どこへだって　いけるわね！</language>
 		<language name="JPN_KANJI" width="256">ママ『これで　あなたも
-ポケモンも　げんきいっぱい！[BE:00:ページ切り替え（行送り）]
-どこへだって　いけるわね！</language>
+ポケモンも　元気一杯！[BE:00:ページ切り替え（行送り）]
+どこへだって　行けるわね！</language>
 	</row>
 
 	<row id="msg_t01r0101_mama_07">
@@ -400,8 +400,8 @@
 　家を出るまではこのメッセージを繰り返し</comment>
 		<language name="JPN" width="256">ママ『つぎは　どこに　いって
 どんな　ポケモンと　であうのかしら？</language>
-		<language name="JPN_KANJI" width="256">ママ『つぎは　どこに　いって
-どんな　ポケモンと　であうのかしら？</language>
+		<language name="JPN_KANJI" width="256">ママ『次は　どこに　いって
+どんな　ポケモンと　出会うのかしら？</language>
 	</row>
 
 	<row id="msg_t01r0101_test_01" back-color="#808080,,,#808080,,#808080,#808080,,,,,,#808080,,,,,,">
