@@ -38,6 +38,9 @@
 #include "system/mcss.h"
 #include "system/mcss_tool.h"
 
+#include "poke_tool/poke_tool_def.h"
+
+
 #define _TIMING_ENDNO (12)
 #define BOX_MONS_NUM (30)
 #define _BRIGHTNESS_SYNC (2)  // フェードのＳＹＮＣは要調整
@@ -126,6 +129,7 @@ struct _IRC_POKEMON_TRADE {
 	u32 receive_result_param;
 	u32 receive_first_param;
 
+	int nowBoxno;  //いまのボックス
 	u32 x;
 	u32 y;
 	BOOL bUpVec;
@@ -206,6 +210,17 @@ static void PSTATUS_SUB_PokeDeleteMcss( IRC_POKEMON_TRADE *pWork,int no  )
 
 #if 1
 
+static void _getPokeIconPos(int index, GFL_CLACTPOS* pos)
+{
+	static const u8	iconSize = 24;
+	static const u8 iconTop = 72;
+	static const u8 iconLeft = 72;
+	
+	pos->x = (index % 6) * iconSize + iconLeft;
+	pos->y = (index / 6) * iconSize + iconTop;
+}
+
+
 static void _InitBoxIcon( BOX_DATA* boxData , u8 trayNo ,IRC_POKEMON_TRADE* pWork )
 {
 	//パレット・セルファイルを共通で用意し使う
@@ -227,16 +242,16 @@ static void _InitBoxIcon( BOX_DATA* boxData , u8 trayNo ,IRC_POKEMON_TRADE* pWor
 		{
 			GFL_CLWK_DATA cellInitData;
 			u8 pltNum;
-			static const u8	iconSize = 24;
-			static const u8 iconTop = 72;
-			static const u8 iconLeft = 72;
+			GFL_CLACTPOS pos;
 
 			pWork->pokeIconNcgRes[i] =
 				GFL_CLGRP_CGR_Register( arcHandle , POKEICON_GetCgxArcIndex(ppp) , FALSE , CLSYS_DRAW_SUB , pWork->heapID );
 
 			pltNum = POKEICON_GetPalNumGetByPPP( ppp );
-			cellInitData.pos_x = (i%6) * iconSize + iconLeft;
-			cellInitData.pos_y = (i/6) * iconSize + iconTop;
+			_getPokeIconPos(i, &pos);
+			
+			cellInitData.pos_x = pos.x;
+			cellInitData.pos_y = pos.y;
 			cellInitData.anmseq = POKEICON_ANM_HPMAX;
 			cellInitData.softpri = 0;
 			cellInitData.bgpri = 0;
@@ -406,6 +421,7 @@ static void _noneState(IRC_POKEMON_TRADE* pWork)
 static void _touchState(IRC_POKEMON_TRADE* pWork)
 {
 	u32 x,y;
+		GFL_CLACTPOS pos;
 
 
 	if(GFL_UI_TP_GetPointCont(&x,&y)){   //ベクトルを監視
@@ -416,37 +432,64 @@ static void _touchState(IRC_POKEMON_TRADE* pWork)
 		pWork->x = x;
 		pWork->y = y;
 	}
+
+
 	
 
-	if(GFL_UI_TP_GetPointTrg(&x,&y)==TRUE){
-
-		if((x >=  72) && (186 > x)){
-			if((y >=  56) && (160 > y)){
-				x = (x - 72) / 24;
-				y = (y - 56) / 24;
+	if(GFL_UI_TP_GetPointTrg(&x,&y)==TRUE){  //ポケモンをつかむ
+		if(0){
+			pWork->nowBoxno++;  //box切り替え
+		}
+		if(0){
+			pWork->nowBoxno--;
+		}
+		
+		if((x >=  64) && (208 > x)){
+			if((y >=  64) && (184 > y)){
+				x = (x - 64) / 24;
+				y = (y - 64) / 24;
 				pWork->catchIndex = x + y * 6;
-
-				
 			}
 		}
 	}
 	if(GFL_UI_TP_GetCont()==FALSE){
-		if((pWork->catchIndex!=-1) && pWork->bUpVec){
-
+		
+		if((pWork->catchIndex != -1) && !pWork->bUpVec){
+			if(pWork->nowBoxno == pWork->selectBoxno){   //つかんでた物を元に戻す
+				GFL_CLACT_WK_SetDrawEnable( pWork->pokeIcon[pWork->catchIndex],TRUE);
+				_getPokeIconPos(pWork->catchIndex, &pos);
+				GFL_CLACT_WK_SetPos( pWork->pokeIcon[pWork->catchIndex], &pos, CLSYS_DRAW_SUB);
+			}
+		}
+		if((pWork->catchIndex != -1) && pWork->bUpVec){
+			if(pWork->selectIndex != -1){
+				if(pWork->nowBoxno == pWork->selectBoxno){   //消えてたアイコン復活
+					GFL_CLACT_WK_SetDrawEnable( pWork->pokeIcon[pWork->selectIndex],TRUE);
+					_getPokeIconPos(pWork->selectIndex, &pos);
+					GFL_CLACT_WK_SetPos( pWork->pokeIcon[pWork->selectIndex], &pos, CLSYS_DRAW_SUB);
+				}
+			}
+			
 			pWork->selectIndex = pWork->catchIndex;
-			pWork->selectBoxno = 0;
-			{
-				POKEMON_PASO_PARAM* ppp = BOXDAT_GetPokeDataAddress(pWork->pBox,0,0);
+			pWork->selectBoxno = pWork->nowBoxno;
+			GFL_CLACT_WK_SetDrawEnable( pWork->pokeIcon[pWork->catchIndex],FALSE);  //選択した物を消す
+			
+			{ //選択ポケモン表示
+				POKEMON_PASO_PARAM* ppp = BOXDAT_GetPokeDataAddress(pWork->pBox, pWork->selectBoxno, pWork->selectIndex);
 				PSTATUS_SUB_PokeDeleteMcss(pWork,0);
 				PSTATUS_SUB_PokeCreateMcss(pWork,0,ppp);
+
+				//@@OO POKEMON_PASO_PARAMサイズ取得関数依頼中
+				//@@OO 戻り値を見ないとばぐる
+				GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(),_NETCMD_SELECT_POKEMON, sizeof( POKEMON_PASO_PARAM ),ppp);
+
 			}
+
 		}
 		pWork->catchIndex = -1;
 	}
 
-
 	if(pWork->catchIndex != -1){
-		GFL_CLACTPOS pos;
 		if(GFL_UI_TP_GetPointCont(&x,&y)){
 			pos.x = x;
 			pos.y = y;
@@ -592,7 +635,7 @@ static void _createBg(IRC_POKEMON_TRADE* pWork)
 			GX_VRAM_OBJEXTPLTT_NONE,			// メイン2DエンジンのOBJ拡張パレット
 			GX_VRAM_SUB_OBJ_128_D,			// サブ2DエンジンのOBJ
 			GX_VRAM_SUB_OBJEXTPLTT_NONE,	// サブ2DエンジンのOBJ拡張パレット
-			GX_VRAM_TEX_0_C,				// テクスチャイメージスロット
+			GX_VRAM_TEX_0_B,				// テクスチャイメージスロット
 			GX_VRAM_TEXPLTT_0_F,			// テクスチャパレットスロット
 			GX_OBJVRAMMODE_CHAR_1D_128K,	// メインOBJマッピングモード
 			GX_OBJVRAMMODE_CHAR_1D_128K,		// サブOBJマッピングモード
@@ -814,6 +857,12 @@ static GFL_PROC_RESULT IrcBattleFriendProcInit( GFL_PROC * proc, int * seq, void
 
 		pWork->pBox = SaveData_GetBoxData(GAMEDATA_GetSaveControlWork(GAMESYSTEM_GetGameData(pWork->pGameSys)));
 
+		pWork->catchIndex = -1;
+		pWork->selectIndex = -1;
+
+		
+		pWork->recvPoke[0] = GFL_HEAP_AllocClearMemory(pWork->heapID, sizeof(POKEMON_PASO_PARAM));
+		pWork->recvPoke[1] = GFL_HEAP_AllocClearMemory(pWork->heapID, sizeof(POKEMON_PASO_PARAM));
 
 		
 	}
