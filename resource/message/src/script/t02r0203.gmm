@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00179" date="2009-05-14T14:12:19"/>
+	<create user="matsumiya" host="W00207" date="2009-07-10T16:13:15"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,9 +263,9 @@
 		</language>
 	</columns>
 
-	<dialog left="248" top="176" right="950" bottom="796" maximized="no" rayout="Vertical2">
+	<dialog left="1" top="184" right="703" bottom="804" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
-		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
+		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="527"/>
 		<band id="1" index="2" style="0000" width="165"/>
 		<band id="2" index="3" style="0000" width="540"/>
@@ -296,24 +296,24 @@
 		<comment>♂</comment>
 		<attribute name="キャラ指定">青年１</attribute>
 		<language name="JPN" width="256">しろ　くろ　つける　というけれど
-それいがいの　こたえを　さがす……▽
+それいがいの　こたえを　さがす……[BE:00:ページ切り替え（行送り）]
 そんな　やりかたも　あるんじゃないの</language>
 		<language name="JPN_KANJI" width="256">白黒つける　というけれど
-それいがいの　答えを　探す……▽
+それいがいの　答えを　探す……[BE:00:ページ切り替え（行送り）]
 そんな　やりかたも　あるんじゃないの</language>
 	</row>
 
 	<row id="msg_t02r0203_woman1_01">
 		<comment>♀</comment>
 		<attribute name="キャラ指定">女性１</attribute>
-		<language name="JPN" width="256">つよい　ポケモンが　すき……▼
-それも　ひとつの　かんがえかた　だけど
-よわい　ポケモンを　きらいになる▽
-りゆうには　なっていないもんね</language>
-		<language name="JPN_KANJI" width="256">強い　ポケモンが　好き……▼
-それも　ひとつの　考え方　だけど
-弱い　ポケモンを　嫌いになる▽
-理由には　なっていないもんね</language>
+		<language name="JPN" width="256">つよい　ポケモンが　すき……[BE:01:ページ切り替え（クリア）]
+よわい　ポケモンが　すき　という
+きもちも　どうじに　そんざいする[BE:00:ページ切り替え（行送り）]
+ひとって　ふしぎ　よね</language>
+		<language name="JPN_KANJI" width="256">強い　ポケモンが　好き……[BE:01:ページ切り替え（クリア）]
+弱い　ポケモンが　好きという
+気持ちも　同時に　存在する[BE:00:ページ切り替え（行送り）]
+人って　矛盾しているのよね</language>
 	</row>
 
 	<flowchart-group-list>
