@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00179" date="2009-05-20T15:26:18"/>
+	<create user="matsumiya" host="W00207" date="2009-07-10T15:42:51"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,15 +263,15 @@
 		</language>
 	</columns>
 
-	<dialog left="248" top="176" right="953" bottom="796" maximized="no" rayout="Vertical2">
+	<dialog left="5" top="244" right="710" bottom="864" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
-		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
+		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
 		<band id="1" index="2" style="0000" width="165"/>
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -292,34 +292,45 @@
 	</lock>
 
 
+	<row id="msg_t02r0101_middlewoman1_01">
+		<attribute name="キャラ指定">おばさん１</attribute>
+		<language name="JPN" width="256">ポケモンを　たたかわせて　つよくそだてる
+それが　ポケモントレーナーなの！▼
+だけど　むりしちゃ　だめよ▼
+よわい　ポケモンは
+ポケモンセンターで　こまめに▽
+たいりょくを　かいふく　させてね</language>
+		<language name="JPN_KANJI" width="256">ポケモンを　闘わせて　強く育てる
+それが　ポケモントレーナーなの！▼
+だけど　無理しちゃ　だめよ▼
+弱い　ポケモンは
+ポケモンセンターで　こまめに▽
+体力を　回復　させてね</language>
+	</row>
+
 	<row id="msg_t02r0101_woman1_01">
-		<comment>♀</comment>
 		<attribute name="キャラ指定">女性１</attribute>
-		<language name="JPN" width="256">アララギはかせに　たのまれて
-Ｃギアを　つくってみたの[BE:01:ページ切り替え（クリア）]
-つうしんに　かんする　じょうほうが
-ひとめで　わかるから　べんりでしょ</language>
-		<language name="JPN_KANJI" width="256">アララギ博士に　頼まれて
-Ｃギアを　つくってみたの[BE:01:ページ切り替え（クリア）]
+		<language name="JPN" width="256">[FF:00:色:2]Ｃギア[FF:00:色:0]って　ごぞんじ？[BE:01:ページ切り替え（クリア）]
+つうしんに　ついての　じょうほうが
+まとまった　べんりな　どうぐ[BE:01:ページ切り替え（クリア）]
+となりの　ヤグルマシティにいる
+はつめいかが　つくったのよ</language>
+		<language name="JPN_KANJI" width="256">[FF:00:色:2]Ｃギア[FF:00:色:0]って　ご存知？[BE:01:ページ切り替え（クリア）]
 通信に　関する　情報が
-ひとめで　わかるから　便利でしょ</language>
+まとまった　便利な　道具[BE:01:ページ切り替え（クリア）]
+隣の　ヤグルマシティにいる
+発明家が　作ったのよ</language>
 	</row>
 
 	<row id="msg_t02r0101_babyboy1_01">
 		<comment>♂</comment>
 		<attribute name="キャラ指定">男の子１</attribute>
-		<language name="JPN" width="256">つよい　トレーナーの　もと
-その　ポケモン　すがたを　あらわし[BE:00:ページ切り替え（行送り）]
-せかいを　みちびく　たすけとなる……[BE:01:ページ切り替え（クリア）]
-これが　イッシュちほうの　おはなし[BE:01:ページ切り替え（クリア）]
-どれだけ　つよくなれば
-でんせつの　ポケモンに　あえるのかな？</language>
-		<language name="JPN_KANJI" width="256">強い　トレーナーの　もと
-その　ポケモン　姿を　現し
-世界を　導く　助けとなる……[BE:01:ページ切り替え（クリア）]
-これが　イッシュ地方の　お話[BE:01:ページ切り替え（クリア）]
-どれだけ　強くなれば
-伝説の　ポケモンに　会えるのかな？</language>
+		<language name="JPN" width="256">あっ！　ポケモンだ！
+いいなぁ　うらやましいなぁ[BE:00:ページ切り替え（行送り）]
+ぼくも　トレーナーに　なりたい！</language>
+		<language name="JPN_KANJI" width="256">あっ！　ポケモンだ！
+いいなぁ　うらやましいなぁ[BE:00:ページ切り替え（行送り）]
+ぼくも　トレーナーに　なりたい！</language>
 	</row>
 
 	<flowchart-group-list>
