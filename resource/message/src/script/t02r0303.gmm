@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00179" date="2009-05-13T15:17:28"/>
+	<create user="matsumiya" host="W00207" date="2009-07-10T16:26:48"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -235,7 +235,7 @@
 			<list entry="1" japanese="グループ 1" english="グループ 1" colorID="0"/>
 		</group>
 		<number position="-1" width="100"/>
-		<comment position="4" width="100"/>
+		<comment position="4" width="218"/>
 		<erase position="-1" width="100"/>
 		<attribute japanese="キャラ指定" english="キャラ指定" type="string" default="" position="1" width="100">
 		</attribute>
@@ -263,15 +263,15 @@
 		</language>
 	</columns>
 
-	<dialog left="248" top="176" right="953" bottom="796" maximized="no" rayout="Vertical2">
+	<dialog left="53" top="203" right="756" bottom="821" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
-		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
-		<band id="0" index="1" style="0000" width="530"/>
+		<tag-palette left="835" top="125" right="1308" bottom="523" visible="yes"/>
+		<band id="0" index="1" style="0000" width="528"/>
 		<band id="1" index="2" style="0000" width="165"/>
-		<band id="2" index="3" style="0000" width="543"/>
+		<band id="2" index="3" style="0000" width="541"/>
 		<band id="3" index="4" style="0000" width="152"/>
-		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<band id="4" index="0" style="0000" width="695"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -293,16 +293,43 @@
 
 
 	<row id="msg_t02r0303_middleman1_01">
-		<comment>♂</comment>
+		<comment>♂
+・アイテム入手処理
+・No003「スーパーボール」</comment>
 		<attribute name="キャラ指定">おじさん１</attribute>
-		<language name="JPN" width="256">こんなところまで　きたんだ
-なにか　おみやげを　あげよう！▼
-とおもったけれど　なんにもないな
-また　こんどまでに　よういしておくよ</language>
-		<language name="JPN_KANJI" width="256">こんなところまで　来たんだ
-なにか　お土産を　あげよう！▼
-と思ったけれど　なんにもないな
-また　今度までに　用意しておくよ</language>
+		<language name="JPN" width="256">おっ　わかき　トレーナーよ[BE:01:ページ切り替え（クリア）]
+これは　むかし　つかっていた
+モンスターボールの　あまりだが[BE:00:ページ切り替え（行送り）]
+きみに　あげようではないか[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">おっ　若き　トレーナーよ[BE:01:ページ切り替え（クリア）]
+これは　昔　使っていた
+モンスターボールの　余りだが[BE:00:ページ切り替え（行送り）]
+君に　進呈しようではないか[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_t02r0303_middleman1_02">
+		<comment>♂
+・アイテム入手後</comment>
+		<attribute name="キャラ指定">おじさん１</attribute>
+		<language name="JPN" width="256">きみの　これからの　じんせいで
+いちばんの　パートナーとなれる[BE:00:ページ切り替え（行送り）]
+ポケモンに　であえることを[BE:00:ページ切り替え（行送り）]
+かってに　ねがわせてもらうよ[BE:01:ページ切り替え（クリア）]
+……じつは　もう　であっているかもな</language>
+		<language name="JPN_KANJI" width="256">君の　これからの　人生で
+一番の　パートナーとなれる[BE:00:ページ切り替え（行送り）]
+ポケモンに　出会えることを[BE:00:ページ切り替え（行送り）]
+おじさん　勝手に　願わせてもらうよ[BE:01:ページ切り替え（クリア）]
+……実は　もう　出会っているかもな</language>
+	</row>
+
+	<row id="msg_t02r0303_poke_01">
+		<comment>ポケモン
+・暫定
+・あわせて鳴き声SE</comment>
+		<attribute name="キャラ指定">ポケモン</attribute>
+		<language name="JPN" width="256">ポケモン『？？？</language>
+		<language name="JPN_KANJI" width="256">ポケモン『？？？</language>
 	</row>
 
 	<flowchart-group-list>
