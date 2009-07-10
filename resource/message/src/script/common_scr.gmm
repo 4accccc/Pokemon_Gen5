@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-07-10T17:50:32"/>
+	<create user="matsumiya" host="W00207" date="2009-07-10T21:27:16"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -309,13 +309,13 @@
 
 	<dialog left="93" top="197" right="798" bottom="817" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
-		<tag-palette left="878" top="134" right="1351" bottom="532" visible="yes"/>
+		<tag-palette left="807" top="134" right="1280" bottom="532" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
 		<band id="1" index="2" style="0000" width="165"/>
 		<band id="2" index="3" style="0000" width="217"/>
 		<band id="3" index="4" style="0000" width="478"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -349,14 +349,20 @@
 たいりょく　かいふくを　します[BE:01:ページ切り替え（クリア）]
 あなたの　ポケモンを
 やすませて　あげますか？</language>
-		<language name="JPN_KANJI" width="256"></language>
+		<language name="JPN_KANJI" width="256">おつかれさまです！
+ポケモン　センター　です[BE:01:ページ切り替え（クリア）][BE:01:ページ切り替え（クリア）]
+ここでは　ポケモンの
+体力回復を　します[BE:01:ページ切り替え（クリア）]
+あなたの　ポケモンを
+休ませてあげますか？</language>
 	</row>
 
 	<row id="msg_common_pc_heal_02">
 		<attribute name="キャラ指定">ポケセン受付１</attribute>
 		<language name="JPN" width="256">それでは
 おあずかり　いたします！</language>
-		<language name="JPN_KANJI" width="256"></language>
+		<language name="JPN_KANJI" width="256">それでは
+お預かりいたします！</language>
 	</row>
 
 	<row id="msg_common_pc_heal_03">
@@ -364,14 +370,17 @@
 		<language name="JPN" width="256">おまちどおさま！[BE:01:ページ切り替え（クリア）]
 おあずかり　した　ポケモンは
 みんな　げんきに　なりましたよ！[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256"></language>
+		<language name="JPN_KANJI" width="256">おまちどおさま！[BE:01:ページ切り替え（クリア）]
+お預かりした　ポケモンは
+みんな　元気に　なりましたよ！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_common_pc_heal_04">
 		<attribute name="キャラ指定">ポケセン受付１</attribute>
 		<language name="JPN" width="256">またの
 ごりようを　おまち　してます！</language>
-		<language name="JPN_KANJI" width="256"></language>
+		<language name="JPN_KANJI" width="256">またの
+ご利用を　お待ちしてます！</language>
 	</row>
 
 	<row id="msg_common_pc_heal_05">
@@ -381,7 +390,11 @@
 ここでは　ポケモンの
 たいりょく　かいふくを　します[BE:01:ページ切り替え（クリア）]
 あなたの　ポケモンを……[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256"></language>
+		<language name="JPN_KANJI" width="256">おつかれさまです！
+ポケモン　センター　です[BE:01:ページ切り替え（クリア）]
+ここでは　ポケモンの
+体力回復を　します[BE:01:ページ切り替え（クリア）]
+あなたの　ポケモンを……[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_common_pc_heal_06">
@@ -397,32 +410,43 @@
 [1:00:トレーナー名:0]さんが　はじめて　です！[BE:01:ページ切り替え（クリア）]
 さあ　[1:00:トレーナー名:0]さんの
 ポケモンを　やすませて　あげましょう！</language>
-		<language name="JPN_KANJI" width="256"></language>
+		<language name="JPN_KANJI" width="256">そ　その　カードは！？[BE:01:ページ切り替え（クリア）]
+その色！！
+星の数！！[BE:01:ページ切り替え（クリア）]
+わたしも　これまでに
+シルバーカードの　トレーナーさんなら[BE:00:ページ切り替え（行送り）]
+なんにんか　みてきましたが[BE:01:ページ切り替え（クリア）]
+それより　すごい
+トレーナーカードを　お持ちの　方は[BE:00:ページ切り替え（行送り）]
+[1:00:トレーナー名:0]さんが　初めてです！[BE:01:ページ切り替え（クリア）]
+さあ　[1:00:トレーナー名:0]さんの
+ポケモンを　休ませてあげましょう！</language>
 	</row>
 
 	<row id="msg_common_pc_heal_07">
 		<attribute name="キャラ指定">ポケセン受付１</attribute>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]さん　おつかれさまです！
 いつもので　よろしい　ですね！</language>
-		<language name="JPN_KANJI" width="256"></language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]さん　おつかれさまです！
+いつもので　よろしい　ですね！</language>
 	</row>
 
 	<row id="msg_common_pc_heal_08">
 		<attribute name="キャラ指定">ポケセン受付１</attribute>
 		<language name="JPN" width="256">では　おあずかりさせて　いただきます！</language>
-		<language name="JPN_KANJI" width="256"></language>
+		<language name="JPN_KANJI" width="256">では　お預かりさせて　いただきます！</language>
 	</row>
 
 	<row id="msg_common_pc_heal_09">
 		<attribute name="キャラ指定">ポケセン受付１</attribute>
 		<language name="JPN" width="256">たいへん　おまたせ　いたしました！</language>
-		<language name="JPN_KANJI" width="256"></language>
+		<language name="JPN_KANJI" width="256">たいへん　お待たせいたしました！</language>
 	</row>
 
 	<row id="msg_common_pc_heal_10">
 		<attribute name="キャラ指定">ポケセン受付１</attribute>
 		<language name="JPN" width="256">また　いつでも　おこしください！</language>
-		<language name="JPN_KANJI" width="256"></language>
+		<language name="JPN_KANJI" width="256">また　いつでも　お越しください！</language>
 	</row>
 
 	<row id="msg_common_heal_pokerus_01">
@@ -437,7 +461,14 @@
 ちいさな　せいめいたい　だそうです[BE:01:ページ切り替え（クリア）]
 これが　ついている　あいだ
 ポケモンが　よく　そだつ　みたいです</language>
-		<language name="JPN_KANJI" width="256"></language>
+		<language name="JPN_KANJI" width="256">おあずかりした　ポケモンに
+ポケルスが　ついて　いるようです[BE:01:ページ切り替え（クリア）]
+くわしいことは　わかって　いませんが
+ポケルスと　いうのは[BE:00:ページ切り替え（行送り）]
+ポケモンに　くっつく[BE:00:ページ切り替え（行送り）]
+ちいさな　せいめいたい　だそうです[BE:01:ページ切り替え（クリア）]
+これが　ついている　あいだ
+ポケモンが　よく　そだつ　みたいです</language>
 	</row>
 
 	<flowchart-group-list>
