@@ -113,4 +113,7 @@ extern void FLDMAPPER_GetDrawOffset( const FLDMAPPER *g3Dmapper, VecFx32 *offs )
 extern const GFL_G3D_MAP_GLOBALOBJ_ST * FLDMAPPER_CreateObjStatusList
 ( const FLDMAPPER* g3Dmapper, const FLDHIT_RECT * rect, HEAPID heapID, u32 * num );
 
+//--------------------------------------------------------------
+//--------------------------------------------------------------
+extern BOOL DEBUG_Field_Grayscale(GFL_G3D_RES *g3Dres);
 

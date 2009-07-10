@@ -129,6 +129,7 @@ static void grass_InitResource( FLDEFF_GRASS *grass )
   
   grass->g3d_res_mdl	=
     GFL_G3D_CreateResourceHandle( handle, NARC_fldeff_kusaeff_nsbmd );
+  DEBUG_Field_Grayscale(grass->g3d_res_mdl);
   ret = GFL_G3D_TransVramTexture( grass->g3d_res_mdl );
   
   GF_ASSERT( ret );

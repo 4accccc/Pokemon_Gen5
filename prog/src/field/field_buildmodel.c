@@ -1099,6 +1099,7 @@ static void createGlobalResource( GLOBAL_RESOURCE * objRes, const MAKE_OBJ_PARAM
 		objRes->g3DresTex = NULL;
 		resTex = objRes->g3DresMdl;
 	}
+	DEBUG_Field_Grayscale(resTex);
 	GFL_G3D_TransVramTexture( resTex );
 	for( i=0; i<GLOBAL_OBJ_ANMCOUNT; i++ ){
 		if( param->anm[i].arcID != MAKE_RES_NONPARAM ){

@@ -535,6 +535,41 @@ void FLDMAPPER_ReleaseData( FLDMAPPER* g3Dmapper )
 	DeleteGlobalTexture( g3Dmapper );
 }
 
+#include "system/palanm.h"
+#include "gamesystem/gamesystem.h"
+#include "gamesystem/game_comm.h"
+//--------------------------------------------------------------
+/**
+ * デバッグ：侵入フィールド白黒化テスト
+ *
+ * @param   g3Dres		
+ *
+ * @retval  BOOL		
+ */
+//--------------------------------------------------------------
+BOOL DEBUG_Field_Grayscale(GFL_G3D_RES *g3Dres)
+{
+	NNSG3dResFileHeader*	header;
+	NNSG3dResTex*			texture;
+  u32 sz;
+  void* pData;
+  
+  if(GameCommSys_BootCheck( GAMESYSTEM_GetGameCommSysPtr( DEBUG_GameSysWorkPtrGet() ) ) != GAME_COMM_NO_INVASION){
+    return FALSE;
+  }
+  
+	header = GFL_G3D_GetResourceFileHeader(g3Dres);
+	texture = NNS_G3dGetTex( header ); 
+
+	if( texture ){
+    sz = (u32)texture->plttInfo.sizePltt << 3;
+    pData = (u8*)texture + texture->plttInfo.ofsPlttData;
+    PaletteGrayScale(pData, sz / sizeof(u16));
+		return TRUE;
+	}
+	return FALSE;
+}
+
 //------------------------------------------------------------------
 /**
  * @brief	グローバルテクスチャ作成
@@ -547,6 +582,7 @@ static void CreateGlobalTexture( FLDMAPPER* g3Dmapper, const FLDMAPPER_RESISTDAT
 		{
 			const FLDMAPPER_RESIST_TEX* gtexData = &resistData->gtexData;
 			g3Dmapper->globalTexture = GFL_G3D_CreateResourceArc( gtexData->arcID, gtexData->datID );
+			DEBUG_Field_Grayscale(g3Dmapper->globalTexture);
 			GFL_G3D_TransVramTexture( g3Dmapper->globalTexture );
 		}
 		break;
