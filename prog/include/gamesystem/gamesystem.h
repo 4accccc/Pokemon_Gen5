@@ -175,6 +175,10 @@ extern GAME_COMM_SYS_PTR GAMESYSTEM_GetGameCommSysPtr(GAMESYS_WORK *gsys);
 //--------------------------------------------------------------
 extern BOOL GAMESYSTEM_GetAlwaysNetFlag(GAMESYS_WORK * gsys);
 
+#ifdef PM_DEBUG
+extern GAMESYS_WORK * DEBUG_GameSysWorkPtrGet(void);
+#endif
+
 #ifdef	__cplusplus
 } /* extern "C" */
 #endif

@@ -505,4 +505,16 @@ static void DEBUG_MYITEM_MakeBag(MYITEM_PTR myitem, int heapID)
 	}
 }
 
+//==================================================================
+/**
+ * デバッグ：ゲーム制御システム用ワーク取得
+ *
+ * @retval  GAMESYS_WORK *		
+ */
+//==================================================================
+GAMESYS_WORK * DEBUG_GameSysWorkPtrGet(void)
+{
+  return GameSysWork;
+}
+
 #endif //PM_DEBUG
