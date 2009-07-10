@@ -174,4 +174,5 @@
 	ARCID_SCENEAREA_DATA		"fieldmap/field_scenearea_data.narc"   #シーンエリアデータ
 	ARCID_ZONEFOG_TABLE		"fieldmap/field_fog_table.narc"   #フォグデータ
 	ARCID_ZONELIGHT_TABLE		"fieldmap/field_zone_light.narc"   #ライト情報
+	ARCID_APP_MENU_COMMON		"app_menu_common.narc"   #共通素材ARC
 

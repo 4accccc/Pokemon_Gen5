@@ -70,7 +70,8 @@ SUBDIRS	=	wmi \
 			wifi_earth \
 			ballslow \
 			bucket \
-			p_status
+			p_status \
+			app_menu_common
 
 
 include $(RESOURCE_MACRO)
