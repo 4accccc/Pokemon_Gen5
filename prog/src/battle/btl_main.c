@@ -11,7 +11,6 @@
 
 #include "system/main.h"
 #include "battle/battle.h"
-#include "btlv/btlv_mcss.h"
 
 #include "btl_common.h"
 #include "btl_server.h"
@@ -23,6 +22,7 @@
 #include "btl_util.h"
 
 #include "btlv/btlv_core.h"
+#include "btlv/btlv_mcss.h"
 
 #include "btl_main.h"
 
@@ -935,6 +935,19 @@ BtlEscapeMode BTL_MAIN_GetEscapeMode( const BTL_MAIN_MODULE * wk )
   // @@@ いまのところ常に許可する
   return BTL_ESCAPE_MODE_OK;
 }
+//=============================================================================================
+/**
+ * 地形タイプを返す
+ *
+ * @param   wk
+ *
+ * @retval  BtlLandForm
+ */
+//=============================================================================================
+BtlLandForm BTL_MAIN_GetLandForm( const BTL_MAIN_MODULE* wk )
+{
+  return wk->setupParam->landForm;
+}
 
 //=============================================================================================
 /**
@@ -1057,7 +1070,6 @@ BtlSide BTL_MAIN_GetClientSide( const BTL_MAIN_MODULE* wk, u8 clientID )
 {
   return clientID_to_side( clientID );
 }
-
 
 //=============================================================================================
 /**
@@ -1445,12 +1457,10 @@ static void PokeCon_Init( BTL_POKE_CONTAINER* pokecon, BTL_MAIN_MODULE* mainModu
 
   pokecon->mainModule = mainModule;
 
-  for(i=0; i<NELEMS(pokecon->party); ++i)
-  {
+  for(i=0; i<NELEMS(pokecon->party); ++i){
     BTL_PARTY_Initialize( &pokecon->party[i] );
   }
-  for(i=0; i<NELEMS(pokecon->pokeParam); ++i)
-  {
+  for(i=0; i<NELEMS(pokecon->pokeParam); ++i){
     pokecon->pokeParam[i] = NULL;
   }
 }
@@ -1601,10 +1611,14 @@ const BTL_POKEPARAM* BTL_POKECON_GetPokeParamConst( const BTL_POKE_CONTAINER* wk
 //------------------------------------------------------------------------------
 BTL_PARTY* BTL_POKECON_GetPartyData( BTL_POKE_CONTAINER* wk, u32 clientID )
 {
+  GF_ASSERT(clientID < BTL_CLIENT_MAX);
+  GF_ASSERT(wk->party[clientID].memberCount!=0);
   return &wk->party[ clientID ];
 }
 const BTL_PARTY* BTL_POKECON_GetPartyDataConst( const BTL_POKE_CONTAINER* wk, u32 clientID )
 {
+  GF_ASSERT(clientID < BTL_CLIENT_MAX);
+  GF_ASSERT(wk->party[clientID].memberCount!=0);
   return &wk->party[ clientID ];
 }
 

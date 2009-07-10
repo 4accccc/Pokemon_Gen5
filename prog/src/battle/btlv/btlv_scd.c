@@ -56,6 +56,9 @@ enum {
   POKEWIN_6_X = 256-POKEWIN_WIDTH,
   POKEWIN_6_Y = POKEWIN_5_Y,
 
+  POKEWIN_BACK_X = POKEWIN_6_X,
+  POKEWIN_BACK_Y = POKEWIN_6_Y + POKEWIN_HEIGHT + 8,
+
   SUBPROC_STACK_DEPTH = 4,
 };
 
@@ -907,6 +910,8 @@ static BOOL selectPokemon_init( int* seq, void* wk_adrs )
     { POKEWIN_4_X, POKEWIN_4_Y },
     { POKEWIN_5_X, POKEWIN_5_Y },
     { POKEWIN_6_X, POKEWIN_6_Y },
+
+    { POKEWIN_BACK_X, POKEWIN_BACK_Y },
   };
 
   BTLV_SCD* wk = wk_adrs;
@@ -932,8 +937,15 @@ static BOOL selectPokemon_init( int* seq, void* wk_adrs )
         BTL_STR_MakeStatusWinStr( wk->strbuf, bpp, hp );
         GFL_BMP_Fill( wk->bmp, winpos[i].x, winpos[i].y, POKEWIN_WIDTH, POKEWIN_HEIGHT, col );
         PRINT_UTIL_Print( &wk->printUtil, wk->printQue, winpos[i].x+2, winpos[i].y+2, wk->strbuf, wk->font );
-        GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_OBJ, VISIBLE_OFF );
       }
+
+      // [‚à‚Ç‚é]ƒ{ƒ^ƒ“•`‰æ
+      i = NELEMS(winpos) - 1;
+      BTL_STR_GetUIString( wk->strbuf, BTLMSG_UI_SEL_BACK );
+      GFL_BMP_Fill( wk->bmp, winpos[i].x, winpos[i].y, POKEWIN_WIDTH, POKEWIN_HEIGHT, 0x0a );
+      PRINT_UTIL_Print( &wk->printUtil, wk->printQue, winpos[i].x+2, winpos[i].y+2, wk->strbuf, wk->font );
+
+      GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_OBJ, VISIBLE_OFF );
       (*seq)++;
     }
     break;
@@ -978,6 +990,9 @@ static BOOL selectPokemon_loop( int* seq, void* wk_adrs )
     POKEWIN_6_BTM = POKEWIN_6_Y+POKEWIN_HEIGHT - 1,
     POKEWIN_6_RGT = POKEWIN_6_X+POKEWIN_WIDTH - 1,
 
+    POKEWIN_BACK_BTM = POKEWIN_BACK_Y + POKEWIN_HEIGHT-1,
+    POKEWIN_BACK_RGT = POKEWIN_BACK_X + POKEWIN_WIDTH-1,
+
     WARNWIN_WIDTH = 256-(8*2),
     WARNWIN_HEIGHT = 32,
     WARNWIN_X = 8,
@@ -991,6 +1006,7 @@ static BOOL selectPokemon_loop( int* seq, void* wk_adrs )
     { POKEWIN_4_Y, POKEWIN_4_BTM, POKEWIN_4_X, POKEWIN_4_RGT },
     { POKEWIN_5_Y, POKEWIN_5_BTM, POKEWIN_5_X, POKEWIN_5_RGT },
     { POKEWIN_6_Y, POKEWIN_6_BTM, POKEWIN_6_X, POKEWIN_6_RGT },
+    { POKEWIN_BACK_Y, POKEWIN_BACK_BTM, POKEWIN_BACK_X, POKEWIN_BACK_RGT },
     { GFL_UI_TP_HIT_END, 0, 0, 0 },
   };
 
@@ -1013,6 +1029,15 @@ static BOOL selectPokemon_loop( int* seq, void* wk_adrs )
       {
         const BTL_PARTY* party = param->party;
 
+        if( hitpos == (NELEMS(hitTbl)-2) ){
+          BTL_POKESELECT_RESULT_Init( res, param );
+          wk->pokesel_param = NULL;
+          wk->pokesel_result = NULL;
+          GFL_BMP_Clear( wk->bmp, 0x00 );
+          GFL_BMPWIN_TransVramCharacter( wk->win );
+          GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_OBJ, VISIBLE_ON );
+          return TRUE;
+        }
         if( hitpos < BTL_PARTY_GetMemberCount(party) )
         {
           const BTL_POKEPARAM* bpp;

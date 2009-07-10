@@ -3344,9 +3344,9 @@ static BOOL scEvent_UnCategoryWaza( BTL_SVFLOW_WORK* wk, WazaID waza, const BTL_
       }
       BTL_EVENTVAR_SetValue( BTL_EVAR_WAZAID, waza );
       if( cnt ){
-        BTL_EVENT_CallHandlers( wk, BTL_EVENT_UNCATEGORY_WAZA );
+        BTL_EVENT_CallHandlers( wk, BTL_EVENT_UNCATEGORIZE_WAZA );
       }else{
-        BTL_EVENT_CallHandlers( wk, BTL_EVENT_UNCATEGORY_WAZA_NO_TARGET );
+        BTL_EVENT_CallHandlers( wk, BTL_EVENT_UNCATEGORIZE_WAZA_NO_TARGET );
       }
     }
   BTL_EVENTVAR_Pop();
@@ -6707,7 +6707,39 @@ u32 BTL_SVFLOW_SimulationDamage( BTL_SVFLOW_WORK* wk, u8 atkPokeID, u8 defPokeID
 
   return scEvent_CalcDamage( wk, attacker, defender, waza, aff, BTL_CALC_DMG_TARGET_RATIO_NONE, critical_flag );
 }
+//=============================================================================================
+/**
+ * 戦闘地形タイプを取得
+ *
+ * @param   wk
+ *
+ * @retval  BtlLandForm
+ */
+//=============================================================================================
+BtlLandForm BTL_SVFLOW_GetLandForm( BTL_SVFLOW_WORK* wk )
+{
+  return BTL_MAIN_GetLandForm( wk->mainModule );
+}
+//=============================================================================================
+/**
+ * 指定ポケモンを含むパーティデータを取得
+ *
+ * @param   wk
+ * @param   pokeID
+ *
+ * @retval  const BTL_PARTY*
+ */
+//=============================================================================================
+const BTL_PARTY* BTL_SVFLOW_GetPartyData( BTL_SVFLOW_WORK* wk, u8 pokeID )
+{
+  u8 clientID = BTL_MAIN_PokeIDtoClientID( wk->mainModule, pokeID );
+  return BTL_POKECON_GetPartyDataConst( wk->pokeCon, clientID );
+}
 
+
+//--------------------------------------------------------------------------------------------------------
+// HandEx
+//--------------------------------------------------------------------------------------------------------
 
 static void Hem_Init( HANDLER_EXHIBISION_MANAGER* wk )
 {

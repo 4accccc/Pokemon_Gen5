@@ -492,10 +492,16 @@ static BOOL SubProc_UI_SelectAction( BTL_CLIENT* wk, int* seq )
   case SEQ_SELECT_POKEMON:
     if( BTLV_WaitPokeSelect(wk->viewCore) )
     {
-      u8 idx = BTL_POKESELECT_RESULT_GetLast( &wk->pokeSelResult );
-      BTL_ACTION_SetChangeParam( &wk->actionParam[wk->procPokeIdx], wk->procPokeIdx, idx );
-      BTL_POKESELECT_PARAM_SetProhibit( &wk->pokeSelParam, BTL_POKESEL_CANT_SELECTED, idx );
-      (*seq) =  SEQ_CHECK_DONE;
+      if( BTL_POKESELECT_IsDone( &wk->pokeSelResult ) )
+      {
+        u8 idx = BTL_POKESELECT_RESULT_GetLast( &wk->pokeSelResult );
+        BTL_ACTION_SetChangeParam( &wk->actionParam[wk->procPokeIdx], wk->procPokeIdx, idx );
+        BTL_POKESELECT_PARAM_SetProhibit( &wk->pokeSelParam, BTL_POKESEL_CANT_SELECTED, idx );
+        (*seq) =  SEQ_CHECK_DONE;
+      }
+      else{
+        (*seq) = SEQ_SELECT_ACTION;
+      }
     }
     break;
 
@@ -624,7 +630,9 @@ static BOOL is_action_unselectable( BTL_CLIENT* wk, const BTL_POKEPARAM* bpp, BT
   {
     WazaID waza = BTL_POKEPARAM_GetPrevWazaNumber( wk->procPoke );
     BtlPokePos pos = BTL_POKEPARAM_GetPrevTargetPos( wk->procPoke );
-    u8 waza_idx = BTL_POKEPARAM_GetWazaIdx( wk->procPoke, waza );
+    u8 waza_idx;
+    waza_idx = BTL_POKEPARAM_GetWazaIdx( wk->procPoke, waza );
+    BTL_Printf("ワザロック：前回使ったワザは %d, idx=%d, targetPos=%d\n", waza, waza_idx, pos);
     if( BTL_POKEPARAM_GetPP(wk->procPoke, waza_idx) ){
       BTL_ACTION_SetFightParam( action, waza, pos );
     }else{

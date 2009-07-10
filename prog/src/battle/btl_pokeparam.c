@@ -582,7 +582,7 @@ u16 BTL_POKEPARAM_GetPP( const BTL_POKEPARAM* pp, u8 wazaIdx )
   if( wazaIdx < pp->wazaCnt ){
     return  pp->waza[wazaIdx].pp;
   }else{
-    GF_ASSERT(0);
+    GF_ASSERT_MSG(0,"wazaIdx:%d, wazaCnt:%d", wazaIdx, pp->wazaCnt);
     return 0;
   }
 }

@@ -1360,7 +1360,6 @@ static void handler_SkillLink( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flow
     // ヒット回数を最大に
     u16 max = BTL_EVENTVAR_GetValue( BTL_EVAR_HITCOUNT_MAX );
     BTL_EVENTVAR_RewriteValue( BTL_EVAR_HITCOUNT, max );
-    BTL_Printf("POKE[%d]の スキルリンク で、ヒット回数を最大の%dにした\n", max);
   }
 }
 static BTL_EVENT_FACTOR*  HAND_TOK_ADD_SkillLink( u16 pri, u16 tokID, u8 pokeID )
