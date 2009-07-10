@@ -921,6 +921,10 @@
 		<language name="JPN" width="256">OPEN1</language>
 		<language name="JPN_KANJI" width="256">OPEN1</language>
 	</row>
+	<row id="msg_seq_se_open2">
+		<language name="JPN" width="256">OPEN2</language>
+		<language name="JPN_KANJI" width="256">OPEN2</language>
+	</row>
 	<row id="msg_seq_se_close1">
 		<language name="JPN" width="256">CLOSE1</language>
 		<language name="JPN_KANJI" width="256">CLOSE1</language>
@@ -1084,10 +1088,6 @@
 	<row id="msg_seq_se_w075_06">
 		<language name="JPN" width="256">W075-06</language>
 		<language name="JPN_KANJI" width="256">W075-06</language>
-	</row>
-	<row id="msg_seq_se_w075_07">
-		<language name="JPN" width="256">W075-07</language>
-		<language name="JPN_KANJI" width="256">W075-07</language>
 	</row>
 	<row id="msg_seq_se_pasa1">
 		<language name="JPN" width="256">PASA1</language>
@@ -1704,10 +1704,6 @@
 	<row id="msg_seq_se_zukan02">
 		<language name="JPN" width="256">ZUKAN02</language>
 		<language name="JPN_KANJI" width="256">ZUKAN02</language>
-	</row>
-	<row id="msg_seq_se_open2">
-		<language name="JPN" width="256">OPEN2</language>
-		<language name="JPN_KANJI" width="256">OPEN2</language>
 	</row>
 	<row id="msg_seq_se_close2">
 		<language name="JPN" width="256">CLOSE2</language>
