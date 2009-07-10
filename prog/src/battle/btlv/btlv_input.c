@@ -25,6 +25,8 @@
 
 #include "pm_define.h"
 
+#include "sound/pm_sndsys.h"
+
 #include "message.naix"
 #include "msg/msg_btlv_input.h"
 
@@ -672,6 +674,7 @@ static  void  TCB_TransformStandby2Command( GFL_TCB* tcb, void* work )
 
   switch( ttw->seq_no ){ 
   case 0:
+    PMSND_PlaySE( SEQ_SE_OPEN2 );
     GFL_BG_SetScroll( GFL_BG_FRAME1_S, GFL_BG_SCROLL_X_SET, TTS2C_FRAME1_SCROLL_X );
     GFL_BG_SetScroll( GFL_BG_FRAME1_S, GFL_BG_SCROLL_Y_SET, TTS2C_FRAME1_SCROLL_Y );
     SetupScaleChange( ttw->biw, TTS2C_START_SCALE, TTS2C_END_SCALE, -TTS2C_SCALE_SPEED );

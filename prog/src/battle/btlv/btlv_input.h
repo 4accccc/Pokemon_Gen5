@@ -30,6 +30,13 @@ typedef struct{
   const POKEMON_PARAM*  pp;
 }BTLV_INPUT_DIR_PARAM;
 
+///ポケモン選択画面構成用のSceneワーク
+//typedef struct{
+//  BTLV_INPUT_DIR_PARAM  bidp[ BTL_CLIENT_MAX ];
+//  u8                    client_type;
+//  u8                    pokesele_type;  ///<対象選択タイプ
+//}BTLV_INPUT_SCENE_POKE;
+
 typedef enum
 { 
   BTLV_INPUT_TYPE_SINGLE = 0,
