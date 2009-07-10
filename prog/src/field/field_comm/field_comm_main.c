@@ -342,9 +342,9 @@ GMEVENT * DEBUG_PalaceTreeMapWarp(FIELD_MAIN_WORK *fieldWork, GAMESYS_WORK *game
   FIELD_PLAYER_GetPos( pcActor, &pos );
   if(pos.x >= FX32_CONST(744) && pos.x <= FX32_CONST(776) 
       && pos.z >= FX32_CONST(72) && pos.z <= FX32_CONST(88-1)){
-    pos.x = 12040 << FX32_SHIFT;
+    pos.x = 12536 << FX32_SHIFT;
     pos.y = 0;
-    pos.z = 13080 << FX32_SHIFT;
+    pos.z = 12120 << FX32_SHIFT;
     
     if(commSys != NULL 
         && GFL_NET_GetConnectNum() > 1 
