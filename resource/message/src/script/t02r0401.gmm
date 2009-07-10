@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00179" date="2009-05-14T14:19:28"/>
+	<create user="matsumiya" host="W00207" date="2009-07-10T16:27:53"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -235,7 +235,7 @@
 			<list entry="1" japanese="グループ 1" english="グループ 1" colorID="0"/>
 		</group>
 		<number position="-1" width="100"/>
-		<comment position="4" width="100"/>
+		<comment position="4" width="196"/>
 		<erase position="-1" width="100"/>
 		<attribute japanese="キャラ指定" english="キャラ指定" type="string" default="" position="1" width="100">
 		</attribute>
@@ -263,9 +263,9 @@
 		</language>
 	</columns>
 
-	<dialog left="248" top="176" right="953" bottom="796" maximized="no" rayout="Vertical2">
+	<dialog left="75" top="237" right="780" bottom="857" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
-		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
+		<tag-palette left="807" top="131" right="1280" bottom="529" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
 		<band id="1" index="2" style="0000" width="165"/>
 		<band id="2" index="3" style="0000" width="543"/>
@@ -292,7 +292,42 @@
 	</lock>
 
 
-	<row id="msg_t02r0401_middleman1_01">
+	<row id="msg_t02r0401_girl4_01">
+		<comment>♀
+ピアノ演奏</comment>
+		<attribute name="キャラ指定">GIRL4
+お嬢様</attribute>
+		<language name="JPN" width="256">ピアノは　ひくものであって
+たたくものでは　ございません</language>
+		<language name="JPN_KANJI" width="256">ピアノは　弾くものであって
+たたくものでは　ございません</language>
+	</row>
+
+	<row id="msg_t02r0401_man2_01">
+		<comment>♂
+ドラム演奏</comment>
+		<attribute name="キャラ指定">MAN2
+青年２（金髪）</attribute>
+		<language name="JPN" width="256">ドラムを　たたく！[BE:01:ページ切り替え（クリア）]
+それは　おれの　しんぞうが
+うごいているのと　おなじことなんだ</language>
+		<language name="JPN_KANJI" width="256">ドラムを　たたく！[BE:01:ページ切り替え（クリア）]
+それは　オレの　心臓が
+動いているのと　同じことなんだ</language>
+	</row>
+
+	<row id="msg_t02r0401_poke_01">
+		<comment>ポケモン
+・暫定
+・あわせて鳴き声SE</comment>
+		<attribute name="キャラ指定">ポケモン
+・未定</attribute>
+		<language name="JPN" width="256">ポケモン『？？？</language>
+		<language name="JPN_KANJI" width="256">ポケモン『？？？</language>
+	</row>
+
+	<row id="msg_t02r0401_middleman1_01" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>削除</comment>
 		<attribute name="キャラ指定">おじさん１</attribute>
 		<language name="JPN" width="256">きせつの　うつりかわりを　めでる……
 そんな　おとこで　ありたいものだ</language>
@@ -300,7 +335,8 @@
 そんな　漢（おとこ）で　ありたいものだ</language>
 	</row>
 
-	<row id="msg_t02r0401_middlewoman1_01">
+	<row id="msg_t02r0401_middlewoman1_01" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>削除</comment>
 		<attribute name="キャラ指定">おばさん１</attribute>
 		<language name="JPN" width="256">ヤグルマシティや
 ライモンシティの　すごさ　ったら▽
