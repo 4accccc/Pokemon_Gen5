@@ -112,6 +112,7 @@ static void PrintPoint( const RAIL_POINT* cp_point )
 		TOMOYA_Printf( "lines[%d] = %d\n", i, cp_point->lines[i] );
 		TOMOYA_Printf( "keys[%d] = %d\n", i, cp_point->keys[i] );
 	}
+	TOMOYA_Printf( "pos x[0x%x]y[0x%x]z[0x%x]\n", cp_point->pos.x, cp_point->pos.y, cp_point->pos.z );
 	TOMOYA_Printf( "camera_set = %d\n", cp_point->camera_set );
 	TOMOYA_Printf( "\n" );
 }

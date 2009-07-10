@@ -192,7 +192,7 @@ void FIELD_RAIL_POSFUNC_StraitLine(const FIELD_RAIL * rail, VecFx32 * pos)
   const RAIL_LINE * nLine = FIELD_RAIL_GetLine( rail );
 	s32 line_ofs = FIELD_RAIL_GetLineOfs( rail );
 	s32 line_ofs_max = FIELD_RAIL_GetLineOfsMax( rail );
-  fx32 ofs = (line_ofs * FX32_ONE) / line_ofs_max;
+  fx32 ofs = FX_Div( (line_ofs * FX32_ONE), line_ofs_max<<FX32_SHIFT);
   VecFx32 val;
 	const RAIL_POINT* point_s = FIELD_RAIL_GetPointStart( rail );
 	const RAIL_POINT* point_e = FIELD_RAIL_GetPointEnd( rail );
@@ -210,17 +210,20 @@ void FIELD_RAIL_POSFUNC_StraitLine(const FIELD_RAIL * rail, VecFx32 * pos)
     VEC_CrossProduct(&val, &xzNormal, &width);
     VEC_Normalize(&width, &width);
     VEC_MultAdd(w_ofs, &width, pos, pos);
+
+		if (GFL_UI_KEY_GetTrg() & PAD_BUTTON_B)
+		{
+			debugPrintWholeVector("start ", p0, "\n");
+			//debugPrintHexVector(p0);
+			debugPrintWholeVector("now   ", pos, "\n");
+			//debugPrintHexVector(pos);
+			debugPrintWholeVector("end   ", p1, "\n");
+			//debugPrintHexVector(p1);
+			TOMOYA_Printf( "w_ofs = 0x%x\n", w_ofs );
+			debugPrintHexVector(&width);
+		}
   }
 
-  if (GFL_UI_KEY_GetTrg() & PAD_BUTTON_B)
-  {
-    debugPrintWholeVector("start ", p0, "\n");
-    //debugPrintHexVector(p0);
-    debugPrintWholeVector("now   ", pos, "\n");
-    //debugPrintHexVector(pos);
-    debugPrintWholeVector("end   ", p1, "\n");
-    //debugPrintHexVector(p1);
-  }
 }
 
 //------------------------------------------------------------------
