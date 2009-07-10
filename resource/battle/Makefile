@@ -107,7 +107,7 @@ bg_nclr: $(notdir $(BGNCLFILE:.ncl=.NCLR))
 %.NCLR: $(RES_BGDIR)%.ncl
 	g2dcvtr $< -pcm -o/./
 
-$(NARCNAME): $(notdir $(IMDFILE:.imd=.nsbmd)) $(notdir $(ICAFILE:.ica=.nsbca)) $(notdir $(IMAFILE:.ima=.nsbma)) $(notdir $(ITAFILE:.ita=.nsbta)) $(notdir $(BGNSCFILE:.nsc=.NSCR)) $(notdir $(BGNCGFILE:.ncg=.NCGR)) $(notdir $(BGNCLFILE:.ncl=.NCLR)) battgra_wb.scr
+$(NARCNAME): $(notdir $(IMDFILE:.imd=.nsbmd)) $(notdir $(ICAFILE:.ica=.nsbca)) $(notdir $(IMAFILE:.ima=.nsbma)) $(notdir $(ITAFILE:.ita=.nsbta)) $(notdir $(BGNSCFILE:.nsc=.NSCR)) $(notdir $(BGNCGFILE:.ncg=.NCGR)) $(notdir $(BGNCLFILE:.ncl=.NCLR)) $(notdir $(OBJNCEFILE:.nce=.NCER)) $(notdir $(OBJNCLFILE:.ncl=.NCLR)) battgra_wb.scr
 	nnsarc -c -l -n -i $(NARCNAME) -S battgra_wb.scr > error
 	$(NAIXCUT) $(NAIXNAME)
 
