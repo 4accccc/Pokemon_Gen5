@@ -711,7 +711,7 @@ static void init_soundviewer_subscreen(FIELD_SUBSCREEN_WORK * pWork, FIELD_SUBSC
 	static const GFL_SNDVIEWER_SETUP sndStatusData= {
 		PAD_BUTTON_SELECT,
 		GFL_DISPUT_BGID_S0, GFL_DISPUT_PALID_15,
-		PMSND_GetBGMhandlePointer,
+		PMSND_GetNowSndHandlePointer,
 		PMSND_GetBGMsoundNo,
 		PMSND_GetBGMplayerNoIdx,
 		PMSND_CheckOnReverb,

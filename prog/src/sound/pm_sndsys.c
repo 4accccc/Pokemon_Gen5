@@ -230,7 +230,7 @@ u32 PMSND_GetSndHeapFreeSize( void )
 	return NNS_SndHeapGetFreeSize(PmSndHeapHandle);
 }
 
-NNSSndHandle* PMSND_GetBGMhandlePointer( void )
+NNSSndHandle* PMSND_GetNowSndHandlePointer( void )
 {
 	int i;
 	for( i=0; i<SEPLAYER_MAX; i++ ){
@@ -238,6 +238,11 @@ NNSSndHandle* PMSND_GetBGMhandlePointer( void )
 			return &sePlayerData[i].sndHandle;
 		}
 	}
+	return SOUNDMAN_GetHierarchyPlayerSndHandle();
+}
+
+NNSSndHandle* PMSND_GetBGMhandlePointer( void )
+{
 	return SOUNDMAN_GetHierarchyPlayerSndHandle();
 }
 
