@@ -11,6 +11,8 @@
 #include "btlv_effect.h"
 #include "print/printsys.h"
 #include "print/wordset.h"
+#include "system/wazatype_icon.h"
+#include "waza_tool/waza_tool.h"
 #include "system/palanm.h"
 #include "system/bmp_oam.h"
 #include "infowin/infowin.h"
@@ -20,6 +22,8 @@
 
 #include "arc_def.h"
 #include "battle/battgra_wb.naix"
+
+#include "pm_define.h"
 
 #include "message.naix"
 #include "msg/msg_btlv_input.h"
@@ -170,26 +174,61 @@ enum
   WAZANAME_Y2 = BUTTON_UP_Y1,
   WAZANAME_X3 = WAZANAME_X1,
   WAZANAME_Y3 = BUTTON_DOWN_Y1,
-  WAZANAME_X4 = 128 + WAZANAME_X1,
+  WAZANAME_X4 = WAZANAME_X2,
   WAZANAME_Y4 = BUTTON_DOWN_Y1,
 
-  PPMSG_X1 = 40,
+  PPMSG_X1 = 49,
   PPMSG_Y1 = BUTTON_UP_Y2,
   PPMSG_X2 = 128 + PPMSG_X1,
   PPMSG_Y2 = BUTTON_UP_Y2,
   PPMSG_X3 = PPMSG_X1,
   PPMSG_Y3 = BUTTON_DOWN_Y2,
-  PPMSG_X4 = 128 + PPMSG_X1,
+  PPMSG_X4 = PPMSG_X2,
   PPMSG_Y4 = BUTTON_DOWN_Y2,
 
-  PP_X1 = 88,
+  PP_X1 = 90,
   PP_Y1 = BUTTON_UP_Y2,
   PP_X2 = 128 + PP_X1,
   PP_Y2 = BUTTON_UP_Y2,
   PP_X3 = PP_X1,
   PP_Y3 = BUTTON_DOWN_Y2,
-  PP_X4 = 128 + PP_X1,
+  PP_X4 = PP_X2,
   PP_Y4 = BUTTON_DOWN_Y2,
+};
+
+///技タイプアイコン：アクターヘッダ
+static  const GFL_CLWK_DATA WazaTypeIconObjParam = {
+  0, 0,   //x, y
+  0, 100, 0,  //アニメ番号、優先順位、BGプライオリティ
+};
+
+//技タイプアイコンの表示座標
+enum
+{ 
+  WAZATYPE_X1 = 32,
+  WAZATYPE_Y1 = 64,
+  WAZATYPE_X2 = 128 + WAZATYPE_X1,
+  WAZATYPE_Y2 = WAZATYPE_Y1,
+  WAZATYPE_X3 = WAZATYPE_X1,
+  WAZATYPE_Y3 = 112,
+  WAZATYPE_X4 = WAZATYPE_X2,
+  WAZATYPE_Y4 = WAZATYPE_Y3,
+};
+
+ALIGN4  static  const u16 WazaIconPos[][2] = {  //0:X, 1:Y
+  { WAZATYPE_X1, WAZATYPE_Y1 },
+  { WAZATYPE_X2, WAZATYPE_Y2 },
+  { WAZATYPE_X3, WAZATYPE_Y3 },
+  { WAZATYPE_X4, WAZATYPE_Y4 },
+};
+
+//ボールゲージ座標定義
+enum
+{ 
+  BTLV_INPUT_BALLGAUGE_ENEMY_X = ( 128 + ( 8 * 3 ) - 4 ),
+  BTLV_INPUT_BALLGAUGE_ENEMY_Y = ( 6 * 8 ),
+  BTLV_INPUT_BALLGAUGE_MINE_X = ( 128 - ( 16 * 3 ) + 8 ),
+  BTLV_INPUT_BALLGAUGE_MINE_Y = ( 16 * 8 ) + 8,
 };
 
 //============================================================================================
@@ -198,37 +237,52 @@ enum
  */
 //============================================================================================
 
+typedef struct
+{ 
+  GFL_CLWK*   clwk;
+  s16         pos_x;
+  s16         pos_y;
+}BTLV_INPUT_BALLGAUGE;
+
 struct _BTLV_INPUT_WORK
 {
-  GFL_TCBSYS*         tcbsys;
-  void*               tcbwork;
-  ARCHANDLE*          handle;
-  BTLV_INPUT_TYPE     type;
-  BTLV_INPUT_SCRTYPE  scr_type;
-  u32                 tcb_execute_flag  :1;
-  u32                 tcb_execute_count :3;
-  u32                                   :28;
+  GFL_TCBSYS*           tcbsys;
+  void*                 tcbwork;
+  ARCHANDLE*            handle;
+  BTLV_INPUT_TYPE       type;
+  BTLV_INPUT_SCRTYPE    scr_type;
+  u32                   tcb_execute_flag  :1;
+  u32                   tcb_execute_count :3;
+  u32                                     :28;
 
   //OBJリソース
-  u32                 objcharID;
-  u32                 objplttID;
-  u32                 objcellID;
+  u32                   objcharID;
+  u32                   objplttID;
+  u32                   objcellID;
+
+  //ボールゲージOBJ
+  GFL_CLUNIT*           ballgauge_clunit;
+  BTLV_INPUT_BALLGAUGE  ballgauge_mine[ TEMOTI_POKEMAX ];
+  BTLV_INPUT_BALLGAUGE  ballgauge_enemy[ TEMOTI_POKEMAX ];
 
   //技タイプアイコンOBJ
-  GFL_CLUNIT*         wazatype_clunit;
-  GFL_CLWK*           wazatype_wk[ PTL_WAZA_MAX ];
+  u32                   wazatype_charID[ PTL_WAZA_MAX ];
+  u32                   wazatype_plttID;
+  u32                   wazatype_cellID;
+  GFL_CLUNIT*           wazatype_clunit;
+  GFL_CLWK*             wazatype_wk[ PTL_WAZA_MAX ];
 
   //フォント
-  GFL_FONT*           font;
+  GFL_FONT*             font;
 
   //BMP
-  GFL_BMPWIN*         bmp_win;
-  GFL_BMP_DATA*       bmp_data;
+  GFL_BMPWIN*           bmp_win;
+  GFL_BMP_DATA*         bmp_data;
 
   //メインループTCB
-  GFL_TCB*            main_loop;      //scdにメインループが存在しないのでBTLV_EFFECTのTCBを間借りしてメインを回す
+  GFL_TCB*              main_loop;      //scdにメインループが存在しないのでBTLV_EFFECTのTCBを間借りしてメインを回す
 
-	HEAPID              heapID;
+	HEAPID                heapID;
 };
 
 typedef struct
@@ -299,7 +353,10 @@ static  void  TCB_ButtonAnime( GFL_TCB* tcb, void* work );
 static  void	BTLV_INPUT_MainTCB( GFL_TCB* tcb, void* work );
 static  void  FontLenGet( const STRBUF *str, GFL_FONT *font, int *ret_dot_len, int *ret_char_len );
 static  void  BTLV_INPUT_CreateWazaScreen( BTLV_INPUT_WORK* biw, const BTLV_INPUT_WAZA_PARAM *biwp );
+static  void  BTLV_INPUT_ClearWazaScreen( BTLV_INPUT_WORK* biw );
 static  PRINTSYS_LSB  PP_FontColorGet( int pp, int pp_max );
+static  void  BTLV_INPUT_CreateBallGauge( BTLV_INPUT_WORK* biw, const BTLV_INPUT_DIR_PARAM *bidp, int type );
+static  void  BTLV_INPUT_DeleteBallGauge( BTLV_INPUT_WORK* biw );
 
 //============================================================================================
 /**
@@ -325,6 +382,7 @@ BTLV_INPUT_WORK*  BTLV_INPUT_Init( BTLV_INPUT_TYPE type, GFL_FONT* font, HEAPID 
   biw->font = font;
 
   biw->wazatype_clunit = GFL_CLACT_UNIT_Create( PTL_WAZA_MAX, 0, biw->heapID );
+  biw->ballgauge_clunit = GFL_CLACT_UNIT_Create( TEMOTI_POKEMAX * 2, 0, biw->heapID );
 
   BTLV_INPUT_SetFrame();
   BTLV_INPUT_LoadResource( biw );
@@ -361,7 +419,19 @@ void	BTLV_INPUT_Exit( BTLV_INPUT_WORK* biw )
   GFL_CLGRP_CELLANIM_Release( biw->objcellID );
   GFL_CLGRP_PLTT_Release( biw->objplttID );
 
+  { 
+    int i;
+
+    for( i = 0 ; i < PTL_WAZA_MAX ; i++ )
+    { 
+      GFL_CLGRP_CGR_Release( biw->wazatype_charID[ i ] );
+    }
+  }
+  GFL_CLGRP_CELLANIM_Release( biw->wazatype_cellID );
+  GFL_CLGRP_PLTT_Release( biw->wazatype_plttID );
+
   GFL_CLACT_UNIT_Delete( biw->wazatype_clunit );
+  GFL_CLACT_UNIT_Delete( biw->ballgauge_clunit );
 
   GFL_BMPWIN_Delete( biw->bmp_win );
 
@@ -448,8 +518,7 @@ void BTLV_INPUT_FreeFrame( void )
 //============================================================================================
 void BTLV_INPUT_CreateScreen( BTLV_INPUT_WORK* biw, BTLV_INPUT_SCRTYPE type, void* param )
 {
-  GFL_BMP_Clear( biw->bmp_data, 0x00 );
-  GFL_BMPWIN_TransVramCharacter( biw->bmp_win );
+  BTLV_INPUT_ClearWazaScreen( biw );
 
   switch( type ){ 
   case BTLV_INPUT_SCRTYPE_STANDBY:
@@ -471,6 +540,8 @@ void BTLV_INPUT_CreateScreen( BTLV_INPUT_WORK* biw, BTLV_INPUT_SCRTYPE type, voi
       TCB_TRANSFORM_WORK* ttw = GFL_HEAP_AllocClearMemory( biw->heapID, sizeof( TCB_TRANSFORM_WORK ) );
       biw->tcb_execute_flag = 1;
       ttw->biw = biw;
+
+      BTLV_INPUT_DeleteBallGauge( biw );
 
       if( biw->scr_type == BTLV_INPUT_SCRTYPE_COMMAND )
       { 
@@ -494,6 +565,7 @@ void BTLV_INPUT_CreateScreen( BTLV_INPUT_WORK* biw, BTLV_INPUT_SCRTYPE type, voi
       }
       else
       {
+        BTLV_INPUT_CreateBallGauge( biw, ( BTLV_INPUT_DIR_PARAM * )param, 0 );
         GFL_TCB_AddTask( biw->tcbsys, TCB_TransformStandby2Command, ttw, 1 );
       }
     }
@@ -570,6 +642,23 @@ static  void  BTLV_INPUT_LoadResource( BTLV_INPUT_WORK* biw )
   biw->objplttID = GFL_CLGRP_PLTT_Register( biw->handle, NARC_battgra_wb_battle_w_obj_NCLR, CLSYS_DRAW_SUB, 0, biw->heapID );
   PaletteWorkSet_VramCopy( BTLV_EFFECT_GetPfd(), FADE_SUB_OBJ,
                            GFL_CLGRP_PLTT_GetAddr( biw->objplttID, CLSYS_DRAW_SUB ) / 2, 0x20 * 3 );
+
+  {
+    ARCHANDLE*  hdl;
+    int         i;
+
+    hdl = GFL_ARC_OpenDataHandle( WazaTypeIcon_ArcIDGet(), biw->heapID );
+    biw->wazatype_cellID = GFL_CLGRP_CELLANIM_Register( hdl, WazaTypeIcon_CellIDGet(), WazaTypeIcon_CellAnmIDGet(),
+                                                        biw->heapID );
+    biw->wazatype_plttID = GFL_CLGRP_PLTT_Register( hdl, WazaTypeIcon_PlttIDGet(), CLSYS_DRAW_SUB, 0x20 * 3, biw->heapID );
+    PaletteWorkSet_VramCopy( BTLV_EFFECT_GetPfd(), FADE_SUB_OBJ,
+                             GFL_CLGRP_PLTT_GetAddr( biw->wazatype_plttID, CLSYS_DRAW_SUB ) / 2, 0x20 * 3 );
+    for( i = 0; i < PTL_WAZA_MAX ; i++ ){
+      biw->wazatype_charID[ i ] = GFL_CLGRP_CGR_Register( hdl, WazaTypeIcon_CgrIDGet( POKETYPE_NORMAL ), FALSE,
+                                                          CLSYS_DRAW_SUB, biw->heapID );
+    }
+    GFL_ARC_CloseDataHandle( hdl );
+  }
 }
 
 //============================================================================================
@@ -629,6 +718,7 @@ static  void  TCB_TransformCommand2Waza( GFL_TCB* tcb, void* work )
     if( ttw->biw->tcb_execute_count == 0 )
     { 
       GFL_BMPWIN_TransVramCharacter( ttw->biw->bmp_win );
+      GFL_CLACT_UNIT_SetDrawEnable( ttw->biw->wazatype_clunit, TRUE );
       GFL_BG_SetScroll( GFL_BG_FRAME1_S, GFL_BG_SCROLL_X_SET, TSA_SCROLL_X3 );
       GFL_BG_SetScroll( GFL_BG_FRAME1_S, GFL_BG_SCROLL_Y_SET, TSA_SCROLL_Y3 );
       ttw->biw->tcb_execute_flag = 0;
@@ -1040,9 +1130,7 @@ static void FontLenGet( const STRBUF *str, GFL_FONT *font, int *ret_dot_len, int
 //--------------------------------------------------------------
 static  void  BTLV_INPUT_CreateWazaScreen( BTLV_INPUT_WORK* biw, const BTLV_INPUT_WAZA_PARAM *biwp )
 {
-  void *arc_data;
-  NNSG2dCharacterData *char_data;
-  int char_size, i, waza_type;
+  int i;
   int dot_len, char_len;
   STRBUF *wazaname_p;
   STRBUF *wazaname_src;
@@ -1074,8 +1162,6 @@ static  void  BTLV_INPUT_CreateWazaScreen( BTLV_INPUT_WORK* biw, const BTLV_INPU
     { PP_X4, PP_Y4 },
   };
 
-  char_size = WAZATYPEICON_OAMSIZE;
-
   wazaname_p = GFL_STR_CreateBuffer( BUFLEN_WAZA_NAME, biw->heapID );
   wazaname_src = GFL_MSG_CreateString( msg, BI_WazaNameMsg );
   ppmsg_src = GFL_MSG_CreateString( msg, BI_PPMsg );
@@ -1083,17 +1169,41 @@ static  void  BTLV_INPUT_CreateWazaScreen( BTLV_INPUT_WORK* biw, const BTLV_INPU
   pp_p = GFL_STR_CreateBuffer( BUFLEN_BI_WAZAPP, biw->heapID );
   pp_src = GFL_MSG_CreateString( msg,  BI_PPNowMaxMsg );
 
+  GFL_CLACT_UNIT_SetDrawEnable( biw->wazatype_clunit, FALSE );
+
   for(i = 0; i < PTL_WAZA_MAX; i++){
     if( biwp->wazano[ i ] ){
       //技タイプアイコン
-#if 0 //後回し
-      waza_type = WT_WazaDataParaGet(wazapara->wazano[i], ID_WTD_wazatype);
-      arc_data = GFL_ARC_UTIL_LoadOBJCharacter( WazaTypeIcon_ArcIDGet(),
-        WazaTypeIcon_CgrIDGet( waza_type ), WAZATYPEICON_COMP_CHAR,
-        &char_data, bip->heapID );
-      MI_CpuCopy32(char_data->pRawData, mdw->typeicon_cgx[i], char_size);
-      GFL_HEAP_FreeMemory( arc_data );
-#endif
+      { 
+        void *arc_data;
+        void *obj_vram;
+        NNSG2dImageProxy image;
+        NNSG2dCharacterData *char_data;
+        int waza_type;
+        GFL_CLWK_DATA obj_param = WazaTypeIconObjParam;
+
+        waza_type = WT_WazaDataParaGet( biwp->wazano[ i ], ID_WTD_wazatype );
+
+        obj_param.pos_x = WazaIconPos[ i ][ 0 ];
+        obj_param.pos_y = WazaIconPos[ i ][ 1 ];
+        biw->wazatype_wk[ i ] = GFL_CLACT_WK_Create( biw->wazatype_clunit, biw->wazatype_charID[ i ],
+                                                     biw->wazatype_plttID, biw->wazatype_cellID,
+                                                     &obj_param, CLSYS_DEFREND_SUB, biw->heapID );
+
+        arc_data = GFL_ARC_UTIL_LoadOBJCharacter( WazaTypeIcon_ArcIDGet(),
+                                                  WazaTypeIcon_CgrIDGet( waza_type ), WAZATYPEICON_COMP_CHAR,
+                                                  &char_data, biw->heapID );
+
+        GFL_CLACT_WK_SetPlttOffs( biw->wazatype_wk[ i ], WazaTypeIcon_PlttOffsetGet( waza_type ), CLWK_PLTTOFFS_MODE_PLTT_TOP );
+        obj_vram = G2S_GetOBJCharPtr();
+        GFL_CLACT_WK_GetImgProxy( biw->wazatype_wk[ i ],  &image );
+        MI_CpuCopy16( char_data->pRawData,
+                      ( void * )( ( u32 )obj_vram + image.vramLocation.baseAddrOfVram[ NNS_G2D_VRAM_TYPE_2DSUB ] ),
+                      WAZATYPEICON_OAMSIZE );
+
+        GFL_HEAP_FreeMemory( arc_data );
+      }
+
       //BMPWIN：技名
       WORDSET_RegisterWazaName( wordset, 0, biwp->wazano[ i ] );
       WORDSET_ExpandStr( wordset, wazaname_p, wazaname_src );
@@ -1128,6 +1238,28 @@ static  void  BTLV_INPUT_CreateWazaScreen( BTLV_INPUT_WORK* biw, const BTLV_INPU
   GFL_STR_DeleteBuffer(pp_p);
 
   GFL_MSG_Delete( msg );
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief   技選択画面クリア
+ */
+//--------------------------------------------------------------
+static  void  BTLV_INPUT_ClearWazaScreen( BTLV_INPUT_WORK* biw )
+{ 
+  int i;
+
+  GFL_BMP_Clear( biw->bmp_data, 0x00 );
+  GFL_BMPWIN_TransVramCharacter( biw->bmp_win );
+
+  for( i = 0 ; i < PTL_WAZA_MAX ; i++ )
+  { 
+    if( biw->wazatype_wk[ i ] )
+    { 
+      GFL_CLACT_WK_Remove( biw->wazatype_wk[ i ] );
+      biw->wazatype_wk[ i ] = NULL;
+    }
+  }
 }
 
 //--------------------------------------------------------------
@@ -1172,3 +1304,89 @@ static PRINTSYS_LSB PP_FontColorGet(int pp, int pp_max)
   return MSGCOLOR_PP_WHITE;
 }
 
+//--------------------------------------------------------------
+/**
+ * @brief   ボールゲージ生成
+ *
+ * @param[in] biw   システム管理構造体のポインタ
+ * @param[in] bidp  ボールゲージ生成用パラメータのポインタ
+ * @param[in] type  ボールゲージタイプ
+ */
+//--------------------------------------------------------------
+static  void  BTLV_INPUT_CreateBallGauge( BTLV_INPUT_WORK* biw, const BTLV_INPUT_DIR_PARAM *bidp, int type )
+{ 
+  BTLV_INPUT_BALLGAUGE* bib;
+  int                   i;
+  GFL_CLACTPOS          pos;
+  int                   pos_ofs;
+  int                   anm_ofs;
+  static const GFL_CLWK_DATA ballgauge = {
+    0, 0,     //x, y
+    0, 0, 0,  //アニメ番号、優先順位、BGプライオリティ
+  };
+
+  if( type )
+  { 
+    bib = biw->ballgauge_enemy;
+    pos.x = BTLV_INPUT_BALLGAUGE_ENEMY_X;
+    pos.y = BTLV_INPUT_BALLGAUGE_ENEMY_Y;
+    pos_ofs = -8;
+    anm_ofs = 4;
+  }
+  else
+  { 
+    bib = biw->ballgauge_mine;
+    pos.x = BTLV_INPUT_BALLGAUGE_MINE_X;
+    pos.y = BTLV_INPUT_BALLGAUGE_MINE_Y;
+    pos_ofs = 16;
+    anm_ofs = 0;
+  }
+
+  for( i = 0 ; i < TEMOTI_POKEMAX ; i++ )
+  { 
+    GF_ASSERT( bib[ i ].clwk == NULL );
+    bib[ i ].clwk = GFL_CLACT_WK_Create( biw->ballgauge_clunit, biw->objcharID, biw->objplttID, biw->objcellID,
+                                          &ballgauge, CLSYS_DEFREND_SUB, biw->heapID );
+    GFL_CLACT_WK_SetPos( bib[ i ].clwk, &pos, CLSYS_DEFREND_SUB );
+    GFL_CLACT_WK_SetAutoAnmFlag( bib[ i ].clwk, TRUE );
+    GFL_CLACT_WK_SetAnmSeq( bib[ i ].clwk, bidp[ i ].status + anm_ofs );
+    pos.x += pos_ofs;
+  }
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief   ボールゲージ削除
+ *
+ * @param[in] biw   システム管理構造体のポインタ
+ * @param[in] bidp  ボールゲージ生成用パラメータのポインタ
+ * @param[in] type  ボールゲージタイプ
+ */
+//--------------------------------------------------------------
+static  void  BTLV_INPUT_DeleteBallGauge( BTLV_INPUT_WORK* biw )
+{ 
+  BTLV_INPUT_BALLGAUGE* bib;
+  int                   i;
+  int                   type;
+
+  for( type = 0 ; type < 2 ; type++ )
+  { 
+    if( type )
+    { 
+      bib = biw->ballgauge_enemy;
+    }
+    else
+    { 
+      bib = biw->ballgauge_mine;
+    }
+
+    for( i = 0 ; i < TEMOTI_POKEMAX ; i++ )
+    { 
+      if( bib[ i ].clwk )
+      { 
+        GFL_CLACT_WK_Remove( bib[ i ].clwk );
+        bib[ i ].clwk = NULL;
+      }
+    }
+  }
+}

@@ -383,8 +383,41 @@ static void printBtnWaza( BTLV_SCD* wk, u16 btnIdx, u16 col, const STRBUF* str )
 static BOOL selectAction_init( int* seq, void* wk_adrs )
 {
   BTLV_SCD* wk = wk_adrs;
+  BTLV_INPUT_DIR_PARAM  bidp[ TEMOTI_POKEMAX ];
+  const BTL_PARTY* party;
+  const BTL_POKEPARAM* bpp;
+  const POKEMON_PARAM* pp;
+  u16 members, hp, i;
 
-  BTLV_INPUT_CreateScreen( wk->biw, BTLV_INPUT_SCRTYPE_COMMAND, NULL );
+  MI_CpuClear16( &bidp, sizeof( BTLV_INPUT_DIR_PARAM ) * TEMOTI_POKEMAX );
+
+  party = wk->playerParty;
+  members = BTL_PARTY_GetMemberCount( party );
+
+  for( i = 0 ; i < members ; i++ )
+  {
+    bpp = BTL_PARTY_GetMemberDataConst( party, i );
+    pp  = BTL_POKEPARAM_GetSrcData( bpp );
+    hp = PP_Get( pp, ID_PARA_hp, NULL );
+
+    if( hp )
+    {
+      if( PP_Get( pp, ID_PARA_condition, NULL ) )
+      {
+        bidp[ i ].status = BTLV_INPUT_STATUS_NG;
+      }
+      else
+      {
+        bidp[ i ].status = BTLV_INPUT_STATUS_ALIVE;
+      }
+    }
+    else
+    {
+      bidp[ i ].status = BTLV_INPUT_STATUS_DEAD;
+    }
+  }
+
+  BTLV_INPUT_CreateScreen( wk->biw, BTLV_INPUT_SCRTYPE_COMMAND, bidp );
 
   return TRUE;
 }
@@ -431,41 +464,6 @@ static BOOL selectActionRoot_loop( int* seq, void* wk_adrs )
 static BOOL selectWaza_init( int* seq, void* wk_adrs )
 {
   BTLV_SCD* wk = wk_adrs;
-
-#if 0
-  Sub_TouchEndDelete( wk->bip, TRUE, TRUE );
-
-  {
-    BINPUT_WAZA_PARAM bwp;
-    BINPUT_SCENE_WAZA bsw;
-    ARCHANDLE* hdl_bg;
-    ARCHANDLE* hdl_obj;
-    u16 wazaCnt, wazaID, i;
-    u8 PP, PPMax;
-
-    wazaCnt = BTL_POKEPARAM_GetWazaCount( wk->bpp );
-    for(i=0; i<wazaCnt; i++)
-    {
-      wazaID = BTL_POKEPARAM_GetWazaParticular( wk->bpp, i, &PP, &PPMax );
-      bwp.wazano[ i ] = bsw.wazano[ i ] = wazaID;
-      bwp.pp[ i ] = bsw.pp[ i ] = PP;
-      bwp.ppmax[ i ] = bsw.ppmax[ i ] = PPMax;
-    }
-    for( ; i<PTL_WAZA_MAX; i++){
-      bwp.wazano[ i ] = bsw.wazano[ i ] = 0;
-      bwp.pp[ i ] = bsw.pp[ i ] = 0;
-      bwp.ppmax[ i ] = bsw.ppmax[ i ] = 0;
-    }
-    bsw.client_type = 0;
-    BINPUT_WazaParaMemoryDecord( wk->bip, 0, &bwp );
-    hdl_bg  = GFL_ARC_OpenDataHandle( ARCID_BATT_BG,  GFL_HEAP_LOWID(wk->heapID) );
-    hdl_obj = GFL_ARC_OpenDataHandle( ARCID_BATT_OBJ, GFL_HEAP_LOWID(wk->heapID) );
-    BINPUT_CreateBG( hdl_bg, hdl_obj, wk->bip, BINPUT_TYPE_WAZA, FALSE, &bsw );
-
-    GFL_ARC_CloseDataHandle( hdl_bg );
-    GFL_ARC_CloseDataHandle( hdl_obj );
-  }
-#endif
   BTLV_INPUT_WAZA_PARAM biwp;
   u16 wazaCnt, wazaID, i;
   u8 PP, PPMax;
