@@ -36,18 +36,39 @@
  *					定数宣言
 */
 //-----------------------------------------------------------------------------
+//-------------------------------------
+///	フォグフェード開始オフセット
+//=====================================
+#define FOG_START_OFFSET	( 0x7FFF )
+#define FOG_FADE_SYNC			(160)
+#define FOG_FADEOUT_SYNC	(80)
 
 //-----------------------------------------------------------------------------
 /**
  *					構造体宣言
 */
 //-----------------------------------------------------------------------------
+//-------------------------------------
+///	ワーク
+//=====================================
+typedef struct {
+	BOOL fade_init;
+} SUNNY_WORK;
 
 //-----------------------------------------------------------------------------
 /**
  *					プロトタイプ宣言
 */
 //-----------------------------------------------------------------------------
+
+static WEATHER_TASK_FUNC_RESULT WEATHER_SUNNY_Init( WEATHER_TASK* p_wk, WEATHER_TASK_FOG_MODE fog_cont, u32 heapID ); 
+static WEATHER_TASK_FUNC_RESULT WEATHER_SUNNY_FadeIn( WEATHER_TASK* p_wk, WEATHER_TASK_FOG_MODE fog_cont, u32 heapID ); 
+static WEATHER_TASK_FUNC_RESULT WEATHER_SUNNY_NoFade( WEATHER_TASK* p_wk, WEATHER_TASK_FOG_MODE fog_cont, u32 heapID ); 
+static WEATHER_TASK_FUNC_RESULT WEATHER_SUNNY_Main( WEATHER_TASK* p_wk, WEATHER_TASK_FOG_MODE fog_cont, u32 heapID ); 
+static WEATHER_TASK_FUNC_RESULT WEATHER_SUNNY_InitFadeOut( WEATHER_TASK* p_wk, WEATHER_TASK_FOG_MODE fog_cont, u32 heapID ); 
+static WEATHER_TASK_FUNC_RESULT WEATHER_SUNNY_FadeOut( WEATHER_TASK* p_wk, WEATHER_TASK_FOG_MODE fog_cont, u32 heapID ); 
+static WEATHER_TASK_FUNC_RESULT WEATHER_SUNNY_Exit( WEATHER_TASK* p_wk, WEATHER_TASK_FOG_MODE fog_cont, u32 heapID ); 
+
 
 WEATHER_TASK_DATA c_WEATHER_TASK_DATA_SUNNY = {
 	//	グラフィック情報
@@ -67,15 +88,16 @@ WEATHER_TASK_DATA c_WEATHER_TASK_DATA_SUNNY = {
 	0,			// GXTexPlttColor0
 
 	// ワークサイズ
-	0,
+	sizeof(SUNNY_WORK),
 
 	// 管理関数
-	NULL,		// 初期化
-	NULL,		// フェードイン
-	NULL,		// フェードなし
-	NULL,		// メイン処理
-	NULL,		// フェードアウト
-	NULL,		// 破棄
+	WEATHER_SUNNY_Init,		// 初期化
+	WEATHER_SUNNY_FadeIn,		// フェードイン
+	WEATHER_SUNNY_NoFade,		// フェードなし
+	WEATHER_SUNNY_Main,		// メイン処理
+	WEATHER_SUNNY_InitFadeOut,		// フェードアウト
+	WEATHER_SUNNY_FadeOut,		// フェードアウト
+	WEATHER_SUNNY_Exit,		// 破棄
 
 	// オブジェ動作関数
 	NULL,
@@ -84,3 +106,170 @@ WEATHER_TASK_DATA c_WEATHER_TASK_DATA_SUNNY = {
 
 
 
+
+
+//-----------------------------------------------------------------------------
+/**
+ *			晴れ
+ */
+//-----------------------------------------------------------------------------
+//----------------------------------------------------------------------------
+/**
+ *	@brief	初期化
+ */
+//-----------------------------------------------------------------------------
+static WEATHER_TASK_FUNC_RESULT WEATHER_SUNNY_Init( WEATHER_TASK* p_wk, WEATHER_TASK_FOG_MODE fog_cont, u32 heapID )
+{
+	u32 fogoffset, fogslope, light;
+	SUNNY_WORK* p_sunnywork;
+
+	// ローカルワーク取得
+	p_sunnywork = WEATHER_TASK_GetWorkData( p_wk );
+	p_sunnywork->fade_init = FALSE;
+
+	// フォグの設定
+	if( WEATHER_TASK_IsZoneFog( p_wk ) )
+	{
+		fogoffset = WEATHER_TASK_GetZoneFogOffset( p_wk );
+		fogslope	= WEATHER_TASK_GetZoneFogSlope( p_wk );
+		WEATHER_TASK_FogSet( p_wk, fogslope, FOG_START_OFFSET, fog_cont );
+	}
+
+
+	// ライト変更
+	if( WEATHER_TASK_IsZoneLight( p_wk ) )
+	{
+		light = WEATHER_TASK_GetZoneLight( p_wk );
+		WEATHER_TASK_LIGHT_Change( p_wk, FIELD_ZONEFOGLIGHT_ARC_LIGHT, light, heapID );
+	}
+	
+
+	return WEATHER_TASK_FUNC_RESULT_FINISH;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	フェードイン
+ */
+//-----------------------------------------------------------------------------
+static WEATHER_TASK_FUNC_RESULT WEATHER_SUNNY_FadeIn( WEATHER_TASK* p_wk, WEATHER_TASK_FOG_MODE fog_cont, u32 heapID )
+{
+	BOOL result;
+	SUNNY_WORK* p_sunnywork;
+
+	// ローカルワーク取得
+	p_sunnywork = WEATHER_TASK_GetWorkData( p_wk );
+	if( p_sunnywork->fade_init == FALSE )
+	{
+		u32 fogoffset, fogslope;
+		if( WEATHER_TASK_IsZoneFog( p_wk ) )
+		{
+			fogoffset = WEATHER_TASK_GetZoneFogOffset( p_wk );
+			fogslope	= WEATHER_TASK_GetZoneFogSlope( p_wk );
+
+			WEATHER_TASK_FogFadeIn_Init( p_wk,
+			fogslope, 
+			fogoffset, 
+			FOG_FADE_SYNC,
+			fog_cont );
+		}
+		p_sunnywork->fade_init = TRUE;
+	}
+
+	result = WEATHER_TASK_FogFade_IsFade( p_wk );
+		
+	if( result ){		// フェードリザルトが完了ならばメインへ
+		// シーケンス変更
+		return WEATHER_TASK_FUNC_RESULT_FINISH;
+	}
+
+	return WEATHER_TASK_FUNC_RESULT_CONTINUE;
+
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	フェードなし
+ */
+//-----------------------------------------------------------------------------
+static WEATHER_TASK_FUNC_RESULT WEATHER_SUNNY_NoFade( WEATHER_TASK* p_wk, WEATHER_TASK_FOG_MODE fog_cont, u32 heapID )
+{
+	u32 fogoffset, fogslope;
+
+	if( WEATHER_TASK_IsZoneFog( p_wk ) )
+	{
+		fogoffset = WEATHER_TASK_GetZoneFogOffset( p_wk );
+		fogslope	= WEATHER_TASK_GetZoneFogSlope( p_wk );
+		// フォグの設定
+		WEATHER_TASK_FogSet( p_wk, fogslope, fogoffset, fog_cont );
+	}
+
+	return WEATHER_TASK_FUNC_RESULT_FINISH;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	メイン処理
+ */
+//-----------------------------------------------------------------------------
+static WEATHER_TASK_FUNC_RESULT WEATHER_SUNNY_Main( WEATHER_TASK* p_wk, WEATHER_TASK_FOG_MODE fog_cont, u32 heapID )
+{
+	return WEATHER_TASK_FUNC_RESULT_CONTINUE;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	フェードアウト初期化
+ */
+//-----------------------------------------------------------------------------
+static WEATHER_TASK_FUNC_RESULT WEATHER_SUNNY_InitFadeOut( WEATHER_TASK* p_wk, WEATHER_TASK_FOG_MODE fog_cont, u32 heapID )
+{
+	
+	if( WEATHER_TASK_IsZoneFog( p_wk ) )
+	{
+		WEATHER_TASK_FogFadeOut_Init( p_wk,
+				FOG_START_OFFSET, 
+				FOG_FADEOUT_SYNC, fog_cont );
+	}
+
+	return WEATHER_TASK_FUNC_RESULT_FINISH;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	フェードアウト
+ */
+//-----------------------------------------------------------------------------
+static WEATHER_TASK_FUNC_RESULT WEATHER_SUNNY_FadeOut( WEATHER_TASK* p_wk, WEATHER_TASK_FOG_MODE fog_cont, u32 heapID )
+{
+	BOOL result;
+
+	result = WEATHER_TASK_FogFade_IsFade( p_wk );
+	if( result ){
+		return WEATHER_TASK_FUNC_RESULT_FINISH;
+	}
+
+	return WEATHER_TASK_FUNC_RESULT_CONTINUE;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	破棄
+ */
+//-----------------------------------------------------------------------------
+static WEATHER_TASK_FUNC_RESULT WEATHER_SUNNY_Exit( WEATHER_TASK* p_wk, WEATHER_TASK_FOG_MODE fog_cont, u32 heapID )
+{
+	if( WEATHER_TASK_IsZoneFog( p_wk ) )
+	{
+		// FOG終了
+		WEATHER_TASK_FogClear( p_wk, fog_cont );
+	}
+
+	if( WEATHER_TASK_IsZoneLight( p_wk ) )
+	{
+		// ライト元に
+		WEATHER_TASK_LIGHT_Back( p_wk, heapID );
+	}
+
+	return WEATHER_TASK_FUNC_RESULT_FINISH;
+}

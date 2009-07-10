@@ -247,7 +247,7 @@ static void FIELD_WEATHER_CHANGE_Multi( FIELD_WEATHER* p_sys, u32 heapID );
  *	@return	システムワーク
  */
 //-----------------------------------------------------------------------------
-FIELD_WEATHER* FIELD_WEATHER_Init( const FIELD_CAMERA* cp_camera, FIELD_LIGHT* p_light, FIELD_FOG_WORK* p_fog, u32 heapID )
+FIELD_WEATHER* FIELD_WEATHER_Init( const FIELD_CAMERA* cp_camera, FIELD_LIGHT* p_light, FIELD_FOG_WORK* p_fog, const FIELD_ZONEFOGLIGHT* cp_zonefog, u32 heapID )
 {
 	FIELD_WEATHER* p_sys;
 	int i;
@@ -270,7 +270,7 @@ FIELD_WEATHER* FIELD_WEATHER_Init( const FIELD_CAMERA* cp_camera, FIELD_LIGHT* p
 	
 
 	for( i=0; i<FIELD_WEATHER_WORK_NUM; i++ ){
-		p_sys->p_task[ i ] = WEATHER_TASK_Init( p_sys->p_unit, cp_camera, p_light, p_fog, p_sys->p_3dbg, heapID );
+		p_sys->p_task[ i ] = WEATHER_TASK_Init( p_sys->p_unit, cp_camera, p_light, p_fog, cp_zonefog, p_sys->p_3dbg, heapID );
 	}
 
 	// 割り込み初期化
@@ -389,7 +389,9 @@ void FIELD_WEATHER_Set( FIELD_WEATHER* p_sys, u32 weather_no, u32 heapID )
 	GF_ASSERT( NELEMS(sc_FIELD_WEATHER_DATA) > weather_no );
 
 	// 変更する意味があるか？
-	if( weather_no != p_sys->now_weather ){
+	// 晴れは、ZONE用フォグやライトの反映がるかもしれないので、
+	// 絶対に変更
+	if( (weather_no != p_sys->now_weather) || (weather_no == WEATHER_NO_SUNNY) ){
 
 		// 全情報を破棄
 		for( i=0; i<FIELD_WEATHER_WORK_NUM; i++ ){
@@ -436,7 +438,9 @@ void FIELD_WEATHER_Change( FIELD_WEATHER* p_sys, u32 weather_no )
 	}
 
 	// 天気が一緒なら何もしない
-	if( p_sys->now_weather == weather_no ){
+	// 晴れは、ZONE用フォグやライトの反映がるかもしれないので、
+	// 絶対に変更
+	if( (p_sys->now_weather == weather_no) && ((weather_no != WEATHER_NO_SUNNY)) ){
 		return ;
 	}
 

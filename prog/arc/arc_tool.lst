@@ -172,4 +172,6 @@
 	ARCID_P_STATUS		"p_status_gra.narc"         #WiFiバケットミニゲームグラフィック
 	ARCID_RAIL_DATA		"fieldmap/field_rail_data.narc"   #フィールドレールデータ
 	ARCID_SCENEAREA_DATA		"fieldmap/field_scenearea_data.narc"   #シーンエリアデータ
+	ARCID_ZONEFOG_TABLE		"fieldmap/field_fog_table.narc"   #フォグデータ
+	ARCID_ZONELIGHT_TABLE		"fieldmap/field_zone_light.narc"   #ライト情報
 

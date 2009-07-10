@@ -1,0 +1,18 @@
+/*****************************************************************************
+	Archive file index definition.
+	File: field_fog_table.naix
+
+	This file was created by NINTENDO NITRO-System Archiver.
+
+
+ *****************************************************************************/
+
+#ifndef NARC_FIELD_FOG_TABLE_NAIX_
+#define NARC_FIELD_FOG_TABLE_NAIX_
+
+enum {
+	NARC_field_fog_table_zonefog_h01_dat = 0
+};
+
+/* NARC_FIELD_FOG_TABLE_NAIX_ */
+#endif

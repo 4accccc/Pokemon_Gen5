@@ -1,0 +1,18 @@
+/*****************************************************************************
+	Archive file index definition.
+	File: field_zone_light.naix
+
+	This file was created by NINTENDO NITRO-System Archiver.
+
+
+ *****************************************************************************/
+
+#ifndef NARC_FIELD_ZONE_LIGHT_NAIX_
+#define NARC_FIELD_ZONE_LIGHT_NAIX_
+
+enum {
+	NARC_field_zone_light_zone_dummylight_dat = 0
+};
+
+/* NARC_FIELD_ZONE_LIGHT_NAIX_ */
+#endif

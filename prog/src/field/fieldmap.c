@@ -174,6 +174,7 @@ struct _FIELDMAP_WORK
 	FIELD_CAMERA *camera_control;
 	FIELD_LIGHT *light;
 	FIELD_FOG_WORK *fog;
+	FIELD_ZONEFOGLIGHT	 *zonefog;
 	
 	FIELD_WEATHER *weather_sys;
   FIELD_SUBSCREEN_WORK* fieldSubscreenWork;
@@ -277,6 +278,7 @@ static void zoneChange_SetMMdl(
 		MMDLSYS *fmmdlsys, EVENTDATA_SYSTEM *evdata, u32 zone_id );
 static void zoneChange_SetBGM( GAMEDATA *gdata, u32 zone_id );
 static void zoneChange_SetWeather( FIELDMAP_WORK *fieldWork, u32 zone_id );
+static void zoneChange_SetZoneFogLight( FIELDMAP_WORK *fieldWork, u32 zone_id );
 static void zoneChange_UpdatePlayerWork( GAMEDATA *gdata, u32 zone_id );
 
 //etc
@@ -518,10 +520,14 @@ static MAINSEQ_RESULT mainSeqFunc_setup(GAMESYS_WORK *gsys, FIELDMAP_WORK *field
   // フォグシステム生成
   fieldWork->fog	= FIELD_FOG_Create( fieldWork->heapID );
 
+	// ゾーンフォグシステム生成
+	fieldWork->zonefog = FIELD_ZONEFOGLIGHT_Create( fieldWork->heapID );
+	FIELD_ZONEFOGLIGHT_Load( fieldWork->zonefog, FIELD_ZONEFOGLIGHT_DATA_NONE, FIELD_ZONEFOGLIGHT_DATA_NONE, fieldWork->heapID );
+
   // ライトシステム生成
   {
     fieldWork->light = FIELD_LIGHT_Create( AREADATA_GetLightType( fieldWork->areadata ), 
-        14400, 
+        GFL_RTC_GetTimeBySecond(), 
         fieldWork->fog, fieldWork->g3Dlightset, fieldWork->heapID );
   }
 
@@ -530,11 +536,12 @@ static MAINSEQ_RESULT mainSeqFunc_setup(GAMESYS_WORK *gsys, FIELDMAP_WORK *field
       fieldWork->camera_control,
       fieldWork->light,
       fieldWork->fog,
+			fieldWork->zonefog, 
       fieldWork->heapID );
   
   // 天気晴れ
   FIELD_WEATHER_Set(
-      fieldWork->weather_sys, WEATHER_NO_SUNNY, fieldWork->heapID );
+			fieldWork->weather_sys, WEATHER_NO_SUNNY, fieldWork->heapID );
   
   //情報バーの初期化
 	{
@@ -711,6 +718,9 @@ static MAINSEQ_RESULT mainSeqFunc_free(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldW
 
   // ライトシステム破棄
   FIELD_LIGHT_Delete( fieldWork->light );
+
+	// ゾーンフォグシステム破棄
+	FIELD_ZONEFOGLIGHT_Delete( fieldWork->zonefog );
   
   // フォグシステム破棄
   FIELD_FOG_Delete( fieldWork->fog );
@@ -981,6 +991,18 @@ FIELD_LIGHT * FIELDMAP_GetFieldLight( FIELDMAP_WORK *fieldWork )
 FIELD_FOG_WORK * FIELDMAP_GetFieldFog( FIELDMAP_WORK *fieldWork )
 {
 	return fieldWork->fog;
+}
+
+//----------------------------------------------------------------------------
+/**
+ * FIELDMAP_WORK FIELD_ZONEFOGLIGHT取得
+ * @param	fieldWork	FIELDMAP_WORK
+ * @retval FIELD_ZONEFOGLIGHT
+ */
+//-----------------------------------------------------------------------------
+FIELD_ZONEFOGLIGHT * FIELDMAP_GetFieldZoneFog( FIELDMAP_WORK *fieldWork )
+{
+	return fieldWork->zonefog;
 }
 
 //--------------------------------------------------------------
@@ -1673,6 +1695,9 @@ static void fldmap_ZoneChange( FIELDMAP_WORK *fieldWork )
 	
 	//BGM切り替え
 	zoneChange_SetBGM( gdata, new_zone_id );
+
+	// ZONEフォグライト設定
+	zoneChange_SetZoneFogLight( fieldWork, new_zone_id );
 	
 	//天候リクエスト
 	zoneChange_SetWeather( fieldWork, new_zone_id );
@@ -1759,6 +1784,24 @@ static void zoneChange_SetWeather( FIELDMAP_WORK *fieldWork, u32 zone_id )
 	if( w_no != WEATHER_NO_NUM && w_no != FIELD_WEATHER_GetWeatherNo(we) ){
 		FIELD_WEATHER_Change( we, w_no );
 	}
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	ゾーン切り替え時の処理	ゾーン用上書きFOG、ライト情報
+ *
+ *	@param	fieldWork	
+ *	@param	zone_id 
+ */
+//-----------------------------------------------------------------------------
+static void zoneChange_SetZoneFogLight( FIELDMAP_WORK *fieldWork, u32 zone_id )
+{
+	FIELD_ZONEFOGLIGHT* p_zonefog = FIELDMAP_GetFieldZoneFog( fieldWork );
+
+	FIELD_ZONEFOGLIGHT_Clear( p_zonefog );
+	
+	FIELD_ZONEFOGLIGHT_Load( p_zonefog, FIELD_ZONEFOGLIGHT_DATA_NONE, FIELD_ZONEFOGLIGHT_DATA_NONE, fieldWork->heapID );
+//	FIELD_ZONEFOGLIGHT_Load( p_zonefog, 0, 0, fieldWork->heapID );
 }
 
 //--------------------------------------------------------------

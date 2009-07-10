@@ -295,6 +295,7 @@ SRCS_OVERLAY_FIELDMAP		=	field/field_proc.c \
 				field/event_debug_item.c \
 				field/fldmmdl_draw_0.c \
 				field/field_fog.c \
+				field/field_zonefog.c \
 				field/field_light.c \
 				field/field_subscreen.c \
 				field/field_3dbg.c \

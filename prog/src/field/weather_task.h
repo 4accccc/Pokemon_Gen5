@@ -24,6 +24,7 @@ extern "C"{
 
 #include "field_light.h"
 #include "field_fog.h"
+#include "field_zonefog.h"
 #include "field_3dbg.h"
 
 //-----------------------------------------------------------------------------
@@ -201,7 +202,7 @@ typedef struct {
 //-------------------------------------
 ///	システム生成・破棄・メイン
 //=====================================
-extern WEATHER_TASK* WEATHER_TASK_Init( GFL_CLUNIT* p_clunit, const FIELD_CAMERA* cp_camera, FIELD_LIGHT* p_light, FIELD_FOG_WORK* p_fog, FIELD_3DBG* p_3dbg, u32 heapID );
+extern WEATHER_TASK* WEATHER_TASK_Init( GFL_CLUNIT* p_clunit, const FIELD_CAMERA* cp_camera, FIELD_LIGHT* p_light, FIELD_FOG_WORK* p_fog, const FIELD_ZONEFOGLIGHT* cp_zonefog, FIELD_3DBG* p_3dbg, u32 heapID );
 extern void WEATHER_TASK_Exit( WEATHER_TASK* p_wk );
 extern void WEATHER_TASK_Main( WEATHER_TASK* p_wk, u32 heapID );
 
@@ -279,6 +280,16 @@ extern void WEATHER_TASK_FogClear( WEATHER_TASK* p_wk, WEATHER_TASK_FOG_MODE mod
 extern void WEATHER_TASK_FogFadeIn_Init( WEATHER_TASK* p_wk, FIELD_FOG_SLOPE fog_slope, int fog_offs, int timing, WEATHER_TASK_FOG_MODE mode );
 extern void WEATHER_TASK_FogFadeOut_Init( WEATHER_TASK* p_wk, int fog_offs, int timing, WEATHER_TASK_FOG_MODE mode );
 extern BOOL WEATHER_TASK_FogFade_IsFade( const WEATHER_TASK* cp_wk );
+
+
+//-------------------------------------
+///	ゾーン用設定の取得
+//=====================================
+extern BOOL WEATHER_TASK_IsZoneFog( const WEATHER_TASK* cp_wk );
+extern BOOL WEATHER_TASK_IsZoneLight( const WEATHER_TASK* cp_wk );
+extern s32 WEATHER_TASK_GetZoneFogOffset( const WEATHER_TASK* cp_wk );
+extern u32 WEATHER_TASK_GetZoneFogSlope( const WEATHER_TASK* cp_wk );
+extern u32 WEATHER_TASK_GetZoneLight( const WEATHER_TASK* cp_wk );
 
 //-------------------------------------
 ///	フォグブレンド操作

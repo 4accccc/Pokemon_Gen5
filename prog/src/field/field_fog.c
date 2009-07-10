@@ -120,6 +120,8 @@ FIELD_FOG_WORK* FIELD_FOG_Create( u32 heapID )
 	p_wk->blendmode = FIELD_FOG_BLEND_COLOR_ALPHA;
 	p_wk->alpha		= 31;
 
+	FIELD_FOG_TBL_SetUpDefault( p_wk );
+
 	return p_wk;
 }
 
@@ -175,6 +177,8 @@ void FIELD_FOG_Reflect( FIELD_FOG_WORK* p_wk )
 	// データが変更されたので、SDKに反映
 	if( p_wk->change ){
 
+		OS_TPrintf( "offset = 0x%x\n", p_wk->offset );
+		OS_TPrintf( "slope = %d\n", p_wk->slope );
 		G3X_SetFog( p_wk->flag, p_wk->blendmode,
 				p_wk->slope, p_wk->offset );
 	
@@ -595,7 +599,7 @@ static s32 FADE_WORK_GetOffset( const FADE_WORK* cp_wk )
 //-----------------------------------------------------------------------------
 static u16 FADE_WORK_GetSlope( const FADE_WORK* cp_wk )
 {
-	u16 ans;
+	u32 ans;
 
 	ans = (cp_wk->slope_dist * cp_wk->count) / cp_wk->count_max;
 	ans += cp_wk->slope_start;

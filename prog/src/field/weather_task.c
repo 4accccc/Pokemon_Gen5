@@ -174,6 +174,9 @@ struct _WEATHER_TASK {
 	
 	// ライト情報
 	FIELD_LIGHT* p_light;
+
+	// ゾーン用フォグ、ライト情報
+	const FIELD_ZONEFOGLIGHT*	cp_zonefog;
 	
 	// カメラ情報
 	const FIELD_CAMERA* cp_camera;
@@ -294,13 +297,14 @@ static void TOOL_GetPerspectiveScreenSize( const MtxFx44* cp_pers_mtx, fx32 dist
  *	@param	cp_camera		フィールドカメラ
  *	@param	p_light			フィールドライト
  *	@param	p_fog			フィールドフォグ
+ *	@param	p_zonefog		ゾーン用フォグライト除法
  *	@param	p_3dbg			3DBGシステム
  *	@param	heapID			ヒープID
  *	
  *	@return	天気タスクワーク
  */
 //-----------------------------------------------------------------------------
-WEATHER_TASK* WEATHER_TASK_Init( GFL_CLUNIT* p_clunit, const FIELD_CAMERA* cp_camera, FIELD_LIGHT* p_light, FIELD_FOG_WORK* p_fog, FIELD_3DBG* p_3dbg, u32 heapID )
+WEATHER_TASK* WEATHER_TASK_Init( GFL_CLUNIT* p_clunit, const FIELD_CAMERA* cp_camera, FIELD_LIGHT* p_light, FIELD_FOG_WORK* p_fog, const FIELD_ZONEFOGLIGHT* cp_zonefog, FIELD_3DBG* p_3dbg, u32 heapID )
 {
 	WEATHER_TASK* p_wk;
 
@@ -311,6 +315,7 @@ WEATHER_TASK* WEATHER_TASK_Init( GFL_CLUNIT* p_clunit, const FIELD_CAMERA* cp_ca
 	p_wk->cp_camera		= cp_camera;	
 	p_wk->p_fog			= p_fog;
 	p_wk->p_light		= p_light;
+	p_wk->cp_zonefog	= cp_zonefog;
 	p_wk->p_3dbg		= p_3dbg;
 
 	return p_wk;
@@ -1026,6 +1031,68 @@ extern BOOL WEATHER_TASK_FogFade_IsFade( const WEATHER_TASK* cp_wk )
 
 //----------------------------------------------------------------------------
 /**
+ *	@brief	ゾーンフォグ情報の有無
+ *
+ *	@param	cp_wk		ワーク
+ *
+ *	@retval	TRUE	ある
+ *	@retval	FALSE	ない
+ */
+//-----------------------------------------------------------------------------
+BOOL WEATHER_TASK_IsZoneFog( const WEATHER_TASK* cp_wk )
+{
+	return FIELD_ZONEFOGLIGHT_IsFogData( cp_wk->cp_zonefog );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	ゾーンライト情報の有無
+ *
+ *	@param	cp_wk		ワーク
+ */
+//-----------------------------------------------------------------------------
+BOOL WEATHER_TASK_IsZoneLight( const WEATHER_TASK* cp_wk )
+{
+	return FIELD_ZONEFOGLIGHT_IsLightData( cp_wk->cp_zonefog );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	ゾーンフォグオフセット情報の取得
+ *
+ *	@param	cp_wk		ワーク
+ *
+ *	@return	オフセット情報
+ */
+//-----------------------------------------------------------------------------
+s32 WEATHER_TASK_GetZoneFogOffset( const WEATHER_TASK* cp_wk )
+{
+	return FIELD_ZONEFOGLIGHT_GetOffset( cp_wk->cp_zonefog );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief		ゾーンフォグスロープ情報の取得
+ */
+//-----------------------------------------------------------------------------
+u32 WEATHER_TASK_GetZoneFogSlope( const WEATHER_TASK* cp_wk )
+{
+	return FIELD_ZONEFOGLIGHT_GetSlope( cp_wk->cp_zonefog );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief		ゾーンライトデータIDの取得
+ */
+//-----------------------------------------------------------------------------
+u32 WEATHER_TASK_GetZoneLight( const WEATHER_TASK* cp_wk )
+{
+	return FIELD_ZONEFOGLIGHT_GetLightIndex( cp_wk->cp_zonefog );
+}
+
+
+//----------------------------------------------------------------------------
+/**
  *	@brief	FOGブレンドモード設定
  *
  *	@param	p_wk		ワーク
@@ -1462,13 +1529,15 @@ static void WEATHER_TASK_WK_Clear( WEATHER_TASK* p_wk )
 {
 	GFL_CLUNIT* p_unit;
 	FIELD_FOG_WORK*	p_fog;
+	const FIELD_ZONEFOGLIGHT*	cp_zonefog;
 	FIELD_LIGHT* p_light;
 	FIELD_3DBG* p_3dbg;
 	const FIELD_CAMERA* cp_camera;
 
 	// 一時退避
 	p_unit		= p_wk->p_unit;
-	p_fog		= p_wk->p_fog;
+	p_fog			= p_wk->p_fog;
+	cp_zonefog= p_wk->cp_zonefog;
 	p_light		= p_wk->p_light;
 	cp_camera	= p_wk->cp_camera;
 	p_3dbg		= p_wk->p_3dbg;
@@ -1482,6 +1551,7 @@ static void WEATHER_TASK_WK_Clear( WEATHER_TASK* p_wk )
 	p_wk->p_light	= p_light;
 	p_wk->cp_camera	= cp_camera;
 	p_wk->p_3dbg	= p_3dbg;
+	p_wk->cp_zonefog = cp_zonefog;
 
 }
 
