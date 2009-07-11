@@ -637,14 +637,13 @@ void SCQUE_PUT_MsgImpl( BTL_SERVER_CMD_QUE* que, u8 scType, ... )
     scque_put2byte( que, strID );
 
     BTL_Printf(" PUT MSG SC=%d, StrID=%d\n arg= ", scType, strID);
-
     do {
       arg = va_arg( list, int );
       scque_put1byte( que, arg );
       TAYA_Printf("%d ", arg);
     }while( arg != MSGARG_TERMINATOR );
-
     TAYA_Printf("\n");
+
 
     va_end( list );
   }

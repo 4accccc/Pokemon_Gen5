@@ -84,7 +84,6 @@ typedef enum {
   SC_ACT_KILL,              ///< 強制瀕死演出（みちづれ、一撃ワザなど）
   SC_TOKWIN_IN,             ///< とくせいウィンドウ表示イン [ClientID]
   SC_TOKWIN_OUT,            ///< とくせいウィンドウ表示アウト [ClientID]
-
   SC_MSG_WAZA,              ///< ワザメッセージ表示[ ClientID, wazaIdx ]
   SC_MSG_STD,               ///< メッセージ表示 [MsgID, ClientID, numArgs, arg1, arg2, ... ]
   SC_MSG_SET,               ///< メッセージ表示 [MsgID, ClientID, numArgs, arg1, arg2, ... ]

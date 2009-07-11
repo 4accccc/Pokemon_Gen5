@@ -299,6 +299,8 @@ static BTL_EVENT_FACTOR*  ADD_StealthRock( u16 pri, WazaID waza, u8 pokeID );
 static void handler_StealthRock( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void common_SideEffect( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work,
   BtlSide side, BtlSideEffect effect, BPP_SICK_CONT cont, u16 strID );
+static BTL_EVENT_FACTOR*  ADD_MikadukiNoMai( u16 pri, WazaID waza, u8 pokeID );
+static void handler_MikadukiNoMai( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static BTL_EVENT_FACTOR*  ADD_Ieki( u16 pri, WazaID waza, u8 pokeID );
 static void handler_Ieki( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static BTL_EVENT_FACTOR*  ADD_Narikiri( u16 pri, WazaID waza, u8 pokeID );
@@ -525,6 +527,7 @@ BOOL  BTL_HANDLER_Waza_Add( const BTL_POKEPARAM* pp, WazaID waza )
     { WAZANO_HOROBINOUTA,     ADD_HorobiNoUta   },
     { WAZANO_HUKURODATAKI,    ADD_FukuroDataki  },
     { WAZANO_AKUARINGU,       ADD_AquaRing      },
+    { WAZANO_MIKADUKINOMAI,   ADD_MikadukiNoMai },
   };
 
   int i;
@@ -4639,6 +4642,37 @@ static void common_SideEffect( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flow
     }
   }
 }
+//----------------------------------------------------------------------------------
+/**
+ * ‚Ý‚©‚Ã‚«‚Ì‚Ü‚¢
+ */
+//----------------------------------------------------------------------------------
+static BTL_EVENT_FACTOR*  ADD_MikadukiNoMai( u16 pri, WazaID waza, u8 pokeID )
+{
+  static const BtlEventHandlerTable HandlerTable[] = {
+    { BTL_EVENT_UNCATEGORIZE_WAZA,  handler_MikadukiNoMai   },  // –¢•ª—ÞƒƒU
+    { BTL_EVENT_NULL, NULL },
+  };
+  return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_WAZA, waza, pri, pokeID, HandlerTable );
+}
+static void handler_MikadukiNoMai( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+{
+  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
+  {
+    BTL_HANDEX_PARAM_KILL* kill_param;
+    BTL_HANDEX_PARAM_POSEFF_ADD* eff_param;
+
+    eff_param = BTL_SVFLOW_HANDLERWORK_Push( flowWk, BTL_HANDEX_POSEFF_ADD, pokeID );
+    eff_param->effect = BTL_POSEFF_MIKADUKINOMAI;
+    eff_param->pos = BTL_SVFLOW_PokeIDtoPokePos( flowWk, pokeID );
+
+    kill_param = BTL_SVFLOW_HANDLERWORK_Push( flowWk, BTL_HANDEX_KILL, pokeID );
+    kill_param->pokeID = pokeID;
+  }
+}
+
+
+
 //----------------------------------------------------------------------------------
 /**
  * ‚¢‚¦‚«

@@ -122,6 +122,7 @@ extern HEAPID BTL_SVFLOW_RECEPT_GetHeapID( BTL_SVFLOW_WORK* wk );
 extern u32 BTL_SVFLOW_SimulationDamage( BTL_SVFLOW_WORK* flowWk, u8 atkPokeID, u8 defPokeID, WazaID waza, BOOL fAffinity, BOOL fCritical );
 extern BtlLandForm BTL_SVFLOW_GetLandForm( BTL_SVFLOW_WORK* wk );
 extern const BTL_PARTY* BTL_SVFLOW_GetPartyData( BTL_SVFLOW_WORK* wk, u8 pokeID );
+extern BtlPokePos BTL_SVFLOW_PokeIDtoPokePos( BTL_SVFLOW_WORK* wk, u8 pokeID );
 
 
 /**
@@ -201,6 +202,7 @@ typedef enum {
   BTL_HANDEX_SIDEEFF_REMOVE, ///< サイドエフェクト削除
   BTL_HANDEX_ADD_FLDEFF,    ///< フィールドエフェクト追加
   BTL_HANDEX_REMOVE_FLDEFF, ///< フィールドエフェクト追加
+  BTL_HANDEX_POSEFF_ADD,    ///< 位置エフェクト追加
   BTL_HANDEX_CHANGE_TOKUSEI,///< とくせい書き換え
   BTL_HANDEX_SET_ITEM,      ///< アイテム書き換え
   BTL_HANDEX_SWAP_ITEM,     ///< アイテム入れ替え
@@ -398,6 +400,16 @@ typedef struct {
   BTL_HANDEX_PARAM_HEADER  header;
   BtlFieldEffect           effect;
 }BTL_HANDEX_PARAM_REMOVE_FLDEFF;
+
+/**
+ * 位置エフェクト追加
+ */
+typedef struct {
+  BTL_HANDEX_PARAM_HEADER  header;
+  BtlPosEffect             effect;
+  BtlPokePos               pos;
+  int                      param;
+}BTL_HANDEX_PARAM_POSEFF_ADD;
 
 typedef struct {
   BTL_HANDEX_PARAM_HEADER  header;

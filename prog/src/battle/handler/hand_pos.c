@@ -1,0 +1,202 @@
+//=============================================================================================
+/**
+ * @file  hand_pos.c
+ * @brief ポケモンWB バトルシステム イベントファクター [位置エフェクト]
+ * @author  taya
+ *
+ * @date  2009.06.18  作成
+ */
+//=============================================================================================
+
+#include "poke_tool\poketype.h"
+#include "poke_tool\monsno_def.h"
+
+#include "..\btl_common.h"
+#include "..\btl_calc.h"
+#include "..\btl_field.h"
+#include "..\btl_client.h"
+#include "..\btl_event_factor.h"
+
+#include "hand_pos.h"
+
+/*--------------------------------------------------------------------------*/
+/* Consts                                                                   */
+/*--------------------------------------------------------------------------*/
+enum {
+  WORKIDX_PARAM = EVENT_HANDLER_WORK_ELEMS-1,
+};
+
+
+/*--------------------------------------------------------------------------*/
+/* Prototypes                                                               */
+/*--------------------------------------------------------------------------*/
+static BOOL is_registable( BtlPosEffect effect, BtlPokePos pokePos);
+static BTL_EVENT_FACTOR* ADD_POS_Negaigoto( u16 pri, BtlPokePos pos, BtlPosEffect eff );
+static void handler_pos_Negaigoto( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokePos, int* work );
+static BTL_EVENT_FACTOR* ADD_POS_MikadukiNoMai( u16 pri, BtlPokePos pos, BtlPosEffect eff );
+static void handler_pos_MikadukiNoMai( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokePos, int* work );
+static BTL_EVENT_FACTOR* ADD_POS_SizenNoMegumi( u16 pri, BtlPokePos pos, BtlPosEffect eff );
+static void handler_pos_SizenNoMegumi( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokePos, int* work );
+
+
+
+
+
+//=============================================================================================
+/**
+ * サイドエフェクトハンドラをシステムに追加
+ *
+ * @param   side
+ * @param   sideEffect
+ * @param   contParam
+ *
+ * @retval  BTL_EVENT_FACTOR*   追加されたイベントハンドラ（重複して追加できない場合NULL）
+ */
+//=============================================================================================
+BTL_EVENT_FACTOR*  BTL_HANDLER_POS_Add( BtlPosEffect effect, BtlPokePos pos, int param )
+{
+  typedef BTL_EVENT_FACTOR* (*pEventAddFunc)( u16 pri, BtlPokePos pos, BtlPosEffect eff );
+
+  static const struct {
+    BtlPosEffect   eff;
+    pEventAddFunc  func;
+  }funcTbl[] = {
+    { BTL_POSEFF_NEGAIGOTO,       ADD_POS_Negaigoto       },
+    { BTL_POSEFF_MIKADUKINOMAI,   ADD_POS_MikadukiNoMai   },
+    { BTL_POSEFF_SIZENNOMEGUMI,   ADD_POS_SizenNoMegumi   },
+  };
+
+  GF_ASSERT(effect < BTL_POSEFF_MAX);
+
+  {
+    u32 i;
+    for(i=0; i<NELEMS(funcTbl); ++i)
+    {
+      if( funcTbl[i].eff == effect )
+      {
+        if( is_registable(effect, pos) )
+        {
+          return funcTbl[i].func( 0, pos, effect );
+        }
+        break;
+      }
+    }
+  }
+  return NULL;
+}
+//----------------------------------------------------------------------------------
+/**
+ * 登録できる条件を満たしているか判定  ※同じ位置に同じエフェクトは１つまで
+ *
+ * @param   effect
+ * @param   pokePos
+ *
+ * @retval  BOOL    条件を満たしていたらTRUE
+ */
+//----------------------------------------------------------------------------------
+static BOOL is_registable( BtlPosEffect effect, BtlPokePos pokePos)
+{
+  BTL_EVENT_FACTOR* factor;
+
+  factor = BTL_EVENT_SeekFactor( BTL_EVENT_FACTOR_POS, pokePos );
+  while( factor )
+  {
+    if( BTL_EVENT_FACTOR_GetSubID(factor) == effect ){
+      return FALSE;
+    }
+    factor = BTL_EVENT_GetNextFactor( factor );
+  }
+  return TRUE;
+}
+
+//--------------------------------------------------------------------------------------
+/**
+ *  ねがいごと
+ */
+//--------------------------------------------------------------------------------------
+static BTL_EVENT_FACTOR* ADD_POS_Negaigoto( u16 pri, BtlPokePos pos, BtlPosEffect eff )
+{
+  static const BtlEventHandlerTable HandlerTable[] = {
+    { BTL_EVENT_WAZA_DMG_PROC2,  handler_pos_Negaigoto   },  // ダメージ補正
+    { BTL_EVENT_NULL, NULL },
+  };
+  return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_WAZA, eff, pri, pos, HandlerTable );
+}
+static void handler_pos_Negaigoto( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokePos, int* work )
+{
+}
+//--------------------------------------------------------------------------------------
+/**
+ *  みかづきのまい
+ */
+//--------------------------------------------------------------------------------------
+static BTL_EVENT_FACTOR* ADD_POS_MikadukiNoMai( u16 pri, BtlPokePos pos, BtlPosEffect eff )
+{
+  static const BtlEventHandlerTable HandlerTable[] = {
+    { BTL_EVENT_MEMBER_IN,  handler_pos_MikadukiNoMai   },  // ポケ入場ハンドラ
+    { BTL_EVENT_NULL, NULL },
+  };
+  return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_WAZA, eff, pri, pos, HandlerTable );
+}
+static void handler_pos_MikadukiNoMai( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokePos, int* work )
+{
+  u8 pokeID = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID );
+  if( BTL_SVFLOW_PokeIDtoPokePos(flowWk, pokeID) == pokePos )
+  {
+    const BTL_POKEPARAM* bpp = BTL_SVFLOW_RECEPT_GetPokeParam( flowWk, pokeID );
+    BTL_HANDEX_PARAM_MESSAGE* msg_param = BTL_SVFLOW_HANDLERWORK_Push( flowWk, BTL_HANDEX_MESSAGE, BTL_POKEID_NULL );
+    HANDEX_STR_Setup( &msg_param->str, BTL_STRTYPE_SET, BTL_STRID_SET_MikadukiNoMai );
+    HANDEX_STR_AddArg( &msg_param->str, pokeID );
+
+    // 体力全回復
+    if( !BPP_IsHPFull(bpp) ){
+      BTL_HANDEX_PARAM_RECOVER_HP* hp_param;
+      hp_param = BTL_SVFLOW_HANDLERWORK_Push( flowWk, BTL_HANDEX_RECOVER_HP, pokeID );
+      hp_param->pokeID = pokeID;
+      hp_param->recoverHP = BPP_GetValue(bpp, BPP_MAX_HP) - BPP_GetValue(bpp, BPP_HP);
+    }
+
+    // ポケ系状態異常回復
+    if( BPP_GetPokeSick(bpp) != POKESICK_NULL ){
+      BTL_HANDEX_PARAM_CURE_SICK* param = BTL_SVFLOW_HANDLERWORK_Push( flowWk, BTL_HANDEX_CURE_SICK, pokeID );
+      param->poke_cnt = 1;
+      param->pokeID[0] = pokeID;
+      param->sickCode = WAZASICK_EX_POKEFULL;
+    }
+
+    // 全ワザPP全回復
+    {
+      u32 i;
+      u8 pp, ppMax;
+      for(i=0; i<PTL_WAZA_MAX; ++i){
+        if( BPP_WAZA_GetParticular(bpp, i, &pp, &ppMax) != WAZANO_NULL )
+        {
+          BTL_HANDEX_PARAM_PP* param = BTL_SVFLOW_HANDLERWORK_Push( flowWk, BTL_HANDEX_RECOVER_PP, pokeID );
+          param->pokeID = pokeID;
+          param->volume = (ppMax - pp);
+          param->wazaIdx = i;
+        }
+      }
+    }
+
+    BTL_EVENT_FACTOR_Remove( myHandle );
+  }
+}
+//--------------------------------------------------------------------------------------
+/**
+ *  しぜんのめぐみ
+ */
+//--------------------------------------------------------------------------------------
+static BTL_EVENT_FACTOR* ADD_POS_SizenNoMegumi( u16 pri, BtlPokePos pos, BtlPosEffect eff )
+{
+  static const BtlEventHandlerTable HandlerTable[] = {
+    { BTL_EVENT_WAZA_DMG_PROC2,  handler_pos_SizenNoMegumi   },  // ダメージ補正
+    { BTL_EVENT_NULL, NULL },
+  };
+  return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_WAZA, eff, pri, pos, HandlerTable );
+}
+static void handler_pos_SizenNoMegumi( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokePos, int* work )
+{
+
+}
+

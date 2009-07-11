@@ -24,6 +24,7 @@
 #include "handler\hand_item.h"
 #include "handler\hand_waza.h"
 #include "handler\hand_side.h"
+#include "handler\hand_pos.h"
 
 #include "btl_server_flow.h"
 
@@ -463,6 +464,7 @@ static u8 scproc_HandEx_sideEffectRemove( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_
 static u8 scproc_HandEx_addFieldEffect( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header );
 static void handexSub_putString( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_STR_PARAMS* strParam );
 static u8 scproc_HandEx_removeFieldEffect( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header );
+static u8 scproc_HandEx_PosEffAdd( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header );
 static u8 scproc_HandEx_tokuseiChange( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header );
 static u8 scproc_HandEx_setItem( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header );
 static u8 scproc_HandEx_swapItem( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header );
@@ -1297,6 +1299,9 @@ static void scproc_Fight_WazaExe( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, 
   TargetPokeRec_Clear( &wk->targetPokemon );
   flowsub_registerWazaTargets( wk, atPos, waza, &action, &wk->targetPokemon );
 
+  // @@@単純に死んでるポケモンを除外してるが…ホントはダブルとかだと隣のポケモンに当たったりするハズ
+  TargetPokeRec_RemoveDeadPokemon( &wk->targetPokemon );
+
   flowsub_checkNotEffect( wk, waza, attacker, &wk->targetPokemon );
   flowsub_checkWazaAvoid( wk, waza, attacker, &wk->targetPokemon );
 
@@ -1613,7 +1618,6 @@ static void flowsub_checkWazaAvoid( BTL_SVFLOW_WORK* wk, WazaID waza, const BTL_
     if( !scEvent_checkHit(wk, attacker, bpp, waza) )
     {
       pokeID[count++] = BPP_GetID( bpp );
-      scPut_WazaAvoid( wk, bpp, waza );
       TargetPokeRec_Remove( targets, bpp );
       scPut_WazaAvoid( wk, bpp, waza );
     }
@@ -2854,6 +2858,7 @@ static BOOL scproc_SimpleDamage( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u32 da
       BPP_TURNFLAG_Set( bpp, BPP_TURNFLG_DAMAGED );
 
       if( strID != STRID_NULL ){
+        BTL_Printf("ダメージ時文字列=%d\n", strID);
         scPut_Message_Set( wk, bpp, strID );
       }
 
@@ -3855,30 +3860,6 @@ static WazaSick scPut_CureSick( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, BtlWaza
 }
 //----------------------------------------------------------------------------------
 /**
- * [Put]状態異常回復処理の標準メッセージ出力コマンド生成
- *
- * @param   wk
- * @param   bpp
- * @param   sick
- * @param   itemID
- */
-//----------------------------------------------------------------------------------
-static void scPut_CureSickMsg( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, WazaSick sick, u16 itemID )
-{
-  BOOL fUseItem = (itemID != ITEM_DUMMY_DATA);
-  int strID = getCureSickStrID( sick, fUseItem );
-  if( strID >= 0 )
-  {
-    u8 pokeID = BPP_GetID( bpp );
-    if( fUseItem ){
-      SCQUE_PUT_MSG_SET( wk->que, strID, pokeID, itemID );
-    }else{
-      SCQUE_PUT_MSG_SET( wk->que, strID, pokeID );
-    }
-  }
-}
-//----------------------------------------------------------------------------------
-/**
  * 拡張状態異常コードを、該当するコードに変換する
  *
  * @param   bpp       対象ポケモン
@@ -3921,6 +3902,30 @@ static WazaSick trans_sick_code( const BTL_POKEPARAM* bpp, BtlWazaSickEx exCode 
   }
 
   return result;
+}
+//----------------------------------------------------------------------------------
+/**
+ * [Put]状態異常回復処理の標準メッセージ出力コマンド生成
+ *
+ * @param   wk
+ * @param   bpp
+ * @param   sick
+ * @param   itemID
+ */
+//----------------------------------------------------------------------------------
+static void scPut_CureSickMsg( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, WazaSick sick, u16 itemID )
+{
+  BOOL fUseItem = (itemID != ITEM_DUMMY_DATA);
+  int strID = getCureSickStrID( sick, fUseItem );
+  if( strID >= 0 )
+  {
+    u8 pokeID = BPP_GetID( bpp );
+    if( fUseItem ){
+      SCQUE_PUT_MSG_SET( wk->que, strID, pokeID, itemID );
+    }else{
+      SCQUE_PUT_MSG_SET( wk->que, strID, pokeID );
+    }
+  }
 }
 //----------------------------------------------------------------------------------
 /**
@@ -6752,6 +6757,21 @@ const BTL_PARTY* BTL_SVFLOW_GetPartyData( BTL_SVFLOW_WORK* wk, u8 pokeID )
   u8 clientID = BTL_MAIN_PokeIDtoClientID( wk->mainModule, pokeID );
   return BTL_POKECON_GetPartyDataConst( wk->pokeCon, clientID );
 }
+//=============================================================================================
+/**
+ * 指定ポケモンの戦闘位置を返す
+ *
+ * @param   wk
+ * @param   pokeID
+ *
+ * @retval  BtlPokePos
+ */
+//=============================================================================================
+BtlPokePos BTL_SVFLOW_PokeIDtoPokePos( BTL_SVFLOW_WORK* wk, u8 pokeID )
+{
+  return BTL_MAIN_PokeIDtoPokePos( wk->mainModule, wk->pokeCon, pokeID );
+}
+
 
 
 //--------------------------------------------------------------------------------------------------------
@@ -6830,6 +6850,7 @@ static BTL_HANDEX_PARAM_HEADER* Hem_PushWork( HANDLER_EXHIBISION_MANAGER* wk, Bt
     { BTL_HANDEX_SIDEEFF_REMOVE, sizeof(BTL_HANDEX_PARAM_SIDEEFF_REMOVE)  },
     { BTL_HANDEX_ADD_FLDEFF,     sizeof(BTL_HANDEX_PARAM_ADD_FLDEFF)      },
     { BTL_HANDEX_REMOVE_FLDEFF,  sizeof(BTL_HANDEX_PARAM_REMOVE_FLDEFF)   },
+    { BTL_HANDEX_POSEFF_ADD,     sizeof(BTL_HANDEX_PARAM_POSEFF_ADD)      },
     { BTL_HANDEX_CHANGE_TOKUSEI, sizeof(BTL_HANDEX_PARAM_CHANGE_TOKUSEI)  },
     { BTL_HANDEX_SET_ITEM,       sizeof(BTL_HANDEX_PARAM_SET_ITEM)        },
     { BTL_HANDEX_SWAP_ITEM,      sizeof(BTL_HANDEX_PARAM_SWAP_ITEM)       },
@@ -6930,6 +6951,7 @@ static BOOL scproc_HandEx_Root( BTL_SVFLOW_WORK* wk, u16 useItemID )
     case BTL_HANDEX_SIDEEFF_REMOVE: fPrevSucceed = scproc_HandEx_sideEffectRemove( wk, handEx_header ); break;
     case BTL_HANDEX_ADD_FLDEFF:     fPrevSucceed = scproc_HandEx_addFieldEffect( wk, handEx_header ); break;
     case BTL_HANDEX_REMOVE_FLDEFF:  fPrevSucceed = scproc_HandEx_removeFieldEffect( wk, handEx_header ); break;
+    case BTL_HANDEX_POSEFF_ADD:     fPrevSucceed = scproc_HandEx_PosEffAdd( wk, handEx_header ); break;
     case BTL_HANDEX_CHANGE_TOKUSEI: fPrevSucceed = scproc_HandEx_tokuseiChange( wk, handEx_header ); break;
     case BTL_HANDEX_SET_ITEM:       fPrevSucceed = scproc_HandEx_setItem( wk, handEx_header ); break;
     case BTL_HANDEX_SWAP_ITEM:      fPrevSucceed = scproc_HandEx_swapItem( wk, handEx_header ); break;
@@ -7021,6 +7043,7 @@ static u8 scproc_HandEx_damage( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEAD
     pp_target = BTL_POKECON_GetPokeParam( wk->pokeCon, param->pokeID[i] );
     if( !BPP_IsDead(pp_target) )
     {
+      BTL_Printf("ポケ[%d]にダメージ, 文字列=%d\n", param->pokeID[i], strID);
       if( scproc_SimpleDamage(wk, pp_target, param->damage[i], strID) ){
         result = 1;
       }
@@ -7429,6 +7452,19 @@ static u8 scproc_HandEx_removeFieldEffect( BTL_SVFLOW_WORK* wk, const BTL_HANDEX
   BTL_FIELD_RemoveEffect( param->effect );
   SCQUE_PUT_OP_RemoveFieldEffect( wk->que, param->effect );
   return 1;
+}
+/**
+ * 位置エフェクトハンドラ追加
+ * @return 成功時 1 / 失敗時 0
+ */
+static u8 scproc_HandEx_PosEffAdd( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header )
+{
+  const BTL_HANDEX_PARAM_POSEFF_ADD* param = (const BTL_HANDEX_PARAM_POSEFF_ADD*)(param_header);
+
+  if( BTL_HANDLER_POS_Add(param->effect, param->pos, param->param) != NULL ){
+    return 1;
+  }
+  return 0;
 }
 /**
  * ポケモンとくせい書き換え
