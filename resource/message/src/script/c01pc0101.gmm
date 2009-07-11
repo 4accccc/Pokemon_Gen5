@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-07-09T20:45:11"/>
+	<create user="matsumiya" host="W00207" date="2009-07-11T13:36:20"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -296,14 +296,12 @@
 		<comment>♂</comment>
 		<attribute name="キャラ指定">MAN2
 青年お洒落</attribute>
-		<language name="JPN" width="256">つよい　ポケモンを　そだてることが
-トレーナーの　つよさなら[BE:01:ページ切り替え（クリア）]
-ポケモンに　くわしいのも
-トレーナーの　つよさ　だよね</language>
-		<language name="JPN_KANJI" width="256">強い　ポケモンを　育てることが
-トレーナーの　強さなら[BE:01:ページ切り替え（クリア）]
-ポケモンに　詳しいのも
-トレーナーの　強さ　だよね</language>
+		<language name="JPN" width="256">ジムバッジを　もっていれば
+もっているほど　ここで　かえる[BE:00:ページ切り替え（行送り）]
+しょうひんも　ふえるんだよね</language>
+		<language name="JPN_KANJI" width="256">ジムバッジを　持っていれば
+持っているほど　ここで　買える[BE:00:ページ切り替え（行送り）]
+商品も　増えるんだよね</language>
 	</row>
 
 	<row id="msg_c01pc0101_middleman2_01">
