@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-07-11T14:19:20"/>
+	<create user="matsumiya" host="W00207" date="2009-07-11T14:20:59"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -303,13 +303,13 @@
 	</row>
 
 	<row id="msg_c02pc0101_backpackerm_01">
-		<comment>♀</comment>
+		<comment>♂</comment>
 		<attribute name="キャラ指定">BACKPACKERM
 バックパッカー♂</attribute>
 		<language name="JPN" width="256">はくぶつかんの　てんじを　みるため
-ヤグルマシティから　きたんだ！</language>
+シンオウちほう　から　きたんだ！</language>
 		<language name="JPN_KANJI" width="256">博物館の　展示を　みるため
-ヤグルマシティから　来たんだ！</language>
+シンオウ地方から　来たんだ！</language>
 	</row>
 
 	<flowchart-group-list>
