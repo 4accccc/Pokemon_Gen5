@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-07-10T16:13:15"/>
+	<create user="matsumiya" host="W00207" date="2009-07-11T13:04:32"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -294,26 +294,16 @@
 
 	<row id="msg_t02r0203_man1_01">
 		<comment>♂</comment>
-		<attribute name="キャラ指定">青年１</attribute>
-		<language name="JPN" width="256">しろ　くろ　つける　というけれど
-それいがいの　こたえを　さがす……[BE:00:ページ切り替え（行送り）]
-そんな　やりかたも　あるんじゃないの</language>
-		<language name="JPN_KANJI" width="256">白黒つける　というけれど
-それいがいの　答えを　探す……[BE:00:ページ切り替え（行送り）]
-そんな　やりかたも　あるんじゃないの</language>
+		<attribute name="キャラ指定">おばさん１</attribute>
+		<language name="JPN" width="256">テストメッセージ</language>
+		<language name="JPN_KANJI" width="256">仮メッセージ</language>
 	</row>
 
 	<row id="msg_t02r0203_woman1_01">
 		<comment>♀</comment>
-		<attribute name="キャラ指定">女性１</attribute>
-		<language name="JPN" width="256">つよい　ポケモンが　すき……[BE:01:ページ切り替え（クリア）]
-よわい　ポケモンが　すき　という
-きもちも　どうじに　そんざいする[BE:00:ページ切り替え（行送り）]
-ひとって　ふしぎ　よね</language>
-		<language name="JPN_KANJI" width="256">強い　ポケモンが　好き……[BE:01:ページ切り替え（クリア）]
-弱い　ポケモンが　好きという
-気持ちも　同時に　存在する[BE:00:ページ切り替え（行送り）]
-人って　矛盾しているのよね</language>
+		<attribute name="キャラ指定">おじさん１</attribute>
+		<language name="JPN" width="256">テストメッセージ</language>
+		<language name="JPN_KANJI" width="256">仮メッセージ</language>
 	</row>
 
 	<flowchart-group-list>
