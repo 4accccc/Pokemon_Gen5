@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00179" date="2009-05-14T14:58:56"/>
+	<create user="matsumiya" host="W00207" date="2009-07-11T13:06:38"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -292,49 +292,41 @@
 	</lock>
 
 
+	<row id="msg_t02r0102_woman1_01">
+		<comment>♀
+・仮</comment>
+		<attribute name="キャラ指定">WOMAN1
+女性１</attribute>
+		<language name="JPN" width="256">ある　ひとは　いいました
+いろんな　かんがえが　あるから[BE:00:ページ切り替え（行送り）]
+あらそいが　うまれるのだと……[BE:01:ページ切り替え（クリア）]
+べつの　ひとは　いいました
+いろんな　かんがえが　あるから[BE:00:ページ切り替え（行送り）]
+せかいが　ひろがるのだと……[BE:01:ページ切り替え（クリア）]
+きっと　どちらも　せいかい　なのね</language>
+		<language name="JPN_KANJI" width="256">ある　人は　いいました
+いろんな　考えが　あるから[BE:00:ページ切り替え（行送り）]
+争いが　うまれるのだと……[BE:01:ページ切り替え（クリア）]
+べつの　人は　いいました
+いろんな　考えが　あるから[BE:00:ページ切り替え（行送り）]
+世界が　広がるのだと……[BE:01:ページ切り替え（クリア）]
+きっと　どちらも　正解なのね</language>
+	</row>
+
 	<row id="msg_t02r0102_man1_01">
-		<comment>♂
-はい・いいえの選択肢表示</comment>
-		<attribute name="キャラ指定">青年１</attribute>
-		<language name="JPN" width="256">きみは　シンオウちほうや
-ホウエンちほうって　ごぞんじ　かね？</language>
-		<language name="JPN_KANJI" width="256">きみは　シンオウ地方や
-ホウエン地方って　ご存知　かね？</language>
-	</row>
-
-	<row id="msg_t02r0102_man1_02">
-		<comment>♂
-はい選択時</comment>
-		<language name="JPN" width="256">すごい　ものしり　なんだね！▼
-だけど　ここからは　ものすごく　とおい
-いつのひか　いけたら　いいんだけどね</language>
-		<language name="JPN_KANJI" width="256">すごい　物知り　なんだね！▼
-だけど　ここからは　ものすごく　遠い
-いつの日か　行けたら　いいんだけどね</language>
-	</row>
-
-	<row id="msg_t02r0102_man1_03">
-		<comment>♂
-いいえ選択時</comment>
-		<language name="JPN" width="256">そうなんだ……　しらないのか▼
-ここから　ものすごく　とおくにある
-すばらしい　ちほう　なんだけどね</language>
-		<language name="JPN_KANJI" width="256">そうなんだ……　知らないのか▼
-ここから　ものすごく　遠くにある
-すばらしい　地方　なんだけどね</language>
-	</row>
-
-	<row id="msg_t02r0102_babygirl1_01">
-		<comment>♀</comment>
-		<attribute name="キャラ指定">女の子１</attribute>
-		<language name="JPN" width="256">あたしね　おおきくなったら
-じまんの　ポケモンに　かわいい▽
-グッズを　もたせてね▽
-ミュージカルに　だしてあげるの！</language>
-		<language name="JPN_KANJI" width="256">あたしね　大きくなったら
-じまんの　ポケモンに　かわいい▽
-グッズを　もたせてね▽
-ミュージカルに　だしてあげるの！</language>
+		<comment>♂</comment>
+		<attribute name="キャラ指定">MAN1
+青年</attribute>
+		<language name="JPN" width="256">ぼくたち　けっこんした　ばかりだけど
+ほんとうに　おんなと　おとこって[BE:00:ページ切り替え（行送り）]
+ぜんぜん　ちがう　いきもの　だよね[BE:01:ページ切り替え（クリア）]
+まあ　だからこそ
+いっしょにいて　おもしろいんだけどさ</language>
+		<language name="JPN_KANJI" width="256">ぼくたち　結婚した　ばかりだけど
+本当に　女と　男って[BE:00:ページ切り替え（行送り）]
+ぜんぜん　違う　生き物　だよね[BE:01:ページ切り替え（クリア）]
+まあ　だからこそ
+一緒にいて　おもしろいんだけどさ</language>
 	</row>
 
 	<flowchart-group-list>
