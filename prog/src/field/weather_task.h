@@ -98,8 +98,8 @@ typedef enum {
 //-------------------------------------
 /// DP　から移植　基本情報	
 //=====================================
-#define		WEATHER_FOG_DEPTH_DEFAULT	      ( 0xF880 )	// フォグデフォルト値
-#define		WEATHER_FOG_DEPTH_DEFAULT_START	( 0xFFFF )	// フォグデフォルトフェード開始値
+#define		WEATHER_FOG_DEPTH_DEFAULT	      ( 0x7880 )	// フォグデフォルト値
+#define		WEATHER_FOG_DEPTH_DEFAULT_START	( 0x7FFF )	// フォグデフォルトフェード開始値
 //#define		WEATHER_FOG_DEPTH_DEFAULT	( 0x200 )	// フォグデフォルト値
 #define		WEATHER_FOG_SLOPE_DEFAULT	( 4 )
 

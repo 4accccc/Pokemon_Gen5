@@ -13,6 +13,17 @@
 #include <gflib.h>
 #include "field_fog.h"
 
+#include "arc_def.h"
+#include "message.naix"
+
+#include "print/wordset.h"
+#include "print/gf_font.h"
+#include "print/printsys.h"
+
+#include "msg/msg_d_tomoya.h"
+
+#include "font/font.naix"
+
 //-----------------------------------------------------------------------------
 /**
  *					コーディング規約
@@ -80,6 +91,14 @@ struct _FIELD_FOG_WORK {
 
 
 	BOOL	change;		// データが変更された
+
+#ifdef PM_DEBUG
+	WORDSET*		p_debug_wordset;
+	GFL_FONT*		p_debug_font;
+	GFL_MSGDATA*	p_debug_msgdata;
+	STRBUF*			p_debug_strbuff;
+	STRBUF*			p_debug_strbuff_tmp;
+#endif	// PM_DEBUG
 };
 
 //-----------------------------------------------------------------------------
@@ -177,8 +196,6 @@ void FIELD_FOG_Reflect( FIELD_FOG_WORK* p_wk )
 	// データが変更されたので、SDKに反映
 	if( p_wk->change ){
 
-		OS_TPrintf( "offset = 0x%x\n", p_wk->offset );
-		OS_TPrintf( "slope = %d\n", p_wk->slope );
 		G3X_SetFog( p_wk->flag, p_wk->blendmode,
 				p_wk->slope, p_wk->offset );
 	
@@ -608,3 +625,125 @@ static u16 FADE_WORK_GetSlope( const FADE_WORK* cp_wk )
 }
 
 
+
+#ifdef PM_DEBUG
+void FIELD_FOG_DEBUG_Init( FIELD_FOG_WORK* p_wk, u32 heapID )
+{
+	GF_ASSERT( !p_wk->p_debug_wordset );
+	GF_ASSERT( !p_wk->p_debug_msgdata );
+	
+	// ワードセット作成
+	p_wk->p_debug_wordset = WORDSET_Create( heapID );
+	p_wk->p_debug_msgdata = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_d_tomoya_dat, heapID );
+
+	p_wk->p_debug_strbuff		= GFL_STR_CreateBuffer( 256, heapID );
+	p_wk->p_debug_strbuff_tmp	= GFL_STR_CreateBuffer( 256, heapID );
+
+	// フォントデータ
+	p_wk->p_debug_font = GFL_FONT_Create(
+		ARCID_FONT, NARC_font_large_nftr,
+		GFL_FONT_LOADTYPE_FILE, FALSE, heapID );
+
+	GFL_UI_KEY_SetRepeatSpeed( 4,8 );
+}
+
+void FIELD_FOG_DEBUG_Exit( FIELD_FOG_WORK* p_wk )
+{
+	// フォントデータ
+	GFL_FONT_Delete( p_wk->p_debug_font );
+	p_wk->p_debug_font = NULL;
+
+
+	GFL_MSG_Delete( p_wk->p_debug_msgdata );
+	p_wk->p_debug_msgdata = NULL;
+
+	WORDSET_Delete( p_wk->p_debug_wordset );
+	p_wk->p_debug_wordset = NULL;
+
+	GFL_STR_DeleteBuffer( p_wk->p_debug_strbuff );
+	p_wk->p_debug_strbuff = NULL;
+	GFL_STR_DeleteBuffer( p_wk->p_debug_strbuff_tmp );
+	p_wk->p_debug_strbuff_tmp = NULL;
+
+	GFL_UI_KEY_SetRepeatSpeed( 8,15 );
+}
+
+
+void FIELD_FOG_DEBUG_Control( FIELD_FOG_WORK* p_wk )
+{
+	s32 offset = FIELD_FOG_GetOffset(p_wk);
+	s32 slope = FIELD_FOG_GetSlope(p_wk);
+
+	// FOGON
+	FIELD_FOG_SetFlag( p_wk, TRUE );
+	
+	if( GFL_UI_KEY_GetRepeat() & PAD_KEY_UP )
+	{
+		if( (offset+0x20) <= 0x7fff )
+		{
+			offset += 0x20;
+		}
+		else
+		{
+			offset = 0x7fff;
+		}
+		if( FIELD_FOG_FADE_IsFade( p_wk ) == FALSE )
+		{
+			FIELD_FOG_SetOffset( p_wk, offset );
+		}
+	}
+	else if( GFL_UI_KEY_GetRepeat() & PAD_KEY_DOWN )
+	{
+		if( (offset-0x20) >= 0 )
+		{
+			offset -= 0x20;
+		}
+		else
+		{
+			offset = 0;
+		}
+		if( FIELD_FOG_FADE_IsFade( p_wk ) == FALSE )
+		{
+			FIELD_FOG_SetOffset( p_wk, offset );
+		}
+	}
+
+	if( GFL_UI_KEY_GetTrg() & (PAD_BUTTON_A|PAD_BUTTON_X) )
+	{
+		if( (slope + 1) < FIELD_FOG_SLOPE_MAX )
+		{
+			slope ++;
+		}
+		if( FIELD_FOG_FADE_IsFade( p_wk ) == FALSE )
+		{
+			FIELD_FOG_SetSlope( p_wk, slope );
+		}
+	}
+	else if( GFL_UI_KEY_GetTrg() & (PAD_BUTTON_B|PAD_BUTTON_Y) )
+	{
+		if( (slope - 1) >= 0 )
+		{	
+			slope --;
+		}
+		if( FIELD_FOG_FADE_IsFade( p_wk ) == FALSE )
+		{
+			FIELD_FOG_SetSlope( p_wk, slope );
+		}
+	}
+}
+
+void FIELD_FOG_DEBUG_PrintData( FIELD_FOG_WORK* p_wk, GFL_BMPWIN* p_win )
+{
+			
+	// フレーム 
+	WORDSET_RegisterNumber( p_wk->p_debug_wordset, 0, FIELD_FOG_GetOffset(p_wk), 5, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
+	WORDSET_RegisterNumber( p_wk->p_debug_wordset, 1, FIELD_FOG_GetSlope(p_wk), 2, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
+	// プリント
+	GFL_MSG_GetString( p_wk->p_debug_msgdata, D_TOMOYA_FOG_OFFSET, p_wk->p_debug_strbuff_tmp );
+
+	WORDSET_ExpandStr( p_wk->p_debug_wordset, p_wk->p_debug_strbuff, p_wk->p_debug_strbuff_tmp );
+	PRINTSYS_Print( GFL_BMPWIN_GetBmp( p_win ), 0, 0, p_wk->p_debug_strbuff, p_wk->p_debug_font );
+
+	GFL_BMPWIN_TransVramCharacter( p_win );
+}
+#endif

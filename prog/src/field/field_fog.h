@@ -117,6 +117,15 @@ extern void FIELD_FOG_FADE_InitEx( FIELD_FOG_WORK* p_wk, s32 offset_start, s32 o
 extern BOOL FIELD_FOG_FADE_IsFade( const FIELD_FOG_WORK* cp_wk );
 
 
+#ifdef PM_DEBUG
+extern void FIELD_FOG_DEBUG_Init( FIELD_FOG_WORK* p_wk, u32 heapID );
+extern void FIELD_FOG_DEBUG_Exit( FIELD_FOG_WORK* p_wk );
+
+extern void FIELD_FOG_DEBUG_Control( FIELD_FOG_WORK* p_wk );
+extern void FIELD_FOG_DEBUG_PrintData( FIELD_FOG_WORK* p_wk, GFL_BMPWIN* p_win );
+#endif
+
+
 #ifdef _cplusplus
 }	// extern "C"{
 #endif

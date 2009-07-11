@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ohno" host="W00141" date="2009-07-07T15:43:49"/>
+	<create user="tomoya_takahashi" host="W00148" date="2009-07-10T21:16:06"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -312,7 +312,7 @@
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="697"/>
 		<band id="3" index="3" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -689,6 +689,11 @@
 	<row id="DEBUG_FIELD_STR35">
 		<language name="JPN" width="160">[2:02:３桁:0]</language>
 		<language name="JPN_KANJI" width="160">[2:02:３桁:0]</language>
+	</row>
+
+	<row id="DEBUG_FIELD_STR36">
+		<language name="JPN" width="160">フォグそうさ</language>
+		<language name="JPN_KANJI" width="160">フォグ操作</language>
 	</row>
 
 	<flowchart-group-list>

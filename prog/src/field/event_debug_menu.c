@@ -141,6 +141,7 @@ static BOOL DMenuCallProc_CameraList( DEBUG_MENU_EVENT_WORK *wk );
 static BOOL DMenuCallProc_MMdlList( DEBUG_MENU_EVENT_WORK *wk );
 
 static BOOL DMenuCallProc_ControlLight( DEBUG_MENU_EVENT_WORK *wk );
+static BOOL DMenuCallProc_ControlFog( DEBUG_MENU_EVENT_WORK *wk );
 
 static BOOL DMenuCallProc_WeatherList( DEBUG_MENU_EVENT_WORK *wk );
 
@@ -179,6 +180,7 @@ static const FLDMENUFUNC_LIST DATA_DebugMenuList[] =
   { DEBUG_FIELD_STR21 , DMenuCallProc_MusicalSelect },
   { DEBUG_FIELD_STR30, DMenuCallProc_Naminori },
   { DEBUG_FIELD_STR32, DMenuCallProc_DebugItem },
+  { DEBUG_FIELD_STR36, DMenuCallProc_ControlFog },
 	{ DEBUG_FIELD_STR01, NULL },
 };
 
@@ -1912,6 +1914,7 @@ static BOOL DMenuCallProc_ControlLight( DEBUG_MENU_EVENT_WORK *wk )
 	return( TRUE );
 }
 
+
 //--------------------------------------------------------------
 /**
  * イベント：カメラ操作
@@ -2000,6 +2003,136 @@ static GMEVENT_RESULT DMenuControlLight(
 }
 
 
+//======================================================================
+//	デバッグメニュー　フォグ操作
+//======================================================================
+
+//--------------------------------------------------------------
+///	DEBUG_CTLFOG_WORK フォグ操作ワーク
+//--------------------------------------------------------------
+typedef struct
+{
+	GAMESYS_WORK *gsys;
+	GMEVENT *event;
+	HEAPID heapID;
+	FIELD_MAIN_WORK *fieldWork;
+
+	GFL_BMPWIN* p_win;
+
+}DEBUG_CTLFOG_WORK;
+
+//--------------------------------------------------------------
+///	proto
+//--------------------------------------------------------------
+static GMEVENT_RESULT DMenuControlFog(
+		GMEVENT *event, int *seq, void *wk );
+
+static BOOL DMenuCallProc_ControlFog( DEBUG_MENU_EVENT_WORK *wk )
+{
+	DEBUG_CTLFOG_WORK *work;
+	GAMESYS_WORK *gsys = wk->gmSys;
+	GMEVENT *event = wk->gmEvent;
+	HEAPID heapID = wk->heapID;
+	FIELD_MAIN_WORK *fieldWork = wk->fieldWork;
+	
+	GMEVENT_Change( event, DMenuControlFog, sizeof(DEBUG_CTLFOG_WORK) );
+	work = GMEVENT_GetEventWork( event );
+	MI_CpuClear8( work, sizeof(DEBUG_CTLFOG_WORK) );
+	
+	work->gsys = gsys;
+	work->event = event;
+	work->heapID = heapID;
+	work->fieldWork = fieldWork;
+	return( TRUE );
+}
+
+
+//--------------------------------------------------------------
+/**
+ * イベント：ふぉぐ操作
+ * @param	event	GMEVENT
+ * @param	seq		シーケンス
+ * @param	wk		event work
+ * @retval	GMEVENT_RESULT
+ */
+//--------------------------------------------------------------
+static GMEVENT_RESULT DMenuControlFog(
+		GMEVENT *event, int *seq, void *wk )
+{
+	DEBUG_CTLFOG_WORK *work = wk;
+	FIELD_FOG_WORK* p_fog;
+
+	// フォグ取得
+	p_fog = FIELDMAP_GetFieldFog( work->fieldWork );
+	
+	switch( (*seq) ){
+	case 0:
+
+		// インフォーバーの非表示
+		FIELD_SUBSCREEN_Exit(FIELDMAP_GetFieldSubscreenWork(work->fieldWork));
+		GFL_BG_SetVisible( FIELD_SUBSCREEN_BGPLANE, VISIBLE_OFF );
+
+		// ビットマップウィンドウ初期化
+		{
+			static const GFL_BG_BGCNT_HEADER header_sub3 = {
+				0, 0, 0x800, 0,	// scrX, scrY, scrbufSize, scrbufofs,
+				GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
+				GX_BG_SCRBASE_0x7800, GX_BG_CHARBASE_0x00000,0x7000,
+				GX_BG_EXTPLTT_01, 0, 0, 0, FALSE	// pal, pri, areaover, dmy, mosaic
+			};
+
+			GFL_BG_SetBGControl( FIELD_SUBSCREEN_BGPLANE, &header_sub3, GFL_BG_MODE_TEXT );
+			GFL_BG_ClearFrame( FIELD_SUBSCREEN_BGPLANE );
+			GFL_BG_SetVisible( FIELD_SUBSCREEN_BGPLANE, VISIBLE_ON );
+
+			// パレット情報を転送
+			GFL_ARC_UTIL_TransVramPalette(
+				ARCID_FONT, NARC_font_default_nclr,
+				PALTYPE_SUB_BG, FIELD_SUBSCREEN_PALLET*32, 32, work->heapID );
+			
+			// ビットマップウィンドウを作成
+			work->p_win = GFL_BMPWIN_Create( FIELD_SUBSCREEN_BGPLANE,
+				0, 0, 32, 24,
+				FIELD_SUBSCREEN_PALLET, GFL_BMP_CHRAREA_GET_F );
+			GFL_BMP_Clear( GFL_BMPWIN_GetBmp( work->p_win ), 0xf );
+			GFL_BMPWIN_MakeScreen( work->p_win );
+			GFL_BMPWIN_TransVramCharacter( work->p_win );
+			GFL_BG_LoadScreenReq( FIELD_SUBSCREEN_BGPLANE );
+		}
+
+		FIELD_FOG_DEBUG_Init( p_fog, work->heapID );
+
+
+		(*seq)++;
+	case 1:
+		// フォグ管理メイン
+		FIELD_FOG_DEBUG_Control( p_fog );
+		GFL_BMP_Clear( GFL_BMPWIN_GetBmp( work->p_win ), 0xf );
+		FIELD_FOG_DEBUG_PrintData( p_fog, work->p_win );
+		if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_SELECT ){
+			(*seq)++;
+		}
+		break;
+	case 2:
+
+		// ビットマップウィンドウ破棄
+		{
+			GFL_BG_FreeBGControl(FIELD_SUBSCREEN_BGPLANE);
+			GFL_BMPWIN_Delete( work->p_win );
+		}
+
+		FIELD_FOG_DEBUG_Exit( p_fog );
+
+
+		// インフォーバーの表示
+    FIELDMAP_SetFieldSubscreenWork(work->fieldWork,
+        FIELD_SUBSCREEN_Init( work->heapID, work->fieldWork, FIELD_SUBSCREEN_NORMAL ));
+
+		return( GMEVENT_RES_FINISH );
+	}
+	
+	return( GMEVENT_RES_CONTINUE );
+}
 
 
 //======================================================================
