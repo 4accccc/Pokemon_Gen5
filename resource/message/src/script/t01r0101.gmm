@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-07-10T19:18:42"/>
+	<create user="matsumiya" host="W00207" date="2009-07-11T15:30:09"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -386,6 +386,7 @@
 		<comment>♀
 ・msg_t01r0101_mama_05での
 　回復処理後</comment>
+		<attribute name="キャラ指定">主人公ママ</attribute>
 		<language name="JPN" width="256">ママ『これで　あなたも
 ポケモンも　げんきいっぱい！[BE:00:ページ切り替え（行送り）]
 どこへだって　いけるわね！</language>
@@ -398,6 +399,7 @@
 		<comment>♀
 ・msg_t01r0101_mama_06表示後
 　家を出るまではこのメッセージを繰り返し</comment>
+		<attribute name="キャラ指定">主人公ママ</attribute>
 		<language name="JPN" width="256">ママ『つぎは　どこに　いって
 どんな　ポケモンと　であうのかしら？</language>
 		<language name="JPN_KANJI" width="256">ママ『次は　どこに　いって
@@ -425,24 +427,6 @@
 		<language name="JPN_KANJI" width="256">ママから　一言[BE:01:ページ切り替え（クリア）]
 なぜ　旅を　するのか？
 自分で　考えてみてね</language>
-	</row>
-
-	<row id="msg_t01r0101_test_03" back-color="#808080,,,#808080,,#808080,#808080,,,,,,#808080,,,,,,">
-		<attribute name="キャラ指定">お姉さん</attribute>
-		<language name="JPN" width="256">テスト</language>
-		<language name="JPN_KANJI" width="256">テスト用</language>
-	</row>
-
-	<row id="msg_t01r0101_test_04" back-color="#808080,,,#808080,,#808080,#808080,,,,,,#808080,,,,,,">
-		<attribute name="キャラ指定">お姉さん</attribute>
-		<language name="JPN" width="256">テスト</language>
-		<language name="JPN_KANJI" width="256">テスト用</language>
-	</row>
-
-	<row id="msg_t01r0101_test_05" back-color="#808080,,,#808080,,#808080,#808080,,,,,,#808080,,,,,,">
-		<attribute name="キャラ指定">お姉さん</attribute>
-		<language name="JPN" width="256">テスト</language>
-		<language name="JPN_KANJI" width="256">テスト用</language>
 	</row>
 
 	<flowchart-group-list>
