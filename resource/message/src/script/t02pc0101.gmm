@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-07-06T16:56:16"/>
+	<create user="matsumiya" host="W00207" date="2009-07-11T18:17:18"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -235,7 +235,7 @@
 			<list entry="1" japanese="グループ 1" english="グループ 1" colorID="0"/>
 		</group>
 		<number position="-1" width="100"/>
-		<comment position="4" width="100"/>
+		<comment position="4" width="234"/>
 		<erase position="-1" width="100"/>
 		<attribute japanese="キャラ指定" english="キャラ指定" type="string" default="" position="1" width="100">
 		</attribute>
@@ -292,9 +292,208 @@
 	</lock>
 
 
+	<row id="msg_t02pc0101_docotr_jr_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂
+・マップ切り替え直後からイベント
+　カウンター（）まで進むと
+　主人公と向き合ってこのメッセージ表示</comment>
+		<attribute name="キャラ指定">DOCTOR_JR
+博士</attribute>
+		<language name="JPN" width="256">アララギ『ポケモンセンターの
+すごい　ところ！[BE:01:ページ切り替え（クリア）]
+それは　なんと！
+ポケモンの　かいふくが　できること！[BE:01:ページ切り替え（クリア）]
+しかも　ただ！[BE:01:ページ切り替え（クリア）]
+トレーナーの　みかた　だよな！</language>
+		<language name="JPN_KANJI" width="256">アララギ『ポケモンセンターの
+すごい　ところ！[BE:01:ページ切り替え（クリア）]
+それは　なんと！
+ポケモンの　回復が　できること！[BE:01:ページ切り替え（クリア）]
+しかも　ただ！[BE:01:ページ切り替え（クリア）]
+トレーナーの　味方　だよな！</language>
+	</row>
+
+	<row id="msg_t02pc0101_docotr_jr_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂
+・msg_t02pc0101_docotr_jr_01表示後に
+　主人公が左か下に移動したとき
+　メッセージ表示後、主人公の位置をもどす</comment>
+		<attribute name="キャラ指定">DOCTOR_JR
+博士</attribute>
+		<language name="JPN" width="256">アララギ『ちょっと　[1:00:トレーナー名:0]
+どこへ　いくと　いうんだい？[BE:01:ページ切り替え（クリア）]
+ほら！　おねえさんに　はなしかけて
+きみの　ポケモンを　あずけてごらん[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">アララギ『ちょっと　[1:00:トレーナー名:0]
+どこへ　行くと　いうんだい？[BE:01:ページ切り替え（クリア）]
+ほら！　お姉さんに　話しかけて
+きみの　ポケモンを　預けてごらん[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_t02pc0101_docotr_jr_03" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂
+・回復処理後～
+　パソコン（）まで進むと
+　主人公と向き合ってこのメッセージ表示</comment>
+		<attribute name="キャラ指定">DOCTOR_JR
+博士</attribute>
+		<language name="JPN" width="256">アララギ『こいつは　パソコン！
+トレーナなら　だれでも　つかえるよ[BE:01:ページ切り替え（クリア）]
+つれている　ポケモンを　あずけたり
+ぎゃくに　パソコンに[BE:00:ページ切り替え（行送り）]
+あずけた　ポケモンを　ひきだせるぞ[BE:01:ページ切り替え（クリア）]
+ちなみに　ポケモンを
+６ひき　つれているときに[BE:01:ページ切り替え（クリア）]
+あたらしく　ポケモンを　つかまえると
+じどうてきに　パソコンに　おくられる[BE:01:ページ切り替え（クリア）]
+すばらしいよな！　びっくりだ！[BE:01:ページ切り替え（クリア）]
+あと　アララギのパソコンを　えらべば
+わたしが　ずかんひょうか　するからね[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">アララギ『こいつは　パソコン！
+トレーナなら　だれでも　使えるよ[BE:01:ページ切り替え（クリア）]
+連れている　ポケモンを　預けたり
+逆に　パソコンに[BE:00:ページ切り替え（行送り）]
+預けた　ポケモンを　引き出せるぞ[BE:01:ページ切り替え（クリア）]
+ちなみに　ポケモンを
+６匹　連れているときに[BE:01:ページ切り替え（クリア）]
+新しく　ポケモンを　捕まえると
+自動的に　パソコンに　転送される[BE:01:ページ切り替え（クリア）]
+すばらしいよな！　びっくりだ！[BE:01:ページ切り替え（クリア）]
+あと　アララギのパソコンを　選べば
+わたしが　図鑑評価を　するからね[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_t02pc0101_white_01">
+		<comment>♀</comment>
+		<attribute name="キャラ指定">友達♀</attribute>
+		<language name="JPN" width="256">ともだち♀『はかせ……[BE:01:ページ切り替え（クリア）]
+がめんの　「だれかのパソコン」って
+だれの　パソコンの　こと……？[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">ともだち♀『博士……[BE:01:ページ切り替え（クリア）]
+画面の　「だれかのパソコン」って
+だれの　パソコンの　こと……？[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_t02pc0101_docotr_jr_04" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂</comment>
+		<attribute name="キャラ指定">DOCTOR_JR
+博士</attribute>
+		<language name="JPN" width="256">アララギ『なるほど……
+いい　しつもんだ[BE:01:ページ切り替え（クリア）]
+といいたいところだが
+いまは　きにせず
+つかえば　いいんだよ！[BE:01:ページ切り替え（クリア）]
+だれか　というのは　パソコンでの
+ポケモンあずかりシステムを[BE:01:ページ切り替え（クリア）]
+つくった　ひとの　ことでね
+きみたちも　いつか　であうだろう[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">アララギ『なるほど……
+いい　質問だ[BE:01:ページ切り替え（クリア）]
+といいたいところだが
+今は　気にせず
+使えば　いいんだよ！[BE:01:ページ切り替え（クリア）]
+だれか　というのは　パソコンでの
+ポケモン預かりシステムを[BE:01:ページ切り替え（クリア）]
+つくった　人の　ことでね
+きみたちも　いつか　出会うだろう[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_t02pc0101_docotr_jr_05" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂
+msg_t02pc0101_docotr_jr_03表示後
+ショップカウンタ（）まで進むと
+主人公と向き合ってこのメッセージ表示</comment>
+		<attribute name="キャラ指定">DOCTOR_JR
+博士</attribute>
+		<language name="JPN" width="256">アララギ『こちらは
+フレンドリィショップ！[BE:01:ページ切り替え（クリア）]
+トレーナーに　やくだつ
+どうぐを　かったり[BE:01:ページ切り替え（クリア）]
+あまった　どうぐを
+こちらで　うったり　できるよ！[BE:01:ページ切り替え（クリア）]
+おにいさんが　えがおで
+たいおう　してくれるはずだ！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">アララギ『こちらは
+フレンドリィショップ！[BE:01:ページ切り替え（クリア）]
+トレーナーに　役立つ
+道具を　買ったり[BE:01:ページ切り替え（クリア）]
+あまった　道具を
+こちらで　売ったり　できるよ！[BE:01:ページ切り替え（クリア）]
+お兄さんが　笑顔で
+対応してくれる　はずだ！[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_t02pc0101_docotr_jr_06" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂
+・メッセージ表示後退場
+　画面外に消えると
+　続けてmsg_t02pc0101_black_01
+・t01r0401に博士OBJ復帰</comment>
+		<attribute name="キャラ指定">DOCTOR_JR
+博士</attribute>
+		<language name="JPN" width="256">アララギ『よーしよしよし！[BE:01:ページ切り替え（クリア）]
+これで　きみたち　３にんに
+トレーナーの　きその　きそは　おしえた！[BE:01:ページ切り替え（クリア）]
+それでは
+じぶんは　カノコタウンに　もどるよ！[BE:01:ページ切り替え（クリア）]
+さいごに　ひとつ！[BE:01:ページ切り替え（クリア）]
+サンヨウシティに　いったなら
+はつめいかに　あいたまえ！[BE:01:ページ切り替え（クリア）]
+ぼくの　ふるくからの　ともだちで
+きみの　ぼうけんを　てだすけしてくれるよ[BE:01:ページ切り替え（クリア）]
+ではな！
+きみの　たびに　さちあらんことを！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">アララギ『よーしよしよし！[BE:01:ページ切り替え（クリア）]
+これで　きみたち　３人に
+トレーナーの　基礎の　基礎は　教えた！[BE:01:ページ切り替え（クリア）]
+それでは
+じぶんは　カノコタウンに　戻るよ！[BE:01:ページ切り替え（クリア）]
+最後に　ひとつ！[BE:01:ページ切り替え（クリア）]
+サンヨウシティに　行ったなら
+発明家に　会いたまえ！[BE:01:ページ切り替え（クリア）]
+わたしの　古くからの　友達で
+きみたちの　冒険を　手助けしてくれる[BE:01:ページ切り替え（クリア）]
+ではな！
+きみたちの　旅に　幸あらんことを！[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_t02pc0101_black_01">
+		<comment>♂
+・メッセージ表示後、ポケセン外へ
+　画面外に消えると操作可能に
+・t02フィールドに出現</comment>
+		<attribute name="キャラ指定">友達♂</attribute>
+		<language name="JPN" width="256">ともだち♂『おれは　さきにいくよ
+ポケモンたち　そだてたいしさ[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">ともだち♂『オレ　先に行くよ
+ポケモンたち　育てたいしさ[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_t02pc0101_white_02">
+		<comment>♀
+・t02での演説イベント終了まで
+　ここでこのメッセージ繰り返し</comment>
+		<attribute name="キャラ指定">友達♀</attribute>
+		<language name="JPN" width="256">ともだち♀『あたし
+ちょっと　のんびり　していくね</language>
+		<language name="JPN_KANJI" width="256">ともだち♀『あたし
+ちょっと　のんびり　していくね</language>
+	</row>
+
 	<row id="msg_t02pc0101_woman1_01">
 		<comment>♀</comment>
 		<attribute name="キャラ指定">女性１</attribute>
+		<language name="JPN" width="256">いままでの　できごとを
+わすれないよう　レポートして……[BE:00:ページ切り替え（行送り）]
+これで　ひとやすみ　できるわね</language>
+		<language name="JPN_KANJI" width="256">今までの　出来事を
+忘れないよう　レポートして……[BE:00:ページ切り替え（行送り）]
+これで　一休み　できるわね</language>
+	</row>
+
+	<row id="msg_t02pc0101_middlewoman1_01" back-color="#404040,,,,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>削除予定</comment>
+		<attribute name="キャラ指定">おばさん！</attribute>
 		<language name="JPN" width="256">トレーナーの　いこいの　ばしょ
 ポケモンたちが　すきな　くうかん[BE:00:ページ切り替え（行送り）]
 それが　この　ポケモンセンター！[BE:01:ページ切り替え（クリア）]
@@ -309,17 +508,6 @@
 ポケモンを　回復　させたり[BE:01:ページ切り替え（クリア）]
 パソコンに　預けた　ポケモンを
 旅に　連れて行けるわ</language>
-	</row>
-
-	<row id="msg_t02pc0101_middlewoman1_01">
-		<comment>♀</comment>
-		<attribute name="キャラ指定">おばさん！</attribute>
-		<language name="JPN" width="256">ポケモンセンターの　なかに
-フレンドリィショップが　あると[BE:00:ページ切り替え（行送り）]
-なにかと　べんり　よね</language>
-		<language name="JPN_KANJI" width="256">ポケモンセンターの　中に
-フレンドリィショップが　あると[BE:00:ページ切り替え（行送り）]
-なにかと　便利よね</language>
 	</row>
 
 	<flowchart-group-list>
