@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-07-09T21:08:00"/>
+	<create user="matsumiya" host="W00207" date="2009-07-11T13:24:18"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -311,11 +311,13 @@
 		<language name="JPN" width="256">イッシュちほうに　ある
 ８つの　ポケモンジム[BE:01:ページ切り替え（クリア）]
 どれだけ　つよくなったか
-うでだめしに　ぴったりの　ばしょさ</language>
+うでだめしを　するのに[BE:00:ページ切り替え（行送り）]
+ぴったりの　ばしょさ</language>
 		<language name="JPN_KANJI" width="256">イッシュ地方に　ある
 ８つの　ポケモンジム[BE:01:ページ切り替え（クリア）]
 どれだけ　強くなったか
-腕試しに　ぴったりの　場所さ</language>
+腕試しを　するのに[BE:00:ページ切り替え（行送り）]
+ぴったりの　場所さ</language>
 	</row>
 
 	<row id="msg_c01r0301_boy2_01">
