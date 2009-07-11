@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00179" date="2009-05-26T12:11:31"/>
+	<create user="matsumiya" host="W00207" date="2009-07-11T16:17:34"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -292,7 +292,87 @@
 	</lock>
 
 
-	<row id="msg_t01_testmsg01">
+	<row id="msg_t01_black_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂
+・ポケモン図鑑入手まで
+　ストッパー
+・POS（）を踏むと発動
+・メッセージ表示後
+　連れ歩きで研究所前まで移動
+・研究所前まで移動すると
+　msg_t01_black_02表示</comment>
+		<attribute name="キャラ指定">友達♂</attribute>
+		<language name="JPN" width="256">ともだち♂『あのな　[1:00:トレーナー名:0]！[BE:01:ページ切り替え（クリア）]
+すこしでも　はやく
+ポケモンと　いっしょに[BE:00:ページ切り替え（行送り）]
+どこかに　いきたい　きもち[BE:01:ページ切り替え（クリア）]
+オレにも　よくわかるけど　さきに
+アララギはかせに　あいにいこうな[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">ともだち♂『あのな　[1:00:トレーナー名:0]！[BE:01:ページ切り替え（クリア）]
+少しでも　はやく
+ポケモンと　一緒に[BE:00:ページ切り替え（行送り）]
+どこかに　行きたい　気持ち[BE:01:ページ切り替え（クリア）]
+オレにも　よくわかるけど　先に
+アララギ博士に　会いに行こうな[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_t01_black_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂
+・話しかけたとき
+（図鑑入手まで繰り返し）</comment>
+		<attribute name="キャラ指定">友達♂</attribute>
+		<language name="JPN" width="256">ともだち♂『わるいけど　ともだち♀の
+いえまで　いってくれない？[BE:01:ページ切り替え（クリア）]
+ぜったい　あいつ
+いえで　のんき　しているから[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">ともだち♂『悪いけど　ともだち♀の
+家まで　行ってくれない？[BE:01:ページ切り替え（クリア）]
+絶対　あいつ　家で
+のん気　しているから[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_t01_white_01">
+		<comment>♀
+・t01r0301でのイベント後
+　友達♂の隣に配置
+・研究所の前</comment>
+		<attribute name="キャラ指定">友達♀</attribute>
+		<language name="JPN" width="256">ともだち♀『まってたよ！</language>
+		<language name="JPN_KANJI" width="256">ともだち♀『待ってたよ！</language>
+	</row>
+
+	<row id="msg_t01_black_03" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂
+・話しかけたとき一度友達♀をみてから
+　主人公と向き合ってこのメッセージ表示
+・画面切り替えで研究所内へ</comment>
+		<attribute name="キャラ指定">友達♂</attribute>
+		<language name="JPN" width="256">ともだち♂『ん……
+なんか　あったのか？[BE:01:ページ切り替え（クリア）]
+まあ　いいか[BE:01:ページ切り替え（クリア）]
+よし　みんな　そろったし
+なかに　はいるぞ！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">ともだち♂『ん……
+なんか　あったのか？[BE:01:ページ切り替え（クリア）]
+まあ　いいか[BE:01:ページ切り替え（クリア）]
+よし　みんな　そろったし
+中に　入るぞ！[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_t01_bigman_01">
+		<comment>♂
+・仮メッセージ
+　DPと同じ</comment>
+		<attribute name="キャラ指定">man01</attribute>
+		<language name="JPN" width="256">かがくの　ちからって　すげー！[BE:01:ページ切り替え（クリア）]
+いまじゃ　むせんを　つかって
+せかいの　ひとびとと　あそべるんだと</language>
+		<language name="JPN_KANJI" width="256">科学の　力って　すげー！[BE:01:ページ切り替え（クリア）]
+今じゃ　無線を　使って
+世界の　人々と　遊べるんだと</language>
+	</row>
+
+	<row id="msg_t01_testmsg01" back-color="#808080,,,#808080,,#808080,#808080,,,,,,#808080,,,,,,">
 		<comment>はい・いいえ処理
 はいだと文字モード切替</comment>
 		<attribute name="キャラ指定">man01</attribute>
@@ -302,7 +382,7 @@
 ひらがなの　方が　好きかい？</language>
 	</row>
 
-	<row id="msg_t01_testmsg01_01">
+	<row id="msg_t01_testmsg01_01" back-color="#808080,,,#808080,,#808080,#808080,,,,,,#808080,,,,,,">
 		<comment>はい</comment>
 		<language name="JPN" width="256">では
 話し方を　変えてみるよ</language>
@@ -310,7 +390,7 @@
 はなしかたを　かえてみるよ</language>
 	</row>
 
-	<row id="msg_t01_testmsg01_02">
+	<row id="msg_t01_testmsg01_02" back-color="#808080,,,#808080,,#808080,#808080,,,,,,#808080,,,,,,">
 		<comment>いいえ</comment>
 		<language name="JPN" width="256">うむッ！　ひらがなには　ひらがなの
 あじわいって　やつが　あるからね</language>
@@ -318,27 +398,27 @@
 君は　漢字が　好きなんだね</language>
 	</row>
 
-	<row id="msg_t01_testmsg02">
+	<row id="msg_t01_testmsg02" back-color="#808080,,,#808080,,#808080,#808080,,,,,,#808080,,,,,,">
 		<attribute name="キャラ指定">woman01</attribute>
 		<language name="JPN" width="256">あなた　ポケモン　すき？</language>
 		<language name="JPN_KANJI" width="256">あなた　ポケモン　好き？</language>
 	</row>
 
-	<row id="msg_t01_testmsg02_01">
+	<row id="msg_t01_testmsg02_01" back-color="#808080,,,#808080,,#808080,#808080,,,,,,#808080,,,,,,">
 		<language name="JPN" width="256">うれしい！
 あたしと　いっしょね</language>
 		<language name="JPN_KANJI" width="256">うれしい！
 あたしと　一緒ね</language>
 	</row>
 
-	<row id="msg_t01_testmsg02_02">
+	<row id="msg_t01_testmsg02_02" back-color="#808080,,,#808080,,#808080,#808080,,,,,,#808080,,,,,,">
 		<language name="JPN" width="256">そう……？
 なんだか　さみしいな……</language>
 		<language name="JPN_KANJI" width="256">そう……？
 なんだか　寂しい……</language>
 	</row>
 
-	<row id="msg_t01_testmsg03">
+	<row id="msg_t01_testmsg03" back-color="#808080,,,#808080,,#808080,#808080,,,,,,#808080,,,,,,">
 		<attribute name="キャラ指定">babygirl1</attribute>
 		<language name="JPN" width="256">こんにちは！
 トレーナーさん！！[BE:01:ページ切り替え（クリア）]
@@ -350,31 +430,39 @@
 科学の　力って　すごいわね！</language>
 	</row>
 
-	<row id="msg_t01_sign1_01">
+	<row id="msg_t01_sign1_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+		<comment>BGメッセージ</comment>
 		<attribute name="キャラ指定">看板：街</attribute>
 		<language name="JPN" width="256">ここは　カノコタウン</language>
 		<language name="JPN_KANJI" width="256">ここは　カノコタウン</language>
 	</row>
 
-	<row id="msg_t01_sign2_01">
+	<row id="msg_t01_sign2_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+		<comment>BGメッセージ
+0＝主人公の名前</comment>
 		<attribute name="キャラ指定">看板：主人公</attribute>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]の　いえ</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]の　家</language>
 	</row>
 
-	<row id="msg_t01_sign3_01">
+	<row id="msg_t01_sign3_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+		<comment>BGメッセージ
+・友達♂の名前は固定？</comment>
 		<attribute name="キャラ指定">看板：友達１</attribute>
-		<language name="JPN" width="256">[1:00:トレーナー名:1]の　いえ</language>
+		<language name="JPN" width="256">ともだち♂の　いえ</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]の　家</language>
 	</row>
 
-	<row id="msg_t01_sign4_01">
+	<row id="msg_t01_sign4_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+		<comment>BGメッセージ
+・友達♀の名前は固定？</comment>
 		<attribute name="キャラ指定">看板：友達２</attribute>
-		<language name="JPN" width="256">[1:00:トレーナー名:2]の　いえ</language>
+		<language name="JPN" width="256">ともだち♀の　いえ</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:2]の　家</language>
 	</row>
 
-	<row id="msg_t01_sign5_01">
+	<row id="msg_t01_sign5_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+		<comment>BGメッセージ</comment>
 		<attribute name="キャラ指定">看板：研究所</attribute>
 		<language name="JPN" width="256">アララギ　ポケモンけんきゅうじょ</language>
 		<language name="JPN_KANJI" width="256">アララギ　ポケモン研究所</language>
