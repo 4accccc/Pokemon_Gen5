@@ -14,8 +14,7 @@
  */
 typedef enum {
 
-  BTL_SIDEEFF_NULL = 0,
-  BTL_SIDEEFF_START,
+  BTL_SIDEEFF_START=0,
 
   BTL_SIDEEFF_REFRECTOR=BTL_SIDEEFF_START,      ///< 物理攻撃を半減
   BTL_SIDEEFF_HIKARINOKABE,   ///< 特殊攻撃を半減
@@ -28,6 +27,7 @@ typedef enum {
   BTL_SIDEEFF_STEALTHROCK,    ///< 入れ替えて出てきたポケモンにダメージ（相性計算あり）
 
   BTL_SIDEEFF_MAX,
+  BTL_SIDEEFF_NULL = BTL_SIDEEFF_MAX,
 
   BTL_SIDEEFF_BITFLG_BYTES = 1 + (BTL_SIDEEFF_MAX/8) + ((BTL_SIDEEFF_MAX%8)!=0),
 

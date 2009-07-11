@@ -267,6 +267,7 @@ typedef struct {
  BTL_HANDEX_PARAM_HEADER   header;   ///< 共有ヘッダ
  u16  recoverHP;                     ///< 回復HP量
  u8   pokeID;                        ///< 対象ポケモンID
+ BTL_HANDEX_STR_PARAMS     exStr;    ///< 成功時メッセージ
 }BTL_HANDEX_PARAM_RECOVER_HP;
 
 typedef struct {

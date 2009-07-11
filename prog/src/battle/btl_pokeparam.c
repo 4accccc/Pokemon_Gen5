@@ -373,22 +373,22 @@ static void Effrank_Recover( BPP_VARIABLE_PARAM* rank )
 //----------------------------------------------------------------------------------------------
 //----------------------------------------------------------------------------------------------
 
-u8 BTL_POKEPARAM_GetID( const BTL_POKEPARAM* pp )
+u8 BPP_GetID( const BTL_POKEPARAM* pp )
 {
   return pp->coreParam.myID;
 }
 
-u16 BTL_POKEPARAM_GetMonsNo( const BTL_POKEPARAM* pp )
+u16 BPP_GetMonsNo( const BTL_POKEPARAM* pp )
 {
   return pp->baseParam.monsno;
 }
 
-u8 BTL_POKEPARAM_GetWazaCount( const BTL_POKEPARAM* pp )
+u8 BPP_WAZA_GetCount( const BTL_POKEPARAM* pp )
 {
   return pp->wazaCnt;
 }
 
-u8 BTL_POKEPARAM_GetUsedWazaCount( const BTL_POKEPARAM* pp )
+u8 BPP_WAZA_GetUsedCount( const BTL_POKEPARAM* pp )
 {
   u8 cnt, i;
   for(i=0, cnt=0; i<pp->wazaCnt; ++i)
@@ -400,13 +400,13 @@ u8 BTL_POKEPARAM_GetUsedWazaCount( const BTL_POKEPARAM* pp )
   return cnt;
 }
 
-WazaID BTL_POKEPARAM_GetWazaNumber( const BTL_POKEPARAM* pp, u8 idx )
+WazaID BPP_WAZA_GetID( const BTL_POKEPARAM* pp, u8 idx )
 {
   GF_ASSERT(idx < pp->wazaCnt);
   return pp->waza[idx].number;
 }
 
-WazaID BTL_POKEPARAM_GetWazaParticular( const BTL_POKEPARAM* pp, u8 idx, u8* PP, u8* PPMax )
+WazaID BPP_WAZA_GetParticular( const BTL_POKEPARAM* pp, u8 idx, u8* PP, u8* PPMax )
 {
   GF_ASSERT(idx < pp->wazaCnt);
   *PP = pp->waza[idx].pp;
@@ -416,18 +416,18 @@ WazaID BTL_POKEPARAM_GetWazaParticular( const BTL_POKEPARAM* pp, u8 idx, u8* PP,
 }
 
 
-PokeTypePair BTL_POKEPARAM_GetPokeType( const BTL_POKEPARAM* pp )
+PokeTypePair BPP_GetPokeType( const BTL_POKEPARAM* pp )
 {
   return pp->type;
 }
 
-BOOL BTL_POKEPARAM_IsMatchType( const BTL_POKEPARAM* pp, PokeType type )
+BOOL BPP_IsMatchType( const BTL_POKEPARAM* pp, PokeType type )
 {
   PokeTypePair pair = PokeTypePair_Make( pp->baseParam.type1, pp->baseParam.type2 );
   return PokeTypePair_IsMatch( pair, type );
 }
 
-const POKEMON_PARAM* BTL_POKEPARAM_GetSrcData( const BTL_POKEPARAM* bpp )
+const POKEMON_PARAM* BPP_GetSrcData( const BTL_POKEPARAM* bpp )
 {
   return bpp->coreParam.ppSrc;
 }
@@ -443,7 +443,7 @@ const POKEMON_PARAM* BTL_POKEPARAM_GetSrcData( const BTL_POKEPARAM* bpp )
  * @retval  int
  */
 //=============================================================================================
-int BTL_POKEPARAM_GetValue( const BTL_POKEPARAM* pp, BppValueID vid )
+int BPP_GetValue( const BTL_POKEPARAM* pp, BppValueID vid )
 {
   switch( vid ){
   case BPP_ATTACK:    return pp->realParam.attack;
@@ -485,7 +485,7 @@ int BTL_POKEPARAM_GetValue( const BTL_POKEPARAM* pp, BppValueID vid )
  * @retval  int
  */
 //=============================================================================================
-int BTL_POKEPARAM_GetValue_Base( const BTL_POKEPARAM* pp, BppValueID vid )
+int BPP_GetValue_Base( const BTL_POKEPARAM* pp, BppValueID vid )
 {
   switch( vid ){
   case BPP_ATTACK:    return pp->baseParam.attack;
@@ -499,7 +499,7 @@ int BTL_POKEPARAM_GetValue_Base( const BTL_POKEPARAM* pp, BppValueID vid )
   case BPP_CRITICAL_RATIO:  return RANK_CRITICAL_DEF;
 
   default:
-    return BTL_POKEPARAM_GetValue( pp, vid );
+    return BPP_GetValue( pp, vid );
   };
 }
 //=============================================================================================
@@ -512,7 +512,7 @@ int BTL_POKEPARAM_GetValue_Base( const BTL_POKEPARAM* pp, BppValueID vid )
  * @retval  int
  */
 //=============================================================================================
-int BTL_POKEPARAM_GetValue_Critical( const BTL_POKEPARAM* pp, BppValueID vid )
+int BPP_GetValue_Critical( const BTL_POKEPARAM* pp, BppValueID vid )
 {
   switch( vid ){
   case BPP_ATTACK:    return (pp->varyParam.attack < 0)? pp->baseParam.attack : pp->realParam.attack;
@@ -521,7 +521,7 @@ int BTL_POKEPARAM_GetValue_Critical( const BTL_POKEPARAM* pp, BppValueID vid )
   case BPP_SP_DEFENCE:return (pp->varyParam.sp_defence > 0)? pp->baseParam.sp_defence : pp->realParam.sp_defence;
 
   default:
-    return BTL_POKEPARAM_GetValue( pp, vid );
+    return BPP_GetValue( pp, vid );
   }
 }
 //=============================================================================================
@@ -533,11 +533,11 @@ int BTL_POKEPARAM_GetValue_Critical( const BTL_POKEPARAM* pp, BppValueID vid )
  * @retval  u32
  */
 //=============================================================================================
-u32 BTL_POKEPARAM_GetItem( const BTL_POKEPARAM* pp )
+u32 BPP_GetItem( const BTL_POKEPARAM* pp )
 {
   return pp->coreParam.item;
 }
-void BTL_POKEPARAM_SetItem( BTL_POKEPARAM* pp, u16 itemID )
+void BPP_SetItem( BTL_POKEPARAM* pp, u16 itemID )
 {
   pp->coreParam.item = itemID;
 }
@@ -551,9 +551,9 @@ void BTL_POKEPARAM_SetItem( BTL_POKEPARAM* pp, u16 itemID )
  * @retval  BOOL
  */
 //=============================================================================================
-BOOL BTL_POKEPARAM_IsHPFull( const BTL_POKEPARAM* pp )
+BOOL BPP_IsHPFull( const BTL_POKEPARAM* pp )
 {
-  return BTL_POKEPARAM_GetValue(pp, BPP_HP) == BTL_POKEPARAM_GetValue(pp, BPP_MAX_HP);
+  return BPP_GetValue(pp, BPP_HP) == BPP_GetValue(pp, BPP_MAX_HP);
 }
 //=============================================================================================
 /**
@@ -564,9 +564,9 @@ BOOL BTL_POKEPARAM_IsHPFull( const BTL_POKEPARAM* pp )
  * @retval  BOOL
  */
 //=============================================================================================
-BOOL BTL_POKEPARAM_IsDead( const BTL_POKEPARAM* pp )
+BOOL BPP_IsDead( const BTL_POKEPARAM* pp )
 {
-  return BTL_POKEPARAM_GetValue( pp, BPP_HP ) == 0;
+  return BPP_GetValue( pp, BPP_HP ) == 0;
 }
 //=============================================================================================
 /**
@@ -577,7 +577,7 @@ BOOL BTL_POKEPARAM_IsDead( const BTL_POKEPARAM* pp )
  *
  */
 //=============================================================================================
-u16 BTL_POKEPARAM_GetPP( const BTL_POKEPARAM* pp, u8 wazaIdx )
+u16 BPP_WAZA_GetPP( const BTL_POKEPARAM* pp, u8 wazaIdx )
 {
   if( wazaIdx < pp->wazaCnt ){
     return  pp->waza[wazaIdx].pp;
@@ -596,7 +596,7 @@ u16 BTL_POKEPARAM_GetPP( const BTL_POKEPARAM* pp, u8 wazaIdx )
  * @retval  BOOL
  */
 //=============================================================================================
-BOOL BTL_POKEPARAM_IsPPFull( const BTL_POKEPARAM* pp, u8 wazaIdx )
+BOOL BPP_IsPPFull( const BTL_POKEPARAM* pp, u8 wazaIdx )
 {
   GF_ASSERT(wazaIdx < pp->wazaCnt);
   return  pp->waza[wazaIdx].pp == pp->waza[wazaIdx].ppMax;
@@ -610,7 +610,7 @@ BOOL BTL_POKEPARAM_IsPPFull( const BTL_POKEPARAM* pp, u8 wazaIdx )
  * @retval  u16
  */
 //=============================================================================================
-u16 BTL_POKEPARAM_GetTurnCount( const BTL_POKEPARAM* pp )
+u16 BPP_GetTurnCount( const BTL_POKEPARAM* pp )
 {
   return pp->turnCount;
 }
@@ -623,7 +623,7 @@ u16 BTL_POKEPARAM_GetTurnCount( const BTL_POKEPARAM* pp )
  * @retval  u16
  */
 //=============================================================================================
-u16 BTL_POKEPARAM_GetAppearTurn( const BTL_POKEPARAM* pp )
+u16 BPP_GetAppearTurn( const BTL_POKEPARAM* pp )
 {
   return pp->appearedTurn;
 }
@@ -637,7 +637,7 @@ u16 BTL_POKEPARAM_GetAppearTurn( const BTL_POKEPARAM* pp )
  * @retval  BOOL
  */
 //=============================================================================================
-BOOL BTL_POKEPARAM_GetTurnFlag( const BTL_POKEPARAM* pp, BppTurnFlag flagID )
+BOOL BPP_TURNFLAG_Get( const BTL_POKEPARAM* pp, BppTurnFlag flagID )
 {
   return flgbuf_get( pp->turnFlag, flagID );
 }
@@ -651,7 +651,7 @@ BOOL BTL_POKEPARAM_GetTurnFlag( const BTL_POKEPARAM* pp, BppTurnFlag flagID )
  * @retval  BOOL
  */
 //=============================================================================================
-BOOL BTL_POKEPARAM_GetActFlag( const BTL_POKEPARAM* pp, BppActFlag flagID )
+BOOL BPP_GetActFlag( const BTL_POKEPARAM* pp, BppActFlag flagID )
 {
   return flgbuf_get( pp->actFlag, flagID );
 }
@@ -665,7 +665,7 @@ BOOL BTL_POKEPARAM_GetActFlag( const BTL_POKEPARAM* pp, BppActFlag flagID )
  * @retval  BOOL
  */
 //=============================================================================================
-BOOL BTL_POKEPARAM_GetContFlag( const BTL_POKEPARAM* pp, BppContFlag flagID )
+BOOL BPP_GetContFlag( const BTL_POKEPARAM* pp, BppContFlag flagID )
 {
   return flgbuf_get( pp->contFlag, flagID );
 }
@@ -678,7 +678,7 @@ BOOL BTL_POKEPARAM_GetContFlag( const BTL_POKEPARAM* pp, BppContFlag flagID )
  * @retval  BppHpBorder
  */
 //=============================================================================================
-BppHpBorder BTL_POKEPARAM_CheckHPBorder( const BTL_POKEPARAM* pp, u32 hp )
+BppHpBorder BPP_CheckHPBorder( const BTL_POKEPARAM* pp, u32 hp )
 {
   if( hp <= (pp->baseParam.hpMax / 8) )
   {
@@ -699,9 +699,9 @@ BppHpBorder BTL_POKEPARAM_CheckHPBorder( const BTL_POKEPARAM* pp, u32 hp )
  * @retval  BppHpBorder
  */
 //=============================================================================================
-BppHpBorder BTL_POKEPARAM_GetHPBorder( const BTL_POKEPARAM* pp )
+BppHpBorder BPP_GetHPBorder( const BTL_POKEPARAM* pp )
 {
-  return BTL_POKEPARAM_CheckHPBorder( pp, pp->coreParam.hp );
+  return BPP_CheckHPBorder( pp, pp->coreParam.hp );
 }
 
 //=============================================================================================
@@ -713,7 +713,7 @@ BppHpBorder BTL_POKEPARAM_GetHPBorder( const BTL_POKEPARAM* pp )
  * @retval  fx32
  */
 //=============================================================================================
-fx32 BTL_POKEPARAM_GetHPRatio( const BTL_POKEPARAM* pp )
+fx32 BPP_GetHPRatio( const BTL_POKEPARAM* pp )
 {
   double r = (double)(pp->coreParam.hp * 100) / (double)(pp->baseParam.hpMax);
   return FX32_CONST( r );
@@ -728,7 +728,7 @@ fx32 BTL_POKEPARAM_GetHPRatio( const BTL_POKEPARAM* pp )
  * @retval  u8
  */
 //=============================================================================================
-u8 BTL_POKEPARAM_GetWazaIdx( const BTL_POKEPARAM* pp, WazaID waza )
+u8 BPP_WAZA_SearchIdx( const BTL_POKEPARAM* pp, WazaID waza )
 {
   u32 i;
   for(i=0; i<PTL_WAZA_MAX; ++i){
@@ -782,7 +782,7 @@ static s8* getRankVaryStatus( BTL_POKEPARAM* pp, BppValueID type, s8* min, s8* m
  * @retval  BOOL
  */
 //=============================================================================================
-BOOL BTL_POKEPARAM_IsRankEffectValid( const BTL_POKEPARAM* pp, BppValueID rankType, int volume )
+BOOL BPP_IsRankEffectValid( const BTL_POKEPARAM* pp, BppValueID rankType, int volume )
 {
   const s8* ptr;
   s8  min, max;
@@ -804,7 +804,7 @@ BOOL BTL_POKEPARAM_IsRankEffectValid( const BTL_POKEPARAM* pp, BppValueID rankTy
  * @retval  int   段階数
  */
 //=============================================================================================
-int BTL_POKEPARAM_RankEffectUpLimit( const BTL_POKEPARAM* pp, BppValueID rankType )
+int BPP_RankEffectUpLimit( const BTL_POKEPARAM* pp, BppValueID rankType )
 {
   const s8* ptr;
   s8  min, max;
@@ -822,7 +822,7 @@ int BTL_POKEPARAM_RankEffectUpLimit( const BTL_POKEPARAM* pp, BppValueID rankTyp
  * @retval  int   段階数（マイナス）
  */
 //=============================================================================================
-int BTL_POKEPARAM_RankEffectDownLimit( const BTL_POKEPARAM* pp, BppValueID rankType )
+int BPP_RankEffectDownLimit( const BTL_POKEPARAM* pp, BppValueID rankType )
 {
   const s8* ptr;
   s8  min, max;
@@ -842,7 +842,7 @@ int BTL_POKEPARAM_RankEffectDownLimit( const BTL_POKEPARAM* pp, BppValueID rankT
  * @retval  u8 result   実際に上がった段階数
  */
 //=============================================================================================
-u8 BTL_POKEPARAM_RankUp( BTL_POKEPARAM* pp, BppValueID rankType, u8 volume )
+u8 BPP_RankUp( BTL_POKEPARAM* pp, BppValueID rankType, u8 volume )
 {
   s8 *ptr;
   s8 max = RANK_STATUS_MAX;
@@ -887,7 +887,7 @@ u8 BTL_POKEPARAM_RankUp( BTL_POKEPARAM* pp, BppValueID rankType, u8 volume )
  * @retval  u8    実際に下がった段階数
  */
 //=============================================================================================
-u8 BTL_POKEPARAM_RankDown( BTL_POKEPARAM* pp, BppValueID rankType, u8 volume )
+u8 BPP_RankDown( BTL_POKEPARAM* pp, BppValueID rankType, u8 volume )
 {
   s8 *ptr;
   s8 min = RANK_STATUS_MIN;
@@ -930,7 +930,7 @@ u8 BTL_POKEPARAM_RankDown( BTL_POKEPARAM* pp, BppValueID rankType, u8 volume )
  *
  */
 //=============================================================================================
-void BTL_POKEPARAM_RankSet( BTL_POKEPARAM* pp, BppValueID rankType, u8 value )
+void BPP_RankSet( BTL_POKEPARAM* pp, BppValueID rankType, u8 value )
 {
   s8 *ptr;
   u8 min = RANK_STATUS_MIN;
@@ -968,7 +968,7 @@ void BTL_POKEPARAM_RankSet( BTL_POKEPARAM* pp, BppValueID rankType, u8 value )
  * @param   pp
  */
 //=============================================================================================
-void BTL_POKEPARAM_RankRecover( BTL_POKEPARAM* pp )
+void BPP_RankRecover( BTL_POKEPARAM* pp )
 {
   Effrank_Recover( &pp->varyParam );
   update_RealParam( pp );
@@ -980,7 +980,7 @@ void BTL_POKEPARAM_RankRecover( BTL_POKEPARAM* pp )
  * @param   pp
  */
 //=============================================================================================
-void BTL_POKEPARAM_RankReset( BTL_POKEPARAM* pp )
+void BPP_RankReset( BTL_POKEPARAM* pp )
 {
   Effrank_Reset( &pp->varyParam );
   update_RealParam( pp );
@@ -995,7 +995,7 @@ void BTL_POKEPARAM_RankReset( BTL_POKEPARAM* pp )
  *
  */
 //=============================================================================================
-void BTL_POKEPARAM_HpMinus( BTL_POKEPARAM* pp, u16 value )
+void BPP_HpMinus( BTL_POKEPARAM* pp, u16 value )
 {
   if( pp->coreParam.hp > value )
   {
@@ -1015,7 +1015,7 @@ void BTL_POKEPARAM_HpMinus( BTL_POKEPARAM* pp, u16 value )
  *
  */
 //=============================================================================================
-void BTL_POKEPARAM_HpPlus( BTL_POKEPARAM* pp, u16 value )
+void BPP_HpPlus( BTL_POKEPARAM* pp, u16 value )
 {
   pp->coreParam.hp += value;
   if( pp->coreParam.hp > pp->baseParam.hpMax )
@@ -1031,7 +1031,7 @@ void BTL_POKEPARAM_HpPlus( BTL_POKEPARAM* pp, u16 value )
  *
  */
 //=============================================================================================
-void BTL_POKEPARAM_HpZero( BTL_POKEPARAM* pp )
+void BPP_HpZero( BTL_POKEPARAM* pp )
 {
   pp->coreParam.hp = 0;
 }
@@ -1045,7 +1045,7 @@ void BTL_POKEPARAM_HpZero( BTL_POKEPARAM* pp )
  *
  */
 //=============================================================================================
-void BTL_POKEPARAM_PPMinus( BTL_POKEPARAM* pp, u8 wazaIdx, u8 value )
+void BPP_PPMinus( BTL_POKEPARAM* pp, u8 wazaIdx, u8 value )
 {
   GF_ASSERT(wazaIdx < pp->wazaCnt);
 
@@ -1068,7 +1068,7 @@ void BTL_POKEPARAM_PPMinus( BTL_POKEPARAM* pp, u8 wazaIdx, u8 value )
  *
  */
 //=============================================================================================
-void BTL_POKEPARAM_PPPlus( BTL_POKEPARAM* pp, u8 wazaIdx, u8 value )
+void BPP_PPPlus( BTL_POKEPARAM* pp, u8 wazaIdx, u8 value )
 {
   GF_ASSERT(wazaIdx < pp->wazaCnt);
 
@@ -1086,7 +1086,7 @@ void BTL_POKEPARAM_PPPlus( BTL_POKEPARAM* pp, u8 wazaIdx, u8 value )
  * @param   wazaIdx
  */
 //=============================================================================================
-void BTL_POKEPARAM_SetWazaUsed( BTL_POKEPARAM* pp, u8 wazaIdx )
+void BPP_WAZA_SetUsedFlag( BTL_POKEPARAM* pp, u8 wazaIdx )
 {
   pp->waza[ wazaIdx ].usedFlag = TRUE;
 }
@@ -1101,7 +1101,7 @@ void BTL_POKEPARAM_SetWazaUsed( BTL_POKEPARAM* pp, u8 wazaIdx )
  * @param   fPermenent    永続フラグ（TRUEならバトル後まで引き継ぐ／FALSEなら瀕死・入れかえで元に戻る）
  */
 //=============================================================================================
-void BTL_POKEPARAM_UpdateWazaNumber( BTL_POKEPARAM* pp, u8 wazaIdx, WazaID waza, u8 ppMax, BOOL fPermenent )
+void BPP_WAZA_UpdateID( BTL_POKEPARAM* pp, u8 wazaIdx, WazaID waza, u8 ppMax, BOOL fPermenent )
 {
   BPP_WAZA* pWaza = &pp->waza[ wazaIdx ];
 
@@ -1129,7 +1129,7 @@ void BTL_POKEPARAM_UpdateWazaNumber( BTL_POKEPARAM* pp, u8 wazaIdx, WazaID waza,
  *
  */
 //=============================================================================================
-void BTL_POKEPARAM_SetTurnFlag( BTL_POKEPARAM* pp, BppTurnFlag flagID )
+void BPP_TURNFLAG_Set( BTL_POKEPARAM* pp, BppTurnFlag flagID )
 {
   flgbuf_set( pp->turnFlag, flagID );
 }
@@ -1141,7 +1141,7 @@ void BTL_POKEPARAM_SetTurnFlag( BTL_POKEPARAM* pp, BppTurnFlag flagID )
  * @param   flagID
  */
 //=============================================================================================
-void BTL_POKEPARAM_SetActFlag( BTL_POKEPARAM* pp, BppActFlag flagID )
+void BPP_ACTFLAG_Set( BTL_POKEPARAM* pp, BppActFlag flagID )
 {
   flgbuf_set( pp->actFlag, flagID );
 }
@@ -1154,7 +1154,7 @@ void BTL_POKEPARAM_SetActFlag( BTL_POKEPARAM* pp, BppActFlag flagID )
  *
  */
 //=============================================================================================
-void BTL_POKEPARAM_SetContFlag( BTL_POKEPARAM* pp, BppContFlag flagID )
+void BPP_CONTFLAG_Set( BTL_POKEPARAM* pp, BppContFlag flagID )
 {
   flgbuf_set( pp->contFlag, flagID );
 }
@@ -1167,7 +1167,7 @@ void BTL_POKEPARAM_SetContFlag( BTL_POKEPARAM* pp, BppContFlag flagID )
  *
  */
 //=============================================================================================
-void BTL_POKEPARAM_ResetContFlag( BTL_POKEPARAM* pp, BppContFlag flagID )
+void BPP_CONTFLAG_Clear( BTL_POKEPARAM* pp, BppContFlag flagID )
 {
   flgbuf_reset( pp->contFlag, flagID );
 }
@@ -1187,11 +1187,11 @@ void BTL_POKEPARAM_ResetContFlag( BTL_POKEPARAM* pp, BppContFlag flagID )
  *
  */
 //=============================================================================================
-void BTL_POKEPARAM_SetWazaSick( BTL_POKEPARAM* bpp, WazaSick sick, BPP_SICK_CONT contParam )
+void BPP_SetWazaSick( BTL_POKEPARAM* bpp, WazaSick sick, BPP_SICK_CONT contParam )
 {
   if( sick < POKESICK_MAX )
   {
-    PokeSick pokeSick = BTL_POKEPARAM_GetPokeSick( bpp );
+    PokeSick pokeSick = BPP_GetPokeSick( bpp );
     GF_ASSERT(pokeSick == POKESICK_NULL);
   }
 
@@ -1209,7 +1209,7 @@ void BTL_POKEPARAM_SetWazaSick( BTL_POKEPARAM* bpp, WazaSick sick, BPP_SICK_CONT
  * @param   callbackArg     コールバックに引き渡す任意引数
  */
 //=============================================================================================
-void BTL_POKEPARAM_WazaSick_TurnCheck( BTL_POKEPARAM* bpp, BtlSickTurnCheckFunc callbackFunc, void* callbackWork )
+void BPP_WazaSick_TurnCheck( BTL_POKEPARAM* bpp, BtlSickTurnCheckFunc callbackFunc, void* callbackWork )
 {
   WazaSick  sick;
 
@@ -1266,7 +1266,7 @@ void BTL_POKEPARAM_WazaSick_TurnCheck( BTL_POKEPARAM* bpp, BtlSickTurnCheckFunc 
  *
  */
 //=============================================================================================
-void BTL_POKEPARAM_CurePokeSick( BTL_POKEPARAM* pp )
+void BPP_CurePokeSick( BTL_POKEPARAM* pp )
 {
   u32 i;
   for(i=POKESICK_ORIGIN; i<POKESICK_MAX; ++i)
@@ -1284,11 +1284,11 @@ void BTL_POKEPARAM_CurePokeSick( BTL_POKEPARAM* pp )
  *
  */
 //=============================================================================================
-void BTL_POKEPARAM_CureWazaSick( BTL_POKEPARAM* pp, WazaSick sick )
+void BPP_CureWazaSick( BTL_POKEPARAM* pp, WazaSick sick )
 {
   if( sick < POKESICK_MAX )
   {
-    BTL_POKEPARAM_CurePokeSick( pp );
+    BPP_CurePokeSick( pp );
   }
   else
   {
@@ -1303,7 +1303,7 @@ void BTL_POKEPARAM_CureWazaSick( BTL_POKEPARAM* pp, WazaSick sick )
  * @param   depend_pokeID
  */
 //=============================================================================================
-void BTL_POKEPARAM_CureWazaSickDependPoke( BTL_POKEPARAM* pp, u8 depend_pokeID )
+void BPP_CureWazaSickDependPoke( BTL_POKEPARAM* pp, u8 depend_pokeID )
 {
   u32 i;
   u8 fCure;
@@ -1336,9 +1336,9 @@ void BTL_POKEPARAM_CureWazaSickDependPoke( BTL_POKEPARAM* pp, u8 depend_pokeID )
  * @retval  BOOL    目が覚めた場合はTrue
  */
 //=============================================================================================
-BOOL BTL_POKEPARAM_Nemuri_CheckWake( BTL_POKEPARAM* pp )
+BOOL BPP_Nemuri_CheckWake( BTL_POKEPARAM* pp )
 {
-  if( BTL_POKEPARAM_CheckSick(pp, WAZASICK_NEMURI) )
+  if( BPP_CheckSick(pp, WAZASICK_NEMURI) )
   {
     if( pp->sickCont[POKESICK_NEMURI].type == WAZASICK_CONT_TURN )
     {
@@ -1363,7 +1363,7 @@ BOOL BTL_POKEPARAM_Nemuri_CheckWake( BTL_POKEPARAM* pp )
  * @retval  PokeSick    かかっている状態異常の識別子（かかっていない場合 POKESICK_NULL）
  */
 //=============================================================================================
-PokeSick BTL_POKEPARAM_GetPokeSick( const BTL_POKEPARAM* pp )
+PokeSick BPP_GetPokeSick( const BTL_POKEPARAM* pp )
 {
   u32 i;
   for(i=POKESICK_ORIGIN; i<POKESICK_MAX; ++i)
@@ -1384,7 +1384,7 @@ PokeSick BTL_POKEPARAM_GetPokeSick( const BTL_POKEPARAM* pp )
  * @retval  BOOL
  */
 //=============================================================================================
-BOOL BTL_POKEPARAM_CheckSick( const BTL_POKEPARAM* pp, WazaSick sickType )
+BOOL BPP_CheckSick( const BTL_POKEPARAM* pp, WazaSick sickType )
 {
   GF_ASSERT(sickType < NELEMS(pp->sickCont));
 
@@ -1400,7 +1400,7 @@ BOOL BTL_POKEPARAM_CheckSick( const BTL_POKEPARAM* pp, WazaSick sickType )
  * @retval  u8
  */
 //=============================================================================================
-u8 BTL_POKEPARAM_GetSickParam( const BTL_POKEPARAM* pp, WazaSick sick )
+u8 BPP_GetSickParam( const BTL_POKEPARAM* pp, WazaSick sick )
 {
   GF_ASSERT(sick < NELEMS(pp->sickCont));
 
@@ -1429,7 +1429,7 @@ u8 BTL_POKEPARAM_GetSickParam( const BTL_POKEPARAM* pp, WazaSick sick )
  * @retval  BPP_SICK_CONT
  */
 //=============================================================================================
-BPP_SICK_CONT BTL_POKEPARAM_GetSickCont( const BTL_POKEPARAM* bpp, WazaSick sick )
+BPP_SICK_CONT BPP_GetSickCont( const BTL_POKEPARAM* bpp, WazaSick sick )
 {
   GF_ASSERT(sick < NELEMS(bpp->sickCont));
   return bpp->sickCont[ sick ];
@@ -1444,7 +1444,7 @@ BPP_SICK_CONT BTL_POKEPARAM_GetSickCont( const BTL_POKEPARAM* bpp, WazaSick sick
  * @retval  u8
  */
 //=============================================================================================
-u8 BTL_POKEPARAM_GetSickTurnCount( const BTL_POKEPARAM* bpp, WazaSick sick )
+u8 BPP_GetSickTurnCount( const BTL_POKEPARAM* bpp, WazaSick sick )
 {
   GF_ASSERT(sick < NELEMS(bpp->sickCont));
   return bpp->wazaSickCounter[ sick ];
@@ -1458,9 +1458,9 @@ u8 BTL_POKEPARAM_GetSickTurnCount( const BTL_POKEPARAM* bpp, WazaSick sick )
  * @retval  int
  */
 //=============================================================================================
-int BTL_POKEPARAM_CalcSickDamage( const BTL_POKEPARAM* pp, WazaSick sick )
+int BPP_CalcSickDamage( const BTL_POKEPARAM* pp, WazaSick sick )
 {
-  if( BTL_POKEPARAM_CheckSick(pp, sick) )
+  if( BPP_CheckSick(pp, sick) )
   {
     switch( sick ){
     case WAZASICK_DOKU:
@@ -1478,7 +1478,7 @@ int BTL_POKEPARAM_CalcSickDamage( const BTL_POKEPARAM* pp, WazaSick sick )
       return BTL_CALC_QuotMaxHP( pp, 8 );
 
     case WAZASICK_AKUMU:
-      if( BTL_POKEPARAM_CheckSick(pp, WAZASICK_NEMURI) ){
+      if( BPP_CheckSick(pp, WAZASICK_NEMURI) ){
         return BTL_CALC_QuotMaxHP( pp, 4 );
       }
       break;
@@ -1526,7 +1526,7 @@ static void clearWazaSickWork( BTL_POKEPARAM* bpp, BOOL fPokeSickInclude )
  *
  */
 //=============================================================================================
-void BTL_POKEPARAM_SetAppearTurn( BTL_POKEPARAM* pp, u16 turn )
+void BPP_SetAppearTurn( BTL_POKEPARAM* pp, u16 turn )
 {
   GF_ASSERT(turn < BTL_TURNCOUNT_MAX);
   pp->appearedTurn = turn;
@@ -1541,7 +1541,7 @@ void BTL_POKEPARAM_SetAppearTurn( BTL_POKEPARAM* pp, u16 turn )
  *
  */
 //=============================================================================================
-void BTL_POKEPARAM_TurnCheck( BTL_POKEPARAM* pp )
+void BPP_TurnCheck( BTL_POKEPARAM* pp )
 {
   flgbuf_clear( pp->turnFlag, sizeof(pp->turnFlag) );
 
@@ -1561,7 +1561,7 @@ void BTL_POKEPARAM_TurnCheck( BTL_POKEPARAM* pp )
  *
  */
 //=============================================================================================
-void BTL_POKEPARAM_ForceOffTurnFlag( BTL_POKEPARAM* bpp, BppTurnFlag flagID )
+void BPP_TURNFLAG_ForceOff( BTL_POKEPARAM* bpp, BppTurnFlag flagID )
 {
   flgbuf_reset( bpp->turnFlag, flagID );
 }
@@ -1572,7 +1572,7 @@ void BTL_POKEPARAM_ForceOffTurnFlag( BTL_POKEPARAM* bpp, BppTurnFlag flagID )
  * @param   bpp
  */
 //=============================================================================================
-void BTL_POKEPARAM_ClearActFlag( BTL_POKEPARAM* bpp )
+void BPP_ACTFLAG_Clear( BTL_POKEPARAM* bpp )
 {
   flgbuf_clear( bpp->actFlag, sizeof(bpp->actFlag) );
 }
@@ -1584,7 +1584,7 @@ void BTL_POKEPARAM_ClearActFlag( BTL_POKEPARAM* bpp )
  * @param   pp
  */
 //=============================================================================================
-void BTL_POKEPARM_DeadClear( BTL_POKEPARAM* bpp )
+void BPP_DeadClear( BTL_POKEPARAM* bpp )
 {
   flgbuf_clear( bpp->actFlag, sizeof(bpp->actFlag) );
   flgbuf_clear( bpp->turnFlag, sizeof(bpp->turnFlag) );
@@ -1600,7 +1600,7 @@ void BTL_POKEPARM_DeadClear( BTL_POKEPARAM* bpp )
  * @param   bpp
  */
 //=============================================================================================
-void BTL_POKEPARAM_OutClear( BTL_POKEPARAM* bpp )
+void BPP_OutClear( BTL_POKEPARAM* bpp )
 {
   flgbuf_clear( bpp->actFlag, sizeof(bpp->actFlag) );
   flgbuf_clear( bpp->turnFlag, sizeof(bpp->turnFlag) );
@@ -1617,7 +1617,7 @@ void BTL_POKEPARAM_OutClear( BTL_POKEPARAM* bpp )
  * @param   type
  */
 //=============================================================================================
-void BTL_POKEPARAM_ChangePokeType( BTL_POKEPARAM* pp, PokeTypePair type )
+void BPP_ChangePokeType( BTL_POKEPARAM* pp, PokeTypePair type )
 {
   pp->type = type;
 }
@@ -1629,7 +1629,7 @@ void BTL_POKEPARAM_ChangePokeType( BTL_POKEPARAM* pp, PokeTypePair type )
  * @param   tok
  */
 //=============================================================================================
-void BTL_POKEPARAM_ChangeTokusei( BTL_POKEPARAM* pp, PokeTokusei tok )
+void BPP_ChangeTokusei( BTL_POKEPARAM* pp, PokeTokusei tok )
 {
   pp->tokusei = tok;
 }
@@ -1641,7 +1641,7 @@ void BTL_POKEPARAM_ChangeTokusei( BTL_POKEPARAM* pp, PokeTokusei tok )
  * @param   formNo
  */
 //=============================================================================================
-void BTL_POKEPARAM_ChangeForm( BTL_POKEPARAM* pp, u8 formNo )
+void BPP_ChangeForm( BTL_POKEPARAM* pp, u8 formNo )
 {
   pp->formNo = formNo;
 }
@@ -1652,7 +1652,7 @@ void BTL_POKEPARAM_ChangeForm( BTL_POKEPARAM* pp, u8 formNo )
  * @param   pp
  */
 //=============================================================================================
-void BTL_POKEPARAM_RemoveItem( BTL_POKEPARAM* pp )
+void BPP_RemoveItem( BTL_POKEPARAM* pp )
 {
   pp->coreParam.item = ITEM_DUMMY_DATA;
 }
@@ -1666,7 +1666,7 @@ void BTL_POKEPARAM_RemoveItem( BTL_POKEPARAM* pp )
  * @param   waza
  */
 //=============================================================================================
-void BTL_POKEPARAM_UpdateUsedWazaNumber( BTL_POKEPARAM* pp, WazaID waza, BtlPokePos targetPos )
+void BPP_UpdatePrevWazaID( BTL_POKEPARAM* pp, WazaID waza, BtlPokePos targetPos )
 {
   // @@@ まもる・みきりの関係
   WazaID prev = pp->prevWazaID;
@@ -1686,10 +1686,9 @@ void BTL_POKEPARAM_UpdateUsedWazaNumber( BTL_POKEPARAM* pp, WazaID waza, BtlPoke
  * @param   pp
  */
 //=============================================================================================
-void BTL_POKEPARAM_ResetUsedWazaNumber( BTL_POKEPARAM* pp )
+void BPP_ResetWazaContConter( BTL_POKEPARAM* bpp )
 {
-  pp->prevWazaID = WAZANO_NULL;
-  pp->sameWazaCounter = 0;
+  bpp->sameWazaCounter = 0;
 }
 //=============================================================================================
 /**
@@ -1700,7 +1699,7 @@ void BTL_POKEPARAM_ResetUsedWazaNumber( BTL_POKEPARAM* pp )
  * @retval  WazaID
  */
 //=============================================================================================
-WazaID BTL_POKEPARAM_GetPrevWazaNumber( const BTL_POKEPARAM* pp )
+WazaID BPP_GetPrevWazaID( const BTL_POKEPARAM* pp )
 {
   return pp->prevWazaID;
 }
@@ -1713,7 +1712,7 @@ WazaID BTL_POKEPARAM_GetPrevWazaNumber( const BTL_POKEPARAM* pp )
  * @retval  BtlPokePos
  */
 //=============================================================================================
-BtlPokePos BTL_POKEPARAM_GetPrevTargetPos( const BTL_POKEPARAM* pp )
+BtlPokePos BPP_GetPrevTargetPos( const BTL_POKEPARAM* pp )
 {
   return pp->prevTargetPos;
 }
@@ -1726,7 +1725,7 @@ BtlPokePos BTL_POKEPARAM_GetPrevTargetPos( const BTL_POKEPARAM* pp )
  * @retval  u32
  */
 //=============================================================================================
-u32 BTL_POKEPARAM_GetSameWazaUsedCounter( const BTL_POKEPARAM* pp )
+u32 BPP_GetWazaContCounter( const BTL_POKEPARAM* pp )
 {
   return pp->sameWazaCounter;
 }
@@ -1768,7 +1767,7 @@ static void dmgrecFwdTurn( BTL_POKEPARAM* bpp )
  * @param   rec
  */
 //=============================================================================================
-void BTL_POKEPARAM_WAZADMG_REC_Add( BTL_POKEPARAM* bpp, const BPP_WAZADMG_REC* rec )
+void BPP_WAZADMGREC_Add( BTL_POKEPARAM* bpp, const BPP_WAZADMG_REC* rec )
 {
   u8 turn, idx;
 
@@ -1799,7 +1798,7 @@ void BTL_POKEPARAM_WAZADMG_REC_Add( BTL_POKEPARAM* bpp, const BPP_WAZADMG_REC* r
  * @param   turn_ridx   遡るターン数（0なら当該ターンの記録）
  */
 //=============================================================================================
-u8 BTL_POKEPARAM_WAZADMG_REC_GetCount( const BTL_POKEPARAM* bpp, u8 turn_ridx )
+u8 BPP_WAZADMGREC_GetCount( const BTL_POKEPARAM* bpp, u8 turn_ridx )
 {
   if( turn_ridx < WAZADMG_REC_TURN_MAX )
   {
@@ -1827,7 +1826,7 @@ u8 BTL_POKEPARAM_WAZADMG_REC_GetCount( const BTL_POKEPARAM* bpp, u8 turn_ridx )
  * @retval  BOOL        レコードを取得できたらTRUE／それ以上の記録が無い場合などFALSE
  */
 //=============================================================================================
-BOOL BTL_POKEPARAM_WAZADMG_REC_Get( const BTL_POKEPARAM* bpp, u8 turn_ridx, u8 rec_ridx, BPP_WAZADMG_REC* dst )
+BOOL BPP_WAZADMGREC_Get( const BTL_POKEPARAM* bpp, u8 turn_ridx, u8 rec_ridx, BPP_WAZADMG_REC* dst )
 {
   if( turn_ridx < WAZADMG_REC_TURN_MAX )
   {
@@ -1853,7 +1852,7 @@ BOOL BTL_POKEPARAM_WAZADMG_REC_Get( const BTL_POKEPARAM* bpp, u8 turn_ridx, u8 r
  * @param   actionAgility
  */
 //=============================================================================================
-void BTL_POKEPARAM_SetActionAgility( BTL_POKEPARAM* bpp, u16 actionAgility )
+void BPP_SetActionAgility( BTL_POKEPARAM* bpp, u16 actionAgility )
 {
   bpp->actionAgility = actionAgility;
 }
@@ -1867,7 +1866,7 @@ void BTL_POKEPARAM_SetActionAgility( BTL_POKEPARAM* bpp, u16 actionAgility )
  * @retval  u16
  */
 //=============================================================================================
-u16 BTL_POKEPARAM_GetActionAgility( const BTL_POKEPARAM* bpp )
+u16 BPP_GetActionAgility( const BTL_POKEPARAM* bpp )
 {
   return bpp->actionAgility;
 }
@@ -1925,7 +1924,7 @@ static inline BOOL flgbuf_get( const u8* buf, u32 flagID )
 // 変身用ワーク処理
 //---------------------------------------------------------------------------------------------
 
-BOOL BTL_POKEPARAM_HENSIN_Set( BTL_POKEPARAM* bpp, const BTL_POKEPARAM* target )
+BOOL BPP_HENSIN_Set( BTL_POKEPARAM* bpp, const BTL_POKEPARAM* target )
 {
   if( (bpp->coreParam.hensinSrc == NULL)
   &&  (target->coreParam.hensinSrc == NULL)

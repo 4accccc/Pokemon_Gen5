@@ -397,7 +397,7 @@ void BTLV_UI_Cleanup( BTLV_CORE* core )
 void BTLV_UI_SelectAction_Start( BTLV_CORE* core, const BTL_POKEPARAM* bpp, BTL_ACTION_PARAM* dest )
 {
   core->procPokeParam = bpp;
-  core->procPokeID = BTL_POKEPARAM_GetID( bpp );
+  core->procPokeID = BPP_GetID( bpp );
   core->actionParam = dest;
   core->playerAction = BTL_ACTION_NULL;
   mainproc_setup( core, CmdProc_SelectAction );
@@ -430,7 +430,7 @@ BtlAction BTLV_UI_SelectAction_Wait( BTLV_CORE* core )
 void BTLV_UI_SelectWaza_Start( BTLV_CORE* core, const BTL_POKEPARAM* bpp, BTL_ACTION_PARAM* dest )
 {
   core->procPokeParam = bpp;
-  core->procPokeID = BTL_POKEPARAM_GetID( bpp );
+  core->procPokeID = BPP_GetID( bpp );
   core->actionParam = dest;
   mainproc_setup( core, CmdProc_SelectWaza );
 }
@@ -459,7 +459,7 @@ BOOL BTLV_UI_SelectWaza_Wait( BTLV_CORE* core )
 void BTLV_UI_SelectTarget_Start( BTLV_CORE* core, const BTL_POKEPARAM* bpp, BTL_ACTION_PARAM* dest )
 {
   core->procPokeParam = bpp;
-  core->procPokeID = BTL_POKEPARAM_GetID( bpp );
+  core->procPokeID = BPP_GetID( bpp );
   core->actionParam = dest;
   mainproc_setup( core, CmdProc_SelectTarget );
 }
@@ -719,7 +719,7 @@ void BTLV_ACT_DamageEffectPlural_Start( BTLV_CORE* wk, u32 pokeCnt, BtlTypeAffAb
     for(i=0; i<pokeCnt; ++i)
     {
       BTL_Printf("  対象ポケID=%d\n", pokeID[i]);
-      subwk->pokePos[i] = BTL_MAIN_PokeIDtoPokePosClient( wk->mainModule, pokeID[i] );
+      subwk->pokePos[i] = BTL_MAIN_PokeIDtoPokePos( wk->mainModule, wk->pokeCon, pokeID[i] );
     }
   }
 }
@@ -849,7 +849,7 @@ void BTLV_StartMemberChangeAct( BTLV_CORE* wk, BtlPokePos pos, u8 clientID, u8 m
   subwk->clientID = clientID;
   subwk->memberIdx = memberIdx;
   subwk->pokePos = pos;
-  subwk->pokeID = BTL_POKEPARAM_GetID( bpp );
+  subwk->pokeID = BPP_GetID( bpp );
 
   BTL_Printf("メンバー入場 client=%d, pokePos=%d, memberIdx=%d, pokeID=%d\n",
     clientID, pos, memberIdx, subwk->pokeID );

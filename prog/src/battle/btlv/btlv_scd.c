@@ -400,7 +400,7 @@ static BOOL selectAction_init( int* seq, void* wk_adrs )
   for( i = 0 ; i < members ; i++ )
   {
     bpp = BTL_PARTY_GetMemberDataConst( party, i );
-    pp  = BTL_POKEPARAM_GetSrcData( bpp );
+    pp  = BPP_GetSrcData( bpp );
     hp = PP_Get( pp, ID_PARA_hp, NULL );
 
     if( hp )
@@ -471,10 +471,10 @@ static BOOL selectWaza_init( int* seq, void* wk_adrs )
   u16 wazaCnt, wazaID, i;
   u8 PP, PPMax;
 
-  wazaCnt = BTL_POKEPARAM_GetWazaCount( wk->bpp );
+  wazaCnt = BPP_WAZA_GetCount( wk->bpp );
   for(i=0; i<wazaCnt; i++)
   {
-    wazaID = BTL_POKEPARAM_GetWazaParticular( wk->bpp, i, &PP, &PPMax );
+    wazaID = BPP_WAZA_GetParticular( wk->bpp, i, &PP, &PPMax );
     biwp.wazano[ i ] = wazaID;
     biwp.pp[ i ]     = PP;
     biwp.ppmax[ i ]  = PPMax;
@@ -511,12 +511,12 @@ static BOOL selectWaza_loop( int* seq, void* wk_adrs )
       BTL_ACTION_SetNULL( wk->destActionParam );
       return TRUE;
     }
-    else if( hit <= BTL_POKEPARAM_GetWazaCount( wk->bpp ) )
+    else if( hit <= BPP_WAZA_GetCount( wk->bpp ) )
     {
       WazaID waza;
 
       //キャンセルが先頭にはいっているので、デクリメントして正規の選択位置にする
-      waza = BTL_POKEPARAM_GetWazaNumber( wk->bpp, --hit );
+      waza = BPP_WAZA_GetID( wk->bpp, --hit );
       BTL_ACTION_SetFightParam( wk->destActionParam, waza, 0 );
 
       SePlayDecide();
@@ -538,18 +538,18 @@ static BOOL selectWaza_loop( int* seq, void* wk_adrs )
 //----------------------------------------------------------------------------------
 static BtlvScd_SelAction_Result  check_unselectable_waza( BTLV_SCD* wk, const BTL_POKEPARAM* bpp, u8 waza_idx )
 {
-  if( BTL_POKEPARAM_GetContFlag(bpp, BPP_CONTFLG_KODAWARI_LOCK) )
+  if( BPP_GetContFlag(bpp, BPP_CONTFLG_KODAWARI_LOCK) )
   {
-    WazaID  select_waza = BTL_POKEPARAM_GetWazaNumber( bpp, waza_idx );
-    if( select_waza != BTL_POKEPARAM_GetPrevWazaNumber(bpp) ){
+    WazaID  select_waza = BPP_WAZA_GetID( bpp, waza_idx );
+    if( select_waza != BPP_GetPrevWazaID(bpp) ){
       return BTLV_SCD_SelAction_Warn_Kodawari;
     }
   }
 
-  if( BTL_POKEPARAM_CheckSick(bpp, WAZASICK_ENCORE) )
+  if( BPP_CheckSick(bpp, WAZASICK_ENCORE) )
   {
-    WazaID  select_waza = BTL_POKEPARAM_GetWazaNumber( bpp, waza_idx );
-    if( select_waza != BTL_POKEPARAM_GetPrevWazaNumber(bpp) ){
+    WazaID  select_waza = BPP_WAZA_GetID( bpp, waza_idx );
+    if( select_waza != BPP_GetPrevWazaID(bpp) ){
       return BTLV_SCD_SelAction_Warn_WazaLock;
     }
   }
@@ -696,12 +696,12 @@ static void stwdraw_button( const u8* pos, u8 count, u8 format, BTLV_SCD* wk )
   MI_CpuClear16( &bsp, sizeof( BINPUT_SCENE_POKE ) );
 
   bsp.pokesele_type = WAZADATA_GetTarget( waza );
-  bsp.client_type = BTL_MAIN_PokeIDtoPokePosClient( wk->mainModule, BTL_POKEPARAM_GetID(wk->bpp) );
+  bsp.client_type = BTL_MAIN_PokeIDtoPokePos( wk->mainModule, wk->pokeCon, BPP_GetID(wk->bpp) );
 
   while( count-- )
   {
     bpp = BTL_POKECON_GetFrontPokeDataConst( wk->pokeCon, *pos );
-    pp  = BTL_POKEPARAM_GetSrcData( bpp );
+    pp  = BPP_GetSrcData( bpp );
     vpos = BTL_MAIN_BtlPosToViewPos( wk->mainModule, *pos );
 
     bsp.dspp[ *pos ].hp = PP_Get( pp, ID_PARA_hp, NULL );
@@ -891,7 +891,7 @@ static void seltgt_init_setup_work( SEL_TARGET_WORK* stw, BTLV_SCD* wk )
 {
   WazaID waza = wk->destActionParam->fight.waza;
   WazaTarget target = WAZADATA_GetTarget( waza );
-  BtlPokePos  basePos = BTL_MAIN_PokeIDtoPokePosClient( wk->mainModule, BTL_POKEPARAM_GetID(wk->bpp) );
+  BtlPokePos  basePos = BTL_MAIN_PokeIDtoPokePos( wk->mainModule, wk->pokeCon, BPP_GetID(wk->bpp) );
 
   stw_init( stw );
 
@@ -993,7 +993,7 @@ static BOOL selectPokemon_init( int* seq, void* wk_adrs )
       for(i=0; i<members; i++)
       {
         bpp = BTL_PARTY_GetMemberDataConst( party, i );
-        hp = BTL_POKEPARAM_GetValue( bpp, BPP_HP );
+        hp = BPP_GetValue( bpp, BPP_HP );
         col = (hp)? 6 : 4;
         BTL_STR_MakeStatusWinStr( wk->strbuf, bpp, hp );
         GFL_BMP_Fill( wk->bmp, winpos[i].x, winpos[i].y, POKEWIN_WIDTH, POKEWIN_HEIGHT, col );

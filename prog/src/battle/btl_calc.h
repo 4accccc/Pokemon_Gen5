@@ -116,7 +116,7 @@ static inline int BTL_CALC_Roundup( int value, int min )
 
 static inline u32 BTL_CALC_QuotMaxHP( const BTL_POKEPARAM* bpp, u32 denom )
 {
-  u32 ret = BTL_POKEPARAM_GetValue( bpp, BPP_MAX_HP ) / denom;
+  u32 ret = BPP_GetValue( bpp, BPP_MAX_HP ) / denom;
   if( ret == 0 ){ ret = 1; }
   return ret;
 }

@@ -28,12 +28,36 @@ void BTL_SICK_TurnCheckCallback( BTL_POKEPARAM* bpp, WazaSick sick, BOOL fCure, 
   }
 }
 
+//----------------------------------------------------------------------------------------------
+// 状態異常継続
+//----------------------------------------------------------------------------------------------
+static void contProc( BTL_SVFLOW_WORK* flowWk, BTL_POKEPARAM* bpp, WazaSick sick )
+{
+  switch( sick ){
+  case WAZASICK_HOROBINOUTA:    cont_HorobiNoUta( flowWk, bpp ); break;
+  }
+}
+static void cont_HorobiNoUta( BTL_SVFLOW_WORK* flowWk, BTL_POKEPARAM* bpp )
+{
+  BPP_SICK_CONT cont = BPP_GetSickCont( bpp, WAZASICK_HOROBINOUTA );
+  u8 turnMax = BPP_SICCONT_GetTurnMax( cont );
+  u8 turnNow = BPP_GetSickTurnCount( bpp, WAZASICK_HOROBINOUTA );
+  int turnDiff = turnMax - turnNow;
+  BTL_Printf("ほろび: max=%d, now=%d, diff=%dだーよ\n", turnMax, turnNow, turnDiff);
+  if( turnDiff > 0 ){
+    putHorobiCounter( flowWk, bpp, turnDiff );
+  }
+}
+
+//----------------------------------------------------------------------------------------------
+// 状態異常回復
+//----------------------------------------------------------------------------------------------
 static void cureProc( BTL_SVFLOW_WORK* flowWk, BTL_POKEPARAM* bpp, WazaSick sick )
 {
   int strID = getCureStrID( sick, FALSE );
   if( strID >= 0 )
   {
-    u8 pokeID = BTL_POKEPARAM_GetID( bpp );
+    u8 pokeID = BPP_GetID( bpp );
     BTL_HANDEX_PARAM_MESSAGE* param = BTL_SVFLOW_HANDLERWORK_Push( flowWk, BTL_HANDEX_MESSAGE, pokeID );
     HANDEX_STR_Setup( &param->str, BTL_STRTYPE_SET, strID );
     HANDEX_STR_AddArg( &param->str, pokeID );
@@ -46,20 +70,13 @@ static void cureProc( BTL_SVFLOW_WORK* flowWk, BTL_POKEPARAM* bpp, WazaSick sick
   }
 }
 
-static void contProc( BTL_SVFLOW_WORK* flowWk, BTL_POKEPARAM* bpp, WazaSick sick )
-{
-  switch( sick ){
-  case WAZASICK_HOROBINOUTA:    cont_HorobiNoUta( flowWk, bpp ); break;
-  }
-}
-
 static void cure_Akubi( BTL_SVFLOW_WORK* flowWk, BTL_POKEPARAM* bpp )
 {
   int turns = BTL_CALC_RandRange( BTL_NEMURI_TURN_MIN, BTL_NEMURI_TURN_MAX );
   turns--;  // ターンチェック処理中のため、１ターン分あらかじめ短くしておく
   if( turns > 0 )
   {
-    u8 pokeID = BTL_POKEPARAM_GetID( bpp );
+    u8 pokeID = BPP_GetID( bpp );
     BTL_HANDEX_PARAM_ADD_SICK* param = BTL_SVFLOW_HANDLERWORK_Push( flowWk, BTL_HANDEX_ADD_SICK, pokeID );
     param->fAlmost = TRUE;
     param->sickID = WAZASICK_NEMURI;
@@ -69,30 +86,20 @@ static void cure_Akubi( BTL_SVFLOW_WORK* flowWk, BTL_POKEPARAM* bpp )
   }
 }
 
-static void cont_HorobiNoUta( BTL_SVFLOW_WORK* flowWk, BTL_POKEPARAM* bpp )
-{
-  BPP_SICK_CONT cont = BTL_POKEPARAM_GetSickCont( bpp, WAZASICK_HOROBINOUTA );
-  u8 turnMax = BPP_SICCONT_GetTurnMax( cont );
-  u8 turnNow = BTL_POKEPARAM_GetSickTurnCount( bpp, WAZASICK_HOROBINOUTA );
-  int turnDiff = turnMax - turnNow;
-  BTL_Printf("ほろび: max=%d, now=%d, diff=%dだーよ\n", turnMax, turnNow, turnDiff);
-  if( turnDiff > 0 ){
-    putHorobiCounter( flowWk, bpp, turnDiff );
-  }
-}
 static void cure_HorobiNoUta( BTL_SVFLOW_WORK* flowWk, BTL_POKEPARAM* bpp )
 {
   putHorobiCounter( flowWk, bpp, 0 );
   {
-    u8 pokeID = BTL_POKEPARAM_GetID( bpp );
+    u8 pokeID = BPP_GetID( bpp );
     BTL_HANDEX_PARAM_KILL* param = BTL_SVFLOW_HANDLERWORK_Push( flowWk, BTL_HANDEX_KILL, pokeID );
     param->pokeID = pokeID;
   }
 }
 
+// ほろびのうたカウント表示共通処理
 static void putHorobiCounter( BTL_SVFLOW_WORK* flowWk, const BTL_POKEPARAM* bpp, u8 count )
 {
-  u8 pokeID = BTL_POKEPARAM_GetID( bpp );
+  u8 pokeID = BPP_GetID( bpp );
   BTL_HANDEX_PARAM_MESSAGE* param = BTL_SVFLOW_HANDLERWORK_Push( flowWk, BTL_HANDEX_MESSAGE, pokeID );
   HANDEX_STR_Setup( &param->str, BTL_STRTYPE_SET, BTL_STRID_SET_HorobiCountDown );
   HANDEX_STR_AddArg( &param->str, pokeID );
@@ -131,46 +138,6 @@ static int getCureStrID( WazaSick sick, BOOL fUseItem )
   return -1;
 
 }
-
-
-  #if 0
-    for( sick=WAZASICK_ORIGIN; sick<WAZASICK_MAX; ++sick )
-    {
-      damage = BTL_POKEPARAM_CalcSickDamage( bpp, sick );
-      if( damage )
-      {
-        BTL_EVENTVAR_Push();
-          BTL_EVENTVAR_SetValue( BTL_EVAR_POKEID, pokeID );
-          BTL_EVENTVAR_SetValue( BTL_EVAR_SICKID, sick );
-          BTL_EVENTVAR_SetValue( BTL_EVAR_DAMAGE, damage );
-          BTL_EVENT_CallHandlers( wk, BTL_EVENT_SICK_DAMAGE );
-          damage = BTL_EVENTVAR_GetValue( BTL_EVAR_DAMAGE );
-        BTL_EVENTVAR_Pop();
-        if( damage > 0 )
-        {
-          BTL_POKEPARAM_HpMinus( bpp, damage );
-          SCQUE_PUT_OP_HpMinus( wk->que, pokeID, damage );
-          SCQUE_PUT_SickDamage( wk->que, pokeID, sick, damage );
-          if( BTL_POKEPARAM_IsDead(bpp) ){
-            break;
-          }
-        }
-        else if( damage < 0 )
-        {
-          int recover = -damage;
-          BTL_POKEPARAM_HpPlus( bpp, recover );
-          SCQUE_PUT_OP_HpPlus( wk->que, pokeID, recover );
-          SCQUE_PUT_ACT_SimpleHP( wk->que, pokeID );
-        }
-      }
-    }
-    if( !BTL_POKEPARAM_IsDead(bpp) ){
-      BTL_POKEPARAM_WazaSick_TurnCheck( bpp );
-      SCQUE_PUT_OP_WazaSickTurnCheck( wk->que, pokeID );
-    }
-    scproc_CheckDeadCmd( wk, bpp );
-  #endif
-
 
 
 //=============================================================================================

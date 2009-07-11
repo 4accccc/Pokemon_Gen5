@@ -286,13 +286,13 @@ u16 BTL_CALC_RecvWeatherDamage( const BTL_POKEPARAM* bpp, BtlWeather weather )
 {
   switch( weather ){
   case BTL_WEATHER_SAND:
-    if( BTL_POKEPARAM_IsMatchType(bpp, POKETYPE_IWA) ){ return 0; }
-    if( BTL_POKEPARAM_IsMatchType(bpp, POKETYPE_HAGANE) ){ return 0; }
-    if( BTL_POKEPARAM_IsMatchType(bpp, POKETYPE_JIMEN) ){ return 0; }
+    if( BPP_IsMatchType(bpp, POKETYPE_IWA) ){ return 0; }
+    if( BPP_IsMatchType(bpp, POKETYPE_HAGANE) ){ return 0; }
+    if( BPP_IsMatchType(bpp, POKETYPE_JIMEN) ){ return 0; }
     break;
 
   case BTL_WEATHER_SNOW:
-    if( BTL_POKEPARAM_IsMatchType(bpp, POKETYPE_KOORI) ){ return 0; }
+    if( BPP_IsMatchType(bpp, POKETYPE_KOORI) ){ return 0; }
     break;
 
   default:
@@ -300,7 +300,7 @@ u16 BTL_CALC_RecvWeatherDamage( const BTL_POKEPARAM* bpp, BtlWeather weather )
   }
 
   {
-    u16 dmg = BTL_POKEPARAM_GetValue( bpp, BPP_MAX_HP ) / 16;
+    u16 dmg = BPP_GetValue( bpp, BPP_MAX_HP ) / 16;
     if( dmg == 0 ){ dmg = 1; }
     return dmg;
   }
@@ -323,7 +323,7 @@ void BTL_CALC_WazaSickContToBppSickCont( WAZA_SICKCONT_PARAM wazaSickCont, const
   switch( sickCont->type ){
   case WAZASICK_CONT_POKE:
     GF_ASSERT(attacker!=NULL);
-    sickCont->poke.ID = BTL_POKEPARAM_GetID( attacker );
+    sickCont->poke.ID = BPP_GetID( attacker );
     break;
 
   case WAZASICK_CONT_TURN:
@@ -439,7 +439,7 @@ void BTL_CALC_MakeDefaultWazaSickCont( WazaSick sick, const BTL_POKEPARAM* attac
   switch( sick ){
   case WAZASICK_MEROMERO:
     cont->type = WAZASICK_CONT_POKE;
-    cont->poke.ID = BTL_POKEPARAM_GetID( attacker );
+    cont->poke.ID = BPP_GetID( attacker );
     break;
   case WAZASICK_KONRAN:
     cont->type = WAZASICK_CONT_TURN;

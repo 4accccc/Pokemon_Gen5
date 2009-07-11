@@ -201,7 +201,7 @@ static inline void register_PokeNickname( u8 pokeID, WordBufID bufID )
   const POKEMON_PARAM* pp;
 
   bpp = BTL_POKECON_GetPokeParamConst( SysWork.pokeCon, pokeID );
-  pp = BTL_POKEPARAM_GetSrcData( bpp );
+  pp = BPP_GetSrcData( bpp );
 
   WORDSET_RegisterPokeNickName( SysWork.wset, bufID, pp );
 }
@@ -784,9 +784,9 @@ void BTL_STR_MakeWazaUIString( STRBUF* dst, u16 wazaID, u8 wazaPP, u8 wazaPPMax 
 
 void BTL_STR_MakeStatusWinStr( STRBUF* dst, const BTL_POKEPARAM* bpp, u16 hp )
 {
-  u16 hpMax = BTL_POKEPARAM_GetValue( bpp, BPP_MAX_HP );
+  u16 hpMax = BPP_GetValue( bpp, BPP_MAX_HP );
 
-  WORDSET_RegisterPokeNickName( SysWork.wset, 0, BTL_POKEPARAM_GetSrcData(bpp) );
+  WORDSET_RegisterPokeNickName( SysWork.wset, 0, BPP_GetSrcData(bpp) );
   WORDSET_RegisterNumber( SysWork.wset, 1, hp, 3, STR_NUM_DISP_SPACE, STR_NUM_CODE_DEFAULT );
   WORDSET_RegisterNumber( SysWork.wset, 2, hpMax, 3, STR_NUM_DISP_SPACE, STR_NUM_CODE_DEFAULT );
 
@@ -796,7 +796,7 @@ void BTL_STR_MakeStatusWinStr( STRBUF* dst, const BTL_POKEPARAM* bpp, u16 hp )
 
 void BTL_STR_MakeWarnStr( STRBUF* dst, const BTL_POKEPARAM* bpp, u16 strID )
 {
-  WORDSET_RegisterPokeNickName( SysWork.wset, 0, BTL_POKEPARAM_GetSrcData(bpp) );
+  WORDSET_RegisterPokeNickName( SysWork.wset, 0, BPP_GetSrcData(bpp) );
   GFL_MSG_GetString( SysWork.msg[MSGSRC_UI], strID, SysWork.tmpBuf );
   WORDSET_ExpandStr( SysWork.wset, dst, SysWork.tmpBuf );
 }

@@ -198,7 +198,7 @@ void BTL_HANDLER_SIDE_TurnCheck( pSideEffEndCallBack callBack, void* callbackArg
   u32 side, i;
   for(side = 0; side < BTL_SIDE_MAX; ++side)
   {
-    for(i=0; i<BTL_SIDEEFF_MAX; ++i)
+    for(i=BTL_SIDEEFF_START; i<BTL_SIDEEFF_MAX; ++i)
     {
       if( ExistEffect[side][i].add_counter )
       {
@@ -421,7 +421,7 @@ static void handler_side_StealthRock( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WOR
   if( (BTL_MAINUTIL_PokeIDtoSide(pokeID) == mySide)
   ){
     const BTL_POKEPARAM* bpp = BTL_SVFLOW_RECEPT_GetPokeParam( flowWk, pokeID );
-    BtlTypeAff  affinity = BTL_CALC_TypeAff( POKETYPE_IWA, BTL_POKEPARAM_GetPokeType(bpp) );
+    BtlTypeAff  affinity = BTL_CALC_TypeAff( POKETYPE_IWA, BPP_GetPokeType(bpp) );
     u8 denom = 8;
     switch( affinity ){
     case BTL_TYPEAFF_25:
@@ -465,7 +465,7 @@ static void handler_side_Makibisi( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* 
   ){
     const BTL_POKEPARAM* bpp = BTL_SVFLOW_RECEPT_GetPokeParam( flowWk, pokeID );
 
-    if( !BTL_POKEPARAM_GetTurnFlag(bpp, BPP_TURNFLG_FLYING) )
+    if( !BPP_TURNFLAG_Get(bpp, BPP_TURNFLG_FLYING) )
     {
       u8 add_counter = getMyAddCounter( myHandle, mySide );
       u8 denom;
@@ -510,7 +510,7 @@ static void handler_side_Dokubisi( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* 
   ){
     const BTL_POKEPARAM* bpp = BTL_SVFLOW_RECEPT_GetPokeParam( flowWk, pokeID );
 
-    if( !BTL_POKEPARAM_GetTurnFlag(bpp, BPP_TURNFLG_FLYING) )
+    if( !BPP_TURNFLAG_Get(bpp, BPP_TURNFLG_FLYING) )
     {
       BTL_HANDEX_PARAM_ADD_SICK* param = BTL_SVFLOW_HANDLERWORK_Push( flowWk, BTL_HANDEX_ADD_SICK, BTL_POKEID_NULL );
 

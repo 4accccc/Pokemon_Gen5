@@ -12,6 +12,8 @@
 
 #include "btl_common.h"
 #include "btl_pokeparam.h"
+#include "btl_sideeff.h"
+#include "btl_field.h"
 
 #include "btl_event.h"
 #include "btl_event_factor.h"
@@ -20,15 +22,14 @@
 /* Consts                                                                   */
 /*--------------------------------------------------------------------------*/
 enum {
-  FACTOR_REGISTER_MAX = 64,     ///< 登録できるイベントファクター最大数（※）
-  EVENTVAL_STACK_DEPTH = 128,   ///< イベント変数スタックの容量
+  FACTOR_PER_POKE = EVENT_WAZA_STICK_MAX + 3,       ///< ワザ貼り付き最大数+使用ワザ+とくせい+アイテム = 11
+  FACTOR_MAX_FOR_POKE = FACTOR_PER_POKE * BTL_POS_MAX, ///< ポケモンごと最大数(11) * 場所数(6) = 66
+  FACTOR_MAX_FOR_SIDEEFF = BTL_SIDEEFF_MAX * 2,     ///< サイドエフェクト最大数(9)×陣営数(2) = 18
+  FACTOR_MAX_FOR_FIELD = BTL_FLDEFF_MAX,            ///< フィールドエフェクト最大数 = 6
 
-  /* ※ イベントファクター数の根拠
-  ( ワザ2+とくせい1+アイテム1 ) × 場に存在するポケモン数の最大(6) = 24
-  サイドエフェクト(9) × 陣営数(2) = 18
-  フィールドエフェクト（6)
-  24 + 18 + 6 = 48 ... 少なくともこれを上回るようにしておく
-  */
+  // 登録できるイベントファクター最大数（66 + 18 + 6) = 90
+  FACTOR_REGISTER_MAX = FACTOR_MAX_FOR_POKE + FACTOR_MAX_FOR_SIDEEFF + FACTOR_MAX_FOR_FIELD,
+  EVENTVAL_STACK_DEPTH = 128,   ///< イベント変数スタックの容量
 
 };
 
@@ -357,7 +358,17 @@ BTL_EVENT_FACTOR* BTL_EVENT_SeekFactor( BtlEventFactor factorType, u8 pokeID )
 BTL_EVENT_FACTOR* BTL_EVENT_GetNextFactor( BTL_EVENT_FACTOR* factor )
 {
   if( factor ){
-    return factor->next;
+    BtlEventFactor type = factor->factorType;
+    u8 pokeID = factor->pokeID;
+
+    factor = factor->next;
+    while( factor ){
+      if( (factor->factorType == type) && (factor->pokeID == pokeID) ){
+        BTL_Printf("イベントタイプ[%d], ポケ[%d]の次のハンドラが見つかったよ\n", type, pokeID );
+        return factor;
+      }
+      factor = factor->next;
+    }
   }
   return NULL;
 }

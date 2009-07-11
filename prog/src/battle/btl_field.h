@@ -18,7 +18,6 @@
  *  バトル独自のフィールド状態（重複発動あり）
  */
 typedef enum {
-  BTL_FLDEFF_NULL = 0,
 
   BTL_FLDEFF_WEATHER,     ///< 各種天候
   BTL_FLDEFF_TRICKROOM,   ///< トリックルーム
@@ -28,6 +27,7 @@ typedef enum {
   BTL_FLDEFF_DOROASOBI,   ///< どろあそび
 
   BTL_FLDEFF_MAX,
+  BTL_FLDEFF_NULL = BTL_FLDEFF_MAX,
 
 }BtlFieldEffect;
 

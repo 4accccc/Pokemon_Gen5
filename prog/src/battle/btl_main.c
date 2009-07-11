@@ -1261,38 +1261,11 @@ static inline u8 PokeID_to_ClientID( u8 pokeID )
  * @retval  BtlPokePos    ポケモン戦闘位置
  */
 //=============================================================================================
-BtlPokePos BTL_MAIN_PokeIDtoPokePos( const BTL_MAIN_MODULE* wk, u8 pokeID )
+BtlPokePos BTL_MAIN_PokeIDtoPokePos( const BTL_MAIN_MODULE* wk, const BTL_POKE_CONTAINER* pokeCon, u8 pokeID )
 {
   u8 clientID = PokeID_to_ClientID( pokeID );
 
-  int idx = PokeCon_FindPokemon( &wk->pokeconForServer, clientID, pokeID );
-  if( idx >= 0 )
-  {
-    BtlPokePos pos = BTL_MAIN_GetClientPokePos( wk, clientID, idx );
-    if( pos != BTL_POS_MAX )
-    {
-      return pos;
-    }
-    GF_ASSERT_MSG(0, " not fighting pokeID [%d]", pokeID );
-  }
-  GF_ASSERT_MSG(0, " not including pokeID [%d] (clientID=%d)", pokeID, clientID );
-  return 0;
-}
-//=============================================================================================
-/**
- * バトルポケモンIDをポケモン戦闘位置に変換
- *
- * @param   wk
- * @param   pokeID
- *
- * @retval  BtlPokePos    ポケモン戦闘位置
- */
-//=============================================================================================
-BtlPokePos BTL_MAIN_PokeIDtoPokePosClient( const BTL_MAIN_MODULE* wk, u8 pokeID )
-{
-  u8 clientID = PokeID_to_ClientID( pokeID );
-
-  int idx = PokeCon_FindPokemon( &wk->pokeconForClient, clientID, pokeID );
+  int idx = PokeCon_FindPokemon( pokeCon, clientID, pokeID );
   if( idx >= 0 )
   {
     BtlPokePos pos = BTL_MAIN_GetClientPokePos( wk, clientID, idx );
@@ -1504,7 +1477,7 @@ static int PokeCon_FindPokemon( const BTL_POKE_CONTAINER* pokecon, u8 clientID, 
   for(i=0; i<max; ++i)
   {
     bpp = BTL_PARTY_GetMemberDataConst( party, i );
-    if( BTL_POKEPARAM_GetID(bpp) == pokeID )
+    if( BPP_GetID(bpp) == pokeID )
     {
       return i;
     }
@@ -1653,7 +1626,7 @@ u8 BTL_PARTY_GetAliveMemberCount( const BTL_PARTY* party )
   int i, cnt;
   for(i=0, cnt=0; i<party->memberCount; i++)
   {
-    if( BTL_POKEPARAM_GetValue(party->member[i], BPP_HP) )
+    if( BPP_GetValue(party->member[i], BPP_HP) )
     {
       cnt++;
     }
