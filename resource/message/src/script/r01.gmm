@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-07-06T15:31:58"/>
+	<create user="matsumiya" host="W00207" date="2009-07-11T17:27:42"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -229,7 +229,7 @@
 	</tag-table>
 
 	<columns>
-		<id position="0" width="117"/>
+		<id position="0" width="141"/>
 		<group default=" 0:デフォルト" position="-1" width="100">
 			<list entry="0" japanese="デフォルト" english="Default" colorID="0"/>
 			<list entry="1" japanese="グループ 1" english="グループ 1" colorID="0"/>
@@ -237,7 +237,7 @@
 		<number position="-1" width="100"/>
 		<comment position="4" width="211"/>
 		<erase position="-1" width="100"/>
-		<attribute japanese="キャラ指定" english="キャラ指定" type="string" default="" position="1" width="149">
+		<attribute japanese="キャラ指定" english="キャラ指定" type="string" default="" position="1" width="100">
 		</attribute>
 		<language japanese="JPN" english="JPN">
 			<message position="2" width="274"/>
@@ -263,14 +263,14 @@
 		</language>
 	</columns>
 
-	<dialog left="57" top="195" right="762" bottom="815" maximized="no" rayout="Vertical2">
+	<dialog left="57" top="195" right="757" bottom="811" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="790" top="142" right="1263" bottom="540" visible="yes"/>
-		<band id="0" index="1" style="0000" width="530"/>
+		<band id="0" index="1" style="0000" width="525"/>
 		<band id="1" index="2" style="0000" width="165"/>
-		<band id="2" index="3" style="0000" width="543"/>
+		<band id="2" index="3" style="0000" width="538"/>
 		<band id="3" index="4" style="0000" width="152"/>
-		<band id="4" index="0" style="0000" width="697"/>
+		<band id="4" index="0" style="0000" width="692"/>
 		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
@@ -292,7 +292,302 @@
 	</lock>
 
 
-	<row id="msg_r01_boy1_01">
+	<row id="msg_r01_black_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>画面上（博士）をみながらメッセージ表示
+ついで主人公を向き合いながら
+次のメッセージ表示</comment>
+		<attribute name="キャラ指定">友達♂</attribute>
+		<language name="JPN" width="256">ともだち♂『すみません[BE:01:ページ切り替え（クリア）]
+かぞくに　ずかんのこと　とか
+はなしていたら　おそくなりました[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">ともだち♂『すみません[BE:01:ページ切り替え（クリア）]
+かぞくに　ずかんのこと　とか
+はなしていたら　おそくなりました[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_r01_doctor_jr_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂：捕獲デモ
+※今回はメッセージのみ</comment>
+		<attribute name="キャラ指定">DOCTOR_JR
+博士</attribute>
+		<language name="JPN" width="256">アララギ『さて　しょくん[BE:01:ページ切り替え（クリア）]
+ポケモンずかんの　ページを　うめるには
+ポケモンと　であう　ひつようが　ある！[BE:01:ページ切り替え（クリア）]
+さらに　ポケモンに　ついて
+くわしく　しるには[BE:00:ページ切り替え（行送り）]
+つかまえる　ひつようが　あるのだよ[BE:01:ページ切り替え（クリア）]
+では　わたしが　じっさいに
+ポケモンを　つかまえてみるぞ！[BE:01:ページ切り替え（クリア）]
+（ほかくデモへ……）[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">アララギ『さて　しょくん[BE:01:ページ切り替え（クリア）]
+ポケモンずかんの　ページを　うめるには
+ポケモンと　であう　ひつようが　ある！[BE:01:ページ切り替え（クリア）]
+さらに　ポケモンに　ついて
+くわしく　しるには[BE:00:ページ切り替え（行送り）]
+つかまえる　ひつようが　あるのだよ[BE:01:ページ切り替え（クリア）]
+では　わたしが　じっさいに
+ポケモンを　つかまえてみるぞ！[BE:01:ページ切り替え（クリア）]
+（ほかくデモへ……）[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_r01_doctor_jr_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂
+・捕獲デモ後、フィールドに復帰すると
+　このメッセージ表示
+・アイテムNo004「モンスターボール」
+　１０こ入手（個数は仮）</comment>
+		<attribute name="キャラ指定">DOCTOR_JR
+博士</attribute>
+		<language name="JPN" width="256">アララギ『いまのを　みてくれたかい[BE:01:ページ切り替え（クリア）]
+ポイントを　かいせつすると
+まず　ポケモンの[BE:00:ページ切り替え（行送り）]
+たいりょくを　へらすこと！[BE:01:ページ切り替え（クリア）]
+げんきな　ポケモンは
+つかまえにくいからね[BE:01:ページ切り替え（クリア）]
+つぎに　じぶんの　ポケモンの　わざで
+つかまえたい　ポケモンを[BE:00:ページ切り替え（行送り）]
+ねむらせたり　まひさせると　いい！[BE:01:ページ切り替え（クリア）]
+では　きみたちに
+モンスターボールも　わたそう！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">アララギ『いまのを　みてくれたかい[BE:01:ページ切り替え（クリア）]
+ポイントを　かいせつすると
+まず　ポケモンの[BE:00:ページ切り替え（行送り）]
+たいりょくを　へらすこと！[BE:01:ページ切り替え（クリア）]
+げんきな　ポケモンは
+つかまえにくいからね[BE:01:ページ切り替え（クリア）]
+つぎに　じぶんの　ポケモンの　わざで
+つかまえたい　ポケモンを[BE:00:ページ切り替え（行送り）]
+ねむらせたり　まひさせると　いい！[BE:01:ページ切り替え（クリア）]
+では　きみたちに
+モンスターボールも　わたそう！[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_r01_doctor_jr_03" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂
+・T02方面に移動、画面外に消えると
+　msg_r01_black_01
+・博士はT02に出現</comment>
+		<attribute name="キャラ指定">DOCTOR_JR
+博士</attribute>
+		<language name="JPN" width="256">アララギ『きみたちに　わたした
+モンスターボールは[BE:00:ページ切り替え（行送り）]
+ポケモンを　つかまえたり[BE:01:ページ切り替え（クリア）]
+つかまえた　ポケモンを
+つれてはこぶための　どうぐ[BE:01:ページ切り替え（クリア）]
+では　じぶんは　このさき
+カラクサタウンで　まっているよ[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">アララギ『きみたちに　わたした
+モンスターボールは[BE:00:ページ切り替え（行送り）]
+ポケモンを　つかまえたり[BE:01:ページ切り替え（クリア）]
+つかまえた　ポケモンを
+つれてはこぶための　どうぐ[BE:01:ページ切り替え（クリア）]
+では　じぶんは　このさき
+カラクサタウンで　まっているよ[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_r01_black_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂
+・画面上（博士）をみながらメッセージ表示
+　ついで主人公を向き合いながら
+　次のmsg_r01_black_03表示</comment>
+		<attribute name="キャラ指定">友達♂</attribute>
+		<language name="JPN" width="256">ともだち♂『いいたいこと　いったら
+いっちゃったよ　はかせ……[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">ともだち♂『いいたいこと　いったら
+いっちゃったよ　はかせ……[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_r01_black_03" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂
+・続けてmsg_r01_white_01表示</comment>
+		<attribute name="キャラ指定">友達♂</attribute>
+		<language name="JPN" width="256">とにかく　おれたちも
+カラクサタウンに　むかおう[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">とにかく　おれたちも
+カラクサタウンに　むかおう[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_r01_white_01">
+		<comment>♀
+・メッセージ表示後
+　「！」マーク表示
+・続けてmsg_r01_white_02</comment>
+		<attribute name="キャラ指定">友達♀</attribute>
+		<language name="JPN" width="256">ともだち♀『そうだよね
+それに　となりまちまで　いかないと[BE:00:ページ切り替え（行送り）]
+モンスターボールも　かえないし[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">ともだち♀『そうだよね
+それに　となりまちまで　いかないと[BE:00:ページ切り替え（行送り）]
+モンスターボールも　かえないし[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_r01_white_02">
+		<attribute name="キャラ指定">友達♀</attribute>
+		<language name="JPN" width="256">ねえねえ！
+[1:00:トレーナー名:]　ともだち♂[BE:01:ページ切り替え（クリア）]
+あたし　いいこと
+おもいついたんだけど[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">ねえねえ！
+[1:00:トレーナー名:]　ともだち♂[BE:01:ページ切り替え（クリア）]
+あたし　いいこと
+おもいついたんだけど[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_r01_black_04" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<attribute name="キャラ指定">友達♂</attribute>
+		<language name="JPN" width="256">ともだち♂『きゃっか[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">ともだち♂『きゃっか[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_r01_white_03">
+		<attribute name="キャラ指定">友達♀</attribute>
+		<language name="JPN" width="256">ともだち♀『どーしてよお　もう！？[BE:01:ページ切り替え（クリア）]
+この　１ばんどうろで
+どれだけ　ポケモンを　つかまえたか[BE:00:ページ切り替え（行送り）]
+みんなで　きょうそう　しよう？[BE:01:ページ切り替え（クリア）]
+おなじ　ポケモンを
+なんびき　つかまえたか　じゃなくて[BE:01:ページ切り替え（クリア）]
+つかまえた　しゅるいの
+おおい　ひとが　かちね！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">ともだち♀『どーしてよお　もう！？[BE:01:ページ切り替え（クリア）]
+この　１ばんどうろで
+どれだけ　ポケモンを　つかまえたか[BE:00:ページ切り替え（行送り）]
+みんなで　きょうそう　しよう？[BE:01:ページ切り替え（クリア）]
+おなじ　ポケモンを
+なんびき　つかまえたか　じゃなくて[BE:01:ページ切り替え（クリア）]
+つかまえた　しゅるいの
+おおい　ひとが　かちね！[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_r01_black_05" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂
+・続けてmsg_r01_white_06表示</comment>
+		<attribute name="キャラ指定">友達♂</attribute>
+		<language name="JPN" width="256">ともだち♂『なるほどな
+そういうことなら　おもしろいな[BE:00:ページ切り替え（行送り）]
+ずかんの　ページも　うまるから
+はかせも　よろこぶだろうし[BE:01:ページ切り替え（クリア）]
+オッケイ！　じゃあ
+カラクサタウンに　つくまで[BE:00:ページ切り替え（行送り）]
+ポケモンの　かいふくは[BE:00:ページ切り替え（行送り）]
+じたくで　しろよ[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">ともだち♂『なるほどな
+そういうことなら　おもしろいな[BE:00:ページ切り替え（行送り）]
+ずかんの　ページも　うまるから
+はかせも　よろこぶだろうし[BE:01:ページ切り替え（クリア）]
+オッケイ！　じゃあ
+カラクサタウンに　つくまで[BE:00:ページ切り替え（行送り）]
+ポケモンの　かいふくは[BE:00:ページ切り替え（行送り）]
+じたくで　しろよ[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_r01_white_06">
+		<comment>♀
+・メッセージ表示後、友達♂と♀
+　画面上に移動する
+　※できればばらばらに
+・2人の動作モデルが画面外に消えると
+　操作可能に</comment>
+		<attribute name="キャラ指定">友達♀</attribute>
+		<language name="JPN" width="256">ともだち♀『あたしと
+[1:01:ポケモン種族名:0]の　コンビが[BE:00:ページ切り替え（行送り）]
+いちばんに　きまってるもん！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">ともだち♀『あたしと
+[1:01:ポケモン種族名:0]の　コンビが[BE:00:ページ切り替え（行送り）]
+いちばんに　きまってるもん！[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_r01_black_10" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂
+・msg_r01_white_06表示後
+　T02側に出現</comment>
+		<attribute name="キャラ指定">友達♂</attribute>
+		<language name="JPN" width="256">ともだち♂『おっ　[1:00:トレーナー名:0]
+ともだち♀と　しょうぶ　する？[BE:01:ページ切り替え（クリア）]
+オレは　２ひき　つかまえて
+ともだち♀と　ひきわけ　だったんだ[BE:01:ページ切り替え（クリア）]
+あっ……　どれだけ
+つかまえたか　いってしまった……</language>
+		<language name="JPN_KANJI" width="256">ともだち♂『おっ　[1:00:トレーナー名:0]
+ともだち♀と　しょうぶ　する？[BE:01:ページ切り替え（クリア）]
+オレは　２ひき　つかまえて
+ともだち♀と　ひきわけ　だったんだ[BE:01:ページ切り替え（クリア）]
+あっ……　どれだけ
+つかまえたか　いってしまった……</language>
+	</row>
+
+	<row id="msg_r01_white_10">
+		<comment>♀
+・msg_r01_white_06表示後
+　T02側に出現
+・はい/いいえの選択肢表示
+・はい選択時で捕まえた数が
+　　3匹以上→msg_r01_white_12
+　　2匹　　　→msg_r01_white_13
+　　1匹以下→msg_r01_white_14
+・いいえ選択時→msg_r01_white_11</comment>
+		<attribute name="キャラ指定">友達♀</attribute>
+		<language name="JPN" width="256">ともだち♀『どう？　[1:00:トレーナー名:0]
+どちらが　おおくの　しゅるいの[BE:00:ページ切り替え（行送り）]
+ポケモンを　つかまえたか　くらべる？</language>
+		<language name="JPN_KANJI" width="256">ともだち♀『どう？　[1:00:トレーナー名:0]
+どちらが　おおくの　しゅるいの[BE:00:ページ切り替え（行送り）]
+ポケモンを　つかまえたか　くらべる？</language>
+	</row>
+
+	<row id="msg_r01_white_11">
+		<comment>♀
+・いいえ選択時</comment>
+		<attribute name="キャラ指定">友達♀</attribute>
+		<language name="JPN" width="256">ともだち♀『むう……
+じゃあ　ここで　まってるね</language>
+		<language name="JPN_KANJI" width="256">ともだち♀『むう……
+じゃあ　ここで　まってるね</language>
+	</row>
+
+	<row id="msg_r01_white_12">
+		<comment>♀
+・はい選択＆3匹以上</comment>
+		<attribute name="キャラ指定">友達♀</attribute>
+		<language name="JPN" width="256">ともだち♀『[2:00:１桁:0]ひき！？[BE:01:ページ切り替え（クリア）]
+すごーい！
+えー　そんなに　ポケモン　いるんだ[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">ともだち♀『[2:00:１桁:0]ひき！？[BE:01:ページ切り替え（クリア）]
+すごーい！
+えー　そんなに　ポケモン　いるんだ[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_r01_white_13">
+		<comment>♀
+・はい選択＆2匹</comment>
+		<attribute name="キャラ指定">友達♀</attribute>
+		<language name="JPN" width="256">ともだち♀『２ひきね
+あたしたち　みんな　いっしょだね[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">ともだち♀『２ひきね
+あたしたち　みんな　いっしょだね[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_r01_white_14">
+		<comment>♀
+・はい選択＆1匹以下</comment>
+		<attribute name="キャラ指定">友達♀</attribute>
+		<language name="JPN" width="256">ともだち♀『その　ちょうしだと
+ポケモンずかん　かんせいは　きびしそう[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">ともだち♀『その　ちょうしだと
+ポケモンずかん　かんせいは　きびしそう[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_r01_black_11" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<attribute name="キャラ指定">友達♂</attribute>
+		<language name="JPN" width="256">ともだち♂『じゃあ
+カラクサタウン　いこう！[BE:01:ページ切り替え（クリア）]
+はかせも　まってるだろうし[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">ともだち♂『じゃあ
+カラクサタウン　いこう！[BE:01:ページ切り替え（クリア）]
+はかせも　まってるだろうし[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_r01_boy1_01" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♂
 はい／いいえ</comment>
 		<attribute name="キャラ指定">少年</attribute>
@@ -302,7 +597,7 @@
 ボクが　みてきてあげるよ！</language>
 	</row>
 
-	<row id="msg_r01_boy1_02">
+	<row id="msg_r01_boy1_02" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♂
 はい選択時アニメ前</comment>
 		<attribute name="キャラ指定">少年</attribute>
@@ -310,7 +605,7 @@
 		<language name="JPN_KANJI" width="256">よし！　まってて！！</language>
 	</row>
 
-	<row id="msg_r01_boy1_03">
+	<row id="msg_r01_boy1_03" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♂
 はい選択時アニメ後</comment>
 		<attribute name="キャラ指定">少年</attribute>
@@ -324,7 +619,7 @@
 ゆだん　しないでよ！</language>
 	</row>
 
-	<row id="msg_r01_boy1_04">
+	<row id="msg_r01_boy1_04" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♂
 いいえ選択時</comment>
 		<attribute name="キャラ指定">少年</attribute>
@@ -332,7 +627,7 @@
 		<language name="JPN_KANJI" width="256">えんりょ　しなくて　いいのにさ！</language>
 	</row>
 
-	<row id="msg_r01_girl1_01">
+	<row id="msg_r01_girl1_01" back-color="#808080,,,#808080,,#808080,#808080,,,,,,#808080,,,,,,">
 		<comment>♀</comment>
 		<attribute name="キャラ指定">少女</attribute>
 		<language name="JPN" width="256">うれしい　きぶん　だから
@@ -341,7 +636,7 @@
 ぴょんぴょん　飛び跳ねるの！</language>
 	</row>
 
-	<row id="msg_r01_man1_01">
+	<row id="msg_r01_man1_01" back-color="#808080,,,#808080,,#808080,#808080,,,,,,#808080,,,,,,">
 		<comment>♂
 ・倍角表示なし？</comment>
 		<attribute name="キャラ指定">青年</attribute>
@@ -353,24 +648,32 @@
 うおー！！</language>
 	</row>
 
-	<row id="msg_r01_sign1_01">
+	<row id="msg_r01_sign1_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>看板分類：タウンマップ</comment>
 		<attribute name="キャラ指定">看板：道路</attribute>
 		<language name="JPN" width="256">１ばんどうろ</language>
 		<language name="JPN_KANJI" width="256">１番道路</language>
 	</row>
 
-	<row id="msg_r01_sign2_01">
+	<row id="msg_r01_sign2_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>看板分類：タウンマップ</comment>
 		<attribute name="キャラ指定">看板：道路</attribute>
 		<language name="JPN" width="256">１ばんどうろ</language>
 		<language name="JPN_KANJI" width="256">１番道路</language>
 	</row>
 
-	<row id="msg_r01_sign3_01">
+	<row id="msg_r01_sign3_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<attribute name="キャラ指定">看板：お得な掲示板</attribute>
-		<language name="JPN" width="256">おとくな　けいじばん</language>
-		<language name="JPN_KANJI" width="256">お得な　掲示板</language>
+		<language name="JPN" width="256">おとくな　けいじばん！▼
+せっかくの　であいです
+いろんな　ひとと　おはなしましょう！▼
+きっと　みんなが　やくだつことを
+おしえてくれる　はずです！</language>
+		<language name="JPN_KANJI" width="256">お得な　掲示板！▼
+せっかくの　出会いです
+いろんな　人と　お話ましょう！▼
+きっと　みんなが　役立つことを
+教えてくれる　はずです！</language>
 	</row>
 
 	<flowchart-group-list>
