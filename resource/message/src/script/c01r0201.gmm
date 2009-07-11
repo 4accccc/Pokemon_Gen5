@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-06-25T15:58:57"/>
+	<create user="matsumiya" host="W00207" date="2009-07-11T14:04:59"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -235,7 +235,7 @@
 			<list entry="1" japanese="グループ 1" english="グループ 1" colorID="0"/>
 		</group>
 		<number position="-1" width="100"/>
-		<comment position="4" width="124"/>
+		<comment position="4" width="216"/>
 		<erase position="-1" width="100"/>
 		<attribute japanese="キャラ指定" english="キャラ指定" type="string" default="" position="1" width="100">
 		</attribute>
@@ -251,7 +251,7 @@
 			<line position="-1" width="100"/>
 		</language>
 		<language japanese="JPN_KANJI" english="JPN_KANJI">
-			<message position="3" width="246"/>
+			<message position="3" width="288"/>
 			<font default=" 0:large" position="6" width="106">
 				<list entry="0" file="W:\font\large.nftr"/>
 				<list entry="1" file="W:\font\small.nftr"/>
@@ -263,9 +263,9 @@
 		</language>
 	</columns>
 
-	<dialog left="248" top="176" right="953" bottom="796" maximized="no" rayout="Vertical2">
+	<dialog left="83" top="197" right="788" bottom="817" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
-		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
+		<tag-palette left="807" top="126" right="1280" bottom="524" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
 		<band id="1" index="2" style="0000" width="165"/>
 		<band id="2" index="3" style="0000" width="543"/>
@@ -292,11 +292,61 @@
 	</lock>
 
 
-	<row id="msg_c01r0201_test1_01">
-		<comment>？？？</comment>
-		<attribute name="キャラ指定">？？？</attribute>
-		<language name="JPN" width="256">テストメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+	<row id="msg_c01r0201_bigman_01">
+		<comment>♀
+・アイテム入手前
+　0＝内容未定</comment>
+		<attribute name="キャラ指定">BIGMAN
+太った青年</attribute>
+		<language name="JPN" width="256">おっ！　きみの　ポケモン
+なんだか　よさげな　かんじじゃん！[BE:01:ページ切り替え（クリア）]
+でもね　これを　もたせてあげると
+もっともっと　よさげに　なるよ！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">おっ！　君の　ポケモン
+なんだか　よさげな　感じじゃん！[BE:01:ページ切り替え（クリア）]
+でもね　これを　持たせてあげると
+もっともっと　よさげに　なるよ！[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_c01r0201_bigman_02">
+		<comment>♀
+・アイテム入手後</comment>
+		<attribute name="キャラ指定">BIGMAN
+太った青年</attribute>
+		<language name="JPN" width="256">ピントレンズを　もたせた　ポケモンの
+こうげきは　きゅうしょに　あたりやすい！[BE:01:ページ切り替え（クリア）]
+ほかにも　いろんな　こうかの
+どうぐがあるから　ためすといいよ</language>
+		<language name="JPN_KANJI" width="256">ピントレンズを　持たせた　ポケモンの
+攻撃は　急所に　当たりやすい！[BE:01:ページ切り替え（クリア）]
+他にも　いろんな　効果の
+道具があるから　試すといいよ</language>
+	</row>
+
+	<row id="msg_c01r0201_oldman1_01">
+		<comment>♂</comment>
+		<attribute name="キャラ指定">OLDMAN1
+おじいさん</attribute>
+		<language name="JPN" width="256">ばあさんとの　であいは
+ポケモンしょうぶが　きっかけ　だった[BE:01:ページ切り替え（クリア）]
+なんど　いどんでも　かてなかったんだ</language>
+		<language name="JPN_KANJI" width="256">ばあさんとの　出会いは
+ポケモン勝負が　きっかけ　だった[BE:01:ページ切り替え（クリア）]
+何度　挑んでも　勝てなかったんだ</language>
+	</row>
+
+	<row id="msg_c01r0201_oldwoman1_01">
+		<comment>♀</comment>
+		<attribute name="キャラ指定">OLDWOMAN1
+おばあさん</attribute>
+		<language name="JPN" width="256">おじいさんに　まけると
+もう　あいて　してもらえないかも　って[BE:01:ページ切り替え（クリア）]
+ひっしの　おもいで
+ポケモンを　そだてていたんですよ</language>
+		<language name="JPN_KANJI" width="256">おじいさんに　負けると
+もう　相手して　もらえないかも　って[BE:01:ページ切り替え（クリア）]
+必死の　思いで
+ポケモンを　育てていたんですよ</language>
 	</row>
 
 	<flowchart-group-list>
