@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ohno" host="W00141" date="2009-07-09T17:34:17"/>
+	<create user="ohno" host="W00141" date="2009-07-12T19:06:53"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -312,7 +312,7 @@
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="697"/>
 		<band id="3" index="3" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -429,6 +429,21 @@
 	<row id="IRCBTL_STR_18">
 		<language name="JPN" width="256">ポケモンこうかん</language>
 		<language name="JPN_KANJI" width="256">ポケモン交換</language>
+	</row>
+
+	<row id="IRCBTL_STR_19">
+		<language name="JPN" width="256">てもち</language>
+		<language name="JPN_KANJI" width="256">てもち</language>
+	</row>
+
+	<row id="IRCBTL_STR_20">
+		<language name="JPN" width="256">こうかんしますか？</language>
+		<language name="JPN_KANJI" width="256">交換しますか？</language>
+	</row>
+
+	<row id="IRCBTL_STR_21">
+		<language name="JPN" width="256">LV.[2:02:３桁:0]</language>
+		<language name="JPN_KANJI" width="256">LV.[2:02:３桁:0]</language>
 	</row>
 
 	<flowchart-group-list>

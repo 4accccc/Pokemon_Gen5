@@ -22,6 +22,21 @@ def naixcheck(baseHandle, targetHandle)
   return true
 end
 
+
+def nanrHeaderCheck(baseHandle, targetHandle)
+  
+  baseHandle.each {|baseline|
+    targetline = targetHandle.gets()
+    if /creation date ==>/ =~ baseline
+    elsif targetline == baseline
+    else
+      return false
+    end
+  }
+  return true
+end
+
+
 begin
   exit 1 if ARGV.size < 2
 
@@ -39,6 +54,12 @@ begin
         baseHandle = File::open(basename)
         targetHandle = File::open(target)
         nIgnore = naixcheck(baseHandle, targetHandle)
+        baseHandle.close
+        targetHandle.close
+      elsif /LBLDEFS.h/ =~ basename #h‚È‚çLBLDEFS.h‚Æ‚İ‚È‚µ‚Ä“Æ©ŒŸ¸
+        baseHandle = File::open(basename)
+        targetHandle = File::open(target)
+        nIgnore = nanrHeaderCheck(baseHandle, targetHandle)
         baseHandle.close
         targetHandle.close
       elsif File.compare(sfile, target)   # “à—e‚ª“¯‚¶‚¾‚Á‚½‚ç
