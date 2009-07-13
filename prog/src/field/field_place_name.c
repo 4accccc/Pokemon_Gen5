@@ -278,7 +278,7 @@ void FIELD_PLACE_NAME_Delete( FIELD_PLACE_NAME* p_sys )
  */
 //------------------------------------------------------------------------------------
 void FIELD_PLACE_NAME_ZoneChange( FIELD_PLACE_NAME* p_sys, u32 next_zone_id )
-{
+{ 
 	// 指定されたゾーンIDを次に表示すべきものとして記憶
 	p_sys->nextZoneID = next_zone_id;
 
@@ -524,6 +524,9 @@ static void WriteStringToWindow( FIELD_PLACE_NAME* p_sys, u32 zone_id )
 	OBATA_Printf( "str_width / 2 = %d\n", str_width / 2 );
 	OBATA_Printf( "str_x = %d\n", str_x );
 	OBATA_Printf( "str_id = %d\n", (int)str_id );
+
+	// TEMP: "なぞのばしょ" なら表示しない
+	if( str_id == 0 ) FIELD_PLACE_NAME_Hide( p_sys );
 }
 
 //-----------------------------------------------------------------------------------
