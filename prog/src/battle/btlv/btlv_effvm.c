@@ -392,18 +392,18 @@ static VMCMD_RESULT VMEC_CAMERA_MOVE( VMHANDLE *vmh, void *context_work )
   static  VecFx32 cam_pos_table[]={
     { 0x00005ca6, 0x00005f33, 0x00013cc3 },       //BTLEFF_CAMERA_POS_AA
     { 0x00006994, 0x00006f33, 0x00006e79 },       //BTLEFF_CAMERA_POS_BB
-    { FX32_ONE * 0, FX32_ONE * 0, FX32_ONE * 0 }, //BTLEFF_CAMERA_POS_A
-    { FX32_ONE * 0, FX32_ONE * 0, FX32_ONE * 0 }, //BTLEFF_CAMERA_POS_B
-    { FX32_ONE * 0, FX32_ONE * 0, FX32_ONE * 0 }, //BTLEFF_CAMERA_POS_C
-    { FX32_ONE * 0, FX32_ONE * 0, FX32_ONE * 0 }, //BTLEFF_CAMERA_POS_D
+    { 0x00005ca6, 0x00005f33, 0x00013cc3 },       //BTLEFF_CAMERA_POS_A
+    { 0x00006994, 0x00006f33, 0x00006e79 },       //BTLEFF_CAMERA_POS_B
+    { 0x00005ca6, 0x00005f33, 0x00013cc3 },       //BTLEFF_CAMERA_POS_C
+    { 0x00006994, 0x00006f33, 0x00006e79 },       //BTLEFF_CAMERA_POS_D
   };
   static  VecFx32 cam_target_table[]={
     { 0xfffff173, 0x00001d9a, 0x000027f6 },       //BTLEFF_CAMERA_POS_AA
     { 0xfffffe61, 0x00002d9a, 0xffff59ac },       //BTLEFF_CAMERA_POS_BB
-    { FX32_ONE * 0, FX32_ONE * 0, FX32_ONE * 0 }, //BTLEFF_CAMERA_POS_A
-    { FX32_ONE * 0, FX32_ONE * 0, FX32_ONE * 0 }, //BTLEFF_CAMERA_POS_B
-    { FX32_ONE * 0, FX32_ONE * 0, FX32_ONE * 0 }, //BTLEFF_CAMERA_POS_C
-    { FX32_ONE * 0, FX32_ONE * 0, FX32_ONE * 0 }, //BTLEFF_CAMERA_POS_D
+    { 0xfffff173, 0x00001d9a, 0x000027f6 },       //BTLEFF_CAMERA_POS_A
+    { 0xfffffe61, 0x00002d9a, 0xffff59ac },       //BTLEFF_CAMERA_POS_B
+    { 0xfffff173, 0x00001d9a, 0x000027f6 },       //BTLEFF_CAMERA_POS_C
+    { 0xfffffe61, 0x00002d9a, 0xffff59ac },       //BTLEFF_CAMERA_POS_D
   };
   //à⁄ìÆÉtÉåÅ[ÉÄêîÇì«Ç›çûÇ›
   frame = ( int )VMGetU32( vmh );
