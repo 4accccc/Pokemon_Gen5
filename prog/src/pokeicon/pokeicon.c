@@ -295,6 +295,33 @@ u32 POKEICON_GetCellArcIndex(void)
 
 //--------------------------------------------------------------------------------------------
 /**
+ * セルのアーカイブインデックス取得
+ *
+ * @param	none
+ *
+ * @return	アーカイブインデックス
+ */
+//--------------------------------------------------------------------------------------------
+u32 POKEICON_GetCellSubArcIndex(void)
+{
+	GXOBJVRamModeChar vrammode;
+	
+	vrammode = GX_GetOBJVRamModeChar();
+	switch(vrammode){
+	case GX_OBJVRAMMODE_CHAR_1D_32K:
+		return NARC_poke_icon_poke_icon_32k_NCER;
+	case GX_OBJVRAMMODE_CHAR_1D_64K:
+		return NARC_poke_icon_poke_icon_64k_NCER;
+	case GX_OBJVRAMMODE_CHAR_1D_128K:
+		return NARC_poke_icon_poke_icon_128k_NCER;
+	default:
+		GF_ASSERT(0);	//非対応のマッピングモード
+		return NARC_poke_icon_poke_icon_128k_NCER;
+	}
+}
+
+//--------------------------------------------------------------------------------------------
+/**
  * セルアニメのアーカイブインデックス取得
  *
  * @param	none

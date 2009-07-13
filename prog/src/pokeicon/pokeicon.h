@@ -48,6 +48,7 @@ extern const u8 POKEICON_GetPalNumByPPP( const POKEMON_PASO_PARAM * ppp );
 extern u8 POKEICON_GetPalNumGetByPPP( const POKEMON_PASO_PARAM * ppp );
 extern u32 POKEICON_GetPalArcIndex(void);
 extern u32 POKEICON_GetCellArcIndex(void);
+extern u32 POKEICON_GetCellSubArcIndex(void);
 extern u32 POKEICON_GetAnmArcIndex(void);
 
 #endif	//__POKEICON_H__
