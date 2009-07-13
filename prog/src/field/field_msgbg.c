@@ -383,6 +383,20 @@ GFL_MSGDATA * FLDMSGBG_CreateMSGDATA( FLDMSGBG *fmb, u32 arcDatIDMsg )
 	return( msgData );
 }
 
+//--------------------------------------------------------------
+/**
+ * FLDMSGBG MSGDATAの削除。
+ * @param msgData GFL_MSGDATA
+ * @retval nothing
+ * @note Create()と対になる関数が欲しいとの要望により。
+ * 中身はGFL_MSGDATAを呼んでいるだけ。
+ */
+//--------------------------------------------------------------
+void FLDMSGBG_DeleteMSGDATA( GFL_MSGDATA *msgData )
+{
+  GFL_MSG_Delete( msgData );
+}
+
 //======================================================================
 //	FLDMSGPRINT	フィールド文字表示関連
 //======================================================================
@@ -1230,6 +1244,46 @@ FLDMSGWIN_STREAM * FLDMSGWIN_STREAM_AddTalkWin(
     FLDMSGBG *fmb, GFL_MSGDATA *msgData )
 {
   return( FLDMSGWIN_STREAM_Add(fmb,msgData,1,19,30,4) );
+}
+
+//--------------------------------------------------------------
+/**
+ * FLDMSGWIN_STREAM メッセージウィンドウ メッセージクリア
+ * @param msgWin FLDMSGWIN_STREAM
+ * @retval nothing
+ */
+//--------------------------------------------------------------
+void FLDMSGWIN_STREAM_ClearMessage( FLDMSGWIN_STREAM *msgWin )
+{
+  GFL_BMP_DATA *bmp = GFL_BMPWIN_GetBmp( msgWin->bmpwin );
+  GFL_BMP_Clear( bmp, 0xff);
+	GFL_BG_LoadScreenReq( msgWin->fmb->bgFrame );
+}
+
+//--------------------------------------------------------------
+/**
+ * FLDMSGWIN_STREAM メッセージウィンドウ ウィンドウクリア
+ * @param msgWin FLDMSGWIN_STREAM
+ * @retval nothing
+ */
+//--------------------------------------------------------------
+void FLDMSGWIN_STREAM_ClearWindow( FLDMSGWIN_STREAM *msgWin )
+{
+  BmpWinFrame_Clear( msgWin->bmpwin, 0 );
+}
+
+//--------------------------------------------------------------
+/**
+ * FLDMSGWIN_STREAM メッセージウィンドウ ウィンドウ描画
+ * @param msgWin FLDMSGWIN_STREAM
+ * @retval nothing
+ */
+//--------------------------------------------------------------
+void FLDMSGWIN_STREAM_WriteWindow( FLDMSGWIN_STREAM *msgWin )
+{
+	BmpWinFrame_Write( msgWin->bmpwin,
+      WINDOW_TRANS_ON, 1, FLDMSGBG_PANO_MENU );
+  FLDMSGWIN_STREAM_ClearMessage( msgWin );
 }
 
 //======================================================================
