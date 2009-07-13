@@ -451,9 +451,9 @@ static void DEBUG_MyPokeAdd(GAMESYS_WORK * gsys)
 		int i,j;
 		BOX_DATA* pBox = SaveData_GetBoxData(GAMEDATA_GetSaveControlWork(GAMESYSTEM_GetGameData(gsys)));
 
-		for(i=0;i<10;i++){
-			for(j=0;j<30;j++){
-				PP_Setup(pp, MONSNO_ZENIGAME+i+j, 100, 123456);
+		for(i=0;i<18;i++){
+			for(j=0;j<5;j++){
+				PP_Setup(pp, MONSNO_ZENIGAME+i+j, i+j, 123456);
 				BOXDAT_PutPokemonBox(pBox, i, (POKEMON_PASO_PARAM*)PP_GetPPPPointerConst(pp));
 			}
 		}
