@@ -94,6 +94,7 @@ struct _COMPATIBLE_IRC_SYS
 	u32		random;
 	s32 	child_timing[2];
 	BOOL	is_timing;
+	BOOL	is_init;
 
 	u8		mac_address[6];
 	u16		scene_send_cnt;
@@ -269,7 +270,8 @@ COMPATIBLE_IRC_SYS * COMPATIBLE_IRC_CreateSystem( u32 irc_timeout, HEAPID heapID
 	GFL_STD_MemClear( p_sys, sizeof(COMPATIBLE_IRC_SYS) );
 	//初期化
 	p_sys->irc_timeout		= irc_timeout;
-	p_sys->heapID	= heapID;
+	p_sys->heapID		= heapID;
+	p_sys->is_init	= FALSE;
 
 	return p_sys;
 }
@@ -327,6 +329,7 @@ BOOL COMPATIBLE_IRC_InitWait( COMPATIBLE_IRC_SYS *p_sys )
 
 	case SEQ_INIT_MENU:
 		MENUNET_Init( &p_sys->menu, p_sys, p_sys->heapID );
+		p_sys->is_init			= TRUE;
 		p_sys->seq	= SEQ_INIT_END;
 		break;
 
@@ -388,6 +391,7 @@ BOOL COMPATIBLE_IRC_ExitWait( COMPATIBLE_IRC_SYS *p_sys )
 
 	case SEQ_EXIT_END:
 		p_sys->seq	= 0;
+		p_sys->is_init	= FALSE;
 		return TRUE;
 
 	default:
@@ -482,7 +486,8 @@ BOOL COMPATIBLE_IRC_DisConnextWait( COMPATIBLE_IRC_SYS *p_sys )
 
 	switch(p_sys->seq){
 	case SEQ_DISCONNECT_MENU:
-		p_sys->seq	= SEQ_DISCONNECT_START;
+		//仮　応急処置	DisConnectでExitすると、ExitでDelCommandできない
+		p_sys->seq	= SEQ_DISCONNECT_END;
 		break;
 
 	case SEQ_DISCONNECT_START:
@@ -534,13 +539,28 @@ BOOL COMPATIBLE_IRC_DisConnextWait( COMPATIBLE_IRC_SYS *p_sys )
  *
  *	@param	const COMPATIBLE_IRC_SYS *cp_sys ワーク
  *
- *	@retval	接続中
- *	@retval	切断中
+ *	@retval	TRUE	接続中
+ *	@retval	FALSE	切断中
  */
 //-----------------------------------------------------------------------------
 BOOL COMPATIBLE_IRC_IsConnext( const COMPATIBLE_IRC_SYS *cp_sys )
 {	
 	return cp_sys->is_connect;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	初期化したかチェック
+ *
+ *	@param	const COMPATIBLE_IRC_SYS *cp_sys	ワーク
+ *
+ *	@retval	TRUE	初期化した
+ *	@retval	FALSE	していない
+ */
+//-----------------------------------------------------------------------------
+BOOL COMPATIBLE_IRC_IsInit( const COMPATIBLE_IRC_SYS *cp_sys )
+{	
+	return cp_sys->is_init;
 }
 
 //----------------------------------------------------------------------------

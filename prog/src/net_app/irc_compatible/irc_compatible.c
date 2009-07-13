@@ -430,7 +430,7 @@ static void SEQFUNC_End( IRC_COMPATIBLE_MAIN_WORK *p_wk, u16 *p_seq )
 	switch( *p_seq )
 	{	
 	case SEQ_NET_EXIT:
-		if( COMPATIBLE_IRC_ExitWait( p_wk->p_irc ) )
+		//if( COMPATIBLE_IRC_ExitWait( p_wk->p_irc ) )
 		{	
 			*p_seq	= SEQ_END;
 		}

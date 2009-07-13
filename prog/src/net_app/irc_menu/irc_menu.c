@@ -1493,6 +1493,10 @@ static void SEQFUNC_End( IRC_MENU_MAIN_WORK *p_wk, u16 *p_seq )
 		{	
 			*p_seq	= SEQ_NET_DISCONNECT;
 		}
+		else if( COMPATIBLE_IRC_IsInit(p_wk->p_param->p_irc ) )
+		{	
+			*p_seq	= SEQ_NET_EXIT;
+		}
 		else
 		{	
 			*p_seq	= SEQ_END;
