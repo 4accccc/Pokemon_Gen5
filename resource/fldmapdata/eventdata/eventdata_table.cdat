@@ -3,11 +3,14 @@
 #ifndef ZONE_C01_EVD_H
 #define ZONE_C01_EVD_H
 
-#define DOOR_ID_C01_EXIT01                0
-#define DOOR_ID_C01_EXIT02                1
+#define DOOR_ID_C01_EXIT10                0
+#define DOOR_ID_C01_EXIT01                1
 #define DOOR_ID_C01_EXIT03                2
-#define DOOR_ID_C01_EXIT04                3
-#define DOOR_ID_C01_EXIT05                4
+#define DOOR_ID_C01_EXIT05                3
+#define DOOR_ID_C01_EXIT12                4
+#define DOOR_ID_C01_EXIT14                5
+#define DOOR_ID_C01_EXIT13                6
+#define DOOR_ID_C01_EXIT15                7
 
 #endif //ZONE_C01_EVD_H
 //このファイルはdata/c01.mevから自動生成されました
@@ -16,16 +19,137 @@
 
 
 #endif //ZONE_C01_EVC_H
+//#include "tmp/c01pc0101.h"
+//このファイルはdata/c01pc0101.mevから自動生成されました
+#ifndef ZONE_C01PC0101_EVD_H
+#define ZONE_C01PC0101_EVD_H
+
+#define DOOR_ID_C01PC0101_EXIT02          0
+#define DOOR_ID_C01PC0101_EXIT01          1
+#define DOOR_ID_C01PC0101_EXIT03          2
+
+#endif //ZONE_C01PC0101_EVD_H
+//このファイルはdata/c01pc0101.mevから自動生成されました
+#ifndef ZONE_C01PC0101_EVC_H
+#define ZONE_C01PC0101_EVC_H
+
+
+#endif //ZONE_C01PC0101_EVC_H
+//#include "tmp/c01r0101.h"
+//このファイルはdata/c01r0101.mevから自動生成されました
+#ifndef ZONE_C01R0101_EVD_H
+#define ZONE_C01R0101_EVD_H
+
+#define DOOR_ID_C01R0101_EXIT01           0
+#define DOOR_ID_C01R0101_EXIT02           1
+#define DOOR_ID_C01R0101_EXIT03           2
+#define DOOR_ID_C01R0101_EXIT04           3
+
+#endif //ZONE_C01R0101_EVD_H
+//このファイルはdata/c01r0101.mevから自動生成されました
+#ifndef ZONE_C01R0101_EVC_H
+#define ZONE_C01R0101_EVC_H
+
+
+#endif //ZONE_C01R0101_EVC_H
+//#include "tmp/c01r0102.h"
+//このファイルはdata/c01r0102.mevから自動生成されました
+#ifndef ZONE_C01R0102_EVD_H
+#define ZONE_C01R0102_EVD_H
+
+#define DOOR_ID_C01R0102_EXIT01           0
+
+#endif //ZONE_C01R0102_EVD_H
+//このファイルはdata/c01r0102.mevから自動生成されました
+#ifndef ZONE_C01R0102_EVC_H
+#define ZONE_C01R0102_EVC_H
+
+
+#endif //ZONE_C01R0102_EVC_H
+//#include "tmp/c01r0201.h"
+//このファイルはdata/c01r0201.mevから自動生成されました
+#ifndef ZONE_C01R0201_EVD_H
+#define ZONE_C01R0201_EVD_H
+
+#define DOOR_ID_C01R0201_EXIT01           0
+#define DOOR_ID_C01R0201_EXIT02           1
+#define DOOR_ID_C01R0201_EXIT03           2
+#define DOOR_ID_C01R0201_EXIT04           3
+
+#endif //ZONE_C01R0201_EVD_H
+//このファイルはdata/c01r0201.mevから自動生成されました
+#ifndef ZONE_C01R0201_EVC_H
+#define ZONE_C01R0201_EVC_H
+
+
+#endif //ZONE_C01R0201_EVC_H
+//#include "tmp/c01r0202.h"
+//このファイルはdata/c01r0202.mevから自動生成されました
+#ifndef ZONE_C01R0202_EVD_H
+#define ZONE_C01R0202_EVD_H
+
+#define DOOR_ID_C01R0202_EXIT01           0
+
+#endif //ZONE_C01R0202_EVD_H
+//このファイルはdata/c01r0202.mevから自動生成されました
+#ifndef ZONE_C01R0202_EVC_H
+#define ZONE_C01R0202_EVC_H
+
+
+#endif //ZONE_C01R0202_EVC_H
+//#include "tmp/c01r0301.h"
+//このファイルはdata/c01r0301.mevから自動生成されました
+#ifndef ZONE_C01R0301_EVD_H
+#define ZONE_C01R0301_EVD_H
+
+#define DOOR_ID_C01R0301_EXIT01           0
+#define DOOR_ID_C01R0301_EXIT02           1
+#define DOOR_ID_C01R0301_EXIT03           2
+#define DOOR_ID_C01R0301_EXIT04           3
+
+#endif //ZONE_C01R0301_EVD_H
+//このファイルはdata/c01r0301.mevから自動生成されました
+#ifndef ZONE_C01R0301_EVC_H
+#define ZONE_C01R0301_EVC_H
+
+
+#endif //ZONE_C01R0301_EVC_H
+//#include "tmp/c01r0302.h"
+//このファイルはdata/c01r0302.mevから自動生成されました
+#ifndef ZONE_C01R0302_EVD_H
+#define ZONE_C01R0302_EVD_H
+
+#define DOOR_ID_C01R0302_EXIT01           0
+
+#endif //ZONE_C01R0302_EVD_H
+//このファイルはdata/c01r0302.mevから自動生成されました
+#ifndef ZONE_C01R0302_EVC_H
+#define ZONE_C01R0302_EVC_H
+
+
+#endif //ZONE_C01R0302_EVC_H
 //#include "tmp/c02.h"
 //このファイルはdata/c02.mevから自動生成されました
 #ifndef ZONE_C02_EVD_H
 #define ZONE_C02_EVD_H
 
-#define DOOR_ID_C02_EXIT01                0
-#define DOOR_ID_C02_EXIT02                1
+#define DOOR_ID_C02_EXIT02                0
+#define DOOR_ID_C02_EXIT01                1
 #define DOOR_ID_C02_EXIT03                2
 #define DOOR_ID_C02_EXIT04                3
 #define DOOR_ID_C02_EXIT05                4
+#define DOOR_ID_C02_EXIT08                5
+#define DOOR_ID_C02_EXIT06                6
+#define DOOR_ID_C02_EXIT11                7
+#define DOOR_ID_C02_EXIT10                8
+#define DOOR_ID_C02_EXIT09                9
+#define DOOR_ID_C02_EXIT12               10
+#define DOOR_ID_C02_EXIT14               11
+#define DOOR_ID_C02_EXIT13               12
+#define DOOR_ID_C02_EXIT16               13
+#define DOOR_ID_C02_EXIT15               14
+#define DOOR_ID_C02_EXIT17               15
+#define DOOR_ID_C02_EXIT18               16
 
 #endif //ZONE_C02_EVD_H
 //このファイルはdata/c02.mevから自動生成されました
@@ -34,6 +158,176 @@
 
 
 #endif //ZONE_C02_EVC_H
+//#include "tmp/c02pc0101.h"
+//このファイルはdata/c02pc0101.mevから自動生成されました
+#ifndef ZONE_C02PC0101_EVD_H
+#define ZONE_C02PC0101_EVD_H
+
+#define DOOR_ID_C02PC0101_EXIT02          0
+#define DOOR_ID_C02PC0101_EXIT01          1
+#define DOOR_ID_C02PC0101_EXIT03          2
+
+#endif //ZONE_C02PC0101_EVD_H
+//このファイルはdata/c02pc0101.mevから自動生成されました
+#ifndef ZONE_C02PC0101_EVC_H
+#define ZONE_C02PC0101_EVC_H
+
+
+#endif //ZONE_C02PC0101_EVC_H
+//#include "tmp/c02r0101.h"
+//このファイルはdata/c02r0101.mevから自動生成されました
+#ifndef ZONE_C02R0101_EVD_H
+#define ZONE_C02R0101_EVD_H
+
+#define DOOR_ID_C02R0101_EXIT02           0
+#define DOOR_ID_C02R0101_EXIT01           1
+#define DOOR_ID_C02R0101_EXIT03           2
+
+#endif //ZONE_C02R0101_EVD_H
+//このファイルはdata/c02r0101.mevから自動生成されました
+#ifndef ZONE_C02R0101_EVC_H
+#define ZONE_C02R0101_EVC_H
+
+
+#endif //ZONE_C02R0101_EVC_H
+//#include "tmp/c02r0201.h"
+//このファイルはdata/c02r0201.mevから自動生成されました
+#ifndef ZONE_C02R0201_EVD_H
+#define ZONE_C02R0201_EVD_H
+
+#define DOOR_ID_C02R0201_EXIT02           0
+#define DOOR_ID_C02R0201_EXIT01           1
+#define DOOR_ID_C02R0201_EXIT03           2
+#define DOOR_ID_C02R0201_EXIT04           3
+
+#endif //ZONE_C02R0201_EVD_H
+//このファイルはdata/c02r0201.mevから自動生成されました
+#ifndef ZONE_C02R0201_EVC_H
+#define ZONE_C02R0201_EVC_H
+
+
+#endif //ZONE_C02R0201_EVC_H
+//#include "tmp/c02r0301.h"
+//このファイルはdata/c02r0301.mevから自動生成されました
+#ifndef ZONE_C02R0301_EVD_H
+#define ZONE_C02R0301_EVD_H
+
+#define DOOR_ID_C02R0301_EXIT02           0
+#define DOOR_ID_C02R0301_EXIT01           1
+#define DOOR_ID_C02R0301_EXIT03           2
+#define DOOR_ID_C02R0301_EXIT04           3
+
+#endif //ZONE_C02R0301_EVD_H
+//このファイルはdata/c02r0301.mevから自動生成されました
+#ifndef ZONE_C02R0301_EVC_H
+#define ZONE_C02R0301_EVC_H
+
+
+#endif //ZONE_C02R0301_EVC_H
+//#include "tmp/c02r0401.h"
+//このファイルはdata/c02r0401.mevから自動生成されました
+#ifndef ZONE_C02R0401_EVD_H
+#define ZONE_C02R0401_EVD_H
+
+#define DOOR_ID_C02R0401_EXIT02           0
+#define DOOR_ID_C02R0401_EXIT01           1
+#define DOOR_ID_C02R0401_EXIT03           2
+#define DOOR_ID_C02R0401_EXIT04           3
+
+#endif //ZONE_C02R0401_EVD_H
+//このファイルはdata/c02r0401.mevから自動生成されました
+#ifndef ZONE_C02R0401_EVC_H
+#define ZONE_C02R0401_EVC_H
+
+
+#endif //ZONE_C02R0401_EVC_H
+//#include "tmp/c02r0501.h"
+//このファイルはdata/c02r0501.mevから自動生成されました
+#ifndef ZONE_C02R0501_EVD_H
+#define ZONE_C02R0501_EVD_H
+
+#define DOOR_ID_C02R0501_EXIT02           0
+#define DOOR_ID_C02R0501_EXIT01           1
+#define DOOR_ID_C02R0501_EXIT03           2
+
+#endif //ZONE_C02R0501_EVD_H
+//このファイルはdata/c02r0501.mevから自動生成されました
+#ifndef ZONE_C02R0501_EVC_H
+#define ZONE_C02R0501_EVC_H
+
+
+#endif //ZONE_C02R0501_EVC_H
+//#include "tmp/c02r0601.h"
+//このファイルはdata/c02r0601.mevから自動生成されました
+#ifndef ZONE_C02R0601_EVD_H
+#define ZONE_C02R0601_EVD_H
+
+#define DOOR_ID_C02R0601_EXIT02           0
+#define DOOR_ID_C02R0601_EXIT01           1
+#define DOOR_ID_C02R0601_EXIT03           2
+
+#endif //ZONE_C02R0601_EVD_H
+//このファイルはdata/c02r0601.mevから自動生成されました
+#ifndef ZONE_C02R0601_EVC_H
+#define ZONE_C02R0601_EVC_H
+
+
+#endif //ZONE_C02R0601_EVC_H
+//#include "tmp/d01.h"
+//このファイルはdata/d01.mevから自動生成されました
+#ifndef ZONE_D01_EVD_H
+#define ZONE_D01_EVD_H
+
+#define DOOR_ID_D01_EXIT01                0
+#define DOOR_ID_D01_EXIT02                1
+#define DOOR_ID_D01_EXIT03                2
+#define DOOR_ID_D01_EXIT04                3
+
+#endif //ZONE_D01_EVD_H
+//このファイルはdata/d01.mevから自動生成されました
+#ifndef ZONE_D01_EVC_H
+#define ZONE_D01_EVC_H
+
+
+#endif //ZONE_D01_EVC_H
+//#include "tmp/d01r0101.h"
+//このファイルはdata/d01r0101.mevから自動生成されました
+#ifndef ZONE_D01R0101_EVD_H
+#define ZONE_D01R0101_EVD_H
+
+#define DOOR_ID_D01R0101_EXIT04           0
+#define DOOR_ID_D01R0101_EXIT03           1
+#define DOOR_ID_D01R0101_EXIT01           2
+#define DOOR_ID_D01R0101_EXIT02           3
+#define DOOR_ID_D01R0101_EXIT05           4
+#define DOOR_ID_D01R0101_EXIT06           5
+#define DOOR_ID_D01R0201_EXIT07           6
+#define DOOR_ID_D01R0101_EXIT08           7
+#define DOOR_ID_D01R0101_EXIT09           8
+#define DOOR_ID_D01R0101_EXIT10           9
+
+#endif //ZONE_D01R0101_EVD_H
+//このファイルはdata/d01r0101.mevから自動生成されました
+#ifndef ZONE_D01R0101_EVC_H
+#define ZONE_D01R0101_EVC_H
+
+
+#endif //ZONE_D01R0101_EVC_H
+//#include "tmp/d01r0201.h"
+//このファイルはdata/d01r0201.mevから自動生成されました
+#ifndef ZONE_D01R0201_EVD_H
+#define ZONE_D01R0201_EVD_H
+
+#define DOOR_ID_D01R0201_EXIT01           0
+#define DOOR_ID_D01R0201_EXIT02           1
+
+#endif //ZONE_D01R0201_EVD_H
+//このファイルはdata/d01r0201.mevから自動生成されました
+#ifndef ZONE_D01R0201_EVC_H
+#define ZONE_D01R0201_EVC_H
+
+
+#endif //ZONE_D01R0201_EVC_H
 //#include "tmp/d02.h"
 //このファイルはdata/d02.mevから自動生成されました
 #ifndef ZONE_D02_EVD_H
@@ -42,6 +336,7 @@
 #define DOOR_ID_D02_EXIT01                0
 #define DOOR_ID_D02_EXIT02                1
 #define DOOR_ID_D02_EXIT03                2
+#define DOOR_ID_D02_EXIT04                3
 
 #endif //ZONE_D02_EVD_H
 //このファイルはdata/d02.mevから自動生成されました
@@ -55,15 +350,15 @@
 #ifndef ZONE_D02R0101_EVD_H
 #define ZONE_D02R0101_EVD_H
 
-#define DOOR_ID_D02R0101_EXIT06           0
-#define DOOR_ID_D02R0101_EXIT01           1
-#define DOOR_ID_D02R0101_EXIT02           2
-#define DOOR_ID_D02R0101_EXIT03           3
-#define DOOR_ID_D02R0101_EXIT04           4
-#define DOOR_ID_D02R0101_EXIT05           5
+#define DOOR_ID_D02R0101_EXIT01           0
+#define DOOR_ID_D02R0101_EXIT02           1
+#define DOOR_ID_D02R0101_EXIT03           2
+#define DOOR_ID_D02R0101_EXIT04           3
+#define DOOR_ID_D02R0101_EXIT05           4
+#define DOOR_ID_D02R0101_EXIT06           5
 #define DOOR_ID_D02R0101_EXIT07           6
-#define DOOR_ID_D02R0101_EXIT08           7
-#define DOOR_ID_D02R0101_EXIT09           8
+#define DOOR_ID_D02R0101_EXIT09           7
+#define DOOR_ID_D02R0101_EXIT08           8
 #define DOOR_ID_D02R0101_EXIT10           9
 
 #endif //ZONE_D02R0101_EVD_H
@@ -117,7 +412,6 @@
 #define DOOR_ID_R02_EXIT02                1
 #define DOOR_ID_R02_EXIT03                2
 #define DOOR_ID_R02_EXIT04                3
-#define DOOR_ID_R02_EXIT05                4
 
 #endif //ZONE_R02_EVD_H
 //このファイルはdata/r02.mevから自動生成されました
@@ -135,7 +429,8 @@
 #define DOOR_ID_R03_EXIT02                1
 #define DOOR_ID_R03_EXIT03                2
 #define DOOR_ID_R03_EXIT04                3
-#define DOOR_ID_R03_EXIT05                4
+#define DOOR_ID_R03_EXIT06                4
+#define DOOR_ID_R03_EXIT05                5
 
 #endif //ZONE_R03_EVD_H
 //このファイルはdata/r03.mevから自動生成されました
@@ -159,9 +454,6 @@
 #ifndef ZONE_T01_EVC_H
 #define ZONE_T01_EVC_H
 
-#define T01_MAN1                           0
-#define T01_WOMAN1                         1
-#define T01_BABYGIRL1                      2
 
 #endif //ZONE_T01_EVC_H
 //#include "tmp/t01r0101.h"
@@ -188,7 +480,6 @@
 #define ZONE_T01R0102_EVD_H
 
 #define DOOR_ID_T01R0102_EXIT01           0
-#define DOOR_ID_T01R0102_EXIT02           1
 
 #endif //ZONE_T01R0102_EVD_H
 //このファイルはdata/t01r0102.mevから自動生成されました
@@ -205,8 +496,7 @@
 #define DOOR_ID_T01R0201_EXIT01           0
 #define DOOR_ID_T01R0201_EXIT02           1
 #define DOOR_ID_T01R0201_EXIT03           2
-#define DOOR_ID_T01R0201_EXIT05           3
-#define DOOR_ID_T01R0201_EXIT04           4
+#define DOOR_ID_T01R0201_EXIT04           3
 
 #endif //ZONE_T01R0201_EVD_H
 //このファイルはdata/t01r0201.mevから自動生成されました
@@ -222,7 +512,6 @@
 #define ZONE_T01R0202_EVD_H
 
 #define DOOR_ID_T01R0202_EXIT01           0
-#define DOOR_ID_T01R0202_EXIT02           1
 
 #endif //ZONE_T01R0202_EVD_H
 //このファイルはdata/t01r0202.mevから自動生成されました
@@ -240,7 +529,6 @@
 #define DOOR_ID_T01R0301_EXIT02           1
 #define DOOR_ID_T01R0301_EXIT03           2
 #define DOOR_ID_T01R0301_EXIT04           3
-#define DOOR_ID_T01R0301_EXIT05           4
 
 #endif //ZONE_T01R0301_EVD_H
 //このファイルはdata/t01r0301.mevから自動生成されました
@@ -256,7 +544,6 @@
 #define ZONE_T01R0302_EVD_H
 
 #define DOOR_ID_T01R0302_EXIT01           0
-#define DOOR_ID_T01R0302_EXIT02           1
 
 #endif //ZONE_T01R0302_EVD_H
 //このファイルはdata/t01r0302.mevから自動生成されました
@@ -290,6 +577,7 @@
 #define DOOR_ID_T02_EXIT02                1
 #define DOOR_ID_T02_EXIT03                2
 #define DOOR_ID_T02_EXIT04                3
+#define DOOR_ID_T02_EXIT05                4
 
 #endif //ZONE_T02_EVD_H
 //このファイルはdata/t02.mevから自動生成されました
@@ -323,6 +611,7 @@
 #define DOOR_ID_T02R0101_EXIT02           0
 #define DOOR_ID_T02R0101_EXIT01           1
 #define DOOR_ID_T02R0101_EXIT03           2
+#define DOOR_ID_T02R0101_EXIT04           3
 
 #endif //ZONE_T02R0101_EVD_H
 //このファイルはdata/t02r0101.mevから自動生成されました
@@ -331,6 +620,20 @@
 
 
 #endif //ZONE_T02R0101_EVC_H
+//#include "tmp/t02r0102.h"
+//このファイルはdata/t02r0102.mevから自動生成されました
+#ifndef ZONE_T02R0102_EVD_H
+#define ZONE_T02R0102_EVD_H
+
+#define DOOR_ID_T02R0102_EXIT01           0
+
+#endif //ZONE_T02R0102_EVD_H
+//このファイルはdata/t02r0102.mevから自動生成されました
+#ifndef ZONE_T02R0102_EVC_H
+#define ZONE_T02R0102_EVC_H
+
+
+#endif //ZONE_T02R0102_EVC_H
 //#include "tmp/t02r0201.h"
 //このファイルはdata/t02r0201.mevから自動生成されました
 #ifndef ZONE_T02R0201_EVD_H
@@ -339,6 +642,7 @@
 #define DOOR_ID_T02R0201_EXIT02           0
 #define DOOR_ID_T02R0201_EXIT01           1
 #define DOOR_ID_T02R0201_EXIT03           2
+#define DOOR_ID_T02R0201_EXIT04           3
 
 #endif //ZONE_T02R0201_EVD_H
 //このファイルはdata/t02r0201.mevから自動生成されました
@@ -347,6 +651,20 @@
 
 
 #endif //ZONE_T02R0201_EVC_H
+//#include "tmp/t02r0202.h"
+//このファイルはdata/t02r0202.mevから自動生成されました
+#ifndef ZONE_T02R0202_EVD_H
+#define ZONE_T02R0202_EVD_H
+
+#define DOOR_ID_T02R0202_EXIT01           0
+
+#endif //ZONE_T02R0202_EVD_H
+//このファイルはdata/t02r0202.mevから自動生成されました
+#ifndef ZONE_T02R0202_EVC_H
+#define ZONE_T02R0202_EVC_H
+
+
+#endif //ZONE_T02R0202_EVC_H
 //#include "tmp/t02r0301.h"
 //このファイルはdata/t02r0301.mevから自動生成されました
 #ifndef ZONE_T02R0301_EVD_H
@@ -355,6 +673,7 @@
 #define DOOR_ID_T02R0301_EXIT02           0
 #define DOOR_ID_T02R0301_EXIT01           1
 #define DOOR_ID_T02R0301_EXIT03           2
+#define DOOR_ID_T02R0301_EXIT04           3
 
 #endif //ZONE_T02R0301_EVD_H
 //このファイルはdata/t02r0301.mevから自動生成されました
@@ -363,37 +682,85 @@
 
 
 #endif //ZONE_T02R0301_EVC_H
+//#include "tmp/t02r0302.h"
+//このファイルはdata/t02r0302.mevから自動生成されました
+#ifndef ZONE_T02R0302_EVD_H
+#define ZONE_T02R0302_EVD_H
+
+#define DOOR_ID_T02R0302_EXIT01           0
+
+#endif //ZONE_T02R0302_EVD_H
+//このファイルはdata/t02r0302.mevから自動生成されました
+#ifndef ZONE_T02R0302_EVC_H
+#define ZONE_T02R0302_EVC_H
+
+
+#endif //ZONE_T02R0302_EVC_H
+//#include "tmp/t02r0401.h"
+//このファイルはdata/t02r0401.mevから自動生成されました
+#ifndef ZONE_T02R0401_EVD_H
+#define ZONE_T02R0401_EVD_H
+
+#define DOOR_ID_T02R0401_EXIT01           0
+#define DOOR_ID_T02R0401_EXIT02           1
+#define DOOR_ID_T02R0401_EXIT03           2
+
+#endif //ZONE_T02R0401_EVD_H
+//このファイルはdata/t02r0401.mevから自動生成されました
+#ifndef ZONE_T02R0401_EVC_H
+#define ZONE_T02R0401_EVC_H
+
+
+#endif //ZONE_T02R0401_EVC_H
 
 const CONNECT_DATA DOOR_EVENT_C01[] = {
-	{//DOOR_ID_C01_EXIT01 = 0
-		{11552, 0, 10704},
-		ZONE_ID_R02, DOOR_ID_R02_EXIT01,
-		1,//direction
-		0 //type
+	{//DOOR_ID_C01_EXIT10 = 0
+		{12512, 0, 9376},
+		ZONE_ID_C01PC0101, DOOR_ID_C01PC0101_EXIT02,
+		EXIT_DIR_DOWN,//direction
+		EXIT_TYPE_DOOR //type
 	},
-	{//DOOR_ID_C01_EXIT02 = 1
-		{11568, 0, 10704},
-		ZONE_ID_R02, DOOR_ID_R02_EXIT02,
-		1,//direction
-		0 //type
+	{//DOOR_ID_C01_EXIT01 = 1
+		{12640, 0, 9504},
+		ZONE_ID_C01R0101, DOOR_ID_C01R0101_EXIT02,
+		EXIT_DIR_LEFT,//direction
+		EXIT_TYPE_DOOR //type
 	},
 	{//DOOR_ID_C01_EXIT03 = 2
-		{11584, 0, 10704},
-		ZONE_ID_R02, DOOR_ID_R02_EXIT03,
-		1,//direction
-		0 //type
+		{12640, 0, 9584},
+		ZONE_ID_C01R0201, DOOR_ID_C01R0201_EXIT02,
+		EXIT_DIR_LEFT,//direction
+		EXIT_TYPE_DOOR //type
 	},
-	{//DOOR_ID_C01_EXIT04 = 3
-		{11600, 0, 10704},
+	{//DOOR_ID_C01_EXIT05 = 3
+		{12400, 0, 9568},
+		ZONE_ID_C01R0301, DOOR_ID_C01R0301_EXIT02,
+		EXIT_DIR_LEFT,//direction
+		EXIT_TYPE_DOOR //type
+	},
+	{//DOOR_ID_C01_EXIT12 = 4
+		{12576, 0, 9648},
+		ZONE_ID_R02, DOOR_ID_R02_EXIT01,
+		EXIT_DIR_UP,//direction
+		EXIT_TYPE_MAT //type
+	},
+	{//DOOR_ID_C01_EXIT14 = 5
+		{12608, 0, 9648},
 		ZONE_ID_R02, DOOR_ID_R02_EXIT04,
-		1,//direction
-		0 //type
+		EXIT_DIR_UP,//direction
+		EXIT_TYPE_MAT //type
 	},
-	{//DOOR_ID_C01_EXIT05 = 4
-		{11616, 0, 10704},
-		ZONE_ID_R02, DOOR_ID_R02_EXIT05,
-		1,//direction
-		0 //type
+	{//DOOR_ID_C01_EXIT13 = 6
+		{12592, 0, 9648},
+		ZONE_ID_R02, DOOR_ID_R02_EXIT02,
+		EXIT_DIR_UP,//direction
+		EXIT_TYPE_MAT //type
+	},
+	{//DOOR_ID_C01_EXIT15 = 7
+		{12624, 0, 9648},
+		ZONE_ID_R02, DOOR_ID_R02_EXIT04,
+		EXIT_DIR_UP,//direction
+		EXIT_TYPE_MAT //type
 	},
 };
 const int ConnectCount_C01 = NELEMS(DOOR_EVENT_C01);
@@ -401,41 +768,319 @@ const int ConnectCount_C01 = NELEMS(DOOR_EVENT_C01);
 static const EVENTDATA_TABLE event_c01 = {
 	0,
 	0,
-	5,
+	8,
 	0,
 	(void *)NULL,
 	(void *)NULL,
 	(void *)&DOOR_EVENT_C01,
 	(void *)NULL,
 };
+const CONNECT_DATA DOOR_EVENT_C01PC0101[] = {
+	{//DOOR_ID_C01PC0101_EXIT02 = 0
+		{128, 0, 272},
+		ZONE_ID_C01, DOOR_ID_C01_EXIT10,
+		EXIT_DIR_UP,//direction
+		EXIT_TYPE_MAT //type
+	},
+	{//DOOR_ID_C01PC0101_EXIT01 = 1
+		{112, 0, 272},
+		ZONE_ID_C01, DOOR_ID_C01_EXIT10,
+		EXIT_DIR_UP,//direction
+		EXIT_TYPE_MAT //type
+	},
+	{//DOOR_ID_C01PC0101_EXIT03 = 2
+		{144, 0, 272},
+		ZONE_ID_C01, DOOR_ID_C01_EXIT10,
+		EXIT_DIR_UP,//direction
+		EXIT_TYPE_MAT //type
+	},
+};
+const int ConnectCount_C01PC0101 = NELEMS(DOOR_EVENT_C01PC0101);
+
+static const EVENTDATA_TABLE event_c01pc0101 = {
+	0,
+	0,
+	3,
+	0,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)&DOOR_EVENT_C01PC0101,
+	(void *)NULL,
+};
+const CONNECT_DATA DOOR_EVENT_C01R0101[] = {
+	{//DOOR_ID_C01R0101_EXIT01 = 0
+		{112, 0, 160},
+		ZONE_ID_C01, DOOR_ID_C01_EXIT01,
+		EXIT_DIR_UP,//direction
+		EXIT_TYPE_MAT //type
+	},
+	{//DOOR_ID_C01R0101_EXIT02 = 1
+		{128, 0, 160},
+		ZONE_ID_C01, DOOR_ID_C01_EXIT01,
+		EXIT_DIR_UP,//direction
+		EXIT_TYPE_MAT //type
+	},
+	{//DOOR_ID_C01R0101_EXIT03 = 2
+		{144, 0, 160},
+		ZONE_ID_C01, DOOR_ID_C01_EXIT01,
+		EXIT_DIR_UP,//direction
+		EXIT_TYPE_MAT //type
+	},
+	{//DOOR_ID_C01R0101_EXIT04 = 3
+		{128, 0, 32},
+		ZONE_ID_C01R0102, DOOR_ID_C01R0102_EXIT01,
+		EXIT_DIR_LEFT,//direction
+		EXIT_TYPE_STAIRS //type
+	},
+};
+const int ConnectCount_C01R0101 = NELEMS(DOOR_EVENT_C01R0101);
+
+static const EVENTDATA_TABLE event_c01r0101 = {
+	0,
+	0,
+	4,
+	0,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)&DOOR_EVENT_C01R0101,
+	(void *)NULL,
+};
+const CONNECT_DATA DOOR_EVENT_C01R0102[] = {
+	{//DOOR_ID_C01R0102_EXIT01 = 0
+		{192, 0, 32},
+		ZONE_ID_C01R0101, DOOR_ID_C01R0101_EXIT04,
+		EXIT_DIR_RIGHT,//direction
+		EXIT_TYPE_STAIRS //type
+	},
+};
+const int ConnectCount_C01R0102 = NELEMS(DOOR_EVENT_C01R0102);
+
+static const EVENTDATA_TABLE event_c01r0102 = {
+	0,
+	0,
+	1,
+	0,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)&DOOR_EVENT_C01R0102,
+	(void *)NULL,
+};
+const CONNECT_DATA DOOR_EVENT_C01R0201[] = {
+	{//DOOR_ID_C01R0201_EXIT01 = 0
+		{112, 0, 160},
+		ZONE_ID_C01, DOOR_ID_C01_EXIT03,
+		EXIT_DIR_UP,//direction
+		EXIT_TYPE_MAT //type
+	},
+	{//DOOR_ID_C01R0201_EXIT02 = 1
+		{128, 0, 160},
+		ZONE_ID_C01, DOOR_ID_C01_EXIT03,
+		EXIT_DIR_UP,//direction
+		EXIT_TYPE_MAT //type
+	},
+	{//DOOR_ID_C01R0201_EXIT03 = 2
+		{144, 0, 160},
+		ZONE_ID_C01, DOOR_ID_C01_EXIT03,
+		EXIT_DIR_UP,//direction
+		EXIT_TYPE_MAT //type
+	},
+	{//DOOR_ID_C01R0201_EXIT04 = 3
+		{128, 0, 32},
+		ZONE_ID_C01R0202, DOOR_ID_C01R0202_EXIT01,
+		EXIT_DIR_LEFT,//direction
+		EXIT_TYPE_STAIRS //type
+	},
+};
+const int ConnectCount_C01R0201 = NELEMS(DOOR_EVENT_C01R0201);
+
+static const EVENTDATA_TABLE event_c01r0201 = {
+	0,
+	0,
+	4,
+	0,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)&DOOR_EVENT_C01R0201,
+	(void *)NULL,
+};
+const CONNECT_DATA DOOR_EVENT_C01R0202[] = {
+	{//DOOR_ID_C01R0202_EXIT01 = 0
+		{192, 0, 32},
+		ZONE_ID_C01R0201, DOOR_ID_C01R0201_EXIT04,
+		EXIT_DIR_RIGHT,//direction
+		EXIT_TYPE_STAIRS //type
+	},
+};
+const int ConnectCount_C01R0202 = NELEMS(DOOR_EVENT_C01R0202);
+
+static const EVENTDATA_TABLE event_c01r0202 = {
+	0,
+	0,
+	1,
+	0,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)&DOOR_EVENT_C01R0202,
+	(void *)NULL,
+};
+const CONNECT_DATA DOOR_EVENT_C01R0301[] = {
+	{//DOOR_ID_C01R0301_EXIT01 = 0
+		{112, 0, 160},
+		ZONE_ID_C01, DOOR_ID_C01_EXIT05,
+		EXIT_DIR_UP,//direction
+		EXIT_TYPE_MAT //type
+	},
+	{//DOOR_ID_C01R0301_EXIT02 = 1
+		{128, 0, 160},
+		ZONE_ID_C01, DOOR_ID_C01_EXIT05,
+		EXIT_DIR_UP,//direction
+		EXIT_TYPE_MAT //type
+	},
+	{//DOOR_ID_C01R0301_EXIT03 = 2
+		{144, 0, 160},
+		ZONE_ID_C01, DOOR_ID_C01_EXIT05,
+		EXIT_DIR_UP,//direction
+		EXIT_TYPE_MAT //type
+	},
+	{//DOOR_ID_C01R0301_EXIT04 = 3
+		{128, 0, 32},
+		ZONE_ID_C01R0302, DOOR_ID_C01R0302_EXIT01,
+		EXIT_DIR_LEFT,//direction
+		EXIT_TYPE_STAIRS //type
+	},
+};
+const int ConnectCount_C01R0301 = NELEMS(DOOR_EVENT_C01R0301);
+
+static const EVENTDATA_TABLE event_c01r0301 = {
+	0,
+	0,
+	4,
+	0,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)&DOOR_EVENT_C01R0301,
+	(void *)NULL,
+};
+const CONNECT_DATA DOOR_EVENT_C01R0302[] = {
+	{//DOOR_ID_C01R0302_EXIT01 = 0
+		{192, 0, 32},
+		ZONE_ID_C01R0301, DOOR_ID_C01R0301_EXIT04,
+		EXIT_DIR_RIGHT,//direction
+		EXIT_TYPE_STAIRS //type
+	},
+};
+const int ConnectCount_C01R0302 = NELEMS(DOOR_EVENT_C01R0302);
+
+static const EVENTDATA_TABLE event_c01r0302 = {
+	0,
+	0,
+	1,
+	0,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)&DOOR_EVENT_C01R0302,
+	(void *)NULL,
+};
 const CONNECT_DATA DOOR_EVENT_C02[] = {
-	{//DOOR_ID_C02_EXIT01 = 0
-		{9152, 0, 10592},
+	{//DOOR_ID_C02_EXIT02 = 0
+		{10512, 0, 9360},
+		ZONE_ID_C02R0201, DOOR_ID_C02R0201_EXIT02,
+		EXIT_DIR_DOWN,//direction
+		EXIT_TYPE_DOOR //type
+	},
+	{//DOOR_ID_C02_EXIT01 = 1
+		{10544, 0, 9552},
+		ZONE_ID_C02R0101, DOOR_ID_C02R0101_EXIT02,
+		EXIT_DIR_DOWN,//direction
+		EXIT_TYPE_DOOR //type
+	},
+	{//DOOR_ID_C02_EXIT03 = 2
+		{10288, 0, 9552},
+		ZONE_ID_C02R0301, DOOR_ID_C02R0301_EXIT02,
+		EXIT_DIR_DOWN,//direction
+		EXIT_TYPE_DOOR //type
+	},
+	{//DOOR_ID_C02_EXIT04 = 3
+		{10000, 0, 9552},
+		ZONE_ID_C02R0401, DOOR_ID_C02R0401_EXIT02,
+		EXIT_DIR_DOWN,//direction
+		EXIT_TYPE_DOOR //type
+	},
+	{//DOOR_ID_C02_EXIT05 = 4
+		{9920, 0, 9552},
+		ZONE_ID_C02R0501, DOOR_ID_C02R0501_EXIT02,
+		EXIT_DIR_DOWN,//direction
+		EXIT_TYPE_DOOR //type
+	},
+	{//DOOR_ID_C02_EXIT08 = 5
+		{10176, 0, 9552},
+		ZONE_ID_C02PC0101, DOOR_ID_C02PC0101_EXIT02,
+		EXIT_DIR_DOWN,//direction
+		EXIT_TYPE_DOOR //type
+	},
+	{//DOOR_ID_C02_EXIT06 = 6
+		{10000, 0, 9344},
+		ZONE_ID_C02R0601, DOOR_ID_C02R0601_EXIT02,
+		EXIT_DIR_DOWN,//direction
+		EXIT_TYPE_DOOR //type
+	},
+	{//DOOR_ID_C02_EXIT11 = 7
+		{10048, 32, 9504},
+		ZONE_ID_C02R0401, DOOR_ID_C02R0401_EXIT04,
+		EXIT_DIR_RIGHT,//direction
+		EXIT_TYPE_MAT //type
+	},
+	{//DOOR_ID_C02_EXIT10 = 8
+		{10336, 32, 9504},
+		ZONE_ID_C02R0301, DOOR_ID_C02R0301_EXIT04,
+		EXIT_DIR_RIGHT,//direction
+		EXIT_TYPE_MAT //type
+	},
+	{//DOOR_ID_C02_EXIT09 = 9
+		{10560, 32, 9312},
+		ZONE_ID_C02R0201, DOOR_ID_C02R0201_EXIT04,
+		EXIT_DIR_RIGHT,//direction
+		EXIT_TYPE_MAT //type
+	},
+	{//DOOR_ID_C02_EXIT12 = 10
+		{10752, 0, 9552},
 		ZONE_ID_R03, DOOR_ID_R03_EXIT01,
 		3,//direction
 		0 //type
 	},
-	{//DOOR_ID_C02_EXIT02 = 1
-		{9152, 0, 10608},
+	{//DOOR_ID_C02_EXIT14 = 11
+		{10752, 0, 9584},
+		ZONE_ID_R03, DOOR_ID_R03_EXIT03,
+		0,//direction
+		0 //type
+	},
+	{//DOOR_ID_C02_EXIT13 = 12
+		{10752, 0, 9568},
 		ZONE_ID_R03, DOOR_ID_R03_EXIT02,
 		3,//direction
 		0 //type
 	},
-	{//DOOR_ID_C02_EXIT03 = 2
-		{9152, 0, 10624},
-		ZONE_ID_R03, DOOR_ID_R03_EXIT03,
+	{//DOOR_ID_C02_EXIT16 = 13
+		{10752, 0, 9616},
+		ZONE_ID_R03, DOOR_ID_R03_EXIT05,
 		3,//direction
 		0 //type
 	},
-	{//DOOR_ID_C02_EXIT04 = 3
-		{9152, 0, 10640},
+	{//DOOR_ID_C02_EXIT15 = 14
+		{10752, 0, 9600},
 		ZONE_ID_R03, DOOR_ID_R03_EXIT04,
 		3,//direction
 		0 //type
 	},
-	{//DOOR_ID_C02_EXIT05 = 4
-		{9152, 0, 10656},
-		ZONE_ID_R03, DOOR_ID_R03_EXIT05,
+	{//DOOR_ID_C02_EXIT17 = 15
+		{10752, 0, 9632},
+		ZONE_ID_R03, DOOR_ID_R03_EXIT06,
+		0,//direction
+		0 //type
+	},
+	{//DOOR_ID_C02_EXIT18 = 16
+		{10752, 0, 9648},
+		ZONE_ID_R03, DOOR_ID_R03_EXIT06,
 		3,//direction
 		0 //type
 	},
@@ -445,31 +1090,417 @@ const int ConnectCount_C02 = NELEMS(DOOR_EVENT_C02);
 static const EVENTDATA_TABLE event_c02 = {
 	0,
 	0,
-	5,
+	17,
 	0,
 	(void *)NULL,
 	(void *)NULL,
 	(void *)&DOOR_EVENT_C02,
 	(void *)NULL,
 };
+const CONNECT_DATA DOOR_EVENT_C02PC0101[] = {
+	{//DOOR_ID_C02PC0101_EXIT02 = 0
+		{128, 0, 272},
+		ZONE_ID_C02, DOOR_ID_C02_EXIT08,
+		EXIT_DIR_UP,//direction
+		EXIT_TYPE_MAT //type
+	},
+	{//DOOR_ID_C02PC0101_EXIT01 = 1
+		{112, 0, 272},
+		ZONE_ID_C02, DOOR_ID_C02_EXIT08,
+		EXIT_DIR_UP,//direction
+		EXIT_TYPE_MAT //type
+	},
+	{//DOOR_ID_C02PC0101_EXIT03 = 2
+		{144, 0, 272},
+		ZONE_ID_C02, DOOR_ID_C02_EXIT08,
+		EXIT_DIR_UP,//direction
+		EXIT_TYPE_MAT //type
+	},
+};
+const int ConnectCount_C02PC0101 = NELEMS(DOOR_EVENT_C02PC0101);
+
+static const EVENTDATA_TABLE event_c02pc0101 = {
+	0,
+	0,
+	3,
+	0,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)&DOOR_EVENT_C02PC0101,
+	(void *)NULL,
+};
+const CONNECT_DATA DOOR_EVENT_C02R0101[] = {
+	{//DOOR_ID_C02R0101_EXIT02 = 0
+		{112, 0, 160},
+		ZONE_ID_C02, DOOR_ID_C02_EXIT01,
+		EXIT_DIR_UP,//direction
+		EXIT_TYPE_MAT //type
+	},
+	{//DOOR_ID_C02R0101_EXIT01 = 1
+		{96, 0, 160},
+		ZONE_ID_C02, DOOR_ID_C02_EXIT01,
+		EXIT_DIR_UP,//direction
+		EXIT_TYPE_MAT //type
+	},
+	{//DOOR_ID_C02R0101_EXIT03 = 2
+		{128, 0, 160},
+		ZONE_ID_C02, DOOR_ID_C02_EXIT01,
+		EXIT_DIR_UP,//direction
+		EXIT_TYPE_MAT //type
+	},
+};
+const int ConnectCount_C02R0101 = NELEMS(DOOR_EVENT_C02R0101);
+
+static const EVENTDATA_TABLE event_c02r0101 = {
+	0,
+	0,
+	3,
+	0,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)&DOOR_EVENT_C02R0101,
+	(void *)NULL,
+};
+const CONNECT_DATA DOOR_EVENT_C02R0201[] = {
+	{//DOOR_ID_C02R0201_EXIT02 = 0
+		{112, 0, 160},
+		ZONE_ID_C02, DOOR_ID_C02_EXIT02,
+		EXIT_DIR_UP,//direction
+		EXIT_TYPE_MAT //type
+	},
+	{//DOOR_ID_C02R0201_EXIT01 = 1
+		{96, 0, 160},
+		ZONE_ID_C02, DOOR_ID_C02_EXIT02,
+		EXIT_DIR_UP,//direction
+		EXIT_TYPE_MAT //type
+	},
+	{//DOOR_ID_C02R0201_EXIT03 = 2
+		{128, 0, 160},
+		ZONE_ID_C02, DOOR_ID_C02_EXIT02,
+		EXIT_DIR_UP,//direction
+		EXIT_TYPE_MAT //type
+	},
+	{//DOOR_ID_C02R0201_EXIT04 = 3
+		{192, 48, 64},
+		ZONE_ID_C02, DOOR_ID_C02_EXIT09,
+		EXIT_DIR_LEFT,//direction
+		EXIT_TYPE_MAT //type
+	},
+};
+const int ConnectCount_C02R0201 = NELEMS(DOOR_EVENT_C02R0201);
+
+static const EVENTDATA_TABLE event_c02r0201 = {
+	0,
+	0,
+	4,
+	0,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)&DOOR_EVENT_C02R0201,
+	(void *)NULL,
+};
+const CONNECT_DATA DOOR_EVENT_C02R0301[] = {
+	{//DOOR_ID_C02R0301_EXIT02 = 0
+		{112, 0, 160},
+		ZONE_ID_C02, DOOR_ID_C02_EXIT03,
+		EXIT_DIR_UP,//direction
+		EXIT_TYPE_MAT //type
+	},
+	{//DOOR_ID_C02R0301_EXIT01 = 1
+		{96, 0, 160},
+		ZONE_ID_C02, DOOR_ID_C02_EXIT03,
+		EXIT_DIR_UP,//direction
+		EXIT_TYPE_MAT //type
+	},
+	{//DOOR_ID_C02R0301_EXIT03 = 2
+		{128, 0, 160},
+		ZONE_ID_C02, DOOR_ID_C02_EXIT03,
+		EXIT_DIR_UP,//direction
+		EXIT_TYPE_MAT //type
+	},
+	{//DOOR_ID_C02R0301_EXIT04 = 3
+		{192, 48, 64},
+		ZONE_ID_C02, DOOR_ID_C02_EXIT10,
+		EXIT_DIR_LEFT,//direction
+		EXIT_TYPE_MAT //type
+	},
+};
+const int ConnectCount_C02R0301 = NELEMS(DOOR_EVENT_C02R0301);
+
+static const EVENTDATA_TABLE event_c02r0301 = {
+	0,
+	0,
+	4,
+	0,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)&DOOR_EVENT_C02R0301,
+	(void *)NULL,
+};
+const CONNECT_DATA DOOR_EVENT_C02R0401[] = {
+	{//DOOR_ID_C02R0401_EXIT02 = 0
+		{112, 0, 160},
+		ZONE_ID_C02, DOOR_ID_C02_EXIT04,
+		EXIT_DIR_UP,//direction
+		EXIT_TYPE_MAT //type
+	},
+	{//DOOR_ID_C02R0401_EXIT01 = 1
+		{96, 0, 160},
+		ZONE_ID_C02, DOOR_ID_C02_EXIT04,
+		EXIT_DIR_UP,//direction
+		EXIT_TYPE_MAT //type
+	},
+	{//DOOR_ID_C02R0401_EXIT03 = 2
+		{128, 0, 160},
+		ZONE_ID_C02, DOOR_ID_C02_EXIT04,
+		EXIT_DIR_UP,//direction
+		EXIT_TYPE_MAT //type
+	},
+	{//DOOR_ID_C02R0401_EXIT04 = 3
+		{192, 48, 64},
+		ZONE_ID_C02, DOOR_ID_C02_EXIT11,
+		EXIT_DIR_LEFT,//direction
+		EXIT_TYPE_MAT //type
+	},
+};
+const int ConnectCount_C02R0401 = NELEMS(DOOR_EVENT_C02R0401);
+
+static const EVENTDATA_TABLE event_c02r0401 = {
+	0,
+	0,
+	4,
+	0,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)&DOOR_EVENT_C02R0401,
+	(void *)NULL,
+};
+const CONNECT_DATA DOOR_EVENT_C02R0501[] = {
+	{//DOOR_ID_C02R0501_EXIT02 = 0
+		{112, 0, 160},
+		ZONE_ID_C02, DOOR_ID_C02_EXIT05,
+		EXIT_DIR_UP,//direction
+		EXIT_TYPE_MAT //type
+	},
+	{//DOOR_ID_C02R0501_EXIT01 = 1
+		{96, 0, 160},
+		ZONE_ID_C02, DOOR_ID_C02_EXIT05,
+		EXIT_DIR_UP,//direction
+		EXIT_TYPE_MAT //type
+	},
+	{//DOOR_ID_C02R0501_EXIT03 = 2
+		{128, 0, 160},
+		ZONE_ID_C02, DOOR_ID_C02_EXIT05,
+		EXIT_DIR_UP,//direction
+		EXIT_TYPE_MAT //type
+	},
+};
+const int ConnectCount_C02R0501 = NELEMS(DOOR_EVENT_C02R0501);
+
+static const EVENTDATA_TABLE event_c02r0501 = {
+	0,
+	0,
+	3,
+	0,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)&DOOR_EVENT_C02R0501,
+	(void *)NULL,
+};
+const CONNECT_DATA DOOR_EVENT_C02R0601[] = {
+	{//DOOR_ID_C02R0601_EXIT02 = 0
+		{128, 0, 112},
+		ZONE_ID_C02, DOOR_ID_C02_EXIT06,
+		EXIT_DIR_UP,//direction
+		EXIT_TYPE_MAT //type
+	},
+	{//DOOR_ID_C02R0601_EXIT01 = 1
+		{112, 0, 112},
+		ZONE_ID_C02, DOOR_ID_C02_EXIT06,
+		EXIT_DIR_UP,//direction
+		EXIT_TYPE_MAT //type
+	},
+	{//DOOR_ID_C02R0601_EXIT03 = 2
+		{144, 0, 112},
+		ZONE_ID_C02, DOOR_ID_C02_EXIT06,
+		EXIT_DIR_UP,//direction
+		EXIT_TYPE_MAT //type
+	},
+};
+const int ConnectCount_C02R0601 = NELEMS(DOOR_EVENT_C02R0601);
+
+static const EVENTDATA_TABLE event_c02r0601 = {
+	0,
+	0,
+	3,
+	0,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)&DOOR_EVENT_C02R0601,
+	(void *)NULL,
+};
+const CONNECT_DATA DOOR_EVENT_D01[] = {
+	{//DOOR_ID_D01_EXIT01 = 0
+		{13104, 0, 9536},
+		ZONE_ID_D01R0101, DOOR_ID_D01R0101_EXIT01,
+		EXIT_DIR_LEFT,//direction
+		EXIT_TYPE_MAT //type
+	},
+	{//DOOR_ID_D01_EXIT02 = 1
+		{13104, 0, 9552},
+		ZONE_ID_D01R0101, DOOR_ID_D01R0101_EXIT02,
+		EXIT_DIR_LEFT,//direction
+		EXIT_TYPE_MAT //type
+	},
+	{//DOOR_ID_D01_EXIT03 = 2
+		{13104, 0, 9568},
+		ZONE_ID_D01R0101, DOOR_ID_D01R0101_EXIT03,
+		EXIT_DIR_LEFT,//direction
+		EXIT_TYPE_MAT //type
+	},
+	{//DOOR_ID_D01_EXIT04 = 3
+		{13104, 0, 9584},
+		ZONE_ID_D01R0101, DOOR_ID_D01R0101_EXIT04,
+		EXIT_DIR_LEFT,//direction
+		EXIT_TYPE_MAT //type
+	},
+};
+const int ConnectCount_D01 = NELEMS(DOOR_EVENT_D01);
+
+static const EVENTDATA_TABLE event_d01 = {
+	0,
+	0,
+	4,
+	0,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)&DOOR_EVENT_D01,
+	(void *)NULL,
+};
+const CONNECT_DATA DOOR_EVENT_D01R0101[] = {
+	{//DOOR_ID_D01R0101_EXIT04 = 0
+		{128, 0, 464},
+		ZONE_ID_D01, DOOR_ID_D01_EXIT04,
+		EXIT_DIR_RIGHT,//direction
+		EXIT_TYPE_MAT //type
+	},
+	{//DOOR_ID_D01R0101_EXIT03 = 1
+		{128, 0, 448},
+		ZONE_ID_D01, DOOR_ID_D01_EXIT03,
+		EXIT_DIR_RIGHT,//direction
+		EXIT_TYPE_MAT //type
+	},
+	{//DOOR_ID_D01R0101_EXIT01 = 2
+		{128, 0, 416},
+		ZONE_ID_D01, DOOR_ID_D01_EXIT01,
+		EXIT_DIR_RIGHT,//direction
+		EXIT_TYPE_MAT //type
+	},
+	{//DOOR_ID_D01R0101_EXIT02 = 3
+		{128, 0, 432},
+		ZONE_ID_D01, DOOR_ID_D01_EXIT02,
+		EXIT_DIR_RIGHT,//direction
+		EXIT_TYPE_MAT //type
+	},
+	{//DOOR_ID_D01R0101_EXIT05 = 4
+		{736, -9, 208},
+		ZONE_ID_D01R0201, DOOR_ID_D01R0201_EXIT01,
+		EXIT_DIR_RIGHT,//direction
+		EXIT_TYPE_MAT //type
+	},
+	{//DOOR_ID_D01R0101_EXIT06 = 5
+		{736, -9, 224},
+		ZONE_ID_D01R0201, DOOR_ID_D01R0201_EXIT01,
+		EXIT_DIR_RIGHT,//direction
+		EXIT_TYPE_MAT //type
+	},
+	{//DOOR_ID_D01R0201_EXIT07 = 6
+		{736, -9, 240},
+		ZONE_ID_D01R0201, DOOR_ID_D01R0201_EXIT01,
+		EXIT_DIR_RIGHT,//direction
+		EXIT_TYPE_MAT //type
+	},
+	{//DOOR_ID_D01R0101_EXIT08 = 7
+		{448, -9, 704},
+		ZONE_ID_D01R0201, DOOR_ID_D01R0201_EXIT02,
+		EXIT_DIR_RIGHT,//direction
+		EXIT_TYPE_MAT //type
+	},
+	{//DOOR_ID_D01R0101_EXIT09 = 8
+		{448, -9, 720},
+		ZONE_ID_D01R0201, DOOR_ID_D01R0201_EXIT02,
+		EXIT_DIR_RIGHT,//direction
+		EXIT_TYPE_MAT //type
+	},
+	{//DOOR_ID_D01R0101_EXIT10 = 9
+		{448, -9, 736},
+		ZONE_ID_D01R0201, DOOR_ID_D01R0201_EXIT02,
+		EXIT_DIR_RIGHT,//direction
+		EXIT_TYPE_MAT //type
+	},
+};
+const int ConnectCount_D01R0101 = NELEMS(DOOR_EVENT_D01R0101);
+
+static const EVENTDATA_TABLE event_d01r0101 = {
+	0,
+	0,
+	10,
+	0,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)&DOOR_EVENT_D01R0101,
+	(void *)NULL,
+};
+const CONNECT_DATA DOOR_EVENT_D01R0201[] = {
+	{//DOOR_ID_D01R0201_EXIT01 = 0
+		{304, 0, 32},
+		ZONE_ID_D01R0101, DOOR_ID_D01R0101_EXIT06,
+		EXIT_DIR_LEFT,//direction
+		EXIT_TYPE_STAIRS //type
+	},
+	{//DOOR_ID_D01R0201_EXIT02 = 1
+		{96, 0, 304},
+		ZONE_ID_D01R0101, DOOR_ID_D01R0101_EXIT09,
+		EXIT_DIR_LEFT,//direction
+		EXIT_TYPE_STAIRS //type
+	},
+};
+const int ConnectCount_D01R0201 = NELEMS(DOOR_EVENT_D01R0201);
+
+static const EVENTDATA_TABLE event_d01r0201 = {
+	0,
+	0,
+	2,
+	0,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)&DOOR_EVENT_D01R0201,
+	(void *)NULL,
+};
 const CONNECT_DATA DOOR_EVENT_D02[] = {
 	{//DOOR_ID_D02_EXIT01 = 0
-		{7792, 0, 9904},
+		{9344, 0, 9408},
 		ZONE_ID_D02R0101, DOOR_ID_D02R0101_EXIT02,
-		4,//direction
-		0 //type
+		EXIT_DIR_RIGHT,//direction
+		EXIT_TYPE_MAT //type
 	},
 	{//DOOR_ID_D02_EXIT02 = 1
-		{7792, 0, 9920},
+		{9344, 0, 9424},
 		ZONE_ID_D02R0101, DOOR_ID_D02R0101_EXIT02,
-		4,//direction
-		0 //type
+		EXIT_DIR_RIGHT,//direction
+		EXIT_TYPE_MAT //type
 	},
 	{//DOOR_ID_D02_EXIT03 = 2
-		{7792, 0, 9936},
+		{9344, 0, 9440},
 		ZONE_ID_D02R0101, DOOR_ID_D02R0101_EXIT04,
-		4,//direction
-		0 //type
+		EXIT_DIR_RIGHT,//direction
+		EXIT_TYPE_MAT //type
+	},
+	{//DOOR_ID_D02_EXIT04 = 3
+		{9344, 0, 9456},
+		ZONE_ID_D02R0101, DOOR_ID_D02R0101_EXIT04,
+		EXIT_DIR_RIGHT,//direction
+		EXIT_TYPE_MAT //type
 	},
 };
 const int ConnectCount_D02 = NELEMS(DOOR_EVENT_D02);
@@ -477,7 +1508,7 @@ const int ConnectCount_D02 = NELEMS(DOOR_EVENT_D02);
 static const EVENTDATA_TABLE event_d02 = {
 	0,
 	0,
-	3,
+	4,
 	0,
 	(void *)NULL,
 	(void *)NULL,
@@ -485,65 +1516,65 @@ static const EVENTDATA_TABLE event_d02 = {
 	(void *)NULL,
 };
 const CONNECT_DATA DOOR_EVENT_D02R0101[] = {
-	{//DOOR_ID_D02R0101_EXIT06 = 0
-		{1168, 0, 352},
-		ZONE_ID_H01P01, DOOR_ID_H01P01_EXIT01,
-		2,//direction
-		0 //type
-	},
-	{//DOOR_ID_D02R0101_EXIT01 = 1
-		{1392, 0, 1200},
+	{//DOOR_ID_D02R0101_EXIT01 = 0
+		{1376, 0, 1184},
 		ZONE_ID_D02, DOOR_ID_D02_EXIT01,
-		3,//direction
-		0 //type
+		EXIT_DIR_LEFT,//direction
+		EXIT_TYPE_MAT //type
 	},
-	{//DOOR_ID_D02R0101_EXIT02 = 2
-		{1392, 0, 1216},
-		ZONE_ID_D02, DOOR_ID_D02_EXIT01,
-		3,//direction
-		0 //type
+	{//DOOR_ID_D02R0101_EXIT02 = 1
+		{1376, 0, 1200},
+		ZONE_ID_D02, DOOR_ID_D02_EXIT02,
+		EXIT_DIR_LEFT,//direction
+		EXIT_TYPE_MAT //type
 	},
-	{//DOOR_ID_D02R0101_EXIT03 = 3
-		{1392, 0, 1232},
-		ZONE_ID_D02, DOOR_ID_D02_EXIT01,
-		3,//direction
-		0 //type
+	{//DOOR_ID_D02R0101_EXIT03 = 2
+		{1376, 0, 1216},
+		ZONE_ID_D02, DOOR_ID_D02_EXIT03,
+		EXIT_DIR_LEFT,//direction
+		EXIT_TYPE_MAT //type
 	},
-	{//DOOR_ID_D02R0101_EXIT04 = 4
-		{1392, 0, 1184},
-		ZONE_ID_D02, DOOR_ID_D02_EXIT01,
-		3,//direction
-		0 //type
+	{//DOOR_ID_D02R0101_EXIT04 = 3
+		{1376, 0, 1232},
+		ZONE_ID_D02, DOOR_ID_D02_EXIT04,
+		EXIT_DIR_LEFT,//direction
+		EXIT_TYPE_MAT //type
 	},
-	{//DOOR_ID_D02R0101_EXIT05 = 5
-		{1392, 0, 1248},
-		ZONE_ID_D02, DOOR_ID_D02_EXIT01,
-		3,//direction
-		0 //type
+	{//DOOR_ID_D02R0101_EXIT05 = 4
+		{1376, 0, 1248},
+		ZONE_ID_D02, DOOR_ID_D02_EXIT04,
+		EXIT_DIR_LEFT,//direction
+		EXIT_TYPE_MAT //type
+	},
+	{//DOOR_ID_D02R0101_EXIT06 = 5
+		{1168, 0, 368},
+		ZONE_ID_H01P01, DOOR_ID_H01P01_EXIT02,
+		EXIT_DIR_DOWN,//direction
+		EXIT_TYPE_MAT //type
 	},
 	{//DOOR_ID_D02R0101_EXIT07 = 6
-		{1184, 0, 352},
+		{1184, 0, 368},
 		ZONE_ID_H01P01, DOOR_ID_H01P01_EXIT02,
-		2,//direction
-		0 //type
+		EXIT_DIR_DOWN,//direction
+		EXIT_TYPE_MAT //type
 	},
-	{//DOOR_ID_D02R0101_EXIT08 = 7
-		{1200, 0, 352},
+	{//DOOR_ID_D02R0101_EXIT09 = 7
+		{1216, 0, 368},
 		ZONE_ID_H01P01, DOOR_ID_H01P01_EXIT02,
-		2,//direction
-		0 //type
+		EXIT_DIR_DOWN,//direction
+		EXIT_TYPE_MAT //type
 	},
-	{//DOOR_ID_D02R0101_EXIT09 = 8
-		{1216, 0, 352},
+	{//DOOR_ID_D02R0101_EXIT08 = 8
+		{1200, 0, 368},
 		ZONE_ID_H01P01, DOOR_ID_H01P01_EXIT02,
-		2,//direction
-		0 //type
+		EXIT_DIR_DOWN,//direction
+		EXIT_TYPE_MAT //type
 	},
 	{//DOOR_ID_D02R0101_EXIT10 = 9
-		{1232, 0, 352},
+		{1232, 0, 368},
 		ZONE_ID_H01P01, DOOR_ID_H01P01_EXIT02,
-		2,//direction
-		0 //type
+		EXIT_DIR_DOWN,//direction
+		EXIT_TYPE_MAT //type
 	},
 };
 const int ConnectCount_D02R0101 = NELEMS(DOOR_EVENT_D02R0101);
@@ -624,8 +1655,8 @@ const FLDMMDL_HEADER OBJ_EVENT_R01[] = {
 		0,
 		2,
 		2,
-		757,
 		789,
+		725,
 		0,
 	},
 	{
@@ -641,8 +1672,8 @@ const FLDMMDL_HEADER OBJ_EVENT_R01[] = {
 		0,
 		2,
 		2,
-		749,
-		783,
+		781,
+		719,
 		0,
 	},
 	{
@@ -658,8 +1689,8 @@ const FLDMMDL_HEADER OBJ_EVENT_R01[] = {
 		0,
 		2,
 		2,
-		758,
-		745,
+		790,
+		681,
 		0,
 	},
 };
@@ -677,34 +1708,28 @@ static const EVENTDATA_TABLE event_r01 = {
 };
 const CONNECT_DATA DOOR_EVENT_R02[] = {
 	{//DOOR_ID_R02_EXIT01 = 0
-		{11552, 0, 10816},
-		ZONE_ID_C01, DOOR_ID_C01_EXIT01,
-		2,//direction
-		0 //type
+		{12576, 0, 9792},
+		ZONE_ID_C01, DOOR_ID_C01_EXIT12,
+		EXIT_DIR_DOWN,//direction
+		EXIT_TYPE_MAT //type
 	},
 	{//DOOR_ID_R02_EXIT02 = 1
-		{11568, 0, 10816},
-		ZONE_ID_C01, DOOR_ID_C01_EXIT02,
-		2,//direction
-		0 //type
+		{12592, 0, 9792},
+		ZONE_ID_C01, DOOR_ID_C01_EXIT13,
+		EXIT_DIR_DOWN,//direction
+		EXIT_TYPE_MAT //type
 	},
 	{//DOOR_ID_R02_EXIT03 = 2
-		{11584, 0, 10816},
-		ZONE_ID_C01, DOOR_ID_C01_EXIT03,
-		2,//direction
-		0 //type
+		{12608, 0, 9792},
+		ZONE_ID_C01, DOOR_ID_C01_EXIT14,
+		EXIT_DIR_DOWN,//direction
+		EXIT_TYPE_MAT //type
 	},
 	{//DOOR_ID_R02_EXIT04 = 3
-		{11600, 0, 10816},
-		ZONE_ID_C01, DOOR_ID_C01_EXIT04,
-		2,//direction
-		0 //type
-	},
-	{//DOOR_ID_R02_EXIT05 = 4
-		{11616, 0, 10816},
-		ZONE_ID_C01, DOOR_ID_C01_EXIT05,
-		2,//direction
-		0 //type
+		{12624, 0, 9792},
+		ZONE_ID_C01, DOOR_ID_C01_EXIT15,
+		EXIT_DIR_DOWN,//direction
+		EXIT_TYPE_MAT //type
 	},
 };
 const int ConnectCount_R02 = NELEMS(DOOR_EVENT_R02);
@@ -712,7 +1737,7 @@ const int ConnectCount_R02 = NELEMS(DOOR_EVENT_R02);
 static const EVENTDATA_TABLE event_r02 = {
 	0,
 	0,
-	5,
+	4,
 	0,
 	(void *)NULL,
 	(void *)NULL,
@@ -721,33 +1746,39 @@ static const EVENTDATA_TABLE event_r02 = {
 };
 const CONNECT_DATA DOOR_EVENT_R03[] = {
 	{//DOOR_ID_R03_EXIT01 = 0
-		{9232, 0, 10592},
-		ZONE_ID_C02, DOOR_ID_C02_EXIT01,
+		{10768, 0, 9536},
+		ZONE_ID_C02, DOOR_ID_C02_EXIT12,
 		4,//direction
 		0 //type
 	},
 	{//DOOR_ID_R03_EXIT02 = 1
-		{9232, 0, 10608},
-		ZONE_ID_C02, DOOR_ID_C02_EXIT02,
+		{10768, 0, 9552},
+		ZONE_ID_C02, DOOR_ID_C02_EXIT13,
 		4,//direction
 		0 //type
 	},
 	{//DOOR_ID_R03_EXIT03 = 2
-		{9232, 0, 10624},
-		ZONE_ID_C02, DOOR_ID_C02_EXIT03,
+		{10768, 0, 9568},
+		ZONE_ID_C02, DOOR_ID_C02_EXIT14,
 		4,//direction
 		0 //type
 	},
 	{//DOOR_ID_R03_EXIT04 = 3
-		{9232, 0, 10640},
-		ZONE_ID_C02, DOOR_ID_C02_EXIT04,
+		{10768, 0, 9584},
+		ZONE_ID_C02, DOOR_ID_C02_EXIT15,
 		4,//direction
 		0 //type
 	},
-	{//DOOR_ID_R03_EXIT05 = 4
-		{9232, 0, 10656},
-		ZONE_ID_C02, DOOR_ID_C02_EXIT05,
+	{//DOOR_ID_R03_EXIT06 = 4
+		{10768, 0, 9616},
+		ZONE_ID_C02, DOOR_ID_C02_EXIT17,
 		4,//direction
+		0 //type
+	},
+	{//DOOR_ID_R03_EXIT05 = 5
+		{10768, 0, 9600},
+		ZONE_ID_C02, DOOR_ID_C02_EXIT16,
+		0,//direction
 		0 //type
 	},
 };
@@ -756,7 +1787,7 @@ const int ConnectCount_R03 = NELEMS(DOOR_EVENT_R03);
 static const EVENTDATA_TABLE event_r03 = {
 	0,
 	0,
-	5,
+	6,
 	0,
 	(void *)NULL,
 	(void *)NULL,
@@ -765,134 +1796,58 @@ static const EVENTDATA_TABLE event_r03 = {
 };
 const CONNECT_DATA DOOR_EVENT_T01[] = {
 	{//DOOR_ID_T01_EXIT01 = 0
-		{11952, 0, 13120},
-		ZONE_ID_T01R0201, DOOR_ID_T01R0201_EXIT02,
-		EXIT_DIR_DOWN,//direction
-		EXIT_TYPE_DOOR //type
-	},
-	{//DOOR_ID_T01_EXIT02 = 1
-		{12112, 0, 13120},
-		ZONE_ID_T01R0301, DOOR_ID_T01R0301_EXIT02,
-		EXIT_DIR_DOWN,//direction
-		EXIT_TYPE_DOOR //type
-	},
-	{//DOOR_ID_T01_EXIT03 = 2
-		{12032, 0, 12992},
+		{12544, 0, 11952},
 		ZONE_ID_T01R0101, DOOR_ID_T01R0101_EXIT02,
 		EXIT_DIR_DOWN,//direction
 		EXIT_TYPE_DOOR //type
 	},
+	{//DOOR_ID_T01_EXIT02 = 1
+		{12464, 0, 12112},
+		ZONE_ID_T01R0201, DOOR_ID_T01R0201_EXIT02,
+		EXIT_DIR_DOWN,//direction
+		EXIT_TYPE_DOOR //type
+	},
+	{//DOOR_ID_T01_EXIT03 = 2
+		{12608, 0, 12112},
+		ZONE_ID_T01R0301, DOOR_ID_T01R0301_EXIT02,
+		EXIT_DIR_DOWN,//direction
+		EXIT_TYPE_DOOR //type
+	},
 	{//DOOR_ID_T01_EXIT04 = 3
-		{11952, 0, 12896},
+		{12464, 0, 11840},
 		ZONE_ID_T01R0401, DOOR_ID_T01R0401_EXIT02,
 		EXIT_DIR_DOWN,//direction
 		EXIT_TYPE_DOOR //type
 	},
 };
 const int ConnectCount_T01 = NELEMS(DOOR_EVENT_T01);
-#include "../script/t01_def.h"
-const FLDMMDL_HEADER OBJ_EVENT_T01[] = {
-	{
-		T01_MAN1,
-		MAN1,
-		MV_RND,
-		EV_TYPE_NORMAL,
-		0,
-		1,
-		DIR_DOWN,
-		0,
-		0,
-		0,
-		2,
-		2,
-		758,
-		813,
-		0,
-	},
-	{
-		T01_WOMAN1,
-		WOMAN1,
-		MV_RND,
-		EV_TYPE_NORMAL,
-		0,
-		2,
-		DIR_DOWN,
-		0,
-		0,
-		0,
-		2,
-		2,
-		752,
-		804,
-		0,
-	},
-	{
-		T01_BABYGIRL1,
-		BABYGIRL1,
-		MV_RND,
-		EV_TYPE_NORMAL,
-		0,
-		3,
-		DIR_DOWN,
-		0,
-		0,
-		0,
-		2,
-		2,
-		751,
-		820,
-		0,
-	},
-};
-const int ObjCount_T01 = NELEMS(OBJ_EVENT_T01);
-const BG_TALK_DATA BG_EVENT_T01[] = {
-	{//BGID_TEST01 = 0
-		SCRID_T01_BGEVENT_TEST1,  //event id
-		BG_TALK_TYPE_NORMAL, //type
-		753, 821,
-		0,  //height
-		BG_TALK_DIR_ALL,//direction
-	},
-};
-const int BgCount_T01 = NELEMS(BG_EVENT_T01);
-const POS_EVENT_DATA POS_EVENT_T01[] = {
-	{//POSID_TEST01 = 0
-		SCRID_T01_POSEVENT_TEST1,
-		752, 825,
-		1, 1,
-		0,  //height
-		0,
-		SVSCRWK_START,
-	},
-};
-const int PosCount_T01 = NELEMS(POS_EVENT_T01);
 
 static const EVENTDATA_TABLE event_t01 = {
-	1,
-	3,
+	0,
+	0,
 	4,
-	1,
-	(void *)&BG_EVENT_T01,
-	(void *)&OBJ_EVENT_T01,
+	0,
+	(void *)NULL,
+	(void *)NULL,
 	(void *)&DOOR_EVENT_T01,
-	(void *)&POS_EVENT_T01,
+	(void *)NULL,
 };
 const CONNECT_DATA DOOR_EVENT_T01R0101[] = {
 	{//DOOR_ID_T01R0101_EXIT01 = 0
-		{80, 0, 112},
-		ZONE_ID_T01, DOOR_ID_T01_EXIT03,
+		{80, 0, 128},
+		ZONE_ID_T01, DOOR_ID_T01_EXIT01,
 		EXIT_DIR_UP,//direction
 		EXIT_TYPE_MAT //type
 	},
 	{//DOOR_ID_T01R0101_EXIT02 = 1
-		{96, 0, 112},
-		ZONE_ID_T01, DOOR_ID_T01_EXIT03,
+		{96, 0, 128},
+		ZONE_ID_T01, DOOR_ID_T01_EXIT01,
 		EXIT_DIR_UP,//direction
 		EXIT_TYPE_MAT //type
 	},
 	{//DOOR_ID_T01R0101_EXIT03 = 2
-		{112, 0, 112},
-		ZONE_ID_T01, DOOR_ID_T01_EXIT03,
+		{112, 0, 128},
+		ZONE_ID_T01, DOOR_ID_T01_EXIT01,
 		EXIT_DIR_UP,//direction
 		EXIT_TYPE_MAT //type
 	},
@@ -938,16 +1893,10 @@ static const EVENTDATA_TABLE event_t01r0101 = {
 };
 const CONNECT_DATA DOOR_EVENT_T01R0102[] = {
 	{//DOOR_ID_T01R0102_EXIT01 = 0
-		{112, 8, 32},
+		{112, 0, 32},
 		ZONE_ID_T01R0101, DOOR_ID_T01R0101_EXIT04,
-		3,//direction
-		0 //type
-	},
-	{//DOOR_ID_T01R0102_EXIT02 = 1
-		{112, 0, 16},
-		ZONE_ID_T01R0101, DOOR_ID_T01R0101_EXIT04,
-		3,//direction
-		0 //type
+		EXIT_DIR_LEFT,//direction
+		EXIT_TYPE_STAIRS //type
 	},
 };
 const int ConnectCount_T01R0102 = NELEMS(DOOR_EVENT_T01R0102);
@@ -955,7 +1904,7 @@ const int ConnectCount_T01R0102 = NELEMS(DOOR_EVENT_T01R0102);
 static const EVENTDATA_TABLE event_t01r0102 = {
 	0,
 	0,
-	2,
+	1,
 	0,
 	(void *)NULL,
 	(void *)NULL,
@@ -964,31 +1913,25 @@ static const EVENTDATA_TABLE event_t01r0102 = {
 };
 const CONNECT_DATA DOOR_EVENT_T01R0201[] = {
 	{//DOOR_ID_T01R0201_EXIT01 = 0
-		{80, 0, 112},
-		ZONE_ID_T01, DOOR_ID_T01_EXIT01,
+		{80, 0, 128},
+		ZONE_ID_T01, DOOR_ID_T01_EXIT02,
 		EXIT_DIR_UP,//direction
 		EXIT_TYPE_MAT //type
 	},
 	{//DOOR_ID_T01R0201_EXIT02 = 1
-		{96, 0, 112},
-		ZONE_ID_T01, DOOR_ID_T01_EXIT01,
+		{96, 0, 128},
+		ZONE_ID_T01, DOOR_ID_T01_EXIT02,
 		EXIT_DIR_UP,//direction
 		EXIT_TYPE_MAT //type
 	},
 	{//DOOR_ID_T01R0201_EXIT03 = 2
-		{112, 0, 112},
-		ZONE_ID_T01, DOOR_ID_T01_EXIT01,
+		{112, 0, 128},
+		ZONE_ID_T01, DOOR_ID_T01_EXIT02,
 		EXIT_DIR_UP,//direction
 		EXIT_TYPE_MAT //type
 	},
-	{//DOOR_ID_T01R0201_EXIT05 = 3
-		{160, 0, 16},
-		ZONE_ID_T01R0202, DOOR_ID_T01R0202_EXIT02,
-		EXIT_DIR_LEFT,//direction
-		EXIT_TYPE_STAIRS //type
-	},
-	{//DOOR_ID_T01R0201_EXIT04 = 4
-		{160, 0, 32},
+	{//DOOR_ID_T01R0201_EXIT04 = 3
+		{144, 0, 32},
 		ZONE_ID_T01R0202, DOOR_ID_T01R0202_EXIT01,
 		EXIT_DIR_LEFT,//direction
 		EXIT_TYPE_STAIRS //type
@@ -1020,7 +1963,7 @@ const int ObjCount_T01R0201 = NELEMS(OBJ_EVENT_T01R0201);
 static const EVENTDATA_TABLE event_t01r0201 = {
 	0,
 	1,
-	5,
+	4,
 	0,
 	(void *)NULL,
 	(void *)&OBJ_EVENT_T01R0201,
@@ -1029,14 +1972,8 @@ static const EVENTDATA_TABLE event_t01r0201 = {
 };
 const CONNECT_DATA DOOR_EVENT_T01R0202[] = {
 	{//DOOR_ID_T01R0202_EXIT01 = 0
-		{48, 0, 32},
+		{64, 0, 32},
 		ZONE_ID_T01R0201, DOOR_ID_T01R0201_EXIT04,
-		EXIT_DIR_RIGHT,//direction
-		EXIT_TYPE_STAIRS //type
-	},
-	{//DOOR_ID_T01R0202_EXIT02 = 1
-		{48, 0, 16},
-		ZONE_ID_T01R0201, DOOR_ID_T01R0201_EXIT05,
 		EXIT_DIR_RIGHT,//direction
 		EXIT_TYPE_STAIRS //type
 	},
@@ -1046,7 +1983,7 @@ const int ConnectCount_T01R0202 = NELEMS(DOOR_EVENT_T01R0202);
 static const EVENTDATA_TABLE event_t01r0202 = {
 	0,
 	0,
-	2,
+	1,
 	0,
 	(void *)NULL,
 	(void *)NULL,
@@ -1055,32 +1992,26 @@ static const EVENTDATA_TABLE event_t01r0202 = {
 };
 const CONNECT_DATA DOOR_EVENT_T01R0301[] = {
 	{//DOOR_ID_T01R0301_EXIT01 = 0
-		{80, 0, 112},
-		ZONE_ID_T01, DOOR_ID_T01_EXIT02,
+		{80, 0, 128},
+		ZONE_ID_T01, DOOR_ID_T01_EXIT03,
 		EXIT_DIR_UP,//direction
 		EXIT_TYPE_MAT //type
 	},
 	{//DOOR_ID_T01R0301_EXIT02 = 1
-		{96, 0, 112},
-		ZONE_ID_T01, DOOR_ID_T01_EXIT02,
+		{96, 0, 128},
+		ZONE_ID_T01, DOOR_ID_T01_EXIT03,
 		EXIT_DIR_UP,//direction
 		EXIT_TYPE_MAT //type
 	},
 	{//DOOR_ID_T01R0301_EXIT03 = 2
-		{112, 0, 112},
-		ZONE_ID_T01, DOOR_ID_T01_EXIT02,
+		{112, 0, 128},
+		ZONE_ID_T01, DOOR_ID_T01_EXIT03,
 		EXIT_DIR_UP,//direction
 		EXIT_TYPE_MAT //type
 	},
 	{//DOOR_ID_T01R0301_EXIT04 = 3
-		{160, 0, 32},
+		{144, 0, 32},
 		ZONE_ID_T01R0302, DOOR_ID_T01R0302_EXIT01,
-		EXIT_DIR_LEFT,//direction
-		EXIT_TYPE_STAIRS //type
-	},
-	{//DOOR_ID_T01R0301_EXIT05 = 4
-		{160, 0, 16},
-		ZONE_ID_T01R0302, DOOR_ID_T01R0302_EXIT02,
 		EXIT_DIR_LEFT,//direction
 		EXIT_TYPE_STAIRS //type
 	},
@@ -1111,7 +2042,7 @@ const int ObjCount_T01R0301 = NELEMS(OBJ_EVENT_T01R0301);
 static const EVENTDATA_TABLE event_t01r0301 = {
 	0,
 	1,
-	5,
+	4,
 	0,
 	(void *)NULL,
 	(void *)&OBJ_EVENT_T01R0301,
@@ -1120,16 +2051,10 @@ static const EVENTDATA_TABLE event_t01r0301 = {
 };
 const CONNECT_DATA DOOR_EVENT_T01R0302[] = {
 	{//DOOR_ID_T01R0302_EXIT01 = 0
-		{48, 0, 32},
+		{64, 0, 32},
 		ZONE_ID_T01R0301, DOOR_ID_T01R0301_EXIT04,
 		EXIT_DIR_RIGHT,//direction
 		EXIT_TYPE_DOOR //type
-	},
-	{//DOOR_ID_T01R0302_EXIT02 = 1
-		{48, 0, 16},
-		ZONE_ID_T01R0301, DOOR_ID_T01R0301_EXIT05,
-		EXIT_DIR_RIGHT,//direction
-		EXIT_TYPE_STAIRS //type
 	},
 };
 const int ConnectCount_T01R0302 = NELEMS(DOOR_EVENT_T01R0302);
@@ -1137,7 +2062,7 @@ const int ConnectCount_T01R0302 = NELEMS(DOOR_EVENT_T01R0302);
 static const EVENTDATA_TABLE event_t01r0302 = {
 	0,
 	0,
-	2,
+	1,
 	0,
 	(void *)NULL,
 	(void *)NULL,
@@ -1146,22 +2071,22 @@ static const EVENTDATA_TABLE event_t01r0302 = {
 };
 const CONNECT_DATA DOOR_EVENT_T01R0401[] = {
 	{//DOOR_ID_T01R0401_EXIT01 = 0
-		{64, 0, 160},
+		{64, 0, 176},
 		ZONE_ID_T01, DOOR_ID_T01_EXIT04,
-		1,//direction
-		0 //type
+		EXIT_DIR_UP,//direction
+		EXIT_TYPE_MAT //type
 	},
 	{//DOOR_ID_T01R0401_EXIT02 = 1
-		{80, 0, 160},
+		{80, 0, 176},
 		ZONE_ID_T01, DOOR_ID_T01_EXIT04,
-		1,//direction
-		0 //type
+		EXIT_DIR_UP,//direction
+		EXIT_TYPE_MAT //type
 	},
 	{//DOOR_ID_T01R0401_EXIT03 = 2
-		{96, 0, 160},
+		{96, 0, 176},
 		ZONE_ID_T01, DOOR_ID_T01_EXIT04,
-		1,//direction
-		0 //type
+		EXIT_DIR_UP,//direction
+		EXIT_TYPE_MAT //type
 	},
 };
 const int ConnectCount_T01R0401 = NELEMS(DOOR_EVENT_T01R0401);
@@ -1178,28 +2103,34 @@ static const EVENTDATA_TABLE event_t01r0401 = {
 };
 const CONNECT_DATA DOOR_EVENT_T02[] = {
 	{//DOOR_ID_T02_EXIT01 = 0
-		{12160, 0, 11536},
+		{12672, 0, 10528},
 		ZONE_ID_T02PC0101, DOOR_ID_T02PC0101_EXIT02,
 		EXIT_DIR_DOWN,//direction
 		EXIT_TYPE_DOOR //type
 	},
 	{//DOOR_ID_T02_EXIT02 = 1
-		{11840, -80, 11584},
+		{12352, -81, 10560},
 		ZONE_ID_T02R0101, DOOR_ID_T02R0101_EXIT02,
-		2,//direction
-		0 //type
+		EXIT_DIR_DOWN,//direction
+		EXIT_TYPE_DOOR //type
 	},
 	{//DOOR_ID_T02_EXIT03 = 2
-		{11872, 0, 11376},
+		{12480, 0, 10352},
 		ZONE_ID_T02R0201, DOOR_ID_T02R0201_EXIT02,
-		2,//direction
-		0 //type
+		EXIT_DIR_DOWN,//direction
+		EXIT_TYPE_DOOR //type
 	},
 	{//DOOR_ID_T02_EXIT04 = 3
-		{11968, 0, 11376},
+		{12384, 0, 10352},
 		ZONE_ID_T02R0301, DOOR_ID_T02R0301_EXIT02,
-		2,//direction
-		0 //type
+		EXIT_DIR_DOWN,//direction
+		EXIT_TYPE_DOOR //type
+	},
+	{//DOOR_ID_T02_EXIT05 = 4
+		{12672, 80, 10352},
+		ZONE_ID_T02R0401, DOOR_ID_T02R0401_EXIT02,
+		EXIT_DIR_DOWN,//direction
+		EXIT_TYPE_DOOR //type
 	},
 };
 const int ConnectCount_T02 = NELEMS(DOOR_EVENT_T02);
@@ -1207,7 +2138,7 @@ const int ConnectCount_T02 = NELEMS(DOOR_EVENT_T02);
 static const EVENTDATA_TABLE event_t02 = {
 	0,
 	0,
-	4,
+	5,
 	0,
 	(void *)NULL,
 	(void *)NULL,
@@ -1224,20 +2155,20 @@ const CONNECT_DATA DOOR_EVENT_T02PC0101[] = {
 	{//DOOR_ID_T02PC0101_EXIT01 = 1
 		{112, 0, 272},
 		ZONE_ID_T02, DOOR_ID_T02_EXIT01,
-		1,//direction
-		0 //type
+		EXIT_DIR_UP,//direction
+		EXIT_TYPE_MAT //type
 	},
 	{//DOOR_ID_T02PC0101_EXIT02 = 2
 		{128, 0, 272},
 		ZONE_ID_T02, DOOR_ID_T02_EXIT01,
-		1,//direction
-		0 //type
+		EXIT_DIR_UP,//direction
+		EXIT_TYPE_MAT //type
 	},
 	{//DOOR_ID_T02PC0101_EXIT03 = 3
 		{144, 0, 272},
 		ZONE_ID_T02, DOOR_ID_T02_EXIT01,
-		1,//direction
-		0 //type
+		EXIT_DIR_UP,//direction
+		EXIT_TYPE_MAT //type
 	},
 };
 const int ConnectCount_T02PC0101 = NELEMS(DOOR_EVENT_T02PC0101);
@@ -1254,22 +2185,28 @@ static const EVENTDATA_TABLE event_t02pc0101 = {
 };
 const CONNECT_DATA DOOR_EVENT_T02R0101[] = {
 	{//DOOR_ID_T02R0101_EXIT02 = 0
-		{272, 0, 352},
+		{128, 0, 160},
 		ZONE_ID_T02, DOOR_ID_T02_EXIT02,
-		1,//direction
-		0 //type
+		EXIT_DIR_UP,//direction
+		EXIT_TYPE_MAT //type
 	},
 	{//DOOR_ID_T02R0101_EXIT01 = 1
-		{256, 0, 352},
+		{112, 0, 160},
 		ZONE_ID_T02, DOOR_ID_T02_EXIT02,
-		1,//direction
-		0 //type
+		EXIT_DIR_UP,//direction
+		EXIT_TYPE_MAT //type
 	},
 	{//DOOR_ID_T02R0101_EXIT03 = 2
-		{288, 0, 352},
+		{144, 0, 160},
 		ZONE_ID_T02, DOOR_ID_T02_EXIT02,
-		1,//direction
-		0 //type
+		EXIT_DIR_UP,//direction
+		EXIT_TYPE_MAT //type
+	},
+	{//DOOR_ID_T02R0101_EXIT04 = 3
+		{128, 0, 32},
+		ZONE_ID_T02R0102, DOOR_ID_T02R0102_EXIT01,
+		EXIT_DIR_LEFT,//direction
+		EXIT_TYPE_STAIRS //type
 	},
 };
 const int ConnectCount_T02R0101 = NELEMS(DOOR_EVENT_T02R0101);
@@ -1277,31 +2214,57 @@ const int ConnectCount_T02R0101 = NELEMS(DOOR_EVENT_T02R0101);
 static const EVENTDATA_TABLE event_t02r0101 = {
 	0,
 	0,
-	3,
+	4,
 	0,
 	(void *)NULL,
 	(void *)NULL,
 	(void *)&DOOR_EVENT_T02R0101,
 	(void *)NULL,
 };
+const CONNECT_DATA DOOR_EVENT_T02R0102[] = {
+	{//DOOR_ID_T02R0102_EXIT01 = 0
+		{192, 0, 32},
+		ZONE_ID_T02R0101, DOOR_ID_T02R0101_EXIT04,
+		EXIT_DIR_RIGHT,//direction
+		EXIT_TYPE_STAIRS //type
+	},
+};
+const int ConnectCount_T02R0102 = NELEMS(DOOR_EVENT_T02R0102);
+
+static const EVENTDATA_TABLE event_t02r0102 = {
+	0,
+	0,
+	1,
+	0,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)&DOOR_EVENT_T02R0102,
+	(void *)NULL,
+};
 const CONNECT_DATA DOOR_EVENT_T02R0201[] = {
 	{//DOOR_ID_T02R0201_EXIT02 = 0
-		{272, 0, 352},
+		{128, 0, 160},
 		ZONE_ID_T02, DOOR_ID_T02_EXIT03,
-		1,//direction
-		0 //type
+		EXIT_DIR_UP,//direction
+		EXIT_TYPE_MAT //type
 	},
 	{//DOOR_ID_T02R0201_EXIT01 = 1
-		{256, 0, 352},
+		{112, 0, 160},
 		ZONE_ID_T02, DOOR_ID_T02_EXIT03,
-		1,//direction
-		0 //type
+		EXIT_DIR_UP,//direction
+		EXIT_TYPE_MAT //type
 	},
 	{//DOOR_ID_T02R0201_EXIT03 = 2
-		{288, 0, 352},
+		{144, 0, 160},
 		ZONE_ID_T02, DOOR_ID_T02_EXIT03,
-		1,//direction
-		0 //type
+		EXIT_DIR_UP,//direction
+		EXIT_TYPE_MAT //type
+	},
+	{//DOOR_ID_T02R0201_EXIT04 = 3
+		{128, 0, 32},
+		ZONE_ID_T02R0202, DOOR_ID_T02R0202_EXIT01,
+		EXIT_DIR_LEFT,//direction
+		EXIT_TYPE_STAIRS //type
 	},
 };
 const int ConnectCount_T02R0201 = NELEMS(DOOR_EVENT_T02R0201);
@@ -1309,31 +2272,57 @@ const int ConnectCount_T02R0201 = NELEMS(DOOR_EVENT_T02R0201);
 static const EVENTDATA_TABLE event_t02r0201 = {
 	0,
 	0,
-	3,
+	4,
 	0,
 	(void *)NULL,
 	(void *)NULL,
 	(void *)&DOOR_EVENT_T02R0201,
 	(void *)NULL,
 };
+const CONNECT_DATA DOOR_EVENT_T02R0202[] = {
+	{//DOOR_ID_T02R0202_EXIT01 = 0
+		{192, 0, 32},
+		ZONE_ID_T02R0201, DOOR_ID_T02R0201_EXIT04,
+		EXIT_DIR_RIGHT,//direction
+		EXIT_TYPE_STAIRS //type
+	},
+};
+const int ConnectCount_T02R0202 = NELEMS(DOOR_EVENT_T02R0202);
+
+static const EVENTDATA_TABLE event_t02r0202 = {
+	0,
+	0,
+	1,
+	0,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)&DOOR_EVENT_T02R0202,
+	(void *)NULL,
+};
 const CONNECT_DATA DOOR_EVENT_T02R0301[] = {
 	{//DOOR_ID_T02R0301_EXIT02 = 0
-		{272, 0, 352},
+		{128, 0, 160},
 		ZONE_ID_T02, DOOR_ID_T02_EXIT04,
-		1,//direction
-		0 //type
+		EXIT_DIR_UP,//direction
+		EXIT_TYPE_MAT //type
 	},
 	{//DOOR_ID_T02R0301_EXIT01 = 1
-		{256, 0, 352},
+		{112, 0, 160},
 		ZONE_ID_T02, DOOR_ID_T02_EXIT04,
-		1,//direction
-		0 //type
+		EXIT_DIR_UP,//direction
+		EXIT_TYPE_MAT //type
 	},
 	{//DOOR_ID_T02R0301_EXIT03 = 2
-		{288, 0, 352},
+		{144, 0, 160},
 		ZONE_ID_T02, DOOR_ID_T02_EXIT04,
-		1,//direction
-		0 //type
+		EXIT_DIR_UP,//direction
+		EXIT_TYPE_MAT //type
+	},
+	{//DOOR_ID_T02R0301_EXIT04 = 3
+		{128, 0, 32},
+		ZONE_ID_T02R0302, DOOR_ID_T02R0302_EXIT01,
+		EXIT_DIR_LEFT,//direction
+		EXIT_TYPE_STAIRS //type
 	},
 };
 const int ConnectCount_T02R0301 = NELEMS(DOOR_EVENT_T02R0301);
@@ -1341,17 +2330,86 @@ const int ConnectCount_T02R0301 = NELEMS(DOOR_EVENT_T02R0301);
 static const EVENTDATA_TABLE event_t02r0301 = {
 	0,
 	0,
-	3,
+	4,
 	0,
 	(void *)NULL,
 	(void *)NULL,
 	(void *)&DOOR_EVENT_T02R0301,
 	(void *)NULL,
 };
+const CONNECT_DATA DOOR_EVENT_T02R0302[] = {
+	{//DOOR_ID_T02R0302_EXIT01 = 0
+		{192, 0, 32},
+		ZONE_ID_T02R0301, DOOR_ID_T02R0301_EXIT04,
+		EXIT_DIR_RIGHT,//direction
+		EXIT_TYPE_STAIRS //type
+	},
+};
+const int ConnectCount_T02R0302 = NELEMS(DOOR_EVENT_T02R0302);
+
+static const EVENTDATA_TABLE event_t02r0302 = {
+	0,
+	0,
+	1,
+	0,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)&DOOR_EVENT_T02R0302,
+	(void *)NULL,
+};
+const CONNECT_DATA DOOR_EVENT_T02R0401[] = {
+	{//DOOR_ID_T02R0401_EXIT01 = 0
+		{80, 0, 144},
+		ZONE_ID_T02, DOOR_ID_T02_EXIT05,
+		EXIT_DIR_UP,//direction
+		EXIT_TYPE_MAT //type
+	},
+	{//DOOR_ID_T02R0401_EXIT02 = 1
+		{96, 0, 144},
+		ZONE_ID_T02, DOOR_ID_T02_EXIT05,
+		EXIT_DIR_UP,//direction
+		EXIT_TYPE_MAT //type
+	},
+	{//DOOR_ID_T02R0401_EXIT03 = 2
+		{112, 0, 144},
+		ZONE_ID_T02, DOOR_ID_T02_EXIT05,
+		EXIT_DIR_UP,//direction
+		EXIT_TYPE_MAT //type
+	},
+};
+const int ConnectCount_T02R0401 = NELEMS(DOOR_EVENT_T02R0401);
+
+static const EVENTDATA_TABLE event_t02r0401 = {
+	0,
+	0,
+	3,
+	0,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)&DOOR_EVENT_T02R0401,
+	(void *)NULL,
+};
 
 static const EVENTDATA_TOTAL_TABLES TotalTables[] = {
 	{ ZONE_ID_C01, &event_c01 },
+	{ ZONE_ID_C01PC0101, &event_c01pc0101 },
+	{ ZONE_ID_C01R0101, &event_c01r0101 },
+	{ ZONE_ID_C01R0102, &event_c01r0102 },
+	{ ZONE_ID_C01R0201, &event_c01r0201 },
+	{ ZONE_ID_C01R0202, &event_c01r0202 },
+	{ ZONE_ID_C01R0301, &event_c01r0301 },
+	{ ZONE_ID_C01R0302, &event_c01r0302 },
 	{ ZONE_ID_C02, &event_c02 },
+	{ ZONE_ID_C02PC0101, &event_c02pc0101 },
+	{ ZONE_ID_C02R0101, &event_c02r0101 },
+	{ ZONE_ID_C02R0201, &event_c02r0201 },
+	{ ZONE_ID_C02R0301, &event_c02r0301 },
+	{ ZONE_ID_C02R0401, &event_c02r0401 },
+	{ ZONE_ID_C02R0501, &event_c02r0501 },
+	{ ZONE_ID_C02R0601, &event_c02r0601 },
+	{ ZONE_ID_D01, &event_d01 },
+	{ ZONE_ID_D01R0101, &event_d01r0101 },
+	{ ZONE_ID_D01R0201, &event_d01r0201 },
 	{ ZONE_ID_D02, &event_d02 },
 	{ ZONE_ID_D02R0101, &event_d02r0101 },
 	{ ZONE_ID_H01P01, &event_h01p01 },
@@ -1369,8 +2427,12 @@ static const EVENTDATA_TOTAL_TABLES TotalTables[] = {
 	{ ZONE_ID_T02, &event_t02 },
 	{ ZONE_ID_T02PC0101, &event_t02pc0101 },
 	{ ZONE_ID_T02R0101, &event_t02r0101 },
+	{ ZONE_ID_T02R0102, &event_t02r0102 },
 	{ ZONE_ID_T02R0201, &event_t02r0201 },
+	{ ZONE_ID_T02R0202, &event_t02r0202 },
 	{ ZONE_ID_T02R0301, &event_t02r0301 },
+	{ ZONE_ID_T02R0302, &event_t02r0302 },
+	{ ZONE_ID_T02R0401, &event_t02r0401 },
 	{ 0, NULL }
 };
 
