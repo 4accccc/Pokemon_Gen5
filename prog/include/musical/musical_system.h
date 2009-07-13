@@ -15,6 +15,7 @@
 typedef struct
 {
   BOOL          isComm;
+  BOOL          isDebug; //Musical‚ÌI—¹‚ÉŸè‚ÉInitWork‚ÆPP‚ğŠJ•ú‚·‚é
   POKEMON_PARAM *pokePara;
   SAVE_CONTROL_WORK *saveCtrl;
   GAME_COMM_SYS_PTR gameComm;

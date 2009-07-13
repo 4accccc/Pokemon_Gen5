@@ -14,7 +14,6 @@
 
 struct _DRESSUP_INIT_WORK
 {
-	POKEMON_PARAM *pokePara;
 	MUSICAL_POKE_PARAM *musPoke;
 	MUSICAL_SAVE *mus_save;
 };

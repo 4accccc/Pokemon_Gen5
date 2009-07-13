@@ -9,6 +9,8 @@
 #include <gflib.h>
 #include "system/main.h"
 #include "system/gfl_use.h"
+#include "poke_tool/poke_tool.h"
+#include "poke_tool/monsno_def.h"
 
 #include "musical/musical_system.h"
 #include "musical/musical_dressup_sys.h"
@@ -38,6 +40,7 @@ typedef struct
 	FITTING_INIT_WORK *fitInitWork;
 	FITTING_WORK *fitWork;
 	FITTING_RETURN	fitRet;
+	DRESSUP_INIT_WORK *initWork;
 }DRESSUP_LOCAL_WORK;
 
 //======================================================================
@@ -70,6 +73,15 @@ static GFL_PROC_RESULT DressUpProc_Init( GFL_PROC * proc, int * seq , void *pwk,
 	work = GFL_PROC_AllocWork( proc, sizeof(DRESSUP_LOCAL_WORK), HEAPID_MUSICAL_DRESSUP );
 	work->fitInitWork = GFL_HEAP_AllocMemory( HEAPID_MUSICAL_DRESSUP , sizeof(FITTING_INIT_WORK) );
 	
+	if( pwk == NULL )
+	{
+    POKEMON_PARAM *pokePara = PP_Create( MONSNO_MOKOUMORI , 20 , PTL_SETUP_POW_AUTO , HEAPID_MUSICAL_DRESSUP );
+    MUSICAL_POKE_PARAM *musPoke = MUSICAL_SYSTEM_InitMusPoke( pokePara , HEAPID_MUSICAL_DRESSUP );
+    initWork = MUSICAL_DRESSUP_CreateInitWork( HEAPID_MUSICAL_DRESSUP , musPoke , SaveControl_GetPointer() );
+	}
+	
+	work->initWork = initWork;
+	
 	work->fitInitWork->musPoke = initWork->musPoke;
   work->fitInitWork->mus_save = initWork->mus_save;
 	return GFL_PROC_RES_FINISH;
@@ -78,6 +90,14 @@ static GFL_PROC_RESULT DressUpProc_Init( GFL_PROC * proc, int * seq , void *pwk,
 static GFL_PROC_RESULT DressUpProc_Term( GFL_PROC * proc, int * seq , void *pwk, void *mywk )
 {
 	DRESSUP_LOCAL_WORK *work = mywk;
+
+	if( pwk == NULL )
+	{
+    GFL_HEAP_FreeMemory( work->initWork->musPoke->pokePara );
+    GFL_HEAP_FreeMemory( work->initWork->musPoke );
+    GFL_HEAP_FreeMemory( work->initWork );
+  }
+
 	GFL_HEAP_FreeMemory( work->fitInitWork );
 	GFL_PROC_FreeWork( proc );
 

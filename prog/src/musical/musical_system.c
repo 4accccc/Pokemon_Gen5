@@ -216,6 +216,13 @@ static GFL_PROC_RESULT MusicalProc_Term( GFL_PROC * proc, int * seq , void *pwk,
   
   GFL_PROC_FreeWork( proc );
   GFL_HEAP_DeleteHeap( HEAPID_MUSICAL_PROC );
+  
+  if( initWork->isDebug == TRUE )
+  {
+    GFL_HEAP_FreeMemory( initWork->pokePara );
+    GFL_HEAP_FreeMemory( initWork );
+  }
+
 
   GFL_OVERLAY_Unload(FS_OVERLAY_ID(musical));
   

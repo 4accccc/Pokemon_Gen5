@@ -13,8 +13,8 @@ static BOOL TESTMODE_ITEM_SelectFuncStage( TESTMODE_WORK *work , const int idx )
 
 static TESTMODE_MENU_LIST menuMusical[] = 
 {
-	{L"ミュージカル(通信)",TESTMODE_ITEM_SelectFuncMusical_Comm },
-	{L"ミュージカル"		  ,TESTMODE_ITEM_SelectFuncMusical },
+	{L"ミュージカル(通し・通信)",TESTMODE_ITEM_SelectFuncMusical_Comm },
+	{L"ミュージカル(通し)"		  ,TESTMODE_ITEM_SelectFuncMusical },
 	{L"ドレスアップ"		,TESTMODE_ITEM_SelectFuncDressUp },
 	{L"ステージ"			,TESTMODE_ITEM_SelectFuncStage },
 	
@@ -29,6 +29,7 @@ static BOOL TESTMODE_ITEM_SelectFuncMusical( TESTMODE_WORK *work , const int idx
 	initWork->pokePara = PP_Create( MONSNO_MOKOUMORI , 20 , PTL_SETUP_POW_AUTO , GFL_HEAPID_APP|HEAPDIR_MASK );
   initWork->isComm = FALSE;
   initWork->gameComm = NULL;
+  initWork->isDebug = TRUE;
 	TESTMODE_COMMAND_ChangeProc(work,NO_OVERLAY_ID, &Musical_ProcData, initWork);
 	return TRUE;
 }
@@ -41,6 +42,7 @@ static BOOL TESTMODE_ITEM_SelectFuncMusical_Comm( TESTMODE_WORK *work , const in
 	initWork->pokePara = PP_Create( MONSNO_PIKUSII , 20 , PTL_SETUP_POW_AUTO , GFL_HEAPID_APP|HEAPDIR_MASK );
   initWork->isComm = TRUE;
   initWork->gameComm = NULL;
+  initWork->isDebug = TRUE;
 
 	TESTMODE_COMMAND_ChangeProc(work,NO_OVERLAY_ID, &Musical_ProcData, initWork);
 	return TRUE;
@@ -48,12 +50,7 @@ static BOOL TESTMODE_ITEM_SelectFuncMusical_Comm( TESTMODE_WORK *work , const in
 
 static BOOL TESTMODE_ITEM_SelectFuncDressUp( TESTMODE_WORK *work , const int idx )
 {
-	DRESSUP_INIT_WORK *initWork;
-  POKEMON_PARAM *pokePara = PP_Create( MONSNO_MOKOUMORI , 20 , PTL_SETUP_POW_AUTO , GFL_HEAPID_APP );
-  MUSICAL_POKE_PARAM *musPoke = MUSICAL_SYSTEM_InitMusPoke( pokePara , GFL_HEAPID_APP );
-  initWork = MUSICAL_DRESSUP_CreateInitWork( GFL_HEAPID_APP , musPoke , SaveControl_GetPointer() );
-
-	TESTMODE_COMMAND_ChangeProc(work,FS_OVERLAY_ID(musical), &DressUp_ProcData, initWork);
+	TESTMODE_COMMAND_ChangeProc(work,FS_OVERLAY_ID(musical), &DressUp_ProcData, NULL);
 	return TRUE;
 }
 static BOOL TESTMODE_ITEM_SelectFuncStage( TESTMODE_WORK *work , const int idx )
