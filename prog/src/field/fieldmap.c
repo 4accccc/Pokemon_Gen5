@@ -962,6 +962,7 @@ FIELD_RAIL_LOADER * FIELDMAP_GetFieldRailLoader( FIELDMAP_WORK *fieldWork )
 {
 	return fieldWork->railLoader;
 }
+
 //--------------------------------------------------------------
 //--------------------------------------------------------------
 int * FIELDMAP_GetFirstConnectID( FIELDMAP_WORK * fieldWork )
@@ -1102,6 +1103,10 @@ FLDMAPPER * FIELDMAP_GetFieldG3Dmapper( FIELDMAP_WORK *fieldWork )
 }
 
 //--------------------------------------------------------------
+/**
+ * @param
+ * @retval
+ */
 //--------------------------------------------------------------
 const DEPEND_FUNCTIONS * FIELDMAP_GetDependFunctions( const FIELDMAP_WORK * fieldWork )
 {
@@ -1119,12 +1124,19 @@ u16 FIELDMAP_GetZoneID( const FIELDMAP_WORK * fieldWork )
 {
   return fieldWork->map_id;
 }
+
+
 //--------------------------------------------------------------
+/**
+ * @param
+ * @retval
+ */
 //--------------------------------------------------------------
 const VecFx32 * FIELDMAP_GetNowPos( const FIELDMAP_WORK * fieldWork )
 {
   return &fieldWork->now_pos;
 }
+
 //--------------------------------------------------------------
 /**
  * FIELDMAP_WORK マップコントロール用ワーク取得
@@ -1202,13 +1214,30 @@ FLDEFF_CTRL * FIELDMAP_GetFldEffCtrl( FIELDMAP_WORK *fieldWork )
 {
   return fieldWork->fldeff_ctrl;
 }
+
 //--------------------------------------------------------------
+/**
+ * @param
+ * @retval
+ */
 //--------------------------------------------------------------
 FIELD_ENCOUNT * FIELDMAP_GetEncount( FIELDMAP_WORK * fieldWork )
 {
   return fieldWork->encount;
 }
 
+//--------------------------------------------------------------
+/**
+ * 現在のマップコントロールタイプを取得 
+ * @param fieldWork FIELDMAP_WORK
+ * @retval FLDMAP_CTRLTYPE
+ */
+//--------------------------------------------------------------
+FLDMAP_CTRLTYPE FIELDMAP_GetMapControlType( FIELDMAP_WORK *fieldWork )
+{
+  GF_ASSERT( fieldWork->func_tbl != NULL );
+  return fieldWork->func_tbl->type;
+}
 
 //======================================================================
 //	フィールドマップ　サブ　BG関連

@@ -93,4 +93,4 @@ extern void FIELDMAP_SetFieldSubscreenWork(
     FIELDMAP_WORK *fieldWork,FIELD_SUBSCREEN_WORK* pWork );
 extern FLDEFF_CTRL * FIELDMAP_GetFldEffCtrl( FIELDMAP_WORK *fieldWork );
 extern FIELD_ENCOUNT * FIELDMAP_GetEncount( FIELDMAP_WORK * fieldWork );
-
+extern FLDMAP_CTRLTYPE FIELDMAP_GetMapControlType( FIELDMAP_WORK *fieldWork );

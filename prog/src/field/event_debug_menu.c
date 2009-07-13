@@ -338,6 +338,12 @@ static GMEVENT_RESULT DebugMenuEvent( GMEVENT *event, int *seq, void *wk )
 			work->msgData = FLDMSGBG_CreateMSGDATA(
 						msgBG, NARC_message_d_field_dat );
 			
+      {
+        FLDMSGWIN *msgWin = FLDMSGWIN_AddTalkWin( msgBG, work->msgData );
+        FLDMSGWIN_Print( msgWin, 0, 0, 0 );
+        FLDMSGWIN_Delete( msgWin );
+      }
+
 			d_menu_listdata = &DATA_DebugMenuListTbl[work->page_id];
 			menulist = d_menu_listdata->list;
 			
@@ -2504,10 +2510,17 @@ static GMEVENT_RESULT DMenuControlTimeListEvent(
 //--------------------------------------------------------------
 static BOOL DMenuCallProc_Naminori( DEBUG_MENU_EVENT_WORK *wk )
 {
+  if( FIELDMAP_GetMapControlType(wk->fieldWork) != FLDMAP_CTRLTYPE_GRID ){
+    return( FALSE );
+  }
+  
   FIELD_EVENT_ChangeNaminoriStart( wk->gmEvent, wk->gmSys, wk->fieldWork );
   return( TRUE );
 }
 
+//======================================================================
+//  デバッグメニュー アイテム
+//======================================================================
 //--------------------------------------------------------------
 /**
  * @brief   デバッグアイテム作成
