@@ -54,7 +54,7 @@
 #define _OBJPLT_BOX  (0)  //3–{
 #define _OBJPLT_POKEICON  (6)  //3–{
 #define PLIST_RENDER_MAIN (1)
-#define PSTATUS_MCSS_POS_X1 (FX32_CONST(( 50 )/16.0f))
+#define PSTATUS_MCSS_POS_X1 (FX32_CONST(( 60 )/16.0f))
 #define PSTATUS_MCSS_POS_X2 (FX32_CONST(( 190 )/16.0f))
 #define PSTATUS_MCSS_POS_Y (FX32_CONST((192.0f-( 140 ))/16.0f))
 
