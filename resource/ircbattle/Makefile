@@ -81,6 +81,7 @@ $(targetname).narc: $(lobjects) $(gobjects) $(eobjects) $(cobjects) $(aobjects)
 	nnsarc -r -l -n -i $(targetname) $^
 	$(NAIXCUT) $(targetname).naix
 	$(DIFFCOPY) box_m_obj_NANR_LBLDEFS.h  $(TARGETDIR)../src/field/ircbattle
+	$(DIFFCOPY) p_st_obj_d_NANR_LBLDEFS.h  $(TARGETDIR)../src/field/ircbattle
 endif
 
 #------------------------------------------------------------------------------
