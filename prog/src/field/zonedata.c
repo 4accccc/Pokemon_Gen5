@@ -221,6 +221,20 @@ u16 ZONEDATA_GetBGMID(u16 zone_id, u8 season_id)
 
 //------------------------------------------------------------------
 /**
+ * @brief 天候指定IDの取得
+ * @param	zone_id	ゾーン指定ID
+ * @return  u16 天候指定ID（include/field/weather_no.hを参照）
+ */
+//------------------------------------------------------------------
+u16 ZONEDATA_GetWeatherID(u16 zone_id)
+{
+	ZONEDATA zdbuf;
+	getZoneData(&zdbuf, zone_id);
+  return zdbuf.weather_id;
+}
+
+//------------------------------------------------------------------
+/**
  * @brief	特殊なサンプルOBJを使用するかどうかの設定取得
  * @param	zone_id	ゾーン指定ID
  * @param	BOOL	TRUEのとき、サンプルOBJを使用する

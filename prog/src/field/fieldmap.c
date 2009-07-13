@@ -541,7 +541,7 @@ static MAINSEQ_RESULT mainSeqFunc_setup(GAMESYS_WORK *gsys, FIELDMAP_WORK *field
   
   // 天気晴れ
   FIELD_WEATHER_Set(
-			fieldWork->weather_sys, WEATHER_NO_SUNNY, fieldWork->heapID );
+			fieldWork->weather_sys, ZONEDATA_GetWeatherID(fieldWork->map_id), fieldWork->heapID );
   
   //情報バーの初期化
 	{
@@ -1795,20 +1795,9 @@ static void zoneChange_SetBGM( GAMEDATA *gdata, u32 zone_id )
 //--------------------------------------------------------------
 static void zoneChange_SetWeather( FIELDMAP_WORK *fieldWork, u32 zone_id )
 {
-	u32 w_no = WEATHER_NO_SUNNY;
+	u32 w_no = ZONEDATA_GetWeatherID( zone_id );
 	FIELD_WEATHER *we = FIELDMAP_GetFieldWeather( fieldWork );
 	
-	switch( zone_id ){
-/*
- * 090528VerのROMでは雪は降らない
-	case ZONE_ID_T01:
-		w_no = WEATHER_NO_SNOW;
-		break;
-//*/
-	case ZONE_ID_R01:
-		w_no = WEATHER_NO_RAIN;
-		break;
-	}
 	
 	if( w_no != WEATHER_NO_NUM && w_no != FIELD_WEATHER_GetWeatherNo(we) ){
 		FIELD_WEATHER_Change( we, w_no );
