@@ -1321,7 +1321,7 @@ static  void  BTLV_INPUT_CreateWazaScreen( BTLV_INPUT_WORK* biw, const BTLV_INPU
 //--------------------------------------------------------------
 static  void  BTLV_INPUT_CreateDirScreen( BTLV_INPUT_WORK* biw, const BTLV_INPUT_SCENE_PARAM *bisp )
 {
-  int i, pos;
+  int i;
   int dot_len, char_len;
   STRBUF *monsname_p;
   STRBUF *monsname_src;
@@ -1346,9 +1346,8 @@ static  void  BTLV_INPUT_CreateDirScreen( BTLV_INPUT_WORK* biw, const BTLV_INPUT
       WORDSET_RegisterPokeNickName( wordset, 0, bisp->bidp[ i ].pp );
       WORDSET_ExpandStr( wordset, monsname_p, monsname_src );
       FontLenGet( monsname_p, biw->font, &dot_len, &char_len );
-      pos = bisp->bidp[ i ].pos;
-      PRINTSYS_Print( biw->bmp_data, monsname_pos[ pos ][ 0 ] - ( dot_len / 2 ),
-                      monsname_pos[ pos ][ 1 ], monsname_p, biw->font );
+      PRINTSYS_Print( biw->bmp_data, monsname_pos[ i ][ 0 ] - ( dot_len / 2 ),
+                      monsname_pos[ i ][ 1 ], monsname_p, biw->font );
       GFL_STR_DeleteBuffer( monsname_src );
     }
   }
