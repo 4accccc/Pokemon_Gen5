@@ -143,6 +143,9 @@ static GMEVENT_RESULT FieldOpenEvent(GMEVENT * event, int *seq, void*work)
 	switch(*seq) {
 	case 0:
 		if (GAMESYSTEM_IsProcExists(gsys)) break;
+		GFL_FADE_SetMasterBrightReq(
+				GFL_FADE_MASTER_BRIGHT_BLACKOUT_MAIN | GFL_FADE_MASTER_BRIGHT_BLACKOUT_SUB,
+        16, 16, 0);
 		GAMESYSTEM_CallFieldProc(gsys);
 		(*seq) ++;
 		break;
