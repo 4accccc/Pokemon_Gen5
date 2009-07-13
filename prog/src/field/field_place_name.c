@@ -343,6 +343,9 @@ static void SetupBG( FIELD_PLACE_NAME* p_sys )
 	GFL_BG_SetBGControl( BG_FRAME, &bgcnt, GFL_BG_MODE_TEXT );
 	GFL_BG_SetPriority( BG_FRAME, BG_FRAME_PRIORITY );
 	GFL_BG_SetVisible( BG_FRAME, VISIBLE_ON ); 
+
+	// キャラVRAM・スクリーンVRAMをクリア
+	GFL_BG_ClearFrame( BG_FRAME );
 }
 
 //------------------------------------------------------------------------------------
