@@ -10,6 +10,8 @@
 
 #pragma once
 
+#include "battle/btl_common.h"
+
 typedef struct _BTLV_INPUT_WORK BTLV_INPUT_WORK;
 
 ///技選択画面構成用のデータ
@@ -27,15 +29,17 @@ typedef struct{
   u8                    status;
   u16                   dummy;
   
+  s16                   hp;             //現在のHP
+  u16                   hpmax;          //現在のHPMAX
   const POKEMON_PARAM*  pp;
 }BTLV_INPUT_DIR_PARAM;
 
 ///ポケモン選択画面構成用のSceneワーク
-//typedef struct{
-//  BTLV_INPUT_DIR_PARAM  bidp[ BTL_CLIENT_MAX ];
-//  u8                    client_type;
-//  u8                    pokesele_type;  ///<対象選択タイプ
-//}BTLV_INPUT_SCENE_POKE;
+typedef struct{
+  BTLV_INPUT_DIR_PARAM  bidp[ BTL_CLIENT_MAX ];
+  u8                    client_type;
+  u8                    pokesele_type;  ///<対象選択タイプ
+}BTLV_INPUT_SCENE_PARAM;
 
 typedef enum
 { 

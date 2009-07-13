@@ -198,6 +198,26 @@ enum
   PP_Y4 = BUTTON_DOWN_Y2,
 };
 
+//攻撃対象選択ボタン表示位置定義
+enum
+{ 
+  //4ボタン
+  BUTTON4_UP_Y1 = 8 + 2,
+  BUTTON4_UP_Y2 = 24 + 2,
+  
+  BUTTON4_DOWN_Y1 = 56 + 2,
+  BUTTON4_DOWN_Y2 = 72 + 2,
+
+  MONSNAME4_X1 = 64,
+  MONSNAME4_Y1 = BUTTON4_UP_Y1,
+  MONSNAME4_X2 = 128 + MONSNAME4_X1,
+  MONSNAME4_Y2 = BUTTON4_UP_Y1,
+  MONSNAME4_X3 = MONSNAME4_X1,
+  MONSNAME4_Y3 = BUTTON4_DOWN_Y1,
+  MONSNAME4_X4 = MONSNAME4_X2,
+  MONSNAME4_Y4 = BUTTON4_DOWN_Y1,
+};
+
 ///技タイプアイコン：アクターヘッダ
 static  const GFL_CLWK_DATA WazaTypeIconObjParam = {
   0, 0,   //x, y
@@ -355,6 +375,7 @@ static  void  TCB_ButtonAnime( GFL_TCB* tcb, void* work );
 static  void	BTLV_INPUT_MainTCB( GFL_TCB* tcb, void* work );
 static  void  FontLenGet( const STRBUF *str, GFL_FONT *font, int *ret_dot_len, int *ret_char_len );
 static  void  BTLV_INPUT_CreateWazaScreen( BTLV_INPUT_WORK* biw, const BTLV_INPUT_WAZA_PARAM *biwp );
+static  void  BTLV_INPUT_CreateDirScreen( BTLV_INPUT_WORK* biw, const BTLV_INPUT_SCENE_PARAM *bisp );
 static  void  BTLV_INPUT_ClearWazaScreen( BTLV_INPUT_WORK* biw );
 static  PRINTSYS_LSB  PP_FontColorGet( int pp, int pp_max );
 static  void  BTLV_INPUT_CreateBallGauge( BTLV_INPUT_WORK* biw, const BTLV_INPUT_DIR_PARAM *bidp, int type );
@@ -583,10 +604,22 @@ void BTLV_INPUT_CreateScreen( BTLV_INPUT_WORK* biw, BTLV_INPUT_SCRTYPE type, voi
     }
     break;
   case BTLV_INPUT_SCRTYPE_DIR:
+    { 
+      TCB_TRANSFORM_WORK* ttw = GFL_HEAP_AllocClearMemory( biw->heapID, sizeof( TCB_TRANSFORM_WORK ) );
+
+      BTLV_INPUT_CreateDirScreen( biw, ( const BTLV_INPUT_SCENE_PARAM * )param );
+      biw->tcb_execute_flag = 1;
+      ttw->biw = biw;
+      GFL_TCB_AddTask( biw->tcbsys, TCB_TransformWaza2Dir, ttw, 1 );
+    }
     break;
   case BTLV_INPUT_SCRTYPE_YES_NO:
     break;
   case BTLV_INPUT_SCRTYPE_ROTATE:
+    break;
+  default:
+    //ありえないSCRTYPEが指定されている
+    GF_ASSERT( 0 );
     break;
   }
   biw->scr_type = type;
@@ -685,6 +718,7 @@ static  void  TCB_TransformStandby2Command( GFL_TCB* tcb, void* work )
     ttw->seq_no++;
     break;
   case 1:
+  default:
     if( ttw->biw->tcb_execute_count == 0 )
     { 
       GFL_BG_SetVisible( GFL_BG_FRAME0_S, VISIBLE_ON );
@@ -718,6 +752,7 @@ static  void  TCB_TransformCommand2Waza( GFL_TCB* tcb, void* work )
     ttw->seq_no++;
     break;
   case 1:
+  default:
     if( ttw->biw->tcb_execute_count == 0 )
     { 
       GFL_BMPWIN_TransVramCharacter( ttw->biw->bmp_win );
@@ -752,6 +787,7 @@ static  void  TCB_TransformWaza2Command( GFL_TCB* tcb, void* work )
     ttw->seq_no++;
     break;
   case 1:
+  default:
     if( ttw->biw->tcb_execute_count == 0 )
     { 
       ttw->biw->tcb_execute_flag = 0;
@@ -762,9 +798,42 @@ static  void  TCB_TransformWaza2Command( GFL_TCB* tcb, void* work )
   }
 }
 
+//============================================================================================
+/**
+ *	@brief  下画面変形タスク（技選択→攻撃対象選択）
+ */
+//============================================================================================
 static  void  TCB_TransformWaza2Dir( GFL_TCB* tcb, void* work )
 { 
+  TCB_TRANSFORM_WORK* ttw = (TCB_TRANSFORM_WORK *)work;
 
+  //現状、どんな演出になるか決まっていないので、表示だけしてタスク終了
+  /*
+  switch( ttw->seq_no ){ 
+  case 0:
+    SetupScrollUp( ttw->biw, TTW2C_START_SCROLL_X, TTW2C_START_SCROLL_Y, TTW2C_SCROLL_SPEED, TTW2C_SCROLL_COUNT );
+    SetupScreenAnime( ttw->biw, 0, SCREEN_ANIME_DIR_BACKWARD );
+    SetupButtonAnime( ttw->biw, BUTTON_TYPE_WAZA, BUTTON_ANIME_TYPE_VANISH );
+    GFL_BG_SetVisible( GFL_BG_FRAME0_S, VISIBLE_ON );
+    GFL_BG_SetVisible( GFL_BG_FRAME1_S, VISIBLE_ON );
+    GFL_BG_SetVisible( GFL_BG_FRAME3_S, VISIBLE_OFF );
+    ttw->seq_no++;
+    break;
+  case 1:
+  default:
+    if( ttw->biw->tcb_execute_count == 0 )
+    { 
+      ttw->biw->tcb_execute_flag = 0;
+      GFL_HEAP_FreeMemory( ttw );
+      GFL_TCB_DeleteTask( tcb );
+    }
+    break;
+  }
+  */
+  GFL_BMPWIN_TransVramCharacter( ttw->biw->bmp_win );
+  ttw->biw->tcb_execute_flag = 0;
+  GFL_HEAP_FreeMemory( ttw );
+  GFL_TCB_DeleteTask( tcb );
 }
 
 //============================================================================================
@@ -785,6 +854,7 @@ static  void  TCB_TransformCommand2Standby( GFL_TCB* tcb, void* work )
     ttw->seq_no++;
     break;
   case 1:
+  default:
     if( ttw->biw->tcb_execute_count == 0 )
     { 
       ttw->biw->tcb_execute_flag = 0;
@@ -814,6 +884,7 @@ static  void  TCB_TransformWaza2Standby( GFL_TCB* tcb, void* work )
     ttw->seq_no++;
     break;
   case 1:
+  default:
     if( ttw->biw->tcb_execute_count == 0 )
     { 
       SetupScaleChange( ttw->biw, TTC2S_START_SCALE, TTC2S_END_SCALE, TTC2S_SCALE_SPEED );
@@ -1235,10 +1306,55 @@ static  void  BTLV_INPUT_CreateWazaScreen( BTLV_INPUT_WORK* biw, const BTLV_INPU
 
   WORDSET_Delete( wordset );
   GFL_STR_DeleteBuffer( wazaname_p );
-  GFL_STR_DeleteBuffer(ppmsg_src);
-  GFL_STR_DeleteBuffer(wazaname_src);
-  GFL_STR_DeleteBuffer(pp_src);
-  GFL_STR_DeleteBuffer(pp_p);
+  GFL_STR_DeleteBuffer( ppmsg_src );
+  GFL_STR_DeleteBuffer( wazaname_src );
+  GFL_STR_DeleteBuffer( pp_src );
+  GFL_STR_DeleteBuffer( pp_p );
+
+  GFL_MSG_Delete( msg );
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief   攻撃対象選択画面BG生成
+ */
+//--------------------------------------------------------------
+static  void  BTLV_INPUT_CreateDirScreen( BTLV_INPUT_WORK* biw, const BTLV_INPUT_SCENE_PARAM *bisp )
+{
+  int i, pos;
+  int dot_len, char_len;
+  STRBUF *monsname_p;
+  STRBUF *monsname_src;
+  WORDSET *wordset;
+  PRINTSYS_LSB color;
+  GFL_MSGDATA *msg = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_btlv_input_dat, biw->heapID );
+  static  const int monsname_pos[ PTL_WAZA_MAX ][ 2 ] = 
+  { 
+    { MONSNAME4_X3, MONSNAME4_Y3 },
+    { MONSNAME4_X2, MONSNAME4_Y2 },
+    { MONSNAME4_X4, MONSNAME4_Y4 },
+    { MONSNAME4_X1, MONSNAME4_Y1 },
+  };
+
+  monsname_p = GFL_STR_CreateBuffer( BUFLEN_POKEMON_NAME, biw->heapID );
+  wordset = WORDSET_Create( biw->heapID );
+
+  for(i = 0; i < PTL_WAZA_MAX; i++){
+    if( bisp->bidp[ i ].hp ){
+      //BMPWIN：ポケモン名
+      monsname_src = GFL_MSG_CreateString( msg, BI_TargetPokemonMaleMsg + bisp->bidp[ i ].sex );
+      WORDSET_RegisterPokeNickName( wordset, 0, bisp->bidp[ i ].pp );
+      WORDSET_ExpandStr( wordset, monsname_p, monsname_src );
+      FontLenGet( monsname_p, biw->font, &dot_len, &char_len );
+      pos = bisp->bidp[ i ].pos;
+      PRINTSYS_Print( biw->bmp_data, monsname_pos[ pos ][ 0 ] - ( dot_len / 2 ),
+                      monsname_pos[ pos ][ 1 ], monsname_p, biw->font );
+      GFL_STR_DeleteBuffer( monsname_src );
+    }
+  }
+
+  WORDSET_Delete( wordset );
+  GFL_STR_DeleteBuffer( monsname_p );
 
   GFL_MSG_Delete( msg );
 }
@@ -1277,19 +1393,19 @@ static  void  BTLV_INPUT_ClearWazaScreen( BTLV_INPUT_WORK* biw )
 //--------------------------------------------------------------
 static PRINTSYS_LSB PP_FontColorGet(int pp, int pp_max)
 {
-  if(pp == 0){
+  if( pp == 0 ){
     return MSGCOLOR_PP_RED;
   }
-  if(pp_max == pp){
+  if( pp_max == pp ){
     return MSGCOLOR_PP_WHITE;
   }
-  if(pp_max <= 2){
-    if(pp == 1){
+  if( pp_max <= 2 ){
+    if( pp == 1 ){
       return MSGCOLOR_PP_ORANGE;
     }
   }
-  else if(pp_max <= 7){
-    switch(pp){
+  else if( pp_max <= 7 ){
+    switch( pp ){
     case 1:
       return MSGCOLOR_PP_ORANGE;
     case 2:
@@ -1297,10 +1413,10 @@ static PRINTSYS_LSB PP_FontColorGet(int pp, int pp_max)
     }
   }
   else{
-    if(pp <= pp_max / 4){
+    if( pp <= ( pp_max / 4 ) ){
       return MSGCOLOR_PP_ORANGE;
     }
-    if(pp <= pp_max / 2){
+    if( pp <= ( pp_max / 2 ) ){
       return MSGCOLOR_PP_YELLOW;
     }
   }
