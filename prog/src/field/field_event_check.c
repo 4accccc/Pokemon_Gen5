@@ -726,12 +726,12 @@ static GMEVENT * checkPushExit(EV_REQUEST * req,
 	
   //目の前が通行不可でない場合、チェックしない
   setFrontPos(req, &front_pos);
-#if 0
+#if 1
   {
 		FLDMAPPER *g3Dmapper = FIELDMAP_GetFieldG3Dmapper(fieldWork);
     MAPATTR_FLAG flag = MAPATTR_GetAttrFlag( MAPATTR_GetAttribute(g3Dmapper, &front_pos) );
     //MAPATTR_FLAG flag = MAPATTR_GetAttrFlag( MAPATTR_GetAttribute(g3Dmapper, &now_pos) );
-    if (!(flag & MAPATTR_FLAGBIT_ENTER))
+    if (!(flag & MAPATTR_FLAGBIT_HITCH))
     {
       return NULL;
     }
