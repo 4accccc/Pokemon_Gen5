@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-07-09T11:41:52"/>
+	<create user="matsumiya" host="W00207" date="2009-07-13T14:34:08"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -237,7 +237,7 @@
 		<number position="-1" width="100"/>
 		<comment position="4" width="124"/>
 		<erase position="-1" width="100"/>
-		<attribute japanese="キャラ指定" english="キャラ指定" type="string" default="" position="1" width="100">
+		<attribute japanese="キャラ指定" english="キャラ指定" type="string" default="" position="1" width="106">
 		</attribute>
 		<language japanese="JPN" english="JPN">
 			<message position="2" width="274"/>
@@ -292,25 +292,28 @@
 	</lock>
 
 
-	<row id="msg_c02r0201_test1_01">
-		<comment>？？？</comment>
-		<attribute name="キャラ指定">？？？</attribute>
-		<language name="JPN" width="256">テストメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+	<row id="msg_c02r0201_musician_01">
+		<comment>♂</comment>
+		<attribute name="キャラ指定">MUSICAN
+ミュージシャン</attribute>
+		<language name="JPN" width="256">オレの　ミュージックでえ
+みんなを　しあわせにい　するさあん[FF:02:ルビ:1:おんぷ]♪</language>
+		<language name="JPN_KANJI" width="256">オレの　ミュージックでえ
+みんなを　しあわせにい　するさあん[FF:02:ルビ:1:おんぷ]♪</language>
 	</row>
 
-	<row id="msg_c02r0201_test2_01">
-		<comment>？？？</comment>
-		<attribute name="キャラ指定">？？？</attribute>
-		<language name="JPN" width="256">テストメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
-	</row>
-
-	<row id="msg_c02r0201_test3_01">
-		<comment>？？？</comment>
-		<attribute name="キャラ指定">？？？</attribute>
-		<language name="JPN" width="256">テストメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+	<row id="msg_c02r0201_babyboy1_01">
+		<comment>♂</comment>
+		<attribute name="キャラ指定">BABYBOY1
+男の子</attribute>
+		<language name="JPN" width="256">うまくない　おんがく　でも
+だれにも　めいわくを　かけず[BE:00:ページ切り替え（行送り）]
+じぶんが　ハッピーに　なれるなら[BE:00:ページ切り替え（行送り）]
+それは　ステキな　ことだよな</language>
+		<language name="JPN_KANJI" width="256">うまくない　[FF:02:ルビ:2:おんがく]音楽　でも
+だれにも　[FF:02:ルビ:2:めいわく]迷惑を　かけず[BE:00:ページ切り替え（行送り）]
+[FF:02:ルビ:2:じぶん]自分が　ハッピーに　なれるなら[BE:00:ページ切り替え（行送り）]
+それは　ステキな　ことだよな</language>
 	</row>
 
 	<flowchart-group-list>
