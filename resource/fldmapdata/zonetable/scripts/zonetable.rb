@@ -254,7 +254,7 @@ class ZoneDataFile < OutputFile
 		bgm_summer = column[@cl.cBGM_SUMMER]
 		bgm_autumn = column[@cl.cBGM_AUTUMN]
 		bgm_winter = column[@cl.cBGM_WINTER]
-		weather = "WEATHER_SYS_#{column[@cl.cWEATHER].upcase}"
+		weather = "WEATHER_NO_#{column[@cl.cWEATHER].upcase}"
 		camera = "#{column[@cl.cCAMERA]}"
 		battle_bg = "#{column[@cl.cBATTLEBG]}"
 		if !(battle_bg =~ /^BG_ID_/) then
@@ -268,7 +268,8 @@ class ZoneDataFile < OutputFile
 			else
 				"enc_dummy"
 			end
-		window = column[@cl.cWINDOW].upcase
+		#window = column[@cl.cWINDOW].upcase
+		window = column[@cl.cWINDOW]
 		maptype = column[@cl.cMAPTYPE]
 		if !(maptype =~ /^MAPTYPE_/) then
 			STDERR.puts "マップタイプの指定がおかしい!:#{maptype}:\n"
