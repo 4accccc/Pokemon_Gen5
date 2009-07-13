@@ -27,6 +27,7 @@
 //-----------
 #define PALETTE_NO          (0)					// パレット番号
 #define BG_FRAME            (GFL_BG_FRAME2_M)	// 使用するBGフレーム
+#define BG_FRAME_PRIORITY   (1)					// BGフレームのプライオリティ
 #define	COLOR_NO_LETTER     (1)		            // 文字本体のカラー番号
 #define	COLOR_NO_SHADOW     (2)		            // 影部分のカラー番号
 #define	COLOR_NO_BACKGROUND (0)					// 背景部のカラー番号
@@ -144,7 +145,7 @@ FIELD_PLACE_NAME* FIELD_PLACE_NAME_Create( HEAPID heap_id, FLDMSGBG* p_fld_msg_b
 	SetupBG( p_sys );
 
 	// ビットマップ・ウィンドウ作成
-	p_sys->pBmpWin = GFL_BMPWIN_Create( BG_FRAME, 0, 0, 17, 4, 0, GFL_BMP_CHRAREA_GET_B );
+	p_sys->pBmpWin = GFL_BMPWIN_Create( BG_FRAME, 0, 0, BMPWIN_WIDTH_CHAR, BMPWIN_HEIGHT_CHAR, 0, GFL_BMP_CHRAREA_GET_B );
 
 	// メッセージ・データを作成
 	p_sys->pMsgData = FLDMSGBG_CreateMSGDATA( p_sys->pFldMsgBG, NARC_message_place_name_dat );
@@ -309,7 +310,7 @@ static void SetupBG( FIELD_PLACE_NAME* p_sys )
 	GFL_BMP_DATA* p_combine;
 	void* p_char_adrs;
 
-	GFL_BG_BGCNT_HEADER BGCNT2_M = 
+	GFL_BG_BGCNT_HEADER bgcnt = 
 	{
 		0, 0,				    // 初期表示位置
 		0x800,					// スクリーンバッファサイズ
@@ -326,8 +327,8 @@ static void SetupBG( FIELD_PLACE_NAME* p_sys )
 		FALSE,					// モザイク設定
 	};
 
-	GFL_BG_SetBGControl( BG_FRAME, &BGCNT2_M, GFL_BG_MODE_TEXT );
-	GFL_BG_SetPriority( BG_FRAME, 1 );
+	GFL_BG_SetBGControl( BG_FRAME, &bgcnt, GFL_BG_MODE_TEXT );
+	GFL_BG_SetPriority( BG_FRAME, BG_FRAME_PRIORITY );
 	GFL_BG_SetVisible( BG_FRAME, VISIBLE_ON ); 
 }
 
