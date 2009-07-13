@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-07-09T21:45:44"/>
+	<create user="matsumiya" host="W00207" date="2009-07-13T14:25:33"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -229,7 +229,7 @@
 	</tag-table>
 
 	<columns>
-		<id position="0" width="152"/>
+		<id position="0" width="169"/>
 		<group default=" 0:デフォルト" position="-1" width="100">
 			<list entry="0" japanese="デフォルト" english="Default" colorID="0"/>
 			<list entry="1" japanese="グループ 1" english="グループ 1" colorID="0"/>
@@ -292,7 +292,7 @@
 	</lock>
 
 
-	<row id="msg_c02r0601_waitress1_01">
+	<row id="msg_c02r0601_waitress_01">
 		<comment>♀</comment>
 		<attribute name="キャラ指定">WAITRESS
 ウエートレス</attribute>
@@ -300,10 +300,26 @@
 		<language name="JPN_KANJI" width="256">ここはカフェです</language>
 	</row>
 
-	<row id="msg_c02r0601_waitress2_01">
+	<row id="msg_c02r0601_woman3_01">
 		<comment>♀</comment>
-		<attribute name="キャラ指定">WAITRESS
-ウエートレス</attribute>
+		<attribute name="キャラ指定">WOMAN3
+エプロン姉さん</attribute>
+		<language name="JPN" width="256">カフェです</language>
+		<language name="JPN_KANJI" width="256">ここはカフェです</language>
+	</row>
+
+	<row id="msg_c02r0601_middleman2_01">
+		<comment>♂</comment>
+		<attribute name="キャラ指定">MIDDLEMAN2
+太ったおじさん</attribute>
+		<language name="JPN" width="256">カフェです</language>
+		<language name="JPN_KANJI" width="256">ここはカフェです</language>
+	</row>
+
+	<row id="msg_c02r0601_bigman_01">
+		<comment>♂</comment>
+		<attribute name="キャラ指定">BIGMAN
+太った兄さん</attribute>
 		<language name="JPN" width="256">カフェです</language>
 		<language name="JPN_KANJI" width="256">ここはカフェです</language>
 	</row>
