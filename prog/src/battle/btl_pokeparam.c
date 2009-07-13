@@ -1340,14 +1340,12 @@ BOOL BPP_Nemuri_CheckWake( BTL_POKEPARAM* pp )
 {
   if( BPP_CheckSick(pp, WAZASICK_NEMURI) )
   {
-    if( pp->sickCont[POKESICK_NEMURI].type == WAZASICK_CONT_TURN )
+    u8 turnMax = BPP_SICCONT_GetTurnMax( pp->sickCont[POKESICK_NEMURI] );
+    if( (turnMax != 0 ) && (pp->wazaSickCounter[POKESICK_NEMURI] >= turnMax) )
     {
-      if( pp->sickCont[POKESICK_NEMURI].turn.count == 0 )
-      {
-        pp->sickCont[ POKESICK_NEMURI ] = BPP_SICKCONT_MakeNull();
-        pp->sickCont[ WAZASICK_AKUMU ] = BPP_SICKCONT_MakeNull();
-        return TRUE;
-      }
+      pp->sickCont[ POKESICK_NEMURI ] = BPP_SICKCONT_MakeNull();
+      pp->sickCont[ WAZASICK_AKUMU ] = BPP_SICKCONT_MakeNull();
+     return TRUE;
     }
   }else{
     GF_ASSERT(0);

@@ -149,6 +149,7 @@ struct _BTL_SVFLOW_WORK {
   BTL_SERVER_CMD_QUE*     que;
   u32                     turnCount;
   SvflowResult            flowResult;
+  BTL_ACTION_PARAM        actionWork;
   HEAPID  heapID;
 
   u8      numClient;
@@ -1240,6 +1241,7 @@ static void scproc_Fight( BTL_SVFLOW_WORK* wk, u8 attackClientID, u8 posIdx, con
 
       // ワザ出し成功
       scproc_Fight_WazaExe( wk, attacker, waza, action );
+
       waza_exe_flag = TRUE;
     }while(0);
 
@@ -1273,7 +1275,6 @@ static void scproc_Fight_WazaExe( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, 
   scEvent_CheckWazaParam( wk, waza, attacker, &wk->wazaParam );
 
 // @@@ ここに、対象ポケによらない無効化チェックを入れるかも…
-
   BPP_UpdatePrevWazaID( attacker, waza, action.fight.targetPos );
   SCQUE_PUT_OP_UpdateUseWaza( wk->que, pokeID, action.fight.targetPos, waza );
   BPP_TURNFLAG_Set( attacker, BPP_TURNFLG_WAZA_EXE );
@@ -1658,7 +1659,7 @@ static void scproc_Fight_WazaEffective( BTL_SVFLOW_WORK* wk, WazaID waza, u8 atk
  * @param   wk
  * @param   attacker
  * @param   waza
- * @param   action    [io]
+ * @param   action    [io] 溜めターンの場合、攻撃対象の情報をワークに保存／攻撃ターンの場合、それを取り出して格納
  *
  * @retval  BOOL      溜めターン処理を行った場合TRUE
  */
@@ -6771,7 +6772,21 @@ BtlPokePos BTL_SVFLOW_PokeIDtoPokePos( BTL_SVFLOW_WORK* wk, u8 pokeID )
 {
   return BTL_MAIN_PokeIDtoPokePos( wk->mainModule, wk->pokeCon, pokeID );
 }
-
+//=============================================================================================
+/**
+ * 指定位置のポケモンIDを返す
+ *
+ * @param   wk
+ * @param   pokePos
+ *
+ * @retval  u8
+ */
+//=============================================================================================
+u8 BTL_SVFLOW_PokePosToPokeID( BTL_SVFLOW_WORK* wk, u8 pokePos )
+{
+  const BTL_POKEPARAM* bpp = BTL_POKECON_GetFrontPokeDataConst( wk->pokeCon, pokePos );
+  return BPP_GetID( bpp );
+}
 
 
 //--------------------------------------------------------------------------------------------------------

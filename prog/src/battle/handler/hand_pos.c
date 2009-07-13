@@ -35,8 +35,8 @@ static BTL_EVENT_FACTOR* ADD_POS_Negaigoto( u16 pri, BtlPokePos pos, BtlPosEffec
 static void handler_pos_Negaigoto( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokePos, int* work );
 static BTL_EVENT_FACTOR* ADD_POS_MikadukiNoMai( u16 pri, BtlPokePos pos, BtlPosEffect eff );
 static void handler_pos_MikadukiNoMai( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokePos, int* work );
-static BTL_EVENT_FACTOR* ADD_POS_SizenNoMegumi( u16 pri, BtlPokePos pos, BtlPosEffect eff );
-static void handler_pos_SizenNoMegumi( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokePos, int* work );
+static BTL_EVENT_FACTOR* ADD_POS_IyasiNoNegai( u16 pri, BtlPokePos pos, BtlPosEffect eff );
+static void handler_pos_IyasiNoNegai( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokePos, int* work );
 
 
 
@@ -63,7 +63,7 @@ BTL_EVENT_FACTOR*  BTL_HANDLER_POS_Add( BtlPosEffect effect, BtlPokePos pos, int
   }funcTbl[] = {
     { BTL_POSEFF_NEGAIGOTO,       ADD_POS_Negaigoto       },
     { BTL_POSEFF_MIKADUKINOMAI,   ADD_POS_MikadukiNoMai   },
-    { BTL_POSEFF_SIZENNOMEGUMI,   ADD_POS_SizenNoMegumi   },
+    { BTL_POSEFF_IYASINONEGAI,    ADD_POS_IyasiNoNegai    },
   };
 
   GF_ASSERT(effect < BTL_POSEFF_MAX);
@@ -117,13 +117,32 @@ static BOOL is_registable( BtlPosEffect effect, BtlPokePos pokePos)
 static BTL_EVENT_FACTOR* ADD_POS_Negaigoto( u16 pri, BtlPokePos pos, BtlPosEffect eff )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_WAZA_DMG_PROC2,  handler_pos_Negaigoto   },  // ダメージ補正
+    { BTL_EVENT_TURNCHECK_BEGIN,  handler_pos_Negaigoto   },  // ダメージ補正
     { BTL_EVENT_NULL, NULL },
   };
   return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_WAZA, eff, pri, pos, HandlerTable );
 }
 static void handler_pos_Negaigoto( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokePos, int* work )
 {
+  work[0]++;
+  if( work[0] >= 2 )
+  {
+    u8 targetPokeID = BTL_SVFLOW_PokePosToPokeID( flowWk, pokePos );
+    const BTL_POKEPARAM* target = BTL_SVFLOW_RECEPT_GetPokeParam( flowWk, targetPokeID );
+
+    if( !BPP_IsHPFull(target) )
+    {
+      u8 userPokeID = work[ WORKIDX_PARAM ];
+      const BTL_POKEPARAM* user = BTL_SVFLOW_RECEPT_GetPokeParam( flowWk, userPokeID );
+
+      BTL_HANDEX_PARAM_RECOVER_HP* hp_param;
+      hp_param = BTL_SVFLOW_HANDLERWORK_Push( flowWk, BTL_HANDEX_RECOVER_HP, userPokeID );
+      hp_param->pokeID = targetPokeID;
+      hp_param->recoverHP = BTL_CALC_QuotMaxHP( user, 2 );
+      HANDEX_STR_Setup( &hp_param->exStr, BTL_STRTYPE_SET, BTL_STRID_SET_Negaigoto );
+      HANDEX_STR_AddArg( &hp_param->exStr, userPokeID );
+    }
+  }
 }
 //--------------------------------------------------------------------------------------
 /**
@@ -187,16 +206,41 @@ static void handler_pos_MikadukiNoMai( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WO
  *  しぜんのめぐみ
  */
 //--------------------------------------------------------------------------------------
-static BTL_EVENT_FACTOR* ADD_POS_SizenNoMegumi( u16 pri, BtlPokePos pos, BtlPosEffect eff )
+static BTL_EVENT_FACTOR* ADD_POS_IyasiNoNegai( u16 pri, BtlPokePos pos, BtlPosEffect eff )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_WAZA_DMG_PROC2,  handler_pos_SizenNoMegumi   },  // ダメージ補正
+    { BTL_EVENT_WAZA_DMG_PROC2,  handler_pos_IyasiNoNegai   },  // ダメージ補正
     { BTL_EVENT_NULL, NULL },
   };
   return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_WAZA, eff, pri, pos, HandlerTable );
 }
-static void handler_pos_SizenNoMegumi( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokePos, int* work )
+static void handler_pos_IyasiNoNegai( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokePos, int* work )
 {
+  u8 pokeID = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID );
+  if( BTL_SVFLOW_PokeIDtoPokePos(flowWk, pokeID) == pokePos )
+  {
+    const BTL_POKEPARAM* bpp = BTL_SVFLOW_RECEPT_GetPokeParam( flowWk, pokeID );
+    BTL_HANDEX_PARAM_MESSAGE* msg_param = BTL_SVFLOW_HANDLERWORK_Push( flowWk, BTL_HANDEX_MESSAGE, BTL_POKEID_NULL );
+    HANDEX_STR_Setup( &msg_param->str, BTL_STRTYPE_SET, BTL_STRID_SET_IyasiNoNegai );
+    HANDEX_STR_AddArg( &msg_param->str, pokeID );
 
+    // 体力全回復
+    if( !BPP_IsHPFull(bpp) ){
+      BTL_HANDEX_PARAM_RECOVER_HP* hp_param;
+      hp_param = BTL_SVFLOW_HANDLERWORK_Push( flowWk, BTL_HANDEX_RECOVER_HP, pokeID );
+      hp_param->pokeID = pokeID;
+      hp_param->recoverHP = BPP_GetValue(bpp, BPP_MAX_HP) - BPP_GetValue(bpp, BPP_HP);
+    }
+
+    // ポケ系状態異常回復
+    if( BPP_GetPokeSick(bpp) != POKESICK_NULL ){
+      BTL_HANDEX_PARAM_CURE_SICK* param = BTL_SVFLOW_HANDLERWORK_Push( flowWk, BTL_HANDEX_CURE_SICK, pokeID );
+      param->poke_cnt = 1;
+      param->pokeID[0] = pokeID;
+      param->sickCode = WAZASICK_EX_POKEFULL;
+    }
+
+    BTL_EVENT_FACTOR_Remove( myHandle );
+  }
 }
 
