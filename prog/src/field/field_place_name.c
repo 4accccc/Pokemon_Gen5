@@ -20,8 +20,8 @@
  */
 //===================================================================================
 
-// 1キャラ = 8ドット
-#define CHAR_SIZE (8) 
+// 無効ゾーンID
+#define INVALID_ZONE_ID (0xffffffff)
 
 //-----------
 // 表示設定
@@ -41,6 +41,9 @@
 //----------------------
 // グラフィック・サイズ
 //----------------------
+// 1キャラ = 8ドット
+#define CHAR_SIZE (8) 
+
 // ウィンドウのキャラクタ・データ
 #define WIN_CGR_WIDTH_CHAR (32)							     // 幅  (キャラクタ数)
 #define WIN_CGR_HEIGHT_CHAR (4)							     // 高さ(キャラクタ数)
@@ -158,6 +161,10 @@ FIELD_PLACE_NAME* FIELD_PLACE_NAME_Create( HEAPID heap_id, FLDMSGBG* p_fld_msg_b
 
 	// メッセージ描画情報を作成
 	p_sys->pFldMsgPrint = FLDMSGPRINT_SetupPrint( p_sys->pFldMsgBG, p_sys->pMsgData, p_sys->pBmpWin );
+
+	// その他の初期化
+	p_sys->currentZoneID = INVALID_ZONE_ID;
+	p_sys->nextZoneID    = INVALID_ZONE_ID;
 
 
 	// 作成したシステムを返す
@@ -492,6 +499,7 @@ static void WriteStringToWindow( FIELD_PLACE_NAME* p_sys, u32 zone_id )
 	STRBUF* p_str_buf = NULL;
 	GFL_FONT* p_font = NULL;
 
+	// 地名文字列の描画先x座標を算出
 	str_id    = ZONEDATA_GetPlaceNameID( zone_id );				// メッセージ番号を決定
 	if( str_id < 0 | msg_place_name_max <= str_id ) str_id = 0;	// メッセージ番号の範囲チェック
 	p_str_buf = GFL_STR_CreateBuffer( 256, p_sys->heapID );		// バッファを作成
