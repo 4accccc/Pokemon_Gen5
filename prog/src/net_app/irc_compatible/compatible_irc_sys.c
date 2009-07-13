@@ -355,6 +355,7 @@ BOOL COMPATIBLE_IRC_ExitWait( COMPATIBLE_IRC_SYS *p_sys )
 {	
 	enum
 	{	
+		SEQ_MENUNET_EXIT,
 		SEQ_EXIT_START,
 		SEQ_EXIT_WAIT,
 		SEQ_EXIT_END,
@@ -362,6 +363,11 @@ BOOL COMPATIBLE_IRC_ExitWait( COMPATIBLE_IRC_SYS *p_sys )
 
 	switch(p_sys->seq)
 	{
+	case SEQ_MENUNET_EXIT:
+		MENUNET_Exit( &p_sys->menu );
+		p_sys->seq	= SEQ_EXIT_START;
+		break;
+
 	case SEQ_EXIT_START:
 		if( GFL_NET_Exit(NET_EXIT_ExitCallBack ) )
 		{
@@ -476,7 +482,6 @@ BOOL COMPATIBLE_IRC_DisConnextWait( COMPATIBLE_IRC_SYS *p_sys )
 
 	switch(p_sys->seq){
 	case SEQ_DISCONNECT_MENU:
-		MENUNET_Exit( &p_sys->menu );
 		p_sys->seq	= SEQ_DISCONNECT_START;
 		break;
 
