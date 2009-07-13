@@ -759,6 +759,13 @@ static void _changeWaitState(IRC_POKEMON_TRADE* pWork)
 		int id = PPP_Get(pWork->recvPoke[id],ID_PARA_id_no,NULL);
 		POKEMON_PARAM* pp = PP_Create(monsno,lv ,id, pWork->heapID);
 
+
+		{
+			u16 oyaName[5] = {L'ƒu',L'ƒ‰',L'ƒb',L'ƒN',0xFFFF};
+			PP_Put( pp , ID_PARA_oyaname_raw , (u32)&oyaName[0] );
+			PP_Put( pp , ID_PARA_oyasex , PTL_SEX_MALE );
+		}
+		
 		PokeParty_SetMemberData(party, pWork->selectIndex, pp);
 		GFL_HEAP_FreeMemory(pp);
 	}
