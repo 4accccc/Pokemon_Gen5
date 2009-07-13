@@ -194,12 +194,6 @@ enum {
 	GFL_NET_TYPE_WIRELESS_SCANONLY,	///<ワイヤレス通信(スキャン専用・電源ランプ非点滅)
 };
 
-enum{
-  GFL_NET_CHANGEOVER_MODE_NORMAL,       ///<通常状態(親子を一定間隔で切り替え)
-  GFL_NET_CHANGEOVER_MODE_FIX_PARENT,   ///<親固定
-  GFL_NET_CHANGEOVER_MODE_FIX_CHILD,    ///<子固定
-};
-
 typedef u8 GameServiceID;  ///< ゲームサービスID  通信の種類
 typedef u8 ConnectID;      ///< 接続するためのID  0-16 まで
 typedef u8 NetID;          ///< 通信ID  0-16 まで
@@ -454,17 +448,6 @@ extern void GFL_NET_ChangeoverConnect_IRCWIRELESS(NetStepEndCallback callback,Ne
  */
 //==============================================================================
 extern void GFL_NET_Changeover(NetStepEndCallback callback);
-//==================================================================
-/**
- * GFL_NET_Changeover or GFL_NET_ChangeoverConnect の内部モードを後から変更する
- *
- * @param   mode		      GFL_NET_CHANGEOVER_MODE_???
- * @param   bAuto		      TRUE:自動接続
- * @param   macAddress		接続先(親)へのMacAddress
- */
-//==================================================================
-extern void GFL_NET_ChangeoverModeSet(int mode, BOOL bAuto, const u8 *macAddress);
-
 //==============================================================================
 /**
  * @brief    Wi-Fiロビーへ接続する
