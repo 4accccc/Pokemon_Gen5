@@ -141,49 +141,7 @@ void PSTATUS_RIBBON_Term( PSTATUS_WORK *work , PSTATUS_RIBBON_WORK *ribbonWork )
 //--------------------------------------------------------------
 void PSTATUS_RIBBON_Main( PSTATUS_WORK *work , PSTATUS_RIBBON_WORK *ribbonWork )
 {
-  /*
-  BOOL isUpdatePos = FALSE;
-  u8 value = 2;
-  if( GFL_UI_KEY_GetCont() & PAD_BUTTON_X )
-  {
-    value = 24;
-  } 
-  
-  if( GFL_UI_KEY_GetCont() & PAD_KEY_DOWN &&
-      GFL_UI_KEY_GetCont() & PAD_BUTTON_R )
-  {
-    if( ribbonWork->pagePos < value )
-    {
-      ribbonWork->pagePos = 0;
-      isUpdatePos = TRUE;
-    }
-    else
-    if( ribbonWork->pagePos > 0 )
-    {
-      ribbonWork->pagePos -= value;
-      isUpdatePos = TRUE;
-    }
-  }
-  else
-  if( GFL_UI_KEY_GetCont() & PAD_KEY_UP &&
-      GFL_UI_KEY_GetCont() & PAD_BUTTON_R )
-  {
-    ribbonWork->pagePos += value;
-    isUpdatePos = TRUE;
-    if( ribbonWork->pagePos >= 
-       (ribbonWork->ribbonNum-PSTATUS_RIBBON_BAR_DIPS_NUM)*PSTATUS_RIBBON_BAR_HEIGHT )
-    {
-      ribbonWork->pagePos = (ribbonWork->ribbonNum-PSTATUS_RIBBON_BAR_DIPS_NUM)*PSTATUS_RIBBON_BAR_HEIGHT;
-    }
-  }
-  
-  if( isUpdatePos == TRUE )
-  {
-  }
-  */
-  
   PSTATUS_RIBBON_UpdateUI( work , ribbonWork );
-  
   PSTATUS_RIBBON_UpdatRibbon( work , ribbonWork );
 }
 
@@ -230,9 +188,8 @@ void PSTATUS_RIBBON_ReleaseResource( PSTATUS_WORK *work , PSTATUS_RIBBON_WORK *r
 #pragma mark [>Cell
 void PSTATUS_RIBBON_InitCell( PSTATUS_WORK *work , PSTATUS_RIBBON_WORK *ribbonWork )
 {
-  //バーのボタン
+  //選択カーソル
   {
-    u8 i;
     GFL_CLWK_DATA cellInitData;
     cellInitData.pos_x = 0;
     cellInitData.pos_y = 0;
@@ -240,16 +197,13 @@ void PSTATUS_RIBBON_InitCell( PSTATUS_WORK *work , PSTATUS_RIBBON_WORK *ribbonWo
     cellInitData.bgpri = 1;
     cellInitData.anmseq = 0;
     
-    for( i=0;i<SBT_MAX;i++ )
-    {
-      ribbonWork->clwkCur = GFL_CLACT_WK_Create( work->cellUnit ,
-                work->cellRes[SCR_NCG_RIBBON_CUR],
-                work->cellRes[SCR_PLT_RIBBON_CUR],
-                work->cellRes[SCR_ANM_RIBBON_CUR],
-                &cellInitData ,CLSYS_DEFREND_MAIN , work->heapId );
+    ribbonWork->clwkCur = GFL_CLACT_WK_Create( work->cellUnit ,
+              work->cellRes[SCR_NCG_RIBBON_CUR],
+              work->cellRes[SCR_PLT_RIBBON_CUR],
+              work->cellRes[SCR_ANM_RIBBON_CUR],
+              &cellInitData ,CLSYS_DEFREND_MAIN , work->heapId );
 
-      GFL_CLACT_WK_SetDrawEnable( ribbonWork->clwkCur , FALSE );
-    }
+    GFL_CLACT_WK_SetDrawEnable( ribbonWork->clwkCur , FALSE );
   }  
 }
 
@@ -668,6 +622,7 @@ static void PSTATUS_RIBBON_CreateRibbonBarFunc( PSTATUS_WORK *work , PSTATUS_RIB
   {
     u8 *srcData = ribbonWork->srcCellNcg->pRawData;
     u8 *chrAdr = GFL_BMP_GetCharacterAdrs( ribbonDispWork->bmpData );
+    //選択されたリボンなので土台のキャラずらす
     if( ribbonDispWork->dispRibbonNo == ribbonWork->selectType )
     {
       srcData = (u8*)((u32)srcData + PSTATUS_RIBBON_BAR_CHARSIZE);
@@ -680,6 +635,7 @@ static void PSTATUS_RIBBON_CreateRibbonBarFunc( PSTATUS_WORK *work , PSTATUS_RIB
     WORDSET *wordSet = WORDSET_Create( work->heapId );
     WORDSET_RegisterNumber( wordSet , 0 , ribbonDispWork->dispRibbonNo , 2 , STR_NUM_DISP_ZERO , STR_NUM_CODE_DEFAULT );
     WORDSET_ExpandStr( wordSet , dstStr , srcStr );
+    //ここのフォントはOBJのパレットを使っているので注意！！！ 
     PRINTSYS_PrintQueColor( work->printQue , ribbonDispWork->bmpData , 
             10 , 6 , dstStr , work->fontHandle , PRINTSYS_LSB_Make(1,2,0) );
     GFL_STR_DeleteBuffer( srcStr );

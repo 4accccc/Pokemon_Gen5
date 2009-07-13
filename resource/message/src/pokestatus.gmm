@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ariizumi_nobuhiko" host="W00147" date="2009-07-07T20:33:15"/>
+	<create user="ariizumi_nobuhiko" host="W00147" date="2009-07-10T22:13:39"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -279,7 +279,7 @@
 			<list entry="0" japanese="デフォルト" english="Default" colorID="0"/>
 		</group>
 		<number position="-1" width="100"/>
-		<comment position="1" width="100"/>
+		<comment position="1" width="154"/>
 		<erase position="-1" width="100"/>
 		<language japanese="JPN" english="JPN">
 			<message position="2" width="274"/>
@@ -305,7 +305,7 @@
 		</language>
 	</columns>
 
-	<dialog left="221" top="154" right="926" bottom="774" maximized="no" rayout="Vertical2">
+	<dialog left="89" top="154" right="794" bottom="774" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="0" style="0000" width="530"/>
@@ -352,9 +352,10 @@
 		<language name="JPN_KANJI" font=" 1:small" width="8">♀</language>
 	</row>
 
-	<row id="mes_status_01_04" back-color="#ffff80,,,,,,,,,,,,,,,,,">
+	<row id="mes_status_01_04" back-color="#ffffff,,,#ffff80,,,,,,,,,,,,,,">
 		<comment>対象ポケモンのレベル
-0：レベル数</comment>
+0：レベル数
+仮でLvの文字</comment>
 		<language name="JPN" font=" 1:small" width="24">Lv.[2:02:３桁:0]</language>
 		<language name="JPN_KANJI" font=" 1:small" width="24">Lv.[2:02:３桁:0]</language>
 	</row>
@@ -1645,28 +1646,28 @@
 		<language name="JPN_KANJI" font=" 1:small" width="40">[2:01:２桁:0]</language>
 	</row>
 
-	<row id="mes_status_06_10">
+	<row id="mes_status_06_10" back-color="#c0c0c0,,,,,,,,,,,,,,,,,">
 		<comment>対象ポケモンの手持ち技２の現在のＰＰ
 0：現在のＰＰ値</comment>
 		<language name="JPN" font=" 1:small" width="40">[2:01:２桁:0]</language>
 		<language name="JPN_KANJI" font=" 1:small" width="40">[2:01:２桁:0]</language>
 	</row>
 
-	<row id="mes_status_06_11">
+	<row id="mes_status_06_11" back-color="#c0c0c0,,,,,,,,,,,,,,,,,">
 		<comment>対象ポケモンの手持ち技３の現在のＰＰ
 0：現在のＰＰ値</comment>
 		<language name="JPN" font=" 1:small" width="40">[2:01:２桁:0]</language>
 		<language name="JPN_KANJI" font=" 1:small" width="40">[2:01:２桁:0]</language>
 	</row>
 
-	<row id="mes_status_06_12">
+	<row id="mes_status_06_12" back-color="#c0c0c0,,,,,,,,,,,,,,,,,">
 		<comment>対象ポケモンの手持ち技４の現在のＰＰ
 0：現在のＰＰ値</comment>
 		<language name="JPN" font=" 1:small" width="40">[2:01:２桁:0]</language>
 		<language name="JPN_KANJI" font=" 1:small" width="40">[2:01:２桁:0]</language>
 	</row>
 
-	<row id="mes_status_06_13">
+	<row id="mes_status_06_13" back-color="#c0c0c0,,,,,,,,,,,,,,,,,">
 		<comment>対象ポケモンの手持ち技５の現在のＰＰ（技覚え処理）
 0：現在のＰＰ値</comment>
 		<language name="JPN" font=" 1:small" width="40">[2:01:２桁:0]</language>
@@ -1680,28 +1681,28 @@
 		<language name="JPN_KANJI" font=" 1:small">[2:01:２桁:0]</language>
 	</row>
 
-	<row id="mes_status_06_15">
+	<row id="mes_status_06_15" back-color="#c0c0c0,,,,,,,,,,,,,,,,,">
 		<comment>対象ポケモンの手持ち技２の最大のＰＰ
 0：最大ＰＰ値</comment>
 		<language name="JPN" font=" 1:small">[2:01:２桁:0]</language>
 		<language name="JPN_KANJI" font=" 1:small">[2:01:２桁:0]</language>
 	</row>
 
-	<row id="mes_status_06_16">
+	<row id="mes_status_06_16" back-color="#c0c0c0,,,,,,,,,,,,,,,,,">
 		<comment>対象ポケモンの手持ち技３の最大のＰＰ
 0：最大ＰＰ値</comment>
 		<language name="JPN" font=" 1:small">[2:01:２桁:0]</language>
 		<language name="JPN_KANJI" font=" 1:small">[2:01:２桁:0]</language>
 	</row>
 
-	<row id="mes_status_06_17">
+	<row id="mes_status_06_17" back-color="#c0c0c0,,,,,,,,,,,,,,,,,">
 		<comment>対象ポケモンの手持ち技４の最大のＰＰ
 0：最大ＰＰ値</comment>
 		<language name="JPN" font=" 1:small">[2:01:２桁:0]</language>
 		<language name="JPN_KANJI" font=" 1:small">[2:01:２桁:0]</language>
 	</row>
 
-	<row id="mes_status_06_18">
+	<row id="mes_status_06_18" back-color="#c0c0c0,,,,,,,,,,,,,,,,,">
 		<comment>対象ポケモンの手持ち技５の最大のＰＰ（技覚え処理）
 0：最大ＰＰ値</comment>
 		<language name="JPN" font=" 1:small">[2:01:２桁:0]</language>

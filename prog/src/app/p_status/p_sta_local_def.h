@@ -36,6 +36,10 @@
 #define PSTATUS_BG_PLT_BAR  (0x9)
 #define PSTATUS_BG_PLT_FONT (0xe)
 
+//上画面BGパレット
+#define PSTATUS_BG_SUB_PLT_HPBAR (0xd)
+#define PSTATUS_BG_SUB_PLT_FONT (0xe)
+
 //メインページの幅(キャラ単位)
 #define PSTATUS_MAIN_PAGE_WIDTH (19)
 
@@ -44,22 +48,43 @@
 #define PSTATUS_STR_OFS_X (2)
 #define PSTATUS_STR_OFS_Y (2)
 
+//フォントカラー
+#define PSTATUS_STR_COL_WHITE (PRINTSYS_LSB_Make(0xf,2,0))
+#define PSTATUS_STR_COL_BLACK (PRINTSYS_LSB_Make(1,2,0))
+#define PSTATUS_STR_COL_BLUE (PRINTSYS_LSB_Make(5,6,0))
+#define PSTATUS_STR_COL_RED (PRINTSYS_LSB_Make(3,4,0))
+
+//フォントカラー(表題と数値用
+#define PSTATUS_STR_COL_TITLE PSTATUS_STR_COL_WHITE
+#define PSTATUS_STR_COL_VALUE PSTATUS_STR_COL_BLACK
+
+
+
 #pragma mark[>define OBJ
 #define PSTATUS_OBJPLT_ICON (0x0)
-#define PSTATUS_OBJPLT_RIBBON_BAR (0xA)
-#define PSTATUS_OBJPLT_RIBBON_CUR (0xB)
+#define PSTATUS_OBJPLT_SKILL_PLATE (0xa)
+#define PSTATUS_OBJPLT_RIBBON_BAR (0xb)
+#define PSTATUS_OBJPLT_RIBBON_CUR (0xc)
+
+#define PSTATUS_OBJPLT_SUB_HPBAR (0xd)
 
 //OBJリソースIdx
 enum PSTATUS_CEL_RESOURCE
 {
   SCR_PLT_ICON,
+  SCR_PLT_HPBASE,
+  SCR_PLT_SKILL,
   SCR_PLT_RIBBON_BAR,
   SCR_PLT_RIBBON_CUR,
   
   SCR_NCG_ICON,
+  SCR_NCG_HPBASE,
+  SCR_NCG_SKILL,
   SCR_NCG_RIBBON_CUR,
   
   SCR_ANM_ICON,
+  SCR_ANM_HPBASE,
+  SCR_ANM_SKILL,
   SCR_ANM_RIBBON_CUR,
   
   SCR_MAX ,
@@ -131,6 +156,7 @@ typedef enum
 typedef struct _PSTATUS_SUB_WORK PSTATUS_SUB_WORK;
 typedef struct _PSTATUS_INFO_WORK PSTATUS_INFO_WORK;
 typedef struct _PSTATUS_RIBBON_WORK PSTATUS_RIBBON_WORK;
+typedef struct _PSTATUS_SKILL_WORK PSTATUS_SKILL_WORK;
 
 typedef struct
 {
@@ -163,6 +189,7 @@ typedef struct
   //サブワーク
   PSTATUS_SUB_WORK *subWork;
   PSTATUS_INFO_WORK *infoWork;
+  PSTATUS_SKILL_WORK *skillWork;
   PSTATUS_RIBBON_WORK *ribbonWork;
   
   //Cell系
@@ -170,9 +197,8 @@ typedef struct
   GFL_CLUNIT  *cellUnit;
   GFL_CLWK    *clwkBarIcon[SBT_MAX];
 
-#if PM_DEBUG
-  POKEMON_PARAM *debPp;
-#endif
+  //pppの時ppに変換するよう
+  POKEMON_PARAM *calcPP;
 
 }PSTATUS_WORK;
 

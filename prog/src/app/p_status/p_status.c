@@ -103,6 +103,11 @@ static GFL_PROC_RESULT PokeStatusProc_Init( GFL_PROC * proc, int * seq , void *p
           break;
         }
 #endif
+        {
+          u16 oyaName[5] = {L'ƒu',L'ƒ‰',L'ƒb',L'ƒN',0xFFFF};
+          PP_Put( pPara , ID_PARA_oyaname_raw , (u32)&oyaName[0] );
+          PP_Put( pPara , ID_PARA_oyasex , PTL_SEX_MALE );
+        }
         PokeParty_Add( pokeParty , pPara );
         GFL_HEAP_FreeMemory( pPara );
       }

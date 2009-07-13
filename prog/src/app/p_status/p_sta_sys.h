@@ -10,6 +10,8 @@
 //======================================================================
 #pragma once
 
+#include "print/printsys.h"
+#include "print/wordset.h"
 #include "p_sta_local_def.h"
 
 extern const BOOL PSTATUS_InitPokeStatus( PSTATUS_WORK *work );
@@ -18,4 +20,15 @@ extern const BOOL PSTATUS_UpdatePokeStatus( PSTATUS_WORK *work );
 extern void PSTATUS_SetActiveBarButton( PSTATUS_WORK *work , const BOOL isLock );
 
 extern const POKEMON_PASO_PARAM* PSTATUS_UTIL_GetCurrentPPP( PSTATUS_WORK *work );
+extern const POKEMON_PARAM* PSTATUS_UTIL_GetCurrentPP( PSTATUS_WORK *work );
+
+//•¶Žš•`‰æ
+extern void PSTATUS_UTIL_DrawStrFunc( PSTATUS_WORK *work , GFL_BMPWIN *bmpWin , 
+                                      const u16 strId , const u16 posX , const u16 posY , const u16 col );
+extern void PSTATUS_UTIL_DrawStrFuncRight( PSTATUS_WORK *work , GFL_BMPWIN *bmpWin , 
+                                      const u16 strId , const u16 posX , const u16 posY , const u16 col );
+extern void PSTATUS_UTIL_DrawValueStrFunc( PSTATUS_WORK *work , GFL_BMPWIN *bmpWin , 
+                                      WORDSET *wordSet, const u16 strId , const u16 posX , const u16 posY , const u16 col );
+extern void PSTATUS_UTIL_DrawValueStrFuncRight( PSTATUS_WORK *work , GFL_BMPWIN *bmpWin , 
+                                      WORDSET *wordSet, const u16 strId , const u16 posX , const u16 posY , const u16 col );
 

@@ -63,12 +63,6 @@
 #define PSTATUS_SUB_STR_ITEMNAME_X ( 8 + PSTATUS_STR_OFS_X)
 #define PSTATUS_SUB_STR_ITEMNAME_Y (16 + PSTATUS_STR_OFS_Y)
 
-//フォントカラー
-#define PSTATUS_SUB_STR_COL (PRINTSYS_LSB_Make(1,2,0))
-//名前男女用
-#define PSTATUS_SUB_STR_BLUE (PRINTSYS_LSB_Make(5,6,0))
-#define PSTATUS_SUB_STR_RED (PRINTSYS_LSB_Make(3,4,0))
-
 //======================================================================
 //	enum
 //======================================================================
@@ -231,7 +225,7 @@ void PSTATUS_SUB_DrawStr( PSTATUS_WORK *work , PSTATUS_SUB_WORK *subWork , const
 
     PRINTSYS_PrintQueColor( work->printQue , GFL_BMPWIN_GetBmp( subWork->bmpWinUpper ) , 
             PSTATUS_SUB_STR_NAME_X , PSTATUS_SUB_STR_NAME_Y , 
-            dstStr , work->fontHandle , PSTATUS_SUB_STR_COL);
+            dstStr , work->fontHandle , PSTATUS_STR_COL_BLACK);
 
     GFL_STR_DeleteBuffer( nameStr );
     GFL_STR_DeleteBuffer( srcStr );
@@ -248,7 +242,7 @@ void PSTATUS_SUB_DrawStr( PSTATUS_WORK *work , PSTATUS_SUB_WORK *subWork , const
       srcStr = GFL_MSG_CreateString( work->msgHandle , mes_status_01_02 ); 
       PRINTSYS_PrintQueColor( work->printQue , GFL_BMPWIN_GetBmp( subWork->bmpWinUpper ) , 
               PSTATUS_SUB_STR_SEX_X , PSTATUS_SUB_STR_SEX_Y ,
-              srcStr , work->fontHandle , PSTATUS_SUB_STR_BLUE );
+              srcStr , work->fontHandle , PSTATUS_STR_COL_BLUE );
       GFL_STR_DeleteBuffer( srcStr );
     }
     else if( sex == PTL_SEX_FEMALE )
@@ -256,7 +250,7 @@ void PSTATUS_SUB_DrawStr( PSTATUS_WORK *work , PSTATUS_SUB_WORK *subWork , const
       srcStr = GFL_MSG_CreateString( work->msgHandle , mes_status_01_03 ); 
       PRINTSYS_PrintQueColor( work->printQue , GFL_BMPWIN_GetBmp( subWork->bmpWinUpper ) , 
               PSTATUS_SUB_STR_SEX_X , PSTATUS_SUB_STR_SEX_Y ,
-              srcStr , work->fontHandle , PSTATUS_SUB_STR_RED );
+              srcStr , work->fontHandle , PSTATUS_STR_COL_RED );
       GFL_STR_DeleteBuffer( srcStr );
     }
   }
@@ -273,7 +267,7 @@ void PSTATUS_SUB_DrawStr( PSTATUS_WORK *work , PSTATUS_SUB_WORK *subWork , const
     WORDSET_ExpandStr( wordSet , dstStr , srcStr );
     PRINTSYS_PrintQueColor( work->printQue , GFL_BMPWIN_GetBmp( subWork->bmpWinUpper ) , 
             PSTATUS_SUB_STR_LV_X , PSTATUS_SUB_STR_LV_Y , 
-            dstStr , work->fontHandle , PSTATUS_SUB_STR_COL );
+            dstStr , work->fontHandle , PSTATUS_STR_COL_BLACK );
 
     GFL_STR_DeleteBuffer( srcStr );
     GFL_STR_DeleteBuffer( dstStr );
@@ -286,7 +280,7 @@ void PSTATUS_SUB_DrawStr( PSTATUS_WORK *work , PSTATUS_SUB_WORK *subWork , const
     srcStr = GFL_MSG_CreateString( work->msgHandle , mes_status_01_05 ); 
     PRINTSYS_PrintQueColor( work->printQue , GFL_BMPWIN_GetBmp( subWork->bmpWinDown ) , 
             PSTATUS_SUB_STR_ITEM_X , PSTATUS_SUB_STR_ITEM_Y ,
-            srcStr , work->fontHandle , PSTATUS_SUB_STR_COL );
+            srcStr , work->fontHandle , PSTATUS_STR_COL_BLACK );
     GFL_STR_DeleteBuffer( srcStr );
   }
 
@@ -302,7 +296,7 @@ void PSTATUS_SUB_DrawStr( PSTATUS_WORK *work , PSTATUS_SUB_WORK *subWork , const
     WORDSET_ExpandStr( wordSet , dstStr , srcStr );
     PRINTSYS_PrintQueColor( work->printQue , GFL_BMPWIN_GetBmp( subWork->bmpWinDown ) , 
             PSTATUS_SUB_STR_ITEMNAME_X , PSTATUS_SUB_STR_ITEMNAME_Y , 
-            dstStr , work->fontHandle , PSTATUS_SUB_STR_COL );
+            dstStr , work->fontHandle , PSTATUS_STR_COL_BLACK );
 
     GFL_STR_DeleteBuffer( srcStr );
     GFL_STR_DeleteBuffer( dstStr );

@@ -1296,7 +1296,17 @@ static void PLIST_SelectMenuExit( PLIST_WORK *work )
 
   case PMIT_STATSU:
     {
-      PLIST_ChangeProcInit( work , &PokeStatus_ProcData , FS_OVERLAY_ID(poke_status) , NULL );
+      PSTATUS_DATA *psData = GFL_HEAP_AllocMemory( work->heapId , sizeof(PSTATUS_DATA) );
+      
+      psData->ppd = (void*)work->plData->pp;
+      psData->cfg = work->plData->cfg;
+
+      psData->ppt = PST_PP_TYPE_POKEPARTY;
+      psData->max = PokeParty_GetPokeCount( work->plData->pp );;
+      psData->mode = PST_MODE_NORMAL;
+      psData->pos = work->pokeCursor;
+      
+      PLIST_ChangeProcInit( work , &PokeStatus_ProcData , FS_OVERLAY_ID(poke_status) , (void*)psData );
     }
     break;
     

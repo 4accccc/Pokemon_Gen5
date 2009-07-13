@@ -452,6 +452,7 @@ SRCS_OVERLAY_POKE_STATUS = app/p_status/p_sta_sys.c \
 		app/p_status/p_sta_sub.c \
 		app/p_status/p_sta_info.c \
 		app/p_status/p_sta_ribbon.c \
+		app/p_status/p_sta_skill.c \
 		app/p_status/p_sta_oam.c
 
 
