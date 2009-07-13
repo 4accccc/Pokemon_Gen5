@@ -1646,9 +1646,18 @@ static void scproc_Fight_WazaEffective( BTL_SVFLOW_WORK* wk, WazaID waza, u8 atk
 {
   BtlPokePos  atPos, defPos;
 
+  if( waza == WAZANO_IWANADARE ){
+    BTL_Printf(" IWANADARE: defPokeID=%d\n", defPokeID);
+  }
+
   atPos = BTL_MAIN_PokeIDtoPokePos( wk->mainModule, wk->pokeCon, atkPokeID );
   defPos = ( defPokeID != BTL_POKEID_NULL )?
     BTL_MAIN_PokeIDtoPokePos( wk->mainModule, wk->pokeCon, defPokeID ) : BTL_POS_NULL;
+
+  if( waza == WAZANO_IWANADARE ){
+    BTL_Printf(" IWANADARE: defPokePos=%d\n", defPos);
+  }
+
 
   SCQUE_PUT_ReservedPos( wk->que, que_reserve_pos, SC_ACT_WAZA_EFFECT, atPos, defPos, waza );
 }
@@ -2189,7 +2198,7 @@ static void scproc_Fight_damage_side_plural( BTL_SVFLOW_WORK* wk,
   poke_cnt = TargetPokeRec_GetCount( targets );
   GF_ASSERT(poke_cnt < BTL_POSIDX_MAX);
 
-  wazaEff_SetNoTarget( wk );
+//  wazaEff_SetNoTarget( wk );
   dmg_sum = 0;
   for(i=0; i<poke_cnt; ++i)
   {
@@ -2202,6 +2211,7 @@ static void scproc_Fight_damage_side_plural( BTL_SVFLOW_WORK* wk,
     if( dmg[i] ){
       wazaDmgRec_Add( attacker, bpp[i], &wk->wazaParam, dmg[i] );
       BPP_TURNFLAG_Set( bpp[i], BPP_TURNFLG_DAMAGED );
+      wazaEff_SetTarget( wk, bpp[i] );
     }
   }
 

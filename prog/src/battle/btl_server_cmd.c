@@ -529,7 +529,14 @@ void SCQUE_PUT_ReservedPos( BTL_SERVER_CMD_QUE* que, u16 pos, ServerCmd cmd, ...
     }
     va_end( list );
 
-    BTL_Printf("Write Reserved Pos ... pos=%d, cmd=%d\n", pos, cmd );
+    BTL_Printf("Write Reserved Pos ... pos=%d, cmd=%d", pos, cmd );
+    if( arg_cnt ){
+      TAYA_Printf(" args = ");
+      for( i=0; i<arg_cnt; ++i ){
+        TAYA_Printf("%d,", ArgBuffer[i]);
+      }
+    }
+    TAYA_Printf("\n");
 
     {
       u16 default_read_pos = que->readPtr;

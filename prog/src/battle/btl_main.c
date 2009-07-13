@@ -1350,6 +1350,7 @@ u8 BTL_MAIN_BtlPosToViewPos( const BTL_MAIN_MODULE* wk, BtlPokePos pos )
       { BTLV_MCSS_POS_A, BTLV_MCSS_POS_C, BTLV_MCSS_POS_E },
     };
     u8 posIdx = btlPos_to_sidePosIdx( pos );
+    BTL_Printf("pos=%d -> isPlayerSide=%d, posIdx=%d\n", pos, isPlayerSide, posIdx);
     return vpos[ isPlayerSide ][ posIdx ];
   }
 }
