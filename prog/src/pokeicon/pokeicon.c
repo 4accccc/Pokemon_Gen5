@@ -306,7 +306,7 @@ u32 POKEICON_GetCellSubArcIndex(void)
 {
 	GXOBJVRamModeChar vrammode;
 	
-	vrammode = GX_GetOBJVRamModeChar();
+	vrammode = GXS_GetOBJVRamModeChar();
 	switch(vrammode){
 	case GX_OBJVRAMMODE_CHAR_1D_32K:
 		return NARC_poke_icon_poke_icon_32k_NCER;
