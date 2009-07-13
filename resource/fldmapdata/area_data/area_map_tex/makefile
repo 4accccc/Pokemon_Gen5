@@ -20,7 +20,7 @@ include ../area_common.def
 #------------------------------------------------------------------------------
 #※コンバート作業が必要なユーザーの名前を記述する
 #------------------------------------------------------------------------------
-USERS	=	tamada nakatsui fuchino lee_hyunjung fujiwara_maiko
+USERS	=	tamada nakatsui fuchino lee_hyunjung fujiwara_maiko ibe_mana tanoue_reiko
 
 #------------------------------------------------------------------------------
 #※ここに作成するnarc名を書く
