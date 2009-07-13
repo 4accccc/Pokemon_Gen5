@@ -429,7 +429,7 @@ static MAINSEQ_RESULT mainSeqFunc_setup(GAMESYS_WORK *gsys, FIELDMAP_WORK *field
       fieldWork->heapID, fieldWork->g3Dcamera );
 
   // 地名表示システム作成
-  fieldWork->placeNameSys = FIELD_PLACE_NAME_Create( fieldWork->heapID );
+  fieldWork->placeNameSys = FIELD_PLACE_NAME_Create( fieldWork->heapID, fieldWork->fldMsgBG );
 
   fieldWork->camera_control = FIELD_CAMERA_Create(
       fieldWork,
@@ -700,6 +700,9 @@ static MAINSEQ_RESULT mainSeqFunc_free(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldW
     GAMEDATA_SetRailLocation(gamedata, &railLoc);
   }
   
+  // 地名表示システム破棄
+  FIELD_PLACE_NAME_Delete( fieldWork->placeNameSys );
+
   //フィールドエンカウント破棄
   FIELD_ENCOUNT_Delete( fieldWork->encount );
 
@@ -749,9 +752,6 @@ static MAINSEQ_RESULT mainSeqFunc_free(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldW
   
   FLDMSGBG_Delete( fieldWork->fldMsgBG );
 
-  // 地名表示システム破棄
-  FIELD_PLACE_NAME_Delete( fieldWork->placeNameSys );
-  
   FIELD_DEBUG_Delete( fieldWork->debugWork );
 
 	GAMEDATA_SetFrameSpritEnable(GAMESYSTEM_GetGameData(gsys), FALSE);

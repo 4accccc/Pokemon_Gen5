@@ -71,7 +71,8 @@ SUBDIRS	=	wmi \
 			ballslow \
 			bucket \
 			p_status \
-			app_menu_common
+			app_menu_common \
+			place_name
 
 
 include $(RESOURCE_MACRO)

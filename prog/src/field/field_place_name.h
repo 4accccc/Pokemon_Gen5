@@ -8,6 +8,7 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////
 #pragma once
 #include <gflib.h>
+#include "field/field_msgbg.h"
 
 //====================================================================================
 /**
@@ -27,12 +28,13 @@ typedef struct _FIELD_PLACE_NAME FIELD_PLACE_NAME;
 /**
  * @brief 地名表示システムを作成する
  *
- * @param heap_id 使用するヒープID
+ * @param heap_id      使用するヒープID
+ * @param p_fld_msg_bg 使用するメッセージ表示システム
  *
  * @return 地名表示システム・ワークへのポインタ
  */
 //------------------------------------------------------------------------------------
-extern FIELD_PLACE_NAME* FIELD_PLACE_NAME_Create( HEAPID heap_id );
+extern FIELD_PLACE_NAME* FIELD_PLACE_NAME_Create( HEAPID heap_id, FLDMSGBG* p_fld_msg_bg );
 
 //------------------------------------------------------------------------------------
 /**
