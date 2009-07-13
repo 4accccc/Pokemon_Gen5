@@ -1099,7 +1099,7 @@ static void setup_core( BTLV_CORE* wk, HEAPID heapID )
   //ＢＧモード設定
   {
     static const GFL_BG_SYS_HEADER sysHeader = {
-      GX_DISPMODE_GRAPHICS, GX_BGMODE_0, GX_BGMODE_0, GX_BG0_AS_3D,
+      GX_DISPMODE_GRAPHICS, GX_BGMODE_0, GX_BGMODE_3, GX_BG0_AS_3D,
     };
     GFL_BG_SetBGMode( &sysHeader );
   }
@@ -1109,6 +1109,7 @@ static void setup_core( BTLV_CORE* wk, HEAPID heapID )
     GFL_G3D_Init( GFL_G3D_VMANLNK, GFL_G3D_TEX128K, GFL_G3D_VMANLNK, GFL_G3D_PLT16K, 0, heapID, NULL );
     GFL_G3D_SetSystemSwapBufferMode( GX_SORTMODE_AUTO, GX_BUFFERMODE_Z );
     G3X_AlphaBlend( TRUE );
+//    G3X_AlphaTest( TRUE, 31 );    //alpha0でワイヤーフレームにならないようにする
     G3X_EdgeMarking( TRUE );
     G3X_AntiAlias( FALSE );
     G3X_SetFog( FALSE, 0, 0, 0 );
