@@ -1017,6 +1017,7 @@ static DMenuCallProc_MusicalSelect( DEBUG_MENU_EVENT_WORK *wk )
 		work->fieldWork = fieldWork;
 		work->musInitWork = NULL;
 		work->dupInitWork = NULL;
+		work->musPoke = NULL;
 		work->pokePara = NULL;
 		return( TRUE );
 }
@@ -1148,6 +1149,7 @@ static void setupMusicarAll(DEB_MENU_MUS_WORK * work)
 	work->musInitWork->saveCtrl = GAMEDATA_GetSaveControlWork( GAMESYSTEM_GetGameData(work->gmSys) ); 
 	work->musInitWork->pokePara = PP_Create( MONSNO_PIKUSII , 20 , PTL_SETUP_POW_AUTO , HEAPID_PROC );
 	work->musInitWork->isComm = FALSE;
+	work->musInitWork->isDebug = FALSE;
 	work->musInitWork->gameComm = GAMESYSTEM_GetGameCommSysPtr(work->gmSys);
   work->newEvent = EVENT_FieldSubProc(work->gmSys, work->fieldWork,
         NO_OVERLAY_ID, &Musical_ProcData, work->musInitWork );
