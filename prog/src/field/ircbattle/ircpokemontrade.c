@@ -240,8 +240,6 @@ static const NetRecvFuncTable _PacketTbl[] = {
 static void _messageDelete(IRC_POKEMON_TRADE *pWork)
 {
 	if(pWork->MessageWin){
-
-		TOUCH_SW_Reset( pWork->TouchSubWindowSys );
 		GFL_BMPWIN_ClearScreen(pWork->MessageWin);
 		GFL_BG_LoadScreenV_Req(GFL_BG_FRAME1_S);
 		BmpWinFrame_Clear(pWork->MessageWin, WINDOW_TRANS_OFF);
@@ -645,7 +643,7 @@ static void _recvChangeCancel(const int netID, const int size, const void* pData
 		return;	//自分のハンドルと一致しない場合、親としてのデータ受信なので無視する
 	}
 	//もどす
-
+	TOUCH_SW_Reset( pWork->TouchSubWindowSys );
 	_messageDelete(pWork);
 	
 	_CHANGE_STATE(pWork, _touchState);
@@ -732,11 +730,19 @@ static void _noneState(IRC_POKEMON_TRADE* pWork)
 	//なにもしない
 }
 
-
+static void _messageWaitState(IRC_POKEMON_TRADE* pWork)
+{
+	if(GFL_UI_TP_GetTrg()){
+		_messageDelete(pWork);
+		_CHANGE_STATE(pWork, _touchState);
+	}
+}
 
 static void _changeWaitState(IRC_POKEMON_TRADE* pWork)
 {
 	int i;
+	int id = 1-GFL_NET_SystemGetCurrentID();
+
 	for(i=0;i<2;i++){
 		if(pWork->bChangeOK[i]==FALSE){
 			return;
@@ -745,12 +751,20 @@ static void _changeWaitState(IRC_POKEMON_TRADE* pWork)
 
 	//交換する
 	// 相手のポケを自分の選んでいた場所に入れる
-	if(pWork->selectBoxno == BOX_MAX_TRAY){ //
+	if(pWork->selectBoxno == BOX_MAX_TRAY){ //もちものの交換の場合
+		//@@OO PPPからPPを作ってくれる物が無いので仮
+		POKEPARTY* party = GAMEDATA_GetMyPokemon(GAMESYSTEM_GetGameData(pWork->pGameSys));
+		int monsno = PPP_Get(pWork->recvPoke[id],ID_PARA_monsno,NULL);
+		int lv = PPP_Get(pWork->recvPoke[id],ID_PARA_level,NULL);
+		int id = PPP_Get(pWork->recvPoke[id],ID_PARA_id_no,NULL);
+		POKEMON_PARAM* pp = PP_Create(monsno,lv ,id, pWork->heapID);
+
+		PokeParty_SetMemberData(party, pWork->selectIndex, pp);
+		GFL_HEAP_FreeMemory(pp);
 	}
 	else{
 		OS_TPrintf("change %d %d \n",pWork->selectBoxno, pWork->selectIndex);
-		
-		BOXDAT_PutPokemonPos(pWork->pBox, pWork->selectBoxno, pWork->selectIndex,  pWork->recvPoke[1]);
+		BOXDAT_PutPokemonPos(pWork->pBox, pWork->selectBoxno, pWork->selectIndex,  pWork->recvPoke[id]);
 	}
 	pWork->selectBoxno = 0;
 	pWork->selectIndex = -1;
@@ -758,10 +772,11 @@ static void _changeWaitState(IRC_POKEMON_TRADE* pWork)
 	PSTATUS_SUB_PokeDeleteMcss(pWork, 0);
 	PSTATUS_SUB_PokeDeleteMcss(pWork, 1);
 
-	if(pWork->selectBoxno==pWork->nowBoxno){
-		_InitBoxIcon(pWork->pBox,pWork->nowBoxno,pWork);  //再描画
-	}
-	_CHANGE_STATE(pWork, _touchState);
+	_InitBoxIcon(pWork->pBox,pWork->nowBoxno,pWork);  //再描画
+
+	_msgWindowCreate(pWork, IRCBTL_STR_23);
+	
+	_CHANGE_STATE(pWork, _messageWaitState);
 }
 
 
@@ -773,6 +788,7 @@ static void _changeYesNoWaitState(IRC_POKEMON_TRADE* pWork)
 	result = TOUCH_SW_Main( pWork->TouchSubWindowSys );
 	switch(result){				//こうかん
 	case TOUCH_SW_RET_YES:						//はい
+		TOUCH_SW_Reset( pWork->TouchSubWindowSys );
 		_messageDelete(pWork);
 		GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(),_NETCMD_CHANGE_POKEMON,0,NULL);
 		_CHANGE_STATE(pWork,_changeWaitState);
