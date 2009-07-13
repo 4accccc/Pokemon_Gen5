@@ -357,7 +357,7 @@ static void _setPokemonStatusMessage(IRC_POKEMON_TRADE *pWork, int side,const PO
   GFL_BMPWIN_TransVramCharacter(pWork->StatusWin[sidew+1]);
 
 	GFL_BG_LoadScreenV_Req( frame );
-	OS_TPrintf("ポケモン文字表示\n");
+	//OS_TPrintf("ポケモン文字表示\n");
 
 }
 
@@ -404,7 +404,7 @@ static void _msgWindowCreate(IRC_POKEMON_TRADE* pWork,int strno)
   PRINTSYS_Print( GFL_BMPWIN_GetBmp(pWork->MessageWin), 4, 4, pWork->pStrBuf, pWork->pFontHandle);
   GFL_BMPWIN_TransVramCharacter(pWork->MessageWin);
 	GFL_BG_LoadScreenV_Req( frame );
-	OS_TPrintf("メッセージ\n");
+	//OS_TPrintf("メッセージ\n");
 
 }
 
@@ -688,7 +688,7 @@ static void _recvChangePokemon(const int netID, const int size, const void* pDat
 	if(pNetHandle != GFL_NET_HANDLE_GetCurrentHandle()){
 		return;	//自分のハンドルと一致しない場合、親としてのデータ受信なので無視する
 	}
-	OS_TPrintf("こうかん %d\n", netID);
+	//OS_TPrintf("こうかん %d\n", netID);
 	pWork->bChangeOK[netID] = TRUE;
 
 
@@ -763,7 +763,7 @@ static void _changeWaitState(IRC_POKEMON_TRADE* pWork)
 		GFL_HEAP_FreeMemory(pp);
 	}
 	else{
-		OS_TPrintf("change %d %d \n",pWork->selectBoxno, pWork->selectIndex);
+		//OS_TPrintf("change %d %d \n",pWork->selectBoxno, pWork->selectIndex);
 		BOXDAT_PutPokemonPos(pWork->pBox, pWork->selectBoxno, pWork->selectIndex,  pWork->recvPoke[id]);
 	}
 	pWork->selectBoxno = 0;
@@ -906,6 +906,12 @@ static void _touchState(IRC_POKEMON_TRADE* pWork)
 	}
 	if(GFL_UI_TP_GetCont()==FALSE){  //ポケモンをつかむ
 
+		if(pWork->nowBoxno == pWork->selectBoxno){
+			if(pWork->selectIndex == pWork->catchIndex){
+				pWork->catchIndex = -1;  //さっきと同じ物をつかんでいた場合は何もしない
+			}
+		}
+		
 		if((pWork->catchIndex != -1) && !pWork->bUpVec){
 			if(pWork->nowBoxno == pWork->selectBoxno){   //つかんでた物を元に戻す
 				GFL_CLACT_WK_SetDrawEnable( pWork->pokeIcon[pWork->catchIndex],TRUE);

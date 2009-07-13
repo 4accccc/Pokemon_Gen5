@@ -1644,7 +1644,7 @@ static void WH_StateOutStartScan(void *arg)
 			}
 
 
-			WH_TRACE("‹­“x %d\n",WMSP_GetRssi8(bd->rssi));
+//			WH_TRACE("‹­“x %d\n",WMSP_GetRssi8(bd->rssi));
 			if(WMSP_GetRssi8(bd->rssi) < 30){
 				continue;
 			}
