@@ -123,6 +123,7 @@ extern BOOL FLDMSGBG_CheckFinishPrint( FLDMSGBG *fmb );
 extern PRINT_QUE * FLDMSGBG_GetPrintQue( FLDMSGBG *fmb );
 extern GFL_FONT * FLDMSGBG_GetFontHandle( FLDMSGBG *fmb );
 extern GFL_MSGDATA * FLDMSGBG_CreateMSGDATA( FLDMSGBG *fmb, u32 arcDatIDMsg );
+extern void FLDMSGBG_DeleteMSGDATA( GFL_MSGDATA *msgData );
 
 //メッセージ表示
 extern FLDMSGPRINT * FLDMSGPRINT_SetupPrint(
@@ -202,6 +203,9 @@ extern void FLDMSGWIN_STREAM_PrintStrBufStart(
 extern BOOL FLDMSGWIN_STREAM_Print( FLDMSGWIN_STREAM *msgWin );
 extern FLDMSGWIN_STREAM * FLDMSGWIN_STREAM_AddTalkWin(
     FLDMSGBG *fmb, GFL_MSGDATA *msgData );
+extern void FLDMSGWIN_STREAM_ClearMessage( FLDMSGWIN_STREAM *msgWin );
+extern void FLDMSGWIN_STREAM_ClearWindow( FLDMSGWIN_STREAM *msgWin );
+extern void FLDMSGWIN_STREAM_WriteWindow( FLDMSGWIN_STREAM *msgWin );
 
 //吹き出しメッセージウィンドウ
 extern FLDTALKMSGWIN * FLDTALKMSGWIN_Add( FLDMSGBG *fmb,
