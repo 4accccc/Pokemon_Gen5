@@ -3163,7 +3163,10 @@ static void TOUCH_EFFECT_Draw( TOUCH_EFFECT_SYS *p_sys )
 
 		for( i = 0; i < CIRCLE_MAX; i++ )
 		{	
-			p_wk->rot[i]	+= p_wk->rot_add[i];
+			if( CIRCLE_GetVisible( &p_wk->c[i] ) )
+			{	
+				p_wk->rot[i]	+= p_wk->rot_add[i];
+			}
 			{
 				VEC_Set( &scale, FX_SinIdx(p_wk->rot[i])/4,
 							FX_SinIdx(p_wk->rot[i])/4, 0 );
@@ -3191,6 +3194,10 @@ static void TOUCH_EFFECT_SetVisible( TOUCH_EFFECT_SYS *p_sys, TOUCHEFFID id, BOO
 	for( i = 0; i < CIRCLE_MAX; i++ )
 	{	
 		CIRCLE_SetVisible( &p_wk->c[i], is_visible );
+		if( !is_visible )
+		{	
+			p_wk->rot[i]	= 0;
+		}
 	}
 }
 
