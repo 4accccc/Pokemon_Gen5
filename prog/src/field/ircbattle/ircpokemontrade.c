@@ -759,13 +759,6 @@ static void _changeWaitState(IRC_POKEMON_TRADE* pWork)
 		int id2 = PPP_Get(pWork->recvPoke[id],ID_PARA_id_no,NULL);
 		POKEMON_PARAM* pp = PP_Create(monsno,lv ,id2, pWork->heapID);
 
-
-		{
-			u16 oyaName[5] = {L'ブ',L'ラ',L'ッ',L'ク',0xFFFF};
-			PP_Put( pp , ID_PARA_oyaname_raw , (u32)&oyaName[0] );
-			PP_Put( pp , ID_PARA_oyasex , PTL_SEX_MALE );
-		}
-
 		{
 			POKEMON_PERSONAL_DATA* ppd = POKE_PERSONAL_OpenHandle(monsno, 0, GFL_HEAPID_APP);
 			u32 ret = POKE_PERSONAL_GetParam(ppd,POKEPER_ID_sex);
@@ -774,6 +767,13 @@ static void _changeWaitState(IRC_POKEMON_TRADE* pWork)
 
 			POKE_PERSONAL_CloseHandle(ppd);
 		}
+
+		{
+			u16 oyaName[5] = {L'ブ',L'ラ',L'ッ',L'ク',0xFFFF};
+			PP_Put( pp , ID_PARA_oyaname_raw , (u32)&oyaName[0] );
+			PP_Put( pp , ID_PARA_oyasex , PTL_SEX_MALE );
+		}
+
 
 		
 		PokeParty_SetMemberData(party, pWork->selectIndex, pp);
