@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-07-10T21:27:16"/>
+	<create user="matsumiya" host="W00207" date="2009-07-13T11:36:14"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -279,7 +279,7 @@
 			<list entry="0" japanese="デフォルト" english="Default" colorID="0"/>
 		</group>
 		<number position="-1" width="100"/>
-		<comment position="4" width="142"/>
+		<comment position="4" width="225"/>
 		<erase position="-1" width="100"/>
 		<attribute japanese="キャラ指定" english="キャラ指定" type="string" default="" position="1" width="100">
 		</attribute>
@@ -342,6 +342,10 @@
 	</row>
 
 	<row id="msg_common_pc_heal_01">
+		<comment>ポケセン回復時（夜　17：00：00～3：59：59）
+・はい／いいえの選択
+　はい　→msg_common_pc_heal_02
+　いいえ→msg_common_pc_heal_04</comment>
 		<attribute name="キャラ指定">ポケセン受付１</attribute>
 		<language name="JPN" width="256">おつかれさまです！
 ポケモン　センター　です[BE:01:ページ切り替え（クリア）][BE:01:ページ切り替え（クリア）]
@@ -357,7 +361,51 @@
 休ませてあげますか？</language>
 	</row>
 
+	<row id="msg_common_pc_heal_11">
+		<comment>ポケセン回復時（朝　4：00：00～9：59：59）
+・はい／いいえの選択
+　はい　→msg_common_pc_heal_02
+　いいえ→msg_common_pc_heal_04</comment>
+		<attribute name="キャラ指定">ポケセン受付１</attribute>
+		<language name="JPN" width="256">おはようございます！
+ポケモン　センター　です▼
+ここでは　ポケモンの
+たいりょく　かいふくを　します▼
+あなたの　ポケモンを
+やすませて　あげますか？</language>
+		<language name="JPN_KANJI" width="256">おはようございます！
+ポケモン　センター　です▼
+ここでは　ポケモンの
+体力回復を　します[BE:01:ページ切り替え（クリア）]
+あなたの　ポケモンを
+休ませてあげますか？</language>
+	</row>
+
+	<row id="msg_common_pc_heal_12">
+		<comment>ポケセン回復時（昼　10：00：00～16：59：59）
+・はい／いいえの選択
+　はい　→msg_common_pc_heal_02
+　いいえ→msg_common_pc_heal_04</comment>
+		<attribute name="キャラ指定">ポケセン受付１</attribute>
+		<language name="JPN" width="256">こんにちは！
+ポケモン　センター　です▼
+ここでは　ポケモンの
+たいりょく　かいふくを　します▼
+あなたの　ポケモンを
+やすませて　あげますか？</language>
+		<language name="JPN_KANJI" width="256">こんにちは！
+ポケモン　センター　です▼
+ここでは　ポケモンの
+体力回復を　します[BE:01:ページ切り替え（クリア）]
+あなたの　ポケモンを
+休ませてあげますか？</language>
+	</row>
+
 	<row id="msg_common_pc_heal_02">
+		<comment>ポケセン回復時
+・はい選択
+・回復終了すると
+　msg_common_pc_heal_03に</comment>
 		<attribute name="キャラ指定">ポケセン受付１</attribute>
 		<language name="JPN" width="256">それでは
 おあずかり　いたします！</language>
@@ -366,6 +414,9 @@
 	</row>
 
 	<row id="msg_common_pc_heal_03">
+		<comment>ポケセン回復時
+・お姉さん、お辞儀アニメ
+　続けてmsg_common_pc_heal_04に</comment>
 		<attribute name="キャラ指定">ポケセン受付１</attribute>
 		<language name="JPN" width="256">おまちどおさま！[BE:01:ページ切り替え（クリア）]
 おあずかり　した　ポケモンは
@@ -376,6 +427,7 @@
 	</row>
 
 	<row id="msg_common_pc_heal_04">
+		<comment>ポケセン回復時</comment>
 		<attribute name="キャラ指定">ポケセン受付１</attribute>
 		<language name="JPN" width="256">またの
 ごりようを　おまち　してます！</language>
@@ -384,6 +436,11 @@
 	</row>
 
 	<row id="msg_common_pc_heal_05">
+		<comment>ポケセン回復時
+・ゴールドカードで初めて
+　来店したときの歓迎の挨拶
+・表示後、頭上に「！」表示
+　続けてmsg_common_pc_heal_06</comment>
 		<attribute name="キャラ指定">ポケセン受付１</attribute>
 		<language name="JPN" width="256">おつかれさまです！
 ポケモン　センター　です[BE:01:ページ切り替え（クリア）]
@@ -398,6 +455,11 @@
 	</row>
 
 	<row id="msg_common_pc_heal_06">
+		<comment>ポケセン回復時
+・はい／いいえの選択
+　はい　→msg_common_pc_heal_08
+　いいえ→msg_common_pc_heal_10
+0＝主人公名</comment>
 		<attribute name="キャラ指定">ポケセン受付１</attribute>
 		<language name="JPN" width="256">そ　その　カードは！？[BE:01:ページ切り替え（クリア）]
 その　いろ！！
@@ -424,6 +486,13 @@
 	</row>
 
 	<row id="msg_common_pc_heal_07">
+		<comment>ポケセン回復時
+ゴールドカードで２度目以降に
+来店したときの歓迎の挨拶
+
+・はい／いいえの選択
+　はい　→msg_common_pc_heal_08
+　いいえ→msg_common_pc_heal_10</comment>
 		<attribute name="キャラ指定">ポケセン受付１</attribute>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]さん　おつかれさまです！
 いつもので　よろしい　ですね！</language>
@@ -432,18 +501,25 @@
 	</row>
 
 	<row id="msg_common_pc_heal_08">
+		<comment>ポケセン回復時
+・はい選択
+　回復終了するとmsg_common_pc_heal_09に</comment>
 		<attribute name="キャラ指定">ポケセン受付１</attribute>
 		<language name="JPN" width="256">では　おあずかりさせて　いただきます！</language>
 		<language name="JPN_KANJI" width="256">では　お預かりさせて　いただきます！</language>
 	</row>
 
 	<row id="msg_common_pc_heal_09">
+		<comment>ポケセン回復時
+・お姉さん、お辞儀アニメ
+　続けてmsg_common_pc_heal_10に</comment>
 		<attribute name="キャラ指定">ポケセン受付１</attribute>
 		<language name="JPN" width="256">たいへん　おまたせ　いたしました！</language>
 		<language name="JPN_KANJI" width="256">たいへん　お待たせいたしました！</language>
 	</row>
 
 	<row id="msg_common_pc_heal_10">
+		<comment>ポケセン回復時</comment>
 		<attribute name="キャラ指定">ポケセン受付１</attribute>
 		<language name="JPN" width="256">また　いつでも　おこしください！</language>
 		<language name="JPN_KANJI" width="256">また　いつでも　お越しください！</language>
