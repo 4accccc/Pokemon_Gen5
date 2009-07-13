@@ -7,6 +7,7 @@
  */
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////
 #include "field_place_name.h"
+#include "field/zonedata.h"
 #include "arc/arc_def.h"
 #include "arc/area_win_gra.naix"
 #include "arc/message.naix"
@@ -31,6 +32,11 @@
 #define	COLOR_NO_LETTER     (1)		            // 文字本体のカラー番号
 #define	COLOR_NO_SHADOW     (2)		            // 影部分のカラー番号
 #define	COLOR_NO_BACKGROUND (0)					// 背景部のカラー番号
+
+//--------------------
+// アーカイブ・データ
+//--------------------
+#define	ARC_DATA_ID_MAX (26) // アーカイブ内データIDの最大値
 
 //----------------------
 // グラフィック・サイズ
@@ -386,16 +392,20 @@ static void LoadCharacterData( FIELD_PLACE_NAME* p_sys, u32 arc_id, u32 data_id 
 	y_src  = 0;
 	x_dest = 0;
 	y_dest = 0;
-	copy_char_num = (WIN_CGR_WIDTH_CHAR * WIN_CGR_HEIGHT_CHAR) - 1;
+	copy_char_num = (WIN_CGR_WIDTH_CHAR * WIN_CGR_HEIGHT_CHAR) - 1;		// 先頭キャラ以外をコピーする
 	for( i=0; i<copy_char_num; i++ )
 	{
+		// 1キャラずつコピー
 		GFL_BMP_Print( p_src, p_bmp, x_src, y_src, x_dest, y_dest, CHAR_SIZE, CHAR_SIZE, 0 );
+
+		// コピー元座標を更新
 		x_src += CHAR_SIZE;
 		if( WIN_CGR_WIDTH_DOT <= x_src  )
 		{
 			x_src  = 0;
 			y_src += CHAR_SIZE;
 		}
+		// コピー先座標を更新
 		x_dest += CHAR_SIZE;
 		if( BMPWIN_WIDTH_DOT <= x_dest )
 		{
@@ -445,11 +455,13 @@ static void LoadScreenData( FIELD_PLACE_NAME* p_sys, u32 arc_id, u32 data_id )
 //----------------------------------------------------------------------------------- 
 static void CreateBitmapWindow( FIELD_PLACE_NAME* p_sys, u32 zone_id )
 { 
-	// ビットマップ・ウィンドウの内部バッファにキャラクタ・データを転送
-	LoadCharacterData( p_sys, ARCID_PLACE_NAME, NARC_area_win_gra_gs_areawin4_NCGR );
+	u16 win_id;
 
-	// パレット転送
-	LoadPaletteData( p_sys, ARCID_PLACE_NAME, NARC_area_win_gra_gs_areawin4_NCLR );
+	// キャラクタ・パレットの書き換え
+	win_id = ZONEDATA_GetPlaceNameWinID( zone_id );			// ウィンドウIDを取得
+	if( win_id < 0 | ARC_DATA_ID_MAX < win_id ) win_id = 0; // ウィンドウIDの範囲チェック
+	LoadCharacterData( p_sys, ARCID_PLACE_NAME, win_id );	// ビットマップ・ウィンドウの内部バッファにキャラクタ・データを転送
+	LoadPaletteData( p_sys, ARCID_PLACE_NAME, win_id + 1 ); // パレット転送
 
 	// ビットマップ・ウィンドウの内部バッファに文字を書き込む
 	WriteStringToWindow( p_sys, zone_id );
@@ -458,6 +470,10 @@ static void CreateBitmapWindow( FIELD_PLACE_NAME* p_sys, u32 zone_id )
 	GFL_BMPWIN_TransVramCharacter( p_sys->pBmpWin );	// VRAMにキャラデータを転送	
 	GFL_BMPWIN_MakeScreen( p_sys->pBmpWin );			// BGSYSの内部バッファを更新
 	GFL_BG_LoadScreenReq( BG_FRAME );					// BGSYSの内部バッファをVRAMに転送
+
+
+	// デバッグ出力
+	OBATA_Printf( "win_id = %d\n", (int)win_id );
 }
 
 //-----------------------------------------------------------------------------------
@@ -470,13 +486,14 @@ static void CreateBitmapWindow( FIELD_PLACE_NAME* p_sys, u32 zone_id )
 //----------------------------------------------------------------------------------- 
 static void WriteStringToWindow( FIELD_PLACE_NAME* p_sys, u32 zone_id )
 {
-	u32 str_id;
+	u16 str_id;
 	int str_width;
 	int str_x;
 	STRBUF* p_str_buf = NULL;
 	GFL_FONT* p_font = NULL;
 
-	str_id    = MAPNAME_D8;										// メッセージ番号を決定
+	str_id    = ZONEDATA_GetPlaceNameID( zone_id );				// メッセージ番号を決定
+	if( str_id < 0 | msg_place_name_max <= str_id ) str_id = 0;	// メッセージ番号の範囲チェック
 	p_str_buf = GFL_STR_CreateBuffer( 256, p_sys->heapID );		// バッファを作成
 	GFL_MSG_GetString( p_sys->pMsgData,	str_id, p_str_buf );	// 地名文字列を取得
 	p_font    = FLDMSGBG_GetFontHandle( p_sys->pFldMsgBG );		// フォント情報を取得
@@ -495,6 +512,7 @@ static void WriteStringToWindow( FIELD_PLACE_NAME* p_sys, u32 zone_id )
 	OBATA_Printf( "BMPWIN_WIDTH_DOT / 2 = %d\n", BMPWIN_WIDTH_DOT / 2 );
 	OBATA_Printf( "str_width / 2 = %d\n", str_width / 2 );
 	OBATA_Printf( "str_x = %d\n", str_x );
+	OBATA_Printf( "str_id = %d\n", (int)str_id );
 }
 
 //-----------------------------------------------------------------------------------
