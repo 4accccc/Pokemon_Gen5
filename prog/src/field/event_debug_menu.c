@@ -44,6 +44,8 @@
 
 #include "field_event_check.h"
 #include "event_debug_item.h" //EVENT_DebugItemMake
+#include "savedata/box_savedata.h"  //デバッグアイテム生成用
+
 
 //======================================================================
 //	define
@@ -151,6 +153,7 @@ static BOOL DMenuCallProc_ControlRtcList( DEBUG_MENU_EVENT_WORK *wk );
 
 static BOOL DMenuCallProc_Naminori( DEBUG_MENU_EVENT_WORK *wk );
 static BOOL DMenuCallProc_DebugItem( DEBUG_MENU_EVENT_WORK *wk );
+static BOOL DMenuCallProc_BoxMax( DEBUG_MENU_EVENT_WORK *wk );
 
 //======================================================================
 //  デバッグメニューリスト
@@ -180,6 +183,7 @@ static const FLDMENUFUNC_LIST DATA_DebugMenuList[] =
   { DEBUG_FIELD_STR21 , DMenuCallProc_MusicalSelect },
   { DEBUG_FIELD_STR30, DMenuCallProc_Naminori },
   { DEBUG_FIELD_STR32, DMenuCallProc_DebugItem },
+  { DEBUG_FIELD_STR37, DMenuCallProc_BoxMax },
   { DEBUG_FIELD_STR36, DMenuCallProc_ControlFog },
 	{ DEBUG_FIELD_STR01, NULL },
 };
@@ -2539,6 +2543,46 @@ static BOOL DMenuCallProc_DebugItem( DEBUG_MENU_EVENT_WORK *wk )
 	return( TRUE );
 }
 
+//--------------------------------------------------------------
+/**
+ * @brief   ポケモンボックスにポケモンでいっぱいにする
+ * @param   wk DEBUG_MENU_EVENT_WORK*
+ * @retval  BOOL TRUE=イベント継続
+ */
+//--------------------------------------------------------------
 
+static BOOL DMenuCallProc_BoxMax( DEBUG_MENU_EVENT_WORK *wk )
+{
+#if 1
+	GAMESYS_WORK	*gameSys	= wk->gmSys;
+  MYSTATUS *myStatus;
+	POKEMON_PARAM *pp;
+	const STRCODE *name;
+	
+  myStatus = GAMEDATA_GetMyStatus(GAMESYSTEM_GetGameData(gameSys));
+  name = MyStatus_GetMyName( myStatus );
+  
+	pp = PP_Create(MONSNO_WANIBAAN, 100, 123456, GFL_HEAPID_APP);
+
+	{
+		int i,j;
+		BOX_DATA* pBox = SaveData_GetBoxData(GAMEDATA_GetSaveControlWork(GAMESYSTEM_GetGameData(gameSys)));
+
+		for(i=0;i < 18;i++){
+			for(j=0;j < 30;j++){
+				int monsno =GFUser_GetPublicRand(MONSNO_END-1)+1;
+				OS_TPrintf("%d  %d %d作成\n",monsno, i, j);
+				PP_Setup(pp,  monsno , 30, 123456);
+				PP_Put( pp , ID_PARA_oyaname_raw , (u32)name );
+				PP_Put( pp , ID_PARA_oyasex , MyStatus_GetMySex( myStatus ) );
+				BOXDAT_PutPokemonBox(pBox, i, (POKEMON_PASO_PARAM*)PP_GetPPPPointerConst(pp));
+			}
+		}
+	}
+	
+	GFL_HEAP_FreeMemory(pp);
+#endif
+	return( FALSE );
+}
 
 
