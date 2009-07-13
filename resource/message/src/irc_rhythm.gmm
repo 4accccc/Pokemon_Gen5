@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="toru_nagihashi" host="W00160" date="2009-05-29T17:26:13"/>
+	<create user="toru_nagihashi" host="W00160" date="2009-07-09T17:12:01"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -305,7 +305,7 @@
 		</language>
 	</columns>
 
-	<dialog left="-910" top="409" right="-205" bottom="1037" maximized="no" rayout="Vertical2">
+	<dialog left="-1252" top="141" right="-547" bottom="769" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="0" style="0000" width="530"/>
@@ -347,6 +347,25 @@
 [FF:00:色:1]赤外線通信[FF:00:色:0]を　しましょう！</language>
 	</row>
 
+	<row id="RHYTHM_STR_002">
+		<language name="JPN" width="256">チェックちゅう　です
+[FF:00:色:1]せきがいせん　つうしん[FF:00:色:0]を　つづけてください</language>
+		<language name="JPN_KANJI" width="256">チェック中　です
+[FF:00:色:1]赤外線　通信[FF:00:色:0]を　続けてください</language>
+	</row>
+
+	<row id="RHYTHM_STR_003">
+		<language name="JPN" width="256">[FF:00:色:1]せきがいせん　つうしん[FF:00:色:0]が　つながりました</language>
+		<language name="JPN_KANJI" width="256">[FF:00:色:1]赤外線　通信[FF:00:色:0]が　つながりました</language>
+	</row>
+
+	<row id="RHYTHM_STR_004">
+		<language name="JPN" width="256">つながりが　きれました
+[FF:00:色:1]せきがいせん　つうしん[FF:00:色:0]を　してください</language>
+		<language name="JPN_KANJI" width="256">つながりが　きれました
+[FF:00:色:1]赤外線　通信[FF:00:色:0]を　してください</language>
+	</row>
+
 	<row id="RHYTHM_BTN_000">
 		<language name="JPN" width="256">とじる</language>
 		<language name="JPN_KANJI" width="256">とじる</language>
@@ -362,6 +381,14 @@
 		<comment>デバッグ用</comment>
 		<language name="JPN" width="256">チェックを　おわります。</language>
 		<language name="JPN_KANJI" width="256">チェックを　終わります。</language>
+	</row>
+
+	<row id="RHYTHM_DEBUG_003">
+		<comment>デバッグ用</comment>
+		<language name="JPN" width="256">シーンが　ずれました
+さきへ　すすみます</language>
+		<language name="JPN_KANJI" width="256">シーンが　ずれました
+先へ　進みます</language>
 	</row>
 
 	<row id="RHYTHM_RES_000">

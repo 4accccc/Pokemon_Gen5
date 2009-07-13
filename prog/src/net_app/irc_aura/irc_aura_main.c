@@ -223,11 +223,12 @@ enum{
 #define TOUCH_COUNTER_MAX	(150)
 #define TOUCH_COUNTER_SHAKE_SYNC	(15)	//ブレを観測するための1回のシンク
 #define TOUCH_COUNTER_SHAKE_MAX	(TOUCH_COUNTER_MAX/TOUCH_COUNTER_SHAKE_SYNC)	//ブレを取得する回数
+#define RESULT_SEND_CNT	(COMPATIBLE_IRC_SENDATA_CNT)
 
 //-------------------------------------
 ///	個数
 //=====================================
-#define CIRCLE_MAX		(10)
+#define CIRCLE_MAX		(3)
 
 //-------------------------------------
 ///		MSG_FONT
@@ -335,29 +336,27 @@ typedef struct
 ///	円
 //=====================================
 enum {	
-	CIRCLE_VTX_MAX	=	60,
+	CIRCLE_VTX_MAX	=	60,	//頂点数
 };
 typedef struct 
 {
-	VecFx16	vtx[CIRCLE_VTX_MAX];
-	u16 r;				//半径	
-	u16 red:5;		//赤
-	u16	green:5;	//緑
-	u16 blue:5;		//青
-	u16	dummy1:1;
-
-	u16 add_r;
-	u16 add_red:5;
-	u16 add_green:5;
-	u16 add_blue:5;
-	u16 dummy2:1;
+	VecFx16	*p_vtx;
+	u32			vtx_num;
+	GXRgb	vtx_color;
+	u8	alpha;
+	u8	dummy[3];
+	GFL_G3D_OBJSTATUS	status;
+	BOOL	is_visible;
 } CIRCLE_WORK;
+typedef struct{	
+	CIRCLE_WORK				c[CIRCLE_MAX];
+	u16								rot[CIRCLE_MAX];
+	u16								rot_add[CIRCLE_MAX];
+}TOUCH_EFFECT_WORK;
 typedef struct {
-	CIRCLE_WORK				c[TOUCHEFFID_MAX][CIRCLE_MAX];
-	BOOL							is_visible[TOUCHEFFID_MAX];
-	VecFx32						trans[TOUCHEFFID_MAX];
+	TOUCH_EFFECT_WORK	wk[TOUCHEFFID_MAX];
 	GFL_POINT					left;
-} TOUCH_EFFECT_WORK;
+} TOUCH_EFFECT_SYS;
 
 //-------------------------------------
 ///	OBJ関係
@@ -375,7 +374,7 @@ typedef struct
 	GRAPHIC_BG_WORK		bg;
 	GRAPHIC_3D_WORK		g3d;
 	GRAPHIC_OBJ_WORK	obj;
-	TOUCH_EFFECT_WORK		touch_eff;
+	TOUCH_EFFECT_SYS		touch_eff;
 
 	GFL_TCB						*p_vblank_task;
 } GRAPHIC_WORK;
@@ -497,6 +496,7 @@ struct _AURA_MAIN_WORK
 	//シーケンス管理
 	SEQ_FUNCTION		seq_function;
 	u16		seq;
+	u16		cnt;
 	BOOL is_end;
 	BOOL is_next_proc;
 
@@ -535,7 +535,7 @@ static void GRAPHIC_Init( GRAPHIC_WORK *p_wk, HEAPID heapID );
 static void GRAPHIC_Exit( GRAPHIC_WORK *p_wk );
 static void GRAPHIC_Draw( GRAPHIC_WORK *p_wk );
 static GFL_CLWK* GRAPHIC_GetClwk( const GRAPHIC_WORK *cp_wk, CLWKID id );
-static TOUCH_EFFECT_WORK * GRAPHIC_GetTouchEffWk( GRAPHIC_WORK *p_wk );
+static TOUCH_EFFECT_SYS * GRAPHIC_GetTouchEffWk( GRAPHIC_WORK *p_wk );
 static void GRAPHIC_WriteBmpwinFrame( GRAPHIC_WORK *p_wk, GFL_BMPWIN *p_bmpwin );
 static void Graphic_VBlankTask( GFL_TCB *p_tcb, void *p_work );
 //BG
@@ -587,6 +587,7 @@ static void SEQFUNC_StartGame( AURA_MAIN_WORK *p_wk, u16 *p_seq );
 static void SEQFUNC_TouchLeft( AURA_MAIN_WORK *p_wk, u16 *p_seq );
 static void SEQFUNC_TouchRight( AURA_MAIN_WORK *p_wk, u16 *p_seq );
 static void SEQFUNC_Result( AURA_MAIN_WORK *p_wk, u16 *p_seq );
+static void SEQFUNC_SceneError( AURA_MAIN_WORK *p_wk, u16 *p_seq );
 //net
 static void AURANET_Init( AURANET_WORK *p_wk, COMPATIBLE_IRC_SYS *p_irc );
 static void AURANET_Exit( AURANET_WORK *p_wk );
@@ -596,17 +597,27 @@ static void AURANET_GetResultData( const AURANET_WORK *cp_wk, AURANET_RESULT_DAT
 static void NETRECV_Result( const int netID, const int size, const void* cp_data, void* p_work, GFL_NETHANDLE* p_net_handle );
 static u8* NETRECV_GetBufferAddr(int netID, void* pWork, int size);
 //円プリミティブ
-static void CIRCLE_Init( CIRCLE_WORK *p_wk, u16 r, GXRgb color );
+static void CIRCLE_Init( CIRCLE_WORK *p_wk, u32 vtx_num, HEAPID heapID );
+static void CIRCLE_Exit( CIRCLE_WORK *p_wk );
 static void CIRCLE_Draw( CIRCLE_WORK *p_wk );
-static void CIRCLE_SetAddR( CIRCLE_WORK *p_wk, u16 add_r );
-static void CIRCLE_SetAddColor( CIRCLE_WORK *p_wk, u16 add_color );
-static void CIRCLE_Reset( CIRCLE_WORK *p_wk );
+static void CIRCLE_SetVtxColor( CIRCLE_WORK *p_wk, GXRgb color );
+static void CIRCLE_SetAlpha( CIRCLE_WORK *p_wk, u8 alpha );
+static void CIRCLE_SetTrans( CIRCLE_WORK *p_wk, const VecFx32 *cp_trans );
+static void CIRCLE_SetScale( CIRCLE_WORK *p_wk, const VecFx32 *cp_scale );
+static void CIRCLE_SetRot( CIRCLE_WORK *p_wk, const MtxFx33 *cp_rot );
+static void CIRCLE_SetVisible( CIRCLE_WORK *p_wk, BOOL is_visible );
+static void CIRCLE_GetTrans( const CIRCLE_WORK *cp_wk, VecFx32 *p_trans );
+static void CIRCLE_GetScale( const CIRCLE_WORK *cp_wk, VecFx32 *p_scale );
+static void CIRCLE_GetRot( const CIRCLE_WORK *cp_wk, MtxFx33 *p_rot );
+static BOOL CIRCLE_GetVisible( const CIRCLE_WORK *cp_wk );
 static void Circle_DrawLine( VecFx16 *p_start, VecFx16 *p_end );
+
 //演出
-static void TOUCH_EFFECT_Init( TOUCH_EFFECT_WORK *p_wk );
-static void TOUCH_EFFECT_Draw( TOUCH_EFFECT_WORK *p_wk );
-static void TOUCH_EFFECT_SetVisible( TOUCH_EFFECT_WORK *p_wk, TOUCHEFFID id, BOOL is_visible );
-static void TOUCH_EFFECT_SetPos( TOUCH_EFFECT_WORK *p_wk, TOUCHEFFID id, u32 x, u32 y );
+static void TOUCH_EFFECT_Init( TOUCH_EFFECT_SYS *p_sys, HEAPID heapID );
+static void TOUCH_EFFECT_Exit( TOUCH_EFFECT_SYS *p_sys );
+static void TOUCH_EFFECT_Draw( TOUCH_EFFECT_SYS *p_wk );
+static void TOUCH_EFFECT_SetVisible( TOUCH_EFFECT_SYS *p_wk, TOUCHEFFID id, BOOL is_visible );
+static void TOUCH_EFFECT_SetPos( TOUCH_EFFECT_SYS *p_wk, TOUCHEFFID id, u32 x, u32 y );
 
 //汎用
 static BOOL TP_GetRectTrg( const GFL_RECT *cp_rect, GFL_POINT *p_trg );
@@ -816,6 +827,8 @@ DEBUG_ONLYPLAY_IF
 	DEBUGPRINT_Open();
 DEBUG_ONLYPLAY_ENDIF
 
+	//オーラシーンセット
+	COMPATIBLE_IRC_SetScene( p_wk->p_param->p_irc, COMPATIBLE_SCENE_AURA );
 
 	SEQ_Change( p_wk, SEQFUNC_StartGame );
 	return GFL_PROC_RES_FINISH;
@@ -950,6 +963,9 @@ static GFL_PROC_RESULT IRC_AURA_PROC_Main( GFL_PROC *p_proc, int *p_seq, void *p
 	}
 	GRAPHIC_Draw( &p_wk->grp );
 
+	//シーンを継続的に送る
+	COMPATIBLE_IRC_SendSceneContinue( p_wk->p_param->p_irc );
+
 	return GFL_PROC_RES_CONTINUE;
 }
 //=============================================================================
@@ -992,7 +1008,7 @@ static void GRAPHIC_Init( GRAPHIC_WORK* p_wk, HEAPID heapID )
 
 	// VRAMバンク設定
 	GFL_DISP_SetBank( &sc_vramSetTable );
-	GX_SetBankForLCDC(GX_VRAM_LCDC_B);	//Capture用
+	//GX_SetBankForLCDC(GX_VRAM_LCDC_B);	//Capture用
 
 	// ディスプレイON
 	GFL_DISP_SetDispSelect( GX_DISP_SELECT_SUB_MAIN );
@@ -1006,7 +1022,7 @@ static void GRAPHIC_Init( GRAPHIC_WORK* p_wk, HEAPID heapID )
 	GRAPHIC_BG_Init( &p_wk->bg, heapID );
 	GRAPHIC_3D_Init( &p_wk->g3d, heapID );
 
-	TOUCH_EFFECT_Init( &p_wk->touch_eff );
+	TOUCH_EFFECT_Init( &p_wk->touch_eff, heapID );
 
 
 	//VBlackTask登録
@@ -1025,6 +1041,8 @@ static void GRAPHIC_Init( GRAPHIC_WORK* p_wk, HEAPID heapID )
 static void GRAPHIC_Exit( GRAPHIC_WORK* p_wk )
 {
 	GFL_TCB_DeleteTask( p_wk->p_vblank_task );
+
+	TOUCH_EFFECT_Exit( &p_wk->touch_eff );
 
 	GRAPHIC_3D_Exit( &p_wk->g3d );
 	GRAPHIC_BG_Exit( &p_wk->bg );
@@ -1053,7 +1071,7 @@ static void GRAPHIC_Draw( GRAPHIC_WORK* p_wk )
 
 	GRAPHIC_3D_EndDraw( &p_wk->g3d );
 
-
+/*
 	GX_SetCapture(GX_CAPTURE_SIZE_256x192,  // Capture size
                       GX_CAPTURE_MODE_AB,			   // Capture mode
                       GX_CAPTURE_SRCA_2D3D,						 // Blend src A
@@ -1061,7 +1079,7 @@ static void GRAPHIC_Draw( GRAPHIC_WORK* p_wk )
                       GX_CAPTURE_DEST_VRAM_B_0x00000,   // Output VRAM
                       14,             // Blend parameter for src A
                       14);            // Blend parameter for src B
-}
+*/}
 //----------------------------------------------------------------------------
 /**
  *	@brief	CLWK取得
@@ -1087,7 +1105,7 @@ static GFL_CLWK* GRAPHIC_GetClwk( const GRAPHIC_WORK *cp_wk, CLWKID id )
  *	@return	タッチ演出ワーク取得
  */
 //-----------------------------------------------------------------------------
-static TOUCH_EFFECT_WORK * GRAPHIC_GetTouchEffWk( GRAPHIC_WORK *p_wk )
+static TOUCH_EFFECT_SYS * GRAPHIC_GetTouchEffWk( GRAPHIC_WORK *p_wk )
 {	
 	return &p_wk->touch_eff;
 }
@@ -1146,7 +1164,8 @@ static void GRAPHIC_BG_Init( GRAPHIC_BG_WORK* p_wk, HEAPID heapID )
 	{
 		static const GFL_BG_SYS_HEADER sc_bg_sys_header = 
 		{
-			GX_DISPMODE_VRAM_B,GX_BGMODE_0,GX_BGMODE_0,GX_BG0_AS_3D
+		//	GX_DISPMODE_VRAM_B,GX_BGMODE_0,GX_BGMODE_0,GX_BG0_AS_3D
+			GX_DISPMODE_GRAPHICS,GX_BGMODE_0,GX_BGMODE_0,GX_BG0_AS_3D
 		};	
 		GFL_BG_SetBGMode( &sc_bg_sys_header );
 	}
@@ -1277,6 +1296,7 @@ static void GRAPHIC_OBJ_Init( GRAPHIC_OBJ_WORK *p_wk, const GFL_DISP_VRAM* cp_vr
 	GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_OBJ, VISIBLE_ON );
 	GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_OBJ, VISIBLE_ON );
 
+#if 0
 	//リソース読み込み
 	{	
 		ARCHANDLE *p_handle;
@@ -1308,7 +1328,7 @@ static void GRAPHIC_OBJ_Init( GRAPHIC_OBJ_WORK *p_wk, const GFL_DISP_VRAM* cp_vr
 				heapID
 				);
 	}
-
+#endif
 
 
 }
@@ -1322,6 +1342,7 @@ static void GRAPHIC_OBJ_Init( GRAPHIC_OBJ_WORK *p_wk, const GFL_DISP_VRAM* cp_vr
 //-----------------------------------------------------------------------------
 static void GRAPHIC_OBJ_Exit( GRAPHIC_OBJ_WORK *p_wk )
 {	
+#if 0
 	//CLWK破棄
 	{	
 		int i;
@@ -1337,6 +1358,7 @@ static void GRAPHIC_OBJ_Exit( GRAPHIC_OBJ_WORK *p_wk )
 		GFL_CLGRP_CGR_Release( p_wk->reg_id[OBJREGID_TOUCH_CHR] );
 		GFL_CLGRP_CELLANIM_Release( p_wk->reg_id[OBJREGID_TOUCH_CEL] );
 	}
+#endif 
 
 	//システム破棄
 	GFL_CLACT_UNIT_Delete( p_wk->p_clunit );
@@ -1739,6 +1761,9 @@ static void MSGWND_Print( MSGWND_WORK* p_wk, const MSG_WORK *cp_msg, u32 strID, 
 	//文字列作成
 	GFL_MSG_GetString( cp_msgdata, strID, p_wk->p_strbuf );
 
+	//キューをクリア
+	PRINTSYS_QUE_Clear( p_que );
+
 	//表示
 	PRINT_UTIL_Print( &p_wk->print_util, p_que, x, y, p_wk->p_strbuf, p_font );
 }
@@ -1775,6 +1800,9 @@ static void MSGWND_PrintCenter( MSGWND_WORK* p_wk, const MSG_WORK *cp_msg, u32 s
 	y	= GFL_BMPWIN_GetSizeY( p_wk->p_bmpwin )*4;
 	x	-= PRINTSYS_GetStrWidth( p_wk->p_strbuf, p_font, 0 )/2;
 	y	-= PRINTSYS_GetStrHeight( p_wk->p_strbuf, p_font )/2;
+
+	//キューをクリア
+	PRINTSYS_QUE_Clear( p_que );
 
 	//表示
 	PRINT_UTIL_Print( &p_wk->print_util, p_que, x, y, p_wk->p_strbuf, p_font );
@@ -1822,6 +1850,10 @@ static void MSGWND_PrintNumber( MSGWND_WORK* p_wk, const MSG_WORK *cp_msg, u32 s
 		GFL_FONT*		p_font;	
 		p_que		= MSG_GetPrintQue( cp_msg );
 		p_font	= MSG_GetFont( cp_msg );
+
+		//キューをクリア
+		PRINTSYS_QUE_Clear( p_que );
+
 		PRINT_UTIL_Print( &p_wk->print_util, p_que, x, y, p_wk->p_strbuf, p_font );
 	}
 }
@@ -2163,7 +2195,7 @@ DEBUG_ONLYPLAY_ENDIF
 		//タッチ演出OFF
 		{	
 			int i;
-			TOUCH_EFFECT_WORK *p_touch;
+			TOUCH_EFFECT_SYS *p_touch;
 			p_touch	= GRAPHIC_GetTouchEffWk( &p_wk->grp );
 			for( i = 0; i < TOUCHEFFID_MAX; i++ )
 			{	
@@ -2185,7 +2217,7 @@ DEBUG_ONLYPLAY_ENDIF
 		
 			//左タッチ演出ON
 			{	
-				TOUCH_EFFECT_WORK *p_touch;
+				TOUCH_EFFECT_SYS *p_touch;
 				p_touch	= GRAPHIC_GetTouchEffWk( &p_wk->grp );
 				TOUCH_EFFECT_SetVisible( p_touch, TOUCHEFFID_LEFT, TRUE );
 				TOUCH_EFFECT_SetPos( p_touch, TOUCHEFFID_LEFT, p_trg_left->x, p_trg_left->y );
@@ -2207,6 +2239,12 @@ DEBUG_ONLYPLAY_ENDIF
 		PMSND_PlaySystemSE( SEQ_SE_CANCEL1 );	
 		p_wk->p_param->result	= IRCAURA_RESULT_RETURN;
 		SEQ_End( p_wk );
+	}	
+	
+	//シーンが異なるチェック
+	if( COMPATIBLE_IRC_CompScene( p_wk->p_param->p_irc ) != 0 )
+	{	
+		SEQ_Change( p_wk, SEQFUNC_SceneError );
 	}
 }
 //----------------------------------------------------------------------------
@@ -2255,7 +2293,7 @@ DEBUG_ONLYPLAY_ENDIF
 
 			//左タッチ演出ON
 			{	
-				TOUCH_EFFECT_WORK *p_touch;
+				TOUCH_EFFECT_SYS *p_touch;
 				p_touch	= GRAPHIC_GetTouchEffWk( &p_wk->grp );
 				TOUCH_EFFECT_SetVisible( p_touch, TOUCHEFFID_LEFT, TRUE );
 				TOUCH_EFFECT_SetPos( p_touch, TOUCHEFFID_LEFT, pos.x, pos.y );
@@ -2281,7 +2319,7 @@ DEBUG_ONLYPLAY_ENDIF
 
 			//右タッチ演出ON
 			{	
-				TOUCH_EFFECT_WORK *p_touch;
+				TOUCH_EFFECT_SYS *p_touch;
 				p_touch	= GRAPHIC_GetTouchEffWk( &p_wk->grp );
 				TOUCH_EFFECT_SetVisible( p_touch, TOUCHEFFID_RIGHT, TRUE );
 				TOUCH_EFFECT_SetPos( p_touch, TOUCHEFFID_RIGHT, p_trg_right->x, p_trg_right->y );
@@ -2307,6 +2345,12 @@ DEBUG_ONLYPLAY_ENDIF
 		PMSND_PlaySystemSE( SEQ_SE_CANCEL1 );
 		p_wk->p_param->result	= IRCAURA_RESULT_RETURN;
 		SEQ_End( p_wk );
+	}
+
+	//シーンが異なるチェック
+	if( COMPATIBLE_IRC_CompScene( p_wk->p_param->p_irc ) != 0 )
+	{	
+		SEQ_Change( p_wk, SEQFUNC_SceneError );
 	}
 }
 //----------------------------------------------------------------------------
@@ -2365,7 +2409,7 @@ DEBUG_ONLYPLAY_ENDIF
 
 			//右タッチ演出ON
 			{	
-				TOUCH_EFFECT_WORK *p_touch;
+				TOUCH_EFFECT_SYS *p_touch;
 				p_touch	= GRAPHIC_GetTouchEffWk( &p_wk->grp );
 				TOUCH_EFFECT_SetVisible( p_touch, TOUCHEFFID_RIGHT, TRUE );
 				TOUCH_EFFECT_SetPos( p_touch, TOUCHEFFID_RIGHT, pos.x, pos.y );
@@ -2377,7 +2421,7 @@ DEBUG_ONLYPLAY_ENDIF
 		{	
 			//右タッチ演出ON
 			{	
-				TOUCH_EFFECT_WORK *p_touch;
+				TOUCH_EFFECT_SYS *p_touch;
 				p_touch	= GRAPHIC_GetTouchEffWk( &p_wk->grp );
 				TOUCH_EFFECT_SetVisible( p_touch, TOUCHEFFID_RIGHT, FALSE );
 			}
@@ -2397,6 +2441,12 @@ DEBUG_ONLYPLAY_ENDIF
 		PMSND_PlaySystemSE( SEQ_SE_CANCEL1 );
 		p_wk->p_param->result	= IRCAURA_RESULT_RETURN;
 		SEQ_End( p_wk );
+	}
+
+	//シーンが異なるチェック
+	if( COMPATIBLE_IRC_CompScene( p_wk->p_param->p_irc ) != 0 )
+	{	
+		SEQ_Change( p_wk, SEQFUNC_SceneError );
 	}
 }
 //----------------------------------------------------------------------------
@@ -2436,9 +2486,12 @@ DEBUG_ONLYPLAY_IF
 DEBUG_ONLYPLAY_ELSE
 	enum{	
 		SEQ_RESULT,
+		SEQ_MSG_PRINT,
 		SEQ_SENDRESULT,
+		SEQ_SCENE,
 		SEQ_TIMING,
 		SEQ_CALC,
+		SEQ_MSG_PRINT_END,
 		SEQ_END,
 
 	};
@@ -2449,8 +2502,13 @@ DEBUG_ONLYPLAY_ELSE
 	case SEQ_RESULT:
 		if( COMPATIBLE_IRC_TimingSyncWait( p_wk->p_param->p_irc, COMPATIBLE_TIMING_NO_AURA_RESULT ) )
 		{	
-			*p_seq	= SEQ_SENDRESULT;
+			*p_seq	= SEQ_MSG_PRINT;
 		}
+		break;
+
+	case SEQ_MSG_PRINT:
+		MSGWND_Print( &p_wk->msgwnd[MSGWNDID_TEXT], &p_wk->msg, AURA_STR_004, 0, 0 );
+		*p_seq	= SEQ_SENDRESULT;
 		break;
 
 	case SEQ_SENDRESULT:
@@ -2460,21 +2518,31 @@ DEBUG_ONLYPLAY_ELSE
 		result.shake_right	=	p_wk->shake_right[0];
 		if( AURANET_SendResultData( &p_wk->net, &result ) )
 		{	
-			*p_seq	= SEQ_TIMING;
+			*p_seq	= SEQ_SCENE;
 		}
 
-		if( TouchReturnBtn() )
-		{
-			COMPATIBLE_IRC_Cancel( p_wk->p_param->p_irc );
-			PMSND_PlaySystemSE( SEQ_SE_CANCEL1 );
-			p_wk->p_param->result	= IRCAURA_RESULT_RETURN;
-			SEQ_End( p_wk );
+		break;
+
+	case SEQ_SCENE:
+		//次のシーンを設定
+		COMPATIBLE_IRC_SetScene(  p_wk->p_param->p_irc, COMPATIBLE_SCENE_RESULT );
+		if( COMPATIBLE_IRC_SendScene( p_wk->p_param->p_irc ) )
+		{	
+			*p_seq	= SEQ_TIMING;
 		}
 		break;
 
 	case SEQ_TIMING:
 		if( COMPATIBLE_IRC_TimingSyncWait( p_wk->p_param->p_irc, COMPATIBLE_TIMING_NO_AURA_END ) )
 		{	
+			*p_seq	= SEQ_MSG_PRINT_END;
+		}
+		break;
+
+	case SEQ_MSG_PRINT_END:
+		if( p_wk->cnt >= RESULT_SEND_CNT )
+		{	
+			MSGWND_Print( &p_wk->msgwnd[MSGWNDID_TEXT], &p_wk->msg, AURA_STR_005, 0, 0 );
 			*p_seq	= SEQ_CALC;
 		}
 		break;
@@ -2487,11 +2555,97 @@ DEBUG_ONLYPLAY_ELSE
 
 	case SEQ_END:
 		SEQ_End( p_wk );
-		break;
+		return;	//↓のアサートを通過しないため
+	}
+
+	//シーンが異なるチェック
+	if( *p_seq < SEQ_SCENE && COMPATIBLE_IRC_CompScene( p_wk->p_param->p_irc ) != 0 )
+	{	
+		SEQ_Change( p_wk, SEQFUNC_SceneError );
+	}
+
+	//戻るボタン
+	if( TouchReturnBtn() )
+	{
+		PMSND_PlaySystemSE( SEQ_SE_CANCEL1 );	
+		p_wk->p_param->result	= IRCAURA_RESULT_RETURN;
+		SEQ_End( p_wk );
+	}	
+
+	//赤外線開始待ち
+	if( SEQ_MSG_PRINT <= *p_seq && *p_seq <=  SEQ_MSG_PRINT_END )
+	{	
+		if( p_wk->cnt <= RESULT_SEND_CNT )
+		{	
+			p_wk->cnt++;
+		}
 	}
 
 DEBUG_ONLYPLAY_ENDIF
 }
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	シーンエラーシーケンス
+ *
+ *	@param	AURA_MAIN_WORK *p_wk	メインワーク
+ *	@param	*p_seq								シーケンス
+ *
+ */
+//-----------------------------------------------------------------------------
+static void SEQFUNC_SceneError( AURA_MAIN_WORK *p_wk, u16 *p_seq )
+{	
+	enum
+	{	
+		SEQ_JUNCTION,
+		SEQ_INIT,
+		SEQ_MSG_PRINT,
+		SEQ_TIMING,
+		SEQ_END,
+	};
+
+	switch( *p_seq )
+	{	
+	case SEQ_JUNCTION:
+		NAGI_Printf( "ErrorScene!\n" );
+		//自分が先ならば
+		if( COMPATIBLE_IRC_CompScene( p_wk->p_param->p_irc ) > 0 )
+		{	
+			*p_seq	= SEQ_INIT;
+		}
+		//相手が先ならば
+		else if( COMPATIBLE_IRC_CompScene( p_wk->p_param->p_irc ) < 0 )
+		{	
+			p_wk->p_param->score	= 0;
+			p_wk->p_param->result	= IRCAURA_RESULT_RESULT;
+			SEQ_End( p_wk );
+		}
+		else
+		{	
+			GF_ASSERT( 0 );
+		}
+		break;
+	case SEQ_INIT:
+		p_wk->p_param->score	= 0;
+		p_wk->p_param->result	= IRCAURA_RESULT_RESULT;
+		*p_seq	= SEQ_MSG_PRINT;
+		break;
+	case SEQ_MSG_PRINT:
+		MSGWND_Print( &p_wk->msgwnd[MSGWNDID_TEXT], &p_wk->msg, AURA_STR_006, 0, 0 );
+		*p_seq	= SEQ_TIMING;
+		break;
+	case SEQ_TIMING:
+		if( COMPATIBLE_IRC_TimingSyncWait( p_wk->p_param->p_irc, COMPATIBLE_TIMING_NO_SCENE_ERROR ) )
+		{	
+			*p_seq	= SEQ_END;
+		}
+		break;
+	case SEQ_END:
+		SEQ_End( p_wk );
+		break;
+	}
+}
+
 //=============================================================================
 /**
  *					NET
@@ -2680,28 +2834,54 @@ static u8* NETRECV_GetBufferAddr(int netID, void* p_work, int size)
  *	@brief	円プリミティブを作成
  *
  *	@param	CIRCLE_WORK *p_wk		ワーク
+ *	@param	vtx_num							頂点数
+ *	@param	HEAPID							メモリ確保用ID
  *
  */
 //-----------------------------------------------------------------------------
-static void CIRCLE_Init( CIRCLE_WORK *p_wk, u16 r, GXRgb color )
+static void CIRCLE_Init( CIRCLE_WORK *p_wk, u32 vtx_num, HEAPID heapID )
 {	
+	//クリア
 	GFL_STD_MemClear( p_wk, sizeof(CIRCLE_WORK) );
-	p_wk->r			= r;
-	p_wk->red		= (color&GX_RGB_R_MASK)>>GX_RGB_R_SHIFT;
-	p_wk->green	= (color&GX_RGB_G_MASK)>>GX_RGB_G_SHIFT;
-	p_wk->blue	= (color&GX_RGB_B_MASK)>>GX_RGB_B_SHIFT;
 
-	//円の頂点作成
+	//初期化
+	p_wk->vtx_num	= vtx_num;
+	CIRCLE_SetAlpha( p_wk, 31 );
+	{	
+		MtxFx33	rot;
+		MTX_Identity33( &rot );
+		CIRCLE_SetRot( p_wk, &rot );
+	}
+
+	//頂点作成
+	p_wk->p_vtx	= GFL_HEAP_AllocMemory( heapID, sizeof(VecFx16)*p_wk->vtx_num );
+	GFL_STD_MemClear( p_wk->p_vtx, sizeof(VecFx16)*p_wk->vtx_num );
+
+	//円の頂点座標作成
 	{	
 		int i;
-		for( i = 0; i < CIRCLE_VTX_MAX; i++ )
+		for( i = 0; i < p_wk->vtx_num; i++ )
 		{	
-			p_wk->vtx[i].x	=	FX_CosIdx( ( i * 360 / CIRCLE_VTX_MAX) * 0xFFFF / 360 );
-			p_wk->vtx[i].y	=	FX_SinIdx( ( i * 360 / CIRCLE_VTX_MAX) * 0xFFFF / 360 );
-			p_wk->vtx[i].z	=	0;
+			p_wk->p_vtx[i].x	=	FX_CosIdx( ( i * 360 / p_wk->vtx_num) * 0xFFFF / 360 );
+			p_wk->p_vtx[i].y	=	FX_SinIdx( ( i * 360 / p_wk->vtx_num) * 0xFFFF / 360 );
+			p_wk->p_vtx[i].z	=	0;
 		}
 	}
 }
+//----------------------------------------------------------------------------
+/**
+ *	@brief	円プリミティブを破棄
+ *
+ *	@param	CIRCLE_WORK *p_wk		ワーク
+ *
+ */
+//-----------------------------------------------------------------------------
+static void CIRCLE_Exit( CIRCLE_WORK *p_wk )
+{	
+	GFL_HEAP_FreeMemory( p_wk->p_vtx );
+	GFL_STD_MemClear( p_wk, sizeof(CIRCLE_WORK) );
+}
+
 //----------------------------------------------------------------------------
 /**
  *	@brief	円を描画
@@ -2712,78 +2892,172 @@ static void CIRCLE_Init( CIRCLE_WORK *p_wk, u16 r, GXRgb color )
 //-----------------------------------------------------------------------------
 static void CIRCLE_Draw( CIRCLE_WORK *p_wk )
 {	
-	//マテリアル設定
-	G3_MaterialColorDiffAmb(GX_RGB(16, 16, 16), GX_RGB(16, 16, 16), FALSE );
-	G3_MaterialColorSpecEmi(GX_RGB( 16, 16, 16 ), GX_RGB( 31,31,31 ), FALSE );
-	G3_PolygonAttr( GX_LIGHTMASK_0123,GX_POLYGONMODE_MODULATE,GX_CULL_BACK,0,31,0 );
+	if( p_wk->is_visible )
+	{	
+		G3_PushMtx();
 
-	//サイズ設定
-	G3_Scale( FX_SinIdx(p_wk->r)/4, FX_SinIdx(p_wk->r)/4, FX_SinIdx(p_wk->r)/4);
+		//回転設定
+		G3_MultMtx33( &p_wk->status.rotate );
 
-	//描画
-	G3_Begin( GX_BEGIN_TRIANGLES );
-	{
-		int i;
-		G3_Color(GX_RGB( p_wk->red, p_wk->green, p_wk->blue ));
-		for( i = 0; i < CIRCLE_VTX_MAX - 1; i++ )
-		{	
-			Circle_DrawLine( &p_wk->vtx[i], &p_wk->vtx[i+1] );
+		//移動設定
+		G3_Translate( p_wk->status.trans.x, p_wk->status.trans.y, p_wk->status.trans.z );
+
+		//サイズ設定
+		G3_Scale( p_wk->status.scale.x, p_wk->status.scale.y, p_wk->status.scale.z);
+
+		//マテリアル設定
+		G3_MaterialColorDiffAmb(GX_RGB(16, 16, 16), GX_RGB(16, 16, 16), FALSE );
+		G3_MaterialColorSpecEmi(GX_RGB( 16, 16, 16 ), GX_RGB( 31,31,31 ), FALSE );
+		G3_PolygonAttr( GX_LIGHTMASK_0123,GX_POLYGONMODE_MODULATE,GX_CULL_BACK,0,p_wk->alpha,0 );
+	
+		//描画
+		G3_Begin( GX_BEGIN_TRIANGLES );
+		{
+			int i;
+			G3_Color(p_wk->vtx_color);
+			for( i = 0; i < p_wk->vtx_num - 1; i++ )
+			{	
+				Circle_DrawLine( &p_wk->p_vtx[i], &p_wk->p_vtx[i+1] );
+			}
+			Circle_DrawLine( &p_wk->p_vtx[i], &p_wk->p_vtx[0] );
 		}
-		Circle_DrawLine( &p_wk->vtx[i], &p_wk->vtx[0] );
+		G3_End();
+	
+		G3_PopMtx(1);
 	}
-	G3_End();
-
-	//動作
-	p_wk->r				+= p_wk->add_r;
-	p_wk->red			+= p_wk->add_red;
-	p_wk->green		+= p_wk->add_green;
-	p_wk->blue		+= p_wk->add_blue;
-	p_wk->red			%= 31;
-	p_wk->green		%= 31;
-	p_wk->blue		%= 31;
-
 }
-
 //----------------------------------------------------------------------------
 /**
- *	@brief	半径加算値をセット
+ *	@brief	頂点カラー設定
  *
  *	@param	CIRCLE_WORK *p_wk	ワーク
- *	@param	add_r							半径加算値	
+ *	@param	color							カラー
  *
  */
 //-----------------------------------------------------------------------------
-static void CIRCLE_SetAddR( CIRCLE_WORK *p_wk, u16 add_r )
+static void CIRCLE_SetVtxColor( CIRCLE_WORK *p_wk, GXRgb color )
 {	
-	p_wk->add_r			= add_r;
+	p_wk->vtx_color	=	color;
 }
 
 //----------------------------------------------------------------------------
 /**
- *	@brief	色加算値をセット
+ *	@brief	アルファせってい
  *
  *	@param	CIRCLE_WORK *p_wk	ワーク
- *	@param	add_color					色加算値
+ *	@param	alpha							アルファ	（0 ~ 31）
  *
  */
 //-----------------------------------------------------------------------------
-static void CIRCLE_SetAddColor( CIRCLE_WORK *p_wk, u16 add_color )
+static void CIRCLE_SetAlpha( CIRCLE_WORK *p_wk, u8 alpha )
 {	
-	p_wk->add_red		= (add_color&GX_RGB_R_MASK)>>GX_RGB_R_SHIFT;
-	p_wk->add_green	= (add_color&GX_RGB_G_MASK)>>GX_RGB_G_SHIFT;
-	p_wk->add_blue	= (add_color&GX_RGB_B_MASK)>>GX_RGB_B_SHIFT;
+	p_wk->alpha	= alpha;
 }
+
 //----------------------------------------------------------------------------
 /**
- *	@brief	リセット
+ *	@brief	トランスレーション設定
  *
  *	@param	CIRCLE_WORK *p_wk		ワーク
+ *	@param	VecFx32 *cp_trans		移動
  *
  */
 //-----------------------------------------------------------------------------
-static void CIRCLE_Reset( CIRCLE_WORK *p_wk )
+static void CIRCLE_SetTrans( CIRCLE_WORK *p_wk, const VecFx32 *cp_trans )
 {	
-	p_wk->r					= 0;
+	p_wk->status.trans	= *cp_trans;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	スケール値設定
+ *
+ *	@param	CIRCLE_WORK *p_wk		ワーク
+ *	@param	VecFx32 *cp_scale		スケール
+ *
+ */
+//-----------------------------------------------------------------------------
+static void CIRCLE_SetScale( CIRCLE_WORK *p_wk, const VecFx32 *cp_scale )
+{	
+	p_wk->status.scale	= *cp_scale;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	回転行列設定
+ *
+ *	@param	CIRCLE_WORK *p_wk	ワーク
+ *	@param	MtxFx33 *cp_rot		回転行列
+ *
+ */
+//-----------------------------------------------------------------------------
+static void CIRCLE_SetRot( CIRCLE_WORK *p_wk, const MtxFx33 *cp_rot )
+{	
+	p_wk->status.rotate	= *cp_rot;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	表示フラグ設定
+ *
+ *	@param	CIRCLE_WORK *p_wk	ワーク
+ *	@param	is_visible				TRUEならば表示　FALSEならば非表示
+ *
+ */
+//-----------------------------------------------------------------------------
+static void CIRCLE_SetVisible( CIRCLE_WORK *p_wk, BOOL is_visible )
+{	
+	p_wk->is_visible	= is_visible;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	移動取得	
+ *
+ *	@param	const CIRCLE_WORK *cp_wk	ワーク
+ *	@param	*p_trans									移動受け取り
+ *
+ */
+//-----------------------------------------------------------------------------
+static void CIRCLE_GetTrans( const CIRCLE_WORK *cp_wk, VecFx32 *p_trans )
+{	
+	*p_trans	= cp_wk->status.trans;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	拡大縮小取得
+ *
+ *	@param	const CIRCLE_WORK *cp_wk	ワーク
+ *	@param	*p_scale									拡縮受け取り
+ *
+ */
+//-----------------------------------------------------------------------------
+static void CIRCLE_GetScale( const CIRCLE_WORK *cp_wk, VecFx32 *p_scale )
+{	
+	*p_scale	= cp_wk->status.scale;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	回転行列取得
+ *
+ *	@param	const CIRCLE_WORK *cp_wk	ワーク
+ *	@param	*p_rot										回転行列受け取り
+ *
+ */
+//-----------------------------------------------------------------------------
+static void CIRCLE_GetRot( const CIRCLE_WORK *cp_wk, MtxFx33 *p_rot )
+{	
+	*p_rot	= cp_wk->status.rotate;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	表示フラグ取得
+ *
+ *	@param	const CIRCLE_WORK *cp_wk	ワーク
+ *
+ *	@return	TRUEならば表示中	FALSEならば非表示
+ */
+//-----------------------------------------------------------------------------
+static BOOL CIRCLE_GetVisible( const CIRCLE_WORK *cp_wk )
+{	
+	return cp_wk->is_visible;
 }
 //----------------------------------------------------------------------------
 /**
@@ -2796,9 +3070,15 @@ static void CIRCLE_Reset( CIRCLE_WORK *p_wk )
 //-----------------------------------------------------------------------------
 static void Circle_DrawLine( VecFx16 *p_start, VecFx16 *p_end )
 {	
+#if 1
 	G3_Vtx( p_start->x, p_start->y, p_start->z);
 	G3_Vtx( p_end->x, p_end->y, p_end->z);
 	G3_Vtx( p_start->x, p_start->y, p_start->z);
+#else
+	G3_Vtx( 0, 0, 0);
+	G3_Vtx( p_start->x, p_start->y, p_start->z);
+	G3_Vtx( p_end->x, p_end->y, p_end->z);
+#endif
 }
 //=============================================================================
 /**
@@ -2809,23 +3089,32 @@ static void Circle_DrawLine( VecFx16 *p_start, VecFx16 *p_end )
 /**
  *	@brief	タッチ演出、初期化
  *
- *	@param	TOUCH_EFFECT_WORK *p_wk		ワーク
+ *	@param	TOUCH_EFFECT_SYS *p_wk		ワーク
+ *	@param	heapID										ヒープID
  *
  */
 //-----------------------------------------------------------------------------
-static void TOUCH_EFFECT_Init( TOUCH_EFFECT_WORK *p_wk )
+static void TOUCH_EFFECT_Init( TOUCH_EFFECT_SYS *p_sys, HEAPID heapID )
 {	
-	GFL_STD_MemClear( p_wk, sizeof(TOUCH_EFFECT_WORK) );
+	GFL_STD_MemClear( p_sys, sizeof(TOUCH_EFFECT_SYS) );
 
 	{	
-		int i,j;
+		int i, j;
+		VecFx32	scale;
 		for( j = 0; j < TOUCHEFFID_MAX; j++ )
 		{	
+			TOUCH_EFFECT_WORK	*p_wk	= &p_sys->wk[j];
+
 			for( i = 0; i < CIRCLE_MAX; i++ )
 			{	
-				CIRCLE_Init( &p_wk->c[j][i], 0, GX_RGB(31,16,0) );
-				CIRCLE_SetAddR( &p_wk->c[j][i], 0x4F+0x28*i );
-				CIRCLE_SetAddColor( &p_wk->c[j][i], GX_RGB(0,0,1) );
+				CIRCLE_Init( &p_wk->c[i], CIRCLE_VTX_MAX, heapID );
+				CIRCLE_SetVtxColor( &p_wk->c[i], GX_RGB(0,31,31) );
+				p_wk->rot[i]	= 0;
+				p_wk->rot_add[i]	= 0x1F;
+				VEC_Set( &scale, FX_SinIdx(p_wk->rot[i])/4,
+							FX_SinIdx(p_wk->rot[i])/4, 0 );
+				CIRCLE_SetScale( &p_wk->c[i], &scale );
+				CIRCLE_SetVisible( &p_wk->c[i], FALSE );
 			}
 		}
 	}
@@ -2833,29 +3122,55 @@ static void TOUCH_EFFECT_Init( TOUCH_EFFECT_WORK *p_wk )
 
 //----------------------------------------------------------------------------
 /**
- *	@brief	タッチ演出	描画
+ *	@brief	破棄
  *
- *	@param	TOUCH_EFFECT_WORK *p_wk		ワーク
+ *	@param	TOUCH_EFFECT_SYS *p_sys		ワーク
  *
  */
 //-----------------------------------------------------------------------------
-static void TOUCH_EFFECT_Draw( TOUCH_EFFECT_WORK *p_wk )
+static void TOUCH_EFFECT_Exit( TOUCH_EFFECT_SYS *p_sys )
 {	
-	int j;
+	{	
+		int i,j;
+		for( j = 0; j < TOUCHEFFID_MAX; j++ )
+		{	
+			TOUCH_EFFECT_WORK	*p_wk	= &p_sys->wk[j];
+
+			for( i = 0; i < CIRCLE_MAX; i++ )
+			{	
+				CIRCLE_Exit( &p_wk->c[i] );
+			}
+		}
+	}
+	GFL_STD_MemClear( p_sys, sizeof(TOUCH_EFFECT_SYS) );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	タッチ演出	描画
+ *
+ *	@param	TOUCH_EFFECT_SYS *p_wk		ワーク
+ *
+ */
+//-----------------------------------------------------------------------------
+static void TOUCH_EFFECT_Draw( TOUCH_EFFECT_SYS *p_sys )
+{	
+	int i, j;
+	VecFx32	scale;
 
 	for( j = 0; j < TOUCHEFFID_MAX; j++ )
 	{	
+		TOUCH_EFFECT_WORK	*p_wk	= &p_sys->wk[j];
 
-		if( p_wk->is_visible[j] )
+		for( i = 0; i < CIRCLE_MAX; i++ )
 		{	
-			int i;
-			G3_PushMtx();
-			G3_Translate( p_wk->trans[j].x, p_wk->trans[j].y, p_wk->trans[j].z );
-			for( i = 0; i < CIRCLE_MAX; i++ )
-			{	
-				CIRCLE_Draw( &p_wk->c[j][i] );
+			p_wk->rot[i]	+= p_wk->rot_add[i];
+			{
+				VEC_Set( &scale, FX_SinIdx(p_wk->rot[i])/4,
+							FX_SinIdx(p_wk->rot[i])/4, 0 );
+				CIRCLE_SetScale( &p_wk->c[i], &scale );
 			}
-			G3_PopMtx(1);
+
+			CIRCLE_Draw( &p_wk->c[i] );
 		}
 	}
 }
@@ -2864,21 +3179,18 @@ static void TOUCH_EFFECT_Draw( TOUCH_EFFECT_WORK *p_wk )
 /**
  *	@brief	タッチ演出	表示設定
  *
- *	@param	TOUCH_EFFECT_WORK *p_wk	ワーク
+ *	@param	TOUCH_EFFECT_SYS *p_wk	ワーク
  *	@param	is_visible							表示ON,OFF
  *
  */
 //-----------------------------------------------------------------------------
-static void TOUCH_EFFECT_SetVisible( TOUCH_EFFECT_WORK *p_wk, TOUCHEFFID id, BOOL is_visible )
+static void TOUCH_EFFECT_SetVisible( TOUCH_EFFECT_SYS *p_sys, TOUCHEFFID id, BOOL is_visible )
 {	
-	p_wk->is_visible[id]	= is_visible;
-	if( !is_visible )
+	int i;
+	TOUCH_EFFECT_WORK	*p_wk	= &p_sys->wk[id];
+	for( i = 0; i < CIRCLE_MAX; i++ )
 	{	
-		int i;
-		for( i = 0; i < CIRCLE_MAX; i++ )
-		{	
-			CIRCLE_Reset( &p_wk->c[id][i] );
-		}
+		CIRCLE_SetVisible( &p_wk->c[i], is_visible );
 	}
 }
 
@@ -2886,34 +3198,44 @@ static void TOUCH_EFFECT_SetVisible( TOUCH_EFFECT_WORK *p_wk, TOUCHEFFID id, BOO
 /**
  *	@brief	座標設定
  *
- *	@param	TOUCH_EFFECT_WORK *p_wk		ワーク
+ *	@param	TOUCH_EFFECT_SYS *p_wk		ワーク
  *	@param	x													LCD座標X
  *	@param	y													LCD座標Y
  *
  */
 //-----------------------------------------------------------------------------
-static void TOUCH_EFFECT_SetPos( TOUCH_EFFECT_WORK *p_wk, TOUCHEFFID id, u32 x, u32 y )
+static void TOUCH_EFFECT_SetPos( TOUCH_EFFECT_SYS *p_sys, TOUCHEFFID id, u32 x, u32 y )
 {	
+
+	TOUCH_EFFECT_WORK	*p_wk	= &p_sys->wk[id];
 	VecFx32	near;
 	VecFx32	far;
+	int i;
+
 	switch( id )
 	{
 	case TOUCHEFFID_LEFT:
 		NNS_G3dScrPosToWorldLine( x, y, &near, &far );
-		p_wk->trans[id]	= near;
-		p_wk->left.x	= x;
-		p_wk->left.y	= y;
+		for( i = 0; i < CIRCLE_MAX; i++ )
+		{	
+			CIRCLE_SetTrans( &p_wk->c[i], &near );
+		}
+		p_sys->left.x	= x;
+		p_sys->left.y	= y;
 		break;
 
 	case TOUCHEFFID_RIGHT:
 		{
 			GFL_POINT	pos;
-			pos.x		= p_wk->left.x + (x - p_wk->left.x) * 2;
-			pos.y		= p_wk->left.y + (y - p_wk->left.y) * 2;
+			pos.x		= p_sys->left.x + (x - p_sys->left.x) * 2;
+			pos.y		= p_sys->left.y + (y - p_sys->left.y) * 2;
 	//		NAGI_Printf( "X 左%d 中%d 右%d", p_wk->left.x, x, pos.x );
 		//	NAGI_Printf( "Y 左%d 中%d 右%d", p_wk->left.y, y, pos.y );
 			NNS_G3dScrPosToWorldLine( pos.x, pos.y, &near, &far );
-			p_wk->trans[id]	= near;
+			for( i = 0; i < CIRCLE_MAX; i++ )
+			{	
+				CIRCLE_SetTrans( &p_wk->c[i], &near );
+			}
 		}
 		break;
 	}

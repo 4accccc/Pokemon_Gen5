@@ -589,6 +589,10 @@ SRCS_OVERLAY_IRC_RHYTHM	= net_app/irc_rhythm/irc_rhythm.c
 #===> SRCS_OVERLAY_IRC_COMPATIBLE
 SRCS_OVERLAY_IRC_RESULT	= net_app/irc_result/irc_result.c
 
+#赤外線相性ランキング
+#===> SRCS_OVERLAY_IRC_COMPATIBLE
+SRCS_OVERLAY_IRC_RANKING	= net_app/irc_ranking/irc_ranking.c
+
 #ダウンロードプレイ  DP/PL/GS吸い上げ
 #===> SRCS_OVERLAY_DEV_WIRELESS
 #===> SRCS_OVERLAY_DEV_IRC

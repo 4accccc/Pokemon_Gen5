@@ -663,6 +663,8 @@ static GFL_PROC_RESULT IRC_RESULT_PROC_Init( GFL_PROC *p_proc, int *p_seq, void 
 	DEBUGPRINT_Init( sc_bgcnt_frame[GRAPHIC_BG_FRAME_S_BACK], FALSE, HEAPID_IRCRESULT );
 	DEBUGPRINT_Open();
 
+	//リズムシーンセット
+	COMPATIBLE_IRC_SetScene( p_wk->p_param->p_irc, COMPATIBLE_SCENE_RESULT );
 
 	SEQ_Change( p_wk, SEQFUNC_StartGame );
 	return GFL_PROC_RES_FINISH;
@@ -803,6 +805,18 @@ static GFL_PROC_RESULT IRC_RESULT_PROC_Main( GFL_PROC *p_proc, int *p_seq, void 
 	}
 
 	GRAPHIC_Draw( &p_wk->grp );
+
+
+	//ここでチェックしても遅れているのは相手なので進めることはしない
+#if 0
+	if( !COMPATIBLE_IRC_CompScene( p_wk->p_param->p_irc ) )
+	{	
+		SEQ_End( p_wk );
+	}
+#endif
+
+	//シーンを継続的に送る
+	COMPATIBLE_IRC_SendSceneContinue( p_wk->p_param->p_irc );
 
 	return GFL_PROC_RES_CONTINUE;
 }

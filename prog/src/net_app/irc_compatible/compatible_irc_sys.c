@@ -42,6 +42,8 @@
 #define COMPATIBLE_IRC_CONNECT_TIMINGSYNC_NO	(14)
 #define COMPATIBLE_IRC_TIMINGSYNC_NO					(15)
 
+#define COMPATIBLE_IRC_SCENE_SEND_CNT					(3*60)
+
 //=============================================================================
 /**
  *					構造体宣言
@@ -77,6 +79,9 @@ struct _COMPATIBLE_IRC_SYS
 {	
 	MENUNET_WORK	menu;
 
+	COMPATIBLE_SCENE	my_scene;
+	COMPATIBLE_SCENE	you_scene;
+
 	u32		irc_timeout;
 	u32		seq;
 	u32		err_seq;
@@ -91,6 +96,7 @@ struct _COMPATIBLE_IRC_SYS
 	BOOL	is_timing;
 
 	u8		mac_address[6];
+	u16		scene_send_cnt;
 
 	HEAPID	heapID;
 };
@@ -114,6 +120,7 @@ static void NET_EXIT_ExitCallBack( void *p_work );
 //受信コマンドテーブル
 static void NET_RECV_TimingStart( const int netID, const int size, const void* cp_data, void* p_work, GFL_NETHANDLE* p_net_handle );
 static void NET_RECV_TimingEnd( const int netID, const int size, const void* cp_data, void* p_work, GFL_NETHANDLE* p_net_handle );
+static void NET_RECV_Scene( const int netID, const int size, const void* cp_data, void* p_work, GFL_NETHANDLE* p_net_handle );
 
 //net
 static void MENUNET_Init( MENUNET_WORK *p_wk, COMPATIBLE_IRC_SYS *p_irc, HEAPID heapID );
@@ -143,6 +150,7 @@ enum
 {
 	SENDCMD_TIMING_START = GFL_NET_CMD_IRCCOMPATIBLE,
 	SENDCMD_TIMING_END,
+	SENDCMD_SCENE,
 };
 static const NetRecvFuncTable sc_net_recv_tbl[]	=
 {	
@@ -152,6 +160,9 @@ static const NetRecvFuncTable sc_net_recv_tbl[]	=
 	{	
 		NET_RECV_TimingEnd, NULL
 	},
+	{	
+		NET_RECV_Scene, NULL
+	}
 };
 
 //-------------------------------------
@@ -597,12 +608,12 @@ BOOL COMPATIBLE_IRC_TimingSyncWait( COMPATIBLE_IRC_SYS *p_sys, COMPATIBLE_TIMING
 		break;
 
 	case SEQ_TIMING_END:
-		IRC_Print("タイミング取り成功\n");
+		IRC_Print("タイミング取り成功 %d \n", timing_no);
 		p_sys->seq = 0;
 		return TRUE;
 
 	default:
-		GF_ASSERT_MSG( 0, "NET SEQ ERROR %d\n", p_sys->seq  );
+		GF_ASSERT_MSG( 0, "NET SEQ ERROR %d\n", p_sys->seq );
 	}
 
 	return FALSE;
@@ -669,6 +680,107 @@ BOOL COMPATIBLE_IRC_IsError( COMPATIBLE_IRC_SYS *p_sys )
 		return FALSE;
 	}
 	return FALSE;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	お互いのシーンをリセット
+ *
+ *	@param	COMPATIBLE_IRC_SYS *p_sys		システム
+ *
+ */
+//-----------------------------------------------------------------------------
+void COMPATIBLE_IRC_ResetScene( COMPATIBLE_IRC_SYS *p_sys )
+{	
+	p_sys->my_scene	= p_sys->you_scene	= 0;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	自分のシーンを設定
+ *
+ *	@param	COMPATIBLE_IRC_SYS *p_sys	システム
+ *	@param	scene											シーン
+ *
+ */
+//-----------------------------------------------------------------------------
+void COMPATIBLE_IRC_SetScene( COMPATIBLE_IRC_SYS *p_sys, COMPATIBLE_SCENE scene )
+{	
+	p_sys->my_scene	= scene;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	継続的にシーンを送る
+ *
+ *	@param	COMPATIBLE_IRC_SYS *p_sys	システム
+ *	@retval	TRUE		通信成功
+ *	@retval	FALSE		通信不成功
+ */
+//-----------------------------------------------------------------------------
+BOOL COMPATIBLE_IRC_SendSceneContinue( COMPATIBLE_IRC_SYS *p_sys )
+{	
+	//一定間隔で、シーンを送る。
+	//シーンはバッファにおいてあるものを使う
+	//送信キューをチェックし存在していないときのみ送信。
+	//そうしないと、バッファオーバーフローがありえる
+	if( p_sys->scene_send_cnt++ > COMPATIBLE_IRC_SCENE_SEND_CNT )
+	{	
+		p_sys->scene_send_cnt	= 0;
+
+		//送信キューに存在していないなら、送信
+		if( !GFL_NET_SystemIsSendCommand( SENDCMD_SCENE, GFL_NET_GetNetID( GFL_NET_HANDLE_GetCurrentHandle() )) )
+		{	
+			return COMPATIBLE_IRC_SendScene( p_sys );
+		}
+	}
+
+	return FALSE;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	シーンを必ず送信
+ *
+ *	@param	COMPATIBLE_IRC_SYS *p_sys		システム
+ *
+ *	@retval	TRUE		通信成功
+ *	@retval	FALSE		通信不成功
+ */
+//-----------------------------------------------------------------------------
+BOOL COMPATIBLE_IRC_SendScene( COMPATIBLE_IRC_SYS *p_sys )
+{		
+	NetID	sendID;
+	NetID	recvID;
+
+	sendID	= GFL_NET_GetNetID( GFL_NET_HANDLE_GetCurrentHandle() );
+	if( sendID == 0 )
+	{	
+		recvID	= 1;
+	}else{	
+		recvID	= 0;
+	}
+
+	//送信キューに存在していないなら、送信
+	if( !GFL_NET_SystemIsSendCommand( SENDCMD_SCENE, sendID ) )
+	{	
+		return COMPATIBLE_IRC_SendDataEx( p_sys, SENDCMD_SCENE, sizeof(COMPATIBLE_SCENE), &p_sys->my_scene,recvID, FALSE, FALSE, TRUE	);
+	}
+
+	return FALSE;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	相手のシーンと同じかチェックする
+ *
+ *	@param	const COMPATIBLE_IRC_SYS *p_sys	システム
+ *
+ *	@retval	0ならば同じ　正ならばが自分が先　負ならば相手が先
+ */
+//-----------------------------------------------------------------------------
+int COMPATIBLE_IRC_CompScene( const COMPATIBLE_IRC_SYS *cp_sys )
+{	
+	return cp_sys->my_scene - cp_sys->you_scene;
 }
 
 //----------------------------------------------------------------------------
@@ -1002,15 +1114,38 @@ static void NET_RECV_TimingEnd( const int netID, const int size, const void* cp_
 	{
 		return;	//自分のハンドルと一致しない場合、親としてのデータ受信なので無視する
 	}
-/*	if( netID == GFL_NET_SystemGetCurrentID() )
+
+	p_sys->is_timing		= TRUE;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	シーン受信
+ *
+ *	@param	const int netID	ネットID
+ *	@param	int size				サイズ
+ *	@param	void* cp_data		データ
+ *	@param	p_work					パラメータ
+ *	@param	p_net_handle		ネットハンドル
+ *
+ */
+//-----------------------------------------------------------------------------
+static void NET_RECV_Scene( const int netID, const int size, const void* cp_data, void* p_work, GFL_NETHANDLE* p_net_handle )
+{	
+	COMPATIBLE_IRC_SYS	*p_sys	= p_work;
+
+	if( p_net_handle != GFL_NET_HANDLE_GetCurrentHandle() )
+	{
+		return;	//自分のハンドルと一致しない場合、親としてのデータ受信なので無視する
+	}
+	if( netID == GFL_NET_SystemGetCurrentID() )
 	{
 		return;	//自分のデータは無視
 	}
-*/
-	NAGI_Printf("タイミング完了\n" );
-	p_sys->is_timing		= TRUE;
+	
+	GF_ASSERT( size == sizeof(COMPATIBLE_SCENE) );
+	GFL_STD_MemCopy( cp_data, &p_sys->you_scene, sizeof(COMPATIBLE_SCENE) );
+	NAGI_Printf( "SCENE my%d you%d\n", p_sys->my_scene, p_sys->you_scene );
 }
-
 
 //=============================================================================
 /**

@@ -72,8 +72,8 @@ SUBDIRS	=	wmi \
 			bucket \
 			p_status \
 			app_menu_common \
-			place_name
-
+			place_name \
+			irc_ranking
 
 include $(RESOURCE_MACRO)
 

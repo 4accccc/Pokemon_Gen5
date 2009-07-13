@@ -24,6 +24,7 @@
 typedef enum {
 	IRCRHYTHM_RESULT_CLEAR,		//ƒNƒŠƒA‚µ‚½
 	IRCRHYTHM_RESULT_RETURN,	//–ß‚è‚ð‘I‘ð
+	IRCRHYTHM_RESULT_RESULT,	//Œ‹‰Ê‰æ–Ê‚Ö
 } IRCRHYTHM_RESULT;
 
 

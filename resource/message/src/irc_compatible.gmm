@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="suginaka_katsunori" host="W00161" date="2009-05-28T12:32:21"/>
+	<create user="toru_nagihashi" host="W00160" date="2009-07-08T20:17:21"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -305,13 +305,13 @@
 		</language>
 	</columns>
 
-	<dialog left="249" top="349" right="952" bottom="969" maximized="yes" rayout="Vertical2">
+	<dialog left="249" top="349" right="952" bottom="969" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="0" style="0000" width="528"/>
 		<band id="1" index="1" style="0000" width="165"/>
-		<band id="2" index="2" style="0000" width="583"/>
-		<band id="3" index="3" style="0000" width="1280"/>
+		<band id="2" index="2" style="0000" width="695"/>
+		<band id="3" index="3" style="0000" width="695"/>
 		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
@@ -357,6 +357,13 @@
 [FF:00:色:1]赤外線通信[FF:00:色:0]を　しましょう！</language>
 	</row>
 
+	<row id="COMPATI_STR_004">
+		<language name="JPN" width="256">チェックちゅう　です
+[FF:00:色:1]せきがいせん　つうしん[FF:00:色:0]を　つづけてください</language>
+		<language name="JPN_KANJI" width="256">チェック中　です
+[FF:00:色:1]赤外線通信[FF:00:色:0]を　続けてください</language>
+	</row>
+
 	<row id="COMPATI_LIST_000">
 		<language name="JPN" width="256">あいしょうチェック</language>
 		<language name="JPN_KANJI" width="256">相性チェック</language>
@@ -370,6 +377,13 @@
 	<row id="COMPATI_BTN_000">
 		<language name="JPN" width="256">とじる</language>
 		<language name="JPN_KANJI" width="256">とじる</language>
+	</row>
+
+	<row id="COMPATI_DEBUG_000">
+		<language name="JPN" width="256">シーンが　ずれました
+さきへ　すすみます</language>
+		<language name="JPN_KANJI" width="256">シーンが　ずれました
+先へ　進みます</language>
 	</row>
 
 	<flowchart-group-list>

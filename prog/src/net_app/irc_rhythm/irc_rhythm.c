@@ -229,6 +229,7 @@ enum{
 ///	カウント
 //=====================================
 #define TOUCHMARKER_VISIBLE_CNT	(10)
+#define RESULT_SEND_CNT	(COMPATIBLE_IRC_SENDATA_CNT)
 
 //-------------------------------------
 ///	計測情報
@@ -447,6 +448,7 @@ struct _RHYTHM_MAIN_WORK
 	//シーケンス管理
 	SEQ_FUNCTION		seq_function;
 	u16		seq;
+	u16		cnt;
 	BOOL is_end;
 	BOOL is_next_proc;
 
@@ -521,6 +523,7 @@ static void SEQ_End( RHYTHM_MAIN_WORK *p_wk );
 static void SEQFUNC_StartGame( RHYTHM_MAIN_WORK *p_wk, u16 *p_seq );
 static void SEQFUNC_MainGame( RHYTHM_MAIN_WORK *p_wk, u16 *p_seq );
 static void SEQFUNC_Result( RHYTHM_MAIN_WORK *p_wk, u16 *p_seq );
+static void SEQFUNC_SceneError( RHYTHM_MAIN_WORK *p_wk, u16 *p_seq );
 //RHYTHMSEARCH
 static void RHYTHMSEARCH_Init( RHYTHMSEARCH_WORK *p_wk );
 static void RHYTHMSEARCH_Exit( RHYTHMSEARCH_WORK *p_wk );
@@ -782,6 +785,9 @@ DEBUG_ONLYPLAY_IF
 	DEBUGPRINT_Open();
 DEBUG_ONLYPLAY_ENDIF
 
+	//リズムシーンセット
+	COMPATIBLE_IRC_SetScene( p_wk->p_param->p_irc, COMPATIBLE_SCENE_RHYTHM );
+
 	SEQ_Change( p_wk, SEQFUNC_StartGame );
 	return GFL_PROC_RES_FINISH;
 }
@@ -937,6 +943,9 @@ static GFL_PROC_RESULT IRC_RHYTHM_PROC_Main( GFL_PROC *p_proc, int *p_seq, void 
 	}
 
 	GRAPHIC_Draw( &p_wk->grp );
+
+	//シーンを継続的に送る
+	COMPATIBLE_IRC_SendSceneContinue( p_wk->p_param->p_irc );
 
 	return GFL_PROC_RES_CONTINUE;
 }
@@ -1895,7 +1904,14 @@ DEBUG_ONLYPLAY_IF
 DEBUG_ONLYPLAY_ENDIF
 
 	RHYTHMSEARCH_Start( p_search );
-	SEQ_Change( p_wk, SEQFUNC_MainGame );
+	SEQ_Change( p_wk, SEQFUNC_MainGame );	
+	
+	
+	//シーンが異なるチェック
+	if( COMPATIBLE_IRC_CompScene( p_wk->p_param->p_irc ) != 0 )
+	{	
+		SEQ_Change( p_wk, SEQFUNC_SceneError );
+	}
 
 }
 //----------------------------------------------------------------------------
@@ -1969,6 +1985,12 @@ DEBUG_ONLYPLAY_ENDIF
 		p_wk->p_param->result	= IRCRHYTHM_RESULT_RETURN;
 		SEQ_End( p_wk );
 	}
+
+	//シーンが異なるチェック
+	if( COMPATIBLE_IRC_CompScene( p_wk->p_param->p_irc ) != 0 )
+	{	
+		SEQ_Change( p_wk, SEQFUNC_SceneError );
+	}
 }
 //----------------------------------------------------------------------------
 /**
@@ -1992,8 +2014,11 @@ DEBUG_ONLYPLAY_ELSE
 	enum
 	{	
 		SEQ_RESULT,
+		SEQ_MSG_PRINT,
 		SEQ_SENDRESULT,
+		SEQ_SCENE,
 		SEQ_TIMING,
+		SEQ_MSG_PRINT_END,
 		SEQ_CALC,
 		SEQ_END,
 #if 0
@@ -2013,7 +2038,7 @@ DEBUG_ONLYPLAY_ELSE
 	case SEQ_RESULT:
 		if( COMPATIBLE_IRC_TimingSyncWait( p_wk->p_param->p_irc, COMPATIBLE_TIMING_NO_RHYTHM_RESULT ) )
 		{	
-			*p_seq	= SEQ_SENDRESULT;
+			*p_seq	= SEQ_MSG_PRINT;
 		}
 
 		if( TouchReturnBtn() )
@@ -2025,17 +2050,38 @@ DEBUG_ONLYPLAY_ELSE
 		}	
 		break;
 
+	case SEQ_MSG_PRINT:
+		MSGWND_Print( &p_wk->msgwnd[MSGWNDID_TEXT], &p_wk->msg, RHYTHM_STR_002, 0, 0 );
+		*p_seq	= SEQ_SENDRESULT;
+		break;
+
 	case SEQ_SENDRESULT:
 		if( RHYTHMNET_SendResultData( &p_wk->net, &p_wk->search ) )
 		{	
+			*p_seq	= SEQ_SCENE;
+		}
+		break;
+
+	case SEQ_SCENE:
+		//次のシーンを設定
+		COMPATIBLE_IRC_SetScene(  p_wk->p_param->p_irc, COMPATIBLE_SCENE_AURA );
+		if( COMPATIBLE_IRC_SendScene( p_wk->p_param->p_irc ) )
+		{	
 			*p_seq	= SEQ_TIMING;
 		}
-
 		break;
 
 	case SEQ_TIMING:
 		if( COMPATIBLE_IRC_TimingSyncWait( p_wk->p_param->p_irc, COMPATIBLE_TIMING_NO_RHYTHM_END ) )
 		{	
+			*p_seq	= SEQ_MSG_PRINT_END;
+		}
+		break;
+
+	case SEQ_MSG_PRINT_END:
+		if( p_wk->cnt >= RESULT_SEND_CNT )
+		{	
+			MSGWND_Print( &p_wk->msgwnd[MSGWNDID_TEXT], &p_wk->msg, RHYTHM_STR_003, 0, 0 );
 			*p_seq	= SEQ_CALC;
 		}
 		break;
@@ -2049,7 +2095,7 @@ DEBUG_ONLYPLAY_ELSE
 
 	case SEQ_END:
 		SEQ_End( p_wk );
-		break;
+		return;	//下記のアサートを通過しないため
 #if 0
 	case SEQ_FADEIN_START:
 		GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT, 0, 16, 0 );
@@ -2105,11 +2151,90 @@ DEBUG_ONLYPLAY_ELSE
 		break;
 #endif
 	}
+
+	//メッセージ終了待ち
+	if( SEQ_MSG_PRINT <= *p_seq && *p_seq <=  SEQ_MSG_PRINT_END )
+	{	
+		if( p_wk->cnt <= RESULT_SEND_CNT )
+		{	
+			p_wk->cnt++;
+		}
+	}
+
+	//シーンが異なるチェック
+	if( *p_seq < SEQ_SCENE && COMPATIBLE_IRC_CompScene( p_wk->p_param->p_irc ) != 0 )
+	{	
+		SEQ_Change( p_wk, SEQFUNC_SceneError );
+	}
+
 DEBUG_ONLYPLAY_ENDIF
 
 	TouchMarker_Main( p_wk );
 
 }
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	シーンエラーシーケンス
+ *
+ *	@param	RHYTHM_MAIN_WORK *p_wk	メインワーク
+ *	@param	*p_seq								シーケンス
+ *
+ */
+//-----------------------------------------------------------------------------
+static void SEQFUNC_SceneError( RHYTHM_MAIN_WORK *p_wk, u16 *p_seq )
+{	
+	enum
+	{	
+		SEQ_JUNCTION,
+		SEQ_INIT,
+		SEQ_MSG_PRINT,
+		SEQ_TIMING,
+		SEQ_END,
+	};
+
+	switch( *p_seq )
+	{	
+	case SEQ_JUNCTION:
+		NAGI_Printf( "ErrorScene!\n" );
+		//自分が先ならば
+		if( COMPATIBLE_IRC_CompScene( p_wk->p_param->p_irc ) > 0 )
+		{	
+			p_wk->p_param->score	= 0;
+			p_wk->p_param->result	= IRCRHYTHM_RESULT_RETURN;
+			SEQ_End( p_wk );
+		}
+		//相手が先ならば
+		else if( COMPATIBLE_IRC_CompScene( p_wk->p_param->p_irc ) < 0 )
+		{	
+			*p_seq	= SEQ_INIT;
+		}
+		else
+		{
+			GF_ASSERT(0);
+		}
+		break;
+	case SEQ_INIT:
+		p_wk->p_param->score	= 0;
+		p_wk->p_param->result	= IRCRHYTHM_RESULT_RESULT;
+		*p_seq	= SEQ_MSG_PRINT;
+		break;
+	case SEQ_MSG_PRINT:
+		MSGWND_Print( &p_wk->msgwnd[MSGWNDID_TEXT], &p_wk->msg, RHYTHM_STR_004, 0, 0 );
+		*p_seq	= SEQ_TIMING;
+		break;
+	case SEQ_TIMING:
+		if( COMPATIBLE_IRC_TimingSyncWait( p_wk->p_param->p_irc, COMPATIBLE_TIMING_NO_SCENE_ERROR ) )
+		{	
+			*p_seq	= SEQ_END;
+		}
+		break;
+	case SEQ_END:
+		SEQ_End( p_wk );
+		break;
+	}
+}
+
 //=============================================================================
 /**
  *			RHYTHMSEARCH
@@ -2277,15 +2402,22 @@ DEBUG_ONLYPLAY_ENDIF
 //-----------------------------------------------------------------------------
 static BOOL RHYTHMNET_SendResultData( RHYTHMNET_WORK *p_wk, const RHYTHMSEARCH_WORK *cp_data )
 {	
+	enum 
+	{	
+		SEQ_DATA_SEND_INIT,
+		SEQ_DATA_SEND_MAIN,
+		SEQ_DATA_SEND_WAIT,
+	};
+
 	switch( p_wk->seq )
 	{	
-	case 0:
+	case SEQ_DATA_SEND_INIT:
 		p_wk->result_send	= *cp_data;
-		p_wk->seq = 1;
+		p_wk->seq = SEQ_DATA_SEND_MAIN;
 		NAGI_Printf( "結果データ送信開始\n" );
 		break;
 
-	case 1:
+	case SEQ_DATA_SEND_MAIN:
 		{	
 			NetID	netID;
 			netID	= GFL_NET_GetNetID( GFL_NET_HANDLE_GetCurrentHandle() );
@@ -2299,12 +2431,12 @@ static BOOL RHYTHMNET_SendResultData( RHYTHMNET_WORK *p_wk, const RHYTHMSEARCH_W
 					sizeof(RHYTHMSEARCH_WORK), &p_wk->result_send, netID, FALSE, FALSE, TRUE ) )
 			{	
 				NAGI_Printf( "結果データ送信完了、相手待ち\n" );
-				p_wk->seq	= 2;
+				p_wk->seq	= SEQ_DATA_SEND_WAIT;
 			}
 		}
 		break;
 
-	case 2:
+	case SEQ_DATA_SEND_WAIT:
 		if( p_wk->is_recv )
 		{
 			p_wk->is_recv	= FALSE;

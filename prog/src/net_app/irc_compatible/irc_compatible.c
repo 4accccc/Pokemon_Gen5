@@ -27,6 +27,7 @@
 #include "net_app/irc_aura.h"
 #include "net_app/irc_rhythm.h"
 #include "net_app/irc_result.h"
+#include "net_app/irc_ranking.h" 
 
 //	mine
 #include "net_app/irc_compatible.h"
@@ -41,7 +42,7 @@
 //=====================================
 #ifdef PM_DEBUG
 #ifdef defined DEBUG_ONLY_FOR_toru_nagihashi
-#define DEBUG_RETURN_TO_PROG	//戻るボタンを押すと次へ進む
+//#define DEBUG_RETURN_TO_PROG	//戻るボタンを押すと次へ進む
 #endif	//DEBUG_ONLY_FOR_toru_nagihashi
 #endif	//PM_DEBUG
 
@@ -86,7 +87,8 @@ struct _IRC_COMPATIBLE_MAIN_WORK
 	IRCMENU_SELECT			select;	//メニューで選んだもの
 	IRCAURA_RESULT			aura_result;
 	IRCRHYTHM_RESULT		rhythm_result;
-	u8									score;
+	u8									rhythm_score;
+	u8									aura_score;
 	u8									dummy2[3];
 	BOOL								is_init;
 	MYSTATUS						*p_you_status;
@@ -110,6 +112,7 @@ static void SEQFUNC_Start( IRC_COMPATIBLE_MAIN_WORK *p_wk, u16 *p_seq );
 static void SEQFUNC_End( IRC_COMPATIBLE_MAIN_WORK *p_wk, u16 *p_seq );
 static void SEQFUNC_MenuProc( IRC_COMPATIBLE_MAIN_WORK *p_wk, u16 *p_seq );
 static void SEQFUNC_CompatibleProc( IRC_COMPATIBLE_MAIN_WORK *p_wk, u16 *p_seq );
+static void SEQFUNC_RankingProc( IRC_COMPATIBLE_MAIN_WORK *p_wk, u16 *p_seq );
 static void SEQFUNC_DebugCompatibleProc( IRC_COMPATIBLE_MAIN_WORK *p_wk, u16 *p_seq );
 //PROCMODE
 static void SUBPROC_Init( SUBPROC_WORK *p_wk, HEAPID heapID );
@@ -127,6 +130,10 @@ static void *SUBPROC_ALLOC_Rhythm( HEAPID heapID, void *p_wk_adrs );
 static void SUBPROC_FREE_Rhythm( void *p_param_adrs, void *p_wk_adrs );
 static void *SUBPROC_ALLOC_Result( HEAPID heapID, void *p_wk_adrs );
 static void SUBPROC_FREE_Result( void *p_param_adrs, void *p_wk_adrs );
+//RULE
+static u32 RULE_CalcScore( u32 rhythm_score, u32 aura_score, const MYSTATUS *cp_my_status, const MYSTATUS *cp_you_status, HEAPID heapID );
+static u32 RULE_CalcNameScore( const STRBUF	*cp_player1_name, const STRBUF	*cp_player2_name );
+static u32 MATH_GetMostOnebit( u32 x, u8 bit );
 //=============================================================================
 /**
  *					データ
@@ -148,6 +155,7 @@ FS_EXTERN_OVERLAY(irc_menu);
 FS_EXTERN_OVERLAY(irc_aura);
 FS_EXTERN_OVERLAY(irc_rhythm);
 FS_EXTERN_OVERLAY(irc_result);
+FS_EXTERN_OVERLAY(irc_ranking);
 
 //-------------------------------------
 ///	PROC移動データ
@@ -158,6 +166,7 @@ typedef enum
 	SUBPROCID_AURA,
 	SUBPROCID_RHYTHM,
 	SUBPROCID_RESULT,
+	SUBPROCID_RANKING,
 
 	SUBPROCID_MAX,
 	SUBPROCID_NULL	= SUBPROCID_MAX,
@@ -193,6 +202,12 @@ static const struct
 		&IrcResult_ProcData,
 		SUBPROC_ALLOC_Result,
 		SUBPROC_FREE_Result,
+	},
+	{	
+		FS_OVERLAY_ID(irc_ranking),
+		&IrcRanking_ProcData,
+		NULL,
+		NULL,
 	}
 };
 
@@ -239,9 +254,10 @@ static GFL_PROC_RESULT IRC_COMPATIBLE_PROC_Init( GFL_PROC *p_proc, int *p_seq, v
 	//モジュール作成
 	SUBPROC_Init( &p_wk->subproc, HEAPID_IRCCOMPATIBLE_SYSTEM );
 
-	//0xFFFFFFFFは応急処理（仮）5月ROM焼きのあと、
+	//0xFFFFFFFFは応急処理
 	//毎回接続しなおす処理に直す。その際、最初の接続時にマックアドレスを貰いその人としか
 	//繋がらないような処理にする
+	//→仕様になりました。090709
 	p_wk->p_irc	= COMPATIBLE_IRC_CreateSystem( 0xFFFFFFFF, HEAPID_IRCCOMPATIBLE_SYSTEM );
 
 	p_wk->is_init	= TRUE;
@@ -459,6 +475,9 @@ static void SEQFUNC_MenuProc( IRC_COMPATIBLE_MAIN_WORK *p_wk, u16 *p_seq )
 		case IRCMENU_SELECT_COMPATIBLE:
 			SEQ_Change( p_wk, SEQFUNC_CompatibleProc );
 			break;
+		case IRCMENU_SELECT_RANKING:
+			SEQ_Change( p_wk, SEQFUNC_RankingProc );
+			break;
 		case IRCMENU_SELECT_RETURN:
 			SEQ_Change( p_wk, SEQFUNC_End );
 			break;
@@ -494,7 +513,8 @@ static void SEQFUNC_CompatibleProc( IRC_COMPATIBLE_MAIN_WORK *p_wk, u16 *p_seq )
 	switch( *p_seq )
 	{	
 	case SEQ_INIT:
-		p_wk->score	= 0;
+		p_wk->aura_score		= 0;
+		p_wk->rhythm_score	= 0;
 		*p_seq	= SEQ_PROC_RHYTHM;
 		break;
 
@@ -513,6 +533,12 @@ static void SEQFUNC_CompatibleProc( IRC_COMPATIBLE_MAIN_WORK *p_wk, u16 *p_seq )
 #endif	//DEBUG_RETURN_TO_PROG
 		{	
 			*p_seq	= SEQ_PROC_AURA;
+		}
+		else if( p_wk->rhythm_result == IRCRHYTHM_RESULT_RESULT )
+		{	
+			p_wk->aura_score		= 0;
+			p_wk->rhythm_score	= 0;
+			*p_seq	= SEQ_PROC_RESULT;
 		}
 		else
 		{	
@@ -536,6 +562,12 @@ static void SEQFUNC_CompatibleProc( IRC_COMPATIBLE_MAIN_WORK *p_wk, u16 *p_seq )
 		{	
 			*p_seq	= SEQ_PROC_RESULT;
 		}
+		else if( p_wk->aura_result == IRCAURA_RESULT_RESULT )
+		{	
+			p_wk->aura_score		= 0;
+			p_wk->rhythm_score	= 0;
+			*p_seq	= SEQ_PROC_RESULT;
+		}
 		else
 		{	
 			*p_seq	= SEQ_CHANGE_MENU;
@@ -554,6 +586,43 @@ static void SEQFUNC_CompatibleProc( IRC_COMPATIBLE_MAIN_WORK *p_wk, u16 *p_seq )
 		break;
 	};
 }
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	ランキングPROC
+ *
+ *	@param	IRC_COMPATIBLE_MAIN_WORK *p_wk	ワーク
+ *	@param	*p_seq													シーケンス
+ *
+ */
+//-----------------------------------------------------------------------------
+static void SEQFUNC_RankingProc( IRC_COMPATIBLE_MAIN_WORK *p_wk, u16 *p_seq )
+{	enum
+	{	
+		SEQ_INIT,
+		SEQ_PROC_RANKING,
+		SEQ_CHANGE_MENU,
+	};
+
+	switch( *p_seq )
+	{	
+	case SEQ_INIT:
+		*p_seq	= SEQ_PROC_RANKING;
+		break;
+
+	case SEQ_PROC_RANKING:
+		if( SUBPROC_CallProcReq( &p_wk->subproc, SUBPROCID_RANKING, HEAPID_IRCCOMPATIBLE_SYSTEM, p_wk ) )
+		{	
+			*p_seq	= SEQ_CHANGE_MENU;
+		}
+		break;
+
+	case SEQ_CHANGE_MENU:
+		SEQ_Change( p_wk, SEQFUNC_MenuProc );
+		break;
+	};
+}
+
 #ifdef DEBUG_IRC_COMPATIBLE_ONLYPLAY
 //----------------------------------------------------------------------------
 /**
@@ -578,7 +647,8 @@ static void SEQFUNC_DebugCompatibleProc( IRC_COMPATIBLE_MAIN_WORK *p_wk, u16 *p_
 	switch( *p_seq )
 	{	
 	case SEQ_INIT:
-		p_wk->score			= 0;
+		p_wk->aura_score		= 0;
+		p_wk->rhythm_score	= 0;
 		*p_seq	= SEQ_PROC_RHYTHM;
 		break;
 
@@ -683,7 +753,14 @@ static BOOL SUBPROC_CallProcReq( SUBPROC_WORK *p_wk, u32 proc_id, HEAPID heapID,
 	switch( p_wk->seq )
 	{	
 	case SEQ_ALLOC_PARAM:
-		p_wk->p_proc_param	= sc_proc_data_tbl[ proc_id ].alloc_func( heapID, p_wk_adrs );
+		if( sc_proc_data_tbl[ proc_id ].alloc_func )
+		{	
+			p_wk->p_proc_param	= sc_proc_data_tbl[ proc_id ].alloc_func( heapID, p_wk_adrs );
+		}
+		else
+		{	
+			p_wk->p_proc_param	= NULL;
+		}
 		p_wk->seq	= SEQ_CALL_PROC;
 		break;
 
@@ -694,7 +771,10 @@ static BOOL SUBPROC_CallProcReq( SUBPROC_WORK *p_wk, u32 proc_id, HEAPID heapID,
 		break;
 
 	case SEQ_FREE_PARAM:
-		sc_proc_data_tbl[	proc_id ].free_func( p_wk->p_proc_param, p_wk_adrs );
+		if( sc_proc_data_tbl[	proc_id ].free_func )
+		{	
+			sc_proc_data_tbl[	proc_id ].free_func( p_wk->p_proc_param, p_wk_adrs );
+		}
 		p_wk->seq	= SEQ_END;
 		break;
 
@@ -814,7 +894,7 @@ static void SUBPROC_FREE_Aura( void *p_param_adrs, void *p_wk_adrs )
 	p_param	= p_param_adrs;
 
 	p_wk->aura_result	= p_param->result;
-	p_wk->score				+= p_param->score;
+	p_wk->aura_score	= p_param->score;
 
 	GFL_HEAP_FreeMemory( p_param );
 }
@@ -865,7 +945,7 @@ static void SUBPROC_FREE_Rhythm( void *p_param_adrs, void *p_wk_adrs )
 	p_param	= p_param_adrs;
 
 	p_wk->rhythm_result	= p_param->result;
-	p_wk->score					+= p_param->score;
+	p_wk->rhythm_score	= p_param->score;
 
 	GFL_HEAP_FreeMemory( p_param );
 }
@@ -891,7 +971,19 @@ static void *SUBPROC_ALLOC_Result( HEAPID heapID, void *p_wk_adrs )
 	p_param->p_gamesys	= p_wk->p_param->p_gamesys;
 	p_param->p_irc			= p_wk->p_irc;
 	p_param->p_you_status	= p_wk->p_you_status;
-	p_param->score			= p_wk->score / 2;
+
+	//得点計算
+	{	
+		PLAYER_WORK *p_player;
+		MYSTATUS *p_my_status;
+		p_player	= GAMESYSTEM_GetMyPlayerWork( p_wk->p_param->p_gamesys );
+		p_my_status	= &p_player->mystatus;
+
+		if( p_wk->rhythm_score != 0 && p_wk->aura_score != 0 )
+		{	
+			p_param->score			= RULE_CalcScore( p_wk->rhythm_score, p_wk->aura_score, p_my_status, p_wk->p_you_status, HEAPID_IRCCOMPATIBLE_SYSTEM );
+		}
+	}
 
 	return p_param;
 }
@@ -913,4 +1005,168 @@ static void SUBPROC_FREE_Result( void *p_param_adrs, void *p_wk_adrs )
 	p_param	= p_param_adrs;
 
 	GFL_HEAP_FreeMemory( p_param );
+}
+//=============================================================================
+/**
+ *				RULE
+ */
+//=============================================================================
+//----------------------------------------------------------------------------
+/**
+ *	@brief	スコア計算
+ *
+ *	@param	u32 rhythm_score				リズムチェックのスコア
+ *	@param	aura_score							オーラチェックのスコア
+ *	@param	MYSTATUS *cp_my_status	運命値のために必要な情報
+ *	@param	MYSTATUS *cp_you_status	運命値のために必要な情報
+ *	@param	heapID 
+ *
+ *	@return	スコア
+ */
+//-----------------------------------------------------------------------------
+static u32 RULE_CalcScore( u32 rhythm_score, u32 aura_score, const MYSTATUS *cp_my_status, const MYSTATUS *cp_you_status, HEAPID heapID )
+{	
+	u32	name_score;
+	u32 score;
+
+	//プレイヤーの名前から運命値を算出
+	{	
+		STRBUF	*p_myname;
+		STRBUF	*p_youname;
+		p_myname	= MyStatus_CreateNameString( cp_my_status, heapID );
+		p_youname	= MyStatus_CreateNameString( cp_you_status, heapID );
+
+		name_score	= RULE_CalcNameScore( p_myname, p_youname );
+
+		GFL_STR_DeleteBuffer( p_youname );
+		GFL_STR_DeleteBuffer( p_myname );
+	}
+
+#if 1
+	score	= rhythm_score*40 + aura_score*40 + name_score*20;
+	score	= score/100;
+	score	= MATH_CLAMP( score, 0, 100 );
+#else
+	score	= (rhythm_score + aura_score)/2;
+	//運命値計算
+	{	
+		u32		add;
+		fx32	rate;
+
+		rate	= FX32_CONST(name_score) / 150;
+		rate	= MATH_CLAMP( rate , FX32_CONST(0.2F), FX32_CONST(0.8F) );
+
+		add	= ((100-score) * rate) >> FX32_SHIFT;
+		score	+= add;
+	}
+#endif
+
+	return score;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	運命値を計算
+ *
+ *	@param	STRBUF	*p_player1_name	名前１
+ *	@param	STRBUF	*p_player2_name	名前２
+ *
+ *	@return	スコア
+ */
+//-----------------------------------------------------------------------------
+static u32 RULE_CalcNameScore( const STRBUF	*cp_player1_name, const STRBUF	*cp_player2_name )
+{	
+	enum
+	{	
+		BIT_NUM	= 8,
+	};
+
+	const STRCODE	*cp_p1;
+	const STRCODE	*cp_p2;
+	
+	u32 num1;
+	u32 num2;
+	u32 b1;
+	u32 b2;
+	u32 bit1;
+	u32 bit2;
+	u32 ans_cnt;
+	u32 ans_max;
+	u32 score;
+
+	cp_p1	= GFL_STR_GetStringCodePointer( cp_player1_name );
+	cp_p2	= GFL_STR_GetStringCodePointer( cp_player2_name );
+	num1	= *cp_p1;
+	num2	= *cp_p2;
+	bit1	= MATH_GetMostOnebit( *cp_p1, BIT_NUM );
+	bit2	= MATH_GetMostOnebit( *cp_p2, BIT_NUM );
+
+	ans_max	= 0;
+	ans_cnt	= 0;
+	while( 1 )
+	{
+	 OS_Printf( "num1%d bit1%d num2%d bit2%d\n", *cp_p1, bit1, *cp_p2, bit2 );
+	 if( bit1 == 0 )
+	 {	
+		cp_p1++;
+		num1	= *cp_p1;
+		if( num1 == GFL_STR_GetEOMCode() )
+		{	
+			break;
+		}
+		bit1	= MATH_GetMostOnebit( num1, BIT_NUM );
+	 }
+	 if( bit2 == 0 )
+	 {	
+		cp_p2++;
+		num2	= *cp_p2;
+		if( num2 == GFL_STR_GetEOMCode() )
+		{	
+			break;
+		}
+ 		bit2	= MATH_GetMostOnebit( num2, BIT_NUM );
+	 }
+
+	 b1	= ((num1) >> bit1) & 0x1;
+	 b2	= ((num2) >> bit2) & 0x1;
+
+	 //bitの一致率をチェック
+	 if( b1 == b2 )
+	 {	
+			ans_cnt++;
+	 }
+	 ans_max++;
+
+	 //ビットを減らす
+	 bit1--;
+	 bit2--;
+	}
+	
+	score	= 100*ans_cnt/ans_max;
+	OS_Printf( "全体のビット%d 一致%d 点数\n", ans_max, ans_cnt, score );
+
+	return score;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	最上位が１のビットを数得る
+ *
+ *	@param	u32 x		値
+ *	@param	u8 bit	ビット数
+ *
+ *	@return	最上位の１のビットの位置
+ */
+//-----------------------------------------------------------------------------
+static u32 MATH_GetMostOnebit( u32 x, u8 bit )
+{	
+	int i;
+	for( i = bit-1; i != 0; i-- )
+	{	
+		if( (x >> i) & 0x1 )
+		{
+			break;
+		}
+	}
+
+	return i;
 }

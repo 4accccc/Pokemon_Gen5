@@ -6,10 +6,21 @@
  *	@author	Toru=Nagihashi
  *	@date		2009.05.13
  *
- *	相性診断ゲームは、何回も接続するが、接続と接続の間が長めで
- *	タイムアウトしてしまうので、毎回、ネゴシエーションからやり直す。
- *	ただし、それだと誰とも繋がってしまうので、
- *	最初につないだとき相手のMacAddrを貰い、その相手とのみ通信するようにする。
+ *	赤外線接続システム
+ *	０．基本
+ *	接続から切断まで基本的にずっと接続し、データを送り続けます（例外あり）
+ *
+ *
+ *	１．場面チェック
+ *	かならず、何かを送信するときは、今、自分がどの場面にいるかを一緒に送ります。
+ *	もし、同期が失敗し、別々の場所で赤外線を通信した場合、どの場面にいるかという情報から、
+ *	その場面にいく
+ *
+ *
+ *	２．切断時
+ *	切断時のみ、タイムアウトを設けます。
+ *	切断時の同期が失敗したときは、タイムアウトで終了します。
+ *
  *
  */
 //]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]
@@ -27,17 +38,37 @@
 #define COMPATIBLE_IRC_SENDDATA_BYTE  (32)    // 最大送信バイト数
 #define COMPATIBLE_IRC_GETBEACON_NUM	(16)    // 最大ビーコン収集数
 
+#define COMPATIBLE_IRC_SENDATA_CNT		(60)
 
+
+//-------------------------------------
+///		タイミング
+//=====================================
 typedef enum
 {	
 	COMPATIBLE_TIMING_NO_MENU_START,
+	COMPATIBLE_TIMING_NO_MENU_END,
 	COMPATIBLE_TIMING_NO_RHYTHM_RESULT,
 	COMPATIBLE_TIMING_NO_RHYTHM_END,
 	COMPATIBLE_TIMING_NO_AURA_RESULT,
 	COMPATIBLE_TIMING_NO_AURA_END,
 
+	COMPATIBLE_TIMING_NO_SCENE_ERROR,
+
 	COMPATIBLE_TIMING_NO_MAX,
 }COMPATIBLE_TIMING_NO;
+
+
+//-------------------------------------
+///		現在の赤外線場所
+//=====================================
+typedef enum {
+	COMPATIBLE_SCENE_MENU,
+	COMPATIBLE_SCENE_RHYTHM,
+	COMPATIBLE_SCENE_AURA,
+	COMPATIBLE_SCENE_RESULT,
+} COMPATIBLE_SCENE;
+
 
 //=============================================================================
 /**
@@ -62,10 +93,16 @@ extern BOOL COMPATIBLE_IRC_DisConnextWait( COMPATIBLE_IRC_SYS *p_sys );
 
 extern BOOL COMPATIBLE_IRC_IsConnext( const COMPATIBLE_IRC_SYS *cp_sys );
 extern BOOL COMPATIBLE_IRC_TimingSyncWait( COMPATIBLE_IRC_SYS *p_sys, COMPATIBLE_TIMING_NO timing_no );
+
 extern void COMPATIBLE_IRC_Cancel( COMPATIBLE_IRC_SYS *p_sys );
 
 extern BOOL COMPATIBLE_IRC_IsError( COMPATIBLE_IRC_SYS *p_sys );
 
+extern void COMPATIBLE_IRC_SetScene( COMPATIBLE_IRC_SYS *p_sys, COMPATIBLE_SCENE scene );
+extern void COMPATIBLE_IRC_ResetScene( COMPATIBLE_IRC_SYS *p_sys );
+extern BOOL COMPATIBLE_IRC_SendSceneContinue( COMPATIBLE_IRC_SYS *p_sys );
+extern BOOL COMPATIBLE_IRC_SendScene( COMPATIBLE_IRC_SYS *p_sys );
+extern int COMPATIBLE_IRC_CompScene( const COMPATIBLE_IRC_SYS *cp_sys );
 
 //各赤外線ミニゲームで使用
 extern BOOL COMPATIBLE_IRC_SendData( COMPATIBLE_IRC_SYS *p_sys, u16 send_command, u16 size, const void *cp_data );

@@ -21,6 +21,7 @@
 typedef enum 
 {
 	IRCMENU_SELECT_COMPATIBLE,	//相性ミニゲームを選んだ
+	IRCMENU_SELECT_RANKING,			//ランキングを選んだ
 	IRCMENU_SELECT_RETURN,			//戻るを選んだ
 } IRCMENU_SELECT;
 

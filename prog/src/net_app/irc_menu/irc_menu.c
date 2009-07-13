@@ -125,6 +125,7 @@ enum{
 ///	カウント
 //=====================================
 #define TOCH_COUNTER_MAX	(30*5)
+#define RESULT_SEND_CNT	(COMPATIBLE_IRC_SENDATA_CNT)
 
 //=============================================================================
 /**
@@ -209,7 +210,7 @@ struct _IRC_MENU_MAIN_WORK
 	//シーケンス管理
 	SEQ_FUNCTION		seq_function;
 	u16		seq;
-	u16		dummy;
+	u16		cnt;
 	BOOL	is_end;
 
 	//パラメータ
@@ -265,6 +266,7 @@ static void SEQFUNC_Select( IRC_MENU_MAIN_WORK *p_wk, u16 *p_seq );
 static void SEQFUNC_NextProc( IRC_MENU_MAIN_WORK *p_wk, u16 *p_seq );
 static void SEQFUNC_DisConnect( IRC_MENU_MAIN_WORK *p_wk, u16 *p_seq );
 static void SEQFUNC_End( IRC_MENU_MAIN_WORK *p_wk, u16 *p_seq );
+static void SEQFUNC_SceneError( IRC_MENU_MAIN_WORK *p_wk, u16 *p_seq );
 //BTN
 static void BUTTON_Init( BUTTON_WORK *p_wk, u8 frm, const	 BUTTON_SETUP *cp_btn_setup_tbl, u8 tbl_max, const MSG_WORK *cp_msg, GFL_ARCUTIL_TRANSINFO frame_char, u8 plt, HEAPID heapID );
 static void BUTTON_Exit( BUTTON_WORK *p_wk );
@@ -351,6 +353,7 @@ static const GFL_BG_BGCNT_HEADER sc_bgcnt_data[ GRAPHIC_BG_FRAME_MAX ] =
 //=====================================
 enum{	
 	BTNID_COMATIBLE,
+	BTNID_RANKING,
 	BTNID_RETURN,
 
 	BTNID_MAX,
@@ -366,6 +369,16 @@ static const BUTTON_SETUP	sc_btn_setp_tbl[BTNID_MAX]	=
 		MSGWND_AURA_W,
 		MSGWND_AURA_H,
 	},
+#if 0
+	//ランキング選択
+	{	
+		COMPATI_LIST_001,
+		MSGWND_RHYTHM_X,
+		MSGWND_RHYTHM_Y,
+		MSGWND_RHYTHM_W,
+		MSGWND_RHYTHM_H,
+	},
+#endif
 	//戻る
 	{	
 		COMPATI_BTN_000,
@@ -441,6 +454,9 @@ static GFL_PROC_RESULT IRC_MENU_PROC_Init( GFL_PROC *p_proc, int *p_seq, void *p
 	default:
 		GF_ASSERT( 0 );
 	}
+		
+	//メニューシーンセット
+	COMPATIBLE_IRC_SetScene( p_wk->p_param->p_irc, COMPATIBLE_SCENE_MENU );
 
 	return GFL_PROC_RES_FINISH;
 }
@@ -1100,14 +1116,17 @@ static void SEQFUNC_Connect( IRC_MENU_MAIN_WORK *p_wk, u16 *p_seq )
 	enum{	
 		SEQ_MSG_STARTNET,
 		SEQ_CONNECT,
+		SEQ_MSG_PRINT,
 		SEQ_SEND_STATUS,
-		SEQ_TIMING,
-		SEQ_MSG_CONNECT,
+		SEQ_TIMING_START,
 		SEQ_CHANGE_SELECT,
 		SEQ_SENDMENU,
 		SEQ_RECVMENU,
 		SEQ_SENDRETURNMENU,
 		SEQ_RECVRETURNMENU,
+		SEQ_SCENE,
+		SEQ_TIMING_END,
+		SEQ_MSG_CONNECT,
 		SEQ_NEXTPROC,
 	};
 
@@ -1123,7 +1142,7 @@ static void SEQFUNC_Connect( IRC_MENU_MAIN_WORK *p_wk, u16 *p_seq )
 	case SEQ_CONNECT:
 		if( COMPATIBLE_IRC_ConnextWait( p_wk->p_param->p_irc ) )
 		{	
-			*p_seq	= SEQ_SEND_STATUS;
+			*p_seq	= SEQ_MSG_PRINT;
 		}
 
 		if( TP_GetRectTrg( &sc_btn_setp_tbl[BTNID_RETURN] ) )
@@ -1132,13 +1151,18 @@ static void SEQFUNC_Connect( IRC_MENU_MAIN_WORK *p_wk, u16 *p_seq )
 			COMPATIBLE_IRC_Cancel( p_wk->p_param->p_irc );
 			SEQ_Change( p_wk, SEQFUNC_End );
 		}
+		break;
+
+	case SEQ_MSG_PRINT:
+		MSGWND_Print( &p_wk->msgwnd, &p_wk->msg, COMPATI_STR_004, 0, 0  );
+		*p_seq	= SEQ_SEND_STATUS;
 		break;
 
 	case SEQ_SEND_STATUS:
 		if(COMPATIBLE_MENU_SendStatusData( p_wk->p_param->p_irc, p_wk->p_param->p_gamesys ) )
 		{	
 			COMPATIBLE_MENU_GetStatusData( p_wk->p_param->p_irc, p_wk->p_param->p_you_status  );
-			*p_seq	= SEQ_TIMING;
+			*p_seq	= SEQ_TIMING_START;
 		}
 
 		if( TP_GetRectTrg( &sc_btn_setp_tbl[BTNID_RETURN] ) )
@@ -1149,16 +1173,11 @@ static void SEQFUNC_Connect( IRC_MENU_MAIN_WORK *p_wk, u16 *p_seq )
 		}
 		break;
 
-	case SEQ_TIMING:
+	case SEQ_TIMING_START:
 		if( COMPATIBLE_IRC_TimingSyncWait( p_wk->p_param->p_irc, COMPATIBLE_TIMING_NO_MENU_START ) )
 		{	
-			*p_seq	= SEQ_MSG_CONNECT;
+			*p_seq	= SEQ_SENDMENU;
 		}
-		break;
-
-	case SEQ_MSG_CONNECT:
-		MSGWND_Print( &p_wk->msgwnd, &p_wk->msg, COMPATI_STR_002, 0, 0  );
-		*p_seq	= SEQ_SENDMENU;
 		break;
 		
 	case SEQ_SENDMENU:
@@ -1186,14 +1205,54 @@ static void SEQFUNC_Connect( IRC_MENU_MAIN_WORK *p_wk, u16 *p_seq )
 	case SEQ_RECVRETURNMENU:
 		if( COMPATIBLE_MENU_RecvReturnMenu( p_wk->p_param->p_irc ) )
 		{
+			*p_seq	= SEQ_SCENE;
+		}
+		break;
+
+
+		
+	case SEQ_SCENE:
+		COMPATIBLE_IRC_SetScene( p_wk->p_param->p_irc, COMPATIBLE_SCENE_RHYTHM );
+		if( COMPATIBLE_IRC_SendScene( p_wk->p_param->p_irc ) )
+		{	
+			*p_seq	= SEQ_TIMING_END;
+		}
+		break;
+
+	case SEQ_TIMING_END:
+		if( COMPATIBLE_IRC_TimingSyncWait( p_wk->p_param->p_irc, COMPATIBLE_TIMING_NO_MENU_END ) )
+		{	
+			*p_seq	= SEQ_MSG_CONNECT;
+		}
+		break;
+
+	case SEQ_MSG_CONNECT:
+		if( p_wk->cnt >= RESULT_SEND_CNT )
+		{	
+			MSGWND_Print( &p_wk->msgwnd, &p_wk->msg, COMPATI_STR_002, 0, 0  );
 			*p_seq	= SEQ_NEXTPROC;
 		}
 		break;
 
 	case SEQ_NEXTPROC:
+		p_wk->p_param->select	= IRCMENU_SELECT_COMPATIBLE;
 		SEQ_Change( p_wk, SEQFUNC_NextProc );
-		break;
+		return;	//↓のアサートを通過しないため
 	};
+
+	//赤外線開始待ち
+	if( SEQ_MSG_PRINT <= *p_seq && *p_seq <=  SEQ_MSG_CONNECT )
+	{	
+		if( p_wk->cnt <= RESULT_SEND_CNT )
+		{	
+			p_wk->cnt++;
+		}
+	}
+
+	if( *p_seq < SEQ_SCENE && COMPATIBLE_IRC_CompScene( p_wk->p_param->p_irc ) != 0 )
+	{	
+		SEQ_Change( p_wk, SEQFUNC_SceneError );
+	}
 }
 //----------------------------------------------------------------------------
 /**
@@ -1284,6 +1343,13 @@ static void SEQFUNC_Select( IRC_MENU_MAIN_WORK *p_wk, u16 *p_seq )
 				PMSND_PlaySystemSE( MENU_SE_DECIDE );
 				*p_seq	= SEQ_MSG;
 				break;
+
+			case BTNID_RANKING:
+				PMSND_PlaySystemSE( MENU_SE_DECIDE );
+				p_wk->p_param->select	= IRCMENU_SELECT_RANKING;
+				SEQ_Change( p_wk, SEQFUNC_NextProc );
+				break;
+
 			case BTNID_RETURN:
 				PMSND_PlaySystemSE( MENU_SE_CANCEL );
 				SEQ_Change( p_wk, SEQFUNC_End );
@@ -1315,7 +1381,7 @@ static void SEQFUNC_Select( IRC_MENU_MAIN_WORK *p_wk, u16 *p_seq )
 		break;
 
 	case SEQ_NEXTPROC:
-		SEQ_Change( p_wk, SEQFUNC_NextProc );
+		SEQ_Change( p_wk, SEQFUNC_NextProCOMPATIBLE_IRC_CompScene(c );
 		break;
 #endif
 	};
@@ -1348,7 +1414,6 @@ static void SEQFUNC_NextProc( IRC_MENU_MAIN_WORK *p_wk, u16 *p_seq )
 	switch( *p_seq )
 	{	
 	case SEQ_INIT:
-		p_wk->p_param->select	= IRCMENU_SELECT_COMPATIBLE;
 		*p_seq	= SEQ_END;
 		break;
 
@@ -1370,6 +1435,7 @@ static void SEQFUNC_NextProc( IRC_MENU_MAIN_WORK *p_wk, u16 *p_seq )
 static void SEQFUNC_DisConnect( IRC_MENU_MAIN_WORK *p_wk, u16 *p_seq )
 {	
 	enum{	
+		SEQ_SCENE,
 		SEQ_NET_DISCONNECT,
 		SEQ_NET_EXIT,
 		SEQ_CHANGE_MENU,
@@ -1377,6 +1443,11 @@ static void SEQFUNC_DisConnect( IRC_MENU_MAIN_WORK *p_wk, u16 *p_seq )
 
 	switch( *p_seq )
 	{	
+	case SEQ_SCENE:
+		COMPATIBLE_IRC_ResetScene( p_wk->p_param->p_irc );
+		*p_seq	= SEQ_NET_DISCONNECT;
+		break;
+
 	case SEQ_NET_DISCONNECT:
 		if( COMPATIBLE_IRC_DisConnextWait( p_wk->p_param->p_irc ) )
 		{	
@@ -1394,7 +1465,6 @@ static void SEQFUNC_DisConnect( IRC_MENU_MAIN_WORK *p_wk, u16 *p_seq )
 	case SEQ_CHANGE_MENU:
 		SEQ_Change( p_wk, SEQFUNC_Select );
 		break;
-
 	};
 }
 
@@ -1449,6 +1519,38 @@ static void SEQFUNC_End( IRC_MENU_MAIN_WORK *p_wk, u16 *p_seq )
 		break;
 	}
 }
+//----------------------------------------------------------------------------
+/**
+ *	@brief	エラーシーケンス
+ *
+ *	@param	IRC_MENU_MAIN_WORK *p_wk	ワーク
+ *	@param	*p_seq													シーケンス
+ *
+ */
+//-----------------------------------------------------------------------------
+static void SEQFUNC_SceneError( IRC_MENU_MAIN_WORK *p_wk, u16 *p_seq )
+{	
+	//自分が先はありえない
+	if( COMPATIBLE_IRC_CompScene( p_wk->p_param->p_irc ) > 0 )
+	{	
+		GF_ASSERT(0);
+	}
+
+	//接続していたら
+	if( COMPATIBLE_IRC_IsConnext( p_wk->p_param->p_irc ) )
+	{	
+		//次へ飛ぶ
+		COMPATIBLE_IRC_SetScene( p_wk->p_param->p_irc, COMPATIBLE_SCENE_RHYTHM );	
+		p_wk->p_param->select	= IRCMENU_SELECT_COMPATIBLE;
+		SEQ_Change( p_wk, SEQFUNC_NextProc );
+	}
+	else
+	{	
+		//接続していないならば、選択に戻る
+		SEQ_Change( p_wk, SEQFUNC_Select );
+	}
+
+}
 //=============================================================================
 /**
  *			adapter
@@ -1467,6 +1569,8 @@ static void SEQFUNC_End( IRC_MENU_MAIN_WORK *p_wk, u16 *p_seq )
 static void MainModules( IRC_MENU_MAIN_WORK *p_wk )
 {	
 	INFOWIN_Update();
+
+	//メッセージ処理
 	if( MSG_Main( &p_wk->msg ) )
 	{	
 		MSGWND_Main( &p_wk->msgwnd, &p_wk->msg );

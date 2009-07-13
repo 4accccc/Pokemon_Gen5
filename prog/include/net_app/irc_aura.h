@@ -24,6 +24,7 @@
 typedef enum {
 	IRCAURA_RESULT_CLEAR,		//ƒNƒŠƒA‚µ‚½
 	IRCAURA_RESULT_RETURN,	//–ß‚è‚ð‘I‘ð
+	IRCAURA_RESULT_RESULT,	//Œ‹‰Ê‰æ–Ê‚Ö
 } IRCAURA_RESULT;
 
 //=============================================================================
