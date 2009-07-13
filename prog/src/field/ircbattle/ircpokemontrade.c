@@ -765,6 +765,16 @@ static void _changeWaitState(IRC_POKEMON_TRADE* pWork)
 			PP_Put( pp , ID_PARA_oyaname_raw , (u32)&oyaName[0] );
 			PP_Put( pp , ID_PARA_oyasex , PTL_SEX_MALE );
 		}
+
+		{
+			POKEMON_PERSONAL_DATA* ppd = POKE_PERSONAL_OpenHandle(monsno, 0, GFL_HEAPID_APP);
+			u32 ret = POKE_PERSONAL_GetParam(ppd,POKEPER_ID_sex);
+
+			PP_SetupEx(pp, monsno, lv, 123456,PTL_SETUP_POW_AUTO, ret);
+
+			POKE_PERSONAL_CloseHandle(ppd);
+		}
+
 		
 		PokeParty_SetMemberData(party, pWork->selectIndex, pp);
 		GFL_HEAP_FreeMemory(pp);
