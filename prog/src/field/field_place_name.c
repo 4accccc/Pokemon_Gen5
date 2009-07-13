@@ -391,6 +391,9 @@ static void LoadCharacterData( FIELD_PLACE_NAME* p_sys, u32 arc_id, u32 data_id 
 	// 転送先ビットマップ = ビットマップウィンドウ
 	p_bmp = GFL_BMPWIN_GetBmp( p_sys->pBmpWin );
 
+	// 転送先ビットマップをクリア
+	GFL_BMP_Fill( p_bmp, 0, 0, BMPWIN_WIDTH_DOT, BMPWIN_HEIGHT_DOT, 0 );
+
 	// 転送元ビットマップを作成( アーカイブからキャラデータを取得 )
 	p_src = GFL_BMP_LoadCharacter( arc_id, data_id, 0, p_sys->heapID );
 
