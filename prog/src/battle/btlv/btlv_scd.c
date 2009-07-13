@@ -765,36 +765,37 @@ static void stwdraw_button( const u8* pos, u8 count, u8 format, BTLV_SCD* wk )
     bpp = BTL_POKECON_GetFrontPokeDataConst( wk->pokeCon, *pos );
     pp  = BPP_GetSrcData( bpp );
     vpos = BTL_MAIN_BtlPosToViewPos( wk->mainModule, *pos );
+    vpos -= BTLV_MCSS_POS_A;
 
-    bisp.bidp[ *pos ].hp = PP_Get( pp, ID_PARA_hp, NULL );
-    if( bisp.bidp[ *pos ].hp )
+    bisp.bidp[ vpos ].hp = PP_Get( pp, ID_PARA_hp, NULL );
+    if( bisp.bidp[ vpos ].hp )
     {
       int mons_no = PP_Get( pp, ID_PARA_monsno, NULL );
-      bisp.bidp[ *pos ].pp = pp;
-      bisp.bidp[ *pos ].hpmax = PP_Get( pp, ID_PARA_hpmax, NULL );
-      bisp.bidp[ *pos ].exist = 1;
+      bisp.bidp[ vpos ].pp = pp;
+      bisp.bidp[ vpos ].hpmax = PP_Get( pp, ID_PARA_hpmax, NULL );
+      bisp.bidp[ vpos ].exist = 1;
       if( ( mons_no == MONSNO_NIDORAN_M ) || ( mons_no == MONSNO_NIDORAN_F ) )
       {
-        bisp.bidp[ *pos ].sex = PTL_SEX_UNKNOWN;
+        bisp.bidp[ vpos ].sex = PTL_SEX_UNKNOWN;
       }
       else
       {
-        bisp.bidp[ *pos ].sex = PP_Get( pp, ID_PARA_sex, NULL );
+        bisp.bidp[ vpos ].sex = PP_Get( pp, ID_PARA_sex, NULL );
       }
 
       if( PP_Get( pp, ID_PARA_condition, NULL ) )
       {
-        bisp.bidp[ *pos ].status = BTLV_INPUT_STATUS_NG;
+        bisp.bidp[ vpos ].status = BTLV_INPUT_STATUS_NG;
       }
       else
       {
-        bisp.bidp[ *pos ].status = BTLV_INPUT_STATUS_ALIVE;
+        bisp.bidp[ vpos ].status = BTLV_INPUT_STATUS_ALIVE;
       }
     }
     else
     {
-      bisp.bidp[ *pos ].exist = 0;
-      bisp.bidp[ *pos ].status = BTLV_INPUT_STATUS_DEAD;
+      bisp.bidp[ vpos ].exist = 0;
+      bisp.bidp[ vpos ].status = BTLV_INPUT_STATUS_DEAD;
     }
     pos++;
   }
