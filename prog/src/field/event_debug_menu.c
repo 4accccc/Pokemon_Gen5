@@ -181,7 +181,7 @@ static const FLDMENUFUNC_LIST DATA_DebugMenuList[] =
 	{ DEBUG_FIELD_STR16, DMenuCallProc_WeatherList },
   { DEBUG_FIELD_STR_SUBSCRN, DMenuCallProc_SubscreenSelect },
   { DEBUG_FIELD_STR21 , DMenuCallProc_MusicalSelect },
-  { DEBUG_FIELD_STR30, DMenuCallProc_Naminori },
+  { DEBUG_FIELD_STR31, DMenuCallProc_Naminori },
   { DEBUG_FIELD_STR32, DMenuCallProc_DebugItem },
   { DEBUG_FIELD_STR37, DMenuCallProc_BoxMax },
   { DEBUG_FIELD_STR36, DMenuCallProc_ControlFog },

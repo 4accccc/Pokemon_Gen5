@@ -286,6 +286,17 @@ BOOL FIELD_ENCOUNT_CheckEncount( FIELD_ENCOUNT *enc )
   if( attr == MAPATTR_ERROR ){
     return( FALSE );
   }
+
+  //090713 ROM用 水アトリビュートエンカウント無効
+  #if 1 
+  {
+    MAPATTR_FLAG attr_flag;
+    attr_flag = MAPATTR_GetAttrFlag( attr );
+    if( (attr_flag & MAPATTR_FLAGBIT_WATER) ){ //水
+      return( FALSE );
+    }
+  }
+  #endif
   
   //エンカウント確率取得
   per = enc_GetAttrPercent( enc, attr, &enc_loc );
