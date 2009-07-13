@@ -106,6 +106,12 @@ static GFL_PROC_RESULT FieldMapProcEnd
 {
 	GAMESYS_WORK * gsys = pwk;
 	FIELDPROC_WORK * fpwk = mywk;
+  GAME_COMM_SYS_PTR game_comm = GAMESYSTEM_GetGameCommSysPtr(gsys);
+  
+  //※check　フィールドが無い間はビーコンサーチしない
+  if(GameCommSys_BootCheck(game_comm) == GAME_COMM_NO_FIELD_BEACON_SEARCH){
+    GameCommSys_ExitReq(game_comm);
+  }
 
 	FIELDMAP_Delete(fpwk->fieldWork);
 	GAMESYSTEM_SetFieldMapWork(gsys, NULL);
