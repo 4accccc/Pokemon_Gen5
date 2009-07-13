@@ -98,7 +98,7 @@ typedef struct {
 
 static const CONNECT_DATA ConnectData_H01[] = {
 	{//DOOR_ID_H01_EXIT01 = 0
-		{559, 0, 2151},
+		{559, 0, 2139},
 		//{559, 0, 2143},
 		ZONE_ID_H01P01, DOOR_ID_H01P01_EXIT04,
 		2,//direction
