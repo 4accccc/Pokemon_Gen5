@@ -353,7 +353,7 @@ static const GFL_BG_BGCNT_HEADER sc_bgcnt_data[ GRAPHIC_BG_FRAME_MAX ] =
 //=====================================
 enum{	
 	BTNID_COMATIBLE,
-	BTNID_RANKING,
+//	BTNID_RANKING,
 	BTNID_RETURN,
 
 	BTNID_MAX,
@@ -1343,13 +1343,13 @@ static void SEQFUNC_Select( IRC_MENU_MAIN_WORK *p_wk, u16 *p_seq )
 				PMSND_PlaySystemSE( MENU_SE_DECIDE );
 				*p_seq	= SEQ_MSG;
 				break;
-
+#if 0
 			case BTNID_RANKING:
 				PMSND_PlaySystemSE( MENU_SE_DECIDE );
 				p_wk->p_param->select	= IRCMENU_SELECT_RANKING;
 				SEQ_Change( p_wk, SEQFUNC_NextProc );
 				break;
-
+#endif
 			case BTNID_RETURN:
 				PMSND_PlaySystemSE( MENU_SE_CANCEL );
 				SEQ_Change( p_wk, SEQFUNC_End );
