@@ -911,6 +911,10 @@ static void _touchState(IRC_POKEMON_TRADE* pWork)
 				pWork->catchIndex = -1;  //‚³‚Á‚«‚Æ“¯‚¶•¨‚ð‚Â‚©‚ñ‚Å‚¢‚½ê‡‚Í‰½‚à‚µ‚È‚¢
 			}
 		}
+		if(	pWork->pokeIcon[pWork->catchIndex]==NULL ){  //‚¢‚È‚¢‚à‚Ì‚Í‚È‚É‚à‚µ‚È‚¢
+				pWork->catchIndex = -1;
+		}
+
 		
 		if((pWork->catchIndex != -1) && !pWork->bUpVec){
 			if(pWork->nowBoxno == pWork->selectBoxno){   //‚Â‚©‚ñ‚Å‚½•¨‚ðŒ³‚É–ß‚·
@@ -951,7 +955,9 @@ static void _touchState(IRC_POKEMON_TRADE* pWork)
 		if(GFL_UI_TP_GetPointCont(&x,&y)){
 			pos.x = x;
 			pos.y = y;
-			GFL_CLACT_WK_SetPos( pWork->pokeIcon[pWork->catchIndex], &pos, CLSYS_DRAW_SUB);
+			if(pWork->pokeIcon[pWork->catchIndex]){
+				GFL_CLACT_WK_SetPos( pWork->pokeIcon[pWork->catchIndex], &pos, CLSYS_DRAW_SUB);
+			}
 		}
 	}
 
