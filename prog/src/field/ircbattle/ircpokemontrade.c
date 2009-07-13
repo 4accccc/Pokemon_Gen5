@@ -193,6 +193,7 @@ struct _IRC_POKEMON_TRADE {
 	BOOL bChangeOK[2];
 
 	BOOL bParent;
+	BOOL bTouchReset;
 };
 
 
@@ -627,6 +628,7 @@ static void _recvChangeYesNo(const int netID, const int size, const void* pData,
 	_msgWindowCreate(pWork, IRCBTL_STR_20);
 
 	TouchYesNoStart(pWork->TouchSubWindowSys);
+	pWork->bTouchReset=TRUE;
 	
 	_CHANGE_STATE(pWork,_changeYesNoWaitState);
 
@@ -643,7 +645,10 @@ static void _recvChangeCancel(const int netID, const int size, const void* pData
 		return;	//自分のハンドルと一致しない場合、親としてのデータ受信なので無視する
 	}
 	//もどす
-	TOUCH_SW_Reset( pWork->TouchSubWindowSys );
+	if(pWork->bTouchReset){
+		TOUCH_SW_Reset( pWork->TouchSubWindowSys );
+		pWork->bTouchReset=FALSE;
+	}
 	_messageDelete(pWork);
 	
 	_CHANGE_STATE(pWork, _touchState);
@@ -661,6 +666,7 @@ static void _recvEndReq(const int netID, const int size, const void* pData, void
 
 	_msgWindowCreate(pWork, IRCBTL_STR_22);
 	TouchYesNoStart(pWork->TouchSubWindowSys);
+	pWork->bTouchReset=TRUE;
 
 	_CHANGE_STATE(pWork, _endWaitState);
 }
@@ -805,7 +811,10 @@ static void _changeYesNoWaitState(IRC_POKEMON_TRADE* pWork)
 	result = TOUCH_SW_Main( pWork->TouchSubWindowSys );
 	switch(result){				//こうかん
 	case TOUCH_SW_RET_YES:						//はい
-		TOUCH_SW_Reset( pWork->TouchSubWindowSys );
+		if(pWork->bTouchReset){
+			TOUCH_SW_Reset( pWork->TouchSubWindowSys );
+			pWork->bTouchReset=FALSE;
+		}
 		_messageDelete(pWork);
 		GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(),_NETCMD_CHANGE_POKEMON,0,NULL);
 		_CHANGE_STATE(pWork,_changeWaitState);
