@@ -25,6 +25,7 @@
 #include "sound/pm_sndsys.h"		//サウンドシステム参照
 
 #include "event_fldmmdl_control.h"
+#include "field_place_name.h"   //FIELD_PLACE_NAME_ZoneChange
 
 static void UpdateMapParams(GAMESYS_WORK * gsys, const LOCATION * loc_req);
 static void SetMMdl( GAMESYS_WORK *gsys, const LOCATION *loc_req, GAMEINIT_MODE mode );
@@ -75,6 +76,8 @@ static GMEVENT_RESULT EVENT_FirstMapIn(GMEVENT * event, int *seq, void *work)
 		(*seq) ++;
 		break;
 	case 3:
+		fieldmap = GAMESYSTEM_GetFieldMapWork(gsys);
+    FIELD_PLACE_NAME_ZoneChange(FIELDMAP_GetPlaceNameSys(fieldmap), fmw->loc_req.zone_id);
 		return GMEVENT_RES_FINISH;
 	}
 	return GMEVENT_RES_CONTINUE;
@@ -416,6 +419,8 @@ static GMEVENT_RESULT EVENT_MapChange(GMEVENT * event, int *seq, void*work)
 		(*seq) ++;
 		break;
 	case 6:
+		fieldmap = GAMESYSTEM_GetFieldMapWork(gsys);
+    FIELD_PLACE_NAME_ZoneChange(FIELDMAP_GetPlaceNameSys(fieldmap), mcw->loc_req.zone_id);
 		return GMEVENT_RES_FINISH;
 
 	}

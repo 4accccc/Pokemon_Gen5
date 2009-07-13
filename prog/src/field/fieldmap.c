@@ -1239,6 +1239,15 @@ FLDMAP_CTRLTYPE FIELDMAP_GetMapControlType( FIELDMAP_WORK *fieldWork )
   return fieldWork->func_tbl->type;
 }
 
+//--------------------------------------------------------------
+/**
+ */
+//--------------------------------------------------------------
+FIELD_PLACE_NAME * FIELDMAP_GetPlaceNameSys( FIELDMAP_WORK * fieldWork )
+{
+  return fieldWork->placeNameSys;
+}
+
 //======================================================================
 //	フィールドマップ　サブ　BG関連
 //======================================================================
