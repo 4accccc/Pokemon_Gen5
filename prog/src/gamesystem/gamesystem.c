@@ -453,8 +453,16 @@ static void DEBUG_MyPokeAdd(GAMESYS_WORK * gsys)
 
 		for(i=0;i<18;i++){
 			for(j=0;j<5;j++){
-				PP_Setup(pp, MONSNO_ZENIGAME+i+j, i+j, 123456);
+				POKEMON_PERSONAL_DATA* ppd = POKE_PERSONAL_OpenHandle(MONSNO_ZENIGAME+i+j, 0, GFL_HEAPID_APP);
+				u32 ret = POKE_PERSONAL_GetParam(ppd,POKEPER_ID_sex);
+
+				PP_SetupEx(pp, MONSNO_ZENIGAME+i+j, i+j, 123456,PTL_SETUP_POW_AUTO, ret);
+				PP_Put( pp , ID_PARA_oyaname_raw , (u32)name );
+				PP_Put( pp , ID_PARA_oyasex , MyStatus_GetMySex( myStatus ) );
+
 				BOXDAT_PutPokemonBox(pBox, i, (POKEMON_PASO_PARAM*)PP_GetPPPPointerConst(pp));
+
+				POKE_PERSONAL_CloseHandle(ppd);
 			}
 		}
 	}
