@@ -756,8 +756,8 @@ static void _changeWaitState(IRC_POKEMON_TRADE* pWork)
 		POKEPARTY* party = GAMEDATA_GetMyPokemon(GAMESYSTEM_GetGameData(pWork->pGameSys));
 		int monsno = PPP_Get(pWork->recvPoke[id],ID_PARA_monsno,NULL);
 		int lv = PPP_Get(pWork->recvPoke[id],ID_PARA_level,NULL);
-		int id = PPP_Get(pWork->recvPoke[id],ID_PARA_id_no,NULL);
-		POKEMON_PARAM* pp = PP_Create(monsno,lv ,id, pWork->heapID);
+		int id2 = PPP_Get(pWork->recvPoke[id],ID_PARA_id_no,NULL);
+		POKEMON_PARAM* pp = PP_Create(monsno,lv ,id2, pWork->heapID);
 
 
 		{
