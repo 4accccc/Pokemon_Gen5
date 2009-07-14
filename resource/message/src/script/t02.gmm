@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-07-14T16:23:10"/>
+	<create user="matsumiya" host="W00207" date="2009-07-14T16:59:18"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="537"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="691"/>
-		<edit entry="0" language="JPN_KANJI" mode="Source" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -401,8 +401,8 @@
 		<comment>♀
 ・続けて表示</comment>
 		<attribute name="キャラ指定">？？？団員♀</attribute>
-		<language name="JPN" width="256">？？？？？『それは　それは？[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">？？？？？『それは　それは？[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">？？？だん『それは　それは？[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">？？？団『それは　それは？[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_t02_hakaim_02">
@@ -431,8 +431,8 @@
 		<comment>♀
 ・続けて表示</comment>
 		<attribute name="キャラ指定">？？？団員♀</attribute>
-		<language name="JPN" width="256">？？？？？『それから　それから？[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">？？？？？『それから　それから？[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">？？？だん『それから　それから？[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">？？？団『それから　それから？[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_t02_hakaim_03">
@@ -455,8 +455,8 @@
 		<comment>♀
 ・続けて表示</comment>
 		<attribute name="キャラ指定">？？？団員♀</attribute>
-		<language name="JPN" width="256">？？？？？『それから　それから？[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">？？？？？『それから　それから？[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">？？？だん『それから　それから？[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">？？？団『それから　それから？[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_t02_hakaim_04">
@@ -469,14 +469,26 @@
 ふあんていな　みらいに
 つながるものを　はかい　しましょう[BE:01:ページ切り替え（クリア）]
 いっさいがっさいを　こわしてしまい
-あらたな　せかいを　つくりあげるのです[BE:01:ページ切り替え（クリア）]</language>
+あらたな　せかいを　つくりあげるのです[BE:01:ページ切り替え（クリア）]
+……だいじょうぶ　ですとも
+みなさん　しんじてください[BE:01:ページ切り替え（クリア）]
+わたしたちは　
+きゅうせいしゅを　みつけました[BE:01:ページ切り替え（クリア）]
+かれと　いっしょならば
+かならず　せかいを　かえられます！[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">ＧーＣｉｓ『簡単です[BE:01:ページ切り替え（クリア）]
 わたしたちと　いっしょに
 過去の　しがらみを　破壊しましょう[BE:01:ページ切り替え（クリア）]
 不安定な　未来に
 つながるものを　破壊しましょう[BE:01:ページ切り替え（クリア）]
 一切合財を　壊してしまい
-新たな　世界を　つくりあげるのです[BE:01:ページ切り替え（クリア）]</language>
+新たな　世界を　つくりあげるのです[BE:01:ページ切り替え（クリア）]
+……大丈夫　ですとも
+みなさん　信じてください[BE:01:ページ切り替え（クリア）]
+わたしたちは　
+救世主を　みつけました[BE:01:ページ切り替え（クリア）]
+彼と　一緒ならば
+必ず　世界を　変えられます！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_t02_hakaiw_04">
@@ -484,11 +496,13 @@
 ・
 ・続けて表示</comment>
 		<attribute name="キャラ指定">？？？団員♀</attribute>
-		<language name="JPN" width="256">？？？？？『はかい　しましょう！！[BE:01:ページ切り替え（クリア）]
+		<language name="JPN" width="256">？？？だん『はかい　しましょう！！
+せかいを　かえましょう！[BE:01:ページ切り替え（クリア）]
 ということで　みなさま
 はなしを　きいてくださり[BE:00:ページ切り替え（行送り）]
 ほんとうに　ありがとうございました！[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">？？？？？『破壊しましょう！！[BE:01:ページ切り替え（クリア）]
+		<language name="JPN_KANJI" width="256">？？？団『破壊しましょう！！
+世界を　変えましょう！[BE:01:ページ切り替え（クリア）]
 ということで　みなさま
 話を　きいてくださり[BE:00:ページ切り替え（行送り）]
 本当に　ありがとうございました！[BE:01:ページ切り替え（クリア）]</language>

@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00179" date="2009-05-26T14:16:50"/>
+	<create user="matsumiya" host="W00207" date="2009-07-14T17:09:34"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -229,13 +229,13 @@
 	</tag-table>
 
 	<columns>
-		<id position="0" width="149"/>
+		<id position="0" width="195"/>
 		<group default=" 0:デフォルト" position="-1" width="100">
 			<list entry="0" japanese="デフォルト" english="Default" colorID="0"/>
 			<list entry="1" japanese="グループ 1" english="グループ 1" colorID="0"/>
 		</group>
 		<number position="-1" width="100"/>
-		<comment position="4" width="100"/>
+		<comment position="4" width="204"/>
 		<erase position="-1" width="100"/>
 		<attribute japanese="キャラ指定" english="キャラ指定" type="string" default="" position="1" width="100">
 		</attribute>
@@ -251,7 +251,7 @@
 			<line position="-1" width="100"/>
 		</language>
 		<language japanese="JPN_KANJI" english="JPN_KANJI">
-			<message position="3" width="246"/>
+			<message position="3" width="292"/>
 			<font default=" 0:large" position="6" width="106">
 				<list entry="0" file="W:\font\large.nftr"/>
 				<list entry="1" file="W:\font\small.nftr"/>
@@ -263,15 +263,15 @@
 		</language>
 	</columns>
 
-	<dialog left="6" top="217" right="709" bottom="837" maximized="no" rayout="Vertical2">
+	<dialog left="20" top="266" right="721" bottom="886" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
-		<band id="0" index="1" style="0000" width="528"/>
+		<band id="0" index="1" style="0000" width="526"/>
 		<band id="1" index="2" style="0000" width="165"/>
-		<band id="2" index="3" style="0000" width="541"/>
+		<band id="2" index="3" style="0000" width="539"/>
 		<band id="3" index="4" style="0000" width="152"/>
-		<band id="4" index="0" style="0000" width="695"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<band id="4" index="0" style="0000" width="693"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -294,17 +294,303 @@
 
 	<row id="msg_t01r0401_doctor01_01">
 		<comment>♂
-・アニメ</comment>
-		<attribute name="キャラ指定">博士（子）</attribute>
-		<language name="JPN" width="256">おっ！　まっていたよ！
-あらためて　じこしょうかいだ[BE:01:ページ切り替え（クリア）]
-ボクの　なまえは[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">おっ！　待っていたよ！
-あらためて　自己紹介だ[BE:01:ページ切り替え（クリア）]
-ボクの　名前は[BE:01:ページ切り替え（クリア）]</language>
+・アニメ後
+　続けてmsg_t01r0401_black_01表示</comment>
+		<attribute name="キャラ指定">DOCTOR_JR
+博士</attribute>
+		<language name="JPN" width="256">おー　きたきたきた！[BE:01:ページ切り替え（クリア）]
+まっていたよ
+わかものしょくん！[BE:01:ページ切り替え（クリア）]
+あらためて　じこしょうかい　しよう[BE:01:ページ切り替え（クリア）]
+わたしの　なまえは……[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">おー　きたきたきた！[BE:01:ページ切り替え（クリア）]
+待っていたよ
+若者諸君！[BE:01:ページ切り替え（クリア）]
+あらためて　自己紹介しよう[BE:01:ページ切り替え（クリア）]
+わたしの　名前は……[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_t01r0401_doctor01_02">
+	<row id="msg_t01r0401_black_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂
+・続けてmsg_t01r0401_doctor_jr_02表示</comment>
+		<attribute name="キャラ指定">友達♂</attribute>
+		<language name="JPN" width="256">ともだち♂『アララギはかせ？[BE:01:ページ切り替え（クリア）]
+どーしたんです
+いまさら　じこしょうかい　だなんて[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">ともだち♂『アララギ博士？[BE:01:ページ切り替え（クリア）]
+どーしたんです
+いまさら　自己紹介だなんて[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_t01r0401_doctor_jr_02">
+		<comment>♂
+・メッセージ表示後
+　3人の前を移動するアニメ
+・続けてmsg_t01r0401_doctor_jr_03</comment>
+		<attribute name="キャラ指定">DOCTOR_JR
+博士</attribute>
+		<language name="JPN" width="256">アララギ『まあまあまあまあ！[BE:01:ページ切り替え（クリア）]
+きょうは　きねんとなる　ひだからね
+かしこまったほうが　いいのさ[BE:01:ページ切り替え（クリア）]
+さて　しきりなおし　だ[BE:01:ページ切り替え（クリア）]
+わたしの　なまえは
+アララギ　イチイ！[BE:01:ページ切り替え（クリア）]
+じぶんで　いうのも　なんだが
+それなりに　ゆうしゅうな　けんきゅうかだ</language>
+		<language name="JPN_KANJI" width="256">アララギ『まあまあまあまあ！[BE:01:ページ切り替え（クリア）]
+今日は　記念となる　日だからね
+かしこまったほうが　いいのさ[BE:01:ページ切り替え（クリア）]
+さて　仕切りなおし　だ[BE:01:ページ切り替え（クリア）]
+わたしの　名前は
+アララギ　イチイ！[BE:01:ページ切り替え（クリア）]
+自分で　いうのも　なんだが
+それなりに　優秀な　研究だ</language>
+	</row>
+
+	<row id="msg_t01r0401_doctor_jr_03">
+		<comment>♂
+・はい/いいえの選択肢表示
+　はい→名前入力画面へ
+　いいえ→
+・今回はmsg_t01r0401_doctor_jr_04
+　はい/いいえともに同じ流れ</comment>
+		<attribute name="キャラ指定">DOCTOR_JR
+博士</attribute>
+		<language name="JPN" width="256">なるほどなるほど
+もう　ポケモンしょうぶを　したんだね[BE:01:ページ切り替え（クリア）]
+それでだろうな
+ポケモンたちも　きみたちを[BE:00:ページ切り替え（行送り）]
+しんらいしはじめた　かんじだな[BE:01:ページ切り替え（クリア）]
+ところで　ポケモンに
+ニックネームを　つかるかい？</language>
+		<language name="JPN_KANJI" width="256">なるほどなるほど
+もう　ポケモン勝負を　したんだね[BE:01:ページ切り替え（クリア）]
+それでだろうな
+ポケモンたちも　きみたちを[BE:00:ページ切り替え（行送り）]
+信頼しはじめた……　そんな感じだな[BE:01:ページ切り替え（クリア）]
+ところで　ポケモンに
+ニックネームを　つかるかい？</language>
+	</row>
+
+	<row id="msg_t01r0401_doctor_jr_04">
+		<comment>♂
+・いいえ選択時の再確認
+・はい/いいえの選択肢表示
+　はい→msg_t01r0401_doctor_jr_07
+　いいえ→名前入力画面</comment>
+		<attribute name="キャラ指定">DOCTOR_JR
+博士</attribute>
+		<language name="JPN" width="256">アララギ『なるほどなるほど
+その　ニックネームで　きめちゃうかい？</language>
+		<language name="JPN_KANJI" width="256">アララギ『なるほどなるほど
+その　ニックネームで　決めちゃうかい？</language>
+	</row>
+
+	<row id="msg_t01r0401_doctor_jr_05">
+		<comment>♂
+・名前入力画面から復帰して
+　ニックネーム変わった
+・続けてmsg_t01r0401_doctor_jr_07表示</comment>
+		<attribute name="キャラ指定">DOCTOR_JR
+博士</attribute>
+		<language name="JPN" width="256">アララギ『なるほどなるほど[BE:01:ページ切り替え（クリア）]
+[1:02:ポケモンニックネーム:0]と　いうのか
+いい　なまえ　じゃあないか！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">アララギ『なるほどなるほど[BE:01:ページ切り替え（クリア）]
+[1:02:ポケモンニックネーム:0]と　いうのか
+いい　なまえ　じゃあないか！[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_t01r0401_doctor_jr_06">
+		<comment>♂
+・名前入力画面から復帰して
+　ニックネーム変わっていない
+・続けてmsg_t01r0401_doctor_jr_07表示</comment>
+		<attribute name="キャラ指定">DOCTOR_JR
+博士</attribute>
+		<language name="JPN" width="256">アララギ『なるほどなるほど
+ニックネームを　つけないんだね[BE:00:ページ切り替え（行送り）]
+それも　いいだろうさ！[BE:00:ページ切り替え（行送り）]</language>
+		<language name="JPN_KANJI" width="256">アララギ『なるほどなるほど
+ニックネームを　つけないんだね[BE:00:ページ切り替え（行送り）]
+それも　いいだろうさ！[BE:00:ページ切り替え（行送り）]</language>
+	</row>
+
+	<row id="msg_t01r0401_doctor_jr_07">
+		<comment>♂
+・続けてmsg_t01r0401_black_02表示</comment>
+		<attribute name="キャラ指定">DOCTOR_JR
+博士</attribute>
+		<language name="JPN" width="256">アララギ『さて　きみたちに
+ポケモンを　あげた　りゆうだが……</language>
+		<language name="JPN_KANJI" width="256">アララギ『さて　きみたちに
+ポケモンを　進呈した　理由だが……</language>
+	</row>
+
+	<row id="msg_t01r0401_black_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂
+・続けてmsg_t01r0401_white_01表示</comment>
+		<attribute name="キャラ指定">友達♂</attribute>
+		<language name="JPN" width="256">ともだち♂『ポケモンずかん　ですよね[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">ともだち♂『ポケモン図鑑　ですよね[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_t01r0401_white_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♀
+・続けてmsg_t01r0401_doctor_jr_08表示</comment>
+		<attribute name="キャラ指定">友達♀</attribute>
+		<language name="JPN" width="256">ともだち♀『ポケモンずかん……？[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">ともだち♀『ポケモン図鑑……？[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_t01r0401_doctor_jr_08">
+		<comment>♂
+・メッセージ表示後、演出
+　その場で一回転など
+・続けてmsg_t01r0401_doctor_jr_09表示</comment>
+		<attribute name="キャラ指定">DOCTOR_JR
+博士</attribute>
+		<language name="JPN" width="256">アララギ『すごいねすごいね
+さすがだね　ともだち♂！[BE:01:ページ切り替え（クリア）]
+さいこうの　トレーナーを　めざして
+べんきょう　していることは　ある[BE:01:ページ切り替え（クリア）]
+うむ！　それでは
+せつめい　させていただこう！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">アララギ『すごいねすごいね
+流石だね　ともだち♂！[BE:01:ページ切り替え（クリア）]
+最高の　トレーナーを　目指して
+勉強していることは　ある[BE:01:ページ切り替え（クリア）]
+うむ！　それでは
+説明させていただこう！[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_t01r0401_doctor_jr_09">
+		<comment>♂
+・アニメなどの演出予定
+・続けてmsg_t01r0401_doctor_jr_10表示</comment>
+		<attribute name="キャラ指定">DOCTOR_JR
+博士</attribute>
+		<language name="JPN" width="256">ポケモンずかん　とは……！[BE:01:ページ切り替え（クリア）]
+きみたちが　であった　ポケモンを[BE:00:ページ切り替え（行送り）]
+じどうてきに　きろく　していく[BE:00:ページ切り替え（行送り）]
+ハイテクな　どうぐ　だ！[BE:01:ページ切り替え（クリア）]
+だから　[1:00:トレーナー名:0]たちは
+いろんな　ところに　でかけ[BE:00:ページ切り替え（行送り）]
+この　イッシュちほう　すべての[BE:00:ページ切り替え（行送り）]
+ポケモンに　であうのだッ！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">ポケモン図鑑　とは……！[BE:01:ページ切り替え（クリア）]
+きみたちが　であった　ポケモンを[BE:00:ページ切り替え（行送り）]
+じどうてきに　記録していく[BE:00:ページ切り替え（行送り）]
+ハイテクな　道具　だ！[BE:01:ページ切り替え（クリア）]
+だから　[1:00:トレーナー名:0]たちは
+いろんな　ところに　でかけ[BE:00:ページ切り替え（行送り）]
+この　イッシュ地方　すべての[BE:00:ページ切り替え（行送り）]
+ポケモンに　であうのだッ！[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_t01r0401_doctor_jr_10">
+		<comment>♂
+・はい/いいえの選択肢表示
+　はい→msg_t01r0401_doctor_jr_12
+　いいえ→msg_t01r0401_doctor_jr_11
+・0＝プレイヤーの名前</comment>
+		<attribute name="キャラ指定">DOCTOR_JR
+博士</attribute>
+		<language name="JPN" width="256">さて　たずねよう[BE:01:ページ切り替え（クリア）]
+[1:00:トレーナー名:0]！
+ともだち♂！　ともだち♀！[BE:01:ページ切り替え（クリア）]
+ポケモンずかんを　うめるべく
+ぼうけんの　たびに　でかけるよね！</language>
+		<language name="JPN_KANJI" width="256">さて　たずねよう[BE:01:ページ切り替え（クリア）]
+[1:00:トレーナー名:0]！
+ともだち♂！　ともだち♀！[BE:01:ページ切り替え（クリア）]
+ポケモンずかんを　うめるべく
+ぼうけんの　たびに　でかけるよね！</language>
+	</row>
+
+	<row id="msg_t01r0401_doctor_jr_11">
+		<comment>♂
+・いいえ選択時
+・再度はい/いいえの選択肢表示
+　はい→msg_t01r0401_doctor_jr_12
+　いいえ→msg_t01r0401_doctor_jr_11</comment>
+		<language name="JPN" width="256">アララギ『わたしが　ききたいのは
+せかいを　きりひらく[BE:01:ページ切り替え（クリア）]
+ゆうきある　ことば　だけだあ！！[BE:01:ページ切り替え（クリア）]
+[1:00:トレーナー名:0]たちは
+いろんな　ところに　でかけ[BE:00:ページ切り替え（行送り）]
+この　イッシュちほう　すべての[BE:00:ページ切り替え（行送り）]
+ポケモンに　であってください！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">アララギ『わたしが　ききたいのは
+せかいを　きりひらく[BE:01:ページ切り替え（クリア）]
+ゆうきある　ことば　だけだあ！！[BE:01:ページ切り替え（クリア）]
+[1:00:トレーナー名:0]たちは
+いろんな　ところに　でかけ[BE:00:ページ切り替え（行送り）]
+この　イッシュちほう　すべての[BE:00:ページ切り替え（行送り）]
+ポケモンに　であってください！[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_t01r0401_doctor_jr_12">
+		<comment>♂
+・はい選択時
+・メッセージ表示後、退場
+・1番道路に博士を配置
+　あわせて友達♂、♀も
+・続けてmsg_t01r0401_white_02</comment>
+		<attribute name="キャラ指定">DOCTOR_JR
+博士</attribute>
+		<language name="JPN" width="256">よし！　いい　へんじだ！[BE:01:ページ切り替え（クリア）]
+では　つぎのステップ
+ポケモンと　出会う　方法を[BE:01:ページ切り替え（クリア）]
+教えるから
+１番道路に　来てくれよな！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">よし！　いい　返事だ！[BE:01:ページ切り替え（クリア）]
+では　つぎのステップ
+ポケモンと　出会う　方法を[BE:01:ページ切り替え（クリア）]
+教えるから
+１番道路に　来てくれよな！[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_t01r0401_white_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♀
+・続けてmsg_t01r0401_black_03</comment>
+		<attribute name="キャラ指定">友達♀</attribute>
+		<language name="JPN" width="256">ともだち♀『あっ　あたしたち
+はかせに　たのまれたから[BE:00:ページ切り替え（行送り）]
+ぼうけんしても　いいんだよね？[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">ともだち♀『あっ　あたしたち
+博士に　頼まれたから[BE:00:ページ切り替え（行送り）]
+冒険しても　いいんだよね？[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_t01r0401_black_03" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂
+・メッセージ表示後、友達♂♀退場
+　画面外に消えると、操作可能に</comment>
+		<attribute name="キャラ指定">友達♂</attribute>
+		<language name="JPN" width="256">ともだち♂『ああ　そうだね[BE:01:ページ切り替え（クリア）]
+というわけで　オレたちも
+１ばんどうろに　いくと　しようぜ[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">ともだち♂『ああ　そうだね[BE:01:ページ切り替え（クリア）]
+というわけで　オレたちも
+１番道路に　行くと　しようぜ[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_t01r0401_doctor_jr_20">
+		<comment>♂
+・t02pc0101のイベント後以降
+・図鑑評価関連（仮）</comment>
+		<attribute name="キャラ指定">DOCTOR_JR
+博士</attribute>
+		<language name="JPN" width="256">アララギ『どうだいどうだい！
+ポケモンずかんの　ちょうしは[BE:01:ページ切り替え（クリア）]
+・つづけて　ずかんひょうか　へ</language>
+		<language name="JPN_KANJI" width="256">アララギ『どうだいどうだい！
+ポケモン図鑑の　調子は[BE:01:ページ切り替え（クリア）]
+・つづけて　ずかんひょうか　へ</language>
+	</row>
+
+	<row id="msg_t01r0401_doctor01_02" back-color="#808080,,,#808080,,#808080,#808080,,,,,,#808080,,,,,,">
 		<comment>♂
 ・はい／いいえ</comment>
 		<attribute name="キャラ指定">博士（子）</attribute>
@@ -316,7 +602,7 @@
 おくりつけて　わるかったね[BE:00:ページ切り替え（行送り）]
 おどろいたかい？</language>
 		<language name="JPN_KANJI" width="256">アララギ[BE:01:ページ切り替え（クリア）]
-ごぞんじのとおり　若き
+ご存知のとおり　若き
 ポケモン研究家　だ[BE:01:ページ切り替え（クリア）]
 さて……　いきなり　ポケモンの
 はいった　モンスターボールを[BE:00:ページ切り替え（行送り）]
@@ -324,7 +610,7 @@
 驚いたかい？</language>
 	</row>
 
-	<row id="msg_t01r0401_doctor01_03">
+	<row id="msg_t01r0401_doctor01_03" back-color="#808080,,,#808080,,#808080,#808080,,,,,,#808080,,,,,,">
 		<comment>♂
 ・はい選択時</comment>
 		<attribute name="キャラ指定">博士（子）</attribute>
@@ -338,7 +624,7 @@
 不思議な　生き物　だからさ[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_t01r0401_doctor01_04">
+	<row id="msg_t01r0401_doctor01_04" back-color="#808080,,,#808080,,#808080,#808080,,,,,,#808080,,,,,,">
 		<comment>♂
 ・いいえ選択時</comment>
 		<attribute name="キャラ指定">博士（子）</attribute>
@@ -354,7 +640,7 @@
 不思議な　生き物　だからさ[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_t01r0401_doctor01_05">
+	<row id="msg_t01r0401_doctor01_05" back-color="#808080,,,#808080,,#808080,#808080,,,,,,#808080,,,,,,">
 		<comment>♂</comment>
 		<attribute name="キャラ指定">博士（子）</attribute>
 		<language name="JPN" width="256">なぜ　きみに
@@ -381,7 +667,7 @@
 ポケモン図鑑に　記録してほしい！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_t01r0401_doctor01_06">
+	<row id="msg_t01r0401_doctor01_06" back-color="#808080,,,#808080,,#808080,#808080,,,,,,#808080,,,,,,">
 		<comment>♂</comment>
 		<attribute name="キャラ指定">博士（子）</attribute>
 		<language name="JPN" width="256">……ついでに[BE:01:ページ切り替え（クリア）]
@@ -392,7 +678,7 @@
 探してくれると　助かるけど[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_t01r0401_doctor01_07">
+	<row id="msg_t01r0401_doctor01_07" back-color="#808080,,,#808080,,#808080,#808080,,,,,,#808080,,,,,,">
 		<comment>♂</comment>
 		<attribute name="キャラ指定">博士（子）</attribute>
 		<language name="JPN" width="256">さあ　さあ　さあ！
@@ -407,19 +693,22 @@
 確かめてくれよ！！</language>
 	</row>
 
-	<row id="msg_t01r0401_photo_01">
+	<row id="msg_t01r0401_photo_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>BGメッセージ</comment>
 		<attribute name="キャラ指定">写真たて</attribute>
-		<language name="JPN" width="256">アララギはかせ</language>
-		<language name="JPN_KANJI" width="256">アララギはかせ</language>
+		<language name="JPN" width="256">アララギはかせと　だれだろう……？
+えがおの　だんせいが　うつっている</language>
+		<language name="JPN_KANJI" width="256">アララギ博士と　だれだろう……？
+笑顔の　男性が　写っている</language>
 	</row>
 
-	<row id="msg_t01r0401_photo_02">
+	<row id="msg_t01r0401_photo_02" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>BGメッセージ</comment>
 		<attribute name="キャラ指定">写真たて</attribute>
-		<language name="JPN" width="256">アララギはかせ</language>
-		<language name="JPN_KANJI" width="256">父と　子……
-二人の　アララギ博士が　写っている</language>
+		<language name="JPN" width="256">ちちと　むすこ……
+ふたりの　アララギはかせの　しゃしんだ</language>
+		<language name="JPN_KANJI" width="256">父と　息子……
+二人の　アララギ博士の　写真だ</language>
 	</row>
 
 	<flowchart-group-list>
