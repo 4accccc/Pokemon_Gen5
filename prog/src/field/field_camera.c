@@ -49,6 +49,7 @@ struct _FIELD_CAMERA {
 	GFL_G3D_CAMERA * g3Dcamera;			///<カメラ構造体へのポインタ
 
 	FIELD_CAMERA_TYPE	type;			///<カメラのタイプ指定
+	FIELD_CAMERA_MODE mode;			///<カメラモード
 
   const VecFx32 * default_target;
 	const VecFx32 *		watch_target;	///<追随する注視点へのポインタ
@@ -125,17 +126,23 @@ static void traceUpdate(FIELD_CAMERA * camera);
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 static void initGridParameter(FIELD_CAMERA * camera);
-static void ControlGridParameter(FIELD_CAMERA * camera, u16 key_cont);
 
 static void initBridgeParameter(FIELD_CAMERA * camera);
-static void ControlBridgeParameter(FIELD_CAMERA * camera, u16 key_cont);
 
 static void initC3Parameter(FIELD_CAMERA * camera);
-static void ControlC3Parameter(FIELD_CAMERA * camera, u16 key_cont);
 
 static void initPokeCenParameter(FIELD_CAMERA * camera);
 static void initH01P01Parameter(FIELD_CAMERA * camera);
 //static void ControlPokeCenParameter(FIELD_CAMERA * camera, u16 key_cont);
+/*
+static void ControlGridParameter(FIELD_CAMERA * camera, u16 key_cont);
+static void ControlBridgeParameter(FIELD_CAMERA * camera, u16 key_cont);
+static void ControlC3Parameter(FIELD_CAMERA * camera, u16 key_cont);
+*/
+static void ControlParameter( FIELD_CAMERA * camera, u16 key_cont );
+static void ControlParameter_CalcCamera( FIELD_CAMERA * camera, u16 key_cont );
+static void ControlParameter_CalcTarget( FIELD_CAMERA * camera, u16 key_cont );
+static void ControlParameter_Direct( FIELD_CAMERA * camera, u16 key_cont );
 
 //============================================================================================
 //============================================================================================
@@ -147,23 +154,23 @@ static void initH01P01Parameter(FIELD_CAMERA * camera);
 static const CAMERA_FUNC_TABLE CameraFuncTable[] = {
 	{
 		initGridParameter,
-		ControlGridParameter,
+		ControlParameter,
 	},
 	{
 		initBridgeParameter,
-		ControlBridgeParameter,
+		ControlParameter,
 	},
 	{
 		initC3Parameter,
-		ControlC3Parameter,
+		ControlParameter,
 	},
   {
     initPokeCenParameter,
-    ControlGridParameter,
+    ControlParameter,
   },
   {
     initH01P01Parameter,
-    ControlGridParameter,
+    ControlParameter,
   },
 };
 
@@ -178,6 +185,7 @@ static const CAMERA_FUNC_TABLE CameraFuncTable[] = {
 FIELD_CAMERA* FIELD_CAMERA_Create(
 		FIELD_MAIN_WORK * fieldWork,
 		FIELD_CAMERA_TYPE type,
+		FIELD_CAMERA_MODE mode,
 		GFL_G3D_CAMERA * cam,
 		const VecFx32 * target,
 		HEAPID heapID)
@@ -191,6 +199,7 @@ FIELD_CAMERA* FIELD_CAMERA_Create(
 	TAMADA_Printf("FIELD CAMERA TYPE = %d\n", type);
 	camera->fieldWork = fieldWork;
 	camera->type = type;
+	camera->mode = mode;
 	camera->g3Dcamera = cam;
   camera->default_target = target;
 	camera->watch_target = target;
@@ -238,6 +247,37 @@ void	FIELD_CAMERA_Delete( FIELD_CAMERA* camera )
 void FIELD_CAMERA_Main( FIELD_CAMERA* camera, u16 key_cont)
 {
 	CameraFuncTable[camera->type].control(camera, key_cont);
+}
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	カメラモード　設定
+ *	
+ *	@param	camera		カメラ
+ *	@param	mode			モード
+ */
+//-----------------------------------------------------------------------------
+void FIELD_CAMERA_SetMode( FIELD_CAMERA * camera, FIELD_CAMERA_MODE mode )
+{
+	GF_ASSERT( camera );
+	GF_ASSERT( mode < FIELD_CAMERA_MODE_MAX );
+	camera->mode = mode;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	カメラモード　取得
+ *
+ *	@param	camera	カメラ
+ *
+ *	@return	カメラモード
+ */
+//-----------------------------------------------------------------------------
+FIELD_CAMERA_MODE FIELD_CAMERA_GetMode( const FIELD_CAMERA * camera )
+{
+	GF_ASSERT( camera );
+	return camera->mode;
 }
 
 
@@ -434,8 +474,14 @@ static void calcAnglePos( const VecFx32* cp_target, VecFx32* p_pos, u16 yaw, u16
 static void updateAngleCameraPos(FIELD_CAMERA * camera)
 { 
   // カメラポジション計算
-  calcAnglePos( &camera->target, &camera->camPos,
-      camera->angle_yaw, camera->angle_pitch, camera->angle_len );
+	calcAnglePos( &camera->target, &camera->camPos,
+			camera->angle_yaw, camera->angle_pitch, camera->angle_len );
+}
+static void updateAngleTargetPos(FIELD_CAMERA * camera)
+{ 
+  // カメラポジション計算
+	calcAnglePos( &camera->camPos, &camera->target,
+			camera->angle_yaw, camera->angle_pitch, camera->angle_len );
 }
 	
 //------------------------------------------------------------------
@@ -499,41 +545,51 @@ static void updateG3Dcamera(FIELD_CAMERA * camera)
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
-static void ControlGridParameter(FIELD_CAMERA * camera, u16 key_cont)
+static void ControlParameter(FIELD_CAMERA * camera, u16 key_cont)
+{
+	static void (*const cp_Control[FIELD_CAMERA_MODE_MAX])( FIELD_CAMERA * camera, u16 key_cont ) = 
+	{
+		ControlParameter_CalcCamera,
+		ControlParameter_CalcTarget,
+		ControlParameter_Direct,
+	};
+	GF_ASSERT( camera->mode < FIELD_CAMERA_MODE_MAX );
+	cp_Control[ camera->mode ]( camera, key_cont );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	カメラ管理	カメラ座標計算モード
+ */
+//-----------------------------------------------------------------------------
+static void ControlParameter_CalcCamera( FIELD_CAMERA * camera, u16 key_cont )
 {
 	updateTargetBinding(camera);
   updateAngleCameraPos(camera);
   updateG3Dcamera(camera);
 }
 
-void FIELD_CAMERA_BindNoCamera(FIELD_CAMERA * camera, BOOL flag)
+//----------------------------------------------------------------------------
+/**
+ *	@brief	カメラ管理	ターゲット座標計算モード
+ */
+//-----------------------------------------------------------------------------
+static void ControlParameter_CalcTarget( FIELD_CAMERA * camera, u16 key_cont )
 {
-  if (flag)
-  {
-    camera->watch_camera = &camera->camPos;
-  }
-  else
-  {
-    camera->watch_camera = NULL;
-  }
-}
-//------------------------------------------------------------------
-//------------------------------------------------------------------
-static void ControlBridgeParameter(FIELD_CAMERA * camera, u16 key_cont)
-{
-	updateTargetBinding(camera);
-  if (!updateCamPosBinding(camera))
-  {
-    updateAngleCameraPos(camera);
-  }
+	updateCamPosBinding( camera );
+  updateAngleTargetPos(camera);
   updateG3Dcamera(camera);
 }
 
-//------------------------------------------------------------------
-//------------------------------------------------------------------
-static void ControlC3Parameter(FIELD_CAMERA * camera, u16 key_cont)
+//----------------------------------------------------------------------------
+/**
+ *	@brief	カメラ管理	ダイレクト座標モード
+ */
+//-----------------------------------------------------------------------------
+static void ControlParameter_Direct( FIELD_CAMERA * camera, u16 key_cont )
 {
 	updateTargetBinding(camera);
+	updateCamPosBinding( camera );
   updateG3Dcamera(camera);
 }
 
@@ -556,6 +612,7 @@ const GFL_G3D_CAMERA * FIELD_CAMERA_GetCameraPtr(const FIELD_CAMERA * camera)
 //------------------------------------------------------------------
 void FIELD_CAMERA_BindTarget(FIELD_CAMERA * camera, const VecFx32 * watch_target)
 {
+	GF_ASSERT( (camera->mode == FIELD_CAMERA_MODE_CALC_CAMERA_POS)||(camera->mode == FIELD_CAMERA_MODE_CALC_TARGET_POS) );
 	camera->watch_target = watch_target;
   camera->target_before = *watch_target;
   camera->target = *watch_target;
@@ -572,6 +629,51 @@ void FIELD_CAMERA_BindDefaultTarget(FIELD_CAMERA * camera)
 {
   camera->watch_target = camera->default_target;
 }
+
+
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+/*
+void FIELD_CAMERA_BindNoCamera(FIELD_CAMERA * camera, BOOL flag)
+{
+	if(flag)
+	{
+		camera->watch_camera = &camera->camPos;
+	}
+	else
+	{
+		camera->watch_camera = NULL;
+	}
+}
+//*/
+//----------------------------------------------------------------------------
+/**
+ *	@brief	カメラ座標のバインド
+ *
+ *	@param	camera				カメラ
+ *	@param	watch_camera	カメラついづい座標
+ */
+//-----------------------------------------------------------------------------
+void FIELD_CAMERA_BindCamera(FIELD_CAMERA * camera, const VecFx32 * watch_camera)
+{
+	GF_ASSERT( camera );
+	GF_ASSERT( (camera->mode == FIELD_CAMERA_MODE_CALC_TARGET_POS) || (camera->mode == FIELD_CAMERA_MODE_DIRECT_POS) );
+	camera->watch_camera = watch_camera;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	カメラ座標のバインド　終了
+ *
+ *	@param	camera	カメラ
+ */
+//-----------------------------------------------------------------------------
+void FIELD_CAMERA_FreeCamera(FIELD_CAMERA * camera)
+{
+	GF_ASSERT( camera );
+	camera->watch_camera = NULL;
+}
+
 
 //------------------------------------------------------------------
 /**
@@ -634,6 +736,7 @@ fx32 FIELD_CAMERA_GetFar(const FIELD_CAMERA * camera)
 //------------------------------------------------------------------
 void	FIELD_CAMERA_SetTargetPos( FIELD_CAMERA* camera, const VecFx32* target )
 {
+	GF_ASSERT( (camera->mode == FIELD_CAMERA_MODE_DIRECT_POS) || (camera->mode == FIELD_CAMERA_MODE_CALC_CAMERA_POS) );
 	camera->target = *target;
   camera->target_before = * target;
 }
@@ -697,6 +800,7 @@ void FIELD_CAMERA_GetCameraPos( const FIELD_CAMERA * camera, VecFx32 * camPos)
 //------------------------------------------------------------------
 void FIELD_CAMERA_SetCameraPos( FIELD_CAMERA * camera, const VecFx32 * camPos)
 {
+	GF_ASSERT( (camera->mode == FIELD_CAMERA_MODE_DIRECT_POS) || (camera->mode == FIELD_CAMERA_MODE_CALC_TARGET_POS) );
   camera->camPos = *camPos;
 }
 
@@ -711,6 +815,7 @@ u16 FIELD_CAMERA_GetAnglePitch(const FIELD_CAMERA * camera )
 }
 void FIELD_CAMERA_SetAnglePitch(FIELD_CAMERA * camera, u16 angle )
 {
+	GF_ASSERT( (camera->mode == FIELD_CAMERA_MODE_CALC_CAMERA_POS)||(camera->mode == FIELD_CAMERA_MODE_CALC_TARGET_POS) );
 	camera->angle_pitch = angle;
 }
 
@@ -726,6 +831,7 @@ u16 FIELD_CAMERA_GetAngleYaw(const FIELD_CAMERA * camera )
 
 void FIELD_CAMERA_SetAngleYaw(FIELD_CAMERA * camera, u16 angle )
 {
+	GF_ASSERT( (camera->mode == FIELD_CAMERA_MODE_CALC_CAMERA_POS)||(camera->mode == FIELD_CAMERA_MODE_CALC_TARGET_POS) );
 	camera->angle_yaw = angle;
 }
 
@@ -740,6 +846,7 @@ fx32 FIELD_CAMERA_GetAngleLen(const FIELD_CAMERA * camera )
 }
 void FIELD_CAMERA_SetAngleLen(FIELD_CAMERA * camera, fx32 length )
 {
+	GF_ASSERT( (camera->mode == FIELD_CAMERA_MODE_CALC_CAMERA_POS)||(camera->mode == FIELD_CAMERA_MODE_CALC_TARGET_POS) );
 	camera->angle_len = length;
 }
 

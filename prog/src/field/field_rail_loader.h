@@ -50,6 +50,14 @@ extern void FIELD_RAIL_LOADER_Clear( FIELD_RAIL_LOADER* p_sys );
 // レールセットアップ情報取得
 extern const RAIL_SETTING* FIELD_RAIL_LOADER_GetData( const FIELD_RAIL_LOADER* cp_sys );
 
+
+// デバック機能
+#ifdef PM_DEBUG
+extern void FIELD_RAIL_LOADER_DEBUG_LoadBinary( FIELD_RAIL_LOADER* p_sys, void* p_dat, u32 size );
+extern void* FIELD_RAIL_LOADER_DEBUG_GetData( const FIELD_RAIL_LOADER* cp_sys );
+extern u32 FIELD_RAIL_LOADER_DEBUG_GetDataSize( const FIELD_RAIL_LOADER* cp_sys );
+#endif
+
 #ifdef _cplusplus
 }	// extern "C"{
 #endif

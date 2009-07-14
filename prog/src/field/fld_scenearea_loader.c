@@ -122,6 +122,7 @@ void FLD_SCENEAREA_LOADER_Load( FLD_SCENEAREA_LOADER* p_sys, u32 datano, u32 hea
 	p_sys->p_data = GFL_ARC_UTIL_LoadEx( ARCID_SCENEAREA_DATA, datano, FALSE, heapID, &size );
 	p_sys->num		= size / sizeof(FLD_SCENEAREA_DATA);
 
+	TOMOYA_Printf( "SCENEAREA_size = %d\n", size );
 	TOMOYA_Printf( "SCENEAREA num = %d\n",  p_sys->num );
 }
 
@@ -190,6 +191,55 @@ const FLD_SCENEAREA_FUNC* FLD_SCENEAREA_LOADER_GetFunc( const FLD_SCENEAREA_LOAD
 	return &sc_FLD_SCENEAREA_FUNC;
 }
 
+
+// デバック機能
+#ifdef PM_DEBUG
+void FLD_SCENEAREA_LOADER_LoadBinary( FLD_SCENEAREA_LOADER* p_sys, void* p_dat, u32 size )
+{
+	GF_ASSERT( p_sys );
+
+	p_sys->p_data = p_dat;
+	p_sys->num		= size / sizeof(FLD_SCENEAREA_DATA);
+
+	// あまりがない？
+	GF_ASSERT( (size % sizeof(FLD_SCENEAREA_DATA)) == 0 );
+
+	TOMOYA_Printf( "SCENEAREA num = %d\n",  p_sys->num );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	scenearea情報の取得
+ *
+	*	@param	cp_sys	わーく
+ *
+ *	@return	情報
+ */
+//-----------------------------------------------------------------------------
+void* FLD_SCENEAREA_LOADER_DEBUG_GetData( const FLD_SCENEAREA_LOADER* cp_sys )
+{
+	GF_ASSERT( cp_sys );
+
+	return cp_sys->p_data;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	scenearea情報サイズのシュトク
+ *
+ *	@param	cp_sys	ワーク
+ *
+ *	@return	サイズ
+ */
+//-----------------------------------------------------------------------------
+u32 FLD_SCENEAREA_LOADER_DEBUG_GetDataSize( const FLD_SCENEAREA_LOADER* cp_sys )
+{
+	GF_ASSERT( cp_sys );
+
+	return cp_sys->num * sizeof(FLD_SCENEAREA_DATA);
+}
+
+#endif
 
 
 
@@ -262,6 +312,9 @@ static void C3_SCENEAREA_Update( const FLD_SCENEAREA* cp_sys, const FLD_SCENEARE
   const FLD_SCENEAREA_CIRCLE_PARAM* cp_param = (const FLD_SCENEAREA_CIRCLE_PARAM*)cp_data->area;
 
   p_camera = FLD_SCENEAREA_GetFieldCamera( cp_sys );
+
+	FIELD_CAMERA_SetMode( p_camera, FIELD_CAMERA_MODE_DIRECT_POS );
+
 	FIELD_CAMERA_GetTargetPos( p_camera, &target);
   target_y  = target.y;
   target.y  = 0;
@@ -300,6 +353,8 @@ static void C3_SCENEAREA_FxCamera( const FLD_SCENEAREA* cp_sys, const FLD_SCENEA
   VecFx32 target, camera_pos;
 
   p_camera = FLD_SCENEAREA_GetFieldCamera( cp_sys );
+
+	FIELD_CAMERA_SetMode( p_camera, FIELD_CAMERA_MODE_DIRECT_POS );
 
   // ターゲット位置設定
   VEC_Set( &target, cp_param->target_x, cp_param->target_y, cp_param->target_z );

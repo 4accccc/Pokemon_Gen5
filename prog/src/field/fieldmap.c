@@ -189,6 +189,9 @@ struct _FIELDMAP_WORK
 
 	FIELD_RAIL_MAN * railMan;
 	FIELD_RAIL_LOADER * railLoader;
+
+	FLD_SCENEAREA * sceneArea;
+	FLD_SCENEAREA_LOADER * sceneAreaLoader;
 	
 	FLDMAPPER *g3Dmapper;
 	FLD_WIPEOBJ *fldWipeObj;
@@ -434,6 +437,7 @@ static MAINSEQ_RESULT mainSeqFunc_setup(GAMESYS_WORK *gsys, FIELDMAP_WORK *field
   fieldWork->camera_control = FIELD_CAMERA_Create(
       fieldWork,
       ZONEDATA_GetCameraID(fieldWork->map_id),
+			FIELD_CAMERA_MODE_CALC_CAMERA_POS,
       fieldWork->g3Dcamera,
       &fieldWork->now_pos,
       fieldWork->heapID );
@@ -443,6 +447,12 @@ static MAINSEQ_RESULT mainSeqFunc_setup(GAMESYS_WORK *gsys, FIELDMAP_WORK *field
 
   // railシステム初期化
   fieldWork->railMan = FIELD_RAIL_MAN_Create( fieldWork->heapID, fieldWork->camera_control );
+
+	// sceneareaデータ読み込みシステム
+	fieldWork->sceneAreaLoader = FLD_SCENEAREA_LOADER_Create( fieldWork->heapID );
+	
+	// sceneareaシステム
+	fieldWork->sceneArea = FLD_SCENEAREA_Create( fieldWork->heapID, fieldWork->camera_control );
 
   {
     FIELD_BMODEL_MAN * bmodel_man = FLDMAPPER_GetBuildModelManager( fieldWork->g3Dmapper );
@@ -621,9 +631,13 @@ static MAINSEQ_RESULT mainSeqFunc_update_top(GAMESYS_WORK *gsys, FIELDMAP_WORK *
 
   if( GAMESYSTEM_GetEvent(gsys) == NULL) {
 
+		VecFx32 rail_pos;
+
     // レールシステムメイン
     FIELD_RAIL_MAN_Update(fieldWork->railMan, GFL_UI_KEY_GetCont() );
     FIELD_RAIL_MAN_UpdateCamera(fieldWork->railMan);
+		FIELD_RAIL_MAN_GetPos( fieldWork->railMan, &rail_pos );
+		FLD_SCENEAREA_Update( fieldWork->sceneArea, &rail_pos );
     
     //登録テーブルごとに個別のメイン処理を呼び出し
     fieldWork->func_tbl->main_func( fieldWork, &fieldWork->now_pos );
@@ -727,6 +741,12 @@ static MAINSEQ_RESULT mainSeqFunc_free(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldW
   
   // フォグシステム破棄
   FIELD_FOG_Delete( fieldWork->fog );
+
+	// sceneareaシステム
+	FLD_SCENEAREA_Delete( fieldWork->sceneArea );
+
+	// sceneareaデータ読み込みシステム
+	FLD_SCENEAREA_LOADER_Delete( fieldWork->sceneAreaLoader );
 
   // レール制御破棄
   FIELD_RAIL_MAN_Delete( fieldWork->railMan );
@@ -898,9 +918,13 @@ const BOOL FIELDMAP_IsReady( const FIELDMAP_WORK *fieldWork )
 //--------------------------------------------------------------
 void FIELDMAP_ForceUpdate( FIELDMAP_WORK *fieldWork )
 {
+	VecFx32 rail_pos;
+
   // レールシステムメイン
   FIELD_RAIL_MAN_Update(fieldWork->railMan, GFL_UI_KEY_GetCont() );
   FIELD_RAIL_MAN_UpdateCamera(fieldWork->railMan);
+	FIELD_RAIL_MAN_GetPos( fieldWork->railMan, &rail_pos );
+	FLD_SCENEAREA_Update( fieldWork->sceneArea, &rail_pos );
   
 	//登録テーブルごとに個別のメイン処理を呼び出し
 	fieldWork->func_tbl->main_func( fieldWork, &fieldWork->now_pos );
@@ -961,6 +985,20 @@ FIELD_RAIL_MAN * FIELDMAP_GetFieldRailMan( FIELDMAP_WORK *fieldWork )
 FIELD_RAIL_LOADER * FIELDMAP_GetFieldRailLoader( FIELDMAP_WORK *fieldWork )
 {
 	return fieldWork->railLoader;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	シーンエリア制御システムの取得
+ */
+//-----------------------------------------------------------------------------
+FLD_SCENEAREA * FIELDMAP_GetFldSceneArea( FIELDMAP_WORK *fieldWork )
+{
+	return fieldWork->sceneArea;
+}
+FLD_SCENEAREA_LOADER * FIELDMAP_GetFldSceneAreaLoader( FIELDMAP_WORK *fieldWork )
+{
+	return fieldWork->sceneAreaLoader;
 }
 
 //--------------------------------------------------------------

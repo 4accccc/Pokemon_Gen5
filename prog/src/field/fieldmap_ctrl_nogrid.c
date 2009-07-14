@@ -73,7 +73,7 @@ static void mapCtrlNoGrid_Create(
   FIELD_RAIL_MAN_SetLocation( railMan, &locationStart );
   //FIELD_RAIL_MAN_Load(railMan, &point_c03_start);
   FIELD_RAIL_MAN_GetPos(railMan, pos );
-  FIELD_CAMERA_BindNoCamera(camera, TRUE);
+//  FIELD_CAMERA_BindNoCamera(camera, TRUE);
 
   fld_player = FIELDMAP_GetFieldPlayer( fieldWork );
   //2009.07.05 ROMÇÃÇΩÇﬂÇÃàÍéûìIÇ»ï‚ê≥èàóù
@@ -120,12 +120,14 @@ static void mapCtrlNoGrid_Main( FIELDMAP_WORK *fieldWork, VecFx32 *pos )
     FIELD_RAIL_MAN_SetActiveFlag(railMan, !rail_flag);
     if (!rail_flag)
     {
-      FIELD_CAMERA_BindNoCamera(FIELDMAP_GetFieldCamera(fieldWork), TRUE);
+			FIELD_CAMERA_SetMode( FIELDMAP_GetFieldCamera(fieldWork), FIELD_CAMERA_MODE_DIRECT_POS );
+//      FIELD_CAMERA_BindNoCamera(FIELDMAP_GetFieldCamera(fieldWork), TRUE);
   //    FIELD_CAMERA_SetCameraType(FIELDMAP_GetFieldCamera(fieldWork), FIELD_CAMERA_TYPE_H01);
     }
     else
     {
-      FIELD_CAMERA_BindNoCamera(FIELDMAP_GetFieldCamera(fieldWork), FALSE);
+			FIELD_CAMERA_SetMode( FIELDMAP_GetFieldCamera(fieldWork), FIELD_CAMERA_MODE_CALC_CAMERA_POS );
+//      FIELD_CAMERA_BindNoCamera(FIELDMAP_GetFieldCamera(fieldWork), FALSE);
    //   FIELD_CAMERA_SetCameraType(FIELDMAP_GetFieldCamera(fieldWork), FIELD_CAMERA_TYPE_NOUSE);
     }
   }

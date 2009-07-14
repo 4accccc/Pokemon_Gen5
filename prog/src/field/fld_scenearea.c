@@ -42,6 +42,9 @@ struct _FLD_SCENEAREA {
   // 起動フラグ
   u32 active_area;
 
+	// 動作フラグ
+	u32 active_flag;
+
 	// コール関数ID
 	u32 call_funcID;
 };
@@ -218,6 +221,37 @@ u32 FLD_SCENEAREA_GetUpdateFuncID( const FLD_SCENEAREA* cp_sys )
 	GF_ASSERT( cp_sys );
 	return cp_sys->call_funcID;
 }
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	アクティブフラグ設定
+ *
+ *	@param	p_sys		システム
+ *	@param	flag		フラグ
+ */	
+//-----------------------------------------------------------------------------
+void FLD_SCENEAREA_SetActiveFlag( FLD_SCENEAREA* p_sys, BOOL flag )
+{
+	GF_ASSERT( p_sys );
+	p_sys->active_flag = flag;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	アクティブフラグの取得
+ *
+ *	@param	cp_sys	システム
+ *
+ *	@retval	TRUE	
+ *	@retval	FALSE	
+ */
+//-----------------------------------------------------------------------------
+BOOL FLD_SCENEAREA_GetActiveFlag( const FLD_SCENEAREA* cp_sys )
+{
+	GF_ASSERT( cp_sys );
+	return cp_sys->active_flag;
+}
+
 
 
 

@@ -95,6 +95,9 @@ extern u32 FLD_SCENEAREA_Update( FLD_SCENEAREA* p_sys, const VecFx32* cp_pos );
 
 extern u32 FLD_SCENEAREA_GetUpdateFuncID( const FLD_SCENEAREA* cp_sys );
 
+extern void FLD_SCENEAREA_SetActiveFlag( FLD_SCENEAREA* p_sys, BOOL flag );
+extern BOOL FLD_SCENEAREA_GetActiveFlag( const FLD_SCENEAREA* cp_sys );
+
 // äeéÌèÓïÒÇÃéÛÇØìnÇµ
 extern FIELD_CAMERA* FLD_SCENEAREA_GetFieldCamera( const FLD_SCENEAREA* cp_sys );
 

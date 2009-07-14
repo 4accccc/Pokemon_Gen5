@@ -358,31 +358,6 @@ fx32 FIELD_RAIL_LINE_DIST_FUNC_CircleLine( const RAIL_POINT * point_s, const RAI
 
 
 //------------------------------------------------------------------
-//------------------------------------------------------------------
-static void calcAngleCamera(FIELD_CAMERA * field_camera, const VecFx32 * target)
-{
-  {
-    VecFx32 camPos, before;
-    u16 yaw = FIELD_CAMERA_GetAngleYaw(field_camera);
-    u16 pitch = FIELD_CAMERA_GetAnglePitch(field_camera);
-    fx32 len = FIELD_CAMERA_GetAngleLen(field_camera);
-
-    FIELD_CAMERA_GetCameraPos(field_camera, &before);
-
-    getVectorFromAngleValue(&camPos, yaw, pitch, len);
-    VEC_Add(&camPos, target, &camPos);
-    FIELD_CAMERA_SetCameraPos(field_camera, &camPos);
-
-    if (GFL_UI_KEY_GetTrg() & PAD_BUTTON_Y)
-    {
-      debugPrintWholeVector("CamTgt:", target, "\n");
-      debugPrintWholeVector("CamPos:", &camPos, "\n");
-      OS_TPrintf("yaw:%04x pitch:%04x len:%08x\n",yaw, pitch, len);
-    }
-  }
-}
-
-//------------------------------------------------------------------
 /**
  * @brief カメラ指定：パラメータをFx32３つとして単純に足すだけ
  */
@@ -395,6 +370,9 @@ void FIELD_RAIL_CAMERAFUNC_FixPosCamera(const FIELD_RAIL_MAN* man)
 	const RAIL_CAMERAFUNC_FIXPOS_WORK* work;
 	
   FIELD_RAIL_MAN_GetPos(man, &pos);
+
+	// 座標直指定モード
+	FIELD_CAMERA_SetMode( FIELD_RAIL_MAN_GetCamera(man), FIELD_CAMERA_MODE_DIRECT_POS );
 
 	work = (const RAIL_CAMERAFUNC_FIXPOS_WORK*)cam_set->work;
   pos.x += work->x;
@@ -417,12 +395,28 @@ void FIELD_RAIL_CAMERAFUNC_FixAngleCamera(const FIELD_RAIL_MAN* man)
 	const RAIL_CAMERAFUNC_FIXANGLE_WORK* work;
 
 	work = (const RAIL_CAMERAFUNC_FIXANGLE_WORK*)cam_set->work;
-  FIELD_CAMERA_SetAnglePitch(cam, (u16)work->pitch);
-  FIELD_CAMERA_SetAngleYaw(cam, (u16)work->yaw);
-  FIELD_CAMERA_SetAngleLen(cam, (fx32)work->len);
+
+	// 座標直指定モード
+	FIELD_CAMERA_SetMode( cam, FIELD_CAMERA_MODE_DIRECT_POS );
 
   FIELD_RAIL_MAN_GetPos( man, &pos );
-  calcAngleCamera(cam, &pos );
+  {
+    VecFx32 camPos;
+    u16 yaw = (u16)work->yaw;
+    u16 pitch = (u16)work->pitch;
+    fx32 len = work->len;
+
+    getVectorFromAngleValue(&camPos, yaw, pitch, len);
+    VEC_Add(&camPos, &pos, &camPos);
+    FIELD_CAMERA_SetCameraPos(cam, &camPos);
+
+    if (GFL_UI_KEY_GetTrg() & PAD_BUTTON_Y)
+    {
+      debugPrintWholeVector("CamTgt:", &pos, "\n");
+      debugPrintWholeVector("CamPos:", &camPos, "\n");
+      OS_TPrintf("yaw:%04x pitch:%04x len:%08x\n",yaw, pitch, len);
+    }
+  }
 }
 
 //------------------------------------------------------------------
@@ -443,6 +437,9 @@ void FIELD_RAIL_CAMERAFUNC_OfsAngleCamera(const FIELD_RAIL_MAN* man)
 	const RAIL_CAMERAFUNC_FIXANGLE_WORK* ce_work;
 	
   GF_ASSERT(FIELD_RAIL_GetType(rail) == FIELD_RAIL_TYPE_LINE);
+
+	// 座標直指定モード
+	FIELD_CAMERA_SetMode( cam, FIELD_CAMERA_MODE_DIRECT_POS );
 
   cs = FIELD_RAIL_POINT_GetCameraSet( rail, point_s );
 //  GF_ASSERT(getRailDatCameraFunc( &man->rail_dat, cs->func_index ) == FIELD_RAIL_CAMERAFUNC_FixAngleCamera);
@@ -490,6 +487,9 @@ void FIELD_RAIL_CAMERAFUNC_FixAllCamera(const FIELD_RAIL_MAN* man)
 	const RAIL_CAMERAFUNC_FIXALL_WORK* work;
 
 	work = (const RAIL_CAMERAFUNC_FIXALL_WORK*)cam_set->work;
+
+	// 座標直指定モード
+	FIELD_CAMERA_SetMode( cam, FIELD_CAMERA_MODE_DIRECT_POS );
 
   pos.x = work->pos_x;
   pos.y = work->pos_y;
@@ -610,6 +610,10 @@ static void updateCircleCamera( const FIELD_RAIL_MAN * man, u16 pitch, fx32 len,
 
 
   p_camera = FIELD_RAIL_MAN_GetCamera( man );
+
+	// 座標直指定モード
+	FIELD_CAMERA_SetMode( p_camera, FIELD_CAMERA_MODE_DIRECT_POS );
+	
   target    = *cp_target;
   target_y  = target.y;
   target.y  = 0;

@@ -62,6 +62,7 @@ typedef struct {
 struct _FIELD_RAIL_LOADER 
 {
 	RAIL_DATA_HEADER* p_work;
+	u32 work_size;
 	RAIL_SETTING setting;
 };
 
@@ -195,12 +196,16 @@ void FIELD_RAIL_LOADER_Delete( FIELD_RAIL_LOADER* p_sys )
 //-----------------------------------------------------------------------------
 void FIELD_RAIL_LOADER_Load( FIELD_RAIL_LOADER* p_sys, u32 datano, u32 heapID )
 {
+	u32 all_size;
 	u32 siz;
 	OFS_DATA* ofs_data;
 	
 	GF_ASSERT( p_sys );
 	GF_ASSERT( !p_sys->p_work );
-	p_sys->p_work = GFL_ARC_UTIL_Load( ARCID_RAIL_DATA, datano, FALSE, heapID );
+	p_sys->p_work = GFL_ARC_UTIL_LoadEx( ARCID_RAIL_DATA, datano, FALSE, heapID, &all_size );
+	p_sys->work_size	= all_size;
+
+	TOMOYA_Printf( "rail_data size = %d\n", all_size );
 
 	GF_ASSERT( p_sys->p_work->label == RAIL_DATA_HEADER_LABEL );
 	
@@ -300,6 +305,91 @@ const RAIL_SETTING* FIELD_RAIL_LOADER_GetData( const FIELD_RAIL_LOADER* cp_sys )
 	return &cp_sys->setting;
 }
 
+
+// デバック機能
+#ifdef PM_DEBUG
+void FIELD_RAIL_LOADER_DEBUG_LoadBinary( FIELD_RAIL_LOADER* p_sys, void* p_dat, u32 size )
+{
+	u32 siz;
+	OFS_DATA* ofs_data;
+	
+	GF_ASSERT( p_sys );
+	GF_ASSERT( !p_sys->p_work );
+	p_sys->p_work = p_dat;
+
+	p_sys->work_size	= size;
+
+	GF_ASSERT( p_sys->p_work->label == RAIL_DATA_HEADER_LABEL );
+	
+	// ポイントテーブル
+	p_sys->setting.point_table = (RAIL_POINT*)(((u32)p_sys->p_work) + p_sys->p_work->pointdata_offset);
+	siz = p_sys->p_work->linedata_offset - p_sys->p_work->pointdata_offset;
+	siz /= sizeof(RAIL_POINT);
+	p_sys->setting.point_count = siz;
+	TOMOYA_Printf( "point_count = %d\n", p_sys->setting.point_count );
+
+	// ラインテーブル
+	p_sys->setting.line_table = (RAIL_LINE*)(((u32)p_sys->p_work) + p_sys->p_work->linedata_offset);
+	siz = p_sys->p_work->cameradata_offset - p_sys->p_work->linedata_offset;
+	siz /= sizeof(RAIL_LINE);
+	p_sys->setting.line_count = siz;
+	TOMOYA_Printf( "line_count = %d\n", p_sys->setting.line_count );
+
+	// カメラセットテーブル
+	p_sys->setting.camera_table = (RAIL_CAMERA_SET*)(((u32)p_sys->p_work) + p_sys->p_work->cameradata_offset);
+	siz = p_sys->p_work->lineposdata_offset - p_sys->p_work->cameradata_offset;
+	siz /= sizeof(RAIL_CAMERA_SET);
+	p_sys->setting.camera_count = siz;
+	TOMOYA_Printf( "camera_count = %d\n", p_sys->setting.camera_count );
+
+	// 座標セットテーブル
+	p_sys->setting.linepos_table = (RAIL_LINEPOS_SET*)(((u32)p_sys->p_work) + p_sys->p_work->lineposdata_offset);
+	siz = p_sys->p_work->end_pos - p_sys->p_work->lineposdata_offset;
+	siz /= sizeof(RAIL_LINEPOS_SET);
+	p_sys->setting.linepos_count = siz;
+	TOMOYA_Printf( "linepos_count = %d\n", p_sys->setting.linepos_count );
+	
+
+	// オフセットパラメータ
+	ofs_data = (OFS_DATA*)(((u32)p_sys->p_work) + p_sys->p_work->ofsdata_offset);
+	p_sys->setting.ofs_max = ofs_data->ofs_max;
+	p_sys->setting.ofs_unit = ofs_data->ofs_unit;
+
+	TOMOYA_Printf( "ofs_max = %d\n", p_sys->setting.ofs_max );
+	TOMOYA_Printf( "ofs_unit = %d\n", p_sys->setting.ofs_unit );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	レール情報の取得
+ *
+ *	@param	cp_sys	ワーク
+ *
+ *	@return	レール情報
+ */
+//-----------------------------------------------------------------------------
+void* FIELD_RAIL_LOADER_DEBUG_GetData( const FIELD_RAIL_LOADER* cp_sys )
+{
+	GF_ASSERT( cp_sys );
+	return cp_sys->p_work;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	レール情報サイズの取得
+ *
+ *	@param	cp_sys	ワーク
+ *
+ *	@return	情報サイズ
+ */
+//-----------------------------------------------------------------------------
+u32 FIELD_RAIL_LOADER_DEBUG_GetDataSize( const FIELD_RAIL_LOADER* cp_sys )
+{
+	GF_ASSERT( cp_sys );
+	return cp_sys->work_size;
+}
+
+#endif
 
 
 

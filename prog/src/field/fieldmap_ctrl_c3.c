@@ -142,8 +142,8 @@ static void mapCtrlC3_Create(
   pos->y += FX32_ONE * 8;
 
   // シーンエリア
-  work->p_sceneArea = FLD_SCENEAREA_Create( FIELDMAP_GetHeapID(fieldWork), camera );
-	work->p_scenearealoader = FLD_SCENEAREA_LOADER_Create( FIELDMAP_GetHeapID(fieldWork) );
+  work->p_sceneArea = FIELDMAP_GetFldSceneArea( fieldWork );
+	work->p_scenearealoader = FIELDMAP_GetFldSceneAreaLoader( fieldWork );
 	FLD_SCENEAREA_LOADER_Load( work->p_scenearealoader, 0, FIELDMAP_GetHeapID(fieldWork) );
   FLD_SCENEAREA_Load( work->p_sceneArea, 
 			FLD_SCENEAREA_LOADER_GetData(work->p_scenearealoader),
@@ -175,9 +175,10 @@ static void mapCtrlC3_Delete( FIELDMAP_WORK *fieldWork )
 {
 	C3_MOVE_WORK *work = FIELDMAP_GetMapCtrlWork( fieldWork );
 	FIELD_RAIL_LOADER* p_rail_loader = FIELDMAP_GetFieldRailLoader(fieldWork);
-  FLD_SCENEAREA_Delete( work->p_sceneArea );
 
-	FLD_SCENEAREA_LOADER_Delete( work->p_scenearealoader );
+  FLD_SCENEAREA_Release( work->p_sceneArea );
+
+	FLD_SCENEAREA_LOADER_Clear( work->p_scenearealoader );
 
 	FIELD_RAIL_LOADER_Clear( p_rail_loader );
 
@@ -206,6 +207,7 @@ static void mapCtrlC3_Main( FIELDMAP_WORK *fieldWork, VecFx32 *pos )
   if (key_trg & PAD_BUTTON_L)
   {
     FIELD_RAIL_MAN_SetActiveFlag(railMan, !rail_flag);
+    FLD_SCENEAREA_SetActiveFlag(mwk->p_sceneArea, !rail_flag);
   }
 
   if (rail_flag)
@@ -218,7 +220,6 @@ static void mapCtrlC3_Main( FIELDMAP_WORK *fieldWork, VecFx32 *pos )
     FIELD_PLAYER_SetPos( fld_player, pos );
     
     // シーンエリア処理でカメラ上書き
-		FLD_SCENEAREA_Update( mwk->p_sceneArea, pos );
     if( FLD_SCENEAREA_GetUpdateFuncID( mwk->p_sceneArea ) == FLD_SCENEAREA_UPDATE_CIRCLE ){
       // カメラ動作限界管理
       cameraRailAreaControl( FIELDMAP_GetFieldCamera( fieldWork ) );

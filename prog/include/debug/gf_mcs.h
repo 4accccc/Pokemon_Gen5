@@ -43,7 +43,6 @@ enum{
 #define	MCS_SEND_SIZE	( 0x1800 )
 
 extern	BOOL	MCS_Init( HEAPID heapID );
-extern	BOOL	MCS_Open( void );
 extern	void	MCS_Close( void );
 extern	void	MCS_Exit( void );
 extern	void	MCS_Main( void );
