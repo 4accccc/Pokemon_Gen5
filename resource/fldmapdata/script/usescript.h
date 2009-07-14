@@ -94,6 +94,9 @@
 #define ANOON_SEE_NUM_1	(10)
 #define ANOON_SEE_NUM_2	(26)
 
+//メニュー用戻り値
+#define EV_WIN_B_CANCEL (0xfffe)
+
 //======================================================================
 //	
 //======================================================================
@@ -108,6 +111,9 @@
 
 //イベントワーク、フラグ evwkdef.h
 #include "../../../prog/src/field/eventwork_def.h"
+
+//サウンドラベル
+#include "../../sound/wb_sound_data.sadl"
 
 #if 0 //wb null
 #include "saveflag.h"								//フラグ、ワーク定義
