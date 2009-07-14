@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-07-10T16:27:53"/>
+	<create user="matsumiya" host="W00207" date="2009-07-14T21:06:50"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -324,26 +324,6 @@
 ・未定</attribute>
 		<language name="JPN" width="256">ポケモン『？？？</language>
 		<language name="JPN_KANJI" width="256">ポケモン『？？？</language>
-	</row>
-
-	<row id="msg_t02r0401_middleman1_01" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>削除</comment>
-		<attribute name="キャラ指定">おじさん１</attribute>
-		<language name="JPN" width="256">きせつの　うつりかわりを　めでる……
-そんな　おとこで　ありたいものだ</language>
-		<language name="JPN_KANJI" width="256">季節の　移り変わりを　愛でる……
-そんな　漢（おとこ）で　ありたいものだ</language>
-	</row>
-
-	<row id="msg_t02r0401_middlewoman1_01" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>削除</comment>
-		<attribute name="キャラ指定">おばさん１</attribute>
-		<language name="JPN" width="256">ヤグルマシティや
-ライモンシティの　すごさ　ったら▽
-きっと　あなたも　おどろくわよ</language>
-		<language name="JPN_KANJI" width="256">ヤグルマシティや
-ライモンシティの　すごさ　ったら▽
-きっと　あなたも　驚くわよ</language>
 	</row>
 
 	<flowchart-group-list>
