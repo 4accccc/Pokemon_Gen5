@@ -119,4 +119,22 @@ extern void BmpMenuWork_ListAddLinkList(
 //------------------------------------------------------------------
 extern void BmpMenuWork_ListSTRBUFDelete( BMP_MENULIST_DATA *list_top );
 
+//--------------------------------------------------------------
+/**
+ * リストバッファ、リスト最大文字数を取得
+ * @param list_top
+ * @retval u32 
+ */
+//--------------------------------------------------------------
+extern u32 BmpMenuWork_GetListMaxLength( const BMP_MENULIST_DATA *list_top );
+
+//--------------------------------------------------------------
+/**
+ * リストバッファ　リスト最大数を取得
+ * @param
+ * @retval
+ */
+//--------------------------------------------------------------
+extern u32 BmpMenuWork_GetListMax( const BMP_MENULIST_DATA *list_top );
+
 #endif	//__BMP_MENU_LIST_H__
