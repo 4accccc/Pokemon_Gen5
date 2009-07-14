@@ -12,6 +12,13 @@ SCRSRCS	=\
 	sp_t01r0401.ev	\
 	sp_t02.ev	\
 	sp_t02pc0101.ev	\
+	sp_t02r0101.ev	\
+	sp_t02r0102.ev	\
+	sp_t02r0201.ev	\
+	sp_t02r0202.ev	\
+	sp_t02r0301.ev	\
+	sp_t02r0302.ev	\
+	sp_t02r0401.ev	\
 	t01.ev	\
 	t01r0101.ev	\
 	t01r0201.ev	\
@@ -19,4 +26,11 @@ SCRSRCS	=\
 	t01r0401.ev	\
 	t02.ev	\
 	t02pc0101.ev	\
+	t02r0101.ev	\
+	t02r0102.ev	\
+	t02r0201.ev	\
+	t02r0202.ev	\
+	t02r0301.ev	\
+	t02r0302.ev	\
+	t02r0401.ev	\
 	trainer.ev	
