@@ -126,6 +126,8 @@ typedef struct {
 	void *						gobjData;		//グローバルオブジェクト
 
 	FLDMAPPER_RESIST_GROUND_ANIME ground_anime;	// 地面アニメーション
+
+	u32						memsize;				// １ブロックメモリサイズ
 }FLDMAPPER_RESISTDATA;
 
 //============================================================================================
