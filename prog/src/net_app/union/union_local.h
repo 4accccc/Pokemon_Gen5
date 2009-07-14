@@ -6,10 +6,12 @@
  * @date    2009.07.04(土)
  */
 //==============================================================================
+#pragma once
+
 #include "net_app/union/union_main.h"
 #include "union_types.h"
+#include "field/field_msgbg.h"
 
-#pragma once
 
 
 //==============================================================================
@@ -24,6 +26,9 @@
 //==============================================================================
 typedef struct _UNION_SYSTEM{
   UNION_PARENT_WORK *uniparent;
+  
+  GFL_MSGDATA *msgdata;
+  FLDMSGWIN_STREAM *fld_msgwin_stream;
   
   UNION_MY_SITUATION my_situation;    ///<自分の状況
   UNION_BEACON my_beacon;             ///<自分の送信ビーコン

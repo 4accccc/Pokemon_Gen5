@@ -38,8 +38,8 @@ extern "C" {
 #define GFL_NET_DEBUG   (1)   ///< ユーザーインターフェイスデバッグ用 0:無効 1:有効
 #define GFL_LOBBY_DEBUG	(0)		///<Wi-Fi広場デバッグ用 0:無効 1:有効
 #elif defined(DEBUG_ONLY_FOR_matsuda)
-#define GFL_NET_DEBUG   (1)   ///< ユーザーインターフェイスデバッグ用 0:無効 1:有効
-#define GFL_LOBBY_DEBUG	(1)		///<Wi-Fi広場デバッグ用 0:無効 1:有効
+#define GFL_NET_DEBUG   (0)   ///< ユーザーインターフェイスデバッグ用 0:無効 1:有効
+#define GFL_LOBBY_DEBUG	(0)		///<Wi-Fi広場デバッグ用 0:無効 1:有効
 #elif defined(DEBUG_ONLY_FOR_ariizumi_nobuhiko)
 #define GFL_NET_DEBUG   (0)   ///< ユーザーインターフェイスデバッグ用 0:無効 1:有効
 #define GFL_LOBBY_DEBUG	(0)		///<Wi-Fi広場デバッグ用 0:無効 1:有効
@@ -192,6 +192,12 @@ enum {
 	GFL_NET_TYPE_IRC,			///<赤外線通信
 	GFL_NET_TYPE_IRC_WIRELESS,	///<赤外線通信でマッチング後、ワイヤレス通信へ移行
 	GFL_NET_TYPE_WIRELESS_SCANONLY,	///<ワイヤレス通信(スキャン専用・電源ランプ非点滅)
+};
+
+enum{
+  GFL_NET_CHANGEOVER_MODE_NORMAL,       ///<通常状態(親子を一定間隔で切り替え)
+  GFL_NET_CHANGEOVER_MODE_FIX_PARENT,   ///<親固定
+  GFL_NET_CHANGEOVER_MODE_FIX_CHILD,    ///<子固定
 };
 
 typedef u8 GameServiceID;  ///< ゲームサービスID  通信の種類
@@ -448,6 +454,17 @@ extern void GFL_NET_ChangeoverConnect_IRCWIRELESS(NetStepEndCallback callback,Ne
  */
 //==============================================================================
 extern void GFL_NET_Changeover(NetStepEndCallback callback);
+//==================================================================
+/**
+ * GFL_NET_Changeover or GFL_NET_ChangeoverConnect の内部モードを後から変更する
+ *
+ * @param   mode		      GFL_NET_CHANGEOVER_MODE_???
+ * @param   bAuto		      TRUE:自動接続
+ * @param   macAddress		接続先(親)へのMacAddress
+ */
+//==================================================================
+extern void GFL_NET_ChangeoverModeSet(int mode, BOOL bAuto, const u8 *macAddress);
+
 //==============================================================================
 /**
  * @brief    Wi-Fiロビーへ接続する

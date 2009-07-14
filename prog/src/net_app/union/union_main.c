@@ -15,6 +15,7 @@
 #include "union_local.h"
 #include "union_receive.h"
 #include "union_chara.h"
+#include "union_oneself.h"
 
 
 void Union_Main(GAME_COMM_SYS_PTR game_comm, FIELD_MAIN_WORK *fieldmap)
@@ -32,6 +33,7 @@ void Union_Main(GAME_COMM_SYS_PTR game_comm, FIELD_MAIN_WORK *fieldmap)
   UnionReceive_BeaconInterpret(unisys);
   
   //キー操作によるイベント起動
+  UnionOneself_Update(unisys, fieldmap);
   
   //OBJ反映
   UNION_CHAR_Update(unisys, unisys->uniparent->game_data);

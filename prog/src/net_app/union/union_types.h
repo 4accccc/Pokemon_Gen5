@@ -19,11 +19,13 @@
 
 ///ユニオン：ステータス
 enum{
-  UNION_STATUS_BUSY,        ///<何らかの処理中
-  UNION_STATUS_NORMAL,      ///<通常状態
+  UNION_STATUS_NORMAL,      ///<通常状態(何もしていない)
+  UNION_STATUS_ENTER,       ///<ユニオンルームへ進入
+  UNION_STATUS_LEAVE,       ///<ユニオンルームから退出
   
   UNION_STATUS_CONNECT_REQ,     ///<接続リクエスト実行中
   UNION_STATUS_CONNECT_ANSWER,  ///<接続リクエストを受けた側が返信として接続しにいっている状態
+  UNION_STATUS_TALK,        ///<接続確立後の会話
   
   UNION_STATUS_BATTLE,      ///<戦闘
   UNION_STATUS_TRADE,       ///<交換
@@ -32,6 +34,8 @@ enum{
   UNION_STATUS_GURUGURU,    ///<ぐるぐる交換
   
   UNION_STATUS_CHAT,        ///<チャット編集中
+  
+  UNION_STATUS_MAX,
 };
 
 ///ユニオン：アピール番号
@@ -53,6 +57,13 @@ enum{
   UNION_BATTLE_MODE_ROTATION,   ///<1vs1 ローテーションバトル
   
   UNION_BATTLE_MODE_MULTI,      ///<2vs2 マルチバトル
+};
+
+///ユニオンビーコン：受信状況
+enum{
+  UNION_BEACON_RECEIVE_NULL,    ///<ビーコン変化なし
+  UNION_BEACON_RECEIVE_NEW,     ///<新規ビーコン
+  UNION_BEACON_RECEIVE_UPDATE,  ///<ビーコン更新
 };
 
 ///ユニオンルームのキャラクタ寿命(フレーム単位)
@@ -112,7 +123,7 @@ typedef struct{
 typedef struct{
   UNION_BEACON beacon;
   u8 mac_address[6];          ///<送信相手のMacAddress
-  u8 new_data;                ///<TRUE:新規のビーコンデータ
+  u8 update_flag;             ///<ビーコンデータ受信状況(UNION_BEACON_???)
   u8 padding;
   
   u16 life;                    ///<寿命(フレーム単位)　新しくビーコンを受信しなければ消える
@@ -129,8 +140,16 @@ typedef struct{
 //--------------------------------------------------------------
 ///ユニオンルーム内での自分の状況
 typedef struct{
-  u8 connect_mac_address[6];  ///<接続したい人へのMacAddress
-  u8 union_status;                  ///<プレイヤーの状況(UNION_STATUS_???)
+  u8 connect_mac_address[6];  ///<接続して欲しい人へのMacAddress
+  u8 union_status;            ///<プレイヤーの状況(UNION_STATUS_???)
   u8 appeal_no;               ///<アピール番号(UNION_APPEAL_???)
+  
+  //↓ここから下は通信では送らないデータ
+  u8 answer_mac_address[6];  ///<接続したい人へのMacAddress
+  s16 wait;
+  u8 next_union_status;       ///<次に実行するプレイヤーの状況(UNION_STATUS_???)
+  u8 func_proc;
+  u8 func_seq;
+  u8 padding;
 }UNION_MY_SITUATION;
 

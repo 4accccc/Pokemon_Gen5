@@ -10,7 +10,17 @@
 
 #include "gamesystem/game_comm.h"
 #include "field/fieldmap_proc.h"
+#include "net_app/union/union_types.h"
 
+
+//==============================================================================
+//  定数定義
+//==============================================================================
+///自分シチュエーションIndex
+typedef enum{
+  UNION_MYSITU_PARAM_IDX_CONNECT_MAC,
+  UNION_MYSITU_PARAM_IDX_ANSWER_MAC,
+}UNION_MYSITU_PARAM_IDX;
 
 //==============================================================================
 //  構造体定義
@@ -34,6 +44,8 @@ extern BOOL UnionComm_InitWait(int *seq, void *pwk, void *pWork);
 extern BOOL UnionComm_Exit(int *seq, void *pwk, void *pWork);
 extern BOOL UnionComm_ExitWait(int *seq, void *pwk, void *pWork);
 extern void UnionComm_Update(int *seq, void *pwk, void *pWork);
+extern void UnionMySituation_SetParam(UNION_SYSTEM_PTR unisys, UNION_MYSITU_PARAM_IDX index, void *work);
+extern void UnionMySituation_Clear(UNION_SYSTEM_PTR unisys);
 
 //--------------------------------------------------------------
 //  union_main.c

@@ -184,13 +184,14 @@ void UNION_CHAR_Update(UNION_SYSTEM_PTR unisys, GAMEDATA *gdata)
       }
       
       //寿命チェック
-      if(BeaconPcFuncTbl[bpc->event_status].life_dec == TRUE){
-        if(bpc->life <= 0){
-          UNION_CHAR_EventReq(bpc, BPC_EVENT_STATUS_LEAVE);
-        }
-        else{
-          bpc->life--;
-          OS_TPrintf("life = %d\n", bpc->life);
+      if(unisys->my_situation.union_status == UNION_STATUS_NORMAL && unisys->my_situation.next_union_status == UNION_STATUS_NORMAL){
+        if(BeaconPcFuncTbl[bpc->event_status].life_dec == TRUE){
+          if(bpc->life <= 0){
+            UNION_CHAR_EventReq(bpc, BPC_EVENT_STATUS_LEAVE);
+          }
+          else{
+            bpc->life--;
+          }
         }
       }
       

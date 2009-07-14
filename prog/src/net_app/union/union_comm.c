@@ -322,11 +322,12 @@ static BOOL UnionBeacon_SetReceiveData(UNION_SYSTEM_PTR unisys, const UNION_BEAC
     if(dest[i].beacon.data_valid == UNION_BEACON_VALID
         && GFL_STD_MemComp(beacon_mac_address, dest[i].mac_address, 6) == 0){
       GFL_STD_MemCopy(beacon, &dest[i].beacon, sizeof(UNION_BEACON));
-    #if 0 //一度に同じマシンからの連続受信を考えてここでFALSEはしない
-      dest[i].new_data = FALSE;
-    #endif
+      //一度に同じマシンからの連続受信の可能性を考えnewの場合はフラグを変えない
+      if(dest[i].update_flag != UNION_BEACON_RECEIVE_NEW){
+        dest[i].update_flag = UNION_BEACON_RECEIVE_UPDATE;
+      }
       dest[i].life = UNION_CHAR_LIFE;   //ビーコンの更新があったので寿命を元に戻す
-      OS_TPrintf("ビーコン更新 %d\n", i);
+//      OS_TPrintf("life回復 %d\n", OS_GetVBlankCount());
       return TRUE;
     }
   }
@@ -336,9 +337,8 @@ static BOOL UnionBeacon_SetReceiveData(UNION_SYSTEM_PTR unisys, const UNION_BEAC
     if(dest[i].beacon.data_valid != UNION_BEACON_VALID){
       GFL_STD_MemCopy(beacon, &dest[i].beacon, sizeof(UNION_BEACON));
       GFL_STD_MemCopy(beacon_mac_address, dest[i].mac_address, 6);
-      dest[i].new_data = TRUE;
+      dest[i].update_flag = UNION_BEACON_RECEIVE_NEW;
       dest[i].life = UNION_CHAR_LIFE;
-      OS_TPrintf("新規ビーコン更新 %d\n", i);
       return TRUE;
     }
   }
@@ -383,8 +383,7 @@ static void UnionComm_SetBeaconParam(UNION_SYSTEM_PTR unisys, UNION_BEACON *beac
   beacon->union_status = situ->union_status;
   beacon->appeal_no = situ->appeal_no;
   
-  //※check　名前コピーがないので後で。
-  //name
+  MyStatus_CopyNameStrCode(unisys->uniparent->mystatus, beacon->name, PERSON_NAME_SIZE + EOM_SIZE);
   
   beacon->trainer_view = MyStatus_GetTrainerView( unisys->uniparent->mystatus );
   beacon->sex = MyStatus_GetMySex(unisys->uniparent->mystatus);
@@ -451,4 +450,55 @@ static void UnionComm_DisconnectCallBack(void* pWork)
   OS_TPrintf("通信切断コールバック UnionComm_DisconnectCallBack\n");
 }
 
+
+//==============================================================================
+//  通信リクエスト
+//==============================================================================
+//==================================================================
+/**
+ * 自分シチュエーションのセット
+ *
+ * @param   unisys		
+ * @param   index		  シチュエーションパラメータのデータIndex
+ * @param   work		  各Indexで必要とするワークへのポインタ
+ */
+//==================================================================
+void UnionMySituation_SetParam(UNION_SYSTEM_PTR unisys, UNION_MYSITU_PARAM_IDX index, void *work)
+{
+  UNION_MY_SITUATION *situ = &unisys->my_situation;
+
+  switch(index){
+  case UNION_MYSITU_PARAM_IDX_CONNECT_MAC:
+    {
+      u8 *connect_mac_address = work;
+      if(connect_mac_address == NULL){
+        GFL_STD_MemClear(situ->connect_mac_address, 6);
+      }
+      else{
+        GFL_STD_MemCopy(connect_mac_address, situ->connect_mac_address, 6);
+      }
+    }
+    break;
+  case UNION_MYSITU_PARAM_IDX_ANSWER_MAC:
+    {
+      u8 *answer_mac_address = work;
+      GFL_STD_MemCopy(answer_mac_address, situ->answer_mac_address, 6);
+    }
+    break;
+  }
+}
+
+//==================================================================
+/**
+ * 自分シチュエーションのクリア
+ *
+ * @param   unisys		
+ */
+//==================================================================
+void UnionMySituation_Clear(UNION_SYSTEM_PTR unisys)
+{
+  UNION_MY_SITUATION *situ = &unisys->my_situation;
+  
+  GFL_STD_MemClear(situ, sizeof(UNION_MY_SITUATION));
+}
 

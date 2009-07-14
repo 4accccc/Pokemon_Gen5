@@ -1312,9 +1312,9 @@ void PaletteGrayScale(u16* pal, int pal_size)
 	u32 c;
 
 	for(i = 0; i < pal_size; i++){
-		r = ((*pal) & 0x1f);
-		g = (((*pal) >> 5) & 0x1f);
-		b = (((*pal) >> 10) & 0x1f);
+		r = 15 - ((*pal) & 0x1f);
+		g = 15 - (((*pal) >> 5) & 0x1f);
+		b = 15 - (((*pal) >> 10) & 0x1f);
 
 		c = RGBtoY(r,g,b);
 

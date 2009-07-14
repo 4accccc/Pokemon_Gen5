@@ -1,0 +1,3205 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<?xml-stylesheet type="text/xsl" href="" ?>
+
+<gmml version="4.5">
+
+<head>
+	<create user="tetsuji_ohta" host="W00176" date="2009-07-06T15:59:43"/>
+	<generator name="MessageEditor" version="4.9.2.5"/>
+</head>
+
+<body language="japanese">
+	<color>
+		<list entry="0" r="00" g="00" b="00" a="FF"/>
+		<list entry="1" r="FF" g="00" b="00" a="FF"/>
+		<list entry="2" r="00" g="00" b="FF" a="FF"/>
+		<list entry="3" r="00" g="8C" b="00" a="FF"/>
+	</color>
+
+	<tag-table>
+		<group entry="0" japanese="タググループ" english="タググループ">
+		</group>
+
+		<group entry="1" japanese="ポケモンＷＢ（単語）" english="PokemonDP" color="#c0c0c0">
+			<tag entry="00" japanese="トレーナー名" english="トレーナー名" view="EP" width="60" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="01" japanese="ポケモン種族名" english="ポケモン種族名" view="EP" width="60" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">ポケモンの名前。
+ピカチュウとかフシギダネとか。</comment>
+				<comment language="english">ポケモンの名前。
+ピカチュウとかフシギダネとか。</comment>
+			</tag>
+			<tag entry="02" japanese="ポケモンニックネーム" english="ポケモンニックネーム" view="EP" width="60" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">ポケモンのニックネーム</comment>
+				<comment language="english">ポケモンのニックネーム</comment>
+			</tag>
+			<tag entry="03" japanese="ポケモンタイプ" english="ポケモンタイプ" view="EP" width="48" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">みず、くさ、ほのお…とか。</comment>
+				<comment language="english">みず、くさ、ほのお…とか。</comment>
+			</tag>
+			<tag entry="04" japanese="ポケモン分類" english="ポケモン分類" view="EP" width="60" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">「DNAポケモン」など。</comment>
+				<comment language="english">「DNAポケモン」など。</comment>
+			</tag>
+			<tag entry="05" japanese="マップ名" english="マップ名" view="EP" width="120" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="06" japanese="とくせい名" english="とくせい名" view="EP" width="84" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="07" japanese="わざ名" english="わざ名" view="EP" width="84" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="08" japanese="せいかく" english="せいかく" view="EP" width="60" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="09" japanese="どうぐ名" english="どうぐ名" view="EP" width="96" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="10" japanese="グッズ名" english="グッズ名" view="EP" length="8" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="11" japanese="ボックス名" english="ボックス名" view="EP" width="96" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="13" japanese="ステータス名" english="ステータス名" view="EP" width="74" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">たいりょく、こうげきりょく、ぼうぎょりょく、とくこう、とくぼう、すばやさ、かいひりつ、めいちゅう</comment>
+				<comment language="english">たいりょく、こうげきりょく、ぼうぎょりょく、とくこう、とくぼう、すばやさ、かいひりつ、めいちゅう</comment>
+			</tag>
+			<tag entry="14" japanese="トレーナー種別名" english="トレーナー種別名" view="EP" width="120" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">「たんぱんこぞう」「エリートトレーナー」など</comment>
+				<comment language="english">「たんぱんこぞう」「エリートトレーナー」など</comment>
+			</tag>
+			<tag entry="17" japanese="特殊状態名" english="特殊状態名" view="EP" width="48" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">ポケモンの特殊状態です。</comment>
+				<comment language="english">ポケモンの特殊状態です。</comment>
+			</tag>
+			<tag entry="18" japanese="バッグのポケット名" english="バッグのポケット名" view="EP" width="132" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">バッグのポケットの名前。「ポケット」の部分も含む。</comment>
+				<comment language="english">バッグのポケットの名前。「ポケット」の部分も含む。</comment>
+			</tag>
+			<tag entry="26" japanese="カップ名" english="カップ名" view="EP" width="72" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">対戦のレギュレーション名</comment>
+				<comment language="english">対戦のレギュレーション名</comment>
+			</tag>
+			<tag entry="28" japanese="簡易会話単語" english="簡易会話単語" view="EP" width="84" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="31" japanese="アクセサリー名" english="アクセサリー名" view="EP" width="96" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">ポケモンにつけるアクセサリー</comment>
+				<comment language="english">ポケモンにつけるアクセサリー</comment>
+			</tag>
+			<tag entry="32" japanese="ジム名" english="ジム名" view="EP" width="72" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="33" japanese="時間帯" english="時間帯" view="EP" width="48" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">ぼうけんノートなどで使う</comment>
+				<comment language="english">ぼうけんノートなどで使う</comment>
+			</tag>
+			<tag entry="34" japanese="コンテスト名称" english="コンテスト名称" view="EP" width="120" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">コンテストのジャンル
+「○○○○○コンテスト」</comment>
+				<comment language="english">コンテストのジャンル
+「○○○○○コンテスト」</comment>
+			</tag>
+			<tag entry="35" japanese="コンテストランク" english="コンテストランク" view="EP" width="84" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">○○○○ランク
+「ランク」も含む</comment>
+				<comment language="english">○○○○ランク
+「ランク」も含む</comment>
+			</tag>
+			<tag entry="36" japanese="国名" english="国名" view="EP" width="216" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">プレイヤーが入力する、自分が住んでいる国名</comment>
+				<comment language="english">プレイヤーが入力する、自分が住んでいる国名</comment>
+			</tag>
+			<tag entry="37" japanese="地域名" english="地域名" view="EP" width="216" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">プレイヤーが入力する、自分が住んでいる地域名</comment>
+				<comment language="english">プレイヤーが入力する、自分が住んでいる地域名</comment>
+			</tag>
+			<tag entry="39" japanese="リボンの名前" english="リボンの名前" view="EP" width="168" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">リボンの名前</comment>
+				<comment language="english">リボンの名前</comment>
+			</tag>
+			<tag entry="40" japanese="広場ミニゲーム" english="広場ミニゲーム" view="EP" width="120" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">WiFi広場のミニゲーム名</comment>
+				<comment language="english">WiFi広場のミニゲーム名</comment>
+			</tag>
+			<tag entry="41" japanese="広場イベント名" english="広場イベント名" view="EP" width="60" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">WiFi広場イベント名</comment>
+				<comment language="english">WiFi広場イベント名</comment>
+			</tag>
+			<tag entry="42" japanese="広場アイテム名" english="広場アイテム名" view="EP" width="120" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">WiFi広場のアイテム名</comment>
+				<comment language="english">WiFi広場のアイテム名</comment>
+			</tag>
+			<tag entry="43" japanese="日本の挨拶" english="日本の挨拶" view="EP" width="143" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">日本の挨拶</comment>
+				<comment language="english">日本の挨拶</comment>
+			</tag>
+			<tag entry="44" japanese="英語の挨拶" english="英語の挨拶" view="EP" width="143" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">英語の挨拶</comment>
+				<comment language="english">英語の挨拶</comment>
+			</tag>
+			<tag entry="45" japanese="フランス語の挨拶" english="フランス語の挨拶" view="EP" width="143" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">フランス語の挨拶</comment>
+				<comment language="english">フランス語の挨拶</comment>
+			</tag>
+			<tag entry="46" japanese="ドイツ語の挨拶" english="ドイツ語の挨拶" view="EP" width="143" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">ドイツ語の挨拶</comment>
+				<comment language="english">ドイツ語の挨拶</comment>
+			</tag>
+			<tag entry="47" japanese="イタリア語の挨拶" english="イタリア語の挨拶" view="EP" width="143" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">イタリア語の挨拶</comment>
+				<comment language="english">イタリア語の挨拶</comment>
+			</tag>
+			<tag entry="48" japanese="スペイン語の挨拶" english="スペイン語の挨拶" view="EP" width="143" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">スペイン語の挨拶</comment>
+				<comment language="english">スペイン語の挨拶</comment>
+			</tag>
+		</group>
+
+		<group entry="2" japanese="ポケモンＷＢ（数値）" english="ポケモンＷＢ（数値）" color="#c0c0c0">
+			<tag entry="00" japanese="１桁" english="１桁" view="EP" width="8" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="01" japanese="２桁" english="２桁" view="EP" width="16" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="02" japanese="３桁" english="３桁" view="EP" width="24" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="03" japanese="４桁" english="４桁" view="EP" width="32" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="04" japanese="５桁" english="５桁" view="EP" width="40" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="05" japanese="６桁" english="６桁" view="EP" width="48" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">
+</comment>
+				<comment language="english">
+</comment>
+			</tag>
+			<tag entry="06" japanese="７桁" english="７桁" view="EP" width="56" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="07" japanese="８桁" english="８桁" view="EP" width="64" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+		</group>
+
+		<group entry="189" japanese="汎用コントロール" english="汎用コントロール" color="#c0c0c0">
+			<tag entry="00" japanese="カラー変更" english="カラー変更" view="EP" length="0" line="1">
+				<parameter number="0" japanese="文字色番号" english="文字色番号" type="int8"/>
+				<parameter number="1" japanese="影色番号" english="影色番号" type="int8"/>
+				<parameter number="2" japanese="背景色番号" english="背景色番号" type="int8"/>
+				<comment language="japanese">システムのカラータグより細かい設定が可能な低レベル版。
+ほとんどの場合、システムタグを使えば問題ないと思います。</comment>
+				<comment language="english">システムのカラータグより細かい設定が可能な低レベル版。
+ほとんどの場合、システムタグを使えば問題ないと思います。</comment>
+			</tag>
+			<tag entry="01" japanese="カラー変更リセット" english="カラー変更リセット" view="EP" length="0" line="1"/>
+			<tag entry="02" japanese="Ｘセンタリング" english="Ｘセンタリング" view="EP" length="0" line="1"/>
+			<tag entry="03" japanese="Ｘ右寄せ" english="Ｘ右寄せ" view="EP" length="0" line="1">
+				<parameter number="0" japanese="右スペース" english="右スペース" type="int8"/>
+				<comment language="japanese">当該行の文字列を
+ウィンドウ内で右寄せします。</comment>
+				<comment language="english">当該行の文字列を
+ウィンドウ内で右寄せします。</comment>
+			</tag>
+		</group>
+
+		<group entry="190" japanese="動的コントロール" english="Word" color="#c0c0c0">
+			<tag entry="00" japanese="ページ切り替え（行送り）" english="ページ切り替え（行送り）" view="EP" length="0" line="1"/>
+			<tag entry="01" japanese="ページ切り替え（クリア）" english="ページ切り替え（クリア）" view="EP" length="0" line="1"/>
+			<tag entry="02" japanese="ウェイト変更（単発）" english="ウェイト変更（単発）" view="EP" length="0" line="1">
+				<parameter number="0" japanese="フレーム数" english="フレーム数" type="int16"/>
+			</tag>
+			<tag entry="03" japanese="ウェイト変更（継続）" english="ウェイト変更（継続）" view="EP" length="0" line="1">
+				<parameter number="0" japanese="フレーム数" english="フレーム数" type="int16"/>
+			</tag>
+			<tag entry="04" japanese="ウェイトリセット" english="ウェイトリセット" view="EP" length="0" line="1"/>
+			<tag entry="05" japanese="コールバック引数変更（単発）" english="コールバック引数変更（単発）" view="EP" length="0" line="1">
+				<parameter number="0" japanese="引数" english="引数" type="int16"/>
+			</tag>
+			<tag entry="06" japanese="コールバック引数変更（継続）" english="コールバック引数変更（継続）" view="EP" length="0" line="1">
+				<parameter number="0" japanese="引数" english="引数" type="int16"/>
+			</tag>
+			<tag entry="07" japanese="コールバック引数リセット" english="コールバック引数リセット" view="EP" length="0" line="1"/>
+			<tag entry="08" japanese="描画領域クリア" english="描画領域クリア" view="EP" length="0" line="1"/>
+		</group>
+
+		<group entry="254" japanese="文字列展開" english="Word">
+		</group>
+
+		<set japanese="500%" english="500%" value="FF:01:サイズ:500"/>
+		<set japanese="400%" english="400%" value="FF:01:サイズ:400"/>
+		<set japanese="300%" english="300%" value="FF:01:サイズ:300"/>
+		<set japanese="200%" english="200%" value="FF:01:サイズ:200"/>
+		<set japanese="150%" english="150%" value="FF:01:サイズ:150"/>
+		<set japanese="100%" english="100%" value="FF:01:サイズ:100"/>
+		<set japanese="75%" english="75%" value="FF:01:サイズ:75"/>
+		<set japanese="50%" english="50%" value="FF:01:サイズ:50"/>
+		<set japanese="カラーデフォルト" english="Black" value="FF:00:色:0"/>
+		<set japanese="カラー１" english="Red" value="FF:00:色:1"/>
+		<set japanese="カラー２" english="Green" value="FF:00:色:2"/>
+		<set japanese="カラー３" english="Blue" value="FF:00:色:3"/>
+	</tag-table>
+
+	<columns>
+		<id position="0" width="139"/>
+		<group default=" 0:デフォルト" position="-1" width="100">
+			<list entry="0" japanese="デフォルト" english="Default" colorID="0"/>
+		</group>
+		<number position="-1" width="100"/>
+		<comment position="1" width="370"/>
+		<erase position="-1" width="100"/>
+		<language japanese="JPN" english="JPN">
+			<message position="2" width="274"/>
+			<font default=" 0:large" position="4" width="59">
+				<list entry="0" file="W:\font\large.nftr"/>
+				<list entry="1" file="W:\font\small.nftr"/>
+			</font>
+			<size position="-1" width="100"/>
+			<space position="-1" width="100"/>
+			<width position="6" width="37"/>
+			<line position="-1" width="100"/>
+		</language>
+		<language japanese="JPN_KANJI" english="JPN_KANJI">
+			<message position="3" width="246"/>
+			<font default=" 0:large" position="5" width="54">
+				<list entry="0" file="W:\font\large.nftr"/>
+				<list entry="1" file="W:\font\small.nftr"/>
+			</font>
+			<size position="-1" width="100"/>
+			<space position="-1" width="100"/>
+			<width position="7" width="41"/>
+			<line position="-1" width="100"/>
+		</language>
+	</columns>
+
+	<dialog left="248" top="176" right="953" bottom="796" maximized="no" rayout="Vertical2">
+		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
+		<tag-palette left="787" top="36" right="1260" bottom="434" visible="no"/>
+		<band id="0" index="0" style="0000" width="530"/>
+		<band id="1" index="1" style="0000" width="165"/>
+		<band id="2" index="2" style="0000" width="697"/>
+		<band id="3" index="3" style="0000" width="697"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
+		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
+		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
+	</dialog>
+
+	<output default="デフォルト">
+		<target japanese="デフォルト" english="default" endian="big" encoding="Shift_JIS" letter-list-encoding="Shift_JIS" header-file-encoding="Shift_JIS" language="JPN">
+			<struct name="JMSMesgEntry" id="" message="mesgOffset">
+			</struct>
+			<entry sort="id" id-block="no" flowlabel-block="no"/>
+			<header divide="no" id-prefix="JMS_" query-prefix="JMS_QUERY_" flownode-prefix="JMS_FLOWNODE_" id="" struct="" query=""/>
+		</target>
+	</output>
+
+
+	<lock>
+		<operation add_message="no" header_setting="no" tag_setting="no" output_setting="no" display="no" sort="no" flowchart_window="no"/>
+	</lock>
+
+
+	<row id="msg_union_select_01" text-color="#000000,,,#000000,,#000000,#000000,#000000,,#000000,#000000,,,,,,,">
+		<comment>何もしていないOBJに話し掛けた時のコマンド</comment>
+		<language name="JPN" font=" 1:small" width="48">あいさつ</language>
+		<language name="JPN_KANJI" font=" 1:small" width="48">あいさつ</language>
+	</row>
+
+	<row id="msg_union_select_02" text-color="#000000,,,#000000,,#000000,#000000,#000000,,#000000,#000000,,,,,,,">
+		<comment>何もしていないOBJに話し掛けた時のコマンド</comment>
+		<language name="JPN" font=" 1:small" width="48">おえかき</language>
+		<language name="JPN_KANJI" font=" 1:small" width="48">おえかき</language>
+	</row>
+
+	<row id="msg_union_select_03" text-color="#000000,,,#000000,,#000000,#000000,#000000,,#000000,#000000,,,,,,,">
+		<comment>何もしていないOBJに話し掛けた時のコマンド</comment>
+		<language name="JPN" font=" 1:small" width="48">たいせん</language>
+		<language name="JPN_KANJI" font=" 1:small" width="48">たいせん</language>
+	</row>
+
+	<row id="msg_union_select_04" text-color="#000000,,,#000000,,#000000,#000000,#000000,,#000000,#000000,,,,,,,">
+		<comment>何もしていないOBJに話し掛けた時のコマンド</comment>
+		<language name="JPN" font=" 1:small" width="48">こうかん</language>
+		<language name="JPN_KANJI" font=" 1:small" width="48">こうかん</language>
+	</row>
+
+	<row id="msg_union_select_05" text-color="#000000,,,#000000,,#000000,#000000,#000000,,#000000,#000000,,,,,,,">
+		<comment>何もしていないOBJに話し掛けた時のコマンド</comment>
+		<language name="JPN" font=" 1:small" width="48">やめる</language>
+		<language name="JPN_KANJI" font=" 1:small" width="48">やめる</language>
+	</row>
+
+	<row id="msg_union_select_06" text-color="#000000,,,#000000,,#000000,#000000,#000000,,#000000,#000000,,,,,,,">
+		<comment>何もしていないOBJに話し掛けた時のコマンド</comment>
+		<language name="JPN" font=" 1:small" width="48">ぐるぐる</language>
+		<language name="JPN_KANJI" font=" 1:small" width="48">ぐるぐる</language>
+	</row>
+
+	<row id="msg_union_select_07" text-color="#000000,,,#000000,,#000000,#000000,#000000,,#000000,#000000,,,,,,,">
+		<comment>何もしていないOBJに話し掛けた時のコマンド</comment>
+		<language name="JPN" font=" 1:small" width="48">レコード</language>
+		<language name="JPN_KANJI" font=" 1:small" width="48">レコード</language>
+	</row>
+
+	<row id="msg_union_connect_00_02" text-color="#000000,,,#000000,,#000000,#000000,#000000,,#000000,#000000,,,,,,,">
+		<comment>■外国対応メッセージ■
+●話し掛けられた時のはじめのメッセージ
+国が同じ、もしくは国を入力していないときのメッセージ
+
+・トレーナー名：０　話しかけてきた相手の名前
+・簡易文章：１　相手の国の挨拶言葉
+
+▲のマークのあるメッセージへ分岐</comment>
+		<language name="JPN" width="216" line="2">[1:1C:簡易会話単語:2][1:1C:簡易会話単語:15][BE:01:ページ切り替え（クリア）]
+[1:00:トレーナー名:0]が
+はなしかけて　きました</language>
+		<language name="JPN_KANJI" width="216" line="2">[1:1C:簡易会話単語:2][1:1C:簡易会話単語:15][BE:01:ページ切り替え（クリア）]
+[1:00:トレーナー名:0]が
+はなしかけて　きました</language>
+	</row>
+
+	<row id="msg_union_connect_00_03" text-color="#000000,,,#000000,,#000000,#000000,#000000,,#000000,#000000,,,,,,,">
+		<comment>▲話しかけられたとき：
+　msg_union_connect_00_02：00_02_01のときに、
+　相手が「やめる」を選んだときのメッセージ
+　→END</comment>
+		<language name="JPN" width="216" line="2">かいわが　きれました</language>
+		<language name="JPN_KANJI" width="216" line="2">かいわが　きれました</language>
+	</row>
+
+	<row id="msg_union_connect_00_04" text-color="#000000,,,#000000,,#000000,#000000,#000000,,#000000,#000000,,,,,,,">
+		<comment>２回目の会話に行くときの、共通メッセージ
+
+トレーナー名：０　話しかけてきた相手の名前</comment>
+		<language name="JPN" width="216" line="2">[1:00:トレーナー名:0]の　へんじを
+まっています</language>
+		<language name="JPN_KANJI" width="216" line="2">[1:00:トレーナー名:0]の　へんじを
+まっています</language>
+	</row>
+
+	<row id="msg_union_connect_00_05" text-color="#000000,,,#000000,,#000000,#000000,#000000,,#000000,#000000,,,,,,,">
+		<comment>▲話しかけられたとき：
+　msg_union_connect_00_02：00_02_01のときに、
+　Bボタンを押した時のメッセージ
+　→END</comment>
+		<language name="JPN" width="216" line="2">かいわを　やめました</language>
+		<language name="JPN_KANJI" width="216" line="2">かいわを　やめました</language>
+	</row>
+
+	<row id="msg_union_connect_01_01" text-color="#000000,,,#000000,,#000000,#000000,#000000,,#000000,#000000,,,,,,,">
+		<comment>▲「あいさつ」を誘われた
+　msg_union_connect_00_02：00_02_01から
+
+トレーナー名：０　相手の名前
+
+・msg_union_connect_01_02　　　国が違い地域がある
+・msg_union_connect_01_02_1　　国が違い地域がない
+・msg_union_connect_01_02_2　　国が同じ
+・msg_union_connect_01_02_3　　国を入力してない
+・msg_union_connect_01_03　断った</comment>
+		<language name="JPN" width="216" line="2">[1:00:トレーナー名:0]が　トレーナーケースを
+みせて　きました[BE:01:ページ切り替え（クリア）]
+こちらも　トレーナーケースを
+みせますか？</language>
+		<language name="JPN_KANJI" width="216" line="2">[1:00:トレーナー名:0]が　トレーナーケースを
+みせて　きました[BE:01:ページ切り替え（クリア）]
+こちらも　トレーナーケースを
+みせますか？</language>
+	</row>
+
+	<row id="msg_union_connect_01_02" text-color="#000000,,,#000000,,#000000,#000000,#000000,,#000000,#000000,,,,,,,">
+		<comment>■外国対応メッセージ■
+　「あいさつ」で「はい」を選択した後のメッセージ
+　msg_union_connect_01_01からの分岐
+　
+　・「国が違い地域がある」</comment>
+		<language name="JPN" width="216" line="2">\[1:36:国名:3\]
+\[1:37:地域名:4\][BE:01:ページ切り替え（クリア）]
+に　すんでいる　[1:00:トレーナー名:0]の
+トレーナーケースを　みせてもらった</language>
+		<language name="JPN_KANJI" width="216" line="2">\[1:36:国名:3\]
+\[1:37:地域名:4\][BE:01:ページ切り替え（クリア）]
+に　すんでいる　[1:00:トレーナー名:0]の
+トレーナーケースを　みせてもらった</language>
+	</row>
+
+	<row id="msg_union_connect_01_02_1" text-color="#000000,,,#000000,,#000000,#000000,#000000,,#000000,#000000,,,,,,,">
+		<comment>■外国対応メッセージ■
+　「あいさつ」で「はい」を選択した後のメッセージ
+　msg_union_connect_01_01からの分岐
+　
+　・「国が違い地域がない」</comment>
+		<language name="JPN" width="216" line="2">\[1:36:国名:3\]
+に　すんでいる　[1:00:トレーナー名:0]の[BE:00:ページ切り替え（行送り）]
+トレーナーケースを　みせてもらった</language>
+		<language name="JPN_KANJI" width="216" line="2">\[1:36:国名:3\]
+に　すんでいる　[1:00:トレーナー名:0]の[BE:00:ページ切り替え（行送り）]
+トレーナーケースを　みせてもらった</language>
+	</row>
+
+	<row id="msg_union_connect_01_02_2" text-color="#000000,,,#000000,,#000000,#000000,#000000,,#000000,#000000,,,,,,,">
+		<comment>■外国対応メッセージ■
+　「あいさつ」で「はい」を選択した後のメッセージ
+　msg_union_connect_01_01からの分岐
+　
+　・「国が同じ」</comment>
+		<language name="JPN" width="216" line="2">\[1:37:地域名:4\]
+に　すんでいる　[1:00:トレーナー名:0]の[BE:00:ページ切り替え（行送り）]
+トレーナーケースを　みせてもらった</language>
+		<language name="JPN_KANJI" width="216" line="2">\[1:37:地域名:4\]
+に　すんでいる　[1:00:トレーナー名:0]の[BE:00:ページ切り替え（行送り）]
+トレーナーケースを　みせてもらった</language>
+	</row>
+
+	<row id="msg_union_connect_01_02_3" text-color="#000000,,,#000000,,#000000,#000000,#000000,,#000000,#000000,,,,,,,">
+		<comment>■外国対応メッセージ■
+　「あいさつ」で「はい」を選択した後のメッセージ
+　msg_union_connect_01_01からの分岐
+　
+　・「国を入力してない」</comment>
+		<language name="JPN" width="216" line="2">[1:00:トレーナー名:0]の
+トレーナーケースを　みせてもらった</language>
+		<language name="JPN_KANJI" width="216" line="2">[1:00:トレーナー名:0]の
+トレーナーケースを　みせてもらった</language>
+	</row>
+
+	<row id="msg_union_connect_01_02_4" text-color="#000000,,,#000000,,#000000,#000000,#000000,,#000000,#000000,,,,,,,">
+		<language name="JPN" width="216" line="2">あいての　しゅうりょうを　まっています</language>
+		<language name="JPN_KANJI" width="216" line="2">あいての　しゅうりょうを　まっています</language>
+	</row>
+
+	<row id="msg_union_connect_01_03" text-color="#000000,,,#000000,,#000000,#000000,#000000,,#000000,#000000,,,,,,,">
+		<comment>　「あいさつ」で「いいえ」を選択した後のメッセージ
+　msg_union_connect_01_01からの分岐
+　　→END</comment>
+		<language name="JPN" width="216" line="2">おさそいを
+ことわり　ました</language>
+		<language name="JPN_KANJI" width="216" line="2">おさそいを
+ことわり　ました</language>
+	</row>
+
+	<row id="msg_union_connect_02_01" text-color="#000000,,,#000000,,#000000,#000000,#000000,,#000000,#000000,,,,,,,">
+		<comment>▲誰かに「おえかき」をもちかけられたとき：
+　msg_union_connect_00_02：00_02_01から
+
+トレーナー名：０　話しかけてきた相手の名前
+
+・msg_union_connect_02_02　「はい」
+・msg_union_connect_02_03　「いいえ」
+</comment>
+		<language name="JPN" width="216" line="2">[1:00:トレーナー名:0]が　おえかき　に
+さそって　きました[BE:01:ページ切り替え（クリア）]
+いっしょに　おえかき　しますか？</language>
+		<language name="JPN_KANJI" width="216" line="2">[1:00:トレーナー名:0]が　おえかき　に
+さそって　きました[BE:01:ページ切り替え（クリア）]
+いっしょに　おえかき　しますか？</language>
+	</row>
+
+	<row id="msg_union_connect_02_02" text-color="#000000,,,#000000,,#000000,#000000,#000000,,#000000,#000000,,,,,,,">
+		<comment>　「おえかき」で「はい」を選択した後のメッセージ
+
+　
+　◎このあと、お絵かきボードの画面へ</comment>
+		<language name="JPN" width="216" line="2">おえかき　を
+はじめます！</language>
+		<language name="JPN_KANJI" width="216" line="2">おえかき　を
+はじめます！</language>
+	</row>
+
+	<row id="msg_union_connect_02_03" text-color="#000000,,,#000000,,#000000,#000000,#000000,,#000000,#000000,,,,,,,">
+		<comment>　「おえかき」で「いいえ」を選択した後のメッセージ
+　→END</comment>
+		<language name="JPN" width="216" line="2">おさそいを
+ことわり　ました</language>
+		<language name="JPN_KANJI" width="216" line="2">おさそいを
+ことわり　ました</language>
+	</row>
+
+	<row id="msg_union_connect_03_01_01" text-color="#000000,,,#000000,,,#000000,#000000,,#000000,#000000,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,#80ffff,,#80ffff,#80ffff,#80ffff,#80ffff,,,#80ffff,,">
+		<comment>▲誰かに「シングルバトル（レベル５０）」をもちかけられたとき：
+　msg_union_connect_00_02：00_02_01から
+
+トレーナー名：０　話しかけてきた相手の名前
+
+・msg_union_connect_03_02　「はい」
+・msg_union_connect_03_03　「いいえ」
+・「はい」を選んだが、手持ちの条件が合わない場合、参加ＮＧメッセージ後に、
+　msg_union_connect_03_03を表示。
+</comment>
+		<language name="JPN" width="216" line="2">[1:00:トレーナー名:0]が　たいせんを
+もうしこんで　きました[BE:01:ページ切り替え（クリア）]
+シングルバトルの　レベル５０ルールで
+たいせん　しますか？</language>
+		<language name="JPN_KANJI" width="216" line="2">[1:00:トレーナー名:0]が　たいせんを
+もうしこんで　きました[BE:01:ページ切り替え（クリア）]
+シングルバトルの　レベル５０ルールで
+たいせん　しますか？</language>
+	</row>
+
+	<row id="msg_union_connect_03_01_02" text-color="#000000,,,,,,#000000,#000000,,#000000,#000000,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,#80ffff,,#80ffff,#80ffff,#80ffff,#80ffff,,,#80ffff,,">
+		<comment>▲誰かに「シングルバトル（制限なし）」をもちかけられたとき：
+　msg_union_connect_00_02：00_02_01から
+
+トレーナー名：０　話しかけてきた相手の名前
+
+・msg_union_connect_03_02　「はい」
+・msg_union_connect_03_03　「いいえ」
+・msg_union_connect_03_04　「手持ちの条件が合わない」
+</comment>
+		<language name="JPN" width="216" line="2">[1:00:トレーナー名:0]が　たいせんを
+もうしこんで　きました[BE:01:ページ切り替え（クリア）]
+シングルバトルの　せいげんなしで
+たいせん　しますか？</language>
+		<language name="JPN_KANJI" width="216" line="2">[1:00:トレーナー名:0]が　たいせんを
+もうしこんで　きました[BE:01:ページ切り替え（クリア）]
+シングルバトルの　せいげんなしで
+たいせん　しますか？</language>
+	</row>
+
+	<row id="msg_union_connect_03_01_03" text-color="#000000,,,,,,#000000,#000000,,#000000,#000000,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,#80ffff,,#80ffff,#80ffff,#80ffff,#80ffff,,,#80ffff,,">
+		<comment>▲誰かに「シングルバトル（スタンダード）」をもちかけられたとき：
+　msg_union_connect_00_02：00_02_01から
+
+トレーナー名：０　話しかけてきた相手の名前
+
+・msg_union_connect_03_02　「はい」
+・msg_union_connect_03_03　「いいえ」
+・msg_union_connect_03_04　「手持ちの条件が合わない」
+</comment>
+		<language name="JPN" width="216" line="2">[1:00:トレーナー名:0]が　たいせんを
+もうしこんで　きました[BE:01:ページ切り替え（クリア）]
+シングルバトルの
+スタンダードルールで[BE:00:ページ切り替え（行送り）]
+たいせん　しますか？</language>
+		<language name="JPN_KANJI" width="216" line="2">[1:00:トレーナー名:0]が　たいせんを
+もうしこんで　きました[BE:01:ページ切り替え（クリア）]
+シングルバトルの
+スタンダードルールで[BE:00:ページ切り替え（行送り）]
+たいせん　しますか？</language>
+	</row>
+
+	<row id="msg_union_connect_03_01_04" text-color="#000000,,,,,,#000000,#000000,,#000000,#000000,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,#80ffff,,#80ffff,#80ffff,#80ffff,#80ffff,,,#80ffff,,">
+		<comment>▲誰かに「ダブルバトル（レベル５０）」をもちかけられたとき：
+　msg_union_connect_00_02：00_02_01から
+
+トレーナー名：０　話しかけてきた相手の名前
+
+・msg_union_connect_03_02　「はい」
+・msg_union_connect_03_03　「いいえ」
+・msg_union_connect_03_04　「手持ちの条件が合わない」
+</comment>
+		<language name="JPN" width="216" line="2">[1:00:トレーナー名:0]が　たいせんを
+もうしこんで　きました[BE:01:ページ切り替え（クリア）]
+ダブルバトルの　レベル５０ルールで
+たいせん　しますか？</language>
+		<language name="JPN_KANJI" width="216" line="2">[1:00:トレーナー名:0]が　たいせんを
+もうしこんで　きました[BE:01:ページ切り替え（クリア）]
+ダブルバトルの　レベル５０ルールで
+たいせん　しますか？</language>
+	</row>
+
+	<row id="msg_union_connect_03_01_05" text-color="#000000,,,,,,#000000,#000000,,#000000,#000000,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,#80ffff,,#80ffff,#80ffff,#80ffff,#80ffff,,,#80ffff,,">
+		<comment>▲誰かに「ダブルバトル（制限なし）」をもちかけられたとき：
+　msg_union_connect_00_02：00_02_01から
+
+トレーナー名：０　話しかけてきた相手の名前
+
+・msg_union_connect_03_02　「はい」
+・msg_union_connect_03_03　「いいえ」
+・msg_union_connect_03_04　「手持ちの条件が合わない」
+</comment>
+		<language name="JPN" width="216" line="2">[1:00:トレーナー名:0]が　たいせんを
+もうしこんで　きました[BE:01:ページ切り替え（クリア）]
+ダブルバトルの　せいげんなしで
+たいせん　しますか？</language>
+		<language name="JPN_KANJI" width="216" line="2">[1:00:トレーナー名:0]が　たいせんを
+もうしこんで　きました[BE:01:ページ切り替え（クリア）]
+ダブルバトルの　せいげんなしで
+たいせん　しますか？</language>
+	</row>
+
+	<row id="msg_union_connect_03_01_06" text-color="#000000,,,,,,#000000,#000000,,#000000,#000000,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,#80ffff,,#80ffff,#80ffff,#80ffff,#80ffff,,,#80ffff,,">
+		<comment>▲誰かに「ダブルバトル（スタンダード）」をもちかけられたとき：
+　msg_union_connect_00_02：00_02_01から
+
+トレーナー名：０　話しかけてきた相手の名前
+
+・msg_union_connect_03_02　「はい」
+・msg_union_connect_03_03　「いいえ」
+・msg_union_connect_03_04　「手持ちの条件が合わない」
+</comment>
+		<language name="JPN" width="216" line="2">[1:00:トレーナー名:0]が　たいせんを
+もうしこんで　きました[BE:01:ページ切り替え（クリア）]
+ダブルバトルの　スタンダードルールで
+たいせん　しますか？</language>
+		<language name="JPN_KANJI" width="216" line="2">[1:00:トレーナー名:0]が　たいせんを
+もうしこんで　きました[BE:01:ページ切り替え（クリア）]
+ダブルバトルの　スタンダードルールで
+たいせん　しますか？</language>
+	</row>
+
+	<row id="msg_union_connect_03_01_07" text-color="#000000,,,,,,#000000,#000000,,#000000,#000000,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,#80ffff,,#80ffff,#80ffff,#80ffff,#80ffff,,,#80ffff,,">
+		<comment>▲誰かに「トリプルバトル（レベル５０）」をもちかけられたとき：
+　msg_union_connect_00_02：00_02_01から
+
+トレーナー名：０　話しかけてきた相手の名前
+
+・msg_union_connect_03_02　「はい」
+・msg_union_connect_03_03　「いいえ」
+・msg_union_connect_03_04　「手持ちの条件が合わない」
+</comment>
+		<language name="JPN" width="216" line="2">[1:00:トレーナー名:0]が　たいせんを
+もうしこんで　きました[BE:01:ページ切り替え（クリア）]
+トリプルバトルの　レベル５０ルールで
+たいせん　しますか？</language>
+		<language name="JPN_KANJI" width="216" line="2">[1:00:トレーナー名:0]が　たいせんを
+もうしこんで　きました[BE:01:ページ切り替え（クリア）]
+トリプルバトルの　レベル５０ルールで
+たいせん　しますか？</language>
+	</row>
+
+	<row id="msg_union_connect_03_01_08" text-color="#000000,,,,,,#000000,#000000,,#000000,#000000,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,#80ffff,,#80ffff,#80ffff,#80ffff,#80ffff,,,#80ffff,,">
+		<comment>▲誰かに「トリプルバトル（制限なし）」をもちかけられたとき：
+　msg_union_connect_00_02：00_02_01から
+
+トレーナー名：０　話しかけてきた相手の名前
+
+・msg_union_connect_03_02　「はい」
+・msg_union_connect_03_03　「いいえ」
+・msg_union_connect_03_04　「手持ちの条件が合わない」
+</comment>
+		<language name="JPN" width="216" line="2">[1:00:トレーナー名:0]が　たいせんを
+もうしこんで　きました[BE:01:ページ切り替え（クリア）]
+トリプルバトルの　せいげんなしで
+たいせん　しますか？</language>
+		<language name="JPN_KANJI" width="216" line="2">[1:00:トレーナー名:0]が　たいせんを
+もうしこんで　きました[BE:01:ページ切り替え（クリア）]
+トリプルバトルの　せいげんなしで
+たいせん　しますか？</language>
+	</row>
+
+	<row id="msg_union_connect_03_01_09" text-color="#000000,,,,,,#000000,#000000,,#000000,#000000,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,#80ffff,,#80ffff,#80ffff,#80ffff,#80ffff,,,#80ffff,,">
+		<comment>▲誰かに「トリプルバトル（スタンダード）」をもちかけられたとき：
+　msg_union_connect_00_02：00_02_01から
+
+トレーナー名：０　話しかけてきた相手の名前
+
+・msg_union_connect_03_02　「はい」
+・msg_union_connect_03_03　「いいえ」
+・msg_union_connect_03_04　「手持ちの条件が合わない」
+</comment>
+		<language name="JPN" width="216" line="2">[1:00:トレーナー名:0]が　たいせんを
+もうしこんで　きました[BE:01:ページ切り替え（クリア）]
+トリプルバトルの
+スタンダードルールで[BE:00:ページ切り替え（行送り）]
+たいせん　しますか？</language>
+		<language name="JPN_KANJI" width="216" line="2">[1:00:トレーナー名:0]が　たいせんを
+もうしこんで　きました[BE:01:ページ切り替え（クリア）]
+トリプルバトルの
+スタンダードルールで[BE:00:ページ切り替え（行送り）]
+たいせん　しますか？</language>
+	</row>
+
+	<row id="msg_union_connect_03_01_10" text-color="#000000,,,,,,#000000,#000000,,#000000,#000000,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,#80ffff,,#80ffff,#80ffff,#80ffff,#80ffff,,,#80ffff,,">
+		<comment>▲誰かに「ローテーションバトル（レベル５０）」をもちかけられたとき：
+　msg_union_connect_00_02：00_02_01から
+
+トレーナー名：０　話しかけてきた相手の名前
+
+・msg_union_connect_03_02　「はい」
+・msg_union_connect_03_03　「いいえ」
+・msg_union_connect_03_04　「手持ちの条件が合わない」
+</comment>
+		<language name="JPN" width="216" line="2">[1:00:トレーナー名:0]が　たいせんを
+もうしこんで　きました[BE:01:ページ切り替え（クリア）]
+ローテーションバトルの
+レベル５０ルールで[BE:00:ページ切り替え（行送り）]
+たいせん　しますか？</language>
+		<language name="JPN_KANJI" width="216" line="2">[1:00:トレーナー名:0]が　たいせんを
+もうしこんで　きました[BE:01:ページ切り替え（クリア）]
+ローテーションバトルの
+レベル５０ルールで[BE:00:ページ切り替え（行送り）]
+たいせん　しますか？</language>
+	</row>
+
+	<row id="msg_union_connect_03_01_11" text-color="#000000,,,,,,#000000,#000000,,#000000,#000000,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,#80ffff,,#80ffff,#80ffff,#80ffff,#80ffff,,,#80ffff,,">
+		<comment>▲誰かに「ローテーションバトル（制限なし）」をもちかけられたとき：
+　msg_union_connect_00_02：00_02_01から
+
+トレーナー名：０　話しかけてきた相手の名前
+
+・msg_union_connect_03_02　「はい」
+・msg_union_connect_03_03　「いいえ」
+・msg_union_connect_03_04　「手持ちの条件が合わない」
+</comment>
+		<language name="JPN" width="216" line="2">[1:00:トレーナー名:0]が　たいせんを
+もうしこんで　きました[BE:01:ページ切り替え（クリア）]
+ローテーションバトルの
+せいげんなしで[BE:00:ページ切り替え（行送り）]
+たいせん　しますか？</language>
+		<language name="JPN_KANJI" width="216" line="2">[1:00:トレーナー名:0]が　たいせんを
+もうしこんで　きました[BE:01:ページ切り替え（クリア）]
+ローテーションバトルの
+せいげんなしで[BE:00:ページ切り替え（行送り）]
+たいせん　しますか？</language>
+	</row>
+
+	<row id="msg_union_connect_03_01_12" text-color="#000000,,,,,,#000000,#000000,,#000000,#000000,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,#80ffff,,#80ffff,#80ffff,#80ffff,#80ffff,,,#80ffff,,">
+		<comment>▲誰かに「ローテーションバトル（スタンダード）」をもちかけられたとき：
+　msg_union_connect_00_02：00_02_01から
+
+トレーナー名：０　話しかけてきた相手の名前
+
+・msg_union_connect_03_02　「はい」
+・msg_union_connect_03_03　「いいえ」
+・msg_union_connect_03_04　「手持ちの条件が合わない」
+</comment>
+		<language name="JPN" width="216" line="2">[1:00:トレーナー名:0]が　たいせんを
+もうしこんで　きました[BE:01:ページ切り替え（クリア）]
+ローテーションバトルの
+スタンダードルールで[BE:00:ページ切り替え（行送り）]
+たいせん　しますか？</language>
+		<language name="JPN_KANJI" width="216" line="2">[1:00:トレーナー名:0]が　たいせんを
+もうしこんで　きました[BE:01:ページ切り替え（クリア）]
+ローテーションバトルの
+スタンダードルールで[BE:00:ページ切り替え（行送り）]
+たいせん　しますか？</language>
+	</row>
+
+	<row id="msg_union_connect_03_01_13" text-color="#000000,,,,,,#000000,#000000,,#000000,#000000,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,#80ffff,,#80ffff,#80ffff,#80ffff,#80ffff,,,#80ffff,,">
+		<comment>▲誰かに「マルチバトル（スタンダード）」をもちかけられたとき：
+　msg_union_connect_00_02：00_02_01から
+
+トレーナー名：０　話しかけてきた相手の名前
+
+・msg_union_connect_03_02　「はい」
+・msg_union_connect_03_03　「いいえ」
+・msg_union_connect_03_04　「手持ちの条件が合わない」
+</comment>
+		<language name="JPN" width="216" line="2">[1:00:トレーナー名:0]が　マルチバトルを
+もうしこんで　きました[BE:01:ページ切り替え（クリア）]
+たいせん　しますか？</language>
+		<language name="JPN_KANJI" width="216" line="2">[1:00:トレーナー名:0]が　マルチバトルを
+もうしこんで　きました[BE:01:ページ切り替え（クリア）]
+たいせん　しますか？</language>
+	</row>
+
+	<row id="msg_union_connect_03_02" text-color="#000000,,,#000000,,#000000,#000000,#000000,,#000000,#000000,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,#80ffff,,#80ffff,#80ffff,#80ffff,#80ffff,,,#80ffff,,">
+		<comment>　「たいせん」で「はい」を選択した後のメッセージ
+
+　
+　◎このあと、コロシアム部屋へ</comment>
+		<language name="JPN" width="216" line="2">たいせんを
+かいし　します！</language>
+		<language name="JPN_KANJI" width="216" line="2">たいせんを
+かいし　します！</language>
+	</row>
+
+	<row id="msg_union_connect_03_03" text-color="#000000,,,#000000,,#000000,#000000,#000000,,#000000,#000000,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,#80ffff,,#80ffff,#80ffff,#80ffff,#80ffff,,,#80ffff,,">
+		<comment>　「たいせん」で「いいえ」を選択した後と、
+参加ＮＧメッセージを表示した後のメッセージ
+　→END</comment>
+		<language name="JPN" width="216" line="2">おさそいを
+ことわり　ました</language>
+		<language name="JPN_KANJI" width="216" line="2">おさそいを
+ことわり　ました</language>
+	</row>
+
+	<row id="msg_union_connect_04_01" text-color="#000000,,,#000000,,#000000,#000000,#000000,,#000000,#000000,,,,,,,">
+		<comment>▲誰かに「こうかん」をもちかけられたとき：
+　msg_union_connect_00_02：00_02_01から
+
+トレーナー名：０　話しかけてきた相手の名前
+
+・msg_union_connect_04_02　「はい」
+・msg_union_connect_04_03　「いいえ」
+・msg_union_connect_04_04　「はい」を選んだが手持ちが一体
+</comment>
+		<language name="JPN" width="216" line="2">[1:00:トレーナー名:0]が　こうかんを
+もうしこんで　きました[BE:01:ページ切り替え（クリア）]
+こうかん　しますか？</language>
+		<language name="JPN_KANJI" width="216" line="2">[1:00:トレーナー名:0]が　こうかんを
+もうしこんで　きました[BE:01:ページ切り替え（クリア）]
+こうかん　しますか？</language>
+	</row>
+
+	<row id="msg_union_connect_04_02" text-color="#000000,,,#000000,,#000000,#000000,#000000,,#000000,#000000,,,,,,,">
+		<comment>　「こうかん」で「はい」を選択した後のメッセージ
+
+　
+　◎このあと、ポケモンリストの画面へ</comment>
+		<language name="JPN" width="216" line="2">こうかんを
+かいし　します！</language>
+		<language name="JPN_KANJI" width="216" line="2">こうかんを
+かいし　します！</language>
+	</row>
+
+	<row id="msg_union_connect_04_03" text-color="#000000,,,#000000,,#000000,#000000,#000000,,#000000,#000000,,,,,,,">
+		<comment>　「こうかん」で「いいえ」を選択した後のメッセージ
+　→END</comment>
+		<language name="JPN" width="216" line="2">おさそいを
+ことわり　ました</language>
+		<language name="JPN_KANJI" width="216" line="2">おさそいを
+ことわり　ました</language>
+	</row>
+
+	<row id="msg_union_connect_04_04" text-color="#000000,,,#000000,,#000000,#000000,#000000,,#000000,#000000,,,,,,,">
+		<comment>　「こうかん」で「はい」を選んだが、手持ちが一体の場合
+　→END</comment>
+		<language name="JPN" width="216" line="2">こうかんでは　２ひき　いじょうの
+てもちが　ひつようです　</language>
+		<language name="JPN_KANJI" width="216" line="2">こうかんでは　２ひき　いじょうの
+てもちが　ひつようです　</language>
+	</row>
+
+	<row id="msg_union_connect_05_01" text-color="#000000,,,#000000,,#000000,#000000,#000000,,#000000,#000000,,,,,,,">
+		<comment>▲誰かに「レコード」をもちかけられたとき：
+　msg_union_connect_00_02：00_02_01から
+
+トレーナー名：０　話しかけてきた相手の名前
+
+・msg_union_connect_05_02　「はい」
+・msg_union_connect_05_03　「いいえ」
+</comment>
+		<language name="JPN" width="216" line="2">[1:00:トレーナー名:0]が　レコードつうしんに
+さそって　きました[BE:01:ページ切り替え（クリア）]
+いっしょに　レコードつうしんを
+しますか？</language>
+		<language name="JPN_KANJI" width="216" line="2">[1:00:トレーナー名:0]が　レコードつうしんに
+さそって　きました[BE:01:ページ切り替え（クリア）]
+いっしょに　レコードつうしんを
+しますか？</language>
+	</row>
+
+	<row id="msg_union_connect_05_02" text-color="#000000,,,#000000,,#000000,#000000,#000000,,#000000,#000000,,,,,,,">
+		<comment>　「レコード」で「はい」を選択した後のメッセージ
+
+　
+　◎このあと、レコードの画面へ</comment>
+		<language name="JPN" width="216" line="2">レコードつうしんを
+かいし　します！</language>
+		<language name="JPN_KANJI" width="216" line="2">レコードつうしんを
+かいし　します！</language>
+	</row>
+
+	<row id="msg_union_connect_05_03" text-color="#000000,,,#000000,,#000000,#000000,#000000,,#000000,#000000,,,,,,,">
+		<comment>　「レコード」で「いいえ」を選択した後のメッセージ
+　→END</comment>
+		<language name="JPN" width="216" line="2">おさそいを
+ことわり　ました</language>
+		<language name="JPN_KANJI" width="216" line="2">おさそいを
+ことわり　ました</language>
+	</row>
+
+	<row id="msg_union_connect_06_01" text-color="#000000,,,#000000,,#000000,#000000,#000000,,#000000,#000000,,,,,,,">
+		<comment>▲誰かに「こうかん」をもちかけられたとき：
+　msg_union_connect_00_02：00_02_01から
+
+トレーナー名：０　話しかけてきた相手の名前
+
+・msg_union_connect_06_02　「はい」
+・msg_union_connect_06_03　「いいえ」
+・msg_union_connect_06_04　「はい」を選択したが卵がない
+</comment>
+		<language name="JPN" width="216" line="2">[1:00:トレーナー名:0]が　ぐるぐるこうかん　に
+さそって　きました[BE:01:ページ切り替え（クリア）]
+いっしょに　ぐるぐるこうかん　を
+しますか？</language>
+		<language name="JPN_KANJI" width="216" line="2">[1:00:トレーナー名:0]が　ぐるぐるこうかん　に
+さそって　きました[BE:01:ページ切り替え（クリア）]
+いっしょに　ぐるぐるこうかん　を
+しますか？</language>
+	</row>
+
+	<row id="msg_union_connect_06_02" text-color="#000000,,,#000000,,#000000,#000000,#000000,,#000000,#000000,,,,,,,">
+		<comment>　「ぐるぐる」で「はい」を選択した後のメッセージ
+
+　
+　◎このあと、ぐるぐるの画面へ</comment>
+		<language name="JPN" width="216" line="2">ぐるぐるこうかん を
+かいし　します！</language>
+		<language name="JPN_KANJI" width="216" line="2">ぐるぐるこうかん を
+かいし　します！</language>
+	</row>
+
+	<row id="msg_union_connect_06_03" text-color="#000000,,,#000000,,#000000,#000000,#000000,,#000000,#000000,,,,,,,">
+		<comment>　「ぐるぐる」で「いいえ」を選択した後のメッセージ
+　→END</comment>
+		<language name="JPN" width="216" line="2">おさそいを
+ことわり　ました</language>
+		<language name="JPN_KANJI" width="216" line="2">おさそいを
+ことわり　ました</language>
+	</row>
+
+	<row id="msg_union_connect_06_04" text-color="#000000,,,#000000,,#000000,#000000,#000000,,#000000,#000000,,,,,,,">
+		<comment>　「ぐるぐる」で「はい」と答えたがタマゴを持っていない
+　→END</comment>
+		<language name="JPN" width="216" line="2">タマゴを　もっていないので
+おさそいを　ことわり　ました</language>
+		<language name="JPN_KANJI" width="216" line="2">タマゴを　もっていないので
+おさそいを　ことわり　ました</language>
+	</row>
+
+	<row id="msg_union_talkboy_00_02" text-color="#0000ff,,,#000000,,#000000,#000000,#000000,,#000000,#000000,,,,,,,">
+		<comment>■外国対応メッセージ■
+msg_connect_union_08からの分岐メッセージ
+国が同じ、もしくは国を入力していないときのメッセージ
+
+・トレーナー名：０　話しかけてきた相手の名前
+・簡易文章：１　相手の国の挨拶言葉
+
+★のマークのあるメッセージへ分岐</comment>
+		<language name="JPN" width="216" line="2">[1:1C:簡易会話単語:2][1:1C:簡易会話単語:15][BE:01:ページ切り替え（クリア）]
+[1:00:トレーナー名:0]　です！
+なにか　するかい？</language>
+		<language name="JPN_KANJI" width="216" line="2">[1:1C:簡易会話単語:2][1:1C:簡易会話単語:15][BE:01:ページ切り替え（クリア）]
+[1:00:トレーナー名:0]　です！
+なにか　するかい？</language>
+	</row>
+
+	<row id="msg_union_talkgirl_00_02" text-color="#ff0000,,,,,,#000000,#000000,,#000000,#000000,,,,,,,">
+		<comment>■外国対応メッセージ■
+msg_connect_union_08からの分岐メッセージ
+国が同じ、もしくは国を入力していないときのメッセージ
+
+・トレーナー名：０　話しかけてきた相手の名前
+・簡易文章：１　相手の国の挨拶言葉
+
+★のマークのあるメッセージへ分岐</comment>
+		<language name="JPN" width="216" line="2">[1:1C:簡易会話単語:2][1:1C:簡易会話単語:15][BE:01:ページ切り替え（クリア）]
+[1:00:トレーナー名:0]　です！
+なにか　する？</language>
+		<language name="JPN_KANJI" width="216" line="2">[1:1C:簡易会話単語:2][1:1C:簡易会話単語:15][BE:01:ページ切り替え（クリア）]
+[1:00:トレーナー名:0]　です！
+なにか　する？</language>
+	</row>
+
+	<row id="msg_union_talkboy_00_03" text-color="#0000ff,,,#000000,,#000000,#000000,#000000,,#000000,#000000,,,,,,,">
+		<comment>★msg_union_talkboy_00_02からの分岐
+男OBＪ：相手に会話を切られた時
+
+　相手は　msg_union_connect_00_05　「かいわを　やめました」が表示
+　→END</comment>
+		<language name="JPN" width="216" line="2">あ！　ごめん
+ほかに　ようじが　あるから[BE:00:ページ切り替え（行送り）]
+また　こんどね</language>
+		<language name="JPN_KANJI" width="216" line="2">あ！　ごめん
+ほかに　ようじが　あるから[BE:00:ページ切り替え（行送り）]
+また　こんどね</language>
+	</row>
+
+	<row id="msg_union_talkgirl_00_03" text-color="#ff0000,,,,,,#000000,#000000,,#000000,#000000,,,,,,,">
+		<comment>★msg_union_talkgirl_00_02からの分岐
+女OBＪ：相手に会話を切られた時
+
+　相手は　msg_union_connect_00_05　「かいわを　やめました」が表示
+　→END</comment>
+		<language name="JPN" width="216" line="2">あ！　ごめん
+ほかにも　ようじが　あるから[BE:00:ページ切り替え（行送り）]
+また　こんどね</language>
+		<language name="JPN_KANJI" width="216" line="2">あ！　ごめん
+ほかにも　ようじが　あるから[BE:00:ページ切り替え（行送り）]
+また　こんどね</language>
+	</row>
+
+	<row id="msg_union_talkboy_00_04" text-color="#0000ff,,,#000000,,#000000,#000000,#000000,,#000000,#000000,,,,,,,">
+		<comment>男OBJと会話を続けた時
+
+★のマークのあるメッセージへ分岐</comment>
+		<language name="JPN" width="216" line="2">ほかにも
+なにか　する？</language>
+		<language name="JPN_KANJI" width="216" line="2">ほかにも
+なにか　する？</language>
+	</row>
+
+	<row id="msg_union_talkgirl_00_04" text-color="#ff0000,,,,,,#000000,#000000,,#000000,#000000,,,,,,,">
+		<comment>女OBJと会話を続けた時
+
+★のマークのあるメッセージへ分岐</comment>
+		<language name="JPN" width="216" line="2">ほかにも
+なにか　する？</language>
+		<language name="JPN_KANJI" width="216" line="2">ほかにも
+なにか　する？</language>
+	</row>
+
+	<row id="msg_union_talkboy_00_05" text-color="#0000ff,,,#000000,,#000000,#000000,#000000,,#000000,#000000,,,,,,,">
+		<comment>男OBJがメニューを開いている時に、話し掛けた時
+　　→END</comment>
+		<language name="JPN" width="216" line="2">……
+いまは　とりこみちゅうの　ようだ</language>
+		<language name="JPN_KANJI" width="216" line="2">……
+いまは　とりこみちゅうの　ようだ</language>
+	</row>
+
+	<row id="msg_union_talkgirl_00_05" text-color="#ff0000,,,,,,#000000,#000000,,#000000,#000000,,,,,,,">
+		<comment>女OBJがメニューを開いている時に、話し掛けた時
+　　→END</comment>
+		<language name="JPN" width="216" line="2">……
+いまは　とりこみちゅうの　ようだ</language>
+		<language name="JPN_KANJI" width="216" line="2">……
+いまは　とりこみちゅうの　ようだ</language>
+	</row>
+
+	<row id="msg_union_talkboy_00_06" text-color="#0000ff,,,#000000,,#000000,#000000,#000000,,#000000,#000000,,,,,,,">
+		<comment>タイムアウト共通処理。
+
+トレーナー名：０　話しかけた相手の名前
+　　→END</comment>
+		<language name="JPN" width="216" line="2">[1:00:トレーナー名:0]から　へんじが
+きません　でした……</language>
+		<language name="JPN_KANJI" width="216" line="2">[1:00:トレーナー名:0]から　へんじが
+きません　でした……</language>
+	</row>
+
+	<row id="msg_union_talkgirl_00_06" text-color="#ff0000,,,,,,#000000,#000000,,#000000,#000000,,,,,,,">
+		<comment>タイムアウト共通処理。
+
+トレーナー名：０　話しかけた相手の名前
+　　→END</comment>
+		<language name="JPN" width="216" line="2">[1:00:トレーナー名:0]から　へんじが
+きません　でした……</language>
+		<language name="JPN_KANJI" width="216" line="2">[1:00:トレーナー名:0]から　へんじが
+きません　でした……</language>
+	</row>
+
+	<row id="msg_union_talkboy_01_01" text-color="#0000ff,,,#000000,,#000000,#000000,#000000,,#000000,#000000,,,,,,,">
+		<comment>★男OBJに話し掛けて、「あいさつ」を選んだとき
+　msg_union_talkboy_00_02からの分岐
+
+・msg_union_talkboy_01_02　「相手が断った」
+・msg_union_connect_01_02　　　「国が違い地域がある」
+・msg_union_connect_01_02_1　　「国が違い地域がない」
+・msg_union_connect_01_02_2　　「国が同じ」
+・msg_union_connect_01_02_3　　「国を入力してない」
+</comment>
+		<language name="JPN" width="216" line="2">わかった！　じゃあ　あいさつがわりに
+トレーナーケースを　みせてあげるよ</language>
+		<language name="JPN_KANJI" width="216" line="2">わかった！　じゃあ　あいさつがわりに
+トレーナーケースを　みせてあげるよ</language>
+	</row>
+
+	<row id="msg_union_talkgirl_01_01" text-color="#ff0000,,,,,,#000000,#000000,,#000000,#000000,,,,,,,">
+		<comment>★女OBJに話し掛けて、「あいさつ」を選んだとき
+　msg_union_talkgirl_00_02からの分岐
+
+・msg_union_talkgirl_01_02　「相手が断った」
+・msg_union_connect_01_02　　　「国が違い地域がある」
+・msg_union_connect_01_02_1　　「国が違い地域がない」
+・msg_union_connect_01_02_2　　「国が同じ」
+・msg_union_connect_01_02_3　　「国を入力してない」
+</comment>
+		<language name="JPN" width="216" line="2">じゃあ　あいさつの　かわりに
+トレーナーケース　みせてあげるね</language>
+		<language name="JPN_KANJI" width="216" line="2">じゃあ　あいさつの　かわりに
+トレーナーケース　みせてあげるね</language>
+	</row>
+
+	<row id="msg_union_talkboy_01_02" text-color="#0000ff,,,#000000,,#000000,#000000,#000000,,#000000,#000000,,,,,,,">
+		<comment>　男OBJ：
+　「あいさつ」で相手が断った後のメッセージ
+　msg_union_talkboy_01_01からの分岐
+　　→END</comment>
+		<language name="JPN" width="216" line="2">あれ！？　トレーナーケースが
+みあたらない　なあ[BE:01:ページ切り替え（クリア）]
+ごめん！　またこんどね</language>
+		<language name="JPN_KANJI" width="216" line="2">あれ！？　トレーナーケースが
+みあたらない　なあ[BE:01:ページ切り替え（クリア）]
+ごめん！　またこんどね</language>
+	</row>
+
+	<row id="msg_union_talkgirl_01_02" text-color="#ff0000,,,,,,#000000,#000000,,#000000,#000000,,,,,,,">
+		<comment>　女OBJ：
+　「あいさつ」で相手が断った後のメッセージ
+　msg_union_talkgirl_01_01からの分岐
+　　→END</comment>
+		<language name="JPN" width="216" line="2">あれ！？　トレーナーケース
+どこ　いったかな？……[BE:01:ページ切り替え（クリア）]
+ごめん！　またこんどね</language>
+		<language name="JPN_KANJI" width="216" line="2">あれ！？　トレーナーケース
+どこ　いったかな？……[BE:01:ページ切り替え（クリア）]
+ごめん！　またこんどね</language>
+	</row>
+
+	<row id="msg_union_talkboy_01_03" text-color="#0000ff,,,#000000,,#000000,#000000,#000000,,#000000,#000000,,,,,,,">
+		<comment>あいさつ中の男OBJに話し掛けた時 、ランダムその１
+　　→END</comment>
+		<language name="JPN" width="216" line="2">いま　あいさつがわりに
+トレーナーケースを　みせてるんだ</language>
+		<language name="JPN_KANJI" width="216" line="2">いま　あいさつがわりに
+トレーナーケースを　みせてるんだ</language>
+	</row>
+
+	<row id="msg_union_talkgirl_01_03" text-color="#ff0000,,,,,,#000000,#000000,,#000000,#000000,,,,,,,">
+		<comment>あいさつ中の女OBJに話し掛けた時 、ランダムその１
+　　→END</comment>
+		<language name="JPN" width="216" line="2">いま　あいさつの　かわりに
+トレーナーケースを　みせあってるの</language>
+		<language name="JPN_KANJI" width="216" line="2">いま　あいさつの　かわりに
+トレーナーケースを　みせあってるの</language>
+	</row>
+
+	<row id="msg_union_talkboy_01_04" text-color="#0000ff,,,#000000,,#000000,#000000,#000000,,#000000,#000000,,,,,,,">
+		<comment>あいさつ中の男OBJに話し掛けた時 、ランダムその２
+　　→END</comment>
+		<language name="JPN" width="216" line="2">これからも
+よろしく！</language>
+		<language name="JPN_KANJI" width="216" line="2">これからも
+よろしく！</language>
+	</row>
+
+	<row id="msg_union_talkgirl_01_04" text-color="#ff0000,,,,,,#000000,#000000,,#000000,#000000,,,,,,,">
+		<comment>あいさつ中の女OBJに話し掛けた時 、ランダムその２
+　　→END</comment>
+		<language name="JPN" width="216" line="2">これからも
+よろしくね！</language>
+		<language name="JPN_KANJI" width="216" line="2">これからも
+よろしくね！</language>
+	</row>
+
+	<row id="msg_union_talkboy_02_01" text-color="#0000ff,,,#000000,,#000000,#000000,#000000,,#000000,#000000,,,,,,,">
+		<comment>★男OBJに話し掛けて、「おえかき」を選んだとき
+　msg_union_talkboy_00_02からの分岐
+
+・msg_union_talkboy_02_02　「相手がＯＫ」
+・msg_union_talkboy_02_03　「相手が断った」
+</comment>
+		<language name="JPN" width="216" line="2">ぼくと　おえかき　するのかい？
+うん　ちょっと　まってて</language>
+		<language name="JPN_KANJI" width="216" line="2">ぼくと　おえかき　するのかい？
+うん　ちょっと　まってて</language>
+	</row>
+
+	<row id="msg_union_talkgirl_02_01" text-color="#ff0000,,,,,,#000000,#000000,,#000000,#000000,,,,,,,">
+		<comment>★女OBJに話し掛けて、「おえかき」を選んだとき
+　msg_union_talkgirl_00_02からの分岐
+
+・msg_union_talkgirl_02_02　「相手がＯＫ」
+・msg_union_talkgirl_02_03　「相手が断った」
+</comment>
+		<language name="JPN" width="216" line="2">おえかき　ね！
+うん　ちょっと　まってて</language>
+		<language name="JPN_KANJI" width="216" line="2">おえかき　ね！
+うん　ちょっと　まってて</language>
+	</row>
+
+	<row id="msg_union_talkboy_02_02" text-color="#0000ff,,,#000000,,#000000,#000000,#000000,,#000000,#000000,,,,,,,">
+		<comment>男OBJとの「おえかき」 が成立した
+
+　◎このあと、おえかきの画面へ</comment>
+		<language name="JPN" width="216" line="2">あっ　またせたね！
+それじゃあ　おえかき　しようか！</language>
+		<language name="JPN_KANJI" width="216" line="2">あっ　またせたね！
+それじゃあ　おえかき　しようか！</language>
+	</row>
+
+	<row id="msg_union_talkgirl_02_02" text-color="#ff0000,,,,,,#000000,#000000,,#000000,#000000,,,,,,,">
+		<comment>女OBJとの「おえかき」 が成立した
+
+　◎このあと、おえかきの画面へ</comment>
+		<language name="JPN" width="216" line="2">あっ　おまたせ！
+それじゃあ　はじめましょう！</language>
+		<language name="JPN_KANJI" width="216" line="2">あっ　おまたせ！
+それじゃあ　はじめましょう！</language>
+	</row>
+
+	<row id="msg_union_talkboy_02_03" text-color="#0000ff,,,#000000,,#000000,#000000,#000000,,#000000,#000000,,,,,,,">
+		<comment>男OBJとの「おえかき」が不成立だった
+　　→END</comment>
+		<language name="JPN" width="216" line="2">あっ　ごめん！
+おえかきは　またこんど　しよう</language>
+		<language name="JPN_KANJI" width="216" line="2">あっ　ごめん！
+おえかきは　またこんど　しよう</language>
+	</row>
+
+	<row id="msg_union_talkgirl_02_03" text-color="#ff0000,,,,,,#000000,#000000,,#000000,#000000,,,,,,,">
+		<comment>女OBJとの「おえかき」が不成立だった
+　　→END</comment>
+		<language name="JPN" width="216" line="2">あっ　ごめんなさい！
+おえかきは　またこんど　しようね</language>
+		<language name="JPN_KANJI" width="216" line="2">あっ　ごめんなさい！
+おえかきは　またこんど　しようね</language>
+	</row>
+
+	<row id="msg_union_talkboy_02_05" text-color="#0000ff,,,#000000,,#000000,#000000,#000000,,#000000,#000000,,,,,,,">
+		<comment>お絵描き途中参加で男OBJ（親）に話し掛けた時
+
+トレーナー名：０　相手の名前
+トレーナー名：１　自分の名前
+はい、いいえの選択
+
+・msg_union_talkboy_02_06　「いいえ」
+・msg_union_talkboy_02_07　「はい」
+・msg_union_talkboy_02_08　「はい」で参加不成立
+
+</comment>
+		<language name="JPN" width="216" line="2">[1:00:トレーナー名:0]「いま　ぼくたち
+おえかき　してたんだ！[BE:01:ページ切り替え（クリア）]
+そうだ！　[1:00:トレーナー名:1]も　いっしょに
+おえかき　するかい？</language>
+		<language name="JPN_KANJI" width="216" line="2">[1:00:トレーナー名:0]「いま　ぼくたち
+おえかき　してたんだ！[BE:01:ページ切り替え（クリア）]
+そうだ！　[1:00:トレーナー名:1]も　いっしょに
+おえかき　するかい？</language>
+	</row>
+
+	<row id="msg_union_talkgirl_02_05" text-color="#ff0000,,,,,,#000000,#000000,,#000000,#000000,,,,,,,">
+		<comment>お絵描き途中参加で女OBJ（親）に話し掛けた時
+
+トレーナー名：０　相手の名前
+トレーナー名：１　自分の名前
+はい、いいえの選択
+
+・msg_union_talkgirl_02_06　「いいえ」
+・msg_union_talkgirl_02_07　「はい」
+・msg_union_talkgirl_02_08　「はい」で参加不成立
+
+</comment>
+		<language name="JPN" width="216" line="2">[1:00:トレーナー名:0]「いまね　わたしたち
+おえかき　してたんだ[BE:01:ページ切り替え（クリア）]
+そうだ！　[1:00:トレーナー名:1]も　いっしょに
+おえかき　しない？</language>
+		<language name="JPN_KANJI" width="216" line="2">[1:00:トレーナー名:0]「いまね　わたしたち
+おえかき　してたんだ[BE:01:ページ切り替え（クリア）]
+そうだ！　[1:00:トレーナー名:1]も　いっしょに
+おえかき　しない？</language>
+	</row>
+
+	<row id="msg_union_talkboy_02_06" text-color="#0000ff,,,#000000,,#000000,#000000,#000000,,#000000,#000000,,,,,,,">
+		<comment>お絵描きの途中参加で、「いいえ」を選んだ
+　　→END</comment>
+		<language name="JPN" width="216" line="2">そうか
+また　いつでも　おいでよ！</language>
+		<language name="JPN_KANJI" width="216" line="2">そうか
+また　いつでも　おいでよ！</language>
+	</row>
+
+	<row id="msg_union_talkgirl_02_06" text-color="#ff0000,,,,,,#000000,#000000,,#000000,#000000,,,,,,,">
+		<comment>お絵描きの途中参加で、「いいえ」を選んだ
+　　→END</comment>
+		<language name="JPN" width="216" line="2">そう……
+また　いつでも　きてね！</language>
+		<language name="JPN_KANJI" width="216" line="2">そう……
+また　いつでも　きてね！</language>
+	</row>
+
+	<row id="msg_union_talkboy_02_07" text-color="#0000ff,,,#000000,,#000000,#000000,#000000,,#000000,#000000,,,,,,,">
+		<comment>お絵描きの途中参加が成立した
+◎このあと、おえかきの画面へ</comment>
+		<language name="JPN" width="216" line="2">よし！　じゃあ　いっしょに
+おえかき　しようぜ！</language>
+		<language name="JPN_KANJI" width="216" line="2">よし！　じゃあ　いっしょに
+おえかき　しようぜ！</language>
+	</row>
+
+	<row id="msg_union_talkgirl_02_07" text-color="#ff0000,,,,,,#000000,#000000,,#000000,#000000,,,,,,,">
+		<comment>お絵描きの途中参加が成立した
+◎このあと、おえかきの画面へ</comment>
+		<language name="JPN" width="216" line="2">おまたせ！　じゃあ　いっしょに
+おえかき　しましょう！</language>
+		<language name="JPN_KANJI" width="216" line="2">おまたせ！　じゃあ　いっしょに
+おえかき　しましょう！</language>
+	</row>
+
+	<row id="msg_union_talkboy_02_08" text-color="#0000ff,,,#000000,,#000000,#000000,#000000,,#000000,#000000,,,,,,,">
+		<comment>お絵描きの途中参加が不成立だった
+　　→END</comment>
+		<language name="JPN" width="216" line="2">あっ　ごめん！
+やっぱり　いま　つごうがわるいんだ[BE:00:ページ切り替え（行送り）]
+また　こんど　おえかき　しような</language>
+		<language name="JPN_KANJI" width="216" line="2">あっ　ごめん！
+やっぱり　いま　つごうがわるいんだ[BE:00:ページ切り替え（行送り）]
+また　こんど　おえかき　しような</language>
+	</row>
+
+	<row id="msg_union_talkgirl_02_08" text-color="#ff0000,,,,,,#000000,#000000,,#000000,#000000,,,,,,,">
+		<comment>お絵描きの途中参加が不成立だった
+　　→END</comment>
+		<language name="JPN" width="216" line="2">ごめん！
+やっぱり　いま　つごうがわるいの[BE:00:ページ切り替え（行送り）]
+また　こんど　おえかき　しようね</language>
+		<language name="JPN_KANJI" width="216" line="2">ごめん！
+やっぱり　いま　つごうがわるいの[BE:00:ページ切り替え（行送り）]
+また　こんど　おえかき　しようね</language>
+	</row>
+
+	<row id="msg_union_talkboy_02_09" text-color="#0000ff,,,#000000,,#000000,#000000,#000000,,#000000,#000000,,,,,,,">
+		<comment>お絵描き中の男OBJ（子）に話し掛けた時、ランダムその１
+　　→END</comment>
+		<language name="JPN" width="216" line="2">なるほど！
+おえかきで　しりとりか！</language>
+		<language name="JPN_KANJI" width="216" line="2">なるほど！
+おえかきで　しりとりか！</language>
+	</row>
+
+	<row id="msg_union_talkgirl_02_09" text-color="#ff0000,,,,,,#000000,#000000,,#000000,#000000,,,,,,,">
+		<comment>お絵描き中の女OBJ（子）に話し掛けた時、ランダムその１
+　　→END</comment>
+		<language name="JPN" width="216" line="2">うわー
+すごい　じょうずね！</language>
+		<language name="JPN_KANJI" width="216" line="2">うわー
+すごい　じょうずね！</language>
+	</row>
+
+	<row id="msg_union_talkboy_02_10" text-color="#0000ff,,,#000000,,#000000,#000000,#000000,,#000000,#000000,,,,,,,">
+		<comment>お絵描き中の男OBJ（子）に話し掛けた時、ランダムその２
+　　→END</comment>
+		<language name="JPN" width="216" line="2">また　へんなかお　かいて
+あんまり　わらわせるなよ！</language>
+		<language name="JPN_KANJI" width="216" line="2">また　へんなかお　かいて
+あんまり　わらわせるなよ！</language>
+	</row>
+
+	<row id="msg_union_talkgirl_02_10" text-color="#ff0000,,,,,,#000000,#000000,,#000000,#000000,,,,,,,">
+		<comment>お絵描き中の女OBJ（子）に話し掛けた時、ランダムその２
+　　→END</comment>
+		<language name="JPN" width="216" line="2">あはは！
+なに　それ！</language>
+		<language name="JPN_KANJI" width="216" line="2">あはは！
+なに　それ！</language>
+	</row>
+
+	<row id="msg_union_talkboy_02_11" text-color="#0000ff,,,#000000,,#000000,#000000,#000000,,#000000,#000000,,,,,,,">
+		<comment>お絵描き中の男OBJ（子）に話し掛けた時、ランダムその３
+　　→END</comment>
+		<language name="JPN" width="216" line="2">わー　うまいね！
+まねして　かいてみる！</language>
+		<language name="JPN_KANJI" width="216" line="2">わー　うまいね！
+まねして　かいてみる！</language>
+	</row>
+
+	<row id="msg_union_talkgirl_02_11" text-color="#ff0000,,,,,,#000000,#000000,,#000000,#000000,,,,,,,">
+		<comment>お絵描き中の女OBJ（子）に話し掛けた時、ランダムその３
+　　→END</comment>
+		<language name="JPN" width="216" line="2">おえかき　たのしい！
+どんどん　かくわよ！</language>
+		<language name="JPN_KANJI" width="216" line="2">おえかき　たのしい！
+どんどん　かくわよ！</language>
+	</row>
+
+	<row id="msg_union_talkboy_02_12" text-color="#0000ff,,,#000000,,#000000,#000000,#000000,,#000000,#000000,,,,,,,">
+		<comment>お絵描き中の男OBJ（子）に話し掛けた時、ランダムその４
+　　→END</comment>
+		<language name="JPN" width="216" line="2">……ふんふん　なに？
+それ　ぼくの　かおなの？</language>
+		<language name="JPN_KANJI" width="216" line="2">……ふんふん　なに？
+それ　ぼくの　かおなの？</language>
+	</row>
+
+	<row id="msg_union_talkgirl_02_12" text-color="#ff0000,,,,,,#000000,#000000,,#000000,#000000,,,,,,,">
+		<comment>お絵描き中の女OBJ（子）に話し掛けた時、ランダムその４
+　　→END</comment>
+		<language name="JPN" width="216" line="2">あっ！
+はみだしちゃった！</language>
+		<language name="JPN_KANJI" width="216" line="2">あっ！
+はみだしちゃった！</language>
+	</row>
+
+	<row id="msg_union_talkboy_03_01" text-color="#0000ff,,,,,,#000000,#000000,,#000000,#000000,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,#80ffff,,#80ffff,#80ffff,#80ffff,#80ffff,,,#80ffff,,">
+		<comment>★男OBJに話し掛けて、「たいせん」を選んだとき
+　msg_union_talkboy_00_02からの分岐
+
+・msg_union_talkboy_03_02　「相手がＯＫ」
+・msg_union_talkboy_03_03　「相手が断った、相手の条件が会わなかった」
+</comment>
+		<language name="JPN" width="216" line="2">たいせん　だね！
+よーし　ちょっと　まってて！</language>
+		<language name="JPN_KANJI" width="216" line="2">たいせん　だね！
+よーし　ちょっと　まってて！</language>
+	</row>
+
+	<row id="msg_union_talkgirl_03_01" text-color="#ff0000,,,,,,#000000,#000000,,#000000,#000000,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,#80ffff,,#80ffff,#80ffff,#80ffff,#80ffff,,,#80ffff,,">
+		<comment>★女OBJに話し掛けて、「たいせん」を選んだとき
+　msg_union_talkgirl_00_02からの分岐
+
+・msg_union_talkgirl_03_02　「相手がＯＫ」
+・msg_union_talkgirl_03_03　「相手が断った、相手の条件が会わなかった」
+</comment>
+		<language name="JPN" width="216" line="2">たいせん　ね！
+よーし　ちょっと　まってて！</language>
+		<language name="JPN_KANJI" width="216" line="2">たいせん　ね！
+よーし　ちょっと　まってて！</language>
+	</row>
+
+	<row id="msg_union_talkboy_03_02" text-color="#0000ff,,,#000000,,#000000,#000000,#000000,,#000000,#000000,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,#80ffff,,#80ffff,#80ffff,#80ffff,#80ffff,,,#80ffff,,">
+		<comment>男OBJとの「たいせん」 が成立した
+
+　◎このあと、ポケモンリストの画面へ</comment>
+		<language name="JPN" width="216" line="2">またせたね！
+それじゃあ　たいせん　しようか！</language>
+		<language name="JPN_KANJI" width="216" line="2">またせたね！
+それじゃあ　たいせん　しようか！</language>
+	</row>
+
+	<row id="msg_union_talkgirl_03_02" text-color="#ff0000,,,,,,#000000,#000000,,#000000,#000000,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,#80ffff,,#80ffff,#80ffff,#80ffff,#80ffff,,,#80ffff,,">
+		<comment>女OBJとの「たいせん」 が成立した
+
+　◎このあと、ポケモンリストの画面へ</comment>
+		<language name="JPN" width="216" line="2">おまたせ！
+それじゃあ　はじめましょう！</language>
+		<language name="JPN_KANJI" width="216" line="2">おまたせ！
+それじゃあ　はじめましょう！</language>
+	</row>
+
+	<row id="msg_union_talkboy_03_03" text-color="#0000ff,,,#000000,,#000000,#000000,#000000,,#000000,#000000,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,#80ffff,,#80ffff,#80ffff,#80ffff,#80ffff,,,#80ffff,,">
+		<comment>男OBJとの「たいせん」が不成立だった
+　　→END</comment>
+		<language name="JPN" width="216" line="2">ごめん！　ちょっと　ポケモンの
+ちょうしが　わるい　みたいなんだ[BE:00:ページ切り替え（行送り）]
+また　こんど　たいせん　しよう</language>
+		<language name="JPN_KANJI" width="216" line="2">ごめん！　ちょっと　ポケモンの
+ちょうしが　わるい　みたいなんだ[BE:00:ページ切り替え（行送り）]
+また　こんど　たいせん　しよう</language>
+	</row>
+
+	<row id="msg_union_talkgirl_03_03" text-color="#ff0000,,,,,,#000000,#000000,,#000000,#000000,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,#80ffff,,#80ffff,#80ffff,#80ffff,#80ffff,,,#80ffff,,">
+		<comment>女OBJとの「たいせん」が不成立だった
+　　→END</comment>
+		<language name="JPN" width="216" line="2">ごめんなさい！
+ちょっと　ポケモンの　ちょうしが[BE:00:ページ切り替え（行送り）]
+わるい　みたいなの……[BE:01:ページ切り替え（クリア）]
+また　こんど
+たいせん　しようね！</language>
+		<language name="JPN_KANJI" width="216" line="2">ごめんなさい！
+ちょっと　ポケモンの　ちょうしが[BE:00:ページ切り替え（行送り）]
+わるい　みたいなの……[BE:01:ページ切り替え（クリア）]
+また　こんど
+たいせん　しようね！</language>
+	</row>
+
+	<row id="msg_union_talkboy_03_04" text-color="#0000ff,,,,,,#000000,#000000,,#000000,#000000,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,#80ffff,,#80ffff,#80ffff,#80ffff,#80ffff,,,#80ffff,,">
+		<comment>マルチバトルの途中参加で男OBJ（親）に話し掛けた時
+
+トレーナー名：０　相手の名前
+トレーナー名：１　自分の名前
+はい、いいえの選択
+
+・msg_union_talkboy_03_05　「いいえ」
+・msg_union_talkboy_03_06　「はい」
+</comment>
+		<language name="JPN" width="216" line="2">[1:00:トレーナー名:0]「これから　ぼくたち
+マルチバトル　するんだ[BE:01:ページ切り替え（クリア）]
+そうだ！　[1:00:トレーナー名:1]も　いっしょに
+マルチバトル　するかい？</language>
+		<language name="JPN_KANJI" width="216" line="2">[1:00:トレーナー名:0]「これから　ぼくたち
+マルチバトル　するんだ[BE:01:ページ切り替え（クリア）]
+そうだ！　[1:00:トレーナー名:1]も　いっしょに
+マルチバトル　するかい？</language>
+	</row>
+
+	<row id="msg_union_talkgirl_03_04" text-color="#ff0000,,,,,,#000000,#000000,,#000000,#000000,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,#80ffff,,#80ffff,#80ffff,#80ffff,#80ffff,,,#80ffff,,">
+		<comment>マルチバトルの途中参加で女OBJ（親）に話し掛けた時
+
+トレーナー名：０　相手の名前
+トレーナー名：１　自分の名前
+はい、いいえの選択
+
+・msg_union_talkgirl_03_05　「いいえ」
+・msg_union_talkgirl_03_06　「はい」
+</comment>
+		<language name="JPN" width="216" line="2">[1:00:トレーナー名:0]「これから　わたしたち
+マルチバトル　するの[BE:01:ページ切り替え（クリア）]
+そうだ！　[1:00:トレーナー名:1]も　いっしょに
+マルチバトル　しない？</language>
+		<language name="JPN_KANJI" width="216" line="2">[1:00:トレーナー名:0]「これから　わたしたち
+マルチバトル　するの[BE:01:ページ切り替え（クリア）]
+そうだ！　[1:00:トレーナー名:1]も　いっしょに
+マルチバトル　しない？</language>
+	</row>
+
+	<row id="msg_union_talkboy_03_05" text-color="#0000ff,,,,,,#000000,#000000,,#000000,#000000,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,#80ffff,,#80ffff,#80ffff,#80ffff,#80ffff,,,#80ffff,,">
+		<comment>マルチバトルの途中参加で、「いいえ」を選んだ
+　　→END</comment>
+		<language name="JPN" width="216" line="2">そうか
+また　いつでも　おいでよ！</language>
+		<language name="JPN_KANJI" width="216" line="2">そうか
+また　いつでも　おいでよ！</language>
+	</row>
+
+	<row id="msg_union_talkgirl_03_05" text-color="#ff0000,,,,,,#000000,#000000,,#000000,#000000,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,#80ffff,,#80ffff,#80ffff,#80ffff,#80ffff,,,#80ffff,,">
+		<comment>マルチバトルの参加で、「いいえ」を選んだ
+　　→END</comment>
+		<language name="JPN" width="216" line="2">そう……
+また　いつでも　きてね！</language>
+		<language name="JPN_KANJI" width="216" line="2">そう……
+また　いつでも　きてね！</language>
+	</row>
+
+	<row id="msg_union_talkboy_03_06" text-color="#0000ff,,,,,,#000000,#000000,,#000000,#000000,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,#80ffff,,#80ffff,#80ffff,#80ffff,#80ffff,,,#80ffff,,">
+		<comment>マルチバトルの途中参加で、「はい」を選んだ。親の承諾待ち。
+・msg_union_talkboy_03_07　参加成立
+・msg_union_talkboy_03_08　参加不成立
+</comment>
+		<language name="JPN" width="216" line="2">よーし　ちょっと　まってて！</language>
+		<language name="JPN_KANJI" width="216" line="2">よーし　ちょっと　まってて！</language>
+	</row>
+
+	<row id="msg_union_talkgirl_03_06" text-color="#ff0000,,,,,,#000000,#000000,,#000000,#000000,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,#80ffff,,#80ffff,#80ffff,#80ffff,#80ffff,,,#80ffff,,">
+		<comment>マルチバトルの参加で、「はい」を選んだ。親の承諾待ち。
+・msg_union_talkgirl_03_07　参加成立
+・msg_union_talkgirl_03_08　参加不成立
+</comment>
+		<language name="JPN" width="216" line="2">よーし　ちょっと　まってて！</language>
+		<language name="JPN_KANJI" width="216" line="2">よーし　ちょっと　まってて！</language>
+	</row>
+
+	<row id="msg_union_talkboy_03_07" text-color="#0000ff,,,,,,#000000,#000000,,#000000,#000000,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,#80ffff,,#80ffff,#80ffff,#80ffff,#80ffff,,,#80ffff,,">
+		<comment>マルチバトルへの参加が成立した
+◎このあと、コロシアム画面へ</comment>
+		<language name="JPN" width="216" line="2">またせたね！　それじゃ　いっしょに
+マルチバトル　しようぜ！</language>
+		<language name="JPN_KANJI" width="216" line="2">またせたね！　それじゃ　いっしょに
+マルチバトル　しようぜ！</language>
+	</row>
+
+	<row id="msg_union_talkgirl_03_07" text-color="#ff0000,,,,,,#000000,#000000,,#000000,#000000,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,#80ffff,,#80ffff,#80ffff,#80ffff,#80ffff,,,#80ffff,,">
+		<comment>マルチバトルへの参加が成立した
+◎このあと、コロシアム画面へ</comment>
+		<language name="JPN" width="216" line="2">おまたせ！　じゃあ　いっしょに
+マルチバトル　しましょう！</language>
+		<language name="JPN_KANJI" width="216" line="2">おまたせ！　じゃあ　いっしょに
+マルチバトル　しましょう！</language>
+	</row>
+
+	<row id="msg_union_talkboy_03_08" text-color="#0000ff,,,,,,#000000,#000000,,#000000,#000000,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,#80ffff,,#80ffff,#80ffff,#80ffff,#80ffff,,,#80ffff,,">
+		<comment>
+
+マルチバトルへの途中参加が不成立だった
+　　→END</comment>
+		<language name="JPN" width="216" line="2">あっ　ごめん！
+やっぱり　いま　つごうが　わるいんだ[BE:00:ページ切り替え（行送り）]
+また　こんど　よろしくね！</language>
+		<language name="JPN_KANJI" width="216" line="2">あっ　ごめん！
+やっぱり　いま　つごうが　わるいんだ[BE:00:ページ切り替え（行送り）]
+また　こんど　よろしくね！</language>
+	</row>
+
+	<row id="msg_union_talkgirl_03_08" text-color="#ff0000,,,,,,#000000,#000000,,#000000,#000000,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,#80ffff,,#80ffff,#80ffff,#80ffff,#80ffff,,,#80ffff,,">
+		<comment>
+
+マルチバトルへの参加が不成立だった
+　　→END</comment>
+		<language name="JPN" width="216" line="2">あっ　ごめんなさい！
+またこんど　しようね</language>
+		<language name="JPN_KANJI" width="216" line="2">あっ　ごめんなさい！
+またこんど　しようね</language>
+	</row>
+
+	<row id="msg_union_talkboy_03_09" text-color="#0000ff,,,,,,#000000,#000000,,#000000,#000000,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,#80ffff,,#80ffff,#80ffff,#80ffff,#80ffff,,,#80ffff,,">
+		<comment>　「はい」と答えたが、ポケモンが３匹以下の場合、
+参加ＮＧメッセージを表示した後に、このメッセージを表示。
+　→END</comment>
+		<language name="JPN" width="216" line="2">おさそいを
+ことわり　ました</language>
+		<language name="JPN_KANJI" width="216" line="2">おさそいを
+ことわり　ました</language>
+	</row>
+
+	<row id="msg_union_talkgirl_03_09" text-color="#ff0000,,,,,,#000000,#000000,,#000000,#000000,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,#80ffff,,#80ffff,#80ffff,#80ffff,#80ffff,,,#80ffff,,">
+		<comment>　「はい」と答えたが、ポケモンが３匹以下の場合、
+参加ＮＧメッセージを表示した後に、このメッセージを表示。
+　→END</comment>
+		<language name="JPN" width="216" line="2">おさそいを
+ことわり　ました</language>
+		<language name="JPN_KANJI" width="216" line="2">おさそいを
+ことわり　ました</language>
+	</row>
+
+	<row id="msg_union_talkboy_03_10" text-color="#0000ff,,,#000000,,#000000,#000000,#000000,,#000000,#000000,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,#80ffff,,#80ffff,#80ffff,#80ffff,#80ffff,,,#80ffff,,">
+		<comment>戦闘中の男OBJに話し掛けた時、ランダムその１
+　　→END</comment>
+		<language name="JPN" width="216" line="2">おー！
+なかなか　てごわいな！</language>
+		<language name="JPN_KANJI" width="216" line="2">おー！
+なかなか　てごわいな！</language>
+	</row>
+
+	<row id="msg_union_talkgirl_03_10" text-color="#ff0000,,,,,,#000000,#000000,,#000000,#000000,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,#80ffff,,#80ffff,#80ffff,#80ffff,#80ffff,,,#80ffff,,">
+		<comment>戦闘中の女OBJに話し掛けた時、ランダムその１
+　　→END</comment>
+		<language name="JPN" width="216" line="2">その　ポケモン
+すごくよく　そだてられてるね！</language>
+		<language name="JPN_KANJI" width="216" line="2">その　ポケモン
+すごくよく　そだてられてるね！</language>
+	</row>
+
+	<row id="msg_union_talkboy_03_11" text-color="#0000ff,,,#000000,,#000000,#000000,#000000,,#000000,#000000,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,#80ffff,,#80ffff,#80ffff,#80ffff,#80ffff,,,#80ffff,,">
+		<comment>戦闘中の女OBJに話し掛けた時、ランダムその２
+　　→END</comment>
+		<language name="JPN" width="216" line="2">ここで　そんな　わざを
+だして　くるなんて　やるな！</language>
+		<language name="JPN_KANJI" width="216" line="2">ここで　そんな　わざを
+だして　くるなんて　やるな！</language>
+	</row>
+
+	<row id="msg_union_talkgirl_03_11" text-color="#ff0000,,,,,,#000000,#000000,,#000000,#000000,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,#80ffff,,#80ffff,#80ffff,#80ffff,#80ffff,,,#80ffff,,">
+		<comment>戦闘中の男OBJに話し掛けた時、ランダムその２
+　　→END</comment>
+		<language name="JPN" width="216" line="2">そうよ！
+そこで　このわざよ！！</language>
+		<language name="JPN_KANJI" width="216" line="2">そうよ！
+そこで　このわざよ！！</language>
+	</row>
+
+	<row id="msg_union_talkboy_03_12" text-color="#0000ff,,,#000000,,#000000,#000000,#000000,,#000000,#000000,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,#80ffff,,#80ffff,#80ffff,#80ffff,#80ffff,,,#80ffff,,">
+		<comment>戦闘中の女OBJに話し掛けた時、ランダムその３
+　　→END</comment>
+		<language name="JPN" width="216" line="2">さすがだ！
+そんな　たたかいかたも　あるのか！</language>
+		<language name="JPN_KANJI" width="216" line="2">さすがだ！
+そんな　たたかいかたも　あるのか！</language>
+	</row>
+
+	<row id="msg_union_talkgirl_03_12" text-color="#ff0000,,,,,,#000000,#000000,,#000000,#000000,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,#80ffff,,#80ffff,#80ffff,#80ffff,#80ffff,,,#80ffff,,">
+		<comment>戦闘中の男OBJに話し掛けた時、ランダムその３
+　　→END</comment>
+		<language name="JPN" width="216" line="2">すごい！
+そんな　たたかい　かたも　あるのね！</language>
+		<language name="JPN_KANJI" width="216" line="2">すごい！
+そんな　たたかい　かたも　あるのね！</language>
+	</row>
+
+	<row id="msg_union_talkboy_03_13" text-color="#0000ff,,,#000000,,#000000,#000000,#000000,,#000000,#000000,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,#80ffff,,#80ffff,#80ffff,#80ffff,#80ffff,,,#80ffff,,">
+		<comment>戦闘中の女OBJに話し掛けた時、ランダムその４
+　　→END</comment>
+		<language name="JPN" width="216" line="2">この　ポケモンを
+こんな　ばめんで　だしてくるとは！</language>
+		<language name="JPN_KANJI" width="216" line="2">この　ポケモンを
+こんな　ばめんで　だしてくるとは！</language>
+	</row>
+
+	<row id="msg_union_talkgirl_03_13" text-color="#ff0000,,,,,,#000000,#000000,,#000000,#000000,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,#80ffff,,#80ffff,#80ffff,#80ffff,#80ffff,,,#80ffff,,">
+		<comment>戦闘中の男OBJに話し掛けた時、ランダムその４
+　　→END</comment>
+		<language name="JPN" width="216" line="2">ポケモン　いれかえの　タイミングが
+ぜつみょうね！</language>
+		<language name="JPN_KANJI" width="216" line="2">ポケモン　いれかえの　タイミングが
+ぜつみょうね！</language>
+	</row>
+
+	<row id="msg_union_talkboy_04_01" text-color="#0000ff,,,#000000,,#000000,#000000,#000000,,#000000,#000000,,,,,,,">
+		<comment>★男OBJに話し掛けて、「こうかん」を選んだとき
+　msg_union_talkboy_00_02からの分岐
+
+・msg_union_talkboy_04_02　「相手がＯＫ」
+・msg_union_talkboy_04_03　「相手が断った、相手の条件が会わなかった」
+・msg_union_talkboy_04_06　「自分の手持ちが１匹しかいない」
+</comment>
+		<language name="JPN" width="216" line="2">こうかん　だね！
+よーし　ちょっと　まってて！</language>
+		<language name="JPN_KANJI" width="216" line="2">こうかん　だね！
+よーし　ちょっと　まってて！</language>
+	</row>
+
+	<row id="msg_union_talkgirl_04_01" text-color="#ff0000,,,,,,#000000,#000000,,#000000,#000000,,,,,,,">
+		<comment>★女OBJに話し掛けて、「こうかん」を選んだとき
+　msg_union_talkgirl_00_02からの分岐
+
+・msg_union_talkgirl_04_02　「相手がＯＫ」
+・msg_union_talkgirl_04_03　「相手が断った、相手の条件が会わなかった」
+・msg_union_talkgirl_04_06　「自分の手持ちが１匹しかいない」
+</comment>
+		<language name="JPN" width="216" line="2">こうかん　ね！
+よーし　ちょっと　まってて！</language>
+		<language name="JPN_KANJI" width="216" line="2">こうかん　ね！
+よーし　ちょっと　まってて！</language>
+	</row>
+
+	<row id="msg_union_talkboy_04_02" text-color="#0000ff,,,#000000,,#000000,#000000,#000000,,#000000,#000000,,,,,,,">
+		<comment>男OBJとの「こうかん」 が成立した
+
+　◎このあと、ポケモンリストの画面へ</comment>
+		<language name="JPN" width="216" line="2">またせたね！
+それじゃあ　こうかん　しようか！</language>
+		<language name="JPN_KANJI" width="216" line="2">またせたね！
+それじゃあ　こうかん　しようか！</language>
+	</row>
+
+	<row id="msg_union_talkgirl_04_02" text-color="#ff0000,,,,,,#000000,#000000,,#000000,#000000,,,,,,,">
+		<comment>女OBJとの「こうかん」 が成立した
+
+　◎このあと、ポケモンリストの画面へ</comment>
+		<language name="JPN" width="216" line="2">おまたせ！
+それじゃあ　はじめましょう！</language>
+		<language name="JPN_KANJI" width="216" line="2">おまたせ！
+それじゃあ　はじめましょう！</language>
+	</row>
+
+	<row id="msg_union_talkboy_04_03" text-color="#0000ff,,,#000000,,#000000,#000000,#000000,,#000000,#000000,,,,,,,">
+		<comment>男OBJとの「こうかん」が不成立だった
+　　→END</comment>
+		<language name="JPN" width="216" line="2">ごめん！
+こうかん　できる　ポケモンが[BE:00:ページ切り替え（行送り）]
+いま　いないんだ[BE:01:ページ切り替え（クリア）]
+また　こんど　こうかん　しよう</language>
+		<language name="JPN_KANJI" width="216" line="2">ごめん！
+こうかん　できる　ポケモンが[BE:00:ページ切り替え（行送り）]
+いま　いないんだ[BE:01:ページ切り替え（クリア）]
+また　こんど　こうかん　しよう</language>
+	</row>
+
+	<row id="msg_union_talkgirl_04_03" text-color="#ff0000,,,,,,#000000,#000000,,#000000,#000000,,,,,,,">
+		<comment>女OBJとの「こうかん」が不成立だった
+　　→END</comment>
+		<language name="JPN" width="216" line="2">ごめんなさい！
+こうかん　できる　ポケモンを[BE:00:ページ切り替え（行送り）]
+もって　いないの……[BE:01:ページ切り替え（クリア）]
+また　こんど
+こうかん　しようね！</language>
+		<language name="JPN_KANJI" width="216" line="2">ごめんなさい！
+こうかん　できる　ポケモンを[BE:00:ページ切り替え（行送り）]
+もって　いないの……[BE:01:ページ切り替え（クリア）]
+また　こんど
+こうかん　しようね！</language>
+	</row>
+
+	<row id="msg_union_talkboy_04_04" text-color="#0000ff,,,#000000,,#000000,#000000,#000000,,#000000,#000000,,,,,,,">
+		<comment>交換中の男OBJに話し掛けた時 、ランダムその１
+→END</comment>
+		<language name="JPN" width="216" line="2">やった！
+このポケモン　ほしかったんだ！</language>
+		<language name="JPN_KANJI" width="216" line="2">やった！
+このポケモン　ほしかったんだ！</language>
+	</row>
+
+	<row id="msg_union_talkgirl_04_04" text-color="#ff0000,,,,,,#000000,#000000,,#000000,#000000,,,,,,,">
+		<comment>交換中の女OBJに話し掛けた時 、ランダムその１
+→END</comment>
+		<language name="JPN" width="216" line="2">いまね　ポケモンの
+こうかんを　してるの！</language>
+		<language name="JPN_KANJI" width="216" line="2">いまね　ポケモンの
+こうかんを　してるの！</language>
+	</row>
+
+	<row id="msg_union_talkboy_04_05" text-color="#0000ff,,,#000000,,#000000,#000000,#000000,,#000000,#000000,,,,,,,">
+		<comment>交換中の男OBJに話し掛けた時 、ランダムその２
+→END</comment>
+		<language name="JPN" width="216" line="2">さがしてた　ポケモンを
+やっと　こうかんして　もらったよ</language>
+		<language name="JPN_KANJI" width="216" line="2">さがしてた　ポケモンを
+やっと　こうかんして　もらったよ</language>
+	</row>
+
+	<row id="msg_union_talkgirl_04_05" text-color="#ff0000,,,,,,#000000,#000000,,#000000,#000000,,,,,,,">
+		<comment>交換中の女OBJに話し掛けた時 、ランダムその２
+→END</comment>
+		<language name="JPN" width="216" line="2">ほしい　ポケモンが
+やっと　こうかんして　もらえたわ！</language>
+		<language name="JPN_KANJI" width="216" line="2">ほしい　ポケモンが
+やっと　こうかんして　もらえたわ！</language>
+	</row>
+
+	<row id="msg_union_talkboy_04_06" text-color="#0000ff,,,#000000,,#000000,#000000,#000000,,#000000,#000000,,,,,,,">
+		<comment>交換で、自分の手持ちが１ひきだったとき
+→msg_union_talkgirl_00_04</comment>
+		<language name="JPN" width="216" line="2">てもちが　１ひき　だと
+こうかんは　できないなぁ[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="216" line="2">てもちが　１ひき　だと
+こうかんは　できないなぁ[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_union_talkgirl_04_06" text-color="#ff0000,,,,,,#000000,#000000,,#000000,#000000,,,,,,,">
+		<comment>交換で、自分の手持ちが１ひきだったとき
+→msg_union_talkgirl_00_04</comment>
+		<language name="JPN" width="216" line="2">てもちが　１ひき　だと
+こうかんは　できないよ[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="216" line="2">てもちが　１ひき　だと
+こうかんは　できないよ[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_union_talkboy_05_01" text-color="#0000ff,,,#000000,,#000000,#000000,#000000,,#000000,#000000,,,,,,,">
+		<comment>★男OBJに話し掛けて、やめる」を選んだとき
+　msg_union_talkboy_00_02からの分岐
+　→ＥＮＤ
+</comment>
+		<language name="JPN" width="216" line="2">なにか　したくなったら
+また　こえを　かけてくれよ</language>
+		<language name="JPN_KANJI" width="216" line="2">なにか　したくなったら
+また　こえを　かけてくれよ</language>
+	</row>
+
+	<row id="msg_union_talkgirl_05_01" text-color="#ff0000,,,,,,#000000,#000000,,#000000,#000000,,,,,,,">
+		<comment>★女OBJに話し掛けて、やめる」を選んだとき
+　msg_union_talkgirl_00_02からの分岐
+　→ＥＮＤ
+</comment>
+		<language name="JPN" width="216" line="2">なにか　したくなったら
+また　こえを　かけてね！</language>
+		<language name="JPN_KANJI" width="216" line="2">なにか　したくなったら
+また　こえを　かけてね！</language>
+	</row>
+
+	<row id="msg_union_talkboy_06_01" text-color="#0000ff,,,#000000,,#000000,#000000,#000000,,#000000,#000000,,,,,,,">
+		<comment>★男OBJに話し掛けて、「レコード」を選んだとき
+　msg_union_talkboy_00_02からの分岐
+
+・msg_union_talkboy_06_02　「相手がＯＫ」
+・msg_union_talkboy_06_03　「相手が断った、相手の条件が会わなかった」
+</comment>
+		<language name="JPN" width="216" line="2">レコードつうしん　だね！
+よーし　ちょっと　まってて！</language>
+		<language name="JPN_KANJI" width="216" line="2">レコードつうしん　だね！
+よーし　ちょっと　まってて！</language>
+	</row>
+
+	<row id="msg_union_talkgirl_06_01" text-color="#ff0000,,,,,,#000000,#000000,,#000000,#000000,,,,,,,">
+		<comment>★女OBJに話し掛けて、「レコード」を選んだとき
+　msg_union_talkgirl_00_02からの分岐
+
+・msg_union_talkgirl_06_02　「相手がＯＫ」
+・msg_union_talkgirl_06_03　「相手が断った、相手の条件が会わなかった」
+</comment>
+		<language name="JPN" width="216" line="2">レコードつうしん　ね！
+うん　ちょっと　まってて！</language>
+		<language name="JPN_KANJI" width="216" line="2">レコードつうしん　ね！
+うん　ちょっと　まってて！</language>
+	</row>
+
+	<row id="msg_union_talkboy_06_02" text-color="#0000ff,,,#000000,,#000000,#000000,#000000,,#000000,#000000,,,,,,,">
+		<comment>男OBJとの「レコード」 が成立した
+
+　◎このあと、レコードの画面へ</comment>
+		<language name="JPN" width="216" line="2">またせたね！
+レコードつうしん　しようか！</language>
+		<language name="JPN_KANJI" width="216" line="2">またせたね！
+レコードつうしん　しようか！</language>
+	</row>
+
+	<row id="msg_union_talkgirl_06_02" text-color="#ff0000,,,,,,#000000,#000000,,#000000,#000000,,,,,,,">
+		<comment>女OBJとの「レコード」 が成立した
+
+　◎このあと、レコードの画面へ</comment>
+		<language name="JPN" width="216" line="2">あっ　おまたせ！
+それじゃあ　はじめましょう！</language>
+		<language name="JPN_KANJI" width="216" line="2">あっ　おまたせ！
+それじゃあ　はじめましょう！</language>
+	</row>
+
+	<row id="msg_union_talkboy_06_03" text-color="#0000ff,,,#000000,,#000000,#000000,#000000,,#000000,#000000,,,,,,,">
+		<comment>男OBJとの「レコード」が不成立だった
+　　→END</comment>
+		<language name="JPN" width="216" line="2">あっ　ごめん！
+やっぱり　いま　つごうが　わるいんだ[BE:00:ページ切り替え（行送り）]
+また　こんど　よろしくね！</language>
+		<language name="JPN_KANJI" width="216" line="2">あっ　ごめん！
+やっぱり　いま　つごうが　わるいんだ[BE:00:ページ切り替え（行送り）]
+また　こんど　よろしくね！</language>
+	</row>
+
+	<row id="msg_union_talkgirl_06_03" text-color="#ff0000,,,,,,#000000,#000000,,#000000,#000000,,,,,,,">
+		<comment>女OBJとの「レコード」が不成立だった
+　　→END</comment>
+		<language name="JPN" width="216" line="2">あっ　ごめんなさい！
+またこんど　しようね</language>
+		<language name="JPN_KANJI" width="216" line="2">あっ　ごめんなさい！
+またこんど　しようね</language>
+	</row>
+
+	<row id="msg_union_talkboy_06_05" text-color="#0000ff,,,#000000,,#000000,#000000,#000000,,#000000,#000000,,,,,,,">
+		<comment>レコード途中参加で男OBJ（親）に話し掛けた時
+
+トレーナー名：０　相手の名前
+トレーナー名：１　自分の名前
+はい、いいえの選択
+
+・msg_union_talkboy_06_06　「いいえ」
+・msg_union_talkboy_06_07　「はい」
+・msg_union_talkboy_06_08　「はい」で参加不成立
+
+</comment>
+		<language name="JPN" width="216" line="2">[1:00:トレーナー名:0]「これから　ぼくたち
+レコードつうしん　するんだ[BE:01:ページ切り替え（クリア）]
+そうだ！　[1:00:トレーナー名:1]も　いっしょに
+レコードつうしん　するかい？</language>
+		<language name="JPN_KANJI" width="216" line="2">[1:00:トレーナー名:0]「これから　ぼくたち
+レコードつうしん　するんだ[BE:01:ページ切り替え（クリア）]
+そうだ！　[1:00:トレーナー名:1]も　いっしょに
+レコードつうしん　するかい？</language>
+	</row>
+
+	<row id="msg_union_talkgirl_06_05" text-color="#ff0000,,,,,,#000000,#000000,,#000000,#000000,,,,,,,">
+		<comment>レコード途中参加で女OBJ（親）に話し掛けた時
+
+トレーナー名：０　相手の名前
+トレーナー名：１　自分の名前
+はい、いいえの選択
+
+・msg_union_talkgirl_06_06　「いいえ」
+・msg_union_talkgirl_06_07　「はい」
+・msg_union_talkgirl_06_08　「はい」で参加不成立
+
+</comment>
+		<language name="JPN" width="216" line="2">[1:00:トレーナー名:0]「いまね　わたしたち
+レコードつうしん　してたんだ[BE:01:ページ切り替え（クリア）]
+そうだ！　[1:00:トレーナー名:1]も　いっしょに
+レコードつうしん　しない？</language>
+		<language name="JPN_KANJI" width="216" line="2">[1:00:トレーナー名:0]「いまね　わたしたち
+レコードつうしん　してたんだ[BE:01:ページ切り替え（クリア）]
+そうだ！　[1:00:トレーナー名:1]も　いっしょに
+レコードつうしん　しない？</language>
+	</row>
+
+	<row id="msg_union_talkboy_06_06" text-color="#0000ff,,,#000000,,#000000,#000000,#000000,,#000000,#000000,,,,,,,">
+		<comment>レコードの途中参加で、「いいえ」を選んだ
+　　→END</comment>
+		<language name="JPN" width="216" line="2">そうか
+また　いつでも　おいでよ！</language>
+		<language name="JPN_KANJI" width="216" line="2">そうか
+また　いつでも　おいでよ！</language>
+	</row>
+
+	<row id="msg_union_talkgirl_06_06" text-color="#ff0000,,,,,,#000000,#000000,,#000000,#000000,,,,,,,">
+		<comment>レコードの途中参加で、「いいえ」を選んだ
+　　→END</comment>
+		<language name="JPN" width="216" line="2">そう……
+また　いつでも　きてね！</language>
+		<language name="JPN_KANJI" width="216" line="2">そう……
+また　いつでも　きてね！</language>
+	</row>
+
+	<row id="msg_union_talkboy_06_07" text-color="#0000ff,,,#000000,,#000000,#000000,#000000,,#000000,#000000,,,,,,,">
+		<comment>レコードの途中参加が成立した
+◎このあと、レコードの画面へ</comment>
+		<language name="JPN" width="216" line="2">よし！　じゃあ　いっしょに
+レコードつうしん　しようぜ！</language>
+		<language name="JPN_KANJI" width="216" line="2">よし！　じゃあ　いっしょに
+レコードつうしん　しようぜ！</language>
+	</row>
+
+	<row id="msg_union_talkgirl_06_07" text-color="#ff0000,,,,,,#000000,#000000,,#000000,#000000,,,,,,,">
+		<comment>レコードの途中参加が成立した
+◎このあと、レコードの画面へ</comment>
+		<language name="JPN" width="216" line="2">おまたせ！　じゃあ　いっしょに
+レコードつうしん　しましょう！</language>
+		<language name="JPN_KANJI" width="216" line="2">おまたせ！　じゃあ　いっしょに
+レコードつうしん　しましょう！</language>
+	</row>
+
+	<row id="msg_union_talkboy_06_08" text-color="#0000ff,,,#000000,,#000000,#000000,#000000,,#000000,#000000,,,,,,,">
+		<comment>レコードの途中参加が不成立だった
+　　→END</comment>
+		<language name="JPN" width="216" line="2">あっ　ごめん！
+やっぱり　いま　つごうが　わるいんだ[BE:00:ページ切り替え（行送り）]
+また　こんど　よろしくね！</language>
+		<language name="JPN_KANJI" width="216" line="2">あっ　ごめん！
+やっぱり　いま　つごうが　わるいんだ[BE:00:ページ切り替え（行送り）]
+また　こんど　よろしくね！</language>
+	</row>
+
+	<row id="msg_union_talkgirl_06_08" text-color="#ff0000,,,,,,#000000,#000000,,#000000,#000000,,,,,,,">
+		<comment>レコードの途中参加が不成立だった
+　　→END</comment>
+		<language name="JPN" width="216" line="2">あっ　ごめんなさい！
+またこんど　しようね</language>
+		<language name="JPN_KANJI" width="216" line="2">あっ　ごめんなさい！
+またこんど　しようね</language>
+	</row>
+
+	<row id="msg_union_talkboy_06_09" text-color="#0000ff,,,#000000,,#000000,#000000,#000000,,#000000,#000000,,,,,,,">
+		<comment>レコード交換中の子に話し掛けた時、ランダムその１
+　　→END</comment>
+		<language name="JPN" width="216" line="2">レコードまぜるの　たのしいな！</language>
+		<language name="JPN_KANJI" width="216" line="2">レコードまぜるの　たのしいな！</language>
+	</row>
+
+	<row id="msg_union_talkgirl_06_09" text-color="#ff0000,,,,,,#000000,#000000,,#000000,#000000,,,,,,,">
+		<comment>レコード交換中の子に話し掛けた時、ランダムその１
+　　→END</comment>
+		<language name="JPN" width="216" line="2">レコードまぜるの　たのしいわ！</language>
+		<language name="JPN_KANJI" width="216" line="2">レコードまぜるの　たのしいわ！</language>
+	</row>
+
+	<row id="msg_union_talkboy_06_10" text-color="#0000ff,,,#000000,,#000000,#000000,#000000,,#000000,#000000,,,,,,,">
+		<comment>レコード交換中の子に話し掛けた時、ランダムその２
+　　→END</comment>
+		<language name="JPN" width="216" line="2">どんどん　まぜるぞ！</language>
+		<language name="JPN_KANJI" width="216" line="2">どんどん　まぜるぞ！</language>
+	</row>
+
+	<row id="msg_union_talkgirl_06_10" text-color="#ff0000,,,,,,#000000,#000000,,#000000,#000000,,,,,,,">
+		<comment>レコード交換中の子に話し掛けた時、ランダムその２
+　　→END</comment>
+		<language name="JPN" width="216" line="2">どんどん　まぜるわよ！</language>
+		<language name="JPN_KANJI" width="216" line="2">どんどん　まぜるわよ！</language>
+	</row>
+
+	<row id="msg_union_talkboy_06_11" text-color="#0000ff,,,#000000,,#000000,#000000,#000000,,#000000,#000000,,,,,,,">
+		<comment>レコード交換中の子に話し掛けた時、ランダムその３
+　　→END</comment>
+		<language name="JPN" width="216" line="2">まぜろ！　まぜろ！</language>
+		<language name="JPN_KANJI" width="216" line="2">まぜろ！　まぜろ！</language>
+	</row>
+
+	<row id="msg_union_talkgirl_06_11" text-color="#ff0000,,,,,,#000000,#000000,,#000000,#000000,,,,,,,">
+		<comment>レコード交換中の子に話し掛けた時、ランダムその３
+　　→END</comment>
+		<language name="JPN" width="216" line="2">まぜて！　まぜて！</language>
+		<language name="JPN_KANJI" width="216" line="2">まぜて！　まぜて！</language>
+	</row>
+
+	<row id="msg_union_talkboy_06_12" text-color="#0000ff,,,#000000,,#000000,#000000,#000000,,#000000,#000000,,,,,,,">
+		<comment>レコード交換中の子に話し掛けた時、ランダムその４
+　　→END</comment>
+		<language name="JPN" width="216" line="2">きみも　こんど　まぜよー</language>
+		<language name="JPN_KANJI" width="216" line="2">きみも　こんど　まぜよー</language>
+	</row>
+
+	<row id="msg_union_talkgirl_06_12" text-color="#ff0000,,,,,,#000000,#000000,,#000000,#000000,,,,,,,">
+		<comment>レコード交換中の子に話し掛けた時、ランダムその４
+　　→END</comment>
+		<language name="JPN" width="216" line="2">どんな　ことが　おきるのかしら！</language>
+		<language name="JPN_KANJI" width="216" line="2">どんな　ことが　おきるのかしら！</language>
+	</row>
+
+	<row id="msg_union_talkboy_07_01" text-color="#0000ff,,,#000000,,#000000,#000000,#000000,,#000000,#000000,,,,,,,">
+		<comment>★男OBJに話し掛けて、「ぐるぐる」を選んだとき
+　msg_union_talkboy_00_02からの分岐
+
+・msg_union_talkboy_07_02　「相手がＯＫ」
+・msg_union_talkboy_07_03　「相手が断った、相手の条件が会わなかった」
+・msg_union_talkboy_07_04　「卵がなかった場合」</comment>
+		<language name="JPN" width="216" line="2">ぐるぐるこうかん　だね！
+よーし　ちょっと　まってて！</language>
+		<language name="JPN_KANJI" width="216" line="2">ぐるぐるこうかん　だね！
+よーし　ちょっと　まってて！</language>
+	</row>
+
+	<row id="msg_union_talkgirl_07_01" text-color="#ff0000,,,,,,#000000,#000000,,#000000,#000000,,,,,,,">
+		<comment>★女OBJに話し掛けて、「ぐるぐる」を選んだとき
+　msg_union_talkgirl_00_02からの分岐
+
+・msg_union_talkgirl_07_02　「相手がＯＫ」
+・msg_union_talkgirl_07_03　「相手が断った、相手の条件が会わなかった」
+・msg_union_talkgirl_07_04　「卵がなかった場合」</comment>
+		<language name="JPN" width="216" line="2">ぐるぐるこうかん　ね！
+うん　ちょっと　まってて！</language>
+		<language name="JPN_KANJI" width="216" line="2">ぐるぐるこうかん　ね！
+うん　ちょっと　まってて！</language>
+	</row>
+
+	<row id="msg_union_talkboy_07_02" text-color="#0000ff,,,#000000,,#000000,#000000,#000000,,#000000,#000000,,,,,,,">
+		<comment>男OBJとの「ぐるぐる」 が成立した
+
+　◎このあと、ぐるぐるの画面へ</comment>
+		<language name="JPN" width="216" line="2">うん　いいよ！
+ぐるぐるこうかん　しようか！</language>
+		<language name="JPN_KANJI" width="216" line="2">うん　いいよ！
+ぐるぐるこうかん　しようか！</language>
+	</row>
+
+	<row id="msg_union_talkgirl_07_02" text-color="#ff0000,,,,,,#000000,#000000,,#000000,#000000,,,,,,,">
+		<comment>女OBJとの「ぐるぐる」 が成立した
+
+　◎このあと、ぐるぐるの画面へ</comment>
+		<language name="JPN" width="216" line="2">あっ　おまたせ！
+それじゃあ　はじめましょう！</language>
+		<language name="JPN_KANJI" width="216" line="2">あっ　おまたせ！
+それじゃあ　はじめましょう！</language>
+	</row>
+
+	<row id="msg_union_talkboy_07_03" text-color="#0000ff,,,#000000,,#000000,#000000,#000000,,#000000,#000000,,,,,,,">
+		<comment>男OBJとの「ぐるぐる」が不成立だった
+　　→END</comment>
+		<language name="JPN" width="216" line="2">あっ　ごめん！
+やっぱり　いま　つごうが　わるいんだ[BE:00:ページ切り替え（行送り）]
+また　こんど　よろしくね！</language>
+		<language name="JPN_KANJI" width="216" line="2">あっ　ごめん！
+やっぱり　いま　つごうが　わるいんだ[BE:00:ページ切り替え（行送り）]
+また　こんど　よろしくね！</language>
+	</row>
+
+	<row id="msg_union_talkgirl_07_03" text-color="#ff0000,,,,,,#000000,#000000,,#000000,#000000,,,,,,,">
+		<comment>女OBJとの「ぐるぐる」が不成立だった
+　　→END</comment>
+		<language name="JPN" width="216" line="2">あっ　ごめんなさい！
+またこんど　しようね</language>
+		<language name="JPN_KANJI" width="216" line="2">あっ　ごめんなさい！
+またこんど　しようね</language>
+	</row>
+
+	<row id="msg_union_talkboy_07_04" text-color="#0000ff,,,#000000,,#000000,#000000,#000000,,#000000,#000000,,,,,,,">
+		<comment>交換で、自分の手持ちにタマゴがなかったとき
+→msg_union_talkboy_00_04</comment>
+		<language name="JPN" width="216" line="2">ぐるぐるこうかん　するには
+タマゴが　ひつよう　だよ[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="216" line="2">ぐるぐるこうかん　するには
+タマゴが　ひつよう　だよ[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_union_talkgirl_07_04" text-color="#ff0000,,,,,,#000000,#000000,,#000000,#000000,,,,,,,">
+		<comment>交換で、自分の手持ちにタマゴがなかったとき
+→msg_union_talkboy_00_04</comment>
+		<language name="JPN" width="216" line="2">ぐるぐるこうかん　するには
+タマゴが　ひつよう　だよ[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="216" line="2">ぐるぐるこうかん　するには
+タマゴが　ひつよう　だよ[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_union_talkboy_07_05" text-color="#0000ff,,,#000000,,#000000,#000000,#000000,,#000000,#000000,,,,,,,">
+		<comment>ぐるぐる途中参加で男OBJ（親）に話し掛けた時
+
+トレーナー名：０　相手の名前
+トレーナー名：１　自分の名前
+はい、いいえの選択
+
+・msg_union_talkboy_07_06　「いいえ」
+・msg_union_talkboy_07_07　「はい」
+・msg_union_talkboy_07_08　「はい」で卵を持っていない
+・msg_union_talkboy_07_09　「はい」で参加不成立
+
+
+</comment>
+		<language name="JPN" width="216" line="2">[1:00:トレーナー名:0]「これから　ぼくたち
+ぐるぐるこうかん　するんだ[BE:01:ページ切り替え（クリア）]
+そうだ！　[1:00:トレーナー名:1]も　いっしょに
+ぐるぐるこうかん　するかい？</language>
+		<language name="JPN_KANJI" width="216" line="2">[1:00:トレーナー名:0]「これから　ぼくたち
+ぐるぐるこうかん　するんだ[BE:01:ページ切り替え（クリア）]
+そうだ！　[1:00:トレーナー名:1]も　いっしょに
+ぐるぐるこうかん　するかい？</language>
+	</row>
+
+	<row id="msg_union_talkgirl_07_05" text-color="#ff0000,,,,,,#000000,#000000,,#000000,#000000,,,,,,,">
+		<comment>ぐるぐる途中参加で女OBJ（親）に話し掛けた時
+
+トレーナー名：０　相手の名前
+トレーナー名：１　自分の名前
+はい、いいえの選択
+
+・msg_union_talkgirl_07_06　「いいえ」
+・msg_union_talkgirl_07_07　「はい」
+・msg_union_talkgirl_07_08　「はい」でたまごを持っていない
+・msg_union_talkgirl_07_09　「はい」で参加不成立
+
+</comment>
+		<language name="JPN" width="216" line="2">[1:00:トレーナー名:0]「いまね　わたしたち
+ぐるぐるこうかん　してたんだ[BE:01:ページ切り替え（クリア）]
+そうだ！　[1:00:トレーナー名:1]も　いっしょに
+ぐるぐるこうかん　しない？</language>
+		<language name="JPN_KANJI" width="216" line="2">[1:00:トレーナー名:0]「いまね　わたしたち
+ぐるぐるこうかん　してたんだ[BE:01:ページ切り替え（クリア）]
+そうだ！　[1:00:トレーナー名:1]も　いっしょに
+ぐるぐるこうかん　しない？</language>
+	</row>
+
+	<row id="msg_union_talkboy_07_06" text-color="#0000ff,,,#000000,,#000000,#000000,#000000,,#000000,#000000,,,,,,,">
+		<comment>ぐるぐるの途中参加で、「いいえ」を選んだ
+　　→END</comment>
+		<language name="JPN" width="216" line="2">そうか
+また　いつでも　おいでよ！</language>
+		<language name="JPN_KANJI" width="216" line="2">そうか
+また　いつでも　おいでよ！</language>
+	</row>
+
+	<row id="msg_union_talkgirl_07_06" text-color="#ff0000,,,,,,#000000,#000000,,#000000,#000000,,,,,,,">
+		<comment>ぐるぐるの途中参加で、「いいえ」を選んだ
+　　→END</comment>
+		<language name="JPN" width="216" line="2">そう……
+また　いつでも　きてね！</language>
+		<language name="JPN_KANJI" width="216" line="2">そう……
+また　いつでも　きてね！</language>
+	</row>
+
+	<row id="msg_union_talkboy_07_07" text-color="#0000ff,,,#000000,,#000000,#000000,#000000,,#000000,#000000,,,,,,,">
+		<comment>ぐるぐるの途中参加が成立した
+◎このあと、ぐるぐるの画面へ</comment>
+		<language name="JPN" width="216" line="2">よし！　じゃあ　いっしょに
+ぐるぐるこうかん　しようぜ！</language>
+		<language name="JPN_KANJI" width="216" line="2">よし！　じゃあ　いっしょに
+ぐるぐるこうかん　しようぜ！</language>
+	</row>
+
+	<row id="msg_union_talkgirl_07_07" text-color="#ff0000,,,,,,#000000,#000000,,#000000,#000000,,,,,,,">
+		<comment>ぐるぐるの途中参加が成立した
+◎このあと、ぐるぐるの画面へ</comment>
+		<language name="JPN" width="216" line="2">おまたせ！　じゃあ　いっしょに
+ぐるぐるこうかん　しましょう！</language>
+		<language name="JPN_KANJI" width="216" line="2">おまたせ！　じゃあ　いっしょに
+ぐるぐるこうかん　しましょう！</language>
+	</row>
+
+	<row id="msg_union_talkboy_07_08" text-color="#0000ff,,,#000000,,#000000,#000000,#000000,,#000000,#000000,,,,,,,">
+		<comment>ぐるぐるの途中参加で、卵を持ってなかった
+　　→END</comment>
+		<language name="JPN" width="216" line="2">あれ？
+タマゴを　もってない　みたいだね[BE:01:ページ切り替え（クリア）]
+タマゴを　もってきたら
+また　おいでよ！</language>
+		<language name="JPN_KANJI" width="216" line="2">あれ？
+タマゴを　もってない　みたいだね[BE:01:ページ切り替え（クリア）]
+タマゴを　もってきたら
+また　おいでよ！</language>
+	</row>
+
+	<row id="msg_union_talkgirl_07_08" text-color="#ff0000,,,,,,#000000,#000000,,#000000,#000000,,,,,,,">
+		<comment>ぐるぐるの途中参加で、卵を持ってなかった
+　　→END</comment>
+		<language name="JPN" width="216" line="2">あれ？
+タマゴを　もってないの？[BE:01:ページ切り替え（クリア）]
+タマゴを　もってきたら
+また　いっしょに　やりましょう！</language>
+		<language name="JPN_KANJI" width="216" line="2">あれ？
+タマゴを　もってないの？[BE:01:ページ切り替え（クリア）]
+タマゴを　もってきたら
+また　いっしょに　やりましょう！</language>
+	</row>
+
+	<row id="msg_union_talkboy_07_09" text-color="#0000ff,,,#000000,,#000000,#000000,#000000,,#000000,#000000,,,,,,,">
+		<comment>ぐるぐるの途中参加が不成立だった
+　　→END</comment>
+		<language name="JPN" width="216" line="2">あっ　ごめん！
+やっぱり　いま　つごうが　わるいんだ[BE:00:ページ切り替え（行送り）]
+また　こんど　よろしくね！</language>
+		<language name="JPN_KANJI" width="216" line="2">あっ　ごめん！
+やっぱり　いま　つごうが　わるいんだ[BE:00:ページ切り替え（行送り）]
+また　こんど　よろしくね！</language>
+	</row>
+
+	<row id="msg_union_talkgirl_07_09" text-color="#ff0000,,,,,,#000000,#000000,,#000000,#000000,,,,,,,">
+		<comment>ぐるぐるの途中参加が不成立だった
+　　→END</comment>
+		<language name="JPN" width="216" line="2">あっ　ごめんなさい！
+またこんど　しようね</language>
+		<language name="JPN_KANJI" width="216" line="2">あっ　ごめんなさい！
+またこんど　しようね</language>
+	</row>
+
+	<row id="msg_union_talkboy_07_14" text-color="#0000ff,,,#000000,,#000000,#000000,#000000,,#000000,#000000,,,,,,,">
+		<comment>ダメタマゴのため、参加が不成立だった
+　　→END
+
+プラチナで追加。</comment>
+		<language name="JPN" width="216" line="2">てもちに　こうかん　できない
+タマゴが　あります</language>
+		<language name="JPN_KANJI" width="216" line="2">てもちに　こうかん　できない
+タマゴが　あります</language>
+	</row>
+
+	<row id="msg_union_talkgirl_07_14" text-color="#ff0000,,,,,,#000000,#000000,,#000000,#000000,,,,,,,">
+		<comment>ダメタマゴのため、参加が不成立だった
+　　→END
+
+プラチナで追加。</comment>
+		<language name="JPN" width="216" line="2">てもちに　こうかん　できない
+タマゴが　あります</language>
+		<language name="JPN_KANJI" width="216" line="2">てもちに　こうかん　できない
+タマゴが　あります</language>
+	</row>
+
+	<row id="msg_union_talkboy_07_10" text-color="#0000ff,,,#000000,,#000000,#000000,#000000,,#000000,#000000,,,,,,,">
+		<comment>ぐるぐる交換中の子に話し掛けた時、ランダムその１
+　　→END</comment>
+		<language name="JPN" width="216" line="2">ぐるぐるこうかん　たのしいな！</language>
+		<language name="JPN_KANJI" width="216" line="2">ぐるぐるこうかん　たのしいな！</language>
+	</row>
+
+	<row id="msg_union_talkgirl_07_10" text-color="#ff0000,,,,,,#000000,#000000,,#000000,#000000,,,,,,,">
+		<comment>ぐるぐる交換中の子に話し掛けた時、ランダムその１
+　　→END</comment>
+		<language name="JPN" width="216" line="2">ぐるぐるこうかん　してるのよ！</language>
+		<language name="JPN_KANJI" width="216" line="2">ぐるぐるこうかん　してるのよ！</language>
+	</row>
+
+	<row id="msg_union_talkboy_07_11" text-color="#0000ff,,,#000000,,#000000,#000000,#000000,,#000000,#000000,,,,,,,">
+		<comment>ぐるぐる交換中の子に話し掛けた時、ランダムその２
+　　→END</comment>
+		<language name="JPN" width="216" line="2">それっ！　そこで　とまれー</language>
+		<language name="JPN_KANJI" width="216" line="2">それっ！　そこで　とまれー</language>
+	</row>
+
+	<row id="msg_union_talkgirl_07_11" text-color="#ff0000,,,,,,#000000,#000000,,#000000,#000000,,,,,,,">
+		<comment>ぐるぐる交換中の子に話し掛けた時、ランダムその２
+　　→END</comment>
+		<language name="JPN" width="216" line="2">わっ！　また　うごいちゃった！</language>
+		<language name="JPN_KANJI" width="216" line="2">わっ！　また　うごいちゃった！</language>
+	</row>
+
+	<row id="msg_union_talkboy_07_12" text-color="#0000ff,,,#000000,,#000000,#000000,#000000,,#000000,#000000,,,,,,,">
+		<comment>ぐるぐる交換中の子に話し掛けた時、ランダムその３
+　　→END</comment>
+		<language name="JPN" width="216" line="2">ぼくの　タマゴは　すごいよ！</language>
+		<language name="JPN_KANJI" width="216" line="2">ぼくの　タマゴは　すごいよ！</language>
+	</row>
+
+	<row id="msg_union_talkgirl_07_12" text-color="#ff0000,,,,,,#000000,#000000,,#000000,#000000,,,,,,,">
+		<comment>ぐるぐる交換中の子に話し掛けた時、ランダムその３
+　　→END</comment>
+		<language name="JPN" width="216" line="2">あの　タマゴが　ほしいのになー</language>
+		<language name="JPN_KANJI" width="216" line="2">あの　タマゴが　ほしいのになー</language>
+	</row>
+
+	<row id="msg_union_talkboy_07_13" text-color="#0000ff,,,#000000,,#000000,#000000,#000000,,#000000,#000000,,,,,,,">
+		<comment>ぐるぐる交換中の子に話し掛けた時、ランダムその４
+　　→END</comment>
+		<language name="JPN" width="216" line="2">やったぁ！
+ほしい　タマゴを　もらえたぞ！</language>
+		<language name="JPN_KANJI" width="216" line="2">やったぁ！
+ほしい　タマゴを　もらえたぞ！</language>
+	</row>
+
+	<row id="msg_union_talkgirl_07_13" text-color="#ff0000,,,,,,#000000,#000000,,#000000,#000000,,,,,,,">
+		<comment>ぐるぐる交換中の子に話し掛けた時、ランダムその４
+　　→END</comment>
+		<language name="JPN" width="216" line="2">あそこで　とまれば
+きのみを　もらえるのにー</language>
+		<language name="JPN_KANJI" width="216" line="2">あそこで　とまれば
+きのみを　もらえるのにー</language>
+	</row>
+
+	<row id="msg_union_info_01_01" text-color="#ff78ff,,,#000000,,#000000,#000000,#000000,,#000000,#000000,,,,,,,">
+		<comment>説明お姉さん：はじめのメッセージ
+・せつめい
+・おはなしする
+・もどる</comment>
+		<language name="JPN" width="216" line="2">ユニオンルームへ　ようこそ[BE:01:ページ切り替え（クリア）]
+なにか　わからないことが　ありましたら
+おもうしつけ　くださいませ！</language>
+		<language name="JPN_KANJI" width="216" line="2">ユニオンルームへ　ようこそ[BE:01:ページ切り替え（クリア）]
+なにか　わからないことが　ありましたら
+おもうしつけ　くださいませ！</language>
+	</row>
+
+	<row id="msg_union_info_01_02" text-color="#ff78ff,,,#000000,,#000000,#000000,#000000,,#000000,#000000,,,,,,,">
+		<comment>説明お姉さん：はじめのメッセージ（２回目）
+・せつめい
+・おはなしする
+・もどる</comment>
+		<language name="JPN" width="216" line="2">なにか　ごようけんは
+ありますでしょうか？</language>
+		<language name="JPN_KANJI" width="216" line="2">なにか　ごようけんは
+ありますでしょうか？</language>
+	</row>
+
+	<row id="msg_union_info_01_03" text-color="#ff78ff,,,#000000,,#000000,#000000,#000000,,#000000,#000000,,,,,,,">
+		<comment>説明お姉さん：説明するのメッセージ
+・たいせん
+・こうかん
+・レコード
+・ぐるぐる
+・おえかき
+・チャット
+・もどる</comment>
+		<language name="JPN" width="216" line="2">なにに　ついて
+ききたい　ですか？</language>
+		<language name="JPN_KANJI" width="216" line="2">なにに　ついて
+ききたい　ですか？</language>
+	</row>
+
+	<row id="msg_union_info_01_04" text-color="#ff78ff,,,#000000,,,#000000,#000000,,#000000,#000000,,,,,,,">
+		<comment>説明お姉さん：説明するのメッセージ
+・たいせん
+</comment>
+		<language name="JPN" width="216" line="2">たいせんの　せつめい</language>
+		<language name="JPN_KANJI" width="216" line="2">たいせんの　せつめい</language>
+	</row>
+
+	<row id="msg_union_info_01_05" text-color="#ff78ff,,,#000000,,#000000,#000000,#000000,,#000000,#000000,,,,,,,">
+		<comment>説明お姉さん：説明するのメッセージ
+・こうかん
+</comment>
+		<language name="JPN" width="216" line="2">おたがいの　ポケモンを
+こうかんすることが　できます[BE:01:ページ切り替え（クリア）]
+あたらしい　ひととの　であいが
+めずらしい　ポケモンとの[BE:00:ページ切り替え（行送り）]
+であいになるかも　しれませんね！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="216" line="2">おたがいの　ポケモンを
+こうかんすることが　できます[BE:01:ページ切り替え（クリア）]
+あたらしい　ひととの　であいが
+めずらしい　ポケモンとの[BE:00:ページ切り替え（行送り）]
+であいになるかも　しれませんね！[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_union_info_01_06" text-color="#ff78ff,,,#000000,,#000000,#000000,#000000,,#000000,#000000,,,,,,,">
+		<comment>説明お姉さん：説明するのメッセージ
+・レコード
+</comment>
+		<language name="JPN" width="216" line="2">レコードつうしん　では
+じぶんの　きろくを[BE:00:ページ切り替え（行送り）]
+みんなで　こうかんすることが　できます[BE:01:ページ切り替え（クリア）]
+きろくを　こうかんすることで
+いったい　なにがおきるのか！？[BE:01:ページ切り替え（クリア）]
+それは　じぶんの　めで
+たしかめてみて　ください！[BE:01:ページ切り替え（クリア）]
+５にんまで　さんか　できるので
+ともだちと　やってみてくださいね！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="216" line="2">レコードつうしん　では
+じぶんの　きろくを[BE:00:ページ切り替え（行送り）]
+みんなで　こうかんすることが　できます[BE:01:ページ切り替え（クリア）]
+きろくを　こうかんすることで
+いったい　なにがおきるのか！？[BE:01:ページ切り替え（クリア）]
+それは　じぶんの　めで
+たしかめてみて　ください！[BE:01:ページ切り替え（クリア）]
+５にんまで　さんか　できるので
+ともだちと　やってみてくださいね！[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_union_info_01_07" text-color="#ff78ff,,,#000000,,#000000,#000000,#000000,,#000000,#000000,,,,,,,">
+		<comment>説明お姉さん：説明するのメッセージ
+・ぐるぐる
+</comment>
+		<language name="JPN" width="216" line="2">ぐるぐるこうかん　は　もっている
+タマゴを　みんなで　もちよって[BE:00:ページ切り替え（行送り）]
+こうかん　することが　できます[BE:01:ページ切り替え（クリア）]
+いったい　どのタマゴがくるか？
+どんな　ポケモンの　タマゴなのか？[BE:00:ページ切り替え（行送り）]
+わくわく　ドキドキ　ですね！[BE:01:ページ切り替え（クリア）]
+５にんまで　さんか　できるので
+ともだちと　やってみてくださいね！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="216" line="2">ぐるぐるこうかん　は　もっている
+タマゴを　みんなで　もちよって[BE:00:ページ切り替え（行送り）]
+こうかん　することが　できます[BE:01:ページ切り替え（クリア）]
+いったい　どのタマゴがくるか？
+どんな　ポケモンの　タマゴなのか？[BE:00:ページ切り替え（行送り）]
+わくわく　ドキドキ　ですね！[BE:01:ページ切り替え（クリア）]
+５にんまで　さんか　できるので
+ともだちと　やってみてくださいね！[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_union_info_01_08" text-color="#ff78ff,,,#000000,,#000000,#000000,#000000,,#000000,#000000,,,,,,,">
+		<comment>説明お姉さん：説明するのメッセージ
+・おえかき
+</comment>
+		<language name="JPN" width="216" line="2">みんなで　おえかきを
+することが　できます[BE:01:ページ切り替え（クリア）]
+１まいの　かみの　うえに
+すきに　えを　かいてみてください！[BE:01:ページ切り替え（クリア）]
+みんなで　かいた　えは　きっと
+すばらしい　えに　なるはずですよ！[BE:01:ページ切り替え（クリア）]
+５にんまで　さんか　できるので
+ともだちと　やってみて　くださいね！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="216" line="2">みんなで　おえかきを
+することが　できます[BE:01:ページ切り替え（クリア）]
+１まいの　かみの　うえに
+すきに　えを　かいてみてください！[BE:01:ページ切り替え（クリア）]
+みんなで　かいた　えは　きっと
+すばらしい　えに　なるはずですよ！[BE:01:ページ切り替え（クリア）]
+５にんまで　さんか　できるので
+ともだちと　やってみて　くださいね！[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_union_info_01_09" text-color="#ff78ff,,,#000000,,#000000,#000000,#000000,,#000000,#000000,,,,,,,">
+		<comment>説明お姉さん：説明するのメッセージ
+・チャット</comment>
+		<language name="JPN" width="216" line="2">メニューを　ひらいて
+チャットを　えらぶことで[BE:01:ページ切り替え（クリア）]
+ユニオンルーム　にいる
+みんなに　じぶんのことを[BE:00:ページ切り替え（行送り）]
+アピール　することが　できます！[BE:01:ページ切り替え（クリア）]
+じぶんが　どんなひとか？
+なにが　したいのか？[BE:01:ページ切り替え（クリア）]
+どんどん
+アピールしちゃってください！[BE:01:ページ切り替え（クリア）]
+</language>
+		<language name="JPN_KANJI" width="216" line="2">メニューを　ひらいて
+チャットを　えらぶことで[BE:01:ページ切り替え（クリア）]
+ユニオンルーム　にいる
+みんなに　じぶんのことを[BE:00:ページ切り替え（行送り）]
+アピール　することが　できます！[BE:01:ページ切り替え（クリア）]
+じぶんが　どんなひとか？
+なにが　したいのか？[BE:01:ページ切り替え（クリア）]
+どんどん
+アピールしちゃってください！[BE:01:ページ切り替え（クリア）]
+</language>
+	</row>
+
+	<row id="msg_union_info_02_01" text-color="#ff78ff,,,#000000,,#000000,#000000,#000000,,#000000,#000000,,,,,,,">
+		<comment>説明お姉さん：おはなしする
+・だれかがユニオンルームに来ているとき</comment>
+		<language name="JPN" width="216" line="2">あ！
+だれか　きてますよ！[BE:01:ページ切り替え（クリア）]
+ほらほら　わたし　じゃなくて　あのひとと
+おはなししては　どうですか？[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="216" line="2">あ！
+だれか　きてますよ！[BE:01:ページ切り替え（クリア）]
+ほらほら　わたし　じゃなくて　あのひとと
+おはなししては　どうですか？[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_union_info_02_02" text-color="#ff78ff,,,#000000,,#000000,#000000,#000000,,#000000,#000000,,,,,,,">
+		<comment>説明お姉さん：おはなしする
+・チャットをなにも入れていないとき</comment>
+		<language name="JPN" width="216" line="2">だれも　こないと
+ひまですね[BE:01:ページ切り替え（クリア）]
+なにか　おもしろいこと
+ないかな……[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="216" line="2">だれも　こないと
+ひまですね[BE:01:ページ切り替え（クリア）]
+なにか　おもしろいこと
+ないかな……[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_union_info_02_03" text-color="#ff78ff,,,#000000,,#000000,#000000,#000000,,#000000,#000000,,,,,,,">
+		<comment>説明お姉さん：おはなしする
+・チャットを入れているが、対応メッセージがないとき</comment>
+		<language name="JPN" width="216" line="2">あなたって　[1:0E:トレーナー種別名:0]に
+みまちがえられた ことないですか？[BE:01:ページ切り替え（クリア）]
+なんとなく　そんな
+ふんいきが　するんですよねー[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="216" line="2">あなたって　[1:0E:トレーナー種別名:0]に
+みまちがえられた ことないですか？[BE:01:ページ切り替え（クリア）]
+なんとなく　そんな
+ふんいきが　するんですよねー[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_union_info_02_04" text-color="#ff78ff,,,#000000,,#000000,#000000,#000000,,#000000,#000000,,,,,,,">
+		<comment>説明お姉さん：おはなしする
+・簡易分に「ユニオン１」を使用しているとき</comment>
+		<language name="JPN" width="216" line="2">こんにちは！[BE:01:ページ切り替え（クリア）]
+そうです！
+あいさつが　じゅうようなんです！[BE:01:ページ切り替え（クリア）]
+だれかが　きたら
+もっと　アピール　アピール！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="216" line="2">こんにちは！[BE:01:ページ切り替え（クリア）]
+そうです！
+あいさつが　じゅうようなんです！[BE:01:ページ切り替え（クリア）]
+だれかが　きたら
+もっと　アピール　アピール！[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_union_info_02_05" text-color="#ff78ff,,,#000000,,#000000,#000000,#000000,,#000000,#000000,,,,,,,">
+		<comment>説明お姉さん：おはなしする
+・簡易分に「ユニオン２」を使用しているとき</comment>
+		<language name="JPN" width="216" line="2">はじめまして！[BE:01:ページ切り替え（クリア）]
+[1:1C:簡易会話単語:0]　は
+いいですよねー[BE:00:ページ切り替え（行送り）]
+わたしも　だいすき　なんです！[BE:01:ページ切り替え（クリア）]
+はじめて　あったひとには
+きちんと　じこしょうかいを　するのが[BE:00:ページ切り替え（行送り）]
+マナーですよ！[BE:01:ページ切り替え（クリア）]
+じぶんを　しょうかい　することで
+あいてのことも　わかって　くるんです！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="216" line="2">はじめまして！[BE:01:ページ切り替え（クリア）]
+[1:1C:簡易会話単語:0]　は
+いいですよねー[BE:00:ページ切り替え（行送り）]
+わたしも　だいすき　なんです！[BE:01:ページ切り替え（クリア）]
+はじめて　あったひとには
+きちんと　じこしょうかいを　するのが[BE:00:ページ切り替え（行送り）]
+マナーですよ！[BE:01:ページ切り替え（クリア）]
+じぶんを　しょうかい　することで
+あいてのことも　わかって　くるんです！[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_union_info_02_06" text-color="#ff78ff,,,#000000,,#000000,#000000,#000000,,#000000,#000000,,,,,,,">
+		<comment>説明お姉さん：おはなしする
+・簡易分に「ユニオン３」を使用しているとき</comment>
+		<language name="JPN" width="216" line="2">へー　[1:1C:簡易会話単語:0]　トレーナー
+なんですか！？[BE:00:ページ切り替え（行送り）]
+すごい　ですねー[BE:01:ページ切り替え（クリア）]
+でも　ごめんなさい！
+わたし　ポケモン　もってないんです……[BE:01:ページ切り替え（クリア）]
+たいせんは　するよりも
+みてるほうが　すきなので！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="216" line="2">へー　[1:1C:簡易会話単語:0]　トレーナー
+なんですか！？[BE:00:ページ切り替え（行送り）]
+すごい　ですねー[BE:01:ページ切り替え（クリア）]
+でも　ごめんなさい！
+わたし　ポケモン　もってないんです……[BE:01:ページ切り替え（クリア）]
+たいせんは　するよりも
+みてるほうが　すきなので！[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_union_info_02_07" text-color="#ff78ff,,,#000000,,#000000,#000000,#000000,,#000000,#000000,,,,,,,">
+		<comment>説明お姉さん：おはなしする
+・簡易分に「ユニオン４」を使用しているとき</comment>
+		<language name="JPN" width="216" line="2">あ！
+わたし　[1:1C:簡易会話単語:0]　ほしいです！[BE:00:ページ切り替え（行送り）]
+わたしのと　こうかん　してください[BE:01:ページ切り替え（クリア）]
+……[BE:01:ページ切り替え（クリア）]
+あ　いまの　うそです[BE:01:ページ切り替え（クリア）]
+わたし　ほんとは　ポケモン　もって
+ないので　こうかん　できないんです……[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="216" line="2">あ！
+わたし　[1:1C:簡易会話単語:0]　ほしいです！[BE:00:ページ切り替え（行送り）]
+わたしのと　こうかん　してください[BE:01:ページ切り替え（クリア）]
+……[BE:01:ページ切り替え（クリア）]
+あ　いまの　うそです[BE:01:ページ切り替え（クリア）]
+わたし　ほんとは　ポケモン　もって
+ないので　こうかん　できないんです……[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_union_info_02_08" text-color="#ff78ff,,,#000000,,#000000,#000000,#000000,,#000000,#000000,,,,,,,">
+		<comment>説明お姉さん：おはなしする
+・簡易分に「ユニオン５」を使用しているとき</comment>
+		<language name="JPN" width="216" line="2">[1:1C:簡易会話単語:0]が　ほしいのは
+わかりますが[BE:01:ページ切り替え（クリア）]
+こうかんを　するときは
+むりを　いっちゃ　だめですよ！[BE:01:ページ切り替え（クリア）]
+あいての　ほしいポケモンの　ことも
+かんがえなきゃね！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="216" line="2">[1:1C:簡易会話単語:0]が　ほしいのは
+わかりますが[BE:01:ページ切り替え（クリア）]
+こうかんを　するときは
+むりを　いっちゃ　だめですよ！[BE:01:ページ切り替え（クリア）]
+あいての　ほしいポケモンの　ことも
+かんがえなきゃね！[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_union_info_02_09" text-color="#ff78ff,,,#000000,,#000000,#000000,#000000,,#000000,#000000,,,,,,,">
+		<comment>説明お姉さん：おはなしする
+・簡易分に「ユニオン６」を使用しているとき</comment>
+		<language name="JPN" width="216" line="2">ユニオンルームへ　ようこそ！[BE:01:ページ切り替え（クリア）]
+いまは　わたししか　いませんが
+ともだちと　いっしょに　はいって[BE:00:ページ切り替え（行送り）]
+いろいろと　あそんで　みてくださいね！[BE:01:ページ切り替え（クリア）]
+あと　ひまだったら　わたしにも
+はなしかけて　ください！[BE:01:ページ切り替え（クリア）]
+わたしも　ひまなので……[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="216" line="2">ユニオンルームへ　ようこそ！[BE:01:ページ切り替え（クリア）]
+いまは　わたししか　いませんが
+ともだちと　いっしょに　はいって[BE:00:ページ切り替え（行送り）]
+いろいろと　あそんで　みてくださいね！[BE:01:ページ切り替え（クリア）]
+あと　ひまだったら　わたしにも
+はなしかけて　ください！[BE:01:ページ切り替え（クリア）]
+わたしも　ひまなので……[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_union_info_02_10" text-color="#ff78ff,,,#000000,,#000000,#000000,#000000,,#000000,#000000,,,,,,,">
+		<comment>説明お姉さん：おはなしする
+・簡易分に「ユニオン７」を使用しているとき</comment>
+		<language name="JPN" width="216" line="2">わたし　おえかきは
+うまいんですよ！[BE:01:ページ切り替え（クリア）]
+[1:1C:簡易会話単語:0]　だったら
+まかせて　ください！[BE:00:ページ切り替え（行送り）]
+だれにも　まけませんよ！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="216" line="2">わたし　おえかきは
+うまいんですよ！[BE:01:ページ切り替え（クリア）]
+[1:1C:簡易会話単語:0]　だったら
+まかせて　ください！[BE:00:ページ切り替え（行送り）]
+だれにも　まけませんよ！[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_union_info_02_11" text-color="#ff78ff,,,#000000,,#000000,#000000,#000000,,#000000,#000000,,,,,,,">
+		<comment>説明お姉さん：おはなしする
+・簡易分に「ユニオン８」を使用しているとき</comment>
+		<language name="JPN" width="216" line="2">かえっちゃうんですか……[BE:01:ページ切り替え（クリア）]
+……[BE:01:ページ切り替え（クリア）]
+さみしいです[BE:01:ページ切り替え（クリア）]
+また
+あいにきて　くださいね！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="216" line="2">かえっちゃうんですか……[BE:01:ページ切り替え（クリア）]
+……[BE:01:ページ切り替え（クリア）]
+さみしいです[BE:01:ページ切り替え（クリア）]
+また
+あいにきて　くださいね！[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_union_info_02_12" text-color="#ff78ff,,,#000000,,#000000,#000000,#000000,,#000000,#000000,,,,,,,">
+		<comment>説明お姉さん：おはなしする
+・簡易分に「ユニオン９」を使用しているとき</comment>
+		<language name="JPN" width="216" line="2">どうしたんですか？
+なにか　いやなこと　あったんですか？[BE:01:ページ切り替え（クリア）]
+そういう　ときは
+ひとりで　いるよりも[BE:00:ページ切り替え（行送り）]
+ともだちと　いっぱい[BE:00:ページ切り替え（行送り）]
+あそんだほうが　いいですよ！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="216" line="2">どうしたんですか？
+なにか　いやなこと　あったんですか？[BE:01:ページ切り替え（クリア）]
+そういう　ときは
+ひとりで　いるよりも[BE:00:ページ切り替え（行送り）]
+ともだちと　いっぱい[BE:00:ページ切り替え（行送り）]
+あそんだほうが　いいですよ！[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_union_info_02_13" text-color="#ff78ff,,,#000000,,#000000,#000000,#000000,,#000000,#000000,,,,,,,">
+		<comment>説明お姉さん：おはなしする
+・簡易分に「ユニオン１０」を使用しているとき</comment>
+		<language name="JPN" width="216" line="2">はーい！
+[1:1C:簡易会話単語:0]　したいです！[BE:01:ページ切り替え（クリア）]
+……したい　ですけど
+ここを　うごけないので[BE:00:ページ切り替え（行送り）]
+やっぱり　できません[BE:01:ページ切り替え（クリア）]
+はぁ
+[1:1C:簡易会話単語:0]　したいなぁ[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="216" line="2">はーい！
+[1:1C:簡易会話単語:0]　したいです！[BE:01:ページ切り替え（クリア）]
+……したい　ですけど
+ここを　うごけないので[BE:00:ページ切り替え（行送り）]
+やっぱり　できません[BE:01:ページ切り替え（クリア）]
+はぁ
+[1:1C:簡易会話単語:0]　したいなぁ[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_union_info_02_14" text-color="#ff78ff,,,#000000,,#000000,#000000,#000000,,#000000,#000000,,,,,,,">
+		<comment>説明お姉さん：おはなしする
+・簡易分に「ユニオン１１」を使用しているとき</comment>
+		<language name="JPN" width="216" line="2">はーい！
+わたしも　[1:1C:簡易会話単語:0]します！[BE:01:ページ切り替え（クリア）]
+でも　ここで　みんなに　せつめいを
+しないと　いけないんです……[BE:01:ページ切り替え（クリア）]
+なので　みんなと　あそんで
+くださいね！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="216" line="2">はーい！
+わたしも　[1:1C:簡易会話単語:0]します！[BE:01:ページ切り替え（クリア）]
+でも　ここで　みんなに　せつめいを
+しないと　いけないんです……[BE:01:ページ切り替え（クリア）]
+なので　みんなと　あそんで
+くださいね！[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_union_info_02_15" text-color="#ff78ff,,,#000000,,#000000,#000000,#000000,,#000000,#000000,,,,,,,">
+		<comment>説明お姉さん：おはなしする
+・簡易分に「ユニオン１２」を使用しているとき</comment>
+		<language name="JPN" width="216" line="2">[1:1C:簡易会話単語:0]を
+さそわれて　しまった！[BE:01:ページ切り替え（クリア）]
+……　あ！
+でも　わたしは　ここで　せつめいを[BE:00:ページ切り替え（行送り）]
+しないと　いけないので[BE:01:ページ切り替え（クリア）]
+すみませんが　おさそいは
+おことわりします　ごめんなさい！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="216" line="2">[1:1C:簡易会話単語:0]を
+さそわれて　しまった！[BE:01:ページ切り替え（クリア）]
+……　あ！
+でも　わたしは　ここで　せつめいを[BE:00:ページ切り替え（行送り）]
+しないと　いけないので[BE:01:ページ切り替え（クリア）]
+すみませんが　おさそいは
+おことわりします　ごめんなさい！[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_union_info_02_16" text-color="#ff78ff,,,#000000,,#000000,#000000,#000000,,#000000,#000000,,,,,,,">
+		<comment>説明お姉さん：おはなしする
+・簡易分に「ユニオン１３」を使用しているとき</comment>
+		<language name="JPN" width="216" line="2">そうです！[BE:01:ページ切り替え（クリア）]
+ときには　つよきで　ともだちを
+さそうのも　いいですよ！[BE:01:ページ切り替え（クリア）]
+でも　[1:1C:簡易会話単語:0]が　したくて
+わがままに　ならないようにね！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="216" line="2">そうです！[BE:01:ページ切り替え（クリア）]
+ときには　つよきで　ともだちを
+さそうのも　いいですよ！[BE:01:ページ切り替え（クリア）]
+でも　[1:1C:簡易会話単語:0]が　したくて
+わがままに　ならないようにね！[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_union_info_02_17" text-color="#ff78ff,,,#000000,,#000000,#000000,#000000,,#000000,#000000,,,,,,,">
+		<comment>説明お姉さん：おはなしする
+・簡易分に「ユニオン１４」を使用しているとき</comment>
+		<language name="JPN" width="216" line="2">はい！
+オーケー　なのです！[BE:01:ページ切り替え（クリア）]
+だめな　ことなんて　ありません！[BE:01:ページ切り替え（クリア）]
+まえむきに　かんがえて
+いきましょう！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="216" line="2">はい！
+オーケー　なのです！[BE:01:ページ切り替え（クリア）]
+だめな　ことなんて　ありません！[BE:01:ページ切り替え（クリア）]
+まえむきに　かんがえて
+いきましょう！[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_union_info_02_18" text-color="#ff78ff,,,#000000,,#000000,#000000,#000000,,#000000,#000000,,,,,,,">
+		<comment>説明お姉さん：おはなしする
+・簡易分に「ユニオン１５」を使用しているとき</comment>
+		<language name="JPN" width="216" line="2">だれにでも　にがてな　ことは
+ひとつは　ありますよ[BE:01:ページ切り替え（クリア）]
+あなたも　あいての　いやがることを
+むりに　さそっては　ダメですよ[BE:01:ページ切り替え（クリア）]
+ちなみに　わたしは
+[1:1C:簡易会話単語:0]は　してみたいですけど！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="216" line="2">だれにでも　にがてな　ことは
+ひとつは　ありますよ[BE:01:ページ切り替え（クリア）]
+あなたも　あいての　いやがることを
+むりに　さそっては　ダメですよ[BE:01:ページ切り替え（クリア）]
+ちなみに　わたしは
+[1:1C:簡易会話単語:0]は　してみたいですけど！[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_union_info_02_19" text-color="#ff78ff,,,#000000,,#000000,#000000,#000000,,#000000,#000000,,,,,,,">
+		<comment>説明お姉さん：おはなしする
+・簡易分に「ユニオン１６」を使用しているとき</comment>
+		<language name="JPN" width="216" line="2">いってらっしゃいませ！[BE:01:ページ切り替え（クリア）]
+ユニオンルームでは　できない
+ほんかくてきな　たいせんを[BE:00:ページ切り替え（行送り）]
+たのしんできて　くださいね！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="216" line="2">いってらっしゃいませ！[BE:01:ページ切り替え（クリア）]
+ユニオンルームでは　できない
+ほんかくてきな　たいせんを[BE:00:ページ切り替え（行送り）]
+たのしんできて　くださいね！[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_union_info_02_20" text-color="#ff78ff,,,#000000,,#000000,#000000,#000000,,#000000,#000000,,,,,,,">
+		<comment>説明お姉さん：おはなしする
+・簡易分に「ユニオン１７」を使用しているとき
+・プラチナでバグ対応のため修正</comment>
+		<language name="JPN" width="216" line="2">はなしかけて！[BE:01:ページ切り替え（クリア）]
+って　いいながら　なんで　わたしに
+はなしかけて　いるんですか！？[BE:01:ページ切り替え（クリア）]
+もっと　じぶんから
+せっきょくてきに　はなしかけなくちゃ[BE:00:ページ切り替え（行送り）]
+ともだちは　できませんよ！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="216" line="2">はなしかけて！[BE:01:ページ切り替え（クリア）]
+って　いいながら　なんで　わたしに
+はなしかけて　いるんですか！？[BE:01:ページ切り替え（クリア）]
+もっと　じぶんから
+せっきょくてきに　はなしかけなくちゃ[BE:00:ページ切り替え（行送り）]
+ともだちは　できませんよ！[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_union_info_02_21" text-color="#ff78ff,,,#000000,,#000000,#000000,#000000,,#000000,#000000,,,,,,,">
+		<comment>説明お姉さん：おはなしする
+・簡易分に「ユニオン１８」を使用しているとき</comment>
+		<language name="JPN" width="216" line="2">どこに
+いるかって……[BE:00:ページ切り替え（行送り）]
+めのまえに　いますね[BE:01:ページ切り替え（クリア）]
+あ！
+もしかして　にせもの！？[BE:01:ページ切り替え（クリア）]
+ほんものは
+べつに　いるとか？[BE:01:ページ切り替え（クリア）]
+……　って
+へんなこと　いわないで　くださいよ！[BE:00:ページ切り替え（行送り）]
+もうっ！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="216" line="2">どこに
+いるかって……[BE:00:ページ切り替え（行送り）]
+めのまえに　いますね[BE:01:ページ切り替え（クリア）]
+あ！
+もしかして　にせもの！？[BE:01:ページ切り替え（クリア）]
+ほんものは
+べつに　いるとか？[BE:01:ページ切り替え（クリア）]
+……　って
+へんなこと　いわないで　くださいよ！[BE:00:ページ切り替え（行送り）]
+もうっ！[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_union_info_02_22" text-color="#ff78ff,,,#000000,,#000000,#000000,#000000,,#000000,#000000,,,,,,,">
+		<comment>説明お姉さん：おはなしする
+・簡易分に「ユニオン１９」を使用しているとき
+・プラチナでバグ対応のため修正</comment>
+		<language name="JPN" width="216" line="2">[1:1C:簡易会話単語:0]こうかん
+したいですよ　ねえ！[BE:00:ページ切り替え（行送り）]
+わたしも　したいですもん[BE:01:ページ切り替え（クリア）]
+でも　わたしに　はなしかけても
+こうかんは　できませんけどね[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="216" line="2">[1:1C:簡易会話単語:0]こうかん
+したいですよ　ねえ！[BE:00:ページ切り替え（行送り）]
+わたしも　したいですもん[BE:01:ページ切り替え（クリア）]
+でも　わたしに　はなしかけても
+こうかんは　できませんけどね[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_union_info_02_23" text-color="#ff78ff,,,#000000,,#000000,#000000,#000000,,#000000,#000000,,,,,,,">
+		<comment>説明お姉さん：おはなしする
+・簡易分に「ユニオン２０」を使用しているとき</comment>
+		<language name="JPN" width="216" line="2">[1:1C:簡易会話単語:0]たいせんを
+するんだったら[BE:01:ページ切り替え（クリア）]
+じぶんから　はなしかけるぐらい
+つよきで　いかないと！[BE:01:ページ切り替え（クリア）]
+[1:1C:簡易会話単語:0]　たいせんを
+するまえに　まけちゃい　ますよ！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="216" line="2">[1:1C:簡易会話単語:0]たいせんを
+するんだったら[BE:01:ページ切り替え（クリア）]
+じぶんから　はなしかけるぐらい
+つよきで　いかないと！[BE:01:ページ切り替え（クリア）]
+[1:1C:簡易会話単語:0]　たいせんを
+するまえに　まけちゃい　ますよ！[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_union_info_03_01" text-color="#ff78ff,,,#000000,,#000000,#000000,#000000,,#000000,#000000,,,,,,,">
+		<comment>説明お姉さん：選択肢</comment>
+		<language name="JPN" font=" 1:small" width="216" line="2">せつめい</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216" line="2">せつめい</language>
+	</row>
+
+	<row id="msg_union_info_03_02" text-color="#ff78ff,,,#000000,,#000000,#000000,#000000,,#000000,#000000,,,,,,,">
+		<comment>説明お姉さん：選択肢</comment>
+		<language name="JPN" font=" 1:small" width="216" line="2">おはなしする</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216" line="2">おはなしする</language>
+	</row>
+
+	<row id="msg_union_info_03_03" text-color="#ff78ff,,,#000000,,#000000,#000000,#000000,,#000000,#000000,,,,,,,">
+		<comment>説明お姉さん：選択肢</comment>
+		<language name="JPN" font=" 1:small" width="216" line="2">やめる</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216" line="2">やめる</language>
+	</row>
+
+	<row id="msg_union_info_03_04" text-color="#ff78ff,,,#000000,,#000000,#000000,#000000,,#000000,#000000,,,,,,,">
+		<comment>説明お姉さん：選択肢</comment>
+		<language name="JPN" font=" 1:small" width="216" line="2">たいせん</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216" line="2">たいせん</language>
+	</row>
+
+	<row id="msg_union_info_03_05" text-color="#ff78ff,,,#000000,,#000000,#000000,#000000,,#000000,#000000,,,,,,,">
+		<comment>説明お姉さん：選択肢</comment>
+		<language name="JPN" font=" 1:small" width="216" line="2">こうかん</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216" line="2">こうかん</language>
+	</row>
+
+	<row id="msg_union_info_03_06" text-color="#ff78ff,,,#000000,,#000000,#000000,#000000,,#000000,#000000,,,,,,,">
+		<comment>説明お姉さん：選択肢</comment>
+		<language name="JPN" font=" 1:small" width="216" line="2">レコード</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216" line="2">レコード</language>
+	</row>
+
+	<row id="msg_union_info_03_07" text-color="#ff78ff,,,#000000,,#000000,#000000,#000000,,#000000,#000000,,,,,,,">
+		<comment>説明お姉さん：選択肢</comment>
+		<language name="JPN" font=" 1:small" width="216" line="2">ぐるぐる</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216" line="2">ぐるぐる</language>
+	</row>
+
+	<row id="msg_union_info_03_08" text-color="#ff78ff,,,#000000,,#000000,#000000,#000000,,#000000,#000000,,,,,,,">
+		<comment>説明お姉さん：選択肢</comment>
+		<language name="JPN" font=" 1:small" width="216" line="2">おえかき</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216" line="2">おえかき</language>
+	</row>
+
+	<row id="msg_union_info_03_09" text-color="#ff78ff,,,#000000,,#000000,#000000,#000000,,#000000,#000000,,,,,,,">
+		<comment>説明お姉さん：選択肢</comment>
+		<language name="JPN" font=" 1:small" width="216" line="2">チャット</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216" line="2">チャット</language>
+	</row>
+
+	<row id="msg_union_info_03_10" text-color="#ff78ff,,,#000000,,#000000,#000000,#000000,,#000000,#000000,,,,,,,">
+		<comment>説明お姉さん：選択肢</comment>
+		<language name="JPN" font=" 1:small" width="216" line="2">もどる</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216" line="2">もどる</language>
+	</row>
+
+	<row id="msg_connect_union_08" text-color="#000000,,,#000000,,#000000,#000000,#000000,,#000000,#000000,,,,,,,">
+		<comment>●ＯＢＪに話しかけたときの共通はじめのメッセージ
+　通信待機中に、レポートの時計記号を出す
+
+　・msg_union_talkboy_00_02　「相手が男」
+　・msg_union_talkgirl_00_02　「相手が女」
+　・msg_union_talkboy_00_05　「相手が男で取り込み中」
+　・msg_union_talkgirl_00_05　「相手が女で取り込み中」</comment>
+		<language name="JPN">[1:00:トレーナー名:0]に　はなしかけています</language>
+		<language name="JPN_KANJI">[1:00:トレーナー名:0]に　はなしかけています</language>
+	</row>
+
+	<row id="msg_connect_union_10" text-color="#000000,,,#000000,,#000000,#000000,#000000,,#000000,#000000,,,,,,,">
+		<comment>ユニオンルーム</comment>
+		<language name="JPN">あ！　ごめん
+ほかに　ようじが　あるから[BE:00:ページ切り替え（行送り）]
+また　こんどね</language>
+		<language name="JPN_KANJI">あ！　ごめん
+ほかに　ようじが　あるから[BE:00:ページ切り替え（行送り）]
+また　こんどね</language>
+	</row>
+
+	<row id="msg_union_friend_name01" text-color="#000000,,,#000000,,#000000,#000000,#000000,,#000000,#000000,,,,,,,">
+		<comment>ユニオン下画面の１番上にある掲示板の友達名。</comment>
+		<language name="JPN" font=" 1:small" width="120">[1:00:トレーナー名:0]のともだち</language>
+		<language name="JPN_KANJI" font=" 1:small" width="120">[1:00:トレーナー名:0]のともだち</language>
+	</row>
+
+	<row id="msg_union_friend_name02" text-color="#000000,,,#000000,,#000000,#000000,#000000,,#000000,#000000,,,,,,,">
+		<comment>ユニオン下画面の２番目にある掲示板の友達名。</comment>
+		<language name="JPN" font=" 1:small" width="120">[1:00:トレーナー名:1]のともだち</language>
+		<language name="JPN_KANJI" font=" 1:small" width="120">[1:00:トレーナー名:1]のともだち</language>
+	</row>
+
+	<row id="msg_union_friend_name03" text-color="#000000,,,#000000,,#000000,#000000,#000000,,#000000,#000000,,,,,,,">
+		<comment>ユニオン下画面の３番目にある掲示板の友達名。</comment>
+		<language name="JPN" font=" 1:small" width="120">[1:00:トレーナー名:2]のともだち</language>
+		<language name="JPN_KANJI" font=" 1:small" width="120">[1:00:トレーナー名:2]のともだち</language>
+	</row>
+
+	<row id="msg_union_greeting_01" text-color="#000000,,,#000000,,#000000,#000000,#000000,,#000000,#000000,,,,,,,">
+		<comment>日本語のあいさつ</comment>
+		<language name="JPN" width="120">こんにちは！</language>
+		<language name="JPN_KANJI" width="120">こんにちは！</language>
+	</row>
+
+	<row id="msg_union_greeting_02" text-color="#000000,,,#000000,,#000000,#000000,#000000,,#000000,#000000,,,,,,,">
+		<comment>英語のあいさつ</comment>
+		<language name="JPN" width="120">Hello</language>
+		<language name="JPN_KANJI" width="120">Hello</language>
+	</row>
+
+	<row id="msg_union_greeting_03" text-color="#000000,,,#000000,,#000000,#000000,#000000,,#000000,#000000,,,,,,,">
+		<comment>フランス語のあいさつ</comment>
+		<language name="JPN" width="120">Bonjour</language>
+		<language name="JPN_KANJI" width="120">Bonjour</language>
+	</row>
+
+	<row id="msg_union_greeting_04" text-color="#000000,,,#000000,,#000000,#000000,#000000,,#000000,#000000,,,,,,,">
+		<comment>イタリア語のあいさつ</comment>
+		<language name="JPN" width="120">Ciao</language>
+		<language name="JPN_KANJI" width="120">Ciao</language>
+	</row>
+
+	<row id="msg_union_greeting_05" text-color="#000000,,,#000000,,#000000,#000000,#000000,,#000000,#000000,,,,,,,">
+		<comment>ドイツ語のあいさつ</comment>
+		<language name="JPN" width="120">Hallo</language>
+		<language name="JPN_KANJI" width="120">Hallo</language>
+	</row>
+
+	<row id="msg_union_greeting_06" text-color="#000000,,,#000000,,#000000,#000000,#000000,,#000000,#000000,,,,,,,">
+		<comment>スペイン語のあいさつ</comment>
+		<language name="JPN" width="120">Hola</language>
+		<language name="JPN_KANJI" width="120">Hola</language>
+	</row>
+
+	<row id="msg_union_greeting_07" text-color="#000000,,,#000000,,#000000,#000000,#000000,,#000000,#000000,,,,,,,">
+		<comment>その他のあいさつ</comment>
+		<language name="JPN" width="120">コンニチハ！</language>
+		<language name="JPN_KANJI" width="120">コンニチハ！</language>
+	</row>
+
+	<row id="msg_union_battle_01_01" text-color="#000000,,,,,,#000000,#000000,,#000000,#000000,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,#80ffff,,#80ffff,#80ffff,#80ffff,#80ffff,,,#80ffff,,">
+		<comment>★誰かに話し掛けて、「たいせん」を選んだとき
+　２人か４人で対戦するかの選択項目。
+</comment>
+		<language name="JPN" width="216" line="2">ふたりで　たいせん</language>
+		<language name="JPN_KANJI" width="216" line="2">ふたりで　たいせん</language>
+	</row>
+
+	<row id="msg_union_battle_01_02" text-color="#000000,,,,,,#000000,#000000,,#000000,#000000,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,#80ffff,,#80ffff,#80ffff,#80ffff,#80ffff,,,#80ffff,,">
+		<comment>★誰かに話し掛けて、「たいせん」を選んだとき
+　２人か４人で対戦するかの選択項目。
+</comment>
+		<language name="JPN" width="216" line="2">４にんで　たいせん</language>
+		<language name="JPN_KANJI" width="216" line="2">４にんで　たいせん</language>
+	</row>
+
+	<row id="msg_union_battle_01_03" text-color="#000000,,,,,,#000000,#000000,,#000000,#000000,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,#80ffff,,#80ffff,#80ffff,#80ffff,#80ffff,,,#80ffff,,">
+		<comment>「２人で対戦」「４人で対戦」のウィンドウを閉じる
+あいさつ、対戦、交換、レコード、お絵かき、ぐるぐる交換のウィンドウを表示。</comment>
+		<language name="JPN" width="216" line="2">やめる</language>
+		<language name="JPN_KANJI" width="216" line="2">やめる</language>
+	</row>
+
+	<row id="msg_union_battle_01_04" text-color="#000000,,,,,,#000000,#000000,,#000000,#000000,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,#80ffff,,#80ffff,#80ffff,#80ffff,#80ffff,,,#80ffff,,">
+		<comment>各種ルール選択へ</comment>
+		<language name="JPN" width="216" line="2">シングルバトル</language>
+		<language name="JPN_KANJI" width="216" line="2">シングルバトル</language>
+	</row>
+
+	<row id="msg_union_battle_01_05" text-color="#000000,,,,,,#000000,#000000,,#000000,#000000,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,#80ffff,,#80ffff,#80ffff,#80ffff,#80ffff,,,#80ffff,,">
+		<comment>各種ルール選択へ</comment>
+		<language name="JPN" width="216" line="2">ダブルバトル</language>
+		<language name="JPN_KANJI" width="216" line="2">ダブルバトル</language>
+	</row>
+
+	<row id="msg_union_battle_01_06" text-color="#000000,,,,,,#000000,#000000,,#000000,#000000,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,#80ffff,,#80ffff,#80ffff,#80ffff,#80ffff,,,#80ffff,,">
+		<comment>各種ルール選択へ</comment>
+		<language name="JPN" width="216" line="2">トリプルバトル</language>
+		<language name="JPN_KANJI" width="216" line="2">トリプルバトル</language>
+	</row>
+
+	<row id="msg_union_battle_01_07" text-color="#000000,,,,,,#000000,#000000,,#000000,#000000,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,#80ffff,,#80ffff,#80ffff,#80ffff,#80ffff,,,#80ffff,,">
+		<comment>各種ルール選択へ</comment>
+		<language name="JPN" width="216" line="2">ローテーションバトル</language>
+		<language name="JPN_KANJI" width="216" line="2">ローテーションバトル</language>
+	</row>
+
+	<row id="msg_union_battle_01_08" text-color="#000000,,,,,,#000000,#000000,,#000000,#000000,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,#80ffff,,#80ffff,#80ffff,#80ffff,#80ffff,,,#80ffff,,">
+		<comment>・「２人で対戦」「４人で対戦」のウィンドウへ戻る。</comment>
+		<language name="JPN" width="216" line="2">もどる</language>
+		<language name="JPN_KANJI" width="216" line="2">もどる</language>
+	</row>
+
+	<row id="msg_union_battle_01_09" text-color="#000000,,,,,,#000000,#000000,,#000000,#000000,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,#80ffff,,#80ffff,#80ffff,#80ffff,#80ffff,,,#80ffff,,">
+		<comment>・msg_union_talkboy_03_01　「男ＯＢＪに話しかけて参加条件をクリアのとき」
+　msg_union_talkgirl_03_01　「女ＯＢＪに話しかけて参加条件をクリアのとき」
+・参加できない場合、各種の参加ＮＧメッセージへ。</comment>
+		<language name="JPN" width="216" line="2">レベル５０ルール</language>
+		<language name="JPN_KANJI" width="216" line="2">レベル５０ルール</language>
+	</row>
+
+	<row id="msg_union_battle_01_10" text-color="#000000,,,,,,#000000,#000000,,#000000,#000000,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,#80ffff,,#80ffff,#80ffff,#80ffff,#80ffff,,,#80ffff,,">
+		<comment>・msg_union_talkboy_03_01　「男ＯＢＪに話しかけて参加条件をクリアのとき」
+　msg_union_talkgirl_03_01　「女ＯＢＪに話しかけて参加条件をクリアのとき」
+・参加できない場合、各種の参加ＮＧメッセージへ。</comment>
+		<language name="JPN" width="216" line="2">せいげんなし</language>
+		<language name="JPN_KANJI" width="216" line="2">せいげんなし</language>
+	</row>
+
+	<row id="msg_union_battle_01_11" text-color="#000000,,,,,,#000000,#000000,,#000000,#000000,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,#80ffff,,#80ffff,#80ffff,#80ffff,#80ffff,,,#80ffff,,">
+		<comment>・msg_union_talkboy_03_01　「男ＯＢＪに話しかけて参加条件をクリアのとき」
+　msg_union_talkgirl_03_01　「女ＯＢＪに話しかけて参加条件をクリアのとき」
+・参加できない場合、各種の参加ＮＧメッセージへ。</comment>
+		<language name="JPN" width="216" line="2">スタンダードルール</language>
+		<language name="JPN_KANJI" width="216" line="2">スタンダードルール</language>
+	</row>
+
+	<row id="msg_union_battle_01_12" text-color="#000000,,,,,,#000000,#000000,,#000000,#000000,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,#80ffff,,#80ffff,#80ffff,#80ffff,#80ffff,,,#80ffff,,">
+		<comment>・対戦形式決定のウィンドウへ戻る</comment>
+		<language name="JPN" width="216" line="2">もどる</language>
+		<language name="JPN_KANJI" width="216" line="2">もどる</language>
+	</row>
+
+	<row id="msg_union_battle_01_13" text-color="#000000,,,,,,#000000,#000000,,#000000,#000000,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,#80ffff,,#80ffff,#80ffff,#80ffff,#80ffff,,,#80ffff,,">
+		<comment>ダブルバトル（レベル５０ルール、制限なし）の参加ＮＧメッセージ</comment>
+		<language name="JPN" width="216" line="2">たいせんするには　ポケモンが
+２ひき　いじょう　ひつようです</language>
+		<language name="JPN_KANJI" width="216" line="2">たいせんするには　ポケモンが
+２ひき　いじょう　ひつようです</language>
+	</row>
+
+	<row id="msg_union_battle_01_14" text-color="#000000,,,,,,#000000,#000000,,#000000,#000000,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,#80ffff,,#80ffff,#80ffff,#80ffff,#80ffff,,,#80ffff,,">
+		<comment>トリプル、ローテーションバトル（レベル５０ルール、制限なし）の参加ＮＧメッセージ</comment>
+		<language name="JPN" width="216" line="2">たいせんするには　ポケモンが
+３ひき　いじょう　ひつようです</language>
+		<language name="JPN_KANJI" width="216" line="2">たいせんするには　ポケモンが
+３ひき　いじょう　ひつようです</language>
+	</row>
+
+	<row id="msg_union_battle_01_15" text-color="#000000,,,,,,#000000,#000000,,#000000,#000000,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,#80ffff,,#80ffff,#80ffff,#80ffff,#80ffff,,,#80ffff,,">
+		<comment>シングルバトル（スタンダードルール）の参加ＮＧメッセージ</comment>
+		<language name="JPN" width="216" line="2">じょうけんを　みたした　ポケモンが
+３ひき　いじょう　ひつようです</language>
+		<language name="JPN_KANJI" width="216" line="2">じょうけんを　みたした　ポケモンが
+３ひき　いじょう　ひつようです</language>
+	</row>
+
+	<row id="msg_union_battle_01_16" text-color="#000000,,,,,,#000000,#000000,,#000000,#000000,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,#80ffff,,#80ffff,#80ffff,#80ffff,#80ffff,,,#80ffff,,">
+		<comment>ダブルバトル（スタンダードルール）の参加ＮＧメッセージ</comment>
+		<language name="JPN" width="216" line="2">じょうけんを　みたした　ポケモンが
+４ひき　いじょう　ひつようです</language>
+		<language name="JPN_KANJI" width="216" line="2">じょうけんを　みたした　ポケモンが
+４ひき　いじょう　ひつようです</language>
+	</row>
+
+	<row id="msg_union_battle_01_17" text-color="#000000,,,,,,#000000,#000000,,#000000,#000000,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,#80ffff,,#80ffff,#80ffff,#80ffff,#80ffff,,,#80ffff,,">
+		<comment>トリプル、ローテーションバトル（スタンダードルール）の参加ＮＧメッセージ</comment>
+		<language name="JPN" width="216" line="2">じょうけんを　みたした　ポケモンが
+６ひき　いじょう　ひつようです</language>
+		<language name="JPN_KANJI" width="216" line="2">じょうけんを　みたした　ポケモンが
+６ひき　いじょう　ひつようです</language>
+	</row>
+
+	<row id="msg_union_battle_01_18" text-color="#000000,,,,,,#000000,#000000,,#000000,#000000,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,#80ffff,,#80ffff,#80ffff,#80ffff,#80ffff,,,#80ffff,,">
+		<comment>マルチバトルの参加ＮＧメッセージ</comment>
+		<language name="JPN" width="216" line="2">たいせんするには　ポケモンが
+３ひき　いじょう　ひつようです</language>
+		<language name="JPN_KANJI" width="216" line="2">たいせんするには　ポケモンが
+３ひき　いじょう　ひつようです</language>
+	</row>
+
+	<flowchart-group-list>
+		<flowchart-group japanese="root" english="root" group-id="0" parent-id="-1"/>
+	</flowchart-group-list>
+</body>
+
+</gmml>

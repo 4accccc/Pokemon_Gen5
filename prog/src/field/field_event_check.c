@@ -34,6 +34,7 @@
 #include "event_fieldtalk.h"      //EVENT_FieldTalk
 #include "event_fieldmap_menu.h"  //EVENT_FieldMapMenu
 #include "script.h"     //SCRIPT_SetEventScript
+#include "net_app/union/union_event_check.h"
 
 
 #include "field_encount.h"      //FIELD_ENCOUNT_CheckEncount
@@ -444,6 +445,13 @@ GMEVENT * FIELD_EVENT_CheckUnion( GAMESYS_WORK *gsys, void *work )
   
   setupRequest( &req, gsys, fieldWork );
 
+  //デバッグ用チェック
+#ifdef  PM_DEBUG
+  event = DEBUG_checkKeyEvent( &req, gsys, fieldWork );
+  if (event != NULL) {
+    return event;
+  }
+#endif //debug
   
 //☆☆☆一歩移動チェックがここから
   //座標イベントチェック
@@ -478,19 +486,9 @@ GMEVENT * FIELD_EVENT_CheckUnion( GAMESYS_WORK *gsys, void *work )
 
 	///通信用会話処理(仮
   {
-    FIELD_COMM_MAIN * commSys = FIELDMAP_GetCommSys(fieldWork);
-    
-    if(commSys != NULL){
-      //話しかける側
-      if( req.talkRequest ){
-        if( FIELD_COMM_MAIN_CanTalk( commSys ) == TRUE ){
-          return FIELD_COMM_EVENT_StartTalk( gsys , fieldWork , commSys );
-        }
-      }
-
-      //話しかけられる側(中で一緒に話せる状態かのチェックもしてしまう
-      if( FIELD_COMM_MAIN_CheckReserveTalk( commSys ) == TRUE ){
-        return FIELD_COMM_EVENT_StartTalkPartner( gsys , fieldWork , commSys );
+    if(req.talkRequest){
+      if(UnionEvent_TalkCheck( gsys, fieldWork ) != NULL){
+        return NULL;
       }
     }
   }
