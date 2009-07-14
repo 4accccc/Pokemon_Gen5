@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="lee_hyunjung" host="W00154A" date="2009-05-26T11:14:03" source="pcmachine01.mb"/>
+	<create user="lee_hyunjung" host="W00154A" date="2009-07-13T19:23:49" source="pcmachine01.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 </head>
 
 <body>
 
-<original_create user="lee_hyunjung" host="W00154A" date="2009-05-26T11:14:03" source="pcmachine01.mb"/>
+<original_create user="lee_hyunjung" host="W00154A" date="2009-07-13T19:23:49" source="pcmachine01.mb"/>
 <original_generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 
 <model_info
@@ -30,52 +30,52 @@
 <box_test pos_scale="3" xyz="-2.629639 0.321045 -2.261963" whd="5.330811 5.197754 4.683594"/>
 
 <tex_image_array size="2">
-	<tex_image index="0" name="in02_kage"
+	<tex_image index="0" name="pc_kage"
 		width="8" height="8" original_width="8" original_height="8"
 		format="palette4"
 		color0_mode="color"
-		palette_name="in02_kage_pl"
-		path="C:/home/wb_data3d/build_model/indoor/pcmachine01/in02_kage.tga"
+		palette_name="pc_kage_pl"
+		path="C:/home/wb_data3d/build_model/indoor/pcmachine01/tex/pc_kage.tga"
 	>
 		<bitmap size="8">
 			0000 0000 0000 0000 0000 0000 0000 0000
 		</bitmap>
 	</tex_image>
-	<tex_image index="1" name="meka2"
+	<tex_image index="1" name="pc_meka01"
 		width="16" height="32" original_width="16" original_height="32"
 		format="palette16"
 		color0_mode="transparency"
-		palette_name="meka2_pl"
-		path="C:/home/wb_data3d/build_model/indoor/pcmachine01/tex/meka2.tga"
+		palette_name="pc_meka01_pl"
+		path="C:/home/wb_data3d/build_model/indoor/pcmachine01/tex/pc_meka01.tga"
 	>
 		<bitmap size="128">
-			0000 0000 3331 3333 0000 0000 6662 6666
-			5550 0000 aaa3 aaaa 9950 000c aaa3 aaaa
-			cc00 000c aaa3 aaaa 0000 0000 cccc cccc
-			0000 0000 cccc aaac 5550 0000 7777 7777
-			ee50 000c 7777 7777 cc00 000c 7777 7777
-			0000 0000 7777 7777 0000 0000 7777 7777
-			5550 0000 7777 7777 ee50 000c 87bb bbb7
-			cc00 000c 87bb bbb7 0000 0000 77bb bbb7
-			0000 0000 bbbb bbbb 5550 0000 dddd dddd
-			ee50 000c dddd dddd ccc0 000c dddd dddd
-			0000 0000 dddd dddd bbbb bbbb bbbb aaab
-			6666 6666 6666 aaa6 aaa6 aaaa aaaa ccc6
-			cca6 cccc accc ccc6 34a6 3333 a433 ccc6
-			34a6 3333 a433 ccc6 3466 4444 6434 ccc6
-			3466 6666 6436 ccc6 3466 6666 6436 ccc6
-			a466 aaaa 64aa ccc6 6666 6666 6666 ccc6
+			8888 8888 dddf dddd 8888 8888 bbbe bbbb
+			ccc8 8888 aaad aaaa 11c8 8889 aaad aaaa
+			9988 8889 aaad aaaa 8888 8888 9999 9999
+			8888 8888 9999 aaa9 ccc8 8888 2222 2222
+			55c8 8889 2222 2222 9988 8889 2222 2222
+			8888 8888 2222 2222 8888 8888 2222 2222
+			ccc8 8888 2222 2222 55c8 8889 7244 4442
+			9988 8889 7244 4442 8888 8888 2244 4442
+			8888 8888 4444 4444 ccc8 8888 3333 3333
+			55c8 8889 3333 3333 9998 8889 3333 3333
+			8888 8888 3333 3333 4444 4444 4444 aaa4
+			bbbb bbbb bbbb aaab aaab aaaa aaaa 999b
+			99ab 9999 a999 999b d6ab dddd a6dd 999b
+			d6ab dddd a6dd 999b d6bb 6666 b6d6 999b
+			d6bb bbbb b6db 999b d6bb bbbb b6db 999b
+			a6bb aaaa b6aa 999b bbbb bbbb bbbb 999b
 		</bitmap>
 	</tex_image>
 </tex_image_array>
 
 <tex_palette_array size="2">
-	<tex_palette index="0" name="in02_kage_pl" color_size="4">
-		394a 7fff 7fff 7fff
+	<tex_palette index="0" name="pc_kage_pl" color_size="4">
+		0000 7fff 7fff 7fff
 	</tex_palette>
-	<tex_palette index="1" name="meka2_pl" color_size="16">
-		0000 18c6 318c 4631 4e72 5294 56b5 5a45
-		5bff 5dbf 5ef7 6685 6f7b 76e5 7f45 7fff
+	<tex_palette index="1" name="pc_meka01_pl" color_size="16">
+		7fff 5dbf 5a45 76e5 6685 7f45 4e72 5bff
+		7fff 6f7b 5ef7 56b5 5294 4631 318c 18c6
 	</tex_palette>
 </tex_palette_array>
 
@@ -399,13 +399,13 @@
 					<tex st="8.375000 24.250000"/>
 					<pos_xy xy="1.972168 1.999268"/>
 					<pos_xz xz="0.986084 1.723389"/>
-					<tex st="6.000000 0.000000"/>
+					<tex st="6.875000 0.000000"/>
 					<pos_xyz xyz="-1.192139 2.128418 2.364258"/>
-					<tex st="6.000000 21.000000"/>
+					<tex st="6.875000 21.000000"/>
 					<pos_xy xy="1.192139 2.128418"/>
-					<tex st="1.000000 21.000000"/>
+					<tex st="0.125000 21.000000"/>
 					<pos_xyz xyz="1.190674 2.128906 1.856445"/>
-					<tex st="1.000000 0.000000"/>
+					<tex st="0.125000 0.000000"/>
 					<pos_xy xy="-1.190674 2.128906"/>
 					<tex st="8.312500 22.687500"/>
 					<pos_xyz xyz="-2.629639 1.998779 0.015381"/>
