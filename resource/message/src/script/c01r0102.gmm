@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-07-11T13:51:38"/>
+	<create user="matsumiya" host="W00207" date="2009-07-14T12:11:06"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -312,12 +312,10 @@
 少女（聡明）</attribute>
 		<language name="JPN" width="256">ポケモンの　とくせいに　ついて
 りかい　しておくことで[BE:00:ページ切り替え（行送り）]
-しょうぶを　ゆうりに　すすめられる[BE:01:ページ切り替え（クリア）]
-そんなことも　あるのよ</language>
+しょうぶを　ゆうりに　すすめられるわ</language>
 		<language name="JPN_KANJI" width="256">ポケモンの　とくせいに　ついて
 理解しておくことで[BE:00:ページ切り替え（行送り）]
-勝負を　有利に　すすめられる[BE:01:ページ切り替え（クリア）]
-そんなことも　あるのよ</language>
+勝負を　有利に　すすめられるわ</language>
 	</row>
 
 	<row id="msg_c01r0102_boy3_01">
