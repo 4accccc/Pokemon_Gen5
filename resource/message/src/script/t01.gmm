@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-07-11T16:17:34"/>
+	<create user="matsumiya" host="W00207" date="2009-07-14T18:57:46"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -235,7 +235,7 @@
 			<list entry="1" japanese="グループ 1" english="グループ 1" colorID="0"/>
 		</group>
 		<number position="-1" width="100"/>
-		<comment position="4" width="189"/>
+		<comment position="4" width="244"/>
 		<erase position="-1" width="100"/>
 		<attribute japanese="キャラ指定" english="キャラ指定" type="string" default="" position="1" width="100">
 		</attribute>
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -293,13 +293,12 @@
 
 
 	<row id="msg_t01_black_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
-		<comment>♂
-・ポケモン図鑑入手まで
-　ストッパー
-・POS（）を踏むと発動
+		<comment>♂：研究所の前
+・研究所に入るためのストッパー
+・POS（X=..Z=）を踏むと発動
 ・メッセージ表示後
 　連れ歩きで研究所前まで移動
-・研究所前まで移動すると
+・研究所前まで移動したら
 　msg_t01_black_02表示</comment>
 		<attribute name="キャラ指定">友達♂</attribute>
 		<language name="JPN" width="256">ともだち♂『あのな　[1:00:トレーナー名:0]！[BE:01:ページ切り替え（クリア）]
@@ -323,19 +322,18 @@
 		<attribute name="キャラ指定">友達♂</attribute>
 		<language name="JPN" width="256">ともだち♂『わるいけど　ともだち♀の
 いえまで　いってくれない？[BE:01:ページ切り替え（クリア）]
-ぜったい　あいつ
-いえで　のんき　しているから[BE:01:ページ切り替え（クリア）]</language>
+ぜったい　あいつ　いえで
+のんびり　しているからさ[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">ともだち♂『悪いけど　ともだち♀の
 家まで　行ってくれない？[BE:01:ページ切り替え（クリア）]
 絶対　あいつ　家で
-のん気　しているから[BE:01:ページ切り替え（クリア）]</language>
+のんびり　しているからさ[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_t01_white_01">
-		<comment>♀
+		<comment>♀：研究所の前
 ・t01r0301でのイベント後
-　友達♂の隣に配置
-・研究所の前</comment>
+　友達♂の隣に配置</comment>
 		<attribute name="キャラ指定">友達♀</attribute>
 		<language name="JPN" width="256">ともだち♀『まってたよ！</language>
 		<language name="JPN_KANJI" width="256">ともだち♀『待ってたよ！</language>
@@ -361,15 +359,15 @@
 
 	<row id="msg_t01_bigman_01">
 		<comment>♂
-・仮メッセージ
-　DPと同じ</comment>
-		<attribute name="キャラ指定">man01</attribute>
+・仮メッセージ</comment>
+		<attribute name="キャラ指定">BIGMAN
+太った青年</attribute>
 		<language name="JPN" width="256">かがくの　ちからって　すげー！[BE:01:ページ切り替え（クリア）]
-いまじゃ　むせんを　つかって
-せかいの　ひとびとと　あそべるんだと</language>
+いまじゃ　せきがいせんを　つかって
+あんなことや　こんなことが　できるぞ</language>
 		<language name="JPN_KANJI" width="256">科学の　力って　すげー！[BE:01:ページ切り替え（クリア）]
-今じゃ　無線を　使って
-世界の　人々と　遊べるんだと</language>
+今じゃ　赤外線を　使って
+あんなことや　こんなことが　できるぞ</language>
 	</row>
 
 	<row id="msg_t01_testmsg01" back-color="#808080,,,#808080,,#808080,#808080,,,,,,#808080,,,,,,">
@@ -399,12 +397,14 @@
 	</row>
 
 	<row id="msg_t01_testmsg02" back-color="#808080,,,#808080,,#808080,#808080,,,,,,#808080,,,,,,">
+		<comment>はい・いいえ処理</comment>
 		<attribute name="キャラ指定">woman01</attribute>
 		<language name="JPN" width="256">あなた　ポケモン　すき？</language>
 		<language name="JPN_KANJI" width="256">あなた　ポケモン　好き？</language>
 	</row>
 
 	<row id="msg_t01_testmsg02_01" back-color="#808080,,,#808080,,#808080,#808080,,,,,,#808080,,,,,,">
+		<comment>はい</comment>
 		<language name="JPN" width="256">うれしい！
 あたしと　いっしょね</language>
 		<language name="JPN_KANJI" width="256">うれしい！
@@ -412,6 +412,7 @@
 	</row>
 
 	<row id="msg_t01_testmsg02_02" back-color="#808080,,,#808080,,#808080,#808080,,,,,,#808080,,,,,,">
+		<comment>いいえ</comment>
 		<language name="JPN" width="256">そう……？
 なんだか　さみしいな……</language>
 		<language name="JPN_KANJI" width="256">そう……？
