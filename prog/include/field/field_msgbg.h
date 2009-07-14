@@ -175,6 +175,12 @@ extern void FLDMENUFUNC_AddStringListData( FLDMENUFUNC_LISTDATA *listData,
 extern void FLDMENUFUNC_AddArcStringListData(
 		FLDMENUFUNC_LISTDATA *listData,
 		GFL_MSGDATA *msgData, u32 strID, u32 param, HEAPID heapID );
+extern u32 FLDMENUFUNC_GetListLengthMax( const FLDMENUFUNC_LISTDATA *listData );
+extern u32 FLDMENUFUNC_GetListMax( const FLDMENUFUNC_LISTDATA *listData );
+extern u32 FLDMENUFUNC_GetListMenuWidth(
+    const FLDMENUFUNC_LISTDATA *listData, u32 font_size );
+extern u32 FLDMENUFUNC_GetListMenuHeight(
+    const FLDMENUFUNC_LISTDATA *listData, u32 font_size );
 extern void FLDMENUFUNC_InputHeaderListSize(
 	FLDMENUFUNC_HEADER *head, u16 count,
 	u16 bmppos_x, u16 bmppos_y, u16 bmpsize_x, u16 bmpsize_y );
