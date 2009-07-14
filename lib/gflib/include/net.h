@@ -11,13 +11,9 @@ extern "C" {
 //=============================================================================
 #pragma once
 
-#include "ui.h"
+#include "heap.h"
 
 
-//#if defined(MULTI_BOOT_MAKE)   // マルチブートmake
-//#define GFL_NET_WIFI    (0)   ///< WIFIをゲームで使用する場合 ON
-//#define GFL_NET_IRC     (0)   ///< IRCをゲームで使用する場合 ON
-//#else
 #define GFL_NET_WIFI    (1)   ///< WIFIをゲームで使用する場合 ON
 #define GFL_NET_IRC     (1)   ///< IRCをゲームで使用する場合 ON
 
@@ -25,50 +21,42 @@ extern "C" {
 #include <dwc.h>
 #endif  //GFL_NET_WIFI
 
-//#endif
 
-//#if defined(DEBUG_ONLY_FOR_ohno)
-//#define BEACON_TEST (0)
-//#else
-//#define BEACON_TEST    (0) 
-//#endif
 
 // デバッグ用決まり文句----------------------
-#if defined(DEBUG_ONLY_FOR_ohno)
-#define GFL_NET_DEBUG   (1)   ///< ユーザーインターフェイスデバッグ用 0:無効 1:有効
-#define GFL_LOBBY_DEBUG	(0)		///<Wi-Fi広場デバッグ用 0:無効 1:有効
-#elif defined(DEBUG_ONLY_FOR_matsuda)
-#define GFL_NET_DEBUG   (0)   ///< ユーザーインターフェイスデバッグ用 0:無効 1:有効
-#define GFL_LOBBY_DEBUG	(0)		///<Wi-Fi広場デバッグ用 0:無効 1:有効
-#elif defined(DEBUG_ONLY_FOR_ariizumi_nobuhiko)
-#define GFL_NET_DEBUG   (0)   ///< ユーザーインターフェイスデバッグ用 0:無効 1:有効
-#define GFL_LOBBY_DEBUG	(0)		///<Wi-Fi広場デバッグ用 0:無効 1:有効
-#elif defined(DEBUG_ONLY_FOR_toru_nagihashi)
-#define GFL_NET_DEBUG   (1)   ///< ユーザーインターフェイスデバッグ用 0:無効 1:有効
-#define GFL_LOBBY_DEBUG	(0)		///<Wi-Fi広場デバッグ用 0:無効 1:有効
-#else
-#define GFL_NET_DEBUG   (0)   ///< ユーザーインターフェイスデバッグ用 0:無効 1:有効
-#define GFL_LOBBY_DEBUG	(0)		///<Wi-Fi広場デバッグ用 0:無効 1:有効
-#endif
 
-//#if defined(DEBUG_ONLY_FOR_ohno)
-//#undef GFL_NET_DEBUG
-//#define GFL_NET_DEBUG   (1)
-//#endif  //DEBUG_ONLY_FOR_ohno
+#ifdef PM_DEBUG
+
+extern BOOL GFL_NET_DebugGetPrintOn(void);
+#define GFL_NET_DEBUG   (1)   ///< ユーザーインターフェイスデバッグ用 0:無効 1:有効
+#define GFL_LOBBY_DEBUG	(1)		///<Wi-Fi広場デバッグ用 0:無効 1:有効
+
+#else //PM_DEBUG
+
+#define GFL_NET_DEBUG   (0)   ///< ユーザーインターフェイスデバッグ用 0:無効 1:有効
+#define GFL_LOBBY_DEBUG	(0)		///<Wi-Fi広場デバッグ用 0:無効 1:有効
+
+#endif  //PM_DEBUG
+
+
 
 #ifndef NET_PRINT
 #if GFL_NET_DEBUG
+
 #define NET_PRINT(...) \
-  (void) ((OS_TPrintf(__VA_ARGS__)))
+  if(GFL_NET_DebugGetPrintOn())  (void) ((OS_TPrintf(__VA_ARGS__)))
+
 #else   //GFL_NET_DEBUG
+
 #define NET_PRINT(...)           ((void) 0)
+
 #endif  // GFL_NET_DEBUG
 #endif  //GFL_NET_PRINT
 // デバッグ用決まり文句----------------------
 // データダンプ
 #ifdef GFL_NET_DEBUG
 extern void GFL_NET_SystemDump_Debug(u8* adr, int length, char* pInfoStr);
-#define DEBUG_DUMP(a,l,s)  GFL_NET_SystemDump_Debug(a,l,s)
+#define DEBUG_DUMP(a,l,s)  if(GFL_NET_DebugGetPrintOn()) GFL_NET_SystemDump_Debug(a,l,s)
 #else
 #define DEBUG_DUMP(a,l,s)       ((void) 0)
 #endif
@@ -79,7 +67,7 @@ extern void GFL_NET_SystemDump_Debug(u8* adr, int length, char* pInfoStr);
 #ifndef IRC_PRINT
 #if GFL_IRC_DEBUG
 #define IRC_PRINT(...) \
-  (void) ((OS_TPrintf(__VA_ARGS__)))
+  if(GFL_NET_DebugGetPrintOn()) (void) ((OS_TPrintf(__VA_ARGS__)))
 #else   //GFL_IRC_DEBUG
 #define IRC_PRINT(...)           ((void) 0)
 #endif  // GFL_IRC_DEBUG
@@ -88,7 +76,7 @@ extern void GFL_NET_SystemDump_Debug(u8* adr, int length, char* pInfoStr);
 #ifndef LOBBY_PRINT
 #if GFL_LOBBY_DEBUG
 #define LOBBY_PRINT(...) \
-  (void) ((OS_TPrintf(__VA_ARGS__)))
+  if(GFL_NET_DebugGetPrintOn()) (void) ((OS_TPrintf(__VA_ARGS__)))
 #else   //GFL_LOBBY_DEBUG
 #define LOBBY_PRINT(...)           ((void) 0)
 #endif  // GFL_LOBBY_DEBUG
@@ -949,6 +937,18 @@ extern int GFL_NET_SystemGetConnectNum(void);
  */
 //----------------------------------------------------------------
 extern BOOL GFL_NET_SystemIsSendCommand(int command, int myID);
+
+
+
+#ifdef PM_DEBUG
+//----------------------------------------------------------------
+/**
+ * @brief		デバッグしたい時にON
+ * @retval  none
+ */
+//----------------------------------------------------------------
+extern void GFL_NET_DebugPrintOn(void);
+#endif
 
 
 #include "net_devicetbl.h"

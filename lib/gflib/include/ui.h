@@ -9,29 +9,12 @@
 
 #pragma once
 
-#include <heap.h>
+#include "heap.h"
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-// デバッグ用決まり文句----------------------
-#define GFL_UI_DEBUG   (0)   ///< ユーザーインターフェイスデバッグ用 0:無効 1:有効
-
-#if defined(DEBUG_ONLY_FOR_ohno)
-#undef GFL_UI_DEBUG
-#define GFL_UI_DEBUG   (1)
-#endif  //DEBUG_ONLY_FOR_ohno
-
-#ifndef GFL_UI_PRINT
-#if GFL_UI_DEBUG
-#define GFL_UI_PRINT(...) \
-  (void) ((OS_Printf(__VA_ARGS__)))
-#else   //GFL_UI_DEBUG
-#define GFL_UI_PRINT(...)           ((void) 0)
-#endif  // GFL_UI_DEBUG
-#endif  //GFL_UI_PRINT
-// デバッグ用決まり文句----------------------
 
 
 //-----------------------------------------------------------------------------
