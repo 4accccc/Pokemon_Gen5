@@ -577,7 +577,7 @@ VMHANDLE * SCRIPT_AddVMachine(
 	
 	head.gsys = gsys;
 	head.gdata = GAMESYSTEM_GetGameData( gsys );
-	head.fldmmdlsys = GAMEDATA_GetMMdlSys( head.gdata );
+	head.mmdlsys = GAMEDATA_GetMMdlSys( head.gdata );
 	head.script = sc;
 	
 	work = SCRCMD_WORK_Create( &head, heapID );
@@ -641,7 +641,6 @@ static u16 SetScriptDataSub( SCRCMD_WORK *work, VMHANDLE* core, u32 zone_id, u16
 		SetScriptData( work, core,
         NARC_script_seq_trainer_bin,
         NARC_script_message_common_scr_dat, heapID );
-    OS_Printf( "トレーナースクリプトきました\n" );
 		scr_id -= ID_TRAINER_OFFSET;
   }
   else if( scr_id >= ID_COMMON_SCR_OFFSET )		//共通スクリプトID

@@ -926,6 +926,72 @@ void FLDMENUFUNC_AddArcStringListData( FLDMENUFUNC_LISTDATA *listData,
 
 //--------------------------------------------------------------
 /**
+ * FLDMENUFUNC_LISTDATAに格納されているリストの最大文字数を取得
+ * @param listData FLDMENUFUNC_LISTDATA
+ * @retval u32 リスト内、最大文字数
+ */
+//--------------------------------------------------------------
+u32 FLDMENUFUNC_GetListLengthMax( const FLDMENUFUNC_LISTDATA *listData )
+{
+  u32 len;
+  len = BmpMenuWork_GetListMaxLength( (const BMP_MENULIST_DATA*)listData );
+  return( len );
+}
+
+//--------------------------------------------------------------
+/**
+ * FLDMENUFUNC_LISTDATAに格納されているリスト数を取得
+ * @param listData FLDMENUFUNC_LISTDATA
+ * @retval u32 リスト内、最大文字数
+ */
+//--------------------------------------------------------------
+u32 FLDMENUFUNC_GetListMax( const FLDMENUFUNC_LISTDATA *listData )
+{
+  u32 len;
+  len = BmpMenuWork_GetListMax( (const BMP_MENULIST_DATA*)listData );
+  return( len );
+}
+
+//--------------------------------------------------------------
+/**
+ * FLDMENUFUNC_LISTDATAに格納されているリストの最大文字数から
+ * 必要なメニュー横幅を取得。
+ * @param listData FLDMENUFUNC_LISTDATA
+ * @param font_size フォント横サイズ
+ * @retval u32 メニュー横幅 キャラ単位
+ */
+//--------------------------------------------------------------
+u32 FLDMENUFUNC_GetListMenuWidth(
+    const FLDMENUFUNC_LISTDATA *listData, u32 font_size )
+{
+  u32 c,len = FLDMENUFUNC_GetListLengthMax( listData );
+  len *= font_size;
+  c = len / 8;
+  if( (len & 0x07) ){ c++; }
+  return( c );
+}
+
+//--------------------------------------------------------------
+/**
+ * FLDMENUFUNC_LISTDATAに格納されているリスト数から
+ * 必要なメニュー縦幅を取得。
+ * @param listData FLDMENUFUNC_LISTDATA
+ * @param font_size フォント横サイズ
+ * @retval u32 メニュー縦幅 キャラ単位
+ */
+//--------------------------------------------------------------
+u32 FLDMENUFUNC_GetListMenuHeight(
+    const FLDMENUFUNC_LISTDATA *listData, u32 font_size )
+{
+  u32 c,len = FLDMENUFUNC_GetListMax( listData );
+  len *= font_size;
+  c = len / 8;
+  if( (len & 0x07) ){ c++; }
+  return( c );
+}
+
+//--------------------------------------------------------------
+/**
  * FLDMENUFUNC_HEADERにリスト数、座標系情報を追加
  * @param	head	FLDMENUFUNC_HEADER
  * @param	list_count	リスト数

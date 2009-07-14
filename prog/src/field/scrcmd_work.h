@@ -6,12 +6,13 @@
  * @data	05.07.13
  */
 //======================================================================
-#ifndef SCRCMD_WORK_H_FILE
-#define SCRCMD_WORK_H_FILE
-
+#pragma once
 #include <gflib.h>
 #include "system/gfl_use.h"
 #include "gamesystem/gamesystem.h"
+
+#include "msgdata.h"
+#include "print/wordset.h"
 
 #include "field/fldmmdl.h"
 #include "field/script.h"
@@ -37,7 +38,7 @@ typedef struct
 	SCRIPT_WORK *script;
 	GAMESYS_WORK *gsys;
 	GAMEDATA *gdata;
-	MMDLSYS *fldmmdlsys;
+	MMDLSYS *mmdlsys;
 	
   FLDMSGBG *fldMsgBG;
   FIELDMAP_WORK *fieldMap;
@@ -71,6 +72,15 @@ extern const VecFx32 * SCRCMD_WORK_GetTalkMsgWinTailPos( SCRCMD_WORK *work );
 extern void SCRCMD_WORK_SetMMdlAnmTCB( SCRCMD_WORK *work, GFL_TCB *tcb );
 extern BOOL SCRCMD_WORK_CheckMMdlAnmTCB( SCRCMD_WORK *work );
 
-//その他
+//メッセージデータ
 extern void SCRCMD_WORK_CreateMsgData( SCRCMD_WORK *work, u32 datID );
-#endif //SCRCMD_WORK_H_FILE
+
+//メニュー
+extern void SCRCMD_WORK_InitMenuWork( SCRCMD_WORK *work,
+  u16 x, u16 y, u16 cursor, u16 cancel, u16 *ret,
+  WORDSET *wordset, GFL_MSGDATA *msgData );
+extern void SCRCMD_WORK_AddMenuList(
+    SCRCMD_WORK *work, u32 msg_id, u32 param,
+    STRBUF *msgbuf, STRBUF *tmpbuf );
+extern void SCRCMD_WORK_StartMenu( SCRCMD_WORK *work );
+extern BOOL SCRCMD_WORK_ProcMenu( SCRCMD_WORK *work );

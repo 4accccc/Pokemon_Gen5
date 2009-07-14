@@ -424,7 +424,7 @@ static VMCMD_RESULT EvCmdObjAnime( VMHANDLE *core, void *wk )
 	MMDL *fmmdl; //対象のフィールドOBJのポインタ
 	SCRCMD_WORK *work = wk;
 	SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
-	u16 obj_id = VMGetWorkValue(core,work); //obj ID
+	u16 obj_id = SCRCMD_GetVMWorkValue(core,work); //obj ID
 	u32 pos = VMGetU32(core); //list pos
 	
 	fmmdl = FieldObjPtrGetByObjId( work, obj_id );
