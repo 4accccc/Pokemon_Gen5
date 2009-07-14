@@ -100,9 +100,12 @@ while line = csv_file.gets
 	#距離
 	data.Distance = "0x" + column[1]
 	#アングル
-	data.Angle.X = MakeAngleStr(column[2])
-	data.Angle.Y = MakeAngleStr(column[3])
-	data.Angle.Z = MakeAngleStr(column[4])
+	data.Angle.X = MakeShiftStr(column[2])
+	data.Angle.Y = MakeShiftStr(column[3])
+	data.Angle.Z = MakeShiftStr(column[4])
+	#data.Angle.X = MakeAngleStr(column[2])
+	#data.Angle.Y = MakeAngleStr(column[3])
+	#data.Angle.Z = MakeAngleStr(column[4])
 
 	#ビュータイプ
 	if column[5] == "PER" then
@@ -115,8 +118,10 @@ while line = csv_file.gets
 	#パース
 	data.PerspWay = "0x" + column[6]
 	#クリップ
-	data.Clip.Near = "FX32_ONE * " + column[7]
-	data.Clip.Far = "FX32_ONE * " + column[8]
+	data.Clip.Near = "FX32_ONE * 0x" + column[7]
+	data.Clip.Far = "FX32_ONE * 0x" + column[8]
+	#data.Clip.Near = "FX32_ONE * " + column[7]
+	#data.Clip.Far = "FX32_ONE * " + column[8]
 	#シフト
 	data.Shift.X = MakeShiftStr(column[9])
 	data.Shift.Y = MakeShiftStr(column[10])
