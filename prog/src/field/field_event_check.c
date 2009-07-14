@@ -124,6 +124,7 @@ static GMEVENT * checkEvent_PlayerNaminoriEnd( const EV_REQUEST *req,
 //
 //
 //======================================================================
+
 //--------------------------------------------------------------
 /**
  * イベント　イベント起動チェック
@@ -132,7 +133,7 @@ static GMEVENT * checkEvent_PlayerNaminoriEnd( const EV_REQUEST *req,
  * @retval GMEVENT NULL=イベント無し
  */
 //--------------------------------------------------------------
-GMEVENT * FIELD_EVENT_CheckNormal( GAMESYS_WORK *gsys, void *work )
+static GMEVENT * FIELD_EVENT_CheckNormal( GAMESYS_WORK *gsys, void *work )
 {
 	
   EV_REQUEST req;
@@ -393,6 +394,36 @@ GMEVENT * FIELD_EVENT_CheckNormal( GAMESYS_WORK *gsys, void *work )
     }
 	}
 	return NULL;
+}
+
+
+//--------------------------------------------------------------
+/**
+ * イベント起動チェック と, イベント生成時の処理
+ * @param	gsys GAMESYS_WORK
+ * @param work FIELDMAP_WORK
+ * @retval GMEVENT NULL=イベント無し
+ */
+//--------------------------------------------------------------
+GMEVENT * FIELD_EVENT_CheckNormal_Wrap( GAMESYS_WORK *gsys, void *work )
+{
+	GMEVENT *event;
+	FIELDMAP_WORK *fieldmap_work;
+	FIELD_PLACE_NAME *place_name_sys;
+
+	// イベント起動チェック
+	event = FIELD_EVENT_CheckNormal( gsys, work );
+
+	// イベント生成時の処理
+	if( event != NULL )
+	{
+		// 地名表示ウィンドウを消去
+		fieldmap_work   = (FIELDMAP_WORK*)GAMESYSTEM_GetFieldMapWork( gsys );
+		place_name_sys  = FIELDMAP_GetPlaceNameSys( fieldmap_work );
+		FIELD_PLACE_NAME_Hide( place_name_sys );
+	}
+
+	return event;
 }
 
 //==================================================================
