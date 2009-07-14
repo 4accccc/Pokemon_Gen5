@@ -219,6 +219,8 @@ const SCENE_DATA resistMapTbl[] = {
 			FLDMAPPER_TEXTYPE_NONE,	{ 0, 0 },
 			FLDMAPPER_RESIST_OBJTYPE_BMODEL,	NULL,
 			{0,2},	// 地面アニメーション
+
+			FLD_MAPPER_BLOCK_MEMSIZE,	// 1ブロックメモリサイズ
 		},
 		&FieldMapCtrl_GridFunctions,
 		TRUE,
@@ -240,6 +242,8 @@ const SCENE_DATA resistMapTbl[] = {
 			FLDMAPPER_TEXTYPE_NONE,	{ 0, 0 },
 			FLDMAPPER_RESIST_OBJTYPE_BMODEL,	NULL,
 			{FLDMAPPER_MAPDATA_NULL,FLDMAPPER_MAPDATA_NULL},	// 地面アニメーション
+
+			FLD_MAPPER_BLOCK_MEMSIZE,	// 1ブロックメモリサイズ
 		}, 
 		&FieldMapCtrl_NoGridFunctions,
 		FALSE,
@@ -259,6 +263,8 @@ const SCENE_DATA resistMapTbl[] = {
 			FLDMAPPER_TEXTYPE_NONE,	{ 0, 0 },
 			FLDMAPPER_RESIST_OBJTYPE_BMODEL,	NULL,
 			{FLDMAPPER_MAPDATA_NULL,FLDMAPPER_MAPDATA_NULL},	// 地面アニメーション
+
+			FLD_MAPPER_BLOCK_MEMSIZE,	// 1ブロックメモリサイズ
 		}, 
 		&FieldMapCtrl_C3Functions,
 		FALSE,
@@ -278,6 +284,8 @@ const SCENE_DATA resistMapTbl[] = {
 			FLDMAPPER_TEXTYPE_NONE,	{ 0, 0 },
 			FLDMAPPER_RESIST_OBJTYPE_BMODEL,	NULL,
 			{0,2},	// 地面アニメーション
+
+			FLD_MAPPER_BLOCK_MEMSIZE,	// 1ブロックメモリサイズ
 		},
 		&FieldMapCtrl_GridFunctions,
 		TRUE,
@@ -297,6 +305,8 @@ const SCENE_DATA resistMapTbl[] = {
 			FLDMAPPER_TEXTYPE_NONE,	{ 0, 0 },
 			FLDMAPPER_RESIST_OBJTYPE_BMODEL,	NULL,
 			{0,2},	// 地面アニメーション
+
+			FLD_MAPPER_BLOCK_MEMSIZE,	// 1ブロックメモリサイズ
 		},
 		&FieldMapCtrl_GridFunctions,
 		TRUE,
@@ -316,6 +326,8 @@ const SCENE_DATA resistMapTbl[] = {
 			FLDMAPPER_TEXTYPE_NONE,	{ 0, 0 },
 			FLDMAPPER_RESIST_OBJTYPE_BMODEL,	NULL,
 			{0,2},	// 地面アニメーション
+
+			FLD_MAPPER_BLOCK_MEMSIZE*4,	// 1ブロックメモリサイズ
 		},
 		&FieldMapCtrl_GridFunctions,
 		TRUE,

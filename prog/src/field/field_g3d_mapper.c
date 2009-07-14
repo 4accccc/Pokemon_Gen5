@@ -49,9 +49,6 @@
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 
-#define	MAPMDL_SIZE		(0xf000)	//モデルデータ用メモリ確保サイズ 
-#define	MAPTEX_SIZE		(0) 	    //テクスチャデータ用ＶＲＡＭ＆メモリ確保サイズ 
-#define	MAPATTR_SIZE	(0x6004) 	//アトリビュート（高さ等）用メモリ確保サイズ 
 
 
 
@@ -438,13 +435,13 @@ void FLDMAPPER_ResistData( FLDMAPPER* g3Dmapper, const FLDMAPPER_RESISTDATA* res
 		GFL_G3D_MAP_SETUP setup;
 
 		if (g3Dmapper->globalTexture != NULL) {
-			setup.mapDataHeapSize = MAPMDL_SIZE + MAPTEX_SIZE + MAPATTR_SIZE;
+			setup.mapDataHeapSize = resistData->memsize;
 			setup.texVramSize = 0;
 			setup.mapFileFunc = mapFileFuncTbl;
 			setup.externalWork = NULL;
 		} else {
-			setup.mapDataHeapSize = MAPMDL_SIZE + MAPTEX_SIZE + MAPATTR_SIZE;
-			setup.texVramSize = MAPTEX_SIZE;
+			setup.mapDataHeapSize = resistData->memsize;
+			setup.texVramSize = FLD_MAPPER_MAPTEX_SIZE;
 			setup.mapFileFunc = mapFileFuncTbl;
 			setup.externalWork = NULL;
 		}
