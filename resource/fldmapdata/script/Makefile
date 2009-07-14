@@ -81,9 +81,11 @@ $(TARGET_DIR)/$(TARGET_NARC): $(TARGET_NARC)
 	$(COPY) $(TARGET_NARC) $(TARGET_DIR)
 	$(COPY) $(TARGET_NAIX) $(TARGET_DIR)
 
+ifeq ($(CONVERTUSER),true) #CONVERTUSER
 $(TARGET_NARC): $(SCRSRCS_BIN)
 	nnsarc -i -c -l -n $(TARGET_NARC) $(SCRSRCS_BIN) > arc_result.txt
 	$(NAIXCUT) $(TARGET_NAIX)
+endif
 
 #----------------------------------------------------------------------------
 #	mklst
