@@ -101,6 +101,7 @@ subdir:
 
 # narc のコピーだけ実行する
 $(TARGETDIR)/$(targetname).narc:  $(targetname).narc 
+	@echo copying $(targetname).narc
 	@$(COPY) $(targetname).narc $(TARGETDIR)
 	@$(COPY) $(targetname).naix $(TARGETDIR)
 
