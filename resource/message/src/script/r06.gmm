@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-07-06T15:33:32"/>
+	<create user="matsumiya" host="W00207" date="2009-07-14T11:51:24"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -299,21 +299,21 @@
 		<language name="JPN_KANJI" width="256">仮メッセージ</language>
 	</row>
 
-	<row id="msg_r06_sign1_01">
+	<row id="msg_r06_sign1_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>看板分類：タウンマップ</comment>
 		<attribute name="キャラ指定">看板：道路</attribute>
 		<language name="JPN" width="256">６ばんどうろ</language>
 		<language name="JPN_KANJI" width="256">６番道路</language>
 	</row>
 
-	<row id="msg_r06_sign2_01">
+	<row id="msg_r06_sign2_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>看板分類：タウンマップ</comment>
 		<attribute name="キャラ指定">看板：道路</attribute>
 		<language name="JPN" width="256">６ばんどうろ</language>
 		<language name="JPN_KANJI" width="256">６番道路</language>
 	</row>
 
-	<row id="msg_r06_sign3_01">
+	<row id="msg_r06_sign3_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<attribute name="キャラ指定">看板：お得な掲示板</attribute>
 		<language name="JPN" width="256">おとくな　けいじばん</language>
 		<language name="JPN_KANJI" width="256">お得な　掲示板</language>
