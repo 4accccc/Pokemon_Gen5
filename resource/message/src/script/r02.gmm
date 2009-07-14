@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-07-11T17:38:33"/>
+	<create user="matsumiya" host="W00207" date="2009-07-14T12:23:55"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -298,8 +298,8 @@
 　主人公に隣接してこのメッセージ表示
 0＝プレイヤー名</comment>
 		<attribute name="キャラ指定">友達♂</attribute>
-		<language name="JPN" width="256">ともだち♂『[1:00:トレーナー名:0][BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">ともだち♂『[1:00:トレーナー名:0][BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">ともだち♂『[1:00:トレーナー名:0]……！！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">ともだち♂『[1:00:トレーナー名:0]……！！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_r02_black_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
@@ -452,12 +452,12 @@
 たたかいに　さんかした　ポケモンは
 けいけんちが　もらえます！[BE:01:ページ切り替え（クリア）]
 ポケモンを　どんどん　たたかせて
-ポケモンを　どんどん　つよくしよう！</language>
+どんどん　つよくしよう！</language>
 		<language name="JPN_KANJI" width="256">お得な　掲示板！[BE:01:ページ切り替え（クリア）]
 戦いに　参加した　ポケモンは
 経験値が　もらえます！[BE:01:ページ切り替え（クリア）]
 ポケモンを　どんどん　戦わせて
-ポケモンを　どんどん　強くしよう！</language>
+どんどん　強くしよう！</language>
 	</row>
 
 	<flowchart-group-list>
