@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-07-11T15:13:13"/>
+	<create user="matsumiya" host="W00207" date="2009-07-14T12:09:45"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,14 +263,14 @@
 		</language>
 	</columns>
 
-	<dialog left="-2" top="221" right="703" bottom="841" maximized="no" rayout="Vertical2">
+	<dialog left="0" top="221" right="703" bottom="841" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
-		<band id="0" index="1" style="0000" width="530"/>
+		<band id="0" index="1" style="0000" width="528"/>
 		<band id="1" index="2" style="0000" width="165"/>
-		<band id="2" index="3" style="0000" width="543"/>
+		<band id="2" index="3" style="0000" width="541"/>
 		<band id="3" index="4" style="0000" width="152"/>
-		<band id="4" index="0" style="0000" width="697"/>
+		<band id="4" index="0" style="0000" width="695"/>
 		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
@@ -315,14 +315,14 @@
 	<row id="msg_c01r0202_dancer_01">
 		<attribute name="キャラ指定">DANCER
 ダンサー</attribute>
-		<language name="JPN" width="256">ダンスって　ことばが
-なくても　たのしめるだろ？[BE:01:ページ切り替え（クリア）]
+		<language name="JPN" width="256">ダンスって　ことばが　なくても
+たのしめて　すごいだろ？[BE:01:ページ切り替え（クリア）]
 ポケモンも　ことばが　つうじない
-あいてとも　たのしめるから　いいだろ？</language>
+あいてとも　たのしめて　すごいよな</language>
 		<language name="JPN_KANJI" width="256">ダンスって　言葉が　なくても
-みんなが　楽しめるだろ？[BE:01:ページ切り替え（クリア）]
+楽しめて　すごいだろ？[BE:01:ページ切り替え（クリア）]
 ポケモンも　言葉が　通じない
-相手とも　楽しめるから　いいだろ？</language>
+相手とも　楽しめて　すごいよな</language>
 	</row>
 
 	<row id="msg_c01r0202_woman3_01">
