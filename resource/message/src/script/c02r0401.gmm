@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-07-13T14:43:16"/>
+	<create user="matsumiya" host="W00207" date="2009-07-14T17:57:28"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -296,24 +296,41 @@
 		<comment>♂</comment>
 		<attribute name="キャラ指定">FIGHTERM
 格闘家</attribute>
-		<language name="JPN" width="256">しめきられた　そうこ</language>
-		<language name="JPN_KANJI" width="256">閉め切られた　倉庫</language>
+		<language name="JPN" width="256">かくとうタイプの　ポケモンは
+ひこうタイプや　エスパータイプの[BE:00:ページ切り替え（行送り）]
+わざを　にがてと　しているッ！</language>
+		<language name="JPN_KANJI" width="256">かくとうタイプの　ポケモンは
+ひこうタイプや　エスパータイプの[BE:00:ページ切り替え（行送り）]
+技を　苦手と　しているッ！</language>
 	</row>
 
 	<row id="msg_c02r0401_fighterm2_01">
 		<comment>♂</comment>
 		<attribute name="キャラ指定">FIGHTERM
 格闘家</attribute>
-		<language name="JPN" width="256">あせくさい　おとこたち</language>
-		<language name="JPN_KANJI" width="256">汗臭い　男たち</language>
+		<language name="JPN" width="256">かくとうタイプの　わざは！
+ノーマルタイプや　いわ　はがね[BE:00:ページ切り替え（行送り）]
+さらには　あく　こおりタイプの[BE:00:ページ切り替え（行送り）]
+ポケモンに　こうか　ばつぐん　だぞ！</language>
+		<language name="JPN_KANJI" width="256">かくとうタイプの　技は！
+ノーマルタイプや　いわ　はがね[BE:00:ページ切り替え（行送り）]
+さらには　あく　こおりタイプの[BE:00:ページ切り替え（行送り）]
+ポケモンに　こうか　ばつぐん　だぞ！</language>
 	</row>
 
 	<row id="msg_c02r0401_fighterm3_01">
-		<comment>♂</comment>
+		<comment>♂
+・ポケモン交換の予定</comment>
 		<attribute name="キャラ指定">FIGHTERM
 格闘家</attribute>
-		<language name="JPN" width="256">しゅぎょうの　ジャマを　しないでくれい！</language>
-		<language name="JPN_KANJI" width="256">修行の　ジャマを　しないでくれい！</language>
+		<language name="JPN" width="256">きみぃ！　かくとうタイプの
+ポケモンが　ほしくなっただろ？[BE:01:ページ切り替え（クリア）]
+よければ　わたしの　ポケモンと
+きみの　ポケモンを　こうかん　しよう</language>
+		<language name="JPN_KANJI" width="256">きみぃ！　かくとうタイプの
+ポケモンが　ほしくなっただろ？[BE:01:ページ切り替え（クリア）]
+よければ　わたしの　ポケモンと
+きみの　ポケモンを　交換しよう</language>
 	</row>
 
 	<flowchart-group-list>
