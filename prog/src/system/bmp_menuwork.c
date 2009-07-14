@@ -243,3 +243,59 @@ void BmpMenuWork_ListSTRBUFDelete( BMP_MENULIST_DATA *list_top )
 		list++;
 	}
 }
+
+//--------------------------------------------------------------
+/**
+ * リストバッファ、リスト最大文字数を取得
+ * @param list_top
+ * @retval u32 
+ */
+//--------------------------------------------------------------
+u32 BmpMenuWork_GetListMaxLength( const BMP_MENULIST_DATA *list_top )
+{
+  u32 len,max = 0;
+	const BMP_MENULIST_DATA* list = list_top;
+  
+  while( list->str != LIST_ENDCODE )
+  {
+    if( list->str == NULL )
+    {
+      break;
+    }
+    
+    len = GFL_STR_GetBufferLength( (const STRBUF*)list->str );
+    
+    if( len > max )
+    {
+      max = len;
+    }
+  
+    list++;
+  }
+  
+  return( max );
+}
+
+//--------------------------------------------------------------
+/**
+ * リストバッファ　リスト最大数を取得
+ * @param
+ * @retval
+ */
+//--------------------------------------------------------------
+u32 BmpMenuWork_GetListMax( const BMP_MENULIST_DATA *list_top )
+{
+  u32 max = 0;
+	const BMP_MENULIST_DATA* list = list_top;
+  
+  while( list->str != LIST_ENDCODE )
+  {
+    if( list->str != NULL )
+    {
+      max++;
+    }
+    list++;
+  }
+  return( max );
+}
+
