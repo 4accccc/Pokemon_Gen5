@@ -138,6 +138,7 @@
 	ARCID_SCRSEQ		"fieldmap/script_seq.narc"		#スクリプトシーケンス
 	ARCID_MMDL_LIST	"fieldmap/move_model_list.narc" #動作モデルリスト
 	ARCID_CODE_INPUT	"code_input.narc"				#コード入力画面
+  ARCID_FIELD_CAMERA  "fieldmap/field_camera_data.narc" #フィールドカメラ初期設定
 	ARCID_FIELD_LIGHT	"field_light.narc"	#フィールドライトデータ
 	ARCID_FIELD_WEATHER_LIGHT	"field_weather_light.narc"	#フィールド天気ライトデータ
 	ARCID_WIFI_NOTE		"wifi_note.narc"	#友だち手帳
