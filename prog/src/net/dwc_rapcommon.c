@@ -52,7 +52,7 @@ void GFL_NET_WIFI_InitUserData( DWCUserData *userdata )
     if( !DWC_CheckUserData( userdata ) ){
         DWC_CreateUserData( userdata, 'ADAJ' );
         DWC_ClearDirtyFlag( userdata );
-        OS_TPrintf("WIFIユーザデータを作成\n");
+        NET_PRINT("WIFIユーザデータを作成\n");
     }
 }
 

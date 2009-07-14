@@ -34,18 +34,8 @@
 // ボイスチャットを利用する場合は定義する。
 #define MYDWC_USEVCHA
 
-// デバッグ出力を大量に吐き出す場合定義
-#if defined(DEBUG_ONLY_FOR_ohno) | defined(DEBUG_ONLY_FOR_tomoya_takahashi)
-//#define DEBUGPRINT_ON
-#endif
 
-
-#ifdef DEBUGPRINT_ON
-#define MYDWC_DEBUGPRINT(...) \
-  (void) ((OS_TPrintf(__VA_ARGS__)))
-#else
-#define MYDWC_DEBUGPRINT(...)           ((void) 0)
-#endif
+#define MYDWC_DEBUGPRINT NET_PRINT
 
 
 // フレンドリストのサイズ

@@ -556,13 +556,6 @@ static _WM_INFO_STRUCT* _pWmInfo;  //通信用構造体
 
 #define DATASHARING_DOUBLEMODE (TRUE)  //DS,MPを同時に行う場合 1/30と1/60では値が異なる
 
-/* デバッグ出力フック関数 */
-static void (*wh_trace) (const char *, ...) =
-#if GFL_NET_DEBUG
-OS_TPrintf;
-#else
-NULL;
-#endif
 
 
 
@@ -659,17 +652,18 @@ static void WH_StateOutReset(void *arg);
 /* ======================================================================
    debug codes
    ====================================================================== */
-#ifdef DEBUG_ONLY_FOR_ohno
+
 #define WMHIGH_DEBUG
-#endif
+
+
 #if defined(WMHIGH_DEBUG)
 
-#define WH_TRACE    if(wh_trace) wh_trace
+#define WH_TRACE    NET_PRINT
 
-#define WH_TRACE_STATE OS_TPrintf("%s sSysState = %d\n", __func__, _pWmInfo->sSysState)
+#define WH_TRACE_STATE NET_PRINT("%s sSysState = %d\n", __func__, _pWmInfo->sSysState)
 
 #define WH_REPORT_FAILURE(result)                \
-	do{ OS_TPrintf("Failed in %s, %s = %s\n",      \
+	do{ NET_PRINT("Failed in %s, %s = %s\n",      \
 								 __func__,                      \
 #result,                       \
 								 WH_GetWMErrCodeName(result));  \
@@ -889,15 +883,15 @@ static void WH_OutputBitmap(u16 bitmap)
 	{
 		if ((bitmap >> i) & 0x01)
 		{
-			OS_TPrintf("o");
+			NET_PRINT("o");
 		}
 		else
 		{
-			OS_TPrintf("-");
+			NET_PRINT("-");
 		}
 	}
 
-	OS_TPrintf("\n");
+	NET_PRINT("\n");
 }
 
 static void WH_ChangeSysState(int state)
@@ -1671,7 +1665,7 @@ static void WH_StateOutStartScan(void *arg)
 		}
 		break;
 	default:
-		OS_TPrintf("スキャン失敗\n");
+		NET_PRINT("スキャン失敗\n");
 		return;
 	}
 
@@ -2565,9 +2559,11 @@ void WH_SetUserGameInfo(u16 *userGameInfo, u16 length)
  *---------------------------------------------------------------------------*/
 void WH_SetDebugOutput(void (*func) (const char *, ...))
 {
+#if 0
 	OSIntrMode enabled = OS_DisableInterrupts();
 	wh_trace = func;
 	(void)OS_RestoreInterrupts(enabled);
+#endif
 }
 
 
@@ -2666,35 +2662,35 @@ void WH_PrintBssDesc(WMBssDesc *info)
 #pragma unused( info )
 	u16     i;
 
-	OS_TPrintf("length = 0x%04x\n", info->length);
-	OS_TPrintf("rssi   = 0x%04x\n", info->rssi);
-	OS_TPrintf("bssid = %02x%02x%02x%02x%02x%02x\n", info->bssid[0], info->bssid[1], info->bssid[2],
+	NET_PRINT("length = 0x%04x\n", info->length);
+	NET_PRINT("rssi   = 0x%04x\n", info->rssi);
+	NET_PRINT("bssid = %02x%02x%02x%02x%02x%02x\n", info->bssid[0], info->bssid[1], info->bssid[2],
 						 info->bssid[3], info->bssid[4], info->bssid[5]);
-	OS_TPrintf("ssidLength = 0x%04x\n", info->ssidLength);
-	OS_TPrintf("ssid = ");
+	NET_PRINT("ssidLength = 0x%04x\n", info->ssidLength);
+	NET_PRINT("ssid = ");
 	for (i = 0; i < 32; i++)
 	{
-		OS_TPrintf("0x%02x", info->ssid[i]);
+		NET_PRINT("0x%02x", info->ssid[i]);
 	}
-	OS_TPrintf("\n");
-	OS_TPrintf("capaInfo        = 0x%04x\n", info->capaInfo);
-	OS_TPrintf("rateSet.basic   = 0x%04x\n", info->rateSet.basic);
-	OS_TPrintf("rateSet.support = 0x%04x\n", info->rateSet.support);
-	OS_TPrintf("beaconPeriod    = 0x%04x\n", info->beaconPeriod);
-	OS_TPrintf("dtimPeriod      = 0x%04x\n", info->dtimPeriod);
-	OS_TPrintf("channel         = 0x%04x\n", info->channel);
-	OS_TPrintf("cfpPeriod       = 0x%04x\n", info->cfpPeriod);
-	OS_TPrintf("cfpMaxDuration  = 0x%04x\n", info->cfpMaxDuration);
-	OS_TPrintf("gameInfoLength  = 0x%04x\n", info->gameInfoLength);
-	OS_TPrintf("gameInfo.magicNumber = 0x%04x\n", info->gameInfo.magicNumber);
-	OS_TPrintf("gameInfo.ver    = 0x%02x\n", info->gameInfo.ver);
-	OS_TPrintf("gameInfo.ggid   = 0x%08x\n", info->gameInfo.ggid);
-	OS_TPrintf("gameInfo.tgid   = 0x%04x\n", info->gameInfo.tgid);
-	OS_TPrintf("gameInfo.userGameInfoLength = 0x%02x\n", info->gameInfo.userGameInfoLength);
-	OS_TPrintf("gameInfo.gameNameCount_attribute = 0x%02x\n",
+	NET_PRINT("\n");
+	NET_PRINT("capaInfo        = 0x%04x\n", info->capaInfo);
+	NET_PRINT("rateSet.basic   = 0x%04x\n", info->rateSet.basic);
+	NET_PRINT("rateSet.support = 0x%04x\n", info->rateSet.support);
+	NET_PRINT("beaconPeriod    = 0x%04x\n", info->beaconPeriod);
+	NET_PRINT("dtimPeriod      = 0x%04x\n", info->dtimPeriod);
+	NET_PRINT("channel         = 0x%04x\n", info->channel);
+	NET_PRINT("cfpPeriod       = 0x%04x\n", info->cfpPeriod);
+	NET_PRINT("cfpMaxDuration  = 0x%04x\n", info->cfpMaxDuration);
+	NET_PRINT("gameInfoLength  = 0x%04x\n", info->gameInfoLength);
+	NET_PRINT("gameInfo.magicNumber = 0x%04x\n", info->gameInfo.magicNumber);
+	NET_PRINT("gameInfo.ver    = 0x%02x\n", info->gameInfo.ver);
+	NET_PRINT("gameInfo.ggid   = 0x%08x\n", info->gameInfo.ggid);
+	NET_PRINT("gameInfo.tgid   = 0x%04x\n", info->gameInfo.tgid);
+	NET_PRINT("gameInfo.userGameInfoLength = 0x%02x\n", info->gameInfo.userGameInfoLength);
+	NET_PRINT("gameInfo.gameNameCount_attribute = 0x%02x\n",
 						 info->gameInfo.gameNameCount_attribute);
-	OS_TPrintf("gameInfo.parentMaxSize   = 0x%04x\n", info->gameInfo.parentMaxSize);
-	OS_TPrintf("gameInfo.childMaxSize    = 0x%04x\n", info->gameInfo.childMaxSize);
+	NET_PRINT("gameInfo.parentMaxSize   = 0x%04x\n", info->gameInfo.parentMaxSize);
+	NET_PRINT("gameInfo.childMaxSize    = 0x%04x\n", info->gameInfo.childMaxSize);
 }
 
 
@@ -3105,7 +3101,7 @@ static void WH_StateOutInitialize(void *arg)
 	}
 
 #ifndef SDK_FINALROM
-	OS_TPrintf("ライフタイム変更\n");
+	NET_PRINT("ライフタイム変更\n");
 	WM_SetLifeTime(_setLifeCallback,0xffff, 100, 5, 100);
 #else
 	// システム状態をアイドリング（待機中）に変更。
@@ -3203,7 +3199,7 @@ static void WH_StateOutPowerOn(void *arg)
 
 
 #ifndef SDK_FINALROM
-	OS_TPrintf("ライフタイム変更\n");
+	NET_PRINT("ライフタイム変更\n");
 	WM_SetLifeTime(_setLifeCallback,0xffff, 100, 5, 100);
 #else
 	// システム状態をアイドリング（待機中）に変更。

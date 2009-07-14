@@ -1592,7 +1592,8 @@ static GFL_PROC_RESULT IrcBattleFriendProcEnd( GFL_PROC * proc, int * seq, void 
 		}
 	}
 	GFL_CLACT_UNIT_Delete(pWork->cellUnit);
-	GFL_NET_Exit(NULL);  //@@OO –{—ˆ‚Í‚±‚±‚ÅŒÄ‚Î‚È‚¢
+
+	//GFL_NET_Exit(NULL);  //@@OO –{—ˆ‚Í‚±‚±‚ÅŒÄ‚Î‚È‚¢
 
 
 	GFL_CLACT_SYS_Delete();

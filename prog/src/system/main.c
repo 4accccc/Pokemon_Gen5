@@ -185,6 +185,13 @@ static	void	GameInit(void)
 	//セーブ関連初期化
 	SaveControl_SystemInit(GFL_HEAPID_APP);	//※check 使用しているヒープIDは暫定
 
+
+	// 通信のデバッグプリントを行う定義
+#ifdef PM_DEBUG
+#if defined(DEBUG_ONLY_FOR_ohno)||defined(DEBUG_ONLY_FOR_toru_nagihashi)||defined(DEBUG_ONLY_FOR_matsuda)||defined(DEBUG_ONLY_FOR_ariizumi_nobuhiko)
+	GFL_NET_DebugPrintOn();
+#endif
+#endif  //PM_DEBUG
 	// 通信ブート処理 VBlank割り込み後に行うためここに記述、第二引数は表示用関数ポインタ
 	GFL_NET_Boot( GFL_HEAPID_APP, NULL, GFL_HEAPID_APP, HEAPID_NETWORK_FIX);
 	/* 起動プロセスの設定 */
