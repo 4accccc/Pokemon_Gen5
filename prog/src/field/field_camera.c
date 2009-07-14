@@ -50,6 +50,7 @@ struct _FIELD_CAMERA {
 
 	FIELD_CAMERA_TYPE	type;			///<カメラのタイプ指定
 
+  const VecFx32 * default_target;
 	const VecFx32 *		watch_target;	///<追随する注視点へのポインタ
   const VecFx32 *   watch_camera; ///<追随するカメラ位置へのポインタ
 
@@ -191,6 +192,7 @@ FIELD_CAMERA* FIELD_CAMERA_Create(
 	camera->fieldWork = fieldWork;
 	camera->type = type;
 	camera->g3Dcamera = cam;
+  camera->default_target = target;
 	camera->watch_target = target;
   camera->watch_camera = NULL;
 	camera->heapID = heapID;
@@ -563,6 +565,12 @@ void FIELD_CAMERA_BindTarget(FIELD_CAMERA * camera, const VecFx32 * watch_target
 void FIELD_CAMERA_FreeTarget(FIELD_CAMERA * camera)
 {
 	camera->watch_target = NULL;
+}
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+void FIELD_CAMERA_BindDefaultTarget(FIELD_CAMERA * camera)
+{
+  camera->watch_target = camera->default_target;
 }
 
 //------------------------------------------------------------------
