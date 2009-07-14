@@ -12,10 +12,11 @@ USERS = kagaya matsumiya tamada
 include $(PROJECT_RSCDIR)/macro_define
 
 SUBDIRS =
-DEPENDHEADERS = usescript.h
+DEPENDHEADERS = usescript.h scr_seq_def.h
 
 #SCRSRCS
 include	scrfile.lst
+
 #SCRSRCS_BIN
 SCRSRCS_BIN = $(SCRSRCS:.ev=.bin)
 
@@ -80,11 +81,9 @@ $(TARGET_DIR)/$(TARGET_NARC): $(TARGET_NARC)
 	$(COPY) $(TARGET_NARC) $(TARGET_DIR)
 	$(COPY) $(TARGET_NAIX) $(TARGET_DIR)
 
-ifeq ($(CONVERTUSER),true) #CONVERTUSER
 $(TARGET_NARC): $(SCRSRCS_BIN)
 	nnsarc -i -c -l -n $(TARGET_NARC) $(SCRSRCS_BIN) > arc_result.txt
 	$(NAIXCUT) $(TARGET_NAIX)
-endif
 
 #----------------------------------------------------------------------------
 #	mklst
