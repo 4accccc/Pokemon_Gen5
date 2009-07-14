@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00179" date="2009-05-22T19:57:59"/>
+	<create user="matsumiya" host="W00207" date="2009-07-14T19:10:41"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -229,13 +229,13 @@
 	</tag-table>
 
 	<columns>
-		<id position="0" width="150"/>
+		<id position="0" width="203"/>
 		<group default=" 0:デフォルト" position="-1" width="100">
 			<list entry="0" japanese="デフォルト" english="Default" colorID="0"/>
 			<list entry="1" japanese="グループ 1" english="グループ 1" colorID="0"/>
 		</group>
 		<number position="-1" width="100"/>
-		<comment position="4" width="147"/>
+		<comment position="4" width="182"/>
 		<erase position="-1" width="100"/>
 		<attribute japanese="キャラ指定" english="キャラ指定" type="string" default="" position="1" width="100">
 		</attribute>
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -292,7 +292,95 @@
 	</lock>
 
 
-	<row id="msg_t01r0301_test_01">
+	<row id="msg_t01r0301_white_01" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+		<comment>♀
+・t01r0301に入るとこのメッセージ
+・メッセージ表示後
+　室外へ出るアニメ
+・主人公と隣接したとき
+　msg_t01r0301_white_02</comment>
+		<attribute name="キャラ指定">友達♀</attribute>
+		<language name="JPN" width="256">ともだち♀『あたしだって……[BE:01:ページ切り替え（クリア）]
+ポケモンを　もらった
+りっぱな　トレーナー　なんだもん！[BE:00:ページ切り替え（行送り）]
+ぼうけんだって　できるんだから！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+	</row>
+
+	<row id="msg_t01r0301_white_02" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+		<comment>♀
+・このメッセージ表示後
+　研究所内に入れる</comment>
+		<language name="JPN" width="256">ともだち♀『あっ　[1:00:トレーナー名:0][BE:01:ページ切り替え（クリア）]
+……だいじょうぶ　だよ[BE:01:ページ切り替え（クリア）]
+……だいじょうぶ！[BE:01:ページ切り替え（クリア）]
+あたし　けんきゅうじょの　まえで
+まってるからね[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+	</row>
+
+	<row id="msg_t01r0301_middleman1_01">
+		<comment>♂
+・ポケモン図鑑入手まで</comment>
+		<attribute name="キャラ指定">男性</attribute>
+		<language name="JPN" width="256">？？？パパ『わたしたちよりも
+ポケモンが　だいじなら[BE:00:ページ切り替え（行送り）]
+もう　かえってこなくて　いいッ！！</language>
+		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+	</row>
+
+	<row id="msg_t01r0301_middlewoman1_01">
+		<comment>♀
+・ポケモン図鑑入手まで</comment>
+		<attribute name="キャラ指定">女性</attribute>
+		<language name="JPN" width="256">？？？ママ『しんじられない……[BE:01:ページ切り替え（クリア）]
+ともだち♀みたいな　こが
+トレーナーとして[BE:00:ページ切り替え（行送り）]
+ぼうけんのたびに　でるだなんて……？</language>
+		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+	</row>
+
+	<row id="msg_t01r0301_middleman1_02">
+		<comment>♂
+・ポケモン図鑑入手後から
+　ランニングシューズ入手するまで</comment>
+		<attribute name="キャラ指定">男性</attribute>
+		<language name="JPN" width="256">？？？パパ『……かぞくよりも
+ポケモンのほうが　だいじなのかな[BE:00:ページ切り替え（行送り）]
+ちゃんと　みおくれば　よかったかな……</language>
+		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+	</row>
+
+	<row id="msg_t01r0301_middlewoman1_02">
+		<comment>♀
+・ポケモン図鑑入手後から
+　ランニングシューズ入手するまで</comment>
+		<attribute name="キャラ指定">女性</attribute>
+		<language name="JPN" width="256">？？？ママ『ともだち♀　ったら……</language>
+		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+	</row>
+
+	<row id="msg_t01r0301_oldwoman1_01">
+		<comment>仮
+・t02r0103と同じ</comment>
+		<attribute name="キャラ指定">老婆</attribute>
+		<language name="JPN" width="256">ある　ひとは　いいました
+いろんな　かんがえが　あるから[BE:00:ページ切り替え（行送り）]
+あらそいが　うまれるのだと……[BE:01:ページ切り替え（クリア）]
+べつの　ひとは　いいました
+いろんな　かんがえが　あるから[BE:00:ページ切り替え（行送り）]
+せかいが　ひろがるのだと……[BE:01:ページ切り替え（クリア）]
+きっと　どちらも　せいかい　なのね</language>
+		<language name="JPN_KANJI" width="256">ある　人は　いいました
+いろんな　考えが　あるから[BE:00:ページ切り替え（行送り）]
+争いが　うまれるのだと……[BE:01:ページ切り替え（クリア）]
+べつの　人は　いいました
+いろんな　考えが　あるから[BE:00:ページ切り替え（行送り）]
+世界が　広がるのだと……[BE:01:ページ切り替え（クリア）]
+きっと　どちらも　正解なのね</language>
+	</row>
+
+	<row id="msg_t01r0301_test_01" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>仮
 ・t02r0103と同じ</comment>
 		<attribute name="キャラ指定">老婆</attribute>
