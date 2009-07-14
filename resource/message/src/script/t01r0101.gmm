@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-07-11T15:30:09"/>
+	<create user="matsumiya" host="W00207" date="2009-07-14T12:44:34"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -311,7 +311,7 @@
 		<language name="JPN" width="256">ともだち♀『おじゃま　しました
 また　あそびに　きますね[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">ともだち♀『おじゃま　しました
-また　あそびに　きますね[BE:01:ページ切り替え（クリア）]</language>
+また　遊びに　来ますね[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_t01r0101_mama_01">
@@ -345,7 +345,9 @@
 	<row id="msg_t01r0101_mama_03">
 		<comment>♀
 ・メッセージ表示後、
-　画面暗転して回復処理</comment>
+　画面暗転して回復処理
+・画面復帰後
+　msg_t01r0101_mama_04表示</comment>
 		<attribute name="キャラ指定">主人公ママ</attribute>
 		<language name="JPN" width="256">そうだ！　しょうぶをした　ポケモンを
 やすませて　あげないと！[BE:01:ページ切り替え（クリア）]</language>
@@ -402,7 +404,7 @@
 		<attribute name="キャラ指定">主人公ママ</attribute>
 		<language name="JPN" width="256">ママ『つぎは　どこに　いって
 どんな　ポケモンと　であうのかしら？</language>
-		<language name="JPN_KANJI" width="256">ママ『次は　どこに　いって
+		<language name="JPN_KANJI" width="256">ママ『次は　どこに　行って
 どんな　ポケモンと　出会うのかしら？</language>
 	</row>
 
