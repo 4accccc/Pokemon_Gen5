@@ -110,7 +110,7 @@ BEGIN{
 END{
 	#最大数の定義を追加する
 	count = count - start
-	print "#define\tSCRID_" name2 "_DATA_MAX\t\t" "(" count ")\t\t\/\/最大数" > name "_def.h"#ID_??
+	print "#define\tSCRID_" name2 "_DATA_MAX\t\t" "(" count ")\t\t//最大数" > name "_def.h"#ID_??
 
 	#多重インクルードチェック
 	print "\n#endif //_" name2 "_DEF_H_" > name "_def.h"#ID_??
