@@ -1,0 +1,604 @@
+//======================================================================
+/**
+ * @file  scr_sound.c
+ * @bfief  スクリプトコマンド：サウンド関連
+ * @author  Satoshi Nohara
+ * @date  06.06.26
+ */
+//======================================================================
+#include <gflib.h>
+#include "system/gfl_use.h"
+#include "system/vm_cmd.h"
+
+#include "gamesystem/gamesystem.h"
+#include "gamesystem/game_event.h"
+
+#include "sound/pm_sndsys.h"
+#include "sound/wb_sound_data.sadl"
+
+#include "fieldmap.h"
+#include "field/zonedata.h"
+
+#include "script.h"
+#include "script_def.h"
+#include "scrcmd.h"
+#include "scrcmd_work.h"
+
+#include "scrcmd_sound.h"
+
+//======================================================================
+//  define
+//======================================================================
+
+//======================================================================
+//  struct
+//======================================================================
+
+//======================================================================
+//  proto
+//======================================================================
+
+//======================================================================
+//  コマンド BGM
+//======================================================================
+//--------------------------------------------------------------
+/**
+ * BGM変更
+ * @param  core    仮想マシン制御構造体へのポインタ
+ * @retval VMCMD_RESULT
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdBgmPlay( VMHANDLE *core, void *wk )
+{
+  SCRCMD_WORK *work = wk;
+  u16 music = VMGetU16( core );
+#if 0
+  Snd_BgmPlay( music );
+#else //wb
+  {
+	  u16 trackBit = 0xfcff;	// track 9,10 OFF
+	  PMSND_PlayNextBGM_EX( music, trackBit, 60, 0 );
+  }
+#endif
+  return VMCMD_RESULT_CONTINUE;
+}
+
+//--------------------------------------------------------------
+/**
+ * BGM停止
+ * @param  core    仮想マシン制御構造体へのポインタ
+ * @retval VMCMD_RESULT
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdBgmStop( VMHANDLE *core, void *wk )
+{
+#if 0
+  u16 music = VMGetU16(core);  //"未使用"
+  //Snd_BgmStop( music, 0 );
+  Snd_BgmStop( Snd_NowBgmNoGet(), 0 );
+#else //wb
+  PMSND_StopBGM();
+#endif
+  return VMCMD_RESULT_CONTINUE;
+}
+
+//--------------------------------------------------------------
+/**
+ * シーケンスを一時停止または再開
+ * @param  core    仮想マシン制御構造体へのポインタ
+ * @retval VMCMD_RESULT
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdBgmPlayerPause( VMHANDLE *core, void *wk )
+{
+#if 0
+  u8 player = VMGetU8(core);
+  BOOL flag = VMGetU8(core);
+  
+  Snd_PlayerPause( player, flag );
+#else //wb
+  BOOL flag = VMGetU8(core);
+  PMSND_PauseBGM( flag );
+#endif
+  return VMCMD_RESULT_CONTINUE;
+}
+
+//--------------------------------------------------------------
+/**
+ * BGM終了待ち
+ * @param  core    仮想マシン制御構造体へのポインタ
+ * @retval VMCMD_RESULT
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdBgmPlayCheck( VMHANDLE *core, void *wk )
+{
+  SCRCMD_WORK *work = wk;
+  u16 music  = VMGetU16( core );
+  u16 *ret_wk  = SCRCMD_GetVMWork( core, work );
+#if 0
+  *ret_wk = Snd_BgmPlayCheck( music );
+#else //wb
+  *ret_wk = PMSND_CheckPlayBGM();
+#endif
+  return VMCMD_RESULT_CONTINUE;
+}
+
+#if 0 //wb
+//--------------------------------------------------------------
+/**
+ * マップ内限定のBGM指定がセットされる
+ * 自転車BGMの制御などに使用
+ * @param  core    仮想マシン制御構造体へのポインタ
+ * @retval VMCMD_RESULT
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdBgmSpecialSet( VMHANDLE *core, void *wk )
+{
+  Snd_FieldBgmSetSpecial( core->fsys, VMGetU16(core) );
+  return VMCMD_RESULT_CONTINUE;
+}
+#endif
+
+//--------------------------------------------------------------
+/**
+ * BGMフェードアウト待ち　ウェイト部分
+ * @param  core    仮想マシン制御構造体へのポインタ
+ * @retval BOOL TRUE=終了
+ */
+//--------------------------------------------------------------
+static BOOL EvWaitBgmFade( VMHANDLE *core, void *wk )
+{
+#if 0
+  if( Snd_FadeCheck() == 0 ){
+    return TRUE;
+  }
+#else //wb
+  if( PMSND_CheckFadeOnBGM() ){
+    return( TRUE );
+  }
+#endif
+  return FALSE;
+}
+
+//--------------------------------------------------------------
+/**
+ * BGMフェードアウト待ち
+ * @param  core    仮想マシン制御構造体へのポインタ
+ * @return  VMCMD_RESULT
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdBgmFadeOut( VMHANDLE *core, void *wk )
+{
+  u16 vol    = VMGetU16(core);
+  u16 frame  = VMGetU16(core);
+#if 0
+  Snd_BgmFadeOut( vol, frame );
+#else //wb
+  PMSND_FadeOutBGM( frame );
+#endif
+  VMCMD_SetWait( core, EvWaitBgmFade );
+  return VMCMD_RESULT_SUSPEND;
+}
+
+//--------------------------------------------------------------
+/**
+ * BGMフェードイン待ち(フェードアウトしたものが再開する)
+ * @param  core    仮想マシン制御構造体へのポインタ
+ * @retval VMCMD_RESULT
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdBgmFadeIn( VMHANDLE *core, void *wk )
+{
+  u16 frame = VMGetU16(core);
+#if 0
+  Snd_BgmFadeIn( BGM_VOL_MAX, frame, BGM_FADEIN_START_VOL_MIN );
+#else //wb
+  PMSND_FadeInBGM( frame );
+#endif
+  VMCMD_SetWait( core, EvWaitBgmFade );
+  return VMCMD_RESULT_SUSPEND;
+}
+
+//--------------------------------------------------------------
+/**
+ * 現在のマップのBGMを再生
+ * @param  core    仮想マシン制御構造体へのポインタ
+ * @retval VMCMD_RESULT
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdBgmNowMapPlay( VMHANDLE *core, void *wk )
+{
+#if 0
+  int zone_id = core->fsys->location->zone_id;
+  //u16 music  = Snd_PcBgmNoGet( core->fsys, Snd_FieldBgmNoGet(core->fsys,zone_id) );
+  u16 music  = Snd_FieldBgmNoGetNonBasicBank( core->fsys,zone_id );
+  Snd_BgmPlay( music );
+#else
+  {
+	  u16 trackBit = 0xfcff;	// track 9,10 OFF
+    SCRCMD_WORK *work = wk;
+    SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
+    GAMEDATA *gdata = SCRCMD_WORK_GetGameData( work );
+    SCRIPT_FLDPARAM *fparam = SCRIPT_GetMemberWork(
+        sc, ID_EVSCR_WK_FLDPARAM );
+    u16 zone_id = FIELDMAP_GetZoneID( fparam->fieldMap );
+    u16 bgm = ZONEDATA_GetBGMID( zone_id, GAMEDATA_GetSeasonID(gdata) );
+
+    if( bgm != 0 ){
+      PMSND_PlayNextBGM_EX( bgm, trackBit, 60, 0 );
+    }
+  }
+#endif
+  return VMCMD_RESULT_CONTINUE;
+}
+
+#if 0 //wb
+//--------------------------------------------------------------
+/**
+ * 演出BGM再生(ライバル、サポート、つれてけ)
+ * @param  core    仮想マシン制御構造体へのポインタ
+ * @retval VMCMD_RESULT
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdPlayerFieldDemoBgmPlay( VMHANDLE *core, void *wk )
+{
+  Snd_PlayerFieldDemoBgmPlay( SND_SCENE_FIELD, VMGetU16(core) );
+  return VMCMD_RESULT_CONTINUE;
+}
+#endif
+
+#if 0 //wb
+//--------------------------------------------------------------
+/**
+ * フィールドBGMを固定にするフラグセット(セーブしない)
+ * @param  core    仮想マシン制御構造体へのポインタ
+ * @retval VMCMD_RESULT
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdCtrlBgmFlagSet( VMHANDLE *core, void *wk )
+{
+  Snd_CtrlBgmFlagSet( VMGetU8(core) );
+  return VMCMD_RESULT_CONTINUE;
+}
+#endif
+
+//======================================================================
+//  コマンド　SE
+//======================================================================
+//--------------------------------------------------------------
+/**
+ * ＳＥを鳴らす
+ * @param  core    仮想マシン制御構造体へのポインタ
+ * @retval VMCMD_RESULT
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdSePlay( VMHANDLE *core, void *wk )
+{
+#if 0
+  Snd_SePlay( SCRCMD_VMGetWorkValue(core,wk) );
+#else //wb
+  PMSND_PlaySE( SCRCMD_GetVMWorkValue(core,wk) );
+#endif
+  return VMCMD_RESULT_CONTINUE;
+}
+
+//--------------------------------------------------------------
+/**
+ * ＳＥを止める
+ * @param  core    仮想マシン制御構造体へのポインタ
+ * @retval VMCMD_RESULT
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdSeStop( VMHANDLE *core, void *wk )
+{
+#if 0
+  Snd_SeStopBySeqNo( VMGetWorkValue(core), 0 );
+#else //wb
+  PMSND_StopSE();
+#endif
+  return VMCMD_RESULT_CONTINUE;
+}
+
+//--------------------------------------------------------------
+/**
+ * SE終了待ち ウェイト部分
+ * @param 
+ * @retval BOOL TRUE=終了
+ */
+//--------------------------------------------------------------
+static BOOL EvWaitSe(VMHANDLE *core, void *wk)
+{
+#if 0
+  //if( Snd_SePlayCheckAll() == 0 ){
+  if( Snd_SePlayCheck(core->reg[0]) == 0 ){
+    return TRUE;
+  }
+#else //wb
+  if( PMSND_CheckPlaySE() == FALSE ){
+    return TRUE;
+  }
+#endif
+  return FALSE;
+}
+
+//--------------------------------------------------------------
+/**
+ * SE終了待ち
+ * @param  core    仮想マシン制御構造体へのポインタ
+ * @return  VMCMD_RESULT
+ * @li    雨などのループ音で、無限ループになってしまうので、SEナンバー指定して、それをチェック！
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdSeWait(VMHANDLE *core, void *wk)
+{
+#if 0
+  //仮想マシンの汎用レジスタにBGMナンバーを格納
+  core->reg[0] = VMGetWorkValue(core);
+  VMCMD_SetWait( core, EvWaitSe );
+#else //wb
+  VMCMD_SetWait( core, EvWaitSe );
+#endif
+  return VMCMD_RESULT_SUSPEND;
+}
+
+//======================================================================
+//  ME
+//======================================================================
+//--------------------------------------------------------------
+/**
+ * ME再生
+ * @param  core    仮想マシン制御構造体へのポインタ
+ * @retval VMCMD_RESULT
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdMePlay(VMHANDLE *core, void *wk )
+{
+  u16 trackBit = 0xffff;
+  u16 no = VMGetU16( core );
+  
+  PMSND_PauseBGM( TRUE );
+  PMSND_PushBGM();
+  
+  PMSND_PlayBGM_EX( no, trackBit );
+  return VMCMD_RESULT_CONTINUE;
+}
+
+//--------------------------------------------------------------
+/**
+ * ME終了待ち ウェイト部分
+ * @param  core    仮想マシン制御構造体へのポインタ
+ * @retval BOOL TRUE=終了
+ */
+//--------------------------------------------------------------
+static BOOL EvWaitMe( VMHANDLE *core, void *wk )
+{
+  if( PMSND_CheckPlayBGM() == FALSE ){
+    PMSND_PopBGM();
+    PMSND_PauseBGM( FALSE );
+    return TRUE;
+  }
+  
+  return FALSE;
+}
+
+//--------------------------------------------------------------
+/**
+ * ME終了待ち
+ * @param  core    仮想マシン制御構造体へのポインタ
+ * @retval VMCMD_RESULT
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdMeWait(VMHANDLE *core, void *wk )
+{
+  VMCMD_SetWait( core, EvWaitMe );
+  return VMCMD_RESULT_SUSPEND;
+}
+
+//======================================================================
+//  鳴き声
+//======================================================================
+#if 0 //wb
+//--------------------------------------------------------------
+/**
+ * 鳴き声を鳴らす
+ * @param  core    仮想マシン制御構造体へのポインタ
+ * @retval VMCMD_RESULT
+ * ★手持ちの先頭のポケモンの鳴き声を鳴らす時があったら、フォルムを見る必要がある！
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdVoicePlay( VMHANDLE *core, void *wk )
+{
+  u16 no, ptn;
+  no  = VMGetWorkValue(core);
+  ptn = VMGetWorkValue(core);
+
+  //ぺラップ再生テスト
+  //no = MONSNO_PERAPPU;
+
+  //パターンを指定できる関数に置き換える予定
+  Snd_PMVoicePlay( no, 0 );
+
+  //フィールド上で、スカイフォルムが出現することはない。
+  //育て屋に預けるとノーマルフォルムになるので、育て屋の鳴き声もOK
+  return VMCMD_RESULT_CONTINUE;
+};
+
+//--------------------------------------------------------------
+/**
+ * 鳴き声終了待ち
+ * @param  core    仮想マシン制御構造体へのポインタ
+ * @return  VMCMD_RESULT
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdVoicePlayWait( VMHANDLE *core, void *wk )
+{
+  VMCMD_SetWait( core, EvWaitVoicePlay );
+  return VMCMD_RESULT_SUSPEND;
+}
+
+//return 1 = 終了
+static BOOL EvWaitVoicePlay(VMHANDLE *core, void *wk)
+{
+  if( Snd_PMVoicePlayCheck() == 0 ){
+    return TRUE;
+  }
+  return FALSE;
+}
+#endif
+
+//======================================================================
+//  ぺラップ
+//======================================================================
+#if 0 //wb
+//--------------------------------------------------------------
+/**
+ * ペラップデータがあるかチェック
+ * @param  core    仮想マシン制御構造体へのポインタ
+ * @retval VMCMD_RESULT
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdPerapDataCheck( VMHANDLE *core, void *wk )
+{
+  u16* ret_wk  = SCRCMD_GetVMWork( core, work );
+
+  if( Snd_PerapVoiceCheck(SaveData_GetPerapVoice(core->fsys->savedata)) == TRUE ){
+    *ret_wk = TRUE;
+    return VMCMD_RESULT_CONTINUE;
+  }
+
+  *ret_wk = FALSE;
+  return VMCMD_RESULT_CONTINUE;
+}
+
+//--------------------------------------------------------------
+/**
+ * ペラップ録音開始
+ * @param  core    仮想マシン制御構造体へのポインタ
+ * @retval VMCMD_RESULT
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdPerapRecStart( VMHANDLE *core, void *wk )
+{
+  u16* ret_wk      = SCRCMD_GetVMWork( core, work );
+
+  if( Snd_PerapVoiceRecStart() == MIC_RESULT_SUCCESS ){
+    *ret_wk = TRUE;  //成功
+    return VMCMD_RESULT_CONTINUE;
+  }
+
+  *ret_wk = FALSE;  //失敗
+  return VMCMD_RESULT_CONTINUE;
+
+}
+
+//--------------------------------------------------------------
+/**
+ * ペラップ録音停止
+ * @param  core    仮想マシン制御構造体へのポインタ
+ * @retval VMCMD_RESULT
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdPerapRecStop( VMHANDLE *core, void *wk )
+{
+  Snd_PerapVoiceRecStop();
+  return VMCMD_RESULT_SUSPEND;
+
+}
+
+//--------------------------------------------------------------
+/**
+ * ペラップ録音したデータをセーブ
+ * @param  core    仮想マシン制御構造体へのポインタ
+ * @retval VMCMD_RESULT
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdPerapSave( VMHANDLE *core, void *wk )
+{
+  Snd_PerapVoiceDataSave( SaveData_GetPerapVoice(core->fsys->savedata) );
+  return VMCMD_RESULT_SUSPEND;
+
+}
+#endif
+
+//======================================================================
+//  その他
+//======================================================================
+#if 0 //wb
+//--------------------------------------------------------------
+/**
+ * クライマックス演出サウンドデータ追加ロード
+ * @param  core    仮想マシン制御構造体へのポインタ
+ * @retval VMCMD_RESULT
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdSndClimaxDataLoad( VMHANDLE *core, void *wk )
+{
+  Snd_DataSetByScene( SND_SCENE_SUB_CLIMAX, 0, 0 );  //サウンドデータロード(BGM引継ぎ)
+  return VMCMD_RESULT_SUSPEND;
+}
+
+//--------------------------------------------------------------
+/**
+ * 初期ボリュームセット
+ * @param  core    仮想マシン制御構造体へのポインタ
+ * @retval VMCMD_RESULT
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdSndInitialVolSet( VMHANDLE *core, void *wk )
+{
+  u16 no  = VMGetWorkValue(core);
+  u16 vol = VMGetWorkValue(core);
+
+  Snd_PlayerSetInitialVolumeBySeqNo( no, vol );
+  return VMCMD_RESULT_CONTINUE;
+}
+
+//--------------------------------------------------------------
+/**
+ * デモ演出サウンドデータロード
+ * @param  core    仮想マシン制御構造体へのポインタ
+ * @retval VMCMD_RESULT
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdSndDemo01DataLoad( VMHANDLE *core, void *wk )
+{
+  if( sys.cont & PAD_KEY_UP ){
+    //Snd_DataSetByScene( SND_SCENE_DEMO01, SEQ_PL_CHO01_2_SIM, 1 );
+    //Snd_DataSetByScene( SND_SCENE_DEMO01, SEQ_PL_TOWN01, 1 );
+    //Snd_DataSetByScene( SND_SCENE_DEMO01, SEQ_PL_TOWN01, 1 );
+    Snd_DataSetByScene( SND_SCENE_DEMO01, SEQ_PL_TOWN02, 1 );    //ディレイTrあり
+  }else{
+    //Snd_DataSetByScene( SND_SCENE_DEMO01, SEQ_PL_TOWN01, 1 );
+    Snd_DataSetByScene( SND_SCENE_DEMO01, SEQ_PL_TOWN02, 1 );    //ディレイTrあり
+  }
+  return VMCMD_RESULT_SUSPEND;
+}
+
+//--------------------------------------------------------------
+/**
+ * フィールドサウンドデータロード
+ * @param  core    仮想マシン制御構造体へのポインタ
+ * @retval VMCMD_RESULT
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdSndFieldDataLoad( VMHANDLE *core, void *wk )
+{
+  u16 bgm = SCRCMD_GetVMWorkValue( core, work );
+  Snd_DataSetByScene( SND_SCENE_FIELD, bgm, 1 );
+  return VMCMD_RESULT_SUSPEND;
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief  今のBGMナンバー取得
+ * @param  core    仮想マシン制御構造体へのポインタ
+ * @retval VMCMD_RESULT
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdSndNowBgmNoGet( VMHANDLE *core, void *wk )
+{
+  u16* ret_wk  = SCRCMD_GetVMWork( core, work );
+  *ret_wk    = Snd_NowBgmNoGet();
+  return VMCMD_RESULT_CONTINUE;
+}
+#endif
