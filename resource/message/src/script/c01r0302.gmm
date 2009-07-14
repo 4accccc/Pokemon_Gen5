@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-07-11T14:59:23"/>
+	<create user="matsumiya" host="W00207" date="2009-07-14T12:08:07"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -313,11 +313,11 @@
 		<language name="JPN" width="256">６ひきを　まんべんなく
 そだてるのは　たいへん　だから[BE:01:ページ切り替え（クリア）]
 ３びきくらいを　じゅうてんてきに
-そだてる　トレーナーも　おおいわよ</language>
+そだてている　トレーナーも　いるってよ</language>
 		<language name="JPN_KANJI" width="256">６匹を　満遍なく
 育てるのは　大変だから[BE:01:ページ切り替え（クリア）]
 ３匹くらいを　重点的に
-育てる　トレーナーも　多いわよ</language>
+育てている　トレーナーも　いるってよ</language>
 	</row>
 
 	<row id="msg_c01r0302_poke1_01">
