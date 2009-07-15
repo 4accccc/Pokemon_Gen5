@@ -522,6 +522,7 @@ void PSTATUS_RIBBON_DispPage( PSTATUS_WORK *work , PSTATUS_RIBBON_WORK *ribbonWo
     PSTA_OAM_ActorSetDrawEnable( ribbonWork->ribbonDispWork[i].bmpOam , TRUE );
   }
 
+  ribbonWork->pagePos = 0;
   ribbonWork->selectIdx = 0xFF;
   ribbonWork->selectType = PSTATUS_RIBBON_INVALID_TYPE;
 
@@ -558,7 +559,6 @@ void PSTATUS_RIBBON_CreateRibbonBar( PSTATUS_WORK *work , PSTATUS_RIBBON_WORK *r
 
   //TODO 仮
   ribbonWork->ribbonNum = 80;
-  ribbonWork->pagePos = 0;
 
   //リボンの番号のセット
   for( i=0 ; i<PSTATUS_RIBBON_BAR_NUM ; i++ )

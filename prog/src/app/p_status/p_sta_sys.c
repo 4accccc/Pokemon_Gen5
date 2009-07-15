@@ -173,6 +173,8 @@ const PSTATUS_RETURN_TYPE PSTATUS_UpdatePokeStatus( PSTATUS_WORK *work )
   PSTATUS_SUB_Main( work , work->subWork );
 
 
+  PSTATUS_UpdateUI( work );
+
   switch( work->befPage )
   {
   case PPT_INFO:
@@ -185,8 +187,6 @@ const PSTATUS_RETURN_TYPE PSTATUS_UpdatePokeStatus( PSTATUS_WORK *work )
     PSTATUS_RIBBON_Main( work , work->ribbonWork );
     break;
   }
-
-  PSTATUS_UpdateUI( work );
 
   //メッセージ
   PRINTSYS_QUE_Main( work->printQue );
