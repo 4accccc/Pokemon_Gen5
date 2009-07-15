@@ -27,7 +27,8 @@ FLDCSV			= field_list.csv
 
 DIR_G3DCVTR		= land_g3dcvtr/
 DIR_3DPPACK		= land_3dppack/
-DIR_LANDRES		= ../land_res/
+DIR_LANDRES		= land_res/
+#DIR_LANDRES		= ../land_res/
 DIR_MATRIX		= ../map_matrix
 
 #CONCAT_TARGET
