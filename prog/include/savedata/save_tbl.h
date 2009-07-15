@@ -64,6 +64,7 @@ enum{
 	GMDATA_ID_WFHIROBA,		//Wi-Fi広場
 	GMDATA_ID_MUSICAL,		//ミュージカル
   GMDATA_ID_RANDOMMAP,  //ランダム生成マップ
+	GMDATA_ID_IRCCOMPATIBLE,	//相性チェック
   
 #if 0
 	GMDATA_ID_SYSTEM_DATA,

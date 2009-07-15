@@ -31,6 +31,10 @@
 #include "net_app/irc_compatible.h"
 #include "net_app/compatible_irc_sys.h"
 #include "debug_irc_name.h"
+#include "net_app/irc_ranking.h"
+
+#include "savedata/irc_compatible_savedata.h"
+
 
 //=============================================================================
 /**
@@ -205,6 +209,9 @@ static void LISTDATA_ChangeProcResult( DEBUG_NAGI_MAIN_WORK *p_wk );
 static void LISTDATA_ChangeProcCompatible( DEBUG_NAGI_MAIN_WORK *p_wk );
 static void LISTDATA_ChangeProcCompatibleDebug( DEBUG_NAGI_MAIN_WORK *p_wk );
 static void LISTDATA_ChangeProcNameDebug( DEBUG_NAGI_MAIN_WORK *p_wk );
+static void LISTDATA_ChangeProcRankingDebug( DEBUG_NAGI_MAIN_WORK *p_wk );
+static void LISTDATA_AddRankData( DEBUG_NAGI_MAIN_WORK *p_wk );
+static void LISTDATA_FullRankData( DEBUG_NAGI_MAIN_WORK *p_wk );
 static void LISTDATA_Return( DEBUG_NAGI_MAIN_WORK *p_wk );
 static void LISTDATA_NextListHome( DEBUG_NAGI_MAIN_WORK *p_wk );
 static void LISTDATA_NextListPage1( DEBUG_NAGI_MAIN_WORK *p_wk );
@@ -271,6 +278,9 @@ enum
 	LISTDATA_SEQ_PROC_COMPATIBLE_DEBUG,
 	LISTDATA_SEQ_RETURN,
 	LISTDATA_SEQ_PROC_NAME_DEBUG,
+	LISTDATA_SEQ_PROC_RANKING_DEBUG,
+	LISTDATA_SEQ_RANKDATA_ONE,
+	LISTDATA_SEQ_RANKDATA_FULL,
 	LISTDATA_SEQ_NEXT_HOME,
 	LISTDATA_SEQ_NEXT_PAGE1,
 	LISTDATA_SEQ_MAX,
@@ -284,6 +294,9 @@ static const LISTDATA_FUNCTION	sc_list_funciton[]	=
 	LISTDATA_ChangeProcCompatibleDebug,
 	LISTDATA_Return,
 	LISTDATA_ChangeProcNameDebug,
+	LISTDATA_ChangeProcRankingDebug,
+	LISTDATA_AddRankData,
+	LISTDATA_FullRankData,
 	LISTDATA_NextListHome,
 	LISTDATA_NextListPage1,
 };
@@ -308,6 +321,7 @@ static const LIST_SETUP_TBL sc_list_data_home[]	=
 	{	
 		L"相性診断画面へ", LISTDATA_SEQ_PROC_COMPATIBLE
 	},
+#if 0
 	{	
 		L"相性診断（ひとり）", LISTDATA_SEQ_PROC_COMPATIBLE_DEBUG
 	},
@@ -317,8 +331,18 @@ static const LIST_SETUP_TBL sc_list_data_home[]	=
 	{	
 		L"リズム（ひとり）", LISTDATA_SEQ_PROC_RHYTHM_DEBUG
 	},
+#endif
 	{	
 		L"運命値チェック", LISTDATA_SEQ_PROC_NAME_DEBUG,
+	},
+	{	
+		L"ランキング", LISTDATA_SEQ_PROC_RANKING_DEBUG,
+	},
+	{	
+		L"ランクデータ１",	LISTDATA_SEQ_RANKDATA_ONE,
+	},
+	{	
+		L"ランクデータフル",	LISTDATA_SEQ_RANKDATA_FULL,
 	},
 	{	
 		L"もどる", LISTDATA_SEQ_RETURN
@@ -347,7 +371,7 @@ static const LIST_SETUP_TBL sc_list_data_page1[]	=
 static GFL_PROC_RESULT DEBUG_PROC_NAGI_Init( GFL_PROC *p_proc, int *p_seq, void *p_parent, void *p_work )
 {	
 	DEBUG_NAGI_MAIN_WORK	*p_wk;
-	GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_NAGI_DEBUG, 0x10000 );
+	GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_NAGI_DEBUG, 0x20000 );
 	p_wk	= GFL_PROC_AllocWork( p_proc, sizeof(DEBUG_NAGI_MAIN_WORK), HEAPID_NAGI_DEBUG );
 	GFL_STD_MemClear( p_wk, sizeof(DEBUG_NAGI_MAIN_WORK) );
 
@@ -712,6 +736,118 @@ static void LISTDATA_ChangeProcCompatibleDebug( DEBUG_NAGI_MAIN_WORK *p_wk )
 static void LISTDATA_ChangeProcNameDebug( DEBUG_NAGI_MAIN_WORK *p_wk )
 {	
 	DEBUG_NAGI_COMMAND_ChangeProc( p_wk, NO_OVERLAY_ID, &DebugIrcName_ProcData, NULL );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	ランキングPROCへの遷移
+ *
+ *	@param	DEBUG_NAGI_MAIN_WORK *p_wkワーク
+ *
+ */
+//-----------------------------------------------------------------------------
+FS_EXTERN_OVERLAY(irc_ranking);
+static void LISTDATA_ChangeProcRankingDebug( DEBUG_NAGI_MAIN_WORK *p_wk )
+{	
+	DEBUG_NAGI_COMMAND_ChangeProc( p_wk, FS_OVERLAY_ID(irc_ranking), &IrcRanking_ProcData, NULL );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	ランキングデータ１つ挿入
+ *
+ *	@param	DEBUG_NAGI_MAIN_WORK *p_wk	ワーク
+ *
+ */
+//-----------------------------------------------------------------------------
+static void LISTDATA_AddRankData( DEBUG_NAGI_MAIN_WORK *p_wk )
+{	
+	IRC_COMPATIBLE_SAVEDATA *p_sv	= IRC_COMPATIBLE_SV_GetSavedata( SaveControl_GetPointer() );
+	{	
+		STRCODE	str[128];
+		u16	strlen;
+		u16 idx;
+		static const struct
+		{	
+			u16 * p_str;
+			u32 ID;
+		} scp_debug_rank_data[]	=
+		{	
+			{	
+				L"かつのり",
+				0x573,
+			},
+			{	
+				L"アリイズミ",
+				0x785,
+			},
+			{	
+				L"キタさん",
+				0x123,
+			},
+			{	
+				L"いわおっち",
+				0x987,
+			},
+			{	
+				L"レイコ",
+				0x782
+			},
+			{	
+				L"イケイケ",
+				0x191,
+			},
+			{	
+				L"ぺぐ",
+				0x232
+			},
+			{	
+				L"マナ",
+				0x595,
+			},
+			{	
+				L"あさみん",
+				0x999,
+			},
+			{	
+				L"プラット",
+				0x1234,
+			},
+			{	
+				L"プラット",
+				0x2345,
+			},
+			{	
+				L"プラット",
+				0x3456,
+			},
+		};
+		u16 *p_str;
+
+		idx	= GFUser_GetPublicRand( NELEMS(scp_debug_rank_data) );
+
+		p_str	= scp_debug_rank_data[idx].p_str;
+
+		strlen	= wcslen(p_str);
+		GFL_STD_MemCopy(p_str, str, strlen*2);
+		str[strlen]	= GFL_STR_GetEOMCode();
+
+		IRC_COMPATIBLE_SV_AddRanking( p_sv, str, GFUser_GetPublicRand( 101 ), scp_debug_rank_data[idx].ID );
+	}
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	ランキングデータをFull
+ *
+ *	@param	DEBUG_NAGI_MAIN_WORK *p_wk	ワーク
+ *
+ */
+//-----------------------------------------------------------------------------
+static void LISTDATA_FullRankData( DEBUG_NAGI_MAIN_WORK *p_wk )
+{	
+	IRC_COMPATIBLE_SAVEDATA *p_sv	= IRC_COMPATIBLE_SV_GetSavedata( SaveControl_GetPointer() );
+	while( IRC_COMPATIBLE_SV_GetRankNum( p_sv ) < IRC_COMPATIBLE_SV_RANKING_MAX )
+	{	
+		LISTDATA_AddRankData( p_wk );
+	}
 }
 //----------------------------------------------------------------------------
 /**

@@ -30,6 +30,7 @@
 #include "savedata/wifi_hiroba_save.h"
 #include "savedata/musical_save.h"
 #include "savedata/randommap_save.h"
+#include "savedata/irc_compatible_savedata.h"
 
 //==============================================================================
 //	定数定義
@@ -226,7 +227,12 @@ static const GFL_SAVEDATA_TABLE SaveDataTbl_Normal[] = {
     GMDATA_ID_RANDOMMAP,  
     (FUNC_GET_SIZE)RANDOMMAP_SAVE_GetWorkSize,
     (FUNC_INIT_WORK)RANDOMMAP_SAVE_InitWork,
-  }
+  },
+	{	//相性チェック
+		GMDATA_ID_IRCCOMPATIBLE,
+    (FUNC_GET_SIZE)IRC_COMPATIBLE_SV_GetWorkSize,
+    (FUNC_INIT_WORK)IRC_COMPATIBLE_SV_Init,
+	}
 
 };
 

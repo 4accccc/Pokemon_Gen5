@@ -30,7 +30,8 @@ SAVEDATASRC =   savedata/save_tbl.c \
         savedata/mystery_data.c \
         savedata/wifi_hiroba_save.c \
         savedata/musical_save.c \
-        savedata/randommap_save.c
+        savedata/randommap_save.c \
+				savedata/irc_compatible_savedata.c
 
 
 #’ÊM‚Ìí’“
