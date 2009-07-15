@@ -97,7 +97,7 @@ typedef enum
 
 
 typedef enum {
-	_NETCMD_SELECT_POKEMON = GFL_NET_CMD_IRCBATTLE,
+	_NETCMD_SELECT_POKEMON = GFL_NET_CMD_IRCTRADE,
 	_NETCMD_CHANGE_POKEMON,
 	_NETCMD_CHANGE_YESNO,
 	_NETCMD_CHANGE_CANCEL,
@@ -1460,7 +1460,7 @@ static GFL_PROC_RESULT IrcBattleFriendProcInit( GFL_PROC * proc, int * seq, void
 		pWork->pParentWork = pwk;
 		pWork->pGameSys = IrcBattle_GetGAMESYS_WORK(pWork->pParentWork);
 		// 通信テーブル追加
-		GFL_NET_AddCommandTable(GFL_NET_CMD_IRCBATTLE,_PacketTbl,NELEMS(_PacketTbl), pWork);
+		GFL_NET_AddCommandTable(GFL_NET_CMD_IRCTRADE,_PacketTbl,NELEMS(_PacketTbl), pWork);
 		_CHANGE_STATE( pWork, _dispInit);
 		pWork->g3dVintr = GFUser_VIntr_CreateTCB( _VBlank, (void*)pWork, 0 );
 
@@ -1530,7 +1530,7 @@ static GFL_PROC_RESULT IrcBattleFriendProcEnd( GFL_PROC * proc, int * seq, void 
 	IRC_POKEMON_TRADE* pWork = mywk;
 	EVENT_IRCBATTLE_WORK* pParentWork = pwk;
 
-	GFL_NET_DelCommandTable(GFL_NET_CMD_IRCBATTLE);
+	GFL_NET_DelCommandTable(GFL_NET_CMD_IRCTRADE);
 	
 	TOUCH_SW_FreeWork( pWork->TouchSubWindowSys );
 

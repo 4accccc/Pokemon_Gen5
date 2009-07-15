@@ -80,7 +80,9 @@ ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、元ファイルからコンバートするル
 $(targetname).narc: $(lobjects) $(gobjects) $(eobjects) $(cobjects) $(aobjects)
 	nnsarc -r -l -n -i $(targetname) $^
 	$(NAIXCUT) $(targetname).naix
-	$(COPY) *.h ../../prog/src/field/c_gear/
+	$(DIFFCOPY) c_gear_obj_NANR_LBLDEFS.h  ../../prog/src/field/c_gear/
+	$(DIFFCOPY) c_gear2_obj_NANR_LBLDEFS.h  ../../prog/src/field/c_gear/
+
 endif
 
 #------------------------------------------------------------------------------

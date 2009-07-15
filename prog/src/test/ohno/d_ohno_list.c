@@ -102,6 +102,7 @@ extern const GFL_PROC_DATA WifiClubProcData;
 extern const GFL_PROC_DATA DebugOhnoMainProcData;
 extern const GFL_PROC_DATA DebugLayoutMainProcData;
 extern const GFL_PROC_DATA G_SYNC_ProcData;
+extern const GFL_PROC_DATA VTRProcData;
 
 //==============================================================================
 //	ÉfÅ[É^
@@ -123,6 +124,12 @@ static const D_MENULIST DebugMenuList[] = {
 	{//
 		DEBUG_OHNO_MSG0004, 
 		&G_SYNC_ProcData,
+		NULL,
+		FS_OVERLAY_ID(ohno_debugapp)
+	},
+	{//
+		DEBUG_OHNO_MSG0004, 
+		&VTRProcData,
 		NULL,
 		FS_OVERLAY_ID(ohno_debugapp)
 	},

@@ -37,7 +37,7 @@
 #define _TIMING_ENDNO (12)
 
 typedef enum {
-    _NETCMD_MYSTATUS = GFL_NET_CMD_IRCBATTLE,
+    _NETCMD_MYSTATUS = GFL_NET_CMD_IRCFRIEND,
     _NETCMD_FRIENDCODE,
 } _BATTLEIRC_SENDCMD;
 
@@ -235,7 +235,7 @@ static GFL_PROC_RESULT IrcBattleFriendProcInit( GFL_PROC * proc, int * seq, void
         pWork->selectType =  EVENT_IrcBattleGetType((EVENT_IRCBATTLE_WORK*) pwk);
         pWork->pParentWork = pwk;
         // 通信テーブル追加
-        GFL_NET_AddCommandTable(GFL_NET_CMD_IRCBATTLE,_PacketTbl,NELEMS(_PacketTbl), pWork);
+        GFL_NET_AddCommandTable(GFL_NET_CMD_IRCFRIEND,_PacketTbl,NELEMS(_PacketTbl), pWork);
         _CHANGE_STATE( pWork, _sendFriendCode);
     }
     return GFL_PROC_RES_FINISH;

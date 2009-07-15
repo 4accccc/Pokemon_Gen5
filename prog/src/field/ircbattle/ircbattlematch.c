@@ -145,7 +145,7 @@ static const NetRecvFuncTable _PacketTbl[] = {
 #define _MAXSIZE  (32)        // 最大送信バイト数
 #define _BCON_GET_NUM (16)    // 最大ビーコン収集数
 
-static const GFLNetInitializeStruct aGFLNetInit = {
+static GFLNetInitializeStruct aGFLNetInit = {
   _PacketTbl,  // 受信関数テーブル
   NELEMS(_PacketTbl), // 受信テーブル要素数
   NULL,    ///< ハードで接続した時に呼ばれる
@@ -589,18 +589,20 @@ static void _ircMatchStart(IRC_BATTLE_MATCH* pWork)
     net_ini_data.bNetType = GFL_NET_TYPE_IRC_WIRELESS;
     switch(pWork->selectType){
     case EVENTIRCBTL_ENTRYMODE_SINGLE:
-      break;
     case EVENTIRCBTL_ENTRYMODE_DOUBLE:
-      break;
     case EVENTIRCBTL_ENTRYMODE_TRI:
+			net_ini_data.gsid = WB_NET_IRCBATTLE;
       break;
     case EVENTIRCBTL_ENTRYMODE_MULTH:
+			net_ini_data.gsid = WB_NET_IRCBATTLE;
       net_ini_data.maxConnectNum = 4;
       break;
     case EVENTIRCBTL_ENTRYMODE_FRIEND:
-      break;
+			net_ini_data.gsid = WB_NET_IRCFRIEND;
+			break;
     case EVENTIRCBTL_ENTRYMODE_TRADE:
-      break;
+			net_ini_data.gsid = WB_NET_IRCTRADE;
+			break;
     default:
       GF_ASSERT(0);
       break;
@@ -661,6 +663,7 @@ static void _ircExitWait(IRC_BATTLE_MATCH* pWork)
     if(ret == 0)
     { // はいを選択した場合
 			EVENT_IrcBattleSetType(pWork->pBattleWork,EVENTIRCBTL_ENTRYMODE_EXIT);
+			_buttonWindowDelete(pWork);
 			GFL_NET_Exit(NULL);
 			_CHANGE_STATE(pWork,NULL);
     }
@@ -675,7 +678,24 @@ static void _ircExitWait(IRC_BATTLE_MATCH* pWork)
 }
 
 
+//------------------------------------------------------------------------------
+/**
+ * @brief   キーを待って終了
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
 
+
+static void _ircEndKeyWait(IRC_BATTLE_MATCH* pWork)
+{
+	if(GFL_UI_KEY_GetTrg() != 0){
+		
+		
+		EVENT_IrcBattleSetType(pWork->pBattleWork,EVENTIRCBTL_ENTRYMODE_RETRY);
+		GFL_NET_Exit(NULL);
+		_CHANGE_STATE(pWork,NULL);
+	}
+}
 
 
 //------------------------------------------------------------------------------
@@ -694,7 +714,15 @@ static const BMPWIN_YESNO_DAT _yesNoBmpDatSys2 = {
 
 static void _ircMatchWait(IRC_BATTLE_MATCH* pWork)
 {
-
+	if(GFL_NET_IsInit()){
+		if(GFL_NET_NEG_TYPE_TYPE_ERROR==GFL_NET_HANDLE_GetNegotiationType(GFL_NET_HANDLE_GetCurrentHandle())){  ///< モードが異なる接続エラー
+			int aMsgBuff[]={IRCBTL_STR_25};
+			_buttonWindowDelete(pWork);
+			_msgWindowCreate(aMsgBuff, pWork);
+			_CHANGE_STATE(pWork,_ircEndKeyWait);
+			return;
+		}
+	}
 	if(GFL_UI_KEY_GetTrg() == PAD_BUTTON_CANCEL){
 		int aMsgBuff[]={IRCBTL_STR_16};
 		_buttonWindowDelete(pWork);
@@ -714,11 +742,6 @@ static void _ircMatchWait(IRC_BATTLE_MATCH* pWork)
 		_CHANGE_STATE(pWork,_ircExitWait);
 	}
 
-	
-  // if(pWork->connect_ok == TRUE){
-  //		GFL_NET_HANDLE_TimingSyncStart(GFL_NET_HANDLE_GetCurrentHandle() ,_START_TIMING);
-  // _CHANGE_STATE(pWork,_ircStartTiming);
-  //    }
 
 }
 

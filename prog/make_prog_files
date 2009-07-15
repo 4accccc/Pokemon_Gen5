@@ -618,6 +618,7 @@ SRCS_OVERLAY_OHNO_DEBUG = test/ohno/d_ohno_list.c
 #===> SRCS_OVERLAY_OHNO_DEBUG
 SRCS_OVERLAY_OHNO_DEBUGAPP  = test/ohno/debug_ohno.c \
 			  net_app/gsync/gsync_state.c \
+			  test/ohno/debug_vtr.c \
         test/ohno/fatal_error.c \
         test/ohno/debug_field.c \
         test/ohno/test_layout.c

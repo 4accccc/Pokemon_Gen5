@@ -62,6 +62,7 @@ enum _EVENT_IRCBATTLE {
   _FIELD_FADEOUT,
   _CALL_IRCBATTLE_MATCH,
   _WAIT_IRCBATTLE_MATCH,
+	_BATTLE_MATCH_START,
   _TIMING_SYNC_CALL_BATTLE,
   _CALL_BATTLE,
   _WAIT_BATTLE,
@@ -148,22 +149,32 @@ static GMEVENT_RESULT EVENT_IrcBattleMain(GMEVENT * event, int *  seq, void * wo
     break;
   case _WAIT_IRCBATTLE_MATCH:
     if (!GAMESYSTEM_IsProcExists(gsys)){
-      if(dbw->selectType == EVENTIRCBTL_ENTRYMODE_EXIT){
-        *seq = _WAIT_NET_END;
-        return GMEVENT_RES_CONTINUE;
-      }
-      else if(dbw->selectType == EVENTIRCBTL_ENTRYMODE_FRIEND){
+			// マッチング内容によりゲーム分岐
+			switch(dbw->selectType){
+			case EVENTIRCBTL_ENTRYMODE_EXIT:
+				*seq = _WAIT_NET_END;
+				break;
+			case EVENTIRCBTL_ENTRYMODE_RETRY:
+				*seq = _CALL_IRCBATTLE_MENU;
+				break;
+			case EVENTIRCBTL_ENTRYMODE_FRIEND:
         *seq = _CALL_IRCBATTLE_FRIEND;
-        return GMEVENT_RES_CONTINUE;
-      }
-			else if(dbw->selectType == EVENTIRCBTL_ENTRYMODE_TRADE){
+        break;
+			case EVENTIRCBTL_ENTRYMODE_TRADE:
         *seq = _CALL_TRADE;
-        return GMEVENT_RES_CONTINUE;
+        break;
+			default:
+				*seq = _BATTLE_MATCH_START;
+				break;
 			}
-      (*seq) ++;
+		}
+		break;
+	case _BATTLE_MATCH_START:
+		{
       GFL_OVERLAY_Load( FS_OVERLAY_ID( battle ) );
       GFL_NET_AddCommandTable(GFL_NET_CMD_BATTLE, BtlRecvFuncTable, 5, NULL);
       GFL_NET_TimingSyncStart(GFL_NET_HANDLE_GetCurrentHandle(),_LOCALMATCHNO);
+      (*seq) ++;
     }
     break;
   case _TIMING_SYNC_CALL_BATTLE:

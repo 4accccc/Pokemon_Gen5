@@ -54,15 +54,17 @@ typedef struct _NET_TOOLSYS_t NET_TOOLSYS;
 
 
 typedef enum {
-  _NEG_TYPE_FIRST,
-  _NEG_TYPE_SEND_BEFORE,
-  _NEG_TYPE_SEND,
-  _NEG_TYPE_SEND_AFTER,
-  _NEG_TYPE_RECV,
-  _NEG_TYPE_CONNECT,       ///< 接続を親が認証した場合 CONNECTになる このコマンド後は通信可能になる
-  _NEG_TYPE_END,           ///< 切断状態
+  GFL_NET_NEG_TYPE_FIRST,
+  GFL_NET_NEG_TYPE_SEND_BEFORE,
+  GFL_NET_NEG_TYPE_SEND,
+  GFL_NET_NEG_TYPE_SEND_AFTER,
+  GFL_NET_NEG_TYPE_RECV,
+  GFL_NET_NEG_TYPE_CONNECT,       ///< 接続を親が認証した場合 CONNECTになる このコマンド後は通信可能になる
+  GFL_NET_NEG_TYPE_END,           ///< 切断状態
+  GFL_NET_NEG_TYPE_TYPE_ERROR,           ///< エラーである
+  GFL_NET_NEG_TYPE_NONE,
 
-} _NEGOTIATION_TYPE_E;
+} GFL_NET_NEGOTIATION_TYPE_E;
 
 //==============================================================================
 /**
@@ -226,6 +228,14 @@ extern void* GFL_NET_HANDLE_GetInfomationData(const GFL_NETHANDLE* pNetHandle);
  */
 //-------------------------------------------------------------------------
 extern int GFL_NET_HANDLE_GetInfomationDataSize(const GFL_NETHANDLE* pNetHandle);
+//------------------------------------------------------------------------------
+/**
+ * @brief       現在のネゴシエーション結果をえる
+ * @param[in]   pHandle   通信ハンドル
+ * @return      GFL_NET_NEGOTIATION_TYPE_E
+ */
+//------------------------------------------------------------------------------
+extern GFL_NET_NEGOTIATION_TYPE_E GFL_NET_HANDLE_GetNegotiationType(GFL_NETHANDLE* pHandle);
 
 
 
