@@ -4,4 +4,4 @@ CameraNo,Length,Pitch,Yow,Roll,ViewType,depth,fovyy,Near,Far,OffsetX,OffsetY,Off
 2,315,698,0,0,PER,WBUF,e38,64,680,0,0,0,C03,
 3,d5,1bd8,0,0,PER,WBUF,e38,1,400,0,18066,fffef197,ポケセン,
 4,4d,5d8,0,0,PER,WBUF,281,1,400,0,199f7,9ed,H01ゲート前,
-5,003d,1dd8,0,0,PER,ZBUF,1438,1,400,0,0,0,チャンピオンリーグ全景,
+5,ed,1dd8,0,0,PER,ZBUF,1438,1,400,0,0,0,チャンピオンリーグ全景,
