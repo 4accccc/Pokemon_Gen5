@@ -58,6 +58,11 @@ enum {
   QUE_DEFAULT_BUFSIZE = 1024,
   QUE_DEFAULT_TICK = 4400,    ///< 通信時、１度の描画処理に使う時間の目安（Tick）デフォルト値
 
+  //
+  JOB_COLORSTATE_IGNORE = 0,
+  JOB_COLORSTATE_CHANGE_REQ,
+  JOB_COLORSTATE_CHANGE_DONE,
+
 };
 
 
@@ -80,8 +85,11 @@ typedef struct {
   u32   org_x : 10;
   u32   org_y : 10;
   u32   write_x : 10;
-  u32   write_y : 10;
-  u32   jobColorEnable : 1;
+  u32   pad0    : 2;
+
+  u32   write_y    : 10;
+  u32   colorState : 4;
+  u32   pad1       : 18;
 
   PRINTSYS_LSB    defColor;
   PRINTSYS_LSB    jobColor;
@@ -105,7 +113,7 @@ struct _PRINT_QUE {
   u16   bufEndPos;
   u16   bufSize;
   u8    colorChanged;
-  u8    job_colorChanged;
+  u8    debugCounter;
 
   PRINTSYS_LSB  defColor;
 
@@ -260,7 +268,9 @@ PRINT_QUE* PRINTSYS_QUE_CreateEx( u16 buf_size, HEAPID heapID )
   que->runningJob = NULL;
   que->sp = NULL;
   que->colorChanged = FALSE;
-  que->job_colorChanged = FALSE;
+
+
+  que->debugCounter=0;
 
   que->bufTopPos = 0;
   que->bufEndPos = buf_size;
@@ -311,6 +321,7 @@ void PRINTSYS_QUE_SetLimitTick( PRINT_QUE* que, OSTick tick )
 //==============================================================================================
 BOOL PRINTSYS_QUE_Main( PRINT_QUE* que )
 {
+  que->debugCounter++;
   if( que->runningJob )
   {
     OSTick start, diff;
@@ -318,27 +329,28 @@ BOOL PRINTSYS_QUE_Main( PRINT_QUE* que )
 
     start = OS_GetTick();
 
-    if( que->runningJob->jobColorEnable && que->job_colorChanged == FALSE )
-    {
-      u8 colL, colS, colB;
-
-      PRINTSYS_LSB_GetLSB( que->runningJob->jobColor, &colL, &colS, &colB );
-      if( GFL_FONTSYS_IsDifferentColor(colL, colS, colB) )
-      {
-        if( que->colorChanged == FALSE )
-        {
-          u8 defL, defS, defB;
-          GFL_FONTSYS_GetColor( &defL, &defS, &defB );
-          que->defColor = PRINTSYS_LSB_Make( defL, defS, defB );
-          que->colorChanged = TRUE;
-        }
-        GFL_FONTSYS_SetColor( colL, colS, colB );
-        que->job_colorChanged = TRUE;
-      }
-    }
-
     while( que->runningJob )
     {
+      if( que->runningJob->colorState == JOB_COLORSTATE_CHANGE_REQ )
+      {
+        u8 colL, colS, colB;
+
+        PRINTSYS_LSB_GetLSB( que->runningJob->jobColor, &colL, &colS, &colB );
+        if( GFL_FONTSYS_IsDifferentColor(colL, colS, colB) )
+        {
+          // 最初の色変更時、デフォルトの色情報を覚えておく
+          if( que->colorChanged == FALSE )
+          {
+            u8 defL, defS, defB;
+            GFL_FONTSYS_GetColor( &defL, &defS, &defB );
+            que->defColor = PRINTSYS_LSB_Make( defL, defS, defB );
+            que->colorChanged = TRUE;
+          }
+          GFL_FONTSYS_SetColor( colL, colS, colB );
+          que->runningJob->colorState = JOB_COLORSTATE_CHANGE_DONE;
+        }
+      }
+
       while( *(que->sp) != EOM_CODE )
       {
         que->sp = print_next_char( que->runningJob, que->sp );
@@ -352,7 +364,18 @@ BOOL PRINTSYS_QUE_Main( PRINT_QUE* que )
       //
       if( *(que->sp) == EOM_CODE )
       {
-        u16 pos = Que_AdrsToBufPos( que, que->runningJob );
+        u16 pos;
+
+        // job 終了ごとにデフォルト色に戻す
+        if( que->runningJob->colorState == JOB_COLORSTATE_CHANGE_DONE )
+        {
+          u8 defL, defS, defB;
+          PRINTSYS_LSB_GetLSB( que->defColor, &defL, &defS, &defB );
+          if( GFL_FONTSYS_IsDifferentColor( defL, defS, defB ) ){
+            GFL_FONTSYS_SetColor( defL, defS, defB );
+          }
+        }
+        pos = Que_AdrsToBufPos( que, que->runningJob );
 
         que->runningJob = Que_ReadNextJobAdrs( que, que->runningJob );
         if( que->runningJob )
@@ -360,18 +383,15 @@ BOOL PRINTSYS_QUE_Main( PRINT_QUE* que )
           pos = Que_FwdBufPos( que, pos, sizeof(PRINT_JOB) );
           pos = Que_FwdBufPos( que, pos, sizeof(PRINT_JOB*) );
           que->sp = Que_BufPosToAdrs( que, pos );
-          que->job_colorChanged = FALSE;
         }
       }
 
       if( endFlag ){ break; }
-
     }
 
     if( que->runningJob )
     {
       que->bufEndPos = Que_AdrsToBufPos( que, que->sp );
-      que->job_colorChanged = FALSE;
       return FALSE;
     }
 
@@ -381,9 +401,11 @@ BOOL PRINTSYS_QUE_Main( PRINT_QUE* que )
 
   if( que->colorChanged )
   {
-    u8 colL, colS, colB;
-    PRINTSYS_LSB_GetLSB( que->defColor, &colL, &colS, &colB );
-    GFL_FONTSYS_SetColor( colL, colS, colB );
+    u8 defL, defS, defB;
+    PRINTSYS_LSB_GetLSB( que->defColor, &defL, &defS, &defB );
+    if( GFL_FONTSYS_IsDifferentColor( defL, defS, defB ) ){
+      GFL_FONTSYS_SetColor( defL, defS, defB );
+    }
   }
 
   return TRUE;
@@ -587,7 +609,7 @@ static void printJob_setup( PRINT_JOB* wk, GFL_FONT* font, GFL_BMP_DATA* dst, u1
   wk->fontHandle = font;
   wk->org_x = wk->write_x = org_x;
   wk->org_y = wk->write_y = org_y;
-  wk->jobColorEnable = FALSE;
+  wk->colorState = JOB_COLORSTATE_IGNORE;
 
   {
     u8 letter, shadow, back;
@@ -606,7 +628,7 @@ static void printJob_setup( PRINT_JOB* wk, GFL_FONT* font, GFL_BMP_DATA* dst, u1
 static void printJob_setColor( PRINT_JOB* wk, PRINTSYS_LSB color )
 {
   wk->jobColor = color;
-  wk->jobColorEnable = TRUE;
+  wk->colorState = JOB_COLORSTATE_CHANGE_REQ;
 }
 //--------------------------------------------------------------------------
 /**
@@ -624,9 +646,9 @@ static void printJob_finish( PRINT_JOB* job, const STRBUF* str )
   u8 defColorL, defColorS, defColorB, colorChanged;
 
   defColorL = defColorS = defColorB = 0;
-  colorChanged = FALSE;
+  colorChanged = 0;
 
-  if( job->jobColorEnable )
+  if( job->colorState == JOB_COLORSTATE_CHANGE_REQ )
   {
     u8 colL, colS, colB;
 
@@ -637,6 +659,7 @@ static void printJob_finish( PRINT_JOB* job, const STRBUF* str )
       GFL_FONTSYS_SetColor( colL, colS, colB );
       colorChanged = TRUE;
     }
+    job->colorState = JOB_COLORSTATE_CHANGE_DONE;
   }
 
   while( *sp != EOM_CODE )
@@ -698,7 +721,6 @@ static const STRCODE* print_next_char( PRINT_JOB* wk, const STRCODE* sp )
         u16 w, h;
 
         wk->put1charFunc( wk->dst, wk->write_x, wk->write_y, wk->fontHandle, *sp, &size );
-
         wk->write_x += size.width;
         sp++;
 
