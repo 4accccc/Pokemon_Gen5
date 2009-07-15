@@ -15,9 +15,9 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA    ev_t02r0401_girl4_1
-_EVENT_DATA    ev_t02r0401_man2_1
-_EVENT_DATA    ev_t02r0401_poke_1
+_EVENT_DATA    ev_t02r0401_talkobj_girl4
+_EVENT_DATA    ev_t02r0401_talkobj_man2
+_EVENT_DATA    ev_t02r0401_talkobj_poke
 _EVENT_DATA_END
 
 
@@ -38,9 +38,9 @@ _EVENT_DATA_END
 //  _END
 
 /**************************************************************/
-/*                                                            */
+/*  T02R0401 GIRL4の会話用イベントスクリプト*/
 /**************************************************************/
-ev_t02r0401_girl4_1:
+ev_t02r0401_talkobj_girl4:
 	_TALK_OBJ_PAUSE_ALL
 	_TURN_HERO_SITE
 	_TALKWIN_OPEN
@@ -50,7 +50,10 @@ ev_t02r0401_girl4_1:
   _OBJ_PAUSE_CLEAR_ALL
   _END
 
-ev_t02r0401_man2_1:
+/**************************************************************/
+/*  T02R0401 MAN2の会話用イベントスクリプト*/
+/**************************************************************/
+ev_t02r0401_talkobj_man2:
 	_TALK_OBJ_PAUSE_ALL
 	_TURN_HERO_SITE
 	_TALKWIN_OPEN
@@ -60,7 +63,10 @@ ev_t02r0401_man2_1:
   _OBJ_PAUSE_CLEAR_ALL
   _END
 
-ev_t02r0401_poke_1:
+/**************************************************************/
+/*  T02R0401 POKEの会話用イベントスクリプト*/
+/**************************************************************/
+ev_t02r0401_talkobj_poke:
 	_TALK_OBJ_PAUSE_ALL
 	_TURN_HERO_SITE
 	_TALKWIN_OPEN
