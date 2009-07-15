@@ -145,6 +145,34 @@ POKEMON_PARAM* PP_Create( u16 mons_no, u16 level, u64 id, HEAPID heapID )
 
   return pp;
 }
+//=============================================================================================
+/**
+ * ポケモンパソコンパラメータから、ポケモンパラメータを構築する
+ *
+ * @param   ppp
+ * @param   heapID
+ *
+ * @retval  POKEMON_PARAM*
+ */
+//=============================================================================================
+POKEMON_PARAM* PP_CreateByPPP( const POKEMON_PASO_PARAM* ppp, HEAPID heapID )
+{
+  POKEMON_PARAM* pp;
+  BOOL fast_flag;
+
+  fast_flag = PPP_FastModeOn( (POKEMON_PASO_PARAM*)ppp );
+  {
+    u16 mons_no = PPP_Get( ppp, ID_PARA_monsno, NULL );
+    u16 level = PPP_Get( ppp, ID_PARA_level, NULL );
+    u32 ID = PPP_Get( ppp, ID_PARA_id_no, NULL );
+
+    pp = PP_Create( mons_no, level, ID, heapID );
+  }
+
+  PPP_FastModeOff( (POKEMON_PASO_PARAM*)ppp, fast_flag );
+  return pp;
+}
+
 
 //============================================================================================
 /**

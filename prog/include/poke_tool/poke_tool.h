@@ -575,7 +575,7 @@ extern  u32   POKETOOL_GetWorkSize( void );     ///< POKEMON_PARAM１体分のサイズ
 
 
 extern  POKEMON_PARAM*  PP_Create( u16 mons_no, u16 level, u64 id, HEAPID heapID ); ///<
-
+extern  POKEMON_PARAM*  PP_CreateByPPP( const POKEMON_PASO_PARAM* ppp, HEAPID heapID );
 
 // 動作高速化
 // 複数回の Get, Put を行う前に FastModeOn しておくと、
