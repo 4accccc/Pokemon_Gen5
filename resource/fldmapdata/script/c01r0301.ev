@@ -1,11 +1,15 @@
+
 //======================================================================
-//                c01r0301
+//                c01r0301.ev
+//
+//    スクリプトファイル：c01r0301用
+//
 //======================================================================
 
   .text
 
   .include  "scr_seq_def.h"
-  .include  "../../../prog/include/msg/script/msg_c01r0301.h"
+  .include  "../../message/dst/script/msg_c01r0301.h"
   //.include  "../eventdata/zone_c01r0301evc.h"
 
 //--------------------------------------------------------------
@@ -15,64 +19,20 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA    ev_c01r0301_talkobj_middlewoman2
-_EVENT_DATA    ev_c01r0301_talkobj_man1
-_EVENT_DATA    ev_c01r0301_talkobj_boy2
+_EVENT_DATA    ev_c01r0301
 _EVENT_DATA_END
 
 
 /**************************************************************/
 /*            FLAG_CHANGE_LABEL                               */
-/*
- * 注意！(06.02.09現在)
- * EV_SCRIPT_WORKを確保していないので、
- * SCWK_ANSWERなどのワークは使用することが出来ない！
- * LOCALWORK0などを使用するようにする！
- *
- * 共通スクリプトについては現状使用不可！
- * 対応予定だが、ゾーンをまたいだ時に処理落ちするかも？
- * あまりつかわないかも？
- */
 /**************************************************************/
 //ev_c01r0301_flag_change:
 //  _END
 
 /**************************************************************/
-/*  C01R0301 MIDDLEWOMAN2の会話用イベントスクリプト*/
+/*                                                            */
 /**************************************************************/
-ev_c01r0301_talkobj_middlewoman2:
-	_TALK_OBJ_PAUSE_ALL
-	_TURN_HERO_SITE
-	_TALKWIN_OPEN
-	_TALKMSG_ALLPUT msg_c01r0301_middlewoman2_01
-	_AB_KEYWAIT
-  _TALKWIN_CLOSE
-  _OBJ_PAUSE_CLEAR_ALL
-  _END
-
-/**************************************************************/
-/*  C01R0301 MAN1の会話用イベントスクリプト*/
-/**************************************************************/
-ev_c01r0301_talkobj_man1:
-	_TALK_OBJ_PAUSE_ALL
-	_TURN_HERO_SITE
-	_TALKWIN_OPEN
-	_TALKMSG_ALLPUT msg_c01r0301_man1_01
-	_AB_KEYWAIT
-  _TALKWIN_CLOSE
-  _OBJ_PAUSE_CLEAR_ALL
-  _END
-
-/**************************************************************/
-/*  C01R0301 BOY2の会話用イベントスクリプト*/
-/**************************************************************/
-ev_c01r0301_talkobj_boy2:
-	_TALK_OBJ_PAUSE_ALL
-	_TURN_HERO_SITE
-	_TALKWIN_OPEN
-	_TALKMSG_ALLPUT msg_c01r0301_boy2_01
-	_AB_KEYWAIT
-  _TALKWIN_CLOSE
-  _OBJ_PAUSE_CLEAR_ALL
+ev_c01r0301:
+  //とりあえず最初のラベルだけ生成している
   _END
 

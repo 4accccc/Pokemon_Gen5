@@ -1,9 +1,14 @@
-#ifndef _T02R0102_DEF_H_
-#define _T02R0102_DEF_H_
+//======================================================================
+//                t02r0102_def.h
+//
+//    スクリプトヘッダファイル：t02r0102用
+//
+//======================================================================
+#ifndef __t02r0102_DEF_H__
+#define __t02r0102_DEF_H__
 
-//スクリプトデータID定義 
-#define	SCRID_T02R0102_TALKOBJ_MAN1		(1)
-#define	SCRID_T02R0102_TALKOBJ_WOMAN1		(2)
-#define	SCRID_T02R0102_DATA_MAX		(2)		//最大数
+//スクリプトデータID定義
+#define SCRID_t02r0102_DATA_MAX   (0)   /* 最大数 */
 
-#endif //_T02R0102_DEF_H_
+#endif  /* __t02r0102_DEF_H__ */
+

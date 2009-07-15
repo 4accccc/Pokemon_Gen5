@@ -1,10 +1,14 @@
-#ifndef _R01_DEF_H_
-#define _R01_DEF_H_
+//======================================================================
+//                r01_def.h
+//
+//    スクリプトヘッダファイル：r01用
+//
+//======================================================================
+#ifndef __r01_DEF_H__
+#define __r01_DEF_H__
 
-//スクリプトデータID定義 
-#define	SCRID_R01_TALKOBJ_BOY1		(1)
-#define	SCRID_R01_TALKOBJ_GIRL1		(2)
-#define	SCRID_R01_TALKOBJ_MAN1		(3)
-#define	SCRID_R01_DATA_MAX		(3)		//最大数
+//スクリプトデータID定義
+#define SCRID_r01_DATA_MAX   (0)   /* 最大数 */
 
-#endif //_R01_DEF_H_
+#endif  /* __r01_DEF_H__ */
+

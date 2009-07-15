@@ -1,9 +1,14 @@
-#ifndef _C01PC0101_DEF_H_
-#define _C01PC0101_DEF_H_
+//======================================================================
+//                c01pc0101_def.h
+//
+//    スクリプトヘッダファイル：c01pc0101用
+//
+//======================================================================
+#ifndef __c01pc0101_DEF_H__
+#define __c01pc0101_DEF_H__
 
-//スクリプトデータID定義 
-#define	SCRID_C01PC0101_TALKOBJ_MAN2		(1)
-#define	SCRID_C01PC0101_TALKOBJ_MIDDLEMAN2		(2)
-#define	SCRID_C01PC0101_DATA_MAX		(2)		//最大数
+//スクリプトデータID定義
+#define SCRID_c01pc0101_DATA_MAX   (0)   /* 最大数 */
 
-#endif //_C01PC0101_DEF_H_
+#endif  /* __c01pc0101_DEF_H__ */
+

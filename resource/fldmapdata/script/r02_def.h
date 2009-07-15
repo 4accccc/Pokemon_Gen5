@@ -1,9 +1,14 @@
-#ifndef _R02_DEF_H_
-#define _R02_DEF_H_
+//======================================================================
+//                r02_def.h
+//
+//    スクリプトヘッダファイル：r02用
+//
+//======================================================================
+#ifndef __r02_DEF_H__
+#define __r02_DEF_H__
 
-//スクリプトデータID定義 
-#define	SCRID_R02_TALKOBJ_BLACK		(1)
-#define	SCRID_R02_TALKOBJ_MAMA		(2)
-#define	SCRID_R02_DATA_MAX		(2)		//最大数
+//スクリプトデータID定義
+#define SCRID_r02_DATA_MAX   (0)   /* 最大数 */
 
-#endif //_R02_DEF_H_
+#endif  /* __r02_DEF_H__ */
+

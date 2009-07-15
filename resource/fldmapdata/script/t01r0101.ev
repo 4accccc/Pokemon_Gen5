@@ -1,12 +1,16 @@
+
 //======================================================================
-//                t01r0101
+//                t01r0101.ev
+//
+//    スクリプトファイル：t01r0101用
+//
 //======================================================================
 
   .text
 
   .include  "scr_seq_def.h"
-  .include  "../../../prog/include/msg/script/msg_t01r0101.h"
-  .include  "../eventdata/zone_t01r0101evc.h"
+  .include  "../../message/dst/script/msg_t01r0101.h"
+  //.include  "../eventdata/zone_t01r0101evc.h"
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -15,55 +19,20 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA    ev_t01r0101_woman1_1
+_EVENT_DATA    ev_t01r0101
 _EVENT_DATA_END
 
 
 /**************************************************************/
 /*            FLAG_CHANGE_LABEL                               */
-/*
- * 注意！(06.02.09現在)
- * EV_SCRIPT_WORKを確保していないので、
- * SCWK_ANSWERなどのワークは使用することが出来ない！
- * LOCALWORK0などを使用するようにする！
- *
- * 共通スクリプトについては現状使用不可！
- * 対応予定だが、ゾーンをまたいだ時に処理落ちするかも？
- * あまりつかわないかも？
- */
 /**************************************************************/
 //ev_t01r0101_flag_change:
 //  _END
 
 /**************************************************************/
-/*    WOMAN1用会話                                            */
+/*                                                            */
 /**************************************************************/
-ev_t01r0101_woman1_1:
-	_TALK_OBJ_PAUSE_ALL
-	_TURN_HERO_SITE
-	_PLAYER_NAME 0
-	_TALKWIN_OPEN
-	_TALKMSG_ALLPUT msg_t01r0101_test_01
-	_AB_KEYWAIT
-	_TALKWIN_CLOSE
+ev_t01r0101:
+  //とりあえず最初のラベルだけ生成している
+  _END
 
-	_OBJ_ANIME T01R0101_WOMAN1_1,test01anime
-	_OBJ_ANIME_WAIT
-
-	_TURN_HERO_SITE
-	_TALKWIN_OPEN
-	_TALKMSG_ALLPUT msg_t01r0101_test_02
-	_AB_KEYWAIT
-	_TALKWIN_CLOSE
-
-	_OBJ_PAUSE_CLEAR_ALL
-	_END
-
-//--------------------------------------------------------------
-//	アニメーションデータ
-//--------------------------------------------------------------
-_ANIME_LABEL test01anime
-	_ANIME_DATA AC_WALK_R_8F,1
-	_ANIME_DATA AC_WALK_L_8F,2
-	_ANIME_DATA AC_WALK_R_8F,1
-	_ANIME_DATA ACMD_END,0
