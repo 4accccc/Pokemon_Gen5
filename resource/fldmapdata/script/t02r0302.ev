@@ -15,8 +15,8 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA    ev_t02r0302_middleman1_1
-_EVENT_DATA    ev_t02r0302_poke_1
+_EVENT_DATA    ev_t02r0302_talkobj_middleman1
+_EVENT_DATA    ev_t02r0302_talkobj_poke
 _EVENT_DATA_END
 
 
@@ -39,7 +39,7 @@ _EVENT_DATA_END
 /**************************************************************/
 /*  T02R0302 MIDDLEMAN1の会話用イベントスクリプト*/
 /**************************************************************/
-ev_t02r0302_middleman1_1:
+ev_t02r0302_talkobj_middleman1:
 	_TALK_OBJ_PAUSE_ALL
 	_TURN_HERO_SITE
 	_TALKWIN_OPEN
@@ -52,7 +52,7 @@ ev_t02r0302_middleman1_1:
 /**************************************************************/
 /*  T02R0302 POKE1の会話用イベントスクリプト*/
 /**************************************************************/
-ev_t02r0302_poke_1:
+ev_t02r0302_talkobj_poke:
 	_TALK_OBJ_PAUSE_ALL
 	_TURN_HERO_SITE
 	_TALKWIN_OPEN
