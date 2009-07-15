@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-06-25T16:28:46"/>
+	<create user="matsumiya" host="W00207" date="2009-07-14T11:56:29"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -292,6 +292,96 @@
 	</lock>
 
 
+	<row id="msg_ｃ02_boss_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+		<comment>♂
+戦闘前その1</comment>
+		<attribute name="キャラ指定">N</attribute>
+		<language name="JPN" width="256">ポケモンずかんは　どうだい？</language>
+		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+	</row>
+
+	<row id="msg_ｃ02_boss_02" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+		<comment>♂
+戦闘前その２</comment>
+		<attribute name="キャラ指定">N</attribute>
+		<language name="JPN" width="256">Ｎ『トレーナーとして
+すこしは　せいちょう　したかな？
+ボクも　あたらしい　ともだち～
+よければ　たたかってくれないかな？</language>
+		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+	</row>
+
+	<row id="msg_ｃ02_boss_03" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+		<comment>♂
+戦闘後</comment>
+		<attribute name="キャラ指定">N</attribute>
+		<language name="JPN" width="256">Ｎ『
+きみたち　トレーナーが　うらやましいよ
+ポケモンが　つかえる　わざを
+つかっていれば～
+事象を　認識させ～</language>
+		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+	</row>
+
+	<row id="msg_c02_black_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<attribute name="キャラ指定">友達♂</attribute>
+		<language name="JPN" width="256">？？？『ずいぶんと　にんげんの
+あんただって　にんげん　だろ？</language>
+		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+	</row>
+
+	<row id="msg_ｃ02_boss_04" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+		<comment>？？？</comment>
+		<attribute name="キャラ指定">N</attribute>
+		<language name="JPN" width="256">Ｎ『……
+ボクは　ポケモンの　こども　だからね</language>
+		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+	</row>
+
+	<row id="msg_c02_white_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<attribute name="キャラ指定">友達♀</attribute>
+		<language name="JPN" width="256">？？？『どういうことなの？</language>
+		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+	</row>
+
+	<row id="msg_ｃ02_boss_05" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+		<comment>？？？</comment>
+		<attribute name="キャラ指定">N</attribute>
+		<language name="JPN" width="256">君たちに言ってもわからないさ
+世の中に数多くの数式がある
+ほとんどの人は数式自体を認識しても
+その意味を理解できない</language>
+		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+	</row>
+
+	<row id="msg_ｃ02_leader3_01">
+		<comment>♂</comment>
+		<attribute name="キャラ指定">アーティ
+C03ジムリーダー</attribute>
+		<language name="JPN" width="256">アーティ『……んうん？</language>
+		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+	</row>
+
+	<row id="msg_ｃ02_leader2_01">
+		<comment>♀</comment>
+		<attribute name="キャラ指定">アロエ
+C02ジムリーダー</attribute>
+		<language name="JPN" width="256">アロエ『
+あんたが　さいきんまで
+くらしていた　まち～</language>
+		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+	</row>
+
+	<row id="msg_ｃ02_leader2_02">
+		<attribute name="キャラ指定">アーティ
+C03ジムリーダー</attribute>
+		<language name="JPN" width="256">アーティ『……んうん
+……そうだよね　そうですよね
+……わかりました
+おれも　いきますよ</language>
+		<language name="JPN_KANJI" width="256"></language>
+	</row>
+
 	<row id="msg_ｃ02_test1_01">
 		<comment>？？？</comment>
 		<attribute name="キャラ指定">？？？</attribute>
@@ -306,7 +396,21 @@
 		<language name="JPN_KANJI" width="256">仮メッセージ</language>
 	</row>
 
-	<row id="msg_ｃ02_sign1_01">
+	<row id="msg_ｃ02_test3_01">
+		<comment>？？？</comment>
+		<attribute name="キャラ指定">？？？</attribute>
+		<language name="JPN" width="256">テストメッセージ</language>
+		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+	</row>
+
+	<row id="msg_ｃ02_test4_01">
+		<comment>？？？</comment>
+		<attribute name="キャラ指定">？？？</attribute>
+		<language name="JPN" width="256">テストメッセージ</language>
+		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+	</row>
+
+	<row id="msg_ｃ02_sign1_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>看板分類：タウンマップ</comment>
 		<attribute name="キャラ指定">看板：街</attribute>
 		<language name="JPN" width="256">テストメッセージ</language>
