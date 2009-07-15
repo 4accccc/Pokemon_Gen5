@@ -790,6 +790,8 @@ WazaTarget WAZADATA_GetTarget( WazaID id )
      return WAZA_TARGET_UNKNOWN;
   case WAZANO_HOROBINOUTA:
      return WAZA_TARGET_ALL;
+  case WAZANO_OUMUGAESI:
+     return WAZA_TARGET_OTHER_SELECT;
   default:
     break;
   }
