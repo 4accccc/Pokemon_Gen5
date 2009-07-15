@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-07-14T11:56:29"/>
+	<create user="matsumiya" host="W00207" date="2009-07-15T21:38:37"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -292,7 +292,7 @@
 	</lock>
 
 
-	<row id="msg_ｃ02_boss_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_c02_boss_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>♂
 戦闘前その1</comment>
 		<attribute name="キャラ指定">N</attribute>
@@ -300,7 +300,7 @@
 		<language name="JPN_KANJI" width="256">仮メッセージ</language>
 	</row>
 
-	<row id="msg_ｃ02_boss_02" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_c02_boss_02" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>♂
 戦闘前その２</comment>
 		<attribute name="キャラ指定">N</attribute>
@@ -311,7 +311,7 @@
 		<language name="JPN_KANJI" width="256">仮メッセージ</language>
 	</row>
 
-	<row id="msg_ｃ02_boss_03" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_c02_boss_03" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>♂
 戦闘後</comment>
 		<attribute name="キャラ指定">N</attribute>
@@ -330,7 +330,7 @@
 		<language name="JPN_KANJI" width="256">仮メッセージ</language>
 	</row>
 
-	<row id="msg_ｃ02_boss_04" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_c02_boss_04" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>？？？</comment>
 		<attribute name="キャラ指定">N</attribute>
 		<language name="JPN" width="256">Ｎ『……
@@ -344,7 +344,7 @@
 		<language name="JPN_KANJI" width="256">仮メッセージ</language>
 	</row>
 
-	<row id="msg_ｃ02_boss_05" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_c02_boss_05" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>？？？</comment>
 		<attribute name="キャラ指定">N</attribute>
 		<language name="JPN" width="256">君たちに言ってもわからないさ
@@ -354,7 +354,7 @@
 		<language name="JPN_KANJI" width="256">仮メッセージ</language>
 	</row>
 
-	<row id="msg_ｃ02_leader3_01">
+	<row id="msg_c02_leader3_01">
 		<comment>♂</comment>
 		<attribute name="キャラ指定">アーティ
 C03ジムリーダー</attribute>
@@ -362,7 +362,7 @@ C03ジムリーダー</attribute>
 		<language name="JPN_KANJI" width="256">仮メッセージ</language>
 	</row>
 
-	<row id="msg_ｃ02_leader2_01">
+	<row id="msg_c02_leader2_01">
 		<comment>♀</comment>
 		<attribute name="キャラ指定">アロエ
 C02ジムリーダー</attribute>
@@ -372,7 +372,7 @@ C02ジムリーダー</attribute>
 		<language name="JPN_KANJI" width="256">仮メッセージ</language>
 	</row>
 
-	<row id="msg_ｃ02_leader2_02">
+	<row id="msg_c02_leader2_02">
 		<attribute name="キャラ指定">アーティ
 C03ジムリーダー</attribute>
 		<language name="JPN" width="256">アーティ『……んうん
@@ -382,35 +382,35 @@ C03ジムリーダー</attribute>
 		<language name="JPN_KANJI" width="256"></language>
 	</row>
 
-	<row id="msg_ｃ02_test1_01">
+	<row id="msg_c02_test1_01">
 		<comment>？？？</comment>
 		<attribute name="キャラ指定">？？？</attribute>
 		<language name="JPN" width="256">テストメッセージ</language>
 		<language name="JPN_KANJI" width="256">仮メッセージ</language>
 	</row>
 
-	<row id="msg_ｃ02_test2_01">
+	<row id="msg_c02_test2_01">
 		<comment>？？？</comment>
 		<attribute name="キャラ指定">？？？</attribute>
 		<language name="JPN" width="256">テストメッセージ</language>
 		<language name="JPN_KANJI" width="256">仮メッセージ</language>
 	</row>
 
-	<row id="msg_ｃ02_test3_01">
+	<row id="msg_c02_test3_01">
 		<comment>？？？</comment>
 		<attribute name="キャラ指定">？？？</attribute>
 		<language name="JPN" width="256">テストメッセージ</language>
 		<language name="JPN_KANJI" width="256">仮メッセージ</language>
 	</row>
 
-	<row id="msg_ｃ02_test4_01">
+	<row id="msg_c02_test4_01">
 		<comment>？？？</comment>
 		<attribute name="キャラ指定">？？？</attribute>
 		<language name="JPN" width="256">テストメッセージ</language>
 		<language name="JPN_KANJI" width="256">仮メッセージ</language>
 	</row>
 
-	<row id="msg_ｃ02_sign1_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_c02_sign1_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>看板分類：タウンマップ</comment>
 		<attribute name="キャラ指定">看板：街</attribute>
 		<language name="JPN" width="256">テストメッセージ</language>
