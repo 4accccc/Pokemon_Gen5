@@ -1119,6 +1119,7 @@ void BPP_WAZA_UpdateID( BTL_POKEPARAM* pp, u8 wazaIdx, WazaID waza, u8 ppMax, BO
     pWaza->ppMax = ppMax;
   }
   pWaza->pp = pWaza->ppMax;
+  BTL_Printf("ƒƒUã‘‚«: ppMaxŽw’è=%d, ŽÀ’n:%d\n", ppMax, pWaza->ppMax);
 }
 //=============================================================================================
 /**

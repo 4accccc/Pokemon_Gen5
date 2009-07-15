@@ -116,6 +116,7 @@ static void ms_select_action_ready( STRBUF* dst, BtlStrID_STD strID, const int* 
 static void ms_out_member1( STRBUF* dst, BtlStrID_STD strID, const int* args );
 static void ms_kodawari_lock( STRBUF* dst, BtlStrID_STD strID, const int* args );
 static void ms_waza_lock( STRBUF* dst, BtlStrID_STD strID, const int* args );
+static void ms_waza_only( STRBUF* dst, BtlStrID_STD strID, const int* args );
 static void ms_side_eff( STRBUF* dst, BtlStrID_STD strID, const int* args );
 static void ms_set_std( STRBUF* dst, u16 strID, const int* args );
 static void ms_set_rankup( STRBUF* dst, u16 strID, const int* args );
@@ -308,6 +309,8 @@ void BTL_STR_MakeStringStdWithArgArray( STRBUF* buf, BtlStrID_STD strID, const i
     { BTL_STRID_STD_SelectAction,     ms_select_action_ready },
     { BTL_STRID_STD_KodawariLock,     ms_kodawari_lock },
     { BTL_STRID_STD_WazaLock,         ms_waza_lock },
+    { BTL_STRID_STD_YubiWoFuru,       ms_waza_only },
+    { BTL_STRID_STD_SizenNoTikara,    ms_waza_only },
     { BTL_STRID_STD_Reflector,        ms_side_eff },
     { BTL_STRID_STD_ReflectorOff,     ms_side_eff },
     { BTL_STRID_STD_HikariNoKabe,     ms_side_eff },
@@ -414,6 +417,14 @@ static void ms_waza_lock( STRBUF* dst, BtlStrID_STD strID, const int* args )
   GFL_MSG_GetString( SysWork.msg[MSGSRC_STD], strID, SysWork.tmpBuf );
   WORDSET_ExpandStr( SysWork.wset, dst, SysWork.tmpBuf );
 }
+// [arg0]が出た！など
+// arg0: ワザID
+static void ms_waza_only( STRBUF* dst, BtlStrID_STD strID, const int* args )
+{
+  WORDSET_RegisterWazaName( SysWork.wset, 0, args[0] );
+  GFL_MSG_GetString( SysWork.msg[MSGSRC_STD], strID, SysWork.tmpBuf );
+  WORDSET_ExpandStr( SysWork.wset, dst, SysWork.tmpBuf );
+}
 // arg[0]: SideID、味方側と相手側で文字列IDを変える
 static void ms_side_eff( STRBUF* dst, BtlStrID_STD strID, const int* args )
 {
@@ -470,6 +481,7 @@ void BTL_STR_MakeStringSet( STRBUF* buf, BtlStrID_SET strID, const int* args )
     { BTL_STRID_SET_ChouhatuWarn,         ms_set_waza_sp },
     { BTL_STRID_SET_FuuinWarn,            ms_set_waza_sp },
     { BTL_STRID_SET_Kanasibari,           ms_set_waza_sp },
+    { BTL_STRID_SET_Monomane,             ms_set_waza_sp },
     { BTL_STRID_SET_Urami,                ms_set_waza_num },
     { BTL_STRID_SET_HorobiCountDown,      ms_set_poke_num },
     { BTL_STRID_SET_LockOn,               ms_set_poke },

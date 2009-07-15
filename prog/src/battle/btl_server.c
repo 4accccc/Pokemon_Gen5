@@ -364,6 +364,7 @@ static BOOL ServerMain_SelectAction( BTL_SERVER* server, int* seq )
       BTL_Printf("アクション受け付け完了\n");
       ResetAdapterCmd( server );
       server->flowResult = BTL_SVFLOW_Start( server->flowWork );
+      BTL_Printf("サーバコマンド生成完了,送信します\n");
       SetAdapterCmdEx( server, BTL_ACMD_SERVER_CMD, server->que->buffer, server->que->writePtr );
       (*seq)++;
     }
@@ -372,7 +373,7 @@ static BOOL ServerMain_SelectAction( BTL_SERVER* server, int* seq )
   case 2:
     if( WaitAdapterCmd(server) )
     {
-      BTL_Printf("コマンド再生おわりました\n");
+      BTL_Printf("全クライアントのコマンド再生おわりました\n");
       BTL_MAIN_SyncServerCalcData( server->mainModule );
       ResetAdapterCmd( server );
 
@@ -381,13 +382,14 @@ static BOOL ServerMain_SelectAction( BTL_SERVER* server, int* seq )
         (*seq)=0;
         break;
       case SVFLOW_RESULT_POKE_CHANGE:
+        BTL_Printf("ポケモン死んだので選択へ\n");
         setMainProc( server, ServerMain_SelectPokemon );
         break;
       default:
         GF_ASSERT(0);
         /* fallthru */
       case SVFLOW_RESULT_BTL_QUIT:
-        BTL_Printf("バトル終了\n");
+        BTL_Printf("バトル終了へ\n");
         return TRUE;
       }
     }

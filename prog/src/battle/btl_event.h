@@ -34,6 +34,10 @@ typedef enum {
   BTL_EVENT_CALC_AGILITY,           ///< すばやさ計算
   BTL_EVENT_CHECK_CONF,             ///< 混乱チェック
   BTL_EVENT_CALC_CONF_DAMAGE,       ///< 混乱ダメージ計算
+  BTL_EVENT_REQWAZA_FOR_ACT_ORDER,  ///< 優先順計算に使う他ワザ呼び出し
+  BTL_EVENT_REQWAZA_CHECKFAIL,      ///< 他ワザ呼び出し失敗チェック
+  BTL_EVENT_REQWAZA_PARAM,          ///< 他ワザ呼び出し時パラメータ
+  BTL_EVENT_REQWAZA_MSG,            ///< 他ワザ呼び出し時メッセージ
   BTL_EVENT_WAZA_EXECUTE_CHECK,     ///< ワザ実行チェック
   BTL_EVENT_WAZA_EXECUTE_FAIL,      ///< ワザ出し失敗
   BTL_EVENT_WAZA_EXECUTE_FIX,       ///< ワザ出し成功確定
@@ -151,6 +155,8 @@ typedef enum {
   BTL_EVAR_POKEID_TARGET4,
   BTL_EVAR_POKEID_TARGET5,
   BTL_EVAR_POKEID_TARGET6,
+  BTL_EVAR_POKEPOS,
+  BTL_EVAR_POKEPOS_ORG,
   BTL_EVAR_SP_PRIORITY_A,
   BTL_EVAR_SP_PRIORITY_B,
   BTL_EVAR_WAZAID,

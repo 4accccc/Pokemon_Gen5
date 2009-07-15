@@ -457,9 +457,9 @@ static inline void SCQUE_PUT_MSG_WAZA( BTL_SERVER_CMD_QUE* que, u8 pokeID, u16 w
 }
 
 //=====================================================
-typedef u8 ScMsgArg;
+typedef u16 ScMsgArg;
 enum {
-  MSGARG_TERMINATOR = 0xff,
+  MSGARG_TERMINATOR = 0xffff,
 };
 
 #include <stdarg.h>
