@@ -92,10 +92,6 @@ struct _PSTATUS_RIBBON_WORK
   u8       selectIdx;
   u8       selectType;
   u8       befSelectIdx;
-  u32      tpx;
-  u32      tpy;
-  u32      befTpx;
-  u32      befTpy;
   s32      speed;
   
   BOOL     isTouchBar;
@@ -199,7 +195,7 @@ void PSTATUS_RIBBON_InitCell( PSTATUS_WORK *work , PSTATUS_RIBBON_WORK *ribbonWo
     
     ribbonWork->clwkCur = GFL_CLACT_WK_Create( work->cellUnit ,
               work->cellRes[SCR_NCG_RIBBON_CUR],
-              work->cellRes[SCR_PLT_RIBBON_CUR],
+              work->cellRes[SCR_PLT_CURSOR_COMMON],
               work->cellRes[SCR_ANM_RIBBON_CUR],
               &cellInitData ,CLSYS_DEFREND_MAIN , work->heapId );
 
@@ -225,9 +221,6 @@ static void PSTATUS_RIBBON_SetCursorPosBar( PSTATUS_WORK *work , PSTATUS_RIBBON_
 //--------------------------------------------------------------
 static void PSTATUS_RIBBON_UpdateUI( PSTATUS_WORK *work , PSTATUS_RIBBON_WORK *ribbonWork )
 {
-  ribbonWork->befTpx = ribbonWork->tpx;
-  ribbonWork->befTpy = ribbonWork->tpy;
-  GFL_UI_TP_GetPointCont( &ribbonWork->tpx , &ribbonWork->tpy );
   if( work->isActiveBarButton == TRUE )
   {
     const int touchBar = PSTATUS_RIBBON_CheckTouchBar( work , ribbonWork );
@@ -273,6 +266,7 @@ static const BOOL PSTATUS_RIBBON_UpdateKey( PSTATUS_WORK *work , PSTATUS_RIBBON_
     GFL_CLACT_WK_SetDrawEnable( ribbonWork->clwkCur , FALSE );
     ribbonWork->selectIdx = 0xFF;
     ribbonWork->selectType = PSTATUS_RIBBON_INVALID_TYPE;
+    work->ktst = GFL_APP_END_KEY;
     return TRUE;
   }
   else
@@ -364,10 +358,10 @@ static void PSTATUS_RIBBON_UpdateTP( PSTATUS_WORK *work , PSTATUS_RIBBON_WORK *r
   else
   if( GFL_UI_TP_GetCont() == TRUE &&
       ribbonWork->isTouchBar == TRUE &&
-      ribbonWork->tpx > PSTATUS_RIBBON_BAR_X &&
-      ribbonWork->tpx < PSTATUS_RIBBON_BAR_X + PSTATUS_RIBBON_BAR_WIDTH )
+      work->tpx > PSTATUS_RIBBON_BAR_X &&
+      work->tpx < PSTATUS_RIBBON_BAR_X + PSTATUS_RIBBON_BAR_WIDTH )
   {
-    const s16 tpSub = ribbonWork->befTpy - ribbonWork->tpy;
+    const s16 tpSub = work->befTpy - work->tpy;
     PSTATUS_RIBBON_MoveBar( work , ribbonWork , tpSub );
     ribbonWork->speed = tpSub*PSTATUS_RIBBON_BAR_SPEED_RATE;
   }

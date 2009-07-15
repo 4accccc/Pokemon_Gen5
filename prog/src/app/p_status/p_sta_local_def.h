@@ -15,6 +15,7 @@
 #include "print/printsys.h"
 #include "sound/pm_sndsys.h"
 #include "debug/debugwin_sys.h"
+#include "poke_tool/poketype.h"
 
 #include "p_status_gra.naix"
 #include "msg/msg_pokestatus.h"
@@ -62,35 +63,45 @@
 
 #pragma mark[>define OBJ
 #define PSTATUS_OBJPLT_ICON (0x0)
+#define PSTATUS_OBJPLT_POKE_TYPE (0x7)  //3本
 #define PSTATUS_OBJPLT_SKILL_PLATE (0xa)
 #define PSTATUS_OBJPLT_RIBBON_BAR (0xb)
-#define PSTATUS_OBJPLT_RIBBON_CUR (0xc)
+#define PSTATUS_OBJPLT_CURSOR_COMMON (0xc)
 
 #define PSTATUS_OBJPLT_SUB_HPBAR (0xd)
+#define PSTATUS_OBJPLT_SUB_POKE_TYPE (0x7)  //3本
 
 //OBJリソースIdx
 enum PSTATUS_CEL_RESOURCE
 {
   SCR_PLT_ICON,
+  SCR_PLT_POKE_TYPE,
+  SCR_PLT_SUB_POKE_TYPE,
   SCR_PLT_HPBASE,
   SCR_PLT_SKILL,
   SCR_PLT_RIBBON_BAR,
-  SCR_PLT_RIBBON_CUR,
+  SCR_PLT_CURSOR_COMMON,
   
   SCR_NCG_ICON,
+  SCR_NCG_SKILL_TYPE_HENKA,
+  SCR_NCG_SKILL_TYPE_BUTURI,
+  SCR_NCG_SKILL_TYPE_TOKUSHU,
   SCR_NCG_HPBASE,
   SCR_NCG_SKILL,
+  SCR_NCG_SKILL_CUR,
   SCR_NCG_RIBBON_CUR,
   
   SCR_ANM_ICON,
+  SCR_ANM_POKE_TYPE,
   SCR_ANM_HPBASE,
   SCR_ANM_SKILL,
+  SCR_ANM_SKILL_CUR,
   SCR_ANM_RIBBON_CUR,
   
   SCR_MAX ,
   
   SCR_PLT_START = SCR_PLT_ICON,
-  SCR_PLT_END = SCR_PLT_RIBBON_CUR,
+  SCR_PLT_END = SCR_PLT_CURSOR_COMMON,
   SCR_NCG_START = SCR_NCG_ICON,
   SCR_NCG_END = SCR_NCG_RIBBON_CUR,
   SCR_ANM_START = SCR_ANM_ICON,
@@ -146,6 +157,13 @@ enum PSTATUS_BARICON_TYPE
 
 typedef enum
 {
+  SRT_CONTINUE,
+  SRT_RETURN,
+  SRT_EXIT,
+}PSTATUS_RETURN_TYPE;
+
+typedef enum
+{
   PPT_INFO,     //ポケモン情報
   PPT_SKILL,    //技
   PPT_RIBBON,   //リボン
@@ -171,8 +189,14 @@ typedef struct
   u32 befVCount;
   int barButtonHit; //バーのボタンが押されているか？
   u8  ktst;
+
+  u32      tpx;
+  u32      tpy;
+  u32      befTpx;
+  u32      befTpy;
   
   BOOL isActiveBarButton;
+  PSTATUS_RETURN_TYPE retVal;
     
   PSTATUS_PAGE_TYPE page;
   PSTATUS_PAGE_TYPE befPage;
@@ -194,6 +218,7 @@ typedef struct
   
   //Cell系
   u32 cellRes[SCR_MAX];
+  u32 cellResTypeNcg[POKETYPE_MAX];
   GFL_CLUNIT  *cellUnit;
   GFL_CLWK    *clwkBarIcon[SBT_MAX];
 

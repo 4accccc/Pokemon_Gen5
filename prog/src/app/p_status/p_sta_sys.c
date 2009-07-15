@@ -12,12 +12,14 @@
 #include "system/main.h"
 #include "system/gfl_use.h"
 #include "system/wipe.h"
+#include "app/app_menu_common.h"
 #include "poke_tool/poke_tool.h"
 
 #include "arc_def.h"
 #include "message.naix"
 #include "font/font.naix"
 #include "pokelist_gra.naix"
+#include "app_menu_common.naix"
 
 #include "p_sta_sys.h"
 #include "p_sta_sub.h"
@@ -79,9 +81,11 @@ static void PSTATUS_InitMessage( PSTATUS_WORK *work );
 static void PSTATUS_TermMessage( PSTATUS_WORK *work );
 
 static void PSTATUS_UpdateBarButton( PSTATUS_WORK *work );
+static void PSTATUS_UpdateUI( PSTATUS_WORK *work );
+static const BOOL PSTATUS_UpdateKey( PSTATUS_WORK *work );
+static void PSTATUS_UpdateTP( PSTATUS_WORK *work );
 
 static void PSTATUS_RefreshDisp( PSTATUS_WORK *work );
-static void PSTATUS_UTIL_SetCurrentPPPFast( PSTATUS_WORK *work , const BOOL isFast );
 
 
 //--------------------------------------------------------------
@@ -96,6 +100,7 @@ const BOOL PSTATUS_InitPokeStatus( PSTATUS_WORK *work )
   work->page = PPT_INFO;
   work->befPage = PPT_INFO;
   work->isActiveBarButton = TRUE;
+  work->retVal = SRT_CONTINUE;
 
 #if PM_DEBUG
   work->calcPP = NULL;
@@ -157,57 +162,16 @@ const BOOL PSTATUS_TermPokeStatus( PSTATUS_WORK *work )
 //--------------------------------------------------------------
 //	更新
 //--------------------------------------------------------------
-const BOOL PSTATUS_UpdatePokeStatus( PSTATUS_WORK *work )
+const PSTATUS_RETURN_TYPE PSTATUS_UpdatePokeStatus( PSTATUS_WORK *work )
 {
+  work->befTpx = work->tpx;
+  work->befTpy = work->tpy;
+  GFL_UI_TP_GetPointCont( &work->tpx , &work->tpy );
+
   PSTATUS_UpdateBarButton( work );
   
   PSTATUS_SUB_Main( work , work->subWork );
-  //FIXME 仮キー処理
-  if( work->isActiveBarButton == TRUE )
-  {
-    if( GFL_UI_KEY_GetRepeat() & PAD_KEY_DOWN &&
-        !(GFL_UI_KEY_GetCont() & PAD_BUTTON_R))
-    {
-      if( work->dataPos < work->psData->max-1 )
-      {
-        work->dataPos++;
-        PSTATUS_RefreshDisp( work );
-      }
-    }
-    else
-    if( GFL_UI_KEY_GetRepeat() & PAD_KEY_UP &&
-        !(GFL_UI_KEY_GetCont() & PAD_BUTTON_R))
-    {
-      if( work->dataPos != 0 )
-      {
-        work->dataPos--;
-        PSTATUS_RefreshDisp( work );
-      }
-    }
-    else
-    if( GFL_UI_KEY_GetRepeat() & PAD_KEY_RIGHT )
-    {
-      if( work->page < PPT_RIBBON )
-      {
-        work->page++;
-        PSTATUS_RefreshDisp( work );
-      }
-    }
-    else
-    if( GFL_UI_KEY_GetRepeat() & PAD_KEY_LEFT )
-    {
-      if( work->page > PPT_INFO )
-      {
-        work->page--;
-        PSTATUS_RefreshDisp( work );
-      }
-    }
-    else
-    if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_B )
-    {
-      return TRUE;
-    }
-  }
+
 
   switch( work->befPage )
   {
@@ -222,6 +186,7 @@ const BOOL PSTATUS_UpdatePokeStatus( PSTATUS_WORK *work )
     break;
   }
 
+  PSTATUS_UpdateUI( work );
 
   //メッセージ
   PRINTSYS_QUE_Main( work->printQue );
@@ -253,7 +218,7 @@ const BOOL PSTATUS_UpdatePokeStatus( PSTATUS_WORK *work )
     }
   }
 
-  return FALSE;
+  return work->retVal;
 }
 
 //--------------------------------------------------------------
@@ -509,24 +474,26 @@ static void PSTATUS_LoadResource( PSTATUS_WORK *work )
 
   //OBJリソース
   //パレット
-  work->cellRes[SCR_PLT_ICON] = GFL_CLGRP_PLTT_Register( archandle , 
+  work->cellRes[SCR_PLT_ICON] = GFL_CLGRP_PLTT_RegisterEx( archandle , 
         NARC_p_status_gra_p_st_obj_d_NCLR , CLSYS_DRAW_MAIN , 
-        PSTATUS_OBJPLT_ICON*32 , work->heapId  );
-  work->cellRes[SCR_PLT_SKILL] = GFL_CLGRP_PLTT_Register( archandle , 
+        PSTATUS_OBJPLT_ICON*32 , 0 , 7 , work->heapId  );
+  work->cellRes[SCR_PLT_SKILL] = GFL_CLGRP_PLTT_RegisterEx( archandle , 
         NARC_p_status_gra_p_st_skill_palte_NCLR , CLSYS_DRAW_MAIN , 
-        PSTATUS_OBJPLT_SKILL_PLATE*32 , work->heapId  );
-  work->cellRes[SCR_PLT_RIBBON_BAR] = GFL_CLGRP_PLTT_Register( archandle , 
+        PSTATUS_OBJPLT_SKILL_PLATE*32 , 0 , 1 , work->heapId  );
+  work->cellRes[SCR_PLT_RIBBON_BAR] = GFL_CLGRP_PLTT_RegisterEx( archandle , 
         NARC_p_status_gra_p_status_ribbon_bar_NCLR , CLSYS_DRAW_MAIN , 
-        PSTATUS_OBJPLT_RIBBON_BAR*32 , work->heapId  );
-  work->cellRes[SCR_PLT_RIBBON_CUR] = GFL_CLGRP_PLTT_Register( archandle , 
-        NARC_p_status_gra_p_st_ribbon_cur_NCLR , CLSYS_DRAW_MAIN , 
-        PSTATUS_OBJPLT_RIBBON_CUR*32 , work->heapId  );
+        PSTATUS_OBJPLT_RIBBON_BAR*32 , 0 , 1 , work->heapId  );
+  work->cellRes[SCR_PLT_CURSOR_COMMON] = GFL_CLGRP_PLTT_RegisterEx( archandle , 
+        NARC_p_status_gra_p_st_cursor_common_NCLR , CLSYS_DRAW_MAIN , 
+        PSTATUS_OBJPLT_CURSOR_COMMON*32 , 0 , 1 , work->heapId  );
         
   //キャラクタ
   work->cellRes[SCR_NCG_ICON] = GFL_CLGRP_CGR_Register( archandle , 
         NARC_p_status_gra_p_st_obj_d_NCGR , FALSE , CLSYS_DRAW_MAIN , work->heapId  );
   work->cellRes[SCR_NCG_SKILL] = GFL_CLGRP_CGR_Register( archandle , 
         NARC_p_status_gra_p_st_skill_palte_NCGR , FALSE , CLSYS_DRAW_MAIN , work->heapId  );
+  work->cellRes[SCR_NCG_SKILL_CUR] = GFL_CLGRP_CGR_Register( archandle , 
+        NARC_p_status_gra_p_st_skill_cur_NCGR , FALSE , CLSYS_DRAW_MAIN , work->heapId  );
   work->cellRes[SCR_NCG_RIBBON_CUR] = GFL_CLGRP_CGR_Register( archandle , 
         NARC_p_status_gra_p_st_ribbon_cur_NCGR , FALSE , CLSYS_DRAW_MAIN , work->heapId  );
   
@@ -535,27 +502,54 @@ static void PSTATUS_LoadResource( PSTATUS_WORK *work )
         NARC_p_status_gra_p_st_obj_d_NCER , NARC_p_status_gra_p_st_obj_d_NANR, work->heapId  );
   work->cellRes[SCR_ANM_SKILL] = GFL_CLGRP_CELLANIM_Register( archandle , 
         NARC_p_status_gra_p_st_skill_palte_NCER , NARC_p_status_gra_p_st_skill_palte_NANR, work->heapId  );
+  work->cellRes[SCR_ANM_SKILL_CUR] = GFL_CLGRP_CELLANIM_Register( archandle , 
+        NARC_p_status_gra_p_st_skill_cur_NCER , NARC_p_status_gra_p_st_skill_cur_NANR, work->heapId  );
   work->cellRes[SCR_ANM_RIBBON_CUR] = GFL_CLGRP_CELLANIM_Register( archandle , 
         NARC_p_status_gra_p_st_ribbon_cur_NCER , NARC_p_status_gra_p_st_ribbon_cur_NANR, work->heapId  );
 
   {
+    u8 i;
     //他のarcからの読み込み
-    ARCHANDLE *archandleList = GFL_ARC_OpenDataHandle( ARCID_POKELIST , work->heapId );
+    ARCHANDLE *archandleCommon = GFL_ARC_OpenDataHandle( APP_COMMON_GetArcId() , work->heapId );
 
     //hpバー描画色
-    GFL_ARCHDL_UTIL_TransVramPalette( archandleList , NARC_pokelist_gra_hp_bar_NCLR , 
+    GFL_ARCHDL_UTIL_TransVramPalette( archandleCommon , NARC_app_menu_common_hp_bar_NCLR , 
                       PALTYPE_SUB_BG , PSTATUS_BG_SUB_PLT_HPBAR*16*2 , 16*2 , work->heapId );
     
     //HPバー土台
-    work->cellRes[SCR_PLT_HPBASE] = GFL_CLGRP_PLTT_Register( archandleList , 
-          NARC_pokelist_gra_hp_dodai_NCLR , CLSYS_DRAW_SUB , 
-          PSTATUS_OBJPLT_SUB_HPBAR*32 , work->heapId  );
-    work->cellRes[SCR_NCG_HPBASE] = GFL_CLGRP_CGR_Register( archandleList , 
-          NARC_pokelist_gra_hp_dodai_NCGR , FALSE , CLSYS_DRAW_SUB , work->heapId  );
-    work->cellRes[SCR_ANM_HPBASE] = GFL_CLGRP_CELLANIM_Register( archandleList , 
-          NARC_pokelist_gra_hp_dodai_NCER , NARC_pokelist_gra_hp_dodai_NANR, work->heapId  );
+    work->cellRes[SCR_PLT_HPBASE] = GFL_CLGRP_PLTT_RegisterEx( archandleCommon , 
+          NARC_app_menu_common_hp_dodai_NCLR , CLSYS_DRAW_SUB , 
+          PSTATUS_OBJPLT_SUB_HPBAR*32 , 0 , 1 , work->heapId  );
+    work->cellRes[SCR_NCG_HPBASE] = GFL_CLGRP_CGR_Register( archandleCommon , 
+          NARC_app_menu_common_hp_dodai_NCGR , FALSE , CLSYS_DRAW_SUB , work->heapId  );
+    work->cellRes[SCR_ANM_HPBASE] = GFL_CLGRP_CELLANIM_Register( archandleCommon , 
+          NARC_app_menu_common_hp_dodai_NCER , NARC_app_menu_common_hp_dodai_NANR, work->heapId  );
 
-    GFL_ARC_CloseDataHandle(archandleList);
+    //タイプアイコン
+    work->cellRes[SCR_PLT_POKE_TYPE] = GFL_CLGRP_PLTT_RegisterEx( archandleCommon , 
+          APP_COMMON_GetPokeTypePltArcIdx() , CLSYS_DRAW_MAIN , 
+          PSTATUS_OBJPLT_POKE_TYPE*32 , 0 , APP_COMMON_POKETYPE_PLT_NUM , work->heapId  );
+    work->cellRes[SCR_PLT_SUB_POKE_TYPE] = GFL_CLGRP_PLTT_RegisterEx( archandleCommon , 
+          APP_COMMON_GetPokeTypePltArcIdx() , CLSYS_DRAW_SUB , 
+          PSTATUS_OBJPLT_SUB_POKE_TYPE*32 , 0 , APP_COMMON_POKETYPE_PLT_NUM , work->heapId  );
+    work->cellRes[SCR_ANM_POKE_TYPE] = GFL_CLGRP_CELLANIM_Register( archandleCommon , 
+          APP_COMMON_GetPokeTypeCellArcIdx(APP_COMMON_MAPPING_128K) , 
+          APP_COMMON_GetPokeTypeAnimeArcIdx(APP_COMMON_MAPPING_128K), work->heapId  );
+    //属性
+    for( i=0;i<POKETYPE_MAX;i++ )
+    {
+      work->cellResTypeNcg[i] = GFL_CLGRP_CGR_Register( archandleCommon , 
+         APP_COMMON_GetPokeTypeCharArcIdx(i) , FALSE , CLSYS_DRAW_MAIN , work->heapId );
+    }
+    //技タイプ
+    work->cellRes[SCR_NCG_SKILL_TYPE_HENKA] = GFL_CLGRP_CGR_Register( archandleCommon , 
+          NARC_app_menu_common_p_st_bunrui_henka_NCGR , FALSE , CLSYS_DRAW_SUB , work->heapId  );
+    work->cellRes[SCR_NCG_SKILL_TYPE_BUTURI] = GFL_CLGRP_CGR_Register( archandleCommon , 
+          NARC_app_menu_common_p_st_bunrui_buturi_NCGR , FALSE , CLSYS_DRAW_SUB , work->heapId  );
+    work->cellRes[SCR_NCG_SKILL_TYPE_TOKUSHU] = GFL_CLGRP_CGR_Register( archandleCommon , 
+          NARC_app_menu_common_p_st_bunrui_tokusyu_NCGR , FALSE , CLSYS_DRAW_SUB , work->heapId  );
+
+    GFL_ARC_CloseDataHandle(archandleCommon);
   }
 
   PSTATUS_SUB_LoadResource( work , work->subWork , archandle );
@@ -591,6 +585,11 @@ static void PSTATUS_ReleaseResource( PSTATUS_WORK *work )
   for( i=SCR_ANM_START ; i<=SCR_ANM_END ; i++ )
   {
     GFL_CLGRP_CELLANIM_Release( work->cellRes[i] );
+  }
+    //属性
+  for( i=0;i<POKETYPE_MAX;i++ )
+  {
+    GFL_CLGRP_CGR_Release( work->cellResTypeNcg[i] );
   }
   
 }
@@ -713,6 +712,134 @@ static void PSTATUS_UpdateBarButton( PSTATUS_WORK *work )
   work->barButtonHit = GFL_UI_TP_HitTrg( hitTbl );
 }
 
+//--------------------------------------------------------------------------
+//  操作系更新
+//--------------------------------------------------------------------------
+static void PSTATUS_UpdateUI( PSTATUS_WORK *work )
+{
+  if( work->isActiveBarButton == TRUE )
+  {
+    if( PSTATUS_UpdateKey(work) == FALSE )
+    {
+      PSTATUS_UpdateTP( work );
+    }
+  }
+}
+
+//--------------------------------------------------------------------------
+//  キー操作更新
+//--------------------------------------------------------------------------
+static const BOOL PSTATUS_UpdateKey( PSTATUS_WORK *work )
+{
+  if( GFL_UI_KEY_GetRepeat() & PAD_KEY_DOWN )
+  {
+    if( work->dataPos < work->psData->max-1 )
+    {
+      work->dataPos++;
+      PSTATUS_RefreshDisp( work );
+      return TRUE;
+    }
+  }
+  else
+  if( GFL_UI_KEY_GetRepeat() & PAD_KEY_UP )
+  {
+    if( work->dataPos != 0 )
+    {
+      work->dataPos--;
+      PSTATUS_RefreshDisp( work );
+      return TRUE;
+    }
+  }
+  else
+  if( GFL_UI_KEY_GetRepeat() & PAD_KEY_RIGHT )
+  {
+    if( work->page < PPT_RIBBON )
+    {
+      work->page++;
+      PSTATUS_RefreshDisp( work );
+      return TRUE;
+    }
+  }
+  else
+  if( GFL_UI_KEY_GetRepeat() & PAD_KEY_LEFT )
+  {
+    if( work->page > PPT_INFO )
+    {
+      work->page--;
+      PSTATUS_RefreshDisp( work );
+      return TRUE;
+    }
+  }
+  else
+  if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_B )
+  {
+    work->retVal = SRT_RETURN;
+    return TRUE;
+  }
+  else
+  if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_X )
+  {
+    work->retVal = SRT_EXIT;
+    return TRUE;
+  }
+  return FALSE;
+}
+
+//--------------------------------------------------------------------------
+//  TP操作更新
+//--------------------------------------------------------------------------
+static void PSTATUS_UpdateTP( PSTATUS_WORK *work )
+{
+  //ボタンの判定は別でやっているのでここではチェックのみ
+  switch( work->barButtonHit )
+  {
+  case SBT_PAGE1:
+    if( work->page != PPT_INFO )
+    {
+      work->page = PPT_INFO;
+      PSTATUS_RefreshDisp( work );
+    }
+    break;
+  case SBT_PAGE2:
+    if( work->page != PPT_SKILL )
+    {
+      work->page = PPT_SKILL;
+      PSTATUS_RefreshDisp( work );
+    }
+    break;
+  case SBT_PAGE3:
+    if( work->page != PPT_RIBBON )
+    {
+      work->page = PPT_RIBBON;
+      PSTATUS_RefreshDisp( work );
+    }
+    break;
+  case SBT_CHECK:
+    break;
+  case SBT_CURSOR_UP:
+    if( work->dataPos != 0 )
+    {
+      work->dataPos--;
+      PSTATUS_RefreshDisp( work );
+    }
+    break;
+  case SBT_CURSOR_DOWN:
+    if( work->dataPos < work->psData->max-1 )
+    {
+      work->dataPos++;
+      PSTATUS_RefreshDisp( work );
+    }
+    break;
+  case SBT_EXIT:
+    work->retVal = SRT_EXIT;
+    break;
+  case SBT_RETURN:
+    work->retVal = SRT_RETURN;
+    break;
+    
+  }
+}
+
 //外部からの操作関数
 #pragma mark [>Outer
 //--------------------------------------------------------------------------
@@ -822,7 +949,7 @@ const POKEMON_PASO_PARAM* PSTATUS_UTIL_GetCurrentPPP( PSTATUS_WORK *work )
 //--------------------------------------------------------------
 //現在のPPを取得
 //--------------------------------------------------------------
-const POKEMON_PARAM* PSTATUS_UTIL_GetCurrentPP( PSTATUS_WORK *work )
+POKEMON_PARAM* PSTATUS_UTIL_GetCurrentPP( PSTATUS_WORK *work )
 {
   switch( work->psData->ppt )
   {
@@ -865,7 +992,7 @@ const POKEMON_PARAM* PSTATUS_UTIL_GetCurrentPP( PSTATUS_WORK *work )
 //--------------------------------------------------------------
 //PP・PPPの暗号・複合切り替え
 //--------------------------------------------------------------
-static void PSTATUS_UTIL_SetCurrentPPPFast( PSTATUS_WORK *work , const BOOL isFast )
+void PSTATUS_UTIL_SetCurrentPPPFast( PSTATUS_WORK *work , const BOOL isFast )
 {
   switch( work->psData->ppt )
   {

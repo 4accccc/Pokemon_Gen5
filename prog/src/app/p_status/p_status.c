@@ -171,8 +171,14 @@ static GFL_PROC_RESULT PokeStatusProc_Term( GFL_PROC * proc, int * seq , void *p
 static GFL_PROC_RESULT PokeStatusProc_Main( GFL_PROC * proc, int * seq , void *pwk, void *mywk )
 {
   PSTATUS_WORK *psWork = mywk;
-  
-  if( PSTATUS_UpdatePokeStatus( psWork ) == TRUE )
+  const PSTATUS_RETURN_TYPE ret = PSTATUS_UpdatePokeStatus( psWork );
+
+  if( ret == SRT_RETURN )
+  {
+    return GFL_PROC_RES_FINISH;
+  }
+  else
+  if( ret == SRT_EXIT )
   {
     return GFL_PROC_RES_FINISH;
   }
