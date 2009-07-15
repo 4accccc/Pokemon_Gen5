@@ -1,10 +1,30 @@
 SCRSRCS	=\
+	c01pc0101.ev	\
+	c01r0101.ev	\
+	c01r0102.ev	\
+	c01r0201.ev	\
+	c01r0202.ev	\
+	c01r0301.ev	\
+	c01r0302.ev	\
+	c01r0401.ev	\
+	c01r0402.ev	\
 	c99.ev	\
 	common_scr.ev	\
 	dummy.ev	\
 	dummy_scr.ev	\
 	r01.ev	\
+	r02.ev	\
+	sp_c01pc0101.ev	\
+	sp_c01r0101.ev	\
+	sp_c01r0102.ev	\
+	sp_c01r0201.ev	\
+	sp_c01r0202.ev	\
+	sp_c01r0301.ev	\
+	sp_c01r0302.ev	\
+	sp_c01r0401.ev	\
+	sp_c01r0402.ev	\
 	sp_r01.ev	\
+	sp_r02.ev	\
 	sp_t01.ev	\
 	sp_t01r0101.ev	\
 	sp_t01r0201.ev	\
