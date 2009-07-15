@@ -94,6 +94,8 @@
 #define ANMID_BLACT 2 //汎用ビルボードアクター用
 #define ANMID_CYCLEHERO 3 //自転車自機専用
 #define ANMID_SWIMHERO 4 //波乗り自機専用
+#define ANMID_BLACT_FLIP 5 //人物汎用 反転使用
+#define ANMID_BLACT_NONFLIP 6 //人物汎用 反転未使用
 
 //SEX 性別で指定するシンボルです。
 #define SEX_MALE 0
