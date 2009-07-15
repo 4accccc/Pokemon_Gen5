@@ -10,7 +10,8 @@
 #include "field_common.h"
 #include "field_camera.h"
 	
-//#include "arc_def.h"
+#include "arc_def.h"
+#include "fieldmap/field_camera_data.naix"
 //============================================================================================
 //============================================================================================
 
@@ -83,6 +84,7 @@ struct _FIELD_CAMERA {
 };
 
 
+#include "../resource/fldmapdata/camera_data/fieldcameraformat.h"
 #if 0
 //------------------------------------------------------------------
 /**
@@ -125,6 +127,7 @@ static void updateTraceData(CAMERA_TRACE * trace,
 static void traceUpdate(FIELD_CAMERA * camera);
 //------------------------------------------------------------------
 //------------------------------------------------------------------
+static void loadCameraParameters(FIELD_CAMERA * camera);
 static void initGridParameter(FIELD_CAMERA * camera);
 
 static void initBridgeParameter(FIELD_CAMERA * camera);
@@ -221,6 +224,7 @@ FIELD_CAMERA* FIELD_CAMERA_Create(
     camera->fovy = FX_AcosIdx( fovyCos );
   }
 
+  loadCameraParameters(camera);
 	CameraFuncTable[camera->type].init_func(camera);
 
 	createTraceData(	FIELD_CAMERA_TRACE_BUFF, FIELD_CAMERA_DELAY,
@@ -292,6 +296,7 @@ FIELD_CAMERA_MODE FIELD_CAMERA_GetMode( const FIELD_CAMERA * camera )
 //------------------------------------------------------------------
 static void initGridParameter(FIELD_CAMERA * camera)
 {
+#if 0
   camera->angle_len = 0x00ED * FX32_ONE;
   camera->angle_pitch = 0x25d8;
 	
@@ -301,12 +306,14 @@ static void initGridParameter(FIELD_CAMERA * camera)
   VEC_Set( &camera->target_offset, 0, 0x4000, 0 );
 
   GFL_G3D_SetSystemSwapBufferMode( GX_SORTMODE_MANUAL, GX_BUFFERMODE_Z );
+#endif
 }
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 static void initPokeCenParameter(FIELD_CAMERA * camera)
 {
+#if 0
   camera->angle_len = 0x00d5 * FX32_ONE;
   camera->angle_pitch = 0x1bd8;
 	
@@ -316,6 +323,7 @@ static void initPokeCenParameter(FIELD_CAMERA * camera)
   VEC_Set( &camera->target_offset, 0, 0x18066, 0xfffef197 );
 
   GFL_G3D_SetSystemSwapBufferMode( GX_SORTMODE_MANUAL, GX_BUFFERMODE_W );
+#endif
 }
 
 //------------------------------------------------------------------
@@ -323,6 +331,7 @@ static void initPokeCenParameter(FIELD_CAMERA * camera)
 //------------------------------------------------------------------
 static void initH01P01Parameter(FIELD_CAMERA * camera)
 {
+#if 0
   camera->angle_len = 0x004d * FX32_ONE;
   camera->angle_pitch = 0x05d8;
 	
@@ -332,12 +341,14 @@ static void initH01P01Parameter(FIELD_CAMERA * camera)
   VEC_Set( &camera->target_offset, 0, 0x199f7, 0x09ed );
 
   GFL_G3D_SetSystemSwapBufferMode( GX_SORTMODE_MANUAL, GX_BUFFERMODE_W );
+#endif
 }
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 static void initC3Parameter(FIELD_CAMERA * camera)
 {
+#if 0
 	enum { 
 		CAMERA_LENGTH = 0x308,
 		CAMERA_HEIGHT = 0x07c,
@@ -376,12 +387,14 @@ static void initC3Parameter(FIELD_CAMERA * camera)
   VEC_Set( &camera->target_offset, 0, 0, 0 );
 
   GFL_G3D_SetSystemSwapBufferMode( GX_SORTMODE_MANUAL, GX_BUFFERMODE_W );
+#endif
 }
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 static void initBridgeParameter(FIELD_CAMERA * camera)
 {
+#if 0
 	enum { 
 		CAMERA_LENGTH = 0x90000,
 		CAMERA_HEIGHT = 0x3a000,
@@ -414,6 +427,47 @@ static void initBridgeParameter(FIELD_CAMERA * camera)
   VEC_Set( &camera->target_offset, 0, 0x4000, 0 );
 
   GFL_G3D_SetSystemSwapBufferMode( GX_SORTMODE_MANUAL, GX_BUFFERMODE_W );
+#endif
+}
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+static void loadCameraParameters(FIELD_CAMERA * camera)
+{
+  FLD_CAMERA_PARAM param;
+  u16 file_id = NARC_field_camera_data_field_camera_bin;
+  u16 arc_id = ARCID_FIELD_CAMERA;
+  ARCHANDLE * handle = GFL_ARC_OpenDataHandle(arc_id, camera->heapID);
+  u16 size = GFL_ARC_GetDataSizeByHandle(handle, file_id);
+  GF_ASSERT( camera->type * sizeof(FLD_CAMERA_PARAM) < size );
+  GFL_ARC_LoadDataOfsByHandle(handle, file_id,
+      camera->type * sizeof(FLD_CAMERA_PARAM), sizeof(FLD_CAMERA_PARAM), &param);
+  TAMADA_Printf("FIELD CAMERA INIT INFO\n");
+  TAMADA_Printf("FIELD CAMERA TYPE =%d\n",camera->type);
+  TAMADA_Printf("dist = %08x\n", param.Distance);
+  TAMADA_Printf("angle = %08x,%08x,%08x\n", param.Angle.x, param.Angle.y, param.Angle.z );
+  TAMADA_Printf("viewtype = %d, persp = %08x\n", param.View, param.PerspWay);
+  TAMADA_Printf("near=%8x, far =%08x\n", param.Near, param.Far);
+  TAMADA_Printf("shift = %08x,%08x,%08x\n", param.Shift.x, param.Shift.y, param.Shift.z );
+  TAMADA_Printf("now near = %d\n", FX_Whole( FIELD_CAMERA_GetNear(camera) ) );
+  TAMADA_Printf("now far = %d\n", FX_Whole( FIELD_CAMERA_GetFar(camera) ) );
+
+  camera->angle_pitch = param.Angle.x;
+  camera->angle_yaw = param.Angle.y;
+  camera->angle_len = param.Distance * FX32_ONE;
+  camera->target_offset = param.Shift;
+  FIELD_CAMERA_SetFar( camera, param.Far );
+  FIELD_CAMERA_SetNear(camera, param.Near );
+  switch (param.depthType)
+  {
+  case DEPTH_TYPE_ZBUF:
+    GFL_G3D_SetSystemSwapBufferMode( GX_SORTMODE_MANUAL, GX_BUFFERMODE_Z );
+    break;
+  case DEPTH_TYPE_WBUF:
+    GFL_G3D_SetSystemSwapBufferMode( GX_SORTMODE_MANUAL, GX_BUFFERMODE_W );
+    break;
+  }
+
+	GFL_ARC_CloseDataHandle(handle);
 }
 
 //============================================================================================

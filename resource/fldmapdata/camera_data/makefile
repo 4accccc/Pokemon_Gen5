@@ -75,10 +75,12 @@ include	$(NITROSYSTEM_ROOT)/build/buildtools/commondefs
 include	$(NITROSYSTEM_ROOT)/build/buildtools/modulerules
 
 #%.bin: %.c
-field_camera.bin: field_camera.dat
+#field_camera.bin: field_camera.dat
+field_camera.bin: $(DATATXT)
+	@ruby field_camera.rb $(DATATXT) 
 	@echo "camera parameter convert"
 	@echo "//" > temp.c
-	@cat dummy_header.h $< |unix2dos > temp.c
+	@cat dummy_header.h field_camera.dat |unix2dos > temp.c
 	@$(CC) $(CCFLAGS) $(INCLUDES) $(INCPATH)  -c temp.c -MD -o temp.o
 	@$(MWLD) -dis -o field_camera.elf temp.o
 	@$(ELF2BIN) field_camera.elf
@@ -116,8 +118,8 @@ $(targetname).narc: field_camera.bin
 $(DATATXT):	$(DATAFILE)
 	$(XLS2TAB) -c $(DATAFILE) > $(DATATXT)
 
-field_camera.dat: $(DATATXT)
-	@ruby field_camera.rb $(DATATXT) 
+#field_camera.dat: $(DATATXT)
+#	@ruby field_camera.rb $(DATATXT) 
 
 
 endif
