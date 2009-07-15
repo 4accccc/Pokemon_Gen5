@@ -1102,18 +1102,18 @@ BtlPokePos BTL_MAIN_GetClientPokePos( const BTL_MAIN_MODULE* wk, u8 clientID, u8
 }
 //=============================================================================================
 /**
- * 対戦相手方のポケモン戦闘位置を返す
+ * 対戦相手側のポケモン位置IDを返す
  *
- * @param   wk
+ * @param   rule
  * @param   basePos
  * @param   idx
  *
  * @retval  BtlPokePos
  */
 //=============================================================================================
-BtlPokePos BTL_MAIN_GetOpponentPokePos( const BTL_MAIN_MODULE* wk, BtlPokePos basePos, u8 idx )
+BtlPokePos BTL_MAINUTIL_GetOpponentPokePos( BtlRule rule, BtlPokePos basePos, u8 idx )
 {
-  switch( wk->setupParam->rule ){
+  switch( rule ){
   case BTL_RULE_SINGLE:
     GF_ASSERT(idx<1);
     break;
@@ -1135,6 +1135,21 @@ BtlPokePos BTL_MAIN_GetOpponentPokePos( const BTL_MAIN_MODULE* wk, BtlPokePos ba
   {
     return BTL_POS_1ST_0 + (idx * 2);
   }
+}
+//=============================================================================================
+/**
+ * 対戦相手方のポケモン戦闘位置を返す
+ *
+ * @param   wk
+ * @param   basePos
+ * @param   idx
+ *
+ * @retval  BtlPokePos
+ */
+//=============================================================================================
+BtlPokePos BTL_MAIN_GetOpponentPokePos( const BTL_MAIN_MODULE* wk, BtlPokePos basePos, u8 idx )
+{
+  return BTL_MAINUTIL_GetOpponentPokePos( wk->setupParam->rule, basePos, idx );
 }
 //=============================================================================================
 /**

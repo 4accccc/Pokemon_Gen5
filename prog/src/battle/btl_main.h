@@ -77,6 +77,7 @@ extern BtlPokePos BTL_MAIN_ViewPosToBtlPos( const BTL_MAIN_MODULE* wk, u8 vpos )
 
 extern BOOL BTL_MAINUTIL_IsFriendPokeID( u8 pokeID1, u8 pokeID2 );
 extern BtlSide BTL_MAINUTIL_PokeIDtoSide( u8 pokeID );
+extern BtlPokePos BTL_MAINUTIL_GetOpponentPokePos( BtlRule rule, BtlPokePos basePos, u8 idx );
 
 
 static inline BtlSide BTL_MAINUTIL_GetOpponentSide( BtlSide side )

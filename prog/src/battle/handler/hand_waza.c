@@ -375,6 +375,8 @@ static void handler_SizenNoTikara_Msg( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WO
 static BTL_EVENT_FACTOR*  ADD_Nekonote( u16 pri, WazaID waza, u8 pokeID );
 static void handler_Nekonote( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_Nekonote_CheckParam( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static BTL_EVENT_FACTOR*  ADD_OumuGaesi( u16 pri, WazaID waza, u8 pokeID );
+static void handler_OumuGaesi_CheckParam( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 
 
 
@@ -546,6 +548,7 @@ BOOL  BTL_HANDLER_Waza_Add( const BTL_POKEPARAM* pp, WazaID waza )
     { WAZANO_YUBIWOHURU,      ADD_YubiWoFuru    },
     { WAZANO_SIZENNOTIKARA,   ADD_SizenNoTikara },
     { WAZANO_NEKONOTE,        ADD_Nekonote      },
+    { WAZANO_OUMUGAESI,       ADD_OumuGaesi     },
   };
 
   int i;
@@ -5739,6 +5742,61 @@ static void handler_Nekonote_CheckParam( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_
     }
   }
 }
+//----------------------------------------------------------------------------------
+/**
+ * オウムがえし
+ */
+//----------------------------------------------------------------------------------
+static BTL_EVENT_FACTOR*  ADD_OumuGaesi( u16 pri, WazaID waza, u8 pokeID )
+{
+  static const BtlEventHandlerTable HandlerTable[] = {
+    { BTL_EVENT_REQWAZA_PARAM,          handler_OumuGaesi_CheckParam },  // 他ワザパラメータチェック
+    { BTL_EVENT_NULL, NULL },
+  };
+  return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_WAZA, waza, pri, pokeID, HandlerTable );
+}
+static void handler_OumuGaesi_CheckParam( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+{
+  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID )
+  {
+    BtlPokePos targetPos = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEPOS_ORG );
+    u8* targetPokeIDAry = (u8*)work;
+    u8  poke_cnt, i;
+
+    // シングル戦の場合、相手選択の必要がないのでNULLが来る
+    if( targetPos == BTL_POS_NULL ){
+      BtlPokePos  myPos = BTL_SVFLOW_CheckExistFrontPokeID( flowWk, pokeID );
+      BtlRule  rule = BTL_SVFLOW_GetRule( flowWk );
+      targetPos = BTL_MAINUTIL_GetOpponentPokePos( rule, myPos, 0 );
+    }
+
+
+    if( BTL_SERVERFLOW_RECEPT_GetTargetPokeID(flowWk, targetPos, targetPokeIDAry) )
+    {
+      const BTL_POKEPARAM* bpp = BTL_SVFLOW_RECEPT_GetPokeParam( flowWk, targetPokeIDAry[0] );
+      WazaID  waza = BPP_GetPrevWazaID( bpp );
+      {
+        BTL_Printf( "オウム：狙った位置にポケモンいた。位置=%d, ID=%dです\n", targetPos, targetPokeIDAry[0]);
+      }
+      if( (waza == WAZANO_NULL)
+      ||  (isReqWazaExclude(waza))
+      ){
+        BTL_EVENTVAR_RewriteValue( BTL_EVAR_FAIL_FLAG, TRUE );
+      }
+      else{
+        BTL_EVENTVAR_RewriteValue( BTL_EVAR_WAZAID, waza );
+        BTL_EVENTVAR_RewriteValue( BTL_EVAR_POKEPOS, targetPos );
+      }
+    }
+    else
+    {
+      BTL_Printf( "オウム：狙った位置にポケモンいない\n");
+    }
+  }
+}
+
+
+
 
 
 

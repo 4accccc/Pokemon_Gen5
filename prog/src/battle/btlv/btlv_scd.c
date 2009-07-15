@@ -141,7 +141,7 @@ static void stw_convert_pos_to_index( SEL_TARGET_WORK* stw, const BTL_MAIN_MODUL
 static void stw_setSelectablePoke( SEL_TARGET_WORK* stw, const BTL_MAIN_MODULE* mainModule, BtlExPos exPos );
 static void stw_setConfirmPoke( SEL_TARGET_WORK* stw, const BTL_MAIN_MODULE* mainModule, BtlExPos exPos );
 static void stw_setConfirmField( SEL_TARGET_WORK* stw, const BTL_MAIN_MODULE* mainModule, BtlExPos exPos );
-static BOOL stw_is_enable_hitpos( SEL_TARGET_WORK* stw, int hitPos, const BTL_MAIN_MODULE* mainModule, u8* target_idx );
+static BOOL stw_is_enable_hitpos( SEL_TARGET_WORK* stw, int hitPos, const BTL_MAIN_MODULE* mainModule, BtlPokePos* targetPos );
 static inline u8 stwdraw_vpos_to_tblidx( u8 vpos );
 static void stwdraw_button( const u8* pos, u8 count, u8 format, BTLV_SCD* wk );
 static void stw_draw( const SEL_TARGET_WORK* stw, BTLV_SCD* work );
@@ -517,7 +517,7 @@ static BOOL selectWaza_loop( int* seq, void* wk_adrs )
 
       //キャンセルが先頭にはいっているので、デクリメントして正規の選択位置にする
       waza = BPP_WAZA_GetID( wk->bpp, --hit );
-      BTL_ACTION_SetFightParam( wk->destActionParam, waza, 0 );
+      BTL_ACTION_SetFightParam( wk->destActionParam, waza, BTL_POS_NULL );
 
       SePlayDecide();
       return TRUE;
@@ -642,7 +642,7 @@ static void stw_setConfirmField( SEL_TARGET_WORK* stw, const BTL_MAIN_MODULE* ma
   stw->confirmType = STW_CONFIRM_FIELD;
 }
 //
-static BOOL stw_is_enable_hitpos( SEL_TARGET_WORK* stw, int hitPos, const BTL_MAIN_MODULE* mainModule, u8* target_idx )
+static BOOL stw_is_enable_hitpos( SEL_TARGET_WORK* stw, int hitPos, const BTL_MAIN_MODULE* mainModule, BtlPokePos* targetPos )
 {
   GF_ASSERT_MSG(hitPos<NELEMS(STW_HitTblIndex), "hitPos=%d", hitPos);
 
@@ -656,7 +656,7 @@ static BOOL stw_is_enable_hitpos( SEL_TARGET_WORK* stw, int hitPos, const BTL_MA
       vpos = BTL_MAIN_BtlPosToViewPos( mainModule, stw->pos[i] );
       if( vpos == hitVpos )
       {
-        *target_idx = stw->pos[i];
+        *targetPos = stw->pos[i];
         return TRUE;
       }
     }
@@ -665,7 +665,7 @@ static BOOL stw_is_enable_hitpos( SEL_TARGET_WORK* stw, int hitPos, const BTL_MA
   else
   {
     // 確認のみモードの場合、どこをタッチしてもOKにしておく
-    *target_idx = 0;
+    *targetPos = BTL_POS_NULL;
     return TRUE;
   }
 }
@@ -857,12 +857,12 @@ static BOOL selectTarget_loop( int* seq, void* wk_adrs )
 //        Sub_TouchEndDelete( wk->bip, TRUE, TRUE );
         if( hit < BTL_CLIENT_MAX )
         {
-          u8 target_idx;
+          BtlPokePos targetPos;
           SePlayDecide();
-          if( stw_is_enable_hitpos( &wk->selTargetWork, hit, wk->mainModule, &target_idx ) )
+          if( stw_is_enable_hitpos( &wk->selTargetWork, hit, wk->mainModule, &targetPos ) )
           {
-            BTL_Printf("ターゲット決定 ... hitBtn=%d, hitPos=%d, target_idx=%d\n", hit, wk->selTargetWork.pos[hit], target_idx);
-            BTL_ACTION_SetFightParam( wk->destActionParam, wk->destActionParam->fight.waza, target_idx );
+            BTL_Printf("ターゲット決定 ... hitBtn=%d, hitPos=%d, targetPos=%d\n", hit, wk->selTargetWork.pos[hit], targetPos);
+            BTL_ACTION_SetFightParam( wk->destActionParam, wk->destActionParam->fight.waza, targetPos );
             wk->selTargetDone = TRUE;
             return TRUE;
           }

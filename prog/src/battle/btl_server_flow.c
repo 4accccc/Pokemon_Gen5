@@ -587,7 +587,7 @@ SvflowResult BTL_SVFLOW_Start( BTL_SVFLOW_WORK* wk )
 
     if( !BPP_IsDead(bpp) )
     {
-      const BTL_ACTION_PARAM* action = &wk->actOrder[i].action;
+      BTL_ACTION_PARAM* action = &wk->actOrder[i].action;
 
       BTL_Printf("Client(%d) の %d 番目のポケモンのアクション\n", clientID, pokeIdx);
       switch( action->gen.cmd ){
