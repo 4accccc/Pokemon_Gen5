@@ -1,20 +1,107 @@
 #event data
-#save date:2009/07/13 17:08:31
+#save date:2009/07/15 18:51:53
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\t02r0301.wms
 #SECTION START:OBJ_EVENT
 #Map Event List data
-#save date:2009/07/13 17:08:31
+#save date:2009/07/15 18:51:53
 2
 #hold event type:
 1
 #hold event number:
+3
+#event number: 0
+#type
+1
+#ID name
+T02R0301_MIDDLEWOMAN2
+#OBJ CODE Number
+WOMAN3
+#MOVE CODE Number
+MV_RT2
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
 0
+#Event Script Name
+SCRID_T02R0301_TALKOBJ_MIDDLEWOMAN2
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+3
+#position
+-112 0 144
+#event number: 1
+#type
+1
+#ID name
+T02R0301_BABYBOY1
+#OBJ CODE Number
+BABYBOY1
+#MOVE CODE Number
+MV_RND
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+1
+#Event Script Name
+SCRID_T02R0301_TALKOBJ_BABYBOY1
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+2
+#Move Limit Z Number
+1
+#position
+-160 0 192
+#event number: 2
+#type
+1
+#ID name
+T02R0301_MAN1
+#OBJ CODE Number
+MAN1
+#MOVE CODE Number
+MV_RND_V
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+0
+#Event Script Name
+SCRID_T02R0301_TALKOBJ_MAN1
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#position
+-176 0 176
 #Map Event List Data End
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT
 #Map Event List data
-#save date:2009/07/13 17:08:31
+#save date:2009/07/15 18:51:53
 2
 #hold event type:
 1
@@ -24,7 +111,7 @@ C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\t02r0301.wms
 #SECTION End:BG_EVENT
 #SECTION START:POS_EVENT
 #Map Event List data
-#save date:2009/07/13 17:08:31
+#save date:2009/07/15 18:51:53
 2
 #hold event type:
 1
@@ -34,7 +121,7 @@ C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\t02r0301.wms
 #SECTION End:POS_EVENT
 #SECTION START:DOOR_EVENT
 #Map Event List data
-#save date:2009/07/13 17:08:31
+#save date:2009/07/15 18:51:53
 2
 #hold event type:
 1
