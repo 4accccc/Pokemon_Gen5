@@ -15,7 +15,7 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA    ev_c01pc0101_talkobj_man1
+_EVENT_DATA    ev_c01pc0101_talkobj_man2
 _EVENT_DATA    ev_c01pc0101_talkobj_middleman2
 _EVENT_DATA_END
 
@@ -37,8 +37,28 @@ _EVENT_DATA_END
 //  _END
 
 /**************************************************************/
-/*                                                            */
+/*  C01PC0101 MAN2の会話用イベントスクリプト*/
 /**************************************************************/
-ev_c01pc0101:
+ev_c01pc0101_talkobj_man2:
+	_TALK_OBJ_PAUSE_ALL
+	_TURN_HERO_SITE
+	_TALKWIN_OPEN
+	_TALKMSG_ALLPUT msg_c01pc0101_man2_01
+	_AB_KEYWAIT
+  _TALKWIN_CLOSE
+  _OBJ_PAUSE_CLEAR_ALL
+  _END
+
+/**************************************************************/
+/*  C01PC0101 MIDDLEMAN2の会話用イベントスクリプト*/
+/**************************************************************/
+ev_c01pc0101_talkobj_middleman2:
+	_TALK_OBJ_PAUSE_ALL
+	_TURN_HERO_SITE
+	_TALKWIN_OPEN
+	_TALKMSG_ALLPUT msg_c01pc0101_middleman2_01
+	_AB_KEYWAIT
+  _TALKWIN_CLOSE
+  _OBJ_PAUSE_CLEAR_ALL
   _END
 

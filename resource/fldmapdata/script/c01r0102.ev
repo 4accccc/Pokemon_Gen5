@@ -38,8 +38,40 @@ _EVENT_DATA_END
 //  _END
 
 /**************************************************************/
-/*                                                            */
+/*  C01R0102 TRAINERMの会話用イベントスクリプト*/
 /**************************************************************/
-ev_c01r0102:
+ev_c01r0102_talkobj_trainerm:
+	_TALK_OBJ_PAUSE_ALL
+	_TURN_HERO_SITE
+	_TALKWIN_OPEN
+	_TALKMSG_ALLPUT msg_c01r0102_trainerm_01
+	_AB_KEYWAIT
+  _TALKWIN_CLOSE
+  _OBJ_PAUSE_CLEAR_ALL
+  _END
+  
+/**************************************************************/
+/*  C01R0102 GIRL3の会話用イベントスクリプト*/
+/**************************************************************/
+ev_c01r0102_talkobj_girl3:
+	_TALK_OBJ_PAUSE_ALL
+	_TURN_HERO_SITE
+	_TALKWIN_OPEN
+	_TALKMSG_ALLPUT msg_c01r0102_girl3_01
+	_AB_KEYWAIT
+  _TALKWIN_CLOSE
+  _OBJ_PAUSE_CLEAR_ALL
   _END
 
+/**************************************************************/
+/*  C01R0102 BOY3の会話用イベントスクリプト*/
+/**************************************************************/
+ev_c01r0102_talkobj_boy3:
+	_TALK_OBJ_PAUSE_ALL
+	_TURN_HERO_SITE
+	_TALKWIN_OPEN
+	_TALKMSG_ALLPUT msg_c01r0102_boy3_01
+	_AB_KEYWAIT
+  _TALKWIN_CLOSE
+  _OBJ_PAUSE_CLEAR_ALL
+  _END

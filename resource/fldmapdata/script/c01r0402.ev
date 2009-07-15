@@ -37,8 +37,28 @@ _EVENT_DATA_END
 //  _END
 
 /**************************************************************/
-/*                                                            */
+/*  C01R0402 MIDDLEMAN2の会話用イベントスクリプト*/
 /**************************************************************/
-ev_c01r0402:
+ev_c01r0402_talkobj_middleman2:
+	_TALK_OBJ_PAUSE_ALL
+	_TURN_HERO_SITE
+	_TALKWIN_OPEN
+	_TALKMSG_ALLPUT msg_c01r0402_middleman2_01
+	_AB_KEYWAIT
+  _TALKWIN_CLOSE
+  _OBJ_PAUSE_CLEAR_ALL
+  _END
+
+/**************************************************************/
+/*  C01R0402 BABYBOY1の会話用イベントスクリプト*/
+/**************************************************************/
+ev_c01r0402_talkobj_babyboy1:
+	_TALK_OBJ_PAUSE_ALL
+	_TURN_HERO_SITE
+	_TALKWIN_OPEN
+	_TALKMSG_ALLPUT msg_c01r0402_babyboy1_01
+	_AB_KEYWAIT
+  _TALKWIN_CLOSE
+  _OBJ_PAUSE_CLEAR_ALL
   _END
 
