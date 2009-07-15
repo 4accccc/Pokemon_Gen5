@@ -184,6 +184,7 @@ struct _BTL_SVFLOW_WORK {
   BPP_WAZADMG_REC             wazaDamageRec;
 
   u8          flowFlags[ FLOWFLG_BYTE_MAX ];
+  u8          handlerTmpWork[ EVENT_HANDLER_TMP_WORK_SIZE ];
 };
 
 
@@ -1309,19 +1310,26 @@ static void scproc_Fight( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, REQWAZA_
   {
     do {
       // ワザ出し失敗判定１
-      if( scproc_Fight_CheckWazaExecuteFail_1st(wk, attacker, orgWaza) ){ break; }
+      if( scproc_Fight_CheckWazaExecuteFail_1st(wk, attacker, orgWaza ) ){ break; }
 
-      scEvent_GetReqWazaParam( wk, attacker, orgWaza, orgTargetPos, reqWaza );
-      if( reqWaza->wazaID != WAZANO_NULL ){
+      // 他ワザ呼び出しワザのパラメータチェック＆失敗判定
+      if( scEvent_GetReqWazaParam(wk, attacker, orgWaza, orgTargetPos, reqWaza) ){
         scPut_WazaMsg( wk, attacker, orgWaza );
-        scPut_ReqWazaEffect( wk, attacker, orgWaza, orgTargetPos );
-        BTL_HANDLER_Waza_Add( attacker, reqWaza->wazaID );
-        actWaza = reqWaza->wazaID;
-        actTargetPos = reqWaza->targetPos;
-        BTL_Printf("他ワザ実行で [%d] -> [%d] が出る\n", orgWaza, actWaza);
-      }else{
-        actWaza = orgWaza;
-        actTargetPos = orgTargetPos;
+        scproc_WazaExecuteFailed( wk, attacker, orgWaza, SV_WAZAFAIL_OTHER );
+      }
+      else
+      {
+        if( reqWaza->wazaID != WAZANO_NULL ){
+          scPut_WazaMsg( wk, attacker, orgWaza );
+          scPut_ReqWazaEffect( wk, attacker, orgWaza, orgTargetPos );
+          BTL_HANDLER_Waza_Add( attacker, reqWaza->wazaID );
+          actWaza = reqWaza->wazaID;
+          actTargetPos = reqWaza->targetPos;
+          BTL_Printf("他ワザ実行で [%d] -> [%d] が出る\n", orgWaza, actWaza);
+        }else{
+          actWaza = orgWaza;
+          actTargetPos = orgTargetPos;
+        }
       }
 
       // 他ワザ呼び出し時など、ワザ名メッセージをカスタマイズ
@@ -1337,7 +1345,7 @@ static void scproc_Fight( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, REQWAZA_
       // ワザ出し失敗判定２
       if( scproc_Fight_CheckWazaExecuteFail_2nd(wk, attacker, actWaza) ){ break; }
 
-      // ワザ出し成功
+      // ここまで来たらワザ出し成功
       // @@@ ここに、対象ポケによらない無効化チェックを入れるかも…
       BPP_UpdatePrevWazaID( attacker, actWaza, action->fight.targetPos );
       SCQUE_PUT_OP_UpdateUseWaza( wk->que, attacker_pokeID, action->fight.targetPos, actWaza );
@@ -1391,20 +1399,24 @@ static void scPut_ReqWazaEffect( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, WazaID
 // 他ワザ呼び出しを行うか判定
 // [io] reqWaza  呼び出すワザパラメータ
 //
-// @return   行う場合、呼び出すワザID／行わない場合、WAZANO_NULL
+// @return   ワザを失敗する場合FALSE
 static BOOL scEvent_GetReqWazaParam( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker,
   WazaID orgWazaid, BtlPokePos orgTargetPos, REQWAZA_WORK* reqWaza )
 {
+  BOOL failFlag = FALSE;
+
   BTL_EVENTVAR_Push();
     BTL_EVENTVAR_SetValue( BTL_EVAR_POKEID, BPP_GetID(attacker) );
     BTL_EVENTVAR_SetValue( BTL_EVAR_WAZAID, reqWaza->wazaID );
     BTL_EVENTVAR_SetValue( BTL_EVAR_POKEPOS, BTL_POS_NULL );
     BTL_EVENTVAR_SetValue( BTL_EVAR_POKEPOS_ORG, orgTargetPos );
+    BTL_EVENTVAR_SetValue( BTL_EVAR_FAIL_FLAG, failFlag );
     BTL_EVENT_CallHandlers( wk, BTL_EVENT_REQWAZA_PARAM );
     reqWaza->wazaID = BTL_EVENTVAR_GetValue( BTL_EVAR_WAZAID );
     reqWaza->targetPos = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEPOS );
+    failFlag = BTL_EVENTVAR_GetValue( BTL_EVAR_FAIL_FLAG );
   BTL_EVENTVAR_Pop();
-  return (reqWaza->wazaID != WAZANO_NULL);
+  return failFlag;
 }
 
 //----------------------------------------------------------------------------------
@@ -7056,7 +7068,19 @@ u8 BTL_SVFLOW_PokePosToPokeID( BTL_SVFLOW_WORK* wk, u8 pokePos )
   const BTL_POKEPARAM* bpp = BTL_POKECON_GetFrontPokeDataConst( wk->pokeCon, pokePos );
   return BPP_GetID( bpp );
 }
-
+//=============================================================================================
+/**
+ * 全ハンドラ共有のテンポラリワーク先頭アドレスを返す
+ *
+ * @param   wk
+ *
+ * @retval  void*
+ */
+//=============================================================================================
+void* BTL_SVFLOW_GetHandlerTmpWork( BTL_SVFLOW_WORK* wk )
+{
+  return wk->handlerTmpWork;
+}
 
 
 //--------------------------------------------------------------------------------------------------------
@@ -7479,7 +7503,7 @@ static void handex_addsick_msg( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* target
 {
   const BTL_HANDEX_PARAM_ADD_SICK* param = arg;
 
-  if( param->fExMsg ){
+  if( param->exStr.type != BTL_STRTYPE_NULL ){
     handexSub_putString( wk, &param->exStr );
   }else{
     scPut_AddSickDefaultMsg( wk, target, param->sickID, param->sickCont );
