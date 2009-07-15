@@ -37,6 +37,7 @@ esources:=$(wildcard *.nce)
 lobjects = $(subst .ncl,.NCLR,$(lsources))
 gobjects = $(subst .ncg,.NCGR,$(gsources))
 sobjects = $(subst .nsc,.NSCR,$(ssources))
+cobjects = $(subst .nce,.NCGR,$(esources))
 eobjects = $(subst .nce,.NCER,$(esources))
 aobjects = $(subst .nce,.NANR,$(esources))
 
@@ -54,7 +55,7 @@ ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
 	g2dcvtr $<
 
 .nce.NCER:
-	g2dcvtr $<
+	g2dcvtr $< -ncn
 
 endif
 
@@ -75,8 +76,8 @@ $(TARGETDIR)/$(targetname).narc: $(targetname).narc
 
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、元ファイルからコンバートするルールを有効にする
 # コピー先のnarcが古い場合実行する
-$(targetname).narc: $(lobjects) $(gobjects) $(sobjects) $(eobjects) $(aobjects)
-	nnsarc -r -l -n -i $(targetname) $^
+$(targetname).narc: $(lobjects) $(gobjects) $(sobjects) $(eobjects) $(aobjects) $(cobjects)
+	nnsarc -c -l -n -i $(targetname) -S app_menu_common.scr
 	$(NAIXCUT) $(targetname).naix
 endif
 
