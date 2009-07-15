@@ -1,14 +1,8 @@
-//======================================================================
-//                union_def.h
-//
-//    スクリプトヘッダファイル：union用
-//
-//======================================================================
-#ifndef __union_DEF_H__
-#define __union_DEF_H__
+#ifndef _UNION_DEF_H_
+#define _UNION_DEF_H_
 
-//スクリプトデータID定義
-#define SCRID_union_DATA_MAX   (0)   /* 最大数 */
+//スクリプトデータID定義 
+#define	SCRID_UNION		(1)
+#define	SCRID_UNION_DATA_MAX		(1)		//最大数
 
-#endif  /* __union_DEF_H__ */
-
+#endif //_UNION_DEF_H_

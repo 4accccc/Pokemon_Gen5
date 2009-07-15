@@ -1,0 +1,7 @@
+#マップに依存しないスクリプトはここに追加してください
+SCRIPTFILES	+= \
+	c99.ev	\
+	common_scr.ev	\
+	dummy.ev	\
+	dummy_scr.ev	\
+	trainer.ev	

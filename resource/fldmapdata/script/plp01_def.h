@@ -1,14 +1,8 @@
-//======================================================================
-//                plp01_def.h
-//
-//    スクリプトヘッダファイル：plp01用
-//
-//======================================================================
-#ifndef __plp01_DEF_H__
-#define __plp01_DEF_H__
+#ifndef _PLP01_DEF_H_
+#define _PLP01_DEF_H_
 
-//スクリプトデータID定義
-#define SCRID_plp01_DATA_MAX   (0)   /* 最大数 */
+//スクリプトデータID定義 
+#define	SCRID_PLP01		(1)
+#define	SCRID_PLP01_DATA_MAX		(1)		//最大数
 
-#endif  /* __plp01_DEF_H__ */
-
+#endif //_PLP01_DEF_H_

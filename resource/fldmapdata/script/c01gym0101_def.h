@@ -1,14 +1,8 @@
-//======================================================================
-//                c01gym0101_def.h
-//
-//    スクリプトヘッダファイル：c01gym0101用
-//
-//======================================================================
-#ifndef __c01gym0101_DEF_H__
-#define __c01gym0101_DEF_H__
+#ifndef _C01GYM0101_DEF_H_
+#define _C01GYM0101_DEF_H_
 
-//スクリプトデータID定義
-#define SCRID_c01gym0101_DATA_MAX   (0)   /* 最大数 */
+//スクリプトデータID定義 
+#define	SCRID_C01GYM0101		(1)
+#define	SCRID_C01GYM0101_DATA_MAX		(1)		//最大数
 
-#endif  /* __c01gym0101_DEF_H__ */
-
+#endif //_C01GYM0101_DEF_H_

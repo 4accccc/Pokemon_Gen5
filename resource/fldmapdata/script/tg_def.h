@@ -1,14 +1,8 @@
-//======================================================================
-//                tg_def.h
-//
-//    スクリプトヘッダファイル：tg用
-//
-//======================================================================
-#ifndef __tg_DEF_H__
-#define __tg_DEF_H__
+#ifndef _TG_DEF_H_
+#define _TG_DEF_H_
 
-//スクリプトデータID定義
-#define SCRID_tg_DATA_MAX   (0)   /* 最大数 */
+//スクリプトデータID定義 
+#define	SCRID_TG		(1)
+#define	SCRID_TG_DATA_MAX		(1)		//最大数
 
-#endif  /* __tg_DEF_H__ */
-
+#endif //_TG_DEF_H_

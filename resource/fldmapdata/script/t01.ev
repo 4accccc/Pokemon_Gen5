@@ -1,16 +1,12 @@
-
 //======================================================================
-//                t01.ev
-//
-//    スクリプトファイル：t01用
-//
+//                t01
 //======================================================================
 
-  .text
+  .text //テキストデータを表しています。
 
-  .include  "scr_seq_def.h"
-  .include  "../../message/dst/script/msg_t01.h"
-  //.include  "../eventdata/zone_t01evc.h"
+  .include  "scr_seq_def.h" //スクリプトコマンドに必要な定義が記述されたヘッダーファイルです
+  .include  "../../../prog/include/msg/script/msg_t01.h" //t01.gmmファイルを参照するヘッダーファイルです。
+  .include  "../eventdata/zone_t01evc.h" //t01に存在する動作モデルのIDが記載されています。
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -18,21 +14,145 @@
 
 //--------------------------------------------------------------
 //               スクリプトテーブル
+//　スクリプトデータとなるラベルを指定します
 //--------------------------------------------------------------
-_EVENT_DATA    ev_t01
-_EVENT_DATA_END
+_EVENT_DATA   ev_t01_talkobj_man01
+_EVENT_DATA   ev_t01_talkobj_woman01
+_EVENT_DATA   ev_t01_talkobj_babygirl1
+_EVENT_DATA   ev_t01_posevent_test1
+_EVENT_DATA   ev_t01_bgevent_test1
+_EVENT_DATA_END //データ終端を指定しています。
 
 
 /**************************************************************/
 /*            FLAG_CHANGE_LABEL                               */
+/*
+ * 注意！(06.02.09現在)
+ * ev_t01_SCRIPT_WORKを確保していないので、
+ * SCWK_ANSWERなどのワークは使用することが出来ない！
+ * LOCALWORK0などを使用するようにする！
+ *
+ * 共通スクリプトについては現状使用不可！
+ * 対応予定だが、ゾーンをまたいだ時に処理落ちするかも？
+ * あまりつかわないかも？
+ */
 /**************************************************************/
-//ev_t01_flag_change:
+//ev_t01_t01_flag_change:
 //  _END
 
 /**************************************************************/
 /*                                                            */
 /**************************************************************/
-ev_t01:
-  //とりあえず最初のラベルだけ生成している
+//-------------------------------------------------------------
+//  T01 MAN1の会話用イベントスクリプトです。
+//-------------------------------------------------------------
+ev_t01_talkobj_man01:
+	_TALK_OBJ_PAUSE_ALL
+	_TURN_HERO_SITE
+	_TALKWIN_OPEN
+	_TALKMSG_ALLPUT msg_t01_testmsg01
+
+	_YES_NO_WIN SCWK_ANSWER
+	_TALKWIN_CLOSE
+	_IFVAL_JUMP SCWK_ANSWER,EQ,0,talkobj_man01_yes
+	_IFVAL_JUMP SCWK_ANSWER,EQ,1,talkobj_man01_no
+
+talkobj_man01_yes:
+	_TALKWIN_OPEN
+	_TALKMSG_ALLPUT msg_t01_testmsg01_01
+
+	_AB_KEYWAIT
+  	_TALKWIN_CLOSE
+
+	_CHG_LANGID
+
+	_JUMP talkobj_man01_end
+
+talkobj_man01_no:
+	_TALKWIN_OPEN
+	_TALKMSG_ALLPUT msg_t01_testmsg01_02
+
+	_AB_KEYWAIT
+  	_TALKWIN_CLOSE
+
+talkobj_man01_end:
+  	_OBJ_PAUSE_CLEAR_ALL
+  	_END
+//-------------------------------------------------------------
+//  T01 WOMAN1の会話用イベントスクリプトです。
+//-------------------------------------------------------------
+
+ev_t01_talkobj_woman01:
+	_TALK_OBJ_PAUSE_ALL
+	_TURN_HERO_SITE
+	_TALKWIN_OPEN
+	_TALKMSG_ALLPUT msg_t01_testmsg02
+
+	_YES_NO_WIN SCWK_ANSWER
+	_TALKWIN_CLOSE
+
+	IF $SCWK_ANSWER == 0 THEN
+		_TALKWIN_OPEN
+		_TALKMSG_ALLPUT msg_t01_testmsg02_01
+	ELSE
+		_TALKWIN_OPEN
+		_TALKMSG_ALLPUT msg_t01_testmsg02_02
+	ENDIF
+
+/*
+	_IFVAL_JUMP SCWK_ANSWER,EQ,0,talkobj_woman01_yes
+	_IFVAL_JUMP SCWK_ANSWER,EQ,1,talkobj_woman01_no
+
+talkobj_woman01_yes:
+	_TALKWIN_OPEN
+	_TALKMSG_ALLPUT msg_t01_testmsg02_01
+	_JUMP talkobj_woman01_end
+
+talkobj_woman01_no:
+	_TALKWIN_OPEN
+	_TALKMSG_ALLPUT msg_t01_testmsg02_02
+
+talkobj_woman01_end:
+*/
+	_AB_KEYWAIT
+  	_TALKWIN_CLOSE
+  	_OBJ_PAUSE_CLEAR_ALL
+  	_END
+
+//-------------------------------------------------------------
+//  T01 BABYGIRL1の会話用イベントスクリプトです。
+//-------------------------------------------------------------
+ev_t01_talkobj_babygirl1:
+	_TALK_OBJ_PAUSE_ALL
+	_TURN_HERO_SITE
+	_TALKWIN_OPEN
+	_TALKMSG_ALLPUT msg_t01_testmsg03
+	_AB_KEYWAIT
+  _TALKWIN_CLOSE
+  _OBJ_PAUSE_CLEAR_ALL
   _END
 
+//-------------------------------------------------------------
+//  T01 テスト用座標イベントスクリプト
+//-------------------------------------------------------------
+ev_t01_posevent_test1:
+  _TALK_OBJ_PAUSE_ALL
+  _TALKWIN_OPEN
+  _TALKMSG_ALLPUT msg_t01_testmsg03
+  _AB_KEYWAIT
+  _TALKWIN_CLOSE
+  _OBJ_PAUSE_CLEAR_ALL
+  _LDVAL SVSCRWK_START,1
+  _END
+
+//-------------------------------------------------------------
+//  T01 テスト用BG話し掛けイベントスクリプト
+//-------------------------------------------------------------
+ev_t01_bgevent_test1:
+  _TALK_OBJ_PAUSE_ALL
+  _TALKWIN_OPEN
+  _TALKMSG_ALLPUT msg_t01_sign1_01
+  _AB_KEYWAIT
+  _TALKWIN_CLOSE
+  _OBJ_PAUSE_CLEAR_ALL
+  _END

@@ -1,14 +1,8 @@
-//======================================================================
-//                closseum_def.h
-//
-//    スクリプトヘッダファイル：closseum用
-//
-//======================================================================
-#ifndef __closseum_DEF_H__
-#define __closseum_DEF_H__
+#ifndef _CLOSSEUM_DEF_H_
+#define _CLOSSEUM_DEF_H_
 
-//スクリプトデータID定義
-#define SCRID_closseum_DATA_MAX   (0)   /* 最大数 */
+//スクリプトデータID定義 
+#define	SCRID_CLOSSEUM		(1)
+#define	SCRID_CLOSSEUM_DATA_MAX		(1)		//最大数
 
-#endif  /* __closseum_DEF_H__ */
-
+#endif //_CLOSSEUM_DEF_H_

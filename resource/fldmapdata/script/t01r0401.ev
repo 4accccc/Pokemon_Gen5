@@ -1,16 +1,12 @@
-
 //======================================================================
-//                t01r0401.ev
-//
-//    スクリプトファイル：t01r0401用
-//
+//                t01r0401
 //======================================================================
 
   .text
 
   .include  "scr_seq_def.h"
-  .include  "../../message/dst/script/msg_t01r0401.h"
-  //.include  "../eventdata/zone_t01r0401evc.h"
+  .include  "../../../prog/include/msg/script/msg_t01r0401.h"
+  .include  "../eventdata/zone_t01r0401evc.h"
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -19,12 +15,22 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA    ev_t01r0401
+_EVENT_DATA    ev_t01r0401_kabi32_1
 _EVENT_DATA_END
 
 
 /**************************************************************/
 /*            FLAG_CHANGE_LABEL                               */
+/*
+ * 注意！(06.02.09現在)
+ * EV_SCRIPT_WORKを確保していないので、
+ * SCWK_ANSWERなどのワークは使用することが出来ない！
+ * LOCALWORK0などを使用するようにする！
+ *
+ * 共通スクリプトについては現状使用不可！
+ * 対応予定だが、ゾーンをまたいだ時に処理落ちするかも？
+ * あまりつかわないかも？
+ */
 /**************************************************************/
 //ev_t01r0401_flag_change:
 //  _END
@@ -32,7 +38,88 @@ _EVENT_DATA_END
 /**************************************************************/
 /*                                                            */
 /**************************************************************/
-ev_t01r0401:
-  //とりあえず最初のラベルだけ生成している
-  _END
+ev_t01r0401_kabi32_1:
+	_TALK_OBJ_PAUSE_ALL
+	_TURN_HERO_SITE
+	_TALKWIN_OPEN
+	_TALKMSG_ALLPUT msg_t01r0401_doctor01_01
+	_AB_KEYWAIT
+	_TALKWIN_CLOSE
 
+	_OBJ_ANIME T01R0401_KABI32_1,test01anime //自己紹介アニメ
+	_OBJ_ANIME_WAIT
+
+	_TURN_HERO_SITE
+	_TALKWIN_OPEN
+	_TALKMSG_ALLPUT msg_t01r0401_doctor01_02
+	_AB_KEYWAIT
+
+	_YES_NO_WIN SCWK_ANSWER
+	_TALKWIN_CLOSE
+
+	_IFVAL_JUMP SCWK_ANSWER,EQ,0,t01r0401_kabi32_yes
+	_IFVAL_JUMP SCWK_ANSWER,EQ,1,t01r0401_kabi32_no
+
+t01r0401_kabi32_yes:
+	_TALKWIN_OPEN
+	_TALKMSG_ALLPUT msg_t01r0401_doctor01_03
+	_AB_KEYWAIT
+	_TALKWIN_CLOSE
+	_JUMP t01r0401_kabi32_2
+
+t01r0401_kabi32_no:
+	_TALKWIN_OPEN
+	_TALKMSG_ALLPUT msg_t01r0401_doctor01_04
+	_AB_KEYWAIT
+	_TALKWIN_CLOSE
+
+t01r0401_kabi32_2:
+	_TALKWIN_OPEN
+	_TALKMSG_ALLPUT msg_t01r0401_doctor01_05
+	_AB_KEYWAIT
+	_TALKWIN_CLOSE
+
+	_OBJ_ANIME T01R0401_KABI32_1,test02anime //独り言アニメその１
+	_OBJ_ANIME_WAIT
+
+	_TALKWIN_OPEN
+	_TALKMSG_ALLPUT msg_t01r0401_doctor01_06
+	_AB_KEYWAIT
+  	_TALKWIN_CLOSE
+
+	_OBJ_ANIME T01R0401_KABI32_1,test03anime //独り言アニメその２
+	_OBJ_ANIME_WAIT
+
+	_TURN_HERO_SITE
+	_TALKWIN_OPEN
+	_TALKMSG_ALLPUT msg_t01r0401_doctor01_07
+	_AB_KEYWAIT
+  	_TALKWIN_CLOSE
+
+	_OBJ_PAUSE_CLEAR_ALL
+	_END
+
+//--------------------------------------------------------------
+//	アニメーションデータ
+//--------------------------------------------------------------
+_ANIME_LABEL test01anime //自己紹介アニメ
+	_ANIME_DATA AC_DIR_U,1
+	_ANIME_DATA AC_DIR_R,1
+	_ANIME_DATA AC_DIR_D,1
+	_ANIME_DATA AC_DIR_L,1
+	_ANIME_DATA AC_DIR_U,1
+	_ANIME_DATA AC_DIR_R,1
+	_ANIME_DATA AC_DIR_D,1
+	_ANIME_DATA AC_DIR_L,1
+	_ANIME_DATA AC_DIR_U,1
+	_ANIME_DATA AC_DIR_R,1
+	_ANIME_DATA AC_DIR_D,1
+	_ANIME_DATA ACMD_END,0
+
+_ANIME_LABEL test02anime //独り言アニメその１
+	_ANIME_DATA AC_WALK_U_8F,2
+	_ANIME_DATA ACMD_END,0
+
+_ANIME_LABEL test03anime //独り言アニメその２
+	_ANIME_DATA AC_WALK_D_8F,2
+	_ANIME_DATA ACMD_END,0

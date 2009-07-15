@@ -1,14 +1,9 @@
-//======================================================================
-//                t02r0302_def.h
-//
-//    スクリプトヘッダファイル：t02r0302用
-//
-//======================================================================
-#ifndef __t02r0302_DEF_H__
-#define __t02r0302_DEF_H__
+#ifndef _T02R0302_DEF_H_
+#define _T02R0302_DEF_H_
 
-//スクリプトデータID定義
-#define SCRID_t02r0302_DATA_MAX   (0)   /* 最大数 */
+//スクリプトデータID定義 
+#define	SCRID_T02R0302_TALKOBJ_MIDDLEMAN1		(1)
+#define	SCRID_T02R0302_TALKOBJ_POKE		(2)
+#define	SCRID_T02R0302_DATA_MAX		(2)		//最大数
 
-#endif  /* __t02r0302_DEF_H__ */
-
+#endif //_T02R0302_DEF_H_

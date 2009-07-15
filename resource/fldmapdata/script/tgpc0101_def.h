@@ -1,14 +1,8 @@
-//======================================================================
-//                tgpc0101_def.h
-//
-//    スクリプトヘッダファイル：tgpc0101用
-//
-//======================================================================
-#ifndef __tgpc0101_DEF_H__
-#define __tgpc0101_DEF_H__
+#ifndef _TGPC0101_DEF_H_
+#define _TGPC0101_DEF_H_
 
-//スクリプトデータID定義
-#define SCRID_tgpc0101_DATA_MAX   (0)   /* 最大数 */
+//スクリプトデータID定義 
+#define	SCRID_TGPC0101		(1)
+#define	SCRID_TGPC0101_DATA_MAX		(1)		//最大数
 
-#endif  /* __tgpc0101_DEF_H__ */
-
+#endif //_TGPC0101_DEF_H_

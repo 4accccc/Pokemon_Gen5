@@ -1,16 +1,12 @@
-
 //======================================================================
-//                r01.ev
-//
-//    スクリプトファイル：r01用
-//
+//                r01
 //======================================================================
 
   .text
 
   .include  "scr_seq_def.h"
-  .include  "../../message/dst/script/msg_r01.h"
-  //.include  "../eventdata/zone_r01evc.h"
+  .include  "../../../prog/include/msg/script/msg_r01.h"
+  .include  "../eventdata/zone_r01evc.h"
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -19,20 +15,118 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA    ev_r01
+_EVENT_DATA ev_r01_talkobj_boy1
+_EVENT_DATA ev_r01_talkobj_girl1
+_EVENT_DATA ev_r01_talkobj_man1
 _EVENT_DATA_END
 
 
 /**************************************************************/
 /*            FLAG_CHANGE_LABEL                               */
+/*
+ * 注意！(06.02.09現在)
+ * ev_r01_SCRIPT_WORKを確保していないので、
+ * SCWK_ANSWERなどのワークは使用することが出来ない！
+ * LOCALWORK0などを使用するようにする！
+ *
+ * 共通スクリプトについては現状使用不可！
+ * 対応予定だが、ゾーンをまたいだ時に処理落ちするかも？
+ * あまりつかわないかも？
+ */
 /**************************************************************/
-//ev_r01_flag_change:
+//ev_r01_r01_flag_change:
 //  _END
 
 /**************************************************************/
 /*                                                            */
 /**************************************************************/
-ev_r01:
-  //とりあえず最初のラベルだけ生成している
-  _END
+//--------------------------------------------------------------
+//	
+//--------------------------------------------------------------
+ev_r01_talkobj_boy1:
+	_TALK_OBJ_PAUSE_ALL //動作モデルをポーズします
+	_TURN_HERO_SITE //自機の方向へ振り向きます
+	_TALKWIN_OPEN //会話ウィンドウを開きます
+	_TALKMSG_ALLPUT msg_r01_boy1_01 //会話ウィンドウにmsg_r01_boy1_01を表示します
 
+	_YES_NO_WIN SCWK_ANSWER
+	_TALKWIN_CLOSE //会話ウィンドウを閉じます
+
+	_IFVAL_JUMP SCWK_ANSWER,EQ,0,talkobj_boy1_yes
+	_IFVAL_JUMP SCWK_ANSWER,EQ,1,talkobj_boy1_no
+
+talkobj_boy1_yes:
+	_TALKWIN_OPEN
+	_TALKMSG_ALLPUT msg_r01_boy1_02
+	_AB_KEYWAIT
+  	_TALKWIN_CLOSE
+	_OBJ_ANIME R01BOY1,test01anime
+	_OBJ_ANIME_WAIT
+
+	_TURN_HERO_SITE
+	_TALKWIN_OPEN
+	_TALKMSG_ALLPUT msg_r01_boy1_03
+	_AB_KEYWAIT
+  	_TALKWIN_CLOSE
+	_JUMP talkobj_boy1_end
+
+talkobj_boy1_no:
+	_OBJ_ANIME R01BOY1,test02anime
+	_OBJ_ANIME_WAIT
+	_TALKWIN_OPEN
+	_TALKMSG_ALLPUT msg_r01_boy1_04
+	_AB_KEYWAIT
+  	_TALKWIN_CLOSE
+
+talkobj_boy1_end:
+	_OBJ_PAUSE_CLEAR_ALL //動作モデルポーズを解除します
+	_END //イベントを終了します
+
+
+ev_r01_talkobj_girl1:
+	_TALK_OBJ_PAUSE_ALL
+	_TURN_HERO_SITE
+	_TALKWIN_OPEN
+	_TALKMSG_ALLPUT msg_r01_girl1_01
+	_AB_KEYWAIT
+	_TALKWIN_CLOSE
+
+	_OBJ_ANIME R01GIRL1,test02anime
+	_OBJ_ANIME_WAIT
+
+	_OBJ_PAUSE_CLEAR_ALL
+	_END
+
+
+ev_r01_talkobj_man1:
+	_TALK_OBJ_PAUSE_ALL
+	_TURN_HERO_SITE
+	_TALKWIN_OPEN
+	_TALKMSG_ALLPUT msg_r01_man1_01
+	_AB_KEYWAIT
+	_TALKWIN_CLOSE
+
+	_OBJ_ANIME R01MAN1,test03anime
+	_OBJ_ANIME_WAIT
+
+	_OBJ_PAUSE_CLEAR_ALL
+	_END
+
+//--------------------------------------------------------------
+//	アニメーションデータ
+//--------------------------------------------------------------
+_ANIME_LABEL test01anime
+	_ANIME_DATA AC_WALK_U_8F,4
+	_ANIME_DATA AC_WALK_D_8F,4
+	_ANIME_DATA ACMD_END,0
+
+_ANIME_LABEL test02anime
+	_ANIME_DATA AC_STAY_JUMP_U_16F,3
+	_ANIME_DATA ACMD_END,0
+
+_ANIME_LABEL test03anime
+	_ANIME_DATA AC_STAY_WALK_D_4F,4
+	_ANIME_DATA AC_WALK_D_4F,3
+	_ANIME_DATA AC_DIR_L,1
+	_ANIME_DATA AC_DIR_R,1
+	_ANIME_DATA ACMD_END,0

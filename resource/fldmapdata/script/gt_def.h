@@ -1,14 +1,8 @@
-//======================================================================
-//                gt_def.h
-//
-//    スクリプトヘッダファイル：gt用
-//
-//======================================================================
-#ifndef __gt_DEF_H__
-#define __gt_DEF_H__
+#ifndef _GT_DEF_H_
+#define _GT_DEF_H_
 
-//スクリプトデータID定義
-#define SCRID_gt_DATA_MAX   (0)   /* 最大数 */
+//スクリプトデータID定義 
+#define	SCRID_GT		(1)
+#define	SCRID_GT_DATA_MAX		(1)		//最大数
 
-#endif  /* __gt_DEF_H__ */
-
+#endif //_GT_DEF_H_

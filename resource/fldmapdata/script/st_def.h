@@ -1,14 +1,8 @@
-//======================================================================
-//                st_def.h
-//
-//    スクリプトヘッダファイル：st用
-//
-//======================================================================
-#ifndef __st_DEF_H__
-#define __st_DEF_H__
+#ifndef _ST_DEF_H_
+#define _ST_DEF_H_
 
-//スクリプトデータID定義
-#define SCRID_st_DATA_MAX   (0)   /* 最大数 */
+//スクリプトデータID定義 
+#define	SCRID_ST		(1)
+#define	SCRID_ST_DATA_MAX		(1)		//最大数
 
-#endif  /* __st_DEF_H__ */
-
+#endif //_ST_DEF_H_

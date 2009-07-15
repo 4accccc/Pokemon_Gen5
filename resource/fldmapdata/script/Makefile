@@ -14,11 +14,15 @@ include $(PROJECT_RSCDIR)/macro_define
 SUBDIRS =
 DEPENDHEADERS = usescript.h scr_seq_def.h
 
-#SCRSRCS
-include	scrfile.lst
+#マップ依存のスクリプト：定義ファイルは自動生成
+include zone_script.list
+
+#マップに依存しないスクリプトはここに追加してください
+include uniq_script.list
 
 #SCRSRCS_BIN
-SCRSRCS_BIN = $(SCRSRCS:.ev=.bin)
+#SCRSRCS_BIN = $(SCRSRCS:.ev=.bin)
+SCRSRCS_BIN = $(SCRIPTFILES:.ev=.bin)
 
 #MSGLIST
 #include msg_list
@@ -53,6 +57,7 @@ else
 LDIRT_CLEAN	= $(TARGET_DIR)/$(TARGET_NARC) $(TARGET_DIR)/$(TARGET_NAIX)
 endif
 
+.SUFFIXES:	.bin .ev
 #----------------------------------------------------------------------------
 #	make
 #----------------------------------------------------------------------------
@@ -66,7 +71,6 @@ do-build: $(SCRSRCS_BIN)
 #*.bin
 %.bin: %.ev $(DEPENDHEADERS)
 	@echo $<
-	#@cp $< temp_$*.s
 	@ruby filter/user.rb $< > temp_$*.s
 	@$(MWAS) $(ADD_MACRO) $(SUBDIRS) temp_$*.s -o $*.o
 	@$(MWLD) -dis -o $*.elf $*.o

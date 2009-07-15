@@ -1,14 +1,10 @@
-//======================================================================
-//                c01r0301_def.h
-//
-//    スクリプトヘッダファイル：c01r0301用
-//
-//======================================================================
-#ifndef __c01r0301_DEF_H__
-#define __c01r0301_DEF_H__
+#ifndef _C01R0301_DEF_H_
+#define _C01R0301_DEF_H_
 
-//スクリプトデータID定義
-#define SCRID_c01r0301_DATA_MAX   (0)   /* 最大数 */
+//スクリプトデータID定義 
+#define	SCRID_C01R0301_TALKOBJ_MIDDLEWOMAN2		(1)
+#define	SCRID_C01R0301_TALKOBJ_MAN1		(2)
+#define	SCRID_C01R0301_TALKOBJ_BOY2		(3)
+#define	SCRID_C01R0301_DATA_MAX		(3)		//最大数
 
-#endif  /* __c01r0301_DEF_H__ */
-
+#endif //_C01R0301_DEF_H_
