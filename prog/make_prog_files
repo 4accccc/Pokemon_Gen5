@@ -151,7 +151,6 @@ SRCS  +=    $(SOUNDSRC) \
 		test/tetsu/debug_common.c \
         system/fld_wipe_3dobj.c \
         debug/debug_system_group.c \
-				debug/gf_mcs.c \
 		field/field_place_name.c \
 		app/app_menu_common.c
 
@@ -416,10 +415,6 @@ SRCS_OVERLAY_DEBUG_MAKEPOKE = debug/debug_makepoke.c
 #===> SRCS_OVERLAY_DEV_IRC
 #===> SRCS_OVERLAY_DEV_WIRELESS
 #===> SRCS_OVERLAY_DEV_WIFI
-#if mcs_user
-#else
-#LIB=>					libnnsmcs.a
-#endif
 SRCS_OVERLAY_SOGABE_DEBUG		= test/soga/d_soga.c \
 								  test/soga/d_btltest.c \
 								  test/soga/capture.c \
@@ -806,4 +801,14 @@ SRCS_OVERLAY_MATSUDA_DEBUG  = test/matsuda/d_matsu.c \
         test/matsuda/d_save.c \
         test/matsuda/palace_block.c \
         test/matsuda/palace_block2.c
+
+#MCSƒ‰ƒCƒuƒ‰ƒŠ
+#===> SRCS_OVERLAY_FIELDMAP
+#===> SRCS_OVERLAY_FIELD_WEATHER_SUNNY
+#===> SRCS_OVERLAY_FIELD_WEATHER_SNOW
+#===> SRCS_OVERLAY_FIELD_WEATHER_RAIN
+#===> SRCS_OVERLAY_FIELD_WEATHER_STORM
+#===> SRCS_OVERLAY_BATTLE
+#LIB=>					libnnsmcs.a
+SRCS_OVERLAY_MCS_LIB = debug/gf_mcs.c
 
