@@ -1,6 +1,12 @@
 #---------------------------------------------------------------
 #	コンバート対象ユーザー定義
 #---------------------------------------------------------------
-USERS = kagaya tamada nakatsui \
+USERS = kagaya \
+  tamada \
+  nakatsui \
   lee_hyunjung fuchino ibe_mana tanoue_reiko \
-  iwao_kazumasa suginaka_katsunori nakamura_hiroki fujiwara_maiko
+  iwao_kazumasa suginaka_katsunori nakamura_hiroki \
+  fujiwara_maiko \
+  unno \
+  hozumi_yukiko \
+  murakami_naoto
