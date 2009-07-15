@@ -41,6 +41,24 @@ typedef struct
 
 //------------------------------------------------------------------
 /**
+ * @brief	フィールドカメラタイプ
+ */
+//------------------------------------------------------------------
+typedef enum {
+	FIELD_CAMERA_TYPE_GRID,
+	FIELD_CAMERA_TYPE_H01,
+	FIELD_CAMERA_TYPE_C03,
+
+  FIELD_CAMERA_TYPE_POKECEN,
+  FIELD_CAMERA_TYPE_H01P01,
+
+  FIELD_CAMERA_TYPE_PLP01,
+
+	FIELD_CAMERA_TYPE_MAX,
+}FIELD_CAMERA_TYPE;
+
+//------------------------------------------------------------------
+/**
  * @brief	型宣言
  */
 //------------------------------------------------------------------
@@ -187,7 +205,7 @@ static const CAMERA_FUNC_TABLE CameraFuncTable[] = {
 //------------------------------------------------------------------
 FIELD_CAMERA* FIELD_CAMERA_Create(
 		FIELD_MAIN_WORK * fieldWork,
-		FIELD_CAMERA_TYPE type,
+		u8 type,
 		FIELD_CAMERA_MODE mode,
 		GFL_G3D_CAMERA * cam,
 		const VecFx32 * target,
@@ -225,7 +243,7 @@ FIELD_CAMERA* FIELD_CAMERA_Create(
   }
 
   loadCameraParameters(camera);
-	CameraFuncTable[camera->type].init_func(camera);
+	//CameraFuncTable[camera->type].init_func(camera);
 
 	createTraceData(	FIELD_CAMERA_TRACE_BUFF, FIELD_CAMERA_DELAY,
 							CAM_TRACE_MASK_Y, heapID, camera);
@@ -250,7 +268,8 @@ void	FIELD_CAMERA_Delete( FIELD_CAMERA* camera )
 //------------------------------------------------------------------
 void FIELD_CAMERA_Main( FIELD_CAMERA* camera, u16 key_cont)
 {
-	CameraFuncTable[camera->type].control(camera, key_cont);
+  ControlParameter(camera, key_cont);
+	//CameraFuncTable[camera->type].control(camera, key_cont);
 }
 
 
@@ -451,9 +470,11 @@ static void loadCameraParameters(FIELD_CAMERA * camera)
   TAMADA_Printf("now near = %d\n", FX_Whole( FIELD_CAMERA_GetNear(camera) ) );
   TAMADA_Printf("now far = %d\n", FX_Whole( FIELD_CAMERA_GetFar(camera) ) );
 
+  camera->angle_len = param.Distance * FX32_ONE;
   camera->angle_pitch = param.Angle.x;
   camera->angle_yaw = param.Angle.y;
-  camera->angle_len = param.Distance * FX32_ONE;
+  //camera->viewtype = param.ViewType;
+  camera->fovy = param.PerspWay;
   camera->target_offset = param.Shift;
   FIELD_CAMERA_SetFar( camera, param.Far );
   FIELD_CAMERA_SetNear(camera, param.Near );
@@ -465,6 +486,10 @@ static void loadCameraParameters(FIELD_CAMERA * camera)
   case DEPTH_TYPE_WBUF:
     GFL_G3D_SetSystemSwapBufferMode( GX_SORTMODE_MANUAL, GX_BUFFERMODE_W );
     break;
+  }
+  if( GFL_G3D_CAMERA_GetProjectionType(camera->g3Dcamera) == GFL_G3D_PRJPERS ){
+    GFL_G3D_CAMERA_SetfovySin( camera->g3Dcamera, FX_SinIdx( camera->fovy ) );
+    GFL_G3D_CAMERA_SetfovyCos( camera->g3Dcamera, FX_CosIdx( camera->fovy ) );
   }
 
 	GFL_ARC_CloseDataHandle(handle);

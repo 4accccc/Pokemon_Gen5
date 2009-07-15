@@ -15,22 +15,6 @@
 //------------------------------------------------------------------
 typedef struct _FIELD_CAMERA	FIELD_CAMERA;
 
-//------------------------------------------------------------------
-/**
- * @brief	フィールドカメラタイプ
- */
-//------------------------------------------------------------------
-typedef enum {
-	FIELD_CAMERA_TYPE_GRID,
-	FIELD_CAMERA_TYPE_H01,
-	FIELD_CAMERA_TYPE_C03,
-
-  FIELD_CAMERA_TYPE_POKECEN,
-  FIELD_CAMERA_TYPE_H01P01,
-
-	FIELD_CAMERA_TYPE_MAX,
-}FIELD_CAMERA_TYPE;
-
 
 //カメラトレースマスク定義
 #define CAM_TRACE_MASK_X	(1)
@@ -61,7 +45,7 @@ typedef enum
 //------------------------------------------------------------------
 extern FIELD_CAMERA* FIELD_CAMERA_Create(
 		FIELD_MAIN_WORK * fieldWork,
-		FIELD_CAMERA_TYPE type,
+		u8 type,
 		FIELD_CAMERA_MODE mode,
 		GFL_G3D_CAMERA * cam,
 		const VecFx32 * target,
