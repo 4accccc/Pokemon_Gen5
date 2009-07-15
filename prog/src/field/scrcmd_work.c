@@ -9,6 +9,8 @@
 #include "scrcmd_work.h"
 #include "arc_def.h"
 
+#include "script_message.naix"
+
 //======================================================================
 //	define
 //======================================================================
@@ -337,9 +339,11 @@ void SCRCMD_WORK_InitMenuWork( SCRCMD_WORK *work,
   menuWork->wordset = wordset;
   menuWork->msgData = msgData;
   
-  if( menuWork->msgData == NULL ){
+  if( menuWork->msgData == NULL ){ //メニュー用共通メッセージ
     menuWork->free_msg = TRUE;
-    menuWork->msgData = NULL;
+    menuWork->msgData = GFL_MSG_Create(
+        GFL_MSG_LOAD_NORMAL, ARCID_SCRIPT_MESSAGE,
+        NARC_script_message_ev_win_dat, work->heapID );
   }
   
   menuWork->listData = FLDMENUFUNC_CreateListData(
