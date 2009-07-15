@@ -1171,6 +1171,46 @@ static const GFL_BBDACT_ANM DATA_BlActAnmNonFlip_WalkR7F[] = {
 	{TEXIDX_NFLIP_R_STOP,ANMFLIP_OFF,ANMFLIP_OFF,3},
 	{GFL_BBDACT_ANMCOM_JMP,0,0,0},
 };
+static const GFL_BBDACT_ANM * const DATA_BlActAnmNonFlipTbl[DRAW_STA_MAXDIR4] =
+{
+	DATA_BlActAnmNonFlip_StopU,//DRWA_STA_STOP
+	DATA_BlActAnmNonFlip_StopD,
+	DATA_BlActAnmNonFlip_StopL,
+	DATA_BlActAnmNonFlip_StopR,
+	DATA_BlActAnmNonFlip_WalkU32F,//DRWA_STA_WALK_32F
+	DATA_BlActAnmNonFlip_WalkD32F,
+	DATA_BlActAnmNonFlip_WalkL32F,
+	DATA_BlActAnmNonFlip_WalkR32F,
+	DATA_BlActAnmNonFlip_WalkU16F,//DRWA_STA_WALK_16F
+	DATA_BlActAnmNonFlip_WalkD16F,
+	DATA_BlActAnmNonFlip_WalkL16F,
+	DATA_BlActAnmNonFlip_WalkR16F,
+	DATA_BlActAnmNonFlip_WalkU8F,//DRWA_STA_WALK_8F
+	DATA_BlActAnmNonFlip_WalkD8F,
+	DATA_BlActAnmNonFlip_WalkL8F,
+	DATA_BlActAnmNonFlip_WalkR8F,
+	DATA_BlActAnmNonFlip_WalkU4F,//DRWA_STA_WALK_4F
+	DATA_BlActAnmNonFlip_WalkD4F,
+	DATA_BlActAnmNonFlip_WalkL4F,
+	DATA_BlActAnmNonFlip_WalkR4F,
+	DATA_BlActAnmNonFlip_WalkU2F,//DRWA_STA_WALK_2F
+	DATA_BlActAnmNonFlip_WalkD2F,
+	DATA_BlActAnmNonFlip_WalkL2F,
+	DATA_BlActAnmNonFlip_WalkR2F,
+	DATA_BlActAnmNonFlip_WalkU6F,//DRWA_STA_WALK_6F
+	DATA_BlActAnmNonFlip_WalkD6F,
+	DATA_BlActAnmNonFlip_WalkL6F,
+	DATA_BlActAnmNonFlip_WalkR6F,
+	DATA_BlActAnmNonFlip_WalkU3F,//DRWA_STA_WALK_3F
+	DATA_BlActAnmNonFlip_WalkD3F,
+	DATA_BlActAnmNonFlip_WalkL3F,
+	DATA_BlActAnmNonFlip_WalkR3F,
+	DATA_BlActAnmNonFlip_WalkU7F,//DRWA_STA_WALK_7F
+	DATA_BlActAnmNonFlip_WalkD7F,
+	DATA_BlActAnmNonFlip_WalkL7F,
+	DATA_BlActAnmNonFlip_WalkR7F,
+};
+
 //======================================================================
 //  自機自転車 フリップ無し＆特殊停止パターン
 //======================================================================
