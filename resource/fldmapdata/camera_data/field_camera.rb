@@ -110,6 +110,7 @@ line = csv_file.gets
 while line = csv_file.gets
 	column = line.split ","
 
+  if column.size < 2 then break end
 	data = CAMERA_DATA.new
 
 	#‹——£
