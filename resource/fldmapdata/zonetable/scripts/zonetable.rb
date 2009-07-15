@@ -249,7 +249,8 @@ class ZoneDataFile < OutputFile
 		event_id = column[@cl.cEVENT] == "›" ? "NARC_zone_event_zone_#{id.downcase}_total_bin" : "event_dummy"
 		script = column[@cl.cSCRIPT] == "›" ? "NARC_script_seq_#{id.downcase}_bin" : "scr_dummy"
 		sp_script = column[@cl.cSCRIPT] == "›" ? "NARC_script_seq_sp_#{id.downcase}_bin" : "sp_scr_dummy"
-		msg = column[@cl.cMSG] == "›" ? "NARC_script_message_#{id.downcase}_dat" : "msg_dummy"
+		#msg = column[@cl.cMSG] == "›" ? "NARC_script_message_#{id.downcase}_dat" : "msg_dummy"
+		msg = "NARC_script_message_#{id.downcase}_dat"
 		bgm_spring = column[@cl.cBGM_SPRING]
 		bgm_summer = column[@cl.cBGM_SUMMER]
 		bgm_autumn = column[@cl.cBGM_AUTUMN]

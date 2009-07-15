@@ -105,7 +105,7 @@ include	$(NITROSYSTEM_ROOT)/build/buildtools/modulerules
 #	ƒ‹[ƒ‹’è‹`
 #
 #----------------------------------------------------------------------------
-.PHONY:	subdir	do-build clean
+.PHONY:	subdir	do-build clean test dummyfiles
 
 do-build: subdir $(TARGETDIR)/$(NARCNAME)
 
@@ -160,8 +160,11 @@ diff:
 	@-rm $(addsuffix .old, $(OUTPUT))
 
 
-test:
+test:	$(DATATABTXT)
 	#$(XLS2TAB) ../map_matrix/map_matrix.xls > $(WORKDIR)/map_matrix.txt
 	ruby scripts/make_matrix_header.rb $(WORKDIR)/map_matrix.txt > $(WORKDIR)/map_matrix.h
+
+dummyfiles:	$(DATATABTXT)
+	ruby scripts/make_dummy.rb $(DATATABTXT)
 
 
