@@ -122,18 +122,18 @@ NNSARC_DEPEND_FILES	= \
 	nsbtx_files/tex_set_out30_summer.nsbtx \
 	nsbtx_files/tex_set_out30_autumn.nsbtx \
 	nsbtx_files/tex_set_out30_winter.nsbtx \
-	nsbtx_files/tex_set_OUT31_spring.nsbtx \
-	nsbtx_files/tex_set_OUT31_summer.nsbtx \
-	nsbtx_files/tex_set_OUT31_autumn.nsbtx \
-	nsbtx_files/tex_set_OUT31_winter.nsbtx \
-	nsbtx_files/tex_set_OUT32_spring.nsbtx \
-	nsbtx_files/tex_set_OUT32_summer.nsbtx \
-	nsbtx_files/tex_set_OUT32_autumn.nsbtx \
-	nsbtx_files/tex_set_OUT32_winter.nsbtx \
-	nsbtx_files/tex_set_OUT33_spring.nsbtx \
-	nsbtx_files/tex_set_OUT33_summer.nsbtx \
-	nsbtx_files/tex_set_OUT33_autumn.nsbtx \
-	nsbtx_files/tex_set_OUT33_winter.nsbtx \
+	nsbtx_files/tex_set_out31_spring.nsbtx \
+	nsbtx_files/tex_set_out31_summer.nsbtx \
+	nsbtx_files/tex_set_out31_autumn.nsbtx \
+	nsbtx_files/tex_set_out31_winter.nsbtx \
+	nsbtx_files/tex_set_out32_spring.nsbtx \
+	nsbtx_files/tex_set_out32_summer.nsbtx \
+	nsbtx_files/tex_set_out32_autumn.nsbtx \
+	nsbtx_files/tex_set_out32_winter.nsbtx \
+	nsbtx_files/tex_set_out33_spring.nsbtx \
+	nsbtx_files/tex_set_out33_summer.nsbtx \
+	nsbtx_files/tex_set_out33_autumn.nsbtx \
+	nsbtx_files/tex_set_out33_winter.nsbtx \
 	nsbtx_files/tex_set_out34_spring.nsbtx \
 	nsbtx_files/tex_set_out34_summer.nsbtx \
 	nsbtx_files/tex_set_out34_autumn.nsbtx \
