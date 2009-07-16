@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-07-13T14:25:33"/>
+	<create user="matsumiya" host="W00207" date="2009-07-16T17:56:49"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -293,35 +293,57 @@
 
 
 	<row id="msg_c02r0601_waitress_01">
-		<comment>♀</comment>
+		<comment>♀
+・仮メッセージ</comment>
 		<attribute name="キャラ指定">WAITRESS
 ウエートレス</attribute>
-		<language name="JPN" width="256">カフェです</language>
-		<language name="JPN_KANJI" width="256">ここはカフェです</language>
+		<language name="JPN" width="256">ちょっと　いなかの
+ちょっと　おしゃれな　カフェへ[BE:00:ページ切り替え（行送り）]
+ようこそ！</language>
+		<language name="JPN_KANJI" width="256">ちょっと　いなかの
+ちょっと　おしゃれな　カフェへ[BE:00:ページ切り替え（行送り）]
+ようこそ！</language>
 	</row>
 
 	<row id="msg_c02r0601_woman3_01">
-		<comment>♀</comment>
+		<comment>♀
+・仮メッセージ</comment>
 		<attribute name="キャラ指定">WOMAN3
 エプロン姉さん</attribute>
-		<language name="JPN" width="256">カフェです</language>
-		<language name="JPN_KANJI" width="256">ここはカフェです</language>
+		<language name="JPN" width="256">ゆっくり　していってね</language>
+		<language name="JPN_KANJI" width="256">ゆっくり　していってね</language>
 	</row>
 
 	<row id="msg_c02r0601_middleman2_01">
-		<comment>♂</comment>
+		<comment>♂
+・仮メッセージ</comment>
 		<attribute name="キャラ指定">MIDDLEMAN2
 太ったおじさん</attribute>
-		<language name="JPN" width="256">カフェです</language>
-		<language name="JPN_KANJI" width="256">ここはカフェです</language>
+		<language name="JPN" width="256">おいしい！
+ボリュームたっぷりで　やすい！[BE:01:ページ切り替え（クリア）]
+じぶんが　まんぞく　できるなら
+だれも　しらないような[BE:00:ページ切り替え（行送り）]
+いなかの　みせでも　いいじゃないか</language>
+		<language name="JPN_KANJI" width="256">美味しい！
+ボリュームたっぷりで　安い！[BE:01:ページ切り替え（クリア）]
+自分が　満足できるなら
+だれも　知らないような[BE:00:ページ切り替え（行送り）]
+田舎の　店でも　いいじゃないか</language>
 	</row>
 
 	<row id="msg_c02r0601_bigman_01">
-		<comment>♂</comment>
+		<comment>♂
+・仮メッセージ</comment>
 		<attribute name="キャラ指定">BIGMAN
 太った兄さん</attribute>
-		<language name="JPN" width="256">カフェです</language>
-		<language name="JPN_KANJI" width="256">ここはカフェです</language>
+		<language name="JPN" width="256">ここの　メニューは
+ぜんぶが　デリシャスッ！[BE:01:ページ切り替え（クリア）]
+ぼくの　この　からだが
+それを　しょうめい　しているだろ！</language>
+		<language name="JPN_KANJI" width="256">ここの　メニューは
+全部が　デリシャスッ！[BE:01:ページ切り替え（クリア）]
+ぼくの　この　体が
+それを　証明しているだろ！</language>
 	</row>
 
 	<flowchart-group-list>
