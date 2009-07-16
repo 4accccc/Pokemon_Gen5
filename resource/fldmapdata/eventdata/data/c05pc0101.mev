@@ -1,0 +1,83 @@
+#event data
+#save date:2009/07/16 12:15:46
+# linked worldmap file name
+C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\c01pc0101.wms
+#SECTION START:OBJ_EVENT
+#Map Event List data
+#save date:2009/07/16 12:15:46
+2
+#hold event type:
+1
+#hold event number:
+0
+#Map Event List Data End
+#SECTION End:OBJ_EVENT
+#SECTION START:BG_EVENT
+#Map Event List data
+#save date:2009/07/16 12:15:46
+2
+#hold event type:
+1
+#hold event number:
+0
+#Map Event List Data End
+#SECTION End:BG_EVENT
+#SECTION START:POS_EVENT
+#Map Event List data
+#save date:2009/07/16 12:15:46
+2
+#hold event type:
+1
+#hold event number:
+0
+#Map Event List Data End
+#SECTION End:POS_EVENT
+#SECTION START:DOOR_EVENT
+#Map Event List data
+#save date:2009/07/16 12:15:46
+2
+#hold event type:
+1
+#hold event number:
+3
+#event number: 0
+#Door Event Label
+DOOR_ID_C05PC0101_EXIT02
+#Next Zone ID Name
+ZONE_ID_C05
+#Next Door ID Name
+DOOR_ID_C05_EXIT18
+#Door Direction
+EXIT_DIR_UP
+#Door Type
+EXIT_TYPE_MAT
+#position
+-128 0 -64
+#event number: 1
+#Door Event Label
+DOOR_ID_C05PC0101_EXIT01
+#Next Zone ID Name
+ZONE_ID_C05
+#Next Door ID Name
+DOOR_ID_C05_EXIT18
+#Door Direction
+EXIT_DIR_UP
+#Door Type
+EXIT_TYPE_MAT
+#position
+-144 0 -64
+#event number: 2
+#Door Event Label
+DOOR_ID_C05PC0101_EXIT03
+#Next Zone ID Name
+ZONE_ID_C05
+#Next Door ID Name
+DOOR_ID_C05_EXIT18
+#Door Direction
+EXIT_DIR_UP
+#Door Type
+EXIT_TYPE_MAT
+#position
+-112 0 -64
+#Map Event List Data End
+#SECTION End:DOOR_EVENT
