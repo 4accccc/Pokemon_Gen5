@@ -1263,12 +1263,6 @@ static void BlActAddReserve_DigestActor( MMDL_BLACTCONT *pBlActCont )
         }
         #endif
 
-        if( ret != TRUE ){
-          
-          ret = BBDResUnitIndex_SearchResID(
-              pBlActCont, pRes->code, &resID, &flag );
-        }
-        
         GF_ASSERT( ret == TRUE &&
           "BLACT ADD RESERVE RESOURCE NONE" ); //リソース無し
       }
@@ -1379,6 +1373,7 @@ static const MMDL_BBDACT_ANMTBL * BlActAnm_GetAnmTbl( u32 no )
 	return( &DATA_MMDL_BBDACT_ANM_ListTable[no] );
 }
 
+#if 0
 //--------------------------------------------------------------
 /**
  * ビルボードアニメ 描画ステータスからテーブル要素数を取得。基本タイプ
@@ -1406,6 +1401,7 @@ u32 FLDMMDL_BLACTCONT_GetAnmTblNo_StatusHero( u32 sta )
   //上下左右の並びで各４方向
   return( sta * DIR_MAX4 );
 }
+#endif
 
 //--------------------------------------------------------------
 /**
