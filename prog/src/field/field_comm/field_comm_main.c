@@ -289,11 +289,21 @@ GMEVENT * DEBUG_PalaceJamp(FIELD_MAIN_WORK *fieldWork, GAMESYS_WORK *gameSys, FI
   PLAYER_WORK *plWork = GAMESYSTEM_GetMyPlayerWork( gameSys );
   ZONEID zone_id = PLAYERWORK_getZoneID( plWork );
   VecFx32 pos;
-
-	pos.x = 760 << FX32_SHIFT;
-	pos.y = 0;
-	pos.z = 234 << FX32_SHIFT;
-	return DEBUG_EVENT_ChangeMapPos(gameSys, fieldWork, ZONE_ID_PALACETEST, &pos, 0);
+  ZONEID jump_zone;
+  
+  if(GFL_UI_KEY_GetCont() & PAD_BUTTON_R){
+  	pos.x = 184 << FX32_SHIFT;
+  	pos.y = 0;
+  	pos.z = 184 << FX32_SHIFT;
+  	jump_zone = ZONE_ID_UNION;
+  }
+  else{
+  	pos.x = 760 << FX32_SHIFT;
+  	pos.y = 0;
+  	pos.z = 234 << FX32_SHIFT;
+  	jump_zone = ZONE_ID_PALACETEST;
+  }
+  return DEBUG_EVENT_ChangeMapPos(gameSys, fieldWork, jump_zone, &pos, 0);
 }
 
 //==================================================================

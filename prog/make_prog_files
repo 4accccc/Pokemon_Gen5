@@ -44,7 +44,8 @@ NETWORKSRC =  net/net_icondata.c \
         net_old/net_old.c \
         net_app/union/union_comm.c \
         net_app/union/union_main.c \
-        net_app/union/union_comm_command.c
+        net_app/union/union_comm_command.c \
+        net_app/union/union_subproc.c
 
 
 

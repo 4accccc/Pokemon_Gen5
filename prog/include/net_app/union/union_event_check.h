@@ -14,7 +14,6 @@
 //==============================================================================
 //  äOïîä÷êîêÈåæ
 //==============================================================================
+extern GMEVENT * UnionEvent_CommCheck( GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork );
 extern GMEVENT * UnionEvent_TalkCheck( GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork );
-extern void UnionEvent_SubProcSet(UNION_SYSTEM_PTR unisys, UNION_SUBPROC_ID sub_proc_id, void *parent_wk);
-extern UNION_SUBPROC_ID UnionEvent_SubProcGet(UNION_SYSTEM_PTR unisys);
 

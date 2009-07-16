@@ -101,6 +101,10 @@ static void _UnionRecv_MainMenuListResult(const int netID, const int size, const
   UNION_SYSTEM_PTR unisys = pWork;
   UNION_MY_SITUATION *situ = &unisys->my_situation;
   const u32 *select = pData;
+
+	if(netID == GFL_NET_GetNetID(GFL_NET_HANDLE_GetCurrentHandle())){
+    return; //自分のデータなので無視
+  }
   
   situ->mycomm.mainmenu_select = *select;
 }
@@ -136,6 +140,10 @@ static void _UnionRecv_MainMenuListResultAnswer(const int netID, const int size,
   UNION_SYSTEM_PTR unisys = pWork;
   UNION_MY_SITUATION *situ = &unisys->my_situation;
   const BOOL *yes_no = pData;
+
+	if(netID == GFL_NET_GetNetID(GFL_NET_HANDLE_GetCurrentHandle())){
+    return; //自分のデータなので無視
+  }
   
   situ->mycomm.mainmenu_yesno_result = *yes_no;
 }
@@ -170,9 +178,14 @@ static void _UnionRecv_TrainerCardParam(const int netID, const int size, const v
 {
   UNION_SYSTEM_PTR unisys = pWork;
   UNION_MY_SITUATION *situ = &unisys->my_situation;
-  const BOOL *yes_no = pData;
+
+	if(netID == GFL_NET_GetNetID(GFL_NET_HANDLE_GetCurrentHandle())){
+    return; //自分のデータなので無視
+  }
   
-  situ->mycomm.mainmenu_yesno_result = *yes_no;
+  OS_TPrintf("COmmCOmmand カード受信 netID = %d\n", netID);
+  situ->mycomm.trcard.target_card_receive = TRUE;
+  GFL_STD_MemCopy(pData, situ->mycomm.trcard.target_card, size);
 }
 
 //==================================================================

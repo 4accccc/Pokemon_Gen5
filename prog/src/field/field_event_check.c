@@ -486,9 +486,17 @@ GMEVENT * FIELD_EVENT_CheckUnion( GAMESYS_WORK *gsys, void *work )
 
 	///通信用会話処理(仮
   {
+    //通信イベント発生チェック
+    event = UnionEvent_CommCheck( gsys, fieldWork );
+    if(event != NULL){
+      return event;
+    }
+    
+    //通信話しかけイベント発生チェック
     if(req.talkRequest){
-      if(UnionEvent_TalkCheck( gsys, fieldWork ) != NULL){
-        return NULL;
+      event = UnionEvent_TalkCheck( gsys, fieldWork );
+      if(event != NULL){
+        return event;
       }
     }
   }

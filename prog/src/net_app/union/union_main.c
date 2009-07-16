@@ -16,6 +16,7 @@
 #include "union_receive.h"
 #include "union_chara.h"
 #include "union_oneself.h"
+#include "union_subproc.h"
 
 
 void Union_Main(GAME_COMM_SYS_PTR game_comm, FIELD_MAIN_WORK *fieldmap)
@@ -29,15 +30,17 @@ void Union_Main(GAME_COMM_SYS_PTR game_comm, FIELD_MAIN_WORK *fieldmap)
   unisys = GameCommSys_GetAppWork(game_comm);
   GF_ASSERT(unisys != NULL);
   
-  //データ受信によるイベント起動
-  UnionReceive_BeaconInterpret(unisys);
-  
-  //キー操作によるイベント起動
-  UnionOneself_Update(unisys, fieldmap);
-  
-  //OBJ反映
-  UNION_CHAR_Update(unisys, unisys->uniparent->game_data);
-  
-  //下画面反映
+  if(UnionSubProc_IsExits(unisys) == FALSE){  //サブPROCが無い時のみ実行
+    //データ受信によるイベント起動
+    UnionReceive_BeaconInterpret(unisys);
+    
+    //キー操作によるイベント起動
+    UnionOneself_Update(unisys, fieldmap);
+    
+    //OBJ反映
+    UNION_CHAR_Update(unisys, unisys->uniparent->game_data);
+    
+    //下画面反映
+  }
 }
 

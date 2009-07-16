@@ -19,6 +19,7 @@
 #include "union_comm_command.h"
 #include "system/main.h"
 #include "net_app/union/union_event_check.h"
+#include "net_app/union/union_subproc.h"
 
 
 //==============================================================================
@@ -68,6 +69,7 @@ static BOOL OneselfSeq_TalkUpdate_Child(UNION_SYSTEM_PTR unisys, UNION_MY_SITUAT
 static BOOL OneselfSeq_TalkExit_Child(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *situ, FIELD_MAIN_WORK *fieldWork, u8 *seq);
 static BOOL OneselfSeq_TrainerCardUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *situ, FIELD_MAIN_WORK *fieldWork, u8 *seq);
 static BOOL OneselfSeq_ShutdownUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *situ, FIELD_MAIN_WORK *fieldWork, u8 *seq);
+static void OneselfSeq_ShutdownCallback( void* pWork );
 
 
 //==============================================================================
@@ -227,9 +229,7 @@ static BOOL OneselfSeq_NormalInit(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *s
 {
   UnionMyComm_Init(&situ->mycomm);
 
-  UnionMsg_YesNo_Del(unisys);
-  UnionMsg_Menu_MainMenuDel(unisys);
-  UnionMsg_TalkStream_WindowDel(unisys);
+  UnionMsg_AllDel(unisys);
 
   return TRUE;
 }
@@ -260,7 +260,7 @@ static BOOL OneselfSeq_NormalUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION 
   }
 
   if(GFL_NET_GetConnectNum() > 1){
-    OS_TPrintf("Normalなのに接続！！！！\n");
+    GF_ASSERT_MSG(0, "Normalなのに接続！！！！\n");
     //※check　暫定で先頭のビーコンデータを接続相手として代入しておく
     //         本来であればNormalで接続は出来ないようにする
     UnionOneself_ReqStatus(unisys, UNION_STATUS_TALK_PARENT);
@@ -776,14 +776,15 @@ static BOOL OneselfSeq_TrainerCardUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SITUA
     }
     break;
   case 6:
-    UnionEvent_SubProcSet(unisys, UNION_SUBPROC_ID_TRAINERCARD, situ->mycomm.trcard.card_param);
+    UnionSubProc_EventSet(unisys, UNION_SUBPROC_ID_TRAINERCARD, situ->mycomm.trcard.card_param);
     (*seq)++;
     break;
   case 7:
-    if(UnionEvent_SubProcGet(unisys) == UNION_SUBPROC_ID_NULL){
+    if(UnionSubProc_IsExits(unisys) == FALSE){
       OS_TPrintf("サブPROC終了\n");
       (*seq)++;
     }
+    break;
   case 8:   //トレーナーカード画面終了後の同期取り
     UnionMsg_TalkStream_PrintPack(unisys, fieldWork, msg_union_test_008);
     GFL_NET_HANDLE_TimingSyncStart(
@@ -830,6 +831,142 @@ static BOOL OneselfSeq_TrainerCardUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SITUA
  */
 //--------------------------------------------------------------
 static BOOL OneselfSeq_ShutdownUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *situ, FIELD_MAIN_WORK *fieldWork, u8 *seq)
+{
+  switch(*seq){
+  case 0:
+    GFL_NET_HANDLE_TimingSyncStart(
+      GFL_NET_HANDLE_GetCurrentHandle(), UNION_TIMING_SHUTDOWN);
+    OS_TPrintf("切断前の同期取り：開始\n");
+    (*seq)++;
+    break;
+  case 1:
+		if(GFL_NET_HANDLE_IsTimingSync(
+		    GFL_NET_HANDLE_GetCurrentHandle(), UNION_TIMING_SHUTDOWN) == TRUE){
+      OS_TPrintf("切断前の同期取り：成功\n");
+      (*seq)++;
+    }
+    break;
+  case 2:
+    if(GFL_NET_IsParentMachine() == TRUE){
+      if(GFL_NET_GetConnectNum() <= 1){ //親は自分一人になってから終了する
+        (*seq)++;
+      }
+      else{
+        OS_TPrintf("親：子の終了待ち 残り=%d\n", GFL_NET_GetConnectNum() - 1);
+      }
+    }
+    else{
+      (*seq)++;
+    }
+    break;
+  case 3:
+    GFL_NET_Exit( OneselfSeq_ShutdownCallback );
+    (*seq)++;
+    break;
+  case 4:
+    if(situ->connect_pc == NULL){   //OneselfSeq_ShutdownCallbackでNULL化されるのを待つ
+      return TRUE;
+    }
+    break;
+  }
+  
+  return FALSE;
+}
+
+//--------------------------------------------------------------
+/**
+ * 切断処理：切断完了コールバック
+ *
+ * @param   pWork		
+ */
+//--------------------------------------------------------------
+static void OneselfSeq_ShutdownCallback( void* pWork )
+{
+  UNION_SYSTEM_PTR unisys = pWork;
+  
+  unisys->my_situation.connect_pc = NULL;
+  OS_TPrintf("Shutdown:切断完了コールバック\n");
+}
+
+//--------------------------------------------------------------
+/**
+ * 対戦の会話（親）：更新
+ *
+ * @param   unisys		
+ * @param   situ		
+ * @param   fieldWork		
+ * @param   seq		
+ *
+ * @retval  BOOL		
+ */
+//--------------------------------------------------------------
+static BOOL OneselfSeq_Talk_Battle_Parent(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *situ, FIELD_MAIN_WORK *fieldWork, u8 *seq)
+{
+  if(UnionMsg_TalkStream_Check(unisys) == FALSE){
+    return FALSE;
+  }
+
+  switch(*seq){
+  case 0:
+    UnionMsg_TalkStream_PrintPack(unisys, fieldWork, msg_union_test_008);
+    (*seq)++;
+    break;
+  case 1:
+    if(situ->mycomm.mainmenu_select == UNION_MSG_MENU_SELECT_NULL){
+      break;
+    }
+    if(situ->mycomm.mainmenu_select < UNION_MSG_MENU_SELECT_MAX){
+      OS_TPrintf("選択メニュー受信：%d\n", situ->mycomm.mainmenu_select);
+      UnionMsg_TalkStream_PrintPack(
+        unisys, fieldWork, msg_union_test_003 + situ->mycomm.mainmenu_select);
+      (*seq)++;
+    }
+    else{
+      if(UnionSend_MainMenuListResultAnswer(FALSE) == TRUE){
+        OS_TPrintf("未知の選択メニュー受信：%d\n", situ->mycomm.mainmenu_select);
+        UnionMsg_TalkStream_PrintPack(unisys, fieldWork, msg_union_test_009);
+        UnionOneself_ReqStatus(unisys, UNION_STATUS_SHUTDOWN);
+        return TRUE;
+      }
+    }
+    break;
+  case 2:   //「はい・いいえ」選択
+    UnionMsg_YesNo_Setup(unisys, fieldWork);
+    (*seq)++;
+    break;
+  case 3:
+    {
+      BOOL result;
+      if(UnionMsg_YesNo_SelectLoop(unisys, &result) == TRUE){
+        UnionMsg_YesNo_Del(unisys);
+        situ->mycomm.mainmenu_yesno_result = result;
+        (*seq)++;
+      }
+    }
+    break;
+  case 4: //「はい・いいえ」選択結果送信
+    if(UnionSend_MainMenuListResultAnswer(situ->mycomm.mainmenu_yesno_result) == TRUE){
+      UnionOneself_ReqStatus(unisys, UNION_STATUS_TRAINERCARD + situ->mycomm.mainmenu_select);
+      return TRUE;
+    }
+  }
+  
+  return FALSE;
+}
+
+//--------------------------------------------------------------
+/**
+ * 対戦の会話（子）：更新
+ *
+ * @param   unisys		
+ * @param   situ		
+ * @param   fieldWork		
+ * @param   seq		
+ *
+ * @retval  BOOL		
+ */
+//--------------------------------------------------------------
+static BOOL OneselfSeq_Talk_Battle_Child(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *situ, FIELD_MAIN_WORK *fieldWork, u8 *seq)
 {
   if(UnionMsg_TalkStream_Check(unisys) == FALSE){
     return FALSE;

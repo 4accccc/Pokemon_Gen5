@@ -35,7 +35,6 @@ typedef struct _UNION_SYSTEM{
   
   GFL_MSGDATA *msgdata;
   FLDMSGWIN_STREAM *fld_msgwin_stream;
-  FLDMENUFUNC_LISTDATA *fldmenu_listdata;
   FLDMENUFUNC *fldmenu_func;
   FLDMENUFUNC *fldmenu_yesno_func;
   

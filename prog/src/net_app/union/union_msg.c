@@ -19,6 +19,14 @@
 
 
 //==============================================================================
+//  プロトタイプ宣言：データ
+//==============================================================================
+static const FLDMENUFUNC_LIST BattleMenuList_Number[3];
+static const FLDMENUFUNC_LIST BattleMenuList_Mode[5];
+static const FLDMENUFUNC_LIST BattleMenuList_Reg[4];
+
+
+//==============================================================================
 //  データ
 //==============================================================================
 //--------------------------------------------------------------
@@ -29,7 +37,7 @@ static const FLDMENUFUNC_LIST MainMenuList[] =
 {
   {msg_union_select_01, (void*)UNION_MSG_MENU_SELECT_AISATU},   //挨拶
   {msg_union_select_02, (void*)UNION_MSG_MENU_SELECT_OEKAKI},   //お絵かき
-  {msg_union_select_03, (void*)UNION_MSG_MENU_SELECT_TAISEN},   //対戦
+  {msg_union_select_03, (void*)UNION_MSG_MENU_SELECT_NO_SEND_BATTLE},   //対戦
   {msg_union_select_04, (void*)UNION_MSG_MENU_SELECT_KOUKAN},   //交換
   {msg_union_select_06, (void*)UNION_MSG_MENU_SELECT_GURUGURU}, //ぐるぐる交換
   {msg_union_select_07, (void*)UNION_MSG_MENU_SELECT_RECORD},   //レコードコーナー
@@ -55,11 +63,83 @@ static const FLDMENUFUNC_HEADER MenuHeader_MainMenu =
 	16,		//文字サイズY(ドット
 	32-14,		//表示座標X キャラ単位
 	1,		//表示座標Y キャラ単位
-	14,		//表示サイズX キャラ単位
+	13,		//表示サイズX キャラ単位
 	14,		//表示サイズY キャラ単位
 };
 //SDK_COMPILER_ASSERT(NELEMS(MainMenuList) == MenuHeader_MainMenu.line);
 
+//--------------------------------------------------------------
+//  対戦メニュー
+//--------------------------------------------------------------
+///二人対戦、四人対戦、やめる
+static const FLDMENUFUNC_LIST BattleMenuList_Number[] =
+{
+  {msg_union_battle_01_01, (void*)BattleMenuList_Mode},   //二人対戦
+  {msg_union_battle_01_02, (void*)FLDMENUFUNC_CANCEL},    //四人対戦
+  {msg_union_battle_01_03, (void*)FLDMENUFUNC_CANCEL},    //やめる
+};
+
+///二人対戦：シングル、ダブル、トリプル、ローテーション、もどる
+static const FLDMENUFUNC_LIST BattleMenuList_Mode[] =
+{
+  {msg_union_battle_01_04, (void*)BattleMenuList_Reg},      //シングル
+  {msg_union_battle_01_05, (void*)BattleMenuList_Number},   //ダブル
+  {msg_union_battle_01_06, (void*)BattleMenuList_Number},   //トリプル
+  {msg_union_battle_01_07, (void*)BattleMenuList_Number},   //ローテーション
+  {msg_union_battle_01_08, (void*)BattleMenuList_Number},   //もどる
+};
+
+///二人対戦：シングル：せいげんなし、スタンダード、もどる
+static const FLDMENUFUNC_LIST BattleMenuList_Reg[] =
+{
+  {msg_union_battle_01_09, (void*)UNION_MSG_MENU_SELECT_BATTLE_2VS2_SINGLE_50},//レベル５０ルール
+  {msg_union_battle_01_10, (void*)UNION_MSG_MENU_SELECT_BATTLE_2VS2_SINGLE_FREE}, //制限なし
+  {msg_union_battle_01_11, (void*)UNION_MSG_MENU_SELECT_BATTLE_2VS2_SINGLE_STANDARD},//スタンダード
+  {msg_union_battle_01_12, (void*)BattleMenuList_Mode},   //もどる
+};
+
+///対戦メニューのデータテーブル
+static const struct{
+  const FLDMENUFUNC_LIST *list;
+  u8 list_max;
+}BattleMenuDataTbl[] = {
+  {
+    BattleMenuList_Number,
+    3,
+  },
+  {
+    BattleMenuList_Mode,
+    5,
+  },
+  {
+    BattleMenuList_Reg,
+    4,
+  },
+};
+
+///メニューヘッダー(対戦メニュー用)
+static const FLDMENUFUNC_HEADER MenuHeader_Battle =
+{
+	3,		//リスト項目数
+	3,		//表示最大項目数
+	0,		//ラベル表示Ｘ座標
+	13,		//項目表示Ｘ座標
+	0,		//カーソル表示Ｘ座標
+	0,		//表示Ｙ座標
+	1,		//表示文字色
+	15,		//表示背景色
+	2,		//表示文字影色
+	0,		//文字間隔Ｘ
+	1,		//文字間隔Ｙ
+	FLDMENUFUNC_SKIP_NON,	//ページスキップタイプ
+	12,		//文字サイズX(ドット
+	16,		//文字サイズY(ドット
+	32-14,		//表示座標X キャラ単位
+	1,		//表示座標Y キャラ単位
+	14,		//表示サイズX キャラ単位
+	14,		//表示サイズY キャラ単位
+};
+//SDK_COMPILER_ASSERT(NELEMS(MainMenuList) == MenuHeader_MainMenu.line);
 
 
 //==============================================================================
@@ -67,6 +147,20 @@ static const FLDMENUFUNC_HEADER MenuHeader_MainMenu =
 //  
 //
 //==============================================================================
+//==================================================================
+/**
+ * UnionMsg系のものを全て一括削除
+ *
+ * @param   unisys		
+ */
+//==================================================================
+void UnionMsg_AllDel(UNION_SYSTEM_PTR unisys)
+{
+  UnionMsg_YesNo_Del(unisys);
+  UnionMsg_Menu_MainMenuDel(unisys);
+  UnionMsg_TalkStream_WindowDel(unisys);
+}
+
 //==================================================================
 /**
  * 会話ウィンドウ：セットアップ
@@ -233,12 +327,12 @@ BOOL UnionMsg_YesNo_SelectLoop(UNION_SYSTEM_PTR unisys, BOOL *result)
 static void UnionMsg_Menu_WindowSetup(UNION_SYSTEM_PTR unisys, FIELD_MAIN_WORK *fieldWork, const FLDMENUFUNC_LIST *menulist, int list_max, const FLDMENUFUNC_HEADER *menuhead)
 {
   FLDMSGBG *fldmsg_bg = FIELDMAP_GetFldMsgBG(fieldWork);
+  FLDMENUFUNC_LISTDATA *fldmenu_listdata;
   
-  if(unisys->fldmenu_listdata == NULL){
-    GF_ASSERT(unisys->fldmenu_listdata == NULL && unisys->fldmenu_func == NULL);
-    unisys->fldmenu_listdata = FLDMENUFUNC_CreateMakeListData(
+  if(unisys->fldmenu_func == NULL){
+    fldmenu_listdata = FLDMENUFUNC_CreateMakeListData(
       menulist, list_max, unisys->msgdata, HEAPID_UNION);
-    unisys->fldmenu_func = FLDMENUFUNC_AddMenu(fldmsg_bg, menuhead, unisys->fldmenu_listdata);
+    unisys->fldmenu_func = FLDMENUFUNC_AddMenu(fldmsg_bg, menuhead, fldmenu_listdata);
   }
 }
 
@@ -254,11 +348,6 @@ static void UnionMsg_Menu_WindowDel(UNION_SYSTEM_PTR unisys)
   if(unisys->fldmenu_func != NULL){
     FLDMENUFUNC_DeleteMenu(unisys->fldmenu_func);
     unisys->fldmenu_func = NULL;
-  }
-
-  if(unisys->fldmenu_listdata != NULL){
-    FLDMENUFUNC_DeleteListData(unisys->fldmenu_listdata);
-    unisys->fldmenu_listdata = NULL;
   }
 }
 
@@ -315,5 +404,73 @@ void UnionMsg_Menu_MainMenuDel(UNION_SYSTEM_PTR unisys)
 u32 UnionMsg_Menu_MainMenuSelectLoop(UNION_SYSTEM_PTR unisys)
 {
   return UnionMsg_Menu_SelectLoop(unisys);
+}
+
+//==================================================================
+/**
+ * 対戦メニュー：セットアップ
+ *
+ * @param   unisys		
+ * @param   fieldWork		
+ */
+//==================================================================
+void UnionMsg_Menu_BattleMenuSetup(UNION_SYSTEM_PTR unisys, FIELD_MAIN_WORK *fieldWork, int menu_index)
+{
+  int i;
+  FLDMENUFUNC_HEADER head;
+  
+  head = MenuHeader_Battle;
+  head.count = BattleMenuDataTbl[menu_index].list_max;
+  head.line = BattleMenuDataTbl[menu_index].list_max;
+  
+  UnionMsg_Menu_WindowSetup(unisys, fieldWork, 
+    BattleMenuDataTbl[menu_index].list, BattleMenuDataTbl[menu_index].list_max, &head);
+}
+
+//==================================================================
+/**
+ * 対戦メニュー：削除
+ *
+ * @param   unisys		
+ */
+//==================================================================
+void UnionMsg_Menu_BattleMenuDel(UNION_SYSTEM_PTR unisys)
+{
+  UnionMsg_Menu_WindowDel(unisys);
+}
+
+//==================================================================
+/**
+ * 対戦メニュー：選択待ち
+ *
+ * @param   unisys		
+ * @param   next_sub_menu		TRUE:次のサブメニューがある　FALSE:最終結果
+ *
+ * @retval  u32		next_sub_menuがTRUEの場合、次のメニューIndex
+ * @retval  u32		next_sub_menuがFALSEの場合、最終結果番号(これを通信で送る)
+ */
+//==================================================================
+u32 UnionMsg_Menu_BattleMenuSelectLoop(UNION_SYSTEM_PTR unisys, BOOL *next_sub_menu)
+{
+  u32 menu_ret;
+  int i;
+  
+  *next_sub_menu = FALSE;
+  
+  menu_ret = UnionMsg_Menu_SelectLoop(unisys);
+  if(menu_ret < UNION_MSG_MENU_SELECT_MAX 
+      || menu_ret == FLDMENUFUNC_NULL || menu_ret == FLDMENUFUNC_CANCEL){
+    return menu_ret;
+  }
+  
+  for(i = 0; i < NELEMS(BattleMenuDataTbl); i++){
+    if(BattleMenuDataTbl[i].list == (void*)menu_ret){
+      *next_sub_menu = TRUE;
+      return i;
+    }
+  }
+  
+  GF_ASSERT_MSG(0, "menu_ret=%d\n", menu_ret);
+  return 0;
 }
 
