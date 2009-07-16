@@ -78,20 +78,9 @@ typedef struct {
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 
-//#define DOOR_ID_T01R0301_EXIT01 0 //暫定！
 #include "arc/fieldmap/zone_id.h"
 #include "eventwork_def.h"
-//仮動作モデル配置データ
-//#include "../../../resource/fldmapdata/eventdata/zone_t01evc.cdat"
-//#include "../../../resource/fldmapdata/eventdata/zone_t01r0101evc.cdat"
-//#include "../../../resource/fldmapdata/eventdata/zone_t01r0201evc.cdat"
-//#include "../../../resource/fldmapdata/eventdata/zone_t01r0301evc.cdat"
-#include "../../../resource/fldmapdata/eventdata/zone_t01r0401evc.cdat"
-//#include "../../../resource/fldmapdata/eventdata/zone_r01evc.cdat"
-#include "../../../resource/fldmapdata/eventdata/zone_t02evc.cdat"
-#include "../../../resource/fldmapdata/eventdata/zone_t02pc0101evc.cdat"
 
-//#define DOOR_ID_T01R0301_EXIT01 0
 //生成したイベントデータを全部インクルード
 #include "../../../resource/fldmapdata/eventdata/eventdata_table.cdat"
 
@@ -131,39 +120,6 @@ static const CONNECT_DATA ConnectData_C03[] = {
 };
 static const int ConnectCount_C03 = NELEMS(ConnectData_C03);
 
-//座標イベントテスト
-#if 0
-static const POS_EVENT_DATA PosEventData_T01[] =
-{
-  {
-    4,			//スクリプトID
-  	751,		//x
-  	825,		//z
-  	1,			//sizeX
-  	1,			//sizeZ
-  	0,		  //height
-  	0,      //param
-  	SVSCRWK_START+0,
-  },
-};
-static const int PosEventDataCount_T01 = NELEMS(PosEventData_T01);
-#endif
-
-//BG話し掛けイベントテスト
-#if 0
-static const BG_TALK_DATA BGEventData_T01[] =
-{
-  {
-		5,			//スクリプトID
-		0,		// データタイプ
-		753,			// X座標
-		821,			// Y座標
-		0,		// 高さ
-		BG_TALK_DIR_DOWN,		// 話しかけ方向タイプ
-  },
-};
-static const int BGEventDataCount_T01 = NELEMS(BGEventData_T01);
-#endif
 
 //============================================================================================
 //============================================================================================
@@ -217,19 +173,6 @@ void EVENTDATA_SYS_Load(EVENTDATA_SYSTEM * evdata, u16 zone_id)
   loadEventDataTable(evdata, zone_id);
 	/* テスト的に接続データを設定 */
 	switch (zone_id) {
-	case ZONE_ID_T02:
-		evdata->npc_count = SampleFldMMdlHeaderCount_t02;
-		evdata->npc_data = SampleFldMMdlHeader_t02;
-		break;
-  case ZONE_ID_T01R0401:
-		evdata->npc_count = SampleFldMMdlHeaderCount_t01r0401;
-		evdata->npc_data = SampleFldMMdlHeader_t01r0401;
-		break;
- case ZONE_ID_T02PC0101:
-		evdata->npc_count = SampleFldMMdlHeaderCount_t02pc0101;
-		evdata->npc_data = SampleFldMMdlHeader_t02pc0101;
-		break;
-
  case ZONE_ID_H01:
     evdata->connect_count = ConnectCount_H01;
     evdata->connect_data = ConnectData_H01;
