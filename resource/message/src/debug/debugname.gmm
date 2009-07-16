@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ariizumi_nobuhiko" host="W00147" date="2009-01-13T11:23:54"/>
+	<create user="obata_toshihiro" host="W00209" date="2009-07-16T20:11:49"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -247,7 +247,7 @@
 		</language>
 	</columns>
 
-	<dialog left="342" top="233" right="988" bottom="798" maximized="no" rayout="Vertical2">
+	<dialog left="573" top="268" right="1219" bottom="833" maximized="no" rayout="Vertical2">
 		<comment-input left="810" top="201" right="1157" bottom="353" visible="no"/>
 		<tag-palette left="677" top="25" right="1024" bottom="423" visible="no"/>
 		<band id="0" index="0" style="0000" width="471"/>
@@ -355,6 +355,11 @@
 		<language name="JPN_KANJI">ヒトミ</language>
 	</row>
 
+	<row id="DEBUG_NAME_UNNO">
+		<language name="JPN" font=" 1:font_system" width="60">タカオ</language>
+		<language name="JPN_KANJI">タカオ</language>
+	</row>
+
 	<row id="DEBUG_NAME_NAKATSUI">
 		<language name="JPN" font=" 1:font_system" width="72">スグル</language>
 		<language name="JPN_KANJI">スグル</language>
@@ -373,6 +378,51 @@
 	<row id="DEBUG_NAME_ARIIZUMI">
 		<language name="JPN" font=" 1:font_system" width="72">アリイズミ</language>
 		<language name="JPN_KANJI">アリイズミ</language>
+	</row>
+
+	<row id="DEBUG_NAME_TOMOHIRO">
+		<language name="JPN" font=" 1:font_system" width="72">トモヒロ</language>
+		<language name="JPN_KANJI">トモヒロ</language>
+	</row>
+
+	<row id="DEBUG_NAME_MAIKO">
+		<language name="JPN" font=" 1:font_system" width="72">マイコ</language>
+		<language name="JPN_KANJI">マイコ</language>
+	</row>
+
+	<row id="DEBUG_NAME_TOSHIHIRO">
+		<language name="JPN" font=" 1:font_system" width="72">トシヒロ</language>
+		<language name="JPN_KANJI">トシヒロ</language>
+	</row>
+
+	<row id="DEBUG_NAME_YUKIKO">
+		<language name="JPN" font=" 1:font_system" width="72">ユキコ</language>
+		<language name="JPN_KANJI">ユキコ</language>
+	</row>
+
+	<row id="DEBUG_NAME_MEGUMI">
+		<language name="JPN" font=" 1:font_system" width="72">メグミ</language>
+		<language name="JPN_KANJI">メグミ</language>
+	</row>
+
+	<row id="DEBUG_NAME_NAOTO">
+		<language name="JPN" font=" 1:font_system" width="72">ナオト</language>
+		<language name="JPN_KANJI">ナオト</language>
+	</row>
+
+	<row id="DEBUG_NAME_SHINGO">
+		<language name="JPN" font=" 1:font_system" width="72">シンゴ</language>
+		<language name="JPN_KANJI">シンゴ</language>
+	</row>
+
+	<row id="DEBUG_NAME_RIKA">
+		<language name="JPN" font=" 1:font_system" width="72">リカ</language>
+		<language name="JPN_KANJI">リカ</language>
+	</row>
+
+	<row id="DEBUG_NAME_DAISUKE">
+		<language name="JPN" font=" 1:font_system" width="72">ダイスケ</language>
+		<language name="JPN_KANJI">ダイスケ</language>
 	</row>
 
 	<row id="DEBUG_NAME_WWWWW">
@@ -418,11 +468,6 @@
 	<row id="DEBUG_NAME_OHMORI">
 		<language name="JPN" font=" 1:font_system" width="60">シゲル</language>
 		<language name="JPN_KANJI">シゲル</language>
-	</row>
-
-	<row id="DEBUG_NAME_UNNO">
-		<language name="JPN" font=" 1:font_system" width="60">タカオ</language>
-		<language name="JPN_KANJI">タカオ</language>
 	</row>
 
 	<row id="DEBUG_NAME_MATSUSHIMA">
