@@ -206,3 +206,6 @@ ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、中間ファイル削除
 endif
 
 
+texture_test:
+	ruby check_texture.rb
+
