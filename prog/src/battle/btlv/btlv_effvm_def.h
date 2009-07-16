@@ -117,11 +117,13 @@
 #define BTLEFF_SEPLAY_DEFAULT                 ( 0 )
 #define BTLEFF_SEPLAY_SE1                     ( 1 )
 #define BTLEFF_SEPLAY_SE2                     ( 2 )
+#define BTLEFF_SEPLAY_PSG                     ( 3 )
 
 //SEストッププレーヤー定義
 #define BTLEFF_SESTOP_ALL                     ( 0 )
 #define BTLEFF_SESTOP_SE1                     ( 1 )
 #define BTLEFF_SESTOP_SE2                     ( 2 )
+#define BTLEFF_SESTOP_PSG                     ( 3 )
 
 //エフェクト終了待ち
 #define	BTLEFF_EFFENDWAIT_ALL									( 0 )
@@ -940,8 +942,8 @@ ex)
  * @param mod_speed   再生モジュレーションスピード
  *
  * #param	VALUE_INT   再生するSEナンバー
- * #param COMBOBOX_TEXT デフォルト  SE1 SE2
- * #param COMBOBOX_VALUE BTLEFF_SEPLAY_DEFAULT  BTLEFF_SEPLAY_SE1 BTLEFF_SEPLAY_SE2
+ * #param COMBOBOX_TEXT デフォルト  SE1 SE2 PSG
+ * #param COMBOBOX_VALUE BTLEFF_SEPLAY_DEFAULT  BTLEFF_SEPLAY_SE1 BTLEFF_SEPLAY_SE2 BTLEFF_SEPLAY_PSG
  * #param VALUE_INT   再生までのウエイト
  * #param VALUE_INT   再生ピッチ
  * #param VALUE_INT   再生パン
@@ -967,8 +969,8 @@ ex)
  * #param_num	1
  * @param player  ストップするPlayerNo
  *
- * #param COMBOBOX_TEXT すべて  SE1 SE2
- * #param COMBOBOX_VALUE BTLEFF_SESTOP_ALL  BTLEFF_SESTOP_SE1 BTLEFF_SESTOP_SE2
+ * #param COMBOBOX_TEXT すべて  SE1 SE2 PSG
+ * #param COMBOBOX_VALUE BTLEFF_SESTOP_ALL  BTLEFF_SESTOP_SE1 BTLEFF_SESTOP_SE2 BTLEFF_SESTOP_PSG
  */
 //======================================================================
 	.macro	SE_STOP player
