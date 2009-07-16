@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-07-14T21:06:50"/>
+	<create user="matsumiya" host="W00207" date="2009-07-16T20:07:34"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -308,12 +308,12 @@
 ドラム演奏</comment>
 		<attribute name="キャラ指定">MAN2
 青年２（金髪）</attribute>
-		<language name="JPN" width="256">ドラムを　たたく！[BE:01:ページ切り替え（クリア）]
-それは　おれの　しんぞうが
-うごいているのと　おなじことなんだ</language>
-		<language name="JPN_KANJI" width="256">ドラムを　たたく！[BE:01:ページ切り替え（クリア）]
-それは　オレの　心臓が
-動いているのと　同じことなんだ</language>
+		<language name="JPN" width="256">おれのッ！　しんぞうがッ！
+ビートを　きざむかぎり[BE:00:ページ切り替え（行送り）]
+ドラムを　たたきつづけるぞい！！</language>
+		<language name="JPN_KANJI" width="256">オレのッ！　心臓がッ！
+ビートを　刻むかぎり[BE:00:ページ切り替え（行送り）]
+ドラムを　たたきつづけるぞい！！</language>
 	</row>
 
 	<row id="msg_t02r0401_poke_01">
@@ -322,8 +322,8 @@
 ・あわせて鳴き声SE</comment>
 		<attribute name="キャラ指定">ポケモン
 ・未定</attribute>
-		<language name="JPN" width="256">ポケモン『？？？</language>
-		<language name="JPN_KANJI" width="256">ポケモン『？？？</language>
+		<language name="JPN" width="256">ポケモン『ぐぎゅぐばぁ！</language>
+		<language name="JPN_KANJI" width="256">ポケモン『ぐぎゅぐばぁ！</language>
 	</row>
 
 	<flowchart-group-list>

@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-07-14T16:59:18"/>
+	<create user="matsumiya" host="W00207" date="2009-07-16T20:20:33"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -679,19 +679,23 @@
 さきに　行くよ[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_t01_babygirl1_01" back-color="#808080,,,#808080,,#808080,#808080,,,,,,#808080,,,,,,">
-		<comment>仮メッセージ</comment>
+	<row id="msg_t01_babygirl1_01">
+		<comment>♀
+・仮メッセージ</comment>
 		<attribute name="キャラ指定">女の子</attribute>
-		<language name="JPN" width="256">フレンドリィショップは[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">フレンドリィショップの　場所は[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">せかい　には　どれだけ
+たくさんの　ポケモンが　いるのかな</language>
+		<language name="JPN_KANJI" width="256">せかい　には　どれだけ
+たくさんの　ポケモンが　いるのかな</language>
 	</row>
 
-	<row id="msg_t01_babygirl1_02" back-color="#808080,,,#808080,,#808080,#808080,,,,,,#808080,,,,,,">
-		<comment>仮メッセージ</comment>
-		<language name="JPN" width="256">なんと！
-ポケモンセンターの　なか　なのです！</language>
-		<language name="JPN_KANJI" width="256">なんと！
-ポケモンセンターの　中なのです！</language>
+	<row id="msg_t01_babygirl1_02">
+		<comment>♀
+・仮メッセージ</comment>
+		<language name="JPN" width="256">せかい　には　どれだけ
+たくさんの　ポケモンが　いるのかな</language>
+		<language name="JPN_KANJI" width="256">せかい　には　どれだけ
+たくさんの　ポケモンが　いるのかな</language>
 	</row>
 
 	<row id="msg_t01_woman1_01">
