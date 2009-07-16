@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="obata_toshihiro" host="W00209" date="2009-07-16T20:11:49"/>
+	<create user="obata_toshihiro" host="W00209" date="2009-07-16T20:28:45"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -315,6 +315,16 @@
 		<language name="JPN_KANJI">フッチー</language>
 	</row>
 
+	<row id="DEBUG_NAME_TOMOYA">
+		<language name="JPN" font=" 1:font_system" width="72">トモヤ</language>
+		<language name="JPN_KANJI">トモヤ</language>
+	</row>
+
+	<row id="DEBUG_NAME_OOMURA">
+		<language name="JPN" font=" 1:font_system" width="72">ユウスケ</language>
+		<language name="JPN_KANJI">ユウスケ</language>
+	</row>
+
 	<row id="DEBUG_NAME_MATSUDA">
 		<language name="JPN" font=" 1:font_system" width="72">セブン</language>
 		<language name="JPN_KANJI">セブン</language>
@@ -333,6 +343,16 @@
 	<row id="DEBUG_NAME_OHNO">
 		<language name="JPN" font=" 1:font_system" width="72">まるまいん</language>
 		<language name="JPN_KANJI">まるまいん</language>
+	</row>
+
+	<row id="DEBUG_NAME_MATSUMIYA">
+		<language name="JPN" font=" 1:font_system" width="72">トシノブ</language>
+		<language name="JPN_KANJI">トシノブ</language>
+	</row>
+
+	<row id="DEBUG_NAME_SAYA">
+		<language name="JPN" font=" 1:font_system" width="72">サヤ</language>
+		<language name="JPN_KANJI">サヤ</language>
 	</row>
 
 	<row id="DEBUG_NAME_NISHINO">
@@ -370,9 +390,49 @@
 		<language name="JPN_KANJI">ヒロ</language>
 	</row>
 
+	<row id="DEBUG_NAME_TORU">
+		<language name="JPN" font=" 1:font_system" width="72">トオル</language>
+		<language name="JPN_KANJI">トオル</language>
+	</row>
+
+	<row id="DEBUG_NAME_GENYA">
+		<language name="JPN" font=" 1:font_system" width="72">ゲンヤ</language>
+		<language name="JPN_KANJI">ゲンヤ</language>
+	</row>
+
+	<row id="DEBUG_NAME_MAI">
+		<language name="JPN" font=" 1:font_system" width="72">マイ</language>
+		<language name="JPN_KANJI">マイ</language>
+	</row>
+
 	<row id="DEBUG_NAME_YOSINORI">
 		<language name="JPN" font=" 1:font_system" width="72">ヨシノリ</language>
 		<language name="JPN_KANJI">ヨシノリ</language>
+	</row>
+
+	<row id="DEBUG_NAME_MANA">
+		<language name="JPN" font=" 1:font_system" width="72">マナ</language>
+		<language name="JPN_KANJI">マナ</language>
+	</row>
+
+	<row id="DEBUG_NAME_KAZUMASA">
+		<language name="JPN" font=" 1:font_system" width="72">カズマサ</language>
+		<language name="JPN_KANJI">カズマサ</language>
+	</row>
+
+	<row id="DEBUG_NAME_KATSUNORI">
+		<language name="JPN" font=" 1:font_system" width="72">カツノリ</language>
+		<language name="JPN_KANJI">カツノリ</language>
+	</row>
+
+	<row id="DEBUG_NAME_REIKO">
+		<language name="JPN" font=" 1:font_system" width="72">レイコ</language>
+		<language name="JPN_KANJI">レイコ</language>
+	</row>
+
+	<row id="DEBUG_NAME_KEIKO">
+		<language name="JPN" font=" 1:font_system" width="72">ケイコ</language>
+		<language name="JPN_KANJI">ケイコ</language>
 	</row>
 
 	<row id="DEBUG_NAME_ARIIZUMI">
@@ -490,11 +550,6 @@
 		<language name="JPN_KANJI">エミ</language>
 	</row>
 
-	<row id="DEBUG_NAME_OOMURA">
-		<language name="JPN" font=" 1:font_system" width="72">ユウスケ</language>
-		<language name="JPN_KANJI">ユウスケ</language>
-	</row>
-
 	<row id="DEBUG_NAME_NAHI">
 		<language name="JPN" font=" 1:font_system" width="72">ナマー</language>
 		<language name="JPN_KANJI">ナマー</language>
@@ -510,11 +565,6 @@
 		<language name="JPN_KANJI">ノゾム</language>
 	</row>
 
-	<row id="DEBUG_NAME_TOMOYA">
-		<language name="JPN" font=" 1:font_system" width="72">トモヤ</language>
-		<language name="JPN_KANJI">トモヤ</language>
-	</row>
-
 	<row id="DEBUG_NAME_SIMOYAMADA">
 		<language name="JPN" font=" 1:font_system" width="72">テルユキ</language>
 		<language name="JPN_KANJI">テルユキ</language>
@@ -528,11 +578,6 @@
 	<row id="DEBUG_NAME_TADASHI">
 		<language name="JPN" font=" 1:font_system" width="72">タダシ</language>
 		<language name="JPN_KANJI">タダシ</language>
-	</row>
-
-	<row id="DEBUG_NAME_MATSUMIYA">
-		<language name="JPN" font=" 1:font_system" width="72">トシノブ</language>
-		<language name="JPN_KANJI">トシノブ</language>
 	</row>
 
 	<row id="DEBUG_NAME_JOHNNY">
