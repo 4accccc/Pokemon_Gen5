@@ -9,6 +9,7 @@
 #pragma once
 
 #include "buflen.h"
+#include "app/trainer_card.h"
 
 
 //==============================================================================
@@ -25,13 +26,16 @@ enum{
   
   UNION_STATUS_CONNECT_REQ,     ///<接続リクエスト実行中
   UNION_STATUS_CONNECT_ANSWER,  ///<接続リクエストを受けた側が返信として接続しにいっている状態
-  UNION_STATUS_TALK,        ///<接続確立後の会話
+  UNION_STATUS_TALK_PARENT,     ///<接続確立後の会話(親)
+  UNION_STATUS_TALK_CHILD,      ///<接続確立後の会話(子)
   
+  UNION_STATUS_TRAINERCARD, ///<トレーナーカード
+  UNION_STATUS_PICTURE,     ///<お絵かき
   UNION_STATUS_BATTLE,      ///<戦闘
   UNION_STATUS_TRADE,       ///<交換
-  UNION_STATUS_RECORD,      ///<レコードコーナー
-  UNION_STATUS_PICTURE,     ///<お絵かき
   UNION_STATUS_GURUGURU,    ///<ぐるぐる交換
+  UNION_STATUS_RECORD,      ///<レコードコーナー
+  UNION_STATUS_SHUTDOWN,    ///<切断
   
   UNION_STATUS_CHAT,        ///<チャット編集中
   
@@ -68,6 +72,19 @@ enum{
 
 ///ユニオンルームのキャラクタ寿命(フレーム単位)
 #define UNION_CHAR_LIFE         (30 * 15)  //フィールドの為、1/30
+
+///同期用のタイミングコマンド番号
+enum{
+  UNION_TIMING_TRAINERCARD_PARAM = 1,   ///<トレーナーカードの情報交換前
+  UNION_TIMING_TRAINERCARD_PROC_BEFORE, ///<トレーナーカード画面呼び出し前
+  UNION_TIMING_TRAINERCARD_PROC_AFTER,  ///<トレーナーカード画面終了後
+};
+
+///サブPROC呼び出しID
+typedef enum{
+  UNION_SUBPROC_ID_NULL,              ///<サブPROC無し
+  UNION_SUBPROC_ID_TRAINERCARD,       ///<トレーナーカード
+}UNION_SUBPROC_ID;
 
 
 //==============================================================================
@@ -138,18 +155,50 @@ typedef struct{
 //--------------------------------------------------------------
 //  自分データ
 //--------------------------------------------------------------
+///トレーナーカード情報
+typedef struct{
+  TRCARD_CALL_PARAM *card_param;  ///<カード画面呼び出しようのParentWork
+  TR_CARD_DATA *my_card;      ///<自分のカード情報(送信バッファ)
+  TR_CARD_DATA *target_card;  ///<相手のカード情報(受信バッファ)
+  u8 target_card_receive;     ///<TRUE:相手のカードを受信した
+  u8 padding[3];
+}UNION_TRCARD;
+
+///送受信で変更するパラメータ類(自機がフリー動作の状態になるたびに初期化される)
+typedef struct{
+  u8 force_exit;              ///<TRUE:通信相手から強制切断を受信
+  u8 mainmenu_select;         ///<メインメニューでの選択結果
+  u8 mainmenu_yesno_result;   ///<「はい(TRUE)」「いいえ(FALSE)」選択結果
+  u8 submenu_select;          ///<メインメニュー後のサブメニューの選択結果
+  UNION_TRCARD trcard;        ///<トレーナーカード情報
+}UNION_MY_COMM;
+
 ///ユニオンルーム内での自分の状況
 typedef struct{
-  u8 connect_mac_address[6];  ///<接続して欲しい人へのMacAddress
+  //↓送信ビーコンに含めるデータ
   u8 union_status;            ///<プレイヤーの状況(UNION_STATUS_???)
   u8 appeal_no;               ///<アピール番号(UNION_APPEAL_???)
+  u8 padding2[2];
+  
+  //↓構造体内の一部のデータのみを送信データに含める
+  UNION_BEACON_PC *calling_pc; ///<接続して欲しい人のreceive_beaconへのポインタ
+  UNION_MY_COMM mycomm;         ///<送受信で変更するパラメータ類
   
   //↓ここから下は通信では送らないデータ
-  u8 answer_mac_address[6];  ///<接続したい人へのMacAddress
+  UNION_BEACON_PC *answer_pc;  ///<接続したい人のreceive_beaconへのポインタ
+  UNION_BEACON_PC *connect_pc; ///<接続中の人のreceive_beaconへのポインタ
   s16 wait;
   u8 next_union_status;       ///<次に実行するプレイヤーの状況(UNION_STATUS_???)
   u8 func_proc;
   u8 func_seq;
-  u8 padding;
+  u8 padding[3];
 }UNION_MY_SITUATION;
+
+//--------------------------------------------------------------
+//  システム
+//--------------------------------------------------------------
+typedef struct{
+  UNION_SUBPROC_ID id;       ///<サブPROC呼び出しID
+  void *parent_work;         ///<サブPROCに渡すParentWorkへのポインタ
+}UNION_SUB_PROC;
 

@@ -16,6 +16,9 @@
 #include "net_app/union/union_msg.h"
 #include "message.naix"
 #include "msg/msg_union.h"
+#include "union_comm_command.h"
+#include "system/main.h"
+#include "net_app/union/union_event_check.h"
 
 
 //==============================================================================
@@ -29,7 +32,7 @@ enum{
 };
 
 ///話しかけてから反応があるまでのタイムアウト時間
-#define ONESELF_SERVER_TIMEOUT      (30 * 10)
+#define ONESELF_SERVER_TIMEOUT      (30 * 20)
 
 
 //==============================================================================
@@ -49,6 +52,7 @@ typedef struct{
 //==============================================================================
 //  プロトタイプ宣言
 //==============================================================================
+static BOOL OneselfSeq_NormalInit(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *situ, FIELD_MAIN_WORK *fieldWork, u8 *seq);
 static BOOL OneselfSeq_NormalUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *situ, FIELD_MAIN_WORK *fieldWork, u8 *seq);
 static BOOL OneselfSeq_ConnectReqInit(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *situ, FIELD_MAIN_WORK *fieldWork, u8 *seq);
 static BOOL OneselfSeq_ConnectReqUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *situ, FIELD_MAIN_WORK *fieldWork, u8 *seq);
@@ -56,9 +60,14 @@ static BOOL OneselfSeq_ConnectReqExit(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATIO
 static BOOL OneselfSeq_ConnectAnswerInit(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *situ, FIELD_MAIN_WORK *fieldWork, u8 *seq);
 static BOOL OneselfSeq_ConnectAnswerUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *situ, FIELD_MAIN_WORK *fieldWork, u8 *seq);
 static BOOL OneselfSeq_ConnectAnswerExit(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *situ, FIELD_MAIN_WORK *fieldWork, u8 *seq);
-static BOOL OneselfSeq_TalkInit(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *situ, FIELD_MAIN_WORK *fieldWork, u8 *seq);
-static BOOL OneselfSeq_TalkUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *situ, FIELD_MAIN_WORK *fieldWork, u8 *seq);
-static BOOL OneselfSeq_TalkExit(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *situ, FIELD_MAIN_WORK *fieldWork, u8 *seq);
+static BOOL OneselfSeq_TalkInit_Parent(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *situ, FIELD_MAIN_WORK *fieldWork, u8 *seq);
+static BOOL OneselfSeq_TalkUpdate_Parent(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *situ, FIELD_MAIN_WORK *fieldWork, u8 *seq);
+static BOOL OneselfSeq_TalkExit_Parent(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *situ, FIELD_MAIN_WORK *fieldWork, u8 *seq);
+static BOOL OneselfSeq_TalkInit_Child(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *situ, FIELD_MAIN_WORK *fieldWork, u8 *seq);
+static BOOL OneselfSeq_TalkUpdate_Child(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *situ, FIELD_MAIN_WORK *fieldWork, u8 *seq);
+static BOOL OneselfSeq_TalkExit_Child(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *situ, FIELD_MAIN_WORK *fieldWork, u8 *seq);
+static BOOL OneselfSeq_TrainerCardUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *situ, FIELD_MAIN_WORK *fieldWork, u8 *seq);
+static BOOL OneselfSeq_ShutdownUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *situ, FIELD_MAIN_WORK *fieldWork, u8 *seq);
 
 
 //==============================================================================
@@ -66,7 +75,7 @@ static BOOL OneselfSeq_TalkExit(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *sit
 //==============================================================================
 static const ONESELF_FUNC_DATA OneselfFuncTbl[] = {
   {//UNION_STATUS_NORMAL
-    NULL,
+    OneselfSeq_NormalInit,
     OneselfSeq_NormalUpdate,
     NULL,
   },
@@ -90,34 +99,49 @@ static const ONESELF_FUNC_DATA OneselfFuncTbl[] = {
     OneselfSeq_ConnectAnswerUpdate,
     OneselfSeq_ConnectAnswerExit,
   },
-  {//UNION_STATUS_TALK
-    OneselfSeq_TalkInit,
-    OneselfSeq_TalkUpdate,
-    OneselfSeq_TalkExit,
+  {//UNION_STATUS_TALK_PARENT
+    OneselfSeq_TalkInit_Parent,
+    OneselfSeq_TalkUpdate_Parent,
+    OneselfSeq_TalkExit_Parent,
   },
-  {//UNION_STATUS_BATTLE
-    NULL,
-    NULL,
-    NULL,
+  {//UNION_STATUS_TALK_CHILD
+    OneselfSeq_TalkInit_Child,
+    OneselfSeq_TalkUpdate_Child,
+    OneselfSeq_TalkExit_Child,
   },
-  {//UNION_STATUS_TRADE
+  {//UNION_STATUS_TRAINERCARD
     NULL,
-    NULL,
-    NULL,
-  },
-  {//UNION_STATUS_RECORD
-    NULL,
-    NULL,
+    OneselfSeq_TrainerCardUpdate,
     NULL,
   },
   {//UNION_STATUS_PICTURE
     NULL,
+    OneselfSeq_ShutdownUpdate,
     NULL,
+  },
+  {//UNION_STATUS_BATTLE
+    NULL,
+    OneselfSeq_ShutdownUpdate,
+    NULL,
+  },
+  {//UNION_STATUS_TRADE
+    NULL,
+    OneselfSeq_ShutdownUpdate,
     NULL,
   },
   {//UNION_STATUS_GURUGURU
     NULL,
+    OneselfSeq_ShutdownUpdate,
     NULL,
+  },
+  {//UNION_STATUS_RECORD
+    NULL,
+    OneselfSeq_ShutdownUpdate,
+    NULL,
+  },
+  {//UNION_STATUS_SHUTDOWN
+    NULL,
+    OneselfSeq_ShutdownUpdate,
     NULL,
   },
   {//UNION_STATUS_CHAT
@@ -130,7 +154,11 @@ SDK_COMPILER_ASSERT(NELEMS(OneselfFuncTbl) == UNION_STATUS_MAX);
 
 
 
-
+//==============================================================================
+//
+//  
+//
+//==============================================================================
 int UnionOneself_Update(UNION_SYSTEM_PTR unisys, FIELD_MAIN_WORK *fieldWork)
 {
   UNION_MY_SITUATION *situ = &unisys->my_situation;
@@ -186,7 +214,29 @@ BOOL UnionOneself_ReqStatus(UNION_SYSTEM_PTR unisys, int req_status)
 
 //--------------------------------------------------------------
 /**
- * 通常状態(何もしていない)
+ * 通常状態(何もしていない)：初期化
+ *
+ * @param   unisys		
+ * @param   situ		
+ * @param   seq		
+ *
+ * @retval  BOOL		
+ */
+//--------------------------------------------------------------
+static BOOL OneselfSeq_NormalInit(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *situ, FIELD_MAIN_WORK *fieldWork, u8 *seq)
+{
+  UnionMyComm_Init(&situ->mycomm);
+
+  UnionMsg_YesNo_Del(unisys);
+  UnionMsg_Menu_MainMenuDel(unisys);
+  UnionMsg_TalkStream_WindowDel(unisys);
+
+  return TRUE;
+}
+
+//--------------------------------------------------------------
+/**
+ * 通常状態(何もしていない)：更新
  *
  * @param   unisys		
  * @param   situ		
@@ -211,7 +261,10 @@ static BOOL OneselfSeq_NormalUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION 
 
   if(GFL_NET_GetConnectNum() > 1){
     OS_TPrintf("Normalなのに接続！！！！\n");
-    UnionOneself_ReqStatus(unisys, UNION_STATUS_TALK);
+    //※check　暫定で先頭のビーコンデータを接続相手として代入しておく
+    //         本来であればNormalで接続は出来ないようにする
+    UnionOneself_ReqStatus(unisys, UNION_STATUS_TALK_PARENT);
+    UnionMySituation_SetParam(unisys, UNION_MYSITU_PARAM_IDX_CONNECT_PC, &unisys->receive_beacon[0]);
     return TRUE;
   }
   
@@ -228,7 +281,7 @@ static BOOL OneselfSeq_NormalUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION 
       return FALSE;
     }
     UnionMySituation_SetParam(unisys, 
-      UNION_MYSITU_PARAM_IDX_CONNECT_MAC, unisys->receive_beacon[obj_id].mac_address);
+      UNION_MYSITU_PARAM_IDX_CALLING_PC, &unisys->receive_beacon[obj_id]);
     OS_TPrintf("ターゲット発見! obj_id = %d, gx=%d, gz=%d\n", obj_id, check_gx, check_gz);
     UnionOneself_ReqStatus(unisys, UNION_STATUS_CONNECT_REQ);
     return TRUE;
@@ -251,8 +304,7 @@ static BOOL OneselfSeq_NormalUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION 
 //--------------------------------------------------------------
 static BOOL OneselfSeq_ConnectReqInit(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *situ, FIELD_MAIN_WORK *fieldWork, u8 *seq)
 {
-  UnionMsg_TalkStream_WindowSetup(unisys, fieldWork);
-  UnionMsg_TalkStream_Print(unisys, msg_union_select_01);
+  UnionMsg_TalkStream_PrintPack(unisys, fieldWork, msg_union_test_000);
   return TRUE;
 }
 
@@ -269,16 +321,29 @@ static BOOL OneselfSeq_ConnectReqInit(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATIO
 //--------------------------------------------------------------
 static BOOL OneselfSeq_ConnectReqUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *situ, FIELD_MAIN_WORK *fieldWork, u8 *seq)
 {
+  enum{
+    LOCALSEQ_INIT,
+    LOCALSEQ_WAIT,
+    LOCALSEQ_END,
+  };
+  
   switch(*seq){
-  case 0:
+  case LOCALSEQ_INIT:
+    OS_TPrintf("ChangeOver モード切替：親固定\n");
     GFL_NET_ChangeoverModeSet(GFL_NET_CHANGEOVER_MODE_FIX_PARENT, TRUE, NULL);
     situ->wait = 0;
     (*seq)++;
     break;
-  case 1:
+  case LOCALSEQ_WAIT:
+    if(UnionMsg_TalkStream_Check(unisys) == FALSE){
+      break;
+    }
+    
     if(GFL_NET_GetConnectNum() > 1){
       OS_TPrintf("接続しました！：親\n");
-      UnionOneself_ReqStatus(unisys, UNION_STATUS_TALK);
+      UnionOneself_ReqStatus(unisys, UNION_STATUS_TALK_PARENT);
+      UnionMySituation_SetParam(unisys, UNION_MYSITU_PARAM_IDX_CONNECT_PC, situ->calling_pc);
+      UnionMySituation_SetParam(unisys, UNION_MYSITU_PARAM_IDX_CALLING_PC, NULL);
       (*seq)++;
     }
     else{
@@ -286,14 +351,15 @@ static BOOL OneselfSeq_ConnectReqUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SITUAT
       if(situ->wait > ONESELF_SERVER_TIMEOUT || (GFL_UI_KEY_GetTrg() & PAD_BUTTON_B)){
         GFL_NET_ChangeoverModeSet(GFL_NET_CHANGEOVER_MODE_NORMAL, FALSE, NULL);
         UnionOneself_ReqStatus(unisys, UNION_STATUS_NORMAL);
-        UnionMySituation_SetParam(unisys, UNION_MYSITU_PARAM_IDX_CONNECT_MAC, NULL);
+        UnionMySituation_SetParam(unisys, UNION_MYSITU_PARAM_IDX_CALLING_PC, NULL);
+        UnionMsg_TalkStream_PrintPack(unisys, fieldWork, msg_union_test_007);
         OS_TPrintf("子が来なかった為キャンセルしました\n");
         (*seq)++;
       }
     }
     break;
-  case 2:
-    if(UnionMsg_TalkStrem_Check(unisys) == TRUE){
+  case LOCALSEQ_END:
+    if(UnionMsg_TalkStream_Check(unisys) == TRUE){
       return TRUE;
     }
     break;
@@ -316,8 +382,7 @@ static BOOL OneselfSeq_ConnectReqUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SITUAT
 //--------------------------------------------------------------
 static BOOL OneselfSeq_ConnectReqExit(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *situ, FIELD_MAIN_WORK *fieldWork, u8 *seq)
 {
-  UnionMySituation_SetParam(unisys, UNION_MYSITU_PARAM_IDX_CONNECT_MAC, NULL);
-  UnionMsg_TalkStream_WindowDel(unisys);
+  UnionMySituation_SetParam(unisys, UNION_MYSITU_PARAM_IDX_CALLING_PC, NULL);
   return TRUE;
 }
 
@@ -335,8 +400,7 @@ static BOOL OneselfSeq_ConnectReqExit(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATIO
 //--------------------------------------------------------------
 static BOOL OneselfSeq_ConnectAnswerInit(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *situ, FIELD_MAIN_WORK *fieldWork, u8 *seq)
 {
-  UnionMsg_TalkStream_WindowSetup(unisys, fieldWork);
-  UnionMsg_TalkStream_Print(unisys, msg_union_select_02);
+  UnionMsg_TalkStream_PrintPack(unisys, fieldWork, msg_union_test_001);
   return TRUE;
 }
 
@@ -357,24 +421,40 @@ static BOOL OneselfSeq_ConnectAnswerUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SIT
   switch(*seq){
   case 0:
     OS_TPrintf("親へ接続しにいきます\n");
-    GFL_NET_ChangeoverModeSet(GFL_NET_CHANGEOVER_MODE_FIX_CHILD, TRUE, situ->answer_mac_address);
+    GF_ASSERT(situ->answer_pc != NULL);
+    OS_TPrintf("ChangeOver モード切替：子固定\n");
+    GFL_NET_ChangeoverModeSet(
+      GFL_NET_CHANGEOVER_MODE_FIX_CHILD, TRUE, situ->answer_pc->mac_address);
     situ->wait = 0;
     (*seq)++;
     break;
   case 1:
+    if(UnionMsg_TalkStream_Check(unisys) == FALSE){
+      break;
+    }
+    
     if(GFL_NET_GetConnectNum() > 1){
       OS_TPrintf("接続しました！：子\n");
-      UnionOneself_ReqStatus(unisys, UNION_STATUS_TALK);
-      return TRUE;
+      UnionOneself_ReqStatus(unisys, UNION_STATUS_TALK_CHILD);
+      UnionMySituation_SetParam(unisys, UNION_MYSITU_PARAM_IDX_CONNECT_PC, situ->answer_pc);
+      UnionMySituation_SetParam(unisys, UNION_MYSITU_PARAM_IDX_ANSWER_PC, NULL);
+      (*seq)++;
     }
     else{
       situ->wait++;
       if(situ->wait > ONESELF_SERVER_TIMEOUT || (GFL_UI_KEY_GetTrg() & PAD_BUTTON_B)){
         GFL_NET_ChangeoverModeSet(GFL_NET_CHANGEOVER_MODE_NORMAL, FALSE, NULL);
         UnionOneself_ReqStatus(unisys, UNION_STATUS_NORMAL);
+        UnionMySituation_SetParam(unisys, UNION_MYSITU_PARAM_IDX_ANSWER_PC, NULL);
+        UnionMsg_TalkStream_PrintPack(unisys, fieldWork, msg_union_test_007);
         OS_TPrintf("親と接続出来なかった為キャンセルしました\n");
-        return TRUE;
+        (*seq)++;
       }
+    }
+    break;
+  case 2:
+    if(UnionMsg_TalkStream_Check(unisys) == TRUE){
+      return TRUE;
     }
     break;
   }
@@ -396,13 +476,13 @@ static BOOL OneselfSeq_ConnectAnswerUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SIT
 //--------------------------------------------------------------
 static BOOL OneselfSeq_ConnectAnswerExit(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *situ, FIELD_MAIN_WORK *fieldWork, u8 *seq)
 {
-  UnionMsg_TalkStream_WindowDel(unisys);
+  UnionMySituation_SetParam(unisys, UNION_MYSITU_PARAM_IDX_ANSWER_PC, NULL);
   return TRUE;
 }
 
 //--------------------------------------------------------------
 /**
- * 接続確立後の会話：初期化
+ * 接続確立後の会話（親）：初期化
  *
  * @param   unisys		
  * @param   situ		
@@ -412,16 +492,15 @@ static BOOL OneselfSeq_ConnectAnswerExit(UNION_SYSTEM_PTR unisys, UNION_MY_SITUA
  * @retval  BOOL		
  */
 //--------------------------------------------------------------
-static BOOL OneselfSeq_TalkInit(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *situ, FIELD_MAIN_WORK *fieldWork, u8 *seq)
+static BOOL OneselfSeq_TalkInit_Parent(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *situ, FIELD_MAIN_WORK *fieldWork, u8 *seq)
 {
-  UnionMsg_TalkStream_WindowSetup(unisys, fieldWork);
-  UnionMsg_TalkStream_Print(unisys, msg_union_select_03);
+  UnionMyComm_Init(&unisys->my_situation.mycomm);
   return TRUE;
 }
 
 //--------------------------------------------------------------
 /**
- * 接続確立後の会話：更新
+ * 接続確立後の会話（親）：更新
  *
  * @param   unisys		
  * @param   situ		
@@ -431,11 +510,76 @@ static BOOL OneselfSeq_TalkInit(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *sit
  * @retval  BOOL		
  */
 //--------------------------------------------------------------
-static BOOL OneselfSeq_TalkUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *situ, FIELD_MAIN_WORK *fieldWork, u8 *seq)
+static BOOL OneselfSeq_TalkUpdate_Parent(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *situ, FIELD_MAIN_WORK *fieldWork, u8 *seq)
 {
   switch(*seq){
   case 0:
-    
+    if(situ->connect_pc->beacon.sex == PM_MALE){
+      UnionMsg_TalkStream_PrintPack(unisys, fieldWork, msg_union_test_002);
+    }
+    else{
+      UnionMsg_TalkStream_PrintPack(unisys, fieldWork, msg_union_test_002);
+    }
+    (*seq)++;
+    break;
+  case 1:
+    if(UnionMsg_TalkStream_Check(unisys) == TRUE){
+      (*seq)++;
+    }
+    break;
+  case 2:   //メインメニュー描画
+    UnionMsg_Menu_MainMenuSetup(unisys, fieldWork);
+    (*seq)++;
+    break;
+  case 3:
+    {
+      u32 select_list;
+      
+      select_list = UnionMsg_Menu_MainMenuSelectLoop(unisys);
+      switch(select_list){
+      case FLDMENUFUNC_NULL:
+        break;
+      case FLDMENUFUNC_CANCEL:
+      case UNION_MSG_MENU_SELECT_CANCEL:
+        OS_TPrintf("メニューをキャンセルしました\n");
+        UnionOneself_ReqStatus(unisys, UNION_STATUS_SHUTDOWN);
+        UnionMsg_Menu_MainMenuDel(unisys);
+        return TRUE;
+      default:
+        situ->mycomm.mainmenu_select = select_list;
+        UnionMsg_Menu_MainMenuDel(unisys);
+        (*seq)++;
+        break;
+      }
+    }
+    break;
+  case 4: //相手に選択したメニューを通知
+		if(UnionSend_MainMenuListResult(situ->mycomm.mainmenu_select) == TRUE){
+      OS_TPrintf("リスト結果送信成功 : %d\n", situ->mycomm.mainmenu_select);
+      UnionMsg_TalkStream_PrintPack(unisys, fieldWork, msg_union_test_004);
+      (*seq)++;
+    }
+    break;
+  case 5: //返事待ち
+    if(UnionMsg_TalkStream_Check(unisys) == FALSE){
+      break;
+    }
+    if(situ->mycomm.mainmenu_yesno_result == TRUE){
+      OS_TPrintf("「はい」受信\n");
+      UnionOneself_ReqStatus(unisys, UNION_STATUS_TRAINERCARD + situ->mycomm.mainmenu_select);
+      (*seq)++;
+    }
+    else if(situ->mycomm.mainmenu_yesno_result == FALSE){
+      OS_TPrintf("「いいえ」受信\n");
+      UnionOneself_ReqStatus(unisys, UNION_STATUS_SHUTDOWN);
+      UnionMsg_TalkStream_PrintPack(unisys, fieldWork, msg_union_test_006);
+      (*seq)++;
+    }
+    break;
+  case 6:
+    if(UnionMsg_TalkStream_Check(unisys) == TRUE){
+      return TRUE;
+    }
     break;
   }
   
@@ -444,7 +588,7 @@ static BOOL OneselfSeq_TalkUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *s
 
 //--------------------------------------------------------------
 /**
- * 接続確立後の会話：終了
+ * 接続確立後の会話（親）：終了
  *
  * @param   unisys		
  * @param   situ		
@@ -454,8 +598,287 @@ static BOOL OneselfSeq_TalkUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *s
  * @retval  BOOL		
  */
 //--------------------------------------------------------------
-static BOOL OneselfSeq_TalkExit(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *situ, FIELD_MAIN_WORK *fieldWork, u8 *seq)
+static BOOL OneselfSeq_TalkExit_Parent(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *situ, FIELD_MAIN_WORK *fieldWork, u8 *seq)
 {
-  UnionMsg_TalkStream_WindowDel(unisys);
+  UnionMsg_Menu_MainMenuDel(unisys);
   return TRUE;
+}
+
+//--------------------------------------------------------------
+/**
+ * 接続確立後の会話（子）：初期化
+ *
+ * @param   unisys		
+ * @param   situ		
+ * @param   fieldWork		
+ * @param   seq		
+ *
+ * @retval  BOOL		
+ */
+//--------------------------------------------------------------
+static BOOL OneselfSeq_TalkInit_Child(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *situ, FIELD_MAIN_WORK *fieldWork, u8 *seq)
+{
+  UnionMyComm_Init(&unisys->my_situation.mycomm);
+  return TRUE;
+}
+
+//--------------------------------------------------------------
+/**
+ * 接続確立後の会話（子）：更新
+ *
+ * @param   unisys		
+ * @param   situ		
+ * @param   fieldWork		
+ * @param   seq		
+ *
+ * @retval  BOOL		
+ */
+//--------------------------------------------------------------
+static BOOL OneselfSeq_TalkUpdate_Child(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *situ, FIELD_MAIN_WORK *fieldWork, u8 *seq)
+{
+  if(UnionMsg_TalkStream_Check(unisys) == FALSE){
+    return FALSE;
+  }
+
+  switch(*seq){
+  case 0:
+    UnionMsg_TalkStream_PrintPack(unisys, fieldWork, msg_union_test_008);
+    (*seq)++;
+    break;
+  case 1:
+    if(situ->mycomm.mainmenu_select == UNION_MSG_MENU_SELECT_NULL){
+      break;
+    }
+    if(situ->mycomm.mainmenu_select < UNION_MSG_MENU_SELECT_MAX){
+      OS_TPrintf("選択メニュー受信：%d\n", situ->mycomm.mainmenu_select);
+      UnionMsg_TalkStream_PrintPack(
+        unisys, fieldWork, msg_union_test_003 + situ->mycomm.mainmenu_select);
+      (*seq)++;
+    }
+    else{
+      if(UnionSend_MainMenuListResultAnswer(FALSE) == TRUE){
+        OS_TPrintf("未知の選択メニュー受信：%d\n", situ->mycomm.mainmenu_select);
+        UnionMsg_TalkStream_PrintPack(unisys, fieldWork, msg_union_test_009);
+        UnionOneself_ReqStatus(unisys, UNION_STATUS_SHUTDOWN);
+        return TRUE;
+      }
+    }
+    break;
+  case 2:   //「はい・いいえ」選択
+    UnionMsg_YesNo_Setup(unisys, fieldWork);
+    (*seq)++;
+    break;
+  case 3:
+    {
+      BOOL result;
+      if(UnionMsg_YesNo_SelectLoop(unisys, &result) == TRUE){
+        UnionMsg_YesNo_Del(unisys);
+        situ->mycomm.mainmenu_yesno_result = result;
+        (*seq)++;
+      }
+    }
+    break;
+  case 4: //「はい・いいえ」選択結果送信
+    if(UnionSend_MainMenuListResultAnswer(situ->mycomm.mainmenu_yesno_result) == TRUE){
+      UnionOneself_ReqStatus(unisys, UNION_STATUS_TRAINERCARD + situ->mycomm.mainmenu_select);
+      return TRUE;
+    }
+  }
+  
+  return FALSE;
+}
+
+//--------------------------------------------------------------
+/**
+ * 接続確立後の会話（子）：終了
+ *
+ * @param   unisys		
+ * @param   situ		
+ * @param   fieldWork		
+ * @param   seq		
+ *
+ * @retval  BOOL		
+ */
+//--------------------------------------------------------------
+static BOOL OneselfSeq_TalkExit_Child(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *situ, FIELD_MAIN_WORK *fieldWork, u8 *seq)
+{
+  return TRUE;
+}
+
+//--------------------------------------------------------------
+/**
+ * トレーナーカード呼び出し：更新
+ *
+ * @param   unisys		
+ * @param   situ		
+ * @param   fieldWork		
+ * @param   seq		
+ *
+ * @retval  BOOL		
+ */
+//--------------------------------------------------------------
+static BOOL OneselfSeq_TrainerCardUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *situ, FIELD_MAIN_WORK *fieldWork, u8 *seq)
+{
+  switch(*seq){
+  case 0:   //トレーナーカードの情報を送りあう
+    //同期取りの前に送信データと受信バッファを作成
+    GF_ASSERT(situ->mycomm.trcard.my_card == NULL && situ->mycomm.trcard.target_card == NULL);
+    situ->mycomm.trcard.my_card 
+      = GFL_HEAP_AllocClearMemory(HEAPID_UNION, sizeof(TR_CARD_DATA));
+    situ->mycomm.trcard.target_card 
+      = GFL_HEAP_AllocClearMemory(HEAPID_UNION, sizeof(TR_CARD_DATA));
+    TRAINERCARD_GetSelfData(situ->mycomm.trcard.my_card, unisys->uniparent->game_data, TRUE);
+    GFL_STD_MemCopy(  //一応何かの事故で受け取れなかった時のケアの為、自分のをコピーしておく
+      situ->mycomm.trcard.my_card, situ->mycomm.trcard.target_card, sizeof(TR_CARD_DATA));
+    
+    GFL_NET_HANDLE_TimingSyncStart(
+      GFL_NET_HANDLE_GetCurrentHandle(), UNION_TIMING_TRAINERCARD_PARAM);
+    OS_TPrintf("トレーナーカード前の同期取り開始\n");
+
+    //「はい、どうぞ！」
+    UnionMsg_TalkStream_PrintPack(unisys, fieldWork, msg_union_test_005);
+
+    (*seq)++;
+    break;
+  case 1:
+		if(GFL_NET_HANDLE_IsTimingSync(
+		    GFL_NET_HANDLE_GetCurrentHandle(), UNION_TIMING_TRAINERCARD_PARAM) == TRUE){
+      OS_TPrintf("トレーナーカード前の同期取り成功\n");
+      (*seq)++;
+    }
+    break;
+  case 2:
+    if(UnionSend_TrainerCardParam(unisys) == TRUE){
+      OS_TPrintf("トレーナーカード情報送信\n");
+      (*seq)++;
+    }
+    break;
+  case 3:
+    if(situ->mycomm.trcard.target_card_receive == TRUE
+        && UnionMsg_TalkStream_Check(unisys) == TRUE){
+      OS_TPrintf("相手のカード受信\n");
+      situ->mycomm.trcard.card_param = TRAINERCASR_CreateCallParam_CommData(
+        unisys->uniparent->game_data, situ->mycomm.trcard.target_card, HEAPID_UNION);
+      (*seq)++;
+    }
+    break;
+  case 4:   //画面切り替え前の同期取り
+    GFL_NET_HANDLE_TimingSyncStart(
+      GFL_NET_HANDLE_GetCurrentHandle(), UNION_TIMING_TRAINERCARD_PROC_BEFORE);
+    OS_TPrintf("トレーナーカード画面切り替え前の同期取り開始\n");
+    (*seq)++;
+    break;
+  case 5:
+		if(GFL_NET_HANDLE_IsTimingSync(
+		    GFL_NET_HANDLE_GetCurrentHandle(), UNION_TIMING_TRAINERCARD_PROC_BEFORE) == TRUE){
+      OS_TPrintf("トレーナーカード画面切り替え前の同期取り成功\n");
+      (*seq)++;
+    }
+    break;
+  case 6:
+    UnionEvent_SubProcSet(unisys, UNION_SUBPROC_ID_TRAINERCARD, situ->mycomm.trcard.card_param);
+    (*seq)++;
+    break;
+  case 7:
+    if(UnionEvent_SubProcGet(unisys) == UNION_SUBPROC_ID_NULL){
+      OS_TPrintf("サブPROC終了\n");
+      (*seq)++;
+    }
+  case 8:   //トレーナーカード画面終了後の同期取り
+    UnionMsg_TalkStream_PrintPack(unisys, fieldWork, msg_union_test_008);
+    GFL_NET_HANDLE_TimingSyncStart(
+      GFL_NET_HANDLE_GetCurrentHandle(), UNION_TIMING_TRAINERCARD_PROC_AFTER);
+    OS_TPrintf("トレーナーカード終了後の同期取り開始\n");
+    (*seq)++;
+    break;
+  case 9:
+		if(GFL_NET_HANDLE_IsTimingSync(
+		    GFL_NET_HANDLE_GetCurrentHandle(), UNION_TIMING_TRAINERCARD_PROC_AFTER) == TRUE){
+      OS_TPrintf("トレーナーカード終了後の同期取り成功\n");
+      
+      GFL_HEAP_FreeMemory(situ->mycomm.trcard.card_param);
+      GFL_HEAP_FreeMemory(situ->mycomm.trcard.my_card);
+      GFL_HEAP_FreeMemory(situ->mycomm.trcard.target_card);
+      situ->mycomm.trcard.card_param = NULL;
+      situ->mycomm.trcard.my_card = NULL;
+      situ->mycomm.trcard.target_card = NULL;
+      
+      if(GFL_NET_IsParentMachine() == TRUE){
+        UnionOneself_ReqStatus(unisys, UNION_STATUS_TALK_PARENT);
+      }
+      else{
+        UnionOneself_ReqStatus(unisys, UNION_STATUS_TALK_CHILD);
+      }
+      return TRUE;
+    }
+    break;
+  }
+  
+  return FALSE;
+}
+
+//--------------------------------------------------------------
+/**
+ * 切断処理：更新
+ *
+ * @param   unisys		
+ * @param   situ		
+ * @param   fieldWork		
+ * @param   seq		
+ *
+ * @retval  BOOL		
+ */
+//--------------------------------------------------------------
+static BOOL OneselfSeq_ShutdownUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *situ, FIELD_MAIN_WORK *fieldWork, u8 *seq)
+{
+  if(UnionMsg_TalkStream_Check(unisys) == FALSE){
+    return FALSE;
+  }
+
+  switch(*seq){
+  case 0:
+    UnionMsg_TalkStream_PrintPack(unisys, fieldWork, msg_union_test_008);
+    (*seq)++;
+    break;
+  case 1:
+    if(situ->mycomm.mainmenu_select == UNION_MSG_MENU_SELECT_NULL){
+      break;
+    }
+    if(situ->mycomm.mainmenu_select < UNION_MSG_MENU_SELECT_MAX){
+      OS_TPrintf("選択メニュー受信：%d\n", situ->mycomm.mainmenu_select);
+      UnionMsg_TalkStream_PrintPack(
+        unisys, fieldWork, msg_union_test_003 + situ->mycomm.mainmenu_select);
+      (*seq)++;
+    }
+    else{
+      if(UnionSend_MainMenuListResultAnswer(FALSE) == TRUE){
+        OS_TPrintf("未知の選択メニュー受信：%d\n", situ->mycomm.mainmenu_select);
+        UnionMsg_TalkStream_PrintPack(unisys, fieldWork, msg_union_test_009);
+        UnionOneself_ReqStatus(unisys, UNION_STATUS_SHUTDOWN);
+        return TRUE;
+      }
+    }
+    break;
+  case 2:   //「はい・いいえ」選択
+    UnionMsg_YesNo_Setup(unisys, fieldWork);
+    (*seq)++;
+    break;
+  case 3:
+    {
+      BOOL result;
+      if(UnionMsg_YesNo_SelectLoop(unisys, &result) == TRUE){
+        UnionMsg_YesNo_Del(unisys);
+        situ->mycomm.mainmenu_yesno_result = result;
+        (*seq)++;
+      }
+    }
+    break;
+  case 4: //「はい・いいえ」選択結果送信
+    if(UnionSend_MainMenuListResultAnswer(situ->mycomm.mainmenu_yesno_result) == TRUE){
+      UnionOneself_ReqStatus(unisys, UNION_STATUS_TRAINERCARD + situ->mycomm.mainmenu_select);
+      return TRUE;
+    }
+  }
+  
+  return FALSE;
 }

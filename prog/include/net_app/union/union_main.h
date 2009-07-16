@@ -18,9 +18,11 @@
 //==============================================================================
 ///自分シチュエーションIndex
 typedef enum{
-  UNION_MYSITU_PARAM_IDX_CONNECT_MAC,
-  UNION_MYSITU_PARAM_IDX_ANSWER_MAC,
+  UNION_MYSITU_PARAM_IDX_CALLING_PC,      ///<接続を呼びかけているPCへのデータ
+  UNION_MYSITU_PARAM_IDX_ANSWER_PC,       ///<接続しようとしている(接続先)PCへのデータ
+  UNION_MYSITU_PARAM_IDX_CONNECT_PC,      ///<接続中のPCへのデータ
 }UNION_MYSITU_PARAM_IDX;
+
 
 //==============================================================================
 //  構造体定義
@@ -46,6 +48,7 @@ extern BOOL UnionComm_ExitWait(int *seq, void *pwk, void *pWork);
 extern void UnionComm_Update(int *seq, void *pwk, void *pWork);
 extern void UnionMySituation_SetParam(UNION_SYSTEM_PTR unisys, UNION_MYSITU_PARAM_IDX index, void *work);
 extern void UnionMySituation_Clear(UNION_SYSTEM_PTR unisys);
+extern void UnionMyComm_Init(UNION_MY_COMM *mycomm);
 
 //--------------------------------------------------------------
 //  union_main.c

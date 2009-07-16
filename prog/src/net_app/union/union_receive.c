@@ -74,7 +74,7 @@ static void UnionReceive_BeaconCheck(UNION_SYSTEM_PTR unisys, UNION_BEACON_PC *b
       OS_GetMacAddress(my_mac);
       if(GFL_STD_MemComp(bpc->beacon.connect_mac_address, my_mac, 6) == 0){
         OS_TPrintf("Ú‘±—v‹FMacˆê’v\n");
-        UnionMySituation_SetParam(unisys, UNION_MYSITU_PARAM_IDX_ANSWER_MAC, bpc->mac_address);
+        UnionMySituation_SetParam(unisys, UNION_MYSITU_PARAM_IDX_ANSWER_PC, bpc);
         UnionOneself_ReqStatus(unisys, UNION_STATUS_CONNECT_ANSWER);
       }
       else{

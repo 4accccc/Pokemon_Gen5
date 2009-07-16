@@ -15,6 +15,8 @@
 #include "net_app/union/union_main.h"
 #include "system/net_err.h"
 #include "net/network_define.h"
+#include "union_comm_command.h"
+#include "union_msg.h"
 
 
 //==============================================================================
@@ -59,8 +61,8 @@ static void UnionComm_DisconnectCallBack(void* pWork);
 //  データ
 //==============================================================================
 static const GFLNetInitializeStruct aGFLNetInit = {
-	NULL,		//NetSamplePacketTbl,  // 受信関数テーブル
-	0,			// 受信テーブル要素数
+	Union_CommPacketTbl,  // 受信関数テーブル
+	UNION_CMD_NUM,  			// 受信テーブル要素数
 	NULL,		///< ハードで接続した時に呼ばれる
 	NULL,		///< ネゴシエーション完了時にコール
 	NULL,		// ユーザー同士が交換するデータのポインタ取得関数
@@ -81,15 +83,15 @@ static const GFLNetInitializeStruct aGFLNetInit = {
 	0,			///< DWCへのHEAPサイズ
 	TRUE,		///< デバック用サーバにつなぐかどうか
 #endif  //GFL_NET_WIFI
-	0x222,		//ggid  DP=0x333,RANGER=0x178,WII=0x346
+	0x122,		//ggid  DP=0x333,RANGER=0x178,WII=0x346
 	GFL_HEAPID_APP,		//元になるheapid
 	HEAPID_NETWORK + HEAPDIR_MASK,		//通信用にcreateされるHEAPID
 	HEAPID_WIFI + HEAPDIR_MASK,		//wifi用にcreateされるHEAPID
 	HEAPID_NETWORK + HEAPDIR_MASK,		//
 	GFL_WICON_POSX,GFL_WICON_POSY,	// 通信アイコンXY位置
-	4,      //_MAXNUM,	//最大接続人数
+	UNION_CONNECT_PLAYER_NUM,      //_MAXNUM,	//最大接続人数
 	48,     //_MAXSIZE,	//最大送信バイト数
-	UNION_RECEIVE_BEACON_MAX / 2,  // 最大ビーコン収集数
+	UNION_RECEIVE_BEACON_MAX,  // 最大ビーコン収集数
 	TRUE,		// CRC計算
 	FALSE,		// MP通信＝親子型通信モードかどうか
 	GFL_NET_TYPE_WIRELESS,		//通信タイプの指定
@@ -120,6 +122,7 @@ static UNION_SYSTEM_PTR Union_InitSystem(UNION_PARENT_WORK *uniparent)
   GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_UNION, HEAP_SIZE_UNION );
   unisys = GFL_HEAP_AllocClearMemory(HEAPID_UNION, sizeof(UNION_SYSTEM));
   unisys->uniparent = uniparent;
+  UnionMyComm_Init(&unisys->my_situation.mycomm);
   
   GFL_OVERLAY_Load( FS_OVERLAY_ID( union_room ) );
   
@@ -376,7 +379,9 @@ static void UnionComm_SetBeaconParam(UNION_SYSTEM_PTR unisys, UNION_BEACON *beac
   
   GFL_STD_MemClear(beacon, sizeof(UNION_BEACON));
   
-  GFL_STD_MemCopy(situ->connect_mac_address, beacon->connect_mac_address, 6);
+  if(situ->calling_pc != NULL){
+    GFL_STD_MemCopy(situ->calling_pc->mac_address, beacon->connect_mac_address, 6);
+  }
   
   beacon->pm_version = PM_VERSION;
   beacon->language = PM_LANG;
@@ -468,21 +473,22 @@ void UnionMySituation_SetParam(UNION_SYSTEM_PTR unisys, UNION_MYSITU_PARAM_IDX i
   UNION_MY_SITUATION *situ = &unisys->my_situation;
 
   switch(index){
-  case UNION_MYSITU_PARAM_IDX_CONNECT_MAC:
+  case UNION_MYSITU_PARAM_IDX_CALLING_PC:
     {
-      u8 *connect_mac_address = work;
-      if(connect_mac_address == NULL){
-        GFL_STD_MemClear(situ->connect_mac_address, 6);
-      }
-      else{
-        GFL_STD_MemCopy(connect_mac_address, situ->connect_mac_address, 6);
-      }
+      UNION_BEACON_PC *calling_pc = work;
+      situ->calling_pc = calling_pc;
     }
     break;
-  case UNION_MYSITU_PARAM_IDX_ANSWER_MAC:
+  case UNION_MYSITU_PARAM_IDX_ANSWER_PC:
     {
-      u8 *answer_mac_address = work;
-      GFL_STD_MemCopy(answer_mac_address, situ->answer_mac_address, 6);
+      UNION_BEACON_PC *answer_pc = work;
+      situ->answer_pc = answer_pc;
+    }
+    break;
+  case UNION_MYSITU_PARAM_IDX_CONNECT_PC:
+    {
+      UNION_BEACON_PC *connect_pc = work;
+      situ->connect_pc = connect_pc;
     }
     break;
   }
@@ -500,5 +506,20 @@ void UnionMySituation_Clear(UNION_SYSTEM_PTR unisys)
   UNION_MY_SITUATION *situ = &unisys->my_situation;
   
   GFL_STD_MemClear(situ, sizeof(UNION_MY_SITUATION));
+  UnionMyComm_Init(&situ->mycomm);
 }
 
+//==================================================================
+/**
+ * UNION_MY_COMM構造体を初期化
+ *
+ * @param   mycomm		
+ */
+//==================================================================
+void UnionMyComm_Init(UNION_MY_COMM *mycomm)
+{
+  GFL_STD_MemClear(mycomm, sizeof(UNION_MY_COMM));
+  mycomm->mainmenu_select = UNION_MSG_MENU_SELECT_NULL;
+  mycomm->submenu_select = UNION_MSG_MENU_SELECT_NULL;
+  mycomm->mainmenu_yesno_result = 0xff;
+}
