@@ -15,6 +15,7 @@
 #include "system/mcss.h"
 #include "system/mcss_tool.h"
 #include "print/global_msg.h"
+#include "app/app_menu_common.h"
 
 #include "p_status_gra.naix"
 
@@ -64,6 +65,13 @@
 #define PSTATUS_INFO_STR_NEXTEXP_VAL_X (32+ PSTATUS_STR_OFS_X)
 #define PSTATUS_INFO_STR_NEXTEXP_VAL_Y ( 0+ PSTATUS_STR_OFS_Y)
 
+//タイプアイコン
+#define PSTATUS_INFO_TYPEICON_1_X  (96)
+#define PSTATUS_INFO_TYPEICON_1_Y  (48)
+#define PSTATUS_INFO_TYPEICON_2_X  (96+32)
+#define PSTATUS_INFO_TYPEICON_2_Y  (48)
+
+//経験値バー
 #define PSTATUS_INFO_EXPBAR_TOP  (3)
 #define PSTATUS_INFO_EXPBAR_LEFT (0)
 #define PSTATUS_INFO_EXPBAR_HEIGHT  (3)
@@ -114,7 +122,7 @@ struct _PSTATUS_INFO_WORK
 //	proto
 //======================================================================
 #pragma mark [> proto
-static void PSTATUS_INFO_DrawStr( PSTATUS_WORK *work , PSTATUS_INFO_WORK *subWork , const POKEMON_PASO_PARAM *ppp );
+static void PSTATUS_INFO_DrawState( PSTATUS_WORK *work , PSTATUS_INFO_WORK *subWork , const POKEMON_PASO_PARAM *ppp );
 
 static const u8 winPos[SIB_MAX][4] =
 {
@@ -159,7 +167,7 @@ void PSTATUS_INFO_Term( PSTATUS_WORK *work , PSTATUS_INFO_WORK *infoWork )
 void PSTATUS_INFO_Main( PSTATUS_WORK *work , PSTATUS_INFO_WORK *infoWork )
 {
   
-  
+/*  
   if( infoWork->isUpdateStr == TRUE )
   {
     u8 i;
@@ -182,6 +190,7 @@ void PSTATUS_INFO_Main( PSTATUS_WORK *work , PSTATUS_INFO_WORK *infoWork )
       infoWork->isUpdateStr = FALSE;
     }
   }
+*/
 }
 
 #pragma mark [>Resource
@@ -221,6 +230,39 @@ void PSTATUS_INFO_DispPage( PSTATUS_WORK *work , PSTATUS_INFO_WORK *infoWork )
   u8 i;
   const POKEMON_PASO_PARAM *ppp = PSTATUS_UTIL_GetCurrentPPP( work );
 
+  for( i=0;i<SIB_MAX;i++ )
+  {
+    infoWork->bmpWin[i] = GFL_BMPWIN_Create( PSTATUS_BG_PARAM ,
+                winPos[i][0] , winPos[i][1] , winPos[i][2] , winPos[i][3] ,
+                PSTATUS_BG_PLT_FONT , GFL_BMP_CHRAREA_GET_B );
+  }
+  
+  PSTATUS_INFO_DrawState( work , infoWork , ppp );
+
+  infoWork->isDisp = TRUE;
+}
+
+//--------------------------------------------------------------
+//	ページのクリア
+//--------------------------------------------------------------
+void PSTATUS_INFO_ClearPage( PSTATUS_WORK *work , PSTATUS_INFO_WORK *infoWork )
+{
+  u8 i;
+  for( i=0;i<SIB_MAX;i++ )
+  {
+    GFL_BMPWIN_Delete( infoWork->bmpWin[i] );
+  }
+  
+  infoWork->isDisp = FALSE;
+}
+//--------------------------------------------------------------
+//	ページの表示(転送タイミング
+//--------------------------------------------------------------
+void PSTATUS_INFO_DispPage_Trans( PSTATUS_WORK *work , PSTATUS_INFO_WORK *infoWork )
+{
+  u8 i;
+  const POKEMON_PASO_PARAM *ppp = PSTATUS_UTIL_GetCurrentPPP( work );
+
   //Window下地の張替え
   GFL_BG_WriteScreenExpand( PSTATUS_BG_PLATE , 
                     0 , 0 , PSTATUS_MAIN_PAGE_WIDTH , 24 ,
@@ -240,41 +282,68 @@ void PSTATUS_INFO_DispPage( PSTATUS_WORK *work , PSTATUS_INFO_WORK *infoWork )
 
   for( i=0;i<SIB_MAX;i++ )
   {
-    infoWork->bmpWin[i] = GFL_BMPWIN_Create( PSTATUS_BG_PARAM ,
-                winPos[i][0] , winPos[i][1] , winPos[i][2] , winPos[i][3] ,
-                PSTATUS_BG_PLT_FONT , GFL_BMP_CHRAREA_GET_B );
+    GFL_BMPWIN_MakeTransWindow_VBlank( infoWork->bmpWin[i] );
   }
-  
-  PSTATUS_INFO_DrawStr( work , infoWork , ppp );
 
-  infoWork->isDisp = TRUE;
-
+  //タイプアイコン
+  {
+    const u32 type1 = PPP_Get( ppp, ID_PARA_type1, NULL );
+    const u32 type2 = PPP_Get( ppp, ID_PARA_type2, NULL );
+    GFL_CLACTPOS cellPos;
+    {
+      NNSG2dImageProxy imageProxy;
+      GFL_CLGRP_CGR_GetProxy( work->cellResTypeNcg[type1] , &imageProxy );
+      GFL_CLACT_WK_SetImgProxy( work->clwkTypeIcon[0] , &imageProxy );
+      GFL_CLACT_WK_SetPlttOffs( work->clwkTypeIcon[0] , 
+                                APP_COMMON_GetPokeTypePltOffset(type1) , 
+                                CLWK_PLTTOFFS_MODE_PLTT_TOP );
+      cellPos.x = PSTATUS_INFO_TYPEICON_1_X;
+      cellPos.y = PSTATUS_INFO_TYPEICON_1_Y;
+      GFL_CLACT_WK_SetPos( work->clwkTypeIcon[0] , &cellPos , CLSYS_DEFREND_MAIN );
+      GFL_CLACT_WK_SetDrawEnable( work->clwkTypeIcon[0] , TRUE );
+      GFL_CLACT_WK_SetBgPri( work->clwkTypeIcon[0] , 1 );
+    }
+    
+    if( type1 != type2 )
+    {
+      NNSG2dImageProxy imageProxy;
+      GFL_CLGRP_CGR_GetProxy( work->cellResTypeNcg[type2] , &imageProxy );
+      GFL_CLACT_WK_SetImgProxy( work->clwkTypeIcon[1] , &imageProxy );
+      GFL_CLACT_WK_SetPlttOffs( work->clwkTypeIcon[1] , 
+                                APP_COMMON_GetPokeTypePltOffset(type2) , 
+                                CLWK_PLTTOFFS_MODE_PLTT_TOP );
+      cellPos.x = PSTATUS_INFO_TYPEICON_2_X;
+      cellPos.y = PSTATUS_INFO_TYPEICON_2_Y;
+      GFL_CLACT_WK_SetPos( work->clwkTypeIcon[1] , &cellPos , CLSYS_DEFREND_MAIN );
+      GFL_CLACT_WK_SetDrawEnable( work->clwkTypeIcon[1] , TRUE );
+      GFL_CLACT_WK_SetBgPri( work->clwkTypeIcon[1] , 1 );
+    }
+    else
+    {
+      GFL_CLACT_WK_SetDrawEnable( work->clwkTypeIcon[1] , FALSE );
+    }
+  }
 }
 
 //--------------------------------------------------------------
-//	ページのクリア
+//	ページのクリア(転送タイミング
 //--------------------------------------------------------------
-void PSTATUS_INFO_ClearPage( PSTATUS_WORK *work , PSTATUS_INFO_WORK *infoWork )
+void PSTATUS_INFO_ClearPage_Trans( PSTATUS_WORK *work , PSTATUS_INFO_WORK *infoWork )
 {
   u8 i;
-  for( i=0;i<SIB_MAX;i++ )
-  {
-    GFL_BMPWIN_Delete( infoWork->bmpWin[i] );
-  }
-  
   GFL_BG_FillScreen( PSTATUS_BG_PARAM , 0 , 0 , 0 , 
                      PSTATUS_MAIN_PAGE_WIDTH , 21 ,
                      GFL_BG_SCRWRT_PALNL );
-  GFL_BG_LoadScreenV_Req( PSTATUS_BG_PARAM );
+  GFL_BG_LoadScreenReq( PSTATUS_BG_PARAM );
   
-  infoWork->isDisp = FALSE;
-
+  GFL_CLACT_WK_SetDrawEnable( work->clwkTypeIcon[0] , FALSE );
+  GFL_CLACT_WK_SetDrawEnable( work->clwkTypeIcon[1] , FALSE );
 }
 
 //--------------------------------------------------------------
 //	文字の描画
 //--------------------------------------------------------------
-void PSTATUS_INFO_DrawStr( PSTATUS_WORK *work , PSTATUS_INFO_WORK *infoWork , const POKEMON_PASO_PARAM *ppp )
+void PSTATUS_INFO_DrawState( PSTATUS_WORK *work , PSTATUS_INFO_WORK *infoWork , const POKEMON_PASO_PARAM *ppp )
 {
   //図鑑
   PSTATUS_UTIL_DrawStrFunc( work , infoWork->bmpWin[SIB_ZUKAN] , mes_status_02_02 ,
@@ -339,7 +408,7 @@ void PSTATUS_INFO_DrawStr( PSTATUS_WORK *work , PSTATUS_INFO_WORK *infoWork , co
                             PSTATUS_INFO_STR_ID_X , PSTATUS_INFO_STR_ID_Y , PSTATUS_STR_COL_TITLE );
   {
     WORDSET *wordSet = WORDSET_Create( work->heapId );
-    u32 id = PPP_Get( ppp , ID_PARA_id_no , NULL );
+    u32 id = PPP_Get( ppp , ID_PARA_id_no , NULL )%100000;
     WORDSET_RegisterNumber( wordSet , 0 , id , 5 , STR_NUM_DISP_LEFT , STR_NUM_CODE_DEFAULT );
     PSTATUS_UTIL_DrawValueStrFunc( work , infoWork->bmpWin[SIB_ID] , wordSet , mes_status_02_10 , 
                                    PSTATUS_INFO_STR_ID_VAL_X , PSTATUS_INFO_STR_ID_VAL_Y , PSTATUS_STR_COL_VALUE );
@@ -404,6 +473,7 @@ void PSTATUS_INFO_DrawStr( PSTATUS_WORK *work , PSTATUS_INFO_WORK *infoWork , co
 
     }
   }
+
 
   infoWork->isUpdateStr = TRUE;
 }

@@ -183,12 +183,14 @@ typedef struct
   
   PSTATUS_DATA *psData;
   
+  BOOL isWaitDisp;
+  
   u8  dataPos;  //何番目か？
   u8  befDataPos;
   u8  scrollCnt;
+  u8  ktst;
   u32 befVCount;
   int barButtonHit; //バーのボタンが押されているか？
-  u8  ktst;
 
   u32      tpx;
   u32      tpy;
@@ -221,6 +223,7 @@ typedef struct
   u32 cellResTypeNcg[POKETYPE_MAX];
   GFL_CLUNIT  *cellUnit;
   GFL_CLWK    *clwkBarIcon[SBT_MAX];
+  GFL_CLWK    *clwkTypeIcon[2];
 
   //pppの時ppに変換するよう
   POKEMON_PARAM *calcPP;

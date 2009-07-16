@@ -125,6 +125,7 @@ void PSTATUS_SUB_Term( PSTATUS_WORK *work , PSTATUS_SUB_WORK *subWork )
 //--------------------------------------------------------------
 void PSTATUS_SUB_Main( PSTATUS_WORK *work , PSTATUS_SUB_WORK *subWork )
 {
+  /*
   if( subWork->isUpdateStr == TRUE )
   {
     if( PRINTSYS_QUE_IsExistTarget( work->printQue , GFL_BMPWIN_GetBmp( subWork->bmpWinUpper )) == FALSE && 
@@ -135,7 +136,7 @@ void PSTATUS_SUB_Main( PSTATUS_WORK *work , PSTATUS_SUB_WORK *subWork )
       GFL_BMPWIN_MakeTransWindow_VBlank( subWork->bmpWinDown );
     }
   }
-  
+  */
   MCSS_Main( subWork->mcssSys );
 }
 
@@ -176,7 +177,7 @@ void PSTATUS_SUB_DispPage( PSTATUS_WORK *work , PSTATUS_SUB_WORK *subWork )
 {
   //MCSS
   const POKEMON_PASO_PARAM *ppp = PSTATUS_UTIL_GetCurrentPPP( work );
-  PSTATUS_SUB_PokeCreateMcss( work , subWork , ppp );
+//  PSTATUS_SUB_PokeCreateMcss( work , subWork , ppp );
 
   //BmpWin
   subWork->bmpWinUpper = GFL_BMPWIN_Create( PSTATUS_BG_PARAM ,
@@ -191,6 +192,17 @@ void PSTATUS_SUB_DispPage( PSTATUS_WORK *work , PSTATUS_SUB_WORK *subWork )
 
   PSTATUS_SUB_DrawStr( work , subWork , ppp );
 }
+//--------------------------------------------------------------
+//	ページの表示
+//--------------------------------------------------------------
+void PSTATUS_SUB_DispPage_Trans( PSTATUS_WORK *work , PSTATUS_SUB_WORK *subWork )
+{
+  //MCSS
+  const POKEMON_PASO_PARAM *ppp = PSTATUS_UTIL_GetCurrentPPP( work );
+  PSTATUS_SUB_PokeCreateMcss( work , subWork , ppp );
+  GFL_BMPWIN_MakeTransWindow_VBlank( subWork->bmpWinUpper );
+  GFL_BMPWIN_MakeTransWindow_VBlank( subWork->bmpWinDown );
+}
 
 //--------------------------------------------------------------
 //	ページのクリア
@@ -202,6 +214,14 @@ void PSTATUS_SUB_ClearPage( PSTATUS_WORK *work , PSTATUS_SUB_WORK *subWork )
   GFL_BMPWIN_Delete( subWork->bmpWinDown );
   GFL_BMPWIN_Delete( subWork->bmpWinUpper );
 
+  //MCSS
+//  PSTATUS_SUB_PokeDeleteMcss( work,subWork );
+}
+//--------------------------------------------------------------
+//	ページのクリア
+//--------------------------------------------------------------
+void PSTATUS_SUB_ClearPage_Trans( PSTATUS_WORK *work , PSTATUS_SUB_WORK *subWork )
+{
   //MCSS
   PSTATUS_SUB_PokeDeleteMcss( work,subWork );
 }

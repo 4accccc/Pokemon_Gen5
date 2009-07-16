@@ -28,6 +28,8 @@ void PSTATUS_RIBBON_TermCell( PSTATUS_WORK *work , PSTATUS_RIBBON_WORK *ribbonWo
 //ï\é¶îÒï\é¶êÿÇËë÷Ç¶
 void PSTATUS_RIBBON_DispPage( PSTATUS_WORK *work , PSTATUS_RIBBON_WORK *ribbonWork );
 void PSTATUS_RIBBON_ClearPage( PSTATUS_WORK *work , PSTATUS_RIBBON_WORK *ribbonWork );
+void PSTATUS_RIBBON_DispPage_Trans( PSTATUS_WORK *work , PSTATUS_RIBBON_WORK *ribbonWork );
+void PSTATUS_RIBBON_ClearPage_Trans( PSTATUS_WORK *work , PSTATUS_RIBBON_WORK *ribbonWork );
 
 void PSTATUS_RIBBON_CreateRibbonBar( PSTATUS_WORK *work , PSTATUS_RIBBON_WORK *ribbonWork );
 void PSTATUS_RIBBON_DeleteRibbonBar( PSTATUS_WORK *work , PSTATUS_RIBBON_WORK *ribbonWork );

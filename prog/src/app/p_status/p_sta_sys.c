@@ -86,6 +86,7 @@ static const BOOL PSTATUS_UpdateKey( PSTATUS_WORK *work );
 static void PSTATUS_UpdateTP( PSTATUS_WORK *work );
 
 static void PSTATUS_RefreshDisp( PSTATUS_WORK *work );
+static void PSTATUS_WaitDisp( PSTATUS_WORK *work );
 
 
 //--------------------------------------------------------------
@@ -94,13 +95,14 @@ static void PSTATUS_RefreshDisp( PSTATUS_WORK *work );
 const BOOL PSTATUS_InitPokeStatus( PSTATUS_WORK *work )
 {
   work->dataPos = work->psData->pos;
-  work->befDataPos = work->dataPos;
+  work->befDataPos = 0xFF;
   work->scrollCnt = 0;
   work->befVCount = OS_GetVBlankCount();
   work->page = PPT_INFO;
-  work->befPage = PPT_INFO;
+  work->befPage = PPT_MAX;
   work->isActiveBarButton = TRUE;
   work->retVal = SRT_CONTINUE;
+  work->isWaitDisp = TRUE;
 
 #if PM_DEBUG
   work->calcPP = NULL;
@@ -172,20 +174,29 @@ const PSTATUS_RETURN_TYPE PSTATUS_UpdatePokeStatus( PSTATUS_WORK *work )
   
   PSTATUS_SUB_Main( work , work->subWork );
 
-
-  PSTATUS_UpdateUI( work );
-
-  switch( work->befPage )
+  if( work->isWaitDisp == TRUE )
   {
-  case PPT_INFO:
-    PSTATUS_INFO_Main( work , work->infoWork );
-    break;
-  case PPT_SKILL:
-    PSTATUS_SKILL_Main( work , work->skillWork );
-    break;
-  case PPT_RIBBON:
-    PSTATUS_RIBBON_Main( work , work->ribbonWork );
-    break;
+    PSTATUS_WaitDisp( work );
+  }
+  else
+  {
+    PSTATUS_UpdateUI( work );
+
+    if( work->isWaitDisp == FALSE )
+    {
+      switch( work->befPage )
+      {
+      case PPT_INFO:
+        PSTATUS_INFO_Main( work , work->infoWork );
+        break;
+      case PPT_SKILL:
+        PSTATUS_SKILL_Main( work , work->skillWork );
+        break;
+      case PPT_RIBBON:
+        PSTATUS_RIBBON_Main( work , work->ribbonWork );
+        break;
+      }
+    }
   }
 
   //メッセージ
@@ -641,6 +652,16 @@ static void PSTATUS_InitCell( PSTATUS_WORK *work )
 
       GFL_CLACT_WK_SetDrawEnable( work->clwkBarIcon[i] , TRUE );
     }
+    for( i=0;i<2;i++ )
+    {
+      work->clwkTypeIcon[i] = GFL_CLACT_WK_Create( work->cellUnit ,
+                work->cellResTypeNcg[0],
+                work->cellRes[SCR_PLT_POKE_TYPE],
+                work->cellRes[SCR_ANM_POKE_TYPE],
+                &cellInitData ,CLSYS_DEFREND_MAIN , work->heapId );
+
+      GFL_CLACT_WK_SetDrawEnable( work->clwkTypeIcon[i] , FALSE );
+    }
   }
   
   PSTATUS_RIBBON_InitCell( work , work->ribbonWork );
@@ -659,6 +680,10 @@ static void PSTATUS_TermCell( PSTATUS_WORK *work )
   for( i=0;i<SBT_MAX;i++ )
   {
     GFL_CLACT_WK_Remove( work->clwkBarIcon[i] );
+  }
+  for( i=0;i<2;i++ )
+  {
+    GFL_CLACT_WK_Remove( work->clwkTypeIcon[i] );
   }
 }
 
@@ -717,7 +742,8 @@ static void PSTATUS_UpdateBarButton( PSTATUS_WORK *work )
 //--------------------------------------------------------------------------
 static void PSTATUS_UpdateUI( PSTATUS_WORK *work )
 {
-  if( work->isActiveBarButton == TRUE )
+  if( work->isActiveBarButton == TRUE &&
+      PRINTSYS_QUE_IsFinished( work->printQue ) == TRUE )
   {
     if( PSTATUS_UpdateKey(work) == FALSE )
     {
@@ -862,13 +888,13 @@ static void PSTATUS_RefreshDisp( PSTATUS_WORK *work )
   
   if( work->befDataPos != work->dataPos )
   {
-    PSTATUS_SUB_ClearPage( work , work->subWork );
+    if( work->befDataPos != 0xFF )
+    {
+      PSTATUS_SUB_ClearPage( work , work->subWork );
+      PSTATUS_RIBBON_DeleteRibbonBar( work , work->ribbonWork );
+    }
     PSTATUS_SUB_DispPage( work , work->subWork );
-    
-    PSTATUS_RIBBON_DeleteRibbonBar( work , work->ribbonWork );
     PSTATUS_RIBBON_CreateRibbonBar( work , work->ribbonWork );
-
-    work->befDataPos = work->dataPos;
   }
 
   switch( work->befPage )
@@ -899,7 +925,57 @@ static void PSTATUS_RefreshDisp( PSTATUS_WORK *work )
   
   //PPP暗号化
   PSTATUS_UTIL_SetCurrentPPPFast( work , FALSE );
-  work->befPage = work->page;
+  work->isWaitDisp = TRUE;
+
+//  work->befPage = work->page;
+}
+
+//--------------------------------------------------------------
+//表示更新待ち
+//--------------------------------------------------------------
+static void PSTATUS_WaitDisp( PSTATUS_WORK *work )
+{
+  if( PRINTSYS_QUE_IsFinished( work->printQue ) == TRUE )
+  {
+    if( work->befDataPos != work->dataPos )
+    {
+      if( work->befDataPos != 0xFF )
+      {
+        PSTATUS_SUB_ClearPage_Trans( work , work->subWork );
+      }
+      PSTATUS_SUB_DispPage_Trans( work , work->subWork );
+      
+      work->befDataPos = work->dataPos;
+    }
+
+    switch( work->befPage )
+    {
+    case PPT_INFO:
+      PSTATUS_INFO_ClearPage_Trans( work , work->infoWork );
+      break;
+    case PPT_SKILL:
+      PSTATUS_SKILL_ClearPage_Trans( work , work->skillWork );
+      break;
+    case PPT_RIBBON:
+      PSTATUS_RIBBON_ClearPage_Trans( work , work->ribbonWork );
+      break;
+    }
+
+    switch( work->page )
+    {
+    case PPT_INFO:
+      PSTATUS_INFO_DispPage_Trans( work , work->infoWork );
+      break;
+    case PPT_SKILL:
+      PSTATUS_SKILL_DispPage_Trans( work , work->skillWork );
+      break;
+    case PPT_RIBBON:
+      PSTATUS_RIBBON_DispPage_Trans( work , work->ribbonWork );
+      break;
+    }    
+    work->isWaitDisp = FALSE;
+    work->befPage = work->page;
+  }
 }
 
 //--------------------------------------------------------------
@@ -935,7 +1011,7 @@ const POKEMON_PASO_PARAM* PSTATUS_UTIL_GetCurrentPPP( PSTATUS_WORK *work )
     if( work->calcPP == NULL )
     {
       u16 oyaName[5] = {L'ブ',L'ラ',L'ッ',L'ク',0xFFFF};
-      work->calcPP = PP_Create( work->dataPos+1 , 50 , PTL_SETUP_POW_AUTO , HEAPID_POKE_STATUS );
+      work->calcPP = PP_Create( work->dataPos+1 , 50 , PTL_SETUP_ID_AUTO , HEAPID_POKE_STATUS );
       PP_Put( work->calcPP , ID_PARA_oyaname_raw , (u32)&oyaName[0] );
       PP_Put( work->calcPP , ID_PARA_oyasex , PTL_SEX_MALE );
     }
@@ -978,7 +1054,7 @@ POKEMON_PARAM* PSTATUS_UTIL_GetCurrentPP( PSTATUS_WORK *work )
     if( work->calcPP == NULL )
     {
       u16 oyaName[5] = {L'ブ',L'ラ',L'ッ',L'ク',0xFFFF};
-      work->calcPP = PP_Create( work->dataPos+1 , 50 , PTL_SETUP_POW_AUTO , HEAPID_POKE_STATUS );
+      work->calcPP = PP_Create( work->dataPos+1 , 50 , PTL_SETUP_ID_AUTO , HEAPID_POKE_STATUS );
       PP_Put( work->calcPP , ID_PARA_oyaname_raw , (u32)&oyaName[0] );
       PP_Put( work->calcPP , ID_PARA_oyasex , PTL_SEX_MALE );
     }
@@ -1029,7 +1105,7 @@ void PSTATUS_UTIL_SetCurrentPPPFast( PSTATUS_WORK *work , const BOOL isFast )
     if( work->calcPP == NULL )
     {
       u16 oyaName[5] = {L'ブ',L'ラ',L'ッ',L'ク',0xFFFF};
-      work->calcPP = PP_Create( work->dataPos+1 , 50 , PTL_SETUP_POW_AUTO , HEAPID_POKE_STATUS );
+      work->calcPP = PP_Create( work->dataPos+1 , 50 , PTL_SETUP_ID_AUTO , HEAPID_POKE_STATUS );
       PP_Put( work->calcPP , ID_PARA_oyaname_raw , (u32)&oyaName[0] );
       PP_Put( work->calcPP , ID_PARA_oyasex , PTL_SEX_MALE );
     }

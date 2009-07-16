@@ -201,11 +201,52 @@ void PSTATUS_RIBBON_InitCell( PSTATUS_WORK *work , PSTATUS_RIBBON_WORK *ribbonWo
 
     GFL_CLACT_WK_SetDrawEnable( ribbonWork->clwkCur , FALSE );
   }  
+  
+    //セルの作成
+  {
+    u8 i;
+    PSTA_OAM_ACT_DATA oamData;
+    oamData.x = PSTATUS_RIBBON_BAR_X;
+    oamData.pltt_index = work->cellRes[SCR_PLT_RIBBON_BAR];
+    oamData.pal_offset = 0;
+    oamData.soft_pri = 0;
+    oamData.bg_pri = 2;
+    oamData.setSerface = CLSYS_DEFREND_MAIN;
+    oamData.draw_type = CLSYS_DRAW_MAIN;
+    for( i=0 ; i<PSTATUS_RIBBON_BAR_NUM ; i++ )
+    {
+      u8 *vramAdr = (u8*)( (u32)G2_GetOBJCharPtr() + 0x20000 - (PSTATUS_RIBBON_BAR_CHARSIZE*(i+1)) );
+
+      //oamData.y = PSTATUS_RIBBON_BAR_Y+PSTATUS_RIBBON_BAR_HEIGHT*i;
+      oamData.y = PSTATUS_RIBBON_CalcRibbonBarY( ribbonWork , i );
+
+      ribbonWork->ribbonDispWork[i].bmpData = GFL_BMP_CreateInVRAM( vramAdr , 
+                                            PSTATUS_RIBBON_BAR_WIDTH/8 , 
+                                            PSTATUS_RIBBON_BAR_HEIGHT/8 ,
+                                            GFL_BMP_16_COLOR , work->heapId );
+
+      oamData.bmp = ribbonWork->ribbonDispWork[i].bmpData;
+      ribbonWork->ribbonDispWork[i].bmpOam = PSTA_OAM_ActorAdd( ribbonWork->bmpOamSys , &oamData );
+
+      //PSTATUS_RIBBON_CreateRibbonBarFunc( work , ribbonWork , &ribbonWork->ribbonDispWork[i] );
+      PSTA_OAM_ActorSetDrawEnable( ribbonWork->ribbonDispWork[i].bmpOam , FALSE );
+    }
+  }
 }
 
 void PSTATUS_RIBBON_TermCell( PSTATUS_WORK *work , PSTATUS_RIBBON_WORK *ribbonWork )
 {
+  u8 i;
   GFL_CLACT_WK_Remove( ribbonWork->clwkCur );
+  for( i=0;i<PSTATUS_RIBBON_BAR_NUM;i++ )
+  {
+    //GFL_CLACT_WK_Remove( ribbonWork->ribbonDispWork[i].clwkRibbonBar );
+    //GFL_BMP_Clear( ribbonWork->ribbonDispWork[i].bmpData , 0 );
+    //PSTA_OAM_ActorBmpTrans( ribbonWork->ribbonDispWork[i].bmpOam );
+
+    PSTA_OAM_ActorDel( ribbonWork->ribbonDispWork[i].bmpOam );
+    GFL_BMP_Delete( ribbonWork->ribbonDispWork[i].bmpData );
+  }
 }
 
 #pragma mark [>UI
@@ -272,7 +313,9 @@ static const BOOL PSTATUS_RIBBON_UpdateKey( PSTATUS_WORK *work , PSTATUS_RIBBON_
   else
   if( work->ktst == GFL_APP_END_TOUCH )
   {
-    if( GFL_UI_KEY_GetTrg() == PAD_BUTTON_A )
+    if( GFL_UI_KEY_GetTrg() == PAD_BUTTON_A ||
+        GFL_UI_KEY_GetTrg() == PAD_KEY_DOWN ||
+        GFL_UI_KEY_GetTrg() == PAD_KEY_UP )
     {
       ribbonWork->speed = 0;
       PSTATUS_RIBBON_SetCursorTopBar( work , ribbonWork );
@@ -343,7 +386,9 @@ static void PSTATUS_RIBBON_UpdateTP( PSTATUS_WORK *work , PSTATUS_RIBBON_WORK *r
     work->ktst = GFL_APP_END_TOUCH;
   }
   else
-  if( GFL_UI_TP_GetTrg() == TRUE )
+  if( GFL_UI_TP_GetTrg() == TRUE &&
+      work->tpx > PSTATUS_RIBBON_BAR_X &&
+      work->tpx < PSTATUS_RIBBON_BAR_X + PSTATUS_RIBBON_BAR_WIDTH )
   {
     const int touchBar = PSTATUS_RIBBON_CheckTouchBar( work , ribbonWork );
     if( touchBar != GFL_UI_TP_HIT_NONE )
@@ -362,8 +407,23 @@ static void PSTATUS_RIBBON_UpdateTP( PSTATUS_WORK *work , PSTATUS_RIBBON_WORK *r
       work->tpx < PSTATUS_RIBBON_BAR_X + PSTATUS_RIBBON_BAR_WIDTH )
   {
     const s16 tpSub = work->befTpy - work->tpy;
+    const s32 tempSpeed = tpSub*PSTATUS_RIBBON_BAR_SPEED_RATE;
     PSTATUS_RIBBON_MoveBar( work , ribbonWork , tpSub );
-    ribbonWork->speed = tpSub*PSTATUS_RIBBON_BAR_SPEED_RATE;
+    if( tempSpeed >= 0 && ribbonWork->speed > 0 &&
+        tempSpeed < ribbonWork->speed )
+    {
+      ribbonWork->speed = (ribbonWork->speed+tempSpeed)/2;
+    }
+    else
+    if( tempSpeed <= 0 && ribbonWork->speed < 0 &&
+        tempSpeed > ribbonWork->speed )
+    {
+      ribbonWork->speed = (ribbonWork->speed+tempSpeed)/2;
+    }
+    else
+    {
+      ribbonWork->speed = tempSpeed;
+    }
   }
   else
   {
@@ -423,6 +483,10 @@ static const int PSTATUS_RIBBON_CheckTouchBar( PSTATUS_WORK *work , PSTATUS_RIBB
     else
     {
       hitTbl[i].rect.bottom = top+PSTATUS_RIBBON_BAR_HEIGHT;
+    }
+    if( hitTbl[i].rect.top == 0 && hitTbl[i].rect.bottom == 0 )
+    {
+      hitTbl[i].circle.code = GFL_UI_TP_SKIP;
     }
   }
   hitTbl[PSTATUS_RIBBON_BAR_NUM].circle.code = GFL_UI_TP_HIT_END;
@@ -500,6 +564,29 @@ static void PSTATUS_RIBBON_MoveBar( PSTATUS_WORK *work , PSTATUS_RIBBON_WORK *ri
 void PSTATUS_RIBBON_DispPage( PSTATUS_WORK *work , PSTATUS_RIBBON_WORK *ribbonWork )
 {
   u8 i;
+  ribbonWork->pagePos = 0;
+  ribbonWork->selectIdx = 0xFF;
+  ribbonWork->selectType = PSTATUS_RIBBON_INVALID_TYPE;
+
+  ribbonWork->befSelectIdx = 0xFF;
+  ribbonWork->isDisp = TRUE;
+  ribbonWork->isMoveRibbon = TRUE;
+
+  for( i=0 ; i<PSTATUS_RIBBON_BAR_NUM ; i++ )
+  {
+    ribbonWork->ribbonDispWork[i].dispRibbonNo = PSTATUS_RIBBON_GetRibbonType( ribbonWork , i );
+    PSTATUS_RIBBON_CreateRibbonBarFunc( work , ribbonWork , 
+                            &ribbonWork->ribbonDispWork[i] );
+    //PSTA_OAM_ActorSetDrawEnable( ribbonWork->ribbonDispWork[i].bmpOam , FALSE );
+  }
+
+}
+//--------------------------------------------------------------
+//	ページの表示
+//--------------------------------------------------------------
+void PSTATUS_RIBBON_DispPage_Trans( PSTATUS_WORK *work , PSTATUS_RIBBON_WORK *ribbonWork )
+{
+  u8 i;
   //Window下地の張替え
   GFL_BG_WriteScreenExpand( PSTATUS_BG_PLATE , 
                     0 , 0 , PSTATUS_MAIN_PAGE_WIDTH , 24 ,
@@ -516,10 +603,12 @@ void PSTATUS_RIBBON_DispPage( PSTATUS_WORK *work , PSTATUS_RIBBON_WORK *ribbonWo
                      ribbonWork->scrDataUp->szByte );
   GFL_BG_LoadScreenV_Req( PSTATUS_BG_SUB_PLATE );
   
-
   for( i=0 ; i<PSTATUS_RIBBON_BAR_NUM ; i++ )
   {
+    s16 y = PSTATUS_RIBBON_CalcRibbonBarY( ribbonWork , i );
+    PSTA_OAM_ActorSetPos( ribbonWork->ribbonDispWork[i].bmpOam , PSTATUS_RIBBON_BAR_X , y );
     PSTA_OAM_ActorSetDrawEnable( ribbonWork->ribbonDispWork[i].bmpOam , TRUE );
+    PSTA_OAM_ActorBmpTrans( ribbonWork->ribbonDispWork[i].bmpOam );
   }
 
   ribbonWork->pagePos = 0;
@@ -538,6 +627,18 @@ void PSTATUS_RIBBON_DispPage( PSTATUS_WORK *work , PSTATUS_RIBBON_WORK *ribbonWo
 void PSTATUS_RIBBON_ClearPage( PSTATUS_WORK *work , PSTATUS_RIBBON_WORK *ribbonWork )
 {
   u8 i;
+  ribbonWork->isDisp = FALSE;
+  for( i=0 ; i<PSTATUS_RIBBON_BAR_NUM ; i++ )
+  {
+    //GFL_BMP_Clear( ribbonWork->ribbonDispWork[i].bmpData , 2 );
+  }
+}
+//--------------------------------------------------------------
+//	ページのクリア
+//--------------------------------------------------------------
+void PSTATUS_RIBBON_ClearPage_Trans( PSTATUS_WORK *work , PSTATUS_RIBBON_WORK *ribbonWork )
+{
+  u8 i;
   for( i=0 ; i<PSTATUS_RIBBON_BAR_NUM ; i++ )
   {
     PSTA_OAM_ActorSetDrawEnable( ribbonWork->ribbonDispWork[i].bmpOam , FALSE );
@@ -546,11 +647,9 @@ void PSTATUS_RIBBON_ClearPage( PSTATUS_WORK *work , PSTATUS_RIBBON_WORK *ribbonW
   GFL_BG_FillScreen( PSTATUS_BG_PARAM , 0 , 0 , 0 , 
                      PSTATUS_MAIN_PAGE_WIDTH , 21 ,
                      GFL_BG_SCRWRT_PALNL );
-  GFL_BG_LoadScreenV_Req( PSTATUS_BG_PARAM );
+  GFL_BG_LoadScreenReq( PSTATUS_BG_PARAM );
   
   ribbonWork->isDisp = FALSE;
-
-
 }
 
 void PSTATUS_RIBBON_CreateRibbonBar( PSTATUS_WORK *work , PSTATUS_RIBBON_WORK *ribbonWork )
@@ -565,50 +664,17 @@ void PSTATUS_RIBBON_CreateRibbonBar( PSTATUS_WORK *work , PSTATUS_RIBBON_WORK *r
   {
     ribbonWork->ribbonDispWork[i].dispRibbonNo = PSTATUS_RIBBON_GetRibbonType( ribbonWork , i );
   }
-
-  //セルの作成
-  {
-    PSTA_OAM_ACT_DATA oamData;
-    oamData.x = PSTATUS_RIBBON_BAR_X;
-    oamData.pltt_index = work->cellRes[SCR_PLT_RIBBON_BAR];
-    oamData.pal_offset = 0;
-    oamData.soft_pri = 0;
-    oamData.bg_pri = 2;
-    oamData.setSerface = CLSYS_DEFREND_MAIN;
-    oamData.draw_type = CLSYS_DRAW_MAIN;
-    for( i=0 ; i<PSTATUS_RIBBON_BAR_NUM ; i++ )
-    {
-      u8 *vramAdr = (u8*)( (u32)G2_GetOBJCharPtr() + 0x20000 - (PSTATUS_RIBBON_BAR_CHARSIZE*(i+1)) );
-
-      //oamData.y = PSTATUS_RIBBON_BAR_Y+PSTATUS_RIBBON_BAR_HEIGHT*i;
-      oamData.y = PSTATUS_RIBBON_CalcRibbonBarY( ribbonWork , i );
-
-      ribbonWork->ribbonDispWork[i].bmpData = GFL_BMP_CreateInVRAM( vramAdr , 
-                                            PSTATUS_RIBBON_BAR_WIDTH/8 , 
-                                            PSTATUS_RIBBON_BAR_HEIGHT/8 ,
-                                            GFL_BMP_16_COLOR , work->heapId );
-
-      oamData.bmp = ribbonWork->ribbonDispWork[i].bmpData;
-      ribbonWork->ribbonDispWork[i].bmpOam = PSTA_OAM_ActorAdd( ribbonWork->bmpOamSys , &oamData );
-
-      PSTATUS_RIBBON_CreateRibbonBarFunc( work , ribbonWork , &ribbonWork->ribbonDispWork[i] );
-      PSTA_OAM_ActorSetDrawEnable( ribbonWork->ribbonDispWork[i].bmpOam , FALSE );
-    }
-  }
 }
+
 
 void PSTATUS_RIBBON_DeleteRibbonBar( PSTATUS_WORK *work , PSTATUS_RIBBON_WORK *ribbonWork )
 {
+  /*
   u8 i;
   for( i=0;i<PSTATUS_RIBBON_BAR_NUM;i++ )
   {
-    //GFL_CLACT_WK_Remove( ribbonWork->ribbonDispWork[i].clwkRibbonBar );
-    GFL_BMP_Clear( ribbonWork->ribbonDispWork[i].bmpData , 0 );
-    PSTA_OAM_ActorBmpTrans( ribbonWork->ribbonDispWork[i].bmpOam );
-
-    PSTA_OAM_ActorDel( ribbonWork->ribbonDispWork[i].bmpOam );
-    GFL_BMP_Delete( ribbonWork->ribbonDispWork[i].bmpData );
   }
+  */
 }
 
 static void PSTATUS_RIBBON_CreateRibbonBarFunc( PSTATUS_WORK *work , PSTATUS_RIBBON_WORK *ribbonWork , PSTATUS_RIBBON_DISP_WORK *ribbonDispWork )
@@ -643,6 +709,7 @@ static void PSTATUS_RIBBON_CreateRibbonBarFunc( PSTATUS_WORK *work , PSTATUS_RIB
 static void PSTATUS_RIBBON_UpdatRibbon( PSTATUS_WORK *work , PSTATUS_RIBBON_WORK *ribbonWork )
 {
   u8 i;
+  
   for( i=0;i<PSTATUS_RIBBON_BAR_NUM;i++ )
   {
     if( ribbonWork->isMoveRibbon == TRUE )
