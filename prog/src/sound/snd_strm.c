@@ -29,12 +29,12 @@
  *						１文字目は大文字
  *				・関数内変数
  *						小文字と”＿”と数字を使用する 関数の引数もこれと同じ
-*/
+ */
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
 /**
  *					定数宣言
-*/
+ */
 //-----------------------------------------------------------------------------
 
 //-------------------------------------
@@ -51,7 +51,9 @@ static const u8 sc_SND_STRM_CHANNEL_TBL[ SND_STRM_CHANNEL_MAX ] = {
 static const int sc_SND_STRM_HZ_TBL[ SND_STRM_HZMAX ] = {
 	NNS_SND_STRM_TIMER_CLOCK/8000,
 	NNS_SND_STRM_TIMER_CLOCK/11025,
+	NNS_SND_STRM_TIMER_CLOCK/16000,
 	NNS_SND_STRM_TIMER_CLOCK/22050,
+	NNS_SND_STRM_TIMER_CLOCK/32000,
 };
 
 //-------------------------------------
@@ -79,7 +81,7 @@ static const u32 sc_SND_STRM_DATATYPE[ SND_STRM_TYPE_MAX ] = {
 //-----------------------------------------------------------------------------
 /**
  *					構造体宣言
-*/
+ */
 //-----------------------------------------------------------------------------
 typedef struct
 {
@@ -95,6 +97,9 @@ typedef struct
 	u32					arcid;
 	u32					dataid;
 	ARCHANDLE*			p_handle;
+
+	u8* pStraightData;
+
 	u32					data_siz;
 	u32					seek_top;
 	u32					type;
@@ -104,14 +109,14 @@ typedef struct
 //ワーク
 static STRM_WORK*	sp_STRM_WORK = NULL;
 
-	
+
 //32バイトアライメントでヒープからの取り方がわからないので、とりあえず静的に
 static	u8				strmBuffer[STRM_BUF_SIZE] ATTRIBUTE_ALIGN(32);
 
 //-----------------------------------------------------------------------------
 /**
  *					プロトタイプ宣言
-*/
+ */
 //-----------------------------------------------------------------------------
 static void SND_STRM_StockWaveData( NNSSndStrmCallbackStatus status, int numChannels, void *buffer[], u32	len, NNSSndStrmFormat format, void *arg );
 static void SND_STRM_CopyBuffer( STRM_WORK* p_wk,int size );
@@ -120,7 +125,7 @@ static void SND_STRM_CopyBuffer( STRM_WORK* p_wk,int size );
 //----------------------------------------------------------------------------
 /**
  *	@brief	ストリーミング再生システム	初期化
- *	
+ *
  *	@param	heapID		ヒープID
  */
 //-----------------------------------------------------------------------------
@@ -132,8 +137,8 @@ void SND_STRM_Init( u32 heapID )
 	GFL_STD_MemClear( sp_STRM_WORK, sizeof(STRM_WORK) );
 
 	// ストリーミングチャンネル設定
-    NNS_SndInit();
-    NNS_SndStrmInit( &sp_STRM_WORK->strm );
+	NNS_SndInit();
+	NNS_SndStrmInit( &sp_STRM_WORK->strm );
 	NNS_SndStrmAllocChannel( &sp_STRM_WORK->strm, SND_STRM_CHANNEL_MAX, sc_SND_STRM_CHANNEL_TBL);
 }
 
@@ -164,7 +169,7 @@ void SND_STRM_Exit( void )
 void SND_STRM_Main( void )
 {
 	GF_ASSERT( sp_STRM_WORK );
-	
+
 	if( sp_STRM_WORK->snddata_in ){
 		SND_STRM_CopyBuffer( sp_STRM_WORK, SND_STRM_ONELOAD_DATASIZ );
 	}
@@ -200,6 +205,28 @@ void SND_STRM_SetUp( u32 arcid, u32 dataid, SND_STRM_TYPE type, SND_STRM_HZ hz, 
 
 //----------------------------------------------------------------------------
 /**
+ *	@brief	サウンドデータ	設定
+ *
+ *	@param	type		データタイプ
+ *	@param	hz			サンプリング周期
+ *	@param	heapID	ヒープID
+ *	@param	data		生のサンプリングデータ
+ *	@param	size		サイズ
+ */
+//-----------------------------------------------------------------------------
+void SND_STRM_SetUppStraightData( SND_STRM_TYPE type, SND_STRM_HZ hz, u32 heapID, u8* data,u32 size)
+{
+	GF_ASSERT( sp_STRM_WORK );
+
+	sp_STRM_WORK->snddata_in = TRUE;
+	sp_STRM_WORK->pStraightData = data;
+	sp_STRM_WORK->data_siz = size;
+	sp_STRM_WORK->type = type;
+	sp_STRM_WORK->hz = hz;
+}
+
+//----------------------------------------------------------------------------
+/**
  *	@brief	サウンドデータの破棄
  */
 //-----------------------------------------------------------------------------
@@ -222,7 +249,7 @@ void SND_STRM_Release( void )
 //----------------------------------------------------------------------------
 /**
  *	@brief		サウンドデータの有無を取得
- *	
+ *
  *	@retval	TRUE	ある
  *	@retval	FALSE	ない
  */
@@ -244,30 +271,37 @@ BOOL SND_STRM_CheckSetUp( void )
 //-----------------------------------------------------------------------------
 void SND_STRM_Play( void )
 {
+	BOOL ret;
 	GF_ASSERT( sp_STRM_WORK );
 	GF_ASSERT( sp_STRM_WORK->snddata_in );
 
 	// パラメータ初期化
-	sp_STRM_WORK->FSReadPos=SWAV_HEAD_SIZE;
+	if(sp_STRM_WORK->pStraightData){
+		sp_STRM_WORK->FSReadPos = 0;
+	}
+	else{
+		sp_STRM_WORK->FSReadPos = SWAV_HEAD_SIZE;
+	}
 	sp_STRM_WORK->strmReadPos=0;
 	sp_STRM_WORK->strmWritePos=0;
 
 	// セットアップ
-	NNS_SndStrmSetup( &sp_STRM_WORK->strm,
-					  sc_SND_STRM_DATATYPE[sp_STRM_WORK->type],
-					  &strmBuffer[0],
-					  STRM_BUF_SIZE,
-					  sc_SND_STRM_HZ_TBL[sp_STRM_WORK->hz],
-					  INTERVAL,
-					  SND_STRM_StockWaveData,
-					  sp_STRM_WORK);
+	ret = NNS_SndStrmSetup( &sp_STRM_WORK->strm,
+													sc_SND_STRM_DATATYPE[sp_STRM_WORK->type],
+													&strmBuffer[0],
+													STRM_BUF_SIZE,
+													sc_SND_STRM_HZ_TBL[sp_STRM_WORK->hz],
+													INTERVAL,
+													SND_STRM_StockWaveData,
+													sp_STRM_WORK);
+	GF_ASSERT(ret);
 
 	// バッファ状態をクリア
 	MI_CpuClearFast( &strmBuffer[0], STRM_BUF_SIZE );
 
 	// データ補充
 	SND_STRM_CopyBuffer( sp_STRM_WORK, STRM_BUF_SIZE );
-	
+
 	NNS_SndStrmStart( &sp_STRM_WORK->strm );
 
 	sp_STRM_WORK->playing = TRUE;
@@ -337,7 +371,7 @@ void SND_STRM_Volume( int volume )
  *	@param	p_buffer[]
  *	@param	len
  *	@param	format
- *	@param	p_arg 
+ *	@param	p_arg
  */
 //-----------------------------------------------------------------------------
 static void SND_STRM_StockWaveData( NNSSndStrmCallbackStatus status, int num_channels, void* p_buffer[], u32 len, NNSSndStrmFormat format, void* p_arg )
@@ -346,8 +380,8 @@ static void SND_STRM_StockWaveData( NNSSndStrmCallbackStatus status, int num_cha
 	int	i;
 	u8	*strBuf;
 
-	strBuf=p_buffer[0];
-	
+	strBuf = p_buffer[0];
+
 	for(i=0;i<len;i++){
 		strBuf[i]=sw->FS_strmBuffer[i+sw->strmReadPos];
 	}
@@ -374,27 +408,50 @@ static void SND_STRM_CopyBuffer( STRM_WORK* p_wk,int size )
 {
 	FSFile	file;
 	s32		ret;
-	
+
 	GF_ASSERT( p_wk->snddata_in );
 
-	if(size){
-		GFL_ARC_LoadDataOfsByHandle( p_wk->p_handle, p_wk->dataid, p_wk->FSReadPos, size, &p_wk->FS_strmBuffer[0] );
-		p_wk->FSReadPos+=size;
+	if(p_wk->pStraightData){
+		if(size){
+			GFL_STD_MemCopy(&p_wk->pStraightData[p_wk->FSReadPos], &p_wk->FS_strmBuffer[0] , size);
+			p_wk->FSReadPos+=size;
+		}
+		else{
+			while(p_wk->strmReadPos!=p_wk->strmWritePos){
+
+				GFL_STD_MemCopy(&p_wk->pStraightData[p_wk->FSReadPos], &p_wk->FS_strmBuffer[p_wk->strmWritePos] , 32);
+				p_wk->FSReadPos+=32;
+				p_wk->strmWritePos+=32;
+				if(p_wk->strmWritePos>=STRM_BUF_SIZE){
+					p_wk->strmWritePos=0;
+				}
+				if( p_wk->FSReadPos >= sp_STRM_WORK->data_siz ){
+					p_wk->FSReadPos=0;
+//					GFL_ARC_SeekDataByHandle( p_wk->p_handle, sp_STRM_WORK->seek_top );
+				}
+			}
+		}
 	}
 	else{
-		while(p_wk->strmReadPos!=p_wk->strmWritePos){
+		if(size){
+			GFL_ARC_LoadDataOfsByHandle( p_wk->p_handle, p_wk->dataid, p_wk->FSReadPos, size, &p_wk->FS_strmBuffer[0] );
+			p_wk->FSReadPos+=size;
+		}
+		else{
+			while(p_wk->strmReadPos!=p_wk->strmWritePos){
 
 
-			GFL_ARC_LoadDataByHandleContinue( p_wk->p_handle, 32, &p_wk->FS_strmBuffer[p_wk->strmWritePos] );
+				GFL_ARC_LoadDataByHandleContinue( p_wk->p_handle, 32, &p_wk->FS_strmBuffer[p_wk->strmWritePos] );
 
-			p_wk->FSReadPos+=32;
-			p_wk->strmWritePos+=32;
-			if(p_wk->strmWritePos>=STRM_BUF_SIZE){
-				p_wk->strmWritePos=0;
-			}
-			if( p_wk->FSReadPos >= sp_STRM_WORK->data_siz ){
-				p_wk->FSReadPos=SWAV_HEAD_SIZE;
-				GFL_ARC_SeekDataByHandle( p_wk->p_handle, sp_STRM_WORK->seek_top );
+				p_wk->FSReadPos+=32;
+				p_wk->strmWritePos+=32;
+				if(p_wk->strmWritePos>=STRM_BUF_SIZE){
+					p_wk->strmWritePos=0;
+				}
+				if( p_wk->FSReadPos >= sp_STRM_WORK->data_siz ){
+					p_wk->FSReadPos=SWAV_HEAD_SIZE;
+					GFL_ARC_SeekDataByHandle( p_wk->p_handle, sp_STRM_WORK->seek_top );
+				}
 			}
 		}
 	}

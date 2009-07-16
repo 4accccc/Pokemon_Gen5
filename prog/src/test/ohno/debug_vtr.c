@@ -5,7 +5,7 @@
 //=============================================================================
 /**
  * @file	  debug_vtr.c
- * @brief	  ゲームシンク
+ * @brief	  声の録音と再生
  * @author	ohno_katsumi@gamefreak.co.jp
  * @date	  09/04/30
  */
@@ -27,10 +27,23 @@
 #include "net/network_define.h"
 #include "savedata/wifilist.h"
 #include "msg\msg_d_ohno.h"
+#include "sound/snd_strm.h"
 
 
 // マイクゲインを設定
 #define MY_AMPGAIN PM_AMPGAIN_160
+
+int micrate[]={
+	MIC_SAMPLING_RATE_8K,
+	MIC_SAMPLING_RATE_11K,
+	MIC_SAMPLING_RATE_16K,
+	MIC_SAMPLING_RATE_22K,
+	MIC_SAMPLING_RATE_32K};
+
+
+
+static int _SAMPLING_RATE = MIC_SAMPLING_RATE_8K;
+#define _SAMPLING_SIZE (0xb000)
 
 typedef struct _VOICETR_WORK VOICETR_WORK;
 
@@ -67,7 +80,7 @@ struct _VOICETR_WORK {
 
 	void* buffer;
 	int bufferSize;
-
+	int hz;
 	int req;
 	int getdataCount;
 	BOOL bEnd;
@@ -193,55 +206,62 @@ static void _changeStateDebug(VOICETR_WORK* pWork,StateFunc state, int line)
  * @retval	"再生成功=TRUE、失敗=FALSE"
  */
 //--------------------------------------------------------------
-#if 0
-BOOL Snd_PerapVoicePlaySub( const PERAPVOICE* perap, u32 sex, int vol, int pan )
+#if 1
+#define WAVEOUT_CH_NORMAL	(14)							//波形で使用するチャンネルNO
+#define WAVEOUT_PLAY_SPDx1 (32768)
+
+
+//波形データ再生に必要なデータ構造体
+typedef struct{
+	NNSSndWaveOutHandle	handle;					//波形再生ハンドル
+	NNSSndWaveFormat		format;					//波形データフォーマット
+	const void*				dataaddr;				//波形データの先頭アドレス
+	BOOL					loopFlag;				//ループフラグ
+	int						loopStartSample;		//ループ開始サンプル位置
+	int						samples;				//波形データのサンプル数
+	int						sampleRate;				//波形データのサンプリングレート
+	int						volume;					//音量
+	int						speed;					//再生スピード
+	int						pan;					//パン(0-127)
+}WAVEOUT_WORK;
+
+static BOOL Snd_PerapVoicePlaySub( const void* perap, int vol, int pan )
 {
 	u16 add_spd;
 	int ret,wave_pan;
-	s8* sWaveBuffer			= Snd_GetWaveBufAdrs();
-	u8* perap_play_flag		= Snd_GetParamAdrs( SND_W_ID_PERAP_PLAY_FLAG );
-
-
-
-	//シーケンス再生のパンは(-127 - 0 - 127)となっている
-	//波形再生のパンは(0 - 64 - 127)となっている
-	
-	//波形再生パンを取得
-	if( pan < 0 ){
-		wave_pan = 64 + (pan / 2);		//0 - 64  にする
-	}else{
-		wave_pan = 64 + (pan / 2);		//64 - 127 にする
-	}
+	NNSSndWaveOutHandle handle;
+//	u8* perap_play_flag		= Snd_GetParamAdrs( SND_W_ID_PERAP_PLAY_FLAG );
 
 
 	//波形再生用チャンネルを確保する
-	Snd_WaveOutAllocChannel( WAVEOUT_CH_NORMAL );
+	handle = NNS_SndWaveOutAllocChannel( WAVEOUT_CH_NORMAL );
 
 	//ランダムに音程を変える
 	//gf_srand( sys.vsync_counter );
-	add_spd = ( gf_rand() % PERAP_WAVEOUT_SPD_RAND );
+	//add_spd = ( gf_rand() % PERAP_WAVEOUT_SPD_RAND );
 
-	//声データの展開
-	PERAPVOICE_ExpandVoiceData( sWaveBuffer, PERAPVOICE_GetVoiceData(perap) );
 
 	{
 		WAVEOUT_WORK waveout_wk;
-		waveout_wk.handle			= Snd_WaveOutHandleGet(WAVEOUT_CH_NORMAL);	//波形再生ハンドル
+		WAVEOUT_WORK* p;
+		
+		waveout_wk.handle			= handle;	//波形再生ハンドル
 		waveout_wk.format			= NNS_SND_WAVE_FORMAT_PCM8;		//波形データフォーマット
-
-		waveout_wk.dataaddr			= Snd_GetWaveBufAdrs();			//波形データの先頭アドレス
-
+		waveout_wk.dataaddr			= perap;			//波形データの先頭アドレス
 		waveout_wk.loopFlag			= FALSE;						//ループフラグ
 		waveout_wk.loopStartSample	= 0;							//ループ開始サンプル位置
-		waveout_wk.samples			= PERAP_SAMPLING_SIZE;			//波形データのサンプル数
-		waveout_wk.sampleRate		= PERAP_SAMPLING_RATE;			//波形データのサンプリングレート
+		waveout_wk.samples			= _SAMPLING_SIZE;			//波形データのサンプル数
+		waveout_wk.sampleRate		= _SAMPLING_RATE;			//波形データのサンプリングレート
 		waveout_wk.volume			= vol;							//音量
-		waveout_wk.speed			= (WAVEOUT_PLAY_SPDx1+add_spd);	//再生スピード
-		waveout_wk.pan				= wave_pan;						//パン(0-127)
-		ret = Snd_WaveOutStart( &waveout_wk, WAVEOUT_CH_NORMAL );
+		waveout_wk.speed			= WAVEOUT_PLAY_SPDx1;	//再生スピード
+		waveout_wk.pan				= 64;						//パン(0-127)
+//		ret = Snd_WaveOutStart( &waveout_wk, WAVEOUT_CH_NORMAL );
 
-		//ボイスチャットの音量対応
-		Snd_WaveOutSetVolume( WAVEOUT_CH_NORMAL, vol );
+		NNS_SndWaveOutSetVolume( handle, 127 );
+		p = &waveout_wk;
+		ret = NNS_SndWaveOutStart( p->handle, p->format, p->dataaddr, p->loopFlag, p->loopStartSample,
+								p->samples, p->sampleRate, p->volume, p->speed, p->pan );
+
 	}
 
 
@@ -254,7 +274,9 @@ BOOL Snd_PerapVoicePlaySub( const PERAPVOICE* perap, u32 sex, int vol, int pan )
 static  void _endCallback(MICResult	result, void*	arg )
 {
 	VOICETR_WORK* pWork=arg;
-	
+	vu32 ans = OS_GetVBlankCount() - pWork->count;
+
+	OS_TPrintf("サンプリング完了%d %d\n",result, ans/60);
 	_CHANGE_STATE(_micKeyWait);
 }
 
@@ -286,7 +308,7 @@ static MICResult Snd_PerapVoiceRecStart( VOICETR_WORK* pWork )
 
 	//代表的なサンプリングレートをARM7のタイマー周期に換算した値の定義
 	//mic.rate			= MIC_SAMPLING_RATE_8K;
-	mic.rate			= MIC_SAMPLING_RATE_32K;
+	mic.rate			= _SAMPLING_RATE;
 //	mic.rate			= HW_CPU_CLOCK_ARM7 / PERAP_SAMPLING_RATE;
 
 	//連続サンプリング時にバッファをループさせるフラグ
@@ -298,7 +320,9 @@ static MICResult Snd_PerapVoiceRecStart( VOICETR_WORK* pWork )
 	//バッファが飽和した際に呼び出すコールバック関数へ渡す引数
 	mic.full_arg		= pWork;
 
+	pWork->count = OS_GetVBlankCount();
 
+	
 	ret = MIC_StartAutoSampling( &mic );
 
 	return ret;
@@ -317,6 +341,19 @@ static void _noneState(VOICETR_WORK* pWork)
 
 }
 
+static void _cancelState(VOICETR_WORK* pWork)
+{
+	switch(GFL_UI_KEY_GetTrg())
+	{
+	case PAD_BUTTON_Y:
+		SND_STRM_Stop();
+		_CHANGE_STATE(_micKeyWait);
+		break;
+	}
+}
+
+
+
 //------------------------------------------------------------------------------
 /**
  * @brief   キー入力で動きを変える
@@ -332,6 +369,22 @@ static void _micKeyWait(VOICETR_WORK* pWork)
 		Snd_PerapVoiceRecStart(pWork);
 		_msgPrint(pWork, DEBUG_OHNO_MSG0006);
 		_CHANGE_STATE(_noneState);
+		break;
+	case PAD_BUTTON_Y:
+//		Snd_PerapVoicePlaySub( pWork->buffer, 127, 0 );
+		SND_STRM_SetUppStraightData( SND_STRM_PCM8, pWork->hz,
+																 GFL_HEAPID_APP, pWork->buffer,pWork->bufferSize);
+		SND_STRM_Play();
+		OS_TPrintf("再生開始\n");
+		_CHANGE_STATE(_cancelState);
+		break;
+	case PAD_BUTTON_L:
+		pWork->hz++;
+		if(pWork->hz >= SND_STRM_HZMAX){
+			pWork->hz = 0;
+		}
+		OS_TPrintf("%d になった\n",pWork->hz);
+		_SAMPLING_RATE = micrate[pWork->hz];
 		break;
 	case PAD_BUTTON_B:
 		_CHANGE_STATE(NULL);
@@ -369,8 +422,8 @@ static void _mic_init(VOICETR_WORK* pWork)
 			OS_TPrintf("AMPのゲイン設定に失敗（%d）", ret);
 		}
 	}
-	pWork->buffer = GFL_NET_Align32Alloc(GFL_HEAPID_APP ,0xb000);
-	pWork->bufferSize = 0xb000;
+	pWork->buffer = GFL_NET_Align32Alloc(GFL_HEAPID_APP ,_SAMPLING_SIZE);
+	pWork->bufferSize = _SAMPLING_SIZE;
 	
 	_CHANGE_STATE(_micKeyWait);
 

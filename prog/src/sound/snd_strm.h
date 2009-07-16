@@ -34,7 +34,9 @@ typedef enum {
 typedef enum {
 	SND_STRM_8KHZ,		// 8.000KHz
 	SND_STRM_11KHZ,		// 11.025KHz
+  SND_STRM_16KHZ,   // 16.000KHz
 	SND_STRM_22KHZ,		// 22.050KHz
+	SND_STRM_32KHZ,		// 32.000KHz
 
 	SND_STRM_HZMAX,		// システム内で使用
 } SND_STRM_HZ;
@@ -64,6 +66,7 @@ extern void SND_STRM_Main( void );
 
 // 音楽情報の読み込み・破棄
 extern void SND_STRM_SetUp( u32 arcid, u32 dataid, SND_STRM_TYPE type, SND_STRM_HZ hz, u32 heapID );
+extern void SND_STRM_SetUppStraightData( SND_STRM_TYPE type, SND_STRM_HZ hz, u32 heapID, u8* data,u32 size);
 extern void SND_STRM_Release( void );
 extern BOOL SND_STRM_CheckSetUp( void );
 
