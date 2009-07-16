@@ -154,7 +154,8 @@ SRCS  +=    $(SOUNDSRC) \
         system/fld_wipe_3dobj.c \
         debug/debug_system_group.c \
 		field/field_place_name.c \
-		app/app_menu_common.c
+		field/iss_unit.c \
+		app/app_menu_common.c 
 
 
 #================================================
