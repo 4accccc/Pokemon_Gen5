@@ -388,7 +388,7 @@ BOOL FIELD_BMODEL_MAN_GetSubModel(const FIELD_BMODEL_MAN * man,
     u16 bm_id, VecFx32 * ofs, u32 * entry_idx)
 {
   u16 submodel_id;
-#if 1
+#if 0
   //とりあえず、ポケセン以外の扉は出さない
   if (bm_id != NARC_buildmodel_outdoor_pc_01_nsbmd
     || man->model_arcid != ARCID_BMODEL_OUTDOOR )
@@ -407,7 +407,7 @@ BOOL FIELD_BMODEL_MAN_GetSubModel(const FIELD_BMODEL_MAN * man,
     return FALSE;
   }
   *entry_idx = FIELD_BMODEL_MAN_GetEntryIndex(man, submodel_id);
-  VEC_Set(ofs, 0, 0, 0);
+  VEC_Set(ofs, 0, 0, -32 * FX32_ONE);
   return TRUE;
 }
 
@@ -1019,6 +1019,7 @@ static void CreateGlobalObj_forBModel(FIELD_BMODEL_MAN * man)
       }
     }
 
+    TAMADA_Printf("BM:Create Rsc %d (%d)\n", i, gobjTbl->objData[i].highQ_ID);
     createGlobalResource( objRes, &objParam );
     FIELD_BMANIME_DATA_entryTexData( man, anmData, objRes->g3DresTex );
   }
@@ -1100,7 +1101,20 @@ static void createGlobalResource( GLOBAL_RESOURCE * objRes, const MAKE_OBJ_PARAM
 		resTex = objRes->g3DresMdl;
 	}
 	DEBUG_Field_Grayscale(resTex);
-	GFL_G3D_TransVramTexture( resTex );
+  if (GFL_G3D_CheckResourceType( resTex, GFL_G3D_RES_CHKTYPE_TEX ) == TRUE)
+  {
+	  GFL_G3D_TransVramTexture( resTex );
+  } else {
+    const MAKE_RES_PARAM * prm;
+    if (param->tex.arcID != MAKE_RES_NONPARAM)
+    {
+      prm = &param->tex;
+    } else {
+      prm = &param->mdl;
+    }
+    OS_Printf("配置モデルにテクスチャが含まれていません！(arcID=%d, mdlID=%d)\n",prm->arcID,prm->datID);
+    GF_ASSERT(0);
+  }
 	for( i=0; i<GLOBAL_OBJ_ANMCOUNT; i++ ){
 		if( param->anm[i].arcID != MAKE_RES_NONPARAM ){
 			objRes->g3DresAnm[i] = GFL_G3D_CreateResourceArc( param->anm[i].arcID, param->anm[i].datID );
