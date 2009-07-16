@@ -117,12 +117,18 @@ typedef struct {
 static const GFL_UI_TP_HITTBL bttndata[] = {  //上下左右
 	//タッチパネル全部
 	{	PANEL_Y2 * 8,  PANEL_Y2 * 8 + (PANEL_SIZEXY * 8 * PANEL_HEIGHT2), 0,32*8-1 },
+	{ 18, 18+16, 208-16, 208+24-16 },
 	{GFL_UI_TP_HIT_END,0,0,0},		 //終了データ
 };
 
 
 // 表示OAMの時間とかの最大
-#define _CLACT_TIMEPARTS_MAX (7)
+#define _CLACT_TIMEPARTS_MAX (9)
+
+#define _CLACT_EDITMARKOFF (7)
+#define _CLACT_EDITMARKON (8)
+
+
 // タイプ
 #define _CLACT_TYPE_MAX (3)
 
@@ -219,6 +225,7 @@ struct _C_GEAR_WORK {
 	u8 bAction;
 	u8 cellMoveCreateCount;
 	u8 cellMoveType;
+	BOOL bPanelEdit;
 };
 
 
@@ -237,6 +244,7 @@ static BOOL _modeSelectMenuButtonCallback(int bttnid,C_GEAR_WORK* pWork);
 
 static void _timeAnimation(C_GEAR_WORK* pWork);
 static void _typeAnimation(C_GEAR_WORK* pWork);
+static void _editMarkONOFF(C_GEAR_WORK* pWork,BOOL bOn);
 
 
 #ifdef _NET_DEBUG
@@ -871,48 +879,56 @@ static void _BttnCallBack( u32 bttnid, u32 event, void* p_work )
 	
 	switch( event ){
 	case GFL_BMN_EVENT_TOUCH:
-		if(GFL_UI_TP_GetPointCont(&touchx,&touchy)){
-			pWork->tpx=touchx;
-			pWork->tpy=touchy;
-		}
-		pWork->cellMoveCreateCount = 0;
-		break;
-	case GFL_BMN_EVENT_HOLD:
-		if(GFL_UI_TP_GetPointCont(&touchx,&touchy)){
-			pWork->tpx=touchx;
-			pWork->tpy=touchy;
-		}
-		if(pWork->cellMove){
-			GFL_CLACTPOS pos;
-			pos.x = pWork->tpx;  // OBJ表示の為の補正値
-			pos.y = pWork->tpy;
-			GFL_CLACT_WK_SetPos(pWork->cellMove, &pos, CLSYS_DEFREND_SUB);
-		}
-		else if(pWork->cellMoveCreateCount > 20){
-			GFL_CLWK_DATA cellInitData;
-			pWork->cellMoveType = getTypeToTouchPos(pWork,touchx,touchy,&xp,&yp);
-			if(pWork->cellMoveType != CGEAR_PANELTYPE_NONE)
-			{
-
-				//セルの生成
-				cellInitData.pos_x = pWork->tpx;
-				cellInitData.pos_y = pWork->tpy;
-				cellInitData.anmseq = NANR_c_gear_obj_CellAnime01 + pWork->cellMoveType - 1;
-				cellInitData.softpri = 0;
-				cellInitData.bgpri = 0;
-				pWork->cellMove = GFL_CLACT_WK_Create( pWork->cellUnit ,
-																							 pWork->objRes[_CLACT_CHR],
-																							 pWork->objRes[_CLACT_PLT],
-																							 pWork->objRes[_CLACT_ANM],
-																							 &cellInitData ,
-																							 CLSYS_DEFREND_SUB ,
-																							 pWork->heapID );
-				GFL_CLACT_WK_SetDrawEnable( pWork->cellMove, TRUE );
-				GFL_CLACT_WK_SetAutoAnmFlag( pWork->cellMove, TRUE );
-			}
+		if(bttnid == 1){
+			pWork->bPanelEdit = pWork->bPanelEdit ^ 1;
+			_editMarkONOFF(pWork, pWork->bPanelEdit);
 		}
 		else{
-			pWork->cellMoveCreateCount++;
+			if(GFL_UI_TP_GetPointCont(&touchx,&touchy)){
+				pWork->tpx=touchx;
+				pWork->tpy=touchy;
+			}
+			pWork->cellMoveCreateCount = 0;
+		}
+		break;
+	case GFL_BMN_EVENT_HOLD:
+		if(pWork->bPanelEdit){
+			if(GFL_UI_TP_GetPointCont(&touchx,&touchy)){
+				pWork->tpx=touchx;
+				pWork->tpy=touchy;
+			}
+			if(pWork->cellMove){
+				GFL_CLACTPOS pos;
+				pos.x = pWork->tpx;  // OBJ表示の為の補正値
+				pos.y = pWork->tpy;
+				GFL_CLACT_WK_SetPos(pWork->cellMove, &pos, CLSYS_DEFREND_SUB);
+			}
+			else if(pWork->cellMoveCreateCount > 20){
+				GFL_CLWK_DATA cellInitData;
+				pWork->cellMoveType = getTypeToTouchPos(pWork,touchx,touchy,&xp,&yp);
+				if(pWork->cellMoveType != CGEAR_PANELTYPE_NONE)
+				{
+					
+					//セルの生成
+					cellInitData.pos_x = pWork->tpx;
+					cellInitData.pos_y = pWork->tpy;
+					cellInitData.anmseq = NANR_c_gear_obj_CellAnime01 + pWork->cellMoveType - 1;
+					cellInitData.softpri = 0;
+					cellInitData.bgpri = 0;
+					pWork->cellMove = GFL_CLACT_WK_Create( pWork->cellUnit ,
+																								 pWork->objRes[_CLACT_CHR],
+																								 pWork->objRes[_CLACT_PLT],
+																								 pWork->objRes[_CLACT_ANM],
+																								 &cellInitData ,
+																								 CLSYS_DEFREND_SUB ,
+																								 pWork->heapID );
+					GFL_CLACT_WK_SetDrawEnable( pWork->cellMove, TRUE );
+					GFL_CLACT_WK_SetAutoAnmFlag( pWork->cellMove, TRUE );
+				}
+			}
+			else{
+				pWork->cellMoveCreateCount++;
+			}
 		}
 		break;
 
@@ -938,7 +954,7 @@ static void _BttnCallBack( u32 bttnid, u32 event, void* p_work )
 		}
 
 
-		if(GFL_UI_KEY_GetCont() & PAD_BUTTON_L)  ///< パネルタイプを変更
+		if(pWork->bPanelEdit)  ///< パネルタイプを変更
 		{
 			if(_gearPanelTypeNum(pWork,type) > 1 && _isSetChip(xp,yp))
 			{
@@ -970,6 +986,24 @@ static void _BttnCallBack( u32 bttnid, u32 event, void* p_work )
 	}
 }
 
+//------------------------------------------------------------------------------
+/**
+ * @brief   エディットモードのONOFF
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+
+static void _editMarkONOFF(C_GEAR_WORK* pWork,BOOL bOn)
+{
+	if(bOn){
+		GFL_CLACT_WK_SetDrawEnable( pWork->cellCursor[_CLACT_EDITMARKOFF], FALSE );
+		GFL_CLACT_WK_SetDrawEnable( pWork->cellCursor[_CLACT_EDITMARKON], TRUE );
+	}
+	else{
+		GFL_CLACT_WK_SetDrawEnable( pWork->cellCursor[_CLACT_EDITMARKOFF], TRUE );
+		GFL_CLACT_WK_SetDrawEnable( pWork->cellCursor[_CLACT_EDITMARKON], FALSE );
+	}
+}
 
 //------------------------------------------------------------------------------
 /**
@@ -994,6 +1028,8 @@ static void _gearObjCreate(C_GEAR_WORK* pWork)
 			NANR_c_gear_obj_CellAnime_colon,
 			NANR_c_gear_obj_CellAnime_NO6,NANR_c_gear_obj_CellAnime_NO10b,
 			NANR_c_gear_obj_CellAnime_batt1,
+			NANR_c_gear_obj_CellAnime0,
+			NANR_c_gear_obj_CellAnime1
 		};
 		int xbuff[]=
 		{
@@ -1003,13 +1039,15 @@ static void _gearObjCreate(C_GEAR_WORK* pWork)
 			52,
 			57,
 			63,
-			198,
+			178,
+			208,
+			208,
 		};
 
 		GFL_CLWK_DATA cellInitData;
 		//セルの生成
 		cellInitData.pos_x = xbuff[i];
-		cellInitData.pos_y =  18;
+		cellInitData.pos_y = 18;
 		cellInitData.anmseq = anmbuff[i];
 		cellInitData.softpri = 0;
 		cellInitData.bgpri = 0;
@@ -1023,6 +1061,7 @@ static void _gearObjCreate(C_GEAR_WORK* pWork)
 																								pWork->heapID );
 		GFL_CLACT_WK_SetDrawEnable( pWork->cellCursor[i], TRUE );
 	}
+	_editMarkONOFF(pWork,FALSE);
 
 	for(i=0;i < _CLACT_TYPE_MAX ;i++)
 	{
