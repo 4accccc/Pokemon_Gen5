@@ -34,7 +34,7 @@ _EVENT_DATA_END
 /*  C02R0501 WOMAN2の会話用イベントスクリプト*/
 /**************************************************************/
 
-ev_c02r0501_talkobj_badman:
+ev_c02r0501_talkobj_woman2:
 	_TALK_OBJ_PAUSE_ALL
 	_TURN_HERO_SITE
 	_TALKWIN_OPEN

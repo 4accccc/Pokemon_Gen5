@@ -40,7 +40,7 @@ ev_c02r0601_talkobj_waitress:
 	_TALK_OBJ_PAUSE_ALL
 	_TURN_HERO_SITE
 	_TALKWIN_OPEN
-	_TALKMSG_ALLPUT msg_c02r0101_waitress_01
+	_TALKMSG_ALLPUT msg_c02r0601_waitress_01
 	_AB_KEYWAIT
   _TALKWIN_CLOSE
   _OBJ_PAUSE_CLEAR_ALL
@@ -54,7 +54,7 @@ ev_c02r0601_talkobj_woman3:
 	_TALK_OBJ_PAUSE_ALL
 	_TURN_HERO_SITE
 	_TALKWIN_OPEN
-	_TALKMSG_ALLPUT msg_c02r0101_woman3_01
+	_TALKMSG_ALLPUT msg_c02r0601_woman3_01
 	_AB_KEYWAIT
   _TALKWIN_CLOSE
   _OBJ_PAUSE_CLEAR_ALL
@@ -64,11 +64,11 @@ ev_c02r0601_talkobj_woman3:
 /*  C02R0601 MIDDLEMAN2の会話用イベントスクリプト*/
 /**************************************************************/
 
-ev_c02r0601_middleman2_middleman2:
+ev_c02r0601_talkobj_middleman2:
 	_TALK_OBJ_PAUSE_ALL
 	_TURN_HERO_SITE
 	_TALKWIN_OPEN
-	_TALKMSG_ALLPUT msg_c02r0101_middleman2_01
+	_TALKMSG_ALLPUT msg_c02r0601_middleman2_01
 	_AB_KEYWAIT
   _TALKWIN_CLOSE
   _OBJ_PAUSE_CLEAR_ALL
@@ -82,7 +82,7 @@ ev_c02r0601_talkobj_bigman:
 	_TALK_OBJ_PAUSE_ALL
 	_TURN_HERO_SITE
 	_TALKWIN_OPEN
-	_TALKMSG_ALLPUT msg_c02r0101_bigman_01
+	_TALKMSG_ALLPUT msg_c02r0601_bigman_01
 	_AB_KEYWAIT
   _TALKWIN_CLOSE
   _OBJ_PAUSE_CLEAR_ALL
