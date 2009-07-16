@@ -16,9 +16,10 @@
 //               スクリプトテーブル
 //--------------------------------------------------------------
 _EVENT_DATA ev_t02_babygirl1_1
-_EVENT_DATA ev_t02_woman1_1
+_EVENT_DATA ev_t02_talkobj_woman1
 _EVENT_DATA ev_t02_oldman1_1
 _EVENT_DATA ev_t02_oldwoman1_1
+_EVENT_DATA ev_t02_talkobj_bigman
 _EVENT_DATA_END
 
 /**************************************************************/
@@ -66,7 +67,7 @@ ev_t02_babygirl1_1:
 //--------------------------------------------------------------
 //  WOMAN1_1 話し掛け
 //--------------------------------------------------------------
-ev_t02_woman1_1:
+ev_t02_talkobj_woman1:
 	_TALK_OBJ_PAUSE_ALL
 	_TURN_HERO_SITE
 	_TALKWIN_OPEN
@@ -97,6 +98,19 @@ ev_t02_oldwoman1_1:
 	_TURN_HERO_SITE
 	_TALKWIN_OPEN
 	_TALKMSG_ALLPUT msg_t01_oldwoman1_01
+	_AB_KEYWAIT
+  _TALKWIN_CLOSE
+  _OBJ_PAUSE_CLEAR_ALL
+  _END
+
+/**************************************************************/
+/*  T02 BIGMANの会話用イベントスクリプト*/
+/**************************************************************/
+ev_t02_talkobj_bigman:
+	_TALK_OBJ_PAUSE_ALL
+	_TURN_HERO_SITE
+	_TALKWIN_OPEN
+	_TALKMSG_ALLPUT msg_t01_bigman_01
 	_AB_KEYWAIT
   _TALKWIN_CLOSE
   _OBJ_PAUSE_CLEAR_ALL
