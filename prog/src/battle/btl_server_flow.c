@@ -167,6 +167,7 @@ struct _BTL_SVFLOW_WORK {
   HEAPID  heapID;
 
   u8      numClient;
+  u8      numActOrder;
   u8      wazaEff_EnableFlag;
   u8      wazaEff_TargetPokeID;
   u8      pokeDeadFlag[ BTL_POKEID_MAX ];
@@ -197,7 +198,7 @@ static void scproc_SetFlyingFlag( BTL_SVFLOW_WORK* wk );
 static void reqWazaUseForCalcActOrder( BTL_SVFLOW_WORK* wk, ACTION_ORDER_WORK* order );
 static BOOL scEvent_GetReqWazaForCalcActOrder( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp, WazaID orgWazaID, REQWAZA_WORK* reqWaza );
 static inline WazaID ActOrder_GetWazaID( const ACTION_ORDER_WORK* wk );
-static u8 sortClientAction( BTL_SVFLOW_WORK* wk, ACTION_ORDER_WORK* order );
+static u8 sortClientAction( BTL_SVFLOW_WORK* wk, ACTION_ORDER_WORK* order, u32 orderMax );
 static u8 countAlivePokemon( BTL_SVFLOW_WORK* wk );
 static inline void FlowFlg_Set( BTL_SVFLOW_WORK* wk, FlowFlag flg );
 static inline void FlowFlg_Clear( BTL_SVFLOW_WORK* wk, FlowFlag flg );
@@ -509,6 +510,7 @@ BTL_SVFLOW_WORK* BTL_SVFLOW_InitSystem(
   wk->pokeCon = pokeCon;
   wk->mainModule = mainModule;
   wk->numClient = numClient;
+  wk->numActOrder = 0;
   wk->turnCount = 0;
   wk->flowResult = SVFLOW_RESULT_DEFAULT;
   wk->que = que;
@@ -567,6 +569,7 @@ SvflowResult BTL_SVFLOW_Start( BTL_SVFLOW_WORK* wk )
   u8 numActPoke, alivePokeBefore, alivePokeAfter, clientID, pokeIdx, i;
 
   SCQUE_Init( wk->que );
+  wk->numActOrder = 0;
 
   FlowFlg_ClearAll( wk );
   BTL_EVENT_StartTurn();
@@ -578,8 +581,8 @@ SvflowResult BTL_SVFLOW_Start( BTL_SVFLOW_WORK* wk )
 
   scproc_SetFlyingFlag( wk );
 
-  numActPoke = sortClientAction( wk, wk->actOrder );
-  for(i=0; i<numActPoke; i++)
+  wk->numActOrder = sortClientAction( wk, wk->actOrder, NELEMS(wk->actOrder) );
+  for(i=0; i<wk->numActOrder; i++)
   {
     clientID = wk->actOrder[i].clientID;
     pokeIdx  = wk->actOrder[i].pokeIdx;
@@ -648,6 +651,31 @@ SvflowResult BTL_SVFLOW_Start( BTL_SVFLOW_WORK* wk )
 
   return SVFLOW_RESULT_DEFAULT;
 }
+// 今、戦闘に出ていて生きているポケモンの数をカウント
+static u8 countAlivePokemon( BTL_SVFLOW_WORK* wk )
+{
+  SVCL_WORK* clwk;
+  const BTL_POKEPARAM* bpp;
+  u16 i, j;
+  u8 cnt = 0;
+
+  for(i=0; i<wk->numClient; ++i)
+  {
+    clwk = BTL_SERVER_GetClientWork( wk->server, i );
+    for(j=0; j<clwk->numCoverPos; ++j)
+    {
+      bpp = clwk->frontMember[ j ];
+      if( bpp != NULL )
+      {
+        if( !BPP_IsDead(bpp) )
+        {
+          cnt++;
+        }
+      }
+    }
+  }
+  return cnt;
+}
 static void clear_poke_actflags( BTL_SVFLOW_WORK* wk )
 {
   BTL_POKEPARAM* bpp;
@@ -705,7 +733,6 @@ SvflowResult BTL_SVFLOW_StartAfterPokeSelect( BTL_SVFLOW_WORK* wk )
     return SVFLOW_RESULT_DEFAULT;
   }
 }
-
 //----------------------------------------------------------------------------------
 /**
  * 場にいる全てのポケモンに可能かつ必要なら飛行フラグをセット
@@ -732,11 +759,10 @@ static void scproc_SetFlyingFlag( BTL_SVFLOW_WORK* wk )
     }
   }
 }
-
 //----------------------------------------------------------------------------------
 /**
  * 他ワザ呼び出しを行うワザで、アクション処理順序計算にも呼び出し後のワザを適用する場合、
- * 呼び出すワザID等ををワークに格納する
+ * 呼び出すワザID等をワークに格納する
  *
  * @param   flowWk
  * @param   order
@@ -775,26 +801,19 @@ static BOOL scEvent_GetReqWazaForCalcActOrder( BTL_SVFLOW_WORK* wk, const BTL_PO
   BTL_EVENTVAR_Pop();
   return (reqWaza->wazaID != WAZANO_NULL);
 }
-// アクション内容から、優先順位計算に使用するワザIDを取得（ワザ使わない場合はWAZANO_NULL）
-static inline WazaID ActOrder_GetWazaID( const ACTION_ORDER_WORK* wk )
-{
-  if( wk->action.gen.cmd == BTL_ACTION_FIGHT )
-  {
-    return (wk->reqWaza.wazaID == WAZANO_NULL)? wk->action.fight.waza : wk->reqWaza.wazaID;
-  }
-  return WAZANO_NULL;
-}
-
-//--------------------------------------------------------------------------
+//----------------------------------------------------------------------------------
 /**
- * クライアントのアクションをチェックし、処理順序を確定
+ *
+ * ポケモンごとのアクションをチェックし、処理順序を確定
  *
  * @param   server
- * @param   order   処理する順番にクライアントIDを並べ直して格納するための配列
+ * @param   order       処理する順番にクライアントIDを並べ直して格納するための配列
+ * @param   orderMax    配列 order の要素数
  *
+ * @retval  u8    処理するポケモン数
  */
-//--------------------------------------------------------------------------
-static u8 sortClientAction( BTL_SVFLOW_WORK* wk, ACTION_ORDER_WORK* order )
+//----------------------------------------------------------------------------------
+static u8 sortClientAction( BTL_SVFLOW_WORK* wk, ACTION_ORDER_WORK* order, u32 orderMax )
 {
   /*
     行動優先順  ...  3 BIT
@@ -828,7 +847,6 @@ static u8 sortClientAction( BTL_SVFLOW_WORK* wk, ACTION_ORDER_WORK* order )
       ++p;
     }
   }
-
 // 各ポケモンの行動プライオリティ値を生成
   numPoke = p;
   for(i=0; i<numPoke; ++i)
@@ -870,48 +888,33 @@ static u8 sortClientAction( BTL_SVFLOW_WORK* wk, ACTION_ORDER_WORK* order )
     // プライオリティ値とクライアントIDを対にして配列に保存
     order[i].priority = MakePriValue( actionPri, spPri_A, wazaPri, spPri_B, agility );
   }
-
-// プライオリティ値ソートに伴ってクライアントID配列もソート
+// プライオリティ値によるソート
   for(i=0; i<numPoke; i++){
     for(j=i+1; j<numPoke; j++){
       if( order[i].priority < order[j].priority ){
-        ACTION_ORDER_WORK w = order[i];
+        ACTION_ORDER_WORK tmp = order[i];
         order[i] = order[j];
-        order[j] = w;
+        order[j] = tmp;
       }
     }
   }
 // 全く同じプライオリティ値があったらランダムシャッフル
 // @@@ 未実装
 
+//
+
   return p;
 }
-
-// 今、戦闘に出ていて生きているポケモンの数をカウント
-static u8 countAlivePokemon( BTL_SVFLOW_WORK* wk )
+// アクション内容から、優先順位計算に使用するワザIDを取得（ワザ使わない場合はWAZANO_NULL）
+static inline WazaID ActOrder_GetWazaID( const ACTION_ORDER_WORK* wk )
 {
-  SVCL_WORK* clwk;
-  const BTL_POKEPARAM* bpp;
-  u16 i, j;
-  u8 cnt = 0;
-
-  for(i=0; i<wk->numClient; ++i)
+  if( wk->action.gen.cmd == BTL_ACTION_FIGHT )
   {
-    clwk = BTL_SERVER_GetClientWork( wk->server, i );
-    for(j=0; j<clwk->numCoverPos; ++j)
-    {
-      bpp = clwk->frontMember[ j ];
-      if( bpp != NULL )
-      {
-        if( !BPP_IsDead(bpp) )
-        {
-          cnt++;
-        }
-      }
-    }
+    return (wk->reqWaza.wazaID == WAZANO_NULL)? wk->action.fight.waza : wk->reqWaza.wazaID;
   }
-  return cnt;
+  return WAZANO_NULL;
 }
+
 
 //----------------------------------------------------------------------------------------------
 // サーバーフローフラグ処理
@@ -1310,12 +1313,13 @@ static void scproc_Fight( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, REQWAZA_
   {
     do {
       // ワザ出し失敗判定１
-      if( scproc_Fight_CheckWazaExecuteFail_1st(wk, attacker, orgWaza ) ){ break; }
+      if( scproc_Fight_CheckWazaExecuteFail_1st(wk, attacker, orgWaza) ){ break; }
 
       // 他ワザ呼び出しワザのパラメータチェック＆失敗判定
       if( scEvent_GetReqWazaParam(wk, attacker, orgWaza, orgTargetPos, reqWaza) ){
         scPut_WazaMsg( wk, attacker, orgWaza );
         scproc_WazaExecuteFailed( wk, attacker, orgWaza, SV_WAZAFAIL_OTHER );
+        break;
       }
       else
       {
@@ -7067,6 +7071,29 @@ u8 BTL_SVFLOW_PokePosToPokeID( BTL_SVFLOW_WORK* wk, u8 pokePos )
 {
   const BTL_POKEPARAM* bpp = BTL_POKECON_GetFrontPokeDataConst( wk->pokeCon, pokePos );
   return BPP_GetID( bpp );
+}
+//=============================================================================================
+/**
+ * 現ターンに選択されたアクション内容を取得
+ *
+ * @param   wk
+ * @param   pokeID
+ * @param   dst       [out]
+ *
+ * @retval  BOOL    正しく取得できたらTRUE（現ターン、参加していないポケなどが指定されたらFALSE）
+ */
+//=============================================================================================
+BOOL BTL_SVFLOW_GetThisTurnAction( BTL_SVFLOW_WORK* wk, u8 pokeID, BTL_ACTION_PARAM* dst )
+{
+  u32 i;
+  for(i=0; i<wk->numActOrder; ++i)
+  {
+    if( BPP_GetID(wk->actOrder[i].bpp) == pokeID ){
+      *dst = wk->actOrder[i].action;
+      return TRUE;
+    }
+  }
+  return FALSE;
 }
 //=============================================================================================
 /**

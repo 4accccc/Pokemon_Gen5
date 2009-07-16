@@ -470,6 +470,8 @@ int BPP_GetValue( const BTL_POKEPARAM* pp, BppValueID vid )
   case BPP_TOKUSEI:   return pp->tokusei;
   case BPP_FORM:      return pp->formNo;
 
+  case BPP_HEAVY:     return 50;  // @@@ ¡‚Í‚Ä‚«‚Æ‚¤
+
   default:
     GF_ASSERT(0);
     return 0;

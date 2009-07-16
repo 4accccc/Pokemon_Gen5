@@ -119,5 +119,13 @@ static inline BtlAction BTL_ACTION_GetAction( const BTL_ACTION_PARAM* p )
   return p->gen.cmd;
 }
 
+static inline WazaID BTL_ACTION_GetWazaID( const BTL_ACTION_PARAM* act )
+{
+  if( act->gen.cmd == BTL_ACTION_FIGHT ){
+    return act->fight.waza;
+  }
+  return WAZANO_NULL;
+}
+
 #endif
 
