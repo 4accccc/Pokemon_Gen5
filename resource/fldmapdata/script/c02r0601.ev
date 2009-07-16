@@ -19,7 +19,10 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA    ev_c02r0601
+_EVENT_DATA    ev_c02r0601_talkobj_waitress
+_EVENT_DATA    ev_c02r0601_talkobj_woman3
+_EVENT_DATA    ev_c02r0601_talkobj_middleman2
+_EVENT_DATA    ev_c02r0601_talkobj_bigman
 _EVENT_DATA_END
 
 
@@ -30,9 +33,59 @@ _EVENT_DATA_END
 //  _END
 
 /**************************************************************/
-/*                                                            */
+/*  C02R0601 WAITRESSの会話用イベントスクリプト*/
 /**************************************************************/
-ev_c02r0601:
-  //とりあえず最初のラベルだけ生成している
+
+ev_c02r0601_talkobj_waitress:
+	_TALK_OBJ_PAUSE_ALL
+	_TURN_HERO_SITE
+	_TALKWIN_OPEN
+	_TALKMSG_ALLPUT msg_c02r0101_waitress_01
+	_AB_KEYWAIT
+  _TALKWIN_CLOSE
+  _OBJ_PAUSE_CLEAR_ALL
   _END
+
+/**************************************************************/
+/*  C02R0601 WOMAN3の会話用イベントスクリプト*/
+/**************************************************************/
+
+ev_c02r0601_talkobj_woman3:
+	_TALK_OBJ_PAUSE_ALL
+	_TURN_HERO_SITE
+	_TALKWIN_OPEN
+	_TALKMSG_ALLPUT msg_c02r0101_woman3_01
+	_AB_KEYWAIT
+  _TALKWIN_CLOSE
+  _OBJ_PAUSE_CLEAR_ALL
+  _END
+
+/**************************************************************/
+/*  C02R0601 MIDDLEMAN2の会話用イベントスクリプト*/
+/**************************************************************/
+
+ev_c02r0601_middleman2_middleman2:
+	_TALK_OBJ_PAUSE_ALL
+	_TURN_HERO_SITE
+	_TALKWIN_OPEN
+	_TALKMSG_ALLPUT msg_c02r0101_middleman2_01
+	_AB_KEYWAIT
+  _TALKWIN_CLOSE
+  _OBJ_PAUSE_CLEAR_ALL
+  _END
+
+/**************************************************************/
+/*  C02R0601 BIGMANの会話用イベントスクリプト*/
+/**************************************************************/
+
+ev_c02r0601_talkobj_bigman:
+	_TALK_OBJ_PAUSE_ALL
+	_TURN_HERO_SITE
+	_TALKWIN_OPEN
+	_TALKMSG_ALLPUT msg_c02r0101_bigman_01
+	_AB_KEYWAIT
+  _TALKWIN_CLOSE
+  _OBJ_PAUSE_CLEAR_ALL
+  _END
+
 

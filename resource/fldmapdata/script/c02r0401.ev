@@ -19,7 +19,9 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA    ev_c02r0401
+_EVENT_DATA    ev_c02r0401_talkobj_fightrem1
+_EVENT_DATA    ev_c02r0401_talkobj_fightrem2
+_EVENT_DATA    ev_c02r0401_talkobj_fightrem3
 _EVENT_DATA_END
 
 
@@ -30,9 +32,46 @@ _EVENT_DATA_END
 //  _END
 
 /**************************************************************/
-/*                                                            */
+/*  C02R0401 FIGHTERM1の会話用イベントスクリプト*/
 /**************************************************************/
-ev_c02r0401:
-  //とりあえず最初のラベルだけ生成している
+
+ev_c02r0101_talkobj_fighterm1:
+	_TALK_OBJ_PAUSE_ALL
+	_TURN_HERO_SITE
+	_TALKWIN_OPEN
+	_TALKMSG_ALLPUT msg_c02r0401_fighterm1_01
+	_AB_KEYWAIT
+  _TALKWIN_CLOSE
+  _OBJ_PAUSE_CLEAR_ALL
   _END
+
+/**************************************************************/
+/*  C02R0401 FIGHTERM2の会話用イベントスクリプト*/
+/**************************************************************/
+
+ev_c02r0101_talkobj_fighterm2:
+	_TALK_OBJ_PAUSE_ALL
+	_TURN_HERO_SITE
+	_TALKWIN_OPEN
+	_TALKMSG_ALLPUT msg_c02r0401_fighterm2_01
+	_AB_KEYWAIT
+  _TALKWIN_CLOSE
+  _OBJ_PAUSE_CLEAR_ALL
+  _END
+
+
+/**************************************************************/
+/*  C02R0401 FIGHTERM3の会話用イベントスクリプト*/
+/**************************************************************/
+
+ev_c02r0101_talkobj_fighterm3:
+	_TALK_OBJ_PAUSE_ALL
+	_TURN_HERO_SITE
+	_TALKWIN_OPEN
+	_TALKMSG_ALLPUT msg_c02r0401_fighterm3_01
+	_AB_KEYWAIT
+  _TALKWIN_CLOSE
+  _OBJ_PAUSE_CLEAR_ALL
+  _END
+
 
