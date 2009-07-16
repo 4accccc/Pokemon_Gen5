@@ -1577,7 +1577,6 @@ void BPP_ACTFLAG_Clear( BTL_POKEPARAM* bpp )
 {
   flgbuf_clear( bpp->actFlag, sizeof(bpp->actFlag) );
 }
-
 //=============================================================================================
 /**
  * Ž€–S‚É‚æ‚éŠeŽíó‘ÔƒNƒŠƒA

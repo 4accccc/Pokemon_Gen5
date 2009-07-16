@@ -148,7 +148,7 @@ typedef struct  {
     struct {
       u16  type_perm : 3;
       u16  count_max : 5;
-      u16  _2        : 8;
+      u16  param     : 8;
     }permanent;
     struct {
        u16 type_poketurn : 3;
@@ -218,6 +218,14 @@ static inline BPP_SICK_CONT BPP_SICKCONT_MakePermanentInc( u8 count_max )
   cont.permanent.count_max = count_max;
   return cont;
 }
+static inline BPP_SICK_CONT BPP_SICKCONT_MakePermanentParam( u8 param )
+{
+  BPP_SICK_CONT cont;
+  cont.raw = 0;
+  cont.type = WAZASICK_CONT_PERMANENT;
+  cont.permanent.param = param;
+  return cont;
+}
 
 static inline BOOL BPP_SICKCONT_IsMoudokuCont( BPP_SICK_CONT cont )
 {
@@ -244,7 +252,13 @@ static inline u8 BPP_SICCONT_GetTurnMax( BPP_SICK_CONT cont )
   }
   return 0;
 }
-
+static inline u8 BPP_SICKCONT_GetParam( BPP_SICK_CONT cont )
+{
+  if( cont.type == WAZASICK_CONT_PERMANENT ){
+    return cont.permanent.param;
+  }
+  return 0;
+}
 
 //===================================================================
 // ÉoÉgÉãópPrintfèàóù

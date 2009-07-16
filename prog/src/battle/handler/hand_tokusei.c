@@ -3730,13 +3730,16 @@ static void handler_HedoroEki( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flow
 {
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_DEF) == pokeID )
   {
+    u16 damage = BTL_EVENTVAR_GetValue( BTL_EVAR_VOLUME );
     BTL_EVENTVAR_RewriteValue( BTL_EVAR_VOLUME, 0 );
     BTL_SVFLOW_HANDLERWORK_Push( flowWk, BTL_HANDEX_TOKWIN_IN, pokeID );
     {
       BTL_HANDEX_PARAM_DAMAGE* param = BTL_SVFLOW_HANDLERWORK_Push( flowWk, BTL_HANDEX_DAMAGE, pokeID );
       param->poke_cnt = 1;
       param->pokeID[0] = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID_ATK );
-      param->damage[0] = BTL_EVENTVAR_GetValue( BTL_EVAR_VOLUME );
+      param->damage[0] = damage;
+      param->fSucceedStrEx = TRUE;
+      param->succeedStrID = BTL_STRID_SET_HedoroEki;
     }
     BTL_SVFLOW_HANDLERWORK_Push( flowWk, BTL_HANDEX_TOKWIN_OUT, pokeID );
   }

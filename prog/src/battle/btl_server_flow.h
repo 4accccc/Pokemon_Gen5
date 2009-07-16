@@ -189,6 +189,7 @@ typedef enum {
   BTL_HANDEX_TOKWIN_OUT,    ///< とくせいウィンドウアウト
   BTL_HANDEX_MESSAGE,       ///< メッセージ表示
   BTL_HANDEX_RECOVER_HP,    ///< HP回復
+  BTL_HANDEX_DRAIN,         ///< HP回復（ドレイン系）
   BTL_HANDEX_DAMAGE,        ///< ダメージを与える
   BTL_HANDEX_SHIFT_HP,      ///< HPを変更（ダメージ・回復として扱わない）
   BTL_HANDEX_RECOVER_PP,    ///< PP回復
@@ -277,6 +278,14 @@ typedef struct {
  u8   pokeID;                        ///< 対象ポケモンID
  BTL_HANDEX_STR_PARAMS     exStr;    ///< 成功時メッセージ
 }BTL_HANDEX_PARAM_RECOVER_HP;
+
+typedef struct {
+ BTL_HANDEX_PARAM_HEADER   header;   ///< 共有ヘッダ
+ u16  recoverHP;                     ///< 回復HP量
+ u8   recoverPokeID;                 ///< 回復対象ポケモンID
+ u8   damagedPokeID;                 ///< ダメージを受けた側のポケモンID
+ BTL_HANDEX_STR_PARAMS     exStr;    ///< 成功時メッセージ
+}BTL_HANDEX_PARAM_DRAIN;
 
 typedef struct {
  BTL_HANDEX_PARAM_HEADER   header;   ///< 共有ヘッダ

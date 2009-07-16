@@ -12,6 +12,7 @@ static void contProc( BTL_SVFLOW_WORK* flowWk, BTL_POKEPARAM* bpp, u8 pokeID, Wa
 static void contDamageCommon( BTL_SVFLOW_WORK* flowWk, const BTL_POKEPARAM* bpp, u8 pokeID, WazaSick sick, u16 damage );
 static int getWazaSickDamageStrID( WazaSick sick );
 static void cont_HorobiNoUta( BTL_SVFLOW_WORK* flowWk, BTL_POKEPARAM* bpp, u8 pokeID );
+static void cont_Yadorigi( BTL_SVFLOW_WORK* flowWk, BTL_POKEPARAM* bpp, u8 pokeID );
 static void cureProc( BTL_SVFLOW_WORK* flowWk, BTL_POKEPARAM* bpp, u8 pokeID, WazaSick sick );
 static void cure_Akubi( BTL_SVFLOW_WORK* flowWk, BTL_POKEPARAM* bpp );
 static void cure_HorobiNoUta( BTL_SVFLOW_WORK* flowWk, BTL_POKEPARAM* bpp );
@@ -45,6 +46,7 @@ static void contProc( BTL_SVFLOW_WORK* flowWk, BTL_POKEPARAM* bpp, u8 pokeID, Wa
   }
   switch( sick ){
   case WAZASICK_HOROBINOUTA:    cont_HorobiNoUta( flowWk, bpp, pokeID ); break;
+  case WAZASICK_YADORIGI:       cont_Yadorigi( flowWk, bpp, pokeID ); break;
   }
 }
 
@@ -92,6 +94,37 @@ static void cont_HorobiNoUta( BTL_SVFLOW_WORK* flowWk, BTL_POKEPARAM* bpp, u8 po
   if( turnDiff > 0 ){
     putHorobiCounter( flowWk, bpp, turnDiff );
   }
+}
+/**
+ *  ‚â‚Ç‚è‚¬‚Ì‚½‚ËFŒp‘±
+ */
+static void cont_Yadorigi( BTL_SVFLOW_WORK* flowWk, BTL_POKEPARAM* bpp, u8 pokeID )
+{
+  BTL_HANDEX_PARAM_DAMAGE* dmg_param;
+  u16 damage = BTL_CALC_QuotMaxHP( bpp, 16 );
+
+  dmg_param = BTL_SVFLOW_HANDLERWORK_Push( flowWk, BTL_HANDEX_DAMAGE, pokeID );
+  dmg_param->poke_cnt = 1;
+  dmg_param->pokeID[0] = pokeID;
+  dmg_param->damage[0] = damage;
+  dmg_param->fSucceedStrEx = TRUE;
+  dmg_param->succeedStrID = BTL_STRID_SET_YadorigiTurn;
+
+  {
+    BPP_SICK_CONT  cont = BPP_GetSickCont( bpp, WAZASICK_YADORIGI );
+    BtlPokePos  pos = BPP_SICKCONT_GetParam( cont );
+    u8 userPokeID[BTL_POS_MAX];
+    if( BTL_SERVERFLOW_RECEPT_GetTargetPokeID(flowWk, pos, userPokeID) )
+    {
+      BTL_HANDEX_PARAM_DRAIN* drain_param;
+      drain_param = BTL_SVFLOW_HANDLERWORK_Push( flowWk, BTL_HANDEX_DRAIN, pokeID );
+      drain_param->header.failSkipFlag = TRUE;
+      drain_param->recoverPokeID = userPokeID[0];
+      drain_param->damagedPokeID = pokeID;
+      drain_param->recoverHP = damage;
+    }
+  }
+
 }
 
 //----------------------------------------------------------------------------------------------
@@ -211,6 +244,7 @@ int BTL_SICK_GetDefaultSickStrID( WazaSick sickID, BPP_SICK_CONT cont )
   case WAZASICK_TYOUHATSU:  strID = BTL_STRID_SET_Chouhatu; break;
   case WAZASICK_ICHAMON:    strID = BTL_STRID_SET_Ichamon; break;
   case WAZASICK_AKUBI:      strID = BTL_STRID_SET_Akubi; break;
+  case WAZASICK_YADORIGI:   strID = BTL_STRID_SET_Yadorigi; break;
 
   case WAZASICK_DOKU:
     strID = BPP_SICKCONT_IsMoudokuCont(cont)? BTL_STRID_SET_MoudokuGet : BTL_STRID_SET_DokuGet;
