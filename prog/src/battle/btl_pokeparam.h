@@ -70,6 +70,7 @@ typedef enum {
   BPP_TURNFLG_DAMAGED,      ///< ダメージ喰らった
   BPP_TURNFLG_WAZA_EXE,     ///< ワザを出した
   BPP_TURNFLG_SHRINK,       ///< ひるまされた
+  BPP_TURNFLG_MUST_SHRINK,  ///< ダメージで必ずひるむ
   BPP_TURNFLG_MAMORU,       ///< “まもる”発動
   BPP_TURNFLG_FLYING,       ///< 宙に浮いてる
 
