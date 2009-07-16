@@ -462,7 +462,11 @@ static int getTypeToTouchPos(C_GEAR_WORK* pWork,int touchx,int touchy,int *pxp, 
 		touchx = touchx / 8;
 		touchy = touchy / 8;
 		xp = (touchx - PANEL_X1) / PANEL_SIZEXY;
+		if(touchy - ypos[xp % 2] < 0){
+			return CGEAR_PANELTYPE_MAX;
+		}
 		yp = (touchy - ypos[xp % 2]) / PANEL_SIZEXY;
+		
 		if((xp < C_GEAR_PANEL_WIDTH) && (yp < yloop[ xp % 2 ]))
 		{
 			type = CGEAR_SV_GetPanelType(pWork->pCGSV,xp,yp);
@@ -885,8 +889,8 @@ static void _BttnCallBack( u32 bttnid, u32 event, void* p_work )
 		}
 		else{
 			if(GFL_UI_TP_GetPointCont(&touchx,&touchy)){
-				pWork->tpx=touchx;
-				pWork->tpy=touchy;
+				pWork->tpx = touchx;
+				pWork->tpy = touchy;
 			}
 			pWork->cellMoveCreateCount = 0;
 		}
@@ -905,7 +909,10 @@ static void _BttnCallBack( u32 bttnid, u32 event, void* p_work )
 			}
 			else if(pWork->cellMoveCreateCount > 20){
 				GFL_CLWK_DATA cellInitData;
-				pWork->cellMoveType = getTypeToTouchPos(pWork,touchx,touchy,&xp,&yp);
+				int type = getTypeToTouchPos(pWork,touchx,touchy,&xp,&yp);
+				if(type != CGEAR_PANELTYPE_MAX){
+					pWork->cellMoveType = type;
+				}
 				if(pWork->cellMoveType != CGEAR_PANELTYPE_NONE)
 				{
 					
@@ -938,6 +945,9 @@ static void _BttnCallBack( u32 bttnid, u32 event, void* p_work )
 		pWork->tpx=0;
 		pWork->tpy=0;
 		type = getTypeToTouchPos(pWork,touchx,touchy,&xp,&yp);  // ギアのタイプ分析
+		if(type == CGEAR_PANELTYPE_MAX){
+			return;
+		}
 
 		if(pWork->cellMove){
 			GFL_CLACT_WK_Remove( pWork->cellMove );
