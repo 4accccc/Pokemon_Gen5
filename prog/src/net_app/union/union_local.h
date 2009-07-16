@@ -24,7 +24,7 @@
 #define UNION_RECEIVE_BEACON_MAX      (SCAN_PARENT_COUNT_MAX)
 
 ///巨大データ受信バッファサイズ
-#define UNION_HUGE_RECEIVE_BUF_SIZE   (0x200)
+#define UNION_HUGE_RECEIVE_BUF_SIZE   (0x800)
 
 //==============================================================================
 //  構造体定義
