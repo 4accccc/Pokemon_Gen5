@@ -65,6 +65,7 @@ enum{
 	GMDATA_ID_MUSICAL,		//ミュージカル
   GMDATA_ID_RANDOMMAP,  //ランダム生成マップ
 	GMDATA_ID_IRCCOMPATIBLE,	//相性チェック
+  GMDATA_ID_SP_RIBBON,	//配布リボン
   
 #if 0
 	GMDATA_ID_SYSTEM_DATA,

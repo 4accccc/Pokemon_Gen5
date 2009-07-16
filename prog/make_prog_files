@@ -31,7 +31,8 @@ SAVEDATASRC =   savedata/save_tbl.c \
         savedata/wifi_hiroba_save.c \
         savedata/musical_save.c \
         savedata/randommap_save.c \
-				savedata/irc_compatible_savedata.c
+				savedata/irc_compatible_savedata.c \
+        savedata/sp_ribbon_save.c 
 
 
 #’ÊM‚Ìí’“
@@ -456,8 +457,8 @@ SRCS_OVERLAY_POKE_STATUS = app/p_status/p_sta_sys.c \
 		app/p_status/p_sta_info.c \
 		app/p_status/p_sta_ribbon.c \
 		app/p_status/p_sta_skill.c \
-		app/p_status/p_sta_oam.c
-
+		app/p_status/p_sta_oam.c \
+		app/p_status/ribbon.c
 
 
 # ŒğŠ·‰æ–Ê

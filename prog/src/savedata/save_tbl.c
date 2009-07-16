@@ -31,6 +31,7 @@
 #include "savedata/musical_save.h"
 #include "savedata/randommap_save.h"
 #include "savedata/irc_compatible_savedata.h"
+#include "savedata/sp_ribbon_save.h"
 
 //==============================================================================
 //	定数定義
@@ -232,7 +233,12 @@ static const GFL_SAVEDATA_TABLE SaveDataTbl_Normal[] = {
 		GMDATA_ID_IRCCOMPATIBLE,
     (FUNC_GET_SIZE)IRC_COMPATIBLE_SV_GetWorkSize,
     (FUNC_INIT_WORK)IRC_COMPATIBLE_SV_Init,
-	}
+	},
+  { //配布リボン
+    GMDATA_ID_SP_RIBBON,
+    (FUNC_GET_SIZE)SP_RIBBON_SAVE_GetWorkSize,
+    (FUNC_INIT_WORK)SP_RIBBON_SAVE_InitWork,
+  },
 
 };
 
