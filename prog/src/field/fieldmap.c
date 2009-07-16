@@ -76,6 +76,7 @@
 #endif //USE_DEBUGWIN_SYSTEM
 
 #include "field_place_name.h"
+#include "iss_unit.h"			// TEMP
 
 //======================================================================
 //	define
@@ -184,6 +185,8 @@ struct _FIELDMAP_WORK
 	FLDMSGBG *fldMsgBG;
 
 	FIELD_PLACE_NAME* placeNameSys;
+	ISS_UNIT* issUnit;
+
 	
 	MMDLSYS *fldMMdlSys;
 
@@ -434,6 +437,9 @@ static MAINSEQ_RESULT mainSeqFunc_setup(GAMESYS_WORK *gsys, FIELDMAP_WORK *field
   // 地名表示システム作成
   fieldWork->placeNameSys = FIELD_PLACE_NAME_Create( fieldWork->heapID, fieldWork->fldMsgBG );
 
+  // TEMP: ISSユニットの作成
+  fieldWork->issUnit = ISS_UNIT_Create( fieldWork->map_id, fieldWork->heapID );
+
   fieldWork->camera_control = FIELD_CAMERA_Create(
       fieldWork,
       ZONEDATA_GetCameraID(fieldWork->map_id),
@@ -649,7 +655,7 @@ static MAINSEQ_RESULT mainSeqFunc_update_top(GAMESYS_WORK *gsys, FIELDMAP_WORK *
 
   // 地名表示システム動作処理
   FIELD_PLACE_NAME_Process( fieldWork->placeNameSys );
-  
+
   //自機更新
   FIELD_PLAYER_Update( fieldWork->field_player );
 
@@ -672,6 +678,21 @@ static MAINSEQ_RESULT mainSeqFunc_update_top(GAMESYS_WORK *gsys, FIELDMAP_WORK *
   }
   
   FLDEFF_CTRL_Update( fieldWork->fldeff_ctrl );
+
+  // TEMP: BGMの一部トラックの音量調整
+  {
+	  int gx, gy, gz;
+      VecFx32 player_pos;
+
+	  // グリッド座標を算
+      FIELD_PLAYER_GetPos(fieldWork->field_player, &player_pos);
+	  gx = (int)( ( FX_Div( player_pos.x, 16*FX32_ONE) & FX32_INT_MASK ) >> FX32_SHIFT );
+	  gy = (int)( ( FX_Div( player_pos.y, 16*FX32_ONE) & FX32_INT_MASK ) >> FX32_SHIFT );
+	  gz = (int)( ( FX_Div( player_pos.z, 16*FX32_ONE) & FX32_INT_MASK ) >> FX32_SHIFT );
+
+	  // ボリュームを更新
+	  ISS_UNIT_Update( fieldWork->issUnit, gx, gy, gz );
+  }
 
   return MAINSEQ_RESULT_CONTINUE;
 }
@@ -716,6 +737,9 @@ static MAINSEQ_RESULT mainSeqFunc_free(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldW
   
   // 地名表示システム破棄
   FIELD_PLACE_NAME_Delete( fieldWork->placeNameSys );
+
+  // TEMP: ISSユニットの破棄
+  ISS_UNIT_Delete( fieldWork->issUnit );
 
   //フィールドエンカウント破棄
   FIELD_ENCOUNT_Delete( fieldWork->encount );
@@ -1783,6 +1807,9 @@ static void fldmap_ZoneChange( FIELDMAP_WORK *fieldWork )
 
 	// 地名表示システムに, ゾーンの切り替えを通達
 	FIELD_PLACE_NAME_ZoneChange( fieldWork->placeNameSys, new_zone_id );
+
+	// ISSユニットにゾーンの切り替えを通達
+	ISS_UNIT_ZoneChange( fieldWork->issUnit, new_zone_id );
 	
 	//ゾーンID更新
 	lc->zone_id = new_zone_id;
