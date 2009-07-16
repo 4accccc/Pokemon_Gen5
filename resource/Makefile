@@ -73,7 +73,8 @@ SUBDIRS	=	wmi \
 			p_status \
 			app_menu_common \
 			place_name \
-			irc_ranking
+			irc_ranking \
+			iss_unit
 
 include $(RESOURCE_MACRO)
 
