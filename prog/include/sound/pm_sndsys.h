@@ -88,6 +88,8 @@ extern BOOL	PMSND_CheckPlayBGM( void );
 extern void	PMSND_ChangeBGMtrack( u16 trackBit );
 //‚a‚f‚lƒXƒe[ƒ^ƒX•ÏX
 extern void	PMSND_SetStatusBGM( int tempoRatio, int pitch, int pan );
+//‚a‚f‚lƒ{ƒŠƒ…[ƒ€•ÏX
+extern void PMSND_ChangeBGMVolume( u16 trackBit, int volume );
 
 //Œ»İ‚Ì‚a‚f‚l‚ğ’â~
 extern void	PMSND_StopBGM( void );

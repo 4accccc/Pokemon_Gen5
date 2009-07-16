@@ -548,6 +548,17 @@ void	PMSND_SetStatusBGM( int tempoRatio, int pitch, int pan )
 
 //------------------------------------------------------------------
 /**
+ * @brief   ‚a‚f‚lƒ{ƒŠƒ…[ƒ€•ÏX
+ */ 
+//------------------------------------------------------------------
+void PMSND_ChangeBGMVolume( u16 trackBit, int volume )
+{
+	NNSSndHandle* pBgmHandle = SOUNDMAN_GetHierarchyPlayerSndHandle();
+	NNS_SndPlayerSetTrackVolume( pBgmHandle, trackBit, volume );
+}
+
+//------------------------------------------------------------------
+/**
  * @brief	‚a‚f‚lI—¹ŒŸo
  */
 //------------------------------------------------------------------
