@@ -178,3 +178,4 @@
 	ARCID_ZONELIGHT_TABLE		"fieldmap/field_zone_light.narc"   #ライト情報
 	ARCID_APP_MENU_COMMON		"app_menu_common.narc"   #共通素材ARC 
 	ARCID_PLACE_NAME "area_win_gra.narc"   #地名表示ウィンドウ
+	ARCID_ISS_UNIT "iss_unit.narc"   #ISSユニットデータ
