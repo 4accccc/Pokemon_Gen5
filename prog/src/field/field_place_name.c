@@ -14,6 +14,7 @@
 #include "msg/msg_place_name.h"
 
 
+
 //===================================================================================
 /**
  * 定数
@@ -224,7 +225,7 @@ void FIELD_PLACE_NAME_Draw( FIELD_PLACE_NAME* p_sys )
 	// スクロール値を設定
 	GFL_BG_SetScroll( BG_FRAME, GFL_BG_SCROLL_Y_SET, scroll_value );
 
-	// デバッグ出力
+	// DEBUG: デバッグ出力
 	/*
 	{
 		char* state;
@@ -288,6 +289,7 @@ void FIELD_PLACE_NAME_ZoneChange( FIELD_PLACE_NAME* p_sys, u32 next_zone_id )
 	{
 		SetState( p_sys, FIELD_PLACE_NAME_STATE_DISAPPEAR ); 
 	}
+
 }
 
 //------------------------------------------------------------------------------------
@@ -485,8 +487,8 @@ static void CreateBitmapWindow( FIELD_PLACE_NAME* p_sys, u32 zone_id )
 	GFL_BG_LoadScreenReq( BG_FRAME );					// BGSYSの内部バッファをVRAMに転送
 
 
-	// デバッグ出力
-	OBATA_Printf( "win_id = %d\n", (int)win_id );
+	// DEBUG: デバッグ出力
+	//OBATA_Printf( "win_id = %d\n", (int)win_id );
 }
 
 //-----------------------------------------------------------------------------------
@@ -522,11 +524,13 @@ static void WriteStringToWindow( FIELD_PLACE_NAME* p_sys, u32 zone_id )
 	// 後始末
 	GFL_STR_DeleteBuffer( p_str_buf );
 
-	// デバッグ出力
+	// DEBUG: デバッグ出力
+	/*
 	OBATA_Printf( "BMPWIN_WIDTH_DOT / 2 = %d\n", BMPWIN_WIDTH_DOT / 2 );
 	OBATA_Printf( "str_width / 2 = %d\n", str_width / 2 );
 	OBATA_Printf( "str_x = %d\n", str_x );
 	OBATA_Printf( "str_id = %d\n", (int)str_id );
+	*/
 
 	// TEMP: "なぞのばしょ" なら表示しない
 	if( str_id == 0 ) FIELD_PLACE_NAME_Hide( p_sys );
