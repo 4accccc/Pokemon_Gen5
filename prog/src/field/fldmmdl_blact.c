@@ -1082,6 +1082,7 @@ static void BlActAddReserve_DigestResource( MMDL_BLACTCONT *pBlActCont )
   
   for( ; i < pReserve->resMax; i++, pRes++ ){
     if( pRes->pG3dRes != NULL && pRes->compFlag == TRUE ){
+      pRes->compFlag = FALSE;
       BBDResUnitIndex_AddResource(
           pBlActCont, pRes->pG3dRes, pRes->code, pRes->flag );
       pRes->pG3dRes = NULL;
@@ -1117,7 +1118,7 @@ static BOOL BlActAddReserve_SearchResource(
   ADDRES_RESERVE *pRes = pReserve->pReserveRes;
   
   for( ; i < pReserve->resMax; i++, pRes++ ){
-    if( pRes->pG3dRes != NULL ){
+    if( pRes->code == code && pRes->pG3dRes != NULL ){
       *outFlag = pRes->flag;
       return( TRUE );
     }
@@ -1235,6 +1236,8 @@ static void BlActAddReserve_DigestActor( MMDL_BLACTCONT *pBlActCont )
       u16 resID,flag;
       u16 transID = BLACT_RESID_NULL;
       
+      pRes->compFlag = FALSE;
+      
       if( pRes->pTransActRes != NULL ) //VRAM転送型
       {
         resID = BlActRes_AddRes( pBlActCont, pRes->code,
@@ -1253,6 +1256,19 @@ static void BlActAddReserve_DigestActor( MMDL_BLACTCONT *pBlActCont )
       {
         ret = BBDResUnitIndex_SearchResID(
             pBlActCont, pRes->code, &resID, &flag );
+
+        #ifdef DEBUG_MMDL_DEVELOP
+        if( ret != TRUE ){
+          OS_Printf( "BLACT ADD RESOURCE ERROR CODE=%xH\n", pRes->code );
+        }
+        #endif
+
+        if( ret != TRUE ){
+          
+          ret = BBDResUnitIndex_SearchResID(
+              pBlActCont, pRes->code, &resID, &flag );
+        }
+        
         GF_ASSERT( ret == TRUE &&
           "BLACT ADD RESERVE RESOURCE NONE" ); //リソース無し
       }
@@ -1361,6 +1377,34 @@ static const MMDL_BBDACT_ANMTBL * BlActAnm_GetAnmTbl( u32 no )
 {
 	GF_ASSERT( no < MMDL_BLACT_ANMTBLNO_MAX );
 	return( &DATA_MMDL_BBDACT_ANM_ListTable[no] );
+}
+
+//--------------------------------------------------------------
+/**
+ * ビルボードアニメ 描画ステータスからテーブル要素数を取得。基本タイプ
+ * @param sta DRAW_STA_STOP等
+ * @retval u32 対応するアニメーションテーブル要素数
+ */
+//--------------------------------------------------------------
+u32 FLDMMDL_BLACTCONT_GetAnmTblNo_Status( u32 sta )
+{
+  GF_ASSERT( sta < DRAW_STA_MAX );
+  //上下左右の並びで各４方向
+  return( sta * DIR_MAX4 );
+}
+
+//--------------------------------------------------------------
+/**
+ * ビルボードアニメ 描画ステータスからテーブル要素数を取得。自機専用
+ * @param sta DRAW_STA_STOP等
+ * @retval u32 対応するアニメーションテーブル要素数
+ */
+//--------------------------------------------------------------
+u32 FLDMMDL_BLACTCONT_GetAnmTblNo_StatusHero( u32 sta )
+{
+  GF_ASSERT( sta < DRAW_STA_MAX_HERO );
+  //上下左右の並びで各４方向
+  return( sta * DIR_MAX4 );
 }
 
 //--------------------------------------------------------------
