@@ -1915,10 +1915,15 @@ static int AC_JumpR2G8F_0( MMDL * mmdl )
 //--------------------------------------------------------------
 static int AC_JumpHiL1G16F_0( MMDL * mmdl )
 {
+#if 0
 	AcJumpWorkInit( mmdl, DIR_LEFT, GRID_VALUE_SPEED_16,
 		GRID_FRAME_16, DRAW_STA_TAKE_OFF_16F, AC_JUMP_HEIGHT_12,
 		AC_JUMP_SPEED_UX16_TBL(GRID_FRAME_16) );
-	
+#else
+	AcJumpWorkInit( mmdl, DIR_LEFT, GRID_VALUE_SPEED_16,
+		GRID_FRAME_16, DRAW_STA_WALK_16F, AC_JUMP_HEIGHT_12,
+		AC_JUMP_SPEED_UX16_TBL(GRID_FRAME_16) );
+#endif
 	return( TRUE );
 }
 
@@ -1931,10 +1936,15 @@ static int AC_JumpHiL1G16F_0( MMDL * mmdl )
 //--------------------------------------------------------------
 static int AC_JumpHiR1G16F_0( MMDL * mmdl )
 {
+#if 0
 	AcJumpWorkInit( mmdl, DIR_RIGHT, GRID_VALUE_SPEED_16,
 		GRID_FRAME_16, DRAW_STA_TAKE_OFF_16F, AC_JUMP_HEIGHT_12,
 		AC_JUMP_SPEED_UX16_TBL(GRID_FRAME_16) );
-	
+#else
+	AcJumpWorkInit( mmdl, DIR_RIGHT, GRID_VALUE_SPEED_16,
+		GRID_FRAME_16, DRAW_STA_WALK_16F, AC_JUMP_HEIGHT_12,
+		AC_JUMP_SPEED_UX16_TBL(GRID_FRAME_16) );
+#endif
 	return( TRUE );
 }
 
@@ -1947,11 +1957,17 @@ static int AC_JumpHiR1G16F_0( MMDL * mmdl )
 //--------------------------------------------------------------
 static int AC_JumpHiL3G32F_0( MMDL * mmdl )
 {
+#if 0
 	AcJumpWorkInit( mmdl, DIR_LEFT,
 		GRID_VALUE_SPEED_4,
 		12, DRAW_STA_TAKE_OFF_8F, AC_JUMP_HEIGHT_12,
 		AC_JUMP_SPEED_UX16_TBL(12) );
-	
+#else	
+	AcJumpWorkInit( mmdl, DIR_LEFT,
+		GRID_VALUE_SPEED_4,
+		12, DRAW_STA_WALK_8F, AC_JUMP_HEIGHT_12,
+		AC_JUMP_SPEED_UX16_TBL(12) );
+#endif
 	return( TRUE );
 }
 
@@ -1964,11 +1980,17 @@ static int AC_JumpHiL3G32F_0( MMDL * mmdl )
 //--------------------------------------------------------------
 static int AC_JumpHiR3G32F_0( MMDL * mmdl )
 {
+#if 0
 	AcJumpWorkInit( mmdl, DIR_RIGHT,
 		GRID_VALUE_SPEED_4,
 		12, DRAW_STA_TAKE_OFF_8F, AC_JUMP_HEIGHT_12,
 		AC_JUMP_SPEED_UX16_TBL(12) );
-	
+#else
+	AcJumpWorkInit( mmdl, DIR_RIGHT,
+		GRID_VALUE_SPEED_4,
+		12, DRAW_STA_WALK_8F, AC_JUMP_HEIGHT_12,
+		AC_JUMP_SPEED_UX16_TBL(12) );
+#endif
 	return( TRUE );
 }
 

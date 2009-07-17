@@ -1072,6 +1072,7 @@ static VMCMD_RESULT EvCmdTalkMsg( VMHANDLE *core, void *wk )
     wordset = SCRIPT_GetMemberWork( sc, ID_EVSCR_WORDSET );
     msgbuf = SCRIPT_GetMemberWork( sc, ID_EVSCR_MSGBUF );
     tmpbuf = SCRIPT_GetMemberWork( sc, ID_EVSCR_TMPBUF );
+    KAGAYA_Printf( "EvCmdTalkMsg MSG ID = %d\n", msg_id );
     GFL_MSG_GetString( msgData, msg_id, *tmpbuf );
     WORDSET_ExpandStr( *wordset, *msgbuf, *tmpbuf );
   }
@@ -1348,6 +1349,51 @@ static VMCMD_RESULT EvCmdPlayerPosGet( VMHANDLE *core, void *wk )
   z = SCRCMD_GetVMWork( core, work );
   *x = MMDL_GetGridPosX( mmdl );
   *z = MMDL_GetGridPosZ( mmdl );
+  return VMCMD_RESULT_CONTINUE;
+}
+
+//--------------------------------------------------------------
+/**
+ * OBJを追加
+ * @param  core    仮想マシン制御構造体へのポインタ
+ * @return  VMCMD_RESULT
+ */
+//--------------------------------------------------------------
+static VMCMD_RESULT EvCmdObjAdd( VMHANDLE *core, void *wk )
+{
+  MMDL *mmdl;
+  SCRCMD_WORK *work = wk;
+  SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
+  SCRIPT_FLDPARAM *fparam = SCRIPT_GetMemberWork( sc, ID_EVSCR_WK_FLDPARAM );
+  u16 gx = VMGetU16( core );
+  u16 gz = VMGetU16( core );
+  u16 dir = VMGetU16( core );
+  u16 id = VMGetU16( core );
+  u16 code = VMGetU16( core );
+  u16 move = VMGetU16( core );
+  int zone_id = FIELDMAP_GetZoneID( fparam->fieldMap );
+  MMDLSYS *mmdlsys = SCRCMD_WORK_GetMMdlSys( work );
+  
+  mmdl = MMDLSYS_AddMMdlParam(
+      mmdlsys, gx, gz, dir, id, code, move, zone_id );
+  return VMCMD_RESULT_CONTINUE;
+}
+
+//--------------------------------------------------------------
+/**
+ * OBJを削除
+ * @param  core    仮想マシン制御構造体へのポインタ
+ * @return  VMCMD_RESULT
+ */
+//--------------------------------------------------------------
+static VMCMD_RESULT EvCmdObjDel( VMHANDLE *core, void *wk )
+{
+  SCRCMD_WORK *work = wk;
+  MMDLSYS *mmdlsys = SCRCMD_WORK_GetMMdlSys( work );
+  u16 id = SCRCMD_GetVMWorkValue( core, work );
+  MMDL *mmdl = MMDLSYS_SearchOBJID( mmdlsys, id );
+  GF_ASSERT( mmdl != NULL && "OBJ DEL 対象のOBJが居ません\n" );
+  MMDL_Delete( mmdl );
   return VMCMD_RESULT_CONTINUE;
 }
 
@@ -1938,6 +1984,54 @@ static VMCMD_RESULT EvCmdGetRand( VMHANDLE *core, void *wk )
 }
 
 //======================================================================
+//  画面フェード
+//======================================================================
+//--------------------------------------------------------------
+/**
+ * 画面フェード
+ * @param  core    仮想マシン制御構造体へのポインタ
+ * @retval VMCMD_RESULT
+ */
+//--------------------------------------------------------------
+static VMCMD_RESULT EvCmdDispFadeStart( VMHANDLE *core, void *wk )
+{
+  u16 mode = VMGetU16( core );
+  u16 start_evy = VMGetU16( core );
+  u16 end_evy = VMGetU16( core );
+  u16 wait = VMGetU16( core );
+  GFL_FADE_SetMasterBrightReq( mode, start_evy, end_evy, wait );
+  return VMCMD_RESULT_CONTINUE;
+}
+
+//--------------------------------------------------------------
+/**
+ * 画面フェード終了チェック ウェイト部分
+ * @param  core    仮想マシン制御構造体へのポインタ
+ * @retval BOOL TRUE=終了
+ */
+//--------------------------------------------------------------
+static BOOL EvCmdDispFadeWait( VMHANDLE *core, void *wk )
+{
+  if( GFL_FADE_CheckFade() == TRUE ){
+    return FALSE;
+  }
+  return TRUE;
+}
+
+//--------------------------------------------------------------
+/**
+ * 画面フェード終了チェック
+ * @param  core    仮想マシン制御構造体へのポインタ
+ * @retval VMCMD_RESULT
+ */
+//--------------------------------------------------------------
+static VMCMD_RESULT EvCmdDispFadeCheck( VMHANDLE *core, void *wk )
+{
+  VMCMD_SetWait( core, EvCmdDispFadeWait );
+  return VMCMD_RESULT_SUSPEND;
+}
+
+//======================================================================
 //  parts
 //======================================================================
 //--------------------------------------------------------------
@@ -2062,6 +2156,8 @@ const VMCMD_FUNC ScriptCmdTbl[] = {
   EvCmdMoveCodeGet,
   EvCmdObjPosGet,
   EvCmdPlayerPosGet,
+  EvCmdObjAdd,
+  EvCmdObjDel,
   
   //動作モデル　イベント関連
   EvCmdObjPauseAll,
@@ -2127,6 +2223,10 @@ const VMCMD_FUNC ScriptCmdTbl[] = {
   EvCmdBmpMenuInitEx,
   EvCmdBmpMenuMakeList,
   EvCmdBmpMenuStart,
+  
+  //画面フェード
+  EvCmdDispFadeStart,
+  EvCmdDispFadeCheck,
   
   //その他
   EvCmdChangeLangID,

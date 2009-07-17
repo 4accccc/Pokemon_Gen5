@@ -536,6 +536,9 @@ extern void MMDLSYS_SetupDrawProc( MMDLSYS *fos );
 
 extern MMDL * MMDLSYS_AddMMdl(
 	const MMDLSYS *fos, const MMDL_HEADER *header, int zone_id );
+extern MMDL * MMDLSYS_AddMMdlParam( const MMDLSYS *fos,
+    s16 gx, s16 gz, u16 dir,
+    u16 id, u16 code, u16 move, int zone_id );
 extern void MMDLSYS_SetMMdl( const MMDLSYS *fos,
 	const MMDL_HEADER *header, int zone_id, int count );
 extern void MMDL_Delete( MMDL * mmdl );

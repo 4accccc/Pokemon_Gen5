@@ -200,19 +200,29 @@
 
 //--------------------------------------------------------------
 ///	フィールド動作モデル 自機専用描画ステータス
+/// 基本歩き系はDRAW_STA_WALK_7Fまで同一
 //--------------------------------------------------------------
 ///移動　ダッシュ 4フレーム
 #define DRAW_STA_DASH_4F		(DRAW_STA_MAX)
 ///描画ステータス最大　自機
 #define DRAW_STA_MAX_HERO		(DRAW_STA_DASH_4F+1)
+
+#define DRAW_STA_MAXDIR4_HERO (DRAW_STA_MAX_HERO*DIR_MAX4)
+
+//--------------------------------------------------------------
+///	フィールド動作モデル 自転車自機専用描画ステータス
+/// 基本歩き系はDRAW_STA_WALK_7Fまで同一
+//--------------------------------------------------------------
+#if 0 //wb null
 ///自機　ジャンプ台
 #define DRAW_STA_TAKE_OFF_16F	(DRAW_STA_MAX)
 ///自機　ジャンプ台
 #define DRAW_STA_TAKE_OFF_8F	(DRAW_STA_MAX+1)
+
 ///描画ステータス最大　自機
 #define DRAW_STA_MAX_CYCLEHERO	(DRAW_STA_TAKE_OFF_8F+1)
 
-#define DRAW_STA_MAXDIR4_HERO (DRAW_STA_MAX_HERO*DIR_MAX4)
+#endif
 
 //--------------------------------------------------------------
 ///	フィールド動作モデル 自機釣り専用描画ステータス

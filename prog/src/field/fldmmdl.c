@@ -430,6 +430,40 @@ MMDL * MMDLSYS_AddMMdl(
 
 //--------------------------------------------------------------
 /**
+ * MMDLSYS 動作モデルを追加。必要最低限な情報からヘッダーを作成して追加。
+ * 足りない情報は0でクリアされている。必要あれば追加後に各自で設定する。
+ * @param fos MMDLSYS
+ * @param x 初期X座標 グリッド単位
+ * @param z 初期Z座標 グリッド単位
+ * @param dir 初期方向。DIR_UP等
+ * @param id OBJ ID
+ * @param code OBJコード。HERO等
+ * @param move 動作コード。MV_RND等
+ * @param zone_id ZONE_ID
+ * @retval MMDL 追加されたMMDL*
+ */
+//--------------------------------------------------------------
+MMDL * MMDLSYS_AddMMdlParam( const MMDLSYS *fos,
+    s16 gx, s16 gz, u16 dir,
+    u16 id, u16 code, u16 move, int zone_id )
+{
+  MMDL *mmdl;
+  MMDL_HEADER head;
+	MI_CpuClear8( &head, sizeof(MMDL_HEADER) );
+  
+  head.id = id;
+  head.obj_code = code;
+  head.move_code = move;
+  head.dir = dir;
+  head.gx = gx;
+  head.gz = gz;
+  
+  mmdl = MMDLSYS_AddMMdl( fos, &head, zone_id );
+  return( mmdl );
+}
+
+//--------------------------------------------------------------
+/**
  * MMDLSYS フィールド動作モデルを追加　複数
  * @param	fos			MMDLSYS *
  * @param	header		追加する情報を纏めたMMDL_HEADER *
