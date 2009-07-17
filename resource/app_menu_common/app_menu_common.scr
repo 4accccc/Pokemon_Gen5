@@ -15,6 +15,10 @@
 "bar_button.NCER"
 "bar_button.NANR"
 
+"menu_bar.NCLR"
+"menu_bar.NCGR"
+"menu_bar.NSCR"
+
 "p_st_type.NCLR"
 
 "p_st_type_normal.NCGR"
