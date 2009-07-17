@@ -101,5 +101,25 @@ DEP_OUTDOOR	=	\
 	$(RESDIR)/r3fence_02.nsbmd \
 	$(RESDIR)/mall_01.nsbmd \
 	$(RESDIR)/door01.nsbmd \
-	$(RESDIR)/rgata_01.nsbmd \
+	$(RESDIR)/rgate_01.nsbmd \
+	$(RESDIR)/c0101.nsbmd \
+	$(RESDIR)/c01fountain_01.nsbmd \
+	$(RESDIR)/c01arch_01.nsbmd \
+	$(RESDIR)/c01thicket_01.nsbmd \
+	$(RESDIR)/c01thicket_02.nsbmd \
+	$(RESDIR)/c04station_01.nsbmd \
+	$(RESDIR)/c04ballpark_01.nsbmd \
+	$(RESDIR)/c04tcourt_01.nsbmd \
+	$(RESDIR)/c04theater_01.nsbmd \
+	$(RESDIR)/thouse_01.nsbmd \
+	$(RESDIR)/tg_house01.nsbmd \
+	$(RESDIR)/tg_house02.nsbmd \
+	$(RESDIR)/tg_house03.nsbmd \
+	$(RESDIR)/tt_house01.nsbmd \
+	$(RESDIR)/tt_train01.nsbmd \
+	$(RESDIR)/tt_train02.nsbmd \
+	$(RESDIR)/st_house01.nsbmd \
+	$(RESDIR)/st_villa01.nsbmd \
+	$(RESDIR)/r7_toh_01.nsbmd \
+	$(RESDIR)/r6_labo_01.nsbmd \
 

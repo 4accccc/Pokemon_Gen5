@@ -113,7 +113,27 @@ enum {
 	NARC_buildmodel_outdoor_r3fence_02_nsbmd = 99,
 	NARC_buildmodel_outdoor_mall_01_nsbmd = 100,
 	NARC_buildmodel_outdoor_door01_nsbmd = 101,
-	NARC_buildmodel_outdoor_rgata_01_nsbmd = 102
+	NARC_buildmodel_outdoor_rgate_01_nsbmd = 102,
+	NARC_buildmodel_outdoor_c0101_nsbmd = 103,
+	NARC_buildmodel_outdoor_c01fountain_01_nsbmd = 104,
+	NARC_buildmodel_outdoor_c01arch_01_nsbmd = 105,
+	NARC_buildmodel_outdoor_c01thicket_01_nsbmd = 106,
+	NARC_buildmodel_outdoor_c01thicket_02_nsbmd = 107,
+	NARC_buildmodel_outdoor_c04station_01_nsbmd = 108,
+	NARC_buildmodel_outdoor_c04ballpark_01_nsbmd = 109,
+	NARC_buildmodel_outdoor_c04tcourt_01_nsbmd = 110,
+	NARC_buildmodel_outdoor_c04theater_01_nsbmd = 111,
+	NARC_buildmodel_outdoor_thouse_01_nsbmd = 112,
+	NARC_buildmodel_outdoor_tg_house01_nsbmd = 113,
+	NARC_buildmodel_outdoor_tg_house02_nsbmd = 114,
+	NARC_buildmodel_outdoor_tg_house03_nsbmd = 115,
+	NARC_buildmodel_outdoor_tt_house01_nsbmd = 116,
+	NARC_buildmodel_outdoor_tt_train01_nsbmd = 117,
+	NARC_buildmodel_outdoor_tt_train02_nsbmd = 118,
+	NARC_buildmodel_outdoor_st_house01_nsbmd = 119,
+	NARC_buildmodel_outdoor_st_villa01_nsbmd = 120,
+	NARC_buildmodel_outdoor_r7_toh_01_nsbmd = 121,
+	NARC_buildmodel_outdoor_r6_labo_01_nsbmd = 122
 };
 
 /* NARC_BUILDMODEL_OUTDOOR_NAIX_ */

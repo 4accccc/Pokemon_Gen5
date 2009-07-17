@@ -132,6 +132,7 @@ while line = input_file.gets
   anime_ids << getAnimeID(anm_dic, column[COL_ANIME_IDX])
   progs << getProgID(column[COL_PROG_IDX])
   submodels << column[COL_SUBMODEL_IDX]
+  puts "#{line}"
 end
 
 submodel_ids = makeSubmodelIDList(syms, submodels)
