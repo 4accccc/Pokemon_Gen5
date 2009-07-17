@@ -150,6 +150,7 @@ struct _BTL_POKEPARAM {
   u8  turnFlag[ TURNFLG_BUF_SIZE ];
   u8  actFlag [ ACTFLG_BUF_SIZE ];
   u8  contFlag[ CONTFLG_BUF_SIZE ];
+  u8  counter[ BPP_COUNTER_MAX ];
 
   BPP_WAZADMG_REC  wazaDamageRec[ WAZADMG_REC_TURN_MAX ][ WAZADMG_REC_MAX ];
   u8               dmgrecCount[ WAZADMG_REC_TURN_MAX ];
@@ -306,9 +307,23 @@ static void setupBySrcData( BTL_POKEPARAM* bpp, const POKEMON_PARAM* srcPP )
 //----------------------------------------------------------------------------------
 static void clearUsedWazaFlag( BTL_POKEPARAM* bpp )
 {
-  u8 i;
+  u32 i;
   for(i=0; i<NELEMS(bpp->waza); ++i){
     bpp->waza[i].usedFlag = FALSE;
+  }
+}
+//----------------------------------------------------------------------------------
+/**
+ * 各種カウンタ値をクリア
+ *
+ * @param   bpp
+ */
+//----------------------------------------------------------------------------------
+static void clearCounter( BTL_POKEPARAM* bpp )
+{
+  u32 i;
+  for(i=0; i<NELEMS(bpp->counter); ++i){
+    bpp->counter[i] = 0;
   }
 }
 
@@ -1592,6 +1607,7 @@ void BPP_DeadClear( BTL_POKEPARAM* bpp )
 
   clearWazaSickWork( bpp, TRUE );
   clearUsedWazaFlag( bpp );
+  clearCounter( bpp );
 }
 //=============================================================================================
 /**
@@ -1608,6 +1624,7 @@ void BPP_OutClear( BTL_POKEPARAM* bpp )
 
   clearWazaSickWork( bpp, FALSE );
   clearUsedWazaFlag( bpp );
+  clearCounter( bpp );
 }
 //=============================================================================================
 /**
@@ -1870,6 +1887,37 @@ u16 BPP_GetActionAgility( const BTL_POKEPARAM* bpp )
 {
   return bpp->actionAgility;
 }
+
+//=============================================================================================
+/**
+ * カウンタ値をセット
+ *
+ * @param   bpp
+ * @param   cnt     カウンタ用途
+ * @param   value   カウンタ値
+ */
+//=============================================================================================
+void BPP_COUNTER_Set( BTL_POKEPARAM* bpp, BppCounter cnt, u8 value )
+{
+  GF_ASSERT(cnt < BPP_COUNTER_MAX);
+  bpp->counter[ cnt ] = value;
+}
+//=============================================================================================
+/**
+ * カウンタ値を取得
+ *
+ * @param   bpp
+ * @param   cnt   カウンタ用途
+ *
+ * @retval  u8
+ */
+//=============================================================================================
+u8 BPP_COUNTER_Get( const BTL_POKEPARAM* bpp, BppCounter cnt )
+{
+  GF_ASSERT(cnt < BPP_COUNTER_MAX);
+  return bpp->counter[ cnt ];
+}
+
 
 //--------------------------------------------------------------------------
 /**

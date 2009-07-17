@@ -215,6 +215,7 @@ typedef enum {
   BTL_HANDEX_SET_ITEM,      ///< アイテム書き換え
   BTL_HANDEX_SWAP_ITEM,     ///< アイテム入れ替え
   BTL_HANDEX_UPDATE_WAZA,   ///< ワザ書き換え
+  BTL_HANDEX_COUNTER,       ///< ポケモンカウンタ値書き換え
 
   BTL_HANDEX_MAX,
 
@@ -465,6 +466,12 @@ typedef struct {
   WazaID          waza;
 }BTL_HANDEX_PARAM_UPDATE_WAZA;
 
+typedef struct {
+  BTL_HANDEX_PARAM_HEADER  header;
+  u8              pokeID;            ///< 対象ポケモンID
+  u8              counterID;         ///< カウンタID（BppCounter)
+  u8              value;             ///< カウンタに設定する値
+}BTL_HANDEX_PARAM_COUNTER;
 
 
 extern void* BTL_SVFLOW_HANDLERWORK_Push( BTL_SVFLOW_WORK* wk, BtlEventHandlerExhibition eq_type, u8 userPokeID );

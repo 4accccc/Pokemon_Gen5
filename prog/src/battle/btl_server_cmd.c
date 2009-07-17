@@ -107,6 +107,7 @@ static const u8 ServerCmdToFmtTbl[] = {
   SC_ARGFMT_1byte,            // SC_OP_OUTCLEAR
   SC_ARGFMT_12byte,           // SC_OP_ADD_FLDEFF
   SC_ARGFMT_1byte,            // SC_OP_REMOVE_FLDEFF
+  SC_ARGFMT_5_5_14bit,        // SC_OP_SET_POKE_COUNTER
   SC_ARGFMT_5_5_14bit,        // SC_ACT_WAZA_EFFECT
   SC_ARGFMT_5_5_14bit_1byte,  // SC_ACT_WAZA_EFFECT_EX
   SC_ARGFMT_5_5_14bit,        // SC_ACT_WAZA_DMG

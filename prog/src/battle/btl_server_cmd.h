@@ -61,6 +61,7 @@ typedef enum {
   SC_OP_OUTCLEAR,           ///< 退場時クリア
   SC_OP_ADD_FLDEFF,         ///< フィールドエフェクト追加
   SC_OP_REMOVE_FLDEFF,      ///< フィールドエフェクト削除
+  SC_OP_SET_POKE_COUNTER,   ///< ポケモンカウンタ値セット
   SC_ACT_WAZA_EFFECT,
   SC_ACT_WAZA_EFFECT_EX,    ///< 【アクション】ワザエフェクト拡張（溜めターンエフェクトなどに使用）
   SC_ACT_WAZA_DMG,          ///< 【アクション】[ AtClient, DefClient, wazaIdx, Affinity ]
@@ -328,7 +329,10 @@ static inline void SCQUE_PUT_OP_RemoveFieldEffect( BTL_SERVER_CMD_QUE* que, u8 e
 {
   SCQUE_PUT_Common( que, SC_OP_REMOVE_FLDEFF, eff );
 }
-
+static inline void SCQUE_PUT_OP_SetPokeCounter( BTL_SERVER_CMD_QUE* que, u8 pokeID, u8 counterID, u8 value )
+{
+  SCQUE_PUT_Common( que, SC_OP_SET_POKE_COUNTER, pokeID, counterID, value );
+}
 
 
 

@@ -91,7 +91,6 @@ typedef enum {
 
 }BppActFlag;
 
-
 //--------------------------------------------------------------
 /**
  *  永続的に保持されるフラグセット
@@ -112,6 +111,20 @@ typedef enum {
   BPP_CONTFLG_MAX,
 
 }BppContFlag;
+
+//--------------------------------------------------------------
+/**
+ *  各種カウンタ値
+ */
+//--------------------------------------------------------------
+typedef enum {
+
+  BPP_COUNTER_TAKUWAERU,          ///< たくわえる段階数
+  BPP_COUNTER_TAKUWAERU_DEF,      ///< たくわえるによって上がった防御ランク
+  BPP_COUNTER_TAKUWAERU_SPDEF,    ///< たくわえるによって上がった特防ランク
+
+  BPP_COUNTER_MAX,
+}BppCounter;
 
 //--------------------------------------------------------------
 /**
@@ -213,6 +226,9 @@ extern fx32  BPP_GetHPRatio( const BTL_POKEPARAM* pp );
 
 extern void BPP_SetActionAgility( BTL_POKEPARAM* bpp, u16 actionAgility );
 extern u16 BPP_GetActionAgility( const BTL_POKEPARAM* bpp );
+
+extern void BPP_COUNTER_Set( BTL_POKEPARAM* bpp, BppCounter cnt, u8 value );
+extern u8 BPP_COUNTER_Get( const BTL_POKEPARAM* bpp, BppCounter cnt );
 
 
 //=============================================================================================
