@@ -513,7 +513,6 @@ class ObjEventData < EventData
   def dump output
     if @objs.length == 0 then return end
     #output.puts "\#include \"zone_#{@zonename.downcase}evc.h\""
-    output.puts "\#include \"../script/#{@zonename.downcase}_def.h\""
     output.puts "const FLDMMDL_HEADER #{getStructName}[] = {"
     @objs.each{|obj| obj.dump(output) }
     output.puts "};"
@@ -602,6 +601,7 @@ begin
     }
 
     File.open("#{ofilename}.cdat", "w"){|file|
+      file.puts "\#include \"../script/#{door_events.zonename.downcase}_def.h\""
       door_events.dump(file)
       obj_events.dump(file)
       bg_events.dump(file)
