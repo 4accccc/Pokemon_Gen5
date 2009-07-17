@@ -449,6 +449,10 @@ static GFL_PROC_RESULT IRC_MENU_PROC_Init( GFL_PROC *p_proc, int *p_seq, void *p
 		SEQ_Change( p_wk, SEQFUNC_DisConnect );
 		break;
 
+	case IRCMENU_MODE_RANKING_RETURN:
+		SEQ_Change( p_wk, SEQFUNC_Select );
+		break;
+
 	default:
 		GF_ASSERT( 0 );
 	}

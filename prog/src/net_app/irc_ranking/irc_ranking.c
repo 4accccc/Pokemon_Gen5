@@ -364,6 +364,9 @@ typedef struct _IRC_RANKING_WORK
 	//データ
 	RANKING_DATA	*p_rank_data;
 
+	//パラメータ
+	GAME_COMM_SYS_PTR	p_gamecomm;
+
 	//etc
 	s16 drag_add;
 	u16	drag_add_cnt;
@@ -403,14 +406,14 @@ static void SEQFUNC_Main( SEQ_WORK *p_seqwk, int *p_seq, void *p_param );
 //-------------------------------------
 ///	BG
 //=====================================
-static void GRAPHIC_BG_Init( GRAPHIC_BG_WORK *p_wk, HEAPID heapID );
+static void GRAPHIC_BG_Init( GRAPHIC_BG_WORK *p_wk, GAME_COMM_SYS_PTR	p_gamecomm, HEAPID heapID );
 static void GRAPHIC_BG_Exit( GRAPHIC_BG_WORK *p_wk );
 static void GRAPHIC_BG_VBlankFunction( GRAPHIC_BG_WORK *p_wk );
 static GFL_ARCUTIL_TRANSINFO GRAPHIC_BG_GetTransInfo( const GRAPHIC_BG_WORK *cp_wk, BOOL is_m );
 //-------------------------------------
 ///	GRAPHIC
 //=====================================
-static void GRAPHIC_Init( GRAPHIC_WORK *p_wk, HEAPID heapID );
+static void GRAPHIC_Init( GRAPHIC_WORK *p_wk, GAME_COMM_SYS_PTR	p_gamecomm, HEAPID heapID );
 static void GRAPHIC_Exit( GRAPHIC_WORK *p_wk );
 static void GRAPHIC_Draw( GRAPHIC_WORK *p_wk );
 static const GRAPHIC_BG_WORK *GRAPHIC_GetBgWorkConst( const GRAPHIC_WORK *cp_wk );
@@ -612,6 +615,7 @@ const GFL_PROC_DATA	IrcRanking_ProcData	=
 static GFL_PROC_RESULT IRC_RANKING_PROC_Init( GFL_PROC *p_proc, int *p_seq, void *p_param, void *p_work )
 {	
 	IRC_RANKING_WORK	*p_wk;
+	IRC_RANKING_PARAM	*p_rank_param;
 	u16	data_len;
 
 	//ヒープ作成
@@ -621,13 +625,24 @@ static GFL_PROC_RESULT IRC_RANKING_PROC_Init( GFL_PROC *p_proc, int *p_seq, void
 	p_wk	= GFL_PROC_AllocWork( p_proc, sizeof(IRC_RANKING_WORK), HEAPID_IRCRANKING );
 	GFL_STD_MemClear( p_wk, sizeof(IRC_RANKING_WORK) );
 
+	//パラメータうけとり
+	p_rank_param	= p_param;
+	if( p_rank_param )
+	{	
+		p_wk->p_gamecomm	= GAMESYSTEM_GetGameCommSysPtr(p_rank_param->p_gamesys);
+	}
+	else
+	{	
+		p_wk->p_gamecomm	= NULL;
+	}
+
 	//データ作成
 	data_len					= RANKING_DATA_GetExistLength();
 	p_wk->p_rank_data	= RANKING_DATA_Create( data_len, HEAPID_IRCRANKING );
 	NAGI_Printf( "data_len %d\n", data_len );
 
 	//モジュール初期化
-	GRAPHIC_Init( &p_wk->grp, HEAPID_IRCRANKING );
+	GRAPHIC_Init( &p_wk->grp, p_wk->p_gamecomm, HEAPID_IRCRANKING );
 	SEQ_Init( &p_wk->seq, p_wk, SEQFUNC_FadeOut );
 	UI_Init( &p_wk->ui, HEAPID_IRCRANKING );
 	ACLR_Init( &p_wk->aclr );
@@ -642,10 +657,6 @@ static GFL_PROC_RESULT IRC_RANKING_PROC_Init( GFL_PROC *p_proc, int *p_seq, void
 			HEAPID_IRCRANKING
 			);
 
-	//INFOバーと同じBG面に書き込む場合、Initの後にしなければならないため
-	//BG_Initの中に移動した
-	//INFOWIN_Init( GRAPHIC_BG_GetFrame(GRAPHIC_BG_FRAME_INFO_S),
-		//	RANKING_BG_PAL_S_15, NULL, HEAPID_IRCRANKING );
 
 	return GFL_PROC_RES_FINISH;
 }
@@ -1029,7 +1040,7 @@ static void SEQFUNC_Main( SEQ_WORK *p_seqwk, int *p_seq, void *p_param )
  *
  */
 //-----------------------------------------------------------------------------
-static void GRAPHIC_BG_Init( GRAPHIC_BG_WORK *p_wk, HEAPID heapID )
+static void GRAPHIC_BG_Init( GRAPHIC_BG_WORK *p_wk, GAME_COMM_SYS_PTR	p_gamecomm, HEAPID heapID )
 {	
 	//クリア
 	GFL_STD_MemClear( p_wk, sizeof(GRAPHIC_BG_WORK) );
@@ -1174,7 +1185,7 @@ static void GRAPHIC_BG_Init( GRAPHIC_BG_WORK *p_wk, HEAPID heapID )
 	}
 
 	INFOWIN_Init( GRAPHIC_BG_GetFrame(GRAPHIC_BG_FRAME_INFO_S),
-			RANKING_BG_PAL_S_15, NULL, HEAPID_IRCRANKING );
+			RANKING_BG_PAL_S_15, p_gamecomm, HEAPID_IRCRANKING );
 
 	//仮バー
 	{	
@@ -1283,7 +1294,7 @@ static GFL_ARCUTIL_TRANSINFO GRAPHIC_BG_GetTransInfo( const GRAPHIC_BG_WORK *cp_
  *
  */
 //-----------------------------------------------------------------------------
-static void GRAPHIC_Init( GRAPHIC_WORK *p_wk, HEAPID heapID )
+static void GRAPHIC_Init( GRAPHIC_WORK *p_wk, GAME_COMM_SYS_PTR	p_gamecomm, HEAPID heapID )
 {	
 	static const GFL_DISP_VRAM sc_vramSetTable =
 	{
@@ -1323,8 +1334,11 @@ static void GRAPHIC_Init( GRAPHIC_WORK *p_wk, HEAPID heapID )
 	//	表示
 	GFL_DISP_GX_InitVisibleControl();
 
+	//	フォント初期化
+	GFL_FONTSYS_Init();
+
 	//	モジュール初期化
-	GRAPHIC_BG_Init( &p_wk->bg, heapID );
+	GRAPHIC_BG_Init( &p_wk->bg, p_gamecomm, heapID );
 
 	//VBlankTask登録
 	p_wk->p_vblank_task	= GFUser_VIntr_CreateTCB(Graphic_VBlankTask, p_wk, 0 );

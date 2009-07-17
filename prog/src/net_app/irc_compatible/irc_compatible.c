@@ -91,6 +91,7 @@ struct _IRC_COMPATIBLE_MAIN_WORK
 	u8									aura_score;
 	u8									dummy2[3];
 	BOOL								is_init;
+	BOOL								is_ranking_ret;
 	MYSTATUS						*p_you_status;
 
 };
@@ -130,6 +131,8 @@ static void *SUBPROC_ALLOC_Rhythm( HEAPID heapID, void *p_wk_adrs );
 static void SUBPROC_FREE_Rhythm( void *p_param_adrs, void *p_wk_adrs );
 static void *SUBPROC_ALLOC_Result( HEAPID heapID, void *p_wk_adrs );
 static void SUBPROC_FREE_Result( void *p_param_adrs, void *p_wk_adrs );
+static void *SUBPROC_ALLOC_Ranking( HEAPID heapID, void *p_wk_adrs );
+static void SUBPROC_FREE_Ranking( void *p_param_adrs, void *p_wk_adrs );
 //RULE
 static u32 RULE_CalcScore( u32 rhythm_score, u32 aura_score, const MYSTATUS *cp_my_status, const MYSTATUS *cp_you_status, HEAPID heapID );
 static u32 RULE_CalcNameScore( const STRBUF	*cp_player1_name, const STRBUF	*cp_player2_name );
@@ -206,8 +209,8 @@ static const struct
 	{	
 		FS_OVERLAY_ID(irc_ranking),
 		&IrcRanking_ProcData,
-		NULL,
-		NULL,
+		SUBPROC_ALLOC_Ranking,
+		SUBPROC_FREE_Ranking,
 	}
 };
 
@@ -820,7 +823,15 @@ static void *SUBPROC_ALLOC_Menu( HEAPID heapID, void *p_wk_adrs )
 	}
 	else
 	{	
-		p_param->mode				= IRCMENU_MODE_RETURN;
+		if( p_wk->is_ranking_ret )
+		{	
+			p_wk->is_ranking_ret	= FALSE;
+			p_param->mode				= IRCMENU_MODE_RANKING_RETURN;
+		}
+		else
+		{	
+			p_param->mode				= IRCMENU_MODE_RETURN;
+		}
 	}
 	
 	return p_param;
@@ -1005,6 +1016,51 @@ static void SUBPROC_FREE_Result( void *p_param_adrs, void *p_wk_adrs )
 	p_param	= p_param_adrs;
 
 	GFL_HEAP_FreeMemory( p_param );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	ランキング用プロック用パラメータ作成
+ *
+ *	@param	void *p_param_adrs	パラメータアドレス
+ *	@param	*p_wk_adrs					ワークアドレス
+ *
+ */
+//-----------------------------------------------------------------------------
+static void *SUBPROC_ALLOC_Ranking( HEAPID heapID, void *p_wk_adrs )
+{	
+	IRC_COMPATIBLE_MAIN_WORK *p_wk;
+	IRC_RANKING_PARAM	*p_param;
+
+	p_wk	= p_wk_adrs;
+
+	p_param	= GFL_HEAP_AllocMemory( heapID, sizeof(IRC_RANKING_PARAM) );
+	GFL_STD_MemClear( p_param, sizeof(IRC_RANKING_PARAM)) ;
+	p_param->p_gamesys	= p_wk->p_param->p_gamesys;
+
+	return p_param;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	ランキング用プロック用パラメータ破棄
+ *
+ *	@param	void *p_param_adrs	パラメータアドレス
+ *	@param	*p_wk_adrs					ワークアドレス
+ *
+ */
+//-----------------------------------------------------------------------------
+static void SUBPROC_FREE_Ranking( void *p_param_adrs, void *p_wk_adrs )
+{	
+	IRC_COMPATIBLE_MAIN_WORK *p_wk;
+	IRC_RANKING_PARAM	*p_param;
+	
+	p_wk		= p_wk_adrs;
+	p_param	= p_param_adrs;
+
+	//解放
+	GFL_HEAP_FreeMemory( p_param );
+
+	//ランキングから戻ったことを通知
+	p_wk->is_ranking_ret	= TRUE;
 }
 //=============================================================================
 /**

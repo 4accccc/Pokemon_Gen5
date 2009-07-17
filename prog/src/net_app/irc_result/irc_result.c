@@ -32,6 +32,9 @@
 //	result
 #include "net_app/irc_result.h"
 
+//savedata
+#include "savedata/irc_compatible_savedata.h"
+
 #ifdef PM_DEBUG
 //debug用
 #include "system/net_err.h"	//VRAM退避用アドレスを貰うため
@@ -663,7 +666,6 @@ static GFL_PROC_RESULT IRC_RESULT_PROC_Init( GFL_PROC *p_proc, int *p_seq, void 
 	DEBUGPRINT_Init( sc_bgcnt_frame[GRAPHIC_BG_FRAME_S_BACK], FALSE, HEAPID_IRCRESULT );
 	DEBUGPRINT_Open();
 
-	//リズムシーンセット
 	COMPATIBLE_IRC_SetScene( p_wk->p_param->p_irc, COMPATIBLE_SCENE_RESULT );
 
 	SEQ_Change( p_wk, SEQFUNC_StartGame );
@@ -2035,6 +2037,12 @@ static void SEQ_End( RESULT_MAIN_WORK *p_wk )
 //-----------------------------------------------------------------------------
 static void SEQFUNC_StartGame( RESULT_MAIN_WORK *p_wk, u16 *p_seq )
 {	
+	IRC_COMPATIBLE_SAVEDATA *p_sv	= IRC_COMPATIBLE_SV_GetSavedata( SaveControl_GetPointer() );
+	u8 score				= p_wk->p_param->score;
+	MYSTATUS *p_you	= p_wk->p_param->p_you_status;
+
+	//セーブする
+	IRC_COMPATIBLE_SV_AddRanking( p_sv, MyStatus_GetMyName(p_you), score, MyStatus_GetID(p_you) );
 	SEQ_Change( p_wk, SEQFUNC_DecideHeart );
 }
 //----------------------------------------------------------------------------

@@ -934,6 +934,9 @@ static void GRAPHIC_Init( GRAPHIC_WORK* p_wk, HEAPID heapID )
 	//表示
 	GFL_DISP_GX_InitVisibleControl();
 
+	//	フォント初期化
+	GFL_FONTSYS_Init();
+
 	//描画モジュール
 	GRAPHIC_BG_Init( &p_wk->gbg, heapID );
 	GRAPHIC_3D_Init( &p_wk->g3d, heapID );

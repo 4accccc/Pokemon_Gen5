@@ -30,8 +30,9 @@ typedef enum
 //=====================================
 typedef enum
 {
-	IRCMENU_MODE_INIT,					//初回スタート
-	IRCMENU_MODE_RETURN,				//他からの復帰
+	IRCMENU_MODE_INIT,							//初回スタート
+	IRCMENU_MODE_RETURN,						//他からの復帰		（切断処理が入る）
+	IRCMENU_MODE_RANKING_RETURN,		//ランキングからの復帰
 } IRCMENU_MODE;
 
 
