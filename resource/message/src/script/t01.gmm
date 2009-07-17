@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-07-14T18:57:46"/>
+	<create user="matsumiya" host="W00207" date="2009-07-17T17:58:55"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -370,30 +370,35 @@
 あんなことや　こんなことが　できるぞ</language>
 	</row>
 
-	<row id="msg_t01_testmsg01" back-color="#808080,,,#808080,,#808080,#808080,,,,,,#808080,,,,,,">
-		<comment>はい・いいえ処理
-はいだと文字モード切替</comment>
-		<attribute name="キャラ指定">man01</attribute>
-		<language name="JPN" width="256">きみは　ひらがな　よりも
-かんじの　ほうが　すきかい？</language>
-		<language name="JPN_KANJI" width="256">きみは　漢字よりも
-ひらがなの　方が　好きかい？</language>
+	<row id="msg_t01_woman2_01">
+		<comment>♂
+・仮メッセージ
+・はい・いいえの選択肢表示
+　はいだと文字モード切替</comment>
+		<attribute name="キャラ指定">WOMAN2
+女性</attribute>
+		<language name="JPN" width="256">あなたは　ひらがな　よりも
+かんじの　ほうが　すきなのかしら？</language>
+		<language name="JPN_KANJI" width="256">あなたは　ひらがな　よりも
+漢字のほうが　好きなのかしら？</language>
 	</row>
 
-	<row id="msg_t01_testmsg01_01" back-color="#808080,,,#808080,,#808080,#808080,,,,,,#808080,,,,,,">
-		<comment>はい</comment>
+	<row id="msg_t01_woman2_02">
+		<comment>♂
+・はい選択時</comment>
 		<language name="JPN" width="256">では
-話し方を　変えてみるよ</language>
+話し方を　変えてみるわね</language>
 		<language name="JPN_KANJI" width="256">では
-はなしかたを　かえてみるよ</language>
+はなしかたを　かえてみるわね</language>
 	</row>
 
-	<row id="msg_t01_testmsg01_02" back-color="#808080,,,#808080,,#808080,#808080,,,,,,#808080,,,,,,">
-		<comment>いいえ</comment>
-		<language name="JPN" width="256">うむッ！　ひらがなには　ひらがなの
-あじわいって　やつが　あるからね</language>
+	<row id="msg_t01_woman2_03">
+		<comment>♂
+・いいえ選択時</comment>
+		<language name="JPN" width="256">そうね……　ひらがなには
+ひらがなの　あじわいが　あるわね</language>
 		<language name="JPN_KANJI" width="256">なるほど……
-君は　漢字が　好きなんだね</language>
+あなたは　漢字が　好きなのね</language>
 	</row>
 
 	<row id="msg_t01_testmsg02" back-color="#808080,,,#808080,,#808080,#808080,,,,,,#808080,,,,,,">
@@ -419,16 +424,14 @@
 なんだか　寂しい……</language>
 	</row>
 
-	<row id="msg_t01_testmsg03" back-color="#808080,,,#808080,,#808080,#808080,,,,,,#808080,,,,,,">
+	<row id="msg_t01_babygirl1_01">
+		<comment>♀
+・仮メッセージ</comment>
 		<attribute name="キャラ指定">babygirl1</attribute>
-		<language name="JPN" width="256">こんにちは！
-トレーナーさん！！[BE:01:ページ切り替え（クリア）]
-あたしが　いうのも　へんだけど[BE:01:ページ切り替え（クリア）]
-かがくの　ちからって　すごいわね！</language>
-		<language name="JPN_KANJI" width="256">こんにちは！
-トレーナーさん！！[BE:01:ページ切り替え（クリア）]
-あたしが　いうのも　へんだけど[BE:01:ページ切り替え（クリア）]
-科学の　力って　すごいわね！</language>
+		<language name="JPN" width="256">よのなかには　たっくさんの　ポケモンを
+いろんな　ひとが　いるんだって！！</language>
+		<language name="JPN_KANJI" width="256">よのなかには　たっくさんの　ポケモンを
+いろんな　ひとが　いるんだって！！</language>
 	</row>
 
 	<row id="msg_t01_sign1_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
