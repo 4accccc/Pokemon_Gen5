@@ -105,7 +105,9 @@ DEF_CMD_COUNT  =  ( DEF_CMD_COUNT + 1 )
   DEF_CMD EV_SEQ_MOVE_CODE_GET
   DEF_CMD EV_SEQ_OBJ_POS_GET
   DEF_CMD EV_SEQ_PLAYER_POS_GET
-  
+  DEF_CMD EV_SEQ_OBJ_ADD
+  DEF_CMD EV_SEQ_OBJ_DEL
+
   //動作モデル　イベント関連
   DEF_CMD EV_SEQ_OBJ_PAUSE_ALL
   DEF_CMD EV_SEQ_TALK_OBJ_PAUSE_ALL
@@ -996,7 +998,39 @@ DEF_CMD_COUNT  =  ( DEF_CMD_COUNT + 1 )
   .short  \x
   .short  \z
   .endm
-  
+ 
+//--------------------------------------------------------------
+/**
+ * _OBJ_ADD OBJを追加
+ * @param x 
+ * @param z
+ * @param dir
+ * @param id
+ * @param code
+ * @param move
+ */
+//--------------------------------------------------------------
+  .macro _OBJ_ADD x,z,dir,id,code,move
+  .short EV_SEQ_OBJ_ADD
+  .short \x
+  .short \z
+  .short \dir
+  .short \id
+  .short \code
+  .short \move
+  .endm
+ 
+//--------------------------------------------------------------
+/**
+ * _OBJ_ADD OBJを削除
+ * @param id 削除するOBJ ID
+ */
+//--------------------------------------------------------------
+  .macro _OBJ_DEL id
+  .short EV_SEQ_OBJ_DEL
+  .short \id
+  .endm
+
 //======================================================================
 //  動作モデル　イベント関連
 //======================================================================
@@ -1716,6 +1750,86 @@ DEF_CMD_COUNT  =  ( DEF_CMD_COUNT + 1 )
 //--------------------------------------------------------------
   .macro  _BMPMENU_START
   .short  EV_SEQ_BMPMENU_START
+  .endm
+
+//======================================================================
+//  画面フェード
+//======================================================================
+//--------------------------------------------------------------
+//  フェードモード(fade.h)
+//--------------------------------------------------------------
+#define DISP_FADE_BLACKOUT_MAIN (0x01) //メイン画面フェード ブラックアウト
+#define DISP_FADE_BLACKOUT_SUB  (0x02) //サブ画面フェード ブラックアウト
+#define DISP_FADE_BLACKOUT (0x03) //両画面フェード ブラックアウト
+#define DISP_FADE_WHITEOUT_MAIN (0x04) //メイン画面フェード ホワイトアウト
+#define DISP_FADE_WHITEOUT_SUB  (0x08) //サブ画面フェード ホワイトアウト
+#define DISP_FADE_WHITEOUT (0x0c) //両画面フェード ホワイトアウト
+
+//--------------------------------------------------------------
+/**
+ *  _DISP_FADE_START 画面フェードスタート
+ *  @param mode 画面フェードモード 
+ *  @param start_evy 初期輝度(0=元の色～16=指定輝度）
+ *  @param end_evy 終了輝度(0=元の色～16=指定輝度)
+ *  @param speed フェードスピード 0～
+ */
+//--------------------------------------------------------------
+  .macro _DISP_FADE_START mode,start_evy,end_evy,speed
+  .short EV_SEQ_DISP_FADE_START
+  .short \mode
+  .short \start_evy
+  .short \end_evy
+  .short \speed
+  .endm
+
+//--------------------------------------------------------------
+/**
+ *  _DISP_FADE_START 画面フェード終了チェック
+ *  @param none
+ */
+//--------------------------------------------------------------
+  .macro _DISP_FADE_END_CHECK
+  .short EV_SEQ_DISP_FADE_CHECK
+  .endm
+
+//--------------------------------------------------------------
+/**
+ *  _WHITE_OUT ホワイトアウト
+ *  @param speed フェードスピード 0～
+ */
+//--------------------------------------------------------------
+  .macro _WHITE_OUT speed
+  _DISP_FADE_START DISP_FADE_WHITEOUT_MAIN,0,16,\speed
+  .endm
+
+//--------------------------------------------------------------
+/**
+ *  _WHITE_IN ホワイトイン
+ *  @param speed フェードスピード 0～
+ */
+//--------------------------------------------------------------
+  .macro _WHITE_IN speed
+  _DISP_FADE_START DISP_FADE_WHITEOUT_MAIN,16,0,\speed
+  .endm
+
+//--------------------------------------------------------------
+/**
+ *  _BLACK_OUT ブラックアウト
+ *  @param speed フェードスピード 0～
+ */
+//--------------------------------------------------------------
+  .macro _BLACK_OUT speed
+  _DISP_FADE_START DISP_FADE_BLACKOUT_MAIN,0,16,\speed
+  .endm
+
+//--------------------------------------------------------------
+/**
+ *  _WHITE_IN ブラックイン
+ *  @param speed フェードスピード 0～
+ */
+//--------------------------------------------------------------
+  .macro _BLACK_IN speed
+  _DISP_FADE_START DISP_FADE_BLACKOUT_MAIN,16,0,\speed
   .endm
 
 //======================================================================
