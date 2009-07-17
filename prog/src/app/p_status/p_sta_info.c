@@ -166,31 +166,7 @@ void PSTATUS_INFO_Term( PSTATUS_WORK *work , PSTATUS_INFO_WORK *infoWork )
 //--------------------------------------------------------------
 void PSTATUS_INFO_Main( PSTATUS_WORK *work , PSTATUS_INFO_WORK *infoWork )
 {
-  
-/*  
-  if( infoWork->isUpdateStr == TRUE )
-  {
-    u8 i;
-    BOOL isFinish = TRUE;
 
-    for( i=0;i<SIB_MAX;i++ )
-    {
-      if( PRINTSYS_QUE_IsExistTarget( work->printQue , GFL_BMPWIN_GetBmp( infoWork->bmpWin[i] )) == TRUE )
-      {
-        isFinish = FALSE;
-        break;
-      }
-    }
-    if( isFinish == TRUE )
-    {
-      for( i=0;i<SIB_MAX;i++ )
-      {
-        GFL_BMPWIN_MakeTransWindow_VBlank( infoWork->bmpWin[i] );
-      }
-      infoWork->isUpdateStr = FALSE;
-    }
-  }
-*/
 }
 
 #pragma mark [>Resource

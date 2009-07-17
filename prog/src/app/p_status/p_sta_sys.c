@@ -63,7 +63,7 @@ static const GFL_DISP_VRAM vramBank = {
   GX_VRAM_TEX_0_D,        // テクスチャイメージスロット
   GX_VRAM_TEXPLTT_0_F,     // テクスチャパレットスロット
   GX_OBJVRAMMODE_CHAR_1D_128K,
-  GX_OBJVRAMMODE_CHAR_1D_128K
+  GX_OBJVRAMMODE_CHAR_1D_32K
 };
 
 
@@ -491,6 +491,9 @@ static void PSTATUS_LoadResource( PSTATUS_WORK *work )
   work->cellRes[SCR_PLT_SKILL] = GFL_CLGRP_PLTT_RegisterEx( archandle , 
         NARC_p_status_gra_p_st_skill_palte_NCLR , CLSYS_DRAW_MAIN , 
         PSTATUS_OBJPLT_SKILL_PLATE*32 , 0 , 1 , work->heapId  );
+  work->cellRes[SCR_PLT_RIBBON_ICON] = GFL_CLGRP_PLTT_RegisterEx( archandle , 
+        NARC_p_status_gra_ribbon_NCLR , CLSYS_DRAW_SUB , 
+        PSTATUS_OBJPLT_SUB_RIBBON*32 , 0 , 5 , work->heapId  );
   work->cellRes[SCR_PLT_RIBBON_BAR] = GFL_CLGRP_PLTT_RegisterEx( archandle , 
         NARC_p_status_gra_p_status_ribbon_bar_NCLR , CLSYS_DRAW_MAIN , 
         PSTATUS_OBJPLT_RIBBON_BAR*32 , 0 , 1 , work->heapId  );
@@ -515,6 +518,8 @@ static void PSTATUS_LoadResource( PSTATUS_WORK *work )
         NARC_p_status_gra_p_st_skill_palte_NCER , NARC_p_status_gra_p_st_skill_palte_NANR, work->heapId  );
   work->cellRes[SCR_ANM_SKILL_CUR] = GFL_CLGRP_CELLANIM_Register( archandle , 
         NARC_p_status_gra_p_st_skill_cur_NCER , NARC_p_status_gra_p_st_skill_cur_NANR, work->heapId  );
+  work->cellRes[SCR_ANM_RIBBON_ICON] = GFL_CLGRP_CELLANIM_Register( archandle , 
+        NARC_p_status_gra_ribbon00_NCER , NARC_p_status_gra_ribbon00_NANR, work->heapId  );
   work->cellRes[SCR_ANM_RIBBON_CUR] = GFL_CLGRP_CELLANIM_Register( archandle , 
         NARC_p_status_gra_p_st_ribbon_cur_NCER , NARC_p_status_gra_p_st_ribbon_cur_NANR, work->heapId  );
 
@@ -532,9 +537,9 @@ static void PSTATUS_LoadResource( PSTATUS_WORK *work )
           NARC_app_menu_common_hp_dodai_NCLR , CLSYS_DRAW_SUB , 
           PSTATUS_OBJPLT_SUB_HPBAR*32 , 0 , 1 , work->heapId  );
     work->cellRes[SCR_NCG_HPBASE] = GFL_CLGRP_CGR_Register( archandleCommon , 
-          NARC_app_menu_common_hp_dodai_NCGR , FALSE , CLSYS_DRAW_SUB , work->heapId  );
+          NARC_app_menu_common_hp_dodai_32k_NCGR , FALSE , CLSYS_DRAW_SUB , work->heapId  );
     work->cellRes[SCR_ANM_HPBASE] = GFL_CLGRP_CELLANIM_Register( archandleCommon , 
-          NARC_app_menu_common_hp_dodai_NCER , NARC_app_menu_common_hp_dodai_NANR, work->heapId  );
+          NARC_app_menu_common_hp_dodai_32k_NCER , NARC_app_menu_common_hp_dodai_32k_NANR, work->heapId  );
 
     //タイプアイコン
     work->cellRes[SCR_PLT_POKE_TYPE] = GFL_CLGRP_PLTT_RegisterEx( archandleCommon , 
@@ -546,6 +551,9 @@ static void PSTATUS_LoadResource( PSTATUS_WORK *work )
     work->cellRes[SCR_ANM_POKE_TYPE] = GFL_CLGRP_CELLANIM_Register( archandleCommon , 
           APP_COMMON_GetPokeTypeCellArcIdx(APP_COMMON_MAPPING_128K) , 
           APP_COMMON_GetPokeTypeAnimeArcIdx(APP_COMMON_MAPPING_128K), work->heapId  );
+    work->cellRes[SCR_ANM_SUB_POKE_TYPE] = GFL_CLGRP_CELLANIM_Register( archandleCommon , 
+          APP_COMMON_GetPokeTypeCellArcIdx(APP_COMMON_MAPPING_32K) , 
+          APP_COMMON_GetPokeTypeAnimeArcIdx(APP_COMMON_MAPPING_32K), work->heapId  );
     //属性
     for( i=0;i<POKETYPE_MAX;i++ )
     {
@@ -628,7 +636,7 @@ static void PSTATUS_InitCell( PSTATUS_WORK *work )
       PSTATUS_BAR_CELL_PAGE1_X,
       PSTATUS_BAR_CELL_PAGE2_X,
       PSTATUS_BAR_CELL_PAGE3_X,
-      PSTATUS_BAR_CELL_CHECK_X,
+      PSTATUS_BAR_CELL_CHECK_X+4,
       PSTATUS_BAR_CELL_CURSOR_UP_X,
       PSTATUS_BAR_CELL_CURSOR_DOWN_X,
       PSTATUS_BAR_CELL_CURSOR_EXIT,
@@ -636,13 +644,13 @@ static void PSTATUS_InitCell( PSTATUS_WORK *work )
     };
     u8 i;
     GFL_CLWK_DATA cellInitData;
-    cellInitData.pos_y = PSTATUS_BAR_CELL_Y;
     cellInitData.softpri = 10;
     cellInitData.bgpri = 1;
     
     for( i=0;i<SBT_MAX;i++ )
     {
       cellInitData.pos_x = posXArr[i];
+      cellInitData.pos_y = ( i == SBT_CHECK ? PSTATUS_BAR_CELL_Y+4 : PSTATUS_BAR_CELL_Y);
       cellInitData.anmseq = anmIdxArr[i];
       work->clwkBarIcon[i] = GFL_CLACT_WK_Create( work->cellUnit ,
                 work->cellRes[SCR_NCG_ICON],
@@ -652,14 +660,20 @@ static void PSTATUS_InitCell( PSTATUS_WORK *work )
 
       GFL_CLACT_WK_SetDrawEnable( work->clwkBarIcon[i] , TRUE );
     }
+    work->clwkTypeIcon[0] = GFL_CLACT_WK_Create( work->cellUnit ,
+              work->cellResTypeNcg[0],
+              work->cellRes[SCR_PLT_POKE_TYPE],
+              work->cellRes[SCR_ANM_POKE_TYPE],
+              &cellInitData ,CLSYS_DEFREND_MAIN , work->heapId );
+    work->clwkTypeIcon[1] = GFL_CLACT_WK_Create( work->cellUnit ,
+              work->cellResTypeNcg[0],
+              work->cellRes[SCR_PLT_SUB_POKE_TYPE],
+              work->cellRes[SCR_ANM_SUB_POKE_TYPE],
+              &cellInitData ,CLSYS_DEFREND_MAIN , work->heapId );
+
+
     for( i=0;i<2;i++ )
     {
-      work->clwkTypeIcon[i] = GFL_CLACT_WK_Create( work->cellUnit ,
-                work->cellResTypeNcg[0],
-                work->cellRes[SCR_PLT_POKE_TYPE],
-                work->cellRes[SCR_ANM_POKE_TYPE],
-                &cellInitData ,CLSYS_DEFREND_MAIN , work->heapId );
-
       GFL_CLACT_WK_SetDrawEnable( work->clwkTypeIcon[i] , FALSE );
     }
   }

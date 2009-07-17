@@ -18,11 +18,14 @@
 #include "print/printsys.h"
 #include "print/wordset.h"
 
+#include "arc_def.h"
 #include "p_status_gra.naix"
+#include "message.naix"
 
 #include "p_sta_sys.h"
 #include "p_sta_ribbon.h"
 #include "p_sta_oam.h"
+#include "ribbon.h"
 
 #include "test/ariizumi/ari_debug.h"
 
@@ -51,6 +54,25 @@
 
 #define PSTATUS_RIBBON_BAR_SPEED_RATE (2)
 
+//リボン詳細用
+#define PSTATUS_RIBBON_NAME_WIN_LEFT (5)
+#define PSTATUS_RIBBON_NAME_WIN_TOP (7)
+#define PSTATUS_RIBBON_NAME_WIN_WIDTH (22)
+#define PSTATUS_RIBBON_NAME_WIN_HEIGHT (2)
+
+#define PSTATUS_RIBBON_INFO_WIN_LEFT (1)
+#define PSTATUS_RIBBON_INFO_WIN_TOP (16)
+#define PSTATUS_RIBBON_INFO_WIN_WIDTH (30)
+#define PSTATUS_RIBBON_INFO_WIN_HEIGHT (4)
+
+#define PSTATUS_RIBBON_NAME_STR_X ( 0+ PSTATUS_STR_OFS_X)
+#define PSTATUS_RIBBON_NAME_STR_Y ( 0+ PSTATUS_STR_OFS_Y)
+#define PSTATUS_RIBBON_INFO_STR_X ( 0+ PSTATUS_STR_OFS_X)
+#define PSTATUS_RIBBON_INFO_STR_Y ( 0+ PSTATUS_STR_OFS_Y)
+
+#define PSTATUS_RIBBON_ICON_X ( 128 )
+#define PSTATUS_RIBBON_ICON_Y ( 88 )
+
 //======================================================================
 //	enum
 //======================================================================
@@ -75,11 +97,18 @@ typedef struct
 struct _PSTATUS_RIBBON_WORK
 {
   BOOL isDisp;
+  BOOL isDispInfo;
+  BOOL isUpdateStrInfo;
   BOOL isMoveRibbon;
   
   u8  ribbonNum;
   u32 pagePos;
 
+  u32 ribbonIconNcg;
+  GFL_CLWK *clwkRibbonIcon;
+  GFL_BMPWIN *bmpWinName;
+  GFL_BMPWIN *bmpWinInfo;
+  
   NNSG2dScreenData *scrDataDown;
   void *scrResDown;
   NNSG2dScreenData *scrDataUp;
@@ -112,6 +141,11 @@ static u8 PSTATUS_RIBBON_GetRibbonIdx( PSTATUS_RIBBON_WORK *ribbonWork , const u
 static u16 PSTATUS_RIBBON_GetRibbonType( PSTATUS_RIBBON_WORK *ribbonWork , const u8 idx );
 static s16 PSTATUS_RIBBON_CalcRibbonBarY( PSTATUS_RIBBON_WORK *ribbonWork , const u8 idx );
 
+static void PSTATUS_RIBBON_DispInfo( PSTATUS_WORK *work , PSTATUS_RIBBON_WORK *ribbonWork );
+static void PSTATUS_RIBBON_DispInfo_Trans( PSTATUS_WORK *work , PSTATUS_RIBBON_WORK *ribbonWork );
+static void PSTATUS_RIBBON_ClearInfo( PSTATUS_WORK *work , PSTATUS_RIBBON_WORK *ribbonWork );
+static void PSTATUS_RIBBON_ClearInfo_Trans( PSTATUS_WORK *work , PSTATUS_RIBBON_WORK *ribbonWork );
+
 //--------------------------------------------------------------
 //	初期化
 //--------------------------------------------------------------
@@ -138,7 +172,19 @@ void PSTATUS_RIBBON_Term( PSTATUS_WORK *work , PSTATUS_RIBBON_WORK *ribbonWork )
 void PSTATUS_RIBBON_Main( PSTATUS_WORK *work , PSTATUS_RIBBON_WORK *ribbonWork )
 {
   PSTATUS_RIBBON_UpdateUI( work , ribbonWork );
-  PSTATUS_RIBBON_UpdatRibbon( work , ribbonWork );
+  if( ribbonWork->isUpdateStrInfo == TRUE )
+  {
+    if( PRINTSYS_QUE_IsFinished( work->printQue ) == TRUE )
+    {
+      PSTATUS_RIBBON_ClearInfo_Trans( work , ribbonWork );
+      PSTATUS_RIBBON_DispInfo_Trans( work , ribbonWork );
+      ribbonWork->isUpdateStrInfo = FALSE;
+    }
+  }
+  else
+  {
+    PSTATUS_RIBBON_UpdatRibbon( work , ribbonWork );
+  }
 }
 
 #pragma mark [>Resource
@@ -286,6 +332,8 @@ static void PSTATUS_RIBBON_UpdateUI( PSTATUS_WORK *work , PSTATUS_RIBBON_WORK *r
         PSTATUS_SetActiveBarButton( work , FALSE );
         work->ktst = GFL_APP_END_TOUCH;
       }
+      PSTATUS_RIBBON_ClearInfo( work , ribbonWork );
+      PSTATUS_RIBBON_DispInfo( work , ribbonWork );
     }
   }
   else
@@ -307,6 +355,9 @@ static const BOOL PSTATUS_RIBBON_UpdateKey( PSTATUS_WORK *work , PSTATUS_RIBBON_
     GFL_CLACT_WK_SetDrawEnable( ribbonWork->clwkCur , FALSE );
     ribbonWork->selectIdx = 0xFF;
     ribbonWork->selectType = PSTATUS_RIBBON_INVALID_TYPE;
+
+    PSTATUS_RIBBON_ClearInfo( work , ribbonWork );
+    PSTATUS_RIBBON_ClearInfo_Trans( work , ribbonWork );
     work->ktst = GFL_APP_END_KEY;
     return TRUE;
   }
@@ -318,6 +369,7 @@ static const BOOL PSTATUS_RIBBON_UpdateKey( PSTATUS_WORK *work , PSTATUS_RIBBON_
         GFL_UI_KEY_GetTrg() == PAD_KEY_UP )
     {
       ribbonWork->speed = 0;
+      ribbonWork->isTouchBar = FALSE;
       PSTATUS_RIBBON_SetCursorTopBar( work , ribbonWork );
       GFL_CLACT_WK_SetDrawEnable( ribbonWork->clwkCur , TRUE );
       work->ktst = GFL_APP_END_KEY;
@@ -344,7 +396,11 @@ static const BOOL PSTATUS_RIBBON_UpdateKey( PSTATUS_WORK *work , PSTATUS_RIBBON_
           PSTATUS_RIBBON_MoveBar( work , ribbonWork , sub );
         }
         PSTATUS_RIBBON_SetCursorPosBar( work , ribbonWork , ribbonWork->selectIdx );
+
+        PSTATUS_RIBBON_ClearInfo( work , ribbonWork );
+        PSTATUS_RIBBON_DispInfo( work , ribbonWork );
       }
+      return TRUE;
     }
     else
     if( GFL_UI_KEY_GetRepeat() == PAD_KEY_UP )
@@ -367,7 +423,11 @@ static const BOOL PSTATUS_RIBBON_UpdateKey( PSTATUS_WORK *work , PSTATUS_RIBBON_
           PSTATUS_RIBBON_MoveBar( work , ribbonWork , sub );
         }
         PSTATUS_RIBBON_SetCursorPosBar( work , ribbonWork , ribbonWork->selectIdx );
+
+        PSTATUS_RIBBON_ClearInfo( work , ribbonWork );
+        PSTATUS_RIBBON_DispInfo( work , ribbonWork );
       }
+      return TRUE;
     }
   }
 
@@ -384,6 +444,9 @@ static void PSTATUS_RIBBON_UpdateTP( PSTATUS_WORK *work , PSTATUS_RIBBON_WORK *r
     ribbonWork->selectIdx = 0xFF;
     ribbonWork->selectType = PSTATUS_RIBBON_INVALID_TYPE;
     work->ktst = GFL_APP_END_TOUCH;
+
+    PSTATUS_RIBBON_ClearInfo( work , ribbonWork );
+    PSTATUS_RIBBON_ClearInfo_Trans( work , ribbonWork );
   }
   else
   if( GFL_UI_TP_GetTrg() == TRUE &&
@@ -396,7 +459,12 @@ static void PSTATUS_RIBBON_UpdateTP( PSTATUS_WORK *work , PSTATUS_RIBBON_WORK *r
       ribbonWork->selectIdx = touchBar;
       ribbonWork->selectType = PSTATUS_RIBBON_GetRibbonType( ribbonWork , touchBar );
       ribbonWork->isTouchBar = TRUE;
+      ribbonWork->speed = 0;
       GFL_CLACT_WK_SetDrawEnable( ribbonWork->clwkCur , FALSE );
+
+      PSTATUS_RIBBON_ClearInfo( work , ribbonWork );
+      PSTATUS_RIBBON_DispInfo( work , ribbonWork );
+
     }
     work->ktst = GFL_APP_END_TOUCH;
   }
@@ -570,6 +638,8 @@ void PSTATUS_RIBBON_DispPage( PSTATUS_WORK *work , PSTATUS_RIBBON_WORK *ribbonWo
 
   ribbonWork->befSelectIdx = 0xFF;
   ribbonWork->isDisp = TRUE;
+  ribbonWork->isDispInfo = FALSE;
+  ribbonWork->isUpdateStrInfo = FALSE;
   ribbonWork->isMoveRibbon = TRUE;
 
   for( i=0 ; i<PSTATUS_RIBBON_BAR_NUM ; i++ )
@@ -690,19 +760,25 @@ static void PSTATUS_RIBBON_CreateRibbonBarFunc( PSTATUS_WORK *work , PSTATUS_RIB
     GFL_STD_MemCopy( srcData , chrAdr , PSTATUS_RIBBON_BAR_CHARSIZE );
   }
   {
+    //FIXME ribbonDispWork->dispRibbonNo をバー表示用のMsg番号Idxに直す
     STRBUF *srcStr = GFL_MSG_CreateString( work->msgHandle , mes_status_test_1 ); 
     STRBUF *dstStr = GFL_STR_CreateBuffer( 32, work->heapId );
     WORDSET *wordSet = WORDSET_Create( work->heapId );
-    WORDSET_RegisterNumber( wordSet , 0 , ribbonDispWork->dispRibbonNo , 2 , STR_NUM_DISP_ZERO , STR_NUM_CODE_DEFAULT );
+    WORDSET_RegisterNumber( wordSet , 0 , ribbonDispWork->dispRibbonNo+1 , 2 , STR_NUM_DISP_ZERO , STR_NUM_CODE_DEFAULT );
     WORDSET_ExpandStr( wordSet , dstStr , srcStr );
     //ここのフォントはOBJのパレットを使っているので注意！！！ 
-    PRINTSYS_PrintQueColor( work->printQue , ribbonDispWork->bmpData , 
-            10 , 6 , dstStr , work->fontHandle , PRINTSYS_LSB_Make(1,2,0) );
+    //個々では例外的にbmp直書きを使う
+    GFL_FONTSYS_SetColor( 1,2,0 );
+    PRINTSYS_Print( ribbonDispWork->bmpData , 10 , 6 , dstStr , work->fontHandle );
+    GFL_FONTSYS_SetDefaultColor();
+//    PRINTSYS_PrintQueColor( work->printQue , ribbonDispWork->bmpData , 
+//            10 , 6 , dstStr , work->fontHandle , PRINTSYS_LSB_Make(1,2,0) );
     GFL_STR_DeleteBuffer( srcStr );
     GFL_STR_DeleteBuffer( dstStr );
     WORDSET_Delete( wordSet );
   }
-  ribbonDispWork->isUpdateStr = TRUE;
+  PSTA_OAM_ActorBmpTrans( ribbonDispWork->bmpOam );
+//  ribbonDispWork->isUpdateStr = TRUE;
   
 }
 
@@ -791,7 +867,7 @@ static u16 PSTATUS_RIBBON_GetRibbonType( PSTATUS_RIBBON_WORK *ribbonWork , const
   }
   else
   {
-    return ribbonIdx+1;
+    return ribbonIdx;
   }
 }
 
@@ -813,4 +889,112 @@ static s16 PSTATUS_RIBBON_CalcRibbonBarY( PSTATUS_RIBBON_WORK *ribbonWork , cons
   }
   
   return PSTATUS_RIBBON_BAR_Y + subArrIdx*PSTATUS_RIBBON_BAR_HEIGHT - modPos;
+}
+
+#pragma mark [>DispInfo
+//--------------------------------------------------------------
+//	リボン詳細の表示
+//--------------------------------------------------------------
+static void PSTATUS_RIBBON_DispInfo( PSTATUS_WORK *work , PSTATUS_RIBBON_WORK *ribbonWork )
+{
+  
+  ribbonWork->bmpWinName = GFL_BMPWIN_Create( PSTATUS_BG_SUB_STR ,
+              PSTATUS_RIBBON_NAME_WIN_LEFT , PSTATUS_RIBBON_NAME_WIN_TOP ,
+              PSTATUS_RIBBON_NAME_WIN_WIDTH , PSTATUS_RIBBON_NAME_WIN_HEIGHT ,
+              PSTATUS_BG_SUB_PLT_FONT , GFL_BMP_CHRAREA_GET_B );
+  
+  ribbonWork->bmpWinInfo = GFL_BMPWIN_Create( PSTATUS_BG_SUB_STR ,
+              PSTATUS_RIBBON_INFO_WIN_LEFT , PSTATUS_RIBBON_INFO_WIN_TOP ,
+              PSTATUS_RIBBON_INFO_WIN_WIDTH , PSTATUS_RIBBON_INFO_WIN_HEIGHT ,
+              PSTATUS_BG_SUB_PLT_FONT , GFL_BMP_CHRAREA_GET_B );
+  //文字列
+  {
+    GFL_MSGDATA *ribbonMsg = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL , ARCID_MESSAGE , 
+                                             NARC_message_ribbon_dat , work->heapId );
+    //名前
+    {
+      const u32 msgId = RIBBON_DataGet( ribbonWork->selectType , RIBBON_PARA_NAME );
+      STRBUF *srcStr;
+      srcStr = GFL_MSG_CreateString( ribbonMsg , msgId ); 
+      PRINTSYS_PrintQueColor( work->printQue , GFL_BMPWIN_GetBmp( ribbonWork->bmpWinName ) , 
+              PSTATUS_RIBBON_NAME_STR_X , PSTATUS_RIBBON_NAME_STR_Y , srcStr , 
+              work->fontHandle , PSTATUS_STR_COL_BLACK );
+      GFL_STR_DeleteBuffer( srcStr );
+    }
+    //説明
+    {
+      const u32 msgId = RIBBON_InfoGet( ribbonWork->selectType , work->psData->spRibbonNo );
+      STRBUF *srcStr;
+      srcStr = GFL_MSG_CreateString( ribbonMsg , msgId ); 
+      PRINTSYS_PrintQueColor( work->printQue , GFL_BMPWIN_GetBmp( ribbonWork->bmpWinInfo ) , 
+              PSTATUS_RIBBON_INFO_STR_X , PSTATUS_RIBBON_INFO_STR_Y , srcStr , 
+              work->fontHandle , PSTATUS_STR_COL_BLACK );
+      GFL_STR_DeleteBuffer( srcStr );
+    }
+    GFL_MSG_Delete( ribbonMsg );
+  }
+  
+  ribbonWork->isUpdateStrInfo = TRUE;
+}
+
+//--------------------------------------------------------------
+//	リボン詳細の表示
+//--------------------------------------------------------------
+static void PSTATUS_RIBBON_DispInfo_Trans( PSTATUS_WORK *work , PSTATUS_RIBBON_WORK *ribbonWork )
+{
+  GFL_BMPWIN_MakeTransWindow_VBlank( ribbonWork->bmpWinName );
+  GFL_BMPWIN_MakeTransWindow_VBlank( ribbonWork->bmpWinInfo );
+  //アイコン
+  {
+    ARCHANDLE *archandle = GFL_ARC_OpenDataHandle( ARCID_P_STATUS , work->heapId );
+    GFL_CLWK_DATA cellInitData;
+    
+    ribbonWork->ribbonIconNcg = GFL_CLGRP_CGR_Register( archandle , 
+        RIBBON_DataGet( ribbonWork->selectType , RIBBON_PARA_GRAPHIC ) , 
+        FALSE , CLSYS_DRAW_SUB , work->heapId  );
+
+    GFL_ARC_CloseDataHandle(archandle);
+
+    cellInitData.pos_x = PSTATUS_RIBBON_ICON_X;
+    cellInitData.pos_y = PSTATUS_RIBBON_ICON_Y;
+    cellInitData.softpri = 10;
+    cellInitData.bgpri = 0;
+    cellInitData.anmseq = 0;
+    
+    ribbonWork->clwkRibbonIcon = GFL_CLACT_WK_Create( work->cellUnit ,
+              ribbonWork->ribbonIconNcg,
+              work->cellRes[SCR_PLT_RIBBON_ICON],
+              work->cellRes[SCR_ANM_RIBBON_ICON],
+              &cellInitData ,CLSYS_DEFREND_SUB , work->heapId );
+    GFL_CLACT_WK_SetPlttOffs( ribbonWork->clwkRibbonIcon , 
+                            RIBBON_DataGet( ribbonWork->selectType , RIBBON_PARA_PALNUM ) , 
+                            CLWK_PLTTOFFS_MODE_PLTT_TOP );
+    GFL_CLACT_WK_SetDrawEnable( ribbonWork->clwkRibbonIcon , TRUE );
+  }
+  ribbonWork->isDispInfo = TRUE;
+}
+
+//--------------------------------------------------------------
+//	リボン詳細の消去
+//--------------------------------------------------------------
+static void PSTATUS_RIBBON_ClearInfo( PSTATUS_WORK *work , PSTATUS_RIBBON_WORK *ribbonWork )
+{
+  if( ribbonWork->isDispInfo == TRUE )
+  {
+    GFL_BMPWIN_Delete( ribbonWork->bmpWinName );
+    GFL_BMPWIN_Delete( ribbonWork->bmpWinInfo );
+  }
+}
+
+//--------------------------------------------------------------
+//	リボン詳細の消去
+//--------------------------------------------------------------
+static void PSTATUS_RIBBON_ClearInfo_Trans( PSTATUS_WORK *work , PSTATUS_RIBBON_WORK *ribbonWork )
+{
+  if( ribbonWork->isDispInfo == TRUE )
+  {
+    GFL_CLGRP_CGR_Release( ribbonWork->ribbonIconNcg );
+    GFL_CLACT_WK_Remove( ribbonWork->clwkRibbonIcon );
+    ribbonWork->isDispInfo = FALSE;
+  }
 }

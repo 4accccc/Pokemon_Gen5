@@ -21,6 +21,7 @@
 typedef struct {
   void * ppd;   // ポケモンデータ
   CONFIG * cfg; // コンフィグデータ
+  u8 *spRibbonNo; //配布リボンセーブデータ
 
   const STRCODE * player_name;  // 見ている人の名前
   u32 player_id;          // 見ている人のID
