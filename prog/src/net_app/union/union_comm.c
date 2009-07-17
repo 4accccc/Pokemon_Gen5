@@ -387,6 +387,7 @@ static void UnionComm_SetBeaconParam(UNION_SYSTEM_PTR unisys, UNION_BEACON *beac
   beacon->language = PM_LANG;
   beacon->union_status = situ->union_status;
   beacon->appeal_no = situ->appeal_no;
+  beacon->play_category = situ->play_category;
   
   MyStatus_CopyNameStrCode(unisys->uniparent->mystatus, beacon->name, PERSON_NAME_SIZE + EOM_SIZE);
   

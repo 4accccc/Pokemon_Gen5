@@ -86,6 +86,7 @@ enum NetworkServiceID_e {
 	WB_NET_IRCMENU,				///相性チェック　RHYTHMチェック
 	WB_NET_MUSICAL,       ///ミュージカル
 	WB_NET_UNION,           ///<ユニオンルーム
+	WB_NET_COLOSSEUM,       ///<コロシアム
   WB_NET_IRCTRADE,       ///<赤外線ぽけ交換
   WB_NET_IRCFRIEND,       ///<赤外線ともだち交換
 	
@@ -118,6 +119,7 @@ enum NetworkCommandHeaderNo_e {
 	GFL_NET_CMD_IRCMENU	= (WB_NET_IRCMENU<<8),	///<相性チェック　メニュー
 	GFL_NET_CMD_MUSICAL = (WB_NET_MUSICAL<<8),  ///ミュージカル
 	GFL_NET_CMD_UNION = (WB_NET_UNION<<8),      ///<ユニオンルーム
+	GFL_NET_CMD_COLOSSEUM = (WB_NET_COLOSSEUM<<8),      ///<コロシアム
   GFL_NET_CMD_IRCTRADE = (WB_NET_IRCBATTLE<<8),  ///< IRCぽけこうかん
   GFL_NET_CMD_IRCFRIEND = (WB_NET_IRCFRIEND<<8),  ///< IRCともだちこうかん
 };

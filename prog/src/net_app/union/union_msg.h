@@ -11,7 +11,7 @@
 //==============================================================================
 //  定数定義
 //==============================================================================
-///UnionMsg_Menu_SelectLoop関数の戻り値
+///UnionMsg_Menu_SelectLoop関数の戻り値   ※MenuMemberMaxテーブルと並びを同じにしておくこと！
 enum{
   UNION_MSG_MENU_SELECT_AISATU,       ///<挨拶
   UNION_MSG_MENU_SELECT_OEKAKI,       ///<お絵かき
@@ -32,6 +32,7 @@ enum{
 //==============================================================================
 //  外部関数宣言
 //==============================================================================
+extern int UnionMsg_GetMemberMax(int menu_index);
 extern void UnionMsg_AllDel(UNION_SYSTEM_PTR unisys);
 
 extern void UnionMsg_TalkStream_WindowSetup(UNION_SYSTEM_PTR unisys, FIELD_MAIN_WORK *fieldWork);

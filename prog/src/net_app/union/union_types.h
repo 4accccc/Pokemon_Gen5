@@ -18,6 +18,13 @@
 ///ビーコンデータが有効なものである事を示す数値
 #define UNION_BEACON_VALID        (0x7a)
 
+///実行中のゲームカテゴリー
+enum{
+  UNION_PLAY_CATEGORY_UNION,          ///<ユニオンルーム
+  UNION_PLAY_CATEGORY_TRAINERCARD,    ///<トレーナーカード
+  UNION_PLAY_CATEGORY_COLOSSEUM,      ///<コロシアム
+};
+
 ///ユニオン：ステータス
 enum{
   UNION_STATUS_NORMAL,      ///<通常状態(何もしていない)
@@ -27,7 +34,9 @@ enum{
   UNION_STATUS_CONNECT_REQ,     ///<接続リクエスト実行中
   UNION_STATUS_CONNECT_ANSWER,  ///<接続リクエストを受けた側が返信として接続しにいっている状態
   UNION_STATUS_TALK_PARENT,     ///<接続確立後の会話(親)
+  UNION_STATUS_TALK_LIST_SEND_PARENT, ///<接続確立後、親の選んだ項目送信＆子の返事待ち
   UNION_STATUS_TALK_CHILD,      ///<接続確立後の会話(子)
+  UNION_STATUS_TALK_BATTLE_PARENT,  ///<会話：対戦メニュー(親)
   
   UNION_STATUS_TRAINERCARD, ///<トレーナーカード
   UNION_STATUS_PICTURE,     ///<お絵かき
@@ -36,6 +45,8 @@ enum{
   UNION_STATUS_GURUGURU,    ///<ぐるぐる交換
   UNION_STATUS_RECORD,      ///<レコードコーナー
   UNION_STATUS_SHUTDOWN,    ///<切断
+  
+  UNION_STATUS_COLOSSEUM_MEMBER_WAIT,   ///<コロシアム：メンバー集合待ち
   
   UNION_STATUS_CHAT,        ///<チャット編集中
   
@@ -76,15 +87,24 @@ enum{
 ///同期用のタイミングコマンド番号
 enum{
   UNION_TIMING_SHUTDOWN = 1,            ///<切断前の同期取り
+  
   UNION_TIMING_TRAINERCARD_PARAM,       ///<トレーナーカードの情報交換前
   UNION_TIMING_TRAINERCARD_PROC_BEFORE, ///<トレーナーカード画面呼び出し前
   UNION_TIMING_TRAINERCARD_PROC_AFTER,  ///<トレーナーカード画面終了後
+  
+  UNION_TIMING_COLOSSEUM_PROC_BEFORE,   ///<コロシアム遷移前の同期取り
+  UNION_TIMING_COLOSSEUM_MEMBER_ENTRY_AFTER,  ///<コロシアム：メンバー集まった後の同期取り
+  UNION_TIMING_COLOSSEUM_ADD_CMD_TBL_AFTER,   ///<コロシアム：通信テーブルを追加後
+  UNION_TIMING_COLOSSEUM_PROC_AFTER,    ///<コロシアム終了後の同期取り
 };
 
-///サブPROC呼び出しID
+///サブPROC呼び出しID     ※SubProc_PlayCategoryTblと並びを同じにしておくこと！
 typedef enum{
   UNION_SUBPROC_ID_NULL,              ///<サブPROC無し
   UNION_SUBPROC_ID_TRAINERCARD,       ///<トレーナーカード
+  UNION_SUBPROC_ID_COLOSSEUM_WARP,    ///<コロシアム遷移
+  
+  UNION_SUBPROC_ID_MAX,
 }UNION_SUBPROC_ID;
 
 
@@ -125,9 +145,9 @@ typedef struct{
   STRCODE name[PERSON_NAME_SIZE + EOM_SIZE];  ///<名前
   
   u8 data_valid;              ///<UNION_BEACON_VALID:このビーコンデータは有効なものである
+  u8 play_category;           ///<実行中のゲームカテゴリー
   u8 trainer_view;            ///<トレーナータイプ(ユニオンルーム内での見た目)
   u8 sex;                     ///<性別
-  u8 padding;
   
   union{
     UNION_BEACON_CHAT chat;
@@ -177,9 +197,10 @@ typedef struct{
 ///ユニオンルーム内での自分の状況
 typedef struct{
   //↓送信ビーコンに含めるデータ
+  u8 play_category;           ///<実行中のゲームカテゴリー(UNION_PLAY_CATEGORY_???)
   u8 union_status;            ///<プレイヤーの状況(UNION_STATUS_???)
   u8 appeal_no;               ///<アピール番号(UNION_APPEAL_???)
-  u8 padding2[2];
+  u8 padding2;
   
   //↓構造体内の一部のデータのみを送信データに含める
   UNION_BEACON_PC *calling_pc; ///<接続して欲しい人のreceive_beaconへのポインタ
@@ -189,10 +210,11 @@ typedef struct{
   UNION_BEACON_PC *answer_pc;  ///<接続したい人のreceive_beaconへのポインタ
   UNION_BEACON_PC *connect_pc; ///<接続中の人のreceive_beaconへのポインタ
   s16 wait;
+  s16 work;
   u8 next_union_status;       ///<次に実行するプレイヤーの状況(UNION_STATUS_???)
   u8 func_proc;
   u8 func_seq;
-  u8 padding[3];
+  u8 padding;
 }UNION_MY_SITUATION;
 
 //--------------------------------------------------------------

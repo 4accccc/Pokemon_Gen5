@@ -20,6 +20,8 @@
 #include "field/event_fieldmap_control.h"
 #include "net_app/union/union_subproc.h"
 #include "net_app/union/union_msg.h"
+#include "field/event_mapchange.h"
+#include "fieldmap/zone_id.h"
 
 
 //==============================================================================
@@ -37,6 +39,31 @@ typedef struct{
 //  プロトタイプ宣言
 //==============================================================================
 static GMEVENT_RESULT UnionSubProc_GameChangeEvent(GMEVENT * event, int * seq, void * work);
+
+
+//==============================================================================
+//  データ
+//==============================================================================
+///サブPROC実行時にplay_category値のテーブル
+static const struct{
+  u8 play_category;       ///<サブPROC実行中のplay_category値
+  u8 after_play_category; ///<サブPROC終了後に設定するplay_category値
+  u8 padding[2];
+}SubProc_PlayCategoryTbl[] = {
+  {//UNION_SUBPROC_ID_NULL
+    UNION_PLAY_CATEGORY_UNION, 
+    UNION_PLAY_CATEGORY_UNION,
+  },
+  {//UNION_SUBPROC_ID_TRAINERCARD
+    UNION_PLAY_CATEGORY_TRAINERCARD, 
+    UNION_PLAY_CATEGORY_UNION,
+  },
+  {//UNION_SUBPROC_ID_COLOSSEUM_WARP
+    UNION_PLAY_CATEGORY_COLOSSEUM, 
+    UNION_PLAY_CATEGORY_COLOSSEUM,
+  },
+};
+SDK_COMPILER_ASSERT(UNION_SUBPROC_ID_MAX == NELEMS(SubProc_PlayCategoryTbl));
 
 
 //==============================================================================
@@ -87,29 +114,49 @@ static GMEVENT_RESULT UnionSubProc_GameChangeEvent(GMEVENT * event, int * seq, v
 {
 	UNION_SUBPROC_EVENT_WORK *subev = work;
 	GAMESYS_WORK *gsys = subev->gsys;
-	UNION_SUB_PROC *subproc = &subev->unisys->subproc;
+	UNION_SYSTEM_PTR unisys = subev->unisys;
+	UNION_SUB_PROC *subproc = &unisys->subproc;
   GMEVENT *child_event = NULL;
+  UNION_MY_SITUATION *situ = &unisys->my_situation;
   
 	switch(*seq) {
 	case 0:
 	  OS_TPrintf("GMEVENT サブPROC呼び出し id = %d\n", subproc->id);
-    UnionMsg_AllDel(subev->unisys);
-
+    UnionMsg_AllDel(unisys);
+    
 	  switch(subproc->id){
 	  case UNION_SUBPROC_ID_TRAINERCARD:
+	    situ->play_category = UNION_PLAY_CATEGORY_TRAINERCARD;
   	  child_event = EVENT_FieldSubProc(
   	    gsys, subev->fieldWork, TRCARD_OVERLAY_ID, &TrCardSysCommProcData, subproc->parent_work);
   	  break;
+  	case UNION_SUBPROC_ID_COLOSSEUM_WARP:
+	    situ->play_category = UNION_PLAY_CATEGORY_COLOSSEUM;
+      {
+        PLAYER_WORK *plWork = GAMESYSTEM_GetMyPlayerWork( gsys );
+        VecFx32 pos;
+        
+        pos.x = 184 << FX32_SHIFT;
+        pos.y = 0;
+        pos.z = 184 << FX32_SHIFT;
+        child_event = DEBUG_EVENT_ChangeMapPos(gsys, subev->fieldWork, ZONE_ID_CLOSSEUM, &pos, 0);
+      }
+      break;
   	default:
   	  GF_ASSERT(0); //不明なサブPROC ID
   	  break;
   	}
     GMEVENT_CallEvent(event, child_event);
-
+    
+    situ->play_category = SubProc_PlayCategoryTbl[subproc->id].play_category;
+    OS_TPrintf("play_category = %d\n", situ->play_category);
 		(*seq) ++;
 		break;
 	
 	case 1:
+    situ->play_category = SubProc_PlayCategoryTbl[subproc->id].after_play_category;
+    OS_TPrintf("after play_category = %d\n", situ->play_category);
+
     subproc->id = UNION_SUBPROC_ID_NULL;
     subproc->parent_work = NULL;
     subproc->active = FALSE;

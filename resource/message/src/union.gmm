@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsuda" host="W00142" date="2009-07-16T16:31:16"/>
+	<create user="matsuda" host="W00142" date="2009-07-17T15:29:08"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -3287,6 +3287,16 @@ msg_connect_union_08からの分岐メッセージ
 	<row id="msg_union_test_009" text-color="#000000,,,,,,#000000,#000000,,#000000,#000000,,,,,,," back-color="#80ffff,,,,,,#80ffff,#80ffff,,#80ffff,#80ffff,,#80ffff,,,#80ffff,,">
 		<language name="JPN" width="216" line="2">しらない　あそびだから　あそべないよ！</language>
 		<language name="JPN_KANJI" width="216" line="2">しらない　あそびだから　あそべないよ！</language>
+	</row>
+
+	<row id="msg_union_test_010" text-color="#000000,,,,,,#000000,#000000,,#000000,#000000,,,,,,," back-color="#80ffff,,,,,,#80ffff,#80ffff,,#80ffff,#80ffff,,#80ffff,,,#80ffff,,">
+		<language name="JPN" width="216" line="2">そのレギュレーションには　さんかできません</language>
+		<language name="JPN_KANJI" width="216" line="2">そのレギュレーションには　さんかできません</language>
+	</row>
+
+	<row id="msg_union_test_011" text-color="#000000,,,,,,#000000,#000000,,#000000,#000000,,,,,,," back-color="#80ffff,,,,,,#80ffff,#80ffff,,#80ffff,#80ffff,,#80ffff,,,#80ffff,,">
+		<language name="JPN" width="216" line="2">メンバーしゅうごうを　まっています</language>
+		<language name="JPN_KANJI" width="216" line="2">メンバーしゅうごうを　まっています</language>
 	</row>
 
 	<flowchart-group-list>

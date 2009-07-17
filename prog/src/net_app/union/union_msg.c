@@ -30,6 +30,24 @@ static const FLDMENUFUNC_LIST BattleMenuList_Reg[4];
 //  データ
 //==============================================================================
 //--------------------------------------------------------------
+//  各ゲームの最大参加人数
+//--------------------------------------------------------------
+static const struct{
+  u8 member_max;
+  u8 padding[3];
+}MenuMemberMax[] = {
+  {2},      //UNION_MSG_MENU_SELECT_AISATU
+  {4},      //UNION_MSG_MENU_SELECT_OEKAKI
+  {2},      //UNION_MSG_MENU_SELECT_BATTLE_2VS2_SINGLE_50
+  {2},      //UNION_MSG_MENU_SELECT_BATTLE_2VS2_SINGLE_FREE
+  {2},      //UNION_MSG_MENU_SELECT_BATTLE_2VS2_SINGLE_STANDARD
+  {2},      //UNION_MSG_MENU_SELECT_KOUKAN
+  {4},      //UNION_MSG_MENU_SELECT_GURUGURU
+  {5},      //UNION_MSG_MENU_SELECT_RECORD
+  {2},      //UNION_MSG_MENU_SELECT_CANCEL
+};
+
+//--------------------------------------------------------------
 //  メニューヘッダー
 //--------------------------------------------------------------
 ///メインメニューリスト
@@ -134,9 +152,9 @@ static const FLDMENUFUNC_HEADER MenuHeader_Battle =
 	FLDMENUFUNC_SKIP_NON,	//ページスキップタイプ
 	12,		//文字サイズX(ドット
 	16,		//文字サイズY(ドット
-	32-14,		//表示座標X キャラ単位
+	32-16,		//表示座標X キャラ単位
 	1,		//表示座標Y キャラ単位
-	14,		//表示サイズX キャラ単位
+	15,		//表示サイズX キャラ単位
 	14,		//表示サイズY キャラ単位
 };
 //SDK_COMPILER_ASSERT(NELEMS(MainMenuList) == MenuHeader_MainMenu.line);
@@ -147,6 +165,21 @@ static const FLDMENUFUNC_HEADER MenuHeader_Battle =
 //  
 //
 //==============================================================================
+//==================================================================
+/**
+ * 各メニューで選択したゲームの通信最大参加人数を取得する
+ *
+ * @param   menu_index		UNION_MSG_MENU_SELECT_???
+ *
+ * @retval  int		最大参加人数
+ */
+//==================================================================
+int UnionMsg_GetMemberMax(int menu_index)
+{
+  GF_ASSERT(menu_index < UNION_MSG_MENU_SELECT_MAX);
+  return MenuMemberMax[menu_index].member_max;
+}
+
 //==================================================================
 /**
  * UnionMsg系のものを全て一括削除
@@ -422,6 +455,7 @@ void UnionMsg_Menu_BattleMenuSetup(UNION_SYSTEM_PTR unisys, FIELD_MAIN_WORK *fie
   head = MenuHeader_Battle;
   head.count = BattleMenuDataTbl[menu_index].list_max;
   head.line = BattleMenuDataTbl[menu_index].list_max;
+  head.bmpsize_y = head.count * 2;
   
   UnionMsg_Menu_WindowSetup(unisys, fieldWork, 
     BattleMenuDataTbl[menu_index].list, BattleMenuDataTbl[menu_index].list_max, &head);

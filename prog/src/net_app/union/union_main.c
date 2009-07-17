@@ -30,17 +30,23 @@ void Union_Main(GAME_COMM_SYS_PTR game_comm, FIELD_MAIN_WORK *fieldmap)
   unisys = GameCommSys_GetAppWork(game_comm);
   GF_ASSERT(unisys != NULL);
   
-  if(UnionSubProc_IsExits(unisys) == FALSE){  //サブPROCが無い時のみ実行
-    //データ受信によるイベント起動
-    UnionReceive_BeaconInterpret(unisys);
-    
-    //キー操作によるイベント起動
-    UnionOneself_Update(unisys, fieldmap);
-    
-    //OBJ反映
-    UNION_CHAR_Update(unisys, unisys->uniparent->game_data);
-    
-    //下画面反映
+  switch(unisys->my_situation.play_category){
+  case UNION_PLAY_CATEGORY_UNION:
+    if(UnionSubProc_IsExits(unisys) == FALSE){  //サブPROCが無い時のみ実行
+      //データ受信によるイベント起動
+      UnionReceive_BeaconInterpret(unisys);
+      
+      //キー操作によるイベント起動
+      UnionOneself_Update(unisys, fieldmap);
+      
+      //OBJ反映
+      UNION_CHAR_Update(unisys, unisys->uniparent->game_data);
+      
+      //下画面反映
+    }
+    break;
+  case UNION_PLAY_CATEGORY_COLOSSEUM:
+    break;
   }
 }
 
