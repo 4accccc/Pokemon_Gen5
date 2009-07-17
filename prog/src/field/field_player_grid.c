@@ -466,13 +466,13 @@ static PLAYER_SET gjiki_CheckMoveStart_Walk(
         MAPATTR_VALUE val = MAPATTR_GetAttrValue( attr );
         MAPATTR_FLAG flag = MAPATTR_GetAttrFlag( attr );
         
-        if( MAPATTR_CheckAttrValueJumpUp(val) ){
+        if( MAPATTR_VALUE_CheckJumpUp(val) ){
           attr_dir = DIR_UP;
-        }else if( MAPATTR_CheckAttrValueJumpDown(val) ){
+        }else if( MAPATTR_VALUE_CheckJumpDown(val) ){
           attr_dir = DIR_DOWN;
-        }else if( MAPATTR_CheckAttrValueJumpLeft(val) ){
+        }else if( MAPATTR_VALUE_CheckumpLeft(val) ){
           attr_dir = DIR_LEFT;
-        }else if( MAPATTR_CheckAttrValueJumpRight(val) ){
+        }else if( MAPATTR_VALUE_CheckJumpRight(val) ){
           attr_dir = DIR_RIGHT;
         }
         
@@ -1271,13 +1271,13 @@ static PLAYER_SET gjikiCycle_CheckMoveStart_Walk(
         MAPATTR_VALUE val = MAPATTR_GetAttrValue( attr );
         MAPATTR_FLAG flag = MAPATTR_GetAttrFlag( attr );
         
-        if( MAPATTR_CheckAttrValueJumpUp(val) ){
+        if( MAPATTR_VALUE_CheckJumpUp(val) ){
           attr_dir = DIR_UP;
-        }else if( MAPATTR_CheckAttrValueJumpDown(val) ){
+        }else if( MAPATTR_VALUE_CheckJumpDown(val) ){
           attr_dir = DIR_DOWN;
-        }else if( MAPATTR_CheckAttrValueJumpLeft(val) ){
+        }else if( MAPATTR_VALUE_CheckumpLeft(val) ){
           attr_dir = DIR_LEFT;
-        }else if( MAPATTR_CheckAttrValueJumpRight(val) ){
+        }else if( MAPATTR_VALUE_CheckJumpRight(val) ){
           attr_dir = DIR_RIGHT;
         }
         

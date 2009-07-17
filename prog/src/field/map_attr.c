@@ -81,7 +81,7 @@ MAPATTR_FLAG MAPATTR_GetAttrFlag( const MAPATTR attr )
  * @retval BOOL FALSE=違う
  */
 //--------------------------------------------------------------
-BOOL MAPATTR_CheckAttrValueLongGrass( const MAPATTR_VALUE val )
+BOOL MAPATTR_VALUE_CheckLongGrass( const MAPATTR_VALUE val )
 {
   if( val == 0x06 || val == 0x07 ){
     return( TRUE );
@@ -96,7 +96,7 @@ BOOL MAPATTR_CheckAttrValueLongGrass( const MAPATTR_VALUE val )
  * @retval BOOL FALSE=違う
  */
 //--------------------------------------------------------------
-BOOL MAPATTR_CheckAttrValueJumpUp( const MAPATTR_VALUE val )
+BOOL MAPATTR_VALUE_CheckJumpUp( const MAPATTR_VALUE val )
 {
   if( val == 0x74 ){
     return( TRUE );
@@ -111,7 +111,7 @@ BOOL MAPATTR_CheckAttrValueJumpUp( const MAPATTR_VALUE val )
  * @retval BOOL FALSE=違う
  */
 //--------------------------------------------------------------
-BOOL MAPATTR_CheckAttrValueJumpDown( const MAPATTR_VALUE val )
+BOOL MAPATTR_VALUE_CheckJumpDown( const MAPATTR_VALUE val )
 {
   if( val == 0x75 ){
     return( TRUE );
@@ -126,7 +126,7 @@ BOOL MAPATTR_CheckAttrValueJumpDown( const MAPATTR_VALUE val )
  * @retval BOOL FALSE=違う
  */
 //--------------------------------------------------------------
-BOOL MAPATTR_CheckAttrValueJumpLeft( const MAPATTR_VALUE val )
+BOOL MAPATTR_VALUE_CheckumpLeft( const MAPATTR_VALUE val )
 {
   if( val == 0x73 ){
     return( TRUE );
@@ -141,9 +141,24 @@ BOOL MAPATTR_CheckAttrValueJumpLeft( const MAPATTR_VALUE val )
  * @retval BOOL FALSE=違う
  */
 //--------------------------------------------------------------
-BOOL MAPATTR_CheckAttrValueJumpRight( const MAPATTR_VALUE val )
+BOOL MAPATTR_VALUE_CheckJumpRight( const MAPATTR_VALUE val )
 {
   if( val == 0x72 ){
+    return( TRUE );
+  }
+  return( FALSE );
+}
+
+//--------------------------------------------------------------
+/**
+ * アトリビュートバリュー チェック カウンター
+ * @param val MAPATTR_VALUE
+ * @retval BOOL FALSE=違う
+ */
+//--------------------------------------------------------------
+BOOL MAPATTR_VALUE_CheckCounter( const MAPATTR_VALUE val )
+{
+  if( val == 0x4c ){
     return( TRUE );
   }
   return( FALSE );

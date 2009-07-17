@@ -481,7 +481,7 @@ static BOOL enc_CheckEncount(
   { //ämó¶ïœìÆ
     MAPATTR_VALUE val = MAPATTR_GetAttrValue( attr );
     
-    if( MAPATTR_CheckAttrValueLongGrass(val) == TRUE ){
+    if( MAPATTR_VALUE_CheckLongGrass(val) == TRUE ){
       next_per += LONG_GRASS_PERCENT; //í∑Ç¢ëêÇÃèÍçáÇÕ+30%
     }else{
       #ifndef FENCOUNT_PL_NULL

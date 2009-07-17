@@ -953,7 +953,6 @@ static GMEVENT_RESULT event_ConvenienceButton(
   FIELD_PLAYER_GRID *gjiki;
   PLAYER_MOVE_FORM form;
   
-  OS_Printf( "べんりぼたんイベントstart work=0x%x\n", work );
   gridMap = FIELDMAP_GetMapCtrlWork( work->fieldWork );
   gjiki = FIELDMAP_CTRL_GRID_GetFieldPlayerGrid( gridMap );
   
@@ -983,7 +982,6 @@ static GMEVENT * eventSet_ConvenienceButton( const EV_REQUEST *req,
   event = GMEVENT_Create(
       gsys, NULL, event_ConvenienceButton, sizeof(EVWORK_CONVBTN) );
   work = GMEVENT_GetEventWork( event );
-  OS_Printf( "べんりぼたんイベント work=0x%x\n", work );
   work->gsys = gsys;
   work->fieldWork = fieldWork;
   return( event );
