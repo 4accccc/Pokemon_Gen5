@@ -28,6 +28,7 @@ extern BOOL BTL_MAIN_IsFriendPokeID( const BTL_MAIN_MODULE* wk, u8 pokeID1, u8 p
 extern u8 BTL_MAIN_PokeIDtoClientID( const BTL_MAIN_MODULE* wk, u8 pokeID );
 extern const MYSTATUS* BTL_MAIN_GetPlayerStatus( const BTL_MAIN_MODULE* wk );
 extern BOOL BTL_MAIN_IsServerMachine( BTL_MAIN_MODULE * wk );
+extern BOOL BTL_MAIN_IsMultiMode( const BTL_MAIN_MODULE * wk );
 
 
 //-------------------------
