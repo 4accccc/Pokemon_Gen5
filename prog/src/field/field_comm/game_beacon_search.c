@@ -367,7 +367,7 @@ static void GameBeacon_SetBeaconParam(GBS_BEACON *beacon)
   beacon->gsid = aGFLNetInit.gsid;
   beacon->member_num = GFL_NET_GetConnectNum();
   beacon->member_max = 4;
-  beacon->error = GFL_NET_SystemIsError();
+  beacon->error = GFL_NET_SystemGetErrorCode();
 }
 
 //--------------------------------------------------------------
