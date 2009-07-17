@@ -1002,12 +1002,12 @@ DEF_CMD_COUNT  =  ( DEF_CMD_COUNT + 1 )
 //--------------------------------------------------------------
 /**
  * _OBJ_ADD OBJを追加
- * @param x 
- * @param z
- * @param dir
- * @param id
- * @param code
- * @param move
+ * @param x 表示するグリッドX座標
+ * @param z 表示するグリッドZ座標
+ * @param dir 方向 DIR_UP等
+ * @param id 識別用OBJ ID
+ * @param code 表示コードBOY1等
+ * @param move 動作コードMV_RND等
  */
 //--------------------------------------------------------------
   .macro _OBJ_ADD x,z,dir,id,code,move
