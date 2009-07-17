@@ -74,7 +74,8 @@ SUBDIRS	=	wmi \
 			app_menu_common \
 			place_name \
 			irc_ranking \
-			iss_unit
+			iss_unit \
+			townmap
 
 include $(RESOURCE_MACRO)
 
