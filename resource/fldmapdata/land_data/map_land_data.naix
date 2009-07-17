@@ -327,7 +327,13 @@ enum {
 	NARC_map_land_data_m_wlabo01_00_00_3dppack = 313,
 	NARC_map_land_data_m_gym0301_00_01_3dppack = 314,
 	NARC_map_land_data_m_gym0301_01_00_3dppack = 315,
-	NARC_map_land_data_m_gym0301_01_01_3dppack = 316
+	NARC_map_land_data_m_gym0301_01_01_3dppack = 316,
+	NARC_map_land_data_m_stadium01_00_00_3dppack = 317,
+	NARC_map_land_data_m_stadium02_00_00_3dppack = 318,
+	NARC_map_land_data_m_tennis01_00_00_3dppack = 319,
+	NARC_map_land_data_m_gstation01_00_00_3dppack = 320,
+	NARC_map_land_data_m_gstation02_00_00_3dppack = 321,
+	NARC_map_land_data_m_closseum02_00_00_3dppack = 322
 };
 
 /* NARC_MAP_LAND_DATA_NAIX_ */
