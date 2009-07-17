@@ -1,20 +1,78 @@
 #event data
-#save date:2009/07/09 17:36:23
+#save date:2009/07/17 20:16:14
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\c01pc0101.wms
 #SECTION START:OBJ_EVENT
 #Map Event List data
-#save date:2009/07/09 17:36:23
+#save date:2009/07/17 20:16:14
 2
 #hold event type:
 1
 #hold event number:
+2
+#event number: 0
+#type
+1
+#ID name
+C01PC0101_PCWOMAN
+#OBJ CODE Number
+PCWOMAN1
+#MOVE CODE Number
+MV_DOWN
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
 0
+#Event Script Name
+0
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#position
+-128 0 96
+#event number: 1
+#type
+1
+#ID name
+C01PC0101_SHOPM
+#OBJ CODE Number
+SHOPM1
+#MOVE CODE Number
+MV_LEFT
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+0
+#Event Script Name
+0
+#Direction Type Number
+DIR_LEFT
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#position
+-64 0 -32
 #Map Event List Data End
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT
 #Map Event List data
-#save date:2009/07/09 17:36:23
+#save date:2009/07/17 20:16:14
 2
 #hold event type:
 1
@@ -24,7 +82,7 @@ C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\c01pc0101.wms
 #SECTION End:BG_EVENT
 #SECTION START:POS_EVENT
 #Map Event List data
-#save date:2009/07/09 17:36:23
+#save date:2009/07/17 20:16:14
 2
 #hold event type:
 1
@@ -34,7 +92,7 @@ C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\c01pc0101.wms
 #SECTION End:POS_EVENT
 #SECTION START:DOOR_EVENT
 #Map Event List data
-#save date:2009/07/09 17:36:23
+#save date:2009/07/17 20:16:14
 2
 #hold event type:
 1
@@ -52,7 +110,7 @@ EXIT_DIR_UP
 #Door Type
 EXIT_TYPE_MAT
 #position
--128 0 -16
+-128 0 -80
 #event number: 1
 #Door Event Label
 DOOR_ID_C01PC0101_EXIT01
@@ -65,7 +123,7 @@ EXIT_DIR_UP
 #Door Type
 EXIT_TYPE_MAT
 #position
--144 0 -16
+-144 0 -80
 #event number: 2
 #Door Event Label
 DOOR_ID_C01PC0101_EXIT03
@@ -78,6 +136,6 @@ EXIT_DIR_UP
 #Door Type
 EXIT_TYPE_MAT
 #position
--112 0 -16
+-112 0 -80
 #Map Event List Data End
 #SECTION End:DOOR_EVENT
