@@ -75,10 +75,10 @@ struct _ISS_UNIT
 static int GetVolumeByGrid( const ISS_UNIT* p_unit, int x, int y, int z );
 
 // リトルエンディアンのu16値取得関数
-u16 GetU16( u8* data, int pos );
+static u16 GetU16( u8* data, int pos );
 
-// アーカイブからデータを取得する
-static void SetupByArc( ISS_UNIT* p_unit, u16 zone_id );
+// 指定したゾーンに応じたユニットにセットアップする
+static void Setup( ISS_UNIT* p_unit, u16 zone_id );
 
 
 //=====================================================================================================
@@ -106,7 +106,7 @@ ISS_UNIT* ISS_UNIT_Create( u16 zone_id, HEAPID heap_id )
 
 	// 初期設定
 	p_unit->heapID = heap_id;
-	SetupByArc( p_unit, zone_id );
+	Setup( p_unit, zone_id );
 	
 	// 作成したISSユニットを返す
 	return p_unit;
@@ -170,7 +170,7 @@ void ISS_UNIT_Update( const ISS_UNIT* p_unit, int x, int y, int z )
 void ISS_UNIT_ZoneChange( ISS_UNIT* p_unit, u16 next_zone_id )
 {
 	// アーカイブからデータを読み直す
-	SetupByArc( p_unit, next_zone_id );
+	Setup( p_unit, next_zone_id );
 }
 
 
@@ -262,7 +262,7 @@ static int GetVolumeByGrid( const ISS_UNIT* p_unit, int x, int y, int z )
  * @return u16
  */
 //---------------------------------------------------------------------------- 
-u16 GetU16( u8* data, int pos )
+static u16 GetU16( u8* data, int pos )
 {
 	u16 lower = (u16)( data[ pos ] );
 	u16 upper = (u16)( data[ pos + 1 ] );
@@ -273,20 +273,19 @@ u16 GetU16( u8* data, int pos )
 
 //---------------------------------------------------------------------------- 
 /**
- * @brief アーカイブからデータを取得する
+ * @brief 指定したゾーンに応じたユニットにセットアップする
  *
  * @param p_unit  データを設定するユニット
  * @param zone_id ゾーンID
  */
 //---------------------------------------------------------------------------- 
-static void SetupByArc( ISS_UNIT* p_unit, u16 zone_id )
+static void Setup( ISS_UNIT* p_unit, u16 zone_id )
 {
 	int i;
-	int pos;
-	u8* header;
-	u8* data;
-	u8 table_size;
-	u16 offset;
+	int pos;		// 参照位置
+	u8* header;		// ヘッダ部の先頭アドレス
+	u16 offset;		// データ部先頭へのオフセット
+	u8 table_size;	// 参照テーブルに登録されているデータの数
 
 	// アーカイブデータの読み出し
 	header = (u8*)GFL_ARC_UTIL_Load( ARCID_ISS_UNIT, NARC_iss_unit_iss_unit_bin, FALSE, p_unit->heapID );
@@ -294,7 +293,7 @@ static void SetupByArc( ISS_UNIT* p_unit, u16 zone_id )
 	// 指定ゾーンIDがテーブルに登録されているかどうかを検索
 	offset     = 0;
 	pos        = 0;
-	table_size = header[ pos++ ];
+	table_size = header[ pos++ ];	// テーブルサイズを取得
 	for( i=0; i<table_size; i++ )
 	{
 		u16 id = GetU16( header, pos );
@@ -305,15 +304,14 @@ static void SetupByArc( ISS_UNIT* p_unit, u16 zone_id )
 		{
 			offset = GetU16( header, pos );
 			break;
-		}
-
+		} 
 		pos += 2;
 	}
 	
 	// ユニットのセットアップ
-	if( 0 < offset )
+	if( 0 < offset )	// (指定ゾーンにISSユニットが存在する場合)
 	{
-		data = header + offset;
+		u8* data = header + offset;		// データ部の先頭アドレス
 		p_unit->isActive = TRUE;
 		p_unit->x = GetU16( data, 2 );
 		p_unit->y = GetU16( data, 4 );
@@ -335,7 +333,7 @@ static void SetupByArc( ISS_UNIT* p_unit, u16 zone_id )
 		p_unit->volumeSpace[2].z_range = *( (u8*)( data + 22 ) );
 		p_unit->volumeSpace[3].z_range = *( (u8*)( data + 23 ) );
 	}
-	else
+	else		// (指定ゾーンにISSユニットが存在しない場合)
 	{
 		p_unit->isActive = FALSE;
 	}
