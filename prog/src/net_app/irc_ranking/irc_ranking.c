@@ -232,6 +232,7 @@ enum
 //-------------------------------------
 ///	DIV
 //=====================================
+#define DRAG_MOVE_DIV_ADD_RATE				(FX32_CONST(0.05f))
 #define DRAG_MOVE_DIV_MAX							(10)
 #define DRAG_MOVE_INIT_DISTANCE				(10)
 
@@ -957,7 +958,7 @@ static void SEQFUNC_Main( SEQ_WORK *p_seqwk, int *p_seq, void *p_param )
 		};
 
 		//ƒhƒ‰ƒbƒO‚É‚æ‚éˆÚ“®
-		if( UI_GetDrag( &p_wk->ui, &drag_start, &drag_end, &dist ) )
+		if( UI_GetDrag( &p_wk->ui, &drag_start, &drag_end, &dist ) && VEC_Mag(&dist ) > DRAG_MOVE_INIT_DISTANCE )
 		{	
 			fx32 distance;
 			s8	dir;
@@ -966,7 +967,7 @@ static void SEQFUNC_Main( SEQ_WORK *p_seqwk, int *p_seq, void *p_param )
 			{	
 				distance	= VEC_DotProduct( &sc_up_norm, &dist );
 				p_wk->drag_add_cnt	= 0;
-				p_wk->drag_add	= distance / DRAG_MOVE_DIV_MAX;
+				p_wk->drag_add	= FX_Mul(distance, DRAG_MOVE_DIV_ADD_RATE);
 				dir	= p_wk->drag_add / MATH_IAbs(p_wk->drag_add);
 				p_wk->drag_add	= MATH_CLAMP( MATH_IAbs(p_wk->drag_add), FX32_ONE, MATH_IAbs(p_wk->drag_add));
 				p_wk->drag_add	*= dir;
@@ -978,7 +979,7 @@ static void SEQFUNC_Main( SEQ_WORK *p_seqwk, int *p_seq, void *p_param )
 			if( p_wk->drag_add_cnt++ < DRAG_MOVE_DIV_MAX )
 			{
 				SCROLL_AddPos( &p_wk->scroll, p_wk->drag_add >> FX32_SHIFT );
-				OS_Printf( "init cnt%d add%f\n", p_wk->drag_add_cnt, FX_FX32_TO_F32(p_wk->drag_add) );
+				OS_Printf( "move cnt%d add%f\n", p_wk->drag_add_cnt, FX_FX32_TO_F32(p_wk->drag_add) );
 			}
 			ACLR_Stop( &p_wk->aclr );
 		}
