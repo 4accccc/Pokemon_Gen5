@@ -19,6 +19,11 @@
 #ifndef ZONE_C01_EVC_H
 #define ZONE_C01_EVC_H
 
+#define C01_BADMAN                         0
+#define C01__BOY2                          1
+#define C01_CLEANINGM                      2
+#define C01_WOMAN2                         3
+#define C01_BREEDERW                       4
 
 #endif //ZONE_C01_EVC_H
 //#include "tmp/c01gym0101.h"
@@ -51,6 +56,8 @@
 #ifndef ZONE_C01PC0101_EVC_H
 #define ZONE_C01PC0101_EVC_H
 
+#define C01PC0101_PCWOMAN                  0
+#define C01PC0101_SHOPM                    1
 
 #endif //ZONE_C01PC0101_EVC_H
 //#include "tmp/c01r0101.h"
@@ -105,6 +112,9 @@
 #ifndef ZONE_C01R0201_EVC_H
 #define ZONE_C01R0201_EVC_H
 
+#define C01R0201_OLDWOMAN1                 0
+#define C01R0201_OLDMAN1                   1
+#define C01R0201_BIGMAN                    2
 
 #endif //ZONE_C01R0201_EVC_H
 //#include "tmp/c01r0202.h"
@@ -119,6 +129,9 @@
 #ifndef ZONE_C01R0202_EVC_H
 #define ZONE_C01R0202_EVC_H
 
+#define C01R0202_DANCER                    0
+#define C01R0202_GENTLEMAN                 1
+#define C01R0202_WOMAN3                    2
 
 #endif //ZONE_C01R0202_EVC_H
 //#include "tmp/c01r0301.h"
@@ -136,6 +149,9 @@
 #ifndef ZONE_C01R0301_EVC_H
 #define ZONE_C01R0301_EVC_H
 
+#define C01R0301_BOY2                      0
+#define C01R0301_MIDDLEWOMAN2              1
+#define C01R0301_MAN1                      2
 
 #endif //ZONE_C01R0301_EVC_H
 //#include "tmp/c01r0302.h"
@@ -150,6 +166,10 @@
 #ifndef ZONE_C01R0302_EVC_H
 #define ZONE_C01R0302_EVC_H
 
+#define C01R0302_BREEDERW                  0
+#define C01R0302_POKE1                     1
+#define C01R0302_POKE2                     2
+#define C01R0302_MAN1                      3
 
 #endif //ZONE_C01R0302_EVC_H
 //#include "tmp/c01r0501.h"
@@ -229,6 +249,8 @@
 #ifndef ZONE_C02PC0101_EVC_H
 #define ZONE_C02PC0101_EVC_H
 
+#define C02PC0101_SHOPM                    0
+#define C02PC0101_PCWOMAN                  1
 
 #endif //ZONE_C02PC0101_EVC_H
 //#include "tmp/c02r0101.h"
@@ -245,6 +267,7 @@
 #ifndef ZONE_C02R0101_EVC_H
 #define ZONE_C02R0101_EVC_H
 
+#define C02R0101_BADMAN                    0
 
 #endif //ZONE_C02R0101_EVC_H
 //#include "tmp/c02r0201.h"
@@ -262,6 +285,8 @@
 #ifndef ZONE_C02R0201_EVC_H
 #define ZONE_C02R0201_EVC_H
 
+#define C02R0201_MUSICIAN                  0
+#define C02R0201_BABYBOY1                  1
 
 #endif //ZONE_C02R0201_EVC_H
 //#include "tmp/c02r0301.h"
@@ -279,6 +304,8 @@
 #ifndef ZONE_C02R0301_EVC_H
 #define ZONE_C02R0301_EVC_H
 
+#define C02R0301_POKE                      0
+#define C02R0301_WOMAN2                    1
 
 #endif //ZONE_C02R0301_EVC_H
 //#include "tmp/c02r0401.h"
@@ -296,6 +323,9 @@
 #ifndef ZONE_C02R0401_EVC_H
 #define ZONE_C02R0401_EVC_H
 
+#define C02R0401_FIGHTERM1                 0
+#define C02R0401_FIGHTERM2                 1
+#define C02R0401_FIGHTERM3                 2
 
 #endif //ZONE_C02R0401_EVC_H
 //#include "tmp/c02r0501.h"
@@ -312,6 +342,8 @@
 #ifndef ZONE_C02R0501_EVC_H
 #define ZONE_C02R0501_EVC_H
 
+#define C02R0501_MAN2                      0
+#define C02R0501_WOMAN2                    1
 
 #endif //ZONE_C02R0501_EVC_H
 //#include "tmp/c02r0601.h"
@@ -328,6 +360,10 @@
 #ifndef ZONE_C02R0601_EVC_H
 #define ZONE_C02R0601_EVC_H
 
+#define C02R0601_WAITRESS                  0
+#define C02R0601_BIGMAN                    1
+#define C02R0601_MIDDLEMAN2                2
+#define C02R0601_WOMAN3                    3
 
 #endif //ZONE_C02R0601_EVC_H
 //#include "tmp/c04.h"
@@ -1010,6 +1046,9 @@
 #ifndef ZONE_T01_EVC_H
 #define ZONE_T01_EVC_H
 
+#define T01_BIGMAN                         0
+#define T01_WOMAN02                        1
+#define T01_BABYGIRL1                      2
 
 #endif //ZONE_T01_EVC_H
 //#include "tmp/t01r0101.h"
@@ -1140,6 +1179,11 @@
 #ifndef ZONE_T02_EVC_H
 #define ZONE_T02_EVC_H
 
+#define T02_BIGMAN                         0
+#define T02_WOMAN1                         1
+#define T02_OLDWOMAN1_1                    2
+#define T02_OLDMAN1_1                      3
+#define T02_BABYGIRL1_1                    4
 
 #endif //ZONE_T02_EVC_H
 //#include "tmp/t02pc0101.h"
@@ -1147,16 +1191,17 @@
 #ifndef ZONE_T02PC0101_EVD_H
 #define ZONE_T02PC0101_EVD_H
 
-#define DOOR_ID_T01R0102_EXIT01           0
-#define DOOR_ID_T02PC0101_EXIT01          1
-#define DOOR_ID_T02PC0101_EXIT02          2
-#define DOOR_ID_T02PC0101_EXIT03          3
+#define DOOR_ID_T02PC0101_EXIT01          0
+#define DOOR_ID_T02PC0101_EXIT02          1
+#define DOOR_ID_T02PC0101_EXIT03          2
 
 #endif //ZONE_T02PC0101_EVD_H
 //このファイルはdata/t02pc0101.mevから自動生成されました
 #ifndef ZONE_T02PC0101_EVC_H
 #define ZONE_T02PC0101_EVC_H
 
+#define T02PC0101_SHOPM                    0
+#define T02PC0101_PCWOMAN                  1
 
 #endif //ZONE_T02PC0101_EVC_H
 //#include "tmp/t02r0101.h"
@@ -1286,6 +1331,7 @@
 
 #endif //ZONE_T02R0401_EVC_H
 
+#include "../script/c01_def.h"
 const CONNECT_DATA DOOR_EVENT_C01[] = {
 	{//DOOR_ID_C01_EXIT10 = 0
 		{12512, 0, 9376},
@@ -1349,17 +1395,106 @@ const CONNECT_DATA DOOR_EVENT_C01[] = {
 	},
 };
 const int ConnectCount_C01 = NELEMS(DOOR_EVENT_C01);
+const FLDMMDL_HEADER OBJ_EVENT_C01[] = {
+	{
+		C01_BADMAN,
+		BADMAN,
+		MV_RND_UD,
+		EV_TYPE_NORMAL,
+		0,
+		SCRID_C01_TALKOBJ_BADMAN,
+		DIR_DOWN,
+		0,
+		0,
+		0,
+		0,
+		4,
+		779,
+		597,
+		0,
+	},
+	{
+		C01__BOY2,
+		BOY2,
+		MV_DIR_RND,
+		EV_TYPE_NORMAL,
+		0,
+		SCRID_C01_TALKOBJ_BOY2,
+		DIR_DOWN,
+		0,
+		0,
+		0,
+		0,
+		0,
+		777,
+		589,
+		0,
+	},
+	{
+		C01_CLEANINGM,
+		CLEANINGM,
+		MV_RND,
+		EV_TYPE_NORMAL,
+		0,
+		SCRID_C01_TALKOBJ_CLEANINGM,
+		DIR_DOWN,
+		0,
+		0,
+		0,
+		1,
+		2,
+		771,
+		594,
+		0,
+	},
+	{
+		C01_WOMAN2,
+		WOMAN2,
+		MV_RTRDUL       ,
+		EV_TYPE_NORMAL,
+		0,
+		SCRID_C01_TALKOBJ_WOMAN2,
+		DIR_RIGHT,
+		0,
+		0,
+		0,
+		2,
+		2,
+		754,
+		589,
+		0,
+	},
+	{
+		C01_BREEDERW,
+		BREEDERW,
+		MV_RND,
+		EV_TYPE_NORMAL,
+		0,
+		SCRID_C01_TALKOBJ_BREEDERW,
+		DIR_DOWN,
+		0,
+		0,
+		0,
+		2,
+		2,
+		786,
+		594,
+		0,
+	},
+};
+const int ObjCount_C01 = NELEMS(OBJ_EVENT_C01);
 
 static const EVENTDATA_TABLE event_c01 = {
 	0,
-	0,
+	5,
 	10,
 	0,
 	(void *)NULL,
-	(void *)NULL,
+	(void *)&OBJ_EVENT_C01,
 	(void *)&DOOR_EVENT_C01,
 	(void *)NULL,
 };
+#include "../script/c01gym0101_def.h"
 const CONNECT_DATA DOOR_EVENT_C01GYM0101[] = {
 	{//DOOR_ID_C01GYM0101_C01_EXIT01 = 0
 		{304, 0, 496},
@@ -1392,38 +1527,77 @@ static const EVENTDATA_TABLE event_c01gym0101 = {
 	(void *)&DOOR_EVENT_C01GYM0101,
 	(void *)NULL,
 };
+#include "../script/c01pc0101_def.h"
 const CONNECT_DATA DOOR_EVENT_C01PC0101[] = {
 	{//DOOR_ID_C01PC0101_EXIT02 = 0
-		{128, 0, 272},
+		{128, 0, 336},
 		ZONE_ID_C01, DOOR_ID_C01_EXIT10,
 		EXIT_DIR_UP,//direction
 		EXIT_TYPE_MAT //type
 	},
 	{//DOOR_ID_C01PC0101_EXIT01 = 1
-		{112, 0, 272},
+		{112, 0, 336},
 		ZONE_ID_C01, DOOR_ID_C01_EXIT10,
 		EXIT_DIR_UP,//direction
 		EXIT_TYPE_MAT //type
 	},
 	{//DOOR_ID_C01PC0101_EXIT03 = 2
-		{144, 0, 272},
+		{144, 0, 336},
 		ZONE_ID_C01, DOOR_ID_C01_EXIT10,
 		EXIT_DIR_UP,//direction
 		EXIT_TYPE_MAT //type
 	},
 };
 const int ConnectCount_C01PC0101 = NELEMS(DOOR_EVENT_C01PC0101);
+const FLDMMDL_HEADER OBJ_EVENT_C01PC0101[] = {
+	{
+		C01PC0101_PCWOMAN,
+		PCWOMAN1,
+		MV_DOWN,
+		EV_TYPE_NORMAL,
+		0,
+		0,
+		DIR_DOWN,
+		0,
+		0,
+		0,
+		0,
+		0,
+		7,
+		10,
+		0,
+	},
+	{
+		C01PC0101_SHOPM,
+		SHOPM1,
+		MV_LEFT,
+		EV_TYPE_NORMAL,
+		0,
+		0,
+		DIR_LEFT,
+		0,
+		0,
+		0,
+		0,
+		0,
+		11,
+		18,
+		0,
+	},
+};
+const int ObjCount_C01PC0101 = NELEMS(OBJ_EVENT_C01PC0101);
 
 static const EVENTDATA_TABLE event_c01pc0101 = {
 	0,
-	0,
+	2,
 	3,
 	0,
 	(void *)NULL,
-	(void *)NULL,
+	(void *)&OBJ_EVENT_C01PC0101,
 	(void *)&DOOR_EVENT_C01PC0101,
 	(void *)NULL,
 };
+#include "../script/c01r0101_def.h"
 const CONNECT_DATA DOOR_EVENT_C01R0101[] = {
 	{//DOOR_ID_C01R0101_EXIT01 = 0
 		{112, 0, 160},
@@ -1451,7 +1625,6 @@ const CONNECT_DATA DOOR_EVENT_C01R0101[] = {
 	},
 };
 const int ConnectCount_C01R0101 = NELEMS(DOOR_EVENT_C01R0101);
-#include "../script/c01r0101_def.h"
 const FLDMMDL_HEADER OBJ_EVENT_C01R0101[] = {
 	{
 		C01R0101_BIGMAN,
@@ -1517,6 +1690,7 @@ static const EVENTDATA_TABLE event_c01r0101 = {
 	(void *)&DOOR_EVENT_C01R0101,
 	(void *)NULL,
 };
+#include "../script/c01r0102_def.h"
 const CONNECT_DATA DOOR_EVENT_C01R0102[] = {
 	{//DOOR_ID_C01R0102_EXIT01 = 0
 		{176, 0, 32},
@@ -1526,7 +1700,6 @@ const CONNECT_DATA DOOR_EVENT_C01R0102[] = {
 	},
 };
 const int ConnectCount_C01R0102 = NELEMS(DOOR_EVENT_C01R0102);
-#include "../script/c01r0102_def.h"
 const FLDMMDL_HEADER OBJ_EVENT_C01R0102[] = {
 	{
 		C01R0102_TRAINERM,
@@ -1592,6 +1765,7 @@ static const EVENTDATA_TABLE event_c01r0102 = {
 	(void *)&DOOR_EVENT_C01R0102,
 	(void *)NULL,
 };
+#include "../script/c01r0201_def.h"
 const CONNECT_DATA DOOR_EVENT_C01R0201[] = {
 	{//DOOR_ID_C01R0201_EXIT01 = 0
 		{112, 0, 160},
@@ -1619,17 +1793,72 @@ const CONNECT_DATA DOOR_EVENT_C01R0201[] = {
 	},
 };
 const int ConnectCount_C01R0201 = NELEMS(DOOR_EVENT_C01R0201);
+const FLDMMDL_HEADER OBJ_EVENT_C01R0201[] = {
+	{
+		C01R0201_OLDWOMAN1,
+		OLDWOMAN1,
+		MV_DMY,
+		EV_TYPE_NORMAL,
+		0,
+		SCRID_C01R0201_TALKOBJ_OLDWOMAN1,
+		DIR_DOWN,
+		0,
+		0,
+		0,
+		0,
+		0,
+		4,
+		5,
+		0,
+	},
+	{
+		C01R0201_OLDMAN1,
+		OLDMAN1,
+		MV_DMY,
+		EV_TYPE_NORMAL,
+		0,
+		SCRID_C01R0201_TALKOBJ_OLDMAN1,
+		DIR_DOWN,
+		0,
+		0,
+		0,
+		0,
+		0,
+		5,
+		5,
+		0,
+	},
+	{
+		C01R0201_BIGMAN,
+		MAN3,
+		MV_DIR_RND,
+		EV_TYPE_NORMAL,
+		0,
+		SCRID_C01R0201_TALKOBJ_BIGMAN,
+		DIR_LEFT,
+		0,
+		0,
+		0,
+		0,
+		0,
+		9,
+		6,
+		0,
+	},
+};
+const int ObjCount_C01R0201 = NELEMS(OBJ_EVENT_C01R0201);
 
 static const EVENTDATA_TABLE event_c01r0201 = {
 	0,
-	0,
+	3,
 	4,
 	0,
 	(void *)NULL,
-	(void *)NULL,
+	(void *)&OBJ_EVENT_C01R0201,
 	(void *)&DOOR_EVENT_C01R0201,
 	(void *)NULL,
 };
+#include "../script/c01r0202_def.h"
 const CONNECT_DATA DOOR_EVENT_C01R0202[] = {
 	{//DOOR_ID_C01R0202_EXIT01 = 0
 		{176, 0, 32},
@@ -1639,17 +1868,72 @@ const CONNECT_DATA DOOR_EVENT_C01R0202[] = {
 	},
 };
 const int ConnectCount_C01R0202 = NELEMS(DOOR_EVENT_C01R0202);
+const FLDMMDL_HEADER OBJ_EVENT_C01R0202[] = {
+	{
+		C01R0202_DANCER,
+		DANCER,
+		MV_RTRUDL       ,
+		EV_TYPE_NORMAL,
+		0,
+		SCRID_C01R0202_TALKOBJ_DANCER,
+		DIR_DOWN,
+		0,
+		0,
+		0,
+		2,
+		2,
+		7,
+		8,
+		0,
+	},
+	{
+		C01R0202_GENTLEMAN,
+		GENTLEMAN,
+		MV_DMY,
+		EV_TYPE_NORMAL,
+		0,
+		SCRID_C01R0202_TALKOBJ_GENTLEMAN,
+		DIR_LEFT,
+		0,
+		0,
+		0,
+		0,
+		0,
+		12,
+		5,
+		0,
+	},
+	{
+		C01R0202_WOMAN3,
+		WOMAN3,
+		MV_RND,
+		EV_TYPE_NORMAL,
+		0,
+		SCRID_C01R0202_TALKOBJ_WOMAN3,
+		DIR_DOWN,
+		0,
+		0,
+		0,
+		0,
+		2,
+		3,
+		5,
+		0,
+	},
+};
+const int ObjCount_C01R0202 = NELEMS(OBJ_EVENT_C01R0202);
 
 static const EVENTDATA_TABLE event_c01r0202 = {
 	0,
-	0,
+	3,
 	1,
 	0,
 	(void *)NULL,
-	(void *)NULL,
+	(void *)&OBJ_EVENT_C01R0202,
 	(void *)&DOOR_EVENT_C01R0202,
 	(void *)NULL,
 };
+#include "../script/c01r0301_def.h"
 const CONNECT_DATA DOOR_EVENT_C01R0301[] = {
 	{//DOOR_ID_C01R0301_EXIT01 = 0
 		{112, 0, 160},
@@ -1677,17 +1961,72 @@ const CONNECT_DATA DOOR_EVENT_C01R0301[] = {
 	},
 };
 const int ConnectCount_C01R0301 = NELEMS(DOOR_EVENT_C01R0301);
+const FLDMMDL_HEADER OBJ_EVENT_C01R0301[] = {
+	{
+		C01R0301_BOY2,
+		BOY1,
+		MV_RND_V,
+		EV_TYPE_NORMAL,
+		0,
+		SCRID_C01R0301_TALKOBJ_BOY2,
+		DIR_DOWN,
+		0,
+		0,
+		0,
+		0,
+		0,
+		5,
+		6,
+		0,
+	},
+	{
+		C01R0301_MIDDLEWOMAN2,
+		MIDDLEWOMAN2,
+		MV_DMY,
+		EV_TYPE_NORMAL,
+		0,
+		SCRID_C01R0301_TALKOBJ_MIDDLEWOMAN2,
+		DIR_LEFT,
+		0,
+		0,
+		0,
+		0,
+		0,
+		4,
+		3,
+		0,
+	},
+	{
+		C01R0301_MAN1,
+		MAN1,
+		MV_RND,
+		EV_TYPE_NORMAL,
+		0,
+		SCRID_C01R0301_TALKOBJ_MAN1,
+		DIR_RIGHT,
+		0,
+		0,
+		0,
+		0,
+		0,
+		10,
+		7,
+		0,
+	},
+};
+const int ObjCount_C01R0301 = NELEMS(OBJ_EVENT_C01R0301);
 
 static const EVENTDATA_TABLE event_c01r0301 = {
 	0,
-	0,
+	3,
 	4,
 	0,
 	(void *)NULL,
-	(void *)NULL,
+	(void *)&OBJ_EVENT_C01R0301,
 	(void *)&DOOR_EVENT_C01R0301,
 	(void *)NULL,
 };
+#include "../script/c01r0302_def.h"
 const CONNECT_DATA DOOR_EVENT_C01R0302[] = {
 	{//DOOR_ID_C01R0302_EXIT01 = 0
 		{176, 0, 32},
@@ -1697,17 +2036,89 @@ const CONNECT_DATA DOOR_EVENT_C01R0302[] = {
 	},
 };
 const int ConnectCount_C01R0302 = NELEMS(DOOR_EVENT_C01R0302);
+const FLDMMDL_HEADER OBJ_EVENT_C01R0302[] = {
+	{
+		C01R0302_BREEDERW,
+		BREEDERW,
+		MV_DIR_RND,
+		EV_TYPE_NORMAL,
+		0,
+		SCRID_C01R0302_TALKOBJ_BREEDERW,
+		DIR_DOWN,
+		0,
+		0,
+		0,
+		0,
+		0,
+		10,
+		6,
+		0,
+	},
+	{
+		C01R0302_POKE1,
+		POKE2,
+		MV_RT2,
+		EV_TYPE_NORMAL,
+		0,
+		SCRID_C01R0302_TALKOBJ_POKE1,
+		DIR_RIGHT,
+		0,
+		0,
+		0,
+		3,
+		0,
+		7,
+		7,
+		0,
+	},
+	{
+		C01R0302_POKE2,
+		POKE2,
+		MV_RT2,
+		EV_TYPE_NORMAL,
+		0,
+		SCRID_C01R0302_TALKOBJ_POKE2,
+		DIR_LEFT,
+		0,
+		0,
+		0,
+		3,
+		0,
+		11,
+		8,
+		0,
+	},
+	{
+		C01R0302_MAN1,
+		MAN1,
+		MV_DIR_RND,
+		EV_TYPE_NORMAL,
+		0,
+		SCRID_C01R0302_TALKOBJ_MAN1,
+		DIR_DOWN,
+		0,
+		0,
+		0,
+		0,
+		0,
+		2,
+		7,
+		0,
+	},
+};
+const int ObjCount_C01R0302 = NELEMS(OBJ_EVENT_C01R0302);
 
 static const EVENTDATA_TABLE event_c01r0302 = {
 	0,
-	0,
+	4,
 	1,
 	0,
 	(void *)NULL,
-	(void *)NULL,
+	(void *)&OBJ_EVENT_C01R0302,
 	(void *)&DOOR_EVENT_C01R0302,
 	(void *)NULL,
 };
+#include "../script/c01r0501_def.h"
 const CONNECT_DATA DOOR_EVENT_C01R0501[] = {
 	{//DOOR_ID_C01R0501_EXIT01 = 0
 		{128, 0, 240},
@@ -1740,6 +2151,7 @@ static const EVENTDATA_TABLE event_c01r0501 = {
 	(void *)&DOOR_EVENT_C01R0501,
 	(void *)NULL,
 };
+#include "../script/c02_def.h"
 const CONNECT_DATA DOOR_EVENT_C02[] = {
 	{//DOOR_ID_C02_EXIT02 = 0
 		{10512, 0, 9360},
@@ -1862,6 +2274,7 @@ static const EVENTDATA_TABLE event_c02 = {
 	(void *)&DOOR_EVENT_C02,
 	(void *)NULL,
 };
+#include "../script/c02gym0101_def.h"
 const CONNECT_DATA DOOR_EVENT_C02GYM0101[] = {
 	{//DOOR_ID_C02GYM0101_EXIT01 = 0
 		{80, 0, 128},
@@ -1894,38 +2307,77 @@ static const EVENTDATA_TABLE event_c02gym0101 = {
 	(void *)&DOOR_EVENT_C02GYM0101,
 	(void *)NULL,
 };
+#include "../script/c02pc0101_def.h"
 const CONNECT_DATA DOOR_EVENT_C02PC0101[] = {
 	{//DOOR_ID_C02PC0101_EXIT02 = 0
-		{128, 0, 272},
+		{128, 0, 336},
 		ZONE_ID_C02, DOOR_ID_C02_EXIT08,
 		EXIT_DIR_UP,//direction
 		EXIT_TYPE_MAT //type
 	},
 	{//DOOR_ID_C02PC0101_EXIT01 = 1
-		{112, 0, 272},
+		{112, 0, 336},
 		ZONE_ID_C02, DOOR_ID_C02_EXIT08,
 		EXIT_DIR_UP,//direction
 		EXIT_TYPE_MAT //type
 	},
 	{//DOOR_ID_C02PC0101_EXIT03 = 2
-		{144, 0, 272},
+		{144, 0, 336},
 		ZONE_ID_C02, DOOR_ID_C02_EXIT08,
 		EXIT_DIR_UP,//direction
 		EXIT_TYPE_MAT //type
 	},
 };
 const int ConnectCount_C02PC0101 = NELEMS(DOOR_EVENT_C02PC0101);
+const FLDMMDL_HEADER OBJ_EVENT_C02PC0101[] = {
+	{
+		C02PC0101_SHOPM,
+		SHOPM1,
+		MV_LEFT,
+		EV_TYPE_NORMAL,
+		0,
+		0,
+		DIR_LEFT,
+		0,
+		0,
+		0,
+		0,
+		0,
+		11,
+		18,
+		0,
+	},
+	{
+		C02PC0101_PCWOMAN,
+		PCWOMAN1,
+		MV_DOWN,
+		EV_TYPE_NORMAL,
+		0,
+		0,
+		DIR_DOWN,
+		0,
+		0,
+		0,
+		0,
+		0,
+		7,
+		10,
+		0,
+	},
+};
+const int ObjCount_C02PC0101 = NELEMS(OBJ_EVENT_C02PC0101);
 
 static const EVENTDATA_TABLE event_c02pc0101 = {
 	0,
-	0,
+	2,
 	3,
 	0,
 	(void *)NULL,
-	(void *)NULL,
+	(void *)&OBJ_EVENT_C02PC0101,
 	(void *)&DOOR_EVENT_C02PC0101,
 	(void *)NULL,
 };
+#include "../script/c02r0101_def.h"
 const CONNECT_DATA DOOR_EVENT_C02R0101[] = {
 	{//DOOR_ID_C02R0101_EXIT02 = 0
 		{112, 0, 160},
@@ -1947,17 +2399,38 @@ const CONNECT_DATA DOOR_EVENT_C02R0101[] = {
 	},
 };
 const int ConnectCount_C02R0101 = NELEMS(DOOR_EVENT_C02R0101);
+const FLDMMDL_HEADER OBJ_EVENT_C02R0101[] = {
+	{
+		C02R0101_BADMAN,
+		BADMAN,
+		MV_DMY,
+		EV_TYPE_NORMAL,
+		0,
+		SCRID_C02R0101_TALKOBJ_BADMAN,
+		DIR_DOWN,
+		0,
+		0,
+		0,
+		0,
+		0,
+		6,
+		4,
+		0,
+	},
+};
+const int ObjCount_C02R0101 = NELEMS(OBJ_EVENT_C02R0101);
 
 static const EVENTDATA_TABLE event_c02r0101 = {
 	0,
-	0,
+	1,
 	3,
 	0,
 	(void *)NULL,
-	(void *)NULL,
+	(void *)&OBJ_EVENT_C02R0101,
 	(void *)&DOOR_EVENT_C02R0101,
 	(void *)NULL,
 };
+#include "../script/c02r0201_def.h"
 const CONNECT_DATA DOOR_EVENT_C02R0201[] = {
 	{//DOOR_ID_C02R0201_EXIT02 = 0
 		{112, 0, 160},
@@ -1985,17 +2458,55 @@ const CONNECT_DATA DOOR_EVENT_C02R0201[] = {
 	},
 };
 const int ConnectCount_C02R0201 = NELEMS(DOOR_EVENT_C02R0201);
+const FLDMMDL_HEADER OBJ_EVENT_C02R0201[] = {
+	{
+		C02R0201_MUSICIAN,
+		MUSICIAN,
+		MV_DIR_RND,
+		EV_TYPE_NORMAL,
+		0,
+		SCRID_C02R0201_TALKOBJ_MUSICIAN,
+		DIR_UP,
+		0,
+		0,
+		0,
+		0,
+		0,
+		4,
+		3,
+		48,
+	},
+	{
+		C02R0201_BABYBOY1,
+		BABYBOY1,
+		MV_DIR_RND,
+		EV_TYPE_NORMAL,
+		0,
+		SCRID_C02R0201_TALKOBJ_BABYBOY1,
+		DIR_DOWN,
+		0,
+		0,
+		0,
+		2,
+		2,
+		4,
+		8,
+		0,
+	},
+};
+const int ObjCount_C02R0201 = NELEMS(OBJ_EVENT_C02R0201);
 
 static const EVENTDATA_TABLE event_c02r0201 = {
 	0,
-	0,
+	2,
 	4,
 	0,
 	(void *)NULL,
-	(void *)NULL,
+	(void *)&OBJ_EVENT_C02R0201,
 	(void *)&DOOR_EVENT_C02R0201,
 	(void *)NULL,
 };
+#include "../script/c02r0301_def.h"
 const CONNECT_DATA DOOR_EVENT_C02R0301[] = {
 	{//DOOR_ID_C02R0301_EXIT02 = 0
 		{112, 0, 160},
@@ -2023,17 +2534,55 @@ const CONNECT_DATA DOOR_EVENT_C02R0301[] = {
 	},
 };
 const int ConnectCount_C02R0301 = NELEMS(DOOR_EVENT_C02R0301);
+const FLDMMDL_HEADER OBJ_EVENT_C02R0301[] = {
+	{
+		C02R0301_POKE,
+		POKE2,
+		MV_DIR_RND,
+		EV_TYPE_NORMAL,
+		0,
+		SCRID_C02R0301_TALKOBJ_POKE,
+		DIR_DOWN,
+		0,
+		0,
+		0,
+		0,
+		3,
+		5,
+		4,
+		48,
+	},
+	{
+		C02R0301_WOMAN2,
+		WOMAN2,
+		MV_DIR_RND,
+		EV_TYPE_NORMAL,
+		0,
+		SCRID_C02R0301_TALKOBJ_WOMAN2,
+		DIR_DOWN,
+		0,
+		0,
+		0,
+		0,
+		0,
+		9,
+		8,
+		0,
+	},
+};
+const int ObjCount_C02R0301 = NELEMS(OBJ_EVENT_C02R0301);
 
 static const EVENTDATA_TABLE event_c02r0301 = {
 	0,
-	0,
+	2,
 	4,
 	0,
 	(void *)NULL,
-	(void *)NULL,
+	(void *)&OBJ_EVENT_C02R0301,
 	(void *)&DOOR_EVENT_C02R0301,
 	(void *)NULL,
 };
+#include "../script/c02r0401_def.h"
 const CONNECT_DATA DOOR_EVENT_C02R0401[] = {
 	{//DOOR_ID_C02R0401_EXIT02 = 0
 		{112, 0, 160},
@@ -2061,17 +2610,72 @@ const CONNECT_DATA DOOR_EVENT_C02R0401[] = {
 	},
 };
 const int ConnectCount_C02R0401 = NELEMS(DOOR_EVENT_C02R0401);
+const FLDMMDL_HEADER OBJ_EVENT_C02R0401[] = {
+	{
+		C02R0401_FIGHTERM1,
+		FIGHTERM,
+		MV_DMY,
+		EV_TYPE_NORMAL,
+		0,
+		SCRID_C02R0401_TALKOBJ_FIGHTREM1,
+		DIR_DOWN,
+		0,
+		0,
+		0,
+		0,
+		0,
+		6,
+		2,
+		48,
+	},
+	{
+		C02R0401_FIGHTERM2,
+		FIGHTERM,
+		MV_DMY,
+		EV_TYPE_NORMAL,
+		0,
+		SCRID_C02R0401_TALKOBJ_FIGHTREM2,
+		DIR_DOWN,
+		0,
+		0,
+		0,
+		0,
+		0,
+		3,
+		2,
+		48,
+	},
+	{
+		C02R0401_FIGHTERM3,
+		FIGHTERM,
+		MV_DMY,
+		EV_TYPE_NORMAL,
+		0,
+		SCRID_C02R0401_TALKOBJ_FIGHTERM3,
+		DIR_DOWN,
+		0,
+		0,
+		0,
+		0,
+		0,
+		9,
+		2,
+		48,
+	},
+};
+const int ObjCount_C02R0401 = NELEMS(OBJ_EVENT_C02R0401);
 
 static const EVENTDATA_TABLE event_c02r0401 = {
 	0,
-	0,
+	3,
 	4,
 	0,
 	(void *)NULL,
-	(void *)NULL,
+	(void *)&OBJ_EVENT_C02R0401,
 	(void *)&DOOR_EVENT_C02R0401,
 	(void *)NULL,
 };
+#include "../script/c02r0501_def.h"
 const CONNECT_DATA DOOR_EVENT_C02R0501[] = {
 	{//DOOR_ID_C02R0501_EXIT02 = 0
 		{112, 0, 160},
@@ -2093,17 +2697,55 @@ const CONNECT_DATA DOOR_EVENT_C02R0501[] = {
 	},
 };
 const int ConnectCount_C02R0501 = NELEMS(DOOR_EVENT_C02R0501);
+const FLDMMDL_HEADER OBJ_EVENT_C02R0501[] = {
+	{
+		C02R0501_MAN2,
+		MAN2,
+		MV_RND,
+		EV_TYPE_NORMAL,
+		0,
+		SCRID_C02R0501_TALKOBJ_MAN2,
+		DIR_RIGHT,
+		0,
+		0,
+		0,
+		0,
+		0,
+		4,
+		4,
+		0,
+	},
+	{
+		C02R0501_WOMAN2,
+		WOMAN2,
+		MV_RND,
+		EV_TYPE_NORMAL,
+		0,
+		SCRID_C02R0501_TALKOBJ_WOMAN2,
+		DIR_DOWN,
+		0,
+		0,
+		0,
+		1,
+		1,
+		8,
+		6,
+		0,
+	},
+};
+const int ObjCount_C02R0501 = NELEMS(OBJ_EVENT_C02R0501);
 
 static const EVENTDATA_TABLE event_c02r0501 = {
 	0,
-	0,
+	2,
 	3,
 	0,
 	(void *)NULL,
-	(void *)NULL,
+	(void *)&OBJ_EVENT_C02R0501,
 	(void *)&DOOR_EVENT_C02R0501,
 	(void *)NULL,
 };
+#include "../script/c02r0601_def.h"
 const CONNECT_DATA DOOR_EVENT_C02R0601[] = {
 	{//DOOR_ID_C02R0601_EXIT02 = 0
 		{144, 32, 240},
@@ -2125,17 +2767,89 @@ const CONNECT_DATA DOOR_EVENT_C02R0601[] = {
 	},
 };
 const int ConnectCount_C02R0601 = NELEMS(DOOR_EVENT_C02R0601);
+const FLDMMDL_HEADER OBJ_EVENT_C02R0601[] = {
+	{
+		C02R0601_WAITRESS,
+		WAITRESS,
+		MV_DMY,
+		EV_TYPE_NORMAL,
+		0,
+		SCRID_C02R0601_TALKOBJ_WAITRESS,
+		DIR_LEFT,
+		0,
+		0,
+		0,
+		0,
+		0,
+		9,
+		12,
+		32,
+	},
+	{
+		C02R0601_BIGMAN,
+		MAN3,
+		MV_DMY,
+		EV_TYPE_NORMAL,
+		0,
+		SCRID_C02R0601_TALKOBJ_BIGMAN,
+		DIR_RIGHT,
+		0,
+		0,
+		0,
+		0,
+		0,
+		8,
+		4,
+		32,
+	},
+	{
+		C02R0601_MIDDLEMAN2,
+		MIDDLEMAN2,
+		MV_DMY,
+		EV_TYPE_NORMAL,
+		0,
+		SCRID_C02R0601_TALKOBJ_MIDDLEMAN2,
+		DIR_UP,
+		0,
+		0,
+		0,
+		0,
+		0,
+		4,
+		6,
+		0,
+	},
+	{
+		C02R0601_WOMAN3,
+		WOMAN3,
+		MV_DIR_RND,
+		EV_TYPE_NORMAL,
+		0,
+		SCRID_C02R0601_TALKOBJ_WOMAN3,
+		DIR_LEFT,
+		0,
+		0,
+		0,
+		0,
+		4,
+		10,
+		6,
+		32,
+	},
+};
+const int ObjCount_C02R0601 = NELEMS(OBJ_EVENT_C02R0601);
 
 static const EVENTDATA_TABLE event_c02r0601 = {
 	0,
-	0,
+	4,
 	3,
 	0,
 	(void *)NULL,
-	(void *)NULL,
+	(void *)&OBJ_EVENT_C02R0601,
 	(void *)&DOOR_EVENT_C02R0601,
 	(void *)NULL,
 };
+#include "../script/c04_def.h"
 const CONNECT_DATA DOOR_EVENT_C04[] = {
 	{//DOOR_ID_C04_R04_EXIT01 = 0
 		{6400, 0, 7664},
@@ -2198,6 +2912,7 @@ static const EVENTDATA_TABLE event_c04 = {
 	(void *)&DOOR_EVENT_C04,
 	(void *)NULL,
 };
+#include "../script/c05_def.h"
 const CONNECT_DATA DOOR_EVENT_C05[] = {
 	{//DOOR_ID_C05_R05_EXIT01 = 0
 		{3936, 0, 6896},
@@ -2290,6 +3005,7 @@ static const EVENTDATA_TABLE event_c05 = {
 	(void *)&DOOR_EVENT_C05,
 	(void *)NULL,
 };
+#include "../script/c05gym0101_def.h"
 const CONNECT_DATA DOOR_EVENT_C05GYM0101[] = {
 	{//DOOR_ID_C05GYM0101_EXIT02 = 0
 		{96, 0, 128},
@@ -2322,6 +3038,7 @@ static const EVENTDATA_TABLE event_c05gym0101 = {
 	(void *)&DOOR_EVENT_C05GYM0101,
 	(void *)NULL,
 };
+#include "../script/c05pc0101_def.h"
 const CONNECT_DATA DOOR_EVENT_C05PC0101[] = {
 	{//DOOR_ID_C05PC0101_EXIT02 = 0
 		{128, 0, 320},
@@ -2354,6 +3071,7 @@ static const EVENTDATA_TABLE event_c05pc0101 = {
 	(void *)&DOOR_EVENT_C05PC0101,
 	(void *)NULL,
 };
+#include "../script/c05r0101_def.h"
 const CONNECT_DATA DOOR_EVENT_C05R0101[] = {
 	{//DOOR_ID_C05R0101_EXIT02 = 0
 		{112, 0, 144},
@@ -2386,6 +3104,7 @@ static const EVENTDATA_TABLE event_c05r0101 = {
 	(void *)&DOOR_EVENT_C05R0101,
 	(void *)NULL,
 };
+#include "../script/c05r0201_def.h"
 const CONNECT_DATA DOOR_EVENT_C05R0201[] = {
 	{//DOOR_ID_C05R0201_EXIT02 = 0
 		{112, 0, 144},
@@ -2418,6 +3137,7 @@ static const EVENTDATA_TABLE event_c05r0201 = {
 	(void *)&DOOR_EVENT_C05R0201,
 	(void *)NULL,
 };
+#include "../script/c05r0301_def.h"
 const CONNECT_DATA DOOR_EVENT_C05R0301[] = {
 	{//DOOR_ID_C05R0301_EXIT02 = 0
 		{112, 0, 144},
@@ -2450,6 +3170,7 @@ static const EVENTDATA_TABLE event_c05r0301 = {
 	(void *)&DOOR_EVENT_C05R0301,
 	(void *)NULL,
 };
+#include "../script/c05r0401_def.h"
 const CONNECT_DATA DOOR_EVENT_C05R0401[] = {
 	{//DOOR_ID_C05R0401_EXIT02 = 0
 		{112, 0, 144},
@@ -2482,6 +3203,7 @@ static const EVENTDATA_TABLE event_c05r0401 = {
 	(void *)&DOOR_EVENT_C05R0401,
 	(void *)NULL,
 };
+#include "../script/c05r0501_def.h"
 const CONNECT_DATA DOOR_EVENT_C05R0501[] = {
 	{//DOOR_ID_C05R0501_EXIT01 = 0
 		{112, 0, 288},
@@ -2514,6 +3236,7 @@ static const EVENTDATA_TABLE event_c05r0501 = {
 	(void *)&DOOR_EVENT_C05R0501,
 	(void *)NULL,
 };
+#include "../script/c05r0601_def.h"
 const CONNECT_DATA DOOR_EVENT_C05R0601[] = {
 	{//DOOR_ID_C05R0601_EXIT01 = 0
 		{144, 0, 288},
@@ -2582,6 +3305,7 @@ static const EVENTDATA_TABLE event_c05r0601 = {
 	(void *)&DOOR_EVENT_C05R0601,
 	(void *)NULL,
 };
+#include "../script/c06_def.h"
 const CONNECT_DATA DOOR_EVENT_C06[] = {
 	{//DOOR_ID_C06_C06PC0101EXIT01 = 0
 		{1808, 0, 4880},
@@ -2644,6 +3368,7 @@ static const EVENTDATA_TABLE event_c06 = {
 	(void *)&DOOR_EVENT_C06,
 	(void *)NULL,
 };
+#include "../script/c06gym0101_def.h"
 const CONNECT_DATA DOOR_EVENT_C06GYM0101[] = {
 	{//DOOR_ID_C06GYM0101_EXIT01 = 0
 		{80, 0, 128},
@@ -2676,6 +3401,7 @@ static const EVENTDATA_TABLE event_c06gym0101 = {
 	(void *)&DOOR_EVENT_C06GYM0101,
 	(void *)NULL,
 };
+#include "../script/c06pc0101_def.h"
 const CONNECT_DATA DOOR_EVENT_C06PC0101[] = {
 	{//DOOR_ID_C06PC0101_EXIT01 = 0
 		{112, 0, 272},
@@ -2708,6 +3434,7 @@ static const EVENTDATA_TABLE event_c06pc0101 = {
 	(void *)&DOOR_EVENT_C06PC0101,
 	(void *)NULL,
 };
+#include "../script/c06r0101_def.h"
 const CONNECT_DATA DOOR_EVENT_C06R0101[] = {
 	{//DOOR_ID_C06R0101_EXIT01 = 0
 		{288, 0, 368},
@@ -2740,6 +3467,7 @@ static const EVENTDATA_TABLE event_c06r0101 = {
 	(void *)&DOOR_EVENT_C06R0101,
 	(void *)NULL,
 };
+#include "../script/c06r0201_def.h"
 const CONNECT_DATA DOOR_EVENT_C06R0201[] = {
 	{//DOOR_ID_C06R0201_EXIT01 = 0
 		{224, 0, 384},
@@ -2772,6 +3500,7 @@ static const EVENTDATA_TABLE event_c06r0201 = {
 	(void *)&DOOR_EVENT_C06R0201,
 	(void *)NULL,
 };
+#include "../script/c06r0301_def.h"
 const CONNECT_DATA DOOR_EVENT_C06R0301[] = {
 	{//DOOR_ID_C06R0301_EXIT01 = 0
 		{96, 0, 144},
@@ -2804,6 +3533,7 @@ static const EVENTDATA_TABLE event_c06r0301 = {
 	(void *)&DOOR_EVENT_C06R0301,
 	(void *)NULL,
 };
+#include "../script/c06r0401_def.h"
 const CONNECT_DATA DOOR_EVENT_C06R0401[] = {
 	{//DOOR_ID_C06R0401_EXIT01 = 0
 		{96, 0, 144},
@@ -2836,6 +3566,7 @@ static const EVENTDATA_TABLE event_c06r0401 = {
 	(void *)&DOOR_EVENT_C06R0401,
 	(void *)NULL,
 };
+#include "../script/c06r0501_def.h"
 const CONNECT_DATA DOOR_EVENT_C06R0501[] = {
 	{//DOOR_ID_C06R0501_EXIT01 = 0
 		{160, 0, 192},
@@ -2868,6 +3599,7 @@ static const EVENTDATA_TABLE event_c06r0501 = {
 	(void *)&DOOR_EVENT_C06R0501,
 	(void *)NULL,
 };
+#include "../script/c07_def.h"
 const CONNECT_DATA DOOR_EVENT_C07[] = {
 	{//DOOR_ID_C07_C07R0201_EXIT01 = 0
 		{3024, 3, 3136},
@@ -2930,6 +3662,7 @@ static const EVENTDATA_TABLE event_c07 = {
 	(void *)&DOOR_EVENT_C07,
 	(void *)NULL,
 };
+#include "../script/c07gym0101_def.h"
 const CONNECT_DATA DOOR_EVENT_C07GYM0101[] = {
 	{//DOOR_ID_C07GYM0101_C07_EXIT01 = 0
 		{80, 0, 128},
@@ -2962,6 +3695,7 @@ static const EVENTDATA_TABLE event_c07gym0101 = {
 	(void *)&DOOR_EVENT_C07GYM0101,
 	(void *)NULL,
 };
+#include "../script/c07pc0101_def.h"
 const CONNECT_DATA DOOR_EVENT_C07PC0101[] = {
 	{//DOOR_ID_C07PC0101_C07_EXIT01 = 0
 		{112, 0, 320},
@@ -2994,6 +3728,7 @@ static const EVENTDATA_TABLE event_c07pc0101 = {
 	(void *)&DOOR_EVENT_C07PC0101,
 	(void *)NULL,
 };
+#include "../script/c07r0101_def.h"
 const CONNECT_DATA DOOR_EVENT_C07R0101[] = {
 	{//DOOR_ID_C07R0101_C07_EXIT01 = 0
 		{96, 0, 144},
@@ -3026,6 +3761,7 @@ static const EVENTDATA_TABLE event_c07r0101 = {
 	(void *)&DOOR_EVENT_C07R0101,
 	(void *)NULL,
 };
+#include "../script/c07r0201_def.h"
 const CONNECT_DATA DOOR_EVENT_C07R0201[] = {
 	{//DOOR_ID_C07R0201_C07_EXIT01 = 0
 		{96, 0, 144},
@@ -3058,6 +3794,7 @@ static const EVENTDATA_TABLE event_c07r0201 = {
 	(void *)&DOOR_EVENT_C07R0201,
 	(void *)NULL,
 };
+#include "../script/c07r0301_def.h"
 const CONNECT_DATA DOOR_EVENT_C07R0301[] = {
 	{//DOOR_ID_C07R0301_C07_EXIT01 = 0
 		{96, 0, 144},
@@ -3090,6 +3827,7 @@ static const EVENTDATA_TABLE event_c07r0301 = {
 	(void *)&DOOR_EVENT_C07R0301,
 	(void *)NULL,
 };
+#include "../script/c07r0401_def.h"
 const CONNECT_DATA DOOR_EVENT_C07R0401[] = {
 	{//DOOR_ID_C07R0401_C07_EXIT01 = 0
 		{96, 0, 144},
@@ -3122,6 +3860,7 @@ static const EVENTDATA_TABLE event_c07r0401 = {
 	(void *)&DOOR_EVENT_C07R0401,
 	(void *)NULL,
 };
+#include "../script/d01_def.h"
 const CONNECT_DATA DOOR_EVENT_D01[] = {
 	{//DOOR_ID_D01_EXIT01 = 0
 		{13104, 0, 9536},
@@ -3160,6 +3899,7 @@ static const EVENTDATA_TABLE event_d01 = {
 	(void *)&DOOR_EVENT_D01,
 	(void *)NULL,
 };
+#include "../script/d01r0101_def.h"
 const CONNECT_DATA DOOR_EVENT_D01R0101[] = {
 	{//DOOR_ID_D01R0101_EXIT04 = 0
 		{128, 0, 464},
@@ -3234,6 +3974,7 @@ static const EVENTDATA_TABLE event_d01r0101 = {
 	(void *)&DOOR_EVENT_D01R0101,
 	(void *)NULL,
 };
+#include "../script/d01r0201_def.h"
 const CONNECT_DATA DOOR_EVENT_D01R0201[] = {
 	{//DOOR_ID_D01R0201_EXIT01 = 0
 		{320, 0, 32},
@@ -3260,6 +4001,7 @@ static const EVENTDATA_TABLE event_d01r0201 = {
 	(void *)&DOOR_EVENT_D01R0201,
 	(void *)NULL,
 };
+#include "../script/d02_def.h"
 const CONNECT_DATA DOOR_EVENT_D02[] = {
 	{//DOOR_ID_D02_EXIT01 = 0
 		{9360, 0, 9408},
@@ -3298,6 +4040,7 @@ static const EVENTDATA_TABLE event_d02 = {
 	(void *)&DOOR_EVENT_D02,
 	(void *)NULL,
 };
+#include "../script/d02r0101_def.h"
 const CONNECT_DATA DOOR_EVENT_D02R0101[] = {
 	{//DOOR_ID_D02R0101_EXIT01 = 0
 		{1360, 0, 1184},
@@ -3372,6 +4115,7 @@ static const EVENTDATA_TABLE event_d02r0101 = {
 	(void *)&DOOR_EVENT_D02R0101,
 	(void *)NULL,
 };
+#include "../script/d06_def.h"
 const CONNECT_DATA DOOR_EVENT_D06[] = {
 	{//DOOR_ID_D06_C06_EXIT01 = 0
 		{1632, 16, 5488},
@@ -3392,6 +4136,7 @@ static const EVENTDATA_TABLE event_d06 = {
 	(void *)&DOOR_EVENT_D06,
 	(void *)NULL,
 };
+#include "../script/d07_def.h"
 const CONNECT_DATA DOOR_EVENT_D07[] = {
 	{//DOOR_ID_D07_C07_EXIT01 = 0
 		{2320, 0, 3264},
@@ -3430,6 +4175,7 @@ static const EVENTDATA_TABLE event_d07 = {
 	(void *)&DOOR_EVENT_D07,
 	(void *)NULL,
 };
+#include "../script/h01p01_def.h"
 const CONNECT_DATA DOOR_EVENT_H01P01[] = {
 	{//DOOR_ID_H01P01_EXIT01 = 0
 		{256, 16, 480},
@@ -3480,8 +4226,8 @@ static const EVENTDATA_TABLE event_h01p01 = {
 	(void *)&DOOR_EVENT_H01P01,
 	(void *)NULL,
 };
-//ConnectData_R01[]はデータがないため存在しない
 #include "../script/r01_def.h"
+//ConnectData_R01[]はデータがないため存在しない
 const FLDMMDL_HEADER OBJ_EVENT_R01[] = {
 	{
 		R01_BOY1,
@@ -3547,6 +4293,7 @@ static const EVENTDATA_TABLE event_r01 = {
 	(void *)NULL,
 	(void *)NULL,
 };
+#include "../script/r02_def.h"
 const CONNECT_DATA DOOR_EVENT_R02[] = {
 	{//DOOR_ID_R02_EXIT01 = 0
 		{12576, 0, 9792},
@@ -3585,6 +4332,7 @@ static const EVENTDATA_TABLE event_r02 = {
 	(void *)&DOOR_EVENT_R02,
 	(void *)NULL,
 };
+#include "../script/r03_def.h"
 const CONNECT_DATA DOOR_EVENT_R03[] = {
 	{//DOOR_ID_R03_EXIT01 = 0
 		{10768, 0, 9536},
@@ -3635,6 +4383,7 @@ static const EVENTDATA_TABLE event_r03 = {
 	(void *)&DOOR_EVENT_R03,
 	(void *)NULL,
 };
+#include "../script/r04_def.h"
 const CONNECT_DATA DOOR_EVENT_R04[] = {
 	{//DOOR_ID_R04_C04_EXIT01 = 0
 		{6944, 0, 7744},
@@ -3673,6 +4422,7 @@ static const EVENTDATA_TABLE event_r04 = {
 	(void *)&DOOR_EVENT_R04,
 	(void *)NULL,
 };
+#include "../script/r05_def.h"
 const CONNECT_DATA DOOR_EVENT_R05[] = {
 	{//DOOR_ID_R05_C05_EXIT03 = 0
 		{5296, 0, 6928},
@@ -3693,28 +4443,28 @@ const CONNECT_DATA DOOR_EVENT_R05[] = {
 		EXIT_TYPE_MAT //type
 	},
 	{//DOOR_ID_R05_C04_EXIT01 = 3
-		{5968, 0, 6880},
+		{5936, 0, 6880},
 		ZONE_ID_C04, DOOR_ID_C04_R05_EXIT01,
 		EXIT_DIR_LEFT,//direction
-		EXIT_TYPE_NONE //type
+		EXIT_TYPE_MAT //type
 	},
 	{//DOOR_ID_R05_C04_EXIT02 = 4
-		{5968, 0, 6896},
+		{5936, 0, 6896},
 		ZONE_ID_C04, DOOR_ID_C04_R05_EXIT02,
 		EXIT_DIR_LEFT,//direction
-		EXIT_TYPE_NONE //type
+		EXIT_TYPE_MAT //type
 	},
 	{//DOOR_ID_R05_C04_EXIT03 = 5
-		{5968, 0, 6912},
+		{5936, 0, 6912},
 		ZONE_ID_C04, DOOR_ID_C04_R05_EXIT03,
 		EXIT_DIR_LEFT,//direction
-		EXIT_TYPE_NONE //type
+		EXIT_TYPE_MAT //type
 	},
 	{//DOOR_ID_R05_C04_EXIT04 = 6
-		{5968, 0, 6928},
+		{5936, 0, 6928},
 		ZONE_ID_C04, DOOR_ID_C04_R05_EXIT04,
 		EXIT_DIR_LEFT,//direction
-		EXIT_TYPE_NONE //type
+		EXIT_TYPE_MAT //type
 	},
 };
 const int ConnectCount_R05 = NELEMS(DOOR_EVENT_R05);
@@ -3729,6 +4479,7 @@ static const EVENTDATA_TABLE event_r05 = {
 	(void *)&DOOR_EVENT_R05,
 	(void *)NULL,
 };
+#include "../script/t01_def.h"
 const CONNECT_DATA DOOR_EVENT_T01[] = {
 	{//DOOR_ID_T01_EXIT01 = 0
 		{12544, 0, 11952},
@@ -3756,17 +4507,72 @@ const CONNECT_DATA DOOR_EVENT_T01[] = {
 	},
 };
 const int ConnectCount_T01 = NELEMS(DOOR_EVENT_T01);
+const FLDMMDL_HEADER OBJ_EVENT_T01[] = {
+	{
+		T01_BIGMAN,
+		MAN3,
+		MV_DOWN,
+		EV_TYPE_NORMAL,
+		0,
+		SCRID_T01_TALKOBJ_BIGMAN,
+		DIR_DOWN,
+		0,
+		0,
+		0,
+		0,
+		0,
+		783,
+		761,
+		0,
+	},
+	{
+		T01_WOMAN02,
+		WOMAN2,
+		MV_RND,
+		EV_TYPE_NORMAL,
+		0,
+		SCRID_T01_TALKOBJ_WOMAN02,
+		DIR_DOWN,
+		0,
+		0,
+		0,
+		2,
+		2,
+		775,
+		745,
+		0,
+	},
+	{
+		T01_BABYGIRL1,
+		BABYGIRL1,
+		MV_RT2,
+		EV_TYPE_NORMAL,
+		0,
+		SCRID_T01_TALKOBJ_BABYGIRL1,
+		DIR_LEFT,
+		0,
+		0,
+		0,
+		2,
+		0,
+		790,
+		749,
+		0,
+	},
+};
+const int ObjCount_T01 = NELEMS(OBJ_EVENT_T01);
 
 static const EVENTDATA_TABLE event_t01 = {
 	0,
-	0,
+	3,
 	4,
 	0,
 	(void *)NULL,
-	(void *)NULL,
+	(void *)&OBJ_EVENT_T01,
 	(void *)&DOOR_EVENT_T01,
 	(void *)NULL,
 };
+#include "../script/t01r0101_def.h"
 const CONNECT_DATA DOOR_EVENT_T01R0101[] = {
 	{//DOOR_ID_T01R0101_EXIT01 = 0
 		{96, 0, 160},
@@ -3794,7 +4600,6 @@ const CONNECT_DATA DOOR_EVENT_T01R0101[] = {
 	},
 };
 const int ConnectCount_T01R0101 = NELEMS(DOOR_EVENT_T01R0101);
-#include "../script/t01r0101_def.h"
 const FLDMMDL_HEADER OBJ_EVENT_T01R0101[] = {
 	{
 		T01R0101_WOMAN1_1,
@@ -3826,6 +4631,7 @@ static const EVENTDATA_TABLE event_t01r0101 = {
 	(void *)&DOOR_EVENT_T01R0101,
 	(void *)NULL,
 };
+#include "../script/t01r0102_def.h"
 const CONNECT_DATA DOOR_EVENT_T01R0102[] = {
 	{//DOOR_ID_T01R0102_EXIT01 = 0
 		{160, 0, 32},
@@ -3846,6 +4652,7 @@ static const EVENTDATA_TABLE event_t01r0102 = {
 	(void *)&DOOR_EVENT_T01R0102,
 	(void *)NULL,
 };
+#include "../script/t01r0201_def.h"
 const CONNECT_DATA DOOR_EVENT_T01R0201[] = {
 	{//DOOR_ID_T01R0201_EXIT01 = 0
 		{96, 0, 160},
@@ -3873,7 +4680,6 @@ const CONNECT_DATA DOOR_EVENT_T01R0201[] = {
 	},
 };
 const int ConnectCount_T01R0201 = NELEMS(DOOR_EVENT_T01R0201);
-#include "../script/t01r0201_def.h"
 const FLDMMDL_HEADER OBJ_EVENT_T01R0201[] = {
 	{
 		T01R0201_BOY1_1,
@@ -3905,6 +4711,7 @@ static const EVENTDATA_TABLE event_t01r0201 = {
 	(void *)&DOOR_EVENT_T01R0201,
 	(void *)NULL,
 };
+#include "../script/t01r0202_def.h"
 const CONNECT_DATA DOOR_EVENT_T01R0202[] = {
 	{//DOOR_ID_T01R0202_EXIT01 = 0
 		{48, 0, 32},
@@ -3914,17 +4721,28 @@ const CONNECT_DATA DOOR_EVENT_T01R0202[] = {
 	},
 };
 const int ConnectCount_T01R0202 = NELEMS(DOOR_EVENT_T01R0202);
+const BG_TALK_DATA BG_EVENT_T01R0202[] = {
+	{//BGID_T01R0202_PC = 0
+		SCRID_T01R0202_PC,  //event id
+		BG_TALK_TYPE_NORMAL, //type
+		1, 8,
+		0,  //height
+		BG_TALK_DIR_ALL,//direction
+	},
+};
+const int BgCount_T01R0202 = NELEMS(BG_EVENT_T01R0202);
 
 static const EVENTDATA_TABLE event_t01r0202 = {
-	0,
+	1,
 	0,
 	1,
 	0,
-	(void *)NULL,
+	(void *)&BG_EVENT_T01R0202,
 	(void *)NULL,
 	(void *)&DOOR_EVENT_T01R0202,
 	(void *)NULL,
 };
+#include "../script/t01r0301_def.h"
 const CONNECT_DATA DOOR_EVENT_T01R0301[] = {
 	{//DOOR_ID_T01R0301_EXIT01 = 0
 		{96, 0, 160},
@@ -3952,7 +4770,6 @@ const CONNECT_DATA DOOR_EVENT_T01R0301[] = {
 	},
 };
 const int ConnectCount_T01R0301 = NELEMS(DOOR_EVENT_T01R0301);
-#include "../script/t01r0301_def.h"
 const FLDMMDL_HEADER OBJ_EVENT_T01R0301[] = {
 	{
 		T01R0301_OLDWOMAN1_1,
@@ -3984,6 +4801,7 @@ static const EVENTDATA_TABLE event_t01r0301 = {
 	(void *)&DOOR_EVENT_T01R0301,
 	(void *)NULL,
 };
+#include "../script/t01r0302_def.h"
 const CONNECT_DATA DOOR_EVENT_T01R0302[] = {
 	{//DOOR_ID_T01R0302_EXIT01 = 0
 		{48, 0, 32},
@@ -3993,17 +4811,28 @@ const CONNECT_DATA DOOR_EVENT_T01R0302[] = {
 	},
 };
 const int ConnectCount_T01R0302 = NELEMS(DOOR_EVENT_T01R0302);
+const BG_TALK_DATA BG_EVENT_T01R0302[] = {
+	{//BGID_T01R0302_PC = 0
+		SCRID_T01R0302_PC,  //event id
+		BG_TALK_TYPE_NORMAL, //type
+		1, 8,
+		0,  //height
+		BG_TALK_DIR_ALL,//direction
+	},
+};
+const int BgCount_T01R0302 = NELEMS(BG_EVENT_T01R0302);
 
 static const EVENTDATA_TABLE event_t01r0302 = {
-	0,
+	1,
 	0,
 	1,
 	0,
-	(void *)NULL,
+	(void *)&BG_EVENT_T01R0302,
 	(void *)NULL,
 	(void *)&DOOR_EVENT_T01R0302,
 	(void *)NULL,
 };
+#include "../script/t01r0401_def.h"
 const CONNECT_DATA DOOR_EVENT_T01R0401[] = {
 	{//DOOR_ID_T01R0401_EXIT01 = 0
 		{64, 0, 176},
@@ -4036,6 +4865,7 @@ static const EVENTDATA_TABLE event_t01r0401 = {
 	(void *)&DOOR_EVENT_T01R0401,
 	(void *)NULL,
 };
+#include "../script/t02_def.h"
 const CONNECT_DATA DOOR_EVENT_T02[] = {
 	{//DOOR_ID_T02_EXIT01 = 0
 		{12672, 0, 10496},
@@ -4069,55 +4899,176 @@ const CONNECT_DATA DOOR_EVENT_T02[] = {
 	},
 };
 const int ConnectCount_T02 = NELEMS(DOOR_EVENT_T02);
+const FLDMMDL_HEADER OBJ_EVENT_T02[] = {
+	{
+		T02_BIGMAN,
+		MAN3,
+		MV_UP,
+		EV_TYPE_NORMAL,
+		0,
+		SCRID_T02_TALKOBJ_BIGMAN,
+		DIR_UP,
+		0,
+		0,
+		0,
+		0,
+		0,
+		789,
+		643,
+		80,
+	},
+	{
+		T02_WOMAN1,
+		WOMAN1,
+		MV_DIR_RND,
+		EV_TYPE_NORMAL,
+		0,
+		SCRID_T02_TALKOBJ_WOMAN1,
+		DIR_DOWN,
+		0,
+		0,
+		0,
+		0,
+		0,
+		773,
+		661,
+		-80,
+	},
+	{
+		T02_OLDWOMAN1_1,
+		OLDWOMAN1,
+		MV_SPIN_L,
+		EV_TYPE_NORMAL,
+		0,
+		SCRID_T02_OLDWOMAN1_1,
+		DIR_DOWN,
+		0,
+		0,
+		0,
+		0,
+		0,
+		778,
+		653,
+		0,
+	},
+	{
+		T02_OLDMAN1_1,
+		OLDMAN1,
+		MV_DIR_RND,
+		EV_TYPE_NORMAL,
+		0,
+		SCRID_T02_OLDMAN1_1,
+		DIR_DOWN,
+		0,
+		0,
+		0,
+		2,
+		3,
+		781,
+		655,
+		0,
+	},
+	{
+		T02_BABYGIRL1_1,
+		BABYGIRL1,
+		MV_RND,
+		EV_TYPE_NORMAL,
+		0,
+		SCRID_T02_BABYGIRL1_1,
+		DIR_DOWN,
+		0,
+		0,
+		0,
+		0,
+		0,
+		795,
+		661,
+		0,
+	},
+};
+const int ObjCount_T02 = NELEMS(OBJ_EVENT_T02);
 
 static const EVENTDATA_TABLE event_t02 = {
 	0,
-	0,
+	5,
 	5,
 	0,
 	(void *)NULL,
-	(void *)NULL,
+	(void *)&OBJ_EVENT_T02,
 	(void *)&DOOR_EVENT_T02,
 	(void *)NULL,
 };
+#include "../script/t02pc0101_def.h"
 const CONNECT_DATA DOOR_EVENT_T02PC0101[] = {
-	{//DOOR_ID_T01R0102_EXIT01 = 0
-		{112, 8, 32},
-		ZONE_ID_T01R0101, DOOR_ID_T01R0101_EXIT04,
-		3,//direction
-		0 //type
-	},
-	{//DOOR_ID_T02PC0101_EXIT01 = 1
-		{112, 0, 272},
+	{//DOOR_ID_T02PC0101_EXIT01 = 0
+		{112, 0, 336},
 		ZONE_ID_T02, DOOR_ID_T02_EXIT01,
 		EXIT_DIR_UP,//direction
 		EXIT_TYPE_MAT //type
 	},
-	{//DOOR_ID_T02PC0101_EXIT02 = 2
-		{128, 0, 272},
+	{//DOOR_ID_T02PC0101_EXIT02 = 1
+		{128, 0, 336},
 		ZONE_ID_T02, DOOR_ID_T02_EXIT01,
 		EXIT_DIR_UP,//direction
 		EXIT_TYPE_MAT //type
 	},
-	{//DOOR_ID_T02PC0101_EXIT03 = 3
-		{144, 0, 272},
+	{//DOOR_ID_T02PC0101_EXIT03 = 2
+		{144, 0, 336},
 		ZONE_ID_T02, DOOR_ID_T02_EXIT01,
 		EXIT_DIR_UP,//direction
 		EXIT_TYPE_MAT //type
 	},
 };
 const int ConnectCount_T02PC0101 = NELEMS(DOOR_EVENT_T02PC0101);
+const FLDMMDL_HEADER OBJ_EVENT_T02PC0101[] = {
+	{
+		T02PC0101_SHOPM,
+		SHOPM1,
+		MV_LEFT,
+		EV_TYPE_NORMAL,
+		0,
+		0,
+		DIR_LEFT,
+		0,
+		0,
+		0,
+		0,
+		0,
+		11,
+		18,
+		0,
+	},
+	{
+		T02PC0101_PCWOMAN,
+		PCWOMAN1,
+		MV_DOWN,
+		EV_TYPE_NORMAL,
+		0,
+		0,
+		DIR_DOWN,
+		0,
+		0,
+		0,
+		0,
+		0,
+		7,
+		10,
+		0,
+	},
+};
+const int ObjCount_T02PC0101 = NELEMS(OBJ_EVENT_T02PC0101);
 
 static const EVENTDATA_TABLE event_t02pc0101 = {
 	0,
-	0,
-	4,
+	2,
+	3,
 	0,
 	(void *)NULL,
-	(void *)NULL,
+	(void *)&OBJ_EVENT_T02PC0101,
 	(void *)&DOOR_EVENT_T02PC0101,
 	(void *)NULL,
 };
+#include "../script/t02r0101_def.h"
 const CONNECT_DATA DOOR_EVENT_T02R0101[] = {
 	{//DOOR_ID_T02R0101_EXIT02 = 0
 		{128, 0, 160},
@@ -4145,7 +5096,6 @@ const CONNECT_DATA DOOR_EVENT_T02R0101[] = {
 	},
 };
 const int ConnectCount_T02R0101 = NELEMS(DOOR_EVENT_T02R0101);
-#include "../script/t02r0101_def.h"
 const FLDMMDL_HEADER OBJ_EVENT_T02R0101[] = {
 	{
 		T02R0101_MIDDLEWOMAN1,
@@ -4211,6 +5161,7 @@ static const EVENTDATA_TABLE event_t02r0101 = {
 	(void *)&DOOR_EVENT_T02R0101,
 	(void *)NULL,
 };
+#include "../script/t02r0102_def.h"
 const CONNECT_DATA DOOR_EVENT_T02R0102[] = {
 	{//DOOR_ID_T02R0102_EXIT01 = 0
 		{176, 0, 32},
@@ -4220,7 +5171,6 @@ const CONNECT_DATA DOOR_EVENT_T02R0102[] = {
 	},
 };
 const int ConnectCount_T02R0102 = NELEMS(DOOR_EVENT_T02R0102);
-#include "../script/t02r0102_def.h"
 const FLDMMDL_HEADER OBJ_EVENT_T02R0102[] = {
 	{
 		T02R0102_WOMAN1,
@@ -4269,6 +5219,7 @@ static const EVENTDATA_TABLE event_t02r0102 = {
 	(void *)&DOOR_EVENT_T02R0102,
 	(void *)NULL,
 };
+#include "../script/t02r0201_def.h"
 const CONNECT_DATA DOOR_EVENT_T02R0201[] = {
 	{//DOOR_ID_T02R0201_EXIT02 = 0
 		{128, 0, 160},
@@ -4296,7 +5247,6 @@ const CONNECT_DATA DOOR_EVENT_T02R0201[] = {
 	},
 };
 const int ConnectCount_T02R0201 = NELEMS(DOOR_EVENT_T02R0201);
-#include "../script/t02r0201_def.h"
 const FLDMMDL_HEADER OBJ_EVENT_T02R0201[] = {
 	{
 		T02R0201_MIDDLEWOMAN1,
@@ -4345,6 +5295,7 @@ static const EVENTDATA_TABLE event_t02r0201 = {
 	(void *)&DOOR_EVENT_T02R0201,
 	(void *)NULL,
 };
+#include "../script/t02r0202_def.h"
 const CONNECT_DATA DOOR_EVENT_T02R0202[] = {
 	{//DOOR_ID_T02R0202_EXIT01 = 0
 		{176, 0, 32},
@@ -4354,7 +5305,6 @@ const CONNECT_DATA DOOR_EVENT_T02R0202[] = {
 	},
 };
 const int ConnectCount_T02R0202 = NELEMS(DOOR_EVENT_T02R0202);
-#include "../script/t02r0202_def.h"
 const FLDMMDL_HEADER OBJ_EVENT_T02R0202[] = {
 	{
 		T02R0202_WOMAN1,
@@ -4403,6 +5353,7 @@ static const EVENTDATA_TABLE event_t02r0202 = {
 	(void *)&DOOR_EVENT_T02R0202,
 	(void *)NULL,
 };
+#include "../script/t02r0301_def.h"
 const CONNECT_DATA DOOR_EVENT_T02R0301[] = {
 	{//DOOR_ID_T02R0301_EXIT02 = 0
 		{128, 0, 160},
@@ -4430,7 +5381,6 @@ const CONNECT_DATA DOOR_EVENT_T02R0301[] = {
 	},
 };
 const int ConnectCount_T02R0301 = NELEMS(DOOR_EVENT_T02R0301);
-#include "../script/t02r0301_def.h"
 const FLDMMDL_HEADER OBJ_EVENT_T02R0301[] = {
 	{
 		T02R0301_MIDDLEWOMAN2,
@@ -4496,6 +5446,7 @@ static const EVENTDATA_TABLE event_t02r0301 = {
 	(void *)&DOOR_EVENT_T02R0301,
 	(void *)NULL,
 };
+#include "../script/t02r0302_def.h"
 const CONNECT_DATA DOOR_EVENT_T02R0302[] = {
 	{//DOOR_ID_T02R0302_EXIT01 = 0
 		{176, 0, 32},
@@ -4505,7 +5456,6 @@ const CONNECT_DATA DOOR_EVENT_T02R0302[] = {
 	},
 };
 const int ConnectCount_T02R0302 = NELEMS(DOOR_EVENT_T02R0302);
-#include "../script/t02r0302_def.h"
 const FLDMMDL_HEADER OBJ_EVENT_T02R0302[] = {
 	{
 		T02R0302_POKE,
@@ -4554,6 +5504,7 @@ static const EVENTDATA_TABLE event_t02r0302 = {
 	(void *)&DOOR_EVENT_T02R0302,
 	(void *)NULL,
 };
+#include "../script/t02r0401_def.h"
 const CONNECT_DATA DOOR_EVENT_T02R0401[] = {
 	{//DOOR_ID_T02R0401_EXIT01 = 0
 		{80, 0, 144},
@@ -4575,7 +5526,6 @@ const CONNECT_DATA DOOR_EVENT_T02R0401[] = {
 	},
 };
 const int ConnectCount_T02R0401 = NELEMS(DOOR_EVENT_T02R0401);
-#include "../script/t02r0401_def.h"
 const FLDMMDL_HEADER OBJ_EVENT_T02R0401[] = {
 	{
 		T02R0401_GIRL4,
