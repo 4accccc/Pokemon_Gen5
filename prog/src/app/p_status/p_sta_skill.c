@@ -195,6 +195,10 @@ struct _PSTATUS_SKILL_WORK
   void *scrResUpStatus;
   NNSG2dScreenData *scrDataUpSkill;
   void *scrResUpSkill;
+  NNSG2dScreenData *scrDataUpStatusTitle;
+  void *scrResUpStatusTitle;
+  NNSG2dScreenData *scrDataUpSkillTitle;
+  void *scrResUpSkillTitle;
   
   GFL_BMPWIN *upBmpWin[PSBT_MAX];
   
@@ -386,12 +390,16 @@ void PSTATUS_SKILL_LoadResource( PSTATUS_WORK *work , PSTATUS_SKILL_WORK *skillW
 {
   u8 i;
   //書き換え用スクリーン読み込み
-  skillWork->scrResDown = GFL_ARCHDL_UTIL_LoadScreen( archandle , NARC_p_status_gra_p_st_info_d_NSCR ,
+  skillWork->scrResDown = GFL_ARCHDL_UTIL_LoadScreen( archandle , NARC_p_status_gra_p_st_skill_d_NSCR ,
                     FALSE , &skillWork->scrDataDown , work->heapId );
-  skillWork->scrResUpStatus = GFL_ARCHDL_UTIL_LoadScreen( archandle , NARC_p_status_gra_p_st_info_u_NSCR ,
+  skillWork->scrResUpStatus = GFL_ARCHDL_UTIL_LoadScreen( archandle , NARC_p_status_gra_p_st_skill_u1_NSCR ,
                     FALSE , &skillWork->scrDataUpStatus , work->heapId );
-  skillWork->scrResUpSkill = GFL_ARCHDL_UTIL_LoadScreen( archandle , NARC_p_status_gra_p_st_info_u_NSCR ,
+  skillWork->scrResUpSkill = GFL_ARCHDL_UTIL_LoadScreen( archandle , NARC_p_status_gra_p_st_skill_u2_NSCR ,
                     FALSE , &skillWork->scrDataUpSkill , work->heapId );
+  skillWork->scrResUpStatusTitle = GFL_ARCHDL_UTIL_LoadScreen( archandle , NARC_p_status_gra_p_st_skilltitle_u1_NSCR ,
+                    FALSE , &skillWork->scrDataUpStatusTitle , work->heapId );
+  skillWork->scrResUpSkillTitle = GFL_ARCHDL_UTIL_LoadScreen( archandle , NARC_p_status_gra_p_st_skilltitle_u2_NSCR ,
+                    FALSE , &skillWork->scrDataUpSkillTitle , work->heapId );
 
 }
 
@@ -410,6 +418,8 @@ void PSTATUS_SKILL_ReleaseResource( PSTATUS_WORK *work , PSTATUS_SKILL_WORK *ski
   GFL_HEAP_FreeMemory( skillWork->scrResDown );
   GFL_HEAP_FreeMemory( skillWork->scrResUpStatus );
   GFL_HEAP_FreeMemory( skillWork->scrResUpSkill );
+  GFL_HEAP_FreeMemory( skillWork->scrResUpStatusTitle );
+  GFL_HEAP_FreeMemory( skillWork->scrResUpSkillTitle );
 
 }
 
@@ -514,7 +524,7 @@ void PSTATUS_SKILL_DispPage( PSTATUS_WORK *work , PSTATUS_SKILL_WORK *skillWork 
   {
     PSTATUS_SKILL_DispPlate( work , skillWork , &skillWork->plateWork[i] );
   }
-
+  skillWork->cursorPos = 0xFF;
   skillWork->isDisp = TRUE;
 }
 //--------------------------------------------------------------
@@ -604,14 +614,17 @@ static void PSTATUS_SKILL_DispStatusPage_Trans( PSTATUS_WORK *work , PSTATUS_SKI
   {
     GFL_BMPWIN_MakeTransWindow_VBlank( skillWork->upBmpWin[i] );
   }
-  GFL_BG_LoadScreen( PSTATUS_BG_SUB_PLATE, 
-                     skillWork->scrDataUpStatus->rawData, 
-                     skillWork->scrDataUpStatus->szByte, 
-                     0 );
+
   GFL_BG_LoadScreenBuffer( PSTATUS_BG_SUB_PLATE, 
                      skillWork->scrDataUpStatus->rawData, 
                      skillWork->scrDataUpStatus->szByte );
   GFL_BG_LoadScreenV_Req( PSTATUS_BG_SUB_PLATE );
+  //上画面タイトル
+  GFL_BG_WriteScreenExpand( PSTATUS_BG_SUB_TITLE , 
+                    0 , 0 , 32 , PSTATUS_SUB_TITLE_HEIGHT ,
+                    skillWork->scrDataUpStatusTitle->rawData ,
+                    0 , 0 , 32 , 32 );
+  GFL_BG_LoadScreenV_Req( PSTATUS_BG_SUB_TITLE );
 
   GFL_CLACT_WK_SetDrawEnable( skillWork->clwkHpBar , TRUE );
   GFL_CLACT_WK_SetDrawEnable( skillWork->clwkWazaKind , FALSE );
@@ -648,6 +661,13 @@ static void PSTATUS_SKILL_DispSkillInfoPage_Trans( PSTATUS_WORK *work , PSTATUS_
                      skillWork->scrDataUpSkill->rawData, 
                      skillWork->scrDataUpSkill->szByte );
   GFL_BG_LoadScreenV_Req( PSTATUS_BG_SUB_PLATE );
+
+  //上画面タイトル
+  GFL_BG_WriteScreenExpand( PSTATUS_BG_SUB_TITLE , 
+                    0 , 0 , 32 , PSTATUS_SUB_TITLE_HEIGHT ,
+                    skillWork->scrDataUpSkillTitle->rawData ,
+                    0 , 0 , 32 , 32 );
+  GFL_BG_LoadScreenV_Req( PSTATUS_BG_SUB_TITLE );
 
   GFL_CLACT_WK_SetDrawEnable( skillWork->clwkHpBar , FALSE );
   GFL_CLACT_WK_SetDrawEnable( skillWork->clwkWazaKind , TRUE );
@@ -1283,7 +1303,10 @@ static void PSTATUS_SKILL_UpdateCursorPos( PSTATUS_WORK *work , PSTATUS_SKILL_WO
   if( skillWork->cursorPos != skillWork->changeTarget ||
       skillWork->isChangeMode == FALSE )
   {
-    PSTATUS_SKILL_ChangeColor( &skillWork->plateWork[skillWork->cursorPos] , 0 );
+    if( skillWork->cursorPos != 0xFF )
+    {
+      PSTATUS_SKILL_ChangeColor( &skillWork->plateWork[skillWork->cursorPos] , 0 );
+    }
   }
   if( newPos != skillWork->changeTarget ||
       skillWork->isChangeMode == FALSE )

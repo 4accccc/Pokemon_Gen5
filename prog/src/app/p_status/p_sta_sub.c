@@ -17,7 +17,7 @@
 #include "print/printsys.h"
 #include "print/wordset.h"
 
-#include "p_status_gra.naix"
+#include "arc_def.h"
 
 #include "p_sta_sys.h"
 #include "p_sta_sub.h"
@@ -63,6 +63,10 @@
 #define PSTATUS_SUB_STR_ITEMNAME_X ( 8 + PSTATUS_STR_OFS_X)
 #define PSTATUS_SUB_STR_ITEMNAME_Y (16 + PSTATUS_STR_OFS_Y)
 
+//セル系座標
+#define PSTATUS_SUB_CELL_BALL_X ( 168 )
+#define PSTATUS_SUB_CELL_BALL_Y (   8 )
+
 //======================================================================
 //	enum
 //======================================================================
@@ -81,6 +85,9 @@ struct _PSTATUS_SUB_WORK
   
   GFL_BMPWIN  *bmpWinUpper;
   GFL_BMPWIN  *bmpWinDown;
+  
+  GFL_CLWK    *clwkBall;
+
 };
 
 //======================================================================
@@ -169,6 +176,39 @@ void PSTATUS_SUB_ReleaseResource( PSTATUS_WORK *work , PSTATUS_SUB_WORK *subWork
 
 }
 
+#pragma mark [>Cell
+//--------------------------------------------------------------
+//	セル初期化
+//--------------------------------------------------------------
+void PSTATUS_SUB_InitCell( PSTATUS_WORK *work , PSTATUS_SUB_WORK *subWork )
+{
+  //選択カーソル
+  {
+    GFL_CLWK_DATA cellInitData;
+    cellInitData.pos_x = PSTATUS_SUB_CELL_BALL_X;
+    cellInitData.pos_y = PSTATUS_SUB_CELL_BALL_Y;
+    cellInitData.softpri = 10;
+    cellInitData.bgpri = 1;
+    cellInitData.anmseq = 0;
+    
+    subWork->clwkBall = GFL_CLACT_WK_Create( work->cellUnit ,
+              work->cellRes[SCR_NCG_BALL],
+              work->cellRes[SCR_PLT_BALL],
+              work->cellRes[SCR_ANM_BALL],
+              &cellInitData ,CLSYS_DEFREND_MAIN , work->heapId );
+
+    GFL_CLACT_WK_SetDrawEnable( subWork->clwkBall , FALSE );
+  }
+}
+
+//--------------------------------------------------------------
+//	セル開放
+//--------------------------------------------------------------
+void PSTATUS_SUB_TermCell( PSTATUS_WORK *work , PSTATUS_SUB_WORK *subWork )
+{
+  GFL_CLACT_WK_Remove( subWork->clwkBall );
+}
+
 #pragma mark [>Disp
 //--------------------------------------------------------------
 //	ページの表示
@@ -202,6 +242,34 @@ void PSTATUS_SUB_DispPage_Trans( PSTATUS_WORK *work , PSTATUS_SUB_WORK *subWork 
   PSTATUS_SUB_PokeCreateMcss( work , subWork , ppp );
   GFL_BMPWIN_MakeTransWindow_VBlank( subWork->bmpWinUpper );
   GFL_BMPWIN_MakeTransWindow_VBlank( subWork->bmpWinDown );
+  
+  //ボールの更新
+  {
+    u32 ballIdx = PPP_Get( ppp , ID_PARA_get_ball , NULL );
+    if( ballIdx != 0 )
+    {
+      ballIdx--;
+    }
+    {
+      NNSG2dPaletteData *pltData;
+      void *pltRes = GFL_ARC_UTIL_LoadPalette( ARCID_P_STATUS , 
+                          NARC_p_status_gra_ball00_NCLR + ballIdx ,
+                          &pltData , work->heapId );
+      GFL_CLGRP_PLTT_Replace( work->cellRes[SCR_PLT_BALL] , pltData , 1 );
+      GFL_HEAP_FreeMemory( pltRes );
+    }
+    {
+      NNSG2dCharacterData *ncgData;
+      void *ncgRes = GFL_ARC_UTIL_LoadBGCharacter( ARCID_P_STATUS , 
+                          NARC_p_status_gra_ball00_NCGR + ballIdx ,
+                          FALSE , &ncgData , work->heapId );
+      GFL_CLGRP_CGR_Replace( work->cellRes[SCR_NCG_BALL] , ncgData );
+      GFL_HEAP_FreeMemory( ncgRes );
+    }
+    
+    GFL_CLACT_WK_SetDrawEnable( subWork->clwkBall , TRUE );
+  }
+
 }
 
 //--------------------------------------------------------------
@@ -224,6 +292,7 @@ void PSTATUS_SUB_ClearPage_Trans( PSTATUS_WORK *work , PSTATUS_SUB_WORK *subWork
 {
   //MCSS
   PSTATUS_SUB_PokeDeleteMcss( work,subWork );
+  GFL_CLACT_WK_SetDrawEnable( subWork->clwkBall , FALSE );
 }
 
 //--------------------------------------------------------------

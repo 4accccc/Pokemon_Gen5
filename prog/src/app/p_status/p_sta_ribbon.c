@@ -113,6 +113,10 @@ struct _PSTATUS_RIBBON_WORK
   void *scrResDown;
   NNSG2dScreenData *scrDataUp;
   void *scrResUp;
+  NNSG2dScreenData *scrDataUpDetail;
+  void *scrResUpDetail;
+  NNSG2dScreenData *scrDataUpTitle;
+  void *scrResUpTitle;
   NNSG2dCharacterData *srcCellNcg;
   void *resCellNcg;
 
@@ -124,6 +128,7 @@ struct _PSTATUS_RIBBON_WORK
   s32      speed;
   
   BOOL     isTouchBar;
+  BOOL     isUpdateIdx;
   
   
   PSTA_OAM_SYS_PTR bmpOamSys;
@@ -195,13 +200,17 @@ void PSTATUS_RIBBON_LoadResource( PSTATUS_WORK *work , PSTATUS_RIBBON_WORK *ribb
 {
   u8 i;
   //書き換え用スクリーン読み込み
-  ribbonWork->scrResDown = GFL_ARCHDL_UTIL_LoadScreen( archandle , NARC_p_status_gra_p_st_info_d_NSCR ,
+  ribbonWork->scrResDown = GFL_ARCHDL_UTIL_LoadScreen( archandle , NARC_p_status_gra_p_st_ribbon_d_NSCR ,
                     FALSE , &ribbonWork->scrDataDown , work->heapId );
-  ribbonWork->scrResUp = GFL_ARCHDL_UTIL_LoadScreen( archandle , NARC_p_status_gra_p_st_info_u_NSCR ,
+  ribbonWork->scrResUp = GFL_ARCHDL_UTIL_LoadScreen( archandle , NARC_p_status_gra_p_st_ribbon_u1_NSCR ,
                     FALSE , &ribbonWork->scrDataUp , work->heapId );
+  ribbonWork->scrResUpDetail = GFL_ARCHDL_UTIL_LoadScreen( archandle , NARC_p_status_gra_p_st_ribbon_u2_NSCR ,
+                    FALSE , &ribbonWork->scrDataUpDetail , work->heapId );
+  ribbonWork->scrResUpTitle = GFL_ARCHDL_UTIL_LoadScreen( archandle , NARC_p_status_gra_p_st_ribbontitle_u_NSCR ,
+                    FALSE , &ribbonWork->scrDataUpTitle , work->heapId );
 
   //書き換え用OBJキャラクタ読み込み
-  ribbonWork->resCellNcg = GFL_ARCHDL_UTIL_LoadOBJCharacter( archandle , NARC_p_status_gra_p_status_ribbon_bar_NCGR ,
+  ribbonWork->resCellNcg = GFL_ARCHDL_UTIL_LoadOBJCharacter( archandle , NARC_p_status_gra_p_st_ribbon_bar_NCGR ,
                     FALSE , &ribbonWork->srcCellNcg , work->heapId );
 
   ribbonWork->bmpOamSys = PSTA_OAM_Init( work->heapId , work->cellUnit );
@@ -224,6 +233,8 @@ void PSTATUS_RIBBON_ReleaseResource( PSTATUS_WORK *work , PSTATUS_RIBBON_WORK *r
   GFL_HEAP_FreeMemory( ribbonWork->resCellNcg );
   GFL_HEAP_FreeMemory( ribbonWork->scrResDown );
   GFL_HEAP_FreeMemory( ribbonWork->scrResUp );
+  GFL_HEAP_FreeMemory( ribbonWork->scrResUpDetail );
+  GFL_HEAP_FreeMemory( ribbonWork->scrResUpTitle );
 
 }
 
@@ -328,6 +339,7 @@ static void PSTATUS_RIBBON_UpdateUI( PSTATUS_WORK *work , PSTATUS_RIBBON_WORK *r
       {
         ribbonWork->isTouchBar = TRUE;
         ribbonWork->selectIdx = touchBar;
+        ribbonWork->isUpdateIdx = TRUE;
         ribbonWork->selectType = PSTATUS_RIBBON_GetRibbonType( ribbonWork , touchBar );
         PSTATUS_SetActiveBarButton( work , FALSE );
         work->ktst = GFL_APP_END_TOUCH;
@@ -355,6 +367,7 @@ static const BOOL PSTATUS_RIBBON_UpdateKey( PSTATUS_WORK *work , PSTATUS_RIBBON_
     GFL_CLACT_WK_SetDrawEnable( ribbonWork->clwkCur , FALSE );
     ribbonWork->selectIdx = 0xFF;
     ribbonWork->selectType = PSTATUS_RIBBON_INVALID_TYPE;
+    ribbonWork->isUpdateIdx = TRUE;
 
     PSTATUS_RIBBON_ClearInfo( work , ribbonWork );
     PSTATUS_RIBBON_ClearInfo_Trans( work , ribbonWork );
@@ -390,6 +403,7 @@ static const BOOL PSTATUS_RIBBON_UpdateKey( PSTATUS_WORK *work , PSTATUS_RIBBON_
       if( ribbonWork->ribbonDispWork[newIdx].dispRibbonNo != PSTATUS_RIBBON_INVALID_TYPE )
       {
         ribbonWork->selectIdx = newIdx;
+        ribbonWork->isUpdateIdx = TRUE;
         if( PSTATUS_RIBBON_CalcRibbonBarY( ribbonWork , ribbonWork->selectIdx ) > bottomPos )
         {
           const u8 sub = PSTATUS_RIBBON_CalcRibbonBarY( ribbonWork , ribbonWork->selectIdx ) - bottomPos;
@@ -417,6 +431,8 @@ static const BOOL PSTATUS_RIBBON_UpdateKey( PSTATUS_WORK *work , PSTATUS_RIBBON_
       if( ribbonWork->ribbonDispWork[newIdx].dispRibbonNo != PSTATUS_RIBBON_INVALID_TYPE )
       {
         ribbonWork->selectIdx = newIdx;
+        ribbonWork->isUpdateIdx = TRUE;
+
         if( PSTATUS_RIBBON_CalcRibbonBarY( ribbonWork , ribbonWork->selectIdx ) < PSTATUS_RIBBON_BAR_Y )
         {
           const s16 sub = PSTATUS_RIBBON_CalcRibbonBarY( ribbonWork , ribbonWork->selectIdx ) - PSTATUS_RIBBON_BAR_Y;
@@ -443,6 +459,7 @@ static void PSTATUS_RIBBON_UpdateTP( PSTATUS_WORK *work , PSTATUS_RIBBON_WORK *r
     GFL_CLACT_WK_SetDrawEnable( ribbonWork->clwkCur , FALSE );
     ribbonWork->selectIdx = 0xFF;
     ribbonWork->selectType = PSTATUS_RIBBON_INVALID_TYPE;
+    ribbonWork->isUpdateIdx = TRUE;
     work->ktst = GFL_APP_END_TOUCH;
 
     PSTATUS_RIBBON_ClearInfo( work , ribbonWork );
@@ -457,6 +474,7 @@ static void PSTATUS_RIBBON_UpdateTP( PSTATUS_WORK *work , PSTATUS_RIBBON_WORK *r
     if( touchBar != GFL_UI_TP_HIT_NONE )
     {
       ribbonWork->selectIdx = touchBar;
+      ribbonWork->isUpdateIdx = TRUE;
       ribbonWork->selectType = PSTATUS_RIBBON_GetRibbonType( ribbonWork , touchBar );
       ribbonWork->isTouchBar = TRUE;
       ribbonWork->speed = 0;
@@ -585,6 +603,7 @@ static void PSTATUS_RIBBON_SetCursorPosBar( PSTATUS_WORK *work , PSTATUS_RIBBON_
   GFL_CLACT_WK_SetPos( ribbonWork->clwkCur , &cellPos , CLSYS_DEFREND_MAIN );
   
   ribbonWork->selectIdx = idx;
+  ribbonWork->isUpdateIdx = TRUE;
   ribbonWork->selectType = PSTATUS_RIBBON_GetRibbonType( ribbonWork , idx );
 }
 
@@ -664,15 +683,18 @@ void PSTATUS_RIBBON_DispPage_Trans( PSTATUS_WORK *work , PSTATUS_RIBBON_WORK *ri
                     0 , 0 , 32 , 32 );
   GFL_BG_LoadScreenV_Req( PSTATUS_BG_PLATE );
 
-  GFL_BG_LoadScreen( PSTATUS_BG_SUB_PLATE, 
-                     ribbonWork->scrDataUp->rawData, 
-                     ribbonWork->scrDataUp->szByte, 
-                     0 );
   GFL_BG_LoadScreenBuffer( PSTATUS_BG_SUB_PLATE, 
                      ribbonWork->scrDataUp->rawData, 
                      ribbonWork->scrDataUp->szByte );
   GFL_BG_LoadScreenV_Req( PSTATUS_BG_SUB_PLATE );
   
+  //上画面タイトル
+  GFL_BG_WriteScreenExpand( PSTATUS_BG_SUB_TITLE , 
+                    0 , 0 , 32 , PSTATUS_SUB_TITLE_HEIGHT ,
+                    ribbonWork->scrDataUpTitle->rawData ,
+                    0 , 0 , 32 , 32 );
+  GFL_BG_LoadScreenV_Req( PSTATUS_BG_SUB_TITLE );
+
   for( i=0 ; i<PSTATUS_RIBBON_BAR_NUM ; i++ )
   {
     s16 y = PSTATUS_RIBBON_CalcRibbonBarY( ribbonWork , i );
@@ -820,7 +842,9 @@ static void PSTATUS_RIBBON_UpdatRibbon( PSTATUS_WORK *work , PSTATUS_RIBBON_WORK
     }
   }
   
-  if( ribbonWork->selectIdx != ribbonWork->befSelectIdx )
+  //前回idxの差分で見るとTP操作で10個飛ばしで動いたとき、変更が取れない！
+//  if( ribbonWork->selectIdx != ribbonWork->befSelectIdx )
+  if( ribbonWork->isUpdateIdx == TRUE )
   {
     if( ribbonWork->selectIdx < PSTATUS_RIBBON_BAR_NUM )
     {
@@ -833,6 +857,7 @@ static void PSTATUS_RIBBON_UpdatRibbon( PSTATUS_WORK *work , PSTATUS_RIBBON_WORK
                     &ribbonWork->ribbonDispWork[ribbonWork->befSelectIdx] );
     }
     ribbonWork->befSelectIdx = ribbonWork->selectIdx;
+    ribbonWork->isUpdateIdx = FALSE;
   }
   
   ribbonWork->isMoveRibbon = FALSE;
@@ -971,6 +996,12 @@ static void PSTATUS_RIBBON_DispInfo_Trans( PSTATUS_WORK *work , PSTATUS_RIBBON_W
                             CLWK_PLTTOFFS_MODE_PLTT_TOP );
     GFL_CLACT_WK_SetDrawEnable( ribbonWork->clwkRibbonIcon , TRUE );
   }
+
+  GFL_BG_LoadScreenBuffer( PSTATUS_BG_SUB_PLATE, 
+                     ribbonWork->scrDataUpDetail->rawData, 
+                     ribbonWork->scrDataUpDetail->szByte );
+  GFL_BG_LoadScreenV_Req( PSTATUS_BG_SUB_PLATE );
+
   ribbonWork->isDispInfo = TRUE;
 }
 
@@ -995,6 +1026,13 @@ static void PSTATUS_RIBBON_ClearInfo_Trans( PSTATUS_WORK *work , PSTATUS_RIBBON_
   {
     GFL_CLGRP_CGR_Release( ribbonWork->ribbonIconNcg );
     GFL_CLACT_WK_Remove( ribbonWork->clwkRibbonIcon );
+    GFL_BG_ClearScreenCodeVReq( PSTATUS_BG_SUB_STR , 0 );
+    GFL_BG_LoadScreenV_Req( PSTATUS_BG_SUB_STR );
     ribbonWork->isDispInfo = FALSE;
+
+    GFL_BG_LoadScreenBuffer( PSTATUS_BG_SUB_PLATE, 
+                       ribbonWork->scrDataUp->rawData, 
+                       ribbonWork->scrDataUp->szByte );
+    GFL_BG_LoadScreenV_Req( PSTATUS_BG_SUB_PLATE );
   }
 }

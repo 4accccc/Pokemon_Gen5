@@ -88,7 +88,9 @@ static void PSTATUS_UpdateTP( PSTATUS_WORK *work );
 static void PSTATUS_RefreshDisp( PSTATUS_WORK *work );
 static void PSTATUS_WaitDisp( PSTATUS_WORK *work );
 
-
+#if PM_DEBUG
+void PSTATUS_UTIL_DebugCreatePP( PSTATUS_WORK *work );
+#endif
 //--------------------------------------------------------------
 //	初期化
 //--------------------------------------------------------------
@@ -214,6 +216,7 @@ const PSTATUS_RETURN_TYPE PSTATUS_UpdatePokeStatus( PSTATUS_WORK *work )
   GFL_G3D_DRAW_End();
 
   //背景スクロール
+  if(0)
   {
     const u32 vCount = OS_GetVBlankCount();
     work->scrollCnt += vCount - work->befVCount;
@@ -305,7 +308,7 @@ static void PSTATUS_InitGraphic( PSTATUS_WORK *work )
     static const GFL_BG_BGCNT_HEADER header_sub1 = {
       0, 0, 0x800, 0,  // scrX, scrY, scrbufSize, scrbufofs,
       GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
-      GX_BG_SCRBASE_0x6800, GX_BG_CHARBASE_0x08000,0x08000,
+      GX_BG_SCRBASE_0x6800, GX_BG_CHARBASE_0x10000,0x08000,
       GX_BG_EXTPLTT_23, 1, 0, 0, FALSE  // pal, pri, areaover, dmy, mosaic
     };
     // BG2 SUB (土台
@@ -332,7 +335,7 @@ static void PSTATUS_InitGraphic( PSTATUS_WORK *work )
     GFL_BG_SetVisible( PSTATUS_BG_3D , TRUE );
     
     PSTATUS_SetupBgFunc( &header_sub0 , PSTATUS_BG_SUB_STR  , GFL_BG_MODE_TEXT );
-    PSTATUS_SetupBgFunc( &header_sub1 , PSTATUS_BG_SUB_INFO , GFL_BG_MODE_TEXT );
+    PSTATUS_SetupBgFunc( &header_sub1 , PSTATUS_BG_SUB_TITLE , GFL_BG_MODE_TEXT );
     PSTATUS_SetupBgFunc( &header_sub2 , PSTATUS_BG_SUB_PLATE , GFL_BG_MODE_TEXT );
     PSTATUS_SetupBgFunc( &header_sub3 , PSTATUS_BG_SUB_BG , GFL_BG_MODE_TEXT );
   }
@@ -415,7 +418,7 @@ static void PSTATUS_TermGraphic( PSTATUS_WORK *work )
   GFL_CLACT_UNIT_Delete( work->cellUnit );
   GFL_CLACT_SYS_Delete();
 
-  GFL_BG_FreeBGControl( PSTATUS_BG_SUB_INFO );
+  GFL_BG_FreeBGControl( PSTATUS_BG_SUB_TITLE );
   GFL_BG_FreeBGControl( PSTATUS_BG_SUB_PLATE );
   GFL_BG_FreeBGControl( PSTATUS_BG_SUB_BG );
   GFL_BG_FreeBGControl( PSTATUS_BG_MAIN_BG );
@@ -474,13 +477,15 @@ static void PSTATUS_LoadResource( PSTATUS_WORK *work )
   //上画面共通キャラ
   GFL_ARCHDL_UTIL_TransVramBgCharacter( archandle , NARC_p_status_gra_p_st_bg_u_NCGR ,
                     PSTATUS_BG_SUB_PLATE , 0 , 0, FALSE , work->heapId );
+  GFL_ARCHDL_UTIL_TransVramBgCharacter( archandle , NARC_p_status_gra_p_st_bg_title_u_NCGR ,
+                    PSTATUS_BG_SUB_TITLE , 0 , 0, FALSE , work->heapId );
 
   //上画面背景
   GFL_ARCHDL_UTIL_TransVramScreen( archandle , NARC_p_status_gra_p_st_scroll_u_NSCR , 
                     PSTATUS_BG_SUB_BG ,  0 , 0, FALSE , work->heapId );
   //上画面info
   GFL_ARCHDL_UTIL_TransVramScreen( archandle , NARC_p_status_gra_p_st_infotitle_u_NSCR , 
-                    PSTATUS_BG_SUB_INFO ,  0 , 0, FALSE , work->heapId );
+                    PSTATUS_BG_SUB_TITLE ,  0 , 0, FALSE , work->heapId );
 
 
   //OBJリソース
@@ -488,14 +493,17 @@ static void PSTATUS_LoadResource( PSTATUS_WORK *work )
   work->cellRes[SCR_PLT_ICON] = GFL_CLGRP_PLTT_RegisterEx( archandle , 
         NARC_p_status_gra_p_st_obj_d_NCLR , CLSYS_DRAW_MAIN , 
         PSTATUS_OBJPLT_ICON*32 , 0 , 7 , work->heapId  );
+  work->cellRes[SCR_PLT_BALL] = GFL_CLGRP_PLTT_RegisterEx( archandle , 
+        NARC_p_status_gra_ball00_NCLR , CLSYS_DRAW_MAIN , 
+        PSTATUS_OBJPLT_BALL*32 , 0 , 7 , work->heapId  );
   work->cellRes[SCR_PLT_SKILL] = GFL_CLGRP_PLTT_RegisterEx( archandle , 
-        NARC_p_status_gra_p_st_skill_palte_NCLR , CLSYS_DRAW_MAIN , 
+        NARC_p_status_gra_p_st_skill_plate_NCLR , CLSYS_DRAW_MAIN , 
         PSTATUS_OBJPLT_SKILL_PLATE*32 , 0 , 1 , work->heapId  );
   work->cellRes[SCR_PLT_RIBBON_ICON] = GFL_CLGRP_PLTT_RegisterEx( archandle , 
         NARC_p_status_gra_ribbon_NCLR , CLSYS_DRAW_SUB , 
         PSTATUS_OBJPLT_SUB_RIBBON*32 , 0 , 5 , work->heapId  );
   work->cellRes[SCR_PLT_RIBBON_BAR] = GFL_CLGRP_PLTT_RegisterEx( archandle , 
-        NARC_p_status_gra_p_status_ribbon_bar_NCLR , CLSYS_DRAW_MAIN , 
+        NARC_p_status_gra_p_st_ribbon_bar_NCLR , CLSYS_DRAW_MAIN , 
         PSTATUS_OBJPLT_RIBBON_BAR*32 , 0 , 1 , work->heapId  );
   work->cellRes[SCR_PLT_CURSOR_COMMON] = GFL_CLGRP_PLTT_RegisterEx( archandle , 
         NARC_p_status_gra_p_st_cursor_common_NCLR , CLSYS_DRAW_MAIN , 
@@ -504,8 +512,10 @@ static void PSTATUS_LoadResource( PSTATUS_WORK *work )
   //キャラクタ
   work->cellRes[SCR_NCG_ICON] = GFL_CLGRP_CGR_Register( archandle , 
         NARC_p_status_gra_p_st_obj_d_NCGR , FALSE , CLSYS_DRAW_MAIN , work->heapId  );
+  work->cellRes[SCR_NCG_BALL] = GFL_CLGRP_CGR_Register( archandle , 
+        NARC_p_status_gra_ball00_NCGR , FALSE , CLSYS_DRAW_MAIN , work->heapId  );
   work->cellRes[SCR_NCG_SKILL] = GFL_CLGRP_CGR_Register( archandle , 
-        NARC_p_status_gra_p_st_skill_palte_NCGR , FALSE , CLSYS_DRAW_MAIN , work->heapId  );
+        NARC_p_status_gra_p_st_skill_plate_NCGR , FALSE , CLSYS_DRAW_MAIN , work->heapId  );
   work->cellRes[SCR_NCG_SKILL_CUR] = GFL_CLGRP_CGR_Register( archandle , 
         NARC_p_status_gra_p_st_skill_cur_NCGR , FALSE , CLSYS_DRAW_MAIN , work->heapId  );
   work->cellRes[SCR_NCG_RIBBON_CUR] = GFL_CLGRP_CGR_Register( archandle , 
@@ -514,8 +524,10 @@ static void PSTATUS_LoadResource( PSTATUS_WORK *work )
   //セル・アニメ
   work->cellRes[SCR_ANM_ICON] = GFL_CLGRP_CELLANIM_Register( archandle , 
         NARC_p_status_gra_p_st_obj_d_NCER , NARC_p_status_gra_p_st_obj_d_NANR, work->heapId  );
+  work->cellRes[SCR_ANM_BALL] = GFL_CLGRP_CELLANIM_Register( archandle , 
+        NARC_p_status_gra_ball00_NCER , NARC_p_status_gra_ball00_NANR, work->heapId  );
   work->cellRes[SCR_ANM_SKILL] = GFL_CLGRP_CELLANIM_Register( archandle , 
-        NARC_p_status_gra_p_st_skill_palte_NCER , NARC_p_status_gra_p_st_skill_palte_NANR, work->heapId  );
+        NARC_p_status_gra_p_st_skill_plate_NCER , NARC_p_status_gra_p_st_skill_plate_NANR, work->heapId  );
   work->cellRes[SCR_ANM_SKILL_CUR] = GFL_CLGRP_CELLANIM_Register( archandle , 
         NARC_p_status_gra_p_st_skill_cur_NCER , NARC_p_status_gra_p_st_skill_cur_NANR, work->heapId  );
   work->cellRes[SCR_ANM_RIBBON_ICON] = GFL_CLGRP_CELLANIM_Register( archandle , 
@@ -667,8 +679,8 @@ static void PSTATUS_InitCell( PSTATUS_WORK *work )
               &cellInitData ,CLSYS_DEFREND_MAIN , work->heapId );
     work->clwkTypeIcon[1] = GFL_CLACT_WK_Create( work->cellUnit ,
               work->cellResTypeNcg[0],
-              work->cellRes[SCR_PLT_SUB_POKE_TYPE],
-              work->cellRes[SCR_ANM_SUB_POKE_TYPE],
+              work->cellRes[SCR_PLT_POKE_TYPE],
+              work->cellRes[SCR_ANM_POKE_TYPE],
               &cellInitData ,CLSYS_DEFREND_MAIN , work->heapId );
 
 
@@ -678,6 +690,7 @@ static void PSTATUS_InitCell( PSTATUS_WORK *work )
     }
   }
   
+  PSTATUS_SUB_InitCell( work , work->subWork );
   PSTATUS_RIBBON_InitCell( work , work->ribbonWork );
   PSTATUS_SKILL_InitCell( work , work->skillWork );
 }
@@ -690,6 +703,7 @@ static void PSTATUS_TermCell( PSTATUS_WORK *work )
   u8 i;
   PSTATUS_RIBBON_TermCell( work , work->ribbonWork );
   PSTATUS_SKILL_TermCell( work , work->skillWork );
+  PSTATUS_SUB_TermCell( work , work->subWork );
 
   for( i=0;i<SBT_MAX;i++ )
   {
@@ -1016,19 +1030,7 @@ const POKEMON_PASO_PARAM* PSTATUS_UTIL_GetCurrentPPP( PSTATUS_WORK *work )
 
 #if PM_DEBUG
   case PST_PP_TYPE_DEBUG:
-    if( work->calcPP != NULL &&
-        PP_Get( work->calcPP , ID_PARA_monsno , NULL ) != work->dataPos+1 )
-    {
-      GFL_HEAP_FreeMemory( work->calcPP );
-      work->calcPP = NULL;
-    }
-    if( work->calcPP == NULL )
-    {
-      u16 oyaName[5] = {L'ブ',L'ラ',L'ッ',L'ク',0xFFFF};
-      work->calcPP = PP_Create( work->dataPos+1 , 50 , PTL_SETUP_ID_AUTO , HEAPID_POKE_STATUS );
-      PP_Put( work->calcPP , ID_PARA_oyaname_raw , (u32)&oyaName[0] );
-      PP_Put( work->calcPP , ID_PARA_oyasex , PTL_SEX_MALE );
-    }
+    PSTATUS_UTIL_DebugCreatePP( work );
     return PP_GetPPPPointerConst( work->calcPP );
     break;
 #endif
@@ -1059,19 +1061,7 @@ POKEMON_PARAM* PSTATUS_UTIL_GetCurrentPP( PSTATUS_WORK *work )
 
 #if PM_DEBUG
   case PST_PP_TYPE_DEBUG:
-    if( work->calcPP != NULL &&
-        PP_Get( work->calcPP , ID_PARA_monsno , NULL ) != work->dataPos+1 )
-    {
-      GFL_HEAP_FreeMemory( work->calcPP );
-      work->calcPP = NULL;
-    }
-    if( work->calcPP == NULL )
-    {
-      u16 oyaName[5] = {L'ブ',L'ラ',L'ッ',L'ク',0xFFFF};
-      work->calcPP = PP_Create( work->dataPos+1 , 50 , PTL_SETUP_ID_AUTO , HEAPID_POKE_STATUS );
-      PP_Put( work->calcPP , ID_PARA_oyaname_raw , (u32)&oyaName[0] );
-      PP_Put( work->calcPP , ID_PARA_oyasex , PTL_SEX_MALE );
-    }
+    PSTATUS_UTIL_DebugCreatePP( work );
     return work->calcPP;
     break;
 #endif
@@ -1110,19 +1100,7 @@ void PSTATUS_UTIL_SetCurrentPPPFast( PSTATUS_WORK *work , const BOOL isFast )
 
 #if PM_DEBUG
   case PST_PP_TYPE_DEBUG:
-    if( work->calcPP != NULL &&
-        PP_Get( work->calcPP , ID_PARA_monsno , NULL ) != work->dataPos+1 )
-    {
-      GFL_HEAP_FreeMemory( work->calcPP );
-      work->calcPP = NULL;
-    }
-    if( work->calcPP == NULL )
-    {
-      u16 oyaName[5] = {L'ブ',L'ラ',L'ッ',L'ク',0xFFFF};
-      work->calcPP = PP_Create( work->dataPos+1 , 50 , PTL_SETUP_ID_AUTO , HEAPID_POKE_STATUS );
-      PP_Put( work->calcPP , ID_PARA_oyaname_raw , (u32)&oyaName[0] );
-      PP_Put( work->calcPP , ID_PARA_oyasex , PTL_SEX_MALE );
-    }
+    PSTATUS_UTIL_DebugCreatePP( work );
 
     if( isFast == TRUE )
     {
@@ -1202,3 +1180,26 @@ void PSTATUS_UTIL_DrawValueStrFuncRight( PSTATUS_WORK *work , GFL_BMPWIN *bmpWin
   GFL_STR_DeleteBuffer( srcStr );
   GFL_STR_DeleteBuffer( dstStr );
 }
+
+
+#if PM_DEBUG
+void PSTATUS_UTIL_DebugCreatePP( PSTATUS_WORK *work )
+{
+  if( work->calcPP != NULL &&
+      PP_Get( work->calcPP , ID_PARA_monsno , NULL ) != work->dataPos+1 )
+  {
+    GFL_HEAP_FreeMemory( work->calcPP );
+    work->calcPP = NULL;
+  }
+  if( work->calcPP == NULL )
+  {
+    u16 oyaName[5] = {L'ブ',L'ラ',L'ッ',L'ク',0xFFFF};
+    work->calcPP = PP_Create( work->dataPos+1 , 50 , PTL_SETUP_ID_AUTO , HEAPID_POKE_STATUS );
+    PP_Put( work->calcPP , ID_PARA_oyaname_raw , (u32)&oyaName[0] );
+    PP_Put( work->calcPP , ID_PARA_oyasex , PTL_SEX_MALE );
+    PP_Put( work->calcPP , ID_PARA_get_ball , work->dataPos%24+1 );
+  }  
+}
+
+#endif
+

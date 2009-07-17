@@ -116,6 +116,8 @@ struct _PSTATUS_INFO_WORK
   void *scrResDown;
   NNSG2dScreenData *scrDataUp;
   void *scrResUp;
+  NNSG2dScreenData *scrDataUpTitle;
+  void *scrResUpTitle;
 };
 
 //======================================================================
@@ -180,6 +182,8 @@ void PSTATUS_INFO_LoadResource( PSTATUS_WORK *work , PSTATUS_INFO_WORK *infoWork
                     FALSE , &infoWork->scrDataDown , work->heapId );
   infoWork->scrResUp = GFL_ARCHDL_UTIL_LoadScreen( archandle , NARC_p_status_gra_p_st_info_u_NSCR ,
                     FALSE , &infoWork->scrDataUp , work->heapId );
+  infoWork->scrResUpTitle = GFL_ARCHDL_UTIL_LoadScreen( archandle , NARC_p_status_gra_p_st_infotitle_u_NSCR ,
+                    FALSE , &infoWork->scrDataUpTitle , work->heapId );
 }
 
 //--------------------------------------------------------------
@@ -195,6 +199,7 @@ void PSTATUS_INFO_ReleaseResource( PSTATUS_WORK *work , PSTATUS_INFO_WORK *infoW
 
   GFL_HEAP_FreeMemory( infoWork->scrResDown );
   GFL_HEAP_FreeMemory( infoWork->scrResUp );
+  GFL_HEAP_FreeMemory( infoWork->scrResUpTitle );
 }
 
 #pragma mark [>Disp
@@ -246,15 +251,18 @@ void PSTATUS_INFO_DispPage_Trans( PSTATUS_WORK *work , PSTATUS_INFO_WORK *infoWo
                     0 , 0 , 32 , 32 );
   GFL_BG_LoadScreenV_Req( PSTATUS_BG_PLATE );
 
-  GFL_BG_LoadScreen( PSTATUS_BG_SUB_PLATE, 
-                     infoWork->scrDataUp->rawData, 
-                     infoWork->scrDataUp->szByte, 
-                     0 );
   GFL_BG_LoadScreenBuffer( PSTATUS_BG_SUB_PLATE, 
                      infoWork->scrDataUp->rawData, 
                      infoWork->scrDataUp->szByte );
 
   GFL_BG_LoadScreenV_Req( PSTATUS_BG_SUB_PLATE );
+
+  //ã‰æ–Êƒ^ƒCƒgƒ‹
+  GFL_BG_WriteScreenExpand( PSTATUS_BG_SUB_TITLE , 
+                    0 , 0 , 32 , PSTATUS_SUB_TITLE_HEIGHT ,
+                    infoWork->scrDataUpTitle->rawData ,
+                    0 , 0 , 32 , 32 );
+  GFL_BG_LoadScreenV_Req( PSTATUS_BG_SUB_TITLE );
 
   for( i=0;i<SIB_MAX;i++ )
   {
