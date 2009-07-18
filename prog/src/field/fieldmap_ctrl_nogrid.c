@@ -8,6 +8,8 @@
 #include <gflib.h>
 #include "system/gfl_use.h"
 
+#include "arc/fieldmap/field_rail_data.naix"
+
 #include "fieldmap.h"
 #include "field_player_nogrid.h"
 
@@ -68,7 +70,7 @@ static void mapCtrlNoGrid_Create(
   FIELD_RAIL_MAN * railMan = FIELDMAP_GetFieldRailMan(fieldWork);
 	FIELD_RAIL_LOADER* railLoader = FIELDMAP_GetFieldRailLoader(fieldWork);
 
-	FIELD_RAIL_LOADER_Load( railLoader, 1, FIELDMAP_GetHeapID(fieldWork) );
+	FIELD_RAIL_LOADER_Load( railLoader, NARC_field_rail_data_h01_dat, FIELDMAP_GetHeapID(fieldWork) );
   FIELD_RAIL_MAN_Load(railMan, FIELD_RAIL_LOADER_GetData(railLoader));
   FIELD_RAIL_MAN_SetLocation( railMan, &locationStart );
   //FIELD_RAIL_MAN_Load(railMan, &point_c03_start);

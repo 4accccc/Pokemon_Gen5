@@ -28,6 +28,8 @@ extern "C"{
 ///	送受信データタイプ
 //=====================================
 typedef enum {
+	RE_MCS_DATA_NONE,				// ダミー
+	RE_MCS_DATA_MCSUSE,			// ダミー
 	RE_MCS_DATA_RAIL,				// レール情報			DS<->PC
 	RE_MCS_DATA_AREA,				// エリア情報			DS<->PC
 	RE_MCS_DATA_PLAYERDATA,	// プレイヤー情報	DS->PC

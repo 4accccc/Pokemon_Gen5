@@ -49,12 +49,12 @@ enum {
 } ;
 
 // 汎用受信バッファ
-#define RE_TMP_BUFF_SIZE	( 4096 )
+#define RE_TMP_BUFF_SIZE	( 8198 )
 
 //-------------------------------------
 ///	レール、エリア受信バッファサイズ
 //=====================================
-#define RE_MCS_BUFF_RAIL_SIZE	( 4096 )
+#define RE_MCS_BUFF_RAIL_SIZE	( 8198 )
 #define RE_MCS_BUFF_AREA_SIZE	( 1024 )
 
 
@@ -109,10 +109,13 @@ typedef struct {
 //=====================================
 typedef struct {
 	FIELDMAP_WORK* p_fieldmap;		// フィールドマップ
-	RE_RECV_BUFF	recv;						// 受信バッファ
-	u32						tmp_buff[RE_TMP_BUFF_SIZE/4];// 汎用受信バッファ
+	RE_RECV_BUFF*	p_recv;						// 受信バッファ
+	u32*					p_tmp_buff;// 汎用受信バッファ
 	VecFx32				camera_target;
 } DEBUG_RAIL_EDITOR;
+
+
+FS_EXTERN_OVERLAY(mcs_lib);
 
 //-----------------------------------------------------------------------------
 /**
@@ -231,10 +234,16 @@ static GMEVENT_RESULT DEBUG_RailEditorEvent( GMEVENT * p_event, int *  p_seq, vo
 	switch( *p_seq )
 	{
 	// 初期化
-	case RAIL_EDITOR_SEQ_INIT:				
+	case RAIL_EDITOR_SEQ_INIT:
+
+		GFL_OVERLAY_Load(FS_OVERLAY_ID(mcs_lib));
+
+		// バッファのメモリ確保
+		p_wk->p_recv = GFL_HEAP_AllocClearMemory( FIELDMAP_GetHeapID(p_wk->p_fieldmap), sizeof(RE_RECV_BUFF) );
+		p_wk->p_tmp_buff = GFL_HEAP_AllocClearMemory( FIELDMAP_GetHeapID(p_wk->p_fieldmap), RE_TMP_BUFF_SIZE );
 
 		// カメラターゲット設定
-		FIELD_CAMERA_BindTarget( FIELDMAP_GetFieldCamera( p_wk->p_fieldmap ), &p_wk->camera_target );
+//		FIELD_CAMERA_BindTarget( FIELDMAP_GetFieldCamera( p_wk->p_fieldmap ), &p_wk->camera_target );
 
 		// 座標を設定
 		FIELD_PLAYER_GetPos( FIELDMAP_GetFieldPlayer( p_wk->p_fieldmap ), &p_wk->camera_target );
@@ -259,21 +268,24 @@ static GMEVENT_RESULT DEBUG_RailEditorEvent( GMEVENT * p_event, int *  p_seq, vo
 	// リクエスト対応
 	case RAIL_EDITOR_SEQ_MAIN:
 
+		// MCSメイン
+		MCS_Main();
+
 		// 受信情報フラグ部破棄
-		RE_Recv_ClearFlag( &p_wk->recv );
+		RE_Recv_ClearFlag( p_wk->p_recv );
 
 		// 受信情報対応
 		RE_RecvControl( p_wk );
 
 		// 終了受信
-		if( RE_Recv_IsEnd( &p_wk->recv ) )
+		if( RE_Recv_IsEnd( p_wk->p_recv ) )
 		{
 			(*p_seq)++;
 			break;
 		}
 
 		// リセット受信
-		if( RE_Recv_IsReset( &p_wk->recv ) ){
+		if( RE_Recv_IsReset( p_wk->p_recv ) ){
 			break;
 		}
 		
@@ -290,13 +302,18 @@ static GMEVENT_RESULT DEBUG_RailEditorEvent( GMEVENT * p_event, int *  p_seq, vo
 
 	// 切断
 	case RAIL_EDITOR_SEQ_CLOSE:			
-		MCS_Close();
 		(*p_seq) ++;
 		break;
 
 	// 破棄
 	case RAIL_EDITOR_SEQ_EXIT:				
 		MCS_Exit();
+
+		GFL_OVERLAY_Unload( FS_OVERLAY_ID( mcs_lib ) );
+
+		// バッファのメモリ破棄
+		GFL_HEAP_FreeMemory( p_wk->p_recv );
+		GFL_HEAP_FreeMemory( p_wk->p_tmp_buff );
 		return GMEVENT_RES_FINISH;
 
 	default:
@@ -371,6 +388,8 @@ static void RE_RecvControl( DEBUG_RAIL_EDITOR* p_wk )
 	u32 size;
 	static void (* const cpRecv[RE_MCS_DATA_TYPE_MAX])( DEBUG_RAIL_EDITOR* p_wk, const void* cp_data, u32 size ) = 
 	{
+		NULL,
+		NULL,
 		RE_Recv_Rail,
 		RE_Recv_Area,
 		NULL,
@@ -385,17 +404,20 @@ static void RE_RecvControl( DEBUG_RAIL_EDITOR* p_wk )
 	};
 
 	// 受信データがあるかチェック
-	size = MCS_Read( p_wk->tmp_buff, RE_TMP_BUFF_SIZE );
-	if( size != 0 )
+	if( MCS_CheckRead() != 0 )
 	{
-		cp_header = (const RE_MCS_HEADER*)p_wk->tmp_buff;
-			
-		// 未知のデータが来た
-		GF_ASSERT( cp_header->data_type < RE_MCS_DATA_TYPE_MAX );
-
-		if( cpRecv[ cp_header->data_type ] )
+		size = MCS_Read( p_wk->p_tmp_buff, RE_TMP_BUFF_SIZE );
+		if( size != 0 )
 		{
-			cpRecv[ cp_header->data_type ]( p_wk, p_wk->tmp_buff, size );
+			cp_header = (const RE_MCS_HEADER*)p_wk->p_tmp_buff;
+				
+			// 未知のデータが来た
+			GF_ASSERT( cp_header->data_type < RE_MCS_DATA_TYPE_MAX );
+
+			if( cpRecv[ cp_header->data_type ] )
+			{
+				cpRecv[ cp_header->data_type ]( p_wk, p_wk->p_tmp_buff, size );
+			}
 		}
 	}
 }
@@ -411,13 +433,13 @@ static void RE_Recv_Rail( DEBUG_RAIL_EDITOR* p_wk, const void* cp_data, u32 size
 
 	GF_ASSERT( cp_rail->header.data_type == RE_MCS_DATA_RAIL );
 
-	p_wk->recv.rail_recv = TRUE;
-	p_wk->recv.reset_req = cp_rail->reset;
+	p_wk->p_recv->rail_recv = TRUE;
+	p_wk->p_recv->reset_req = cp_rail->reset;
 
 	GF_ASSERT( size < RE_MCS_BUFF_RAIL_SIZE );
-	GFL_STD_MemCopy( cp_rail, p_wk->recv.rail, size );
+	GFL_STD_MemCopy( cp_rail, p_wk->p_recv->rail, size );
 
-	p_wk->recv.rail_size = size;
+	p_wk->p_recv->rail_size = size;
 }
 
 //----------------------------------------------------------------------------
@@ -431,12 +453,12 @@ static void RE_Recv_Area( DEBUG_RAIL_EDITOR* p_wk, const void* cp_data, u32 size
 
 	GF_ASSERT( cp_area->header.data_type == RE_MCS_DATA_AREA );
 
-	p_wk->recv.area_recv = TRUE;
-	p_wk->recv.reset_req = cp_area->reset;
+	p_wk->p_recv->area_recv = TRUE;
+	p_wk->p_recv->reset_req = cp_area->reset;
 
 	GF_ASSERT( size < RE_MCS_BUFF_AREA_SIZE );
-	GFL_STD_MemCopy( cp_area, p_wk->recv.area, size );
-	p_wk->recv.area_size = size;
+	GFL_STD_MemCopy( cp_area, p_wk->p_recv->area, size );
+	p_wk->p_recv->area_size = size;
 }
 
 //----------------------------------------------------------------------------
@@ -450,10 +472,10 @@ static void RE_Recv_SelectData( DEBUG_RAIL_EDITOR* p_wk, const void* cp_data, u3
 
 	GF_ASSERT( cp_select->header.data_type == RE_MCS_DATA_SELECTDATA );
 
-	p_wk->recv.select_recv = TRUE;
+	p_wk->p_recv->select_recv = TRUE;
 
 	GF_ASSERT( size == sizeof(RE_MCS_SELECT_DATA) );
-	GFL_STD_MemCopy( cp_select, &p_wk->recv.select, size );
+	GFL_STD_MemCopy( cp_select, &p_wk->p_recv->select, size );
 }
 
 //----------------------------------------------------------------------------
@@ -466,7 +488,7 @@ static void RE_Recv_RailReq( DEBUG_RAIL_EDITOR* p_wk, const void* cp_data, u32 s
 	const RE_MCS_HEADER* cp_header = cp_data;
 
 	GF_ASSERT( cp_header->data_type == RE_MCS_DATA_RAIL_REQ );
-	p_wk->recv.rail_req = TRUE;
+	p_wk->p_recv->rail_req = TRUE;
 }
 
 //----------------------------------------------------------------------------
@@ -479,7 +501,7 @@ static void RE_Recv_AreaReq( DEBUG_RAIL_EDITOR* p_wk, const void* cp_data, u32 s
 	const RE_MCS_HEADER* cp_header = cp_data;
 
 	GF_ASSERT( cp_header->data_type == RE_MCS_DATA_AREA_REQ );
-	p_wk->recv.area_req = TRUE;
+	p_wk->p_recv->area_req = TRUE;
 }
 
 //----------------------------------------------------------------------------
@@ -492,7 +514,7 @@ static void RE_Recv_PlayerDataReq( DEBUG_RAIL_EDITOR* p_wk, const void* cp_data,
 	const RE_MCS_HEADER* cp_header = cp_data;
 
 	GF_ASSERT( cp_header->data_type == RE_MCS_DATA_PLAYER_REQ );
-	p_wk->recv.player_req = TRUE;
+	p_wk->p_recv->player_req = TRUE;
 }
 
 //----------------------------------------------------------------------------
@@ -505,7 +527,7 @@ static void RE_Recv_CameraDataReq( DEBUG_RAIL_EDITOR* p_wk, const void* cp_data,
 	const RE_MCS_HEADER* cp_header = cp_data;
 
 	GF_ASSERT( cp_header->data_type == RE_MCS_DATA_CAMERA_REQ );
-	p_wk->recv.camera_req = TRUE;
+	p_wk->p_recv->camera_req = TRUE;
 }
 
 //----------------------------------------------------------------------------
@@ -518,7 +540,7 @@ static void RE_Recv_ResetReq( DEBUG_RAIL_EDITOR* p_wk, const void* cp_data, u32 
 	const RE_MCS_HEADER* cp_header = cp_data;
 
 	GF_ASSERT( cp_header->data_type == RE_MCS_DATA_RESET_REQ );
-	p_wk->recv.reset_req = TRUE;
+	p_wk->p_recv->reset_req = TRUE;
 }
 
 //----------------------------------------------------------------------------
@@ -531,7 +553,7 @@ static void RE_Recv_EndReq( DEBUG_RAIL_EDITOR* p_wk, const void* cp_data, u32 si
 	const RE_MCS_HEADER* cp_header = cp_data;
 
 	GF_ASSERT( cp_header->data_type == RE_MCS_DATA_END_REQ );
-	p_wk->recv.end_req = TRUE;
+	p_wk->p_recv->end_req = TRUE;
 }
 
 //----------------------------------------------------------------------------
@@ -543,15 +565,15 @@ static void RE_Recv_EndReq( DEBUG_RAIL_EDITOR* p_wk, const void* cp_data, u32 si
 //-----------------------------------------------------------------------------
 static void RE_Reflect( DEBUG_RAIL_EDITOR* p_wk )
 {
-	if( p_wk->recv.rail_recv )
+	if( p_wk->p_recv->rail_recv )
 	{
 		RE_Reflect_Rail( p_wk );
 	}
-	if( p_wk->recv.area_recv )
+	if( p_wk->p_recv->area_recv )
 	{
 		RE_Reflect_Area( p_wk );
 	}
-	if( p_wk->recv.select_recv )
+	if( p_wk->p_recv->select_recv )
 	{
 		RE_Reflect_Select( p_wk );
 	}
@@ -569,14 +591,14 @@ static void RE_Reflect_Rail( DEBUG_RAIL_EDITOR* p_wk )
 	FIELD_RAIL_MAN* p_rail = FIELDMAP_GetFieldRailMan( p_wk->p_fieldmap );
 	FIELD_RAIL_LOADER* p_railload = FIELDMAP_GetFieldRailLoader( p_wk->p_fieldmap );
 	RAIL_LOCATION location;
-	RE_MCS_RAIL_DATA* p_data = (RE_MCS_RAIL_DATA*)p_wk->recv.rail;	
+	RE_MCS_RAIL_DATA* p_data = (RE_MCS_RAIL_DATA*)p_wk->p_recv->rail;	
 
 	// ロケーション取得
 	FIELD_RAIL_MAN_GetLocation( p_rail, &location );
 
 	// レール情報ローダーに設定
 	FIELD_RAIL_LOADER_Clear( p_railload );
-	FIELD_RAIL_LOADER_DEBUG_LoadBinary( p_railload, p_data->rail, p_wk->recv.rail_size );
+	FIELD_RAIL_LOADER_DEBUG_LoadBinary( p_railload, p_data->rail, p_wk->p_recv->rail_size  - 8 );
 
 	// レールマネージャに登録
 	FIELD_RAIL_MAN_Load( p_rail,  FIELD_RAIL_LOADER_GetData( p_railload ) );
@@ -596,11 +618,11 @@ static void RE_Reflect_Area( DEBUG_RAIL_EDITOR* p_wk )
 {
 	FLD_SCENEAREA* p_area = FIELDMAP_GetFldSceneArea( p_wk->p_fieldmap );
 	FLD_SCENEAREA_LOADER* p_areaload = FIELDMAP_GetFldSceneAreaLoader( p_wk->p_fieldmap );
-	RE_MCS_AREA_DATA* p_data = (RE_MCS_AREA_DATA*)p_wk->recv.area;	
+	RE_MCS_AREA_DATA* p_data = (RE_MCS_AREA_DATA*)p_wk->p_recv->area;	
 
 	// areaローダーに設定
 	FLD_SCENEAREA_LOADER_Clear( p_areaload );
-	FLD_SCENEAREA_LOADER_LoadBinary( p_areaload, p_data->area, p_wk->recv.area_size );
+	FLD_SCENEAREA_LOADER_LoadBinary( p_areaload, p_data->area, p_wk->p_recv->area_size - 8 );
 
 	// areaマネージャに登録
 	FLD_SCENEAREA_Release( p_area );
@@ -626,10 +648,10 @@ static void RE_Reflect_Select( DEBUG_RAIL_EDITOR* p_wk )
 		RE_JumpArea,
 	};
 
-	GF_ASSERT( p_wk->recv.select.select_data < RE_SELECT_DATA_MAX );
-	if( cpJump[p_wk->recv.select.select_data] )
+	GF_ASSERT( p_wk->p_recv->select.select_data < RE_SELECT_DATA_MAX );
+	if( cpJump[p_wk->p_recv->select.select_data] )
 	{
-		cpJump[p_wk->recv.select.select_data]( p_wk );
+		cpJump[p_wk->p_recv->select.select_data]( p_wk );
 	}
 }
 
@@ -645,7 +667,7 @@ static void RE_JumpPoint( DEBUG_RAIL_EDITOR* p_wk )
 	VecFx32 pos;
 
 	location.type					= FIELD_RAIL_TYPE_POINT;
-	location.rail_index		= p_wk->recv.select.select_index;
+	location.rail_index		= p_wk->p_recv->select.select_index;
 	location.line_ofs			= 0;
 	location.width_ofs		= 0;
 	location.key					= 0;
@@ -669,7 +691,7 @@ static void RE_JumpLine( DEBUG_RAIL_EDITOR* p_wk )
 	VecFx32 pos;
 
 	location.type					= FIELD_RAIL_TYPE_LINE;
-	location.rail_index		= p_wk->recv.select.select_index;
+	location.rail_index		= p_wk->p_recv->select.select_index;
 	location.line_ofs			= 0;
 	location.width_ofs		= 0;
 	location.key					= 0;
@@ -733,10 +755,10 @@ static void RE_InputControl( DEBUG_RAIL_EDITOR* p_wk )
 	};
 	
 	// 選択状態による、操作
-	GF_ASSERT( p_wk->recv.select.select_seq < RE_SELECT_DATA_SEQ_TYPE_MAX);	
-	if( cpInput[p_wk->recv.select.select_seq] )
+	GF_ASSERT( p_wk->p_recv->select.select_seq < RE_SELECT_DATA_SEQ_TYPE_MAX);	
+	if( cpInput[p_wk->p_recv->select.select_seq] )
 	{
-		cpInput[p_wk->recv.select.select_seq]( p_wk );
+		cpInput[p_wk->p_recv->select.select_seq]( p_wk );
 	}
 }
 
@@ -875,22 +897,22 @@ static void RE_InputLinePos_Rail( DEBUG_RAIL_EDITOR* p_wk )
 //-----------------------------------------------------------------------------
 static void RE_SendControl( DEBUG_RAIL_EDITOR* p_wk )
 {
-	if( p_wk->recv.rail_req )
+	if( p_wk->p_recv->rail_req )
 	{
 		// レール情報の送信
 		RE_Send_RailData( p_wk );
 	}
-	else if( p_wk->recv.area_req )
+	else if( p_wk->p_recv->area_req )
 	{
 		// area情報の送信
 		RE_Send_AreaData( p_wk );
 	}
-	else if( p_wk->recv.player_req )
+	else if( p_wk->p_recv->player_req )
 	{
 		// player情報の送信
 		RE_Send_PlayerData( p_wk );
 	}
-	else if( p_wk->recv.camera_req )
+	else if( p_wk->p_recv->camera_req )
 	{
 		// camera情報の送信
 		RE_Send_CameraData( p_wk );
@@ -909,7 +931,7 @@ static void RE_Send_RailData( DEBUG_RAIL_EDITOR* p_wk )
 	const FIELD_RAIL_LOADER* cp_loader = FIELDMAP_GetFieldRailLoader( p_wk->p_fieldmap );
 	const void* cp_data = FIELD_RAIL_LOADER_DEBUG_GetData( cp_loader );	
 	u32 datasize = FIELD_RAIL_LOADER_DEBUG_GetDataSize( cp_loader );	
-	RE_MCS_RAIL_DATA* p_senddata = (RE_MCS_RAIL_DATA*)p_wk->tmp_buff;
+	RE_MCS_RAIL_DATA* p_senddata = (RE_MCS_RAIL_DATA*)p_wk->p_tmp_buff;
 	BOOL result;
 
 	p_senddata->header.data_type = RE_MCS_DATA_RAIL;
@@ -933,7 +955,7 @@ static void RE_Send_AreaData( DEBUG_RAIL_EDITOR* p_wk )
 	const FLD_SCENEAREA_LOADER* cp_loader = FIELDMAP_GetFldSceneAreaLoader( p_wk->p_fieldmap );
 	const void* cp_data = FLD_SCENEAREA_LOADER_DEBUG_GetData( cp_loader );
 	u32 datasize				= FLD_SCENEAREA_LOADER_DEBUG_GetDataSize( cp_loader );
-	RE_MCS_AREA_DATA* p_senddata = (RE_MCS_AREA_DATA*)p_wk->tmp_buff;
+	RE_MCS_AREA_DATA* p_senddata = (RE_MCS_AREA_DATA*)p_wk->p_tmp_buff;
 	BOOL result;
 
 	p_senddata->header.data_type = RE_MCS_DATA_AREA;
@@ -956,10 +978,10 @@ static void RE_Send_AreaData( DEBUG_RAIL_EDITOR* p_wk )
 static void RE_Send_PlayerData( DEBUG_RAIL_EDITOR* p_wk )
 {
 	const FIELD_PLAYER* cp_player = FIELDMAP_GetFieldPlayer( p_wk->p_fieldmap );
-	RE_MCS_PLAYER_DATA* p_senddata;
+	RE_MCS_PLAYER_DATA* p_senddata = (RE_MCS_PLAYER_DATA*)p_wk->p_tmp_buff;
 	VecFx32 pos;
 	BOOL result;
-
+	
 	p_senddata->header.data_type = RE_MCS_DATA_PLAYERDATA;
 
 	FIELD_PLAYER_GetPos( cp_player, &pos );
@@ -982,7 +1004,7 @@ static void RE_Send_PlayerData( DEBUG_RAIL_EDITOR* p_wk )
 static void RE_Send_CameraData( DEBUG_RAIL_EDITOR* p_wk )
 {
 	const FIELD_CAMERA* cp_camera = FIELDMAP_GetFieldCamera( p_wk->p_fieldmap );
-	RE_MCS_CAMERA_DATA* p_senddata;
+	RE_MCS_CAMERA_DATA* p_senddata = (RE_MCS_CAMERA_DATA*)p_wk->p_tmp_buff;
 	VecFx32 pos;
 	VecFx32 target;
 	BOOL result;
@@ -1018,6 +1040,8 @@ static void RE_FreeMove_Normal( DEBUG_RAIL_EDITOR* p_wk )
 	FIELD_RAIL_MAN* p_rail = FIELDMAP_GetFieldRailMan( p_wk->p_fieldmap );
 	FLD_SCENEAREA* p_scenearea = FIELDMAP_GetFldSceneArea( p_wk->p_fieldmap );
 
+	FIELD_CAMERA_SetMode( p_camera, FIELD_CAMERA_MODE_CALC_CAMERA_POS );
+
 	FIELD_RAIL_MAN_SetActiveFlag(p_rail, FALSE);
 	FLD_SCENEAREA_SetActiveFlag(p_scenearea, FALSE);
 	
@@ -1044,6 +1068,8 @@ static void RE_FreeMove_Circle( DEBUG_RAIL_EDITOR* p_wk )
 	u32 key_cont = GFL_UI_KEY_GetCont();
 	s16 df_angle;
 	s16 df_len;
+
+	FIELD_CAMERA_SetMode( p_camera, FIELD_CAMERA_MODE_CALC_CAMERA_POS );
 
 	FIELD_RAIL_MAN_SetActiveFlag(p_rail, FALSE);
 	FLD_SCENEAREA_SetActiveFlag(p_scenearea, FALSE);

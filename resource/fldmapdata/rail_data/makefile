@@ -36,6 +36,8 @@ OBJ_FILE = $(RAILFILE:.rail=.dat)
 
 LIST_FILE 	= list.txt
 
+script = $(PROJECT_ROOT)\tools\rail_editor\rail_conv.pl
+
 #------------------------------------------------------------------------------
 #ヘッダ参照先
 #------------------------------------------------------------------------------
@@ -54,7 +56,7 @@ ifeq	($(CONVERTUSER),true)
 
 #コンバート環境
 .rail.dat:
-	perl rail_conv.pl $< $(HEADERDIR)field_rail_loader_func.h $(HEADERDIR)field_rail.h
+	perl $(script) $< $(HEADERDIR)field_rail_loader_func.h $(HEADERDIR)field_rail.h
 	ruby $(PROJECT_ROOT)\tools\binlinker.rb $*.ofs $*.point $*.line $*.camera $*.linepos $@ RL
 	
 

@@ -7,6 +7,9 @@
 #include <gflib.h>
 #include "system/gfl_use.h"
 
+#include "arc/fieldmap/field_rail_data.naix"
+#include "arc/fieldmap/field_scenearea_data.naix"
+
 #include "fieldmap.h"
 #include "field_player_nogrid.h"
 
@@ -134,7 +137,7 @@ static void mapCtrlC3_Create(
 	FIELDMAP_SetMapCtrlWork( fieldWork, work );
 
   // レール起動
-	FIELD_RAIL_LOADER_Load( p_rail_loader, 0, FIELDMAP_GetHeapID(fieldWork) );
+	FIELD_RAIL_LOADER_Load( p_rail_loader, NARC_field_rail_data_c3_dat, FIELDMAP_GetHeapID(fieldWork) );
   FIELD_RAIL_MAN_Load(railMan, FIELD_RAIL_LOADER_GetData(p_rail_loader));
   FIELD_RAIL_MAN_SetLocation( railMan, &sc_RAIL_START_LOCATION );
   FIELD_RAIL_MAN_GetPos(railMan, pos );
@@ -144,7 +147,7 @@ static void mapCtrlC3_Create(
   // シーンエリア
   work->p_sceneArea = FIELDMAP_GetFldSceneArea( fieldWork );
 	work->p_scenearealoader = FIELDMAP_GetFldSceneAreaLoader( fieldWork );
-	FLD_SCENEAREA_LOADER_Load( work->p_scenearealoader, 0, FIELDMAP_GetHeapID(fieldWork) );
+	FLD_SCENEAREA_LOADER_Load( work->p_scenearealoader, NARC_field_scenearea_data_c3_dat, FIELDMAP_GetHeapID(fieldWork) );
   FLD_SCENEAREA_Load( work->p_sceneArea, 
 			FLD_SCENEAREA_LOADER_GetData(work->p_scenearealoader),
 			FLD_SCENEAREA_LOADER_GetDataNum(work->p_scenearealoader),
@@ -279,13 +282,13 @@ static void mapCtrlC3_Main( FIELDMAP_WORK *fieldWork, VecFx32 *pos )
       FIELD_CAMERA *camera_control;
       camera_control = FIELDMAP_GetFieldCamera( fieldWork );
       FIELD_CAMERA_GetTargetPos( camera_control, &cam);
+			FIELD_CAMERA_SetMode( camera_control, FIELD_CAMERA_MODE_DIRECT_POS );
       CalcPos( &player_pos, &cam, mwk->player_len, mwk->pos_angle );
       //SetPlayerActTrans( fieldWork->field_player, &player_pos );
       FIELD_PLAYER_SetPos( fld_player, &player_pos);
       *pos = player_pos;
       // プレイヤー位置から、カメラ座標を決定
       mapCtrlC3_CameraMain( fieldWork, pos, mwk->camera_pitch, mwk->camera_len );
-      FIELD_CAMERA_SetAngleYaw( camera_control, mwk->pos_angle);
       FIELD_PLAYER_C3_Move( fld_player, key_cont, mwk->pos_angle );
 
       if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A ){

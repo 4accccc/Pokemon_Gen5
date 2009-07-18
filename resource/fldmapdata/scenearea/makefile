@@ -36,6 +36,8 @@ OBJ_FILE = $(SAFILE:.sa=.dat)
 
 LIST_FILE 	= list.txt
 
+script = $(PROJECT_ROOT)\tools\rail_editor\scenearea_conv.pl
+
 #------------------------------------------------------------------------------
 #ヘッダ参照先
 #------------------------------------------------------------------------------
@@ -54,7 +56,7 @@ ifeq	($(CONVERTUSER),true)
 
 #コンバート環境
 .sa.dat:
-	perl scenearea_conv.pl $< $(HEADERDIR)fld_scenearea_loader_func.h $(HEADERDIR)fld_scenearea.h
+	perl $(script) $< $(HEADERDIR)fld_scenearea_loader_func.h $(HEADERDIR)fld_scenearea.h
 
 endif
 

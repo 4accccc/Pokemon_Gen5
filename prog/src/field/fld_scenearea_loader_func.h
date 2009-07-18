@@ -64,13 +64,14 @@ typedef struct {
   u32   rot_end;
   fx32  dist_min;
   fx32  dist_max;
-  u32   pitch;
-  fx32  length;
 
 	// カメラ中心
   fx32  center_x;	
   fx32  center_y;
   fx32  center_z;
+
+  u32   pitch;
+  fx32  length;
 
 } FLD_SCENEAREA_CIRCLE_PARAM;
 
@@ -87,13 +88,14 @@ typedef struct {
   u32   rot_end;
   fx32  dist_min;
   fx32  dist_max;
-  u32   pitch;
-  fx32  length;
 
 	// カメラ中心
   fx32  center_x;	
   fx32  center_y;
   fx32  center_z;
+
+  u32   pitch;
+  fx32  length;
 
   // 固定カメラに必要なパラメータ
   fx32  target_x;
