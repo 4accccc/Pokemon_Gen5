@@ -123,9 +123,9 @@ const u8  APP_COMMON_GetBarIconPltOffset( const APP_COMMON_BARICON type )
 	GF_ASSERT( type < APP_COMMON_BARICON_MAX );
 	return BarIconPlttOffset[ type ];
 }
-const u32 APP_COMMON_GetBarIconCharArcIdx( void )
+const u32 APP_COMMON_GetBarIconCharArcIdx()
 {	
-	return NARC_app_menu_common_bar_button_NCGR;
+	return NARC_app_menu_common_bar_button_128k_NCGR;
 }
 const u32 APP_COMMON_GetBarIconCellArcIdx( const APP_COMMON_MAPPING mapping )
 {	

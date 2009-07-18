@@ -74,7 +74,7 @@ extern const u32 APP_COMMON_GetWazaKindCharArcIdx( const PokeType type );
 //下部バーボタン系素材取得
 extern const u32 APP_COMMON_GetBarIconPltArcIdx( void );
 extern const u8  APP_COMMON_GetBarIconPltOffset( const APP_COMMON_BARICON type );
-extern const u32 APP_COMMON_GetBarIconCharArcIdx( void );
+const u32 APP_COMMON_GetBarIconCharArcIdx();
 extern const u32 APP_COMMON_GetBarIconCellArcIdx( const APP_COMMON_MAPPING mapping );
 extern const u32 APP_COMMON_GetBarIconAnimeArcIdx( const APP_COMMON_MAPPING mapping );
 
