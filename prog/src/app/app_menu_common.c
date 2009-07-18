@@ -49,6 +49,19 @@ ALIGN4 static const u8 WazaKindPlttOffset[] = {
   1,    //KIND_TOKUSYU
 };
 
+//バーボタン用パレットオフセット
+ALIGN4 static const u8 BarIconPlttOffset[]	= {	
+	0,//  APP_COMMON_BARICON_CLOSE,
+	0,//  APP_COMMON_BARICON_RETURN,
+	1,//  APP_COMMON_BARICON_CURSOR_DOWN,
+	1,//  APP_COMMON_BARICON_CURSOR_UP,
+	1,//  APP_COMMON_BARICON_CURSOR_LEFT,
+	1,//  APP_COMMON_BARICON_CURSOR_RIGHT,
+	1,//  APP_COMMON_BARICON_CHECK_ON,
+	1,//  APP_COMMON_BARICON_CHECK_OFF,
+  
+};
+
 //--------------------------------------------------------------
 //	ARCIDの取得
 //--------------------------------------------------------------
@@ -98,3 +111,42 @@ const u32 APP_COMMON_GetWazaKindCharArcIdx( const PokeType type )
   return NARC_app_menu_common_p_st_bunrui_henka_NCGR + type;
 }
 
+//--------------------------------------------------------------
+//下部バーボタン系素材取得
+//--------------------------------------------------------------
+const u32 APP_COMMON_GetBarIconPltArcIdx( void )
+{	
+	return NARC_app_menu_common_bar_button_NCLR;
+}
+const u8  APP_COMMON_GetBarIconPltOffset( const APP_COMMON_BARICON type )
+{	
+	GF_ASSERT( type < APP_COMMON_BARICON_MAX );
+	return BarIconPlttOffset[ type ];
+}
+const u32 APP_COMMON_GetBarIconCharArcIdx( void )
+{	
+	return NARC_app_menu_common_bar_button_NCGR;
+}
+const u32 APP_COMMON_GetBarIconCellArcIdx( const APP_COMMON_MAPPING mapping )
+{	
+	return NARC_app_menu_common_bar_button_32k_NCER + mapping;
+}
+const u32 APP_COMMON_GetBarIconAnimeArcIdx( const APP_COMMON_MAPPING mapping )
+{	
+	return NARC_app_menu_common_bar_button_32k_NANR + mapping;
+}
+//--------------------------------------------------------------
+//下部バー系素材取得
+//--------------------------------------------------------------
+const u32 APP_COMMON_GetBarPltArcIdx( void )
+{	
+	return NARC_app_menu_common_menu_bar_NCLR;
+}
+const u32 APP_COMMON_GetBarCharArcIdx( void )
+{	
+	return NARC_app_menu_common_menu_bar_NCGR;
+}
+const u32 APP_COMMON_GetBarScrnArcIdx( void )
+{	
+	return NARC_app_menu_common_menu_bar_NSCR;
+}

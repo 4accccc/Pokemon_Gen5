@@ -17,7 +17,7 @@
 //	定数定義
 //==============================================================================
 //バーのボタンのアニメインデックス
-enum
+typedef enum
 {
   APP_COMMON_BARICON_CLOSE,
   APP_COMMON_BARICON_RETURN,
@@ -29,8 +29,13 @@ enum
   APP_COMMON_BARICON_CHECK_OFF,
   
   APP_COMMON_BARICON_MAX,
-};
+}APP_COMMON_BARICON;
 
+//バーのボタンのパレット本数
+#define APP_COMMON_BARICON_PLT_NUM	(2)
+
+//バーのパレット本数
+#define APP_COMMON_BAR_PLT_NUM	(1)
 
 ///アイコンタイプ(技タイプ以外のタイプ)
 enum{
@@ -66,3 +71,14 @@ extern const u32 APP_COMMON_GetPokeTypeAnimeArcIdx( const APP_COMMON_MAPPING map
 extern const u8  APP_COMMON_GetWazaKindPltOffset( const PokeType type );
 extern const u32 APP_COMMON_GetWazaKindCharArcIdx( const PokeType type );
 
+//下部バーボタン系素材取得
+extern const u32 APP_COMMON_GetBarIconPltArcIdx( void );
+extern const u8  APP_COMMON_GetBarIconPltOffset( const APP_COMMON_BARICON type );
+extern const u32 APP_COMMON_GetBarIconCharArcIdx( void );
+extern const u32 APP_COMMON_GetBarIconCellArcIdx( const APP_COMMON_MAPPING mapping );
+extern const u32 APP_COMMON_GetBarIconAnimeArcIdx( const APP_COMMON_MAPPING mapping );
+
+//下部バー素材取得
+extern const u32 APP_COMMON_GetBarPltArcIdx( void );
+extern const u32 APP_COMMON_GetBarCharArcIdx( void );
+extern const u32 APP_COMMON_GetBarScrnArcIdx( void );
