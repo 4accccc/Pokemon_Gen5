@@ -1,0 +1,33 @@
+/*****************************************************************************
+	Archive file index definition.
+	File: bag.naix
+
+	This file was created by NINTENDO NITRO-System Archiver.
+
+
+ *****************************************************************************/
+
+#ifndef NARC_BAG_NAIX_
+#define NARC_BAG_NAIX_
+
+enum {
+	NARC_bag_bag_basebg_d_NCLR = 0,
+	NARC_bag_bag_basebg_u_NCLR = 1,
+	NARC_bag_bag_win01_u_NCLR = 2,
+	NARC_bag_bag_win02_u_NCLR = 3,
+	NARC_bag_bag_win_d_NCLR = 4,
+	NARC_bag_bag_basebg_d_NCGR = 5,
+	NARC_bag_bag_basebg_u_NCGR = 6,
+	NARC_bag_bag_win01_u_NCGR = 7,
+	NARC_bag_bag_win02_u_NCGR = 8,
+	NARC_bag_bag_win_d_NCGR = 9,
+	NARC_bag_bag_win_d_NCER = 10,
+	NARC_bag_bag_basebg_d_NSCR = 11,
+	NARC_bag_bag_basebg_u_NSCR = 12,
+	NARC_bag_bag_win01_u_NSCR = 13,
+	NARC_bag_bag_win02_u_NSCR = 14,
+	NARC_bag_bag_win_d_NANR = 15
+};
+
+/* NARC_BAG_NAIX_ */
+#endif
