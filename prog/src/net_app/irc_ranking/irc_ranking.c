@@ -2855,7 +2855,7 @@ static void APPBAR_Init( APPBAR_WORK *p_wk, GFL_CLUNIT* p_unit, u8 bar_frm, u8 b
 		NAGI_Printf( "pos %d size %d\n", GFL_ARCUTIL_TRANSINFO_GetPos(p_wk->chr_pos), GFL_ARCUTIL_TRANSINFO_GetSize(p_wk->chr_pos) );
 
 	 //OBJ
-		GFL_CLGRP_PLTT_RegisterEx( p_handle,
+		p_wk->reg_plt	= GFL_CLGRP_PLTT_RegisterEx( p_handle,
 				APP_COMMON_GetBarIconPltArcIdx(), clsys_draw_type, obj_plt*0x20, 0, APP_COMMON_BARICON_PLT_NUM, heapID );
 
 		p_wk->reg_chr	= GFL_CLGRP_CGR_Register( p_handle,

@@ -413,6 +413,8 @@ print( FILEOUT "#pragma once\n" );
 print( FILEOUT "//このファイルはtownmap_data_convによって自動生成されています\n\n" );
 print( FILEOUT "//データ総数\n" );
 print( FILEOUT "#define TOWNMAP_DATA_MAX\t($DATA_LENGTH)\n\n" );
+print( FILEOUT "//データエラー値\n" );
+print( FILEOUT "#define TOWNMAP_DATA_ERROE\t($DATA_ERROR_VALUE)\n\n" );
 print( FILEOUT "//場所のタイプ\n" );
 $cnt	= 0;
 foreach $type ( @TYPE_BUFF )

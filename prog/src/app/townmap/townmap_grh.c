@@ -39,13 +39,20 @@ typedef struct
 {
 	int dummy;
 } GRAPHIC_BG_WORK;
-
+//-------------------------------------
+///	OBJワーク
+//=====================================
+typedef struct 
+{
+	GFL_CLUNIT *p_clunit;
+} GRAPHIC_OBJ_WORK;
 //-------------------------------------
 ///	タウンマップ用基本グラフィックワーク
 //=====================================
 struct _TOWNMAP_GRAPHIC_SYS
 {	
-	GRAPHIC_BG_WORK	bg;
+	GRAPHIC_BG_WORK		bg;
+	GRAPHIC_OBJ_WORK	obj;
 	GFL_TCB	*p_vblank_task;
 };
 
@@ -59,14 +66,20 @@ struct _TOWNMAP_GRAPHIC_SYS
 //=====================================
 static void TownMap_Graphic_Init( void );
 static void TownMap_Graphic_VBlankTask( GFL_TCB *p_tcb, void *p_wk_adrs );
-
 //-------------------------------------
 ///	BG
 //=====================================
 static void GRAPHIC_BG_Init( GRAPHIC_BG_WORK *p_wk, HEAPID heapID );
 static void GRAPHIC_BG_Exit( GRAPHIC_BG_WORK *p_wk );
 static void GRAPHIC_BG_VBlankFunction( GRAPHIC_BG_WORK *p_wk );
-
+//-------------------------------------
+///	OBJ
+//=====================================
+static void GRAPHIC_OBJ_Init( GRAPHIC_OBJ_WORK *p_wk, const GFL_DISP_VRAM* cp_vram_bank, HEAPID heapID );
+static void GRAPHIC_OBJ_Exit( GRAPHIC_OBJ_WORK *p_wk );
+static void GRAPHIC_OBJ_Main( GRAPHIC_OBJ_WORK *p_wk );
+static void GRAPHIC_OBJ_VBlankFunction( GRAPHIC_OBJ_WORK *p_wk );
+static GFL_CLUNIT * GRAPHIC_OBJ_GetUnit( const GRAPHIC_OBJ_WORK *cp_wk );
 //=============================================================================
 /**
  *					DATA
@@ -200,6 +213,8 @@ TOWNMAP_GRAPHIC_SYS * TOWNMAP_GRAPHIC_Init( HEAPID heapID )
 
 	//モジュール作成
 	GRAPHIC_BG_Init( &p_wk->bg, heapID );
+	GRAPHIC_OBJ_Init( &p_wk->obj, &sc_vramSetTable, heapID );
+
 
 	//VBlankTask登録
 	p_wk->p_vblank_task	= GFUser_VIntr_CreateTCB(TownMap_Graphic_VBlankTask, p_wk, 0 );
@@ -220,6 +235,7 @@ void TOWNMAP_GRAPHIC_Exit( TOWNMAP_GRAPHIC_SYS *p_wk )
 	GFL_TCB_DeleteTask( p_wk->p_vblank_task );
 
 	//モジュール破棄
+	GRAPHIC_OBJ_Exit( &p_wk->obj );
 	GRAPHIC_BG_Exit( &p_wk->bg );
 
 	//ワーク破棄
@@ -234,8 +250,8 @@ void TOWNMAP_GRAPHIC_Exit( TOWNMAP_GRAPHIC_SYS *p_wk )
  */
 //-----------------------------------------------------------------------------
 void TOWNMAP_GRAPHIC_Draw( TOWNMAP_GRAPHIC_SYS *p_wk )
-{	
-
+{
+	GRAPHIC_OBJ_Main( &p_wk->obj );
 }
 
 //----------------------------------------------------------------------------
@@ -251,6 +267,19 @@ void TOWNMAP_GRAPHIC_Draw( TOWNMAP_GRAPHIC_SYS *p_wk )
 u8 TOWNMAP_GRAPHIC_GetFrame( const TOWNMAP_GRAPHIC_SYS *cp_wk, TOWNMAP_GRAPHIC_BG_FRAME frame )
 {	
 	return GRAPHIC_BG_GetFrame( frame );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	UNIT取得
+ *
+ *	@param	const TOWNMAP_GRAPHIC_SYS *cp_wk	ワーク
+ *
+ *	@return	UNIT
+ */
+//-----------------------------------------------------------------------------
+GFL_CLUNIT *TOWNMAP_GRAPHIC_GetUnit( const TOWNMAP_GRAPHIC_SYS *cp_wk )
+{	
+	return GRAPHIC_OBJ_GetUnit( &cp_wk->obj );
 }
 //=============================================================================
 /**
@@ -300,6 +329,7 @@ static void TownMap_Graphic_VBlankTask( GFL_TCB *p_tcb, void *p_wk_adrs )
 {	
 	TOWNMAP_GRAPHIC_SYS *p_wk	= p_wk_adrs;
 	GRAPHIC_BG_VBlankFunction( &p_wk->bg );
+	GRAPHIC_OBJ_VBlankFunction( &p_wk->obj );
 }
 //=============================================================================
 /**
@@ -421,4 +451,90 @@ static void GRAPHIC_BG_VBlankFunction( GRAPHIC_BG_WORK *p_wk )
 {	
 	GFL_BG_VBlankFunc();
 }
+//=============================================================================
+/**
+ *				OBJ
+ */
+//=============================================================================
+//----------------------------------------------------------------------------
+/**
+ *	@brief	OBJ描画	初期化
+ *
+ *	@param	GRAPHIC_OBJ_WORK *p_wk			ワーク
+ *	@param	GFL_DISP_VRAM* cp_vram_bank	バンクテーブル
+ *	@param	heapID											ヒープID
+ *
+ */
+//-----------------------------------------------------------------------------
+static void GRAPHIC_OBJ_Init( GRAPHIC_OBJ_WORK *p_wk, const GFL_DISP_VRAM* cp_vram_bank, HEAPID heapID )
+{	
+	//クリア
+	GFL_STD_MemClear( p_wk, sizeof(GRAPHIC_OBJ_WORK) );
+
+	//システム作成
+	GFL_CLACT_SYS_Create( &GFL_CLSYSINIT_DEF_DIVSCREEN, cp_vram_bank, heapID );
+	p_wk->p_clunit	= GFL_CLACT_UNIT_Create( 128, 0, heapID );
+	GFL_CLACT_UNIT_SetDefaultRend( p_wk->p_clunit );
+
+	//表示
+	GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_OBJ, VISIBLE_ON );
+	GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_OBJ, VISIBLE_ON );
+
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	OBJ描画	破棄
+ *
+ *	@param	GRAPHIC_OBJ_WORK *p_wk	ワーク
+ *
+ */
+//-----------------------------------------------------------------------------
+static void GRAPHIC_OBJ_Exit( GRAPHIC_OBJ_WORK *p_wk )
+{	
+
+	//システム破棄
+	GFL_CLACT_UNIT_Delete( p_wk->p_clunit );
+	GFL_CLACT_SYS_Delete();
+	GFL_STD_MemClear( p_wk, sizeof(GRAPHIC_OBJ_WORK) );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	OBJ描画	メイン処理
+ *
+ *	@param	GRAPHIC_OBJ_WORK *p_wk	ワーク
+ *
+ */
+//-----------------------------------------------------------------------------
+static void GRAPHIC_OBJ_Main( GRAPHIC_OBJ_WORK *p_wk )
+{	
+	GFL_CLACT_SYS_Main();
+
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	OBJ描画	Vブランク処理
+ *
+ *	@param	GRAPHIC_OBJ_WORK *p_wk	ワーク
+ *
+ */
+//-----------------------------------------------------------------------------
+static void GRAPHIC_OBJ_VBlankFunction( GRAPHIC_OBJ_WORK *p_wk )
+{	
+	GFL_CLACT_SYS_VBlankFunc();
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	CLユニットの取得
+ *
+ *	@param	const GRAPHIC__OBJ_WORK *cp_wk	ワーク
+ *
+ *	@return	GFL_CLUNIT
+ */
+//-----------------------------------------------------------------------------
+static GFL_CLUNIT * GRAPHIC_OBJ_GetUnit( const GRAPHIC_OBJ_WORK *cp_wk )
+{	
+	return cp_wk->p_clunit;
+}
+
 

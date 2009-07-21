@@ -33,7 +33,7 @@
 //=====================================
 typedef struct 
 {
-	u16	param[TOWNMAP_PARAM_MAX];
+	u16	param[TOWNMAP_DATA_PARAM_MAX];
 } TOWNMAP_DATA_STRUCT;
 
 
@@ -85,16 +85,16 @@ void TOWNMAP_DATA_Free( TOWNMAP_DATA *p_wk )
  *
  *	@param	const		TOWNMAP_DATA *cp_wk	マップデータハンドル
  *	@param	idx			場所インデックス（MAX　TOWNMAP_DATA_MAX）
- *	@param	param		TOWNMAP_PARAM列挙
+ *	@param	param		TOWNMAP_DATA_PARAM列挙
  *
  *	@return	値
  */
 //-----------------------------------------------------------------------------
-u16 TOWNMAP_DATA_GetParam( const TOWNMAP_DATA *cp_wk, u16 idx, TOWNMAP_PARAM param )
+u16 TOWNMAP_DATA_GetParam( const TOWNMAP_DATA *cp_wk, u16 idx, TOWNMAP_DATA_PARAM param )
 {	
 	GF_ASSERT( cp_wk );
 	GF_ASSERT( idx < TOWNMAP_DATA_MAX );
-	GF_ASSERT( param < TOWNMAP_PARAM_MAX );
+	GF_ASSERT( param < TOWNMAP_DATA_PARAM_MAX );
 
 	{	
 		const TOWNMAP_DATA_STRUCT *cp_data;

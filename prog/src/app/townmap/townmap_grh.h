@@ -21,22 +21,22 @@
 enum
 {	
 	// メイン画面BG(下画面)
-	TOWNMAP_BG_PAL_M_00 = 0,//	256pltここから
-	TOWNMAP_BG_PAL_M_01,		//   
+	TOWNMAP_BG_PAL_M_00 = 0,//	
+	TOWNMAP_BG_PAL_M_01,		//  
 	TOWNMAP_BG_PAL_M_02,		//  
-	TOWNMAP_BG_PAL_M_03,		//   
-	TOWNMAP_BG_PAL_M_04,		//   
-	TOWNMAP_BG_PAL_M_05,		//   
-	TOWNMAP_BG_PAL_M_06,		//   
-	TOWNMAP_BG_PAL_M_07,		//   
+	TOWNMAP_BG_PAL_M_03,		//  
+	TOWNMAP_BG_PAL_M_04,		//  
+	TOWNMAP_BG_PAL_M_05,		//  
+	TOWNMAP_BG_PAL_M_06,		//  
+	TOWNMAP_BG_PAL_M_07,		//  
 	TOWNMAP_BG_PAL_M_08,		//  
 	TOWNMAP_BG_PAL_M_09,		//  
 	TOWNMAP_BG_PAL_M_10,		//  
 	TOWNMAP_BG_PAL_M_11,		//  
 	TOWNMAP_BG_PAL_M_12,		//  
-	TOWNMAP_BG_PAL_M_13,		//  256pltここまで
+	TOWNMAP_BG_PAL_M_13,		//  
 	TOWNMAP_BG_PAL_M_14,		// フォント
-	TOWNMAP_BG_PAL_M_15,		//
+	TOWNMAP_BG_PAL_M_15,		// アプリケーションバー
 
 
 	// サブ画面BG（上画面）
@@ -56,6 +56,44 @@ enum
 	TOWNMAP_BG_PAL_S_13,		// 使用してない
 	TOWNMAP_BG_PAL_S_14,		// フォント
 	TOWNMAP_BG_PAL_S_15,		//	使用してない
+
+	// メイン画面OBJ(下画面)
+	TOWNMAP_OBJ_PAL_M_00 = 0,//	
+	TOWNMAP_OBJ_PAL_M_01,		//  
+	TOWNMAP_OBJ_PAL_M_02,		//  
+	TOWNMAP_OBJ_PAL_M_03,		//  
+	TOWNMAP_OBJ_PAL_M_04,		//  
+	TOWNMAP_OBJ_PAL_M_05,		//  
+	TOWNMAP_OBJ_PAL_M_06,		//  
+	TOWNMAP_OBJ_PAL_M_07,		//  
+	TOWNMAP_OBJ_PAL_M_08,		//  
+	TOWNMAP_OBJ_PAL_M_09,		//  
+	TOWNMAP_OBJ_PAL_M_10,		//  
+	TOWNMAP_OBJ_PAL_M_11,		//  
+	TOWNMAP_OBJ_PAL_M_12,		//  
+	TOWNMAP_OBJ_PAL_M_13,		//  
+	TOWNMAP_OBJ_PAL_M_14,		// アプリケーションバー
+	TOWNMAP_OBJ_PAL_M_15,		// アプリケーションバー
+
+
+	// サブ画面OBJ（上画面）
+	TOWNMAP_OBJ_PAL_S_00 = 0,	//  使用してない
+	TOWNMAP_OBJ_PAL_S_01,		//   使用してない
+	TOWNMAP_OBJ_PAL_S_02,		//   使用してない
+	TOWNMAP_OBJ_PAL_S_03,		//   使用してない
+	TOWNMAP_OBJ_PAL_S_04,		//   使用してない
+	TOWNMAP_OBJ_PAL_S_05,		//   使用してない
+	TOWNMAP_OBJ_PAL_S_06,		//   使用してない
+	TOWNMAP_OBJ_PAL_S_07,		// 使用してない
+	TOWNMAP_OBJ_PAL_S_08,		// 使用してない
+	TOWNMAP_OBJ_PAL_S_09,		// 使用してない
+	TOWNMAP_OBJ_PAL_S_10,		// 使用してない
+	TOWNMAP_OBJ_PAL_S_11,		// 使用してない
+	TOWNMAP_OBJ_PAL_S_12,		// 使用してない
+	TOWNMAP_OBJ_PAL_S_13,		// 使用してない
+	TOWNMAP_OBJ_PAL_S_14,		// 使用してない
+	TOWNMAP_OBJ_PAL_S_15,		//	使用してない
+
 };
 
 //-------------------------------------
@@ -96,3 +134,4 @@ extern void TOWNMAP_GRAPHIC_Exit( TOWNMAP_GRAPHIC_SYS *p_wk );
 extern void TOWNMAP_GRAPHIC_Draw( TOWNMAP_GRAPHIC_SYS *p_wk );
 
 extern u8 TOWNMAP_GRAPHIC_GetFrame( const TOWNMAP_GRAPHIC_SYS *cp_wk, TOWNMAP_GRAPHIC_BG_FRAME frame );
+extern GFL_CLUNIT *TOWNMAP_GRAPHIC_GetUnit( const TOWNMAP_GRAPHIC_SYS *cp_wk );
