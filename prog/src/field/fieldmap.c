@@ -76,7 +76,8 @@
 #endif //USE_DEBUGWIN_SYSTEM
 
 #include "field_place_name.h"
-#include "iss_unit.h"			// TEMP
+#include "iss_unit.h"		
+#include "sound/bgm_info.h"
 
 //======================================================================
 //	define
@@ -184,8 +185,9 @@ struct _FIELDMAP_WORK
 	
 	FLDMSGBG *fldMsgBG;
 
-	FIELD_PLACE_NAME* placeNameSys;
-	ISS_UNIT* issUnit;
+	FIELD_PLACE_NAME* placeNameSys;	// 地名表示ウィンドウ
+	ISS_UNIT* issUnit;				// 街ISSユニット
+	BGM_INFO_SYS* bgmInfoSys;		// BGM情報
 
 	
 	MMDLSYS *fldMMdlSys;
@@ -437,8 +439,11 @@ static MAINSEQ_RESULT mainSeqFunc_setup(GAMESYS_WORK *gsys, FIELDMAP_WORK *field
   // 地名表示システム作成
   fieldWork->placeNameSys = FIELD_PLACE_NAME_Create( fieldWork->heapID, fieldWork->fldMsgBG );
 
-  // TEMP: ISSユニットの作成
+  // 街ISSユニットの作成
   fieldWork->issUnit = ISS_UNIT_Create( fieldWork->map_id, fieldWork->heapID );
+
+  // BGM情報管理システムを作成
+  fieldWork->bgmInfoSys = BGM_INFO_CreateSystem( fieldWork->heapID );
 
   fieldWork->camera_control = FIELD_CAMERA_Create(
       fieldWork,
@@ -738,8 +743,11 @@ static MAINSEQ_RESULT mainSeqFunc_free(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldW
   // 地名表示システム破棄
   FIELD_PLACE_NAME_Delete( fieldWork->placeNameSys );
 
-  // TEMP: ISSユニットの破棄
+  // 街ISSユニットの破棄
   ISS_UNIT_Delete( fieldWork->issUnit );
+
+  // BGM情報管理システムの破棄
+  BGM_INFO_DeleteSystem( fieldWork->bgmInfoSys );
 
   //フィールドエンカウント破棄
   FIELD_ENCOUNT_Delete( fieldWork->encount );
