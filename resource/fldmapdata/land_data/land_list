@@ -258,6 +258,15 @@ CONCAT_TARGET = \
 	$(DIR_LANDRES)/m_dun0706_01_00.bin $(DIR_LANDRES)/m_dun0706_01_00.imd \
 	$(DIR_LANDRES)/m_dun0706_00_01.bin $(DIR_LANDRES)/m_dun0706_00_01.imd \
 	$(DIR_LANDRES)/m_dun0706_01_01.bin $(DIR_LANDRES)/m_dun0706_01_01.imd \
+	$(DIR_LANDRES)/m_dun0301_00_00.bin $(DIR_LANDRES)/m_dun0301_00_00.imd \
+	$(DIR_LANDRES)/m_dun0301_00_01.bin $(DIR_LANDRES)/m_dun0301_00_01.imd \
+	$(DIR_LANDRES)/m_dun0301_00_02.bin $(DIR_LANDRES)/m_dun0301_00_02.imd \
+	$(DIR_LANDRES)/m_dun0301_01_00.bin $(DIR_LANDRES)/m_dun0301_01_00.imd \
+	$(DIR_LANDRES)/m_dun0301_01_01.bin $(DIR_LANDRES)/m_dun0301_01_01.imd \
+	$(DIR_LANDRES)/m_dun0301_01_02.bin $(DIR_LANDRES)/m_dun0301_01_02.imd \
+	$(DIR_LANDRES)/m_dun0301_02_00.bin $(DIR_LANDRES)/m_dun0301_02_00.imd \
+	$(DIR_LANDRES)/m_dun0301_02_01.bin $(DIR_LANDRES)/m_dun0301_02_01.imd \
+	$(DIR_LANDRES)/m_dun0301_02_02.bin $(DIR_LANDRES)/m_dun0301_02_02.imd \
 	$(DIR_LANDRES)/m_ruin01_00_00.bin $(DIR_LANDRES)/m_ruin01_00_00.imd \
 	$(DIR_LANDRES)/m_gate01_00_00.bin $(DIR_LANDRES)/m_gate01_00_00.imd \
 	$(DIR_LANDRES)/m_pc01_00_00.bin $(DIR_LANDRES)/m_pc01_00_00.imd \
