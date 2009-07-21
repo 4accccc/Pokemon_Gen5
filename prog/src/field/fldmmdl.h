@@ -292,6 +292,7 @@ typedef enum
 	MMDL_DRAWPROCNO_BLACT,	///<ビルボード汎用
   MMDL_DRAWPROCNO_CYCLEHERO, ///<自転車自機専用
   MMDL_DRAWPROCNO_SWIMHERO, ///<波乗り自機専用
+  MMDL_DRAWPROCNO_BLACTALWAYS, //ビルボード汎用＋常にアニメ
 	MMDL_DRAWPROCNO_MAX,		///<最大
 }MMDL_DRAWPROCNO;
 
@@ -863,9 +864,12 @@ extern void MMDL_CallMoveProcAfterDrawInit( MMDL * mmdl );
 extern s16 MMDL_TOOL_GetDirAddValueGridX( u16 dir );
 extern s16 MMDL_TOOL_GetDirAddValueGridZ( u16 dir );
 extern void MMDL_TOOL_AddDirVector( u16 dir, VecFx32 *vec, fx32 val );
+extern void MMDL_TOOL_AddDirGrid( u16 dir, s16 *gx, s16 *gz, s16 val );
 extern void MMDL_TOOL_GetCenterGridPos( s16 gx, s16 gz, VecFx32 *vec );
-extern void MMDL_TOOL_GetVectorPosGrid(
+extern void MMDL_TOOL_VectorPosToGridPos(
 	s16 *gx, s16 *gy, s16 *gz, const VecFx32 *vec );
+extern void MMDL_TOOL_GridPosToVectorPos(
+    const s16 gx, const s16 gy, const s16 gz, VecFx32 *pos );
 extern u16 MMDL_TOOL_FlipDir( u16 dir );
 extern u16 MMDL_TOOL_GetRangeDir( int ax, int az, int bx, int bz );
 

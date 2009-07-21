@@ -118,6 +118,8 @@ static GMEVENT * checkEvent_PlayerNaminoriStart( const EV_REQUEST *req,
 static GMEVENT * checkEvent_PlayerNaminoriEnd( const EV_REQUEST *req,
     GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork );
 
+static MMDL * getFrontTalkOBJ( EV_REQUEST *req, FIELDMAP_WORK *fieldMap );
+
 //======================================================================
 //
 //
@@ -281,12 +283,15 @@ static GMEVENT * FIELD_EVENT_CheckNormal( GAMESYS_WORK *gsys, void *work )
 		if( req.talkRequest )
 		{
       { //OBJ話し掛け
+#if 0
 			  s16 gx,gy,gz;
 			  MMDL *fmmdl_talk;
 			  FIELD_PLAYER_GetFrontGridPos( req.field_player, &gx, &gy, &gz );
 	  		fmmdl_talk = MMDLSYS_SearchGridPos(
 	  				FIELDMAP_GetMMdlSys(fieldWork), gx, gz, FALSE );
-
+#else
+        MMDL *fmmdl_talk = getFrontTalkOBJ( &req, fieldWork );
+#endif
 		  	if( fmmdl_talk != NULL )
 	  		{
 	  			u32 scr_id = MMDL_GetEventID( fmmdl_talk );
@@ -1256,3 +1261,42 @@ static GMEVENT * checkEvent_PlayerNaminoriEnd( const EV_REQUEST *req,
 
   return NULL;
 }
+
+//======================================================================
+//
+//======================================================================
+//--------------------------------------------------------------
+/**
+ * 自機前方の会話OBJ取得
+ * @param
+ * @retval
+ */
+//--------------------------------------------------------------
+static MMDL * getFrontTalkOBJ( EV_REQUEST *req, FIELDMAP_WORK *fieldMap )
+{
+  MMDL *mmdl;
+  VecFx32 pos;
+  s16 gx,gy,gz;
+  FLDMAPPER *mapper;
+  MAPATTR attr;
+  MAPATTR_VALUE attr_val;
+  
+  FIELD_PLAYER_GetFrontGridPos( req->field_player, &gx, &gy, &gz );
+  MMDL_TOOL_GridPosToVectorPos( gx, gy, gz, &pos );
+  
+  mapper = FIELDMAP_GetFieldG3Dmapper( fieldMap );
+  attr = MAPATTR_GetAttribute( mapper, &pos );
+  attr_val = MAPATTR_GetAttrValue( attr );
+  
+  if( MAPATTR_VALUE_CheckCounter(attr_val) == TRUE ){
+    MMDL *jiki = FIELD_PLAYER_GetMMdl( req->field_player );
+    u16 dir = MMDL_GetDirDisp( jiki );
+    MMDL_TOOL_AddDirGrid( dir, &gx, &gz, 1 );
+  }
+  
+  mmdl = MMDLSYS_SearchGridPos(
+      FIELDMAP_GetMMdlSys(fieldMap), gx, gz, FALSE );
+  
+  return( mmdl );
+}
+

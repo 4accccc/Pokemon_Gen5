@@ -2045,6 +2045,26 @@ void MMDL_TOOL_AddDirVector( u16 dir, VecFx32 *vec, fx32 val )
 
 //--------------------------------------------------------------
 /**
+ * 指定値を指定方向に加算する　グリッド
+ * @param	dir			移動4方向。DIR_UP等
+ * @param	gx      加える対象　グリッドx
+ * @param gz      加える対象　グリッドz
+ * @param	val			移動量(正
+ * @retval	nothing
+ */
+//--------------------------------------------------------------
+void MMDL_TOOL_AddDirGrid( u16 dir, s16 *gx, s16 *gz, s16 val )
+{
+	switch( dir ){
+	case DIR_UP: *gz -= val; break;
+	case DIR_DOWN: *gz += val; break;
+	case DIR_LEFT: *gx -= val; break;
+	case DIR_RIGHT: *gx += val; break;
+	}
+}
+
+//--------------------------------------------------------------
+/**
  * 指定されたグリッド座標の中心位置を実座標で取得
  * @param	gx	グリッドX座標	
  * @param	gz	グリッドZ座標
@@ -2060,7 +2080,7 @@ void MMDL_TOOL_GetCenterGridPos( s16 gx, s16 gz, VecFx32 *vec )
 
 //--------------------------------------------------------------
 /**
- * 指定された実座標をグリッド単位に直す
+ * 指定された実座標をグリッド単位に変更
  * @param	gx	グリッドX座標格納先
  * @param	gy	グリッドY座標格納先
  * @param	gz	グリッドZ座標格納先
@@ -2068,12 +2088,30 @@ void MMDL_TOOL_GetCenterGridPos( s16 gx, s16 gz, VecFx32 *vec )
  * @retval	nothing
  */
 //--------------------------------------------------------------
-void MMDL_TOOL_GetVectorPosGrid(
+void MMDL_TOOL_VectorPosToGridPos(
 	s16 *gx, s16 *gy, s16 *gz, const VecFx32 *vec )
 {
 	*gx = SIZE_GRID_FX32( vec->x );
 	*gy = SIZE_GRID_FX32( vec->y );
 	*gz = SIZE_GRID_FX32( vec->z );
+}
+
+//--------------------------------------------------------------
+/**
+ * 指定されたグリッド座標を実座標に変更
+ * @param	gx	グリッドX座標
+ * @param	gy	グリッドY座標
+ * @param	gz	グリッドZ座標
+ * @param	vec	座標変換先
+ * @retval nothing
+ */
+//--------------------------------------------------------------
+void MMDL_TOOL_GridPosToVectorPos(
+    const s16 gx, const s16 gy, const s16 gz, VecFx32 *pos )
+{
+  pos->x = GRID_SIZE_FX32( gx );
+  pos->y = GRID_SIZE_FX32( gy );
+  pos->z = GRID_SIZE_FX32( gz );
 }
 
 //--------------------------------------------------------------

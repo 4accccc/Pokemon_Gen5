@@ -559,6 +559,65 @@ static void DrawBlAct_Draw( MMDL *mmdl )
 
 //--------------------------------------------------------------
 /**
+ * 描画処理　ビルボード　汎用＋常にアニメ　描画
+ * @param	mmdl	MMDL
+ * @retval	nothing
+ */
+//--------------------------------------------------------------
+static void DrawBlAct_DrawAlwaysAnime( MMDL *mmdl )
+{
+	VecFx32 pos;
+	BOOL chg_dir = FALSE;
+	u16 dir,anm_id;
+	DRAW_BLACT_WORK *work;
+	GFL_BBDACT_SYS *actSys;
+	
+	work = MMDL_GetDrawProcWork( mmdl );
+  
+  if( work->actID == MMDL_BLACTID_NULL ){
+    return;
+  }
+  
+	actSys = MMDL_BLACTCONT_GetBbdActSys( MMDL_GetBlActCont(mmdl) );
+	dir = MMDL_GetDirDisp( mmdl );
+  
+	anm_id = DRAW_STA_WALK_8F * DIR_MAX4;
+	anm_id += dir;
+	
+	if( work->set_anm_dir != dir ){ //方向更新
+		work->set_anm_dir = dir;
+		GFL_BBDACT_SetAnimeIdx( actSys, work->actID, anm_id );
+		chg_dir = TRUE;
+	}
+	
+	MMDL_GetDrawVectorPos( mmdl, &pos );
+  pos.y += MMDL_BBD_OFFS_POS_Y;
+  pos.z += MMDL_BBD_OFFS_POS_Z;
+	
+	GFL_BBD_SetObjectTrans(
+		GFL_BBDACT_GetBBDSystem(actSys), work->actID, &pos );
+
+	{
+		BOOL flag = TRUE;
+		
+    if( chg_dir == FALSE && MMDL_CheckDrawPause(mmdl) == TRUE ){
+			flag = FALSE;
+		}
+    
+		GFL_BBDACT_SetAnimeEnable( actSys, work->actID, flag );
+    
+    flag = TRUE; 
+    
+    if( MMDL_CheckStatusBitVanish(mmdl) == TRUE ){
+      flag = FALSE;
+    }
+    
+    GFL_BBDACT_SetDrawEnable( actSys, work->actID, flag );
+	}
+}
+
+//--------------------------------------------------------------
+/**
  * 描画処理　ビルボード　汎用　取得。
  * ビルボードアクターIDを返す。
  * @param	mmdl	MMDL
@@ -585,3 +644,17 @@ const MMDL_DRAW_PROC_LIST DATA_MMDL_DRAWPROCLIST_BlAct =
 	DrawBlAct_Init,		//本当は復帰
 	DrawBlAct_GetBlActID,
 };
+
+//--------------------------------------------------------------
+//	描画処理　ビルボード　汎用+常にアニメ　まとめ
+//--------------------------------------------------------------
+const MMDL_DRAW_PROC_LIST DATA_MMDL_DRAWPROCLIST_BlActAlwaysAnime =
+{
+	DrawBlAct_Init,
+	DrawBlAct_DrawAlwaysAnime,
+	DrawBlAct_Delete,
+	DrawBlAct_Delete,	//本当は退避
+	DrawBlAct_Init,		//本当は復帰
+	DrawBlAct_GetBlActID,
+};
+

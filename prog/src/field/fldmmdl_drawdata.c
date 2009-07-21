@@ -26,6 +26,7 @@ const MMDL_DRAW_PROC_LIST * const
 	&DATA_MMDL_DRAWPROCLIST_BlAct,	//通常ビルボードアクター
 	&DATA_MMDL_DRAWPROCLIST_CycleHero,	//自機自転車
 	&DATA_MMDL_DRAWPROCLIST_SwimHero,	//自機自転車
+  &DATA_MMDL_DRAWPROCLIST_BlActAlwaysAnime, //通常ビルボード＋常にアニメ
 };
 
 //======================================================================
