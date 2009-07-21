@@ -1,29 +1,42 @@
-EFFSEQ
-$0001
-C:\home\pokemon_wb\resource\particle\wazaeffect\w_075.spa
-#001
-%00
-カメラ移動	追従	攻撃側	10	0	8
-SE再生	SEQ_SE_BC01	デフォルト	0	0	0	0	0
-エフェクト終了待ち	すべて
-パーティクルデータロード	w_075
-SE再生	SEQ_SE_W075_04	デフォルト	0	0	0	0	0
-SE再生	SEQ_SE_W075_03	SE2	10	0	0	0	0
-SE再生	SEQ_SE_W075_05	SE1	40	0	0	0	0
-SE再生	SEQ_SE_DUMMY5	SE2	70	0	0	0	0
-パーティクル再生	w_075	W_075_075_LEAF_BURN	攻撃側	方向無し	2	0
-パーティクル再生	w_075	W_075_075_LEAF_BEAM	攻撃側	防御側	2	4
-タイマーによるウエイト	60
-カメラ移動	追従	防御側	30	0	28
-SE再生	SEQ_SE_W075_06	デフォルト	0	0	0	0	0
-SE再生	SEQ_SE_W075_06	SE2	15	0	0	0	0
-SE再生	SEQ_SE_W075_06	デフォルト	20	0	0	0	0
-SE再生	SEQ_SE_W075_01	SE2	40	0	0	0	0
-SE再生	SEQ_SE_W075_02	SE1	40	0	0	0	0
-SE再生	SEQ_SE_DUMMY5	SE1	50	0	0	0	0
-エフェクト終了待ち	すべて
-カメラ移動	追従	初期位置	10	0	8
-SE再生	SEQ_SE_BC02	SE2	0	0	0	0	0
-エフェクト終了待ち	すべて
-エフェクト終了
-&
+//===================================================
+//
+//	エフェクトシーケンス
+//
+//	コンバータから吐き出されたファイルです
+//
+//===================================================
+
+	.text
+
+#define	__ASM_NO_DEF_
+	.include	c:/home/pokemon_wb/prog/src/battle/btlv/btlv_efftool.h
+	.include	c:/home/pokemon_wb/prog/src/battle/btlv/btlv_effvm_def.h
+	.include	c:/home/pokemon_wb/prog/include/system/mcss.h
+	.include	c:/home/pokemon_wb/prog/include/sound/wb_sound_data.sadl
+	.include	c:/home/pokemon_wb/prog/arc/particle/wazaeffect/spa_def.h
+	.include	c:/home/pokemon_wb/resource/particle/wazaeffect/w_001.h
+	.include	c:/home/pokemon_wb/resource/particle/wazaeffect/w_001.h
+	.include	c:/home/pokemon_wb/resource/particle/wazaeffect/w_001.h
+
+WE_075:
+	.long	WE_075_00 - WE_075	//AA2BB
+	.long	WE_075_00 - WE_075	//BB2AA
+	.long	WE_075_00 - WE_075	//A2B
+	.long	WE_075_00 - WE_075	//A2C
+	.long	WE_075_00 - WE_075	//A2D
+	.long	WE_075_00 - WE_075	//B2A
+	.long	WE_075_00 - WE_075	//B2C
+	.long	WE_075_00 - WE_075	//B2D
+	.long	WE_075_00 - WE_075	//C2A
+	.long	WE_075_00 - WE_075	//C2B
+	.long	WE_075_00 - WE_075	//C2D
+	.long	WE_075_00 - WE_075	//D2A
+	.long	WE_075_00 - WE_075	//D2B
+	.long	WE_075_00 - WE_075	//D2C
+
+WE_075_00:
+	PARTICLE_LOAD	W_001_SPA
+	PARTICLE_PLAY	W_001_SPA,	W_001_001_BALL_BURN,	BTLEFF_PARTICLE_PLAY_SIDE_ATTACK,	BTLEFF_PARTICLE_PLAY_SIDE_NONE,	0x00000000,	0x00000000
+	PARTICLE_PLAY	W_001_SPA,	W_001_001_HIT_MARK,	BTLEFF_PARTICLE_PLAY_SIDE_ATTACK,	BTLEFF_PARTICLE_PLAY_SIDE_NONE,	0x00000000,	0x00000000
+	EFFECT_END_WAIT	BTLEFF_EFFENDWAIT_ALL
+	SEQ_END	

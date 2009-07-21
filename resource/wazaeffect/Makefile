@@ -33,13 +33,13 @@ include $(PROJECT_RSCDIR)/macro_define
 include	$(NITROSDK_ROOT)/build/buildtools/commondefs.cctype.CW
 
 #リソースファイルの存在するディレクトリを指定
-RES_DIR = ./
+RES_DIR = ./esf_file/
 
 #コンバートしたファイルを格納するディレクトリを指定
 CNV_DIR = ./
 
 #コンバート対象のファイルツリーを生成
-WAZAEFFSRCS	:= $(wildcard $(RES_DIR)*.s)
+WAZAEFFSRCS	:= $(wildcard $(RES_DIR)*.esf)
 
 .PHONY:	do-build clean subdir
 
@@ -47,7 +47,10 @@ ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
 
 .SUFFIXES:	.s
 
-do-build: $(notdir $(WAZAEFFSRCS:.s=.bin))
+do-build: $(notdir $(WAZAEFFSRCS:.esf=.s)) $(notdir $(WAZAEFFSRCS:.esf=.bin))
+%.s: $(RES_DIR)%.esf ../../prog/src/battle/btlv/btlv_effvm_def.h
+	ruby eescmk.rb c:/home/pokemon_wb/prog/src/battle/btlv/btlv_effvm_def.h $(RES_DIR)$*.esf c:/home/pokemon_wb/
+
 %.bin: %.s ../../prog/src/battle/btlv/btlv_effvm_def.h
 	$(MWAS) $< -o $*.o
 	$(MWLD) -dis -o $*.elf $*.o
@@ -69,7 +72,7 @@ $(TARGETDIR)/$(NARCNAME):	$(NARCNAME)
 	$(COPY) $(NAIXNAME) $(TARGETDIR)
 
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
-$(NARCNAME): $(notdir $(WAZAEFFSRCS:.s=.bin))
+$(NARCNAME): $(notdir $(WAZAEFFSRCS:.esf=.bin))
 	nnsarc -c -l -n -i $(NARCNAME) we_*.bin be_*.bin
 	$(NAIXCUT) $(NAIXNAME)
 endif
@@ -79,7 +82,9 @@ endif
 #------------------------------------------------------------------------------
 clean:
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
-#	-rm -f *.N*R
+	-rm -f *.s
+	-rm -f *.o
+	-rm -f *.elf
 	-rm -f *.bin
 	-rm -f $(NARCNAME)
 	-rm -f $(NAIXNAME)

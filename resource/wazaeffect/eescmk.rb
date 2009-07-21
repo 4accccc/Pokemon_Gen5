@@ -305,7 +305,10 @@ end
 	sequence = []
 	inc_header = []
 	dir_table = [ "AA2BB", "BB2AA", "A2B", "A2C", "A2D", "B2A", "B2C", "B2D", "C2A", "C2B", "C2D", "D2A", "D2B", "D2C" ]
-	num_str = ""
+	ARGV[ ARGV_ESF_FILE ] =~ /\D+(\d+)\.\D+/
+	num_str = $1
+  file_name = File::basename( ARGV[ ARGV_ESF_FILE ] )
+  write_file = file_name.sub("esf","s")
 	file_list = []
 	bin_list = []
 	bin_list_tmp = []
@@ -347,7 +350,7 @@ end
 			seq_no = SEQ_EFFNO_SEARCH
 		when SEQ_EFFNO_SEARCH
 			if split_data[ EFFNO_POS ][ 0 ].chr == "#"
-				num_str = split_data[ EFFNO_POS ][ 1 ].chr + split_data[ EFFNO_POS ][ 2 ].chr + split_data[ EFFNO_POS ][ 3 ].chr
+#				num_str = split_data[ EFFNO_POS ][ 1 ].chr + split_data[ EFFNO_POS ][ 2 ].chr + split_data[ EFFNO_POS ][ 3 ].chr
 				seq_table.clear
 				sequence.clear
 				inc_header.clear
@@ -361,7 +364,6 @@ end
 				data_pos -= 1
 				seq_no = SEQ_EFFNO_SEARCH
 			elsif split_data[ EFFNO_POS ][ 0 ].chr == "&"
-				write_file = "we_" + num_str + ".s"
 				fp_w = open( write_file, "w" )
 				fp_w.print("//===================================================\n")
 				fp_w.print("//\n")
@@ -492,8 +494,6 @@ end
 			bin_list << bin_list_tmp[ tmp_num ]
 		end
 	}
-
-	p bin_list
 
 	open( "eebinary.bin", "wb" ) {|file|
 		padding = []

@@ -1,0 +1,34 @@
+EFFSEQ
+$0001
+c:\home\pokemon_wb\resource\particle\wazaeffect\w_004.spa
+#001
+%00
+ポケモン拡縮	POS_AA	ダイレクト	0	0	0	0	0
+パーティクルデータロード	be_ball_normal_1
+パーティクルデータロード	be_m_ball_00_kaiten
+タイマーによるウエイト	25
+トレーナーアニメセット	0	1
+タイマーによるウエイト	20
+SE再生	SEQ_SE_NAGERU	デフォルト	0	0	0	0	0
+エミッタ移動（座標指定）	be_m_ball_00_kaiten	BE_M_BALL_00_KAITEN_M_BALL_00_KAITEN	放物線	7.5:2:20	POS_AA	2:40:4
+トレーナー移動	0	追従	-64	232	48	0	0
+エフェクト終了待ち	すべて
+制御モード変更	継続
+SE再生	SEQ_SE_BOWA2		デフォルト	0	0	0	0	0
+パーティクル再生	be_ball_normal_1	BE_BALL_NORMAL_1_BALL_NORMAL_1	POS_AA	方向無し	0	0
+パーティクル再生	be_ball_normal_1	BE_BALL_NORMAL_1_BALL_NORMAL_2	POS_AA	方向無し	0	0
+パーティクル再生	be_ball_normal_1	BE_BALL_NORMAL_1_BALL_NORMAL_3	POS_AA	方向無し	0	0
+ポケモンパレットフェード	POS_AA	16	16	0	31:31:31
+ポケモン拡縮	POS_AA	追従	0.7	0.7	32	0	0
+トレーナー削除	0
+エフェクト終了待ち	ポケモン
+ポケモンパレットフェード	POS_AA	16	0	1	31:31:31
+ポケモン拡縮	POS_AA	追従	0.5	0.5	16	0	0
+タイマーによるウエイト	60
+制御モード変更	継続
+カメラ移動	追従	初期位置	10	0	8
+ポケモン拡縮	POS_AA	追従	1	1	10	0	0
+ポケモン拡縮	POS_BB	追従	1	1	10	0	0
+エフェクト終了待ち	すべて
+エフェクト終了
+&
