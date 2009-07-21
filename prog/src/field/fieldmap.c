@@ -578,6 +578,12 @@ static MAINSEQ_RESULT mainSeqFunc_setup(GAMESYS_WORK *gsys, FIELDMAP_WORK *field
   //フィールドエンカウント初期化
   fieldWork->encount = FIELD_ENCOUNT_Create( fieldWork );
   
+  //通信初期化コールバック呼び出し
+  {
+    GAME_COMM_SYS_PTR game_comm = GAMESYSTEM_GetGameCommSysPtr(gsys);
+    GameCommSys_Callback_FieldCreate( game_comm, fieldWork );
+  }
+
   //フィールドデバッグ初期化
   fieldWork->debugWork = FIELD_DEBUG_Init( fieldWork, fieldWork->heapID );
 
@@ -744,6 +750,12 @@ static MAINSEQ_RESULT mainSeqFunc_free(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldW
     RAIL_LOCATION railLoc;
     FIELD_RAIL_MAN_GetLocation(fieldWork->railMan, &railLoc);
     GAMEDATA_SetRailLocation(gamedata, &railLoc);
+  }
+  
+  //通信削除コールバック呼び出し
+  {
+    GAME_COMM_SYS_PTR game_comm = GAMESYSTEM_GetGameCommSysPtr(gsys);
+    GameCommSys_Callback_FieldDelete( game_comm, fieldWork );
   }
   
   // 地名表示システム破棄
