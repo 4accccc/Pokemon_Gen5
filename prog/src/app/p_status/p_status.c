@@ -125,15 +125,18 @@ static GFL_PROC_RESULT PokeStatusProc_Init( GFL_PROC * proc, int * seq , void *p
       psData->mode = PST_MODE_NORMAL;
       psData->pos = 0;
       
-      psData->spRibbonNo = GFL_HEAP_AllocMemory( HEAPID_POKE_STATUS , SP_RIBBON_SAVE_MAX );
-      for( i=0;i<SP_RIBBON_SAVE_MAX;i++ )
+      psData->ribbon = GFL_HEAP_AllocMemory( HEAPID_POKE_STATUS , SP_RIBBON_SAVE_MAX );
       {
-        psData->spRibbonNo[i] = 0;
+        u8 *ribbonArr = psData->ribbon;
+        for( i=0;i<SP_RIBBON_SAVE_MAX;i++ )
+        {
+          ribbonArr[i] = 0;
+        }
+        ribbonArr[0] = 66; //マリン：ポケセン横浜記念
+        ribbonArr[1] = 64; //ランド：ポケモンが大好きなこと～
+        ribbonArr[2] = 93; //スカイ：2010優勝
+        ribbonArr[3] = 55; //カントリー：夏休み
       }
-      psData->spRibbonNo[0] = 66; //マリン：ポケセン横浜記念
-      psData->spRibbonNo[1] = 64; //ランド：ポケモンが大好きなこと～
-      psData->spRibbonNo[2] = 93; //スカイ：2010優勝
-      psData->spRibbonNo[3] = 55; //カントリー：夏休み
       
       GFL_UI_SetTouchOrKey( GFL_APP_KTST_TOUCH );
     }
@@ -167,7 +170,7 @@ static GFL_PROC_RESULT PokeStatusProc_Term( GFL_PROC * proc, int * seq , void *p
   //デバグ
   if( pwk == NULL )
   {
-    GFL_HEAP_FreeMemory( psWork->psData->spRibbonNo );
+    GFL_HEAP_FreeMemory( psWork->psData->ribbon );
     GFL_HEAP_FreeMemory( psWork->psData->ppd );
     GFL_HEAP_FreeMemory( psWork->psData );
   }

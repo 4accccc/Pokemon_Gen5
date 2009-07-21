@@ -948,7 +948,7 @@ static void PSTATUS_RIBBON_DispInfo( PSTATUS_WORK *work , PSTATUS_RIBBON_WORK *r
     }
     //à–¾
     {
-      const u32 msgId = RIBBON_InfoGet( ribbonWork->selectType , work->psData->spRibbonNo );
+      const u32 msgId = RIBBON_InfoGet( ribbonWork->selectType , work->psData->ribbon );
       STRBUF *srcStr;
       srcStr = GFL_MSG_CreateString( ribbonMsg , msgId ); 
       PRINTSYS_PrintQueColor( work->printQue , GFL_BMPWIN_GetBmp( ribbonWork->bmpWinInfo ) , 

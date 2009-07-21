@@ -79,6 +79,16 @@
 
 #define PSTATUS_INFO_EXPBAR_COL (5) //とりあえずフォントの青
 
+//上画面
+#define PSTATUS_INFO_MEMO_WIN_TOP  (5)
+#define PSTATUS_INFO_MEMO_WIN_LEFT (4)
+#define PSTATUS_INFO_MEMO_WIN_HEIGHT  (16)
+#define PSTATUS_INFO_MEMO_WIN_WIDTH (24)
+
+#define PSTATUS_INFO_MEMO_STR_X ( 0+ PSTATUS_STR_OFS_X)
+#define PSTATUS_INFO_MEMO_STR_Y ( 0+ PSTATUS_STR_OFS_Y)
+
+
 //======================================================================
 //	enum
 //======================================================================
@@ -125,6 +135,7 @@ struct _PSTATUS_INFO_WORK
 //======================================================================
 #pragma mark [> proto
 static void PSTATUS_INFO_DrawState( PSTATUS_WORK *work , PSTATUS_INFO_WORK *subWork , const POKEMON_PASO_PARAM *ppp );
+static void PSTATUS_INFO_DrawStateUp( PSTATUS_WORK *work , PSTATUS_INFO_WORK *infoWork , const POKEMON_PASO_PARAM *ppp );
 
 static const u8 winPos[SIB_MAX][4] =
 {
@@ -217,25 +228,18 @@ void PSTATUS_INFO_DispPage( PSTATUS_WORK *work , PSTATUS_INFO_WORK *infoWork )
                 winPos[i][0] , winPos[i][1] , winPos[i][2] , winPos[i][3] ,
                 PSTATUS_BG_PLT_FONT , GFL_BMP_CHRAREA_GET_B );
   }
-  
+  infoWork->bmpWinUp = GFL_BMPWIN_Create( PSTATUS_BG_SUB_STR ,
+              PSTATUS_INFO_MEMO_WIN_LEFT , PSTATUS_INFO_MEMO_WIN_TOP ,
+              PSTATUS_INFO_MEMO_WIN_WIDTH , PSTATUS_INFO_MEMO_WIN_HEIGHT ,
+              PSTATUS_BG_SUB_PLT_FONT , GFL_BMP_CHRAREA_GET_B );
+
   PSTATUS_INFO_DrawState( work , infoWork , ppp );
+  PSTATUS_INFO_DrawStateUp( work , infoWork , ppp );
 
   infoWork->isDisp = TRUE;
 }
 
-//--------------------------------------------------------------
-//	ページのクリア
-//--------------------------------------------------------------
-void PSTATUS_INFO_ClearPage( PSTATUS_WORK *work , PSTATUS_INFO_WORK *infoWork )
-{
-  u8 i;
-  for( i=0;i<SIB_MAX;i++ )
-  {
-    GFL_BMPWIN_Delete( infoWork->bmpWin[i] );
-  }
-  
-  infoWork->isDisp = FALSE;
-}
+
 //--------------------------------------------------------------
 //	ページの表示(転送タイミング
 //--------------------------------------------------------------
@@ -268,6 +272,7 @@ void PSTATUS_INFO_DispPage_Trans( PSTATUS_WORK *work , PSTATUS_INFO_WORK *infoWo
   {
     GFL_BMPWIN_MakeTransWindow_VBlank( infoWork->bmpWin[i] );
   }
+  GFL_BMPWIN_MakeTransWindow_VBlank( infoWork->bmpWinUp );
 
   //タイプアイコン
   {
@@ -308,7 +313,20 @@ void PSTATUS_INFO_DispPage_Trans( PSTATUS_WORK *work , PSTATUS_INFO_WORK *infoWo
     }
   }
 }
-
+//--------------------------------------------------------------
+//	ページのクリア
+//--------------------------------------------------------------
+void PSTATUS_INFO_ClearPage( PSTATUS_WORK *work , PSTATUS_INFO_WORK *infoWork )
+{
+  u8 i;
+  for( i=0;i<SIB_MAX;i++ )
+  {
+    GFL_BMPWIN_Delete( infoWork->bmpWin[i] );
+  }
+  GFL_BMPWIN_Delete( infoWork->bmpWinUp );
+  
+  infoWork->isDisp = FALSE;
+}
 //--------------------------------------------------------------
 //	ページのクリア(転送タイミング
 //--------------------------------------------------------------
@@ -319,7 +337,10 @@ void PSTATUS_INFO_ClearPage_Trans( PSTATUS_WORK *work , PSTATUS_INFO_WORK *infoW
                      PSTATUS_MAIN_PAGE_WIDTH , 21 ,
                      GFL_BG_SCRWRT_PALNL );
   GFL_BG_LoadScreenReq( PSTATUS_BG_PARAM );
-  
+
+  GFL_BG_ClearScreenCodeVReq( PSTATUS_BG_SUB_STR , 0 );
+  GFL_BG_LoadScreenReq( PSTATUS_BG_SUB_STR );
+
   GFL_CLACT_WK_SetDrawEnable( work->clwkTypeIcon[0] , FALSE );
   GFL_CLACT_WK_SetDrawEnable( work->clwkTypeIcon[1] , FALSE );
 }
@@ -327,7 +348,7 @@ void PSTATUS_INFO_ClearPage_Trans( PSTATUS_WORK *work , PSTATUS_INFO_WORK *infoW
 //--------------------------------------------------------------
 //	文字の描画
 //--------------------------------------------------------------
-void PSTATUS_INFO_DrawState( PSTATUS_WORK *work , PSTATUS_INFO_WORK *infoWork , const POKEMON_PASO_PARAM *ppp )
+static void PSTATUS_INFO_DrawState( PSTATUS_WORK *work , PSTATUS_INFO_WORK *infoWork , const POKEMON_PASO_PARAM *ppp )
 {
   //図鑑
   PSTATUS_UTIL_DrawStrFunc( work , infoWork->bmpWin[SIB_ZUKAN] , mes_status_02_02 ,
@@ -460,4 +481,83 @@ void PSTATUS_INFO_DrawState( PSTATUS_WORK *work , PSTATUS_INFO_WORK *infoWork , 
 
 
   infoWork->isUpdateStr = TRUE;
+}
+
+//--------------------------------------------------------------
+//	文字の描画
+//--------------------------------------------------------------
+static void PSTATUS_INFO_DrawStateUp( PSTATUS_WORK *work , PSTATUS_INFO_WORK *infoWork , const POKEMON_PASO_PARAM *ppp )
+{
+  u32 height;
+  //メモ
+  {
+    u16 placeName[7] = {L'な',L'ぞ',L'の',L'ば',L'し',L'ょ',0xFFFF};
+
+    STRBUF *srcStr;
+    STRBUF *dstStr = GFL_STR_CreateBuffer( 256 , work->heapId );
+    STRBUF *placeStr = GFL_STR_CreateBuffer( 8 , work->heapId );
+    WORDSET *wordSet = WORDSET_Create( work->heapId );
+    const u32 year  = PPP_Get( ppp , ID_PARA_get_year , NULL );
+    const u32 month = PPP_Get( ppp , ID_PARA_get_month , NULL )+1;
+    const u32 day   = PPP_Get( ppp , ID_PARA_get_day , NULL )+1;
+    const u32 place = PPP_Get( ppp , ID_PARA_get_place , NULL );
+    const u32 level = PPP_Get( ppp , ID_PARA_get_level , NULL );
+
+    //場所仮
+    GFL_STR_SetStringCode( placeStr , placeName );
+    
+    WORDSET_RegisterNumber( wordSet , 0 , year , 2 , STR_NUM_DISP_ZERO , STR_NUM_CODE_DEFAULT );
+    WORDSET_RegisterNumber( wordSet , 1 , month , 2 , STR_NUM_DISP_LEFT , STR_NUM_CODE_DEFAULT );
+    WORDSET_RegisterNumber( wordSet , 2 , day , 2 , STR_NUM_DISP_LEFT , STR_NUM_CODE_DEFAULT );
+    WORDSET_RegisterNumber( wordSet , 3 , level , 3 , STR_NUM_DISP_LEFT , STR_NUM_CODE_DEFAULT );
+    WORDSET_RegisterWord( wordSet , 4 , placeStr , 0,TRUE,PM_LANG );
+
+    srcStr = GFL_MSG_CreateString( work->msgHandle , mes_status_03_03_01_01 ); 
+    WORDSET_ExpandStr( wordSet , dstStr , srcStr );
+    PRINTSYS_PrintQueColor( work->printQue , GFL_BMPWIN_GetBmp( infoWork->bmpWinUp ) , 
+            PSTATUS_INFO_MEMO_STR_X , PSTATUS_INFO_MEMO_STR_Y , 
+            dstStr , work->fontHandle , PSTATUS_STR_COL_VALUE );
+
+    WORDSET_Delete( wordSet );
+
+    height = PRINTSYS_GetStrHeight( dstStr , work->fontHandle );
+    //TODO ずれてる・・・？
+    height = 16*4;
+    
+    GFL_STR_DeleteBuffer( placeStr );
+    GFL_STR_DeleteBuffer( srcStr );
+    GFL_STR_DeleteBuffer( dstStr );
+  }
+  //メモ２
+  {
+    u8 i;
+    u8 maxIdx = 0;
+    u8 maxRand = 0;
+    u32 msgId;
+    const int paraId[6] = 
+    {
+      ID_PARA_hp_rnd,               //HP乱数
+      ID_PARA_pow_rnd,              //攻撃力乱数
+      ID_PARA_def_rnd,              //防御力乱数
+      ID_PARA_agi_rnd,              //素早さ乱数
+      ID_PARA_spepow_rnd,             //特攻乱数
+      ID_PARA_spedef_rnd,             //特防乱数
+    };
+    
+    for( i=0;i<6;i++ )
+    {
+      const u32 rand = PPP_Get( ppp , paraId[i] , NULL );
+      if( maxRand < rand )
+      {
+        maxRand = rand;
+        maxIdx = i;
+      }
+    }
+    
+    msgId = mes_status_03_05_01_00 + maxIdx*5 + maxRand%5;
+    PSTATUS_UTIL_DrawStrFunc( work , infoWork->bmpWinUp , msgId ,
+                          PSTATUS_INFO_MEMO_STR_X , PSTATUS_INFO_MEMO_STR_Y + height , 
+                          PSTATUS_STR_COL_VALUE );
+
+  }
 }

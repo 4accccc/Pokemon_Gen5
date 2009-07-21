@@ -828,12 +828,14 @@ static const BOOL PSTATUS_UpdateKey( PSTATUS_WORK *work )
   if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_B )
   {
     work->retVal = SRT_RETURN;
+    work->psData->ret_mode = PST_RET_CANCEL;
     return TRUE;
   }
   else
   if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_X )
   {
     work->retVal = SRT_EXIT;
+    work->psData->ret_mode = PST_RET_EXIT;
     return TRUE;
   }
   return FALSE;
@@ -886,9 +888,11 @@ static void PSTATUS_UpdateTP( PSTATUS_WORK *work )
     break;
   case SBT_EXIT:
     work->retVal = SRT_EXIT;
+    work->psData->ret_mode = PST_RET_CANCEL;
     break;
   case SBT_RETURN:
     work->retVal = SRT_RETURN;
+    work->psData->ret_mode = PST_RET_EXIT;
     break;
     
   }
