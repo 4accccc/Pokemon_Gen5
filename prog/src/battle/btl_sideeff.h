@@ -34,14 +34,4 @@ typedef enum {
 }BtlSideEffect;
 
 
-typedef enum {
-
-  BTL_POSEFF_NEGAIGOTO,
-  BTL_POSEFF_MIKADUKINOMAI,
-  BTL_POSEFF_IYASINONEGAI,
-
-  BTL_POSEFF_MAX,
-  BTL_POSEFF_NULL = BTL_POSEFF_MAX,
-
-}BtlPosEffect;
 

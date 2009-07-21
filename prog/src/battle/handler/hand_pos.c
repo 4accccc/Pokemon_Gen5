@@ -23,7 +23,7 @@
 /* Consts                                                                   */
 /*--------------------------------------------------------------------------*/
 enum {
-  WORKIDX_PARAM = EVENT_HANDLER_WORK_ELEMS-1,
+  WORKIDX_USER_POKEID = EVENT_HANDLER_WORK_ELEMS-1,
 };
 
 
@@ -37,6 +37,8 @@ static BTL_EVENT_FACTOR* ADD_POS_MikadukiNoMai( u16 pri, BtlPokePos pos, BtlPosE
 static void handler_pos_MikadukiNoMai( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokePos, int* work );
 static BTL_EVENT_FACTOR* ADD_POS_IyasiNoNegai( u16 pri, BtlPokePos pos, BtlPosEffect eff );
 static void handler_pos_IyasiNoNegai( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokePos, int* work );
+static BTL_EVENT_FACTOR* ADD_POS_DelayAttack( u16 pri, BtlPokePos pos, BtlPosEffect eff );
+static void handler_pos_DelayAttack( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokePos, int* work );
 
 
 
@@ -46,14 +48,15 @@ static void handler_pos_IyasiNoNegai( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WOR
 /**
  * サイドエフェクトハンドラをシステムに追加
  *
- * @param   side
- * @param   sideEffect
- * @param   contParam
+ * @param   effect
+ * @param   pos
+ * @param   pokeID
+ * @param   param
  *
  * @retval  BTL_EVENT_FACTOR*   追加されたイベントハンドラ（重複して追加できない場合NULL）
  */
 //=============================================================================================
-BTL_EVENT_FACTOR*  BTL_HANDLER_POS_Add( BtlPosEffect effect, BtlPokePos pos, int param )
+BTL_EVENT_FACTOR*  BTL_HANDLER_POS_Add( BtlPosEffect effect, BtlPokePos pos, u8 pokeID, const int* param, u8 param_cnt )
 {
   typedef BTL_EVENT_FACTOR* (*pEventAddFunc)( u16 pri, BtlPokePos pos, BtlPosEffect eff );
 
@@ -64,6 +67,7 @@ BTL_EVENT_FACTOR*  BTL_HANDLER_POS_Add( BtlPosEffect effect, BtlPokePos pos, int
     { BTL_POSEFF_NEGAIGOTO,       ADD_POS_Negaigoto       },
     { BTL_POSEFF_MIKADUKINOMAI,   ADD_POS_MikadukiNoMai   },
     { BTL_POSEFF_IYASINONEGAI,    ADD_POS_IyasiNoNegai    },
+    { BTL_POSEFF_DELAY_ATTACK,    ADD_POS_DelayAttack     },
   };
 
   GF_ASSERT(effect < BTL_POSEFF_MAX);
@@ -76,7 +80,16 @@ BTL_EVENT_FACTOR*  BTL_HANDLER_POS_Add( BtlPosEffect effect, BtlPokePos pos, int
       {
         if( is_registable(effect, pos) )
         {
-          return funcTbl[i].func( 0, pos, effect );
+          BTL_EVENT_FACTOR* factor = funcTbl[i].func( 0, pos, effect );
+          if( factor )
+          {
+            u32 j;
+            for(j=0; j<param_cnt; ++j){
+              BTL_EVENT_FACTOR_SetWorkValue( factor, j, param[j] );
+            }
+            BTL_EVENT_FACTOR_SetWorkValue( factor, WORKIDX_USER_POKEID, pokeID );
+          }
+          return factor;
         }
         break;
       }
@@ -132,7 +145,7 @@ static void handler_pos_Negaigoto( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* 
 
     if( !BPP_IsHPFull(target) )
     {
-      u8 userPokeID = work[ WORKIDX_PARAM ];
+      u8 userPokeID = work[ WORKIDX_USER_POKEID ];
       const BTL_POKEPARAM* user = BTL_SVFLOW_RECEPT_GetPokeParam( flowWk, userPokeID );
 
       BTL_HANDEX_PARAM_RECOVER_HP* hp_param;
@@ -142,6 +155,7 @@ static void handler_pos_Negaigoto( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* 
       HANDEX_STR_Setup( &hp_param->exStr, BTL_STRTYPE_SET, BTL_STRID_SET_Negaigoto );
       HANDEX_STR_AddArg( &hp_param->exStr, userPokeID );
     }
+    BTL_EVENT_FACTOR_Remove( myHandle );
   }
 }
 //--------------------------------------------------------------------------------------
@@ -203,13 +217,13 @@ static void handler_pos_MikadukiNoMai( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WO
 }
 //--------------------------------------------------------------------------------------
 /**
- *  しぜんのめぐみ
+ *  いやしのねがい
  */
 //--------------------------------------------------------------------------------------
 static BTL_EVENT_FACTOR* ADD_POS_IyasiNoNegai( u16 pri, BtlPokePos pos, BtlPosEffect eff )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_WAZA_DMG_PROC2,  handler_pos_IyasiNoNegai   },  // ダメージ補正
+    { BTL_EVENT_MEMBER_IN,  handler_pos_IyasiNoNegai   },  // ダメージ補正
     { BTL_EVENT_NULL, NULL },
   };
   return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_WAZA, eff, pri, pos, HandlerTable );
@@ -243,4 +257,47 @@ static void handler_pos_IyasiNoNegai( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WOR
     BTL_EVENT_FACTOR_Remove( myHandle );
   }
 }
+//--------------------------------------------------------------------------------------
+/**
+ *  時間差ワザ攻撃（みらいよち、はめつのねがい等）
+ */
+//--------------------------------------------------------------------------------------
+static BTL_EVENT_FACTOR* ADD_POS_DelayAttack( u16 pri, BtlPokePos pos, BtlPosEffect eff )
+{
+  static const BtlEventHandlerTable HandlerTable[] = {
+    { BTL_EVENT_TURNCHECK_BEGIN,  handler_pos_DelayAttack   },  // ダメージ補正
+    { BTL_EVENT_NULL, NULL },
+  };
+  return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_WAZA, eff, pri, pos, HandlerTable );
+}
+static void handler_pos_DelayAttack( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokePos, int* work )
+{
+  enum {
+    WORKIDX_TURN = 0,
+    WORKIDX_WAZAID,
+  };
+
+  if( work[WORKIDX_TURN] == 0 )
+  {
+    BTL_HANDEX_PARAM_DELAY_WAZADMG* param;
+    BTL_HANDEX_PARAM_MESSAGE* msg_param;
+    u8 targetPokeID = BTL_SVFLOW_PokePosToPokeID( flowWk, pokePos );
+
+    msg_param = BTL_SVFLOW_HANDLERWORK_Push( flowWk, BTL_HANDEX_MESSAGE, work[WORKIDX_USER_POKEID] );
+    HANDEX_STR_Setup( &msg_param->str, BTL_STRTYPE_SET, BTL_STRID_SET_DelayAttack );
+    HANDEX_STR_AddArg( &msg_param->str, targetPokeID );
+    HANDEX_STR_AddArg( &msg_param->str, work[ WORKIDX_WAZAID ] );
+    BTL_Printf("時間差攻撃:基ワザ＝%d\n", work[ WORKIDX_WAZAID ] );
+
+    param = BTL_SVFLOW_HANDLERWORK_Push( flowWk, BTL_HANDEX_DELAY_WAZADMG, work[WORKIDX_USER_POKEID] );
+    param->attackerPokeID = work[ WORKIDX_USER_POKEID ];
+    param->targetPokeID = targetPokeID;
+    param->wazaID = work[ WORKIDX_WAZAID ];
+    BTL_EVENT_FACTOR_Remove( myHandle );
+  }
+  else{
+    work[WORKIDX_TURN]--;
+  }
+}
+
 

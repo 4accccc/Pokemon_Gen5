@@ -13,5 +13,7 @@
 #include "..\btl_server_flow.h"
 
 
-extern BTL_EVENT_FACTOR*  BTL_HANDLER_POS_Add( BtlPosEffect effect, BtlPokePos pos, int param );
+
+extern BTL_EVENT_FACTOR*  BTL_HANDLER_POS_Add( BtlPosEffect effect, BtlPokePos pos, u8 pokeID,
+  const int* param, u8 param_cnt );
 

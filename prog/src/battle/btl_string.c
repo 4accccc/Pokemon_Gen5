@@ -483,6 +483,7 @@ void BTL_STR_MakeStringSet( STRBUF* buf, BtlStrID_SET strID, const int* args )
     { BTL_STRID_SET_FuuinWarn,            ms_set_waza_sp },
     { BTL_STRID_SET_Kanasibari,           ms_set_waza_sp },
     { BTL_STRID_SET_Monomane,             ms_set_waza_sp },
+    { BTL_STRID_SET_DelayAttack,          ms_set_waza_sp },
     { BTL_STRID_SET_Urami,                ms_set_waza_num },
     { BTL_STRID_SET_HorobiCountDown,      ms_set_poke_num },
     { BTL_STRID_SET_Takuwaeru,            ms_set_poke_num },

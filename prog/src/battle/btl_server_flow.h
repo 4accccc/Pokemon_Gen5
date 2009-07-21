@@ -18,6 +18,7 @@
 #include "btl_server_cmd.h"
 #include "btl_string.h"
 #include "btl_sideeff.h"
+#include "btl_poseff.h"
 #include "btl_field.h"
 
 /*--------------------------------------------------------------------------*/
@@ -216,6 +217,7 @@ typedef enum {
   BTL_HANDEX_SWAP_ITEM,     ///< アイテム入れ替え
   BTL_HANDEX_UPDATE_WAZA,   ///< ワザ書き換え
   BTL_HANDEX_COUNTER,       ///< ポケモンカウンタ値書き換え
+  BTL_HANDEX_DELAY_WAZADMG, ///< 時間差ワザダメージ
 
   BTL_HANDEX_MAX,
 
@@ -425,7 +427,8 @@ typedef struct {
   BTL_HANDEX_PARAM_HEADER  header;
   BtlPosEffect             effect;
   BtlPokePos               pos;
-  int                      param;
+  int                      param[ BTL_POSEFF_PARAM_MAX ];
+  u8                       param_cnt;
 }BTL_HANDEX_PARAM_POSEFF_ADD;
 
 typedef struct {
@@ -472,6 +475,16 @@ typedef struct {
   u8              counterID;         ///< カウンタID（BppCounter)
   u8              value;             ///< カウンタに設定する値
 }BTL_HANDEX_PARAM_COUNTER;
+
+/**
+ * 時間差ワザダメージ処理用ワーク
+ */
+typedef struct {
+  BTL_HANDEX_PARAM_HEADER  header;
+  u8                       attackerPokeID;
+  u8                       targetPokeID;
+  WazaID                   wazaID;
+}BTL_HANDEX_PARAM_DELAY_WAZADMG;
 
 
 extern void* BTL_SVFLOW_HANDLERWORK_Push( BTL_SVFLOW_WORK* wk, BtlEventHandlerExhibition eq_type, u8 userPokeID );
