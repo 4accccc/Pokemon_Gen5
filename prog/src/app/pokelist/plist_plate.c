@@ -714,6 +714,46 @@ void PLIST_PLATE_MovePlate( PLIST_WORK *work , PLIST_PLATE_WORK *plateWork , con
 }
 
 //--------------------------------------------------------------
+//プレートを移動させる(キャラ単位
+//--------------------------------------------------------------
+void PLIST_PLATE_MovePlateXY( PLIST_WORK *work , PLIST_PLATE_WORK *plateWork , const s8 subX , const s8 subY )
+{
+  const int baseX = PLIST_PLATE_POS_ARR[plateWork->idx][0]+subX;
+  const int baseY = PLIST_PLATE_POS_ARR[plateWork->idx][1]+subY;
+  
+  if( plateWork->isBlank == FALSE )
+  {
+    GFL_BMPWIN_SetPosX( plateWork->bmpWin , 
+              baseX + PLIST_BG_SCROLL_X_CHAR );
+    GFL_BMPWIN_SetPosY( plateWork->bmpWin , 
+              baseY );
+  	GFL_BMPWIN_MakeScreen( plateWork->bmpWin );
+  
+    {
+      //レンダラを動かす
+      GFL_CLACTPOS surfacePos;
+      surfacePos.x = -baseX*8;
+      surfacePos.y = -baseY*8;
+      GFL_CLACT_USERREND_SetSurfacePos( plateWork->cellRender , PLIST_RENDER_MAIN , &surfacePos );
+    }
+  }
+  //BG系
+  GFL_BG_WriteScreenExpand( PLIST_BG_PLATE , 
+                      baseX+PLIST_BG_SCROLL_X_CHAR ,baseY ,
+                      PLIST_PLATE_WIDTH , PLIST_PLATE_HEIGHT ,
+                      &work->plateScrData->rawData , 
+                      PLATE_SCR_POS_ARR[(plateWork->idx==0?0:1)][0] , PLATE_SCR_POS_ARR[(plateWork->idx==0?0:1)][1] ,
+                      32 , 32 );  //←グラフィックデータのサイズ
+
+  GFL_BG_ChangeScreenPalette( PLIST_BG_PLATE , 
+              baseX+PLIST_BG_SCROLL_X_CHAR , baseY ,
+              PLIST_PLATE_WIDTH , PLIST_PLATE_HEIGHT , (plateWork->idx == work->pokeCursor?PPC_NORMAL_SELECT:PPC_NORMAL) );
+
+  GFL_BG_LoadScreenV_Req( PLIST_BG_PARAM );
+  GFL_BG_LoadScreenV_Req( PLIST_BG_PLATE );
+}
+
+//--------------------------------------------------------------
 //プレートをクリアする(入れ替えの移動前に行う
 //--------------------------------------------------------------
 void PLIST_PLATE_ClearPlate( PLIST_WORK *work , PLIST_PLATE_WORK *plateWork , const u8 moveValue )

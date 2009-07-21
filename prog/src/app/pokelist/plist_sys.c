@@ -155,7 +155,7 @@ static void PLIST_SelectPokeUpdateKey( PLIST_WORK *work );
 static void PLIST_SelectPokeUpdateTP( PLIST_WORK *work );
 static void PLIST_SelectPokeSetCursor( PLIST_WORK *work , const PL_SELECT_POS pos );
 static void PLIST_SelectPokeSetCursor_Change( PLIST_WORK *work , const PL_SELECT_POS pos );
-
+static void PLIST_PLATE_SetActivePlatePos( PLIST_WORK *work , const PL_SELECT_POS pos );
 //ƒƒjƒ…[‘I‘ð
 static void PLIST_SelectMenu( PLIST_WORK *work );
 static void PLIST_SelectMenuInit( PLIST_WORK *work );
@@ -969,6 +969,8 @@ static void PLIST_SelectPokeUpdateKey( PLIST_WORK *work )
       PLIST_SelectPokeSetCursor( work , work->pokeCursor );
       PLIST_PLATE_SetActivePlate( work , work->plateWork[work->pokeCursor] , TRUE );
       
+      PLIST_PLATE_SetActivePlatePos( work , work->pokeCursor );
+      
       work->ktst = GFL_APP_KTST_KEY;
     }
   }
@@ -1049,6 +1051,8 @@ static void PLIST_SelectPokeUpdateKey( PLIST_WORK *work )
         PLIST_SelectPokeSetCursor( work , work->pokeCursor );
         PLIST_PLATE_SetActivePlate( work , work->plateWork[work->pokeCursor] , TRUE );
         PLIST_PLATE_SetActivePlate( work , work->plateWork[befPos] , FALSE );
+
+        PLIST_PLATE_SetActivePlatePos( work , work->pokeCursor );
       }
     }
   }
@@ -1170,6 +1174,64 @@ static void PLIST_SelectPokeSetCursor_Change( PLIST_WORK *work , const PL_SELECT
   {
     GFL_CLACT_WK_SetAnmSeq( work->clwkCursor[1] , PCA_CHANGE_B );
   }
+}
+
+static void PLIST_PLATE_SetActivePlatePos( PLIST_WORK *work , const PL_SELECT_POS pos )
+{
+  const s8 moveVal[7][6][2] =
+  {
+    {
+      { 0,0 },{ 1,0 },
+      { 0,1 },{ 1,1 },
+      { 0,1 },{ 1,1 },
+    },
+    {
+      { -1,0 },{ 0,0 },
+      { -1,1 },{ 0,1 },
+      { -1,1 },{ 0,1 },
+    },
+    {
+      { 0,-1 },{ 1,-1 },
+      { 0,0 } ,{ 1,0 },
+      { 0,1 } ,{ 1,1 },
+    },
+    {
+      { -1,-1 },{ 0,-1 },
+      { -1,0 } ,{ 0,0 },
+      { -1,1 } ,{ 0,1 },
+    },
+    {
+      { 0,-1 },{ 1,-1 },
+      { 0,-1 },{ 1,-1 },
+      { 0,0 } ,{ 1,0 },
+    },
+    {
+      { -1,-1 },{ 0,-1 },
+      { -1,-1 },{ 0,-1 },
+      { -1,0 } ,{ 0,0 },
+    },
+    {
+      { 0,0 },{ 0,0 },
+      { 0,0 },{ 0,0 },
+      { 0,0 },{ 0,0 },
+    },
+  };
+  u8 i;
+#if DEBUG_ONLY_FOR_ariizumi_nobuhiko | DEBUG_ONLY_FOR_ibe_mana
+  GFL_BG_ClearScreenCodeVReq( PLIST_BG_PARAM , 0 );
+  GFL_BG_ClearScreenCodeVReq( PLIST_BG_PLATE , 0 );
+  for( i=0;i<6;i++ )
+  {
+    if( i%2 == work->pokeCursor%2 )
+    {
+      PLIST_PLATE_MovePlateXY( work , work->plateWork[i] , /*moveVal[pos][i][0]*/0 , moveVal[pos][i][1] );
+    }
+    else
+    {
+      PLIST_PLATE_MovePlateXY( work , work->plateWork[i] , 0 , 0 );
+    }
+  }
+#endif
 }
 
 #pragma mark [>MenuSelect
