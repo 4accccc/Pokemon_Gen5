@@ -357,13 +357,19 @@ FIELDMAP_WORK * FIELDMAP_Create( GAMESYS_WORK *gsys, HEAPID heapID )
 //--------------------------------------------------------------
 void FIELDMAP_Delete( FIELDMAP_WORK *fieldWork )
 {
-  //
+  GAMESYS_WORK *gsys = fieldWork->gsys;
+  
+  //エリアデータ
   AREADATA_Delete( fieldWork->areadata );
 
 	//マップマトリクス
 	MAP_MATRIX_Delete( fieldWork->pMapMatrix );
 	
+  //ワーク開放
 	GFL_HEAP_FreeMemory( fieldWork );
+  
+  //GAMESYSTEM内で保持しているワークをNULLに
+  GAMESYSTEM_SetFieldMapWork( gsys, NULL );
 }
 
 //======================================================================

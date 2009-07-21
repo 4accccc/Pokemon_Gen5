@@ -138,6 +138,15 @@ extern void GAMESYSTEM_SetFieldMapWork(GAMESYS_WORK * gsys, void * fieldmap);
 
 //------------------------------------------------------------------
 /**
+ * @brief	フィールドマップワークのポインタチェック
+ * @param	gsys		ゲーム制御ワークへのポインタ
+ * @retval BOOL TRUE=フィールドマップワークがセットされている。
+ */
+//------------------------------------------------------------------
+extern BOOL GAMESYSTEM_CheckFieldMapWork( const GAMESYS_WORK *gsys );
+
+//------------------------------------------------------------------
+/**
  * @brief	ゲームデータの取得
  * @param	gsys		ゲーム制御ワークへのポインタ
  * @return	GAMEDATA	ゲームデータへのポインタ

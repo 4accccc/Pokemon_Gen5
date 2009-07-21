@@ -382,12 +382,24 @@ void * GAMESYSTEM_GetFieldMapWork(GAMESYS_WORK * gsys)
 	GF_ASSERT(gsys->fieldmap != NULL);
 	return gsys->fieldmap;
 }
+
 //------------------------------------------------------------------
 //	フィールドマップワークのポインタセット
 //------------------------------------------------------------------
 void GAMESYSTEM_SetFieldMapWork(GAMESYS_WORK * gsys, void * fieldmap)
 {
 	gsys->fieldmap = fieldmap;
+}
+
+//--------------------------------------------------------------
+//  フィールドマップワークポインタ有効チェック
+//--------------------------------------------------------------
+BOOL GAMESYSTEM_CheckFieldMapWork( const GAMESYS_WORK *gsys )
+{
+  if( gsys->fieldmap != NULL ){
+    return TRUE;
+  }
+  return FALSE;
 }
 
 //==================================================================
