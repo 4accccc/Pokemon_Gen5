@@ -1020,26 +1020,17 @@ static void _funcBconDataChange( void )
 	_GF_BSS_DATA_INFO* pGF = (_GF_BSS_DATA_INFO*)pNetWL->gameInfoBuff;
 	GFLNetInitializeStruct* pInit = GFL_NET_GetNETInitStruct();
 	int size;
-  BOOL bChange=FALSE;
 
 	if(pInit->beaconGetSizeFunc!=NULL){
 		NetBeaconGetSizeFunc func = pInit->beaconGetSizeFunc;
 		size = func(pNetWL->pUserWork);
-
-    if(GFL_STD_MemComp( pInit->beaconGetFunc(pNetWL->pUserWork), pGF->aBeaconDataBuff, size)!=0){
-      GFL_STD_MemCopy( pInit->beaconGetFunc(pNetWL->pUserWork), pGF->aBeaconDataBuff, size);
-      bChange=TRUE;
-    }
+		GFL_STD_MemCopy( pInit->beaconGetFunc(pNetWL->pUserWork), pGF->aBeaconDataBuff, size);
 	}
+
 	if(_connectNum() != pGF->connectNum){
-    pGF->connectNum = _connectNum();
-    bChange=TRUE;
+		pGF->connectNum = _connectNum();
+		_setBeacon(pNetWL->gameInfoBuff, sizeof(_GF_BSS_DATA_INFO));
 	}
-
-  if(bChange){
-    _setBeacon(pNetWL->gameInfoBuff, sizeof(_GF_BSS_DATA_INFO));
-  }
-
 }
 
 //-------------------------------------------------------------
