@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="taya" host="W00146" date="2009-07-17T18:25:39"/>
+	<create user="taya" host="W00146" date="2009-07-17T23:19:08"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -1457,6 +1457,28 @@
 当たらなかった！</language>
 	</row>
 
+	<row id="BTL_STRID_SET_Item_DamageShrink">
+		<comment>特定アイテムでダメージを弱めた時のメッセージ</comment>
+		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]への　ダメージを
+[1:09:どうぐ名:1]が　よわめた！</language>
+		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]への　ダメージを
+[1:09:どうぐ名:1]が　弱めた！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_Item_DamageShrink_Y">
+		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]への　ダメージを
+[1:09:どうぐ名:1]が　よわめた！</language>
+		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]への　ダメージを
+[1:09:どうぐ名:1]が　弱めた！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_Item_DamageShrink_E">
+		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]への　ダメージを
+[1:09:どうぐ名:1]が　よわめた！</language>
+		<language name="JPN_KANJI" width="216">相手の　[1:02:ポケモンニックネーム:0]への　ダメージを
+[1:09:どうぐ名:1]が　弱めた！</language>
+	</row>
+
 	<row id="BTL_STRID_SET_DokuGet" back-color=",,,#ffff00,,,,,,,,,,,,,,">
 		<comment>ポケモン系状態異常メッセージ</comment>
 		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]　は
@@ -1924,7 +1946,7 @@
 	</row>
 
 	<row id="BTL_STRID_SET_KonranGet" back-color=",,,#ffff00,,,,,,,,,,,,,,">
-		<comment>ワザ系状態異常メッセージ</comment>
+		<comment>こんらん</comment>
 		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]　は
 こんらん　した！</language>
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]　は
@@ -1967,6 +1989,7 @@
 	</row>
 
 	<row id="BTL_STRID_SET_ShrinkExe">
+		<comment>ひるみ</comment>
 		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]　は
 ひるんで　わざが　だせない！</language>
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]　は
@@ -1985,6 +2008,28 @@
 ひるんで　わざが　だせない！</language>
 		<language name="JPN_KANJI" width="216">相手の　[1:02:ポケモンニックネーム:0]　は
 ひるんで　技が出せない！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_Miyaburu">
+		<comment>みやぶる</comment>
+		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]の
+しょうたいを　みやぶった！</language>
+		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]の
+正体を　見破った！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_Miyaburu_Y">
+		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]の
+しょうたいを　みやぶった！</language>
+		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]の
+正体を　見破った！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_Miyaburu_E">
+		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]の
+しょうたいを　みやぶった！</language>
+		<language name="JPN_KANJI" width="216">相手の　[1:02:ポケモンニックネーム:0]の
+正体を　見破った！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_ReactionDmg">
