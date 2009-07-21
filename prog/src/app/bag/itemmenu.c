@@ -43,38 +43,16 @@
 //============================================================================================
 //============================================================================================
 
-#define DEBUG_ITEMDISP_FRAME (GFL_BG_FRAME1_M)
-
-
-#define _DISP_INITX (18)
-#define _DISP_INITY (1)
-#define _DISP_SIZEX (12)
-#define _DISP_SIZEY (20)
-#define _BUTTON_WIN_PAL   (12)  // ウインドウ
-#define _BUTTON_MSG_PAL   (11)  // メッセージフォント
-#define	FBMP_COL_WHITE		(15)
-#define WINCLR_COL(col)	(((col)<<4)|(col))
-
-
-#define _ITEMUSE_DISP_INITX (17)
-#define _ITEMUSE_DISP_INITY (10)
-#define _ITEMUSE_DISP_SIZEX (8)
-#define _ITEMUSE_DISP_SIZEY (10)
-
-
-
-#define FLD_SUBSCR_FADE_DIV (1)
-#define FLD_SUBSCR_FADE_SYNC (1)
-
 #define _1CHAR (8)
 
 
+//ならびは savedata/myitem_savedata.hに準拠
 static const GFL_UI_TP_HITTBL bttndata[] = {  //上下左右
 	{	7*_1CHAR,  10*_1CHAR,  3*_1CHAR, 6*_1CHAR },  //どうぐ
-	{	7*_1CHAR,  10*_1CHAR,  9*_1CHAR, 12*_1CHAR },  //大切な物
 	{	0x0e*_1CHAR,  0x11*_1CHAR,  2*_1CHAR, 5*_1CHAR },  //回復
 	{	0x10*_1CHAR,  0x13*_1CHAR,  6*_1CHAR, 8*_1CHAR },  //技マシン
 	{	0x0e*_1CHAR,  0x11*_1CHAR,  10*_1CHAR, 13*_1CHAR },  //木の実
+	{	7*_1CHAR,  10*_1CHAR,  9*_1CHAR, 12*_1CHAR },  //大切な物
 	{GFL_UI_TP_HIT_END,0,0,0},		 //終了データ
 };
 
@@ -83,6 +61,8 @@ static const GFL_UI_TP_HITTBL bttndata[] = {  //上下左右
 //-----------------------------------------------
 //static 定義
 //-----------------------------------------------
+
+
 static void _changeState(FIELD_ITEMMENU_WORK* pWork,StateFunc* state);
 static void _changeStateDebug(FIELD_ITEMMENU_WORK* pWork,StateFunc* state, int line);
 static void _itemNumSelectMenu(FIELD_ITEMMENU_WORK* pWork);
@@ -126,8 +106,6 @@ static void _changeStateDebug(FIELD_ITEMMENU_WORK* pWork,StateFunc state, int li
 	_changeState(pWork, state);
 }
 #endif
-
-#include "itemmenu_disp.c"
 
 
 #define	FBMP_COL_NULL		(0)
@@ -178,74 +156,13 @@ static BMPMENULIST_HEADER _itemMenuListHeader = {
 
 static void _windowCreate(FIELD_ITEMMENU_WORK* pWork)
 {
-
-	pWork->win = GFL_BMPWIN_Create(
-		DEBUG_ITEMDISP_FRAME,
-		_DISP_INITX, _DISP_INITY,
-		_DISP_SIZEX, _DISP_SIZEY,
-		_BUTTON_MSG_PAL, GFL_BMP_CHRAREA_GET_B );
-
-	//  GFL_BMP_Clear(GFL_BMPWIN_GetBmp(pWork->win), WINCLR_COL(FBMP_COL_WHITE) );
-	GFL_BMPWIN_MakeScreen( pWork->win );
-//	BmpWinFrame_Write( pWork->win, WINDOW_TRANS_ON, GFL_ARCUTIL_TRANSINFO_GetPos(pWork->bgchar), _BUTTON_WIN_PAL );
 	_windowRewrite(pWork);
-
-	BmpMenuList_Rewrite(pWork->sublw);
-	GFL_BMPWIN_TransVramCharacter(pWork->win);
 
 }
 
 
 static void _windowRewrite(FIELD_ITEMMENU_WORK* pWork)
 {
-	BMPMENULIST_HEADER list_h = _itemMenuListHeader;
-	int length,i;
-
-	GFL_BMP_Clear(GFL_BMPWIN_GetBmp(pWork->win), WINCLR_COL(FBMP_COL_WHITE) );
-
-	length = MYITEM_GetItemPocketNumber( pWork->pMyItem, pWork->pocketno);
-
-	if(pWork->submenulist){
-		BmpMenuWork_ListDelete(pWork->submenulist);
-	}
-	pWork->submenulist = BmpMenuWork_ListCreate(  length, pWork->heapID );
-	GF_ASSERT(pWork->submenulist);
-	
-	for(i=0; i< length ; i++){
-		ITEM_ST * item;
-		item = MYITEM_PosItemGet( pWork->pMyItem, pWork->pocketno, i );
-		if((item==NULL) || (item->id==ITEM_DUMMY_DATA)){
-			break;
-		}
-		//OS_TPrintf("item no %d num %d\n",item->id,item->no);
-
-		GFL_MSG_GetString(  pWork->MsgManager, MSG_ITEMDEBUG_STR36, pWork->pStrBuf );
-
-		WORDSET_RegisterNumber(pWork->WordSet, 0, item->no,
-													 3, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT);
-		WORDSET_RegisterItemName(pWork->WordSet, 1, item->id);
-		WORDSET_ExpandStr( pWork->WordSet, pWork->pExpStrBuf, pWork->pStrBuf  );
-
-		BmpMenuWork_ListAddString( pWork->submenulist, pWork->pExpStrBuf, 0,pWork->heapID );
-	}
-
-
-	list_h.list = pWork->submenulist;
-	list_h.work = pWork;
-	list_h.win = pWork->win;
-	list_h.count = length;
-
-	list_h.print_que = pWork->SysMsgQue;
-	PRINT_UTIL_Setup( &pWork->SysMsgPrintUtil , pWork->win );
-	list_h.print_util = &pWork->SysMsgPrintUtil;
-	list_h.font_handle = pWork->fontHandle;
-
-	if(pWork->sublw){
-		BmpMenuList_Exit(pWork->sublw,NULL,NULL);
-	}
-	pWork->sublw = BmpMenuList_Set(&list_h, 0, 0, pWork->heapID);
-	//BmpMenuList_SetCursorBmp(pWork->sublw, pWork->heapID);
-
 
   _upMessageRewrite(pWork);  
 }
@@ -263,9 +180,12 @@ static void _itemKindSelectMenu(FIELD_ITEMMENU_WORK* pWork)
 	u32	ret=0;
   BOOL bChange=FALSE;
 
-	if( PRINT_UTIL_Trans( &pWork->SysMsgPrintUtil, pWork->SysMsgQue ) == TRUE){
-		GFL_BMPWIN_TransVramCharacter( pWork->win );
-	}
+	if(GFL_UI_KEY_GetTrg()== PAD_BUTTON_B){
+    _CHANGE_STATE(pWork,NULL);
+    return;
+  }
+//	if( PRINT_UTIL_Trans( &pWork->SysMsgPrintUtil, pWork->SysMsgQue ) == TRUE){
+//	}
 
   {
     int pos = pWork->curpos;
@@ -309,7 +229,7 @@ static void _itemKindSelectMenu(FIELD_ITEMMENU_WORK* pWork)
   if(bChange){
     _windowRewrite(pWork);
   }
-  
+
 }
 
 #if 0
@@ -419,6 +339,7 @@ static int Bag_MenuUse( FIELD_ITEMMENU_WORK * pWork )
 	return BAG_ItemUse( pWork );
 }
 #endif
+
 
 
 //--------------------------------------------------------------------------------------------
@@ -657,7 +578,6 @@ static void _itemUseMenu(FIELD_ITEMMENU_WORK* pWork)
 		BmpMenuList_Exit(pWork->lwItemUse, NULL, NULL);
 //		GFL_BMPWIN_ClearScreen(pWork->itemUseWin);
 //		BmpWinFrame_Clear(pWork->itemUseWin, WINDOW_TRANS_OFF);
-		GFL_BMPWIN_MakeScreen( pWork->win );
 		GFL_BG_LoadScreenV_Req(DEBUG_ITEMDISP_FRAME);
 		GFL_BMPWIN_Delete(pWork->itemUseWin);
 		BmpMenuWork_ListDelete(pWork->itemUseMenuList);
@@ -728,14 +648,14 @@ static GFL_PROC_RESULT FieldItemMenuProc_Init( GFL_PROC * proc, int * seq, void 
 	pWork->MsgManagerItemInfo = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE,
 																							NARC_message_iteminfo_dat, pWork->heapID );
 
-	pWork->pStrBuf = GFL_STR_CreateBuffer(100,pWork->heapID);
-	pWork->pExpStrBuf = GFL_STR_CreateBuffer(100,pWork->heapID);
+	pWork->pStrBuf = GFL_STR_CreateBuffer(200,pWork->heapID);
+	pWork->pExpStrBuf = GFL_STR_CreateBuffer(200,pWork->heapID);
 	pWork->WordSet    = WORDSET_Create( pWork->heapID );
 	pWork->fontHandle = GFL_FONT_Create( ARCID_FONT , NARC_font_large_nftr ,
 																		GFL_FONT_LOADTYPE_FILE , FALSE , pWork->heapID );
 
 	GFL_UI_KEY_SetRepeatSpeed(1, 6);
-	_upMessageCreate(pWork);
+	ITEMDISP_upMessageCreate(pWork);
 	_windowCreate(pWork);
 
 	pWork->pButton = GFL_BMN_Create( bttndata, _BttnCallBack, pWork,  pWork->heapID );
@@ -786,23 +706,27 @@ static GFL_PROC_RESULT FieldItemMenuProc_End( GFL_PROC * proc, int * seq, void *
 {
 	FIELD_ITEMMENU_WORK* pWork = ppWork;
 
-	GFL_BG_FreeCharacterArea(DEBUG_ITEMDISP_FRAME,GFL_ARCUTIL_TRANSINFO_GetPos(pWork->bgchar),
-													 GFL_ARCUTIL_TRANSINFO_GetSize(pWork->bgchar));
+  if(pWork->bgchar!=0){
+    GFL_BG_FreeCharacterArea(DEBUG_ITEMDISP_FRAME,GFL_ARCUTIL_TRANSINFO_GetPos(pWork->bgchar),
+                             GFL_ARCUTIL_TRANSINFO_GetSize(pWork->bgchar));
+  }
 	GFL_TCB_DeleteTask( pWork->g3dVintr );
-	GFL_BMPWIN_ClearScreen(pWork->win);
-	BmpWinFrame_Clear(pWork->win, WINDOW_TRANS_OFF);
-	GFL_BG_LoadScreenV_Req(DEBUG_ITEMDISP_FRAME);
-	GFL_BMPWIN_Delete(pWork->win);
+
+  ITEMDISP_upMessageDelete(pWork);
+  ITEMDISP_graphicDelete(pWork);
+  
 	GFL_MSG_Delete(pWork->MsgManager);
 	GFL_MSG_Delete(pWork->MsgManagerItemInfo);
 	GFL_STR_DeleteBuffer(pWork->pStrBuf);
 	GFL_STR_DeleteBuffer(pWork->pExpStrBuf);
 	WORDSET_Delete(pWork->WordSet);
-	BmpMenuWork_ListDelete(pWork->submenulist);
+//  if(pWork->submenulist){
+//    BmpMenuWork_ListDelete(pWork->submenulist);
+//  }
 	GFL_FONT_Delete(pWork->fontHandle);
 	PRINTSYS_QUE_Clear(pWork->SysMsgQue);
 	PRINTSYS_QUE_Delete(pWork->SysMsgQue);
-		GFL_BMN_Delete(pWork->pButton);
+  GFL_BMN_Delete(pWork->pButton);
 
 	GFL_BMPWIN_Exit();
 	GFL_BG_Exit();

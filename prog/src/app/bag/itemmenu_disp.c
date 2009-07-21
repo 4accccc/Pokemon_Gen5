@@ -14,6 +14,9 @@
 
 #include "item/item.h"
 
+#include "app/app_menu_common.h"
+#include "app_menu_common.naix"
+
 #include "gamesystem/gamesystem.h"
 #include "gamesystem/game_init.h"
 #include "gamesystem/game_event.h"
@@ -21,6 +24,7 @@
 #include "system/bmp_winframe.h"
 
 #include "message.naix"
+#include "bag.naix"
 #include "item_icon.naix"
 #include "msg/msg_d_field.h"
 #include "msg/msg_bag.h"
@@ -35,6 +39,7 @@
 #include "itemmenu_local.h"
 #include "app/itemuse.h"
 #include "savedata/mystatus.h"
+#include "itemmenu_local.h"
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
@@ -80,7 +85,7 @@ static void _itemiconAnim(FIELD_ITEMMENU_WORK* pWork,int itemid);
  */
 //------------------------------------------------------------------------------
 
-static void _createSubBg(void)
+void _createSubBg(void)
 {
   GX_SetDispSelect(GX_DISP_SELECT_SUB_MAIN);
 
@@ -96,7 +101,6 @@ static void _createSubBg(void)
     GFL_BG_SetBGControl( GFL_BG_FRAME0_M, &TextBgCntDat, GFL_BG_MODE_TEXT );
     GFL_BG_ClearFrame( GFL_BG_FRAME0_M );
     GFL_BG_LoadScreenReq( GFL_BG_FRAME0_M );
-    GFL_BG_SetPriority( GFL_BG_FRAME0_M, 0 );
     GFL_BG_SetVisible( GFL_BG_FRAME0_M, VISIBLE_ON );
 
   }
@@ -111,8 +115,21 @@ static void _createSubBg(void)
     GFL_BG_SetBGControl( GFL_BG_FRAME1_M, &TextBgCntDat, GFL_BG_MODE_TEXT );
     GFL_BG_ClearFrame( GFL_BG_FRAME1_M );
     GFL_BG_LoadScreenReq( GFL_BG_FRAME1_M );
-    GFL_BG_SetPriority( GFL_BG_FRAME1_M, 0 );
     GFL_BG_SetVisible( GFL_BG_FRAME1_M, VISIBLE_ON );
+
+  }
+  {
+    GFL_BG_BGCNT_HEADER TextBgCntDat = {
+      0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
+      GX_BG_SCRBASE_0xf000, GX_BG_CHARBASE_0x10000,
+      0x8000,
+      GX_BG_EXTPLTT_01,
+      1, 0, 0, FALSE
+      };
+    GFL_BG_SetBGControl( GFL_BG_FRAME2_M, &TextBgCntDat, GFL_BG_MODE_TEXT );
+    GFL_BG_ClearFrame( GFL_BG_FRAME2_M );
+    GFL_BG_LoadScreenReq( GFL_BG_FRAME2_M );
+    GFL_BG_SetVisible( GFL_BG_FRAME2_M, VISIBLE_ON );
 
   }
 
@@ -201,7 +218,7 @@ static GFL_DISP_VRAM _defVBTbl = {
  */
 //------------------------------------------------------------------------------
 
-static void _graphicInit(FIELD_ITEMMENU_WORK* pWork)
+void _graphicInit(FIELD_ITEMMENU_WORK* pWork)
 {
   G2_BlendNone();
 
@@ -270,6 +287,38 @@ static void _graphicInit(FIELD_ITEMMENU_WORK* pWork)
 
   GFL_DISP_GXS_SetVisibleControl(GX_PLANEMASK_OBJ,VISIBLE_ON);
 
+  {
+    ARCHANDLE *archandle = GFL_ARC_OpenDataHandle( ARCID_APP_MENU_COMMON , pWork->heapID );
+    //下画面バー
+    GFL_ARCHDL_UTIL_TransVramPalette( archandle , NARC_app_menu_common_menu_bar_NCLR , 
+                                      PALTYPE_MAIN_BG , 8*32 , 32 , pWork->heapID );
+    pWork->barbg = GFL_ARCHDL_UTIL_TransVramBgCharacterAreaMan( archandle , NARC_app_menu_common_menu_bar_NCGR ,
+                                                                GFL_BG_FRAME2_M , 0 , 0, pWork->heapID );
+    GFL_ARCHDL_UTIL_TransVramScreenCharOfs( archandle , NARC_app_menu_common_menu_bar_NSCR , 
+                                            GFL_BG_FRAME2_M , 0 ,
+                                            0x8000+GFL_ARCUTIL_TRANSINFO_GetPos(pWork->barbg),0, 0, pWork->heapID );
+    GFL_BG_LoadScreenReq( GFL_BG_FRAME2_M );
+    
+    GFL_ARC_CloseDataHandle(archandle);
+  }
+}
+
+void ITEMDISP_graphicDelete(FIELD_ITEMMENU_WORK* pWork)
+{
+
+  GFL_BG_FreeCharacterArea(GFL_BG_FRAME0_S,
+                           GFL_ARCUTIL_TRANSINFO_GetPos(pWork->subbg),
+													 GFL_ARCUTIL_TRANSINFO_GetSize(pWork->subbg));
+  GFL_BG_FreeCharacterArea(GFL_BG_FRAME1_S,
+                           GFL_ARCUTIL_TRANSINFO_GetPos(pWork->subbg2),
+													 GFL_ARCUTIL_TRANSINFO_GetSize(pWork->subbg2));
+  GFL_BG_FreeCharacterArea(GFL_BG_FRAME0_M,
+                           GFL_ARCUTIL_TRANSINFO_GetPos(pWork->mainbg),
+													 GFL_ARCUTIL_TRANSINFO_GetSize(pWork->mainbg));
+  GFL_BG_FreeCharacterArea(GFL_BG_FRAME2_M,
+                           GFL_ARCUTIL_TRANSINFO_GetPos(pWork->barbg),
+													 GFL_ARCUTIL_TRANSINFO_GetSize(pWork->barbg));
+
 }
 
 //------------------------------------------------------------------------------
@@ -279,7 +328,7 @@ static void _graphicInit(FIELD_ITEMMENU_WORK* pWork)
  */
 //------------------------------------------------------------------------------
 
-static void _upMessageRewrite(FIELD_ITEMMENU_WORK* pWork)
+void _upMessageRewrite(FIELD_ITEMMENU_WORK* pWork)
 {
   ITEM_ST * item;
 
@@ -326,7 +375,7 @@ static void _upMessageRewrite(FIELD_ITEMMENU_WORK* pWork)
  */
 //------------------------------------------------------------------------------
 
-static void _upMessageDelete(FIELD_ITEMMENU_WORK* pWork)
+void ITEMDISP_upMessageDelete(FIELD_ITEMMENU_WORK* pWork)
 {
 
   GFL_BMPWIN_ClearScreen(pWork->winItemName);
@@ -337,6 +386,15 @@ static void _upMessageDelete(FIELD_ITEMMENU_WORK* pWork)
   GFL_BMPWIN_Delete(pWork->winItemReport);
   GFL_BMPWIN_Delete(pWork->winItemNum);
 
+  GFL_CLACT_WK_Remove( pWork->cellicon );
+  GFL_CLGRP_CGR_Release( pWork->objRes[_CLACT_CHR] );
+  GFL_CLGRP_PLTT_Release( pWork->objRes[_CLACT_PLT] );
+  GFL_CLGRP_CELLANIM_Release(pWork->objRes[_CLACT_ANM]);
+
+  GFL_CLACT_UNIT_Delete(pWork->cellUnit);
+  
+  GFL_CLACT_SYS_Delete();
+
 }
 
 //------------------------------------------------------------------------------
@@ -346,7 +404,7 @@ static void _upMessageDelete(FIELD_ITEMMENU_WORK* pWork)
  */
 //------------------------------------------------------------------------------
 
-static void _upMessageCreate(FIELD_ITEMMENU_WORK* pWork)
+void ITEMDISP_upMessageCreate(FIELD_ITEMMENU_WORK* pWork)
 {
 
   pWork->winItemName = GFL_BMPWIN_Create(
@@ -371,7 +429,7 @@ static void _upMessageCreate(FIELD_ITEMMENU_WORK* pWork)
   GFL_BMPWIN_MakeScreen( pWork->winItemName );
   GFL_BMPWIN_MakeScreen( pWork->winItemNum );
   GFL_BMPWIN_MakeScreen( pWork->winItemReport );
-    {
+  {
     ARCHANDLE* p_handle = GFL_ARC_OpenDataHandle( ARCID_ITEMICON, pWork->heapID );
 
     pWork->objRes[_CLACT_ANM] = GFL_CLGRP_CELLANIM_Register( p_handle ,
@@ -432,8 +490,83 @@ static void _itemiconAnim(FIELD_ITEMMENU_WORK* pWork,int itemid)
 }
 
 
-static void _dispMain(FIELD_ITEMMENU_WORK* pWork)
+void _dispMain(FIELD_ITEMMENU_WORK* pWork)
 {
   GFL_CLACT_SYS_Main(); // CLSYSメイン
 }
+
+
+
+#if 0
+
+void PSTATUS_RIBBON_InitCell( PSTATUS_WORK *work , PSTATUS_RIBBON_WORK *ribbonWork )
+{
+  //選択カーソル
+  {
+    GFL_CLWK_DATA cellInitData;
+    cellInitData.pos_x = 0;
+    cellInitData.pos_y = 0;
+    cellInitData.softpri = 10;
+    cellInitData.bgpri = 1;
+    cellInitData.anmseq = 0;
+    
+    ribbonWork->clwkCur = GFL_CLACT_WK_Create( work->cellUnit ,
+              work->cellRes[SCR_NCG_RIBBON_CUR],
+              work->cellRes[SCR_PLT_CURSOR_COMMON],
+              work->cellRes[SCR_ANM_RIBBON_CUR],
+              &cellInitData ,CLSYS_DEFREND_MAIN , work->heapId );
+
+    GFL_CLACT_WK_SetDrawEnable( ribbonWork->clwkCur , FALSE );
+  }  
+  
+    //セルの作成
+  {
+    u8 i;
+    PSTA_OAM_ACT_DATA oamData;
+    oamData.x = PSTATUS_RIBBON_BAR_X;
+    oamData.pltt_index = work->cellRes[SCR_PLT_RIBBON_BAR];
+    oamData.pal_offset = 0;
+    oamData.soft_pri = 0;
+    oamData.bg_pri = 2;
+    oamData.setSerface = CLSYS_DEFREND_MAIN;
+    oamData.draw_type = CLSYS_DRAW_MAIN;
+    for( i=0 ; i<PSTATUS_RIBBON_BAR_NUM ; i++ )
+    {
+      u8 *vramAdr = (u8*)( (u32)G2_GetOBJCharPtr() + 0x20000 - (PSTATUS_RIBBON_BAR_CHARSIZE*(i+1)) );
+
+      //oamData.y = PSTATUS_RIBBON_BAR_Y+PSTATUS_RIBBON_BAR_HEIGHT*i;
+      oamData.y = PSTATUS_RIBBON_CalcRibbonBarY( ribbonWork , i );
+
+      ribbonWork->ribbonDispWork[i].bmpData = GFL_BMP_CreateInVRAM( vramAdr , 
+                                            PSTATUS_RIBBON_BAR_WIDTH/8 , 
+                                            PSTATUS_RIBBON_BAR_HEIGHT/8 ,
+                                            GFL_BMP_16_COLOR , work->heapId );
+
+      oamData.bmp = ribbonWork->ribbonDispWork[i].bmpData;
+      ribbonWork->ribbonDispWork[i].bmpOam = PSTA_OAM_ActorAdd( ribbonWork->bmpOamSys , &oamData );
+
+      //PSTATUS_RIBBON_CreateRibbonBarFunc( work , ribbonWork , &ribbonWork->ribbonDispWork[i] );
+      PSTA_OAM_ActorSetDrawEnable( ribbonWork->ribbonDispWork[i].bmpOam , FALSE );
+    }
+  }
+}
+
+	for(i=0; i< length ; i++){
+		ITEM_ST * item;
+		item = MYITEM_PosItemGet( pWork->pMyItem, pWork->pocketno, i );
+		if((item==NULL) || (item->id==ITEM_DUMMY_DATA)){
+			break;
+		}
+		//OS_TPrintf("item no %d num %d\n",item->id,item->no);
+
+		GFL_MSG_GetString(  pWork->MsgManager, MSG_ITEMDEBUG_STR36, pWork->pStrBuf );
+
+		WORDSET_RegisterNumber(pWork->WordSet, 0, item->no,
+													 3, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT);
+		WORDSET_RegisterItemName(pWork->WordSet, 1, item->id);
+		WORDSET_ExpandStr( pWork->WordSet, pWork->pExpStrBuf, pWork->pStrBuf  );
+
+		BmpMenuWork_ListAddString( pWork->submenulist, pWork->pExpStrBuf, 0,pWork->heapID );
+	}
+#endif
 

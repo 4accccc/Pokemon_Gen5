@@ -385,6 +385,7 @@ SRCS_OVERLAY_CONFIG_PANEL = app/config_panel/config_panel.c
 #===> SRCS_OVERLAY_DEV_WIFI
 #===> SRCS_OVERLAY_DEV_IRC
 SRCS_OVERLAY_BAG = app/bag/itemmenu.c \
+												app/bag/itemmenu_disp.c \
 												app/bag/itemuse.c
 
 #===> SRCS_OVERLAY_DEV_WIFI

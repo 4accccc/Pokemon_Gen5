@@ -78,6 +78,7 @@ struct _DEBUGITEM_PARAM {
   int mainbg;
   int subbg;
   int subbg2;
+  int barbg;
 	int pocketno;  //今さしているポケット番号
 	int curpos;   //今さしているカーソル番号
 	int itemnum;
@@ -90,4 +91,35 @@ struct _DEBUGITEM_PARAM {
 	HEAPID heapID;
 	u32 bgchar;
 };
+
+#define DEBUG_ITEMDISP_FRAME (GFL_BG_FRAME1_M)
+
+
+#define _DISP_INITX (18)
+#define _DISP_INITY (1)
+#define _DISP_SIZEX (12)
+#define _DISP_SIZEY (20)
+#define _BUTTON_WIN_PAL   (12)  // ウインドウ
+#define _BUTTON_MSG_PAL   (11)  // メッセージフォント
+#define	FBMP_COL_WHITE		(15)
+#define WINCLR_COL(col)	(((col)<<4)|(col))
+
+
+#define _ITEMUSE_DISP_INITX (17)
+#define _ITEMUSE_DISP_INITY (10)
+#define _ITEMUSE_DISP_SIZEX (8)
+#define _ITEMUSE_DISP_SIZEY (10)
+
+
+
+#define FLD_SUBSCR_FADE_DIV (1)
+#define FLD_SUBSCR_FADE_SYNC (1)
+
+extern void _createSubBg(void);
+extern void _graphicInit(FIELD_ITEMMENU_WORK* pWork);
+extern void _upMessageRewrite(FIELD_ITEMMENU_WORK* pWork);
+extern void ITEMDISP_upMessageDelete(FIELD_ITEMMENU_WORK* pWork);
+extern void ITEMDISP_upMessageCreate(FIELD_ITEMMENU_WORK* pWork);
+extern void ITEMDISP_graphicDelete(FIELD_ITEMMENU_WORK* pWork);
+extern void _dispMain(FIELD_ITEMMENU_WORK* pWork);
 
