@@ -312,7 +312,7 @@ enum {
   WSEQ_DRAIN = 3,
   WSEQ_MIYABURU = 113,
   WSEQ_MIRACLEEYE = 216,
-
+  WSEQ_MIRAIYOTI = 148,
 };
 
 // @@@ 旧バージョンのワザデータシーケンスを、新バージョンのデータテーブルとして扱うための
@@ -659,6 +659,11 @@ static const SEQ_PARAM* getSeqParam( WazaID waza )
     },{
         WSEQ_MIRACLEEYE, WAZADATA_CATEGORY_SIMPLE_SICK,
         WAZASICK_MIYABURU, WAZASICK_CONT_PERMANENT, POKETYPE_AKU, 0,
+        { { WAZA_RANKEFF_NULL, 0 }, { WAZA_RANKEFF_NULL, 0 } },
+        FALSE, BTL_WEATHER_NONE, 0, 0,
+    },{
+        WSEQ_MIRAIYOTI, WAZADATA_CATEGORY_OTHERS,
+        WAZASICK_NULL, 0, 0, 0,
         { { WAZA_RANKEFF_NULL, 0 }, { WAZA_RANKEFF_NULL, 0 } },
         FALSE, BTL_WEATHER_NONE, 0, 0,
     }
