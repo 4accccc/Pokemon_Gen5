@@ -83,11 +83,11 @@
 // WM_SIZE_USER_GAMEINFO  最大 112byte
 // _BEACON_SIZE_FIXには 固定でほしいビーコンパラメータの合計を手で書く
 typedef struct{
-	u16        GGID;               ///< ゲーム固有のID  一致が必須
 	u8        FixHead[_BEACON_FIXHEAD_SIZE];         ///< 固定で決めた６バイト部分
+	u16        GGID;               ///< ゲーム固有のID  一致が必須
 	GameServiceID  		serviceNo; ///< 通信サービス番号
 	u8        debugAloneTest;      ///< デバッグ用 同じゲームでもビーコンを拾わないように
-	u8  	  connectNum;    	   ///< つながっている台数  --> 本親かどうか識別
+	u8  	    connectNum;    	   ///< つながっている台数  --> 本親かどうか識別
 	u8        pause;               ///< 接続を禁止したい時に使用する
 	u8        aBeaconDataBuff[_BEACON_USER_SIZE_MAX];
 } _GF_BSS_DATA_INFO;
@@ -141,7 +141,7 @@ struct _NET_WL_WORK {
 	//   u8 bAutoExit;
 	u8 bEntry;        ///< 子機の新規参入
 	u8 bScanCallBack;  ///< 親のスキャンがかかった場合TRUE, いつもはFALSE
-	u8 dummy;
+	u8 bChange;   ///<ビーコン変更フラグ
 } ;
 
 //#define _NET_WL_WORK  GFL_NETWL;
@@ -1024,13 +1024,19 @@ static void _funcBconDataChange( void )
 	if(pInit->beaconGetSizeFunc!=NULL){
 		NetBeaconGetSizeFunc func = pInit->beaconGetSizeFunc;
 		size = func(pNetWL->pUserWork);
-		GFL_STD_MemCopy( pInit->beaconGetFunc(pNetWL->pUserWork), pGF->aBeaconDataBuff, size);
+    GF_ASSERT(size <= _BEACON_USER_SIZE_MAX);
+    GFL_STD_MemCopy( pInit->beaconGetFunc(pNetWL->pUserWork), pGF->aBeaconDataBuff, size);
 	}
 
-	if(_connectNum() != pGF->connectNum){
+	if(_connectNum() != pGF->connectNum ){
+    pNetWL->bChange = 0;
 		pGF->connectNum = _connectNum();
+  }
+  if(pNetWL->bChange == 0){
 		_setBeacon(pNetWL->gameInfoBuff, sizeof(_GF_BSS_DATA_INFO));
+    pNetWL->bChange = 60;
 	}
+  pNetWL->bChange--;
 }
 
 //-------------------------------------------------------------

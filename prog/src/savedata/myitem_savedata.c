@@ -24,11 +24,11 @@ struct _MYITEM {
 	ITEM_ST MyNormalItem[ BAG_NORMAL_ITEM_MAX ];	// 手持ちの普通の道具
 	ITEM_ST MyEventItem[ BAG_EVENT_ITEM_MAX ];		// 手持ちの大切な道具
 	ITEM_ST MySkillItem[ BAG_WAZA_ITEM_MAX ];		// 手持ちの技マシン
-	ITEM_ST MySealItem[ BAG_SEAL_ITEM_MAX ];		// 手持ちのシール
+//	ITEM_ST MySealItem[ BAG_SEAL_ITEM_MAX ];		// 手持ちのシール
 	ITEM_ST MyDrugItem[ BAG_DRUG_ITEM_MAX ];		// 手持ちの薬
 	ITEM_ST MyNutsItem[ BAG_NUTS_ITEM_MAX ];		// 手持ちの木の実
-	ITEM_ST MyBallItem[ BAG_BALL_ITEM_MAX ];		// 手持ちのモンスターボール
-	ITEM_ST MyBattleItem[ BAG_BATTLE_ITEM_MAX ];	// 手持ちの戦闘用アイテム
+//	ITEM_ST MyBallItem[ BAG_BALL_ITEM_MAX ];		// 手持ちのモンスターボール
+//	ITEM_ST MyBattleItem[ BAG_BATTLE_ITEM_MAX ];	// 手持ちの戦闘用アイテム
 	u32	cnv_button;									// 便利ボタン
 };
 
@@ -174,18 +174,6 @@ static u32 MyPocketDataGet( MYITEM_PTR myitem, s32 pocket, ITEM_ST ** item, u32 
 	case BAG_POKE_DRUG:		// 薬
 		*item = myitem->MyDrugItem;
 		*max = BAG_DRUG_ITEM_MAX;
-		break;
-	case BAG_POKE_BALL:		// ボール
-		*item = myitem->MyBallItem;
-		*max = BAG_BALL_ITEM_MAX;
-		break;
-	case BAG_POKE_BATTLE:	// 戦闘用
-		*item = myitem->MyBattleItem;
-		*max = BAG_BATTLE_ITEM_MAX;
-		break;
-	case BAG_POKE_SEAL:		// シール
-		*item = myitem->MySealItem;
-		*max = BAG_SEAL_ITEM_MAX;
 		break;
 	case BAG_POKE_WAZA:		// 技マシン
 		*item = myitem->MySkillItem;
@@ -684,15 +672,6 @@ void * MYITEM_MakeBagData( MYITEM_PTR myitem, const u8 * list, u32 heap )
 		case BAG_POKE_DRUG:
 			BagPocketDataMake( bag, myitem->MyDrugItem, BAG_POKE_DRUG, i );
 			break;
-		case BAG_POKE_BALL:
-			BagPocketDataMake( bag, myitem->MyBallItem, BAG_POKE_BALL, i );
-			break;
-		case BAG_POKE_BATTLE:
-			BagPocketDataMake( bag, myitem->MyBattleItem, BAG_POKE_BATTLE, i );
-			break;
-		case BAG_POKE_SEAL:
-			BagPocketDataMake( bag, myitem->MySealItem, BAG_POKE_SEAL, i );
-			break;
 		case BAG_POKE_WAZA:
 			BagPocketDataMake( bag, myitem->MySkillItem, BAG_POKE_WAZA, i );
 			break;
@@ -733,18 +712,6 @@ ITEM_ST * MYITEM_PosItemGet( MYITEM_PTR myitem, u16 pocket, u16 pos )
 	case BAG_POKE_DRUG:		// 薬
 		item = myitem->MyDrugItem;
 		max  = BAG_DRUG_ITEM_MAX;
-		break;
-	case BAG_POKE_BALL:		// ボール
-		item = myitem->MyBallItem;
-		max  = BAG_BALL_ITEM_MAX;
-		break;
-	case BAG_POKE_BATTLE:	// 戦闘用
-		item = myitem->MyBattleItem;
-		max  = BAG_BATTLE_ITEM_MAX;
-		break;
-	case BAG_POKE_SEAL:		// シール
-		item = myitem->MySealItem;
-		max  = BAG_SEAL_ITEM_MAX;
 		break;
 	case BAG_POKE_WAZA:		// 技マシン
 		item = myitem->MySkillItem;
@@ -950,11 +917,8 @@ void *Index_Get_Myitem_Offset(MYITEM_PTR item, int type)
   case BAG_POKE_NORMAL: return item->MyNormalItem; break;
   case BAG_POKE_EVENT: return item->MyEventItem; break;
   case BAG_POKE_WAZA: return item->MySkillItem; break;
-  case BAG_POKE_SEAL: return item->MySealItem; break;
   case BAG_POKE_DRUG: return item->MyDrugItem; break;
   case BAG_POKE_NUTS: return item->MyNutsItem; break;
-  case BAG_POKE_BALL: return item->MyBallItem; break;
-  case BAG_POKE_BATTLE: return item->MyBattleItem; break;
   }
 }
 #endif

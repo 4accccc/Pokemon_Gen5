@@ -3450,7 +3450,7 @@ BOOL WH_StepDS(const void *data)
 	if (result == WM_ERRCODE_NO_DATASET)
 	{
 		//        WH_TRACE("WH_StepDataSharing - Warning No DataSet\n");
-		WH_SetError(result);
+		//WH_SetError(result);  //Ç±ÇÍÇÕFALSEÇï‘Ç∑Ç™ÉGÉâÅ[Ç…ÇÕÇµÇ»Ç¢
 		return FALSE;
 	}
 

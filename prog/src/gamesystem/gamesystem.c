@@ -537,6 +537,13 @@ static const ITEM_ST DebugItem[] = {
 	{ ITEM_MOKOSINOMI,	50},	//ƒ‚ƒRƒV‚Ì‚Ý
 	{ ITEM_GOSUNOMI,	50},	//ƒSƒX‚Ì‚Ý
 	{ ITEM_RABUTANOMI,	50},	//ƒ‰ƒuƒ^‚Ì‚Ý
+
+  { ITEM_WAZAMASIN01,  328},		// ‚í‚´ƒ}ƒVƒ“‚O‚P
+  {  ITEM_WAZAMASIN02	, 329 },		// ‚í‚´ƒ}ƒVƒ“‚O‚Q
+  {  ITEM_WAZAMASIN03	, 330 },		// ‚í‚´ƒ}ƒVƒ“‚O‚R
+  {  ITEM_WAZAMASIN04	, 331 },		// ‚í‚´ƒ}ƒVƒ“‚O‚S
+  {  ITEM_WAZAMASIN05	, 332 },		// ‚í‚´ƒ}ƒVƒ“‚O‚T
+  
 };
 
 static void DEBUG_MYITEM_MakeBag(MYITEM_PTR myitem, int heapID)

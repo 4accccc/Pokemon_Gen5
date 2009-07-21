@@ -23,30 +23,24 @@ typedef	struct {
 	u16	no;		// 個数
 }ITEM_ST;
 
-#define	BAG_NORMAL_ITEM_MAX		( 165 )		// 道具ポケット最大数
 #define	BAG_EVENT_ITEM_MAX		( 50 )		// 大切な物ポケット最大数
 #define	BAG_WAZA_ITEM_MAX		( 100 )		// 技マシンポケット最大数
-#define	BAG_SEAL_ITEM_MAX		( 12 )		// シールポケット最大数
 #define	BAG_DRUG_ITEM_MAX		( 40 )		// 薬ポケット最大数
 #define	BAG_NUTS_ITEM_MAX		( 64 )		// 木の実ポケット最大数
-#define	BAG_BALL_ITEM_MAX		( 15 )		// モンスターボールポケット最大数
-#define	BAG_BATTLE_ITEM_MAX		( 30 )		// 戦闘用アイテムポケット最大数
+#define	BAG_NORMAL_ITEM_MAX		( 165+30+15+12 )		// 道具ポケット最大数
 
 
 //--------------------------------------------------------------
-//	
+//	この定義はitemconv_dp の datamake.cppと同じでなければいけない 2009
 //--------------------------------------------------------------
 // ポケットID
 #define	BAG_POKE_NORMAL		( 0 )		// 道具
 #define	BAG_POKE_DRUG		( 1 )		// 薬
-#define	BAG_POKE_BALL		( 2 )		// ボール
-#define	BAG_POKE_WAZA		( 3 )		// 技マシン
-#define	BAG_POKE_NUTS		( 4 )		// 木の実
-#define	BAG_POKE_SEAL		( 5 )		// シール
-#define	BAG_POKE_BATTLE		( 6 )		// 戦闘用
-#define	BAG_POKE_EVENT		( 7 )		// 大切な物
+#define	BAG_POKE_WAZA		( 2 )		// 技マシン
+#define	BAG_POKE_NUTS		( 3 )		// 木の実
+#define	BAG_POKE_EVENT		( 4 )		// 大切な物
 
-#define	BAG_POKE_MAX		( 8 )		// ポケット最大数
+#define	BAG_POKE_MAX		( 5 )		// ポケット最大数
 
 
 //==============================================================================
