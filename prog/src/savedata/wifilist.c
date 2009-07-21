@@ -602,7 +602,7 @@ void WifiList_AddMinigameBalloon( WIFI_LIST *list, int no, int addnum )
 
 //-----------------------------------------------------------------
 /**
- * $brief   Aの人のデータをBの人にマージする
+ * @brief   Aの人のデータをBの人にマージする
  * @param   list	WIFI_LIST構造体のポインタ
  * @param   no		何人目の友達か
  * @param   winNum  勝ち数

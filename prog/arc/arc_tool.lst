@@ -181,3 +181,4 @@
 	ARCID_ISS_UNIT "iss_unit.narc"   #ISSユニットデータ
 	ARCID_TOWNMAP_GRA "townmap_gra.narc"	#タウンマップアプリケーション用グラフィック
 	ARCID_BGM_INFO "bgm_info.narc"   #BGMの情報
+	ARCID_BAG "bag.narc"   # バッグ

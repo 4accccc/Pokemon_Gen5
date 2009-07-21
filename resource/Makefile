@@ -9,6 +9,7 @@ RESOURCE_MACRO	= $(PROJECT_RSCDIR)\macro_define
 
 SUBDIRS	=	wmi \
 			sound \
+			bag \
 			test_graphic\
 			message\
 			field_weather \

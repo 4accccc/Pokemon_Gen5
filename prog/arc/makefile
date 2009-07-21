@@ -18,7 +18,7 @@ include $(VER_FILE)
 
 .PHONY:	do-build clean
 
-do-build: narc_tree.inc arc_def.h arc_file.h file_tree.inc
+do-build: narc_tree.inc arc_def.h arc_file.h file_tree.inc arc_tool.lst
 
 narc_tree.inc: ../../tools/arc/narc_tree.pl arc_tool.lst $(VER_FILE)
 	perl ../../tools/arc/narc_tree.pl arc_tool.lst $(PM_VERSION)

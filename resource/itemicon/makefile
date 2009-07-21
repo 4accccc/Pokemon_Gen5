@@ -28,24 +28,26 @@ SUBDIRS	=
 include	$(PROJECT_RSCDIR)\macro_define
 
 # 自動でリソースを集める
-lsources:=$(wildcard *.ncl)
 esources:=$(wildcard *.nce)
+lsources:=$(wildcard *.ncl)
 
 # リソースが吐き出すファイルを自動でつくる
-lobjects = $(subst .ncl,.NCLR,$(lsources))
 eobjects = $(subst .nce,.NCER,$(esources))
+lobjects = $(subst .ncl,.NCLR,$(lsources))
 
 
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
 # サフィックスルールを定義することで 依存関係を自動で判断してくれる
-.SUFFIXES: .NCLR .ncl .NCER .nce
-
-.ncl.NCLR:
-	g2dcvtr $< -pcm
+.SUFFIXES: .NCER .nce .NCLR .ncl
 
 
 .nce.NCER:
-	ruby exec.rb g2dcvtr $< -br -pcm
+	ruby exec.rb g2dcvtr $< -br
+
+
+.ncl.NCLR:
+	g2dcvtr $<
+
 
 
 endif
@@ -70,7 +72,7 @@ $(TARGETDIR)/$(targetname).narc: $(targetname).narc
 
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、元ファイルからコンバートするルールを有効にする
 # コピー先のnarcが古い場合実行する
-$(targetname).narc: $(lobjects) $(eobjects) itemicon.txt makefile
+$(targetname).narc: $(eobjects) $(lobjects) itemicon.txt makefile
 	nnsarc -c -l -n -i item_icon -S itemicon.txt
 	$(NAIXCUT) $(targetname).naix
 endif

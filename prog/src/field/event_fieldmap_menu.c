@@ -31,7 +31,7 @@
 #include "event_fieldmap_control.h" //EVENT_FieldSubProc
 #include "app/config_panel.h"   //ConfigPanelProcData
 #include "app/trainer_card.h"   //TrainerCardSysProcData
-#include "app/itemmenu/itemmenu_local.h" //ItemMenuProcData
+#include "app/bag/itemmenu_local.h" //ItemMenuProcData
 #include "app/pokelist.h"   //PokeList_ProcData・PLIST_DATA
 
 extern const GFL_PROC_DATA DebugAriizumiMainProcData;
@@ -472,7 +472,7 @@ static BOOL FMenuCallProc_PokeStatus( FMENU_EVENT_WORK *mwk )
  * @retval  BOOL  TRUE=イベント切り替え
  */
 //--------------------------------------------------------------
-FS_EXTERN_OVERLAY(itemmenu);
+FS_EXTERN_OVERLAY(bag);
 
 static BOOL FMenuCallProc_Bag( FMENU_EVENT_WORK *mwk )
 {
@@ -502,7 +502,7 @@ static BOOL FMenuCallProc_Bag( FMENU_EVENT_WORK *mwk )
 
   mwk->sub_proc_parent = epp;
 
-	newEvent = EVENT_FieldSubProc(mwk->gmSys, mwk->fieldWork, FS_OVERLAY_ID(itemmenu), &ItemMenuProcData, epp);
+	newEvent = EVENT_FieldSubProc(mwk->gmSys, mwk->fieldWork, FS_OVERLAY_ID(bag), &ItemMenuProcData, epp);
   epp->event = newEvent;
 
 	GMEVENT_CallEvent(mwk->gmEvent, newEvent);
