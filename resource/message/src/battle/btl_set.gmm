@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="taya" host="W00146" date="2009-07-17T23:19:08"/>
+	<create user="taya" host="W00146" date="2009-07-21T23:25:21"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -421,7 +421,7 @@
 
 	<dialog left="130" top="0" right="811" bottom="508" maximized="no" rayout="Vertical2">
 		<comment-input left="677" top="618" right="1024" bottom="768" visible="no"/>
-		<tag-palette left="548" top="536" right="979" bottom="934" visible="yes"/>
+		<tag-palette left="548" top="536" right="979" bottom="934" visible="no"/>
 		<band id="0" index="0" style="0001" width="506"/>
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="673"/>
@@ -4940,6 +4940,72 @@
 のろわれている！</language>
 		<language name="JPN_KANJI" width="216">相手の　[1:02:ポケモンニックネーム:0]は
 のろわれている！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_Miraiyoti">
+		<comment>みらいよち</comment>
+		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は
+みらいに　こうげきを　よちした！</language>
+		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
+未来に　攻撃を予知した！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_Miraiyoti_Y">
+		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は
+みらいに　こうげきを　よちした！</language>
+		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]は
+未来に　攻撃を予知した！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_Miraiyoti_E">
+		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は
+みらいに　こうげきを　よちした！</language>
+		<language name="JPN_KANJI" width="216">相手の　[1:02:ポケモンニックネーム:0]は
+未来に　攻撃を予知した！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_HametuNoNegai">
+		<comment>はめつのねがい</comment>
+		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は
+はめつのねがいを　みらいに　たくした！</language>
+		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
+はめつのねがいを　未来に託した！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_HametuNoNegai_Y">
+		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は
+はめつのねがいを　みらいに　たくした！</language>
+		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]は
+はめつのねがいを　未来に託した！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_HametuNoNegai_E">
+		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は
+はめつのねがいを　みらいに　たくした！</language>
+		<language name="JPN_KANJI" width="216">相手の　[1:02:ポケモンニックネーム:0]は
+はめつのねがいを　未来に託した！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_DelayAttack">
+		<comment>みらいよち・はめつのねがい</comment>
+		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は
+[1:07:わざ名:1]の　こうげきを　うけた！</language>
+		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
+[1:07:わざ名:1]の　攻撃を受けた！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_DelayAttack_Y">
+		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は
+[1:07:わざ名:1]の　こうげきを　うけた！</language>
+		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]は
+[1:07:わざ名:1]の　攻撃を受けた！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_DelayAttack_E">
+		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は
+[1:07:わざ名:1]の　こうげきを　うけた！</language>
+		<language name="JPN_KANJI" width="216">相手の　[1:02:ポケモンニックネーム:0]は
+[1:07:わざ名:1]の　攻撃を受けた！</language>
 	</row>
 
 	<flowchart-group-list>
