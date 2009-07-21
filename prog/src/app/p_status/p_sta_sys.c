@@ -105,6 +105,8 @@ const BOOL PSTATUS_InitPokeStatus( PSTATUS_WORK *work )
   work->isActiveBarButton = TRUE;
   work->retVal = SRT_CONTINUE;
   work->isWaitDisp = TRUE;
+  work->mosaicEffSeq = SMS_NONE;
+  work->mosaicCnt = 0;
 
 #if PM_DEBUG
   work->calcPP = NULL;
@@ -342,11 +344,12 @@ static void PSTATUS_InitGraphic( PSTATUS_WORK *work )
   
   //WindowMaskÝ’è
   {
+/*
     G2_SetWnd0Position( 0 , 0 , PSTATUS_MAIN_PAGE_WIDTH*8 , 192 );
     G2_SetWnd0InsidePlane( GX_WND_PLANEMASK_BG0 | GX_WND_PLANEMASK_BG1 | GX_WND_PLANEMASK_BG2 | GX_WND_PLANEMASK_BG3 | GX_WND_PLANEMASK_OBJ , TRUE );
     G2_SetWndOutsidePlane( GX_WND_PLANEMASK_BG0 | GX_WND_PLANEMASK_BG1 | GX_WND_PLANEMASK_BG2 | GX_WND_PLANEMASK_BG3 | GX_WND_PLANEMASK_OBJ , FALSE );
     GX_SetVisibleWnd( GX_WNDMASK_W0 );
-
+*/
     G2_SetBlendAlpha( GX_BLEND_PLANEMASK_BG2 , GX_BLEND_PLANEMASK_BG3 , 13 , 16 );
     G2S_SetBlendAlpha( GX_BLEND_PLANEMASK_BG2 , GX_BLEND_PLANEMASK_BG3 , 13 , 16 );
   }
@@ -955,6 +958,17 @@ static void PSTATUS_RefreshDisp( PSTATUS_WORK *work )
     break;
   }
   
+  if( work->befPage != work->page )
+  {
+    work->mosaicEffSeq = SMS_FADEOUT;
+    work->mosaicCnt = 0;
+//    G2_BG1Mosaic( TRUE );
+    G2_BG2Mosaic( TRUE );
+//    G2S_BG0Mosaic( TRUE );
+    G2S_BG1Mosaic( TRUE );
+    G2S_BG2Mosaic( TRUE );
+  }
+  
   //PPPˆÃ†‰»
   PSTATUS_UTIL_SetCurrentPPPFast( work , FALSE );
   work->isWaitDisp = TRUE;
@@ -967,7 +981,31 @@ static void PSTATUS_RefreshDisp( PSTATUS_WORK *work )
 //--------------------------------------------------------------
 static void PSTATUS_WaitDisp( PSTATUS_WORK *work )
 {
-  if( PRINTSYS_QUE_IsFinished( work->printQue ) == TRUE )
+  if( work->mosaicEffSeq == SMS_FADEOUT )
+  {
+    work->mosaicCnt += 1;
+    G2_SetBGMosaicSize( work->mosaicCnt,work->mosaicCnt );
+    G2S_SetBGMosaicSize( work->mosaicCnt,work->mosaicCnt );
+    if( work->mosaicCnt >= 5 )
+    {
+      work->mosaicEffSeq = SMS_WAIT;
+    }
+  }
+  if( work->mosaicEffSeq == SMS_FADEIN )
+  {
+    work->mosaicCnt -= 1;
+    G2_SetBGMosaicSize( work->mosaicCnt,work->mosaicCnt );
+    G2S_SetBGMosaicSize( work->mosaicCnt,work->mosaicCnt );
+    if( work->mosaicCnt <= 0 )
+    {
+      work->isWaitDisp = FALSE;
+      work->mosaicEffSeq = SMS_NONE;
+      return;
+    }
+  }
+  
+  if( PRINTSYS_QUE_IsFinished( work->printQue ) == TRUE &&
+      ( work->mosaicEffSeq == SMS_WAIT || work->mosaicEffSeq == SMS_NONE ) )
   {
     if( work->befDataPos != work->dataPos )
     {
@@ -1004,9 +1042,18 @@ static void PSTATUS_WaitDisp( PSTATUS_WORK *work )
     case PPT_RIBBON:
       PSTATUS_RIBBON_DispPage_Trans( work , work->ribbonWork );
       break;
-    }    
-    work->isWaitDisp = FALSE;
-    work->befPage = work->page;
+    }
+    
+    if( work->mosaicEffSeq == SMS_WAIT )
+    {
+      work->mosaicEffSeq = SMS_FADEIN;
+      work->befPage = work->page;
+    }
+    else
+    {
+      work->isWaitDisp = FALSE;
+      work->befPage = work->page;
+    }
   }
 }
 
@@ -1202,6 +1249,23 @@ void PSTATUS_UTIL_DebugCreatePP( PSTATUS_WORK *work )
     PP_Put( work->calcPP , ID_PARA_oyaname_raw , (u32)&oyaName[0] );
     PP_Put( work->calcPP , ID_PARA_oyasex , PTL_SEX_MALE );
     PP_Put( work->calcPP , ID_PARA_get_ball , work->dataPos%24+1 );
+
+    {
+      const u32 lv = PP_Get( work->calcPP, ID_PARA_level, NULL );
+      const u32 exp = PP_Get( work->calcPP , ID_PARA_exp , NULL );
+      const u32 nextLvExp = POKETOOL_GetMinExp(PP_Get( work->calcPP, ID_PARA_monsno, NULL ),
+                                      PP_Get( work->calcPP, ID_PARA_form_no, NULL ),
+                                      lv+1) ;
+      const u32 nowLvExp = POKETOOL_GetMinExp(PP_Get( work->calcPP, ID_PARA_monsno, NULL ),
+                                      PP_Get( work->calcPP, ID_PARA_form_no, NULL ),
+                                      lv) ;
+      const u32 modLvExp = (nextLvExp-nowLvExp);
+      
+      const u32 calcExp = modLvExp/2;
+      PP_Put( work->calcPP,ID_PARA_exp , nowLvExp+calcExp );
+      
+    }
+
   }  
 }
 

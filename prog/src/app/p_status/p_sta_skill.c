@@ -536,7 +536,8 @@ void PSTATUS_SKILL_DispPage_Trans( PSTATUS_WORK *work , PSTATUS_SKILL_WORK *skil
 
    //Window‰º’n‚Ì’£‘Ö‚¦
   GFL_BG_WriteScreenExpand( PSTATUS_BG_PLATE , 
-                    0 , 0 , PSTATUS_MAIN_PAGE_WIDTH , 24 ,
+//                    0 , 0 , PSTATUS_MAIN_PAGE_WIDTH , 24 ,
+                    0 , 0 , 32 , 24 ,
                     skillWork->scrDataDown->rawData ,
                     0 , 0 , 32 , 32 );
   GFL_BG_LoadScreenV_Req( PSTATUS_BG_PLATE );

@@ -238,5 +238,15 @@ typedef struct
   //ppp‚ÌŽžpp‚É•ÏŠ·‚·‚é‚æ‚¤
   POKEMON_PARAM *calcPP;
 
+  u8 mosaicEffSeq;
+  u8 mosaicCnt;
+
 }PSTATUS_WORK;
 
+enum
+{
+  SMS_NONE,
+  SMS_FADEOUT,
+  SMS_WAIT,
+  SMS_FADEIN,
+};
