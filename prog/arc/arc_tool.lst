@@ -180,5 +180,6 @@
 	ARCID_PLACE_NAME "area_win_gra.narc"   #地名表示ウィンドウ
 	ARCID_ISS_UNIT "iss_unit.narc"   #ISSユニットデータ
 	ARCID_TOWNMAP_GRAPHIC "townmap_gra.narc"	#タウンマップアプリケーション用グラフィック
+	ARCID_TOWNMAP_DATA	"townmap_data.narc"		#タウンマップ用データ
 	ARCID_BGM_INFO "bgm_info.narc"   #BGMの情報
 	ARCID_BAG "bag.narc"   # バッグ

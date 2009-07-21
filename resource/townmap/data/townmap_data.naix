@@ -1,0 +1,18 @@
+/*****************************************************************************
+	Archive file index definition.
+	File: townmap_data.naix
+
+	This file was created by NINTENDO NITRO-System Archiver.
+
+
+ *****************************************************************************/
+
+#ifndef NARC_TOWNMAP_DATA_NAIX_
+#define NARC_TOWNMAP_DATA_NAIX_
+
+enum {
+	NARC_townmap_data_townmap_data_dat = 0
+};
+
+/* NARC_TOWNMAP_DATA_NAIX_ */
+#endif
