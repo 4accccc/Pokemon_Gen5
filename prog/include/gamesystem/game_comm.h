@@ -65,6 +65,8 @@ typedef struct{
 extern GAME_COMM_SYS_PTR GameCommSys_Alloc(HEAPID heap_id, GAMEDATA *gamedata);
 extern void GameCommSys_Free(GAME_COMM_SYS_PTR gcsp);
 extern void GameCommSys_Main(GAME_COMM_SYS_PTR gcsp);
+extern void GameCommSys_Callback_FieldCreate(GAME_COMM_SYS_PTR gcsp, void *fieldWork);
+extern void GameCommSys_Callback_FieldDelete(GAME_COMM_SYS_PTR gcsp, void *fieldWork);
 
 //--------------------------------------------------------------
 //  ユーザー使用

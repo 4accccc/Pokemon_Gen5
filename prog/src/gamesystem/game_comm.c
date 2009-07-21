@@ -16,6 +16,7 @@
 #include "message.naix"
 #include "msg/msg_invasion.h"
 #include "net_app/union/union_main.h"
+#include "field/fieldmap_proc.h"
 
 
 //==============================================================================
@@ -103,6 +104,9 @@ typedef struct{
   void (*update_func)(int *seq, void *pwk, void *app_work);        ///<更新処理
   BOOL (*exit_func)(int *seq, void *pwk, void *app_work);          ///<終了処理
   BOOL (*exit_wait_func)(int *seq, void *pwk, void *app_work);     ///<終了完了待ち
+  
+  BOOL (*field_create)(void *pwk, void *app_work, FIELD_MAIN_WORK *fieldWork);  ///<Field作成時に呼ばれるコールバック
+  BOOL (*field_delete)(void *pwk, void *app_work, FIELD_MAIN_WORK *fieldWork);  ///<Field削除時に呼ばれるコールバック
 }GAME_FUNC_TBL;
 
 
@@ -118,6 +122,8 @@ static const GAME_FUNC_TBL GameFuncTbl[] = {
     NULL,       //update
     NULL,       //exit
     NULL,       //exit_wait
+    NULL,       //field_create
+    NULL,       //field_delete
   },
   
   //GAME_COMM_NO_FIELD_BEACON_SEARCH
@@ -127,6 +133,8 @@ static const GAME_FUNC_TBL GameFuncTbl[] = {
     GameBeacon_Update,     //update
     GameBeacon_Exit,       //exit
     GameBeacon_ExitWait,   //exit_wait
+    NULL,       //field_create
+    NULL,       //field_delete
   },
   //GAME_COMM_NO_INVASION
   {
@@ -135,6 +143,8 @@ static const GAME_FUNC_TBL GameFuncTbl[] = {
     FIELD_COMM_FUNC_UpdateSystem,         //update
     FIELD_COMM_FUNC_TermCommSystem,       //exit
     FIELD_COMM_FUNC_TermCommSystemWait,   //exit_wait
+    NULL,       //field_create
+    NULL,       //field_delete
   },
   //GAME_COMM_NO_UNION
   {
@@ -143,6 +153,8 @@ static const GAME_FUNC_TBL GameFuncTbl[] = {
     UnionComm_Update,     //update
     UnionComm_Exit,       //exit
     UnionComm_ExitWait,   //exit_wait
+    NULL,       //field_create
+    NULL,       //field_delete
   },
 };
 
@@ -262,6 +274,34 @@ void GameCommSys_Main(GAME_COMM_SYS_PTR gcsp)
       }
     }
     break;
+  }
+}
+
+//==================================================================
+/**
+ * フィールドマップ作成時に実行するコールバック
+ *
+ * @param   gcsp		
+ */
+//==================================================================
+void GameCommSys_Callback_FieldCreate(GAME_COMM_SYS_PTR gcsp, void *fieldWork)
+{
+  if(GameFuncTbl[gcsp->game_comm_no].field_create != NULL){
+    GameFuncTbl[gcsp->game_comm_no].field_create(gcsp->parent_work, gcsp->app_work, fieldWork);
+  }
+}
+
+//==================================================================
+/**
+ * フィールドマップ削除時に呼ばれるコールバック
+ *
+ * @param   gcsp		
+ */
+//==================================================================
+void GameCommSys_Callback_FieldDelete(GAME_COMM_SYS_PTR gcsp, void *fieldWork)
+{
+  if(GameFuncTbl[gcsp->game_comm_no].field_delete != NULL){
+    GameFuncTbl[gcsp->game_comm_no].field_delete(gcsp->parent_work, gcsp->app_work, fieldWork);
   }
 }
 
