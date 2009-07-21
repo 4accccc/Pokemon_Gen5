@@ -19,12 +19,12 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA    ev_c021_talkobj_woman2
-_EVENT_DATA    ev_c021_talkobj_man2
-_EVENT_DATA    ev_c021_talkobj_middlewoman2
-_EVENT_DATA    ev_c021_talkobj_backpacker
-_EVENT_DATA    ev_c021_talkobj_accordion//アコーディオン
-_EVENT_DATA    ev_c021_talkobj_sign1
+_EVENT_DATA    ev_c02_talkobj_woman2
+_EVENT_DATA    ev_c02_talkobj_man2
+_EVENT_DATA    ev_c02_talkobj_middlewoman2
+_EVENT_DATA    ev_c02_talkobj_backpacker
+_EVENT_DATA    ev_c02_talkobj_accordion
+_EVENT_DATA    ev_c02_talkobj_sign1
 _EVENT_DATA_END
 
 
@@ -37,7 +37,7 @@ _EVENT_DATA_END
 /**************************************************************/
 /*  C02 WOMAN2の会話用イベントスクリプト                      */
 /**************************************************************/
-ev_c021_talkobj_woman2:
+ev_c02_talkobj_woman2:
 	_TALK_OBJ_PAUSE_ALL
 	_TURN_HERO_SITE
 	_TALKWIN_OPEN
@@ -50,7 +50,7 @@ ev_c021_talkobj_woman2:
 /**************************************************************/
 /*  C02 MAN2の会話用イベントスクリプト                      */
 /**************************************************************/
-ev_c021_talkobj_man2:
+ev_c02_talkobj_man2:
 	_TALK_OBJ_PAUSE_ALL
 	_TURN_HERO_SITE
 	_TALKWIN_OPEN
@@ -63,7 +63,7 @@ ev_c021_talkobj_man2:
 /**************************************************************/
 /*  C02 MIDDLEWOMAN2の会話用イベントスクリプト                      */
 /**************************************************************/
-ev_c021_talkobj_middlewoman2
+ev_c02_talkobj_middlewoman2:
 	_TALK_OBJ_PAUSE_ALL
 	_TURN_HERO_SITE
 	_TALKWIN_OPEN
@@ -76,7 +76,7 @@ ev_c021_talkobj_middlewoman2
 /**************************************************************/
 /*  C02 BACKPAXKERWの会話用イベントスクリプト                      */
 /**************************************************************/
-ev_c021_talkobj_backpacker:
+ev_c02_talkobj_backpacker:
 	_TALK_OBJ_PAUSE_ALL
 	_TURN_HERO_SITE
 	_TALKWIN_OPEN
@@ -89,7 +89,7 @@ ev_c021_talkobj_backpacker:
 /**************************************************************/
 /*  C02 ISSの会話用イベントスクリプト                      */
 /**************************************************************/
-ev_c021_talkobj_accordion:
+ev_c02_talkobj_accordion:
 	_TALK_OBJ_PAUSE_ALL
 	_TURN_HERO_SITE
 	_TALKWIN_OPEN
@@ -100,13 +100,13 @@ ev_c021_talkobj_accordion:
   _END
 
 /**************************************************************/
-/*  C02 BADMANの会話用イベントスクリプト                      */
+/*  C02 SIGNの会話用イベントスクリプト                      */
 /**************************************************************/
-ev_c01_talkobj_badman:
+ev_c02_talkobj_sign1:
 	_TALK_OBJ_PAUSE_ALL
 	_TURN_HERO_SITE
 	_TALKWIN_OPEN
-	_TALKMSG_ALLPUT msg_c02_badman_01
+	_TALKMSG_ALLPUT msg_c02_sign1_01
 	_AB_KEYWAIT
   _TALKWIN_CLOSE
   _OBJ_PAUSE_CLEAR_ALL
