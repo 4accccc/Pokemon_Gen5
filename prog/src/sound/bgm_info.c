@@ -88,11 +88,8 @@ void BGM_INFO_DeleteSystem( BGM_INFO_SYS* p_sys )
 	int i;
 
 	// システムが持つデータを破棄
-	for( i=0; i<p_sys->dataNum; i++ )
-	{
-		GFL_HEAP_FreeMemory( p_sys->seqIndex );
-		GFL_HEAP_FreeMemory( p_sys->issType );
-	}
+	GFL_HEAP_FreeMemory( p_sys->seqIndex );
+	GFL_HEAP_FreeMemory( p_sys->issType );
 	
 	// 本体を破棄
 	GFL_HEAP_FreeMemory( p_sys );
