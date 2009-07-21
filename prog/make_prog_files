@@ -391,7 +391,8 @@ SRCS_OVERLAY_BAG = app/bag/itemmenu.c \
 #===> SRCS_OVERLAY_DEV_WIRELESS
 #===> SRCS_OVERLAY_DEV_IRC
 SRCS_OVERLAY_TOWNMAP = app/townmap/townmap.c \
-											 app/townmap/townmap_grh.c
+											 app/townmap/townmap_grh.c \
+											 app/townmap/townmap_data_sys.c
 
 # サウンドデバッグ画面
 #===> main
