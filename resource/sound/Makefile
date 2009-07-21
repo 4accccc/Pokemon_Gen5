@@ -21,13 +21,20 @@ TARGETFILENAME  = snd_test_name.gmm
 include $(PROJECT_RSCDIR)\macro_define
 
 
-.PHONY:	do-build clean
+#------------------------------------------------------------------------------
+#※サブディレクトリでもMakeしたい場合、ここにディレクトリ名を書く
+#------------------------------------------------------------------------------
+SUBDIRS	= bgm_info
+
+.PHONY:	do-build clean subdir
 
 #------------------------------------------------------------------------------
 #	make do-build ルール
 #------------------------------------------------------------------------------
-do-build:	$(TARGETDIR)/$(TARGETFILENAME)
+do-build:	subdir $(TARGETDIR)/$(TARGETFILENAME)
 
+subdir:
+	@$(MAKE_SUBDIR)
 
 $(TARGETDIR)/$(TARGETFILENAME):	$(TARGETFILENAME)
 	$(COPY) $(TARGETFILENAME) $(TARGETDIR)
