@@ -32,6 +32,7 @@
 #include "net_app/compatible_irc_sys.h"
 #include "debug_irc_name.h"
 #include "net_app/irc_ranking.h"
+#include "app/townmap.h"
 
 #include "savedata/irc_compatible_savedata.h"
 
@@ -212,6 +213,7 @@ static void LISTDATA_ChangeProcNameDebug( DEBUG_NAGI_MAIN_WORK *p_wk );
 static void LISTDATA_ChangeProcRankingDebug( DEBUG_NAGI_MAIN_WORK *p_wk );
 static void LISTDATA_AddRankData( DEBUG_NAGI_MAIN_WORK *p_wk );
 static void LISTDATA_FullRankData( DEBUG_NAGI_MAIN_WORK *p_wk );
+static void LISTDATA_ChangeProcTownMap( DEBUG_NAGI_MAIN_WORK *p_wk );
 static void LISTDATA_Return( DEBUG_NAGI_MAIN_WORK *p_wk );
 static void LISTDATA_NextListHome( DEBUG_NAGI_MAIN_WORK *p_wk );
 static void LISTDATA_NextListPage1( DEBUG_NAGI_MAIN_WORK *p_wk );
@@ -281,6 +283,7 @@ enum
 	LISTDATA_SEQ_PROC_RANKING_DEBUG,
 	LISTDATA_SEQ_RANKDATA_ONE,
 	LISTDATA_SEQ_RANKDATA_FULL,
+	LISTDATA_SEQ_PROC_TOWNMAP,
 	LISTDATA_SEQ_NEXT_HOME,
 	LISTDATA_SEQ_NEXT_PAGE1,
 	LISTDATA_SEQ_MAX,
@@ -297,6 +300,7 @@ static const LISTDATA_FUNCTION	sc_list_funciton[]	=
 	LISTDATA_ChangeProcRankingDebug,
 	LISTDATA_AddRankData,
 	LISTDATA_FullRankData,
+	LISTDATA_ChangeProcTownMap,
 	LISTDATA_NextListHome,
 	LISTDATA_NextListPage1,
 };
@@ -343,6 +347,9 @@ static const LIST_SETUP_TBL sc_list_data_home[]	=
 	},
 	{	
 		L"ランクデータフル",	LISTDATA_SEQ_RANKDATA_FULL,
+	},
+	{	
+		L"タウンマップ", LISTDATA_SEQ_PROC_TOWNMAP,
 	},
 	{	
 		L"もどる", LISTDATA_SEQ_RETURN
@@ -848,6 +855,19 @@ static void LISTDATA_FullRankData( DEBUG_NAGI_MAIN_WORK *p_wk )
 	{	
 		LISTDATA_AddRankData( p_wk );
 	}
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	タウンマップPROCへ
+ *
+ *	@param	DEBUG_NAGI_MAIN_WORK *p_wk	ワーク
+ *
+ */
+//-----------------------------------------------------------------------------
+FS_EXTERN_OVERLAY(townmap);
+static void LISTDATA_ChangeProcTownMap( DEBUG_NAGI_MAIN_WORK *p_wk )
+{	
+	DEBUG_NAGI_COMMAND_ChangeProc( p_wk, FS_OVERLAY_ID(townmap), &TownMap_ProcData, NULL );
 }
 //----------------------------------------------------------------------------
 /**
