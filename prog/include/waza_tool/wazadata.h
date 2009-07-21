@@ -89,6 +89,7 @@ typedef enum {
   WAZASICK_AKUBI,
   WAZASICK_KAIHUKUHUUJI,
   WAZASICK_IEKI,            ///< ‚Æ‚­‚¹‚¢–³Œø‰»
+  WAZASICK_MIYABURU,        ///< ‚Ý‚â‚Ô‚ç‚ê‚Ä‘Š«ƒ[ƒ‚Å‚à“™”{‚Å‰£‚ç‚ê‚é•‰ñ”ð—¦ã¸‚ª–³Œø
   WAZASICK_YADORIGI,
   WAZASICK_SASIOSAE,
   WAZASICK_HOROBINOUTA,
