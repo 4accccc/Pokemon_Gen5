@@ -187,7 +187,7 @@ struct _FIELDMAP_WORK
 
 	FIELD_PLACE_NAME* placeNameSys;	// 地名表示ウィンドウ
 	ISS_UNIT* issUnit;				// 街ISSユニット
-	//BGM_INFO_SYS* bgmInfoSys;		// BGM情報
+	BGM_INFO_SYS* bgmInfoSys;		// BGM情報
 
 	
 	MMDLSYS *fldMMdlSys;
@@ -449,7 +449,7 @@ static MAINSEQ_RESULT mainSeqFunc_setup(GAMESYS_WORK *gsys, FIELDMAP_WORK *field
   fieldWork->issUnit = ISS_UNIT_Create( fieldWork->map_id, fieldWork->heapID );
 
   // BGM情報管理システムを作成
-  //fieldWork->bgmInfoSys = BGM_INFO_CreateSystem( fieldWork->heapID );
+  fieldWork->bgmInfoSys = BGM_INFO_CreateSystem( fieldWork->heapID );
 
   fieldWork->camera_control = FIELD_CAMERA_Create(
       fieldWork,
@@ -765,7 +765,7 @@ static MAINSEQ_RESULT mainSeqFunc_free(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldW
   ISS_UNIT_Delete( fieldWork->issUnit );
 
   // BGM情報管理システムの破棄
-  //BGM_INFO_DeleteSystem( fieldWork->bgmInfoSys );
+  BGM_INFO_DeleteSystem( fieldWork->bgmInfoSys );
 
   //フィールドエンカウント破棄
   FIELD_ENCOUNT_Delete( fieldWork->encount );
