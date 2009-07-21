@@ -76,6 +76,7 @@ static void handler_NazoNomi( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowW
 static void handler_NazoNomi_Use( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static BTL_EVENT_FACTOR* HAND_ADD_ITEM_OkkaNomi( u16 pri, u16 itemID, u8 pokeID );
 static void handler_OkkaNomi( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static void handler_common_WeakAff_DmgAfter( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static BTL_EVENT_FACTOR* HAND_ADD_ITEM_ItokeNomi( u16 pri, u16 itemID, u8 pokeID );
 static void handler_ItokeNomi( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static BTL_EVENT_FACTOR* HAND_ADD_ITEM_SokunoNomi( u16 pri, u16 itemID, u8 pokeID );
@@ -108,7 +109,7 @@ static BTL_EVENT_FACTOR* HAND_ADD_ITEM_RiribaNomi( u16 pri, u16 itemID, u8 pokeI
 static void handler_RiribaNomi( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static BTL_EVENT_FACTOR* HAND_ADD_ITEM_HozuNomi( u16 pri, u16 itemID, u8 pokeID );
 static void handler_HozuNomi( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
-static void common_WeakAff_Relieve( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, PokeType type );
+static BOOL common_WeakAff_Relieve( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, PokeType type );
 static void handler_PinchReactCommon( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void common_DamageReactCore( BTL_SVFLOW_WORK* flowWk, u8 pokeID, u8 n );
 static BTL_EVENT_FACTOR* HAND_ADD_ITEM_SiroiHerb( u16 pri, u16 itemID, u8 pokeID );
@@ -958,14 +959,37 @@ static void handler_NazoNomi_Use( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* f
 static BTL_EVENT_FACTOR* HAND_ADD_ITEM_OkkaNomi( u16 pri, u16 itemID, u8 pokeID )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_CHECK_AFFINITY,         handler_OkkaNomi },
+    { BTL_EVENT_WAZA_DMG_PROC2,         handler_OkkaNomi },
+    { BTL_EVENT_WAZA_DMG_AFTER,         handler_common_WeakAff_DmgAfter },
     { BTL_EVENT_NULL, NULL },
   };
   return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_ITEM, itemID, pri, pokeID, HandlerTable );
 }
 static void handler_OkkaNomi( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
-  common_WeakAff_Relieve( myHandle, flowWk, pokeID, POKETYPE_HONOO );
+  if( common_WeakAff_Relieve( myHandle, flowWk, pokeID, POKETYPE_HONOO ) ){
+    work[0] = 1;
+  }
+}
+static void handler_common_WeakAff_DmgAfter( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+{
+  if( work[0] )
+  {
+    if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_DEF) == pokeID )
+    {
+      BTL_HANDEX_PARAM_MESSAGE* msg_param;
+      BTL_HANDEX_PARAM_SET_ITEM* item_param;
+
+      msg_param = BTL_SVFLOW_HANDLERWORK_Push( flowWk, BTL_HANDEX_MESSAGE, pokeID );
+      HANDEX_STR_Setup( &msg_param->str, BTL_STRTYPE_SET, BTL_STRID_SET_Item_DamageShrink );
+      HANDEX_STR_AddArg( &msg_param->str, pokeID );
+      HANDEX_STR_AddArg( &msg_param->str, BTL_EVENT_FACTOR_GetSubID(myHandle) );
+
+      item_param = BTL_SVFLOW_HANDLERWORK_Push( flowWk, BTL_HANDEX_SET_ITEM, pokeID );
+      item_param->pokeID = pokeID;
+      item_param->itemID = ITEM_DUMMY_DATA;
+    }
+  }
 }
 //------------------------------------------------------------------------------
 /**
@@ -975,14 +999,17 @@ static void handler_OkkaNomi( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowW
 static BTL_EVENT_FACTOR* HAND_ADD_ITEM_ItokeNomi( u16 pri, u16 itemID, u8 pokeID )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_CHECK_AFFINITY,         handler_ItokeNomi },
+    { BTL_EVENT_WAZA_DMG_PROC2,         handler_ItokeNomi },
+    { BTL_EVENT_WAZA_DMG_AFTER,         handler_common_WeakAff_DmgAfter },
     { BTL_EVENT_NULL, NULL },
   };
   return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_ITEM, itemID, pri, pokeID, HandlerTable );
 }
 static void handler_ItokeNomi( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
-  common_WeakAff_Relieve( myHandle, flowWk, pokeID, POKETYPE_MIZU );
+  if( common_WeakAff_Relieve( myHandle, flowWk, pokeID, POKETYPE_MIZU ) ){
+    work[0] = 1;
+  }
 }
 //------------------------------------------------------------------------------
 /**
@@ -992,14 +1019,17 @@ static void handler_ItokeNomi( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flow
 static BTL_EVENT_FACTOR* HAND_ADD_ITEM_SokunoNomi( u16 pri, u16 itemID, u8 pokeID )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_CHECK_AFFINITY,               handler_SokunoNomi },
+    { BTL_EVENT_WAZA_DMG_PROC2,         handler_SokunoNomi },
+    { BTL_EVENT_WAZA_DMG_AFTER,         handler_common_WeakAff_DmgAfter },
     { BTL_EVENT_NULL, NULL },
   };
   return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_ITEM, itemID, pri, pokeID, HandlerTable );
 }
 static void handler_SokunoNomi( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
-  common_WeakAff_Relieve( myHandle, flowWk, pokeID, POKETYPE_DENKI );
+  if( common_WeakAff_Relieve( myHandle, flowWk, pokeID, POKETYPE_DENKI ) ){
+    work[0] = 1;
+  }
 }
 //------------------------------------------------------------------------------
 /**
@@ -1009,14 +1039,17 @@ static void handler_SokunoNomi( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flo
 static BTL_EVENT_FACTOR* HAND_ADD_ITEM_RindoNomi( u16 pri, u16 itemID, u8 pokeID )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_CHECK_AFFINITY,               handler_RindoNomi },
+    { BTL_EVENT_WAZA_DMG_PROC2,               handler_RindoNomi },
+    { BTL_EVENT_WAZA_DMG_AFTER,         handler_common_WeakAff_DmgAfter },
     { BTL_EVENT_NULL, NULL },
   };
   return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_ITEM, itemID, pri, pokeID, HandlerTable );
 }
 static void handler_RindoNomi( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
-  common_WeakAff_Relieve( myHandle, flowWk, pokeID, POKETYPE_KUSA );
+  if( common_WeakAff_Relieve( myHandle, flowWk, pokeID, POKETYPE_KUSA ) ){
+    work[0] = 1;
+  }
 }
 //------------------------------------------------------------------------------
 /**
@@ -1026,14 +1059,17 @@ static void handler_RindoNomi( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flow
 static BTL_EVENT_FACTOR* HAND_ADD_ITEM_YacheNomi( u16 pri, u16 itemID, u8 pokeID )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_CHECK_AFFINITY,               handler_YacheNomi },
+    { BTL_EVENT_WAZA_DMG_PROC2,               handler_YacheNomi },
+    { BTL_EVENT_WAZA_DMG_AFTER,         handler_common_WeakAff_DmgAfter },
     { BTL_EVENT_NULL, NULL },
   };
   return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_ITEM, itemID, pri, pokeID, HandlerTable );
 }
 static void handler_YacheNomi( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
-  common_WeakAff_Relieve( myHandle, flowWk, pokeID, POKETYPE_KOORI );
+  if( common_WeakAff_Relieve( myHandle, flowWk, pokeID, POKETYPE_KOORI ) ){
+    work[0] = 1;
+  }
 }
 //------------------------------------------------------------------------------
 /**
@@ -1043,14 +1079,17 @@ static void handler_YacheNomi( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flow
 static BTL_EVENT_FACTOR* HAND_ADD_ITEM_YopuNomi( u16 pri, u16 itemID, u8 pokeID )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_CHECK_AFFINITY,               handler_YopuNomi },
+    { BTL_EVENT_WAZA_DMG_PROC2,               handler_YopuNomi },
+    { BTL_EVENT_WAZA_DMG_AFTER,         handler_common_WeakAff_DmgAfter },
     { BTL_EVENT_NULL, NULL },
   };
   return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_ITEM, itemID, pri, pokeID, HandlerTable );
 }
 static void handler_YopuNomi( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
-  common_WeakAff_Relieve( myHandle, flowWk, pokeID, POKETYPE_KAKUTOU );
+  if( common_WeakAff_Relieve( myHandle, flowWk, pokeID, POKETYPE_KAKUTOU ) ){
+    work[0] = 1;
+  }
 }
 //------------------------------------------------------------------------------
 /**
@@ -1060,14 +1099,17 @@ static void handler_YopuNomi( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowW
 static BTL_EVENT_FACTOR* HAND_ADD_ITEM_BiarNomi( u16 pri, u16 itemID, u8 pokeID )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_CHECK_AFFINITY,               handler_BiarNomi },
+    { BTL_EVENT_WAZA_DMG_PROC2,               handler_BiarNomi },
+    { BTL_EVENT_WAZA_DMG_AFTER,         handler_common_WeakAff_DmgAfter },
     { BTL_EVENT_NULL, NULL },
   };
   return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_ITEM, itemID, pri, pokeID, HandlerTable );
 }
 static void handler_BiarNomi( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
-  common_WeakAff_Relieve( myHandle, flowWk, pokeID, POKETYPE_DOKU );
+  if( common_WeakAff_Relieve( myHandle, flowWk, pokeID, POKETYPE_DOKU ) ){
+    work[0] = 1;
+  }
 }
 //------------------------------------------------------------------------------
 /**
@@ -1077,14 +1119,17 @@ static void handler_BiarNomi( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowW
 static BTL_EVENT_FACTOR* HAND_ADD_ITEM_SyukaNomi( u16 pri, u16 itemID, u8 pokeID )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_CHECK_AFFINITY,               handler_SyukaNomi },
+    { BTL_EVENT_WAZA_DMG_PROC2,               handler_SyukaNomi },
+    { BTL_EVENT_WAZA_DMG_AFTER,         handler_common_WeakAff_DmgAfter },
     { BTL_EVENT_NULL, NULL },
   };
   return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_ITEM, itemID, pri, pokeID, HandlerTable );
 }
 static void handler_SyukaNomi( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
-  common_WeakAff_Relieve( myHandle, flowWk, pokeID, POKETYPE_JIMEN );
+  if( common_WeakAff_Relieve( myHandle, flowWk, pokeID, POKETYPE_JIMEN ) ){
+    work[0] = 1;
+  }
 }
 //------------------------------------------------------------------------------
 /**
@@ -1094,14 +1139,17 @@ static void handler_SyukaNomi( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flow
 static BTL_EVENT_FACTOR* HAND_ADD_ITEM_BakouNomi( u16 pri, u16 itemID, u8 pokeID )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_CHECK_AFFINITY,               handler_BakouNomi },
+    { BTL_EVENT_WAZA_DMG_PROC2,               handler_BakouNomi },
+    { BTL_EVENT_WAZA_DMG_AFTER,         handler_common_WeakAff_DmgAfter },
     { BTL_EVENT_NULL, NULL },
   };
   return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_ITEM, itemID, pri, pokeID, HandlerTable );
 }
 static void handler_BakouNomi( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
-  common_WeakAff_Relieve( myHandle, flowWk, pokeID, POKETYPE_HIKOU );
+  if( common_WeakAff_Relieve( myHandle, flowWk, pokeID, POKETYPE_HIKOU ) ){
+    work[0] = 1;
+  }
 }
 //------------------------------------------------------------------------------
 /**
@@ -1111,14 +1159,17 @@ static void handler_BakouNomi( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flow
 static BTL_EVENT_FACTOR* HAND_ADD_ITEM_UtanNomi( u16 pri, u16 itemID, u8 pokeID )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_CHECK_AFFINITY,               handler_UtanNomi },
+    { BTL_EVENT_WAZA_DMG_PROC2,               handler_UtanNomi },
+    { BTL_EVENT_WAZA_DMG_AFTER,         handler_common_WeakAff_DmgAfter },
     { BTL_EVENT_NULL, NULL },
   };
   return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_ITEM, itemID, pri, pokeID, HandlerTable );
 }
 static void handler_UtanNomi( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
-  common_WeakAff_Relieve( myHandle, flowWk, pokeID, POKETYPE_ESPER );
+  if( common_WeakAff_Relieve( myHandle, flowWk, pokeID, POKETYPE_ESPER ) ){
+    work[0] = 1;
+  }
 }
 //------------------------------------------------------------------------------
 /**
@@ -1128,14 +1179,17 @@ static void handler_UtanNomi( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowW
 static BTL_EVENT_FACTOR* HAND_ADD_ITEM_TangaNomi( u16 pri, u16 itemID, u8 pokeID )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_CHECK_AFFINITY,               handler_TangaNomi },
+    { BTL_EVENT_WAZA_DMG_PROC2,               handler_TangaNomi },
+    { BTL_EVENT_WAZA_DMG_AFTER,         handler_common_WeakAff_DmgAfter },
     { BTL_EVENT_NULL, NULL },
   };
   return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_ITEM, itemID, pri, pokeID, HandlerTable );
 }
 static void handler_TangaNomi( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
-  common_WeakAff_Relieve( myHandle, flowWk, pokeID, POKETYPE_MUSHI );
+  if( common_WeakAff_Relieve( myHandle, flowWk, pokeID, POKETYPE_MUSHI ) ){
+    work[0] = 1;
+  }
 }
 //------------------------------------------------------------------------------
 /**
@@ -1145,14 +1199,17 @@ static void handler_TangaNomi( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flow
 static BTL_EVENT_FACTOR* HAND_ADD_ITEM_YorogiNomi( u16 pri, u16 itemID, u8 pokeID )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_CHECK_AFFINITY,               handler_YorogiNomi },
+    { BTL_EVENT_WAZA_DMG_PROC2,               handler_YorogiNomi },
+    { BTL_EVENT_WAZA_DMG_AFTER,         handler_common_WeakAff_DmgAfter },
     { BTL_EVENT_NULL, NULL },
   };
   return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_ITEM, itemID, pri, pokeID, HandlerTable );
 }
 static void handler_YorogiNomi( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
-  common_WeakAff_Relieve( myHandle, flowWk, pokeID, POKETYPE_IWA );
+  if( common_WeakAff_Relieve( myHandle, flowWk, pokeID, POKETYPE_IWA ) ){
+    work[0] = 1;
+  }
 }
 //------------------------------------------------------------------------------
 /**
@@ -1162,14 +1219,17 @@ static void handler_YorogiNomi( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flo
 static BTL_EVENT_FACTOR* HAND_ADD_ITEM_KasibuNomi( u16 pri, u16 itemID, u8 pokeID )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_CHECK_AFFINITY,               handler_KasibuNomi },
+    { BTL_EVENT_WAZA_DMG_PROC2,               handler_KasibuNomi },
+    { BTL_EVENT_WAZA_DMG_AFTER,         handler_common_WeakAff_DmgAfter },
     { BTL_EVENT_NULL, NULL },
   };
   return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_ITEM, itemID, pri, pokeID, HandlerTable );
 }
 static void handler_KasibuNomi( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
-  common_WeakAff_Relieve( myHandle, flowWk, pokeID, POKETYPE_GHOST );
+  if( common_WeakAff_Relieve( myHandle, flowWk, pokeID, POKETYPE_GHOST ) ){
+    work[0] = 1;
+  }
 }
 //------------------------------------------------------------------------------
 /**
@@ -1179,14 +1239,17 @@ static void handler_KasibuNomi( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flo
 static BTL_EVENT_FACTOR* HAND_ADD_ITEM_HabanNomi( u16 pri, u16 itemID, u8 pokeID )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_CHECK_AFFINITY,               handler_HabanNomi },
+    { BTL_EVENT_WAZA_DMG_PROC2,               handler_HabanNomi },
+    { BTL_EVENT_WAZA_DMG_AFTER,         handler_common_WeakAff_DmgAfter },
     { BTL_EVENT_NULL, NULL },
   };
   return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_ITEM, itemID, pri, pokeID, HandlerTable );
 }
 static void handler_HabanNomi( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
-  common_WeakAff_Relieve( myHandle, flowWk, pokeID, POKETYPE_DRAGON );
+  if( common_WeakAff_Relieve( myHandle, flowWk, pokeID, POKETYPE_DRAGON ) ){
+    work[0] = 1;
+  }
 }
 //------------------------------------------------------------------------------
 /**
@@ -1196,14 +1259,17 @@ static void handler_HabanNomi( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flow
 static BTL_EVENT_FACTOR* HAND_ADD_ITEM_NamoNomi( u16 pri, u16 itemID, u8 pokeID )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_CHECK_AFFINITY,               handler_NamoNomi },
+    { BTL_EVENT_WAZA_DMG_PROC2,               handler_NamoNomi },
+    { BTL_EVENT_WAZA_DMG_AFTER,         handler_common_WeakAff_DmgAfter },
     { BTL_EVENT_NULL, NULL },
   };
   return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_ITEM, itemID, pri, pokeID, HandlerTable );
 }
 static void handler_NamoNomi( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
-  common_WeakAff_Relieve( myHandle, flowWk, pokeID, POKETYPE_AKU );
+  if( common_WeakAff_Relieve( myHandle, flowWk, pokeID, POKETYPE_AKU ) ){
+    work[0] = 1;
+  }
 }
 //------------------------------------------------------------------------------
 /**
@@ -1213,14 +1279,17 @@ static void handler_NamoNomi( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowW
 static BTL_EVENT_FACTOR* HAND_ADD_ITEM_RiribaNomi( u16 pri, u16 itemID, u8 pokeID )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_CHECK_AFFINITY,               handler_RiribaNomi },
+    { BTL_EVENT_WAZA_DMG_PROC2,               handler_RiribaNomi },
+    { BTL_EVENT_WAZA_DMG_AFTER,         handler_common_WeakAff_DmgAfter },
     { BTL_EVENT_NULL, NULL },
   };
   return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_ITEM, itemID, pri, pokeID, HandlerTable );
 }
 static void handler_RiribaNomi( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
-  common_WeakAff_Relieve( myHandle, flowWk, pokeID, POKETYPE_HAGANE );
+  if( common_WeakAff_Relieve( myHandle, flowWk, pokeID, POKETYPE_HAGANE ) ){
+    work[0] = 1;
+  }
 }
 //------------------------------------------------------------------------------
 /**
@@ -1230,7 +1299,8 @@ static void handler_RiribaNomi( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flo
 static BTL_EVENT_FACTOR* HAND_ADD_ITEM_HozuNomi( u16 pri, u16 itemID, u8 pokeID )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_CHECK_AFFINITY,               handler_HozuNomi },
+    { BTL_EVENT_WAZA_DMG_PROC2,               handler_HozuNomi },
+    { BTL_EVENT_WAZA_DMG_AFTER,         handler_common_WeakAff_DmgAfter },
     { BTL_EVENT_NULL, NULL },
   };
   return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_ITEM, itemID, pri, pokeID, HandlerTable );
@@ -1240,25 +1310,23 @@ static void handler_HozuNomi( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowW
   if( (BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_DEF) == pokeID)
   &&  (BTL_EVENTVAR_GetValue(BTL_EVAR_WAZA_TYPE) == POKETYPE_NORMAL )
   ){
-    BTL_EVWK_CHECK_AFFINITY* evwk = (BTL_EVWK_CHECK_AFFINITY*) BTL_EVENTVAR_GetValue(BTL_EVAR_WORK_ADRS);
-    evwk->weakReserveByItem = TRUE;
-    evwk->weakedItemID = BTL_EVENT_FACTOR_GetSubID( myHandle );
+    BTL_EVENTVAR_MulValue( BTL_EVAR_RATIO, FX32_CONST(0.5) );
+    work[0] = 1;
   }
 }
-
-static void common_WeakAff_Relieve( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, PokeType type )
+/**
+ *  ˆÐ—Í”¼Œ¸‚³‚¹‚½‚çTRUE‚ð•Ô‚·
+ */
+static BOOL common_WeakAff_Relieve( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, PokeType type )
 {
   if( (BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_DEF) == pokeID)
   &&  (BTL_EVENTVAR_GetValue(BTL_EVAR_WAZA_TYPE) == type)
+  &&  (BTL_EVENTVAR_GetValue(BTL_EVAR_TYPEAFF) > BTL_TYPEAFF_100)
   ){
-    BTL_EVWK_CHECK_AFFINITY* evwk = (BTL_EVWK_CHECK_AFFINITY*) BTL_EVENTVAR_GetValue(BTL_EVAR_WORK_ADRS);
-    if( evwk->aff > BTL_TYPEAFF_100 )
-    {
-      evwk->aff--;
-      evwk->weakedByItem = TRUE;
-      evwk->weakedItemID = BTL_EVENT_FACTOR_GetSubID( myHandle );
-    }
+    BTL_EVENTVAR_MulValue( BTL_EVAR_RATIO, FX32_CONST(0.5) );
+    return TRUE;
   }
+  return FALSE;
 }
 
 //----------------------------------------------------------------------------------

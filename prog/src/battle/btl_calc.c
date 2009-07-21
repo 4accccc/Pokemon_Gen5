@@ -334,6 +334,7 @@ void BTL_CALC_WazaSickContToBppSickCont( WAZA_SICKCONT_PARAM wazaSickCont, const
 
   case WAZASICK_CONT_PERMANENT:
     sickCont->permanent.count_max = wazaSickCont.turnMax;
+    sickCont->permanent.param = wazaSickCont.turnMin;
     break;
   }
 }

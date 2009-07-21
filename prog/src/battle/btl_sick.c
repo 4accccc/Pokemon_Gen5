@@ -2,6 +2,7 @@
 #include "btl_common.h"
 #include "btl_pokeparam.h"
 #include "btl_server_flow.h"
+#include "btl_event.h"
 
 #include "btl_sick.h"
 
@@ -215,8 +216,6 @@ static int getCureStrID( WazaSick sick, BOOL fUseItem )
   return -1;
 
 }
-
-
 //=============================================================================================
 /**
  * 状態異常にかかった時のデフォルトメッセージＩＤを返す
@@ -245,6 +244,7 @@ int BTL_SICK_GetDefaultSickStrID( WazaSick sickID, BPP_SICK_CONT cont )
   case WAZASICK_ICHAMON:    strID = BTL_STRID_SET_Ichamon; break;
   case WAZASICK_AKUBI:      strID = BTL_STRID_SET_Akubi; break;
   case WAZASICK_YADORIGI:   strID = BTL_STRID_SET_Yadorigi; break;
+  case WAZASICK_MIYABURU:   strID = BTL_STRID_SET_Miyaburu; break;
 
   case WAZASICK_DOKU:
     strID = BPP_SICKCONT_IsMoudokuCont(cont)? BTL_STRID_SET_MoudokuGet : BTL_STRID_SET_DokuGet;
@@ -255,5 +255,48 @@ int BTL_SICK_GetDefaultSickStrID( WazaSick sickID, BPP_SICK_CONT cont )
   }
 
   return strID;
+}
+
+
+
+
+
+
+
+//=============================================================================================
+/**
+ *
+ *
+ * @param   flowWk
+ * @param   defender
+ */
+//=============================================================================================
+void BTL_SICK_CheckNotEffectByType( BTL_SVFLOW_WORK* flowWk, const BTL_POKEPARAM* defender )
+{
+  if( BPP_CheckSick(defender, WAZASICK_MIYABURU) )
+  {
+    BPP_SICK_CONT cont = BPP_GetSickCont( defender, WAZASICK_MIYABURU );
+    PokeType type = BPP_SICKCONT_GetParam( cont );
+    BTL_Printf("見破られ中, 対象タイプ=%d\n", type);
+    if( BPP_IsMatchType(defender, type) ){
+      BTL_EVENTVAR_RewriteValue( BTL_EVAR_NOEFFECT_FLAG, FALSE );
+    }
+  }
+}
+
+void BTL_SICK_CheckDamageAffinity(  BTL_SVFLOW_WORK* flowWk, const BTL_POKEPARAM* defender )
+{
+  if( BPP_CheckSick(defender, WAZASICK_MIYABURU) )
+  {
+    BPP_SICK_CONT cont = BPP_GetSickCont( defender, WAZASICK_MIYABURU );
+    PokeType type = BPP_SICKCONT_GetParam( cont );
+    BTL_Printf("見破られ中, 対象タイプ=%d\n", type);
+    if( BPP_IsMatchType(defender, type) ){
+      BtlTypeAff aff = BTL_EVENTVAR_GetValue( BTL_EVAR_TYPEAFF );
+      if( aff == BTL_TYPEAFF_0 ){
+        BTL_EVENTVAR_RewriteValue( BTL_EVAR_TYPEAFF, BTL_TYPEAFF_100 );
+      }
+    }
+  }
 }
 

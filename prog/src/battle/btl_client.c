@@ -193,6 +193,7 @@ static BOOL scProc_OP_Hensin( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_OP_OutClear( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_OP_AddFldEff( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_OP_RemoveFldEff( BTL_CLIENT* wk, int* seq, const int* args );
+static BOOL scProc_OP_SetPokeCounter( BTL_CLIENT* wk, int* seq, const int* args );
 static void cec_addCode( CANT_ESC_CONTROL* ctrl, u8 pokeID, BtlCantEscapeCode code );
 static void cec_subCode( CANT_ESC_CONTROL* ctrl, u8 pokeID, BtlCantEscapeCode code );
 static u8 cec_isEnable( CANT_ESC_CONTROL* ctrl, BtlCantEscapeCode code, BTL_CLIENT* wk );
@@ -1254,6 +1255,7 @@ static BOOL SubProc_UI_ServerCmd( BTL_CLIENT* wk, int* seq )
     { SC_OP_OUTCLEAR,           scProc_OP_OutClear        },
     { SC_OP_ADD_FLDEFF,         scProc_OP_AddFldEff       },
     { SC_OP_REMOVE_FLDEFF,      scProc_OP_RemoveFldEff    },
+    { SC_OP_SET_POKE_COUNTER,   scProc_OP_SetPokeCounter  },
     { SC_ACT_KILL,              scProc_ACT_Kill           },
   };
 
@@ -2254,6 +2256,13 @@ static BOOL scProc_OP_RemoveFldEff( BTL_CLIENT* wk, int* seq, const int* args )
     BTL_FIELD_RemoveEffect( args[0] );
   }
   return TRUE;
+}
+static BOOL scProc_OP_SetPokeCounter( BTL_CLIENT* wk, int* seq, const int* args )
+{
+  BTL_POKEPARAM* bpp = BTL_POKECON_GetPokeParam( wk->pokeCon, args[0] );
+  BPP_COUNTER_Set( bpp, args[1], args[2] );
+  return TRUE;
+
 }
 
 

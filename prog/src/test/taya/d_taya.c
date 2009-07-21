@@ -634,100 +634,41 @@ static BOOL SUBPROC_PrintTest( GFL_PROC* proc, int* seq, void* pwk, void* mywk )
     RAND_TEST_UP_VAL = RAND_MAX_NUM - RAND_TEST_DOWN_VAL,
   };
 
-  typedef struct {
-
-    u16  count[RAND_MAX_NUM];
-
-  }SUBWORK;
-
   MAIN_WORK* wk = mywk;
-  SUBWORK* sub = getGenericWork( wk, sizeof(SUBWORK) );
 
-  GFL_TCBL_Main( wk->tcbl );
-
-  if( !PRINT_UTIL_Trans( wk->printUtil, wk->printQue ) )
-  {
-    return FALSE;
-  }
+  static const u8 letterCol[3] = {
+    0x05, 0x09, 0x0d
+  };
 
   switch( *seq ){
   case 0:
-    GFL_MSG_GetString( wk->mm, DEBUG_TAYA_STR00, wk->strbuf );
-    GFL_BMP_Clear( wk->bmp, 0xff );
-    PRINT_UTIL_Print( wk->printUtil, wk->printQue, 0, 0, wk->strbuf, wk->fontHandle );
-    (*seq)++;
-    break;
+    {
+      int i;
+      PRINTSYS_LSB  color;
 
+      GFL_BMP_Clear( wk->bmp, 0x0f );
+
+      for(i=0; i<NELEMS(strID); ++i)
+      {
+        GFL_MSG_GetString( wk->mm, strID[i], wk->strbuf );
+        color = PRINTSYS_LSB_Make( letterCol[i%3], 0x0f, 0x0f );
+        PRINTSYS_PrintQueColor( wk->printQue, wk->bmp, 4, 4+i*12+((i/8)*16), wk->strbuf, wk->fontHandle, color );
+      }
+      (*seq)++;
+    }
+    break;
   case 1:
-    if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_SELECT )
+    if( PRINTSYS_QUE_Main( wk->printQue ) )
     {
-      GFL_MSG_GetString( wk->mm, DEBUG_TAYA_STR10, wk->strbuf );
-      GFL_BMP_Clear( wk->bmp, 0xff );
-      PRINT_UTIL_Print( wk->printUtil, wk->printQue, 0, 0, wk->strbuf, wk->fontHandle );
-//      GFL_BMPWIN_TransVramCharacter( wk->win );
-      (*seq) = 10;
-      break;
-    }
-    if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A )
-    {
-      wk->strNum = 0;
-      wk->yofs = 30;
-      (*seq)++;
-      break;
-    }
-    if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_B )
-    {
-      return TRUE;
-    }
-    break;
-
-  case 2:
-    GFL_MSG_GetString( wk->mm, strID[wk->strNum], wk->strbuf );
-    wk->printStream = PRINTSYS_PrintStream( wk->win, 0, wk->yofs,
-            wk->strbuf, wk->fontHandle, 0, wk->tcbl, 0, wk->heapID, 0xff );
-    (*seq)++;
-    break;
-
-  case 3:
-    if( PRINTSYS_PrintStreamGetState(wk->printStream) == PRINTSTREAM_STATE_DONE )
-    {
-      PRINTSYS_PrintStreamDelete( wk->printStream );
+      TAYA_Printf("QUEˆ—‚µ‚¨‚í‚Á‚½‚©‚çVRAM“]‘—‚µ‚Ü‚·\n");
+      GFL_BMPWIN_TransVramCharacter( wk->win );
       (*seq)++;
     }
     break;
-
-  case 4:
-    if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A )
-    {
-      if( ++(wk->strNum) < NELEMS(strID) )
-      {
-        wk->yofs += 16;
-        if( strID[wk->strNum] == DEBUG_TAYA_STR09 )
-        {
-          wk->yofs += 16;
-        }
-        (*seq) = 2;
-      }
-      else
-      {
-        wk->kanjiMode = !(wk->kanjiMode);
-        GFL_MSGSYS_SetLangID( wk->kanjiMode );
-        (*seq) = 0;
-      }
-    }
-    break;
-
-  case 10:
-    if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_SELECT )
-    {
-      (*seq) = 0;
-    }
-    break;
-
   }
-
   return FALSE;
 }
+
 
 //----------------------------------------------------------
 /**
@@ -950,23 +891,24 @@ static BOOL SUBPROC_GoBattle( GFL_PROC* proc, int* seq, void* pwk, void* mywk )
       para->statusPlayer = SaveData_GetMyStatus( SaveControl_GetPointer() );
 
     #ifdef DEBUG_ONLY_FOR_taya
-      setup_party( HEAPID_CORE, para->partyPlayer, MONSNO_HARITEYAMA,  MONSNO_PIKATYUU, MONSNO_GURAADON, MONSNO_KAIOOGA, 0 );
-      setup_party( HEAPID_CORE, para->partyEnemy1, MONSNO_ENPERUTO,    MONSNO_AABOKKU, MONSNO_YADOKINGU, MONSNO_REKKUUZA, 0 );
+      setup_party( HEAPID_CORE, para->partyPlayer, MONSNO_ENEKORORO,  MONSNO_PIKATYUU, MONSNO_GURAADON, MONSNO_KAIOOGA, 0 );
+      setup_party( HEAPID_CORE, para->partyEnemy1, MONSNO_GENGAA,    MONSNO_AABOKKU, MONSNO_YADOKINGU, MONSNO_REKKUUZA, 0 );
       {
         POKEMON_PARAM* pp = PokeParty_GetMemberPointer( para->partyEnemy1, 0 );
-        PP_SetWazaPos( pp, WAZANO_DOKUNOKONA,  0 );
-        PP_SetWazaPos( pp, WAZANO_NULL,    1 );
-        PP_SetWazaPos( pp, WAZANO_NULL,    2 );
-        PP_SetWazaPos( pp, WAZANO_NULL,    3 );
+        PP_SetWazaPos( pp, WAZANO_HANERU, 0 );
+        PP_SetWazaPos( pp, WAZANO_NULL, 1 );
+        PP_SetWazaPos( pp, WAZANO_NULL, 2 );
+        PP_SetWazaPos( pp, WAZANO_NULL, 3 );
 
         pp = PokeParty_GetMemberPointer( para->partyPlayer, 0 );
-        PP_SetWazaPos( pp, WAZANO_HOROBINOUTA,   0 );
-        PP_SetWazaPos( pp, WAZANO_ZYUUDEN,       1 );
-        PP_SetWazaPos( pp, WAZANO_HANERU,        2 );
-        PP_SetWazaPos( pp, WAZANO_KAMINARIPANTI, 3 );
+        PP_SetWazaPos( pp, WAZANO_MIYABURU,   0 );
+        PP_SetWazaPos( pp, WAZANO_HATAKU,    1 );
+        PP_SetWazaPos( pp, WAZANO_NOMIKOMU,    2 );
+        PP_SetWazaPos( pp, WAZANO_TOKERU,  3 );
+        PP_Put( pp, ID_PARA_item, ITEM_OKKANOMI );
 
-        pp = PokeParty_GetMemberPointer( para->partyPlayer, 1 );
-        PP_SetWazaPos( pp, WAZANO_MIKADUKINOMAI,   0 );
+        pp = PokeParty_GetMemberPointer( para->partyEnemy1, 1 );
+        PP_Put( pp, ID_PARA_speabino,   POKETOKUSEI_HEDOROEKI );
 
 
 //        PP_Put( pp, ID_PARA_item, ITEM_KIAINOTASUKI );
