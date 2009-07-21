@@ -19,7 +19,14 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA    ev_c01
+_EVENT_DATA    ev_c01_talkobj_badman
+_EVENT_DATA    ev_c01_talkobj_boy2
+_EVENT_DATA    ev_c01_talkobj_cleaningm
+_EVENT_DATA    ev_c01_talkobj_breederw
+_EVENT_DATA    ev_c01_talkobj_woman2
+_EVENT_DATA    ev_c01_sign1
+_EVENT_DATA    ev_c01_sign2
+_EVENT_DATA    ev_c01_sign3
 _EVENT_DATA_END
 
 
@@ -30,9 +37,105 @@ _EVENT_DATA_END
 //  _END
 
 /**************************************************************/
-/*                                                            */
+/*  C01 BADMANの会話用イベントスクリプト                      */
 /**************************************************************/
-ev_c01:
-  //とりあえず最初のラベルだけ生成している
+ev_c01_talkobj_badman:
+	_TALK_OBJ_PAUSE_ALL
+	_TURN_HERO_SITE
+	_TALKWIN_OPEN
+	_TALKMSG_ALLPUT msg_c01_badman_01
+	_AB_KEYWAIT
+  _TALKWIN_CLOSE
+  _OBJ_PAUSE_CLEAR_ALL
   _END
 
+/**************************************************************/
+/*  C01 BOY2の会話用イベントスクリプト                      */
+/**************************************************************/
+ev_c01_talkobj_boy2:
+	_TALK_OBJ_PAUSE_ALL
+	_TURN_HERO_SITE
+	_TALKWIN_OPEN
+	_TALKMSG_ALLPUT msg_c01_boy2_01
+	_AB_KEYWAIT
+  _TALKWIN_CLOSE
+  _OBJ_PAUSE_CLEAR_ALL
+  _END
+
+/**************************************************************/
+/*  C01 CLEANINGMの会話用イベントスクリプト                      */
+/**************************************************************/
+ev_c01_talkobj_cleaningm:
+	_TALK_OBJ_PAUSE_ALL
+	_TURN_HERO_SITE
+	_TALKWIN_OPEN
+	_TALKMSG_ALLPUT msg_c01_cleaningm_01
+	_AB_KEYWAIT
+  _TALKWIN_CLOSE
+  _OBJ_PAUSE_CLEAR_ALL
+  _END
+
+/**************************************************************/
+/*  C01 BREEDERWの会話用イベントスクリプト                      */
+/**************************************************************/
+ev_c01_talkobj_breederw:
+	_TALK_OBJ_PAUSE_ALL
+	_TURN_HERO_SITE
+	_TALKWIN_OPEN
+	_TALKMSG_ALLPUT msg_c01_breederw_01
+	_AB_KEYWAIT
+  _TALKWIN_CLOSE
+  _OBJ_PAUSE_CLEAR_ALL
+  _END
+
+/**************************************************************/
+/*  C01 WOMAN2の会話用イベントスクリプト                      */
+/**************************************************************/
+ev_c01_talkobj_woman2:
+	_TALK_OBJ_PAUSE_ALL
+	_TURN_HERO_SITE
+	_TALKWIN_OPEN
+	_TALKMSG_ALLPUT msg_c01_woman2_01
+	_AB_KEYWAIT
+  _TALKWIN_CLOSE
+  _OBJ_PAUSE_CLEAR_ALL
+  _END
+
+/**************************************************************/
+/*  C01 SIGN1用イベントスクリプト                      */
+/**************************************************************/
+ev_c01_sign1:
+	_TALK_OBJ_PAUSE_ALL
+	_TURN_HERO_SITE
+	_TALKWIN_OPEN
+	_TALKMSG_ALLPUT msg_c01_sign1_01
+	_AB_KEYWAIT
+  _TALKWIN_CLOSE
+  _OBJ_PAUSE_CLEAR_ALL
+  _END
+
+/**************************************************************/
+/*  C01 SIGN2用イベントスクリプト                      */
+/**************************************************************/
+ev_c01_sign2:
+	_TALK_OBJ_PAUSE_ALL
+	_TURN_HERO_SITE
+	_TALKWIN_OPEN
+	_TALKMSG_ALLPUT msg_c01_sign2_01
+	_AB_KEYWAIT
+  _TALKWIN_CLOSE
+  _OBJ_PAUSE_CLEAR_ALL
+  _END
+
+/**************************************************************/
+/*  C01 SIGN3用イベントスクリプト                      */
+/**************************************************************/
+ev_c01_sign3:
+	_TALK_OBJ_PAUSE_ALL
+	_TURN_HERO_SITE
+	_TALKWIN_OPEN
+	_TALKMSG_ALLPUT msg_c01_sign3_01
+	_AB_KEYWAIT
+  _TALKWIN_CLOSE
+  _OBJ_PAUSE_CLEAR_ALL
+  _END
