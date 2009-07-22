@@ -557,7 +557,6 @@ static void enc_CreateBattleParam(
     param->competitor = BTL_COMPETITOR_WILD;
     param->netHandle = NULL;
     param->commMode = BTL_COMM_NONE;
-    param->commPos = 0;
     param->netID = 0;
   }
 

@@ -259,7 +259,6 @@ GMEVENT * DEBUG_EVENT_Battle( GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldmap )
 
     para->netHandle = NULL;
     para->commMode = BTL_COMM_NONE;
-    para->commPos = 0;
     para->netID = 0;
 
     //プレイヤーのパーティ
