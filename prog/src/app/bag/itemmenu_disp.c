@@ -556,11 +556,11 @@ void ITEMDISP_CellCreate( FIELD_ITEMMENU_WORK* pWork )
   //選択カーソル
   {
     GFL_CLWK_DATA cellInitData;
-    cellInitData.pos_x = 0;
-    cellInitData.pos_y = 0;
-    cellInitData.softpri = 10;
+    cellInitData.pos_x = 17*8;
+    cellInitData.pos_y = 24;
+    cellInitData.softpri = 1;
     cellInitData.bgpri = 2;
-    cellInitData.anmseq = 0;
+    cellInitData.anmseq = 1;
     
     pWork->clwkCur = GFL_CLACT_WK_Create(
       pWork->cellUnit ,
@@ -601,22 +601,27 @@ void ITEMDISP_CellMessagePrint( FIELD_ITEMMENU_WORK* pWork )
 	for(i = 0; i< ITEM_LIST_NUM ; i++){
 		ITEM_ST * item;
 
-    item = MYITEM_PosItemGet( pWork->pMyItem, pWork->pocketno,  pWork->curpos + i );
+    item = MYITEM_PosItemGet( pWork->pMyItem, pWork->pocketno,  pWork->curpos+i  );
+    
 		if((item==NULL) || (item->id==ITEM_DUMMY_DATA)){
 			break;
 		}
     GFL_BMP_Clear(pWork->listBmp[i],3);
     GFL_FONTSYS_SetColor( 0xf, 0xe, 3 );
     GFL_MSG_GetString(  pWork->MsgManager, MSG_ITEM_STR001, pWork->pStrBuf );
-    WORDSET_RegisterItemName(pWork->WordSet, 0, i);
+    WORDSET_RegisterItemName(pWork->WordSet, 0, item->id);
     WORDSET_ExpandStr( pWork->WordSet, pWork->pExpStrBuf, pWork->pStrBuf  );
     PRINTSYS_Print( pWork->listBmp[i], 0, 0, pWork->pExpStrBuf, pWork->fontHandle);
 	}
 }
 
+
 void ITEMDISP_CellVramTrans( FIELD_ITEMMENU_WORK* pWork )
 {
   int i;
+
+  u32 dest = GFL_CLGRP_CGR_GetAddr( pWork->listRes[0], CLSYS_DRAW_MAIN);
+  
 
 	for(i = 0; i< ITEM_LIST_NUM ; i++){
     {
