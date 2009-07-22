@@ -38,6 +38,7 @@ extern const GFL_PROC_DATA ItemMenuProcData;
 
 
 #define ITEM_LIST_NUM (8)
+#define _CELLUNIT_NUM (12)
 
 enum _ITEMLISTCELL_RESOURCE
 {
@@ -89,6 +90,7 @@ struct _DEBUGITEM_PARAM {
 	GFL_TCB *g3dVintr; //3D—pvIntrTaskƒnƒ“ƒhƒ‹
   GFL_CLUNIT *cellUnit;
   GFL_CLWK  *cellicon;
+  GFL_CLWK  *clwkCur;
 
   GFL_BMPWIN* winItemName;
   GFL_BMPWIN* winItemNum;
@@ -109,6 +111,7 @@ struct _DEBUGITEM_PARAM {
   u32 FrontAttr;
 	HEAPID heapID;
 	u32 bgchar;
+  BOOL bChange;
 };
 
 #define DEBUG_ITEMDISP_FRAME (GFL_BG_FRAME1_M)
@@ -136,7 +139,7 @@ struct _DEBUGITEM_PARAM {
 
 extern void _createSubBg(void);
 extern void _graphicInit(FIELD_ITEMMENU_WORK* pWork);
-extern void _upMessageRewrite(FIELD_ITEMMENU_WORK* pWork);
+extern void ITEMDISP_upMessageRewrite(FIELD_ITEMMENU_WORK* pWork);
 extern void ITEMDISP_upMessageDelete(FIELD_ITEMMENU_WORK* pWork);
 extern void ITEMDISP_upMessageCreate(FIELD_ITEMMENU_WORK* pWork);
 extern void ITEMDISP_graphicDelete(FIELD_ITEMMENU_WORK* pWork);
@@ -144,5 +147,6 @@ extern void _dispMain(FIELD_ITEMMENU_WORK* pWork);
 extern void ITEMDISP_CellResourceCreate( FIELD_ITEMMENU_WORK* pWork );
 extern void ITEMDISP_CellCreate( FIELD_ITEMMENU_WORK* pWork );
 extern void ITEMDISP_CellMessagePrint( FIELD_ITEMMENU_WORK* pWork );
+extern void ITEMDISP_CellVramTrans( FIELD_ITEMMENU_WORK* pWork );
 
 

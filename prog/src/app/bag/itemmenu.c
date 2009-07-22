@@ -164,7 +164,11 @@ static void _windowCreate(FIELD_ITEMMENU_WORK* pWork)
 static void _windowRewrite(FIELD_ITEMMENU_WORK* pWork)
 {
 
-  _upMessageRewrite(pWork);  
+  ITEMDISP_upMessageRewrite(pWork);  
+  ITEMDISP_CellMessagePrint(pWork);
+  pWork->bChange = TRUE;
+
+
 }
 
 
@@ -184,6 +188,7 @@ static void _itemKindSelectMenu(FIELD_ITEMMENU_WORK* pWork)
     _CHANGE_STATE(pWork,NULL);
     return;
   }
+
 //	if( PRINT_UTIL_Trans( &pWork->SysMsgPrintUtil, pWork->SysMsgQue ) == TRUE){
 //	}
 
@@ -621,7 +626,13 @@ static void _BttnCallBack( u32 bttnid, u32 event, void* p_work )
 //--------------------------------------------------------------
 static void	_VBlank( GFL_TCB *tcb, void *work )
 {
+  FIELD_ITEMMENU_WORK* pWork = work;
+  
 	GFL_CLACT_SYS_VBlankFunc();	//セルアクターVBlank
+  if(pWork->bChange){
+    ITEMDISP_CellVramTrans(pWork);
+    pWork->bChange = FALSE;
+  }
 }
 
 
@@ -656,7 +667,9 @@ static GFL_PROC_RESULT FieldItemMenuProc_Init( GFL_PROC * proc, int * seq, void 
 
 	GFL_UI_KEY_SetRepeatSpeed(1, 6);
 	ITEMDISP_upMessageCreate(pWork);
+  ITEMDISP_CellResourceCreate(pWork);
 	_windowCreate(pWork);
+  ITEMDISP_CellCreate(pWork);
 
 	pWork->pButton = GFL_BMN_Create( bttndata, _BttnCallBack, pWork,  pWork->heapID );
 
@@ -665,6 +678,7 @@ static GFL_PROC_RESULT FieldItemMenuProc_Init( GFL_PROC * proc, int * seq, void 
 
 	pWork->g3dVintr = GFUser_VIntr_CreateTCB( _VBlank, (void*)pWork, 0 );
 
+  
 	_CHANGE_STATE(pWork, _itemKindSelectMenu);
 	return GFL_PROC_RES_FINISH;
 }

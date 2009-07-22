@@ -286,9 +286,10 @@ void _graphicInit(FIELD_ITEMMENU_WORK* pWork)
   GFL_ARC_UTIL_TransVramPalette(ARCID_FONT, NARC_font_default_nclr, PALTYPE_MAIN_BG,
                                 0x20*_BUTTON_MSG_PAL, 0x20, pWork->heapID);
 
-  pWork->cellUnit = GFL_CLACT_UNIT_Create( 1 , 0 , pWork->heapID );
+  pWork->cellUnit = GFL_CLACT_UNIT_Create( _CELLUNIT_NUM , 0 , pWork->heapID );
 
   GFL_DISP_GXS_SetVisibleControl(GX_PLANEMASK_OBJ,VISIBLE_ON);
+  GFL_DISP_GX_SetVisibleControl(GX_PLANEMASK_OBJ,VISIBLE_ON);
 
   {
     ARCHANDLE *archandle = GFL_ARC_OpenDataHandle( ARCID_APP_MENU_COMMON , pWork->heapID );
@@ -331,20 +332,20 @@ void ITEMDISP_graphicDelete(FIELD_ITEMMENU_WORK* pWork)
  */
 //------------------------------------------------------------------------------
 
-void _upMessageRewrite(FIELD_ITEMMENU_WORK* pWork)
+void ITEMDISP_upMessageRewrite(FIELD_ITEMMENU_WORK* pWork)
 {
-  ITEM_ST * item;
+  ITEM_ST * item = MYITEM_PosItemGet( pWork->pMyItem, pWork->pocketno, pWork->curpos );
+  if((item==NULL) || (item->id==ITEM_DUMMY_DATA)){
+    return;
+  }
 
 
   GFL_BMP_Clear(GFL_BMPWIN_GetBmp(pWork->winItemName), 0 );
   GFL_BMP_Clear(GFL_BMPWIN_GetBmp(pWork->winItemNum), 0 );
   GFL_BMP_Clear(GFL_BMPWIN_GetBmp(pWork->winItemReport), 0 );
   
+  GFL_FONTSYS_SetDefaultColor();
 
-  item = MYITEM_PosItemGet( pWork->pMyItem, pWork->pocketno, pWork->curpos );
-  if((item==NULL) || (item->id==ITEM_DUMMY_DATA)){
-    return;
-  }
   GFL_MSG_GetString(  pWork->MsgManager, MSG_ITEM_STR001, pWork->pStrBuf );
   WORDSET_RegisterItemName(pWork->WordSet, 0, item->id);
   WORDSET_ExpandStr( pWork->WordSet, pWork->pExpStrBuf, pWork->pStrBuf  );
@@ -368,6 +369,7 @@ void _upMessageRewrite(FIELD_ITEMMENU_WORK* pWork)
   GFL_BG_LoadScreenV_Req(ITEMREPORT_FRAME);
 
   _itemiconAnim(pWork, item->id);
+
 }
 
 
@@ -380,7 +382,8 @@ void _upMessageRewrite(FIELD_ITEMMENU_WORK* pWork)
 
 void ITEMDISP_upMessageDelete(FIELD_ITEMMENU_WORK* pWork)
 {
-
+  int i;
+  
   GFL_BMPWIN_ClearScreen(pWork->winItemName);
   GFL_BMPWIN_ClearScreen(pWork->winItemNum);
   GFL_BMPWIN_ClearScreen(pWork->winItemReport);
@@ -393,6 +396,10 @@ void ITEMDISP_upMessageDelete(FIELD_ITEMMENU_WORK* pWork)
   GFL_CLGRP_CGR_Release( pWork->objRes[_CLACT_CHR] );
   GFL_CLGRP_PLTT_Release( pWork->objRes[_CLACT_PLT] );
   GFL_CLGRP_CELLANIM_Release(pWork->objRes[_CLACT_ANM]);
+
+  for( i=0 ; i < ITEM_LIST_NUM ; i++ ){
+    GFL_BMP_Delete(pWork->listBmp[i]);
+  }
 
   GFL_CLACT_UNIT_Delete(pWork->cellUnit);
   
@@ -442,7 +449,9 @@ void ITEMDISP_upMessageCreate(FIELD_ITEMMENU_WORK* pWork)
     GFL_ARC_CloseDataHandle( p_handle );
   }
 
-  _upMessageRewrite(pWork);
+  {
+    ITEMDISP_upMessageRewrite(pWork);
+  }
 
 }
 
@@ -473,7 +482,7 @@ static void _itemiconAnim(FIELD_ITEMMENU_WORK* pWork,int itemid)
     GFL_CLWK_DATA cellInitData;
 
 
-
+    OS_TPrintf("アイコン絵交換\n");
 
     cellInitData.pos_x = _ITEMICON_SCR_X * 8+16;
     cellInitData.pos_y = _ITEMICON_SCR_Y * 8+16;
@@ -502,23 +511,24 @@ void _dispMain(FIELD_ITEMMENU_WORK* pWork)
 
 
 
-#if 0
+#if 1
 
 void ITEMDISP_CellResourceCreate( FIELD_ITEMMENU_WORK* pWork )
 {
-  ARCHANDLE *archandle = GFL_ARC_OpenDataHandle( ARCID_P_STATUS , pWork->heapID );
+  int i;
+  ARCHANDLE *archandle = GFL_ARC_OpenDataHandle( ARCID_BAG , pWork->heapID );
 
   pWork->cellRes[_PLT_CUR] = GFL_CLGRP_PLTT_RegisterEx( archandle ,
         NARC_bag_bag_win03_d_NCLR , CLSYS_DRAW_MAIN ,
-        PSTATUS_OBJPLT_CURSOR_COMMON*32 , 0 , 1 , pWork->heapID  );
+        0 , 0 , 0 , pWork->heapID  );
 
   pWork->cellRes[_NCG_CUR] = GFL_CLGRP_CGR_Register(
     archandle , NARC_bag_bag_win03_d_NCGR ,
     FALSE , CLSYS_DRAW_MAIN , pWork->heapID  );
 
   pWork->cellRes[_ANM_CUR] = GFL_CLGRP_CELLANIM_Register(
-    archandle , NARC_bag_bag_win03_d_NANR ,
-    NARC_bag_bag_win_d_NCER, pWork->heapID  );
+    archandle , NARC_bag_bag_win03_d_NCER,NARC_bag_bag_win03_d_NANR ,
+     pWork->heapID  );
 
 
   for( i=0 ; i < ITEM_LIST_NUM ; i++ )
@@ -526,13 +536,13 @@ void ITEMDISP_CellResourceCreate( FIELD_ITEMMENU_WORK* pWork )
     pWork->listRes[i] = GFL_CLGRP_CGR_Register(
       archandle , NARC_bag_bag_win01_d_NCGR ,
       FALSE , CLSYS_DRAW_MAIN , pWork->heapID  );
-    pWork->listBmp[i] = GFL_BMP_Create( int sizex, int sizey, GFL_BMP_16_COLOR, pWork->heapID );
+    pWork->listBmp[i] = GFL_BMP_Create( 12, 2, GFL_BMP_16_COLOR, pWork->heapID );
 
   }
 
   pWork->cellRes[_ANM_LIST] = GFL_CLGRP_CELLANIM_Register(
-    archandle , NARC_bag_bag_win01_d_NANR ,
-    NARC_bag_bag_win01_d_NCER, pWork->heapID  );
+    archandle , NARC_bag_bag_win01_d_NCER, NARC_bag_bag_win01_d_NANR ,
+     pWork->heapID  );
 
 
 
@@ -549,43 +559,35 @@ void ITEMDISP_CellCreate( FIELD_ITEMMENU_WORK* pWork )
     cellInitData.pos_x = 0;
     cellInitData.pos_y = 0;
     cellInitData.softpri = 10;
-    cellInitData.bgpri = 1;
-    cellInitData.anmseq = NANR_bag_win_d_cursor1;
+    cellInitData.bgpri = 2;
+    cellInitData.anmseq = 0;
     
-    ribbonWork->clwkCur = GFL_CLACT_WK_Create(
+    pWork->clwkCur = GFL_CLACT_WK_Create(
       pWork->cellUnit ,
-      pWork->cellRes[_PLT_CUR], pWork->cellRes[_NCG_CUR], pWork->cellRes[_ANM_CUR],
+      pWork->cellRes[_NCG_CUR], pWork->cellRes[_PLT_CUR],  pWork->cellRes[_ANM_CUR],
       &cellInitData ,CLSYS_DEFREND_MAIN , pWork->heapID );
 
-    GFL_CLACT_WK_SetDrawEnable( ribbonWork->clwkCur , FALSE );
+    GFL_CLACT_WK_SetDrawEnable( pWork->clwkCur , TRUE );
   }  
   
     //セルの作成
   {
-    u8 i;
-    PSTA_OAM_ACT_DATA oamData;
-    oamData.x = PSTATUS_RIBBON_BAR_X;
-    oamData.pltt_index = work->cellRes[SCR_PLT_RIBBON_BAR];
-    oamData.pal_offset = 0;
-    oamData.soft_pri = 0;
-    oamData.bg_pri = 2;
-    oamData.setSerface = CLSYS_DEFREND_MAIN;
-    oamData.draw_type = CLSYS_DRAW_MAIN;
+    int i;
     for( i=0 ; i < ITEM_LIST_NUM ; i++ )
     {
       GFL_CLWK_DATA cellInitData;
       cellInitData.pos_x = 17*8;
       cellInitData.pos_y = 3*8*i + 24;
       cellInitData.softpri = 10;
-      cellInitData.bgpri = 1;
+      cellInitData.bgpri = 2;
       cellInitData.anmseq = 0;
     
       pWork->listCell[i] = GFL_CLACT_WK_Create(
         pWork->cellUnit ,
-        pWork->cellRes[_PLT_CUR], pWork->listRes[ i ], pWork->cellRes[_ANM_LIST],
+        pWork->listRes[ i ],pWork->cellRes[_PLT_CUR],  pWork->cellRes[_ANM_LIST],
         &cellInitData ,CLSYS_DEFREND_MAIN , pWork->heapID );
 
-      GFL_CLACT_WK_SetDrawEnable( ribbonWork->clwkCur , FALSE );
+      GFL_CLACT_WK_SetDrawEnable( pWork->listCell[i] , TRUE );
 
     }
   }
@@ -599,20 +601,44 @@ void ITEMDISP_CellMessagePrint( FIELD_ITEMMENU_WORK* pWork )
 	for(i = 0; i< ITEM_LIST_NUM ; i++){
 		ITEM_ST * item;
 
-    item = MYITEM_PosItemGet( pWork->pMyItem, pWork->pocketno, i );
+    item = MYITEM_PosItemGet( pWork->pMyItem, pWork->pocketno,  pWork->curpos + i );
 		if((item==NULL) || (item->id==ITEM_DUMMY_DATA)){
 			break;
 		}
-
+    GFL_BMP_Clear(pWork->listBmp[i],3);
+    GFL_FONTSYS_SetColor( 0xf, 0xe, 3 );
     GFL_MSG_GetString(  pWork->MsgManager, MSG_ITEM_STR001, pWork->pStrBuf );
     WORDSET_RegisterItemName(pWork->WordSet, 0, i);
     WORDSET_ExpandStr( pWork->WordSet, pWork->pExpStrBuf, pWork->pStrBuf  );
     PRINTSYS_Print( pWork->listBmp[i], 0, 0, pWork->pExpStrBuf, pWork->fontHandle);
+	}
+}
+
+void ITEMDISP_CellVramTrans( FIELD_ITEMMENU_WORK* pWork )
+{
+  int i;
+
+	for(i = 0; i< ITEM_LIST_NUM ; i++){
     {
-      u8* dest_adrs = GFL_CLGRP_CGR_GetAddr( pWork->listRes[i], NNS_G2D_VRAM_TYPE_2DMAIN);
+      u32 dest_adrs = GFL_CLGRP_CGR_GetAddr( pWork->listRes[i], CLSYS_DRAW_MAIN);
+      u8* charbuff = GFL_BMP_GetCharacterAdrs(pWork->listBmp[i]);
+      u32 size = GFL_BMP_GetBmpDataSize(pWork->listBmp[i]);
+      DC_FlushRange(charbuff, size);
       
-      
-      
+      dest_adrs += (8)*32;
+      GX_LoadOBJ(&charbuff[8*32], dest_adrs, (32*4));
+      dest_adrs += (4)*32;
+      GX_LoadOBJ(&charbuff[(20*32)], dest_adrs, (32*4));
+
+      dest_adrs += (12)*32;
+      GX_LoadOBJ(&charbuff[4*32], dest_adrs, (32*4));
+      dest_adrs += (4)*32;
+      GX_LoadOBJ(&charbuff[(16*32)], dest_adrs, (32*4));
+
+      dest_adrs += (12)*32;
+      GX_LoadOBJ(&charbuff[0*32], dest_adrs, (32*4));
+      dest_adrs += (4)*32;
+      GX_LoadOBJ(&charbuff[(12*32)], dest_adrs, (32*4));
       
     }
 	}
