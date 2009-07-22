@@ -330,11 +330,11 @@ static const u32 FieldFuncRandom_GetBilduingResId( const u8 height )
   u8 type = RANDOMMAP_SAVE_GetCityType( mapSave );
   if( type == RMT_BLACK_CITY )
   {
-    return NARC_buildmodel_outdoor_bc_build_01_nsbmd + height-1;
+    return NARC_output_buildmodel_outdoor_bc_build_01_nsbmd + height-1;
   }
   else
   {
-    return NARC_buildmodel_outdoor_wf_tree_01_nsbmd + height-1;
+    return NARC_output_buildmodel_outdoor_wf_tree_01_nsbmd + height-1;
   }
   
 }

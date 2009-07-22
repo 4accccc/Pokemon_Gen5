@@ -16,7 +16,7 @@
 #include "fieldmap.h"
 #include "field_player.h"
 #include "field_buildmodel.h"
-#include "../resource/fldmapdata/build_model/buildmodel_outdoor.naix"
+#include "../arc/fieldmap/buildmodel_outdoor.naix"
 
 
 //============================================================================================
@@ -46,7 +46,7 @@ GMEVENT_RESULT FieldDoorInAnime(GMEVENT * event, int *seq, void * work)
   FLDMAPPER * fldmapper = FIELDMAP_GetFieldG3Dmapper(fdaw->fieldmap);
   FIELD_BMODEL_MAN * bmodel_man = FLDMAPPER_GetBuildModelManager(fldmapper);
   //u32 idx = FIELD_BMODEL_MAN_GetEntryIndex(bmodel_man, NARC_buildmodel_outdoor_p_door_nsbmd);
-  u32 idx = FIELD_BMODEL_MAN_GetEntryIndex(bmodel_man, NARC_buildmodel_outdoor_door01_nsbmd);
+  u32 idx = FIELD_BMODEL_MAN_GetEntryIndex(bmodel_man, NARC_output_buildmodel_outdoor_door01_nsbmd);
   int i;
 
   switch (*seq) {
