@@ -1034,7 +1034,7 @@ static void _funcBconDataChange( void )
   }
   if(pNetWL->bChange == 0){
 		_setBeacon(pNetWL->gameInfoBuff, sizeof(_GF_BSS_DATA_INFO));
-    pNetWL->bChange = 60;
+    pNetWL->bChange = 2;
 	}
   pNetWL->bChange--;
 }
