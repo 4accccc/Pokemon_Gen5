@@ -350,7 +350,9 @@ end
 			seq_no = SEQ_EFFNO_SEARCH
 		when SEQ_EFFNO_SEARCH
 			if split_data[ EFFNO_POS ][ 0 ].chr == "#"
-#				num_str = split_data[ EFFNO_POS ][ 1 ].chr + split_data[ EFFNO_POS ][ 2 ].chr + split_data[ EFFNO_POS ][ 3 ].chr
+        if num_str == nil
+				  num_str = split_data[ EFFNO_POS ][ 1 ].chr + split_data[ EFFNO_POS ][ 2 ].chr + split_data[ EFFNO_POS ][ 3 ].chr
+        end
 				seq_table.clear
 				sequence.clear
 				inc_header.clear
