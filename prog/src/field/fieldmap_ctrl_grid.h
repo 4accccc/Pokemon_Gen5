@@ -30,3 +30,5 @@ extern const DEPEND_FUNCTIONS FieldMapCtrl_GridFunctions;
 
 extern FIELD_PLAYER_GRID * FIELDMAP_CTRL_GRID_GetFieldPlayerGrid(
     FIELDMAP_CTRL_GRID *gridWork );
+extern void FIELDMAP_CTRL_GRID_SetPlayerPause(
+    FIELDMAP_WORK *fieldMap, BOOL flag );

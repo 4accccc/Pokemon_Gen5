@@ -42,7 +42,9 @@ struct _TAG_FIELDMAP_CTRL_GRID
 	u16 seq_proc;	
 	u8 padding0;
 	u8 padding1;
-	
+
+	BOOL jikiMovePause;
+
 	FIELD_PLAYER_GRID *gridPlayer;
 };
 
@@ -146,6 +148,7 @@ static void mapCtrlGrid_Main( FIELDMAP_WORK *fieldWork, VecFx32 *pos )
 	FIELDMAP_CTRL_GRID *gridWork = FIELDMAP_GetMapCtrlWork( fieldWork );
 	FIELD_PLAYER_GRID *gridPlayer = gridWork->gridPlayer;
 	
+  if( gridWork->jikiMovePause == FALSE )
 	{	//自機移動
 		int key_trg = GFL_UI_KEY_GetTrg( );
 		int key_cont = GFL_UI_KEY_GetCont( );
@@ -205,4 +208,24 @@ static u16 grid_ChangeFourDir( u16 dir )
 FIELD_PLAYER_GRID * FIELDMAP_CTRL_GRID_GetFieldPlayerGrid( FIELDMAP_CTRL_GRID *gridWork )
 {
   return( gridWork->gridPlayer );
+}
+
+//--------------------------------------------------------------
+/**
+ * フィールドマップ　グリッド処理　自機動作停止
+ * @param fieldMap FIELDMAP_WORK
+ * @param flag TRUE=停止 FALSE=動作
+ * @retval nothing
+ */
+//--------------------------------------------------------------
+void FIELDMAP_CTRL_GRID_SetPlayerPause( FIELDMAP_WORK *fieldMap, BOOL flag )
+{
+  FIELDMAP_CTRL_GRID *gridWork = FIELDMAP_GetMapCtrlWork( fieldMap );
+#ifdef PM_DEBUG
+  {
+    FLDMAP_CTRLTYPE type = FIELDMAP_GetMapControlType( fieldMap );
+    GF_ASSERT( type == FLDMAP_CTRLTYPE_GRID );
+  }
+#endif
+  gridWork->jikiMovePause = flag;
 }
