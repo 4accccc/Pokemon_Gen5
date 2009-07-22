@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsuda" host="W00142" date="2009-07-17T15:29:08"/>
+	<create user="matsuda" host="W00142" date="2009-07-22T12:46:05"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -3274,6 +3274,11 @@ msg_connect_union_08からの分岐メッセージ
 		<language name="JPN_KANJI" width="216" line="2">ことわられました</language>
 	</row>
 
+	<row id="msg_union_test_006_01" text-color="#000000,,,,,,#000000,#000000,,#000000,#000000,,,,,,," back-color="#80ffff,,,,,,#80ffff,#80ffff,,#80ffff,#80ffff,,#80ffff,,,#80ffff,,">
+		<language name="JPN" width="216" line="2">ことわりました</language>
+		<language name="JPN_KANJI" width="216" line="2">ことわりました</language>
+	</row>
+
 	<row id="msg_union_test_007" text-color="#000000,,,,,,#000000,#000000,,#000000,#000000,,,,,,," back-color="#80ffff,,,,,,#80ffff,#80ffff,,#80ffff,#80ffff,,#80ffff,,,#80ffff,,">
 		<language name="JPN" width="216" line="2">あいての　へんじが　ありませんでした</language>
 		<language name="JPN_KANJI" width="216" line="2">あいての　へんじが　ありませんでした</language>
@@ -3297,6 +3302,39 @@ msg_connect_union_08からの分岐メッセージ
 	<row id="msg_union_test_011" text-color="#000000,,,,,,#000000,#000000,,#000000,#000000,,,,,,," back-color="#80ffff,,,,,,#80ffff,#80ffff,,#80ffff,#80ffff,,#80ffff,,,#80ffff,,">
 		<language name="JPN" width="216" line="2">メンバーしゅうごうを　まっています</language>
 		<language name="JPN_KANJI" width="216" line="2">メンバーしゅうごうを　まっています</language>
+	</row>
+
+	<row id="msg_union_test_012" text-color="#000000,,,,,,#000000,#000000,,#000000,#000000,,,,,,," back-color="#80ffff,,,,,,#80ffff,#80ffff,,#80ffff,#80ffff,,#80ffff,,,#80ffff,,">
+		<language name="JPN" width="216" line="2">しょうしょう　おまちください</language>
+		<language name="JPN_KANJI" width="216" line="2">しょうしょう　おまちください</language>
+	</row>
+
+	<row id="msg_union_test_013" text-color="#000000,,,,,,#000000,#000000,,#000000,#000000,,,,,,," back-color="#80ffff,,,,,,#80ffff,#80ffff,,#80ffff,#80ffff,,#80ffff,,,#80ffff,,">
+		<language name="JPN" width="216" line="2">うんうん！　へー！　そうなんだ！</language>
+		<language name="JPN_KANJI" width="216" line="2">うんうん！　へー！　そうなんだ！</language>
+	</row>
+
+	<row id="msg_union_test_014" text-color="#000000,,,,,,#000000,#000000,,#000000,#000000,,,,,,," back-color="#80ffff,,,,,,#80ffff,#80ffff,,#80ffff,#80ffff,,#80ffff,,,#80ffff,,">
+		<language name="JPN" width="216" line="2">ふむふむ
+トレーナーカードを　みるのって　たのしい！</language>
+		<language name="JPN_KANJI" width="216" line="2">ふむふむ
+トレーナーカードを　みるのって　たのしい！</language>
+	</row>
+
+	<row id="msg_union_test_015" text-color="#000000,,,,,,#000000,#000000,,#000000,#000000,,,,,,," back-color="#80ffff,,,,,,#80ffff,#80ffff,,#80ffff,#80ffff,,#80ffff,,,#80ffff,,">
+		<language name="JPN" width="216" line="2">１ｖｓ１でバトルしてるんだ！</language>
+		<language name="JPN_KANJI" width="216" line="2">１ｖｓ１でバトルしてるんだ！</language>
+	</row>
+
+	<row id="msg_union_test_016" text-color="#000000,,,,,,#000000,#000000,,#000000,#000000,,,,,,," back-color="#80ffff,,,,,,#80ffff,#80ffff,,#80ffff,#80ffff,,#80ffff,,,#80ffff,,">
+		<language name="JPN" width="216" line="2">４にんで　たいせんしよう！
+きみも　さんかする？</language>
+		<language name="JPN_KANJI" width="216" line="2"></language>
+	</row>
+
+	<row id="msg_union_test_017" text-color="#000000,,,,,,#000000,#000000,,#000000,#000000,,,,,,," back-color="#80ffff,,,,,,#80ffff,#80ffff,,#80ffff,#80ffff,,#80ffff,,,#80ffff,,">
+		<language name="JPN" width="216" line="2">みたこともない　あそびをしている！</language>
+		<language name="JPN_KANJI" width="216" line="2">みたこともない　あそびをしている！</language>
 	</row>
 
 	<flowchart-group-list>

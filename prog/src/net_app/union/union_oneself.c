@@ -21,6 +21,9 @@
 #include "net_app/union/union_event_check.h"
 #include "net_app/union/union_subproc.h"
 #include "net_app/union/colosseum_comm_command.h"
+#include "colosseum.h"
+#include "colosseum_tool.h"
+#include "union_chara.h"
 
 
 //==============================================================================
@@ -69,12 +72,18 @@ static BOOL OneselfSeq_TalkListSendUpdate_Parent(UNION_SYSTEM_PTR unisys, UNION_
 static BOOL OneselfSeq_TalkInit_Child(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *situ, FIELD_MAIN_WORK *fieldWork, u8 *seq);
 static BOOL OneselfSeq_TalkUpdate_Child(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *situ, FIELD_MAIN_WORK *fieldWork, u8 *seq);
 static BOOL OneselfSeq_TalkExit_Child(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *situ, FIELD_MAIN_WORK *fieldWork, u8 *seq);
+static BOOL OneselfSeq_TalkPlayGameUpdate_Parent(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *situ, FIELD_MAIN_WORK *fieldWork, u8 *seq);
+static BOOL OneselfSeq_TalkPlayGameUpdate_Child(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *situ, FIELD_MAIN_WORK *fieldWork, u8 *seq);
 static BOOL OneselfSeq_TrainerCardUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *situ, FIELD_MAIN_WORK *fieldWork, u8 *seq);
 static BOOL OneselfSeq_ShutdownUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *situ, FIELD_MAIN_WORK *fieldWork, u8 *seq);
-static void OneselfSeq_ShutdownCallback( void* pWork );
 static BOOL OneselfSeq_Talk_Battle_Parent(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *situ, FIELD_MAIN_WORK *fieldWork, u8 *seq);
 static BOOL OneselfSeq_BattleUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *situ, FIELD_MAIN_WORK *fieldWork, u8 *seq);
 static BOOL OneselfSeq_ColosseumMemberWaitUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *situ, FIELD_MAIN_WORK *fieldWork, u8 *seq);
+static BOOL OneselfSeq_ColosseumInit(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *situ, FIELD_MAIN_WORK *fieldWork, u8 *seq);
+static BOOL OneselfSeq_ColosseumNormal(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *situ, FIELD_MAIN_WORK *fieldWork, u8 *seq);
+static BOOL OneselfSeq_ColosseumStandPosition(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *situ, FIELD_MAIN_WORK *fieldWork, u8 *seq);
+static BOOL OneselfSeq_ColosseumPokelist(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *situ, FIELD_MAIN_WORK *fieldWork, u8 *seq);
+static BOOL OneselfSeq_ColosseumStandingBack(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *situ, FIELD_MAIN_WORK *fieldWork, u8 *seq);
 
 
 //==============================================================================
@@ -126,6 +135,16 @@ static const ONESELF_FUNC_DATA OneselfFuncTbl[] = {
     OneselfSeq_Talk_Battle_Parent,
     NULL,
   },
+  {//UNION_STATUS_TALK_PLAYGAME_PARENT
+    NULL,
+    OneselfSeq_TalkPlayGameUpdate_Parent,
+    NULL,
+  },
+  {//UNION_STATUS_TALK_PLAYGAME_CHILD
+    NULL,
+    OneselfSeq_TalkPlayGameUpdate_Child,
+    NULL,
+  },
   {//UNION_STATUS_TRAINERCARD
     NULL,
     OneselfSeq_TrainerCardUpdate,
@@ -164,6 +183,26 @@ static const ONESELF_FUNC_DATA OneselfFuncTbl[] = {
   {//UNION_STATUS_COLOSSEUM_MEMBER_WAIT
     NULL,
     OneselfSeq_ColosseumMemberWaitUpdate,
+    NULL,
+  },
+  {//UNION_STATUS_COLOSSEUM_NORMAL
+    OneselfSeq_ColosseumInit,
+    OneselfSeq_ColosseumNormal,
+    NULL,
+  },
+  {//UNION_STATUS_COLOSSEUM_STANDPOSITION
+    NULL,
+    OneselfSeq_ColosseumStandPosition,
+    NULL,
+  },
+  {//UNION_STATUS_COLOSSEUM_STANDING_BACK
+    NULL,
+    OneselfSeq_ColosseumStandingBack,
+    NULL,
+  },
+  {//UNION_STATUS_COLOSSEUM_POKELIST
+    NULL,
+    OneselfSeq_ColosseumPokelist,
     NULL,
   },
   {//UNION_STATUS_CHAT
@@ -262,6 +301,31 @@ static BOOL Union_CheckEntryBattleRegulation(u32 menu_index)
 
 //--------------------------------------------------------------
 /**
+ * 自機にポーズをかける
+ *
+ * @param   fieldWork		
+ * @param   pause_flag		TRUE:ポーズ　FALSE:ポーズ解除
+ */
+//--------------------------------------------------------------
+static void _PlayerMinePause(FIELD_MAIN_WORK *fieldWork, int pause_flag)
+{
+  FIELD_PLAYER * player = FIELDMAP_GetFieldPlayer(fieldWork);
+  MMDL *player_mmdl = FIELD_PLAYER_GetMMdl(player);
+
+  if(pause_flag == TRUE){
+    MMDL_OnStatusBitMoveProcPause( player_mmdl );
+  }
+  else{
+    MMDL_OffStatusBitMoveProcPause( player_mmdl );
+  }
+}
+
+
+//==============================================================================
+//  
+//==============================================================================
+//--------------------------------------------------------------
+/**
  * 通常状態(何もしていない)：初期化
  *
  * @param   unisys		
@@ -273,9 +337,14 @@ static BOOL Union_CheckEntryBattleRegulation(u32 menu_index)
 //--------------------------------------------------------------
 static BOOL OneselfSeq_NormalInit(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *situ, FIELD_MAIN_WORK *fieldWork, u8 *seq)
 {
-  UnionMyComm_Init(&situ->mycomm);
+  UnionMyComm_Init(unisys, &situ->mycomm);
+  UnionMySituation_SetParam(
+    unisys, UNION_MYSITU_PARAM_IDX_PLAY_CATEGORY, (void*)UNION_PLAY_CATEGORY_UNION);
 
   UnionMsg_AllDel(unisys);
+
+  _PlayerMinePause(fieldWork, FALSE);
+  
 
   return TRUE;
 }
@@ -295,7 +364,7 @@ static BOOL OneselfSeq_NormalUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION 
 {
   FIELD_PLAYER * player = FIELDMAP_GetFieldPlayer(fieldWork);
   MMDLSYS *fldMdlSys = FIELDMAP_GetMMdlSys( fieldWork );
-  u16 obj_id;
+  u16 obj_id, buf_no;
   s16 check_gx, check_gy, check_gz;
   MMDL *target_pc;
   
@@ -322,14 +391,23 @@ static BOOL OneselfSeq_NormalUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION 
     }
     
     obj_id = MMDL_GetOBJID(target_pc);
-    if(obj_id > UNION_RECEIVE_BEACON_MAX){
-      GF_ASSERT(0);
-      return FALSE;
+    situ->mycomm.talk_obj_id = obj_id;
+    buf_no = UNION_CHARA_GetCharaIndex_to_ParentNo(obj_id);
+    OS_TPrintf("ターゲット発見! buf_no = %d, gx=%d, gz=%d\n", buf_no, check_gx, check_gz);
+    if(UNION_CHARA_CheckCharaIndex(obj_id) == UNION_CHARA_INDEX_PARENT){
+      if(unisys->receive_beacon[buf_no].beacon.play_category == UNION_PLAY_CATEGORY_UNION){
+        UnionMySituation_SetParam(unisys, 
+          UNION_MYSITU_PARAM_IDX_CALLING_PC, &unisys->receive_beacon[buf_no]);
+        UnionOneself_ReqStatus(unisys, UNION_STATUS_CONNECT_REQ);
+      }
+      else{
+        UnionOneself_ReqStatus(unisys, UNION_STATUS_TALK_PLAYGAME_PARENT);
+      }
     }
-    UnionMySituation_SetParam(unisys, 
-      UNION_MYSITU_PARAM_IDX_CALLING_PC, &unisys->receive_beacon[obj_id]);
-    OS_TPrintf("ターゲット発見! obj_id = %d, gx=%d, gz=%d\n", obj_id, check_gx, check_gz);
-    UnionOneself_ReqStatus(unisys, UNION_STATUS_CONNECT_REQ);
+    else{
+      UnionOneself_ReqStatus(unisys, UNION_STATUS_TALK_PLAYGAME_CHILD);
+    }
+    _PlayerMinePause(fieldWork, TRUE);
     return TRUE;
   }
   
@@ -540,7 +618,10 @@ static BOOL OneselfSeq_ConnectAnswerExit(UNION_SYSTEM_PTR unisys, UNION_MY_SITUA
 //--------------------------------------------------------------
 static BOOL OneselfSeq_TalkInit_Parent(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *situ, FIELD_MAIN_WORK *fieldWork, u8 *seq)
 {
-  UnionMyComm_Init(&unisys->my_situation.mycomm);
+  UnionMyComm_Init(unisys, &situ->mycomm);
+  UnionMySituation_SetParam(
+    unisys, UNION_MYSITU_PARAM_IDX_PLAY_CATEGORY, (void*)UNION_PLAY_CATEGORY_TALK);
+  UnionMyComm_PartyAdd(&situ->mycomm, situ->connect_pc);
   return TRUE;
 }
 
@@ -694,7 +775,10 @@ static BOOL OneselfSeq_TalkListSendUpdate_Parent(UNION_SYSTEM_PTR unisys, UNION_
 //--------------------------------------------------------------
 static BOOL OneselfSeq_TalkInit_Child(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *situ, FIELD_MAIN_WORK *fieldWork, u8 *seq)
 {
-  UnionMyComm_Init(&unisys->my_situation.mycomm);
+  UnionMyComm_Init(unisys, &situ->mycomm);
+  UnionMySituation_SetParam(
+    unisys, UNION_MYSITU_PARAM_IDX_PLAY_CATEGORY, (void*)UNION_PLAY_CATEGORY_TALK);
+  UnionMyComm_PartyAdd(&situ->mycomm, situ->connect_pc);
   return TRUE;
 }
 
@@ -767,7 +851,13 @@ static BOOL OneselfSeq_TalkUpdate_Child(UNION_SYSTEM_PTR unisys, UNION_MY_SITUAT
     break;
   case 4: //「はい・いいえ」選択結果送信
     if(UnionSend_MainMenuListResultAnswer(situ->mycomm.mainmenu_yesno_result) == TRUE){
-      UnionOneself_ReqStatus(unisys, UNION_STATUS_TRAINERCARD + situ->mycomm.mainmenu_select);
+      if(situ->mycomm.mainmenu_yesno_result == FALSE){
+        UnionMsg_TalkStream_PrintPack(unisys, fieldWork, msg_union_test_006_01);
+        UnionOneself_ReqStatus(unisys, UNION_STATUS_SHUTDOWN);
+      }
+      else{
+        UnionOneself_ReqStatus(unisys, UNION_STATUS_TRAINERCARD + situ->mycomm.mainmenu_select);
+      }
       return TRUE;
     }
   }
@@ -849,6 +939,106 @@ static BOOL OneselfSeq_Talk_Battle_Parent(UNION_SYSTEM_PTR unisys, UNION_MY_SITU
       }
       situ->mycomm.mainmenu_select = select_ret;
       UnionOneself_ReqStatus(unisys, UNION_STATUS_TALK_LIST_SEND_PARENT);
+      return TRUE;
+    }
+    break;
+  }
+  
+  return FALSE;
+}
+
+//--------------------------------------------------------------
+/**
+ * 既に遊んでいる親に話しかけた：更新
+ *
+ * @param   unisys		
+ * @param   situ		  
+ * @param   seq		    
+ *
+ * @retval  BOOL		
+ */
+//--------------------------------------------------------------
+static BOOL OneselfSeq_TalkPlayGameUpdate_Parent(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *situ, FIELD_MAIN_WORK *fieldWork, u8 *seq)
+{
+  UNION_PLAY_CATEGORY play_category;
+  u16 buf_no;
+  
+  switch(*seq){
+  case 0:
+    buf_no = UNION_CHARA_GetCharaIndex_to_ParentNo(situ->mycomm.talk_obj_id);
+    play_category = unisys->receive_beacon[buf_no].beacon.play_category;
+    switch(play_category){
+    case UNION_PLAY_CATEGORY_TALK:           //会話中
+      UnionMsg_TalkStream_PrintPack(unisys, fieldWork, msg_union_test_013);
+      UnionOneself_ReqStatus(unisys, UNION_STATUS_NORMAL);
+      break;
+    case UNION_PLAY_CATEGORY_TRAINERCARD:    //トレーナーカード
+      UnionMsg_TalkStream_PrintPack(unisys, fieldWork, msg_union_test_014);
+      UnionOneself_ReqStatus(unisys, UNION_STATUS_NORMAL);
+      break;
+    case UNION_PLAY_CATEGORY_COLOSSEUM:      //コロシアム
+      UnionMsg_TalkStream_PrintPack(unisys, fieldWork, msg_union_test_015);
+      UnionOneself_ReqStatus(unisys, UNION_STATUS_NORMAL);
+      break;
+    default:
+      OS_TPrintf("未知の遊び play_category = %d\n", situ->play_category);
+      UnionOneself_ReqStatus(unisys, UNION_STATUS_NORMAL);
+      break;
+    }
+    (*seq)++;
+    break;
+  case 1:
+    if(UnionMsg_TalkStream_Check(unisys) == TRUE){
+      return TRUE;
+    }
+    break;
+  }
+  
+  return FALSE;
+}
+
+//--------------------------------------------------------------
+/**
+ * 既に遊んでいる子に話しかけた：更新
+ *
+ * @param   unisys		
+ * @param   situ		  
+ * @param   seq		    
+ *
+ * @retval  BOOL		
+ */
+//--------------------------------------------------------------
+static BOOL OneselfSeq_TalkPlayGameUpdate_Child(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *situ, FIELD_MAIN_WORK *fieldWork, u8 *seq)
+{
+  UNION_PLAY_CATEGORY play_category;
+  u16 buf_no;
+  
+  switch(*seq){
+  case 0:
+    buf_no = UNION_CHARA_GetCharaIndex_to_ParentNo(situ->mycomm.talk_obj_id);
+    play_category = unisys->receive_beacon[buf_no].beacon.play_category;
+    switch(play_category){
+    case UNION_PLAY_CATEGORY_TALK:           //会話中
+      UnionMsg_TalkStream_PrintPack(unisys, fieldWork, msg_union_test_013);
+      UnionOneself_ReqStatus(unisys, UNION_STATUS_NORMAL);
+      break;
+    case UNION_PLAY_CATEGORY_TRAINERCARD:    //トレーナーカード
+      UnionMsg_TalkStream_PrintPack(unisys, fieldWork, msg_union_test_014);
+      UnionOneself_ReqStatus(unisys, UNION_STATUS_NORMAL);
+      break;
+    case UNION_PLAY_CATEGORY_COLOSSEUM:      //コロシアム
+      UnionMsg_TalkStream_PrintPack(unisys, fieldWork, msg_union_test_015);
+      UnionOneself_ReqStatus(unisys, UNION_STATUS_NORMAL);
+      break;
+    default:
+      OS_TPrintf("未知の遊び play_category = %d\n", situ->play_category);
+      UnionOneself_ReqStatus(unisys, UNION_STATUS_NORMAL);
+      break;
+    }
+    (*seq)++;
+    break;
+  case 1:
+    if(UnionMsg_TalkStream_Check(unisys) == TRUE){
       return TRUE;
     }
     break;
@@ -1006,45 +1196,19 @@ static BOOL OneselfSeq_ShutdownUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATIO
     }
     break;
   case 2:
-    if(GFL_NET_IsParentMachine() == TRUE){
-      if(GFL_NET_GetConnectNum() <= 1){ //親は自分一人になってから終了する
-        (*seq)++;
-      }
-      else{
-        OS_TPrintf("親：子の終了待ち 残り=%d\n", GFL_NET_GetConnectNum() - 1);
-      }
-    }
-    else{
-      (*seq)++;
-    }
-    break;
-  case 3:
-    GFL_NET_Exit( OneselfSeq_ShutdownCallback );
+    UnionComm_Req_ShutdownRestarts(unisys);
     (*seq)++;
     break;
-  case 4:
-    if(situ->connect_pc == NULL){   //OneselfSeq_ShutdownCallbackでNULL化されるのを待つ
+  case 3:
+    if(UnionComm_Check_ShutdownRestarts(unisys) == FALSE){
+      UnionMyComm_PartyDel(&situ->mycomm, situ->connect_pc);
+      UnionMySituation_SetParam(unisys, UNION_MYSITU_PARAM_IDX_CONNECT_PC, NULL);
       return TRUE;
     }
     break;
   }
   
   return FALSE;
-}
-
-//--------------------------------------------------------------
-/**
- * 切断処理：切断完了コールバック
- *
- * @param   pWork		
- */
-//--------------------------------------------------------------
-static void OneselfSeq_ShutdownCallback( void* pWork )
-{
-  UNION_SYSTEM_PTR unisys = pWork;
-  
-  unisys->my_situation.connect_pc = NULL;
-  OS_TPrintf("Shutdown:切断完了コールバック\n");
 }
 
 //--------------------------------------------------------------
@@ -1085,12 +1249,19 @@ static BOOL OneselfSeq_BattleUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION 
     }
     break;
   case 4:
-    UnionSubProc_EventSet(unisys, UNION_SUBPROC_ID_COLOSSEUM_WARP, situ->mycomm.trcard.card_param);
+    UnionSubProc_EventSet(unisys, UNION_SUBPROC_ID_COLOSSEUM_WARP, NULL);
     (*seq)++;
     break;
   case 5:
     if(UnionSubProc_IsExits(unisys) == FALSE){
       OS_TPrintf("コロシアム遷移のサブPROC終了\n");
+
+      //通信プレイヤー制御システムの生成
+      GF_ASSERT(unisys->colosseum_sys == NULL);
+      unisys->colosseum_sys = Colosseum_InitSystem(
+        unisys->uniparent->game_data, fieldWork, unisys->uniparent->mystatus);
+
+      _PlayerMinePause(fieldWork, TRUE);
       UnionOneself_ReqStatus(unisys, UNION_STATUS_COLOSSEUM_MEMBER_WAIT);
       return TRUE;
     }
@@ -1114,12 +1285,18 @@ static BOOL OneselfSeq_BattleUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION 
 //--------------------------------------------------------------
 static BOOL OneselfSeq_ColosseumMemberWaitUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *situ, FIELD_MAIN_WORK *fieldWork, u8 *seq)
 {
+  COLOSSEUM_SYSTEM_PTR clsys = unisys->colosseum_sys;
+  int my_net_id = GFL_NET_GetNetID(GFL_NET_HANDLE_GetCurrentHandle());
+
+  GF_ASSERT(clsys != NULL);
+  
   switch(*seq){
   case 0:
     UnionMsg_TalkStream_PrintPack(unisys, fieldWork, msg_union_test_011);
+    (*seq)++;
     break;
   case 1:
-    if(UnionMsg_TalkStream_Check(unisys) == FALSE){
+    if(UnionMsg_TalkStream_Check(unisys) == TRUE){
       (*seq)++;
     }
     break;
@@ -1154,7 +1331,234 @@ static BOOL OneselfSeq_ColosseumMemberWaitUpdate(UNION_SYSTEM_PTR unisys, UNION_
     }
     break;
   case 6:
-    OS_TPrintf("全員分のトレーナーカード情報を交換し合います\n");
+    OS_TPrintf("全員分の基本情報を交換し合います\n");
+    if(ColosseumSend_BasicStatus(&clsys->basic_status[my_net_id]) == TRUE){
+      (*seq)++;
+    }
+    break;
+  case 7:
+    if(ColosseumTool_AllReceiveCheck_BasicStatus(clsys) == TRUE){
+      OS_TPrintf("全員分の基本情報を受信完了\n");
+      (*seq)++;
+    }
+    break;
+  case 8:
+    OS_TPrintf("全員分のトレーナーカードを交換し合います\n");
+    if(ColosseumSend_TrainerCard(clsys->tr_card[my_net_id]) == TRUE){
+      (*seq)++;
+    }
+    break;
+  case 9:
+    if(ColosseumTool_AllReceiveCheck_TrainerCard(clsys) == TRUE){
+      OS_TPrintf("全員分のトレーナーカードを受信完了\n");
+      (*seq)++;
+    }
+    break;
+  case 10:
+    OS_TPrintf("コロシアムの準備OK! 歩き回り開始！\n");
+    Colosseum_CommReadySet(clsys, TRUE);
+    UnionOneself_ReqStatus(unisys, UNION_STATUS_COLOSSEUM_NORMAL);
+    return TRUE;
+  }
+  
+  return FALSE;
+}
+
+//--------------------------------------------------------------
+/**
+ * コロシアム、フリー移動：更新
+ *
+ * @param   unisys		
+ * @param   situ		
+ * @param   fieldWork		
+ * @param   seq		
+ *
+ * @retval  BOOL		
+ */
+//--------------------------------------------------------------
+static BOOL OneselfSeq_ColosseumInit(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *situ, FIELD_MAIN_WORK *fieldWork, u8 *seq)
+{
+  UnionMsg_AllDel(unisys);
+  _PlayerMinePause(fieldWork, FALSE);
+
+  return TRUE;
+}
+
+//--------------------------------------------------------------
+/**
+ * コロシアム、フリー移動：更新
+ *
+ * @param   unisys		
+ * @param   situ		
+ * @param   fieldWork		
+ * @param   seq		
+ *
+ * @retval  BOOL		
+ */
+//--------------------------------------------------------------
+static BOOL OneselfSeq_ColosseumNormal(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *situ, FIELD_MAIN_WORK *fieldWork, u8 *seq)
+{
+  COLOSSEUM_SYSTEM_PTR clsys = unisys->colosseum_sys;
+  
+  switch(*seq){
+  case 0:
+    {
+      int stand_pos;
+   
+      //立ち位置チェック
+      if(ColosseumTool_CheckStandingPosition(fieldWork, 
+          UnionMsg_GetMemberMax(situ->mycomm.mainmenu_select), &stand_pos) == TRUE){
+        Colosseum_Mine_SetStandingPostion(clsys, stand_pos);
+        UnionOneself_ReqStatus(unisys, UNION_STATUS_COLOSSEUM_STANDPOSITION);
+        _PlayerMinePause(fieldWork, TRUE);
+        return TRUE;
+      }
+    }
+    break;
+  }
+  
+  return FALSE;
+}
+
+//--------------------------------------------------------------
+/**
+ * コロシアム、立ち位置にたった：更新
+ *
+ * @param   unisys		
+ * @param   situ		
+ * @param   fieldWork		
+ * @param   seq		
+ *
+ * @retval  BOOL		
+ */
+//--------------------------------------------------------------
+static BOOL OneselfSeq_ColosseumStandPosition(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *situ, FIELD_MAIN_WORK *fieldWork, u8 *seq)
+{
+  COLOSSEUM_SYSTEM_PTR clsys = unisys->colosseum_sys;
+  
+  switch(*seq){
+  case 0:
+    UnionMsg_TalkStream_PrintPack(unisys, fieldWork, msg_union_test_012);
+    (*seq)++;
+    break;
+  case 1:
+    if(ColosseumSend_StandingPositionConfirm(clsys) == TRUE){
+      OS_TPrintf("親に立ち位置の許可要求を送信\n");
+      (*seq)++;
+    }
+    break;
+  case 2:
+    if(UnionMsg_TalkStream_Check(unisys) == FALSE){
+      break;
+    }
+    
+    {
+      int ret;
+      ret = Colosseum_Mine_GetAnswerStandingPosition(clsys);
+      if(ret == TRUE){
+        OS_TPrintf("立ち位置OK\n");
+        UnionOneself_ReqStatus(unisys, UNION_STATUS_COLOSSEUM_POKELIST);
+        return TRUE;
+      }
+      else if(ret == FALSE){
+        OS_TPrintf("立ち位置NG\n");
+        UnionOneself_ReqStatus(unisys, UNION_STATUS_COLOSSEUM_STANDING_BACK);
+        return TRUE;
+      }
+    }
+    break;
+  }
+  
+  return FALSE;
+}
+
+//--------------------------------------------------------------
+/**
+ * コロシアム、立ち位置から後退する：更新
+ *
+ * @param   unisys		
+ * @param   situ		
+ * @param   fieldWork		
+ * @param   seq		
+ *
+ * @retval  BOOL		
+ */
+//--------------------------------------------------------------
+static BOOL OneselfSeq_ColosseumStandingBack(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *situ, FIELD_MAIN_WORK *fieldWork, u8 *seq)
+{
+  COLOSSEUM_SYSTEM_PTR clsys = unisys->colosseum_sys;
+  FIELD_PLAYER * player = FIELDMAP_GetFieldPlayer(fieldWork);
+  MMDL *player_mmdl = FIELD_PLAYER_GetMMdl(player);
+  int stand_pos;
+  u16 anm_code;
+  
+  switch(*seq){
+  case 0:
+    Colosseum_Mine_SetStandingPostion(clsys, COLOSSEUM_STANDING_POSITION_NULL);
+    (*seq)++;
+    break;
+  case 1:
+    if(ColosseumSend_StandingPositionConfirm(clsys) == TRUE){
+      OS_TPrintf("親に立ち位置から退きます。を送信\n");
+      (*seq)++;
+    }
+    break;
+  case 2:
+    if(Colosseum_Mine_GetAnswerStandingPosition(clsys) != COLOSSEUM_STANDING_POSITION_NULL){
+      OS_TPrintf("受信：どいてOK\n");
+      (*seq)++;
+    }
+    break;
+  case 3:
+    UnionMsg_AllDel(unisys);
+    (*seq)++;
+    break;
+  case 4:
+    if(MMDL_CheckPossibleAcmd(player_mmdl) == TRUE){
+      ColosseumTool_CheckStandingPosition(
+        fieldWork, UnionMsg_GetMemberMax(situ->mycomm.mainmenu_select), &stand_pos);
+      anm_code = (stand_pos & 1) ? AC_WALK_R_16F : AC_WALK_L_16F;
+      MMDL_SetAcmd(player_mmdl, anm_code);
+      (*seq)++;
+    }
+    else{
+      OS_TPrintf("MMDL_CheckPossibleAcmd待ち\n");
+    }
+    break;
+  case 5:
+    if(MMDL_CheckEndAcmd(player_mmdl) == TRUE){
+      MMDL_EndAcmd(player_mmdl);
+      UnionOneself_ReqStatus(unisys, UNION_STATUS_COLOSSEUM_NORMAL);
+      return TRUE;
+    }
+    break;
+  }
+
+  return FALSE;
+}
+
+//--------------------------------------------------------------
+/**
+ * コロシアム、ポケモンリスト呼び出し：更新
+ *
+ * @param   unisys		
+ * @param   situ		
+ * @param   fieldWork		
+ * @param   seq		
+ *
+ * @retval  BOOL		
+ */
+//--------------------------------------------------------------
+static BOOL OneselfSeq_ColosseumPokelist(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *situ, FIELD_MAIN_WORK *fieldWork, u8 *seq)
+{
+  COLOSSEUM_SYSTEM_PTR clsys = unisys->colosseum_sys;
+
+  switch(*seq){
+  case 0:
+    UnionMsg_AllDel(unisys);
+    (*seq)++;
+    break;
+  case 1:
     break;
   }
   

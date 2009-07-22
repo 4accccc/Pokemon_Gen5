@@ -8,6 +8,8 @@
 //==============================================================================
 #include <gflib.h>
 #include "field/field_comm_actor.h"
+#include "net_app/union/comm_player.h"
+#include "field/fieldmap.h"
 
 
 //==============================================================================
@@ -36,7 +38,7 @@ typedef struct{
 }MINE_PLAYER;
 
 ///通信プレイヤー制御システムワーク
-typedef struct{
+typedef struct _COMM_PLAYER_SYS{
   FIELD_MAIN_WORK *fieldWork;
   FIELD_COMM_ACTOR_CTRL *act_ctrl;
   COMM_PLAYER act[COMM_PLAYER_MAX];
@@ -66,8 +68,12 @@ COMM_PLAYER_SYS_PTR CommPlayer_Init(int max, FIELD_MAIN_WORK *fieldWork, HEAPID 
 {
   COMM_PLAYER_SYS_PTR cps;
   MMDLSYS *fldMdlSys = FIELDMAP_GetMMdlSys(fieldWork);
+
+  OS_TPrintf("通信プレイヤー制御システムの生成\n");
   
   cps = GFL_HEAP_AllocClearMemory(heap_id, sizeof(COMM_PLAYER_SYS));
+  
+  GF_ASSERT(max <= COMM_PLAYER_MAX);
   
   cps->max = max;
   cps->fieldWork = fieldWork;
@@ -87,6 +93,8 @@ void CommPlayer_Exit(COMM_PLAYER_SYS_PTR cps)
 {
   int i;
   
+  OS_TPrintf("通信プレイヤー制御システムの破棄\n");
+
   for(i = 0; i < COMM_PLAYER_MAX; i++){
     CommPlayer_Del(cps, i);
   }
@@ -103,11 +111,14 @@ void CommPlayer_Exit(COMM_PLAYER_SYS_PTR cps)
  * @param   index		管理Index(基本的にnet_idを渡せばよい。
  *                  穴抜け参加に対応しているのでmaxが2でも0,3といった指定が可能)
  * @param   sex		  性別
+ * @param   pack    座標データパッケージ
  */
 //==================================================================
-void CommPlayer_Add(COMM_PLAYER_SYS_PTR cps, int index, int sex, const VecFx32 *pos, u16 dir)
+void CommPlayer_Add(COMM_PLAYER_SYS_PTR cps, int index, int sex, const COMM_PLAYER_PACKAGE *pack)
 {
   int objcode;
+
+  OS_TPrintf("通信プレイヤーAdd index=%d\n", index);
 
 #ifdef PM_DEBUG
   {//最大人数を超えて追加しようとしていないかチェック
@@ -131,9 +142,9 @@ void CommPlayer_Add(COMM_PLAYER_SYS_PTR cps, int index, int sex, const VecFx32 *
   }
 
   objcode = (sex == PM_MALE) ? HERO : HEROINE;
-  cps->act[index].pos = *pos;
-  cps->act[index].dir = dir;
-  cps->act[index].vanish = FALSE;
+  cps->act[index].pos = pack->pos;
+  cps->act[index].dir = pack->dir;
+  cps->act[index].vanish = pack->vanish;
   cps->act[index].occ = TRUE;
   
   FIELD_COMM_ACTOR_CTRL_AddActor(cps->act_ctrl, index, objcode, &cps->act[index].dir, 
@@ -154,8 +165,43 @@ void CommPlayer_Del(COMM_PLAYER_SYS_PTR cps, int index)
     return;
   }
   
+  OS_TPrintf("通信プレイヤーDel index=%d\n", index);
   FIELD_COMM_ACTOR_CTRL_DeleteActro(cps->act_ctrl, index);
   cps->act[index].occ = FALSE;
+}
+
+//==================================================================
+/**
+ * 通信プレイヤー存在チェック
+ *
+ * @param   cps		
+ * @param   index		管理Index
+ *
+ * @retval  BOOL		TRUE:存在している。　FALSE:非存在
+ */
+//==================================================================
+BOOL CommPlayer_CheckOcc(COMM_PLAYER_SYS_PTR cps, int index)
+{
+  GF_ASSERT(cps != NULL && index < COMM_PLAYER_MAX);
+  return cps->act[index].occ;
+}
+
+//==================================================================
+/**
+ * 通信プレイヤーアクター座標をセットする
+ *
+ * @param   cps		  
+ * @param   index		管理Index
+ * @param   pack		座標パッケージ
+ */
+//==================================================================
+void CommPlayer_SetParam(COMM_PLAYER_SYS_PTR cps, int index, const COMM_PLAYER_PACKAGE *pack)
+{
+  GF_ASSERT(cps->act[index].occ == TRUE);
+
+  cps->act[index].pos = pack->pos;
+  cps->act[index].dir = pack->dir;
+  cps->act[index].vanish = pack->vanish;
 }
 
 //==================================================================
@@ -183,32 +229,13 @@ BOOL CommPlayer_Mine_DataUpdate(COMM_PLAYER_SYS_PTR cps, COMM_PLAYER_PACKAGE *pa
 
   pack->dir = dir;
   pack->pos = pos;
-  pack->vanish = mine->vanish;
+  pack->vanish = FALSE;
 
-  if(dir != mine->dir || GFL_STD_MemComp(&pos, &mine->pos) != 0){
-    OS_TPrintf("自機座標更新\n");
+  if(dir != mine->dir || GFL_STD_MemComp(&pos, &mine->pos, sizeof(VecFx32)) != 0){
     mine->dir = dir;
     mine->pos = pos;
     return TRUE;
   }
   return FALSE;
-}
-
-//==================================================================
-/**
- * 通信プレイヤーアクター座標をセットする
- *
- * @param   cps		  
- * @param   index		管理Index
- * @param   pack		座標パッケージ
- */
-//==================================================================
-void CommPlayer_SetParam(COMM_PLAYER_SYS_PTR cps, int index, const COMM_PLAYER_PACKAGE *pack)
-{
-  GF_ASSERT(cps->act[index].occ == TRUE);
-
-  cps->act[index].pos = pack->pos;
-  cps->act[index].dir = pack->dir;
-  cps->act[index].vanish = pack->vanish;
 }
 

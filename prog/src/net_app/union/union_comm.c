@@ -17,6 +17,9 @@
 #include "net/network_define.h"
 #include "union_comm_command.h"
 #include "union_msg.h"
+#include "comm_player.h"
+#include "colosseum_comm_command.h"
+#include "colosseum_tool.h"
 
 
 //==============================================================================
@@ -122,7 +125,7 @@ static UNION_SYSTEM_PTR Union_InitSystem(UNION_PARENT_WORK *uniparent)
   GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_UNION, HEAP_SIZE_UNION );
   unisys = GFL_HEAP_AllocClearMemory(HEAPID_UNION, sizeof(UNION_SYSTEM));
   unisys->uniparent = uniparent;
-  UnionMyComm_Init(&unisys->my_situation.mycomm);
+  UnionMyComm_Init(unisys, &unisys->my_situation.mycomm);
   
   GFL_OVERLAY_Load( FS_OVERLAY_ID( union_room ) );
   
@@ -193,7 +196,7 @@ BOOL UnionComm_InitWait(int *seq, void *pwk, void *pWork)
 
 //--------------------------------------------------------------
 /**
- * 初期化完了コールバック
+ * 初期化完了コールバック　※切断→再開のコールバックとしても使用するので中身の変更には注意
  *
  * @param   pWork		UNION_SYSTEM_PTR
  */
@@ -248,7 +251,7 @@ BOOL UnionComm_ExitWait(int *seq, void *pwk, void *pWork)
 
 //--------------------------------------------------------------
 /**
- * 終了完了コールバック
+ * 終了完了コールバック ※切断→再開のコールバックとしても使用するので中身の変更には注意
  *
  * @param   pWork		UNION_SYSTEM_PTR
  */
@@ -263,6 +266,87 @@ static void	UnionComm_ExitCallback(void* pWork)
 
 //==================================================================
 /**
+ * 切断→再開リクエスト
+ *
+ * @param   unisys		
+ *
+ * 接続している人との通信を終了し、ただのビーコン送受信状態に戻す
+ */
+//==================================================================
+void UnionComm_Req_ShutdownRestarts(UNION_SYSTEM_PTR unisys)
+{
+  if(unisys->restart_seq != 0){
+    GF_ASSERT(0); //既にリスタート処理が行われている
+    return;
+  }
+  unisys->restart_seq = 1;
+  OS_TPrintf("切断→再接続リクエストを受け付けました\n");
+}
+
+//==================================================================
+/**
+ * 「切断→再開」処理を行っているか調べる
+ *
+ * @param   unisys		
+ *
+ * @retval  BOOL		TRUE:実行中　FALSE:何もしていない
+ */
+//==================================================================
+BOOL UnionComm_Check_ShutdownRestarts(UNION_SYSTEM_PTR unisys)
+{
+  if(unisys->restart_seq == 0){
+    return FALSE;
+  }
+  return TRUE;
+}
+
+//--------------------------------------------------------------
+/**
+ * 切断→再開処理
+ *
+ * @param   unisys		
+ *
+ * @retval  BOOL		TRUE:「切断→再開処理」実行中
+ */
+//--------------------------------------------------------------
+static BOOL UnionComm_ShutdownRestarts(UNION_SYSTEM_PTR unisys)
+{
+  switch(unisys->restart_seq){
+  case 0:
+    return FALSE;
+  case 1:
+    OS_TPrintf("restart 切断→再接続開始\n");
+    unisys->comm_status = UNION_COMM_STATUS_EXIT_START;
+  	GFL_NET_Exit(UnionComm_ExitCallback);
+    unisys->restart_seq++;
+    break;
+  case 2:
+    if(unisys->comm_status == UNION_COMM_STATUS_EXIT){
+      OS_TPrintf("restart 切断完了\n");
+      unisys->restart_seq++;
+    }
+    break;
+  case 3:
+    OS_TPrintf("restart 初期化開始\n");
+  	unisys->comm_status = UNION_COMM_STATUS_INIT_START;
+  	GFL_NET_Init(&aGFLNetInit, UnionComm_InitCallback, unisys);
+    unisys->restart_seq++;
+    break;
+  case 4:
+    if(unisys->comm_status >= UNION_COMM_STATUS_INIT){
+      OS_TPrintf("restart 初期化完了\n");
+      unisys->comm_status = UNION_COMM_STATUS_UPDATE;
+      GFL_NET_Changeover(NULL);
+      unisys->restart_seq = 0;
+    }
+    break;
+  }
+  
+  return TRUE;
+}
+
+//==================================================================
+/**
  * 更新処理
  *
  * @param   pWork		UNION_SYSTEM_PTR
@@ -272,7 +356,30 @@ void UnionComm_Update(int *seq, void *pwk, void *pWork)
 {
   UNION_SYSTEM_PTR unisys = pWork;
   
+  if(UnionComm_ShutdownRestarts(unisys) == TRUE){
+    return; //切断→再開 の処理を実行中
+  }
+  
   UnionComm_BeaconSearch(unisys);   //ビーコンサーチ
+  
+  //PROCがフィールドのときのみ動作する処理
+  if(Union_FieldCheck(unisys) == TRUE){
+    //コロシアム
+    if(unisys->colosseum_sys != NULL && unisys->colosseum_sys->comm_ready == TRUE)
+    {
+      //通信プレイヤーアクター管理システムが生成されているなら自分座標の転送を行う
+      if(CommPlayer_Mine_DataUpdate(
+          unisys->colosseum_sys->cps, &unisys->colosseum_sys->send_mine_package) == TRUE){
+        ColosseumSend_PosPackage(&unisys->colosseum_sys->send_mine_package);
+      }
+      
+      //通信プレイヤーの座標反映
+      ColosseumTool_CommPlayerUpdate(unisys->colosseum_sys);
+      
+      //立ち位置への返事リクエストが貯まっているなら送信を行う
+      Colosseum_Parent_SendAnswerStandingPosition(unisys->colosseum_sys);
+    }
+  }
 }
 
 //--------------------------------------------------------------
@@ -340,6 +447,7 @@ static BOOL UnionBeacon_SetReceiveData(UNION_SYSTEM_PTR unisys, const UNION_BEAC
     if(dest[i].beacon.data_valid != UNION_BEACON_VALID){
       GFL_STD_MemCopy(beacon, &dest[i].beacon, sizeof(UNION_BEACON));
       GFL_STD_MemCopy(beacon_mac_address, dest[i].mac_address, 6);
+      dest[i].buffer_no = i;
       dest[i].update_flag = UNION_BEACON_RECEIVE_NEW;
       dest[i].life = UNION_CHAR_LIFE;
       return TRUE;
@@ -379,8 +487,18 @@ static void UnionComm_SetBeaconParam(UNION_SYSTEM_PTR unisys, UNION_BEACON *beac
   
   GFL_STD_MemClear(beacon, sizeof(UNION_BEACON));
   
-  if(situ->calling_pc != NULL){
+  if(situ->connect_pc != NULL){
+    if(GFL_NET_IsParentMachine() == TRUE){
+      OS_GetMacAddress(beacon->connect_mac_address);
+    }
+    else{
+      GFL_STD_MemCopy(situ->connect_pc->mac_address, beacon->connect_mac_address, 6);
+    }
+    beacon->connect_mac_mode = UNION_CONNECT_MAC_MODE_PARENT;
+  }
+  else if(situ->calling_pc != NULL){
     GFL_STD_MemCopy(situ->calling_pc->mac_address, beacon->connect_mac_address, 6);
+    beacon->connect_mac_mode = UNION_CONNECT_MAC_MODE_CONNECT;
   }
   
   beacon->pm_version = PM_VERSION;
@@ -393,7 +511,8 @@ static void UnionComm_SetBeaconParam(UNION_SYSTEM_PTR unisys, UNION_BEACON *beac
   
   beacon->trainer_view = MyStatus_GetTrainerView( unisys->uniparent->mystatus );
   beacon->sex = MyStatus_GetMySex(unisys->uniparent->mystatus);
-  
+
+  beacon->party = situ->mycomm.party;
   
   //送信データ完成
   beacon->data_valid = UNION_BEACON_VALID;
@@ -492,6 +611,9 @@ void UnionMySituation_SetParam(UNION_SYSTEM_PTR unisys, UNION_MYSITU_PARAM_IDX i
       situ->connect_pc = connect_pc;
     }
     break;
+  case UNION_MYSITU_PARAM_IDX_PLAY_CATEGORY:
+    situ->play_category = (u32)work;
+    break;
   }
 }
 
@@ -507,7 +629,7 @@ void UnionMySituation_Clear(UNION_SYSTEM_PTR unisys)
   UNION_MY_SITUATION *situ = &unisys->my_situation;
   
   GFL_STD_MemClear(situ, sizeof(UNION_MY_SITUATION));
-  UnionMyComm_Init(&situ->mycomm);
+  UnionMyComm_Init(unisys, &situ->mycomm);
 }
 
 //==================================================================
@@ -517,10 +639,75 @@ void UnionMySituation_Clear(UNION_SYSTEM_PTR unisys)
  * @param   mycomm		
  */
 //==================================================================
-void UnionMyComm_Init(UNION_MY_COMM *mycomm)
+void UnionMyComm_Init(UNION_SYSTEM_PTR unisys, UNION_MY_COMM *mycomm)
 {
   GFL_STD_MemClear(mycomm, sizeof(UNION_MY_COMM));
   mycomm->mainmenu_select = UNION_MSG_MENU_SELECT_NULL;
   mycomm->submenu_select = UNION_MSG_MENU_SELECT_NULL;
   mycomm->mainmenu_yesno_result = 0xff;
+  
+  //UNION_MEMBERの自分分を埋める
+  {
+    UNION_MEMBER *member = &mycomm->party.member[0];
+    
+    OS_GetMacAddress(member->mac_address);
+    member->trainer_view = MyStatus_GetTrainerView( unisys->uniparent->mystatus );
+    member->sex = MyStatus_GetMySex(unisys->uniparent->mystatus);
+    member->occ = TRUE;
+  }
+}
+
+//==================================================================
+/**
+ * ユニオンパーティにプレイヤーを登録する
+ *
+ * @param   unisys		
+ * @param   pc		    登録対象のPCへのポインタ
+ *
+ * @retval  TRUE:登録成功　　FALSE:失敗
+ */
+//==================================================================
+BOOL UnionMyComm_PartyAdd(UNION_MY_COMM *mycomm, const UNION_BEACON_PC *pc)
+{
+  int i;
+  UNION_MEMBER *member;
+  
+  for(i = 0; i < UNION_CONNECT_PLAYER_NUM; i++){
+    member = &mycomm->party.member[i];
+    if(member->occ == FALSE){
+      GFL_STD_MemCopy(pc->mac_address, member->mac_address, 6);
+      member->trainer_view = pc->beacon.trainer_view;
+      member->sex = pc->beacon.sex;
+      member->occ = TRUE;
+      return i;
+    }
+  }
+  
+  GF_ASSERT(0); //既にメンバーが埋まっている
+  return 0;
+}
+
+//==================================================================
+/**
+ * ユニオンパーティからプレイヤーを削除する
+ *
+ * @param   unisys		
+ * @param   pc		    削除対象のPCへのポインタ
+ */
+//==================================================================
+void UnionMyComm_PartyDel(UNION_MY_COMM *mycomm, const UNION_BEACON_PC *pc)
+{
+  int i;
+  UNION_MEMBER *member;
+  
+  for(i = 0; i < UNION_CONNECT_PLAYER_NUM - 1; i++){
+    member = &mycomm->party.member[i];
+    if(member->occ == TRUE && GFL_STD_MemComp(pc->mac_address, member->mac_address, 6) == 0){
+      GFL_STD_MemClear(member, sizeof(UNION_MEMBER));
+      OS_TPrintf("メンバー削除 %d\n", i);
+      return;
+    }
+  }
+  
+  GF_ASSERT(0); //パーティに存在していないPC
 }

@@ -30,23 +30,71 @@ void Union_Main(GAME_COMM_SYS_PTR game_comm, FIELD_MAIN_WORK *fieldmap)
   unisys = GameCommSys_GetAppWork(game_comm);
   GF_ASSERT(unisys != NULL);
   
-  switch(unisys->my_situation.play_category){
-  case UNION_PLAY_CATEGORY_UNION:
-    if(UnionSubProc_IsExits(unisys) == FALSE){  //サブPROCが無い時のみ実行
-      //データ受信によるイベント起動
-      UnionReceive_BeaconInterpret(unisys);
-      
-      //キー操作によるイベント起動
-      UnionOneself_Update(unisys, fieldmap);
-      
-      //OBJ反映
-      UNION_CHAR_Update(unisys, unisys->uniparent->game_data);
-      
-      //下画面反映
+  //PROCがフィールドの時のみ実行する処理
+  if(Union_FieldCheck(unisys) == TRUE){
+    switch(unisys->my_situation.play_category){
+    case UNION_PLAY_CATEGORY_UNION:
+    case UNION_PLAY_CATEGORY_TALK:
+      if(UnionSubProc_IsExits(unisys) == FALSE){  //サブPROCが無い時のみ実行
+        //データ受信によるイベント起動
+        UnionReceive_BeaconInterpret(unisys);
+        
+        //キー操作によるイベント起動
+        UnionOneself_Update(unisys, fieldmap);
+        
+        //OBJ反映
+        UNION_CHAR_Update(unisys, unisys->uniparent->game_data);
+        
+        //下画面反映
+      }
+      break;
+    case UNION_PLAY_CATEGORY_COLOSSEUM:
+      if(UnionSubProc_IsExits(unisys) == FALSE){  //サブPROCが無い時のみ実行
+        //キー操作によるイベント起動
+        UnionOneself_Update(unisys, fieldmap);
+      }
+      break;
     }
-    break;
-  case UNION_PLAY_CATEGORY_COLOSSEUM:
-    break;
   }
 }
 
+//==================================================================
+/**
+ * PROCがフィールドの状態か調べる
+ *
+ * @param   unisys		
+ *
+ * @retval  BOOL		TRUE:フィールドである
+ */
+//==================================================================
+BOOL Union_FieldCheck(UNION_SYSTEM_PTR unisys)
+{
+  if(GAMESYSTEM_CheckFieldMapWork(unisys->uniparent->gsys) == TRUE){
+    if(FIELDMAP_IsReady(GAMESYSTEM_GetFieldMapWork(unisys->uniparent->gsys)) == TRUE){
+      return TRUE;
+    }
+  }
+  return FALSE;
+}
+
+//==================================================================
+/**
+ * フィールド削除時に行う処理
+ *
+ * @param   unisys		
+ */
+//==================================================================
+void Union_FieldDelete(UNION_SYSTEM_PTR unisys)
+{
+}
+
+//==================================================================
+/**
+ * 他アプリからフィールドへ復帰してきた時の処理
+ *
+ * @param   unisys		
+ */
+//==================================================================
+void Union_FieldComeback(UNION_SYSTEM_PTR unisys)
+{
+}

@@ -1980,6 +1980,7 @@ static void FIELDMAP_CommBoot(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork, HEAP
         upw->mystatus = GAMEDATA_GetMyStatus(gdata);
         upw->game_comm = game_comm;
         upw->game_data = gdata;
+        upw->gsys = gsys;
         if(comm_no == GAME_COMM_NO_NULL){
     	    GameCommSys_Boot(game_comm, GAME_COMM_NO_UNION, upw);
     	  }

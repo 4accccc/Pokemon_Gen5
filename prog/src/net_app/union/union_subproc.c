@@ -56,7 +56,7 @@ static const struct{
   },
   {//UNION_SUBPROC_ID_TRAINERCARD
     UNION_PLAY_CATEGORY_TRAINERCARD, 
-    UNION_PLAY_CATEGORY_UNION,
+    UNION_PLAY_CATEGORY_TALK,
   },
   {//UNION_SUBPROC_ID_COLOSSEUM_WARP
     UNION_PLAY_CATEGORY_COLOSSEUM, 
@@ -126,19 +126,17 @@ static GMEVENT_RESULT UnionSubProc_GameChangeEvent(GMEVENT * event, int * seq, v
     
 	  switch(subproc->id){
 	  case UNION_SUBPROC_ID_TRAINERCARD:
-	    situ->play_category = UNION_PLAY_CATEGORY_TRAINERCARD;
   	  child_event = EVENT_FieldSubProc(
   	    gsys, subev->fieldWork, TRCARD_OVERLAY_ID, &TrCardSysCommProcData, subproc->parent_work);
   	  break;
   	case UNION_SUBPROC_ID_COLOSSEUM_WARP:
-	    situ->play_category = UNION_PLAY_CATEGORY_COLOSSEUM;
       {
         PLAYER_WORK *plWork = GAMESYSTEM_GetMyPlayerWork( gsys );
         VecFx32 pos;
         
-        pos.x = 184 << FX32_SHIFT;
+        pos.x = (88 + 16*GFL_NET_GetNetID(GFL_NET_HANDLE_GetCurrentHandle())) << FX32_SHIFT;
         pos.y = 0;
-        pos.z = 184 << FX32_SHIFT;
+        pos.z = 136 << FX32_SHIFT;
         child_event = DEBUG_EVENT_ChangeMapPos(gsys, subev->fieldWork, ZONE_ID_CLOSSEUM, &pos, 0);
       }
       break;
@@ -148,13 +146,15 @@ static GMEVENT_RESULT UnionSubProc_GameChangeEvent(GMEVENT * event, int * seq, v
   	}
     GMEVENT_CallEvent(event, child_event);
     
-    situ->play_category = SubProc_PlayCategoryTbl[subproc->id].play_category;
+    UnionMySituation_SetParam(unisys, UNION_MYSITU_PARAM_IDX_PLAY_CATEGORY, 
+      (void*)SubProc_PlayCategoryTbl[subproc->id].play_category);
     OS_TPrintf("play_category = %d\n", situ->play_category);
 		(*seq) ++;
 		break;
 	
 	case 1:
-    situ->play_category = SubProc_PlayCategoryTbl[subproc->id].after_play_category;
+    UnionMySituation_SetParam(unisys, UNION_MYSITU_PARAM_IDX_PLAY_CATEGORY, 
+      (void*)SubProc_PlayCategoryTbl[subproc->id].after_play_category);
     OS_TPrintf("after play_category = %d\n", situ->play_category);
 
     subproc->id = UNION_SUBPROC_ID_NULL;

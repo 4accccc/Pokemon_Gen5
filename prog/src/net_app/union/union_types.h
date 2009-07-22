@@ -15,15 +15,19 @@
 //==============================================================================
 //  定数定義
 //==============================================================================
+///一度に接続できる最大人数
+#define UNION_CONNECT_PLAYER_NUM      (5) //レコードコーナーが最大5人なので
+
 ///ビーコンデータが有効なものである事を示す数値
 #define UNION_BEACON_VALID        (0x7a)
 
 ///実行中のゲームカテゴリー
-enum{
+typedef enum{
   UNION_PLAY_CATEGORY_UNION,          ///<ユニオンルーム
+  UNION_PLAY_CATEGORY_TALK,           ///<会話中
   UNION_PLAY_CATEGORY_TRAINERCARD,    ///<トレーナーカード
   UNION_PLAY_CATEGORY_COLOSSEUM,      ///<コロシアム
-};
+}UNION_PLAY_CATEGORY;
 
 ///ユニオン：ステータス
 enum{
@@ -37,6 +41,8 @@ enum{
   UNION_STATUS_TALK_LIST_SEND_PARENT, ///<接続確立後、親の選んだ項目送信＆子の返事待ち
   UNION_STATUS_TALK_CHILD,      ///<接続確立後の会話(子)
   UNION_STATUS_TALK_BATTLE_PARENT,  ///<会話：対戦メニュー(親)
+  UNION_STATUS_TALK_PLAYGAME_PARENT,  ///<既に遊んでいる相手(親)に話しかけた
+  UNION_STATUS_TALK_PLAYGAME_CHILD,   ///<既に遊んでいる相手(子)に話しかけた
   
   UNION_STATUS_TRAINERCARD, ///<トレーナーカード
   UNION_STATUS_PICTURE,     ///<お絵かき
@@ -47,6 +53,10 @@ enum{
   UNION_STATUS_SHUTDOWN,    ///<切断
   
   UNION_STATUS_COLOSSEUM_MEMBER_WAIT,   ///<コロシアム：メンバー集合待ち
+  UNION_STATUS_COLOSSEUM_NORMAL,        ///<コロシアム：フリー移動
+  UNION_STATUS_COLOSSEUM_STANDPOSITION, ///<コロシアム：立ち位置にたった
+  UNION_STATUS_COLOSSEUM_STANDING_BACK, ///<コロシアム：立ち位置から後退
+  UNION_STATUS_COLOSSEUM_POKELIST,      ///<コロシアム：ポケモンリスト呼び出し
   
   UNION_STATUS_CHAT,        ///<チャット編集中
   
@@ -115,6 +125,42 @@ typedef enum{
 typedef struct _UNION_SYSTEM * UNION_SYSTEM_PTR;
 
 
+///接続メンバーの情報
+typedef struct{
+  u8 mac_address[6];    ///<一緒に遊んでいる相手のMacAddress
+  u8 trainer_view;      ///<一緒に遊んでいる相手の見た目
+  u8 sex:1;             ///<一緒に遊んでいる相手の性別
+  u8 occ:1;             ///<TRUE：データ有効
+  u8    :6;
+}UNION_MEMBER;
+
+///接続メンバーの集合体
+typedef struct{
+  UNION_MEMBER member[UNION_CONNECT_PLAYER_NUM];
+}UNION_PARTY;
+
+//--------------------------------------------------------------
+//  キャラクタ
+//--------------------------------------------------------------
+///キャラクタ制御ワーク
+typedef struct{
+  struct _UNION_BEACON_PC *parent_pc; ///<親PCへのポインタ
+  u8 trainer_view;            ///<トレーナータイプ(ユニオンルーム内での見た目)
+  u8 sex;                     ///<性別
+  u8 child_no;                ///<子番号(親:0　子:1～)
+  u8 occ;                     ///<TRUE:データ有効　FALSE:無効
+
+  u8 event_status;            ///<イベントステータス(BPC_EVENT_STATUS_???)
+  u8 next_event_status;       ///<次に実行するイベントステータス(BPC_EVENT_STATUS_???)
+  u8 func_proc;               ///<動作プロセスNo(BPC_SUBPROC_???)
+  u8 func_seq;                ///<動作プロセスシーケンス
+}UNION_CHARACTER;
+
+///一人の親が管理するキャラクタ制御ワークのグループ
+typedef struct{
+  UNION_CHARACTER *character[UNION_CONNECT_PLAYER_NUM];
+}UNION_CHARA_GROUP;
+
 //--------------------------------------------------------------
 //  ビーコン
 //--------------------------------------------------------------
@@ -132,11 +178,20 @@ typedef struct{
   u16 word[2];
 }UNION_BEACON_CHAT;
 
+///UNION_BEACON.connect_mac_addressの持つ意味
+///状況に応じてmacAddress格納ワークを複数持たなくて良い、ビーコンがなかなか届かなくて
+///切断＞また接続のような妙な動作を起こさないようにモードをセットで使用する
+enum{
+  UNION_CONNECT_MAC_MODE_CONNECT,       ///<接続したい人へのMacAddressが入っている
+  UNION_CONNECT_MAC_MODE_PARENT,        ///<接続中の通信グループの親のMacAddressが入っている
+};
 
 ///ユニオンで送受信するビーコンデータ
 typedef struct{
   u8 connect_mac_address[6];  ///<接続したい人へのMacAddress
-
+  u8 connect_mac_mode;        ///<connect_mac_addressの持つ意味(UNION_CONNECT_MAC_MODE_???)
+  u8 padding;
+  
   u8 pm_version;              ///<PM_VERSION
   u8 language;                ///<PM_LANG
   u8 union_status;            ///<プレイヤーの状況(UNION_STATUS_???)
@@ -149,6 +204,9 @@ typedef struct{
   u8 trainer_view;            ///<トレーナータイプ(ユニオンルーム内での見た目)
   u8 sex;                     ///<性別
   
+  UNION_PARTY party;          ///<接続相手の情報
+  
+  //play_categoryの内容によってワークの中身が変化
   union{
     UNION_BEACON_CHAT chat;
     UNION_BEACON_BATTLE battle;
@@ -158,19 +216,20 @@ typedef struct{
 }UNION_BEACON;
 
 ///受信したビーコンデータから作成されたPCパラメータ
-typedef struct{
+typedef struct _UNION_BEACON_PC{
   UNION_BEACON beacon;
   u8 mac_address[6];          ///<送信相手のMacAddress
   u8 update_flag;             ///<ビーコンデータ受信状況(UNION_BEACON_???)
-  u8 padding;
+  u8 buffer_no;               ///<バッファ番号
   
-  u16 life;                    ///<寿命(フレーム単位)　新しくビーコンを受信しなければ消える
-  u8 padding2[2];
+  u16 life;                   ///<寿命(フレーム単位)　新しくビーコンを受信しなければ消える
+  u8 seat;                    ///<接続相手の配置場所(bit管理 0bit目=一人目の席、1bit目=二人目の席)
+  u8 my_seat_no;              ///<自分自身の席
   
-  u8 event_status;            ///<イベントステータス(BPC_EVENT_STATUS_???)
-  u8 next_event_status;       ///<次に実行するイベントステータス(BPC_EVENT_STATUS_???)
-  u8 func_proc;               ///<動作プロセスNo(BPC_SUBPROC_???)
-  u8 func_seq;                ///<動作プロセスシーケンス
+  UNION_CHARA_GROUP chara_group;   ///<キャラクタグループ
+  
+  struct _UNION_BEACON_PC *link_parent_pc;   ///<リンクしているPC(親)へのポインタ
+  u8 link_parent_index;       ///<リンクしているPCのindex
 }UNION_BEACON_PC;
 
 //--------------------------------------------------------------
@@ -192,6 +251,9 @@ typedef struct{
   u8 mainmenu_yesno_result;   ///<「はい(TRUE)」「いいえ(FALSE)」選択結果
   u8 submenu_select;          ///<メインメニュー後のサブメニューの選択結果
   UNION_TRCARD trcard;        ///<トレーナーカード情報
+  UNION_PARTY party;          ///<一緒に遊んでいる相手のパラメータ
+  u16 talk_obj_id;             ///<話しかけた相手のCharacterIndex
+  u8 padding[2];
 }UNION_MY_COMM;
 
 ///ユニオンルーム内での自分の状況
@@ -214,7 +276,6 @@ typedef struct{
   u8 next_union_status;       ///<次に実行するプレイヤーの状況(UNION_STATUS_???)
   u8 func_proc;
   u8 func_seq;
-  u8 padding;
 }UNION_MY_SITUATION;
 
 //--------------------------------------------------------------

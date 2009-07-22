@@ -41,9 +41,9 @@ void UnionReceive_BeaconInterpret(UNION_SYSTEM_PTR unisys)
     if(bpc->beacon.data_valid == UNION_BEACON_VALID){
       if(bpc->update_flag == UNION_BEACON_RECEIVE_NEW){
         //新規キャラ登録
-        UNION_CHAR_AddOBJ(unisys, unisys->uniparent->game_data, bpc->beacon.trainer_view, i);
-        req_ret = UNION_CHAR_EventReq(bpc, BPC_EVENT_STATUS_ENTER);
-        GF_ASSERT_MSG(req_ret == TRUE, "add union req_faile!");
+//        UNION_CHAR_AddOBJ(unisys, unisys->uniparent->game_data, bpc->beacon.trainer_view, i);
+//        req_ret = UNION_CHAR_EventReq(bpc, BPC_EVENT_STATUS_ENTER);
+//        GF_ASSERT_MSG(req_ret == TRUE, "add union req_faile!");
       }
       //ビーコンの内容チェック
       if(bpc->update_flag != UNION_BEACON_RECEIVE_NULL){
@@ -69,19 +69,24 @@ static void UnionReceive_BeaconCheck(UNION_SYSTEM_PTR unisys, UNION_BEACON_PC *b
   
   if(situ->union_status == UNION_STATUS_NORMAL){
     //接続要求チェック
-    if(bpc->beacon.union_status == UNION_STATUS_CONNECT_REQ){
+    if(bpc->beacon.union_status == UNION_STATUS_CONNECT_REQ 
+        && bpc->beacon.connect_mac_mode == UNION_CONNECT_MAC_MODE_CONNECT)
+    {
       u8 my_mac[6];
       OS_GetMacAddress(my_mac);
-      if(GFL_STD_MemComp(bpc->beacon.connect_mac_address, my_mac, 6) == 0){
+      if(GFL_STD_MemComp(bpc->beacon.connect_mac_address, my_mac, 6) == 0)
+      {
         OS_TPrintf("接続要求：Mac一致\n");
         UnionMySituation_SetParam(unisys, UNION_MYSITU_PARAM_IDX_ANSWER_PC, bpc);
         UnionOneself_ReqStatus(unisys, UNION_STATUS_CONNECT_ANSWER);
       }
-      else{
+      else
+      {
       //  OS_TPrintf("接続要求：Mac不一致 my = %d %d %d %d %d %d, req = %d %d %d %d %d %d\n", my_mac[0], my_mac[1], my_mac[2], my_mac[3], my_mac[4], my_mac[5], bpc->beacon.connect_mac_address[0], bpc->beacon.connect_mac_address[1], bpc->beacon.connect_mac_address[2], bpc->beacon.connect_mac_address[3], bpc->beacon.connect_mac_address[4], bpc->beacon.connect_mac_address[5]);
       }
     }
-    else{
+    else
+    {
     //  OS_TPrintf("ビーコンチェック：union_status = %d\n", bpc->beacon.union_status);
     }
   }

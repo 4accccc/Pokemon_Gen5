@@ -16,6 +16,7 @@
 #include "system/net_err.h"
 #include "net/network_define.h"
 #include "colosseum_comm_command.h"
+#include "colosseum.h"
 
 
 //==============================================================================
@@ -23,9 +24,11 @@
 //==============================================================================
 static u8 * _RecvHugeBuffer(int netID, void* pWork, int size);
 static void _ColosseumRecv_Shutdown(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
-static void _ColosseumRecv_MainMenuListResult(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
-static void _ColosseumRecv_MainMenuListResultAnswer(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
-static void _ColosseumRecv_TrainerCardParam(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
+static void _ColosseumRecv_BasicStatus(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
+static void _ColosseumRecv_TrainerCard(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
+static void _ColosseumRecv_PosPackage(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
+static void _ColosseumRecv_StandingPositionConfirm(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
+static void _ColosseumRecv_AnswerStandingPosition(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
 
 
 //==============================================================================
@@ -33,13 +36,14 @@ static void _ColosseumRecv_TrainerCardParam(const int netID, const int size, con
 //==============================================================================
 ///ユニオン受信コマンドテーブル   ※COLOSSEUM_CMD_???と並びを同じにしておくこと！！
 const NetRecvFuncTable Colosseum_CommPacketTbl[] = {
-  {_ColosseumRecv_Shutdown, NULL},                //COLOSSEUM_CMD_SHUTDOWN
-  {_ColosseumRecv_MainMenuListResult, NULL},      //COLOSSEUM_CMD_MAINMENU_LIST_RESULT
-  {_ColosseumRecv_MainMenuListResultAnswer, NULL},      //COLOSSEUM_CMD_MAINMENU_LIST_RESULT_ANSWER
-  {_ColosseumRecv_TrainerCardParam, _RecvHugeBuffer},        //COLOSSEUM_CMD_TRAINERCARD_PARAM
+  {_ColosseumRecv_Shutdown, NULL},                  //COLOSSEUM_CMD_SHUTDOWN
+  {_ColosseumRecv_BasicStatus, _RecvHugeBuffer},    //COLOSSEUM_CMD_BASIC_STATUS
+  {_ColosseumRecv_TrainerCard, _RecvHugeBuffer},    //COLOSSEUM_CMD_TRAINERCARD
+  {_ColosseumRecv_PosPackage, _RecvHugeBuffer},     //COLOSSEUM_CMD_POS_PACKAGE
+  {_ColosseumRecv_StandingPositionConfirm, NULL},   //COLOSSEUM_CMD_STANDPOS_CONFIRM
+  {_ColosseumRecv_AnswerStandingPosition, NULL},    //COLOSSEUM_CMD_ANSWER_STANDPOS
 };
 SDK_COMPILER_ASSERT(NELEMS(Colosseum_CommPacketTbl) == COLOSSEUM_CMD_NUM);
-
 
 
 //==============================================================================
@@ -89,6 +93,10 @@ static u8 * _RecvHugeBuffer(int netID, void* pWork, int size)
 	return unisys->huge_receive_buf[netID];
 }
 
+
+//==============================================================================
+//  
+//==============================================================================
 //--------------------------------------------------------------
 /**
  * @brief   コマンド受信：切断
@@ -102,47 +110,19 @@ static u8 * _RecvHugeBuffer(int netID, void* pWork, int size)
 //--------------------------------------------------------------
 static void _ColosseumRecv_Shutdown(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle)
 {
-  UNION_SYSTEM_PTR unisys = pWork;
-}
-
-//==============================================================================
-//  
-//==============================================================================
-//--------------------------------------------------------------
-/**
- * @brief   コマンド受信：メインメニューの選択結果
- * @param   netID      送ってきたID
- * @param   size       パケットサイズ
- * @param   pData      データ
- * @param   pWork      ワークエリア
- * @param   pHandle    受け取る側の通信ハンドル
- * @retval  none  
- */
-//--------------------------------------------------------------
-static void _ColosseumRecv_MainMenuListResult(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle)
-{
-#if 0
-  UNION_SYSTEM_PTR unisys = pWork;
-  UNION_MY_SITUATION *situ = &unisys->my_situation;
-  const u32 *select = pData;
-
-	if(netID == GFL_NET_GetNetID(GFL_NET_HANDLE_GetCurrentHandle())){
-    return; //自分のデータなので無視
-  }
-  
-  situ->mycomm.mainmenu_select = *select;
-#endif
+  ;
 }
 
 //==================================================================
 /**
- * データ送信：メインメニューの選択結果
+ * データ送信：切断
  * @param   select_list		選択結果(UNION_MSG_MENU_SELECT_???)
  * @retval  BOOL		TRUE:送信成功。　FALSE:失敗
  */
 //==================================================================
-BOOL ColosseumSend_MainMenuListResult(u32 select_list)
+BOOL ColosseumSend_Shutdown(COMM_PLAYER_PACKAGE *pos_package)
 {
+  GF_ASSERT(0); //未作成
   return 0;
 }
 
@@ -151,7 +131,7 @@ BOOL ColosseumSend_MainMenuListResult(u32 select_list)
 //==============================================================================
 //--------------------------------------------------------------
 /**
- * @brief   コマンド受信：メインメニューの選択結果の返事
+ * @brief   コマンド受信：基本情報
  * @param   netID      送ってきたID
  * @param   size       パケットサイズ
  * @param   pData      データ
@@ -160,31 +140,35 @@ BOOL ColosseumSend_MainMenuListResult(u32 select_list)
  * @retval  none  
  */
 //--------------------------------------------------------------
-static void _ColosseumRecv_MainMenuListResultAnswer(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle)
+static void _ColosseumRecv_BasicStatus(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle)
 {
-#if 0
   UNION_SYSTEM_PTR unisys = pWork;
-  UNION_MY_SITUATION *situ = &unisys->my_situation;
-  const BOOL *yes_no = pData;
+  COLOSSEUM_SYSTEM_PTR clsys = unisys->colosseum_sys;
 
 	if(netID == GFL_NET_GetNetID(GFL_NET_HANDLE_GetCurrentHandle())){
     return; //自分のデータなので無視
   }
+  if(clsys == NULL || clsys->cps == NULL){
+    GF_ASSERT(0);
+    return; //準備が出来ていないので受け取らない
+  }
   
-  situ->mycomm.mainmenu_yesno_result = *yes_no;
-#endif
+  OS_TPrintf("コロシアム：基本情報受信：net_id = %d\n", netID);
+  GFL_STD_MemCopy(pData, &clsys->basic_status[netID], size);
 }
 
 //==================================================================
 /**
- * データ送信：メインメニューの選択結果の返事
- * @param   yes_no    TRUE:はい　FALSE:いいえ
+ * データ送信：座標パッケージ
+ * @param   select_list		選択結果(UNION_MSG_MENU_SELECT_???)
  * @retval  BOOL		TRUE:送信成功。　FALSE:失敗
  */
 //==================================================================
-BOOL ColosseumSend_MainMenuListResultAnswer(BOOL yes_no)
+BOOL ColosseumSend_BasicStatus(COLOSSEUM_BASIC_STATUS *basic_status)
 {
-  return 0;
+  return GFL_NET_SendDataEx(GFL_NET_HANDLE_GetCurrentHandle(), GFL_NET_SENDID_ALLUSER, 
+    COLOSSEUM_CMD_BASIC_STATUS, sizeof(COLOSSEUM_BASIC_STATUS), 
+    basic_status, TRUE, FALSE, TRUE);
 }
 
 //==============================================================================
@@ -192,7 +176,7 @@ BOOL ColosseumSend_MainMenuListResultAnswer(BOOL yes_no)
 //==============================================================================
 //--------------------------------------------------------------
 /**
- * @brief   コマンド受信：トレーナーカード情報
+ * @brief   コマンド受信：トレーナーカード
  * @param   netID      送ってきたID
  * @param   size       パケットサイズ
  * @param   pData      データ
@@ -201,30 +185,188 @@ BOOL ColosseumSend_MainMenuListResultAnswer(BOOL yes_no)
  * @retval  none  
  */
 //--------------------------------------------------------------
-static void _ColosseumRecv_TrainerCardParam(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle)
+static void _ColosseumRecv_TrainerCard(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle)
 {
-#if 0
   UNION_SYSTEM_PTR unisys = pWork;
-  UNION_MY_SITUATION *situ = &unisys->my_situation;
+  COLOSSEUM_SYSTEM_PTR clsys = unisys->colosseum_sys;
+  COMM_PLAYER_SYS_PTR cps;
 
 	if(netID == GFL_NET_GetNetID(GFL_NET_HANDLE_GetCurrentHandle())){
     return; //自分のデータなので無視
   }
+  if(clsys == NULL || clsys->cps == NULL || clsys->tr_card[netID] == NULL){
+    GF_ASSERT(0);
+    return; //準備が出来ていないので受け取らない
+  }
   
-  OS_TPrintf("COmmCOmmand カード受信 netID = %d\n", netID);
-  situ->mycomm.trcard.target_card_receive = TRUE;
-  GFL_STD_MemCopy(pData, situ->mycomm.trcard.target_card, size);
-#endif
+  OS_TPrintf("コロシアム：トレーナーカード受信 net_id = %d\n", netID);
+  GFL_STD_MemCopy(pData, clsys->tr_card[netID], size);
+  clsys->tr_card_occ[netID] = TRUE;
 }
 
 //==================================================================
 /**
- * データ送信：トレーナーカード情報
- * @param   yes_no    TRUE:はい　FALSE:いいえ
+ * データ送信：座標パッケージ
+ * @param   select_list		選択結果(UNION_MSG_MENU_SELECT_???)
  * @retval  BOOL		TRUE:送信成功。　FALSE:失敗
  */
 //==================================================================
-BOOL ColosseumSend_TrainerCardParam(UNION_SYSTEM_PTR unisys)
+BOOL ColosseumSend_TrainerCard(TR_CARD_DATA *send_card)
 {
-  return 0;
+  return GFL_NET_SendDataEx(GFL_NET_HANDLE_GetCurrentHandle(), GFL_NET_SENDID_ALLUSER, 
+    COLOSSEUM_CMD_TRAINERCARD, sizeof(TR_CARD_DATA), send_card, TRUE, FALSE, TRUE);
 }
+
+
+//==============================================================================
+//  
+//==============================================================================
+//--------------------------------------------------------------
+/**
+ * @brief   コマンド受信：座標パッケージ
+ * @param   netID      送ってきたID
+ * @param   size       パケットサイズ
+ * @param   pData      データ
+ * @param   pWork      ワークエリア
+ * @param   pHandle    受け取る側の通信ハンドル
+ * @retval  none  
+ */
+//--------------------------------------------------------------
+static void _ColosseumRecv_PosPackage(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle)
+{
+  UNION_SYSTEM_PTR unisys = pWork;
+  COLOSSEUM_SYSTEM_PTR clsys = unisys->colosseum_sys;
+
+	if(netID == GFL_NET_GetNetID(GFL_NET_HANDLE_GetCurrentHandle())){
+    return; //自分のデータなので無視
+  }
+  if(clsys == NULL || clsys->cps == NULL){
+    GF_ASSERT(0);
+    return; //準備が出来ていないので受け取らない
+  }
+  
+  Colosseum_SetCommPlayerPos(clsys, netID, pData);
+}
+
+//==================================================================
+/**
+ * データ送信：座標パッケージ
+ * @param   select_list		選択結果(UNION_MSG_MENU_SELECT_???)
+ * @retval  BOOL		TRUE:送信成功。　FALSE:失敗
+ */
+//==================================================================
+BOOL ColosseumSend_PosPackage(COMM_PLAYER_PACKAGE *pos_package)
+{
+  return GFL_NET_SendDataEx(GFL_NET_HANDLE_GetCurrentHandle(), GFL_NET_SENDID_ALLUSER, 
+    COLOSSEUM_CMD_POS_PACKAGE, sizeof(COMM_PLAYER_PACKAGE), 
+    pos_package, FALSE, TRUE, TRUE);
+}
+
+//==============================================================================
+//  
+//==============================================================================
+//--------------------------------------------------------------
+/**
+ * @brief   コマンド受信：親に自分の今の立ち位置を使っても問題ないか確認する
+ * @param   netID      送ってきたID
+ * @param   size       パケットサイズ
+ * @param   pData      データ
+ * @param   pWork      ワークエリア
+ * @param   pHandle    受け取る側の通信ハンドル
+ * @retval  none  
+ */
+//--------------------------------------------------------------
+static void _ColosseumRecv_StandingPositionConfirm(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle)
+{
+  UNION_SYSTEM_PTR unisys = pWork;
+  COLOSSEUM_SYSTEM_PTR clsys = unisys->colosseum_sys;
+  COMM_PLAYER_SYS_PTR cps;
+  const u8 *stand_pos = pData;
+
+  if(clsys == NULL || clsys->cps == NULL){
+    GF_ASSERT(0);
+    return; //準備が出来ていないので受け取らない
+  }
+  
+  cps = clsys->cps;
+  
+  if(GFL_NET_IsParentMachine() == FALSE){
+    return; //親機以外には送信していないはずだけどここでも一応チェック
+  }
+  
+  OS_TPrintf("受信：立ち位置確認 net_id=%d, stand_pos=%d\n", netID, *stand_pos);
+  Colosseum_Parent_SetStandingPosition(clsys, netID, *stand_pos);
+}
+
+//==================================================================
+/**
+ * データ送信：親に自分の今の立ち位置を使っても問題ないか確認する
+ * @retval  BOOL		TRUE:送信成功。　FALSE:失敗
+ */
+//==================================================================
+BOOL ColosseumSend_StandingPositionConfirm(COLOSSEUM_SYSTEM_PTR clsys)
+{
+  u8 stand_pos;
+  
+  stand_pos = Colosseum_Mine_GetStandingPostion(clsys);
+
+  //親機にだけ送信
+  return GFL_NET_SendDataEx(GFL_NET_HANDLE_GetCurrentHandle(), GFL_NET_NO_PARENTMACHINE, 
+    COLOSSEUM_CMD_STANDPOS_CONFIRM, sizeof(stand_pos), 
+    &stand_pos, TRUE, FALSE, FALSE);
+}
+
+//==============================================================================
+//  
+//==============================================================================
+//--------------------------------------------------------------
+/**
+ * @brief   コマンド受信：立ち位置使用結果の返事
+ * @param   netID      送ってきたID
+ * @param   size       パケットサイズ
+ * @param   pData      データ
+ * @param   pWork      ワークエリア
+ * @param   pHandle    受け取る側の通信ハンドル
+ * @retval  none  
+ */
+//--------------------------------------------------------------
+static void _ColosseumRecv_AnswerStandingPosition(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle)
+{
+  UNION_SYSTEM_PTR unisys = pWork;
+  COLOSSEUM_SYSTEM_PTR clsys = unisys->colosseum_sys;
+  COMM_PLAYER_SYS_PTR cps;
+  const BOOL *result = pData;
+
+  if(clsys == NULL || clsys->cps == NULL){
+    GF_ASSERT(0);
+    return; //準備が出来ていないので受け取らない
+  }
+  
+  cps = clsys->cps;
+  
+  OS_TPrintf("受信：立ち位置の返事 result=%d\n", *result);
+  Colosseum_Mine_SetAnswerStandingPosition(clsys, *result);
+}
+
+//==================================================================
+/**
+ * データ送信：立ち位置使用結果の返事を送信
+ *
+ * @param   clsys		
+ * @param   send_net_id		送信先のnetID
+ * @param   result		    結果
+ *
+ * @retval  BOOL		TRUE:送信成功。　FALSE:失敗
+ */
+//==================================================================
+BOOL ColosseumSend_AnswerStandingPosition(COLOSSEUM_SYSTEM_PTR clsys, int send_net_id, BOOL result)
+{
+  u8 stand_pos;
+  
+  stand_pos = Colosseum_Mine_GetStandingPostion(clsys);
+
+  //対象者にだけ送信
+  return GFL_NET_SendDataEx(GFL_NET_HANDLE_GetCurrentHandle(), send_net_id, 
+    COLOSSEUM_CMD_ANSWER_STANDPOS, sizeof(BOOL), &result, TRUE, FALSE, FALSE);
+}
+

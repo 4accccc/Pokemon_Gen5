@@ -11,17 +11,18 @@
 #include "net_app/union/union_main.h"
 #include "union_types.h"
 #include "field/field_msgbg.h"
-
+#include "net_app/union/comm_player.h"
+#include "net_app/union/colosseum_types.h"
 
 
 //==============================================================================
 //  定数定義
 //==============================================================================
-///一度に接続できる最大人数
-#define UNION_CONNECT_PLAYER_NUM      (5) //レコードコーナーが最大5人なので
-
 ///一度に受信できる最大ビーコン数
-#define UNION_RECEIVE_BEACON_MAX      (SCAN_PARENT_COUNT_MAX)
+#define UNION_RECEIVE_BEACON_MAX      (10)
+
+///キャラクタ管理数(一度に出せる最大キャラクタ数)
+#define UNION_CHARACTER_MAX           (UNION_RECEIVE_BEACON_MAX * UNION_CONNECT_PLAYER_NUM)
 
 ///巨大データ受信バッファサイズ
 #define UNION_HUGE_RECEIVE_BUF_SIZE   (0x800)
@@ -41,10 +42,15 @@ typedef struct _UNION_SYSTEM{
   UNION_MY_SITUATION my_situation;    ///<自分の状況
   UNION_BEACON my_beacon;             ///<自分の送信ビーコン
   UNION_BEACON_PC receive_beacon[UNION_RECEIVE_BEACON_MAX];  ///<受信ビーコン
+  UNION_CHARACTER character[UNION_CHARACTER_MAX];   ///<キャラクタ管理バッファ
   
   UNION_SUB_PROC subproc;             ///<サブPROC呼び出し制御
   
+  COLOSSEUM_SYSTEM *colosseum_sys;    ///<コロシアムシステムワーク
+  
   u8 comm_status;
+  u8 restart_seq;                     ///<「切断→再開」処理シーケンスNo
+  u8 padding[2];
 }UNION_SYSTEM;
 
 

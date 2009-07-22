@@ -10,6 +10,8 @@
 
 #include <gflib.h>
 #include "net/network_define.h"
+#include "colosseum.h"
+#include "net_app/union/union_main.h"
 
 
 //==============================================================================
@@ -20,10 +22,12 @@
 enum COLOSSEUM_CMD{
   COLOSSEUM_CMD_START = GFL_NET_CMD_COLOSSEUM,
   
-  COLOSSEUM_CMD_SHUTDOWN = COLOSSEUM_CMD_START,     ///<切断
-  COLOSSEUM_CMD_MAINMENU_LIST_RESULT,           ///<メインメニュー選択結果
-  COLOSSEUM_CMD_MAINMENU_LIST_RESULT_ANSWER,    ///<メインメニュー選択結果の返事
-  COLOSSEUM_CMD_TRAINERCARD_PARAM,              ///<トレーナーカード情報
+  COLOSSEUM_CMD_SHUTDOWN = COLOSSEUM_CMD_START, ///<切断
+  COLOSSEUM_CMD_BASIC_STATUS,               ///<基本情報
+  COLOSSEUM_CMD_TRAINERCARD,                ///<トレーナーカード情報
+  COLOSSEUM_CMD_POS_PACKAGE,                ///<座標パッケージ
+  COLOSSEUM_CMD_STANDPOS_CONFIRM,           ///<親に自分の今の立ち位置を使っても問題ないか確認する
+  COLOSSEUM_CMD_ANSWER_STANDPOS,            ///<立ち位置使用結果の返事
   
   COLOSSEUM_CMD_MAX,
   COLOSSEUM_CMD_NUM = COLOSSEUM_CMD_MAX - COLOSSEUM_CMD_START,
@@ -42,6 +46,10 @@ extern const NetRecvFuncTable Colosseum_CommPacketTbl[];
 extern void Colosseum_AddCommandTable(UNION_SYSTEM_PTR unisys);
 extern void Colosseum_DelCommandTable(void);
 
-extern BOOL ColosseumSend_MainMenuListResult(u32 select_list);
-extern BOOL ColosseumSend_MainMenuListResultAnswer(BOOL yes_no);
-extern BOOL ColosseumSend_TrainerCardParam(UNION_SYSTEM_PTR unisys);
+extern BOOL ColosseumSend_Shutdown(COMM_PLAYER_PACKAGE *pos_package);
+extern BOOL ColosseumSend_BasicStatus(COLOSSEUM_BASIC_STATUS *basic_status);
+extern BOOL ColosseumSend_TrainerCard(TR_CARD_DATA *send_card);
+extern BOOL ColosseumSend_PosPackage(COMM_PLAYER_PACKAGE *pos_package);
+extern BOOL ColosseumSend_StandingPositionConfirm(COLOSSEUM_SYSTEM_PTR clsys);
+extern BOOL ColosseumSend_AnswerStandingPosition(COLOSSEUM_SYSTEM_PTR clsys, int send_net_id, BOOL result);
+
