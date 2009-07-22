@@ -34,7 +34,7 @@
 //======================================================================
 #define HEIGHT	(0x3000)
 
-#define CAMERA_DEF_PITCH  ( 0x800 )
+#define CAMERA_DEF_PITCH  ( 0x100 )
 #define CAMERA_DEF_LEN    ( 0x38D000 )
 #define CAMERA_DEF_TARGET_X ( 0x2f6f36 )
 #define CAMERA_DEF_TARGET_Y ( 0x4000 )

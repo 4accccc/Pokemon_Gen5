@@ -35,6 +35,7 @@
 #include "field_effect.h"
 #include "field_encount.h"
 #include "field_place_name.h"
+#include "fieldmap_func_def.h"
 
 //======================================================================
 //	define
@@ -100,5 +101,6 @@ extern FLDEFF_CTRL * FIELDMAP_GetFldEffCtrl( FIELDMAP_WORK *fieldWork );
 extern FIELD_ENCOUNT * FIELDMAP_GetEncount( FIELDMAP_WORK * fieldWork );
 extern FLDMAP_CTRLTYPE FIELDMAP_GetMapControlType( FIELDMAP_WORK *fieldWork );
 extern FIELD_PLACE_NAME * FIELDMAP_GetPlaceNameSys( FIELDMAP_WORK * fieldWork );
+extern FLDMAPFUNC_SYS * FIELDMAP_GetFldmapFuncSys( FIELDMAP_WORK * fieldWork );
 
 

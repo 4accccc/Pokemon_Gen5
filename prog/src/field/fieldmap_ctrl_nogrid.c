@@ -134,7 +134,7 @@ static void mapCtrlNoGrid_Main( FIELDMAP_WORK *fieldWork, VecFx32 *pos )
     }
   }
 
-	FIELD_PLAYER_NOGRID_Move( fld_player, key_cont );
+	FIELD_PLAYER_NOGRID_Move( fld_player, key_cont, FX32_ONE );
 	FIELD_PLAYER_GetPos( fld_player, pos );
 
   if (rail_flag)

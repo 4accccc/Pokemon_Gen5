@@ -19,7 +19,7 @@
 //======================================================================
 //	extern
 //======================================================================
-extern void FIELD_PLAYER_NOGRID_Move( FIELD_PLAYER *fld_player, int key );
+extern void FIELD_PLAYER_NOGRID_Move( FIELD_PLAYER *fld_player, int key, fx32 onedist );
 
 extern void FIELD_PLAYER_C3_Move(
 		FIELD_PLAYER *fld_player, int key, u16 angle );

@@ -157,7 +157,6 @@ void FLD_SCENEAREA_LOADER_Clear( FLD_SCENEAREA_LOADER* p_sys )
 const FLD_SCENEAREA_DATA* FLD_SCENEAREA_LOADER_GetData( const FLD_SCENEAREA_LOADER* cp_sys )
 {
 	GF_ASSERT( cp_sys );
-
 	return cp_sys->p_data;
 }
 

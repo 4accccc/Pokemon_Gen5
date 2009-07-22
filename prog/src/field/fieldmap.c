@@ -60,6 +60,8 @@
 
 #include "system/fld_wipe_3dobj.h"
 
+#include "fieldmap_func.h"
+
 #include "arc/fieldmap/zone_id.h"
 #include "field/weather_no.h"
 #include "sound/pm_sndsys.h"
@@ -142,6 +144,9 @@ enum {
 
 #define MMDL_LIST_MAX	(64) ///<動作モデルリスト最大
 
+/// FLDMAPFUNCシステムのタスク最大数
+#define FLDMAPFUNC_TASK_MAX	( 32 )
+
 //--------------------------------------------------------------
 /**
  * @brief フィールドマップシーケンス動作関数の戻り値
@@ -210,6 +215,8 @@ struct _FIELDMAP_WORK
 	GFL_G3D_LIGHTSET *g3Dlightset; //g3Dlight Lib ハンドル
 	GFL_TCB *g3dVintr; //3D用vIntrTaskハンドル
 	GFL_BBDACT_SYS *bbdActSys; //ビルボードアクトシステム設定ハンドル
+
+  FLDMAPFUNC_SYS * fldmapFuncSys;
 	
 	GAMEMODE gamemode;
 	FLDMAPSEQ seq;
@@ -584,6 +591,9 @@ static MAINSEQ_RESULT mainSeqFunc_setup(GAMESYS_WORK *gsys, FIELDMAP_WORK *field
     GameCommSys_Callback_FieldCreate( game_comm, fieldWork );
   }
 
+	// フィールドマップ用制御タスクシステム
+	fieldWork->fldmapFuncSys = FLDMAPFUNC_Sys_Create( fieldWork, fieldWork->heapID, FLDMAPFUNC_TASK_MAX );
+
   //フィールドデバッグ初期化
   fieldWork->debugWork = FIELD_DEBUG_Init( fieldWork, fieldWork->heapID );
 
@@ -619,6 +629,9 @@ static MAINSEQ_RESULT mainSeqFunc_ready(GAMESYS_WORK *gsys, FIELDMAP_WORK *field
   }
   
   FLDEFF_CTRL_Update( fieldWork->fldeff_ctrl );
+
+	// フィールドマップ用制御タスクシステム
+	FLDMAPFUNC_Sys_Main( fieldWork->fldmapFuncSys );
 
   if (ZONEDATA_DEBUG_IsRailMap(fieldWork->map_id) == TRUE)
   {
@@ -696,6 +709,10 @@ static MAINSEQ_RESULT mainSeqFunc_update_top(GAMESYS_WORK *gsys, FIELDMAP_WORK *
   
   FLDEFF_CTRL_Update( fieldWork->fldeff_ctrl );
 
+
+	// フィールドマップ用制御タスクシステム
+	FLDMAPFUNC_Sys_Main( fieldWork->fldmapFuncSys );
+
   // TEMP: BGMの一部トラックの音量調整
   {
 	  int gx, gy, gz;
@@ -751,6 +768,9 @@ static MAINSEQ_RESULT mainSeqFunc_free(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldW
     FIELD_RAIL_MAN_GetLocation(fieldWork->railMan, &railLoc);
     GAMEDATA_SetRailLocation(gamedata, &railLoc);
   }
+
+	// フィールドマップ用制御タスクシステム
+	FLDMAPFUNC_Sys_Delete( fieldWork->fldmapFuncSys );
   
   //通信削除コールバック呼び出し
   {
@@ -1336,6 +1356,17 @@ FIELD_PLACE_NAME * FIELDMAP_GetPlaceNameSys( FIELDMAP_WORK * fieldWork )
   return fieldWork->placeNameSys;
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief	フィールドマップ上で動作する制御タスクシステム	取得
+ */
+//-----------------------------------------------------------------------------
+FLDMAPFUNC_SYS * FIELDMAP_GetFldmapFuncSys( FIELDMAP_WORK * fieldWork )
+{
+	return fieldWork->fldmapFuncSys;
+}
+
+
 //======================================================================
 //	フィールドマップ　サブ　BG関連
 //======================================================================
@@ -1517,6 +1548,9 @@ static void fldmap_G3D_Draw( FIELDMAP_WORK * fieldWork )
 		NNS_G3dGlbSetProjectionMtx(&org_pm);
 		NNS_G3dGlbFlush();		//　ジオメトリコマンドを転送
   }
+
+	// フィールドマップ用制御タスクシステム
+	FLDMAPFUNC_Sys_Draw3D( fieldWork->fldmapFuncSys );
 
 	
   FIELD_WEATHER_3DWrite( fieldWork->weather_sys );	// 天気描画処理

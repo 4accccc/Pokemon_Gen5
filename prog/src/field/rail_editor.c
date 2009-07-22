@@ -61,8 +61,8 @@ enum {
 //-------------------------------------
 ///	CIRCLE移動
 //=====================================
-#define RM_DEF_ANGLE_MOVE	(16)
-#define RM_DEF_LEN_MOVE		(FX32_ONE)
+#define RM_DEF_ANGLE_MOVE	(0x100)
+#define RM_DEF_LEN_MOVE		(8*FX32_ONE)
 #define RM_DEF_CAMERA_LEN	( 0x38D000 )
 #define RM_DEF_CAMERA_PITCH	( 0x800 )
 
@@ -112,6 +112,10 @@ typedef struct {
 	RE_RECV_BUFF*	p_recv;						// 受信バッファ
 	u32*					p_tmp_buff;// 汎用受信バッファ
 	VecFx32				camera_target;
+	const VecFx32* cp_field_default_target;
+	VecFx32				default_target_offset;
+
+	u32	last_control_type;
 } DEBUG_RAIL_EDITOR;
 
 
@@ -156,22 +160,23 @@ static void RE_InputControl( DEBUG_RAIL_EDITOR* p_wk );
 static void RE_InputPoint_FreeNormal( DEBUG_RAIL_EDITOR* p_wk );
 static void RE_InputPoint_FreeCircle( DEBUG_RAIL_EDITOR* p_wk );
 static void RE_InputPoint_Rail( DEBUG_RAIL_EDITOR* p_wk );
-static void RE_InputLine_FreeNormal( DEBUG_RAIL_EDITOR* p_wk );
-static void RE_InputLine_FreeCircle( DEBUG_RAIL_EDITOR* p_wk );
-static void RE_InputLine_Rail( DEBUG_RAIL_EDITOR* p_wk );
-static void RE_InputArea_FreeNormal( DEBUG_RAIL_EDITOR* p_wk );
-static void RE_InputArea_FreeCircle( DEBUG_RAIL_EDITOR* p_wk );
-static void RE_InputArea_Rail( DEBUG_RAIL_EDITOR* p_wk );
-static void RE_InputCamera_FreeNormal( DEBUG_RAIL_EDITOR* p_wk );
-static void RE_InputCamera_FreeCircle( DEBUG_RAIL_EDITOR* p_wk );
 static void RE_InputCamera_Pos( DEBUG_RAIL_EDITOR* p_wk );
-static void RE_InputCamera_Angle( DEBUG_RAIL_EDITOR* p_wk );
 static void RE_InputCamera_Target( DEBUG_RAIL_EDITOR* p_wk );
-static void RE_InputCamera_Rail( DEBUG_RAIL_EDITOR* p_wk );
-static void RE_InputLinePos_FreeNormal( DEBUG_RAIL_EDITOR* p_wk );
-static void RE_InputLinePos_FreeCircle( DEBUG_RAIL_EDITOR* p_wk );
 static void RE_InputLinePos_CenterPos( DEBUG_RAIL_EDITOR* p_wk );
-static void RE_InputLinePos_Rail( DEBUG_RAIL_EDITOR* p_wk );
+
+static void RE_InitInputPoint_FreeNormal( DEBUG_RAIL_EDITOR* p_wk );
+static void RE_InitInputPoint_FreeCircle( DEBUG_RAIL_EDITOR* p_wk );
+static void RE_InitInputPoint_Rail( DEBUG_RAIL_EDITOR* p_wk );
+static void RE_InitInputCamera_Pos( DEBUG_RAIL_EDITOR* p_wk );
+static void RE_InitInputCamera_Target( DEBUG_RAIL_EDITOR* p_wk );
+static void RE_InitInputLinePos_CenterPos( DEBUG_RAIL_EDITOR* p_wk );
+
+static void RE_ExitInputPoint_FreeNormal( DEBUG_RAIL_EDITOR* p_wk );
+static void RE_ExitInputPoint_FreeCircle( DEBUG_RAIL_EDITOR* p_wk );
+static void RE_ExitInputPoint_Rail( DEBUG_RAIL_EDITOR* p_wk );
+static void RE_ExitInputCamera_Pos( DEBUG_RAIL_EDITOR* p_wk );
+static void RE_ExitInputCamera_Target( DEBUG_RAIL_EDITOR* p_wk );
+static void RE_ExitInputLinePos_CenterPos( DEBUG_RAIL_EDITOR* p_wk );
 
 // 送信関数
 static void RE_SendControl( DEBUG_RAIL_EDITOR* p_wk );
@@ -180,13 +185,6 @@ static void RE_Send_AreaData( DEBUG_RAIL_EDITOR* p_wk );
 static void RE_Send_PlayerData( DEBUG_RAIL_EDITOR* p_wk );
 static void RE_Send_CameraData( DEBUG_RAIL_EDITOR* p_wk );
 
-
-// 主人公、ノーマル移動
-static void RE_FreeMove_Normal( DEBUG_RAIL_EDITOR* p_wk );
-// 主人公、回転移動
-static void RE_FreeMove_Circle( DEBUG_RAIL_EDITOR* p_wk );
-// 主人公　レール動作
-static void RE_RailMove( DEBUG_RAIL_EDITOR* p_wk );
 
 
 //----------------------------------------------------------------------------
@@ -244,6 +242,15 @@ static GMEVENT_RESULT DEBUG_RailEditorEvent( GMEVENT * p_event, int *  p_seq, vo
 
 		// カメラターゲット設定
 //		FIELD_CAMERA_BindTarget( FIELDMAP_GetFieldCamera( p_wk->p_fieldmap ), &p_wk->camera_target );
+
+
+		// デフォルトターゲットの変更
+		p_wk->cp_field_default_target = FIELD_CAMERA_DEBUG_GetDefaultTarget( FIELDMAP_GetFieldCamera( p_wk->p_fieldmap ) );
+
+		// デフォルトターゲットオフセット取得
+		FIELD_CAMERA_GetTargetOffset( FIELDMAP_GetFieldCamera( p_wk->p_fieldmap ), &p_wk->default_target_offset );
+
+		FIELD_CAMERA_DEBUG_SetDefaultTarget( FIELDMAP_GetFieldCamera( p_wk->p_fieldmap ), &p_wk->camera_target );
 
 		// 座標を設定
 		FIELD_PLAYER_GetPos( FIELDMAP_GetFieldPlayer( p_wk->p_fieldmap ), &p_wk->camera_target );
@@ -439,6 +446,7 @@ static void RE_Recv_Rail( DEBUG_RAIL_EDITOR* p_wk, const void* cp_data, u32 size
 	GF_ASSERT( size < RE_MCS_BUFF_RAIL_SIZE );
 	GFL_STD_MemCopy( cp_rail, p_wk->p_recv->rail, size );
 
+	TOMOYA_Printf( "rail_recv size = %d\n", size );
 	p_wk->p_recv->rail_size = size;
 }
 
@@ -592,13 +600,16 @@ static void RE_Reflect_Rail( DEBUG_RAIL_EDITOR* p_wk )
 	FIELD_RAIL_LOADER* p_railload = FIELDMAP_GetFieldRailLoader( p_wk->p_fieldmap );
 	RAIL_LOCATION location;
 	RE_MCS_RAIL_DATA* p_data = (RE_MCS_RAIL_DATA*)p_wk->p_recv->rail;	
+	void* p_setdata;
 
 	// ロケーション取得
 	FIELD_RAIL_MAN_GetLocation( p_rail, &location );
 
 	// レール情報ローダーに設定
 	FIELD_RAIL_LOADER_Clear( p_railload );
-	FIELD_RAIL_LOADER_DEBUG_LoadBinary( p_railload, p_data->rail, p_wk->p_recv->rail_size  - 8 );
+	p_setdata = GFL_HEAP_AllocClearMemory( FIELDMAP_GetHeapID( p_wk->p_fieldmap ), (p_wk->p_recv->rail_size  - 8) );
+	GFL_STD_MemCopy( p_data->rail, p_setdata, (p_wk->p_recv->rail_size  - 8) );
+	FIELD_RAIL_LOADER_DEBUG_LoadBinary( p_railload, p_setdata, (p_wk->p_recv->rail_size  - 8) );
 
 	// レールマネージャに登録
 	FIELD_RAIL_MAN_Load( p_rail,  FIELD_RAIL_LOADER_GetData( p_railload ) );
@@ -619,10 +630,13 @@ static void RE_Reflect_Area( DEBUG_RAIL_EDITOR* p_wk )
 	FLD_SCENEAREA* p_area = FIELDMAP_GetFldSceneArea( p_wk->p_fieldmap );
 	FLD_SCENEAREA_LOADER* p_areaload = FIELDMAP_GetFldSceneAreaLoader( p_wk->p_fieldmap );
 	RE_MCS_AREA_DATA* p_data = (RE_MCS_AREA_DATA*)p_wk->p_recv->area;	
+	void* p_setdata;
 
 	// areaローダーに設定
 	FLD_SCENEAREA_LOADER_Clear( p_areaload );
-	FLD_SCENEAREA_LOADER_LoadBinary( p_areaload, p_data->area, p_wk->p_recv->area_size - 8 );
+	p_setdata = GFL_HEAP_AllocClearMemory( FIELDMAP_GetHeapID( p_wk->p_fieldmap ), (p_wk->p_recv->area_size - 8) );
+	GFL_STD_MemCopy( p_data->area, p_setdata, (p_wk->p_recv->area_size - 8) );
+	FLD_SCENEAREA_LOADER_LoadBinary( p_areaload, p_setdata, p_wk->p_recv->area_size - 8 );
 
 	// areaマネージャに登録
 	FLD_SCENEAREA_Release( p_area );
@@ -643,6 +657,7 @@ static void RE_Reflect_Select( DEBUG_RAIL_EDITOR* p_wk )
 {
 	static void (*const cpJump[RE_SELECT_DATA_MAX])( DEBUG_RAIL_EDITOR* p_wk ) = 
 	{
+		NULL,
 		RE_JumpPoint,
 		RE_JumpLine,
 		RE_JumpArea,
@@ -730,29 +745,52 @@ static void RE_JumpArea( DEBUG_RAIL_EDITOR* p_wk )
 //-----------------------------------------------------------------------------
 static void RE_InputControl( DEBUG_RAIL_EDITOR* p_wk )
 {
+	static void (*const cpInitInput[RE_SELECT_DATA_SEQ_TYPE_MAX])( DEBUG_RAIL_EDITOR* p_wk ) = 
+	{
+		NULL,
+		RE_InitInputPoint_FreeNormal,
+		RE_InitInputPoint_FreeCircle,
+		RE_InitInputPoint_Rail,
+		RE_InitInputCamera_Pos,
+		RE_InitInputCamera_Target,
+		RE_InitInputLinePos_CenterPos,
+	};
+
+	static void (*const cpExitInput[RE_SELECT_DATA_SEQ_TYPE_MAX])( DEBUG_RAIL_EDITOR* p_wk ) = 
+	{
+		NULL,
+		RE_ExitInputPoint_FreeNormal,
+		RE_ExitInputPoint_FreeCircle,
+		RE_ExitInputPoint_Rail,
+		RE_ExitInputCamera_Pos,
+		RE_ExitInputCamera_Target,
+		RE_ExitInputLinePos_CenterPos,
+	};
+	
 	static void (*const cpInput[RE_SELECT_DATA_SEQ_TYPE_MAX])( DEBUG_RAIL_EDITOR* p_wk ) = 
 	{
 		NULL,
 		RE_InputPoint_FreeNormal,
 		RE_InputPoint_FreeCircle,
 		RE_InputPoint_Rail,
-		RE_InputLine_FreeNormal,
-		RE_InputLine_FreeCircle,
-		RE_InputLine_Rail,
-		RE_InputArea_FreeNormal,
-		RE_InputArea_FreeCircle,
-		RE_InputArea_Rail,
-		RE_InputCamera_FreeNormal,
-		RE_InputCamera_FreeCircle,
 		RE_InputCamera_Pos,
-		RE_InputCamera_Angle,
 		RE_InputCamera_Target,
-		RE_InputCamera_Rail,
-		RE_InputLinePos_FreeNormal,
-		RE_InputLinePos_FreeCircle,
 		RE_InputLinePos_CenterPos,
-		RE_InputLinePos_Rail,
 	};
+
+	// 変更チェック
+	if( p_wk->p_recv->select.select_seq != p_wk->last_control_type )
+	{
+		if(cpExitInput[ p_wk->last_control_type ])
+		{
+			cpExitInput[ p_wk->last_control_type ]( p_wk );
+		}
+
+		if(cpInitInput[ p_wk->p_recv->select.select_seq ])
+		{
+			cpInitInput[ p_wk->p_recv->select.select_seq ]( p_wk );
+		}
+	}
 	
 	// 選択状態による、操作
 	GF_ASSERT( p_wk->p_recv->select.select_seq < RE_SELECT_DATA_SEQ_TYPE_MAX);	
@@ -760,6 +798,8 @@ static void RE_InputControl( DEBUG_RAIL_EDITOR* p_wk )
 	{
 		cpInput[p_wk->p_recv->select.select_seq]( p_wk );
 	}
+
+	p_wk->last_control_type = p_wk->p_recv->select.select_seq;
 }
 
 //----------------------------------------------------------------------------
@@ -769,13 +809,81 @@ static void RE_InputControl( DEBUG_RAIL_EDITOR* p_wk )
 //-----------------------------------------------------------------------------
 static void RE_InputPoint_FreeNormal( DEBUG_RAIL_EDITOR* p_wk )
 {
-	// フリー自機動作
-	RE_FreeMove_Normal( p_wk );
+	FIELD_CAMERA* p_camera = FIELDMAP_GetFieldCamera( p_wk->p_fieldmap );
+	FIELD_PLAYER* p_player = FIELDMAP_GetFieldPlayer( p_wk->p_fieldmap );
+
+	// 半グリッドサイズでの移動にする
+	FIELD_PLAYER_NOGRID_Move( p_player, GFL_UI_KEY_GetCont(), 0x8000 );
+
+	FIELD_PLAYER_GetPos( p_player, &p_wk->camera_target );
 }
+
 static void RE_InputPoint_FreeCircle( DEBUG_RAIL_EDITOR* p_wk )
 {
-	// フリー自機動作
-	RE_FreeMove_Circle( p_wk );
+	FIELD_CAMERA* p_camera = FIELDMAP_GetFieldCamera( p_wk->p_fieldmap );
+	FIELD_PLAYER* p_player = FIELDMAP_GetFieldPlayer( p_wk->p_fieldmap );
+	VecFx32 target, pl_pos, sub;
+	u16 yaw;
+	fx32 len;
+	u32 key_cont = GFL_UI_KEY_GetRepeat();
+	s16 df_angle;
+	s16 df_len;
+	BOOL change = FALSE;
+
+	// カメラターゲットを中心に回転移動
+	FIELD_CAMERA_GetTargetPos( p_camera, &target );
+	FIELD_PLAYER_GetPos( p_player, &pl_pos );
+
+	target.y	= pl_pos.y;
+	len				= VEC_Distance( &target, &pl_pos );
+	yaw = FIELD_CAMERA_GetAngleYaw( p_camera );
+
+	if( key_cont & PAD_BUTTON_B )
+	{
+		df_len		= 4*RM_DEF_LEN_MOVE;
+		df_angle	= 4*RM_DEF_ANGLE_MOVE;
+	}
+	else
+	{
+		df_len		= RM_DEF_LEN_MOVE;
+		df_angle	= RM_DEF_ANGLE_MOVE;
+	}
+
+ 
+	if( key_cont & PAD_KEY_LEFT )
+	{
+		yaw -= df_angle;
+		change = TRUE;
+	}
+	else if( key_cont & PAD_KEY_RIGHT )
+	{
+		yaw += df_angle;
+		change = TRUE;
+	}
+	else if( key_cont & PAD_KEY_UP )
+	{
+		len += df_len;
+		change = TRUE;
+	}
+	else if( key_cont & PAD_KEY_DOWN )
+	{
+		len -= df_len;
+		change = TRUE;
+	}
+
+	if( change )
+	{
+		// 角度から、座標を求める
+		pl_pos.x = target.x + FX_Mul( FX_SinIdx( yaw ), len );
+		pl_pos.z = target.z + FX_Mul( FX_CosIdx( yaw ), len );
+		FIELD_PLAYER_SetPos( p_player, &pl_pos );
+	}
+
+
+	// 延長線上にカメラを配置
+	FIELD_CAMERA_SetAnglePitch( p_camera, RM_DEF_CAMERA_PITCH );
+	FIELD_CAMERA_SetAngleYaw( p_camera, yaw );
+	FIELD_CAMERA_SetAngleLen( p_camera, RM_DEF_CAMERA_LEN );
 }
 
 //----------------------------------------------------------------------------
@@ -785,105 +893,301 @@ static void RE_InputPoint_FreeCircle( DEBUG_RAIL_EDITOR* p_wk )
 //-----------------------------------------------------------------------------
 static void RE_InputPoint_Rail( DEBUG_RAIL_EDITOR* p_wk )
 {
-	RE_RailMove( p_wk );
+	FIELD_CAMERA* p_camera = FIELDMAP_GetFieldCamera( p_wk->p_fieldmap );
+	FIELD_PLAYER* p_player = FIELDMAP_GetFieldPlayer( p_wk->p_fieldmap );
+	FIELD_RAIL_MAN* p_rail = FIELDMAP_GetFieldRailMan( p_wk->p_fieldmap );
+	FLD_SCENEAREA* p_scenearea = FIELDMAP_GetFldSceneArea( p_wk->p_fieldmap );
+	VecFx32 pos;
+
+
+	// レールシステムメイン
+	FIELD_RAIL_MAN_Update(p_rail, GFL_UI_KEY_GetCont() );
+	FIELD_RAIL_MAN_UpdateCamera(p_rail);
+	FIELD_RAIL_MAN_GetPos( p_rail, &pos );
+	FLD_SCENEAREA_Update( p_scenearea, &pos );
+
+  FIELD_PLAYER_SetPos( p_player, &pos );
+	FIELD_PLAYER_GetPos( p_player, &p_wk->camera_target );
+//	FIELD_CAMERA_BindTarget( p_camera, &p_wk->camera_target );
 }
 
 //----------------------------------------------------------------------------
 /**
- *	@brief	ラインノーマル移動
+ *	@brief	カメラ座標操作
  */
 //-----------------------------------------------------------------------------
-static void RE_InputLine_FreeNormal( DEBUG_RAIL_EDITOR* p_wk )
-{
-	RE_FreeMove_Normal( p_wk );
-}
-//----------------------------------------------------------------------------
-/**
- *	@brief	ラインサークル移動
- */
-//-----------------------------------------------------------------------------
-static void RE_InputLine_FreeCircle( DEBUG_RAIL_EDITOR* p_wk )
-{
-	RE_FreeMove_Circle( p_wk );
-}
-
-//----------------------------------------------------------------------------
-/**
- *	@brief	ラインレール移動
- */
-//-----------------------------------------------------------------------------
-static void RE_InputLine_Rail( DEBUG_RAIL_EDITOR* p_wk )
-{
-	RE_RailMove( p_wk );
-}
-
-//----------------------------------------------------------------------------
-/**
- *	@brief	エリア入力　フリー動作
- */
-//-----------------------------------------------------------------------------
-static void RE_InputArea_FreeNormal( DEBUG_RAIL_EDITOR* p_wk )
-{
-	RE_FreeMove_Normal( p_wk );
-}
-static void RE_InputArea_FreeCircle( DEBUG_RAIL_EDITOR* p_wk )
-{
-	RE_FreeMove_Circle( p_wk );
-}
-static void RE_InputArea_Rail( DEBUG_RAIL_EDITOR* p_wk )
-{
-	RE_RailMove( p_wk );
-}
-
-//----------------------------------------------------------------------------
-/**
- *	@brief	カメラ入力
- */
-//-----------------------------------------------------------------------------
-static void RE_InputCamera_FreeNormal( DEBUG_RAIL_EDITOR* p_wk )
-{
-	RE_FreeMove_Normal( p_wk );
-}
-static void RE_InputCamera_FreeCircle( DEBUG_RAIL_EDITOR* p_wk )
-{
-	RE_FreeMove_Circle( p_wk );
-}
 static void RE_InputCamera_Pos( DEBUG_RAIL_EDITOR* p_wk )
 {
+	FIELD_SUBSCREEN_WORK * subscreen;
+
+	// カメラ操作は下画面で行う
+	subscreen = FIELDMAP_GetFieldSubscreenWork(p_wk->p_fieldmap);
+
+  FIELD_SUBSCREEN_Main(subscreen);
 }
-static void RE_InputCamera_Angle( DEBUG_RAIL_EDITOR* p_wk )
-{
-}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	ターゲット座標の操作
+ */
+//-----------------------------------------------------------------------------
 static void RE_InputCamera_Target( DEBUG_RAIL_EDITOR* p_wk )
 {
-}
-static void RE_InputCamera_Rail( DEBUG_RAIL_EDITOR* p_wk )
-{
-	RE_RailMove( p_wk );
+	FIELD_SUBSCREEN_WORK * subscreen;
+
+	// カメラ操作は下画面で行う
+	subscreen = FIELDMAP_GetFieldSubscreenWork(p_wk->p_fieldmap);
+  FIELD_SUBSCREEN_Main(subscreen);
 }
 
 //----------------------------------------------------------------------------
 /**
- *	@brief	ライン位置入力
+ *	@brief	ライン動作処理、	中心座標
  */
 //-----------------------------------------------------------------------------
-static void RE_InputLinePos_FreeNormal( DEBUG_RAIL_EDITOR* p_wk )
-{
-	RE_FreeMove_Normal( p_wk );
-}
-
-static void RE_InputLinePos_FreeCircle( DEBUG_RAIL_EDITOR* p_wk )
-{
-	RE_FreeMove_Circle( p_wk );
-}
-
 static void RE_InputLinePos_CenterPos( DEBUG_RAIL_EDITOR* p_wk )
 {
+	// 中心座標を調べやすいように
+	RE_InputPoint_FreeNormal( p_wk );
 }
 
-static void RE_InputLinePos_Rail( DEBUG_RAIL_EDITOR* p_wk )
+
+
+// 初期化
+//----------------------------------------------------------------------------
+/**
+ *	@brief	自由移動
+ */
+//-----------------------------------------------------------------------------
+static void RE_InitInputPoint_FreeNormal( DEBUG_RAIL_EDITOR* p_wk )
 {
-	RE_RailMove( p_wk );
+	FIELD_CAMERA* p_camera = FIELDMAP_GetFieldCamera( p_wk->p_fieldmap );
+	FIELD_PLAYER* p_player = FIELDMAP_GetFieldPlayer( p_wk->p_fieldmap );
+	FIELD_RAIL_MAN* p_rail = FIELDMAP_GetFieldRailMan( p_wk->p_fieldmap );
+	FLD_SCENEAREA* p_scenearea = FIELDMAP_GetFldSceneArea( p_wk->p_fieldmap );
+	VecFx32 pos;
+
+	FIELD_CAMERA_SetMode( p_camera, FIELD_CAMERA_MODE_CALC_CAMERA_POS );
+
+	FIELD_CAMERA_BindDefaultTarget( p_camera );
+
+	FIELD_RAIL_MAN_SetActiveFlag(p_rail, FALSE);
+	FLD_SCENEAREA_SetActiveFlag(p_scenearea, FALSE);
+
+	// プレイヤー座標をハーフグリッド単位にする
+	FIELD_PLAYER_GetPos( p_player, &pos );
+	pos.x -= pos.x % GRID_HALF_FX32;
+	pos.y -= pos.y % GRID_HALF_FX32;
+	pos.z -= pos.z % GRID_HALF_FX32;
+	FIELD_PLAYER_SetPos( p_player, &pos );
+
+	// 基本アングルの設定
+	FIELD_CAMERA_SetAnglePitch( p_camera, 45*182 );
+	FIELD_CAMERA_SetAngleYaw( p_camera, 0 );
+	FIELD_CAMERA_SetAngleLen( p_camera, 0x90000 );
+
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	サークル移動
+ */
+//-----------------------------------------------------------------------------
+static void RE_InitInputPoint_FreeCircle( DEBUG_RAIL_EDITOR* p_wk )
+{
+	FIELD_CAMERA* p_camera = FIELDMAP_GetFieldCamera( p_wk->p_fieldmap );
+	FIELD_PLAYER* p_player = FIELDMAP_GetFieldPlayer( p_wk->p_fieldmap );
+	FIELD_RAIL_MAN* p_rail = FIELDMAP_GetFieldRailMan( p_wk->p_fieldmap );
+	FLD_SCENEAREA* p_scenearea = FIELDMAP_GetFldSceneArea( p_wk->p_fieldmap );
+	VecFx32 target, pl_pos, sub;
+	u16 yaw;
+	fx32 len;
+	u32 key_cont = GFL_UI_KEY_GetRepeat();
+	s16 df_angle;
+	s16 df_len;
+	BOOL change = FALSE;
+
+	FIELD_RAIL_MAN_SetActiveFlag(p_rail, FALSE);
+	FLD_SCENEAREA_SetActiveFlag(p_scenearea, FALSE);
+
+	FIELD_CAMERA_FreeTarget( p_camera );
+
+	// カメラターゲットを中心に回転移動
+	FIELD_CAMERA_GetTargetPos( p_camera, &target );
+	FIELD_PLAYER_GetPos( p_player, &pl_pos );
+
+	target.y	= pl_pos.y;
+	len				= VEC_Distance( &target, &pl_pos );
+
+	FIELD_CAMERA_SetMode( p_camera, FIELD_CAMERA_MODE_CALC_CAMERA_POS );
+
+	VEC_Subtract( &pl_pos, &target, &sub );
+	yaw				= FX_Atan2Idx( sub.x, sub.z );
+
+	// 角度から、座標を求める
+	pl_pos.x = target.x + FX_Mul( FX_SinIdx( yaw ), len );
+	pl_pos.z = target.z + FX_Mul( FX_CosIdx( yaw ), len );
+	FIELD_PLAYER_SetPos( p_player, &pl_pos );
+
+	// 延長線上にカメラを配置
+	FIELD_CAMERA_SetAnglePitch( p_camera, RM_DEF_CAMERA_PITCH );
+	FIELD_CAMERA_SetAngleYaw( p_camera, yaw );
+	FIELD_CAMERA_SetAngleLen( p_camera, RM_DEF_CAMERA_LEN );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	レール移動
+ */
+//-----------------------------------------------------------------------------
+static void RE_InitInputPoint_Rail( DEBUG_RAIL_EDITOR* p_wk )
+{
+	FIELD_CAMERA* p_camera = FIELDMAP_GetFieldCamera( p_wk->p_fieldmap );
+	FIELD_RAIL_MAN* p_rail = FIELDMAP_GetFieldRailMan( p_wk->p_fieldmap );
+	FLD_SCENEAREA* p_scenearea = FIELDMAP_GetFldSceneArea( p_wk->p_fieldmap );
+
+	// レール移動
+	FIELD_RAIL_MAN_SetActiveFlag(p_rail, TRUE);
+	FLD_SCENEAREA_SetActiveFlag(p_scenearea, TRUE);
+
+	FIELD_CAMERA_FreeTarget( p_camera );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	カメラ操作移動
+ */
+//-----------------------------------------------------------------------------
+static void RE_InitInputCamera_Pos( DEBUG_RAIL_EDITOR* p_wk )
+{
+	FIELD_SUBSCREEN_WORK * subscreen;
+	
+
+	// カメラ操作は下画面で行う
+	subscreen = FIELDMAP_GetFieldSubscreenWork(p_wk->p_fieldmap);
+	FIELD_SUBSCREEN_ChangeForce(subscreen, FIELD_SUBSCREEN_DEBUG_TOUCHCAMERA);
+	{ 
+		void * inner_work;
+		FIELD_CAMERA * cam = FIELDMAP_GetFieldCamera(p_wk->p_fieldmap);
+		inner_work = FIELD_SUBSCREEN_DEBUG_GetControl(subscreen);
+		FIELD_CAMERA_DEBUG_BindSubScreen(cam, inner_work, FIELD_CAMERA_DEBUG_BIND_CAMERA_POS);
+
+		// 動作モード設定
+		FIELD_CAMERA_SetMode( cam, FIELD_CAMERA_MODE_CALC_CAMERA_POS );
+	}
+
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	ターゲット操作
+ */
+//-----------------------------------------------------------------------------
+static void RE_InitInputCamera_Target( DEBUG_RAIL_EDITOR* p_wk )
+{
+	FIELD_SUBSCREEN_WORK * subscreen;
+	
+
+	// カメラ操作は下画面で行う
+	subscreen = FIELDMAP_GetFieldSubscreenWork(p_wk->p_fieldmap);
+	FIELD_SUBSCREEN_ChangeForce(subscreen, FIELD_SUBSCREEN_DEBUG_TOUCHCAMERA);
+	{ 
+		void * inner_work;
+		FIELD_CAMERA * cam = FIELDMAP_GetFieldCamera(p_wk->p_fieldmap);
+		inner_work = FIELD_SUBSCREEN_DEBUG_GetControl(subscreen);
+		FIELD_CAMERA_DEBUG_BindSubScreen(cam, inner_work, FIELD_CAMERA_DEBUG_BIND_TARGET_POS);
+
+		// 動作モード設定
+		FIELD_CAMERA_SetMode( cam, FIELD_CAMERA_MODE_CALC_TARGET_POS );
+	}
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief		移動中心座標設定
+ */
+//-----------------------------------------------------------------------------
+static void RE_InitInputLinePos_CenterPos( DEBUG_RAIL_EDITOR* p_wk )
+{
+	FIELD_CAMERA* p_camera = FIELDMAP_GetFieldCamera( p_wk->p_fieldmap );
+
+	// 自由移動モード
+	RE_InitInputPoint_FreeNormal( p_wk );
+
+	// 基本アングルの設定
+	// かなり上から
+	FIELD_CAMERA_SetAnglePitch( p_camera, 90*182 );
+	FIELD_CAMERA_SetAngleYaw( p_camera, 0 );
+	FIELD_CAMERA_SetAngleLen( p_camera, 0x150000 );
+}
+
+// 破棄
+//----------------------------------------------------------------------------
+/**
+ *	@brief	自由移動
+ */
+//-----------------------------------------------------------------------------
+static void RE_ExitInputPoint_FreeNormal( DEBUG_RAIL_EDITOR* p_wk )
+{
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	円形移動
+ */
+//-----------------------------------------------------------------------------
+static void RE_ExitInputPoint_FreeCircle( DEBUG_RAIL_EDITOR* p_wk )
+{
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	レール移動
+ */
+//-----------------------------------------------------------------------------
+static void RE_ExitInputPoint_Rail( DEBUG_RAIL_EDITOR* p_wk )
+{
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	カメラ操作
+ */
+//-----------------------------------------------------------------------------
+static void RE_ExitInputCamera_Pos( DEBUG_RAIL_EDITOR* p_wk )
+{
+  FIELD_CAMERA * cam = FIELDMAP_GetFieldCamera(p_wk->p_fieldmap);
+	FIELD_CAMERA_DEBUG_ReleaseSubScreen( cam );
+
+	{
+		FIELD_SUBSCREEN_WORK * subscreen;
+		
+
+		// カメラ操作は下画面で行う
+		subscreen = FIELDMAP_GetFieldSubscreenWork(p_wk->p_fieldmap);
+		FIELD_SUBSCREEN_ChangeForce(subscreen, FIELD_SUBSCREEN_NORMAL);
+	}
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	ターゲット操作
+ */
+//-----------------------------------------------------------------------------
+static void RE_ExitInputCamera_Target( DEBUG_RAIL_EDITOR* p_wk )
+{
+  FIELD_CAMERA * cam = FIELDMAP_GetFieldCamera(p_wk->p_fieldmap);
+	FIELD_CAMERA_DEBUG_ReleaseSubScreen( cam );
+
+	// オフセットに変更値が入ってしまうので、ターゲットの実座標に戻す
+	FIELD_CAMERA_SetTargetOffset( cam, &p_wk->default_target_offset );
+
+	{
+		FIELD_SUBSCREEN_WORK * subscreen;
+		
+
+		// カメラ操作は下画面で行う
+		subscreen = FIELDMAP_GetFieldSubscreenWork(p_wk->p_fieldmap);
+		FIELD_SUBSCREEN_ChangeForce(subscreen, FIELD_SUBSCREEN_NORMAL);
+	}
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	カーブ移動中心座標操作
+ */
+//-----------------------------------------------------------------------------
+static void RE_ExitInputLinePos_CenterPos( DEBUG_RAIL_EDITOR* p_wk )
+{
 }
 
 
@@ -1003,7 +1307,8 @@ static void RE_Send_PlayerData( DEBUG_RAIL_EDITOR* p_wk )
 //-----------------------------------------------------------------------------
 static void RE_Send_CameraData( DEBUG_RAIL_EDITOR* p_wk )
 {
-	const FIELD_CAMERA* cp_camera = FIELDMAP_GetFieldCamera( p_wk->p_fieldmap );
+	FIELD_CAMERA* p_camera = FIELDMAP_GetFieldCamera( p_wk->p_fieldmap );
+	const GFL_G3D_CAMERA * cp_core_camera = FIELD_CAMERA_GetCameraPtr( p_camera );
 	RE_MCS_CAMERA_DATA* p_senddata = (RE_MCS_CAMERA_DATA*)p_wk->p_tmp_buff;
 	VecFx32 pos;
 	VecFx32 target;
@@ -1011,141 +1316,45 @@ static void RE_Send_CameraData( DEBUG_RAIL_EDITOR* p_wk )
 
 	p_senddata->header.data_type = RE_MCS_DATA_CAMERADATA;
 
-	FIELD_CAMERA_GetTargetPos( cp_camera, &target );
-	FIELD_CAMERA_GetCameraPos( cp_camera, &pos );
+	FIELD_CAMERA_Main( p_camera, 0 );
+
+	GFL_G3D_CAMERA_GetTarget( cp_core_camera, &target );
+	VEC_Subtract( &target, &p_wk->default_target_offset, &target );	// ターゲットオフセット分は減らす
+	GFL_G3D_CAMERA_GetPos( cp_core_camera, &pos );
 	p_senddata->pos_x = pos.x;
 	p_senddata->pos_y = pos.y;
 	p_senddata->pos_z = pos.z;
 	p_senddata->target_x = target.x;
 	p_senddata->target_y = target.y;
 	p_senddata->target_z = target.z;
-	p_senddata->pitch = FIELD_CAMERA_GetAnglePitch( cp_camera );
-	p_senddata->yaw		= FIELD_CAMERA_GetAngleYaw( cp_camera );
-	p_senddata->len		= FIELD_CAMERA_GetAngleLen( cp_camera );
+	
+	if( FIELD_CAMERA_GetMode( p_camera ) == FIELD_CAMERA_MODE_CALC_CAMERA_POS )
+	{
+		p_senddata->pitch = FIELD_CAMERA_GetAnglePitch( p_camera );
+		p_senddata->yaw		= FIELD_CAMERA_GetAngleYaw( p_camera );
+		p_senddata->len		= FIELD_CAMERA_GetAngleLen( p_camera );
+	}
+	else
+	{
+		VecFx32 camera_way;
+		fx32 xz_dist;
+
+		VEC_Subtract( &pos, &target, &camera_way );
+		pos.y = 0;
+		target.y = 0;
+		xz_dist = VEC_Distance( &pos, &target );
+
+		p_senddata->len		= VEC_Mag( &camera_way );
+		p_senddata->pitch = FX_Atan2( xz_dist, camera_way.y );
+		p_senddata->yaw		= FX_Atan2( camera_way.z, camera_way.x );
+	}
 
 	// 送信
 	result = MCS_Write( MCS_CHANNEL0, p_senddata, sizeof(RE_MCS_CAMERA_DATA) );
 	GF_ASSERT( result );	
 }
 
-//----------------------------------------------------------------------------
-/**
- *	@brief	主人公　通常移動
- */
-//-----------------------------------------------------------------------------
-static void RE_FreeMove_Normal( DEBUG_RAIL_EDITOR* p_wk )
-{
-	FIELD_CAMERA* p_camera = FIELDMAP_GetFieldCamera( p_wk->p_fieldmap );
-	FIELD_PLAYER* p_player = FIELDMAP_GetFieldPlayer( p_wk->p_fieldmap );
-	FIELD_RAIL_MAN* p_rail = FIELDMAP_GetFieldRailMan( p_wk->p_fieldmap );
-	FLD_SCENEAREA* p_scenearea = FIELDMAP_GetFldSceneArea( p_wk->p_fieldmap );
-
-	FIELD_CAMERA_SetMode( p_camera, FIELD_CAMERA_MODE_CALC_CAMERA_POS );
-
-	FIELD_RAIL_MAN_SetActiveFlag(p_rail, FALSE);
-	FLD_SCENEAREA_SetActiveFlag(p_scenearea, FALSE);
-	
-	FIELD_PLAYER_NOGRID_Move( p_player, GFL_UI_KEY_GetCont() );
-
-	FIELD_PLAYER_GetPos( p_player, &p_wk->camera_target );
-	FIELD_CAMERA_BindTarget( p_camera, &p_wk->camera_target );
-}
-
-//----------------------------------------------------------------------------
-/**
- *	@brief	主人公　円移動
- */
-//-----------------------------------------------------------------------------
-static void RE_FreeMove_Circle( DEBUG_RAIL_EDITOR* p_wk )
-{
-	FIELD_CAMERA* p_camera = FIELDMAP_GetFieldCamera( p_wk->p_fieldmap );
-	FIELD_PLAYER* p_player = FIELDMAP_GetFieldPlayer( p_wk->p_fieldmap );
-	FIELD_RAIL_MAN* p_rail = FIELDMAP_GetFieldRailMan( p_wk->p_fieldmap );
-	FLD_SCENEAREA* p_scenearea = FIELDMAP_GetFldSceneArea( p_wk->p_fieldmap );
-	VecFx32 target, pl_pos;
-	u16 yaw;
-	fx32 len;
-	u32 key_cont = GFL_UI_KEY_GetCont();
-	s16 df_angle;
-	s16 df_len;
-
-	FIELD_CAMERA_SetMode( p_camera, FIELD_CAMERA_MODE_CALC_CAMERA_POS );
-
-	FIELD_RAIL_MAN_SetActiveFlag(p_rail, FALSE);
-	FLD_SCENEAREA_SetActiveFlag(p_scenearea, FALSE);
-
-	FIELD_CAMERA_FreeTarget( p_camera );
-
-	if( key_cont & PAD_BUTTON_B )
-	{
-		df_len		= 4*RM_DEF_LEN_MOVE;
-		df_angle	= 4*RM_DEF_ANGLE_MOVE;
-	}
-	else
-	{
-		df_len		= RM_DEF_LEN_MOVE;
-		df_angle	= RM_DEF_ANGLE_MOVE;
-	}
-
-	// カメラターゲットを中心に回転移動
-	FIELD_CAMERA_GetTargetPos( p_camera, &target );
-	FIELD_PLAYER_GetPos( p_player, &pl_pos );
-	target.y	= pl_pos.y;
-	len				= VEC_Distance( &target, &pl_pos );
-	yaw				= FX_Atan2Idx( target.x, target.z );
-
-	if( key_cont & PAD_KEY_LEFT )
-	{
-		yaw += df_angle;
-	}
-	else if( key_cont & PAD_KEY_RIGHT )
-	{
-		yaw -= df_angle;
-	}
-	else if( key_cont & PAD_KEY_UP )
-	{
-		len -= df_len;
-	}
-	else if( key_cont & PAD_KEY_DOWN )
-	{
-		len += df_len;
-	}
-
-	// 角度から、座標を求める
-	pl_pos.x = FX_Mul( FX_SinIdx( yaw ), len );
-	pl_pos.z = FX_Mul( FX_CosIdx( yaw ), len );
-	FIELD_PLAYER_SetPos( p_player, &pl_pos );
-	
-	// 延長線上にカメラを配置
-	FIELD_CAMERA_SetAnglePitch( p_camera, RM_DEF_CAMERA_PITCH );
-	FIELD_CAMERA_SetAngleYaw( p_camera, yaw );
-	FIELD_CAMERA_SetAngleLen( p_camera, RM_DEF_CAMERA_LEN );
-}
-
-//----------------------------------------------------------------------------
-/**
- *	@brief	レール動作
- *
- *	@param	p_wk 
- */
-//-----------------------------------------------------------------------------
-static void RE_RailMove( DEBUG_RAIL_EDITOR* p_wk )
-{
-	FIELD_PLAYER* p_player = FIELDMAP_GetFieldPlayer( p_wk->p_fieldmap );
-	FIELD_RAIL_MAN* p_rail = FIELDMAP_GetFieldRailMan( p_wk->p_fieldmap );
-	FLD_SCENEAREA* p_scenearea = FIELDMAP_GetFldSceneArea( p_wk->p_fieldmap );
-	VecFx32 pos;
-
-	// レール移動
-	FIELD_RAIL_MAN_SetActiveFlag(p_rail, FALSE);
-	FLD_SCENEAREA_SetActiveFlag(p_scenearea, FALSE);
-	
-  FIELD_RAIL_MAN_GetPos(p_rail, &pos );
-  FIELD_PLAYER_SetPos( p_player, &pos );
-
-	FIELD_PLAYER_GetPos( p_player, &p_wk->camera_target );
-//	FIELD_CAMERA_BindTarget( p_camera, &p_wk->camera_target );
-}
 
 
 #endif // PM_DEBUG
+

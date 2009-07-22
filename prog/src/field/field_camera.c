@@ -558,7 +558,7 @@ static void updateAngleCameraPos(FIELD_CAMERA * camera)
 }
 static void updateAngleTargetPos(FIELD_CAMERA * camera)
 { 
-  // カメラポジション計算
+  // ターゲットポジション計算
 	calcAnglePos( &camera->camPos, &camera->target,
 			camera->angle_yaw, camera->angle_pitch, camera->angle_len );
 }
@@ -702,11 +702,30 @@ void FIELD_CAMERA_FreeTarget(FIELD_CAMERA * camera)
 {
 	camera->watch_target = NULL;
 }
+
+
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 void FIELD_CAMERA_BindDefaultTarget(FIELD_CAMERA * camera)
 {
   camera->watch_target = camera->default_target;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	デフォルトターゲットがあるかチェック
+ *
+ *	@retval	TRUE	ある
+ *	@retval	FALSE	ない
+ */
+//-----------------------------------------------------------------------------
+BOOL FIELD_CAMERA_IsBindDefaultTarget( const FIELD_CAMERA * camera )
+{
+	if( camera->default_target )
+	{
+		return TRUE;
+	}
+	return FALSE;
 }
 
 
@@ -984,6 +1003,27 @@ void FIELD_CAMERA_DEBUG_ReleaseSubScreen(FIELD_CAMERA * camera)
 
   camera->debug_subscreen_type = FIELD_CAMERA_DEBUG_BIND_NONE;
 }
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	デフォルトターゲットの設定
+ */
+//-----------------------------------------------------------------------------
+void FIELD_CAMERA_DEBUG_SetDefaultTarget( FIELD_CAMERA* camera, const VecFx32* target )
+{
+	camera->default_target = target;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	デフォルトターゲットの取得
+ */
+//-----------------------------------------------------------------------------
+const VecFx32* FIELD_CAMERA_DEBUG_GetDefaultTarget( const FIELD_CAMERA* camera )
+{
+	return camera->default_target;
+}
+
 #endif  //PM_DEBUG
 
 //---------------------------------------------------------------------------

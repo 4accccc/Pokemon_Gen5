@@ -33,6 +33,7 @@
 #include "event_battle.h"         //EVENT_Battle
 #include "event_fieldtalk.h"      //EVENT_FieldTalk
 #include "event_fieldmap_menu.h"  //EVENT_FieldMapMenu
+#include "rail_editor.h"
 #include "script.h"     //SCRIPT_SetEventScript
 #include "net_app/union/union_event_check.h"
 
@@ -616,7 +617,9 @@ static GMEVENT * DEBUG_checkKeyEvent(EV_REQUEST * req, GAMESYS_WORK * gsys, FIEL
 {
 	enum{
 		resetCont = PAD_BUTTON_L | PAD_BUTTON_R | PAD_BUTTON_START,
-		chgCont = PAD_BUTTON_L | PAD_BUTTON_R | PAD_BUTTON_SELECT
+		chgCont = PAD_BUTTON_L | PAD_BUTTON_R | PAD_BUTTON_SELECT,
+
+		railCont = PAD_BUTTON_R | PAD_BUTTON_B | PAD_BUTTON_A,
 	};
 
 	//ソフトリセットチェック
@@ -635,6 +638,13 @@ static GMEVENT * DEBUG_checkKeyEvent(EV_REQUEST * req, GAMESYS_WORK * gsys, FIEL
 		return DEBUG_EVENT_DebugMenu(gsys, fieldWork, 
 				req->heapID, ZONEDATA_GetMapRscID(req->map_id));
 	}
+
+	// レールエディタ起動
+	if( (req->key_cont & railCont) == railCont )
+	{
+		return DEBUG_EVENT_RailEditor( gsys, fieldWork );
+	}
+	
   return NULL;
 }
 #endif

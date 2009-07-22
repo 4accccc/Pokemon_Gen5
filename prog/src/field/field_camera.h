@@ -167,6 +167,7 @@ extern const GFL_G3D_CAMERA * FIELD_CAMERA_GetCameraPtr(const FIELD_CAMERA * cam
 extern void FIELD_CAMERA_BindTarget(FIELD_CAMERA * camera, const VecFx32 * watch_target);
 extern void FIELD_CAMERA_BindDefaultTarget(FIELD_CAMERA * camera);
 extern void FIELD_CAMERA_FreeTarget(FIELD_CAMERA * camera);
+extern BOOL FIELD_CAMERA_IsBindDefaultTarget( const FIELD_CAMERA * camera );
 
 //------------------------------------------------------------------
 //	カメラ座標更新の停止（デバック用？）
@@ -194,5 +195,13 @@ typedef enum{
 //------------------------------------------------------------------
 extern void FIELD_CAMERA_DEBUG_BindSubScreen(FIELD_CAMERA * camera, void * param, FIELD_CAMERA_DEBUG_BIND_TYPE type);
 extern void FIELD_CAMERA_DEBUG_ReleaseSubScreen(FIELD_CAMERA * camera);
+
+
+
+//------------------------------------------------------------------
+//  デフォルトターゲット操作
+//------------------------------------------------------------------
+extern void FIELD_CAMERA_DEBUG_SetDefaultTarget( FIELD_CAMERA* camera, const VecFx32* target );
+extern const VecFx32* FIELD_CAMERA_DEBUG_GetDefaultTarget( const FIELD_CAMERA* camera );
 #endif
 

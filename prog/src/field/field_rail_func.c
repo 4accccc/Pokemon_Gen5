@@ -379,6 +379,9 @@ void FIELD_RAIL_CAMERAFUNC_FixPosCamera(const FIELD_RAIL_MAN* man)
   pos.y += work->y;
   pos.z += work->z;
   FIELD_CAMERA_SetCameraPos( FIELD_RAIL_MAN_GetCamera(man), &pos );
+
+	// デフォルトターゲットを参照
+	FIELD_CAMERA_BindDefaultTarget( FIELD_RAIL_MAN_GetCamera(man) );
 }
 
 //------------------------------------------------------------------
@@ -398,6 +401,9 @@ void FIELD_RAIL_CAMERAFUNC_FixAngleCamera(const FIELD_RAIL_MAN* man)
 
 	// 座標直指定モード
 	FIELD_CAMERA_SetMode( cam, FIELD_CAMERA_MODE_DIRECT_POS );
+
+	// デフォルトターゲットを参照
+	FIELD_CAMERA_BindDefaultTarget( FIELD_RAIL_MAN_GetCamera(man) );
 
   FIELD_RAIL_MAN_GetPos( man, &pos );
   {
@@ -440,6 +446,9 @@ void FIELD_RAIL_CAMERAFUNC_OfsAngleCamera(const FIELD_RAIL_MAN* man)
 
 	// 座標直指定モード
 	FIELD_CAMERA_SetMode( cam, FIELD_CAMERA_MODE_DIRECT_POS );
+
+	// デフォルトターゲットを参照
+	FIELD_CAMERA_BindDefaultTarget( FIELD_RAIL_MAN_GetCamera(man) );
 
   cs = FIELD_RAIL_POINT_GetCameraSet( rail, point_s );
 //  GF_ASSERT(getRailDatCameraFunc( &man->rail_dat, cs->func_index ) == FIELD_RAIL_CAMERAFUNC_FixAngleCamera);
@@ -490,6 +499,9 @@ void FIELD_RAIL_CAMERAFUNC_FixAllCamera(const FIELD_RAIL_MAN* man)
 
 	// 座標直指定モード
 	FIELD_CAMERA_SetMode( cam, FIELD_CAMERA_MODE_DIRECT_POS );
+
+	// 追従ターゲットNULL
+	FIELD_CAMERA_FreeTarget( FIELD_RAIL_MAN_GetCamera(man) );
 
   pos.x = work->pos_x;
   pos.y = work->pos_y;
@@ -608,11 +620,15 @@ static void updateCircleCamera( const FIELD_RAIL_MAN * man, u16 pitch, fx32 len,
   fx32 xz_dist;
   fx32 target_y;
 
+//	TOMOYA_Printf( "target x[0x%x] y[0x%x] z[0x%x]\n", cp_target->x, cp_target->y, cp_target->z );
 
   p_camera = FIELD_RAIL_MAN_GetCamera( man );
 
 	// 座標直指定モード
 	FIELD_CAMERA_SetMode( p_camera, FIELD_CAMERA_MODE_DIRECT_POS );
+
+	// 追従ターゲットNULL
+	FIELD_CAMERA_FreeTarget( p_camera );
 	
   target    = *cp_target;
   target_y  = target.y;

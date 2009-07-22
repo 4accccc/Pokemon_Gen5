@@ -44,7 +44,7 @@ static BOOL nogridPC_Move_CalcSetGroundMove(
  * @retval nothing
  */
 //--------------------------------------------------------------
-void FIELD_PLAYER_NOGRID_Move( FIELD_PLAYER *fld_player, int key )
+void FIELD_PLAYER_NOGRID_Move( FIELD_PLAYER *fld_player, int key, fx32 onedist )
 {
 	VecFx32 pos;
 	FIELDMAP_WORK *fieldWork;
@@ -54,6 +54,8 @@ void FIELD_PLAYER_NOGRID_Move( FIELD_PLAYER *fld_player, int key )
 	fieldWork = FIELD_PLAYER_GetFieldMapWork( fld_player );
 	
 	nogridPC_Move_SetValue( fld_player, fieldWork, key, &vecMove );
+	vecMove.x = FX_Mul( vecMove.x, onedist );	// 移動距離を設定
+	vecMove.z = FX_Mul( vecMove.z, onedist );
 	
 	if (key & PAD_BUTTON_B) {
 		VEC_Add( &pos, &vecMove, &pos );
@@ -82,6 +84,7 @@ void FIELD_PLAYER_C3_Move( FIELD_PLAYER *fld_player, int key, u16 angle )
 	FIELDMAP_WORK *fieldWork = FIELD_PLAYER_GetFieldMapWork( fld_player );
 	nogridPC_Move_SetValue( fld_player, fieldWork, key, &vecMove );
 }
+
 
 //======================================================================
 //	ノングリッド自機　移動処理
