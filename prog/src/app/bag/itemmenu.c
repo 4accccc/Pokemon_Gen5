@@ -171,6 +171,19 @@ static void _windowRewrite(FIELD_ITEMMENU_WORK* pWork)
 
 }
 
+//------------------------------------------------------------------------------
+/**
+ * @brief   アイテムインデックスをカーソルとリストの位置から計算
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+
+int ITEMMENU_GetItemIndex(FIELD_ITEMMENU_WORK* pWork)
+{
+  return pWork->curpos + pWork->oamlistpos + 1;
+}
+
+
 
 //------------------------------------------------------------------------------
 /**
@@ -178,6 +191,12 @@ static void _windowRewrite(FIELD_ITEMMENU_WORK* pWork)
  * @retval  none
  */
 //------------------------------------------------------------------------------
+
+
+//カーソルの位置
+//OAMLIST の 先頭位置 -1は表示しない
+
+
 
 static void _itemKindSelectMenu(FIELD_ITEMMENU_WORK* pWork)
 {
@@ -197,19 +216,36 @@ static void _itemKindSelectMenu(FIELD_ITEMMENU_WORK* pWork)
     int length = MYITEM_GetItemPocketNumber( pWork->pMyItem, pWork->pocketno);
     
 		if(GFL_UI_KEY_GetRepeat()== PAD_KEY_DOWN){
-			pWork->curpos++;
+      if((pWork->curpos==4) && ((pWork->oamlistpos+7)<length)){
+        //カーソルはそのままでリストが移動
+        pWork->oamlistpos++;
+        bChange = TRUE;
+      }
+      else if((pWork->curpos==4) && ((pWork->curpos+1) < length)){
+        //リストの終端まで来たのでカーソルが移動
+        pWork->curpos++;
+        bChange = TRUE;
+      }
+      else if((pWork->curpos!=5) && ((pWork->curpos+1) < length)){
+        pWork->curpos++;
+        bChange = TRUE;
+      }
 		}
 		if(GFL_UI_KEY_GetRepeat()== PAD_KEY_UP){
-			pWork->curpos--;
-		}
-    if(pWork->curpos < 0){
-      pWork->curpos = 0;
-    }
-    if(pWork->curpos >= length){
-      pWork->curpos = length-1;  // @@OOここは戻るボタン追加で変わる
-    }
-		if(pos != pWork->curpos){
-			bChange = TRUE;
+      if((pWork->curpos==1) && (pWork->oamlistpos!=-1)){
+        //カーソルはそのままでリストが移動
+        pWork->oamlistpos--;
+        bChange = TRUE;
+      }
+      else if((pWork->curpos==1)){
+        //リストの終端まで来たのでカーソルが移動
+        pWork->curpos--;
+        bChange = TRUE;
+      }
+      else if(pWork->curpos != 0){
+        pWork->curpos--;
+        bChange = TRUE;
+      }
 		}
   }
 	{
@@ -664,6 +700,7 @@ static GFL_PROC_RESULT FieldItemMenuProc_Init( GFL_PROC * proc, int * seq, void 
 	pWork->WordSet    = WORDSET_Create( pWork->heapID );
 	pWork->fontHandle = GFL_FONT_Create( ARCID_FONT , NARC_font_large_nftr ,
 																		GFL_FONT_LOADTYPE_FILE , FALSE , pWork->heapID );
+  pWork->oamlistpos = -1;
 
 	GFL_UI_KEY_SetRepeatSpeed(1, 6);
 	ITEMDISP_upMessageCreate(pWork);

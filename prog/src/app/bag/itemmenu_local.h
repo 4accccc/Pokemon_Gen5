@@ -85,6 +85,7 @@ struct _DEBUGITEM_PARAM {
   u32 listRes[ITEM_LIST_NUM];  //アイテムリスト
   GFL_BMP_DATA* listBmp[ITEM_LIST_NUM];
   GFL_CLWK  *listCell[ITEM_LIST_NUM];
+  u32 bListEnable[ITEM_LIST_NUM];
   
 	GFL_BUTTON_MAN* pButton;
 	GFL_TCB *g3dVintr; //3D用vIntrTaskハンドル
@@ -100,9 +101,13 @@ struct _DEBUGITEM_PARAM {
   int subbg;
   int subbg2;
   int barbg;
+  
 	int pocketno;  //今さしているポケット番号
 	int curpos;   //今さしているカーソル番号
+  int oamlistpos; //OAMLIST の 先頭位置 -1から開始
+  
 	int itemnum;
+
   int pagetop;
   int mode;
   int ret_item;
@@ -149,4 +154,6 @@ extern void ITEMDISP_CellCreate( FIELD_ITEMMENU_WORK* pWork );
 extern void ITEMDISP_CellMessagePrint( FIELD_ITEMMENU_WORK* pWork );
 extern void ITEMDISP_CellVramTrans( FIELD_ITEMMENU_WORK* pWork );
 
+
+extern int ITEMMENU_GetItemIndex(FIELD_ITEMMENU_WORK* pWork);
 
