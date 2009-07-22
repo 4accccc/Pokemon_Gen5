@@ -68,6 +68,9 @@
 #define _ITEMICON_SCR_Y (8)
 
 
+#define ITEM_LIST_NUM (8)
+
+
 typedef enum{
   _CLACT_PLT,
   _CLACT_CHR,
@@ -497,9 +500,48 @@ void _dispMain(FIELD_ITEMMENU_WORK* pWork)
 
 
 
+
+
 #if 0
 
-void PSTATUS_RIBBON_InitCell( PSTATUS_WORK *work , PSTATUS_RIBBON_WORK *ribbonWork )
+void ITEMDISP_CellResourceCreate( FIELD_ITEMMENU_WORK* pWork )
+{
+  ARCHANDLE *archandle = GFL_ARC_OpenDataHandle( ARCID_P_STATUS , pWork->heapID );
+
+  pWork->cellRes[_PLT_CUR] = GFL_CLGRP_PLTT_RegisterEx( archandle ,
+        NARC_bag_bag_win03_d_NCLR , CLSYS_DRAW_MAIN ,
+        PSTATUS_OBJPLT_CURSOR_COMMON*32 , 0 , 1 , pWork->heapID  );
+
+  pWork->cellRes[_NCG_CUR] = GFL_CLGRP_CGR_Register(
+    archandle , NARC_bag_bag_win03_d_NCGR ,
+    FALSE , CLSYS_DRAW_MAIN , pWork->heapID  );
+
+  pWork->cellRes[_ANM_CUR] = GFL_CLGRP_CELLANIM_Register(
+    archandle , NARC_bag_bag_win03_d_NANR ,
+    NARC_bag_bag_win_d_NCER, pWork->heapID  );
+
+
+  for( i=0 ; i < ITEM_LIST_NUM ; i++ )
+  {
+    pWork->listRes[i] = GFL_CLGRP_CGR_Register(
+      archandle , NARC_bag_bag_win01_d_NCGR ,
+      FALSE , CLSYS_DRAW_MAIN , pWork->heapID  );
+    pWork->listBmp[i] = GFL_BMP_Create( int sizex, int sizey, GFL_BMP_16_COLOR, pWork->heapID );
+
+  }
+
+  pWork->cellRes[_ANM_LIST] = GFL_CLGRP_CELLANIM_Register(
+    archandle , NARC_bag_bag_win01_d_NANR ,
+    NARC_bag_bag_win01_d_NCER, pWork->heapID  );
+
+
+
+  
+  GFL_ARC_CloseDataHandle(archandle);
+}
+
+
+void ITEMDISP_CellCreate( FIELD_ITEMMENU_WORK* pWork )
 {
   //選択カーソル
   {
@@ -508,13 +550,12 @@ void PSTATUS_RIBBON_InitCell( PSTATUS_WORK *work , PSTATUS_RIBBON_WORK *ribbonWo
     cellInitData.pos_y = 0;
     cellInitData.softpri = 10;
     cellInitData.bgpri = 1;
-    cellInitData.anmseq = 0;
+    cellInitData.anmseq = NANR_bag_win_d_cursor1;
     
-    ribbonWork->clwkCur = GFL_CLACT_WK_Create( work->cellUnit ,
-              work->cellRes[SCR_NCG_RIBBON_CUR],
-              work->cellRes[SCR_PLT_CURSOR_COMMON],
-              work->cellRes[SCR_ANM_RIBBON_CUR],
-              &cellInitData ,CLSYS_DEFREND_MAIN , work->heapId );
+    ribbonWork->clwkCur = GFL_CLACT_WK_Create(
+      pWork->cellUnit ,
+      pWork->cellRes[_PLT_CUR], pWork->cellRes[_NCG_CUR], pWork->cellRes[_ANM_CUR],
+      &cellInitData ,CLSYS_DEFREND_MAIN , pWork->heapID );
 
     GFL_CLACT_WK_SetDrawEnable( ribbonWork->clwkCur , FALSE );
   }  
@@ -530,43 +571,51 @@ void PSTATUS_RIBBON_InitCell( PSTATUS_WORK *work , PSTATUS_RIBBON_WORK *ribbonWo
     oamData.bg_pri = 2;
     oamData.setSerface = CLSYS_DEFREND_MAIN;
     oamData.draw_type = CLSYS_DRAW_MAIN;
-    for( i=0 ; i<PSTATUS_RIBBON_BAR_NUM ; i++ )
+    for( i=0 ; i < ITEM_LIST_NUM ; i++ )
     {
-      u8 *vramAdr = (u8*)( (u32)G2_GetOBJCharPtr() + 0x20000 - (PSTATUS_RIBBON_BAR_CHARSIZE*(i+1)) );
+      GFL_CLWK_DATA cellInitData;
+      cellInitData.pos_x = 17*8;
+      cellInitData.pos_y = 3*8*i + 24;
+      cellInitData.softpri = 10;
+      cellInitData.bgpri = 1;
+      cellInitData.anmseq = 0;
+    
+      pWork->listCell[i] = GFL_CLACT_WK_Create(
+        pWork->cellUnit ,
+        pWork->cellRes[_PLT_CUR], pWork->listRes[ i ], pWork->cellRes[_ANM_LIST],
+        &cellInitData ,CLSYS_DEFREND_MAIN , pWork->heapID );
 
-      //oamData.y = PSTATUS_RIBBON_BAR_Y+PSTATUS_RIBBON_BAR_HEIGHT*i;
-      oamData.y = PSTATUS_RIBBON_CalcRibbonBarY( ribbonWork , i );
+      GFL_CLACT_WK_SetDrawEnable( ribbonWork->clwkCur , FALSE );
 
-      ribbonWork->ribbonDispWork[i].bmpData = GFL_BMP_CreateInVRAM( vramAdr , 
-                                            PSTATUS_RIBBON_BAR_WIDTH/8 , 
-                                            PSTATUS_RIBBON_BAR_HEIGHT/8 ,
-                                            GFL_BMP_16_COLOR , work->heapId );
-
-      oamData.bmp = ribbonWork->ribbonDispWork[i].bmpData;
-      ribbonWork->ribbonDispWork[i].bmpOam = PSTA_OAM_ActorAdd( ribbonWork->bmpOamSys , &oamData );
-
-      //PSTATUS_RIBBON_CreateRibbonBarFunc( work , ribbonWork , &ribbonWork->ribbonDispWork[i] );
-      PSTA_OAM_ActorSetDrawEnable( ribbonWork->ribbonDispWork[i].bmpOam , FALSE );
     }
   }
 }
 
-	for(i=0; i< length ; i++){
+
+void ITEMDISP_CellMessagePrint( FIELD_ITEMMENU_WORK* pWork )
+{
+  int i;
+
+	for(i = 0; i< ITEM_LIST_NUM ; i++){
 		ITEM_ST * item;
-		item = MYITEM_PosItemGet( pWork->pMyItem, pWork->pocketno, i );
+
+    item = MYITEM_PosItemGet( pWork->pMyItem, pWork->pocketno, i );
 		if((item==NULL) || (item->id==ITEM_DUMMY_DATA)){
 			break;
 		}
-		//OS_TPrintf("item no %d num %d\n",item->id,item->no);
 
-		GFL_MSG_GetString(  pWork->MsgManager, MSG_ITEMDEBUG_STR36, pWork->pStrBuf );
-
-		WORDSET_RegisterNumber(pWork->WordSet, 0, item->no,
-													 3, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT);
-		WORDSET_RegisterItemName(pWork->WordSet, 1, item->id);
-		WORDSET_ExpandStr( pWork->WordSet, pWork->pExpStrBuf, pWork->pStrBuf  );
-
-		BmpMenuWork_ListAddString( pWork->submenulist, pWork->pExpStrBuf, 0,pWork->heapID );
+    GFL_MSG_GetString(  pWork->MsgManager, MSG_ITEM_STR001, pWork->pStrBuf );
+    WORDSET_RegisterItemName(pWork->WordSet, 0, i);
+    WORDSET_ExpandStr( pWork->WordSet, pWork->pExpStrBuf, pWork->pStrBuf  );
+    PRINTSYS_Print( pWork->listBmp[i], 0, 0, pWork->pExpStrBuf, pWork->fontHandle);
+    {
+      u8* dest_adrs = GFL_CLGRP_CGR_GetAddr( pWork->listRes[i], NNS_G2D_VRAM_TYPE_2DMAIN);
+      
+      
+      
+      
+    }
 	}
-#endif
+}
 
+#endif

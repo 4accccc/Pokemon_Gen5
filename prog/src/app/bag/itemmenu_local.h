@@ -36,6 +36,20 @@
 
 extern const GFL_PROC_DATA ItemMenuProcData;
 
+
+#define ITEM_LIST_NUM (8)
+
+enum _ITEMLISTCELL_RESOURCE
+{
+  _PLT_CUR,
+  _PLT_BAR,
+  _NCG_CUR,
+  _ANM_CUR,
+  _ANM_LIST,
+  SCR_MAX ,
+};
+
+
 typedef struct _DEBUGITEM_PARAM FIELD_ITEMMENU_WORK;
 typedef void (StateFunc)(FIELD_ITEMMENU_WORK* wk);
 typedef int (MenuFunc)(FIELD_ITEMMENU_WORK* wk);
@@ -65,7 +79,12 @@ struct _DEBUGITEM_PARAM {
   MenuFunc* menu_func[BAG_MENUTBL_MAX];
   ITEMCHECK_WORK icwk;
 	u32 objRes[3];  //CLACTリソース
+  u32 cellRes[SCR_MAX];  //アイテムカーソル
 
+  u32 listRes[ITEM_LIST_NUM];  //アイテムリスト
+  GFL_BMP_DATA* listBmp[ITEM_LIST_NUM];
+  GFL_CLWK  *listCell[ITEM_LIST_NUM];
+  
 	GFL_BUTTON_MAN* pButton;
 	GFL_TCB *g3dVintr; //3D用vIntrTaskハンドル
   GFL_CLUNIT *cellUnit;
@@ -122,4 +141,8 @@ extern void ITEMDISP_upMessageDelete(FIELD_ITEMMENU_WORK* pWork);
 extern void ITEMDISP_upMessageCreate(FIELD_ITEMMENU_WORK* pWork);
 extern void ITEMDISP_graphicDelete(FIELD_ITEMMENU_WORK* pWork);
 extern void _dispMain(FIELD_ITEMMENU_WORK* pWork);
+extern void ITEMDISP_CellResourceCreate( FIELD_ITEMMENU_WORK* pWork );
+extern void ITEMDISP_CellCreate( FIELD_ITEMMENU_WORK* pWork );
+extern void ITEMDISP_CellMessagePrint( FIELD_ITEMMENU_WORK* pWork );
+
 
