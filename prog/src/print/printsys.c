@@ -1093,6 +1093,9 @@ static void print_stream_task( GFL_TCBL* tcb, void* wk_adrs )
           if( STR_TOOL_GetTagType(wk->sp) == TAGTYPE_STREAM_CTRL )
           {
             ctrlStreamTag( wk );
+            if( wk->state != PRINTSTREAM_STATE_RUNNING ){
+              i = wk->putPerFrame;  // for loop out
+            }
             break;
           }
           /* fallthru */
