@@ -588,7 +588,10 @@ static void updateG3Dcamera(FIELD_CAMERA * camera)
     GFL_G3D_CAMERA_SetTarget( camera->g3Dcamera, &cameraTarget );
     GFL_G3D_CAMERA_SetPos( camera->g3Dcamera, &camera->camPos );
 
-		traceUpdate( camera );
+		if( camera->debug_subscreen_type == FIELD_CAMERA_DEBUG_BIND_NONE )
+		{
+			traceUpdate( camera );
+		}
   }
   else
   {

@@ -359,7 +359,7 @@ static const GFL_UI_TP_HITTBL eventContTouchPanelTable[TPBTN_CONT_MAX + 1] = {
 };
 
 //------------------------------------------------------------------
-#define ANGLE_ROTATE_SPD			(0x200)
+#define ANGLE_ROTATE_SPD			(0x100)
 #define	CAMERA_TARGET_HEIGHT	(4 * FX32_ONE)
 #define CAMLEN_MVSPD					(8 * FX32_ONE)
 #define	CAMANGLEH_MAX					(0x4000 - ANGLE_ROTATE_SPD)
