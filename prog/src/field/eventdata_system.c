@@ -177,10 +177,12 @@ void EVENTDATA_SYS_Load(EVENTDATA_SYSTEM * evdata, u16 zone_id)
     evdata->connect_count = ConnectCount_H01;
     evdata->connect_data = ConnectData_H01;
     break;
+#if 0
  case ZONE_ID_C03:
     evdata->connect_count = ConnectCount_C03;
     evdata->connect_data = ConnectData_C03;
     break;
+#endif
 	}
 }
 
