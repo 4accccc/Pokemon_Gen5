@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="tetsuji_ohta" host="W00176" date="2009-07-06T18:44:30"/>
+	<create user="ariizumi_nobuhiko" host="W00147" date="2009-07-22T19:26:03"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -305,7 +305,7 @@
 		</language>
 	</columns>
 
-	<dialog left="0" top="176" right="689" bottom="796" maximized="no" rayout="Vertical2">
+	<dialog left="1443" top="156" right="2132" bottom="776" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="0" style="0000" width="514"/>
@@ -313,7 +313,7 @@
 		<band id="2" index="2" style="0000" width="681"/>
 		<band id="3" index="3" style="0000" width="681"/>
 		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
-		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
+		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
 	</dialog>
@@ -409,8 +409,8 @@
 
 	<row id="mes_pokelist_02_01_01" back-color=",,,,,,,#ff78ff,,,#ff78ff,,,,,,,">
 		<comment>参加選択時に１匹も選んでいない場合のエラーメッセージ</comment>
-		<language name="JPN" width="160">ポケモンを　えらんでください[2:07:８桁:]</language>
-		<language name="JPN_KANJI" width="160">ポケモンを　えらんでください[2:07:８桁:]</language>
+		<language name="JPN" width="160">ポケモンを　えらんでください</language>
+		<language name="JPN_KANJI" width="160">ポケモンを　えらんでください</language>
 	</row>
 
 	<row id="mes_pokelist_02_02">
@@ -535,9 +535,9 @@ PP値上昇アイテムで技選択するとき</comment>
 	<row id="mes_pokelist_04_02">
 		<comment>転送しますかで「はい」と答えたとき</comment>
 		<language name="JPN" width="216" line="2">とった　メールを　パソコンに
-てんそう　しました[2:07:８桁:]</language>
+てんそう　しました</language>
 		<language name="JPN_KANJI" width="216" line="2">とった　メールを　パソコンに
-てんそう　しました[2:07:８桁:]</language>
+てんそう　しました</language>
 	</row>
 
 	<row id="mes_pokelist_04_03">
@@ -566,18 +566,18 @@ PP値上昇アイテムで技選択するとき</comment>
 		<comment>転送しますかで「はい」と答えて
 パソコンのメールボックスが一杯のとき</comment>
 		<language name="JPN" width="216" line="2">パソコンの　メールボックスが
-いっぱいです！[2:07:８桁:]</language>
+いっぱいです！</language>
 		<language name="JPN_KANJI" width="216" line="2">パソコンの　メールボックスが
-いっぱいです！[2:07:８桁:]</language>
+いっぱいです！</language>
 	</row>
 
 	<row id="mes_pokelist_04_05">
 		<comment>メールを取ると消えてしまいますが
 よろしいですか？で「はい」と答えたとき</comment>
 		<language name="JPN" width="216" line="2">ポケモンから　メールを
-とりました！[2:07:８桁:]</language>
+とりました！</language>
 		<language name="JPN_KANJI" width="216" line="2">ポケモンから　メールを
-とりました！[2:07:８桁:]</language>
+とりました！</language>
 	</row>
 
 	<row id="mes_pokelist_04_06">
@@ -587,15 +587,15 @@ PP値上昇アイテムで技選択するとき</comment>
 1：技マシンの技名
 </comment>
 		<language name="JPN" width="216" line="2">[1:02:ポケモンニックネーム:0]は　あたらしく
-[1:07:わざ名:1]を　おぼえたい……[2:07:８桁:]
+[1:07:わざ名:1]を　おぼえたい……
 しかし　[1:02:ポケモンニックネーム:0]は　わざを　４つ
-おぼえるので　せいいっぱいだ！[2:07:８桁:]
+おぼえるので　せいいっぱいだ！
 [1:07:わざ名:1]の　かわりに
 ほかの　わざを　わすれさせますか？</language>
 		<language name="JPN_KANJI" width="216" line="2">[1:02:ポケモンニックネーム:0]は　あたらしく
-[1:07:わざ名:1]を　おぼえたい……[2:07:８桁:]
+[1:07:わざ名:1]を　おぼえたい……
 しかし　[1:02:ポケモンニックネーム:0]は　わざを　４つ
-おぼえるので　せいいっぱいだ！[2:07:８桁:]
+おぼえるので　せいいっぱいだ！
 [1:07:わざ名:1]の　かわりに
 ほかの　わざを　わすれさせますか？</language>
 	</row>
@@ -642,17 +642,17 @@ PP値上昇アイテムで技選択するとき</comment>
 0：選択したポケモンニックネーム
 1：技マシンの技名</comment>
 		<language name="JPN" width="216" line="2">[1:02:ポケモンニックネーム:0]は　[1:07:わざ名:1]を
-おぼえずに　おわった！[2:07:８桁:]</language>
+おぼえずに　おわった！</language>
 		<language name="JPN_KANJI" width="216" line="2">[1:02:ポケモンニックネーム:0]は　[1:07:わざ名:1]を
-おぼえずに　おわった！[2:07:８桁:]</language>
+おぼえずに　おわった！</language>
 	</row>
 
 	<row id="mes_pokelist_04_09">
 		<comment>忘れさせますかで「はい」としたとき</comment>
 		<language name="JPN" width="216" line="2">どの　わざを
-わすれさせたい？[2:07:８桁:]</language>
+わすれさせたい？</language>
 		<language name="JPN_KANJI" width="216" line="2">どの　わざを
-わすれさせたい？[2:07:８桁:]</language>
+わすれさせたい？</language>
 	</row>
 
 	<row id="mes_pokelist_04_10">
@@ -677,9 +677,9 @@ PP値上昇アイテムで技選択するとき</comment>
 0：選択したポケモンニックネーム
 1：技マシンの技名</comment>
 		<language name="JPN" width="216" line="2">[1:02:ポケモンニックネーム:0]は　あたらしく
-[1:07:わざ名:1]を　おぼえた！[1:07:わざ名:4][1:07:わざ名:2][2:07:８桁:]</language>
+[1:07:わざ名:1]を　おぼえた！[1:07:わざ名:4][1:07:わざ名:2]</language>
 		<language name="JPN_KANJI" width="216" line="2">[1:02:ポケモンニックネーム:0]は　あたらしく
-[1:07:わざ名:1]を　おぼえた！[1:07:わざ名:4][1:07:わざ名:2][2:07:８桁:]</language>
+[1:07:わざ名:1]を　おぼえた！[1:07:わざ名:4][1:07:わざ名:2]</language>
 	</row>
 
 	<row id="mes_pokelist_04_12">
@@ -688,11 +688,11 @@ PP値上昇アイテムで技選択するとき</comment>
 0：選択したポケモンニックネーム
 1：技マシンの技名</comment>
 		<language name="JPN" width="216" line="2">[1:02:ポケモンニックネーム:0]と　[1:07:わざ名:1]は
-あいしょうが　わるかった！[2:07:８桁:]
-[1:07:わざ名:1]は　おぼえられない！[2:07:８桁:]</language>
+あいしょうが　わるかった！
+[1:07:わざ名:1]は　おぼえられない！</language>
 		<language name="JPN_KANJI" width="216" line="2">[1:02:ポケモンニックネーム:0]と　[1:07:わざ名:1]は
-あいしょうが　わるかった！[2:07:８桁:]
-[1:07:わざ名:1]は　おぼえられない！[2:07:８桁:]</language>
+あいしょうが　わるかった！
+[1:07:わざ名:1]は　おぼえられない！</language>
 	</row>
 
 	<row id="mes_pokelist_04_13">
@@ -701,9 +701,9 @@ PP値上昇アイテムで技選択するとき</comment>
 0：選択したポケモンニックネーム
 1：技マシンの技名</comment>
 		<language name="JPN" width="216" line="2">[1:02:ポケモンニックネーム:0]は　すでに
-[1:07:わざ名:1]を　おぼえています[2:07:８桁:]</language>
+[1:07:わざ名:1]を　おぼえています</language>
 		<language name="JPN_KANJI" width="216" line="2">[1:02:ポケモンニックネーム:0]は　すでに
-[1:07:わざ名:1]を　おぼえています[2:07:８桁:]</language>
+[1:07:わざ名:1]を　おぼえています</language>
 	</row>
 
 	<row id="mes_pokelist_04_14">
@@ -711,9 +711,9 @@ PP値上昇アイテムで技選択するとき</comment>
 0：選択したポケモンニックネーム
 1：回復したＨＰ</comment>
 		<language name="JPN" width="216" line="2">[1:02:ポケモンニックネーム:0]の　たいりょくが
-[2:02:３桁:1]　かいふくした！[2:07:８桁:]</language>
+[2:02:３桁:1]　かいふくした！</language>
 		<language name="JPN_KANJI" width="216" line="2">[1:02:ポケモンニックネーム:0]の　たいりょくが
-[2:02:３桁:1]　かいふくした！[2:07:８桁:]</language>
+[2:02:３桁:1]　かいふくした！</language>
 	</row>
 
 	<row id="mes_pokelist_04_15">
@@ -721,9 +721,9 @@ PP値上昇アイテムで技選択するとき</comment>
 0：選択したポケモンニックネーム
 </comment>
 		<language name="JPN" width="216" line="2">[1:02:ポケモンニックネーム:0]の　どくは
-きれい　さっぱり　なくなった！[2:07:８桁:]</language>
+きれい　さっぱり　なくなった！</language>
 		<language name="JPN_KANJI" width="216" line="2">[1:02:ポケモンニックネーム:0]の　どくは
-きれい　さっぱり　なくなった！[2:07:８桁:]</language>
+きれい　さっぱり　なくなった！</language>
 	</row>
 
 	<row id="mes_pokelist_04_16">
@@ -731,9 +731,9 @@ PP値上昇アイテムで技選択するとき</comment>
 0：選択したポケモンニックネーム
 </comment>
 		<language name="JPN" width="216" line="2">[1:02:ポケモンニックネーム:0]の
-からだの　しびれが　とれた！[2:07:８桁:]</language>
+からだの　しびれが　とれた！</language>
 		<language name="JPN_KANJI" width="216" line="2">[1:02:ポケモンニックネーム:0]の
-からだの　しびれが　とれた！[2:07:８桁:]</language>
+からだの　しびれが　とれた！</language>
 	</row>
 
 	<row id="mes_pokelist_04_17">
@@ -741,9 +741,9 @@ PP値上昇アイテムで技選択するとき</comment>
 0：選択したポケモンニックネーム
 </comment>
 		<language name="JPN" width="216" line="2">[1:02:ポケモンニックネーム:0]の
-やけどが　なおった！[2:07:８桁:]</language>
+やけどが　なおった！</language>
 		<language name="JPN_KANJI" width="216" line="2">[1:02:ポケモンニックネーム:0]の
-やけどが　なおった！[2:07:８桁:]</language>
+やけどが　なおった！</language>
 	</row>
 
 	<row id="mes_pokelist_04_18">
@@ -751,17 +751,17 @@ PP値上昇アイテムで技選択するとき</comment>
 0：選択したポケモンニックネーム
 </comment>
 		<language name="JPN" width="216" line="2">[1:02:ポケモンニックネーム:0]の
-からだの　こおりが　とけた！[2:07:８桁:]</language>
+からだの　こおりが　とけた！</language>
 		<language name="JPN_KANJI" width="216" line="2">[1:02:ポケモンニックネーム:0]の
-からだの　こおりが　とけた！[2:07:８桁:]</language>
+からだの　こおりが　とけた！</language>
 	</row>
 
 	<row id="mes_pokelist_04_19">
 		<comment>道具使用でＰＰ回復メッセージ
 名称を正式にパワーポイントに統一
 09.05.22</comment>
-		<language name="JPN" width="216" line="2">パワーポイントが　かいふくした！[2:07:８桁:]　</language>
-		<language name="JPN_KANJI" width="216" line="2">パワーポイントが　かいふくした！[2:07:８桁:]　</language>
+		<language name="JPN" width="216" line="2">パワーポイントが　かいふくした！　</language>
+		<language name="JPN_KANJI" width="216" line="2">パワーポイントが　かいふくした！　</language>
 	</row>
 
 	<row id="mes_pokelist_04_20">
@@ -769,9 +769,9 @@ PP値上昇アイテムで技選択するとき</comment>
 0：選択したポケモンニックネーム
 </comment>
 		<language name="JPN" width="216" line="2">[1:02:ポケモンニックネーム:0]は
-げんきを　とりもどした！[2:07:８桁:]</language>
+げんきを　とりもどした！</language>
 		<language name="JPN_KANJI" width="216" line="2">[1:02:ポケモンニックネーム:0]は
-げんきを　とりもどした！[2:07:８桁:]</language>
+げんきを　とりもどした！</language>
 	</row>
 
 	<row id="mes_pokelist_04_21">
@@ -779,9 +779,9 @@ PP値上昇アイテムで技選択するとき</comment>
 0：選択したポケモンニックネーム
 </comment>
 		<language name="JPN" width="216" line="2">[1:02:ポケモンニックネーム:0]は
-けんこうに　なった！[2:07:８桁:]</language>
+けんこうに　なった！</language>
 		<language name="JPN_KANJI" width="216" line="2">[1:02:ポケモンニックネーム:0]は
-けんこうに　なった！[2:07:８桁:]</language>
+けんこうに　なった！</language>
 	</row>
 
 	<row id="mes_pokelist_04_22">
@@ -790,9 +790,9 @@ PP値上昇アイテムで技選択するとき</comment>
 名称を正式にパワーポイントに統一09.5.22
 </comment>
 		<language name="JPN" width="216" line="2">[1:07:わざ名:0]の
-パワーポイントが　ふえた！[2:07:８桁:]</language>
+パワーポイントが　ふえた！</language>
 		<language name="JPN_KANJI" width="216" line="2">[1:07:わざ名:0]の
-パワーポイントが　ふえた！[2:07:８桁:]</language>
+パワーポイントが　ふえた！</language>
 	</row>
 
 	<row id="mes_pokelist_04_23">
@@ -800,9 +800,9 @@ PP値上昇アイテムで技選択するとき</comment>
 0：選択したポケモンニックネーム
 </comment>
 		<language name="JPN" width="216" line="2">[1:02:ポケモンニックネーム:0]の
-こんらんが　とけた！[2:07:８桁:]</language>
+こんらんが　とけた！</language>
 		<language name="JPN_KANJI" width="216" line="2">[1:02:ポケモンニックネーム:0]の
-こんらんが　とけた！[2:07:８桁:]</language>
+こんらんが　とけた！</language>
 	</row>
 
 	<row id="mes_pokelist_04_24">
@@ -810,9 +810,9 @@ PP値上昇アイテムで技選択するとき</comment>
 0：選択したポケモンニックネーム
 </comment>
 		<language name="JPN" width="216" line="2">[1:02:ポケモンニックネーム:0]の
-メロメロが　とけた！[2:07:８桁:]</language>
+メロメロが　とけた！</language>
 		<language name="JPN_KANJI" width="216" line="2">[1:02:ポケモンニックネーム:0]の
-メロメロが　とけた！[2:07:８桁:]</language>
+メロメロが　とけた！</language>
 	</row>
 
 	<row id="mes_pokelist_04_25">
@@ -820,27 +820,27 @@ PP値上昇アイテムで技選択するとき</comment>
 0：選択したポケモンニックネーム
 1：ステータス名</comment>
 		<language name="JPN" width="216" line="2">[1:02:ポケモンニックネーム:0]は　[1:0D:ステータス名:1]の
-きそポイントが　あがった！[2:07:８桁:]</language>
+きそポイントが　あがった！</language>
 		<language name="JPN_KANJI" width="216" line="2">[1:02:ポケモンニックネーム:0]は　[1:0D:ステータス名:1]の
-きそポイントが　あがった！[2:07:８桁:]</language>
+きそポイントが　あがった！</language>
 	</row>
 
 	<row id="mes_pokelist_04_26">
 		<comment>メッセージ
 秘伝技使用で必要バッジを手に入れていない</comment>
 		<language name="JPN" width="216" line="2">あたらしい　バッジを　てにするまで
-まだ　つかえません[2:07:８桁:]</language>
+まだ　つかえません</language>
 		<language name="JPN_KANJI" width="216" line="2">あたらしい　バッジを　てにするまで
-まだ　つかえません[2:07:８桁:]</language>
+まだ　つかえません</language>
 	</row>
 
 	<row id="mes_pokelist_04_27">
 		<comment>バッグからの処理
 メールを持っているポケモンに道具を持たせる</comment>
 		<language name="JPN" width="216" line="2">メールを　はずさないと
-どうぐは　もてません！[2:07:８桁:]</language>
+どうぐは　もてません！</language>
 		<language name="JPN_KANJI" width="216" line="2">メールを　はずさないと
-どうぐは　もてません！[2:07:８桁:]</language>
+どうぐは　もてません！</language>
 	</row>
 
 	<row id="mes_pokelist_04_28">
@@ -849,11 +849,11 @@ PP値上昇アイテムで技選択するとき</comment>
 0：選択したポケモンニックネーム
 1：道具名</comment>
 		<language name="JPN" width="216" line="4">[1:02:ポケモンニックネーム:0]は　すでに
-[1:09:どうぐ名:1]を　もっています[2:07:８桁:]
+[1:09:どうぐ名:1]を　もっています
 もっている　どうぐを
 とりかえますか？</language>
 		<language name="JPN_KANJI" width="216" line="4">[1:02:ポケモンニックネーム:0]は　すでに
-[1:09:どうぐ名:1]を　もっています[2:07:８桁:]
+[1:09:どうぐ名:1]を　もっています
 もっている　どうぐを
 とりかえますか？</language>
 	</row>
@@ -876,9 +876,9 @@ PP値上昇アイテムで技選択するとき</comment>
 		<comment>道具を持っていないポケモンに対して
 預かるを選択したメッセージ</comment>
 		<language name="JPN" width="216" line="2">[1:02:ポケモンニックネーム:0]は　どうぐを　なにも
-もっていません！[2:07:８桁:]</language>
+もっていません！</language>
 		<language name="JPN_KANJI" width="216" line="2">[1:02:ポケモンニックネーム:0]は　どうぐを　なにも
-もっていません！[2:07:８桁:]</language>
+もっていません！</language>
 	</row>
 
 	<row id="mes_pokelist_04_30">
@@ -887,9 +887,9 @@ PP値上昇アイテムで技選択するとき</comment>
 0：選択したポケモンニックネーム
 1：道具名</comment>
 		<language name="JPN" width="216" line="2">[1:02:ポケモンニックネーム:0]から
-[1:09:どうぐ名:1]を　あずかりました！[2:07:８桁:]</language>
+[1:09:どうぐ名:1]を　あずかりました！</language>
 		<language name="JPN_KANJI" width="216" line="2">[1:02:ポケモンニックネーム:0]から
-[1:09:どうぐ名:1]を　あずかりました！[2:07:８桁:]</language>
+[1:09:どうぐ名:1]を　あずかりました！</language>
 	</row>
 
 	<row id="mes_pokelist_04_31">
@@ -897,9 +897,9 @@ PP値上昇アイテムで技選択するとき</comment>
 預かるを選択したがバッグが一杯のときの
 メッセージ</comment>
 		<language name="JPN" width="216" line="2">バッグが　いっぱいで
-どうぐを　うけとれません！[2:07:８桁:]</language>
+どうぐを　うけとれません！</language>
 		<language name="JPN_KANJI" width="216" line="2">バッグが　いっぱいで
-どうぐを　うけとれません！[2:07:８桁:]</language>
+どうぐを　うけとれません！</language>
 	</row>
 
 	<row id="mes_pokelist_04_32">
@@ -907,9 +907,9 @@ PP値上昇アイテムで技選択するとき</comment>
 1：今持っている道具名
 2：新たに持たせる道具名</comment>
 		<language name="JPN" width="216" line="2">[1:09:どうぐ名:1]を　あずかり
-[1:09:どうぐ名:2]を　もたせました！[2:07:８桁:]</language>
+[1:09:どうぐ名:2]を　もたせました！</language>
 		<language name="JPN_KANJI" width="216" line="2">[1:09:どうぐ名:1]を　あずかり
-[1:09:どうぐ名:2]を　もたせました！[2:07:８桁:]</language>
+[1:09:どうぐ名:2]を　もたせました！</language>
 	</row>
 
 	<row id="mes_pokelist_04_33">
@@ -957,9 +957,9 @@ PP値上昇アイテムで技選択するとき</comment>
 0：選択したポケモンニックネーム
 </comment>
 		<language name="JPN" width="216" line="2">[1:02:ポケモンニックネーム:0]は
-めを　さました！[2:07:８桁:]</language>
+めを　さました！</language>
 		<language name="JPN_KANJI" width="216" line="2">[1:02:ポケモンニックネーム:0]は
-めを　さました！[2:07:８桁:]</language>
+めを　さました！</language>
 	</row>
 
 	<row id="mes_pokelist_04_37">
@@ -1015,37 +1015,37 @@ PP値上昇アイテムで技選択するとき</comment>
 参加可能人数以上を選ぼうとしたとき
 ２匹まで</comment>
 		<language name="JPN" width="216" line="2">さんか　できる　ポケモンは
-２ひき　まで　です！[2:07:８桁:]</language>
+２ひき　まで　です！</language>
 		<language name="JPN_KANJI" width="216" line="2">さんか　できる　ポケモンは
-２ひき　まで　です！[2:07:８桁:]</language>
+２ひき　まで　です！</language>
 	</row>
 
 	<row id="mes_pokelist_04_42">
 		<comment>波乗りしている状態で波乗りを使用
 </comment>
-		<language name="JPN" width="216" line="2">すでに　なみのり　しています[2:07:８桁:]</language>
-		<language name="JPN_KANJI" width="216" line="2">すでに　なみのり　しています[2:07:８桁:]</language>
+		<language name="JPN" width="216" line="2">すでに　なみのり　しています</language>
+		<language name="JPN_KANJI" width="216" line="2">すでに　なみのり　しています</language>
 	</row>
 
 	<row id="mes_pokelist_04_44">
 		<comment>フィールド技を使えないところで使用
 </comment>
-		<language name="JPN" width="216" line="2">ここでは　つかえません[2:07:８桁:]</language>
-		<language name="JPN_KANJI" width="216" line="2">ここでは　つかえません[2:07:８桁:]</language>
+		<language name="JPN" width="216" line="2">ここでは　つかえません</language>
+		<language name="JPN_KANJI" width="216" line="2">ここでは　つかえません</language>
 	</row>
 
 	<row id="mes_pokelist_04_45">
 		<comment>道具を使っても効果がないとき
 </comment>
-		<language name="JPN" width="216" line="2">つかっても　こうかがないよ[2:07:８桁:]</language>
-		<language name="JPN_KANJI" width="216" line="2">つかっても　こうかがないよ[2:07:８桁:]</language>
+		<language name="JPN" width="216" line="2">つかっても　こうかがないよ</language>
+		<language name="JPN_KANJI" width="216" line="2">つかっても　こうかがないよ</language>
 	</row>
 
 	<row id="mes_pokelist_04_47">
 		<comment>バトル施設で参加数を満たしていない状態
 ２匹</comment>
-		<language name="JPN" width="216" line="2">２ひき　そろってません！[2:07:８桁:]</language>
-		<language name="JPN_KANJI" width="216" line="2">２ひき　そろってません！[2:07:８桁:]</language>
+		<language name="JPN" width="216" line="2">２ひき　そろってません！</language>
+		<language name="JPN_KANJI" width="216" line="2">２ひき　そろってません！</language>
 	</row>
 
 	<row id="mes_pokelist_04_51">
@@ -1053,13 +1053,13 @@ PP値上昇アイテムで技選択するとき</comment>
 0：選択したポケモンニックネーム
 1：アップしたステータス名</comment>
 		<language name="JPN" width="216" line="2">[1:02:ポケモンニックネーム:0]は
-ちょっと　なついた！[2:07:８桁:]
+ちょっと　なついた！
 [1:0D:ステータス名:1]の
-きそポイントが　さがった！[2:07:８桁:]</language>
+きそポイントが　さがった！</language>
 		<language name="JPN_KANJI" width="216" line="2">[1:02:ポケモンニックネーム:0]は
-ちょっと　なついた！[2:07:８桁:]
+ちょっと　なついた！
 [1:0D:ステータス名:1]の
-きそポイントが　さがった！[2:07:８桁:]</language>
+きそポイントが　さがった！</language>
 	</row>
 
 	<row id="mes_pokelist_04_52">
@@ -1068,13 +1068,13 @@ PP値上昇アイテムで技選択するとき</comment>
 0：選択したポケモンニックネーム
 1：アップしたステータス名</comment>
 		<language name="JPN" width="216" line="2">[1:02:ポケモンニックネーム:0]は
-さいこうに　なついていてる！[2:07:８桁:]
+さいこうに　なついていてる！
 [1:0D:ステータス名:1]の
-きそポイントが　さがった！[2:07:８桁:]</language>
+きそポイントが　さがった！</language>
 		<language name="JPN_KANJI" width="216" line="2">[1:02:ポケモンニックネーム:0]は
-さいこうに　なついていてる！[2:07:８桁:]
+さいこうに　なついていてる！
 [1:0D:ステータス名:1]の
-きそポイントが　さがった！[2:07:８桁:]</language>
+きそポイントが　さがった！</language>
 	</row>
 
 	<row id="mes_pokelist_04_53">
@@ -1083,13 +1083,13 @@ PP値上昇アイテムで技選択するとき</comment>
 0：選択したポケモンニックネーム
 1：アップしたステータス名</comment>
 		<language name="JPN" width="216" line="2">[1:02:ポケモンニックネーム:0]は
-ちょっと　なついた！[2:07:８桁:]
+ちょっと　なついた！
 [1:0D:ステータス名:1]の
-きそポイントは　もうさがらない！[2:07:８桁:]</language>
+きそポイントは　もうさがらない！</language>
 		<language name="JPN_KANJI" width="216" line="2">[1:02:ポケモンニックネーム:0]は
-ちょっと　なついた！[2:07:８桁:]
+ちょっと　なついた！
 [1:0D:ステータス名:1]の
-きそポイントは　もうさがらない！[2:07:８桁:]</language>
+きそポイントは　もうさがらない！</language>
 	</row>
 
 	<row id="mes_pokelist_04_59">
@@ -1097,100 +1097,124 @@ PP値上昇アイテムで技選択するとき</comment>
 0：選択したポケモン名
 1：持たせた道具名</comment>
 		<language name="JPN" width="216" line="2">[1:02:ポケモンニックネーム:0]に
-[1:09:どうぐ名:1]を　もたせた！[2:07:８桁:]</language>
+[1:09:どうぐ名:1]を　もたせた！</language>
 		<language name="JPN_KANJI" width="216" line="2">[1:02:ポケモンニックネーム:0]に
-[1:09:どうぐ名:1]を　もたせた！[2:07:８桁:]</language>
+[1:09:どうぐ名:1]を　もたせた！</language>
 	</row>
 
-	<row id="mes_pokelist_04_60">
+	<row id="mes_pokelist_04_60_1" back-color=",,,#ffff80,,,,,,,,,,,,,,">
+		<comment>バトル施設で参加数を満たしていない状態
+１匹（追加 090722Ariizumi</comment>
+		<language name="JPN" width="216" line="2">１ひき　そろってません！</language>
+		<language name="JPN_KANJI" width="216" line="2">１ひき　そろってません！</language>
+	</row>
+
+	<row id="mes_pokelist_04_60_2" back-color=",,,#ffff80,,,,,,,,,,,,,,">
+		<comment>バトル施設で参加数を満たしていない状態
+２匹（追加 090722Ariizumi</comment>
+		<language name="JPN" width="216" line="2">２ひき　そろってません！</language>
+		<language name="JPN_KANJI" width="216" line="2">２ひき　そろってません！</language>
+	</row>
+
+	<row id="mes_pokelist_04_60_3">
 		<comment>バトル施設で参加数を満たしていない状態
 ３匹</comment>
-		<language name="JPN" width="216" line="2">３ひき　そろってません！[2:07:８桁:]</language>
-		<language name="JPN_KANJI" width="216" line="2">３ひき　そろってません！[2:07:８桁:]</language>
+		<language name="JPN" width="216" line="2">３ひき　そろってません！</language>
+		<language name="JPN_KANJI" width="216" line="2">３ひき　そろってません！</language>
 	</row>
 
-	<row id="mes_pokelist_04_61">
+	<row id="mes_pokelist_04_60_4">
 		<comment>バトル施設で参加数を満たしていない状態
 ４匹</comment>
-		<language name="JPN" width="216" line="2">４ひき　そろってません！[2:07:８桁:]</language>
-		<language name="JPN_KANJI" width="216" line="2">４ひき　そろってません！[2:07:８桁:]</language>
+		<language name="JPN" width="216" line="2">４ひき　そろってません！</language>
+		<language name="JPN_KANJI" width="216" line="2">４ひき　そろってません！</language>
 	</row>
 
-	<row id="mes_pokelist_04_61_01">
+	<row id="mes_pokelist_04_60_5">
 		<comment>バトル施設で参加数を満たしていない状態
 ５匹</comment>
-		<language name="JPN" width="216" line="2">５ひき　そろってません！[2:07:８桁:]</language>
-		<language name="JPN_KANJI" width="216" line="2">５ひき　そろってません！[2:07:８桁:]</language>
+		<language name="JPN" width="216" line="2">５ひき　そろってません！</language>
+		<language name="JPN_KANJI" width="216" line="2">５ひき　そろってません！</language>
 	</row>
 
-	<row id="mes_pokelist_04_61_02">
+	<row id="mes_pokelist_04_60_6">
 		<comment>バトル施設で参加数を満たしていない状態
 ６匹</comment>
-		<language name="JPN" width="216" line="2">６ひき　そろってません！[2:07:８桁:]</language>
-		<language name="JPN_KANJI" width="216" line="2">６ひき　そろってません！[2:07:８桁:]</language>
+		<language name="JPN" width="216" line="2">６ひき　そろってません！</language>
+		<language name="JPN_KANJI" width="216" line="2">６ひき　そろってません！</language>
 	</row>
 
-	<row id="mes_pokelist_04_61_03">
+	<row id="mes_pokelist_04_62_1">
 		<comment>バトル施設メッセージ
 参加可能人数以上を選ぼうとしたとき
 １匹まで</comment>
 		<language name="JPN" width="216" line="2">さんか　できる　ポケモンは
-１ひき　まで　です！[2:07:８桁:]</language>
+１ひき　まで　です！</language>
 		<language name="JPN_KANJI" width="216" line="2">さんか　できる　ポケモンは
-１ひき　まで　です！[2:07:８桁:]</language>
+１ひき　まで　です！</language>
 	</row>
 
-	<row id="mes_pokelist_04_62">
+	<row id="mes_pokelist_04_62_2" back-color=",,,#ffff80,,,,,,,,,,,,,,">
+		<comment>バトル施設メッセージ
+参加可能人数以上を選ぼうとしたとき
+２匹まで（追加 090722Ariizumi</comment>
+		<language name="JPN" width="216" line="2">さんか　できる　ポケモンは
+２ひき　まで　です！</language>
+		<language name="JPN_KANJI" width="216" line="2">さんか　できる　ポケモンは
+２ひき　まで　です！</language>
+	</row>
+
+	<row id="mes_pokelist_04_62_3">
 		<comment>バトル施設メッセージ
 参加可能人数以上を選ぼうとしたとき
 ３匹まで</comment>
 		<language name="JPN" width="216" line="2">さんか　できる　ポケモンは
-３ひき　まで　です！[2:07:８桁:]</language>
+３ひき　まで　です！</language>
 		<language name="JPN_KANJI" width="216" line="2">さんか　できる　ポケモンは
-３ひき　まで　です！[2:07:８桁:]</language>
+３ひき　まで　です！</language>
 	</row>
 
-	<row id="mes_pokelist_04_63">
+	<row id="mes_pokelist_04_62_4">
 		<comment>バトル施設メッセージ
 参加可能人数以上を選ぼうとしたとき
 ４匹まで</comment>
 		<language name="JPN" width="216" line="2">さんか　できる　ポケモンは
-４ひき　まで　です！[2:07:８桁:]</language>
+４ひき　まで　です！</language>
 		<language name="JPN_KANJI" width="216" line="2">さんか　できる　ポケモンは
-４ひき　まで　です！[2:07:８桁:]</language>
+４ひき　まで　です！</language>
 	</row>
 
-	<row id="mes_pokelist_04_63_01">
+	<row id="mes_pokelist_04_62_5">
 		<comment>バトル施設メッセージ
 参加可能人数以上を選ぼうとしたとき
 ５匹まで</comment>
 		<language name="JPN" width="216" line="2">さんか　できる　ポケモンは
-５ひき　まで　です！[2:07:８桁:]</language>
+５ひき　まで　です！</language>
 		<language name="JPN_KANJI" width="216" line="2">さんか　できる　ポケモンは
-５ひき　まで　です！[2:07:８桁:]</language>
+５ひき　まで　です！</language>
 	</row>
 
 	<row id="mes_pokelist_04_64">
 		<comment>ボックスのメールを持たせるメッセージ：成功</comment>
-		<language name="JPN" width="216" line="2">ボックスから　メールを　うつしました[2:07:８桁:]</language>
-		<language name="JPN_KANJI" width="216" line="2">ボックスから　メールを　うつしました[2:07:８桁:]</language>
+		<language name="JPN" width="216" line="2">ボックスから　メールを　うつしました</language>
+		<language name="JPN_KANJI" width="216" line="2">ボックスから　メールを　うつしました</language>
 	</row>
 
 	<row id="mes_pokelist_04_65">
 		<comment>ボックスのメールを持たせるメッセージ：失敗</comment>
 		<language name="JPN" width="216" line="2">すでに　どうぐを　もっているので
-メールを　もたせることが　できません[2:07:８桁:]</language>
+メールを　もたせることが　できません</language>
 		<language name="JPN_KANJI" width="216" line="2">すでに　どうぐを　もっているので
-メールを　もたせることが　できません[2:07:８桁:]</language>
+メールを　もたせることが　できません</language>
 	</row>
 
 	<row id="mes_pokelist_04_68" back-color=",,,,,,,#ffff00,,,#ffff00,,,,,,,">
 		<comment>ミルクのみ、タマグうみで対象ポケモンに
 使えないときのメッセージ</comment>
 		<language name="JPN" width="216" line="2">そのポケモンには
-つかえません[2:07:８桁:]</language>
+つかえません</language>
 		<language name="JPN_KANJI" width="216" line="2">そのポケモンには
-つかえません[2:07:８桁:]</language>
+つかえません</language>
 	</row>
 
 	<row id="mes_pokelist_04_69" back-color=",,,,,,,#ffff00,,,#ffff00,,,,,,,">
@@ -1242,8 +1266,8 @@ PP値上昇アイテムで技選択するとき</comment>
 	<row id="mes_pokelist_04_71" back-color=",,,,,,,#ffff00,,,#ffff00,,,,,,,">
 		<comment>ミルクのみ、タマゴうみでＨＰ1/5以下で
 使用できないメッセージ</comment>
-		<language name="JPN" width="216" line="2">たいりょくが　たりません……[2:07:８桁:]</language>
-		<language name="JPN_KANJI" width="216" line="2">たいりょくが　たりません……[2:07:８桁:]</language>
+		<language name="JPN" width="216" line="2">たいりょくが　たりません……</language>
+		<language name="JPN_KANJI" width="216" line="2">たいりょくが　たりません……</language>
 	</row>
 
 	<row id="mes_pokelist_05_01">
@@ -1508,31 +1532,31 @@ PP値上昇アイテムで技選択するとき</comment>
 
 	<row id="mes_pokelist_07_01">
 		<comment>スタンダードルールのエラーメッセージ</comment>
-		<language name="JPN" font=" 1:small" width="216">おなじ　ポケモンが　います[2:07:８桁:]</language>
-		<language name="JPN_KANJI" font=" 1:small" width="216">おなじ　ポケモンが　います[2:07:８桁:]</language>
+		<language name="JPN" font=" 1:small" width="216">おなじ　ポケモンが　います</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">おなじ　ポケモンが　います</language>
 	</row>
 
 	<row id="mes_pokelist_07_02">
 		<comment>スタンダードルールのエラーメッセージ</comment>
-		<language name="JPN" font=" 1:small" width="216">どうぐが　おなじ　ポケモンが　います[2:07:８桁:]</language>
-		<language name="JPN_KANJI" font=" 1:small" width="216">どうぐが　おなじ　ポケモンが　います[2:07:８桁:]</language>
+		<language name="JPN" font=" 1:small" width="216">どうぐが　おなじ　ポケモンが　います</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">どうぐが　おなじ　ポケモンが　います</language>
 	</row>
 
 	<row id="mes_pokelist_07_03" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
 		<comment>レギュレーションエラーメッセージ
 0:レベルの合計</comment>
 		<language name="JPN" font=" 1:small" width="216">ポケモンの　レベルの　ごうけいが
-[2:02:３桁:0]いじょうに　なっています[2:07:８桁:]</language>
+[2:02:３桁:0]いじょうに　なっています</language>
 		<language name="JPN_KANJI" font=" 1:small" width="216">ポケモンの　レベルの　ごうけいが
-[2:02:３桁:0]いじょうに　なっています[2:07:８桁:]</language>
+[2:02:３桁:0]いじょうに　なっています</language>
 	</row>
 
 	<row id="mes_pokelist_07_04" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
 		<comment>レギュレーションエラーメッセージ</comment>
 		<language name="JPN" font=" 1:small" width="216">でんせつの　ポケモンが
-３たい　いじょういます[2:07:８桁:]</language>
+３たい　いじょういます</language>
 		<language name="JPN_KANJI" font=" 1:small" width="216">でんせつの　ポケモンが
-３たい　いじょういます[2:07:８桁:]</language>
+３たい　いじょういます</language>
 	</row>
 
 	<row id="mes_pokelist_08_01">
@@ -1586,31 +1610,31 @@ PP値上昇アイテムで技選択するとき</comment>
 	<row id="mes_pokelist_08_09">
 		<comment>「ふしぎなアメ」レベルアップ</comment>
 		<language name="JPN" font=" 1:small" width="216">[1:02:ポケモンニックネーム:0]は
-レベル[2:02:３桁:1]　に　あがった！[2:02:３桁:4][2:02:３桁:2][2:07:８桁:]</language>
+レベル[2:02:３桁:1]　に　あがった！[2:02:３桁:4][2:02:３桁:2]</language>
 		<language name="JPN_KANJI" font=" 1:small" width="216">[1:02:ポケモンニックネーム:0]は
-レベル[2:02:３桁:1]　に　あがった！[2:02:３桁:4][2:02:３桁:2][2:07:８桁:]</language>
+レベル[2:02:３桁:1]　に　あがった！[2:02:３桁:4][2:02:３桁:2]</language>
 	</row>
 
 	<row id="mes_pokelist_08_10">
 		<comment>「ふしぎなアメ」レベルアップ</comment>
 		<language name="JPN" font=" 1:small" width="216">[1:02:ポケモンニックネーム:0]は
-[1:07:わざ名:1]を　おぼえた！[1:07:わざ名:4][1:07:わざ名:2][2:07:８桁:]</language>
+[1:07:わざ名:1]を　おぼえた！[1:07:わざ名:4][1:07:わざ名:2]</language>
 		<language name="JPN_KANJI" font=" 1:small" width="216">[1:02:ポケモンニックネーム:0]は
-[1:07:わざ名:1]を　おぼえた！[1:07:わざ名:4][1:07:わざ名:2][2:07:８桁:]</language>
+[1:07:わざ名:1]を　おぼえた！[1:07:わざ名:4][1:07:わざ名:2]</language>
 	</row>
 
 	<row id="mes_pokelist_09_01" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
 		<comment>連れ歩きエラーメッセージ</comment>
 		<language name="JPN" font=" 1:small" width="216">つれあるいているときは
-つかえません！[2:07:８桁:]</language>
+つかえません！</language>
 		<language name="JPN_KANJI" font=" 1:small" width="216">つれあるいているときは
-つかえません！[2:07:８桁:]</language>
+つかえません！</language>
 	</row>
 
 	<row id="mes_pokelist_09_02" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
 		<comment>ロケット団変装イベント中エラーメッセージ</comment>
-		<language name="JPN" font=" 1:small" width="216">いまは　それどころじゃ　ない！[2:07:８桁:]</language>
-		<language name="JPN_KANJI" font=" 1:small" width="216">いまは　それどころじゃ　ない！[2:07:８桁:]</language>
+		<language name="JPN" font=" 1:small" width="216">いまは　それどころじゃ　ない！</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">いまは　それどころじゃ　ない！</language>
 	</row>
 
 	<row id="mes_pokelist_10_01">
@@ -1648,27 +1672,27 @@ PP値上昇アイテムで技選択するとき</comment>
 		<comment>フォルムチェンジした時に表示するメッセージ
 ※プラチナで追加</comment>
 		<language name="JPN" font=" 1:small" width="216">[1:01:ポケモン種族名:0]は
-べつの　すがたに　へんかした[2:07:８桁:]</language>
+べつの　すがたに　へんかした</language>
 		<language name="JPN_KANJI" font=" 1:small" width="216">[1:01:ポケモン種族名:0]は
-べつの　すがたに　へんかした[2:07:８桁:]</language>
+べつの　すがたに　へんかした</language>
 	</row>
 
 	<row id="mes_pokelist_12_02">
 		<comment>ギラティナ以外にハッキンダマを持たせようとした時の警告メッセージ
 ※プラチナで追加</comment>
 		<language name="JPN" font=" 1:small" width="216">[1:02:ポケモンニックネーム:0]は　[1:09:どうぐ名:1]を
-もつことが　できない！[2:07:８桁:]</language>
+もつことが　できない！</language>
 		<language name="JPN_KANJI" font=" 1:small" width="216">[1:02:ポケモンニックネーム:0]は　[1:09:どうぐ名:1]を
-もつことが　できない！[2:07:８桁:]</language>
+もつことが　できない！</language>
 	</row>
 
 	<row id="mes_pokelist_12_03">
 		<comment>ユニオンルーム内でハッキンダマを持たせようとした場合の警告メッセージ
 ※プラチナで追加</comment>
 		<language name="JPN" font=" 1:small" width="216">このばしょでは
-[1:09:どうぐ名:0]を　もたせられません[2:07:８桁:]</language>
+[1:09:どうぐ名:0]を　もたせられません</language>
 		<language name="JPN_KANJI" font=" 1:small" width="216">このばしょでは
-[1:09:どうぐ名:0]を　もたせられません[2:07:８桁:]</language>
+[1:09:どうぐ名:0]を　もたせられません</language>
 	</row>
 
 	<flowchart-group-list>

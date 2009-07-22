@@ -78,7 +78,7 @@ static GFL_PROC_RESULT PokeListProc_Init( GFL_PROC * proc, int * seq , void *pwk
     if( pwk == NULL )
     {
       u8 i;
-      plData = GFL_HEAP_AllocMemory( HEAPID_POKELIST , sizeof(PLIST_DATA) );
+      plData = GFL_HEAP_AllocClearMemory( HEAPID_POKELIST , sizeof(PLIST_DATA) );
       plData->pp = PokeParty_AllocPartyWork(HEAPID_POKELIST);
       plData->ret_sel = PL_SEL_POS_POKE1;
       PokeParty_Init( plData->pp , 6 );
@@ -115,7 +115,18 @@ static GFL_PROC_RESULT PokeListProc_Init( GFL_PROC * proc, int * seq , void *pwk
       }
       
       plData->mode = PL_MODE_FIELD;
-      
+      if( GFL_UI_KEY_GetCont() & PAD_BUTTON_R )
+      {
+        u8 i;
+        for( i=0;i<6;i++ )
+        {
+          plData->in_num[i] = 0;
+        }
+        plData->mode = PL_MODE_BATTLE;
+        plData->in_min = 2;
+        plData->in_max = 4;
+        plData->in_lv = 100;
+      }
       GFL_UI_SetTouchOrKey( GFL_APP_KTST_TOUCH );
     }
     
@@ -148,6 +159,11 @@ static GFL_PROC_RESULT PokeListProc_Term( GFL_PROC * proc, int * seq , void *pwk
   //ƒfƒoƒO
   if( pwk == NULL )
   {
+    u8 i;
+    for( i=0;i<6;i++ )
+    {
+      ARI_TPrintf("%d[%d]\n",i,plWork->plData->in_num[i]);
+    }
     GFL_HEAP_FreeMemory( plWork->plData->pp );
     GFL_HEAP_FreeMemory( plWork->plData );
   }

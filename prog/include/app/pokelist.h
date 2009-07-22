@@ -143,7 +143,7 @@ typedef struct
   u8  con_type;   // コンテストタイプ（美しさとか賢さとか）
   u8  con_rank;   // コンテストランク
 
-  u8  in_num[6];    // 参加番号
+  u8  in_num[6];    // 参加番号 0:無し 1～:1番目～
   u8  in_min:4;   // 参加最小数
   u8  in_max:4;   // 参加最大数
   u8  in_lv;      // 参加レベル

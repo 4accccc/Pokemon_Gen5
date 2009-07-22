@@ -181,6 +181,11 @@ void PLIST_MSG_OpenWindow( PLIST_WORK *work , PLIST_MSG_WORK *msgWork , const PL
 //--------------------------------------------------------------
 void PLIST_MSG_CloseWindow( PLIST_WORK *work , PLIST_MSG_WORK *msgWork )
 {
+  if( msgWork->winType == PMT_NONE )
+  {
+    //開いてないこともありえるので・・・
+    return;
+  }
   GF_ASSERT_MSG( msgWork->winType != PMT_NONE , "PLIST_MSG Close window yet!!\n");
   
   TalkWinFrame_Clear( msgWork->bmpWin , WINDOW_TRANS_ON_V );

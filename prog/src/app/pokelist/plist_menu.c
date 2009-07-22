@@ -23,6 +23,7 @@
 
 #include "plist_sys.h"
 #include "plist_menu.h"
+#include "plist_plate.h"
 #include "plist_snd_def.h"
 
 #include "test/ariizumi/ari_debug.h"
@@ -314,8 +315,21 @@ static void PLIST_MENU_CreateItem(  PLIST_WORK *work , PLIST_MENU_WORK *menuWork
 
     case PMIT_SET_JOIN:    //参加する・参加しない
       //FIXME 取り消し処理チェック
-      menuWork->itemArr[menuWork->itemNum] = PMIT_RET_JOIN;
-      menuWork->itemNum += 1;
+      {
+        const battleOrder = PLIST_PLATE_GetBattleOrder( work->plateWork[ work->pokeCursor ] );
+        if( battleOrder == PPBO_JOIN_OK )
+        {
+          menuWork->itemArr[menuWork->itemNum] = PMIT_RET_JOIN;
+          menuWork->itemNum += 1;
+        }
+        else
+        if( battleOrder <= PPBO_JOIN_6 )
+        {
+          menuWork->itemArr[menuWork->itemNum] = PMIT_JOIN_CANCEL;
+          menuWork->itemNum += 1;
+        }
+        //その他は増えない！
+      }
       break;
       
     case PMIT_GIVE:    //持たせる
@@ -527,4 +541,31 @@ static void PLIST_MENU_SetActiveItem( PLIST_MENU_WORK *menuWork , const u8 idx ,
   GFL_BG_LoadScreenV_Req( GFL_BMPWIN_GetFrame(menuWork->menuWin[idx]) );
 }
 
+
+
+//--------------------------------------------------------------
+//	バトル選択用に座標指定で出せるように
+//--------------------------------------------------------------
+GFL_BMPWIN* PLIST_MENU_CreateMenuWin_BattleMenu( PLIST_WORK *work , PLIST_MENU_WORK *menuWork , u32 strId , u8 charX , u8 charY )
+{
+  GFL_BMPWIN* bmpWin;
+  
+  PRINTSYS_LSB col;
+  STRBUF *str = GFL_MSG_CreateString( work->msgHandle , strId );
+
+  bmpWin = GFL_BMPWIN_Create( PLIST_BG_MENU ,
+                  charX , charY , 
+                  PLIST_MENU_PLATE_WIDTH , PLIST_MENU_PLATE_HEIGHT , 
+                  PLIST_BG_PLT_MENU_NORMAL , GFL_BMP_CHRAREA_GET_B );
+  //プレートの絵を送る
+  GFL_STD_MemCopy32( menuWork->ncgData->pRawData , GFL_BMP_GetCharacterAdrs(GFL_BMPWIN_GetBmp( bmpWin )) ,
+                   0x20*PLIST_MENU_PLATE_WIDTH*PLIST_MENU_PLATE_HEIGHT );
+  col = PRINTSYS_LSB_Make( PLIST_FONT_MENU_LETTER,PLIST_FONT_MENU_SHADOW,PLIST_FONT_MENU_BACK);
+  PRINTSYS_PrintQueColor( work->printQue , GFL_BMPWIN_GetBmp( bmpWin ), 
+                      8+PLIST_MSG_STR_OFS_X , 4+PLIST_MSG_STR_OFS_Y , str , work->fontHandle , col );
+  GFL_STR_DeleteBuffer( str );
+  GFL_BMPWIN_MakeTransWindow_VBlank( bmpWin );
+
+  return bmpWin;
+}
 

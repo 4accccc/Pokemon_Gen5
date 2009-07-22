@@ -16,8 +16,8 @@
 #include "msg/msg_pokelist.h"
 
 #include "pokeicon/pokeicon.h"
-#include "print/wordset.h"
 
+#include "plist_sys.h"
 #include "plist_plate.h"
 
 #include "test/ariizumi/ari_debug.h"
@@ -46,20 +46,23 @@
 #define PLIST_PLATE_CONDITION_POS_Y (42)
 
 //文字の位置
-#define PLIST_PLATE_STR_NAME_X (40)
-#define PLIST_PLATE_STR_NAME_Y ( 8)
-#define PLIST_PLATE_STR_SEX_X (104)
-#define PLIST_PLATE_STR_SEX_Y ( 8)
+#define PLIST_PLATE_STR_NAME_X (40+PLIST_MSG_STR_OFS_X)
+#define PLIST_PLATE_STR_NAME_Y ( 8+PLIST_MSG_STR_OFS_Y)
+#define PLIST_PLATE_STR_SEX_X (104+PLIST_MSG_STR_OFS_X)
+#define PLIST_PLATE_STR_SEX_Y ( 8+PLIST_MSG_STR_OFS_Y)
 
-#define PLIST_PLATE_NUM_BASAE_Y (34)  //LvとHpのY座標
-#define PLIST_PLATE_STR_LEVEL_X (16)
+#define PLIST_PLATE_NUM_BASAE_Y (34+PLIST_MSG_STR_OFS_Y)  //LvとHpのY座標
+#define PLIST_PLATE_STR_LEVEL_X (16+PLIST_MSG_STR_OFS_X)
 #define PLIST_PLATE_STR_LEVEL_Y (PLIST_PLATE_NUM_BASAE_Y)
-#define PLIST_PLATE_STR_HP_X (64)
+#define PLIST_PLATE_STR_HP_X (64+PLIST_MSG_STR_OFS_X)
 #define PLIST_PLATE_STR_HP_Y (PLIST_PLATE_NUM_BASAE_Y)
-#define PLIST_PLATE_STR_SLASH_X (PLIST_PLATE_STR_HP_X+24)
+#define PLIST_PLATE_STR_SLASH_X (PLIST_PLATE_STR_HP_X+24+PLIST_MSG_STR_OFS_X)
 #define PLIST_PLATE_STR_SLASH_Y (PLIST_PLATE_NUM_BASAE_Y)
-#define PLIST_PLATE_STR_HPMAX_X (PLIST_PLATE_STR_SLASH_X+8)
+#define PLIST_PLATE_STR_HPMAX_X (PLIST_PLATE_STR_SLASH_X+8+PLIST_MSG_STR_OFS_X)
 #define PLIST_PLATE_STR_HPMAX_Y (PLIST_PLATE_NUM_BASAE_Y)
+
+#define PLIST_PLATE_STR_BTL_ORDER_X (48+PLIST_MSG_STR_OFS_X)
+#define PLIST_PLATE_STR_BTL_ORDER_Y (PLIST_PLATE_NUM_BASAE_Y-1)
 
 //HPバー系
 #define PLIST_PLATE_HPBAR_LEN (48)
@@ -97,6 +100,7 @@ struct _PLIST_PLATE_WORK
   BOOL isBlank;
   BOOL isUpdateStr;
 
+  PLIST_PLATE_BATTLE_ORDER btlOrder;
   GFL_BMPWIN *bmpWin;
 
   //Obj系  
@@ -131,8 +135,11 @@ static void PLIST_PLATE_CreateCell( PLIST_WORK *work , PLIST_PLATE_WORK *plateWo
 static void PLIST_PLATE_CreatePokeIcon( PLIST_WORK *work , PLIST_PLATE_WORK *plateWork );
 static void PLIST_PLATE_DrawParam( PLIST_WORK *work , PLIST_PLATE_WORK *plateWork );
 static void PLIST_PLATE_DrawHPBar( PLIST_WORK *work , PLIST_PLATE_WORK *plateWork );
+static void PLIST_PLATE_ReDrawParam( PLIST_WORK *work , PLIST_PLATE_WORK *plateWork );
 static const u8 PLIST_PLATE_GetHPRate( PLIST_PLATE_WORK *plateWork );
 static void PLIST_PLATE_CalcCellPos( PLIST_PLATE_WORK *plateWork , const s16 x , const s16 y , GFL_CLACTPOS *pos );
+
+static void PLIST_PLATE_CheckBattleOrder( PLIST_WORK *work , PLIST_PLATE_WORK *plateWork );
 
 //--------------------------------------------------------------
 //	プレート作成
@@ -185,6 +192,9 @@ PLIST_PLATE_WORK* PLIST_PLATE_CreatePlate( PLIST_WORK *work , const u8 idx , POK
   plateWork->bmpWin = GFL_BMPWIN_Create( PLIST_BG_PARAM , baseX+PLIST_BG_SCROLL_X_CHAR , baseY , 
           PLIST_PLATE_WIDTH , PLIST_PLATE_HEIGHT , PLIST_BG_PLT_HP_BAR , GFL_BMP_CHRAREA_GET_B );
   
+  //バトルチェック
+  PLIST_PLATE_CheckBattleOrder( work , plateWork );
+  
   PLIST_PLATE_DrawParam( work , plateWork );
   PLIST_PLATE_DrawHPBar( work , plateWork );
   return plateWork;
@@ -208,6 +218,7 @@ PLIST_PLATE_WORK* PLIST_PLATE_CreatePlate_Blank( PLIST_WORK *work , const u8 idx
   plateWork->idx = idx;
   plateWork->pp = NULL;
   plateWork->isBlank = TRUE;
+  plateWork->btlOrder = PPBO_INVALLID;
   GFL_BG_LoadScreenV_Req( PLIST_BG_PLATE );
 
   return plateWork;
@@ -380,17 +391,12 @@ static void PLIST_PLATE_DrawParam( PLIST_WORK *work , PLIST_PLATE_WORK *plateWor
   //名前
   {
     WORDSET *wordSet = WORDSET_Create( work->heapId );
-    STRBUF *srcStr;
-    STRBUF *dstStr = GFL_STR_CreateBuffer( 32, work->heapId );
-
     WORDSET_RegisterPokeNickName( wordSet , 0 , plateWork->pp );
-    srcStr = GFL_MSG_CreateString( work->msgHandle , mes_pokelist_01_09 ); 
-    WORDSET_ExpandStr( wordSet , dstStr , srcStr );
-    PRINTSYS_PrintQueColor( work->printQue , GFL_BMPWIN_GetBmp( plateWork->bmpWin ) , 
-            PLIST_PLATE_STR_NAME_X+PLIST_MSG_STR_OFS_X , PLIST_PLATE_STR_NAME_Y+PLIST_MSG_STR_OFS_Y , 
-            dstStr , work->fontHandle , fontCol);
-    GFL_STR_DeleteBuffer( srcStr );
-    GFL_STR_DeleteBuffer( dstStr );
+
+    PLIST_UTIL_DrawValueStrFunc( work , plateWork->bmpWin , 
+                      wordSet , mes_pokelist_01_09 ,
+                      PLIST_PLATE_STR_NAME_X , PLIST_PLATE_STR_NAME_Y , fontCol );
+
     WORDSET_Delete( wordSet );
   }
   //性別
@@ -399,40 +405,31 @@ static void PLIST_PLATE_DrawParam( PLIST_WORK *work , PLIST_PLATE_WORK *plateWor
     u32 sex = PP_Get( plateWork->pp , ID_PARA_sex , NULL );
     if( sex == PTL_SEX_MALE )
     {
-      srcStr = GFL_MSG_CreateString( work->msgHandle , mes_pokelist_01_28 ); 
-      PRINTSYS_PrintQueColor( work->printQue , GFL_BMPWIN_GetBmp( plateWork->bmpWin ) , 
-              PLIST_PLATE_STR_SEX_X+PLIST_MSG_STR_OFS_X , PLIST_PLATE_STR_SEX_Y+PLIST_MSG_STR_OFS_Y ,
-              srcStr , work->fontHandle , fontCol );
-      GFL_STR_DeleteBuffer( srcStr );
+      PLIST_UTIL_DrawStrFunc( work , plateWork->bmpWin , mes_pokelist_01_28 ,
+                      PLIST_PLATE_STR_SEX_X , PLIST_PLATE_STR_SEX_Y , fontCol );
     }
     else if( sex == PTL_SEX_FEMALE )
     {
-      srcStr = GFL_MSG_CreateString( work->msgHandle , mes_pokelist_01_29 ); 
-      PRINTSYS_PrintQueColor( work->printQue , GFL_BMPWIN_GetBmp( plateWork->bmpWin ) , 
-              PLIST_PLATE_STR_SEX_X+PLIST_MSG_STR_OFS_X , PLIST_PLATE_STR_SEX_Y+PLIST_MSG_STR_OFS_Y , 
-              srcStr , work->fontHandle , fontCol );
-      GFL_STR_DeleteBuffer( srcStr );
+      PLIST_UTIL_DrawStrFunc( work , plateWork->bmpWin , mes_pokelist_01_29 ,
+                      PLIST_PLATE_STR_SEX_X , PLIST_PLATE_STR_SEX_Y , fontCol );
     }
   }
 
   //レベル
-  if( PP_GetSick( plateWork->pp ) == POKESICK_NULL &&
-      PP_Get( plateWork->pp , ID_PARA_hp , NULL ) != 0 )
+  if( (PP_GetSick( plateWork->pp ) == POKESICK_NULL &&
+      PP_Get( plateWork->pp , ID_PARA_hp , NULL ) != 0) ||
+      plateWork->btlOrder != PPBO_INVALLID )  //バトルのときはレベル表示
   {
+    
     WORDSET *wordSet = WORDSET_Create( work->heapId );
-    STRBUF *srcStr;
-    STRBUF *dstStr = GFL_STR_CreateBuffer( 16, work->heapId );
 
     u32 lv = PP_CalcLevel( plateWork->pp );
     WORDSET_RegisterNumber( wordSet , 0 , lv , 3 , STR_NUM_DISP_LEFT , STR_NUM_CODE_DEFAULT );
-    srcStr = GFL_MSG_CreateString( work->msgHandle , mes_pokelist_01_03 ); 
-    WORDSET_ExpandStr( wordSet , dstStr , srcStr );
-    PRINTSYS_PrintQueColor( work->printQue , GFL_BMPWIN_GetBmp( plateWork->bmpWin ) , 
-            PLIST_PLATE_STR_LEVEL_X+PLIST_MSG_STR_OFS_X , PLIST_PLATE_STR_LEVEL_Y+PLIST_MSG_STR_OFS_Y , 
-            dstStr , work->sysFontHandle , fontCol );
 
-    GFL_STR_DeleteBuffer( srcStr );
-    GFL_STR_DeleteBuffer( dstStr );
+    PLIST_UTIL_DrawValueStrFuncSys( work , plateWork->bmpWin , 
+                      wordSet , mes_pokelist_01_03 , 
+                      PLIST_PLATE_STR_LEVEL_X , PLIST_PLATE_STR_LEVEL_Y , fontCol );
+
     WORDSET_Delete( wordSet );
   }
   else
@@ -466,52 +463,62 @@ static void PLIST_PLATE_DrawParam( PLIST_WORK *work , PLIST_PLATE_WORK *plateWor
     GFL_CLACT_WK_SetDrawEnable( plateWork->conditionIcon , TRUE );
   }
   
-  //HP最大
+  //HPorバトル参加順
+  if( plateWork->btlOrder != PPBO_INVALLID )
   {
-    WORDSET *wordSet = WORDSET_Create( work->heapId );
+    //バトル参加順
+    u32 strId;
     STRBUF *srcStr;
-    STRBUF *dstStr = GFL_STR_CreateBuffer( 16, work->heapId );
-
-    u32 hpMax = PP_Get( plateWork->pp , ID_PARA_hpmax , NULL );
-    WORDSET_RegisterNumber( wordSet , 0 , hpMax , 3 , STR_NUM_DISP_LEFT , STR_NUM_CODE_DEFAULT );
-    srcStr = GFL_MSG_CreateString( work->msgHandle , mes_pokelist_01_15 ); 
-    WORDSET_ExpandStr( wordSet , dstStr , srcStr );
-    PRINTSYS_PrintQueColor( work->printQue , GFL_BMPWIN_GetBmp( plateWork->bmpWin ) , 
-            PLIST_PLATE_STR_HPMAX_X+PLIST_MSG_STR_OFS_X , PLIST_PLATE_STR_HPMAX_Y+PLIST_MSG_STR_OFS_Y , 
-            dstStr , work->sysFontHandle , fontCol );
-
-    GFL_STR_DeleteBuffer( srcStr );
-    GFL_STR_DeleteBuffer( dstStr );
-    WORDSET_Delete( wordSet );
+    if( plateWork->btlOrder == PPBO_JOIN_OK )
+    {
+      strId = mes_pokelist_06_01;
+    }
+    else
+    if( plateWork->btlOrder == PPBO_JOIN_NG )
+    {
+      strId = mes_pokelist_06_02;
+    }
+    else
+    {
+      strId = mes_pokelist_06_03 + plateWork->btlOrder;
+    }
+    
+    PLIST_UTIL_DrawStrFunc( work , plateWork->bmpWin , strId ,
+                    PLIST_PLATE_STR_BTL_ORDER_X , PLIST_PLATE_STR_BTL_ORDER_Y , fontCol );
+    
   }
-  //HP現在
+  else
   {
-    WORDSET *wordSet = WORDSET_Create( work->heapId );
-    STRBUF *srcStr;
-    STRBUF *dstStr = GFL_STR_CreateBuffer( 16, work->heapId );
+    //HP描画
+    {
+      WORDSET *wordSet = WORDSET_Create( work->heapId );
 
-    u32 hp = PP_Get( plateWork->pp , ID_PARA_hp , NULL );
-    WORDSET_RegisterNumber( wordSet , 0 , hp , 3 , STR_NUM_DISP_SPACE , STR_NUM_CODE_DEFAULT );
-    srcStr = GFL_MSG_CreateString( work->msgHandle , mes_pokelist_01_21 ); 
-    WORDSET_ExpandStr( wordSet , dstStr , srcStr );
-    PRINTSYS_PrintQueColor( work->printQue , GFL_BMPWIN_GetBmp( plateWork->bmpWin ) , 
-            PLIST_PLATE_STR_HP_X+PLIST_MSG_STR_OFS_X , PLIST_PLATE_STR_HP_Y+PLIST_MSG_STR_OFS_Y , 
-            dstStr , work->sysFontHandle , fontCol );
+      u32 hpMax = PP_Get( plateWork->pp , ID_PARA_hpmax , NULL );
+      WORDSET_RegisterNumber( wordSet , 0 , hpMax , 3 , STR_NUM_DISP_LEFT , STR_NUM_CODE_DEFAULT );
 
-    GFL_STR_DeleteBuffer( srcStr );
-    GFL_STR_DeleteBuffer( dstStr );
-    WORDSET_Delete( wordSet );
-  }
-  //HPのスラッシュ
-  {
-    STRBUF *srcStr;
+      PLIST_UTIL_DrawValueStrFuncSys( work , plateWork->bmpWin , 
+                        wordSet , mes_pokelist_01_15 , 
+                        PLIST_PLATE_STR_HPMAX_X , PLIST_PLATE_STR_HPMAX_Y , fontCol );
 
-    srcStr = GFL_MSG_CreateString( work->msgHandle , mes_pokelist_01_27 ); 
-    PRINTSYS_PrintQueColor( work->printQue , GFL_BMPWIN_GetBmp( plateWork->bmpWin ) , 
-            PLIST_PLATE_STR_SLASH_X+PLIST_MSG_STR_OFS_X , PLIST_PLATE_STR_SLASH_Y+PLIST_MSG_STR_OFS_Y , 
-            srcStr , work->sysFontHandle , fontCol );
+      WORDSET_Delete( wordSet );
+    }
+    //HP現在
+    {
+      WORDSET *wordSet = WORDSET_Create( work->heapId );
+      u32 hp = PP_Get( plateWork->pp , ID_PARA_hp , NULL );
+      WORDSET_RegisterNumber( wordSet , 0 , hp , 3 , STR_NUM_DISP_SPACE , STR_NUM_CODE_DEFAULT );
 
-    GFL_STR_DeleteBuffer( srcStr );
+      PLIST_UTIL_DrawValueStrFuncSys( work , plateWork->bmpWin , 
+                        wordSet , mes_pokelist_01_21 , 
+                        PLIST_PLATE_STR_HP_X , PLIST_PLATE_STR_HP_Y , fontCol );
+
+      WORDSET_Delete( wordSet );
+    }
+    //HPのスラッシュ
+    {
+      PLIST_UTIL_DrawStrFuncSys( work , plateWork->bmpWin , mes_pokelist_01_27 ,
+                      PLIST_PLATE_STR_SLASH_X , PLIST_PLATE_STR_SLASH_Y , fontCol );
+    }
   }
   
   //アイテムアイコン
@@ -723,6 +730,7 @@ void PLIST_PLATE_MovePlateXY( PLIST_WORK *work , PLIST_PLATE_WORK *plateWork , c
   
   if( plateWork->isBlank == FALSE )
   {
+    u8 palCol;
     GFL_BMPWIN_SetPosX( plateWork->bmpWin , 
               baseX + PLIST_BG_SCROLL_X_CHAR );
     GFL_BMPWIN_SetPosY( plateWork->bmpWin , 
@@ -743,10 +751,37 @@ void PLIST_PLATE_MovePlateXY( PLIST_WORK *work , PLIST_PLATE_WORK *plateWork , c
                         &work->plateScrData->rawData , 
                         PLATE_SCR_POS_ARR[(plateWork->idx==0?0:1)][0] , PLATE_SCR_POS_ARR[(plateWork->idx==0?0:1)][1] ,
                         32 , 32 );  //←グラフィックデータのサイズ
+    if( plateWork->idx == work->changeTarget )
+    {
+      palCol = PPC_CHANGE;
+    }
+    else
+    if( plateWork->idx == work->pokeCursor )
+    {
+      if( PLIST_PLATE_GetHPRate( plateWork ) == 0 )
+      {
+        palCol = PPC_DEATH_SELECT;
+      }
+      else
+      {
+        palCol = PPC_NORMAL_SELECT;
+      }
+    }
+    else
+    {
+      if( PLIST_PLATE_GetHPRate( plateWork ) == 0 )
+      {
+        palCol = PPC_DEATH;
+      }
+      else
+      {
+        palCol = PPC_NORMAL;
+      }
+    }
 
     GFL_BG_ChangeScreenPalette( PLIST_BG_PLATE , 
                 baseX+PLIST_BG_SCROLL_X_CHAR , baseY ,
-                PLIST_PLATE_WIDTH , PLIST_PLATE_HEIGHT , (plateWork->idx == work->pokeCursor?PPC_NORMAL_SELECT:PPC_NORMAL) );
+                PLIST_PLATE_WIDTH , PLIST_PLATE_HEIGHT , palCol );
   }
   else
   {
@@ -818,7 +853,17 @@ void PLIST_PLATE_ResetParam( PLIST_WORK *work , PLIST_PLATE_WORK *plateWork , PO
   PLIST_PLATE_DrawHPBar( work , plateWork );
   
 }
+//--------------------------------------------------------------
+//文字だけ再描画
+//--------------------------------------------------------------
+static void PLIST_PLATE_ReDrawParam( PLIST_WORK *work , PLIST_PLATE_WORK *plateWork )
+{
+  GFL_BMP_Clear( GFL_BMPWIN_GetBmp( plateWork->bmpWin ) , 0 );
+  PLIST_PLATE_DrawParam( work , plateWork );
+  PLIST_PLATE_DrawHPBar( work , plateWork );
+}
 
+#pragma mark [>outer func
 //--------------------------------------------------------------
 //選択できるか？
 //--------------------------------------------------------------
@@ -852,6 +897,67 @@ void PLIST_PLATE_GetPlateRect( PLIST_WORK *work , PLIST_PLATE_WORK *plateWork , 
 }
 
 //--------------------------------------------------------------
+//バトル参加用状態取得
+//--------------------------------------------------------------
+const PLIST_PLATE_BATTLE_ORDER PLIST_PLATE_GetBattleOrder( const PLIST_PLATE_WORK *plateWork )
+{
+  return plateWork->btlOrder;
+}
+
+//--------------------------------------------------------------
+//バトル参加用状態設定
+//--------------------------------------------------------------
+void PLIST_PLATE_SetBattleOrder( PLIST_WORK *work , PLIST_PLATE_WORK *plateWork , const PLIST_PLATE_BATTLE_ORDER order )
+{
+  if( plateWork->btlOrder != order )
+  {
+    plateWork->btlOrder = order;
+    PLIST_PLATE_ReDrawParam( work , plateWork );
+  }
+}
+
+#pragma mark [>battle order
+//--------------------------------------------------------------
+//バトルに参加できるか？(初期参加番号が入っているか？
+//--------------------------------------------------------------
+static void PLIST_PLATE_CheckBattleOrder( PLIST_WORK *work , PLIST_PLATE_WORK *plateWork )
+{
+  u8 i;
+  if( PLIST_UTIL_IsBattleMenu(work) == FALSE )
+  {
+    //バトルじゃない！
+    plateWork->btlOrder = PPBO_INVALLID;
+    return;
+  }
+    
+  //参加番号のチェック
+  for( i=0;i<6;i++ )
+  {
+    if( work->plData->in_num[i] == plateWork->idx +1 )
+    {
+      plateWork->btlOrder = i;
+      return;
+    }
+  }
+  
+  //参加条件のチェック
+  //FIXME 現在はレベルのみ
+  //モードでin_lvが上限値か下限値かが変わる
+  //タマゴ未対応
+  
+  if( PP_CalcLevel( plateWork->pp ) > work->plData->in_lv )
+  {
+    plateWork->btlOrder = PPBO_JOIN_NG;
+  }
+  else
+  {
+    plateWork->btlOrder = PPBO_JOIN_OK;
+  }
+}
+
+
+#pragma mark [>util
+//--------------------------------------------------------------
 //HPの割合の計算0～100
 //--------------------------------------------------------------
 static const u8 PLIST_PLATE_GetHPRate( PLIST_PLATE_WORK *plateWork )
@@ -882,3 +988,4 @@ static void PLIST_PLATE_CalcCellPos( PLIST_PLATE_WORK *plateWork , const s16 x ,
   pos->x = -rendPos.x + x;
   pos->y = -rendPos.y + y;
 }
+

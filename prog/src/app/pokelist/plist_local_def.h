@@ -145,6 +145,7 @@ typedef enum
   PSMS_CHANGE_POKE,
   PSMS_CHANGE_ANM,
   PSMS_MENU,        //メニュー処理中
+  PSMS_MSG_WAIT,    //メッセージ諸々
   PSMS_FADEOUT,
   PSMS_FADEOUT_WAIT,
   
@@ -187,6 +188,10 @@ typedef struct
 
   //入れ替えアニメ用
   u8  anmCnt;
+
+  //バトルメニュー用
+  u8  btlJoinNum;   //バトル参加人数
+  GFL_BMPWIN *btlMenuWin[2];  //バトル用決定・戻る
 
   //MSG系
   GFL_MSGDATA *msgHandle;
