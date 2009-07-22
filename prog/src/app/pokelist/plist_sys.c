@@ -877,18 +877,22 @@ static void PLIST_SelectPokeTerm( PLIST_WORK *work )
   case PSSEL_DECIDE:
     work->mainSeq = PSMS_FADEOUT;
     work->plData->ret_sel = PL_SEL_POS_ENTER;
+    work->plData->ret_mode = PL_RET_NORMAL;
+
     PMSND_PlaySystemSE( PLIST_SND_DECIDE );
     break;
     
   case PSSEL_RETURN:
     work->mainSeq = PSMS_FADEOUT;
     work->plData->ret_sel = PL_SEL_POS_EXIT;
+    work->plData->ret_mode = PL_RET_NORMAL;
     PMSND_PlaySystemSE( PLIST_SND_CANCEL );
     break;
 
   case PSSEL_EXIT:
     work->mainSeq = PSMS_FADEOUT;
     work->plData->ret_sel = PL_SEL_POS_EXIT2;
+    work->plData->ret_mode = PL_RET_NORMAL;
     PMSND_PlaySystemSE( PLIST_SND_CANCEL );
     break;
   }
@@ -1357,6 +1361,10 @@ static void PLIST_SelectMenuExit( PLIST_WORK *work )
     break;
 
   case PMIT_STATSU:
+    work->mainSeq = PSMS_FADEOUT;
+    work->plData->ret_sel = work->pokeCursor;
+    work->plData->ret_mode = PL_RET_STATUS;
+    /*
     {
       PSTATUS_DATA *psData = GFL_HEAP_AllocMemory( work->heapId , sizeof(PSTATUS_DATA) );
       
@@ -1370,6 +1378,7 @@ static void PLIST_SelectMenuExit( PLIST_WORK *work )
       
       PLIST_ChangeProcInit( work , &PokeStatus_ProcData , FS_OVERLAY_ID(poke_status) , (void*)psData );
     }
+    */
     break;
     
   case PMIT_WAZA_1:

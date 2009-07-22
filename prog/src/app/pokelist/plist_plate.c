@@ -736,18 +736,25 @@ void PLIST_PLATE_MovePlateXY( PLIST_WORK *work , PLIST_PLATE_WORK *plateWork , c
       surfacePos.y = -baseY*8;
       GFL_CLACT_USERREND_SetSurfacePos( plateWork->cellRender , PLIST_RENDER_MAIN , &surfacePos );
     }
-  }
-  //BG系
-  GFL_BG_WriteScreenExpand( PLIST_BG_PLATE , 
-                      baseX+PLIST_BG_SCROLL_X_CHAR ,baseY ,
-                      PLIST_PLATE_WIDTH , PLIST_PLATE_HEIGHT ,
-                      &work->plateScrData->rawData , 
-                      PLATE_SCR_POS_ARR[(plateWork->idx==0?0:1)][0] , PLATE_SCR_POS_ARR[(plateWork->idx==0?0:1)][1] ,
-                      32 , 32 );  //←グラフィックデータのサイズ
+    //BG系
+    GFL_BG_WriteScreenExpand( PLIST_BG_PLATE , 
+                        baseX+PLIST_BG_SCROLL_X_CHAR ,baseY ,
+                        PLIST_PLATE_WIDTH , PLIST_PLATE_HEIGHT ,
+                        &work->plateScrData->rawData , 
+                        PLATE_SCR_POS_ARR[(plateWork->idx==0?0:1)][0] , PLATE_SCR_POS_ARR[(plateWork->idx==0?0:1)][1] ,
+                        32 , 32 );  //←グラフィックデータのサイズ
 
-  GFL_BG_ChangeScreenPalette( PLIST_BG_PLATE , 
-              baseX+PLIST_BG_SCROLL_X_CHAR , baseY ,
-              PLIST_PLATE_WIDTH , PLIST_PLATE_HEIGHT , (plateWork->idx == work->pokeCursor?PPC_NORMAL_SELECT:PPC_NORMAL) );
+    GFL_BG_ChangeScreenPalette( PLIST_BG_PLATE , 
+                baseX+PLIST_BG_SCROLL_X_CHAR , baseY ,
+                PLIST_PLATE_WIDTH , PLIST_PLATE_HEIGHT , (plateWork->idx == work->pokeCursor?PPC_NORMAL_SELECT:PPC_NORMAL) );
+  }
+  else
+  {
+    GFL_BG_WriteScreenExpand( PLIST_BG_PLATE , 
+                        baseX+PLIST_BG_SCROLL_X_CHAR ,baseY ,
+                        PLIST_PLATE_WIDTH , PLIST_PLATE_HEIGHT ,
+                        &work->plateScrData->rawData , 0 , 19 , 32 , 32 ); 
+  }
 
   GFL_BG_LoadScreenV_Req( PLIST_BG_PARAM );
   GFL_BG_LoadScreenV_Req( PLIST_BG_PLATE );

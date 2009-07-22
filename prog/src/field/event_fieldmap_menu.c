@@ -28,14 +28,19 @@
 #include "field/fieldmap.h"
 #include "field/map_attr.h"
 
+#include "savedata/sp_ribbon_save.h"
+
 #include "event_fieldmap_control.h" //EVENT_FieldSubProc
 #include "app/config_panel.h"   //ConfigPanelProcData
 #include "app/trainer_card.h"   //TrainerCardSysProcData
 #include "app/bag/itemmenu_local.h" //ItemMenuProcData
 #include "app/pokelist.h"   //PokeList_ProcData・PLIST_DATA
+#include "app/p_status.h"   //PokeList_ProcData・PLIST_DATA
 
 extern const GFL_PROC_DATA DebugAriizumiMainProcData;
 extern const GFL_PROC_DATA TrainerCardProcData;
+FS_EXTERN_OVERLAY(bag);
+FS_EXTERN_OVERLAY(poke_status);
 
 //======================================================================
 //  define
@@ -64,7 +69,34 @@ typedef enum
   FMENUSTATE_WAIT_RETURN,
   FMENUSTATE_RETURN_MENU,
   FMENUSTATE_EXIT_MENU,
+  
+  //フィールド出入り系
+  FMENUSTATE_FIELD_FADEOUT,
+  FMENUSTATE_FIELD_CLOSE,
+  FMENUSTATE_FIELD_OPEN,
+  FMENUSTATE_FIELD_FADEIN,
+
+  //子Proc処理
+  FMENUSTATE_CALL_SUB_PROC,
+  FMENUSTATE_CALL_WAIT_SUB,
+  
 }FMENU_STATE;
+
+typedef enum
+{
+  //メニューから呼ばれるもの
+  FMENU_APP_POKELIST,
+  FMENU_APP_ZUKAN,
+  FMENU_APP_BAG,
+  FMENU_APP_TRAINERCARD,
+  FMENU_APP_CONFIG,
+  
+  //メニューから呼ばれるものから呼ばれるもの
+  FMENU_APP_STATUS,
+  FMENU_APP_TOWNMAP,
+  
+  FMENU_APP_MAX,
+}FMENU_APP_TYPE;
 
 //======================================================================
 //  typedef struct
@@ -77,17 +109,7 @@ typedef struct _TAG_FMENU_EVENT_WORK FMENU_EVENT_WORK;
 /// BOOL TRUE=イベント継続 FALSE==フィールドマップメニューイベント終了
 //--------------------------------------------------------------
 typedef BOOL (* FMENU_CALLPROC)(FMENU_EVENT_WORK*);
-
-//--------------------------------------------------------------
-/// FMENU_LISTDATA
-//--------------------------------------------------------------
-typedef struct
-{
-  u16 charsize_x;
-  u16 charsize_y;
-  u32 max;
-  const FLDMENUFUNC_LIST *list;
-}FMENU_LISTDATA;
+typedef const BOOL (* FMENU_RETURN_PROC_FUNC)(FMENU_EVENT_WORK*);
 
 //--------------------------------------------------------------
 /// FMENU_EVENT_WORK
@@ -99,16 +121,22 @@ struct _TAG_FMENU_EVENT_WORK
   GAMESYS_WORK *gmSys;
   FIELD_MAIN_WORK *fieldWork;
   
-  FIELD_MENU_ITEM_TYPE befType;
-  
-  int menu_num;
-  FMENU_CALLPROC call_proc;
-  
   GFL_MSGDATA *msgData;
   FLDMENUFUNC *menuFunc;
   
-  void *sub_proc_parent;
+  FMENU_STATE state;
+  
+  FMENU_APP_TYPE subProcType;
+  void *subProcWork;
 };
+
+
+typedef struct
+{
+  FSOverlayID ovId;
+	const GFL_PROC_DATA *procData;
+  FMENU_RETURN_PROC_FUNC retFunc;
+}FMENU_SUBPROC_DATA;
 
 //======================================================================
 //  proto
@@ -122,6 +150,8 @@ static BOOL FMenuCallProc_MyTrainerCard( FMENU_EVENT_WORK *mwk );
 static BOOL FMenuCallProc_Report( FMENU_EVENT_WORK *mwk );
 static BOOL FMenuCallProc_Config( FMENU_EVENT_WORK *mwk );
 
+static void FMenu_SetNextSubProc( FMENU_EVENT_WORK* mwk,FMENU_APP_TYPE type , void *procWork );
+
 static GMEVENT * createFMenuMsgWinEvent(
   GAMESYS_WORK *gsys, u32 heapID, u32 strID, FLDMSGBG *msgBG );
 static GMEVENT_RESULT FMenuMsgWinEvent( GMEVENT *event, int *seq, void *wk );
@@ -130,59 +160,62 @@ static GMEVENT * createFMenuReportEvent(
   GAMESYS_WORK *gsys, FIELD_MAIN_WORK *fieldWork, u32 heapID, FLDMSGBG *msgBG );
 static GMEVENT_RESULT FMenuReportEvent( GMEVENT *event, int *seq, void *wk );
 
+static const BOOL FMenuReturnProc_PokeList(FMENU_EVENT_WORK* mwk);
+static const BOOL FMenuReturnProc_PokeStatus(FMENU_EVENT_WORK* mwk);
+
 //--------------------------------------------------------------
 /// フィールドマップメニューリスト
 //--------------------------------------------------------------
-static const FLDMENUFUNC_LIST DATA_FldMapMenuList[] =
+static const FMENU_CALLPROC FldMapMenu_CallProcList[FMIT_MAX] =
 {
-  { FLDMAPMENU_STR01, FMenuCallProc_Zukan },
-  { FLDMAPMENU_STR02, FMenuCallProc_PokeStatus },
-  { FLDMAPMENU_STR03, FMenuCallProc_Bag },
-  { FLDMAPMENU_STR04, FMenuCallProc_MyTrainerCard },
-  { FLDMAPMENU_STR05, FMenuCallProc_Report },
-  { FLDMAPMENU_STR06, FMenuCallProc_Config },
-  { FLDMAPMENU_STR07, NULL },
+  { NULL },
+  { FMenuCallProc_PokeStatus },
+  { FMenuCallProc_Zukan },
+  { FMenuCallProc_Bag },
+  { FMenuCallProc_MyTrainerCard },
+  { FMenuCallProc_Report },
+  { FMenuCallProc_Config },
 };
 
 //--------------------------------------------------------------
-/// フィールドマップメニューリストテーブル
+/// 子Procデータテーブル
 //--------------------------------------------------------------
-static const FMENU_LISTDATA DATA_FldMapMenuListTbl[] =
+
+static const FMENU_SUBPROC_DATA FldMapMenu_SubProcData[FMENU_APP_MAX] =
 {
-  {
-    MENU_CHARSIZE_X,
-    MENU_CHARSIZE_Y,
-    NELEMS(DATA_FldMapMenuList),
-    DATA_FldMapMenuList
+  { //  FMENU_APP_POKELIST,
+    FS_OVERLAY_ID(pokelist) , 
+    &PokeList_ProcData ,
+    FMenuReturnProc_PokeList 
   },
-};
-
-//メニュー最大数
-#define MENULISTTBL_MAX (NELEMS(DATA_FldMapMenuListTbl))
-
-//--------------------------------------------------------------
-/// メニューヘッダー
-//--------------------------------------------------------------
-static const FLDMENUFUNC_HEADER DATA_FldMapMenuListHeader =
-{
-  1,    //リスト項目数
-  9,    //表示最大項目数
-  0,    //ラベル表示Ｘ座標
-  13,   //項目表示Ｘ座標
-  0,    //カーソル表示Ｘ座標
-  0,    //表示Ｙ座標
-  1,    //表示文字色
-  15,   //表示背景色
-  2,    //表示文字影色
-  0,    //文字間隔Ｘ
-  6,    //文字間隔Ｙ
-  FLDMENUFUNC_SKIP_LRKEY, //ページスキップタイプ
-  12,   //文字サイズX(ドット
-  12,   //文字サイズY(ドット
-  0,    //表示座標X キャラ単位
-  0,    //表示座標Y キャラ単位
-  0,    //表示サイズX キャラ単位
-  0,    //表示サイズY キャラ単位
+  { //  FMENU_APP_ZUKAN,
+    0 , NULL , NULL
+  },
+  { //  FMENU_APP_BAG,
+    FS_OVERLAY_ID(bag) , 
+    &ItemMenuProcData  ,
+    NULL
+  },
+  { //  FMENU_APP_TRAINERCARD,
+    TRCARD_OVERLAY_ID , 
+    &TrCardSysProcData ,
+    NULL 
+  },
+  { //  FMENU_APP_CONFIG,
+    FS_OVERLAY_ID(config_panel) , 
+    &ConfigPanelProcData ,
+    NULL
+  },
+  
+  //孫呼びされるもの
+  { //  FMENU_APP_STATUS,
+    FS_OVERLAY_ID(poke_status) , 
+    &PokeStatus_ProcData ,
+    FMenuReturnProc_PokeStatus
+  },
+  { //  FMENU_APP_TOWNMAP,
+    0 , NULL , NULL
+  },
 };
 
 //======================================================================
@@ -212,7 +245,8 @@ GMEVENT * EVENT_FieldMapMenu(
   mwk->gmEvent = event;
   mwk->fieldWork = fieldWork;
   mwk->heapID = heapID;
-  mwk->befType = FMIT_POKEMON;
+  mwk->state = FMENUSTATE_INIT;
+  mwk->subProcWork = NULL;
   
   return event;
 }
@@ -229,7 +263,7 @@ GMEVENT * EVENT_FieldMapMenu(
 static GMEVENT_RESULT FldMapMenuEvent( GMEVENT *event, int *seq, void *wk )
 {
   FMENU_EVENT_WORK *mwk = wk;
-  switch (*seq) 
+  switch (mwk->state) 
   {
   case FMENUSTATE_INIT:
     if( FIELD_SUBSCREEN_CanChange( FIELDMAP_GetFieldSubscreenWork(mwk->fieldWork) ) == TRUE )
@@ -240,7 +274,7 @@ static GMEVENT_RESULT FldMapMenuEvent( GMEVENT *event, int *seq, void *wk )
       MMDLSYS_PauseMoveProc( fldMdlSys );
       GAMEDATA_SetSubScreenType( gameData , FMIT_POKEMON );
       FIELD_SUBSCREEN_Change(FIELDMAP_GetFieldSubscreenWork(mwk->fieldWork), FIELD_SUBSCREEN_TOPMENU);
-      (*seq) = FMENUSTATE_MAIN;
+      mwk->state = FMENUSTATE_MAIN;
     }
     break;
   case FMENUSTATE_MAIN:
@@ -249,14 +283,14 @@ static GMEVENT_RESULT FldMapMenuEvent( GMEVENT *event, int *seq, void *wk )
       if( action == FIELD_SUBSCREEN_ACTION_TOPMENU_DECIDE )
       {
         //何か項目が決定された
-        (*seq) = FMENUSTATE_DECIDE_ITEM;
+        mwk->state = FMENUSTATE_DECIDE_ITEM;
         FIELD_SUBSCREEN_ResetAction( FIELDMAP_GetFieldSubscreenWork(mwk->fieldWork) );
       }
       else
       if( action == FIELD_SUBSCREEN_ACTION_TOPMENU_EXIT )
       {
         //キャンセル
-        (*seq) = FMENUSTATE_EXIT_MENU;
+        mwk->state = FMENUSTATE_EXIT_MENU;
         FIELD_SUBSCREEN_ResetAction( FIELDMAP_GetFieldSubscreenWork(mwk->fieldWork) );
       }
     }
@@ -266,62 +300,35 @@ static GMEVENT_RESULT FldMapMenuEvent( GMEVENT *event, int *seq, void *wk )
       GAMESYS_WORK *gameSys = GMEVENT_GetGameSysWork( event );
       GAMEDATA *gameData = GAMESYSTEM_GetGameData( gameSys );
       const FIELD_MENU_ITEM_TYPE type = FIELD_SUBSCREEN_GetTopMenuItemNo( FIELDMAP_GetFieldSubscreenWork(mwk->fieldWork) );
-      mwk->befType = type;
       GAMEDATA_SetSubScreenType( gameData , type );
       
-      switch( type )
+      if( FldMapMenu_CallProcList[type] != NULL )
       {
-        case FMIT_POKEMON:
-          mwk->call_proc = FMenuCallProc_PokeStatus;
-          break;
-
-        case FMIT_ZUKAN:
-          mwk->call_proc = FMenuCallProc_Zukan;
-          break;
-
-        case FMIT_ITEMMENU:
-          mwk->call_proc = FMenuCallProc_Bag;
-          break;
-
-        case FMIT_TRAINERCARD:
-          mwk->call_proc = FMenuCallProc_MyTrainerCard;
-          break;
-
-        case FMIT_REPORT:
-          mwk->call_proc = FMenuCallProc_Report;
-          break;
-
-        case FMIT_CONFING:
-          mwk->call_proc = FMenuCallProc_Config;
-          break;
-      }
-      if( mwk->call_proc != NULL ){
-        GF_ASSERT(mwk->sub_proc_parent == NULL);
-        if( mwk->call_proc(mwk) == TRUE ){
-          mwk->call_proc = NULL;
-          (*seq) = FMENUSTATE_WAIT_RETURN;
+        GF_ASSERT(mwk->subProcWork == NULL);
+        if( FldMapMenu_CallProcList[type](mwk) == TRUE )
+        {
           return( GMEVENT_RES_CONTINUE );
         }
       }
       else
       {
-        (*seq) = FMENUSTATE_EXIT_MENU;
+        mwk->state = FMENUSTATE_EXIT_MENU;
       }
      }
     break;
 
   case FMENUSTATE_WAIT_RETURN:
     /* sub event 終了待ち */
-    if(mwk->sub_proc_parent != NULL)
+    if(mwk->subProcWork != NULL)
     {
-      GFL_HEAP_FreeMemory(mwk->sub_proc_parent);
-      mwk->sub_proc_parent = NULL;
+      GFL_HEAP_FreeMemory(mwk->subProcWork);
+      mwk->subProcWork = NULL;
     }
-    (*seq) = FMENUSTATE_RETURN_MENU;
+    mwk->state = FMENUSTATE_RETURN_MENU;
     break;
     
   case FMENUSTATE_RETURN_MENU:
-    (*seq) = FMENUSTATE_MAIN;
+    mwk->state = FMENUSTATE_MAIN;
     break;
   
   case FMENUSTATE_EXIT_MENU:
@@ -332,85 +339,66 @@ static GMEVENT_RESULT FldMapMenuEvent( GMEVENT *event, int *seq, void *wk )
     }
     return( GMEVENT_RES_FINISH );
     break;
+    
+  //以下サブプロック呼び出しのためのフィールド抜け
   
+  case FMENUSTATE_FIELD_FADEOUT:
+		GMEVENT_CallEvent(event, EVENT_FieldFadeOut(mwk->gmSys, mwk->fieldWork, 0));
+    mwk->state = FMENUSTATE_FIELD_CLOSE;
+    break;
+    
+  case FMENUSTATE_FIELD_CLOSE:
+		GMEVENT_CallEvent(event, EVENT_FieldClose(mwk->gmSys, mwk->fieldWork));
+    mwk->state = FMENUSTATE_CALL_SUB_PROC;
+    break;
+    
+  case FMENUSTATE_FIELD_OPEN:
+		GMEVENT_CallEvent(event, EVENT_FieldOpen(mwk->gmSys));
+    mwk->state = FMENUSTATE_FIELD_FADEIN;
+    break;
+    
+  case FMENUSTATE_FIELD_FADEIN:
+		GMEVENT_CallEvent(event, EVENT_FieldFadeIn(mwk->gmSys, mwk->fieldWork, 0));
+    mwk->state = FMENUSTATE_RETURN_MENU;
+    break;
+
+  case FMENUSTATE_CALL_SUB_PROC:
+    if( FldMapMenu_SubProcData[mwk->subProcType].procData == NULL )
+    {
+      GF_ASSERT_MSG( FldMapMenu_SubProcData[mwk->subProcType].procData != NULL , "ProcDataが無い");
+      mwk->state = FMENUSTATE_FIELD_FADEIN;
+      return( GMEVENT_RES_CONTINUE );
+    }
+    GAMESYSTEM_CallProc(mwk->gmSys, 
+                        FldMapMenu_SubProcData[mwk->subProcType].ovId , 
+                        FldMapMenu_SubProcData[mwk->subProcType].procData, 
+                        mwk->subProcWork);
+    mwk->state = FMENUSTATE_CALL_WAIT_SUB;
+    break;
+    
+  case FMENUSTATE_CALL_WAIT_SUB:
+    if( GAMESYSTEM_IsProcExists(mwk->gmSys)) break;
+    
+    if( FldMapMenu_SubProcData[mwk->subProcType].retFunc == NULL ||
+        FldMapMenu_SubProcData[mwk->subProcType].retFunc(mwk) == FALSE )
+    {
+      mwk->state = FMENUSTATE_FIELD_OPEN;
+    }
+    else
+    {
+      mwk->state = FMENUSTATE_CALL_SUB_PROC;
+    }
+    break;
+    
   }
   return( GMEVENT_RES_CONTINUE );
 
-#if 0
-  FMENU_EVENT_WORK *mwk = wk;
-  
-  switch (*seq) {
-  case 0:
-    {
-      FLDMSGBG *msgBG;
-      FLDMENUFUNC_HEADER head;
-      FLDMENUFUNC_LISTDATA *listdata;
-      const FLDMENUFUNC_LIST *menulist; 
-      const FMENU_LISTDATA *fmenu_listdata;
-      
-      msgBG = FIELDMAP_GetFldMsgBG( mwk->fieldWork );
-      mwk->msgData = FLDMSGBG_CreateMSGDATA(
-        msgBG, NARC_message_fldmapmenu_dat );
-      
-      fmenu_listdata = &DATA_FldMapMenuListTbl[mwk->menu_num];
-      menulist = fmenu_listdata->list;
-      
-      listdata = FLDMENUFUNC_CreateMakeListData(
-        menulist, fmenu_listdata->max, mwk->msgData, mwk->heapID );
-      
-      head = DATA_FldMapMenuListHeader;
-      FLDMENUFUNC_InputHeaderListSize( &head, fmenu_listdata->max,
-        23, 1, fmenu_listdata->charsize_x, fmenu_listdata->charsize_y );
-      
-      mwk->menuFunc = FLDMENUFUNC_AddMenu( msgBG, &head, listdata );
-      GFL_MSG_Delete( mwk->msgData );
-    }
-    
-    (*seq)++;
-    break;
-  case 1:
-    {
-      u32 ret;
-      ret = FLDMENUFUNC_ProcMenu( mwk->menuFunc );
-      
-      if( ret == FLDMENUFUNC_NULL ){  //操作無し
-        break;
-      }else if( ret == FLDMENUFUNC_CANCEL ){  //キャンセル
-        (*seq)++;
-      }else{              //決定
-        mwk->call_proc = (FMENU_CALLPROC)ret;
-        (*seq)++;
-      }
-    }
-    break;
-  case 2:
-    {
-      FLDMENUFUNC_DeleteMenu( mwk->menuFunc );
-      
-      if( mwk->call_proc != NULL ){
-        GF_ASSERT(mwk->sub_proc_parent == NULL);
-        if( mwk->call_proc(mwk) == TRUE ){
-          mwk->call_proc = NULL;
-          (*seq)++;
-          return( GMEVENT_RES_CONTINUE );
-        }
-      }
-      
-      return( GMEVENT_RES_FINISH );
-    }
-    break;
-  case 3:
-    /* sub event 終了待ち */
-    if(mwk->sub_proc_parent != NULL){
-      GFL_HEAP_FreeMemory(mwk->sub_proc_parent);
-      mwk->sub_proc_parent = NULL;
-    }
-    (*seq) = 0;
-    break;
-  }
-  return( GMEVENT_RES_CONTINUE );
-#endif
 }
+
+#pragma mark [>MenuCallProc
+//----------------------------------------------------------------------
+//  以下メニュー決定時処理
+//----------------------------------------------------------------------
 
 //======================================================================
 //  フィールドマップメニュー呼び出し
@@ -427,6 +415,7 @@ static BOOL FMenuCallProc_Zukan( FMENU_EVENT_WORK *mwk )
   GMEVENT * subevent = createFMenuMsgWinEvent( mwk->gmSys, mwk->heapID,
     FLDMAPMENU_STR08, FIELDMAP_GetFldMsgBG(mwk->fieldWork) );
   GMEVENT_CallEvent(mwk->gmEvent, subevent);
+  mwk->state = FMENUSTATE_WAIT_RETURN;
   return( TRUE );
 }
 
@@ -439,29 +428,24 @@ static BOOL FMenuCallProc_Zukan( FMENU_EVENT_WORK *mwk )
 //--------------------------------------------------------------
 static BOOL FMenuCallProc_PokeStatus( FMENU_EVENT_WORK *mwk )
 {
-  //GMEVENT * subevent = createFMenuMsgWinEvent(mwk->gmSys, mwk->heapID, FLDMAPMENU_STR09);
-  //GMEVENT_CallEvent(mwk->gmEvent, subevent);
   GMEVENT * newEvent;
-  /*
-  EASY_POKELIST_PARENT *epp;
-  
-  epp = GFL_HEAP_AllocClearMemory(GFL_HEAPID_APP, sizeof(EASY_POKELIST_PARENT));
-  epp->party = GAMEDATA_GetMyPokemon(GAMESYSTEM_GetGameData(mwk->gmSys));
-  mwk->sub_proc_parent = epp;
-  newEvent = EVENT_FieldSubProc(mwk->gmSys, mwk->fieldWork,
-      FS_OVERLAY_ID(pokelist), &EasyPokeListData, epp);
-  */
   
   PLIST_DATA *plistData;
   plistData = GFL_HEAP_AllocClearMemory(HEAPID_PROC, sizeof(PLIST_DATA));
   plistData->pp = GAMEDATA_GetMyPokemon(GAMESYSTEM_GetGameData(mwk->gmSys));
   plistData->mode = PL_MODE_FIELD;
+  plistData->ret_sel = PL_SEL_POS_POKE1;
 
-  mwk->sub_proc_parent = plistData;
+  mwk->subProcWork = plistData;
+/*  
   newEvent = EVENT_FieldSubProc(mwk->gmSys, mwk->fieldWork,
       FS_OVERLAY_ID(pokelist), &PokeList_ProcData, plistData);
     
   GMEVENT_CallEvent(mwk->gmEvent, newEvent);
+*/
+
+  mwk->subProcType = FMENU_APP_POKELIST;
+  mwk->state = FMENUSTATE_FIELD_FADEOUT;
   return( TRUE );
 }
 
@@ -472,7 +456,6 @@ static BOOL FMenuCallProc_PokeStatus( FMENU_EVENT_WORK *mwk )
  * @retval  BOOL  TRUE=イベント切り替え
  */
 //--------------------------------------------------------------
-FS_EXTERN_OVERLAY(bag);
 
 static BOOL FMenuCallProc_Bag( FMENU_EVENT_WORK *mwk )
 {
@@ -500,12 +483,13 @@ static BOOL FMenuCallProc_Bag( FMENU_EVENT_WORK *mwk )
 	epp->icwk.Companion = FALSE;
 	epp->mystatus = GAMEDATA_GetMyStatus(pGameData);
 
-  mwk->sub_proc_parent = epp;
+  mwk->subProcWork = epp;
 
 	newEvent = EVENT_FieldSubProc(mwk->gmSys, mwk->fieldWork, FS_OVERLAY_ID(bag), &ItemMenuProcData, epp);
   epp->event = newEvent;
 
 	GMEVENT_CallEvent(mwk->gmEvent, newEvent);
+  mwk->state = FMENUSTATE_WAIT_RETURN;
 
 	return( TRUE );
 }
@@ -529,6 +513,7 @@ static BOOL FMenuCallProc_MyTrainerCard( FMENU_EVENT_WORK *mwk )
   newEvent = EVENT_FieldSubProc(mwk->gmSys, mwk->fieldWork,
       TRCARD_OVERLAY_ID, &TrCardSysProcData, callParam);
   GMEVENT_CallEvent(mwk->gmEvent, newEvent);
+  mwk->state = FMENUSTATE_WAIT_RETURN;
   return TRUE;
 }
 
@@ -544,6 +529,7 @@ static BOOL FMenuCallProc_Report( FMENU_EVENT_WORK *mwk )
   GMEVENT * subevent = createFMenuReportEvent( mwk->gmSys, mwk->fieldWork, mwk->heapID,
       FIELDMAP_GetFldMsgBG(mwk->fieldWork) );
   GMEVENT_CallEvent(mwk->gmEvent, subevent);
+  mwk->state = FMENUSTATE_WAIT_RETURN;
   return( TRUE );
 }
 
@@ -565,8 +551,167 @@ static BOOL FMenuCallProc_Config( FMENU_EVENT_WORK *mwk )
   newEvent = EVENT_FieldSubProc(mwk->gmSys, mwk->fieldWork,
       FS_OVERLAY_ID(config_panel), &ConfigPanelProcData, config);
   GMEVENT_CallEvent(mwk->gmEvent, newEvent);
+  mwk->state = FMENUSTATE_WAIT_RETURN;
   return TRUE;
 }
+
+#pragma mark [>ReturnProc
+//----------------------------------------------------------------------
+//  以下子Proc後処理
+//----------------------------------------------------------------------
+//--------------------------------------------------------------
+/**
+ * 子Proc後処理 PokeList
+ * @param mwk FMENU_EVENT_WORK
+ * @retval  BOOL  TRUE=別のProcを呼び出す(mwk->subProcTypeに次のprocを設定してください
+ *                FALSE=Fieldに戻る
+ */
+//--------------------------------------------------------------
+static const BOOL FMenuReturnProc_PokeList(FMENU_EVENT_WORK* mwk)
+{
+  PLIST_DATA *plData = mwk->subProcWork;
+  
+  switch( plData->ret_mode )
+  {
+  case PL_RET_NORMAL:      // 通常
+    return FALSE;
+    break;
+    
+  case PL_RET_STATUS:      // メニュー「つよさをみる」
+    {
+      PSTATUS_DATA *psData = GFL_HEAP_AllocMemory( HEAPID_PROC , sizeof(PSTATUS_DATA) );
+      GAMEDATA *gmData = GAMESYSTEM_GetGameData(mwk->gmSys);
+      SAVE_CONTROL_WORK *svWork = GAMEDATA_GetSaveControlWork( gmData );
+      
+      psData->ppd = (void*)plData->pp;
+      psData->cfg = plData->cfg;
+      psData->ribbon = (u8*)SP_RIBBON_SAVE_GetSaveData(svWork);
+
+      psData->ppt = PST_PP_TYPE_POKEPARTY;
+      psData->max = PokeParty_GetPokeCount( plData->pp );
+      psData->mode = PST_MODE_NORMAL;
+      psData->pos = plData->ret_sel;
+      
+      FMenu_SetNextSubProc( mwk ,FMENU_APP_STATUS , psData );
+      return TRUE;
+    }
+    break;
+  
+  default:
+    return FALSE;
+    break;
+    
+/*
+  case PL_RET_NORMAL:      // 通常
+  case PL_RET_STATUS:      // メニュー「つよさをみる」
+  case PL_RET_CHANGE:      // メニュー「いれかえる」
+  case PL_RET_ITEMSET:     // メニュー「もたせる」
+
+  case PL_RET_WAZASET:     // 技選択へ（技マシン）
+  case PL_RET_LVUP_WAZASET:// 技選択へ（不思議なアメ）
+  case PL_RET_MAILSET:     // メール入力へ
+  case PL_RET_MAILREAD:    // メールを読む画面へ
+
+  case PL_RET_ITEMSHINKA:  // 進化画面へ（アイテム進化）
+  case PL_RET_LVUPSHINKA:  // 進化画面へ（レベル進化）
+  
+  case PL_RET_BAG:         // バッグから呼ばれた場合で、バッグへ戻る
+  
+  case PL_RET_IAIGIRI:     // メニュー 技：いあいぎり
+  case PL_RET_SORAWOTOBU:  // メニュー 技：そらをとぶ
+  case PL_RET_NAMINORI:    // メニュー 技：なみのり
+  case PL_RET_KAIRIKI:     // メニュー 技：かいりき
+  case PL_RET_KIRIBARAI:   // メニュー 技：きりばらい
+  case PL_RET_IWAKUDAKI:   // メニュー 技：いわくだき
+  case PL_RET_TAKINOBORI:  // メニュー 技：たきのぼり
+  case PL_RET_ROCKCLIMB:   // メニュー 技：ロッククライム
+
+  case PL_RET_FLASH:       // メニュー 技：フラッシュ
+  case PL_RET_TELEPORT:    // メニュー 技：テレポート
+  case PL_RET_ANAWOHORU:   // メニュー 技：あなをほる
+  case PL_RET_AMAIKAORI:   // メニュー 技：あまいかおり
+  case PL_RET_OSYABERI:    // メニュー 技：おしゃべり
+  case PL_RET_MILKNOMI:    // メニュー 技：ミルクのみ
+  case PL_RET_TAMAGOUMI:   // メニュー 技：タマゴうみ
+*/        
+  }
+  
+  return FALSE;
+}
+
+//--------------------------------------------------------------
+/**
+ * 子Proc後処理 PokeStatus
+ * @param mwk FMENU_EVENT_WORK
+ * @retval  BOOL  TRUE=別のProcを呼び出す(mwk->subProcTypeに次のprocを設定してください
+ *                FALSE=Fieldに戻る
+ */
+//--------------------------------------------------------------
+static const BOOL FMenuReturnProc_PokeStatus(FMENU_EVENT_WORK* mwk)
+{
+  PSTATUS_DATA *psData = mwk->subProcWork;
+  
+  switch( psData->ret_mode )
+  {
+  case PST_RET_DECIDE:
+  case PST_RET_CANCEL:
+    {
+      PLIST_DATA *plData = GFL_HEAP_AllocMemory( HEAPID_PROC , sizeof(PLIST_DATA) );
+      GAMEDATA *gmData = GAMESYSTEM_GetGameData(mwk->gmSys);
+      SAVE_CONTROL_WORK *svWork = GAMEDATA_GetSaveControlWork( gmData );
+      
+      plData->pp = GAMEDATA_GetMyPokemon(gmData);
+      plData->mode = PL_MODE_FIELD;
+      plData->ret_sel = psData->pos;
+
+      FMenu_SetNextSubProc( mwk ,FMENU_APP_POKELIST , plData );
+      return TRUE;
+    }
+    break;
+
+  case PST_RET_EXIT:
+    return FALSE;
+    break;
+  }
+  return FALSE;
+}
+
+
+//--------------------------------------------------------------
+/**
+ * 子Proc後処理 汎用フィールド戻り
+ * @param mwk FMENU_EVENT_WORK
+ * @retval  BOOL  TRUE=別のProcを呼び出す(mwk->subProcTypeに次のprocを設定してください
+ *                FALSE=Fieldに戻る
+ */
+//--------------------------------------------------------------
+static const BOOL FMenuReturnProc_ReturnField(FMENU_EVENT_WORK* mwk)
+{
+  return FALSE;
+}
+
+#pragma mark [>UtilFunc
+//--------------------------------------------------------------
+/**
+  孫Proc呼び出し用。
+  呼ぶと中で前回のワークがFreeされるので注意！！！！！
+ */
+//--------------------------------------------------------------
+static void FMenu_SetNextSubProc(FMENU_EVENT_WORK* mwk, FMENU_APP_TYPE type , void *procWork )
+{
+  if( mwk->subProcWork != NULL )
+  {
+    GFL_HEAP_FreeMemory( mwk->subProcWork );
+  }
+  mwk->subProcWork = procWork;
+  mwk->subProcType = type;
+  
+}
+
+#pragma mark [>event
+//----------------------------------------------------------------------
+//  以下仮用イベント(レポート・未作成Msg
+//----------------------------------------------------------------------
 
 //======================================================================
 //  メッセージウィンドウ表示イベント
