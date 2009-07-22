@@ -102,6 +102,16 @@ static RAIL_LINE_DIST_FUNC* sp_RAIL_LINE_DIST_FUNC[FIELD_RAIL_LOADER_LINEDIST_FU
  *					プロトタイプ宣言
 */
 //-----------------------------------------------------------------------------
+static void SettingClear( RAIL_SETTING* p_setting )
+{
+	GFL_STD_MemClear( p_setting, sizeof(RAIL_SETTING) );
+	p_setting->camera_func_count		= FIELD_RAIL_LOADER_CAMERA_FUNC_MAX;
+	p_setting->linepos_func_count		= FIELD_RAIL_LOADER_LINEPOS_FUNC_MAX;
+	p_setting->line_dist_func_count	= FIELD_RAIL_LOADER_LINEDIST_FUNC_MAX;
+	p_setting->camera_func					= sp_RAIL_CAMERA_FUNC;
+	p_setting->line_pos_func				= sp_RAIL_POS_FUNC;
+	p_setting->line_dist_func				= sp_RAIL_LINE_DIST_FUNC;
+}
 #ifdef PM_DEBUG
 static void PrintPoint( const RAIL_POINT* cp_point )
 {
@@ -161,12 +171,7 @@ FIELD_RAIL_LOADER* FIELD_RAIL_LOADER_Create( u32 heapID )
 	p_loader = GFL_HEAP_AllocClearMemory( heapID, sizeof(FIELD_RAIL_LOADER) );
 
 	// 関数配列の設定
-	p_loader->setting.camera_func_count			= FIELD_RAIL_LOADER_CAMERA_FUNC_MAX;
-	p_loader->setting.linepos_func_count		= FIELD_RAIL_LOADER_LINEPOS_FUNC_MAX;
-	p_loader->setting.line_dist_func_count	= FIELD_RAIL_LOADER_LINEDIST_FUNC_MAX;
-	p_loader->setting.camera_func			= sp_RAIL_CAMERA_FUNC;
-	p_loader->setting.line_pos_func		= sp_RAIL_POS_FUNC;
-	p_loader->setting.line_dist_func	= sp_RAIL_LINE_DIST_FUNC;
+	SettingClear( &p_loader->setting );
 
 	return p_loader;
 }
@@ -287,6 +292,9 @@ void FIELD_RAIL_LOADER_Clear( FIELD_RAIL_LOADER* p_sys )
 		GFL_HEAP_FreeMemory( p_sys->p_work );
 		p_sys->p_work = NULL;
 	}
+	
+	// 関数配列の設定
+	SettingClear( &p_sys->setting );
 }
 
 

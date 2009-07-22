@@ -178,7 +178,7 @@ FLDMAPFUNC_WORK * FLDMAPFUNC_Create(FLDMAPFUNC_SYS * sys, const FLDMAPFUNC_DATA 
 	FLDMAPFUNC_WORK * fwk;
 	for (fwk = sys->array, i = 0; i < sys->max; fwk ++, i++) {
 		if (fwk->tcb == NULL) {
-			fwk->tcb = GFL_TCB_AddTask(sys->drawsys, FLDMAPFUNC_Tcb, fwk, data->pri);
+			fwk->tcb = GFL_TCB_AddTask(sys->mainsys, FLDMAPFUNC_Tcb, fwk, data->pri);
 			fwk->drawtcb = GFL_TCB_AddTask(sys->drawsys, FLDMAPFUNC_DrawTcb, fwk, data->pri);
 			fwk->sys = sys;
 			fwk->data = data;

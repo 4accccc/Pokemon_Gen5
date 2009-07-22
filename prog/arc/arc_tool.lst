@@ -49,6 +49,7 @@
 	ARCID_TEST3D		"test_graphic/test3d.narc"		#
 	ARCID_SAMPLEMAP		"test_graphic/sample_map.narc"	#
 	ARCID_TEST3DP		"test_graphic/test3dp.narc"		#3D表示テスト用データ
+	ARCID_RAIL_EDITOR "test_graphic/rail_editor.narc"   # レールエディター
 	ARCID_SNDSTRM			"snd_strm.narc"	# サウンドストリーミング
 	ARCID_WMI			"wmi.narc"	# 通信アイコン
 	ARCID_LAYOUT		"layout.narc"	# レイアウトエディタから吐き出したもの

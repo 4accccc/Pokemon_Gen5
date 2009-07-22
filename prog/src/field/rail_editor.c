@@ -21,9 +21,14 @@
 #include "gamesystem/game_event.h"
 #include "gamesystem/game_data.h"
 
+#include "arc/arc_def.h"
+#include "arc/test_graphic/rail_editor.naix"
+
 #include "field/fieldmap.h"
 #include "event_fieldmap_control.h"
 #include "field_player_nogrid.h"
+
+#include "fieldmap_func.h"
 
 #include "debug/gf_mcs.h"
 
@@ -65,6 +70,13 @@ enum {
 #define RM_DEF_LEN_MOVE		(8*FX32_ONE)
 #define RM_DEF_CAMERA_LEN	( 0x38D000 )
 #define RM_DEF_CAMERA_PITCH	( 0x800 )
+
+
+//-------------------------------------
+///	レール描画リソース
+//=====================================
+#define RM_DRAW_OBJ_RES_MAX	( FIELD_RAIL_TYPE_MAX )
+#define RM_DRAW_OBJ_MAX	( 128 )
 
 //-----------------------------------------------------------------------------
 /**
@@ -116,7 +128,39 @@ typedef struct {
 	VecFx32				default_target_offset;
 
 	u32	last_control_type;
+
+
+	// レール描画ワーク
+	FLDMAPFUNC_WORK* p_rail_draw;
 } DEBUG_RAIL_EDITOR;
+
+
+
+//-------------------------------------
+///	リソース
+//=====================================
+typedef struct {
+	BOOL use;
+	GFL_G3D_OBJSTATUS trans;
+	u32 rail_type;		// ポイントか、ラインか
+	u32 rail_index;		// テーブルインデックス
+} RE_RAIL_DRAW_OBJ;
+
+//-------------------------------------
+///	レール情報描画処理ワーク
+//=====================================
+typedef struct {
+	// リソース部
+	GFL_G3D_RES* p_mdl[ RM_DRAW_OBJ_RES_MAX ];
+	GFL_G3D_RND* p_rnd[ RM_DRAW_OBJ_RES_MAX ];
+	GFL_G3D_OBJ* p_obj[ RM_DRAW_OBJ_RES_MAX ];
+	
+	// 描画オブジェ部
+	RE_RAIL_DRAW_OBJ draw_obj[ RM_DRAW_OBJ_MAX ];
+	
+	// 制御情報部
+	const DEBUG_RAIL_EDITOR* cp_parent;
+} RE_RAIL_DRAW_WORK;
 
 
 FS_EXTERN_OVERLAY(mcs_lib);
@@ -129,6 +173,27 @@ FS_EXTERN_OVERLAY(mcs_lib);
 
 static GMEVENT_RESULT DEBUG_RailEditorEvent(
     GMEVENT * p_event, int *  p_seq, void * p_work );
+
+// レール描画処理
+static void RE_DRAW_Update(FLDMAPFUNC_WORK* p_funcwk, FIELDMAP_WORK * p_fieldmap, void * p_work);
+static void RE_DRAW_Draw(FLDMAPFUNC_WORK * p_funcwk, FIELDMAP_WORK * p_fieldmap, void * p_work);
+static void RE_DRAW_Create(FLDMAPFUNC_WORK * p_funcwk, FIELDMAP_WORK * p_fieldmap, void * p_work);
+static void RE_DRAW_Delete(FLDMAPFUNC_WORK * p_funcwk, FIELDMAP_WORK * p_fieldmap, void * p_work);
+
+static RE_RAIL_DRAW_OBJ* RE_DRAW_GetClearWork( RE_RAIL_DRAW_WORK* p_wk );
+static void RE_DRAW_SetUpData( RE_RAIL_DRAW_WORK* p_wk, const RAIL_SETTING* cp_setting );
+static void RE_DRAW_DRAWOBJ_Clear( RE_RAIL_DRAW_OBJ* p_drawobj );
+static BOOL RE_DRAW_DRAWOBJ_IsUse( const RE_RAIL_DRAW_OBJ* cp_drawobj );
+static void RE_DRAW_DRAWOBJ_Set( RE_RAIL_DRAW_OBJ* p_drawobj, u32 rail_type, u32 rail_index, const VecFx32* cp_trans, const VecFx32* cp_distance );
+static void RE_DRAW_DRAWOBJ_Draw( RE_RAIL_DRAW_WORK* p_wk, RE_RAIL_DRAW_OBJ* p_drawobj );
+static const FLDMAPFUNC_DATA sc_RE_DRAW_FUNCDATA = 
+{
+	0, sizeof(RE_RAIL_DRAW_WORK),
+	RE_DRAW_Create, 
+	RE_DRAW_Delete, 
+	RE_DRAW_Update, 
+	RE_DRAW_Draw, 
+};
 
 
 // 受信データ、対応関数
@@ -254,6 +319,16 @@ static GMEVENT_RESULT DEBUG_RailEditorEvent( GMEVENT * p_event, int *  p_seq, vo
 
 		// 座標を設定
 		FIELD_PLAYER_GetPos( FIELDMAP_GetFieldPlayer( p_wk->p_fieldmap ), &p_wk->camera_target );
+
+		// 描画タスクを登録
+		p_wk->p_rail_draw = FLDMAPFUNC_Create( FIELDMAP_GetFldmapFuncSys(p_wk->p_fieldmap), &sc_RE_DRAW_FUNCDATA );
+		{
+			RE_RAIL_DRAW_WORK* p_drawwk = FLDMAPFUNC_GetFreeWork( p_wk->p_rail_draw );	
+			
+			p_drawwk->cp_parent = p_wk;
+
+			RE_DRAW_SetUpData( p_drawwk, FIELD_RAIL_LOADER_GetData( FIELDMAP_GetFieldRailLoader( p_wk->p_fieldmap ) ) );
+		}
 		
 		(*p_seq) = RAIL_EDITOR_SEQ_CONNECT;
 		break;
@@ -321,6 +396,9 @@ static GMEVENT_RESULT DEBUG_RailEditorEvent( GMEVENT * p_event, int *  p_seq, vo
 		// バッファのメモリ破棄
 		GFL_HEAP_FreeMemory( p_wk->p_recv );
 		GFL_HEAP_FreeMemory( p_wk->p_tmp_buff );
+
+		// 破棄
+		FLDMAPFUNC_Delete( p_wk->p_rail_draw );
 		return GMEVENT_RES_FINISH;
 
 	default:
@@ -329,6 +407,230 @@ static GMEVENT_RESULT DEBUG_RailEditorEvent( GMEVENT * p_event, int *  p_seq, vo
 	}
 
   return GMEVENT_RES_CONTINUE;
+}
+
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	レール情報描画処理	作成
+ */
+//-----------------------------------------------------------------------------
+static void RE_DRAW_Create(FLDMAPFUNC_WORK * p_funcwk, FIELDMAP_WORK * p_fieldmap, void * p_work)
+{
+	int i;
+	static const u32 sc_res_id[ RM_DRAW_OBJ_RES_MAX ] = 
+	{
+		NARC_rail_editor_rail_editor_point_nsbmd,
+		NARC_rail_editor_rail_editor_line_nsbmd,
+	};
+	RE_RAIL_DRAW_WORK* p_wk = p_work;
+	
+	// 描画リソース読み込み
+	for( i=0; i<RM_DRAW_OBJ_RES_MAX; i++ )
+	{
+		
+		p_wk->p_mdl[i] = GFL_G3D_CreateResourceArc( ARCID_RAIL_EDITOR, sc_res_id[i] );
+		p_wk->p_rnd[i] = GFL_G3D_RENDER_Create( p_wk->p_mdl[i], 0, NULL );
+		p_wk->p_obj[i] = GFL_G3D_OBJECT_Create( p_wk->p_rnd[i], NULL, 0 );
+	}
+
+	// ワークのクリア
+	for( i=0; i<RM_DRAW_OBJ_MAX; i++ )
+	{
+		RE_DRAW_DRAWOBJ_Clear( &p_wk->draw_obj[i] );
+	}
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	レール情報描画処理	破棄
+ */
+//-----------------------------------------------------------------------------
+static void RE_DRAW_Delete(FLDMAPFUNC_WORK * p_funcwk, FIELDMAP_WORK * p_fieldmap, void * p_work)
+{
+	int i;
+	RE_RAIL_DRAW_WORK* p_wk = p_work;
+	
+	// 描画リソース破棄
+	for( i=0; i<RM_DRAW_OBJ_RES_MAX; i++ )
+	{
+		GFL_G3D_OBJECT_Delete( p_wk->p_obj[i] );
+		GFL_G3D_RENDER_Delete( p_wk->p_rnd[i] );
+		GFL_G3D_DeleteResource( p_wk->p_mdl[i] );
+	}
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	レール情報描画処理	アップデート
+ */
+//-----------------------------------------------------------------------------
+static void RE_DRAW_Update(FLDMAPFUNC_WORK* p_funcwk, FIELDMAP_WORK * p_fieldmap, void * p_work)
+{
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	レール情報描画処理	描画
+ */
+//-----------------------------------------------------------------------------
+static void RE_DRAW_Draw(FLDMAPFUNC_WORK * p_funcwk, FIELDMAP_WORK * p_fieldmap, void * p_work)
+{
+	int i;
+	RE_RAIL_DRAW_WORK* p_wk = p_work;
+	// ワークの描画
+	for( i=0; i<RM_DRAW_OBJ_MAX; i++ )
+	{
+		RE_DRAW_DRAWOBJ_Draw( p_wk, &p_wk->draw_obj[i] );
+	}
+}
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	空いているワークを取得する
+ *
+ *	@param	p_wk	ワーク
+ */
+//-----------------------------------------------------------------------------
+static RE_RAIL_DRAW_OBJ* RE_DRAW_GetClearWork( RE_RAIL_DRAW_WORK* p_wk )
+{
+	int i;
+
+	for( i=0; i<RM_DRAW_OBJ_MAX; i++ )
+	{
+		if( RE_DRAW_DRAWOBJ_IsUse( &p_wk->draw_obj[i] ) == FALSE )
+		{
+			return &p_wk->draw_obj[i];
+		}
+	}
+	GF_ASSERT( 0 );
+			
+	return &p_wk->draw_obj[0];
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	データセットアップ
+ *
+ *	@param	p_wk				ワーク
+ *	@param	cp_setting	セッティング
+ */
+//-----------------------------------------------------------------------------
+static void RE_DRAW_SetUpData( RE_RAIL_DRAW_WORK* p_wk, const RAIL_SETTING* cp_setting )
+{
+	int  i;
+	RE_RAIL_DRAW_OBJ* p_drawobj;
+	const RAIL_POINT* cp_point;
+	VecFx32 point_s, point_e;
+	VecFx32 distance = {0,0,0};
+
+	// 全情報クリーン
+	for( i=0; i<RM_DRAW_OBJ_MAX; i++ )
+	{
+		RE_DRAW_DRAWOBJ_Clear( &p_wk->draw_obj[i] );
+	}
+
+	// ポイント
+	for( i=0; i<cp_setting->point_count; i++ )
+	{
+		p_drawobj = RE_DRAW_GetClearWork( p_wk );
+		
+		RE_DRAW_DRAWOBJ_Set( p_drawobj, FIELD_RAIL_TYPE_POINT, i, &cp_setting->point_table[i].pos, &distance );
+	}
+
+	// ライン
+	for( i=0; i<cp_setting->line_count; i++ )
+	{
+		p_drawobj = RE_DRAW_GetClearWork( p_wk );
+
+		cp_point = &cp_setting->point_table[ cp_setting->line_table[i].point_s ];
+		point_s = cp_point->pos;
+		cp_point = &cp_setting->point_table[ cp_setting->line_table[i].point_e ];
+		point_e = cp_point->pos;
+		
+		VEC_Subtract( &point_e, &point_s, &distance );
+		RE_DRAW_DRAWOBJ_Set( p_drawobj, FIELD_RAIL_TYPE_LINE, i, &point_s, &distance );
+	}
+}
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	描画オブジェ　クリア
+ *
+ *	@param	p_drawobj		描画オブジェ
+ */
+//-----------------------------------------------------------------------------
+static void RE_DRAW_DRAWOBJ_Clear( RE_RAIL_DRAW_OBJ* p_drawobj )
+{
+	p_drawobj->use = FALSE;
+	p_drawobj->rail_type = 0;
+	p_drawobj->rail_index = 0;
+
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	USE	フラグのチェック
+ *
+ *	@param	cp_drawobj 
+ */
+//-----------------------------------------------------------------------------
+static BOOL RE_DRAW_DRAWOBJ_IsUse( const RE_RAIL_DRAW_OBJ* cp_drawobj )
+{
+	return cp_drawobj->use;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	描画おぶじぇ	情報設定
+ *
+ *	@param	p_drawobj			描画おぶじぇ
+ *	@param	rail_type			レールタイプ
+ *	@param	rail_index		テーブルインデックス
+ *	@param	cp_trans			転置情報（ラインは始点）
+ *	@param	cp_way				方向と距離
+ */
+//-----------------------------------------------------------------------------
+static void RE_DRAW_DRAWOBJ_Set( RE_RAIL_DRAW_OBJ* p_drawobj, u32 rail_type, u32 rail_index, const VecFx32* cp_trans, const VecFx32* cp_distance )
+{
+	VecFx32 vec_n;
+	
+	GF_ASSERT( rail_type < RM_DRAW_OBJ_RES_MAX );
+	p_drawobj->rail_type	= rail_type;
+	p_drawobj->rail_index = rail_index;
+
+	MTX_Identity33( &p_drawobj->trans.rotate );
+	VEC_Set( &p_drawobj->trans.scale, FX32_ONE, FX32_ONE, FX32_ONE );
+	p_drawobj->trans.trans = *cp_trans;
+
+	if( rail_type == FIELD_RAIL_TYPE_LINE )
+	{
+		GF_ASSERT( cp_distance );
+		VEC_Set( &p_drawobj->trans.scale, FX32_ONE, FX32_ONE, VEC_Mag(cp_distance) );
+		VEC_Normalize( cp_distance, &vec_n );
+		GFL_CALC3D_MTX_GetVecToRotMtxXZ( &vec_n, &p_drawobj->trans.rotate );
+	}
+
+	p_drawobj->use = TRUE;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	描画おぶじぇ　描画処理
+ *
+ *	@param	p_wk				レール描画システム
+ *	@param	p_drawobj		オブジェワーク
+ */
+//-----------------------------------------------------------------------------
+static void RE_DRAW_DRAWOBJ_Draw( RE_RAIL_DRAW_WORK* p_wk, RE_RAIL_DRAW_OBJ* p_drawobj )
+{
+	if( p_drawobj->use )
+	{
+		GFL_G3D_DRAW_DrawObject( p_wk->p_obj[p_drawobj->rail_type], &p_drawobj->trans );
+	}
 }
 
 
@@ -616,6 +918,13 @@ static void RE_Reflect_Rail( DEBUG_RAIL_EDITOR* p_wk )
 
 	// ロケーション設定
 	FIELD_RAIL_MAN_SetLocation( p_rail, &location );
+
+	// 描画反映
+	{
+		RE_RAIL_DRAW_WORK* p_drawwk = FLDMAPFUNC_GetFreeWork( p_wk->p_rail_draw );	
+		
+		RE_DRAW_SetUpData( p_drawwk, FIELD_RAIL_LOADER_GetData( p_railload ) );
+	}
 }
 
 //----------------------------------------------------------------------------
