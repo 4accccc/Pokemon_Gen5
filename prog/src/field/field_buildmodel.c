@@ -29,8 +29,8 @@
 
 typedef EL_SCOREBOARD_TEX ELBOARD_TEX;
 
-#include "../resource/fldmapdata/build_model/buildmodel_outdoor.naix"
-#include "../resource/fldmapdata/build_model/buildmodel_indoor.naix"
+#include "arc/fieldmap/buildmodel_outdoor.naix"
+#include "arc/fieldmap/buildmodel_indoor.naix"
 
 #include "map/dp3format.h"
 //============================================================================================
@@ -688,7 +688,7 @@ static void loadBmInfo(FIELD_BMODEL_MAN * man, u16 file_id)
     BMODEL_ID id = man->entryToIDTable[i];
     GFL_ARC_LoadDataOfsByHandle(info_hdl, file_id, id * DATASIZE, DATASIZE, bminfo);
     anime_id = bminfo->anime_id;
-    TAMADA_Printf("bmodel: entry ID(%d) --> anime_id(%d)\n", id, anime_id);
+    //TAMADA_Printf("bmodel: entry ID(%d) --> anime_id(%d)\n", id, anime_id);
     if (anime_id != 0xffff)
     { 
       GFL_ARC_LoadDataOfsByHandle(info_hdl, FILEID_BMODEL_ANIMEDATA,
@@ -1019,7 +1019,7 @@ static void CreateGlobalObj_forBModel(FIELD_BMODEL_MAN * man)
       }
     }
 
-    TAMADA_Printf("BM:Create Rsc %d (%d)\n", i, gobjTbl->objData[i].highQ_ID);
+    //TAMADA_Printf("BM:Create Rsc %d (%d)\n", i, gobjTbl->objData[i].highQ_ID);
     createGlobalResource( objRes, &objParam );
     FIELD_BMANIME_DATA_entryTexData( man, anmData, objRes->g3DresTex );
   }
