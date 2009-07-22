@@ -352,7 +352,9 @@ end
 			if split_data[ EFFNO_POS ][ 0 ].chr == "#"
         if num_str == nil
 				  num_str = split_data[ EFFNO_POS ][ 1 ].chr + split_data[ EFFNO_POS ][ 2 ].chr + split_data[ EFFNO_POS ][ 3 ].chr
+          write_file = "we_" + num_str + ".s"
         end
+        p num_str
 				seq_table.clear
 				sequence.clear
 				inc_header.clear
