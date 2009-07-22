@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="ibe_mana" host="W00191" date="2009-07-09T15:40:24" source="slide_01.mb"/>
+	<create user="ibe_mana" host="W00191" date="2009-07-22T11:01:01" source="slide_01.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 </head>
 
 <body>
 
-<original_create user="ibe_mana" host="W00191" date="2009-07-09T15:40:24" source="slide_01.mb"/>
+<original_create user="ibe_mana" host="W00191" date="2009-07-22T11:01:01" source="slide_01.mb"/>
 <original_generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 
 <model_info
@@ -77,10 +77,10 @@
 		path="C:/home/wb_data3d/build_model/outdoor/slide_01/tex/tex002.tga"
 	>
 		<bitmap size="32">
-			1255 1111 1111 5521 1255 0000 0000 5521
-			1255 0000 0000 5521 1255 0002 2000 5521
-			1255 2222 2222 5521 1255 3333 3333 5521
-			1255 3333 3333 5521 1255 4444 4444 5521
+			4588 1111 4411 8854 4588 0000 4100 8854
+			4588 0000 4100 8854 4588 3335 1003 8854
+			4588 5555 1055 8854 4588 6666 2556 8854
+			4588 6666 2666 8854 4588 7777 7777 8854
 		</bitmap>
 	</tex_image>
 	<tex_image index="3" name="tex004"
@@ -99,20 +99,28 @@
 	</tex_image>
 	<tex_image index="4" name="tex005"
 		width="16" height="32" original_width="16" original_height="32"
-		format="palette4"
+		format="palette16"
 		color0_mode="transparency"
 		palette_name="tex005_pl"
 		path="C:/home/wb_data3d/build_model/outdoor/slide_01/tex/tex005.tga"
 	>
-		<bitmap size="64">
-			ffff ffff ffff ffff 5555 5555 5555 5555
-			5aaa aaa5 5800 0025 5800 0025 5800 0025
-			5800 0025 5800 0025 5800 0025 5800 0025
-			5800 0025 5800 0025 5800 0025 5800 0025
-			5800 0025 5800 0025 5800 0025 5800 0025
-			5800 0025 5800 0025 5800 0025 5800 0025
-			5800 0025 5800 0025 5800 0025 5800 0025
-			5800 0025 5800 0025 5800 0025 5800 0025
+		<bitmap size="128">
+			5555 5555 5555 5555 5555 5555 5555 5555
+			1111 1111 1111 1111 1111 1111 1111 1111
+			4444 4444 4444 4444 0000 3340 0433 0000
+			0000 3340 0433 0000 0000 3340 0433 0000
+			0000 3340 0433 0000 0000 3340 0433 0000
+			0000 3340 0433 0000 0000 2240 0422 0000
+			0000 1140 0411 0000 0000 1140 0411 0000
+			0000 1140 0411 0000 0000 1140 0411 0000
+			0000 1140 0411 0000 0000 1140 0411 0000
+			0000 1140 0411 0000 0000 1140 0411 0000
+			0000 1140 0411 0000 0000 1140 0411 0000
+			0000 1140 0411 0000 0000 1140 0411 0000
+			0000 1140 0411 0000 0000 1140 0411 0000
+			0000 1140 0411 0000 0000 1140 0411 0000
+			0000 1140 0411 0000 0000 1140 0411 0000
+			0000 1140 0411 0000 0000 1140 0411 0000
 		</bitmap>
 	</tex_image>
 </tex_image_array>
@@ -122,17 +130,18 @@
 		0000 7fff 7fff 7fff 7fff 7fff 7fff 7fff
 	</tex_palette>
 	<tex_palette index="1" name="tex001_pl" color_size="16">
-		06f8 0b7c 0b7d 3def 4560 4580 51a0 5294
-		55c0 5ad6 5ef7 62f7 6620 6b5a 7fff 7fff
+		06f8 0b7c 0b7d 39ce 4560 4580 51a0 5294
+		5a02 5ad6 5ef7 62f7 6620 6b5a 7fff 7fff
 	</tex_palette>
-	<tex_palette index="2" name="tex002_pl" color_size="8">
-		4210 4631 5294 5ad6 5ef7 6739 7fff 7fff
+	<tex_palette index="2" name="tex002_pl" color_size="16">
+		318c 39ce 3def 4210 4631 5294 5ad6 5ef7
+		6739 7fff 7fff 7fff 7fff 7fff 7fff 7fff
 	</tex_palette>
 	<tex_palette index="3" name="tex004_pl" color_size="4">
 		56c6 5ee7 6327 7fff
 	</tex_palette>
-	<tex_palette index="4" name="tex005_pl" color_size="4">
-		7c1f 037c 02b6 4fdf
+	<tex_palette index="4" name="tex005_pl" color_size="8">
+		7c1f 037c 031a 02d8 02b6 4fdf 7fff 7fff
 	</tex_palette>
 </tex_palette_array>
 
