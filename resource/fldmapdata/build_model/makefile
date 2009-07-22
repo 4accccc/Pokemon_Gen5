@@ -43,6 +43,7 @@ WKDIR				= wkdir
 RESDIR		= nsbmdfiles
 SRCDIR		= imdfiles
 INDEXDIR	= indexfiles
+OUTPUT		= output
 
 XLS_DATA_OUTDOOR	= $(TARGET_OUTDOOR).xls
 TXT_DATA_OUTDOOR	= $(WKDIR)/$(XLS_DATA_OUTDOOR:.xls=.txt)
@@ -104,25 +105,25 @@ $(TARGETDIR)/$(NARC_BIN_DATA): $(NARC_BIN_DATA)
 	@$(COPY)	$(NARC_BIN_DATA) $(TARGETDIR)
 	@$(COPY) $(NAIX_BIN_DATA) $(TARGETDIR)
 
-$(TARGETDIR)/$(NARC_OUTDOOR):	$(NARC_OUTDOOR)
-	@echo $(TARGETDIR)に$(NARC_OUTDOOR)をコピー
-	@$(COPY)	$(NARC_OUTDOOR) $(TARGETDIR)
-	@$(COPY) $(NAIX_OUTDOOR) $(TARGETDIR)
+$(TARGETDIR)/$(NARC_OUTDOOR):	$(OUTPUT)/$(NARC_OUTDOOR)
+	@echo $(TARGETDIR)に$(OUTPUT)/$(NARC_OUTDOOR)をコピー
+	@$(COPY)	$(OUTPUT)/$(NARC_OUTDOOR) $(TARGETDIR)
+	@$(COPY) $(OUTPUT)/$(NAIX_OUTDOOR) $(TARGETDIR)
 
-$(TARGETDIR)/$(NARC_INDOOR):	$(NARC_INDOOR)
-	@echo $(TARGETDIR)に$(NARC_INDOOR)をコピー
-	@$(COPY)	$(NARC_INDOOR) $(TARGETDIR)
-	@$(COPY) $(NAIX_INDOOR) $(TARGETDIR)
+$(TARGETDIR)/$(NARC_INDOOR):	$(OUTPUT)/$(NARC_INDOOR)
+	@echo $(TARGETDIR)に$(OUTPUT)/$(NARC_INDOOR)をコピー
+	@$(COPY)	$(OUTPUT)/$(NARC_INDOOR) $(TARGETDIR)
+	@$(COPY) $(OUTPUT)/$(NAIX_INDOOR) $(TARGETDIR)
 
-$(NARC_OUTDOOR):	$(DEP_OUTDOOR)
+$(OUTPUT)/$(NARC_OUTDOOR):	$(DEP_OUTDOOR)
 	@echo $@をアーカイブしています
-	@nnsarc -c -l -n -i $(NARC_OUTDOOR) -S $(ARC_LIST_OUTDOOR) > $(WKDIR)/arc_result.txt
-	@$(NAIXCUT) $(NAIX_OUTDOOR)
+	@nnsarc -c -l -n -i $(OUTPUT)/$(NARC_OUTDOOR) -S $(ARC_LIST_OUTDOOR) > $(WKDIR)/arc_result.txt
+	@$(NAIXCUT) $(OUTPUT)/$(NAIX_OUTDOOR)
 
-$(NARC_INDOOR):	$(DEP_INDOOR)
+$(OUTPUT)/$(NARC_INDOOR):	$(DEP_INDOOR)
 	@echo $@をアーカイブしています
-	@nnsarc -c -l -n -i $(NARC_INDOOR) -S $(ARC_LIST_INDOOR) > $(WKDIR)/arc_result.txt
-	@$(NAIXCUT) $(NAIX_INDOOR)
+	@nnsarc -c -l -n -i $(OUTPUT)/$(NARC_INDOOR) -S $(ARC_LIST_INDOOR) > $(WKDIR)/arc_result.txt
+	@$(NAIXCUT) $(OUTPUT)/$(NAIX_INDOOR)
 
 $(TARGETDIR)/$(INDEX_OUTDOOR):	$(INDEXDIR)/$(INDEX_OUTDOOR)
 	@echo $(TARGETDIR)に$<をコピー
@@ -189,12 +190,12 @@ endif		#コンバート対象者のみ動作、ここまで
 #	make cleanルール
 #------------------------------------------------------------------------------
 clean:
-	@echo cleanup build_model directory
 	@$(MAKE_SUBDIR)
+	@echo cleanup build_model directory
 	@-rm -f $(TARGETDIR)/$(NARC_OUTDOOR) $(TARGETDIR)/$(NAIX_OUTDOOR)
 	@-rm -f $(TARGETDIR)/$(NARC_INDOOR) $(TARGETDIR)/$(NAIX_INDOOR)
-	@-rm -f $(NARC_OUTDOOR) $(NAIX_OUTDOOR)
-	@-rm -f $(NARC_INDOOR) $(NAIX_INDOOR)
+	@-rm -f $(OUTPUT)/$(NARC_OUTDOOR) $(OUTPUT)/$(NAIX_OUTDOOR)
+	@-rm -f $(OUTPUT)/$(NARC_INDOOR) $(OUTPUT)/$(NAIX_INDOOR)
 	@-rm -f $(TARGETDIR)/$(INDEX_OUTDOOR) $(TARGETDIR)/$(INDEX_INDOOR)
 	@-rm -f $(TARGETDIR)/$(NARC_BIN_DATA)
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、中間ファイル削除
