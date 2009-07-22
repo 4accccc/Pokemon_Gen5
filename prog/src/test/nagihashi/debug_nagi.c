@@ -151,6 +151,7 @@ typedef struct
 	IRC_COMPATIBLE_PARAM	compatible_param;
 	IRC_AURA_PARAM				aura_param;
 	IRC_RHYTHM_PARAM			rhythm_param;
+	TOWNMAP_PARAM					townmap_param;
 } DEBUG_NAGI_MAIN_WORK;
 
 //-------------------------------------
@@ -214,6 +215,7 @@ static void LISTDATA_ChangeProcRankingDebug( DEBUG_NAGI_MAIN_WORK *p_wk );
 static void LISTDATA_AddRankData( DEBUG_NAGI_MAIN_WORK *p_wk );
 static void LISTDATA_FullRankData( DEBUG_NAGI_MAIN_WORK *p_wk );
 static void LISTDATA_ChangeProcTownMap( DEBUG_NAGI_MAIN_WORK *p_wk );
+static void LISTDATA_ChangeProcSkyJump( DEBUG_NAGI_MAIN_WORK *p_wk );
 static void LISTDATA_Return( DEBUG_NAGI_MAIN_WORK *p_wk );
 static void LISTDATA_NextListHome( DEBUG_NAGI_MAIN_WORK *p_wk );
 static void LISTDATA_NextListPage1( DEBUG_NAGI_MAIN_WORK *p_wk );
@@ -284,6 +286,7 @@ enum
 	LISTDATA_SEQ_RANKDATA_ONE,
 	LISTDATA_SEQ_RANKDATA_FULL,
 	LISTDATA_SEQ_PROC_TOWNMAP,
+	LISTDATA_SEQ_PROC_SKYJUMP,
 	LISTDATA_SEQ_NEXT_HOME,
 	LISTDATA_SEQ_NEXT_PAGE1,
 	LISTDATA_SEQ_MAX,
@@ -301,6 +304,7 @@ static const LISTDATA_FUNCTION	sc_list_funciton[]	=
 	LISTDATA_AddRankData,
 	LISTDATA_FullRankData,
 	LISTDATA_ChangeProcTownMap,
+	LISTDATA_ChangeProcSkyJump,
 	LISTDATA_NextListHome,
 	LISTDATA_NextListPage1,
 };
@@ -350,6 +354,9 @@ static const LIST_SETUP_TBL sc_list_data_home[]	=
 	},
 	{	
 		L"タウンマップ", LISTDATA_SEQ_PROC_TOWNMAP,
+	},
+	{	
+		L"そらをとぶ", LISTDATA_SEQ_PROC_SKYJUMP,
 	},
 	{	
 		L"もどる", LISTDATA_SEQ_RETURN
@@ -867,7 +874,17 @@ static void LISTDATA_FullRankData( DEBUG_NAGI_MAIN_WORK *p_wk )
 FS_EXTERN_OVERLAY(townmap);
 static void LISTDATA_ChangeProcTownMap( DEBUG_NAGI_MAIN_WORK *p_wk )
 {	
-	DEBUG_NAGI_COMMAND_ChangeProc( p_wk, FS_OVERLAY_ID(townmap), &TownMap_ProcData, NULL );
+	GFL_STD_MemClear( &p_wk->townmap_param, sizeof(TOWNMAP_PARAM) );
+	p_wk->townmap_param.mode			= TOWNMAP_MODE_MAP;
+	p_wk->townmap_param.is_debug	= TRUE;
+	DEBUG_NAGI_COMMAND_ChangeProc( p_wk, FS_OVERLAY_ID(townmap), &TownMap_ProcData, &p_wk->townmap_param );
+}
+static void LISTDATA_ChangeProcSkyJump( DEBUG_NAGI_MAIN_WORK *p_wk )
+{	
+	GFL_STD_MemClear( &p_wk->townmap_param, sizeof(TOWNMAP_PARAM) );
+	p_wk->townmap_param.mode			= TOWNMAP_MODE_SKY;
+	p_wk->townmap_param.is_debug	= TRUE;
+	DEBUG_NAGI_COMMAND_ChangeProc( p_wk, FS_OVERLAY_ID(townmap), &TownMap_ProcData, &p_wk->townmap_param );
 }
 //----------------------------------------------------------------------------
 /**

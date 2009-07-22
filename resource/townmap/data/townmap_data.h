@@ -5,7 +5,7 @@
 #define TOWNMAP_DATA_MAX	(10)
 
 //データエラー値
-#define TOWNMAP_DATA_ERROE	(65535)
+#define TOWNMAP_DATA_ERROR	(65535)
 
 //場所のタイプ
 #define TOWNMAP_PLACETYPE_TOWN	(0)

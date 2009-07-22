@@ -27,7 +27,7 @@
 //	Module
 #include "print/gf_font.h"
 #include "print/printsys.h"
-
+#include "field/zonedata.h"
 #include "townmap_data_sys.h"
 
 //mine
@@ -140,8 +140,8 @@ enum
 //制限
 #define CURSOR_MOVE_LIMIT_TOP			(0+8)
 #define CURSOR_MOVE_LIMIT_BOTTOM	(192)
-#define CURSOR_MOVE_LIMIT_LEFT		(0+8)
-#define CURSOR_MOVE_LIMIT_RIGHT		(256)
+#define CURSOR_MOVE_LIMIT_LEFT		(0)
+#define CURSOR_MOVE_LIMIT_RIGHT		(256-8)
 //-------------------------------------
 ///		INFO
 //=====================================
@@ -152,15 +152,17 @@ enum
 #define INFO_BMPWIN_H	(24)
 
 //文字位置
+#define INFO_STR_PLACE_CENTERING	//OFFにするとINFO_STR_PLACE_Xの定義を使い座標指定します
 #define INFO_STR_PLACE_X	(16)
+
 #define INFO_STR_PLACE_Y	(48)
-#define INFO_STR_GUIDE_X	(16)
+#define INFO_STR_GUIDE_X	(32)
 #define INFO_STR_GUIDE_Y	(80)
-#define INFO_STR_PLACE1_X	(8)
+#define INFO_STR_PLACE1_X	(32)
 #define INFO_STR_PLACE1_Y	(128)
-#define INFO_STR_PLACE2_X	(8)
+#define INFO_STR_PLACE2_X	(32)
 #define INFO_STR_PLACE2_Y	(144)
-#define INFO_STR_PLACE3_X	(8)
+#define INFO_STR_PLACE3_X	(32)
 #define INFO_STR_PLACE3_Y	(160)
 #define INFO_STR_PLACE4_X	(144)
 #define INFO_STR_PLACE4_Y	(128)
@@ -168,6 +170,17 @@ enum
 #define INFO_STR_PLACE5_Y	(144)
 #define INFO_STR_PLACE6_X	(144)
 #define INFO_STR_PLACE6_Y	(160)
+
+//-------------------------------------
+///	MSGWND
+//=====================================
+#define MSGWND_BMPWIN_SKY_X	(0)
+#define MSGWND_BMPWIN_SKY_Y	(21)
+#define MSGWND_BMPWIN_SKY_W	(24)
+#define MSGWND_BMPWIN_SKY_H	(3)
+
+#define MSGWND_STR_SKY_X	(0)
+#define MSGWND_STR_SKY_Y	(0)
 
 //=============================================================================
 /**
@@ -227,10 +240,19 @@ typedef struct
 	GFL_BMPWIN	*p_bmpwin;
 	STRBUF			*p_strbuf;			//汎用バッファ
 	GFL_FONT		*p_font;				//受け取る
-	GFL_MSGDATA	*p_place_msg;		//受け取り
-	GFL_MSGDATA	*p_guide_msg;		//受け取り
+	const GFL_MSGDATA	*cp_place_msg;		//受け取り
+	const GFL_MSGDATA	*cp_guide_msg;		//受け取り
 } INFO_WORK;
-
+//-------------------------------------
+///	メッセージ表示ウィンドウ
+//=====================================
+typedef struct
+{
+	GFL_BMPWIN*				p_bmpwin;
+	STRBUF*						p_strbuf;
+	GFL_FONT*				  p_font;
+  const GFL_MSGDATA*			cp_msg;
+} MSGWND_WORK;
 //-------------------------------------
 ///	Module操作
 //=====================================
@@ -242,7 +264,7 @@ typedef struct
 ///	シーケンス管理
 //=====================================
 typedef struct _SEQ_WORK SEQ_WORK;
-typedef void (*SEQ_FUNCTION)( SEQ_WORK *p_wk, int *p_seq, void *p_param );
+typedef void (*SEQ_FUNCTION)( SEQ_WORK *p_wk, int *p_seq, void *p_param_adrs );
 struct _SEQ_WORK
 {
 	SEQ_FUNCTION	seq_function;
@@ -279,11 +301,16 @@ typedef struct
 	//上画面情報
 	INFO_WORK			info;
 
+	//空を飛ぶ？のメッセージ面
+	MSGWND_WORK		msgwnd;
+
 	//共通利用システム
 	GFL_FONT			*p_font;
 	GFL_MSGDATA		*p_place_msg;
 	GFL_MSGDATA		*p_guide_msg;
 
+	//引数
+	TOWNMAP_PARAM	*p_param;
 
 	//その他
 	const PLACE_DATA *cp_pre_data;
@@ -370,11 +397,16 @@ static void CONTROL_Exit( CONTROL_WORK *p_wk );
 //-------------------------------------
 ///	INFO
 //=====================================
-static void INFO_Init( INFO_WORK *p_wk, u8 frm, GFL_FONT *p_font, GFL_MSGDATA *p_place_msg, GFL_MSGDATA *p_guide_msg, HEAPID heapID );
+static void INFO_Init( INFO_WORK *p_wk, u8 frm, GFL_FONT *p_font, const GFL_MSGDATA *cp_place_msg, const GFL_MSGDATA *cp_guide_msg, HEAPID heapID );
 static void INFO_Exit( INFO_WORK *p_wk );
 static void INFO_Main( INFO_WORK *p_wk );
 static void INFO_Update( INFO_WORK *p_wk, const PLACE_DATA *cp_data );
-
+//-------------------------------------
+///	MSGWND_WORK
+//=====================================
+static void MSGWND_Init( MSGWND_WORK* p_wk, u8 bgframe, GFL_FONT *p_font, const GFL_MSGDATA *cp_msg, u8 x, u8 y, u8 w, u8 h, HEAPID heapID );
+static void MSGWND_Exit( MSGWND_WORK* p_wk );
+static void MSGWND_Print( MSGWND_WORK* p_wk, u32 strID, u16 x, u16 y );
 //=============================================================================
 /**
  *						DATA
@@ -414,7 +446,7 @@ const GFL_PROC_DATA	TownMap_ProcData	=
 static GFL_PROC_RESULT TOWNMAP_PROC_Init( GFL_PROC *p_proc, int *p_seq, void *p_param_adrs, void *p_wk_adrs )
 {	
 	TOWNMAP_WORK	*p_wk;
-	TOWNMAP_PARAM	*p_rank_param;
+	TOWNMAP_PARAM	*p_param	= p_param_adrs;
 	u16	data_len;
 
 	//ヒープ作成
@@ -423,6 +455,7 @@ static GFL_PROC_RESULT TOWNMAP_PROC_Init( GFL_PROC *p_proc, int *p_seq, void *p_
 	//ワーク作成
 	p_wk	= GFL_PROC_AllocWork( p_proc, sizeof(TOWNMAP_WORK), HEAPID_TOWNMAP );
 	GFL_STD_MemClear( p_wk, sizeof(TOWNMAP_WORK) );
+	p_wk->p_param	= p_param;
 
 	//共通システム作成---------------------
 	//フォント
@@ -430,7 +463,7 @@ static GFL_PROC_RESULT TOWNMAP_PROC_Init( GFL_PROC *p_proc, int *p_seq, void *p_
     NARC_font_large_nftr, GFL_FONT_LOADTYPE_FILE, FALSE, HEAPID_TOWNMAP );
 
 	//地名メッセージデータ
-	p_wk->p_guide_msg = GFL_MSG_Create(
+	p_wk->p_place_msg = GFL_MSG_Create(
 		GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_place_name_dat, HEAPID_TOWNMAP );
 	//ガイドメッセージデータ
 	p_wk->p_guide_msg = GFL_MSG_Create(
@@ -444,10 +477,37 @@ static GFL_PROC_RESULT TOWNMAP_PROC_Init( GFL_PROC *p_proc, int *p_seq, void *p_
 	SEQ_Init( &p_wk->seq, p_wk, SEQFUNC_FadeOut );
 
 	//アプリケーションバー作成
-	APPBAR_Init( &p_wk->appbar, APPBAR_OPTION_MASK_TOWN,
-			TOWNMAP_GRAPHIC_GetUnit( p_wk->p_grh, TOWNMAP_OBJ_CLUNIT_DEFAULT ),
-			TOWNMAP_GRAPHIC_GetFrame( p_wk->p_grh, TOWNMAP_BG_FRAME_BAR_M),
-			TOWNMAP_BG_PAL_M_15, TOWNMAP_OBJ_PAL_M_12, HEAPID_TOWNMAP );
+	
+	{	
+		u32 appbar_mode;
+
+		if( p_wk->p_param->mode == TOWNMAP_MODE_SKY )
+		{	
+			appbar_mode	= APPBAR_OPTION_MASK_SKY;
+
+			//空を飛ぶモードならばメッセージ面追加
+			MSGWND_Init( &p_wk->msgwnd,
+					TOWNMAP_GRAPHIC_GetFrame( p_wk->p_grh, TOWNMAP_BG_FRAME_FONT_M),
+					p_wk->p_font,
+					p_wk->p_guide_msg,
+					MSGWND_BMPWIN_SKY_X,
+					MSGWND_BMPWIN_SKY_Y,
+					MSGWND_BMPWIN_SKY_W,
+					MSGWND_BMPWIN_SKY_H,
+					HEAPID_TOWNMAP
+					);
+			MSGWND_Print( &p_wk->msgwnd, 0, MSGWND_STR_SKY_X, MSGWND_STR_SKY_Y );
+		}
+		else
+		{	
+			appbar_mode	= APPBAR_OPTION_MASK_TOWN;
+		}
+
+		APPBAR_Init( &p_wk->appbar,appbar_mode,
+				TOWNMAP_GRAPHIC_GetUnit( p_wk->p_grh, TOWNMAP_OBJ_CLUNIT_DEFAULT ),
+				TOWNMAP_GRAPHIC_GetFrame( p_wk->p_grh, TOWNMAP_BG_FRAME_BAR_M),
+				TOWNMAP_BG_PAL_M_15, TOWNMAP_OBJ_PAL_M_12, HEAPID_TOWNMAP );
+	}
 
 	//カーソル作成
 	CURSOR_Init( &p_wk->cursor, TOWNMAP_GRAPHIC_GetClwk( p_wk->p_grh, TOWNMAP_OBJ_CLWK_CURSOR ),
@@ -502,6 +562,11 @@ static GFL_PROC_RESULT TOWNMAP_PROC_Exit( GFL_PROC *p_proc, int *p_seq, void *p_
 	//カーソル破棄
 	CURSOR_Exit( &p_wk->cursor );
 
+	//空を飛ぶモードならばメッセージ面破棄
+	if( p_wk->p_param->mode == TOWNMAP_MODE_SKY )
+	{		
+		MSGWND_Exit( &p_wk->msgwnd );
+	}
 	//アプリケーションバー破棄
 	APPBAR_Exit( &p_wk->appbar );
 
@@ -760,10 +825,10 @@ static void SEQFUNC_Main( SEQ_WORK *p_seqwk, int *p_seq, void *p_param_adrs )
 	switch( APPBAR_GetTrg( &p_wk->appbar ) )
 	{	
 	case APPBAR_SELECT_CLOSE:
-		SEQ_SetNext( &p_wk->seq, SEQFUNC_FadeIn );
+		SEQ_SetNext( p_seqwk, SEQFUNC_FadeIn );
 		break;
 	case APPBAR_SELECT_RETURN:
-		SEQ_SetNext( &p_wk->seq, SEQFUNC_FadeIn );
+		SEQ_SetNext( p_seqwk, SEQFUNC_FadeIn );
 		break;
 	}
 
@@ -771,11 +836,20 @@ static void SEQFUNC_Main( SEQ_WORK *p_seqwk, int *p_seq, void *p_param_adrs )
 	{	
 		const PLACE_DATA *cp_data;
 		cp_data	= PLACE_Hit( &p_wk->place, &p_wk->cursor );
-		if( cp_data != p_wk->cp_pre_data )
+		if( cp_data != p_wk->cp_pre_data && cp_data != NULL )
 		{	
 			INFO_Update( &p_wk->info, cp_data );
 		}
 		p_wk->cp_pre_data	= cp_data;
+		//仮
+		if( cp_data != NULL && GFL_UI_KEY_GetTrg() & PAD_BUTTON_A )
+		{	
+			p_wk->p_param->select	= TOWNMAP_SELECT_SKY;
+			p_wk->p_param->zoneID	= PLACEDATA_GetParam( cp_data, TOWNMAP_DATA_PARAM_ZONE_ID );
+			p_wk->p_param->grid.x	= PLACEDATA_GetParam( cp_data, TOWNMAP_DATA_PARAM_WARP_X );
+			p_wk->p_param->grid.y	= PLACEDATA_GetParam( cp_data, TOWNMAP_DATA_PARAM_WARP_Y );
+			SEQ_SetNext( p_seqwk, SEQFUNC_FadeIn );
+		}
 	}
 
 	APPBAR_Main( &p_wk->appbar );
@@ -1814,13 +1888,13 @@ static void MAP_GetWldPos( const MAP_WORK *cp_wk, GFL_POINT *p_pos )
  *
  */
 //-----------------------------------------------------------------------------
-static void INFO_Init( INFO_WORK *p_wk, u8 frm, GFL_FONT *p_font, GFL_MSGDATA *p_place_msg, GFL_MSGDATA *p_guide_msg, HEAPID heapID )
+static void INFO_Init( INFO_WORK *p_wk, u8 frm, GFL_FONT *p_font, const GFL_MSGDATA *cp_place_msg, const GFL_MSGDATA *cp_guide_msg, HEAPID heapID )
 {	
 	//クリア
 	GFL_STD_MemClear( p_wk, sizeof(INFO_WORK) );
 	p_wk->p_font			= p_font;
-	p_wk->p_place_msg	= p_place_msg;
-	p_wk->p_guide_msg	= p_guide_msg;
+	p_wk->cp_place_msg	= cp_place_msg;
+	p_wk->cp_guide_msg	= cp_guide_msg;
 
 	//文字面作成
 	p_wk->p_bmpwin	= GFL_BMPWIN_Create( frm, INFO_BMPWIN_X, INFO_BMPWIN_Y, INFO_BMPWIN_W, INFO_BMPWIN_H,
@@ -1874,39 +1948,145 @@ static void INFO_Update( INFO_WORK *p_wk, const PLACE_DATA *cp_data )
 	GFL_BMP_Clear( p_bmp, 0 );
 
 	if( cp_data )
-	{
+	{	
+		u16 msgID;
+		u16 zoneID;
+
 		//地名
+		zoneID	= PLACEDATA_GetParam( cp_data, TOWNMAP_DATA_PARAM_ZONE_ID );
+		GF_ASSERT( zoneID != TOWNMAP_DATA_ERROR );
+		GFL_MSG_GetString( p_wk->cp_place_msg, ZONEDATA_GetPlaceNameID( zoneID ), p_wk->p_strbuf );
+#ifdef INFO_STR_PLACE_CENTERING
+		{	
+			s16 x	= GFL_BMPWIN_GetSizeX( p_wk->p_bmpwin )*4;
+			x	-= PRINTSYS_GetStrWidth( p_wk->p_strbuf, p_wk->p_font, 0 )/2;
+			PRINTSYS_Print( p_bmp, x, INFO_STR_PLACE_Y, p_wk->p_strbuf, p_wk->p_font );	
+		}
+#else
+			PRINTSYS_Print( p_bmp, INFO_STR_PLACE_X, INFO_STR_PLACE_Y, p_wk->p_strbuf, p_wk->p_font );	
+#endif
 
 		//GUIDE
-		GFL_MSG_GetString( p_wk->p_guide_msg, 
-				PLACEDATA_GetParam( cp_data, TOWNMAP_DATA_PARAM_GUIDE_MSGID), p_wk->p_strbuf );
-		PRINTSYS_Print( p_bmp, INFO_STR_GUIDE_X, INFO_STR_GUIDE_Y, p_wk->p_strbuf, p_wk->p_font );
+		msgID	= PLACEDATA_GetParam( cp_data, TOWNMAP_DATA_PARAM_GUIDE_MSGID);
+		if( msgID != TOWNMAP_DATA_ERROR )
+		{	
+			GFL_MSG_GetString( p_wk->cp_guide_msg, msgID, p_wk->p_strbuf );
+			PRINTSYS_Print( p_bmp, INFO_STR_GUIDE_X, INFO_STR_GUIDE_Y, p_wk->p_strbuf, p_wk->p_font );
+		}
 
 		//PLACE1
-		GFL_MSG_GetString( p_wk->p_guide_msg, 
-				PLACEDATA_GetParam( cp_data, TOWNMAP_DATA_PARAM_PLACE1_MSGID), p_wk->p_strbuf );
-		PRINTSYS_Print( p_bmp, INFO_STR_PLACE1_X, INFO_STR_PLACE1_Y, p_wk->p_strbuf, p_wk->p_font );
+		msgID = PLACEDATA_GetParam( cp_data, TOWNMAP_DATA_PARAM_PLACE1_MSGID);
+		if( msgID != TOWNMAP_DATA_ERROR )
+		{	
+			GFL_MSG_GetString( p_wk->cp_guide_msg, msgID, p_wk->p_strbuf );
+			PRINTSYS_Print( p_bmp, INFO_STR_PLACE1_X, INFO_STR_PLACE1_Y, p_wk->p_strbuf, p_wk->p_font );
+		}
+
 		//PLACE2
-		GFL_MSG_GetString( p_wk->p_guide_msg, 
-				PLACEDATA_GetParam( cp_data, TOWNMAP_DATA_PARAM_PLACE2_MSGID), p_wk->p_strbuf );
-		PRINTSYS_Print( p_bmp, INFO_STR_PLACE2_X, INFO_STR_PLACE2_Y, p_wk->p_strbuf, p_wk->p_font );
+		msgID = PLACEDATA_GetParam( cp_data, TOWNMAP_DATA_PARAM_PLACE2_MSGID);
+		if( msgID != TOWNMAP_DATA_ERROR )
+		{	
+			GFL_MSG_GetString( p_wk->cp_guide_msg, msgID, p_wk->p_strbuf );
+			PRINTSYS_Print( p_bmp, INFO_STR_PLACE2_X, INFO_STR_PLACE2_Y, p_wk->p_strbuf, p_wk->p_font );
+		}
 		//PLACE3
-		GFL_MSG_GetString( p_wk->p_guide_msg, 
-				PLACEDATA_GetParam( cp_data, TOWNMAP_DATA_PARAM_PLACE3_MSGID), p_wk->p_strbuf );
-		PRINTSYS_Print( p_bmp, INFO_STR_PLACE3_X, INFO_STR_PLACE3_Y, p_wk->p_strbuf, p_wk->p_font );
+		msgID = PLACEDATA_GetParam( cp_data, TOWNMAP_DATA_PARAM_PLACE3_MSGID);
+		if( msgID != TOWNMAP_DATA_ERROR )
+		{	
+			GFL_MSG_GetString( p_wk->cp_guide_msg, msgID, p_wk->p_strbuf );
+			PRINTSYS_Print( p_bmp, INFO_STR_PLACE3_X, INFO_STR_PLACE3_Y, p_wk->p_strbuf, p_wk->p_font );
+		}
 		//PLACE4
-		GFL_MSG_GetString( p_wk->p_guide_msg, 
-				PLACEDATA_GetParam( cp_data, TOWNMAP_DATA_PARAM_PLACE4_MSGID), p_wk->p_strbuf );
-		PRINTSYS_Print( p_bmp, INFO_STR_PLACE4_X, INFO_STR_PLACE4_Y, p_wk->p_strbuf, p_wk->p_font );
+		msgID = PLACEDATA_GetParam( cp_data, TOWNMAP_DATA_PARAM_PLACE4_MSGID);
+		if( msgID != TOWNMAP_DATA_ERROR )
+		{	
+			GFL_MSG_GetString( p_wk->cp_guide_msg, msgID, p_wk->p_strbuf );
+			PRINTSYS_Print( p_bmp, INFO_STR_PLACE4_X, INFO_STR_PLACE4_Y, p_wk->p_strbuf, p_wk->p_font );
+		}
 		//PLACE5
-		GFL_MSG_GetString( p_wk->p_guide_msg, 
-				PLACEDATA_GetParam( cp_data, TOWNMAP_DATA_PARAM_PLACE5_MSGID), p_wk->p_strbuf );
-		PRINTSYS_Print( p_bmp, INFO_STR_PLACE5_X, INFO_STR_PLACE5_Y, p_wk->p_strbuf, p_wk->p_font );
+		msgID = PLACEDATA_GetParam( cp_data, TOWNMAP_DATA_PARAM_PLACE5_MSGID);
+		if( msgID != TOWNMAP_DATA_ERROR )
+		{	
+			GFL_MSG_GetString( p_wk->cp_guide_msg, msgID, p_wk->p_strbuf );
+			PRINTSYS_Print( p_bmp, INFO_STR_PLACE5_X, INFO_STR_PLACE5_Y, p_wk->p_strbuf, p_wk->p_font );
+		}
 		//PLACE6
-		GFL_MSG_GetString( p_wk->p_guide_msg, 
-				PLACEDATA_GetParam( cp_data, TOWNMAP_DATA_PARAM_PLACE6_MSGID), p_wk->p_strbuf );
-		PRINTSYS_Print( p_bmp, INFO_STR_PLACE6_X, INFO_STR_PLACE6_Y, p_wk->p_strbuf, p_wk->p_font );
+		msgID = PLACEDATA_GetParam( cp_data, TOWNMAP_DATA_PARAM_PLACE5_MSGID);
+		if( msgID != TOWNMAP_DATA_ERROR )
+		{	
+			GFL_MSG_GetString( p_wk->cp_guide_msg, msgID, p_wk->p_strbuf );
+			PRINTSYS_Print( p_bmp, INFO_STR_PLACE6_X, INFO_STR_PLACE6_Y, p_wk->p_strbuf, p_wk->p_font );
+		}
 
 	}
+	GFL_BMPWIN_MakeTransWindow_VBlank( p_wk->p_bmpwin );
+}
+//=============================================================================
+/**
+ *		MSGWND
+ */
+//=============================================================================
+//----------------------------------------------------------------------------
+/**
+ *	@brief	メッセージ面	初期化
+ *
+ *	@param	MSGWND_WORK* p_wk	ワーク
+ *	@param	bgframe						BGフレーム
+ *	@param	*p_font						フォント
+ *	@param	*p_msg						メッセージ
+ *	@param	x									座標X
+ *	@param	y									座標Y
+ *	@param	w									幅
+ *	@param	h									高さ
+ *	@param	heapID						ヒープID
+ *
+ */
+//-----------------------------------------------------------------------------
+static void MSGWND_Init( MSGWND_WORK* p_wk, u8 bgframe, GFL_FONT *p_font, const GFL_MSGDATA *cp_msg, u8 x, u8 y, u8 w, u8 h, HEAPID heapID )
+{	
+	//クリアー
+	GFL_STD_MemClear( p_wk, sizeof(MSGWND_WORK) );
+	p_wk->p_font	= p_font;
+	p_wk->cp_msg		= cp_msg;
+
+	p_wk->p_bmpwin	= GFL_BMPWIN_Create( bgframe, x, y, w, h, TOWNMAP_BG_PAL_M_14, GFL_BMP_CHRAREA_GET_F );
+	p_wk->p_strbuf	= GFL_STR_CreateBuffer( 255, heapID );
+
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	メッセージ面	破棄
+ *
+ *	@param	MSGWND_WORK* p_wk		ワーク
+ */
+//-----------------------------------------------------------------------------
+static void MSGWND_Exit( MSGWND_WORK* p_wk )
+{	
+	GFL_STR_DeleteBuffer( p_wk->p_strbuf );
+	GFL_BMPWIN_Delete( p_wk->p_bmpwin );
+	GFL_STD_MemClear( p_wk, sizeof(MSGWND_WORK) );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	メッセージ面	プリント
+ *
+ *	@param	MSGWND_WORK* p_wk	ワーク
+ *	@param	strID							文字列ID
+ *	@param	x									座標X
+ *	@param	y									座標Y
+ */
+//-----------------------------------------------------------------------------
+static void MSGWND_Print( MSGWND_WORK* p_wk, u32 strID, u16 x, u16 y )
+{	
+
+	//一端消去
+	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(p_wk->p_bmpwin), 0 );	
+
+	//文字列作成
+	GFL_FONTSYS_SetColor( 0xf, 1, 0 );
+	GFL_MSG_GetString( p_wk->cp_msg, strID, p_wk->p_strbuf );
+	PRINTSYS_Print( GFL_BMPWIN_GetBmp(p_wk->p_bmpwin), x, y, p_wk->p_strbuf, p_wk->p_font );
+	GFL_FONTSYS_SetDefaultColor();
+
 	GFL_BMPWIN_MakeTransWindow_VBlank( p_wk->p_bmpwin );
 }

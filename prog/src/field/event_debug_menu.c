@@ -45,6 +45,7 @@
 #include "field_event_check.h"
 #include "event_debug_item.h" //EVENT_DebugItemMake
 #include "savedata/box_savedata.h"  //デバッグアイテム生成用
+#include "app/townmap.h"
 
 
 //======================================================================
@@ -155,6 +156,8 @@ static BOOL DMenuCallProc_Naminori( DEBUG_MENU_EVENT_WORK *wk );
 static BOOL DMenuCallProc_DebugItem( DEBUG_MENU_EVENT_WORK *wk );
 static BOOL DMenuCallProc_BoxMax( DEBUG_MENU_EVENT_WORK *wk );
 
+static BOOL DMenuCallProc_DebugSkyJump( DEBUG_MENU_EVENT_WORK *p_wk );
+
 //======================================================================
 //  デバッグメニューリスト
 //======================================================================
@@ -185,6 +188,7 @@ static const FLDMENUFUNC_LIST DATA_DebugMenuList[] =
   { DEBUG_FIELD_STR32, DMenuCallProc_DebugItem },
   { DEBUG_FIELD_STR37, DMenuCallProc_BoxMax },
   { DEBUG_FIELD_STR36, DMenuCallProc_ControlFog },
+	{	DEBUG_FIELD_STR38, DMenuCallProc_DebugSkyJump },
 	{ DEBUG_FIELD_STR01, NULL },
 };
 
@@ -213,6 +217,7 @@ static const FLDMENUFUNC_LIST DATA_DebugMenuListGrid[] =
   { DEBUG_FIELD_STR21 , DMenuCallProc_MusicalSelect },
   { DEBUG_FIELD_STR31, DMenuCallProc_Naminori },
   { DEBUG_FIELD_STR32, DMenuCallProc_DebugItem },
+	{	DEBUG_FIELD_STR38, DMenuCallProc_DebugSkyJump },
 	{ DEBUG_FIELD_STR01, NULL },
 };
 
@@ -2587,4 +2592,122 @@ static BOOL DMenuCallProc_BoxMax( DEBUG_MENU_EVENT_WORK *wk )
 	return( FALSE );
 }
 
+//======================================================================
+//  デバッグメニュー そらを飛ぶ
+//======================================================================
+FS_EXTERN_OVERLAY(townmap);
+//-------------------------------------
+///	デバッグ空を飛ぶ用ワーク	
+//=====================================
+typedef struct 
+{
+	GAMESYS_WORK		*p_gamesys;
+	GMEVENT					*p_event;
+	GMEVENT					*p_next_ev;
+	FIELD_MAIN_WORK *p_field;
+	TOWNMAP_PARAM		*p_param;
+} DEBUG_SKYJUMP_EVENT_WORK;
+//-------------------------------------
+///		PROTOTYPE
+//=====================================
+static GMEVENT_RESULT DMenuSkyJump( GMEVENT *p_event, int *p_seq, void *p_wk_adrs );
+//----------------------------------------------------------------------------
+/**
+ *	@brief	デバッグ空を飛ぶ
+ *
+ *	@param	DEBUG_MENU_EVENT_WORK *wk		ワーク
+ *
+ *	@return	TRUEイベント継続	FALSE終了
+ */
+//-----------------------------------------------------------------------------
+static BOOL DMenuCallProc_DebugSkyJump( DEBUG_MENU_EVENT_WORK *p_wk )
+{	
+	GAMESYS_WORK	*p_gamesys	= p_wk->gmSys;
+	GMEVENT				*p_event		= p_wk->gmEvent;
+	FIELD_MAIN_WORK *p_field	= p_wk->fieldWork;
+	DEBUG_SKYJUMP_EVENT_WORK	*p_sky;
 
+	//イヴェント
+	GMEVENT_Change( p_event, DMenuSkyJump, sizeof(DEBUG_SKYJUMP_EVENT_WORK) );
+	p_sky = GMEVENT_GetEventWork( p_event );
+	GFL_STD_MemClear( p_sky, sizeof(DEBUG_SKYJUMP_EVENT_WORK) );
+	
+	//ワーク設定
+	p_sky->p_gamesys	= p_gamesys;
+	p_sky->p_event		= p_event;
+	p_sky->p_field		= p_field;
+
+	//タウンマップワーク設定
+	p_sky->p_param	= GFL_HEAP_AllocMemory( HEAPID_PROC, sizeof(TOWNMAP_PARAM) );
+	GFL_STD_MemClear( p_sky->p_param, sizeof(TOWNMAP_PARAM) );
+	p_sky->p_param->mode			= TOWNMAP_MODE_SKY;
+	p_sky->p_param->is_debug	= TRUE;
+
+	return TRUE;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	デバッグ空を飛ぶイベント
+ *
+ *	@param	GMEVENT *event	GMEVENT
+ *	@param	*seq						シーケンス
+ *	@param	*work						ワーク
+ *
+ *	@return	終了コード
+ */
+//-----------------------------------------------------------------------------
+static GMEVENT_RESULT DMenuSkyJump( GMEVENT *p_event, int *p_seq, void *p_wk_adrs )
+{	
+	enum
+	{	
+		SEQ_INIT,
+		SEQ_EXIT,
+	};
+
+	DEBUG_SKYJUMP_EVENT_WORK	*p_wk	= p_wk_adrs;
+
+	switch(*p_seq )
+	{	
+	case SEQ_INIT:
+		p_wk->p_next_ev	= EVENT_FieldSubProc( p_wk->p_gamesys, p_wk->p_field,
+				FS_OVERLAY_ID(townmap), &TownMap_ProcData, p_wk->p_param );
+
+		PMSND_PauseBGM(TRUE);
+		PMSND_PushBGM();
+		GMEVENT_CallEvent( p_wk->p_event, p_wk->p_next_ev );
+
+		*p_seq	= SEQ_EXIT;
+		break;
+
+	case SEQ_EXIT:
+		{	
+			u32 select;
+			VecFx32	pos;
+			u32 zoneID;
+
+			select	= p_wk->p_param->select;
+			pos.x		= p_wk->p_param->grid.x;
+			pos.y		= 0;
+			pos.z		= p_wk->p_param->grid.y;
+			zoneID	= p_wk->p_param->zoneID;
+
+			PMSND_PopBGM();
+			PMSND_PauseBGM(FALSE);
+			PMSND_FadeInBGM(60);
+			GFL_HEAP_FreeMemory( p_wk->p_param );
+		
+			if( select == TOWNMAP_SELECT_SKY )
+			{	
+				GMEVENT_ChangeEvent( p_wk->p_event, 
+						DEBUG_EVENT_ChangeMapPos( p_wk->p_gamesys, p_wk->p_field, zoneID, &pos, 0) );
+			}
+			else
+			{	
+				return GMEVENT_RES_FINISH;
+			}
+		}
+	}
+
+	return GMEVENT_RES_CONTINUE ;
+}

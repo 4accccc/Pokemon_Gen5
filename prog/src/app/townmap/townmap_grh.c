@@ -470,6 +470,8 @@ static void GRAPHIC_BG_Init( GRAPHIC_BG_WORK *p_wk, HEAPID heapID )
 		GFL_ARC_UTIL_TransVramPalette( ARCID_FONT, NARC_font_default_nclr, PALTYPE_MAIN_BG, TOWNMAP_BG_PAL_M_14*0x20, 0x20, heapID );
 		GFL_ARC_UTIL_TransVramPalette( ARCID_FONT, NARC_font_default_nclr, PALTYPE_SUB_BG, TOWNMAP_BG_PAL_S_14*0x20, 0x20, heapID );
 
+		GFL_BG_FillCharacter( GRAPHIC_BG_GetFrame(TOWNMAP_BG_FRAME_FONT_M), 0x00, 1, 0 );
+
 		GFL_ARC_CloseDataHandle( p_handle );
 	}
 
@@ -485,6 +487,10 @@ static void GRAPHIC_BG_Init( GRAPHIC_BG_WORK *p_wk, HEAPID heapID )
 //-----------------------------------------------------------------------------
 static void GRAPHIC_BG_Exit( GRAPHIC_BG_WORK *p_wk )
 {	
+	//”jŠü
+	{	
+		GFL_BG_FillCharacterRelease( GRAPHIC_BG_GetFrame(TOWNMAP_BG_FRAME_FONT_M), 1,0 );
+	}
 	
 	//BG–Ê”jŠü
 	{	

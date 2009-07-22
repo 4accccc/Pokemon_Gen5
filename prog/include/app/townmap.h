@@ -16,6 +16,28 @@
  *					定数宣言
 */
 //=============================================================================
+//-------------------------------------
+///	タウンマップ起動モード
+//=====================================
+typedef enum
+{
+	TOWNMAP_MODE_SKY,	//そらをとぶモード
+	TOWNMAP_MODE_MAP,	//タウンマップ見るモード
+
+	TOWNMAP_MODE_MAX
+} TOWNMAP_MODE;
+
+//-------------------------------------
+///	タウンマップ選択
+//=====================================
+typedef enum
+{
+	TOWNMAP_SELECT_RETURN,	//何もせず戻る
+	TOWNMAP_SELECT_SKY,			//飛ぶ先を選択した
+
+	TOWNMAP_SELECT_MAX
+} TOWNMAP_SELECT;
+
 
 //=============================================================================
 /**
@@ -27,7 +49,12 @@
 //=====================================
 typedef struct 
 {
-	int a;
+	TOWNMAP_MODE		mode;			//[in]	動作モード
+	BOOL						is_debug;	//[in]	デバッグフラグどこでも空を飛べるようになる
+	TOWNMAP_SELECT	select;		//[out]	選択の種類
+	u16							zoneID;		//[out]	空を飛ぶゾーンID
+	u16							dummy;		// zoneIDはu16
+	GFL_POINT				grid;			//[out] 空を飛んだ先の座標
 } TOWNMAP_PARAM;
 
 
