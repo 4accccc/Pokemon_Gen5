@@ -104,7 +104,7 @@ enum {
 	NARC_buildmodel_outdoor_nschool_01_nsbmd = 90,
 	NARC_buildmodel_outdoor_slide_01_nsbmd = 91,
 	NARC_buildmodel_outdoor_sandbox_01_nsbmd = 92,
-	NARC_buildmodel_outdoor_p_door_nsbmd = 93,
+	NARC_buildmodel_outdoor_door_pc_nsbmd = 93,
 	NARC_buildmodel_outdoor_buill_01_nsbmd = 94,
 	NARC_buildmodel_outdoor_buill_02_nsbmd = 95,
 	NARC_buildmodel_outdoor_buill_03_nsbmd = 96,
@@ -133,7 +133,8 @@ enum {
 	NARC_buildmodel_outdoor_st_house01_nsbmd = 119,
 	NARC_buildmodel_outdoor_st_villa01_nsbmd = 120,
 	NARC_buildmodel_outdoor_r7_toh_01_nsbmd = 121,
-	NARC_buildmodel_outdoor_r6_labo_01_nsbmd = 122
+	NARC_buildmodel_outdoor_r6_labo_01_nsbmd = 122,
+	NARC_buildmodel_outdoor_trailer_01test_nsbmd = 123
 };
 
 /* NARC_BUILDMODEL_OUTDOOR_NAIX_ */

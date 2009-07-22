@@ -91,7 +91,7 @@
 "nsbmdfiles/nschool_01.nsbmd"
 "nsbmdfiles/slide_01.nsbmd"
 "nsbmdfiles/sandbox_01.nsbmd"
-"nsbmdfiles/p_door.nsbmd"
+"nsbmdfiles/door_pc.nsbmd"
 "nsbmdfiles/buill_01.nsbmd"
 "nsbmdfiles/buill_02.nsbmd"
 "nsbmdfiles/buill_03.nsbmd"
@@ -121,3 +121,4 @@
 "nsbmdfiles/st_villa01.nsbmd"
 "nsbmdfiles/r7_toh_01.nsbmd"
 "nsbmdfiles/r6_labo_01.nsbmd"
+"nsbmdfiles/trailer_01test.nsbmd"

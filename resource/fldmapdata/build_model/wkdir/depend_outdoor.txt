@@ -92,7 +92,7 @@ DEP_OUTDOOR	=	\
 	$(RESDIR)/nschool_01.nsbmd \
 	$(RESDIR)/slide_01.nsbmd \
 	$(RESDIR)/sandbox_01.nsbmd \
-	$(RESDIR)/p_door.nsbmd \
+	$(RESDIR)/door_pc.nsbmd \
 	$(RESDIR)/buill_01.nsbmd \
 	$(RESDIR)/buill_02.nsbmd \
 	$(RESDIR)/buill_03.nsbmd \
@@ -122,4 +122,5 @@ DEP_OUTDOOR	=	\
 	$(RESDIR)/st_villa01.nsbmd \
 	$(RESDIR)/r7_toh_01.nsbmd \
 	$(RESDIR)/r6_labo_01.nsbmd \
+	$(RESDIR)/trailer_01test.nsbmd \
 
