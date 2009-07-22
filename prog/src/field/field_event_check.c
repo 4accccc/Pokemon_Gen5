@@ -640,10 +640,12 @@ static GMEVENT * DEBUG_checkKeyEvent(EV_REQUEST * req, GAMESYS_WORK * gsys, FIEL
 	}
 
 	// レールエディタ起動
+#ifdef DEBUG_ONLY_FOR_tomoya_takahashi
 	if( (req->key_cont & railCont) == railCont )
 	{
 		return DEBUG_EVENT_RailEditor( gsys, fieldWork );
 	}
+#endif
 	
   return NULL;
 }

@@ -1290,9 +1290,9 @@ static void RE_InitInputPoint_FreeNormal( DEBUG_RAIL_EDITOR* p_wk )
 	FIELD_PLAYER_SetPos( p_player, &pos );
 
 	// äÓñ{ÉAÉìÉOÉãÇÃê›íË
-	FIELD_CAMERA_SetAnglePitch( p_camera, 45*182 );
+/*	FIELD_CAMERA_SetAnglePitch( p_camera, 45*182 );
 	FIELD_CAMERA_SetAngleYaw( p_camera, 0 );
-	FIELD_CAMERA_SetAngleLen( p_camera, 0x90000 );
+	FIELD_CAMERA_SetAngleLen( p_camera, 0x90000 );*/
 
 }
 //----------------------------------------------------------------------------
