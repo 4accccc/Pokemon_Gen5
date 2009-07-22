@@ -47,11 +47,11 @@ struct _GMEVENT_CONTROL{
 GMEVENT * GMEVENT_Create(GAMESYS_WORK * gsys, GMEVENT * parent, GMEVENT_FUNC event_func, u32 work_size)
 {
 	GMEVENT * event;
-	event = GFL_HEAP_AllocMemory(HEAPID_LOCAL, sizeof(GMEVENT));
+	event = GFL_HEAP_AllocClearMemory(HEAPID_LOCAL, sizeof(GMEVENT));
 	event->parent = parent;
 	event->func = event_func;
 	event->seq = 0;
-	event->work = GFL_HEAP_AllocMemory(HEAPID_LOCAL, work_size);
+	event->work = GFL_HEAP_AllocClearMemory(HEAPID_LOCAL, work_size);
 	event->gsys = gsys;
 	return event;
 }
@@ -88,7 +88,7 @@ void GMEVENT_Change(GMEVENT * event, GMEVENT_FUNC next_func, u32 work_size)
 	if (event->work) {
 		GFL_HEAP_FreeMemory(event->work);
 	}
-	event->work = GFL_HEAP_AllocMemory(HEAPID_LOCAL, work_size);
+	event->work = GFL_HEAP_AllocClearMemory(HEAPID_LOCAL, work_size);
 }
 //------------------------------------------------------------------
 //------------------------------------------------------------------
