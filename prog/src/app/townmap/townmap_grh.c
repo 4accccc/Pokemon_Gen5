@@ -26,6 +26,17 @@
  *					定数宣言
 */
 //=============================================================================
+//-------------------------------------
+///	リソース
+//=====================================
+enum 
+{	
+	OBJ_RES_CHR	= 0,
+	OBJ_RES_CEL,
+	OBJ_RES_PLT,
+
+	OBJ_RES_MAX
+};
 
 //=============================================================================
 /**
@@ -44,7 +55,10 @@ typedef struct
 //=====================================
 typedef struct 
 {
-	GFL_CLUNIT *p_clunit;
+	GFL_CLUNIT			*p_clunit[TOWNMAP_OBJ_CLUNIT_MAX];
+	GFL_CLWK				*p_clwk[TOWNMAP_OBJ_CLWK_MAX];
+	GFL_CLSYS_REND	*p_rend;
+	u32							res[OBJ_RES_MAX];
 } GRAPHIC_OBJ_WORK;
 //-------------------------------------
 ///	タウンマップ用基本グラフィックワーク
@@ -79,7 +93,10 @@ static void GRAPHIC_OBJ_Init( GRAPHIC_OBJ_WORK *p_wk, const GFL_DISP_VRAM* cp_vr
 static void GRAPHIC_OBJ_Exit( GRAPHIC_OBJ_WORK *p_wk );
 static void GRAPHIC_OBJ_Main( GRAPHIC_OBJ_WORK *p_wk );
 static void GRAPHIC_OBJ_VBlankFunction( GRAPHIC_OBJ_WORK *p_wk );
-static GFL_CLUNIT * GRAPHIC_OBJ_GetUnit( const GRAPHIC_OBJ_WORK *cp_wk );
+static GFL_CLWK		* GRAPHIC_OBJ_GetClwk( const GRAPHIC_OBJ_WORK *cp_wk, TOWNMAP_GRAPHIC_OBJ_CLWK id );
+static GFL_CLUNIT * GRAPHIC_OBJ_GetUnit( const GRAPHIC_OBJ_WORK *cp_wk, TOWNMAP_GRAPHIC_OBJ_CLUNIT id );
+static GFL_CLSYS_REND* GRAPHIC_OBJ_GetRend( const GRAPHIC_OBJ_WORK *cp_wk );
+static u32 GRAPHIC_OBJ_GetResource( const GRAPHIC_OBJ_WORK *cp_wk, u32 resID );
 //=============================================================================
 /**
  *					DATA
@@ -177,7 +194,7 @@ static const struct
 		{
 			0, 0, 0x800, 0,
 			GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
-			GX_BG_SCRBASE_0x0800, GX_BG_CHARBASE_0x08000, GFL_BG_CHRSIZ_256x256,
+			GX_BG_SCRBASE_0x0800, GX_BG_CHARBASE_0x10000, GFL_BG_CHRSIZ_256x256,
 			GX_BG_EXTPLTT_01, 1, 0, 0, FALSE
 		},
 		GFL_BG_MODE_TEXT
@@ -273,13 +290,60 @@ u8 TOWNMAP_GRAPHIC_GetFrame( const TOWNMAP_GRAPHIC_SYS *cp_wk, TOWNMAP_GRAPHIC_B
  *	@brief	UNIT取得
  *
  *	@param	const TOWNMAP_GRAPHIC_SYS *cp_wk	ワーク
+ *	@param	id	CLUNIT
  *
  *	@return	UNIT
  */
 //-----------------------------------------------------------------------------
-GFL_CLUNIT *TOWNMAP_GRAPHIC_GetUnit( const TOWNMAP_GRAPHIC_SYS *cp_wk )
+GFL_CLUNIT *TOWNMAP_GRAPHIC_GetUnit( const TOWNMAP_GRAPHIC_SYS *cp_wk, TOWNMAP_GRAPHIC_OBJ_CLUNIT id )
 {	
-	return GRAPHIC_OBJ_GetUnit( &cp_wk->obj );
+	return GRAPHIC_OBJ_GetUnit( &cp_wk->obj, id );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	CLWKを取得
+ *
+ *	@param	const TOWNMAP_GRAPHIC_SYS *cp_wk	ワーク
+ *	@param	id																CLWKID
+ *
+ *	@return	GFL_CLWK
+ */
+//-----------------------------------------------------------------------------
+GFL_CLWK	*TOWNMAP_GRAPHIC_GetClwk( const TOWNMAP_GRAPHIC_SYS *cp_wk, TOWNMAP_GRAPHIC_OBJ_CLWK id )
+{	
+	return GRAPHIC_OBJ_GetClwk( &cp_wk->obj, id );
+}
+#if 0
+//----------------------------------------------------------------------------
+/**
+ *	@brief	レンダラー取得
+ *
+ *	@param		ワーク
+ *
+ *	@return	レンダラー
+ */
+//-----------------------------------------------------------------------------
+GFL_CLSYS_REND	*TOWNMAP_GRAPHIC_GetRend( const TOWNMAP_GRAPHIC_SYS *cp_wk )
+{	
+	return GRAPHIC_OBJ_GetRend( &cp_wk->obj );
+}
+#endif
+//----------------------------------------------------------------------------
+/**
+ *	@brief	Resource取得
+ *
+ *	@param	const TOWNMAP_GRAPHIC_SYS *cp_wk	ワーク
+ *	@param	*p_chr		キャラリソース
+ *	@param	*p_cel		セルリソース
+ *	@param	*p_plt		パレットリソース
+ *
+ */
+//-----------------------------------------------------------------------------
+void TOWNMAP_GRAPHIC_GetObjResource( const TOWNMAP_GRAPHIC_SYS *cp_wk, u32 *p_chr, u32 *p_cel, u32 *p_plt )
+{	
+	*p_chr	= GRAPHIC_OBJ_GetResource( &cp_wk->obj, OBJ_RES_CHR );
+	*p_cel	= GRAPHIC_OBJ_GetResource( &cp_wk->obj, OBJ_RES_CEL );
+	*p_plt	= GRAPHIC_OBJ_GetResource( &cp_wk->obj, OBJ_RES_PLT );
 }
 //=============================================================================
 /**
@@ -473,12 +537,62 @@ static void GRAPHIC_OBJ_Init( GRAPHIC_OBJ_WORK *p_wk, const GFL_DISP_VRAM* cp_vr
 
 	//システム作成
 	GFL_CLACT_SYS_Create( &GFL_CLSYSINIT_DEF_DIVSCREEN, cp_vram_bank, heapID );
-	p_wk->p_clunit	= GFL_CLACT_UNIT_Create( 128, 0, heapID );
-	GFL_CLACT_UNIT_SetDefaultRend( p_wk->p_clunit );
 
-	//表示
+	//汎用UNIT
+	{	
+		p_wk->p_clunit[TOWNMAP_OBJ_CLUNIT_DEFAULT]	= GFL_CLACT_UNIT_Create( 128, 0, heapID );
+		GFL_CLACT_UNIT_SetDefaultRend( p_wk->p_clunit[TOWNMAP_OBJ_CLUNIT_DEFAULT] );
+	}
+
 	GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_OBJ, VISIBLE_ON );
 	GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_OBJ, VISIBLE_ON );
+
+
+	//リソース読み込み
+	{	
+		ARCHANDLE	*	p_handle	= GFL_ARC_OpenDataHandle( ARCID_TOWNMAP_GRAPHIC, heapID );
+
+		p_wk->res[OBJ_RES_PLT]	= GFL_CLGRP_PLTT_Register( p_handle,
+				NARC_townmap_gra_tmap_obj_NCLR, CLSYS_DRAW_MAIN, TOWNMAP_OBJ_PAL_M_00*0x20, heapID );	
+
+		p_wk->res[OBJ_RES_CHR]	= GFL_CLGRP_CGR_Register( p_handle,
+				NARC_townmap_gra_tmap_obj_d_NCGR, FALSE, CLSYS_DRAW_MAIN, heapID );
+
+		p_wk->res[OBJ_RES_CEL]	= GFL_CLGRP_CELLANIM_Register( p_handle,
+				NARC_townmap_gra_tmap_obj_d_NCER,
+				NARC_townmap_gra_tmap_obj_d_NANR, heapID );
+
+		GFL_ARC_CloseDataHandle( p_handle );
+	}
+
+	//CLWK作成
+	{	
+		int i;
+		GFL_CLWK_DATA cldata;
+		GFL_STD_MemClear( &cldata, sizeof(GFL_CLWK_DATA) );
+		for( i = 0; i < TOWNMAP_OBJ_CLWK_MAX; i++ )
+		{	
+			p_wk->p_clwk[i]	= GFL_CLACT_WK_Create( p_wk->p_clunit[TOWNMAP_OBJ_CLUNIT_DEFAULT],
+					p_wk->res[OBJ_RES_CHR], p_wk->res[OBJ_RES_PLT], p_wk->res[OBJ_RES_CEL], &cldata, CLSYS_DEFREND_SUB, heapID );
+		}
+	}
+
+	//CLWK設定
+	{	
+		int i;
+
+		//アニメシーケンスのみ設定（座標は各管理側）
+		GFL_CLACT_WK_SetAnmSeq( p_wk->p_clwk[TOWNMAP_OBJ_CLWK_WINDOW], 0 );
+		GFL_CLACT_WK_SetAnmSeq( p_wk->p_clwk[TOWNMAP_OBJ_CLWK_CURSOR], 4 );
+		GFL_CLACT_WK_SetAnmSeq( p_wk->p_clwk[TOWNMAP_OBJ_CLWK_RING_CUR], 5 );
+		GFL_CLACT_WK_SetAnmSeq( p_wk->p_clwk[TOWNMAP_OBJ_CLWK_HERO], 6 );
+
+
+		for( i = 0; i < TOWNMAP_OBJ_CLWK_MAX; i++ )
+		{	
+			GFL_CLACT_WK_SetDrawEnable( p_wk->p_clwk[i], FALSE );
+		}
+	}
 
 }
 //----------------------------------------------------------------------------
@@ -491,9 +605,38 @@ static void GRAPHIC_OBJ_Init( GRAPHIC_OBJ_WORK *p_wk, const GFL_DISP_VRAM* cp_vr
 //-----------------------------------------------------------------------------
 static void GRAPHIC_OBJ_Exit( GRAPHIC_OBJ_WORK *p_wk )
 {	
+	int i;
+
+	//CLWK取得
+	{
+		for( i = 0; i < TOWNMAP_OBJ_CLWK_MAX; i++ )
+		{	
+			if( p_wk->p_clwk[i] )
+			{	
+				GFL_CLACT_WK_Remove( p_wk->p_clwk[i] );
+			}
+		}
+	}
+
+	//リソース破棄
+	{	
+		GFL_CLGRP_CELLANIM_Release( p_wk->res[OBJ_RES_CEL] );
+		GFL_CLGRP_CGR_Release( p_wk->res[OBJ_RES_CHR] );
+		GFL_CLGRP_PLTT_Release( p_wk->res[OBJ_RES_PLT] );	
+	}
+
 
 	//システム破棄
-	GFL_CLACT_UNIT_Delete( p_wk->p_clunit );
+	{
+		for( i = 0; i < TOWNMAP_OBJ_CLUNIT_MAX; i++ )
+		{	
+			if( p_wk->p_clunit[i] )
+			{	
+				GFL_CLACT_UNIT_Delete( p_wk->p_clunit[i] );
+			}
+		}
+	}
+
 	GFL_CLACT_SYS_Delete();
 	GFL_STD_MemClear( p_wk, sizeof(GRAPHIC_OBJ_WORK) );
 }
@@ -525,6 +668,21 @@ static void GRAPHIC_OBJ_VBlankFunction( GRAPHIC_OBJ_WORK *p_wk )
 
 //----------------------------------------------------------------------------
 /**
+ *	@brief	CLWKの取得
+ *
+ *	@param	const GRAPHIC_OBJ_WORK *cp_wk	ワーク
+ *	@param	id														CLWKID
+ *
+ *	@return	CLWK
+ */
+//-----------------------------------------------------------------------------
+static GFL_CLWK		* GRAPHIC_OBJ_GetClwk( const GRAPHIC_OBJ_WORK *cp_wk, TOWNMAP_GRAPHIC_OBJ_CLWK id )
+{	
+	GF_ASSERT( id < TOWNMAP_OBJ_CLWK_MAX );
+	return cp_wk->p_clwk[id];
+}
+//----------------------------------------------------------------------------
+/**
  *	@brief	CLユニットの取得
  *
  *	@param	const GRAPHIC__OBJ_WORK *cp_wk	ワーク
@@ -532,9 +690,37 @@ static void GRAPHIC_OBJ_VBlankFunction( GRAPHIC_OBJ_WORK *p_wk )
  *	@return	GFL_CLUNIT
  */
 //-----------------------------------------------------------------------------
-static GFL_CLUNIT * GRAPHIC_OBJ_GetUnit( const GRAPHIC_OBJ_WORK *cp_wk )
+static GFL_CLUNIT * GRAPHIC_OBJ_GetUnit( const GRAPHIC_OBJ_WORK *cp_wk, TOWNMAP_GRAPHIC_OBJ_CLUNIT id )
 {	
-	return cp_wk->p_clunit;
+	GF_ASSERT( id < TOWNMAP_OBJ_CLUNIT_MAX );
+	return cp_wk->p_clunit[ id ];
 }
 
-
+//----------------------------------------------------------------------------
+/**
+ *	@brief	レンダラー取得
+ *
+ *	@param	const GRAPHIC_OBJ_WORK *cp_wk		ワーク
+ *
+ *	@return	レンダラー
+ */
+//-----------------------------------------------------------------------------
+static GFL_CLSYS_REND* GRAPHIC_OBJ_GetRend( const GRAPHIC_OBJ_WORK *cp_wk )
+{	
+	return cp_wk->p_rend;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	OBJリソース
+ *
+ *	@param	const TOWNMAP_GRAPHIC_SYS *cp_wk	ワーク
+ *	@param	resID		リソースID
+ *
+ *	@return	リソース
+ */
+//-----------------------------------------------------------------------------
+static u32 GRAPHIC_OBJ_GetResource( const GRAPHIC_OBJ_WORK *cp_wk, u32 resID )
+{	
+	GF_ASSERT( resID < OBJ_RES_MAX );
+	return cp_wk->res[resID];
+}

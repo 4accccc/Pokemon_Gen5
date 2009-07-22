@@ -58,9 +58,9 @@ enum
 	TOWNMAP_BG_PAL_S_15,		//	使用してない
 
 	// メイン画面OBJ(下画面)
-	TOWNMAP_OBJ_PAL_M_00 = 0,//	
-	TOWNMAP_OBJ_PAL_M_01,		//  
-	TOWNMAP_OBJ_PAL_M_02,		//  
+	TOWNMAP_OBJ_PAL_M_00 = 0,//	OBJ
+	TOWNMAP_OBJ_PAL_M_01,		//  OBJ
+	TOWNMAP_OBJ_PAL_M_02,		//	OBJ
 	TOWNMAP_OBJ_PAL_M_03,		//  
 	TOWNMAP_OBJ_PAL_M_04,		//  
 	TOWNMAP_OBJ_PAL_M_05,		//  
@@ -114,6 +114,28 @@ typedef enum
 }TOWNMAP_GRAPHIC_BG_FRAME;
 
 
+//-------------------------------------
+///	CLUNIT
+//=====================================
+typedef enum
+{
+	TOWNMAP_OBJ_CLUNIT_DEFAULT,	//汎用
+
+	TOWNMAP_OBJ_CLUNIT_MAX
+}TOWNMAP_GRAPHIC_OBJ_CLUNIT ;
+//-------------------------------------
+///	CKWK
+//=====================================
+typedef enum
+{
+	TOWNMAP_OBJ_CLWK_WINDOW,
+	TOWNMAP_OBJ_CLWK_CURSOR,
+	TOWNMAP_OBJ_CLWK_RING_CUR,
+	TOWNMAP_OBJ_CLWK_HERO,
+
+	TOWNMAP_OBJ_CLWK_MAX
+}TOWNMAP_GRAPHIC_OBJ_CLWK ;
+
 //=============================================================================
 /**
  *					構造体宣言
@@ -134,4 +156,7 @@ extern void TOWNMAP_GRAPHIC_Exit( TOWNMAP_GRAPHIC_SYS *p_wk );
 extern void TOWNMAP_GRAPHIC_Draw( TOWNMAP_GRAPHIC_SYS *p_wk );
 
 extern u8 TOWNMAP_GRAPHIC_GetFrame( const TOWNMAP_GRAPHIC_SYS *cp_wk, TOWNMAP_GRAPHIC_BG_FRAME frame );
-extern GFL_CLUNIT *TOWNMAP_GRAPHIC_GetUnit( const TOWNMAP_GRAPHIC_SYS *cp_wk );
+extern GFL_CLUNIT *TOWNMAP_GRAPHIC_GetUnit( const TOWNMAP_GRAPHIC_SYS *cp_wk, TOWNMAP_GRAPHIC_OBJ_CLUNIT id );
+extern GFL_CLWK	*TOWNMAP_GRAPHIC_GetClwk( const TOWNMAP_GRAPHIC_SYS *cp_wk, TOWNMAP_GRAPHIC_OBJ_CLWK id );
+//extern GFL_CLSYS_REND *TOWNMAP_GRAPHIC_GetRend( const TOWNMAP_GRAPHIC_SYS *cp_wk );
+extern void TOWNMAP_GRAPHIC_GetObjResource( const TOWNMAP_GRAPHIC_SYS *cp_wk, u32 *p_chr, u32 *p_cel, u32 *p_plt );
