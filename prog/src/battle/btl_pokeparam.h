@@ -331,6 +331,7 @@ extern void BPP_SetAppearTurn( BTL_POKEPARAM* pp, u16 turn );
 extern void BPP_ChangePokeType( BTL_POKEPARAM* pp, PokeTypePair type );
 extern void BPP_ChangeForm( BTL_POKEPARAM* pp, u8 formNo );
 extern void BPP_RemoveItem( BTL_POKEPARAM* pp );
+extern u16 BPP_GetConsumedItem( const BTL_POKEPARAM* bpp );
 extern void BPP_UpdatePrevWazaID( BTL_POKEPARAM* pp, WazaID waza, BtlPokePos targetPos );
 extern void BPP_ResetWazaContConter( BTL_POKEPARAM* pp );
 extern void BPP_RankRecover( BTL_POKEPARAM* pp );

@@ -22,11 +22,11 @@
 /* Consts                                                                   */
 /*--------------------------------------------------------------------------*/
 enum {
-  FACTOR_PER_POKE = EVENT_WAZA_STICK_MAX + 3,       ///< ワザ貼り付き最大数+使用ワザ+とくせい+アイテム = 11
-  FACTOR_MAX_FOR_POKE = FACTOR_PER_POKE * BTL_POS_MAX, ///< ポケモンごと最大数(11) * 場所数(6) = 66
-  FACTOR_MAX_FOR_SIDEEFF = BTL_SIDEEFF_MAX * 2,     ///< サイドエフェクト最大数(9)×陣営数(2) = 18
+  FACTOR_PER_POKE = EVENT_WAZA_STICK_MAX + 3,            ///< ワザ貼り付き最大数+使用ワザ+とくせい+アイテム = 11
+  FACTOR_MAX_FOR_POKE = FACTOR_PER_POKE * BTL_POS_MAX,   ///< ポケモンごと最大数(11) * 場所数(6) = 66
+  FACTOR_MAX_FOR_SIDEEFF = BTL_SIDEEFF_MAX * 2,          ///< サイドエフェクト最大数(9)×陣営数(2) = 18
   FACTOR_MAX_FOR_POSEFF = BTL_POSEFF_MAX * BTL_POS_MAX,  ///< 位置エフェクト最大数(3) * 場所数(6) = 18
-  FACTOR_MAX_FOR_FIELD = BTL_FLDEFF_MAX,            ///< フィールドエフェクト最大数 = 6
+  FACTOR_MAX_FOR_FIELD = BTL_FLDEFF_MAX,                 ///< フィールドエフェクト最大数 = 6
 
   // 登録できるイベントファクター最大数（66 + 18 + 18 + 6) = 108
   FACTOR_REGISTER_MAX = FACTOR_MAX_FOR_POKE + FACTOR_MAX_FOR_SIDEEFF + FACTOR_MAX_FOR_FIELD + FACTOR_MAX_FOR_POSEFF,
@@ -58,6 +58,7 @@ struct _BTL_EVENT_FACTOR {
   BTL_EVENT_FACTOR* next;
   const BtlEventHandlerTable* handlerTable;
   BtlEventFactor  factorType;
+  BtlEventSkipCheckHandler  skipCheckHandler;
   u32       priority;
   int       work[ EVENT_HANDLER_WORK_ELEMS ];
   u16       subID;
@@ -98,6 +99,7 @@ static void pushFactor( BTL_EVENT_FACTOR* factor );
 static void clearFactorWork( BTL_EVENT_FACTOR* factor );
 static inline u32 calcFactorPriority( BtlEventFactor factorType, u16 subPri );
 static void callHandlers( BTL_EVENT_FACTOR* factor, BtlEventType eventType, BTL_SVFLOW_WORK* flowWork );
+static BOOL check_handler_skip( BTL_SVFLOW_WORK* flowWork, BtlEventFactor factorType, BtlEventType eventType, u16 subID, u8 pokeID );
 static void varStack_Init( void );
 static int evar_getNewPoint( const VAR_STACK* stack, BtlEvVarLabel label );
 static int evar_getExistPoint( const VAR_STACK* stack, BtlEvVarLabel label );
@@ -172,6 +174,7 @@ BTL_EVENT_FACTOR* BTL_EVENT_AddFactor( BtlEventFactor factorType, u16 subID, u16
     newFactor->subID = subID;
     newFactor->callingFlag = FALSE;
     newFactor->sleepFlag = FALSE;
+    newFactor->skipCheckHandler = NULL;
     GFL_STD_MemClear( newFactor->work, sizeof(newFactor->work) );
 
     // 最初の登録
@@ -220,6 +223,19 @@ BTL_EVENT_FACTOR* BTL_EVENT_AddFactor( BtlEventFactor factorType, u16 subID, u16
     return NULL;
   }
 }
+//=============================================================================================
+/**
+ * スキップチェックハンドラをアタッチする
+ *
+ * @param   factor
+ * @param   handler
+ */
+//=============================================================================================
+void BTL_EVENT_FACTOR_AttachSkipCheckHandler( BTL_EVENT_FACTOR* factor, BtlEventSkipCheckHandler handler )
+{
+  factor->skipCheckHandler = handler;
+}
+
 //=============================================================================================
 /**
  * イベント反応要素を削除
@@ -278,6 +294,19 @@ void BTL_EVENT_FACTOR_ChangePokeParam( BTL_EVENT_FACTOR* factor, u8 pokeID, u16 
 u16 BTL_EVENT_FACTOR_GetSubID( const BTL_EVENT_FACTOR* factor )
 {
   return factor->subID;
+}
+//=============================================================================================
+/**
+ * 関連ポケモンIDを返す
+ *
+ * @param   factor
+ *
+ * @retval  u8
+ */
+//=============================================================================================
+u8 BTL_EVENT_FACTOR_GetPokeID( const BTL_EVENT_FACTOR* factor )
+{
+  return factor->pokeID;
 }
 //=============================================================================================
 /**
@@ -440,12 +469,33 @@ static void callHandlers( BTL_EVENT_FACTOR* factor, BtlEventType eventType, BTL_
     {
       if( tbl[i].eventType == eventType )
       {
-        factor->callingFlag = TRUE;
-        tbl[i].handler( factor, flowWork, factor->pokeID, factor->work );
-        factor->callingFlag = FALSE;
+        if( !check_handler_skip(flowWork, factor->factorType, eventType, factor->subID, factor->pokeID) )
+        {
+          factor->callingFlag = TRUE;
+          tbl[i].handler( factor, flowWork, factor->pokeID, factor->work );
+          factor->callingFlag = FALSE;
+        }
       }
     }
   }
+}
+/**
+ *  特定ハンドラをスキップするかチェック
+ */
+static BOOL check_handler_skip( BTL_SVFLOW_WORK* flowWork, BtlEventFactor factorType, BtlEventType eventType, u16 subID, u8 pokeID )
+{
+  BTL_EVENT_FACTOR* factor;
+  int sleepFlag = FALSE;
+
+  for( factor=FirstFactorPtr; factor!=NULL; factor=factor->next )
+  {
+    if( factor->skipCheckHandler ){
+      if( factor->skipCheckHandler( factor, factorType, eventType, subID, pokeID) ){
+        return TRUE;
+      }
+    }
+  }
+  return FALSE;
 }
 
 

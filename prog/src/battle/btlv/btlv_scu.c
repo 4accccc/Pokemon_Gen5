@@ -1315,9 +1315,16 @@ static void taskHPGauge( GFL_TCBL* tcbl, void* wk_adrs )
  * @param   pos
  */
 //=============================================================================================
-void BTLV_SCU_KinomiAct_Start( BTLV_SCU* wk, BtlPokePos pos )
+void BTLV_SCU_KinomiAct_Start( BTLV_SCU* wk, BtlvMcssPos pos )
 {
+  // @@@ 今は適当にワザエフェクトを出しておく
+  BTLV_WAZAEFFECT_PARAM param;
 
+  param.waza = WAZANO_HATAKU;
+  param.from = pos;
+  param.to = pos;
+  param.turn_count = 0;
+  param.continue_count = 0;
 }
 //=============================================================================================
 /**
@@ -1329,10 +1336,9 @@ void BTLV_SCU_KinomiAct_Start( BTLV_SCU* wk, BtlPokePos pos )
  * @retval  BOOL    終了時TRUE
  */
 //=============================================================================================
-BOOL BTLV_SCU_KinomiAct_Wait( BTLV_SCU* wk, BtlPokePos pos )
+BOOL BTLV_SCU_KinomiAct_Wait( BTLV_SCU* wk, BtlvMcssPos pos )
 {
-  BTL_Printf("pos[%d]のポケモンがきのみ食べました\n", pos);
-  return TRUE;
+  return BTLV_EFFECT_CheckExecute() == FALSE;
 }
 
 //==============================================================================================

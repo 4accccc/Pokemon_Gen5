@@ -1047,7 +1047,8 @@ void BTLV_ResetCommWaitInfo( BTLV_CORE* wk )
 //=============================================================================================
 void BTLV_KinomiAct_Start( BTLV_CORE* wk, BtlPokePos pos )
 {
-  BTLV_SCU_KinomiAct_Start( wk->scrnU, pos );
+  BtlvMcssPos vpos = BTL_MAIN_BtlPosToViewPos( wk->mainModule, pos );
+  BTLV_SCU_KinomiAct_Start( wk->scrnU, vpos );
 }
 //=============================================================================================
 /**
@@ -1059,7 +1060,8 @@ void BTLV_KinomiAct_Start( BTLV_CORE* wk, BtlPokePos pos )
 //=============================================================================================
 BOOL BTLV_KinomiAct_Wait( BTLV_CORE* wk, BtlPokePos pos )
 {
-  return BTLV_SCU_KinomiAct_Wait( wk->scrnU, pos );
+  BtlvMcssPos vpos = BTL_MAIN_BtlPosToViewPos( wk->mainModule, pos );
+  return BTLV_SCU_KinomiAct_Wait( wk->scrnU, vpos );
 }
 
 //-------------------------------------------

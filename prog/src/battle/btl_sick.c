@@ -3,6 +3,7 @@
 #include "btl_pokeparam.h"
 #include "btl_server_flow.h"
 #include "btl_event.h"
+#include "handler\hand_item.h"
 
 #include "btl_sick.h"
 
@@ -18,8 +19,27 @@ static void cureProc( BTL_SVFLOW_WORK* flowWk, BTL_POKEPARAM* bpp, u8 pokeID, Wa
 static void cure_Akubi( BTL_SVFLOW_WORK* flowWk, BTL_POKEPARAM* bpp );
 static void cure_HorobiNoUta( BTL_SVFLOW_WORK* flowWk, BTL_POKEPARAM* bpp );
 static void putHorobiCounter( BTL_SVFLOW_WORK* flowWk, const BTL_POKEPARAM* bpp, u8 count );
+static void cure_Sasiosae( BTL_SVFLOW_WORK* flowWk, const BTL_POKEPARAM* bpp );
 static int getCureStrID( WazaSick sick, BOOL fUseItem );
 
+
+
+//=============================================================================================
+/**
+ * 状態異常化させられた時の処理
+ *
+ * @param   bpp
+ * @param   sick
+ */
+//=============================================================================================
+void BTL_SICK_AddProc( BTL_SVFLOW_WORK* flowWk, BTL_POKEPARAM* bpp, WazaSick sick )
+{
+  switch( sick ){
+  case WAZASICK_SASIOSAE:
+    BTL_HANDLER_ITEM_Remove( bpp );
+    break;
+  }
+}
 
 
 
@@ -145,6 +165,7 @@ static void cureProc( BTL_SVFLOW_WORK* flowWk, BTL_POKEPARAM* bpp, u8 pokeID, Wa
   switch( sick ){
   case WAZASICK_AKUBI:       cure_Akubi( flowWk, bpp ); break;
   case WAZASICK_HOROBINOUTA: cure_HorobiNoUta( flowWk, bpp ); break;
+  case WAZASICK_SASIOSAE:    cure_Sasiosae( flowWk, bpp ); break;
   }
 }
 
@@ -185,6 +206,12 @@ static void putHorobiCounter( BTL_SVFLOW_WORK* flowWk, const BTL_POKEPARAM* bpp,
 
 }
 
+static void cure_Sasiosae( BTL_SVFLOW_WORK* flowWk, const BTL_POKEPARAM* bpp )
+{
+  BTL_HANDLER_ITEM_Add( bpp );
+}
+
+
 
 static int getCureStrID( WazaSick sick, BOOL fUseItem )
 {
@@ -200,6 +227,7 @@ static int getCureStrID( WazaSick sick, BOOL fUseItem )
     { WAZASICK_MAHI,      BTL_STRID_SET_MahiCure,         BTL_STRID_SET_UseItem_CureMahi    },
     { WAZASICK_ENCORE,    BTL_STRID_SET_EncoreCure,       -1                                },
     { WAZASICK_KANASIBARI,BTL_STRID_SET_KanasibariCure,   -1                                },
+    { WAZASICK_SASIOSAE,  BTL_STRID_SET_Sasiosae,         BTL_STRID_SET_SasiosaeCure        },
 
     { WAZASICK_KONRAN,    -1,                             BTL_STRID_SET_UseItem_CureKonran  },
     { WAZASICK_MEROMERO,  -1,                             BTL_STRID_SET_UseItem_CureMero    },
@@ -277,7 +305,6 @@ void BTL_SICK_CheckNotEffectByType( BTL_SVFLOW_WORK* flowWk, const BTL_POKEPARAM
   {
     BPP_SICK_CONT cont = BPP_GetSickCont( defender, WAZASICK_MIYABURU );
     PokeType type = BPP_SICKCONT_GetParam( cont );
-    BTL_Printf("見破られ中, 対象タイプ=%d\n", type);
     if( BPP_IsMatchType(defender, type) ){
       BTL_EVENTVAR_RewriteValue( BTL_EVAR_NOEFFECT_FLAG, FALSE );
     }
@@ -290,7 +317,6 @@ void BTL_SICK_CheckDamageAffinity(  BTL_SVFLOW_WORK* flowWk, const BTL_POKEPARAM
   {
     BPP_SICK_CONT cont = BPP_GetSickCont( defender, WAZASICK_MIYABURU );
     PokeType type = BPP_SICKCONT_GetParam( cont );
-    BTL_Printf("見破られ中, 対象タイプ=%d\n", type);
     if( BPP_IsMatchType(defender, type) ){
       BtlTypeAff aff = BTL_EVENTVAR_GetValue( BTL_EVAR_TYPEAFF );
       if( aff == BTL_TYPEAFF_0 ){

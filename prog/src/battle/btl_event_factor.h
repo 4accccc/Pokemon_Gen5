@@ -37,13 +37,31 @@ typedef struct _BTL_EVENT_FACTOR  BTL_EVENT_FACTOR;
 /**
 * イベントハンドラ型
 *
-* factor  自身削除用のハンドル
-* flowWk  サーバフローワーク
-* pokeID  主体となるポケモンのID
-* work  ワーク用配列（要素数はEVENT_HANDLER_WORK_ELEMS, 初回呼び出し時ゼロクリアが保証される）
+* myHandle  自身削除用のハンドラ
+* flowWk    サーバフローワーク
+* pokeID    主体となるポケモンのID
+* work      ワーク用配列（要素数はEVENT_HANDLER_WORK_ELEMS, 初回呼び出し時ゼロクリアが保証される）
 */
 //--------------------------------------------------------------
-typedef void (*BtlEventHandler)( BTL_EVENT_FACTOR* factor, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+typedef void (*BtlEventHandler)( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+
+
+//--------------------------------------------------------------
+/**
+* イベントスキップチェックハンドラ型
+* 特定のハンドラ呼び出しをスキップするかどうか判定に反応する場合、このハンドラを追加でアタッチする
+* （※現状、とくせい「かたやぶり」が特定のとくせいを無効化する場合に使用することを想定）
+*
+* myHandle      自分自身のハンドラ
+* factorType    反応ファクタータイプ（ワザ、とくせい、アイテム等）
+* eventType     イベントID
+* subID         ファクタータイプごとのサブID（ワザなら「なみのり」，とくせいなら「いかく」などのID)
+* pokeID        主体となるポケモンのID
+*
+* return  スキップする場合TRUE
+*/
+//--------------------------------------------------------------
+typedef BOOL (*BtlEventSkipCheckHandler)( BTL_EVENT_FACTOR* myHandle, BtlEventFactor factorType, BtlEventType eventType, u16 subID, u8 pokeID );
 
 //--------------------------------------------------------------
 /**
@@ -66,7 +84,8 @@ extern void BTL_EVENT_FACTOR_ChangePokeParam( BTL_EVENT_FACTOR* factor, u8 pokeI
 extern u16 BTL_EVENT_FACTOR_GetSubID( const BTL_EVENT_FACTOR* factor );
 extern int BTL_EVENT_FACTOR_GetWorkValue( const BTL_EVENT_FACTOR* factor, u8 workIdx );
 extern void BTL_EVENT_FACTOR_SetWorkValue( BTL_EVENT_FACTOR* factor, u8 workIdx, int value );
-
+extern u8 BTL_EVENT_FACTOR_GetPokeID( const BTL_EVENT_FACTOR* factor );
+extern void BTL_EVENT_FACTOR_AttachSkipCheckHandler( BTL_EVENT_FACTOR* factor, BtlEventSkipCheckHandler handler );
 
 //=============================================================================================
 /**

@@ -100,7 +100,6 @@ typedef enum {
   BTL_EVENT_SHRINK_FIX,             ///< ひるみ確定後
   BTL_EVENT_ICHIGEKI_CHECK,         ///< 一撃必殺チェック
   BTL_EVENT_NOT_WAZA_DAMAGE,        ///< ワザ以外のダメージチェック
-  BTL_EVENT_USE_ITEM_ENABLE,        ///< アイテム使用可否チェック
   BTL_EVENT_USE_ITEM,               ///< アイテム使用
   BTL_EVENT_TURNCHECK_BEGIN,        ///< ターンチェック（先頭）
   BTL_EVENT_TURNCHECK_END,          ///< ターンチェック（終端）
@@ -115,12 +114,13 @@ typedef enum {
   BTL_EVENT_CALC_DRAIN,             ///< ドレイン系ワザ回復量計算
   BTL_EVENT_CALC_SPECIAL_DRAIN,     ///< ドレイン系ワザ回復量計算
   BTL_EVENT_RECOVER_HP_RATIO,       ///< HP回復ワザの回復率計算
+  BTL_EVENT_CHECK_ITEM_REACTION,    ///< アイテム反応チェック
   BTL_EVENT_CHECK_TAMETURN_SKIP,    ///< 溜めターンスキップ判定
   BTL_EVENT_TAME_START,             ///< 溜め開始
   BTL_EVENT_TAME_RELEASE,           ///< 溜め解放
   BTL_EVENT_CHECK_POKE_HIDE,        ///< ポケモンが消えている状態のワザ命中チェック
   BTL_EVENT_SET_ITEM_BEFORE,        ///< アイテム書き換え前の成否チェック
-  BTL_EVENT_SET_ITEM_AFTER,         ///< アイテム書き換え後のリアクション
+  BTL_EVENT_SET_ITEM,
   BTL_EVENT_UNCATEGORIZE_WAZA,            ///< 未分類ワザ処理
   BTL_EVENT_UNCATEGORIZE_WAZA_NO_TARGET,  ///< 未分類ワザ処理（ターゲットいないワザ）
 

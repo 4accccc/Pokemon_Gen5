@@ -50,6 +50,7 @@ typedef struct {
   const POKEMON_PARAM*  hensinSrc;
   u16   hp;
   u16   item;
+  u16   consumedItem;
   u8    myID;
 }BPP_CORE_PARAM;
 
@@ -204,6 +205,7 @@ BTL_POKEPARAM*  BTL_POKEPARAM_Create( const POKEMON_PARAM* pp, u8 pokeID, HEAPID
   bpp->coreParam.ppSrc = pp;
   bpp->coreParam.hp = PP_Get( pp, ID_PARA_hp, 0 );
   bpp->coreParam.item = PP_Get( pp, ID_PARA_item, NULL );
+  bpp->coreParam.consumedItem = ITEM_DUMMY_DATA;
   bpp->coreParam.hensinSrc = NULL;
 
   setupBySrcData( bpp, pp );
@@ -1669,9 +1671,23 @@ void BPP_ChangeForm( BTL_POKEPARAM* pp, u8 formNo )
  * @param   pp
  */
 //=============================================================================================
-void BPP_RemoveItem( BTL_POKEPARAM* pp )
+void BPP_RemoveItem( BTL_POKEPARAM* bpp )
 {
-  pp->coreParam.item = ITEM_DUMMY_DATA;
+  bpp->coreParam.consumedItem = bpp->coreParam.item;
+  bpp->coreParam.item = ITEM_DUMMY_DATA;
+}
+//=============================================================================================
+/**
+ * 消費したアイテムナンバーを返す
+ *
+ * @param   bpp
+ *
+ * @retval  u16   消費したアイテムナンバー（消費していなければITEM_DUMMY_DATA）
+ */
+//=============================================================================================
+u16 BPP_GetConsumedItem( const BTL_POKEPARAM* bpp )
+{
+  return bpp->coreParam.consumedItem;
 }
 
 

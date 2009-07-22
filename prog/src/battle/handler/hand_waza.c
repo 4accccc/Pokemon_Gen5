@@ -247,6 +247,8 @@ static void handler_Koraeru( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk
 static BTL_EVENT_FACTOR*  ADD_Mamoru( u16 pri, WazaID waza, u8 pokeID );
 static void handler_Mamoru_ExeCheck( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_Mamoru( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static BTL_EVENT_FACTOR*  ADD_Recycle( u16 pri, WazaID waza, u8 pokeID );
+static void handler_Recycle( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static BTL_EVENT_FACTOR*  ADD_PsycoShift( u16 pri, WazaID waza, u8 pokeID );
 static void handler_PsycoShift( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static BTL_EVENT_FACTOR*  ADD_Itamiwake( u16 pri, WazaID waza, u8 pokeID );
@@ -593,6 +595,7 @@ BOOL  BTL_HANDLER_Waza_Add( const BTL_POKEPARAM* pp, WazaID waza )
     { WAZANO_NOMIKOMU,        ADD_Nomikomu      },
     { WAZANO_MIRAIYOTI,       ADD_Miraiyoti     },
     { WAZANO_HAMETUNONEGAI,   ADD_HametuNoNegai },
+    { WAZANO_RISAIKURU,       ADD_Recycle       },
   };
 
   int i;
@@ -3630,11 +3633,9 @@ static void handler_Hatakiotosu( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* fl
       BTL_HANDEX_PARAM_SET_ITEM* param = BTL_SVFLOW_HANDLERWORK_Push( flowWk, BTL_HANDEX_SET_ITEM, pokeID );
       param->pokeID = target_pokeID;
       param->itemID = ITEM_DUMMY_DATA;
-      param->fSucceedMsg = TRUE;
-      param->succeedStrID = BTL_STRID_SET_Hatakiotosu;
-      param->succeedStrArgCnt = 2;
-      param->succeedStrArgs[0] = target_pokeID;
-      param->succeedStrArgs[1] = itemID;
+      HANDEX_STR_Setup( &param->exStr, BTL_STRTYPE_SET, BTL_STRID_SET_Hatakiotosu );
+      HANDEX_STR_AddArg( &param->exStr, target_pokeID );
+      HANDEX_STR_AddArg( &param->exStr, itemID );
     }
   }
 }
@@ -3936,6 +3937,38 @@ static void handler_Mamoru( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk,
     flagParam = BTL_SVFLOW_HANDLERWORK_Push( flowWk, BTL_HANDEX_SET_TURNFLAG, pokeID );
     flagParam->pokeID = pokeID;
     flagParam->flag = BPP_TURNFLG_MAMORU;
+  }
+}
+//----------------------------------------------------------------------------------
+/**
+ * リサイクル
+ */
+//----------------------------------------------------------------------------------
+static BTL_EVENT_FACTOR*  ADD_Recycle( u16 pri, WazaID waza, u8 pokeID )
+{
+  static const BtlEventHandlerTable HandlerTable[] = {
+    { BTL_EVENT_UNCATEGORIZE_WAZA,     handler_Recycle },          // 未分類ワザハンドラ
+    { BTL_EVENT_NULL, NULL },
+  };
+  return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_WAZA, waza, pri, pokeID, HandlerTable );
+}
+static void handler_Recycle( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+{
+  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
+  {
+    const BTL_POKEPARAM* bpp = BTL_SVFLOW_RECEPT_GetPokeParam( flowWk, pokeID );
+    u16 itemID = BPP_GetConsumedItem( bpp );
+    if( itemID != ITEM_DUMMY_DATA )
+    {
+      BTL_HANDEX_PARAM_SET_ITEM* param = BTL_SVFLOW_HANDLERWORK_Push( flowWk, BTL_HANDEX_SET_ITEM, pokeID );
+
+      param->itemID = itemID;
+      param->pokeID = pokeID;
+
+      HANDEX_STR_Setup( &param->exStr, BTL_STRTYPE_SET, BTL_STRID_SET_Recycle );
+      HANDEX_STR_AddArg( &param->exStr, pokeID );
+      HANDEX_STR_AddArg( &param->exStr, itemID );
+    }
   }
 }
 //----------------------------------------------------------------------------------
