@@ -58,9 +58,21 @@ static const struct{
     UNION_PLAY_CATEGORY_TRAINERCARD, 
     UNION_PLAY_CATEGORY_TALK,
   },
+  {//UNION_SUBPROC_ID_COLOSSEUM_WARP_1VS1_SINGLE_50
+    UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_SINGLE_50, 
+    UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_SINGLE_50,
+  },
+  {//UNION_SUBPROC_ID_COLOSSEUM_WARP_1VS1_SINGLE_FREE
+    UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_SINGLE_FREE, 
+    UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_SINGLE_FREE,
+  },
+  {//UNION_SUBPROC_ID_COLOSSEUM_WARP_1VS1_SINGLE_STANDARD
+    UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_SINGLE_STANDARD, 
+    UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_SINGLE_STANDARD,
+  },
   {//UNION_SUBPROC_ID_COLOSSEUM_WARP
-    UNION_PLAY_CATEGORY_COLOSSEUM, 
-    UNION_PLAY_CATEGORY_COLOSSEUM,
+    UNION_PLAY_CATEGORY_COLOSSEUM_MULTI, 
+    UNION_PLAY_CATEGORY_COLOSSEUM_MULTI,
   },
 };
 SDK_COMPILER_ASSERT(UNION_SUBPROC_ID_MAX == NELEMS(SubProc_PlayCategoryTbl));
@@ -129,7 +141,9 @@ static GMEVENT_RESULT UnionSubProc_GameChangeEvent(GMEVENT * event, int * seq, v
   	  child_event = EVENT_FieldSubProc(
   	    gsys, subev->fieldWork, TRCARD_OVERLAY_ID, &TrCardSysCommProcData, subproc->parent_work);
   	  break;
-  	case UNION_SUBPROC_ID_COLOSSEUM_WARP:
+  	case UNION_SUBPROC_ID_COLOSSEUM_WARP_1VS1_SINGLE_50:
+  	case UNION_SUBPROC_ID_COLOSSEUM_WARP_1VS1_SINGLE_FREE:
+  	case UNION_SUBPROC_ID_COLOSSEUM_WARP_1VS1_SINGLE_STANDARD:
       {
         PLAYER_WORK *plWork = GAMESYSTEM_GetMyPlayerWork( gsys );
         VecFx32 pos;
@@ -138,6 +152,17 @@ static GMEVENT_RESULT UnionSubProc_GameChangeEvent(GMEVENT * event, int * seq, v
         pos.y = 0;
         pos.z = 136 << FX32_SHIFT;
         child_event = DEBUG_EVENT_ChangeMapPos(gsys, subev->fieldWork, ZONE_ID_CLOSSEUM, &pos, 0);
+      }
+      break;
+  	case UNION_SUBPROC_ID_COLOSSEUM_WARP_MULTI:
+      {
+        PLAYER_WORK *plWork = GAMESYSTEM_GetMyPlayerWork( gsys );
+        VecFx32 pos;
+        
+        pos.x = (88 + 16*GFL_NET_GetNetID(GFL_NET_HANDLE_GetCurrentHandle())) << FX32_SHIFT;
+        pos.y = 0;
+        pos.z = 136 << FX32_SHIFT;
+        child_event = DEBUG_EVENT_ChangeMapPos(gsys, subev->fieldWork, ZONE_ID_CLOSSEUM02, &pos,0);
       }
       break;
   	default:

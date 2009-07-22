@@ -48,7 +48,10 @@ void Union_Main(GAME_COMM_SYS_PTR game_comm, FIELD_MAIN_WORK *fieldmap)
         //下画面反映
       }
       break;
-    case UNION_PLAY_CATEGORY_COLOSSEUM:
+    case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_SINGLE_50:
+    case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_SINGLE_FREE:
+    case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_SINGLE_STANDARD:
+    case UNION_PLAY_CATEGORY_COLOSSEUM_MULTI:
       if(UnionSubProc_IsExits(unisys) == FALSE){  //サブPROCが無い時のみ実行
         //キー操作によるイベント起動
         UnionOneself_Update(unisys, fieldmap);

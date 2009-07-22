@@ -29,9 +29,11 @@
 typedef struct{
   STRCODE name[PERSON_NAME_SIZE + EOM_SIZE];  ///<名前
   u32 id;               ///< ID(トレーナーカードにかかれているID)
+  u8 mac_address[6];
   u8 sex;
+  u8 trainer_view;
   u8 occ;               ///< TRUE:データ有効
-  u8 padding[2];
+  u8 padding[3];
 }COLOSSEUM_BASIC_STATUS;
 
 ///親だけが持つシステムデータ

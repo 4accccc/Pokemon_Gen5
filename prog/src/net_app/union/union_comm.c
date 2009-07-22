@@ -494,13 +494,12 @@ static void UnionComm_SetBeaconParam(UNION_SYSTEM_PTR unisys, UNION_BEACON *beac
     else{
       GFL_STD_MemCopy(situ->connect_pc->mac_address, beacon->connect_mac_address, 6);
     }
-    beacon->connect_mac_mode = UNION_CONNECT_MAC_MODE_PARENT;
   }
   else if(situ->calling_pc != NULL){
     GFL_STD_MemCopy(situ->calling_pc->mac_address, beacon->connect_mac_address, 6);
-    beacon->connect_mac_mode = UNION_CONNECT_MAC_MODE_CONNECT;
   }
   
+  beacon->connect_num = GFL_NET_GetConnectNum();
   beacon->pm_version = PM_VERSION;
   beacon->language = PM_LANG;
   beacon->union_status = situ->union_status;
@@ -642,8 +641,8 @@ void UnionMySituation_Clear(UNION_SYSTEM_PTR unisys)
 void UnionMyComm_Init(UNION_SYSTEM_PTR unisys, UNION_MY_COMM *mycomm)
 {
   GFL_STD_MemClear(mycomm, sizeof(UNION_MY_COMM));
-  mycomm->mainmenu_select = UNION_MSG_MENU_SELECT_NULL;
-  mycomm->submenu_select = UNION_MSG_MENU_SELECT_NULL;
+  mycomm->mainmenu_select = UNION_MENU_SELECT_NULL;
+  mycomm->submenu_select = UNION_MENU_SELECT_NULL;
   mycomm->mainmenu_yesno_result = 0xff;
   
   //UNION_MEMBERの自分分を埋める
@@ -659,7 +658,46 @@ void UnionMyComm_Init(UNION_SYSTEM_PTR unisys, UNION_MY_COMM *mycomm)
 
 //==================================================================
 /**
- * ユニオンパーティにプレイヤーを登録する
+ * ユニオンパーティにプレイヤーを登録する　※パラメータ指定
+ *
+ * @param   mycomm		      
+ * @param   mac_address		  
+ * @param   trainer_view		
+ * @param   sex		
+ *
+ * @retval  BOOL		
+ */
+//==================================================================
+BOOL UnionMyComm_PartyAddParam(UNION_MY_COMM *mycomm, const u8 *mac_address, u8 trainer_view, u8 sex)
+{
+  int i;
+  UNION_MEMBER *member;
+  
+  for(i = 0; i < UNION_CONNECT_PLAYER_NUM; i++){
+    member = &mycomm->party.member[i];
+    if(member->occ == TRUE && GFL_STD_MemComp(mac_address, member->mac_address, 6) == 0){
+      return i;   //既に登録済み
+    }
+  }
+  
+  for(i = 0; i < UNION_CONNECT_PLAYER_NUM; i++){
+    member = &mycomm->party.member[i];
+    if(member->occ == FALSE){
+      GFL_STD_MemCopy(mac_address, member->mac_address, 6);
+      member->trainer_view = trainer_view;
+      member->sex = sex;
+      member->occ = TRUE;
+      return i;
+    }
+  }
+  
+  GF_ASSERT(0); //既にメンバーが埋まっている
+  return 0;
+}
+
+//==================================================================
+/**
+ * ユニオンパーティにプレイヤーを登録する   ※UNION_BEACON_PC指定
  *
  * @param   unisys		
  * @param   pc		    登録対象のPCへのポインタ
@@ -669,22 +707,7 @@ void UnionMyComm_Init(UNION_SYSTEM_PTR unisys, UNION_MY_COMM *mycomm)
 //==================================================================
 BOOL UnionMyComm_PartyAdd(UNION_MY_COMM *mycomm, const UNION_BEACON_PC *pc)
 {
-  int i;
-  UNION_MEMBER *member;
-  
-  for(i = 0; i < UNION_CONNECT_PLAYER_NUM; i++){
-    member = &mycomm->party.member[i];
-    if(member->occ == FALSE){
-      GFL_STD_MemCopy(pc->mac_address, member->mac_address, 6);
-      member->trainer_view = pc->beacon.trainer_view;
-      member->sex = pc->beacon.sex;
-      member->occ = TRUE;
-      return i;
-    }
-  }
-  
-  GF_ASSERT(0); //既にメンバーが埋まっている
-  return 0;
+  return UnionMyComm_PartyAddParam(mycomm, pc->mac_address, pc->beacon.trainer_view, pc->beacon.sex);
 }
 
 //==================================================================

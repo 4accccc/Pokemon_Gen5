@@ -24,6 +24,7 @@
 #include "colosseum.h"
 #include "colosseum_tool.h"
 #include "union_chara.h"
+#include "field/fieldmap_ctrl_grid.h"
 
 
 //==============================================================================
@@ -75,9 +76,11 @@ static BOOL OneselfSeq_TalkExit_Child(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATIO
 static BOOL OneselfSeq_TalkPlayGameUpdate_Parent(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *situ, FIELD_MAIN_WORK *fieldWork, u8 *seq);
 static BOOL OneselfSeq_TalkPlayGameUpdate_Child(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *situ, FIELD_MAIN_WORK *fieldWork, u8 *seq);
 static BOOL OneselfSeq_TrainerCardUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *situ, FIELD_MAIN_WORK *fieldWork, u8 *seq);
+static BOOL OneselfSeq_IntrudeUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *situ, FIELD_MAIN_WORK *fieldWork, u8 *seq);
 static BOOL OneselfSeq_ShutdownUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *situ, FIELD_MAIN_WORK *fieldWork, u8 *seq);
 static BOOL OneselfSeq_Talk_Battle_Parent(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *situ, FIELD_MAIN_WORK *fieldWork, u8 *seq);
 static BOOL OneselfSeq_BattleUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *situ, FIELD_MAIN_WORK *fieldWork, u8 *seq);
+static BOOL OneselfSeq_MultiBattleUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *situ, FIELD_MAIN_WORK *fieldWork, u8 *seq);
 static BOOL OneselfSeq_ColosseumMemberWaitUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *situ, FIELD_MAIN_WORK *fieldWork, u8 *seq);
 static BOOL OneselfSeq_ColosseumInit(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *situ, FIELD_MAIN_WORK *fieldWork, u8 *seq);
 static BOOL OneselfSeq_ColosseumNormal(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *situ, FIELD_MAIN_WORK *fieldWork, u8 *seq);
@@ -155,9 +158,24 @@ static const ONESELF_FUNC_DATA OneselfFuncTbl[] = {
     OneselfSeq_ShutdownUpdate,
     NULL,
   },
-  {//UNION_STATUS_BATTLE
+  {//UNION_STATUS_BATTLE_1VS1_SINGLE_50
     NULL,
     OneselfSeq_BattleUpdate,
+    NULL,
+  },
+  {//UNION_STATUS_BATTLE_1VS1_SINGLE_FREE
+    NULL,
+    OneselfSeq_BattleUpdate,
+    NULL,
+  },
+  {//UNION_STATUS_BATTLE_1VS1_SINGLE_STANDARD
+    NULL,
+    OneselfSeq_BattleUpdate,
+    NULL,
+  },
+  {//UNION_STATUS_BATTLE_MULTI
+    NULL,
+    OneselfSeq_MultiBattleUpdate,
     NULL,
   },
   {//UNION_STATUS_TRADE
@@ -173,6 +191,11 @@ static const ONESELF_FUNC_DATA OneselfFuncTbl[] = {
   {//UNION_STATUS_RECORD
     NULL,
     OneselfSeq_ShutdownUpdate,
+    NULL,
+  },
+  {//UNION_STATUS_INTRUDE
+    NULL,
+    OneselfSeq_IntrudeUpdate,
     NULL,
   },
   {//UNION_STATUS_SHUTDOWN
@@ -247,6 +270,7 @@ int UnionOneself_Update(UNION_SYSTEM_PTR unisys, FIELD_MAIN_WORK *fieldWork)
     situ->func_proc++;
     if(situ->func_proc > ONESELF_SUBPROC_EXIT){
       situ->func_proc = 0;
+      situ->before_union_status = situ->union_status;
       situ->union_status = situ->next_union_status;
       situ->next_union_status = UNION_STATUS_NORMAL;
     }
@@ -284,15 +308,16 @@ BOOL UnionOneself_ReqStatus(UNION_SYSTEM_PTR unisys, int req_status)
 //--------------------------------------------------------------
 static BOOL Union_CheckEntryBattleRegulation(u32 menu_index)
 {
-  if(menu_index < UNION_MSG_MENU_SELECT_BATTLE_2VS2_SINGLE_50 
-      || menu_index > UNION_MSG_MENU_SELECT_BATTLE_2VS2_SINGLE_STANDARD){
+  if(menu_index < UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_SINGLE_50 
+      || menu_index > UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_SINGLE_STANDARD){
     return TRUE;  //戦闘ではないのでTRUE
   }
   
   switch(menu_index){
-  case UNION_MSG_MENU_SELECT_BATTLE_2VS2_SINGLE_50:        //対戦:2VS2:シングル:LV50
-  case UNION_MSG_MENU_SELECT_BATTLE_2VS2_SINGLE_FREE:      //対戦:2VS2:シングル:制限なし
-  case UNION_MSG_MENU_SELECT_BATTLE_2VS2_SINGLE_STANDARD:  //対戦:2VS2:シングル:スタンダード
+  case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_SINGLE_50:        //対戦:1VS1:シングル:LV50
+  case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_SINGLE_FREE:      //対戦:1VS1:シングル:制限なし
+  case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_SINGLE_STANDARD:  //対戦:1VS1:シングル:スタンダード
+  case UNION_PLAY_CATEGORY_COLOSSEUM_MULTI:                 //対戦:マルチ
     return TRUE;  //今はレギュレーションチェックなし。項目さえあっていればOK
   default:
     return FALSE;
@@ -309,15 +334,7 @@ static BOOL Union_CheckEntryBattleRegulation(u32 menu_index)
 //--------------------------------------------------------------
 static void _PlayerMinePause(FIELD_MAIN_WORK *fieldWork, int pause_flag)
 {
-  FIELD_PLAYER * player = FIELDMAP_GetFieldPlayer(fieldWork);
-  MMDL *player_mmdl = FIELD_PLAYER_GetMMdl(player);
-
-  if(pause_flag == TRUE){
-    MMDL_OnStatusBitMoveProcPause( player_mmdl );
-  }
-  else{
-    MMDL_OffStatusBitMoveProcPause( player_mmdl );
-  }
+  FIELDMAP_CTRL_GRID_SetPlayerPause( fieldWork, pause_flag );
 }
 
 
@@ -525,6 +542,7 @@ static BOOL OneselfSeq_ConnectReqExit(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATIO
 static BOOL OneselfSeq_ConnectAnswerInit(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *situ, FIELD_MAIN_WORK *fieldWork, u8 *seq)
 {
   UnionMsg_TalkStream_PrintPack(unisys, fieldWork, msg_union_test_001);
+  _PlayerMinePause(fieldWork, TRUE);
   return TRUE;
 }
 
@@ -667,13 +685,13 @@ static BOOL OneselfSeq_TalkUpdate_Parent(UNION_SYSTEM_PTR unisys, UNION_MY_SITUA
       case FLDMENUFUNC_NULL:
         break;
       case FLDMENUFUNC_CANCEL:
-      case UNION_MSG_MENU_SELECT_CANCEL:
+      case UNION_MENU_SELECT_CANCEL:
         OS_TPrintf("メニューをキャンセルしました\n");
-        situ->mycomm.mainmenu_select = UNION_MSG_MENU_SELECT_CANCEL;
+        situ->mycomm.mainmenu_select = UNION_MENU_SELECT_CANCEL;
         UnionOneself_ReqStatus(unisys, UNION_STATUS_TALK_LIST_SEND_PARENT);
         UnionMsg_Menu_MainMenuDel(unisys);
         return TRUE;
-      case UNION_MSG_MENU_SELECT_NO_SEND_BATTLE:
+      case UNION_MENU_NO_SEND_BATTLE:
         OS_TPrintf("対戦メニューを選択\n");
         UnionOneself_ReqStatus(unisys, UNION_STATUS_TALK_BATTLE_PARENT);
         UnionMsg_Menu_MainMenuDel(unisys);
@@ -727,7 +745,7 @@ static BOOL OneselfSeq_TalkListSendUpdate_Parent(UNION_SYSTEM_PTR unisys, UNION_
   case 0: //相手に選択したメニューを通知
 		if(UnionSend_MainMenuListResult(situ->mycomm.mainmenu_select) == TRUE){
       OS_TPrintf("リスト結果送信成功 : %d\n", situ->mycomm.mainmenu_select);
-      if(situ->mycomm.mainmenu_select == UNION_MSG_MENU_SELECT_CANCEL){
+      if(situ->mycomm.mainmenu_select == UNION_MENU_SELECT_CANCEL){
         UnionOneself_ReqStatus(unisys, UNION_STATUS_SHUTDOWN);
         return TRUE;
       }
@@ -741,7 +759,8 @@ static BOOL OneselfSeq_TalkListSendUpdate_Parent(UNION_SYSTEM_PTR unisys, UNION_
     }
     if(situ->mycomm.mainmenu_yesno_result == TRUE){
       OS_TPrintf("「はい」受信\n");
-      UnionOneself_ReqStatus(unisys, UNION_STATUS_TRAINERCARD + situ->mycomm.mainmenu_select);
+      UnionOneself_ReqStatus(unisys, 
+        UNION_STATUS_TRAINERCARD + situ->mycomm.mainmenu_select - UNION_PLAY_CATEGORY_TRAINERCARD);
       (*seq)++;
     }
     else if(situ->mycomm.mainmenu_yesno_result == FALSE){
@@ -806,19 +825,20 @@ static BOOL OneselfSeq_TalkUpdate_Child(UNION_SYSTEM_PTR unisys, UNION_MY_SITUAT
     (*seq)++;
     break;
   case 1:
-    if(situ->mycomm.mainmenu_select == UNION_MSG_MENU_SELECT_NULL){
+    if(situ->mycomm.mainmenu_select == UNION_MENU_SELECT_NULL){
       break;
     }
-    else if(situ->mycomm.mainmenu_select == UNION_MSG_MENU_SELECT_CANCEL){
+    else if(situ->mycomm.mainmenu_select == UNION_MENU_SELECT_CANCEL){
       OS_TPrintf("選択メニュー受信：キャンセル\n");
       UnionMsg_TalkStream_PrintPack(unisys, fieldWork, msg_union_test_003_06);
       UnionOneself_ReqStatus(unisys, UNION_STATUS_SHUTDOWN);
       return TRUE;
     }
-    else if(situ->mycomm.mainmenu_select < UNION_MSG_MENU_SELECT_MAX){
+    else if(situ->mycomm.mainmenu_select < UNION_PLAY_CATEGORY_MAX){
       OS_TPrintf("選択メニュー受信：%d\n", situ->mycomm.mainmenu_select);
       UnionMsg_TalkStream_PrintPack(
-        unisys, fieldWork, msg_union_test_003 + situ->mycomm.mainmenu_select);
+        unisys, fieldWork, 
+        msg_union_test_003 + situ->mycomm.mainmenu_select - UNION_PLAY_CATEGORY_TRAINERCARD);
       (*seq)++;
     }
     else{
@@ -856,7 +876,8 @@ static BOOL OneselfSeq_TalkUpdate_Child(UNION_SYSTEM_PTR unisys, UNION_MY_SITUAT
         UnionOneself_ReqStatus(unisys, UNION_STATUS_SHUTDOWN);
       }
       else{
-        UnionOneself_ReqStatus(unisys, UNION_STATUS_TRAINERCARD + situ->mycomm.mainmenu_select);
+        UnionOneself_ReqStatus(unisys, 
+          UNION_STATUS_TRAINERCARD + situ->mycomm.mainmenu_select-UNION_PLAY_CATEGORY_TRAINERCARD);
       }
       return TRUE;
     }
@@ -925,10 +946,18 @@ static BOOL OneselfSeq_Talk_Battle_Parent(UNION_SYSTEM_PTR unisys, UNION_MY_SITU
       UnionMsg_Menu_BattleMenuDel(unisys);
       (*seq)--;
     }
-    else if(select_ret == FLDMENUFUNC_CANCEL){
-      OS_TPrintf("メニューをキャンセルしました\n");
-      UnionOneself_ReqStatus(unisys, UNION_STATUS_SHUTDOWN);
-      return TRUE;
+    else if(select_ret == FLDMENUFUNC_CANCEL || select_ret == UNION_MENU_SELECT_CANCEL){
+      UnionMsg_Menu_MainMenuDel(unisys);
+      if(situ->work > 0){
+        situ->work--;
+        (*seq)--;
+      }
+      else{
+        OS_TPrintf("メニューをキャンセルしました\n");
+        situ->mycomm.mainmenu_select = UNION_MENU_SELECT_CANCEL;
+        UnionOneself_ReqStatus(unisys, UNION_STATUS_TALK_LIST_SEND_PARENT);
+        return TRUE;
+      }
     }
     else if(select_ret != FLDMENUFUNC_NULL){
       UnionMsg_Menu_BattleMenuDel(unisys);
@@ -962,34 +991,91 @@ static BOOL OneselfSeq_TalkPlayGameUpdate_Parent(UNION_SYSTEM_PTR unisys, UNION_
 {
   UNION_PLAY_CATEGORY play_category;
   u16 buf_no;
+  enum{
+    LOCALSEQ_INIT,
+    LOCALSEQ_END,
+    
+    LOCALSEQ_YESNO_SETUP,
+    LOCALSEQ_YESNO,
+  };
   
+  buf_no = UNION_CHARA_GetCharaIndex_to_ParentNo(situ->mycomm.talk_obj_id);
+
   switch(*seq){
-  case 0:
-    buf_no = UNION_CHARA_GetCharaIndex_to_ParentNo(situ->mycomm.talk_obj_id);
+  case LOCALSEQ_INIT:
     play_category = unisys->receive_beacon[buf_no].beacon.play_category;
     switch(play_category){
     case UNION_PLAY_CATEGORY_TALK:           //会話中
       UnionMsg_TalkStream_PrintPack(unisys, fieldWork, msg_union_test_013);
       UnionOneself_ReqStatus(unisys, UNION_STATUS_NORMAL);
+      (*seq) = LOCALSEQ_END;
       break;
     case UNION_PLAY_CATEGORY_TRAINERCARD:    //トレーナーカード
       UnionMsg_TalkStream_PrintPack(unisys, fieldWork, msg_union_test_014);
       UnionOneself_ReqStatus(unisys, UNION_STATUS_NORMAL);
+      (*seq) = LOCALSEQ_END;
       break;
-    case UNION_PLAY_CATEGORY_COLOSSEUM:      //コロシアム
+    case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_SINGLE_50:      //コロシアム
+    case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_SINGLE_FREE:      //コロシアム
+    case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_SINGLE_STANDARD:      //コロシアム
       UnionMsg_TalkStream_PrintPack(unisys, fieldWork, msg_union_test_015);
       UnionOneself_ReqStatus(unisys, UNION_STATUS_NORMAL);
+      (*seq) = LOCALSEQ_END;
+      break;
+    case UNION_PLAY_CATEGORY_COLOSSEUM_MULTI:      //コロシアム
+      if(unisys->receive_beacon[buf_no].beacon.connect_num < UnionMsg_GetMemberMax(play_category)){
+        UnionMsg_TalkStream_PrintPack(unisys, fieldWork, msg_union_test_016);
+        (*seq) = LOCALSEQ_YESNO_SETUP;
+      }
+      else{ //人数がいっぱい
+        UnionMsg_TalkStream_PrintPack(unisys, fieldWork, msg_union_test_016_01);
+        UnionOneself_ReqStatus(unisys, UNION_STATUS_NORMAL);
+        (*seq) = LOCALSEQ_END;
+      }
       break;
     default:
       OS_TPrintf("未知の遊び play_category = %d\n", situ->play_category);
       UnionOneself_ReqStatus(unisys, UNION_STATUS_NORMAL);
+      (*seq) = LOCALSEQ_END;
       break;
     }
-    (*seq)++;
     break;
-  case 1:
+  case LOCALSEQ_END:
     if(UnionMsg_TalkStream_Check(unisys) == TRUE){
       return TRUE;
+    }
+    break;
+
+  case LOCALSEQ_YESNO_SETUP:   //「はい・いいえ」選択
+    if(UnionMsg_TalkStream_Check(unisys) == TRUE){
+      UnionMsg_YesNo_Setup(unisys, fieldWork);
+      (*seq)++;
+    }
+    break;
+  case LOCALSEQ_YESNO:
+    {
+      BOOL result;
+      if(UnionMsg_YesNo_SelectLoop(unisys, &result) == TRUE){
+        UnionMsg_YesNo_Del(unisys);
+        if(result == FALSE){
+          UnionMsg_TalkStream_PrintPack(unisys, fieldWork, msg_union_test_018);
+          UnionOneself_ReqStatus(unisys, UNION_STATUS_NORMAL);
+          (*seq) = LOCALSEQ_END;
+        }
+        else{
+          //レギュレーションを見て参加可能かチェック
+          if(Union_CheckEntryBattleRegulation(situ->mycomm.mainmenu_select) == FALSE){
+            UnionMsg_TalkStream_PrintPack(unisys, fieldWork, msg_union_test_010);
+            UnionOneself_ReqStatus(unisys, UNION_STATUS_NORMAL);
+            (*seq) = LOCALSEQ_END;
+          }
+          else{
+            situ->mycomm.mainmenu_yesno_result = result;
+            UnionOneself_ReqStatus(unisys, UNION_STATUS_INTRUDE);
+            (*seq) = LOCALSEQ_END;
+          }
+        }
+      }
     }
     break;
   }
@@ -1026,8 +1112,14 @@ static BOOL OneselfSeq_TalkPlayGameUpdate_Child(UNION_SYSTEM_PTR unisys, UNION_M
       UnionMsg_TalkStream_PrintPack(unisys, fieldWork, msg_union_test_014);
       UnionOneself_ReqStatus(unisys, UNION_STATUS_NORMAL);
       break;
-    case UNION_PLAY_CATEGORY_COLOSSEUM:      //コロシアム
+    case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_SINGLE_50:      //コロシアム
+    case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_SINGLE_FREE:      //コロシアム
+    case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_SINGLE_STANDARD:      //コロシアム
       UnionMsg_TalkStream_PrintPack(unisys, fieldWork, msg_union_test_015);
+      UnionOneself_ReqStatus(unisys, UNION_STATUS_NORMAL);
+      break;
+    case UNION_PLAY_CATEGORY_COLOSSEUM_MULTI:      //コロシアム
+      UnionMsg_TalkStream_PrintPack(unisys, fieldWork, msg_union_test_016_01);
       UnionOneself_ReqStatus(unisys, UNION_STATUS_NORMAL);
       break;
     default:
@@ -1165,6 +1257,76 @@ static BOOL OneselfSeq_TrainerCardUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SITUA
 
 //--------------------------------------------------------------
 /**
+ * 乱入処理：更新
+ *
+ * @param   unisys		
+ * @param   situ		
+ * @param   fieldWork		
+ * @param   seq		
+ *
+ * @retval  BOOL		
+ */
+//--------------------------------------------------------------
+static BOOL OneselfSeq_IntrudeUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *situ, FIELD_MAIN_WORK *fieldWork, u8 *seq)
+{
+  u16 buf_no = UNION_CHARA_GetCharaIndex_to_ParentNo(situ->mycomm.talk_obj_id);
+
+  switch(*seq){
+  case 0:
+    {
+      OS_TPrintf("乱入開始します\n");
+      OS_TPrintf("ChangeOver モード切替：子固定\n");
+      GFL_NET_ChangeoverModeSet(
+        GFL_NET_CHANGEOVER_MODE_FIX_CHILD, TRUE, unisys->receive_beacon[buf_no].mac_address);
+    }
+    UnionMsg_TalkStream_PrintPack(unisys, fieldWork, msg_union_test_012);
+    situ->wait = 0;
+    (*seq)++;
+    break;
+  case 1:
+    if(UnionMsg_TalkStream_Check(unisys) == FALSE){
+      break;
+    }
+    
+    if(GFL_NET_GetConnectNum() > 1){
+      OS_TPrintf("接続しました！：子\n");
+      UnionMySituation_SetParam(
+        unisys, UNION_MYSITU_PARAM_IDX_CONNECT_PC, &unisys->receive_beacon[buf_no]);
+      situ->mycomm.mainmenu_select = unisys->receive_beacon[buf_no].beacon.play_category;
+      switch(situ->mycomm.mainmenu_select){
+      case UNION_PLAY_CATEGORY_COLOSSEUM_MULTI:
+        UnionOneself_ReqStatus(unisys, UNION_STATUS_BATTLE_MULTI);
+        break;
+      default:
+        OS_TPrintf("設定されていないcategory = %d\n", situ->mycomm.mainmenu_select);
+        GF_ASSERT(0);
+        break;
+      }
+      (*seq)++;
+    }
+    else{
+      situ->wait++;
+      if(situ->wait > ONESELF_SERVER_TIMEOUT || (GFL_UI_KEY_GetTrg() & PAD_BUTTON_B)){
+        GFL_NET_ChangeoverModeSet(GFL_NET_CHANGEOVER_MODE_NORMAL, FALSE, NULL);
+        UnionOneself_ReqStatus(unisys, UNION_STATUS_NORMAL);
+        UnionMsg_TalkStream_PrintPack(unisys, fieldWork, msg_union_test_007);
+        OS_TPrintf("親と接続出来なかった為キャンセルしました\n");
+        (*seq)++;
+      }
+    }
+    break;
+  case 2:
+    if(UnionMsg_TalkStream_Check(unisys) == TRUE){
+      return TRUE;
+    }
+    break;
+  }
+  
+  return FALSE;
+}
+
+//--------------------------------------------------------------
+/**
  * 切断処理：更新
  *
  * @param   unisys		
@@ -1249,7 +1411,108 @@ static BOOL OneselfSeq_BattleUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION 
     }
     break;
   case 4:
-    UnionSubProc_EventSet(unisys, UNION_SUBPROC_ID_COLOSSEUM_WARP, NULL);
+    switch(situ->mycomm.mainmenu_select){
+    case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_SINGLE_50:
+      UnionSubProc_EventSet(unisys, UNION_SUBPROC_ID_COLOSSEUM_WARP_1VS1_SINGLE_50, NULL);
+      break;
+    case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_SINGLE_FREE:
+      UnionSubProc_EventSet(unisys, UNION_SUBPROC_ID_COLOSSEUM_WARP_1VS1_SINGLE_FREE, NULL);
+      break;
+    case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_SINGLE_STANDARD:
+      UnionSubProc_EventSet(unisys, UNION_SUBPROC_ID_COLOSSEUM_WARP_1VS1_SINGLE_STANDARD, NULL);
+      break;
+    case UNION_PLAY_CATEGORY_COLOSSEUM_MULTI:
+      UnionSubProc_EventSet(unisys, UNION_SUBPROC_ID_COLOSSEUM_WARP_MULTI, NULL);
+      break;
+    default:
+      GF_ASSERT(0); //不明なID
+      break;
+    }
+    (*seq)++;
+    break;
+  case 5:
+    if(UnionSubProc_IsExits(unisys) == FALSE){
+      OS_TPrintf("コロシアム遷移のサブPROC終了\n");
+
+      //通信プレイヤー制御システムの生成
+      GF_ASSERT(unisys->colosseum_sys == NULL);
+      unisys->colosseum_sys = Colosseum_InitSystem(
+        unisys->uniparent->game_data, fieldWork, unisys->uniparent->mystatus);
+
+      _PlayerMinePause(fieldWork, TRUE);
+      UnionOneself_ReqStatus(unisys, UNION_STATUS_COLOSSEUM_MEMBER_WAIT);
+      return TRUE;
+    }
+    break;
+  }
+  
+  return FALSE;
+}
+
+//--------------------------------------------------------------
+/**
+ * マルチ：コロシアム遷移：更新
+ *
+ * @param   unisys		
+ * @param   situ		
+ * @param   fieldWork		
+ * @param   seq		
+ *
+ * @retval  BOOL		
+ */
+//--------------------------------------------------------------
+static BOOL OneselfSeq_MultiBattleUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *situ, FIELD_MAIN_WORK *fieldWork, u8 *seq)
+{
+  switch(*seq){
+  case 0:
+    OS_TPrintf("マルチ対戦\n");
+    UnionMsg_TalkStream_PrintPack(unisys, fieldWork, msg_union_talkboy_03_02);
+    (*seq)++;
+    break;
+  case 1:
+    if(UnionMsg_TalkStream_Check(unisys) == TRUE){
+      (*seq)++;
+    }
+    break;
+  case 2:
+    if(situ->before_union_status != UNION_STATUS_INTRUDE){  //乱入の場合は同期取りなし
+      GFL_NET_HANDLE_TimingSyncStart(
+        GFL_NET_HANDLE_GetCurrentHandle(), UNION_TIMING_COLOSSEUM_PROC_BEFORE);
+      OS_TPrintf("コロシアム遷移前の同期取り開始\n");
+    }
+    (*seq)++;
+    break;
+  case 3:
+    if(situ->before_union_status != UNION_STATUS_INTRUDE){  //乱入の場合は同期取りなし
+  		if(GFL_NET_HANDLE_IsTimingSync(
+  		    GFL_NET_HANDLE_GetCurrentHandle(), UNION_TIMING_COLOSSEUM_PROC_BEFORE) == TRUE){
+        OS_TPrintf("コロシアム遷移前の同期取り成功\n");
+        (*seq)++;
+      }
+    }
+    else{
+      (*seq)++;
+    }
+    break;
+  case 4:
+    switch(situ->mycomm.mainmenu_select){
+    case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_SINGLE_50:
+      UnionSubProc_EventSet(unisys, UNION_SUBPROC_ID_COLOSSEUM_WARP_1VS1_SINGLE_50, NULL);
+      break;
+    case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_SINGLE_FREE:
+      UnionSubProc_EventSet(unisys, UNION_SUBPROC_ID_COLOSSEUM_WARP_1VS1_SINGLE_FREE, NULL);
+      break;
+    case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_SINGLE_STANDARD:
+      UnionSubProc_EventSet(unisys, UNION_SUBPROC_ID_COLOSSEUM_WARP_1VS1_SINGLE_STANDARD, NULL);
+      break;
+    case UNION_PLAY_CATEGORY_COLOSSEUM_MULTI:
+      UnionSubProc_EventSet(unisys, UNION_SUBPROC_ID_COLOSSEUM_WARP_MULTI, NULL);
+      break;
+    default:
+      OS_TPrintf("不明なID = %d\n", situ->mycomm.mainmenu_select);
+      GF_ASSERT(0); //不明なID
+      break;
+    }
     (*seq)++;
     break;
   case 5:
@@ -1338,6 +1601,14 @@ static BOOL OneselfSeq_ColosseumMemberWaitUpdate(UNION_SYSTEM_PTR unisys, UNION_
     break;
   case 7:
     if(ColosseumTool_AllReceiveCheck_BasicStatus(clsys) == TRUE){
+      int i, member_num;
+      member_num = GFL_NET_GetConnectNum();
+      for(i = 0; i < member_num; i++){
+        if(clsys->basic_status[i].occ == TRUE){
+          UnionMyComm_PartyAddParam(&situ->mycomm, clsys->basic_status[i].mac_address, 
+            clsys->basic_status[i].trainer_view, clsys->basic_status[i].sex);
+        }
+      }
       OS_TPrintf("全員分の基本情報を受信完了\n");
       (*seq)++;
     }

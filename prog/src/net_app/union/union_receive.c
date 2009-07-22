@@ -69,8 +69,7 @@ static void UnionReceive_BeaconCheck(UNION_SYSTEM_PTR unisys, UNION_BEACON_PC *b
   
   if(situ->union_status == UNION_STATUS_NORMAL){
     //接続要求チェック
-    if(bpc->beacon.union_status == UNION_STATUS_CONNECT_REQ 
-        && bpc->beacon.connect_mac_mode == UNION_CONNECT_MAC_MODE_CONNECT)
+    if(bpc->beacon.union_status == UNION_STATUS_CONNECT_REQ)
     {
       u8 my_mac[6];
       OS_GetMacAddress(my_mac);

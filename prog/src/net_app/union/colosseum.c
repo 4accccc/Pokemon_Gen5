@@ -61,7 +61,9 @@ COLOSSEUM_SYSTEM_PTR Colosseum_InitSystem(GAMEDATA *game_data, FIELD_MAIN_WORK *
   my_basic = &clsys->basic_status[my_net_id];
   MyStatus_CopyNameStrCode(myst, my_basic->name, PERSON_NAME_SIZE + EOM_SIZE);
   my_basic->id = MyStatus_GetID(myst);
+  OS_GetMacAddress(my_basic->mac_address);
   my_basic->sex = MyStatus_GetMySex(myst);
+  my_basic->trainer_view = MyStatus_GetTrainerView(myst);
   my_basic->occ = TRUE;
   
   //自分のトレーナーカード情報セット

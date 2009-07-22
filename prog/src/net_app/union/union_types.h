@@ -22,11 +22,20 @@
 #define UNION_BEACON_VALID        (0x7a)
 
 ///実行中のゲームカテゴリー
-typedef enum{
+typedef enum{ //※MenuMemberMax, UNION_STATUS_TRAINERCARD以降のテーブルと並びを同じにしておくこと！
   UNION_PLAY_CATEGORY_UNION,          ///<ユニオンルーム
   UNION_PLAY_CATEGORY_TALK,           ///<会話中
   UNION_PLAY_CATEGORY_TRAINERCARD,    ///<トレーナーカード
-  UNION_PLAY_CATEGORY_COLOSSEUM,      ///<コロシアム
+  UNION_PLAY_CATEGORY_PICTURE,        ///<お絵かき
+  UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_SINGLE_50,         ///<コロシアム
+  UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_SINGLE_FREE,       ///<コロシアム
+  UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_SINGLE_STANDARD,   ///<コロシアム
+  UNION_PLAY_CATEGORY_COLOSSEUM_MULTI,      ///<コロシアム
+  UNION_PLAY_CATEGORY_TRADE,          ///<ポケモン交換
+  UNION_PLAY_CATEGORY_GURUGURU,       ///<ぐるぐる交換
+  UNION_PLAY_CATEGORY_RECORD,         ///<レコードコーナー
+  
+  UNION_PLAY_CATEGORY_MAX,
 }UNION_PLAY_CATEGORY;
 
 ///ユニオン：ステータス
@@ -44,12 +53,19 @@ enum{
   UNION_STATUS_TALK_PLAYGAME_PARENT,  ///<既に遊んでいる相手(親)に話しかけた
   UNION_STATUS_TALK_PLAYGAME_CHILD,   ///<既に遊んでいる相手(子)に話しかけた
   
+  //PLAY_CATEGORYと並びを同じにする必要がある　ここから============
   UNION_STATUS_TRAINERCARD, ///<トレーナーカード
   UNION_STATUS_PICTURE,     ///<お絵かき
-  UNION_STATUS_BATTLE,      ///<戦闘
+  UNION_STATUS_BATTLE_1VS1_SINGLE_50,        ///<戦闘
+  UNION_STATUS_BATTLE_1VS1_SINGLE_FREE,      ///<戦闘
+  UNION_STATUS_BATTLE_1VS1_SINGLE_STANDARD,  ///<戦闘
+  UNION_STATUS_BATTLE_MULTI,      ///<戦闘
   UNION_STATUS_TRADE,       ///<交換
   UNION_STATUS_GURUGURU,    ///<ぐるぐる交換
   UNION_STATUS_RECORD,      ///<レコードコーナー
+  // ここまで======================
+  
+  UNION_STATUS_INTRUDE,     ///<乱入
   UNION_STATUS_SHUTDOWN,    ///<切断
   
   UNION_STATUS_COLOSSEUM_MEMBER_WAIT,   ///<コロシアム：メンバー集合待ち
@@ -112,7 +128,10 @@ enum{
 typedef enum{
   UNION_SUBPROC_ID_NULL,              ///<サブPROC無し
   UNION_SUBPROC_ID_TRAINERCARD,       ///<トレーナーカード
-  UNION_SUBPROC_ID_COLOSSEUM_WARP,    ///<コロシアム遷移
+  UNION_SUBPROC_ID_COLOSSEUM_WARP_1VS1_SINGLE_50,    ///<コロシアム遷移
+  UNION_SUBPROC_ID_COLOSSEUM_WARP_1VS1_SINGLE_FREE,    ///<コロシアム遷移
+  UNION_SUBPROC_ID_COLOSSEUM_WARP_1VS1_SINGLE_STANDARD,    ///<コロシアム遷移
+  UNION_SUBPROC_ID_COLOSSEUM_WARP_MULTI,    ///<コロシアム遷移(マルチ部屋)
   
   UNION_SUBPROC_ID_MAX,
 }UNION_SUBPROC_ID;
@@ -178,18 +197,10 @@ typedef struct{
   u16 word[2];
 }UNION_BEACON_CHAT;
 
-///UNION_BEACON.connect_mac_addressの持つ意味
-///状況に応じてmacAddress格納ワークを複数持たなくて良い、ビーコンがなかなか届かなくて
-///切断＞また接続のような妙な動作を起こさないようにモードをセットで使用する
-enum{
-  UNION_CONNECT_MAC_MODE_CONNECT,       ///<接続したい人へのMacAddressが入っている
-  UNION_CONNECT_MAC_MODE_PARENT,        ///<接続中の通信グループの親のMacAddressが入っている
-};
-
 ///ユニオンで送受信するビーコンデータ
 typedef struct{
   u8 connect_mac_address[6];  ///<接続したい人へのMacAddress
-  u8 connect_mac_mode;        ///<connect_mac_addressの持つ意味(UNION_CONNECT_MAC_MODE_???)
+  u8 connect_num;             ///<現在の接続人数
   u8 padding;
   
   u8 pm_version;              ///<PM_VERSION
@@ -273,6 +284,7 @@ typedef struct{
   UNION_BEACON_PC *connect_pc; ///<接続中の人のreceive_beaconへのポインタ
   s16 wait;
   s16 work;
+  u8 before_union_status;     ///<前に実行していたプレイヤーの状況(UNION_STATUS_???)
   u8 next_union_status;       ///<次に実行するプレイヤーの状況(UNION_STATUS_???)
   u8 func_proc;
   u8 func_seq;

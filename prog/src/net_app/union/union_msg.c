@@ -36,15 +36,17 @@ static const struct{
   u8 member_max;
   u8 padding[3];
 }MenuMemberMax[] = {
-  {2},      //UNION_MSG_MENU_SELECT_AISATU
-  {4},      //UNION_MSG_MENU_SELECT_OEKAKI
-  {2},      //UNION_MSG_MENU_SELECT_BATTLE_2VS2_SINGLE_50
-  {2},      //UNION_MSG_MENU_SELECT_BATTLE_2VS2_SINGLE_FREE
-  {2},      //UNION_MSG_MENU_SELECT_BATTLE_2VS2_SINGLE_STANDARD
-  {2},      //UNION_MSG_MENU_SELECT_KOUKAN
-  {4},      //UNION_MSG_MENU_SELECT_GURUGURU
-  {5},      //UNION_MSG_MENU_SELECT_RECORD
-  {2},      //UNION_MSG_MENU_SELECT_CANCEL
+  {2},      //UNION_PLAY_CATEGORY_UNION,          ///<ユニオンルーム
+  {2},      //UNION_PLAY_CATEGORY_TALK,           ///<会話中
+  {2},      //UNION_PLAY_CATEGORY_TRAINERCARD,    ///<トレーナーカード
+  {4},      //UNION_PLAY_CATEGORY_PICTURE,        ///<お絵かき
+  {2},      //UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_SINGLE_50,         ///<コロシアム
+  {2},      //UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_SINGLE_FREE,       ///<コロシアム
+  {2},      //UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_SINGLE_STANDARD,   ///<コロシアム
+  {4},      //UNION_PLAY_CATEGORY_COLOSSEUM_MULTI,      ///<コロシアム
+  {2},      //UNION_PLAY_CATEGORY_TRADE,          ///<ポケモン交換
+  {4},      //UNION_PLAY_CATEGORY_GURUGURU,       ///<ぐるぐる交換
+  {5},      //UNION_PLAY_CATEGORY_RECORD,         ///<レコードコーナー
 };
 
 //--------------------------------------------------------------
@@ -53,13 +55,13 @@ static const struct{
 ///メインメニューリスト
 static const FLDMENUFUNC_LIST MainMenuList[] =
 {
-  {msg_union_select_01, (void*)UNION_MSG_MENU_SELECT_AISATU},   //挨拶
-  {msg_union_select_02, (void*)UNION_MSG_MENU_SELECT_OEKAKI},   //お絵かき
-  {msg_union_select_03, (void*)UNION_MSG_MENU_SELECT_NO_SEND_BATTLE},   //対戦
-  {msg_union_select_04, (void*)UNION_MSG_MENU_SELECT_KOUKAN},   //交換
-  {msg_union_select_06, (void*)UNION_MSG_MENU_SELECT_GURUGURU}, //ぐるぐる交換
-  {msg_union_select_07, (void*)UNION_MSG_MENU_SELECT_RECORD},   //レコードコーナー
-  {msg_union_select_05, (void*)UNION_MSG_MENU_SELECT_CANCEL},   //やめる
+  {msg_union_select_01, (void*)UNION_PLAY_CATEGORY_TRAINERCARD},   //挨拶
+  {msg_union_select_02, (void*)UNION_PLAY_CATEGORY_PICTURE},   //お絵かき
+  {msg_union_select_03, (void*)UNION_MENU_NO_SEND_BATTLE},   //対戦
+  {msg_union_select_04, (void*)UNION_PLAY_CATEGORY_TRADE},   //交換
+  {msg_union_select_06, (void*)UNION_PLAY_CATEGORY_GURUGURU}, //ぐるぐる交換
+  {msg_union_select_07, (void*)UNION_PLAY_CATEGORY_RECORD},   //レコードコーナー
+  {msg_union_select_05, (void*)UNION_MENU_SELECT_CANCEL},   //やめる
 };
 
 ///メニューヘッダー(メインメニュー用)
@@ -93,7 +95,7 @@ static const FLDMENUFUNC_HEADER MenuHeader_MainMenu =
 static const FLDMENUFUNC_LIST BattleMenuList_Number[] =
 {
   {msg_union_battle_01_01, (void*)BattleMenuList_Mode},   //二人対戦
-  {msg_union_battle_01_02, (void*)FLDMENUFUNC_CANCEL},    //四人対戦
+  {msg_union_battle_01_02, (void*)UNION_PLAY_CATEGORY_COLOSSEUM_MULTI},    //四人対戦
   {msg_union_battle_01_03, (void*)FLDMENUFUNC_CANCEL},    //やめる
 };
 
@@ -110,9 +112,9 @@ static const FLDMENUFUNC_LIST BattleMenuList_Mode[] =
 ///二人対戦：シングル：せいげんなし、スタンダード、もどる
 static const FLDMENUFUNC_LIST BattleMenuList_Reg[] =
 {
-  {msg_union_battle_01_09, (void*)UNION_MSG_MENU_SELECT_BATTLE_2VS2_SINGLE_50},//レベル５０ルール
-  {msg_union_battle_01_10, (void*)UNION_MSG_MENU_SELECT_BATTLE_2VS2_SINGLE_FREE}, //制限なし
-  {msg_union_battle_01_11, (void*)UNION_MSG_MENU_SELECT_BATTLE_2VS2_SINGLE_STANDARD},//スタンダード
+  {msg_union_battle_01_09, (void*)UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_SINGLE_50},//レベル５０ルール
+  {msg_union_battle_01_10, (void*)UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_SINGLE_FREE}, //制限なし
+  {msg_union_battle_01_11, (void*)UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_SINGLE_STANDARD},//スタンダード
   {msg_union_battle_01_12, (void*)BattleMenuList_Mode},   //もどる
 };
 
@@ -174,9 +176,9 @@ static const FLDMENUFUNC_HEADER MenuHeader_Battle =
  * @retval  int		最大参加人数
  */
 //==================================================================
-int UnionMsg_GetMemberMax(int menu_index)
+int UnionMsg_GetMemberMax(UNION_PLAY_CATEGORY menu_index)
 {
-  GF_ASSERT(menu_index < UNION_MSG_MENU_SELECT_MAX);
+  GF_ASSERT(menu_index < UNION_PLAY_CATEGORY_MAX);
   return MenuMemberMax[menu_index].member_max;
 }
 
@@ -492,7 +494,7 @@ u32 UnionMsg_Menu_BattleMenuSelectLoop(UNION_SYSTEM_PTR unisys, BOOL *next_sub_m
   *next_sub_menu = FALSE;
   
   menu_ret = UnionMsg_Menu_SelectLoop(unisys);
-  if(menu_ret < UNION_MSG_MENU_SELECT_MAX 
+  if(menu_ret < UNION_PLAY_CATEGORY_MAX 
       || menu_ret == FLDMENUFUNC_NULL || menu_ret == FLDMENUFUNC_CANCEL){
     return menu_ret;
   }
