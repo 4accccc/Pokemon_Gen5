@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-07-23T16:35:19"/>
+	<create user="matsumiya" host="W00207" date="2009-07-23T16:45:55"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -386,7 +386,7 @@
 その　ニックネームで　決めちゃうかい？</language>
 	</row>
 
-	<row id="msg_t01r0401_hakase2r_05">
+	<row id="msg_t01r0401_hakase2_05">
 		<comment>♂
 ・名前入力画面から復帰して
 　ニックネーム変わった
