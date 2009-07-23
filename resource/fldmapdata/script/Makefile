@@ -42,9 +42,11 @@ TARGET_DIR = $(PROJECT_ROOT)/prog/arc/fieldmap
 TARGET_NARC = script_seq.narc
 TARGET_NAIX = $(TARGET_NARC:.narc=.naix)
 
+
+ADD_MACRO = -I../eventdata/tmp/
 #(PM_DEBUG == yes)のときのみデバッグバージョン
 ifeq ($(PM_DEBUG),yes)
-ADD_MACRO = -DPM_DEBUG
+ADD_MACRO += -DPM_DEBUG
 endif
 
 #----------------------------------------------------------------------------
