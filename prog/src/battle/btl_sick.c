@@ -66,6 +66,7 @@ static void contProc( BTL_SVFLOW_WORK* flowWk, BTL_POKEPARAM* bpp, u8 pokeID, Wa
       contDamageCommon( flowWk, bpp, pokeID, sick, damage );
     }
   }
+  BTL_Printf("É|ÉP[%d], èÛë‘àŸèÌ[%d] Ç™åpë±íÜ...\n", pokeID, sick);
   switch( sick ){
   case WAZASICK_HOROBINOUTA:    cont_HorobiNoUta( flowWk, bpp, pokeID ); break;
   case WAZASICK_YADORIGI:       cont_Yadorigi( flowWk, bpp, pokeID ); break;
@@ -243,7 +244,7 @@ static int getCureStrID( WazaSick sick, BOOL fUseItem )
     { WAZASICK_MAHI,      BTL_STRID_SET_MahiCure,         BTL_STRID_SET_UseItem_CureMahi    },
     { WAZASICK_ENCORE,    BTL_STRID_SET_EncoreCure,       -1                                },
     { WAZASICK_KANASIBARI,BTL_STRID_SET_KanasibariCure,   -1                                },
-    { WAZASICK_SASIOSAE,  BTL_STRID_SET_Sasiosae,         BTL_STRID_SET_SasiosaeCure        },
+    { WAZASICK_SASIOSAE,  BTL_STRID_SET_SasiosaeCure,     -1                                },
 
     { WAZASICK_KONRAN,    -1,                             BTL_STRID_SET_UseItem_CureKonran  },
     { WAZASICK_MEROMERO,  -1,                             BTL_STRID_SET_UseItem_CureMero    },
@@ -290,6 +291,7 @@ int BTL_SICK_GetDefaultSickStrID( WazaSick sickID, BPP_SICK_CONT cont )
   case WAZASICK_YADORIGI:   strID = BTL_STRID_SET_Yadorigi; break;
   case WAZASICK_MIYABURU:   strID = BTL_STRID_SET_Miyaburu; break;
   case WAZASICK_NEWOHARU:   strID = BTL_STRID_SET_NeWoHaru; break;
+  case WAZASICK_SASIOSAE:   strID = BTL_STRID_SET_Sasiosae; break;
   case WAZASICK_DOKU:
     strID = BPP_SICKCONT_IsMoudokuCont(cont)? BTL_STRID_SET_MoudokuGet : BTL_STRID_SET_DokuGet;
     break;
