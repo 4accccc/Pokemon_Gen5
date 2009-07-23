@@ -438,6 +438,15 @@ end
 							end
 							str += format("0x%08x",f)
 						end
+					when "VALUE_ANGLE"
+            angle = split_data[ param_num ].to_f;
+            angle = 65535 * angle / 360
+						if angle > 0
+							angle = angle * ( 1 << 12 ) + 0.5
+						else
+							angle = angle * ( 1 << 12 ) - 0.5
+						end
+						str += format("0x%08x",angle)
 					when "FILE_DIALOG"
 						file_dialog = split_data[ param_num ] + com_list.get_com_str( split_data[ ESF_COM_STR_POS ] ).get_fd_ext( param_num -1 ) 
 						inc_header << file_dialog.sub( com_list.get_com_str( split_data[ ESF_COM_STR_POS ] ).get_fd_ext( param_num -1 ), ".h" )
