@@ -32,7 +32,7 @@
 #include "field_light.h"
 #include "field_buildmodel.h"
 #include "field_rail.h"
-#include "field_rail_loader.h"
+#include "field/field_rail_loader.h"
 
 #include "gamesystem/gamesystem.h"
 #include "gamesystem/playerwork.h"

@@ -29,7 +29,7 @@
 #include "field_debug.h"
 #include "field_subscreen.h"
 #include "field_rail.h"
-#include "field_rail_loader.h"
+#include "field/field_rail_loader.h"
 #include "fld_scenearea.h"
 #include "fld_scenearea_loader.h"
 #include "field_effect.h"

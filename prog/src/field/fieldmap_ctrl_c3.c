@@ -18,7 +18,7 @@
 #include "fieldmap_ctrl_c3.h"
 
 #include "field_rail.h"
-#include "field_rail_loader.h"
+#include "field/field_rail_loader.h"
 #include "fld_scenearea.h"
 #include "fld_scenearea_loader.h"
 #include "fld_scenearea_loader_func.h"

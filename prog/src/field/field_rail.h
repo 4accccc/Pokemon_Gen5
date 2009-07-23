@@ -11,7 +11,7 @@
 #pragma once
 
 #include "field_camera.h"
-
+#include "field/field_rail_loader.h"
 #include "field/rail_location.h"
 //------------------------------------------------------------------
 //------------------------------------------------------------------
@@ -186,7 +186,7 @@ struct _RAIL_LINE {
 //------------------------------------------------------------------
 /// ƒŒ[ƒ‹î•ñ
 //------------------------------------------------------------------
-typedef struct {
+typedef struct _RAIL_SETTING{
   u16 point_count;
   u16 line_count;
   u16 camera_count;
@@ -205,7 +205,7 @@ typedef struct {
 
   s32   ofs_max;      // ••ªŠ„”
   fx32  ofs_unit;     // •‚ÌˆÚ“®’PˆÊ
-} RAIL_SETTING;
+} ;
 
 
 

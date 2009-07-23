@@ -16,7 +16,7 @@
 extern "C"{
 #endif
 
-#include "field_rail.h"
+//#include "field_rail.h"
 
 //-----------------------------------------------------------------------------
 /**
@@ -33,6 +33,7 @@ extern "C"{
 ///	ÉèÅ[ÉN
 //=====================================
 typedef struct _FIELD_RAIL_LOADER FIELD_RAIL_LOADER;
+typedef struct _RAIL_SETTING RAIL_SETTING;
 
 //-----------------------------------------------------------------------------
 /**
