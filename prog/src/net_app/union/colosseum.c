@@ -46,7 +46,8 @@ COLOSSEUM_SYSTEM_PTR Colosseum_InitSystem(GAMEDATA *game_data, FIELD_MAIN_WORK *
   clsys = GFL_HEAP_AllocClearMemory(HEAPID_UNION, sizeof(COLOSSEUM_SYSTEM));
   clsys->cps = CommPlayer_Init(COLOSSEUM_MEMBER_MAX, fieldWork, HEAPID_UNION);
   for(i = 0; i < COLOSSEUM_MEMBER_MAX; i++){
-    clsys->tr_card[i] = GFL_HEAP_AllocClearMemory(HEAPID_UNION, sizeof(TR_CARD_DATA));
+    clsys->recvbuf.tr_card[i] = GFL_HEAP_AllocClearMemory(HEAPID_UNION, sizeof(TR_CARD_DATA));
+    clsys->recvbuf.pokeparty[i] = PokeParty_AllocPartyWork(HEAPID_UNION);
   }
   
   //初期値セット
@@ -56,6 +57,8 @@ COLOSSEUM_SYSTEM_PTR Colosseum_InitSystem(GAMEDATA *game_data, FIELD_MAIN_WORK *
   }
   clsys->mine.stand_position = COLOSSEUM_STANDING_POSITION_NULL;
   clsys->mine.answer_stand_position = COLOSSEUM_STANDING_POSITION_NULL;
+  PokeParty_Copy( //自分の手持ちポケモンをセットしておく
+    GAMEDATA_GetMyPokemon(game_data), clsys->recvbuf.pokeparty[my_net_id]);
   
   //自分の基本情報エリアにデータをセットする
   my_basic = &clsys->basic_status[my_net_id];
@@ -67,8 +70,8 @@ COLOSSEUM_SYSTEM_PTR Colosseum_InitSystem(GAMEDATA *game_data, FIELD_MAIN_WORK *
   my_basic->occ = TRUE;
   
   //自分のトレーナーカード情報セット
-  TRAINERCARD_GetSelfData(clsys->tr_card[my_net_id], game_data, TRUE);
-  clsys->tr_card_occ[my_net_id] = TRUE;
+  TRAINERCARD_GetSelfData(clsys->recvbuf.tr_card[my_net_id], game_data, TRUE);
+  clsys->recvbuf.tr_card_occ[my_net_id] = TRUE;
   
   return clsys;
 }
@@ -85,9 +88,8 @@ void Colosseum_ExitSystem(COLOSSEUM_SYSTEM_PTR clsys)
   int i;
   
   for(i = 0; i < COLOSSEUM_MEMBER_MAX; i++){
-    if(clsys->tr_card[i] != NULL){
-      GFL_HEAP_FreeMemory(clsys->tr_card[i]);
-    }
+    GFL_HEAP_FreeMemory(clsys->recvbuf.tr_card[i]);
+    GFL_HEAP_FreeMemory(clsys->recvbuf.pokeparty[i]);
   }
   CommPlayer_Exit(clsys->cps);
   GFL_HEAP_FreeMemory(clsys);
@@ -237,8 +239,8 @@ void Colosseum_Parent_SendAnswerStandingPosition(COLOSSEUM_SYSTEM_PTR clsys)
 //==================================================================
 void Colosseum_SetCommPlayerPos(COLOSSEUM_SYSTEM_PTR clsys, int net_id, const COMM_PLAYER_PACKAGE *pack)
 {
-  clsys->recvbuf[net_id].comm_player_pack = *pack;
-  clsys->recvbuf[net_id].comm_player_pack_update = TRUE;
+  clsys->recvbuf.comm_player_pack[net_id] = *pack;
+  clsys->recvbuf.comm_player_pack_update[net_id] = TRUE;
 }
 
 //==================================================================
@@ -258,8 +260,8 @@ BOOL Colosseum_GetCommPlayerPos(COLOSSEUM_SYSTEM_PTR clsys, int net_id, COMM_PLA
 {
   BOOL update_flag;
   
-  *dest = clsys->recvbuf[net_id].comm_player_pack;
-  update_flag = clsys->recvbuf[net_id].comm_player_pack_update;
-  clsys->recvbuf[net_id].comm_player_pack_update = FALSE;
+  *dest = clsys->recvbuf.comm_player_pack[net_id];
+  update_flag = clsys->recvbuf.comm_player_pack_update[net_id];
+  clsys->recvbuf.comm_player_pack_update[net_id] = FALSE;
   return update_flag;
 }

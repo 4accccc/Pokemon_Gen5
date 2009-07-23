@@ -73,6 +73,7 @@ enum{
   UNION_STATUS_COLOSSEUM_STANDPOSITION, ///<コロシアム：立ち位置にたった
   UNION_STATUS_COLOSSEUM_STANDING_BACK, ///<コロシアム：立ち位置から後退
   UNION_STATUS_COLOSSEUM_POKELIST,      ///<コロシアム：ポケモンリスト呼び出し
+  UNION_STATUS_COLOSSEUM_BATTLE,        ///<コロシアム：戦闘画面呼び出し
   
   UNION_STATUS_CHAT,        ///<チャット編集中
   
@@ -121,8 +122,11 @@ enum{
   UNION_TIMING_COLOSSEUM_PROC_BEFORE,   ///<コロシアム遷移前の同期取り
   UNION_TIMING_COLOSSEUM_MEMBER_ENTRY_AFTER,  ///<コロシアム：メンバー集まった後の同期取り
   UNION_TIMING_COLOSSEUM_ADD_CMD_TBL_AFTER,   ///<コロシアム：通信テーブルを追加後
+  UNION_TIMING_COLOSSEUM_CARD_BEFORE,   ///<コロシアム：全員分のトレーナーカード交換前
+  UNION_TIMING_BATTLE_STANDINGPOS_BEFORE,     ///<コロシアム：全員の立ち位置送信前
   UNION_TIMING_COLOSSEUM_PROC_AFTER,    ///<コロシアム終了後の同期取り
   
+  UNION_TIMING_BATTLE_POKEPARTY_BEFORE,   ///<戦闘：POKEPARTY交換前
   UNION_TIMING_BATTLE_ADD_CMD_TBL_AFTER,  ///<戦闘：通信テーブルを追加後
 };
 

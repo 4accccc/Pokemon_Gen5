@@ -46,12 +46,22 @@ typedef struct{
 typedef struct{
   u8 stand_position;          ///<自分の立ち位置
   u8 answer_stand_position;   ///<立ち位置使用許可の返事受信バッファ
+  u8 padding[2];
 }COLOSSEUM_MINE_WORK;
 
 ///受信バッファ
 typedef struct{
-  COMM_PLAYER_PACKAGE comm_player_pack;     ///<通信相手の座標
-  u8 comm_player_pack_update;               ///<TRUE:更新あり
+  COMM_PLAYER_PACKAGE comm_player_pack[COLOSSEUM_MEMBER_MAX];     ///<通信相手の座標
+  u8 comm_player_pack_update[COLOSSEUM_MEMBER_MAX];               ///<TRUE:更新あり
+
+  TR_CARD_DATA *tr_card[COLOSSEUM_MEMBER_MAX];         ///<通信相手のトレーナーカード情報
+  u8 tr_card_occ[COLOSSEUM_MEMBER_MAX];                ///<TRUE:トレーナーカードデータ有効
+
+  POKEPARTY *pokeparty[COLOSSEUM_MEMBER_MAX];          ///<通信相手のポケモンパーティ
+  u8 pokeparty_occ[COLOSSEUM_MEMBER_MAX];              ///<TRUE:POKEPARTY有効
+  
+  u8 stand_position[COLOSSEUM_MEMBER_MAX];  ///<各メンバーがどの立ち位置にいるか
+  u8 stand_position_occ;                    ///<TRUE:データ有効
 }COLOSSEUM_RECV_BUF;
 
 ///コロシアムシステムワーク
@@ -62,12 +72,9 @@ typedef struct _COLOSSEUM_SYSTEM{
   COLOSSEUM_BASIC_STATUS basic_status[COLOSSEUM_MEMBER_MAX];  ///<各プレイヤーの基本情報
   BOOL comm_ready;                          ///<TRUE:基本情報の交換が済んだので自由に通信してOK
   
-  TR_CARD_DATA *tr_card[COLOSSEUM_MEMBER_MAX];  ///<通信相手のトレーナーカード情報
-  u8 tr_card_occ[COLOSSEUM_MEMBER_MAX];     ///<TRUE:トレーナーカードデータ有効
-  
   COLOSSEUM_PARENT_WORK parentsys;          ///<親データ
   COLOSSEUM_MINE_WORK mine;                 ///<自分データ
-  COLOSSEUM_RECV_BUF recvbuf[COLOSSEUM_MEMBER_MAX]; ///<受信バッファ
+  COLOSSEUM_RECV_BUF recvbuf;               ///<受信バッファ
 }COLOSSEUM_SYSTEM;
 
 

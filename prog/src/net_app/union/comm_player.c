@@ -23,10 +23,16 @@
 //==============================================================================
 ///通信プレイヤーワーク
 typedef struct{
+  //フィールドアクターから常に参照され続けるワーク　※その為、ビットフィールド禁止
   VecFx32 pos;
   BOOL vanish;
   u16 dir;
-  u8 occ;         ///<この構造体全体のデータ有効・無効(TRUE:有効)
+  
+  //comm_player.cでのみ使用するもの
+  u8 occ:1;         ///<この構造体全体のデータ有効・無効(TRUE:有効)
+  u8 sex:1;
+  u8 push_flag:1;
+  u8 :5;
   u8 padding;
 }COMM_PLAYER;
 
@@ -44,7 +50,8 @@ typedef struct _COMM_PLAYER_SYS{
   COMM_PLAYER act[COMM_PLAYER_MAX];
   MINE_PLAYER mine;     ///<自分自身の座標データなど
   u8 max;
-  u8 padding[3];
+  u8 update_stop;       ///<TRUE:座標更新を行わない
+  u8 padding[2];
 }COMM_PLAYER_SYS;
 
 
@@ -145,6 +152,8 @@ void CommPlayer_Add(COMM_PLAYER_SYS_PTR cps, int index, int sex, const COMM_PLAY
   cps->act[index].pos = pack->pos;
   cps->act[index].dir = pack->dir;
   cps->act[index].vanish = pack->vanish;
+  cps->act[index].sex = sex;
+  cps->act[index].push_flag = FALSE;
   cps->act[index].occ = TRUE;
   
   FIELD_COMM_ACTOR_CTRL_AddActor(cps->act_ctrl, index, objcode, &cps->act[index].dir, 
@@ -168,6 +177,63 @@ void CommPlayer_Del(COMM_PLAYER_SYS_PTR cps, int index)
   OS_TPrintf("通信プレイヤーDel index=%d\n", index);
   FIELD_COMM_ACTOR_CTRL_DeleteActro(cps->act_ctrl, index);
   cps->act[index].occ = FALSE;
+}
+
+//==================================================================
+/**
+ * 通信プレイヤーPush処理
+ *
+ * @param   cps		
+ */
+//==================================================================
+void CommPlayer_Push(COMM_PLAYER_SYS_PTR cps)
+{
+  int i;
+  
+  for(i = 0; i < COMM_PLAYER_MAX; i++){
+    if(cps->act[i].occ == TRUE){
+      CommPlayer_Del(cps, i);
+      cps->act[i].push_flag = TRUE;
+      OS_TPrintf("CommPlayer Push! %d\n", i);
+    }
+  }
+}
+
+//==================================================================
+/**
+ * 通信プレイヤーPop処理
+ *
+ * @param   cps		
+ */
+//==================================================================
+void CommPlayer_Pop(COMM_PLAYER_SYS_PTR cps)
+{
+  int i;
+  COMM_PLAYER_PACKAGE pack;
+  
+  GFL_STD_MemClear(&pack, sizeof(COMM_PLAYER_PACKAGE));
+  for(i = 0; i < COMM_PLAYER_MAX; i++){
+    if(cps->act[i].push_flag == TRUE){
+      pack.pos = cps->act[i].pos;
+      pack.dir = cps->act[i].dir;
+      pack.vanish = cps->act[i].vanish;
+      CommPlayer_Add(cps, i, cps->act[i].sex, &pack);
+      OS_TPrintf("CommPlayer Pop! %d\n", i);
+    }
+  }
+}
+
+//==================================================================
+/**
+ * 座標更新のポーズフラグをセットする
+ *
+ * @param   cps		
+ * @param   stop_flag		TRUE:座標更新を行わない
+ */
+//==================================================================
+void CommPlayer_FlagSet_UpdateStop(COMM_PLAYER_SYS_PTR cps, BOOL stop_flag)
+{
+  cps->update_stop = stop_flag;
 }
 
 //==================================================================
@@ -223,6 +289,10 @@ BOOL CommPlayer_Mine_DataUpdate(COMM_PLAYER_SYS_PTR cps, COMM_PLAYER_PACKAGE *pa
   FIELD_PLAYER * player = FIELDMAP_GetFieldPlayer(cps->fieldWork);
   VecFx32 pos;
   u16 dir;
+  
+  if(cps->update_stop == TRUE){
+    return FALSE;
+  }
   
   FIELD_PLAYER_GetPos(player, &pos);
   dir = FIELD_PLAYER_GetDir(player);

@@ -85,7 +85,7 @@ BOOL ColosseumTool_AllReceiveCheck_TrainerCard(COLOSSEUM_SYSTEM_PTR clsys)
   
   count = 0;
   for(i = 0; i < COLOSSEUM_MEMBER_MAX; i++){
-    if(clsys->tr_card_occ[i] == TRUE){
+    if(clsys->recvbuf.tr_card_occ[i] == TRUE){
       count++;
     }
   }
@@ -93,6 +93,81 @@ BOOL ColosseumTool_AllReceiveCheck_TrainerCard(COLOSSEUM_SYSTEM_PTR clsys)
     return TRUE;
   }
   return FALSE;
+}
+
+//==================================================================
+/**
+ * 全員分のPOKEPARTYが受け取れているか調べる
+ *
+ * @param   clsys		
+ *
+ * @retval  BOOL		TRUE:全員分受信している
+ */
+//==================================================================
+BOOL ColosseumTool_AllReceiveCheck_Pokeparty(COLOSSEUM_SYSTEM_PTR clsys)
+{
+  int i, count;
+  
+  count = 0;
+  for(i = 0; i < COLOSSEUM_MEMBER_MAX; i++){
+    if(clsys->recvbuf.pokeparty_occ[i] == TRUE){
+      count++;
+    }
+  }
+  if(count >= GFL_NET_GetConnectNum()){
+    return TRUE;
+  }
+  return FALSE;
+}
+
+//==================================================================
+/**
+ * 受信バッファのクリア：POKEPARTY
+ *
+ * @param   clsys		
+ * @param   except_for_mine   TRUE:自分のデータはクリアしない(受信フラグは落とす)
+ */
+//==================================================================
+void ColosseumTool_Clear_ReceivePokeParty(COLOSSEUM_SYSTEM_PTR clsys, BOOL except_for_mine)
+{
+  int i, my_net_id;
+  
+  my_net_id = GFL_NET_GetNetID(GFL_NET_HANDLE_GetCurrentHandle());
+  for(i = 0; i < COLOSSEUM_MEMBER_MAX; i++){
+    if(except_for_mine == FALSE || my_net_id != i){
+      PokeParty_InitWork(clsys->recvbuf.pokeparty[i]);
+    }
+    clsys->recvbuf.pokeparty_occ[i] = FALSE;
+  }
+}
+
+//==================================================================
+/**
+ * 全員分の立ち位置が受け取れているか調べる
+ *
+ * @param   clsys		
+ *
+ * @retval  BOOL		TRUE:OK
+ */
+//==================================================================
+BOOL ColosseumTool_ReceiveCheck_StandingPos(COLOSSEUM_SYSTEM_PTR clsys)
+{
+  if(clsys->recvbuf.stand_position_occ == TRUE){
+    return TRUE;
+  }
+  return FALSE;
+}
+
+//==================================================================
+/**
+ * 受信バッファのクリア：全員分の立ち位置受信
+ *
+ * @param   clsys		
+ */
+//==================================================================
+void ColosseumTool_Clear_ReceiveStandingPos(COLOSSEUM_SYSTEM_PTR clsys)
+{
+  clsys->recvbuf.stand_position_occ = FALSE;
 }
 
 //==================================================================

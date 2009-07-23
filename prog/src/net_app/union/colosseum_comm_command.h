@@ -12,6 +12,7 @@
 #include "net/network_define.h"
 #include "colosseum.h"
 #include "net_app/union/union_main.h"
+#include "poke_tool/pokeparty.h"
 
 
 //==============================================================================
@@ -28,6 +29,8 @@ enum COLOSSEUM_CMD{
   COLOSSEUM_CMD_POS_PACKAGE,                ///<座標パッケージ
   COLOSSEUM_CMD_STANDPOS_CONFIRM,           ///<親に自分の今の立ち位置を使っても問題ないか確認する
   COLOSSEUM_CMD_ANSWER_STANDPOS,            ///<立ち位置使用結果の返事
+  COLOSSEUM_CMD_POKEPARTY,                  ///<POKEPARTY受信
+  COLOSSEUM_CMD_STANDING_POS,               ///<全員分の立ち位置を受信
   
   COLOSSEUM_CMD_MAX,
   COLOSSEUM_CMD_NUM = COLOSSEUM_CMD_MAX - COLOSSEUM_CMD_START,
@@ -52,4 +55,6 @@ extern BOOL ColosseumSend_TrainerCard(TR_CARD_DATA *send_card);
 extern BOOL ColosseumSend_PosPackage(COMM_PLAYER_PACKAGE *pos_package);
 extern BOOL ColosseumSend_StandingPositionConfirm(COLOSSEUM_SYSTEM_PTR clsys);
 extern BOOL ColosseumSend_AnswerStandingPosition(COLOSSEUM_SYSTEM_PTR clsys, int send_net_id, BOOL result);
+extern BOOL ColosseumSend_Pokeparty(POKEPARTY *pokeparty);
+extern BOOL ColosseumSend_StandingPos(u8 *standing_pos);
 

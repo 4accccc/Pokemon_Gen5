@@ -641,7 +641,7 @@ static MAINSEQ_RESULT mainSeqFunc_ready(GAMESYS_WORK *gsys, FIELDMAP_WORK *field
       EVENTDATA_SearchConnectIDBySphere(evdata, &fieldWork->now_pos);
   }
   //フィールドマップ用イベント起動チェックをセットする
-  if(fieldWork->map_id == ZONE_ID_UNION || fieldWork->map_id == ZONE_ID_CLOSSEUM){
+  if(fieldWork->map_id == ZONE_ID_UNION || fieldWork->map_id == ZONE_ID_CLOSSEUM || fieldWork->map_id == ZONE_ID_CLOSSEUM02){
     GAMESYSTEM_EVENT_EntryCheckFunc( gsys, FIELD_EVENT_CheckUnion, fieldWork );
   }
   else{
@@ -2006,6 +2006,7 @@ static void FIELDMAP_CommBoot(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork, HEAP
 	switch(fieldWork->map_id){    //※check　どこかのタイミングで一度整理
 	case ZONE_ID_UNION:
 	case ZONE_ID_CLOSSEUM:
+	case ZONE_ID_CLOSSEUM02:
 	  {
       UNION_PARENT_WORK *upw;
       

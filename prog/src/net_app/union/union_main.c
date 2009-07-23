@@ -18,6 +18,7 @@
 #include "union_oneself.h"
 #include "union_subproc.h"
 #include "field/fieldmap_ctrl_grid.h"
+#include "colosseum.h"
 
 
 void Union_Main(GAME_COMM_SYS_PTR game_comm, FIELD_MAIN_WORK *fieldmap)
@@ -92,9 +93,14 @@ void UnionMain_Callback_FieldCreate(void *pwk, void *app_work, FIELD_MAIN_WORK *
 {
   UNION_PARENT_WORK *uniparent = pwk;
   UNION_SYSTEM_PTR unisys = app_work;
+  COLOSSEUM_SYSTEM_PTR clsys = unisys->colosseum_sys;
   
   if(unisys->player_pause == TRUE){
     FIELDMAP_CTRL_GRID_SetPlayerPause( fieldWork, TRUE );
+  }
+  
+  if(clsys != NULL && clsys->comm_ready == TRUE){
+    CommPlayer_Pop(clsys->cps);
   }
 }
 
@@ -109,6 +115,10 @@ void UnionMain_Callback_FieldDelete(void *pwk, void *app_work, FIELD_MAIN_WORK *
 {
   UNION_PARENT_WORK *uniparent = pwk;
   UNION_SYSTEM_PTR unisys = app_work;
+  COLOSSEUM_SYSTEM_PTR clsys = unisys->colosseum_sys;
 
+  if(clsys != NULL && clsys->comm_ready == TRUE){
+    CommPlayer_Push(clsys->cps);
+  }
 }
 

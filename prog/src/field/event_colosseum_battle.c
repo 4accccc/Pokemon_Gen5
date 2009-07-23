@@ -81,8 +81,6 @@ static GMEVENT_RESULT EVENT_ColosseumBattleMain(GMEVENT * event, int *  seq, voi
 		break;
 	case 2:
 		GMEVENT_CallEvent(event, EVENT_FieldClose(gsys, cbw->fieldmap));
-		//配置していた動作モデルを削除
-		MMDLSYS_DeleteMMdl( GAMEDATA_GetMMdlSys(GAMESYSTEM_GetGameData(gsys)) );
 		(*seq)++;
 		break;
 	case 3:
@@ -90,11 +88,13 @@ static GMEVENT_RESULT EVENT_ColosseumBattleMain(GMEVENT * event, int *  seq, voi
       GFL_OVERLAY_Load( FS_OVERLAY_ID( battle ) );
       GFL_NET_AddCommandTable(GFL_NET_CMD_BATTLE, BtlRecvFuncTable, 5, NULL);
       GFL_NET_TimingSyncStart(GFL_NET_HANDLE_GetCurrentHandle(), UNION_TIMING_BATTLE_ADD_CMD_TBL_AFTER);
+      OS_TPrintf("戦闘用通信コマンドテーブルをAddしたので同期取り\n");
       (*seq) ++;
     }
     break;
   case 4:
     if(GFL_NET_IsTimingSync(GFL_NET_HANDLE_GetCurrentHandle(), UNION_TIMING_BATTLE_ADD_CMD_TBL_AFTER)){
+      OS_TPrintf("戦闘用通信コマンドテーブルをAdd後の同期取り完了\n");
       (*seq) ++;
     }
     break;
@@ -102,7 +102,7 @@ static GMEVENT_RESULT EVENT_ColosseumBattleMain(GMEVENT * event, int *  seq, voi
     PMSND_PlayBGM(cbw->para.musicDefault);
 
     GAMESYSTEM_CallProc(gsys, NO_OVERLAY_ID, &BtlProcData, &cbw->para);
-    GFL_FADE_SetMasterBrightReq(GFL_FADE_MASTER_BRIGHT_BLACKOUT, 16, 0, 1);
+//    GFL_FADE_SetMasterBrightReq(GFL_FADE_MASTER_BRIGHT_BLACKOUT, 16, 0, 1);
     (*seq)++;
     break;
   case 6:
@@ -158,7 +158,7 @@ GMEVENT* EVENT_ColosseumBattle(GAMESYS_WORK * gsys, FIELD_MAIN_WORK * fieldmap, 
     multi = 0;
     break;
   case UNION_PLAY_CATEGORY_COLOSSEUM_MULTI:      //コロシアム
-    rule = BTL_RULE_SINGLE;
+    rule = BTL_RULE_DOUBLE;
     multi = 1;
     break;
   default:
@@ -174,8 +174,8 @@ GMEVENT* EVENT_ColosseumBattle(GAMESYS_WORK * gsys, FIELD_MAIN_WORK * fieldmap, 
   para = &cbw->para;
   {
     para->engine = BTL_ENGINE_ALONE;
-    para->rule = rule;
     para->competitor = BTL_COMPETITOR_COMM;
+    para->rule = rule;
 
     para->commMode = BTL_COMM_DS;
     para->multiMode = multi;

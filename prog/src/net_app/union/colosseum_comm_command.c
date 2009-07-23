@@ -29,6 +29,8 @@ static void _ColosseumRecv_TrainerCard(const int netID, const int size, const vo
 static void _ColosseumRecv_PosPackage(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
 static void _ColosseumRecv_StandingPositionConfirm(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
 static void _ColosseumRecv_AnswerStandingPosition(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
+static void _ColosseumRecv_Pokeparty(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
+static void _ColosseumRecv_StandingPos(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
 
 
 //==============================================================================
@@ -42,6 +44,8 @@ const NetRecvFuncTable Colosseum_CommPacketTbl[] = {
   {_ColosseumRecv_PosPackage, _RecvHugeBuffer},     //COLOSSEUM_CMD_POS_PACKAGE
   {_ColosseumRecv_StandingPositionConfirm, NULL},   //COLOSSEUM_CMD_STANDPOS_CONFIRM
   {_ColosseumRecv_AnswerStandingPosition, NULL},    //COLOSSEUM_CMD_ANSWER_STANDPOS
+  {_ColosseumRecv_Pokeparty, _RecvHugeBuffer},      //COLOSSEUM_CMD_POKEPARTY
+  {_ColosseumRecv_StandingPos, NULL},               //COLOSSEUM_CMD_STANDING_POS
 };
 SDK_COMPILER_ASSERT(NELEMS(Colosseum_CommPacketTbl) == COLOSSEUM_CMD_NUM);
 
@@ -194,14 +198,14 @@ static void _ColosseumRecv_TrainerCard(const int netID, const int size, const vo
 	if(netID == GFL_NET_GetNetID(GFL_NET_HANDLE_GetCurrentHandle())){
     return; //自分のデータなので無視
   }
-  if(clsys == NULL || clsys->cps == NULL || clsys->tr_card[netID] == NULL){
+  if(clsys == NULL || clsys->cps == NULL || clsys->recvbuf.tr_card[netID] == NULL){
     GF_ASSERT(0);
     return; //準備が出来ていないので受け取らない
   }
   
   OS_TPrintf("コロシアム：トレーナーカード受信 net_id = %d\n", netID);
-  GFL_STD_MemCopy(pData, clsys->tr_card[netID], size);
-  clsys->tr_card_occ[netID] = TRUE;
+  GFL_STD_MemCopy(pData, clsys->recvbuf.tr_card[netID], size);
+  clsys->recvbuf.tr_card_occ[netID] = TRUE;
 }
 
 //==================================================================
@@ -370,3 +374,87 @@ BOOL ColosseumSend_AnswerStandingPosition(COLOSSEUM_SYSTEM_PTR clsys, int send_n
     COLOSSEUM_CMD_ANSWER_STANDPOS, sizeof(BOOL), &result, TRUE, FALSE, FALSE);
 }
 
+//==============================================================================
+//  
+//==============================================================================
+//--------------------------------------------------------------
+/**
+ * @brief   コマンド受信：POKEPARTY
+ * @param   netID      送ってきたID
+ * @param   size       パケットサイズ
+ * @param   pData      データ
+ * @param   pWork      ワークエリア
+ * @param   pHandle    受け取る側の通信ハンドル
+ * @retval  none  
+ */
+//--------------------------------------------------------------
+static void _ColosseumRecv_Pokeparty(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle)
+{
+  UNION_SYSTEM_PTR unisys = pWork;
+  COLOSSEUM_SYSTEM_PTR clsys = unisys->colosseum_sys;
+
+  if(clsys == NULL || clsys->recvbuf.pokeparty[netID] == NULL){
+    GF_ASSERT(0);
+    return; //準備が出来ていないので受け取らない
+  }
+  
+  OS_TPrintf("コロシアム：POKEPARTY受信：net_id = %d\n", netID);
+  GFL_STD_MemCopy(pData, clsys->recvbuf.pokeparty[netID], size);
+  clsys->recvbuf.pokeparty_occ[netID] = TRUE;
+}
+
+//==================================================================
+/**
+ * データ送信：POKEPARTY
+ * @param   
+ * @retval  BOOL		TRUE:送信成功。　FALSE:失敗
+ */
+//==================================================================
+BOOL ColosseumSend_Pokeparty(POKEPARTY *pokeparty)
+{
+  return GFL_NET_SendDataEx(GFL_NET_HANDLE_GetCurrentHandle(), GFL_NET_SENDID_ALLUSER, 
+    COLOSSEUM_CMD_POKEPARTY, sizeof(PokeParty_GetWorkSize()), 
+    pokeparty, TRUE, FALSE, TRUE);
+}
+
+//==============================================================================
+//  
+//==============================================================================
+//--------------------------------------------------------------
+/**
+ * @brief   コマンド受信：POKEPARTY
+ * @param   netID      送ってきたID
+ * @param   size       パケットサイズ
+ * @param   pData      データ
+ * @param   pWork      ワークエリア
+ * @param   pHandle    受け取る側の通信ハンドル
+ * @retval  none  
+ */
+//--------------------------------------------------------------
+static void _ColosseumRecv_StandingPos(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle)
+{
+  UNION_SYSTEM_PTR unisys = pWork;
+  COLOSSEUM_SYSTEM_PTR clsys = unisys->colosseum_sys;
+
+  if(clsys == NULL){
+    GF_ASSERT(0);
+    return; //準備が出来ていないので受け取らない
+  }
+  
+  OS_TPrintf("コロシアム：立ち位置受信：net_id = %d\n", netID);
+  GFL_STD_MemCopy(pData, clsys->recvbuf.stand_position, size);
+  clsys->recvbuf.stand_position_occ = TRUE;
+}
+
+//==================================================================
+/**
+ * データ送信：POKEPARTY
+ * @param   
+ * @retval  BOOL		TRUE:送信成功。　FALSE:失敗
+ */
+//==================================================================
+BOOL ColosseumSend_StandingPos(u8 *standing_pos)
+{
+  return GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(), 
+    COLOSSEUM_CMD_STANDING_POS, sizeof(u8) * COLOSSEUM_MEMBER_MAX, standing_pos);
+}

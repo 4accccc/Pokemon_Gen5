@@ -20,6 +20,7 @@
 #include "comm_player.h"
 #include "colosseum_comm_command.h"
 #include "colosseum_tool.h"
+#include "union_subproc.h"
 
 
 //==============================================================================
@@ -381,10 +382,12 @@ static void UnionComm_Colosseum_Update(UNION_SYSTEM_PTR unisys)
   
   //PROCがフィールドのときのみ動作する処理
   if(Union_FieldCheck(unisys) == TRUE){
-    //通信プレイヤーアクター管理システムが生成されているなら自分座標の転送を行う
-    if(CommPlayer_Mine_DataUpdate(
-        unisys->colosseum_sys->cps, &unisys->colosseum_sys->send_mine_package) == TRUE){
-      ColosseumSend_PosPackage(&unisys->colosseum_sys->send_mine_package);
+    if(UnionSubProc_IsExits(unisys) == FALSE){  //サブPROC実行中でない時に実行する処理
+      //通信プレイヤーアクター管理システムが生成されているなら自分座標の転送を行う
+      if(CommPlayer_Mine_DataUpdate(
+          unisys->colosseum_sys->cps, &unisys->colosseum_sys->send_mine_package) == TRUE){
+        ColosseumSend_PosPackage(&unisys->colosseum_sys->send_mine_package);
+      }
     }
     
     //通信プレイヤーの座標反映
