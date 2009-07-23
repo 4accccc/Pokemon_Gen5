@@ -25,6 +25,7 @@
 #include "colosseum_tool.h"
 #include "union_chara.h"
 #include "field/fieldmap_ctrl_grid.h"
+#include "savedata/config.h"
 
 
 //==============================================================================
@@ -332,8 +333,9 @@ static BOOL Union_CheckEntryBattleRegulation(u32 menu_index)
  * @param   pause_flag		TRUE:ポーズ　FALSE:ポーズ解除
  */
 //--------------------------------------------------------------
-static void _PlayerMinePause(FIELD_MAIN_WORK *fieldWork, int pause_flag)
+static void _PlayerMinePause(UNION_SYSTEM_PTR unisys, FIELD_MAIN_WORK *fieldWork, int pause_flag)
 {
+  unisys->player_pause = pause_flag;
   FIELDMAP_CTRL_GRID_SetPlayerPause( fieldWork, pause_flag );
 }
 
@@ -360,7 +362,7 @@ static BOOL OneselfSeq_NormalInit(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *s
 
   UnionMsg_AllDel(unisys);
 
-  _PlayerMinePause(fieldWork, FALSE);
+  _PlayerMinePause(unisys, fieldWork, FALSE);
   
 
   return TRUE;
@@ -424,7 +426,7 @@ static BOOL OneselfSeq_NormalUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION 
     else{
       UnionOneself_ReqStatus(unisys, UNION_STATUS_TALK_PLAYGAME_CHILD);
     }
-    _PlayerMinePause(fieldWork, TRUE);
+    _PlayerMinePause(unisys, fieldWork, TRUE);
     return TRUE;
   }
   
@@ -542,7 +544,7 @@ static BOOL OneselfSeq_ConnectReqExit(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATIO
 static BOOL OneselfSeq_ConnectAnswerInit(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *situ, FIELD_MAIN_WORK *fieldWork, u8 *seq)
 {
   UnionMsg_TalkStream_PrintPack(unisys, fieldWork, msg_union_test_001);
-  _PlayerMinePause(fieldWork, TRUE);
+  _PlayerMinePause(unisys, fieldWork, TRUE);
   return TRUE;
 }
 
@@ -1439,7 +1441,7 @@ static BOOL OneselfSeq_BattleUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION 
       unisys->colosseum_sys = Colosseum_InitSystem(
         unisys->uniparent->game_data, fieldWork, unisys->uniparent->mystatus);
 
-      _PlayerMinePause(fieldWork, TRUE);
+      _PlayerMinePause(unisys, fieldWork, TRUE);
       UnionOneself_ReqStatus(unisys, UNION_STATUS_COLOSSEUM_MEMBER_WAIT);
       return TRUE;
     }
@@ -1524,7 +1526,7 @@ static BOOL OneselfSeq_MultiBattleUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SITUA
       unisys->colosseum_sys = Colosseum_InitSystem(
         unisys->uniparent->game_data, fieldWork, unisys->uniparent->mystatus);
 
-      _PlayerMinePause(fieldWork, TRUE);
+      _PlayerMinePause(unisys, fieldWork, TRUE);
       UnionOneself_ReqStatus(unisys, UNION_STATUS_COLOSSEUM_MEMBER_WAIT);
       return TRUE;
     }
@@ -1650,7 +1652,7 @@ static BOOL OneselfSeq_ColosseumMemberWaitUpdate(UNION_SYSTEM_PTR unisys, UNION_
 static BOOL OneselfSeq_ColosseumInit(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *situ, FIELD_MAIN_WORK *fieldWork, u8 *seq)
 {
   UnionMsg_AllDel(unisys);
-  _PlayerMinePause(fieldWork, FALSE);
+  _PlayerMinePause(unisys, fieldWork, FALSE);
 
   return TRUE;
 }
@@ -1681,7 +1683,7 @@ static BOOL OneselfSeq_ColosseumNormal(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATI
           UnionMsg_GetMemberMax(situ->mycomm.mainmenu_select), &stand_pos) == TRUE){
         Colosseum_Mine_SetStandingPostion(clsys, stand_pos);
         UnionOneself_ReqStatus(unisys, UNION_STATUS_COLOSSEUM_STANDPOSITION);
-        _PlayerMinePause(fieldWork, TRUE);
+        _PlayerMinePause(unisys, fieldWork, TRUE);
         return TRUE;
       }
     }
@@ -1823,14 +1825,55 @@ static BOOL OneselfSeq_ColosseumStandingBack(UNION_SYSTEM_PTR unisys, UNION_MY_S
 static BOOL OneselfSeq_ColosseumPokelist(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *situ, FIELD_MAIN_WORK *fieldWork, u8 *seq)
 {
   COLOSSEUM_SYSTEM_PTR clsys = unisys->colosseum_sys;
-
+  PLIST_DATA *plist;
+  UNION_SUBPROC_PARENT_POKELIST *parent_list;
+  
   switch(*seq){
   case 0:
-    UnionMsg_AllDel(unisys);
+    parent_list = GFL_HEAP_AllocClearMemory(HEAPID_UNION, sizeof(UNION_SUBPROC_PARENT_POKELIST));
+    
+    plist = &parent_list->plist;
+    plist->pp = GAMEDATA_GetMyPokemon(unisys->uniparent->game_data);
+    plist->myitem = GAMEDATA_GetMyItem(unisys->uniparent->game_data);
+    plist->cfg = SaveData_GetConfig(GAMEDATA_GetSaveControlWork(unisys->uniparent->game_data));
+    plist->mode = PL_MODE_BATTLE;
+    plist->in_min = 1;
+    plist->in_max = 6;
+    plist->in_lv = 100;
+    
+    unisys->parent_work = parent_list;
+    UnionSubProc_EventSet(unisys, UNION_SUBPROC_ID_POKELIST, parent_list);
+
     (*seq)++;
     break;
   case 1:
+    if(UnionSubProc_IsExits(unisys) == TRUE){
+      break;
+    }
+    
+    parent_list = unisys->parent_work;
+    plist = &parent_list->plist;
+    
+    GF_ASSERT_MSG(plist->ret_mode == PL_RET_NORMAL, "plist->ret_mode 不正 %d\n", plist->ret_mode);
+    switch(plist->ret_sel){
+    case PL_SEL_POS_EXIT:
+      UnionOneself_ReqStatus(unisys, UNION_STATUS_COLOSSEUM_STANDING_BACK);
+      (*seq)++;
+      break;
+    case PL_SEL_POS_ENTER:
+      UnionOneself_ReqStatus(unisys, UNION_STATUS_COLOSSEUM_STANDING_BACK);
+      (*seq)++;
+      break;
+    default:
+      OS_TPrintf("plist->ret_sel 不正 %d\n", plist->ret_sel);
+      GF_ASSERT(0);
+      break;
+    }
     break;
+  case 2:
+    GFL_HEAP_FreeMemory(unisys->parent_work);
+    unisys->parent_work = NULL;
+    return TRUE;
   }
   
   return FALSE;

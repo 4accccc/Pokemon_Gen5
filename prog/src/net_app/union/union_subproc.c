@@ -22,6 +22,8 @@
 #include "net_app/union/union_msg.h"
 #include "field/event_mapchange.h"
 #include "fieldmap/zone_id.h"
+#include "field/event_colosseum_battle.h"
+#include "savedata/sp_ribbon_save.h"
 
 
 //==============================================================================
@@ -40,39 +42,69 @@ typedef struct{
 //==============================================================================
 static GMEVENT_RESULT UnionSubProc_GameChangeEvent(GMEVENT * event, int * seq, void * work);
 
+static BOOL SubEvent_TrainerCard(GAMESYS_WORK *gsys, UNION_SYSTEM_PTR unisys, FIELD_MAIN_WORK *fieldWork, void *pwk, GMEVENT * parent_event, GMEVENT **child_event, u8 *seq);
+static BOOL SubEvent_ColosseumWarp(GAMESYS_WORK *gsys, UNION_SYSTEM_PTR unisys, FIELD_MAIN_WORK *fieldWork, void *pwk, GMEVENT * parent_event, GMEVENT **child_event, u8 *seq);
+static BOOL SubEvent_ColosseumWarpMulti(GAMESYS_WORK *gsys, UNION_SYSTEM_PTR unisys, FIELD_MAIN_WORK *fieldWork, void *pwk, GMEVENT * parent_event, GMEVENT **child_event, u8 *seq);
+static BOOL SubEvent_Pokelist(GAMESYS_WORK *gsys, UNION_SYSTEM_PTR unisys, FIELD_MAIN_WORK *fieldWork, void *pwk, GMEVENT * parent_event, GMEVENT **child_event, u8 *seq);
+static BOOL SubEvent_Battle(GAMESYS_WORK *gsys, UNION_SYSTEM_PTR unisys, FIELD_MAIN_WORK *fieldWork, void *pwk, GMEVENT * parent_event, GMEVENT **child_event, u8 *seq);
+
+
+//--------------------------------------------------------------
+//  オーバーレイ定義
+//--------------------------------------------------------------
+FS_EXTERN_OVERLAY(pokelist);
+FS_EXTERN_OVERLAY(poke_status);
+
 
 //==============================================================================
 //  データ
 //==============================================================================
 ///サブPROC実行時にplay_category値のテーブル
 static const struct{
+  BOOL (*sub_event)(GAMESYS_WORK *gsys, UNION_SYSTEM_PTR unisys, FIELD_MAIN_WORK *fieldWork, void *pwk, GMEVENT * parent_event, GMEVENT **child_event, u8 *seq);  ///<実行関数
   u8 play_category;       ///<サブPROC実行中のplay_category値
   u8 after_play_category; ///<サブPROC終了後に設定するplay_category値
   u8 padding[2];
 }SubProc_PlayCategoryTbl[] = {
   {//UNION_SUBPROC_ID_NULL
+    NULL,
     UNION_PLAY_CATEGORY_UNION, 
     UNION_PLAY_CATEGORY_UNION,
   },
   {//UNION_SUBPROC_ID_TRAINERCARD
+    SubEvent_TrainerCard,
     UNION_PLAY_CATEGORY_TRAINERCARD, 
     UNION_PLAY_CATEGORY_TALK,
   },
   {//UNION_SUBPROC_ID_COLOSSEUM_WARP_1VS1_SINGLE_50
+    SubEvent_ColosseumWarp,
     UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_SINGLE_50, 
     UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_SINGLE_50,
   },
   {//UNION_SUBPROC_ID_COLOSSEUM_WARP_1VS1_SINGLE_FREE
+    SubEvent_ColosseumWarp,
     UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_SINGLE_FREE, 
     UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_SINGLE_FREE,
   },
   {//UNION_SUBPROC_ID_COLOSSEUM_WARP_1VS1_SINGLE_STANDARD
+    SubEvent_ColosseumWarp,
     UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_SINGLE_STANDARD, 
     UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_SINGLE_STANDARD,
   },
-  {//UNION_SUBPROC_ID_COLOSSEUM_WARP
+  {//UNION_SUBPROC_ID_COLOSSEUM_WARP_MULTI
+    SubEvent_ColosseumWarpMulti,
     UNION_PLAY_CATEGORY_COLOSSEUM_MULTI, 
     UNION_PLAY_CATEGORY_COLOSSEUM_MULTI,
+  },
+  {//UNION_SUBPROC_ID_POKELIST
+    SubEvent_Pokelist,
+    UNION_PLAY_CATEGORY_MAX,  //MAX=変更しない
+    UNION_PLAY_CATEGORY_MAX,
+  },
+  {//UNION_SUBPROC_ID_BATTLE
+    SubEvent_Battle,
+    UNION_PLAY_CATEGORY_MAX,  //MAX=変更しない
+    UNION_PLAY_CATEGORY_MAX,
   },
 };
 SDK_COMPILER_ASSERT(UNION_SUBPROC_ID_MAX == NELEMS(SubProc_PlayCategoryTbl));
@@ -130,60 +162,43 @@ static GMEVENT_RESULT UnionSubProc_GameChangeEvent(GMEVENT * event, int * seq, v
 	UNION_SUB_PROC *subproc = &unisys->subproc;
   GMEVENT *child_event = NULL;
   UNION_MY_SITUATION *situ = &unisys->my_situation;
+  BOOL next;
   
 	switch(*seq) {
 	case 0:
 	  OS_TPrintf("GMEVENT サブPROC呼び出し id = %d\n", subproc->id);
     UnionMsg_AllDel(unisys);
-    
-	  switch(subproc->id){
-	  case UNION_SUBPROC_ID_TRAINERCARD:
-  	  child_event = EVENT_FieldSubProc(
-  	    gsys, subev->fieldWork, TRCARD_OVERLAY_ID, &TrCardSysCommProcData, subproc->parent_work);
-  	  break;
-  	case UNION_SUBPROC_ID_COLOSSEUM_WARP_1VS1_SINGLE_50:
-  	case UNION_SUBPROC_ID_COLOSSEUM_WARP_1VS1_SINGLE_FREE:
-  	case UNION_SUBPROC_ID_COLOSSEUM_WARP_1VS1_SINGLE_STANDARD:
-      {
-        PLAYER_WORK *plWork = GAMESYSTEM_GetMyPlayerWork( gsys );
-        VecFx32 pos;
-        
-        pos.x = (88 + 16*GFL_NET_GetNetID(GFL_NET_HANDLE_GetCurrentHandle())) << FX32_SHIFT;
-        pos.y = 0;
-        pos.z = 136 << FX32_SHIFT;
-        child_event = DEBUG_EVENT_ChangeMapPos(gsys, subev->fieldWork, ZONE_ID_CLOSSEUM, &pos, 0);
-      }
-      break;
-  	case UNION_SUBPROC_ID_COLOSSEUM_WARP_MULTI:
-      {
-        PLAYER_WORK *plWork = GAMESYSTEM_GetMyPlayerWork( gsys );
-        VecFx32 pos;
-        
-        pos.x = (88 + 16*GFL_NET_GetNetID(GFL_NET_HANDLE_GetCurrentHandle())) << FX32_SHIFT;
-        pos.y = 0;
-        pos.z = 136 << FX32_SHIFT;
-        child_event = DEBUG_EVENT_ChangeMapPos(gsys, subev->fieldWork, ZONE_ID_CLOSSEUM02, &pos,0);
-      }
-      break;
-  	default:
-  	  GF_ASSERT(0); //不明なサブPROC ID
-  	  break;
-  	}
-    GMEVENT_CallEvent(event, child_event);
-    
-    UnionMySituation_SetParam(unisys, UNION_MYSITU_PARAM_IDX_PLAY_CATEGORY, 
-      (void*)SubProc_PlayCategoryTbl[subproc->id].play_category);
+
+    if(SubProc_PlayCategoryTbl[subproc->id].play_category != UNION_PLAY_CATEGORY_MAX){
+      UnionMySituation_SetParam(unisys, UNION_MYSITU_PARAM_IDX_PLAY_CATEGORY, 
+        (void*)SubProc_PlayCategoryTbl[subproc->id].play_category);
+    }
     OS_TPrintf("play_category = %d\n", situ->play_category);
-		(*seq) ++;
+
+    (*seq)++;
+    //break through
+    
+	case 1:
+	  next = SubProc_PlayCategoryTbl[subproc->id].sub_event(
+	      gsys, unisys, subev->fieldWork, subproc->parent_work, event, &child_event, &subproc->seq);
+	  if(child_event != NULL){
+      GMEVENT_CallEvent(event, child_event);
+    }
+    else if(next == TRUE){
+		  (*seq)++;
+		}
 		break;
 	
-	case 1:
-    UnionMySituation_SetParam(unisys, UNION_MYSITU_PARAM_IDX_PLAY_CATEGORY, 
-      (void*)SubProc_PlayCategoryTbl[subproc->id].after_play_category);
+	case 2:
+    if(SubProc_PlayCategoryTbl[subproc->id].after_play_category != UNION_PLAY_CATEGORY_MAX){
+      UnionMySituation_SetParam(unisys, UNION_MYSITU_PARAM_IDX_PLAY_CATEGORY, 
+        (void*)SubProc_PlayCategoryTbl[subproc->id].after_play_category);
+    }
     OS_TPrintf("after play_category = %d\n", situ->play_category);
 
     subproc->id = UNION_SUBPROC_ID_NULL;
     subproc->parent_work = NULL;
+    subproc->seq = 0;
     subproc->active = FALSE;
 	  OS_TPrintf("GMEVENT サブPROC終了\n");
 		return GMEVENT_RES_FINISH;
@@ -207,6 +222,7 @@ void UnionSubProc_EventSet(UNION_SYSTEM_PTR unisys, UNION_SUBPROC_ID sub_proc_id
   
   unisys->subproc.id = sub_proc_id;
   unisys->subproc.parent_work = parent_wk;
+  unisys->subproc.seq = 0;
 }
 
 //==================================================================
@@ -224,5 +240,229 @@ BOOL UnionSubProc_IsExits(UNION_SYSTEM_PTR unisys)
     return FALSE;
   }
   return TRUE;
+}
+
+
+//==============================================================================
+//  サブイベント実行関数
+//==============================================================================
+//--------------------------------------------------------------
+/**
+ * イベント：トレーナーカード
+ *
+ * @param   gsys		
+ * @param   unisys		
+ * @param   fieldWork		
+ * @param   pwk		
+ * @param   seq		
+ *
+ * @retval  GMEVENT *		
+ */
+//--------------------------------------------------------------
+static BOOL SubEvent_TrainerCard(GAMESYS_WORK *gsys, UNION_SYSTEM_PTR unisys, FIELD_MAIN_WORK *fieldWork, void *pwk, GMEVENT * parent_event, GMEVENT **child_event, u8 *seq)
+{
+  switch(*seq){
+  case 0:
+    *child_event = EVENT_FieldSubProc(
+  	    gsys, fieldWork, TRCARD_OVERLAY_ID, &TrCardSysCommProcData, pwk);
+    break;
+  default:
+    return TRUE;
+  }
+  
+  (*seq)++;
+  return FALSE;
+}
+
+//--------------------------------------------------------------
+/**
+ * イベント：コロシアムへワープ
+ *
+ * @param   gsys		
+ * @param   unisys		
+ * @param   fieldWork		
+ * @param   pwk		
+ * @param   seq		
+ *
+ * @retval  GMEVENT *		
+ */
+//--------------------------------------------------------------
+static BOOL SubEvent_ColosseumWarp(GAMESYS_WORK *gsys, UNION_SYSTEM_PTR unisys, FIELD_MAIN_WORK *fieldWork, void *pwk, GMEVENT * parent_event, GMEVENT **child_event, u8 *seq)
+{
+  switch(*seq){
+  case 0:
+    {
+      PLAYER_WORK *plWork = GAMESYSTEM_GetMyPlayerWork( gsys );
+      VecFx32 pos;
+      
+      pos.x = (88 + 16*GFL_NET_GetNetID(GFL_NET_HANDLE_GetCurrentHandle())) << FX32_SHIFT;
+      pos.y = 0;
+      pos.z = 136 << FX32_SHIFT;
+      *child_event = DEBUG_EVENT_ChangeMapPos(gsys, fieldWork, ZONE_ID_CLOSSEUM, &pos, 0);
+    }
+    break;
+  default:
+    return TRUE;
+  }
+  
+  (*seq)++;
+  return FALSE;
+}
+
+//--------------------------------------------------------------
+/**
+ * イベント：マルチ用のコロシアムへワープ
+ *
+ * @param   gsys		
+ * @param   unisys		
+ * @param   fieldWork		
+ * @param   pwk		
+ * @param   seq		
+ *
+ * @retval  GMEVENT *		
+ */
+//--------------------------------------------------------------
+static BOOL SubEvent_ColosseumWarpMulti(GAMESYS_WORK *gsys, UNION_SYSTEM_PTR unisys, FIELD_MAIN_WORK *fieldWork, void *pwk, GMEVENT * parent_event, GMEVENT **child_event, u8 *seq)
+{
+  switch(*seq){
+  case 0:
+    {
+      PLAYER_WORK *plWork = GAMESYSTEM_GetMyPlayerWork( gsys );
+      VecFx32 pos;
+      
+      pos.x = (88 + 16*GFL_NET_GetNetID(GFL_NET_HANDLE_GetCurrentHandle())) << FX32_SHIFT;
+      pos.y = 0;
+      pos.z = 136 << FX32_SHIFT;
+      *child_event = DEBUG_EVENT_ChangeMapPos(gsys, fieldWork, ZONE_ID_CLOSSEUM02, &pos,0);
+    }
+    break;
+  default:
+    return TRUE;
+  }
+  
+  (*seq)++;
+  return FALSE;
+}
+
+//--------------------------------------------------------------
+/**
+ * イベント：ポケモンリスト呼び出し
+ *
+ * @param   gsys		
+ * @param   unisys		
+ * @param   fieldWork		
+ * @param   pwk		
+ * @param   seq		
+ *
+ * @retval  GMEVENT *		
+ */
+//--------------------------------------------------------------
+static BOOL SubEvent_Pokelist(GAMESYS_WORK *gsys, UNION_SYSTEM_PTR unisys, FIELD_MAIN_WORK *fieldWork, void *pwk, GMEVENT * parent_event, GMEVENT **child_event, u8 *seq)
+{
+  UNION_SUBPROC_PARENT_POKELIST *parent_list = pwk;
+  PLIST_DATA *plist = &parent_list->plist;
+  PSTATUS_DATA *pstatus = &parent_list->pstatus;
+  
+  enum{
+    SEQ_FADEOUT,
+    SEQ_FIELD_CLOSE,
+    SEQ_POKELIST,
+    SEQ_POKELIST_WAIT,
+    SEQ_STATUS,
+    SEQ_STATUS_WAIT,
+    SEQ_FIELD_OPEN,
+    SEQ_FADEIN,
+    SEQ_FINISH,
+  };
+  
+	switch(*seq) {
+	case SEQ_FADEOUT:
+		GMEVENT_CallEvent(parent_event, EVENT_FieldFadeOut(gsys, fieldWork, 0));
+		(*seq) ++;
+		break;
+	case SEQ_FIELD_CLOSE:
+		GMEVENT_CallEvent(parent_event, EVENT_FieldClose(gsys, fieldWork));
+		(*seq) ++;
+		break;
+	case SEQ_POKELIST:
+    OS_TPrintf("ポケモンリスト呼び出し\n");
+		GAMESYSTEM_CallProc(gsys, FS_OVERLAY_ID(pokelist), &PokeList_ProcData, plist);
+		(*seq) ++;
+		break;
+	case SEQ_POKELIST_WAIT:
+		if(GAMESYSTEM_IsProcExists(gsys)){
+      break;
+    }
+    if(plist->ret_mode == PL_RET_STATUS){
+      *seq = SEQ_STATUS;
+    }
+    else{
+      *seq = SEQ_FIELD_OPEN;
+    }
+    break;
+  case SEQ_STATUS:
+    OS_TPrintf("ポケモンステータス呼び出し\n");
+    pstatus->ppd = (void*)plist->pp;
+    pstatus->cfg = plist->cfg;
+    pstatus->ribbon = (u8*)SP_RIBBON_SAVE_GetSaveData(GAMEDATA_GetSaveControlWork(GAMESYSTEM_GetGameData(gsys)));
+
+    pstatus->ppt = PST_PP_TYPE_POKEPARTY;
+    pstatus->max = PokeParty_GetPokeCount( plist->pp );
+    pstatus->mode = PST_MODE_NORMAL;
+    pstatus->pos = plist->ret_sel;
+    
+		GAMESYSTEM_CallProc(gsys, FS_OVERLAY_ID(poke_status), &PokeStatus_ProcData, pstatus);
+		(*seq) ++;
+		break;
+	case SEQ_STATUS_WAIT:
+		if(GAMESYSTEM_IsProcExists(gsys)){
+      break;
+    }
+    plist->ret_sel = pstatus->pos;
+    (*seq) = SEQ_POKELIST;
+    break;
+	case SEQ_FIELD_OPEN:
+		GMEVENT_CallEvent(parent_event, EVENT_FieldOpen(gsys));
+		(*seq) ++;
+		break;
+	case SEQ_FADEIN:
+		GMEVENT_CallEvent(parent_event, EVENT_FieldFadeIn(gsys, fieldWork, 0));
+		(*seq) ++;
+		break;
+	case SEQ_FINISH:
+  default:
+    return TRUE;
+  }
+  
+  return FALSE;
+}
+
+//--------------------------------------------------------------
+/**
+ * イベント：戦闘画面呼び出し
+ *
+ * @param   gsys		
+ * @param   unisys		
+ * @param   fieldWork		
+ * @param   pwk		
+ * @param   seq		
+ *
+ * @retval  GMEVENT *		
+ */
+//--------------------------------------------------------------
+static BOOL SubEvent_Battle(GAMESYS_WORK *gsys, UNION_SYSTEM_PTR unisys, FIELD_MAIN_WORK *fieldWork, void *pwk, GMEVENT * parent_event, GMEVENT **child_event, u8 *seq)
+{
+  UNION_MY_SITUATION *situ = &unisys->my_situation;
+  
+  switch(*seq){
+  case 0:
+    *child_event = EVENT_ColosseumBattle(gsys, fieldWork, situ->play_category, pwk);
+    break;
+  default:
+    return TRUE;
+  }
+  
+  (*seq)++;
+  return FALSE;
 }
 

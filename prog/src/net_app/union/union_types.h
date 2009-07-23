@@ -122,6 +122,8 @@ enum{
   UNION_TIMING_COLOSSEUM_MEMBER_ENTRY_AFTER,  ///<コロシアム：メンバー集まった後の同期取り
   UNION_TIMING_COLOSSEUM_ADD_CMD_TBL_AFTER,   ///<コロシアム：通信テーブルを追加後
   UNION_TIMING_COLOSSEUM_PROC_AFTER,    ///<コロシアム終了後の同期取り
+  
+  UNION_TIMING_BATTLE_ADD_CMD_TBL_AFTER,  ///<戦闘：通信テーブルを追加後
 };
 
 ///サブPROC呼び出しID     ※SubProc_PlayCategoryTblと並びを同じにしておくこと！
@@ -132,6 +134,8 @@ typedef enum{
   UNION_SUBPROC_ID_COLOSSEUM_WARP_1VS1_SINGLE_FREE,    ///<コロシアム遷移
   UNION_SUBPROC_ID_COLOSSEUM_WARP_1VS1_SINGLE_STANDARD,    ///<コロシアム遷移
   UNION_SUBPROC_ID_COLOSSEUM_WARP_MULTI,    ///<コロシアム遷移(マルチ部屋)
+  UNION_SUBPROC_ID_POKELIST,                ///<ポケモンリスト呼び出し
+  UNION_SUBPROC_ID_BATTLE,                  ///<戦闘遷移
   
   UNION_SUBPROC_ID_MAX,
 }UNION_SUBPROC_ID;
@@ -297,5 +301,7 @@ typedef struct{
   BOOL active;               ///<TRUE:サブPROC実行中
   UNION_SUBPROC_ID id;       ///<サブPROC呼び出しID
   void *parent_work;         ///<サブPROCに渡すParentWorkへのポインタ
+  u8 seq;
+  u8 padding[3];
 }UNION_SUB_PROC;
 

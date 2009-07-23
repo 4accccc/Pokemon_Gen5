@@ -17,6 +17,7 @@
 #include "union_chara.h"
 #include "union_oneself.h"
 #include "union_subproc.h"
+#include "field/fieldmap_ctrl_grid.h"
 
 
 void Union_Main(GAME_COMM_SYS_PTR game_comm, FIELD_MAIN_WORK *fieldmap)
@@ -82,22 +83,32 @@ BOOL Union_FieldCheck(UNION_SYSTEM_PTR unisys)
 
 //==================================================================
 /**
- * フィールド削除時に行う処理
+ * フィールド作成時に呼ばれるコールバック
  *
  * @param   unisys		
  */
 //==================================================================
-void Union_FieldDelete(UNION_SYSTEM_PTR unisys)
+void UnionMain_Callback_FieldCreate(void *pwk, void *app_work, FIELD_MAIN_WORK *fieldWork)
 {
+  UNION_PARENT_WORK *uniparent = pwk;
+  UNION_SYSTEM_PTR unisys = app_work;
+  
+  if(unisys->player_pause == TRUE){
+    FIELDMAP_CTRL_GRID_SetPlayerPause( fieldWork, TRUE );
+  }
 }
 
 //==================================================================
 /**
- * 他アプリからフィールドへ復帰してきた時の処理
+ * フィールド削除時に呼ばれるコールバック
  *
  * @param   unisys		
  */
 //==================================================================
-void Union_FieldComeback(UNION_SYSTEM_PTR unisys)
+void UnionMain_Callback_FieldDelete(void *pwk, void *app_work, FIELD_MAIN_WORK *fieldWork)
 {
+  UNION_PARENT_WORK *uniparent = pwk;
+  UNION_SYSTEM_PTR unisys = app_work;
+
 }
+

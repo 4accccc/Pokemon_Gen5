@@ -65,6 +65,6 @@ extern BOOL UnionComm_Check_ShutdownRestarts(UNION_SYSTEM_PTR unisys);
 //--------------------------------------------------------------
 extern void Union_Main(GAME_COMM_SYS_PTR game_comm, FIELD_MAIN_WORK *fieldmap);
 extern BOOL Union_FieldCheck(UNION_SYSTEM_PTR unisys);
-extern void Union_FieldDelete(UNION_SYSTEM_PTR unisys);
-extern void Union_FieldComeback(UNION_SYSTEM_PTR unisys);
+extern void UnionMain_Callback_FieldCreate(void *pwk, void *app_work, FIELD_MAIN_WORK *fieldWork);
+extern void UnionMain_Callback_FieldDelete(void *pwk, void *app_work, FIELD_MAIN_WORK *fieldWork);
 

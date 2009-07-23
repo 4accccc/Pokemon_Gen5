@@ -45,12 +45,14 @@ typedef struct _UNION_SYSTEM{
   UNION_CHARACTER character[UNION_CHARACTER_MAX];   ///<キャラクタ管理バッファ
   
   UNION_SUB_PROC subproc;             ///<サブPROC呼び出し制御
+  void *parent_work;                  ///<サブPROC用に使用する一時的なワーク管理用
   
   COLOSSEUM_SYSTEM *colosseum_sys;    ///<コロシアムシステムワーク
   
   u8 comm_status;
   u8 restart_seq;                     ///<「切断→再開」処理シーケンスNo
-  u8 padding[2];
+  u8 player_pause;                    ///<自機のポーズ状況
+  u8 padding;
 }UNION_SYSTEM;
 
 

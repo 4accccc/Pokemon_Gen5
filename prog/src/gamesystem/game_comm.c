@@ -105,8 +105,8 @@ typedef struct{
   BOOL (*exit_func)(int *seq, void *pwk, void *app_work);          ///<終了処理
   BOOL (*exit_wait_func)(int *seq, void *pwk, void *app_work);     ///<終了完了待ち
   
-  BOOL (*field_create)(void *pwk, void *app_work, FIELD_MAIN_WORK *fieldWork);  ///<Field作成時に呼ばれるコールバック
-  BOOL (*field_delete)(void *pwk, void *app_work, FIELD_MAIN_WORK *fieldWork);  ///<Field削除時に呼ばれるコールバック
+  void (*field_create)(void *pwk, void *app_work, FIELD_MAIN_WORK *fieldWork);  ///<Field作成時に呼ばれるコールバック
+  void (*field_delete)(void *pwk, void *app_work, FIELD_MAIN_WORK *fieldWork);  ///<Field削除時に呼ばれるコールバック
 }GAME_FUNC_TBL;
 
 
@@ -153,8 +153,8 @@ static const GAME_FUNC_TBL GameFuncTbl[] = {
     UnionComm_Update,     //update
     UnionComm_Exit,       //exit
     UnionComm_ExitWait,   //exit_wait
-    NULL,       //field_create
-    NULL,       //field_delete
+    UnionMain_Callback_FieldCreate,       //field_create
+    UnionMain_Callback_FieldDelete,       //field_delete
   },
 };
 

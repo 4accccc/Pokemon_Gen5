@@ -50,6 +50,7 @@ FS_EXTERN_OVERLAY(union_room);
 //==============================================================================
 static void UnionComm_InitCallback(void *pWork);
 static void	UnionComm_ExitCallback(void* pWork);
+static void UnionComm_Colosseum_Update(UNION_SYSTEM_PTR unisys);
 static void UnionComm_BeaconSearch(UNION_SYSTEM_PTR unisys);
 static BOOL UnionBeacon_SetReceiveData(UNION_SYSTEM_PTR unisys, const UNION_BEACON *beacon, const u8 *beacon_mac_address);
 static void* UnionComm_GetBeaconData(void* pWork);
@@ -362,24 +363,36 @@ void UnionComm_Update(int *seq, void *pwk, void *pWork)
   
   UnionComm_BeaconSearch(unisys);   //ビーコンサーチ
   
+  UnionComm_Colosseum_Update(unisys); //コロシアム更新
+}
+
+//--------------------------------------------------------------
+/**
+ * コロシアムの更新処理
+ *
+ * @param   unisys		
+ */
+//--------------------------------------------------------------
+static void UnionComm_Colosseum_Update(UNION_SYSTEM_PTR unisys)
+{
+  if(unisys->colosseum_sys == NULL || unisys->colosseum_sys->comm_ready == FALSE){
+    return;
+  }
+  
   //PROCがフィールドのときのみ動作する処理
   if(Union_FieldCheck(unisys) == TRUE){
-    //コロシアム
-    if(unisys->colosseum_sys != NULL && unisys->colosseum_sys->comm_ready == TRUE)
-    {
-      //通信プレイヤーアクター管理システムが生成されているなら自分座標の転送を行う
-      if(CommPlayer_Mine_DataUpdate(
-          unisys->colosseum_sys->cps, &unisys->colosseum_sys->send_mine_package) == TRUE){
-        ColosseumSend_PosPackage(&unisys->colosseum_sys->send_mine_package);
-      }
-      
-      //通信プレイヤーの座標反映
-      ColosseumTool_CommPlayerUpdate(unisys->colosseum_sys);
-      
-      //立ち位置への返事リクエストが貯まっているなら送信を行う
-      Colosseum_Parent_SendAnswerStandingPosition(unisys->colosseum_sys);
+    //通信プレイヤーアクター管理システムが生成されているなら自分座標の転送を行う
+    if(CommPlayer_Mine_DataUpdate(
+        unisys->colosseum_sys->cps, &unisys->colosseum_sys->send_mine_package) == TRUE){
+      ColosseumSend_PosPackage(&unisys->colosseum_sys->send_mine_package);
     }
+    
+    //通信プレイヤーの座標反映
+    ColosseumTool_CommPlayerUpdate(unisys->colosseum_sys);
   }
+
+  //立ち位置への返事リクエストが貯まっているなら送信を行う
+  Colosseum_Parent_SendAnswerStandingPosition(unisys->colosseum_sys);
 }
 
 //--------------------------------------------------------------

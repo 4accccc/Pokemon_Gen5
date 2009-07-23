@@ -70,3 +70,4 @@ typedef struct _COLOSSEUM_SYSTEM{
   COLOSSEUM_RECV_BUF recvbuf[COLOSSEUM_MEMBER_MAX]; ///<受信バッファ
 }COLOSSEUM_SYSTEM;
 
+
