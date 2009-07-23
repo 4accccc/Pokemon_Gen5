@@ -1228,7 +1228,6 @@ static void handler_Refresh( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk
     }
   }
 }
-
 //----------------------------------------------------------------------------------
 /**
  * ƒNƒ‚‚Ì‚·A‚­‚ë‚¢‚Ü‚È‚´‚µA‚Æ‚¨‚¹‚ñ‚Ú‚¤
@@ -1251,12 +1250,12 @@ static void handler_KumoNoSu( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowW
     u8 targetPokeID = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID_TARGET1 );
     const BTL_POKEPARAM* bpp = BTL_SVFLOW_RECEPT_GetPokeParam( flowWk, targetPokeID );
 
-    if( !BPP_CheckSick(bpp, WAZASICK_CANT_ESCAPE) )
+    if( !BPP_CheckSick(bpp, WAZASICK_TOOSENBOU) )
     {
       BTL_HANDEX_PARAM_ADD_SICK* param = BTL_SVFLOW_HANDLERWORK_Push( flowWk, BTL_HANDEX_ADD_SICK, pokeID );
       param->poke_cnt = 1;
       param->pokeID[0] = targetPokeID;
-      param->sickID = WAZASICK_CANT_ESCAPE;
+      param->sickID = WAZASICK_TOOSENBOU;
       param->sickCont = BTL_CALC_MakeWazaSickCont_Poke( targetPokeID );
 
       param->fExMsg = TRUE;

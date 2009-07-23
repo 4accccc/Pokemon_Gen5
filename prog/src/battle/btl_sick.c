@@ -15,6 +15,7 @@ static void contDamageCommon( BTL_SVFLOW_WORK* flowWk, const BTL_POKEPARAM* bpp,
 static int getWazaSickDamageStrID( WazaSick sick );
 static void cont_HorobiNoUta( BTL_SVFLOW_WORK* flowWk, BTL_POKEPARAM* bpp, u8 pokeID );
 static void cont_Yadorigi( BTL_SVFLOW_WORK* flowWk, BTL_POKEPARAM* bpp, u8 pokeID );
+static void cont_NeWoHaru( BTL_SVFLOW_WORK* flowWk, BTL_POKEPARAM* bpp, u8 pokeID );
 static void cureProc( BTL_SVFLOW_WORK* flowWk, BTL_POKEPARAM* bpp, u8 pokeID, WazaSick sick );
 static void cure_Akubi( BTL_SVFLOW_WORK* flowWk, BTL_POKEPARAM* bpp );
 static void cure_HorobiNoUta( BTL_SVFLOW_WORK* flowWk, BTL_POKEPARAM* bpp );
@@ -68,6 +69,7 @@ static void contProc( BTL_SVFLOW_WORK* flowWk, BTL_POKEPARAM* bpp, u8 pokeID, Wa
   switch( sick ){
   case WAZASICK_HOROBINOUTA:    cont_HorobiNoUta( flowWk, bpp, pokeID ); break;
   case WAZASICK_YADORIGI:       cont_Yadorigi( flowWk, bpp, pokeID ); break;
+  case WAZASICK_NEWOHARU:       cont_NeWoHaru( flowWk, bpp, pokeID ); break;
   }
 }
 
@@ -146,6 +148,20 @@ static void cont_Yadorigi( BTL_SVFLOW_WORK* flowWk, BTL_POKEPARAM* bpp, u8 pokeI
     }
   }
 
+}
+/**
+ *  ‚Ë‚ð‚Í‚éFŒp‘±
+ */
+static void cont_NeWoHaru( BTL_SVFLOW_WORK* flowWk, BTL_POKEPARAM* bpp, u8 pokeID )
+{
+  if( !BPP_IsHPFull(bpp) )
+  {
+    BTL_HANDEX_PARAM_RECOVER_HP* param = BTL_SVFLOW_HANDLERWORK_Push( flowWk, BTL_HANDEX_RECOVER_HP, pokeID );
+    param->recoverHP = BTL_CALC_QuotMaxHP( bpp, 16 );
+    param->pokeID = pokeID;
+    HANDEX_STR_Setup( &param->exStr, BTL_STRTYPE_SET, BTL_STRID_SET_NeWoHaruRecover );
+    HANDEX_STR_AddArg( &param->exStr, pokeID );
+  }
 }
 
 //----------------------------------------------------------------------------------------------
@@ -273,7 +289,7 @@ int BTL_SICK_GetDefaultSickStrID( WazaSick sickID, BPP_SICK_CONT cont )
   case WAZASICK_AKUBI:      strID = BTL_STRID_SET_Akubi; break;
   case WAZASICK_YADORIGI:   strID = BTL_STRID_SET_Yadorigi; break;
   case WAZASICK_MIYABURU:   strID = BTL_STRID_SET_Miyaburu; break;
-
+  case WAZASICK_NEWOHARU:   strID = BTL_STRID_SET_NeWoHaru; break;
   case WAZASICK_DOKU:
     strID = BPP_SICKCONT_IsMoudokuCont(cont)? BTL_STRID_SET_MoudokuGet : BTL_STRID_SET_DokuGet;
     break;
