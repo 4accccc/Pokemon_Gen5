@@ -107,6 +107,7 @@ typedef enum
 	TOWNMAP_BG_FRAME_ROAD_M,	//道
 	TOWNMAP_BG_FRAME_MAP_M,		//地図
 
+	TOWNMAP_BG_FRAME_DEBUG_S,	//デバッグ
 	TOWNMAP_BG_FRAME_FONT_S,	//文字
 	TOWNMAP_BG_FRAME_WND_S,		//文字のウィンドウ
 

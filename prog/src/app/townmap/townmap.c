@@ -34,15 +34,32 @@
 #include "townmap_grh.h"
 #include "app/townmap.h"
 
+//debug
+#include "debug/debugwin_sys.h"
+
 //=============================================================================
 /**
  *					定数宣言
 */
 //=============================================================================
 //-------------------------------------
+///	SWITCH
+//=====================================
+#ifdef PM_DEBUG
+#define DEBUG_MENU_USE
+#define DEBUG_PRINT_USE
+#endif //PM_DEBUG
+
+//-------------------------------------
 ///	RULE
 //=====================================
 #define RULE_PLACE_MSG_MAX	(6)
+
+//-------------------------------------
+///	PLACE
+//=====================================
+#define PLACE_PULL_R				(10)
+#define PLACE_PULL_STRONG		(FX32_CONST(2))	//吸い込む強さ（カーソルより弱く）
 
 //-------------------------------------
 ///	APPBAR
@@ -179,8 +196,22 @@ enum
 #define MSGWND_BMPWIN_SKY_W	(24)
 #define MSGWND_BMPWIN_SKY_H	(3)
 
-#define MSGWND_STR_SKY_X	(0)
+#define MSGWND_STR_SKY_X	(16)
 #define MSGWND_STR_SKY_Y	(0)
+
+//-------------------------------------
+///	地名ウィンドウ	PLACEWND
+//=====================================
+#define PLACEWND_BMPWIN_X	(0)
+#define PLACEWND_BMPWIN_Y	(0)
+#define PLACEWND_BMPWIN_W	(24)
+#define PLACEWND_BMPWIN_H	(3)
+
+#define PLACEWND_STR_X		(16)
+#define PLACEWND_STR_Y		(2)
+
+#define PLACEWND_WND_POS_X		(128)
+#define PLACEWND_WND_POS_Y		(96)
 
 //=============================================================================
 /**
@@ -208,6 +239,7 @@ typedef struct
 {
 	GFL_CLWK	*p_clwk[CURSOR_CLWK_MAX];
 	GFL_CLACTPOS	pos;
+	BOOL					is_trg;
 } CURSOR_WORK;
 //-------------------------------------
 ///	場所処理
@@ -253,6 +285,18 @@ typedef struct
 	GFL_FONT*				  p_font;
   const GFL_MSGDATA*			cp_msg;
 } MSGWND_WORK;
+//-------------------------------------
+///	地名ウィンドウ
+//=====================================
+typedef struct 
+{
+	MSGWND_WORK	msgwnd;
+	GFL_CLWK		*p_clwk;	//受け取り
+	const PLACE_DATA *cp_data;
+	BOOL				is_update;
+	BOOL				is_start;
+} PLACEWND_WORK;
+
 //-------------------------------------
 ///	Module操作
 //=====================================
@@ -304,6 +348,9 @@ typedef struct
 	//空を飛ぶ？のメッセージ面
 	MSGWND_WORK		msgwnd;
 
+	//地名ウィンドウ
+	PLACEWND_WORK	placewnd;
+
 	//共通利用システム
 	GFL_FONT			*p_font;
 	GFL_MSGDATA		*p_place_msg;
@@ -351,7 +398,7 @@ static void SEQFUNC_Main( SEQ_WORK *p_seqwk, int *p_seq, void *p_param_adrs );
 //=====================================
 static void APPBAR_Init( APPBAR_WORK *p_wk, APPBAR_OPTION_MASK mask, GFL_CLUNIT* p_unit, u8 bar_frm, u8 bg_plt, u8 obj_plt, HEAPID heapID );
 static void APPBAR_Exit( APPBAR_WORK *p_wk );
-static void APPBAR_Main( APPBAR_WORK *p_wk );
+static void APPBAR_Main( APPBAR_WORK *p_wk, const CURSOR_WORK *cp_cursor );
 static APPBAR_SELECT APPBAR_GetTrg( const APPBAR_WORK *cp_wk );
 static APPBAR_SELECT APPBAR_GetCont( const APPBAR_WORK *cp_wk );
 static void ARCHDL_UTIL_TransVramScreenEx( ARCHANDLE *handle, ARCDATID datID, u32 frm, u32 chr_ofs, u8 src_x, u8 src_y, u8 src_w, u8 src_h, u8 dst_x, u8 dst_y, u8 dst_w, u8 dst_h,  u8 plt, BOOL compressedFlag, HEAPID heapID );
@@ -360,8 +407,10 @@ static void ARCHDL_UTIL_TransVramScreenEx( ARCHANDLE *handle, ARCDATID datID, u3
 //=====================================
 static void CURSOR_Init( CURSOR_WORK *p_wk, GFL_CLWK *p_cursor, GFL_CLWK *p_ring, HEAPID heapID );
 static void CURSOR_Exit( CURSOR_WORK *p_wk );
-static void CURSOR_Main( CURSOR_WORK *p_wk );
+static void CURSOR_Main( CURSOR_WORK *p_wk, const PLACE_WORK *cp_place );
 static void CURSOR_GetPos( const CURSOR_WORK *cp_wk, GFL_POINT *p_pos );
+static BOOL CURSOR_GetTrg( const CURSOR_WORK *cp_wk );
+static BOOL CURSOR_GetPointTrg( const CURSOR_WORK *cp_wk, u32 *p_x, u32 *p_y );
 //-------------------------------------
 ///	PLACE
 //=====================================
@@ -373,11 +422,13 @@ static void PLACE_SetVisible( PLACE_WORK *p_wk, BOOL is_visible );
 static void PLACE_SetWldPos( PLACE_WORK *p_wk, const GFL_POINT *cp_pos );
 static void PLACE_GetWldPos( const PLACE_WORK *cp_wk, GFL_POINT *p_pos );
 static const PLACE_DATA* PLACE_Hit( const PLACE_WORK *cp_wk, const CURSOR_WORK *cp_cursor );
+static const PLACE_DATA* PLACE_PullHit( const PLACE_WORK *cp_wk, const CURSOR_WORK *cp_cursor );
 static u16 PLACEDATA_GetParam( const PLACE_DATA *cp_wk, TOWNMAP_DATA_PARAM param );
 static void PlaceData_Init( PLACE_DATA *p_wk, const TOWNMAP_DATA *cp_data, u32 data_idx, GFL_CLUNIT *p_clunit, u32 chr, u32 cel, u32 plt, HEAPID heapID );
 static void PlaceData_Exit( PLACE_DATA *p_wk );
 static void PlaceData_SetVisible( PLACE_DATA *p_wk, BOOL is_visible );
 static BOOL PlaceData_IsHit( const PLACE_DATA *cp_wk, const GFL_POINT *cp_pos );
+static BOOL PlaceData_IsPullHit( const PLACE_DATA *cp_wk, const GFL_POINT *cp_pos, u32 *p_distance );
 //-------------------------------------
 ///	MAP
 //=====================================
@@ -402,11 +453,98 @@ static void INFO_Exit( INFO_WORK *p_wk );
 static void INFO_Main( INFO_WORK *p_wk );
 static void INFO_Update( INFO_WORK *p_wk, const PLACE_DATA *cp_data );
 //-------------------------------------
-///	MSGWND_WORK
+///	MSGWND
 //=====================================
 static void MSGWND_Init( MSGWND_WORK* p_wk, u8 bgframe, GFL_FONT *p_font, const GFL_MSGDATA *cp_msg, u8 x, u8 y, u8 w, u8 h, HEAPID heapID );
 static void MSGWND_Exit( MSGWND_WORK* p_wk );
 static void MSGWND_Print( MSGWND_WORK* p_wk, u32 strID, u16 x, u16 y );
+static void MSGWND_Clear( MSGWND_WORK* p_wk );
+//-------------------------------------
+///	PLACEWND
+//=====================================
+static void PLACEWND_Init( PLACEWND_WORK *p_wk, u8 bgframe, GFL_FONT *p_font, const GFL_MSGDATA *cp_msg, GFL_CLWK *p_clwk, HEAPID heapID );
+static void PLACEWND_Exit( PLACEWND_WORK *p_wk );
+static void PLACEWND_Main( PLACEWND_WORK *p_wk );
+static void PLACEWND_Start( PLACEWND_WORK *p_wk, const PLACE_DATA *cp_data );
+
+//=============================================================================
+/**
+ *						DEBUG_PRINT
+ */
+//=============================================================================
+#ifdef DEBUG_PRINT_USE
+//debug用
+#include "system/net_err.h"	//VRAM退避用アドレスを貰うため
+#include <wchar.h>					//wcslen
+//-------------------------------------
+///	デバッグプリント用画面
+//=====================================
+typedef struct
+{
+	GFL_BMP_DATA *p_bmp;
+	GFL_FONT*			p_font;
+
+	BOOL	is_now_save;
+	u8	frm;
+	u8	dummy[3];
+
+  u8  *p_char_temp_area;      ///<キャラクタVRAM退避先
+  u16 *p_scrn_temp_area;      ///<スクリーンVRAM退避先
+  u16 *p_pltt_temp_area;      ///<パレットVRAM退避先
+
+ 	u8  font_col_bkup[3];
+	u8	dummy2;
+  u8  prioryty_bkup;
+  u8  scroll_x_bkup;
+  u8  scroll_y_bkup;
+	u8	dummy3;
+
+	BOOL is_open;
+
+	HEAPID heapID;
+} DEBUG_PRINT_WORK;
+
+#define DEBUGPRINT_CHAR_TEMP_AREA (0x4000)
+#define DEBUGPRINT_SCRN_TEMP_AREA (0x800)
+#define DEBUGPRINT_PLTT_TEMP_AREA (0x20)
+#define DEBUGPRINT_WIDTH  (32)
+#define DEBUGPRINT_HEIGHT (18)
+
+static DEBUG_PRINT_WORK *sp_dp_wk;
+static void DEBUGPRINT_Init( u8 frm, BOOL is_now_save, HEAPID heapID );
+static void DEBUGPRINT_Exit( void );
+static void DEBUGPRINT_Open( void );
+static BOOL DEBUGPRINT_IsOpen( void );
+static void DEBUGPRINT_Close( void );
+static void DEBUGPRINT_Print( const u16 *cp_str, u16 x, u16 y );
+static void DEBUGPRINT_PrintNumber( const u16 *cp_str, int number, u16 x, u16 y );
+static void DEBUGPRINT_Clear( void );
+static void DEBUGPRINT_ClearRange( s16 x, s16 y, u16 w, u16 h );
+//拡張
+static void DEBUGPRINT_Update( TOWNMAP_WORK *p_wk );
+#else
+#define DEBUGPRINT_Init(...)				((void)0)
+#define DEBUGPRINT_Exit(...)				((void)0)
+#define DEBUGPRINT_Open(...)				((void)0)
+#define DEBUGPRINT_IsOpen(...)			((void)0)
+#define DEBUGPRINT_Close(...)				((void)0)
+#define DEBUGPRINT_Print(...)				((void)0)
+#define DEBUGPRINT_PrintNumber(...) ((void)0)
+#define DEBUGPRINT_Clear(...)				((void)0)
+#define DEBUGPRINT_ClearRange(...)	((void)0)
+#define DEBUGPRINT_Update(...)			((void)0)
+#endif //DEBUG_PRINT_USE
+
+//=============================================================================
+/**
+ *						DEBUG_MENU
+ */
+//=============================================================================
+#ifdef DEBUG_MENU_USE
+static void DEBUGMENU_UPDATE_Print( void* p_wk_adrs, DEBUGWIN_ITEM* p_item );
+static void DEBUGMENU_DRAW_Print( void* p_wk_adrs, DEBUGWIN_ITEM* p_item );
+#endif 
+
 //=============================================================================
 /**
  *						DATA
@@ -496,7 +634,10 @@ static GFL_PROC_RESULT TOWNMAP_PROC_Init( GFL_PROC *p_proc, int *p_seq, void *p_
 					MSGWND_BMPWIN_SKY_H,
 					HEAPID_TOWNMAP
 					);
+
+			GFL_FONTSYS_SetColor( 0xf, 1, 0 );
 			MSGWND_Print( &p_wk->msgwnd, 0, MSGWND_STR_SKY_X, MSGWND_STR_SKY_Y );
+			GFL_FONTSYS_SetDefaultColor();
 		}
 		else
 		{	
@@ -508,6 +649,17 @@ static GFL_PROC_RESULT TOWNMAP_PROC_Init( GFL_PROC *p_proc, int *p_seq, void *p_
 				TOWNMAP_GRAPHIC_GetFrame( p_wk->p_grh, TOWNMAP_BG_FRAME_BAR_M),
 				TOWNMAP_BG_PAL_M_15, TOWNMAP_OBJ_PAL_M_12, HEAPID_TOWNMAP );
 	}
+
+	//地名ウィンドウ作成
+	PLACEWND_Init( &p_wk->placewnd, 
+			TOWNMAP_GRAPHIC_GetFrame( p_wk->p_grh, TOWNMAP_BG_FRAME_FONT_M),
+			p_wk->p_font, p_wk->p_place_msg, 
+			TOWNMAP_GRAPHIC_GetClwk( p_wk->p_grh, TOWNMAP_OBJ_CLWK_WINDOW ),
+			HEAPID_TOWNMAP );
+	//FONT面をずらす
+	GFL_BG_SetScroll( TOWNMAP_GRAPHIC_GetFrame( p_wk->p_grh, TOWNMAP_BG_FRAME_FONT_M),
+					GFL_BG_SCROLL_Y_SET, -4 );
+
 
 	//カーソル作成
 	CURSOR_Init( &p_wk->cursor, TOWNMAP_GRAPHIC_GetClwk( p_wk->p_grh, TOWNMAP_OBJ_CLWK_CURSOR ),
@@ -526,6 +678,20 @@ static GFL_PROC_RESULT TOWNMAP_PROC_Init( GFL_PROC *p_proc, int *p_seq, void *p_
 	INFO_Init( &p_wk->info, TOWNMAP_GRAPHIC_GetFrame( p_wk->p_grh, TOWNMAP_BG_FRAME_FONT_S ),
 			p_wk->p_font, p_wk->p_place_msg, p_wk->p_guide_msg, HEAPID_TOWNMAP );
 
+
+	//デバッグ画面
+#ifdef DEBUG_MENU_USE
+	DEBUGWIN_InitProc( TOWNMAP_GRAPHIC_GetFrame( p_wk->p_grh, TOWNMAP_BG_FRAME_FONT_M ),
+			p_wk->p_font );
+	DEBUGWIN_ChangeLetterColor( 0, 31, 0 );
+	DEBUGWIN_ChangeSelectColor( 31, 0, 0 );
+	DEBUGWIN_AddGroupToTop( 0 , "タウンマップ" , HEAPID_TOWNMAP );
+#endif //DEBUG_MENU_USE
+#ifdef DEBUG_PRINT_USE
+	DEBUGPRINT_Init( TOWNMAP_GRAPHIC_GetFrame( p_wk->p_grh, TOWNMAP_BG_FRAME_DEBUG_S ), 
+			FALSE, HEAPID_TOWNMAP );
+	DEBUGWIN_AddItemToGroupEx( DEBUGMENU_UPDATE_Print, DEBUGMENU_DRAW_Print, p_wk, 0, HEAPID_TOWNMAP );
+#endif //DEBUG_PRINT_USE
 
 	return GFL_PROC_RES_FINISH;
 }
@@ -546,7 +712,16 @@ static GFL_PROC_RESULT TOWNMAP_PROC_Exit( GFL_PROC *p_proc, int *p_seq, void *p_
 	TOWNMAP_WORK	*p_wk	= p_wk_adrs;
 
 	//モジュール破棄-------------
-	
+
+	//デバッグ破棄
+#ifdef DEBUG_PRINT_USE
+	DEBUGPRINT_Exit();
+#endif //DEBUG_PRINT_USE
+#ifdef DEBUG_MENU_USE
+	DEBUGWIN_RemoveGroup( 0 );
+	DEBUGWIN_ExitProc();
+#endif //DEBUG_MENU_USE
+
 	//上画面情報破棄
 	INFO_Exit( &p_wk->info );
 
@@ -562,9 +737,12 @@ static GFL_PROC_RESULT TOWNMAP_PROC_Exit( GFL_PROC *p_proc, int *p_seq, void *p_
 	//カーソル破棄
 	CURSOR_Exit( &p_wk->cursor );
 
+	//地名ウィンドウ破棄
+	PLACEWND_Exit( &p_wk->placewnd );
+
 	//空を飛ぶモードならばメッセージ面破棄
 	if( p_wk->p_param->mode == TOWNMAP_MODE_SKY )
-	{		
+	{	
 		MSGWND_Exit( &p_wk->msgwnd );
 	}
 	//アプリケーションバー破棄
@@ -839,10 +1017,11 @@ static void SEQFUNC_Main( SEQ_WORK *p_seqwk, int *p_seq, void *p_param_adrs )
 		if( cp_data != p_wk->cp_pre_data && cp_data != NULL )
 		{	
 			INFO_Update( &p_wk->info, cp_data );
+			PLACEWND_Start( &p_wk->placewnd, cp_data );
 		}
 		p_wk->cp_pre_data	= cp_data;
 		//仮
-		if( cp_data != NULL && GFL_UI_KEY_GetTrg() & PAD_BUTTON_A )
+		if( cp_data != NULL && CURSOR_GetTrg( &p_wk->cursor ) )
 		{	
 			p_wk->p_param->select	= TOWNMAP_SELECT_SKY;
 			p_wk->p_param->zoneID	= PLACEDATA_GetParam( cp_data, TOWNMAP_DATA_PARAM_ZONE_ID );
@@ -852,8 +1031,9 @@ static void SEQFUNC_Main( SEQ_WORK *p_seqwk, int *p_seq, void *p_param_adrs )
 		}
 	}
 
-	APPBAR_Main( &p_wk->appbar );
-	CURSOR_Main( &p_wk->cursor );
+	APPBAR_Main( &p_wk->appbar, &p_wk->cursor );
+	CURSOR_Main( &p_wk->cursor, &p_wk->place );
+	PLACEWND_Main( &p_wk->placewnd );
 }
 //=============================================================================
 /**
@@ -1128,11 +1308,12 @@ static void APPBAR_Exit( APPBAR_WORK *p_wk )
 /**
  *	@brief	APPBAR	メイン処理
  *
- *	@param	APPBAR_WORK *p_wk		ワーク
+ *	@param	APPBAR_WORK *p_wk			ワーク
+ *	@param	CURSOR_WORK	cp_cursor	カーソルでボタンを押すのを実現させるため
  *
  */
 //-----------------------------------------------------------------------------
-static void APPBAR_Main( APPBAR_WORK *p_wk )
+static void APPBAR_Main( APPBAR_WORK *p_wk, const CURSOR_WORK *cp_cursor )
 {	
 	static const GFL_UI_TP_HITTBL	sc_hit_tbl[APPBAR_BARICON_MAX]	=
 	{	
@@ -1179,7 +1360,7 @@ static void APPBAR_Main( APPBAR_WORK *p_wk )
 	{	
 		if( p_wk->mode & 1<<i )
 		{	
-			if( GFL_UI_TP_GetPointTrg( &x, &y ) )
+			if( CURSOR_GetPointTrg( cp_cursor, &x, &y ) )
 			{	
 				if( ((u32)( x - sc_hit_tbl[i].rect.left) <= 
 							(u32)(sc_hit_tbl[i].rect.right - sc_hit_tbl[i].rect.left))
@@ -1189,7 +1370,7 @@ static void APPBAR_Main( APPBAR_WORK *p_wk )
 					p_wk->trg	= i;
 				}
 			}
-
+#if 0
 			if( GFL_UI_TP_GetPointCont( &x, &y ) )
 			{	
 				if( ((u32)( x - sc_hit_tbl[i].rect.left) <= 
@@ -1200,10 +1381,11 @@ static void APPBAR_Main( APPBAR_WORK *p_wk )
 					p_wk->cont	= i;
 				}
 			}
+#endif
 		}
 	}
 
-	//手動の動き
+	//キーの動き
 	if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_B )
 	{	
 		p_wk->trg	= APPBAR_SELECT_RETURN;
@@ -1371,52 +1553,109 @@ static void CURSOR_Exit( CURSOR_WORK *p_wk )
  *	@brief	カーソルメイン処理
  *
  *	@param	CURSOR_WORK *p_wk		ワーク
+ *	@param	p_place	吸い込む処理のため情報をもらう
  *
  */
 //-----------------------------------------------------------------------------
-static void CURSOR_Main( CURSOR_WORK *p_wk )
+static void CURSOR_Main( CURSOR_WORK *p_wk, const PLACE_WORK *cp_place )
 {	
-	VecFx32	norm	=  {0,0,0};
+	VecFx32	norm	= {0,0,0};
+	VecFx32	pull	= {0,0,0};
 	BOOL is_move	= FALSE;
+
+	//情報の毎フレームクリア処理
+	p_wk->is_trg	= FALSE;
 
 	//カーソル移動方向
 	if( GFL_UI_KEY_GetCont() & PAD_KEY_UP )
 	{	
 		norm.y	-= FX32_ONE;
+		GFL_CLACT_WK_SetDrawEnable( p_wk->p_clwk[CURSOR_CLWK_CURSOR], TRUE );
 		is_move	= TRUE;
 	}
 	else if( GFL_UI_KEY_GetCont() & PAD_KEY_DOWN )
 	{	
 		norm.y	+= FX32_ONE;
+		GFL_CLACT_WK_SetDrawEnable( p_wk->p_clwk[CURSOR_CLWK_CURSOR], TRUE );
 		is_move	= TRUE;
 	}
 	if( GFL_UI_KEY_GetCont() & PAD_KEY_LEFT )
 	{	
 		norm.x	-= FX32_ONE;
+		GFL_CLACT_WK_SetDrawEnable( p_wk->p_clwk[CURSOR_CLWK_CURSOR], TRUE );
 		is_move	= TRUE;
 	}
 	else if( GFL_UI_KEY_GetCont() & PAD_KEY_RIGHT )
 	{	
 		norm.x	+= FX32_ONE;
+		GFL_CLACT_WK_SetDrawEnable( p_wk->p_clwk[CURSOR_CLWK_CURSOR], TRUE );
 		is_move	= TRUE;
+	}
+
+
+	//吸い込まれる処理
+	//吸い込み範囲内ならば吸い込まれる
+	{	
+		const PLACE_DATA* cp_placedata;
+		cp_placedata	= PLACE_PullHit( cp_place, p_wk );
+		if( cp_placedata != NULL )
+		{	
+			VecFx32	place_pos;
+			VecFx32	now_pos;
+
+			place_pos.x	= FX32_CONST(PLACEDATA_GetParam( cp_placedata, TOWNMAP_DATA_PARAM_CURSOR_X ));
+			place_pos.y	= FX32_CONST(PLACEDATA_GetParam( cp_placedata, TOWNMAP_DATA_PARAM_CURSOR_Y ));
+			place_pos.z	= 0;
+
+			now_pos.x	= FX32_CONST(p_wk->pos.x);
+			now_pos.y	= FX32_CONST(p_wk->pos.y);
+			now_pos.z	= 0;
+
+			VEC_Subtract( &place_pos, &now_pos, &pull );
+
+			//もし一定以上の距離ならばそのまま
+			if( VEC_Mag(&pull) > PLACE_PULL_STRONG )
+			{	
+				VEC_Normalize( &pull, &pull );
+				GFL_CALC3D_VEC_MulScalar( &pull, PLACE_PULL_STRONG, &pull );
+			}
+			is_move	= TRUE;
+		}
 	}
 
 	//移動計算
 	if( is_move )
 	{	
+		VecFx32	add;
 		VEC_Normalize( &norm, &norm );
-		p_wk->pos.x	+=	(norm.x * CURSOR_ADD_SPEED) >> FX32_SHIFT; 
-		p_wk->pos.y	+=	(norm.y *  CURSOR_ADD_SPEED) >> FX32_SHIFT;
+
+		add.x	= (norm.x * CURSOR_ADD_SPEED)	+ pull.x;
+		add.y	= (norm.y * CURSOR_ADD_SPEED)	+ pull.y;
+		add.z	=	0;
+
+		p_wk->pos.x	+= add.x >> FX32_SHIFT; 
+		p_wk->pos.y	+= add.y >> FX32_SHIFT;
 		p_wk->pos.x	= MATH_CLAMP( p_wk->pos.x, CURSOR_MOVE_LIMIT_LEFT, CURSOR_MOVE_LIMIT_RIGHT );
 		p_wk->pos.y	= MATH_CLAMP( p_wk->pos.y, CURSOR_MOVE_LIMIT_TOP, CURSOR_MOVE_LIMIT_BOTTOM );
 		GFL_CLACT_WK_SetPos( p_wk->p_clwk[CURSOR_CLWK_CURSOR], &p_wk->pos, 0 );
-		GFL_CLACT_WK_SetDrawEnable( p_wk->p_clwk[CURSOR_CLWK_CURSOR], TRUE );
 	}
 
-	//タッチすると消える
-	if( GFL_UI_TP_GetTrg() )
+	//決定
+	if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A )
 	{	
-		GFL_CLACT_WK_SetDrawEnable( p_wk->p_clwk[CURSOR_CLWK_CURSOR], FALSE );
+		p_wk->is_trg	= TRUE;
+	}
+
+	//タッチ処理
+	{	
+		u32 x, y;
+		if( GFL_UI_TP_GetPointTrg( &x, &y ) )
+		{	
+			GFL_CLACT_WK_SetDrawEnable( p_wk->p_clwk[CURSOR_CLWK_CURSOR], FALSE );
+			p_wk->is_trg	= TRUE;
+			p_wk->pos.x	= x;
+			p_wk->pos.y	= y;
+		}
 	}
 }
 //----------------------------------------------------------------------------
@@ -1432,6 +1671,49 @@ static void CURSOR_GetPos( const CURSOR_WORK *cp_wk, GFL_POINT *p_pos )
 {	
 	p_pos->x	= cp_wk->pos.x;
 	p_pos->y	= cp_wk->pos.y;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	カーソル決定を取得
+ *
+ *	@param	const CURSOR_WORK *cp_wk	ワーク
+ *
+ *	@return	TRUEで押した	FALSEで押してない
+ */
+//-----------------------------------------------------------------------------
+static BOOL CURSOR_GetTrg( const CURSOR_WORK *cp_wk )
+{	
+	return cp_wk->is_trg;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	押し状態を取得
+ *
+ *	@param	const CURSOR_WORK *cp_wk	ワーク
+ *	@param	*p_x		X受け取り
+ *	@param	*p_y		Y受け取り
+ *
+ *	@return	TRUEで押した	FALSEで押していない
+ */
+//-----------------------------------------------------------------------------
+static BOOL CURSOR_GetPointTrg( const CURSOR_WORK *cp_wk, u32 *p_x, u32 *p_y )
+{	
+	if( CURSOR_GetTrg( cp_wk ) )
+	{	
+		GFL_POINT	pos;
+		CURSOR_GetPos( cp_wk, &pos );
+		if( p_x )
+		{	
+			*p_x	= pos.x;
+		}
+		if( p_y )
+		{	
+			*p_y	= pos.y;
+		}
+		return TRUE;
+	}
+
+	return FALSE;
 }
 //=============================================================================
 /**
@@ -1471,16 +1753,20 @@ static void PLACE_Init( PLACE_WORK *p_wk, const TOWNMAP_DATA *cp_data, const TOW
 	{	
 		int i;
 		u16 type;
+#if 0
 		p_wk->data_num	= 0;	//０にしてからカウント
 		for( i = 0; i < TOWNMAP_DATA_MAX; i++ )
 		{	
 			type	= TOWNMAP_DATA_GetParam( cp_data, i, TOWNMAP_DATA_PARAM_PLACE_TYPE );
 			//町とダンジョンだけセルを作る
-			if( type == TOWNMAP_PLACETYPE_TOWN || type == TOWNMAP_PLACETYPE_DUNGEON	)
+			if( 1	)
 			{	
 				p_wk->data_num++;
 			}
 		}
+#else
+		p_wk->data_num	= TOWNMAP_DATA_MAX;
+#endif
 	}
 	
 	//設定されている数分CLWKを出すため、バッファ作成
@@ -1500,8 +1786,8 @@ static void PLACE_Init( PLACE_WORK *p_wk, const TOWNMAP_DATA *cp_data, const TOW
 		for( i = 0; i < TOWNMAP_DATA_MAX; i++ )
 		{	
 			type	= TOWNMAP_DATA_GetParam( cp_data, i, TOWNMAP_DATA_PARAM_PLACE_TYPE );
-			//町とダンジョンだけ
-			if( type == TOWNMAP_PLACETYPE_TOWN || type == TOWNMAP_PLACETYPE_DUNGEON	)
+			
+			if( 1	)
 			{	
 				PlaceData_Init( &p_wk->p_place[place_cnt], cp_data, i, p_wk->p_clunit, chr, cel, plt, heapID );
 				place_cnt++;
@@ -1651,6 +1937,50 @@ static const PLACE_DATA* PLACE_Hit( const PLACE_WORK *cp_wk, const CURSOR_WORK *
 }
 //----------------------------------------------------------------------------
 /**
+ *	@brief	場所	カーソルが吸い込み範囲内か
+ *
+ *	@param	const PLACE_WORK *cp_wk	ワーク
+ *	@param	CURSOR_WORK *cp_wk			カーソル
+ *
+ *	@return	NULLならば当たっていない	それ以外ならば当たった場所のデータ
+ */
+//-----------------------------------------------------------------------------
+static const PLACE_DATA* PLACE_PullHit( const PLACE_WORK *cp_wk, const CURSOR_WORK *cp_cursor )
+{	
+	int i;
+	GFL_POINT pos;
+	u32 best_distance;
+	u32 now_distance;
+	s32 best_idx;
+
+	CURSOR_GetPos( cp_cursor, &pos );
+
+	//複数衝突していたならば一番近くのものを返す
+	best_idx			=	-1;
+	best_distance	= 0xFFFF;
+	for( i = 0; i < cp_wk->data_num; i++ )
+	{
+		if( PlaceData_IsPullHit( &cp_wk->p_place[i], &pos, &now_distance )  )
+		{
+			if( best_distance > now_distance )
+			{	
+				best_idx	= i;
+				best_distance	= now_distance;
+			}
+		}
+	}
+
+	if( best_idx == -1 )
+	{	
+		return NULL;
+	}
+	else
+	{	
+		return &cp_wk->p_place[ best_idx ];
+	}
+}
+//----------------------------------------------------------------------------
+/**
  *	@brief	場所データ	データ取得
  *
  *	@param	const PLACE_DATA *cp_wk	ワーク
@@ -1680,28 +2010,33 @@ static u16 PLACEDATA_GetParam( const PLACE_DATA *cp_wk, TOWNMAP_DATA_PARAM param
 //-----------------------------------------------------------------------------
 static void PlaceData_Init( PLACE_DATA *p_wk, const TOWNMAP_DATA *cp_data, u32 data_idx, GFL_CLUNIT *p_clunit, u32 chr, u32 cel, u32 plt, HEAPID heapID )
 {	
-	GFL_CLWK_DATA cldata;
 
 	//ワーククリア
 	GFL_STD_MemClear( p_wk, sizeof(PLACE_DATA) );
 	p_wk->cp_data			= cp_data;
 	p_wk->data_idx		= data_idx;
 
-	GFL_STD_MemClear( &cldata, sizeof(GFL_CLWK_DATA) );
-	cldata.pos_x	= PLACEDATA_GetParam( p_wk,TOWNMAP_DATA_PARAM_CURSOR_X );
-	cldata.pos_y	= PLACEDATA_GetParam( p_wk,TOWNMAP_DATA_PARAM_CURSOR_Y );
-	switch( PLACEDATA_GetParam( p_wk,TOWNMAP_DATA_PARAM_PLACE_TYPE ) )
+	//町とダンジョンだけセルを作成する
+	if( PLACEDATA_GetParam( p_wk,TOWNMAP_DATA_PARAM_PLACE_TYPE ) == TOWNMAP_PLACETYPE_TOWN ||
+			PLACEDATA_GetParam( p_wk,TOWNMAP_DATA_PARAM_PLACE_TYPE ) == TOWNMAP_PLACETYPE_DUNGEON )
 	{	
-	case TOWNMAP_PLACETYPE_TOWN:
-		cldata.anmseq	= 2;
-		break;
-	case TOWNMAP_PLACETYPE_DUNGEON:
-		cldata.anmseq	= 3;
-		break;
-	default:
-		GF_ASSERT(0);
+		GFL_CLWK_DATA cldata;
+		GFL_STD_MemClear( &cldata, sizeof(GFL_CLWK_DATA) );
+		cldata.pos_x	= PLACEDATA_GetParam( p_wk,TOWNMAP_DATA_PARAM_POS_X );
+		cldata.pos_y	= PLACEDATA_GetParam( p_wk,TOWNMAP_DATA_PARAM_POS_Y );
+		switch( PLACEDATA_GetParam( p_wk,TOWNMAP_DATA_PARAM_PLACE_TYPE ) )
+		{	
+		case TOWNMAP_PLACETYPE_TOWN:
+			cldata.anmseq	= 2;
+			break;
+		case TOWNMAP_PLACETYPE_DUNGEON:
+			cldata.anmseq	= 3;
+			break;
+		default:
+			GF_ASSERT(0);
+		}
+		p_wk->p_clwk	= GFL_CLACT_WK_Create( p_clunit, chr, plt, cel, &cldata, 0, heapID );
 	}
-	p_wk->p_clwk	= GFL_CLACT_WK_Create( p_clunit, chr, plt, cel, &cldata, 0, heapID );
 }
 //----------------------------------------------------------------------------
 /**
@@ -1713,7 +2048,10 @@ static void PlaceData_Init( PLACE_DATA *p_wk, const TOWNMAP_DATA *cp_data, u32 d
 //-----------------------------------------------------------------------------
 static void PlaceData_Exit( PLACE_DATA *p_wk )
 {	
-	GFL_CLACT_WK_Remove( p_wk->p_clwk );
+	if( p_wk->p_clwk )
+	{	
+		GFL_CLACT_WK_Remove( p_wk->p_clwk );
+	}
 	//ワーククリア
 	GFL_STD_MemClear( p_wk, sizeof(PLACE_DATA) );
 }
@@ -1728,7 +2066,10 @@ static void PlaceData_Exit( PLACE_DATA *p_wk )
 //-----------------------------------------------------------------------------
 static void PlaceData_SetVisible( PLACE_DATA *p_wk, BOOL is_visible )
 {	
-	GFL_CLACT_WK_SetDrawEnable( p_wk->p_clwk, is_visible );
+	if( p_wk->p_clwk )
+	{	
+		GFL_CLACT_WK_SetDrawEnable( p_wk->p_clwk, is_visible );
+	}
 }
 //----------------------------------------------------------------------------
 /**
@@ -1763,6 +2104,41 @@ static BOOL PlaceData_IsHit( const PLACE_DATA *cp_wk, const GFL_POINT *cp_pos )
 	GFL_COLLISION3D_CYLINDER_SetData( &cylinder, &v1, &v2, w );
 	
 	return GFL_COLLISION3D_CYLXCIR_Check( &cylinder, &circle, NULL );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	吸い込み範囲内かどうか
+ *
+ *	@param	const PLACE_DATA *cp_wk	ワーク
+ *	@param	GFL_POINT *cp_pos				座標
+ *	@param	距離を受け取り
+ *
+ *	@return	TRUEならば吸い込み範囲	FALSEならば範囲外
+ */
+//-----------------------------------------------------------------------------
+static BOOL PlaceData_IsPullHit( const PLACE_DATA *cp_wk, const GFL_POINT *cp_pos, u32 *p_distance )
+{	
+	u32 cur_x, cur_y;
+	u32	x, y;
+
+	cur_x	= PLACEDATA_GetParam( cp_wk, TOWNMAP_DATA_PARAM_CURSOR_X );
+	cur_y	= PLACEDATA_GetParam( cp_wk, TOWNMAP_DATA_PARAM_CURSOR_Y );
+
+	x = (cur_x - cp_pos->x) * (cur_x - cp_pos->x);
+	y = (cur_y - cp_pos->y) * (cur_y - cp_pos->y);
+
+	if( x + y < (PLACE_PULL_R * PLACE_PULL_R) )
+	{
+		if( p_distance )
+		{	
+			*p_distance	= (x + y);
+		}
+
+		return TRUE;
+	}
+
+	return FALSE;
 }
 
 //=============================================================================
@@ -2078,15 +2454,471 @@ static void MSGWND_Exit( MSGWND_WORK* p_wk )
 //-----------------------------------------------------------------------------
 static void MSGWND_Print( MSGWND_WORK* p_wk, u32 strID, u16 x, u16 y )
 {	
-
 	//一端消去
 	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(p_wk->p_bmpwin), 0 );	
 
 	//文字列作成
-	GFL_FONTSYS_SetColor( 0xf, 1, 0 );
 	GFL_MSG_GetString( p_wk->cp_msg, strID, p_wk->p_strbuf );
 	PRINTSYS_Print( GFL_BMPWIN_GetBmp(p_wk->p_bmpwin), x, y, p_wk->p_strbuf, p_wk->p_font );
-	GFL_FONTSYS_SetDefaultColor();
 
 	GFL_BMPWIN_MakeTransWindow_VBlank( p_wk->p_bmpwin );
 }
+//----------------------------------------------------------------------------
+/**
+ *	@brief	消去
+ *
+ *	@param	MSGWND_WORK* p_wk		ワーク
+ */
+//-----------------------------------------------------------------------------
+static void MSGWND_Clear( MSGWND_WORK* p_wk )
+{	
+	GFL_BMPWIN_ClearTransWindow_VBlank( p_wk->p_bmpwin );
+}
+//=============================================================================
+/**
+ *	PLACEWND
+ */
+//=============================================================================
+//----------------------------------------------------------------------------
+/**
+ *	@brief	地名ウィンドウ	初期化
+ *
+ *	@param	PLACEWND_WORK *p_wk		ワーク
+ *	@param	bgframe								フォント表示面
+ *	@param	*p_font								フォント
+ *	@param	GFL_MSGDATA *cp_msg		地名メッセージ
+ *	@param	GFL_CLWK		clwk			OBJ
+ *	@param	heapID								ヒープID
+ */
+//-----------------------------------------------------------------------------
+static void PLACEWND_Init( PLACEWND_WORK *p_wk, u8 bgframe, GFL_FONT *p_font, const GFL_MSGDATA *cp_msg, GFL_CLWK *p_clwk, HEAPID heapID )
+{	
+	//クリア
+	GFL_STD_MemClear( p_wk, sizeof(PLACEWND_WORK) );
+	p_wk->p_clwk	= p_clwk;
+
+	//フォント面設定
+	MSGWND_Init( &p_wk->msgwnd, bgframe, p_font, cp_msg, PLACEWND_BMPWIN_X, PLACEWND_BMPWIN_Y,
+			PLACEWND_BMPWIN_W, PLACEWND_BMPWIN_H, heapID );
+
+	//セル設定
+	{	
+		GFL_CLACTPOS	pos;
+		pos.x	= PLACEWND_WND_POS_X;
+		pos.y	= PLACEWND_WND_POS_Y;
+		GFL_CLACT_WK_SetPos( p_wk->p_clwk, &pos, 0 );
+		GFL_CLACT_WK_SetBgPri( p_wk->p_clwk, 1 );
+		GFL_CLACT_WK_SetDrawEnable( p_wk->p_clwk, TRUE );
+		GFL_CLACT_WK_SetAnmSeq( p_wk->p_clwk, 0 );
+		GFL_CLACT_WK_SetAutoAnmFlag( p_wk->p_clwk, TRUE );
+		GFL_CLACT_WK_StopAnm( p_wk->p_clwk ); 
+	}
+	
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	地名ウィンドウ	破棄
+ *
+ *	@param	PLACEWND_WORK *p_wk		ワーク
+ */
+//-----------------------------------------------------------------------------
+static void PLACEWND_Exit( PLACEWND_WORK *p_wk )
+{	
+	//フォント面解放
+	MSGWND_Exit( &p_wk->msgwnd );
+
+	GFL_STD_MemClear( p_wk, sizeof(PLACEWND_WORK) );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	地名ウィンドウ	メイン処理
+ *
+ *	@param	PLACEWND_WORK *p_wk		ワーク
+ */
+//-----------------------------------------------------------------------------
+static void PLACEWND_Main( PLACEWND_WORK *p_wk )
+{	
+	//アップデートチェック
+	if( p_wk->is_start )
+	{	
+		p_wk->is_start	= FALSE;
+
+		//OBJアニメ開始
+		GFL_CLACT_WK_ResetAnm( p_wk->p_clwk );
+		//フォントは消す
+		MSGWND_Clear( &p_wk->msgwnd );
+
+		//メイン処理実行
+		p_wk->is_update	= TRUE;
+	}
+
+	//メイン処理
+	if( p_wk->is_update )
+	{	
+		//アニメ終了時にフォントも出す
+		if( GFL_CLACT_WK_CheckAnmActive( p_wk->p_clwk ) == FALSE )
+		{	
+			u16 zoneID;
+			//メッセージ版語取得
+			zoneID	= PLACEDATA_GetParam( p_wk->cp_data, TOWNMAP_DATA_PARAM_ZONE_ID );
+			GF_ASSERT( zoneID != TOWNMAP_DATA_ERROR );
+
+			//文字描画
+			MSGWND_Print( &p_wk->msgwnd, ZONEDATA_GetPlaceNameID( zoneID ), PLACEWND_STR_X, PLACEWND_STR_Y );
+
+			//メイン処理終了
+			p_wk->is_update	= FALSE;
+		}
+
+	}
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	地名ウィンドウ	出現開始
+ *
+ *	@param	PLACEWND_WORK *p_wk		ワーク
+ */
+//-----------------------------------------------------------------------------
+static void PLACEWND_Start( PLACEWND_WORK *p_wk, const PLACE_DATA *cp_data )
+{	
+	GF_ASSERT( cp_data );
+	p_wk->is_start	= TRUE;
+	p_wk->cp_data		= cp_data;
+}
+//=============================================================================
+/**
+ *			DEBUG
+ */
+//=============================================================================
+#ifdef DEBUG_PRINT_USE
+//----------------------------------------------------------------------------
+/**
+ *	@brief	デバッグ用プリント領域	初期化
+ *
+ *	@param	frm											フレーム
+ *	@param	heapID									ヒープID
+ *
+ */
+//-----------------------------------------------------------------------------
+static void DEBUGPRINT_Init( u8 frm, BOOL is_now_save, HEAPID heapID )
+{	
+	DEBUG_PRINT_WORK *p_wk;
+
+	sp_dp_wk	= GFL_HEAP_AllocMemory( heapID, sizeof(DEBUG_PRINT_WORK) );
+	p_wk = sp_dp_wk;
+	GFL_STD_MemClear( p_wk, sizeof(DEBUG_PRINT_WORK) );
+	p_wk->heapID						= heapID;
+	p_wk->is_now_save				= is_now_save;
+	p_wk->frm								= frm;
+
+	//デバッグプリント用フォント
+	p_wk->p_font	= GFL_FONT_Create( ARCID_FONT,
+				NARC_font_small_nftr, GFL_FONT_LOADTYPE_FILE, FALSE, heapID );	
+
+	//退避エリアをNetEffから取得
+	NetErr_GetTempArea( &p_wk->p_char_temp_area, &p_wk->p_scrn_temp_area, &p_wk->p_pltt_temp_area );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	デバッグ用プリント領域	破棄
+ *
+ */
+//-----------------------------------------------------------------------------
+static void DEBUGPRINT_Exit( void )
+{	
+	DEBUG_PRINT_WORK *p_wk	= sp_dp_wk;
+
+	if( DEBUGPRINT_IsOpen() )
+	{	
+		DEBUGPRINT_Close();
+	}
+
+	GFL_FONT_Delete( p_wk->p_font );
+	GFL_STD_MemClear( p_wk, sizeof(DEBUG_PRINT_WORK) );
+
+	GFL_HEAP_FreeMemory( p_wk );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	デバッグ用プリント領域オープン
+ *
+ */
+//-----------------------------------------------------------------------------
+static void DEBUGPRINT_Open( void )
+{	
+	DEBUG_PRINT_WORK *p_wk	= sp_dp_wk;
+
+	GF_ASSERT( p_wk );
+
+	if( p_wk->is_now_save )
+	{	
+		//VRAMのデータを退避
+		GFL_STD_MemCopy16(GFL_DISPUT_GetCgxPtr(p_wk->frm), p_wk->p_char_temp_area, DEBUGPRINT_CHAR_TEMP_AREA);
+		GFL_STD_MemCopy16(GFL_DISPUT_GetScrPtr(p_wk->frm), p_wk->p_scrn_temp_area, DEBUGPRINT_SCRN_TEMP_AREA);
+		GFL_STD_MemCopy16(GFL_DISPUT_GetPltPtr(p_wk->frm), p_wk->p_pltt_temp_area, DEBUGPRINT_PLTT_TEMP_AREA);	
+		//Fontカラーの退避
+		GFL_FONTSYS_GetColor( &p_wk->font_col_bkup[0] ,
+				&p_wk->font_col_bkup[1] ,
+				&p_wk->font_col_bkup[2] );
+
+		//もろもろ退避
+		p_wk->prioryty_bkup = GFL_BG_GetPriority(p_wk->frm);
+		p_wk->scroll_x_bkup = GFL_BG_GetScrollX(p_wk->frm);
+		p_wk->scroll_y_bkup = GFL_BG_GetScrollY(p_wk->frm);
+	}
+
+	//上で退避させたものの設定
+	GFL_BG_SetPriority( p_wk->frm , 0 );
+	GFL_BG_SetScroll( p_wk->frm , GFL_BG_SCROLL_X_SET , 0 );
+	GFL_BG_SetScroll( p_wk->frm , GFL_BG_SCROLL_Y_SET , 0 );
+
+	//デバッグプリント用設定
+	//スクリーンの作成
+  {
+    u8 x,y;
+		u16 buf;
+    for( y = 0;y<DEBUGPRINT_HEIGHT;y++ )
+    {
+      for( x=0;x<DEBUGPRINT_WIDTH;x++ )
+      {
+        buf = x+y*DEBUGPRINT_WIDTH;
+        GFL_BG_WriteScreen( p_wk->frm, &buf, x,y,1,1 );
+      }
+      for( x=DEBUGPRINT_WIDTH;x<32;x++ )
+      {
+        buf = DEBUGPRINT_HEIGHT*DEBUGPRINT_WIDTH;
+        GFL_BG_WriteScreen( p_wk->frm, &buf, x,y,1,1 );
+      }
+    }
+		for( y = DEBUGPRINT_HEIGHT;y<24;y++ )
+    {
+	 		buf = DEBUGPRINT_HEIGHT*DEBUGPRINT_WIDTH;
+ 			GFL_BG_WriteScreen( p_wk->frm, &buf, x,y,1,1 );
+			for( x=0;x<32;x++ )
+      {
+        buf = DEBUGPRINT_HEIGHT*DEBUGPRINT_WIDTH;
+        GFL_BG_WriteScreen( p_wk->frm, &buf, x,y,1,1 );
+      }
+		}
+    GFL_BG_LoadScreenReq( p_wk->frm );
+  }
+  
+  //パレットの作成
+  {
+    u16 col[4]={ 0xFFFF , 0x0000 , 0x7fff , 0x001f };
+    GFL_BG_LoadPalette( p_wk->frm, col, sizeof(u16)*4, 0 );
+  }
+
+	//書き込むためのBMP作成
+	p_wk->p_bmp	= GFL_BMP_CreateInVRAM( GFL_DISPUT_GetCgxPtr(p_wk->frm), DEBUGPRINT_WIDTH, DEBUGPRINT_HEIGHT, GFL_BMP_16_COLOR, p_wk->heapID );
+	GFL_STD_MemClear16( GFL_DISPUT_GetCgxPtr(p_wk->frm) , DEBUGPRINT_CHAR_TEMP_AREA );
+
+	p_wk->is_open	= TRUE;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	デバッグ用プリント領域を開いているか
+ *
+ *	@return	TRUEならば開いている	FALSEならば閉じている
+ */
+//-----------------------------------------------------------------------------
+static BOOL DEBUGPRINT_IsOpen( void )
+{	
+	DEBUG_PRINT_WORK *p_wk	= sp_dp_wk;
+	if( p_wk )
+	{	
+		return p_wk->is_open;
+	}
+	else
+	{	
+		return FALSE;
+	}
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	デバッグ用プリント領域	終了
+ *
+ */
+//-----------------------------------------------------------------------------
+static void DEBUGPRINT_Close( void )
+{	
+	DEBUG_PRINT_WORK *p_wk	= sp_dp_wk;
+
+	GF_ASSERT( p_wk );
+
+
+	p_wk->is_open	= FALSE;
+
+	GFL_BMP_Delete( p_wk->p_bmp );
+	if( p_wk->is_now_save )
+	{	
+		//もろもろ復帰
+		GFL_BG_SetScroll( p_wk->frm , GFL_BG_SCROLL_X_SET , p_wk->scroll_x_bkup );
+		GFL_BG_SetScroll( p_wk->frm , GFL_BG_SCROLL_Y_SET , p_wk->scroll_y_bkup );
+		GFL_BG_SetPriority( p_wk->frm , p_wk->prioryty_bkup );
+		//Fontカラーの復帰
+		GFL_FONTSYS_SetColor( p_wk->font_col_bkup[0] ,
+				p_wk->font_col_bkup[1] ,
+				p_wk->font_col_bkup[2] );
+		GFL_STD_MemCopy16(p_wk->p_char_temp_area, GFL_DISPUT_GetCgxPtr(p_wk->frm), DEBUGPRINT_CHAR_TEMP_AREA);
+		GFL_STD_MemCopy16(p_wk->p_scrn_temp_area, GFL_DISPUT_GetScrPtr(p_wk->frm), DEBUGPRINT_SCRN_TEMP_AREA);
+		GFL_STD_MemCopy16(p_wk->p_pltt_temp_area, GFL_DISPUT_GetPltPtr(p_wk->frm), DEBUGPRINT_PLTT_TEMP_AREA);
+	}
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	デバッグ用プリント領域に書き込み
+ *
+ *	@param	u16 *cp_str							ワイド文字列
+ *	@param	x												座標X
+ *	@param	y												座標Y
+ *
+ */
+//-----------------------------------------------------------------------------
+static void DEBUGPRINT_Print( const u16 *cp_str, u16 x, u16 y )
+{	
+	STRBUF	*p_strbuf;
+	STRCODE	str[128];
+	u16	strlen;
+	DEBUG_PRINT_WORK *p_wk	= sp_dp_wk;
+
+	GF_ASSERT(p_wk);
+
+	//STRBUF用に変換
+	strlen	= wcslen(cp_str);
+	GFL_STD_MemCopy(cp_str, str, strlen*2);
+	str[strlen]	= GFL_STR_GetEOMCode();
+
+	//STRBUFに転送
+	p_strbuf	= GFL_STR_CreateBuffer( strlen*2, p_wk->heapID );
+	GFL_STR_SetStringCode( p_strbuf, str);
+
+	//書き込み
+	PRINTSYS_Print( p_wk->p_bmp, x, y, p_strbuf, p_wk->p_font );
+
+	//破棄
+	GFL_STR_DeleteBuffer( p_strbuf );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	デバッグ用プリント領域に数値つき文字書き込み
+ *
+ *	@param	u16 *cp_str							ワイド文字列（%dや%fを使ってください）
+ *	@param	number									数字
+ *	@param	x												座標X
+ *	@param	y												座標Y
+ *
+ */
+//-----------------------------------------------------------------------------
+static void DEBUGPRINT_PrintNumber( const u16 *cp_str, int number, u16 x, u16 y )
+{	
+	u16	str[128];
+	swprintf( str, 128, cp_str, number );
+	DEBUGPRINT_Print( str, x, y );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	デバッグ用プリント領域をクリアー
+ *
+ */
+//-----------------------------------------------------------------------------
+static void DEBUGPRINT_Clear( void )
+{	
+	DEBUG_PRINT_WORK *p_wk	= sp_dp_wk;
+	GF_ASSERT(p_wk);
+	GFL_BMP_Clear( p_wk->p_bmp, 0 );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	デバッグ用プリント領域、一部範囲クリアー
+ *
+ *	@param	x	座標X
+ *	@param	y	座標Y
+ *	@param	w	幅
+ *	@param	h	高さ
+ */
+//-----------------------------------------------------------------------------
+static void DEBUGPRINT_ClearRange( s16 x, s16 y, u16 w, u16 h )
+{	
+	DEBUG_PRINT_WORK *p_wk	= sp_dp_wk;
+	GF_ASSERT(p_wk);
+	GFL_BMP_Fill( p_wk->p_bmp, x, y, w, h, 0 );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	デバッグプリント
+ *
+ *	@param	TOWNMAP_WORK *p_wk	メインワーク
+ */
+//-----------------------------------------------------------------------------
+static void DEBUGPRINT_Update( TOWNMAP_WORK *p_wk )
+{	
+	if( !DEBUGPRINT_IsOpen() )
+	{	
+		return;
+	}
+
+	DEBUGPRINT_Clear();
+
+	{	
+		GFL_POINT pos;
+		CURSOR_GetPos( &p_wk->cursor, &pos );
+		DEBUGPRINT_Print( L"カーソル座標 ", 32, 32 );
+		DEBUGPRINT_PrintNumber( L"X=[%d]", pos.x, 80, 32 );
+		DEBUGPRINT_PrintNumber( L"Y=[%d]", pos.y, 120, 32 );
+	}
+}
+#endif //DEBUG_PRINT_USE
+//=============================================================================
+/**
+ *	DEBUG_MENU_FUNC
+ */
+//=============================================================================
+#ifdef DEBUG_MENU_USE
+//----------------------------------------------------------------------------
+/**
+ *	@brief	デバッグプリント用処理関数
+ *
+ *	@param	void* p_wk_adrs	ワーク
+ *	@param	p_item					アイテム
+ */
+//-----------------------------------------------------------------------------
+static void DEBUGMENU_UPDATE_Print( void* p_wk_adrs, DEBUGWIN_ITEM* p_item )
+{	
+  if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A )
+  {	
+		if( DEBUGPRINT_IsOpen() )
+		{	
+			DEBUGPRINT_Close();
+		}
+		else
+		{	
+			DEBUGPRINT_Open();
+			DEBUGPRINT_Update( p_wk_adrs );
+		}
+		DEBUGWIN_RefreshScreen();
+	}
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	デバッグプリント用描画関数
+ *
+ *	@param	void* p_wk_adrs	ワーク
+ *	@param	p_item					アイテム
+ */
+//-----------------------------------------------------------------------------
+static void DEBUGMENU_DRAW_Print( void* p_wk_adrs, DEBUGWIN_ITEM* p_item )
+{	
+	if( DEBUGPRINT_IsOpen() )
+	{	
+		DEBUGWIN_ITEM_SetNameV( p_item , "デバッグ表示[現在ON]" );
+	}
+	else
+	{	
+		DEBUGWIN_ITEM_SetNameV( p_item , "デバッグ表示[現在OFF]" );
+	}
+}
+#endif //DEBUG_MENU_USE

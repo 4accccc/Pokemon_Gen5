@@ -36,6 +36,8 @@ $PLACEGMM_FILENAME	= "";
 
 #取得したデータ
 @DATA_ZONEID				=	();		#ゾーンID
+@DATA_POS_X					=	();		#座標X
+@DATA_POS_Y					=	();		#座標Y
 @DATA_CURSOR_X			=	();		#カーソルX
 @DATA_CURSOR_Y			=	();		#カーソルY
 @DATA_HIT_S_X				=	();		#当たり開始X
@@ -193,6 +195,18 @@ foreach $line ( @TOWNMAP_XLS_DATA )
 			{
 				&UndefAssert( $w );
 				push( @DATA_ZONEID, &GetTypeNumber( $w, \@ZONEID_BUFF ) );
+			}
+			#座標X
+			elsif( $tag eq "#pos_x" )
+			{
+				&UndefAssert( $w );
+				push( @DATA_POS_X, $w );
+			}
+			#座標Y
+			elsif( $tag eq "#pos_y" )
+			{
+				&UndefAssert( $w );
+				push( @DATA_POS_Y, $w );
 			}
 			#カーソルX
 			elsif( $tag eq "#cursor_x" )
@@ -383,6 +397,8 @@ if(0)
 	{
 		print( "DATA=".$i."\n" );
 		print( "ZONE=".$DATA_ZONEID[$i]."\n" );
+		print( "posX=".$DATA_POS_X[$i]."\n" );
+		print( "posY=".$DATA_POS_Y[$i]."\n" );
 		print( "curX=".$DATA_CURSOR_X[$i]."\n" );
 		print( "curY=".$DATA_CURSOR_Y[$i]."\n" );
 		print( "hisX=".$DATA_HIT_S_X[$i]."\n" );
@@ -433,6 +449,8 @@ binmode( FILEOUT );
 for( my $i = 0; $i < $DATA_LENGTH; $i++ )
 {
 	print( FILEOUT pack( "S", $DATA_ZONEID[$i] ) );
+	print( FILEOUT pack( "S", $DATA_POS_X[$i] ) );
+	print( FILEOUT pack( "S", $DATA_POS_Y[$i] ) );
 	print( FILEOUT pack( "S", $DATA_CURSOR_X[$i] ) );
 	print( FILEOUT pack( "S", $DATA_CURSOR_Y[$i] ) );
 	print( FILEOUT pack( "S", $DATA_HIT_S_X[$i] ) );
