@@ -213,6 +213,11 @@ enum
 #define PLACEWND_WND_POS_X		(128)
 #define PLACEWND_WND_POS_Y		(96)
 
+//-------------------------------------
+///	MAP
+//=====================================
+#define MAP_SCALE_SYNC	(10)
+
 //=============================================================================
 /**
  *					構造体宣言
@@ -262,7 +267,23 @@ typedef struct
 //=====================================
 typedef struct 
 {
-	int dummy;	
+	u8	map_frm;
+	u8	road_frm;
+	u16	sync;
+
+	u16 limit_right;
+	u16	limit_bottom;
+
+	GFL_POINT	center;	//拡大縮小中心座標
+
+	BOOL	is_scale_req;
+	fx32	now_scale;
+	fx32	next_scale;
+	fx32	init_scale;
+
+	GFL_POINT	pos;
+
+	MtxFx22	mtx;
 } MAP_WORK;
 //-------------------------------------
 ///	上画面情報
@@ -359,8 +380,8 @@ typedef struct
 	//引数
 	TOWNMAP_PARAM	*p_param;
 
-	//その他
-	const PLACE_DATA *cp_pre_data;
+	//選択中のもの
+	const PLACE_DATA *cp_select;
 	
 } TOWNMAP_WORK;
 
@@ -416,6 +437,7 @@ static BOOL CURSOR_GetPointTrg( const CURSOR_WORK *cp_wk, u32 *p_x, u32 *p_y );
 //=====================================
 static void PLACE_Init( PLACE_WORK *p_wk, const TOWNMAP_DATA *cp_data, const TOWNMAP_GRAPHIC_SYS *p_grh, HEAPID heapID);
 static void PLACE_Exit( PLACE_WORK *p_wk );
+static void PLACE_Main( PLACE_WORK *p_wk );
 static void PLACE_ScaleUp( PLACE_WORK *p_wk );
 static void PLACE_ScaleDown( PLACE_WORK *p_wk );
 static void PLACE_SetVisible( PLACE_WORK *p_wk, BOOL is_visible );
@@ -432,11 +454,11 @@ static BOOL PlaceData_IsPullHit( const PLACE_DATA *cp_wk, const GFL_POINT *cp_po
 //-------------------------------------
 ///	MAP
 //=====================================
-static void MAP_Init( MAP_WORK *p_wk, HEAPID heapID );
+static void MAP_Init( MAP_WORK *p_wk, u8 map_frm, u8 road_frm, HEAPID heapID );
 static void MAP_Exit( MAP_WORK *p_wk );
 static void MAP_Main( MAP_WORK *p_wk );
-static void MAP_ScaleUp( MAP_WORK *p_wk );
-static void MAP_ScaleDown( MAP_WORK *p_wk );
+static void MAP_ScaleUp( MAP_WORK *p_wk, const GFL_POINT *cp_center );
+static void MAP_ScaleDown( MAP_WORK *p_wk, const GFL_POINT *cp_center );
 static BOOL MAP_IsScaleEnd( const MAP_WORK *cp_wk );
 static void MAP_SetWldPos( MAP_WORK *p_wk, const GFL_POINT *cp_pos );
 static void MAP_GetWldPos( const MAP_WORK *cp_wk, GFL_POINT *p_pos );
@@ -672,7 +694,10 @@ static GFL_PROC_RESULT TOWNMAP_PROC_Init( GFL_PROC *p_proc, int *p_seq, void *p_
 	PLACE_Init( &p_wk->place, p_wk->p_data, p_wk->p_grh, HEAPID_TOWNMAP );
 
 	//地図作成
-	MAP_Init( &p_wk->map, HEAPID_TOWNMAP );
+	MAP_Init( &p_wk->map,
+			TOWNMAP_GRAPHIC_GetFrame( p_wk->p_grh, TOWNMAP_BG_FRAME_MAP_M ),
+			TOWNMAP_GRAPHIC_GetFrame( p_wk->p_grh, TOWNMAP_BG_FRAME_ROAD_M ),
+			HEAPID_TOWNMAP );
 
 	//上画面情報作成
 	INFO_Init( &p_wk->info, TOWNMAP_GRAPHIC_GetFrame( p_wk->p_grh, TOWNMAP_BG_FRAME_FONT_S ),
@@ -1000,40 +1025,67 @@ static void SEQFUNC_Main( SEQ_WORK *p_seqwk, int *p_seq, void *p_param_adrs )
 {	
 	TOWNMAP_WORK	*p_wk	= p_param_adrs;
 
-	switch( APPBAR_GetTrg( &p_wk->appbar ) )
-	{	
-	case APPBAR_SELECT_CLOSE:
-		SEQ_SetNext( p_seqwk, SEQFUNC_FadeIn );
-		break;
-	case APPBAR_SELECT_RETURN:
-		SEQ_SetNext( p_seqwk, SEQFUNC_FadeIn );
-		break;
-	}
-
 	//カーソルの場所当たり判定
 	{	
 		const PLACE_DATA *cp_data;
 		cp_data	= PLACE_Hit( &p_wk->place, &p_wk->cursor );
-		if( cp_data != p_wk->cp_pre_data && cp_data != NULL )
+		if( cp_data != p_wk->cp_select && cp_data != NULL )
 		{	
 			INFO_Update( &p_wk->info, cp_data );
 			PLACEWND_Start( &p_wk->placewnd, cp_data );
+			p_wk->cp_select	= cp_data;
 		}
-		p_wk->cp_pre_data	= cp_data;
-		//仮
-		if( cp_data != NULL && CURSOR_GetTrg( &p_wk->cursor ) )
+		//選択処理
+		if( p_wk->p_param->mode == TOWNMAP_MODE_SKY )
 		{	
-			p_wk->p_param->select	= TOWNMAP_SELECT_SKY;
-			p_wk->p_param->zoneID	= PLACEDATA_GetParam( cp_data, TOWNMAP_DATA_PARAM_ZONE_ID );
-			p_wk->p_param->grid.x	= PLACEDATA_GetParam( cp_data, TOWNMAP_DATA_PARAM_WARP_X );
-			p_wk->p_param->grid.y	= PLACEDATA_GetParam( cp_data, TOWNMAP_DATA_PARAM_WARP_Y );
-			SEQ_SetNext( p_seqwk, SEQFUNC_FadeIn );
+			if( cp_data != NULL && CURSOR_GetTrg( &p_wk->cursor ) )
+			{	
+				p_wk->p_param->select	= TOWNMAP_SELECT_SKY;
+				p_wk->p_param->zoneID	= PLACEDATA_GetParam( cp_data, TOWNMAP_DATA_PARAM_ZONE_ID );
+				p_wk->p_param->grid.x	= PLACEDATA_GetParam( cp_data, TOWNMAP_DATA_PARAM_WARP_X );
+				p_wk->p_param->grid.y	= PLACEDATA_GetParam( cp_data, TOWNMAP_DATA_PARAM_WARP_Y );
+				SEQ_SetNext( p_seqwk, SEQFUNC_FadeIn );
+			}
 		}
 	}
 
+	///モジュールメイン処理
 	APPBAR_Main( &p_wk->appbar, &p_wk->cursor );
 	CURSOR_Main( &p_wk->cursor, &p_wk->place );
+	PLACE_Main( &p_wk->place );
+	MAP_Main( &p_wk->map );
 	PLACEWND_Main( &p_wk->placewnd );
+
+	//アプリケーションバー選択
+	switch( APPBAR_GetTrg( &p_wk->appbar ) )
+	{	
+	case APPBAR_SELECT_CLOSE:
+		p_wk->p_param->select	= TOWNMAP_SELECT_CLOSE;
+		SEQ_SetNext( p_seqwk, SEQFUNC_FadeIn );
+		break;
+	case APPBAR_SELECT_RETURN:
+		p_wk->p_param->select	= TOWNMAP_SELECT_RETURN;
+		SEQ_SetNext( p_seqwk, SEQFUNC_FadeIn );
+		break;
+	case APPBAR_SELECT_SCALE_UP:
+		PLACE_ScaleUp( &p_wk->place );
+		{	
+			GFL_POINT pos;
+			pos.x	= 128;
+			pos.y	= 96;
+			MAP_ScaleUp( &p_wk->map, &pos );
+		}
+		break;
+	case APPBAR_SELECT_SCALE_DOWN:
+		PLACE_ScaleDown( &p_wk->place );
+		{	
+			GFL_POINT pos;
+			pos.x	= 128;
+			pos.y	= 96;
+			MAP_ScaleDown( &p_wk->map, &pos );
+		}
+		break;
+	}
 }
 //=============================================================================
 /**
@@ -1340,6 +1392,9 @@ static void APPBAR_Main( APPBAR_WORK *p_wk, const CURSOR_WORK *cp_cursor )
 			APPBAR_ICON_CUR_R_X, APPBAR_ICON_CUR_R_X + APPBAR_ICON_W
 		},
 		{	
+			0
+		},
+		{	
 			APPBAR_ICON_Y, APPBAR_ICON_Y + APPBAR_ICON_W, 
 			APPBAR_ICON_SCALE_UP_X, APPBAR_ICON_SCALE_UP_X + APPBAR_ICON_W
 		},
@@ -1348,6 +1403,18 @@ static void APPBAR_Main( APPBAR_WORK *p_wk, const CURSOR_WORK *cp_cursor )
 			APPBAR_ICON_SCALE_DOWN_X, APPBAR_ICON_SCALE_DOWN_X + APPBAR_ICON_W
 		},
 		
+	};
+	static const u32 sc_mask_tbl[APPBAR_BARICON_MAX]	=
+	{	
+		APPBAR_OPTION_MASK_CLOSE,
+		APPBAR_OPTION_MASK_RETURN,
+		APPBAR_OPTION_MASK_CUR_D,
+		APPBAR_OPTION_MASK_CUR_U,
+		APPBAR_OPTION_MASK_CUR_L,
+		APPBAR_OPTION_MASK_CUR_R,
+		APPBAR_OPTION_MASK_CHECK,
+		APPBAR_OPTION_MASK_SCALE,
+		APPBAR_OPTION_MASK_SCALE,
 	};
 	
 	//タッチの動き
@@ -1358,7 +1425,7 @@ static void APPBAR_Main( APPBAR_WORK *p_wk, const CURSOR_WORK *cp_cursor )
 	p_wk->cont	= APPBAR_SELECT_NONE;
 	for( i = 0; i < NELEMS(sc_hit_tbl); i++ )
 	{	
-		if( p_wk->mode & 1<<i )
+		if( p_wk->mode & sc_mask_tbl[i] )
 		{	
 			if( CURSOR_GetPointTrg( cp_cursor, &x, &y ) )
 			{	
@@ -1839,7 +1906,7 @@ static void PLACE_Exit( PLACE_WORK *p_wk )
  *
  */
 //-----------------------------------------------------------------------------
-static void PLACE_Main( PLACE_WORK *p_wk, const CURSOR_WORK *cp_wk )
+static void PLACE_Main( PLACE_WORK *p_wk )
 {	
 
 }
@@ -2036,6 +2103,7 @@ static void PlaceData_Init( PLACE_DATA *p_wk, const TOWNMAP_DATA *cp_data, u32 d
 			GF_ASSERT(0);
 		}
 		p_wk->p_clwk	= GFL_CLACT_WK_Create( p_clunit, chr, plt, cel, &cldata, 0, heapID );
+		GFL_CLACT_WK_SetAffineParam( p_wk->p_clwk, CLSYS_AFFINETYPE_DOUBLE );
 	}
 }
 //----------------------------------------------------------------------------
@@ -2091,7 +2159,7 @@ static BOOL PlaceData_IsHit( const PLACE_DATA *cp_wk, const GFL_POINT *cp_pos )
 	v1.x	= FX32_CONST( cp_pos->x );
 	v1.y	= FX32_CONST( cp_pos->y );
 	v1.z	= 0;
-	GFL_COLLISION3D_CIRCLE_SetData( &circle, &v1, 0 );
+	GFL_COLLISION3D_CIRCLE_SetData( &circle, &v1, FX32_ONE );
 
 
 	v1.x	= FX32_CONST( PLACEDATA_GetParam( cp_wk,TOWNMAP_DATA_PARAM_HIT_START_X ) );
@@ -2151,13 +2219,19 @@ static BOOL PlaceData_IsPullHit( const PLACE_DATA *cp_wk, const GFL_POINT *cp_po
  *	@brief	地図	初期化
  *
  *	@param	MAP_WORK *p_wk	ワーク
+ *	@param	u8 map_frm			地図用フレーム
+ *	@param	u8 road_frm			
  *	@param	heapID					ヒープID
  *
  */
 //-----------------------------------------------------------------------------
-static void MAP_Init( MAP_WORK *p_wk, HEAPID heapID )
+static void MAP_Init( MAP_WORK *p_wk, u8 map_frm, u8 road_frm, HEAPID heapID )
 {	
+	//リリア
 	GFL_STD_MemClear( p_wk, sizeof(MAP_WORK) );
+	p_wk->map_frm		= map_frm;
+	p_wk->road_frm	= road_frm;
+	p_wk->now_scale	= FX32_ONE;
 }
 //----------------------------------------------------------------------------
 /**
@@ -2182,6 +2256,26 @@ static void MAP_Exit( MAP_WORK *p_wk )
 static void MAP_Main( MAP_WORK *p_wk )
 {	
 
+	//拡大処理
+	if( p_wk->is_scale_req )
+	{	
+		fx32 add;
+		
+		add	= (p_wk->next_scale - p_wk->init_scale)/MAP_SCALE_SYNC;
+		p_wk->now_scale	= p_wk->init_scale + add * p_wk->sync;
+
+		if( p_wk->sync++ > MAP_SCALE_SYNC )
+		{	
+			p_wk->sync	= 0;
+			p_wk->is_scale_req	= FALSE;
+			p_wk->now_scale	= p_wk->next_scale;
+		}
+		
+		MTX_Scale22( &p_wk->mtx, p_wk->now_scale, p_wk->now_scale );
+
+		GFL_BG_SetAffine( p_wk->map_frm, &p_wk->mtx, p_wk->center.x, p_wk->center.y );
+		GFL_BG_SetAffine( p_wk->road_frm, &p_wk->mtx, p_wk->center.x, p_wk->center.y );
+	}
 }
 //----------------------------------------------------------------------------
 /**
@@ -2191,9 +2285,12 @@ static void MAP_Main( MAP_WORK *p_wk )
  *
  */
 //-----------------------------------------------------------------------------
-static void MAP_ScaleUp( MAP_WORK *p_wk )
+static void MAP_ScaleUp( MAP_WORK *p_wk, const GFL_POINT *cp_center )
 {	
-
+	p_wk->is_scale_req	= TRUE;
+	p_wk->next_scale		= FX32_CONST(0.5);
+	p_wk->center				= *cp_center;
+	p_wk->init_scale		= p_wk->now_scale;
 }
 //----------------------------------------------------------------------------
 /**
@@ -2203,9 +2300,12 @@ static void MAP_ScaleUp( MAP_WORK *p_wk )
  *
  */
 //-----------------------------------------------------------------------------
-static void MAP_ScaleDown( MAP_WORK *p_wk )
+static void MAP_ScaleDown( MAP_WORK *p_wk, const GFL_POINT *cp_center )
 {	
-
+	p_wk->is_scale_req	= TRUE;
+	p_wk->next_scale		= FX32_CONST(1);
+	p_wk->center				= *cp_center;
+	p_wk->init_scale		= p_wk->now_scale;
 }
 //----------------------------------------------------------------------------
 /**
@@ -2231,7 +2331,16 @@ static BOOL MAP_IsScaleEnd( const MAP_WORK *cp_wk )
 //-----------------------------------------------------------------------------
 static void MAP_SetWldPos( MAP_WORK *p_wk, const GFL_POINT *cp_pos )
 {	
-	
+	p_wk->pos	= *cp_pos;
+
+	GFL_BG_SetAffineScroll( p_wk->map_frm, GFL_BG_SCROLL_X_SET, cp_pos->x,
+			&p_wk->mtx, p_wk->center.x, p_wk->center.y );
+	GFL_BG_SetAffineScroll( p_wk->map_frm, GFL_BG_SCROLL_Y_SET, cp_pos->y,
+			&p_wk->mtx, p_wk->center.x, p_wk->center.y );
+	GFL_BG_SetAffineScroll( p_wk->road_frm, GFL_BG_SCROLL_X_SET, cp_pos->x,
+			&p_wk->mtx, p_wk->center.x, p_wk->center.y );
+	GFL_BG_SetAffineScroll( p_wk->road_frm, GFL_BG_SCROLL_Y_SET, cp_pos->y,
+			&p_wk->mtx, p_wk->center.x, p_wk->center.y );
 }
 //----------------------------------------------------------------------------
 /**
@@ -2244,7 +2353,7 @@ static void MAP_SetWldPos( MAP_WORK *p_wk, const GFL_POINT *cp_pos )
 //-----------------------------------------------------------------------------
 static void MAP_GetWldPos( const MAP_WORK *cp_wk, GFL_POINT *p_pos )
 {	
-
+	*p_pos	= cp_wk->pos;
 }
 //=============================================================================
 /**
@@ -2892,6 +3001,7 @@ static void DEBUGMENU_UPDATE_Print( void* p_wk_adrs, DEBUGWIN_ITEM* p_item )
   {	
 		if( DEBUGPRINT_IsOpen() )
 		{	
+			DEBUGPRINT_Clear();
 			DEBUGPRINT_Close();
 		}
 		else

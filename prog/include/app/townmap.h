@@ -33,6 +33,7 @@ typedef enum
 typedef enum
 {
 	TOWNMAP_SELECT_RETURN,	//‰½‚à‚¹‚¸–ß‚é
+	TOWNMAP_SELECT_CLOSE,		//‰½‚à‚¹‚¸I—¹‚·‚é
 	TOWNMAP_SELECT_SKY,			//”ò‚Ôæ‚ð‘I‘ð‚µ‚½
 
 	TOWNMAP_SELECT_MAX
