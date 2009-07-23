@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-07-23T16:45:55"/>
+	<create user="matsumiya" host="W00207" date="2009-07-23T19:48:45"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -292,7 +292,7 @@
 	</lock>
 
 
-	<row id="msg_t01r0401_doctor01_01">
+	<row id="msg_t01r0401_hakase2_01">
 		<comment>♂
 ・アニメ後
 　続けてmsg_t01r0401_black_01表示</comment>
@@ -344,7 +344,7 @@
 わたしの　名前は
 アララギ　イチイ！[BE:01:ページ切り替え（クリア）]
 自分で　いうのも　なんだが
-それなりに　優秀な　研究だ</language>
+それなりに　優秀な　研究家だ</language>
 	</row>
 
 	<row id="msg_t01r0401_hakase2_03">
@@ -592,7 +592,27 @@
 ・つづけて　ずかんひょうか　へ</language>
 	</row>
 
-	<row id="msg_t01r0401_doctor01_02" back-color="#808080,,,#808080,,#808080,#808080,,,,,,#808080,,,,,,">
+	<row id="msg_t01r0401_doctor01_01" back-color="#808080,,,#808080,,#808080,#808080,,,,,,#808080,,,,,,">
+		<comment>♂
+・はい／いいえ</comment>
+		<attribute name="キャラ指定">博士（子）</attribute>
+		<language name="JPN" width="256">アララギ[BE:01:ページ切り替え（クリア）]
+ごぞんじのとおり　わかき
+ポケモン　けんきゅうか　だ[BE:01:ページ切り替え（クリア）]
+さて……　いきなり　ポケモンの
+はいった　モンスターボールを[BE:00:ページ切り替え（行送り）]
+おくりつけて　わるかったね[BE:00:ページ切り替え（行送り）]
+おどろいたかい？</language>
+		<language name="JPN_KANJI" width="256">アララギ[BE:01:ページ切り替え（クリア）]
+ご存知のとおり　若き
+ポケモン研究家　だ[BE:01:ページ切り替え（クリア）]
+さて……　いきなり　ポケモンの
+はいった　モンスターボールを[BE:00:ページ切り替え（行送り）]
+送りつけて　悪かったね[BE:00:ページ切り替え（行送り）]
+驚いたかい？</language>
+	</row>
+
+	<row id="msg_t01r0401_doctor01_02" back-color="#808080,,,,,,,,,,,,,,,,,,">
 		<comment>♂
 ・はい／いいえ</comment>
 		<attribute name="キャラ指定">博士（子）</attribute>
