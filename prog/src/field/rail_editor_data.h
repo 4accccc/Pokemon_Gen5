@@ -41,6 +41,8 @@ typedef enum {
 	RE_MCS_DATA_CAMERA_REQ,	// カメラ情報吸出しリクエスト	DS<-PC
 	RE_MCS_DATA_RESET_REQ,	// 画面リセットリクエスト	DS<-PC
 	RE_MCS_DATA_END_REQ,		// 終了クエスト	DS<-PC
+	RE_MCS_DATA_RAILLOCATIONDATA,		// レールロケーション情報				DS->PC
+	RE_MCS_DATA_RAILLOCATION_REQ,	// レールロケーションリクエスト	DS<-PC
 
 	RE_MCS_DATA_TYPE_MAX,
 } RE_MCS_DATA_TYPE;
@@ -137,6 +139,15 @@ typedef struct {
 	u32						select_index;			// 選択データインデックス
 	u32						select_seq;				// 選択データ管理シーケンス	RE_SELECT_DATA_SEQ_TYPE
 } RE_MCS_SELECT_DATA;
+
+//-------------------------------------
+///	レールロケーション
+//=====================================
+typedef struct {
+	RE_MCS_HEADER header;
+	u32						rail_type;			// レールタイプ	FIELD_RAIL_TYPE
+	u32						index;					// データインデックス
+} RE_MCS_RAILLOCATION_DATA;
 
 
 //-----------------------------------------------------------------------------

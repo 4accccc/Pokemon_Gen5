@@ -120,7 +120,8 @@ typedef struct {
 			u32	camera_req:1;			// カメラ情報送信リクエスト
 			u32	reset_req:1;			// リセットリクエスト
 			u32 end_req:1;				// 終了リクエスト
-			u32	pad_data:23;
+			u32 raillocation_req:1;	// レールロケーション送信リクエスト
+			u32	pad_data:22;
 		};
 		u32 flag;	
 	};
@@ -237,6 +238,7 @@ static void RE_Recv_PlayerDataReq( DEBUG_RAIL_EDITOR* p_wk, const void* cp_data,
 static void RE_Recv_CameraDataReq( DEBUG_RAIL_EDITOR* p_wk, const void* cp_data, u32 size );
 static void RE_Recv_ResetReq( DEBUG_RAIL_EDITOR* p_wk, const void* cp_data, u32 size );
 static void RE_Recv_EndReq( DEBUG_RAIL_EDITOR* p_wk, const void* cp_data, u32 size );
+static void RE_Recv_RailLocationReq( DEBUG_RAIL_EDITOR* p_wk, const void* cp_data, u32 size );
 
 // 受信情報の反映
 static void RE_Reflect( DEBUG_RAIL_EDITOR* p_wk );
@@ -276,6 +278,7 @@ static void RE_Send_RailData( DEBUG_RAIL_EDITOR* p_wk );
 static void RE_Send_AreaData( DEBUG_RAIL_EDITOR* p_wk );
 static void RE_Send_PlayerData( DEBUG_RAIL_EDITOR* p_wk );
 static void RE_Send_CameraData( DEBUG_RAIL_EDITOR* p_wk );
+static void RE_Send_RailLocationData( DEBUG_RAIL_EDITOR* p_wk );
 
 
 
@@ -839,6 +842,8 @@ static void RE_RecvControl( DEBUG_RAIL_EDITOR* p_wk )
 		RE_Recv_CameraDataReq,
 		RE_Recv_ResetReq,
 		RE_Recv_EndReq,
+		NULL,
+		RE_Recv_RailLocationReq
 	};
 
 	// 受信データがあるかチェック
@@ -993,6 +998,19 @@ static void RE_Recv_EndReq( DEBUG_RAIL_EDITOR* p_wk, const void* cp_data, u32 si
 
 	GF_ASSERT( cp_header->data_type == RE_MCS_DATA_END_REQ );
 	p_wk->p_recv->end_req = TRUE;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	レールロケーション送信　リクエスト受信
+ */
+//-----------------------------------------------------------------------------
+static void RE_Recv_RailLocationReq( DEBUG_RAIL_EDITOR* p_wk, const void* cp_data, u32 size )
+{
+	const RE_MCS_HEADER* cp_header = cp_data;
+
+	GF_ASSERT( cp_header->data_type == RE_MCS_DATA_RAILLOCATION_REQ );
+	p_wk->p_recv->raillocation_req = TRUE;
 }
 
 //----------------------------------------------------------------------------
@@ -1676,6 +1694,11 @@ static void RE_SendControl( DEBUG_RAIL_EDITOR* p_wk )
 		// camera情報の送信
 		RE_Send_CameraData( p_wk );
 	}
+	else if( p_wk->p_recv->raillocation_req )
+	{
+		// レールロケーション送信
+		RE_Send_RailLocationData( p_wk );
+	}
 }
 
 //----------------------------------------------------------------------------
@@ -1806,6 +1829,32 @@ static void RE_Send_CameraData( DEBUG_RAIL_EDITOR* p_wk )
 
 	// 送信
 	result = MCS_Write( MCS_CHANNEL0, p_senddata, sizeof(RE_MCS_CAMERA_DATA) );
+	GF_ASSERT( result );	
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	レールロケーションの送信
+ *
+ *	@param	p_wk	わーく
+ */
+//-----------------------------------------------------------------------------
+static void RE_Send_RailLocationData( DEBUG_RAIL_EDITOR* p_wk )
+{
+	FIELD_RAIL_MAN * p_rail = FIELDMAP_GetFieldRailMan( p_wk->p_fieldmap );
+	RE_MCS_RAILLOCATION_DATA* p_senddata = (RE_MCS_RAILLOCATION_DATA*)p_wk->p_tmp_buff;
+	RAIL_LOCATION location;
+	BOOL result;
+
+	FIELD_RAIL_MAN_GetLocation( p_rail, &location );
+
+	p_senddata->header.data_type = RE_MCS_DATA_RAILLOCATIONDATA;
+	p_senddata->rail_type = location.type;
+	p_senddata->index			= location.rail_index;
+
+
+	// 送信
+	result = MCS_Write( MCS_CHANNEL0, p_senddata, sizeof(RE_MCS_RAILLOCATION_DATA) );
 	GF_ASSERT( result );	
 }
 
