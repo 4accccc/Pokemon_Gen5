@@ -1525,6 +1525,7 @@
 
 #define T02PC0101_SHOPM                    0
 #define T02PC0101_PCWOMAN                  1
+#define T02PC0101_DOCTOR                   2
 
 #endif //ZONE_T02PC0101_EVC_H
 //#include "tmp/t02r0101.h"
@@ -6429,12 +6430,29 @@ const FLDMMDL_HEADER OBJ_EVENT_T02PC0101[] = {
 		10,
 		0,
 	},
+	{
+		T02PC0101_DOCTOR,
+		HAKASE2,
+		MV_DMY,
+		EV_TYPE_NORMAL,
+		0,
+		SCRID_T02PC0101_DOCTOR_GUIDE,
+		DIR_DOWN,
+		0,
+		0,
+		0,
+		0,
+		0,
+		7,
+		17,
+		0,
+	},
 };
 const int ObjCount_T02PC0101 = NELEMS(OBJ_EVENT_T02PC0101);
 
 static const EVENTDATA_TABLE event_t02pc0101 = {
 	0,
-	2,
+	3,
 	3,
 	0,
 	(void *)NULL,
