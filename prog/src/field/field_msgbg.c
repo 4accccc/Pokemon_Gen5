@@ -643,6 +643,7 @@ FLDMSGWIN * FLDMSGWIN_Add( FLDMSGBG *fmb, GFL_MSGDATA *msgData,
 		fmb->bgFrame, fmb->heapID, bmppos_x, bmppos_y, bmpsize_x, bmpsize_y );
 	msgWin->msgPrint = FLDMSGPRINT_SetupPrint( fmb, msgData, msgWin->bmpwin );
 	
+  FLDMSGBG_SetBlendAlpha();
 	return( msgWin );
 }
 
@@ -776,6 +777,8 @@ FLDMENUFUNC * FLDMENUFUNC_AddMenuList( FLDMSGBG *fmb,
 		BmpMenuList_Set( &menuH, list_pos, cursor_pos, fmb->heapID );
 //	BmpMenuList_SetCursorString( menuFunc->pMenuListWork, 0 );
 	BmpMenuList_SetCursorBmp( menuFunc->pMenuListWork, fmb->heapID );
+  
+  FLDMSGBG_SetBlendAlpha();
 	return( menuFunc );
 }
 
@@ -1214,6 +1217,7 @@ FLDMSGWIN_STREAM * FLDMSGWIN_STREAM_Add(
 		fmb->bgFrame, fmb->heapID, bmppos_x, bmppos_y, bmpsize_x, bmpsize_y );
   msgWin->strBuf = GFL_STR_CreateBuffer( FLDMSGBG_STRLEN, fmb->heapID );
   
+  FLDMSGBG_SetBlendAlpha();
   return( msgWin );
 }
 
@@ -1398,6 +1402,9 @@ static void fldTalkMsgWin_Add(
       15 );
 #else
   OS_Printf( "ウィンドウ %d,%d,%d\n", pos->x, pos->y, pos->z );
+  
+  FLDMSGBG_SetBlendAlpha();
+
   switch( idx ){
   case FLDTALKMSGWIN_IDX_UPPER:
     TALKMSGWIN_CreateFixWindowUpper( tmsg->talkMsgWinSys,
