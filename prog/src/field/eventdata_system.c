@@ -102,6 +102,7 @@ static const CONNECT_DATA ConnectData_H01[] = {
 };
 static const int ConnectCount_H01 = NELEMS(ConnectData_H01);
 
+#if 0
 static const CONNECT_DATA ConnectData_C03[] = {
 	{//DOOR_ID_C03_EXIT01 = 0
 		{1101, 0, 493},
@@ -119,6 +120,7 @@ static const CONNECT_DATA ConnectData_C03[] = {
 #endif
 };
 static const int ConnectCount_C03 = NELEMS(ConnectData_C03);
+#endif
 
 
 //============================================================================================
