@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-07-14T17:09:34"/>
+	<create user="matsumiya" host="W00207" date="2009-07-23T16:35:19"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -296,7 +296,7 @@
 		<comment>♂
 ・アニメ後
 　続けてmsg_t01r0401_black_01表示</comment>
-		<attribute name="キャラ指定">DOCTOR_JR
+		<attribute name="キャラ指定">HAKASE2
 博士</attribute>
 		<language name="JPN" width="256">おー　きたきたきた！[BE:01:ページ切り替え（クリア）]
 まっていたよ
@@ -322,12 +322,12 @@
 いまさら　自己紹介だなんて[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_t01r0401_doctor_jr_02">
+	<row id="msg_t01r0401_hakase2_02">
 		<comment>♂
 ・メッセージ表示後
 　3人の前を移動するアニメ
 ・続けてmsg_t01r0401_doctor_jr_03</comment>
-		<attribute name="キャラ指定">DOCTOR_JR
+		<attribute name="キャラ指定">HAKASE2
 博士</attribute>
 		<language name="JPN" width="256">アララギ『まあまあまあまあ！[BE:01:ページ切り替え（クリア）]
 きょうは　きねんとなる　ひだからね
@@ -347,14 +347,14 @@
 それなりに　優秀な　研究だ</language>
 	</row>
 
-	<row id="msg_t01r0401_doctor_jr_03">
+	<row id="msg_t01r0401_hakase2_03">
 		<comment>♂
 ・はい/いいえの選択肢表示
 　はい→名前入力画面へ
 　いいえ→
 ・今回はmsg_t01r0401_doctor_jr_04
 　はい/いいえともに同じ流れ</comment>
-		<attribute name="キャラ指定">DOCTOR_JR
+		<attribute name="キャラ指定">HAKASE2
 博士</attribute>
 		<language name="JPN" width="256">なるほどなるほど
 もう　ポケモンしょうぶを　したんだね[BE:01:ページ切り替え（クリア）]
@@ -372,13 +372,13 @@
 ニックネームを　つかるかい？</language>
 	</row>
 
-	<row id="msg_t01r0401_doctor_jr_04">
+	<row id="msg_t01r0401_hakase2_04">
 		<comment>♂
 ・いいえ選択時の再確認
 ・はい/いいえの選択肢表示
 　はい→msg_t01r0401_doctor_jr_07
 　いいえ→名前入力画面</comment>
-		<attribute name="キャラ指定">DOCTOR_JR
+		<attribute name="キャラ指定">HAKASE2
 博士</attribute>
 		<language name="JPN" width="256">アララギ『なるほどなるほど
 その　ニックネームで　きめちゃうかい？</language>
@@ -386,12 +386,12 @@
 その　ニックネームで　決めちゃうかい？</language>
 	</row>
 
-	<row id="msg_t01r0401_doctor_jr_05">
+	<row id="msg_t01r0401_hakase2r_05">
 		<comment>♂
 ・名前入力画面から復帰して
 　ニックネーム変わった
 ・続けてmsg_t01r0401_doctor_jr_07表示</comment>
-		<attribute name="キャラ指定">DOCTOR_JR
+		<attribute name="キャラ指定">HAKASE2
 博士</attribute>
 		<language name="JPN" width="256">アララギ『なるほどなるほど[BE:01:ページ切り替え（クリア）]
 [1:02:ポケモンニックネーム:0]と　いうのか
@@ -401,12 +401,12 @@
 いい　なまえ　じゃあないか！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_t01r0401_doctor_jr_06">
+	<row id="msg_t01r0401_hakase2_06">
 		<comment>♂
 ・名前入力画面から復帰して
 　ニックネーム変わっていない
 ・続けてmsg_t01r0401_doctor_jr_07表示</comment>
-		<attribute name="キャラ指定">DOCTOR_JR
+		<attribute name="キャラ指定">HAKASE2
 博士</attribute>
 		<language name="JPN" width="256">アララギ『なるほどなるほど
 ニックネームを　つけないんだね[BE:00:ページ切り替え（行送り）]
@@ -416,10 +416,10 @@
 それも　いいだろうさ！[BE:00:ページ切り替え（行送り）]</language>
 	</row>
 
-	<row id="msg_t01r0401_doctor_jr_07">
+	<row id="msg_t01r0401_hakase2_07">
 		<comment>♂
 ・続けてmsg_t01r0401_black_02表示</comment>
-		<attribute name="キャラ指定">DOCTOR_JR
+		<attribute name="キャラ指定">HAKASE2
 博士</attribute>
 		<language name="JPN" width="256">アララギ『さて　きみたちに
 ポケモンを　あげた　りゆうだが……</language>
@@ -443,12 +443,12 @@
 		<language name="JPN_KANJI" width="256">ともだち♀『ポケモン図鑑……？[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_t01r0401_doctor_jr_08">
+	<row id="msg_t01r0401_hakase2_08">
 		<comment>♂
 ・メッセージ表示後、演出
 　その場で一回転など
 ・続けてmsg_t01r0401_doctor_jr_09表示</comment>
-		<attribute name="キャラ指定">DOCTOR_JR
+		<attribute name="キャラ指定">HAKASE2
 博士</attribute>
 		<language name="JPN" width="256">アララギ『すごいねすごいね
 さすがだね　ともだち♂！[BE:01:ページ切り替え（クリア）]
@@ -464,11 +464,11 @@
 説明させていただこう！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_t01r0401_doctor_jr_09">
+	<row id="msg_t01r0401_hakase2_09">
 		<comment>♂
 ・アニメなどの演出予定
 ・続けてmsg_t01r0401_doctor_jr_10表示</comment>
-		<attribute name="キャラ指定">DOCTOR_JR
+		<attribute name="キャラ指定">HAKASE2
 博士</attribute>
 		<language name="JPN" width="256">ポケモンずかん　とは……！[BE:01:ページ切り替え（クリア）]
 きみたちが　であった　ポケモンを[BE:00:ページ切り替え（行送り）]
@@ -488,13 +488,13 @@
 ポケモンに　であうのだッ！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_t01r0401_doctor_jr_10">
+	<row id="msg_t01r0401_hakase2_10">
 		<comment>♂
 ・はい/いいえの選択肢表示
 　はい→msg_t01r0401_doctor_jr_12
 　いいえ→msg_t01r0401_doctor_jr_11
 ・0＝プレイヤーの名前</comment>
-		<attribute name="キャラ指定">DOCTOR_JR
+		<attribute name="キャラ指定">HAKASE2
 博士</attribute>
 		<language name="JPN" width="256">さて　たずねよう[BE:01:ページ切り替え（クリア）]
 [1:00:トレーナー名:0]！
@@ -508,12 +508,14 @@
 ぼうけんの　たびに　でかけるよね！</language>
 	</row>
 
-	<row id="msg_t01r0401_doctor_jr_11">
+	<row id="msg_t01r0401_hakase2_11">
 		<comment>♂
 ・いいえ選択時
 ・再度はい/いいえの選択肢表示
 　はい→msg_t01r0401_doctor_jr_12
 　いいえ→msg_t01r0401_doctor_jr_11</comment>
+		<attribute name="キャラ指定">HAKASE2
+博士</attribute>
 		<language name="JPN" width="256">アララギ『わたしが　ききたいのは
 せかいを　きりひらく[BE:01:ページ切り替え（クリア）]
 ゆうきある　ことば　だけだあ！！[BE:01:ページ切り替え（クリア）]
@@ -530,14 +532,14 @@
 ポケモンに　であってください！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_t01r0401_doctor_jr_12">
+	<row id="msg_t01r0401_hakase2_12">
 		<comment>♂
 ・はい選択時
 ・メッセージ表示後、退場
 ・1番道路に博士を配置
 　あわせて友達♂、♀も
 ・続けてmsg_t01r0401_white_02</comment>
-		<attribute name="キャラ指定">DOCTOR_JR
+		<attribute name="キャラ指定">HAKASE2
 博士</attribute>
 		<language name="JPN" width="256">よし！　いい　へんじだ！[BE:01:ページ切り替え（クリア）]
 では　つぎのステップ
@@ -576,11 +578,11 @@
 １番道路に　行くと　しようぜ[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_t01r0401_doctor_jr_20">
+	<row id="msg_t01r0401_hakase2_20">
 		<comment>♂
 ・t02pc0101のイベント後以降
 ・図鑑評価関連（仮）</comment>
-		<attribute name="キャラ指定">DOCTOR_JR
+		<attribute name="キャラ指定">HAKASE2
 博士</attribute>
 		<language name="JPN" width="256">アララギ『どうだいどうだい！
 ポケモンずかんの　ちょうしは[BE:01:ページ切り替え（クリア）]
