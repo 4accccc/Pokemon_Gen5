@@ -156,7 +156,7 @@ static void SNDVIEWER_ResetSwitchParam( GFL_SNDVIEWER* gflSndViewer );
  *
  */
 //============================================================================================
-extern GFL_SNDVIEWER*	GFL_SNDVIEWER_Create( const GFL_SNDVIEWER_SETUP* setup, HEAPID heapID )
+GFL_SNDVIEWER*	GFL_SNDVIEWER_Create( const GFL_SNDVIEWER_SETUP* setup, HEAPID heapID )
 {
 	GFL_SNDVIEWER* gflSndViewer;
 	int i;
