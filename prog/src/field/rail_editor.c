@@ -78,6 +78,24 @@ enum {
 #define RM_DRAW_OBJ_RES_MAX	( FIELD_RAIL_TYPE_MAX )
 #define RM_DRAW_OBJ_MAX	( 128 )
 
+// positionリソース
+enum
+{
+	// リソース
+	RM_DRAW_OBJ_RES_POSITION_MDL = 0,
+	RM_DRAW_OBJ_RES_POSITION_ICA,
+	RM_DRAW_OBJ_RES_POSITION_IMA,
+	RM_DRAW_OBJ_RES_POSITION_NUM,
+
+	// アニメ
+	RM_DRAW_OBJ_ANM_POSITION_ICA = 0,
+	RM_DRAW_OBJ_ANM_POSITION_IMA,
+	RM_DRAW_OBJ_ANM_POSITION_NUM,
+};
+#define POSITION_ICA_ANMSPEED_MOVE	( FX32_CONST(5) )
+#define POSITION_ICA_ANMSPEED	( FX32_HALF )
+#define POSITION_IMA_ADDSPEED	( FX32_CONST(10) )
+
 //-----------------------------------------------------------------------------
 /**
  *					構造体宣言
@@ -128,6 +146,7 @@ typedef struct {
 	VecFx32				default_target_offset;
 
 	u32	last_control_type;
+	RE_MCS_SELECT_DATA select_last;
 
 
 	// レール描画ワーク
@@ -154,6 +173,14 @@ typedef struct {
 	GFL_G3D_RES* p_mdl[ RM_DRAW_OBJ_RES_MAX ];
 	GFL_G3D_RND* p_rnd[ RM_DRAW_OBJ_RES_MAX ];
 	GFL_G3D_OBJ* p_obj[ RM_DRAW_OBJ_RES_MAX ];
+
+	// position
+	GFL_G3D_RES* p_position[ RM_DRAW_OBJ_RES_POSITION_NUM ];
+	GFL_G3D_ANM* p_positionanm[ RM_DRAW_OBJ_ANM_POSITION_NUM ];
+	GFL_G3D_RND* p_positionrnd;
+	GFL_G3D_OBJ* p_positionobj;
+	VecFx32			position_last_pos;
+	int					color_frame;
 	
 	// 描画オブジェ部
 	RE_RAIL_DRAW_OBJ draw_obj[ RM_DRAW_OBJ_MAX ];
@@ -424,6 +451,12 @@ static void RE_DRAW_Create(FLDMAPFUNC_WORK * p_funcwk, FIELDMAP_WORK * p_fieldma
 		NARC_rail_editor_rail_editor_point_nsbmd,
 		NARC_rail_editor_rail_editor_line_nsbmd,
 	};
+	static const u32 sc_positionres_id[ RM_DRAW_OBJ_RES_POSITION_NUM ] = 
+	{
+		NARC_rail_editor_rail_editor_position_nsbmd,
+		NARC_rail_editor_rail_editor_position_nsbca,
+		NARC_rail_editor_rail_editor_position_nsbma,
+	};
 	RE_RAIL_DRAW_WORK* p_wk = p_work;
 	
 	// 描画リソース読み込み
@@ -434,6 +467,30 @@ static void RE_DRAW_Create(FLDMAPFUNC_WORK * p_funcwk, FIELDMAP_WORK * p_fieldma
 		p_wk->p_rnd[i] = GFL_G3D_RENDER_Create( p_wk->p_mdl[i], 0, NULL );
 		p_wk->p_obj[i] = GFL_G3D_OBJECT_Create( p_wk->p_rnd[i], NULL, 0 );
 	}
+
+	// 描画リソース読み込み
+	for( i=0; i<RM_DRAW_OBJ_RES_POSITION_NUM; i++ )
+	{
+		p_wk->p_position[i] = GFL_G3D_CreateResourceArc( ARCID_RAIL_EDITOR, sc_positionres_id[i] );
+	}
+	// レンダラー作成
+	p_wk->p_positionrnd = GFL_G3D_RENDER_Create( p_wk->p_position[RM_DRAW_OBJ_RES_POSITION_MDL], 0, NULL );
+	// アニメ生成
+	for( i=0; i<RM_DRAW_OBJ_ANM_POSITION_NUM; i++ )
+	{
+		p_wk->p_positionanm[i] = GFL_G3D_ANIME_Create( p_wk->p_positionrnd, p_wk->p_position[ RM_DRAW_OBJ_RES_POSITION_ICA+i ], 0 );
+	}
+	// オブジェ作成
+	p_wk->p_positionobj = GFL_G3D_OBJECT_Create( p_wk->p_positionrnd, p_wk->p_positionanm, RM_DRAW_OBJ_ANM_POSITION_NUM );
+	for( i=0; i<RM_DRAW_OBJ_ANM_POSITION_NUM; i++ )
+	{
+		GFL_G3D_OBJECT_EnableAnime( p_wk->p_positionobj, i );
+	}
+	{
+		FIELD_PLAYER* p_player = FIELDMAP_GetFieldPlayer( p_fieldmap );
+		FIELD_PLAYER_GetPos( p_player, &p_wk->position_last_pos );
+	}
+
 
 	// ワークのクリア
 	for( i=0; i<RM_DRAW_OBJ_MAX; i++ )
@@ -451,6 +508,24 @@ static void RE_DRAW_Delete(FLDMAPFUNC_WORK * p_funcwk, FIELDMAP_WORK * p_fieldma
 {
 	int i;
 	RE_RAIL_DRAW_WORK* p_wk = p_work;
+
+	// positionリソース破棄
+	{
+		// オブジェ作成
+		GFL_G3D_OBJECT_Delete( p_wk->p_positionobj );
+		// アニメ生成
+		for( i=0; i<RM_DRAW_OBJ_ANM_POSITION_NUM; i++ )
+		{
+			GFL_G3D_ANIME_Delete( p_wk->p_positionanm[i] );
+		}
+		// レンダラー作成
+		GFL_G3D_RENDER_Delete( p_wk->p_positionrnd );
+		// 描画リソース読み込み
+		for( i=0; i<RM_DRAW_OBJ_RES_POSITION_NUM; i++ )
+		{
+			GFL_G3D_DeleteResource( p_wk->p_position[i] );
+		}
+	}
 	
 	// 描画リソース破棄
 	for( i=0; i<RM_DRAW_OBJ_RES_MAX; i++ )
@@ -484,6 +559,60 @@ static void RE_DRAW_Draw(FLDMAPFUNC_WORK * p_funcwk, FIELDMAP_WORK * p_fieldmap,
 	{
 		RE_DRAW_DRAWOBJ_Draw( p_wk, &p_wk->draw_obj[i] );
 	}
+
+	
+	// 主人公位置に置く
+	{
+		FIELD_PLAYER* p_player = FIELDMAP_GetFieldPlayer( p_fieldmap );
+		GFL_G3D_OBJSTATUS trans = 
+		{
+			{0,0,0},
+			{FX32_ONE, FX32_ONE, FX32_ONE},
+			{FX32_ONE,0,0, 0,FX32_ONE,0, 0,0,FX32_ONE },
+		};
+
+		// 座標の取得
+		FIELD_PLAYER_GetPos( p_player, &trans.trans );
+
+		
+		// 移動中は、アニメ,移動してないなら終了
+		{
+			fx32 dist;
+
+			dist = VEC_Distance( &trans.trans, &p_wk->position_last_pos );
+			p_wk->position_last_pos = trans.trans;
+			if( dist )
+			{
+				GFL_G3D_OBJECT_LoopAnimeFrame( p_wk->p_positionobj, RM_DRAW_OBJ_ANM_POSITION_ICA, POSITION_ICA_ANMSPEED_MOVE );
+
+				if( (p_wk->color_frame+POSITION_IMA_ADDSPEED) < FX32_CONST(60) )
+				{
+					p_wk->color_frame += POSITION_IMA_ADDSPEED;
+				}
+				else
+				{
+					p_wk->color_frame = FX32_CONST(60);
+				}
+				GFL_G3D_OBJECT_SetAnimeFrame( p_wk->p_positionobj, RM_DRAW_OBJ_ANM_POSITION_IMA, &p_wk->color_frame );
+			}
+			else
+			{
+				GFL_G3D_OBJECT_LoopAnimeFrame( p_wk->p_positionobj, RM_DRAW_OBJ_ANM_POSITION_ICA, POSITION_ICA_ANMSPEED );
+				if( (p_wk->color_frame-POSITION_IMA_ADDSPEED) > 0 )
+				{
+					p_wk->color_frame -= POSITION_IMA_ADDSPEED;
+				}
+				else
+				{
+					p_wk->color_frame = 0;
+				}
+				GFL_G3D_OBJECT_SetAnimeFrame( p_wk->p_positionobj, RM_DRAW_OBJ_ANM_POSITION_IMA, &p_wk->color_frame );
+			}
+		}
+
+		GFL_G3D_DRAW_DrawObject( p_wk->p_positionobj, &trans );
+	}
+	
 }
 
 
@@ -964,19 +1093,27 @@ static void RE_Reflect_Area( DEBUG_RAIL_EDITOR* p_wk )
 //-----------------------------------------------------------------------------
 static void RE_Reflect_Select( DEBUG_RAIL_EDITOR* p_wk )
 {
-	static void (*const cpJump[RE_SELECT_DATA_MAX])( DEBUG_RAIL_EDITOR* p_wk ) = 
+	// テーブル内インデックスの変更
+	if( (p_wk->p_recv->select.select_data != p_wk->select_last.select_data) ||
+			(p_wk->p_recv->select.select_index != p_wk->select_last.select_index) ||
+			(p_wk->p_recv->select.select_seq == p_wk->select_last.select_seq) )
 	{
-		NULL,
-		RE_JumpPoint,
-		RE_JumpLine,
-		RE_JumpArea,
-	};
+		static void (*const cpJump[RE_SELECT_DATA_MAX])( DEBUG_RAIL_EDITOR* p_wk ) = 
+		{
+			NULL,
+			RE_JumpPoint,
+			RE_JumpLine,
+			RE_JumpArea,
+		};
 
-	GF_ASSERT( p_wk->p_recv->select.select_data < RE_SELECT_DATA_MAX );
-	if( cpJump[p_wk->p_recv->select.select_data] )
-	{
-		cpJump[p_wk->p_recv->select.select_data]( p_wk );
+		GF_ASSERT( p_wk->p_recv->select.select_data < RE_SELECT_DATA_MAX );
+		if( cpJump[p_wk->p_recv->select.select_data] )
+		{
+			cpJump[p_wk->p_recv->select.select_data]( p_wk );
+		}
 	}
+
+	p_wk->select_last = p_wk->p_recv->select;
 }
 
 //----------------------------------------------------------------------------
@@ -989,18 +1126,23 @@ static void RE_JumpPoint( DEBUG_RAIL_EDITOR* p_wk )
 	FIELD_RAIL_MAN* p_rail = FIELDMAP_GetFieldRailMan( p_wk->p_fieldmap );
 	RAIL_LOCATION location;
 	VecFx32 pos;
+	const RAIL_SETTING* cp_setting = FIELD_RAIL_LOADER_GetData( FIELDMAP_GetFieldRailLoader( p_wk->p_fieldmap ) );
 
-	location.type					= FIELD_RAIL_TYPE_POINT;
-	location.rail_index		= p_wk->p_recv->select.select_index;
-	location.line_ofs			= 0;
-	location.width_ofs		= 0;
-	location.key					= 0;
-	FIELD_RAIL_MAN_SetLocation( p_rail, &location );
+	if( cp_setting->point_count > p_wk->p_recv->select.select_index )
+	{
 
-	// 位置を人物に設定
-	FIELD_RAIL_MAN_GetPos( p_rail, &pos );
-	// 
-	FIELD_PLAYER_SetPos( FIELDMAP_GetFieldPlayer( p_wk->p_fieldmap ), &pos );
+		location.type					= FIELD_RAIL_TYPE_POINT;
+		location.rail_index		= p_wk->p_recv->select.select_index;
+		location.line_ofs			= 0;
+		location.width_ofs		= 0;
+		location.key					= 0;
+		FIELD_RAIL_MAN_SetLocation( p_rail, &location );
+
+		// 位置を人物に設定
+		FIELD_RAIL_MAN_GetPos( p_rail, &pos );
+		// 
+		FIELD_PLAYER_SetPos( FIELDMAP_GetFieldPlayer( p_wk->p_fieldmap ), &pos );
+	}
 }
 
 //----------------------------------------------------------------------------
@@ -1013,18 +1155,22 @@ static void RE_JumpLine( DEBUG_RAIL_EDITOR* p_wk )
 	FIELD_RAIL_MAN* p_rail = FIELDMAP_GetFieldRailMan( p_wk->p_fieldmap );
 	RAIL_LOCATION location;
 	VecFx32 pos;
+	const RAIL_SETTING* cp_setting = FIELD_RAIL_LOADER_GetData( FIELDMAP_GetFieldRailLoader( p_wk->p_fieldmap ) );
 
-	location.type					= FIELD_RAIL_TYPE_LINE;
-	location.rail_index		= p_wk->p_recv->select.select_index;
-	location.line_ofs			= 0;
-	location.width_ofs		= 0;
-	location.key					= 0;
-	FIELD_RAIL_MAN_SetLocation( p_rail, &location );
+	if( cp_setting->line_count > p_wk->p_recv->select.select_index )
+	{
+		location.type					= FIELD_RAIL_TYPE_LINE;
+		location.rail_index		= p_wk->p_recv->select.select_index;
+		location.line_ofs			= 0;
+		location.width_ofs		= 0;
+		location.key					= 0;
+		FIELD_RAIL_MAN_SetLocation( p_rail, &location );
 
-	// 位置を人物に設定
-	FIELD_RAIL_MAN_GetPos( p_rail, &pos );
-	// 
-	FIELD_PLAYER_SetPos( FIELDMAP_GetFieldPlayer( p_wk->p_fieldmap ), &pos );
+		// 位置を人物に設定
+		FIELD_RAIL_MAN_GetPos( p_rail, &pos );
+		// 
+		FIELD_PLAYER_SetPos( FIELDMAP_GetFieldPlayer( p_wk->p_fieldmap ), &pos );
+	}
 }
 
 //----------------------------------------------------------------------------

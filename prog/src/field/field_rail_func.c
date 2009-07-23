@@ -142,19 +142,28 @@ static void getInterNormalVector(VecFx32 * out, const VecFx32 * start, const Vec
   VEC_Normalize( start, &s );
   VEC_Normalize( end, &e );
   angle = FX_AcosIdx( VEC_DotProduct( &s, &e ) );
-  sinTheta = FX_SinIdx( angle );
-  Ps = FX_SinIdx( FX_Mul(angle, FX32_ONE - t) );
-  Pe = FX_SinIdx( FX_Mul(angle, t) );
+	sinTheta = FX_SinIdx( angle );
+	
+	if( (sinTheta == 0) )
+	{
+		// sinThetaが0　(変化する角度が少なすぎる)場合は、終了にすぐにする
+		*out = e;
+	}
+	else
+	{
+		Ps = FX_SinIdx( FX_Mul(angle<<FX32_SHIFT, FX32_ONE - t)>>FX32_SHIFT );
+		Pe = FX_SinIdx( FX_Mul(angle<<FX32_SHIFT, t)>>FX32_SHIFT );
 
-  // out = ( Ps * s + Pe * e ) / sinTheta
-  GFL_CALC3D_VEC_MulScalar(&s, FX32_ONE * Ps / sinTheta, &s);
-  GFL_CALC3D_VEC_MulScalar(&e, FX32_ONE * Pe / sinTheta, &e);
-  //GFL_CALC3D_VEC_MulScalar(&s, FX32_ONE * Ps / 0x10000, &s);
-  //GFL_CALC3D_VEC_MulScalar(&e, FX32_ONE * Pe / 0x10000, &e);
-  VEC_Add(&s, &e, out);
-  //GFL_CALC3D_VEC_DivScalar(out, FX32_ONE * sinTheta / 0x10000, out);
+		// out = ( Ps * s + Pe * e ) / sinTheta
+		GFL_CALC3D_VEC_MulScalar(&s, FX_Div( Ps, sinTheta), &s);
+		GFL_CALC3D_VEC_MulScalar(&e, FX_Div( Pe, sinTheta), &e);
+		//GFL_CALC3D_VEC_MulScalar(&s, FX32_ONE * Ps / 0x10000, &s);
+		//GFL_CALC3D_VEC_MulScalar(&e, FX32_ONE * Pe / 0x10000, &e);
+		VEC_Add(&s, &e, out);
+		//GFL_CALC3D_VEC_DivScalar(out, FX32_ONE * sinTheta / 0x10000, out);
+		VEC_Normalize(out, out);
+	}
 
-  VEC_Normalize(out, out);
 }
 
 //------------------------------------------------------------------
@@ -465,11 +474,12 @@ void FIELD_RAIL_CAMERAFUNC_OfsAngleCamera(const FIELD_RAIL_MAN* man)
 
     getVectorFromAngleValue(&c_s, cs_work->yaw, cs_work->pitch, cs_work->len);
     getVectorFromAngleValue(&c_e, ce_work->yaw, ce_work->pitch, ce_work->len);
-    getIntermediateVector(&c_now, &c_s, &c_e, t);
 
-    FIELD_RAIL_MAN_GetPos( man, &target );
-    VEC_Add(&c_now, &target, &c_now);
-    FIELD_CAMERA_SetCameraPos(cam, &c_now);
+		getIntermediateVector(&c_now, &c_s, &c_e, t);
+
+		FIELD_RAIL_MAN_GetPos( man, &target );
+		VEC_Add(&c_now, &target, &c_now);
+		FIELD_CAMERA_SetCameraPos(cam, &c_now);
   }
 
   if (GFL_UI_KEY_GetTrg() & PAD_BUTTON_Y)
