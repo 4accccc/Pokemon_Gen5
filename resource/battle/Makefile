@@ -87,6 +87,10 @@ nsbta: $(notdir $(ITAFILE:.ita=.nsbta))
 %.nsbta: $(RES_3DDIR)%.ita
 	g3dcvtr $<
 
+ncgr: $(notdir $(OBJNCGFILE:.ncg=.NCGR))
+%.NCGR: $(RES_OBJDIR)%.ncg
+	g2dcvtr $< -bg -o/./
+
 ncer: $(notdir $(OBJNCEFILE:.nce=.NCER))
 %.NCER: $(RES_OBJDIR)%.nce
 	g2dcvtr $< -o/./
