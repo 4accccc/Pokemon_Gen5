@@ -265,6 +265,7 @@ static GFL_PROC_RESULT DebugBattleTestProcInit( GFL_PROC * proc, int * seq, void
   wk->scale = FX32_ONE * 3;
   wk->scale_value = -0x100;
 
+
   return GFL_PROC_RES_FINISH;
 }
 
@@ -309,6 +310,7 @@ static GFL_PROC_RESULT DebugBattleTestProcMain( GFL_PROC * proc, int * seq, void
 
   MoveCamera( wk );
 
+#if 0
   if( trg & PAD_BUTTON_SELECT )
   { 
     BTLV_INPUT_CreateScreen( wk->biw, BTLV_INPUT_SCRTYPE_STANDBY, NULL );
@@ -320,6 +322,16 @@ static GFL_PROC_RESULT DebugBattleTestProcMain( GFL_PROC * proc, int * seq, void
   if( trg & PAD_BUTTON_B )
   {
     BTLV_INPUT_CreateScreen( wk->biw, BTLV_INPUT_SCRTYPE_WAZA, NULL );
+  }
+#endif
+
+  if( trg & PAD_BUTTON_A )
+  {
+    BTLV_EFFECT_CalcGauge( BTLV_MCSS_POS_AA, -8 );
+  }
+  if( trg & PAD_BUTTON_B )
+  {
+    BTLV_EFFECT_CalcGauge( BTLV_MCSS_POS_AA, 12 );
   }
 
   BTLV_EFFECT_Main();
@@ -481,10 +493,9 @@ static  void  set_pokemon( SOGA_WORK *wk )
 {
   //POKEMON_PARAM¶¬
   POKEMON_PARAM *pp = GFL_HEAP_AllocMemory( wk->heapID, POKETOOL_GetWorkSize() );
-  PP_SetupEx( pp, 0, 0, 0, 0, 255 );
 
   if( wk->timer_flag ){
-    PP_Put( pp, ID_PARA_monsno, wk->mons_no );
+    PP_SetupEx( pp, wk->mons_no, 0, 0, 0, 255 );
     PP_Put( pp, ID_PARA_id_no, 0x10 );
     BTLV_MCSS_Add( wk->bmw, pp, pokemon_pos_table[ wk->position ][ 0 ] );
     BTLV_MCSS_Add( wk->bmw, pp, pokemon_pos_table[ wk->position ][ 1 ] );
@@ -492,13 +503,15 @@ static  void  set_pokemon( SOGA_WORK *wk )
   else{
 #ifdef BTLV_MCSS_1vs1
 //1vs1
-    PP_Put( pp, ID_PARA_monsno, MONSNO_WANIGURASU );
+    PP_SetupEx( pp, MONSNO_WANIGURASU, 0, 0, 0, 255 );
     PP_Put( pp, ID_PARA_id_no, 0x10 );
     BTLV_EFFECT_SetPokemon( pp, BTLV_MCSS_POS_AA );
     BTLV_EFFECT_SetPokemon( pp, BTLV_MCSS_POS_BB );
+    BTLV_EFFECT_SetGauge( pp, BTLV_MCSS_POS_AA );
+    BTLV_EFFECT_SetGauge( pp, BTLV_MCSS_POS_BB );
 #else
 //2vs2
-    PP_Put( pp, ID_PARA_monsno, MONSNO_AUSU + 1 );
+    PP_SetupEx( pp, MONSNO_AUSU + 1, 0, 0, 0, 255 );
     PP_Put( pp, ID_PARA_id_no, 0x10 );
     BTLV_EFFECT_SetPokemon( pp, BTLV_MCSS_POS_A );
     BTLV_EFFECT_SetPokemon( pp, BTLV_MCSS_POS_B );
