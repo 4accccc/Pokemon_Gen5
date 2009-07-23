@@ -129,6 +129,10 @@ static const u16 ITEM_RETURN_POS_CNT = 10;
 //表示アイテムの点滅間隔
 static const u8 ITEM_LIST_NEW_BLINK = 45;
 
+//リストアイテム揺れ系
+static const u8 ITEM_SWING_ORIGIN_OFSSET = 8;
+static const u16 ITEM_SWING_ANGLE_MAX = 0x3000;
+static const u16 ITEM_SWING_ANGLE_ADD_VALUE = 0x100;
 
 //表示順位メモ
 //↑
@@ -254,7 +258,8 @@ struct _FITTING_WORK
   s16 listSpeed;
   u16 listHoldMove; //持っているときの移動量
   s32 listTotalMove;  //リスト全体の移動量
-  
+  s16 listSwingAngle;      //リストの揺れ
+  s16 listSwingSpeed;
   //デモ用
   BOOL isDemo;
   u16  demoCnt;
@@ -379,6 +384,7 @@ FITTING_WORK* DUP_FIT_InitFitting( FITTING_INIT_WORK *initWork , HEAPID heapId )
   work->isSortAnime = FALSE;
   work->sortType = MUS_POKE_EQUIP_USER_MAX;
   work->listAngle = 0;
+  work->listSwingAngle = 0;
   work->isDemo = FALSE;
   work->scrollCnt = 0;
   work->isOpenCurtain = FALSE;
@@ -765,7 +771,7 @@ static void DUP_FIT_SetupGraphic( FITTING_WORK *work )
       GX_RGB(0,0,0),
       GX_RGB(0,0,0),
       GX_RGB(0,0,0),
-      0
+      0 , GFL_BBD_ORIGIN_CENTER
     };
     //ビルボードシステム構築
     work->bbdSys = GFL_BBD_CreateSys( &bbdSetup , work->heapId );
@@ -1160,9 +1166,52 @@ static void DUP_FIT_FittingMain(  FITTING_WORK *work )
 
     DUP_DEMO_DemoStart( work );
   }
-  if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_X )
+  if( GFL_UI_KEY_GetCont() & PAD_BUTTON_X )
   {
-    OS_TPrintf("[%d:%d]\n",work->tpx,work->tpy);
+    work->listSwingAngle = 0x4000;
+    work->listSwingSpeed = -0x200;
+    DUP_FIT_CalcItemListAngle( work , work->listAngle , 0 , LIST_SIZE_X , LIST_SIZE_Y );
+  }
+  
+  if( MATH_ABS(work->listSpeed) < 0x40 )
+  {
+    if( work->listSwingAngle != 0 ||
+        work->listSwingSpeed != 0 )
+    {
+      static const s16 kskSpeed = 0x80;
+      work->listSwingAngle += work->listSwingSpeed;
+      if( work->listSwingAngle > 0 )
+      {
+        if( work->listSwingSpeed > 0 )
+        {
+          work->listSwingSpeed -= kskSpeed;
+        }
+        else
+        {
+          work->listSwingSpeed -= kskSpeed/3;
+        }
+      }
+      else
+      if( work->listSwingAngle < 0 )
+      {
+        if( work->listSwingSpeed < 0 )
+        {
+          work->listSwingSpeed += kskSpeed;
+        }
+        else
+        {
+          work->listSwingSpeed += kskSpeed/3;
+        }
+      }
+      //ARI_TPrintf("[%d][%d]\n",work->listSwingAngle,work->listSwingSpeed);
+      if( MATH_ABS(work->listSwingAngle) < 0x200 &&
+          MATH_ABS(work->listSwingSpeed) < 0x200 )
+      {
+        work->listSwingSpeed = 0;
+        work->listSwingAngle = 0;
+      }
+      DUP_FIT_CalcItemListAngle( work , work->listAngle , 0 , LIST_SIZE_X , LIST_SIZE_Y );
+    }
   }
 
 #endif
@@ -1214,6 +1263,8 @@ static void DUP_FIT_CalcItemListAngle( FITTING_WORK *work , u16 angle , s16 move
 {
   //円は下が手前で0度として、depthは下で0x8000 上が0x0000
   int i = 0;
+  u16 itemSwingRot;
+  fx32 itemSwingOfsX,itemSwingOfsY;
   FIT_ITEM_WORK *item = DUP_FIT_ITEMGROUP_GetStartItem( work->itemGroupList );
   
   work->listTotalMove += moveAngle;
@@ -1227,7 +1278,14 @@ static void DUP_FIT_CalcItemListAngle( FITTING_WORK *work , u16 angle , s16 move
     work->listTotalMove -= (LIST_ONE_ANGLE*work->totalItemNum);
   }
   
-
+  //リストのアイテムが揺れる処理(アイテムの回転量と位置補正を求める
+  {
+    itemSwingRot = work->listSwingAngle;
+    itemSwingOfsX = ((fx32)FX_SinIdx( 0 )*ITEM_SWING_ORIGIN_OFSSET)-((fx32)FX_SinIdx( itemSwingRot )*ITEM_SWING_ORIGIN_OFSSET);
+    itemSwingOfsY = ((fx32)FX_CosIdx( 0 )-ITEM_SWING_ORIGIN_OFSSET)-((fx32)FX_CosIdx( itemSwingRot )*-ITEM_SWING_ORIGIN_OFSSET)-FX32_CONST(ITEM_SWING_ORIGIN_OFSSET);
+    //OS_Printf("[%4x][%.2f][%.2f]\n",itemSwingRot,F32_CONST(itemSwingOfsX),F32_CONST(itemSwingOfsY));
+  }
+  
   while( item != NULL )
   {
     GFL_POINT dispPos;
@@ -1284,11 +1342,12 @@ static void DUP_FIT_CalcItemListAngle( FITTING_WORK *work , u16 angle , s16 move
     }
     dispPos.x = F32_CONST(posX);
     dispPos.y = F32_CONST(posY);
-    pos.x = posX;
-    pos.y = posY;
+    pos.x = posX + itemSwingOfsX;
+    pos.y = posY + itemSwingOfsY;
     pos.z = LIST_DEPTH_BASE + (0x8000-depth);
   
     MUS_ITEM_DRAW_SetPosition( work->itemDrawSys , itemDrawWork , &pos );
+    MUS_ITEM_DRAW_SetRotation( work->itemDrawSys , itemDrawWork , itemSwingRot );
     DUP_FIT_ITEM_SetPosition( item , &dispPos );
     //サイズの計算
     {
@@ -1547,7 +1606,10 @@ static void DUP_FIT_UpdateTpList( FITTING_WORK *work , s16 subX , s16 subY )
   {
     FIT_ITEM_WORK *item = DUP_FIT_ITEMGROUP_GetStartItem( work->itemGroupList );
     //ついでに初期化
-    work->listSpeed = 0;
+    if( work->tpIsTrg == TRUE )
+    {
+      work->listSpeed = 0;
+    }
     work->listHoldMove = 0;
     work->holdItem = NULL;
 
@@ -1589,26 +1651,48 @@ static void DUP_FIT_UpdateTpList( FITTING_WORK *work , s16 subX , s16 subY )
         tempAngle -= 0x10000;
       work->listAngle = tempAngle;
       DUP_FIT_CalcItemListAngle( work , work->listAngle , subAngle , LIST_SIZE_X , LIST_SIZE_Y );
-      
-      if( ( work->listSpeed>0 && work->listSpeed<0) ||
-        ( work->listSpeed<0 && work->listSpeed>0) )
+
+      //リスト回転の計算式をリボンと共通化
+      if( subAngle >= 0 && work->listSpeed > 0 &&
+          subAngle < work->listSpeed )
       {
-        work->listSpeed = 0;
+        work->listSpeed = (work->listSpeed+subAngle)/2;
+      }
+      else
+      if( subAngle <= 0 && work->listSpeed < 0 &&
+          subAngle > work->listSpeed )
+      {
+        work->listSpeed = (work->listSpeed+subAngle)/2;
       }
       else
       {
         work->listSpeed = subAngle;
       }
-/*
-      //移動後もはずせるように修正。ただし、アイテムは選びなおすため、上のTrg処理と統合
-      work->listHoldMove += MATH_ABS(subAngle);
-      if( work->listHoldMove >= DEG_TO_U16(10) )
+      
+      OS_TPrintf("[%d]\n",work->listSpeed);
+      //Swing処理
+      if( (work->listSpeed > 0 && work->listSwingAngle > 0) ||
+          (work->listSpeed < 0 && work->listSwingAngle < 0) )
       {
-        //移動しすぎたのでアイテム保持解除
-        work->holdItem = NULL;
-        work->holdItemType = IG_NONE;
+        //方向逆
+        work->listSwingAngle = 0;
       }
-*/
+      else
+      if( work->listSpeed > 0 && work->listSwingAngle > -ITEM_SWING_ANGLE_MAX )
+      {
+        if( work->listSpeed*15 > work->listSwingAngle*-10 )
+        {
+          work->listSwingAngle -= ITEM_SWING_ANGLE_ADD_VALUE;
+        }
+      }
+      else
+      if( work->listSpeed < 0 && work->listSwingAngle < ITEM_SWING_ANGLE_MAX )
+      {
+        if( work->listSpeed*-15 > work->listSwingAngle*10 )
+        {
+          work->listSwingAngle += ITEM_SWING_ANGLE_ADD_VALUE;
+        }
+      }
     }
     else
     {
@@ -2293,6 +2377,7 @@ static void DUP_FIT_UpdateItemAnime( FITTING_WORK *work )
       }
     }
   }
+
 }
 
 //--------------------------------------------------------------
