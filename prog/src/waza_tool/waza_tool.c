@@ -300,6 +300,7 @@ enum {
   WSEQ_YADORIGI = 84,
   WSEQ_NOMIKOMU = 162,
   WSEQ_SASIOSAE = 232,
+  WSEQ_NEWOHARU = 181,
 
   WSEQ_REACT_HAKAI = 80,  ///< 次のターンアクションできない
 
@@ -672,7 +673,12 @@ static const SEQ_PARAM* getSeqParam( WazaID waza )
         WAZASICK_SASIOSAE, WAZASICK_CONT_TURN, 5, 5,
         { { WAZA_RANKEFF_NULL, 0 }, { WAZA_RANKEFF_NULL, 0 } },
         FALSE, BTL_WEATHER_NONE, 0, 0,
-    },
+    },{
+        WSEQ_NEWOHARU, WAZADATA_CATEGORY_SIMPLE_SICK,
+        WAZASICK_SASIOSAE, WAZASICK_CONT_PERMANENT, 0, 0,
+        { { WAZA_RANKEFF_NULL, 0 }, { WAZA_RANKEFF_NULL, 0 } },
+        FALSE, BTL_WEATHER_NONE, 0, 0,
+    }
 
 
 /*
