@@ -51,6 +51,8 @@
 #define PLIST_BATTLE_BUTTON_CANCEL_X (19)
 #define PLIST_BATTLE_BUTTON_CANCEL_Y (21)
 
+#define PLIST_PLATE_ACTIVE_ANM_CNT (12)
+#define PLIST_PLATE_ACTIVE_ANM_CNT_HALF (6)
 
 //======================================================================
 //	enum
@@ -206,6 +208,7 @@ const BOOL PLIST_InitPokeList( PLIST_WORK *work )
   work->reqChangeProc = FALSE;
   work->changeProcSeq = PSCS_INIT;
   work->btlJoinNum = 0;
+  work->platePalAnmCnt = 0;
 
   
   PLIST_InitGraphic( work );
@@ -360,6 +363,40 @@ const BOOL PLIST_UpdatePokeList( PLIST_WORK *work )
 
   //OBJの更新
   GFL_CLACT_SYS_Main();
+
+  //プレートアニメ
+  if( work->platePalAnmCnt > 0 )
+  {
+    u8 anmRate;
+    u8 i;
+    work->platePalAnmCnt--; //最終的に0にするので先にデクリメント
+    if( work->platePalAnmCnt > PLIST_PLATE_ACTIVE_ANM_CNT_HALF )
+    {
+      anmRate = PLIST_PLATE_ACTIVE_ANM_CNT_HALF-(work->platePalAnmCnt-PLIST_PLATE_ACTIVE_ANM_CNT_HALF);
+    }
+    else
+    {
+      anmRate = work->platePalAnmCnt;
+    }
+    OS_TPrintf("----------\n");
+    for( i=0;i<16;i++ )
+    {
+      u8 r = (work->platePalAnm[i]&GX_RGB_R_MASK)>>GX_RGB_R_SHIFT;
+      u8 g = (work->platePalAnm[i]&GX_RGB_G_MASK)>>GX_RGB_G_SHIFT;
+      u8 b = (work->platePalAnm[i]&GX_RGB_B_MASK)>>GX_RGB_B_SHIFT;
+//      r = (r<anmRate*2?0:r-(anmRate*2));
+//      g = (g<anmRate*2?0:g-(anmRate*2));
+//      b = (b<anmRate*2?0:b-(anmRate*2));
+      r = (r+anmRate*2 > 31?1:r+(anmRate*2));
+      g = (g+anmRate*2 > 31?31:g+(anmRate*2));
+      b = (b+anmRate*2 > 31?31:b+(anmRate*2));
+      work->platePalTrans[i] = GX_RGB(r,g,b);
+      OS_TPrintf("[%d][%d:%d:%d][%4x]\n",anmRate,r,g,b,work->platePalTrans[i]);
+    }
+    NNS_GfdRegisterNewVramTransferTask( NNS_GFD_DST_2D_BG_PLTT_MAIN ,
+                                        PPC_NORMAL_SELECT * 32 ,
+                                        work->platePalTrans , 2*16 );
+  }
 
   return FALSE;
 }
@@ -727,7 +764,11 @@ static void PLIST_LoadResource( PLIST_WORK *work )
     
     GFL_ARC_CloseDataHandle(arcHandlePoke);
   }
+  
+  //アニメ用に、プレートの選択色のパレットを退避
+  GFL_STD_MemCopy16( (void*)(0x05000000+PPC_NORMAL_SELECT*32) , work->platePalAnm , 16*2 );
 }
+
 
 static void PLIST_ReleaseResource( PLIST_WORK *work )
 {
@@ -1078,8 +1119,8 @@ static void PLIST_SelectPokeUpdateKey( PLIST_WORK *work )
       work->pokeCursor = PL_SEL_POS_POKE1;
       PLIST_SelectPokeSetCursor( work , work->pokeCursor );
       PLIST_PLATE_SetActivePlate( work , work->plateWork[work->pokeCursor] , TRUE );
-      
-      PLIST_PLATE_SetActivePlatePos( work , work->pokeCursor );
+
+      //PLIST_PLATE_SetActivePlatePos( work , work->pokeCursor );
       
       work->ktst = GFL_APP_KTST_KEY;
     }
@@ -1168,8 +1209,9 @@ static void PLIST_SelectPokeUpdateKey( PLIST_WORK *work )
         PLIST_SelectPokeSetCursor( work , work->pokeCursor );
         PLIST_PLATE_SetActivePlate( work , work->plateWork[work->pokeCursor] , TRUE );
         PLIST_PLATE_SetActivePlate( work , work->plateWork[befPos] , FALSE );
+        work->platePalAnmCnt = PLIST_PLATE_ACTIVE_ANM_CNT;
 
-        PLIST_PLATE_SetActivePlatePos( work , work->pokeCursor );
+        //PLIST_PLATE_SetActivePlatePos( work , work->pokeCursor );
       }
     }
   }
@@ -1212,6 +1254,7 @@ static void PLIST_SelectPokeUpdateTP( PLIST_WORK *work )
       PLIST_SelectPokeSetCursor( work , work->pokeCursor );
       PLIST_PLATE_SetActivePlate( work , work->plateWork[work->pokeCursor] , TRUE );
       PLIST_PLATE_SetActivePlate( work , work->plateWork[befPos] , FALSE );
+      work->platePalAnmCnt = PLIST_PLATE_ACTIVE_ANM_CNT;
 
       work->ktst = GFL_APP_KTST_TOUCH;
     }

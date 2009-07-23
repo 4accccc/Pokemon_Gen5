@@ -45,12 +45,12 @@
 
 //プレートのアニメ。sin使うので0～0xFFFFのループ
 #define PLIST_MENU_ANIME_VALUE (0x400)
-#define PLIST_MENU_ANIME_S_R (27)
-#define PLIST_MENU_ANIME_S_G (13)
+#define PLIST_MENU_ANIME_S_R (5)
+#define PLIST_MENU_ANIME_S_G (10)
 #define PLIST_MENU_ANIME_S_B (13)
-#define PLIST_MENU_ANIME_E_R (31)
-#define PLIST_MENU_ANIME_E_G (24)
-#define PLIST_MENU_ANIME_E_B (24)
+#define PLIST_MENU_ANIME_E_R (12)
+#define PLIST_MENU_ANIME_E_G (25)
+#define PLIST_MENU_ANIME_E_B (30)
 //======================================================================
 //	enum
 //======================================================================

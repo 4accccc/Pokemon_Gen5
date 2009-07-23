@@ -71,7 +71,7 @@
 
 
 //プレートのアニメする色
-#define PLIST_MENU_ANIME_COL (0x2)
+#define PLIST_MENU_ANIME_COL (0x7)
 
 
 //OBJリソースIdx
@@ -185,6 +185,10 @@ typedef struct
   PL_SELECT_POS changeTarget;
   POKEMON_PARAM *selectPokePara;
   int  menuRet; //PLIST_MENU_ITEM_TYPE
+  
+  u16 platePalAnm[16];
+  u16 platePalTrans[16];
+  u8  platePalAnmCnt;
 
   //入れ替えアニメ用
   u8  anmCnt;
