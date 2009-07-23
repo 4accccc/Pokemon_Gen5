@@ -6,14 +6,15 @@
  * @date  2008.11.21
  */
 //============================================================================================
-#pragma once
 
+#pragma once
 
 #include "btlv_stage.h"
 #include "btlv_field.h"
 #include "btlv_camera.h"
 #include "btlv_mcss.h"
 #include "btlv_clact.h"
+#include "btlv_gauge.h"
 
 #include "btlv_efftool.h"
 #include "btlv_effvm.h"
@@ -77,6 +78,10 @@ extern  void              BTLV_EFFECT_DelPokemon( int position );
 extern  BOOL              BTLV_EFFECT_CheckExistPokemon( int position );
 extern  void              BTLV_EFFECT_SetTrainer( int trtype, int position, int pos_x, int pos_y );
 extern  void              BTLV_EFFECT_DelTrainer( int position );
+extern  void              BTLV_EFFECT_SetGauge( const POKEMON_PARAM* pp, int position );
+extern  void              BTLV_EFFECT_DelGauge( int position );
+extern  void              BTLV_EFFECT_CalcGauge( int position, int value );
+extern  BOOL              BTLV_EFFECT_CheckExecuteGauge( void );
 extern  void              BTLV_EFFECT_SetPaletteFade( int model, u8 start_evy, u8 end_evy, u8 wait, u16 rgb );
 extern  BOOL              BTLV_EFFECT_CheckExecutePaletteFade( int model );
 extern  void              BTLV_EFFECT_SetVanishFlag( int model, int flag );

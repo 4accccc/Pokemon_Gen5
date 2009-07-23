@@ -26,6 +26,7 @@
 
 #include "btlv_scu.h"
 
+//#define BMP_GAUGE   //有効にすることで、BMPWINで表示しているHPゲージに差し代わります
 
 /*--------------------------------------------------------------------------*/
 /* Consts                                                                   */
@@ -285,6 +286,8 @@ void BTLV_SCU_Setup( BTLV_SCU* wk )
   GFL_BG_SetVisible( GFL_BG_FRAME1_M,   VISIBLE_ON  );
   GFL_BG_SetVisible( GFL_BG_FRAME2_M,   VISIBLE_ON  );
   GFL_BG_SetVisible( GFL_BG_FRAME3_M,   VISIBLE_ON );
+  ///<obj
+  GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_OBJ, VISIBLE_ON );
 }
 
 void BTLV_SCU_Delete( BTLV_SCU* wk )
@@ -948,6 +951,7 @@ typedef struct {
 //=============================================================================================
 void BTLV_SCU_StartWazaDamageAct( BTLV_SCU* wk, BtlPokePos defPos )
 {
+#ifdef BMP_GAUGE
   enum {
     DAMAGE_FRAME_MIN = 40,
   };
@@ -969,10 +973,18 @@ void BTLV_SCU_StartWazaDamageAct( BTLV_SCU* wk, BtlPokePos defPos )
 
     twk->hpMinusVal = FX32_CONST(twk->statWin->hp - twk->hpEnd) / twk->timer;
   }
-
   BTLV_EFFECT_Damage( BTL_MAIN_BtlPosToViewPos(wk->mainModule, defPos) );
 
   (*(twk->taskCounter))++;
+#else
+  { 
+    const BTL_POKEPARAM*  bpp = BTL_POKECON_GetFrontPokeDataConst( wk->pokeCon, defPos );
+    int                   value = BPP_GetValue( bpp, BPP_HP );
+
+    BTLV_EFFECT_CalcGauge( BTL_MAIN_BtlPosToViewPos( wk->mainModule, defPos ), value );
+  }
+  BTLV_EFFECT_Damage( BTL_MAIN_BtlPosToViewPos(wk->mainModule, defPos) );
+#endif
 }
 
 //=============================================================================================
@@ -986,7 +998,11 @@ void BTLV_SCU_StartWazaDamageAct( BTLV_SCU* wk, BtlPokePos defPos )
 //=============================================================================================
 BOOL BTLV_SCU_WaitWazaDamageAct( BTLV_SCU* wk )
 {
+#ifdef BMP_GAUGE
   return wk->taskCounter[TASKTYPE_WAZA_DAMAGE] == 0;
+#else
+  return !( BTLV_EFFECT_CheckExecute() | BTLV_EFFECT_CheckExecuteGauge() );
+#endif
 }
 
 static void taskDamageEffect( GFL_TCBL* tcbl, void* wk_adrs )
@@ -1228,6 +1244,7 @@ typedef struct {
 //=============================================================================================
 void BTLV_SCU_StartHPGauge( BTLV_SCU* wk, BtlPokePos pos )
 {
+#ifdef BMP_GAUGE
   enum {
     DAMAGE_FRAME_MIN = 40,
   };
@@ -1262,7 +1279,14 @@ void BTLV_SCU_StartHPGauge( BTLV_SCU* wk, BtlPokePos pos )
   }
 
   (*(twk->taskCounter))++;
+#else
+  { 
+    const BTL_POKEPARAM*  bpp = BTL_POKECON_GetFrontPokeDataConst( wk->pokeCon, pos );
+    int                   value = BPP_GetValue( bpp, BPP_HP );
 
+    BTLV_EFFECT_CalcGauge( BTL_MAIN_BtlPosToViewPos( wk->mainModule, pos ), value );
+  }
+#endif
 }
 //=============================================================================================
 /**
@@ -1275,7 +1299,11 @@ void BTLV_SCU_StartHPGauge( BTLV_SCU* wk, BtlPokePos pos )
 //=============================================================================================
 BOOL BTLV_SCU_WaitHPGauge( BTLV_SCU* wk )
 {
+#ifdef BMP_GAUGE
   return wk->taskCounter[TASKTYPE_HP_GAUGE] == 0;
+#else
+  return !(BTLV_EFFECT_CheckExecuteGauge());
+#endif
 }
 
 static void taskHPGauge( GFL_TCBL* tcbl, void* wk_adrs )
@@ -1554,10 +1582,14 @@ static void statwin_reset_data( STATUS_WIN* stwin )
 
 static void statwin_disp_start( STATUS_WIN* stwin )
 {
+#ifdef BMP_GAUGE
   GFL_BMPWIN_TransVramCharacter( stwin->win );
   GFL_BMPWIN_MakeScreen( stwin->win );
   GFL_BG_LoadScreenReq( GFL_BMPWIN_GetFrame(stwin->win) );
   BTL_Printf("StatusWin (pos=%d) disp start!!\n", stwin->pokePos);
+#else
+  BTLV_EFFECT_SetGauge( BPP_GetSrcData( stwin->bpp ), stwin->pokePos );
+#endif
 }
 
 static void statwin_disp( STATUS_WIN* stwin )
@@ -1568,13 +1600,18 @@ static void statwin_disp( STATUS_WIN* stwin )
 
 static void statwin_hide( STATUS_WIN* stwin )
 {
+#ifdef BMP_GAUGE
   GFL_BMPWIN_ClearScreen( stwin->win );
   GFL_BG_LoadScreenReq( GFL_BMPWIN_GetFrame(stwin->win) );
+#else
+  BTLV_EFFECT_DelGauge( stwin->pokePos );
+#endif
 }
 
 // １行ずつ消す。全部消えたらTRUE
 static BOOL statwin_erase( STATUS_WIN* stwin, u8 line )
 {
+#ifdef BMP_GAUGE
   u8 px, py, width, height, frame;
 
   px     = GFL_BMPWIN_GetPosX( stwin->win );
@@ -1592,6 +1629,11 @@ static BOOL statwin_erase( STATUS_WIN* stwin, u8 line )
   GFL_BG_LoadScreenReq( frame );
 
   return line == height;
+#else
+  BTLV_EFFECT_DelGauge( stwin->pokePos );
+  
+  return TRUE;
+#endif
 }
 
 static void statwin_update( STATUS_WIN* stwin, u16 hp, u8 col )

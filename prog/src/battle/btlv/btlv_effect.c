@@ -52,6 +52,7 @@ struct _BTLV_EFFECT_WORK
   BTLV_FIELD_WORK   *bfw;
   BTLV_CAMERA_WORK  *bcw;
   BTLV_CLACT_WORK   *bclw;
+  BTLV_GAUGE_WORK   *bgw;
   GFL_TCB           *v_tcb;
   int               execute_flag;
   HEAPID            heapID;
@@ -91,7 +92,7 @@ void  BTLV_EFFECT_SetPokemonDebug( const MCSS_ADD_DEBUG_WORK *madw, int position
 
 //============================================================================================
 /**
- *  システム初期化
+ * @brief システム初期化
  *
  * @param[in] index     背景を決定するインデックスナンバー
  * @param[in] heapID    ヒープID
@@ -122,6 +123,7 @@ void  BTLV_EFFECT_Init( int index, HEAPID heapID )
   bew->bfw  = BTLV_FIELD_Init( index, heapID );
   bew->bcw  = BTLV_CAMERA_Init( bew->tcb_sys, heapID );
   bew->bclw = BTLV_CLACT_Init( bew->tcb_sys, heapID );
+  bew->bgw  = BTLV_GAUGE_Init( heapID );
 
   BTLV_MCSS_SetOrthoMode( bew->bmw );
 
@@ -144,7 +146,7 @@ void  BTLV_EFFECT_Init( int index, HEAPID heapID )
 
 //============================================================================================
 /**
- *  システム終了
+ *  @brief  システム終了
  */
 //============================================================================================
 void  BTLV_EFFECT_Exit( void )
@@ -161,6 +163,7 @@ void  BTLV_EFFECT_Exit( void )
   BTLV_FIELD_Exit( bew->bfw );
   BTLV_CAMERA_Exit( bew->bcw );
   BTLV_CLACT_Exit( bew->bclw );
+  BTLV_GAUGE_Exit( bew->bgw );
   GFL_PTC_Exit();
   BTLV_EFFVM_Exit( bew->vm_core );
   GFL_TCB_DeleteTask( bew->v_tcb );
@@ -174,7 +177,7 @@ void  BTLV_EFFECT_Exit( void )
 
 //============================================================================================
 /**
- *  システムメイン
+ *  @brief  システムメイン
  */
 //============================================================================================
 void  BTLV_EFFECT_Main( void )
@@ -190,6 +193,7 @@ void  BTLV_EFFECT_Main( void )
   BTLV_FIELD_Main( bew->bfw );
   BTLV_CAMERA_Main( bew->bcw );
   BTLV_CLACT_Main( bew->bclw );
+  BTLV_GAUGE_Main( bew->bgw );
 
   //3D描画
   {
@@ -218,7 +222,7 @@ void  BTLV_EFFECT_Main( void )
 
 //============================================================================================
 /**
- *  エフェクト起動
+ * @brief  エフェクト起動
  *
  * @param[in] eff_no  起動するエフェクトナンバー
  */
@@ -229,7 +233,7 @@ void  BTLV_EFFECT_Add( int eff_no )
 }
 //=============================================================================================
 /**
- * エフェクト起動（発動位置の指定が必要なもの ... 能力アップ・ダウン，入場・退場等）
+ * @brief エフェクト起動（発動位置の指定が必要なもの ... 能力アップ・ダウン，入場・退場等）
  *
  * @param   pos       発動位置
  * @param   eff_no    エフェクトナンバー
@@ -242,7 +246,7 @@ void BTLV_EFFECT_AddByPos( BtlvMcssPos pos, int eff_no )
 }
 //=============================================================================================
 /**
- * エフェクト起動（ワザエフェクト専用）
+ * @brief エフェクト起動（ワザエフェクト専用）
  *
  * @param   param   [in] エフェクトパラメータ
  */
@@ -255,7 +259,7 @@ void BTLV_EFFECT_AddWazaEffect( const BTLV_WAZAEFFECT_PARAM* param )
 
 //=============================================================================================
 /**
- * エフェクト強制停止
+ * @brief エフェクト強制停止
  */
 //=============================================================================================
 void BTLV_EFFECT_Stop( void )
@@ -265,7 +269,7 @@ void BTLV_EFFECT_Stop( void )
 
 //=============================================================================================
 /**
- * ダメージエフェクト起動
+ * @brief ダメージエフェクト起動
  *
  * @param   target    発動位置
  *
@@ -287,7 +291,7 @@ void BTLV_EFFECT_Damage( BtlvMcssPos target )
 
 //============================================================================================
 /**
- *  エフェクト起動中かチェック
+ * @brief  エフェクト起動中かチェック
  *
  * @retval FALSE:起動していない　TRUE:起動中
  */
@@ -299,7 +303,7 @@ BOOL  BTLV_EFFECT_CheckExecute( void )
 
 //============================================================================================
 /**
- *  指定された立ち位置にポケモンをセット
+ * @brief  指定された立ち位置にポケモンをセット
  *
  * @param[in] pp      セットするポケモンのPOKEMON_PARAM構造体へのポインタ
  * @param[in] position  セットするポケモンの立ち位置
@@ -312,7 +316,7 @@ void  BTLV_EFFECT_SetPokemon( const POKEMON_PARAM *pp, int position )
 
 //============================================================================================
 /**
- *  指定された立ち位置のポケモンを削除
+ * @brief  指定された立ち位置のポケモンを削除
  *
  * @param[in] position  削除するポケモンの立ち位置
  */
@@ -324,7 +328,7 @@ void  BTLV_EFFECT_DelPokemon( int position )
 
 //============================================================================================
 /**
- *  指定された立ち位置のポケモンが存在するかチェック
+ * @brief  指定された立ち位置のポケモンが存在するかチェック
  *
  * @param[in] position  チェックするポケモンの立ち位置
  *
@@ -338,7 +342,7 @@ BOOL  BTLV_EFFECT_CheckExistPokemon( int position )
 
 //============================================================================================
 /**
- *  指定された位置にトレーナーをセット
+ * @brief  指定された位置にトレーナーをセット
  *
  * @param[in] trtype    セットするトレーナータイプ
  * @param[in] position  セットするトレーナーの立ち位置
@@ -365,7 +369,7 @@ void  BTLV_EFFECT_SetTrainer( int trtype, int position, int pos_x, int pos_y )
 
 //============================================================================================
 /**
- *  指定された立ち位置のトレーナーを削除
+ * @brief  指定された立ち位置のトレーナーを削除
  *
  * @param[in] position  削除するトレーナーの立ち位置
  */
@@ -381,7 +385,54 @@ void  BTLV_EFFECT_DelTrainer( int position )
 
 //============================================================================================
 /**
- *  指定された3Dモデルに対するパレットフェードをセット
+ * @brief  指定された位置にゲージをセット
+ *
+ * @param[in] pp        ゲージ表示するポケモンのPOEKMON_PARAM構造体のポインタ
+ * @param[in] position  セットするゲージ位置
+ */
+//============================================================================================
+void  BTLV_EFFECT_SetGauge( const POKEMON_PARAM* pp, int position )
+{
+  BTLV_GAUGE_Add( bew->bgw, pp, BTLV_GAUGE_TYPE_1vs1, position );
+}
+
+//============================================================================================
+/**
+ * @brief  指定された位置のゲージを削除
+ *
+ * @param[in] position  削除するゲージ位置
+ */
+//============================================================================================
+void  BTLV_EFFECT_DelGauge( int position )
+{
+  BTLV_GAUGE_Del( bew->bgw, position );
+}
+//============================================================================================
+/**
+ * @brief  指定された位置のゲージ計算
+ *
+ * @param[in] position  計算するゲージ位置
+ * @param[in] value     計算量
+ */
+//============================================================================================
+void  BTLV_EFFECT_CalcGauge( int position, int value )
+{
+  BTLV_GAUGE_Calc( bew->bgw, position, value );
+}
+
+//============================================================================================
+/**
+ * @brief  ゲージが計算中かチェック
+ */
+//============================================================================================
+BOOL  BTLV_EFFECT_CheckExecuteGauge( void )
+{
+  return BTLV_GAUGE_CheckExecute( bew->bgw );
+}
+
+//============================================================================================
+/**
+ * @brief  指定された3Dモデルに対するパレットフェードをセット
  *
  * @param[in] model       対象とする3Dモデル
  * @param[in]	start_evy   セットするパラメータ（フェードさせる色に対する開始割合16段階）
@@ -408,7 +459,7 @@ void  BTLV_EFFECT_SetPaletteFade( int model, u8 start_evy, u8 end_evy, u8 wait, 
 
 //============================================================================================
 /**
- *  指定された3Dモデルに対するパレットフェードの実行チェック
+ * @brief  指定された3Dモデルに対するパレットフェードの実行チェック
  *
  * @param[in] model       対象とする3Dモデル
  *
@@ -438,7 +489,7 @@ BOOL  BTLV_EFFECT_CheckExecutePaletteFade( int model )
 
 //============================================================================================
 /**
- *  指定された3Dモデルに対するバニッシュフラグセット
+ * @brief  指定された3Dモデルに対するバニッシュフラグセット
  *
  * @param[in] model  対象とする3Dモデル
  * @param[in] flag   セットするフラグ
@@ -461,7 +512,7 @@ void  BTLV_EFFECT_SetVanishFlag( int model, int flag )
 
 //============================================================================================
 /**
- *  指定された立ち位置のトレーナーインデックスを取得
+ * @brief  指定された立ち位置のトレーナーインデックスを取得
  *
  * @param[in] position  取得するトレーナーの立ち位置
  */
@@ -475,7 +526,7 @@ int BTLV_EFFECT_GetTrainerIndex( int position )
 
 //============================================================================================
 /**
- *  エフェクトで使用されているカメラ管理構造体のポインタを取得
+ * @brief  エフェクトで使用されているカメラ管理構造体のポインタを取得
  *
  * @retval bcw カメラ管理構造体
  */
@@ -487,7 +538,7 @@ BTLV_CAMERA_WORK  *BTLV_EFFECT_GetCameraWork( void )
 
 //============================================================================================
 /**
- *  エフェクトで使用されているMCSS管理構造体のポインタを取得
+ * @brief  エフェクトで使用されているMCSS管理構造体のポインタを取得
  *
  * @retval bmw MCSS管理構造体
  */
@@ -499,7 +550,7 @@ BTLV_MCSS_WORK  *BTLV_EFFECT_GetMcssWork( void )
 
 //============================================================================================
 /**
- *  エフェクトで使用されているVMHANDLE管理構造体のポインタを取得
+ * @brief  エフェクトで使用されているVMHANDLE管理構造体のポインタを取得
  *
  * @retval vm_core VMHANDLE管理構造体
  */
@@ -511,7 +562,7 @@ VMHANDLE  *BTLV_EFFECT_GetVMHandle( void )
 
 //============================================================================================
 /**
- *  エフェクトで使用されているGFL_TCBSYS管理構造体のポインタを取得
+ * @brief  エフェクトで使用されているGFL_TCBSYS管理構造体のポインタを取得
  *
  * @retval vm_core VMHANDLE管理構造体
  */
@@ -523,7 +574,7 @@ GFL_TCBSYS  *BTLV_EFFECT_GetTCBSYS( void )
 
 //============================================================================================
 /**
- *  エフェクトで使用されているPALETTE_FADE_PTR管理構造体のポインタを取得
+ * @brief  エフェクトで使用されているPALETTE_FADE_PTR管理構造体のポインタを取得
  *
  * @retval vm_core VMHANDLE管理構造体
  */
@@ -535,7 +586,7 @@ PALETTE_FADE_PTR  BTLV_EFFECT_GetPfd( void )
 
 //============================================================================================
 /**
- *  エフェクトで使用されているCLWK管理構造体のポインタを取得
+ * @brief  エフェクトで使用されているCLWK管理構造体のポインタを取得
  *
  * @retval bclw CLWK管理構造体
  */
@@ -547,7 +598,7 @@ BTLV_CLACT_WORK *BTLV_EFFECT_GetCLWK( void )
 
 //============================================================================================
 /**
- *  VBlank関数
+ *  @brief  VBlank関数
  */
 //============================================================================================
 static  void  BTLV_EFFECT_VBlank( GFL_TCB *tcb, void *work )
@@ -558,7 +609,7 @@ static  void  BTLV_EFFECT_VBlank( GFL_TCB *tcb, void *work )
 
 //============================================================================================
 /**
- *  ダメージエフェクトシーケンス（仮でTCBで作成）
+ *  @brief  ダメージエフェクトシーケンス（仮でTCBで作成）
  */
 //============================================================================================
 static  void  BTLV_EFFECT_TCB_Damage( GFL_TCB *tcb, void *work )
@@ -591,7 +642,7 @@ static  void  BTLV_EFFECT_TCB_Damage( GFL_TCB *tcb, void *work )
 #ifdef PM_DEBUG
 //============================================================================================
 /**
- *  指定された立ち位置にポケモンをセット
+ * @brief  指定された立ち位置にポケモンをセット
  *
  * @param[in] pp      セットするポケモンのPOKEMON_PARAM構造体へのポインタ
  * @param[in] position  セットするポケモンの立ち位置

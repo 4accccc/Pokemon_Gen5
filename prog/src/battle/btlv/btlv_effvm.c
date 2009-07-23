@@ -619,7 +619,6 @@ static VMCMD_RESULT VMEC_PARTICLE_LOAD( VMHANDLE *vmh, void *context_work )
     ofs_p = (u32*)&bevw->dpd->adrs[ 0 ];
     ofs = ofs_p[ BTLV_EFFVM_GetDPDNo( bevw, datID ) ];
     resource = (void *)&bevw->dpd->adrs[ ofs ];
-    OS_TPrintf("ofs:%d resource:%08x\n",ofs,resource);
     GFL_PTC_SetResourceEx( bevw->ptc[ ptc_no ], resource, FALSE, GFUser_VIntr_GetTCBSYS() );
     return bevw->control_mode;
   }
