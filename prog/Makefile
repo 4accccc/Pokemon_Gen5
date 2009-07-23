@@ -103,7 +103,7 @@ endif
 #----------------------------------------------------------------------------
 ifeq	($(USERNAME),tamada)
 CCFLAGS_WARNING	= -w all,noerr,nounusedarg,noextracomma,\
-	nonotused,nofilecaps,nosysfilecaps,noimpl_signedunsigned
+	nonotused,nofilecaps,nosysfilecaps,noimpl_signedunsigned,noimplicit
 else
 CCFLAGS_WARNING		=	-w all,nocmdline,noerr,nounused,noextracomma,nopedantic,noimplicit,\
 				nostructclass,nopadding,nonotused,noanyptrintconv,nofilecaps,nosysfilecaps
@@ -250,7 +250,11 @@ overlaymap:
 #	警告フィルタの適用
 #----------------------------------------------------------------------------
 warning:
-	#$(MAKE) source > result.txt
-	$(MAKE) > result.txt
+	$(MAKE) source > result.txt
 	ruby ../tools/warning/filter.rb result.txt > fresult.txt
+
+#----------------------------------------------------------------------------
+#----------------------------------------------------------------------------
+echo_buildtype:
+	@echo $(NITRO_BUILDTYPE)
 
