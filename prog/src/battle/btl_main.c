@@ -87,6 +87,7 @@ struct _BTL_MAIN_MODULE {
   u8        myClientID;
   u8        myOrgPos;
   u8        ImServer;
+  u32       bonusMoney;
 
   BTL_PROC    subProc;
   pMainLoop   mainLoop;
@@ -343,11 +344,11 @@ static BOOL setup_alone_single( int* seq, void* work )
 
   // バトル用ポケモンパラメータ＆パーティデータを生成
   PokeCon_Init( &wk->pokeconForClient, wk );
-  PokeCon_AddParty( &wk->pokeconForClient, sp->partyPlayer, 0 );
+  PokeCon_AddParty( &wk->pokeconForClient, sp->partyPlayer, BTL_STANDALONE_PLAYER_CLIENT_ID );
   PokeCon_AddParty( &wk->pokeconForClient, sp->partyEnemy1, 1 );
 
   PokeCon_Init( &wk->pokeconForServer, wk );
-  PokeCon_AddParty( &wk->pokeconForServer, sp->partyPlayer, 0 );
+  PokeCon_AddParty( &wk->pokeconForServer, sp->partyPlayer, BTL_STANDALONE_PLAYER_CLIENT_ID );
   PokeCon_AddParty( &wk->pokeconForServer, sp->partyEnemy1, 1 );
 
   // Server 作成
@@ -355,7 +356,9 @@ static BOOL setup_alone_single( int* seq, void* work )
   wk->ImServer = TRUE;
 
   // Client 作成
-  wk->client[0] = BTL_CLIENT_Create( wk, &wk->pokeconForClient, BTL_COMM_NONE, sp->netHandle, 0, 1, BTL_THINKER_UI, wk->heapID );
+  wk->client[ BTL_STANDALONE_PLAYER_CLIENT_ID ] = BTL_CLIENT_Create(
+       wk, &wk->pokeconForClient, BTL_COMM_NONE, sp->netHandle, 0, 1, BTL_THINKER_UI, wk->heapID );
+
   wk->client[1] = BTL_CLIENT_Create( wk, &wk->pokeconForClient, BTL_COMM_NONE, sp->netHandle, 1, 1, BTL_THINKER_AI, wk->heapID );
   wk->numClients = 2;
   wk->myClientID = 0;
@@ -1734,3 +1737,16 @@ BOOL BTL_MAIN_IsServerMachine( BTL_MAIN_MODULE * wk )
 {
   return wk->ImServer;
 }
+
+
+//---------------------------------------------------------------------------------------------------
+//---------------------------------------------------------------------------------------------------
+
+void BTL_MAIN_AddBonusMoney( BTL_MAIN_MODULE* wk, u32 volume )
+{
+  wk->bonusMoney += volume;
+  if( wk->bonusMoney > BTL_BONUS_MONEY_MAX ){
+    wk->bonusMoney = BTL_BONUS_MONEY_MAX;
+  }
+}
+

@@ -30,6 +30,9 @@ extern const MYSTATUS* BTL_MAIN_GetPlayerStatus( const BTL_MAIN_MODULE* wk );
 extern BOOL BTL_MAIN_IsServerMachine( BTL_MAIN_MODULE * wk );
 extern BOOL BTL_MAIN_IsMultiMode( const BTL_MAIN_MODULE * wk );
 
+//-------------------------
+extern void BTL_MAIN_AddBonusMoney( BTL_MAIN_MODULE* wk, u32 volume );
+
 
 //-------------------------
 

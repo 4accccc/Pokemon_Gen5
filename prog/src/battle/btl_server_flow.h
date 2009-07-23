@@ -130,7 +130,9 @@ extern BOOL BTL_SVFLOW_GetThisTurnAction( BTL_SVFLOW_WORK* wk, u8 pokeID, BTL_AC
 extern void* BTL_SVFLOW_GetHandlerTmpWork( BTL_SVFLOW_WORK* wk );
 extern WazaID BTL_SVFLOW_GetPrevExeWaza( BTL_SVFLOW_WORK* wk );
 
-
+//----------------------------
+extern void BTL_SVFLOW_AddBonusMoney( BTL_SVFLOW_WORK* wk, u32 volume );
+extern BOOL BTL_SVFLOW_IsStandAlonePlayerSide( BTL_SVFLOW_WORK* wk, u8 pokeID );
 
 
 /**

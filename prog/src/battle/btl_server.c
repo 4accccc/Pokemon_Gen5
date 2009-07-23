@@ -594,3 +594,10 @@ const BTL_ACTION_PARAM* BTL_SVCL_GetPokeAction( SVCL_WORK* clwk, u8 posIdx )
   }
 }
 
+
+//----------------------------------------------
+
+void BTL_SERVER_AddBonusMoney( BTL_SERVER* server, u32 volume )
+{
+  BTL_MAIN_AddBonusMoney( server->mainModule, volume );
+}

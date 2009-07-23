@@ -87,6 +87,9 @@ enum {
   // 素早さ補正関連
   BTL_CALC_AGILITY_MAX = 10000,
 
+  // フィールド・進化画面等への連絡関連
+  BTL_STANDALONE_PLAYER_CLIENT_ID = 0,
+  BTL_BONUS_MONEY_MAX = 99999,
 };
 
 static inline u32 BTL_CALC_MulRatio( u32 value, fx32 ratio )

@@ -144,6 +144,8 @@ static BTL_EVENT_FACTOR*  ADD_HorobiNoUta( u16 pri, WazaID waza, u8 pokeID );
 static void handler_HorobiNoUta_Exe( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static BTL_EVENT_FACTOR*  ADD_YadorigiNoTane( u16 pri, WazaID waza, u8 pokeID );
 static void handler_YadorigiNoTane_Param( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static BTL_EVENT_FACTOR*  ADD_NekoNiKoban( u16 pri, WazaID waza, u8 pokeID );
+static void handler_NekoNiKoban( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static BTL_EVENT_FACTOR*  ADD_Ikari( u16 pri, WazaID waza, u8 pokeID );
 static void handler_Ikari_Exe( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_Ikari_React( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
@@ -600,6 +602,7 @@ BOOL  BTL_HANDLER_Waza_Add( const BTL_POKEPARAM* pp, WazaID waza )
     { WAZANO_HAMETUNONEGAI,   ADD_HametuNoNegai },
     { WAZANO_RISAIKURU,       ADD_Recycle       },
     { WAZANO_OIUTI,           ADD_Oiuti         },
+    { WAZANO_NEKONIKOBAN,     ADD_NekoNiKoban   },
   };
 
   int i;
@@ -2385,7 +2388,36 @@ static void handler_YadorigiNoTane_Param( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW
     BTL_EVENTVAR_RewriteValue( BTL_EVAR_SICK_CONT, cont.raw );
   }
 }
+//----------------------------------------------------------------------------------
+/**
+ * ネコにこばん
+ */
+//----------------------------------------------------------------------------------
+static BTL_EVENT_FACTOR*  ADD_NekoNiKoban( u16 pri, WazaID waza, u8 pokeID )
+{
+  static const BtlEventHandlerTable HandlerTable[] = {
+    { BTL_EVENT_WAZA_DMG_AFTER, handler_NekoNiKoban },    // ダメージ反応ハンドラ
+    { BTL_EVENT_NULL, NULL },
+  };
+  return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_WAZA, waza, pri, pokeID, HandlerTable );
+}
+static void handler_NekoNiKoban( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+{
+  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
+  {
+    if( BTL_SVFLOW_IsStandAlonePlayerSide( flowWk, pokeID ) )
+    {
+      BTL_HANDEX_PARAM_MESSAGE* param;
+      const BTL_POKEPARAM* bpp = BTL_SVFLOW_RECEPT_GetPokeParam( flowWk, pokeID );
 
+      u32 volume = BPP_GetValue( bpp, BPP_LEVEL ) * 20;
+      BTL_SVFLOW_AddBonusMoney( flowWk, volume );
+
+      param = BTL_SVFLOW_HANDLERWORK_Push( flowWk, BTL_HANDEX_MESSAGE, pokeID );
+      HANDEX_STR_Setup( &param->str, BTL_STRTYPE_STD, BTL_STRID_STD_NekoNiKoban );
+    }
+  }
+}
 //----------------------------------------------------------------------------------
 /**
  * いかり

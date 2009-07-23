@@ -36,6 +36,10 @@ extern void BTL_SERVER_Delete( BTL_SERVER* wk );
 
 extern void BTL_SERVER_Main( BTL_SERVER* server );
 
+//-------------------------------------
+// server_flow -> server ŒÄ‚Ño‚µê—p
+//-------------------------------------
+extern void BTL_SERVER_AddBonusMoney( BTL_SERVER* server, u32 volume );
 
 
 #endif

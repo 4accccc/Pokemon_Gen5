@@ -7003,6 +7003,25 @@ BtlRule BTL_SVFLOW_GetRule( BTL_SVFLOW_WORK* wk )
 }
 //=============================================================================================
 /**
+ * ゲーム内戦闘であり、かつプレイヤー側のポケモンであるかどうか判定
+ *
+ * @param   wk
+ * @param   pokeID
+ *
+ * @retval  BOOL    そうだったらTRUE
+ */
+//=============================================================================================
+BOOL BTL_SVFLOW_IsStandAlonePlayerSide( BTL_SVFLOW_WORK* wk, u8 pokeID )
+{
+  if( (BTL_MAIN_GetCommMode(wk->mainModule) == BTL_COMM_NONE)
+  &&  (BTL_MAINUTIL_PokeIDtoClientID(pokeID) == BTL_STANDALONE_PLAYER_CLIENT_ID)
+  ){
+    return TRUE;
+  }
+  return FALSE;
+}
+//=============================================================================================
+/**
  * [ハンドラ受信] 逃げ交換禁止コードの追加を全クライアントに通知
  *
  * @param   wk
@@ -7294,6 +7313,19 @@ void* BTL_SVFLOW_GetHandlerTmpWork( BTL_SVFLOW_WORK* wk )
   return wk->handlerTmpWork;
 }
 
+
+//=============================================================================================
+/**
+ *
+ *
+ * @param   wk
+ * @param   volume
+ */
+//=============================================================================================
+void BTL_SVFLOW_AddBonusMoney( BTL_SVFLOW_WORK* wk, u32 volume )
+{
+  BTL_SERVER_AddBonusMoney( wk->server, volume );
+}
 
 //--------------------------------------------------------------------------------------------------------
 // HandEx
