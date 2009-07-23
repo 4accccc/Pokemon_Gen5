@@ -46,6 +46,7 @@ struct _FIT_ITEM_WORK
 	MUS_POKE_EQUIP_POS ePos;
 	
 	GFL_POINT	befPos;
+	fx32	    befScale;
 
 	//単方向リスト構造
 	FIT_ITEM_WORK* next;
@@ -269,6 +270,14 @@ void DUP_FIT_ITEM_SetBefPosition( FIT_ITEM_WORK *item , const GFL_POINT *pos )
 GFL_POINT* DUP_FIT_ITEM_GetBefPosition( FIT_ITEM_WORK *item )
 {
 	return &item->befPos;
+}
+void DUP_FIT_ITEM_SetBefScale( FIT_ITEM_WORK *item , const fx32 befScale )
+{
+	item->befScale = befScale;
+}
+fx32 DUP_FIT_ITEM_GetBefScale( FIT_ITEM_WORK *item )
+{
+	return item->befScale;
 }
 void DUP_FIT_ITEM_SetScale( FIT_ITEM_WORK *item , const fx32 scale )
 {

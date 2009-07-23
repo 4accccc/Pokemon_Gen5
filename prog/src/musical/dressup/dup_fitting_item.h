@@ -79,6 +79,8 @@ void DUP_FIT_ITEM_SetPosition( FIT_ITEM_WORK *item ,const GFL_POINT *pos );
 GFL_POINT* DUP_FIT_ITEM_GetPosition( FIT_ITEM_WORK *item );
 void DUP_FIT_ITEM_SetBefPosition( FIT_ITEM_WORK *item ,const GFL_POINT *pos );
 GFL_POINT* DUP_FIT_ITEM_GetBefPosition( FIT_ITEM_WORK *item );
+void DUP_FIT_ITEM_SetBefScale( FIT_ITEM_WORK *item , const fx32 befScale );
+fx32 DUP_FIT_ITEM_GetBefScale( FIT_ITEM_WORK *item );
 void DUP_FIT_ITEM_SetScale( FIT_ITEM_WORK *item , const fx32 scale );
 fx32 DUP_FIT_ITEM_GetScale( FIT_ITEM_WORK *item );
 void DUP_FIT_ITEM_SetCount( FIT_ITEM_WORK *item , const u16 count );

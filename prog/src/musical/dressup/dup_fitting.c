@@ -122,10 +122,10 @@ static const fx32 EQUIP_ITEM_DEPTH_BACK = FX32_CONST(20.5f);
 
 
 //リストに戻るアニメーション
-static const u16 ITEM_RETURN_ANIME_CNT = 30;
+static const u16 ITEM_RETURN_ANIME_CNT = 10;
 static const fx32 ITEM_RETURN_DEPTH = FX32_CONST(70.0f);
 //移動キャンセルでフィールドに戻るとき
-static const u16 ITEM_RETURN_POS_CNT = 5;
+static const u16 ITEM_RETURN_POS_CNT = 10;
 //表示アイテムの点滅間隔
 static const u8 ITEM_LIST_NEW_BLINK = 45;
 
@@ -451,6 +451,7 @@ FITTING_RETURN  DUP_FIT_LoopFitting( FITTING_WORK *work )
   case DUS_FADEIN_WAIT:
     if( WIPE_SYS_EndCheck() == TRUE )
     {
+      /*
       if( DUP_FIT_ITEMGROUP_GetItemNum(work->itemGroupField) == 0 )
       {
         //フィールドにアイテム無かったらデモ
@@ -460,6 +461,8 @@ FITTING_RETURN  DUP_FIT_LoopFitting( FITTING_WORK *work )
       {
         work->state = DUS_FITTING_MAIN;
       }
+      */
+      work->state = DUS_FITTING_MAIN;
     }
     break;
     
@@ -1836,21 +1839,54 @@ static void DUP_FIT_UpdateTpDropItemToList( FITTING_WORK *work , const BOOL isMo
   MUS_ITEM_DRAW_WORK *holdDrawWork = DUP_FIT_ITEM_GetItemDrawWork( work->holdItem );
   ITEM_STATE *itemState = DUP_FIT_ITEM_GetItemState( work->holdItem );
 
-  //リストを付け替えて座標を再設定
+  //リストを付け替え
   DUP_FIT_ITEMGROUP_RemoveItem( work->itemGroupField , work->holdItem );
   DUP_FIT_ITEMGROUP_AddItemTop( work->itemGroupAnime , work->holdItem );
-  
-  MUS_ITEM_DRAW_GetPosition( work->itemDrawSys , drawWork , &pos );
-  pos.z = RETURN_LIST_ITEM_DEPTH;
-  MUS_ITEM_DRAW_SetPosition( work->itemDrawSys , drawWork , &pos );
 
-  MUS_ITEM_DRAW_SetSize( work->itemDrawSys , holdDrawWork ,FX16_ONE,FX16_ONE );
-  
-  if( isMove == FALSE )
+  //開始位置設定
   {
-    //動かないように前回座標を今のものに
-    GFL_POINT *befPos = DUP_FIT_ITEM_GetPosition( work->holdItem );
-    DUP_FIT_ITEM_SetBefPosition( work->holdItem , befPos );
+    GFL_POINT dispPos;
+    VecFx32 pos = {0,0,ITEM_RETURN_DEPTH};
+    dispPos.x = work->tpx;
+    dispPos.y = work->tpy;
+    pos.x = FX32_CONST(work->befItemPos.x);
+    pos.y = FX32_CONST(work->befItemPos.y);
+    DUP_FIT_ITEM_SetBefPosition( work->holdItem , &dispPos );
+    MUS_ITEM_DRAW_SetPosition( work->itemDrawSys , holdDrawWork , &pos );
+    MUS_ITEM_DRAW_SetSize( work->itemDrawSys , holdDrawWork ,FX16_ONE,FX16_ONE );
+    DUP_FIT_ITEM_SetScale( work->holdItem , FX16_ONE );
+  }
+  
+  //動作終了地点設定
+  //リスト内に戻すアイテムがあるか？
+  {
+    FIT_ITEM_WORK *targetItem = NULL;
+    FIT_ITEM_WORK *listItem = DUP_FIT_ITEMGROUP_GetStartItem( work->itemGroupList );
+    while( listItem != NULL && targetItem == NULL )
+    {
+      const ITEM_STATE *listItemState = DUP_FIT_ITEM_GetItemState( listItem );
+      if( listItemState->itemId == itemState->itemId )
+      {
+        targetItem = listItem;
+      }
+      listItem = DUP_FIT_ITEM_GetNextItem(listItem);
+    }
+    
+    //リスト内にアイテムがあった！
+    if( targetItem != NULL )
+    {
+      GFL_POINT *befPos = DUP_FIT_ITEM_GetPosition( targetItem );
+      DUP_FIT_ITEM_SetPosition( work->holdItem , befPos );
+      DUP_FIT_ITEM_SetBefScale( work->holdItem , DUP_FIT_ITEM_GetScale(targetItem) );
+
+    }
+    else
+    {
+      //無かった！！
+      GFL_POINT befPos = { LIST_CENTER_X , LIST_CENTER_Y-LIST_SIZE_Y };
+      DUP_FIT_ITEM_SetPosition( work->holdItem , &befPos );
+      DUP_FIT_ITEM_SetBefScale( work->holdItem , 0 );
+    }
   }
 
   DUP_FIT_ITEM_SetCount( work->holdItem , ITEM_RETURN_ANIME_CNT );
@@ -2169,6 +2205,7 @@ static void DUP_FIT_UpdateItemAnime( FITTING_WORK *work )
       u16 cnt = DUP_FIT_ITEM_GetCount( item );
       GFL_POINT *befPos = DUP_FIT_ITEM_GetBefPosition( item );
       GFL_POINT *endPos = DUP_FIT_ITEM_GetPosition( item );
+      fx16 befScale = DUP_FIT_ITEM_GetBefScale( item );
 
       //removeする可能性があるので、先に次をとっておく
       nextItem = DUP_FIT_ITEM_GetNextItem(item);
@@ -2177,7 +2214,7 @@ static void DUP_FIT_UpdateItemAnime( FITTING_WORK *work )
       if( cnt > 0 )
       {
         VecFx32 pos;
-        fx16 size = FX16_ONE * (cnt) / ITEM_RETURN_ANIME_CNT;
+        fx16 size = ((FX16_ONE-befScale) * (cnt) / ITEM_RETURN_ANIME_CNT)+befScale;
         MUS_ITEM_DRAW_SetSize( work->itemDrawSys , drawWork , size , size );
         MUS_ITEM_DRAW_GetPosition( work->itemDrawSys , drawWork , &pos );
         
