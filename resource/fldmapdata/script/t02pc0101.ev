@@ -79,6 +79,9 @@ ev_t02pc0101_doctor_guide:
 	_AB_KEYWAIT
   	_TALKWIN_CLOSE
 
+	_OBJ_ANIME T02PC0101_DOCTOR,anime_t02pc0101_guide04
+	_OBJ_ANIME_WAIT
+
   _OBJ_PAUSE_CLEAR_ALL
 
   _END
@@ -152,6 +155,7 @@ _ANIME_LABEL	anime_t02pc0101_guide03
 	_ANIME_DATA	AC_WALK_D_8F,1
 	_ANIME_DATA	AC_WALK_R_8F,5
 	_ANIME_DATA	AC_WALK_D_8F,4
+	_ANIME_DATA	AC_DIR_R,1
 	_ANIME_DATA	ACMD_END,0
 
 /**************************************************************/
@@ -161,6 +165,17 @@ _ANIME_LABEL	anime_t02pc0101_guide03a
 	_ANIME_DATA	AC_WAIT_16F,1
 	_ANIME_DATA	AC_WALK_D_8F,1
 	_ANIME_DATA	AC_WALK_R_8F,5
+	_ANIME_DATA	AC_WALK_D_8F,4
+	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	ACMD_END,0
+
+/**************************************************************/
+/*     博士の案内：ショップからポケセン外へ退場               */
+/**************************************************************/
+_ANIME_LABEL	anime_t02pc0101_guide04
+	_ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	AC_DIR_D,1
 	_ANIME_DATA	AC_WALK_D_8F,4
 	_ANIME_DATA	ACMD_END,0
 
