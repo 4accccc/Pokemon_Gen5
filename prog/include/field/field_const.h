@@ -17,10 +17,11 @@ extern "C"{
 
 //-----------------------------------------------------------------------------
 /**
- *					グリッド単位(UNIT)
+ *					グリッド幅単位(UNIT)
 */
 //-----------------------------------------------------------------------------
-#define FLD_CONST_GRID_SIZE		(16)
+#define FLD_CONST_GRID_SIZE					(16)
+#define FLD_CONST_GRID_FX32_SIZE		(16<<FX32_SHIFT)
 
 #ifdef _cplusplus
 }	// extern "C"{
