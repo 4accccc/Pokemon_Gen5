@@ -1,0 +1,109 @@
+#event data
+#save date:2009/07/22 18:52:04
+# linked worldmap file name
+C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\d06r0101.wms
+#SECTION START:OBJ_EVENT
+#Map Event List data
+#save date:2009/07/22 18:52:04
+2
+#hold event type:
+1
+#hold event number:
+0
+#Map Event List Data End
+#SECTION End:OBJ_EVENT
+#SECTION START:BG_EVENT
+#Map Event List data
+#save date:2009/07/22 18:52:04
+2
+#hold event type:
+1
+#hold event number:
+0
+#Map Event List Data End
+#SECTION End:BG_EVENT
+#SECTION START:POS_EVENT
+#Map Event List data
+#save date:2009/07/22 18:52:04
+2
+#hold event type:
+1
+#hold event number:
+0
+#Map Event List Data End
+#SECTION End:POS_EVENT
+#SECTION START:DOOR_EVENT
+#Map Event List data
+#save date:2009/07/22 18:52:04
+2
+#hold event type:
+1
+#hold event number:
+5
+#event number: 0
+#Door Event Label
+DOOR_ID_D06R0101_D06_EXIT01
+#Next Zone ID Name
+ZONE_ID_D06
+#Next Door ID Name
+DOOR_ID_D06_D06R0101_EXIT01
+#Door Direction
+EXIT_DIR_UP
+#Door Type
+EXIT_TYPE_MAT
+#position
+-128 0 -672
+#event number: 1
+#Door Event Label
+DOOR_ID_D06R0101_C06_EXIT01
+#Next Zone ID Name
+ZONE_ID_C06
+#Next Door ID Name
+DOOR_ID_C06_D06R0101_EXIT01
+#Door Direction
+EXIT_DIR_DOWN
+#Door Type
+EXIT_TYPE_MAT
+#position
+960 0 160
+#event number: 2
+#Door Event Label
+DOOR_ID_D06R0101_D06R0201_EXIT03
+#Next Zone ID Name
+ZONE_ID_D06R0201
+#Next Door ID Name
+DOOR_ID_D06R0201_D06R0101_EXIT03
+#Door Direction
+EXIT_DIR_RIGHT
+#Door Type
+EXIT_TYPE_MAT
+#position
+736 0 -544
+#event number: 3
+#Door Event Label
+DOOR_ID_D06R0101_D06R0201_EXIT01
+#Next Zone ID Name
+ZONE_ID_D06R0201
+#Next Door ID Name
+DOOR_ID_D06R0201_D06R0101_EXIT01
+#Door Direction
+EXIT_DIR_LEFT
+#Door Type
+EXIT_TYPE_MAT
+#position
+160 0 -448
+#event number: 4
+#Door Event Label
+DOOR_ID_D06R0101_D06R0201_EXIT02
+#Next Zone ID Name
+ZONE_ID_D06R0201
+#Next Door ID Name
+DOOR_ID_D06R0201_D06R0101_EXIT02
+#Door Direction
+EXIT_DIR_RIGHT
+#Door Type
+EXIT_TYPE_MAT
+#position
+672 0 176
+#Map Event List Data End
+#SECTION End:DOOR_EVENT
