@@ -81,6 +81,7 @@ typedef enum {
   BTL_EVENT_CALC_KICKBACK,          ///< 反動計算ハンドラ
   BTL_EVENT_ADD_RANK_TARGET,        ///< ワザを受けた側への追加効果
   BTL_EVENT_ADD_RANK_USER,          ///< ワザを使った側への追加効果
+  BTL_EVENT_MENBERCHANGE_INTR,      ///< メンバー入れ替え割り込み
   BTL_EVENT_MEMBER_OUT,             ///< 個別ポケ退場直前
   BTL_EVENT_MEMBER_IN,              ///< 個別ポケ入場直後
   BTL_EVENT_MEMBER_COMP,            ///< 全参加ポケ登場後

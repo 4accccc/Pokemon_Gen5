@@ -1115,13 +1115,13 @@ typedef struct {
 }POKEOUT_ACT_WORK;
 
 
-void BTLV_SCU_StartMemberOutAct( BTLV_SCU* wk, u8 clientID, u8 memberIdx, BtlPokePos pos )
+void BTLV_SCU_StartMemberOutAct( BTLV_SCU* wk, BtlvMcssPos vpos )
 {
   GFL_TCBL* tcbl = GFL_TCBL_Create( wk->tcbl, taskPokeOutAct, sizeof(POKEOUT_ACT_WORK), BTLV_TASKPRI_DAMAGE_EFFECT );
   POKEOUT_ACT_WORK* twk = GFL_TCBL_GetWork( tcbl );
 
-  twk->viewpos = BTL_MAIN_BtlPosToViewPos( wk->mainModule, pos );
-  twk->statWin = &wk->statusWin[ pos ];
+  twk->viewpos = vpos;
+  twk->statWin = &wk->statusWin[ vpos ];
   twk->endFlag = &wk->taskCounter[TASKTYPE_DEFAULT];
   twk->seq = 0;
 

@@ -85,7 +85,7 @@ static const u8 ServerCmdToFmtTbl[] = {
   SC_ARGFMT_112byte,          // SC_OP_SICK_SET
   SC_ARGFMT_1byte,            // SC_OP_CURE_POKESICK
   SC_ARGFMT_12byte,           // SC_OP_CURE_WAZASICK
-  SC_ARGFMT_53bit_1byte,      // SC_OP_MEMBER_IN
+  SC_ARGFMT_53bit_12byte,     // SC_OP_MEMBER_IN
   SC_ARGFMT_1byte,            // SC_OP_WAZASICK_TURNCHECK
   SC_ARGFMT_5_3bit,           // SC_OP_CANTESCAPE_ADD
   SC_ARGFMT_5_3bit,           // SC_OP_CANTESCAPE_SUB
@@ -118,7 +118,7 @@ static const u8 ServerCmdToFmtTbl[] = {
   SC_ARGFMT_5_5_5bit,         // SC_ACT_RANKUP
   SC_ARGFMT_5_5_5bit,         // SC_ACT_RANKDOWN
   SC_ARGFMT_1byte,            // SC_ACT_DEAD
-  SC_ARGFMT_4_4bit,           // SC_ACT_MEMBER_OUT
+  SC_ARGFMT_1byte,            // SC_ACT_MEMBER_OUT
   SC_ARGFMT_53bit_1byte,      // SC_ACT_MEMBER_IN
   SC_ARGFMT_12byte,           // SC_ACT_SICK_SET
   SC_ARGFMT_5_5_14bit,        // SC_ACT_SICK_DMG

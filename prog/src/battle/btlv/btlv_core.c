@@ -821,11 +821,9 @@ BOOL BTLV_WaitDeadAct( BTLV_CORE* wk )
  *
  */
 //=============================================================================================
-void BTLV_ACT_MemberOut_Start( BTLV_CORE* wk, u8 clientID, u8 memberIdx )
+void BTLV_ACT_MemberOut_Start( BTLV_CORE* wk, BtlvMcssPos vpos )
 {
-  BtlPokePos pos = BTL_MAIN_GetClientPokePos( wk->mainModule, clientID, memberIdx );
-
-  BTLV_SCU_StartMemberOutAct( wk->scrnU, clientID, memberIdx, pos );
+  BTLV_SCU_StartMemberOutAct( wk->scrnU, vpos );
 }
 BOOL BTLV_ACT_MemberOut_Wait( BTLV_CORE* wk )
 {
@@ -861,9 +859,6 @@ void BTLV_StartMemberChangeAct( BTLV_CORE* wk, BtlPokePos pos, u8 clientID, u8 m
   subwk->pokePos = pos;
   subwk->pokeID = BPP_GetID( bpp );
 
-  BTL_Printf("ƒƒ“ƒo[“üê client=%d, pokePos=%d, memberIdx=%d, pokeID=%d\n",
-    clientID, pos, memberIdx, subwk->pokeID );
-
   BTL_UTIL_SetupProc( &wk->subProc, wk, NULL, subprocMemberIn );
 }
 
@@ -882,7 +877,6 @@ static BOOL subprocMemberIn( int* seq, void* wk_adrs )
     {
       u16 strID = BTL_MAIN_IsOpponentClientID(wk->mainModule, wk->myClientID, subwk->clientID)?
           BTL_STRID_STD_PutSingle_Enemy : BTL_STRID_STD_PutSingle;
-
       BTL_STR_MakeStringStd( wk->strBuf, strID, 1, subwk->pokeID );
       BTLV_SCU_StartMsg( wk->scrnU, wk->strBuf, BTLV_MSGWAIT_NONE );
       (*seq)++;

@@ -1310,13 +1310,12 @@ BtlPokePos BTL_MAIN_PokeIDtoPokePos( const BTL_MAIN_MODULE* wk, const BTL_POKE_C
 /**
  * バトルポケモンIDから、そのポケモンを管理するクライアントIDを取得
  *
- * @param   wk
  * @param   pokeID
  *
  * @retval  u8
  */
 //=============================================================================================
-u8 BTL_MAIN_PokeIDtoClientID( const BTL_MAIN_MODULE* wk, u8 pokeID )
+u8 BTL_MAINUTIL_PokeIDtoClientID( u8 pokeID )
 {
   return PokeID_to_ClientID( pokeID );
 }

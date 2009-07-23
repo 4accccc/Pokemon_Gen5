@@ -218,7 +218,7 @@ static inline void register_PokeNickname( u8 pokeID, WordBufID bufID )
 //--------------------------------------------------------------------------
 static inline SetStrFormat get_strFormat( u8 pokeID )
 {
-  u8 targetClientID = BTL_MAIN_PokeIDtoClientID( SysWork.mainModule, pokeID );
+  u8 targetClientID = BTL_MAINUTIL_PokeIDtoClientID( pokeID );
 
   if( BTL_MAIN_IsOpponentClientID(SysWork.mainModule, SysWork.clientID, targetClientID) )
   {

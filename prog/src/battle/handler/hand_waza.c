@@ -131,6 +131,9 @@ static BTL_EVENT_FACTOR*  ADD_Akumu( u16 pri, WazaID waza, u8 pokeID );
 static void handler_Akumu_NoEff( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static BTL_EVENT_FACTOR*  ADD_Fuiuti( u16 pri, WazaID waza, u8 pokeID );
 static void handler_Fuiuti_NoEff( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static BTL_EVENT_FACTOR*  ADD_Oiuti( u16 pri, WazaID waza, u8 pokeID );
+static void handler_Oiuti_Intr( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static void handler_Oiuti_Dmg( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static BTL_EVENT_FACTOR*  ADD_Daibakuhatsu( u16 pri, WazaID waza, u8 pokeID );
 static void handler_Daibakuhatsu( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_Daibakuhatsu_ExeFix( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
@@ -596,6 +599,7 @@ BOOL  BTL_HANDLER_Waza_Add( const BTL_POKEPARAM* pp, WazaID waza )
     { WAZANO_MIRAIYOTI,       ADD_Miraiyoti     },
     { WAZANO_HAMETUNONEGAI,   ADD_HametuNoNegai },
     { WAZANO_RISAIKURU,       ADD_Recycle       },
+    { WAZANO_OIUTI,           ADD_Oiuti         },
   };
 
   int i;
@@ -2216,6 +2220,51 @@ static void handler_Fuiuti_NoEff( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* f
       ||  (!WAZADATA_IsDamage(waza))
       ){
         BTL_EVENTVAR_RewriteValue( BTL_EVAR_NOEFFECT_FLAG, TRUE );
+      }
+    }
+  }
+}
+//----------------------------------------------------------------------------------
+/**
+ * おいうち
+ */
+//----------------------------------------------------------------------------------
+static BTL_EVENT_FACTOR*  ADD_Oiuti( u16 pri, WazaID waza, u8 pokeID )
+{
+  static const BtlEventHandlerTable HandlerTable[] = {
+    { BTL_EVENT_MENBERCHANGE_INTR, handler_Oiuti_Intr },    // 入れ替え割り込みハンドラ
+    { BTL_EVENT_WAZA_DMG_PROC2,    handler_Oiuti_Dmg  },    // ダメージ計算最終チェック
+    { BTL_EVENT_NULL, NULL },
+  };
+  return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_WAZA, waza, pri, pokeID, HandlerTable );
+}
+static void handler_Oiuti_Intr( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+{
+  BTL_ACTION_PARAM  action;
+
+  if( BTL_SVFLOW_GetThisTurnAction(flowWk, pokeID, &action) )
+  {
+    u8 targetPokeID = BTL_SVFLOW_PokePosToPokeID( flowWk, action.fight.targetPos );
+    BTL_Printf("ワシ[%d]が今から狙うポケ=%d, 入れ替わろうとしてるポケ=%d（位置:%d)\n",
+      pokeID, targetPokeID, BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_TARGET1), action.fight.targetPos);
+    if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_TARGET1) == targetPokeID )
+    {
+      BTL_Printf("割り込みます\n");
+      BTL_EVENTVAR_RewriteValue( BTL_EVAR_POKEID_ATK, pokeID );
+    }
+  }
+}
+static void handler_Oiuti_Dmg( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+{
+  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
+  {
+    BTL_ACTION_PARAM  action;
+    u8 targetPokeID = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID_DEF );
+    if( BTL_SVFLOW_GetThisTurnAction(flowWk, targetPokeID, &action) )
+    {
+      if( BTL_ACTION_GetAction(&action) == BTL_ACTION_CHANGE ){
+        BTL_Printf("入れ替わろうとしてるヤツには２倍です\n");
+        BTL_EVENTVAR_MulValue( BTL_EVAR_RATIO, FX32_CONST(2) );
       }
     }
   }

@@ -851,6 +851,8 @@ static BOOL SubProc_AI_SelectAction( BTL_CLIENT* wk, int* seq )
     {
       u8 wazaCount, wazaIdx, mypos, targetPos;
 
+      mypos = BTL_MAIN_GetClientPokePos( wk->mainModule, wk->myID, i );
+
       if( BPP_CheckSick(pp, WAZASICK_ENCORE)
       ||  BPP_CheckSick(pp, WAZASICK_WAZALOCK)
       ){
@@ -893,7 +895,6 @@ static BOOL SubProc_AI_SelectAction( BTL_CLIENT* wk, int* seq )
         const BTL_POKEPARAM* targetPoke;
         u8 j, p, aliveCnt;
         u8 alivePokePos[ CHECK_MAX ];
-        mypos = BTL_MAIN_GetClientPokePos( wk->mainModule, wk->myID, i );
         aliveCnt = 0;
         for(j=0; j<CHECK_MAX; ++j)
         {
@@ -912,6 +913,7 @@ static BOOL SubProc_AI_SelectAction( BTL_CLIENT* wk, int* seq )
       }
       {
         WazaID waza = BPP_WAZA_GetID( pp, wazaIdx );
+        BTL_Printf("ワシAIデス. ワシの位置=%d, 狙う位置=%dデス\n", mypos, targetPos);
         BTL_ACTION_SetFightParam( &wk->actionParam[i], waza, targetPos );
       }
     }
@@ -1328,10 +1330,8 @@ static BOOL scProc_ACT_MemberOut( BTL_CLIENT* wk, int* seq, const int* args )
   switch( *seq ){
   case 0:
     {
-      u8 clientID = args[0];
-      u8 memberIdx = args[1];
-
-      BTLV_ACT_MemberOut_Start( wk->viewCore, clientID, memberIdx );
+      BtlvMcssPos  vpos = BTL_MAIN_BtlPosToViewPos( wk->mainModule, args[0] );
+      BTLV_ACT_MemberOut_Start( wk->viewCore, vpos );
       (*seq)++;
     }
     break;
@@ -2308,7 +2308,7 @@ static u8 cec_isEnable( CANT_ESC_CONTROL* ctrl, BtlCantEscapeCode code, BTL_CLIE
     {
       if( ctrl->counter[code][i] )
       {
-        u8 clientID = BTL_MAIN_PokeIDtoClientID( wk->mainModule, i );
+        u8 clientID = BTL_MAINUTIL_PokeIDtoClientID( i );
         if( !BTL_MAIN_IsOpponentClientID(wk->mainModule, wk->myID, clientID) ){ continue; }
         switch( code ){
         case BTL_CANTESC_KAGEFUMI:  if( _cec_check_kagefumi(wk) ){ return i; }
