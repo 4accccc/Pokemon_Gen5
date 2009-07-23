@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="taya" host="W00146" date="2009-07-15T18:07:48"/>
+	<create user="taya" host="W00146" date="2009-07-24T00:42:13"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -652,6 +652,12 @@
 [1:07:わざ名:0]　になった！</language>
 		<language name="JPN_KANJI" width="216">しぜんのちからは
 [1:07:わざ名:0]　になった！</language>
+	</row>
+
+	<row id="BTL_STRID_STD_NekoNiKoban">
+		<comment>ねこにこばん</comment>
+		<language name="JPN" width="216">こばんが　あたりに　ちらばった！</language>
+		<language name="JPN_KANJI" width="216">小判が　あたりに　散らばった！</language>
 	</row>
 
 	<row id="BTL_STRID_STD_Reflector">
