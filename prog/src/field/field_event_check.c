@@ -478,11 +478,13 @@ GMEVENT * FIELD_EVENT_CheckUnion( GAMESYS_WORK *gsys, void *work )
       return event;
     }
 
+#if 0
    //座標接続チェック
     event = checkExit(&req, fieldWork, req.now_pos);
     if( event != NULL ){
       return event;
     }
+#endif
   }
 
 //☆☆☆自機状態イベントチェックがここから
