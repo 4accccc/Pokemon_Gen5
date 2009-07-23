@@ -20,11 +20,15 @@ end
 
 GRID_SIZE   =   16    #1グリッドのユニット数
 BLOCK_SIZE  =   32    #地形ブロック当たりのグリッド数
+
 #============================================================================
 #============================================================================
 class EventHeader
 
   def initialize stream
+    @blockSizeX   =   BLOCK_SIZE
+    @blockSizeY   =   BLOCK_SIZE
+
     line = stream.gets
     raise DataFormatError unless line =~ /^#event data/
     line = stream.gets
@@ -59,22 +63,31 @@ class EventHeader
     @height = read(lines, /^#Height/)
     @x_ofs = Integer(read(lines, /^#block x offset/))
     @z_ofs = Integer(read(lines, /^#block z offset/))
+    begin 
+      line = lines.gets
+      if line =~/#block size/ then
+        col = lines.gets.split
+        @blockSizeX = Integer(col[0])
+        @blockSizeY = Integer(col[1])
+      end
+    end
+    
   end
 
   def calcXofs x
-    return  x + (BLOCK_SIZE / 2 + @x_ofs * BLOCK_SIZE) * GRID_SIZE
+    return  x + (@blockSizeX / 2 + @x_ofs * @blockSizeX) * GRID_SIZE
   end
 
   def calcZofs z
-    return -z + (BLOCK_SIZE / 2 + @z_ofs * BLOCK_SIZE) * GRID_SIZE
+    return -z + (@blockSizeY / 2 + @z_ofs * @blockSizeY) * GRID_SIZE
   end
 
   def calcXgridOfs x
-    return x / GRID_SIZE + (BLOCK_SIZE / 2 + @x_ofs * BLOCK_SIZE) - 1
+    return x / GRID_SIZE + (@blockSizeX / 2 + @x_ofs * @blockSizeX) - 1
   end
 
   def calcZgridOfs z
-    return (- z) / GRID_SIZE + (BLOCK_SIZE / 2 + @z_ofs * BLOCK_SIZE)
+    return (- z) / GRID_SIZE + (@blockSizeY / 2 + @z_ofs * @blockSizeY)
   end
 
 end
