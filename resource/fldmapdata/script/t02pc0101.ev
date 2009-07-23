@@ -6,7 +6,8 @@
 
   .include  "scr_seq_def.h"
   .include  "../../../prog/include/msg/script/msg_t02pc0101.h"
-  .include  "../eventdata/zone_t02pc0101evc.h"
+//  .include  "../eventdata/tmp/zone_t02pc0101evc.h"
+  .include  "t02pc0101.h"
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -44,9 +45,18 @@ ev_t02pc0101_doctor_guide:
 	_TALK_OBJ_PAUSE_ALL
 	_TURN_HERO_SITE
 	_TALKWIN_OPEN
-	_TALKMSG_ALLPUT msg_t02pc0101_docotr_jr_01
+	_TALKMSG_ALLPUT msg_t02pc0101_hakase2_01 //入ってすぐ
 	_AB_KEYWAIT
 	_TALKWIN_CLOSE
+
+	_OBJ_ANIME T02PC0101_DOCTOR,anime_t02pc0101_guide01
+	_OBJ_ANIME_WAIT
+
+	_TURN_HERO_SITE
+	_TALKWIN_OPEN
+	_TALKMSG_ALLPUT msg_t02pc0101_hakase2_02 //カウンター前
+	_AB_KEYWAIT
+  	_TALKWIN_CLOSE
 
   _END
 
@@ -75,3 +85,15 @@ ev_t02pc0101_middlewoman1_1:
   _TALKWIN_CLOSE
   _OBJ_PAUSE_CLEAR_ALL
   _END
+
+
+
+
+/**************************************************************/
+/*     博士の案内：カウンター前まで                     */
+/**************************************************************/
+_ANIME_LABEL	anime_t02pc0101_guide01
+	_ANIME_DATA	AC_WALK_U_8F,5
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+  
