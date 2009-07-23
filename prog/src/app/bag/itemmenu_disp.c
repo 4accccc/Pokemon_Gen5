@@ -575,7 +575,7 @@ void ITEMDISP_CellCreate( FIELD_ITEMMENU_WORK* pWork )
   //選択カーソル
   {
     GFL_CLWK_DATA cellInitData;
-    cellInitData.pos_x = 17*8-4;
+    cellInitData.pos_x = 17*8-4+8;
     cellInitData.pos_y = 24+24;
     cellInitData.softpri = 1;
     cellInitData.bgpri = 2;
@@ -595,8 +595,8 @@ void ITEMDISP_CellCreate( FIELD_ITEMMENU_WORK* pWork )
     for( i=0 ; i < ITEM_LIST_NUM ; i++ )
     {
       GFL_CLWK_DATA cellInitData;
-      cellInitData.pos_x = 17*8-4;
-      cellInitData.pos_y = 3*8*i ;
+      cellInitData.pos_x = 17 * 8 - 4 + 8;
+      cellInitData.pos_y = 3 * 8 * i ;
       cellInitData.softpri = 10;
       cellInitData.bgpri = 2;
       cellInitData.anmseq = 0;
@@ -701,6 +701,37 @@ void ITEMDISP_scrollCursorMove(FIELD_ITEMMENU_WORK* pWork)
     if(y > _SCROLL_BOTTOM_Y){
       return;
     }
+    GFL_CLACT_WK_GetPos( pWork->scrollCur , &pos, CLWK_SETSF_NONE );
+    pos.y = y;
+    GFL_CLACT_WK_SetPos( pWork->scrollCur ,  &pos, CLWK_SETSF_NONE );
+  }
+}
+
+//------------------------------------------------------------------------------
+/**
+ * @brief   指しているアイテム番号からるクロールカーソル位置を設定
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+void ITEMDISP_scrollCursorChangePos(FIELD_ITEMMENU_WORK* pWork, int num)
+{
+  u32 x,y;
+
+  {
+    int length = MYITEM_GetItemPocketNumber( pWork->pMyItem, pWork->pocketno)-1;
+    GFL_CLACTPOS pos;
+    int ymax = _SCROLL_BOTTOM_Y - _SCROLL_TOP_Y;
+    int y = ((num * ymax)/length) + _SCROLL_TOP_Y;
+
+
+    if(y < _SCROLL_TOP_Y){
+      y=_SCROLL_TOP_Y;
+    }
+    if(y > _SCROLL_BOTTOM_Y){
+      y=_SCROLL_BOTTOM_Y;
+    }
+
+    
     GFL_CLACT_WK_GetPos( pWork->scrollCur , &pos, CLWK_SETSF_NONE );
     pos.y = y;
     GFL_CLACT_WK_SetPos( pWork->scrollCur ,  &pos, CLWK_SETSF_NONE );

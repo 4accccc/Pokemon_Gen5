@@ -187,6 +187,7 @@ static void _pocketCursorChange(FIELD_ITEMMENU_WORK* pWork,int oldpocket, int ne
   MYITEM_FieldBagCursorGet(pWork->pBagCursor, newpocket, &cur, &scr );
   pWork->curpos = cur;
   pWork->oamlistpos = scr - 1;
+  ITEMDISP_scrollCursorChangePos(pWork, ITEMMENU_GetItemIndex(pWork));
 }
 
 //------------------------------------------------------------------------------
@@ -331,6 +332,7 @@ static void _itemKindSelectMenu(FIELD_ITEMMENU_WORK* pWork)
     bChange = TRUE;
   }
   else if(_keyMoveCheck(pWork)){
+    ITEMDISP_scrollCursorChangePos(pWork, ITEMMENU_GetItemIndex(pWork));
     bChange = TRUE;
   }
   {

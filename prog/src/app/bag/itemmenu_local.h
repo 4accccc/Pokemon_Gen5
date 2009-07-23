@@ -159,6 +159,7 @@ extern void ITEMDISP_CellCreate( FIELD_ITEMMENU_WORK* pWork );
 extern void ITEMDISP_CellMessagePrint( FIELD_ITEMMENU_WORK* pWork );
 extern void ITEMDISP_CellVramTrans( FIELD_ITEMMENU_WORK* pWork );
 extern void ITEMDISP_scrollCursorMove(FIELD_ITEMMENU_WORK* pWork);
+extern void ITEMDISP_scrollCursorChangePos(FIELD_ITEMMENU_WORK* pWork, int num);
 
 
 extern int ITEMMENU_GetItemIndex(FIELD_ITEMMENU_WORK* pWork);
