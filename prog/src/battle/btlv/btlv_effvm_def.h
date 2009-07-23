@@ -211,6 +211,10 @@ ex)
 	VALUE_VECFX32	camPosX	camPosY	camPosZ
 	
 	こうすることによって、ツールのダイアログに、入力するための値の意味を表示させることができます
+ 
+・VALUE_ANGLE
+	角度入力用の値（0～360）
+  コンバータで（0～0xffff）に変換します
 
 ・FILE_DIALOG
 　ファイルダイアログを表示してファイル選択を促す　選択を絞る拡張子を指定できます
@@ -667,7 +671,7 @@ ex)
  * #param	COMBOBOX_VALUE	BTLEFF_POKEMON_SIDE_ATTACK BTLEFF_POKEMON_SIDE_ATTACK_PAIR BTLEFF_POKEMON_SIDE_DEFENCE BTLEFF_POKEMON_SIDE_DEFENCE_PAIR
  * #param	COMBOBOX_TEXT	ダイレクト	追従	往復	往復ロング
  * #param	COMBOBOX_VALUE	BTLEFF_POKEMON_ROTATE_DIRECT	BTLEFF_POKEMON_ROTATE_INTERPOLATION	BTLEFF_POKEMON_ROTATE_ROUNDTRIP	BTLEFF_POKEMON_ROTATE_ROUNDTRIP_LONG
- * #param	VALUE_FX32	回転角度
+ * #param	VALUE_ANGLE	回転角度
  * #param	VALUE_INT		回転フレーム数（設定した回転値まで何フレームで到達するか）
  * #param	VALUE_INT		回転ウエイト
  * #param	VALUE_INT		往復カウント（往復時有効）
