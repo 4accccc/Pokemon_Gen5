@@ -144,6 +144,8 @@ const BOOL PSTATUS_InitPokeStatus( PSTATUS_WORK *work )
 const BOOL PSTATUS_TermPokeStatus( PSTATUS_WORK *work )
 {
   GFL_TCB_DeleteTask( work->vBlankTcb );
+  
+  work->psData->pos = work->dataPos;
 
   PSTATUS_TermCell( work );
 
