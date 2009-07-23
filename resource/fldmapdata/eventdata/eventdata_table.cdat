@@ -1749,6 +1749,7 @@
 #define DOOR_ID_T02PC0101_EXIT01          0
 #define DOOR_ID_T02PC0101_EXIT02          1
 #define DOOR_ID_T02PC0101_EXIT03          2
+#define DOOR_ID_T02PC0101_UNION_EXIT01    3
 
 #endif //ZONE_T02PC0101_EVD_H
 //このファイルはdata/t02pc0101.mevから自動生成されました
@@ -1887,6 +1888,22 @@
 #define T02R0401_MAN2                      2
 
 #endif //ZONE_T02R0401_EVC_H
+//#include "tmp/union.h"
+//このファイルはdata/union.mevから自動生成されました
+#ifndef ZONE_UNION_EVD_H
+#define ZONE_UNION_EVD_H
+
+#define DOOR_ID_UNION_T02PC0101_EXIT01    0
+#define DOOR_ID_UNION_T02PC0101_EXIT02    1
+#define DOOR_ID_UNION_T02PC0101_EXIT03    2
+
+#endif //ZONE_UNION_EVD_H
+//このファイルはdata/union.mevから自動生成されました
+#ifndef ZONE_UNION_EVC_H
+#define ZONE_UNION_EVC_H
+
+
+#endif //ZONE_UNION_EVC_H
 
 #include "../script/c01_def.h"
 const CONNECT_DATA DOOR_EVENT_C01[] = {
@@ -7640,6 +7657,12 @@ const CONNECT_DATA DOOR_EVENT_T02PC0101[] = {
 		EXIT_DIR_UP,//direction
 		EXIT_TYPE_MAT //type
 	},
+	{//DOOR_ID_T02PC0101_UNION_EXIT01 = 3
+		{80, 48, 64},
+		ZONE_ID_UNION, DOOR_ID_UNION_T02PC0101_EXIT01,
+		EXIT_DIR_DOWN,//direction
+		EXIT_TYPE_NONE //type
+	},
 };
 const int ConnectCount_T02PC0101 = NELEMS(DOOR_EVENT_T02PC0101);
 const FLDMMDL_HEADER OBJ_EVENT_T02PC0101[] = {
@@ -7717,7 +7740,7 @@ const int ObjCount_T02PC0101 = NELEMS(OBJ_EVENT_T02PC0101);
 static const EVENTDATA_TABLE event_t02pc0101 = {
 	0,
 	4,
-	3,
+	4,
 	0,
 	(void *)NULL,
 	(void *)&OBJ_EVENT_T02PC0101,
@@ -8247,6 +8270,39 @@ static const EVENTDATA_TABLE event_t02r0401 = {
 	(void *)&DOOR_EVENT_T02R0401,
 	(void *)NULL,
 };
+#include "../script/union_def.h"
+const CONNECT_DATA DOOR_EVENT_UNION[] = {
+	{//DOOR_ID_UNION_T02PC0101_EXIT01 = 0
+		{176, 0, 240},
+		ZONE_ID_T02PC0101, DOOR_ID_T02PC0101_UNION_EXIT01,
+		EXIT_DIR_UP,//direction
+		EXIT_TYPE_NONE //type
+	},
+	{//DOOR_ID_UNION_T02PC0101_EXIT02 = 1
+		{160, 0, 240},
+		ZONE_ID_T02PC0101, DOOR_ID_T02PC0101_UNION_EXIT01,
+		EXIT_DIR_UP,//direction
+		EXIT_TYPE_NONE //type
+	},
+	{//DOOR_ID_UNION_T02PC0101_EXIT03 = 2
+		{192, 0, 240},
+		ZONE_ID_T02PC0101, DOOR_ID_T02PC0101_UNION_EXIT01,
+		EXIT_DIR_UP,//direction
+		EXIT_TYPE_NONE //type
+	},
+};
+const int ConnectCount_UNION = NELEMS(DOOR_EVENT_UNION);
+
+static const EVENTDATA_TABLE event_union = {
+	0,
+	0,
+	3,
+	0,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)&DOOR_EVENT_UNION,
+	(void *)NULL,
+};
 
 static const EVENTDATA_TOTAL_TABLES TotalTables[] = {
 	{ ZONE_ID_C01, &event_c01 },
@@ -8344,6 +8400,7 @@ static const EVENTDATA_TOTAL_TABLES TotalTables[] = {
 	{ ZONE_ID_T02R0301, &event_t02r0301 },
 	{ ZONE_ID_T02R0302, &event_t02r0302 },
 	{ ZONE_ID_T02R0401, &event_t02r0401 },
+	{ ZONE_ID_UNION, &event_union },
 	{ 0, NULL }
 };
 
