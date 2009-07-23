@@ -746,10 +746,10 @@ nsbtx_files/tex_set_out35_winter.nsbtx: src_imd_files/out35_test_gt_texset.imd
 	@$(COPY) src_imd_files/out35_test_gt_texset.imd marged_imd_files/tex_set_out35_winter.imd
 	@$(G3DCVTR) marged_imd_files/tex_set_out35_winter.imd -o nsbtx_files/tex_set_out35_winter.nsbtx -etex
 
-nsbtx_files/tex_set_in01.nsbtx: src_imd_files/testroom00_00c.imd src_imd_files/in00_texset.imd src_imd_files/tex_griddmy.imd
-	@echo src_imd_files/testroom00_00c.imd + src_imd_files/in00_texset.imd Å® nsbtx_files/tex_set_in01.nsbtx
+nsbtx_files/tex_set_in01.nsbtx: src_imd_files/in01_local_texset.imd src_imd_files/in00_texset.imd src_imd_files/tex_griddmy.imd
+	@echo src_imd_files/in01_local_texset.imd + src_imd_files/in00_texset.imd Å® nsbtx_files/tex_set_in01.nsbtx
 	@-rm marged_imd_files/tex_set_in01.imd
-	@-$(TEX_MAG) -q -o marged_imd_files/tex_set_in01.imd src_imd_files/testroom00_00c.imd src_imd_files/in00_texset.imd src_imd_files/tex_griddmy.imd
+	@-$(TEX_MAG) -q -o marged_imd_files/tex_set_in01.imd src_imd_files/in01_local_texset.imd src_imd_files/in00_texset.imd src_imd_files/tex_griddmy.imd
 	@$(G3DCVTR) marged_imd_files/tex_set_in01.imd -o nsbtx_files/tex_set_in01.nsbtx -etex
 
 nsbtx_files/tex_set_in02.nsbtx: src_imd_files/in02_texset.imd
@@ -782,9 +782,10 @@ nsbtx_files/tex_set_in07.nsbtx: src_imd_files/in00_texset.imd
 	@$(COPY) src_imd_files/in00_texset.imd marged_imd_files/tex_set_in07.imd
 	@$(G3DCVTR) marged_imd_files/tex_set_in07.imd -o nsbtx_files/tex_set_in07.nsbtx -etex
 
-nsbtx_files/tex_set_in08.nsbtx: src_imd_files/in00_texset.imd
-	@echo src_imd_files/in00_texset.imd Å® nsbtx_files/tex_set_in08.nsbtx
-	@$(COPY) src_imd_files/in00_texset.imd marged_imd_files/tex_set_in08.imd
+nsbtx_files/tex_set_in08.nsbtx: src_imd_files/in08_local_texset.imd src_imd_files/in00_texset.imd src_imd_files/tex_griddmy.imd
+	@echo src_imd_files/in08_local_texset.imd + src_imd_files/in00_texset.imd Å® nsbtx_files/tex_set_in08.nsbtx
+	@-rm marged_imd_files/tex_set_in08.imd
+	@-$(TEX_MAG) -q -o marged_imd_files/tex_set_in08.imd src_imd_files/in08_local_texset.imd src_imd_files/in00_texset.imd src_imd_files/tex_griddmy.imd
 	@$(G3DCVTR) marged_imd_files/tex_set_in08.imd -o nsbtx_files/tex_set_in08.nsbtx -etex
 
 nsbtx_files/tex_set_in09.nsbtx: src_imd_files/in09_local_texset.imd src_imd_files/in00_texset.imd src_imd_files/tex_griddmy.imd
