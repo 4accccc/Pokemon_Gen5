@@ -50,13 +50,36 @@ ev_t02pc0101_doctor_guide:
 	_TALKWIN_CLOSE
 
 	_OBJ_ANIME T02PC0101_DOCTOR,anime_t02pc0101_guide01
+	_OBJ_ANIME MMDL_ID_PLAYER,anime_t02pc0101_guide01a
 	_OBJ_ANIME_WAIT
 
 	_TURN_HERO_SITE
 	_TALKWIN_OPEN
-	_TALKMSG_ALLPUT msg_t02pc0101_hakase2_02 //カウンター前
+	_TALKMSG_ALLPUT msg_t02pc0101_hakase2_02 //カウンター前で
+	_AB_KEYWAIT
+	_TALKWIN_CLOSE
+
+	_OBJ_ANIME T02PC0101_DOCTOR,anime_t02pc0101_guide02
+	_OBJ_ANIME MMDL_ID_PLAYER,anime_t02pc0101_guide02a
+	_OBJ_ANIME_WAIT
+
+	_TURN_HERO_SITE
+	_TALKWIN_OPEN
+	_TALKMSG_ALLPUT msg_t02pc0101_hakase2_04 //パソコン前で
 	_AB_KEYWAIT
   	_TALKWIN_CLOSE
+
+	_OBJ_ANIME T02PC0101_DOCTOR,anime_t02pc0101_guide03
+	_OBJ_ANIME MMDL_ID_PLAYER,anime_t02pc0101_guide03a
+	_OBJ_ANIME_WAIT
+
+	_TURN_HERO_SITE
+	_TALKWIN_OPEN
+	_TALKMSG_ALLPUT msg_t02pc0101_hakase2_06 //ショップ前で
+	_AB_KEYWAIT
+  	_TALKWIN_CLOSE
+
+  _OBJ_PAUSE_CLEAR_ALL
 
   _END
 
@@ -96,4 +119,49 @@ _ANIME_LABEL	anime_t02pc0101_guide01
 	_ANIME_DATA	AC_WALK_U_8F,5
 	_ANIME_DATA	AC_WALK_R_8F,1
 	_ANIME_DATA	ACMD_END,0
+
+/**************************************************************/
+/*     博士についてく：カウンター前まで                     */
+/**************************************************************/
+_ANIME_LABEL	anime_t02pc0101_guide01a
+	_ANIME_DATA	AC_WALK_U_8F,5
+	_ANIME_DATA	ACMD_END,0
+
+/**************************************************************/
+/*     博士の案内：カウンターからパソコン            */
+/**************************************************************/
+_ANIME_LABEL	anime_t02pc0101_guide02
+	_ANIME_DATA	AC_WALK_L_8F,5
+	_ANIME_DATA	ACMD_END,0
+
+/**************************************************************/
+/*     博士についてく：カウンターからパソコン           */
+/**************************************************************/
+_ANIME_LABEL	anime_t02pc0101_guide02a
+	_ANIME_DATA	AC_WAIT_8F,1
+	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA	AC_WALK_L_8F,3
+	_ANIME_DATA	ACMD_END,0
+
+/**************************************************************/
+/*     博士の案内：パソコンからショップ                     */
+/**************************************************************/
+_ANIME_LABEL	anime_t02pc0101_guide03
+	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	AC_WALK_R_8F,5
+	_ANIME_DATA	AC_WALK_D_8F,4
+	_ANIME_DATA	ACMD_END,0
+
+/**************************************************************/
+/*     博士についてく：パソコンからショップ                     */
+/**************************************************************/
+_ANIME_LABEL	anime_t02pc0101_guide03a
+	_ANIME_DATA	AC_WAIT_16F,1
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	AC_WALK_R_8F,5
+	_ANIME_DATA	AC_WALK_D_8F,4
+	_ANIME_DATA	ACMD_END,0
+
   
