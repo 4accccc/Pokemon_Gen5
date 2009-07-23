@@ -67,9 +67,12 @@
 #define _ITEMICON_SCR_X (14)
 #define _ITEMICON_SCR_Y (8)
 
-
-
 #define ITEM_LIST_NUM (8)
+
+
+
+#define PSTATUS_BAR_CELL_CURSOR_EXIT (200)    //EXIT xボタン
+#define PSTATUS_BAR_CELL_CURSOR_RETURN (232) //RETURN Enterボタン
 
 
 typedef enum{
@@ -335,7 +338,9 @@ void ITEMDISP_graphicDelete(FIELD_ITEMMENU_WORK* pWork)
 
 void ITEMDISP_upMessageRewrite(FIELD_ITEMMENU_WORK* pWork)
 {
-  ITEM_ST * item = MYITEM_PosItemGet( pWork->pMyItem, pWork->pocketno, ITEMMENU_GetItemIndex(pWork) );
+ // ITEM_ST * item = MYITEM_PosItemGet( pWork->pMyItem, pWork->pocketno, ITEMMENU_GetItemIndex(pWork) );
+  ITEM_ST * item = ITEMMENU_GetItem( pWork,ITEMMENU_GetItemIndex(pWork) );
+
   if((item==NULL) || (item->id==ITEM_DUMMY_DATA)){
     return;
   }
@@ -484,8 +489,6 @@ static void _itemiconAnim(FIELD_ITEMMENU_WORK* pWork,int itemid)
     GFL_CLWK_DATA cellInitData;
 
 
-    OS_TPrintf("アイコン絵交換\n");
-
     cellInitData.pos_x = _ITEMICON_SCR_X * 8+16;
     cellInitData.pos_y = _ITEMICON_SCR_Y * 8+16;
     cellInitData.anmseq = 0;
@@ -625,7 +628,8 @@ void ITEMDISP_CellMessagePrint( FIELD_ITEMMENU_WORK* pWork )
     if(pWork->oamlistpos+i < 0){
       continue;
     }
-    item = MYITEM_PosItemGet( pWork->pMyItem, pWork->pocketno,  pWork->oamlistpos+i  );
+//    item = MYITEM_PosItemGet( pWork->pMyItem, pWork->pocketno,  pWork->oamlistpos+i  );
+    item = ITEMMENU_GetItem( pWork , pWork->oamlistpos+i);
 		if((item==NULL) || (item->id==ITEM_DUMMY_DATA)){
 			continue;
 		}
@@ -718,7 +722,7 @@ void ITEMDISP_scrollCursorChangePos(FIELD_ITEMMENU_WORK* pWork, int num)
   u32 x,y;
 
   {
-    int length = MYITEM_GetItemPocketNumber( pWork->pMyItem, pWork->pocketno)-1;
+    int length = ITEMMENU_GetItemPocketNumber( pWork ) - 1;
     GFL_CLACTPOS pos;
     int ymax = _SCROLL_BOTTOM_Y - _SCROLL_TOP_Y;
     int y = ((num * ymax)/length) + _SCROLL_TOP_Y;

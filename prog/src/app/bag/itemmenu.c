@@ -71,6 +71,7 @@ static void _windowRewrite(FIELD_ITEMMENU_WORK* pWork);
 static void _itemUseWindowCreate(FIELD_ITEMMENU_WORK* pWork);
 static void _itemUseWindowRewrite(FIELD_ITEMMENU_WORK* pWork);
 static void _itemUseMenu(FIELD_ITEMMENU_WORK* pWork);
+static void _itemKindSelectMenu(FIELD_ITEMMENU_WORK* pWork);
 
 
 #ifdef _NET_DEBUG
@@ -173,6 +174,76 @@ static void _windowRewrite(FIELD_ITEMMENU_WORK* pWork)
 
 //------------------------------------------------------------------------------
 /**
+ * @brief   ポケットにあるアイテムを返す
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+
+ITEM_ST* ITEMMENU_GetItem(FIELD_ITEMMENU_WORK* pWork, int no)
+{
+  ITEM_ST * item;
+  
+  if(pWork->moveMode){
+    item = &pWork->ScrollItem[no];
+  }
+  else{
+    item = MYITEM_PosItemGet( pWork->pMyItem, pWork->pocketno, no );
+  }
+  return item;
+}
+
+//------------------------------------------------------------------------------
+/**
+ * @brief   ポケットにあるアイテムの総数を返す
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+
+int ITEMMENU_GetItemPocketNumber(FIELD_ITEMMENU_WORK* pWork)
+{
+  int length = 0;
+  
+  if(pWork->moveMode){
+    length = MYITEM_GetItemThisPocketNumber(pWork->ScrollItem, BAG_MYITEM_MAX);
+    
+  }
+  else{
+    length = MYITEM_GetItemPocketNumber( pWork->pMyItem, pWork->pocketno);
+  }
+  return length;
+}
+
+
+static void _ItemChangeSingle(FIELD_ITEMMENU_WORK* pWork, int no1, int no2 )
+{
+  ITEM_ST temp;
+  GFL_STD_MemCopy(&pWork->ScrollItem[no1], &temp, sizeof(ITEM_ST));
+  GFL_STD_MemCopy(&pWork->ScrollItem[no2],&pWork->ScrollItem[no1], sizeof(ITEM_ST));
+  GFL_STD_MemCopy(&temp, &pWork->ScrollItem[no2], sizeof(ITEM_ST));
+}
+
+
+static void _ItemChange(FIELD_ITEMMENU_WORK* pWork, int no1, int no2 )
+{
+  int i;
+
+  if(no1 == no2){
+    return;
+  }
+  else if(no1 < no2){
+    for(i = no1; i < no2 ; i++ ){
+      _ItemChangeSingle(pWork, i, i+1);
+    }
+  }
+  else{
+    for(i = no1; i > no2 ; i-- ){
+      _ItemChangeSingle(pWork, i, i-1);
+    }
+  }
+}
+
+//------------------------------------------------------------------------------
+/**
  * @brief   ポケットに応じたカーソル位置を覚えておく 新しいポケットでのカーソル位置を引き出す
  * @retval  none
  */
@@ -231,6 +302,28 @@ static BOOL _posplus(FIELD_ITEMMENU_WORK* pWork, int length)
 }
 
 
+static BOOL _posminus(FIELD_ITEMMENU_WORK* pWork, int length)
+{
+  BOOL bChange = FALSE;
+
+  if((pWork->curpos==1) && (pWork->oamlistpos!=-1)){
+    //カーソルはそのままでリストが移動
+    pWork->oamlistpos--;
+    bChange = TRUE;
+  }
+  else if((pWork->curpos==1)){
+    //リストの終端まで来たのでカーソルが移動
+    pWork->curpos--;
+    bChange = TRUE;
+  }
+  else if(pWork->curpos != 0){
+    pWork->curpos--;
+    bChange = TRUE;
+  }
+  return bChange;
+}
+
+
 //------------------------------------------------------------------------------
 /**
  * @brief   スクロールの処理
@@ -244,14 +337,14 @@ static BOOL _itemScrollCheck(FIELD_ITEMMENU_WORK* pWork)
   int ymax = _SCROLL_BOTTOM_Y - _SCROLL_TOP_Y;
 
   if(GFL_UI_TP_GetPointCont(&x, &y) == TRUE){
-    if((y <= _SCROLL_TOP_Y)  || (y >= _SCROLL_BOTTOM_Y)){
+    if((y <= _SCROLL_TOP_Y) || (y >= _SCROLL_BOTTOM_Y)){
       return FALSE;
     }
     if((x >= (32*8)) || (x <= (30*8)) ){
       return FALSE;
     }
     {
-      int length = MYITEM_GetItemPocketNumber( pWork->pMyItem, pWork->pocketno);
+      int length = ITEMMENU_GetItemPocketNumber( pWork);
       int num = (length * (y-_SCROLL_TOP_Y)) / ymax;
 
       pWork->curpos = 0;
@@ -273,34 +366,150 @@ static BOOL _itemScrollCheck(FIELD_ITEMMENU_WORK* pWork)
  */
 //------------------------------------------------------------------------------
 
-static BOOL _keyMoveCheck(FIELD_ITEMMENU_WORK* pWork)
+static BOOL _keyChangeItemCheck(FIELD_ITEMMENU_WORK* pWork)
 {
   BOOL bChange = FALSE;
+  int nowno = ITEMMENU_GetItemIndex(pWork);
   {
     int pos = pWork->curpos;
-    int length = MYITEM_GetItemPocketNumber( pWork->pMyItem, pWork->pocketno);
+    int length = ITEMMENU_GetItemPocketNumber( pWork);
     
 		if(GFL_UI_KEY_GetRepeat()== PAD_KEY_DOWN){
       bChange = _posplus(pWork, length);
 		}
 		if(GFL_UI_KEY_GetRepeat()== PAD_KEY_UP){
-      if((pWork->curpos==1) && (pWork->oamlistpos!=-1)){
-        //カーソルはそのままでリストが移動
-        pWork->oamlistpos--;
-        bChange = TRUE;
-      }
-      else if((pWork->curpos==1)){
-        //リストの終端まで来たのでカーソルが移動
-        pWork->curpos--;
-        bChange = TRUE;
-      }
-      else if(pWork->curpos != 0){
-        pWork->curpos--;
-        bChange = TRUE;
-      }
+      bChange = _posminus(pWork, length);
+		}
+  }
+  if(bChange){
+    int newno = ITEMMENU_GetItemIndex(pWork);
+    _ItemChange(pWork, nowno, newno);
+  }
+  return bChange;
+}
+
+
+
+//------------------------------------------------------------------------------
+/**
+ * @brief   アイテム交換時のキーの動きの処理
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+
+static BOOL _keyMoveCheck(FIELD_ITEMMENU_WORK* pWork)
+{
+  BOOL bChange = FALSE;
+  {
+    int pos = pWork->curpos;
+    int length = ITEMMENU_GetItemPocketNumber( pWork);
+    
+		if(GFL_UI_KEY_GetRepeat()== PAD_KEY_DOWN){
+      bChange = _posplus(pWork, length);
+		}
+		if(GFL_UI_KEY_GetRepeat()== PAD_KEY_UP){
+      bChange = _posminus(pWork, length);
 		}
   }
   return bChange;
+}
+
+//------------------------------------------------------------------------------
+/**
+ * @brief   アイテム移動モード時のアイテム部分のタッチ処理
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+
+static BOOL _itemMovePositionTouchItem(FIELD_ITEMMENU_WORK* pWork)
+{
+  int nowno = ITEMMENU_GetItemIndex(pWork);
+  u32 x,y,i;
+  int ymax = _SCROLL_BOTTOM_Y - _SCROLL_TOP_Y;
+  
+  if(GFL_UI_TP_GetPointCont(&x, &y) == TRUE){
+    if((y <= _SCROLL_TOP_Y)  || (y >= _SCROLL_BOTTOM_Y)){
+      return FALSE;
+    }
+    if((x >= (30*8)) || (x <= (18*8)) ){
+      return FALSE;
+    }
+    {
+      int length = ITEMMENU_GetItemPocketNumber( pWork);
+      BOOL bChange=FALSE;
+      int num = (6 * (y-_SCROLL_TOP_Y)) / ymax;  //カーソルを移動させたい量
+
+      if(pWork->curpos == num){
+        return FALSE;
+      }
+      else if(pWork->curpos < num){
+        for(i = pWork->curpos ; i < num; i++){
+          bChange += _posplus(pWork, length);
+        }
+      }
+      else{
+        for(i = pWork->curpos ; i > num; i--){
+          bChange += _posminus(pWork, length);
+        }
+      }
+    }
+    if(0){
+      int length = ITEMMENU_GetItemPocketNumber( pWork);
+      int num = (length * (y-_SCROLL_TOP_Y)) / ymax;
+
+      pWork->curpos = 0;
+      pWork->oamlistpos = -1;
+      for(i = 0 ; i < num ; i++){
+        _posplus(pWork, length);
+      }
+    }
+    {
+      int newno = ITEMMENU_GetItemIndex(pWork);
+      _ItemChange(pWork, nowno, newno);
+    }
+    return TRUE;
+  }
+  return FALSE;
+}
+
+//------------------------------------------------------------------------------
+/**
+ * @brief   アイテム移動モード時のキーの処理
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+
+static void _itemMovePosition(FIELD_ITEMMENU_WORK* pWork)
+{
+  BOOL bChange=FALSE;
+  u32 trg = GFL_UI_KEY_GetTrg();
+
+  
+  if((trg == PAD_BUTTON_A) || (trg == PAD_BUTTON_SELECT)){  //反映
+    MYITEM_ITEM_STCopy(pWork->pMyItem, pWork->ScrollItem, pWork->pocketno, FALSE);
+  }
+  if((trg == PAD_BUTTON_B) || (trg == PAD_BUTTON_A) || (trg == PAD_BUTTON_SELECT) ){  //戻る
+    pWork->moveMode = FALSE;
+    _CHANGE_STATE(pWork,_itemKindSelectMenu);
+    GFL_CLACT_WK_SetAnmSeq( pWork->clwkCur , 1 );
+    return;
+  }
+
+  if( _itemScrollCheck(pWork) ){   // スクロールバーの操作
+    ITEMDISP_scrollCursorMove(pWork);
+    bChange = TRUE;
+  }
+  else if(_itemMovePositionTouchItem(pWork)){
+    ITEMDISP_scrollCursorChangePos(pWork, ITEMMENU_GetItemIndex(pWork));
+    bChange = TRUE;
+  }
+  else if(_keyChangeItemCheck(pWork)){   // キーの操作
+    ITEMDISP_scrollCursorChangePos(pWork, ITEMMENU_GetItemIndex(pWork));
+    bChange = TRUE;
+  }
+  if(bChange){
+    _windowRewrite(pWork);
+  }
 }
 
 
@@ -326,7 +535,17 @@ static void _itemKindSelectMenu(FIELD_ITEMMENU_WORK* pWork)
     _CHANGE_STATE(pWork,NULL);
     return;
   }
+	if(GFL_UI_KEY_GetTrg() == PAD_BUTTON_SELECT){
+    GFL_STD_MemClear(pWork->ScrollItem, sizeof(pWork->ScrollItem));
+    MYITEM_ITEM_STCopy(pWork->pMyItem, pWork->ScrollItem, pWork->pocketno, TRUE);  //取得
+    pWork->moveMode = TRUE;
+    GFL_CLACT_WK_SetAnmSeq( pWork->clwkCur , 2 );
+   
+    _CHANGE_STATE(pWork,_itemMovePosition);
+    return;
+  }
 
+  
   if( _itemScrollCheck(pWork) ){
     ITEMDISP_scrollCursorMove(pWork);
     bChange = TRUE;

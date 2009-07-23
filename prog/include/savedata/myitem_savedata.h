@@ -29,6 +29,7 @@ typedef	struct {
 #define	BAG_NUTS_ITEM_MAX		( 64 )		// 木の実ポケット最大数
 #define	BAG_NORMAL_ITEM_MAX		( 165+30+15+12 )		// 道具ポケット最大数
 
+#define	BAG_MYITEM_MAX (BAG_NORMAL_ITEM_MAX) //一番要素が大きい物
 
 //--------------------------------------------------------------
 //	この定義はitemconv_dp の datamake.cppと同じでなければいけない 2009.07.21
@@ -60,6 +61,7 @@ typedef struct _MYITEM * MYITEM_PTR;
 extern int MYITEM_GetWorkSize(void);
 extern MYITEM_PTR MYITEM_AllocWork(int heapID);
 extern void MYITEM_Copy(const MYITEM_PTR from, MYITEM_PTR to);
+extern void MYITEM_ITEM_STCopy(MYITEM_PTR myitem, ITEM_ST* itemst, int pocket, int bMyGet);
 
 //----------------------------------------------------------
 //	MYITEM操作のための関数
@@ -80,6 +82,11 @@ extern ITEM_ST * MYITEM_PosItemGet( MYITEM_PTR myitem, u16 pocket, u16 pos );
 extern void MYITEM_BattlePocketItemMake( MYITEM_PTR myitem, ITEM_ST * make[], u32 heap );
 extern u32 MYITEM_CnvButtonItemGet( const MYITEM_PTR myitem );
 extern void MYITEM_CnvButtonItemSet( MYITEM_PTR myitem, u32 item );
+
+//----------------------------------------------------------
+//	ITEMLIST操作のための関数
+//----------------------------------------------------------
+extern u32 MYITEM_GetItemThisPocketNumber( ITEM_ST * item,int max );
 
 
 //----------------------------------------------------------

@@ -59,6 +59,7 @@ typedef void (StateFunc)(FIELD_ITEMMENU_WORK* wk);
 typedef int (MenuFunc)(FIELD_ITEMMENU_WORK* wk);
 
 struct _DEBUGITEM_PARAM {
+	ITEM_ST ScrollItem[ BAG_MYITEM_MAX ];	// スクロールする為のアイテムリスト
   StateFunc* state;      ///< ハンドルのプログラム状態
   GMEVENT * event;
   GAMESYS_WORK * gsys;
@@ -110,10 +111,8 @@ struct _DEBUGITEM_PARAM {
 	int pocketno;  //今さしているポケット番号
 	int curpos;   //今さしているカーソル番号
   int oamlistpos; //OAMLIST の 先頭位置 -1から開始
+  int moveMode;  //移動モードになる
   
-	int itemnum;
-
-  int pagetop;
   int mode;
   int ret_item;
   int cycle_flg;
@@ -163,4 +162,6 @@ extern void ITEMDISP_scrollCursorChangePos(FIELD_ITEMMENU_WORK* pWork, int num);
 
 
 extern int ITEMMENU_GetItemIndex(FIELD_ITEMMENU_WORK* pWork);
+extern int ITEMMENU_GetItemPocketNumber(FIELD_ITEMMENU_WORK* pWork);
+extern ITEM_ST* ITEMMENU_GetItem(FIELD_ITEMMENU_WORK* pWork,int no);
 

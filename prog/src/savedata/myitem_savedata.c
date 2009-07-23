@@ -64,6 +64,7 @@ struct _BAG_CURSOR {
 #define	ITEM_MAX_WAZAMACHINE	( 99 )		// 技マシンの所持数最大
 
 static u32 MyItemDataGet( MYITEM_PTR myitem, u16 id, ITEM_ST ** item, u32 * max, u32 heap );
+static u32 MyPocketDataGet( MYITEM_PTR myitem, s32 pocket, ITEM_ST ** item, u32 * max);
 
 
 
@@ -120,6 +121,34 @@ void MYITEM_Copy(const MYITEM_PTR from, MYITEM_PTR to)
 {
 	GFL_STD_MemCopy(from, to, sizeof(MYITEM));
 }
+
+
+//------------------------------------------------------------------
+/**
+ * @brief	MYITEMのITEM_STのコピー
+ * @param	myitem	  MYITEMのポインタ
+ * @param	itemst		アイテムリストの先頭ポインタ
+ * @param	pocket		ポケット番号
+ * @param	bMyGet		myitemからデータがほしい場合TRUE  myitemに格納する場合FALSE
+ */
+//------------------------------------------------------------------
+void MYITEM_ITEM_STCopy(MYITEM_PTR myitem, ITEM_ST* itemst, int pocket, int bMyGet)
+{
+  ITEM_ST* MyItemSt;
+  u32 max;
+
+  MyPocketDataGet(myitem, pocket, &MyItemSt, &max);
+
+  if(bMyGet)
+  {
+    GFL_STD_MemCopy(MyItemSt, itemst, sizeof(ITEM_ST) * max );
+  }
+  else
+  {
+    GFL_STD_MemCopy(itemst, MyItemSt,  sizeof(ITEM_ST) * max );
+  }
+}
+
 
 //------------------------------------------------------------------
 /**
@@ -518,6 +547,33 @@ BOOL MYITEM_CheckItemPocket( MYITEM_PTR myitem, u32 pocket )
 
 //------------------------------------------------------------------
 /**
+ * @brief	ポケット構造体のアイテム数
+ * @param	myitem		ポケット構造体へのポインタ
+ * @return     数
+ */
+//------------------------------------------------------------------
+
+u32 MYITEM_GetItemThisPocketNumber( ITEM_ST * item,int max )
+{
+	u32	num=0;
+	u32	i;
+
+  if(item)
+	{
+		for( i=0; i < max; i++ )
+		{
+			if( item[i].id != ITEM_DUMMY_DATA )
+			{
+				num++;
+			}
+		}
+	}
+	return num;
+}
+
+
+//------------------------------------------------------------------
+/**
  * @brief	ポケットのアイテム数
  * @param	myitem		手持ちアイテム構造体へのポインタ
  * @param	pocket		ポケット番号
@@ -531,17 +587,7 @@ u32 MYITEM_GetItemPocketNumber( MYITEM_PTR myitem, u32 pocket )
 	u32	i;
 
 	MyPocketDataGet(myitem, pocket, &item, &max);	
-	if(item)
-	{
-		for( i=0; i<max; i++ )
-		{
-			if( item[i].id != ITEM_DUMMY_DATA )
-			{
-				num++;
-			}
-		}
-	}
-	return num;
+	return MYITEM_GetItemThisPocketNumber(item, max);
 }
 
 //------------------------------------------------------------------
