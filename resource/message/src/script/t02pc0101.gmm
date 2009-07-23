@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-07-11T18:17:18"/>
+	<create user="matsumiya" host="W00207" date="2009-07-23T15:55:44"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -299,21 +299,36 @@
 　主人公と向き合ってこのメッセージ表示</comment>
 		<attribute name="キャラ指定">DOCTOR_JR
 博士</attribute>
+		<language name="JPN" width="256">アララギ『ここが　ポケモンセンター！
+なんとなく　おちつくよね[BE:01:ページ切り替え（クリア）]
+さあ　あんない　するよ！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">アララギ『ここが　ポケモンセンター！
+なんとなく　おちつくよね[BE:01:ページ切り替え（クリア）]
+さあ　あんない　するよ！[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_t02pc0101_docotr_jr_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂
+・マップ切り替え直後からイベント
+　カウンター（）まで進むと
+　主人公と向き合ってこのメッセージ表示</comment>
+		<attribute name="キャラ指定">DOCTOR_JR
+博士</attribute>
 		<language name="JPN" width="256">アララギ『ポケモンセンターの
 すごい　ところ！[BE:01:ページ切り替え（クリア）]
 それは　なんと！
 ポケモンの　かいふくが　できること！[BE:01:ページ切り替え（クリア）]
 しかも　ただ！[BE:01:ページ切り替え（クリア）]
-トレーナーの　みかた　だよな！</language>
+トレーナーの　みかた　だよな！[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">アララギ『ポケモンセンターの
 すごい　ところ！[BE:01:ページ切り替え（クリア）]
 それは　なんと！
 ポケモンの　回復が　できること！[BE:01:ページ切り替え（クリア）]
 しかも　ただ！[BE:01:ページ切り替え（クリア）]
-トレーナーの　味方　だよな！</language>
+トレーナーの　味方だよな！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_t02pc0101_docotr_jr_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_t02pc0101_docotr_jr_03" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・msg_t02pc0101_docotr_jr_01表示後に
 　主人公が左か下に移動したとき
@@ -330,7 +345,7 @@
 きみの　ポケモンを　預けてごらん[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_t02pc0101_docotr_jr_03" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_t02pc0101_docotr_jr_04" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・回復処理後～
 　パソコン（）まで進むと
@@ -374,7 +389,7 @@
 だれの　パソコンの　こと……？[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_t02pc0101_docotr_jr_04" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_t02pc0101_docotr_jr_05" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂</comment>
 		<attribute name="キャラ指定">DOCTOR_JR
 博士</attribute>
@@ -398,7 +413,7 @@
 きみたちも　いつか　出会うだろう[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_t02pc0101_docotr_jr_05" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_t02pc0101_docotr_jr_06" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 msg_t02pc0101_docotr_jr_03表示後
 ショップカウンタ（）まで進むと
@@ -423,7 +438,7 @@ msg_t02pc0101_docotr_jr_03表示後
 対応してくれる　はずだ！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_t02pc0101_docotr_jr_06" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_t02pc0101_docotr_jr_07" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・メッセージ表示後退場
 　画面外に消えると
