@@ -173,6 +173,24 @@ static void _windowRewrite(FIELD_ITEMMENU_WORK* pWork)
 
 //------------------------------------------------------------------------------
 /**
+ * @brief   ポケットに応じたカーソル位置を覚えておく 新しいポケットでのカーソル位置を引き出す
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+
+static void _pocketCursorChange(FIELD_ITEMMENU_WORK* pWork,int oldpocket, int newpocket)
+{
+  s16 cur,scr;
+  
+  MYITEM_FieldBagPocketSet(pWork->pBagCursor, oldpocket);
+  MYITEM_FieldBagCursorSet(pWork->pBagCursor, oldpocket, pWork->curpos, pWork->oamlistpos+1 );
+  MYITEM_FieldBagCursorGet(pWork->pBagCursor, newpocket, &cur, &scr );
+  pWork->curpos = cur;
+  pWork->oamlistpos = scr - 1;
+}
+
+//------------------------------------------------------------------------------
+/**
  * @brief   アイテムインデックスをカーソルとリストの位置から計算
  * @retval  none
  */
@@ -183,6 +201,106 @@ int ITEMMENU_GetItemIndex(FIELD_ITEMMENU_WORK* pWork)
   return pWork->curpos + pWork->oamlistpos + 1;
 }
 
+//------------------------------------------------------------------------------
+/**
+ * @brief   キーがした押されたときの処理
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+
+static BOOL _posplus(FIELD_ITEMMENU_WORK* pWork, int length)
+{
+  BOOL bChange = FALSE;
+  
+  if((pWork->curpos==4) && ((pWork->oamlistpos+7) < length)){
+    //カーソルはそのままでリストが移動
+    pWork->oamlistpos++;
+    bChange = TRUE;
+  }
+  else if((pWork->curpos==4) && ((pWork->curpos+1) < length)){
+    //リストの終端まで来たのでカーソルが移動
+    pWork->curpos++;
+    bChange = TRUE;
+  }
+  else if((pWork->curpos!=5) && ((pWork->curpos+1) < length)){
+    pWork->curpos++;
+    bChange = TRUE;
+  }
+  return bChange;
+}
+
+
+//------------------------------------------------------------------------------
+/**
+ * @brief   スクロールの処理
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+
+static BOOL _itemScrollCheck(FIELD_ITEMMENU_WORK* pWork)
+{
+  u32 x,y,i;
+  int ymax = _SCROLL_BOTTOM_Y - _SCROLL_TOP_Y;
+
+  if(GFL_UI_TP_GetPointCont(&x, &y) == TRUE){
+    if((y <= _SCROLL_TOP_Y)  || (y >= _SCROLL_BOTTOM_Y)){
+      return FALSE;
+    }
+    if((x >= (32*8)) || (x <= (30*8)) ){
+      return FALSE;
+    }
+    {
+      int length = MYITEM_GetItemPocketNumber( pWork->pMyItem, pWork->pocketno);
+      int num = (length * (y-_SCROLL_TOP_Y)) / ymax;
+
+      pWork->curpos = 0;
+      pWork->oamlistpos = -1;
+      for(i = 0 ; i < num ; i++){
+        _posplus(pWork, length);
+      }
+    }
+    return TRUE;
+  }
+  return FALSE;
+}
+
+
+//------------------------------------------------------------------------------
+/**
+ * @brief   キーの動きの処理
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+
+static BOOL _keyMoveCheck(FIELD_ITEMMENU_WORK* pWork)
+{
+  BOOL bChange = FALSE;
+  {
+    int pos = pWork->curpos;
+    int length = MYITEM_GetItemPocketNumber( pWork->pMyItem, pWork->pocketno);
+    
+		if(GFL_UI_KEY_GetRepeat()== PAD_KEY_DOWN){
+      bChange = _posplus(pWork, length);
+		}
+		if(GFL_UI_KEY_GetRepeat()== PAD_KEY_UP){
+      if((pWork->curpos==1) && (pWork->oamlistpos!=-1)){
+        //カーソルはそのままでリストが移動
+        pWork->oamlistpos--;
+        bChange = TRUE;
+      }
+      else if((pWork->curpos==1)){
+        //リストの終端まで来たのでカーソルが移動
+        pWork->curpos--;
+        bChange = TRUE;
+      }
+      else if(pWork->curpos != 0){
+        pWork->curpos--;
+        bChange = TRUE;
+      }
+		}
+  }
+  return bChange;
+}
 
 
 //------------------------------------------------------------------------------
@@ -203,57 +321,24 @@ static void _itemKindSelectMenu(FIELD_ITEMMENU_WORK* pWork)
 	u32	ret=0;
   BOOL bChange=FALSE;
 
-	if(GFL_UI_KEY_GetTrg()== PAD_BUTTON_B){
+	if(GFL_UI_KEY_GetTrg() == PAD_BUTTON_B){
     _CHANGE_STATE(pWork,NULL);
     return;
   }
 
-//	if( PRINT_UTIL_Trans( &pWork->SysMsgPrintUtil, pWork->SysMsgQue ) == TRUE){
-//	}
-
-  {
-    int pos = pWork->curpos;
-    int length = MYITEM_GetItemPocketNumber( pWork->pMyItem, pWork->pocketno);
-    
-		if(GFL_UI_KEY_GetRepeat()== PAD_KEY_DOWN){
-      if((pWork->curpos==4) && ((pWork->oamlistpos+7)<length)){
-        //カーソルはそのままでリストが移動
-        pWork->oamlistpos++;
-        bChange = TRUE;
-      }
-      else if((pWork->curpos==4) && ((pWork->curpos+1) < length)){
-        //リストの終端まで来たのでカーソルが移動
-        pWork->curpos++;
-        bChange = TRUE;
-      }
-      else if((pWork->curpos!=5) && ((pWork->curpos+1) < length)){
-        pWork->curpos++;
-        bChange = TRUE;
-      }
-		}
-		if(GFL_UI_KEY_GetRepeat()== PAD_KEY_UP){
-      if((pWork->curpos==1) && (pWork->oamlistpos!=-1)){
-        //カーソルはそのままでリストが移動
-        pWork->oamlistpos--;
-        bChange = TRUE;
-      }
-      else if((pWork->curpos==1)){
-        //リストの終端まで来たのでカーソルが移動
-        pWork->curpos--;
-        bChange = TRUE;
-      }
-      else if(pWork->curpos != 0){
-        pWork->curpos--;
-        bChange = TRUE;
-      }
-		}
+  if( _itemScrollCheck(pWork) ){
+    ITEMDISP_scrollCursorMove(pWork);
+    bChange = TRUE;
   }
-	{
-		int oldpoket = pWork->pocketno;
-		if(GFL_UI_KEY_GetTrg()== PAD_KEY_RIGHT){
+  else if(_keyMoveCheck(pWork)){
+    bChange = TRUE;
+  }
+  {
+		int oldpocket = pWork->pocketno;
+		if(GFL_UI_KEY_GetTrg() == PAD_KEY_RIGHT){
 			pWork->pocketno++;
 		}
-		if(GFL_UI_KEY_GetTrg()== PAD_KEY_LEFT){
+		if(GFL_UI_KEY_GetTrg() == PAD_KEY_LEFT){
 			pWork->pocketno--;
 		}
 		if(pWork->pocketno >= BAG_POKE_MAX){
@@ -262,8 +347,9 @@ static void _itemKindSelectMenu(FIELD_ITEMMENU_WORK* pWork)
 		if(pWork->pocketno < 0){
 			pWork->pocketno = BAG_POKE_MAX-1;
 		}
-		if(oldpoket != pWork->pocketno){
-			bChange = TRUE;
+		if(oldpocket != pWork->pocketno){
+      _pocketCursorChange(pWork, oldpocket, pWork->pocketno);
+      bChange = TRUE;
 		}
 	}
 
@@ -647,7 +733,9 @@ static void _BttnCallBack( u32 bttnid, u32 event, void* p_work )
 {
   FIELD_ITEMMENU_WORK* pWork = p_work;
 
+  _pocketCursorChange(pWork, pWork->pocketno, bttnid);
   pWork->pocketno = bttnid;
+
   _windowRewrite(pWork);
 
 }
@@ -685,7 +773,15 @@ static GFL_PROC_RESULT FieldItemMenuProc_Init( GFL_PROC * proc, int * seq, void 
 
 	GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_ITEMMENU, 0x28000 );
 	pWork->heapID = HEAPID_ITEMMENU;
+  pWork->pBagCursor = GAMEDATA_GetBagCursor(GAMESYSTEM_GetGameData(pWork->gsys));
 
+  pWork->pocketno = MYITEM_FieldBagPocketGet(pWork->pBagCursor);
+  {
+    s16 cur,scr;
+    MYITEM_FieldBagCursorGet(pWork->pBagCursor, pWork->pocketno, &cur, &scr );
+    pWork->curpos = cur;
+    pWork->oamlistpos = scr - 1;
+  }
 	_graphicInit(pWork);
 
 	pWork->pMyItem = GAMEDATA_GetMyItem(GAMESYSTEM_GetGameData(pWork->gsys));
@@ -700,7 +796,6 @@ static GFL_PROC_RESULT FieldItemMenuProc_Init( GFL_PROC * proc, int * seq, void 
 	pWork->WordSet    = WORDSET_Create( pWork->heapID );
 	pWork->fontHandle = GFL_FONT_Create( ARCID_FONT , NARC_font_large_nftr ,
 																		GFL_FONT_LOADTYPE_FILE , FALSE , pWork->heapID );
-  pWork->oamlistpos = -1;
 
 	GFL_UI_KEY_SetRepeatSpeed(1, 6);
 	ITEMDISP_upMessageCreate(pWork);
@@ -762,6 +857,9 @@ static GFL_PROC_RESULT FieldItemMenuProc_End( GFL_PROC * proc, int * seq, void *
                              GFL_ARCUTIL_TRANSINFO_GetSize(pWork->bgchar));
   }
 	GFL_TCB_DeleteTask( pWork->g3dVintr );
+
+  MYITEM_FieldBagPocketSet(pWork->pBagCursor, pWork->pocketno);
+  MYITEM_FieldBagCursorSet(pWork->pBagCursor, pWork->pocketno, pWork->curpos, pWork->oamlistpos+1 );
 
   ITEMDISP_upMessageDelete(pWork);
   ITEMDISP_graphicDelete(pWork);

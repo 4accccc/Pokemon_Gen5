@@ -68,6 +68,7 @@
 #define _ITEMICON_SCR_Y (8)
 
 
+
 #define ITEM_LIST_NUM (8)
 
 
@@ -392,6 +393,7 @@ void ITEMDISP_upMessageDelete(FIELD_ITEMMENU_WORK* pWork)
   GFL_BMPWIN_Delete(pWork->winItemReport);
   GFL_BMPWIN_Delete(pWork->winItemNum);
 
+  GFL_CLACT_WK_Remove( pWork->scrollCur );
   GFL_CLACT_WK_Remove( pWork->cellicon );
   GFL_CLGRP_CGR_Release( pWork->objRes[_CLACT_CHR] );
   GFL_CLGRP_PLTT_Release( pWork->objRes[_CLACT_PLT] );
@@ -511,8 +513,6 @@ void _dispMain(FIELD_ITEMMENU_WORK* pWork)
 
 
 
-#if 1
-
 void ITEMDISP_CellResourceCreate( FIELD_ITEMMENU_WORK* pWork )
 {
   int i;
@@ -553,6 +553,25 @@ void ITEMDISP_CellResourceCreate( FIELD_ITEMMENU_WORK* pWork )
 
 void ITEMDISP_CellCreate( FIELD_ITEMMENU_WORK* pWork )
 {
+
+  //スクロールカーソル
+  {
+    GFL_CLWK_DATA cellInitData;
+    cellInitData.pos_x = 31*8;
+    cellInitData.pos_y = _SCROLL_TOP_Y;
+    cellInitData.softpri = 1;
+    cellInitData.bgpri = 2;
+    cellInitData.anmseq = 0;
+    
+    pWork->scrollCur = GFL_CLACT_WK_Create(
+      pWork->cellUnit ,
+      pWork->cellRes[_NCG_CUR], pWork->cellRes[_PLT_CUR],  pWork->cellRes[_ANM_CUR],
+      &cellInitData ,CLSYS_DEFREND_MAIN , pWork->heapID );
+
+    GFL_CLACT_WK_SetDrawEnable( pWork->scrollCur , TRUE );
+  }  
+
+
   //選択カーソル
   {
     GFL_CLWK_DATA cellInitData;
@@ -663,4 +682,28 @@ void ITEMDISP_CellVramTrans( FIELD_ITEMMENU_WORK* pWork )
 	}
 }
 
-#endif
+
+//------------------------------------------------------------------------------
+/**
+ * @brief   スクロールバー上のスクロールカーソル表示
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+void ITEMDISP_scrollCursorMove(FIELD_ITEMMENU_WORK* pWork)
+{
+  u32 x,y;
+
+  if(GFL_UI_TP_GetPointCont(&x, &y) == TRUE){
+    GFL_CLACTPOS pos;
+    if(y < _SCROLL_TOP_Y){
+      return;
+    }
+    if(y > _SCROLL_BOTTOM_Y){
+      return;
+    }
+    GFL_CLACT_WK_GetPos( pWork->scrollCur , &pos, CLWK_SETSF_NONE );
+    pos.y = y;
+    GFL_CLACT_WK_SetPos( pWork->scrollCur ,  &pos, CLWK_SETSF_NONE );
+  }
+}
+

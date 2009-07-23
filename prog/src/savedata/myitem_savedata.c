@@ -34,16 +34,16 @@ struct _MYITEM {
 
 // フィールドのバッグのカーソル位置
 typedef struct {
-	u8	scr[8];
-	u8	pos[8];
-	u16	pocket;
-	u16	dummy;
+	s16	scr[BAG_POKE_MAX];  //10
+	s16	pos[BAG_POKE_MAX];  //20
+	u16	pocket;        //22
+	u16	dummy;         //24byte
 }FLDBAG_CURSOR;
 
 // 戦闘のバッグのカーソル位置
 typedef struct {
-	u8	scr[5];
-	u8	pos[5];
+	s16	scr[5];
+	s16	pos[5];
 	u16	item;
 	u16	page;
 	u16	pocket;		// ポケットページの位置
@@ -733,11 +733,7 @@ ITEM_ST * MYITEM_PosItemGet( MYITEM_PTR myitem, u16 pocket, u16 pos )
 //------------------------------------------------------------------
 BAG_CURSOR * MYITEM_BagCursorAlloc( u32 heapID )
 {
-	BAG_CURSOR * cursor;
-
-	cursor = GFL_HEAP_AllocMemory( heapID, sizeof(BAG_CURSOR) );
-	GFL_STD_MemClear16( cursor, sizeof(BAG_CURSOR) );
-	return cursor;
+	return GFL_HEAP_AllocClearMemory( heapID, sizeof(BAG_CURSOR) );
 }
 
 //------------------------------------------------------------------
@@ -750,7 +746,7 @@ BAG_CURSOR * MYITEM_BagCursorAlloc( u32 heapID )
  * @return	none
  */
 //------------------------------------------------------------------
-void MYITEM_FieldBagCursorGet( BAG_CURSOR * wk, u32 pocket, u8 * pos, u8 * scr )
+void MYITEM_FieldBagCursorGet( BAG_CURSOR * wk, u16 pocket, s16 * pos, s16 * scr )
 {
 	*pos = wk->fld.pos[pocket];
 	*scr = wk->fld.scr[pocket];
@@ -778,9 +774,13 @@ u16 MYITEM_FieldBagPocketGet( BAG_CURSOR * wk )
  * @return	none
  */
 //------------------------------------------------------------------
-void MYITEM_FieldBagCursorSet( BAG_CURSOR * wk, u32 pocket, u8 pos, u8 scr )
+void MYITEM_FieldBagCursorSet( BAG_CURSOR * wk, u16 pocket, s16 pos, s16 scr )
 {
-	wk->fld.pos[pocket] = pos;
+  GF_ASSERT(pocket >= 0);
+  GF_ASSERT(pocket < BAG_POKE_MAX);
+  GF_ASSERT(scr >= 0);
+  GF_ASSERT(pos >= 0);
+  wk->fld.pos[pocket] = pos;
 	wk->fld.scr[pocket] = scr;
 }
 
@@ -794,7 +794,9 @@ void MYITEM_FieldBagCursorSet( BAG_CURSOR * wk, u32 pocket, u8 pos, u8 scr )
 //------------------------------------------------------------------
 void MYITEM_FieldBagPocketSet( BAG_CURSOR * wk, u16 pocket )
 {
-	wk->fld.pocket = pocket;
+  GF_ASSERT(pocket >= 0);
+  GF_ASSERT(pocket < BAG_POKE_MAX);
+  wk->fld.pocket = pocket;
 }
 
 //------------------------------------------------------------------
@@ -807,9 +809,9 @@ void MYITEM_FieldBagPocketSet( BAG_CURSOR * wk, u16 pocket )
  * @return	none
  */
 //------------------------------------------------------------------
-void MYITEM_BattleBagCursorGet( BAG_CURSOR * wk, u32 pocket, u8 * pos, u8 * scr )
+void MYITEM_BattleBagCursorGet( BAG_CURSOR * wk, u16 pocket, s16 * pos, s16 * scr )
 {
-	*pos = wk->btl.pos[pocket];
+  *pos = wk->btl.pos[pocket];
 	*scr = wk->btl.scr[pocket];
 }
 
@@ -859,7 +861,7 @@ u16 MYITEM_BattleBagPocketPagePosGet( BAG_CURSOR * wk )
  * @return	none
  */
 //------------------------------------------------------------------
-void MYITEM_BattleBagCursorSet( BAG_CURSOR * wk, u32 pocket, u8 pos, u8 scr )
+void MYITEM_BattleBagCursorSet( BAG_CURSOR * wk, u16 pocket, s16 pos, s16 scr )
 {
 	wk->btl.pos[pocket] = pos;
 	wk->btl.scr[pocket] = scr;

@@ -20,7 +20,7 @@
 #include "field/eventdata_system.h"
 #include "field/location.h"
 #include "field/rail_location.h"  //RAIL_LOCATION
-#include "savedata/myitem_savedata.h"
+#include "savedata/myitem_savedata.h"  //BAG_CURSOR MYITEM
 #include "poke_tool/pokeparty.h"
 #include "field/fldmmdl.h"
 #include "field/eventwork.h"
@@ -154,6 +154,14 @@ extern const RAIL_LOCATION * GAMEDATA_GetRailLocation(const GAMEDATA * gamedata)
 //--------------------------------------------------------------
 extern void GAMEDATA_SetRailLocation(GAMEDATA * gamedata, const RAIL_LOCATION * railLoc);
 
+//--------------------------------------------------------------
+/**
+ * @brief   バッグカーソルのポインタ取得
+ * @param   gamedata		GAMEDATAへのポインタ
+ * @retval  バッグカーソルポインタ
+ */
+//--------------------------------------------------------------
+extern BAG_CURSOR* GAMEDATA_GetBagCursor(const GAMEDATA * gamedata);
 //--------------------------------------------------------------
 /**
  * @brief   手持ちアイテムへのポインタ取得

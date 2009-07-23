@@ -94,16 +94,16 @@ extern void * MYITEM_MakeBagData( MYITEM_PTR myitem, const u8 * list, u32 heap )
 //------------------------------------------------------------------
 extern BAG_CURSOR * MYITEM_BagCursorAlloc( u32 heapID );
 
-extern void MYITEM_FieldBagCursorGet( BAG_CURSOR * wk, u32 pocket, u8 * pos, u8 * scr );
+extern void MYITEM_FieldBagCursorGet( BAG_CURSOR * wk, u16 pocket, s16 * pos, s16 * scr );
 extern u16 MYITEM_FieldBagPocketGet( BAG_CURSOR * wk );
-extern void MYITEM_FieldBagCursorSet( BAG_CURSOR * wk, u32 pocket, u8 pos, u8 scr );
+extern void MYITEM_FieldBagCursorSet( BAG_CURSOR * wk, u16 pocket, s16 pos, s16 scr );
 extern void MYITEM_FieldBagPocketSet( BAG_CURSOR * wk, u16 pocket );
 
-extern void MYITEM_BattleBagCursorGet( BAG_CURSOR * wk, u32 pocket, u8 * pos, u8 * scr );
+extern void MYITEM_BattleBagCursorGet( BAG_CURSOR * wk, u16 pocket, s16 * pos, s16 * scr );
 extern u16 MYITEM_BattleBagLastItemGet( BAG_CURSOR * wk );
 extern u16 MYITEM_BattleBagLastPageGet( BAG_CURSOR * wk );
 extern u16 MYITEM_BattleBagPocketPagePosGet( BAG_CURSOR * wk );
-extern void MYITEM_BattleBagCursorSet( BAG_CURSOR * wk, u32 pocket, u8 pos, u8 scr );
+extern void MYITEM_BattleBagCursorSet( BAG_CURSOR * wk, u16 pocket, s16 pos, s16 scr );
 extern void MYITEM_BattleBagLastItemSet( BAG_CURSOR * wk, u16 item, u16 page );
 extern void MYITEM_BattleBagPocketPagePosSet( BAG_CURSOR * wk, u16 pocket );
 extern void MYITEM_BattleBagCursorPosInit( BAG_CURSOR * wk );
