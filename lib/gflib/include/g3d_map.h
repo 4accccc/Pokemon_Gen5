@@ -4,19 +4,12 @@
 extern "C" {
 #endif
 
-#define	MAPPLTT_SIZE	(0x200) 	//テクスチャパレット用ＶＲＡＭ確保サイズ 
 //#define	MAPOBJ_SIZE		(0x18000) 	//ブロック内オブジェクトモデルデータ用メモリ確保サイズ 
 //#define	MAPOBJTEX_SIZE	(0x4000) 	//ブロック内オブジェクトテクスチャデータ用ＶＲＡＭ確保サイズ 
-#define	MAPLOAD_SIZE	(0x800)		//分割データロードサイズ(ROM→RAM) 
-#define	MAPTRANS_SIZE	(0x2000) 	//分割データ転送サイズ(RAM→VRAM) 
+#define	GFL_G3D_MAP_MAPPLTT_SIZE	(0x200) 	//テクスチャパレット用ＶＲＡＭ確保サイズ 
+#define	GFL_G3D_MAP_MAPLOAD_SIZE	(0x800)		//分割データロードサイズ(ROM→RAM) 
+#define	GFL_G3D_MAP_MAPTRANS_SIZE	(0x2000) 	//分割データ転送サイズ(RAM→VRAM) 
 
-#define MAP_GRIDCOUNT	(32)		//マップ内縦横グリッド数
-
-#define DRAW_LIMIT	(1024 * FX32_ONE)		//描画範囲
-#define LOD_LIMIT	(512 * FX32_ONE)		//HighQuallity(LOD)用描画範囲
-
-#define	NON_TEX		(0xffff)
-#define	NON_ATTR	(0xffff)
 
 #define GFL_G3D_MAP_ATTR_GETMAX	(16)	//アトリビュート取得最大数
 //------------------------------------------------------------------

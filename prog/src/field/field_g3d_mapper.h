@@ -37,6 +37,7 @@ typedef struct {
 #define	FLD_MAPPER_MAPATTR_SIZE	(0x6004) 	//アトリビュート（高さ等）用メモリ確保サイズ 
 #define FLD_MAPPER_BLOCK_MEMSIZE	( FLD_MAPPER_MAPMDL_SIZE + FLD_MAPPER_MAPTEX_SIZE + FLD_MAPPER_MAPATTR_SIZE )
 
+
 //============================================================================================
 //
 //

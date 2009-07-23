@@ -8,6 +8,8 @@
 //============================================================================================
 #include "gflib.h"
 
+#include "field/field_const.h"
+
 #include "field_func_wbnormal_file.h"
 
 #include "../field_buildmodel.h"
@@ -141,6 +143,7 @@ void FieldGetAttr_WBNormalFile( GFL_G3D_MAP_ATTRINFO* attrInfo, const void* mapd
 {
 	fx32			grid_w, grid_x, grid_z;
 	u32				grid_idx;
+	u32				grid_count;
 	VecFx32			pos, vecN;
 	fx32			by, valD;
 	NormalVtxSt*	nvs;
@@ -149,8 +152,9 @@ void FieldGetAttr_WBNormalFile( GFL_G3D_MAP_ATTRINFO* attrInfo, const void* mapd
 
 	VEC_Set( &pos, posInBlock->x + map_width/2, posInBlock->y, posInBlock->z + map_width/2 );
 	//グリッド内情報取得
-	grid_w = map_width / MAP_GRIDCOUNT;	//マップ幅をグリッド数で分割
-	grid_idx = ( pos.z / grid_w ) * MAP_GRIDCOUNT + ( pos.x / grid_w );
+	grid_count = (map_width>>FX32_SHIFT) /  FIELD_CONST_GRID_SIZE;
+	grid_w = FIELD_CONST_GRID_FX32_SIZE;	//マップ幅をグリッド数で分割
+	grid_idx = ( pos.z / grid_w ) * grid_count + ( pos.x / grid_w );
 	grid_x = pos.x % grid_w;
 	grid_z = pos.z % grid_w;
 
