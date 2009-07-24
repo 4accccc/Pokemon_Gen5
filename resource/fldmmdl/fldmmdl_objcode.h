@@ -150,6 +150,8 @@
 #define POKE18 (0x91) //145 ポケモン１８
 #define POKE19 (0x92) //146 ポケモン１９
 #define POKE20 (0x93) //147 ポケモン２０
-#define OBJCODEMAX (0x94) //148 最大
+#define ACCORDION (0x94) //148 アコーディオン奏者
+#define BASKETM (0x95) //149 バスケ選手
+#define OBJCODEMAX (0x96) //150 最大
 
 #endif

@@ -157,7 +157,9 @@ enum {
 	NARC_fldmmdl_mdlres_poke17_nsbtx = 143,
 	NARC_fldmmdl_mdlres_poke18_nsbtx = 144,
 	NARC_fldmmdl_mdlres_poke19_nsbtx = 145,
-	NARC_fldmmdl_mdlres_poke20_nsbtx = 146
+	NARC_fldmmdl_mdlres_poke20_nsbtx = 146,
+	NARC_fldmmdl_mdlres_accordion_nsbtx = 147,
+	NARC_fldmmdl_mdlres_basketm_nsbtx = 148
 };
 
 /* NARC_FLDMMDL_MDLRES_NAIX_ */
