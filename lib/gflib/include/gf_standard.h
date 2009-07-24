@@ -11,10 +11,13 @@ extern "C" {
  */
 //=============================================================================================
 
-#ifndef	__GF_STANDARD_H__
-#define	__GF_STANDARD_H__
+#pragma once
 
 #include "heap.h"
+
+//要素数カウント C++だとテンプレートを使うらしい
+#define elementof(ar) (sizeof(ar) / sizeof((ar)[0]))
+
 
 ///< ２次元をあらわす汎用構造体
 typedef struct {
@@ -196,15 +199,15 @@ extern void GFL_STD_MtRandInit(u32 s);
 extern u32 __GFL_STD_MtRand(void); ///< 使用禁止  下のinline関数を使ってください
 static inline u32 GFL_STD_MtRand(u32 range)
 {
-    u64 x = (u64)__GFL_STD_MtRand();
+  u64 x = (u64)__GFL_STD_MtRand();
 
-    // 引数maxが定数ならばコンパイラにより最適化される。
-    if (range == GFL_STD_RAND_MAX) {
-        return (u32)x;
-    }
-    else {
-        return (u32)((x * range) >> 32);
-    }
+  // 引数maxが定数ならばコンパイラにより最適化される。
+  if (range == GFL_STD_RAND_MAX) {
+    return (u32)x;
+  }
+  else {
+    return (u32)((x * range) >> 32);
+  }
 }
 //----------------------------------------------------------------------------
 /**
@@ -226,11 +229,10 @@ static inline u32 GFL_STD_MtRand0(u32 range)
  */
 typedef struct
 {
-    u64     x;                         ///< 乱数値
-    u64     mul;                       ///< 乗数
-    u64     add;                       ///< 加算する数
-}
-GFL_STD_RandContext;
+  u64     x;                         ///< 乱数値
+  u64     mul;                       ///< 乗数
+  u64     add;                       ///< 加算する数
+} GFL_STD_RandContext;
 
 //----------------------------------------------------------------------------
 /**
@@ -242,9 +244,9 @@ GFL_STD_RandContext;
 //----------------------------------------------------------------------------
 static inline void GFL_STD_RandInit(GFL_STD_RandContext *context, u64 seed)
 {
-    context->x = seed;
-    context->mul = (1566083941LL << 32) + 1812433253LL;
-    context->add = 2531011;
+  context->x = seed;
+  context->mul = (1566083941LL << 32) + 1812433253LL;
+  context->add = 2531011;
 }
 
 //----------------------------------------------------------------------------
@@ -260,16 +262,16 @@ static inline void GFL_STD_RandInit(GFL_STD_RandContext *context, u64 seed)
 //----------------------------------------------------------------------------
 static inline u32 GFL_STD_Rand(GFL_STD_RandContext *context, u32 range)
 {
-    context->x = context->mul * context->x + context->add;
+  context->x = context->mul * context->x + context->add;
 
-    // 引数maxが定数ならばコンパイラにより最適化される。
-    if (range == GFL_STD_RAND_MAX)
+  // 引数maxが定数ならばコンパイラにより最適化される。
+  if (range == GFL_STD_RAND_MAX)
     {
-        return (u32)(context->x >> 32);
+      return (u32)(context->x >> 32);
     }
-    else
+  else
     {
-        return (u32)(((context->x >> 32) * range) >> 32);
+      return (u32)(((context->x >> 32) * range) >> 32);
     }
 }
 
@@ -311,7 +313,7 @@ extern u16 GFL_STD_CrcCalc( const void* pData, u32 dataLength );
 extern void GFL_STD_RandGeneralInit(GFL_STD_RandContext *context);
 
 //----------------------------------------------------------------------------------------------
-//	暗号化系移植 
+//	暗号化系移植
 //----------------------------------------------------------------------------------------------
 //----------------------------------------------------------------------------------------------
 /**
@@ -329,7 +331,6 @@ extern void	GFL_STD_CODED_Coded(void *data,u32 size,u32 code);
 extern void	GFL_STD_CODED_Decoded(void *data,u32 size,u32 code);
 
 
-#endif	/*	__GF_STANDARD_H__ */
 #ifdef __cplusplus
 } /* extern "C" */
 #endif
