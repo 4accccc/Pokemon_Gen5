@@ -28,7 +28,8 @@
  */
 //============================================================================================
 
-#define BTLV_GAUGE_CLWK_MAX ( BTLV_MCSS_POS_MAX )   //ゲージCLWKのMAX値
+#define BTLV_GAUGE_CLWK_MAX ( BTLV_MCSS_POS_MAX )              //ゲージCLWKのMAX値
+#define BTLV_GAUGE_CLUNIT_CLWK_MAX ( BTLV_MCSS_POS_MAX * 4 )   //CLUNITを生成するときのCLWKのMAX値
 
 ///1キャラの中に入っているゲージのドット数
 #define BTLV_GAUGE_DOTTO			(8)
@@ -83,17 +84,17 @@ enum
   BTLV_GAUGE_POS_BB_X = 56,
   BTLV_GAUGE_POS_BB_Y = 40,
 
-  BTLV_GAUGE_POS_A_X = 0,
-  BTLV_GAUGE_POS_A_Y = 0,
+  BTLV_GAUGE_POS_A_X = 176,
+  BTLV_GAUGE_POS_A_Y = 104,
 
-  BTLV_GAUGE_POS_B_X = 0,
-  BTLV_GAUGE_POS_B_Y = 0,
+  BTLV_GAUGE_POS_B_X = 64,
+  BTLV_GAUGE_POS_B_Y = 28,
 
-  BTLV_GAUGE_POS_C_X = 0,
-  BTLV_GAUGE_POS_C_Y = 0,
+  BTLV_GAUGE_POS_C_X = 184,
+  BTLV_GAUGE_POS_C_Y = 132,
 
-  BTLV_GAUGE_POS_D_X = 0,
-  BTLV_GAUGE_POS_D_Y = 0,
+  BTLV_GAUGE_POS_D_X = 56,
+  BTLV_GAUGE_POS_D_Y = 52,
 
   BTLV_GAUGE_POS_E_X = 0,
   BTLV_GAUGE_POS_E_Y = 0,
@@ -232,7 +233,7 @@ BTLV_GAUGE_WORK*  BTLV_GAUGE_Init( HEAPID heapID )
   bgw->heapID = heapID;
   bgw->handle = GFL_ARC_OpenDataHandle( ARCID_BATTGRA, bgw->heapID );
 
-  bgw->clunit = GFL_CLACT_UNIT_Create( BTLV_GAUGE_CLWK_MAX, 0, bgw->heapID );
+  bgw->clunit = GFL_CLACT_UNIT_Create( BTLV_GAUGE_CLUNIT_CLWK_MAX, 0, bgw->heapID );
 
   //共通パレット読み込み
   bgw->plttID = GFL_CLGRP_PLTT_Register( bgw->handle, NARC_battgra_wb_gauge_NCLR, CLSYS_DRAW_MAIN, 0x20, bgw->heapID );

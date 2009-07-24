@@ -1588,7 +1588,8 @@ static void statwin_disp_start( STATUS_WIN* stwin )
   GFL_BG_LoadScreenReq( GFL_BMPWIN_GetFrame(stwin->win) );
   BTL_Printf("StatusWin (pos=%d) disp start!!\n", stwin->pokePos);
 #else
-  BTLV_EFFECT_SetGauge( BPP_GetSrcData( stwin->bpp ), stwin->pokePos );
+  u8 viewPos = BTL_MAIN_BtlPosToViewPos( stwin->parentWk->mainModule, stwin->pokePos );
+  BTLV_EFFECT_SetGauge( BPP_GetSrcData( stwin->bpp ), viewPos );
 #endif
 }
 
@@ -1604,7 +1605,8 @@ static void statwin_hide( STATUS_WIN* stwin )
   GFL_BMPWIN_ClearScreen( stwin->win );
   GFL_BG_LoadScreenReq( GFL_BMPWIN_GetFrame(stwin->win) );
 #else
-  BTLV_EFFECT_DelGauge( stwin->pokePos );
+  u8 viewPos = BTL_MAIN_BtlPosToViewPos( stwin->parentWk->mainModule, stwin->pokePos );
+  BTLV_EFFECT_DelGauge( viewPos );
 #endif
 }
 
