@@ -177,9 +177,9 @@ static const char * debugGetRailKeyName(RAIL_KEY key);
 static void debugPrintRailInfo(const FIELD_RAIL * rail);
 
 
-static RAIL_KEY updateLineMove_new(FIELD_RAIL * rail, RAIL_KEY key);
+static RAIL_KEY updateLineMove_new(FIELD_RAIL * rail, RAIL_KEY key, u32 count_up);
 //static RAIL_KEY updateLineMove(FIELD_RAIL * rail, RAIL_KEY key);
-static RAIL_KEY updatePointMove(FIELD_RAIL * rail, RAIL_KEY key);
+static RAIL_KEY updatePointMove(FIELD_RAIL * rail, RAIL_KEY key, u32 count_up);
 
 
 static u32 getPointIndex( const FIELD_RAIL_MAN * man, const RAIL_POINT* point );
@@ -410,6 +410,7 @@ void FIELD_RAIL_MAN_Update(FIELD_RAIL_MAN * man, int key_cont)
   FIELD_RAIL_TYPE type = man->now_rail.type;
   RAIL_KEY set_key = RAIL_KEY_NULL;
   RAIL_KEY key = keyContToRailKey(key_cont);
+	u32 count_up;
 
   if (!man->active_flag)
   {
@@ -426,13 +427,23 @@ void FIELD_RAIL_MAN_Update(FIELD_RAIL_MAN * man, int key_cont)
     return;
   }
 
+	if( key_cont & PAD_BUTTON_B )
+	{
+		count_up = 2;
+	}
+	else
+	{
+		count_up = 1;
+	}
+	
+
   if(man->now_rail.type == FIELD_RAIL_TYPE_POINT)
   { //POINT上のときの移動処理
-    set_key = updatePointMove(&man->now_rail, key);
+    set_key = updatePointMove(&man->now_rail, key, count_up);
   }
   else if(man->now_rail.type == FIELD_RAIL_TYPE_LINE)
   { //LINE上のときの移動処理
-    set_key = updateLineMove_new(&man->now_rail, key);
+    set_key = updateLineMove_new(&man->now_rail, key, count_up);
   }
 
   if (set_key != RAIL_KEY_NULL)
@@ -796,7 +807,7 @@ static RAIL_LINE_DIST_FUNC*const getRailDatLineDistFunc( const RAIL_DAT * railda
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
-static RAIL_KEY updateLineMove_new(FIELD_RAIL * rail, RAIL_KEY key)
+static RAIL_KEY updateLineMove_new(FIELD_RAIL * rail, RAIL_KEY key, u32 count_up)
 { //LINE上のときの移動処理
   const RAIL_LINE * nLine = rail->line;
   s32 nLine_ofs_max = getLineOfsMax( nLine, rail->ofs_unit, rail->rail_dat ); // 今のLINEのオフセット最大値
@@ -810,14 +821,14 @@ static RAIL_KEY updateLineMove_new(FIELD_RAIL * rail, RAIL_KEY key)
     const RAIL_LINE * right = RAILPOINT_getLineByKey(nPoint, getClockwiseKey(key), rail->rail_dat);
     //const RAIL_LINE * back = RAILPOINT_getLineByKey(nPoint, getReverseKey(key), rail->rail_dat);
     TAMADA_Printf("↑");
-    rail->line_ofs ++;
+    rail->line_ofs += count_up;
     if (rail->line_ofs <= nLine_ofs_max) return key;
     if (front)
     { //正面移行処理
       debugCheckPointData(nPoint, rail->rail_dat);
       ofs_max = getLineOfsMax( front, rail->ofs_unit, rail->rail_dat );
       return setLine(rail, front, key,
-          /*l_ofs*/1,
+          /*l_ofs*/rail->line_ofs - nLine_ofs_max,
           /*w_ofs*/rail->width_ofs,
           /*ofs_max*/ofs_max); //そのまま
     }
@@ -878,14 +889,14 @@ static RAIL_KEY updateLineMove_new(FIELD_RAIL * rail, RAIL_KEY key)
     const RAIL_LINE * right = RAILPOINT_getLineByKey(nPoint, getAntiClockwiseKey(key), rail->rail_dat);
     const RAIL_LINE * back = RAILPOINT_getLineByKey(nPoint, key, rail->rail_dat);
     TAMADA_Printf("↓");
-    rail->line_ofs --;
+    rail->line_ofs -= count_up;
     if (rail->line_ofs >= 0) return key;
     if (back)
     {//背面移行処理
       debugCheckPointData(nPoint, rail->rail_dat);
       ofs_max = getLineOfsMax( back, rail->ofs_unit, rail->rail_dat );
       return setLine(rail, back, key,
-          /*l_ofs*/ofs_max - 1,
+          /*l_ofs*/ofs_max - rail->line_ofs,
           /*w_ofs*/rail->width_ofs,
           /*ofs_max*/ofs_max);
     }
@@ -940,7 +951,7 @@ static RAIL_KEY updateLineMove_new(FIELD_RAIL * rail, RAIL_KEY key)
   else if (key == getClockwiseKey(nLine->key))
   {//時計回り隣方向キーの場合
     TAMADA_Printf("→");
-    rail->width_ofs ++;
+    rail->width_ofs += count_up;
     if (rail->width_ofs < rail->width_ofs_max)
     {//範囲内の場合、終了
       return key;
@@ -1006,7 +1017,7 @@ static RAIL_KEY updateLineMove_new(FIELD_RAIL * rail, RAIL_KEY key)
   else if (key == getAntiClockwiseKey(nLine->key))
   {//反時計回り隣方向キーの場合
     TAMADA_Printf("←");
-    rail->width_ofs --;
+    rail->width_ofs -= count_up;
     if (MATH_ABS(rail->width_ofs) < rail->width_ofs_max)
     {//範囲内の場合、終了
       return key;
@@ -1066,7 +1077,7 @@ static RAIL_KEY updateLineMove_new(FIELD_RAIL * rail, RAIL_KEY key)
       }
     }
     //中間地点の場合、行くあてがない場合…LINEそのまま、減算を取り消し
-    rail->width_ofs ++;
+    rail->width_ofs += count_up;
     return key;
   }
   return RAIL_KEY_NULL;
@@ -1124,7 +1135,7 @@ static RAIL_KEY updateLineMove(FIELD_RAIL * rail, RAIL_KEY key)
 //============================================================================================
 //------------------------------------------------------------------
 //------------------------------------------------------------------
-static RAIL_KEY updatePointMove(FIELD_RAIL * rail, RAIL_KEY key)
+static RAIL_KEY updatePointMove(FIELD_RAIL * rail, RAIL_KEY key, u32 count_up)
 {//POINT上のときの移動処理
   int i;
   const RAIL_POINT * nPoint = rail->point;
@@ -1140,12 +1151,12 @@ static RAIL_KEY updatePointMove(FIELD_RAIL * rail, RAIL_KEY key)
       
 			if ( isLinePoint_S( rail->rail_dat, nLine, nPoint ) )
       { 
-        setLine(rail, nLine, key, 1, 0, ofs_max);
+        setLine(rail, nLine, key, count_up, 0, ofs_max);
         //rail->line_ofs = 1;  //最初は１から！
       }
 			else if ( isLinePoint_E( rail->rail_dat, nLine, nPoint ) )
       {
-        setLine(rail, nLine, key, ofs_max - 1, 0, ofs_max);
+        setLine(rail, nLine, key, ofs_max - count_up, 0, ofs_max);
         //rail->line_ofs = nLine->ofs_max - 1; //最後ー1から！
       }
       //つながったLINEを次のRAILとしてセット
