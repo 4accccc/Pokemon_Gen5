@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ariizumi_nobuhiko" host="W00147" date="2009-07-24T16:38:19"/>
+	<create user="ohno" host="W00141" date="2009-07-24T11:41:30"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -305,14 +305,14 @@
 		</language>
 	</columns>
 
-	<dialog left="116" top="176" right="821" bottom="796" maximized="no" rayout="Vertical2">
+	<dialog left="248" top="176" right="953" bottom="796" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="0" style="0000" width="530"/>
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="697"/>
 		<band id="3" index="3" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -334,43 +334,28 @@
 
 
 	<row id="msg_pocket_001">
-		<language name="JPN" font=" 1:small" width="216">どうぐ</language>
-		<language name="JPN_KANJI" font=" 1:small" width="216">どうぐ</language>
+		<language name="JPN" width="256">どうぐ</language>
+		<language name="JPN_KANJI" width="256">道具</language>
 	</row>
 
-	<row id="msg_pocket_drug">
-		<language name="JPN" font=" 1:small" width="216">かいふく</language>
-		<language name="JPN_KANJI" font=" 1:small" width="216">かいふく</language>
+	<row id="msg_pocket_002">
+		<language name="JPN" width="256">かいふく</language>
+		<language name="JPN_KANJI" width="256">回復</language>
 	</row>
 
-	<row id="msg_pocket_ball">
-		<language name="JPN" font=" 1:small" width="216">ボール</language>
-		<language name="JPN_KANJI" font=" 1:small" width="216">ボール</language>
+	<row id="msg_pocket_003">
+		<language name="JPN" width="256">わざマシン</language>
+		<language name="JPN_KANJI" width="256">技マシン</language>
 	</row>
 
-	<row id="msg_pocket_waza">
-		<language name="JPN" font=" 1:small" width="216">わざマシン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="216">わざマシン</language>
+	<row id="msg_pocket_004">
+		<language name="JPN" width="256">きのみ</language>
+		<language name="JPN_KANJI" width="256">木の実</language>
 	</row>
 
-	<row id="msg_pocket_nuts">
-		<language name="JPN" font=" 1:small" width="216">きのみ</language>
-		<language name="JPN_KANJI" font=" 1:small" width="216">きのみ</language>
-	</row>
-
-	<row id="msg_pocket_seal">
-		<language name="JPN" font=" 1:small" width="216">メール</language>
-		<language name="JPN_KANJI" font=" 1:small" width="216">メール</language>
-	</row>
-
-	<row id="msg_pocket_battle">
-		<language name="JPN" font=" 1:small" width="216">せんとうよう</language>
-		<language name="JPN_KANJI" font=" 1:small" width="216">せんとうよう</language>
-	</row>
-
-	<row id="msg_pocket_keyitem">
-		<language name="JPN" font=" 1:small" width="216">たいせつなもの</language>
-		<language name="JPN_KANJI" font=" 1:small" width="216">たいせつなもの</language>
+	<row id="msg_pocket_005">
+		<language name="JPN" width="256">たいせつなもの</language>
+		<language name="JPN_KANJI" width="256">大切なもの</language>
 	</row>
 
 	<flowchart-group-list>
