@@ -11,19 +11,20 @@
 #define NARC_BUILDMODEL_ANIME_NAIX_
 
 enum {
-	NARC_buildmodel_anime_d5_ship_01_nsbta = 0,
-	NARC_buildmodel_anime_d5_whouse_02_nsbta = 1,
-	NARC_buildmodel_anime_door_cl_nsbca = 2,
-	NARC_buildmodel_anime_door_op_nsbca = 3,
-	NARC_buildmodel_anime_door_pc_cl_nsbca = 4,
-	NARC_buildmodel_anime_door_pc_op_nsbca = 5,
-	NARC_buildmodel_anime_elboard2_test_nsbta = 6,
-	NARC_buildmodel_anime_elboard_test_nsbca = 7,
-	NARC_buildmodel_anime_elboard_test_nsbta = 8,
-	NARC_buildmodel_anime_fireplace_02_nsbta = 9,
-	NARC_buildmodel_anime_fountain_01_nsbta = 10,
-	NARC_buildmodel_anime_machine_l02_nsbta = 11,
-	NARC_buildmodel_anime_trailer_01test_nsbca = 12
+	NARC_buildmodel_anime_c01fountain_01_nsbta = 0,
+	NARC_buildmodel_anime_d5_ship_01_nsbta = 1,
+	NARC_buildmodel_anime_d5_whouse_02_nsbta = 2,
+	NARC_buildmodel_anime_door_cl_nsbca = 3,
+	NARC_buildmodel_anime_door_op_nsbca = 4,
+	NARC_buildmodel_anime_door_pc_cl_nsbca = 5,
+	NARC_buildmodel_anime_door_pc_op_nsbca = 6,
+	NARC_buildmodel_anime_elboard2_test_nsbta = 7,
+	NARC_buildmodel_anime_elboard_test_nsbca = 8,
+	NARC_buildmodel_anime_elboard_test_nsbta = 9,
+	NARC_buildmodel_anime_fireplace_02_nsbta = 10,
+	NARC_buildmodel_anime_fountain_01_nsbta = 11,
+	NARC_buildmodel_anime_machine_l02_nsbta = 12,
+	NARC_buildmodel_anime_trailer_01test_nsbca = 13
 };
 
 /* NARC_BUILDMODEL_ANIME_NAIX_ */
