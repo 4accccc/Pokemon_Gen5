@@ -333,4 +333,5 @@ G3D_IMD = \
 	$(DIR_LANDRES)/m_tennis01_00_00.imd \
 	$(DIR_LANDRES)/m_gstation01_00_00.imd \
 	$(DIR_LANDRES)/m_gstation02_00_00.imd \
-	$(DIR_LANDRES)/m_closseum02_00_00.imd
+	$(DIR_LANDRES)/m_closseum02_00_00.imd \
+	$(DIR_LANDRES)/m_stadium03_00_00.imd

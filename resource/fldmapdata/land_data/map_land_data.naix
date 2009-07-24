@@ -342,7 +342,8 @@ enum {
 	NARC_map_land_data_m_tennis01_00_00_3dppack = 328,
 	NARC_map_land_data_m_gstation01_00_00_3dppack = 329,
 	NARC_map_land_data_m_gstation02_00_00_3dppack = 330,
-	NARC_map_land_data_m_closseum02_00_00_3dppack = 331
+	NARC_map_land_data_m_closseum02_00_00_3dppack = 331,
+	NARC_map_land_data_m_stadium03_00_00_3dppack = 332
 };
 
 /* NARC_MAP_LAND_DATA_NAIX_ */

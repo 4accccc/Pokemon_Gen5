@@ -130,7 +130,8 @@ enum {
 	NARC_map_matrix_gstation01_mat_bin = 116,
 	NARC_map_matrix_gstation02_mat_bin = 117,
 	NARC_map_matrix_closseum02_mat_bin = 118,
-	NARC_map_matrix_dun0301_mat_bin = 119
+	NARC_map_matrix_dun0301_mat_bin = 119,
+	NARC_map_matrix_stadium03_mat_bin = 120
 };
 
 /* NARC_MAP_MATRIX_NAIX_ */
