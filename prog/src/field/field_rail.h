@@ -186,7 +186,7 @@ struct _RAIL_LINE {
 //------------------------------------------------------------------
 /// ƒŒ[ƒ‹î•ñ
 //------------------------------------------------------------------
-typedef struct _RAIL_SETTING{
+struct _RAIL_SETTING{
   u16 point_count;
   u16 line_count;
   u16 camera_count;
