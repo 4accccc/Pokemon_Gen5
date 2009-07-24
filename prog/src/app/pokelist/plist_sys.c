@@ -491,8 +491,8 @@ static void PLIST_InitGraphic( PLIST_WORK *work )
     PLIST_InitBG0_2DMenu( work );
     
     G2_SetBlendAlpha( GX_BLEND_PLANEMASK_BG2|GX_BLEND_PLANEMASK_OBJ , 
-                      GX_BLEND_PLANEMASK_BG3|GX_BLEND_PLANEMASK_OBJ ,
-                      12 , 16 );
+                      GX_BLEND_PLANEMASK_BG3 ,
+                      16 , 10 );
 
     //土台とパラメータは取替えアニメのためスクロールさせる
     GFL_BG_SetScroll( PLIST_BG_PLATE , GFL_BG_SCROLL_X_SET , PLIST_BG_SCROLL_X_CHAR*8 );

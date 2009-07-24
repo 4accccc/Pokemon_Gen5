@@ -22,7 +22,7 @@ typedef enum
 
   //ˆÈ‰º‚ÍŽ©“®Ý’è
   PPC_DEATH        = 5,  //Ž€–S
-  PPC_DEATH_SELECT = 9,  //Ž€–S(‘I‘ð
+  PPC_DEATH_SELECT = 10,  //Ž€–S(‘I‘ð
 }PLIST_PLATE_COLTYPE;
 
 //í“¬ŽQ‰ÁŽž‚Ìó‘Ô
