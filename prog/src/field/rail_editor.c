@@ -1284,9 +1284,28 @@ static void RE_InputPoint_FreeNormal( DEBUG_RAIL_EDITOR* p_wk )
 {
 	FIELD_CAMERA* p_camera = FIELDMAP_GetFieldCamera( p_wk->p_fieldmap );
 	FIELD_PLAYER* p_player = FIELDMAP_GetFieldPlayer( p_wk->p_fieldmap );
+	u16 yaw;
 
 	// 半グリッドサイズでの移動にする
 	FIELD_PLAYER_NOGRID_Move( p_player, GFL_UI_KEY_GetCont(), 0x8000 );
+
+	// カメラを動かす
+	if( GFL_UI_KEY_GetCont() & PAD_BUTTON_L )
+	{
+		yaw = FIELD_CAMERA_GetAngleYaw( p_camera );
+
+		yaw -= 182;
+
+		FIELD_CAMERA_SetAngleYaw( p_camera, yaw );
+	}
+	else if( GFL_UI_KEY_GetCont() & PAD_BUTTON_R )
+	{
+		yaw = FIELD_CAMERA_GetAngleYaw( p_camera );
+
+		yaw += 182;
+
+		FIELD_CAMERA_SetAngleYaw( p_camera, yaw );
+	}
 
 	FIELD_PLAYER_GetPos( p_player, &p_wk->camera_target );
 }
@@ -1823,8 +1842,8 @@ static void RE_Send_CameraData( DEBUG_RAIL_EDITOR* p_wk )
 		xz_dist = VEC_Distance( &pos, &target );
 
 		p_senddata->len		= VEC_Mag( &camera_way );
-		p_senddata->pitch = FX_Atan2( xz_dist, camera_way.y );
-		p_senddata->yaw		= FX_Atan2( camera_way.z, camera_way.x );
+		p_senddata->pitch = FX_Atan2( -camera_way.y, xz_dist );
+		p_senddata->yaw		= FX_Atan2( camera_way.x, camera_way.z );
 	}
 
 	// 送信

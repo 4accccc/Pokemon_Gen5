@@ -657,7 +657,7 @@ sub getPeaceParam
 		#もし+が出てきたらPeaceオーバー
 		if( $one =~ /\+/ )
 		{
-			print( "#getPeaceParam peace over key=$key startindex=$startindex\n" );
+			print( "#getPeaceParam peace over key=$key startindex=$startidx\n" );
 			exit(1);
 		}
 		
@@ -690,7 +690,7 @@ sub getPeaceParamForName
 			$last_peace_index = $i;
 		}
 		
-		if( $one =~ /--NAME\:\:$name/ )
+		if( $one =~ /--NAME\:\:$name$/ )
 		{
 			#last_peace_indexから、$keyの情報を取得する
 			return &getPeaceParam( \@$data, $last_peace_index+1, $key );
@@ -845,7 +845,7 @@ sub getPeaceParamByteWorkSizeForName
 			$last_peace_index = $i;
 		}
 
-		if( $one =~ /--NAME\:\:$name/ )
+		if( $one =~ /--NAME\:\:$name$/ )
 		{
 			#last_peace_indexから、$index番目のBYTEパラメータを取得する
 			return &getPeaceParamByteWorkSizeForIndex( \@$data, $last_peace_index+1, $index );
@@ -886,7 +886,7 @@ sub isLinkPoint
 			$line_point_e		= &getPeaceParamForName( \@$data, $line, "POINT_E" );
 
 			#接続ラインに自分の情報があるかチェック
-			if( !($line_point_s =~ /$point/) && !($line_point_e =~ /$point/) )
+			if( !($line_point_s eq $point) && !($line_point_e eq $point) )
 			{
 				print( "point[$point] line link error $line に $point と接続している情報はありません。\n" );
 				exit(1);
