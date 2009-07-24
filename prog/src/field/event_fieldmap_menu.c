@@ -162,6 +162,7 @@ static GMEVENT_RESULT FMenuReportEvent( GMEVENT *event, int *seq, void *wk );
 
 static const BOOL FMenuReturnProc_PokeList(FMENU_EVENT_WORK* mwk);
 static const BOOL FMenuReturnProc_PokeStatus(FMENU_EVENT_WORK* mwk);
+static const BOOL FMenuReturnProc_Bag(FMENU_EVENT_WORK* mwk);
 
 //--------------------------------------------------------------
 /// フィールドマップメニューリスト
@@ -194,7 +195,7 @@ static const FMENU_SUBPROC_DATA FldMapMenu_SubProcData[FMENU_APP_MAX] =
   { //  FMENU_APP_BAG,
     FS_OVERLAY_ID(bag) , 
     &ItemMenuProcData  ,
-    NULL
+    FMenuReturnProc_Bag
   },
   { //  FMENU_APP_TRAINERCARD,
     TRCARD_OVERLAY_ID , 
@@ -689,6 +690,35 @@ static const BOOL FMenuReturnProc_ReturnField(FMENU_EVENT_WORK* mwk)
 {
   return FALSE;
 }
+
+
+//--------------------------------------------------------------
+/**
+ * 子Proc後処理 Bag
+ * @param mwk FMENU_EVENT_WORK
+ * @retval  BOOL  TRUE=別のProcを呼び出す(mwk->subProcTypeに次のprocを設定してください
+ *                FALSE=Fieldに戻る
+ */
+//--------------------------------------------------------------
+static const BOOL FMenuReturnProc_Bag(FMENU_EVENT_WORK* mwk)
+{
+  FIELD_ITEMMENU_WORK *pBag = mwk->subProcWork;
+  
+  switch( pBag->ret_code )
+  {
+  case BAG_NEXTPROC_EXIT:      // 通常
+    return FALSE;
+  case BAG_NEXTPROC_RETURN:      // 通常
+    return FALSE;
+  case BAG_NEXTPROC_POKEMONLIST:
+  case BAG_NEXTPROC_EXITEM:
+  default:
+    break;
+  }
+  return FALSE;
+}
+
+
 
 #pragma mark [>UtilFunc
 //--------------------------------------------------------------

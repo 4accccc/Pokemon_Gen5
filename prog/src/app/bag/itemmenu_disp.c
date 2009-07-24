@@ -71,8 +71,8 @@
 
 
 
-#define PSTATUS_BAR_CELL_CURSOR_EXIT (200)    //EXIT xボタン
-#define PSTATUS_BAR_CELL_CURSOR_RETURN (232) //RETURN Enterボタン
+#define _BAR_CELL_CURSOR_EXIT (200)    //EXIT xボタン
+#define _BAR_CELL_CURSOR_RETURN (232) //RETURN Enterボタン
 
 
 typedef enum{
@@ -83,6 +83,7 @@ typedef enum{
 
 
 static void _itemiconAnim(FIELD_ITEMMENU_WORK* pWork,int itemid);
+static void ITEMDISP_InitTaskBar( FIELD_ITEMMENU_WORK* pWork );
 
 
 //------------------------------------------------------------------------------
@@ -139,6 +140,21 @@ void _createSubBg(void)
     GFL_BG_SetVisible( GFL_BG_FRAME2_M, VISIBLE_ON );
 
   }
+  {
+    GFL_BG_BGCNT_HEADER TextBgCntDat = {
+      0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
+      GX_BG_SCRBASE_0xf800, GX_BG_CHARBASE_0x18000,
+      0x8000,
+      GX_BG_EXTPLTT_01,
+      0, 0, 0, FALSE
+      };
+    GFL_BG_SetBGControl( GFL_BG_FRAME3_M, &TextBgCntDat, GFL_BG_MODE_TEXT );
+    GFL_BG_ClearFrame( GFL_BG_FRAME3_M );
+    GFL_BG_LoadScreenReq( GFL_BG_FRAME3_M );
+    GFL_BG_SetVisible( GFL_BG_FRAME3_M, VISIBLE_ON );
+
+  }
+
 
   {
     int frame = GFL_BG_FRAME0_S;
@@ -225,7 +241,7 @@ static GFL_DISP_VRAM _defVBTbl = {
  */
 //------------------------------------------------------------------------------
 
-void _graphicInit(FIELD_ITEMMENU_WORK* pWork)
+void ITEMDISP_graphicInit(FIELD_ITEMMENU_WORK* pWork)
 {
   G2_BlendNone();
 
@@ -306,9 +322,23 @@ void _graphicInit(FIELD_ITEMMENU_WORK* pWork)
                                             GFL_BG_FRAME2_M , 0 ,
                                             0x8000+GFL_ARCUTIL_TRANSINFO_GetPos(pWork->barbg),0, 0, pWork->heapID );
     GFL_BG_LoadScreenReq( GFL_BG_FRAME2_M );
+
+    //下画面アイコン
+    pWork->cellRes[_PLT_COMMON] = GFL_CLGRP_PLTT_RegisterEx(
+      archandle , NARC_app_menu_common_bar_button_NCLR , CLSYS_DRAW_MAIN , 7*32 , 0 , APP_COMMON_BARICON_PLT_NUM , pWork->heapID  );
+    
+    pWork->cellRes[_NCG_COMMON] = GFL_CLGRP_CGR_Register(
+      archandle , NARC_app_menu_common_bar_button_128k_NCGR , FALSE , CLSYS_DRAW_MAIN , pWork->heapID  );
+    
+    pWork->cellRes[_ANM_COMMON] = GFL_CLGRP_CELLANIM_Register(
+      archandle, NARC_app_menu_common_bar_button_128k_NCER, NARC_app_menu_common_bar_button_128k_NANR , pWork->heapID);
+
+
     
     GFL_ARC_CloseDataHandle(archandle);
   }
+  //下画面ボタン
+  ITEMDISP_InitTaskBar(pWork);
 }
 
 void ITEMDISP_graphicDelete(FIELD_ITEMMENU_WORK* pWork)
@@ -523,7 +553,7 @@ void ITEMDISP_CellResourceCreate( FIELD_ITEMMENU_WORK* pWork )
 
   pWork->cellRes[_PLT_CUR] = GFL_CLGRP_PLTT_RegisterEx( archandle ,
         NARC_bag_bag_win03_d_NCLR , CLSYS_DRAW_MAIN ,
-        0 , 0 , 0 , pWork->heapID  );
+        0 , 0 , 2 , pWork->heapID  );
 
   pWork->cellRes[_NCG_CUR] = GFL_CLGRP_CGR_Register(
     archandle , NARC_bag_bag_win03_d_NCGR ,
@@ -741,4 +771,51 @@ void ITEMDISP_scrollCursorChangePos(FIELD_ITEMMENU_WORK* pWork, int num)
     GFL_CLACT_WK_SetPos( pWork->scrollCur ,  &pos, CLWK_SETSF_NONE );
   }
 }
+
+//------------------------------------------------------------------------------
+/**
+ * @brief   タスクバーのCELLの初期化
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+static void ITEMDISP_InitTaskBar( FIELD_ITEMMENU_WORK* pWork )
+{
+
+
+
+  //バーのボタン
+  {
+    const u8 anmIdxArr[] = { 4, 5, 6, 0, 1 };
+    const u8 posXArr[] =
+    {
+      8,
+      8*12,
+      172,
+      _BAR_CELL_CURSOR_EXIT,
+      _BAR_CELL_CURSOR_RETURN,
+    };
+
+    u8 i;
+    GFL_CLWK_DATA cellInitData;
+    cellInitData.softpri = 10;
+    cellInitData.bgpri = 1;
+    
+    for( i = 0;i < elementof(anmIdxArr) ; i++ )
+    {
+      cellInitData.pos_x = posXArr[i];
+      cellInitData.pos_y = 21*8;
+      cellInitData.anmseq = anmIdxArr[i];
+      pWork->clwkBarIcon[i] = GFL_CLACT_WK_Create( pWork->cellUnit ,
+                pWork->cellRes[_NCG_COMMON],
+                pWork->cellRes[_PLT_COMMON],
+                pWork->cellRes[_ANM_COMMON],
+                &cellInitData ,CLSYS_DEFREND_MAIN , pWork->heapID );
+
+      GFL_CLACT_WK_SetDrawEnable( pWork->clwkBarIcon[i] , TRUE );
+    }
+
+  }
+  
+}
+
 

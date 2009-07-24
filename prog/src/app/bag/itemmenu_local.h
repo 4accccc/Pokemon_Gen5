@@ -38,7 +38,7 @@ extern const GFL_PROC_DATA ItemMenuProcData;
 
 
 #define ITEM_LIST_NUM (8)
-#define _CELLUNIT_NUM (12)
+#define _CELLUNIT_NUM (17)
 
 #define _SCROLL_TOP_Y  (8)  //スクロールバーの最初の位置
 #define _SCROLL_BOTTOM_Y  (8*20)  //スクロールバーの最後の位置
@@ -47,11 +47,25 @@ enum _ITEMLISTCELL_RESOURCE
 {
   _PLT_CUR,
   _PLT_BAR,
+  _PLT_COMMON,
   _NCG_CUR,
+  _NCG_COMMON,
   _ANM_CUR,
   _ANM_LIST,
+  _ANM_COMMON,
   SCR_MAX ,
 };
+
+/// バッグから抜けるときの動作
+enum BAG_NEXTPROC_ENUM
+{
+  BAG_NEXTPROC_EXIT,
+  BAG_NEXTPROC_RETURN,
+  BAG_NEXTPROC_POKEMONLIST,
+  BAG_NEXTPROC_EXITEM,
+
+};
+
 
 
 typedef struct _DEBUGITEM_PARAM FIELD_ITEMMENU_WORK;
@@ -69,10 +83,12 @@ struct _DEBUGITEM_PARAM {
   MYSTATUS* mystatus;
 	GFL_BMPWIN* win;
   GFL_BMPWIN* itemUseWin;
+  GFL_BMPWIN* pocketNameWin;
   PRINT_UTIL            SysMsgPrintUtil;    // システムウインドウPrintUtil
   PRINT_QUE*            SysMsgQue;
-  GFL_MSGDATA *MsgManager;			// 名前入力メッセージデータマネージャー
-  GFL_MSGDATA *MsgManagerItemInfo;			// 名前入力メッセージデータマネージャー
+  GFL_MSGDATA* MsgManager;			// 名前入力メッセージデータマネージャー
+  GFL_MSGDATA* MsgManagerItemInfo;			// 名前入力メッセージデータマネージャー
+  GFL_MSGDATA* MsgManagerPocket;
   WORDSET			*WordSet;								// メッセージ展開用ワークマネージャー
   STRBUF*  pStrBuf;
 	STRBUF*  pExpStrBuf;
@@ -98,6 +114,7 @@ struct _DEBUGITEM_PARAM {
   GFL_CLWK  *cellicon;
   GFL_CLWK  *clwkCur;
   GFL_CLWK  *scrollCur;
+  GFL_CLWK  *clwkBarIcon[5];
 
   GFL_BMPWIN* winItemName;
   GFL_BMPWIN* winItemNum;
@@ -121,6 +138,9 @@ struct _DEBUGITEM_PARAM {
 	HEAPID heapID;
 	u32 bgchar;
   BOOL bChange;
+
+  int ret_code;  //バッグメニューを終わる際の次の動作
+  
 };
 
 #define DEBUG_ITEMDISP_FRAME (GFL_BG_FRAME1_M)
@@ -142,12 +162,23 @@ struct _DEBUGITEM_PARAM {
 #define _ITEMUSE_DISP_SIZEY (10)
 
 
+#define _POCKETNAME_DISP_INITX (4)
+#define _POCKETNAME_DISP_INITY (22)
+#define _POCKETNAME_DISP_SIZEX (12)
+#define _POCKETNAME_DISP_SIZEY (2)
+
+
+#define BUTTONID_LEFT    (5)
+#define BUTTONID_RIGHT   (6)
+#define BUTTONID_EXIT   (7)
+#define BUTTONID_RETURN   (8)
+
 
 #define FLD_SUBSCR_FADE_DIV (1)
 #define FLD_SUBSCR_FADE_SYNC (1)
 
 extern void _createSubBg(void);
-extern void _graphicInit(FIELD_ITEMMENU_WORK* pWork);
+extern void ITEMDISP_graphicInit(FIELD_ITEMMENU_WORK* pWork);
 extern void ITEMDISP_upMessageRewrite(FIELD_ITEMMENU_WORK* pWork);
 extern void ITEMDISP_upMessageDelete(FIELD_ITEMMENU_WORK* pWork);
 extern void ITEMDISP_upMessageCreate(FIELD_ITEMMENU_WORK* pWork);

@@ -24,6 +24,7 @@
 #include "bag.naix"
 #include "msg/msg_d_field.h"
 #include "msg/msg_bag.h"
+#include "msg/msg_itempocket.h"
 #include "print/printsys.h"
 #include "print/wordset.h"
 #include "field/fieldmap.h"
@@ -53,7 +54,14 @@ static const GFL_UI_TP_HITTBL bttndata[] = {  //上下左右
 	{	0x10*_1CHAR,  0x13*_1CHAR,  6*_1CHAR, 8*_1CHAR },  //技マシン
 	{	0x0e*_1CHAR,  0x11*_1CHAR,  10*_1CHAR, 13*_1CHAR },  //木の実
 	{	7*_1CHAR,  10*_1CHAR,  9*_1CHAR, 12*_1CHAR },  //大切な物
-	{GFL_UI_TP_HIT_END,0,0,0},		 //終了データ
+
+	{	22*_1CHAR,  25*_1CHAR,   1*_1CHAR,  3*_1CHAR },  //左
+	{	22*_1CHAR,  25*_1CHAR,  12*_1CHAR, 15*_1CHAR },  //右
+
+	{	22*_1CHAR,  25*_1CHAR,  26*_1CHAR, 28*_1CHAR },  //x
+	{	22*_1CHAR,  25*_1CHAR,  30*_1CHAR, 32*_1CHAR },  //リターン
+
+  {GFL_UI_TP_HIT_END,0,0,0},		 //終了データ
 };
 
 
@@ -244,6 +252,23 @@ static void _ItemChange(FIELD_ITEMMENU_WORK* pWork, int no1, int no2 )
 
 //------------------------------------------------------------------------------
 /**
+ * @brief   ポケット名の表示
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+
+static void _pocketMessageDisp(FIELD_ITEMMENU_WORK* pWork,int newpocket)
+{
+  GFL_BMP_Clear(GFL_BMPWIN_GetBmp(pWork->pocketNameWin), 0 );
+  GFL_FONTSYS_SetColor( 0xf, 0xe, 0 );
+  GFL_MSG_GetString(pWork->MsgManagerPocket, msg_pocket_001+newpocket, pWork->pStrBuf );
+  PRINTSYS_Print( GFL_BMPWIN_GetBmp(pWork->pocketNameWin), 0, 0, pWork->pStrBuf, pWork->fontHandle);
+  GFL_BMPWIN_TransVramCharacter(pWork->pocketNameWin);
+  GFL_BG_LoadScreenV_Req(GFL_BG_FRAME3_M);
+}
+
+//------------------------------------------------------------------------------
+/**
  * @brief   ポケットに応じたカーソル位置を覚えておく 新しいポケットでのカーソル位置を引き出す
  * @retval  none
  */
@@ -259,6 +284,7 @@ static void _pocketCursorChange(FIELD_ITEMMENU_WORK* pWork,int oldpocket, int ne
   pWork->curpos = cur;
   pWork->oamlistpos = scr - 1;
   ITEMDISP_scrollCursorChangePos(pWork, ITEMMENU_GetItemIndex(pWork));
+  _pocketMessageDisp(pWork, newpocket);
 }
 
 //------------------------------------------------------------------------------
@@ -953,12 +979,47 @@ static void _itemUseMenu(FIELD_ITEMMENU_WORK* pWork)
 static void _BttnCallBack( u32 bttnid, u32 event, void* p_work )
 {
   FIELD_ITEMMENU_WORK* pWork = p_work;
+  int pocketno = -1;
 
-  _pocketCursorChange(pWork, pWork->pocketno, bttnid);
-  pWork->pocketno = bttnid;
+  if(event!=GFL_BMN_EVENT_TOUCH){
+    return;
+  }
+  
+  if(BAG_POKE_MAX > bttnid){
+    pocketno = bttnid;
+  }
+  else if(BUTTONID_LEFT == bttnid){
+    pocketno = pWork->pocketno;
+    pocketno--;
+		if(pocketno < 0){
+			pocketno = BAG_POKE_MAX-1;
+		}
+  }
+  else if(BUTTONID_RIGHT == bttnid){
+    pocketno = pWork->pocketno;
+    pocketno++;
+		if(pocketno >= BAG_POKE_MAX){
+			pocketno = 0;
+		}
+  }
+  else if(BUTTONID_EXIT == bttnid){
+    pWork->ret_code = BAG_NEXTPROC_EXIT;
+    _CHANGE_STATE(pWork, NULL);
+  }
+  else if(BUTTONID_RETURN == bttnid){
+    pWork->ret_code = BAG_NEXTPROC_RETURN;
+    _CHANGE_STATE(pWork, NULL);
+  }
 
-  _windowRewrite(pWork);
+  
 
+  if(pocketno != -1){
+    _pocketCursorChange(pWork, pWork->pocketno, pocketno);
+    pWork->pocketno = pocketno;
+    _windowRewrite(pWork);
+  }
+
+  
 }
 
 //--------------------------------------------------------------
@@ -1003,7 +1064,7 @@ static GFL_PROC_RESULT FieldItemMenuProc_Init( GFL_PROC * proc, int * seq, void 
     pWork->curpos = cur;
     pWork->oamlistpos = scr - 1;
   }
-	_graphicInit(pWork);
+	ITEMDISP_graphicInit(pWork);
 
 	pWork->pMyItem = GAMEDATA_GetMyItem(GAMESYSTEM_GetGameData(pWork->gsys));
 	pWork->MsgManager = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE,
@@ -1011,6 +1072,9 @@ static GFL_PROC_RESULT FieldItemMenuProc_Init( GFL_PROC * proc, int * seq, void 
 
 	pWork->MsgManagerItemInfo = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE,
 																							NARC_message_iteminfo_dat, pWork->heapID );
+
+  pWork->MsgManagerPocket = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE,
+																							NARC_message_itempocket_dat, pWork->heapID );
 
 	pWork->pStrBuf = GFL_STR_CreateBuffer(200,pWork->heapID);
 	pWork->pExpStrBuf = GFL_STR_CreateBuffer(200,pWork->heapID);
@@ -1031,6 +1095,14 @@ static GFL_PROC_RESULT FieldItemMenuProc_Init( GFL_PROC * proc, int * seq, void 
 
 	pWork->g3dVintr = GFUser_VIntr_CreateTCB( _VBlank, (void*)pWork, 0 );
 
+
+	pWork->pocketNameWin = GFL_BMPWIN_Create(
+		GFL_BG_FRAME3_M,
+		_POCKETNAME_DISP_INITX, _POCKETNAME_DISP_INITY,
+		_POCKETNAME_DISP_SIZEX, _POCKETNAME_DISP_SIZEY,
+		_BUTTON_MSG_PAL, GFL_BMP_CHRAREA_GET_B );
+	GFL_BMPWIN_MakeScreen( pWork->pocketNameWin );
+  _pocketMessageDisp(pWork, pWork->pocketno);
   
 	_CHANGE_STATE(pWork, _itemKindSelectMenu);
 	return GFL_PROC_RES_FINISH;
@@ -1087,9 +1159,15 @@ static GFL_PROC_RESULT FieldItemMenuProc_End( GFL_PROC * proc, int * seq, void *
   
 	GFL_MSG_Delete(pWork->MsgManager);
 	GFL_MSG_Delete(pWork->MsgManagerItemInfo);
+	GFL_MSG_Delete(pWork->MsgManagerPocket);
+  
 	GFL_STR_DeleteBuffer(pWork->pStrBuf);
 	GFL_STR_DeleteBuffer(pWork->pExpStrBuf);
 	WORDSET_Delete(pWork->WordSet);
+
+  
+  GFL_BMPWIN_Delete(pWork->pocketNameWin);
+  
 //  if(pWork->submenulist){
 //    BmpMenuWork_ListDelete(pWork->submenulist);
 //  }
