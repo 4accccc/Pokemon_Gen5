@@ -17,6 +17,8 @@
 #include "zonetableformat.h"
 #include "gamesystem/pm_season.h"
 
+#include "arc/fieldmap/field_rail_data.naix"  //NARC_field_rail_data_～
+
 //============================================================================================
 //============================================================================================
 //------------------------------------------------------------------
@@ -256,7 +258,27 @@ BOOL ZONEDATA_DEBUG_IsSampleObjUse(u16 zone_id)
 //------------------------------------------------------------------
 BOOL ZONEDATA_DEBUG_IsRailMap(u16 zone_id)
 {
-  return ( (zone_id == ZONE_ID_C03) || (zone_id == ZONE_ID_H01) );
+  return (ZONEDATA_GetRailDataID(zone_id) != ZONEDATA_NO_RAILDATA_ID);
+}
+
+//------------------------------------------------------------------
+/**
+ *  @brief  レールデータ指定IDを取得
+ *  @param  zone_id ゾーン指定ID
+ *  @retval ZONEDATA_NO_RAILDATA_ID( == -1)  レールデータが存在しない
+ *  @retval other レールデータアーカイブ指定ID
+ */
+//------------------------------------------------------------------
+int ZONEDATA_GetRailDataID(u16 zone_id)
+{
+  switch (zone_id)
+  {
+  case ZONE_ID_C03:
+    return NARC_field_rail_data_c3_dat;
+  case ZONE_ID_H01:
+    return NARC_field_rail_data_h01_dat;
+  }
+  return ZONEDATA_NO_RAILDATA_ID;
 }
 
 //------------------------------------------------------------------
