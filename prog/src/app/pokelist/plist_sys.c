@@ -358,6 +358,8 @@ const BOOL PLIST_UpdatePokeList( PLIST_WORK *work )
     PLIST_PLATE_UpdatePlate( work , work->plateWork[i] );
   }
   PLIST_MSG_UpdateSystem( work , work->msgWork );
+  
+  PLIST_UpdatePlatePalletAnime( work );
 
   //メッセージ
   PRINTSYS_QUE_Main( work->printQue );
