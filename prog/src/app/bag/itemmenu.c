@@ -285,6 +285,8 @@ static void _pocketCursorChange(FIELD_ITEMMENU_WORK* pWork,int oldpocket, int ne
   pWork->oamlistpos = scr - 1;
   ITEMDISP_scrollCursorChangePos(pWork, ITEMMENU_GetItemIndex(pWork));
   _pocketMessageDisp(pWork, newpocket);
+  ITEMDISP_ChangePocketCell( pWork,newpocket );
+
 }
 
 //------------------------------------------------------------------------------
@@ -1085,7 +1087,9 @@ static GFL_PROC_RESULT FieldItemMenuProc_Init( GFL_PROC * proc, int * seq, void 
 	GFL_UI_KEY_SetRepeatSpeed(1, 6);
 	ITEMDISP_upMessageCreate(pWork);
   ITEMDISP_CellResourceCreate(pWork);
-	_windowCreate(pWork);
+  ITEMDISP_InitPocketCell( pWork );
+
+  _windowCreate(pWork);
   ITEMDISP_CellCreate(pWork);
 
 	pWork->pButton = GFL_BMN_Create( bttndata, _BttnCallBack, pWork,  pWork->heapID );
@@ -1103,6 +1107,7 @@ static GFL_PROC_RESULT FieldItemMenuProc_Init( GFL_PROC * proc, int * seq, void 
 		_BUTTON_MSG_PAL, GFL_BMP_CHRAREA_GET_B );
 	GFL_BMPWIN_MakeScreen( pWork->pocketNameWin );
   _pocketMessageDisp(pWork, pWork->pocketno);
+  ITEMDISP_ChangePocketCell( pWork, pWork->pocketno );
   
 	_CHANGE_STATE(pWork, _itemKindSelectMenu);
 	return GFL_PROC_RES_FINISH;

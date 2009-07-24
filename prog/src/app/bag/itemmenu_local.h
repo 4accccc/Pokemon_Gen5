@@ -38,7 +38,7 @@ extern const GFL_PROC_DATA ItemMenuProcData;
 
 
 #define ITEM_LIST_NUM (8)
-#define _CELLUNIT_NUM (17)
+#define _CELLUNIT_NUM (22)
 
 #define _SCROLL_TOP_Y  (8)  //スクロールバーの最初の位置
 #define _SCROLL_BOTTOM_Y  (8*20)  //スクロールバーの最後の位置
@@ -53,6 +53,11 @@ enum _ITEMLISTCELL_RESOURCE
   _ANM_CUR,
   _ANM_LIST,
   _ANM_COMMON,
+
+
+  _PLT_BAGPOCKET,  
+  _NCG_BAGPOCKET,  
+  _ANM_BAGPOCKET,  
   SCR_MAX ,
 };
 
@@ -114,6 +119,7 @@ struct _DEBUGITEM_PARAM {
   GFL_CLWK  *cellicon;
   GFL_CLWK  *clwkCur;
   GFL_CLWK  *scrollCur;
+  GFL_CLWK  *clwkPocketIcon;
   GFL_CLWK  *clwkBarIcon[5];
 
   GFL_BMPWIN* winItemName;
@@ -195,4 +201,7 @@ extern void ITEMDISP_scrollCursorChangePos(FIELD_ITEMMENU_WORK* pWork, int num);
 extern int ITEMMENU_GetItemIndex(FIELD_ITEMMENU_WORK* pWork);
 extern int ITEMMENU_GetItemPocketNumber(FIELD_ITEMMENU_WORK* pWork);
 extern ITEM_ST* ITEMMENU_GetItem(FIELD_ITEMMENU_WORK* pWork,int no);
+
+extern void ITEMDISP_InitPocketCell( FIELD_ITEMMENU_WORK* pWork );
+extern void ITEMDISP_ChangePocketCell( FIELD_ITEMMENU_WORK* pWork,int pocketno );
 

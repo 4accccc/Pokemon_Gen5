@@ -81,6 +81,7 @@ $(targetname).narc: $(lobjects) $(gobjects) $(eobjects) $(cobjects) $(aobjects)
 	nnsarc -r -l -n -i $(targetname) $^
 	$(NAIXCUT) $(targetname).naix
 	$(DIFFCOPY) bag_win_d_NANR_LBLDEFS.h  $(TARGETDIR)../src/app/bag
+	$(DIFFCOPY) bag_parts_d_NANR_LBLDEFS.h  $(TARGETDIR)../src/app/bag
 endif
 
 #------------------------------------------------------------------------------

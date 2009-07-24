@@ -298,6 +298,20 @@ void ITEMDISP_graphicInit(FIELD_ITEMMENU_WORK* pWork)
                                             GFL_BG_FRAME1_S, 0,
                                             GFL_ARCUTIL_TRANSINFO_GetPos(pWork->subbg2), 0, 0, pWork->heapID);
 
+
+
+    //下画面アイコン
+    pWork->cellRes[_PLT_BAGPOCKET] = GFL_CLGRP_PLTT_RegisterEx(
+      p_handle , NARC_bag_bag_parts_d_NCLR , CLSYS_DRAW_MAIN , 9*32 , 0 , 2 , pWork->heapID  );
+    
+    pWork->cellRes[_NCG_BAGPOCKET] = GFL_CLGRP_CGR_Register(
+      p_handle , NARC_bag_bag_parts_d_NCGR , FALSE , CLSYS_DRAW_MAIN , pWork->heapID  );
+    
+    pWork->cellRes[_ANM_BAGPOCKET] = GFL_CLGRP_CELLANIM_Register(
+      p_handle, NARC_bag_bag_parts_d_NCER, NARC_bag_bag_parts_d_NANR , pWork->heapID);
+
+
+    
     GFL_ARC_CloseDataHandle(p_handle);
   }
 
@@ -816,6 +830,70 @@ static void ITEMDISP_InitTaskBar( FIELD_ITEMMENU_WORK* pWork )
 
   }
   
+}
+
+
+
+
+
+#define    NANR_bag_parts_d_taisetsu    0 // 
+#define    NANR_bag_parts_d_waza    1 // 
+#define    NANR_bag_parts_d_kinomi    2 // 
+#define    NANR_bag_parts_d_kaifuku    3 // 
+#define    NANR_bag_parts_d_dougu    4 // 
+
+
+
+//------------------------------------------------------------------------------
+/**
+ * @brief   ポケットのCELLを初期化
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+void ITEMDISP_InitPocketCell( FIELD_ITEMMENU_WORK* pWork )
+{
+
+  //バーのボタン
+  {
+
+    u8 i;
+    GFL_CLWK_DATA cellInitData;
+    cellInitData.softpri = 10;
+    cellInitData.bgpri = 1;
+    
+    cellInitData.pos_x = 0;
+    cellInitData.pos_y = 0;
+    cellInitData.anmseq = 0;
+    pWork->clwkPocketIcon = GFL_CLACT_WK_Create( pWork->cellUnit ,
+                                                 pWork->cellRes[_NCG_BAGPOCKET],
+                                                 pWork->cellRes[_PLT_BAGPOCKET],
+                                                 pWork->cellRes[_ANM_BAGPOCKET],
+                                                 &cellInitData ,CLSYS_DEFREND_MAIN , pWork->heapID );
+
+    GFL_CLACT_WK_SetDrawEnable( pWork->clwkPocketIcon , FALSE );
+  }
+}
+
+//------------------------------------------------------------------------------
+/**
+ * @brief   ポケットのCELLを初期化
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+void ITEMDISP_ChangePocketCell( FIELD_ITEMMENU_WORK* pWork,int pocketno )
+{
+  int anm[] = {
+    NANR_bag_parts_d_dougu,
+    NANR_bag_parts_d_kaifuku,
+    NANR_bag_parts_d_waza,
+    NANR_bag_parts_d_kinomi,
+    NANR_bag_parts_d_taisetsu};
+  GFL_CLACTPOS pos[]={{64,128}, {48,96}, {96,80}, {80,112}, {64,72} };
+
+  GFL_CLACT_WK_SetAnmSeq(pWork->clwkPocketIcon, anm[pocketno]);
+  GFL_CLACT_WK_SetPos( pWork->clwkPocketIcon ,  &pos[pocketno], CLWK_SETSF_NONE );
+  GFL_CLACT_WK_SetDrawEnable( pWork->clwkPocketIcon , TRUE );
+
 }
 
 
