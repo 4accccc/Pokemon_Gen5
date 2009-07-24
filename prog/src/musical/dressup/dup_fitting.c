@@ -133,6 +133,8 @@ static const u8 ITEM_LIST_NEW_BLINK = 45;
 static const u8 ITEM_SWING_ORIGIN_OFSSET = 8;
 static const u16 ITEM_SWING_ANGLE_MAX = 0x3000;
 static const u16 ITEM_SWING_ANGLE_ADD_VALUE = 0x100;
+static const u16 ITEM_SWING_ANGLE_SORT_MAX = 0x3000;  //ソート時のアニメ角度MAX
+static const u16 ITEM_SWING_ANGLE_SORT_ADD_VALUE = 0x200; 
 
 //表示順位メモ
 //↑
@@ -222,7 +224,6 @@ struct _FITTING_WORK
   u32 befTpx,befTpy;
   u16 befAngle;
   BOOL befAngleEnable;  //↑の変数の有効性
-  BOOL isOpenList;    //リストの表示状態
   MUS_POKE_EQUIP_POS  snapPos;  //装備に吸着してる状態
   
   FIT_ITEM_WORK *holdItem;  //保持しているアイテム
@@ -302,14 +303,15 @@ static void DUP_FIT_CheckItemListPallet( FITTING_WORK *work );
 
 static void DUP_FIT_UpdateTpMain( FITTING_WORK *work );
 static void DUP_FIT_UpdateTpList( FITTING_WORK *work , s16 subX , s16 subY );
-static void DUP_FIT_UpdateTpHoldItem( FITTING_WORK *work );
+static const BOOL DUP_FIT_UpdateTpHoldItem( FITTING_WORK *work , FIT_ITEM_GROUP *itemGroupe , ITEM_GROUPE groupeType );
 static void DUP_FIT_UpdateTpHoldingItem( FITTING_WORK *work );
 static void DUP_FIT_UpdateTpDropItemToField( FITTING_WORK *work );
 static void DUP_FIT_UpdateTpDropItemToList( FITTING_WORK *work , const BOOL isMove );
 static void DUP_FIT_UpdateTpDropItemToEquip(  FITTING_WORK *work );
 static void DUP_FIT_UpdateTpCancelDropItem( FITTING_WORK *work );
-static void DUP_FIT_UpdateTpPokeCheck( FITTING_WORK *work );
+static const BOOL DUP_FIT_UpdateTpPokeCheck( FITTING_WORK *work );
 static void DUP_FIT_UpdateSortAnime( FITTING_WORK *work );
+static void DUP_FIT_UpdateSwingItem( FITTING_WORK *work );
 
 static const BOOL DUP_FIT_CheckIsEquipItem( FITTING_WORK *work , const MUS_POKE_EQUIP_POS pos);
 static MUS_POKE_EQUIP_POS DUP_FIT_SearchEquipPosition( FITTING_WORK *work , MUS_ITEM_DRAW_WORK *itemDrawWork , GFL_POINT *pos , u16 *len );
@@ -385,6 +387,7 @@ FITTING_WORK* DUP_FIT_InitFitting( FITTING_INIT_WORK *initWork , HEAPID heapId )
   work->sortType = MUS_POKE_EQUIP_USER_MAX;
   work->listAngle = 0;
   work->listSwingAngle = 0;
+  work->listSwingSpeed = 0;
   work->isDemo = FALSE;
   work->scrollCnt = 0;
   work->isOpenCurtain = FALSE;
@@ -401,6 +404,28 @@ FITTING_WORK* DUP_FIT_InitFitting( FITTING_INIT_WORK *initWork , HEAPID heapId )
   
   WIPE_SYS_Start( WIPE_PATTERN_FSAM , WIPE_TYPE_FADEIN , WIPE_TYPE_FADEIN , 
                   WIPE_FADE_WHITE , 18 , WIPE_DEF_SYNC , work->heapId );
+  
+  //初回回転演出
+  {
+    //デフォルトでソート
+    const u32 startAngle = work->listTotalMove + 0x18000;
+    u16 startIdx;
+    if( startAngle >= work->totalItemNum * LIST_ONE_ANGLE )
+    {
+      startIdx = (startAngle-(work->totalItemNum * LIST_ONE_ANGLE)) / LIST_ONE_ANGLE;
+    }
+    else
+    {
+      startIdx = startAngle / LIST_ONE_ANGLE;
+    }
+    DUP_FIT_SortItemIdx( work , MUS_POKE_EQUIP_USER_MAX , startIdx );
+    work->sortType = MUS_POKE_EQUIP_USER_MAX;
+    work->isSortAnime = TRUE;
+    work->sortAnimeMoveAngle = 0;
+    work->sortAnimeEndAngle = 0x10000 + work->listAngle%LIST_ONE_ANGLE;
+  }
+
+
   
   return work;
 }
@@ -457,6 +482,7 @@ FITTING_RETURN  DUP_FIT_LoopFitting( FITTING_WORK *work )
   case DUS_FADEIN_WAIT:
     if( WIPE_SYS_EndCheck() == TRUE )
     {
+      // TODO 現在デモ機能OFF
       /*
       if( DUP_FIT_ITEMGROUP_GetItemNum(work->itemGroupField) == 0 )
       {
@@ -469,6 +495,11 @@ FITTING_RETURN  DUP_FIT_LoopFitting( FITTING_WORK *work )
       }
       */
       work->state = DUS_FITTING_MAIN;
+    }
+    //初回回転アニメのためフェードイン中でも動かす
+    if( work->isSortAnime == TRUE )
+    {
+      DUP_FIT_UpdateSortAnime( work );
     }
     break;
     
@@ -493,6 +524,8 @@ FITTING_RETURN  DUP_FIT_LoopFitting( FITTING_WORK *work )
     {
       work->animeCnt = FIT_ANIME_MAX;
       work->state = DUS_CHECK_MAIN;
+      work->listSwingAngle = 0;
+      work->listSwingSpeed = 0;
     }
     DUP_FIT_ChangeStateAnime(work);
     
@@ -1004,7 +1037,6 @@ static void DUP_FIT_SetupItem( FITTING_WORK *work )
   //半回転の位置からスタート
   work->listTotalMove = (LIST_ONE_ANGLE*work->totalItemNum)-0x8000; 
   DUP_FIT_CalcItemListAngle( work , 0 , 0 , LIST_SIZE_X , LIST_SIZE_Y );
-  work->isOpenList = TRUE;
 
 }
 
@@ -1172,47 +1204,7 @@ static void DUP_FIT_FittingMain(  FITTING_WORK *work )
     work->listSwingSpeed = -0x200;
     DUP_FIT_CalcItemListAngle( work , work->listAngle , 0 , LIST_SIZE_X , LIST_SIZE_Y );
   }
-  
-  if( MATH_ABS(work->listSpeed) < 0x40 )
-  {
-    if( work->listSwingAngle != 0 ||
-        work->listSwingSpeed != 0 )
-    {
-      static const s16 kskSpeed = 0x80;
-      work->listSwingAngle += work->listSwingSpeed;
-      if( work->listSwingAngle > 0 )
-      {
-        if( work->listSwingSpeed > 0 )
-        {
-          work->listSwingSpeed -= kskSpeed;
-        }
-        else
-        {
-          work->listSwingSpeed -= kskSpeed/3;
-        }
-      }
-      else
-      if( work->listSwingAngle < 0 )
-      {
-        if( work->listSwingSpeed < 0 )
-        {
-          work->listSwingSpeed += kskSpeed;
-        }
-        else
-        {
-          work->listSwingSpeed += kskSpeed/3;
-        }
-      }
-      //ARI_TPrintf("[%d][%d]\n",work->listSwingAngle,work->listSwingSpeed);
-      if( MATH_ABS(work->listSwingAngle) < 0x200 &&
-          MATH_ABS(work->listSwingSpeed) < 0x200 )
-      {
-        work->listSwingSpeed = 0;
-        work->listSwingAngle = 0;
-      }
-      DUP_FIT_CalcItemListAngle( work , work->listAngle , 0 , LIST_SIZE_X , LIST_SIZE_Y );
-    }
-  }
+
 
 #endif
 
@@ -1223,6 +1215,9 @@ static void DUP_FIT_FittingMain(  FITTING_WORK *work )
   else
   {
     DUP_FIT_UpdateTpMain( work );
+    //アイテム揺らし更新
+    //アニメ中の揺らしはアニメの中でやってる
+    DUP_FIT_UpdateSwingItem( work );
   }
   DUP_FIT_UpdateShadow( work );
 
@@ -1261,6 +1256,9 @@ static void DUP_FIT_FittingMain(  FITTING_WORK *work )
 //--------------------------------------------------------------
 static void DUP_FIT_CalcItemListAngle( FITTING_WORK *work , u16 angle , s16 moveAngle , u16 sizeX , u16 sizeY )
 {
+  //現在複数個所から呼び出しているので処理負荷を余計に食っているかも・・・
+  //処理負荷がきつかったら値を累計させて一箇所で処理するように。
+  
   //円は下が手前で0度として、depthは下で0x8000 上が0x0000
   int i = 0;
   u16 itemSwingRot;
@@ -1440,6 +1438,8 @@ static void DUP_FIT_CheckItemListPallet( FITTING_WORK *work )
 static void DUP_FIT_UpdateTpMain( FITTING_WORK *work )
 {
   BOOL isTouchList = FALSE;
+  BOOL isTouchSort = FALSE;
+  BOOL isTouchEquip = FALSE;
   //デモの場合は外から数値が入ってくる
   if( work->isDemo == FALSE )
   {
@@ -1478,7 +1478,24 @@ static void DUP_FIT_UpdateTpMain( FITTING_WORK *work )
         //アイテム保持中の処理
         DUP_FIT_UpdateTpHoldingItem( work );
       }
-      else if( work->isOpenList == TRUE )
+      else if( work->tpIsTrg == TRUE )
+      {
+        isTouchEquip = DUP_FIT_UpdateTpHoldItem(work,work->itemGroupEquip ,IG_EQUIP);
+        if( isTouchEquip == TRUE )
+        {
+          //装備との当たり判定
+          DUP_FIT_ITEMGROUP_RemoveItem( work->itemGroupEquip , work->holdItem );
+          DUP_FIT_ITEMGROUP_AddItem( work->itemGroupField , work->holdItem );
+          //座標あわせと深度設定
+          DUP_FIT_UpdateTpHoldingItem( work );
+        }
+        else
+        {
+          isTouchSort = DUP_FIT_UpdateTpPokeCheck( work );
+        }
+      }
+      if( isTouchEquip == FALSE && isTouchSort == FALSE && 
+          (work->holdItem == NULL || work->holdItemType == IG_LIST ) )
       {
         //アイテムリストの中か？
         //X座標には比をかけてYのサイズで計算する
@@ -1509,18 +1526,11 @@ static void DUP_FIT_UpdateTpMain( FITTING_WORK *work )
             }
           }
         }
-      }
-      if( isTouchList == FALSE && work->tpIsTrg == TRUE )
-      {
-        //リスト・フィールドから拾う判定
-        DUP_FIT_UpdateTpHoldItem(work);
-        
-        //ソート判定
-        if( hitMinOval == TRUE && work->holdItem == NULL )
+        if( isTouchList == FALSE && work->tpIsTrg == TRUE )
         {
-          DUP_FIT_UpdateTpPokeCheck( work );
+          //フィールドから拾う判定
+          DUP_FIT_UpdateTpHoldItem(work,work->itemGroupField ,IG_FIELD);
         }
-
       }
     }
   }
@@ -1542,8 +1552,7 @@ static void DUP_FIT_UpdateTpMain( FITTING_WORK *work )
         DUP_FIT_UpdateTpDropItemToEquip( work );
       }
       else
-      if( hitMinOval == FALSE && hitMaxOval == TRUE &&
-        work->isOpenList == TRUE )
+      if( hitMinOval == FALSE && hitMaxOval == TRUE )
       {
         DUP_FIT_UpdateTpDropItemToList( work , FALSE );
       }
@@ -1669,7 +1678,6 @@ static void DUP_FIT_UpdateTpList( FITTING_WORK *work , s16 subX , s16 subY )
         work->listSpeed = subAngle;
       }
       
-      OS_TPrintf("[%d]\n",work->listSpeed);
       //Swing処理
       if( (work->listSpeed > 0 && work->listSwingAngle > 0) ||
           (work->listSpeed < 0 && work->listSwingAngle < 0) )
@@ -1680,6 +1688,7 @@ static void DUP_FIT_UpdateTpList( FITTING_WORK *work , s16 subX , s16 subY )
       else
       if( work->listSpeed > 0 && work->listSwingAngle > -ITEM_SWING_ANGLE_MAX )
       {
+        //最大角度はListSpeedの1.5倍
         if( work->listSpeed*15 > work->listSwingAngle*-10 )
         {
           work->listSwingAngle -= ITEM_SWING_ANGLE_ADD_VALUE;
@@ -1688,6 +1697,7 @@ static void DUP_FIT_UpdateTpList( FITTING_WORK *work , s16 subX , s16 subY )
       else
       if( work->listSpeed < 0 && work->listSwingAngle < ITEM_SWING_ANGLE_MAX )
       {
+        //最大角度はListSpeedの1.5倍
         if( work->listSpeed*-15 > work->listSwingAngle*10 )
         {
           work->listSwingAngle += ITEM_SWING_ANGLE_ADD_VALUE;
@@ -1706,6 +1716,7 @@ static void DUP_FIT_UpdateTpList( FITTING_WORK *work , s16 subX , s16 subY )
 //--------------------------------------------------------------
 //フィールド・装備のアイテムを拾う
 //--------------------------------------------------------------
+/*
 static void DUP_FIT_UpdateTpHoldItem( FITTING_WORK *work )
 {
   BOOL isEquipList = TRUE;
@@ -1767,9 +1778,42 @@ static void DUP_FIT_UpdateTpHoldItem( FITTING_WORK *work )
     //座標あわせと深度設定
     DUP_FIT_UpdateTpHoldingItem( work );
   }
-
 }
-
+*/
+static const BOOL DUP_FIT_UpdateTpHoldItem( FITTING_WORK *work , FIT_ITEM_GROUP *itemGroupe , ITEM_GROUPE groupeType )
+{
+  FIT_ITEM_WORK* item = DUP_FIT_ITEMGROUP_GetStartItem( itemGroupe );
+  while( item != NULL )
+  {
+    if( DUP_FIT_ITEM_CheckHit( item , work->tpx,work->tpy ) == TRUE )
+    {
+      const GFL_POINT *itemPos = DUP_FIT_ITEM_GetPosition( item );
+      work->holdItem = item;
+      work->holdItemType = IG_FIELD;
+      ARI_TPrintf("Item Hold[%d]\n",DUP_FIT_ITEM_GetItemState(item)->itemId);
+      
+      //戻す時用の処理
+      work->befItemType = groupeType;
+      work->befItemPos.x = itemPos->x;
+      work->befItemPos.y = itemPos->y;
+      return TRUE;
+    }
+    else
+    {
+      item = DUP_FIT_ITEM_GetNextItem(item);
+    }
+  }
+  return FALSE;
+  /*
+  if( isEquipList == TRUE && item != work->holdItem )
+  {
+    DUP_FIT_ITEMGROUP_RemoveItem( work->itemGroupEquip , work->holdItem );
+    DUP_FIT_ITEMGROUP_AddItem( work->itemGroupField , work->holdItem );
+    //座標あわせと深度設定
+    DUP_FIT_UpdateTpHoldingItem( work );
+  }
+  */
+}
 //--------------------------------------------------------------
 //フィールドのアイテムを持っている
 //--------------------------------------------------------------
@@ -2129,16 +2173,16 @@ static void DUP_FIT_UpdateTpCancelDropItem( FITTING_WORK *work )
 //--------------------------------------------------------------
 //ポケモンのタッチチェック（ソート用)
 //--------------------------------------------------------------
-static void DUP_FIT_UpdateTpPokeCheck( FITTING_WORK *work )
+static const BOOL DUP_FIT_UpdateTpPokeCheck( FITTING_WORK *work )
 {
   u16 snapLen = 16;
   GFL_POINT pokePosSub;
   MUS_POKE_EQUIP_POS touchPos;
   u16 startIdx;
   //1週半と1個先のところを先頭にしてソート(スタートは下
-//  const u32 startAngle = work->listTotalMove + 0x18000+LIST_ONE_ANGLE;
+  const u32 startAngle = work->listTotalMove + 0x18000;
   //1と1/4週と1個先のところを先頭にしてソート(スタートは左
-  const u32 startAngle = work->listTotalMove + 0x14000+LIST_ONE_ANGLE;
+  //const u32 startAngle = work->listTotalMove + 0x14000+LIST_ONE_ANGLE;
   
   if( startAngle >= work->totalItemNum * LIST_ONE_ANGLE )
   {
@@ -2172,25 +2216,28 @@ static void DUP_FIT_UpdateTpPokeCheck( FITTING_WORK *work )
       DUP_FIT_SortItemIdx( work , userType , startIdx );
       work->sortType = userType;
     }
+    work->isSortAnime = TRUE;
+    work->sortAnimeMoveAngle = 0;
+    work->sortAnimeEndAngle = 0x10000 + work->listAngle%LIST_ONE_ANGLE;
+    //listAngleのあまりが０だったら
+    /*  //1週半のときだけ有効にする
+    if( work->sortAnimeEndAngle == 0x10000 )
+    {
+      work->sortAnimeEndAngle += LIST_ONE_ANGLE;
+    }
+    */
+    
+    DUP_FIT_CalcItemListAngle( work , work->listAngle , 0 , LIST_SIZE_X , LIST_SIZE_Y );
+    
+    return TRUE;
   }
   else
   {
-    //デフォルトでソート
-    DUP_FIT_SortItemIdx( work , MUS_POKE_EQUIP_USER_MAX , startIdx );
-    work->sortType = MUS_POKE_EQUIP_USER_MAX;
+    return FALSE;
+    //円の内側をタッチし、何も無かったらデフォルトでソート
+    //DUP_FIT_SortItemIdx( work , MUS_POKE_EQUIP_USER_MAX , startIdx );
+    //work->sortType = MUS_POKE_EQUIP_USER_MAX;
   }
-  work->isSortAnime = TRUE;
-  work->sortAnimeMoveAngle = 0;
-  work->sortAnimeEndAngle = 0x10000 + work->listAngle%LIST_ONE_ANGLE;
-  //listAngleのあまりが０だったら
-  /*  //1週半のときだけ有効にする
-  if( work->sortAnimeEndAngle == 0x10000 )
-  {
-    work->sortAnimeEndAngle += LIST_ONE_ANGLE;
-  }
-  */
-  
-  DUP_FIT_CalcItemListAngle( work , work->listAngle , 0 , LIST_SIZE_X , LIST_SIZE_Y );
   
 }
 
@@ -2219,9 +2266,74 @@ static void DUP_FIT_UpdateSortAnime( FITTING_WORK *work )
     }
   }
   
+  if( leastAngle > 0x1000 )
+  {
+    work->listSwingAngle -= ITEM_SWING_ANGLE_SORT_ADD_VALUE;
+    if( work->listSwingAngle < -ITEM_SWING_ANGLE_SORT_MAX )
+    {
+      work->listSwingAngle = -ITEM_SWING_ANGLE_SORT_MAX;
+    }
+  }
+  else
+  {
+    //アイテム揺らし更新
+    DUP_FIT_UpdateSwingItem( work );
+  }
+
   work->sortAnimeMoveAngle += moveAngle;
   work->listAngle -= moveAngle;
   DUP_FIT_CalcItemListAngle( work , work->listAngle , moveAngle , LIST_SIZE_X , LIST_SIZE_Y );
+}
+
+//--------------------------------------------------------------
+//アイテム揺らし更新
+//--------------------------------------------------------------
+static void DUP_FIT_UpdateSwingItem( FITTING_WORK *work )
+{
+  //リストの速度が一定以下＆ソートアニメ以外
+  if( MATH_ABS(work->listSpeed) < 0x30 )
+  {
+    if( work->listSwingAngle != 0 ||
+        work->listSwingSpeed != 0 )
+    {
+      static const s16 accSpeed = 0x80;
+      work->listSwingAngle += work->listSwingSpeed;
+      if( work->listSwingAngle > 0 )
+      {
+        if( work->listSwingSpeed > 0 )
+        {
+          work->listSwingSpeed -= accSpeed;
+        }
+        else
+        {
+          //向きが逆なので少なく
+          work->listSwingSpeed -= accSpeed/3;
+        }
+      }
+      else
+      if( work->listSwingAngle < 0 )
+      {
+        if( work->listSwingSpeed < 0 )
+        {
+          work->listSwingSpeed += accSpeed;
+        }
+        else
+        {
+          //向きが逆なので少なく
+          work->listSwingSpeed += accSpeed/3;
+        }
+      }
+      //ARI_TPrintf("[%d][%d]\n",work->listSwingAngle,work->listSwingSpeed);
+      //停止条件。速度＆加速度が一定以下
+      if( MATH_ABS(work->listSwingAngle) < 0x200 &&
+          MATH_ABS(work->listSwingSpeed) < 0x200 )
+      {
+        work->listSwingSpeed = 0;
+        work->listSwingAngle = 0;
+      }
+      DUP_FIT_CalcItemListAngle( work , work->listAngle , 0 , LIST_SIZE_X , LIST_SIZE_Y );
+    }
+  }
 }
 
 //--------------------------------------------------------------
