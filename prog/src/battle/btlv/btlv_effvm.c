@@ -90,7 +90,7 @@ typedef struct
 	int               player;
 	int               wait;
   int               pitch;
-  int               pan;
+  int               vol;
   int               mod_depth;
   int               mod_speed;
 }BTLV_EFFVM_SEPLAY;
@@ -154,7 +154,7 @@ static  void  EFFVM_InitEmitterPos( GFL_EMIT_PTR emit );
 static  void  EFFVM_MoveEmitter( GFL_EMIT_PTR emit, unsigned int flag );
 static  void  EFFVM_DeleteEmitter( GFL_PTC_PTR ptc );
 static  void  EFFVM_ChangeCameraProjection( BTLV_EFFVM_WORK *bevw );
-static  void  EFFVM_SePlay( int se_no, int player, int pitch, int pan, int mod_depth, int mod_speed );
+static  void  EFFVM_SePlay( int se_no, int player, int pitch, int vol, int mod_depth, int mod_speed );
 
 //TCB関数
 static  void  TCB_EFFVM_SEPLAY( GFL_TCB* tcb, void* work );
@@ -1175,7 +1175,7 @@ static VMCMD_RESULT VMEC_SE_PLAY( VMHANDLE *vmh, void *context_work )
   int player    = ( int )VMGetU32( vmh );
   int wait      = ( int )VMGetU32( vmh );
   int pitch     = ( int )VMGetU32( vmh );
-  int pan       = ( int )VMGetU32( vmh );
+  int vol       = ( int )VMGetU32( vmh );
   int mod_depth = ( int )VMGetU32( vmh );
   int mod_speed = ( int )VMGetU32( vmh );
 
@@ -1184,7 +1184,7 @@ static VMCMD_RESULT VMEC_SE_PLAY( VMHANDLE *vmh, void *context_work )
 
   if( wait == 0 )
   { 
-    EFFVM_SePlay( se_no, player, pitch, pan, mod_depth, mod_speed );
+    EFFVM_SePlay( se_no, player, pitch, vol, mod_depth, mod_speed );
   }
   else
   { 
@@ -1194,7 +1194,7 @@ static VMCMD_RESULT VMEC_SE_PLAY( VMHANDLE *vmh, void *context_work )
     bes->player     = player;
     bes->wait       = wait;
     bes->pitch      = pitch;
-    bes->pan        = pan;
+    bes->vol        = vol;
     bes->mod_depth  = mod_depth;
     bes->mod_speed  = mod_speed;
 
@@ -1886,12 +1886,12 @@ static  void  EFFVM_ChangeCameraProjection( BTLV_EFFVM_WORK *bevw )
  * @param[in]	se_no	      再生するSEナンバー
  * @param[in] player      再生するPlayerNo
  * @param[in] pitch       再生ピッチ
- * @param[in] pan         再生パン
+ * @param[in] vol         再生ボリューム
  * @param[in] mod_depth   再生モジュレーションデプス
  * @param[in] mod_speed   再生モジュレーションスピード
  */
 //============================================================================================
-static  void  EFFVM_SePlay( int se_no, int player, int pitch, int pan, int mod_depth, int mod_speed )
+static  void  EFFVM_SePlay( int se_no, int player, int pitch, int vol, int mod_depth, int mod_speed )
 { 
   if( player == BTLEFF_SEPLAY_DEFAULT )
   { 
@@ -1903,6 +1903,7 @@ static  void  EFFVM_SePlay( int se_no, int player, int pitch, int pan, int mod_d
     PMSND_PlaySE_byPlayerID( se_no, player );
   }
   //現状ではPANには対応しない
+	NNS_SndPlayerSetVolume( PMSND_GetSE_SndHandle( player ), vol );
   PMSND_SetStatusSE_byPlayerID( player, PMSND_NOEFFECT, pitch, PMSND_NOEFFECT );
   NNS_SndPlayerSetTrackModDepth( PMSND_GetSE_SndHandle( player ), 0xffff, mod_depth );
   NNS_SndPlayerSetTrackModSpeed( PMSND_GetSE_SndHandle( player ), 0xffff, mod_speed );
@@ -1921,7 +1922,7 @@ static  void  TCB_EFFVM_SEPLAY( GFL_TCB* tcb, void* work )
   if( --bes->wait == 0 )
   { 
     bes->bevw->se_play_wait_flag = 0;
-    EFFVM_SePlay( bes->se_no, bes->player, bes->pitch, bes->pan, bes->mod_depth, bes->mod_speed );
+    EFFVM_SePlay( bes->se_no, bes->player, bes->pitch, bes->vol, bes->mod_depth, bes->mod_speed );
     GFL_HEAP_FreeMemory( bes );
     GFL_TCB_DeleteTask( tcb );
   }

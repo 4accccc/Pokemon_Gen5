@@ -941,7 +941,7 @@ ex)
  * @param player      再生するPlayerNo
  * @param wait        再生までのウエイト
  * @param pitch       再生ピッチ
- * @param pan         再生パン
+ * @param vol         再生ボリューム
  * @param mod_depth   再生モジュレーションデプス
  * @param mod_speed   再生モジュレーションスピード
  *
@@ -950,18 +950,18 @@ ex)
  * #param COMBOBOX_VALUE BTLEFF_SEPLAY_DEFAULT  BTLEFF_SEPLAY_SE1 BTLEFF_SEPLAY_SE2 BTLEFF_SEPLAY_PSG
  * #param VALUE_INT   再生までのウエイト
  * #param VALUE_INT   再生ピッチ
- * #param VALUE_INT   再生パン
+ * #param VALUE_INT   再生ボリューム
  * #param VALUE_INT   再生モジュレーションデプス
  * #param VALUE_INT   再生モジュレーションスピード
  */
 //======================================================================
-	.macro	SE_PLAY	se_no, player, wait, pitch, pan, mod_depth, mod_speed
+	.macro	SE_PLAY	se_no, player, wait, pitch, vol, mod_depth, mod_speed
 	.short	EC_SE_PLAY
 	.long		\se_no
 	.long   \player
 	.long   \wait
   .long   \pitch
-  .long   \pan
+  .long   \vol
   .long   \mod_depth
   .long   \mod_speed
 	.endm
