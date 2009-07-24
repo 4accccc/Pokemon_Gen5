@@ -49,11 +49,11 @@
 
 //ならびは savedata/myitem_savedata.hに準拠
 static const GFL_UI_TP_HITTBL bttndata[] = {  //上下左右
-	{	7*_1CHAR,  10*_1CHAR,  3*_1CHAR, 6*_1CHAR },  //どうぐ
-	{	0x0e*_1CHAR,  0x11*_1CHAR,  2*_1CHAR, 5*_1CHAR },  //回復
-	{	0x10*_1CHAR,  0x13*_1CHAR,  6*_1CHAR, 8*_1CHAR },  //技マシン
-	{	0x0e*_1CHAR,  0x11*_1CHAR,  10*_1CHAR, 13*_1CHAR },  //木の実
-	{	7*_1CHAR,  10*_1CHAR,  9*_1CHAR, 12*_1CHAR },  //大切な物
+	{	125,  136,  15, 104 },  //どうぐ
+	{	89,   103,  40,  55 },  //回復
+	{	64,    98,  77, 112 },  //技マシン
+	{	100,  114,  69,  90 },  //木の実
+	{	 64,   75,  48,  80 },  //大切な物
 
 	{	22*_1CHAR,  25*_1CHAR,   1*_1CHAR,  3*_1CHAR },  //左
 	{	22*_1CHAR,  25*_1CHAR,  12*_1CHAR, 15*_1CHAR },  //右
