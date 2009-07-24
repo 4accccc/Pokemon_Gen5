@@ -8,7 +8,7 @@
 #------------------------------------------------------------------------------
 #※コンバート作業が必要なユーザーの名前を記述する
 #------------------------------------------------------------------------------
-USERS	=	sogabe fujiwara toyama shota_kageyama
+USERS	=	sogabe fujiwara toyama shota_kageyama sounduser
 
 #------------------------------------------------------------------------------
 #※ここに作成するnarc名を書く
@@ -48,7 +48,7 @@ ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
 .SUFFIXES:	.s
 
 do-build: $(notdir $(WAZAEFFSRCS:.esf=.s)) $(notdir $(WAZAEFFSRCS:.esf=.bin))
-%.s: $(RES_DIR)%.esf ../../prog/src/battle/btlv/btlv_effvm_def.h
+%.s: $(RES_DIR)%.esf ../../prog/src/battle/btlv/btlv_effvm_def.h ../../prog/include/sound/wb_sound_data.sadl
 	ruby eescmk.rb c:/home/pokemon_wb/prog/src/battle/btlv/btlv_effvm_def.h $(RES_DIR)$*.esf c:/home/pokemon_wb/
 
 %.bin: %.s ../../prog/src/battle/btlv/btlv_effvm_def.h
