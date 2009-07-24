@@ -131,6 +131,7 @@ static const GFL_DISP_VRAM vramBank = {
 
 FS_EXTERN_OVERLAY(poke_status);
 
+static void PLIST_UpdatePlatePalletAnime( PLIST_WORK *work );
 static void PLIST_VBlankFunc(GFL_TCB *tcb, void *wk );
 
 //グラフィック系
@@ -364,6 +365,16 @@ const BOOL PLIST_UpdatePokeList( PLIST_WORK *work )
   //OBJの更新
   GFL_CLACT_SYS_Main();
 
+
+
+  return FALSE;
+}
+
+//--------------------------------------------------------------
+//	選択中のパレットのフラッシュアニメ更新
+//--------------------------------------------------------------
+static void PLIST_UpdatePlatePalletAnime( PLIST_WORK *work )
+{
   //プレートアニメ
   if( work->platePalAnmCnt > 0 )
   {
@@ -378,7 +389,6 @@ const BOOL PLIST_UpdatePokeList( PLIST_WORK *work )
     {
       anmRate = work->platePalAnmCnt;
     }
-    OS_TPrintf("----------\n");
     for( i=0;i<16;i++ )
     {
       u8 r = (work->platePalAnm[i]&GX_RGB_R_MASK)>>GX_RGB_R_SHIFT;
@@ -391,14 +401,11 @@ const BOOL PLIST_UpdatePokeList( PLIST_WORK *work )
       g = (g+anmRate*2 > 31?31:g+(anmRate*2));
       b = (b+anmRate*2 > 31?31:b+(anmRate*2));
       work->platePalTrans[i] = GX_RGB(r,g,b);
-      OS_TPrintf("[%d][%d:%d:%d][%4x]\n",anmRate,r,g,b,work->platePalTrans[i]);
     }
     NNS_GfdRegisterNewVramTransferTask( NNS_GFD_DST_2D_BG_PLTT_MAIN ,
                                         PPC_NORMAL_SELECT * 32 ,
                                         work->platePalTrans , 2*16 );
   }
-
-  return FALSE;
 }
 
 //--------------------------------------------------------------
@@ -1488,8 +1495,8 @@ static void PLIST_SelectMenuTerm( PLIST_WORK *work )
   }
   
   G2_SetBlendAlpha( GX_BLEND_PLANEMASK_BG2|GX_BLEND_PLANEMASK_OBJ , 
-                    GX_BLEND_PLANEMASK_BG3|GX_BLEND_PLANEMASK_OBJ ,
-                    12 , 16 );
+                    GX_BLEND_PLANEMASK_BG3 ,
+                    16 , 10 );
   work->isActiveWindowMask = FALSE;
   GFL_BG_ClearScreenCodeVReq(PLIST_BG_MENU,0);
   
