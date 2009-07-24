@@ -12,8 +12,7 @@
 
 enum {
 	NARC_field_rail_data_c3_dat = 0,
-	NARC_field_rail_data_h01_dat = 1,
-	NARC_field_rail_data_h01_test_dat = 2
+	NARC_field_rail_data_h01_dat = 1
 };
 
 /* NARC_FIELD_RAIL_DATA_NAIX_ */
