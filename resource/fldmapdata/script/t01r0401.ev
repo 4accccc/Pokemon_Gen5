@@ -6,7 +6,7 @@
 
   .include  "scr_seq_def.h"
   .include  "../../../prog/include/msg/script/msg_t01r0401.h"
-  .include  "../eventdata/zone_t01r0401evc.h"
+  .include  "t01r0401.h"
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -16,9 +16,10 @@
 //               スクリプトテーブル
 //--------------------------------------------------------------
 _EVENT_DATA    ev_t01r0401_hakase2_zukan
-_EVENT_DATA    ev_t01r0401_kabi32_1
+_EVENT_DATA   ev_t01r0401_black_01
+_EVENT_DATA   ev_t01r0401_white_01
+/*_EVENT_DATA    ev_t01r0401_kabi32_1*/
 _EVENT_DATA_END
-
 
 /**************************************************************/
 /*            FLAG_CHANGE_LABEL                               */
@@ -37,22 +38,296 @@ _EVENT_DATA_END
 //  _END
 
 /**************************************************************/
+/*  T01R0401 ライバル会話用イベントスクリプト（図鑑入手前）　 */
+/**************************************************************/
+ev_t01r0401_black_01:
+	_TALK_OBJ_PAUSE_ALL
+	_TURN_HERO_SITE
+	_TALKWIN_OPEN
+	_TALKMSG_ALLPUT msg_t01r0401_black_01
+	_AB_KEYWAIT
+  _TALKWIN_CLOSE
+  _OBJ_PAUSE_CLEAR_ALL
+  _END
+
+/**************************************************************/
+/*  T01R0401 サポート会話用イベントスクリプト（図鑑入手前）　 */
+/**************************************************************/
+ev_t01r0401_white_01:
+	_TALK_OBJ_PAUSE_ALL
+	_TURN_HERO_SITE
+	_TALKWIN_OPEN
+	_TALKMSG_ALLPUT msg_t01r0401_white_01
+	_AB_KEYWAIT
+  _TALKWIN_CLOSE
+  _OBJ_PAUSE_CLEAR_ALL
+  _END
+
+/**************************************************************/
 /*      ポケモン図鑑入手イベント                              */
 /**************************************************************/
 ev_t01r0401_hakase2_zukan:
+
+ //博士の前に並ぶ
+	_OBJ_ANIME MMDL_ID_PLAYER,anime_t01r0401_zukan01
+	_OBJ_ANIME T01R0401_RIVAL,anime_t01r0401_zukan01a
+	_OBJ_ANIME T01R0401_HEROINE,anime_t01r0401_zukan01b
+	_OBJ_ANIME_WAIT
+
 	_TALK_OBJ_PAUSE_ALL
 	_TURN_HERO_SITE
 	_TALKWIN_OPEN
 	_TALKMSG_ALLPUT msg_t01r0401_hakase2_01
 	_AB_KEYWAIT
 	_TALKWIN_CLOSE
-	_OBJ_PAUSE_CLEAR_ALL
-	_END
+
+	_TALKWIN_OPEN
+	_TALKMSG_ALLPUT msg_t01r0401_black_02 //ライバル
+	_AB_KEYWAIT
+	_TALKWIN_CLOSE
+
+	_TALKWIN_OPEN
+	_TALKMSG_ALLPUT msg_t01r0401_hakase2_02 //博士
+	_AB_KEYWAIT
+	_TALKWIN_CLOSE
+
+ //博士、3人の前を移動
+	_OBJ_ANIME T01R0401_HAKASE2,anime_t01r0401_zukan02
+	_OBJ_ANIME_WAIT
+
+	_TURN_HERO_SITE
+	_TALKWIN_OPEN
+	_TALKMSG_ALLPUT msg_t01r0401_hakase2_07 //博士
+	_AB_KEYWAIT
+	_TALKWIN_CLOSE
+
+	_TALKWIN_OPEN
+	_TALKMSG_ALLPUT msg_t01r0401_black_03 //ライバル
+	_AB_KEYWAIT
+	_TALKWIN_CLOSE
+
+	_TALKWIN_OPEN
+	_TALKMSG_ALLPUT msg_t01r0401_white_02 //サポート
+	_AB_KEYWAIT
+	_TALKWIN_CLOSE
+
+	_TURN_HERO_SITE
+	_TALKWIN_OPEN
+	_TALKMSG_ALLPUT msg_t01r0401_hakase2_08 //博士
+	_AB_KEYWAIT
+	_TALKWIN_CLOSE
+
+	_TURN_HERO_SITE
+	_PLAYER_NAME 0 //プレイヤー名を反映
+	_TALKWIN_OPEN
+	_TALKMSG_ALLPUT msg_t01r0401_hakase2_09 //博士
+	_AB_KEYWAIT
+	_TALKWIN_CLOSE
+
+	_TURN_HERO_SITE
+	_TALKWIN_OPEN
+	_TALKMSG_ALLPUT msg_t01r0401_hakase2_10 //博士
+	_AB_KEYWAIT
+
+	_YES_NO_WIN SCWK_ANSWER
+	_TALKWIN_CLOSE
+
+	_IFVAL_JUMP SCWK_ANSWER,EQ,0,t01r0401_hakase2_yes
+	_IFVAL_JUMP SCWK_ANSWER,EQ,1,t01r0401_hakase2_no
+
+t01r0401_hakase2_no:
+	_PLAYER_NAME 0 //プレイヤー名を反映
+	_TALKWIN_OPEN
+	_TALKMSG_ALLPUT msg_t01r0401_hakase2_11
+	_AB_KEYWAIT
+
+	_YES_NO_WIN SCWK_ANSWER
+	_TALKWIN_CLOSE
+
+	_IFVAL_JUMP SCWK_ANSWER,EQ,0,t01r0401_hakase2_yes
+	_IFVAL_JUMP SCWK_ANSWER,EQ,1,t01r0401_hakase2_no
+
+t01r0401_hakase2_yes:
+	_TURN_HERO_SITE
+	_TALKWIN_OPEN
+	_TALKMSG_ALLPUT msg_t01r0401_hakase2_12
+	_AB_KEYWAIT
+	_TALKWIN_CLOSE
+
+ //博士、室外へ退場
+	_OBJ_ANIME T01R0401_RIVAL,anime_t01r0401_zukan03a
+	_OBJ_ANIME MMDL_ID_PLAYER,anime_t01r0401_zukan03b
+	_OBJ_ANIME T01R0401_HAKASE2,anime_t01r0401_zukan03c
+	_OBJ_ANIME_WAIT
+
+	_OBJ_ANIME T01R0401_RIVAL,anime_t01r0401_zukan03d
+	_OBJ_ANIME MMDL_ID_PLAYER,anime_t01r0401_zukan03e
+	_OBJ_ANIME T01R0401_HEROINE,anime_t01r0401_zukan03f
+	_OBJ_ANIME_WAIT
+
+	_OBJ_ANIME T01R0401_HAKASE2,anime_t01r0401_zukan03g
+	_OBJ_ANIME_WAIT
+
+	_OBJ_ANIME T01R0401_RIVAL,anime_t01r0401_zukan03h
+	_OBJ_ANIME MMDL_ID_PLAYER,anime_t01r0401_zukan03i
+	_OBJ_ANIME T01R0401_HEROINE,anime_t01r0401_zukan03j
+	_OBJ_ANIME_WAIT
+
+ //サポートたちの話
+	_TURN_HERO_SITE
+	_TALKWIN_OPEN
+	_TALKMSG_ALLPUT msg_t01r0401_white_03 //サポート
+	_AB_KEYWAIT
+	_TALKWIN_CLOSE
+
+	_TURN_HERO_SITE
+	_TALKWIN_OPEN
+	_TALKMSG_ALLPUT msg_t01r0401_black_04 //ライバル
+	_AB_KEYWAIT
+	_TALKWIN_CLOSE
+
+ //サポートたち、室外へ退場
+	_OBJ_ANIME T01R0401_RIVAL,anime_t01r0401_zukan04
+	_OBJ_ANIME T01R0401_HEROINE,anime_t01r0401_zukan04a
+
+  _LDVAL SVSCRWK_START,1
+  _END
 
 
 /**************************************************************/
-/*                                                            */
+/*     主人公、博士の手前まで移動　　　　                     */
 /**************************************************************/
+_ANIME_LABEL	anime_t01r0401_zukan01
+	_ANIME_DATA	AC_WALK_U_8F,4
+	_ANIME_DATA	ACMD_END,0
+
+/**************************************************************/
+/*     サポート、博士の手前まで移動　　　　                   */
+/**************************************************************/
+_ANIME_LABEL	anime_t01r0401_zukan01a
+	_ANIME_DATA	AC_WALK_U_8F,5
+	_ANIME_DATA	ACMD_END,0
+
+/**************************************************************/
+/*     ライバル、博士の手前まで移動　　　　                   */
+/**************************************************************/
+_ANIME_LABEL	anime_t01r0401_zukan01b
+	_ANIME_DATA	AC_WALK_U_8F,5
+	_ANIME_DATA	ACMD_END,0
+
+/**************************************************************/
+/*     博士、みんなの顔を見る　　　　　　　                   */
+/**************************************************************/
+_ANIME_LABEL	anime_t01r0401_zukan02
+	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	AC_WAIT_8F,2
+	_ANIME_DATA	AC_WALK_R_8F,2
+	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	AC_WAIT_8F,2
+	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	AC_WAIT_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+/**************************************************************/
+/*     博士、室外に退場（のためライバル移動）               */
+/**************************************************************/
+_ANIME_LABEL	anime_t01r0401_zukan03a
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+/**************************************************************/
+/*     博士、室外に退場（のため主人公移動）               */
+/**************************************************************/
+_ANIME_LABEL	anime_t01r0401_zukan03b
+	_ANIME_DATA	AC_WAIT_8F,1
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+/**************************************************************/
+/*     博士、室外に退場（まず一歩下に）  　　　　             */
+/**************************************************************/
+_ANIME_LABEL	anime_t01r0401_zukan03c
+	_ANIME_DATA	AC_WAIT_8F,2
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+/**************************************************************/
+/*     博士、室外に退場（ライバル左向き）  　　　　           */
+/**************************************************************/
+_ANIME_LABEL	anime_t01r0401_zukan03d
+	_ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA	ACMD_END,0
+
+/**************************************************************/
+/*     博士、室外に退場（主人公左向き）  　　　　           */
+/**************************************************************/
+_ANIME_LABEL	anime_t01r0401_zukan03e
+	_ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA	ACMD_END,0
+
+/**************************************************************/
+/*     博士、室外に退場（サポート右向き）  　　　　           */
+/**************************************************************/
+_ANIME_LABEL	anime_t01r0401_zukan03f
+	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	ACMD_END,0
+
+/**************************************************************/
+/*     博士、室外に退場　　　　　　　　  　　　　             */
+/**************************************************************/
+_ANIME_LABEL	anime_t01r0401_zukan03g
+	_ANIME_DATA	AC_WALK_D_8F,7
+	_ANIME_DATA	ACMD_END,0
+
+/**************************************************************/
+/*     博士、室外に退場（ライバル下向き）  　　　　           */
+/**************************************************************/
+_ANIME_LABEL	anime_t01r0401_zukan03h
+	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	ACMD_END,0
+
+/**************************************************************/
+/*     博士、室外に退場（主人公下向き）  　　　　           */
+/**************************************************************/
+_ANIME_LABEL	anime_t01r0401_zukan03i
+	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	ACMD_END,0
+
+/**************************************************************/
+/*     博士、室外に退場（サポート下向き）  　　　　           */
+/**************************************************************/
+_ANIME_LABEL	anime_t01r0401_zukan03j
+	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	ACMD_END,0
+
+/**************************************************************/
+/*     ライバル、室外に退場　　　　　　　　　　　　           */
+/**************************************************************/
+_ANIME_LABEL	anime_t01r0401_zukan04
+	_ANIME_DATA	AC_WALK_D_8F,3
+	_ANIME_DATA	AC_WALK_L_8F,2
+	_ANIME_DATA	AC_WALK_D_8F,4
+	_ANIME_DATA	ACMD_END,0
+
+/**************************************************************/
+/*     サポート、室外に退場　　　　　　　　　　　　           */
+/**************************************************************/
+_ANIME_LABEL	anime_t01r0401_zukan04a
+	_ANIME_DATA	AC_WALK_D_8F,3
+	_ANIME_DATA	AC_WAIT_8F,2
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	AC_WALK_D_8F,4
+	_ANIME_DATA	ACMD_END,0
+
+
+
+
+/**************************************************************/
+/*       5月ROM用                                             */
+/**************************************************************/
+/*
 ev_t01r0401_kabi32_1:
 	_TALK_OBJ_PAUSE_ALL
 	_TURN_HERO_SITE
@@ -113,10 +388,12 @@ t01r0401_kabi32_2:
 
 	_OBJ_PAUSE_CLEAR_ALL
 	_END
+	*/
 
 //--------------------------------------------------------------
 //	アニメーションデータ
 //--------------------------------------------------------------
+/*
 _ANIME_LABEL test01anime //自己紹介アニメ
 	_ANIME_DATA AC_DIR_U,1
 	_ANIME_DATA AC_DIR_R,1
@@ -138,3 +415,4 @@ _ANIME_LABEL test02anime //独り言アニメその１
 _ANIME_LABEL test03anime //独り言アニメその２
 	_ANIME_DATA AC_WALK_D_8F,2
 	_ANIME_DATA ACMD_END,0
+	*/
