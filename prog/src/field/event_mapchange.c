@@ -13,6 +13,8 @@
 #include "gamesystem/game_event.h"
 #include "gamesystem/game_data.h"
 
+#include "system/main.h"
+
 #include "field/zonedata.h"
 #include "field/fieldmap.h"
 #include "field/location.h"
@@ -585,21 +587,34 @@ static void MakeNewLocation(const EVENTDATA_SYSTEM * evdata, const LOCATION * lo
 		LOCATION_DEBUG_SetDefaultPos(loc_tmp, loc_req->zone_id);
 	}
 }
+extern u32 FIELD_RAIL_LOADER_GetNearestPoint( const FIELD_RAIL_LOADER* cp_sys, const VecFx32 * pos);
 //------------------------------------------------------------------
 //------------------------------------------------------------------
-static void MakeNewRailLocation(GAMEDATA * gamedata, const LOCATION * loc_req)
+static void MakeNewRailLocation(GAMEDATA * gamedata, EVENTDATA_SYSTEM * evdata, const LOCATION * loc_req)
 {
+  FIELD_RAIL_LOADER * railLoader = GAMEDATA_GetFieldRailLoader(gamedata);
   RAIL_LOCATION railLoc;
   RAIL_LOCATION_Init(&railLoc);
 
   if (ZONEDATA_DEBUG_IsRailMap(loc_req->zone_id) == TRUE
       && loc_req->type != LOCATION_TYPE_DIRECT)
   {
+    LOCATION loc_tmp;
+    BOOL result;
+    u32 exit_id = 0;
+
+    FIELD_RAIL_LOADER_Load( railLoader, ZONEDATA_GetRailDataID(loc_req->zone_id), GFL_HEAPID_APP );
+    result = EVENTDATA_SetLocationByExitID(evdata, &loc_tmp, loc_req->exit_id);
+    if (result)
+    {
+      exit_id = FIELD_RAIL_LOADER_GetNearestPoint(railLoader, &loc_tmp.pos);
+    }
     railLoc.type = FIELD_RAIL_TYPE_POINT;
-    railLoc.rail_index = loc_req->exit_id;
+    railLoc.rail_index = exit_id;
     railLoc.line_ofs = 0;
     railLoc.width_ofs = 0;
     railLoc.key = RAIL_KEY_NULL;
+    FIELD_RAIL_LOADER_Clear( railLoader );
   }
   GAMEDATA_SetRailLocation(gamedata, &railLoc);
 }
@@ -623,7 +638,7 @@ static void UpdateMapParams(GAMESYS_WORK * gsys, const LOCATION * loc_req)
 	
 	//開始位置セット
 	MakeNewLocation(evdata, loc_req, &loc);
-  MakeNewRailLocation(gamedata, loc_req);
+  MakeNewRailLocation(gamedata, evdata, loc_req);
 
 	//特殊接続出入口に出た場合は、前のマップの出入口位置を記憶しておく
 	if (loc.type == LOCATION_TYPE_SPID) {
@@ -670,4 +685,8 @@ static void setNextBGM(GAMEDATA * gamedata, u16 zone_id)
   u16 nextBGM = ZONEDATA_GetBGMID(zone_id, GAMEDATA_GetSeasonID(gamedata));
   PMSND_PlayNextBGM_EX(nextBGM, trackBit, 30, 0);
 }
+//============================================================================================
+//============================================================================================
+//--------------------------------------------------------------
+//--------------------------------------------------------------
 
