@@ -42,6 +42,9 @@ _EVENT_DATA_END
 /*     博士によるポケセン案内イベント                         */
 /**************************************************************/
 ev_t02pc0101_doctor_guide:
+	_OBJ_ANIME MMDL_ID_PLAYER,anime_t02pc0101_guide00
+	_OBJ_ANIME_WAIT
+
 	_TALK_OBJ_PAUSE_ALL
 	_TURN_HERO_SITE
 	_TALKWIN_OPEN
@@ -79,10 +82,19 @@ ev_t02pc0101_doctor_guide:
 	_AB_KEYWAIT
   	_TALKWIN_CLOSE
 
+	_TURN_HERO_SITE
+	_TALKWIN_OPEN
+	_TALKMSG_ALLPUT msg_t02pc0101_hakase2_07 //ショップ前で
+	_AB_KEYWAIT
+  	_TALKWIN_CLOSE
+
 	_OBJ_ANIME T02PC0101_DOCTOR,anime_t02pc0101_guide04
 	_OBJ_ANIME_WAIT
 
   _OBJ_PAUSE_CLEAR_ALL
+  _LDVAL SVSCRWK_START,1
+
+//博士の動作モデルを削除する処理を追加予定
 
   _END
 
@@ -113,7 +125,12 @@ ev_t02pc0101_middlewoman1_1:
   _END
 
 
-
+/**************************************************************/
+/*     主人公、博士の前まで移動                     */
+/**************************************************************/
+_ANIME_LABEL	anime_t02pc0101_guide00
+	_ANIME_DATA	AC_WALK_U_8F,2
+	_ANIME_DATA	ACMD_END,0
 
 /**************************************************************/
 /*     博士の案内：カウンター前まで                     */
@@ -121,6 +138,7 @@ ev_t02pc0101_middlewoman1_1:
 _ANIME_LABEL	anime_t02pc0101_guide01
 	_ANIME_DATA	AC_WALK_U_8F,5
 	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	AC_DIR_L,1
 	_ANIME_DATA	ACMD_END,0
 
 /**************************************************************/
@@ -135,6 +153,7 @@ _ANIME_LABEL	anime_t02pc0101_guide01a
 /**************************************************************/
 _ANIME_LABEL	anime_t02pc0101_guide02
 	_ANIME_DATA	AC_WALK_L_8F,5
+	_ANIME_DATA	AC_DIR_R,1
 	_ANIME_DATA	ACMD_END,0
 
 /**************************************************************/
@@ -176,7 +195,7 @@ _ANIME_LABEL	anime_t02pc0101_guide04
 	_ANIME_DATA	AC_DIR_L,1
 	_ANIME_DATA	AC_WALK_L_8F,1
 	_ANIME_DATA	AC_DIR_D,1
-	_ANIME_DATA	AC_WALK_D_8F,4
+	_ANIME_DATA	AC_WALK_D_8F,6
 	_ANIME_DATA	ACMD_END,0
 
   
