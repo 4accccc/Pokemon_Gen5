@@ -1,15 +1,15 @@
 #event data
-#save date:2009/07/23 19:41:51
+#save date:2009/07/24 20:12:07
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\t01r0401.wms
 #SECTION START:OBJ_EVENT
 #Map Event List data
-#save date:2009/07/23 19:41:51
+#save date:2009/07/24 20:12:07
 2
 #hold event type:
 1
 #hold event number:
-1
+3
 #event number: 0
 #type
 1
@@ -39,11 +39,69 @@ DIR_DOWN
 0
 #position
 -176 0 176
+#event number: 1
+#type
+1
+#ID name
+T01R0401_HEROINE
+#OBJ CODE Number
+HEROINE
+#MOVE CODE Number
+MV_DMY
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+0
+#Event Script Name
+SCRID_T01R0401_WHITE_01
+#Direction Type Number
+DIR_UP
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#position
+-192 0 80
+#event number: 2
+#type
+1
+#ID name
+T01R0401_RIVAL
+#OBJ CODE Number
+RIVEL
+#MOVE CODE Number
+MV_DMY
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+0
+#Event Script Name
+SCRID_T01R0401_BLACK_01
+#Direction Type Number
+DIR_UP
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#position
+-160 0 80
 #Map Event List Data End
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT
 #Map Event List data
-#save date:2009/07/23 19:41:51
+#save date:2009/07/24 20:12:07
 2
 #hold event type:
 1
@@ -53,17 +111,32 @@ DIR_DOWN
 #SECTION End:BG_EVENT
 #SECTION START:POS_EVENT
 #Map Event List data
-#save date:2009/07/23 19:41:51
+#save date:2009/07/24 20:12:07
 2
 #hold event type:
 1
 #hold event number:
+1
+#event number: 0
+#Pos Event Label
+POSID_T01R0401_ZUKAN
+#Pos Script Name
+SCRID_T01R0401_HAKASE2_ZUKAN
+#Event Trigger Work Name
+WK_0907ROM01
+#Event Trigger Work Value
 0
+#Pos Event Size X
+1
+#Pos Event Size Z
+1
+#position
+-176 0 96
 #Map Event List Data End
 #SECTION End:POS_EVENT
 #SECTION START:DOOR_EVENT
 #Map Event List data
-#save date:2009/07/23 19:41:51
+#save date:2009/07/24 20:12:07
 2
 #hold event type:
 1

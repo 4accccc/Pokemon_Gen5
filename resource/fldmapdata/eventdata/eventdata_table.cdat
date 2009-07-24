@@ -7855,8 +7855,59 @@ const FLDMMDL_HEADER OBJ_EVENT_T01R0401[] = {
 		5,
 		0,
 	},
+<<<<<<< .mine
+	{
+		T01R0401_HEROINE,
+		HEROINE,
+		MV_DMY,
+		EV_TYPE_NORMAL,
+		0,
+		SCRID_T01R0401_WHITE_01,
+		DIR_UP,
+		0,
+		0,
+		0,
+		0,
+		0,
+		3,
+		11,
+		0,
+	},
+	{
+		T01R0401_RIVAL,
+		RIVEL,
+		MV_DMY,
+		EV_TYPE_NORMAL,
+		0,
+		SCRID_T01R0401_BLACK_01,
+		DIR_UP,
+		0,
+		0,
+		0,
+		0,
+		0,
+		5,
+		11,
+		0,
+	},
+=======
+>>>>>>> .r5881
 };
 const int ObjCount_T01R0401 = NELEMS(OBJ_EVENT_T01R0401);
+<<<<<<< .mine
+const POS_EVENT_DATA POS_EVENT_T01R0401[] = {
+	{//POSID_T01R0401_ZUKAN = 0
+		SCRID_T01R0401_HAKASE2_ZUKAN,
+		4, 10,
+		1, 1,
+		0,  //height
+		0,
+		WK_0907ROM01,
+	},
+};
+const int PosCount_T01R0401 = NELEMS(POS_EVENT_T01R0401);
+=======
+>>>>>>> .r5881
 
 static const EVENTDATA_TABLE event_t01r0401 = {
 	0,
