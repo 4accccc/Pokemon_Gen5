@@ -24,7 +24,8 @@ enum {
 	NARC_buildmodel_anime_fireplace_02_nsbta = 10,
 	NARC_buildmodel_anime_fountain_01_nsbta = 11,
 	NARC_buildmodel_anime_machine_l02_nsbta = 12,
-	NARC_buildmodel_anime_trailer_01test_nsbca = 13
+	NARC_buildmodel_anime_t1_labo_01_nsbca = 13,
+	NARC_buildmodel_anime_trailer_01test_nsbca = 14
 };
 
 /* NARC_BUILDMODEL_ANIME_NAIX_ */
