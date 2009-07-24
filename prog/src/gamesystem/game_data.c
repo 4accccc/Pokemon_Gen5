@@ -31,6 +31,7 @@
 #include "gamesystem/pm_season.h"		//季節定義参照
 #include "field/field_subscreen.h" //FIELD_SUBSCREEN_ACTION
 #include "field/rail_location.h"    //RAIL_LOCATION
+#include "field/field_rail_loader.h"    //FIELD_RAIL_LOADER
 
 //============================================================================================
 //============================================================================================
@@ -51,6 +52,8 @@ struct _GAMEDATA{
   BAG_CURSOR* bagcursor;  ///< バッグカーソルの管理構造体ポインタ
   MYITEM_PTR myitem;			///<手持ちアイテムセーブデータへのポインタ
   POKEPARTY *my_pokeparty;	///<手持ちポケモンセーブデータへのポインタ
+
+  FIELD_RAIL_LOADER * railLoader;   ///<フィールドレールデータ管理へのポインタ
   MMDLSYS *mmdlsys;
   EVENTWORK *eventwork;
   int fieldmap_walk_count; ///<フィールドマップ歩数カウント
@@ -126,6 +129,8 @@ GAMEDATA * GAMEDATA_Create(HEAPID heapID)
   gd->eventwork = EVENTWORK_AllocWork( heapID );
   EVENTWORK_Init( gd->eventwork );
 
+	// railデータ読み込みシステム
+  gd->railLoader = FIELD_RAIL_LOADER_Create( heapID );
   //動作モデル
   gd->mmdlsys = MMDLSYS_CreateSystem( heapID, MMDL_MDL_MAX );
 
@@ -149,6 +154,7 @@ void GAMEDATA_Delete(GAMEDATA * gamedata)
 {
   GFL_HEAP_FreeMemory(gamedata->bagcursor);
   MMDLSYS_FreeSystem(gamedata->mmdlsys);
+	FIELD_RAIL_LOADER_Delete( gamedata->railLoader );
   EVENTWORK_FreeWork(gamedata->eventwork);
   EVENTDATA_SYS_Delete(gamedata->evdata);
   GFL_HEAP_FreeMemory(gamedata);
@@ -294,6 +300,18 @@ MYSTATUS * GAMEDATA_GetMyStatusPlayer(GAMEDATA * gamedata, u32 player_id)
 {
   GF_ASSERT(player_id < PLAYER_MAX);
   return &gamedata->playerWork[player_id].mystatus;
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief FIELD_RAIL_LOADERへのポインタ取得
+ * @param	gamedata	GAMEDATAへのポインタ
+ * @return  FIELD_RAIL_LOADER レールデータローダーシステムへのポインタ
+ */
+//--------------------------------------------------------------
+FIELD_RAIL_LOADER * GAMEDATA_GetFieldRailLoader(GAMEDATA * gamedata)
+{
+  return gamedata->railLoader;
 }
 
 //--------------------------------------------------------------

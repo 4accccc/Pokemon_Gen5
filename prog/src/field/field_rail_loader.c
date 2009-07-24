@@ -399,5 +399,26 @@ u32 FIELD_RAIL_LOADER_DEBUG_GetDataSize( const FIELD_RAIL_LOADER* cp_sys )
 
 #endif
 
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+u32 FIELD_RAIL_LOADER_GetNearestPoint( const FIELD_RAIL_LOADER* cp_sys, const VecFx32 * pos)
+{
+  fx32 near_len;
+  u32 count, near_count;
+  u32 c_max = cp_sys->setting.point_count;
+  const RAIL_POINT * point = cp_sys->setting.point_table;
+
+  GF_ASSERT(c_max > 0);
+  for (count = 0; count < c_max; count ++)
+  {
+    fx32 len = VEC_Distance(pos, &point[count].pos);
+    if (count == 0 || near_len > len)
+    { //初回か、短い距離の場合はセット
+      near_len = len;
+      near_count = count;
+    }
+  }
+  return near_count;
+}
 
 

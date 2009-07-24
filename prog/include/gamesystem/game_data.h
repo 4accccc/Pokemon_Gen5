@@ -22,6 +22,7 @@
 #include "field/rail_location.h"  //RAIL_LOCATION
 #include "savedata/myitem_savedata.h"  //BAG_CURSOR MYITEM
 #include "poke_tool/pokeparty.h"
+#include "field/field_rail_loader.h"    //FIELD_RAIL_LOADER
 #include "field/fldmmdl.h"
 #include "field/eventwork.h"
 
@@ -198,6 +199,15 @@ extern MYSTATUS * GAMEDATA_GetMyStatus(GAMEDATA * gamedata);
  */
 //--------------------------------------------------------------
 extern MYSTATUS * GAMEDATA_GetMyStatusPlayer(GAMEDATA * gamedata, u32 player_id);
+
+//--------------------------------------------------------------
+/**
+ * @brief FIELD_RAIL_LOADERへのポインタ取得
+ * @param	gamedata	GAMEDATAへのポインタ
+ * @return  FIELD_RAIL_LOADER レールデータローダーシステムへのポインタ
+ */
+//--------------------------------------------------------------
+extern FIELD_RAIL_LOADER * GAMEDATA_GetFieldRailLoader(GAMEDATA * gamedata);
 
 //--------------------------------------------------------------
 /**

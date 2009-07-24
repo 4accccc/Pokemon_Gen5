@@ -198,7 +198,6 @@ struct _FIELDMAP_WORK
 	MMDLSYS *fldMMdlSys;
 
 	FIELD_RAIL_MAN * railMan;
-	FIELD_RAIL_LOADER * railLoader;
 
 	FLD_SCENEAREA * sceneArea;
 	FLD_SCENEAREA_LOADER * sceneAreaLoader;
@@ -465,9 +464,6 @@ static MAINSEQ_RESULT mainSeqFunc_setup(GAMESYS_WORK *gsys, FIELDMAP_WORK *field
       fieldWork->g3Dcamera,
       &fieldWork->now_pos,
       fieldWork->heapID );
-
-	// railデータ読み込みシステム
-	fieldWork->railLoader = FIELD_RAIL_LOADER_Create( fieldWork->heapID );
 
   // railシステム初期化
   fieldWork->railMan = FIELD_RAIL_MAN_Create( fieldWork->heapID, fieldWork->camera_control );
@@ -821,9 +817,6 @@ static MAINSEQ_RESULT mainSeqFunc_free(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldW
   // レール制御破棄
   FIELD_RAIL_MAN_Delete( fieldWork->railMan );
 
-	// railデータ読み込みシステム
-	FIELD_RAIL_LOADER_Delete( fieldWork->railLoader );
-  
   FIELD_CAMERA_Delete( fieldWork->camera_control );
 
 	//フィールド通信削除
@@ -1054,7 +1047,7 @@ FIELD_RAIL_MAN * FIELDMAP_GetFieldRailMan( FIELDMAP_WORK *fieldWork )
 }
 FIELD_RAIL_LOADER * FIELDMAP_GetFieldRailLoader( FIELDMAP_WORK *fieldWork )
 {
-	return fieldWork->railLoader;
+  return GAMEDATA_GetFieldRailLoader( GAMESYSTEM_GetGameData(fieldWork->gsys) );
 }
 
 //----------------------------------------------------------------------------
