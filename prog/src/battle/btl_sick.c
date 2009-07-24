@@ -230,37 +230,6 @@ static void cure_Sasiosae( BTL_SVFLOW_WORK* flowWk, const BTL_POKEPARAM* bpp )
 
 
 
-static int getCureStrID( WazaSick sick, BOOL fUseItem )
-{
-  static const struct {
-    WazaSick  sick;
-    s16       strID_notItem;
-    s16       strID_useItem;
-  }dispatchTbl[] = {
-    { WAZASICK_DOKU,      BTL_STRID_SET_PokeSick_Cure,    BTL_STRID_SET_UseItem_CureDoku    },
-    { POKESICK_YAKEDO,    BTL_STRID_SET_PokeSick_Cure,    BTL_STRID_SET_UseItem_CureYakedo  },
-    { WAZASICK_NEMURI,    BTL_STRID_SET_NemuriWake,       BTL_STRID_SET_UseItem_CureNemuri  },
-    { WAZASICK_KOORI,     BTL_STRID_SET_KoriMelt,         BTL_STRID_SET_UseItem_CureKoori   },
-    { WAZASICK_MAHI,      BTL_STRID_SET_MahiCure,         BTL_STRID_SET_UseItem_CureMahi    },
-    { WAZASICK_ENCORE,    BTL_STRID_SET_EncoreCure,       -1                                },
-    { WAZASICK_KANASIBARI,BTL_STRID_SET_KanasibariCure,   -1                                },
-    { WAZASICK_SASIOSAE,  BTL_STRID_SET_SasiosaeCure,     -1                                },
-
-    { WAZASICK_KONRAN,    -1,                             BTL_STRID_SET_UseItem_CureKonran  },
-    { WAZASICK_MEROMERO,  -1,                             BTL_STRID_SET_UseItem_CureMero    },
-  };
-
-  u32 i;
-
-  for(i=0; i<NELEMS(dispatchTbl); ++i){
-    if( dispatchTbl[i].sick == sick ){
-      return (fUseItem)? dispatchTbl[i].strID_useItem : dispatchTbl[i].strID_notItem;
-    }
-  }
-
-  return -1;
-
-}
 //=============================================================================================
 /**
  * 状態異常にかかった時のデフォルトメッセージＩＤを返す
@@ -302,11 +271,42 @@ int BTL_SICK_GetDefaultSickStrID( WazaSick sickID, BPP_SICK_CONT cont )
 
   return strID;
 }
+int BTL_SICK_GetDefaultSickCureStrID( WazaSick sickID, BOOL fUseItem )
+{
+  return getCureStrID( sickID, fUseItem );
+}
 
+static int getCureStrID( WazaSick sick, BOOL fUseItem )
+{
+  static const struct {
+    WazaSick  sick;
+    s16       strID_notItem;
+    s16       strID_useItem;
+  }dispatchTbl[] = {
+    { WAZASICK_DOKU,      BTL_STRID_SET_PokeSick_Cure,    BTL_STRID_SET_UseItem_CureDoku    },
+    { POKESICK_YAKEDO,    BTL_STRID_SET_PokeSick_Cure,    BTL_STRID_SET_UseItem_CureYakedo  },
+    { WAZASICK_NEMURI,    BTL_STRID_SET_NemuriWake,       BTL_STRID_SET_UseItem_CureNemuri  },
+    { WAZASICK_KOORI,     BTL_STRID_SET_KoriMelt,         BTL_STRID_SET_UseItem_CureKoori   },
+    { WAZASICK_MAHI,      BTL_STRID_SET_MahiCure,         BTL_STRID_SET_UseItem_CureMahi    },
+    { WAZASICK_ENCORE,    BTL_STRID_SET_EncoreCure,       -1                                },
+    { WAZASICK_KANASIBARI,BTL_STRID_SET_KanasibariCure,   -1                                },
+    { WAZASICK_SASIOSAE,  BTL_STRID_SET_SasiosaeCure,     -1                                },
 
+    { WAZASICK_KONRAN,    -1,                             BTL_STRID_SET_UseItem_CureKonran  },
+    { WAZASICK_MEROMERO,  -1,                             BTL_STRID_SET_UseItem_CureMero    },
+  };
 
+  u32 i;
 
+  for(i=0; i<NELEMS(dispatchTbl); ++i){
+    if( dispatchTbl[i].sick == sick ){
+      return (fUseItem)? dispatchTbl[i].strID_useItem : dispatchTbl[i].strID_notItem;
+    }
+  }
 
+  return -1;
+
+}
 
 
 //=============================================================================================

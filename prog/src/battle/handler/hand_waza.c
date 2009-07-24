@@ -34,7 +34,7 @@ enum {
 /*--------------------------------------------------------------------------*/
 /* Prototypes                                                               */
 /*--------------------------------------------------------------------------*/
-static BOOL is_registable( u8 pokeID, WazaID waza );
+static BOOL is_registable( u8 pokeID, WazaID waza, u8* fRegsitered );
 static void removeHandlerForce( u8 pokeID, WazaID waza );
 static BTL_EVENT_FACTOR*  ADD_Texture( u16 pri, WazaID waza, u8 pokeID );
 static void handler_Texture( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
@@ -252,6 +252,15 @@ static void handler_Koraeru( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk
 static BTL_EVENT_FACTOR*  ADD_Mamoru( u16 pri, WazaID waza, u8 pokeID );
 static void handler_Mamoru_ExeCheck( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_Mamoru( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static BTL_EVENT_FACTOR*  ADD_Gaman( u16 pri, WazaID waza, u8 pokeID );
+static void handler_Gaman( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static void handler_Gaman_WazaMsg( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static void handler_Gaman_Target( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static void handler_Gaman_Damage( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static void handler_Gamen_ExeCheck( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static void handler_Gaman_Fail( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static void gaman_ReleaseStick( BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static u32 gaman_getTotalDamage( const BTL_POKEPARAM* bpp );
 static BTL_EVENT_FACTOR*  ADD_Recycle( u16 pri, WazaID waza, u8 pokeID );
 static void handler_Recycle( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static BTL_EVENT_FACTOR*  ADD_PsycoShift( u16 pri, WazaID waza, u8 pokeID );
@@ -603,6 +612,7 @@ BOOL  BTL_HANDLER_Waza_Add( const BTL_POKEPARAM* pp, WazaID waza )
     { WAZANO_RISAIKURU,       ADD_Recycle       },
     { WAZANO_OIUTI,           ADD_Oiuti         },
     { WAZANO_NEKONIKOBAN,     ADD_NekoNiKoban   },
+    { WAZANO_GAMAN,           ADD_Gaman         },
   };
 
   int i;
@@ -612,14 +622,19 @@ BOOL  BTL_HANDLER_Waza_Add( const BTL_POKEPARAM* pp, WazaID waza )
     if( funcTbl[i].waza == waza )
     {
       u8 pokeID = BPP_GetID( pp );
+      u8 fRegistered = FALSE;
 
-      if( is_registable(pokeID, waza) )
+      if( is_registable(pokeID, waza, &fRegistered) )
       {
         u16 agi = BPP_GetValue( pp, BPP_AGILITY );
         BTL_Printf("ワザハンドラ[%d]登録\n", waza);
         if( funcTbl[i].func( agi, waza, pokeID ) ){
           return TRUE;
         }
+      }
+      else if( fRegistered ){
+        BTL_Printf("ワザハンドラ[%d]はすでに登録済み\n", waza);
+        return TRUE;
       }
       return FALSE;
     }
@@ -639,7 +654,7 @@ BOOL  BTL_HANDLER_Waza_Add( const BTL_POKEPARAM* pp, WazaID waza )
  * @retval  BOOL    条件を満たしていたらTRUE
  */
 //----------------------------------------------------------------------------------
-static BOOL is_registable( u8 pokeID, WazaID waza )
+static BOOL is_registable( u8 pokeID, WazaID waza, u8* fRegistered )
 {
   BTL_EVENT_FACTOR* factor;
   u32 cnt = 0;
@@ -649,6 +664,7 @@ static BOOL is_registable( u8 pokeID, WazaID waza )
   {
     if( BTL_EVENT_FACTOR_GetSubID(factor) == waza ){
       BTL_Printf("既に同じワザが登録されている");
+      *fRegistered = TRUE;
       return FALSE;
     }
     if( ++cnt > EVENT_WAZA_STICK_MAX ){
@@ -4019,6 +4035,169 @@ static void handler_Mamoru( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk,
     flagParam->flag = BPP_TURNFLG_MAMORU;
   }
 }
+//----------------------------------------------------------------------------------
+/**
+ * がまん
+ */
+//----------------------------------------------------------------------------------
+enum {
+  GAMAN_STATE_1ST = 0,
+  GAMAN_STATE_2ND,
+  GAMAN_STATE_3RD,
+};
+
+static BTL_EVENT_FACTOR*  ADD_Gaman( u16 pri, WazaID waza, u8 pokeID )
+{
+  static const BtlEventHandlerTable HandlerTable[] = {
+    { BTL_EVENT_WAZA_EXECUTE_FIX,     handler_Gaman },          //
+    { BTL_EVENT_REQWAZA_MSG,          handler_Gaman_WazaMsg },
+    { BTL_EVENT_WAZA_EXECUTE_CHECK,   handler_Gamen_ExeCheck },
+    { BTL_EVENT_WAZA_EXECUTE_FAIL,    handler_Gaman_Fail },
+    { BTL_EVENT_DECIDE_TARGET,        handler_Gaman_Target },
+    { BTL_EVENT_WAZA_DMG_PROC2,       handler_Gaman_Damage },
+    { BTL_EVENT_NULL, NULL },
+  };
+  return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_WAZA, waza, pri, pokeID, HandlerTable );
+}
+static void handler_Gaman( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+{
+  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID )
+  {
+    switch( work[0] ){
+    case GAMAN_STATE_1ST:
+      // １ターン目：自分をワザロック状態にして、処理を抜ける。
+      {
+        BTL_HANDEX_PARAM_ADD_SICK* param = BTL_SVFLOW_HANDLERWORK_Push( flowWk, BTL_HANDEX_ADD_SICK, pokeID );
+        param->sickID = WAZASICK_WAZALOCK;
+        param->sickCont = BPP_SICKCONT_MakePermanent();
+        param->poke_cnt = 1;
+        param->pokeID[0] = pokeID;
+        BTL_EVENTVAR_RewriteValue( BTL_EVAR_GEN_FLAG, TRUE );
+        work[WORKIDX_STICK] = 1;
+        BTL_Printf("がまん１ターン目:ワザロックします  stickWork=%p (%d)\n", &work[WORKIDX_STICK], work[WORKIDX_STICK]);
+        work[0] = GAMAN_STATE_2ND;
+      }
+      break;
+    case GAMAN_STATE_2ND:
+      // ２ターン目：何もせず処理を抜ける
+      {
+        BTL_Printf("がまん２ターン目:スルーします\n");
+        BTL_EVENTVAR_RewriteValue( BTL_EVAR_GEN_FLAG, TRUE );
+        work[0] = GAMAN_STATE_3RD;
+      }
+      break;
+    case GAMAN_STATE_3RD:
+      // ３ターン目：貼り付き＆ワザロック状態解除
+      BTL_Printf("がまん３ターン目:ロック解除します\n");
+      gaman_ReleaseStick( flowWk, pokeID, work );
+      break;
+    }
+  }
+}
+static void handler_Gaman_WazaMsg( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+{
+  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID )
+  {
+    BTL_HANDEX_STR_PARAMS* param = (BTL_HANDEX_STR_PARAMS*)BTL_EVENTVAR_GetValue( BTL_EVAR_WORK_ADRS );
+
+    switch( work[0] ){
+    case GAMAN_STATE_2ND:
+      HANDEX_STR_Setup( param, BTL_STRTYPE_SET, BTL_STRID_SET_Gaman );
+      HANDEX_STR_AddArg( param, pokeID );
+      BTL_EVENTVAR_RewriteValue( BTL_EVAR_GEN_FLAG, TRUE );
+      BTL_Printf("がまん２ターン目攻撃メッセージ\n");
+      break;
+    case GAMAN_STATE_3RD:
+      HANDEX_STR_Setup( param, BTL_STRTYPE_SET, BTL_STRID_SET_GamanEnd );
+      HANDEX_STR_AddArg( param, pokeID );
+      BTL_EVENTVAR_RewriteValue( BTL_EVAR_GEN_FLAG, TRUE );
+      BTL_Printf("がまん３ターン目攻撃メッセージ\n");
+      break;
+    }
+  }
+}
+static void handler_Gaman_Target( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+{
+  if( (BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID)
+  &&  (work[0] == GAMAN_STATE_3RD)
+  ){
+    const BTL_POKEPARAM* bpp = BTL_SVFLOW_RECEPT_GetPokeParam( flowWk, pokeID );
+    u32 t, cnt;
+    for(t=0; t<3; ++t)
+    {
+      cnt = BPP_WAZADMGREC_GetCount( bpp, t );
+      if( cnt ){
+        BPP_WAZADMG_REC  rec;
+        BPP_WAZADMGREC_Get( bpp, t, 0, &rec );
+        BTL_EVENTVAR_RewriteValue( BTL_EVAR_POKEID_DEF, rec.pokeID );
+        BTL_Printf("がまん３ターン目：ターゲット決定=%d\n", rec.pokeID);
+        break;
+      }
+    }
+  }
+}
+static void handler_Gaman_Damage( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+{
+  if( (BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID)
+  &&  (work[0] == GAMAN_STATE_3RD)
+  ){
+    const BTL_POKEPARAM* bpp = BTL_SVFLOW_RECEPT_GetPokeParam( flowWk, pokeID );
+    u32 dmg_sum = gaman_getTotalDamage( bpp );
+    if( dmg_sum ){
+      dmg_sum *= 2;
+      BTL_EVENTVAR_RewriteValue( BTL_EVAR_DAMAGE, dmg_sum );
+      BTL_Printf("がまん３ターン目：ダメージ吐き出し=%d\n", dmg_sum);
+    }
+  }
+}
+static void handler_Gamen_ExeCheck( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+{
+  if( (BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID)
+  &&  (work[0] == GAMAN_STATE_3RD)
+  ){
+    const BTL_POKEPARAM* bpp = BTL_SVFLOW_RECEPT_GetPokeParam( flowWk, pokeID );
+    u32 dmg_sum = gaman_getTotalDamage( bpp );
+    if( dmg_sum == 0 ){
+      BTL_EVENTVAR_RewriteValue( BTL_EVAR_FAIL_CAUSE, SV_WAZAFAIL_OTHER );
+      BTL_Printf("がまん３ターン目：ダメージ受けてないので失敗\n");
+    }
+  }
+}
+static void handler_Gaman_Fail( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+{
+  // 失敗したらすぐに貼り付き＆ワザロック状態解除
+  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID )
+  {
+    gaman_ReleaseStick( flowWk, pokeID, work );
+  }
+}
+static void gaman_ReleaseStick( BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+{
+  if( work[WORKIDX_STICK] ){
+    BTL_HANDEX_PARAM_CURE_SICK* param = BTL_SVFLOW_HANDLERWORK_Push( flowWk, BTL_HANDEX_CURE_SICK, pokeID );
+    param->sickCode = WAZASICK_WAZALOCK;
+    param->poke_cnt = 1;
+    param->pokeID[0] = pokeID;
+    param->fStdMsgDisable = TRUE;
+    work[ WORKIDX_STICK ] = 0;
+  }
+}
+static u32 gaman_getTotalDamage( const BTL_POKEPARAM* bpp )
+{
+  u32 t, i, cnt, dmg_sum = 0;
+  BPP_WAZADMG_REC  rec;
+  for(t=0; t<3; ++t)
+  {
+    cnt = BPP_WAZADMGREC_GetCount( bpp, t );
+    for(i=0; i<cnt; ++i)
+    {
+      BPP_WAZADMGREC_Get( bpp, t, i, &rec );
+      dmg_sum += rec.damage;
+    }
+  }
+  return dmg_sum;
+}
+
 //----------------------------------------------------------------------------------
 /**
  * リサイクル
