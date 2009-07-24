@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-07-23T19:48:45"/>
+	<create user="matsumiya" host="W00207" date="2009-07-24T20:48:37"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -292,6 +292,20 @@
 	</lock>
 
 
+	<row id="msg_t01r0401_black_01" back-color="#ffff80,,,,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<attribute name="キャラ指定">友達♂</attribute>
+		<language name="JPN" width="256">ともだち♂『ほら！
+はかせが　まってるよ</language>
+		<language name="JPN_KANJI" width="256">ともだち♂『ほら！
+博士が　待ってるよ</language>
+	</row>
+
+	<row id="msg_t01r0401_white_01" back-color="#ffff80,,,,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<attribute name="キャラ指定">友達♀</attribute>
+		<language name="JPN" width="256">ともだち♀『どきどきするねー</language>
+		<language name="JPN_KANJI" width="256">ともだち♀『どきどきするねー</language>
+	</row>
+
 	<row id="msg_t01r0401_hakase2_01">
 		<comment>♂
 ・アニメ後
@@ -310,15 +324,15 @@
 わたしの　名前は……[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_t01r0401_black_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_t01r0401_black_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・続けてmsg_t01r0401_doctor_jr_02表示</comment>
 		<attribute name="キャラ指定">友達♂</attribute>
 		<language name="JPN" width="256">ともだち♂『アララギはかせ？[BE:01:ページ切り替え（クリア）]
-どーしたんです
+どうしたんですか
 いまさら　じこしょうかい　だなんて[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">ともだち♂『アララギ博士？[BE:01:ページ切り替え（クリア）]
-どーしたんです
+どうしたんですか
 いまさら　自己紹介だなんて[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
@@ -427,7 +441,7 @@
 ポケモンを　進呈した　理由だが……</language>
 	</row>
 
-	<row id="msg_t01r0401_black_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_t01r0401_black_03" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・続けてmsg_t01r0401_white_01表示</comment>
 		<attribute name="キャラ指定">友達♂</attribute>
@@ -435,7 +449,7 @@
 		<language name="JPN_KANJI" width="256">ともだち♂『ポケモン図鑑　ですよね[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_t01r0401_white_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_t01r0401_white_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♀
 ・続けてmsg_t01r0401_doctor_jr_08表示</comment>
 		<attribute name="キャラ指定">友達♀</attribute>
@@ -479,13 +493,13 @@
 この　イッシュちほう　すべての[BE:00:ページ切り替え（行送り）]
 ポケモンに　であうのだッ！[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">ポケモン図鑑　とは……！[BE:01:ページ切り替え（クリア）]
-きみたちが　であった　ポケモンを[BE:00:ページ切り替え（行送り）]
-じどうてきに　記録していく[BE:00:ページ切り替え（行送り）]
-ハイテクな　道具　だ！[BE:01:ページ切り替え（クリア）]
+きみたちが　であった　ポケモンを
+自動的に　記録していく[BE:00:ページ切り替え（行送り）]
+ハイテクな　道具だ！[BE:01:ページ切り替え（クリア）]
 だから　[1:00:トレーナー名:0]たちは
 いろんな　ところに　でかけ[BE:00:ページ切り替え（行送り）]
-この　イッシュ地方　すべての[BE:00:ページ切り替え（行送り）]
-ポケモンに　であうのだッ！[BE:01:ページ切り替え（クリア）]</language>
+この　イッシュ地方に　暮らす[BE:00:ページ切り替え（行送り）]
+全ての　ポケモンに　であうのだッ！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_t01r0401_hakase2_10">
@@ -543,9 +557,9 @@
 博士</attribute>
 		<language name="JPN" width="256">よし！　いい　へんじだ！[BE:01:ページ切り替え（クリア）]
 では　つぎのステップ
-ポケモンと　出会う　方法を[BE:01:ページ切り替え（クリア）]
-教えるから
-１番道路に　来てくれよな！[BE:01:ページ切り替え（クリア）]</language>
+ポケモンと　であう　ほうほうを[BE:01:ページ切り替え（クリア）]
+おしえるから
+１ばんどうろに　きてくれよな！[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">よし！　いい　返事だ！[BE:01:ページ切り替え（クリア）]
 では　つぎのステップ
 ポケモンと　出会う　方法を[BE:01:ページ切り替え（クリア）]
@@ -553,7 +567,7 @@
 １番道路に　来てくれよな！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_t01r0401_white_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_t01r0401_white_03" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♀
 ・続けてmsg_t01r0401_black_03</comment>
 		<attribute name="キャラ指定">友達♀</attribute>
@@ -565,17 +579,17 @@
 冒険しても　いいんだよね？[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_t01r0401_black_03" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_t01r0401_black_04" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・メッセージ表示後、友達♂♀退場
 　画面外に消えると、操作可能に</comment>
 		<attribute name="キャラ指定">友達♂</attribute>
 		<language name="JPN" width="256">ともだち♂『ああ　そうだね[BE:01:ページ切り替え（クリア）]
 というわけで　オレたちも
-１ばんどうろに　いくと　しようぜ[BE:01:ページ切り替え（クリア）]</language>
+１ばんどうろに　いくと　しよう[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">ともだち♂『ああ　そうだね[BE:01:ページ切り替え（クリア）]
 というわけで　オレたちも
-１番道路に　行くと　しようぜ[BE:01:ページ切り替え（クリア）]</language>
+１番道路に　行くと　しよう[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_t01r0401_hakase2_20">
