@@ -105,6 +105,7 @@ static struct {
 static inline void register_PokeNickname( u8 pokeID, WordBufID bufID );
 static inline SetStrFormat get_strFormat( u8 pokeID );
 static inline u16 get_setStrID( u8 pokeID, u16 defaultStrID );
+static inline u16 get_setStrID_Poke2( u8 pokeID1, u8 pokeID2, u16 defaultStrID );
 static inline u16 get_setPtnStrID( u8 pokeID, u16 originStrID, u8 ptnNum );
 static void ms_std_simple( STRBUF* dst, BtlStrID_STD strID );
 static void ms_encount( STRBUF* dst, BtlStrID_STD strID, const int* args );
@@ -123,6 +124,7 @@ static void ms_set_rankup( STRBUF* dst, u16 strID, const int* args );
 static void ms_set_rankdown( STRBUF* dst, u16 strID, const int* args );
 static void ms_set_rank_limit( STRBUF* dst, u16 strID, const int* args );
 static void ms_set_poke( STRBUF* dst, u16 strID, const int* args );
+static void ms_set_poke2poke( STRBUF* dst, u16 strID, const int* args );
 static void ms_set_trace( STRBUF* dst, u16 strID, const int* args );
 static void ms_set_yotimu( STRBUF* dst, u16 strID, const int* args );
 static void ms_set_omitoosi( STRBUF* dst, u16 strID, const int* args );
@@ -237,7 +239,24 @@ static inline u16 get_setStrID( u8 pokeID, u16 defaultStrID )
 {
   return defaultStrID + get_strFormat( pokeID );
 }
-
+static inline u16 get_setStrID_Poke2( u8 pokeID1, u8 pokeID2, u16 defaultStrID )
+{
+  SetStrFormat  fmt = get_strFormat( pokeID1 );
+  switch( fmt ){
+  case SETTYPE_MINE:
+    return defaultStrID + get_strFormat( pokeID2 );
+  case SETTYPE_WILD:
+    defaultStrID += SETTYPE_MAX;
+    break;
+  case SETTYPE_ENEMY:
+    defaultStrID += (SETTYPE_MAX + 2);
+    break;
+  }
+  if( get_strFormat(pokeID2) == fmt ){
+    defaultStrID++;
+  }
+  return defaultStrID;
+}
 static inline u16 get_setPtnStrID( u8 pokeID, u16 originStrID, u8 ptnNum )
 {
   return originStrID + (ptnNum * SETTYPE_MAX) + get_strFormat( pokeID );
@@ -490,6 +509,7 @@ void BTL_STR_MakeStringSet( STRBUF* buf, BtlStrID_SET strID, const int* args )
     { BTL_STRID_SET_Takuwaeru,            ms_set_poke_num },
     { BTL_STRID_SET_LockOn,               ms_set_poke },
     { BTL_STRID_SET_Tedasuke,             ms_set_poke },
+    { BTL_STRID_SET_YokodoriExe,          ms_set_poke2poke },
 
 
 
@@ -584,6 +604,22 @@ static void ms_set_poke( STRBUF* dst, u16 strID, const int* args )
   register_PokeNickname( args[1], BUFIDX_POKE_2ND );
 
   strID = get_setStrID( args[0], strID );
+  GFL_MSG_GetString( SysWork.msg[MSGSRC_SET], strID, SysWork.tmpBuf );
+  WORDSET_ExpandStr( SysWork.wset, dst, SysWork.tmpBuf );
+
+}
+//--------------------------------------------------------------
+/**
+ *  ○○は××にねらいをさだめた！　等（野生→野生など含む７パターン）
+ *  args... [0]:pokeID,  [1]:targetPokeID
+ */
+//--------------------------------------------------------------
+static void ms_set_poke2poke( STRBUF* dst, u16 strID, const int* args )
+{
+  register_PokeNickname( args[0], BUFIDX_POKE_1ST );
+  register_PokeNickname( args[1], BUFIDX_POKE_2ND );
+
+  strID = get_setStrID_Poke2( args[0], args[1], strID );
   GFL_MSG_GetString( SysWork.msg[MSGSRC_SET], strID, SysWork.tmpBuf );
   WORDSET_ExpandStr( SysWork.wset, dst, SysWork.tmpBuf );
 

@@ -1461,7 +1461,9 @@ static void common_RankDownGuard_Check( BTL_SVFLOW_WORK* flowWk, u8 pokeID, int*
     if( (rankType == WAZA_RANKEFF_MAX)
     ||  (BTL_EVENTVAR_GetValue(BTL_EVAR_STATUS_TYPE) == rankType)
     ){
-      work[0] = BTL_EVENTVAR_RewriteValue( BTL_EVAR_FAIL_FLAG, TRUE );
+      if( BTL_EVENTVAR_GetValue(BTL_EVAR_VOLUME) < 0 ){
+        work[0] = BTL_EVENTVAR_RewriteValue( BTL_EVAR_FAIL_FLAG, TRUE );
+      }
     }
   }
 }
