@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-07-25T18:07:45"/>
+	<create user="matsumiya" host="W00207" date="2009-07-25T18:10:18"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -307,8 +307,9 @@
 		<language name="JPN_KANJI" width="256">仮メッセージ</language>
 	</row>
 
-	<row id="msg_c01r0501_test2_01">
+	<row id="msg_c01r0501_gentleman_01">
 		<comment>♂</comment>
+		<attribute name="キャラ指定">GENTLEMAN</attribute>
 		<language name="JPN" width="256">ポケモンのことを　あいしているから
 もっと　ポケモンについて　しりたい[BE:01:ページ切り替え（クリア）]
 そんな　よっきゅうを　みたすため
@@ -319,7 +320,7 @@
 この　トレーナーズスクールが　ある！</language>
 	</row>
 
-	<row id="msg_c01r0501_test3_01">
+	<row id="msg_c01r0501_girl1_01">
 		<comment>♂</comment>
 		<attribute name="キャラ指定">GIRL1</attribute>
 		<language name="JPN" width="256">ポケモンの　タイプは
@@ -334,7 +335,7 @@
 不利なタイプが　あるのよ！</language>
 	</row>
 
-	<row id="msg_c01r0501_test4_01">
+	<row id="msg_c01r0501_boy2_01">
 		<comment>♀</comment>
 		<attribute name="キャラ指定">BOY2</attribute>
 		<language name="JPN" width="256">しんかキャンセル　という
@@ -349,7 +350,7 @@
 ポケモンが　驚き　進化をやめる[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_c01r0501_test5_01">
+	<row id="msg_c01r0501_trainerm_01">
 		<comment>♀</comment>
 		<attribute name="キャラ指定">TRAINERM</attribute>
 		<language name="JPN" width="256">わざマシンを　つかうことでしか
