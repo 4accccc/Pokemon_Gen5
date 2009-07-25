@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-07-25T19:59:26"/>
+	<create user="matsumiya" host="W00207" date="2009-07-25T20:08:33"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -633,11 +633,11 @@
 		<comment>♀</comment>
 		<attribute name="キャラ指定">少女</attribute>
 		<language name="JPN" width="256">あなたの　ポケモンさん
-たいりょくは　ばっちり　かしら？[BE:00:ページ切り替え（行送り）]
+たいりょくは　ばっちり　かしら？[BE:01:ページ切り替え（クリア）]
 ムリせず　こまめに
 ポケモンさんを　やすませてね</language>
 		<language name="JPN_KANJI" width="256">あなたの　ポケモンさん
-体力は　ばっちり　かしら？[BE:00:ページ切り替え（行送り）]
+体力は　ばっちり　かしら？[BE:01:ページ切り替え（クリア）]
 ムリせず　こまめに
 ポケモンさんを　休ませてね</language>
 	</row>
