@@ -18,6 +18,7 @@
 
 #include "print/gf_font.h"
 
+#include "field/field_const.h"
 #include "fieldmap.h"
 #include "field_common.h"
 
@@ -716,9 +717,9 @@ static MAINSEQ_RESULT mainSeqFunc_update_top(GAMESYS_WORK *gsys, FIELDMAP_WORK *
 
 	  // グリッド座標を算
       FIELD_PLAYER_GetPos(fieldWork->field_player, &player_pos);
-	  gx = (int)( ( FX_Div( player_pos.x, 16*FX32_ONE) & FX32_INT_MASK ) >> FX32_SHIFT );
-	  gy = (int)( ( FX_Div( player_pos.y, 16*FX32_ONE) & FX32_INT_MASK ) >> FX32_SHIFT );
-	  gz = (int)( ( FX_Div( player_pos.z, 16*FX32_ONE) & FX32_INT_MASK ) >> FX32_SHIFT );
+	  gx = (int)( ( FX_Div( player_pos.x, FIELD_CONST_GRID_FX32_SIZE) & FX32_INT_MASK ) >> FX32_SHIFT );
+	  gy = (int)( ( FX_Div( player_pos.y, FIELD_CONST_GRID_FX32_SIZE) & FX32_INT_MASK ) >> FX32_SHIFT );
+	  gz = (int)( ( FX_Div( player_pos.z, FIELD_CONST_GRID_FX32_SIZE) & FX32_INT_MASK ) >> FX32_SHIFT );
 
 	  // ボリュームを更新
 	  ISS_UNIT_Update( fieldWork->issUnit, gx, gy, gz );

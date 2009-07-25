@@ -13,6 +13,8 @@
 #include "arc/fieldmap/zonedata.naix"
 #include "arc/fieldmap/zone_id.h"
 
+#include "field/field_const.h"
+
 #include "field/zonedata.h"
 #include "zonetableformat.h"
 #include "gamesystem/pm_season.h"
@@ -176,9 +178,9 @@ void ZONEDATA_DEBUG_GetStartPos(u16 zone_id, VecFx32 * pos)
 {
 	ZONEDATA zdbuf;
 	getZoneData(&zdbuf, zone_id);
-	pos->x = zdbuf.sx * FX32_ONE * 16;
-	pos->y = zdbuf.sy * FX32_ONE * 16;
-	pos->z = zdbuf.sz * FX32_ONE * 16;
+	pos->x = zdbuf.sx * FX32_ONE * FIELD_CONST_GRID_SIZE;
+	pos->y = zdbuf.sy * FX32_ONE * FIELD_CONST_GRID_SIZE;
+	pos->z = zdbuf.sz * FX32_ONE * FIELD_CONST_GRID_SIZE;
 	TAMADA_Printf("%s x,y,z=%d,%d,%d\n",__FILE__,pos->x, pos->y, pos->z);
 }
 
