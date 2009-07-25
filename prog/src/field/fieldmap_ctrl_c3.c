@@ -17,6 +17,8 @@
 
 #include "fieldmap_ctrl_c3.h"
 
+#include "gamesystem/game_data.h"  //PLAYER_WORK
+
 #include "field_rail.h"
 #include "field/field_rail_loader.h"
 #include "fld_scenearea.h"
@@ -204,7 +206,9 @@ static void mapCtrlC3_Main( FIELDMAP_WORK *fieldWork, VecFx32 *pos )
 	C3_MOVE_WORK *mwk = FIELDMAP_GetMapCtrlWork( fieldWork );
   FIELD_RAIL_MAN* railMan = FIELDMAP_GetFieldRailMan(fieldWork);
   BOOL rail_flag = FIELD_RAIL_MAN_GetActiveFlag(railMan);
-	FIELD_PLAYER *fld_player = FIELDMAP_GetFieldPlayer( fieldWork );;
+	FIELD_PLAYER *fld_player = FIELDMAP_GetFieldPlayer( fieldWork );
+  PLAYER_WORK *player = GAMEDATA_GetMyPlayerWork(
+      GAMESYSTEM_GetGameData(FIELDMAP_GetGameSysWork(fieldWork)) );
 
   //デバッグのため、レール処理をON/OFF
   if (key_trg & PAD_BUTTON_L)
@@ -221,6 +225,7 @@ static void mapCtrlC3_Main( FIELDMAP_WORK *fieldWork, VecFx32 *pos )
     //2009.07.05 ROMのための一時的な補正処理
     pos->y += FX32_ONE * 8;
     FIELD_PLAYER_SetPos( fld_player, pos );
+    PLAYERWORK_setPosition( player, pos );
     
     // シーンエリア処理でカメラ上書き
     if( FLD_SCENEAREA_GetUpdateFuncID( mwk->p_sceneArea ) == FLD_SCENEAREA_UPDATE_CIRCLE ){
