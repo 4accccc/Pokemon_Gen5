@@ -40,9 +40,7 @@ _EVENT_DATA_END
 /**************************************************************/
 /*                                                            */
 /**************************************************************/
-//--------------------------------------------------------------
-//	
-//--------------------------------------------------------------
+
 ev_r01_talkobj_boy1:
 	_TALK_OBJ_PAUSE_ALL //動作モデルをポーズします
 	_TURN_HERO_SITE //自機の方向へ振り向きます
@@ -82,7 +80,9 @@ talkobj_boy1_end:
 	_OBJ_PAUSE_CLEAR_ALL //動作モデルポーズを解除します
 	_END //イベントを終了します
 
-
+/**************************************************************/
+/*                                                            */
+/**************************************************************/
 ev_r01_talkobj_girl1:
 	_TALK_OBJ_PAUSE_ALL
 	_TURN_HERO_SITE
@@ -91,13 +91,15 @@ ev_r01_talkobj_girl1:
 	_AB_KEYWAIT
 	_TALKWIN_CLOSE
 
-	_OBJ_ANIME R01GIRL1,test02anime
+/*	_OBJ_ANIME R01GIRL1,test02anime
 	_OBJ_ANIME_WAIT
-
+*/
 	_OBJ_PAUSE_CLEAR_ALL
 	_END
 
-
+/**************************************************************/
+/*                                                            */
+/**************************************************************/
 ev_r01_talkobj_man1:
 	_TALK_OBJ_PAUSE_ALL
 	_TURN_HERO_SITE
@@ -106,9 +108,9 @@ ev_r01_talkobj_man1:
 	_AB_KEYWAIT
 	_TALKWIN_CLOSE
 
-	_OBJ_ANIME R01MAN1,test03anime
+/*	_OBJ_ANIME R01MAN1,test03anime
 	_OBJ_ANIME_WAIT
-
+*/
 	_OBJ_PAUSE_CLEAR_ALL
 	_END
 
@@ -116,12 +118,13 @@ ev_r01_talkobj_man1:
 //	アニメーションデータ
 //--------------------------------------------------------------
 _ANIME_LABEL test01anime
-	_ANIME_DATA AC_WALK_U_8F,4
-	_ANIME_DATA AC_WALK_D_8F,4
+	_ANIME_DATA AC_MARK_GYOE,1
+	_ANIME_DATA AC_JUMP_D_2G_16F,1
+	_ANIME_DATA AC_DIR_U,1
 	_ANIME_DATA ACMD_END,0
 
 _ANIME_LABEL test02anime
-	_ANIME_DATA AC_STAY_JUMP_U_16F,3
+	_ANIME_DATA AC_STAY_JUMP_D_16F,3
 	_ANIME_DATA ACMD_END,0
 
 _ANIME_LABEL test03anime
