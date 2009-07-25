@@ -1739,6 +1739,10 @@
 #ifndef ZONE_R03_EVC_H
 #define ZONE_R03_EVC_H
 
+#define R03_OLDWOMAN1                      0
+#define R03_BABYGIRL1b                     1
+#define R03_BABYGIRL1a                     2
+#define R03_WOMAN3                         3
 
 #endif //ZONE_R03_EVC_H
 //#include "tmp/r04.h"
@@ -7931,14 +7935,85 @@ const CONNECT_DATA DOOR_EVENT_R03[] = {
 	},
 };
 const int ConnectCount_R03 = NELEMS(DOOR_EVENT_R03);
+const FLDMMDL_HEADER OBJ_EVENT_R03[] = {
+	{
+		R03_OLDWOMAN1,
+		OLDWOMAN1,
+		MV_DIR_RND,
+		EV_TYPE_NORMAL,
+		0,
+		SCRID_R03_TALKOBJ_OLDWOMAN1,
+		DIR_DOWN,
+		0,
+		0,
+		0,
+		0,
+		0,
+		749,
+		556,
+		16,
+	},
+	{
+		R03_BABYGIRL1b,
+		BABYGIRL1,
+		MV_DIR_RND,
+		EV_TYPE_NORMAL,
+		0,
+		SCRID_R03_TALKOBJ_BABYGIRL1B,
+		DIR_RIGHT,
+		0,
+		0,
+		0,
+		0,
+		0,
+		732,
+		556,
+		16,
+	},
+	{
+		R03_BABYGIRL1a,
+		BABYGIRL1,
+		MV_DIR_RND,
+		EV_TYPE_NORMAL,
+		0,
+		SCRID_R03_TALKOBJ_BABYGIRL1A,
+		DIR_LEFT,
+		0,
+		0,
+		0,
+		0,
+		0,
+		733,
+		556,
+		16,
+	},
+	{
+		R03_WOMAN3,
+		WOMAN3,
+		MV_DOWN,
+		EV_TYPE_NORMAL,
+		0,
+		SCRID_R03_TALKOBJ_WOMAN3,
+		DIR_DOWN,
+		0,
+		0,
+		0,
+		0,
+		0,
+		740,
+		556,
+		16,
+	},
+};
+const int ObjCount_R03 = NELEMS(OBJ_EVENT_R03);
 
 static const EVENTDATA_TABLE event_r03 = {
 	0,
-	0,
+	4,
 	6,
 	0,
 	(void *)NULL,
-	(void *)NULL,
+	(void *)&OBJ_EVENT_R03,
 	(void *)&DOOR_EVENT_R03,
 	(void *)NULL,
 };
