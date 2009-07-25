@@ -1,0 +1,200 @@
+#event data
+#save date:2009/07/25 15:25:50
+# linked worldmap file name
+C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\d07r0601.wms
+#SECTION START:OBJ_EVENT
+#Map Event List data
+#save date:2009/07/25 15:25:50
+2
+#hold event type:
+1
+#hold event number:
+0
+#Map Event List Data End
+#SECTION End:OBJ_EVENT
+#SECTION START:BG_EVENT
+#Map Event List data
+#save date:2009/07/25 15:25:50
+2
+#hold event type:
+1
+#hold event number:
+0
+#Map Event List Data End
+#SECTION End:BG_EVENT
+#SECTION START:POS_EVENT
+#Map Event List data
+#save date:2009/07/25 15:25:50
+2
+#hold event type:
+1
+#hold event number:
+0
+#Map Event List Data End
+#SECTION End:POS_EVENT
+#SECTION START:DOOR_EVENT
+#Map Event List data
+#save date:2009/07/25 15:25:50
+2
+#hold event type:
+1
+#hold event number:
+12
+#event number: 0
+#Door Event Label
+DOOR_ID_D07R0601_D07R0201_EXIT01
+#Next Zone ID Name
+ZONE_ID_D07R0201
+#Next Door ID Name
+DOOR_ID_D07R0201_D07R0101_EXIT01
+#Door Direction
+EXIT_DIR_RIGHT
+#Door Type
+EXIT_TYPE_MAT
+#position
+-32 40 -496
+#event number: 1
+#Door Event Label
+DOOR_ID_D07R0601_D07R0201_EXIT02
+#Next Zone ID Name
+ZONE_ID_D07R0201
+#Next Door ID Name
+DOOR_ID_D07R0201_D07R0101_EXIT02
+#Door Direction
+EXIT_DIR_UP
+#Door Type
+EXIT_TYPE_MAT
+#position
+288 40 -608
+#event number: 2
+#Door Event Label
+DOOR_ID_D07R0601_D07R0201_EXIT03
+#Next Zone ID Name
+ZONE_ID_D07R0201
+#Next Door ID Name
+DOOR_ID_D07R0201_D07R0101_EXIT03
+#Door Direction
+EXIT_DIR_UP
+#Door Type
+EXIT_TYPE_MAT
+#position
+528 40 -560
+#event number: 3
+#Door Event Label
+DOOR_ID_D07R0601_D07R0201_EXIT04
+#Next Zone ID Name
+ZONE_ID_D07R0201
+#Next Door ID Name
+DOOR_ID_D07R0201_D07R0101_EXIT04
+#Door Direction
+EXIT_DIR_LEFT
+#Door Type
+EXIT_TYPE_MAT
+#position
+640 40 -352
+#event number: 4
+#Door Event Label
+DOOR_ID_D07R0601_D07R0201_EXIT05
+#Next Zone ID Name
+ZONE_ID_D07R0201
+#Next Door ID Name
+DOOR_ID_D07R0201_D07R0101_EXIT05
+#Door Direction
+EXIT_DIR_LEFT
+#Door Type
+EXIT_TYPE_MAT
+#position
+544 40 -32
+#event number: 5
+#Door Event Label
+DOOR_ID_D07R0601_D07R0201_EXIT06
+#Next Zone ID Name
+ZONE_ID_D07R0201
+#Next Door ID Name
+DOOR_ID_D07R0201_D07R0601_EXIT06
+#Door Direction
+EXIT_DIR_DOWN
+#Door Type
+EXIT_TYPE_MAT
+#position
+448 40 128
+#event number: 6
+#Door Event Label
+DOOR_ID_D07R0601_D07R0301_EXIT01
+#Next Zone ID Name
+ZONE_ID_D07R0301
+#Next Door ID Name
+DOOR_ID_D07R0301_D07R0101_EXIT01
+#Door Direction
+EXIT_DIR_LEFT
+#Door Type
+EXIT_TYPE_MAT
+#position
+496 -40 -416
+#event number: 7
+#Door Event Label
+DOOR_ID_D07R0601_D07R0301_EXIT02
+#Next Zone ID Name
+ZONE_ID_D07R0301
+#Next Door ID Name
+DOOR_ID_D07R0301_D07R0101_EXIT02
+#Door Direction
+EXIT_DIR_RIGHT
+#Door Type
+EXIT_TYPE_MAT
+#position
+32 -40 -416
+#event number: 8
+#Door Event Label
+DOOR_ID_D07R0601_D07R0301_EXIT03
+#Next Zone ID Name
+ZONE_ID_D07R0301
+#Next Door ID Name
+DOOR_ID_D07R0301_D07R0101_EXIT03
+#Door Direction
+EXIT_DIR_RIGHT
+#Door Type
+EXIT_TYPE_MAT
+#position
+-16 -40 -144
+#event number: 9
+#Door Event Label
+DOOR_ID_D07R0601_D07R0301_EXIT05
+#Next Zone ID Name
+ZONE_ID_D07R0301
+#Next Door ID Name
+DOOR_ID_D07R0301_D07R0601_EXIT05
+#Door Direction
+EXIT_DIR_DOWN
+#Door Type
+EXIT_TYPE_MAT
+#position
+288 -40 -48
+#event number: 10
+#Door Event Label
+DOOR_ID_D07R0601_D07R0301_EXIT04
+#Next Zone ID Name
+ZONE_ID_D07R0301
+#Next Door ID Name
+DOOR_ID_D07R0301_D07R0601_EXIT04
+#Door Direction
+EXIT_DIR_DOWN
+#Door Type
+EXIT_TYPE_MAT
+#position
+448 -40 32
+#event number: 11
+#Door Event Label
+DOOR_ID_D07R0601_D07R0401_EXIT01
+#Next Zone ID Name
+ZONE_ID_D07R0401
+#Next Door ID Name
+DOOR_ID_D07R0401_D07R0601_EXIT01
+#Door Direction
+EXIT_DIR_LEFT
+#Door Type
+EXIT_TYPE_MAT
+#position
+480 -88 -272
+#Map Event List Data End
+#SECTION End:DOOR_EVENT
