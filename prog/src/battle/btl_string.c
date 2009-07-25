@@ -510,6 +510,7 @@ void BTL_STR_MakeStringSet( STRBUF* buf, BtlStrID_SET strID, const int* args )
     { BTL_STRID_SET_LockOn,               ms_set_poke },
     { BTL_STRID_SET_Tedasuke,             ms_set_poke },
     { BTL_STRID_SET_YokodoriExe,          ms_set_poke2poke },
+    { BTL_STRID_SET_MagicCoatExe,         ms_set_waza_sp },
 
 
 
