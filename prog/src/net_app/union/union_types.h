@@ -150,7 +150,6 @@ typedef enum{
   UNION_SUBPROC_ID_COLOSSEUM_WARP_1VS1_DOUBLE_STANDARD,    ///<コロシアム遷移
   UNION_SUBPROC_ID_COLOSSEUM_WARP_MULTI,    ///<コロシアム遷移(マルチ部屋)
   UNION_SUBPROC_ID_UNION_WARP,              ///<ユニオンルーム遷移
-  UNION_SUBPROC_ID_FIELD_WARP,              ///<フィールド遷移
   UNION_SUBPROC_ID_POKELIST,                ///<ポケモンリスト呼び出し
   UNION_SUBPROC_ID_BATTLE,                  ///<戦闘遷移
   

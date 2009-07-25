@@ -46,7 +46,6 @@ static BOOL SubEvent_TrainerCard(GAMESYS_WORK *gsys, UNION_SYSTEM_PTR unisys, FI
 static BOOL SubEvent_ColosseumWarp(GAMESYS_WORK *gsys, UNION_SYSTEM_PTR unisys, FIELD_MAIN_WORK *fieldWork, void *pwk, GMEVENT * parent_event, GMEVENT **child_event, u8 *seq);
 static BOOL SubEvent_ColosseumWarpMulti(GAMESYS_WORK *gsys, UNION_SYSTEM_PTR unisys, FIELD_MAIN_WORK *fieldWork, void *pwk, GMEVENT * parent_event, GMEVENT **child_event, u8 *seq);
 static BOOL SubEvent_UnionWarp(GAMESYS_WORK *gsys, UNION_SYSTEM_PTR unisys, FIELD_MAIN_WORK *fieldWork, void *pwk, GMEVENT * parent_event, GMEVENT **child_event, u8 *seq);
-static BOOL SubEvent_FieldWarp(GAMESYS_WORK *gsys, UNION_SYSTEM_PTR unisys, FIELD_MAIN_WORK *fieldWork, void *pwk, GMEVENT * parent_event, GMEVENT **child_event, u8 *seq);
 static BOOL SubEvent_Pokelist(GAMESYS_WORK *gsys, UNION_SYSTEM_PTR unisys, FIELD_MAIN_WORK *fieldWork, void *pwk, GMEVENT * parent_event, GMEVENT **child_event, u8 *seq);
 static BOOL SubEvent_Battle(GAMESYS_WORK *gsys, UNION_SYSTEM_PTR unisys, FIELD_MAIN_WORK *fieldWork, void *pwk, GMEVENT * parent_event, GMEVENT **child_event, u8 *seq);
 
@@ -118,11 +117,6 @@ static const struct{
     UNION_PLAY_CATEGORY_MAX,  //MAX=変更しない
     UNION_PLAY_CATEGORY_MAX,
   },
-  {//UNION_SUBPROC_ID_FIELD_WARP
-    SubEvent_FieldWarp,
-    UNION_PLAY_CATEGORY_MAX,  //MAX=変更しない
-    UNION_PLAY_CATEGORY_UNION,
-  },
   {//UNION_SUBPROC_ID_POKELIST
     SubEvent_Pokelist,
     UNION_PLAY_CATEGORY_MAX,  //MAX=変更しない
@@ -181,6 +175,7 @@ GMEVENT * UnionSubProc_Create(GAMESYS_WORK * gsys, FIELD_MAIN_WORK * fieldWork, 
  * @retval  GMEVENT_RESULT		
  */
 //--------------------------------------------------------------
+#include "system/main.h"
 static GMEVENT_RESULT UnionSubProc_GameChangeEvent(GMEVENT * event, int * seq, void * work)
 {
 	UNION_SUBPROC_EVENT_WORK *subev = work;
@@ -393,40 +388,6 @@ static BOOL SubEvent_UnionWarp(GAMESYS_WORK *gsys, UNION_SYSTEM_PTR unisys, FIEL
       pos.y = 0;
       pos.z = 232 << FX32_SHIFT;
       *child_event = DEBUG_EVENT_ChangeMapPos(gsys, fieldWork, ZONE_ID_UNION, &pos,0);
-    }
-    break;
-  default:
-    return TRUE;
-  }
-  
-  (*seq)++;
-  return FALSE;
-}
-
-//--------------------------------------------------------------
-/**
- * イベント：フィールドへワープ
- *
- * @param   gsys		
- * @param   unisys		
- * @param   fieldWork		
- * @param   pwk		
- * @param   seq		
- *
- * @retval  GMEVENT *		
- */
-//--------------------------------------------------------------
-static BOOL SubEvent_FieldWarp(GAMESYS_WORK *gsys, UNION_SYSTEM_PTR unisys, FIELD_MAIN_WORK *fieldWork, void *pwk, GMEVENT * parent_event, GMEVENT **child_event, u8 *seq)
-{
-  switch(*seq){
-  case 0:
-    {
-      VecFx32 pos;
-      
-      pos.x = 72 << FX32_SHIFT;
-      pos.y = 48;
-      pos.z = 88 << FX32_SHIFT;
-      *child_event = DEBUG_EVENT_ChangeMapPos(gsys, fieldWork, ZONE_ID_T02PC0101, &pos,0);
     }
     break;
   default:

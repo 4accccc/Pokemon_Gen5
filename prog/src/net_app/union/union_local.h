@@ -61,6 +61,10 @@ typedef struct _UNION_SYSTEM{
   u8 restart_seq;                     ///<「切断→再開」処理シーケンスNo
   u8 restart_mode;                    ///< UNION_RESTART_???
   u8 player_pause;                    ///<自機のポーズ状況
+  
+  BOOL debug_wayout_walk;             ///<※check TRUE:出口座標から一度でも出た
+  BOOL finish;                        ///<TRUE:ユニオン終了リクエスト
+  BOOL finish_exe;                    ///<TRUE:ユニオン終了処理実行中
 }UNION_SYSTEM;
 
 

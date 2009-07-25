@@ -221,6 +221,8 @@ BOOL UnionComm_Exit(int *seq, void *pwk, void *pWork)
 {
   UNION_SYSTEM_PTR unisys = pWork;
   
+  unisys->finish_exe = TRUE;
+  
   GF_ASSERT(unisys->comm_status == UNION_COMM_STATUS_UPDATE);
   if(unisys->comm_status < UNION_COMM_STATUS_UPDATE){
     return FALSE; //通常ありえないけど念のためUpdateになるまで待つようにする
@@ -734,6 +736,20 @@ void UnionMySituation_Clear(UNION_SYSTEM_PTR unisys)
 
 //==================================================================
 /**
+ * UNION_MY_COMM構造体の中からメニューの返事関連の受信バッファのみを初期化
+ *
+ * @param   mycomm		
+ */
+//==================================================================
+void UnionMyComm_InitMenuParam(UNION_MY_COMM *mycomm)
+{
+  mycomm->mainmenu_select = UNION_MENU_SELECT_NULL;
+  mycomm->submenu_select = UNION_MENU_SELECT_NULL;
+  mycomm->mainmenu_yesno_result = 0xff;
+}
+
+//==================================================================
+/**
  * UNION_MY_COMM構造体を初期化
  *
  * @param   mycomm		
@@ -742,9 +758,7 @@ void UnionMySituation_Clear(UNION_SYSTEM_PTR unisys)
 void UnionMyComm_Init(UNION_SYSTEM_PTR unisys, UNION_MY_COMM *mycomm)
 {
   GFL_STD_MemClear(mycomm, sizeof(UNION_MY_COMM));
-  mycomm->mainmenu_select = UNION_MENU_SELECT_NULL;
-  mycomm->submenu_select = UNION_MENU_SELECT_NULL;
-  mycomm->mainmenu_yesno_result = 0xff;
+  UnionMyComm_InitMenuParam(mycomm);
   
   //UNION_MEMBERの自分分を埋める
   {

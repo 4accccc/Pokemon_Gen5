@@ -133,3 +133,30 @@ void UnionMain_Callback_FieldDelete(void *pwk, void *app_work, FIELD_MAIN_WORK *
   }
 }
 
+//==================================================================
+/**
+ * ユニオン終了リクエストフラグの取得
+ *
+ * @param   unisys		
+ *
+ * @retval  BOOL		
+ */
+//==================================================================
+BOOL UnionMain_GetFinishReq(UNION_SYSTEM_PTR unisys)
+{
+  return unisys->finish;
+}
+
+//==================================================================
+/**
+ * ユニオン終了処理実行中フラグの取得
+ *
+ * @param   unisys		
+ *
+ * @retval  BOOL		
+ */
+//==================================================================
+BOOL UnionMain_GetFinishExe(UNION_SYSTEM_PTR unisys)
+{
+  return unisys->finish_exe;
+}

@@ -46,6 +46,8 @@
 #include "map_attr.h"
 
 #include "event_trainer_eye.h"
+#include "fieldmap/zone_id.h"
+#include "net_app/union/union_main.h"
 
 //======================================================================
 //======================================================================
@@ -448,9 +450,28 @@ GMEVENT * FIELD_EVENT_CheckUnion( GAMESYS_WORK *gsys, void *work )
   EV_REQUEST req;
 	GMEVENT *event;
 	FIELDMAP_WORK *fieldWork = work;
+	GAME_COMM_SYS_PTR game_comm = GAMESYSTEM_GetGameCommSysPtr(gsys);
+  UNION_SYSTEM_PTR unisys = GameCommSys_GetAppWork(game_comm);
   
   setupRequest( &req, gsys, fieldWork );
 
+  if(unisys == NULL){
+    //ユニオン終了
+    VecFx32 pos;
+    pos.x = 72 << FX32_SHIFT;
+    pos.y = 48;
+    pos.z = 88 << FX32_SHIFT;
+    return DEBUG_EVENT_ChangeMapPos(gsys, fieldWork, ZONE_ID_T02PC0101, &pos, 0);
+  }
+  
+  if(UnionMain_GetFinishReq(unisys) == TRUE){
+    if(UnionMain_GetFinishExe(unisys) == FALSE){
+      //ユニオン終了処理開始
+      GameCommSys_ExitReq(game_comm);
+    }
+    return NULL;
+  }
+  
   //デバッグ用チェック
 #ifdef  PM_DEBUG
   event = DEBUG_checkKeyEvent( &req, gsys, fieldWork );

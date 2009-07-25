@@ -28,6 +28,7 @@
 #include "savedata/config.h"
 #include "pm_define.h"
 #include "field\event_colosseum_battle.h"
+#include "union_tool.h"
 
 
 //==============================================================================
@@ -63,6 +64,7 @@ typedef struct{
 //==============================================================================
 static BOOL OneselfSeq_NormalInit(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *situ, FIELD_MAIN_WORK *fieldWork, u8 *seq);
 static BOOL OneselfSeq_NormalUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *situ, FIELD_MAIN_WORK *fieldWork, u8 *seq);
+static BOOL OneselfSeq_Leave(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *situ, FIELD_MAIN_WORK *fieldWork, u8 *seq);
 static BOOL OneselfSeq_ConnectReqInit(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *situ, FIELD_MAIN_WORK *fieldWork, u8 *seq);
 static BOOL OneselfSeq_ConnectReqUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *situ, FIELD_MAIN_WORK *fieldWork, u8 *seq);
 static BOOL OneselfSeq_ConnectReqExit(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *situ, FIELD_MAIN_WORK *fieldWork, u8 *seq);
@@ -110,7 +112,7 @@ static const ONESELF_FUNC_DATA OneselfFuncTbl[] = {
   },
   {//UNION_STATUS_LEAVE
     NULL,
-    NULL,
+    OneselfSeq_Leave,
     NULL,
   },
   {//UNION_STATUS_CONNECT_REQ
@@ -462,7 +464,35 @@ static BOOL OneselfSeq_NormalUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION 
     return TRUE;
   }
   
+  //出口チェック
+  if(UnionTool_CheckWayOut(fieldWork) == TRUE){
+    if(unisys->debug_wayout_walk == TRUE){
+      _PlayerMinePause(unisys, fieldWork, TRUE);
+      UnionOneself_ReqStatus(unisys, UNION_STATUS_LEAVE);
+    }
+  }
+  else{
+    unisys->debug_wayout_walk = TRUE;
+  }
+  
   return FALSE;
+}
+
+//--------------------------------------------------------------
+/**
+ * ユニオンルーム退出：更新
+ *
+ * @param   unisys		
+ * @param   situ		  
+ * @param   seq		    
+ *
+ * @retval  BOOL		
+ */
+//--------------------------------------------------------------
+static BOOL OneselfSeq_Leave(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *situ, FIELD_MAIN_WORK *fieldWork, u8 *seq)
+{
+  unisys->finish = TRUE;
+  return TRUE;
 }
 
 //--------------------------------------------------------------
@@ -670,6 +700,7 @@ static BOOL OneselfSeq_ConnectAnswerExit(UNION_SYSTEM_PTR unisys, UNION_MY_SITUA
 //--------------------------------------------------------------
 static BOOL OneselfSeq_TalkInit_Parent(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *situ, FIELD_MAIN_WORK *fieldWork, u8 *seq)
 {
+  UnionMyComm_InitMenuParam(&situ->mycomm);
   UnionMySituation_SetParam(
     unisys, UNION_MYSITU_PARAM_IDX_PLAY_CATEGORY, (void*)UNION_PLAY_CATEGORY_TALK);
   UnionMyComm_PartyAdd(&situ->mycomm, situ->mycomm.connect_pc);
@@ -827,6 +858,7 @@ static BOOL OneselfSeq_TalkListSendUpdate_Parent(UNION_SYSTEM_PTR unisys, UNION_
 //--------------------------------------------------------------
 static BOOL OneselfSeq_TalkInit_Child(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *situ, FIELD_MAIN_WORK *fieldWork, u8 *seq)
 {
+  UnionMyComm_InitMenuParam(&situ->mycomm);
   UnionMySituation_SetParam(
     unisys, UNION_MYSITU_PARAM_IDX_PLAY_CATEGORY, (void*)UNION_PLAY_CATEGORY_TALK);
   UnionMyComm_PartyAdd(&situ->mycomm, situ->mycomm.connect_pc);
@@ -1271,8 +1303,10 @@ static BOOL OneselfSeq_TrainerCardUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SITUA
 		if(GFL_NET_HANDLE_IsTimingSync(
 		    GFL_NET_HANDLE_GetCurrentHandle(), UNION_TIMING_TRAINERCARD_PROC_AFTER) == TRUE){
       OS_TPrintf("トレーナーカード終了後の同期取り成功\n");
-      
+    
+    #if 0//トレーナーカードのParentWorkはトレーナーカードのProc内で解放されるのでここでは解放しない
       GFL_HEAP_FreeMemory(situ->mycomm.trcard.card_param);
+    #endif
       GFL_HEAP_FreeMemory(situ->mycomm.trcard.my_card);
       GFL_HEAP_FreeMemory(situ->mycomm.trcard.target_card);
       situ->mycomm.trcard.card_param = NULL;

@@ -55,6 +55,7 @@ extern void UnionMySituation_SetParam(UNION_SYSTEM_PTR unisys, UNION_MYSITU_PARA
 extern void UnionMySituation_Clear(UNION_SYSTEM_PTR unisys);
 
 extern void UnionMyComm_Init(UNION_SYSTEM_PTR unisys, UNION_MY_COMM *mycomm);
+extern void UnionMyComm_InitMenuParam(UNION_MY_COMM *mycomm);
 extern BOOL UnionMyComm_PartyAddParam(UNION_MY_COMM *mycomm, const u8 *mac_address, u8 trainer_view, u8 sex);
 extern BOOL UnionMyComm_PartyAdd(UNION_MY_COMM *mycomm, const UNION_BEACON_PC *pc);
 extern void UnionMyComm_PartyDel(UNION_MY_COMM *mycomm, const UNION_BEACON_PC *pc);
@@ -71,4 +72,6 @@ extern void Union_Main(GAME_COMM_SYS_PTR game_comm, FIELD_MAIN_WORK *fieldmap);
 extern BOOL Union_FieldCheck(UNION_SYSTEM_PTR unisys);
 extern void UnionMain_Callback_FieldCreate(void *pwk, void *app_work, FIELD_MAIN_WORK *fieldWork);
 extern void UnionMain_Callback_FieldDelete(void *pwk, void *app_work, FIELD_MAIN_WORK *fieldWork);
+extern BOOL UnionMain_GetFinishReq(UNION_SYSTEM_PTR unisys);
+extern BOOL UnionMain_GetFinishExe(UNION_SYSTEM_PTR unisys);
 
