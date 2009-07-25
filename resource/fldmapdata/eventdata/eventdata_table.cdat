@@ -1212,6 +1212,8 @@
 #ifndef ZONE_C07PC0101_EVC_H
 #define ZONE_C07PC0101_EVC_H
 
+#define C07PC0101_PCWOMAN                  0
+#define C06PC0101_SHOPM                    1
 
 #endif //ZONE_C07PC0101_EVC_H
 //#include "tmp/c07r0101.h"
@@ -6378,14 +6380,51 @@ const CONNECT_DATA DOOR_EVENT_C07PC0101[] = {
 	},
 };
 const int ConnectCount_C07PC0101 = NELEMS(DOOR_EVENT_C07PC0101);
+const FLDMMDL_HEADER OBJ_EVENT_C07PC0101[] = {
+	{
+		C07PC0101_PCWOMAN,
+		PCWOMAN1,
+		MV_DMY,
+		EV_TYPE_NORMAL,
+		0,
+		0,
+		DIR_DOWN,
+		0,
+		0,
+		0,
+		0,
+		0,
+		7,
+		10,
+		0,
+	},
+	{
+		C06PC0101_SHOPM,
+		SHOPM1,
+		MV_DMY,
+		EV_TYPE_NORMAL,
+		0,
+		0,
+		DIR_LEFT,
+		0,
+		0,
+		0,
+		0,
+		0,
+		11,
+		17,
+		0,
+	},
+};
+const int ObjCount_C07PC0101 = NELEMS(OBJ_EVENT_C07PC0101);
 
 static const EVENTDATA_TABLE event_c07pc0101 = {
 	0,
-	0,
+	2,
 	3,
 	0,
 	(void *)NULL,
-	(void *)NULL,
+	(void *)&OBJ_EVENT_C07PC0101,
 	(void *)&DOOR_EVENT_C07PC0101,
 	(void *)NULL,
 };
