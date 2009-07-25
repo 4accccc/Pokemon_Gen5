@@ -17,6 +17,8 @@
 //--------------------------------------------------------------
 _EVENT_DATA    ev_r02_talkobj_black
 _EVENT_DATA    ev_r02_talkobj_mama
+_EVENT_DATA    ev_r02_talkobj_boy2
+_EVENT_DATA    ev_r02_talkobj_girl2
 _EVENT_DATA_END
 
 
@@ -49,7 +51,6 @@ ev_r02_talkobj_black:
   _OBJ_PAUSE_CLEAR_ALL
   _END
 
-
 /**************************************************************/
 /*  R02 ママのイベントスクリプト*/
 /**************************************************************/
@@ -58,6 +59,32 @@ ev_r02_talkobj_mama:
 	_TURN_HERO_SITE
 	_TALKWIN_OPEN
 	_TALKMSG_ALLPUT msg_r02_mama_01
+	_AB_KEYWAIT
+  _TALKWIN_CLOSE
+  _OBJ_PAUSE_CLEAR_ALL
+  _END
+
+/**************************************************************/
+/*  R02 BOY2の会話イベントスクリプト*/
+/**************************************************************/
+ev_r02_talkobj_boy2:
+	_TALK_OBJ_PAUSE_ALL
+	_TURN_HERO_SITE
+	_TALKWIN_OPEN
+	_TALKMSG_ALLPUT msg_r02_boy2_01
+	_AB_KEYWAIT
+  _TALKWIN_CLOSE
+  _OBJ_PAUSE_CLEAR_ALL
+  _END
+
+/**************************************************************/
+/*  R02 GIRL2の会話のイベントスクリプト*/
+/**************************************************************/
+ev_r02_talkobj_girl2:
+	_TALK_OBJ_PAUSE_ALL
+	_TURN_HERO_SITE
+	_TALKWIN_OPEN
+	_TALKMSG_ALLPUT msg_r02_girl2_01
 	_AB_KEYWAIT
   _TALKWIN_CLOSE
   _OBJ_PAUSE_CLEAR_ALL
