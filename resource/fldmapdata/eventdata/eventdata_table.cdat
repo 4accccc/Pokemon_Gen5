@@ -2291,7 +2291,7 @@ const FLDMMDL_HEADER OBJ_EVENT_C01PC0101[] = {
 		0,
 		0,
 		11,
-		18,
+		17,
 		0,
 	},
 };
@@ -3142,7 +3142,7 @@ const FLDMMDL_HEADER OBJ_EVENT_C02PC0101[] = {
 		0,
 		0,
 		11,
-		18,
+		17,
 		0,
 	},
 	{
@@ -8208,7 +8208,7 @@ const FLDMMDL_HEADER OBJ_EVENT_T02PC0101[] = {
 		0,
 		0,
 		11,
-		18,
+		17,
 		0,
 	},
 	{
