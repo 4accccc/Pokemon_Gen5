@@ -274,6 +274,8 @@
 
 #define C02PC0101_SHOPM                    0
 #define C02PC0101_PCWOMAN                  1
+#define C02PC0101_GIRL2                    2
+#define C02PC0101_BACKPACKERM              3
 
 #endif //ZONE_C02PC0101_EVC_H
 //#include "tmp/c02r0101.h"
@@ -3291,12 +3293,46 @@ const FLDMMDL_HEADER OBJ_EVENT_C02PC0101[] = {
 		10,
 		0,
 	},
+	{
+		C02PC0101_GIRL2,
+		GIRL2,
+		MV_RND,
+		EV_TYPE_NORMAL,
+		0,
+		SCRID_C02PC0101_TALKOBJ_GIRL2,
+		DIR_DOWN,
+		0,
+		0,
+		0,
+		1,
+		1,
+		10,
+		11,
+		0,
+	},
+	{
+		C02PC0101_BACKPACKERM,
+		BACKPACKERM,
+		MV_RIGHT,
+		EV_TYPE_NORMAL,
+		0,
+		SCRID_C02PC0101_TALKOBJ_BACKPACKERM,
+		DIR_RIGHT,
+		0,
+		0,
+		0,
+		0,
+		0,
+		1,
+		14,
+		0,
+	},
 };
 const int ObjCount_C02PC0101 = NELEMS(OBJ_EVENT_C02PC0101);
 
 static const EVENTDATA_TABLE event_c02pc0101 = {
 	0,
-	2,
+	4,
 	3,
 	0,
 	(void *)NULL,

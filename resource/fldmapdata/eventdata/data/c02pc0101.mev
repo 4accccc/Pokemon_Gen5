@@ -1,15 +1,15 @@
 #event data
-#save date:2009/07/25 14:35:12
+#save date:2009/07/25 17:29:14
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\c02pc0101.wms
 #SECTION START:OBJ_EVENT
 #Map Event List data
-#save date:2009/07/25 14:35:12
+#save date:2009/07/25 17:29:14
 2
 #hold event type:
 1
 #hold event number:
-2
+4
 #event number: 0
 #type
 1
@@ -68,11 +68,69 @@ DIR_DOWN
 0
 #position
 -128 0 96
+#event number: 2
+#type
+1
+#ID name
+C02PC0101_GIRL2
+#OBJ CODE Number
+GIRL2
+#MOVE CODE Number
+MV_RND
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+0
+#Event Script Name
+SCRID_C02PC0101_TALKOBJ_GIRL2
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+1
+#Move Limit Z Number
+1
+#position
+-80 0 80
+#event number: 3
+#type
+1
+#ID name
+C02PC0101_BACKPACKERM
+#OBJ CODE Number
+BACKPACKERM
+#MOVE CODE Number
+MV_RIGHT
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+0
+#Event Script Name
+SCRID_C02PC0101_TALKOBJ_BACKPACKERM
+#Direction Type Number
+DIR_RIGHT
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#position
+-224 0 32
 #Map Event List Data End
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT
 #Map Event List data
-#save date:2009/07/25 14:35:12
+#save date:2009/07/25 17:29:14
 2
 #hold event type:
 1
@@ -82,7 +140,7 @@ DIR_DOWN
 #SECTION End:BG_EVENT
 #SECTION START:POS_EVENT
 #Map Event List data
-#save date:2009/07/25 14:35:12
+#save date:2009/07/25 17:29:14
 2
 #hold event type:
 1
@@ -92,7 +150,7 @@ DIR_DOWN
 #SECTION End:POS_EVENT
 #SECTION START:DOOR_EVENT
 #Map Event List data
-#save date:2009/07/25 14:35:12
+#save date:2009/07/25 17:29:14
 2
 #hold event type:
 1
