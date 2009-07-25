@@ -19,7 +19,12 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA    ev_c01r0501
+_EVENT_DATA    ev_c01r0501_talkobj_gentleman
+_EVENT_DATA    ev_c01r0501_talkobj_girl
+_EVENT_DATA    ev_c01r0501_talkobj_boy2
+_EVENT_DATA    ev_c01r0501_talkobj_trainerm
+_EVENT_DATA    ev_c01r0501_talkobj_boy3
+_EVENT_DATA    ev_c01r0501_board
 _EVENT_DATA_END
 
 
@@ -30,9 +35,80 @@ _EVENT_DATA_END
 //  _END
 
 /**************************************************************/
-/*                                                            */
+/*  C01R0501 GENTLEMANの会話用イベントスクリプト*/
 /**************************************************************/
-ev_c01r0501:
-  //とりあえず最初のラベルだけ生成している
+ev_c01r0501_talkobj_gentleman:
+	_TALK_OBJ_PAUSE_ALL
+	_TURN_HERO_SITE
+	_TALKWIN_OPEN
+	_TALKMSG_ALLPUT msg_c01r0501_gentleman_01
+	_AB_KEYWAIT
+  _TALKWIN_CLOSE
+  _OBJ_PAUSE_CLEAR_ALL
+  _END
+
+/**************************************************************/
+/*  C01R0501 GIRL1の会話用イベントスクリプト*/
+/**************************************************************/
+ev_c01r0501_talkobj_girl:
+	_TALK_OBJ_PAUSE_ALL
+	_TURN_HERO_SITE
+	_TALKWIN_OPEN
+	_TALKMSG_ALLPUT msg_c01r0501_girl1_01
+	_AB_KEYWAIT
+  _TALKWIN_CLOSE
+  _OBJ_PAUSE_CLEAR_ALL
+  _END
+
+/**************************************************************/
+/*  C01R0501 BOY2の会話用イベントスクリプト*/
+/**************************************************msg_c01r0501_board_01************/
+ev_c01r0501_talkobj_boy2:
+	_TALK_OBJ_PAUSE_ALL
+	_TURN_HERO_SITE
+	_TALKWIN_OPEN
+	_TALKMSG_ALLPUT msg_c01r0501_boy2_01
+	_AB_KEYWAIT
+  _TALKWIN_CLOSE
+  _OBJ_PAUSE_CLEAR_ALL
+  _END
+
+/**************************************************************/
+/*  C01R0501 TRAINERMの会話用イベントスクリプト*/
+/**************************************************************/
+ev_c01r0501_talkobj_trainerm:
+	_TALK_OBJ_PAUSE_ALL
+	_TURN_HERO_SITE
+	_TALKWIN_OPEN
+	_TALKMSG_ALLPUT msg_c01r0501_trainerm_01
+	_AB_KEYWAIT
+  _TALKWIN_CLOSE
+  _OBJ_PAUSE_CLEAR_ALL
+  _END
+
+/**************************************************************/
+/*  C01R0501 BOY3の会話用イベントスクリプト*/
+/**************************************************************/
+ev_c01r0501_talkobj_boy3:
+	_TALK_OBJ_PAUSE_ALL
+	_TURN_HERO_SITE
+	_TALKWIN_OPEN
+	_TALKMSG_ALLPUT msg_c01r0501_boy3_01
+	_AB_KEYWAIT
+  _TALKWIN_CLOSE
+  _OBJ_PAUSE_CLEAR_ALL
+  _END
+
+/**************************************************************/
+/*  C01R0501 BOARDの会話用イベントスクリプト*/
+/**************************************************************/
+ev_c01r0501_board:
+	_TALK_OBJ_PAUSE_ALL
+	_TURN_HERO_SITE
+	_TALKWIN_OPEN
+	_TALKMSG_ALLPUT msg_c01r0501_board_01
+	_AB_KEYWAIT
+  _TALKWIN_CLOSE
+  _OBJ_PAUSE_CLEAR_ALL
   _END
 
