@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-07-14T12:23:55"/>
+	<create user="matsumiya" host="W00207" date="2009-07-25T15:18:22"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -430,6 +430,36 @@
 それに　ママだって　いつも
 あなたのことを　想っているから[BE:01:ページ切り替え（クリア）]
 じゃあね　がんばってね[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_r02_boy2_01">
+		<comment>♂
+・7月末ROM用</comment>
+		<attribute name="キャラ指定">BOY2</attribute>
+		<language name="JPN" width="256">ポケモンを　たたかわせたい！
+そんなときは　くさむらに！[BE:01:ページ切り替え（クリア）]
+ポケモンを　たたかわせたくない……
+そんなときは　みちを　あるく！</language>
+		<language name="JPN_KANJI" width="256">ポケモンを　戦わせたい！
+そんなときは　草むらに！[BE:01:ページ切り替え（クリア）]
+ポケモンを　戦わせたくない……
+そんなときは　道を　歩く！</language>
+	</row>
+
+	<row id="msg_r02_girl2_02">
+		<comment>♀
+・7月末ROM用</comment>
+		<attribute name="キャラ指定">GIRL2</attribute>
+		<language name="JPN" width="256">ポケモンリストの　ひだりうえ！[BE:01:ページ切り替え（クリア）]
+そこに　セットしてあげるのは
+じぶんの　すきな　ポケモン！[BE:01:ページ切り替え（クリア）]
+なぜなら　ポケモンしょうぶのとき
+さいしょに　とびだしてくれるから！</language>
+		<language name="JPN_KANJI" width="256">ポケモンリストの　左上！[BE:01:ページ切り替え（クリア）]
+そこに　セットしてあげるのは
+じぶんの　好きな　ポケモン！[BE:01:ページ切り替え（クリア）]
+なぜなら　ポケモン勝負のとき
+最初に　飛びだしてくれるから！</language>
 	</row>
 
 	<row id="msg_r02_sign1_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
