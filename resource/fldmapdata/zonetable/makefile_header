@@ -1,0 +1,110 @@
+#----------------------------------------------------------------------------
+# Project:  Cソース->バイナリー
+# File:     Makefile
+#
+# Copyright 2005 GameFreak.inc  All rights reserved.
+#
+#	2008.11.10	tamada	WB環境に移植開始
+#	2009.07.25	tamada	ヘッダ生成部とデータ製西武を分離
+#
+#----------------------------------------------------------------------------
+
+#------------------------------------------------------------------------------
+#※コンバート作業が必要なユーザーの名前を記述する
+#------------------------------------------------------------------------------
+include users.def
+
+#----------------------------------------------------------------------------
+#※ここに作成するファイル名を書く
+#----------------------------------------------------------------------------
+TARGETNAME	= zone_id.h
+
+#------------------------------------------------------------------------------
+#※コピー先へのパスを書く（通常はPROJECT_ARCDIRでよい）
+#------------------------------------------------------------------------------
+TARGETDIR	= $(PROJECT_ARCDIR)fieldmap
+
+#------------------------------------------------------------------------------
+#※サブディレクトリでもMakeしたい場合、ここにディレクトリ名を書く
+#------------------------------------------------------------------------------
+SUBDIRS		=
+
+#共通ルールファイルのインクルード
+include $(PROJECT_RSCDIR)macro_define
+
+
+#----------------------------------------------------------------------------
+#----------------------------------------------------------------------------
+DATAFILE	= zonetable.xls
+DATATABTXT	= $(WORKDIR)/$(DATAFILE:.xls=.txt)
+
+#----------------------------------------------------------------------------
+#	ツールへのパス指定
+#----------------------------------------------------------------------------
+
+XLS2TAB		= ruby $(PROJECT_ROOT)/tools/exceltool/xls2xml/tab_out.rb
+EXCEL2TAB	= $(PROJECT_ROOT)/tools/exceltool/exceltabconv.exe
+ELF2BIN		= $(PROJECT_ROOT)/tools/celf2bin.exe
+
+CONVERTER	= ruby scripts/zonetable.rb
+
+HEADERDIR	= header
+WORKDIR		= tmp
+
+#コンバート結果のテキストファイル一覧（比較対象となるもの）
+OUTPUT		= $(TARGETNAME)
+
+#確認用などのテンポラリファイル一覧
+TEMP_FILES	= zonetable.txt
+
+#----------------------------------------------------------------------------
+#
+#----------------------------------------------------------------------------
+LDIRT_CLEAN = $(TEMP_FILES) $(TARGETDIR)/$(TARGETNAME)
+ifeq	($(CONVERTUSER),true)
+#コンバート対象者のみ、中間ファイル削除
+LDIRT_CLEAN	+= $(OUTPUT) $(WORKDIR)/*.bin $(DATATABTXT) $(CONVSRCS) $(RESULTS) \
+							 $(MATRIXHEADER)
+endif
+
+
+#----------------------------------------------------------------------------
+#
+#	ルール定義
+#
+#----------------------------------------------------------------------------
+.PHONY:	subdir	do-build clean dummyfiles
+
+do-build: subdir $(TARGETDIR)/$(TARGETNAME)
+
+$(TARGETDIR)/$(TARGETNAME):	$(TARGETNAME)
+	$(COPY) $(TARGETNAME) $(TARGETDIR)/$(TARGETNAME)
+
+
+ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ動作させる
+
+#zonetable.txt	--(zonetable.rb)-->	zone_id.h
+$(TARGETNAME): $(DATATABTXT)
+	@echo マップ管理表更新
+	@$(CONVERTER) header $(DATATABTXT)
+
+#zonetable.xls
+#	--(EXCEL2TAB)-->	zonetable.txt
+$(DATATABTXT):	$(DATAFILE)
+	@$(XLS2TAB) $(DATAFILE) > $(DATATABTXT)
+
+endif
+
+clean:
+	@rm -f $(TARGETDIR)/$(TARGETNAME)
+	@
+ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ動作させる
+	@rm -f $(TARGETNAME)
+	@rm -f $(DATATABTXT)
+endif
+
+
+dummyfiles:	$(DATATABTXT)
+	ruby scripts/make_dummy.rb $(DATATABTXT)
+
+

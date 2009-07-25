@@ -47,7 +47,7 @@ class ColumnID
 	attr :cWINDOW, true
 	attr :cCOMMENT, true
 
-	def setup column
+	def initialize( column )
 		c_count = 0;
 		column.each { |item|
 			case item
@@ -148,17 +148,20 @@ end
 ###############################################################
 
 class OutputFile
-	def initialize cl, fname, check_flag
-		@cl = cl
+	def initialize ( fname, check_flag )
 		@check_before_write = check_flag
-		if check_flag == true then
-			@fp = File.open("temp_"+fname, "w")
-		else
-			@fp = File.open(fname, "w")
-		end
 		@filename = fname
-		putHeader
 	end
+
+  def open( column_data )
+    @cl = column_data
+		if @check_before_write == true then
+			@fp = File.open("temp_"+@filename, "w")
+		else
+			@fp = File.open(@filename, "w")
+		end
+		putHeader
+  end
 
 	def getID column
 		column[@cl.cZONE_ID].upcase
@@ -489,48 +492,69 @@ end
 #		ここからメイン
 #
 ###############################################################
-def convert
+def convert( datafilename, outputfiles )
 
-	firstline = gets
-	cl = ColumnID.new
-	cl.setup firstline.split
+  File.open(datafilename){|datafile|
 
-	files = [
-		#カラム内容指定ID定義、ファイル名、上書き前に確認するかどうか
-		ZoneIDFile.new(cl, "zone_id.h", true),
-		ZoneDataFile.new(cl, "tmp/zonetable.c", false),
-	#	ZoneNameFile.new(cl, "mapname.dat", false),
-		ZoneNameBinaryFile.new(cl, "tmp/zonename.bin", false),
-	#	ZoneEventFile.new(cl, "eventlist.txt", false),
-	#	ZoneEventArcFile.new(cl, "eventarc.txt", false),
-	#	ZoneEventDoorHeader.new(cl, "doorevent.h", true),
-	#	ZoneMsgHeader.new(cl, "msg_header.h", true),
-	]
+    #一行目から列のインデックスを作る
+    firstline = datafile.gets
+    column_data = ColumnID.new( firstline.split )
 
-	linecount = 0
-	id_store = Hash.new
-	while line = gets
-		column = line.split
-		id = column[cl.cZONE_ID].upcase
-		if id_store.has_key? id then
-			STDERR.puts "#{id}:重複したIDです！\n"
-			exit 1
-		else
-			id_store[id] = column
-		end
-		if id == "END"
-			#終端定義
-			#STDERR.puts "終端"
-			break
-		end
-		files.each{|file| file.putLine linecount, column}
-		linecount += 1
-	end
+    outputfiles.each{|file| file.open(column_data) }
 
-	files.each{|file| file.close}
+    id_store = Hash.new
 
-	#STDERR.puts "zonetable.xlsをコンバートしました\n"
+    datafile.each_with_index{|line, index|
+      column = line.split
+      id = column[column_data.cZONE_ID].upcase
+      if id_store.has_key? id then
+        raise Exception, "#{id}:重複したIDです！\n"
+      end
+      id_store[id] = column
+      if id == "END"
+        #終端定義
+        #STDERR.puts "終端"
+        break
+      end
+      outputfiles.each{|file| file.putLine index, column}
+    }
+
+    outputfiles.each{|file| file.close}
+
+    #STDERR.puts "zonetable.xlsをコンバートしました\n"
+  
+  }
 end
 
-convert
+=begin
+  outputfiles = [
+    #カラム内容指定ID定義、ファイル名、上書き前に確認するかどうか
+    ZoneIDFile.new("zone_id.h", true),
+    ZoneDataFile.new("tmp/zonetable.c", false),
+  #	ZoneNameFile.new("mapname.dat", false),
+    ZoneNameBinaryFile.new("tmp/zonename.bin", false),
+  #	ZoneEventFile.new("eventlist.txt", false),
+  #	ZoneEventArcFile.new("eventarc.txt", false),
+  #	ZoneEventDoorHeader.new("doorevent.h", true),
+  #	ZoneMsgHeader.new("msg_header.h", true),
+  ]
+=end
+
+begin
+  OPTION = ARGV.shift
+  inputfilename = ARGV.shift
+
+  outputfiles = if OPTION == "header" then
+                  [
+                    ZoneIDFile.new("zone_id.h", true),
+                  ]
+                elsif OPTION == "contents" then
+                  [
+                    ZoneDataFile.new("tmp/zonetable.c", false),
+                    ZoneNameBinaryFile.new("tmp/zonename.bin", false),
+                  ]
+                end
+
+  convert( inputfilename, outputfiles )
+end
 

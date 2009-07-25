@@ -11,7 +11,7 @@
 #------------------------------------------------------------------------------
 #※コンバート作業が必要なユーザーの名前を記述する
 #------------------------------------------------------------------------------
-USERS	=	tamada nakatsui
+include users.def
 
 #----------------------------------------------------------------------------
 #※ここに作成するnarc名を書く
@@ -121,7 +121,7 @@ ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ動作させる
 $(NARCNAME): $(DATAFILE) $(DEPFILES) $(MATRIXHEADER)
 	@echo マップ管理表更新
 	@$(XLS2TAB) $(DATAFILE) > $(DATATABTXT)
-	@$(CONVERTER) $(DATATABTXT)
+	@$(CONVERTER) contents $(DATATABTXT)
 	@$(MAKE) makebin				#Ｃソース→バイナリ変換して
 	@nnsarc -i -c -l -n $(NARCNAME) $(WORKDIR)/*.bin > $(WORKDIR)/arc_result.txt	#アーカイブ作成
 	@$(NAIXCUT) $(NAIXNAME)
