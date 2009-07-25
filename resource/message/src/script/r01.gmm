@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-07-11T17:27:42"/>
+	<create user="matsumiya" host="W00207" date="2009-07-25T19:52:21"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -587,39 +587,41 @@
 はかせも　まってるだろうし[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_r01_boy1_01" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_r01_boy1_01">
 		<comment>♂
 はい／いいえ</comment>
 		<attribute name="キャラ指定">少年</attribute>
-		<language name="JPN" width="256">くさむらに　ポケモンが　いないか
-ボクが　みてきてあげるよ！</language>
-		<language name="JPN_KANJI" width="256">くさむらに　ポケモンが　いないか
-ボクが　みてきてあげるよ！</language>
+		<language name="JPN" width="256">ねーねー[BE:01:ページ切り替え（クリア）]
+いまから　すごいことするから
+みててくれない？</language>
+		<language name="JPN_KANJI" width="256">ねーねー[BE:01:ページ切り替え（クリア）]
+いまから　すごいことするから
+みててくれない？</language>
 	</row>
 
-	<row id="msg_r01_boy1_02" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_r01_boy1_02">
 		<comment>♂
 はい選択時アニメ前</comment>
 		<attribute name="キャラ指定">少年</attribute>
-		<language name="JPN" width="256">よし！　まってて！！</language>
-		<language name="JPN_KANJI" width="256">よし！　まってて！！</language>
+		<language name="JPN" width="256">よし！　まってて！！[BE:01:ページ切り替え（クリア）]
+よぉっ！！</language>
+		<language name="JPN_KANJI" width="256">よし！　まってて！！[BE:01:ページ切り替え（クリア）]
+よぉっ！！</language>
 	</row>
 
-	<row id="msg_r01_boy1_03" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_r01_boy1_03">
 		<comment>♂
 はい選択時アニメ後</comment>
 		<attribute name="キャラ指定">少年</attribute>
-		<language name="JPN" width="256">だいじょーぶ　だったよ！[BE:01:ページ切り替え（クリア）]
-でもさ　くさむらには
-ポケモンが　ひそんでいるからさ[BE:00:ページ切り替え（行送り）]
-ゆだん　しないでよ！</language>
-		<language name="JPN_KANJI" width="256">だいじょーぶ　だったよ！[BE:01:ページ切り替え（クリア）]
-でもさ　くさむらには
-ポケモンが　ひそんでいるからさ[BE:00:ページ切り替え（行送り）]
-ゆだん　しないでよ！</language>
+		<language name="JPN" width="256">ねっ！　みてくれた！？[BE:01:ページ切り替え（クリア）]
+だんさを　とびおりると
+ちかみち　できて　すごいでしょ！</language>
+		<language name="JPN_KANJI" width="256">ねっ！　みてくれた！？[BE:01:ページ切り替え（クリア）]
+だんさを　とびおりると
+ちかみち　できて　すごいでしょ！</language>
 	</row>
 
-	<row id="msg_r01_boy1_04" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_r01_boy1_04">
 		<comment>♂
 いいえ選択時</comment>
 		<attribute name="キャラ指定">少年</attribute>
@@ -627,25 +629,35 @@
 		<language name="JPN_KANJI" width="256">えんりょ　しなくて　いいのにさ！</language>
 	</row>
 
-	<row id="msg_r01_girl1_01" back-color="#808080,,,#808080,,#808080,#808080,,,,,,#808080,,,,,,">
+	<row id="msg_r01_girl1_01">
 		<comment>♀</comment>
 		<attribute name="キャラ指定">少女</attribute>
-		<language name="JPN" width="256">うれしい　きぶん　だから
-ぴょんぴょん　とびはねるの！</language>
-		<language name="JPN_KANJI" width="256">うれしい　気分だから
-ぴょんぴょん　飛び跳ねるの！</language>
+		<language name="JPN" width="256">あなたの　ポケモンさん
+たいりょくは　ばっちり　かしら？[BE:00:ページ切り替え（行送り）]
+ムリせず　こまめに
+ポケモンさんを　やすませてね</language>
+		<language name="JPN_KANJI" width="256">あなたの　ポケモンさん
+体力は　ばっちり　かしら？[BE:00:ページ切り替え（行送り）]
+ムリせず　こまめに
+ポケモンさんを　休ませてね</language>
 	</row>
 
-	<row id="msg_r01_man1_01" back-color="#808080,,,#808080,,#808080,#808080,,,,,,#808080,,,,,,">
+	<row id="msg_r01_man1_01">
 		<comment>♂
 ・倍角表示なし？</comment>
 		<attribute name="キャラ指定">青年</attribute>
-		<language name="JPN" width="256">おれも　ポケモンを　もっていれば
-おまえと　しょうぶが　できるのに[BE:01:ページ切り替え（クリア）]
-うおー！！</language>
-		<language name="JPN_KANJI" width="256">おれも　ポケモンを　持っていれば
-おまえと　勝負が　できるのに[BE:01:ページ切り替え（クリア）]
-うおー！！</language>
+		<language name="JPN" width="256">やせいの　ポケモンは
+くさむらに　ひそんでいる……[BE:01:ページ切り替え（クリア）]
+ということはだぞ[BE:01:ページ切り替え（クリア）]
+やせいポケモンと　たたかいたいとき
+あるいは　つかまえたいときは[BE:00:ページ切り替え（行送り）]
+くさむらに　はいれば　いいんだ</language>
+		<language name="JPN_KANJI" width="256">野生の　ポケモンは
+草むらに　潜んでいる……[BE:01:ページ切り替え（クリア）]
+ということはだぞ[BE:01:ページ切り替え（クリア）]
+やせいポケモンと　戦いたいとき
+あるいは　捕まえたいときは[BE:00:ページ切り替え（行送り）]
+草むらに　入れば　いいんだ</language>
 	</row>
 
 	<row id="msg_r01_sign1_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
