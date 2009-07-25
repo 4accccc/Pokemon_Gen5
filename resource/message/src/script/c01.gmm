@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-07-25T16:38:09"/>
+	<create user="matsumiya" host="W00207" date="2009-07-25T16:46:49"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -451,7 +451,7 @@
 オレの　にがてな　タイプの[BE:00:ページ切り替え（行送り）]
 ポケモンを　くりだすんだよなあ……</language>
 		<language name="JPN_KANJI" width="256">サンヨウシティ　ジムリーダー！[BE:01:ページ切り替え（クリア）]
-何度　挑戦　しても
+何度　挑戦しても
 オレの　苦手な　タイプの[BE:00:ページ切り替え（行送り）]
 ポケモンを　くりだすんだよなあ……</language>
 	</row>
@@ -463,10 +463,12 @@
 		<language name="JPN" width="256">ポケモンの　タイプと
 わざの　タイプが　おなじだと[BE:00:ページ切り替え（行送り）]
 いりょくが　アップ！[BE:01:ページ切り替え（クリア）]
+すごいだろ？
 ジムリーダーに　おしえてもらったんだ</language>
 		<language name="JPN_KANJI" width="256">ポケモンの　タイプと
 わざの　タイプが　同じだと[BE:00:ページ切り替え（行送り）]
 いりょくが　アップ！[BE:01:ページ切り替え（クリア）]
+すごいだろ？
 ジムリーダーに　教えてもらったんだ</language>
 	</row>
 
