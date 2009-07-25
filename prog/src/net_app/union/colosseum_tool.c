@@ -18,29 +18,53 @@
 #include "field\fieldmap.h"
 #include "colosseum_comm_command.h"
 #include "colosseum_tool.h"
+#include "fieldmap/zone_id.h"
 
+
+//==============================================================================
+//  構造体定義
+//==============================================================================
+///s16のポイント型
+typedef struct{
+  s16 x;
+  s16 z;
+}POINT_S16;
 
 //==============================================================================
 //  データ
 //==============================================================================
+//--------------------------------------------------------------
+//  立ち位置座標
+//--------------------------------------------------------------
 ///1vs1の時の立ち位置座標
-static const struct{
-  s16 x;
-  s16 z;
-}ColosseumStandingPos_1vs1[] = {
+static const POINT_S16 ColosseumStandingPos_1vs1[] = {
   {72, 88},   //左
   {136, 88},  //右
 };
 
 ///マルチの時の立ち位置座標
-static const struct{
-  s16 x;
-  s16 z;
-}ColosseumStandingPos_multi[] = {
+static const POINT_S16 ColosseumStandingPos_multi[] = {
   {72, 72},       //左上
   {136, 72},      //右上
   {72, 104},      //左下
   {136, 104},     //右下
+};
+
+//--------------------------------------------------------------
+//  出口座標
+//--------------------------------------------------------------
+///1vs1の時の立ち位置座標
+static const POINT_S16 ColosseumWayOutPos_1vs1[] = {
+  {88, 168},
+  {104, 168},
+  {120, 168},
+};
+
+///マルチの時の立ち位置座標
+static const POINT_S16 ColosseumWayOutPos_multi[] = {
+  {88, 168},
+  {104, 168},
+  {120, 168},
 };
 
 
@@ -209,6 +233,88 @@ BOOL ColosseumTool_CheckStandingPosition(FIELD_MAIN_WORK *fieldWork, int entry_n
     }
   }
   
+  return FALSE;
+}
+
+//==================================================================
+/**
+ * 全員分の「退出します」が受け取れているか調べる
+ *
+ * @param   clsys		
+ *
+ * @retval  BOOL		TRUE:全員分受信している
+ */
+//==================================================================
+BOOL ColosseumTool_AllReceiveCheck_Leave(COLOSSEUM_SYSTEM_PTR clsys)
+{
+  int i, count;
+  
+  count = 0;
+  for(i = 0; i < COLOSSEUM_MEMBER_MAX; i++){
+    if(clsys->recvbuf.leave[i] == TRUE){
+      count++;
+    }
+  }
+  if(count >= GFL_NET_GetConnectNum()){
+    return TRUE;
+  }
+  return FALSE;
+}
+
+//==================================================================
+/**
+ * 誰かから「退出します」フラグが来ていないか調べる
+ *
+ * @param   clsys		
+ *
+ * @retval  BOOL		TRUE:フラグが来ている
+ */
+//==================================================================
+BOOL ColosseumTool_ReceiveCheck_Leave(COLOSSEUM_SYSTEM_PTR clsys)
+{
+  int i;
+  for(i = 0; i < COLOSSEUM_MEMBER_MAX; i++){
+    if(clsys->recvbuf.leave[i] == TRUE){
+      return TRUE;
+    }
+  }
+  return FALSE;
+}
+
+//==================================================================
+/**
+ * コロシアムの出口座標にいるかチェック
+ *
+ * @param   fieldWork		
+ *
+ * @retval  BOOL		TRUE:出口座標にいる
+ */
+//==================================================================
+BOOL ColosseumTool_CheckWayOut(FIELD_MAIN_WORK *fieldWork)
+{
+  VecFx32 pos;
+  FIELD_PLAYER * player = FIELDMAP_GetFieldPlayer(fieldWork);
+  const POINT_S16 *postbl;
+  int i, tbl_max;
+  
+  FIELD_PLAYER_GetPos(player, &pos);
+  pos.x >>= FX32_SHIFT;
+  pos.z >>= FX32_SHIFT;
+
+  if(FIELDMAP_GetZoneID(fieldWork) == ZONE_ID_CLOSSEUM){
+    postbl = ColosseumWayOutPos_1vs1;
+    tbl_max = NELEMS(ColosseumWayOutPos_1vs1);
+  }
+  else{
+    postbl = ColosseumWayOutPos_multi;
+    tbl_max = NELEMS(ColosseumWayOutPos_multi);
+  }
+  
+  for(i = 0; i < tbl_max; i++){
+    if(pos.x == postbl[i].x && pos.z == postbl[i].z){
+      return TRUE;
+    }
+  }
   return FALSE;
 }
 

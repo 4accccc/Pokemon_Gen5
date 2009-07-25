@@ -24,6 +24,7 @@
 static const FLDMENUFUNC_LIST BattleMenuList_Number[3];
 static const FLDMENUFUNC_LIST BattleMenuList_Mode[5];
 static const FLDMENUFUNC_LIST BattleMenuList_Reg[4];
+static const FLDMENUFUNC_LIST BattleMenuList_RegDouble[4];
 
 
 //==============================================================================
@@ -43,6 +44,9 @@ static const struct{
   {2},      //UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_SINGLE_50,         ///<コロシアム
   {2},      //UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_SINGLE_FREE,       ///<コロシアム
   {2},      //UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_SINGLE_STANDARD,   ///<コロシアム
+  {2},      //UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_DOUBLE_50,         ///<コロシアム
+  {2},      //UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_DOUBLE_FREE,       ///<コロシアム
+  {2},      //UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_DOUBLE_STANDARD,   ///<コロシアム
   {4},      //UNION_PLAY_CATEGORY_COLOSSEUM_MULTI,      ///<コロシアム
   {2},      //UNION_PLAY_CATEGORY_TRADE,          ///<ポケモン交換
   {4},      //UNION_PLAY_CATEGORY_GURUGURU,       ///<ぐるぐる交換
@@ -103,7 +107,7 @@ static const FLDMENUFUNC_LIST BattleMenuList_Number[] =
 static const FLDMENUFUNC_LIST BattleMenuList_Mode[] =
 {
   {msg_union_battle_01_04, (void*)BattleMenuList_Reg},      //シングル
-  {msg_union_battle_01_05, (void*)BattleMenuList_Number},   //ダブル
+  {msg_union_battle_01_05, (void*)BattleMenuList_RegDouble},   //ダブル
   {msg_union_battle_01_06, (void*)BattleMenuList_Number},   //トリプル
   {msg_union_battle_01_07, (void*)BattleMenuList_Number},   //ローテーション
   {msg_union_battle_01_08, (void*)BattleMenuList_Number},   //もどる
@@ -115,6 +119,15 @@ static const FLDMENUFUNC_LIST BattleMenuList_Reg[] =
   {msg_union_battle_01_09, (void*)UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_SINGLE_50},//レベル５０ルール
   {msg_union_battle_01_10, (void*)UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_SINGLE_FREE}, //制限なし
   {msg_union_battle_01_11, (void*)UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_SINGLE_STANDARD},//スタンダード
+  {msg_union_battle_01_12, (void*)BattleMenuList_Mode},   //もどる
+};
+
+///二人対戦：ダブル：せいげんなし、スタンダード、もどる
+static const FLDMENUFUNC_LIST BattleMenuList_RegDouble[] =
+{
+  {msg_union_battle_01_09, (void*)UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_DOUBLE_50},//レベル５０ルール
+  {msg_union_battle_01_10, (void*)UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_DOUBLE_FREE}, //制限なし
+  {msg_union_battle_01_11, (void*)UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_DOUBLE_STANDARD},//スタンダード
   {msg_union_battle_01_12, (void*)BattleMenuList_Mode},   //もどる
 };
 
@@ -133,6 +146,10 @@ static const struct{
   },
   {
     BattleMenuList_Reg,
+    4,
+  },
+  {
+    BattleMenuList_RegDouble,
     4,
   },
 };

@@ -157,6 +157,12 @@ GMEVENT* EVENT_ColosseumBattle(GAMESYS_WORK * gsys, FIELD_MAIN_WORK * fieldmap, 
     rule = BTL_RULE_SINGLE;
     multi = 0;
     break;
+  case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_DOUBLE_50:         //コロシアム
+  case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_DOUBLE_FREE:       //コロシアム
+  case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_DOUBLE_STANDARD:   //コロシアム
+    rule = BTL_RULE_DOUBLE;
+    multi = 0;
+    break;
   case UNION_PLAY_CATEGORY_COLOSSEUM_MULTI:      //コロシアム
     rule = BTL_RULE_DOUBLE;
     multi = 1;

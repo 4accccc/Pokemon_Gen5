@@ -30,6 +30,9 @@ typedef enum{ //¦MenuMemberMax, UNION_STATUS_TRAINERCARDˆÈ~‚Ìƒe[ƒuƒ‹‚Æ•À‚Ñ‚ğ“
   UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_SINGLE_50,         ///<ƒRƒƒVƒAƒ€
   UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_SINGLE_FREE,       ///<ƒRƒƒVƒAƒ€
   UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_SINGLE_STANDARD,   ///<ƒRƒƒVƒAƒ€
+  UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_DOUBLE_50,         ///<ƒRƒƒVƒAƒ€
+  UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_DOUBLE_FREE,       ///<ƒRƒƒVƒAƒ€
+  UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_DOUBLE_STANDARD,   ///<ƒRƒƒVƒAƒ€
   UNION_PLAY_CATEGORY_COLOSSEUM_MULTI,      ///<ƒRƒƒVƒAƒ€
   UNION_PLAY_CATEGORY_TRADE,          ///<ƒ|ƒPƒ‚ƒ“ŒğŠ·
   UNION_PLAY_CATEGORY_GURUGURU,       ///<‚®‚é‚®‚éŒğŠ·
@@ -59,6 +62,9 @@ enum{
   UNION_STATUS_BATTLE_1VS1_SINGLE_50,        ///<í“¬
   UNION_STATUS_BATTLE_1VS1_SINGLE_FREE,      ///<í“¬
   UNION_STATUS_BATTLE_1VS1_SINGLE_STANDARD,  ///<í“¬
+  UNION_STATUS_BATTLE_1VS1_DOUBLE_50,        ///<í“¬
+  UNION_STATUS_BATTLE_1VS1_DOUBLE_FREE,      ///<í“¬
+  UNION_STATUS_BATTLE_1VS1_DOUBLE_STANDARD,  ///<í“¬
   UNION_STATUS_BATTLE_MULTI,      ///<í“¬
   UNION_STATUS_TRADE,       ///<ŒğŠ·
   UNION_STATUS_GURUGURU,    ///<‚®‚é‚®‚éŒğŠ·
@@ -74,6 +80,7 @@ enum{
   UNION_STATUS_COLOSSEUM_STANDING_BACK, ///<ƒRƒƒVƒAƒ€F—§‚¿ˆÊ’u‚©‚çŒã‘Ş
   UNION_STATUS_COLOSSEUM_POKELIST,      ///<ƒRƒƒVƒAƒ€Fƒ|ƒPƒ‚ƒ“ƒŠƒXƒgŒÄ‚Ño‚µ
   UNION_STATUS_COLOSSEUM_BATTLE,        ///<ƒRƒƒVƒAƒ€Fí“¬‰æ–ÊŒÄ‚Ño‚µ
+  UNION_STATUS_COLOSSEUM_LEAVE,         ///<ƒRƒƒVƒAƒ€F‘Şoˆ—
   
   UNION_STATUS_CHAT,        ///<ƒ`ƒƒƒbƒg•ÒW’†
   
@@ -125,6 +132,7 @@ enum{
   UNION_TIMING_COLOSSEUM_CARD_BEFORE,   ///<ƒRƒƒVƒAƒ€F‘Sˆõ•ª‚ÌƒgƒŒ[ƒi[ƒJ[ƒhŒğŠ·‘O
   UNION_TIMING_BATTLE_STANDINGPOS_BEFORE,     ///<ƒRƒƒVƒAƒ€F‘Sˆõ‚Ì—§‚¿ˆÊ’u‘—M‘O
   UNION_TIMING_COLOSSEUM_PROC_AFTER,    ///<ƒRƒƒVƒAƒ€I—¹Œã‚Ì“¯Šúæ‚è
+  UNION_TIMING_COLOSSEUM_LEAVE,         ///<ƒRƒƒVƒAƒ€F‘Şo
   
   UNION_TIMING_BATTLE_POKEPARTY_BEFORE,   ///<í“¬FPOKEPARTYŒğŠ·‘O
   UNION_TIMING_BATTLE_ADD_CMD_TBL_AFTER,  ///<í“¬F’ÊMƒe[ƒuƒ‹‚ğ’Ç‰ÁŒã
@@ -137,7 +145,12 @@ typedef enum{
   UNION_SUBPROC_ID_COLOSSEUM_WARP_1VS1_SINGLE_50,    ///<ƒRƒƒVƒAƒ€‘JˆÚ
   UNION_SUBPROC_ID_COLOSSEUM_WARP_1VS1_SINGLE_FREE,    ///<ƒRƒƒVƒAƒ€‘JˆÚ
   UNION_SUBPROC_ID_COLOSSEUM_WARP_1VS1_SINGLE_STANDARD,    ///<ƒRƒƒVƒAƒ€‘JˆÚ
+  UNION_SUBPROC_ID_COLOSSEUM_WARP_1VS1_DOUBLE_50,    ///<ƒRƒƒVƒAƒ€‘JˆÚ
+  UNION_SUBPROC_ID_COLOSSEUM_WARP_1VS1_DOUBLE_FREE,    ///<ƒRƒƒVƒAƒ€‘JˆÚ
+  UNION_SUBPROC_ID_COLOSSEUM_WARP_1VS1_DOUBLE_STANDARD,    ///<ƒRƒƒVƒAƒ€‘JˆÚ
   UNION_SUBPROC_ID_COLOSSEUM_WARP_MULTI,    ///<ƒRƒƒVƒAƒ€‘JˆÚ(ƒ}ƒ‹ƒ`•”‰®)
+  UNION_SUBPROC_ID_UNION_WARP,              ///<ƒ†ƒjƒIƒ“ƒ‹[ƒ€‘JˆÚ
+  UNION_SUBPROC_ID_FIELD_WARP,              ///<ƒtƒB[ƒ‹ƒh‘JˆÚ
   UNION_SUBPROC_ID_POKELIST,                ///<ƒ|ƒPƒ‚ƒ“ƒŠƒXƒgŒÄ‚Ño‚µ
   UNION_SUBPROC_ID_BATTLE,                  ///<í“¬‘JˆÚ
   
@@ -265,6 +278,9 @@ typedef struct{
 
 ///‘—óM‚Å•ÏX‚·‚éƒpƒ‰ƒ[ƒ^—Ş(©‹@‚ªƒtƒŠ[“®ì‚Ìó‘Ô‚É‚È‚é‚½‚Ñ‚É‰Šú‰»‚³‚ê‚é)
 typedef struct{
+  UNION_BEACON_PC *calling_pc; ///<Ú‘±‚µ‚Ä—~‚µ‚¢l‚Ìreceive_beacon‚Ö‚Ìƒ|ƒCƒ“ƒ^
+  UNION_BEACON_PC *answer_pc;  ///<Ú‘±‚µ‚½‚¢l‚Ìreceive_beacon‚Ö‚Ìƒ|ƒCƒ“ƒ^
+  UNION_BEACON_PC *connect_pc; ///<Ú‘±’†‚Ìl‚Ìreceive_beacon‚Ö‚Ìƒ|ƒCƒ“ƒ^
   u8 force_exit;              ///<TRUE:’ÊM‘Šè‚©‚ç‹­§Ø’f‚ğóM
   u8 mainmenu_select;         ///<ƒƒCƒ“ƒƒjƒ…[‚Å‚Ì‘I‘ğŒ‹‰Ê
   u8 mainmenu_yesno_result;   ///<u‚Í‚¢(TRUE)vu‚¢‚¢‚¦(FALSE)v‘I‘ğŒ‹‰Ê
@@ -284,12 +300,9 @@ typedef struct{
   u8 padding2;
   
   //«\‘¢‘Ì“à‚Ìˆê•”‚Ìƒf[ƒ^‚Ì‚İ‚ğ‘—Mƒf[ƒ^‚ÉŠÜ‚ß‚é
-  UNION_BEACON_PC *calling_pc; ///<Ú‘±‚µ‚Ä—~‚µ‚¢l‚Ìreceive_beacon‚Ö‚Ìƒ|ƒCƒ“ƒ^
   UNION_MY_COMM mycomm;         ///<‘—óM‚Å•ÏX‚·‚éƒpƒ‰ƒ[ƒ^—Ş
   
   //«‚±‚±‚©‚ç‰º‚Í’ÊM‚Å‚Í‘—‚ç‚È‚¢ƒf[ƒ^
-  UNION_BEACON_PC *answer_pc;  ///<Ú‘±‚µ‚½‚¢l‚Ìreceive_beacon‚Ö‚Ìƒ|ƒCƒ“ƒ^
-  UNION_BEACON_PC *connect_pc; ///<Ú‘±’†‚Ìl‚Ìreceive_beacon‚Ö‚Ìƒ|ƒCƒ“ƒ^
   s16 wait;
   s16 work;
   u8 before_union_status;     ///<‘O‚ÉÀs‚µ‚Ä‚¢‚½ƒvƒŒƒCƒ„[‚Ìó‹µ(UNION_STATUS_???)

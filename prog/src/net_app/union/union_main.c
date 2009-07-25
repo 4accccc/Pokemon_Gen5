@@ -53,6 +53,9 @@ void Union_Main(GAME_COMM_SYS_PTR game_comm, FIELD_MAIN_WORK *fieldmap)
     case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_SINGLE_50:
     case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_SINGLE_FREE:
     case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_SINGLE_STANDARD:
+    case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_DOUBLE_50:
+    case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_DOUBLE_FREE:
+    case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_DOUBLE_STANDARD:
     case UNION_PLAY_CATEGORY_COLOSSEUM_MULTI:
       if(UnionSubProc_IsExits(unisys) == FALSE){  //サブPROCが無い時のみ実行
         //キー操作によるイベント起動
@@ -117,8 +120,16 @@ void UnionMain_Callback_FieldDelete(void *pwk, void *app_work, FIELD_MAIN_WORK *
   UNION_SYSTEM_PTR unisys = app_work;
   COLOSSEUM_SYSTEM_PTR clsys = unisys->colosseum_sys;
 
-  if(clsys != NULL && clsys->comm_ready == TRUE){
-    CommPlayer_Push(clsys->cps);
+  if(clsys != NULL){
+    if(clsys->colosseum_leave == TRUE){ //コロシアム退出処理
+      Colosseum_ExitSystem(unisys->colosseum_sys);
+      unisys->colosseum_sys = NULL;
+    }
+    else{
+      if(clsys->comm_ready == TRUE){
+        CommPlayer_Push(clsys->cps);
+      }
+    }
   }
 }
 

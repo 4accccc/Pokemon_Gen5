@@ -31,6 +31,7 @@ static void _ColosseumRecv_StandingPositionConfirm(const int netID, const int si
 static void _ColosseumRecv_AnswerStandingPosition(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
 static void _ColosseumRecv_Pokeparty(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
 static void _ColosseumRecv_StandingPos(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
+static void _ColosseumRecv_Leave(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
 
 
 //==============================================================================
@@ -46,6 +47,7 @@ const NetRecvFuncTable Colosseum_CommPacketTbl[] = {
   {_ColosseumRecv_AnswerStandingPosition, NULL},    //COLOSSEUM_CMD_ANSWER_STANDPOS
   {_ColosseumRecv_Pokeparty, _RecvHugeBuffer},      //COLOSSEUM_CMD_POKEPARTY
   {_ColosseumRecv_StandingPos, NULL},               //COLOSSEUM_CMD_STANDING_POS
+  {_ColosseumRecv_Leave, NULL},                     //COLOSSEUM_CMD_LEAVE
 };
 SDK_COMPILER_ASSERT(NELEMS(Colosseum_CommPacketTbl) == COLOSSEUM_CMD_NUM);
 
@@ -458,3 +460,44 @@ BOOL ColosseumSend_StandingPos(u8 *standing_pos)
   return GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(), 
     COLOSSEUM_CMD_STANDING_POS, sizeof(u8) * COLOSSEUM_MEMBER_MAX, standing_pos);
 }
+
+//==============================================================================
+//  
+//==============================================================================
+//--------------------------------------------------------------
+/**
+ * @brief   コマンド受信：退出
+ * @param   netID      送ってきたID
+ * @param   size       パケットサイズ
+ * @param   pData      データ
+ * @param   pWork      ワークエリア
+ * @param   pHandle    受け取る側の通信ハンドル
+ * @retval  none  
+ */
+//--------------------------------------------------------------
+static void _ColosseumRecv_Leave(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle)
+{
+  UNION_SYSTEM_PTR unisys = pWork;
+  COLOSSEUM_SYSTEM_PTR clsys = unisys->colosseum_sys;
+
+  if(clsys == NULL){
+    GF_ASSERT(0);
+    return; //準備が出来ていないので受け取らない
+  }
+  
+  OS_TPrintf("コロシアム：退出受信：net_id = %d\n", netID);
+  clsys->recvbuf.leave[netID] = TRUE;
+}
+
+//==================================================================
+/**
+ * データ送信：退出
+ * @param   
+ * @retval  BOOL		TRUE:送信成功。　FALSE:失敗
+ */
+//==================================================================
+BOOL ColosseumSend_Leave(void)
+{
+  return GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(), COLOSSEUM_CMD_LEAVE, 0, NULL);
+}
+

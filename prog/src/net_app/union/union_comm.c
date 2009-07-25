@@ -281,8 +281,49 @@ void UnionComm_Req_ShutdownRestarts(UNION_SYSTEM_PTR unisys)
     GF_ASSERT(0); //既にリスタート処理が行われている
     return;
   }
-  unisys->restart_seq = 1;
-  OS_TPrintf("切断→再接続リクエストを受け付けました\n");
+  unisys->restart_seq = 1;  //LOCALSEQ_MODE_CHECK
+  unisys->restart_mode = UNION_RESTART_SHUTDOWN_RESTARTS;
+  OS_TPrintf("切断→再開リクエストを受け付けました\n");
+}
+
+//==================================================================
+/**
+ * 切断リクエスト(UnionComm_Req_ShutdownRestartsを切断までの処理で完了)
+ *
+ * @param   unisys		
+ *
+ * 接続している人との通信を終了する
+ */
+//==================================================================
+void UnionComm_Req_Shutdown(UNION_SYSTEM_PTR unisys)
+{
+  if(unisys->restart_seq != 0){
+    GF_ASSERT(0); //既にリスタート処理が行われている
+    return;
+  }
+  unisys->restart_seq = 1;  //LOCALSEQ_MODE_CHECK
+  unisys->restart_mode = UNION_RESTART_SHUTDOWN;
+  OS_TPrintf("切断リクエストを受け付けました\n");
+}
+
+//==================================================================
+/**
+ * 再開リクエスト(UnionComm_Req_Shutdownで切断完了後に使用する)
+ *
+ * @param   unisys		
+ *
+ * ビーコン送受信を開始する
+ */
+//==================================================================
+void UnionComm_Req_Restarts(UNION_SYSTEM_PTR unisys)
+{
+  if(unisys->restart_seq != 0){
+    GF_ASSERT(0); //既にリスタート処理が行われている
+    return;
+  }
+  unisys->restart_seq = 1;  //LOCALSEQ_MODE_CHECK
+  unisys->restart_mode = UNION_RESTART_RESTARTS;
+  OS_TPrintf("再開リクエストを受け付けました\n");
 }
 
 //==================================================================
@@ -313,33 +354,65 @@ BOOL UnionComm_Check_ShutdownRestarts(UNION_SYSTEM_PTR unisys)
 //--------------------------------------------------------------
 static BOOL UnionComm_ShutdownRestarts(UNION_SYSTEM_PTR unisys)
 {
+  enum{
+    LOCALSEQ_NULL,
+    LOCALSEQ_MODE_CHECK,
+    LOCALSEQ_SHUTDOWN,
+    LOCALSEQ_SHUTDOWN_WAIT,
+    LOCALSEQ_RESTART,
+    LOCALSEQ_RESTART_WAIT,
+  };
+  
   switch(unisys->restart_seq){
-  case 0:
+  case LOCALSEQ_NULL:
+    if(unisys->restart_mode == UNION_RESTART_SHUTDOWN){
+      return TRUE;  //切断のみで終わらせている状態なので通信は始まっていない。TRUEを返す
+    }
     return FALSE;
-  case 1:
+  case LOCALSEQ_MODE_CHECK:
+    switch(unisys->restart_mode){
+    case UNION_RESTART_SHUTDOWN_RESTARTS:
+    case UNION_RESTART_SHUTDOWN:
+      unisys->restart_seq = LOCALSEQ_SHUTDOWN;
+      break;
+    case UNION_RESTART_RESTARTS:
+      unisys->restart_seq = LOCALSEQ_RESTART;
+      break;
+    default:
+      unisys->restart_seq = 0;
+      GF_ASSERT(0);
+      break;
+    }
+    break;
+  case LOCALSEQ_SHUTDOWN:
     OS_TPrintf("restart 切断→再接続開始\n");
     unisys->comm_status = UNION_COMM_STATUS_EXIT_START;
   	GFL_NET_Exit(UnionComm_ExitCallback);
     unisys->restart_seq++;
     break;
-  case 2:
+  case LOCALSEQ_SHUTDOWN_WAIT:
     if(unisys->comm_status == UNION_COMM_STATUS_EXIT){
       OS_TPrintf("restart 切断完了\n");
-      unisys->restart_seq++;
+      if(unisys->restart_mode == UNION_RESTART_SHUTDOWN){
+        unisys->restart_seq = LOCALSEQ_NULL;
+      }
+      else{
+        unisys->restart_seq++;
+      }
     }
     break;
-  case 3:
+  case LOCALSEQ_RESTART:
     OS_TPrintf("restart 初期化開始\n");
   	unisys->comm_status = UNION_COMM_STATUS_INIT_START;
   	GFL_NET_Init(&aGFLNetInit, UnionComm_InitCallback, unisys);
     unisys->restart_seq++;
     break;
-  case 4:
+  case LOCALSEQ_RESTART_WAIT:
     if(unisys->comm_status >= UNION_COMM_STATUS_INIT){
       OS_TPrintf("restart 初期化完了\n");
       unisys->comm_status = UNION_COMM_STATUS_UPDATE;
       GFL_NET_Changeover(NULL);
-      unisys->restart_seq = 0;
+      unisys->restart_seq = LOCALSEQ_NULL;
     }
     break;
   }
@@ -503,16 +576,16 @@ static void UnionComm_SetBeaconParam(UNION_SYSTEM_PTR unisys, UNION_BEACON *beac
   
   GFL_STD_MemClear(beacon, sizeof(UNION_BEACON));
   
-  if(situ->connect_pc != NULL){
+  if(situ->mycomm.connect_pc != NULL){
     if(GFL_NET_IsParentMachine() == TRUE){
       OS_GetMacAddress(beacon->connect_mac_address);
     }
     else{
-      GFL_STD_MemCopy(situ->connect_pc->mac_address, beacon->connect_mac_address, 6);
+      GFL_STD_MemCopy(situ->mycomm.connect_pc->mac_address, beacon->connect_mac_address, 6);
     }
   }
-  else if(situ->calling_pc != NULL){
-    GFL_STD_MemCopy(situ->calling_pc->mac_address, beacon->connect_mac_address, 6);
+  else if(situ->mycomm.calling_pc != NULL){
+    GFL_STD_MemCopy(situ->mycomm.calling_pc->mac_address, beacon->connect_mac_address, 6);
   }
   
   beacon->connect_num = GFL_NET_GetConnectNum();
@@ -590,6 +663,18 @@ static void UnionComm_DisconnectCallBack(void* pWork)
   OS_TPrintf("通信切断コールバック UnionComm_DisconnectCallBack\n");
 }
 
+//==================================================================
+/**
+ * ビーコン受信バッファAllクリア
+ *
+ * @param   unisys		
+ */
+//==================================================================
+void UnionBeacon_ClearAllReceiveData(UNION_SYSTEM_PTR unisys)
+{
+  OS_TPrintf("ビーコン受信バッファ全クリア\n");
+  GFL_STD_MemClear(unisys->receive_beacon, sizeof(UNION_BEACON_PC) * UNION_RECEIVE_BEACON_MAX);
+}
 
 //==============================================================================
 //  通信リクエスト
@@ -611,19 +696,19 @@ void UnionMySituation_SetParam(UNION_SYSTEM_PTR unisys, UNION_MYSITU_PARAM_IDX i
   case UNION_MYSITU_PARAM_IDX_CALLING_PC:
     {
       UNION_BEACON_PC *calling_pc = work;
-      situ->calling_pc = calling_pc;
+      situ->mycomm.calling_pc = calling_pc;
     }
     break;
   case UNION_MYSITU_PARAM_IDX_ANSWER_PC:
     {
       UNION_BEACON_PC *answer_pc = work;
-      situ->answer_pc = answer_pc;
+      situ->mycomm.answer_pc = answer_pc;
     }
     break;
   case UNION_MYSITU_PARAM_IDX_CONNECT_PC:
     {
       UNION_BEACON_PC *connect_pc = work;
-      situ->connect_pc = connect_pc;
+      situ->mycomm.connect_pc = connect_pc;
     }
     break;
   case UNION_MYSITU_PARAM_IDX_PLAY_CATEGORY:

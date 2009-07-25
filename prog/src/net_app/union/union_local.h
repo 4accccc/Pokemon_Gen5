@@ -27,6 +27,14 @@
 ///巨大データ受信バッファサイズ
 #define UNION_HUGE_RECEIVE_BUF_SIZE   (0x800)
 
+///リスタートモード
+typedef enum{
+  UNION_RESTART_SHUTDOWN_RESTARTS,    ///<切断→再開
+  UNION_RESTART_SHUTDOWN,             ///<切断のみ
+  UNION_RESTART_RESTARTS,             ///<再開のみ
+}UNION_RESTART;
+
+
 //==============================================================================
 //  構造体定義
 //==============================================================================
@@ -51,8 +59,8 @@ typedef struct _UNION_SYSTEM{
   
   u8 comm_status;
   u8 restart_seq;                     ///<「切断→再開」処理シーケンスNo
+  u8 restart_mode;                    ///< UNION_RESTART_???
   u8 player_pause;                    ///<自機のポーズ状況
-  u8 padding;
 }UNION_SYSTEM;
 
 

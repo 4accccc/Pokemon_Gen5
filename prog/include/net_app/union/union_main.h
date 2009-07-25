@@ -49,6 +49,8 @@ extern BOOL UnionComm_Exit(int *seq, void *pwk, void *pWork);
 extern BOOL UnionComm_ExitWait(int *seq, void *pwk, void *pWork);
 extern void UnionComm_Update(int *seq, void *pwk, void *pWork);
 
+extern void UnionBeacon_ClearAllReceiveData(UNION_SYSTEM_PTR unisys);
+
 extern void UnionMySituation_SetParam(UNION_SYSTEM_PTR unisys, UNION_MYSITU_PARAM_IDX index, void *work);
 extern void UnionMySituation_Clear(UNION_SYSTEM_PTR unisys);
 
@@ -58,6 +60,8 @@ extern BOOL UnionMyComm_PartyAdd(UNION_MY_COMM *mycomm, const UNION_BEACON_PC *p
 extern void UnionMyComm_PartyDel(UNION_MY_COMM *mycomm, const UNION_BEACON_PC *pc);
 
 extern void UnionComm_Req_ShutdownRestarts(UNION_SYSTEM_PTR unisys);
+extern void UnionComm_Req_Shutdown(UNION_SYSTEM_PTR unisys);
+extern void UnionComm_Req_Restarts(UNION_SYSTEM_PTR unisys);
 extern BOOL UnionComm_Check_ShutdownRestarts(UNION_SYSTEM_PTR unisys);
 
 //--------------------------------------------------------------

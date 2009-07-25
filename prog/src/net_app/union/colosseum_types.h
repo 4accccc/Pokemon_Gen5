@@ -62,6 +62,8 @@ typedef struct{
   
   u8 stand_position[COLOSSEUM_MEMBER_MAX];  ///<各メンバーがどの立ち位置にいるか
   u8 stand_position_occ;                    ///<TRUE:データ有効
+  
+  u8 leave[COLOSSEUM_MEMBER_MAX];           ///<TRUE:誰かが退出しようとしている
 }COLOSSEUM_RECV_BUF;
 
 ///コロシアムシステムワーク
@@ -70,7 +72,9 @@ typedef struct _COLOSSEUM_SYSTEM{
   COMM_PLAYER_PACKAGE send_mine_package;    ///<自分座標送信バッファ
 
   COLOSSEUM_BASIC_STATUS basic_status[COLOSSEUM_MEMBER_MAX];  ///<各プレイヤーの基本情報
-  BOOL comm_ready;                          ///<TRUE:基本情報の交換が済んだので自由に通信してOK
+  u8 comm_ready;                            ///<TRUE:基本情報の交換が済んだので自由に通信してOK
+  u8 colosseum_leave;                       ///<TRUE:退出処理に入っている
+  u8 padding[2];
   
   COLOSSEUM_PARENT_WORK parentsys;          ///<親データ
   COLOSSEUM_MINE_WORK mine;                 ///<自分データ

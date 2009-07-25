@@ -91,6 +91,7 @@ static BOOL OneselfSeq_ColosseumStandPosition(UNION_SYSTEM_PTR unisys, UNION_MY_
 static BOOL OneselfSeq_ColosseumPokelist(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *situ, FIELD_MAIN_WORK *fieldWork, u8 *seq);
 static BOOL OneselfSeq_ColosseumBattle(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *situ, FIELD_MAIN_WORK *fieldWork, u8 *seq);
 static BOOL OneselfSeq_ColosseumStandingBack(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *situ, FIELD_MAIN_WORK *fieldWork, u8 *seq);
+static BOOL OneselfSeq_ColosseumLeaveUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *situ, FIELD_MAIN_WORK *fieldWork, u8 *seq);
 
 
 //==============================================================================
@@ -177,6 +178,21 @@ static const ONESELF_FUNC_DATA OneselfFuncTbl[] = {
     OneselfSeq_ColosseumUpdate,
     NULL,
   },
+  {//UNION_STATUS_BATTLE_1VS1_DOUBLE_50
+    NULL,
+    OneselfSeq_ColosseumUpdate,
+    NULL,
+  },
+  {//UNION_STATUS_BATTLE_1VS1_DOUBLE_FREE
+    NULL,
+    OneselfSeq_ColosseumUpdate,
+    NULL,
+  },
+  {//UNION_STATUS_BATTLE_1VS1_DOUBLE_STANDARD
+    NULL,
+    OneselfSeq_ColosseumUpdate,
+    NULL,
+  },
   {//UNION_STATUS_BATTLE_MULTI
     NULL,
     OneselfSeq_MultiColosseumUpdate,
@@ -235,6 +251,11 @@ static const ONESELF_FUNC_DATA OneselfFuncTbl[] = {
   {//UNION_STATUS_COLOSSEUM_BATTLE
     NULL,
     OneselfSeq_ColosseumBattle,
+    NULL,
+  },
+  {//UNION_STATUS_COLOSSEUM_LEAVE
+    NULL,
+    OneselfSeq_ColosseumLeaveUpdate,
     NULL,
   },
   {//UNION_STATUS_CHAT
@@ -326,6 +347,9 @@ static BOOL Union_CheckEntryBattleRegulation(u32 menu_index)
   case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_SINGLE_50:        //対戦:1VS1:シングル:LV50
   case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_SINGLE_FREE:      //対戦:1VS1:シングル:制限なし
   case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_SINGLE_STANDARD:  //対戦:1VS1:シングル:スタンダード
+  case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_DOUBLE_50:        //対戦:1VS1:ダブル:LV50
+  case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_DOUBLE_FREE:      //対戦:1VS1:ダブル:制限なし
+  case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_DOUBLE_STANDARD:  //対戦:1VS1:ダブル:スタンダード
   case UNION_PLAY_CATEGORY_COLOSSEUM_MULTI:                 //対戦:マルチ
     return TRUE;  //今はレギュレーションチェックなし。項目さえあっていればOK
   default:
@@ -493,7 +517,7 @@ static BOOL OneselfSeq_ConnectReqUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SITUAT
     if(GFL_NET_GetConnectNum() > 1){
       OS_TPrintf("接続しました！：親\n");
       UnionOneself_ReqStatus(unisys, UNION_STATUS_TALK_PARENT);
-      UnionMySituation_SetParam(unisys, UNION_MYSITU_PARAM_IDX_CONNECT_PC, situ->calling_pc);
+      UnionMySituation_SetParam(unisys, UNION_MYSITU_PARAM_IDX_CONNECT_PC,situ->mycomm.calling_pc);
       UnionMySituation_SetParam(unisys, UNION_MYSITU_PARAM_IDX_CALLING_PC, NULL);
       (*seq)++;
     }
@@ -573,10 +597,10 @@ static BOOL OneselfSeq_ConnectAnswerUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SIT
   switch(*seq){
   case 0:
     OS_TPrintf("親へ接続しにいきます\n");
-    GF_ASSERT(situ->answer_pc != NULL);
+    GF_ASSERT(situ->mycomm.answer_pc != NULL);
     OS_TPrintf("ChangeOver モード切替：子固定\n");
     GFL_NET_ChangeoverModeSet(
-      GFL_NET_CHANGEOVER_MODE_FIX_CHILD, TRUE, situ->answer_pc->mac_address);
+      GFL_NET_CHANGEOVER_MODE_FIX_CHILD, TRUE, situ->mycomm.answer_pc->mac_address);
     situ->wait = 0;
     (*seq)++;
     break;
@@ -588,7 +612,7 @@ static BOOL OneselfSeq_ConnectAnswerUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SIT
     if(GFL_NET_GetConnectNum() > 1){
       OS_TPrintf("接続しました！：子\n");
       UnionOneself_ReqStatus(unisys, UNION_STATUS_TALK_CHILD);
-      UnionMySituation_SetParam(unisys, UNION_MYSITU_PARAM_IDX_CONNECT_PC, situ->answer_pc);
+      UnionMySituation_SetParam(unisys, UNION_MYSITU_PARAM_IDX_CONNECT_PC, situ->mycomm.answer_pc);
       UnionMySituation_SetParam(unisys, UNION_MYSITU_PARAM_IDX_ANSWER_PC, NULL);
       (*seq)++;
     }
@@ -646,10 +670,9 @@ static BOOL OneselfSeq_ConnectAnswerExit(UNION_SYSTEM_PTR unisys, UNION_MY_SITUA
 //--------------------------------------------------------------
 static BOOL OneselfSeq_TalkInit_Parent(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *situ, FIELD_MAIN_WORK *fieldWork, u8 *seq)
 {
-  UnionMyComm_Init(unisys, &situ->mycomm);
   UnionMySituation_SetParam(
     unisys, UNION_MYSITU_PARAM_IDX_PLAY_CATEGORY, (void*)UNION_PLAY_CATEGORY_TALK);
-  UnionMyComm_PartyAdd(&situ->mycomm, situ->connect_pc);
+  UnionMyComm_PartyAdd(&situ->mycomm, situ->mycomm.connect_pc);
   return TRUE;
 }
 
@@ -669,7 +692,7 @@ static BOOL OneselfSeq_TalkUpdate_Parent(UNION_SYSTEM_PTR unisys, UNION_MY_SITUA
 {
   switch(*seq){
   case 0:
-    if(situ->connect_pc->beacon.sex == PM_MALE){
+    if(situ->mycomm.connect_pc->beacon.sex == PM_MALE){
       UnionMsg_TalkStream_PrintPack(unisys, fieldWork, msg_union_test_002);
     }
     else{
@@ -804,10 +827,9 @@ static BOOL OneselfSeq_TalkListSendUpdate_Parent(UNION_SYSTEM_PTR unisys, UNION_
 //--------------------------------------------------------------
 static BOOL OneselfSeq_TalkInit_Child(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *situ, FIELD_MAIN_WORK *fieldWork, u8 *seq)
 {
-  UnionMyComm_Init(unisys, &situ->mycomm);
   UnionMySituation_SetParam(
     unisys, UNION_MYSITU_PARAM_IDX_PLAY_CATEGORY, (void*)UNION_PLAY_CATEGORY_TALK);
-  UnionMyComm_PartyAdd(&situ->mycomm, situ->connect_pc);
+  UnionMyComm_PartyAdd(&situ->mycomm, situ->mycomm.connect_pc);
   return TRUE;
 }
 
@@ -1028,6 +1050,9 @@ static BOOL OneselfSeq_TalkPlayGameUpdate_Parent(UNION_SYSTEM_PTR unisys, UNION_
     case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_SINGLE_50:      //コロシアム
     case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_SINGLE_FREE:      //コロシアム
     case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_SINGLE_STANDARD:      //コロシアム
+    case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_DOUBLE_50:      //コロシアム
+    case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_DOUBLE_FREE:      //コロシアム
+    case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_DOUBLE_STANDARD:      //コロシアム
       UnionMsg_TalkStream_PrintPack(unisys, fieldWork, msg_union_test_015);
       UnionOneself_ReqStatus(unisys, UNION_STATUS_NORMAL);
       (*seq) = LOCALSEQ_END;
@@ -1125,6 +1150,9 @@ static BOOL OneselfSeq_TalkPlayGameUpdate_Child(UNION_SYSTEM_PTR unisys, UNION_M
     case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_SINGLE_50:      //コロシアム
     case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_SINGLE_FREE:      //コロシアム
     case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_SINGLE_STANDARD:      //コロシアム
+    case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_DOUBLE_50:      //コロシアム
+    case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_DOUBLE_FREE:      //コロシアム
+    case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_DOUBLE_STANDARD:      //コロシアム
       UnionMsg_TalkStream_PrintPack(unisys, fieldWork, msg_union_test_015);
       UnionOneself_ReqStatus(unisys, UNION_STATUS_NORMAL);
       break;
@@ -1373,7 +1401,7 @@ static BOOL OneselfSeq_ShutdownUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATIO
     break;
   case 3:
     if(UnionComm_Check_ShutdownRestarts(unisys) == FALSE){
-      UnionMyComm_PartyDel(&situ->mycomm, situ->connect_pc);
+      UnionMyComm_PartyDel(&situ->mycomm, situ->mycomm.connect_pc);
       UnionMySituation_SetParam(unisys, UNION_MYSITU_PARAM_IDX_CONNECT_PC, NULL);
       return TRUE;
     }
@@ -1430,6 +1458,15 @@ static BOOL OneselfSeq_ColosseumUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATI
       break;
     case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_SINGLE_STANDARD:
       UnionSubProc_EventSet(unisys, UNION_SUBPROC_ID_COLOSSEUM_WARP_1VS1_SINGLE_STANDARD, NULL);
+      break;
+    case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_DOUBLE_50:
+      UnionSubProc_EventSet(unisys, UNION_SUBPROC_ID_COLOSSEUM_WARP_1VS1_DOUBLE_50, NULL);
+      break;
+    case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_DOUBLE_FREE:
+      UnionSubProc_EventSet(unisys, UNION_SUBPROC_ID_COLOSSEUM_WARP_1VS1_DOUBLE_FREE, NULL);
+      break;
+    case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_DOUBLE_STANDARD:
+      UnionSubProc_EventSet(unisys, UNION_SUBPROC_ID_COLOSSEUM_WARP_1VS1_DOUBLE_STANDARD, NULL);
       break;
     case UNION_PLAY_CATEGORY_COLOSSEUM_MULTI:
       UnionSubProc_EventSet(unisys, UNION_SUBPROC_ID_COLOSSEUM_WARP_MULTI, NULL);
@@ -1514,6 +1551,15 @@ static BOOL OneselfSeq_MultiColosseumUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SI
       break;
     case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_SINGLE_STANDARD:
       UnionSubProc_EventSet(unisys, UNION_SUBPROC_ID_COLOSSEUM_WARP_1VS1_SINGLE_STANDARD, NULL);
+      break;
+    case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_DOUBLE_50:
+      UnionSubProc_EventSet(unisys, UNION_SUBPROC_ID_COLOSSEUM_WARP_1VS1_DOUBLE_50, NULL);
+      break;
+    case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_DOUBLE_FREE:
+      UnionSubProc_EventSet(unisys, UNION_SUBPROC_ID_COLOSSEUM_WARP_1VS1_DOUBLE_FREE, NULL);
+      break;
+    case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_DOUBLE_STANDARD:
+      UnionSubProc_EventSet(unisys, UNION_SUBPROC_ID_COLOSSEUM_WARP_1VS1_DOUBLE_STANDARD, NULL);
       break;
     case UNION_PLAY_CATEGORY_COLOSSEUM_MULTI:
       UnionSubProc_EventSet(unisys, UNION_SUBPROC_ID_COLOSSEUM_WARP_MULTI, NULL);
@@ -1707,6 +1753,14 @@ static BOOL OneselfSeq_ColosseumNormal(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATI
         _PlayerMinePause(unisys, fieldWork, TRUE);
         return TRUE;
       }
+      
+      //出口 or 誰かの退出受信チェック
+      if(ColosseumTool_ReceiveCheck_Leave(clsys) == TRUE 
+          || ColosseumTool_CheckWayOut(fieldWork) == TRUE){
+        UnionOneself_ReqStatus(unisys, UNION_STATUS_COLOSSEUM_LEAVE);
+        _PlayerMinePause(unisys, fieldWork, TRUE);
+        return TRUE;
+      }
     }
     break;
   }
@@ -1858,9 +1912,16 @@ static BOOL OneselfSeq_ColosseumPokelist(UNION_SYSTEM_PTR unisys, UNION_MY_SITUA
     plist->myitem = GAMEDATA_GetMyItem(unisys->uniparent->game_data);
     plist->cfg = SaveData_GetConfig(GAMEDATA_GetSaveControlWork(unisys->uniparent->game_data));
     plist->mode = PL_MODE_BATTLE;
-    plist->in_min = 1;
+    if(situ->mycomm.mainmenu_select >= UNION_STATUS_BATTLE_1VS1_DOUBLE_50 
+        && situ->mycomm.mainmenu_select <= UNION_STATUS_BATTLE_1VS1_DOUBLE_STANDARD){
+      plist->in_min = 2;
+    }
+    else{
+      plist->in_min = 1;
+    }
     plist->in_max = 6;
     plist->in_lv = 100;
+    OS_TPrintf("in_min = %d\n", plist->in_min);
     
     unisys->parent_work = parent_list;
     UnionSubProc_EventSet(unisys, UNION_SUBPROC_ID_POKELIST, parent_list);
@@ -2015,6 +2076,95 @@ static BOOL OneselfSeq_ColosseumBattle(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATI
     GFL_HEAP_FreeMemory(unisys->parent_work);
     unisys->parent_work = NULL;
     return TRUE;
+  }
+  
+  return FALSE;
+}
+
+//--------------------------------------------------------------
+/**
+ * コロシアム退出処理：更新
+ *
+ * @param   unisys		
+ * @param   situ		
+ * @param   fieldWork		
+ * @param   seq		
+ *
+ * @retval  BOOL		
+ */
+//--------------------------------------------------------------
+static BOOL OneselfSeq_ColosseumLeaveUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *situ, FIELD_MAIN_WORK *fieldWork, u8 *seq)
+{
+  COLOSSEUM_SYSTEM_PTR clsys = unisys->colosseum_sys;
+
+  switch(*seq){
+  case 0:
+    _PlayerMinePause(unisys, fieldWork, TRUE);
+    UnionMsg_TalkStream_PrintPack(unisys, fieldWork, msg_union_test_019);
+    (*seq)++;
+    break;
+  case 1:
+    if(ColosseumSend_Leave() == TRUE){
+      OS_TPrintf("「退出します」送信完了\n");
+      (*seq)++;
+    }
+    break;
+  case 2:
+    if(ColosseumTool_AllReceiveCheck_Leave(clsys) == TRUE){
+      OS_TPrintf("全員分の「退出します」を受信完了\n");
+      (*seq)++;
+    }
+    break;
+  case 3:
+    //同期後は全員同時に切断が出来るように、先にメッセージの終了を待ってから同期を始める
+    if(UnionMsg_TalkStream_Check(unisys) == TRUE){
+      (*seq)++;
+    }
+    break;
+  case 4:
+    GFL_NET_HANDLE_TimingSyncStart(
+      GFL_NET_HANDLE_GetCurrentHandle(), UNION_TIMING_COLOSSEUM_LEAVE);
+    OS_TPrintf("コロシアム切断前の同期取り：開始\n");
+    (*seq)++;
+    break;
+  case 5:
+		if(GFL_NET_HANDLE_IsTimingSync(
+		    GFL_NET_HANDLE_GetCurrentHandle(), UNION_TIMING_COLOSSEUM_LEAVE) == TRUE){
+      OS_TPrintf("コロシアム切断前の同期取り：成功\n");
+      (*seq)++;
+    }
+    break;
+  case 6:
+    UnionComm_Req_Shutdown(unisys);
+    (*seq)++;
+    break;
+  case 7:
+    if(UnionComm_Check_ShutdownRestarts(unisys) == FALSE){
+      OS_TPrintf("コロシアム切断完了\n");
+      (*seq)++;
+    }
+    break;
+  case 8:
+    clsys->colosseum_leave = TRUE;
+    UnionBeacon_ClearAllReceiveData(unisys);
+    UnionMyComm_Init(unisys, &situ->mycomm);
+    UnionSubProc_EventSet(unisys, UNION_SUBPROC_ID_UNION_WARP, NULL);
+    (*seq)++;
+    break;
+  case 9:
+    if(UnionSubProc_IsExits(unisys) == FALSE){
+      OS_TPrintf("ユニオン遷移のサブPROC終了\n");
+      
+      UnionComm_Req_Restarts(unisys);
+      (*seq)++;
+    }
+    break;
+  case 10:
+    if(UnionComm_Check_ShutdownRestarts(unisys) == FALSE){
+      OS_TPrintf("ビーコンスキャン再開完了\n");
+      return TRUE;
+    }
+    break;
   }
   
   return FALSE;

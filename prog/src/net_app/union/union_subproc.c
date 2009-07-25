@@ -45,6 +45,7 @@ static GMEVENT_RESULT UnionSubProc_GameChangeEvent(GMEVENT * event, int * seq, v
 static BOOL SubEvent_TrainerCard(GAMESYS_WORK *gsys, UNION_SYSTEM_PTR unisys, FIELD_MAIN_WORK *fieldWork, void *pwk, GMEVENT * parent_event, GMEVENT **child_event, u8 *seq);
 static BOOL SubEvent_ColosseumWarp(GAMESYS_WORK *gsys, UNION_SYSTEM_PTR unisys, FIELD_MAIN_WORK *fieldWork, void *pwk, GMEVENT * parent_event, GMEVENT **child_event, u8 *seq);
 static BOOL SubEvent_ColosseumWarpMulti(GAMESYS_WORK *gsys, UNION_SYSTEM_PTR unisys, FIELD_MAIN_WORK *fieldWork, void *pwk, GMEVENT * parent_event, GMEVENT **child_event, u8 *seq);
+static BOOL SubEvent_UnionWarp(GAMESYS_WORK *gsys, UNION_SYSTEM_PTR unisys, FIELD_MAIN_WORK *fieldWork, void *pwk, GMEVENT * parent_event, GMEVENT **child_event, u8 *seq);
 static BOOL SubEvent_Pokelist(GAMESYS_WORK *gsys, UNION_SYSTEM_PTR unisys, FIELD_MAIN_WORK *fieldWork, void *pwk, GMEVENT * parent_event, GMEVENT **child_event, u8 *seq);
 static BOOL SubEvent_Battle(GAMESYS_WORK *gsys, UNION_SYSTEM_PTR unisys, FIELD_MAIN_WORK *fieldWork, void *pwk, GMEVENT * parent_event, GMEVENT **child_event, u8 *seq);
 
@@ -91,10 +92,30 @@ static const struct{
     UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_SINGLE_STANDARD, 
     UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_SINGLE_STANDARD,
   },
+  {//UNION_SUBPROC_ID_COLOSSEUM_WARP_1VS1_DOUBLE_50
+    SubEvent_ColosseumWarp,
+    UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_DOUBLE_50, 
+    UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_DOUBLE_50,
+  },
+  {//UNION_SUBPROC_ID_COLOSSEUM_WARP_1VS1_DOUBLE_FREE
+    SubEvent_ColosseumWarp,
+    UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_DOUBLE_FREE, 
+    UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_DOUBLE_FREE,
+  },
+  {//UNION_SUBPROC_ID_COLOSSEUM_WARP_1VS1_DOUBLE_STANDARD
+    SubEvent_ColosseumWarp,
+    UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_DOUBLE_STANDARD, 
+    UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_DOUBLE_STANDARD,
+  },
   {//UNION_SUBPROC_ID_COLOSSEUM_WARP_MULTI
     SubEvent_ColosseumWarpMulti,
     UNION_PLAY_CATEGORY_COLOSSEUM_MULTI, 
     UNION_PLAY_CATEGORY_COLOSSEUM_MULTI,
+  },
+  {//UNION_SUBPROC_ID_UNION_WARP
+    SubEvent_UnionWarp,
+    UNION_PLAY_CATEGORY_MAX,  //MAX=変更しない
+    UNION_PLAY_CATEGORY_UNION,
   },
   {//UNION_SUBPROC_ID_POKELIST
     SubEvent_Pokelist,
@@ -292,7 +313,6 @@ static BOOL SubEvent_ColosseumWarp(GAMESYS_WORK *gsys, UNION_SYSTEM_PTR unisys, 
   switch(*seq){
   case 0:
     {
-      PLAYER_WORK *plWork = GAMESYSTEM_GetMyPlayerWork( gsys );
       VecFx32 pos;
       
       pos.x = (88 + 16*GFL_NET_GetNetID(GFL_NET_HANDLE_GetCurrentHandle())) << FX32_SHIFT;
@@ -327,13 +347,46 @@ static BOOL SubEvent_ColosseumWarpMulti(GAMESYS_WORK *gsys, UNION_SYSTEM_PTR uni
   switch(*seq){
   case 0:
     {
-      PLAYER_WORK *plWork = GAMESYSTEM_GetMyPlayerWork( gsys );
       VecFx32 pos;
       
       pos.x = (88 + 16*GFL_NET_GetNetID(GFL_NET_HANDLE_GetCurrentHandle())) << FX32_SHIFT;
       pos.y = 0;
       pos.z = 136 << FX32_SHIFT;
       *child_event = DEBUG_EVENT_ChangeMapPos(gsys, fieldWork, ZONE_ID_CLOSSEUM02, &pos,0);
+    }
+    break;
+  default:
+    return TRUE;
+  }
+  
+  (*seq)++;
+  return FALSE;
+}
+
+//--------------------------------------------------------------
+/**
+ * イベント：ユニオンルームへワープ
+ *
+ * @param   gsys		
+ * @param   unisys		
+ * @param   fieldWork		
+ * @param   pwk		
+ * @param   seq		
+ *
+ * @retval  GMEVENT *		
+ */
+//--------------------------------------------------------------
+static BOOL SubEvent_UnionWarp(GAMESYS_WORK *gsys, UNION_SYSTEM_PTR unisys, FIELD_MAIN_WORK *fieldWork, void *pwk, GMEVENT * parent_event, GMEVENT **child_event, u8 *seq)
+{
+  switch(*seq){
+  case 0:
+    {
+      VecFx32 pos;
+      
+      pos.x = 168 << FX32_SHIFT;
+      pos.y = 0;
+      pos.z = 232 << FX32_SHIFT;
+      *child_event = DEBUG_EVENT_ChangeMapPos(gsys, fieldWork, ZONE_ID_UNION, &pos,0);
     }
     break;
   default:
