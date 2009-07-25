@@ -1,10 +1,10 @@
 #event data
-#save date:2009/07/16 18:59:20
+#save date:2009/07/25 15:01:49
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\c02R0601.wms
 #SECTION START:OBJ_EVENT
 #Map Event List data
-#save date:2009/07/16 18:59:20
+#save date:2009/07/25 15:01:49
 2
 #hold event type:
 1
@@ -96,7 +96,7 @@ DIR_UP
 #Move Limit Z Number
 0
 #position
--176 0 160
+-176 0 144
 #event number: 3
 #type
 1
@@ -105,7 +105,7 @@ C02R0601_WOMAN3
 #OBJ CODE Number
 WOMAN3
 #MOVE CODE Number
-MV_DIR_RND
+MV_RT2
 #EVENT TYPE Number
 EV_TYPE_NORMAL
 #Flag Name
@@ -113,7 +113,7 @@ EV_TYPE_NORMAL
 #Event Script Name
 SCRID_C02R0601_TALKOBJ_WOMAN3
 #Direction Type Number
-DIR_LEFT
+DIR_DOWN
 #Parameter 0 Number
 0
 #Parameter 1 Number
@@ -130,7 +130,7 @@ DIR_LEFT
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT
 #Map Event List data
-#save date:2009/07/16 18:59:20
+#save date:2009/07/25 15:01:49
 2
 #hold event type:
 1
@@ -140,7 +140,7 @@ DIR_LEFT
 #SECTION End:BG_EVENT
 #SECTION START:POS_EVENT
 #Map Event List data
-#save date:2009/07/16 18:59:20
+#save date:2009/07/25 15:01:49
 2
 #hold event type:
 1
@@ -150,7 +150,7 @@ DIR_LEFT
 #SECTION End:POS_EVENT
 #SECTION START:DOOR_EVENT
 #Map Event List data
-#save date:2009/07/16 18:59:20
+#save date:2009/07/25 15:01:49
 2
 #hold event type:
 1
