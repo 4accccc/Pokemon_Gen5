@@ -1,20 +1,78 @@
 #event data
-#save date:2009/07/15 12:28:31
+#save date:2009/07/25 14:28:21
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\c06pc0101.wms
 #SECTION START:OBJ_EVENT
 #Map Event List data
-#save date:2009/07/15 12:28:31
+#save date:2009/07/25 14:28:21
 2
 #hold event type:
 1
 #hold event number:
+2
+#event number: 0
+#type
+1
+#ID name
+C06PC0101_PCWOMAN
+#OBJ CODE Number
+PCWOMAN1
+#MOVE CODE Number
+MV_DMY
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
 0
+#Event Script Name
+0
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#position
+-128 0 96
+#event number: 1
+#type
+1
+#ID name
+C06PC0101_SHOPM
+#OBJ CODE Number
+SHOPM1
+#MOVE CODE Number
+MV_DMY
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+0
+#Event Script Name
+0
+#Direction Type Number
+DIR_LEFT
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#position
+-64 0 -16
 #Map Event List Data End
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT
 #Map Event List data
-#save date:2009/07/15 12:28:31
+#save date:2009/07/25 14:28:21
 2
 #hold event type:
 1
@@ -24,7 +82,7 @@ C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\c06pc0101.wms
 #SECTION End:BG_EVENT
 #SECTION START:POS_EVENT
 #Map Event List data
-#save date:2009/07/15 12:28:31
+#save date:2009/07/25 14:28:21
 2
 #hold event type:
 1
@@ -34,7 +92,7 @@ C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\c06pc0101.wms
 #SECTION End:POS_EVENT
 #SECTION START:DOOR_EVENT
 #Map Event List data
-#save date:2009/07/15 12:28:31
+#save date:2009/07/25 14:28:21
 2
 #hold event type:
 1
