@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-07-14T11:56:15"/>
+	<create user="matsumiya" host="W00207" date="2009-07-25T18:07:45"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,15 +263,15 @@
 		</language>
 	</columns>
 
-	<dialog left="248" top="176" right="953" bottom="796" maximized="no" rayout="Vertical2">
+	<dialog left="248" top="177" right="949" bottom="796" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
-		<band id="0" index="1" style="0000" width="530"/>
+		<band id="0" index="1" style="0000" width="526"/>
 		<band id="1" index="2" style="0000" width="165"/>
-		<band id="2" index="3" style="0000" width="543"/>
+		<band id="2" index="3" style="0000" width="539"/>
 		<band id="3" index="4" style="0000" width="152"/>
-		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<band id="4" index="0" style="0000" width="693"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -309,26 +309,59 @@
 
 	<row id="msg_c01r0501_test2_01">
 		<comment>♂</comment>
-		<language name="JPN" width="256">テストメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+		<language name="JPN" width="256">ポケモンのことを　あいしているから
+もっと　ポケモンについて　しりたい[BE:01:ページ切り替え（クリア）]
+そんな　よっきゅうを　みたすため
+この　トレーナーズスクールが　ある！</language>
+		<language name="JPN_KANJI" width="256">ポケモンのことを　愛しているから
+もっと　ポケモンについて　知りたい[BE:01:ページ切り替え（クリア）]
+そんな　欲求を　満たすため
+この　トレーナーズスクールが　ある！</language>
 	</row>
 
 	<row id="msg_c01r0501_test3_01">
 		<comment>♂</comment>
-		<language name="JPN" width="256">テストメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+		<attribute name="キャラ指定">GIRL1</attribute>
+		<language name="JPN" width="256">ポケモンの　タイプは
+ぜんぶで　１７しゅるい！[BE:01:ページ切り替え（クリア）]
+それぞれの　タイプに
+ゆうりなタイプ[BE:00:ページ切り替え（行送り）]
+ふりなタイプが　あるのよ！</language>
+		<language name="JPN_KANJI" width="256">ポケモンの　タイプは
+全部で　１７種類！[BE:01:ページ切り替え（クリア）]
+それぞれの　タイプに
+有利なタイプ[BE:00:ページ切り替え（行送り）]
+不利なタイプが　あるのよ！</language>
 	</row>
 
 	<row id="msg_c01r0501_test4_01">
 		<comment>♀</comment>
-		<language name="JPN" width="256">テストメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+		<attribute name="キャラ指定">BOY2</attribute>
+		<language name="JPN" width="256">しんかキャンセル　という
+テクニックが　あるんだよね[BE:01:ページ切り替え（クリア）]
+ポケモンが　しんかする　しゅんかん
+ビーボタンを　おすことで[BE:00:ページ切り替え（行送り）]
+ポケモンが　おどろき　しんかをやめる[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">進化キャンセル　という
+テクニックが　あるんだよね[BE:01:ページ切り替え（クリア）]
+ポケモンが　進化する　瞬間
+ビーボタンを　押すことで[BE:00:ページ切り替え（行送り）]
+ポケモンが　驚き　進化をやめる[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_c01r0501_test5_01">
 		<comment>♀</comment>
-		<language name="JPN" width="256">テストメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+		<attribute name="キャラ指定">TRAINERM</attribute>
+		<language name="JPN" width="256">わざマシンを　つかうことでしか
+おぼえない　わざも　ある[BE:01:ページ切り替え（クリア）]
+だが　わざマシンは　いちど　つかうと
+なくなるので　どの　ポケモンに[BE:00:ページ切り替え（行送り）]
+つかうべきか　まようんだよなあ……</language>
+		<language name="JPN_KANJI" width="256">わざマシンを　使うことでしか
+覚えない　わざも　ある[BE:01:ページ切り替え（クリア）]
+だが　わざマシンは　一度　使うと
+なくなるので　どの　ポケモンに[BE:00:ページ切り替え（行送り）]
+使うべきか　迷うんだよなあ……</language>
 	</row>
 
 	<row id="msg_c01r0501_boy3_01">
@@ -336,8 +369,12 @@
 ・状態異常のクイズ（予定）</comment>
 		<attribute name="キャラ指定">BOY3
 少年（聡明）</attribute>
-		<language name="JPN" width="256">テストメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+		<language name="JPN" width="256">よろしければ　ポケモンの
+じょうたいいじょうに　ついて[BE:00:ページ切り替え（行送り）]
+クイズを　してみませんか？</language>
+		<language name="JPN_KANJI" width="256">よろしければ　ポケモンの
+状態異常に　ついて[BE:00:ページ切り替え（行送り）]
+クイズを　してみませんか？</language>
 	</row>
 
 	<row id="msg_c01r0501_board_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
@@ -405,13 +442,13 @@
 		<language name="JPN" width="256">ねむって　しまうと
 その　あいだ　こうげき　できません[BE:01:ページ切り替え（クリア）]
 じぶんで　おきることも　ありますが
-ねむったまま　せんとうが　おわると▽
+ねむったまま　せんとうが　おわると[BE:00:ページ切り替え（行送り）]
 ずっと　ねむっています[BE:01:ページ切り替え（クリア）]
 ねむけざましで　おこしましょう[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">ねむって　しまうと
 その　あいだ　こうげき　できません[BE:01:ページ切り替え（クリア）]
 じぶんで　おきることも　ありますが
-ねむったまま　せんとうが　おわると▽
+ねむったまま　せんとうが　おわると[BE:00:ページ切り替え（行送り）]
 ずっと　ねむっています[BE:01:ページ切り替え（クリア）]
 ねむけざましで　おこしましょう[BE:01:ページ切り替え（クリア）]</language>
 	</row>
@@ -422,13 +459,13 @@
 ・続けてboard_02表示</comment>
 		<attribute name="キャラ指定">黒板</attribute>
 		<language name="JPN" width="256">やけどに　なると
-こうげきりょくが　さがるだけでなく▽
+こうげきりょくが　さがるだけでなく[BE:00:ページ切り替え（行送り）]
 たいりょくも　どんどん　へります[BE:01:ページ切り替え（クリア）]
 せんとうが　おわっても
 やけどの　ままです[BE:01:ページ切り替え（クリア）]
 やけどなおしで　なおしましょう[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">やけどに　なると
-こうげきりょくが　さがるだけでなく▽
+こうげきりょくが　さがるだけでなく[BE:00:ページ切り替え（行送り）]
 たいりょくも　どんどん　へります[BE:01:ページ切り替え（クリア）]
 せんとうが　おわっても
 やけどの　ままです[BE:01:ページ切り替え（クリア）]
@@ -443,13 +480,13 @@
 		<language name="JPN" width="256">こおって　しまうと
 なにも　できなくなります[BE:01:ページ切り替え（クリア）]
 しぜんに　とけることも　ありますが
-こおったまま　せんとうが　おわると▽
+こおったまま　せんとうが　おわると[BE:00:ページ切り替え（行送り）]
 こおりついた　ままです[BE:01:ページ切り替え（クリア）]
 こおりなおしで　とかしましょう[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">こおって　しまうと
 なにも　できなくなります[BE:01:ページ切り替え（クリア）]
 しぜんに　とけることも　ありますが
-こおったまま　せんとうが　おわると▽
+こおったまま　せんとうが　おわると[BE:00:ページ切り替え（行送り）]
 こおりついた　ままです[BE:01:ページ切り替え（クリア）]
 こおりなおしで　とかしましょう[BE:01:ページ切り替え（クリア）]</language>
 	</row>
