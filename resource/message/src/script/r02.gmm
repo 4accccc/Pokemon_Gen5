@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-07-25T15:18:22"/>
+	<create user="matsumiya" host="W00207" date="2009-07-25T15:24:52"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -446,7 +446,7 @@
 そんなときは　道を　歩く！</language>
 	</row>
 
-	<row id="msg_r02_girl2_02">
+	<row id="msg_r02_girl2_01">
 		<comment>♀
 ・7月末ROM用</comment>
 		<attribute name="キャラ指定">GIRL2</attribute>
