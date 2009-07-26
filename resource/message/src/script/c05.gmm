@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-07-26T13:52:35"/>
+	<create user="matsumiya" host="W00207" date="2009-07-26T14:11:38"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -371,7 +371,7 @@
 		<language name="JPN" width="256">うみ……[BE:01:ページ切り替え（クリア）]
 わたしが　ここで　こぼした　なみだは
 アサギシティまで　ながれるのかしら</language>
-		<language name="JPN_KANJI" width="256">うみ……[BE:01:ページ切り替え（クリア）]
+		<language name="JPN_KANJI" width="256">海……[BE:01:ページ切り替え（クリア）]
 私が　ここで　零した　涙は
 アサギシティまで　流れるのかしら</language>
 	</row>

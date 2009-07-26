@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-07-16T11:28:24"/>
+	<create user="matsumiya" host="W00207" date="2009-07-26T15:01:49"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -274,7 +274,7 @@
 	</tag-table>
 
 	<columns>
-		<id position="0" width="117"/>
+		<id position="0" width="160"/>
 		<group default=" 0:デフォルト" position="-1" width="100">
 			<list entry="0" japanese="デフォルト" english="Default" colorID="0"/>
 		</group>
@@ -307,7 +307,7 @@
 		</language>
 	</columns>
 
-	<dialog left="248" top="176" right="953" bottom="796" maximized="no" rayout="Vertical2">
+	<dialog left="305" top="109" right="1010" bottom="729" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -336,17 +336,74 @@
 	</lock>
 
 
-	<row id="msg_c06_test1_01">
-		<comment>？？？</comment>
-		<attribute name="キャラクター">？？？</attribute>
-		<language name="JPN" width="256">テストメッセージ</language>
+	<row id="msg_c06_boy3_01">
+		<comment>♂
+・7月ROM用</comment>
+		<attribute name="キャラクター">BOY3</attribute>
+		<language name="JPN" width="256">ひこうき！　この　フォルム！
+まさに　とぶための　デザイン！[BE:01:ページ切り替え（クリア）]
+そして　とぶための　メカニックも
+いっさいの　むだが　ないんです！</language>
 		<language name="JPN_KANJI" width="256">仮メッセージ</language>
 	</row>
 
-	<row id="msg_c06_test2_01">
-		<comment>？？？</comment>
-		<attribute name="キャラクター">？？？</attribute>
-		<language name="JPN" width="256">テストメッセージ</language>
+	<row id="msg_c06_pilot_01">
+		<comment>♂
+・7月ROM用</comment>
+		<attribute name="キャラクター">PILOT</attribute>
+		<language name="JPN" width="256">この　フキヨセの　くうこうから
+とびたつのは　かもつき　ばかりさ[BE:01:ページ切り替え（クリア）]
+トレーナーが　そらを　とびたいときは
+ひでんわざ　そらをとぶが　あるもんね</language>
+		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+	</row>
+
+	<row id="msg_c06_girl2_01">
+		<comment>♀
+・7月ROM用</comment>
+		<attribute name="キャラクター">GIRL2</attribute>
+		<language name="JPN" width="256">フウロねえちゃんの　おじいちゃん
+でんせつの　ひこうきのり　だったの[BE:01:ページ切り替え（クリア）]
+あっ　フウロねえちゃん　てのは
+このまちの　ジムリーダー！[BE:00:ページ切り替え（行送り）]
+いかした　ねえちゃん　なんだから！</language>
+		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+	</row>
+
+	<row id="msg_c06_rangerw_01">
+		<comment>♀
+・7月ROM用</comment>
+		<attribute name="キャラクター">RANGERW</attribute>
+		<language name="JPN" width="256">ポケモンと　ひと　とで
+あれはてた　とちを　きりひらき[BE:00:ページ切り替え（行送り）]
+みんなが　くらせるように　したの[BE:01:ページ切り替え（クリア）]
+きっと　これからも
+その　せいしんは　かわらないわ</language>
+		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+	</row>
+
+	<row id="msg_c06_workman_01">
+		<comment>♂
+・7月ROM用</comment>
+		<attribute name="キャラクター">WORKMAN</attribute>
+		<language name="JPN" width="256">じゅうぶんに　きをつけるなら
+かっそうろで　あそんでも　かまわんぞ[BE:01:ページ切り替え（クリア）]
+うちの　かもつきが　とびだつのは
+１にちに　１びん　ぐらいだしな</language>
+		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+	</row>
+
+	<row id="msg_c06_woman1_01">
+		<comment>♀
+・7月ROM用</comment>
+		<attribute name="キャラクター">WOMAN1</attribute>
+		<language name="JPN" width="256">Ｎ……
+あの　ひとは　いったい……[BE:01:ページ切り替え（クリア）]
+えっ！？　あなたは
+Ｎという　じんぶつを　ごぞんじ　ですか？[BE:01:ページ切り替え（クリア）]
+そうです！　じぶんのことを
+ポケモンのこどもと　いい[BE:00:ページ切り替え（行送り）]
+きせきを　おこす　あのひとです</language>
 		<language name="JPN_KANJI" width="256">仮メッセージ</language>
 	</row>
 
