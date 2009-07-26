@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-07-10T15:57:11"/>
+	<create user="matsumiya" host="W00207" date="2009-07-26T13:22:56"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -296,12 +296,14 @@
 		<attribute name="キャラ指定">おばさん１</attribute>
 		<language name="JPN" width="256">ポケモンセンターは
 ほとんどの　まちに　あるからね[BE:01:ページ切り替え（クリア）]
-ポケモンが　よわったときは
-すぐ　つれていってあげなさいな</language>
+あししげく　かよいなさいな
+やくだつ　じょうほうが[BE:00:ページ切り替え（行送り）]
+きけるかも　しれないから　</language>
 		<language name="JPN_KANJI" width="256">ポケモンセンターは
 ほとんどの　街に　あるからね[BE:01:ページ切り替え（クリア）]
-ポケモンが　弱ったときは
-すぐ　連れて行ってあげなさいな</language>
+足繁く　通いなさいな
+役立つ　情報が[BE:00:ページ切り替え（行送り）]
+聞けるかも　しれないから</language>
 	</row>
 
 	<row id="msg_t02r0201_babygirl1_01">

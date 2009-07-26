@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-07-10T16:04:40"/>
+	<create user="matsumiya" host="W00207" date="2009-07-26T13:19:46"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -328,7 +328,7 @@
 どれだけ　つよくなれば
 でんせつの　ポケモンに　あえるのかな？</language>
 		<language name="JPN_KANJI" width="256">強い　トレーナーの　もと
-その　ポケモン　姿を　現し
+その　ポケモン　姿を　現し[BE:00:ページ切り替え（行送り）]
 世界を　導く　助けとなる……[BE:01:ページ切り替え（クリア）]
 これが　イッシュ地方の　お話[BE:01:ページ切り替え（クリア）]
 どれだけ　強くなれば
