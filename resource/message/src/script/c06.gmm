@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-07-26T15:01:49"/>
+	<create user="matsumiya" host="W00207" date="2009-07-26T16:05:55"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -315,7 +315,7 @@
 		<band id="2" index="3" style="0000" width="540"/>
 		<band id="3" index="4" style="0000" width="155"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -344,7 +344,10 @@
 まさに　とぶための　デザイン！[BE:01:ページ切り替え（クリア）]
 そして　とぶための　メカニックも
 いっさいの　むだが　ないんです！</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+		<language name="JPN_KANJI" width="256">飛行機！　この　フォルム！
+まさに　飛ぶための　デザイン！[BE:01:ページ切り替え（クリア）]
+そして　飛ぶための　メカニックも
+いっさいの　無駄が　ないんです！</language>
 	</row>
 
 	<row id="msg_c06_pilot_01">
@@ -355,7 +358,10 @@
 とびたつのは　かもつき　ばかりさ[BE:01:ページ切り替え（クリア）]
 トレーナーが　そらを　とびたいときは
 ひでんわざ　そらをとぶが　あるもんね</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+		<language name="JPN_KANJI" width="256">この　フキヨセの　空港から
+飛び立つのは　貨物機　ばかりさ[BE:01:ページ切り替え（クリア）]
+トレーナーが　空を　飛びたいときは
+ひでんわざ　そらをとぶが　あるもんね</language>
 	</row>
 
 	<row id="msg_c06_girl2_01">
@@ -367,7 +373,11 @@
 あっ　フウロねえちゃん　てのは
 このまちの　ジムリーダー！[BE:00:ページ切り替え（行送り）]
 いかした　ねえちゃん　なんだから！</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+		<language name="JPN_KANJI" width="256">フウロねえちゃんの　おじいちゃん
+伝説の　飛行機乗り　だったの[BE:01:ページ切り替え（クリア）]
+あっ　フウロねえちゃん　てのは
+この街の　ジムリーダー！[BE:00:ページ切り替え（行送り）]
+いかした　ねえちゃん　なんだから！</language>
 	</row>
 
 	<row id="msg_c06_rangerw_01">
@@ -379,7 +389,11 @@
 みんなが　くらせるように　したの[BE:01:ページ切り替え（クリア）]
 きっと　これからも
 その　せいしんは　かわらないわ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+		<language name="JPN_KANJI" width="256">ポケモンと　人とで
+荒れ果てた　土地を　切り開き[BE:00:ページ切り替え（行送り）]
+みんなが　暮らせるように　したの[BE:01:ページ切り替え（クリア）]
+きっと　これからも
+その　精神は　変わらないわ</language>
 	</row>
 
 	<row id="msg_c06_workman_01">
@@ -388,9 +402,12 @@
 		<attribute name="キャラクター">WORKMAN</attribute>
 		<language name="JPN" width="256">じゅうぶんに　きをつけるなら
 かっそうろで　あそんでも　かまわんぞ[BE:01:ページ切り替え（クリア）]
-うちの　かもつきが　とびだつのは
+うちの　かもつきが　とぶのは
 １にちに　１びん　ぐらいだしな</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+		<language name="JPN_KANJI" width="256">十分に　気をつけるなら
+滑走路で　遊んでも　かまわんぞ[BE:01:ページ切り替え（クリア）]
+うちの　貨物機が　飛ぶのは
+１日に　１便　ぐらいだしな</language>
 	</row>
 
 	<row id="msg_c06_woman1_01">
@@ -404,7 +421,13 @@
 そうです！　じぶんのことを
 ポケモンのこどもと　いい[BE:00:ページ切り替え（行送り）]
 きせきを　おこす　あのひとです</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+		<language name="JPN_KANJI" width="256">Ｎ……
+あの　人は　いったい……[BE:01:ページ切り替え（クリア）]
+えっ！？　あなたは
+Ｎという　人物を　ご存知ですか？[BE:01:ページ切り替え（クリア）]
+そうです！　自分のことを
+ポケモンの子供と　いい[BE:00:ページ切り替え（行送り）]
+奇跡を　起こす　あの人です</language>
 	</row>
 
 	<row id="msg_c06_sign1_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
