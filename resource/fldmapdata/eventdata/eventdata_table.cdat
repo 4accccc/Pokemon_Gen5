@@ -854,6 +854,13 @@
 #ifndef ZONE_C05_EVC_H
 #define ZONE_C05_EVC_H
 
+#define C05_WOMAN2                         0
+#define C05_BACKPACKERW                    1
+#define C05_WORKMAN                        2
+#define C05_BADMAN                         3
+#define C05_BABYGIRL1                      4
+#define C05_TRAINERM                       5
+#define C05_DRIVER                         6
 
 #endif //ZONE_C05_EVC_H
 //#include "tmp/c05gym0101.h"
@@ -1011,6 +1018,12 @@
 #ifndef ZONE_C06_EVC_H
 #define ZONE_C06_EVC_H
 
+#define C06_GIRL2                          0
+#define C06_BOY3                           1
+#define C06_PILOT                          2
+#define C06_WORKMAN                        3
+#define C06_WOMAN1                         4
+#define C06_RANGERW                        5
 
 #endif //ZONE_C06_EVC_H
 //#include "tmp/c06gym0101.h"
@@ -5583,14 +5596,136 @@ const CONNECT_DATA DOOR_EVENT_C05[] = {
 	},
 };
 const int ConnectCount_C05 = NELEMS(DOOR_EVENT_C05);
+const FLDMMDL_HEADER OBJ_EVENT_C05[] = {
+	{
+		C05_WOMAN2,
+		WOMAN2,
+		MV_DIR_RND,
+		EV_TYPE_NORMAL,
+		0,
+		SCRID_C05_TALKOBJ_WOMAN2,
+		DIR_RIGHT,
+		0,
+		0,
+		0,
+		0,
+		0,
+		241,
+		429,
+		0,
+	},
+	{
+		C05_BACKPACKERW,
+		BACKPACKERW,
+		MV_DOWN,
+		EV_TYPE_NORMAL,
+		0,
+		SCRID_C05_TALKOBJ_BACKPACKERW,
+		DIR_DOWN,
+		0,
+		0,
+		0,
+		0,
+		0,
+		217,
+		433,
+		0,
+	},
+	{
+		C05_WORKMAN,
+		WORKMAN,
+		MV_RND,
+		EV_TYPE_NORMAL,
+		0,
+		SCRID_C05_TALKOBJ_WORKMAN,
+		DIR_DOWN,
+		0,
+		0,
+		0,
+		4,
+		2,
+		180,
+		440,
+		0,
+	},
+	{
+		C05_BADMAN,
+		BADMAN,
+		MV_RT2,
+		EV_TYPE_NORMAL,
+		0,
+		SCRID_C05_TALKOBJ_BADMAN,
+		DIR_LEFT,
+		0,
+		0,
+		0,
+		6,
+		0,
+		202,
+		414,
+		0,
+	},
+	{
+		C05_BABYGIRL1,
+		BABYGIRL1,
+		MV_RND,
+		EV_TYPE_NORMAL,
+		0,
+		SCRID_C05_TALKOBJ_BABYGIRL1,
+		DIR_DOWN,
+		0,
+		0,
+		0,
+		3,
+		2,
+		177,
+		427,
+		0,
+	},
+	{
+		C05_TRAINERM,
+		TRAINERM,
+		MV_RND,
+		EV_TYPE_NORMAL,
+		0,
+		SCRID_C05_TALKOBJ_TRAINERM,
+		DIR_DOWN,
+		0,
+		0,
+		0,
+		1,
+		2,
+		191,
+		430,
+		0,
+	},
+	{
+		C05_DRIVER,
+		DRIVER,
+		MV_LEFT,
+		EV_TYPE_NORMAL,
+		0,
+		SCRID_C05_TALKOBJ_DRIVER,
+		DIR_LEFT,
+		0,
+		0,
+		0,
+		0,
+		0,
+		173,
+		440,
+		0,
+	},
+};
+const int ObjCount_C05 = NELEMS(OBJ_EVENT_C05);
 
 static const EVENTDATA_TABLE event_c05 = {
 	0,
-	0,
+	7,
 	13,
 	0,
 	(void *)NULL,
-	(void *)NULL,
+	(void *)&OBJ_EVENT_C05,
 	(void *)&DOOR_EVENT_C05,
 	(void *)NULL,
 };
@@ -5983,14 +6118,119 @@ const CONNECT_DATA DOOR_EVENT_C06[] = {
 	},
 };
 const int ConnectCount_C06 = NELEMS(DOOR_EVENT_C06);
+const FLDMMDL_HEADER OBJ_EVENT_C06[] = {
+	{
+		C06_GIRL2,
+		GIRL2,
+		MV_DIR_RND,
+		EV_TYPE_NORMAL,
+		0,
+		SCRID_C06_TALKOBJ_GIRL2,
+		DIR_DOWN,
+		0,
+		0,
+		0,
+		0,
+		0,
+		89,
+		308,
+		0,
+	},
+	{
+		C06_BOY3,
+		BOY3,
+		MV_LEFT,
+		EV_TYPE_NORMAL,
+		0,
+		SCRID_C06_TALKOBJ_BOY3,
+		DIR_LEFT,
+		0,
+		0,
+		0,
+		0,
+		0,
+		93,
+		314,
+		0,
+	},
+	{
+		C06_PILOT,
+		PILOT,
+		MV_RND,
+		EV_TYPE_NORMAL,
+		0,
+		SCRID_C06_TALKOBJ_PILOT,
+		DIR_DOWN,
+		0,
+		0,
+		0,
+		2,
+		2,
+		116,
+		297,
+		0,
+	},
+	{
+		C06_WORKMAN,
+		WORKMAN,
+		MV_RND_DR,
+		EV_TYPE_NORMAL,
+		0,
+		SCRID_C06_TALKOBJ_WORKMAN,
+		DIR_DOWN,
+		0,
+		0,
+		0,
+		1,
+		2,
+		79,
+		313,
+		0,
+	},
+	{
+		C06_WOMAN1,
+		WOMAN1,
+		MV_DIR_RND,
+		EV_TYPE_NORMAL,
+		0,
+		SCRID_C06_TALKOBJ_WOMAN1,
+		DIR_DOWN,
+		0,
+		0,
+		0,
+		0,
+		0,
+		105,
+		296,
+		0,
+	},
+	{
+		C06_RANGERW,
+		RANGERW,
+		MV_RND,
+		EV_TYPE_NORMAL,
+		0,
+		SCRID_C06_TALKOBJ_RANGERW,
+		DIR_DOWN,
+		0,
+		0,
+		0,
+		3,
+		0,
+		86,
+		275,
+		0,
+	},
+};
+const int ObjCount_C06 = NELEMS(OBJ_EVENT_C06);
 
 static const EVENTDATA_TABLE event_c06 = {
 	0,
-	0,
+	6,
 	8,
 	0,
 	(void *)NULL,
-	(void *)NULL,
+	(void *)&OBJ_EVENT_C06,
 	(void *)&DOOR_EVENT_C06,
 	(void *)NULL,
 };
