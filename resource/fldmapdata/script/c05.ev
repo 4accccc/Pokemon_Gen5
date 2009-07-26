@@ -19,7 +19,13 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA    ev_c05
+_EVENT_DATA    ev_c05_talkobj_woman2
+_EVENT_DATA    ev_c05_talkobj_babygirl1
+_EVENT_DATA    ev_c05_talkobj_backpackerw
+_EVENT_DATA    ev_c05_talkobj_trainerm
+_EVENT_DATA    ev_c05_talkobj_driver
+_EVENT_DATA    ev_c05_talkobj_badman
+_EVENT_DATA    ev_c05_talkobj_workman
 _EVENT_DATA_END
 
 
@@ -27,12 +33,97 @@ _EVENT_DATA_END
 /*            FLAG_CHANGE_LABEL                               */
 /**************************************************************/
 //ev_c05_flag_change:
-//  _END
+
 
 /**************************************************************/
-/*                                                            */
+/*  C05 WOMAN2の会話用イベントスクリプト                      */
 /**************************************************************/
-ev_c05:
-  //とりあえず最初のラベルだけ生成している
+ev_c05_talkobj_woman2:
+	_TALK_OBJ_PAUSE_ALL
+	_TURN_HERO_SITE
+	_TALKWIN_OPEN
+	_TALKMSG_ALLPUT msg_c05_woman2_01
+	_AB_KEYWAIT
+  _TALKWIN_CLOSE
+  _OBJ_PAUSE_CLEAR_ALL
   _END
+
+/**************************************************************/
+/*  C05 BABYGIRL1の会話用イベントスクリプト                      */
+/**************************************************************/
+ev_c05_talkobj_babygirl1:
+	_TALK_OBJ_PAUSE_ALL
+	_TURN_HERO_SITE
+	_TALKWIN_OPEN
+	_TALKMSG_ALLPUT msg_c05_babygirl1_01
+	_AB_KEYWAIT
+  _TALKWIN_CLOSE
+  _OBJ_PAUSE_CLEAR_ALL
+  _END
+
+/**************************************************************/
+/*  C05 BACKPACKERWの会話用イベントスクリプト                      */
+/**************************************************************/
+ev_c05_talkobj_backpackerw:
+	_TALK_OBJ_PAUSE_ALL
+	_TURN_HERO_SITE
+	_TALKWIN_OPEN
+	_TALKMSG_ALLPUT msg_c05_backpackerw_01
+	_AB_KEYWAIT
+  _TALKWIN_CLOSE
+  _OBJ_PAUSE_CLEAR_ALL
+  _END
+
+/**************************************************************/
+/*  C05 TRAINERMの会話用イベントスクリプト                      */
+/**************************************************************/
+ev_c05_talkobj_trainerm:
+	_TALK_OBJ_PAUSE_ALL
+	_TURN_HERO_SITE
+	_TALKWIN_OPEN
+	_TALKMSG_ALLPUT msg_c05_trainerm_01
+	_AB_KEYWAIT
+  _TALKWIN_CLOSE
+  _OBJ_PAUSE_CLEAR_ALL
+  _END
+
+/**************************************************************/
+/*  C05 DRIVERの会話用イベントスクリプト                      */
+/**************************************************************/
+ev_c05_talkobj_driver:
+	_TALK_OBJ_PAUSE_ALL
+	_TURN_HERO_SITE
+	_TALKWIN_OPEN
+	_TALKMSG_ALLPUT msg_c05_driver_01
+	_AB_KEYWAIT
+  _TALKWIN_CLOSE
+  _OBJ_PAUSE_CLEAR_ALL
+  _END
+
+/**************************************************************/
+/*  C05 BADMANの会話用イベントスクリプト                      */
+/**************************************************************/
+ev_c05_talkobj_badman:
+	_TALK_OBJ_PAUSE_ALL
+	_TURN_HERO_SITE
+	_TALKWIN_OPEN
+	_TALKMSG_ALLPUT msg_c05_badman_01
+	_AB_KEYWAIT
+  _TALKWIN_CLOSE
+  _OBJ_PAUSE_CLEAR_ALL
+  _END
+
+/**************************************************************/
+/*  C05 WORKMANの会話用イベントスクリプト                      */
+/**************************************************************/
+ev_c05_talkobj_workman:
+	_TALK_OBJ_PAUSE_ALL
+	_TURN_HERO_SITE
+	_TALKWIN_OPEN
+	_TALKMSG_ALLPUT msg_c05_workman_01
+	_AB_KEYWAIT
+  _TALKWIN_CLOSE
+  _OBJ_PAUSE_CLEAR_ALL
+  _END
+
 
