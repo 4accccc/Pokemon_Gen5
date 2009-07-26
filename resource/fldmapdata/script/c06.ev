@@ -9,7 +9,7 @@
   .text
 
   .include  "scr_seq_def.h"
-  //.include  "../../message/dst/script/msg_c06.h"
+  .include  "../../message/dst/script/msg_c06.h"
   //.include  "../eventdata/zone_c06evc.h"
 
 //--------------------------------------------------------------
@@ -19,7 +19,12 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA    ev_c06
+_EVENT_DATA    ev_c06_talkobj_boy3
+_EVENT_DATA    ev_c06_talkobj_pilot
+_EVENT_DATA    ev_c06_talkobj_girl2
+_EVENT_DATA    ev_c06_talkobj_rangerw
+_EVENT_DATA    ev_c06_talkobj_workman
+_EVENT_DATA    ev_c06_talkobj_woman1
 _EVENT_DATA_END
 
 
@@ -27,12 +32,83 @@ _EVENT_DATA_END
 /*            FLAG_CHANGE_LABEL                               */
 /**************************************************************/
 //ev_c06_flag_change:
-//  _END
+
 
 /**************************************************************/
-/*                                                            */
+/*  C06 BOY3の会話用イベントスクリプト                      */
 /**************************************************************/
-ev_c06:
-  //とりあえず最初のラベルだけ生成している
+ev_c06_talkobj_boy3:
+	_TALK_OBJ_PAUSE_ALL
+	_TURN_HERO_SITE
+	_TALKWIN_OPEN
+	_TALKMSG_ALLPUT msg_c06_boy3_01
+	_AB_KEYWAIT
+  _TALKWIN_CLOSE
+  _OBJ_PAUSE_CLEAR_ALL
   _END
 
+/**************************************************************/
+/*  C06 PILOTの会話用イベントスクリプト                      */
+/**************************************************************/
+ev_c06_talkobj_pilot:
+	_TALK_OBJ_PAUSE_ALL
+	_TURN_HERO_SITE
+	_TALKWIN_OPEN
+	_TALKMSG_ALLPUT msg_c06_pilot_01
+	_AB_KEYWAIT
+  _TALKWIN_CLOSE
+  _OBJ_PAUSE_CLEAR_ALL
+  _END
+
+/**************************************************************/
+/*  C06 GIRL2の会話用イベントスクリプト                      */
+/**************************************************************/
+ev_c06_talkobj_girl2:
+	_TALK_OBJ_PAUSE_ALL
+	_TURN_HERO_SITE
+	_TALKWIN_OPEN
+	_TALKMSG_ALLPUT msg_c06_girl2_01
+	_AB_KEYWAIT
+  _TALKWIN_CLOSE
+  _OBJ_PAUSE_CLEAR_ALL
+  _END
+
+/**************************************************************/
+/*  C06 RANGERWの会話用イベントスクリプト                      */
+/**************************************************************/
+ev_c06_talkobj_rangerw:
+	_TALK_OBJ_PAUSE_ALL
+	_TURN_HERO_SITE
+	_TALKWIN_OPEN
+	_TALKMSG_ALLPUT msg_c06_rangerw_01
+	_AB_KEYWAIT
+  _TALKWIN_CLOSE
+  _OBJ_PAUSE_CLEAR_ALL
+  _END
+
+/**************************************************************/
+/*  C06 WORKMANの会話用イベントスクリプト                      */
+/**************************************************************/
+ev_c06_talkobj_workman:
+	_TALK_OBJ_PAUSE_ALL
+	_TURN_HERO_SITE
+	_TALKWIN_OPEN
+	_TALKMSG_ALLPUT msg_c06_workman_01
+	_AB_KEYWAIT
+  _TALKWIN_CLOSE
+  _OBJ_PAUSE_CLEAR_ALL
+  _END
+
+/**************************************************************/
+/*  C06 WOMAN1の会話用イベントスクリプト                      */
+/**************************************************************/
+ev_c06_talkobj_woman1:
+	_TALK_OBJ_PAUSE_ALL
+	_TURN_HERO_SITE
+	_TALKWIN_OPEN
+	_TALKMSG_ALLPUT msg_c06_woman1_01
+	_AB_KEYWAIT
+  _TALKWIN_CLOSE
+  _OBJ_PAUSE_CLEAR_ALL
+  _END
+//  _END
