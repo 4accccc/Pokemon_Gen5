@@ -1,2 +1,2 @@
-nnsarc -c -l -n -i area_win_gra -S list.txt
+nnsarc -c -l -n -i place_name -S list.txt
 
