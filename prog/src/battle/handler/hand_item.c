@@ -1732,8 +1732,7 @@ static BTL_EVENT_FACTOR* HAND_ADD_ITEM_KemuriDama( u16 pri, u16 itemID, u8 pokeI
 }
 static void handler_KemuriDama( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
-  if( pokeID == BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) )
-  {
+  if( pokeID == BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) ){
     BTL_EVENTVAR_RewriteValue( BTL_EVAR_GEN_FLAG, TRUE );
   }
 }

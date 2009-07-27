@@ -75,6 +75,9 @@ struct _BTL_SERVER {
   BTL_SERVER_CMD_QUE  queBody;
   BTL_SERVER_CMD_QUE* que;
 
+  u8                  changePokePos[ BTL_POS_MAX ];
+  u8                  changePokeCnt;
+
   HEAPID        heapID;
 };
 
@@ -382,7 +385,7 @@ static BOOL ServerMain_SelectAction( BTL_SERVER* server, int* seq )
         (*seq)=0;
         break;
       case SVFLOW_RESULT_POKE_CHANGE:
-        BTL_Printf("ポケモン死んだので選択へ\n");
+        BTL_Printf("次のポケモン選択へ\n");
         setMainProc( server, ServerMain_SelectPokemon );
         break;
       default:

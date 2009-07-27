@@ -19,6 +19,7 @@
 #include "btl_server_local.h"
 #include "btl_server.h"
 #include "btl_sick.h"
+#include "btl_pospoke_state.h"
 
 #include "handler\hand_tokusei.h"
 #include "handler\hand_item.h"
@@ -56,6 +57,7 @@ typedef enum {
   STRID_NULL = 0xffff,
 
 }FlowFlag;
+
 
 /**
  *  ふきとばし系のワザ処理パターン
@@ -528,6 +530,7 @@ static u8 scproc_HandEx_updateWaza( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_
 static u8 scproc_HandEx_counter( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header );
 static u8 scproc_HandEx_delayWazaDamage( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header );
 static u8 scproc_HandEx_quitBattle( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header );
+static u8 scproc_HandEx_changeMember( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header );
 
 
 BTL_SVFLOW_WORK* BTL_SVFLOW_InitSystem(
@@ -742,8 +745,7 @@ static u8 countAlivePokemon( BTL_SVFLOW_WORK* wk )
       bpp = clwk->frontMember[ j ];
       if( bpp != NULL )
       {
-        if( !BPP_IsDead(bpp) )
-        {
+        if( !BPP_IsDead(bpp) ){
           cnt++;
         }
       }
@@ -7603,6 +7605,7 @@ static BTL_HANDEX_PARAM_HEADER* Hem_PushWork( HANDLER_EXHIBISION_MANAGER* wk, Bt
     { BTL_HANDEX_COUNTER,        sizeof(BTL_HANDEX_PARAM_COUNTER)         },
     { BTL_HANDEX_DELAY_WAZADMG,  sizeof(BTL_HANDEX_PARAM_DELAY_WAZADMG)   },
     { BTL_HANDEX_QUIT_BATTLE,    sizeof(BTL_HANDEX_PARAM_HEADER)          },
+    { BTL_HANDEX_CHANGE_MEMBER,  sizeof(BTL_HANDEX_PARAM_HEADER)          },
   };
   u32 size, i;
 
@@ -7709,6 +7712,7 @@ static BOOL scproc_HandEx_Root( BTL_SVFLOW_WORK* wk, u16 useItemID )
     case BTL_HANDEX_COUNTER:        fPrevSucceed = scproc_HandEx_counter( wk, handEx_header ); break;
     case BTL_HANDEX_DELAY_WAZADMG:  fPrevSucceed = scproc_HandEx_delayWazaDamage( wk, handEx_header ); break;
     case BTL_HANDEX_QUIT_BATTLE:    fPrevSucceed = scproc_HandEx_quitBattle( wk, handEx_header ); break;
+    case BTL_HANDEX_CHANGE_MEMBER:  fPrevSucceed = scproc_HandEx_changeMember( wk, handEx_header ); break;
     default:
       GF_ASSERT_MSG(0, "illegal handEx type = %d, userPokeID=%d", handEx_header->equip, handEx_header->userPokeID);
     }
@@ -8434,5 +8438,16 @@ static u8 scproc_HandEx_quitBattle( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_
     return 1;
   }
   return 0;
+}
+/**
+ * メンバー入れ替え
+ * @return 成功時 1 / 失敗時 0
+ */
+static u8 scproc_HandEx_changeMember( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header )
+{
+  BTL_POKEPARAM* bpp = BTL_POKECON_GetPokeParam( wk->pokeCon, param_header->userPokeID );
+  SCQUE_PUT_OP_SetContFlag( wk->que, param_header->userPokeID, BPP_CONTFLG_CHANGE_TARGET );
+  wk->flowResult = SVFLOW_RESULT_POKE_CHANGE;
+  return 1;
 }
 

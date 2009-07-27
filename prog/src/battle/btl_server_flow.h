@@ -223,6 +223,7 @@ typedef enum {
   BTL_HANDEX_COUNTER,       ///< ポケモンカウンタ値書き換え
   BTL_HANDEX_DELAY_WAZADMG, ///< 時間差ワザダメージ
   BTL_HANDEX_QUIT_BATTLE,   ///< バトル離脱
+  BTL_HANDEX_CHANGE_MEMBER, ///< メンバー交換
 
   BTL_HANDEX_MAX,
 

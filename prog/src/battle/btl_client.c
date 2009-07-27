@@ -931,7 +931,7 @@ static BOOL SubProc_AI_SelectAction( BTL_CLIENT* wk, int* seq )
 // 自分のポケモンが死んでいたら次を選択する処理
 //---------------------------------------------------
 
-// 瀕死になって、次のポケモンを出さなければならない担当位置数を返す
+// 瀕死、またはとんぼ返りなどで、次のポケモンを出さなければならない担当位置数を返す
 static u8 calc_empty_pos( BTL_CLIENT* wk, u8* posIdxList )
 {
   u8 cnt, i;
@@ -940,10 +940,10 @@ static u8 calc_empty_pos( BTL_CLIENT* wk, u8* posIdxList )
     if( wk->frontPokeEmpty[i] == FALSE )
     {
       const BTL_POKEPARAM* bpp = BTL_PARTY_GetMemberDataConst( wk->myParty, i );
-      if( BPP_IsDead(bpp) )
-      {
-        if( posIdxList )
-        {
+      if( (BPP_IsDead(bpp))
+      ||  (BPP_GetContFlag(bpp, BPP_CONTFLG_CHANGE_TARGET))
+      ){
+        if( posIdxList ){
           posIdxList[cnt] = i;
         }
         ++cnt;
