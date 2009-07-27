@@ -445,7 +445,8 @@ enum {
 	NARC_script_seq_common_scr_bin = 431,
 	NARC_script_seq_dummy_bin = 432,
 	NARC_script_seq_dummy_scr_bin = 433,
-	NARC_script_seq_trainer_bin = 434
+	NARC_script_seq_trainer_bin = 434,
+	NARC_script_seq_init_scr_bin = 435
 };
 
 /* NARC_SCRIPT_SEQ_NAIX_ */

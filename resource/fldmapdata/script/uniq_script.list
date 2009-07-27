@@ -4,4 +4,5 @@ SCRIPTFILES	+= \
 	common_scr.ev	\
 	dummy.ev	\
 	dummy_scr.ev	\
-	trainer.ev	
+	trainer.ev \
+  init_scr.ev
