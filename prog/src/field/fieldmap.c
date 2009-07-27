@@ -724,6 +724,7 @@ static MAINSEQ_RESULT mainSeqFunc_update_top(GAMESYS_WORK *gsys, FIELDMAP_WORK *
 	  // ボリュームを更新
 	  ISS_UNIT_Update( fieldWork->issUnit, gx, gy, gz );
   }
+  FLDMSGBG_PrintMain( fieldWork->fldMsgBG );
 
   return MAINSEQ_RESULT_CONTINUE;
 }
