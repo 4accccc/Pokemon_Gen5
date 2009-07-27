@@ -329,9 +329,9 @@ def convert_line( no, line, wfile, idxfile, symfile )
 	#âfÇËçûÇ› 1 (9)
 	word = str[STRPRMNO_REFLECT]
 	if( word != "Åõ" )
-		ret = 1
-	else
 		ret = 0
+	else
+		ret = 1
 	end
 	ary = Array( ret )
 	wfile.write( ary.pack("C*") )
