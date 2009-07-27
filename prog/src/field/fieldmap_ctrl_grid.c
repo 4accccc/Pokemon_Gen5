@@ -94,6 +94,7 @@ static void mapCtrlGrid_Create(
 	gridWork->fieldWork = fieldWork;
 	
 	{	//ビルボード設定
+#if 0 //標準を使用する
 		VecFx32 scale = {
 			FX32_ONE+(FX32_ONE/2)+(FX32_ONE/4),
 			FX32_ONE+(FX32_ONE/2)+(FX32_ONE/4),
@@ -101,6 +102,7 @@ static void mapCtrlGrid_Create(
 		};
 		GFL_BBDACT_SYS *bbdActSys = FIELDMAP_GetBbdActSys( fieldWork );
 		GFL_BBD_SetScale( GFL_BBDACT_GetBBDSystem(bbdActSys), &scale );
+#endif
 	}
 	
 	{	//マップ描画オフセット

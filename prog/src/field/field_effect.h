@@ -30,6 +30,8 @@ typedef enum
   FLDEFF_PROCID_GRASS, ///<草エフェクト
   FLDEFF_PROCID_NAMIPOKE, ///<波乗りポケモン
   FLDEFF_PROCID_GYOE, ///<びっくりマーク
+  FLDEFF_PROCID_FOOTMARK, ///<足跡
+  FLDEFF_PROCID_REFLECT, ///<映り込み
   FLDEFF_PROCID_MAX, ///<最大
 }FLDEFF_PROCID;
 
@@ -121,7 +123,7 @@ extern FLDEFF_TASKSYS * FLDEFF_TASKSYS_Init(
     HEAPID heapID, GFL_TCBSYS *tcbsys, int max );
 extern void FLDEFF_TASKSYS_Delete( FLDEFF_TASKSYS *tasksys );
 extern void FLDEFF_TASKSYS_Draw( FLDEFF_TASKSYS *tasksys );
-extern FLDEFF_TASK * FLDEFF_TASKSYS_Add(
+extern FLDEFF_TASK * FLDEFF_TASKSYS_AddTask(
     FLDEFF_TASKSYS *tasksys, const FLDEFF_TASK_HEADER *head,
     const VecFx32 *pos, int add_param, const void *add_ptr, int pri );
 

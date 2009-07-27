@@ -155,15 +155,6 @@ static void mapCtrlC3_Create(
 			FLD_SCENEAREA_LOADER_GetDataNum(work->p_scenearealoader),
 			FLD_SCENEAREA_LOADER_GetFunc(work->p_scenearealoader) );
 	
-	{	//ビルボード設定
-		VecFx32 scale = {
-			FX32_ONE+(FX32_ONE/2)+(FX32_ONE/4),
-			FX32_ONE+(FX32_ONE/2)+(FX32_ONE/4),
-			FX32_ONE+(FX32_ONE/2)+(FX32_ONE/4),
-		};
-		GFL_BBDACT_SYS *bbdActSys = FIELDMAP_GetBbdActSys( fieldWork );
-		GFL_BBD_SetScale( GFL_BBDACT_GetBBDSystem(bbdActSys), &scale );
-	}
 	fld_player = FIELDMAP_GetFieldPlayer( fieldWork );
 	FIELD_PLAYER_SetPos( fld_player, pos);
 	FIELD_PLAYER_SetDir( fld_player, dir );

@@ -292,7 +292,7 @@ typedef enum
 	MMDL_DRAWPROCNO_BLACT,	///<ビルボード汎用
   MMDL_DRAWPROCNO_CYCLEHERO, ///<自転車自機専用
   MMDL_DRAWPROCNO_SWIMHERO, ///<波乗り自機専用
-  MMDL_DRAWPROCNO_BLACTALWAYS, //ビルボード汎用＋常にアニメ
+  MMDL_DRAWPROCNO_BLACTALWAYSANIME, //ビルボード汎用＋常にアニメ
 	MMDL_DRAWPROCNO_MAX,		///<最大
 }MMDL_DRAWPROCNO;
 
@@ -367,6 +367,13 @@ typedef void (*MMDL_DRAW_PROC_DEL)(MMDL*);///<描画削除関数
 typedef void (*MMDL_DRAW_PROC_PUSH)(MMDL*);///<描画退避関数
 typedef void (*MMDL_DRAW_PROC_POP)(MMDL*);///<描画復帰関数
 typedef u32 (*MMDL_DRAW_PROC_GET)(MMDL*,u32);///<描画取得関数
+
+//--------------------------------------------------------------
+/// ビルボードアクター追加時の初期化関数
+/// idx 追加時のアクターインデックス
+/// init_work アクター追加時に指定した任意のワーク
+//--------------------------------------------------------------
+typedef void (*MMDL_BLACTCONT_ADDACT_USERPROC)(u16 idx,void *init_work);
 
 //--------------------------------------------------------------
 ///	MMDL_HEADER構造体
@@ -483,7 +490,7 @@ typedef struct
 	u8 draw_proc_no;	///<MMDL_DRAWPROCNO
 	u8 shadow_type;		///<MMDL_SHADOWTYPE
 	u8 footmark_type;	///<MMDL_FOOTMARKTYPE
-	u8 reflect_type;	///<LDMMDL_REFLECTTYPE
+	u8 reflect_type;	///<MMDL_REFLECTTYPE
 	u8 mdl_size;		///<モデルサイズ
 	u8 tex_size;		///<テクスチャサイズ
 	u8 anm_id;			///<MMDL_BLACT_ANMTBLNO
@@ -514,6 +521,15 @@ typedef struct
   u16 zone_id;
   u16 dmy;
 }MMDL_CHECKSAME_DATA;
+
+//--------------------------------------------------------------
+/// MMDL_BLACTWORK_USER
+//--------------------------------------------------------------
+typedef struct
+{
+  u16 flag; //アクターの状況を管理
+  GFL_BBDACT_ACTUNIT_ID actID; //アクターID
+}MMDL_BLACTWORK_USER;
 
 //======================================================================
 //	extern
@@ -936,6 +952,12 @@ extern void MMDL_BLACTCONT_AddResourceTex(
 extern BOOL MMDL_BLACTCONT_AddActor(
     MMDL *mmdl, u16 code, GFL_BBDACT_ACTUNIT_ID *outID );
 extern void MMDL_BLACTCONT_DeleteActor( MMDL *mmdl, u32 actID );
+
+extern BOOL MMDL_BLACTCONT_USER_AddActor( MMDLSYS *mmdlsys,
+    u16 code, MMDL_BLACTWORK_USER *userAct, const VecFx32 *pos,
+    MMDL_BLACTCONT_ADDACT_USERPROC init_proc, void *init_work );
+extern void MMDL_BLACTCONT_USER_DeleteActor(
+    MMDLSYS *mmdlsys, MMDL_BLACTWORK_USER *userAct );
 
 extern GFL_BBDACT_SYS * MMDL_BLACTCONT_GetBbdActSys(
 		MMDL_BLACTCONT *pBlActCont );

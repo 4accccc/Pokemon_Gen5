@@ -31,6 +31,10 @@ typedef struct
 	GFL_BBDACT_ACTUNIT_ID actID;
 	u8 set_anm_dir;
 	u8 set_anm_status;
+#if 0
+  fx32 TestScale;
+  fx32 TestScaleAdd;
+#endif
 }DRAW_BLACT_WORK;
 
 //======================================================================
@@ -134,6 +138,12 @@ static void DrawHero_Init( MMDL *mmdl )
 	if( MMDL_BLACTCONT_AddActor(mmdl,code,&work->actID) == TRUE ){
     MMDL_CallDrawProc( mmdl );
   }
+#if 0  
+  { //test
+    work->TestScale = FX16_ONE*8;
+    work->TestScaleAdd = 0x0100;
+  }
+#endif
 }
 
 //--------------------------------------------------------------
@@ -227,6 +237,45 @@ static void DrawHero_Draw( MMDL *mmdl )
     
     GFL_BBDACT_SetDrawEnable( actSys, work->actID, flag );
 	}
+
+#if 0 
+  { //ScaleTest
+    /*
+    void	GFL_BBD_SetObjectSiz( GFL_BBD_SYS* billboardSys, int objIdx, const fx16* sizX, const fx16* sizY );
+    */
+    GFL_BBD_SYS *bbdSys = GFL_BBDACT_GetBBDSystem( actSys );
+    int idx = GFL_BBDACT_GetBBDActIdxResIdx( actSys, work->actID );
+    fx16 sx = FX16_ONE*4 - 1;
+    fx16 sy = FX16_ONE*4 - 1;
+    
+    work->TestScale += work->TestScaleAdd;
+    
+    if( work->TestScale <= FX16_ONE ){
+      work->TestScale = FX16_ONE;
+      work->TestScaleAdd = -work->TestScaleAdd;
+    }else if( work->TestScale >= (FX16_ONE*8-1) ){
+      work->TestScale = (FX16_ONE*8-1);
+      work->TestScaleAdd = -work->TestScaleAdd;
+    }
+    
+    sx = work->TestScale;
+    GFL_BBD_SetObjectSiz( bbdSys, idx, &sx, &sy );
+    
+    if( GFL_UI_KEY_GetCont() & PAD_BUTTON_A ){
+      KAGAYA_Printf( "自機横サイズ 0x%x\n", work->TestScale );
+    }else if( GFL_UI_KEY_GetCont() & PAD_BUTTON_B ){
+      VecFx32 scale;
+      GFL_BBD_GetScale( bbdSys, &scale );
+      KAGAYA_Printf( "ビルボードスケール 0x%x,0x%x,0x%x\n",
+          scale.x, scale.y, scale.z );
+    }
+    
+    {
+      BOOL flip = TRUE;
+      GFL_BBD_SetObjectFlipT( bbdSys, idx, &flip );
+    }
+  }
+#endif
 }
 
 //--------------------------------------------------------------

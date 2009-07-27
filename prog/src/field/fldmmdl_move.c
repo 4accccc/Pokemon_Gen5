@@ -11,16 +11,24 @@
 #include "fldmmdl.h"
 
 #include "fieldmap.h"
+#include "map_attr.h"
 
 #include "fldeff_shadow.h"
 #include "fldeff_kemuri.h"
 #include "fldeff_grass.h"
-
-#include "map_attr.h"
+#include "fldeff_footmark.h"
+#include "fldeff_reflect.h"
 
 //======================================================================
 //	define
 //======================================================================
+//--------------------------------------------------------------
+//  debug
+//--------------------------------------------------------------
+#ifdef DEBUG_ONLY_FOR_kagaya
+//#define DEBUG_REFLECT_CHECK //定義で映り込みチェック
+#endif
+
 //--------------------------------------------------------------
 ///	ステータスビット
 //--------------------------------------------------------------
@@ -124,6 +132,8 @@ static BOOL (* const DATA_HitCheckAttr_Next[DIR_MAX4])( MATR attr );
 static BOOL MMdl_GetMapGridInfo(
 	const MMDL *fmmdl, const VecFx32 *pos,
 	FLDMAPPER_GRIDINFO *pGridInfo );
+
+static FLDEFF_CTRL * mmdl_GetFldEffCtrl( MMDL *mmdl );
 
 //======================================================================
 //	フィールド動作モデル 動作
@@ -525,9 +535,7 @@ static void MMdl_MapAttrGrassProc_0(
     MAPATTR_FLAG flag = MAPATTR_GetAttrFlag( now );
     
     if( (flag&MAPATTR_FLAGBIT_GRASS) ){
-      MMDLSYS *fos = (MMDLSYS*)MMDL_GetMMdlSys( fmmdl );
-      FIELDMAP_WORK *fieldMapWork = MMDLSYS_GetFieldMapWork( fos );
-      FLDEFF_CTRL *fectrl = FIELDMAP_GetFldEffCtrl( fieldMapWork );
+      FLDEFF_CTRL *fectrl = mmdl_GetFldEffCtrl( fmmdl );
       FLDEFF_GRASS_SetMMdl( fectrl, fmmdl, FALSE );
     }
   }
@@ -556,9 +564,7 @@ static void MMdl_MapAttrGrassProc_12(
     MAPATTR_FLAG flag = MAPATTR_GetAttrFlag( now );
     
     if( (flag&MAPATTR_FLAGBIT_GRASS) ){
-      MMDLSYS *fos = (MMDLSYS*)MMDL_GetMMdlSys( fmmdl );
-      FIELDMAP_WORK *fieldMapWork = MMDLSYS_GetFieldMapWork( fos );
-      FLDEFF_CTRL *fectrl = FIELDMAP_GetFldEffCtrl( fieldMapWork );
+      FLDEFF_CTRL *fectrl = mmdl_GetFldEffCtrl( fmmdl );
       FLDEFF_GRASS_SetMMdl( fectrl, fmmdl, TRUE );
     }
   }
@@ -612,7 +618,20 @@ static void MMdl_MapAttrFootMarkProc_1(
 		FE_fmmdlFootMarkSnow_Add( fmmdl );
 		return;
 	}
-	#endif
+	#else
+  MAPATTR_FLAG flag = MAPATTR_GetAttrFlag( old );
+  
+  if( (flag & MAPATTR_FLAGBIT_FOOTMARK) ){
+    FLDEFF_CTRL *fectrl = mmdl_GetFldEffCtrl( fmmdl );
+    FOOTMARK_TYPE type = FOOTMARK_TYPE_HUMAN;
+    
+    if( prm->footmark_type == MMDL_FOOTMARK_CYCLE ){
+      type = FOOTMARK_TYPE_CYCLE;
+    }
+
+    FLDEFF_FOOTMARK_SetMMdl( fmmdl, fectrl, type );
+  }
+  #endif
 }
 
 //======================================================================
@@ -725,9 +744,7 @@ static void MMdl_MapAttrShadowProc_1(
 		}
     
 		if( MMDL_CheckStatusBit(fmmdl,MMDL_STABIT_SHADOW_SET) == 0 ){
-      MMDLSYS *fos = (MMDLSYS*)MMDL_GetMMdlSys( fmmdl );
-      FIELDMAP_WORK *fieldMapWork = MMDLSYS_GetFieldMapWork( fos );
-      FLDEFF_CTRL *fectrl = FIELDMAP_GetFldEffCtrl( fieldMapWork );
+      FLDEFF_CTRL *fectrl = mmdl_GetFldEffCtrl( fmmdl );
       FLDEFF_SHADOW_SetMMdl( fmmdl, fectrl );
 			MMDL_OnStatusBit( fmmdl, MMDL_STABIT_SHADOW_SET );
     }
@@ -804,9 +821,7 @@ static void MMdl_MapAttrGroundSmokeProc_2(
 	FE_fmmdlKemuri_Add( fmmdl );
 	#else
   {
-    MMDLSYS *fos = (MMDLSYS*)MMDL_GetMMdlSys( fmmdl );
-    FIELDMAP_WORK *fieldMapWork = MMDLSYS_GetFieldMapWork( fos );
-    FLDEFF_CTRL *fectrl = FIELDMAP_GetFldEffCtrl( fieldMapWork );
+    FLDEFF_CTRL *fectrl = mmdl_GetFldEffCtrl( fmmdl );
     FLDEFF_KEMURI_SetMMdl( fmmdl, fectrl );
   }
   #endif
@@ -1047,7 +1062,51 @@ static void MMdl_MapAttrReflect_01(
 			}
 		}
 	}
-	#endif
+	#else //wb
+  if( prm->reflect_type == MMDL_REFLECT_NON ){
+    return;
+  }
+
+  if( MMDL_CheckStatusBitReflect(fmmdl) == FALSE )
+  {
+    MAPATTR hit_attr = MAPATTR_ERROR;
+    MAPATTR_FLAG flag = MAPATTR_GetAttrFlag( now );
+    
+    #ifdef DEBUG_REFLECT_CHECK
+    flag = MAPATTR_FLAGBIT_REFLECT;
+    #endif
+    
+    if( (flag&MAPATTR_FLAGBIT_REFLECT) )
+    {
+      hit_attr = now;
+      #ifdef DEBUG_REFLECT_CHECK
+      hit_attr = 0;
+      #endif
+    }
+    else
+    {
+      MAPATTR next = MMDL_GetMapDirAttr( fmmdl, DIR_DOWN );
+      flag = MAPATTR_GetAttrFlag( next );
+      
+      if( (flag&MAPATTR_FLAGBIT_REFLECT) )
+      {
+        hit_attr = next;
+      }
+    }
+    
+    if( hit_attr != MAPATTR_ERROR )
+    {
+      REFLECT_TYPE type;
+      FLDEFF_CTRL *fectrl = mmdl_GetFldEffCtrl( fmmdl );
+      MMDLSYS *fmmdlsys = (MMDLSYS*)MMDL_GetMMdlSys( fmmdl );
+      
+      MMDL_SetStatusBitReflect( fmmdl, TRUE );
+      
+      type = REFLECT_TYPE_POND; //本来はアトリビュート識別してタイプ決定
+      FLDEFF_REFLECT_SetMMdl( fmmdlsys, fmmdl, fectrl, type );
+    }
+  }
+  #endif
 }
 
 //--------------------------------------------------------------
@@ -1076,7 +1135,24 @@ static void MMdl_MapAttrReflect_2(
 			MMDL_SetStatusBitReflect( fmmdl, FALSE );
 		}
 	}
-	#endif
+	#else //wb
+  
+	if( prm->reflect_type == MMDL_REFLECT_NON ||
+		MMDL_CheckStatusBitReflect(fmmdl) == FALSE ){
+		return;
+  }
+
+  {
+		MAPATTR attr = MMDL_GetMapDirAttr( fmmdl, DIR_DOWN );
+    MAPATTR_FLAG flag = MAPATTR_GetAttrFlag( attr );
+    #ifdef DEBUG_REFLECT_CHECK
+    flag = MAPATTR_FLAGBIT_REFLECT;
+    #endif
+    if( (flag&MAPATTR_FLAGBIT_REFLECT) == 0 ){
+			MMDL_SetStatusBitReflect( fmmdl, FALSE );
+    }
+  }
+  #endif
 }
 
 //======================================================================
@@ -1789,7 +1865,13 @@ u32 MMDL_GetMapDirAttr( MMDL * fmmdl, u16 dir )
 	FIELDSYS_WORK *fsys = MMDL_FieldSysWorkGet( fmmdl );
 	MATR attr = GetAttributeLSB( fsys, gx, gz );
 	#else
-	MATR attr = 0;
+	u32 attr = MAPATTR_ERROR;
+  VecFx32 pos;
+  const FLDMAPPER *pG3DMapper;
+  
+  MMDL_GetVectorPos( fmmdl, &pos );
+  MMDL_TOOL_AddDirVector( dir, &pos, GRID_FX32 );
+  MMDL_GetMapPosAttr( fmmdl, &pos, &attr );
 	#endif
 
 	return( attr );
@@ -2148,4 +2230,18 @@ u16 MMDL_TOOL_GetRangeDir( int ax, int az, int bx, int bz )
 	if( ax < bx ){ return( DIR_RIGHT ); }
 	if( az > bz ){ return( DIR_UP ); }
 	return( DIR_DOWN );
+}
+
+//--------------------------------------------------------------
+/**
+ * FLDEFF_CTRL取得
+ * @param mmdl  MMDL*
+ * @retval FLDEFF_CTRL*
+ */
+//--------------------------------------------------------------
+static FLDEFF_CTRL * mmdl_GetFldEffCtrl( MMDL *mmdl )
+{
+  const MMDLSYS *mmdlsys = MMDL_GetMMdlSys( mmdl );
+  FIELDMAP_WORK *fieldMapWork = MMDLSYS_GetFieldMapWork( (MMDLSYS*)mmdlsys );
+  return( FIELDMAP_GetFldEffCtrl(fieldMapWork) );
 }

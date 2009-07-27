@@ -421,7 +421,7 @@ FLDEFF_TASK * FLDEFF_CTRL_AddTask(
 {
   FLDEFF_TASK *task;
   GF_ASSERT( fectrl->tasksys );
-  task = FLDEFF_TASKSYS_Add(
+  task = FLDEFF_TASKSYS_AddTask(
       fectrl->tasksys, head, pos, add_param, add_ptr, pri );
   return( task );
 }
@@ -548,7 +548,7 @@ void FLDEFF_TASKSYS_Draw( FLDEFF_TASKSYS *tasksys )
  * add_ptrはFLDEFF_TASK_GetAddPointer()で取得。
  */
 //--------------------------------------------------------------
-FLDEFF_TASK * FLDEFF_TASKSYS_Add(
+FLDEFF_TASK * FLDEFF_TASKSYS_AddTask(
     FLDEFF_TASKSYS *tasksys, const FLDEFF_TASK_HEADER *head,
     const VecFx32 *pos, int add_param, const void *add_ptr, int pri )
 {
@@ -664,7 +664,7 @@ void FLDEFF_TASK_CallDraw( FLDEFF_TASK *task )
 /**
  * フィールドエフェクト　タスク　追加時の引数パラメタ取得
  * @param task FLDEFF_TASK
- * @retval u32 FLDEFF_TASKSYS_Add()引数add_param
+ * @retval u32 FLDEFF_TASKSYS_AddTask()引数add_param
  */
 //--------------------------------------------------------------
 u32 FLDEFF_TASK_GetAddParam( const FLDEFF_TASK *task )
@@ -676,7 +676,7 @@ u32 FLDEFF_TASK_GetAddParam( const FLDEFF_TASK *task )
 /**
  * フィールドエフェクト　タスク　追加時の引数ポインタ取得
  * @param task  FLDEFF_TASK
- * @retval void* FLDEFF_TASKSYS_Add()引数add_ptr
+ * @retval void* FLDEFF_TASKSYS_AddTask()引数add_ptr
  */
 //--------------------------------------------------------------
 const void * FLDEFF_TASK_GetAddPointer( const FLDEFF_TASK *task )
@@ -742,6 +742,8 @@ HEAPID FLDEFF_TASK_GetHeapID( const FLDEFF_TASK *task )
 #include "fldeff_grass.h"
 #include "fldeff_namipoke.h"
 #include "fldeff_gyoe.h"
+#include "fldeff_footmark.h"
+#include "fldeff_reflect.h"
 
 FLDEFF_PROCEFF_DATA DATA_FLDEFF_ProcEffectDataTbl[FLDEFF_PROCID_MAX+1] =
 {
@@ -750,6 +752,8 @@ FLDEFF_PROCEFF_DATA DATA_FLDEFF_ProcEffectDataTbl[FLDEFF_PROCID_MAX+1] =
   {FLDEFF_PROCID_GRASS,FLDEFF_GRASS_Init,FLDEFF_GRASS_Delete},
   {FLDEFF_PROCID_NAMIPOKE,FLDEFF_NAMIPOKE_Init,FLDEFF_NAMIPOKE_Delete},
   {FLDEFF_PROCID_GYOE,FLDEFF_GYOE_Init,FLDEFF_GYOE_Delete},
+  {FLDEFF_PROCID_FOOTMARK,FLDEFF_FOOTMARK_Init,FLDEFF_FOOTMARK_Delete},
+  {FLDEFF_PROCID_REFLECT,FLDEFF_REFLECT_Init,FLDEFF_REFLECT_Delete},
   {FLDEFF_PROCID_MAX,NULL,NULL}, ///<終端
 };
 
@@ -763,6 +767,8 @@ const FLDEFF_PROCID DATA_FLDEFF_RegistEffectGroundTbl[] =
   FLDEFF_PROCID_GRASS,
   FLDEFF_PROCID_NAMIPOKE,
   FLDEFF_PROCID_GYOE,
+  FLDEFF_PROCID_FOOTMARK,
+  FLDEFF_PROCID_REFLECT,
 };
 
 const u32 DATA_FLDEFF_RegistEffectGroundTblNum = 
