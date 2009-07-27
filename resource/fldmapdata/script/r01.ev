@@ -58,8 +58,11 @@ talkobj_boy1_yes:
 	_TALKMSG_ALLPUT msg_r01_boy1_02
 	_AB_KEYWAIT
   	_TALKWIN_CLOSE
+	//段差を降りるアニメ+段差を降りるSE
+	_SE_PLAY SEQ_SE_DANSA
 	_OBJ_ANIME R01BOY1,test01anime
 	_OBJ_ANIME_WAIT
+	_SE_WAIT
 
 	_TURN_HERO_SITE
 	_TALKWIN_OPEN
@@ -118,7 +121,6 @@ ev_r01_talkobj_man1:
 //	アニメーションデータ
 //--------------------------------------------------------------
 _ANIME_LABEL test01anime
-	_ANIME_DATA AC_MARK_GYOE,1
 	_ANIME_DATA AC_JUMP_D_2G_16F,1
 	_ANIME_DATA AC_DIR_U,1
 	_ANIME_DATA ACMD_END,0
