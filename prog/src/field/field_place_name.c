@@ -748,10 +748,10 @@ static void SetupBG( FIELD_PLACE_NAME* p_sys )
 		0x800,						// スクリーンバッファサイズ
 		0,							// スクリーンバッファオフセット
 		GFL_BG_SCRSIZ_256x256,		// スクリーンサイズ
-		GX_BG_COLORMODE_256,		// カラーモード
+		GX_BG_COLORMODE_16,			// カラーモード
 		GX_BG_SCRBASE_0x0800,		// スクリーンベースブロック
 		GX_BG_CHARBASE_0x04000,		// キャラクタベースブロック
-		GFL_BG_CHRSIZ256_256x256,	// キャラクタエリアサイズ
+		GFL_BG_CHRSIZ_256x256,		// キャラクタエリアサイズ
 		GX_BG_EXTPLTT_01,			// BG拡張パレットスロット選択
 		1,							// 表示プライオリティー
 		0,							// エリアオーバーフラグ
@@ -809,8 +809,8 @@ static void SetupBG( FIELD_PLACE_NAME* p_sys )
 //------------------------------------------------------------------------------------
 static void LoadNullCharacterData()
 {
-	GFL_BG_AllocCharacterArea( BG_FRAME, CHAR_SIZE * CHAR_SIZE, GFL_BG_CHRAREA_GET_F );
-	GFL_BG_FillCharacter( BG_FRAME, 0, 1, 0 );
+	GFL_BG_AllocCharacterArea( BG_FRAME, CHAR_SIZE * CHAR_SIZE / 2, GFL_BG_CHRAREA_GET_F );
+	//GFL_BG_FillCharacter( BG_FRAME, 0, 1, 0 );
 }
 
 //------------------------------------------------------------------------------------
@@ -1237,7 +1237,7 @@ static void WriteCharUnitToBitmapWindow( FIELD_PLACE_NAME* p_sys )
 		p_src_bmp = p_char->pBmp;
 		dx = p_char->param.x - ( BMPWIN_POS_X_CHAR * CHAR_SIZE );
 		dy = p_char->param.y - ( BMPWIN_POS_Y_CHAR * CHAR_SIZE );
-		GFL_BMP_Print16to256( p_src_bmp, p_dst_bmp, 0, 0, dx, dy, p_char->width, p_char->height, 0, 0 );
+		GFL_BMP_Print( p_src_bmp, p_dst_bmp, 0, 0, dx, dy, p_char->width, p_char->height, 0 );
 	}
 
 	// 更新されたキャラデータをVRAMに転送
