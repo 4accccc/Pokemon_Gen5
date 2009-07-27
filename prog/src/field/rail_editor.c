@@ -30,10 +30,13 @@
 
 #include "fieldmap_func.h"
 
+
 #include "debug/gf_mcs.h"
 
 #include "rail_editor.h"
 #include "rail_editor_data.h"
+#include "field_rail_loader_func.h"
+#include "field_rail_func.h"
 
 //-----------------------------------------------------------------------------
 /**
@@ -68,7 +71,7 @@ enum {
 //=====================================
 #define RM_DEF_ANGLE_MOVE	(0x100)
 #define RM_DEF_LEN_MOVE		(8*FX32_ONE)
-#define RM_DEF_CAMERA_LEN	( 0x38D000 )
+#define RM_DEF_CAMERA_LEN	( 0x10D000 )
 #define RM_DEF_CAMERA_PITCH	( 0x800 )
 
 
@@ -182,6 +185,9 @@ typedef struct {
 	GFL_G3D_OBJ* p_positionobj;
 	VecFx32			position_last_pos;
 	int					color_frame;
+
+	// ターゲットの描画
+	BOOL	draw_target;
 	
 	// 描画オブジェ部
 	RE_RAIL_DRAW_OBJ draw_obj[ RM_DRAW_OBJ_MAX ];
@@ -208,6 +214,7 @@ static void RE_DRAW_Draw(FLDMAPFUNC_WORK * p_funcwk, FIELDMAP_WORK * p_fieldmap,
 static void RE_DRAW_Create(FLDMAPFUNC_WORK * p_funcwk, FIELDMAP_WORK * p_fieldmap, void * p_work);
 static void RE_DRAW_Delete(FLDMAPFUNC_WORK * p_funcwk, FIELDMAP_WORK * p_fieldmap, void * p_work);
 
+static void RE_DRAW_SetDrawTarget( RE_RAIL_DRAW_WORK* p_wk, BOOL flag );
 static RE_RAIL_DRAW_OBJ* RE_DRAW_GetClearWork( RE_RAIL_DRAW_WORK* p_wk );
 static void RE_DRAW_SetUpData( RE_RAIL_DRAW_WORK* p_wk, const RAIL_SETTING* cp_setting );
 static void RE_DRAW_DRAWOBJ_Clear( RE_RAIL_DRAW_OBJ* p_drawobj );
@@ -429,6 +436,11 @@ static GMEVENT_RESULT DEBUG_RailEditorEvent( GMEVENT * p_event, int *  p_seq, vo
 
 		// 破棄
 		FLDMAPFUNC_Delete( p_wk->p_rail_draw );
+
+
+		// デフォルトターゲットをもとにもどす
+		FIELD_CAMERA_DEBUG_SetDefaultTarget( FIELDMAP_GetFieldCamera( p_wk->p_fieldmap ), p_wk->cp_field_default_target );
+		
 		return GMEVENT_RES_FINISH;
 
 	default:
@@ -461,6 +473,9 @@ static void RE_DRAW_Create(FLDMAPFUNC_WORK * p_funcwk, FIELDMAP_WORK * p_fieldma
 		NARC_rail_editor_rail_editor_position_nsbma,
 	};
 	RE_RAIL_DRAW_WORK* p_wk = p_work;
+
+	// 最初はターゲット描画しない
+	p_wk->draw_target = FALSE;
 	
 	// 描画リソース読み込み
 	for( i=0; i<RM_DRAW_OBJ_RES_MAX; i++ )
@@ -562,7 +577,6 @@ static void RE_DRAW_Draw(FLDMAPFUNC_WORK * p_funcwk, FIELDMAP_WORK * p_fieldmap,
 	{
 		RE_DRAW_DRAWOBJ_Draw( p_wk, &p_wk->draw_obj[i] );
 	}
-
 	
 	// 主人公位置に置く
 	{
@@ -615,9 +629,37 @@ static void RE_DRAW_Draw(FLDMAPFUNC_WORK * p_funcwk, FIELDMAP_WORK * p_fieldmap,
 
 		GFL_G3D_DRAW_DrawObject( p_wk->p_positionobj, &trans );
 	}
+
+	// ターゲット位置に置く
+	if( p_wk->draw_target )
+	{
+		FIELD_CAMERA* p_camera = FIELDMAP_GetFieldCamera( p_fieldmap );
+		GFL_G3D_OBJSTATUS trans = 
+		{
+			{0,0,0},
+			{FX32_ONE, FX32_ONE, FX32_ONE},
+			{FX32_ONE,0,0, 0,FX32_ONE,0, 0,0,FX32_ONE },
+		};
+		FIELD_CAMERA_GetTargetPos( p_camera, &trans.trans );
+		GFL_G3D_DRAW_DrawObject( p_wk->p_positionobj, &trans );
+	}
 	
 }
 
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	ターゲット位置を描画するのか設定
+ *	
+ *	@param	p_wk		ワーク
+ *	@param	flag		フラグ
+ */
+//-----------------------------------------------------------------------------
+static void RE_DRAW_SetDrawTarget( RE_RAIL_DRAW_WORK* p_wk, BOOL flag )
+{
+	p_wk->draw_target = flag;
+}
 
 //----------------------------------------------------------------------------
 /**
@@ -1287,7 +1329,7 @@ static void RE_InputPoint_FreeNormal( DEBUG_RAIL_EDITOR* p_wk )
 	u16 yaw;
 
 	// 半グリッドサイズでの移動にする
-	FIELD_PLAYER_NOGRID_Move( p_player, GFL_UI_KEY_GetCont(), 0x8000 );
+	FIELD_PLAYER_NOGRID_Move( p_player, GFL_UI_KEY_GetCont(), 0x4000 );
 
 	// カメラを動かす
 	if( GFL_UI_KEY_GetCont() & PAD_BUTTON_L )
@@ -1317,18 +1359,26 @@ static void RE_InputPoint_FreeCircle( DEBUG_RAIL_EDITOR* p_wk )
 	VecFx32 target, pl_pos, sub;
 	u16 yaw;
 	fx32 len;
-	u32 key_cont = GFL_UI_KEY_GetRepeat();
+	fx32 camera_len;
+	u32 key_repeat = GFL_UI_KEY_GetRepeat();
+	u32 key_cont = GFL_UI_KEY_GetCont();
 	s16 df_angle;
 	s16 df_len;
 	BOOL change = FALSE;
+	fx32 pos_y;
+
+	// レール情報から、補正してあげる
 
 	// カメラターゲットを中心に回転移動
 	FIELD_CAMERA_GetTargetPos( p_camera, &target );
 	FIELD_PLAYER_GetPos( p_player, &pl_pos );
+	pos_y = pl_pos.y;
 
 	target.y	= pl_pos.y;
 	len				= VEC_Distance( &target, &pl_pos );
 	yaw = FIELD_CAMERA_GetAngleYaw( p_camera );
+
+	camera_len = FIELD_CAMERA_GetAngleLen( p_camera );
 
 	if( key_cont & PAD_BUTTON_B )
 	{
@@ -1342,24 +1392,76 @@ static void RE_InputPoint_FreeCircle( DEBUG_RAIL_EDITOR* p_wk )
 	}
 
  
-	if( key_cont & PAD_KEY_LEFT )
+	if( (key_cont & PAD_BUTTON_A) == 0 )
 	{
-		yaw -= df_angle;
+		if( key_repeat & PAD_KEY_LEFT )
+		{
+			yaw -= df_angle;
+			change = TRUE;
+		}
+		else if( key_repeat & PAD_KEY_RIGHT )
+		{
+			yaw += df_angle;
+			change = TRUE;
+		}
+		else if( key_repeat & PAD_KEY_UP )
+		{
+			len += df_len;
+			change = TRUE;
+		}
+		else if( key_repeat & PAD_KEY_DOWN )
+		{
+			len -= df_len;
+			change = TRUE;
+		}
+		else if( key_repeat & PAD_BUTTON_Y )
+		{
+			pos_y -= 2*FX32_ONE;
+			change = TRUE;
+		}
+		else if( key_repeat & PAD_BUTTON_X )
+		{
+			pos_y += 2*FX32_ONE;
+			change = TRUE;
+		}
+	}
+	else
+	{
+		// ターゲット操作
+		if( key_repeat & PAD_KEY_UP )
+		{
+			change = TRUE;
+			target.z -= 4*FX32_ONE;
+		}
+		else if( key_repeat & PAD_KEY_DOWN )
+		{ 
+			change = TRUE;
+			target.z += 4*FX32_ONE;
+		}
+		else if( key_repeat & PAD_KEY_LEFT )
+		{ 
+			change = TRUE;
+			target.x -= 4*FX32_ONE;
+		}
+		else if( key_repeat & PAD_KEY_RIGHT )
+		{ 
+			change = TRUE;
+			target.x += 4*FX32_ONE;
+		}
+		if( change )
+		{
+			FIELD_CAMERA_SetTargetPos( p_camera, &target );
+		}
+	}
+
+	if( key_repeat & PAD_BUTTON_L )
+	{
+		camera_len += df_len;
 		change = TRUE;
 	}
-	else if( key_cont & PAD_KEY_RIGHT )
+	else if( key_repeat & PAD_BUTTON_R )
 	{
-		yaw += df_angle;
-		change = TRUE;
-	}
-	else if( key_cont & PAD_KEY_UP )
-	{
-		len += df_len;
-		change = TRUE;
-	}
-	else if( key_cont & PAD_KEY_DOWN )
-	{
-		len -= df_len;
+		camera_len -= df_len;
 		change = TRUE;
 	}
 
@@ -1368,14 +1470,18 @@ static void RE_InputPoint_FreeCircle( DEBUG_RAIL_EDITOR* p_wk )
 		// 角度から、座標を求める
 		pl_pos.x = target.x + FX_Mul( FX_SinIdx( yaw ), len );
 		pl_pos.z = target.z + FX_Mul( FX_CosIdx( yaw ), len );
+		pl_pos.y = pos_y;
 		FIELD_PLAYER_SetPos( p_player, &pl_pos );
+
+		FIELD_CAMERA_SetAngleYaw( p_camera, yaw );
+		FIELD_CAMERA_SetAngleLen( p_camera, camera_len );
 	}
 
+	
 
 	// 延長線上にカメラを配置
-	FIELD_CAMERA_SetAnglePitch( p_camera, RM_DEF_CAMERA_PITCH );
-	FIELD_CAMERA_SetAngleYaw( p_camera, yaw );
-	FIELD_CAMERA_SetAngleLen( p_camera, RM_DEF_CAMERA_LEN );
+	//FIELD_CAMERA_SetAnglePitch( p_camera, RM_DEF_CAMERA_PITCH );
+	//FIELD_CAMERA_SetAngleLen( p_camera, RM_DEF_CAMERA_LEN );
 }
 
 //----------------------------------------------------------------------------
@@ -1488,22 +1594,37 @@ static void RE_InitInputPoint_FreeCircle( DEBUG_RAIL_EDITOR* p_wk )
 	FIELD_CAMERA* p_camera = FIELDMAP_GetFieldCamera( p_wk->p_fieldmap );
 	FIELD_PLAYER* p_player = FIELDMAP_GetFieldPlayer( p_wk->p_fieldmap );
 	FIELD_RAIL_MAN* p_rail = FIELDMAP_GetFieldRailMan( p_wk->p_fieldmap );
+	FIELD_RAIL_LOADER * p_rail_loader = FIELDMAP_GetFieldRailLoader( p_wk->p_fieldmap );
 	FLD_SCENEAREA* p_scenearea = FIELDMAP_GetFldSceneArea( p_wk->p_fieldmap );
+	const RAIL_SETTING* cp_rail_setting = FIELD_RAIL_LOADER_GetData( p_rail_loader );
+	RAIL_LOCATION location;
 	VecFx32 target, pl_pos, sub;
 	u16 yaw;
 	fx32 len;
-	u32 key_cont = GFL_UI_KEY_GetRepeat();
-	s16 df_angle;
-	s16 df_len;
-	BOOL change = FALSE;
+	u32 linepos_set;
 
 	FIELD_RAIL_MAN_SetActiveFlag(p_rail, FALSE);
 	FLD_SCENEAREA_SetActiveFlag(p_scenearea, FALSE);
 
 	FIELD_CAMERA_FreeTarget( p_camera );
+	
+	// レール情報のラインの中心データをターゲットに設定
+	FIELD_CAMERA_GetTargetPos( p_camera, &target );	// 今のターゲットで初期化
+	FIELD_RAIL_MAN_GetLocation( p_rail, &location	);
+	if( location.type == FIELD_RAIL_TYPE_LINE )
+	{
+		linepos_set = cp_rail_setting->line_table[ location.rail_index ].line_pos_set;
+		if( cp_rail_setting->linepos_table[ linepos_set ].func_index == FIELD_RAIL_LOADER_LINEPOS_FUNC_CURVE )
+		{
+			const RAIL_POSFUNC_CURVE_WORK* cp_curve_wk = (const RAIL_POSFUNC_CURVE_WORK*)cp_rail_setting->linepos_table[ linepos_set ].work;
+			target.x = cp_curve_wk->x;
+			target.y = cp_curve_wk->y;
+			target.z = cp_curve_wk->z;
+			FIELD_CAMERA_SetTargetPos( p_camera, &target );	// 今のターゲットで初期化
+		}
+	}
 
 	// カメラターゲットを中心に回転移動
-	FIELD_CAMERA_GetTargetPos( p_camera, &target );
 	FIELD_PLAYER_GetPos( p_player, &pl_pos );
 
 	target.y	= pl_pos.y;
@@ -1520,9 +1641,16 @@ static void RE_InitInputPoint_FreeCircle( DEBUG_RAIL_EDITOR* p_wk )
 	FIELD_PLAYER_SetPos( p_player, &pl_pos );
 
 	// 延長線上にカメラを配置
-	FIELD_CAMERA_SetAnglePitch( p_camera, RM_DEF_CAMERA_PITCH );
+//	FIELD_CAMERA_SetAnglePitch( p_camera, RM_DEF_CAMERA_PITCH );
 	FIELD_CAMERA_SetAngleYaw( p_camera, yaw );
-	FIELD_CAMERA_SetAngleLen( p_camera, RM_DEF_CAMERA_LEN );
+//	FIELD_CAMERA_SetAngleLen( p_camera, len + RM_DEF_CAMERA_LEN );
+
+	// ターゲットの描画ON
+	{
+		RE_RAIL_DRAW_WORK* p_drawwk = FLDMAPFUNC_GetFreeWork( p_wk->p_rail_draw );	
+
+		RE_DRAW_SetDrawTarget( p_drawwk, TRUE );
+	}
 }
 //----------------------------------------------------------------------------
 /**
@@ -1623,6 +1751,12 @@ static void RE_ExitInputPoint_FreeNormal( DEBUG_RAIL_EDITOR* p_wk )
 //-----------------------------------------------------------------------------
 static void RE_ExitInputPoint_FreeCircle( DEBUG_RAIL_EDITOR* p_wk )
 {
+	// ターゲットの描画ON
+	{
+		RE_RAIL_DRAW_WORK* p_drawwk = FLDMAPFUNC_GetFreeWork( p_wk->p_rail_draw );	
+
+		RE_DRAW_SetDrawTarget( p_drawwk, TRUE );
+	}
 }
 //----------------------------------------------------------------------------
 /**

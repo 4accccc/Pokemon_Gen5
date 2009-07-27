@@ -78,8 +78,6 @@ static void mapCtrlNoGrid_Create(
 //  FIELD_CAMERA_BindNoCamera(camera, TRUE);
 
   fld_player = FIELDMAP_GetFieldPlayer( fieldWork );
-  //2009.07.05 ROM‚Ì‚½‚ß‚ÌˆêŽž“I‚È•â³ˆ—
-  pos->y += FX32_ONE * 4;
 	FIELD_PLAYER_SetPos( fld_player, pos );
 	FIELD_PLAYER_SetDir( fld_player, dir );
 

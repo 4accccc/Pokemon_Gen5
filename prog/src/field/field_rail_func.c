@@ -258,24 +258,48 @@ void FIELD_RAIL_POSFUNC_CurveLine(const FIELD_RAIL * rail, VecFx32 * pos)
 	s32 line_ofs_max	= FIELD_RAIL_GetLineOfsMax( rail );
   fx32 ofs = (line_ofs * FX32_ONE) / line_ofs_max;
 
-	line_pos_set = FIELD_RAIL_GetLinePosSet( rail );
-	work = (const RAIL_POSFUNC_CURVE_WORK*)line_pos_set->work;
-  center.x = work->x;
-  center.y = work->y;
-  center.z = work->z;
 
-  VEC_Subtract(p_s, &center, &vec_s);
-  VEC_Subtract(p_e, &center, &vec_e);
-  
-  getIntermediateVector(&vec_i, &vec_s, &vec_e, ofs);
-  VEC_Add(&center, &vec_i, pos);
-  {
-    VecFx32 w_vec;
-		s32 width_ofs = FIELD_RAIL_GetWidthOfs( rail );
-		fx32 ofs_unit = FIELD_RAIL_GetOfsUnit( rail );
-    VEC_Normalize(&vec_i, &w_vec);
-    VEC_MultAdd(-(width_ofs) * ofs_unit, &w_vec, pos, pos);
-  }
+	// ライン動作のつながりが良くなるように、line_ofs==0 or line_ofs == line_ofs_max
+	// のときはそれぞれの点の位置に主人公がいるようにする。
+	if( line_ofs == 0 )
+	{
+		*pos = *p_s;
+	}
+	else if( line_ofs == line_ofs_max )
+	{
+		*pos = *p_e;
+	}
+	else
+	{
+		// Y座標は、線形で求める。
+		// XZは、回転でもとめる
+		pos->y = p_e->y - p_s->y;
+		pos->y = FX_Div( FX_Mul( pos->y, line_ofs<<FX32_SHIFT ), line_ofs_max<<FX32_SHIFT );
+		pos->y += p_s->y;
+		
+
+		line_pos_set = FIELD_RAIL_GetLinePosSet( rail );
+		work = (const RAIL_POSFUNC_CURVE_WORK*)line_pos_set->work;
+		center.x = work->x;
+		center.y = pos->y;
+		center.z = work->z;
+
+		VEC_Subtract(p_s, &center, &vec_s);
+		VEC_Subtract(p_e, &center, &vec_e);
+		vec_s.y = 0;
+		vec_e.y = 0;
+
+		
+		getIntermediateVector(&vec_i, &vec_s, &vec_e, ofs);
+		VEC_Add(&center, &vec_i, pos);
+		{
+			VecFx32 w_vec;
+			s32 width_ofs = FIELD_RAIL_GetWidthOfs( rail );
+			fx32 ofs_unit = FIELD_RAIL_GetOfsUnit( rail );
+			VEC_Normalize(&vec_i, &w_vec);
+			VEC_MultAdd(-(width_ofs) * ofs_unit, &w_vec, pos, pos);
+		}
+	}
 
   if (GFL_UI_KEY_GetTrg() & PAD_BUTTON_B)
   {

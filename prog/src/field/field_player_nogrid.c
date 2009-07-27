@@ -153,7 +153,14 @@ static void nogridPC_Move_SetValue( FIELD_PLAYER *fld_player,
 	}
 	
 	if( mvFlag == TRUE ){
-		MMDL_SetDrawStatus(fmmdl,DRAW_STA_WALK_8F);
+		if( key & PAD_BUTTON_B )
+		{	
+			MMDL_SetDrawStatus(fmmdl,DRAW_STA_DASH_4F);
+		}
+		else
+		{
+			MMDL_SetDrawStatus(fmmdl,DRAW_STA_WALK_8F);
+		}
 	} else {
 		MMDL_SetDrawStatus(fmmdl,DRAW_STA_STOP);
 	}

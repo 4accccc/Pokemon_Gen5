@@ -439,6 +439,7 @@ void FIELD_RAIL_MAN_Update(FIELD_RAIL_MAN * man, int key_cont)
 
   if(man->now_rail.type == FIELD_RAIL_TYPE_POINT)
   { //POINTã‚Ì‚Æ‚«‚ÌˆÚ“®ˆ—
+		TOMOYA_Printf( "count_up point %d\n", count_up );
     set_key = updatePointMove(&man->now_rail, key, count_up);
   }
   else if(man->now_rail.type == FIELD_RAIL_TYPE_LINE)
@@ -448,8 +449,8 @@ void FIELD_RAIL_MAN_Update(FIELD_RAIL_MAN * man, int key_cont)
 
   if (set_key != RAIL_KEY_NULL)
   {
-    OS_TPrintf("RAIL:%s :line_ofs=%d width_ofs=%d\n",
-        debugGetRailKeyName(set_key), man->now_rail.line_ofs, man->now_rail.width_ofs);
+    OS_TPrintf("RAIL:%s :line_ofs=%d line_ofs_max=%d width_ofs=%d\n",
+        debugGetRailKeyName(set_key), man->now_rail.line_ofs, man->now_rail.line_ofs_max, man->now_rail.width_ofs);
     man->last_active_key = set_key;
   }
 
@@ -896,7 +897,7 @@ static RAIL_KEY updateLineMove_new(FIELD_RAIL * rail, RAIL_KEY key, u32 count_up
       debugCheckPointData(nPoint, rail->rail_dat);
       ofs_max = getLineOfsMax( back, rail->ofs_unit, rail->rail_dat );
       return setLine(rail, back, key,
-          /*l_ofs*/ofs_max - rail->line_ofs,
+          /*l_ofs*/ofs_max - MATH_ABS(rail->line_ofs),	// ‚±‚±‚É‚ÍA•K‚¸•‰‚Ì’l‚ª—ˆ‚é
           /*w_ofs*/rail->width_ofs,
           /*ofs_max*/ofs_max);
     }

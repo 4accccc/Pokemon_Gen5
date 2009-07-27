@@ -213,8 +213,6 @@ static void mapCtrlC3_Main( FIELDMAP_WORK *fieldWork, VecFx32 *pos )
     // ƒŒ[ƒ‹“®ì
     FIELD_RAIL_MAN_GetPos(railMan, pos );
     pos->y = HEIGHT;
-    //2009.07.05 ROM‚Ì‚½‚ß‚ÌˆêŽž“I‚È•â³ˆ—
-    pos->y += FX32_ONE * 8;
     FIELD_PLAYER_SetPos( fld_player, pos );
     PLAYERWORK_setPosition( player, pos );
     
