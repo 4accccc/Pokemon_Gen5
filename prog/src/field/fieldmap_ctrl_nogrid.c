@@ -13,6 +13,8 @@
 #include "fieldmap.h"
 #include "field_player_nogrid.h"
 
+#include "gamesystem/game_data.h"  //PLAYER_WORK
+
 #include "fieldmap_ctrl_nogrid.h"
 
 #include "field_rail.h"
@@ -137,8 +139,11 @@ static void mapCtrlNoGrid_Main( FIELDMAP_WORK *fieldWork, VecFx32 *pos )
 
   if (rail_flag)
   {
+    PLAYER_WORK *player = GAMEDATA_GetMyPlayerWork(
+        GAMESYSTEM_GetGameData(FIELDMAP_GetGameSysWork(fieldWork)) );
     FIELD_RAIL_MAN_GetPos(railMan, pos );
     FIELD_PLAYER_SetPos( fld_player, pos );
+    PLAYERWORK_setPosition( player, pos );
     FIELD_CAMERA_SetTargetPos( FIELDMAP_GetFieldCamera(fieldWork), pos );
   }
   {
