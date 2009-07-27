@@ -1739,6 +1739,11 @@
 #ifndef ZONE_R03R0101_EVC_H
 #define ZONE_R03R0101_EVC_H
 
+#define R03R0101_MIDDLEWOMAN2              0
+#define R03R0101_BABYBOY1A                 1
+#define R03R0101_BABYBOY1B                 2
+#define R03R0101_WOMAN3                    3
+#define R03R0101_BABYGIRL1                 4
 
 #endif //ZONE_R03R0101_EVC_H
 //#include "tmp/r03r0201.h"
@@ -3954,61 +3959,61 @@ static const EVENTDATA_TABLE event_c02r0601 = {
 #include "../script/c03_def.h"
 const CONNECT_DATA DOOR_EVENT_C03[] = {
 	{//DOOR_ID_C03_C03P05_EXIT01 = 0
-		{832, 0, 352},
+		{1088, 0, 608},
 		ZONE_ID_C03P05, DOOR_ID_C03P05_C03_EXIT01,
 		EXIT_DIR_NON,//direction
 		EXIT_TYPE_NONE //type
 	},
 	{//DOOR_ID_C03_C03P13_EXIT01 = 1
-		{992, 0, 256},
+		{1248, 0, 512},
 		ZONE_ID_C03P13, DOOR_ID_C03P13_C03_EXIT01,
 		EXIT_DIR_NON,//direction
 		EXIT_TYPE_NONE //type
 	},
 	{//DOOR_ID_C03_C03P06_EXIT01 = 2
-		{816, 0, 688},
+		{1072, 0, 944},
 		ZONE_ID_C03P06, DOOR_ID_C03P06_C03_EXIT01,
 		EXIT_DIR_NON,//direction
 		EXIT_TYPE_NONE //type
 	},
 	{//DOOR_ID_C03_C03P12_EXIT01 = 3
-		{992, 0, 784},
+		{1248, 0, 1040},
 		ZONE_ID_C03P12, DOOR_ID_C03P12_C03_EXIT01,
 		EXIT_DIR_NON,//direction
 		EXIT_TYPE_NONE //type
 	},
 	{//DOOR_ID_C03_C03P07_EXIT01 = 4
-		{512, 0, 880},
+		{768, 0, 1136},
 		ZONE_ID_C03P07, DOOR_ID_C03P07_C03_EXIT01,
 		EXIT_DIR_NON,//direction
 		EXIT_TYPE_NONE //type
 	},
 	{//DOOR_ID_C03_C03P11_EXIT01 = 5
-		{512, 0, 1056},
+		{768, 0, 1312},
 		ZONE_ID_C03P11, DOOR_ID_C03P11_C03_EXIT01,
 		EXIT_DIR_NON,//direction
 		EXIT_TYPE_NONE //type
 	},
 	{//DOOR_ID_C03_C03P08_EXIT01 = 6
-		{208, 0, 688},
+		{464, 0, 944},
 		ZONE_ID_C03P08, DOOR_ID_C03P08_C03_EXIT01,
 		EXIT_DIR_NON,//direction
 		EXIT_TYPE_NONE //type
 	},
 	{//DOOR_ID_C03_C03P10_EXIT01 = 7
-		{64, 0, 784},
+		{320, 0, 1040},
 		ZONE_ID_C03P10, DOOR_ID_C03P10_C03_EXIT01,
 		EXIT_DIR_NON,//direction
 		EXIT_TYPE_NONE //type
 	},
 	{//DOOR_ID_C03_C03P03_EXIT01 = 8
-		{208, 0, 336},
+		{464, 0, 592},
 		ZONE_ID_C03P03, DOOR_ID_C03P03_C03_EXIT01,
 		EXIT_DIR_NON,//direction
 		EXIT_TYPE_NONE //type
 	},
 	{//DOOR_ID_C03_C03P09_EXIT01 = 9
-		{48, 0, 240},
+		{304, 0, 496},
 		ZONE_ID_C03P09, DOOR_ID_C03P09_C03_EXIT01,
 		EXIT_DIR_NON,//direction
 		EXIT_TYPE_NONE //type
@@ -8122,7 +8127,7 @@ const FLDMMDL_HEADER OBJ_EVENT_R03[] = {
 	{
 		R03_WOMAN3,
 		WOMAN3,
-		MV_DOWN,
+		MV_RND,
 		EV_TYPE_NORMAL,
 		0,
 		SCRID_R03_TALKOBJ_WOMAN3,
@@ -8130,9 +8135,9 @@ const FLDMMDL_HEADER OBJ_EVENT_R03[] = {
 		0,
 		0,
 		0,
-		0,
-		0,
-		740,
+		1,
+		1,
+		737,
 		556,
 		16,
 	},
@@ -8171,14 +8176,102 @@ const CONNECT_DATA DOOR_EVENT_R03R0101[] = {
 	},
 };
 const int ConnectCount_R03R0101 = NELEMS(DOOR_EVENT_R03R0101);
+const FLDMMDL_HEADER OBJ_EVENT_R03R0101[] = {
+	{
+		R03R0101_MIDDLEWOMAN2,
+		MIDDLEWOMAN2,
+		MV_DOWN,
+		EV_TYPE_NORMAL,
+		0,
+		SCRID_R03R0101_TALKOBJ_MIDDLEWOMAN2,
+		DIR_DOWN,
+		0,
+		0,
+		0,
+		0,
+		0,
+		2,
+		3,
+		0,
+	},
+	{
+		R03R0101_BABYBOY1A,
+		BABYBOY1,
+		MV_RTDL         ,
+		EV_TYPE_NORMAL,
+		0,
+		SCRID_R03R0101_TALKOBJ_BABYBOY1A,
+		DIR_DOWN,
+		0,
+		0,
+		0,
+		3,
+		3,
+		10,
+		4,
+		0,
+	},
+	{
+		R03R0101_BABYBOY1B,
+		BABYBOY1,
+		MV_RTUR         ,
+		EV_TYPE_NORMAL,
+		0,
+		SCRID_R03R0101_TALKOBJ_BABYBOY1B,
+		DIR_DOWN,
+		0,
+		0,
+		0,
+		3,
+		3,
+		7,
+		7,
+		0,
+	},
+	{
+		R03R0101_WOMAN3,
+		WOMAN3,
+		MV_DIR_RND,
+		EV_TYPE_NORMAL,
+		0,
+		SCRID_R03R0101_TALKOBJ_WOMAN3,
+		DIR_DOWN,
+		0,
+		0,
+		0,
+		0,
+		0,
+		10,
+		9,
+		0,
+	},
+	{
+		R03R0101_BABYGIRL1,
+		BABYGIRL1,
+		MV_DIR_RND,
+		EV_TYPE_NORMAL,
+		0,
+		SCRID_R03R0101_TALKOBJ_BABYGIRL1,
+		DIR_DOWN,
+		0,
+		0,
+		0,
+		0,
+		0,
+		3,
+		7,
+		0,
+	},
+};
+const int ObjCount_R03R0101 = NELEMS(OBJ_EVENT_R03R0101);
 
 static const EVENTDATA_TABLE event_r03r0101 = {
 	0,
-	0,
+	5,
 	3,
 	0,
 	(void *)NULL,
-	(void *)NULL,
+	(void *)&OBJ_EVENT_R03R0101,
 	(void *)&DOOR_EVENT_R03R0101,
 	(void *)NULL,
 };

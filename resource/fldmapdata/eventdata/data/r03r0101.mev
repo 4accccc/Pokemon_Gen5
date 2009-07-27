@@ -1,20 +1,165 @@
 #event data
-#save date:2009/07/27 11:54:26
+#save date:2009/07/27 15:07:18
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\r03r0101.wms
 #SECTION START:OBJ_EVENT
 #Map Event List data
-#save date:2009/07/27 11:54:26
+#save date:2009/07/27 15:07:18
 2
 #hold event type:
 1
 #hold event number:
+5
+#event number: 0
+#type
+1
+#ID name
+R03R0101_MIDDLEWOMAN2
+#OBJ CODE Number
+MIDDLEWOMAN2
+#MOVE CODE Number
+MV_DOWN
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
 0
+#Event Script Name
+SCRID_R03R0101_TALKOBJ_MIDDLEWOMAN2
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#position
+-208 0 208
+#event number: 1
+#type
+1
+#ID name
+R03R0101_BABYBOY1A
+#OBJ CODE Number
+BABYBOY1
+#MOVE CODE Number
+MV_RTDL         
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+0
+#Event Script Name
+SCRID_R03R0101_TALKOBJ_BABYBOY1A
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+3
+#Move Limit Z Number
+3
+#position
+-80 0 192
+#event number: 2
+#type
+1
+#ID name
+R03R0101_BABYBOY1B
+#OBJ CODE Number
+BABYBOY1
+#MOVE CODE Number
+MV_RTUR         
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+0
+#Event Script Name
+SCRID_R03R0101_TALKOBJ_BABYBOY1B
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+3
+#Move Limit Z Number
+3
+#position
+-128 0 144
+#event number: 3
+#type
+1
+#ID name
+R03R0101_WOMAN3
+#OBJ CODE Number
+WOMAN3
+#MOVE CODE Number
+MV_DIR_RND
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+0
+#Event Script Name
+SCRID_R03R0101_TALKOBJ_WOMAN3
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#position
+-80 0 112
+#event number: 4
+#type
+1
+#ID name
+R03R0101_BABYGIRL1
+#OBJ CODE Number
+BABYGIRL1
+#MOVE CODE Number
+MV_DIR_RND
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+0
+#Event Script Name
+SCRID_R03R0101_TALKOBJ_BABYGIRL1
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#position
+-192 0 144
 #Map Event List Data End
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT
 #Map Event List data
-#save date:2009/07/27 11:54:26
+#save date:2009/07/27 15:07:18
 2
 #hold event type:
 1
@@ -24,7 +169,7 @@ C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\r03r0101.wms
 #SECTION End:BG_EVENT
 #SECTION START:POS_EVENT
 #Map Event List data
-#save date:2009/07/27 11:54:26
+#save date:2009/07/27 15:07:18
 2
 #hold event type:
 1
@@ -34,7 +179,7 @@ C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\r03r0101.wms
 #SECTION End:POS_EVENT
 #SECTION START:DOOR_EVENT
 #Map Event List data
-#save date:2009/07/27 11:54:26
+#save date:2009/07/27 15:07:18
 2
 #hold event type:
 1
