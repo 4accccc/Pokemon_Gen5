@@ -282,6 +282,17 @@ int ZONEDATA_GetRailDataID(u16 zone_id)
   }
   return ZONEDATA_NO_RAILDATA_ID;
 }
+//------------------------------------------------------------------
+/**
+ * @brief  ユニオンルームマップかどうかのチェック
+ * @param  zoneid ゾーン指定ID
+ * @return BOOL ユニオンルームだったらTRUE
+ */
+//------------------------------------------------------------------
+BOOL ZONEDATA_IsUnionRoom(u16 zone_id)
+{
+  return (zone_id == ZONE_ID_UNION);
+}
 
 //------------------------------------------------------------------
 /**
