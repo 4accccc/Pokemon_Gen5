@@ -639,6 +639,9 @@ static void _itemiconAnim(FIELD_ITEMMENU_WORK* pWork,int itemid)
 void _dispMain(FIELD_ITEMMENU_WORK* pWork)
 {
   GFL_CLACT_SYS_Main(); // CLSYSメイン
+  if(pWork->pAppTask){
+    APP_TASKMENU_UpdateMenu(pWork->pAppTask);
+  }
 }
 
 
@@ -1034,13 +1037,13 @@ void ITEMDISP_ListPlateClear( FIELD_ITEMMENU_WORK* pWork )
   //プレートの土台の絵
   int i;
 
-  for(i = 0 ; i < elementof(pWork->menuWin) ; i++){
-    GFL_BMPWIN_ClearScreen(pWork->menuWin[i]);
-  }
+//  for(i = 0 ; i < elementof(pWork->menuWin) ; i++){
+  //  GFL_BMPWIN_ClearScreen(pWork->menuWin[i]);
+//  }
   //メッセージウインドのクリアも
   GFL_BMPWIN_ClearScreen(pWork->itemInfoDispWin);
   BmpWinFrame_Clear(pWork->itemInfoDispWin,WINDOW_TRANS_ON_V);
- // GFL_BG_LoadScreenV_Req(GFL_BG_FRAME3_M);
+  GFL_BG_LoadScreenV_Req(GFL_BG_FRAME3_M);
 }
 
 
@@ -1075,6 +1078,29 @@ void ITEMDISP_ListPlateDelete( FIELD_ITEMMENU_WORK* pWork )
 //------------------------------------------------------------------------------
 void ITEMDISP_MenuWinDisp(  FIELD_ITEMMENU_WORK *pWork , int *menustr,int num )
 {
+#if 1
+  int i;
+  APP_TASKMENU_INITWORK appinit;
+
+  appinit.heapId = pWork->heapID;
+  appinit.itemNum =  num;
+  appinit.itemWork =  &pWork->appitem[0];
+  appinit.bgFrame =  GFL_BG_FRAME3_M;
+  appinit.palNo = _SUBLIST_NORMAL_PAL;
+  appinit.msgHandle = pWork->MsgManager;
+  appinit.fontHandle =  pWork->fontHandle;
+  appinit.printQue =  pWork->SysMsgQue;
+  
+  for(i=0;i<num;i++){
+    pWork->appitem[i].str = GFL_STR_CreateBuffer(100, pWork->heapID);
+    GFL_MSG_GetString(pWork->MsgManager, menustr[i], pWork->appitem[i].str);
+    pWork->appitem[i].msgColor = PRINTSYS_LSB_Make( 0xe,0xf,0);
+  }
+  pWork->pAppTask = APP_TASKMENU_OpenMenu(&appinit);
+  for(i=0;i<num;i++){
+    GFL_STR_DeleteBuffer(pWork->appitem[i].str);
+  }
+#else
   int i;
   int winindex = elementof(pWork->menuWin) - num;
 
@@ -1095,6 +1121,7 @@ void ITEMDISP_MenuWinDisp(  FIELD_ITEMMENU_WORK *pWork , int *menustr,int num )
   }
   ITEMDISP_ListPlateSelectChange(pWork, 0);  
   GFL_BG_LoadScreenV_Req(GFL_BG_FRAME3_M);
+#endif
 }
 
 //------------------------------------------------------------------------------

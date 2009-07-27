@@ -555,37 +555,29 @@ static void _itemMovePosition(FIELD_ITEMMENU_WORK* pWork)
 
 static void _itemSelectWait(FIELD_ITEMMENU_WORK* pWork)
 {
-	if(GFL_UI_KEY_GetTrg() == PAD_BUTTON_DECIDE){
-
-    pWork->ret_code2 = pWork->submenuList[pWork->subListCursor];
-    pWork->ret_code = BAG_NEXTPROC_HAVE;
-    _CHANGE_STATE(pWork,NULL);
-    return;
+  BOOL bClear=FALSE;
+  
+  if(GFL_UI_KEY_GetTrg() == PAD_BUTTON_DECIDE){
+    int selectno = APP_TASKMENU_GetCursorPos(pWork->pAppTask);
+    pWork->ret_code2 = pWork->submenuList[selectno];
+    OS_Printf("ret_code2 %d %d\n", pWork->ret_code2,selectno);
+    if(BAG_MENU_YAMERU==pWork->ret_code2){
+      _CHANGE_STATE(pWork,_itemKindSelectMenu);
+    }
+    else{
+      pWork->ret_code = BAG_NEXTPROC_HAVE;
+      _CHANGE_STATE(pWork,NULL);
+    }
+    bClear = TRUE;
   }
 	else if(GFL_UI_KEY_GetTrg() == PAD_BUTTON_B){
-    ITEMDISP_ListPlateClear( pWork );
+    bClear = TRUE;
     _CHANGE_STATE(pWork,_itemKindSelectMenu);
   }
-
-  {
-    int cur = pWork->subListCursor;
-  
-    if(GFL_UI_KEY_GetTrg() == PAD_KEY_UP){
-      pWork->subListCursor--;
-    }
-    if(GFL_UI_KEY_GetTrg() == PAD_KEY_DOWN){
-      pWork->subListCursor++;
-    }
-    if(pWork->subListCursor < 0){
-      pWork->subListCursor = pWork->menuNum -1;
-    }
-    else if(pWork->subListCursor >= pWork->menuNum){
-      pWork->subListCursor = 0;
-    }
-
-    if(cur != pWork->subListCursor){
-      ITEMDISP_ListPlateSelectChange(pWork, pWork->subListCursor);
-    }
+  if(bClear){
+    ITEMDISP_ListPlateClear( pWork );
+    APP_TASKMENU_CloseMenu(pWork->pAppTask);
+    pWork->pAppTask=NULL;
   }
 
 }
@@ -957,10 +949,10 @@ static void _itemUseWindowRewrite(FIELD_ITEMMENU_WORK* pWork)
 		ItemMenuMake(pWork, tbl);
 
 		for(i=0,j=0; i< BAG_MENUTBL_MAX ; i++){
-      pWork->submenuList[i]=tbl[i];
 			if(tbl[i]==255){
 				continue;
 			}
+      pWork->submenuList[j]=tbl[i];
       stringbuff[j] = strtbl[tbl[i]];
       j++;
 		}
@@ -1163,10 +1155,6 @@ static GFL_PROC_RESULT FieldItemMenuProc_End( GFL_PROC * proc, int * seq, void *
 {
 	FIELD_ITEMMENU_WORK* pWork = ppWork;
 
-  if(pWork->bgchar!=0){
-    GFL_BG_FreeCharacterArea(DEBUG_ITEMDISP_FRAME,GFL_ARCUTIL_TRANSINFO_GetPos(pWork->bgchar),
-                             GFL_ARCUTIL_TRANSINFO_GetSize(pWork->bgchar));
-  }
 	GFL_TCB_DeleteTask( pWork->g3dVintr );
 
   MYITEM_FieldBagPocketSet(pWork->pBagCursor, pWork->pocketno);

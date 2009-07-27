@@ -33,6 +33,7 @@
 #include "sound/pm_sndsys.h"
 #include "itemmenu.h"
 #include "app/itemuse.h"
+#include "app/app_taskmenu.h"
 
 extern const GFL_PROC_DATA ItemMenuProcData;
 
@@ -42,6 +43,8 @@ extern const GFL_PROC_DATA ItemMenuProcData;
 
 #define _SCROLL_TOP_Y  (8)  //スクロールバーの最初の位置
 #define _SCROLL_BOTTOM_Y  (8*20)  //スクロールバーの最後の位置
+
+#define _SUBMENU_LISTMAX (8)
 
 enum _ITEMLISTCELL_RESOURCE
 {
@@ -139,6 +142,9 @@ struct _DEBUGITEM_PARAM {
   GFL_BMPWIN* winItemNum;
   GFL_BMPWIN* winItemReport;
   GFL_BMPWIN* menuWin[5];
+
+  APP_TASKMENU_WORK* pAppTask;
+  APP_TASKMENU_ITEMWORK appitem[_SUBMENU_LISTMAX];
   
   //メニュー土台
   NNSG2dCharacterData *ncgData;
