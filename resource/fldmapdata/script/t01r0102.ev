@@ -19,7 +19,10 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA    ev_t01r0102
+_EVENT_DATA    ev_t01r0102_game
+_EVENT_DATA    ev_t01r0102_tv
+_EVENT_DATA    ev_t01r0102_pc
+_EVENT_DATA    ev_t01r0102_bed
 _EVENT_DATA_END
 
 
@@ -29,10 +32,55 @@ _EVENT_DATA_END
 //ev_t01r0102_flag_change:
 //  _END
 
+
 /**************************************************************/
-/*                                                            */
+/*  T01R0102 GAME　MACHINEのBG用イベントスクリプト*/
 /**************************************************************/
-ev_t01r0102:
-  //とりあえず最初のラベルだけ生成している
+ev_t01r0102_game:
+  _TALK_OBJ_PAUSE_ALL
+  _TALKWIN_OPEN
+  _TALKMSG_ALLPUT msg_t01r0102_game_01
+  _AB_KEYWAIT
+  _TALKWIN_CLOSE
+  _OBJ_PAUSE_CLEAR_ALL
   _END
+
+/**************************************************************/
+/*  T01R0102 TVのBG用イベントスクリプト*/
+/**************************************************************/
+ev_t01r0102_tv:
+  _TALK_OBJ_PAUSE_ALL
+  _TALKWIN_OPEN
+  _TALKMSG_ALLPUT msg_t01r0102_tv_01
+  _AB_KEYWAIT
+  _TALKWIN_CLOSE
+  _OBJ_PAUSE_CLEAR_ALL
+  _END
+
+/**************************************************************/
+/*  T01R0102 PCのBG用イベントスクリプト*/
+/**************************************************************/
+ev_t01r0102_pc:
+  _TALK_OBJ_PAUSE_ALL
+  _PLAYER_NAME 0 //プレイヤー名を反映
+  _TALKWIN_OPEN
+  _TALKMSG_ALLPUT msg_t01r0102_pc_01
+  _AB_KEYWAIT
+  _TALKWIN_CLOSE
+  _OBJ_PAUSE_CLEAR_ALL
+  _END
+
+/**************************************************************/
+/*  T01R0102 BEDのBG用イベントスクリプト*/
+/**************************************************************/
+ev_t01r0102_bed:
+  _TALK_OBJ_PAUSE_ALL
+  _TALKWIN_OPEN
+  _TALKMSG_ALLPUT msg_t01r0102_bed_01
+  _AB_KEYWAIT
+  _TALKWIN_CLOSE
+  _OBJ_PAUSE_CLEAR_ALL
+  _END
+
+
 
