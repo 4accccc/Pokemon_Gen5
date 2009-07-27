@@ -20,6 +20,7 @@ enum {
   LETTER_CHAR_WIDTH = 2,      ///< １文字あたり横キャラ数
   LETTER_CHAR_HEIGHT = 2,     ///< １文字あたり縦キャラ数
   LINE_DOT_HEIGHT = 16,     ///< １行あたりのドット数
+  LINE_FEED_SPEED = 4,        ///< 改行時の行送り速度（dot/frame）
 
   // 改行コード、終端コード
   EOM_CODE      = 0xffff,
@@ -1132,25 +1133,26 @@ static void print_stream_task( GFL_TCBL* tcb, void* wk_adrs )
     if( wk->pauseReleaseFlag )
     {
       switch( wk->pauseType ){
-      case PRINTSTREAM_PAUSE_LINEFEED:  // @@@ 現在ラインフィード処理は未実装
+      case PRINTSTREAM_PAUSE_LINEFEED:
+        if( wk->pauseWait < LINE_DOT_HEIGHT )
         {
-          u16 size_x, size_y;
+          u16 size_x, size_y, feed_speed;
+
+          feed_speed = LINE_FEED_SPEED;
+          if( (wk->pauseWait+feed_speed) > LINE_DOT_HEIGHT ){
+            feed_speed = (LINE_DOT_HEIGHT - wk->pauseWait);
+          }
+          wk->pauseWait += feed_speed;
 
           size_x = GFL_BMP_GetSizeX( wk->dstBmp );
           size_y = GFL_BMP_GetSizeY( wk->dstBmp );
-          GFL_BMP_Print( wk->dstBmp, wk->dstBmp, 0, 1, 0, 0, size_x, size_y-1, GF_BMPPRT_NOTNUKI );
-          GFL_BMP_Fill( wk->dstBmp, 0, size_y-1, size_x, 1, wk->clearColor );
+          GFL_BMP_Print( wk->dstBmp, wk->dstBmp, 0, feed_speed, 0, 0, size_x, size_y-feed_speed, GF_BMPPRT_NOTNUKI );
+          GFL_BMP_Fill( wk->dstBmp, 0, size_y-feed_speed, size_x, feed_speed, wk->clearColor );
           GFL_BMPWIN_TransVramCharacter( wk->dstWin );
-          if( wk->pauseWait == LINE_DOT_HEIGHT )
-          {
-            wk->printJob.write_x = wk->printJob.org_x;
-            wk->printJob.write_y = LINE_DOT_HEIGHT;
-            wk->state = PRINTSTREAM_STATE_RUNNING;
-          }
-          else
-          {
-            wk->pauseWait++;
-          }
+        }else{
+          wk->printJob.write_x = wk->printJob.org_x;
+          wk->printJob.write_y = LINE_DOT_HEIGHT;
+          wk->state = PRINTSTREAM_STATE_RUNNING;
         }
         break;
 
