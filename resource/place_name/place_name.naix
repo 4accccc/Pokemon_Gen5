@@ -1,0 +1,21 @@
+/*****************************************************************************
+	Archive file index definition.
+	File: place_name.naix
+
+	This file was created by NINTENDO NITRO-System Archiver.
+
+
+ *****************************************************************************/
+
+#ifndef NARC_PLACE_NAME_NAIX_
+#define NARC_PLACE_NAME_NAIX_
+
+enum {
+	NARC_place_name_place_name_back_NCGR = 0,
+	NARC_place_name_place_name_back_NCLR = 1,
+	NARC_place_name_place_name_back_NSCR = 2,
+	NARC_place_name_place_name_string_NCLR = 3
+};
+
+/* NARC_PLACE_NAME_NAIX_ */
+#endif
