@@ -29,7 +29,10 @@ typedef enum {
   BTL_EVENT_NULL = 0,
 
   BTL_EVENT_CHECK_CHANGE,           ///< いれかえチェック
-  BTL_EVENT_CHECK_ESCAPE,           ///< にげるチェック
+  BTL_EVENT_SKIP_NIGERU_CALC,       ///< にげる確率計算スキップチェック
+  BTL_EVENT_SKIP_NIGERU_FORBID,     ///< にげる封じスキップチェック
+  BTL_EVENT_NIGERU_FORBID,          ///< にげる封じチェック
+  BTL_EVENT_NIGERU_EXMSG,           ///< にげる特殊メッセージ
   BTL_EVENT_CHECK_SP_PRIORITY,      ///< とくしゅ優先度チェック
   BTL_EVENT_CALC_AGILITY,           ///< すばやさ計算
   BTL_EVENT_CHECK_CONF,             ///< 混乱チェック

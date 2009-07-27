@@ -96,6 +96,7 @@ extern const BTL_ACTION_PARAM* BTL_SVCL_GetPokeAction( SVCL_WORK* clwk, u8 posId
 // イベントハンドラとの連絡関数
 //------------------------------------------------
 extern BtlRule BTL_SVFLOW_GetRule( BTL_SVFLOW_WORK* wk );
+extern BtlCompetitor BTL_SVFLOW_GetCompetitor( BTL_SVFLOW_WORK* wk );
 extern BtlPokePos BTL_SVFLOW_CheckExistFrontPokeID( BTL_SVFLOW_WORK* server, u8 pokeID );
 extern BOOL BTL_SVFLOW_RECEPT_CheckExistTokuseiPokemon( BTL_SVFLOW_WORK* wk, PokeTokusei tokusei );
 extern const BTL_POKEPARAM* BTL_SVFLOW_RECEPT_GetPokeParam( BTL_SVFLOW_WORK* wk, u8 pokeID );
@@ -221,6 +222,7 @@ typedef enum {
   BTL_HANDEX_UPDATE_WAZA,   ///< ワザ書き換え
   BTL_HANDEX_COUNTER,       ///< ポケモンカウンタ値書き換え
   BTL_HANDEX_DELAY_WAZADMG, ///< 時間差ワザダメージ
+  BTL_HANDEX_QUIT_BATTLE,   ///< バトル離脱
 
   BTL_HANDEX_MAX,
 
