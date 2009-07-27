@@ -2388,19 +2388,19 @@ static const EVENTDATA_TABLE event_c01gym0101 = {
 #include "../script/c01pc0101_def.h"
 const CONNECT_DATA DOOR_EVENT_C01PC0101[] = {
 	{//DOOR_ID_C01PC0101_EXIT02 = 0
-		{128, 0, 336},
+		{128, 0, 304},
 		ZONE_ID_C01, DOOR_ID_C01_EXIT10,
 		EXIT_DIR_UP,//direction
 		EXIT_TYPE_MAT //type
 	},
 	{//DOOR_ID_C01PC0101_EXIT01 = 1
-		{112, 0, 336},
+		{112, 0, 304},
 		ZONE_ID_C01, DOOR_ID_C01_EXIT10,
 		EXIT_DIR_UP,//direction
 		EXIT_TYPE_MAT //type
 	},
 	{//DOOR_ID_C01PC0101_EXIT03 = 2
-		{144, 0, 336},
+		{144, 0, 304},
 		ZONE_ID_C01, DOOR_ID_C01_EXIT10,
 		EXIT_DIR_UP,//direction
 		EXIT_TYPE_MAT //type
@@ -3378,19 +3378,19 @@ static const EVENTDATA_TABLE event_c02gym0101 = {
 #include "../script/c02pc0101_def.h"
 const CONNECT_DATA DOOR_EVENT_C02PC0101[] = {
 	{//DOOR_ID_C02PC0101_EXIT02 = 0
-		{128, 0, 336},
+		{128, 0, 304},
 		ZONE_ID_C02, DOOR_ID_C02_EXIT08,
 		EXIT_DIR_UP,//direction
 		EXIT_TYPE_MAT //type
 	},
 	{//DOOR_ID_C02PC0101_EXIT01 = 1
-		{112, 0, 336},
+		{112, 0, 304},
 		ZONE_ID_C02, DOOR_ID_C02_EXIT08,
 		EXIT_DIR_UP,//direction
 		EXIT_TYPE_MAT //type
 	},
 	{//DOOR_ID_C02PC0101_EXIT03 = 2
-		{144, 0, 336},
+		{144, 0, 304},
 		ZONE_ID_C02, DOOR_ID_C02_EXIT08,
 		EXIT_DIR_UP,//direction
 		EXIT_TYPE_MAT //type
@@ -5781,19 +5781,19 @@ static const EVENTDATA_TABLE event_c05gym0101 = {
 #include "../script/c05pc0101_def.h"
 const CONNECT_DATA DOOR_EVENT_C05PC0101[] = {
 	{//DOOR_ID_C05PC0101_EXIT02 = 0
-		{128, 0, 320},
+		{128, 0, 304},
 		ZONE_ID_C05, DOOR_ID_C05_EXIT18,
 		EXIT_DIR_UP,//direction
 		EXIT_TYPE_MAT //type
 	},
 	{//DOOR_ID_C05PC0101_EXIT01 = 1
-		{112, 0, 320},
+		{112, 0, 304},
 		ZONE_ID_C05, DOOR_ID_C05_EXIT18,
 		EXIT_DIR_UP,//direction
 		EXIT_TYPE_MAT //type
 	},
 	{//DOOR_ID_C05PC0101_EXIT03 = 2
-		{144, 0, 320},
+		{144, 0, 304},
 		ZONE_ID_C05, DOOR_ID_C05_EXIT18,
 		EXIT_DIR_UP,//direction
 		EXIT_TYPE_MAT //type
@@ -6286,19 +6286,19 @@ static const EVENTDATA_TABLE event_c06gym0101 = {
 #include "../script/c06pc0101_def.h"
 const CONNECT_DATA DOOR_EVENT_C06PC0101[] = {
 	{//DOOR_ID_C06PC0101_EXIT01 = 0
-		{112, 0, 272},
+		{112, 0, 304},
 		ZONE_ID_C06, DOOR_ID_C06_C06PC0101EXIT01,
 		EXIT_DIR_UP,//direction
 		EXIT_TYPE_MAT //type
 	},
 	{//DOOR_ID_C06PC0101_EXIT02 = 1
-		{128, 0, 272},
+		{128, 0, 304},
 		ZONE_ID_C06, DOOR_ID_C06_C06PC0101EXIT01,
 		EXIT_DIR_UP,//direction
 		EXIT_TYPE_MAT //type
 	},
 	{//DOOR_ID_C06PC0101_EXIT03 = 2
-		{144, 0, 272},
+		{144, 0, 304},
 		ZONE_ID_C06, DOOR_ID_C06_C06PC0101EXIT01,
 		EXIT_DIR_UP,//direction
 		EXIT_TYPE_MAT //type
@@ -6617,19 +6617,19 @@ static const EVENTDATA_TABLE event_c07gym0101 = {
 #include "../script/c07pc0101_def.h"
 const CONNECT_DATA DOOR_EVENT_C07PC0101[] = {
 	{//DOOR_ID_C07PC0101_C07_EXIT01 = 0
-		{112, 0, 320},
+		{112, 0, 304},
 		ZONE_ID_C07, DOOR_ID_C07_C07PC0101_EXIT01,
 		EXIT_DIR_UP,//direction
 		EXIT_TYPE_MAT //type
 	},
 	{//DOOR_ID_C07PC0101_C07_EXIT02 = 1
-		{128, 0, 320},
+		{128, 0, 304},
 		ZONE_ID_C07, DOOR_ID_C07_C07PC0101_EXIT01,
 		EXIT_DIR_UP,//direction
 		EXIT_TYPE_MAT //type
 	},
 	{//DOOR_ID_C07PC0101_C07_EXIT03 = 2
-		{144, 0, 320},
+		{144, 0, 304},
 		ZONE_ID_C07, DOOR_ID_C07_C07PC0101_EXIT01,
 		EXIT_DIR_UP,//direction
 		EXIT_TYPE_MAT //type
@@ -7178,19 +7178,19 @@ const CONNECT_DATA DOOR_EVENT_D05R0201[] = {
 	{//DOOR_ID_D05R0201_D05R0101_EXIT01 = 0
 		{208, 0, 64},
 		ZONE_ID_D05R0101, DOOR_ID_D05R0101_D05R0201_EXIT01,
-		EXIT_DIR_RIGHT,//direction
+		EXIT_DIR_LEFT,//direction
 		EXIT_TYPE_MAT //type
 	},
 	{//DOOR_ID_D05R0201_D05R0101_EXIT02 = 1
 		{208, 0, 80},
 		ZONE_ID_D05R0101, DOOR_ID_D05R0101_D05R0201_EXIT01,
-		EXIT_DIR_RIGHT,//direction
+		EXIT_DIR_LEFT,//direction
 		EXIT_TYPE_MAT //type
 	},
 	{//DOOR_ID_D05R0201_D05R0101_EXIT03 = 2
 		{208, 0, 96},
 		ZONE_ID_D05R0101, DOOR_ID_D05R0101_D05R0201_EXIT01,
-		EXIT_DIR_RIGHT,//direction
+		EXIT_DIR_LEFT,//direction
 		EXIT_TYPE_MAT //type
 	},
 };
@@ -9012,19 +9012,19 @@ static const EVENTDATA_TABLE event_t02 = {
 #include "../script/t02pc0101_def.h"
 const CONNECT_DATA DOOR_EVENT_T02PC0101[] = {
 	{//DOOR_ID_T02PC0101_EXIT01 = 0
-		{112, 0, 336},
+		{112, 0, 304},
 		ZONE_ID_T02, DOOR_ID_T02_EXIT01,
 		EXIT_DIR_UP,//direction
 		EXIT_TYPE_MAT //type
 	},
 	{//DOOR_ID_T02PC0101_EXIT02 = 1
-		{128, 0, 336},
+		{128, 0, 304},
 		ZONE_ID_T02, DOOR_ID_T02_EXIT01,
 		EXIT_DIR_UP,//direction
 		EXIT_TYPE_MAT //type
 	},
 	{//DOOR_ID_T02PC0101_EXIT03 = 2
-		{144, 0, 336},
+		{144, 0, 304},
 		ZONE_ID_T02, DOOR_ID_T02_EXIT01,
 		EXIT_DIR_UP,//direction
 		EXIT_TYPE_MAT //type
