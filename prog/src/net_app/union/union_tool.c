@@ -10,8 +10,8 @@
 #include "system/main.h"
 #include "field\field_player.h"
 #include "field\fieldmap.h"
+#include "union_types.h"
 #include "union_tool.h"
-
 
 //==============================================================================
 //  構造体定義
@@ -68,3 +68,36 @@ BOOL UnionTool_CheckWayOut(FIELD_MAIN_WORK *fieldWork)
   return FALSE;
 }
 
+//==================================================================
+/**
+ * play_categoryをアピール番号に変換
+ *
+ * @param   situ		
+ *
+ * @retval  UNION_APPEAL		
+ */
+//==================================================================
+UNION_APPEAL UnionTool_PlayCategory_to_AppealNo(UNION_PLAY_CATEGORY play_category)
+{
+  //遊んでいるゲームがあるなら、そちらを優先してアピールさせる
+  switch(play_category){
+  case UNION_PLAY_CATEGORY_PICTURE:        //お絵かき
+    return UNION_APPEAL_PICTURE;
+  case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_SINGLE_50:         //コロシアム
+  case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_SINGLE_FREE:       //コロシアム
+  case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_SINGLE_STANDARD:   //コロシアム
+  case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_DOUBLE_50:         //コロシアム
+  case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_DOUBLE_FREE:       //コロシアム
+  case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_DOUBLE_STANDARD:   //コロシアム
+  case UNION_PLAY_CATEGORY_COLOSSEUM_MULTI:      //コロシアム
+    return UNION_APPEAL_BATTLE;
+  case UNION_PLAY_CATEGORY_TRADE:          //ポケモン交換
+    return UNION_APPEAL_TRADE;
+  case UNION_PLAY_CATEGORY_GURUGURU:       //ぐるぐる交換
+    return UNION_APPEAL_GURUGURU;
+  case UNION_PLAY_CATEGORY_RECORD:         //レコードコーナー
+    return UNION_APPEAL_RECORD;
+  }
+  
+  return UNION_APPEAL_NULL;
+}

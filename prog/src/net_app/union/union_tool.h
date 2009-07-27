@@ -12,3 +12,4 @@
 //  ŠO•”ŠÖ”éŒ¾
 //==============================================================================
 extern BOOL UnionTool_CheckWayOut(FIELD_MAIN_WORK *fieldWork);
+extern UNION_APPEAL UnionTool_PlayCategory_to_AppealNo(UNION_PLAY_CATEGORY play_category);

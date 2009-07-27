@@ -16,6 +16,7 @@
 #include "net_app/union/union_chara.h"
 #include "union_local.h"
 #include "union_msg.h"
+#include "union_tool.h"
 
 
 //==============================================================================
@@ -509,7 +510,8 @@ static BOOL UnicharaSeq_NormalUpdate(UNION_SYSTEM_PTR unisys, UNION_CHARACTER *u
 
   //アピール番号が一致していればジャンプ
   if(situ->appeal_no != UNION_APPEAL_NULL 
-      && situ->appeal_no == beacon->appeal_no   //アピール番号一致
+      && (situ->appeal_no == UnionTool_PlayCategory_to_AppealNo(beacon->play_category)
+      || situ->appeal_no == beacon->appeal_no)   //アピール番号一致
       && unichara->child_no == 0                //親だけ
       && UnionMsg_GetMemberMax(beacon->play_category) > beacon->connect_num){ //接続人数未満
     mmdl = UNION_CHARA_GetMmdl(unisys, unichara->parent_pc, unichara);
