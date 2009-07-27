@@ -8587,13 +8587,65 @@ const CONNECT_DATA DOOR_EVENT_T01R0102[] = {
 	},
 };
 const int ConnectCount_T01R0102 = NELEMS(DOOR_EVENT_T01R0102);
+const BG_TALK_DATA BG_EVENT_T01R0102[] = {
+	{//BGID_T01R0102_TV = 0
+		SCRID_T01R0102_TV,  //event id
+		BG_TALK_TYPE_NORMAL, //type
+		4, 2,
+		0,  //height
+		BG_TALK_DIR_ALL,//direction
+	},
+	{//BGID_T01R0102_TV = 1
+		SCRID_T01R0102_TV,  //event id
+		BG_TALK_TYPE_NORMAL, //type
+		3, 2,
+		0,  //height
+		BG_TALK_DIR_ALL,//direction
+	},
+	{//BGID_T01R0102_TV = 2
+		SCRID_T01R0102_TV,  //event id
+		BG_TALK_TYPE_NORMAL, //type
+		5, 2,
+		0,  //height
+		BG_TALK_DIR_ALL,//direction
+	},
+	{//BGID_T01R0102_PC = 3
+		SCRID_T01R0102_PC,  //event id
+		BG_TALK_TYPE_NORMAL, //type
+		1, 8,
+		0,  //height
+		BG_TALK_DIR_ALL,//direction
+	},
+	{//BGID_T01R0102_BED = 4
+		SCRID_T01R0102_BED,  //event id
+		BG_TALK_TYPE_NORMAL, //type
+		8, 7,
+		0,  //height
+		BG_TALK_DIR_ALL,//direction
+	},
+	{//BGID_T01R0102_BED = 5
+		SCRID_T01R0102_BED,  //event id
+		BG_TALK_TYPE_NORMAL, //type
+		8, 8,
+		0,  //height
+		BG_TALK_DIR_ALL,//direction
+	},
+	{//BGID_T01R0102_BED = 6
+		SCRID_T01R0102_BED,  //event id
+		BG_TALK_TYPE_NORMAL, //type
+		9, 7,
+		0,  //height
+		BG_TALK_DIR_ALL,//direction
+	},
+};
+const int BgCount_T01R0102 = NELEMS(BG_EVENT_T01R0102);
 
 static const EVENTDATA_TABLE event_t01r0102 = {
-	0,
+	7,
 	0,
 	1,
 	0,
-	(void *)NULL,
+	(void *)&BG_EVENT_T01R0102,
 	(void *)NULL,
 	(void *)&DOOR_EVENT_T01R0102,
 	(void *)NULL,
