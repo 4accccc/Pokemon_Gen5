@@ -35,6 +35,16 @@ G3D_FE_MDL = kage.imd \
   kusaeff.imd \
   sea_ride.imd \
   sisen_ef.imd \
+  f_mark_u.imd \
+  f_mark_d.imd \
+  f_mark_l.imd \
+  f_mark_r.imd \
+  c_mark_u.imd \
+  c_mark_l.imd \
+  c_mark_ul.imd \
+  c_mark_ur.imd \
+  c_mark_dl.imd \
+  c_mark_dr.imd
 
 #---------------------------------------------------------------
 #	フィールドエフェクト　テクスチャ定義

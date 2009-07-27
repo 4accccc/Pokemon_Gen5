@@ -16,8 +16,18 @@ enum {
 	NARC_fldeff_kusaeff_nsbmd = 2,
 	NARC_fldeff_sea_ride_nsbmd = 3,
 	NARC_fldeff_sisen_ef_nsbmd = 4,
-	NARC_fldeff_hero_kemu_nsbtp = 5,
-	NARC_fldeff_kusaeff_nsbtp = 6
+	NARC_fldeff_f_mark_u_nsbmd = 5,
+	NARC_fldeff_f_mark_d_nsbmd = 6,
+	NARC_fldeff_f_mark_l_nsbmd = 7,
+	NARC_fldeff_f_mark_r_nsbmd = 8,
+	NARC_fldeff_c_mark_u_nsbmd = 9,
+	NARC_fldeff_c_mark_l_nsbmd = 10,
+	NARC_fldeff_c_mark_ul_nsbmd = 11,
+	NARC_fldeff_c_mark_ur_nsbmd = 12,
+	NARC_fldeff_c_mark_dl_nsbmd = 13,
+	NARC_fldeff_c_mark_dr_nsbmd = 14,
+	NARC_fldeff_hero_kemu_nsbtp = 15,
+	NARC_fldeff_kusaeff_nsbtp = 16
 };
 
 /* NARC_FLDEFF_NAIX_ */
