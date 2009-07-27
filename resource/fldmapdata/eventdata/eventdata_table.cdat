@@ -1944,6 +1944,11 @@
 #ifndef ZONE_T01R0102_EVC_H
 #define ZONE_T01R0102_EVC_H
 
+#define T01R0102_BALL2                     0
+#define T01R0102_BALL3                     1
+#define T01R0102_BALL1                     2
+#define T01R0102_RIVAL                     3
+#define T01R0102_HEROINE                   4
 
 #endif //ZONE_T01R0102_EVC_H
 //#include "tmp/t01r0201.h"
@@ -8939,6 +8944,94 @@ const CONNECT_DATA DOOR_EVENT_T01R0102[] = {
 	},
 };
 const int ConnectCount_T01R0102 = NELEMS(DOOR_EVENT_T01R0102);
+const FLDMMDL_HEADER OBJ_EVENT_T01R0102[] = {
+	{
+		T01R0102_BALL2,
+		MONSTERBALL,
+		MV_UP,
+		EV_TYPE_NORMAL,
+		0,
+		SCRID_T01R0102_POKE_GET0,
+		DIR_UP,
+		0,
+		0,
+		0,
+		0,
+		0,
+		4,
+		6,
+		0,
+	},
+	{
+		T01R0102_BALL3,
+		MONSTERBALL,
+		MV_UP,
+		EV_TYPE_NORMAL,
+		0,
+		SCRID_T01R0102_POKE_GET2,
+		DIR_UP,
+		0,
+		0,
+		0,
+		0,
+		0,
+		5,
+		6,
+		0,
+	},
+	{
+		T01R0102_BALL1,
+		MONSTERBALL,
+		MV_UP,
+		EV_TYPE_NORMAL,
+		0,
+		SCRID_T01R0102_POKE_GET1,
+		DIR_UP,
+		0,
+		0,
+		0,
+		0,
+		0,
+		3,
+		6,
+		0,
+	},
+	{
+		T01R0102_RIVAL,
+		RIVEL,
+		MV_LEFT,
+		EV_TYPE_NORMAL,
+		0,
+		SCRID_T01R0102_BLACK_TEST01,
+		DIR_LEFT,
+		0,
+		0,
+		0,
+		0,
+		0,
+		8,
+		2,
+		0,
+	},
+	{
+		T01R0102_HEROINE,
+		HEROINE,
+		MV_DMY,
+		EV_TYPE_NORMAL,
+		0,
+		SCRID_T01R0102_WHITE_TEST01,
+		DIR_LEFT,
+		0,
+		0,
+		0,
+		0,
+		0,
+		6,
+		6,
+		0,
+	},
+};
+const int ObjCount_T01R0102 = NELEMS(OBJ_EVENT_T01R0102);
 const BG_TALK_DATA BG_EVENT_T01R0102[] = {
 	{//BGID_T01R0102_TV = 0
 		SCRID_T01R0102_TV,  //event id
@@ -8989,16 +9082,23 @@ const BG_TALK_DATA BG_EVENT_T01R0102[] = {
 		0,  //height
 		BG_TALK_DIR_ALL,//direction
 	},
+	{//BGID_T01R0102_GAME = 7
+		SCRID_T01R0102_GAME,  //event id
+		BG_TALK_TYPE_NORMAL, //type
+		3, 3,
+		0,  //height
+		BG_TALK_DIR_ALL,//direction
+	},
 };
 const int BgCount_T01R0102 = NELEMS(BG_EVENT_T01R0102);
 
 static const EVENTDATA_TABLE event_t01r0102 = {
-	7,
-	0,
+	8,
+	5,
 	1,
 	0,
 	(void *)&BG_EVENT_T01R0102,
-	(void *)NULL,
+	(void *)&OBJ_EVENT_T01R0102,
 	(void *)&DOOR_EVENT_T01R0102,
 	(void *)NULL,
 };
