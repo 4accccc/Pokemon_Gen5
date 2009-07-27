@@ -467,10 +467,13 @@ typedef struct
 	u16	move_seq;
 	u16 dummy;
 
-
+#ifdef PM_DEBUG
+	BOOL	is_print_debug;
 	BOOL	is_place_visible_debug;
 	BOOL	is_arrive_debug;
 	BOOL	is_checkpos_debug;
+	u32		checkpos_num_debug;
+#endif
 
 } TOWNMAP_WORK;
 
@@ -595,6 +598,7 @@ static void PLACEWND_SetVisible( PLACEWND_WORK *p_wk, BOOL is_visible );
 ///	ETC
 //=====================================
 static void BMP_DrawLine( GFL_BMP_DATA *p_bmp, const GFL_POINT *cp_start, const GFL_POINT *cp_end, u8 plt_num );
+static void BMP_DrawBoldLine( GFL_BMP_DATA *p_bmp, const GFL_POINT *cp_start, const GFL_POINT *cp_end, int w, u8 plt_num );
 
 //=============================================================================
 /**
@@ -646,11 +650,14 @@ typedef struct
 
 static DEBUG_PRINT_WORK *sp_dp_wk;
 
-#define DEBUGPRINT_CHAR_TEMP_AREA (0x4000)
+//NETERRの方は0x4000までしか確保できません
+//#define DEBUGPRINT_CHAR_TEMP_AREA (0x4000)
+#define DEBUGPRINT_CHAR_TEMP_AREA (0x8000)
 #define DEBUGPRINT_SCRN_TEMP_AREA (0x800)
 #define DEBUGPRINT_PLTT_TEMP_AREA (0x20)
 #define DEBUGPRINT_WIDTH  (32)
-#define DEBUGPRINT_HEIGHT (18)
+//#define DEBUGPRINT_HEIGHT (18)
+#define DEBUGPRINT_HEIGHT (24)
 
 static const u16 sc_debug_print_plt[0xF]	=
 {	
@@ -702,6 +709,8 @@ static void DEBUGMENU_UPDATE_Print( void* p_wk_adrs, DEBUGWIN_ITEM* p_item );
 static void DEBUGMENU_DRAW_Print( void* p_wk_adrs, DEBUGWIN_ITEM* p_item );
 static void DEBUGMENU_UPDATE_CheckPos( void* p_wk_adrs, DEBUGWIN_ITEM* p_item );
 static void DEBUGMENU_DRAW_CheckPos( void* p_wk_adrs, DEBUGWIN_ITEM* p_item );
+static void DEBUGMENU_UPDATE_CheckPosNum( void* p_wk_adrs, DEBUGWIN_ITEM* p_item );
+static void DEBUGMENU_DRAW_CheckPosNum( void* p_wk_adrs, DEBUGWIN_ITEM* p_item );
 static void DEBUGMENU_UPDATE_VisiblePlace( void* p_wk_adrs, DEBUGWIN_ITEM* p_item );
 static void DEBUGMENU_DRAW_VisiblePlace( void* p_wk_adrs, DEBUGWIN_ITEM* p_item );
 static void DEBUGMENU_UPDATE_ArriveFlag( void* p_wk_adrs, DEBUGWIN_ITEM* p_item );
@@ -863,6 +872,7 @@ static GFL_PROC_RESULT TOWNMAP_PROC_Init( GFL_PROC *p_proc, int *p_seq, void *p_
 
 #ifdef DEBUG_POS_CHECK
 	DEBUGWIN_AddItemToGroupEx( DEBUGMENU_UPDATE_CheckPos, DEBUGMENU_DRAW_CheckPos, p_wk, 0, HEAPID_TOWNMAP );
+	DEBUGWIN_AddItemToGroupEx( DEBUGMENU_UPDATE_CheckPosNum, DEBUGMENU_DRAW_CheckPosNum, p_wk, 0, HEAPID_TOWNMAP );
 #endif //DEBUG_POS_CHECK
 
 #endif //DEBUG_PRINT_USE
@@ -1275,11 +1285,11 @@ static void SEQFUNC_Main( SEQ_WORK *p_seqwk, int *p_seq, void *p_param_adrs )
 		{	
 			GFL_POINT	pos;
 			PLACE_GetWldPos( &p_wk->place, &pos );
-			NAGI_Printf( "POS X%d Y%d\n", pos.x, pos.y );
+/*			NAGI_Printf( "POS X%d Y%d\n", pos.x, pos.y );
 			NAGI_Printf( "LIM L%d T%d R%d B%d\n", 
 					p_wk->place.limit_left, p_wk->place.limit_top, 
 					p_wk->place.limit_right, p_wk->place.limit_bottom );
-
+*/
 
 			//BGの移動を遅らせる処理
 			switch( p_wk->move_seq )
@@ -2260,6 +2270,20 @@ static void PLACE_Exit( PLACE_WORK *p_wk )
 //-----------------------------------------------------------------------------
 static void PLACE_Main( PLACE_WORK *p_wk )
 {	
+	if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A )
+	{	
+		const PLACE_DATA *cp_data	= &p_wk->p_place[0];
+		
+		NAGI_Printf( "Pos sx%d yx%d ex%d ey%d w%d\n",
+				PLACEDATA_GetParam( cp_data,TOWNMAP_DATA_PARAM_HIT_START_X ),
+				PLACEDATA_GetParam( cp_data,TOWNMAP_DATA_PARAM_HIT_START_Y ),
+				PLACEDATA_GetParam( cp_data,TOWNMAP_DATA_PARAM_HIT_END_X ),
+				PLACEDATA_GetParam( cp_data,TOWNMAP_DATA_PARAM_HIT_END_Y ),
+				PLACEDATA_GetParam( cp_data,TOWNMAP_DATA_PARAM_HIT_WIDTH )
+				);
+
+		NAGI_Printf( "WLD X%d Y%d\n", p_wk->pos.x, p_wk->pos.y );
+	}
 }
 //----------------------------------------------------------------------------
 /**
@@ -2423,8 +2447,8 @@ static const PLACE_DATA* PLACE_Hit( const PLACE_WORK *cp_wk, const CURSOR_WORK *
 
 	//カーソルの座標を場所座標系に直す
 	CURSOR_GetPos( cp_cursor, &pos );
-	pos.x	+= cp_wk->limit_left;
-	pos.y	+= cp_wk->limit_top;
+	pos.x	+= cp_wk->pos.x;
+	pos.y	+= cp_wk->pos.y;
 
 	//当たり判定
 	for( i = 0; i < cp_wk->data_num; i++ )
@@ -2457,8 +2481,8 @@ static const PLACE_DATA* PLACE_PullHit( const PLACE_WORK *cp_wk, const CURSOR_WO
 
 	//カーソルの座標を場所座標系に直す
 	CURSOR_GetPos( cp_cursor, &pos );
-	pos.x	+= cp_wk->limit_left;
-	pos.y	+= cp_wk->limit_top;
+	pos.x	+= cp_wk->pos.x;
+	pos.y	+= cp_wk->pos.y;
 
 	//複数衝突していたならば一番近くのものを返す
 	best_idx			=	-1;
@@ -2496,7 +2520,7 @@ static const PLACE_DATA* PLACE_PullHit( const PLACE_WORK *cp_wk, const CURSOR_WO
 //-----------------------------------------------------------------------------
 static u16 PLACEDATA_GetParam( const PLACE_DATA *cp_wk, TOWNMAP_DATA_PARAM param )
 {	
-	if( TOWNMAP_DATA_PARAM_POS_X <= param && param <= TOWNMAP_DATA_PARAM_HIT_END_Y )
+	if( TOWNMAP_DATA_PARAM_POS_X <= param && param <= TOWNMAP_DATA_PARAM_HIT_WIDTH )
 	{	
 		//拡大縮小等で変更するデータ
 		return cp_wk->param[ param - TOWNMAP_DATA_PARAM_POS_X ];
@@ -2681,7 +2705,6 @@ static BOOL PlaceData_IsHit( const PLACE_DATA *cp_wk, const GFL_POINT *cp_pos, c
 	v1.y	= FX32_CONST( cp_pos->y );
 	v1.z	= 0;
 	GFL_COLLISION3D_CIRCLE_SetData( &circle, &v1, 0 );
-
 
 	v1.x	= FX32_CONST( PLACEDATA_GetParam( cp_wk,TOWNMAP_DATA_PARAM_HIT_START_X ) + cp_wld_pos->x );
 	v1.y	= FX32_CONST( PLACEDATA_GetParam( cp_wk,TOWNMAP_DATA_PARAM_HIT_START_Y ) + cp_wld_pos->y );
@@ -3578,7 +3601,7 @@ static void BMP_DrawLine( GFL_BMP_DATA *p_bmp, const GFL_POINT *cp_start, const 
 	end.y	= cp_end->y << FX32_SHIFT;
 	end.z	= 0;
 
-	VEC_Subtract( &start, &end, &norm );
+	VEC_Subtract( &end, &start, &norm );
 	mag	= VEC_Mag( &norm );
 	VEC_Normalize( &norm, &norm );
 
@@ -3590,10 +3613,69 @@ static void BMP_DrawLine( GFL_BMP_DATA *p_bmp, const GFL_POINT *cp_start, const 
 		{	
 			pos.x	= (start.x + (norm.x * i) ) >> FX32_SHIFT;
 			pos.y	= (start.y + (norm.y * i) ) >> FX32_SHIFT;
-			GFL_BMP_Fill( p_bmp, pos.x, pos.y, 128, 128, plt_num );
-			NAGI_Printf( "%d %d\n", pos.x, pos.y );
+			GFL_BMP_Fill( p_bmp, pos.x, pos.y, 1, 1, plt_num );
 		}
-		NAGI_Printf( "SX%d SY%d EX%d EY%d m%d\n", cp_start->x, cp_start->y, cp_end->x, cp_end->y, mag>>FX32_SHIFT );
+	}
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	太線を書く
+ *
+ *	@param	GFL_BMP_DATA *p_bmp	書き込むBMP
+ *	@param	GFL_POINT *cp_start	開始座標
+ *	@param	GFL_POINT *cp_end		終了座標
+ *	@param	w										太さ
+ *	@param	plt_num							書き込むパレット番号
+ */
+//-----------------------------------------------------------------------------
+static void BMP_DrawBoldLine( GFL_BMP_DATA *p_bmp, const GFL_POINT *cp_start, const GFL_POINT *cp_end, int w, u8 plt_num )
+{	
+	VecFx32	start;
+	VecFx32	end;
+	VecFx32 norm;
+	fx32 mag;
+
+	VecFx32	v;	//normの垂直
+
+	start.x	= cp_start->x << FX32_SHIFT;
+	start.y	= cp_start->y << FX32_SHIFT;
+	start.z	= 0;
+
+	end.x	= cp_end->x << FX32_SHIFT;
+	end.y	= cp_end->y << FX32_SHIFT;
+	end.z	= 0;
+
+	VEC_Subtract( &end, &start, &norm );
+	mag	= VEC_Mag( &norm );
+	VEC_Normalize( &norm, &norm );
+
+	VEC_Set( &v, -norm.y, norm.x, 0 );
+
+	{	
+		int i,j;
+		GFL_POINT pos;
+		VecFx32	add;
+
+		for( j = 0; j < w/2; j++ )
+		{	
+			add.x	= v.x * j;
+			add.y	= v.y * j;
+			add.z	= 0;
+
+			for( i = 0; i < (mag>>FX32_SHIFT); i++ )
+			{	
+				pos.x	= (start.x + (norm.x * i) + add.x ) >> FX32_SHIFT;
+				pos.y	= (start.y + (norm.y * i) + add.y ) >> FX32_SHIFT;
+				GFL_BMP_Fill( p_bmp, pos.x, pos.y, 1, 1, plt_num );
+			}
+
+			for( i = 0; i < (mag>>FX32_SHIFT); i++ )
+			{	
+				pos.x	= (start.x + (norm.x * i) - add.x ) >> FX32_SHIFT;
+				pos.y	= (start.y + (norm.y * i) - add.y ) >> FX32_SHIFT;
+				GFL_BMP_Fill( p_bmp, pos.x, pos.y, 1, 1, plt_num );
+			}
+		}
 	}
 }
 //=============================================================================
@@ -3932,26 +4014,32 @@ static void DEBUGPRINT_POS_Update( DEBUG_PRINT_WORK *p_print, TOWNMAP_WORK *p_wk
 	}
 
 	DEBUGPRINT_Clear(p_print);
-
-	//InVramはPrintしか対応していないFillはまだ
-
 	{	
 		int i;
 		const PLACE_DATA* cp_placedata;
 		GFL_POINT	start;
 		GFL_POINT	end;
+		int w;
+		u8	plt;
 		for( i = 0; i < cp_place->data_num; i++ )
 		{	
 			cp_placedata	= &cp_place->p_place[i];
 
 			if( cp_placedata )
 			{	
-				start.x		= PLACEDATA_GetParam( cp_placedata, TOWNMAP_DATA_PARAM_HIT_START_Y );
-				start.y		= PLACEDATA_GetParam( cp_placedata, TOWNMAP_DATA_PARAM_HIT_START_X );
-				end.x			= PLACEDATA_GetParam( cp_placedata, TOWNMAP_DATA_PARAM_HIT_END_Y );
-				end.y			= PLACEDATA_GetParam( cp_placedata, TOWNMAP_DATA_PARAM_HIT_END_X );
+				start.x	= PLACEDATA_GetParam( cp_placedata, TOWNMAP_DATA_PARAM_HIT_START_X )+ cp_place->pos.x;
+				start.y	= PLACEDATA_GetParam( cp_placedata, TOWNMAP_DATA_PARAM_HIT_START_Y )+ cp_place->pos.y;
+				end.x		= PLACEDATA_GetParam( cp_placedata, TOWNMAP_DATA_PARAM_HIT_END_X ) + cp_place->pos.x;
+				end.y		= PLACEDATA_GetParam( cp_placedata, TOWNMAP_DATA_PARAM_HIT_END_Y ) + cp_place->pos.y;
+				w				= PLACEDATA_GetParam( cp_placedata, TOWNMAP_DATA_PARAM_HIT_WIDTH );
 			
-				BMP_DrawLine( p_print->p_bmp, &start, &end, 2 );
+				if(p_wk->checkpos_num_debug == i)
+				{	
+					plt = 3;
+				}else{	
+					plt	= 1;
+				}
+				BMP_DrawBoldLine( p_print->p_bmp, &start, &end, w, plt );
 			}
 		}
 	}
@@ -3975,9 +4063,11 @@ static void DEBUGPRINT_POS_Update( DEBUG_PRINT_WORK *p_print, TOWNMAP_WORK *p_wk
 //-----------------------------------------------------------------------------
 static void DEBUGMENU_UPDATE_Print( void* p_wk_adrs, DEBUGWIN_ITEM* p_item )
 {	
+	TOWNMAP_WORK	*p_wk	= p_wk_adrs;
+
   if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A )
   {	
-		if( DEBUGPRINT_IsOpen(sp_dp_wk) )
+		if( p_wk->is_print_debug )
 		{	
 			DEBUGPRINT_Clear(sp_dp_wk);
 			DEBUGPRINT_Close(sp_dp_wk);
@@ -3993,6 +4083,7 @@ static void DEBUGMENU_UPDATE_Print( void* p_wk_adrs, DEBUGWIN_ITEM* p_item )
 			DEBUGPRINT_Open(sp_dp_wk);
 			DEBUGPRINT_Update(sp_dp_wk, p_wk_adrs );
 		}
+		p_wk->is_print_debug	^= TRUE;
 		DEBUGWIN_RefreshScreen();
 	}
 }
@@ -4006,7 +4097,9 @@ static void DEBUGMENU_UPDATE_Print( void* p_wk_adrs, DEBUGWIN_ITEM* p_item )
 //-----------------------------------------------------------------------------
 static void DEBUGMENU_DRAW_Print( void* p_wk_adrs, DEBUGWIN_ITEM* p_item )
 {	
-	if( DEBUGPRINT_IsOpen(sp_dp_wk) )
+	TOWNMAP_WORK	*p_wk	= p_wk_adrs;
+
+	if( p_wk->is_print_debug )
 	{	
 		DEBUGWIN_ITEM_SetNameV( p_item, "デバッグ表示[現在：ON]" );
 	}
@@ -4073,6 +4166,43 @@ static void DEBUGMENU_DRAW_CheckPos( void* p_wk_adrs, DEBUGWIN_ITEM* p_item )
 	}
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief	位置強調表示用処理関数
+ *
+ *	@param	void* p_wk_adrs	ワーク
+ *	@param	p_item					アイテム
+ */
+//-----------------------------------------------------------------------------
+static void DEBUGMENU_UPDATE_CheckPosNum( void* p_wk_adrs, DEBUGWIN_ITEM* p_item )
+{	
+	TOWNMAP_WORK	*p_wk	= p_wk_adrs;
+	if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A )
+  {	
+		p_wk->checkpos_num_debug++;
+		p_wk->checkpos_num_debug	%= TOWNMAP_DATA_MAX;
+		DEBUGWIN_RefreshScreen();
+
+		if( p_wk->is_checkpos_debug == TRUE )
+		{	
+			DEBUGPRINT_POS_Update( sp_dp_wk, p_wk_adrs );
+		}
+
+	}
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	位置強調表示用描画関数
+ *
+ *	@param	void* p_wk_adrs	ワーク
+ *	@param	p_item					アイテム
+ */
+//-----------------------------------------------------------------------------
+static void DEBUGMENU_DRAW_CheckPosNum( void* p_wk_adrs, DEBUGWIN_ITEM* p_item )
+{	
+	TOWNMAP_WORK	*p_wk	= p_wk_adrs;
+	DEBUGWIN_ITEM_SetNameV( p_item, "位置強調[現在：%d]", p_wk->checkpos_num_debug );
+}
 
 //----------------------------------------------------------------------------
 /**
