@@ -49,11 +49,8 @@
 
 //ならびは savedata/myitem_savedata.hに準拠
 static const GFL_UI_TP_HITTBL bttndata[] = {  //上下左右
-	{	125,  136,  15, 104 },  //どうぐ
-	{	89,   103,  40,  55 },  //回復
-	{	64,    98,  77, 112 },  //技マシン
-	{	100,  114,  69,  90 },  //木の実
-	{	 64,   75,  48,  80 },  //大切な物
+
+#include "bag_btnpos.h"
 
 	{	22*_1CHAR,  25*_1CHAR,   1*_1CHAR,  3*_1CHAR },  //左
 	{	22*_1CHAR,  25*_1CHAR,  15*_1CHAR, 18*_1CHAR },  //右

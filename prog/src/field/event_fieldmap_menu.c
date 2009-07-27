@@ -319,13 +319,7 @@ static GMEVENT_RESULT FldMapMenuEvent( GMEVENT *event, int *seq, void *wk )
     break;
 
   case FMENUSTATE_WAIT_RETURN:
-    /* sub event I—¹‘Ò‚¿ */
-    if(mwk->subProcWork != NULL)
-    {
-      GFL_HEAP_FreeMemory(mwk->subProcWork);
-      mwk->subProcWork = NULL;
-    }
-    mwk->state = FMENUSTATE_RETURN_MENU;
+    GF_ASSERT(0); // ŠJ•ú‚Í•Ê‚ÉŠ‚ÉˆÚ“®
     break;
     
   case FMENUSTATE_RETURN_MENU:
@@ -379,10 +373,17 @@ static GMEVENT_RESULT FldMapMenuEvent( GMEVENT *event, int *seq, void *wk )
     
   case FMENUSTATE_CALL_WAIT_SUB:
     if( GAMESYSTEM_IsProcExists(mwk->gmSys)) break;
+
+
     
     if( FldMapMenu_SubProcData[mwk->subProcType].retFunc == NULL ||
         FldMapMenu_SubProcData[mwk->subProcType].retFunc(mwk) == FALSE )
     {
+      if(mwk->subProcWork != NULL)
+      {
+        GFL_HEAP_FreeMemory(mwk->subProcWork);
+        mwk->subProcWork = NULL;
+      }
       mwk->state = FMENUSTATE_FIELD_OPEN;
     }
     else

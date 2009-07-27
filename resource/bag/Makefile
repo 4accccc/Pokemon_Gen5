@@ -27,6 +27,8 @@ SUBDIRS	=
 #共通ルールファイルのインクルード
 include	$(PROJECT_RSCDIR)\macro_define
 
+BTNTBL = ruby $(PROJECT_ROOT)/tools/btndata/gfl_hittbl.rb
+
 # 自動でリソースを集める
 lsources:=$(wildcard *.ncl)
 gsources:=$(wildcard *.ncg)
@@ -77,10 +79,12 @@ $(TARGETDIR)/$(targetname).narc: $(targetname).narc
 
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、元ファイルからコンバートするルールを有効にする
 # コピー先のnarcが古い場合実行する
-$(targetname).narc: $(lobjects) $(gobjects) $(eobjects) $(cobjects) $(aobjects)
+$(targetname).narc: $(lobjects) $(gobjects) $(eobjects) $(cobjects) $(aobjects) bag_btnpos.txt Makefile
 	nnsarc -r -l -n -i $(targetname) $^
 	$(NAIXCUT) $(targetname).naix
+	$(BTNTBL) bag_btnpos.txt bag_btnpos.h
 	$(DIFFCOPY) bag_parts_d_NANR_LBLDEFS.h  $(TARGETDIR)../src/app/bag
+	$(DIFFCOPY) bag_btnpos.h  $(TARGETDIR)../src/app/bag
 endif
 
 #------------------------------------------------------------------------------

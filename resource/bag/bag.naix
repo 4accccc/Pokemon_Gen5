@@ -40,7 +40,9 @@ enum {
 	NARC_bag_bag_parts_d_NANR = 26,
 	NARC_bag_bag_win01_d_NANR = 27,
 	NARC_bag_bag_win02_d_NANR = 28,
-	NARC_bag_bag_win03_d_NANR = 29
+	NARC_bag_bag_win03_d_NANR = 29,
+	NARC_bag_bag_btnpos_txt = 30,
+	NARC_bag_Makefile = 31
 };
 
 /* NARC_BAG_NAIX_ */
