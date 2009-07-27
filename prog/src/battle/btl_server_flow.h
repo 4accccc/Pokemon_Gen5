@@ -103,6 +103,7 @@ extern const BTL_POKEPARAM* BTL_SVFLOW_RECEPT_GetPokeParam( BTL_SVFLOW_WORK* wk,
 extern u8 BTL_SVFLOW_RECEPT_GetAllFrontPokeID( BTL_SVFLOW_WORK* wk, u8* dst );
 extern u8 BTL_SVFLOW_RECEPT_GetAllOpponentFrontPokeID( BTL_SVFLOW_WORK* wk, u8 basePokeID, u8* dst );
 extern u16 BTL_SVFLOW_GetTurnCount( BTL_SVFLOW_WORK* wk );
+extern u8 BTL_SVFLOW_GetClientCoverPosCount( BTL_SVFLOW_WORK* wk, u8 pokeID );
 
 extern void BTL_SERVER_RECEPT_TokuseiWinIn( BTL_SVFLOW_WORK* wk, u8 pokeID );
 extern void BTL_SERVER_RECEPT_TokuseiWinOut( BTL_SVFLOW_WORK* wk, u8 pokeID );
@@ -487,6 +488,13 @@ typedef struct {
   u8                       targetPokeID;
   WazaID                   wazaID;
 }BTL_HANDEX_PARAM_DELAY_WAZADMG;
+
+typedef struct {
+  BTL_HANDEX_PARAM_HEADER  header;
+  BTL_HANDEX_STR_PARAMS    exStr;   ///< 成功時メッセージ
+  u8                       pokeID;
+}BTL_HANDEX_PARAM_CHANGE_MEMBER;
+
 
 
 extern void* BTL_SVFLOW_HANDLERWORK_Push( BTL_SVFLOW_WORK* wk, BtlEventHandlerExhibition eq_type, u8 userPokeID );

@@ -134,6 +134,7 @@ static void ms_set_kinomi_rankup( STRBUF* dst, u16 strID, const int* args );
 static void ms_set_waza_sp( STRBUF* dst, u16 strID, const int* args );
 static void ms_set_waza_num( STRBUF* dst, u16 strID, const int* args );
 static void ms_set_poke_num( STRBUF* dst, u16 strID, const int* args );
+static void ms_set_poke_trainer( STRBUF* dst, u16 strID, const int* args );
 static void ms_set_item_recover_pp( STRBUF* dst, u16 strID, const int* args );
 
 
@@ -511,7 +512,7 @@ void BTL_STR_MakeStringSet( STRBUF* buf, BtlStrID_SET strID, const int* args )
     { BTL_STRID_SET_Tedasuke,             ms_set_poke },
     { BTL_STRID_SET_YokodoriExe,          ms_set_poke2poke },
     { BTL_STRID_SET_MagicCoatExe,         ms_set_waza_sp },
-
+    { BTL_STRID_SET_Tonbogaeri,           ms_set_poke_trainer },
 
 
   };
@@ -761,7 +762,22 @@ static void ms_set_poke_num( STRBUF* dst, u16 strID, const int* args )
   GFL_MSG_GetString( SysWork.msg[MSGSRC_SET], strID, SysWork.tmpBuf );
   WORDSET_ExpandStr( SysWork.wset, dst, SysWork.tmpBuf );
 }
+//--------------------------------------------------------------
+/**
+ *  ○○は××（トレーナー名）のもとにかえっていく！など
+ *  args... [0]:pokeID  [1]:clientID
+ */
+//--------------------------------------------------------------
+static void ms_set_poke_trainer( STRBUF* dst, u16 strID, const int* args )
+{
+  register_PokeNickname( args[0], BUFIDX_POKE_1ST );
+  // @@@ これではプレイヤー名がどちらにも出てしまう…
+  WORDSET_RegisterPlayerName( SysWork.wset, 1, BTL_MAIN_GetPlayerStatus(SysWork.mainModule) );
 
+  strID = get_setStrID( args[0], strID );
+  GFL_MSG_GetString( SysWork.msg[MSGSRC_SET], strID, SysWork.tmpBuf );
+  WORDSET_ExpandStr( SysWork.wset, dst, SysWork.tmpBuf );
+}
 //--------------------------------------------------------------
 /**
  *  ○○は××で△△のPPが回復！など

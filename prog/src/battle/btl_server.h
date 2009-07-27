@@ -39,7 +39,8 @@ extern void BTL_SERVER_Main( BTL_SERVER* server );
 // server_flow -> server åƒÇ—èoÇµêÍóp
 //-------------------------------------
 extern void BTL_SERVER_AddBonusMoney( BTL_SERVER* server, u32 volume );
-extern void BTL_SERVER_RequestChangePokemon( BTL_SERVER* server, u32 cnt, const BtlPokePos* pos );
+extern void BTL_SERVER_InitChangePokemonReq( BTL_SERVER* server );
+extern void BTL_SERVER_RequestChangePokemon( BTL_SERVER* server, BtlPokePos pos );
 
 
 #endif

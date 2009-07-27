@@ -1666,6 +1666,19 @@ u8 BTL_PARTY_GetAliveMemberCount( const BTL_PARTY* party )
   return cnt;
 }
 
+u8 BTL_PARTY_GetAliveMemberCountRear( const BTL_PARTY* party, u8 startIdx )
+{
+  int i, cnt;
+  for(i=startIdx, cnt=0; i<party->memberCount; i++)
+  {
+    if( BPP_GetValue(party->member[i], BPP_HP) )
+    {
+      cnt++;
+    }
+  }
+  return cnt;
+}
+
 BTL_POKEPARAM* BTL_PARTY_GetMemberData( BTL_PARTY* party, u8 idx )
 {
   return party->member[ idx ];

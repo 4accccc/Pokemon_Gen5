@@ -125,7 +125,6 @@ static void setWaruagakiAction( BTL_ACTION_PARAM* dst, BTL_CLIENT* wk, const BTL
 static BOOL is_unselectable_waza( BTL_CLIENT* wk, const BTL_POKEPARAM* bpp, WazaID waza, STR_PARAM* strParam );
 static BtlCantEscapeCode is_prohibit_escape( BTL_CLIENT* wk, u8* pokeID );
 static BOOL SubProc_AI_SelectAction( BTL_CLIENT* wk, int* seq );
-static u8 calc_empty_pos( BTL_CLIENT* wk, u8* posIdxList );
 static void abandon_cover_pos( BTL_CLIENT* wk, u8 numPos );
 static u8 calc_puttable_pokemons( BTL_CLIENT* wk, u8* list );
 static u8 calc_front_dead_pokemons( BTL_CLIENT* wk, u8* list );
@@ -931,32 +930,8 @@ static BOOL SubProc_AI_SelectAction( BTL_CLIENT* wk, int* seq )
   return TRUE;
 }
 //---------------------------------------------------
-// 自分のポケモンが死んでいたら次を選択する処理
-//---------------------------------------------------
-
-// 瀕死、またはとんぼ返りなどで、次のポケモンを出さなければならない担当位置数を返す
-static u8 calc_empty_pos( BTL_CLIENT* wk, u8* posIdxList )
-{
-  u8 cnt, i;
-  for(i=0, cnt=0; i<wk->numCoverPos; ++i)
-  {
-    if( wk->frontPokeEmpty[i] == FALSE )
-    {
-      const BTL_POKEPARAM* bpp = BTL_PARTY_GetMemberDataConst( wk->myParty, i );
-      if( (BPP_IsDead(bpp))
-      ||  (BPP_GetContFlag(bpp, BPP_CONTFLG_CHANGE_TARGET))
-      ){
-        if( posIdxList ){
-          posIdxList[cnt] = i;
-        }
-        ++cnt;
-      }
-    }
-  }
-  return cnt;
-}
-
 // 担当位置を放棄する  numPos : 放棄する位置の数
+//---------------------------------------------------
 static void abandon_cover_pos( BTL_CLIENT* wk, u8 numPos )
 {
   u8 i = wk->numCoverPos - 1;

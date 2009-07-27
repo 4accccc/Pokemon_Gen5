@@ -354,6 +354,8 @@ static BTL_EVENT_FACTOR*  ADD_Ieki( u16 pri, WazaID waza, u8 pokeID );
 static void handler_Ieki( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static BTL_EVENT_FACTOR*  ADD_Narikiri( u16 pri, WazaID waza, u8 pokeID );
 static void handler_Narikiri( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static BTL_EVENT_FACTOR*  ADD_TonboGaeri( u16 pri, WazaID waza, u8 pokeID );
+static void handler_TonboGaeri( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static BTL_EVENT_FACTOR*  ADD_Teleport( u16 pri, WazaID waza, u8 pokeID );
 static void handler_Teleport_ExeCheck( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_Teleport( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
@@ -628,6 +630,7 @@ BOOL  BTL_HANDLER_Waza_Add( const BTL_POKEPARAM* pp, WazaID waza )
     { WAZANO_YOKODORI,        ADD_Yokodori      },
     { WAZANO_MAZIKKUKOOTO,    ADD_MagicCoat     },
     { WAZANO_TEREPOOTO,       ADD_Teleport      },
+    { WAZANO_TONBOGAERI,      ADD_TonboGaeri    },
   };
 
   int i;
@@ -5673,6 +5676,42 @@ static void handler_Narikiri( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowW
 }
 //----------------------------------------------------------------------------------
 /**
+ * とんぼがえり
+ */
+//----------------------------------------------------------------------------------
+static BTL_EVENT_FACTOR*  ADD_TonboGaeri( u16 pri, WazaID waza, u8 pokeID )
+{
+  static const BtlEventHandlerTable HandlerTable[] = {
+    { BTL_EVENT_WAZA_DMG_AFTER,  handler_TonboGaeri   },         // ダメージ直後
+    { BTL_EVENT_NULL, NULL },
+  };
+  return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_WAZA, waza, pri, pokeID, HandlerTable );
+}
+static void handler_TonboGaeri( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+{
+  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
+  {
+    const BTL_PARTY* party = BTL_SVFLOW_GetPartyData( flowWk, pokeID );
+    u8 numCoverPos = BTL_SVFLOW_GetClientCoverPosCount( flowWk, pokeID );
+    if( BTL_PARTY_GetAliveMemberCountRear(party, numCoverPos) )
+    {
+      BTL_HANDEX_PARAM_CHANGE_MEMBER* param;
+      BTL_HANDEX_PARAM_MESSAGE* msg_param;
+      u8 clientID = BTL_MAINUTIL_PokeIDtoClientID( pokeID );
+
+      msg_param = BTL_SVFLOW_HANDLERWORK_Push( flowWk, BTL_HANDEX_MESSAGE, pokeID );
+      HANDEX_STR_Setup( &msg_param->str, BTL_STRTYPE_SET, BTL_STRID_SET_Tonbogaeri );
+      HANDEX_STR_AddArg( &msg_param->str, pokeID );
+      HANDEX_STR_AddArg( &msg_param->str, clientID );
+
+      param = BTL_SVFLOW_HANDLERWORK_Push( flowWk, BTL_HANDEX_CHANGE_MEMBER, pokeID );
+      param->pokeID = pokeID;
+    }
+  }
+}
+
+//----------------------------------------------------------------------------------
+/**
  * テレポート
  */
 //----------------------------------------------------------------------------------
@@ -5708,6 +5747,8 @@ static void handler_Teleport_ExMsg( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK*
     HANDEX_STR_AddArg( &param->str, pokeID );
   }
 }
+
+
 //----------------------------------------------------------------------------------
 /**
  * でんじふゆう
@@ -6610,18 +6651,13 @@ static void handler_Nekonote( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowW
 {
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID )
   {
-    BtlRule rule = BTL_SVFLOW_GetRule( flowWk );
     const BTL_PARTY* party = BTL_SVFLOW_GetPartyData( flowWk, pokeID );
     u16* wazaAry = BTL_SVFLOW_GetHandlerTmpWork( flowWk );
     const BTL_POKEPARAM* bpp;
 
     u8 frontMemberCnt, memberCnt, wazaCnt, i;
 
-    switch( rule ){
-    case BTL_RULE_SINGLE: frontMemberCnt = 1; break;
-    case BTL_RULE_DOUBLE: frontMemberCnt = 2; break;
-    default:              frontMemberCnt = 3; break;
-    }
+    frontMemberCnt = BTL_SVFLOW_GetClientCoverPosCount( flowWk, pokeID );
     memberCnt = BTL_PARTY_GetMemberCount( party );
     for(i=frontMemberCnt, wazaCnt=0; i<memberCnt; ++i)
     {

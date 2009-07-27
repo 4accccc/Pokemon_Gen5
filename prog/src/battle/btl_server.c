@@ -608,15 +608,22 @@ void BTL_SERVER_AddBonusMoney( BTL_SERVER* server, u32 volume )
   BTL_MAIN_AddBonusMoney( server->mainModule, volume );
 }
 
-void BTL_SERVER_RequestChangePokemon( BTL_SERVER* server, u32 cnt, const BtlPokePos* pos )
+void BTL_SERVER_InitChangePokemonReq( BTL_SERVER* server )
 {
-  GF_ASSERT(cnt < BTL_POS_MAX);
+  server->changePokeCnt = 0;
+}
+
+void BTL_SERVER_RequestChangePokemon( BTL_SERVER* server, BtlPokePos pos )
+{
+  GF_ASSERT(server->changePokeCnt < BTL_POS_MAX);
   {
     u32 i;
-    for(i=0; i<cnt; ++i){
-      server->changePokePos[i] = pos[i];
+    for(i=0; i<server->changePokeCnt; ++i){
+      if( server->changePokePos[i] == pos ){
+        return;
+      }
     }
-    server->changePokeCnt = cnt;
+    server->changePokePos[ server->changePokeCnt++ ] = pos;
   }
 }
 

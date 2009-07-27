@@ -47,6 +47,7 @@ extern void BTL_MAIN_SyncServerCalcData( BTL_MAIN_MODULE* wk );
 
 extern u8 BTL_PARTY_GetMemberCount( const BTL_PARTY* party );
 extern u8 BTL_PARTY_GetAliveMemberCount( const BTL_PARTY* party );
+extern u8 BTL_PARTY_GetAliveMemberCountRear( const BTL_PARTY* party, u8 startIdx );
 extern const BTL_POKEPARAM* BTL_PARTY_GetMemberDataConst( const BTL_PARTY* party, u8 idx );
 extern s16 BTL_PARTY_FindMember( const BTL_PARTY* party, const BTL_POKEPARAM* param );
 //-------------------------
