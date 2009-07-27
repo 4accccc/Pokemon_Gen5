@@ -10,7 +10,7 @@
 
   .include  "scr_seq_def.h"
   .include  "../../message/dst/script/msg_t01r0102.h"
-  //.include  "../eventdata/zone_t01r0102evc.h"
+  .include  "t01r0102.h"
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -129,26 +129,99 @@ t01r0102_poke_get_yes:
 	_AB_KEYWAIT
 	_TALKWIN_CLOSE
 
-	//サポート、ライバルの台詞
-	//ここで画面フェード開始？
-	//ボール削除
-	//ここで画面フェード終了？
-	_OBJ_PAUSE_CLEAR_ALL
-  _END
-
+//ライバルアニメ、サポートに隣接
+	_OBJ_ANIME T01R0102_RIVAL,anime_t01r0102_poke_get
+	_OBJ_ANIME_WAIT
+//サポート、ライバルの台詞
+	_TALK_OBJ_PAUSE_ALL
+	_TALKWIN_OPEN
+	_TALKMSG_ALLPUT msg_t01r0102_white_test02
 	_AB_KEYWAIT
 	_TALKWIN_CLOSE
 
-	//サポート、ライバルの台詞
-	//ここで画面フェード開始？
-	//ボール削除
-	//ここで画面フェード終了？
+	_TALK_OBJ_PAUSE_ALL
+	_TALKWIN_OPEN
+	_TALKMSG_ALLPUT msg_t01r0102_black_test02
+	_AB_KEYWAIT
+	_TALKWIN_CLOSE
+	
+//ボール削除
+	_OBJ_DEL T01R0102_BALL1
+	_OBJ_DEL T01R0102_BALL2
+	_OBJ_DEL T01R0102_BALL3
+
+//ここで画面フェード
+	_BLACK_IN DISP_FADE_SPEED
+	_DISP_FADE_END_CHECK
+/*
+	_LDVAL SVSCRWK_START,1
+*/
+
+//サポートとポケモン勝負
+ev_t01r0102_poke_battle:
+//ここでサポート専用曲
+	_BGM_PLAY SEQ_E_SUPPORT_M
+
+	_TALK_OBJ_PAUSE_ALL
+	_PLAYER_NAME 0 //プレイヤー名を反映
+	_TALKWIN_OPEN
+	_TALKMSG_ALLPUT msg_t01r0102_white_test03
+	_AB_KEYWAIT
+	_TALKWIN_CLOSE
+//ここで画面フェード
+	_BLACK_IN DISP_FADE_SPEED
+	_DISP_FADE_END_CHECK
+	_TALK_OBJ_PAUSE_ALL
+	_TALKWIN_OPEN
+	_TALKMSG_ALLPUT msg_t01r0102_white_test04
+	_AB_KEYWAIT
+	_TALKWIN_CLOSE
+
+//ここでサポート専用曲終了
+	_BGM_STOP
+
+//ライバルとポケモン勝負
+//ここでライバル専用曲
+	_BGM_PLAY SEQ_E_RIVAL1
+
+	_TALK_OBJ_PAUSE_ALL
+	_TALKWIN_OPEN
+	_TALKMSG_ALLPUT msg_t01r0102_black_test03
+	_AB_KEYWAIT
+	_TALKWIN_CLOSE
+//ここで画面フェード
+	_BLACK_IN DISP_FADE_SPEED
+	_DISP_FADE_END_CHECK
+//ここでライバル専用曲終了
+	_BGM_STOP
+
+	_TALK_OBJ_PAUSE_ALL
+	_TALKWIN_OPEN
+	_TALKMSG_ALLPUT msg_t01r0102_black_test04
+	_AB_KEYWAIT
+	_TALKWIN_CLOSE
+//ライバル退場アニメ
+	_OBJ_ANIME T01R0102_RIVAL,anime_t01r0102_byebye1
+	_OBJ_ANIME_WAIT
+	_OBJ_DEL T01R0102_RIVAL
+
+	_TALK_OBJ_PAUSE_ALL
+	_TALKWIN_OPEN
+	_TALKMSG_ALLPUT msg_t01r0102_white_test05
+	_AB_KEYWAIT
+	_TALKWIN_CLOSE
+//サポート退場アニメ
+	_OBJ_ANIME T01R0102_HEROINE,anime_t01r0102_byebye2
+	_OBJ_ANIME_WAIT
+	_OBJ_DEL T01R0102_HEROINE
+
 	_OBJ_PAUSE_CLEAR_ALL
+
   _END
 
 
 /**************************************************************/
-/*  T01R0102 GAME　MACHINEのBG用イベントスクリプト*/
+/*  T01R0102 GAME MACHINEのBG用イベントスクリプト*/
 /**************************************************************/
 ev_t01r0102_game:
 	_TALK_OBJ_PAUSE_ALL
@@ -196,5 +269,33 @@ ev_t01r0102_bed:
   _OBJ_PAUSE_CLEAR_ALL
   _END
 
+
+/**************************************************************/
+/*     ライバル、サポートの上隣まで移動　　　　                     */
+/**************************************************************/
+_ANIME_LABEL	anime_t01r0102_poke_get
+	_ANIME_DATA	AC_WALK_D_8F,3
+	_ANIME_DATA	AC_WALK_L_8F,2
+	_ANIME_DATA	ACMD_END,0
+
+/**************************************************************/
+/*     ライバル、退場　　　　                     */
+/**************************************************************/
+_ANIME_LABEL	anime_t01r0102_byebye1
+	_ANIME_DATA	AC_WALK_R_8F,2
+	_ANIME_DATA	AC_WALK_U_8F,3
+	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	AC_WAIT_8F,2
+	_ANIME_DATA	ACMD_END,0
+
+/**************************************************************/
+/*     サポート、退場　　　　                     */
+/**************************************************************/
+_ANIME_LABEL	anime_t01r0102_byebye2
+	_ANIME_DATA	AC_WALK_R_8F,2
+	_ANIME_DATA	AC_WALK_U_8F,4
+	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	AC_WAIT_8F,2
+	_ANIME_DATA	ACMD_END,0
 
 
