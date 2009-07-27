@@ -29,5 +29,7 @@
 #define ID_TRAINER_2VS2_OFFSET_END   (6999) //2vs2トレーナースクリプトIDのオフセット終了
 #define ID_HIDE_ITEM_OFFSET          (8000) //隠しアイテムスクリプトIDのオフセット
 #define ID_HIDE_ITEM_OFFSET_END      (8799) //隠しアイテムスクリプトIDのオフセット終了
+#define	ID_INIT_SCR_OFFSET           (9600) //ゲーム開始スクリプトIDのオフセット
+#define	ID_INIT_SCR_OFFSET_END (9699) //ゲーム開始スクリプトIDのオフセット終了
 
 #endif  /* SCR_OFFSET_H */

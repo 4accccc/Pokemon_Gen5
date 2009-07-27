@@ -29,6 +29,8 @@
 #include "event_fldmmdl_control.h"
 #include "field_place_name.h"   //FIELD_PLACE_NAME_ZoneChange
 
+#include "script.h"
+
 static void UpdateMapParams(GAMESYS_WORK * gsys, const LOCATION * loc_req);
 static void SetMMdl( GAMESYS_WORK *gsys, const LOCATION *loc_req, GAMEINIT_MODE mode );
 static void setNextBGM(GAMEDATA * gamedata, u16 zone_id);
@@ -56,16 +58,18 @@ static GMEVENT_RESULT EVENT_FirstMapIn(GMEVENT * event, int *seq, void *work)
 	FIELD_MAIN_WORK * fieldmap;
 	switch (*seq) {
 	case 0:
+		switch(game_init_work->mode){
+		case GAMEINIT_MODE_FIRST:
+		case GAMEINIT_MODE_DEBUG:
+      SCRIPT_CallGameStartInitScript( gsys, GFL_HEAPID_APP );
+			break;
+		}
+
 		UpdateMapParams(gsys, &fmw->loc_req);
 		SetMMdl( gsys, &fmw->loc_req, game_init_work->mode );
 		
     setNextBGM(fmw->gamedata, fmw->loc_req.zone_id);
 		
-		switch(game_init_work->mode){
-		case GAMEINIT_MODE_FIRST:
-		case GAMEINIT_MODE_DEBUG:
-			break;
-		}
 		(*seq)++;
 		break;
 	case 1:
@@ -672,9 +676,10 @@ static void SetMMdl( GAMESYS_WORK *gsys, const LOCATION *loc_req, GAMEINIT_MODE 
 		u16 count = EVENTDATA_GetNpcCount( evdata );
 		
 		if( count ){
+      EVENTWORK *evwork =  GAMEDATA_GetEventWork( gamedata );
 			MMDLSYS *fmmdlsys = GAMEDATA_GetMMdlSys( gamedata );
 			const MMDL_HEADER *header = EVENTDATA_GetNpcData( evdata );
-			MMDLSYS_SetMMdl( fmmdlsys, header, loc_req->zone_id, count );
+			MMDLSYS_SetMMdl( fmmdlsys, header, loc_req->zone_id, count, evwork );
 		}
 	}
 }

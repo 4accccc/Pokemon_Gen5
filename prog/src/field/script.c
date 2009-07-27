@@ -32,6 +32,8 @@
 
 #include "arc/fieldmap/script_seq.naix"
 
+#include "../../../resource/fldmapdata/script/init_scr_def.h"
+
 //======================================================================
 //	デバック
 //======================================================================
@@ -635,8 +637,15 @@ static void InitScript(
 static u16 SetScriptDataSub( SCRCMD_WORK *work, VMHANDLE* core, u32 zone_id, u16 id, HEAPID heapID )
 {
 	u16 scr_id = id;
-	
-  if( scr_id >= ID_TRAINER_OFFSET ) //トレーナースクリプトID
+
+	if( scr_id >= ID_INIT_SCR_OFFSET )
+  {
+		SetScriptData( work, core,
+        NARC_script_seq_init_scr_bin,
+        NARC_script_message_common_scr_dat, heapID );
+    scr_id -= ID_INIT_SCR_OFFSET;
+  }
+  else if( scr_id >= ID_TRAINER_OFFSET ) //トレーナースクリプトID
   {
 		SetScriptData( work, core,
         NARC_script_seq_trainer_bin,
@@ -2097,6 +2106,20 @@ void GameStartScriptInit( FLDCOMMON_WORK* fsys )
 	}
 #endif
 	return;
+}
+#else //wb
+void SCRIPT_CallGameStartInitScript( GAMESYS_WORK *gsys, HEAPID heapID )
+{
+  SCRIPT_WORK *sc = EvScriptWork_Alloc( heapID );
+//  sc->fld_param = NULL;
+  EvScriptWork_Init( sc, gsys, SCRID_INIT_SCRIPT, NULL, NULL );
+  
+  {
+    VMHANDLE *core = NULL;
+    core = SCRIPT_AddVMachine( sc->gsys, sc, sc->heapID, sc->script_id );
+    while( VM_Control(core) == TRUE ){};
+    script_del( core );
+  }
 }
 #endif
 

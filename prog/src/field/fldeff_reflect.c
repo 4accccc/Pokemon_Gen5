@@ -69,7 +69,8 @@ typedef struct
 {
   fx32 scale_x;
   fx32 scale_val_x;
-  BOOL flag_initact;
+  u16 flag_initact;
+  u16 flag_initfunc;
   TASKHEADER_REFLECT head;
   MMDL_BLACTWORK_USER actWork;
   MMDL_CHECKSAME_DATA samedata;
@@ -82,6 +83,8 @@ static void reflect_InitResource( FLDEFF_REFLECT *reflect );
 static void reflect_DeleteResource( FLDEFF_REFLECT *reflect );
 
 static void reflectTask_UpdateBlAct( u16 actID, void *wk );
+static void reflectBlAct_Update(
+    GFL_BBDACT_SYS *bbdactsys, int actID, void *wk );
 
 static const FLDEFF_TASK_HEADER data_reflectTaskHeader;
 
@@ -256,7 +259,15 @@ static void reflectTask_Update( FLDEFF_TASK *task, void *wk )
   if( work->actWork.actID == MMDL_BLACTID_NULL ){ //アクター追加まだ
     return;
   }
-  
+
+#if 0  
+  if( work->flag_initfunc == FALSE ){
+    GFL_BBDACT_SetFunc( work->head.bbdactsys,
+        work->actWork.actID, reflectBlAct_Update );
+    work->flag_initfunc = TRUE;
+  }
+#endif
+
   work->scale_x += work->scale_val_x;
   
  	if( work->scale_x >= REF_SCALE_X_UP ){
@@ -367,6 +378,12 @@ static void reflectTask_UpdateBlAct( u16 actID, void *wk )
     }
   }
 #endif
+}
+
+static void reflectBlAct_Update(
+    GFL_BBDACT_SYS *bbdactsys, int actID, void *wk )
+{
+  reflectTask_UpdateBlAct( actID, wk );
 }
 
 //======================================================================

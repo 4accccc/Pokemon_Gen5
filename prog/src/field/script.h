@@ -620,7 +620,11 @@ extern void HideItemFlagOneDayClear( FLDCOMMON_WORK* fsys );
  * @return	none
  */
 //------------------------------------------------------------------
+#ifndef SCRIPT_PL_NULL
 extern void GameStartScriptInit( FLDCOMMON_WORK* fsys );
+#else //wb
+extern void SCRIPT_CallGameStartInitScript( GAMESYS_WORK *gsys, HEAPID heapID );
+#endif
 
 //------------------------------------------------------------------
 /**

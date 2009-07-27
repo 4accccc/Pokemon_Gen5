@@ -14,6 +14,7 @@
 #include "arc_def.h"
 
 #include "field_g3d_mapper.h"
+#include "eventwork.h"
 
 #include "arc/fieldmap/fldmmdl_objcode.h"
 #include "fldmmdl_code.h"
@@ -557,8 +558,9 @@ extern MMDL * MMDLSYS_AddMMdlParam( const MMDLSYS *fos,
     s16 gx, s16 gz, u16 dir,
     u16 id, u16 code, u16 move, int zone_id );
 extern void MMDLSYS_SetMMdl( const MMDLSYS *fos,
-	const MMDL_HEADER *header, int zone_id, int count );
+	const MMDL_HEADER *header, int zone_id, int count, EVENTWORK *eventWork );
 extern void MMDL_Delete( MMDL * mmdl );
+extern void MMDL_DeleteEvent( MMDL * mmdl, EVENTWORK *evwork );
 extern void MMDLSYS_DeleteMMdl( const MMDLSYS *fos );
 
 extern void MMDLSYS_Push( MMDLSYS *mmdlsys );

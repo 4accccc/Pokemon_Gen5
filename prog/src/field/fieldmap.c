@@ -289,7 +289,7 @@ static BOOL fldmap_CheckPlayerPosUpdate( FIELDMAP_WORK *fieldWork );
 static BOOL fldmap_CheckMoveZoneChange( FIELDMAP_WORK *fieldWork );
 static void fldmap_ZoneChange( FIELDMAP_WORK *fieldWork );
 
-static void zoneChange_SetMMdl(
+static void zoneChange_SetMMdl( GAMEDATA *gdata,
 		MMDLSYS *fmmdlsys, EVENTDATA_SYSTEM *evdata, u32 zone_id );
 static void zoneChange_SetBGM( GAMEDATA *gdata, u32 zone_id );
 static void zoneChange_SetWeather( FIELDMAP_WORK *fieldWork, u32 zone_id );
@@ -1846,7 +1846,7 @@ static void fldmap_ZoneChange( FIELDMAP_WORK *fieldWork )
 	EVENTDATA_SYS_Load( evdata, new_zone_id );
 	
 	//新規ゾーンに配置する動作モデルセット
-	zoneChange_SetMMdl( fmmdlsys, evdata, new_zone_id );
+	zoneChange_SetMMdl( gdata, fmmdlsys, evdata, new_zone_id );
 	
 	//BGM切り替え
 	zoneChange_SetBGM( gdata, new_zone_id );
@@ -1881,14 +1881,15 @@ static void fldmap_ZoneChange( FIELDMAP_WORK *fieldWork )
  * @retval	nothing
  */
 //--------------------------------------------------------------
-static void zoneChange_SetMMdl(
+static void zoneChange_SetMMdl( GAMEDATA *gdata,
 		MMDLSYS *fmmdlsys, EVENTDATA_SYSTEM *evdata, u32 zone_id )
 {
 	u16 count = EVENTDATA_GetNpcCount( evdata );
 	
 	if( count ){
+    EVENTWORK *evwork =  GAMEDATA_GetEventWork( gdata );
 		const MMDL_HEADER *header = EVENTDATA_GetNpcData( evdata );
-		MMDLSYS_SetMMdl( fmmdlsys, header, zone_id, count );
+		MMDLSYS_SetMMdl( fmmdlsys, header, zone_id, count, evwork );
 	}
 }
 

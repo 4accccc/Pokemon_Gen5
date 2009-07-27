@@ -252,7 +252,7 @@ static const MMDL_DRAW_PROC_LIST * DrawProcList_GetList(
 		MMDL_DRAWPROCNO no );
 static BOOL MMdlHeader_CheckAlies( const MMDL_HEADER *head );
 static int MMdlHeader_GetAliesZoneID( const MMDL_HEADER *head );
-static BOOL MMdlSys_CheckEventFlag( const MMDLSYS *mmdlsys, u16 flag_no );
+static BOOL MMdlSys_CheckEventFlag( EVENTWORK *evwork, u16 flag_no );
 
 //======================================================================
 //	フィールド動作モデル　システム
@@ -474,7 +474,7 @@ MMDL * MMDLSYS_AddMMdlParam( const MMDLSYS *fos,
  */
 //--------------------------------------------------------------
 void MMDLSYS_SetMMdl( const MMDLSYS *fos,
-	const MMDL_HEADER *header, int zone_id, int count )
+	const MMDL_HEADER *header, int zone_id, int count, EVENTWORK *eventWork )
 {
 	GF_ASSERT( count > 0 );
 	GF_ASSERT( header != NULL );
@@ -483,7 +483,7 @@ void MMDLSYS_SetMMdl( const MMDLSYS *fos,
 	
 	do{
     if( MMdlHeader_CheckAlies(header) == TRUE ||
-        MMdlSys_CheckEventFlag(fos,header->event_flag) == FALSE ){
+        MMdlSys_CheckEventFlag(eventWork,header->event_flag) == FALSE ){
 		  MMDLSYS_AddMMdl( fos, header, zone_id );
     }
 #ifdef PM_DEBUG
@@ -521,6 +521,19 @@ void MMDL_Delete( MMDL * mmdl )
 	
 	MMdlSys_DecrementOBJCount( (MMDLSYS*)(mmdl->pMMdlSys) );
 	MMdl_ClearWork( mmdl );
+}
+
+//--------------------------------------------------------------
+/**
+ * MMDL フィールド動作モデルを削除　イベントフラグ OBJ非表示フラグをONに。
+ * @param	mmdl		削除するMMDL * 
+ * @retval	nothing
+ */
+//--------------------------------------------------------------
+void MMDL_DeleteEvent( MMDL * mmdl, EVENTWORK *evwork )
+{
+  EVENTWORK_SetEventFlag( evwork, MMDL_GetEventFlag(mmdl) );
+  MMDL_Delete( mmdl );
 }
 
 //--------------------------------------------------------------
@@ -4239,23 +4252,27 @@ static int MMdlHeader_GetAliesZoneID( const MMDL_HEADER *head )
  * @retval
  */
 //--------------------------------------------------------------
-static BOOL MMdlSys_CheckEventFlag( const MMDLSYS *mmdlsys, u16 flag_no )
+static BOOL MMdlSys_CheckEventFlag( EVENTWORK *evwork, u16 flag_no )
 {
+#if 0 //
   FIELDMAP_WORK *fieldMap = mmdlsys->fieldMapWork;
-#if 0
   GF_ASSERT( fieldMap != NULL );
-#else
+  
   if( fieldMap == NULL ){
     return( FALSE );
   }
+  
   return( FALSE ); //FIELDMAP_WORKの扱いが確定していない。
-#endif
+  
   {
     GAMESYS_WORK *gsys = FIELDMAP_GetGameSysWork( fieldMap );
     GAMEDATA *gdata = GAMESYSTEM_GetGameData( gsys );
     EVENTWORK *ev = GAMEDATA_GetEventWork( gdata );
     return( EVENTWORK_CheckEventFlag(ev,flag_no) );
   }
+#else
+  return( EVENTWORK_CheckEventFlag(evwork,flag_no) );
+#endif
 }
 
 //======================================================================
