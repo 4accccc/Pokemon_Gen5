@@ -11,6 +11,7 @@
 #include "gamesystem/gamesystem.h"
 #include "field/fieldmap_proc.h"
 
+#include "field/zonedata.h" //ZONEDATA_IsUnionRoom
 //======================================================================
 //	define
 //======================================================================
@@ -47,10 +48,22 @@ static GFL_PROC_RESULT FieldMapProcInit
 	FIELDMAP_WORK * fieldWork;
 	FIELDPROC_WORK * fpwk;
 	GAMESYS_WORK * gsys = pwk;
+  u32 heap_size;
 
   switch(*seq){
   case 0:
-  	GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_FIELDMAP, 0x14c000 );
+    {
+      u16 zone_id = PLAYERWORK_getZoneID( GAMESYSTEM_GetMyPlayerWork(gsys) );
+      if (ZONEDATA_IsUnionRoom(zone_id) == TRUE)
+      {
+        heap_size = 0x140000;
+      }
+      else
+      {
+        heap_size = 0x14c000;
+      }
+    }
+  	GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_FIELDMAP, heap_size );
   	fpwk = GFL_PROC_AllocWork(proc, sizeof(FIELDPROC_WORK), HEAPID_FIELDMAP);
   	fpwk->fieldWork = FIELDMAP_Create(gsys, HEAPID_FIELDMAP );
   	GAMESYSTEM_SetFieldMapWork(gsys, fpwk->fieldWork);
