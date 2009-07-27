@@ -49,9 +49,9 @@
 
 
 #define ITEMREPORT_FRAME (GFL_BG_FRAME2_S)
-#define _UP_ITEMNAME_INITX (9)
+#define _UP_ITEMNAME_INITX (5)
 #define _UP_ITEMNAME_INITY (6)
-#define _UP_ITEMNAME_SIZEX (12)
+#define _UP_ITEMNAME_SIZEX (14)
 #define _UP_ITEMNAME_SIZEY (3)
 
 
@@ -150,6 +150,7 @@ void _createSubBg(void)
       0, 0, 0, FALSE
       };
     GFL_BG_SetBGControl( GFL_BG_FRAME3_M, &TextBgCntDat, GFL_BG_MODE_TEXT );
+    GFL_BG_FillCharacter( GFL_BG_FRAME3_M, 0x00, 1, 0 );
     GFL_BG_ClearFrame( GFL_BG_FRAME3_M );
     GFL_BG_LoadScreenReq( GFL_BG_FRAME3_M );
     GFL_BG_SetVisible( GFL_BG_FRAME3_M, VISIBLE_ON );
@@ -267,8 +268,8 @@ void ITEMDISP_graphicInit(FIELD_ITEMMENU_WORK* pWork)
   pWork->SysMsgQue = PRINTSYS_QUE_Create( pWork->heapID );
 
 
-  //	pWork->bgchar = BmpWinFrame_GraphicSetAreaMan(DEBUG_ITEMDISP_FRAME,
-  //																						 _BUTTON_WIN_PAL, MENU_TYPE_SYSTEM, pWork->heapID);
+  pWork->bgchar = BmpWinFrame_GraphicSetAreaMan(GFL_BG_FRAME3_M,
+                                                _BUTTON_WIN_PAL, MENU_TYPE_SYSTEM, pWork->heapID);
 
 
   {
@@ -465,7 +466,7 @@ void ITEMDISP_upMessageRewrite(FIELD_ITEMMENU_WORK* pWork)
     GFL_MSG_GetString(  pWork->MsgManager, MSG_ITEM_STR001, pWork->pStrBuf );
     WORDSET_RegisterItemName(pWork->WordSet, 0, item->id);
     WORDSET_ExpandStr( pWork->WordSet, pWork->pExpStrBuf, pWork->pStrBuf  );
-    PRINTSYS_Print( GFL_BMPWIN_GetBmp(pWork->winItemName), 0, 0, pWork->pExpStrBuf, pWork->fontHandle);
+    PRINTSYS_Print( GFL_BMPWIN_GetBmp(pWork->winItemName), 16, 0, pWork->pExpStrBuf, pWork->fontHandle);
   }
   else{
     GFL_MSG_GetString(  pWork->MsgManager, msg_bag_086, pWork->pStrBuf );
@@ -964,6 +965,13 @@ void ITEMDISP_InitPocketCell( FIELD_ITEMMENU_WORK* pWork )
  * @retval  none
  */
 //------------------------------------------------------------------------------
+
+static GFL_CLACTPOS pokectCellPos[]={
+#include "bag_anmpos.h"
+};
+
+
+
 void ITEMDISP_ChangePocketCell( FIELD_ITEMMENU_WORK* pWork,int pocketno )
 {
   int anm[] = {
@@ -972,10 +980,9 @@ void ITEMDISP_ChangePocketCell( FIELD_ITEMMENU_WORK* pWork,int pocketno )
     NANR_bag_parts_d_waza,
     NANR_bag_parts_d_kinomi,
     NANR_bag_parts_d_taisetsu};
-  GFL_CLACTPOS pos[]={{64,128}, {48,96}, {96,80}, {80,112}, {64,72} };
 
   GFL_CLACT_WK_SetAnmSeq(pWork->clwkPocketIcon, anm[pocketno]);
-  GFL_CLACT_WK_SetPos( pWork->clwkPocketIcon ,  &pos[pocketno], CLWK_SETSF_NONE );
+  GFL_CLACT_WK_SetPos( pWork->clwkPocketIcon ,  &pokectCellPos[pocketno], CLWK_SETSF_NONE );
   GFL_CLACT_WK_SetDrawEnable( pWork->clwkPocketIcon , TRUE );
 
 }
@@ -1030,7 +1037,10 @@ void ITEMDISP_ListPlateClear( FIELD_ITEMMENU_WORK* pWork )
   for(i = 0 ; i < elementof(pWork->menuWin) ; i++){
     GFL_BMPWIN_ClearScreen(pWork->menuWin[i]);
   }
-  GFL_BG_LoadScreenV_Req(GFL_BG_FRAME3_M);
+  //メッセージウインドのクリアも
+  GFL_BMPWIN_ClearScreen(pWork->itemInfoDispWin);
+  BmpWinFrame_Clear(pWork->itemInfoDispWin,WINDOW_TRANS_ON_V);
+ // GFL_BG_LoadScreenV_Req(GFL_BG_FRAME3_M);
 }
 
 
@@ -1233,7 +1243,48 @@ void ITEMDISP_WazaInfoWindowChange( FIELD_ITEMMENU_WORK *pWork )
   
   GFL_BMPWIN_TransVramCharacter(pwin);
 
+}
 
 
+//------------------------------------------------------------------------------
+/**
+ * @brief   説明ウインドウ表示
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+
+void ITEMDISP_ItemInfoWindowDisp( FIELD_ITEMMENU_WORK *pWork )
+{
+  GFL_BMPWIN* pwin;
+  
+  if(pWork->itemInfoDispWin==NULL){
+    pWork->itemInfoDispWin = GFL_BMPWIN_Create(
+      GFL_BG_FRAME3_M ,
+      1 , 1, 30 ,4 , 
+      _BUTTON_MSG_PAL , GFL_BMP_CHRAREA_GET_B );
+  }
+  pwin = pWork->itemInfoDispWin;
+
+  GFL_BMP_Clear(GFL_BMPWIN_GetBmp(pwin), 15);
+  GFL_FONTSYS_SetColor(1, 2, 15);
+  PRINTSYS_Print( GFL_BMPWIN_GetBmp(pwin), 0, 0, pWork->pExpStrBuf, pWork->fontHandle);
+  BmpWinFrame_Write( pwin, WINDOW_TRANS_ON_V, GFL_ARCUTIL_TRANSINFO_GetPos(pWork->bgchar), _BUTTON_WIN_PAL );
+
+  GFL_BMPWIN_TransVramCharacter(pwin);
+  GFL_BMPWIN_MakeScreen(pwin);
+  GFL_BG_LoadScreenV_Req(GFL_BG_FRAME3_M);
+}
+
+//------------------------------------------------------------------------------
+/**
+ * @brief   アイテム説明の文章をExpバッファに入れる
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+void ITEMDISP_ItemInfoMessageMake( FIELD_ITEMMENU_WORK *pWork,int id )
+{
+  GFL_MSG_GetString( pWork->MsgManager, msg_bag_042, pWork->pStrBuf );
+  WORDSET_RegisterItemName(pWork->WordSet, 0, id);
+  WORDSET_ExpandStr( pWork->WordSet, pWork->pExpStrBuf, pWork->pStrBuf  );
 }
 

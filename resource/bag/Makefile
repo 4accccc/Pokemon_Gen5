@@ -79,12 +79,14 @@ $(TARGETDIR)/$(targetname).narc: $(targetname).narc
 
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、元ファイルからコンバートするルールを有効にする
 # コピー先のnarcが古い場合実行する
-$(targetname).narc: $(lobjects) $(gobjects) $(eobjects) $(cobjects) $(aobjects) bag_btnpos.txt Makefile
+$(targetname).narc: $(lobjects) $(gobjects) $(eobjects) $(cobjects) $(aobjects) bag_btnpos.txt bag_anmpos.txt Makefile
 	nnsarc -r -l -n -i $(targetname) $^
 	$(NAIXCUT) $(targetname).naix
 	$(BTNTBL) bag_btnpos.txt bag_btnpos.h
+	$(BTNTBL) bag_anmpos.txt bag_anmpos.h
 	$(DIFFCOPY) bag_parts_d_NANR_LBLDEFS.h  $(TARGETDIR)../src/app/bag
 	$(DIFFCOPY) bag_btnpos.h  $(TARGETDIR)../src/app/bag
+	$(DIFFCOPY) bag_anmpos.h  $(TARGETDIR)../src/app/bag
 endif
 
 #------------------------------------------------------------------------------
@@ -101,6 +103,7 @@ ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、中間ファイル削除
 	rm -f *.NCLR
 	rm -f *.narc
 	rm -f *.naix
+	rm -r *.h
 	rm -f $(targetname).narc
 	rm -f $(targetname).naix
 endif

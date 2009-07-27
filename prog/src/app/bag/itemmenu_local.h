@@ -97,7 +97,7 @@ struct _DEBUGITEM_PARAM {
   MYITEM_PTR pMyItem;
   MYSTATUS* mystatus;
 	GFL_BMPWIN* win;
-  GFL_BMPWIN* itemUseWin;
+  GFL_BMPWIN* itemInfoDispWin;
   GFL_BMPWIN* pocketNameWin;
   PRINT_UTIL            SysMsgPrintUtil;    // システムウインドウPrintUtil
   PRINT_QUE*            SysMsgQue;
@@ -108,8 +108,6 @@ struct _DEBUGITEM_PARAM {
   STRBUF*  pStrBuf;
 	STRBUF*  pExpStrBuf;
   GFL_FONT 			*fontHandle;
-  BMPMENULIST_WORK* sublw;
-  BMPMENULIST_WORK* lwItemUse;
   BAG_CURSOR* pBagCursor;
   MenuFunc* menu_func[BAG_MENUTBL_MAX];
   ITEMCHECK_WORK icwk;
@@ -241,4 +239,7 @@ extern void ITEMDISP_ListPlateClear( FIELD_ITEMMENU_WORK* pWork );
 extern void ITEMDISP_ListPlateSelectChange( FIELD_ITEMMENU_WORK* pWork , int selectNo);
 extern void ITEMDISP_ItemInfoWindowChange(FIELD_ITEMMENU_WORK *pWork,int pocketno  );
 extern void ITEMDISP_WazaInfoWindowChange( FIELD_ITEMMENU_WORK *pWork );
+
+extern void ITEMDISP_ItemInfoWindowDisp( FIELD_ITEMMENU_WORK *pWork );
+extern void ITEMDISP_ItemInfoMessageMake( FIELD_ITEMMENU_WORK *pWork,int id );
 

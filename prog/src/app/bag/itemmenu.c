@@ -601,7 +601,17 @@ static void _itemSelectWait(FIELD_ITEMMENU_WORK* pWork)
 
 static void _itemSelectState(FIELD_ITEMMENU_WORK* pWork)
 {
+  {  //選んだアイテムのセット
+    ITEM_ST * item = ITEMMENU_GetItem( pWork,ITEMMENU_GetItemIndex(pWork) );
+    pWork->ret_item = ITEM_DUMMY_DATA;
+    if(item){
+      pWork->ret_item = item->id;
+    }
+  }
   _itemUseWindowRewrite(pWork);
+
+  ITEMDISP_ItemInfoMessageMake( pWork,pWork->ret_item );
+  ITEMDISP_ItemInfoWindowDisp( pWork );
 
   _CHANGE_STATE(pWork,_itemSelectWait);
   
@@ -936,13 +946,6 @@ static void _itemUseWindowRewrite(FIELD_ITEMMENU_WORK* pWork)
 
 	length = BAG_MENUTBL_MAX;
 
-  {
-    ITEM_ST * item = ITEMMENU_GetItem( pWork,ITEMMENU_GetItemIndex(pWork) );
-    pWork->ret_item=ITEM_DUMMY_DATA;
-    if(item){
-      pWork->ret_item = item->id;
-    }
-  }
   
 	{
 		u8	tbl[BAG_MENUTBL_MAX]={255, 255, 255, 255, 255};
@@ -1183,9 +1186,18 @@ static GFL_PROC_RESULT FieldItemMenuProc_End( GFL_PROC * proc, int * seq, void *
   
   GFL_BMPWIN_Delete(pWork->pocketNameWin);
   
-//  if(pWork->submenulist){
-//    BmpMenuWork_ListDelete(pWork->submenulist);
-//  }
+
+  if(pWork->itemInfoDispWin){
+
+    GFL_BG_FreeCharacterArea(GFL_BG_FRAME3_M,
+				GFL_ARCUTIL_TRANSINFO_GetPos(pWork->bgchar),
+				GFL_ARCUTIL_TRANSINFO_GetSize(pWork->bgchar));
+
+    GFL_BMPWIN_Delete(pWork->itemInfoDispWin);
+  }
+  
+  GFL_BG_FillCharacterRelease(GFL_BG_FRAME3_M,1,0);
+  
 	GFL_FONT_Delete(pWork->fontHandle);
 	PRINTSYS_QUE_Clear(pWork->SysMsgQue);
 	PRINTSYS_QUE_Delete(pWork->SysMsgQue);
