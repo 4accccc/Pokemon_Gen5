@@ -54,7 +54,7 @@ static GFL_PROC_RESULT FieldMapProcInit
   case 0:
     {
       u16 zone_id = PLAYERWORK_getZoneID( GAMESYSTEM_GetMyPlayerWork(gsys) );
-      if (ZONEDATA_IsUnionRoom(zone_id) == TRUE)
+      if (ZONEDATA_IsUnionRoom(zone_id) || ZONEDATA_IsColosseum(zone_id) )
       {
         heap_size = 0x140000;
       }

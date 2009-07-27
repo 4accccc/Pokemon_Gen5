@@ -293,6 +293,19 @@ BOOL ZONEDATA_IsUnionRoom(u16 zone_id)
 {
   return (zone_id == ZONE_ID_UNION);
 }
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+BOOL ZONEDATA_IsColosseum(u16 zone_id)
+{
+  if ( (zone_id == ZONE_ID_CLOSSEUM) || (zone_id == ZONE_ID_CLOSSEUM02) )
+  {
+    return TRUE;
+  }
+  else
+  {
+    return FALSE;
+  }
+}
 
 //------------------------------------------------------------------
 /**
