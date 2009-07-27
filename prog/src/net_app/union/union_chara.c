@@ -15,6 +15,7 @@
 #include "fieldmap/zone_id.h"
 #include "net_app/union/union_chara.h"
 #include "union_local.h"
+#include "union_msg.h"
 
 
 //==============================================================================
@@ -350,7 +351,6 @@ void UNION_CHAR_Update(UNION_SYSTEM_PTR unisys, GAMEDATA *gdata)
   int i;
   UNION_BEACON_PC *bpc;
   BOOL ret;
-  MMDL *mmdl;
   MMDLSYS *mdlsys;
   UNION_CHARACTER *unichara;
   int del_count, child_no;
@@ -489,6 +489,12 @@ static BOOL BeaconPC_UpdateLife(UNION_SYSTEM_PTR unisys, UNION_BEACON_PC *bpc)
 //==================================================================
 static BOOL UnicharaSeq_NormalUpdate(UNION_SYSTEM_PTR unisys, UNION_CHARACTER *unichara, u8 *seq)
 {
+  UNION_MY_SITUATION *situ = &unisys->my_situation;
+  UNION_BEACON *beacon;
+  MMDL *mmdl;
+  
+  beacon = &unichara->parent_pc->beacon;
+  
   //寿命チェック
   if(unichara->parent_pc->life == 0){
     UNION_CHAR_EventReq(unichara, BPC_EVENT_STATUS_LEAVE);
@@ -501,6 +507,17 @@ static BOOL UnicharaSeq_NormalUpdate(UNION_SYSTEM_PTR unisys, UNION_CHARACTER *u
     return TRUE;
   }
 
+  //アピール番号が一致していればジャンプ
+  if(situ->appeal_no != UNION_APPEAL_NULL 
+      && situ->appeal_no == beacon->appeal_no   //アピール番号一致
+      && unichara->child_no == 0                //親だけ
+      && UnionMsg_GetMemberMax(beacon->play_category) > beacon->connect_num){ //接続人数未満
+    mmdl = UNION_CHARA_GetMmdl(unisys, unichara->parent_pc, unichara);
+    if(MMDL_CheckPossibleAcmd(mmdl) == TRUE){
+      MMDL_SetAcmd(mmdl, AC_STAY_JUMP_D_8F);
+    }
+  }
+  
   return FALSE;
 }
 

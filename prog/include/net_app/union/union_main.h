@@ -74,4 +74,5 @@ extern void UnionMain_Callback_FieldCreate(void *pwk, void *app_work, FIELD_MAIN
 extern void UnionMain_Callback_FieldDelete(void *pwk, void *app_work, FIELD_MAIN_WORK *fieldWork);
 extern BOOL UnionMain_GetFinishReq(UNION_SYSTEM_PTR unisys);
 extern BOOL UnionMain_GetFinishExe(UNION_SYSTEM_PTR unisys);
+extern void UnionMain_SetAppealNo(UNION_SYSTEM_PTR unisys, UNION_APPEAL appeal_no);
 

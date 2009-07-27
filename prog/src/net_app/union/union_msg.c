@@ -195,7 +195,10 @@ static const FLDMENUFUNC_HEADER MenuHeader_Battle =
 //==================================================================
 int UnionMsg_GetMemberMax(UNION_PLAY_CATEGORY menu_index)
 {
-  GF_ASSERT(menu_index < UNION_PLAY_CATEGORY_MAX);
+  if(menu_index >= UNION_PLAY_CATEGORY_MAX){
+    GF_ASSERT(menu_index < UNION_PLAY_CATEGORY_MAX);
+    return 0;
+  }
   return MenuMemberMax[menu_index].member_max;
 }
 

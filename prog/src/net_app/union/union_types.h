@@ -88,7 +88,7 @@ enum{
 };
 
 ///ユニオン：アピール番号
-enum{
+typedef enum{
   UNION_APPEAL_NULL,        ///<アピール無し
   
   UNION_APPEAL_BATTLE,      ///<戦闘
@@ -96,7 +96,7 @@ enum{
   UNION_APPEAL_RECORD,      ///<レコードコーナー
   UNION_APPEAL_PICTURE,     ///<お絵かき
   UNION_APPEAL_GURUGURU,    ///<ぐるぐる交換
-};
+}UNION_APPEAL;
 
 ///ビーコン：バトル：戦闘モード
 enum{

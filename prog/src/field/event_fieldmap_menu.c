@@ -128,6 +128,8 @@ struct _TAG_FMENU_EVENT_WORK
   
   FMENU_APP_TYPE subProcType;
   void *subProcWork;
+  
+  FIELD_SUBSCREEN_MODE return_subscreen_mode;
 };
 
 
@@ -248,7 +250,31 @@ GMEVENT * EVENT_FieldMapMenu(
   mwk->heapID = heapID;
   mwk->state = FMENUSTATE_INIT;
   mwk->subProcWork = NULL;
+  mwk->return_subscreen_mode = FIELD_SUBSCREEN_NORMAL;
   
+  return event;
+}
+
+//--------------------------------------------------------------
+/**
+ * ユニオンルーム用フィールドマップメニューイベント起動
+ * @param gsys  GAMESYS_WORK
+ * @param fieldWork FIELD_MAIN_WORK
+ * @param heapID  HEAPID
+ * @retval  GMEVENT*
+ */
+//--------------------------------------------------------------
+GMEVENT * EVENT_UnionMapMenu(
+  GAMESYS_WORK *gsys, FIELD_MAIN_WORK *fieldWork, HEAPID heapID )
+{
+  FMENU_EVENT_WORK *mwk;
+  GMEVENT * event;
+  
+  event = EVENT_FieldMapMenu(gsys, fieldWork, heapID);
+  
+  mwk = GMEVENT_GetEventWork(event);
+  mwk->return_subscreen_mode = FIELD_SUBSCREEN_UNION;
+
   return event;
 }
 
@@ -330,7 +356,7 @@ static GMEVENT_RESULT FldMapMenuEvent( GMEVENT *event, int *seq, void *wk )
     {
       MMDLSYS *fldMdlSys = FIELDMAP_GetMMdlSys( mwk->fieldWork );
       MMDLSYS_ClearPauseMoveProc( fldMdlSys );
-      FIELD_SUBSCREEN_Change(FIELDMAP_GetFieldSubscreenWork(mwk->fieldWork), FIELD_SUBSCREEN_NORMAL);
+      FIELD_SUBSCREEN_Change(FIELDMAP_GetFieldSubscreenWork(mwk->fieldWork), mwk->return_subscreen_mode);
     }
     return( GMEVENT_RES_FINISH );
     break;

@@ -67,3 +67,4 @@ BOOL UnionTool_CheckWayOut(FIELD_MAIN_WORK *fieldWork)
   }
   return FALSE;
 }
+

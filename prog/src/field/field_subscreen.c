@@ -22,6 +22,7 @@
 #include "sound/pm_sndsys.h"
 
 #include "test/camera_adjust_view.h"
+#include "net_app/union/union_subdisp.h"
 
 //-----------------------------------------------------------------------------
 /**
@@ -60,6 +61,7 @@ struct _FIELD_SUBSCREEN_WORK {
 	union {	
 	  FIELD_MENU_WORK *fieldMenuWork;
     C_GEAR_WORK* cgearWork;
+    UNION_SUBDISP_PTR unisubWork;
 		GFL_CAMADJUST * gflCamAdjust;
 		GFL_SNDVIEWER * gflSndViewer;
 		void * checker;
@@ -102,6 +104,11 @@ static void update_topmenu_subscreen( FIELD_SUBSCREEN_WORK* pWork, BOOL bActive 
 static void draw_topmenu_subscreen( FIELD_SUBSCREEN_WORK* pWork, BOOL bActive );
 static void exit_topmenu_subscreen( FIELD_SUBSCREEN_WORK* pWork );
 
+static void init_union_subscreen(FIELD_SUBSCREEN_WORK * pWork, FIELD_SUBSCREEN_MODE prevMode );
+static void exit_union_subscreen( FIELD_SUBSCREEN_WORK* pWork );
+static void update_union_subscreen( FIELD_SUBSCREEN_WORK* pWork,BOOL bActive );
+static void draw_union_subscreen( FIELD_SUBSCREEN_WORK* pWork,BOOL bActive );
+
 static void init_light_subscreen(FIELD_SUBSCREEN_WORK * pWork, FIELD_SUBSCREEN_MODE prevMode );
 static void update_light_subscreen( FIELD_SUBSCREEN_WORK* pWork, BOOL bActive );
 static void exit_light_subscreen( FIELD_SUBSCREEN_WORK* pWork );
@@ -132,6 +139,14 @@ static const FIELD_SUBSCREEN_FUNC_TABLE funcTable[] =
 		update_topmenu_subscreen,
 		draw_topmenu_subscreen ,
 		exit_topmenu_subscreen,
+		NULL ,
+	},
+	{	
+		FIELD_SUBSCREEN_UNION,
+		init_union_subscreen,
+		update_union_subscreen,
+		draw_union_subscreen ,
+		exit_union_subscreen,
 		NULL ,
 	},
 	{	
@@ -659,6 +674,51 @@ void FIELD_SUBSCREEN_SetTopMenuItemNo( FIELD_SUBSCREEN_WORK* pWork , const FIELD
     FIELD_MENU_SetMenuItemNo( pWork->fieldMenuWork , itemType );
   }
 
+}
+
+
+//=============================================================================
+//=============================================================================
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	メニュー画面の初期化
+ *	@param	heapID	ヒープＩＤ
+ */
+//-----------------------------------------------------------------------------
+static void init_union_subscreen(FIELD_SUBSCREEN_WORK * pWork, FIELD_SUBSCREEN_MODE prevMode )
+{
+  pWork->unisubWork = UNION_SUBDISP_Init(FIELDMAP_GetGameSysWork(pWork->fieldmap));
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	メニュー画面の破棄
+ */
+//-----------------------------------------------------------------------------
+static void exit_union_subscreen( FIELD_SUBSCREEN_WORK* pWork )
+{
+  UNION_SUBDISP_Exit(pWork->unisubWork);
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	メニュー画面の更新
+ */
+//-----------------------------------------------------------------------------
+static void update_union_subscreen( FIELD_SUBSCREEN_WORK* pWork,BOOL bActive )
+{
+  UNION_SUBDISP_Update(pWork->unisubWork);
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	メニュー画面の描画
+ */
+//-----------------------------------------------------------------------------
+static void draw_union_subscreen( FIELD_SUBSCREEN_WORK* pWork,BOOL bActive )
+{
+	UNION_SUBDISP_Draw(pWork->unisubWork);
 }
 
 

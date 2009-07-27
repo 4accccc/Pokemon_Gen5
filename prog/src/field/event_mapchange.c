@@ -31,6 +31,9 @@
 
 #include "script.h"
 
+#include "fieldmap/zone_id.h"   //※check　ユニオンのSubScreen設定暫定対処の為
+
+
 static void UpdateMapParams(GAMESYS_WORK * gsys, const LOCATION * loc_req);
 static void SetMMdl( GAMESYS_WORK *gsys, const LOCATION *loc_req, GAMEINIT_MODE mode );
 static void setNextBGM(GAMEDATA * gamedata, u16 zone_id);
@@ -394,6 +397,20 @@ static GMEVENT_RESULT EVENT_MapChange(GMEVENT * event, int *seq, void*work)
 		UpdateMapParams(gsys, &mcw->loc_req);
 		//新規ゾーンに配置する動作モデルを追加
 		SetMMdl( gsys, &mcw->loc_req, GAMEINIT_MODE_FIRST );
+
+	  //※check　ユニオンルームへの移動を受付スクリプトで制御するようになったらサブスクリーンモードの
+	  //         変更もそのスクリプト内で行うようにする
+	  switch(mcw->loc_req.zone_id){
+  	case ZONE_ID_UNION:
+  	case ZONE_ID_CLOSSEUM:
+  	case ZONE_ID_CLOSSEUM02:
+  	  GAMEDATA_SetSubScreenMode(GAMESYSTEM_GetGameData(gsys), FIELD_SUBSCREEN_UNION);
+  	  break;
+  	default:
+  	  GAMEDATA_SetSubScreenMode(GAMESYSTEM_GetGameData(gsys), FIELD_SUBSCREEN_NORMAL);
+  	  break;
+  	}
+
 		(*seq)++;
 		break;
 	case 4:

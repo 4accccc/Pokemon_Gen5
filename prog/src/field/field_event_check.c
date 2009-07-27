@@ -533,7 +533,7 @@ GMEVENT * FIELD_EVENT_CheckUnion( GAMESYS_WORK *gsys, void *work )
 	//メニュー起動チェック
 	if( req.menuRequest ){
 		if(WIPE_SYS_EndCheck()){
-  			return EVENT_FieldMapMenu( gsys, fieldWork, req.heapID );
+  			return EVENT_UnionMapMenu( gsys, fieldWork, req.heapID );
 		}
 	}
 

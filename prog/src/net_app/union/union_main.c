@@ -160,3 +160,16 @@ BOOL UnionMain_GetFinishExe(UNION_SYSTEM_PTR unisys)
 {
   return unisys->finish_exe;
 }
+
+//==================================================================
+/**
+ * アピール番号をセット
+ *
+ * @param   unisys		
+ * @param   appeal_no		アピール番号
+ */
+//==================================================================
+void UnionMain_SetAppealNo(UNION_SYSTEM_PTR unisys, UNION_APPEAL appeal_no)
+{
+  unisys->my_situation.appeal_no = appeal_no;
+}

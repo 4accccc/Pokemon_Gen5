@@ -813,6 +813,7 @@ static void setupTouchCameraSubscreen(DMESSWORK * dmess);
 static void setupSoundViewerSubscreen(DMESSWORK * dmess);
 static void setupNormalSubscreen(DMESSWORK * dmess);
 static void setupTopMenuSubscreen(DMESSWORK * dmess);
+static void setupUnionSubscreen(DMESSWORK * dmess);
 static void setupDebugLightSubscreen(DMESSWORK * dmess);
 
 
@@ -853,6 +854,7 @@ static const FLDMENUFUNC_LIST DATA_SubcreenMenuList[FIELD_SUBSCREEN_MODE_MAX] =
 	{ DEBUG_FIELD_STR_SUBSCRN03, (void*)setupNormalSubscreen },
 	{ DEBUG_FIELD_STR_SUBSCRN04, (void*)setupTopMenuSubscreen },
 	{ DEBUG_FIELD_STR_SUBSCRN01, (void*)setupDebugLightSubscreen },
+	{ DEBUG_FIELD_STR_SUBSCRN05, (void*)setupUnionSubscreen },
 };
 
 //--------------------------------------------------------------
@@ -954,6 +956,13 @@ static void setupNormalSubscreen(DMESSWORK * dmess)
 static void setupTopMenuSubscreen(DMESSWORK * dmess)
 { 
   FIELD_SUBSCREEN_ChangeForce(dmess->subscreen, FIELD_SUBSCREEN_TOPMENU);
+}
+
+//--------------------------------------------------------------
+//--------------------------------------------------------------
+static void setupUnionSubscreen(DMESSWORK * dmess)
+{ 
+  FIELD_SUBSCREEN_ChangeForce(dmess->subscreen, FIELD_SUBSCREEN_UNION);
 }
 
 //--------------------------------------------------------------
