@@ -1,0 +1,23 @@
+#WorldMap SaveData 
+#save date:2009/07/27 17:28:07
+#Width
+3
+#Height
+3
+#block x offset
+0
+#block z offset
+0
+#3dp file names
+C:\home\wb_data3d\field\out06\m_dun0301_00_00.3dp
+C:\home\wb_data3d\field\out06\m_dun0301_00_01.3dp
+C:\home\wb_data3d\field\out06\m_dun0301_00_02.3dp
+C:\home\wb_data3d\field\out06\m_dun0301_01_00.3dp
+C:\home\wb_data3d\field\out06\m_dun0301_01_01.3dp
+C:\home\wb_data3d\field\out06\m_dun0301_01_02.3dp
+C:\home\wb_data3d\field\out06\m_dun0301_02_00.3dp
+C:\home\wb_data3d\field\out06\m_dun0301_02_01.3dp
+C:\home\wb_data3d\field\out06\m_dun0301_02_02.3dp
+#block size
+32 32
+#End of WorldMap SaveData
