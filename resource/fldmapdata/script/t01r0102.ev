@@ -19,11 +19,18 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
+_EVENT_DATA    ev_t01r0102_black_test01
+_EVENT_DATA    ev_t01r0102_white_test01
+_EVENT_DATA    ev_t01r0102_poke_get0
+_EVENT_DATA    ev_t01r0102_poke_get1
+_EVENT_DATA    ev_t01r0102_poke_get2
+
 _EVENT_DATA    ev_t01r0102_game
 _EVENT_DATA    ev_t01r0102_tv
 _EVENT_DATA    ev_t01r0102_pc
 _EVENT_DATA    ev_t01r0102_bed
 _EVENT_DATA_END
+
 
 
 /**************************************************************/
@@ -33,15 +40,122 @@ _EVENT_DATA_END
 //  _END
 
 
+
+/**************************************************************/
+/*  T01R0102 ライバル会話用イベントスクリプト（ポケモン入手前）*/
+/**************************************************************/
+ev_t01r0102_black_test01:
+	_TALK_OBJ_PAUSE_ALL
+	_PLAYER_NAME 0 //プレイヤー名を反映
+	_TURN_HERO_SITE
+	_TALKWIN_OPEN
+	_TALKMSG_ALLPUT msg_t01r0102_black_test01
+	_AB_KEYWAIT
+  _TALKWIN_CLOSE
+  _OBJ_PAUSE_CLEAR_ALL
+  _END
+
+/**************************************************************/
+/*  T01R0102 サポート会話用イベントスクリプト（ポケモン入手前）*/
+/**************************************************************/
+ev_t01r0102_white_test01:
+	_TALK_OBJ_PAUSE_ALL
+	_TURN_HERO_SITE
+	_TALKWIN_OPEN
+	_TALKMSG_ALLPUT msg_t01r0102_white_test01
+	_AB_KEYWAIT
+  _TALKWIN_CLOSE
+  _OBJ_PAUSE_CLEAR_ALL
+  _END
+
+
+/**************************************************************/
+/*  T01R0102 ポケモン入手イベント用スクリプト　 */
+/**************************************************************/
+//炎タイプ（仮）
+ev_t01r0102_poke_get0:
+	_TALK_OBJ_PAUSE_ALL
+	_TALKWIN_OPEN
+	_TALKMSG_ALLPUT msg_t01r0102_ball1_fire_01
+	_AB_KEYWAIT
+
+	_YES_NO_WIN SCWK_ANSWER
+	_TALKWIN_CLOSE
+
+	_IFVAL_JUMP SCWK_ANSWER,EQ,0,t01r0102_poke_get_yes
+	_IFVAL_JUMP SCWK_ANSWER,EQ,1,t01r0102_poke_get_no
+
+//草タイプ（仮）
+ev_t01r0102_poke_get1:
+	_TALK_OBJ_PAUSE_ALL
+	_TALKWIN_OPEN
+	_TALKMSG_ALLPUT msg_t01r0102_ball1_grass_01
+	_AB_KEYWAIT
+
+	_YES_NO_WIN SCWK_ANSWER
+	_TALKWIN_CLOSE
+
+	_IFVAL_JUMP SCWK_ANSWER,EQ,0,t01r0102_poke_get_yes
+	_IFVAL_JUMP SCWK_ANSWER,EQ,1,t01r0102_poke_get_no
+
+//水タイプ（仮）
+ev_t01r0102_poke_get2:
+	_TALK_OBJ_PAUSE_ALL
+	_TALKWIN_OPEN
+	_TALKMSG_ALLPUT msg_t01r0102_ball1_water_01
+	_AB_KEYWAIT
+
+	_YES_NO_WIN SCWK_ANSWER
+	_TALKWIN_CLOSE
+
+	_IFVAL_JUMP SCWK_ANSWER,EQ,0,t01r0102_poke_get_yes
+	_IFVAL_JUMP SCWK_ANSWER,EQ,1,t01r0102_poke_get_no
+
+t01r0102_poke_get_no:
+  _OBJ_PAUSE_CLEAR_ALL
+  _END
+
+t01r0102_poke_get_yes:
+//共通、ポケモン入手メッセージ
+	_TALK_OBJ_PAUSE_ALL
+	_PLAYER_NAME 0 //プレイヤー名を反映
+	_TALKWIN_OPEN
+	_TALKMSG_ALLPUT msg_t01r0102_ball_get_01
+
+	//ME鳴らす
+	_ME_PLAY SEQ_ME_POKEGET
+	_ME_WAIT
+
+	_AB_KEYWAIT
+	_TALKWIN_CLOSE
+
+	//サポート、ライバルの台詞
+	//ここで画面フェード開始？
+	//ボール削除
+	//ここで画面フェード終了？
+	_OBJ_PAUSE_CLEAR_ALL
+  _END
+
+	_AB_KEYWAIT
+	_TALKWIN_CLOSE
+
+	//サポート、ライバルの台詞
+	//ここで画面フェード開始？
+	//ボール削除
+	//ここで画面フェード終了？
+	_OBJ_PAUSE_CLEAR_ALL
+  _END
+
+
 /**************************************************************/
 /*  T01R0102 GAME　MACHINEのBG用イベントスクリプト*/
 /**************************************************************/
 ev_t01r0102_game:
-  _TALK_OBJ_PAUSE_ALL
-  _TALKWIN_OPEN
-  _TALKMSG_ALLPUT msg_t01r0102_game_01
-  _AB_KEYWAIT
-  _TALKWIN_CLOSE
+	_TALK_OBJ_PAUSE_ALL
+	_TALKWIN_OPEN
+	_TALKMSG_ALLPUT msg_t01r0102_game_01
+	_AB_KEYWAIT
+	_TALKWIN_CLOSE
   _OBJ_PAUSE_CLEAR_ALL
   _END
 
@@ -49,11 +163,11 @@ ev_t01r0102_game:
 /*  T01R0102 TVのBG用イベントスクリプト*/
 /**************************************************************/
 ev_t01r0102_tv:
-  _TALK_OBJ_PAUSE_ALL
-  _TALKWIN_OPEN
-  _TALKMSG_ALLPUT msg_t01r0102_tv_01
-  _AB_KEYWAIT
-  _TALKWIN_CLOSE
+  	_TALK_OBJ_PAUSE_ALL
+  	_TALKWIN_OPEN
+  	_TALKMSG_ALLPUT msg_t01r0102_tv_01
+  	_AB_KEYWAIT
+  	_TALKWIN_CLOSE
   _OBJ_PAUSE_CLEAR_ALL
   _END
 
@@ -61,12 +175,12 @@ ev_t01r0102_tv:
 /*  T01R0102 PCのBG用イベントスクリプト*/
 /**************************************************************/
 ev_t01r0102_pc:
-  _TALK_OBJ_PAUSE_ALL
-  _PLAYER_NAME 0 //プレイヤー名を反映
-  _TALKWIN_OPEN
-  _TALKMSG_ALLPUT msg_t01r0102_pc_01
-  _AB_KEYWAIT
-  _TALKWIN_CLOSE
+  	_TALK_OBJ_PAUSE_ALL
+  	_PLAYER_NAME 0 //プレイヤー名を反映
+  	_TALKWIN_OPEN
+  	_TALKMSG_ALLPUT msg_t01r0102_pc_01
+  	_AB_KEYWAIT
+  	_TALKWIN_CLOSE
   _OBJ_PAUSE_CLEAR_ALL
   _END
 
@@ -74,11 +188,11 @@ ev_t01r0102_pc:
 /*  T01R0102 BEDのBG用イベントスクリプト*/
 /**************************************************************/
 ev_t01r0102_bed:
-  _TALK_OBJ_PAUSE_ALL
-  _TALKWIN_OPEN
-  _TALKMSG_ALLPUT msg_t01r0102_bed_01
-  _AB_KEYWAIT
-  _TALKWIN_CLOSE
+  	_TALK_OBJ_PAUSE_ALL
+  	_TALKWIN_OPEN
+  	_TALKMSG_ALLPUT msg_t01r0102_bed_01
+  	_AB_KEYWAIT
+  	_TALKWIN_CLOSE
   _OBJ_PAUSE_CLEAR_ALL
   _END
 
