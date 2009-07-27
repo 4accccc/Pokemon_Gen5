@@ -11,6 +11,8 @@
 #include <gflib.h>
 #include "gamesystem/gamesystem.h"
 
+#include "field/field_const.h"
+
 #include "eventdata_local.h"
 #include "field/eventdata_system.h"
 #include "field/eventdata_sxy.h"
@@ -86,6 +88,7 @@ typedef struct {
 #include "../../../resource/fldmapdata/eventdata/eventdata_table.cdat"
 
 
+#if 0
 static const CONNECT_DATA ConnectData_H01[] = {
 	{//DOOR_ID_H01_EXIT01 = 0
 		{559, 0, 2139},
@@ -102,6 +105,7 @@ static const CONNECT_DATA ConnectData_H01[] = {
 	},
 };
 static const int ConnectCount_H01 = NELEMS(ConnectData_H01);
+#endif
 
 #if 0
 static const CONNECT_DATA ConnectData_C03[] = {
@@ -176,11 +180,11 @@ void EVENTDATA_SYS_Load(EVENTDATA_SYSTEM * evdata, u16 zone_id)
   loadEventDataTable(evdata, zone_id);
 	/* テスト的に接続データを設定 */
 	switch (zone_id) {
+#if 0
  case ZONE_ID_H01:
     evdata->connect_count = ConnectCount_H01;
     evdata->connect_data = ConnectData_H01;
     break;
-#if 0
  case ZONE_ID_C03:
     evdata->connect_count = ConnectCount_C03;
     evdata->connect_data = ConnectData_C03;
@@ -215,7 +219,11 @@ static void loadEventDataTable(EVENTDATA_SYSTEM * evdata, u16 zone_id)
   for (i = 0; i < evdata->connect_count; i++)
   {
     const CONNECT_DATA * cnct = &evdata->connect_data[i];
-    TAMADA_Printf("CNCT:ID%02d (%08x, %08x, %08x)\n", i, cnct->pos.x, cnct->pos.y, cnct->pos.z);
+    TAMADA_Printf("CNCT:ID%02d (%08x, %08x, %08x)", i, cnct->pos.x, cnct->pos.y, cnct->pos.z);
+    TAMADA_Printf(" (%3d, %3d, %3d)\n",
+        cnct->pos.x / FIELD_CONST_GRID_SIZE,
+        cnct->pos.y / FIELD_CONST_GRID_SIZE,
+        cnct->pos.z / FIELD_CONST_GRID_SIZE);
   }
 }
 
@@ -320,30 +328,35 @@ void CONNECTDATA_SetNextLocation(const CONNECT_DATA * connect, LOCATION * loc)
 //------------------------------------------------------------------
 int EVENTDATA_SearchConnectIDBySphere(const EVENTDATA_SYSTEM * evdata, const VecFx32 * sphere)
 {
-  enum { HIT_RANGE = FX32_ONE * 10 };
+  enum { HIT_RANGE = FX32_ONE * 16 };
 	int i;
-	int x,y,z;
-  VecFx32 check;
+  VecFx32 target, check;
+  fx32 len;
 
 	const CONNECT_DATA * cnct = evdata->connect_data;
-	x = FX_Whole(sphere->x) - OFS_X;
-	y = FX_Whole(sphere->y) - OFS_Y;
-	z = FX_Whole(sphere->z) - OFS_Z;
+  target = *sphere;
+  target.y -= FX32_ONE * (FIELD_CONST_GRID_SIZE / 2);
+  if (GFL_UI_KEY_GetTrg() & PAD_BUTTON_R)
+  {
+    TAMADA_Printf("CNCT:check position (%d, %d, %d)\n",
+        FX_Whole(sphere->x), FX_Whole(sphere->y), FX_Whole(sphere->z));
+  }
 
 	for (i = 0; i < evdata->connect_count; i++, cnct++ ) {
     VEC_Set(&check, cnct->pos.x * FX32_ONE, cnct->pos.y * FX32_ONE, cnct->pos.z * FX32_ONE);
-    if (VEC_Distance(&check, sphere) > HIT_RANGE) continue;
-#if 0
+    len = VEC_Distance(&check, sphere); 
+    if (GFL_UI_KEY_GetTrg() & PAD_BUTTON_R)
     {
-      fx32 lx = x - cnct->pos.x;
-      fx32 ly = y - cnct->pos.y;
-      fx32 lz = z - cnct->pos.z;
-      fx32 len = FX_Sqrt(FX_Mul(lx,lx) + FX_Mul(ly,ly) + FX_Mul(lz, lz));
-      if (len > HIT_RANGE) continue;
+      TAMADA_Printf("CNCT:ID%02d (%08x, %08x, %08x)", i, cnct->pos.x, cnct->pos.y, cnct->pos.z);
+      TAMADA_Printf(" (%3d, %3d, %3d)",
+          cnct->pos.x / FIELD_CONST_GRID_SIZE,
+          cnct->pos.y / FIELD_CONST_GRID_SIZE,
+          cnct->pos.z / FIELD_CONST_GRID_SIZE);
+      TAMADA_Printf("\tlen = %d\n", FX_Whole(len) );
     }
-#endif
+    if ( len > HIT_RANGE) continue;
 		TAMADA_Printf("CNCT:zone,exit,type=%d,%d,%d\n",cnct->link_zone_id,cnct->link_exit_id,cnct->exit_type);
-		TAMADA_Printf("CNCT:x %d(%08x), y %d(%08x), z %d(%08x)\n",x,sphere->x, y,sphere->y, z,sphere->z);
+		//TAMADA_Printf("CNCT:x %d(%08x), y %d(%08x), z %d(%08x)\n",x,sphere->x, y,sphere->y, z,sphere->z);
 		return i;
 	}
 	return EXIT_ID_NONE;
