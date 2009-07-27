@@ -607,6 +607,8 @@ static void MakeNewRailLocation(GAMEDATA * gamedata, EVENTDATA_SYSTEM * evdata, 
     result = EVENTDATA_SetLocationByExitID(evdata, &loc_tmp, loc_req->exit_id);
     if (result)
     {
+      OS_Printf("No Grid Exit:(%d,%d,%d)\n",
+          FX_Whole(loc_tmp.pos.x), FX_Whole(loc_tmp.pos.y), FX_Whole(loc_tmp.pos.z) );
       exit_id = FIELD_RAIL_LOADER_GetNearestPoint(railLoader, &loc_tmp.pos);
     }
     railLoc.type = FIELD_RAIL_TYPE_POINT;

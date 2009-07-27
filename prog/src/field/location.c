@@ -16,6 +16,10 @@
 #include "field/zonedata.h"
 #include "field/location.h"
 
+#include "field/field_const.h"
+
+#include "field/eventdata_type.h"
+
 //#include "mapdefine.h"		//ZONE_ID_`
 //#include "fieldobj_code.h"	//DIR_DOWN
 
@@ -26,7 +30,7 @@
 //===========================================================================
 //===========================================================================
 enum {
-	ZONE_ID_GAMESTART = ZONE_ID_T01,		//‚Æ‚è‚ ‚¦‚¸
+	ZONE_ID_GAMESTART = ZONE_ID_T01R0102,		//‚Æ‚è‚ ‚¦‚¸
 };
 //--------------------------------------------------------------
 //--------------------------------------------------------------
@@ -106,7 +110,16 @@ void LOCATION_DEBUG_SetDefaultPos(LOCATION * loc, u16 zone_id)
 //------------------------------------------------------------------
 void LOCATION_SetGameStart(LOCATION * loc)
 {
-	LOCATION_DEBUG_SetDefaultPos(loc, ZONE_ID_GAMESTART);
+	//LOCATION_DEBUG_SetDefaultPos(loc, ZONE_ID_GAMESTART);
+#if 1
+  loc->type = LOCATION_TYPE_DIRECT;
+  loc->zone_id = ZONE_ID_GAMESTART;
+  loc->exit_id = DOOR_ID_JUMP_CODE;
+  loc->dir_id = EXIT_DIR_DOWN;
+  loc->pos.x = 72 * FX32_ONE;
+  loc->pos.y =  0 * FX32_ONE;
+  loc->pos.z = 88 * FX32_ONE;
+#endif
 }
 
 #if 0
