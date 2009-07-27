@@ -1043,7 +1043,7 @@ DEF_CMD_COUNT  =  ( DEF_CMD_COUNT + 1 )
  * @param id 配置OBJ内で追加するOBJ ID
  */
 //--------------------------------------------------------------
-  .macro _OBJ_ADD_EV
+  .macro _OBJ_ADD_EV id
   .short EV_SEQ_OBJ_ADD_EV
   .short \id
   .endm
@@ -1055,7 +1055,7 @@ DEF_CMD_COUNT  =  ( DEF_CMD_COUNT + 1 )
  * @param id 配置OBJ内で追加するOBJ ID
  */
 //--------------------------------------------------------------
-  .macro _OBJ_DEL_EV
+  .macro _OBJ_DEL_EV id
   .short EV_SEQ_OBJ_DEL_EV
   .short \id
   .endm
