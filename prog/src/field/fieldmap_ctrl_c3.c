@@ -143,8 +143,6 @@ static void mapCtrlC3_Create(
   FIELD_RAIL_MAN_Load(railMan, FIELD_RAIL_LOADER_GetData(p_rail_loader));
   FIELD_RAIL_MAN_SetLocation( railMan, &sc_RAIL_START_LOCATION );
   FIELD_RAIL_MAN_GetPos(railMan, pos );
-  //2009.07.05 ROMのための一時的な補正処理
-  pos->y += FX32_ONE * 8;
 
   // シーンエリア
   work->p_sceneArea = FIELDMAP_GetFldSceneArea( fieldWork );
