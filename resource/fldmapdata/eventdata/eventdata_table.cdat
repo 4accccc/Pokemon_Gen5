@@ -1,3 +1,8 @@
+#include "../script/c99_def.h"
+#include "../script/common_scr_def.h"
+#include "../script/dummy_def.h"
+#include "../script/dummy_scr_def.h"
+#include "../script/trainer_def.h"
 //#include "tmp/bcwftest.h"
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕdata/bcwftest.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
 #ifndef ZONE_BCWFTEST_EVD_H
@@ -9597,7 +9602,7 @@ const FLDMMDL_HEADER OBJ_EVENT_T02PC0101[] = {
 		MV_LEFT,
 		EV_TYPE_NORMAL,
 		0,
-		0,
+		SCRID_SHOP_START_TALK,
 		DIR_LEFT,
 		0,
 		0,
@@ -9614,7 +9619,7 @@ const FLDMMDL_HEADER OBJ_EVENT_T02PC0101[] = {
 		MV_DOWN,
 		EV_TYPE_NORMAL,
 		0,
-		0,
+		SCRID_HEAL_P01,
 		DIR_DOWN,
 		0,
 		0,
