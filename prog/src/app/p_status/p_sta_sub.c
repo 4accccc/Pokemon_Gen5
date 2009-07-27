@@ -12,8 +12,6 @@
 #include "system/main.h"
 #include "system/gfl_use.h"
 #include "system/wipe.h"
-#include "system/mcss.h"
-#include "system/mcss_tool.h"
 #include "print/printsys.h"
 #include "print/wordset.h"
 
@@ -29,7 +27,7 @@
 //======================================================================
 #pragma mark [> define
 
-#define PSTATUS_MCSS_POS_X (FX32_CONST(( 200 )/16.0f))
+#define PSTATUS_MCSS_POS_X (FX32_CONST(( 200+16 )/16.0f))
 #define PSTATUS_MCSS_POS_Y (FX32_CONST((192.0f-( 120 ))/16.0f))
 
 //座標系
@@ -67,10 +65,31 @@
 #define PSTATUS_SUB_CELL_BALL_X ( 168 )
 #define PSTATUS_SUB_CELL_BALL_Y (   8 )
 
+//ポケのタッチ範囲
+#define PSTATUS_SUB_TOUCH_TOP ( 32)
+#define PSTATUS_SUB_TOUCH_BOTTOM ( 120)
+#define PSTATUS_SUB_TOUCH_LEFT ( 152)
+#define PSTATUS_SUB_TOUCH_RIGHT ( 255)
+
+
 //======================================================================
 //	enum
 //======================================================================
 #pragma mark [> enum
+
+enum
+{
+  SSMT_BOX_DISC,
+  SSMT_BOX_TRIANGLE,
+  SSMT_BOX_SQUARE,
+  SSMT_BOX_HEART,
+  SSMT_BOX_STAR,
+  SSMT_BOX_DIAMOND,
+  SSMT_MARK_RARE,
+  SSMT_MARK_POKERUS,
+  
+  SSMT_MAX,
+}PSTAUTS_SUB_MARK_TYPE;
 
 //======================================================================
 //	typedef struct
@@ -78,15 +97,17 @@
 #pragma mark [> struct
 struct _PSTATUS_SUB_WORK
 {
-  MCSS_SYS_WORK *mcssSys;
   MCSS_WORK     *pokeMcss;
+  MCSS_WORK     *pokeMcssBack;
   
   BOOL        isUpdateStr;
+  BOOL        isDispFront;
   
   GFL_BMPWIN  *bmpWinUpper;
   GFL_BMPWIN  *bmpWinDown;
   
   GFL_CLWK    *clwkBall;
+  GFL_CLWK    *clwkMark[SSMT_MAX];
 
 };
 
@@ -108,11 +129,10 @@ PSTATUS_SUB_WORK* PSTATUS_SUB_Init( PSTATUS_WORK *work )
   
   subWork = GFL_HEAP_AllocMemory( work->heapId , sizeof(PSTATUS_SUB_WORK) );
   subWork->pokeMcss = NULL;
+  subWork->pokeMcssBack = NULL;
   subWork->isUpdateStr = FALSE;
 
-  subWork->mcssSys = MCSS_Init( 1 , work->heapId );
-  MCSS_SetTextureTransAdrs( subWork->mcssSys , 0 );
-  MCSS_SetOrthoMode( subWork->mcssSys );
+  subWork->isDispFront = TRUE;
 
   return subWork;
 }
@@ -123,7 +143,6 @@ PSTATUS_SUB_WORK* PSTATUS_SUB_Init( PSTATUS_WORK *work )
 void PSTATUS_SUB_Term( PSTATUS_WORK *work , PSTATUS_SUB_WORK *subWork )
 {
   //PSTATUS_SUB_PokeDeleteMcss( work,subWork );
-  MCSS_Exit( subWork->mcssSys );
   GFL_HEAP_FreeMemory( subWork );
 }
 
@@ -144,7 +163,32 @@ void PSTATUS_SUB_Main( PSTATUS_WORK *work , PSTATUS_SUB_WORK *subWork )
     }
   }
   */
-  MCSS_Main( subWork->mcssSys );
+  {
+    //当たり判定作成
+    GFL_UI_TP_HITTBL hitTbl[2] =
+    {
+      { PSTATUS_SUB_TOUCH_TOP , PSTATUS_SUB_TOUCH_BOTTOM , PSTATUS_SUB_TOUCH_LEFT , PSTATUS_SUB_TOUCH_RIGHT },
+      { GFL_UI_TP_HIT_END ,0,0,0 },
+    };
+    
+    const int ret = GFL_UI_TP_HitTrg( hitTbl );
+    
+    if( ret == 0 )
+    {
+      subWork->isDispFront = !subWork->isDispFront;
+
+      if( subWork->isDispFront == TRUE )
+      {
+        MCSS_ResetVanishFlag( subWork->pokeMcss );
+        MCSS_SetVanishFlag( subWork->pokeMcssBack );
+      }
+      else
+      {
+        MCSS_SetVanishFlag( subWork->pokeMcss );
+        MCSS_ResetVanishFlag( subWork->pokeMcssBack );
+      }
+    }
+  }
 }
 
 //--------------------------------------------------------------
@@ -152,7 +196,7 @@ void PSTATUS_SUB_Main( PSTATUS_WORK *work , PSTATUS_SUB_WORK *subWork )
 //--------------------------------------------------------------
 void PSTATUS_SUB_Draw( PSTATUS_WORK *work , PSTATUS_SUB_WORK *subWork )
 {
-  MCSS_Draw( subWork->mcssSys );
+  //未使用
 }
 
 #pragma mark [>Resource
@@ -199,6 +243,32 @@ void PSTATUS_SUB_InitCell( PSTATUS_WORK *work , PSTATUS_SUB_WORK *subWork )
 
     GFL_CLACT_WK_SetDrawEnable( subWork->clwkBall , FALSE );
   }
+  {
+    static const u8 markPosX[SSMT_MAX] = 
+    { 208 , 216 , 224 , 232 , 240 , 248 , 184 , 176 };
+    static const u8 markPosY = 128;
+    static const u8 markAnmSeq[SSMT_MAX] = 
+    { 0 , 2 , 4 , 6 , 8 , 10 , 12 , 13 };
+    u8 i;
+    //マーク
+    GFL_CLWK_DATA cellInitData;
+    cellInitData.pos_y = markPosY;
+    cellInitData.softpri = 10;
+    cellInitData.bgpri = 0;
+    
+    for( i=0;i<SSMT_MAX;i++ )
+    {
+      cellInitData.pos_x = markPosX[i];
+      cellInitData.anmseq = markAnmSeq[i];
+      subWork->clwkMark[i] = GFL_CLACT_WK_Create( work->cellUnit ,
+                work->cellRes[SCR_NCG_MARK],
+                work->cellRes[SCR_PLT_MARK],
+                work->cellRes[SCR_ANM_MARK],
+                &cellInitData ,CLSYS_DEFREND_MAIN , work->heapId );
+      GFL_CLACT_WK_SetDrawEnable( subWork->clwkMark[i] , TRUE );
+    }
+    
+  }
 }
 
 //--------------------------------------------------------------
@@ -206,6 +276,11 @@ void PSTATUS_SUB_InitCell( PSTATUS_WORK *work , PSTATUS_SUB_WORK *subWork )
 //--------------------------------------------------------------
 void PSTATUS_SUB_TermCell( PSTATUS_WORK *work , PSTATUS_SUB_WORK *subWork )
 {
+  u8 i;
+  for( i=0;i<SSMT_MAX;i++ )
+  {
+    GFL_CLACT_WK_Remove( subWork->clwkMark[i] );
+  }
   GFL_CLACT_WK_Remove( subWork->clwkBall );
 }
 
@@ -269,6 +344,13 @@ void PSTATUS_SUB_DispPage_Trans( PSTATUS_WORK *work , PSTATUS_SUB_WORK *subWork 
     
     GFL_CLACT_WK_SetDrawEnable( subWork->clwkBall , TRUE );
   }
+  //マークの更新
+  {
+    GFL_CLACT_WK_SetDrawEnable( subWork->clwkMark[SSMT_MARK_RARE] , FALSE );
+    GFL_CLACT_WK_SetDrawEnable( subWork->clwkMark[SSMT_MARK_POKERUS] , FALSE );
+    
+  }
+  subWork->isDispFront = TRUE;
 
 }
 
@@ -405,14 +487,39 @@ static void PSTATUS_SUB_PokeCreateMcss( PSTATUS_WORK *work , PSTATUS_SUB_WORK *s
 {
   MCSS_ADD_WORK addWork;
   VecFx32 scale = {FX32_ONE*16,FX32_ONE*16,FX32_ONE};
+  VecFx32 shadowScale = {FX32_ONE,FX32_CONST(2.2f),FX32_ONE};
+  
+  work->shadowRotate = 302*65536/360;
   
   GF_ASSERT( subWork->pokeMcss == NULL );
-  
-  MCSS_TOOL_MakeMAWPPP( ppp , &addWork , MCSS_DIR_FRONT );
-  subWork->pokeMcss = MCSS_Add( subWork->mcssSys , PSTATUS_MCSS_POS_X , PSTATUS_MCSS_POS_Y ,0 , &addWork );
-  MCSS_SetScale( subWork->pokeMcss , &scale );
-//  MCSS_ResetVanishFlag( subWork->pokeMcss );//転送後に自動でONになる
-//  MCSS_SetMepachiFlag( subWork->pokeMcss );
+  {
+    MCSS_TOOL_MakeMAWPPP( ppp , &addWork , MCSS_DIR_FRONT );
+    subWork->pokeMcss = MCSS_Add( work->mcssSys , PSTATUS_MCSS_POS_X , PSTATUS_MCSS_POS_Y ,0 , &addWork );
+    MCSS_SetScale( subWork->pokeMcss , &scale );
+    MCSS_SetShadowAlpha( subWork->pokeMcss , 2 );
+  #if USE_DEBUGWIN_SYSTEM
+    MCSS_SetShadowScale( subWork->pokeMcss , &work->shadowScale );
+    MCSS_SetShadowRotate( subWork->pokeMcss , work->shadowRotate );
+    MCSS_SetShadowOffset( subWork->pokeMcss , &work->shadowOfs );
+  #else
+    MCSS_SetShadowScale( subWork->pokeMcss , &shadowScale );
+  #endif
+  }
+  {
+    MCSS_TOOL_MakeMAWPPP( ppp , &addWork , MCSS_DIR_BACK );
+    subWork->pokeMcssBack = MCSS_Add( work->mcssSys , PSTATUS_MCSS_POS_X , PSTATUS_MCSS_POS_Y ,0 , &addWork );
+    MCSS_SetScale( subWork->pokeMcssBack , &scale );
+    MCSS_SetShadowAlpha( subWork->pokeMcssBack , 2 );
+  #if USE_DEBUGWIN_SYSTEM
+    MCSS_SetShadowScale( subWork->pokeMcssBack , &work->shadowScale );
+    MCSS_SetShadowRotate( subWork->pokeMcssBack , work->shadowRotate );
+    MCSS_SetShadowOffset( subWork->pokeMcssBack , &work->shadowOfs );
+  #else
+    MCSS_SetShadowScale( subWork->pokeMcssBack , &shadowScale );
+  #endif
+  }
+  MCSS_ResetVanishFlag( subWork->pokeMcss );
+  MCSS_SetVanishFlag( subWork->pokeMcssBack );
 }
 
 //--------------------------------------------------------------
@@ -423,7 +530,20 @@ static void PSTATUS_SUB_PokeDeleteMcss( PSTATUS_WORK *work , PSTATUS_SUB_WORK *s
   GF_ASSERT( subWork->pokeMcss != NULL );
   
   MCSS_SetVanishFlag( subWork->pokeMcss );
-  MCSS_Del(subWork->mcssSys,subWork->pokeMcss);
+  MCSS_SetVanishFlag( subWork->pokeMcssBack );
+  MCSS_Del(work->mcssSys,subWork->pokeMcss);
+  MCSS_Del(work->mcssSys,subWork->pokeMcssBack);
   subWork->pokeMcss = NULL;
+  subWork->pokeMcssBack = NULL;
 }
 
+//デバグ用
+void PSTATUS_SUB_SetShadowScale( PSTATUS_WORK *work , PSTATUS_SUB_WORK *subWork )
+{
+  MCSS_SetShadowScale( subWork->pokeMcss , &work->shadowScale );
+  MCSS_SetShadowRotate( subWork->pokeMcss , work->shadowRotate );
+  MCSS_SetShadowOffset( subWork->pokeMcss , &work->shadowOfs );
+  MCSS_SetShadowScale( subWork->pokeMcssBack , &work->shadowScale );
+  MCSS_SetShadowRotate( subWork->pokeMcssBack , work->shadowRotate );
+  MCSS_SetShadowOffset( subWork->pokeMcssBack , &work->shadowOfs );
+}

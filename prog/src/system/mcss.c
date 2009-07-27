@@ -34,7 +34,9 @@
 #define	MCSS_NORMAL_MTX	( 29 )
 #define	MCSS_SHADOW_MTX	( 30 )
 
-#define	SHADOW_OFFSET	( -0x1000 )	//影位置のZ方向のオフセット値
+#define	MCSS_DEFAULT_SHADOW_ROTATE	( 0xC400 )
+
+#define	MCSS_DEFAULT_SHADOW_OFFSET	( -0x1000 )	//影位置のZ方向のオフセット値
 
 //--------------------------------------------------------------------------
 /**
@@ -248,7 +250,9 @@ void	MCSS_Draw( MCSS_SYS_WORK *mcss_sys )
 	}
 
 	for( index = 0 ; index < mcss_sys->mcss_max ; index++ ){
-		if( ( mcss_sys->mcss[index] != NULL ) && ( mcss_sys->mcss[index]->vanish_flag == 0 ) ){
+		if( ( mcss_sys->mcss[index] != NULL ) && 
+		    ( mcss_sys->mcss[index]->vanish_flag == 0 ) &&
+		    ( mcss_sys->mcss[index]->is_load_resource == 1 ) ){
 
 			G3_PushMtx();
 
@@ -354,10 +358,12 @@ void	MCSS_Draw( MCSS_SYS_WORK *mcss_sys )
 			G3_LookAt( NNS_G3dGlbGetCameraPos(), NNS_G3dGlbGetCameraUp(), NNS_G3dGlbGetCameraTarget(), NULL );
 
 			//前もって、不変なマルチセルデータをカレント行列にかけておく
-			G3_Translate( mcss->pos.x + mcss->ofs_pos.x, mcss->pos.y, mcss->pos.z  + mcss->ofs_pos.z + SHADOW_OFFSET );
+			G3_Translate( mcss->pos.x + mcss->ofs_pos.x + mcss->shadow_offset.x, 
+			              mcss->pos.y + mcss->shadow_offset.y , 
+			              mcss->pos.z + mcss->ofs_pos.z + mcss->shadow_offset.z );
 
 			//影用の回転
-			G3_RotX( FX_SinIdx( 65536 / 64 * 49 ), FX_CosIdx( 65536 / 64 * 49 ) );
+			G3_RotX( FX_SinIdx( mcss->shadow_rotate ), FX_CosIdx( mcss->shadow_rotate ) );
 			G3_Translate( MCSS_CONST( anim_SRT_mc.px ), MCSS_CONST( -anim_SRT_mc.py ), 0 );
 			G3_RotZ( -FX_SinIdx( anim_SRT_mc.rotZ + rotate ), FX_CosIdx( anim_SRT_mc.rotZ + rotate ) );
 			{	
@@ -530,7 +536,8 @@ static	void	MCSS_DrawAct( MCSS_WORK *mcss,
 							  fx32 *pos_z_default )
 {
 	VecFx32	pos;
-
+	//影のアルファ値計算
+  const u8 shadow_alpha = (mcss->shadow_alpha == MCSS_SHADOW_ALPHA_AUTO ?(mcss->alpha/2):mcss->shadow_alpha); 
 	if( mcss_ortho_mode ){
 		G3_OrthoW( FX32_CONST( 96 ),
 				   -FX32_CONST( 96 ),
@@ -591,7 +598,7 @@ static	void	MCSS_DrawAct( MCSS_WORK *mcss,
        				    GX_POLYGONMODE_MODULATE,	// modulation mode
        				    GX_CULL_NONE,					    // cull back
        				    1,								        // polygon ID(0 - 63)
-       				    ( mcss->alpha / 2 ),      // alpha(0 - 31)
+       				    shadow_alpha,             // alpha(0 - 31)
        				    GX_POLYGON_ATTR_MISC_FOG	// OR of GXPolygonAttrMisc's value
        				   );
 
@@ -659,6 +666,12 @@ MCSS_WORK*	MCSS_Add( MCSS_SYS_WORK *mcss_sys, fx32	pos_x, fx32	pos_y, fx32	pos_z
 			mcss_sys->mcss[ count ]->ofs_scale.y = FX32_ONE;
 			mcss_sys->mcss[ count ]->ofs_scale.z = FX32_ONE;
 			mcss_sys->mcss[ count ]->alpha = 31;
+			mcss_sys->mcss[ count ]->shadow_alpha = MCSS_SHADOW_ALPHA_AUTO;
+			mcss_sys->mcss[ count ]->vanish_flag = MCSS_VANISH_OFF;
+			mcss_sys->mcss[ count ]->shadow_rotate = MCSS_DEFAULT_SHADOW_ROTATE;
+			mcss_sys->mcss[ count ]->shadow_offset.x = 0;
+			mcss_sys->mcss[ count ]->shadow_offset.y = 0;
+			mcss_sys->mcss[ count ]->shadow_offset.z = MCSS_DEFAULT_SHADOW_OFFSET;
 			MCSS_LoadResource( mcss_sys, count, maw );
 			break;
 		}
@@ -879,6 +892,39 @@ void	MCSS_SetShadowScale( MCSS_WORK *mcss, VecFx32 *scale )
 	mcss->shadow_scale.y = scale->y;
 	mcss->shadow_scale.z = scale->z;
 }
+//--------------------------------------------------------------------------
+/**
+ * @brief 影描画用回転角セット
+ *
+ * @param[in]  mcss MCSSワーク構造体のポインタ
+ * @param[in]  rot  回転角
+ */
+//--------------------------------------------------------------------------
+void	MCSS_SetShadowRotate( MCSS_WORK *mcss, const u16 rot )
+{
+  mcss->shadow_rotate = rot;
+}
+
+//--------------------------------------------------------------------------
+/**
+ * @brief 影オフセット
+ *
+ * @param[in]  mcss MCSSワーク構造体のポインタ
+ * @param[in]  pos  セットするスケール値が格納されたワークのポインタ
+ */
+//--------------------------------------------------------------------------
+void  MCSS_SetShadowOffset( MCSS_WORK *mcss, VecFx32 *ofs )
+{
+	mcss->shadow_offset.x = ofs->x;
+	mcss->shadow_offset.y = ofs->y;
+	mcss->shadow_offset.z = ofs->z;
+}
+void  MCSS_GetShadowOffset( MCSS_WORK *mcss, VecFx32 *ofs )
+{
+	ofs->x = mcss->shadow_offset.x;
+	ofs->y = mcss->shadow_offset.y;
+	ofs->z = mcss->shadow_offset.z;
+}
 
 //--------------------------------------------------------------------------
 /**
@@ -1054,6 +1100,32 @@ void	MCSS_SetAlpha( MCSS_WORK *mcss, u8 alpha )
 
 //--------------------------------------------------------------------------
 /**
+ * @brief 影のα値をゲット
+ *
+ * @param[in] mcss MCSSワーク構造体のポインタ
+ */
+//--------------------------------------------------------------------------
+u8    MCSS_GetShadowAlpha( MCSS_WORK *mcss )
+{
+  return mcss->shadow_alpha;
+}
+
+//--------------------------------------------------------------------------
+/**
+ * @brief 影のα値をセット
+ *
+ * @param[in]	mcss		セットするマルチセルワーク構造体
+ * @param[in]	alpha		セットするα値(0-31)
+                      MCSS_SHADOW_ALPHA_AUTO 影のアルファ値を本体の半分にします  
+ */
+//--------------------------------------------------------------------------
+void  MCSS_SetShadowAlpha( MCSS_WORK *mcss, u8 shadow_alpha )
+{
+  mcss->shadow_alpha = shadow_alpha;
+}
+
+//--------------------------------------------------------------------------
+/**
  * @brief パレットフェード中かチェック
  *
  * @param[in]	mcss		チェックするマルチセルワーク構造体
@@ -1108,7 +1180,7 @@ static	void	MCSS_LoadResource( MCSS_SYS_WORK *mcss_sys, int count, const MCSS_AD
 {
 	MCSS_WORK	*mcss = mcss_sys->mcss[ count ];
 
-	mcss->vanish_flag = 1;
+	mcss->is_load_resource = 0;
 
 	//プロキシ初期化
 	NNS_G2dInitImageProxy( &mcss->mcss_image_proxy );
@@ -1183,7 +1255,7 @@ static	void	TCB_LoadResource( GFL_TCB *tcb, void *work )
 	TCB_LOADRESOURCE_WORK *tlw = ( TCB_LOADRESOURCE_WORK *)work;
 
 	if( tlw->mcss ){
-		tlw->mcss->vanish_flag = 0;
+    tlw->mcss->is_load_resource = 1;
 	}
 
 	if( tlw->pBufChar ){
@@ -1438,6 +1510,11 @@ MCSS_WORK*	MCSS_AddDebug( MCSS_SYS_WORK *mcss_sys, fx32	pos_x, fx32	pos_y, fx32	
 			mcss_sys->mcss[ count ]->ofs_scale.y = FX32_ONE;
 			mcss_sys->mcss[ count ]->ofs_scale.z = FX32_ONE;
 			mcss_sys->mcss[ count ]->alpha = 31;
+			mcss_sys->mcss[ count ]->vanish_flag = MCSS_VANISH_OFF;
+			mcss_sys->mcss[ count ]->shadow_rotate = MCSS_DEFAULT_SHADOW_ROTATE;
+			mcss_sys->mcss[ count ]->shadow_offset.x = 0;
+			mcss_sys->mcss[ count ]->shadow_offset.y = 0;
+			mcss_sys->mcss[ count ]->shadow_offset.z = MCSS_DEFAULT_SHADOW_OFFSET;
 			MCSS_LoadResourceDebug( mcss_sys, count, madw );
 			break;
 		}
@@ -1457,7 +1534,7 @@ static	void	MCSS_LoadResourceDebug( MCSS_SYS_WORK *mcss_sys, int count, const MC
 {
 	MCSS_WORK	*mcss = mcss_sys->mcss[ count ];
 
-	mcss->vanish_flag = 1;
+	mcss->is_load_resource = 0;
 
 	//プロキシ初期化
 	NNS_G2dInitImageProxy( &mcss->mcss_image_proxy );

@@ -91,6 +91,12 @@ static void PSTATUS_WaitDisp( PSTATUS_WORK *work );
 #if PM_DEBUG
 void PSTATUS_UTIL_DebugCreatePP( PSTATUS_WORK *work );
 #endif
+
+#if USE_DEBUGWIN_SYSTEM
+static void PSTATUS_InitDebug( PSTATUS_WORK *work );
+static void PSTATUS_TermDebug( PSTATUS_WORK *work );
+#endif //USE_DEBUGWIN_SYSTEM
+
 //--------------------------------------------------------------
 //	初期化
 //--------------------------------------------------------------
@@ -105,8 +111,9 @@ const BOOL PSTATUS_InitPokeStatus( PSTATUS_WORK *work )
   work->isActiveBarButton = TRUE;
   work->retVal = SRT_CONTINUE;
   work->isWaitDisp = TRUE;
-  work->mosaicEffSeq = SMS_NONE;
+  work->mosaicEffSeq = SMES_NONE;
   work->mosaicCnt = 0;
+  work->mainSeq = SMS_FADEIN;
 
 #if PM_DEBUG
   work->calcPP = NULL;
@@ -125,16 +132,17 @@ const BOOL PSTATUS_InitPokeStatus( PSTATUS_WORK *work )
   PSTATUS_InitCell( work );
 
   work->vBlankTcb = GFUser_VIntr_CreateTCB( PSTATUS_VBlankFunc , work , 8 );
-
-  //フェードないので仮処理
-  GX_SetMasterBrightness(0);  
-  GXS_SetMasterBrightness(0);
   
   //最初の表示処理
   PSTATUS_SUB_DispPage( work , work->subWork );
   PSTATUS_INFO_DispPage( work , work->infoWork );
   PSTATUS_RIBBON_CreateRibbonBar( work , work->ribbonWork );
   
+
+#if USE_DEBUGWIN_SYSTEM
+  PSTATUS_InitDebug( work );
+#endif
+
   return TRUE;
 }
 
@@ -146,6 +154,10 @@ const BOOL PSTATUS_TermPokeStatus( PSTATUS_WORK *work )
   GFL_TCB_DeleteTask( work->vBlankTcb );
   
   work->psData->pos = work->dataPos;
+
+#if USE_DEBUGWIN_SYSTEM
+  PSTATUS_TermDebug( work );
+#endif
 
   PSTATUS_TermCell( work );
 
@@ -176,34 +188,73 @@ const PSTATUS_RETURN_TYPE PSTATUS_UpdatePokeStatus( PSTATUS_WORK *work )
   work->befTpy = work->tpy;
   GFL_UI_TP_GetPointCont( &work->tpx , &work->tpy );
 
-  PSTATUS_UpdateBarButton( work );
-  
-  PSTATUS_SUB_Main( work , work->subWork );
-
-  if( work->isWaitDisp == TRUE )
+  switch( work->mainSeq )
   {
-    PSTATUS_WaitDisp( work );
-  }
-  else
-  {
-    PSTATUS_UpdateUI( work );
-
-    if( work->isWaitDisp == FALSE )
+  case SMS_FADEIN:
+    if( work->isWaitDisp == TRUE )
     {
-      switch( work->befPage )
+      PSTATUS_WaitDisp( work );
+    }
+    else
+    {
+      WIPE_SYS_Start( WIPE_PATTERN_WMS , WIPE_TYPE_FADEIN , WIPE_TYPE_FADEIN , 
+                      WIPE_FADE_BLACK , WIPE_DEF_DIV , WIPE_DEF_SYNC , work->heapId );
+      work->mainSeq = SMS_FADEIN_WAIT;
+    }
+    break;
+    
+  case SMS_FADEIN_WAIT:
+    if( WIPE_SYS_EndCheck() == TRUE )
+    {
+      work->mainSeq = SMS_UPDATE;
+    }
+    break;
+    
+  case SMS_FADEOUT:
+    WIPE_SYS_Start( WIPE_PATTERN_WMS , WIPE_TYPE_FADEOUT , WIPE_TYPE_FADEOUT , 
+                    WIPE_FADE_BLACK , WIPE_DEF_DIV , WIPE_DEF_SYNC , work->heapId );
+    work->mainSeq = SMS_FADEOUT_WAIT;
+    break;
+    
+  case SMS_FADEOUT_WAIT:
+    if( WIPE_SYS_EndCheck() == TRUE )
+    {
+      return work->retVal;
+    }
+    break;
+    
+  case SMS_UPDATE:
+    PSTATUS_UpdateBarButton( work );
+    
+    PSTATUS_SUB_Main( work , work->subWork );
+
+    if( work->isWaitDisp == TRUE )
+    {
+      PSTATUS_WaitDisp( work );
+    }
+    else
+    {
+      PSTATUS_UpdateUI( work );
+
+      if( work->isWaitDisp == FALSE )
       {
-      case PPT_INFO:
-        PSTATUS_INFO_Main( work , work->infoWork );
-        break;
-      case PPT_SKILL:
-        PSTATUS_SKILL_Main( work , work->skillWork );
-        break;
-      case PPT_RIBBON:
-        PSTATUS_RIBBON_Main( work , work->ribbonWork );
-        break;
+        switch( work->befPage )
+        {
+        case PPT_INFO:
+          PSTATUS_INFO_Main( work , work->infoWork );
+          break;
+        case PPT_SKILL:
+          PSTATUS_SKILL_Main( work , work->skillWork );
+          break;
+        case PPT_RIBBON:
+          PSTATUS_RIBBON_Main( work , work->ribbonWork );
+          break;
+        }
       }
     }
+    break;
   }
+
 
   //メッセージ
   PRINTSYS_QUE_Main( work->printQue );
@@ -211,16 +262,20 @@ const PSTATUS_RETURN_TYPE PSTATUS_UpdatePokeStatus( PSTATUS_WORK *work )
   //OBJの更新
   GFL_CLACT_SYS_Main();
 
+  //MCSS更新
+  MCSS_Main( work->mcssSys );
+
   //3D描画  
   GFL_G3D_DRAW_Start();
   GFL_G3D_DRAW_SetLookAt();
   {
-    PSTATUS_SUB_Draw( work , work->subWork );
+    MCSS_Draw( work->mcssSys );
+    //PSTATUS_SUB_Draw( work , work->subWork );
   }
   GFL_G3D_DRAW_End();
 
   //背景スクロール
-  if(0)
+  if(0)//無効
   {
     const u32 vCount = OS_GetVBlankCount();
     work->scrollCnt += vCount - work->befVCount;
@@ -236,7 +291,7 @@ const PSTATUS_RETURN_TYPE PSTATUS_UpdatePokeStatus( PSTATUS_WORK *work )
     }
   }
 
-  return work->retVal;
+  return SRT_CONTINUE;
 }
 
 //--------------------------------------------------------------
@@ -352,7 +407,7 @@ static void PSTATUS_InitGraphic( PSTATUS_WORK *work )
     G2_SetWndOutsidePlane( GX_WND_PLANEMASK_BG0 | GX_WND_PLANEMASK_BG1 | GX_WND_PLANEMASK_BG2 | GX_WND_PLANEMASK_BG3 | GX_WND_PLANEMASK_OBJ , FALSE );
     GX_SetVisibleWnd( GX_WNDMASK_W0 );
 */
-    G2_SetBlendAlpha( GX_BLEND_PLANEMASK_BG2 , GX_BLEND_PLANEMASK_BG3 , 13 , 16 );
+    G2_SetBlendAlpha( GX_BLEND_PLANEMASK_BG2 , GX_BLEND_PLANEMASK_BG2|GX_BLEND_PLANEMASK_BG3|GX_BLEND_PLANEMASK_OBJ , 13 , 16 );
     G2S_SetBlendAlpha( GX_BLEND_PLANEMASK_BG2 , GX_BLEND_PLANEMASK_BG3 , 13 , 16 );
   }
   
@@ -372,8 +427,8 @@ static void PSTATUS_InitGraphic( PSTATUS_WORK *work )
   
   //3D系の初期化
   { //3D系の設定
-    static const VecFx32 cam_pos = {FX32_CONST(0.0f),FX32_CONST(0.0f),FX32_CONST(101.0f)};
-    static const VecFx32 cam_target = {FX32_CONST(0.0f),FX32_CONST(0.0f),FX32_CONST(-100.0f)};
+    static const VecFx32 cam_pos = {FX32_CONST(-41.0f),FX32_CONST(0.0f),FX32_CONST(101.0f)};
+    static const VecFx32 cam_target = {FX32_CONST(0.0f),FX32_CONST(0.0f),FX32_CONST(-1.0f)};
     static const VecFx32 cam_up = {0,FX32_ONE,0};
     //エッジマーキングカラー
     static  const GXRgb edge_color_table[8]=
@@ -405,6 +460,12 @@ static void PSTATUS_InitGraphic( PSTATUS_WORK *work )
     
     GFL_G3D_SetSystemSwapBufferMode( GX_SORTMODE_AUTO , GX_BUFFERMODE_Z );
   }
+  //MCSS
+  {
+    work->mcssSys = MCSS_Init( 2 , work->heapId );
+    MCSS_SetTextureTransAdrs( work->mcssSys , 0 );
+    MCSS_SetOrthoMode( work->mcssSys );
+  }
   //Vram転送アニメ
 //  NNS_GfdClearVramTransferManagerTask();
 }
@@ -417,6 +478,8 @@ static void PSTATUS_TermGraphic( PSTATUS_WORK *work )
 {
   NNS_GfdClearVramTransferManagerTask();
   
+  MCSS_Exit( work->mcssSys );
+
   GFL_G3D_CAMERA_Delete( work->camera );
   GFL_G3D_Exit();
 
@@ -497,10 +560,13 @@ static void PSTATUS_LoadResource( PSTATUS_WORK *work )
   //パレット
   work->cellRes[SCR_PLT_ICON] = GFL_CLGRP_PLTT_RegisterEx( archandle , 
         NARC_p_status_gra_p_st_obj_d_NCLR , CLSYS_DRAW_MAIN , 
-        PSTATUS_OBJPLT_ICON*32 , 0 , 7 , work->heapId  );
+        PSTATUS_OBJPLT_ICON*32 , 0 , 5 , work->heapId  );
   work->cellRes[SCR_PLT_BALL] = GFL_CLGRP_PLTT_RegisterEx( archandle , 
         NARC_p_status_gra_ball00_NCLR , CLSYS_DRAW_MAIN , 
-        PSTATUS_OBJPLT_BALL*32 , 0 , 7 , work->heapId  );
+        PSTATUS_OBJPLT_BALL*32 , 0 , 1 , work->heapId  );
+  work->cellRes[SCR_PLT_MARK] = GFL_CLGRP_PLTT_RegisterEx( archandle , 
+        NARC_p_status_gra_p_st_mark_NCLR , CLSYS_DRAW_MAIN , 
+        PSTATUS_OBJPLT_MARK*32 , 0 , 1 , work->heapId  );
   work->cellRes[SCR_PLT_SKILL] = GFL_CLGRP_PLTT_RegisterEx( archandle , 
         NARC_p_status_gra_p_st_skill_plate_NCLR , CLSYS_DRAW_MAIN , 
         PSTATUS_OBJPLT_SKILL_PLATE*32 , 0 , 1 , work->heapId  );
@@ -519,6 +585,8 @@ static void PSTATUS_LoadResource( PSTATUS_WORK *work )
         NARC_p_status_gra_p_st_obj_d_NCGR , FALSE , CLSYS_DRAW_MAIN , work->heapId  );
   work->cellRes[SCR_NCG_BALL] = GFL_CLGRP_CGR_Register( archandle , 
         NARC_p_status_gra_ball00_NCGR , FALSE , CLSYS_DRAW_MAIN , work->heapId  );
+  work->cellRes[SCR_NCG_MARK] = GFL_CLGRP_CGR_Register( archandle , 
+        NARC_p_status_gra_p_st_mark_NCGR , FALSE , CLSYS_DRAW_MAIN , work->heapId  );
   work->cellRes[SCR_NCG_SKILL] = GFL_CLGRP_CGR_Register( archandle , 
         NARC_p_status_gra_p_st_skill_plate_NCGR , FALSE , CLSYS_DRAW_MAIN , work->heapId  );
   work->cellRes[SCR_NCG_SKILL_CUR] = GFL_CLGRP_CGR_Register( archandle , 
@@ -531,6 +599,8 @@ static void PSTATUS_LoadResource( PSTATUS_WORK *work )
         NARC_p_status_gra_p_st_obj_d_NCER , NARC_p_status_gra_p_st_obj_d_NANR, work->heapId  );
   work->cellRes[SCR_ANM_BALL] = GFL_CLGRP_CELLANIM_Register( archandle , 
         NARC_p_status_gra_ball00_NCER , NARC_p_status_gra_ball00_NANR, work->heapId  );
+  work->cellRes[SCR_ANM_MARK] = GFL_CLGRP_CELLANIM_Register( archandle , 
+        NARC_p_status_gra_p_st_mark_NCER , NARC_p_status_gra_p_st_mark_NANR, work->heapId  );
   work->cellRes[SCR_ANM_SKILL] = GFL_CLGRP_CELLANIM_Register( archandle , 
         NARC_p_status_gra_p_st_skill_plate_NCER , NARC_p_status_gra_p_st_skill_plate_NANR, work->heapId  );
   work->cellRes[SCR_ANM_SKILL_CUR] = GFL_CLGRP_CELLANIM_Register( archandle , 
@@ -775,6 +845,10 @@ static void PSTATUS_UpdateBarButton( PSTATUS_WORK *work )
 //--------------------------------------------------------------------------
 static void PSTATUS_UpdateUI( PSTATUS_WORK *work )
 {
+#if USE_DEBUGWIN_SYSTEM
+  if( DEBUGWIN_IsActive() == TRUE ) return;
+#endif
+  
   if( work->isActiveBarButton == TRUE &&
       PRINTSYS_QUE_IsFinished( work->printQue ) == TRUE )
   {
@@ -834,6 +908,7 @@ static const BOOL PSTATUS_UpdateKey( PSTATUS_WORK *work )
   {
     work->retVal = SRT_RETURN;
     work->psData->ret_mode = PST_RET_CANCEL;
+    work->mainSeq = SMS_FADEOUT;
     return TRUE;
   }
   else
@@ -841,6 +916,7 @@ static const BOOL PSTATUS_UpdateKey( PSTATUS_WORK *work )
   {
     work->retVal = SRT_EXIT;
     work->psData->ret_mode = PST_RET_EXIT;
+    work->mainSeq = SMS_FADEOUT;
     return TRUE;
   }
   return FALSE;
@@ -894,10 +970,12 @@ static void PSTATUS_UpdateTP( PSTATUS_WORK *work )
   case SBT_EXIT:
     work->retVal = SRT_EXIT;
     work->psData->ret_mode = PST_RET_CANCEL;
+    work->mainSeq = SMS_FADEOUT;
     break;
   case SBT_RETURN:
     work->retVal = SRT_RETURN;
     work->psData->ret_mode = PST_RET_EXIT;
+    work->mainSeq = SMS_FADEOUT;
     break;
     
   }
@@ -962,7 +1040,7 @@ static void PSTATUS_RefreshDisp( PSTATUS_WORK *work )
   
   if( work->befPage != work->page )
   {
-    work->mosaicEffSeq = SMS_FADEOUT;
+    work->mosaicEffSeq = SMES_FADEOUT;
     work->mosaicCnt = 0;
 //    G2_BG1Mosaic( TRUE );
     G2_BG2Mosaic( TRUE );
@@ -983,17 +1061,17 @@ static void PSTATUS_RefreshDisp( PSTATUS_WORK *work )
 //--------------------------------------------------------------
 static void PSTATUS_WaitDisp( PSTATUS_WORK *work )
 {
-  if( work->mosaicEffSeq == SMS_FADEOUT )
+  if( work->mosaicEffSeq == SMES_FADEOUT )
   {
     work->mosaicCnt += 1;
     G2_SetBGMosaicSize( work->mosaicCnt,work->mosaicCnt );
     G2S_SetBGMosaicSize( work->mosaicCnt,work->mosaicCnt );
     if( work->mosaicCnt >= 5 )
     {
-      work->mosaicEffSeq = SMS_WAIT;
+      work->mosaicEffSeq = SMES_WAIT;
     }
   }
-  if( work->mosaicEffSeq == SMS_FADEIN )
+  if( work->mosaicEffSeq == SMES_FADEIN )
   {
     work->mosaicCnt -= 1;
     G2_SetBGMosaicSize( work->mosaicCnt,work->mosaicCnt );
@@ -1001,13 +1079,13 @@ static void PSTATUS_WaitDisp( PSTATUS_WORK *work )
     if( work->mosaicCnt <= 0 )
     {
       work->isWaitDisp = FALSE;
-      work->mosaicEffSeq = SMS_NONE;
+      work->mosaicEffSeq = SMES_NONE;
       return;
     }
   }
   
   if( PRINTSYS_QUE_IsFinished( work->printQue ) == TRUE &&
-      ( work->mosaicEffSeq == SMS_WAIT || work->mosaicEffSeq == SMS_NONE ) )
+      ( work->mosaicEffSeq == SMES_WAIT || work->mosaicEffSeq == SMES_NONE ) )
   {
     if( work->befDataPos != work->dataPos )
     {
@@ -1046,9 +1124,9 @@ static void PSTATUS_WaitDisp( PSTATUS_WORK *work )
       break;
     }
     
-    if( work->mosaicEffSeq == SMS_WAIT )
+    if( work->mosaicEffSeq == SMES_WAIT )
     {
-      work->mosaicEffSeq = SMS_FADEIN;
+      work->mosaicEffSeq = SMES_FADEIN;
       work->befPage = work->page;
     }
     else
@@ -1272,4 +1350,274 @@ void PSTATUS_UTIL_DebugCreatePP( PSTATUS_WORK *work )
 }
 
 #endif
+
+
+
+#pragma mark [>debug menu
+
+#define PSTATUS_DEBUG_GROUP_NUMBER (60)
+
+static fx32 PSTATUS_DEB_Update_Value( fx32 befValue );
+
+static void PSTATUS_DEB_Update_ScaleX( void* userWork , DEBUGWIN_ITEM* item );
+static void PSTATUS_DEB_Draw_ScaleX( void* userWork , DEBUGWIN_ITEM* item );
+static void PSTATUS_DEB_Update_ScaleY( void* userWork , DEBUGWIN_ITEM* item );
+static void PSTATUS_DEB_Draw_ScaleY( void* userWork , DEBUGWIN_ITEM* item );
+static void PSTATUS_DEB_Update_Rotate( void* userWork , DEBUGWIN_ITEM* item );
+static void PSTATUS_DEB_Draw_Rotate( void* userWork , DEBUGWIN_ITEM* item );
+static void PSTATUS_DEB_Update_CameraX( void* userWork , DEBUGWIN_ITEM* item );
+static void PSTATUS_DEB_Draw_CameraX( void* userWork , DEBUGWIN_ITEM* item );
+static void PSTATUS_DEB_Update_OfsX( void* userWork , DEBUGWIN_ITEM* item );
+static void PSTATUS_DEB_Draw_OfsX( void* userWork , DEBUGWIN_ITEM* item );
+static void PSTATUS_DEB_Update_OfsY( void* userWork , DEBUGWIN_ITEM* item );
+static void PSTATUS_DEB_Draw_OfsY( void* userWork , DEBUGWIN_ITEM* item );
+static void PSTATUS_DEB_Update_OfsZ( void* userWork , DEBUGWIN_ITEM* item );
+static void PSTATUS_DEB_Draw_OfsZ( void* userWork , DEBUGWIN_ITEM* item );
+
+static void PSTATUS_InitDebug( PSTATUS_WORK *work )
+{
+  VEC_Set( &work->shadowScale , FX32_ONE , FX32_CONST(2.2f) , FX32_ONE );
+  work->shadowRotate = 0xD6C1;
+  VEC_Set( &work->shadowOfs , 0 , 0 , -FX32_ONE );
+  
+  DEBUGWIN_InitProc( PSTATUS_BG_SUB_STR , work->fontHandle );
+  DEBUGWIN_ChangeLetterColor( 0,0,0 );
+  
+  DEBUGWIN_AddGroupToTop( PSTATUS_DEBUG_GROUP_NUMBER , "ステータス" , work->heapId );
+
+  DEBUGWIN_AddItemToGroupEx( PSTATUS_DEB_Update_ScaleX   ,PSTATUS_DEB_Draw_ScaleX   , (void*)work , PSTATUS_DEBUG_GROUP_NUMBER , work->heapId );
+  DEBUGWIN_AddItemToGroupEx( PSTATUS_DEB_Update_ScaleY   ,PSTATUS_DEB_Draw_ScaleY   , (void*)work , PSTATUS_DEBUG_GROUP_NUMBER , work->heapId );
+  DEBUGWIN_AddItemToGroupEx( PSTATUS_DEB_Update_Rotate   ,PSTATUS_DEB_Draw_Rotate   , (void*)work , PSTATUS_DEBUG_GROUP_NUMBER , work->heapId );
+  DEBUGWIN_AddItemToGroupEx( PSTATUS_DEB_Update_CameraX  ,PSTATUS_DEB_Draw_CameraX  , (void*)work , PSTATUS_DEBUG_GROUP_NUMBER , work->heapId );
+  DEBUGWIN_AddItemToGroupEx( PSTATUS_DEB_Update_OfsX   ,PSTATUS_DEB_Draw_OfsX   , (void*)work , PSTATUS_DEBUG_GROUP_NUMBER , work->heapId );
+  DEBUGWIN_AddItemToGroupEx( PSTATUS_DEB_Update_OfsY   ,PSTATUS_DEB_Draw_OfsY   , (void*)work , PSTATUS_DEBUG_GROUP_NUMBER , work->heapId );
+  DEBUGWIN_AddItemToGroupEx( PSTATUS_DEB_Update_OfsZ   ,PSTATUS_DEB_Draw_OfsZ   , (void*)work , PSTATUS_DEBUG_GROUP_NUMBER , work->heapId );
+}
+
+static void PSTATUS_TermDebug( PSTATUS_WORK *work )
+{
+  DEBUGWIN_RemoveGroup( PSTATUS_DEBUG_GROUP_NUMBER );
+  DEBUGWIN_ExitProc();
+}
+
+static fx32 PSTATUS_DEB_Update_Value( fx32 befValue )
+{
+  fx32 value;
+  if( GFL_UI_KEY_GetCont() & PAD_BUTTON_X )
+  {
+    value = FX32_ONE;
+  }
+  else
+  {
+    value = FX32_CONST(0.1f);
+  }
+
+  if( GFL_UI_KEY_GetRepeat() & PAD_KEY_RIGHT )
+  {
+    return (befValue + value);
+  }
+  else if( GFL_UI_KEY_GetRepeat() & PAD_KEY_LEFT )
+  {
+    return (befValue - value);
+  }
+  return befValue;
+  
+}
+
+static void PSTATUS_DEB_Update_ScaleX( void* userWork , DEBUGWIN_ITEM* item )
+{
+  PSTATUS_WORK *work = (PSTATUS_WORK*)userWork;
+  fx32 newValue = PSTATUS_DEB_Update_Value( work->shadowScale.x );
+  if( newValue != work->shadowScale.x )
+  {
+    work->shadowScale.x = newValue;
+    DEBUGWIN_RefreshScreen();
+    PSTATUS_SUB_SetShadowScale(work , work->subWork);
+    DEBUGWIN_UpdateFrame();
+  }
+}
+
+static void PSTATUS_DEB_Draw_ScaleX( void* userWork , DEBUGWIN_ITEM* item )
+{
+  PSTATUS_WORK *work = (PSTATUS_WORK*)userWork;
+  const s32 val1 = (s32)FX_FX32_TO_F32(work->shadowScale.x);
+  s32 val2 = (s32)FX_FX32_TO_F32(work->shadowScale.x*10) - val1*10;
+  if( val2 < 0 )val2*=-1;
+
+  DEBUGWIN_ITEM_SetNameV( item , "Scale_X[%d.%d]",val1,val2 );
+}
+
+static void PSTATUS_DEB_Update_ScaleY( void* userWork , DEBUGWIN_ITEM* item )
+{
+  PSTATUS_WORK *work = (PSTATUS_WORK*)userWork;
+  fx32 newValue = PSTATUS_DEB_Update_Value( work->shadowScale.y );
+  if( newValue != work->shadowScale.y )
+  {
+    work->shadowScale.y = newValue;
+    DEBUGWIN_RefreshScreen();
+    PSTATUS_SUB_SetShadowScale(work , work->subWork);
+    DEBUGWIN_UpdateFrame();
+  }
+}
+
+static void PSTATUS_DEB_Draw_ScaleY( void* userWork , DEBUGWIN_ITEM* item )
+{
+  PSTATUS_WORK *work = (PSTATUS_WORK*)userWork;
+  const s32 val1 = (s32)FX_FX32_TO_F32(work->shadowScale.y);
+  s32 val2 = (s32)FX_FX32_TO_F32(work->shadowScale.y*10) - val1*10;
+  if( val2 < 0 )val2*=-1;
+
+  DEBUGWIN_ITEM_SetNameV( item , "Scale_Y[%d.%d]",val1,val2 );
+}
+
+static void PSTATUS_DEB_Update_Rotate( void* userWork , DEBUGWIN_ITEM* item )
+{
+  PSTATUS_WORK *work = (PSTATUS_WORK*)userWork;
+  u16 value;
+  if( GFL_UI_KEY_GetCont() & PAD_BUTTON_X )
+  {
+    value = 65536/36;
+  }
+  else
+  {
+    value = 65536/360;
+  }
+
+  if( GFL_UI_KEY_GetRepeat() & PAD_KEY_RIGHT )
+  {
+    work->shadowRotate += value;
+    DEBUGWIN_RefreshScreen();
+    PSTATUS_SUB_SetShadowScale(work , work->subWork);
+    DEBUGWIN_UpdateFrame();
+  }
+  else if( GFL_UI_KEY_GetRepeat() & PAD_KEY_LEFT )
+  {
+    work->shadowRotate -= value;
+    DEBUGWIN_RefreshScreen();
+    PSTATUS_SUB_SetShadowScale(work , work->subWork);
+    DEBUGWIN_UpdateFrame();
+  }
+}
+
+static void PSTATUS_DEB_Draw_Rotate( void* userWork , DEBUGWIN_ITEM* item )
+{
+  PSTATUS_WORK *work = (PSTATUS_WORK*)userWork;
+  DEBUGWIN_ITEM_SetNameV( item , "Rotate[%d]",work->shadowRotate*360/65536 );
+  
+}
+
+static void PSTATUS_DEB_Update_CameraX( void* userWork , DEBUGWIN_ITEM* item )
+{
+  PSTATUS_WORK *work = (PSTATUS_WORK*)userWork;
+  
+  VecFx32 cameraPos;
+  fx32 value;
+  GFL_G3D_CAMERA_GetPos( work->camera , &cameraPos );
+  
+  if( GFL_UI_KEY_GetCont() & PAD_BUTTON_X )
+  {
+    value = FX32_CONST(5.0f);
+  }
+  else
+  {
+    value = FX32_ONE;
+  }
+
+  if( GFL_UI_KEY_GetRepeat() & PAD_KEY_RIGHT )
+  {
+    cameraPos.x += value;
+    GFL_G3D_CAMERA_SetPos( work->camera , &cameraPos );
+    GFL_G3D_CAMERA_Switching( work->camera );
+    PSTATUS_SUB_SetShadowScale(work , work->subWork);
+    DEBUGWIN_RefreshScreen();
+    DEBUGWIN_UpdateFrame();
+  }
+  else if( GFL_UI_KEY_GetRepeat() & PAD_KEY_LEFT )
+  {
+    cameraPos.x -= value;
+    GFL_G3D_CAMERA_SetPos( work->camera , &cameraPos );
+    GFL_G3D_CAMERA_Switching( work->camera );
+    PSTATUS_SUB_SetShadowScale(work , work->subWork);
+    DEBUGWIN_RefreshScreen();
+    DEBUGWIN_UpdateFrame();
+  }
+}
+
+static void PSTATUS_DEB_Draw_CameraX( void* userWork , DEBUGWIN_ITEM* item )
+{
+  PSTATUS_WORK *work = (PSTATUS_WORK*)userWork;
+  VecFx32 cameraPos;
+  GFL_G3D_CAMERA_GetPos( work->camera , &cameraPos );
+  DEBUGWIN_ITEM_SetNameV( item , "CameraX[%d]",(int)FX_FX32_TO_F32(cameraPos.x) );
+  
+}
+
+static void PSTATUS_DEB_Update_OfsX( void* userWork , DEBUGWIN_ITEM* item )
+{
+  PSTATUS_WORK *work = (PSTATUS_WORK*)userWork;
+  fx32 newValue = PSTATUS_DEB_Update_Value( work->shadowOfs.x );
+  if( newValue != work->shadowOfs.x )
+  {
+    work->shadowOfs.x = newValue;
+    DEBUGWIN_RefreshScreen();
+    PSTATUS_SUB_SetShadowScale(work , work->subWork);
+    DEBUGWIN_UpdateFrame();
+  }
+}
+
+static void PSTATUS_DEB_Draw_OfsX( void* userWork , DEBUGWIN_ITEM* item )
+{
+  PSTATUS_WORK *work = (PSTATUS_WORK*)userWork;
+  const s32 val1 = (s32)FX_FX32_TO_F32(work->shadowOfs.x);
+  s32 val2 = (s32)FX_FX32_TO_F32(work->shadowOfs.x*10) - val1*10;
+  if( val2 < 0 )val2*=-1;
+
+  DEBUGWIN_ITEM_SetNameV( item , "Offset_X[%d.%d]",val1,val2 );  
+}
+
+static void PSTATUS_DEB_Update_OfsY( void* userWork , DEBUGWIN_ITEM* item )
+{
+  PSTATUS_WORK *work = (PSTATUS_WORK*)userWork;
+  fx32 newValue = PSTATUS_DEB_Update_Value( work->shadowOfs.y );
+  if( newValue != work->shadowOfs.y )
+  {
+    work->shadowOfs.y = newValue;
+    DEBUGWIN_RefreshScreen();
+    PSTATUS_SUB_SetShadowScale(work , work->subWork);
+    DEBUGWIN_UpdateFrame();
+  }
+}
+
+static void PSTATUS_DEB_Draw_OfsY( void* userWork , DEBUGWIN_ITEM* item )
+{
+  PSTATUS_WORK *work = (PSTATUS_WORK*)userWork;
+  const s32 val1 = (s32)FX_FX32_TO_F32(work->shadowOfs.y);
+  s32 val2 = (s32)FX_FX32_TO_F32(work->shadowOfs.y*10) - val1*10;
+  if( val2 < 0 )val2*=-1;
+
+  DEBUGWIN_ITEM_SetNameV( item , "Offset_Y[%d.%d]",val1,val2 );  
+}
+
+static void PSTATUS_DEB_Update_OfsZ( void* userWork , DEBUGWIN_ITEM* item )
+{
+  PSTATUS_WORK *work = (PSTATUS_WORK*)userWork;
+  fx32 newValue = PSTATUS_DEB_Update_Value( work->shadowOfs.z );
+  if( newValue != work->shadowOfs.z )
+  {
+    work->shadowOfs.z = newValue;
+    DEBUGWIN_RefreshScreen();
+    PSTATUS_SUB_SetShadowScale(work , work->subWork);
+    DEBUGWIN_UpdateFrame();
+  }
+}
+
+static void PSTATUS_DEB_Draw_OfsZ( void* userWork , DEBUGWIN_ITEM* item )
+{
+  PSTATUS_WORK *work = (PSTATUS_WORK*)userWork;
+  const s32 val1 = (s32)FX_FX32_TO_F32(work->shadowOfs.z);
+  s32 val2 = (s32)FX_FX32_TO_F32(work->shadowOfs.z*10) - val1*10;
+  if( val2 < 0 )val2*=-1;
+
+  DEBUGWIN_ITEM_SetNameV( item , "Offset_Z[%d.%d]",val1,val2 );  
+}
 

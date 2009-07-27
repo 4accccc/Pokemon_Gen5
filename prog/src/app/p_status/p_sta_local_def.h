@@ -16,6 +16,8 @@
 #include "sound/pm_sndsys.h"
 #include "debug/debugwin_sys.h"
 #include "poke_tool/poketype.h"
+#include "system/mcss.h"
+#include "system/mcss_tool.h"
 
 #include "p_status_gra.naix"
 #include "msg/msg_pokestatus.h"
@@ -65,6 +67,7 @@
 
 #pragma mark[>define OBJ
 #define PSTATUS_OBJPLT_ICON (0x0) //未定
+#define PSTATUS_OBJPLT_MARK (0x5)  //1本
 #define PSTATUS_OBJPLT_BALL (0x6)  //1本
 #define PSTATUS_OBJPLT_POKE_TYPE (0x7)  //3本
 #define PSTATUS_OBJPLT_SKILL_PLATE (0xa)
@@ -80,6 +83,7 @@ enum PSTATUS_CEL_RESOURCE
 {
   SCR_PLT_ICON,
   SCR_PLT_BALL,
+  SCR_PLT_MARK,
   SCR_PLT_POKE_TYPE,
   SCR_PLT_SUB_POKE_TYPE,
   SCR_PLT_HPBASE,
@@ -90,6 +94,7 @@ enum PSTATUS_CEL_RESOURCE
   
   SCR_NCG_ICON,
   SCR_NCG_BALL,
+  SCR_NCG_MARK,
   SCR_NCG_SKILL_TYPE_HENKA,
   SCR_NCG_SKILL_TYPE_BUTURI,
   SCR_NCG_SKILL_TYPE_TOKUSHU,
@@ -100,6 +105,7 @@ enum PSTATUS_CEL_RESOURCE
   
   SCR_ANM_ICON,
   SCR_ANM_BALL,
+  SCR_ANM_MARK,
   SCR_ANM_POKE_TYPE,
   SCR_ANM_SUB_POKE_TYPE,
   SCR_ANM_HPBASE,
@@ -174,6 +180,23 @@ typedef enum
 
 typedef enum
 {
+  SMS_FADEIN,
+  SMS_FADEIN_WAIT,
+  SMS_FADEOUT,
+  SMS_FADEOUT_WAIT,
+  SMS_UPDATE,
+}PSTATUS_MAIN_SEQ;
+
+typedef enum
+{
+  SMES_NONE,
+  SMES_FADEOUT,
+  SMES_WAIT,
+  SMES_FADEIN,
+}PSTATUS_MOSAIC_EFFECT_SEQ;
+
+typedef enum
+{
   PPT_INFO,     //ポケモン情報
   PPT_SKILL,    //技
   PPT_RIBBON,   //リボン
@@ -185,6 +208,7 @@ typedef struct _PSTATUS_SUB_WORK PSTATUS_SUB_WORK;
 typedef struct _PSTATUS_INFO_WORK PSTATUS_INFO_WORK;
 typedef struct _PSTATUS_RIBBON_WORK PSTATUS_RIBBON_WORK;
 typedef struct _PSTATUS_SKILL_WORK PSTATUS_SKILL_WORK;
+typedef struct _PSTATUS_DEBUG_WORK PSTATUS_DEBUG_WORK;
 
 typedef struct
 {
@@ -208,6 +232,7 @@ typedef struct
   u32      befTpy;
   
   BOOL isActiveBarButton;
+  PSTATUS_MAIN_SEQ    mainSeq;
   PSTATUS_RETURN_TYPE retVal;
     
   PSTATUS_PAGE_TYPE page;
@@ -216,6 +241,7 @@ typedef struct
   //3D
   GFL_G3D_CAMERA    *camera;
   GFL_BBD_SYS       *bbdSys;
+  MCSS_SYS_WORK     *mcssSys;
   
   //MSG系
   GFL_MSGDATA *msgHandle;
@@ -238,15 +264,13 @@ typedef struct
   //pppの時ppに変換するよう
   POKEMON_PARAM *calcPP;
 
-  u8 mosaicEffSeq;
+  PSTATUS_MOSAIC_EFFECT_SEQ mosaicEffSeq;
   u8 mosaicCnt;
+  
+#if USE_DEBUGWIN_SYSTEM
+  VecFx32 shadowScale;
+  u16 shadowRotate;
+  VecFx32 shadowOfs;
+#endif
 
 }PSTATUS_WORK;
-
-enum
-{
-  SMS_NONE,
-  SMS_FADEOUT,
-  SMS_WAIT,
-  SMS_FADEIN,
-};

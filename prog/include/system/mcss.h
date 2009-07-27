@@ -32,6 +32,8 @@
 #define	MCSS_VANISH_OFF		( 0 )		//バニッシュOFF
 #define	MCSS_VANISH_FLIP	( 2 )		//バニッシュFLIP
 
+#define MCSS_SHADOW_ALPHA_AUTO ( 32 )//影のアルファ値を本体の半分にします
+
 #ifndef __ASM_NO_DEF_
 //--------------------------------------------------------------------------
 /**
@@ -88,6 +90,9 @@ extern	void						MCSS_SetOfsScale( MCSS_WORK *mcss, VecFx32 *scale );
 extern	void						MCSS_GetRotate( MCSS_WORK *mcss, VecFx32 *rotate );
 extern	void						MCSS_SetRotate( MCSS_WORK *mcss, VecFx32 *rotate );
 extern	void						MCSS_SetShadowScale( MCSS_WORK *mcss, VecFx32 *scale );
+extern	void	          MCSS_SetShadowRotate( MCSS_WORK *mcss, const u16 rot );
+extern	void						MCSS_GetShadowOffset( MCSS_WORK *mcss, VecFx32 *ofs );
+extern	void						MCSS_SetShadowOffset( MCSS_WORK *mcss, VecFx32 *ofs );
 extern	void						MCSS_SetMepachiFlag( MCSS_WORK *mcss );
 extern	void						MCSS_ResetMepachiFlag( MCSS_WORK *mcss );
 extern	void						MCSS_FlipMepachiFlag( MCSS_WORK *mcss );
@@ -101,6 +106,8 @@ extern	void						MCSS_SetAnimCtrlCallBack( MCSS_WORK *mcss, u32 param, NNSG2dAnm
 extern	void						MCSS_SetPaletteFade( MCSS_WORK *mcss, u8 start_evy, u8 end_evy, u8 wait, u32 rgb );
 extern  u8              MCSS_GetAlpha( MCSS_WORK *mcss );
 extern  void	          MCSS_SetAlpha( MCSS_WORK *mcss, u8 alpha );
+extern  u8              MCSS_GetShadowAlpha( MCSS_WORK *mcss );
+extern  void	          MCSS_SetShadowAlpha( MCSS_WORK *mcss, u8 alpha );
 extern  BOOL            MCSS_CheckExecutePaletteFade( MCSS_WORK*  mcss );
 extern  void            MCSS_SetTextureTransAdrs( MCSS_SYS_WORK* mcss_sys, u32 adrs );
 extern  void            MCSS_SetTexPaletteTransAdrs( MCSS_SYS_WORK* mcss_sys, u32 adrs );
