@@ -35,13 +35,14 @@ typedef struct {
  * èÛë‘î‰äråãâ ç\ë¢ëÃ
  */
 typedef struct {
-  u32  count;
-  u8   pokeID[ BTL_POS_MAX ];
+  u32          count;
+  BtlPokePos   pos[ BTL_POS_MAX ];
 }BTL_POSPOKE_COMPAIR_RESULT;
 
 
 extern void BTL_POSPOKE_InitWork( BTL_POSPOKE_WORK* wk, const BTL_POKE_CONTAINER* pokeCon, BtlRule rule );
-extern void BTL_POSPOKE_Compair( const BTL_POSPOKE_WORK* wk1, const BTL_POSPOKE_WORK* wk2, BTL_POSPOKE_COMPAIR_RESULT* result );
+extern void BTL_POSPOKE_Update( BTL_POSPOKE_WORK* wk, const BTL_POKE_CONTAINER* pokeCon );
+extern void BTL_POSPOKE_Compair( const BTL_POSPOKE_WORK* wk_before, const BTL_POSPOKE_WORK* wk_after, BTL_POSPOKE_COMPAIR_RESULT* result );
 extern void BTL_POSPOKE_CopyWork( const BTL_POSPOKE_WORK* src, BTL_POSPOKE_WORK* dst );
 
 

@@ -120,6 +120,7 @@ BTL_SERVER* BTL_SERVER_Create( BTL_MAIN_MODULE* mainModule, BTL_POKE_CONTAINER* 
   sv->que = &sv->queBody;
   sv->quitStep = QUITSTEP_NONE;
   sv->flowWork = NULL;
+  sv->changePokeCnt = 0;
 
   {
     int i;
@@ -422,8 +423,10 @@ static BOOL ServerMain_SelectPokemon( BTL_SERVER* server, int* seq )
       // 続行
       if( loseClientCount == 0 )
       {
-        BTL_Printf("負けたクライアントいないので次のポケモン選択へ\n");
-        SetAdapterCmd( server, BTL_ACMD_SELECT_POKEMON );
+        GF_ASSERT( server->changePokeCnt );
+        BTL_Printf("負けたクライアントいないので次のポケモン選択へ  交替されるポケ数=%d\n", server->changePokeCnt);
+        SetAdapterCmdEx( server, BTL_ACMD_SELECT_POKEMON, server->changePokePos,
+            server->changePokeCnt*sizeof(server->changePokePos[0]) );
         (*seq)++;
       }
       // 決着
@@ -604,3 +607,16 @@ void BTL_SERVER_AddBonusMoney( BTL_SERVER* server, u32 volume )
 {
   BTL_MAIN_AddBonusMoney( server->mainModule, volume );
 }
+
+void BTL_SERVER_RequestChangePokemon( BTL_SERVER* server, u32 cnt, const BtlPokePos* pos )
+{
+  GF_ASSERT(cnt < BTL_POS_MAX);
+  {
+    u32 i;
+    for(i=0; i<cnt; ++i){
+      server->changePokePos[i] = pos[i];
+    }
+    server->changePokeCnt = cnt;
+  }
+}
+

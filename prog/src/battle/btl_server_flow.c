@@ -184,6 +184,9 @@ struct _BTL_SVFLOW_WORK {
   TARGET_POKE_REC     targetSubPokemon;
   TARGET_POKE_REC     damagedPokemon;
   SVFL_WAZAPARAM      wazaParam;
+  BTL_POSPOKE_WORK    pospokeBefore;
+  BTL_POSPOKE_WORK    pospokeAfter;
+  BTL_POSPOKE_COMPAIR_RESULT  pospokeResult;
 
   BTL_EVENT_WORK_STACK        eventWork;
   HANDLER_EXHIBISION_MANAGER  HEManager;
@@ -549,6 +552,11 @@ BTL_SVFLOW_WORK* BTL_SVFLOW_InitSystem(
   wk->que = que;
   wk->heapID = heapID;
   wk->prevExeWaza = WAZANO_NULL;
+  {
+    BtlRule rule = BTL_MAIN_GetRule( mainModule );
+    BTL_POSPOKE_InitWork( &wk->pospokeBefore, wk->pokeCon, rule );
+    BTL_POSPOKE_InitWork( &wk->pospokeAfter, wk->pokeCon, rule );
+  }
 
   GFL_STD_MemClear( wk->pokeDeadFlag, sizeof(wk->pokeDeadFlag) );
 
@@ -613,7 +621,7 @@ SvflowResult BTL_SVFLOW_Start( BTL_SVFLOW_WORK* wk )
   clear_poke_actflags( wk );
   scproc_SetFlyingFlag( wk );
 
-  alivePokeBefore = countAlivePokemon( wk );
+  BTL_POSPOKE_Update( &wk->pospokeBefore, wk->pokeCon );
 
   wk->numActOrder = sortClientAction( wk, wk->actOrder, NELEMS(wk->actOrder) );
   for(i=0; i<wk->numActOrder; i++)
@@ -628,12 +636,12 @@ SvflowResult BTL_SVFLOW_Start( BTL_SVFLOW_WORK* wk )
   // ターンチェック処理
   scproc_TurnCheck( wk );
 
-  alivePokeAfter = countAlivePokemon( wk );
+  BTL_POSPOKE_Update( &wk->pospokeAfter, wk->pokeCon );
+  BTL_POSPOKE_Compair( &wk->pospokeBefore, &wk->pospokeAfter, &wk->pospokeResult );
 
   // 死んだポケモンがいる場合の処理
-  BTL_Printf( "ポケモン数 %d -> %d ...\n", alivePokeBefore, alivePokeAfter );
-  if( alivePokeBefore > alivePokeAfter )
-  {
+  if( wk->pospokeResult.count ){
+    BTL_SERVER_RequestChangePokemon( wk->server, wk->pospokeResult.count, wk->pospokeResult.pos );
     return SVFLOW_RESULT_POKE_CHANGE;
   }
 

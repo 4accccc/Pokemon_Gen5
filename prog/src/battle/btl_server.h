@@ -24,7 +24,6 @@ typedef enum {
   SC_RES_ESCAPE,      ///< どちらかが逃げて終了
   SC_RES_CLOSE,       ///< どちらかが勝って終了
 
-
 }ServerCmdResult;
 
 
@@ -40,6 +39,7 @@ extern void BTL_SERVER_Main( BTL_SERVER* server );
 // server_flow -> server 呼び出し専用
 //-------------------------------------
 extern void BTL_SERVER_AddBonusMoney( BTL_SERVER* server, u32 volume );
+extern void BTL_SERVER_RequestChangePokemon( BTL_SERVER* server, u32 cnt, const BtlPokePos* pos );
 
 
 #endif
