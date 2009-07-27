@@ -167,6 +167,7 @@ static BOOL DMenuCallProc_DebugSkyJump( DEBUG_MENU_EVENT_WORK *p_wk );
 //--------------------------------------------------------------
 static const FLDMENUFUNC_LIST DATA_DebugMenuList[] =
 {
+	{	DEBUG_FIELD_STR38, DMenuCallProc_DebugSkyJump },
 	{ DEBUG_FIELD_STR17, DMenuCallProc_FieldPosData },
 	{ DEBUG_FIELD_STR02, DMenuCallProc_ControlCamera },
 	{ DEBUG_FIELD_STR20, DMenuCallProc_ControlTarget },
@@ -188,7 +189,6 @@ static const FLDMENUFUNC_LIST DATA_DebugMenuList[] =
   { DEBUG_FIELD_STR32, DMenuCallProc_DebugItem },
   { DEBUG_FIELD_STR37, DMenuCallProc_BoxMax },
   { DEBUG_FIELD_STR36, DMenuCallProc_ControlFog },
-	{	DEBUG_FIELD_STR38, DMenuCallProc_DebugSkyJump },
 	{ DEBUG_FIELD_STR01, NULL },
 };
 
@@ -198,6 +198,7 @@ static const FLDMENUFUNC_LIST DATA_DebugMenuList[] =
 //--------------------------------------------------------------
 static const FLDMENUFUNC_LIST DATA_DebugMenuListGrid[] =
 {
+	{	DEBUG_FIELD_STR38, DMenuCallProc_DebugSkyJump },
 	{ DEBUG_FIELD_STR17, DMenuCallProc_FieldPosData },
 	{ DEBUG_FIELD_STR02, DMenuCallProc_ControlCamera },
 	{ DEBUG_FIELD_STR20, DMenuCallProc_ControlTarget },
@@ -217,7 +218,6 @@ static const FLDMENUFUNC_LIST DATA_DebugMenuListGrid[] =
   { DEBUG_FIELD_STR21 , DMenuCallProc_MusicalSelect },
   { DEBUG_FIELD_STR31, DMenuCallProc_Naminori },
   { DEBUG_FIELD_STR32, DMenuCallProc_DebugItem },
-	{	DEBUG_FIELD_STR38, DMenuCallProc_DebugSkyJump },
 	{ DEBUG_FIELD_STR01, NULL },
 };
 
