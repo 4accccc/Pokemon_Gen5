@@ -337,7 +337,9 @@ SRCS_OVERLAY_FIELDMAP		=	field/field_proc.c \
 				field/rail_editor.c \
         field/fldeff_gyoe.c \
         field/fieldmap_func.c \
-        field/scrcmd_sound.c
+        field/scrcmd_sound.c \
+        field/fldeff_footmark.c \
+        field/fldeff_reflect.c
 
 # フィールド天気
 #===> SRCS_OVERLAY_FIELDMAP
