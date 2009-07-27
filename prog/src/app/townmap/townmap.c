@@ -1255,7 +1255,7 @@ static void SEQFUNC_Main( SEQ_WORK *p_seqwk, int *p_seq, void *p_param_adrs )
 			add.y -= 4;
 			is_move	= TRUE;
 		}
-		if( CURSOR_MAP_MOVE_RANGE_BOTTOM_APPBAR > pos.y && pos.y > CURSOR_MAP_MOVE_RANGE_BOTTOM )
+		if( CURSOR_MAP_MOVE_RANGE_BOTTOM_APPBAR >= pos.y && pos.y > CURSOR_MAP_MOVE_RANGE_BOTTOM )
 		{	
 			add.y += 4;
 			is_move	= TRUE;
@@ -3984,6 +3984,12 @@ static void DEBUGMENU_UPDATE_Print( void* p_wk_adrs, DEBUGWIN_ITEM* p_item )
 		}
 		else
 		{	
+			if( DEBUGPRINT_IsOpen(sp_dp_wk) )
+			{	
+				DEBUGPRINT_Clear(sp_dp_wk);
+				DEBUGPRINT_Close(sp_dp_wk);
+			}
+
 			DEBUGPRINT_Open(sp_dp_wk);
 			DEBUGPRINT_Update(sp_dp_wk, p_wk_adrs );
 		}
@@ -4028,13 +4034,19 @@ static void DEBUGMENU_UPDATE_CheckPos( void* p_wk_adrs, DEBUGWIN_ITEM* p_item )
 		{	
 			DEBUGPRINT_Clear(sp_dp_wk);
 			DEBUGPRINT_Close(sp_dp_wk);
-			p_wk->is_checkpos_debug	= TRUE;
+			p_wk->is_checkpos_debug	= FALSE;
 		}
 		else
-		{	
+		{
+			if( DEBUGPRINT_IsOpen(sp_dp_wk) )
+			{	
+				DEBUGPRINT_Clear(sp_dp_wk);
+				DEBUGPRINT_Close(sp_dp_wk);
+			}
+
 			DEBUGPRINT_Open(sp_dp_wk);
 			DEBUGPRINT_POS_Update( sp_dp_wk, p_wk_adrs );
-			p_wk->is_checkpos_debug	= FALSE;
+			p_wk->is_checkpos_debug	= TRUE;
 		}
 		DEBUGWIN_RefreshScreen();
 	}
