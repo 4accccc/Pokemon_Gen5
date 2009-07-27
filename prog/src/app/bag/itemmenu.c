@@ -833,9 +833,13 @@ static void ItemMenuMake( FIELD_ITEMMENU_WORK * pWork, u8* tbl )
 	int	 i;
 	void * itemdata;
 	u8	pocket;
+  ITEM_ST * item = ITEMMENU_GetItem( pWork,ITEMMENU_GetItemIndex(pWork) );
+  if((item==NULL) || (item->id==ITEM_DUMMY_DATA)){
+    return;
+  }
 
-	itemdata = ITEM_GetItemArcData( pWork->ret_item, ITEM_GET_DATA, pWork->heapID );
-	pocket   = pWork->pocketno;
+  itemdata = ITEM_GetItemArcData( item->id, ITEM_GET_DATA, pWork->heapID );
+  pocket   = pWork->pocketno;
 
 	for(i=0;i<BAG_MENUTBL_MAX;i++){
 		pWork->menu_func[i] = NULL;
@@ -856,13 +860,13 @@ static void ItemMenuMake( FIELD_ITEMMENU_WORK * pWork, u8* tbl )
 			// ひらく
 			// うめる
 			// とめる
-			if( ITEM_GetBufParam( itemdata,  ITEM_PRM_FIELD ) == 0 )  //@@OO アイテムコンバータがおかしいのか結果が違う
+			if( ITEM_GetBufParam( itemdata,  ITEM_PRM_FIELD ) != 0 )  //@@OO アイテムコンバータがおかしいのか結果が違う
 			{
-				if( pWork->ret_item == ITEM_ZITENSYA && pWork->cycle_flg == 1 )
+				if( item->id == ITEM_ZITENSYA && pWork->cycle_flg == 1 )
 				{
 					tbl[BAG_MENU_USE] = BAG_MENU_ORIRU;
 				}
-				else if( pWork->ret_item == ITEM_POFINKEESU )
+				else if( item->id == ITEM_POFINKEESU )
 				{
 					tbl[BAG_MENU_USE] = BAG_MENU_HIRAKU;
 				}
@@ -879,7 +883,7 @@ static void ItemMenuMake( FIELD_ITEMMENU_WORK * pWork, u8* tbl )
 		// もたせる
 		// すてる
 		if( ITEM_GetBufParam( itemdata, ITEM_PRM_EVENT ) == 0 ){
-			if( ITEM_CheckPokeAdd( pWork->ret_item ) == TRUE ){
+			if( ITEM_CheckPokeAdd( item->id ) == TRUE ){
 				tbl[BAG_MENU_GIVE] = BAG_MENU_MOTASERU;
 			}
 			if( pocket != BAG_POKE_WAZA ){
@@ -890,7 +894,7 @@ static void ItemMenuMake( FIELD_ITEMMENU_WORK * pWork, u8* tbl )
 		// とうろく
 		// かいじょ
 		if( ITEM_GetBufParam( itemdata, ITEM_PRM_CNV ) != 0 ){
-			if( MYITEM_CnvButtonItemGet( pWork->pMyItem ) == pWork->ret_item ){
+			if( MYITEM_CnvButtonItemGet( pWork->pMyItem ) == item->id ){
 				tbl[BAG_MENU_SUB] = BAG_MENU_KAIZYO;
 			}else{
 				tbl[BAG_MENU_SUB] = BAG_MENU_TOUROKU;
@@ -899,7 +903,7 @@ static void ItemMenuMake( FIELD_ITEMMENU_WORK * pWork, u8* tbl )
 	}
 	// 木の実プランター
 	else if( pWork->mode == BAG_MODE_N_PLANTER ){
-		if( BAGMAIN_NPlanterUseCheck( pocket, pWork->ret_item ) == TRUE ){
+		if( BAGMAIN_NPlanterUseCheck( pocket, item->id ) == TRUE ){
 			tbl[BAG_MENU_USE] = BAG_MENU_TSUKAU_NP;
 		}
 	}
@@ -935,7 +939,13 @@ static void _itemUseWindowRewrite(FIELD_ITEMMENU_WORK* pWork)
 
 	length = BAG_MENUTBL_MAX;
 
-  pWork->ret_item = ITEMMENU_GetItemIndex(pWork);//選択しているアイテム
+  {
+    ITEM_ST * item = ITEMMENU_GetItem( pWork,ITEMMENU_GetItemIndex(pWork) );
+    pWork->ret_item=ITEM_DUMMY_DATA;
+    if(item){
+      pWork->ret_item = item->id;
+    }
+  }
   
 	{
 		u8	tbl[BAG_MENUTBL_MAX]={255, 255, 255, 255, 255};

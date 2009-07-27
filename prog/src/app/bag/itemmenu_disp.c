@@ -388,8 +388,8 @@ void ITEMDISP_graphicInit(FIELD_ITEMMENU_WORK* pWork)
   //‹Z‚ÌƒAƒCƒRƒ“
   {
     GFL_CLWK_DATA cellInitData1,cellInitData2;
-    cellInitData1.pos_x = 17*8;
-    cellInitData1.pos_y = 20*8;
+    cellInitData1.pos_x = 10*8;
+    cellInitData1.pos_y = 20*8+20;
     cellInitData1.softpri = 1;
     cellInitData1.bgpri = 1;
     cellInitData1.anmseq = 0;
@@ -399,8 +399,8 @@ void ITEMDISP_graphicInit(FIELD_ITEMMENU_WORK* pWork)
       pWork->commonCell[SCR_NCG_SKILL_TYPE_HENKA], pWork->commonCell[SCR_PLT_SUB_POKE_TYPE],  pWork->commonCell[SCR_ANM_SUB_POKE_TYPE],
       &cellInitData1 ,CLSYS_DEFREND_SUB , pWork->heapID );
 
-    cellInitData2.pos_x = 8*8;
-    cellInitData2.pos_y = 20*8;
+    cellInitData2.pos_x = 10*8;
+    cellInitData2.pos_y = 20*8+2;
     cellInitData2.softpri = 1;
     cellInitData2.bgpri = 1;
     cellInitData2.anmseq = 0;
@@ -445,12 +445,14 @@ void ITEMDISP_graphicDelete(FIELD_ITEMMENU_WORK* pWork)
 
 void ITEMDISP_upMessageRewrite(FIELD_ITEMMENU_WORK* pWork)
 {
+  int wazano;
  // ITEM_ST * item = MYITEM_PosItemGet( pWork->pMyItem, pWork->pocketno, ITEMMENU_GetItemIndex(pWork) );
   ITEM_ST * item = ITEMMENU_GetItem( pWork,ITEMMENU_GetItemIndex(pWork) );
 
   if((item==NULL) || (item->id==ITEM_DUMMY_DATA)){
     return;
   }
+  wazano = ITEM_GetWazaNo( item->id );
 
 
   GFL_BMP_Clear(GFL_BMPWIN_GetBmp(pWork->winItemName), 0 );
@@ -459,11 +461,20 @@ void ITEMDISP_upMessageRewrite(FIELD_ITEMMENU_WORK* pWork)
   
   GFL_FONTSYS_SetDefaultColor();
 
-  GFL_MSG_GetString(  pWork->MsgManager, MSG_ITEM_STR001, pWork->pStrBuf );
-  WORDSET_RegisterItemName(pWork->WordSet, 0, item->id);
-  WORDSET_ExpandStr( pWork->WordSet, pWork->pExpStrBuf, pWork->pStrBuf  );
-  PRINTSYS_Print( GFL_BMPWIN_GetBmp(pWork->winItemName), 0, 0, pWork->pExpStrBuf, pWork->fontHandle);
-
+  if(wazano == 0){
+    GFL_MSG_GetString(  pWork->MsgManager, MSG_ITEM_STR001, pWork->pStrBuf );
+    WORDSET_RegisterItemName(pWork->WordSet, 0, item->id);
+    WORDSET_ExpandStr( pWork->WordSet, pWork->pExpStrBuf, pWork->pStrBuf  );
+    PRINTSYS_Print( GFL_BMPWIN_GetBmp(pWork->winItemName), 0, 0, pWork->pExpStrBuf, pWork->fontHandle);
+  }
+  else{
+    GFL_MSG_GetString(  pWork->MsgManager, msg_bag_086, pWork->pStrBuf );
+    WORDSET_RegisterNumber(pWork->WordSet, 0, ITEM_GetWazaMashineNo(item->id)+1,
+                           2, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT);
+    WORDSET_RegisterWazaName(pWork->WordSet, 1, wazano);
+    WORDSET_ExpandStr( pWork->WordSet, pWork->pExpStrBuf, pWork->pStrBuf  );
+    PRINTSYS_Print( GFL_BMPWIN_GetBmp(pWork->winItemName), 0, 0, pWork->pExpStrBuf, pWork->fontHandle);
+  }
 
   GFL_MSG_GetString(  pWork->MsgManager, MSG_ITEM_STR002, pWork->pStrBuf );
 
@@ -1153,7 +1164,7 @@ void ITEMDISP_WazaInfoWindowChange( FIELD_ITEMMENU_WORK *pWork )
   int wazano = ITEM_GetWazaNo( item->id );
   int ppnum = WT_PPMaxGet(wazano, 0);
   int pow = WT_WazaDataParaGet( wazano, ID_WTD_damage );
-  int hit = WT_WazaDataParaGet( wazano, ID_WTD_damage );
+  int hit = WT_WazaDataParaGet( wazano, ID_WTD_hitprobability );
 
   
   GFL_BG_LoadScreenV_Req(GFL_BG_FRAME1_S);
@@ -1176,40 +1187,40 @@ void ITEMDISP_WazaInfoWindowChange( FIELD_ITEMMENU_WORK *pWork )
   GFL_MSG_GetString(  pWork->MsgManager, mes_bag_107, pWork->pStrBuf );
   PRINTSYS_Print( GFL_BMPWIN_GetBmp(pwin), 8, 4, pWork->pStrBuf, pWork->fontHandle);
 
-
   //‚Ô‚ñ‚é‚¢
   GFL_MSG_GetString(  pWork->MsgManager, mes_bag_098, pWork->pStrBuf );
-  PRINTSYS_Print( GFL_BMPWIN_GetBmp(pwin), 8*10, 4, pWork->pStrBuf, pWork->fontHandle);
+  PRINTSYS_Print( GFL_BMPWIN_GetBmp(pwin), 8, 24, pWork->pStrBuf, pWork->fontHandle);
 
   //ˆÐ—Í
   GFL_MSG_GetString(  pWork->MsgManager, mes_bag_096, pWork->pStrBuf );
-  PRINTSYS_Print( GFL_BMPWIN_GetBmp(pwin), 8*20, 4, pWork->pStrBuf, pWork->fontHandle);
+  PRINTSYS_Print( GFL_BMPWIN_GetBmp(pwin), 8*14, 4, pWork->pStrBuf, pWork->fontHandle);
 
 //‚¢‚è‚å‚­‚ÌŒ…”
   GFL_MSG_GetString(  pWork->MsgManager, mes_bag_100, pWork->pStrBuf );
   WORDSET_RegisterNumber(pWork->WordSet, 0, pow, 3, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT);
   WORDSET_ExpandStr( pWork->WordSet, pWork->pExpStrBuf, pWork->pStrBuf  );
-  PRINTSYS_Print( GFL_BMPWIN_GetBmp(pwin), 28*8, 4, pWork->pExpStrBuf, pWork->fontHandle);
+  PRINTSYS_Print( GFL_BMPWIN_GetBmp(pwin), 22*8, 4, pWork->pExpStrBuf, pWork->fontHandle);
 
-    //PP
-  GFL_MSG_GetString(  pWork->MsgManager, mes_bag_095, pWork->pStrBuf );
-  PRINTSYS_Print( GFL_BMPWIN_GetBmp(pwin), 8, 24, pWork->pStrBuf, pWork->fontHandle);
-
-  //PP‚ÌŒ…”
-  GFL_MSG_GetString(  pWork->MsgManager, mes_bag_099, pWork->pStrBuf );
-  WORDSET_RegisterNumber(pWork->WordSet, 0, ppnum, 2, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT);
-  WORDSET_ExpandStr( pWork->WordSet, pWork->pExpStrBuf, pWork->pStrBuf  );
-  PRINTSYS_Print( GFL_BMPWIN_GetBmp(pwin), 56, 24, pWork->pExpStrBuf, pWork->fontHandle);
-  
-    //–½’†
+      //–½’†
   GFL_MSG_GetString(  pWork->MsgManager, mes_bag_097, pWork->pStrBuf );
-  PRINTSYS_Print( GFL_BMPWIN_GetBmp(pwin), 8*20, 24, pWork->pStrBuf, pWork->fontHandle);
+  PRINTSYS_Print( GFL_BMPWIN_GetBmp(pwin), 8*14, 24, pWork->pStrBuf, pWork->fontHandle);
 
   //‚ß‚¢‚¿‚ã‚¤‚ÌŒ…”
   GFL_MSG_GetString(  pWork->MsgManager, mes_bag_100, pWork->pStrBuf );
   WORDSET_RegisterNumber(pWork->WordSet, 0, hit, 3, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT);
   WORDSET_ExpandStr( pWork->WordSet, pWork->pExpStrBuf, pWork->pStrBuf  );
-  PRINTSYS_Print( GFL_BMPWIN_GetBmp(pwin), 28*8, 24, pWork->pExpStrBuf, pWork->fontHandle);
+  PRINTSYS_Print( GFL_BMPWIN_GetBmp(pwin), 22*8, 24, pWork->pExpStrBuf, pWork->fontHandle);
+
+    //PP
+  GFL_MSG_GetString(  pWork->MsgManager, mes_bag_095, pWork->pStrBuf );
+  PRINTSYS_Print( GFL_BMPWIN_GetBmp(pwin), 27*8, 4, pWork->pStrBuf, pWork->fontHandle);
+
+  //PP‚ÌŒ…”
+  GFL_MSG_GetString(  pWork->MsgManager, mes_bag_099, pWork->pStrBuf );
+  WORDSET_RegisterNumber(pWork->WordSet, 0, ppnum, 2, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT);
+  WORDSET_ExpandStr( pWork->WordSet, pWork->pExpStrBuf, pWork->pStrBuf  );
+  PRINTSYS_Print( GFL_BMPWIN_GetBmp(pwin), 29*8, 4, pWork->pExpStrBuf, pWork->fontHandle);
+  
   
   GFL_BMPWIN_TransVramCharacter(pwin);
 

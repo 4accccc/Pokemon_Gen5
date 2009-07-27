@@ -16,7 +16,6 @@ rem notepad itemconv_dp.err
 rem notepad itemcnv_gmm.err
 
 nnsarc -c -l -n -i item_data itemdata
-del itemdata /q
 
 move itemequip.h %1include/item
 move itemsym.h %1include/item
@@ -24,4 +23,4 @@ move itemindex.dat %1src/item
 move itemname.gmm %2resource/message/src
 move iteminfo.gmm %2resource/message/src
 move itemtype.dat %1src/item
-
+move itemuse_def.h %1include/item
