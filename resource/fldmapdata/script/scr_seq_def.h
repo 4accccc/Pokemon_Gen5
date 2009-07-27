@@ -107,6 +107,8 @@ DEF_CMD_COUNT  =  ( DEF_CMD_COUNT + 1 )
   DEF_CMD EV_SEQ_PLAYER_POS_GET
   DEF_CMD EV_SEQ_OBJ_ADD
   DEF_CMD EV_SEQ_OBJ_DEL
+  DEF_CMD EV_SEQ_OBJ_ADD_EV
+  DEF_CMD EV_SEQ_OBJ_DEL_EV
 
   //動作モデル　イベント関連
   DEF_CMD EV_SEQ_OBJ_PAUSE_ALL
@@ -1032,6 +1034,29 @@ DEF_CMD_COUNT  =  ( DEF_CMD_COUNT + 1 )
 //--------------------------------------------------------------
   .macro _OBJ_DEL id
   .short EV_SEQ_OBJ_DEL
+  .short \id
+  .endm
+ 
+//--------------------------------------------------------------
+/**
+ * _OBJ_ADD_EV ゾーン内で配置されているOBJ一覧内、指定のIDを持つOBJを追加
+ * @param id 配置OBJ内で追加するOBJ ID
+ */
+//--------------------------------------------------------------
+  .macro _OBJ_ADD_EV
+  .short EV_SEQ_OBJ_ADD_EV
+  .short \id
+  .endm
+
+//--------------------------------------------------------------
+/**
+ * _OBJ_DEL_EV 指定のOBJ_IDを持ったOBJを削除。
+ * 削除時、対象OBJで指定されているイベントフラグをONにする。
+ * @param id 配置OBJ内で追加するOBJ ID
+ */
+//--------------------------------------------------------------
+  .macro _OBJ_DEL_EV
+  .short EV_SEQ_OBJ_DEL_EV
   .short \id
   .endm
 
