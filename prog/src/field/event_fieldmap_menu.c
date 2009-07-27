@@ -724,11 +724,12 @@ static const BOOL FMenuReturnProc_Bag(FMENU_EVENT_WORK* mwk)
     {
       PLIST_DATA *plData = GFL_HEAP_AllocMemory( HEAPID_PROC , sizeof(PLIST_DATA) );
       GAMEDATA *gmData = GAMESYSTEM_GetGameData(mwk->gmSys);
-      SAVE_CONTROL_WORK *svWork = GAMEDATA_GetSaveControlWork( gmData );
       
       plData->pp = GAMEDATA_GetMyPokemon(gmData);
-      plData->mode = PL_MODE_FIELD;
       plData->ret_sel = 0;
+      plData->mode = PL_MODE_ITEMSET;    //アイテムをセットする呼び出し
+      plData->item = pBag->ret_item;     //アイテムID
+      plData->myitem = pBag->pMyItem;    // アイテムデータ
 
       FMenu_SetNextSubProc( mwk ,FMENU_APP_POKELIST , plData );
       return TRUE;
