@@ -133,9 +133,11 @@ void APP_TASKMENU_CloseMenu( APP_TASKMENU_WORK *work )
   u8 i;
   for(i=0;i<work->initWork.itemNum;i++)
   {
+    GFL_BMPWIN_ClearScreen( work->menuWin[i] );
     GFL_BMPWIN_Delete( work->menuWin[i] );
   }
-
+  GFL_BG_LoadScreenV_Req( work->initWork.bgFrame );
+  
   GFL_HEAP_FreeMemory( work->menuWin );
   GFL_HEAP_FreeMemory( work->itemWork );
   GFL_HEAP_FreeMemory( work->ncgRes );
