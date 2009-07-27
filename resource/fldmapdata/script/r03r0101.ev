@@ -19,7 +19,11 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA    ev_r03r0101
+_EVENT_DATA    ev_r03r0101_talkobj_middlewoman2
+_EVENT_DATA    ev_r03r0101_talkobj_woman3
+_EVENT_DATA    ev_r03r0101_talkobj_babygirl1
+_EVENT_DATA    ev_r03r0101_talkobj_babyboy1a
+_EVENT_DATA    ev_r03r0101_talkobj_babyboy1b
 _EVENT_DATA_END
 
 
@@ -30,9 +34,67 @@ _EVENT_DATA_END
 //  _END
 
 /**************************************************************/
-/*                                                            */
+/*  R03R0101 MIDDLEWOMAN2の会話用イベントスクリプト*/
 /**************************************************************/
-ev_r03r0101:
-  //とりあえず最初のラベルだけ生成している
+ev_r03r0101_talkobj_middlewoman2:
+	_TALK_OBJ_PAUSE_ALL
+	_TURN_HERO_SITE
+	_TALKWIN_OPEN
+	_TALKMSG_ALLPUT msg_r03r0101_middlewoman2_01
+	_AB_KEYWAIT
+  _TALKWIN_CLOSE
+  _OBJ_PAUSE_CLEAR_ALL
+  _END
+
+/**************************************************************/
+/*  R03R0101 WOMAN3の会話用イベントスクリプト*/
+/**************************************************************/
+ev_r03r0101_talkobj_woman3:
+	_TALK_OBJ_PAUSE_ALL
+	_TURN_HERO_SITE
+	_TALKWIN_OPEN
+	_TALKMSG_ALLPUT msg_r03r0101_woman3_01
+	_AB_KEYWAIT
+  _TALKWIN_CLOSE
+  _OBJ_PAUSE_CLEAR_ALL
+  _END
+
+/**************************************************************/
+/*  R03R0101 BABYGIRL1の会話用イベントスクリプト*/
+/**************************************************************/
+ev_r03r0101_talkobj_babygirl1:
+	_TALK_OBJ_PAUSE_ALL
+	_TURN_HERO_SITE
+	_TALKWIN_OPEN
+	_TALKMSG_ALLPUT msg_r03r0101_babygirl1_01
+	_AB_KEYWAIT
+  _TALKWIN_CLOSE
+  _OBJ_PAUSE_CLEAR_ALL
+  _END
+
+/**************************************************************/
+/*  R03R0101 BABYBOY1の会話用イベントスクリプト*/
+/**************************************************************/
+ev_r03r0101_talkobj_babyboy1a:
+	_TALK_OBJ_PAUSE_ALL
+	_TURN_HERO_SITE
+	_TALKWIN_OPEN
+	_TALKMSG_ALLPUT msg_r03r0101_babyboy1a_01
+	_AB_KEYWAIT
+  _TALKWIN_CLOSE
+  _OBJ_PAUSE_CLEAR_ALL
+  _END
+
+/**************************************************************/
+/*  R03R0101 BABYBOY1の会話用イベントスクリプト*/
+/**************************************************************/
+ev_r03r0101_talkobj_babyboy1b:
+	_TALK_OBJ_PAUSE_ALL
+	_TURN_HERO_SITE
+	_TALKWIN_OPEN
+	_TALKMSG_ALLPUT msg_r03r0101_babyboy1b_01
+	_AB_KEYWAIT
+  _TALKWIN_CLOSE
+  _OBJ_PAUSE_CLEAR_ALL
   _END
 
