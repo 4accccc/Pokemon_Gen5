@@ -114,6 +114,22 @@ typedef enum
 	TOWNMAP_BG_FRAME_MAX,			//ソース内で使用
 }TOWNMAP_GRAPHIC_BG_FRAME;
 
+//-------------------------------------
+///	BG優先度
+//=====================================
+enum 
+{
+	TOWNMAP_BG_PRIORITY_TOP_M	= 0,
+	TOWNMAP_BG_PRIORITY_FONT_M	= TOWNMAP_BG_PRIORITY_TOP_M,
+	TOWNMAP_BG_PRIORITY_BAR_M,
+	TOWNMAP_BG_PRIORITY_ROAD_M,
+	TOWNMAP_BG_PRIORITY_MAP_M,
+
+	TOWNMAP_BG_PRIORITY_TOP_S	= 0,
+	TOWNMAP_BG_PRIORITY_FONT_S	= TOWNMAP_BG_PRIORITY_TOP_S,
+	TOWNMAP_BG_PRIORITY_WND_S,
+} ;
+
 
 //-------------------------------------
 ///	CLUNIT
