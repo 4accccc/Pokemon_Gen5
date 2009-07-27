@@ -28,6 +28,9 @@
 #include "fieldmap.h"
 #include "field_player.h"
 
+#include "eventdata_local.h"
+#include "field/eventdata_sxy.h"
+
 #include "scrcmd_trainer.h"
 #include "scrcmd_sound.h"
 
@@ -1397,6 +1400,60 @@ static VMCMD_RESULT EvCmdObjDel( VMHANDLE *core, void *wk )
   return VMCMD_RESULT_CONTINUE;
 }
 
+//--------------------------------------------------------------
+/**
+ * OBJを追加 配置データから
+ * @param  core    仮想マシン制御構造体へのポインタ
+ * @return  VMCMD_RESULT
+ */
+//--------------------------------------------------------------
+static VMCMD_RESULT EvCmdObjAddEvent( VMHANDLE *core, void *wk )
+{
+  SCRCMD_WORK *work = wk;
+  MMDLSYS *mmdlsys = SCRCMD_WORK_GetMMdlSys( work );
+  GAMEDATA *gdata = SCRCMD_WORK_GetGameData( work );
+	EVENTDATA_SYSTEM *evdata = GAMEDATA_GetEventData( gdata );
+	u16 count = EVENTDATA_GetNpcCount( evdata );
+	PLAYER_WORK *player = GAMEDATA_GetMyPlayerWork( gdata );
+  int zone_id = PLAYERWORK_getZoneID( player );
+  u16 id = SCRCMD_GetVMWorkValue( core, work );
+  
+  if( count ){
+    EVENTWORK *evwork =  GAMEDATA_GetEventWork( gdata );
+		const MMDL_HEADER *header = EVENTDATA_GetNpcData( evdata );
+		MMDL *mmdl = MMDLSYS_AddMMdlHeaderID(
+        mmdlsys, header, zone_id, count, evwork, id );
+    GF_ASSERT( mmdl != NULL );
+  }else{
+    GF_ASSERT( 0 );
+  }
+  
+  return( VMCMD_RESULT_CONTINUE );
+}
+
+//--------------------------------------------------------------
+/**
+ * OBJを削除　OBJ指定イベントフラグをONに
+ * @param  core    仮想マシン制御構造体へのポインタ
+ * @return  VMCMD_RESULT
+ */
+//--------------------------------------------------------------
+static VMCMD_RESULT EvCmdObjDelEvent( VMHANDLE *core, void *wk )
+{
+  MMDL *mmdl;
+  SCRCMD_WORK *work = wk;
+  MMDLSYS *mmdlsys = SCRCMD_WORK_GetMMdlSys( work );
+  GAMEDATA *gdata = SCRCMD_WORK_GetGameData( work );
+  EVENTWORK *evwork =  GAMEDATA_GetEventWork( gdata );
+  u16 id = SCRCMD_GetVMWorkValue( core, work );
+  
+  mmdl = MMDLSYS_SearchOBJID( mmdlsys, id );
+  GF_ASSERT( mmdl != NULL );
+  
+  MMDL_DeleteEvent( mmdl, evwork );
+  return( VMCMD_RESULT_CONTINUE );
+}
+
 //======================================================================
 //  動作モデル　イベント関連
 //======================================================================
@@ -2158,6 +2215,8 @@ const VMCMD_FUNC ScriptCmdTbl[] = {
   EvCmdPlayerPosGet,
   EvCmdObjAdd,
   EvCmdObjDel,
+  EvCmdObjAddEvent,
+  EvCmdObjDelEvent,
   
   //動作モデル　イベント関連
   EvCmdObjPauseAll,

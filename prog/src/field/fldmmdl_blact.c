@@ -36,6 +36,8 @@ typedef enum
 
 ///ビルボード描画スケール。(x2 = 描画サイズ1/2)
 #define MMDL_BBD_GLOBAL_SCALE ((FX32_ONE+0xc00)*2)
+///ビルボード描画スケール等倍。(x2 = 描画サイズ1/2)
+#define MMDL_BBD_GLOBAL_SCALE_ONE (FX32_ONE*2)
 ///ビルボード描画サイズ (FX16_ONE*4 = 1/2)
 //#define MMDL_BBD_DRAW_SIZE (FX16_ONE*8-1)
 #define MMDL_BBD_DRAW_SIZE (FX16_ONE*4)
@@ -258,6 +260,7 @@ void MMDL_BLACTCONT_ProcVBlank( MMDLSYS *mmdlsys )
   BlActAddReserve_Digest( pBlActCont );
 }
 
+#if 0
 //--------------------------------------------------------------
 /**
  * MMDL_BLACTCONT GFL_BBDACT_SYS取得
@@ -270,6 +273,23 @@ GFL_BBDACT_SYS * MMDL_BLACTCONT_GetBlActSys( MMDLSYS *mmdlsys )
 	MMDL_BLACTCONT *pBlActCont = MMDLSYS_GetBlActCont( mmdlsys );
   GF_ASSERT( pBlActCont != NULL );
   return( pBlActCont->pBbdActSys );
+}
+#endif
+
+//--------------------------------------------------------------
+/**
+ * MMDLSYS ビルボードアクタースケールを等倍に
+ * @param mmdlsys MMDLSYS
+ * @retval nothing
+ */
+//--------------------------------------------------------------
+void MMDL_BLACTCONT_SetGlobalScaleOne( MMDLSYS *mmdlsys )
+{
+	MMDL_BLACTCONT *pBlActCont = MMDLSYS_GetBlActCont( mmdlsys );
+  VecFx32 scale = {MMDL_BBD_GLOBAL_SCALE_ONE,
+    MMDL_BBD_GLOBAL_SCALE_ONE,MMDL_BBD_GLOBAL_SCALE_ONE};
+  GFL_BBD_SYS *bbdSys = GFL_BBDACT_GetBBDSystem( pBlActCont->pBbdActSys );
+  GFL_BBD_SetScale( bbdSys, &scale );
 }
 
 //======================================================================

@@ -499,6 +499,50 @@ void MMDLSYS_SetMMdl( const MMDLSYS *fos,
 
 //--------------------------------------------------------------
 /**
+ * MMDLSYS フィールド動作モデルを追加　ヘッダー内の指定OBJID
+ * @param	fos			MMDLSYS *
+ * @param	header		追加する情報を纏めたMMDL_HEADER *
+ * @param	zone_id		ゾーンID
+ * @param	count		header要素数
+ * @param id 追加するOBJ ID
+ * @retval	nothing
+ * @note イベントフラグが立っているヘッダーは追加しない。
+ */
+//--------------------------------------------------------------
+MMDL * MMDLSYS_AddMMdlHeaderID( const MMDLSYS *fos,
+	const MMDL_HEADER *header, int zone_id, int count, EVENTWORK *eventWork,
+  u16 objID )
+{
+  MMDL *mmdl;
+
+	GF_ASSERT( count > 0 );
+	GF_ASSERT( header != NULL );
+	
+	KAGAYA_Printf( "MMDLSYS_SetMMdlHeaderID Count %d\n", count );
+	
+	do{
+    if( MMdlHeader_CheckAlies(header) == FALSE )
+    {
+      if( header->id == objID )
+      {
+        if( MMdlSys_CheckEventFlag(
+              eventWork,header->event_flag) == FALSE )
+        {
+		      mmdl = MMDLSYS_AddMMdl( fos, header, zone_id );
+          break;
+        }
+      }
+    }
+    
+		header++;
+		count--;
+	}while( count );
+  
+  return( mmdl );
+}
+
+//--------------------------------------------------------------
+/**
  * MMDL フィールド動作モデルを削除
  * @param	mmdl		削除するMMDL * 
  * @retval	nothing

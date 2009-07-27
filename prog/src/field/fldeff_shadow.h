@@ -27,5 +27,7 @@
 //======================================================================
 extern void * FLDEFF_SHADOW_Init( FLDEFF_CTRL *fectrl, HEAPID heapID );
 extern void FLDEFF_SHADOW_Delete( FLDEFF_CTRL *fectrl, void *work );
+extern void FLDEFF_SHADOW_SetGlobalRotate(
+    FLDEFF_CTRL *fectrl, u16 rot_x, u16 rot_y, u16 rot_z );
 
 extern void FLDEFF_SHADOW_SetMMdl( MMDL *fmmdl, FLDEFF_CTRL *fectrl );

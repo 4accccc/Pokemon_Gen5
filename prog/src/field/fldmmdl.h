@@ -559,6 +559,9 @@ extern MMDL * MMDLSYS_AddMMdlParam( const MMDLSYS *fos,
     u16 id, u16 code, u16 move, int zone_id );
 extern void MMDLSYS_SetMMdl( const MMDLSYS *fos,
 	const MMDL_HEADER *header, int zone_id, int count, EVENTWORK *eventWork );
+extern MMDL * MMDLSYS_AddMMdlHeaderID( const MMDLSYS *fos,
+	const MMDL_HEADER *header, int zone_id, int count, EVENTWORK *eventWork,
+  u16 objID );
 extern void MMDL_Delete( MMDL * mmdl );
 extern void MMDL_DeleteEvent( MMDL * mmdl, EVENTWORK *evwork );
 extern void MMDLSYS_DeleteMMdl( const MMDLSYS *fos );
@@ -600,6 +603,7 @@ extern GFL_TCBSYS * MMDLSYS_GetTCBSYS( MMDLSYS *fos );
 extern void MMDLSYS_SetBlActCont(
 		MMDLSYS *mmdlsys, MMDL_BLACTCONT *pBlActCont );
 extern MMDL_BLACTCONT * MMDLSYS_GetBlActCont( MMDLSYS *mmdlsys );
+
 extern const FLDMAPPER * MMDLSYS_GetG3DMapper( const MMDLSYS *fos );
 extern void MMDLSYS_SetFieldMapWork(
     MMDLSYS *fos, void *fieldMapWork );
@@ -947,6 +951,7 @@ extern void MMDL_BLACTCONT_Setup( MMDLSYS *mmdlsys,
 	GFL_BBDACT_SYS *pBbdActSys, int res_max );
 extern void MMDL_BLACTCONT_Release( MMDLSYS *mmdlsys );
 extern void MMDL_BLACTCONT_ProcVBlank( MMDLSYS *mmdlsys );
+extern void MMDL_BLACTCONT_SetGlobalScaleOne( MMDLSYS *mmdlsys );
 
 extern void MMDL_BLACTCONT_AddResourceTex(
 	MMDLSYS *mmdlsys, const u16 *code, int max );
