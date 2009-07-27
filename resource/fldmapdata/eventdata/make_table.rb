@@ -4,6 +4,16 @@
 #
 #====================================================
 
+def read_uniq_scripts( filename )
+  File.open(filename){|file|
+    file.each{|line|
+      if line =~/\t\w+\.ev/ then
+        column = line.split
+        puts "\#include \"../script/#{column[0].sub(/\.ev/,"")}_def.h\""
+      end
+    }
+  }
+end
 
 
 begin
@@ -12,6 +22,7 @@ begin
   header = ""
   footer = "static const EVENTDATA_TOTAL_TABLES TotalTables[] = {\n"
 
+  read_uniq_scripts("../script/uniq_script.list")
   ARGV.each{|filename|
     File.open(filename){|file|
       headername = "tmp/#{File.basename(filename,".*")}.h"
