@@ -25,6 +25,8 @@ BLOCK_SIZE  =   32    #地形ブロック当たりのグリッド数
 #============================================================================
 class EventHeader
 
+  attr_reader :blockSizeX, :blockSizeY
+
   def initialize stream
     @blockSizeX   =   BLOCK_SIZE
     @blockSizeY   =   BLOCK_SIZE
@@ -63,12 +65,17 @@ class EventHeader
     @height = read(lines, /^#Height/)
     @x_ofs = Integer(read(lines, /^#block x offset/))
     @z_ofs = Integer(read(lines, /^#block z offset/))
+    line = lines.gets
+    raise ReadWMSError unless line =~/#3dp file names/
+    (Integer(@width) * Integer(@height)).times {lines.gets}
+
     begin 
       line = lines.gets
       if line =~/#block size/ then
         col = lines.gets.split
         @blockSizeX = Integer(col[0])
         @blockSizeY = Integer(col[1])
+        debug_puts "BLOCK SIZE  #{blockSizeX},#{blockSizeY}"
       end
     end
     
@@ -295,7 +302,9 @@ class DoorEvent < AllEvent
   def dump output
     gx,gz = calc_ofs @x, @z
     output.puts "\t{//#{@door_id} = #{@number}"
+    #output.puts "\t\t//#{@x}, #{@z} -- GRID(#{@header.blockSizeX},#{@header.blockSizeY})"
     output.puts "\t\t{#{gx}, #{@y}, #{gz}},"
+    #output.puts "\t\t//{#{gx/GRID_SIZE}, #{@y/GRID_SIZE}, #{gz/GRID_SIZE}},"
     #output.puts "\t\t{#{@x}, #{@y}, #{@z}},"
     output.puts "\t\t#{@next_zone_id}, #{@next_door_id},"
     output.puts "\t\t#{@door_dir},//direction"
