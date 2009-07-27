@@ -50,7 +50,7 @@
 #define ALPHA_VALUE_1 (16)						// 第1対象面のαブレンディング係数
 #define ALPHA_VALUE_2 ( 4)						// 第1対象面のαブレンディング係数
 
-#define Y_CENTER_POS (CHAR_SIZE * 2 - 1)		// 背景帯の中心y座標
+#define Y_CENTER_POS ( CHAR_SIZE * 2 - 1 )		// 背景帯の中心y座標
 
 //--------------------
 // アーカイブ・データ
@@ -611,7 +611,6 @@ void FIELD_PLACE_NAME_Draw( FIELD_PLACE_NAME* p_sys )
 	}
 
 	// DEBUG: デバッグ出力
-	/*
 	{
 		char* state;
 
@@ -626,7 +625,6 @@ void FIELD_PLACE_NAME_Draw( FIELD_PLACE_NAME* p_sys )
 		}
 		OBATA_Printf( "state = %s,  stateCount = %d\n", state, p_sys->stateCount );
 	}
-	*/
 }
 
 //------------------------------------------------------------------------------------
@@ -761,7 +759,7 @@ static void SetupBG( FIELD_PLACE_NAME* p_sys )
 		FALSE,						// モザイク設定
 	};
 
-	GFL_BG_SetBGControl( BG_FRAME, &bgcnt, GFL_BG_MODE_AFFINE );
+	GFL_BG_SetBGControl( BG_FRAME, &bgcnt, GFL_BG_MODE_TEXT );
 	GFL_BG_SetPriority( BG_FRAME, BG_FRAME_PRIORITY );
 	GFL_BG_SetVisible( BG_FRAME, VISIBLE_ON ); 
 	G2_SetBlendAlpha( ALPHA_PLANE_1, ALPHA_PLANE_2, ALPHA_VALUE_1, ALPHA_VALUE_2 );
@@ -781,13 +779,12 @@ static void SetupBG( FIELD_PLACE_NAME* p_sys )
 	// パレット・キャラクタ・スクリーンを転送
 	LoadBGCharacterData( p_sys, ARCID_PLACE_NAME, NARC_place_name_place_name_back_NCGR );
 	LoadBGPaletteData( p_sys, ARCID_PLACE_NAME, NARC_place_name_place_name_back_NCLR );
-	//LoadBGScreenData( p_sys, ARCID_PLACE_NAME, NARC_place_name_place_name_back_NSCR );
+	//LoadBGScreenData( p_sys, ARCID_PLACE_NAME, NARC_area_win_gra_place_name_back_NSCR );
 	
 	// ビットマップ・ウィンドウのデータをVRAMに転送
 	GFL_BMPWIN_MakeTransWindow( p_sys->pBmpWin );
 
 	// DEBUG: スクリーン・バッファを書き出す
-	/*
 	{
 		int i,j;
 		u8* p_screen = (u8*)GFL_BG_GetScreenBufferAdrs( BG_FRAME );
@@ -803,7 +800,6 @@ static void SetupBG( FIELD_PLACE_NAME* p_sys )
 			OBATA_Printf( "\n" );
 		}
 	}
-	*/
 }
 
 //------------------------------------------------------------------------------------
@@ -967,7 +963,7 @@ static void CreateClactUnit( FIELD_PLACE_NAME* p_sys )
 {
 	// セルアクターユニットを作成
 	p_sys->pClactUnit[ CLUNIT_INDEX_CHAR_UNIT ] = 
-		GFL_CLACT_UNIT_Create( MAX_NAME_LENGTH, BG_FRAME_PRIORITY+1, p_sys->heapID );
+		GFL_CLACT_UNIT_Create( MAX_NAME_LENGTH, BG_FRAME_PRIORITY, p_sys->heapID );
 
 	// 初期設定
 	GFL_CLACT_UNIT_SetDrawEnable( p_sys->pClactUnit[ CLUNIT_INDEX_CHAR_UNIT ], TRUE );
