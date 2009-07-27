@@ -20,6 +20,7 @@
 
 #include "print/wordset.h"
 #include "system/bmp_winframe.h"
+#include "app/app_taskmenu.h"
 
 #include "plist_sys.h"
 #include "plist_menu.h"
@@ -62,20 +63,16 @@
 #pragma mark [> struct
 struct _PLIST_MENU_WORK
 {
-  u8 itemNum;
-  u8 cursorPos;
-  u8 anmCnt;
-  u16 transAnmCnt;
-  GXRgb transCol;
-  BOOL isUpdateMsg;
-  BOOL isDecide;
+  u8  itemNum;
+  u16 itemArr[PLIST_MENU_ITEM_MAX];
+  APP_TASKMENU_ITEMWORK itemWork[PLIST_MENU_ITEM_MAX];
 
-  GFL_BMPWIN *menuWin[PLIST_MENU_ITEM_MAX];
-  u16        itemArr[PLIST_MENU_ITEM_MAX];
+  APP_TASKMENU_WORK *taskMenuWork;
+  APP_TASKMENU_INITWORK *initTaskMenu;
+
   //メニュー土台
   NNSG2dCharacterData *ncgData;
   void *ncgRes; 
-
 };
 //======================================================================
 //	proto
@@ -83,7 +80,6 @@ struct _PLIST_MENU_WORK
 #pragma mark [> proto
 
 static void PLIST_MENU_CreateItem( PLIST_WORK *work , PLIST_MENU_WORK *menuWork , PLIST_MENU_ITEM_TYPE *itemArr );
-static void PLIST_MENU_CreateMenuWin( PLIST_WORK *work , PLIST_MENU_WORK *menuWork );
 static STRBUF* PLIST_MENU_CreateMenuStr( PLIST_WORK *work , PLIST_MENU_WORK *menuWork , const PLIST_MENU_ITEM_TYPE type );
 
 static void PLIST_MENU_UpdateKey( PLIST_WORK *work , PLIST_MENU_WORK *menuWork );
@@ -98,18 +94,9 @@ PLIST_MENU_WORK* PLIST_MENU_CreateSystem( PLIST_WORK *work )
 {
   u8 i;
   PLIST_MENU_WORK* menuWork = GFL_HEAP_AllocMemory( work->heapId , sizeof( PLIST_MENU_WORK ) );
-
   //プレートの土台の絵
   menuWork->ncgRes = GFL_ARC_UTIL_LoadBGCharacter( ARCID_POKELIST , NARC_pokelist_gra_list_sel_NCGR , FALSE , 
                     &menuWork->ncgData , work->heapId );
-  
-  menuWork->isUpdateMsg = FALSE;
-  
-  for(i=0;i<8;i++)
-  {
-    menuWork->menuWin[i] = NULL;
-  }
-
   return menuWork;
 }
 
@@ -128,21 +115,20 @@ void PLIST_MENU_DeleteSystem( PLIST_WORK *work , PLIST_MENU_WORK *menuWork )
 void PLIST_MENU_OpenMenu( PLIST_WORK *work , PLIST_MENU_WORK *menuWork , PLIST_MENU_ITEM_TYPE *itemArr )
 {
   u8 i;
+  APP_TASKMENU_INITWORK taskInitWork;
   
   PLIST_MENU_CreateItem( work,menuWork,itemArr );
-  PLIST_MENU_CreateMenuWin( work,menuWork );
 
-  menuWork->isDecide = FALSE;
-  menuWork->cursorPos = menuWork->itemNum-1;
-  menuWork->anmCnt = 0;
-  menuWork->transAnmCnt = 0;
+  taskInitWork.heapId = work->heapId;
+  taskInitWork.itemNum = menuWork->itemNum;
+  taskInitWork.itemWork = menuWork->itemWork;
+  taskInitWork.bgFrame = PLIST_BG_MENU;
+  taskInitWork.palNo = PLIST_BG_PLT_MENU_ACTIVE;
+  taskInitWork.msgHandle = work->msgHandle;
+  taskInitWork.fontHandle = work->fontHandle;
+  taskInitWork.printQue = work->printQue;
   
-  if( work->ktst == GFL_APP_KTST_KEY )
-  {
-    PLIST_MENU_SetActiveItem( menuWork , menuWork->cursorPos , TRUE );
-  }
-  
-  menuWork->isUpdateMsg = TRUE;
+  menuWork->taskMenuWork = APP_TASKMENU_OpenMenu( &taskInitWork );
 }
 
 //--------------------------------------------------------------
@@ -151,10 +137,11 @@ void PLIST_MENU_OpenMenu( PLIST_WORK *work , PLIST_MENU_WORK *menuWork , PLIST_M
 void PLIST_MENU_CloseMenu( PLIST_WORK *work , PLIST_MENU_WORK *menuWork )
 {
   u8 i;
-  for(i=0;i<menuWork->itemNum;i++)
+  APP_TASKMENU_CloseMenu(menuWork->taskMenuWork);
+
+  for( i=0;i<menuWork->itemNum;i++ )
   {
-    GFL_BMPWIN_Delete( menuWork->menuWin[i] );
-    menuWork->menuWin[i] = NULL;
+    GFL_STR_DeleteBuffer( menuWork->itemWork[i].str );
   }
 }
 
@@ -165,85 +152,19 @@ void PLIST_MENU_CloseMenu( PLIST_WORK *work , PLIST_MENU_WORK *menuWork )
 void PLIST_MENU_UpdateMenu( PLIST_WORK *work , PLIST_MENU_WORK *menuWork )
 {
   u8 i;
-  
-  //文字の更新
-  if( menuWork->isUpdateMsg == TRUE )
-  {
-    BOOL isFinish = TRUE;
-    for(i=0;i<menuWork->itemNum;i++)
-    {
-      if( PRINTSYS_QUE_IsExistTarget( work->printQue , GFL_BMPWIN_GetBmp( menuWork->menuWin[i] ) ) == TRUE )
-      {
-        isFinish = FALSE;
-      }
-    }
-    if( isFinish == TRUE )
-    {
-      for(i=0;i<menuWork->itemNum;i++)
-      {
-        GFL_BMPWIN_MakeTransWindow_VBlank( menuWork->menuWin[i] );
-      }
-      menuWork->isUpdateMsg = FALSE;
-    }
-  }
-  
-  if( menuWork->isDecide == FALSE )
-  {
-    PLIST_MENU_UpdateKey( work , menuWork );
-    if( menuWork->isDecide == FALSE )
-    {
-      PLIST_MENU_UpdateTP( work , menuWork );
-    }
-  }
-  else
-  {
-    //決定時アニメ
-    const u8 isBlink = (menuWork->anmCnt/PLIST_MENU_ANM_INTERVAL)%2;
-    if( isBlink == 0 )
-    {
-      PLIST_MENU_SetActiveItem( menuWork , menuWork->cursorPos , TRUE );
-    }
-    else
-    {
-      PLIST_MENU_SetActiveItem( menuWork , menuWork->cursorPos , FALSE );
-    }
-    menuWork->anmCnt++;
-  }
-  
-  //プレートアニメ
-  if( menuWork->transAnmCnt + PLIST_MENU_ANIME_VALUE >= 0x10000 )
-  {
-    menuWork->transAnmCnt = menuWork->transAnmCnt+PLIST_MENU_ANIME_VALUE-0x10000;
-  }
-  else
-  {
-    menuWork->transAnmCnt += PLIST_MENU_ANIME_VALUE;
-  }
-  {
-    //1～0に変換
-    const fx16 cos = (FX_CosIdx(menuWork->transAnmCnt)+FX16_ONE)/2;
-    const u8 r = PLIST_MENU_ANIME_S_R + (((PLIST_MENU_ANIME_E_R-PLIST_MENU_ANIME_S_R)*cos)>>FX16_SHIFT);
-    const u8 g = PLIST_MENU_ANIME_S_G + (((PLIST_MENU_ANIME_E_G-PLIST_MENU_ANIME_S_G)*cos)>>FX16_SHIFT);
-    const u8 b = PLIST_MENU_ANIME_S_B + (((PLIST_MENU_ANIME_E_B-PLIST_MENU_ANIME_S_B)*cos)>>FX16_SHIFT);
-    
-    menuWork->transCol = GX_RGB(r, g, b);
-    
-    NNS_GfdRegisterNewVramTransferTask( NNS_GFD_DST_2D_BG_PLTT_MAIN ,
-                                        PLIST_BG_PLT_MENU_ACTIVE * 32 + PLIST_MENU_ANIME_COL*2 ,
-                                        &menuWork->transCol , 2 );
-  }
-
+  APP_TASKMENU_UpdateMenu(menuWork->taskMenuWork);
 }
 
 const PLIST_MENU_ITEM_TYPE PLIST_MENU_IsFinish( PLIST_WORK *work , PLIST_MENU_WORK *menuWork )
 {
-  if( menuWork->anmCnt < PLIST_MENU_ANM_CNT )
+  if( APP_TASKMENU_IsFinish( menuWork->taskMenuWork ) == FALSE )
   {
     return PMIT_NONE;
   }
   else
   {
-    return menuWork->itemArr[menuWork->cursorPos];
+    const u8 ret = APP_TASKMENU_GetCursorPos( menuWork->taskMenuWork );
+    return menuWork->itemArr[ret];
   }
 }
 
@@ -271,7 +192,7 @@ static void PLIST_MENU_CreateItem(  PLIST_WORK *work , PLIST_MENU_WORK *menuWork
   menuWork->itemNum = 0;
   for( i=0;i<arrNum;i++ )
   {
-    switch( itemArr[arrNum-(i+1)] )
+    switch( itemArr[i] )
     {
     case PMIT_STATSU:  //強さを見る
       menuWork->itemArr[menuWork->itemNum] = PMIT_STATSU;
@@ -348,41 +269,21 @@ static void PLIST_MENU_CreateItem(  PLIST_WORK *work , PLIST_MENU_WORK *menuWork
       break;
     }
   }
-}
 
-//--------------------------------------------------------------
-//	メニューのBmpWinと文字を作る
-//--------------------------------------------------------------
-static void PLIST_MENU_CreateMenuWin(  PLIST_WORK *work , PLIST_MENU_WORK *menuWork )
-{
-  u8 i;
-  
-  for(i=0;i<menuWork->itemNum;i++)
+  for( i=0;i<menuWork->itemNum;i++ )
   {
-    PRINTSYS_LSB col;
-    STRBUF *str = PLIST_MENU_CreateMenuStr( work , menuWork , menuWork->itemArr[i] );
-
-    menuWork->menuWin[i] = GFL_BMPWIN_Create( PLIST_BG_MENU ,
-                        PLIST_MENU_PLATE_LEFT , 24-((i+1)*PLIST_MENU_PLATE_HEIGHT) , 
-                        PLIST_MENU_PLATE_WIDTH , PLIST_MENU_PLATE_HEIGHT , 
-                        PLIST_BG_PLT_MENU_NORMAL , GFL_BMP_CHRAREA_GET_B );
-    //プレートの絵を送る
-    GFL_STD_MemCopy32( menuWork->ncgData->pRawData , GFL_BMP_GetCharacterAdrs(GFL_BMPWIN_GetBmp( menuWork->menuWin[i] )) ,
-                     0x20*PLIST_MENU_PLATE_WIDTH*PLIST_MENU_PLATE_HEIGHT );
+    menuWork->itemWork[i].str = PLIST_MENU_CreateMenuStr( work,menuWork,menuWork->itemArr[i] );
     if( menuWork->itemArr[i] >= PMIT_WAZA_1 && menuWork->itemArr[i] <= PMIT_WAZA_4 )
     {
-      col = PRINTSYS_LSB_Make( PLIST_FONT_MENU_WAZA_LETTER,PLIST_FONT_MENU_SHADOW,PLIST_FONT_MENU_BACK);
+      menuWork->itemWork[i].msgColor = PRINTSYS_LSB_Make( PLIST_FONT_MENU_WAZA_LETTER,PLIST_FONT_MENU_SHADOW,PLIST_FONT_MENU_BACK);
     }
     else
     {
-      col = PRINTSYS_LSB_Make( PLIST_FONT_MENU_LETTER,PLIST_FONT_MENU_SHADOW,PLIST_FONT_MENU_BACK);
+      menuWork->itemWork[i].msgColor = PRINTSYS_LSB_Make( PLIST_FONT_MENU_LETTER,PLIST_FONT_MENU_SHADOW,PLIST_FONT_MENU_BACK);
     }
-    PRINTSYS_PrintQueColor( work->printQue , GFL_BMPWIN_GetBmp( menuWork->menuWin[i] ), 
-                        8+PLIST_MSG_STR_OFS_X , 4+PLIST_MSG_STR_OFS_Y , str , work->fontHandle , col );
-    GFL_STR_DeleteBuffer( str );
-    GFL_BMPWIN_MakeTransWindow_VBlank( menuWork->menuWin[i] );
   }
 }
+
 
 //--------------------------------------------------------------
 //	アイテムごとの文字の作成
@@ -424,124 +325,6 @@ static STRBUF* PLIST_MENU_CreateMenuStr( PLIST_WORK *work , PLIST_MENU_WORK *men
   }
   return str;
 }
-
-#pragma mark [>main func
-static void PLIST_MENU_UpdateKey( PLIST_WORK *work , PLIST_MENU_WORK *menuWork )
-{
-  const int trg = GFL_UI_KEY_GetTrg();
-  const int repeat = GFL_UI_KEY_GetRepeat();
-
-  if( work->ktst == GFL_APP_KTST_TOUCH )
-  {
-    if( trg != 0 )
-    {
-      PLIST_MENU_SetActiveItem( menuWork , menuWork->cursorPos , TRUE );
-      work->ktst = GFL_APP_KTST_KEY;
-    }
-  }
-  else
-  {
-    const u8 befPos = menuWork->cursorPos;
-    if( repeat & PAD_KEY_UP )
-    {
-      if( menuWork->cursorPos == menuWork->itemNum-1 )
-      {
-        menuWork->cursorPos = 0;
-      }
-      else
-      {
-        menuWork->cursorPos++;
-      }
-      PMSND_PlaySystemSE( PLIST_SND_CURSOR );
-    }
-    else
-    if( repeat & PAD_KEY_DOWN )
-    {
-      if( menuWork->cursorPos == 0 )
-      {
-        menuWork->cursorPos = menuWork->itemNum-1;
-      }
-      else
-      {
-        menuWork->cursorPos--;
-      }
-      PMSND_PlaySystemSE( PLIST_SND_CURSOR );
-    }
-    else
-    if( trg & PAD_BUTTON_A )
-    {
-      menuWork->isDecide = TRUE;
-      PMSND_PlaySystemSE( PLIST_SND_DECIDE );
-    }
-    else
-    if( trg & PAD_BUTTON_B )
-    {
-      menuWork->cursorPos = 0;
-      menuWork->isDecide = TRUE;
-      PMSND_PlaySystemSE( PLIST_SND_CANCEL );
-    }
-    
-    if( befPos != menuWork->cursorPos )
-    {
-      PLIST_MENU_SetActiveItem( menuWork , befPos , FALSE );
-      PLIST_MENU_SetActiveItem( menuWork , menuWork->cursorPos , TRUE );
-    }
-  }
-}
-
-static void PLIST_MENU_UpdateTP( PLIST_WORK *work , PLIST_MENU_WORK *menuWork )
-{
-  u8 i;
-  int ret;
-  GFL_UI_TP_HITTBL hitTbl[PLIST_MENU_ITEM_MAX+1];
-  
-  //テーブルの作成
-  for( i=0 ; i<menuWork->itemNum ; i++ )
-  {
-    hitTbl[i].rect.top    = 192 - (PLIST_MENU_PLATE_HEIGHT*8*(i+1));
-    hitTbl[i].rect.bottom = 192 - (PLIST_MENU_PLATE_HEIGHT*8*i) - 1;
-    hitTbl[i].rect.left   = PLIST_MENU_PLATE_LEFT*8;
-    hitTbl[i].rect.right  = (PLIST_MENU_PLATE_LEFT+PLIST_MENU_PLATE_WIDTH)*8 - 1;
-  }
-  hitTbl[i].circle.code = GFL_UI_TP_HIT_END;
-  
-  ret = GFL_UI_TP_HitTrg( hitTbl );
-  
-  if( ret != GFL_UI_TP_HIT_NONE )
-  {
-    work->ktst = GFL_APP_KTST_TOUCH;
-    PLIST_MENU_SetActiveItem( menuWork , menuWork->cursorPos , FALSE );
-    menuWork->cursorPos = ret;
-    menuWork->isDecide = TRUE;
-    PLIST_MENU_SetActiveItem( menuWork , menuWork->cursorPos , TRUE );
-    if( menuWork->cursorPos == 0 )
-    {
-      PMSND_PlaySystemSE( PLIST_SND_DECIDE );
-    }
-    else
-    {
-      PMSND_PlaySystemSE( PLIST_SND_CANCEL );
-    }
-  }
-}
-
-
-#pragma mark [>util
-static void PLIST_MENU_SetActiveItem( PLIST_MENU_WORK *menuWork , const u8 idx , const BOOL isActive )
-{
-  if( isActive == TRUE )
-  {
-    GFL_BMPWIN_SetPalette( menuWork->menuWin[idx] , PLIST_BG_PLT_MENU_ACTIVE );
-  }
-  else if( isActive == FALSE )
-  {
-    GFL_BMPWIN_SetPalette( menuWork->menuWin[idx] , PLIST_BG_PLT_MENU_NORMAL );
-  }
-	GFL_BMPWIN_MakeScreen( menuWork->menuWin[idx] );
-  GFL_BG_LoadScreenV_Req( GFL_BMPWIN_GetFrame(menuWork->menuWin[idx]) );
-}
-
-
 
 //--------------------------------------------------------------
 //	バトル選択用に座標指定で出せるように

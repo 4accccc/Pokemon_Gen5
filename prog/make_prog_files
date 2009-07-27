@@ -160,7 +160,8 @@ SRCS  +=    $(SOUNDSRC) \
         debug/debug_system_group.c \
 		field/field_place_name.c \
 		field/iss_unit.c \
-		app/app_menu_common.c 
+		app/app_menu_common.c \
+		app/app_taskmenu.c
 
 
 #================================================
