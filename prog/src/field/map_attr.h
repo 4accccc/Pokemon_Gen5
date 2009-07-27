@@ -54,3 +54,18 @@ extern BOOL MAPATTR_VALUE_CheckJumpDown( const MAPATTR_VALUE val );
 extern BOOL MAPATTR_VALUE_CheckumpLeft( const MAPATTR_VALUE val );
 extern BOOL MAPATTR_VALUE_CheckJumpRight( const MAPATTR_VALUE val );
 extern BOOL MAPATTR_VALUE_CheckCounter( const MAPATTR_VALUE val );
+
+//アトリビュート話しかけ関連
+extern BOOL MAPATTR_VALUE_CheckMat( const MAPATTR_VALUE val );
+extern BOOL MAPATTR_VALUE_CheckPC( const MAPATTR_VALUE val );
+extern BOOL MAPATTR_VALUE_CheckMap( const MAPATTR_VALUE val );
+extern BOOL MAPATTR_VALUE_CheckTV( const MAPATTR_VALUE val );
+extern BOOL MAPATTR_VALUE_CheckBookShelf1( const MAPATTR_VALUE val );
+extern BOOL MAPATTR_VALUE_CheckBookShelf2( const MAPATTR_VALUE val );
+extern BOOL MAPATTR_VALUE_CheckBookShelf3( const MAPATTR_VALUE val );
+extern BOOL MAPATTR_VALUE_CheckBookShelf4( const MAPATTR_VALUE val );
+extern BOOL MAPATTR_VALUE_CheckVase( const MAPATTR_VALUE val );
+extern BOOL MAPATTR_VALUE_CheckDustBox( const MAPATTR_VALUE val );
+extern BOOL MAPATTR_VALUE_CheckShopShelf1( const MAPATTR_VALUE val );
+extern BOOL MAPATTR_VALUE_CheckShopShelf2( const MAPATTR_VALUE val );
+extern BOOL MAPATTR_VALUE_CheckShopShelf3( const MAPATTR_VALUE val );

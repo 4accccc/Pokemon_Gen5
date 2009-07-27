@@ -158,8 +158,164 @@ BOOL MAPATTR_VALUE_CheckJumpRight( const MAPATTR_VALUE val )
 //--------------------------------------------------------------
 BOOL MAPATTR_VALUE_CheckCounter( const MAPATTR_VALUE val )
 {
-  if( val == 0x4c ){
+  if( val == 0xd4 ){
     return( TRUE );
   }
   return( FALSE );
 }
+//--------------------------------------------------------------
+/**
+ * アトリビュートバリュー チェック マット
+ * @param val MAPATTR_VALUE
+ * @retval BOOL FALSE=違う
+ */
+//--------------------------------------------------------------
+BOOL MAPATTR_VALUE_CheckMat( const MAPATTR_VALUE val )
+{
+  return (val == 0xd5);
+}
+
+//--------------------------------------------------------------
+/**
+ * アトリビュートバリュー チェック パソコン
+ * @param val MAPATTR_VALUE
+ * @retval BOOL FALSE=違う
+ */
+//--------------------------------------------------------------
+BOOL MAPATTR_VALUE_CheckPC( const MAPATTR_VALUE val )
+{
+  return (val == 0xd6);
+}
+
+//--------------------------------------------------------------
+/**
+ * アトリビュートバリュー チェック 世界地図
+ * @param val MAPATTR_VALUE
+ * @retval BOOL FALSE=違う
+ */
+//--------------------------------------------------------------
+BOOL MAPATTR_VALUE_CheckMap( const MAPATTR_VALUE val )
+{
+  return (val == 0xd7);
+}
+
+//--------------------------------------------------------------
+/**
+ * アトリビュートバリュー チェック テレビ
+ * @param val MAPATTR_VALUE
+ * @retval BOOL FALSE=違う
+ */
+//--------------------------------------------------------------
+BOOL MAPATTR_VALUE_CheckTV( const MAPATTR_VALUE val )
+{
+  return (val == 0xd8);
+}
+
+//--------------------------------------------------------------
+/**
+ * アトリビュートバリュー チェック 本棚その１
+ * @param val MAPATTR_VALUE
+ * @retval BOOL FALSE=違う
+ */
+//--------------------------------------------------------------
+BOOL MAPATTR_VALUE_CheckBookShelf1( const MAPATTR_VALUE val )
+{
+  return (val == 0xd9);
+}
+
+//--------------------------------------------------------------
+/**
+ * アトリビュートバリュー チェック 本棚その２
+ * @param val MAPATTR_VALUE
+ * @retval BOOL FALSE=違う
+ */
+//--------------------------------------------------------------
+BOOL MAPATTR_VALUE_CheckBookShelf2( const MAPATTR_VALUE val )
+{
+  return (val == 0xda);
+}
+
+//--------------------------------------------------------------
+/**
+ * アトリビュートバリュー チェック 本棚その３
+ * @param val MAPATTR_VALUE
+ * @retval BOOL FALSE=違う
+ */
+//--------------------------------------------------------------
+BOOL MAPATTR_VALUE_CheckBookShelf3( const MAPATTR_VALUE val )
+{
+  return (val == 0xdb);
+}
+
+//--------------------------------------------------------------
+/**
+ * アトリビュートバリュー チェック 本棚その４
+ * @param val MAPATTR_VALUE
+ * @retval BOOL FALSE=違う
+ */
+//--------------------------------------------------------------
+BOOL MAPATTR_VALUE_CheckBookShelf4( const MAPATTR_VALUE val )
+{
+  return (val == 0xdc);
+}
+
+//--------------------------------------------------------------
+/**
+ * アトリビュートバリュー チェック 壷
+ * @param val MAPATTR_VALUE
+ * @retval BOOL FALSE=違う
+ */
+//--------------------------------------------------------------
+BOOL MAPATTR_VALUE_CheckVase( const MAPATTR_VALUE val )
+{
+  return (val == 0xdd);
+}
+
+//--------------------------------------------------------------
+/**
+ * アトリビュートバリュー チェック ゴミ箱
+ * @param val MAPATTR_VALUE
+ * @retval BOOL FALSE=違う
+ */
+//--------------------------------------------------------------
+BOOL MAPATTR_VALUE_CheckDustBox( const MAPATTR_VALUE val )
+{
+  return (val == 0xde);
+}
+
+//--------------------------------------------------------------
+/**
+ * アトリビュートバリュー チェック  商品棚その１
+ * @param val MAPATTR_VALUE
+ * @retval BOOL FALSE=違う
+ */
+//--------------------------------------------------------------
+BOOL MAPATTR_VALUE_CheckShopShelf1( const MAPATTR_VALUE val )
+{
+  return (val == 0xdf);
+}
+
+//--------------------------------------------------------------
+/**
+ * アトリビュートバリュー チェック  商品棚その２
+ * @param val MAPATTR_VALUE
+ * @retval BOOL FALSE=違う
+ */
+//--------------------------------------------------------------
+BOOL MAPATTR_VALUE_CheckShopShelf2( const MAPATTR_VALUE val )
+{
+  return (val == 0xe0);
+}
+
+//--------------------------------------------------------------
+/**
+ * アトリビュートバリュー チェック  商品棚その３
+ * @param val MAPATTR_VALUE
+ * @retval BOOL FALSE=違う
+ */
+//--------------------------------------------------------------
+BOOL MAPATTR_VALUE_CheckShopShelf3( const MAPATTR_VALUE val )
+{
+  return (val == 0xe1);
+}
+
