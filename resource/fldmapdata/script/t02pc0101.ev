@@ -82,7 +82,9 @@ ev_t02pc0101_doctor_guide:
 	_AB_KEYWAIT
   	_TALKWIN_CLOSE
 
-	_TURN_HERO_SITE
+	_OBJ_ANIME MMDL_ID_PLAYER,anime_t02pc0101_guide03b
+	_OBJ_ANIME_WAIT
+
 	_TALKWIN_OPEN
 	_TALKMSG_ALLPUT msg_t02pc0101_hakase2_07 //ショップ前で
 	_AB_KEYWAIT
@@ -90,11 +92,11 @@ ev_t02pc0101_doctor_guide:
 
 	_OBJ_ANIME T02PC0101_DOCTOR,anime_t02pc0101_guide04
 	_OBJ_ANIME_WAIT
+//博士の動作モデルを削除する処理
+	_OBJ_DEL T02PC0101_DOCTOR
 
   _OBJ_PAUSE_CLEAR_ALL
   _LDVAL SVSCRWK_START,1
-
-//博士の動作モデルを削除する処理を追加予定
 
   _END
 
@@ -129,14 +131,14 @@ ev_t02pc0101_middlewoman1_1:
 /*     主人公、博士の前まで移動                     */
 /**************************************************************/
 _ANIME_LABEL	anime_t02pc0101_guide00
-	_ANIME_DATA	AC_WALK_U_8F,2
+	_ANIME_DATA	AC_WALK_U_8F,1
 	_ANIME_DATA	ACMD_END,0
 
 /**************************************************************/
 /*     博士の案内：カウンター前まで                     */
 /**************************************************************/
 _ANIME_LABEL	anime_t02pc0101_guide01
-	_ANIME_DATA	AC_WALK_U_8F,5
+	_ANIME_DATA	AC_WALK_U_8F,4
 	_ANIME_DATA	AC_WALK_R_8F,1
 	_ANIME_DATA	AC_DIR_L,1
 	_ANIME_DATA	ACMD_END,0
@@ -145,7 +147,7 @@ _ANIME_LABEL	anime_t02pc0101_guide01
 /*     博士についてく：カウンター前まで                     */
 /**************************************************************/
 _ANIME_LABEL	anime_t02pc0101_guide01a
-	_ANIME_DATA	AC_WALK_U_8F,5
+	_ANIME_DATA	AC_WALK_U_8F,4
 	_ANIME_DATA	ACMD_END,0
 
 /**************************************************************/
@@ -186,6 +188,13 @@ _ANIME_LABEL	anime_t02pc0101_guide03a
 	_ANIME_DATA	AC_WALK_R_8F,5
 	_ANIME_DATA	AC_WALK_D_8F,4
 	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	ACMD_END,0
+
+/**************************************************************/
+/*     博士の案内：ショップ前で向き合う                     */
+/**************************************************************/
+_ANIME_LABEL	anime_t02pc0101_guide03b
+	_ANIME_DATA	AC_DIR_L,1
 	_ANIME_DATA	ACMD_END,0
 
 /**************************************************************/

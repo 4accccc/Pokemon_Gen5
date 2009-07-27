@@ -9,6 +9,8 @@
 //--------------------------------------------------------------------
 //					     スクリプト本体
 //--------------------------------------------------------------------
+_EVENT_DATA		ev_heal_p01
+_EVENT_DATA		ev_shop_start_talk
 _EVENT_DATA		ev_common_vm
 _EVENT_DATA_END //終了
 
@@ -18,3 +20,31 @@ _EVENT_DATA_END //終了
 ev_common_vm:
 	_NOP
 	_END
+
+/********************************************************************/
+//  ジョーイ
+/********************************************************************/
+ev_heal_p01:
+	_TALK_OBJ_PAUSE_ALL
+	_TALKWIN_OPEN
+	_TALKMSG_ALLPUT msg_common_pc_heal_01
+	_AB_KEYWAIT
+ 	_TALKWIN_CLOSE
+	_OBJ_PAUSE_CLEAR_ALL
+  _END
+
+/********************************************************************/
+//  ショップ「いらっしゃい」
+/********************************************************************/
+ev_shop_start_talk:
+	_TALK_OBJ_PAUSE_ALL
+	_TALKWIN_OPEN
+	_TALKMSG_ALLPUT msg_shop_01
+	_AB_KEYWAIT
+ 	_TALKWIN_CLOSE
+/*
+	_CHG_LOCAL_SCR	//ローカルスクリプトに切り替え
+*/
+	_OBJ_PAUSE_CLEAR_ALL
+  _END
+
