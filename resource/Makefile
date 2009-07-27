@@ -76,7 +76,8 @@ SUBDIRS	=	wmi \
 			place_name \
 			irc_ranking \
 			iss_unit \
-			townmap
+			townmap \
+			unionroom
 
 include $(RESOURCE_MACRO)
 

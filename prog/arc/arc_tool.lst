@@ -184,3 +184,4 @@
 	ARCID_TOWNMAP_DATA	"townmap_data.narc"		#タウンマップ用データ
 	ARCID_BGM_INFO "bgm_info.narc"   #BGMの情報
 	ARCID_BAG "bag.narc"   # バッグ
+	ARCID_UNION "unionroom.narc"   # ユニオンルーム
