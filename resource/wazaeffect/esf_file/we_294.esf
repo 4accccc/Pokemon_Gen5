@@ -1,11 +1,16 @@
 EFFSEQ
 $0001
-C:\home\pokemon_wb\resource\particle\wazaeffect\w_001.spa
+C:\home\pokemon_wb\resource\particle\wazaeffect\w_294.spa
 #001
 %00
-パーティクルデータロード	w_001
-パーティクル再生	w_001	W_001_001_BALL_BURN	攻撃側	方向無し	0	0
-パーティクル再生	w_001	W_001_001_HIT_MARK	攻撃側	方向無し	0	0
+BGのパレットフェード	すべて	0	12	3	0:0:0
+カメラ移動	追従	攻撃側	16	0	8
+エフェクト終了待ち	すべて
+パーティクルデータロード	w_294
+パーティクル再生	w_294	W_294_294_HOTARU_LIGHT	攻撃側	方向無し	2	0
+エフェクト終了待ち	すべて
+BGのパレットフェード	すべて	12	0	3	0:0:0
+カメラ移動	追従	初期位置	16	0	8
 エフェクト終了待ち	すべて
 エフェクト終了
 &
