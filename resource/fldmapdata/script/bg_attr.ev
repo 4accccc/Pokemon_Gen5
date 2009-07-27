@@ -1,0 +1,60 @@
+
+//======================================================================
+//                bg_attr.ev
+//
+//    スクリプトファイル：bg_attr用
+//
+//======================================================================
+
+  .text
+
+  .include  "scr_seq_def.h"
+  .include  "../../message/dst/script/msg_bg_attr.h"
+  //.include  "../eventdata/zone_bg_attrevc.h"
+
+//--------------------------------------------------------------
+//               スクリプト本体
+//--------------------------------------------------------------
+
+//--------------------------------------------------------------
+//               スクリプトテーブル
+//--------------------------------------------------------------
+_EVENT_DATA  ev_bg_msg_book1_01
+_EVENT_DATA  ev_bg_msg_book2_01
+_EVENT_DATA  ev_bg_msg_bookrack1_01
+_EVENT_DATA  ev_bg_msg_bookrack2_01
+_EVENT_DATA  ev_bg_msg_scrap_01
+_EVENT_DATA  ev_bg_msg_shoprack1_01
+_EVENT_DATA  ev_bg_msg_shoprack2_01
+_EVENT_DATA  ev_bg_msg_shoprack3_01
+_EVENT_DATA_END
+
+
+/**************************************************************/
+/*            FLAG_CHANGE_LABEL                               */
+/**************************************************************/
+//ev_bg_attr_flag_change:
+//  _END
+ev_bg_msg_book1_01:
+ev_bg_msg_book2_01:
+ev_bg_msg_bookrack1_01:
+ev_bg_msg_bookrack2_01:
+ev_bg_msg_scrap_01:
+ev_bg_msg_shoprack1_01:
+ev_bg_msg_shoprack2_01:
+ev_bg_msg_shoprack3_01:
+  _EVENT_START
+  _TALKWIN_OPEN
+  _TALKMSG_ALLPUT bg_msg_book1_01
+  _AB_KEYWAIT
+  _TALKWIN_CLOSE
+  _EVENT_END
+  _END
+
+/**************************************************************/
+/*                                                            */
+/**************************************************************/
+ev_bg_attr:
+  //とりあえず最初のラベルだけ生成している
+  _END
+
