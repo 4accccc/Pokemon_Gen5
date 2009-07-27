@@ -28,7 +28,11 @@
 #define REF_SCALE_X_DOWN (REF_SCALE_X_DEF-(FX16_ONE/4))
 #define REF_SCALE_X_SPEED (FX16_ONE/64)
 
+#if 0 //dp
 #define REF_OFFS_Z (-FX32_ONE*7)
+#else //wb
+#define REF_OFFS_Z (FX32_ONE*12)
+#endif
 
 //======================================================================
 //  struct
@@ -313,16 +317,19 @@ static void reflectTask_UpdateBlAct( u16 actID, void *wk )
   {
     fx32 x,y,z;
     VecFx32 pos;
+#if 0 //dp
  	  fx32 offs[REFLECT_TYPE_MAX] = {
 	    NUM_FX32(12),
-#ifndef DEBUG_REFLECT_CHECK
 		  NUM_FX32(16),
-#else
-		  NUM_FX32(-32),
-#endif
 		  NUM_FX32(12),
 	  };
-    
+#else
+ 	  fx32 offs[REFLECT_TYPE_MAX] = {
+	    NUM_FX32(12*2)+NUM_FX32(1),
+		  NUM_FX32(16*2)+NUM_FX32(1),
+		  NUM_FX32(12*2)+NUM_FX32(1),
+	  };
+#endif
     MMDL_GetVectorDrawOffsetPos( work->head.mmdl, &pos );
     x = pos.x;
     z = -pos.z;
@@ -342,11 +349,15 @@ static void reflectTask_UpdateBlAct( u16 actID, void *wk )
   
   {
     BOOL flip = TRUE;
+    int m_idx = GFL_BBDACT_GetBBDActIdxResIdx( bbdactsys, m_actID );
     int idx = GFL_BBDACT_GetBBDActIdxResIdx( bbdactsys, actID );
     fx16 sx = work->scale_x;
     fx16 sy = REF_SCALE_Y_DEF;
     GFL_BBD_SetObjectSiz( bbdsys, idx, &sx, &sy );
     GFL_BBD_SetObjectFlipT( bbdsys, idx, &flip );
+    
+    flip = GFL_BBD_GetObjectFlipS( bbdsys, m_idx );
+    GFL_BBD_SetObjectFlipS( bbdsys, idx, &flip );
   }
   
 #ifdef DEBUG_REFLECT_CHECK
