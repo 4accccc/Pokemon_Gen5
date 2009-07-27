@@ -472,7 +472,7 @@ static BOOL FMenuCallProc_Bag( FMENU_EVENT_WORK *mwk )
   epp->gsys = mwk->gmSys;
   epp->fieldmap = mwk->fieldWork;
 	epp->heapID = GFL_HEAPID_APP;
-	epp->mode = BAG_MODE_FIELD;
+	epp->mode = BAG_MODE_FIELD;   //フィールドから呼ばれる
 	FIELD_PLAYER_GetPos(fld_player, &aPos);
 	epp->icwk.NowAttr = MAPATTR_GetAttribute(g3Dmapper, &aPos);
 	FIELD_PLAYER_GetDirPos((FIELD_PLAYER*)fld_player, FIELD_PLAYER_GetDir(fld_player), &aPos);
@@ -484,14 +484,24 @@ static BOOL FMenuCallProc_Bag( FMENU_EVENT_WORK *mwk )
 	epp->icwk.Companion = FALSE;
 	epp->mystatus = GAMEDATA_GetMyStatus(pGameData);
 
+  if ( PLAYERWORK_GetMoveForm(GAMEDATA_GetMyPlayerWork(pGameData)) == PLAYER_MOVE_FORM_CYCLE ){
+    epp->cycle_flg = TRUE;
+  }
+  
   mwk->subProcWork = epp;
 
-	newEvent = EVENT_FieldSubProc(mwk->gmSys, mwk->fieldWork, FS_OVERLAY_ID(bag), &ItemMenuProcData, epp);
-  epp->event = newEvent;
+//	newEvent = EVENT_FieldSubProc(mwk->gmSys, mwk->fieldWork, FS_OVERLAY_ID(bag), &ItemMenuProcData, epp);
+//  epp->event = newEvent;
 
-	GMEVENT_CallEvent(mwk->gmEvent, newEvent);
-  mwk->state = FMENUSTATE_WAIT_RETURN;
+//	GMEVENT_CallEvent(mwk->gmEvent, newEvent);
+////  mwk->state = FMENUSTATE_WAIT_RETURN;
 
+
+  mwk->subProcType = FMENU_APP_BAG;
+  mwk->state = FMENUSTATE_FIELD_FADEOUT;
+
+
+  
 	return( TRUE );
 }
 
@@ -710,7 +720,19 @@ static const BOOL FMenuReturnProc_Bag(FMENU_EVENT_WORK* mwk)
     return FALSE;
   case BAG_NEXTPROC_RETURN:      // 通常
     return FALSE;
-  case BAG_NEXTPROC_POKEMONLIST:
+  case BAG_NEXTPROC_HAVE:    // もたせる => ポケモンリスト起動
+    {
+      PLIST_DATA *plData = GFL_HEAP_AllocMemory( HEAPID_PROC , sizeof(PLIST_DATA) );
+      GAMEDATA *gmData = GAMESYSTEM_GetGameData(mwk->gmSys);
+      SAVE_CONTROL_WORK *svWork = GAMEDATA_GetSaveControlWork( gmData );
+      
+      plData->pp = GAMEDATA_GetMyPokemon(gmData);
+      plData->mode = PL_MODE_FIELD;
+      plData->ret_sel = 0;
+
+      FMenu_SetNextSubProc( mwk ,FMENU_APP_POKELIST , plData );
+      return TRUE;
+    }
   case BAG_NEXTPROC_EXITEM:
   default:
     break;

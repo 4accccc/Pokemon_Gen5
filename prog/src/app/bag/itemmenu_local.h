@@ -66,11 +66,21 @@ enum BAG_NEXTPROC_ENUM
 {
   BAG_NEXTPROC_EXIT,
   BAG_NEXTPROC_RETURN,
-  BAG_NEXTPROC_POKEMONLIST,
+  BAG_NEXTPROC_HAVE,  //もたせる
   BAG_NEXTPROC_EXITEM,
 
 };
 
+
+//技アイコンのリソース
+enum WAZAICON_CELL
+{
+  SCR_PLT_SUB_POKE_TYPE,
+  SCR_ANM_SUB_POKE_TYPE,
+  SCR_NCG_SKILL_TYPE_HENKA,
+  SCR_NCG_SKILL_TYPE_BUTURI,
+  SCR_NCG_SKILL_TYPE_TOKUSHU,
+};
 
 
 typedef struct _DEBUGITEM_PARAM FIELD_ITEMMENU_WORK;
@@ -97,8 +107,6 @@ struct _DEBUGITEM_PARAM {
   WORDSET			*WordSet;								// メッセージ展開用ワークマネージャー
   STRBUF*  pStrBuf;
 	STRBUF*  pExpStrBuf;
-  BMP_MENULIST_DATA* submenulist;
-  BMP_MENULIST_DATA* itemUseMenuList;
   GFL_FONT 			*fontHandle;
   BMPMENULIST_WORK* sublw;
   BMPMENULIST_WORK* lwItemUse;
@@ -107,6 +115,10 @@ struct _DEBUGITEM_PARAM {
   ITEMCHECK_WORK icwk;
 	u32 objRes[3];  //CLACTリソース
   u32 cellRes[SCR_MAX];  //アイテムカーソル
+
+
+  u32 commonCellTypeNcg[POKETYPE_MAX];
+  u32 commonCell[5];
 
   u32 listRes[ITEM_LIST_NUM];  //アイテムリスト
   GFL_BMP_DATA* listBmp[ITEM_LIST_NUM];
@@ -120,11 +132,19 @@ struct _DEBUGITEM_PARAM {
   GFL_CLWK  *clwkCur;
   GFL_CLWK  *scrollCur;
   GFL_CLWK  *clwkPocketIcon;
+  GFL_CLWK  *clwkWazaKind;
+  GFL_CLWK  *clwkWazaType;
   GFL_CLWK  *clwkBarIcon[5];
 
+  GFL_BMPWIN* winWaza;
   GFL_BMPWIN* winItemName;
   GFL_BMPWIN* winItemNum;
   GFL_BMPWIN* winItemReport;
+  GFL_BMPWIN* menuWin[5];
+  
+  //メニュー土台
+  NNSG2dCharacterData *ncgData;
+  void *ncgRes; 
 
   int mainbg;
   int subbg;
@@ -135,9 +155,10 @@ struct _DEBUGITEM_PARAM {
 	int curpos;   //今さしているカーソル番号
   int oamlistpos; //OAMLIST の 先頭位置 -1から開始
   int moveMode;  //移動モードになる
-  
+  int menuNum;          //サブメニューの項目数
+  int subListCursor;  //サブメニューのカーソル位置
+  int submenuList[BAG_MENUTBL_MAX];  //サブメニューの項目
   int mode;
-  int ret_item;
   int cycle_flg;
   u32 NowAttr;
   u32 FrontAttr;
@@ -146,10 +167,15 @@ struct _DEBUGITEM_PARAM {
   BOOL bChange;
 
   int ret_code;  //バッグメニューを終わる際の次の動作
+  int ret_code2;
+  int ret_item;  //選んだアイテム
   
 };
 
 #define DEBUG_ITEMDISP_FRAME (GFL_BG_FRAME1_M)
+
+
+#define _OBJPLT_SUB_POKE_TYPE (4) //サブ画面技タイプアイコンパレット位置
 
 
 #define _DISP_INITX (18)
@@ -158,6 +184,9 @@ struct _DEBUGITEM_PARAM {
 #define _DISP_SIZEY (20)
 #define _BUTTON_WIN_PAL   (12)  // ウインドウ
 #define _BUTTON_MSG_PAL   (11)  // メッセージフォント
+#define _SUBLIST_NORMAL_PAL   (9)   //サブメニューの通常パレット
+#define _SUBLIST_SELECT_PAL   (10)  //サブメニューの選択パレット
+
 #define	FBMP_COL_WHITE		(15)
 #define WINCLR_COL(col)	(((col)<<4)|(col))
 
@@ -169,15 +198,16 @@ struct _DEBUGITEM_PARAM {
 
 
 #define _POCKETNAME_DISP_INITX (4)
-#define _POCKETNAME_DISP_INITY (22)
+#define _POCKETNAME_DISP_INITY (21)
 #define _POCKETNAME_DISP_SIZEX (12)
-#define _POCKETNAME_DISP_SIZEY (2)
+#define _POCKETNAME_DISP_SIZEY (3)
 
 
 #define BUTTONID_LEFT    (5)
 #define BUTTONID_RIGHT   (6)
 #define BUTTONID_EXIT   (7)
 #define BUTTONID_RETURN   (8)
+#define BUTTONID_ITEM_AREA (9)
 
 
 #define FLD_SUBSCR_FADE_DIV (1)
@@ -197,6 +227,8 @@ extern void ITEMDISP_CellVramTrans( FIELD_ITEMMENU_WORK* pWork );
 extern void ITEMDISP_scrollCursorMove(FIELD_ITEMMENU_WORK* pWork);
 extern void ITEMDISP_scrollCursorChangePos(FIELD_ITEMMENU_WORK* pWork, int num);
 
+extern void ITEMDISP_ListPlateCreate( FIELD_ITEMMENU_WORK* pWork );
+extern void ITEMDISP_ListPlateDelete( FIELD_ITEMMENU_WORK* pWork );
 
 extern int ITEMMENU_GetItemIndex(FIELD_ITEMMENU_WORK* pWork);
 extern int ITEMMENU_GetItemPocketNumber(FIELD_ITEMMENU_WORK* pWork);
@@ -204,4 +236,9 @@ extern ITEM_ST* ITEMMENU_GetItem(FIELD_ITEMMENU_WORK* pWork,int no);
 
 extern void ITEMDISP_InitPocketCell( FIELD_ITEMMENU_WORK* pWork );
 extern void ITEMDISP_ChangePocketCell( FIELD_ITEMMENU_WORK* pWork,int pocketno );
+extern void ITEMDISP_MenuWinDisp(  FIELD_ITEMMENU_WORK *work , int *menustr,int num );
+extern void ITEMDISP_ListPlateClear( FIELD_ITEMMENU_WORK* pWork );
+extern void ITEMDISP_ListPlateSelectChange( FIELD_ITEMMENU_WORK* pWork , int selectNo);
+extern void ITEMDISP_ItemInfoWindowChange(FIELD_ITEMMENU_WORK *pWork,int pocketno  );
+extern void ITEMDISP_WazaInfoWindowChange( FIELD_ITEMMENU_WORK *pWork );
 

@@ -34,7 +34,8 @@
 #include "font/font.naix" //NARC_font_large_nftr
 #include "sound/pm_sndsys.h"
 #include "system/wipe.h"
-
+#include "waza_tool/waza_tool.h"
+#include "waza_tool/wazadata.h"
 #include "itemmenu.h"
 #include "itemmenu_local.h"
 #include "app/itemuse.h"
@@ -298,6 +299,8 @@ void ITEMDISP_graphicInit(FIELD_ITEMMENU_WORK* pWork)
                                             GFL_BG_FRAME1_S, 0,
                                             GFL_ARCUTIL_TRANSINFO_GetPos(pWork->subbg2), 0, 0, pWork->heapID);
 
+    GFL_ARCHDL_UTIL_TransVramPalette( p_handle, NARC_bag_p_list_NCLR,
+                                      PALTYPE_MAIN_BG, _SUBLIST_NORMAL_PAL*0x20, 2*0x20,  pWork->heapID);
 
 
     //下画面アイコン
@@ -331,11 +334,11 @@ void ITEMDISP_graphicInit(FIELD_ITEMMENU_WORK* pWork)
     GFL_ARCHDL_UTIL_TransVramPalette( archandle , NARC_app_menu_common_menu_bar_NCLR , 
                                       PALTYPE_MAIN_BG , 8*32 , 32 , pWork->heapID );
     pWork->barbg = GFL_ARCHDL_UTIL_TransVramBgCharacterAreaMan( archandle , NARC_app_menu_common_menu_bar_NCGR ,
-                                                                GFL_BG_FRAME2_M , 0 , 0, pWork->heapID );
+                                                                GFL_BG_FRAME1_M , 0 , 0, pWork->heapID );
     GFL_ARCHDL_UTIL_TransVramScreenCharOfs( archandle , NARC_app_menu_common_menu_bar_NSCR , 
-                                            GFL_BG_FRAME2_M , 0 ,
+                                            GFL_BG_FRAME1_M , 0 ,
                                             0x8000+GFL_ARCUTIL_TRANSINFO_GetPos(pWork->barbg),0, 0, pWork->heapID );
-    GFL_BG_LoadScreenReq( GFL_BG_FRAME2_M );
+    GFL_BG_LoadScreenReq( GFL_BG_FRAME1_M );
 
     //下画面アイコン
     pWork->cellRes[_PLT_COMMON] = GFL_CLGRP_PLTT_RegisterEx(
@@ -353,6 +356,66 @@ void ITEMDISP_graphicInit(FIELD_ITEMMENU_WORK* pWork)
   }
   //下画面ボタン
   ITEMDISP_InitTaskBar(pWork);
+
+
+  {
+    u8 i;
+    ARCHANDLE *archandleCommon = GFL_ARC_OpenDataHandle( APP_COMMON_GetArcId() , pWork->heapID );
+
+    //タイプアイコン
+    pWork->commonCell[SCR_PLT_SUB_POKE_TYPE] = GFL_CLGRP_PLTT_RegisterEx( archandleCommon , 
+          APP_COMMON_GetPokeTypePltArcIdx() , CLSYS_DRAW_SUB , 
+          _OBJPLT_SUB_POKE_TYPE*32 , 0 , APP_COMMON_POKETYPE_PLT_NUM , pWork->heapID  );
+    pWork->commonCell[SCR_ANM_SUB_POKE_TYPE] = GFL_CLGRP_CELLANIM_Register( archandleCommon , 
+          APP_COMMON_GetPokeTypeCellArcIdx(APP_COMMON_MAPPING_32K) , 
+          APP_COMMON_GetPokeTypeAnimeArcIdx(APP_COMMON_MAPPING_32K), pWork->heapID  );
+    //技タイプ
+    pWork->commonCell[SCR_NCG_SKILL_TYPE_HENKA] = GFL_CLGRP_CGR_Register( archandleCommon , 
+          NARC_app_menu_common_p_st_bunrui_henka_NCGR , FALSE , CLSYS_DRAW_SUB , pWork->heapID  );
+    pWork->commonCell[SCR_NCG_SKILL_TYPE_BUTURI] = GFL_CLGRP_CGR_Register( archandleCommon , 
+          NARC_app_menu_common_p_st_bunrui_buturi_NCGR , FALSE , CLSYS_DRAW_SUB , pWork->heapID  );
+    pWork->commonCell[SCR_NCG_SKILL_TYPE_TOKUSHU] = GFL_CLGRP_CGR_Register( archandleCommon , 
+          NARC_app_menu_common_p_st_bunrui_tokusyu_NCGR , FALSE , CLSYS_DRAW_SUB , pWork->heapID  );
+    //属性
+    for( i=0;i<POKETYPE_MAX;i++ )
+    {
+      pWork->commonCellTypeNcg[i] = GFL_CLGRP_CGR_Register( archandleCommon , 
+         APP_COMMON_GetPokeTypeCharArcIdx(i) , FALSE , CLSYS_DRAW_SUB , pWork->heapID );
+    }
+
+    GFL_ARC_CloseDataHandle(archandleCommon);
+  }
+  //技のアイコン
+  {
+    GFL_CLWK_DATA cellInitData1,cellInitData2;
+    cellInitData1.pos_x = 17*8;
+    cellInitData1.pos_y = 20*8;
+    cellInitData1.softpri = 1;
+    cellInitData1.bgpri = 1;
+    cellInitData1.anmseq = 0;
+    
+    pWork->clwkWazaKind = GFL_CLACT_WK_Create(
+      pWork->cellUnit ,
+      pWork->commonCell[SCR_NCG_SKILL_TYPE_HENKA], pWork->commonCell[SCR_PLT_SUB_POKE_TYPE],  pWork->commonCell[SCR_ANM_SUB_POKE_TYPE],
+      &cellInitData1 ,CLSYS_DEFREND_SUB , pWork->heapID );
+
+    cellInitData2.pos_x = 8*8;
+    cellInitData2.pos_y = 20*8;
+    cellInitData2.softpri = 1;
+    cellInitData2.bgpri = 1;
+    cellInitData2.anmseq = 0;
+
+    pWork->clwkWazaType = GFL_CLACT_WK_Create(
+      pWork->cellUnit ,
+      pWork->commonCell[SCR_NCG_SKILL_TYPE_HENKA], pWork->commonCell[SCR_PLT_SUB_POKE_TYPE],  pWork->commonCell[SCR_ANM_SUB_POKE_TYPE],
+      &cellInitData2 ,CLSYS_DEFREND_SUB , pWork->heapID );
+
+    GFL_CLACT_WK_SetDrawEnable( pWork->clwkWazaKind , FALSE );
+    GFL_CLACT_WK_SetDrawEnable( pWork->clwkWazaType , FALSE );
+  }  
+
+
+  
 }
 
 void ITEMDISP_graphicDelete(FIELD_ITEMMENU_WORK* pWork)
@@ -367,7 +430,7 @@ void ITEMDISP_graphicDelete(FIELD_ITEMMENU_WORK* pWork)
   GFL_BG_FreeCharacterArea(GFL_BG_FRAME0_M,
                            GFL_ARCUTIL_TRANSINFO_GetPos(pWork->mainbg),
 													 GFL_ARCUTIL_TRANSINFO_GetSize(pWork->mainbg));
-  GFL_BG_FreeCharacterArea(GFL_BG_FRAME2_M,
+  GFL_BG_FreeCharacterArea(GFL_BG_FRAME1_M,
                            GFL_ARCUTIL_TRANSINFO_GetPos(pWork->barbg),
 													 GFL_ARCUTIL_TRANSINFO_GetSize(pWork->barbg));
 
@@ -441,6 +504,7 @@ void ITEMDISP_upMessageDelete(FIELD_ITEMMENU_WORK* pWork)
   GFL_BMPWIN_Delete(pWork->winItemName);
   GFL_BMPWIN_Delete(pWork->winItemReport);
   GFL_BMPWIN_Delete(pWork->winItemNum);
+  GFL_BMPWIN_Delete(pWork->winWaza);
 
   GFL_CLACT_WK_Remove( pWork->scrollCur );
   GFL_CLACT_WK_Remove( pWork->cellicon );
@@ -467,6 +531,12 @@ void ITEMDISP_upMessageDelete(FIELD_ITEMMENU_WORK* pWork)
 
 void ITEMDISP_upMessageCreate(FIELD_ITEMMENU_WORK* pWork)
 {
+  pWork->winWaza= GFL_BMPWIN_Create(
+		ITEMREPORT_FRAME,
+		0, 19,
+		32, 5,
+		_BUTTON_MSG_PAL, GFL_BMP_CHRAREA_GET_B );
+
 
   pWork->winItemName = GFL_BMPWIN_Create(
     ITEMREPORT_FRAME,
@@ -490,6 +560,8 @@ void ITEMDISP_upMessageCreate(FIELD_ITEMMENU_WORK* pWork)
   GFL_BMPWIN_MakeScreen( pWork->winItemName );
   GFL_BMPWIN_MakeScreen( pWork->winItemNum );
   GFL_BMPWIN_MakeScreen( pWork->winItemReport );
+  GFL_BMPWIN_MakeScreen( pWork->winWaza );
+  
   {
     ARCHANDLE* p_handle = GFL_ARC_OpenDataHandle( ARCID_ITEMICON, pWork->heapID );
 
@@ -502,6 +574,7 @@ void ITEMDISP_upMessageCreate(FIELD_ITEMMENU_WORK* pWork)
 
   {
     ITEMDISP_upMessageRewrite(pWork);
+    ITEMDISP_WazaInfoWindowChange(pWork);
   }
 
 }
@@ -518,9 +591,9 @@ static void _itemiconAnim(FIELD_ITEMMENU_WORK* pWork,int itemid)
   {
     ARCHANDLE* p_handle = GFL_ARC_OpenDataHandle( ARCID_ITEMICON, pWork->heapID );
 
-    pWork->objRes[_CLACT_PLT] = GFL_CLGRP_PLTT_Register( p_handle ,
+    pWork->objRes[_CLACT_PLT] = GFL_CLGRP_PLTT_RegisterEx( p_handle ,
                                                          ITEM_GetIndex(itemid,ITEM_GET_ICON_PAL) ,
-                                                         CLSYS_DRAW_SUB , 0 , pWork->heapID );
+                                                         CLSYS_DRAW_SUB , 0, 0, 1 , pWork->heapID );
     pWork->objRes[_CLACT_CHR] = GFL_CLGRP_CGR_Register( p_handle ,
                                                         ITEM_GetIndex(itemid,ITEM_GET_ICON_CGX) ,
                                                         FALSE , CLSYS_DRAW_SUB , pWork->heapID );
@@ -645,7 +718,7 @@ void ITEMDISP_CellCreate( FIELD_ITEMMENU_WORK* pWork )
       cellInitData.pos_x = 17 * 8 - 4 + 8;
       cellInitData.pos_y = 3 * 8 * i ;
       cellInitData.softpri = 10;
-      cellInitData.bgpri = 2;
+      cellInitData.bgpri = 3;
       cellInitData.anmseq = 0;
     
       pWork->listCell[i] = GFL_CLACT_WK_Create(
@@ -803,7 +876,7 @@ static void ITEMDISP_InitTaskBar( FIELD_ITEMMENU_WORK* pWork )
     const u8 posXArr[] =
     {
       8,
-      8*12,
+      8*15,
       172,
       _BAR_CELL_CURSOR_EXIT,
       _BAR_CELL_CURSOR_RETURN,
@@ -896,4 +969,251 @@ void ITEMDISP_ChangePocketCell( FIELD_ITEMMENU_WORK* pWork,int pocketno )
 
 }
 
+
+//------------------------------------------------------------------------------
+/**
+ * @brief   リストプレートの初期化
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+void ITEMDISP_ListPlateCreate( FIELD_ITEMMENU_WORK* pWork )
+{
+  int i;
+  //プレートの土台の絵
+  pWork->ncgRes =
+    GFL_ARC_UTIL_LoadBGCharacter( ARCID_BAG ,
+                                  NARC_bag_list_sel_NCGR , FALSE , 
+                                  &pWork->ncgData , pWork->heapID );
+
+  for(i = 0;i<elementof(pWork->menuWin);i++){
+    pWork->menuWin[i] = GFL_BMPWIN_Create( GFL_BG_FRAME3_M ,
+                                           32-13 , 24 - (elementof(pWork->menuWin)*3) + (i*3),
+                                           13 , 3 , 
+                                           _SUBLIST_NORMAL_PAL , GFL_BMP_CHRAREA_GET_B );
+  }
+  
+}
+
+
+//------------------------------------------------------------------------------
+/**
+ * @brief   リストプレートのクリア
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+void ITEMDISP_ListPlateSelectChange( FIELD_ITEMMENU_WORK* pWork , int selectNo)
+{
+}
+
+//------------------------------------------------------------------------------
+/**
+ * @brief   リストプレートのクリア
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+void ITEMDISP_ListPlateClear( FIELD_ITEMMENU_WORK* pWork )
+{
+  //プレートの土台の絵
+  int i;
+
+  for(i = 0 ; i < elementof(pWork->menuWin) ; i++){
+    GFL_BMPWIN_ClearScreen(pWork->menuWin[i]);
+  }
+  GFL_BG_LoadScreenV_Req(GFL_BG_FRAME3_M);
+}
+
+
+
+
+//------------------------------------------------------------------------------
+/**
+ * @brief   リストプレートの開放
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+void ITEMDISP_ListPlateDelete( FIELD_ITEMMENU_WORK* pWork )
+{
+  //プレートの土台の絵
+  int i;
+
+  for(i = 0 ; i < elementof(pWork->menuWin) ; i++){
+    GFL_BMPWIN_ClearScreen(pWork->menuWin[i]);
+    GFL_BMPWIN_Delete(pWork->menuWin[i]);
+  }
+  GFL_BG_LoadScreenV_Req(GFL_BG_FRAME3_M);
+  GFL_HEAP_FreeMemory( pWork->ncgRes );
+  pWork->ncgRes=NULL;
+}
+
+
+//------------------------------------------------------------------------------
+/**
+ * @brief   リストプレートの絵を使ってリストを作成
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+void ITEMDISP_MenuWinDisp(  FIELD_ITEMMENU_WORK *pWork , int *menustr,int num )
+{
+  int i;
+  int winindex = elementof(pWork->menuWin) - num;
+
+  pWork->menuNum = num;
+  for(i = 0 ; i < num ; i++)
+  {
+    PRINTSYS_LSB col;
+    GFL_BMPWIN* pwin = pWork->menuWin[winindex + i];
+
+    GFL_MSG_GetString(pWork->MsgManager, menustr[i], pWork->pStrBuf);
+    GFL_STD_MemCopy32( pWork->ncgData->pRawData ,
+                       GFL_BMP_GetCharacterAdrs(GFL_BMPWIN_GetBmp( pwin )) ,
+                       0x20*13*3 );
+    GFL_FONTSYS_SetColor( 0xe, 0xf, 0 );
+    PRINTSYS_Print( GFL_BMPWIN_GetBmp(pwin), 8, 4, pWork->pStrBuf, pWork->fontHandle);
+    GFL_BMPWIN_TransVramCharacter(pwin);
+    GFL_BMPWIN_MakeScreen(pwin);
+  }
+  ITEMDISP_ListPlateSelectChange(pWork, 0);  
+  GFL_BG_LoadScreenV_Req(GFL_BG_FRAME3_M);
+}
+
+//------------------------------------------------------------------------------
+/**
+ * @brief   アイテム説明の画面変更
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+
+void ITEMDISP_ItemInfoWindowChange(FIELD_ITEMMENU_WORK *pWork,int pocketno )
+{
+  ARCHANDLE* p_handle = GFL_ARC_OpenDataHandle( ARCID_BAG, pWork->heapID );
+  if(pocketno!=BAG_POKE_WAZA){
+    GFL_ARCHDL_UTIL_TransVramScreenCharOfs(
+      p_handle, NARC_bag_bag_win01_u_NSCR, GFL_BG_FRAME1_S, 0,
+      GFL_ARCUTIL_TRANSINFO_GetPos(pWork->subbg2), 0, 0, pWork->heapID);
+  }
+  else{
+    GFL_ARCHDL_UTIL_TransVramScreenCharOfs(
+      p_handle, NARC_bag_bag_win02_u_NSCR, GFL_BG_FRAME1_S, 0,
+      GFL_ARCUTIL_TRANSINFO_GetPos(pWork->subbg2), 0, 0, pWork->heapID);
+  }
+  GFL_ARC_CloseDataHandle(p_handle);
+}
+
+//------------------------------------------------------------------------------
+/**
+ * @brief   技種類のアイコンの表示
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+
+static void _wazaKindDisp( FIELD_ITEMMENU_WORK *pWork ,int wazaNo)
+{
+  {
+    NNSG2dImageProxy imageProxy;
+    const int type = WAZADATA_GetDamageType( wazaNo );
+    GFL_CLGRP_CGR_GetProxy( pWork->commonCell[SCR_NCG_SKILL_TYPE_HENKA+type] , &imageProxy );
+    GFL_CLACT_WK_SetImgProxy( pWork->clwkWazaKind , &imageProxy );
+    GFL_CLACT_WK_SetPlttOffs( pWork->clwkWazaKind , 
+                              APP_COMMON_GetWazaKindPltOffset(type) , 
+                              CLWK_PLTTOFFS_MODE_PLTT_TOP );
+    GFL_CLACT_WK_SetDrawEnable( pWork->clwkWazaKind, TRUE );
+  }
+}
+//------------------------------------------------------------------------------
+/**
+ * @brief   技タイプのアイコン表示
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+static void _wazaTypeDisp( FIELD_ITEMMENU_WORK *pWork ,int wazaNo)
+{
+  {
+    NNSG2dImageProxy imageProxy;
+    int type1 = WAZADATA_GetType(wazaNo);
+    GFL_CLGRP_CGR_GetProxy( pWork->commonCellTypeNcg[type1] , &imageProxy );
+    GFL_CLACT_WK_SetImgProxy( pWork->clwkWazaType , &imageProxy );
+    GFL_CLACT_WK_SetPlttOffs( pWork->clwkWazaType , 
+                              APP_COMMON_GetPokeTypePltOffset(type1) , 
+                              CLWK_PLTTOFFS_MODE_PLTT_TOP );
+    GFL_CLACT_WK_SetDrawEnable( pWork->clwkWazaType , TRUE );
+  }
+}
+
+//------------------------------------------------------------------------------
+/**
+ * @brief   技マシンの説明追加
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+
+void ITEMDISP_WazaInfoWindowChange( FIELD_ITEMMENU_WORK *pWork )
+{
+  GFL_BMPWIN* pwin = pWork->winWaza;
+  ITEM_ST * item = ITEMMENU_GetItem( pWork,ITEMMENU_GetItemIndex(pWork) );
+  int wazano = ITEM_GetWazaNo( item->id );
+  int ppnum = WT_PPMaxGet(wazano, 0);
+  int pow = WT_WazaDataParaGet( wazano, ID_WTD_damage );
+  int hit = WT_WazaDataParaGet( wazano, ID_WTD_damage );
+
+  
+  GFL_BG_LoadScreenV_Req(GFL_BG_FRAME1_S);
+  if(wazano==0){
+    GFL_BMPWIN_ClearScreen(pwin);
+    GFL_CLACT_WK_SetDrawEnable( pWork->clwkWazaKind, FALSE );
+    GFL_CLACT_WK_SetDrawEnable( pWork->clwkWazaType, FALSE );
+    
+    return;
+  }
+  else{
+    GFL_BMP_Clear(GFL_BMPWIN_GetBmp(pwin), 0 );
+    GFL_BMPWIN_MakeScreen(pwin);
+  }
+
+  _wazaKindDisp(pWork,wazano);
+  _wazaTypeDisp(pWork,wazano);
+  
+  //タイプ
+  GFL_MSG_GetString(  pWork->MsgManager, mes_bag_107, pWork->pStrBuf );
+  PRINTSYS_Print( GFL_BMPWIN_GetBmp(pwin), 8, 4, pWork->pStrBuf, pWork->fontHandle);
+
+
+  //ぶんるい
+  GFL_MSG_GetString(  pWork->MsgManager, mes_bag_098, pWork->pStrBuf );
+  PRINTSYS_Print( GFL_BMPWIN_GetBmp(pwin), 8*10, 4, pWork->pStrBuf, pWork->fontHandle);
+
+  //威力
+  GFL_MSG_GetString(  pWork->MsgManager, mes_bag_096, pWork->pStrBuf );
+  PRINTSYS_Print( GFL_BMPWIN_GetBmp(pwin), 8*20, 4, pWork->pStrBuf, pWork->fontHandle);
+
+//いりょくの桁数
+  GFL_MSG_GetString(  pWork->MsgManager, mes_bag_100, pWork->pStrBuf );
+  WORDSET_RegisterNumber(pWork->WordSet, 0, pow, 3, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT);
+  WORDSET_ExpandStr( pWork->WordSet, pWork->pExpStrBuf, pWork->pStrBuf  );
+  PRINTSYS_Print( GFL_BMPWIN_GetBmp(pwin), 28*8, 4, pWork->pExpStrBuf, pWork->fontHandle);
+
+    //PP
+  GFL_MSG_GetString(  pWork->MsgManager, mes_bag_095, pWork->pStrBuf );
+  PRINTSYS_Print( GFL_BMPWIN_GetBmp(pwin), 8, 24, pWork->pStrBuf, pWork->fontHandle);
+
+  //PPの桁数
+  GFL_MSG_GetString(  pWork->MsgManager, mes_bag_099, pWork->pStrBuf );
+  WORDSET_RegisterNumber(pWork->WordSet, 0, ppnum, 2, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT);
+  WORDSET_ExpandStr( pWork->WordSet, pWork->pExpStrBuf, pWork->pStrBuf  );
+  PRINTSYS_Print( GFL_BMPWIN_GetBmp(pwin), 56, 24, pWork->pExpStrBuf, pWork->fontHandle);
+  
+    //命中
+  GFL_MSG_GetString(  pWork->MsgManager, mes_bag_097, pWork->pStrBuf );
+  PRINTSYS_Print( GFL_BMPWIN_GetBmp(pwin), 8*20, 24, pWork->pStrBuf, pWork->fontHandle);
+
+  //めいちゅうの桁数
+  GFL_MSG_GetString(  pWork->MsgManager, mes_bag_100, pWork->pStrBuf );
+  WORDSET_RegisterNumber(pWork->WordSet, 0, hit, 3, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT);
+  WORDSET_ExpandStr( pWork->WordSet, pWork->pExpStrBuf, pWork->pStrBuf  );
+  PRINTSYS_Print( GFL_BMPWIN_GetBmp(pwin), 28*8, 24, pWork->pExpStrBuf, pWork->fontHandle);
+  
+  GFL_BMPWIN_TransVramCharacter(pwin);
+
+
+
+}
 
