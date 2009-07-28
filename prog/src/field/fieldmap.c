@@ -671,7 +671,7 @@ static MAINSEQ_RESULT mainSeqFunc_update_top(GAMESYS_WORK *gsys, FIELDMAP_WORK *
 		VecFx32 rail_pos;
 
     // レールシステムメイン
-    FIELD_RAIL_MAN_Update(fieldWork->railMan, GFL_UI_KEY_GetCont() );
+	  FIELD_RAIL_MAN_Update(fieldWork->railMan, GFL_UI_KEY_GetCont() );
     FIELD_RAIL_MAN_UpdateCamera(fieldWork->railMan);
 		FIELD_RAIL_MAN_GetPos( fieldWork->railMan, &rail_pos );
 		FLD_SCENEAREA_Update( fieldWork->sceneArea, &rail_pos );

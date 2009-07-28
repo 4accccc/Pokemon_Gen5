@@ -227,7 +227,6 @@ extern void FIELD_RAIL_MAN_Delete(FIELD_RAIL_MAN * man);
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 extern void FIELD_RAIL_MAN_Update(FIELD_RAIL_MAN * man, int key_cont);
-extern void FIELD_RAIL_MAN_UpdateOfs(FIELD_RAIL_MAN * man, int key_cont, int one_ofs);
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
