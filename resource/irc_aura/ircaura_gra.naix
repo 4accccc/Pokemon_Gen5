@@ -11,14 +11,30 @@
 #define NARC_IRCAURA_GRA_NAIX_
 
 enum {
-	NARC_ircaura_gra_aura_bg_guide_NCLR = 0,
-	NARC_ircaura_gra_aura_obj_touch_NCLR = 1,
-	NARC_ircaura_gra_aura_bg_guide_NCGR = 2,
-	NARC_ircaura_gra_aura_obj_touch_NCGR = 3,
-	NARC_ircaura_gra_aura_obj_touch_NCER = 4,
-	NARC_ircaura_gra_aura_bg_guide_l_NSCR = 5,
-	NARC_ircaura_gra_aura_bg_guide_r_NSCR = 6,
-	NARC_ircaura_gra_aura_obj_touch_NANR = 7
+	NARC_ircaura_gra_aura_bg_NCLR = 0,
+	NARC_ircaura_gra_aura_bg_guide_NCLR = 1,
+	NARC_ircaura_gra_aura_obj_NCLR = 2,
+	NARC_ircaura_gra_aura_obj_touch_NCLR = 3,
+	NARC_ircaura_gra_aura_bg_NCGR = 4,
+	NARC_ircaura_gra_aura_bg_guide_NCGR = 5,
+	NARC_ircaura_gra_aura_obj_NCGR = 6,
+	NARC_ircaura_gra_aura_obj_touch_NCGR = 7,
+	NARC_ircaura_gra_aura_obj_NCER = 8,
+	NARC_ircaura_gra_aura_obj_touch_NCER = 9,
+	NARC_ircaura_gra_aura_bg_block_b_NSCR = 10,
+	NARC_ircaura_gra_aura_bg_guide_l_NSCR = 11,
+	NARC_ircaura_gra_aura_bg_guide_r_NSCR = 12,
+	NARC_ircaura_gra_aura_bg_hert_b_NSCR = 13,
+	NARC_ircaura_gra_aura_bg_hert_b_nuki_NSCR = 14,
+	NARC_ircaura_gra_aura_bg_hert_s_NSCR = 15,
+	NARC_ircaura_gra_aura_bg_hert_s_nuki_NSCR = 16,
+	NARC_ircaura_gra_aura_bg_suji_NSCR = 17,
+	NARC_ircaura_gra_aura_obj_NSCR = 18,
+	NARC_ircaura_gra_aura_obj_NANR = 19,
+	NARC_ircaura_gra_aura_obj_touch_NANR = 20,
+	NARC_ircaura_gra_aura_nsbmd = 21,
+	NARC_ircaura_gra_aura_nsbca = 22,
+	NARC_ircaura_gra_aura_nsbma = 23
 };
 
 /* NARC_IRCAURA_GRA_NAIX_ */

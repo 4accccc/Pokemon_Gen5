@@ -1,17 +1,24 @@
 #------------------------------------------------------------------------------
 #  コピーしてtargetnameを書き換えれば汎用的に使えます
 #  2008.08.19
+#  2009.07.28	SOCのmakefileを参考に3D素材も追加できるように
 #------------------------------------------------------------------------------
 
 #------------------------------------------------------------------------------
 #※コンバートを行う人のユーザーIDをここに書く
 #------------------------------------------------------------------------------
-USERS	= toru_nagihashi
+USERS	= toru_nagihashi kitakaze_tomohiro suginaka_katsunori
 
 #------------------------------------------------------------------------------
 #※ここに作成するnarc名を書く
 #------------------------------------------------------------------------------
 targetname = ircaura_gra
+
+#------------------------------------------------------------------------------
+#※テクスチャとモデルを分離してコンバートするかを指定する
+#------------------------------------------------------------------------------
+IMDTEX_SEPARATE =			#分離しない
+#IMDTEX_SEPARATE = on		#分離する
 
 #------------------------------------------------------------------------------
 #※コピー先へのパスを書く（通常はPROJECT_ARCDIRでよい）
@@ -31,6 +38,13 @@ lsources:=$(wildcard *.ncl)
 gsources:=$(wildcard *.ncg)
 csources:=$(wildcard *.nsc)
 esources:=$(wildcard *.nce)
+#3D
+IMDFILE = $(wildcard *.imd)
+ICAFILE = $(wildcard *.ica)
+IVAFILE = $(wildcard *.iva)
+IMAFILE = $(wildcard *.ima)
+ITPFILE = $(wildcard *.itp)
+ITAFILE = $(wildcard *.ita)
 
 # リソースが吐き出すファイルを自動でつくる
 lobjects = $(subst .ncl,.NCLR,$(lsources))
@@ -38,11 +52,20 @@ gobjects = $(subst .ncg,.NCGR,$(gsources))
 cobjects = $(subst .nsc,.NSCR,$(csources))
 eobjects = $(subst .nce,.NCER,$(esources))
 aobjects = $(subst .nce,.NANR,$(esources))
+#3D
+NSBMDFILE = $(IMDFILE:.imd=.nsbmd)
+#NSBTXFILE = $(IMDFILE:.imd=.nsbtx)	#テクスチャなしimdだとエラーがでる
+NSBCAFILE = $(ICAFILE:.ica=.nsbca)
+NSBVAFILE = $(IVAFILE:.iva=.nsbva)
+NSBMAFILE = $(IMAFILE:.ima=.nsbma)
+NSBTPFILE = $(ITPFILE:.itp=.nsbtp)
 
+OBJ_FILE 	= $(lobjects) $(gobjects) $(eobjects) $(cobjects) $(aobjects) \
+						$(NSBMDFILE) $(NSBTXFILE) $(NSBCAFILE) $(NSBVAFILE) $(NSBMAFILE) $(NSBTPFILE)
 
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
 # サフィックスルールを定義することで 依存関係を自動で判断してくれる
-.SUFFIXES: .NCLR .ncl .NCGR .ncg .NSCR .nsc .NCER .nce
+.SUFFIXES: .NCLR .ncl .NCGR .ncg .NSCR .nsc .NCER .nce .imd .ica .iva .ima .itp .ita .nsbmd .nsbtx .nsbca .nsbma .nsbva .nsbtp
 
 .ncl.NCLR:
 	g2dcvtr $< -pcm
@@ -55,6 +78,32 @@ ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
 
 .nce.NCER:
 	g2dcvtr $< -br
+
+#3d
+.imd.nsbmd:
+ifdef IMDTEX_SEPARATE
+	g3dcvtr $< -emdl
+	g3dcvtr $< -etex
+else
+	g3dcvtr $<
+endif
+
+ifdef IMDTEX_SEPARATE
+.imd.nsbtx:
+	g3dcvtr $< -etex
+endif
+
+.ica.nsbca:
+	g3dcvtr $<
+
+.iva.nsbva:
+	g3dcvtr $<
+
+.ima.nsbma:
+	g3dcvtr $<
+
+.itp.nsbtp:
+	g3dcvtr $<
 
 endif
 
@@ -76,7 +125,7 @@ $(TARGETDIR)/$(targetname).narc: $(targetname).narc
 
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、元ファイルからコンバートするルールを有効にする
 # コピー先のnarcが古い場合実行する
-$(targetname).narc: $(lobjects) $(gobjects) $(eobjects) $(cobjects) $(aobjects)
+$(targetname).narc: $(OBJ_FILE)
 	nnsarc -r -l -n -i $(targetname) $^
 	$(NAIXCUT) $(targetname).naix
 endif
@@ -93,6 +142,7 @@ ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、中間ファイル削除
 	rm -f *.NSCR
 	rm -f *.NCGR
 	rm -f *.NCLR
+	rm -f *.nsb*
 	rm -f *.narc
 	rm -f *.naix
 	rm -f $(targetname).narc
