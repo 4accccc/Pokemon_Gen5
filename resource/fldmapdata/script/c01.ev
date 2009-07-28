@@ -19,6 +19,7 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
+_EVENT_DATA    ev_c01_musical
 _EVENT_DATA    ev_c01_talkobj_badman
 _EVENT_DATA    ev_c01_talkobj_boy2
 _EVENT_DATA    ev_c01_talkobj_cleaningm
@@ -35,6 +36,42 @@ _EVENT_DATA_END
 /**************************************************************/
 //ev_c01_flag_change:
 //  _END
+
+/**************************************************************/
+/*  C01 ミュージカル用イベントスクリプト                      */
+/**************************************************************/
+ev_c01_musical:
+	_TALK_OBJ_PAUSE_ALL
+	_TURN_HERO_SITE
+	_TALKWIN_OPEN
+	_TALKMSG_ALLPUT msg_c01_musical_01
+
+	_YES_NO_WIN SCWK_ANSWER
+	_TALKWIN_CLOSE
+	_IFVAL_JUMP SCWK_ANSWER,EQ,0,c01_musical_yes
+	_IFVAL_JUMP SCWK_ANSWER,EQ,1,c01_musical_no
+
+c01_musical_yes:
+	_TALKWIN_OPEN
+	_TALKMSG_ALLPUT msg_c01_musical_02
+
+	_AB_KEYWAIT
+  	_TALKWIN_CLOSE
+
+	_MUSICAL_CALL //ミュージカル呼び出し
+
+	_JUMP c01_musical_end
+
+c01_musical_no:
+	_TALKWIN_OPEN
+	_TALKMSG_ALLPUT msg_c01_musical_03
+
+	_AB_KEYWAIT
+  	_TALKWIN_CLOSE
+
+c01_musical_end:
+  	_OBJ_PAUSE_CLEAR_ALL
+  	_END
 
 /**************************************************************/
 /*  C01 BADMANの会話用イベントスクリプト                      */
