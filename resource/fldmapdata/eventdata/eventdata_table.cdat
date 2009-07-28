@@ -45,6 +45,7 @@
 #define C01_CLEANINGM                      2
 #define C01_WOMAN2                         3
 #define C01_BREEDERW                       4
+#define C01_MAN2                           5
 
 #endif //ZONE_C01_EVC_H
 //#include "tmp/c01gym0101.h"
@@ -2425,12 +2426,29 @@ const FLDMMDL_HEADER OBJ_EVENT_C01[] = {
 		594,
 		0,
 	},
+	{
+		C01_MAN2,
+		MAN2,
+		MV_DOWN,
+		EV_TYPE_NORMAL,
+		0,
+		SCRID_C01_MUSICAL,
+		DIR_DOWN,
+		0,
+		0,
+		0,
+		0,
+		0,
+		783,
+		587,
+		0,
+	},
 };
 const int ObjCount_C01 = NELEMS(OBJ_EVENT_C01);
 
 static const EVENTDATA_TABLE event_c01 = {
 	0,
-	5,
+	6,
 	10,
 	0,
 	(void *)NULL,
