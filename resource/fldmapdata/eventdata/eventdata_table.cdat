@@ -500,6 +500,8 @@
 #define DOOR_ID_C03P02_C03P03_EXIT04a    48
 #define DOOR_ID_C03P02_C03P03_EXIT06a    49
 #define DOOR_ID_C03P02_C03P03_EXIT07a    50
+#define DOOR_ID_C03P02_C03P05_EXIT06     51
+#define DOOR_ID_C03P02_C03P05_EXIT07     52
 
 #endif //ZONE_C03P02_EVD_H
 //このファイルはdata/c03p02.mevから自動生成されました
@@ -1406,6 +1408,8 @@
 #define DOOR_ID_D03R0101_D03_EXIT03       1
 #define DOOR_ID_D03R0101_D03_EXIT02       2
 #define DOOR_ID_D03R0101_D04R0101_EXIT01  3
+#define DOOR_ID_D03R0101_D04R3401_EXIT01  4
+#define DOOR_ID_D03R0101_D04R3401_EXIT02  5
 
 #endif //ZONE_D03R0101_EVD_H
 //このファイルはdata/d03r0101.mevから自動生成されました
@@ -1443,6 +1447,20 @@
 
 
 #endif //ZONE_D04R0201_EVC_H
+//#include "tmp/d04r3401.h"
+//このファイルはdata/d04r3401.mevから自動生成されました
+#ifndef ZONE_D04R3401_EVD_H
+#define ZONE_D04R3401_EVD_H
+
+#define DOOR_ID_D04R3401_D03R0101_EXIT01  0
+
+#endif //ZONE_D04R3401_EVD_H
+//このファイルはdata/d04r3401.mevから自動生成されました
+#ifndef ZONE_D04R3401_EVC_H
+#define ZONE_D04R3401_EVC_H
+
+
+#endif //ZONE_D04R3401_EVC_H
 //#include "tmp/d05.h"
 //このファイルはdata/d05.mevから自動生成されました
 #ifndef ZONE_D05_EVD_H
@@ -4489,13 +4507,25 @@ const CONNECT_DATA DOOR_EVENT_C03P02[] = {
 		EXIT_DIR_DOWN,//direction
 		EXIT_TYPE_NONE //type
 	},
+	{//DOOR_ID_C03P02_C03P05_EXIT06 = 51
+		{336, 0, 112},
+		ZONE_ID_C03P05, DOOR_ID_C03P05_C03P02_EXIT01,
+		EXIT_DIR_LEFT,//direction
+		EXIT_TYPE_NONE //type
+	},
+	{//DOOR_ID_C03P02_C03P05_EXIT07 = 52
+		{336, 0, 96},
+		ZONE_ID_C03P05, DOOR_ID_C03P05_C03P02_EXIT01,
+		EXIT_DIR_LEFT,//direction
+		EXIT_TYPE_NONE //type
+	},
 };
 const int ConnectCount_C03P02 = NELEMS(DOOR_EVENT_C03P02);
 
 static const EVENTDATA_TABLE event_c03p02 = {
 	0,
 	0,
-	51,
+	53,
 	0,
 	(void *)NULL,
 	(void *)NULL,
@@ -7366,13 +7396,25 @@ const CONNECT_DATA DOOR_EVENT_D03R0101[] = {
 		EXIT_DIR_DOWN,//direction
 		EXIT_TYPE_NONE //type
 	},
+	{//DOOR_ID_D03R0101_D04R3401_EXIT01 = 4
+		{768, 24, 1104},
+		ZONE_ID_D04R3401, DOOR_ID_D04R3401_D03R0101_EXIT01,
+		EXIT_DIR_DOWN,//direction
+		EXIT_TYPE_MAT //type
+	},
+	{//DOOR_ID_D03R0101_D04R3401_EXIT02 = 5
+		{784, 24, 1104},
+		ZONE_ID_D04R3401, DOOR_ID_D04R3401_D03R0101_EXIT01,
+		EXIT_DIR_DOWN,//direction
+		EXIT_TYPE_MAT //type
+	},
 };
 const int ConnectCount_D03R0101 = NELEMS(DOOR_EVENT_D03R0101);
 
 static const EVENTDATA_TABLE event_d03r0101 = {
 	0,
 	0,
-	4,
+	6,
 	0,
 	(void *)NULL,
 	(void *)NULL,
@@ -7425,6 +7467,27 @@ static const EVENTDATA_TABLE event_d04r0201 = {
 	(void *)NULL,
 	(void *)NULL,
 	(void *)&DOOR_EVENT_D04R0201,
+	(void *)NULL,
+};
+#include "../script/d04r3401_def.h"
+const CONNECT_DATA DOOR_EVENT_D04R3401[] = {
+	{//DOOR_ID_D04R3401_D03R0101_EXIT01 = 0
+		{256, 0, 336},
+		ZONE_ID_D03R0101, DOOR_ID_D03R0101_D04R3401_EXIT01,
+		EXIT_DIR_UP,//direction
+		EXIT_TYPE_MAT //type
+	},
+};
+const int ConnectCount_D04R3401 = NELEMS(DOOR_EVENT_D04R3401);
+
+static const EVENTDATA_TABLE event_d04r3401 = {
+	0,
+	0,
+	1,
+	0,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)&DOOR_EVENT_D04R3401,
 	(void *)NULL,
 };
 #include "../script/d05_def.h"
@@ -10333,6 +10396,7 @@ static const EVENTDATA_TOTAL_TABLES TotalTables[] = {
 	{ ZONE_ID_D03R0101, &event_d03r0101 },
 	{ ZONE_ID_D04R0101, &event_d04r0101 },
 	{ ZONE_ID_D04R0201, &event_d04r0201 },
+	{ ZONE_ID_D04R3401, &event_d04r3401 },
 	{ ZONE_ID_D05, &event_d05 },
 	{ ZONE_ID_D05R0101, &event_d05r0101 },
 	{ ZONE_ID_D05R0201, &event_d05r0201 },
