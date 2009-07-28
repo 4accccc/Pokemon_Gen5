@@ -132,6 +132,7 @@ static void LoadResource( FIELD_CARS* p_sys );
 static void CreateRender( FIELD_CARS* p_sys );
 static void CreateObject( FIELD_CARS* p_sys );
 static void InitTrailers( FIELD_CARS* p_sys );
+static void InitTimers( FIELD_CARS* p_sys );
 
 // システム進行
 static void ActTrailers( FIELD_CARS* p_sys );
@@ -168,6 +169,9 @@ FIELD_CARS* FIELD_CARS_Create( FIELD_PLAYER* p_player, u16 zone_id, HEAPID heap_
 
 	// トレーラー初期化
 	InitTrailers( p_sys );
+
+	// タイマー初期化
+	InitTimers( p_sys );
 
 	// リソース読み込み
 	LoadResource( p_sys ); 
@@ -381,6 +385,23 @@ static void InitTrailers( FIELD_CARS* p_sys )
 	p_sys->trailer[1].active = FALSE;
 	VEC_Set( &p_sys->trailer[1].status.scale, FX32_ONE, FX32_ONE, FX32_ONE );
 	MTX_RotY33( &p_sys->trailer[1].status.rotate, FX_SinIdx( 32768 ), FX_CosIdx( 32768 ) );	// y軸180度回転
+}
+
+//------------------------------------------------------------------------------- 
+/**
+ * @brief タイマーを初期化する
+ *
+ * @param p_sys 初期化対象のシステム
+ */
+//------------------------------------------------------------------------------- 
+static void InitTimers( FIELD_CARS* p_sys )
+{
+	int i;
+
+	for( i=0; i<TRAILER_NUM; i++ )
+	{
+		p_sys->timer[i].count = 0;
+	}
 }
 
 //------------------------------------------------------------------------------- 
