@@ -124,11 +124,10 @@ GAMEDATA * GAMEDATA_Create(HEAPID heapID)
   //イベントデータ
   gd->evdata = EVENTDATA_SYS_Create(heapID);
   EVENTDATA_SYS_Clear(gd->evdata);
-
+  
   //イベントワーク
-  gd->eventwork = EVENTWORK_AllocWork( heapID );
-  EVENTWORK_Init( gd->eventwork );
-
+  gd->eventwork = SaveControl_DataPtrGet( gd->sv_control_ptr, GMDATA_ID_EVENT_WORK );
+  
 	// railデータ読み込みシステム
   gd->railLoader = FIELD_RAIL_LOADER_Create( heapID );
   //動作モデル
@@ -155,7 +154,6 @@ void GAMEDATA_Delete(GAMEDATA * gamedata)
   GFL_HEAP_FreeMemory(gamedata->bagcursor);
   MMDLSYS_FreeSystem(gamedata->mmdlsys);
 	FIELD_RAIL_LOADER_Delete( gamedata->railLoader );
-  EVENTWORK_FreeWork(gamedata->eventwork);
   EVENTDATA_SYS_Delete(gamedata->evdata);
   GFL_HEAP_FreeMemory(gamedata);
 }

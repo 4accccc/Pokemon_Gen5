@@ -38,6 +38,11 @@ int EVENTWORK_GetWorkSize(void)
 	return sizeof(EVENTWORK);
 }
 
+void EVENTWORK_InitWork( u8 *work )
+{
+  GFL_STD_MemClear( work, sizeof(EVENTWORK) );
+}
+
 //------------------------------------------------------------------
 /**
  * @brief	イベントワークを生成する
@@ -47,6 +52,7 @@ int EVENTWORK_GetWorkSize(void)
  * @return	EVENTWORKへのポインタ
  */
 //------------------------------------------------------------------
+#if 0
 EVENTWORK * EVENTWORK_AllocWork( HEAPID heapID )
 {
 	EVENTWORK * event;
@@ -56,7 +62,9 @@ EVENTWORK * EVENTWORK_AllocWork( HEAPID heapID )
 
 	return event;
 }
+#endif
 
+#if 0
 //------------------------------------------------------------------
 /**
  * @brief	イベントワークを開放する
@@ -70,6 +78,7 @@ void EVENTWORK_FreeWork( EVENTWORK *evwk )
 {
 	GFL_HEAP_FreeMemory( evwk );
 }
+#endif
 
 //------------------------------------------------------------------
 /**
@@ -77,6 +86,7 @@ void EVENTWORK_FreeWork( EVENTWORK *evwk )
  * @param	evwk	EVENTWORKへのポインタ
  */
 //------------------------------------------------------------------
+#if 0
 void EVENTWORK_Init(EVENTWORK * evwk)
 {
 	//不正な値が入っているのでクリア
@@ -85,6 +95,7 @@ void EVENTWORK_Init(EVENTWORK * evwk)
 	SVLD_SetCrc(GMDATA_ID_EVENT_WORK);
 #endif //CRC_LOADCHECK
 }
+#endif
 
 //------------------------------------------------------------------
 /**
