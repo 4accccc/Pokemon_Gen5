@@ -163,6 +163,11 @@ static const u16 ITEM_SWING_ANGLE_SORT_ADD_VALUE = 0x200;
 #pragma mark [> define demo
 #define DEMO_ROT_ITEM_NUM (5)
 
+#pragma mark [> define effect
+#define EFFECT_UP_NUM (8)   //上画面のきらきらの数
+#define EFFECT_UP_LIMIT_X (56)
+#define EFFECT_UP_LIMIT_Y (90)
+
 //======================================================================
 //  enum
 //======================================================================
@@ -192,8 +197,18 @@ typedef enum
 typedef enum
 {
   DOR_BUTTON_PLT,
+  DOR_EFFECT_UP_PLT,
   DOR_BUTTON_NCG,
+  DOR_EFFECT_UP_NCG,
   DOR_BUTTON_ANM,
+  DOR_EFFECT_UP_ANM,
+  
+  DUR_PLT_START = DOR_BUTTON_PLT,
+  DUR_PLT_END =   DOR_EFFECT_UP_PLT,
+  DUR_NCG_START = DOR_BUTTON_NCG,
+  DUR_NCG_END =   DOR_EFFECT_UP_NCG,
+  DUR_ANM_START = DOR_BUTTON_ANM,
+  DUR_ANM_END =   DOR_EFFECT_UP_ANM,
   
   DUP_OBJ_RES_MAX,
 }DUP_OBJ_RES;
@@ -280,6 +295,10 @@ struct _FITTING_WORK
   MUS_ITEM_DRAW_SYSTEM  *itemDrawSys;
   GFL_G3D_CAMERA      *camera;
   GFL_BBD_SYS       *bbdSys;
+  
+  //演出系
+  GFL_CLWK  *clwkEffectUp[EFFECT_UP_NUM];
+  u8        effUpCnt[EFFECT_UP_NUM];
 };
 
 //======================================================================
@@ -341,6 +360,11 @@ static void DUP_DEMO_DemoPhaseListRot( FITTING_WORK *work , const u16 start , co
 static void DUP_DEMO_DemoPhaseWait( FITTING_WORK *work , const u16 cnt );
 static void DUP_DEMO_DemoPhaseDragPen( FITTING_WORK *work , const GFL_POINT *start , const GFL_POINT *end , const u16 cnt );
 
+#pragma mark [> proto Effect
+static void DUP_EFFECT_InitCell( FITTING_WORK *work );
+static void DUP_EFFECT_TermCell( FITTING_WORK *work );
+static void DUP_EFFECT_UpdateCell( FITTING_WORK *work );
+
 static const GFL_DISP_VRAM vramBank = {
   GX_VRAM_BG_128_D,       // メイン2DエンジンのBG
   GX_VRAM_BGEXTPLTT_NONE,     // メイン2DエンジンのBG拡張パレット
@@ -348,7 +372,7 @@ static const GFL_DISP_VRAM vramBank = {
   GX_VRAM_SUB_BGEXTPLTT_NONE,   // サブ2DエンジンのBG拡張パレット
   GX_VRAM_OBJ_64_E,       // メイン2DエンジンのOBJ
   GX_VRAM_OBJEXTPLTT_NONE,    // メイン2DエンジンのOBJ拡張パレット
-  GX_VRAM_SUB_OBJ_NONE,     // サブ2DエンジンのOBJ
+  GX_VRAM_SUB_OBJ_16_I,     // サブ2DエンジンのOBJ
   GX_VRAM_SUB_OBJEXTPLTT_NONE,  // サブ2DエンジンのOBJ拡張パレット
   GX_VRAM_TEX_01_AB,        // テクスチャイメージスロット
   GX_VRAM_TEXPLTT_01_FG,      // テクスチャパレットスロット
@@ -363,7 +387,7 @@ static const GFL_DISP_VRAM vramBank = {
 //  F テクスチャパレット
 //  G テクスチャパレット
 //  H None
-//  I None
+//  I SubObj
 
 
 //--------------------------------------------------------------
@@ -398,7 +422,8 @@ FITTING_WORK* DUP_FIT_InitFitting( FITTING_INIT_WORK *initWork , HEAPID heapId )
   DUP_FIT_SetupBgObj( work );
   DUP_FIT_SetupPokemon( work );
   DUP_FIT_SetupItem( work );
-  
+  DUP_EFFECT_InitCell( work );
+
   INFOWIN_Init( FIT_FRAME_MAIN_INFO,FIT_PAL_INFO,NULL,work->heapId);
   work->vBlankTcb = GFUser_VIntr_CreateTCB( DUP_FIT_VBlankFunc , work , 8 );
   
@@ -435,18 +460,27 @@ FITTING_WORK* DUP_FIT_InitFitting( FITTING_INIT_WORK *initWork , HEAPID heapId )
 //--------------------------------------------------------------
 void  DUP_FIT_TermFitting( FITTING_WORK *work )
 {
-  //フェードないので仮処理
-  GX_SetMasterBrightness(-16);  
-  GXS_SetMasterBrightness(-16);
-  
+  u8 i;
   INFOWIN_Exit();
 
+  DUP_EFFECT_TermCell( work );
   GFL_CLACT_WK_Remove( work->buttonCell[0] );
   GFL_CLACT_WK_Remove( work->buttonCell[1] );
   GFL_CLACT_WK_Remove( work->demoPen );
-  GFL_CLGRP_PLTT_Release( work->objResIdx[DOR_BUTTON_PLT] );
-  GFL_CLGRP_CGR_Release( work->objResIdx[DOR_BUTTON_NCG] );
-  GFL_CLGRP_CELLANIM_Release( work->objResIdx[DOR_BUTTON_ANM] );
+  //OBJ
+  for( i=DUR_PLT_START ; i<=DUR_PLT_END ; i++ )
+  {
+    GFL_CLGRP_PLTT_Release( work->objResIdx[i] );
+  }
+  for( i=DUR_NCG_START ; i<=DUR_NCG_END ; i++ )
+  {
+    GFL_CLGRP_CGR_Release( work->objResIdx[i] );
+  }
+  for( i=DUR_ANM_START ; i<=DUR_ANM_END ; i++ )
+  {
+    GFL_CLGRP_CELLANIM_Release( work->objResIdx[i] );
+  }
+
   GFL_CLACT_UNIT_Delete( work->cellUnit );
   GFL_CLACT_SYS_Delete();
 
@@ -553,6 +587,7 @@ FITTING_RETURN  DUP_FIT_LoopFitting( FITTING_WORK *work )
     break;
   }
 
+  DUP_EFFECT_UpdateCell( work );
   DUP_FIT_UpdateItemAnime( work );
   MUS_POKE_DRAW_UpdateSystem( work->drawSys ); 
   MUS_ITEM_DRAW_UpdateSystem( work->itemDrawSys ); 
@@ -792,7 +827,8 @@ static void DUP_FIT_SetupGraphic( FITTING_WORK *work )
     GFL_CLACT_SYS_Create( &cellSysInitData , &vramBank ,work->heapId );
     
     GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_OBJ , TRUE );
-    work->cellUnit  = GFL_CLACT_UNIT_Create( 3 , 0, work->heapId );
+    GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_OBJ , TRUE );
+    work->cellUnit  = GFL_CLACT_UNIT_Create( 24 , 0, work->heapId );
     GFL_CLACT_UNIT_SetDefaultRend( work->cellUnit );
   }
 
@@ -854,6 +890,9 @@ static void DUP_FIT_SetupBgObj( FITTING_WORK *work )
   work->objResIdx[DOR_BUTTON_PLT] = GFL_CLGRP_PLTT_Register( arcHandle , NARC_dressup_gra_obj_main_NCLR , CLSYS_DRAW_MAIN , 0 , work->heapId  );
   work->objResIdx[DOR_BUTTON_NCG] = GFL_CLGRP_CGR_Register( arcHandle , NARC_dressup_gra_obj_main_NCGR , FALSE , CLSYS_DRAW_MAIN , work->heapId  );
   work->objResIdx[DOR_BUTTON_ANM] = GFL_CLGRP_CELLANIM_Register( arcHandle , NARC_dressup_gra_obj_main_NCER , NARC_dressup_gra_obj_main_NANR, work->heapId  );
+  work->objResIdx[DOR_EFFECT_UP_PLT] = GFL_CLGRP_PLTT_Register( arcHandle , NARC_dressup_gra_anime_ue_NCLR , CLSYS_DRAW_SUB , 0 , work->heapId  );
+  work->objResIdx[DOR_EFFECT_UP_NCG] = GFL_CLGRP_CGR_Register( arcHandle , NARC_dressup_gra_anime_ue_NCGR , FALSE , CLSYS_DRAW_SUB , work->heapId  );
+  work->objResIdx[DOR_EFFECT_UP_ANM] = GFL_CLGRP_CELLANIM_Register( arcHandle , NARC_dressup_gra_anime_ue_NCER , NARC_dressup_gra_anime_ue_NANR, work->heapId  );
   
   {
   //セルの生成
@@ -3033,3 +3072,76 @@ static void DUP_DEMO_DemoPhaseDragPen( FITTING_WORK *work , const GFL_POINT *sta
   
 }
 
+#pragma mark [> EffectFunc
+//演出エフェクト系
+
+static void DUP_EFFECT_InitCell( FITTING_WORK *work )
+{
+  u8 i;
+  
+  for( i=0;i<EFFECT_UP_NUM;i++ )
+  {
+    //セルの生成
+    GFL_CLWK_DATA cellInitData;
+    cellInitData.pos_x = 0;
+    cellInitData.pos_y = 0;
+    cellInitData.anmseq = 0;
+    cellInitData.softpri = 0;
+    cellInitData.bgpri = 0;
+    work->clwkEffectUp[i] = GFL_CLACT_WK_Create( work->cellUnit ,
+              work->objResIdx[DOR_EFFECT_UP_PLT],
+              work->objResIdx[DOR_EFFECT_UP_NCG],
+              work->objResIdx[DOR_EFFECT_UP_ANM],
+              &cellInitData ,CLSYS_DEFREND_SUB , work->heapId );
+    GFL_CLACT_WK_SetDrawEnable( work->clwkEffectUp[i], TRUE );
+    GFL_CLACT_WK_SetAutoAnmFlag( work->clwkEffectUp[i], TRUE );
+    work->effUpCnt[i] = 0;
+  }
+  
+}
+static void DUP_EFFECT_TermCell( FITTING_WORK *work )
+{
+  u8 i;
+  for( i=0;i<EFFECT_UP_NUM;i++ )
+  {
+    GFL_CLACT_WK_Remove( work->clwkEffectUp[i] );
+  }
+}
+
+static void DUP_EFFECT_UpdateCell( FITTING_WORK *work )
+{
+  u8 i;
+  for( i=0;i<EFFECT_UP_NUM;i++ )
+  {
+    if( work->effUpCnt[i] == 0 )
+    {
+      GFL_CLACTPOS pos;
+      pos.x = GFL_STD_MtRand( EFFECT_UP_LIMIT_X );
+      if( GFL_STD_MtRand( 2 ) == 1 )
+      {
+        pos.x = 256-pos.x;
+      }
+      pos.y = GFL_STD_MtRand( 192 );
+      GFL_CLACT_WK_SetPos( work->clwkEffectUp[i] , &pos , CLSYS_DEFREND_SUB );
+      
+      if( pos.y > EFFECT_UP_LIMIT_Y )
+      {
+        GFL_CLACT_WK_SetAnmSeq( work->clwkEffectUp[i] , GFL_STD_MtRand( 2 ) );
+      }
+      else
+      {
+        GFL_CLACT_WK_SetAnmSeq( work->clwkEffectUp[i] , GFL_STD_MtRand( 2 )+2 );
+      }
+      
+      work->effUpCnt[i] = 400 + GFL_STD_MtRand( 200 );
+    }
+    else
+    {
+      if( (GFL_UI_KEY_GetCont() & PAD_BUTTON_Y) == 0 )
+      {
+        work->effUpCnt[i]--;
+      }
+    }
+  }
+  
+}
