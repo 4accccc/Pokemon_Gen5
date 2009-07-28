@@ -122,3 +122,4 @@
 "nsbmdfiles/r7_toh_01.nsbmd"
 "nsbmdfiles/r6_labo_01.nsbmd"
 "nsbmdfiles/trailer_01test.nsbmd"
+"nsbmdfiles/trailer_01.nsbmd"
