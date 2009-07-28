@@ -37,6 +37,7 @@
 #include "script.h"     //SCRIPT_SetEventScript
 #include "net_app/union/union_event_check.h"
 
+#include "system/main.h"    //HEAPID_FIELDMAP
 
 #include "field_encount.h"      //FIELD_ENCOUNT_CheckEncount
 
@@ -48,6 +49,8 @@
 #include "event_trainer_eye.h"
 #include "fieldmap/zone_id.h"
 #include "net_app/union/union_main.h"
+
+#include "../../../resource/fldmapdata/script/bg_attr_def.h"  //SCRID_BG_MSG_～
 
 //======================================================================
 //======================================================================
@@ -122,6 +125,8 @@ static GMEVENT * checkEvent_PlayerNaminoriEnd( const EV_REQUEST *req,
     GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork );
 
 static MMDL * getFrontTalkOBJ( EV_REQUEST *req, FIELDMAP_WORK *fieldMap );
+
+static u16 checkTalkAttrEvent( EV_REQUEST *req, FIELDMAP_WORK *fieldMap);
 
 //======================================================================
 //
@@ -323,6 +328,18 @@ static GMEVENT * FIELD_EVENT_CheckNormal( GAMESYS_WORK *gsys, void *work )
           event = SCRIPT_SetEventScript( gsys, id, NULL, req.heapID, &fparam );
           return event;
         }
+      }
+
+      { //BG Attribute 話しかけ
+        u16 id = checkTalkAttrEvent( &req, fieldWork );
+        if( id != EVENTDATA_ID_NONE ){ //座標イベント起動
+          SCRIPT_FLDPARAM fparam;
+          fparam.fieldMap = fieldWork;
+          fparam.msgBG = FIELDMAP_GetFldMsgBG(fieldWork);
+          event = SCRIPT_SetEventScript( gsys, id, NULL, req.heapID, &fparam );
+          return event;
+        }
+
       }
     }
   }
@@ -652,6 +669,7 @@ static GMEVENT * DEBUG_checkKeyEvent(EV_REQUEST * req, GAMESYS_WORK * gsys, FIEL
 	
 	//マップ変更チェック
 	if( (req->key_cont & chgCont) == chgCont ){
+    //GFL_HEAP_DEBUG_PrintExistMemoryBlocks( HEAPID_FIELDMAP );
 		return DEBUG_EVENT_ChangeToNextMap(gsys, fieldWork);
 	}
 	
@@ -1333,5 +1351,61 @@ static MMDL * getFrontTalkOBJ( EV_REQUEST *req, FIELDMAP_WORK *fieldMap )
       FIELDMAP_GetMMdlSys(fieldMap), gx, gz, FALSE );
   
   return( mmdl );
+}
+
+//--------------------------------------------------------------
+//--------------------------------------------------------------
+typedef struct {
+  BOOL (*attr_check_func)(const MAPATTR_VALUE );
+  u16 dir_code;
+  u16 script_id;
+}MAPATTR_EVENTDATA;
+
+//--------------------------------------------------------------
+/**
+ * @brief BGアトリビュート話しかけチェック
+ */
+//--------------------------------------------------------------
+static u16 checkTalkAttrEvent( EV_REQUEST *req, FIELDMAP_WORK *fieldMap)
+{
+  static const MAPATTR_EVENTDATA check_attr_data[] = {
+    { MAPATTR_VALUE_CheckPC,          0,  EVENTDATA_ID_NONE },
+    { MAPATTR_VALUE_CheckMap,         0,  EVENTDATA_ID_NONE },
+    { MAPATTR_VALUE_CheckTV,          0,  EVENTDATA_ID_NONE },
+    { MAPATTR_VALUE_CheckBookShelf1,  0,  SCRID_BG_MSG_BOOK1_01 },
+    { MAPATTR_VALUE_CheckBookShelf2,  0,  SCRID_BG_MSG_BOOK2_01 },
+    { MAPATTR_VALUE_CheckBookShelf3,  0,  SCRID_BG_MSG_BOOKRACK1_01 },
+    { MAPATTR_VALUE_CheckBookShelf4,  0,  SCRID_BG_MSG_BOOKRACK2_01 },
+    { MAPATTR_VALUE_CheckVase,        0,  SCRID_BG_MSG_SCRAP_01 },
+    { MAPATTR_VALUE_CheckDustBox,     0,  SCRID_BG_MSG_SCRAP_01 },
+    { MAPATTR_VALUE_CheckShopShelf1,  0,  SCRID_BG_MSG_SHOPRACK1_01 },
+    { MAPATTR_VALUE_CheckShopShelf2,  0,  SCRID_BG_MSG_SHOPRACK2_01 },
+    { MAPATTR_VALUE_CheckShopShelf3,  0,  SCRID_BG_MSG_SHOPRACK2_01 },
+  };
+  int i;
+
+  VecFx32 pos;
+  s16 gx,gy,gz;
+  FLDMAPPER *mapper;
+  MAPATTR attr;
+  MAPATTR_VALUE attr_val;
+  
+  FIELD_PLAYER_GetFrontGridPos( req->field_player, &gx, &gy, &gz );
+  MMDL_TOOL_GridPosToVectorPos( gx, gy, gz, &pos );
+  
+  mapper = FIELDMAP_GetFieldG3Dmapper( fieldMap );
+  attr = MAPATTR_GetAttribute( mapper, &pos );
+  attr_val = MAPATTR_GetAttrValue( attr );
+  
+
+  for (i = 0; i < NELEMS(check_attr_data); i++)
+  {
+    if ( check_attr_data[i].attr_check_func(attr_val) )
+    {
+      //本当はさらに方向もチェック
+      return check_attr_data[i].script_id;
+    }
+  }
+  return EVENTDATA_ID_NONE;
 }
 
