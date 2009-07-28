@@ -550,8 +550,9 @@ static inline u8 PTL_SETUP_POW_UNPACK( u32 powrnd, u8 abilityType )
 /* ID                                          */
 /*---------------------------------------------*/
 
-// IDをランダムに決定する（これ以外の値を指定されれば、その値を直接使う）
+// 以下の値以外が指定されれば、その指定された値を使う
 #define PTL_SETUP_ID_AUTO   (0xffffffffffffffff)
+#define PTL_SETUP_ID_NOT_RARE  (0xffffffff00000000)  ///< 必ずノーマルカラーになるように調整
 
 
 /*---------------------------------------------*/
