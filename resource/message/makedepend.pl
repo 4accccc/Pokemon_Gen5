@@ -105,6 +105,7 @@ sub print_depends {
 		{
 			$dst_dir = make_dirpath( $$target_ref[$i] );
 			print DEPEND_FILE "$$target_ref[$i]:\t$$src_ref[$i] resource.pl\n";
+#			print DEPEND_FILE "$$target_ref[$i]:\t$$src_ref[$i]\n";
 			print DEPEND_FILE "\t perl msgconv.pl $$src_ref[$i] $dst_dir";
 
 			for($L=0; $L<@$lang_ref; $L++)
