@@ -559,6 +559,25 @@ void FLDMSGPRINT_ClearBmp( FLDMSGPRINT *msgPrint )
 
 //--------------------------------------------------------------
 /**
+ * FLDMSGPRINT ビットマップ矩形クリア
+ * @param	msgPrint
+ * @param x 書き込み先書き込み開始X座標（ドット）
+ * @param y 書き込み先書き込み開始Y座標（ドット）
+ * @param size_x  描画範囲Xサイズ（ドット）
+ * @param size_y  描画範囲Yサイズ（ドット）
+ * @retval	nothing
+ */
+//--------------------------------------------------------------
+void FLDMSGPRINT_FillClearBmp(
+    FLDMSGPRINT *msgPrint, u32 x, u32 y, u32 size_x, u32 size_y )
+{
+	GFL_BMP_DATA *bmp = GFL_BMPWIN_GetBmp( msgPrint->bmpwin );
+  GFL_BMP_Fill( bmp, x, y, size_x, size_y, 0xff );
+	GFL_BG_LoadScreenReq( msgPrint->fmb->bgFrame );
+}
+
+//--------------------------------------------------------------
+/**
  * FLDMSGPRINT　PRINT_QUE取得
  * @param	msgPrint	FLDMSGPRINT
  * @retval	PRINT_QUE*
@@ -715,6 +734,23 @@ BOOL FLDMSGWIN_CheckPrintTrans( FLDMSGWIN *msgWin )
 void FLDMSGWIN_ClearWindow( FLDMSGWIN *msgWin )
 {
 	FLDMSGPRINT_ClearBmp( msgWin->msgPrint );
+}
+
+//--------------------------------------------------------------
+/**
+ * メッセージウィンドウ　メッセージ指定領域クリア
+ * @param msgWin FLDMSGWIN
+ * @param x 書き込み先書き込み開始X座標（ドット）
+ * @param y 書き込み先書き込み開始Y座標（ドット）
+ * @param size_x  描画範囲Xサイズ（ドット）
+ * @param size_y  描画範囲Yサイズ（ドット）
+ * @retval nothing
+ */
+//--------------------------------------------------------------
+void FLDMSGWIN_FillClearWindow(
+    FLDMSGWIN *msgWin, u32 x, u32 y, u32 size_x, u32 size_y )
+{
+  FLDMSGPRINT_FillClearBmp( msgWin->msgPrint, x, y, size_x, size_y );
 }
 
 //--------------------------------------------------------------
