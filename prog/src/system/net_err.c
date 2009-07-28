@@ -31,13 +31,6 @@
 ///通信エラー画面を終了させるボタン
 #define ERR_DISP_END_BUTTON		(PAD_BUTTON_A | PAD_BUTTON_B)
 
-///キャラクタVRAM退避サイズ
-#define PUSH_CHARVRAM_SIZE		(0x4000)
-///スクリーンVRAM退避サイズ
-#define PUSH_SCRNVRAM_SIZE		(0x800)
-///パレットVRAM退避サイズ
-#define PUSH_PLTTVRAM_SIZE		(0x20)
-
 ///エラー画面表示後、キーを有効にするまでのウェイト
 #define ERR_DISP_KEY_OCC_WAIT		(60*2)
 
@@ -58,8 +51,8 @@
 ///メッセージ描画開始キャラクタNo
 #define MESSAGE_START_CHARNO	(BG_DATA_SIZE / 0x20)
 
-//背景BG＋メッセージデータでキャラクタ領域PUSH_CHARVRAM_SIZEをオーバーしていないかチェック
-SDK_COMPILER_ASSERT(MESSAGE_X_LEN*0x20*MESSAGE_Y_LEN + BG_DATA_SIZE <= PUSH_CHARVRAM_SIZE);
+//背景BG＋メッセージデータでキャラクタ領域NETERR_PUSH_CHARVRAM_SIZEをオーバーしていないかチェック
+SDK_COMPILER_ASSERT(MESSAGE_X_LEN*0x20*MESSAGE_Y_LEN + BG_DATA_SIZE <= NETERR_PUSH_CHARVRAM_SIZE);
 
 
 //==============================================================================
@@ -142,9 +135,9 @@ void NetErr_SystemCreate(int heap_id)
 	
 	GFL_STD_MemClear(nes, sizeof(NET_ERR_SYSTEM));
 
-	nes->push_char_p = GFL_HEAP_AllocMemoryLo(heap_id, PUSH_CHARVRAM_SIZE);
-	nes->push_scrn_p = GFL_HEAP_AllocMemoryLo(heap_id, PUSH_SCRNVRAM_SIZE);
-	nes->push_pltt_p = GFL_HEAP_AllocMemoryLo(heap_id, PUSH_PLTTVRAM_SIZE);
+	nes->push_char_p = GFL_HEAP_AllocMemoryLo(heap_id, NETERR_PUSH_CHARVRAM_SIZE);
+	nes->push_scrn_p = GFL_HEAP_AllocMemoryLo(heap_id, NETERR_PUSH_SCRNVRAM_SIZE);
+	nes->push_pltt_p = GFL_HEAP_AllocMemoryLo(heap_id, NETERR_PUSH_PLTTVRAM_SIZE);
 }
 
 //--------------------------------------------------------------
@@ -300,9 +293,9 @@ static void Local_ErrDispInit(void)
 	G2_SetBG1Offset(0, 0);
 	
 	//VRAMのデータを退避(念のため上でBG1の設定をしてから行っている)
-	GFL_STD_MemCopy16(G2_GetBG1CharPtr(), nes->push_char_p, PUSH_CHARVRAM_SIZE);
-	GFL_STD_MemCopy16(G2_GetBG1ScrPtr(), nes->push_scrn_p, PUSH_SCRNVRAM_SIZE);
-	GFL_STD_MemCopy16((void*)HW_PLTT, nes->push_pltt_p, PUSH_PLTTVRAM_SIZE);
+	GFL_STD_MemCopy16(G2_GetBG1CharPtr(), nes->push_char_p, NETERR_PUSH_CHARVRAM_SIZE);
+	GFL_STD_MemCopy16(G2_GetBG1ScrPtr(), nes->push_scrn_p, NETERR_PUSH_SCRNVRAM_SIZE);
+	GFL_STD_MemCopy16((void*)HW_PLTT, nes->push_pltt_p, NETERR_PUSH_PLTTVRAM_SIZE);
 
 	//フォントカラー退避
 	GFL_FONTSYS_GetColor(&nes->font_letter, &nes->font_shadow, &nes->font_back);
@@ -339,9 +332,9 @@ static void Local_ErrDispExit(void)
 	GFL_FONTSYS_SetColor(nes->font_letter, nes->font_shadow, nes->font_back);
 
 	//VRAM復帰
-	GFL_STD_MemCopy16(nes->push_char_p, G2_GetBG1CharPtr(), PUSH_CHARVRAM_SIZE);
-	GFL_STD_MemCopy16(nes->push_scrn_p, G2_GetBG1ScrPtr(), PUSH_SCRNVRAM_SIZE);
-	GFL_STD_MemCopy16(nes->push_pltt_p, (void*)HW_PLTT, PUSH_PLTTVRAM_SIZE);
+	GFL_STD_MemCopy16(nes->push_char_p, G2_GetBG1CharPtr(), NETERR_PUSH_CHARVRAM_SIZE);
+	GFL_STD_MemCopy16(nes->push_scrn_p, G2_GetBG1ScrPtr(), NETERR_PUSH_SCRNVRAM_SIZE);
+	GFL_STD_MemCopy16(nes->push_pltt_p, (void*)HW_PLTT, NETERR_PUSH_PLTTVRAM_SIZE);
 
 	//BG1Control復帰
 	G2_SetBG1Control(nes->bg1cnt.screenSize, nes->bg1cnt.colorMode,
@@ -399,7 +392,7 @@ static void Local_ErrDispDraw(void)
 	BOOL  cmpFlag;
 	NNSG2dPaletteCompressInfo*  cmpInfo;
 	
-	GFL_STD_MemClear32(G2_GetBG1CharPtr(), PUSH_CHARVRAM_SIZE);
+	GFL_STD_MemClear32(G2_GetBG1CharPtr(), NETERR_PUSH_CHARVRAM_SIZE);
 
 	//キャラクタ
 	arcData = GFL_ARC_UTIL_Load(ARCID_NET_ERR, NARC_net_err_net_err_NCGR, 0, HEAPID_NET_ERR);
@@ -424,8 +417,8 @@ static void Local_ErrDispDraw(void)
 	arcData = GFL_ARC_UTIL_Load(ARCID_NET_ERR, NARC_net_err_net_err_NCLR, 0, HEAPID_NET_ERR);
 	cmpFlag = NNS_G2dGetUnpackedPaletteCompressInfo( arcData, &cmpInfo );
 	if( NNS_G2dGetUnpackedPaletteData( arcData, &palData ) ){
-		DC_FlushRange( palData->pRawData, PUSH_PLTTVRAM_SIZE );
-		GFL_STD_MemCopy16(palData->pRawData, (void*)HW_BG_PLTT, PUSH_PLTTVRAM_SIZE);
+		DC_FlushRange( palData->pRawData, NETERR_PUSH_PLTTVRAM_SIZE );
+		GFL_STD_MemCopy16(palData->pRawData, (void*)HW_BG_PLTT, NETERR_PUSH_PLTTVRAM_SIZE);
 	}
 	GFL_HEAP_FreeMemory( arcData );
 }
