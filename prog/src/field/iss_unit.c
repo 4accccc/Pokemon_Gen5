@@ -22,7 +22,7 @@
 #define VOLUME_SPACE_NUM 4
 
 // 音量を調整するトラックの指定用マスク
-#define TRACK_MASK ( (1 << 9) | (1 << 10) )
+#define TRACK_MASK ( (1 << (9-1)) | (1 << (10-1)) )
 
 // 絶対値を取得する
 #define ABS(n) ( (n)>0? (n) : -(n) )
