@@ -737,6 +737,55 @@ SCRIPT_FUNC_DEF( PokeChangeAnime )
   return SFT_CONTINUE;
 }
 
+//ポケモンポケモン 正面：背面切り替え
+SCRIPT_FUNC_DEF( PokeSetFrontBack )
+{
+  STA_SCRIPT_WORK *scriptWork = (STA_SCRIPT_WORK*)context_work;
+  STA_SCRIPT_SYS *work = scriptWork->sysWork;
+  const s32 pokeNoTemp = ScriptFunc_GetValueS32();
+  const s32 pokeNoBit = ScriptFunc_GetPokeBit( scriptWork , pokeNoTemp );
+  const s32 dir = ScriptFunc_GetValueS32();
+  u8  pokeNo;
+
+  STA_POKE_SYS  *pokeSys = STA_ACT_GetPokeSys( work->actWork );
+  SCRIPT_PRINT_LABEL(PokeSetFrontBack);
+
+  for( pokeNo=0;pokeNo<MUSICAL_POKE_MAX;pokeNo++ )
+  {
+    if( pokeNoBit & (1<<pokeNo) )
+    {
+      STA_POKE_WORK *pokeWork = STA_ACT_GetPokeWork( work->actWork , (u8)pokeNo );
+      STA_POKE_SetFrontBack( pokeSys , pokeWork , (dir==0 ? SPD_LEFT : SPD_RIGHT) );
+    }
+  }
+
+  return SFT_CONTINUE;
+}
+
+//ポケモンポケモン アイテム表示切替
+SCRIPT_FUNC_DEF( PokeDispItem )
+{
+  STA_SCRIPT_WORK *scriptWork = (STA_SCRIPT_WORK*)context_work;
+  STA_SCRIPT_SYS *work = scriptWork->sysWork;
+  const s32 pokeNoTemp = ScriptFunc_GetValueS32();
+  const s32 pokeNoBit = ScriptFunc_GetPokeBit( scriptWork , pokeNoTemp );
+  const s32 dir = ScriptFunc_GetValueS32();
+  u8  pokeNo;
+
+  STA_POKE_SYS  *pokeSys = STA_ACT_GetPokeSys( work->actWork );
+  SCRIPT_PRINT_LABEL(PokeDispItem);
+
+  for( pokeNo=0;pokeNo<MUSICAL_POKE_MAX;pokeNo++ )
+  {
+    if( pokeNoBit & (1<<pokeNo) )
+    {
+      STA_POKE_WORK *pokeWork = STA_ACT_GetPokeWork( work->actWork , (u8)pokeNo );
+      STA_POKE_SetDrawItem( pokeSys , pokeWork , (dir==0 ? SPD_LEFT : SPD_RIGHT) );
+    }
+  }
+
+  return SFT_CONTINUE;
+}
 #pragma mark [>PokemonAction
 //ポケモンアクション・跳ねる
 typedef struct

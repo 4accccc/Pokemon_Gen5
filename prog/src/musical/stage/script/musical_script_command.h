@@ -55,7 +55,9 @@
 #define SCRIPT_ENUM_BgmStart        (36)
 #define SCRIPT_ENUM_BgmStop         (37)
 #define SCRIPT_ENUM_PokeActionRotate    (38)
-#define SEQ_END             (39)
+#define SCRIPT_ENUM_PokeSetFrontBack    (39)
+#define SCRIPT_ENUM_PokeDispItem    (40)
+#define SEQ_END             (41)
 
 #ifndef __C_NO_DEF_
 
@@ -329,6 +331,44 @@
   .short  SCRIPT_ENUM_PokeChangeAnime
   .long \pokeNo
   .long \animeNo
+  .endm
+  
+//======================================================================
+/**
+ * @brief ポケモン：正面・背面切り替え
+ *
+ * #param_num 2
+ * @param pokeNo  ポケモン番号(-1で事前登録対象)
+ * @param dir   向き(正面：背面)
+ *
+ * #param VALUE_INT pokeNo
+ * #param COMBOBOX_TEXT 正面  背面
+ * #param COMBOBOX_VALUE  1 0
+ */
+//======================================================================
+  .macro  ComPokeSetFrontBack  pokeNo  dir
+  .short  SCRIPT_ENUM_PokeSetFrontBack
+  .long \pokeNo
+  .long \dir
+  .endm
+  
+//======================================================================
+/**
+ * @brief ポケモン：装備品表示切り替え
+ *
+ * #param_num 2
+ * @param pokeNo  ポケモン番号(-1で事前登録対象)
+ * @param flg   ON/OFF
+ *
+ * #param VALUE_INT pokeNo
+ * #param COMBOBOX_TEXT OFF ON
+ * #param COMBOBOX_VALUE  0 1
+ */
+//======================================================================
+  .macro  ComPokeSetDispItem pokeNo  flg
+  .short  SCRIPT_ENUM_PokeDispItem
+  .long \pokeNo
+  .long \flg
   .endm
 
 #pragma mark [>Pokemon Action Command

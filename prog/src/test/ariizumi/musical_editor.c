@@ -197,7 +197,7 @@ GFL_PROC_DATA MusicalEdit_ProcData =
   MusicalEditProc_Term
 };
 
-FS_EXTERN_OVERLAY(sogabe_debug);
+FS_EXTERN_OVERLAY(mcs_lib);
 
 //--------------------------------------------------------------
 //  
@@ -231,7 +231,7 @@ static GFL_PROC_RESULT MusicalEditProc_Init( GFL_PROC * proc, int * seq , void *
   //mcs—p‰Šú‰»
   work->heapId = HEAPID_MUSICAL_STAGE;
   work->mcsSeq = MSEQ_WAIT;
-  GFL_OVERLAY_Load(FS_OVERLAY_ID(sogabe_debug));
+  GFL_OVERLAY_Load(FS_OVERLAY_ID(mcs_lib));
   
   return GFL_PROC_RES_FINISH;
 }
@@ -240,7 +240,7 @@ static GFL_PROC_RESULT MusicalEditProc_Term( GFL_PROC * proc, int * seq , void *
 {
   MUS_EDIT_LOCAL_WORK *work = mywk;
   
-  GFL_OVERLAY_Unload(FS_OVERLAY_ID(sogabe_debug));
+  GFL_OVERLAY_Unload(FS_OVERLAY_ID(mcs_lib));
   
   MUSICAL_STAGE_DeleteStageWork( work->actInitWork );
   GFL_PROC_FreeWork( proc );

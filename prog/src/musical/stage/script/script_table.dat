@@ -59,3 +59,6 @@ SCRIPT_FUNC_DEF( BgmStart )			//1	//BGM開始
 SCRIPT_FUNC_DEF( BgmStop )				//BGM停止
 
 SCRIPT_FUNC_DEF( PokeActionRotate )	//3	//ポケモンアクション・回転
+SCRIPT_FUNC_DEF( PokeSetFrontBack )	//2	//ポケモン 正面：背面切り替え
+SCRIPT_FUNC_DEF( PokeDispItem )	//2	//ポケモン アイテム表示切替
+

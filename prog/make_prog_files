@@ -661,11 +661,10 @@ SRCS_OVERLAY_PMSINPUT = app/pms_input/pms_input_data.c \
         app/pms_input/pmsiv_wordwin.c
 
 
-# ミュージカル(mcs使うために曽我部さんのoverlayの下に
-#===> SRCS_OVERLAY_SOGABE_DEBUG
-#  ===> SRCS_OVERLAY_DEV_WIFI
-#  ===> SRCS_OVERLAY_DEV_WIRELESS
-#  ===> SRCS_OVERLAY_DEV_IRC
+# ミュージカル
+#===> SRCS_OVERLAY_DEV_WIFI
+#===> SRCS_OVERLAY_DEV_WIRELESS
+#===> SRCS_OVERLAY_DEV_IRC
 SRCS_OVERLAY_MUSICAL = musical/mus_poke_draw.c \
         musical/mus_poke_data.c \
         musical/mus_item_draw.c \
