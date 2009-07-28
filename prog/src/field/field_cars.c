@@ -415,7 +415,7 @@ static void ActTrailers( FIELD_CARS* p_sys )
 					= START_MIN_INTERVAL + GFL_STD_MtRand( START_MAX_INTERVAL - START_MIN_INTERVAL ); 
 
 				// DEBUG:
-				OBATA_Printf("SetTimer : count = %d\n", p_sys->timer[i].count );
+				//OBATA_Printf("SetTimer : count = %d\n", p_sys->timer[i].count );
 			}
 		}
 		// “®‚¢‚Ä‚¢‚È‚¢ê‡
@@ -452,7 +452,7 @@ static void ActTrailers( FIELD_CARS* p_sys )
 					p_sys->trailer[i].speed  = s;
 
 					// DEBUG:
-					OBATA_Printf( "TrailerStart : speed = %d\n", FX_Whole( p_sys->trailer[i].speed ) );
+					//OBATA_Printf( "TrailerStart : speed = %d\n", FX_Whole( p_sys->trailer[i].speed ) );
 				}
 			} 
 		}
