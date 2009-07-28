@@ -39,8 +39,11 @@ use constant EOM_CODE		=> 0xffff;	# EOMコード
 use constant CR_CODE		=> 0xfffe;	# 改行コード
 use constant TAG_CODE		=> 0xf000;	# タグ開始コード
 
+
 use constant TAGTYPE_WORDSET_WORD   => 0x01;
 use constant TAGTYPE_WORDSET_NUMBER => 0x02;
+use constant TAGCODE_CTRL_STREAM_LINEFEED  => 0xbe00;
+use constant TAGCODE_CTRL_STREAM_PAGECLEAR  => 0xbe01;
 
 use constant MSG_HEADER_SIZE		=> 0x000c;	# ファイルヘッダのサイズ
 use constant LANGBLOCK_HEADER_SIZE	=> 0x0004;	# 言語ブロックヘッダのサイズ
@@ -374,13 +377,15 @@ sub encode_game_strcode {	# source local
 		elsif($t eq "▼")
 		{
 			$ret .= pack('S', TAG_CODE);
-			$ret .= pack('S', 0xbe00);
+			$ret .= pack('S', TAGCODE_CTRL_STREAM_LINEFEED );	# 改行コントロール
+			$ret .= pack('S', 0 );		# パラメータ数=0
 			$EncodeSkipCR_Flag = 1;		# 次の改行は無視する
 		}
 		elsif($t eq "▽")
 		{
 			$ret .= pack('S', TAG_CODE);
-			$ret .= pack('S', 0xbe01);
+			$ret .= pack('S', TAGCODE_CTRL_STREAM_PAGECLEAR );	# 改行コントロール
+			$ret .= pack('S', 0 );		# パラメータ数=0
 			$EncodeSkipCR_Flag = 1;		# 次の改行は無視する
 		}
 		else
