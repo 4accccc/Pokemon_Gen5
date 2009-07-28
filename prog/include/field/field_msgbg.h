@@ -139,6 +139,8 @@ extern BOOL FLDMSGPRINT_CheckPrintTrans( FLDMSGPRINT *msgPrint );
 extern void FLDMSGPRINT_ChangeBmpWin(
 		FLDMSGPRINT *msgPrint, GFL_BMPWIN *bmpwin );
 extern void FLDMSGPRINT_ClearBmp( FLDMSGPRINT *msgPrint );
+extern void FLDMSGPRINT_FillClearBmp(
+    FLDMSGPRINT *msgPrint, u32 x, u32 y, u32 size_x, u32 size_y );
 extern PRINT_QUE * FLDMSGPRINT_GetPrintQue( FLDMSGPRINT *msgPrint );
 extern GFL_FONT * FLDMSGPRINT_GetFontHandle( FLDMSGPRINT *msgPrint );
 extern PRINT_UTIL * FLDMSGPRINT_GetPrintUtil( FLDMSGPRINT *msgPrint );
@@ -153,6 +155,8 @@ extern void FLDMSGWIN_Print( FLDMSGWIN *msgWin, u16 x, u16 y, u32 strID );
 extern void FLDMSGWIN_PrintStrBuf( FLDMSGWIN *msgWin, u16 x, u16 y, STRBUF *strBuf );
 extern BOOL FLDMSGWIN_CheckPrintTrans( FLDMSGWIN *msgWin );
 extern void FLDMSGWIN_ClearWindow( FLDMSGWIN *msgWin );
+extern void FLDMSGWIN_FillClearWindow(
+    FLDMSGWIN *msgWin, u32 x, u32 y, u32 size_x, u32 size_y );
 extern FLDMSGWIN * FLDMSGWIN_AddTalkWin( FLDMSGBG *fmb, GFL_MSGDATA *msgData );
 
 //ÉÅÉjÉÖÅ[
