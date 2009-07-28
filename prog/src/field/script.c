@@ -31,6 +31,7 @@
 #include "eventwork_def.h"
 
 #include "arc/fieldmap/script_seq.naix"
+#include "system/main.h"  //HEAPID_PROC
 
 #include "../../../resource/fldmapdata/script/init_scr_def.h"
 
@@ -291,8 +292,10 @@ GMEVENT * SCRIPT_SetEventScript( GAMESYS_WORK *gsys, u16 scr_id, MMDL *obj,
 		HEAPID heapID, const SCRIPT_FLDPARAM *fparam )
 {
 	GMEVENT *event;
+	SCRIPT_WORK *sc;
 	
-	SCRIPT_WORK *sc = EvScriptWork_Alloc( heapID );		//ワーク確保
+  heapID = HEAPID_PROC;
+	sc = EvScriptWork_Alloc( heapID );		//ワーク確保
 	sc->fld_param = *fparam;
 	EvScriptWork_Init( sc, gsys, scr_id, obj, NULL );	//初期設定
 	event = FldScript_CreateControlEvent( sc );
