@@ -317,6 +317,12 @@ void  PPP_SetupEx( POKEMON_PASO_PARAM *ppp, u16 mons_no, u16 level, u64 id, PtlS
   {
     id = __GFL_STD_MtRand();
   }
+  //トレーナーの持ちポケモンは個性乱数を固定にしてレアは出さないようにするので、IDで調整をする
+  else if( id == PTL_SETUP_ID_NOT_RARE )
+  {
+    id = (u32)(rnd+1);
+    while( POKETOOL_CheckRare( id, rnd ) ){ id = (id+1)&0xffffffff; }
+  }
   PPP_Put( ppp, ID_PARA_id_no, (int)id );
 
 //個性乱数セット
