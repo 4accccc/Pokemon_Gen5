@@ -1,11 +1,16 @@
 EFFSEQ
 $0001
-C:\home\pokemon_wb\resource\particle\wazaeffect\w_001.spa
+C:\home\pokemon_wb\resource\particle\wazaeffect\w_319.spa
 #001
 %00
-パーティクルデータロード	w_001
-パーティクル再生	w_001	W_001_001_BALL_BURN	攻撃側	方向無し	0	0
-パーティクル再生	w_001	W_001_001_HIT_MARK	攻撃側	方向無し	0	0
+BGのパレットフェード	すべて	0	12	3	0:0:0
+エフェクト終了待ち	すべて
+射影モード	透視射影
+パーティクルデータロード	w_319
+エミッタ移動	w_319	W_319_319_METAL_BEAM	直線	攻撃側	防御側	2:46:0
+エフェクト終了待ち	すべて
+射影モード	正射影
+BGのパレットフェード	すべて	12	0	3	0:0:0
 エフェクト終了待ち	すべて
 エフェクト終了
 &
