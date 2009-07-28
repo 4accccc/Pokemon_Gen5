@@ -1,0 +1,128 @@
+//======================================================================
+/**
+ * @file scr_musical.c
+ * @brief スクリプトコマンド　ミュージカル関連
+ * @author	Satoshi Nohara
+ * @date	06.06.26
+ */
+//======================================================================
+#include <gflib.h>
+#include "system/gfl_use.h"
+#include "system/main.h"
+
+#include "system/vm_cmd.h"
+
+#include "gamesystem/gamesystem.h"
+#include "gamesystem/game_event.h"
+
+#include "fieldmap.h"
+
+#include "script.h"
+#include "script_def.h"
+#include "scrcmd.h"
+#include "scrcmd_work.h"
+
+#include "musical/musical_system.h"
+
+#include "poke_tool/poke_tool.h"  //ドレスアップ仮データ用
+#include "poke_tool/monsno_def.h" //ドレスアップ仮データ用
+#include "event_fieldmap_control.h"
+
+#include "scrcmd_musical.h"
+
+//======================================================================
+//  define
+//======================================================================
+
+//======================================================================
+//  struct
+//======================================================================
+//--------------------------------------------------------------
+/// EVENT_MUSICAL_WORK
+//--------------------------------------------------------------
+typedef struct
+{
+  MUSICAL_INIT_WORK init;
+  GMEVENT *event;
+}EVENT_MUSICAL_WORK;
+
+//======================================================================
+//  proto
+//======================================================================
+static GMEVENT_RESULT event_Musical(
+    GMEVENT *event, int *seq, void *work );
+
+//======================================================================
+//  スクリプトコマンド　ミュージカル
+//======================================================================
+//--------------------------------------------------------------
+/**
+ * ミュージカル：ミュージカル呼び出し
+ * @param  core    仮想マシン制御構造体へのポインタ
+ * @retval  VMCMD_RESULT
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdMusicalCall( VMHANDLE *core, void *wk )
+{
+  GMEVENT *call_event;
+  MUSICAL_INIT_WORK *init;
+  EVENT_MUSICAL_WORK *ev_musical_work;
+  SCRCMD_WORK *work = wk;
+  SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
+  GAMESYS_WORK *gsys = SCRCMD_WORK_GetGameSysWork( work );
+  GAMEDATA *gdata = SCRCMD_WORK_GetGameData( work );
+  SCRIPT_FLDPARAM *fparam = SCRIPT_GetMemberWork( sc, ID_EVSCR_WK_FLDPARAM );
+  
+  call_event = GMEVENT_Create(
+      gsys, NULL, event_Musical, sizeof(EVENT_MUSICAL_WORK) );
+  ev_musical_work = GMEVENT_GetEventWork( call_event );
+	MI_CpuClear8( ev_musical_work, sizeof(EVENT_MUSICAL_WORK) );
+  
+  init = &ev_musical_work->init;
+  init->saveCtrl = GAMEDATA_GetSaveControlWork( gdata );
+  init->pokePara = PP_Create(
+      MONSNO_PIKUSII , 20, PTL_SETUP_POW_AUTO , HEAPID_PROC );
+  init->isComm = FALSE;
+  init->isDebug = FALSE;
+  init->gameComm = GAMESYSTEM_GetGameCommSysPtr( gsys );
+  
+  ev_musical_work->event = EVENT_FieldSubProc( gsys, fparam->fieldMap,
+    NO_OVERLAY_ID, &Musical_ProcData, init );
+   
+  {
+    GMEVENT **sc_event = SCRIPT_GetMemberWork( sc, ID_EVSCR_WK_GMEVENT );
+    GMEVENT_CallEvent( *sc_event, call_event );
+  }
+  
+  return VMCMD_RESULT_CONTINUE;
+}
+
+//======================================================================
+//  ミュージカル　イベント部分
+//======================================================================
+//--------------------------------------------------------------
+/**
+ * @param
+ * @retval
+ */
+//--------------------------------------------------------------
+static GMEVENT_RESULT event_Musical(
+    GMEVENT *event, int *seq, void *work )
+{
+  EVENT_MUSICAL_WORK *ev_musical_work = work;
+  
+  switch( (*seq) ){
+  case 0:
+    GMEVENT_CallEvent( event, ev_musical_work->event );
+    (*seq)++;
+    break;
+  case 1:
+    {
+      MUSICAL_INIT_WORK *init = &ev_musical_work->init;
+      GFL_HEAP_FreeMemory( init->pokePara );
+    }
+    (*seq)++;
+    return( GMEVENT_RES_FINISH );
+  }
+  return( GMEVENT_RES_CONTINUE );
+}

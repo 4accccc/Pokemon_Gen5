@@ -33,6 +33,7 @@
 
 #include "scrcmd_trainer.h"
 #include "scrcmd_sound.h"
+#include "scrcmd_musical.h"
 
 //======================================================================
 //  define
@@ -2287,6 +2288,9 @@ const VMCMD_FUNC ScriptCmdTbl[] = {
   EvCmdDispFadeStart,
   EvCmdDispFadeCheck,
   
+  //ミュージカル関連
+  EvCmdMusicalCall,
+
   //その他
   EvCmdChangeLangID,
   EvCmdGetRand,
