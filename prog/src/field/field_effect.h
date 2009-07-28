@@ -18,7 +18,7 @@
 //  define
 //======================================================================
 #define FLDEFF_TASK_WORK_SIZE (160) ///<FLDEFF_TASKで使用するワークサイズ
-#define FLDEFF_TASK_MAX (128)
+#define FLDEFF_TASK_MAX (64)
 
 //--------------------------------------------------------------
 /// FLDEFF_PROCID
