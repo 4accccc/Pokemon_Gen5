@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-07-13T11:36:14"/>
+	<create user="matsumiya" host="W00207" date="2009-07-28T11:38:40"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -537,14 +537,24 @@
 ちいさな　せいめいたい　だそうです[BE:01:ページ切り替え（クリア）]
 これが　ついている　あいだ
 ポケモンが　よく　そだつ　みたいです</language>
-		<language name="JPN_KANJI" width="256">おあずかりした　ポケモンに
+		<language name="JPN_KANJI" width="256">お預かりした　ポケモンに
 ポケルスが　ついて　いるようです[BE:01:ページ切り替え（クリア）]
-くわしいことは　わかって　いませんが
+詳しいことは　わかって　いませんが
 ポケルスと　いうのは[BE:00:ページ切り替え（行送り）]
 ポケモンに　くっつく[BE:00:ページ切り替え（行送り）]
-ちいさな　せいめいたい　だそうです[BE:01:ページ切り替え（クリア）]
+小さな　生命体　だそうです[BE:01:ページ切り替え（クリア）]
 これが　ついている　あいだ
-ポケモンが　よく　そだつ　みたいです</language>
+ポケモンが　よく　育つみたいです</language>
+	</row>
+
+	<row id="msg_shop_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂
+・最初の会話</comment>
+		<attribute name="キャラ指定">ショップ店員</attribute>
+		<language name="JPN" width="256">ようこそ！
+おかいもの　ですね？</language>
+		<language name="JPN_KANJI" width="256">ようこそ！
+お買い物ですね？</language>
 	</row>
 
 	<flowchart-group-list>
