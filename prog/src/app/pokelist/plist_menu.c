@@ -331,6 +331,8 @@ static STRBUF* PLIST_MENU_CreateMenuStr( PLIST_WORK *work , PLIST_MENU_WORK *men
 //--------------------------------------------------------------
 GFL_BMPWIN* PLIST_MENU_CreateMenuWin_BattleMenu( PLIST_WORK *work , PLIST_MENU_WORK *menuWork , u32 strId , u8 charX , u8 charY )
 {
+  
+  //FIXME ‚±‚ê‚ÌprintQue‚ÌUpdate‚ª–³‚¢‚Ì‚ÅŒã‚Å‘«‚·‚±‚Æ
   GFL_BMPWIN* bmpWin;
   
   PRINTSYS_LSB col;
@@ -344,8 +346,12 @@ GFL_BMPWIN* PLIST_MENU_CreateMenuWin_BattleMenu( PLIST_WORK *work , PLIST_MENU_W
   GFL_STD_MemCopy32( menuWork->ncgData->pRawData , GFL_BMP_GetCharacterAdrs(GFL_BMPWIN_GetBmp( bmpWin )) ,
                    0x20*PLIST_MENU_PLATE_WIDTH*PLIST_MENU_PLATE_HEIGHT );
   col = PRINTSYS_LSB_Make( PLIST_FONT_MENU_LETTER,PLIST_FONT_MENU_SHADOW,PLIST_FONT_MENU_BACK);
-  PRINTSYS_PrintQueColor( work->printQue , GFL_BMPWIN_GetBmp( bmpWin ), 
-                      8+PLIST_MSG_STR_OFS_X , 4+PLIST_MSG_STR_OFS_Y , str , work->fontHandle , col );
+//  PRINTSYS_PrintQueColor( work->printQue , GFL_BMPWIN_GetBmp( bmpWin ), 
+//                      8+PLIST_MSG_STR_OFS_X , 4+PLIST_MSG_STR_OFS_Y , str , work->fontHandle , col );
+  GFL_FONTSYS_SetColor(PLIST_FONT_MENU_LETTER,PLIST_FONT_MENU_SHADOW,PLIST_FONT_MENU_BACK);
+  PRINTSYS_Print( GFL_BMPWIN_GetBmp( bmpWin ),8+PLIST_MSG_STR_OFS_X , 4+PLIST_MSG_STR_OFS_Y ,
+                  str , work->fontHandle );
+  GFL_FONTSYS_SetDefaultColor();
   GFL_STR_DeleteBuffer( str );
   GFL_BMPWIN_MakeTransWindow_VBlank( bmpWin );
 

@@ -19,7 +19,7 @@ typedef struct _APP_TASKMENU_WORK APP_TASKMENU_WORK;
 //タスクメニュー 初期化ワーク １項目
 typedef struct
 {
-  STRBUF  *str;
+  STRBUF  *str;           
   PRINTSYS_LSB msgColor;
 }APP_TASKMENU_ITEMWORK;
 
@@ -40,7 +40,7 @@ typedef struct
   GFL_FONT    *fontHandle;
   PRINT_QUE   *printQue;
 }APP_TASKMENU_INITWORK;
-
+//※APP_TASKMENU_INITWORKはOpenMenu後開放しても問題ありません。
 
 extern APP_TASKMENU_WORK* APP_TASKMENU_OpenMenu( APP_TASKMENU_INITWORK *initWork );
 extern void APP_TASKMENU_CloseMenu( APP_TASKMENU_WORK *work );

@@ -660,7 +660,8 @@ static void PLIST_InitMessage( PLIST_WORK *work )
 
   GFL_ARC_UTIL_TransVramPalette( ARCID_FONT , NARC_font_default_nclr , PALTYPE_MAIN_BG , PLIST_BG_PLT_FONT*16*2, 16*2, work->heapId );
   
-  work->printQue = PRINTSYS_QUE_Create( work->heapId );
+  //キューが足りなかったので追加(デフォルト1024
+  work->printQue = PRINTSYS_QUE_CreateEx( 2048 , work->heapId );
 }
 
 //--------------------------------------------------------------------------
@@ -817,9 +818,24 @@ static void PLIST_InitMode_Select( PLIST_WORK *work )
   case PL_MODE_BATTLE:
 //    PLIST_MSG_OpenWindow( work , work->msgWork , PMT_BAR );
 //    PLIST_MSG_DrawMessageNoWait( work , work->msgWork , mes_pokelist_02_06 );
+    GFL_CLACT_WK_SetDrawEnable( work->clwkBarIcon[PBT_RETURN] , TRUE );
     work->canExit = FALSE;
     break;
     
+  case PL_MODE_ITEMUSE:
+  case PL_MODE_SHINKA:
+    PLIST_MSG_OpenWindow( work , work->msgWork , PMT_BAR );
+    PLIST_MSG_DrawMessageNoWait( work , work->msgWork , mes_pokelist_02_04 );
+    work->canExit = FALSE;
+    break;
+  
+  case PL_MODE_ITEMSET:
+  case PL_MODE_MAILSET:
+    PLIST_MSG_OpenWindow( work , work->msgWork , PMT_BAR );
+    PLIST_MSG_DrawMessageNoWait( work , work->msgWork , mes_pokelist_02_03 );
+    work->canExit = FALSE;
+    break;
+  
   default:
     GF_ASSERT_MSG( NULL , "PLIST mode まだ作ってない！[%d]\n" , work->plData->mode );
     break;
@@ -1364,6 +1380,7 @@ static void PLIST_SelectPokeSetCursor_Change( PLIST_WORK *work , const PL_SELECT
 
 static void PLIST_PLATE_SetActivePlatePos( PLIST_WORK *work , const PL_SELECT_POS pos )
 {
+  //現在未使用。プレート選択時移動
   const s8 moveVal[7][6][2] =
   {
     {
