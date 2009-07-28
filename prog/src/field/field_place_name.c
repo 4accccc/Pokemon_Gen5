@@ -496,6 +496,9 @@ static void Draw_LAUNCH( FIELD_PLACE_NAME* p_sys );
 static void Draw_WAIT_2( FIELD_PLACE_NAME* p_sys );
 static void Draw_FADE_OUT( FIELD_PLACE_NAME* p_sys );
 
+// デバッグ出力
+static void DebugPrint( FIELD_PLACE_NAME* p_sys );
+
 
 //===================================================================================
 /**
@@ -611,20 +614,7 @@ void FIELD_PLACE_NAME_Draw( FIELD_PLACE_NAME* p_sys )
 	}
 
 	// DEBUG: デバッグ出力
-	{
-		char* state;
-
-		switch( p_sys->state )
-		{
-			case STATE_HIDE:		state = "HIDE";			break;
-			case STATE_FADE_IN:		state = "FADE_IN";		break;
-			case STATE_WAIT_1:		state = "WAIT_1";		break;
-			case STATE_LAUNCH:		state = "LAUNCE";		break;
-			case STATE_WAIT_2:		state = "WAIT_2";		break;
-			case STATE_FADE_OUT:	state = "FADE_OUT";		break;
-		}
-		OBATA_Printf( "state = %s,  stateCount = %d\n", state, p_sys->stateCount );
-	}
+	//DebugPrint( p_sys );
 }
 
 //------------------------------------------------------------------------------------
@@ -785,6 +775,7 @@ static void SetupBG( FIELD_PLACE_NAME* p_sys )
 	GFL_BMPWIN_MakeTransWindow( p_sys->pBmpWin );
 
 	// DEBUG: スクリーン・バッファを書き出す
+	/*
 	{
 		int i,j;
 		u8* p_screen = (u8*)GFL_BG_GetScreenBufferAdrs( BG_FRAME );
@@ -800,6 +791,7 @@ static void SetupBG( FIELD_PLACE_NAME* p_sys )
 			OBATA_Printf( "\n" );
 		}
 	}
+	*/
 }
 
 //------------------------------------------------------------------------------------
@@ -1368,6 +1360,8 @@ static void Process_FADE_OUT( FIELD_PLACE_NAME* p_sys )
 //-----------------------------------------------------------------------------------
 static void Draw_HIDE( FIELD_PLACE_NAME* p_sys )
 {
+	// BGを非表示
+	GFL_BG_SetVisible( BG_FRAME, VISIBLE_OFF );	
 }
 
 //-----------------------------------------------------------------------------------
@@ -1439,4 +1433,33 @@ static void Draw_FADE_OUT( FIELD_PLACE_NAME* p_sys )
 	val1 = (int)( ALPHA_VALUE_1 * (1.0f - rate) );
 	val2 = (int)( ALPHA_VALUE_2 + (16 - ALPHA_VALUE_2) * rate );
 	G2_SetBlendAlpha( ALPHA_PLANE_1, ALPHA_PLANE_2, val1, val2 );
+}
+
+//-----------------------------------------------------------------------------------
+/**
+ * @brief デバッグ出力
+ *
+ * @param p_sys データを出力するシステム
+ */
+//-----------------------------------------------------------------------------------
+static void DebugPrint( FIELD_PLACE_NAME* p_sys )
+{
+	char* str;
+
+	switch( p_sys->state )
+	{
+		case STATE_HIDE:		str = "HIDE";		break;
+		case STATE_FADE_IN:		str = "FADE_IN";	break;
+		case STATE_WAIT_1:		str = "WAIT_1";		break;
+		case STATE_LAUNCH:		str = "LAUNCE";		break;
+		case STATE_WAIT_2:		str = "WAIT_2";		break;
+		case STATE_FADE_OUT:	str = "FADE_OUT";	break;
+	}
+
+	// DEBUG:
+	OBATA_Printf( "-------------------------------FIELD_PLACE_NAME\n" );
+	OBATA_Printf( "state         = %s\n", str );
+	OBATA_Printf( "stateCount    = %d\n", p_sys->stateCount );
+	OBATA_Printf( "currentZoneID = %d\n", p_sys->currentZoneID );
+	OBATA_Printf( "nextZoneID    = %d\n", p_sys->nextZoneID );
 }
