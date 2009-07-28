@@ -68,7 +68,6 @@ BGM_INFO_SYS* BGM_INFO_CreateSystem( HEAPID heap_id )
 
 	// システムワークを確保
 	p_sys = (BGM_INFO_SYS*)GFL_HEAP_AllocMemory( heap_id, sizeof( BGM_INFO_SYS ) );
-	OBATA_Printf( "-----------------alloc size = %d\n", sizeof( BGM_INFO_SYS ) );
 
 	// データ読み込み
 	LoadInfo( p_sys, heap_id );
@@ -93,9 +92,12 @@ void BGM_INFO_DeleteSystem( BGM_INFO_SYS* p_sys )
 	// 本体を破棄
 	GFL_HEAP_FreeMemory( p_sys );
 
+	// DEBUG:
+	/*
 	OBATA_Printf( "-----------------free size = %d\n", sizeof( u16 ) * p_sys->dataNum );
 	OBATA_Printf( "-----------------free size = %d\n", sizeof( u8 ) * p_sys->dataNum );
 	OBATA_Printf( "-----------------free size = %d\n", sizeof( BGM_INFO_SYS ) );
+	*/
 }
 
 
@@ -165,8 +167,6 @@ void LoadInfo( BGM_INFO_SYS* p_sys, HEAPID heap_id )
 	// 各種データの配列を確保
 	p_sys->seqIndex = (u16*)GFL_HEAP_AllocMemory( heap_id, sizeof( u16 ) * p_sys->dataNum );
 	p_sys->issType  = ( u8*)GFL_HEAP_AllocMemory( heap_id, sizeof(  u8 ) * p_sys->dataNum );
-	OBATA_Printf( "-----------------alloc size = %d\n", sizeof( u16 ) * p_sys->dataNum );
-	OBATA_Printf( "-----------------alloc size = %d\n", sizeof( u8 ) * p_sys->dataNum );
 
 	// 各種データを取得
 	for( i=0; i<p_sys->dataNum; i++ )
@@ -180,11 +180,13 @@ void LoadInfo( BGM_INFO_SYS* p_sys, HEAPID heap_id )
 		pos += 1;
 	}
 
-	// デバッグ出力
+	// DEBUG:
+	/*
 	OBATA_Printf( "--------------------------------------\n" );
 	OBATA_Printf( "dataNum = %d\n", p_sys->dataNum );
 	for( i=0; i<p_sys->dataNum; i++ )
 	{
 		OBATA_Printf( "[%d]: seq=%d, iss=%d\n", i, p_sys->seqIndex[i], p_sys->issType[i] );
 	}
+	*/
 }
