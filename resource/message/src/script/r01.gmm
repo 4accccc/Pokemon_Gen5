@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-07-28T15:00:54"/>
+	<create user="matsumiya" host="W00207" date="2009-07-28T20:58:22"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="538"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="692"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -364,9 +364,9 @@
 ・0＝プレイヤー名
 ・1＝道具名</comment>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]は
-[FF:00:色:2][1:09:どうぐ名:1][FF:00:色:0]を　てにいれた！</language>
+[FF:00:色:2]モンスターボール[FF:00:色:0]を　てにいれた！</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]は
-[FF:00:色:2][1:09:どうぐ名:1][FF:00:色:0]を　てにいれた！</language>
+[FF:00:色:2]モンスターボール[FF:00:色:0]を　てにいれた！</language>
 	</row>
 
 	<row id="msg_r01_hakase2_03" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -501,10 +501,10 @@
 　操作可能に</comment>
 		<attribute name="キャラ指定">友達♀</attribute>
 		<language name="JPN" width="256">ともだち♀『あたしと
-[1:01:ポケモン種族名:0]の　コンビが[BE:00:ページ切り替え（行送り）]
+ポケモンの　コンビが[BE:00:ページ切り替え（行送り）]
 いちばんに　きまってるもん！[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">ともだち♀『あたしと
-[1:01:ポケモン種族名:0]の　コンビが[BE:00:ページ切り替え（行送り）]
+ポケモンの　コンビが[BE:00:ページ切り替え（行送り）]
 一番に　決まってるもん！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
