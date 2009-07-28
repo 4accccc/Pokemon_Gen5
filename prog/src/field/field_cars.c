@@ -422,7 +422,7 @@ static void ActTrailers( FIELD_CARS* p_sys )
 				if( START_MAX_INTERVAL < p_sys->timer[i].count ) p_sys->timer[i].count = START_MAX_INTERVAL;
 
 				// DEBUG:
-				OBATA_Printf("[%d]SetTimer : count = %d\n", i, p_sys->timer[i].count );
+				//OBATA_Printf("[%d]SetTimer : count = %d\n", i, p_sys->timer[i].count );
 			}
 		}
 		// “®‚¢‚Ä‚¢‚È‚¢ê‡
@@ -459,7 +459,7 @@ static void ActTrailers( FIELD_CARS* p_sys )
 					p_sys->trailer[i].speed  = s;
 
 					// DEBUG:
-					OBATA_Printf( "[%d]TrailerStart : speed = %d\n", i, FX_Whole( p_sys->trailer[i].speed ) );
+					//OBATA_Printf( "[%d]TrailerStart : speed = %d\n", i, FX_Whole( p_sys->trailer[i].speed ) );
 				}
 			} 
 		}
