@@ -1241,7 +1241,7 @@ static u16 * DEBUG_GetZoneNameUTF16( u32 heapID, u32 zoneID )
 	char name8[128];
 	
 	pStrBuf = GFL_HEAP_AllocClearMemory( heapID, sizeof(u16)*128 );
-	ZONEDATA_GetZoneName( heapID, name8, zoneID );
+	ZONEDATA_DEBUG_GetZoneName( name8, zoneID );
 	utf16_eom = GFL_STR_GetEOMCode();
 //	OS_Printf( "•ÏŠ· %s\n", name8 );
 	

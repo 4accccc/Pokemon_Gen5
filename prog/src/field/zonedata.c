@@ -340,12 +340,11 @@ u16 ZONEDATA_GetPlaceNameWinID(u16 zone_id)
 //------------------------------------------------------------------
 /**
  * @brief	ゾーン名データの取得
- * @param	heapID		作業用ヒープの指定
  * @param	buffer		名前を取得するためのバッファ(ZONEDATA_NAME_LENGTHの長さが必要）
  * @param	zoneid		取得するゾーンの名前
  */
 //------------------------------------------------------------------
-void ZONEDATA_GetZoneName(HEAPID heapID, char * buffer, u16 zone_id)
+void ZONEDATA_DEBUG_GetZoneName(char * buffer, u16 zone_id)
 {
 	CHECK_RANGE(zone_id);	//範囲外チェック
 	GFL_ARC_LoadDataOfs(buffer,

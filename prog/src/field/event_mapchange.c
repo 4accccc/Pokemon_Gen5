@@ -653,7 +653,7 @@ static void UpdateMapParams(GAMESYS_WORK * gsys, const LOCATION * loc_req)
 
   { 
     char buf[ZONEDATA_NAME_LENGTH*2];
-    ZONEDATA_GetZoneName(0, buf, loc_req->zone_id);
+    ZONEDATA_DEBUG_GetZoneName(buf, loc_req->zone_id);
     TAMADA_Printf("UpdateMapParams:%s\n", buf);
   }
 	//イベント起動データの読み込み

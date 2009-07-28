@@ -493,7 +493,7 @@ static void DebugFieldPosPrint_Proc( FIELD_DEBUG_WORK *work )
 		if( zone_id == MAP_MATRIX_ZONE_ID_NON ){
 			sprintf( str, "ERROR" );
 		}else{
-			ZONEDATA_GetZoneName( 0, str, zone_id );
+			ZONEDATA_DEBUG_GetZoneName( str, zone_id );
 		}
 		
 		DebugFont_Print( work, 8, 7, str );

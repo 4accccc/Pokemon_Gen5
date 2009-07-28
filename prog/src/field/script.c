@@ -546,11 +546,16 @@ static void EvScriptWork_Init( SCRIPT_WORK *sc,
 		HideItemParamSet( sc, scr_id );
 	}
 	
-	#ifdef DEBUG_SCRIPT
-	OS_Printf( "ZONE:%s SCRID:%d\n",
-		ZoneData_GetZoneName(fsys->location->zone_id), scr_id);
-	#endif
 #endif
+	#ifdef DEBUG_SCRIPT
+  {
+    PLAYER_WORK *pw = GAMESYSTEM_GetMyPlayerWork( gsys );
+    u16 zone_id = PLAYERWORK_getZoneID( pw );
+    char buf[ZONEDATA_NAME_LENGTH];
+    ZONEDATA_DEBUG_GetZoneName(buf, zone_id);
+	  OS_Printf( "ZONE:%s SCRID:%d\n", buf, scr_id);
+  }
+	#endif
 }
 
 //--------------------------------------------------------------
