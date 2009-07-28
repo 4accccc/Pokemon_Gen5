@@ -2699,8 +2699,6 @@ static GMEVENT_RESULT DMenuSkyJump( GMEVENT *p_event, int *p_seq, void *p_wk_adr
 
 	case SEQ_FLD_CLOSE:
 		GMEVENT_CallEvent(p_wk->p_event, EVENT_FieldClose(p_wk->p_gamesys, p_wk->p_field));
-		//”z’u‚µ‚Ä‚¢‚½“®ìƒ‚ƒfƒ‹‚ðíœ
-		MMDLSYS_DeleteMMdl( GAMEDATA_GetMMdlSys( GAMESYSTEM_GetGameData(p_wk->p_gamesys) ) );
 		*p_seq	= SEQ_CALL_PROC;
 		break;
 
@@ -2755,7 +2753,8 @@ static GMEVENT_RESULT DMenuSkyJump( GMEVENT *p_event, int *p_seq, void *p_wk_adr
 		break;
 
 	case SEQ_PLACE_NAME:
-		{	
+		if( p_wk->p_param->select == TOWNMAP_SELECT_SKY )
+		{		
 			FIELDMAP_WORK * fieldmap = GAMESYSTEM_GetFieldMapWork(p_wk->p_gamesys);
 			FIELD_PLACE_NAME_ZoneChange(FIELDMAP_GetPlaceNameSys(fieldmap), p_wk->p_param->zoneID);
 		}
