@@ -36,7 +36,6 @@
 ///	オフセット情報
 //=====================================
 typedef struct {
-  s32   ofs_max;      // 幅分割数
   fx32  ofs_unit;     // 幅の移動単位
 } OFS_DATA;
 
@@ -245,10 +244,8 @@ void FIELD_RAIL_LOADER_Load( FIELD_RAIL_LOADER* p_sys, u32 datano, u32 heapID )
 
 	// オフセットパラメータ
 	ofs_data = (OFS_DATA*)(((u32)p_sys->p_work) + p_sys->p_work->ofsdata_offset);
-	p_sys->setting.ofs_max = ofs_data->ofs_max;
 	p_sys->setting.ofs_unit = ofs_data->ofs_unit;
 
-	TOMOYA_Printf( "ofs_max = %d\n", p_sys->setting.ofs_max );
 	TOMOYA_Printf( "ofs_unit = %d\n", p_sys->setting.ofs_unit );
 
 
@@ -360,10 +357,8 @@ void FIELD_RAIL_LOADER_DEBUG_LoadBinary( FIELD_RAIL_LOADER* p_sys, void* p_dat, 
 
 	// オフセットパラメータ
 	ofs_data = (OFS_DATA*)(((u32)p_sys->p_work) + p_sys->p_work->ofsdata_offset);
-	p_sys->setting.ofs_max = ofs_data->ofs_max;
 	p_sys->setting.ofs_unit = ofs_data->ofs_unit;
 
-	TOMOYA_Printf( "ofs_max = %d\n", p_sys->setting.ofs_max );
 	TOMOYA_Printf( "ofs_unit = %d\n", p_sys->setting.ofs_unit );
 }
 

@@ -98,6 +98,7 @@ struct _FIELD_RAIL{
     const RAIL_POINT * point;
     const RAIL_LINE * line;
   };
+	u32 dat_index;	// POINT or LINEのインデックス
   /// LINEにいる間の、LINE上でのオフセット位置
   s32 line_ofs;
   s32 line_ofs_max;
@@ -108,8 +109,6 @@ struct _FIELD_RAIL{
 
   RAIL_KEY key;
 
-  /// 幅情報
-	
 	/// レールデータ
 	const RAIL_DAT* rail_dat;
 };
@@ -152,6 +151,8 @@ static const RAIL_CAMERA_SET * getCameraSet(const FIELD_RAIL * rail);
 static const char * getRailName(const FIELD_RAIL * rail);
 static void getRailPosition(const FIELD_RAIL * rail, VecFx32 * pos);
 static s32 getLineOfsMax( const RAIL_LINE * line, fx32 unit, const RAIL_DAT* rail_dat );
+static s32 getLineWidthOfsMax( const RAIL_LINE * line, u32 line_ofs, u32 line_ofs_max, const RAIL_DAT* rail_dat );
+static RAIL_KEY updateLine( FIELD_RAIL * rail, const RAIL_LINE * line, u32 line_ofs_max, u32 key );
 static RAIL_KEY setLine(FIELD_RAIL * rail, const RAIL_LINE * line, RAIL_KEY key, int l_ofs, int w_ofs, int l_ofs_max);
 static void setLineData(FIELD_RAIL * rail, const RAIL_LINE * line, RAIL_KEY key, int l_ofs, int w_ofs, int l_ofs_max);
 static BOOL isLinePoint_S( const RAIL_DAT * rail_dat, const RAIL_LINE * line, const RAIL_POINT * point );
@@ -255,7 +256,7 @@ void FIELD_RAIL_MAN_Load(FIELD_RAIL_MAN * man, const RAIL_SETTING * setting)
   rail->type    = FIELD_RAIL_TYPE_POINT;
   rail->point   = &setting->point_table[0];
   rail->line_ofs_max  = 0;
-  rail->width_ofs_max = setting->ofs_max;
+  rail->width_ofs_max = setting->point_table[0].width_ofs_max[0];
   rail->ofs_unit      = setting->ofs_unit;
   man->active_flag = TRUE;
 
@@ -823,7 +824,9 @@ static RAIL_KEY updateLineMove_new(FIELD_RAIL * rail, RAIL_KEY key, u32 count_up
     //const RAIL_LINE * back = RAILPOINT_getLineByKey(nPoint, getReverseKey(key), rail->rail_dat);
     TAMADA_Printf("↑");
     rail->line_ofs += count_up;
-    if (rail->line_ofs <= nLine_ofs_max) return key;
+    if (rail->line_ofs <= nLine_ofs_max) {
+			return updateLine( rail, nLine, nLine_ofs_max, key );
+		}
     if (front)
     { //正面移行処理
       debugCheckPointData(nPoint, rail->rail_dat);
@@ -891,7 +894,9 @@ static RAIL_KEY updateLineMove_new(FIELD_RAIL * rail, RAIL_KEY key, u32 count_up
     const RAIL_LINE * back = RAILPOINT_getLineByKey(nPoint, key, rail->rail_dat);
     TAMADA_Printf("↓");
     rail->line_ofs -= count_up;
-    if (rail->line_ofs >= 0) return key;
+    if (rail->line_ofs >= 0) {
+			return updateLine( rail, nLine, nLine_ofs_max, key );
+		}
     if (back)
     {//背面移行処理
       debugCheckPointData(nPoint, rail->rail_dat);
@@ -955,7 +960,7 @@ static RAIL_KEY updateLineMove_new(FIELD_RAIL * rail, RAIL_KEY key, u32 count_up
     rail->width_ofs += count_up;
     if (rail->width_ofs < rail->width_ofs_max)
     {//範囲内の場合、終了
-      return key;
+			return updateLine( rail, nLine, nLine_ofs_max, key );
     }
     else if (rail->line_ofs < rail->width_ofs_max)
     { //始端に近い場合
@@ -1021,7 +1026,7 @@ static RAIL_KEY updateLineMove_new(FIELD_RAIL * rail, RAIL_KEY key, u32 count_up
     rail->width_ofs -= count_up;
     if (MATH_ABS(rail->width_ofs) < rail->width_ofs_max)
     {//範囲内の場合、終了
-      return key;
+			return updateLine( rail, nLine, nLine_ofs_max, key );
     }
     else if (rail->line_ofs < rail->width_ofs_max)
     {//始端に近い場合
@@ -1283,6 +1288,103 @@ static s32 getLineOfsMax( const RAIL_LINE * line, fx32 unit, const RAIL_DAT* rai
 //  OS_TPrintf( "div = %d dist = 0x%x unit = 0x%x\n", div, dist, unit );
 
   return div;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	ライン幅オフセット最大値を求める
+ *
+ *	@param	line
+ *	@param	line_ofs		ライン　オフセット値（進み具合）
+ *	@param	rail_dat 
+ *
+ *	@return	幅オフセット最大値
+ */
+//-----------------------------------------------------------------------------
+static s32 getLineWidthOfsMax( const RAIL_LINE * line, u32 line_ofs, u32 line_ofs_max, const RAIL_DAT* rail_dat )
+{
+	s32 width_ofs_max;
+	s32 width_ofs_div;
+	const RAIL_POINT* cp_point_s;
+	const RAIL_POINT* cp_point_e;
+	int i, j;
+	int width_s, width_e;
+
+	// ラインの始点と終点を取得
+	GF_ASSERT( line->point_s != RAIL_TBL_NULL );
+	cp_point_s = &rail_dat->point_table[ line->point_s ];
+	GF_ASSERT( line->point_e != RAIL_TBL_NULL );
+	cp_point_e = &rail_dat->point_table[ line->point_e ];
+
+	// 一致するラインの幅を取得
+	width_e = -1;
+	width_s = -1;
+	for( i=0; i<RAIL_CONNECT_LINE_MAX; i++ )
+	{
+		if( cp_point_s->lines[i] != RAIL_TBL_NULL )
+		{
+			if( (u32)(&rail_dat->line_table[cp_point_s->lines[i]]) == (u32)(line) )
+			{
+				width_s = cp_point_s->width_ofs_max[i];
+			}
+		}
+
+		if( cp_point_e->lines[i] != RAIL_TBL_NULL )
+		{
+			if( (u32)(&rail_dat->line_table[cp_point_e->lines[i]]) == (u32)(line) )
+			{
+				width_e = cp_point_e->width_ofs_max[i];
+			}
+		}
+	}
+	if( width_s < 0 )
+	{
+		width_s = width_e;
+	}
+	if( width_e < 0 )
+	{
+		width_e = width_s;
+	}
+	GF_ASSERT( width_s >= 0 );
+
+	width_ofs_div = width_e - width_s;
+	width_ofs_max = (width_ofs_div * (s32)line_ofs) / (s32)line_ofs_max;
+	width_ofs_max += width_s;
+	
+
+	return width_ofs_max;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	ライン動作　通常更新（幅チェックをする）
+ *
+ *	@param	rail					レールシステム
+ *	@param	line					進行中のライン
+ *	@param	line_ofs_max	ラインオフセット最大値
+ *	@param	key						押されているキー
+ *
+ *	@return	情報を変更したキー
+ */
+//-----------------------------------------------------------------------------
+static RAIL_KEY updateLine( FIELD_RAIL * rail, const RAIL_LINE * line, u32 line_ofs_max, u32 key )
+{
+  s32 width_ofs_max = getLineWidthOfsMax( line, rail->line_ofs, line_ofs_max, rail->rail_dat ); // 今のLINEのオフセット最大値
+
+	rail->width_ofs_max = width_ofs_max;
+	if( MATH_ABS(rail->width_ofs) >= width_ofs_max )
+	{
+		if(rail->width_ofs > 0)
+		{
+			rail->width_ofs = width_ofs_max-1;
+		}
+		else
+		{
+			rail->width_ofs = -(width_ofs_max-1);
+		}
+	}
+
+	return key;
 }
 
 //------------------------------------------------------------------

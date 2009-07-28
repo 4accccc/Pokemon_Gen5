@@ -72,6 +72,9 @@ typedef struct {
   FLD_SCENEAREA* p_sceneArea;
 	FLD_SCENEAREA_LOADER* p_scenearealoader;
 
+	VecFx32 last_pos;
+	VecFx32 player_way;
+
 }C3_MOVE_WORK;
 
 
@@ -156,6 +159,8 @@ static void mapCtrlC3_Create(
 	fld_player = FIELDMAP_GetFieldPlayer( fieldWork );
 	FIELD_PLAYER_SetPos( fld_player, pos);
 	FIELD_PLAYER_SetDir( fld_player, dir );
+
+	work->last_pos = *pos;
 }
 
 //--------------------------------------------------------------
@@ -210,7 +215,6 @@ static void mapCtrlC3_Main( FIELDMAP_WORK *fieldWork, VecFx32 *pos )
   {
     // ƒŒ[ƒ‹“®ì
     FIELD_RAIL_MAN_GetPos(railMan, pos );
-    pos->y = HEIGHT;
     FIELD_PLAYER_SetPos( fld_player, pos );
     PLAYERWORK_setPosition( player, pos );
     
@@ -220,7 +224,15 @@ static void mapCtrlC3_Main( FIELDMAP_WORK *fieldWork, VecFx32 *pos )
       cameraRailAreaControl( FIELDMAP_GetFieldCamera( fieldWork ) );
     }
 
-		FIELD_PLAYER_C3_Move( fld_player, key_cont, 0 );
+		// ˆÚ“®•ûŒü‚ÌÝ’è
+		if( VEC_Distance( pos, &mwk->last_pos ) != 0 )
+		{
+			VEC_Subtract( pos, &mwk->last_pos, &mwk->player_way );
+
+			mwk->last_pos = *pos;
+		}
+		FIELD_PLAYER_NOGRID_Rail_Move( fld_player, FIELDMAP_GetFldEffCtrl(fieldWork), &mwk->player_way, key_cont, FIELDMAP_GetFieldCamera(fieldWork) );
+//		TOMOYA_Printf( "pos->y 0x%x\n", pos->y );
   }	
   else
   {

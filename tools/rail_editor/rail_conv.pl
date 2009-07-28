@@ -380,7 +380,7 @@ sub convData
 	open( FILEOUT_OFS, ">$outfile.ofs" );
 	binmode( FILEOUT_OFS );
 
-	print( FILEOUT_OFS pack( "i", &get10Number(&getPeaceParamForTag( \@filedata, "ALLDATA", "OFSMAX") )) );
+#	print( FILEOUT_OFS pack( "i", &get10Number(&getPeaceParamForTag( \@filedata, "ALLDATA", "OFSMAX") )) );
 	print( FILEOUT_OFS pack( "i", &get10Number(&getPeaceParamForTag( \@filedata, "ALLDATA", "OFSUNIT")) ) );
 	
 	close( FILEOUT_OFS );
@@ -388,7 +388,7 @@ sub convData
 
 	#ƒ|ƒCƒ“ƒgî•ñ
 	{
-		my( $line, $key, $camera_set, $len );
+		my( $line, $key, $camera_set, $width_ofs,  $len );
 		open( FILEOUT_POINT, ">$outfile.point" );
 		binmode( FILEOUT_POINT );
 
@@ -416,6 +416,17 @@ sub convData
 			print( FILEOUT_POINT pack( "i", &getRAIL_KeyNameToNo( $key ) ) );
 			$key = &getPeaceParamForName( \@filedata, $POINT_NAME[$i], "KEYS03");
 			print( FILEOUT_POINT pack( "i", &getRAIL_KeyNameToNo( $key ) ) );
+
+			#WIDTH_OFS
+			$width_ofs = &getPeaceParamForName( \@filedata, $POINT_NAME[$i], "WIDTH_OFS00");
+			print( FILEOUT_POINT pack( "i", $width_ofs ) );
+			$width_ofs = &getPeaceParamForName( \@filedata, $POINT_NAME[$i], "WIDTH_OFS01");
+			print( FILEOUT_POINT pack( "i", $width_ofs ) );
+			$width_ofs = &getPeaceParamForName( \@filedata, $POINT_NAME[$i], "WIDTH_OFS02");
+			print( FILEOUT_POINT pack( "i", $width_ofs ) );
+			$width_ofs = &getPeaceParamForName( \@filedata, $POINT_NAME[$i], "WIDTH_OFS03");
+			print( FILEOUT_POINT pack( "i", $width_ofs ) );
+
 
 			#POS
 			print( FILEOUT_POINT pack( "i", &get10Number(&getPeaceParamForName( \@filedata, $POINT_NAME[$i], "VECX")) ) );

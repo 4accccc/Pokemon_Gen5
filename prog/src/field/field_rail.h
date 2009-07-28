@@ -153,6 +153,7 @@ struct _RAIL_POINT {
   //keys[n]にマッチしたらlines[n]に移動する
 	u32 lines[RAIL_CONNECT_LINE_MAX];
   u32 keys[RAIL_CONNECT_LINE_MAX];
+	s32	width_ofs_max[RAIL_CONNECT_LINE_MAX];
 
   ///POINTの位置座標
   VecFx32 pos;
@@ -203,7 +204,6 @@ struct _RAIL_SETTING{
 	RAIL_POS_FUNC*const*		line_pos_func;
 	RAIL_LINE_DIST_FUNC*const* line_dist_func;
 
-  s32   ofs_max;      // 幅分割数
   fx32  ofs_unit;     // 幅の移動単位
 } ;
 

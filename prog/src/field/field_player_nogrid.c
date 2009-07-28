@@ -11,6 +11,7 @@
 #include "fldmmdl.h"
 #include "field_player.h"
 #include "field_camera.h"
+#include "fldeff_shadow.h"
 
 #include "field_player_nogrid.h"
 
@@ -33,6 +34,106 @@ static BOOL nogridPC_Move_CalcSetGroundMove(
 		FLDMAPPER_GRIDINFODATA* gridInfoData,
 		VecFx32* pos, VecFx32* vecMove, fx32 speed );
 
+
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	フィールド　ノーグリッド　レール動作
+ *
+ *	@param	fld_player		フィールドプレイヤー
+ *	@param	key						キー
+ *	@param	cp_camera			カメラ情報
+ */
+//-----------------------------------------------------------------------------
+void FIELD_PLAYER_NOGRID_Rail_Move( FIELD_PLAYER *fld_player, FLDEFF_CTRL *fectrl, const VecFx32* cp_playerway, int key, const FIELD_CAMERA* cp_camera )
+{
+	VecFx32 target;
+	VecFx32 camerapos;
+	VecFx32 pl_way;
+	VecFx32 camera_way;
+	u16 rotate_y;
+	fx32 cos;
+	VecFx32 cross;
+	MMDL *fmmdl;
+
+	fmmdl = FIELD_PLAYER_GetMMdl( fld_player );
+
+	FIELD_CAMERA_GetTargetPos( cp_camera, &target );
+	FIELD_CAMERA_GetCameraPos( cp_camera, &camerapos );
+	VEC_Subtract( &target, &camerapos, &camera_way );	// カメラ方向の計算
+	camera_way.y = 0;	// 平面で考える
+	VEC_Normalize( &camera_way, &camera_way );
+
+	// 主人公方向
+	pl_way = *cp_playerway;
+	pl_way.y = 0;	// 平面で考える
+	VEC_Normalize( &pl_way, &pl_way );
+
+
+	// カメラ方向から、陰の方向を設定
+	rotate_y = FX_Atan2Idx( -camera_way.x, -camera_way.z );
+	FLDEFF_SHADOW_SetGlobalRotate( fectrl, 0,rotate_y,0 );
+	
+	// カメラの方向と主人公の方向から、向きを決定
+	if( VEC_Mag( cp_playerway ) == 0 )
+	{
+		MMDL_SetDirDisp(fmmdl,DIR_UP);
+	}
+	else
+	{
+		cos =  VEC_DotProduct( &pl_way, &camera_way );
+		VEC_CrossProduct( &pl_way, &camera_way, &cross );
+
+			
+
+		if( (MATH_ABS(cos) < FX32_HALF) )
+		{
+			if( cross.y < 0 )
+			{
+				// left
+				MMDL_SetDirDisp(fmmdl,DIR_LEFT);
+			}
+			else
+			{
+				// right
+				MMDL_SetDirDisp(fmmdl,DIR_RIGHT);
+			}
+		}
+		else if( cos > 0 )
+		{
+			// up
+			MMDL_SetDirDisp(fmmdl,DIR_UP);
+		}
+		else
+		{
+			// down
+			MMDL_SetDirDisp(fmmdl,DIR_DOWN);
+		}
+
+
+		// プレイヤー方向の設定
+		FIELD_PLAYER_SetDir( fld_player, FX_Atan2Idx( pl_way.x, pl_way.z ) );
+	}
+
+	if( key & (PAD_KEY_UP | PAD_KEY_DOWN | PAD_KEY_LEFT | PAD_KEY_RIGHT) )
+	{
+		if( key & PAD_BUTTON_B )
+		{	
+			MMDL_SetDrawStatus(fmmdl,DRAW_STA_WALK_8F);
+		}
+		else
+		{
+			MMDL_SetDrawStatus(fmmdl,DRAW_STA_WALK_8F);
+		}
+	}
+	else
+	{
+		MMDL_SetDrawStatus(fmmdl,DRAW_STA_STOP);
+	}
+}
+
+
 //======================================================================
 //	ノングリッド移動　フィールドプレイヤー制御
 //======================================================================
@@ -44,7 +145,7 @@ static BOOL nogridPC_Move_CalcSetGroundMove(
  * @retval nothing
  */
 //--------------------------------------------------------------
-void FIELD_PLAYER_NOGRID_Move( FIELD_PLAYER *fld_player, int key, fx32 onedist )
+void FIELD_PLAYER_NOGRID_Free_Move( FIELD_PLAYER *fld_player, int key, fx32 onedist )
 {
 	VecFx32 pos;
 	FIELDMAP_WORK *fieldWork;
@@ -155,7 +256,8 @@ static void nogridPC_Move_SetValue( FIELD_PLAYER *fld_player,
 	if( mvFlag == TRUE ){
 		if( key & PAD_BUTTON_B )
 		{	
-			MMDL_SetDrawStatus(fmmdl,DRAW_STA_DASH_4F);
+			//MMDL_SetDrawStatus(fmmdl,DRAW_STA_DASH_4F);
+			MMDL_SetDrawStatus(fmmdl,DRAW_STA_WALK_8F);
 		}
 		else
 		{

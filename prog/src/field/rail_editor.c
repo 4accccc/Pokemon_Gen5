@@ -1329,7 +1329,7 @@ static void RE_InputPoint_FreeNormal( DEBUG_RAIL_EDITOR* p_wk )
 	u16 yaw;
 
 	// 半グリッドサイズでの移動にする
-	FIELD_PLAYER_NOGRID_Move( p_player, GFL_UI_KEY_GetCont(), 0x4000 );
+	FIELD_PLAYER_NOGRID_Free_Move( p_player, GFL_UI_KEY_GetCont(), 0x4000 );
 
 	// カメラを動かす
 	if( GFL_UI_KEY_GetCont() & PAD_BUTTON_L )

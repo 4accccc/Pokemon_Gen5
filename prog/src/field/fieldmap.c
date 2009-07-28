@@ -1668,12 +1668,15 @@ static void fldmapMain_MMDL_Init( FIELDMAP_WORK *fieldWork )
 	
 	//“®ìƒ‚ƒfƒ‹@•œ‹A
 	MMDLSYS_Pop( fieldWork->fldMMdlSys );
-  
+
+/*
   if( fieldWork->func_tbl->type == FLDMAP_CTRLTYPE_GRID ){
     MMDLSYS_SetJoinShadow( fmmdlsys, TRUE );
   }else{
     MMDLSYS_SetJoinShadow( fmmdlsys, FALSE );
   }
+//*/
+  MMDLSYS_SetJoinShadow( fmmdlsys, TRUE );
   
 #ifdef DEBUG_ONLY_FOR_kagaya
   #define OBJID_TEST_TRAINER (128)
