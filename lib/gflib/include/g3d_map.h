@@ -6,7 +6,7 @@ extern "C" {
 
 //#define	MAPOBJ_SIZE		(0x18000) 	//ブロック内オブジェクトモデルデータ用メモリ確保サイズ 
 //#define	MAPOBJTEX_SIZE	(0x4000) 	//ブロック内オブジェクトテクスチャデータ用ＶＲＡＭ確保サイズ 
-#define	GFL_G3D_MAP_MAPPLTT_SIZE	(0x200) 	//テクスチャパレット用ＶＲＡＭ確保サイズ 
+#define	GFL_G3D_MAP_MAPPLTT_SIZE	(0x200) 	//テクスチャパレット用ＶＲＡＭ確保サイズ(外部からサイズ指定できるように修正予定...) 
 #define	GFL_G3D_MAP_MAPLOAD_SIZE	(0x800)		//分割データロードサイズ(ROM→RAM) 
 #define	GFL_G3D_MAP_MAPTRANS_SIZE	(0x2000) 	//分割データ転送サイズ(RAM→VRAM) 
 
