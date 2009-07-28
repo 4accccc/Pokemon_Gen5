@@ -123,4 +123,5 @@ DEP_OUTDOOR	=	\
 	$(RESDIR)/r7_toh_01.nsbmd \
 	$(RESDIR)/r6_labo_01.nsbmd \
 	$(RESDIR)/trailer_01test.nsbmd \
+	$(RESDIR)/trailer_01.nsbmd \
 
