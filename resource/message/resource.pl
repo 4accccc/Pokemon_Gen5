@@ -39,6 +39,9 @@ use constant EOM_CODE		=> 0xffff;	# EOMコード
 use constant CR_CODE		=> 0xfffe;	# 改行コード
 use constant TAG_CODE		=> 0xf000;	# タグ開始コード
 
+use constant TAGTYPE_WORDSET_WORD   => 0x01;
+use constant TAGTYPE_WORDSET_NUMBER => 0x02;
+
 use constant MSG_HEADER_SIZE		=> 0x000c;	# ファイルヘッダのサイズ
 use constant LANGBLOCK_HEADER_SIZE	=> 0x0004;	# 言語ブロックヘッダのサイズ
 use constant STR_HEADER_SIZE		=> 0x0008;	# 文字列に付くヘッダのｻｲｽﾞ
@@ -81,6 +84,7 @@ sub add_msg {
 	{
 		$pos_c = index($txt, ']', $pos_o+1);
 		if($pos_c < 0){
+			print &tool::enc_sjis("ERR CODE=1\n");
 			return 0;
 		}
 		$str = substr($txt, $i, ($pos_o - $i));
@@ -89,12 +93,14 @@ sub add_msg {
 		$data .= &encode_game_strcode($str, \$err);
 		if( $err )
 		{
+			print &tool::enc_sjis("ERR CODE=2\n");
 			return 0;
 		}
 		
 		$tag = &tag_bin($tag);
 		if($tag eq "")
 		{
+			print &tool::enc_sjis("ERR CODE=3\n");
 			return 0;
 		}
 		$data .= $tag;
@@ -117,6 +123,7 @@ sub add_msg {
 		$data .= &encode_game_strcode($str, \$err);
 		if( $err )
 		{
+			print &tool::enc_sjis("ERR CODE=4\n");
 			return 0;
 		}
 	}
@@ -366,12 +373,14 @@ sub encode_game_strcode {	# source local
 		}
 		elsif($t eq "▼")
 		{
-			$ret .= pack('S', 0x25bc);
+			$ret .= pack('S', TAG_CODE);
+			$ret .= pack('S', 0xbe00);
 			$EncodeSkipCR_Flag = 1;		# 次の改行は無視する
 		}
 		elsif($t eq "▽")
 		{
-			$ret .= pack('S', 0x25BD);
+			$ret .= pack('S', TAG_CODE);
+			$ret .= pack('S', 0xbe01);
 			$EncodeSkipCR_Flag = 1;		# 次の改行は無視する
 		}
 		else
@@ -399,6 +408,8 @@ sub tag_bin {
 	my $tag_val;
 	my $tag_type;
 	my $tag_param;
+	my $tag_hi;
+	my $tag_lo;
 
 	shift @elems;	# 最初に空要素が入ってしまうので
 
@@ -412,12 +423,21 @@ sub tag_bin {
 	$tag_val = pack('S', TAG_CODE);
 
 	# 次にタグ種類コード（2byte）
-	$tag_type = hex($elems[0]) * 256 + hex($elems[1]);
+	$tag_hi  = hex($elems[0]);
+	$tag_lo  = hex($elems[1]);
+	$tag_type = hex($tag_hi) * 256 + hex($tag_lo);
 	$tag_val .= pack('S', $tag_type);
 
 	# 次にパラメータ数（2byte）
 	my $elem_max = @elems - 3;
 	$tag_val .= pack('S', $elem_max);
+
+	# WORDSET用のタグなら必ず引数があるハズ
+	if( ($tag_hi == TAGTYPE_WORDSET_WORD) || ($tag_hi == TARGYPE_WORDSET_NUMBER) ){
+		if( $elem_max == 0 ){
+			return "";
+		}
+	}
 
 	# パラメータ１つあたり2byte
 	if($elem_max > 0)

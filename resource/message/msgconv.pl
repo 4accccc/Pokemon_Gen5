@@ -304,7 +304,9 @@ sub EndHandler
 			if(&resource::add_msg($ReadingText, $ParsingLangID, $OrgLangFlag, $AreaWidth) == 0)
 			{
 				my $id = &idman::get_latest_id();
-				print "解析出来ない文字：ID[ $id ] in $ParsingFileName\n";
+#				print "illegal char code：ID[ $id ] in $ParsingFileName\n";
+				print &tool::enc_sjis("ERR! Illegal String : ID[ $id ] @ $ParsingFileName\n");
+				die;
 			}
 
 			$ParsingLangID++;
