@@ -21,14 +21,22 @@
 //======================================================================
 //#define SCRID_NULL                 (0) //ダミースクリプトID
 #define ID_START_SCR_OFFSET          (1) //開始スクリプトIDのオフセット
+
 #define ID_COMMON_SCR_OFFSET         (2000) //共通スクリプトIDのオフセット
 #define ID_COMMON_SCR_OFFSET_END     (2499) //共通スクリプトIDのオフセット終了
+
+#define ID_BG_ATTR_OFFSET            (2500) //BGスクリプトIDのオフセット
+#define ID_BG_ATTR_OFFSET_END        (2799) //BGスクリプトIDのオフセット終了
+
 #define ID_TRAINER_OFFSET            (3000) //トレーナースクリプトIDのオフセット
 #define ID_TRAINER_OFFSET_END        (4999) //トレーナースクリプトIDのオフセット終了
+
 #define ID_TRAINER_2VS2_OFFSET       (5000) //2vs2トレーナースクリプトIDのオフセット
 #define ID_TRAINER_2VS2_OFFSET_END   (6999) //2vs2トレーナースクリプトIDのオフセット終了
+
 #define ID_HIDE_ITEM_OFFSET          (8000) //隠しアイテムスクリプトIDのオフセット
 #define ID_HIDE_ITEM_OFFSET_END      (8799) //隠しアイテムスクリプトIDのオフセット終了
+
 #define	ID_INIT_SCR_OFFSET           (9600) //ゲーム開始スクリプトIDのオフセット
 #define	ID_INIT_SCR_OFFSET_END (9699) //ゲーム開始スクリプトIDのオフセット終了
 

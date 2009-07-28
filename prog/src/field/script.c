@@ -626,63 +626,67 @@ static void InitScript(
 }
 
 //--------------------------------------------------------------
+//--------------------------------------------------------------
+typedef struct {
+	u16 scr_id;
+	u16 scr_arc_id;
+	u16 msg_arc_id;
+}SCRIPT_ARC_TABLE;
+
+//※スクリプトIDが大きい順に定義すること！！！
+static const SCRIPT_ARC_TABLE ScriptArcTable[] = {
+  //初期化スクリプトのIDが渡されたとき
+  { ID_INIT_SCR_OFFSET, NARC_script_seq_init_scr_bin, NARC_script_message_common_scr_dat },
+	//トレーナースクリプトのIDが渡された時
+  { ID_TRAINER_OFFSET ,NARC_script_seq_trainer_bin, NARC_script_message_common_scr_dat },
+	//BGスクリプトのIDが渡された時
+  { ID_BG_ATTR_OFFSET ,NARC_script_seq_bg_attr_bin, NARC_script_message_bg_attr_dat },
+	//共通スクリプトのIDが渡された時
+  { ID_COMMON_SCR_OFFSET ,NARC_script_seq_common_scr_bin, NARC_script_message_common_scr_dat },
+};
+
+//--------------------------------------------------------------
 /**
  * @brief	スクリプトIDからスクリプトデータ、メッセージデータを読み込み
- * @param	fsys		FLDCOMMON_WORK型のポインタ
+ * @param	work
  * @param	core		VMHANDLE型のポインタ
+ * @param zone_id
  * @param	id			スクリプトID
  * @retval	"スクリプトIDからオフセットを引いた値"
  */
 //--------------------------------------------------------------
 static u16 SetScriptDataSub( SCRCMD_WORK *work, VMHANDLE* core, u32 zone_id, u16 id, HEAPID heapID )
 {
-	u16 scr_id = id;
+  int i;
+  u16 scr_id = id;
+  const SCRIPT_ARC_TABLE * tbl = ScriptArcTable;
 
-	if( scr_id >= ID_INIT_SCR_OFFSET )
-  {
-		SetScriptData( work, core,
-        NARC_script_seq_init_scr_bin,
-        NARC_script_message_common_scr_dat, heapID );
-    scr_id -= ID_INIT_SCR_OFFSET;
-  }
-  else if( scr_id >= ID_TRAINER_OFFSET ) //トレーナースクリプトID
-  {
-		SetScriptData( work, core,
-        NARC_script_seq_trainer_bin,
-        NARC_script_message_common_scr_dat, heapID );
-		scr_id -= ID_TRAINER_OFFSET;
-  }
-  else if( scr_id >= ID_COMMON_SCR_OFFSET )		//共通スクリプトID
-  {
-		SetScriptData( work, core,
-			NARC_script_seq_common_scr_bin,
-			NARC_script_message_common_scr_dat,
-			heapID );
-		scr_id -= ID_COMMON_SCR_OFFSET;
-	}
-  else if( scr_id >= ID_START_SCR_OFFSET ) //ローカルスクリプトID
-  {
-    {
-      u16 idx_script = ZONEDATA_GetScriptArcID( zone_id );
-      u16 idx_msg = ZONEDATA_GetMessageArcID( zone_id );
-	  	SetScriptData( work, core, idx_script, idx_msg, heapID );
-		  scr_id -= ID_START_SCR_OFFSET;
-      
-      OS_Printf( "ゾーンスクリプト起動 scr_idx = %d, msg_idx = %d\n",
-          idx_script, idx_msg );
+  for (i = 0; i < NELEMS(ScriptArcTable); i++) {
+    if (scr_id >= tbl[i].scr_id) {
+      SetScriptData(work, core, tbl[i].scr_arc_id, tbl[i].msg_arc_id, heapID);
+      scr_id -= tbl[i].scr_id;
+      return scr_id;
     }
-	}
-  else										//SCRID_NULL(0)が渡された時
-  {
-		SetScriptData( work, core,
-			NARC_script_seq_dummy_scr_bin,
-			NARC_script_message_common_scr_dat,
-			heapID );
-		scr_id = 0;
-	}
-	
-	return scr_id;
+  }
+  //ローカルスクリプトのIDが渡された時
+  if( scr_id >= ID_START_SCR_OFFSET ){
+    u16 idx_script = ZONEDATA_GetScriptArcID( zone_id );
+    u16 idx_msg = ZONEDATA_GetMessageArcID( zone_id );
+    SetScriptData( work, core, idx_script, idx_msg, heapID );
+    scr_id -= ID_START_SCR_OFFSET;
+    OS_Printf( "ゾーンスクリプト起動 scr_idx = %d, msg_idx = %d\n",
+        idx_script, idx_msg );
+    return scr_id;
+
+  //SCRID_NULL(0)が渡された時
+  }
+  SetScriptData( work, core,
+      NARC_script_seq_dummy_scr_bin,
+      NARC_script_message_common_scr_dat, heapID );
+  scr_id = 0;
+  return scr_id;
 }
+
 
 #if 0 //SCRIPT_PL_NULL
 static u16 SetScriptDataSub( SCRCMD_WORK *work, VMHANDLE* core, u16 id )
