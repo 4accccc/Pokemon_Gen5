@@ -977,7 +977,7 @@ void BTLV_SCU_StartWazaDamageAct( BTLV_SCU* wk, BtlPokePos defPos )
 
   (*(twk->taskCounter))++;
 #else
-  { 
+  {
     const BTL_POKEPARAM*  bpp = BTL_POKECON_GetFrontPokeDataConst( wk->pokeCon, defPos );
     int                   value = BPP_GetValue( bpp, BPP_HP );
 
@@ -1280,7 +1280,7 @@ void BTLV_SCU_StartHPGauge( BTLV_SCU* wk, BtlPokePos pos )
 
   (*(twk->taskCounter))++;
 #else
-  { 
+  {
     const BTL_POKEPARAM*  bpp = BTL_POKECON_GetFrontPokeDataConst( wk->pokeCon, pos );
     int                   value = BPP_GetValue( bpp, BPP_HP );
 
@@ -1553,7 +1553,7 @@ static void statwin_setup( STATUS_WIN* stwin, BTLV_SCU* wk, BtlPokePos pokePos )
   px = winpos[viewPos].x;
   py = winpos[viewPos].y;
 
-  TAYA_Printf("[STATWIN Setup] pokePos=%d, viewPos=%d (%d,%d)\n", pokePos, viewPos, px, py);
+  BTL_PrintfSimple("[STATWIN Setup] pokePos=%d, viewPos=%d (%d,%d)\n", pokePos, viewPos, px, py);
 
   stwin->win = GFL_BMPWIN_Create( GFL_BG_FRAME3_M, px, py, STATWIN_WIDTH, STATWIN_HEIGHT,
       PALIDX_POKEWIN, GFL_BMP_CHRAREA_GET_F );
@@ -1633,7 +1633,7 @@ static BOOL statwin_erase( STATUS_WIN* stwin, u8 line )
   return line == height;
 #else
   BTLV_EFFECT_DelGauge( stwin->pokePos );
-  
+
   return TRUE;
 #endif
 }

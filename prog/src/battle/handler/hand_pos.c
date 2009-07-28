@@ -39,6 +39,8 @@ static BTL_EVENT_FACTOR* ADD_POS_IyasiNoNegai( u16 pri, BtlPokePos pos, BtlPosEf
 static void handler_pos_IyasiNoNegai( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokePos, int* work );
 static BTL_EVENT_FACTOR* ADD_POS_DelayAttack( u16 pri, BtlPokePos pos, BtlPosEffect eff );
 static void handler_pos_DelayAttack( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokePos, int* work );
+static BTL_EVENT_FACTOR* ADD_POS_BatonTouch( u16 pri, BtlPokePos pos, BtlPosEffect eff );
+static void handler_pos_BatonTouch( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokePos, int* work );
 
 
 
@@ -68,6 +70,7 @@ BTL_EVENT_FACTOR*  BTL_HANDLER_POS_Add( BtlPosEffect effect, BtlPokePos pos, u8 
     { BTL_POSEFF_MIKADUKINOMAI,   ADD_POS_MikadukiNoMai   },
     { BTL_POSEFF_IYASINONEGAI,    ADD_POS_IyasiNoNegai    },
     { BTL_POSEFF_DELAY_ATTACK,    ADD_POS_DelayAttack     },
+    { BTL_POSEFF_BATONTOUCH,      ADD_POS_BatonTouch      },
   };
 
   GF_ASSERT(effect < BTL_POSEFF_MAX);
@@ -297,6 +300,33 @@ static void handler_pos_DelayAttack( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK
   }
   else{
     work[WORKIDX_TURN]--;
+  }
+}
+//--------------------------------------------------------------------------------------
+/**
+ *  バトンタッチ
+ */
+//--------------------------------------------------------------------------------------
+static BTL_EVENT_FACTOR* ADD_POS_BatonTouch( u16 pri, BtlPokePos pos, BtlPosEffect eff )
+{
+  static const BtlEventHandlerTable HandlerTable[] = {
+    { BTL_EVENT_MEMBER_IN,  handler_pos_BatonTouch   },  // ダメージ補正
+    { BTL_EVENT_NULL, NULL },
+  };
+  return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_WAZA, eff, pri, pos, HandlerTable );
+}
+static void handler_pos_BatonTouch( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokePos, int* work )
+{
+  enum {
+    WORKIDX_USER_POKEID = 0,
+  };
+
+  u8 targetPokeID = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID );
+  if( targetPokeID == BTL_SVFLOW_PokePosToPokeID(flowWk, pokePos) )
+  {
+    BTL_HANDEX_PARAM_BATONTOUCH* param = BTL_SVFLOW_HANDLERWORK_Push( flowWk, BTL_HANDEX_BATONTOUCH, BTL_POKEID_NULL );
+    param->userPokeID = work[ WORKIDX_USER_POKEID ];
+    param->targetPokeID = targetPokeID;
   }
 }
 

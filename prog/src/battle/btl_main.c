@@ -205,6 +205,13 @@ static GFL_PROC_RESULT BTL_PROC_Main( GFL_PROC* proc, int* seq, void* pwk, void*
     return GFL_PROC_RES_FINISH;
   }
 
+  if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_DEBUG ){
+    GFL_HEAP_DEBUG_PrintSystemInfo();
+    GFL_HEAP_DEBUG_PrintExistMemoryBlocks( HEAPID_BTL_SYSTEM );
+    GFL_HEAP_DEBUG_PrintExistMemoryBlocks( HEAPID_BTL_VIEW );
+    GFL_HEAP_DEBUG_PrintExistMemoryBlocks( HEAPID_BTL_NET );
+  }
+
   return GFL_PROC_RES_CONTINUE;
 
 }
@@ -1762,5 +1769,11 @@ void BTL_MAIN_AddBonusMoney( BTL_MAIN_MODULE* wk, u32 volume )
   if( wk->bonusMoney > BTL_BONUS_MONEY_MAX ){
     wk->bonusMoney = BTL_BONUS_MONEY_MAX;
   }
+}
+
+
+TrainerID BTL_MAIN_GetTrainerID( const BTL_MAIN_MODULE* wk )
+{
+  return wk->setupParam->trID;
 }
 

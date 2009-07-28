@@ -460,9 +460,9 @@ void SCQUE_PUT_Common( BTL_SERVER_CMD_QUE* que, ServerCmd cmd, ... )
     BTL_Printf("PutCmd=%d, Format=%02x, argCnt=%d, args=", cmd, fmt, arg_cnt);
     for(i=0; i<arg_cnt; ++i)
     {
-      TAYA_Printf("%d,", ArgBuffer[i]);
+      BTL_PrintfSimple("%d,", ArgBuffer[i]);
     }
-    TAYA_Printf("\n");
+    BTL_PrintfSimple("\n");
     #endif
 
     put_core( que, cmd, fmt, ArgBuffer );
@@ -532,12 +532,12 @@ void SCQUE_PUT_ReservedPos( BTL_SERVER_CMD_QUE* que, u16 pos, ServerCmd cmd, ...
 
     BTL_Printf("Write Reserved Pos ... pos=%d, cmd=%d", pos, cmd );
     if( arg_cnt ){
-      TAYA_Printf(" args = ");
+      BTL_PrintfSimple(" args = ");
       for( i=0; i<arg_cnt; ++i ){
-        TAYA_Printf("%d,", ArgBuffer[i]);
+        BTL_PrintfSimple("%d,", ArgBuffer[i]);
       }
     }
-    TAYA_Printf("\n");
+    BTL_PrintfSimple("\n");
 
     {
       u16 default_read_pos = que->readPtr;
@@ -588,9 +588,9 @@ ServerCmd SCQUE_Read( BTL_SERVER_CMD_QUE* que, int* args )
         BTL_Printf("ReadCmd=%d, Format=%02x, argCnt=%d, args=", cmd, fmt, arg_cnt);
         for(i=0; i<arg_cnt; ++i)
         {
-          TAYA_Printf("%d,", args[i]);
+          BTL_PrintfSimple("%d,", args[i]);
         }
-        TAYA_Printf("\n");
+        BTL_PrintfSimple("\n");
       }
       #endif
     }
@@ -647,10 +647,10 @@ void SCQUE_PUT_MsgImpl( BTL_SERVER_CMD_QUE* que, u8 scType, ... )
     BTL_Printf(" PUT MSG SC=%d, StrID=%d\n arg= ", scType, strID);
     do {
       arg = va_arg( list, int );
-      TAYA_Printf("%d ", arg);
+      BTL_PrintfSimple("%d ", arg);
       scque_put2byte( que, arg );
     }while( arg != MSGARG_TERMINATOR );
-    TAYA_Printf("\n");
+    BTL_PrintfSimple("\n");
 
 
     va_end( list );

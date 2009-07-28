@@ -1664,7 +1664,7 @@ static BOOL scProc_ACT_Dead( BTL_CLIENT* wk, int* seq, const int* args )
     if( BTLV_WaitDeadAct(wk->viewCore) )
     {
       BTL_POKEPARAM* pp = BTL_POKECON_GetPokeParam( wk->pokeCon, args[0] );
-      BPP_DeadClear( pp );
+      BPP_Clear_ForDead( pp );
       return TRUE;
     }
     break;
@@ -2127,6 +2127,7 @@ static BOOL scProc_OP_MemberIn( BTL_CLIENT* wk, int* seq, const int* args )
     BTL_Printf("メンバーイン 位置 %d <- %d にいたポケ\n", posIdx, memberIdx);
     bpp = BTL_PARTY_GetMemberData( party, posIdx );
     BPP_SetAppearTurn( bpp, args[3] );
+    BPP_Clear_ForIn( bpp );
   }
   return TRUE;
 }
@@ -2243,7 +2244,7 @@ static BOOL scProc_OP_Hensin( BTL_CLIENT* wk, int* seq, const int* args )
 static BOOL scProc_OP_OutClear( BTL_CLIENT* wk, int* seq, const int* args )
 {
   BTL_POKEPARAM* pp = BTL_POKECON_GetPokeParam( wk->pokeCon, args[0] );
-  BPP_OutClear( pp );
+  BPP_Clear_ForOut( pp );
   return TRUE;
 }
 static BOOL scProc_OP_AddFldEff( BTL_CLIENT* wk, int* seq, const int* args )

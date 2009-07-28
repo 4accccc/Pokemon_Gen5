@@ -153,6 +153,6 @@ static inline u8 EXPOS_GET_BASEPOS( BtlExPos exPos )
 extern u8 BTL_MAIN_ExpandBtlPos( const BTL_MAIN_MODULE* wk, BtlExPos exPos, u8* dst );
 
 
-
+extern TrainerID BTL_MAIN_GetTrainerID( const BTL_MAIN_MODULE* wk );
 
 #endif

@@ -356,6 +356,8 @@ static BTL_EVENT_FACTOR*  ADD_Narikiri( u16 pri, WazaID waza, u8 pokeID );
 static void handler_Narikiri( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static BTL_EVENT_FACTOR*  ADD_TonboGaeri( u16 pri, WazaID waza, u8 pokeID );
 static void handler_TonboGaeri( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static BTL_EVENT_FACTOR*  ADD_BatonTouch( u16 pri, WazaID waza, u8 pokeID );
+static void handler_BatonTouch( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static BTL_EVENT_FACTOR*  ADD_Teleport( u16 pri, WazaID waza, u8 pokeID );
 static void handler_Teleport_ExeCheck( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_Teleport( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
@@ -631,6 +633,7 @@ BOOL  BTL_HANDLER_Waza_Add( const BTL_POKEPARAM* pp, WazaID waza )
     { WAZANO_MAZIKKUKOOTO,    ADD_MagicCoat     },
     { WAZANO_TEREPOOTO,       ADD_Teleport      },
     { WAZANO_TONBOGAERI,      ADD_TonboGaeri    },
+    { WAZANO_BATONTATTI,      ADD_BatonTouch    },
   };
 
   int i;
@@ -5598,7 +5601,7 @@ static void handler_HametuNoNegai( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* 
     eff_param = BTL_SVFLOW_HANDLERWORK_Push( flowWk, BTL_HANDEX_POSEFF_ADD, pokeID );
     eff_param->effect = BTL_POSEFF_DELAY_ATTACK;
     eff_param->pos = BTL_SVFLOW_PokeIDtoPokePos( flowWk, targetPokeID );
-    eff_param->param[0] = 3;
+    eff_param->param[0] = 3; // delay turn
     eff_param->param[1] = BTL_EVENT_FACTOR_GetSubID( myHandle );
     eff_param->param_cnt = 2;
 
@@ -5709,7 +5712,41 @@ static void handler_TonboGaeri( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flo
     }
   }
 }
+//----------------------------------------------------------------------------------
+/**
+ * バトンタッチ
+ */
+//----------------------------------------------------------------------------------
+static BTL_EVENT_FACTOR*  ADD_BatonTouch( u16 pri, WazaID waza, u8 pokeID )
+{
+  static const BtlEventHandlerTable HandlerTable[] = {
+    { BTL_EVENT_UNCATEGORIZE_WAZA,  handler_BatonTouch   },         // ダメージ直後
+    { BTL_EVENT_NULL, NULL },
+  };
+  return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_WAZA, waza, pri, pokeID, HandlerTable );
+}
+static void handler_BatonTouch( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+{
+  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
+  {
+    const BTL_PARTY* party = BTL_SVFLOW_GetPartyData( flowWk, pokeID );
+    u8 numCoverPos = BTL_SVFLOW_GetClientCoverPosCount( flowWk, pokeID );
+    if( BTL_PARTY_GetAliveMemberCountRear(party, numCoverPos) )
+    {
+      BTL_HANDEX_PARAM_POSEFF_ADD* eff_param;
+      BTL_HANDEX_PARAM_CHANGE_MEMBER* change_param;
 
+      eff_param = BTL_SVFLOW_HANDLERWORK_Push( flowWk, BTL_HANDEX_POSEFF_ADD, pokeID );
+      eff_param->effect = BTL_POSEFF_BATONTOUCH;
+      eff_param->pos = BTL_SVFLOW_PokeIDtoPokePos( flowWk, pokeID );
+      eff_param->param[0] = pokeID;
+      eff_param->param_cnt = 1;
+
+      change_param = BTL_SVFLOW_HANDLERWORK_Push( flowWk, BTL_HANDEX_CHANGE_MEMBER, pokeID );
+      change_param->pokeID = pokeID;
+    }
+  }
+}
 //----------------------------------------------------------------------------------
 /**
  * テレポート

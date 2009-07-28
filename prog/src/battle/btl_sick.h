@@ -9,6 +9,7 @@
 //=============================================================================================
 #pragma once
 
+#include "btl_server_flow.h"
 #include "btl_pokeparam.h"
 
 
@@ -20,4 +21,6 @@ extern int BTL_SICK_GetDefaultSickCureStrID( WazaSick sickID, BOOL fUseItem );
 
 extern void BTL_SICK_CheckNotEffectByType( BTL_SVFLOW_WORK* flowWk, const BTL_POKEPARAM* defender );
 extern void BTL_SICK_CheckDamageAffinity(  BTL_SVFLOW_WORK* flowWk, const BTL_POKEPARAM* defender );
+
+extern BOOL BTL_SICK_CheckBatonTouch( WazaSick sick );
 

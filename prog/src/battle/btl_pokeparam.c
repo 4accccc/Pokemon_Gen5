@@ -14,8 +14,9 @@
 
 #include "btl_common.h"
 #include "btl_calc.h"
-#include "btl_pokeparam.h"
+#include "btl_sick.h"
 
+#include "btl_pokeparam.h"
 
 /*--------------------------------------------------------------------------*/
 /* Consts                                                                   */
@@ -97,22 +98,6 @@ typedef struct {
 
 //--------------------------------------------------------------
 /**
- *  実際に計算に使われるパラメータ値（初期値×ランク効果）
- */
-//--------------------------------------------------------------
-typedef struct {
-
-  u16 attack;       ///< こうげき
-  u16 defence;      ///< ぼうぎょ
-  u16 sp_attack;    ///< とくこう
-  u16 sp_defence;   ///< とくぼう
-  u16 agility;      ///< すばやさ
-  u16 dmy;
-
-}BPP_REAL_PARAM;
-
-//--------------------------------------------------------------
-/**
  *  ワザ
  */
 //--------------------------------------------------------------
@@ -131,7 +116,6 @@ struct _BTL_POKEPARAM {
 
   BPP_BASE_PARAM      baseParam;
   BPP_VARIABLE_PARAM  varyParam;
-  BPP_REAL_PARAM      realParam;
   BPP_WAZA            waza[ PTL_WAZA_MAX ];
 
   PokeTypePair  type;
@@ -169,16 +153,17 @@ struct _BTL_POKEPARAM {
 /* Prototypes                                                               */
 /*--------------------------------------------------------------------------*/
 static void setupBySrcData( BTL_POKEPARAM* bpp, const POKEMON_PARAM* srcPP );
-static void clearWazaSickWork( BTL_POKEPARAM* pp, BOOL fPokeSickInclude );
 static void clearUsedWazaFlag( BTL_POKEPARAM* bpp );
+static void clearCounter( BTL_POKEPARAM* bpp );
 static void Effrank_Init( BPP_VARIABLE_PARAM* rank );
 static void Effrank_Reset( BPP_VARIABLE_PARAM* rank );
 static void Effrank_Recover( BPP_VARIABLE_PARAM* rank );
+static BppValueID ConvertValueID( const BTL_POKEPARAM* bpp, BppValueID vid );
 static const s8* getRankVaryStatusConst( const BTL_POKEPARAM* pp, BppValueID type, s8* min, s8* max );
 static s8* getRankVaryStatus( BTL_POKEPARAM* pp, BppValueID type, s8* min, s8* max );
+static void clearWazaSickWork( BTL_POKEPARAM* bpp, BOOL fPokeSickInclude );
 static void dmgrecClearWork( BTL_POKEPARAM* bpp );
 static void dmgrecFwdTurn( BTL_POKEPARAM* bpp );
-static void update_RealParam( BTL_POKEPARAM* pp );
 static inline void flgbuf_clear( u8* buf, u32 size );
 static inline void flgbuf_set( u8* buf, u32 flagID );
 static inline void flgbuf_reset( u8* buf, u32 flagID );
@@ -266,13 +251,6 @@ static void setupBySrcData( BTL_POKEPARAM* bpp, const POKEMON_PARAM* srcPP )
   bpp->baseParam.type1 = PP_Get( srcPP, ID_PARA_type1, 0 );
   bpp->baseParam.type2 = PP_Get( srcPP, ID_PARA_type2, 0 );
   bpp->baseParam.sex = PP_GetSex( srcPP );
-
-  // 実パラメータ初期化
-  bpp->realParam.attack = bpp->baseParam.attack;
-  bpp->realParam.defence = bpp->baseParam.defence;
-  bpp->realParam.sp_attack = bpp->baseParam.sp_attack;
-  bpp->realParam.sp_defence = bpp->baseParam.sp_defence;
-  bpp->realParam.agility = bpp->baseParam.agility;
 
   // 所有ワザデータ初期化
   bpp->wazaCnt = 0;
@@ -449,76 +427,104 @@ const POKEMON_PARAM* BPP_GetSrcData( const BTL_POKEPARAM* bpp )
   return bpp->coreParam.ppSrc;
 }
 
+//----------------------------------------------------------------------------------
+/**
+ * 状態異常等の条件により、パラメータ取得用のIDを変更する
+ * ※現状、パワートリック（こうげき・ぼうぎょを入れ替える）にのみ利用している。
+ *
+ * @param   bpp
+ * @param   BppValueID    パラメータ取得用にリクエストされたパラメータID
+ *
+ * @retval  BppValueID    実際に適用するパラメータID
+ */
+//----------------------------------------------------------------------------------
+static BppValueID ConvertValueID( const BTL_POKEPARAM* bpp, BppValueID vid )
+{
+  switch( vid ){
+  case BPP_ATTACK:
+    if( BPP_CheckSick(bpp, WAZASICK_POWERTRICK) ){ vid = BPP_DEFENCE; }
+    break;
+
+  case BPP_DEFENCE:
+    if( BPP_CheckSick(bpp, WAZASICK_POWERTRICK) ){ vid = BPP_ATTACK; }
+    break;
+  }
+  return vid;
+}
+//=============================================================================================
+/**
+ * ランク補正フラットな状態のパラメータ取得
+ *
+ * @param   bpp
+ * @param   vid   必要なパラメータID
+ *
+ * @retval  int
+ */
+//=============================================================================================
+int BPP_GetValue_Base( const BTL_POKEPARAM* bpp, BppValueID vid )
+{
+  vid = ConvertValueID( bpp, vid );
+
+  switch( vid ){
+  case BPP_ATTACK:            return bpp->baseParam.attack;
+  case BPP_DEFENCE:           return bpp->baseParam.defence;
+  case BPP_SP_ATTACK:         return bpp->baseParam.sp_attack;
+  case BPP_SP_DEFENCE:        return bpp->baseParam.sp_defence;
+  case BPP_AGILITY:           return bpp->baseParam.agility;
+
+  case BPP_HIT_RATIO:         return RANK_STATUS_DEF;
+  case BPP_AVOID_RATIO:       return RANK_STATUS_DEF;
+  case BPP_CRITICAL_RATIO:    return RANK_CRITICAL_DEF;
+
+  default:
+    return BPP_GetValue( bpp, vid );
+  };
+}
 
 //=============================================================================================
 /**
  * 各種パラメータ取得
  *
  * @param   pp
- * @param   vid
+ * @param   vid   必要なパラメータID
  *
  * @retval  int
  */
 //=============================================================================================
-int BPP_GetValue( const BTL_POKEPARAM* pp, BppValueID vid )
+int BPP_GetValue( const BTL_POKEPARAM* bpp, BppValueID vid )
 {
+  vid = ConvertValueID( bpp, vid );
+
   switch( vid ){
-  case BPP_ATTACK:    return pp->realParam.attack;
-  case BPP_DEFENCE:   return pp->realParam.defence;
-  case BPP_SP_ATTACK:   return pp->realParam.sp_attack;
-  case BPP_SP_DEFENCE:  return pp->realParam.sp_defence;
-  case BPP_AGILITY:   return pp->realParam.agility;
+  case BPP_ATTACK:          return BTL_CALC_StatusRank( BPP_GetValue_Base(bpp, vid), bpp->varyParam.attack );
+  case BPP_DEFENCE:         return BTL_CALC_StatusRank( BPP_GetValue_Base(bpp, vid), bpp->varyParam.defence );
+  case BPP_SP_ATTACK:       return BTL_CALC_StatusRank( BPP_GetValue_Base(bpp, vid), bpp->varyParam.sp_attack );
+  case BPP_SP_DEFENCE:      return BTL_CALC_StatusRank( BPP_GetValue_Base(bpp, vid), bpp->varyParam.sp_defence );
+  case BPP_AGILITY:         return BTL_CALC_StatusRank( BPP_GetValue_Base(bpp, vid), bpp->varyParam.agility );
 
-  case BPP_ATTACK_RANK:     return pp->varyParam.attack;
-  case BPP_DEFENCE_RANK:    return pp->varyParam.defence;
-  case BPP_SP_ATTACK_RANK:  return pp->varyParam.sp_attack;
-  case BPP_SP_DEFENCE_RANK: return pp->varyParam.sp_defence;
-  case BPP_AGILITY_RANK:    return pp->varyParam.agility;
+  case BPP_ATTACK_RANK:     return bpp->varyParam.attack;
+  case BPP_DEFENCE_RANK:    return bpp->varyParam.defence;
+  case BPP_SP_ATTACK_RANK:  return bpp->varyParam.sp_attack;
+  case BPP_SP_DEFENCE_RANK: return bpp->varyParam.sp_defence;
+  case BPP_AGILITY_RANK:    return bpp->varyParam.agility;
 
-  case BPP_HIT_RATIO:     return pp->varyParam.hit;
-  case BPP_AVOID_RATIO:   return pp->varyParam.avoid;
-  case BPP_CRITICAL_RATIO:  return pp->varyParam.critical;
+  case BPP_HIT_RATIO:       return bpp->varyParam.hit;
+  case BPP_AVOID_RATIO:     return bpp->varyParam.avoid;
+  case BPP_CRITICAL_RATIO:  return bpp->varyParam.critical;
 
-  case BPP_LEVEL:     return pp->baseParam.level;
-  case BPP_HP:        return pp->coreParam.hp;
-  case BPP_MAX_HP:    return pp->baseParam.hpMax;
-  case BPP_SEX:       return pp->baseParam.sex;
+  case BPP_LEVEL:           return bpp->baseParam.level;
+  case BPP_HP:              return bpp->coreParam.hp;
+  case BPP_MAX_HP:          return bpp->baseParam.hpMax;
+  case BPP_SEX:             return bpp->baseParam.sex;
 
-  case BPP_TOKUSEI:   return pp->tokusei;
-  case BPP_FORM:      return pp->formNo;
+  case BPP_TOKUSEI:         return bpp->tokusei;
+  case BPP_FORM:            return bpp->formNo;
 
-  case BPP_HEAVY:     return 50;  // @@@ 今はてきとう
+  case BPP_HEAVY:           return 50;  // @@@ 今はてきとう
 
   default:
     GF_ASSERT(0);
     return 0;
-  };
-}
-//=============================================================================================
-/**
- * ランク補正フラットな状態のパラメータ取得
- *
- * @param   pp
- * @param   vid
- *
- * @retval  int
- */
-//=============================================================================================
-int BPP_GetValue_Base( const BTL_POKEPARAM* pp, BppValueID vid )
-{
-  switch( vid ){
-  case BPP_ATTACK:    return pp->baseParam.attack;
-  case BPP_DEFENCE:   return pp->baseParam.defence;
-  case BPP_SP_ATTACK:   return pp->baseParam.sp_attack;
-  case BPP_SP_DEFENCE:  return pp->baseParam.sp_defence;
-  case BPP_AGILITY:   return pp->baseParam.agility;
-
-  case BPP_HIT_RATIO:     return RANK_STATUS_DEF;
-  case BPP_AVOID_RATIO:   return RANK_STATUS_DEF;
-  case BPP_CRITICAL_RATIO:  return RANK_CRITICAL_DEF;
-
-  default:
-    return BPP_GetValue( pp, vid );
   };
 }
 //=============================================================================================
@@ -533,13 +539,20 @@ int BPP_GetValue_Base( const BTL_POKEPARAM* pp, BppValueID vid )
 //=============================================================================================
 int BPP_GetValue_Critical( const BTL_POKEPARAM* pp, BppValueID vid )
 {
+  BOOL fFlatParam = FALSE;
   switch( vid ){
-  case BPP_ATTACK:    return (pp->varyParam.attack < 0)? pp->baseParam.attack : pp->realParam.attack;
-  case BPP_SP_ATTACK: return (pp->varyParam.sp_attack < 0)? pp->baseParam.sp_attack : pp->realParam.sp_attack;
-  case BPP_DEFENCE:   return (pp->varyParam.defence > 0)? pp->baseParam.defence : pp->realParam.defence;
-  case BPP_SP_DEFENCE:return (pp->varyParam.sp_defence > 0)? pp->baseParam.sp_defence : pp->realParam.sp_defence;
+  case BPP_ATTACK:     fFlatParam = (pp->varyParam.attack < 0); break;
+  case BPP_SP_ATTACK:  fFlatParam = (pp->varyParam.sp_attack < 0); break;
+  case BPP_DEFENCE:    fFlatParam = (pp->varyParam.defence > 0); break;
+  case BPP_SP_DEFENCE: fFlatParam = (pp->varyParam.sp_defence > 0); break;
 
   default:
+    return BPP_GetValue( pp, vid );
+  }
+
+  if( fFlatParam ){
+    return BPP_GetValue_Base( pp, vid );
+  }else{
     return BPP_GetValue( pp, vid );
   }
 }
@@ -849,7 +862,6 @@ int BPP_RankEffectDownLimit( const BTL_POKEPARAM* pp, BppValueID rankType )
   ptr = getRankVaryStatusConst( pp, rankType, &min, &max );
   return (*ptr) - min;
 }
-
 //=============================================================================================
 /**
  * ランクアップ効果
@@ -861,21 +873,21 @@ int BPP_RankEffectDownLimit( const BTL_POKEPARAM* pp, BppValueID rankType )
  * @retval  u8 result   実際に上がった段階数
  */
 //=============================================================================================
-u8 BPP_RankUp( BTL_POKEPARAM* pp, BppValueID rankType, u8 volume )
+u8 BPP_RankUp( BTL_POKEPARAM* bpp, BppValueID rankType, u8 volume )
 {
   s8 *ptr;
   s8 max = RANK_STATUS_MAX;
 
   switch( rankType ){
-  case BPP_ATTACK:      ptr = &pp->varyParam.attack; break;
-  case BPP_DEFENCE:     ptr = &pp->varyParam.defence; break;
-  case BPP_SP_ATTACK:   ptr = &pp->varyParam.sp_attack; break;
-  case BPP_SP_DEFENCE:  ptr = &pp->varyParam.sp_defence; break;
-  case BPP_AGILITY:     ptr = &pp->varyParam.agility; break;
-  case BPP_HIT_RATIO:   ptr = &pp->varyParam.hit; break;
-  case BPP_AVOID_RATIO: ptr = &pp->varyParam.avoid; break;
+  case BPP_ATTACK:      ptr = &bpp->varyParam.attack; break;
+  case BPP_DEFENCE:     ptr = &bpp->varyParam.defence; break;
+  case BPP_SP_ATTACK:   ptr = &bpp->varyParam.sp_attack; break;
+  case BPP_SP_DEFENCE:  ptr = &bpp->varyParam.sp_defence; break;
+  case BPP_AGILITY:     ptr = &bpp->varyParam.agility; break;
+  case BPP_HIT_RATIO:   ptr = &bpp->varyParam.hit; break;
+  case BPP_AVOID_RATIO: ptr = &bpp->varyParam.avoid; break;
   case BPP_CRITICAL_RATIO:
-    ptr = &pp->varyParam.critical;
+    ptr = &bpp->varyParam.critical;
     max = RANK_CRITICAL_MAX;
     break;
   default:
@@ -889,7 +901,6 @@ u8 BPP_RankUp( BTL_POKEPARAM* pp, BppValueID rankType, u8 volume )
       volume = max - (*ptr);
     }
     *ptr += volume;
-    update_RealParam( pp );
     return volume;
   }
 
@@ -906,21 +917,21 @@ u8 BPP_RankUp( BTL_POKEPARAM* pp, BppValueID rankType, u8 volume )
  * @retval  u8    実際に下がった段階数
  */
 //=============================================================================================
-u8 BPP_RankDown( BTL_POKEPARAM* pp, BppValueID rankType, u8 volume )
+u8 BPP_RankDown( BTL_POKEPARAM* bpp, BppValueID rankType, u8 volume )
 {
   s8 *ptr;
   s8 min = RANK_STATUS_MIN;
 
   switch( rankType ){
-  case BPP_ATTACK:    ptr = &pp->varyParam.attack; break;
-  case BPP_DEFENCE:   ptr = &pp->varyParam.defence; break;
-  case BPP_SP_ATTACK:   ptr = &pp->varyParam.sp_attack; break;
-  case BPP_SP_DEFENCE:  ptr = &pp->varyParam.sp_defence; break;
-  case BPP_AGILITY:   ptr = &pp->varyParam.agility; break;
-  case BPP_HIT_RATIO:   ptr = &pp->varyParam.hit; break;
-  case BPP_AVOID_RATIO: ptr = &pp->varyParam.avoid; break;
+  case BPP_ATTACK:       ptr = &bpp->varyParam.attack; break;
+  case BPP_DEFENCE:      ptr = &bpp->varyParam.defence; break;
+  case BPP_SP_ATTACK:    ptr = &bpp->varyParam.sp_attack; break;
+  case BPP_SP_DEFENCE:   ptr = &bpp->varyParam.sp_defence; break;
+  case BPP_AGILITY:      ptr = &bpp->varyParam.agility; break;
+  case BPP_HIT_RATIO:    ptr = &bpp->varyParam.hit; break;
+  case BPP_AVOID_RATIO:  ptr = &bpp->varyParam.avoid; break;
   case BPP_CRITICAL_RATIO:
-    ptr = &pp->varyParam.critical;
+    ptr = &bpp->varyParam.critical;
     min = RANK_CRITICAL_MIN;
     break;
   default:
@@ -934,7 +945,6 @@ u8 BPP_RankDown( BTL_POKEPARAM* pp, BppValueID rankType, u8 volume )
       volume = (*ptr) - min;
     }
     *ptr -= volume;
-    update_RealParam( pp );
     return volume;
   }
   return 0;
@@ -979,7 +989,6 @@ void BPP_RankSet( BTL_POKEPARAM* pp, BppValueID rankType, u8 value )
     GF_ASSERT_MSG(0, "value=%d", value);
   }
 }
-
 //=============================================================================================
 /**
  * 下がっているランク効果をフラットに戻す
@@ -990,7 +999,6 @@ void BPP_RankSet( BTL_POKEPARAM* pp, BppValueID rankType, u8 value )
 void BPP_RankRecover( BTL_POKEPARAM* pp )
 {
   Effrank_Recover( &pp->varyParam );
-  update_RealParam( pp );
 }
 //=============================================================================================
 /**
@@ -1002,7 +1010,6 @@ void BPP_RankRecover( BTL_POKEPARAM* pp )
 void BPP_RankReset( BTL_POKEPARAM* pp )
 {
   Effrank_Reset( &pp->varyParam );
-  update_RealParam( pp );
 }
 
 //=============================================================================================
@@ -1601,15 +1608,17 @@ void BPP_ACTFLAG_Clear( BTL_POKEPARAM* bpp )
  * @param   pp
  */
 //=============================================================================================
-void BPP_DeadClear( BTL_POKEPARAM* bpp )
+void BPP_Clear_ForDead( BTL_POKEPARAM* bpp )
 {
   flgbuf_clear( bpp->actFlag, sizeof(bpp->actFlag) );
   flgbuf_clear( bpp->turnFlag, sizeof(bpp->turnFlag) );
   flgbuf_clear( bpp->contFlag, sizeof(bpp->contFlag) );
 
-  clearWazaSickWork( bpp, TRUE );
   clearUsedWazaFlag( bpp );
   clearCounter( bpp );
+
+  clearWazaSickWork( bpp, TRUE );
+  Effrank_Init( &bpp->varyParam );
 }
 //=============================================================================================
 /**
@@ -1618,15 +1627,26 @@ void BPP_DeadClear( BTL_POKEPARAM* bpp )
  * @param   bpp
  */
 //=============================================================================================
-void BPP_OutClear( BTL_POKEPARAM* bpp )
+void BPP_Clear_ForOut( BTL_POKEPARAM* bpp )
 {
   flgbuf_clear( bpp->actFlag, sizeof(bpp->actFlag) );
   flgbuf_clear( bpp->turnFlag, sizeof(bpp->turnFlag) );
   flgbuf_clear( bpp->contFlag, sizeof(bpp->contFlag) );
 
-  clearWazaSickWork( bpp, FALSE );
   clearUsedWazaFlag( bpp );
   clearCounter( bpp );
+}
+//=============================================================================================
+/**
+ * 入場による各種状態クリア
+ *
+ * @param   bpp
+ */
+//=============================================================================================
+void BPP_Clear_ForIn( BTL_POKEPARAM* bpp )
+{
+  clearWazaSickWork( bpp, FALSE );
+  Effrank_Init( &bpp->varyParam );
 }
 //=============================================================================================
 /**
@@ -1933,24 +1953,29 @@ u8 BPP_COUNTER_Get( const BTL_POKEPARAM* bpp, BppCounter cnt )
   GF_ASSERT(cnt < BPP_COUNTER_MAX);
   return bpp->counter[ cnt ];
 }
-
-
-//--------------------------------------------------------------------------
+//=============================================================================================
 /**
- * ランク効果とデフォルト値をかけあわせて実際値を算出しておく
+ * バトンタッチによるパラメータ受け継ぎ
  *
- * @param   pp
- *
+ * @param   target    受け継ぐ側
+ * @param   user      受け継がせる側
  */
-//--------------------------------------------------------------------------
-static void update_RealParam( BTL_POKEPARAM* pp )
+//=============================================================================================
+void BPP_BatonTouchParam( BTL_POKEPARAM* target, const BTL_POKEPARAM* user )
 {
-  pp->realParam.attack     = BTL_CALC_StatusRank( pp->baseParam.attack, pp->varyParam.attack );
-  pp->realParam.defence    = BTL_CALC_StatusRank( pp->baseParam.defence, pp->varyParam.defence );
-  pp->realParam.sp_attack  = BTL_CALC_StatusRank( pp->baseParam.sp_attack, pp->varyParam.sp_attack );
-  pp->realParam.sp_defence = BTL_CALC_StatusRank( pp->baseParam.sp_defence, pp->varyParam.sp_defence );
-  pp->realParam.agility    = BTL_CALC_StatusRank( pp->baseParam.agility, pp->varyParam.agility );
+  u32 i;
+  target->varyParam = user->varyParam;
+  for(i=0; i<WAZASICK_MAX; ++i)
+  {
+    if( (user->sickCont[i].type != WAZASICK_CONT_NONE)
+    &&  (BTL_SICK_CheckBatonTouch(i))
+    ){
+      target->sickCont[i] = user->sickCont[i];
+      target->wazaSickCounter[i] = user->wazaSickCounter[i];
+    }
+  }
 }
+
 //---------------------------------------------------------------------------------------------
 // bitフラグバッファ処理
 //---------------------------------------------------------------------------------------------

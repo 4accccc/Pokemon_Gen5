@@ -261,6 +261,7 @@ int BTL_SICK_GetDefaultSickStrID( WazaSick sickID, BPP_SICK_CONT cont )
   case WAZASICK_MIYABURU:   strID = BTL_STRID_SET_Miyaburu; break;
   case WAZASICK_NEWOHARU:   strID = BTL_STRID_SET_NeWoHaru; break;
   case WAZASICK_SASIOSAE:   strID = BTL_STRID_SET_Sasiosae; break;
+  case WAZASICK_POWERTRICK: strID = BTL_STRID_SET_PowerTrick; break;
   case WAZASICK_DOKU:
     strID = BPP_SICKCONT_IsMoudokuCont(cont)? BTL_STRID_SET_MoudokuGet : BTL_STRID_SET_DokuGet;
     break;
@@ -344,3 +345,43 @@ void BTL_SICK_CheckDamageAffinity(  BTL_SVFLOW_WORK* flowWk, const BTL_POKEPARAM
   }
 }
 
+
+
+
+
+
+
+//=============================================================================================
+/**
+ * バトンタッチで受け継ぐ状態異常コードかどうか判定
+ *
+ * @param   sick
+ *
+ * @retval  BOOL    受け継ぐならTRUE
+ */
+//=============================================================================================
+BOOL BTL_SICK_CheckBatonTouch( WazaSick sick )
+{
+  static const u16 sickTbl[] = {
+    WAZASICK_KONRAN,
+    WAZASICK_KAIHUKUHUUJI,
+    WAZASICK_IEKI,
+    WAZASICK_YADORIGI,
+    WAZASICK_SASIOSAE,
+    WAZASICK_HOROBINOUTA,
+    WAZASICK_NEWOHARU,
+    WAZASICK_TOOSENBOU,
+    WAZASICK_MUSTHIT_TARGET,
+    WAZASICK_FLYING,
+    WAZASICK_POWERTRICK,
+    WAZASICK_TOOSENBOU,
+    WAZASICK_NOROI,
+  };
+  u32 i;
+  for(i=0; i<NELEMS(sickTbl); ++i){
+    if( sickTbl[i] == sick ){
+      return TRUE;
+    }
+  }
+  return FALSE;
+}
