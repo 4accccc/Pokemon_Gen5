@@ -1965,6 +1965,8 @@ void BPP_BatonTouchParam( BTL_POKEPARAM* target, const BTL_POKEPARAM* user )
 {
   u32 i;
   target->varyParam = user->varyParam;
+  BTL_Printf("ƒoƒgƒ“ƒ^ƒbƒ`‚Åˆø‚«Œp‚ª‚ê‚½:–hŒä=%d, “Á–h=%d\n",
+    target->varyParam.defence, target->varyParam.sp_defence);
   for(i=0; i<WAZASICK_MAX; ++i)
   {
     if( (user->sickCont[i].type != WAZASICK_CONT_NONE)

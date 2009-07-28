@@ -196,6 +196,7 @@ static BOOL scProc_OP_OutClear( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_OP_AddFldEff( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_OP_RemoveFldEff( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_OP_SetPokeCounter( BTL_CLIENT* wk, int* seq, const int* args );
+static BOOL scProc_OP_BatonTouch( BTL_CLIENT* wk, int* seq, const int* args );
 static void cec_addCode( CANT_ESC_CONTROL* ctrl, u8 pokeID, BtlCantEscapeCode code );
 static void cec_subCode( CANT_ESC_CONTROL* ctrl, u8 pokeID, BtlCantEscapeCode code );
 static u8 cec_isEnable( CANT_ESC_CONTROL* ctrl, BtlCantEscapeCode code, BTL_CLIENT* wk );
@@ -1269,6 +1270,7 @@ static BOOL SubProc_UI_ServerCmd( BTL_CLIENT* wk, int* seq )
     { SC_OP_ADD_FLDEFF,         scProc_OP_AddFldEff       },
     { SC_OP_REMOVE_FLDEFF,      scProc_OP_RemoveFldEff    },
     { SC_OP_SET_POKE_COUNTER,   scProc_OP_SetPokeCounter  },
+    { SC_OP_BATONTOUCH,         scProc_OP_BatonTouch      },
     { SC_ACT_KILL,              scProc_ACT_Kill           },
   };
 
@@ -2251,7 +2253,7 @@ static BOOL scProc_OP_AddFldEff( BTL_CLIENT* wk, int* seq, const int* args )
 {
   // @@@ サーバマシンなら既に天候を操作しているハズなので行わない
   //     ただしこの措置は全マシンにサーバ計算機能が乗るようになったらハズすと思う
-  //     （というかこのコマンド自体、要らなくなるハズ）
+  //     （というかこのコマンド自体、要らなくなるハズ）-> でもサーババージョン違ったら問題あるか
   if( !BTL_MAIN_IsServerMachine(wk->mainModule) ){
     BPP_SICK_CONT  cont;
     cont.raw = args[1];
@@ -2263,7 +2265,7 @@ static BOOL scProc_OP_RemoveFldEff( BTL_CLIENT* wk, int* seq, const int* args )
 {
   // @@@ サーバマシンなら既に天候を操作しているハズなので行わない
   //     ただしこの措置は全マシンにサーバ計算機能が乗るようになったらハズすと思う
-  //     （というかこのコマンド自体、要らなくなるハズ）
+  //     （というかこのコマンド自体、要らなくなるハズ）-> でもサーババージョン違ったら問題あるか
   if( !BTL_MAIN_IsServerMachine(wk->mainModule) ){
     BTL_FIELD_RemoveEffect( args[0] );
   }
@@ -2274,7 +2276,13 @@ static BOOL scProc_OP_SetPokeCounter( BTL_CLIENT* wk, int* seq, const int* args 
   BTL_POKEPARAM* bpp = BTL_POKECON_GetPokeParam( wk->pokeCon, args[0] );
   BPP_COUNTER_Set( bpp, args[1], args[2] );
   return TRUE;
-
+}
+static BOOL scProc_OP_BatonTouch( BTL_CLIENT* wk, int* seq, const int* args )
+{
+  BTL_POKEPARAM* user = BTL_POKECON_GetPokeParam( wk->pokeCon, args[0] );
+  BTL_POKEPARAM* target = BTL_POKECON_GetPokeParam( wk->pokeCon, args[1] );
+  BPP_BatonTouchParam( target, user );
+  return TRUE;
 }
 
 

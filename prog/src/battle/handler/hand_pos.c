@@ -136,7 +136,7 @@ static BTL_EVENT_FACTOR* ADD_POS_Negaigoto( u16 pri, BtlPokePos pos, BtlPosEffec
     { BTL_EVENT_TURNCHECK_BEGIN,  handler_pos_Negaigoto   },  // ダメージ補正
     { BTL_EVENT_NULL, NULL },
   };
-  return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_WAZA, eff, pri, pos, HandlerTable );
+  return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_POS, eff, pri, pos, HandlerTable );
 }
 static void handler_pos_Negaigoto( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokePos, int* work )
 {
@@ -172,7 +172,7 @@ static BTL_EVENT_FACTOR* ADD_POS_MikadukiNoMai( u16 pri, BtlPokePos pos, BtlPosE
     { BTL_EVENT_MEMBER_IN,  handler_pos_MikadukiNoMai   },  // ポケ入場ハンドラ
     { BTL_EVENT_NULL, NULL },
   };
-  return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_WAZA, eff, pri, pos, HandlerTable );
+  return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_POS, eff, pri, pos, HandlerTable );
 }
 static void handler_pos_MikadukiNoMai( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokePos, int* work )
 {
@@ -229,7 +229,7 @@ static BTL_EVENT_FACTOR* ADD_POS_IyasiNoNegai( u16 pri, BtlPokePos pos, BtlPosEf
     { BTL_EVENT_MEMBER_IN,  handler_pos_IyasiNoNegai   },  // ダメージ補正
     { BTL_EVENT_NULL, NULL },
   };
-  return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_WAZA, eff, pri, pos, HandlerTable );
+  return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_POS, eff, pri, pos, HandlerTable );
 }
 static void handler_pos_IyasiNoNegai( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokePos, int* work )
 {
@@ -271,7 +271,7 @@ static BTL_EVENT_FACTOR* ADD_POS_DelayAttack( u16 pri, BtlPokePos pos, BtlPosEff
     { BTL_EVENT_TURNCHECK_BEGIN,  handler_pos_DelayAttack   },  // ダメージ補正
     { BTL_EVENT_NULL, NULL },
   };
-  return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_WAZA, eff, pri, pos, HandlerTable );
+  return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_POS, eff, pri, pos, HandlerTable );
 }
 static void handler_pos_DelayAttack( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokePos, int* work )
 {
@@ -313,7 +313,7 @@ static BTL_EVENT_FACTOR* ADD_POS_BatonTouch( u16 pri, BtlPokePos pos, BtlPosEffe
     { BTL_EVENT_MEMBER_IN,  handler_pos_BatonTouch   },  // ダメージ補正
     { BTL_EVENT_NULL, NULL },
   };
-  return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_WAZA, eff, pri, pos, HandlerTable );
+  return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_POS, eff, pri, pos, HandlerTable );
 }
 static void handler_pos_BatonTouch( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokePos, int* work )
 {
@@ -322,11 +322,14 @@ static void handler_pos_BatonTouch( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK*
   };
 
   u8 targetPokeID = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID );
+  BTL_Printf("targetPokeID=%d, NowPow=%d, NowPosPokeID=%d\n",
+    targetPokeID, pokePos, BTL_SVFLOW_PokePosToPokeID(flowWk, pokePos));
   if( targetPokeID == BTL_SVFLOW_PokePosToPokeID(flowWk, pokePos) )
   {
     BTL_HANDEX_PARAM_BATONTOUCH* param = BTL_SVFLOW_HANDLERWORK_Push( flowWk, BTL_HANDEX_BATONTOUCH, BTL_POKEID_NULL );
     param->userPokeID = work[ WORKIDX_USER_POKEID ];
     param->targetPokeID = targetPokeID;
+    BTL_EVENT_FACTOR_Remove( myHandle );
   }
 }
 

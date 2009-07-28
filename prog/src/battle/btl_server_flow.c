@@ -1481,6 +1481,7 @@ static void scproc_AfterMemberIn( BTL_SVFLOW_WORK* wk )
   FRONT_POKE_SEEK_InitWork( &fps, wk );
   while( FRONT_POKE_SEEK_GetNext(&fps, wk, &bpp) )
   {
+    BTL_Printf(" After MemberIn pokeID=%d\n", BPP_GetID(bpp) );
     if( BPP_GetContFlag(bpp, BPP_CONTFLG_MEMBERIN_EFFECT) )
     {
       scEvent_MemberIn( wk, bpp );
@@ -8527,6 +8528,7 @@ static u8 scproc_HandEx_batonTouch( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_
   BTL_POKEPARAM* target = BTL_POKECON_GetPokeParam( wk->pokeCon, param->targetPokeID );
 
   BPP_BatonTouchParam( target, user );
+  SCQUE_PUT_OP_BatonTouch( wk->que, param->userPokeID, param->targetPokeID );
 
   return 1;
 }

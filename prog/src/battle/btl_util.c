@@ -69,7 +69,6 @@ void BTL_UTIL_SetPrintType( BtlPrintType type )
 
 void BTL_UTIL_Printf( const char* filename, int line, const char* fmt, ... )
 {
-  /*
   print_type();
   print_file_info( filename, line );
 
@@ -79,7 +78,6 @@ void BTL_UTIL_Printf( const char* filename, int line, const char* fmt, ... )
     OS_TVPrintf( fmt, vlist );
     va_end( vlist );
   }
-  */
 }
 
 void BTL_UTIL_DumpPrintf( const char* caption, const void* data, u32 size )
