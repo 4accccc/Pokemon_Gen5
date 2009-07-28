@@ -161,7 +161,8 @@ SRCS  +=    $(SOUNDSRC) \
 		field/field_place_name.c \
 		field/iss_unit.c \
 		app/app_menu_common.c \
-		app/app_taskmenu.c
+		app/app_taskmenu.c \
+		field/field_cars.c
 
 
 #================================================
