@@ -81,6 +81,7 @@
 #include "field_place_name.h"
 #include "iss_unit.h"		
 #include "sound/bgm_info.h"
+#include "field_cars.h"
 
 //======================================================================
 //	define
@@ -194,6 +195,7 @@ struct _FIELDMAP_WORK
 	FIELD_PLACE_NAME* placeNameSys;	// 地名表示ウィンドウ
 	ISS_UNIT* issUnit;				// 街ISSユニット
 	BGM_INFO_SYS* bgmInfoSys;		// BGM情報
+	FIELD_CARS* cars;
 
 	
 	MMDLSYS *fldMMdlSys;
@@ -544,6 +546,8 @@ static MAINSEQ_RESULT mainSeqFunc_setup(GAMESYS_WORK *gsys, FIELDMAP_WORK *field
     TAMADA_Printf("start X,Y,Z=%d,%d,%d\n", FX_Whole(pos->x), FX_Whole(pos->y), FX_Whole(pos->z));
     TAMADA_Printf( "Start Dir = %04x\n", pw->direction );
   }
+
+  fieldWork->cars = FIELD_CARS_Create( fieldWork->field_player, fieldWork->map_id, fieldWork->heapID );
   
   //エッジマーキング設定セットアップ
   FIELD_EDGEMARK_Setup( fieldWork->areadata );
@@ -683,6 +687,8 @@ static MAINSEQ_RESULT mainSeqFunc_update_top(GAMESYS_WORK *gsys, FIELDMAP_WORK *
   // 地名表示システム動作処理
   FIELD_PLACE_NAME_Process( fieldWork->placeNameSys );
 
+  FIELD_CARS_Process( fieldWork->cars );
+
   //自機更新
   FIELD_PLAYER_Update( fieldWork->field_player );
 
@@ -710,7 +716,7 @@ static MAINSEQ_RESULT mainSeqFunc_update_top(GAMESYS_WORK *gsys, FIELDMAP_WORK *
 	// フィールドマップ用制御タスクシステム
 	FLDMAPFUNC_Sys_Main( fieldWork->fldmapFuncSys );
 
-  // TEMP: BGMの一部トラックの音量調整
+  // TEMP: 街ISSユニットによる音量調整
   {
 	  int gx, gy, gz;
       VecFx32 player_pos;
@@ -741,6 +747,7 @@ static MAINSEQ_RESULT mainSeqFunc_update_tail(GAMESYS_WORK *gsys, FIELDMAP_WORK 
 	fldmap_G3D_Draw( fieldWork );
 	GFL_CLACT_SYS_Main(); // CLSYSメイン
   
+
 	// ゲームデータのフレーム分割用カウンタをリセット
 	GAMEDATA_ResetFrameSpritCount(GAMESYSTEM_GetGameData(gsys));
   return MAINSEQ_RESULT_CONTINUE;
@@ -784,6 +791,8 @@ static MAINSEQ_RESULT mainSeqFunc_free(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldW
 
   // BGM情報管理システムの破棄
   BGM_INFO_DeleteSystem( fieldWork->bgmInfoSys );
+
+  FIELD_CARS_Delete( fieldWork->cars );
 
   //フィールドエンカウント破棄
   FIELD_ENCOUNT_Delete( fieldWork->encount );
@@ -1549,6 +1558,8 @@ static void fldmap_G3D_Draw( FIELDMAP_WORK * fieldWork )
 
 	
   FIELD_WEATHER_3DWrite( fieldWork->weather_sys );	// 天気描画処理
+
+  FIELD_CARS_Draw( fieldWork->cars );	
 	
   GFL_G3D_DRAW_End(); //描画終了（バッファスワップ）
 }
@@ -1868,7 +1879,7 @@ static void fldmap_ZoneChange( FIELDMAP_WORK *fieldWork )
 
 	// ISSユニットにゾーンの切り替えを通達
 	ISS_UNIT_ZoneChange( fieldWork->issUnit, new_zone_id );
-	
+
 	//ゾーンID更新
 	lc->zone_id = new_zone_id;
 	
