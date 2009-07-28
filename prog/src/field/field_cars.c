@@ -26,9 +26,13 @@
 #define RAIL_MIN_Z (600)
 #define RAIL_MAX_Z (2115)
 
+#define RAIL_X_01 (990)
+#define RAIL_X_02 (1060)
+#define RAIL_Y    (245)
+
 // トレーラーの移動速度
-#define TRAILER_SPEED_MAX (16)
-#define TRAILER_SPEED_MIN ( 8)
+#define TRAILER_SPEED_MAX (8)
+#define TRAILER_SPEED_MIN (5)
 
 // 発車範囲(プレイヤー位置)
 #define START_MIN_Z   (750)
@@ -36,7 +40,7 @@
 
 // 発車間隔(単位:フレーム)
 #define START_MIN_INTERVAL   (60)
-#define START_MAX_INTERVAL  (180)
+#define START_MAX_INTERVAL  (150)
 
 
 //============================================================================== 
@@ -414,8 +418,11 @@ static void ActTrailers( FIELD_CARS* p_sys )
 				p_sys->timer[i].count
 					= START_MIN_INTERVAL + GFL_STD_MtRand( START_MAX_INTERVAL - START_MIN_INTERVAL ); 
 
+				// 念のため
+				if( START_MAX_INTERVAL < p_sys->timer[i].count ) p_sys->timer[i].count = START_MAX_INTERVAL;
+
 				// DEBUG:
-				//OBATA_Printf("SetTimer : count = %d\n", p_sys->timer[i].count );
+				OBATA_Printf("[%d]SetTimer : count = %d\n", i, p_sys->timer[i].count );
 			}
 		}
 		// 動いていない場合
@@ -434,12 +441,12 @@ static void ActTrailers( FIELD_CARS* p_sys )
 					switch( i )
 					{
 						case 0:	
-							x = (997) << FX32_SHIFT;
+							x = (RAIL_X_01) << FX32_SHIFT;
 							z = (RAIL_MAX_Z) << FX32_SHIFT; 
 							s = -( GFL_STD_MtRand( TRAILER_SPEED_MAX - TRAILER_SPEED_MIN ) + TRAILER_SPEED_MIN ) << FX32_SHIFT;	
 							break;
 						case 1:	
-							x = (1053) << FX32_SHIFT;
+							x = (RAIL_X_02) << FX32_SHIFT;
 							z = (RAIL_MIN_Z) << FX32_SHIFT; 
 							s = ( GFL_STD_MtRand( TRAILER_SPEED_MAX - TRAILER_SPEED_MIN ) + TRAILER_SPEED_MIN ) << FX32_SHIFT;	
 							break;
@@ -447,12 +454,12 @@ static void ActTrailers( FIELD_CARS* p_sys )
 
 					p_sys->trailer[i].active = TRUE;
 					p_sys->trailer[i].status.trans.x  = x;
-					p_sys->trailer[i].status.trans.y  = (245) << FX32_SHIFT;
+					p_sys->trailer[i].status.trans.y  = (RAIL_Y) << FX32_SHIFT;
 					p_sys->trailer[i].status.trans.z  = z;
 					p_sys->trailer[i].speed  = s;
 
 					// DEBUG:
-					//OBATA_Printf( "TrailerStart : speed = %d\n", FX_Whole( p_sys->trailer[i].speed ) );
+					OBATA_Printf( "[%d]TrailerStart : speed = %d\n", i, FX_Whole( p_sys->trailer[i].speed ) );
 				}
 			} 
 		}
