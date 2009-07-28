@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="taya" host="W00146" date="2009-07-28T12:18:59"/>
+	<create user="taya" host="W00146" date="2009-07-29T01:29:05"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -636,7 +636,7 @@
 		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]　の
 ぼうぎょ　が　ぐーんと　あがった！</language>
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]　の
-ぼうぎょ　が　ぐーんと上がった！</language>
+防御　が　ぐーんと上がった！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_RankupEx_DEF_Y">
