@@ -1,0 +1,22 @@
+/*****************************************************************************
+	Archive file index definition.
+	File: winframe.naix
+
+	This file was created by NINTENDO NITRO-System Archiver.
+
+
+ *****************************************************************************/
+
+#ifndef NARC_WINFRAME_NAIX_
+#define NARC_WINFRAME_NAIX_
+
+enum {
+	NARC_winframe_system_NCLR = 0,
+	NARC_winframe_talk_win00_NCLR = 1,
+	NARC_winframe_fmenu_NCGR = 2,
+	NARC_winframe_system_NCGR = 3,
+	NARC_winframe_talk_win00_NCGR = 4
+};
+
+/* NARC_WINFRAME_NAIX_ */
+#endif

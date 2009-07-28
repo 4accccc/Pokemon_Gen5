@@ -77,7 +77,8 @@ SUBDIRS	=	wmi \
 			irc_ranking \
 			iss_unit \
 			townmap \
-			unionroom
+			unionroom \
+			winframe
 
 include $(RESOURCE_MACRO)
 

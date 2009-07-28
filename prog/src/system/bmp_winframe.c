@@ -13,7 +13,7 @@
 #include "arc/arc_def.h"
 #include "system/bmp_winframe.h"
 
-#include "arc/test_graphic/winframe.naix"	//test
+#include "arc/winframe.naix"	//test
 #include "arc/test_graphic/menu_gra.naix"	//test
 
 //======================================================================
@@ -49,11 +49,11 @@ void BmpWinFrame_CgxSet( u8 frmnum, u16 cgx, u8 win_num, u32 heap )
 {
 	if( win_num == MENU_TYPE_SYSTEM ){
 		GFL_ARC_UTIL_TransVramBgCharacter(
-			ARCID_FLDMAP_WINFRAME, NARC_winframe_system_ncgr,
+			ARCID_FLDMAP_WINFRAME, NARC_winframe_system_NCGR,
 			frmnum, cgx, 0, 0, heap );
 	}else{
 		GFL_ARC_UTIL_TransVramBgCharacter(
-			ARCID_FLDMAP_WINFRAME, NARC_winframe_fmenu_ncgr,
+			ARCID_FLDMAP_WINFRAME, NARC_winframe_fmenu_NCGR,
 			frmnum, cgx, 0, 0, heap );
 	}
 }
@@ -69,7 +69,7 @@ void BmpWinFrame_CgxSet( u8 frmnum, u16 cgx, u8 win_num, u32 heap )
 //--------------------------------------------------------------
 u32 BmpWinFrame_WinPalArcGet(void)
 {
-	return ( NARC_winframe_system_nclr );
+	return ( NARC_winframe_system_NCLR );
 }
 
 //--------------------------------------------------------------
@@ -93,9 +93,9 @@ void BmpWinFrame_GraphicSet(
 	
 	// キャラ
 	if( win_num == MENU_TYPE_SYSTEM ){
-		arc = NARC_winframe_system_ncgr;
+		arc = NARC_winframe_system_NCGR;
 	}else{
-		arc = NARC_winframe_fmenu_ncgr;
+		arc = NARC_winframe_fmenu_NCGR;
 	}
 
 	GFL_ARC_UTIL_TransVramBgCharacter(
@@ -103,9 +103,10 @@ void BmpWinFrame_GraphicSet(
 	
 	// パレット
 	if( win_num == MENU_TYPE_UG ){
-		arc = NARC_winframe_ugmenu_win_nclr;
+//		arc = NARC_winframe_ugmenu_win_NCLR;
+		arc = NARC_winframe_system_NCLR;
 	}else{
-		arc = NARC_winframe_system_nclr;
+		arc = NARC_winframe_system_NCLR;
 	}
 
 	if( frmnum < GFL_BG_FRAME0_S ){
@@ -138,9 +139,9 @@ GFL_ARCUTIL_TRANSINFO BmpWinFrame_GraphicSetAreaMan( u8 frmnum, u8 pal, u8 win_n
 	
 	// キャラ
 	if( win_num == MENU_TYPE_SYSTEM ){
-		arc = NARC_winframe_system_ncgr;
+		arc = NARC_winframe_system_NCGR;
 	}else{
-		arc = NARC_winframe_fmenu_ncgr;
+		arc = NARC_winframe_fmenu_NCGR;
 	}
 
 	bgchar = GFL_ARC_UTIL_TransVramBgCharacterAreaMan(
@@ -148,9 +149,10 @@ GFL_ARCUTIL_TRANSINFO BmpWinFrame_GraphicSetAreaMan( u8 frmnum, u8 pal, u8 win_n
 	
 	// パレット
 	if( win_num == MENU_TYPE_UG ){
-		arc = NARC_winframe_ugmenu_win_nclr;
+//		arc = NARC_winframe_ugmenu_win_NCLR;
+		arc = NARC_winframe_system_NCLR;
 	}else{
-		arc = NARC_winframe_system_nclr;
+		arc = NARC_winframe_system_NCLR;
 	}
 
 	if( frmnum < GFL_BG_FRAME0_S ){

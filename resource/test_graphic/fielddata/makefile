@@ -14,8 +14,6 @@ TARGET_NAMES = \
 	fieldmap_map.narc \
 	menu_gra.naix \
 	menu_gra.narc \
-	winframe.naix \
-	winframe.narc \
 	testgridmap_a.narc \
 	testgridmap_a.naix \
 	fldmmdl_btx.narc \

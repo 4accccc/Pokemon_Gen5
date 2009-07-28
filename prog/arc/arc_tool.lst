@@ -65,7 +65,7 @@
 	ARCID_GSOBJANMTBL	"test_graphic/bm_info_out.narc"	#
 	ARCID_GSAREAOBJ		"test_graphic/area_build.narc"	#
 	ARCID_POKEGRA		"pokegra/pokegra_wb.narc"	#
-	ARCID_FLDMAP_WINFRAME "test_graphic/winframe.narc"   # ウィンドウフレーム
+	ARCID_FLDMAP_WINFRAME "winframe.narc"   # ウィンドウフレーム
 	ARCID_FLDMAP_MENU_GRA "test_graphic/menu_gra.narc"   # メニューグラフィック
 	ARCID_FLDMAP_TESTGRIDMAP_ATTR "test_graphic/testgridmap_a.narc" #テストマップ
 	ARCID_PTC			"particle/wazaeffect/spa.narc" #技エフェクトパーティクル
