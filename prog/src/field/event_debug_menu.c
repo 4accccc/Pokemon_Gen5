@@ -2612,7 +2612,6 @@ typedef struct
 {
 	GAMESYS_WORK		*p_gamesys;
 	GMEVENT					*p_event;
-	GMEVENT					*p_next_ev;
 	FIELD_MAIN_WORK *p_field;
 	TOWNMAP_PARAM		*p_param;
 } DEBUG_SKYJUMP_EVENT_WORK;
@@ -2678,6 +2677,7 @@ static GMEVENT_RESULT DMenuSkyJump( GMEVENT *p_event, int *p_seq, void *p_wk_adr
 		SEQ_END_PROC,
 		SEQ_FLD_OPEN,
 		SEQ_FLD_FADEIN,
+		SEQ_PLACE_NAME,
 		SEQ_EXIT,
 	};
 
@@ -2686,8 +2686,6 @@ static GMEVENT_RESULT DMenuSkyJump( GMEVENT *p_event, int *p_seq, void *p_wk_adr
 	switch(*p_seq )
 	{	
 	case SEQ_INIT:
-		p_wk->p_next_ev	= EVENT_FieldSubProc( p_wk->p_gamesys, p_wk->p_field,
-				FS_OVERLAY_ID(townmap), &TownMap_ProcData, p_wk->p_param );
 
 		PMSND_PauseBGM(TRUE);
 		PMSND_PushBGM();
@@ -2701,6 +2699,8 @@ static GMEVENT_RESULT DMenuSkyJump( GMEVENT *p_event, int *p_seq, void *p_wk_adr
 
 	case SEQ_FLD_CLOSE:
 		GMEVENT_CallEvent(p_wk->p_event, EVENT_FieldClose(p_wk->p_gamesys, p_wk->p_field));
+		//”z’u‚µ‚Ä‚¢‚½“®ìƒ‚ƒfƒ‹‚ðíœ
+		MMDLSYS_DeleteMMdl( GAMEDATA_GetMMdlSys( GAMESYSTEM_GetGameData(p_wk->p_gamesys) ) );
 		*p_seq	= SEQ_CALL_PROC;
 		break;
 
@@ -2730,8 +2730,12 @@ static GMEVENT_RESULT DMenuSkyJump( GMEVENT *p_event, int *p_seq, void *p_wk_adr
 			p_player		= GAMEDATA_GetMyPlayerWork( p_gamedata );
 
 			LOCATION_Init( &location );
+#if 0
 			LOCATION_SetDirect( &location, p_wk->p_param->zoneID, 0, 
 					p_wk->p_param->grid.x, 0, p_wk->p_param->grid.y );
+#else
+			LOCATION_DEBUG_SetDefaultPos(&location, p_wk->p_param->zoneID);
+#endif
 
 			PLAYERWORK_setZoneID( p_player, location.zone_id );
 			PLAYERWORK_setPosition( p_player, &location.pos );
@@ -2747,10 +2751,22 @@ static GMEVENT_RESULT DMenuSkyJump( GMEVENT *p_event, int *p_seq, void *p_wk_adr
 
 	case SEQ_FLD_FADEIN:
 		GMEVENT_CallEvent(p_wk->p_event, EVENT_FieldFadeIn(p_wk->p_gamesys, p_wk->p_field, 0));
+		*p_seq	= SEQ_PLACE_NAME;
+		break;
+
+	case SEQ_PLACE_NAME:
+		{	
+			FIELDMAP_WORK * fieldmap = GAMESYSTEM_GetFieldMapWork(p_wk->p_gamesys);
+			FIELD_PLACE_NAME_ZoneChange(FIELDMAP_GetPlaceNameSys(fieldmap), p_wk->p_param->zoneID);
+		}
 		*p_seq	= SEQ_EXIT;
 		break;
 
 	case SEQ_EXIT:
+		if( p_wk->p_param )
+		{	
+			GFL_HEAP_FreeMemory(p_wk->p_param);
+		}
 		return GMEVENT_RES_FINISH;
 	}
 

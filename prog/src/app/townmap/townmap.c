@@ -268,6 +268,13 @@ enum
 //=====================================
 #define MAP_SCALE_SYNC	(10)
 
+//-------------------------------------
+///	UI
+//=====================================
+#define UI_FLIK_RELEASE_SYNC	(1)		//はじくとき、離してから何シンク有効か
+#define UI_DRAG_MOVE_SYNC			(20)
+#define UI_DRAG_MOVE_RATE			(FX32_CONST(0.2))
+
 //=============================================================================
 /**
  *					構造体宣言
@@ -296,6 +303,7 @@ typedef struct
 	GFL_CLACTPOS	pos;
 	BOOL					is_trg;
 	BOOL					is_effect;
+	BOOL					is_pull;
 } CURSOR_WORK;
 //-------------------------------------
 ///	場所情報
@@ -401,7 +409,17 @@ typedef struct
 	BOOL				is_update;
 	BOOL				is_start;
 } PLACEWND_WORK;
-
+//-------------------------------------
+///	UI
+//=====================================
+typedef struct 
+{
+	GFL_POINT start;
+	GFL_POINT end;
+	u32	flik_sync;
+	u32	release_sync;
+	u32 key_cont_sync;
+} UI_WORK;
 //-------------------------------------
 ///	シーケンス管理
 //=====================================
@@ -449,6 +467,9 @@ typedef struct
 	//地名ウィンドウ
 	PLACEWND_WORK	placewnd;
 
+	//タッチ
+	UI_WORK	ui;
+
 	//共通利用システム
 	GFL_FONT			*p_font;
 	GFL_MSGDATA		*p_place_msg;
@@ -465,7 +486,8 @@ typedef struct
 	
 	//BG動作を1シンク遅らせるためのシーケンス
 	u16	move_seq;
-	u16 dummy;
+	u16 drag_sync;
+	GFL_POINT drag_end;
 
 #ifdef PM_DEBUG
 	BOOL	is_print_debug;
@@ -524,7 +546,9 @@ static void CURSOR_Main( CURSOR_WORK *p_wk, const PLACE_WORK *cp_place );
 static void CURSOR_GetPos( const CURSOR_WORK *cp_wk, GFL_POINT *p_pos );
 static BOOL CURSOR_GetTrg( const CURSOR_WORK *cp_wk );
 static BOOL CURSOR_GetPointTrg( const CURSOR_WORK *cp_wk, u32 *p_x, u32 *p_y );
+static int  CURSOR_GetContButton( const CURSOR_WORK *cp_wk );
 static void CURSOR_SetEffect( CURSOR_WORK *p_wk, BOOL is_visible );
+static BOOL CURSOR_IsPull( const CURSOR_WORK *cp_wk );
 //-------------------------------------
 ///	PLACE
 //=====================================
@@ -594,6 +618,15 @@ static void PLACEWND_Exit( PLACEWND_WORK *p_wk );
 static void PLACEWND_Main( PLACEWND_WORK *p_wk );
 static void PLACEWND_Start( PLACEWND_WORK *p_wk, const PLACE_DATA *cp_data );
 static void PLACEWND_SetVisible( PLACEWND_WORK *p_wk, BOOL is_visible );
+//-------------------------------------
+///	UI & 
+//=====================================
+static void UI_Init( UI_WORK *p_wk, HEAPID heapID );
+static void UI_Exit( UI_WORK *p_wk );
+static void UI_Main( UI_WORK *p_wk );
+static BOOL UI_GetDrag( const UI_WORK *cp_wk, GFL_POINT *p_start, GFL_POINT *p_end, VecFx32 *p_vec );
+static BOOL UI_GetFlik( UI_WORK *p_wk, GFL_POINT *p_start, GFL_POINT *p_end, VecFx32 *p_vec, u32 *p_sync );
+static int UI_IsContKey( const UI_WORK *cp_wk, u32 *p_sync );
 //-------------------------------------
 ///	ETC
 //=====================================
@@ -777,7 +810,7 @@ static GFL_PROC_RESULT TOWNMAP_PROC_Init( GFL_PROC *p_proc, int *p_seq, void *p_
 		GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_place_name_dat, HEAPID_TOWNMAP );
 	//ガイドメッセージデータ
 	p_wk->p_guide_msg = GFL_MSG_Create(
-		GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_place_name_dat, HEAPID_TOWNMAP );
+		GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_townmap_dat, HEAPID_TOWNMAP );
 
 	//モジュール作成----------------------
 	//グラフィック作成
@@ -852,6 +885,8 @@ static GFL_PROC_RESULT TOWNMAP_PROC_Init( GFL_PROC *p_proc, int *p_seq, void *p_
 	INFO_Init( &p_wk->info, TOWNMAP_GRAPHIC_GetFrame( p_wk->p_grh, TOWNMAP_BG_FRAME_FONT_S ),
 			p_wk->p_font, p_wk->p_place_msg, p_wk->p_guide_msg, HEAPID_TOWNMAP );
 
+	//タッチ
+	UI_Init( &p_wk->ui, HEAPID_TOWNMAP );
 
 #ifdef DEBUG_MENU_USE
 
@@ -905,6 +940,9 @@ static GFL_PROC_RESULT TOWNMAP_PROC_Exit( GFL_PROC *p_proc, int *p_seq, void *p_
 	DEBUGWIN_RemoveGroup( 0 );
 	DEBUGWIN_ExitProc();
 #endif //DEBUG_MENU_USE
+
+	//タッチ破棄
+	UI_Exit( &p_wk->ui );
 
 	//上画面情報破棄
 	INFO_Exit( &p_wk->info );
@@ -987,6 +1025,7 @@ static GFL_PROC_RESULT TOWNMAP_PROC_Main( GFL_PROC *p_proc, int *p_seq, void *p_
 	}
 
 #ifdef PM_DEBUG
+#if 0
 	if( GFL_UI_KEY_GetCont() & PAD_BUTTON_L )
 	{	
 		if( GFL_UI_KEY_GetTrg() & PAD_KEY_UP )
@@ -1010,6 +1049,7 @@ static GFL_PROC_RESULT TOWNMAP_PROC_Main( GFL_PROC *p_proc, int *p_seq, void *p_
 			NAGI_Printf( "debug pos x%d y%d\n", s_debug_pos.x, s_debug_pos.y );
 		}
 	}
+#endif
 #endif //PM_DEBUG
 }
 //=============================================================================
@@ -1254,33 +1294,89 @@ static void SEQFUNC_Main( SEQ_WORK *p_seqwk, int *p_seq, void *p_param_adrs )
 	}
 
 	//カーソルの地図移動
-	if( p_wk->is_scale )
+	if( p_wk->is_scale && !CURSOR_IsPull(&p_wk->cursor) )
 	{	
 		BOOL	is_move	= FALSE;
 		GFL_POINT	pos;
 		GFL_POINT	add	= {0,0};
+		int btn;
 		CURSOR_GetPos( &p_wk->cursor, &pos );
+		btn	= CURSOR_GetContButton( &p_wk->cursor );
+
+		//カーソル操作
 		if( pos.y < CURSOR_MAP_MOVE_RANGE_TOP )
 		{	
-			add.y -= 4;
-			is_move	= TRUE;
+			if( btn & PAD_KEY_UP )
+			{	
+				add.y -= 4;
+				is_move	= TRUE;
+			}
 		}
 		if( CURSOR_MAP_MOVE_RANGE_BOTTOM_APPBAR >= pos.y && pos.y > CURSOR_MAP_MOVE_RANGE_BOTTOM )
 		{	
-			add.y += 4;
-			is_move	= TRUE;
+			if( btn & PAD_KEY_DOWN )
+			{	
+				add.y += 4;
+				is_move	= TRUE;
+			}
 		}
 		if( pos.x < CURSOR_MAP_MOVE_RANGE_LEFT )
 		{	
-			add.x -= 4;
-			is_move	= TRUE;
+			if( btn & PAD_KEY_LEFT )
+			{	
+				add.x -= 4;
+				is_move	= TRUE;
+			}
 		}
 		if( pos.x > CURSOR_MAP_MOVE_RANGE_RIGHT )
 		{	
-			add.x += 4;
-			is_move	= TRUE;
+			if( btn & PAD_KEY_RIGHT )
+			{	
+				add.x += 4;
+				is_move	= TRUE;
+			}
 		}
+#if 0
+		//ドラッグでの動作
+		{	
+			BOOL is_drag;
+			VecFx32	v;
+			fx32 mag;
+			GFL_POINT	drag_end;
+			is_drag	= UI_GetDrag( &p_wk->ui, NULL, &drag_end, &v );
+			if( is_drag )
+			{	
+				if( p_wk->drag_sync++ < UI_DRAG_MOVE_SYNC )
+				{	
+					add.x	= (FX_Mul(v.x, UI_DRAG_MOVE_RATE) * p_wk->drag_sync / UI_DRAG_MOVE_SYNC ) >> FX32_SHIFT;
+					add.y	= (FX_Mul(v.y, UI_DRAG_MOVE_RATE) * p_wk->drag_sync / UI_DRAG_MOVE_SYNC )>> FX32_SHIFT;
+					p_wk->drag_end	= drag_end;
 
+					is_move	= TRUE;
+				}
+				else
+				{	
+					VecFx32	v1,v2;
+					v1.x	= drag_end.x;
+					v1.y	= drag_end.y;
+					v1.z	= 0;
+					v2.x	= p_wk->drag_end.x;
+					v2.y	= p_wk->drag_end.y;
+					v2.z	= 0;
+					
+					if( VEC_Distance( &v1, &v2 ) > FX32_CONST(10) )
+					{	
+						p_wk->drag_sync	= 0;
+					}
+				}
+			}
+			else
+			{	
+				p_wk->drag_sync	= 0;
+			}
+		}
+#endif
+		//移動処理
 		if( is_move )
 		{	
 			GFL_POINT	pos;
@@ -1310,6 +1406,7 @@ static void SEQFUNC_Main( SEQ_WORK *p_seqwk, int *p_seq, void *p_param_adrs )
 	PLACE_Main( &p_wk->place );
 	MAP_Main( &p_wk->map );
 	PLACEWND_Main( &p_wk->placewnd );
+	UI_Main( &p_wk->ui );
 
 	//アプリケーションバー選択
 	switch( APPBAR_GetTrg( &p_wk->appbar ) )
@@ -1961,6 +2058,7 @@ static void CURSOR_Main( CURSOR_WORK *p_wk, const PLACE_WORK *cp_place )
 	{	
 		const PLACE_DATA* cp_placedata;
 		cp_placedata	= PLACE_PullHit( cp_place, p_wk );
+		p_wk->is_pull	= FALSE;
 		if( cp_placedata != NULL )
 		{	
 			
@@ -1985,6 +2083,7 @@ static void CURSOR_Main( CURSOR_WORK *p_wk, const PLACE_WORK *cp_place )
 				VEC_Normalize( &pull, &pull );
 				GFL_CALC3D_VEC_MulScalar( &pull, PLACE_PULL_STRONG, &pull );
 			}
+			p_wk->is_pull	= TRUE;
 			is_move	= TRUE;
 		}
 	}
@@ -2094,6 +2193,19 @@ static BOOL CURSOR_GetPointTrg( const CURSOR_WORK *cp_wk, u32 *p_x, u32 *p_y )
 }
 //----------------------------------------------------------------------------
 /**
+ *	@brief	ボタン押し状態取得
+ *
+ *	@param	const CURSOR_WORK *cp_wk	ワーク
+ *
+ *	@return	ボタン
+ */
+//-----------------------------------------------------------------------------
+static int  CURSOR_GetContButton( const CURSOR_WORK *cp_wk )
+{	
+	return GFL_UI_KEY_GetCont();
+}
+//----------------------------------------------------------------------------
+/**
  *	@brief	演出OBJを出す
  *
  *	@param	CURSOR_WORK *p_wk	ワーク
@@ -2108,6 +2220,19 @@ static void CURSOR_SetEffect( CURSOR_WORK *p_wk, BOOL is_visible )
 	{	
 		GFL_CLACT_WK_ResetAnm( p_wk->p_clwk[CURSOR_CLWK_RING] );
 	}
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	カーソル	引きこまれ動作中
+ *
+ *	@param	const CURSOR_WORK *cp_wk	ワーク
+ *
+ *	@return	TRUEで引きこまれ	FALSEで違う
+ */
+//-----------------------------------------------------------------------------
+static BOOL CURSOR_IsPull( const CURSOR_WORK *cp_wk )
+{	
+	return cp_wk->is_pull;
 }
 //=============================================================================
 /**
@@ -2445,10 +2570,12 @@ static const PLACE_DATA* PLACE_Hit( const PLACE_WORK *cp_wk, const CURSOR_WORK *
 	
 	GFL_POINT pos;
 
-	//カーソルの座標を場所座標系に直す
 	CURSOR_GetPos( cp_cursor, &pos );
-	pos.x	+= cp_wk->pos.x;
-	pos.y	+= cp_wk->pos.y;
+
+	if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A )
+	{	
+		NAGI_Printf( "CUR x%d y%d\n", pos.x, pos.y );
+	}
 
 	//当たり判定
 	for( i = 0; i < cp_wk->data_num; i++ )
@@ -2479,10 +2606,7 @@ static const PLACE_DATA* PLACE_PullHit( const PLACE_WORK *cp_wk, const CURSOR_WO
 	u32 now_distance;
 	s32 best_idx;
 
-	//カーソルの座標を場所座標系に直す
 	CURSOR_GetPos( cp_cursor, &pos );
-	pos.x	+= cp_wk->pos.x;
-	pos.y	+= cp_wk->pos.y;
 
 	//複数衝突していたならば一番近くのものを返す
 	best_idx			=	-1;
@@ -3571,6 +3695,176 @@ static void PLACEWND_SetVisible( PLACEWND_WORK *p_wk, BOOL is_visible )
 		MSGWND_Clear( &p_wk->msgwnd );
 	}
 }
+//=============================================================================
+/**
+ *		UI
+ */
+//=============================================================================
+//----------------------------------------------------------------------------
+/**
+ *	@brief	UI初期化
+ *
+ *	@param	UI_WORK *p_wk	ワーク
+ *	@param	heapID				ヒープID
+ *
+ */
+//-----------------------------------------------------------------------------
+static void UI_Init( UI_WORK *p_wk, HEAPID heapID )
+{	
+	GFL_STD_MemClear( p_wk, sizeof(UI_WORK) );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	UI破棄
+ *
+ *	@param	UI_WORK *p_wk	ワーク
+ *
+ */
+//-----------------------------------------------------------------------------
+static void UI_Exit( UI_WORK *p_wk )
+{	
+	GFL_STD_MemClear( p_wk, sizeof(UI_WORK) );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	UIメイン処理
+ *
+ *	@param	UI_WORK *p_wk		ワーク
+ *
+ */
+//-----------------------------------------------------------------------------
+static void UI_Main( UI_WORK *p_wk )
+{	
+	u32 x, y;
+	//タッチの処理
+	if( GFL_UI_TP_GetPointTrg( &x, &y ) )
+	{	
+		p_wk->start.x		= x;
+		p_wk->start.y		= y;
+		p_wk->end.x		= x;
+		p_wk->end.y		= y;
+
+		p_wk->flik_sync	= 0;
+	}
+	else if(GFL_UI_TP_GetPointCont( &x, &y ) )
+	{	
+		p_wk->end.x		= x;
+		p_wk->end.y		= y;
+
+		p_wk->flik_sync++;
+		p_wk->release_sync	= 0;
+	}
+	else
+	{	
+		p_wk->release_sync++;
+	}
+
+	//キーの処理
+	if( GFL_UI_KEY_GetTrg() )
+	{
+		p_wk->key_cont_sync	= 0;
+	}
+	else if( GFL_UI_KEY_GetCont() )
+	{	
+		p_wk->key_cont_sync++;
+	}
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	UI	ドラッグ情報取得
+ *
+ *	@param	const UI_WORK *p_wk	ワーク
+ *	@param	*p_start						開始点
+ *	@param	*p_end							終了点
+ *	@param	*p_vec							ベクトル
+ *
+ */
+//-----------------------------------------------------------------------------
+static BOOL UI_GetDrag( const UI_WORK *cp_wk, GFL_POINT *p_start, GFL_POINT *p_end, VecFx32 *p_vec )
+{	
+	if( GFL_UI_TP_GetCont() )
+	{	
+		if( p_start )
+		{	
+			*p_start	= cp_wk->start;
+		}
+		if( p_end )
+		{	
+			*p_end	= cp_wk->end;
+		}
+		if( p_vec )
+		{	
+			VecFx32	s, e;
+			VEC_Set( &s, FX32_CONST( cp_wk->start.x ), FX32_CONST( cp_wk->start.y ), 0 );
+			VEC_Set( &e, FX32_CONST( cp_wk->end.x ), FX32_CONST( cp_wk->end.y ), 0 );
+			VEC_Subtract( &s, &e, p_vec );
+		}
+		return TRUE;
+	}
+
+	return FALSE;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	UI	はじき情報取得
+ *
+ *	@param	const UI_WORK *p_wk	ワーク
+ *	@param	*p_start	開始点
+ *	@param	*p_end		終了点
+ *	@param	*p_vec		ベクトル
+ *	@param	*p_sync		はじきにかかったシンク
+ *
+ *	@return
+ */
+//-----------------------------------------------------------------------------
+static BOOL UI_GetFlik( UI_WORK *p_wk, GFL_POINT *p_start, GFL_POINT *p_end, VecFx32 *p_vec, u32 *p_sync )
+{	
+	if( !GFL_UI_KEY_GetCont() && p_wk->release_sync < UI_FLIK_RELEASE_SYNC )
+	{	
+		//1回しか取得できないように
+		p_wk->release_sync	= UI_FLIK_RELEASE_SYNC;
+		if( p_start )
+		{	
+			*p_start	= p_wk->start;
+		}
+		if( p_end )
+		{	
+			*p_end	= p_wk->end;
+		}
+		if( p_vec )
+		{	
+			VecFx32	s, e;
+			VEC_Set( &s, FX32_CONST( p_wk->start.x ), FX32_CONST( p_wk->start.y ), 0 );
+			VEC_Set( &e, FX32_CONST( p_wk->end.x ), FX32_CONST( p_wk->end.y ), 0 );
+			VEC_Subtract( &s, &e, p_vec );
+		}
+		if( p_sync )
+		{	
+			*p_sync	= p_wk->flik_sync;
+		}
+		return TRUE;
+	}
+	return FALSE;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	キー押しつづけを取得
+ *
+ *	@param	const UI_WORK *cp_wk	ワーク
+ *	@param	*p_sync								押し続けている時間
+ *
+ *	@return	TRUEなら押している
+ */
+//-----------------------------------------------------------------------------
+static int UI_IsContKey( const UI_WORK *cp_wk, u32 *p_sync )
+{	
+	if( p_sync )
+	{	
+		*p_sync	= cp_wk->key_cont_sync;
+	}
+	return GFL_UI_KEY_GetCont();
+}
+
 //=============================================================================
 /**
  *		ETC
