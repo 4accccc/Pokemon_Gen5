@@ -79,7 +79,6 @@ typedef enum {
   WAZASICK_YAKEDO = POKESICK_YAKEDO,
 
   WAZASICK_KONRAN = POKESICK_MAX,
-  WAZASICK_MOUDOKU,
   WAZASICK_MEROMERO,
   WAZASICK_AKUMU,
   WAZASICK_NOROI,
@@ -90,16 +89,17 @@ typedef enum {
   WAZASICK_KAIHUKUHUUJI,
   WAZASICK_IEKI,            ///< とくせい無効化
   WAZASICK_MIYABURU,        ///< みやぶられて相性ゼロでも等倍で殴られる＆回避率上昇が無効
-  WAZASICK_YADORIGI,
-  WAZASICK_SASIOSAE,
-  WAZASICK_HOROBINOUTA,
+  WAZASICK_YADORIGI,        ///< やどりぎのたね
+  WAZASICK_SASIOSAE,        ///< さしおさえ
+  WAZASICK_HOROBINOUTA,     ///< ほろびのうた
   WAZASICK_NEWOHARU,        ///< ねをはる
   WAZASICK_TOOSENBOU,       ///< にげる・いれかえが出来ない
   WAZASICK_ENCORE,          ///< 直前に使ったワザしか出せない
   WAZASICK_WAZALOCK,        ///< 直前に使ったワザしか出せない上、行動も選択できない
   WAZASICK_MUSTHIT,         ///< ワザ必中状態
   WAZASICK_MUSTHIT_TARGET,  ///< 特定相手に対してのみ必中状態
-  WAZASICK_FLYING,
+  WAZASICK_FLYING,          ///< でんじふゆう
+  WAZASICK_POWERTRICK,      ///< パワートリック
 
   WAZASICK_MAX,
   WAZASICK_NULL = POKESICK_NULL,
