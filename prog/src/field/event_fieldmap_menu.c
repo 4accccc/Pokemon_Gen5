@@ -345,7 +345,16 @@ static GMEVENT_RESULT FldMapMenuEvent( GMEVENT *event, int *seq, void *wk )
     break;
 
   case FMENUSTATE_WAIT_RETURN:
-    GF_ASSERT(0); // 開放は別に所に移動
+    //GF_ASSERT(0); // 開放は別に所に移動
+    //図鑑やレポートのとき通るので開放は残します Ari090728
+    /* sub event 終了待ち */
+    if(mwk->subProcWork != NULL)
+    {
+      GFL_HEAP_FreeMemory(mwk->subProcWork);
+      mwk->subProcWork = NULL;
+    }
+    mwk->state = FMENUSTATE_RETURN_MENU;
+
     break;
     
   case FMENUSTATE_RETURN_MENU:
