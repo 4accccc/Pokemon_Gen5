@@ -185,3 +185,7 @@
 	ARCID_BGM_INFO "bgm_info.narc"   #BGMの情報
 	ARCID_BAG "bag.narc"   # バッグ
 	ARCID_UNION "unionroom.narc"   # ユニオンルーム
+	ARCID_TRTBL "trtbl.narc"   # トレーナーメッセージ用テーブル
+	ARCID_TRTBL_OFS "trtblofs.narc"   # トレーナーメッセージ用オフセットテーブル
+	ARCID_TRDATA "trdata.narc"   # 野良トレーナーデータ
+	ARCID_TRPOKE "trpoke.narc"   # 野良トレーナー持ちポケモンデータ
