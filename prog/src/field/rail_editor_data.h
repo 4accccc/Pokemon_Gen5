@@ -113,6 +113,7 @@ typedef struct {
 	fx32					pos_x;
 	fx32					pos_y;
 	fx32					pos_z;
+	fx32					target_length;
 } RE_MCS_PLAYER_DATA;
 //-------------------------------------
 ///	ƒJƒƒ‰î•ñ\‘¢‘Ì

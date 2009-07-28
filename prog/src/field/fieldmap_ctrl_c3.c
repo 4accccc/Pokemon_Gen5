@@ -213,6 +213,7 @@ static void mapCtrlC3_Main( FIELDMAP_WORK *fieldWork, VecFx32 *pos )
 
   if (rail_flag)
   {
+		int rail_action_key;
     // ƒŒ[ƒ‹“®ì
     FIELD_RAIL_MAN_GetPos(railMan, pos );
     FIELD_PLAYER_SetPos( fld_player, pos );
@@ -231,7 +232,8 @@ static void mapCtrlC3_Main( FIELDMAP_WORK *fieldWork, VecFx32 *pos )
 
 			mwk->last_pos = *pos;
 		}
-		FIELD_PLAYER_NOGRID_Rail_Move( fld_player, FIELDMAP_GetFldEffCtrl(fieldWork), &mwk->player_way, key_cont, FIELDMAP_GetFieldCamera(fieldWork) );
+		rail_action_key = FIELD_RAIL_MAN_GetActionKey( railMan );
+		FIELD_PLAYER_NOGRID_Rail_Move( fld_player, FIELDMAP_GetFldEffCtrl(fieldWork), &mwk->player_way, rail_action_key, FIELDMAP_GetFieldCamera(fieldWork) );
 //		TOMOYA_Printf( "pos->y 0x%x\n", pos->y );
   }	
   else

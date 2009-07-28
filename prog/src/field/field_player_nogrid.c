@@ -120,7 +120,7 @@ void FIELD_PLAYER_NOGRID_Rail_Move( FIELD_PLAYER *fld_player, FLDEFF_CTRL *fectr
 	{
 		if( key & PAD_BUTTON_B )
 		{	
-			MMDL_SetDrawStatus(fmmdl,DRAW_STA_WALK_8F);
+			MMDL_SetDrawStatus(fmmdl,DRAW_STA_DASH_4F);
 		}
 		else
 		{

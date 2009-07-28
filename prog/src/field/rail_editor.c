@@ -37,6 +37,7 @@
 #include "rail_editor_data.h"
 #include "field_rail_loader_func.h"
 #include "field_rail_func.h"
+#include "fld_scenearea_loader_func.h"
 
 //-----------------------------------------------------------------------------
 /**
@@ -1244,9 +1245,37 @@ static void RE_JumpArea( DEBUG_RAIL_EDITOR* p_wk )
 {
 	// ポイントデータをなめて、area位置に近い場所に飛ぶ
 	FIELD_RAIL_MAN* p_rail = FIELDMAP_GetFieldRailMan( p_wk->p_fieldmap );
+	FIELD_CAMERA* p_camera = FIELDMAP_GetFieldCamera( p_wk->p_fieldmap );
+	FIELD_PLAYER* p_player = FIELDMAP_GetFieldPlayer( p_wk->p_fieldmap );
 	FLD_SCENEAREA_LOADER* p_arealoader = FIELDMAP_GetFldSceneAreaLoader( p_wk->p_fieldmap );
+	const FLD_SCENEAREA_DATA* cp_data = FLD_SCENEAREA_LOADER_GetData( p_arealoader );
+	u32 data_num = FLD_SCENEAREA_LOADER_GetDataNum( p_arealoader );
 
-	TOMOYA_Printf( "RE_JumpArea 未実装\n" );
+	// 今のコントロールモードが、回転移動ならば、回転角度を始点の位置に持っていく。＆距離もコントロールする。
+	if( data_num > p_wk->p_recv->select.select_index )
+	{
+		//  その情報から、ジャンプ
+		if( cp_data[ p_wk->p_recv->select.select_index ].checkArea_func == FLD_SCENEAREA_AREACHECK_CIRCLE )
+		{
+			if( p_wk->p_recv->select.select_seq == RE_SELECT_DATA_SEQ_FREE_CIRCLE )
+			{
+				const FLD_SCENEAREA_CIRCLE_PARAM* cp_wk = (const FLD_SCENEAREA_CIRCLE_PARAM*)cp_data[ p_wk->p_recv->select.select_index ].area;
+				VecFx32 target;
+				VecFx32 pl_pos;
+				u16 _rotate;
+
+				_rotate = (u16)((u32)cp_wk->rot_start + 0x8000);
+
+				FIELD_PLAYER_GetPos( p_player, &pl_pos );
+				FIELD_CAMERA_GetTargetPos( p_camera, &target );
+				FIELD_CAMERA_SetAngleYaw( p_camera, _rotate );
+				pl_pos.x = target.x + FX_Mul( FX_SinIdx( _rotate ), cp_wk->rot_start );
+				pl_pos.z = target.z + FX_Mul( FX_CosIdx( _rotate ), cp_wk->dist_max );
+				FIELD_PLAYER_SetPos( p_player, &pl_pos );
+			}
+		}
+	}
+//	TOMOYA_Printf( "RE_JumpArea 未実装\n" );
 }
 
 
@@ -1793,6 +1822,9 @@ static void RE_ExitInputCamera_Pos( DEBUG_RAIL_EDITOR* p_wk )
 static void RE_ExitInputCamera_Target( DEBUG_RAIL_EDITOR* p_wk )
 {
   FIELD_CAMERA * cam = FIELDMAP_GetFieldCamera(p_wk->p_fieldmap);
+
+	FIELD_CAMERA_DEBUG_GetBindSubScreenTarget( cam, &p_wk->camera_target );
+
 	FIELD_CAMERA_DEBUG_ReleaseSubScreen( cam );
 
 	// オフセットに変更値が入ってしまうので、ターゲットの実座標に戻す
@@ -1806,6 +1838,10 @@ static void RE_ExitInputCamera_Target( DEBUG_RAIL_EDITOR* p_wk )
 		subscreen = FIELDMAP_GetFieldSubscreenWork(p_wk->p_fieldmap);
 		FIELD_SUBSCREEN_ChangeForce(subscreen, FIELD_SUBSCREEN_NORMAL);
 	}
+
+	// カメラアングルモードに戻す
+	FIELD_CAMERA_SetMode( cam, FIELD_CAMERA_MODE_CALC_CAMERA_POS );
+	FIELD_CAMERA_SetTargetPos( cam, &p_wk->camera_target );
 }
 //----------------------------------------------------------------------------
 /**
@@ -1913,16 +1949,20 @@ static void RE_Send_AreaData( DEBUG_RAIL_EDITOR* p_wk )
 static void RE_Send_PlayerData( DEBUG_RAIL_EDITOR* p_wk )
 {
 	const FIELD_PLAYER* cp_player = FIELDMAP_GetFieldPlayer( p_wk->p_fieldmap );
+	const FIELD_CAMERA* cp_camera	= FIELDMAP_GetFieldCamera( p_wk->p_fieldmap );
 	RE_MCS_PLAYER_DATA* p_senddata = (RE_MCS_PLAYER_DATA*)p_wk->p_tmp_buff;
-	VecFx32 pos;
+	VecFx32 pos, target;
 	BOOL result;
 	
 	p_senddata->header.data_type = RE_MCS_DATA_PLAYERDATA;
 
+	FIELD_CAMERA_GetTargetPos( cp_camera, &target );
 	FIELD_PLAYER_GetPos( cp_player, &pos );
 	p_senddata->pos_x = pos.x;
 	p_senddata->pos_y = pos.y;
 	p_senddata->pos_z = pos.z;
+	target.y = pos.y;	
+	p_senddata->target_length = VEC_Distance( &target, &pos );
 
 	// 送信
 	result = MCS_Write( MCS_CHANNEL0, p_senddata, sizeof(RE_MCS_PLAYER_DATA) );

@@ -126,7 +126,7 @@ struct _FIELD_RAIL_MAN{
   BOOL active_flag;
 
   /// 移動が起きた最新のキーバリュー
-  RAIL_KEY last_active_key;
+  int last_active_key;
 
   FIELD_RAIL now_rail;
 
@@ -226,7 +226,7 @@ FIELD_RAIL_MAN * FIELD_RAIL_MAN_Create(HEAPID heapID, FIELD_CAMERA * camera)
   man->active_flag = FALSE;
   man->field_camera = camera;
   //man->line_ofs = 0;
-  man->last_active_key = RAIL_KEY_NULL;
+  man->last_active_key = 0;
   initRail(&man->now_rail, &man->rail_dat);
 
   return man;
@@ -401,6 +401,115 @@ void FIELD_RAIL_MAN_UpdateCamera(const FIELD_RAIL_MAN * man)
   }
 }
 
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	レールシステム　最新の動作を起こした時のキー情報
+ *
+ *	@param	man		
+ *
+ *	@return	キー情報
+ */
+//-----------------------------------------------------------------------------
+int FIELD_RAIL_MAN_GetActionKey( const FIELD_RAIL_MAN * man )
+{
+	GF_ASSERT( man );
+	return man->last_active_key;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	one_ofsごとのアップデート
+ *
+ *	@param	man				マネージャ
+ *	@param	key_cont	キー管理
+ *	@param	one_ofs		移動オフセット
+ */
+//-----------------------------------------------------------------------------
+static BOOL DEBUG_req = FALSE;	// リクエスト有無
+static s32 DEBUG_move_ofs = 0;
+static int DEBUG_key_save = 0;
+void FIELD_RAIL_MAN_UpdateOfs(FIELD_RAIL_MAN * man, int key_cont, int one_ofs)
+{
+	
+	
+
+  if (!man->active_flag)
+  {
+    return;
+  }
+
+  if (isValidRail(&man->now_rail) == FALSE)
+  {
+    return;
+  }
+
+	man->last_active_key = 0;
+
+	if( DEBUG_req == FALSE )
+	{
+		RAIL_KEY now_key = keyContToRailKey(key_cont);
+	
+		if( now_key != RAIL_KEY_NULL )
+		{
+			DEBUG_req = TRUE;
+			DEBUG_move_ofs = 0;
+			DEBUG_key_save = key_cont;
+		}
+	}
+	
+	if( DEBUG_req )
+	{
+
+		FIELD_RAIL_TYPE type = man->now_rail.type;
+		RAIL_KEY set_key = RAIL_KEY_NULL;
+		RAIL_KEY key = keyContToRailKey(DEBUG_key_save);
+		u32 count_up;
+
+
+		if( DEBUG_key_save & PAD_BUTTON_B )
+		{
+			count_up = 2;
+		}
+		else
+		{
+			count_up = 1;
+		}
+
+		DEBUG_move_ofs += count_up;
+		
+
+		if(man->now_rail.type == FIELD_RAIL_TYPE_POINT)
+		{ //POINT上のときの移動処理
+			TOMOYA_Printf( "count_up point %d\n", count_up );
+			set_key = updatePointMove(&man->now_rail, key, count_up);
+		}
+		else if(man->now_rail.type == FIELD_RAIL_TYPE_LINE)
+		{ //LINE上のときの移動処理
+			set_key = updateLineMove_new(&man->now_rail, key, count_up);
+		}
+
+		if (set_key != RAIL_KEY_NULL)
+		{
+			OS_TPrintf("RAIL:%s :line_ofs=%d line_ofs_max=%d width_ofs=%d\n",
+					debugGetRailKeyName(set_key), man->now_rail.line_ofs, man->now_rail.line_ofs_max, man->now_rail.width_ofs);
+			man->last_active_key = DEBUG_key_save;
+		}
+
+		if (type != man->now_rail.type)
+		{
+			OS_TPrintf("RAIL:change to ");
+			debugPrintRailInfo(&man->now_rail);
+		}
+
+		if( DEBUG_move_ofs >= one_ofs )
+		{
+			DEBUG_req = FALSE;
+		}
+	}
+
+}
+
 //------------------------------------------------------------------
 /**
  * @brief 現在位置のアップデート
@@ -422,6 +531,8 @@ void FIELD_RAIL_MAN_Update(FIELD_RAIL_MAN * man, int key_cont)
   {
     return;
   }
+
+	man->last_active_key = 0;
 
   if (key == RAIL_KEY_NULL)
   {
@@ -452,7 +563,7 @@ void FIELD_RAIL_MAN_Update(FIELD_RAIL_MAN * man, int key_cont)
   {
     OS_TPrintf("RAIL:%s :line_ofs=%d line_ofs_max=%d width_ofs=%d\n",
         debugGetRailKeyName(set_key), man->now_rail.line_ofs, man->now_rail.line_ofs_max, man->now_rail.width_ofs);
-    man->last_active_key = set_key;
+    man->last_active_key = key_cont;
   }
 
   if (type != man->now_rail.type)
