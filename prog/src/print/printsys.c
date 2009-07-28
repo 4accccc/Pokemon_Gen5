@@ -19,7 +19,7 @@
 enum {
   LETTER_CHAR_WIDTH = 2,      ///< １文字あたり横キャラ数
   LETTER_CHAR_HEIGHT = 2,     ///< １文字あたり縦キャラ数
-  LINE_DOT_HEIGHT = 16,     ///< １行あたりのドット数
+  LINE_DOT_HEIGHT = 16,       ///< １行あたりのドット数
   LINE_FEED_SPEED = 4,        ///< 改行時の行送り速度（dot/frame）
 
   // 改行コード、終端コード
@@ -27,19 +27,19 @@ enum {
   CR_CODE       = 0xfffe,
 
   // 汎用コントロールタイプ
-  CTRL_GENERAL_COLOR      = (0x0000), ///< 色変更
+  CTRL_GENERAL_COLOR        = (0x0000), ///< 色変更
   CTRL_GENERAL_RESET_COLOR  = (0x0001), ///< 色変更
   CTRL_GENERAL_X_RIGHTFIT   = (0x0002), ///< Ｘ座標右寄せ
   CTRL_GENERAL_X_CENTERING  = (0x0003), ///< Ｘ座標センタリング
 
   // 流れるメッセージ中のみ有効なコントロールタイプ
-  CTRL_STREAM_LINE_FEED   = (0x0000), ///< 改ページ（行送り待ち）
+  CTRL_STREAM_LINE_FEED     = (0x0000), ///< 改ページ（行送り待ち）
   CTRL_STREAM_PAGE_CLEAR    = (0x0001), ///< 改ページ（描画クリア待ち）
   CTRL_STREAM_CHANGE_WAIT   = (0x0002), ///< 描画ウェイト変更（１回）
-  CTRL_STREAM_SET_WAIT    = (0x0003), ///< 描画ウェイト変更（永続）
+  CTRL_STREAM_SET_WAIT      = (0x0003), ///< 描画ウェイト変更（永続）
   CTRL_STREAM_RESET_WAIT    = (0x0004), ///< 描画ウェイトをデフォルトに戻す
   CTRL_STREAM_CHANGE_ARGV   = (0x0005), ///< コールバック引数を変更（１回）
-  CTRL_STREAM_SET_ARGV    = (0x0006), ///< コールバック引数を変更（永続）
+  CTRL_STREAM_SET_ARGV      = (0x0006), ///< コールバック引数を変更（永続）
   CTRL_STREAM_RESET_ARGV    = (0x0007), ///< コールバック引数をデフォルトに戻す
   CTRL_STREAM_FORCE_CLEAR   = (0x0008), ///< 強制描画クリア
 
@@ -47,12 +47,12 @@ enum {
   CTRL_SYSTEM_COLOR     = (0x0000),
 
   // タグ開始コード
-  SPCODE_TAG_START_ = 0xf000,
-  TAGTYPE_WORD = 1,       ///< 文字列挿入
-  TAGTYPE_NUMBER = 2,       ///< 数値挿入
+  SPCODE_TAG_START_ = 0xf000,   ///<
+  TAGTYPE_WORD = 1,             ///< 文字列挿入
+  TAGTYPE_NUMBER = 2,           ///< 数値挿入
   TAGTYPE_GENERAL_CTRL = 0xbd,  ///< 汎用コントロール処理
   TAGTYPE_STREAM_CTRL = 0xbe,   ///< 流れるメッセージ用コントロール処理
-  TAGTYPE_SYSTEM = 0xff,      ///< エディタシステムタグ用コントロール処理
+  TAGTYPE_SYSTEM = 0xff,        ///< エディタシステムタグ用コントロール処理
 
 
   // プリントキュー関連定数
