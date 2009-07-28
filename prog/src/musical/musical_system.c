@@ -87,15 +87,10 @@ GFL_PROC_DATA Musical_ProcData =
 static const u16 musPokeArr[]=
 {
   MONSNO_PIKATYUU,
-  MONSNO_RAITYUU,
-  MONSNO_PIPPI,
-  MONSNO_PIKUSII,
-  MONSNO_PURIN,
-  MONSNO_EREBUU,
-  494,
-  495,
+  MONSNO_WANIBAAN,
+  MONSNO_ONOKKUSU,
+  MONSNO_PURUNSU,
   
-  1000, //プルンセス
   0xFFFF,
 };
 //ミュージカルの参加資格があるか調べる(仮)

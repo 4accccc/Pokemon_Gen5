@@ -12,6 +12,18 @@
 #include "musical/musical_define.h"
 #include "musical/comm/mus_comm_func.h"
 
+//BG定義
+#define ACT_FRAME_MAIN_3D   GFL_BG_FRAME0_M
+#define ACT_FRAME_MAIN_FONT   GFL_BG_FRAME1_M
+#define ACT_FRAME_MAIN_CURTAIN  GFL_BG_FRAME2_M
+#define ACT_FRAME_MAIN_BG   GFL_BG_FRAME3_M
+
+#define ACT_FRAME_SUB_AUDI_FACE    GFL_BG_FRAME0_S
+#define ACT_FRAME_SUB_BG    GFL_BG_FRAME1_S
+#define ACT_FRAME_SUB_AUDI_NECK    GFL_BG_FRAME2_S
+#define ACT_FRAME_SUB_INFO    GFL_BG_FRAME3_S
+
+
 //BBD用座標変換(カメラの幅から計算
 #define ACT_POS_X(val)	FX32_CONST((val)/16.0f)
 #define ACT_POS_Y(val)	FX32_CONST((192.0f-(val))/16.0f)

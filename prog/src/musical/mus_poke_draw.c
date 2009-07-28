@@ -25,7 +25,7 @@
 //======================================================================
 //	define
 //======================================================================
-#define MUS_POKE_DRAW_MAX 4	//描画最大数
+#define MUS_POKE_DRAW_MAX (8)	//描画最大数(表裏込み
 
 //======================================================================
 //	enum
@@ -39,7 +39,10 @@
 struct _MUS_POKE_DRAW_WORK
 {
 	BOOL enable;
+	BOOL isDispFront;
 	MUS_MCSS_WORK	*mcss;
+	MUS_MCSS_WORK	*mcssFront;
+	MUS_MCSS_WORK	*mcssBack;
 	
 	MUS_POKE_DATA_WORK *pokeData;
 	MUS_POKE_EQUIP_DATA	equipData[MUS_POKE_EQUIP_MAX];
@@ -58,7 +61,7 @@ struct _MUS_POKE_DRAW_SYSTEM
 //======================================================================
 //	proto
 //======================================================================
-static void	MUS_POKE_MakeMAW( const MUSICAL_POKE_PARAM *musPoke, MUS_MCSS_ADD_WORK *maw);
+static void	MUS_POKE_MakeMAW( const MUSICAL_POKE_PARAM *musPoke, MUS_MCSS_ADD_WORK *maw, const BOOL isBack );
 static void MUS_POKE_MCSS_CallBack( const u8 pltNo , MUS_MCSS_CELL_DATA *cellData , void* work );
 
 
@@ -105,13 +108,12 @@ void MUS_POKE_DRAW_DrawSystem( MUS_POKE_DRAW_SYSTEM* work )
 	MUS_MCSS_Draw( work->mcssSys , MUS_POKE_MCSS_CallBack );
 }
 
-MUS_POKE_DRAW_WORK* MUS_POKE_DRAW_Add( MUS_POKE_DRAW_SYSTEM* work , MUSICAL_POKE_PARAM *musPoke )
+MUS_POKE_DRAW_WORK* MUS_POKE_DRAW_Add( MUS_POKE_DRAW_SYSTEM* work , MUSICAL_POKE_PARAM *musPoke , const BOOL useBack )
 {
 	int i,idx;
 	VecFx32 scale;
 	MUS_MCSS_ADD_WORK maw;
 	
-	MUS_POKE_MakeMAW( musPoke , &maw );
 	
 	//空きスペースの検索
 	
@@ -124,9 +126,23 @@ MUS_POKE_DRAW_WORK* MUS_POKE_DRAW_Add( MUS_POKE_DRAW_SYSTEM* work , MUSICAL_POKE
 	}
 	GF_ASSERT_MSG( idx < MUS_POKE_DRAW_MAX , "MusicalPokemon draw max over!!\n");
 	
-	
 	work->musMcss[idx].enable = TRUE;
-	work->musMcss[idx].mcss = MUS_MCSS_Add( work->mcssSys , 0,0,0,&maw , &work->musMcss[idx] , FALSE );
+
+	MUS_POKE_MakeMAW( musPoke , &maw , FALSE );
+	work->musMcss[idx].mcssFront = MUS_MCSS_Add( work->mcssSys , 0,0,0,&maw , &work->musMcss[idx] , FALSE );
+	if( useBack == TRUE )
+	{
+  	MUS_POKE_MakeMAW( musPoke , &maw , TRUE );
+  	work->musMcss[idx].mcssBack = MUS_MCSS_Add( work->mcssSys , 0,0,0,&maw , &work->musMcss[idx] , FALSE );
+  }
+  else
+  {
+    work->musMcss[idx].mcssBack = NULL;
+  }
+  
+	work->musMcss[idx].isDispFront = TRUE;
+	work->musMcss[idx].mcss = work->musMcss[idx].mcssFront;
+	
 	VEC_Set( &scale, 
 			 FX32_ONE*16, 
 			 FX32_ONE*16,
@@ -148,7 +164,11 @@ MUS_POKE_DRAW_WORK* MUS_POKE_DRAW_Add( MUS_POKE_DRAW_SYSTEM* work , MUSICAL_POKE
 
 void MUS_POKE_DRAW_Del( MUS_POKE_DRAW_SYSTEM* work , MUS_POKE_DRAW_WORK *drawWork )
 {
-	MUS_MCSS_Del( work->mcssSys , drawWork->mcss );
+  if( drawWork->mcssBack != NULL )
+  {
+  	MUS_MCSS_Del( work->mcssSys , drawWork->mcssBack );
+  }
+	MUS_MCSS_Del( work->mcssSys , drawWork->mcssFront );
 	GFL_HEAP_FreeMemory( drawWork->pokeData );
 	drawWork->enable = FALSE;
 }
@@ -222,6 +242,44 @@ void MUS_POKE_DRAW_ChangeAnime( MUS_POKE_DRAW_WORK *drawWork , const u8 anmIdx )
 	MUS_MCSS_ChangeAnm( drawWork->mcss , anmIdx );
 }
 
+//前後の切り替え
+void MUS_POKE_DRAW_FlipFrontBack( MUS_POKE_DRAW_WORK *drawWork )
+{
+  if( drawWork->isDispFront == TRUE )
+  {
+    MUS_MCSS_CopyState( drawWork->mcssFront , drawWork->mcssBack );
+    drawWork->mcss = drawWork->mcssBack;
+    drawWork->isDispFront = FALSE;
+
+    MUS_MCSS_SetVanishFlag( drawWork->mcssFront );
+  }
+  else
+  {
+    MUS_MCSS_CopyState( drawWork->mcssBack , drawWork->mcssFront );
+    drawWork->mcss = drawWork->mcssFront;
+    drawWork->isDispFront = TRUE;
+
+    MUS_MCSS_SetVanishFlag( drawWork->mcssBack );
+  }
+}
+
+//前後を指定して切り替え
+void MUS_POKE_DRAW_SetFrontBack( MUS_POKE_DRAW_WORK *drawWork , const BOOL isDispFront )
+{
+  if( isDispFront != drawWork->isDispFront )
+  {
+    MUS_POKE_DRAW_FlipFrontBack( drawWork );
+  }
+}
+
+
+//MCSSシステムのテクスチャ読み込みアドレスの変更(読み込み前に！
+void MUS_POKE_DRAW_SetTexAddres(  MUS_POKE_DRAW_SYSTEM* work , u32 adr )
+{
+	MUS_MCSS_SetTexAddres( work->mcssSys , adr );
+  
+}
+
 MUS_POKE_EQUIP_DATA* MUS_POKE_DRAW_GetEquipData( MUS_POKE_DRAW_WORK *drawWork , const MUS_POKE_EQUIP_POS pos )
 {
 	return &drawWork->equipData[pos];
@@ -284,6 +342,15 @@ enum{
 	MUS_POKEGRA_FRONT_NMCR,
 	MUS_POKEGRA_FRONT_NMAR,
 	MUS_POKEGRA_FRONT_NCEC,
+	MUS_POKEGRA_BACK_M_NCGR,
+	MUS_POKEGRA_BACK_F_NCGR,
+	MUS_POKEGRA_BACK_M_NCBR,
+	MUS_POKEGRA_BACK_F_NCBR,
+	MUS_POKEGRA_BACK_NCER,
+	MUS_POKEGRA_BACK_NANR,
+	MUS_POKEGRA_BACK_NMCR,
+	MUS_POKEGRA_BACK_NMAR,
+	MUS_POKEGRA_BACK_NCEC,
 	MUS_POKEGRA_NORMAL_NCLR,
 	MUS_POKEGRA_RARE_NCLR,
 
@@ -300,7 +367,7 @@ enum{
 	MUS_POKEGRA_NCEC
 };
 
-static void	MUS_POKE_MakeMAW( const MUSICAL_POKE_PARAM *musPoke, MUS_MCSS_ADD_WORK *maw)
+static void	MUS_POKE_MakeMAW( const MUSICAL_POKE_PARAM *musPoke, MUS_MCSS_ADD_WORK *maw , const BOOL isBack )
 {
 	const POKEMON_PASO_PARAM *ppp = PP_GetPPPPointerConst( musPoke->pokePara );
 	int	mons_no = PPP_Get( ppp, ID_PARA_monsno,	NULL );
@@ -328,6 +395,15 @@ static void	MUS_POKE_MakeMAW( const MUSICAL_POKE_PARAM *musPoke, MUS_MCSS_ADD_WO
 */
 	file_start = MUS_POKEGRA_FILE_MAX * MUSICAL_SYSTEM_ChangeMusicalPokeNumber(musPoke->pokePara);	//ポケモンナンバーからファイルのオフセットを計算
 
+  if( isBack == TRUE )
+  {
+    file_offset = MUS_POKEGRA_BACK_M_NCGR;
+  }
+  else
+  {
+    file_offset = 0;
+  }
+
 	//本来は別フォルム処理を入れる
 #ifdef DEBUG_ONLY_FOR_ariizumi_nobuhiko
 #warning Another Form Nothing With Musical Poke Mcss
@@ -352,12 +428,12 @@ static void	MUS_POKE_MakeMAW( const MUSICAL_POKE_PARAM *musPoke, MUS_MCSS_ADD_WO
 	}
 
 	maw->arcID = ARCID_POKEGRA_MUS;
-	maw->ncbr = file_start + MUS_POKEGRA_M_NCBR + sex;
+	maw->ncbr = file_start + file_offset + MUS_POKEGRA_M_NCBR + sex;
 	maw->nclr = file_start + MUS_POKEGRA_NORMAL_NCLR + rare;
-	maw->ncer = file_start + MUS_POKEGRA_NCER;
-	maw->nanr = file_start + MUS_POKEGRA_NANR;
-	maw->nmcr = file_start + MUS_POKEGRA_NMCR;
-	maw->nmar = file_start + MUS_POKEGRA_NMAR;
-	maw->ncec = file_start + MUS_POKEGRA_NCEC;
+	maw->ncer = file_start + file_offset + MUS_POKEGRA_NCER;
+	maw->nanr = file_start + file_offset + MUS_POKEGRA_NANR;
+	maw->nmcr = file_start + file_offset + MUS_POKEGRA_NMCR;
+	maw->nmar = file_start + file_offset + MUS_POKEGRA_NMAR;
+	maw->ncec = file_start + file_offset + MUS_POKEGRA_NCEC;
 	
 }

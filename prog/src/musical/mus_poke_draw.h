@@ -53,7 +53,7 @@ void MUS_POKE_DRAW_UpdateSystem( MUS_POKE_DRAW_SYSTEM* work );
 void MUS_POKE_DRAW_DrawSystem( MUS_POKE_DRAW_SYSTEM* work );
 
 //ポケモンの追加・削除
-MUS_POKE_DRAW_WORK* MUS_POKE_DRAW_Add( MUS_POKE_DRAW_SYSTEM* work , MUSICAL_POKE_PARAM *musPoke );
+MUS_POKE_DRAW_WORK* MUS_POKE_DRAW_Add( MUS_POKE_DRAW_SYSTEM* work , MUSICAL_POKE_PARAM *musPoke , const BOOL useBack );
 void MUS_POKE_DRAW_Del( MUS_POKE_DRAW_SYSTEM* work , MUS_POKE_DRAW_WORK *drawWork );
 
 //各パラメータの調整
@@ -68,6 +68,12 @@ BOOL MUS_POKE_DRAW_GetShowFlg( MUS_POKE_DRAW_WORK *drawWork );
 void MUS_POKE_DRAW_StartAnime( MUS_POKE_DRAW_WORK *drawWork );
 void MUS_POKE_DRAW_StopAnime( MUS_POKE_DRAW_WORK *drawWork );
 void MUS_POKE_DRAW_ChangeAnime( MUS_POKE_DRAW_WORK *drawWork , const u8 anmIdx );
+
+void MUS_POKE_DRAW_FlipFrontBack( MUS_POKE_DRAW_WORK *drawWork );
+void MUS_POKE_DRAW_SetFrontBack( MUS_POKE_DRAW_WORK *drawWork , const BOOL isFront );
+
+//MCSSシステムのテクスチャ読み込みアドレスの変更(読み込み前に！
+void MUS_POKE_DRAW_SetTexAddres( MUS_POKE_DRAW_SYSTEM* work , u32 adr );
 
 MUS_POKE_EQUIP_DATA *MUS_POKE_DRAW_GetEquipData( MUS_POKE_DRAW_WORK *drawWork , const MUS_POKE_EQUIP_POS pos );
 VecFx32 *MUS_POKE_DRAW_GetShadowOfs( MUS_POKE_DRAW_WORK *drawWork );

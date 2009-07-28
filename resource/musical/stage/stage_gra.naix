@@ -11,27 +11,24 @@
 #define NARC_STAGE_GRA_NAIX_
 
 enum {
-	NARC_stage_gra_audience_NCLR = 0,
-	NARC_stage_gra_bg_audience_NCLR = 1,
-	NARC_stage_gra_maku_NCLR = 2,
-	NARC_stage_gra_spotlight_NCLR = 3,
-	NARC_stage_gra_audience_NCGR = 4,
-	NARC_stage_gra_bg_audience_NCGR = 5,
-	NARC_stage_gra_maku_NCGR = 6,
-	NARC_stage_gra_spotlight_NCGR = 7,
-	NARC_stage_gra_audience_NSCR = 8,
-	NARC_stage_gra_bg_audience_NSCR = 9,
-	NARC_stage_gra_bg_audience2_NSCR = 10,
-	NARC_stage_gra_maku_NSCR = 11,
-	NARC_stage_gra_spotlight_NCER = 12,
-	NARC_stage_gra_spotlight_NANR = 13,
-	NARC_stage_gra_back_00_nsbtx = 14,
-	NARC_stage_gra_back_01_nsbtx = 15,
-	NARC_stage_gra_shadow_tex_nsbtx = 16,
-	NARC_stage_gra_stage_ojb01_nsbtx = 17,
-	NARC_stage_gra_stage_ojb02_nsbtx = 18,
-	NARC_stage_gra_mus_eff_00_spa = 19,
-	NARC_stage_gra_mus_eff_01_spa = 20
+	NARC_stage_gra_maku_NCLR = 0,
+	NARC_stage_gra_spotlight_NCLR = 1,
+	NARC_stage_gra_sub_bg_NCLR = 2,
+	NARC_stage_gra_maku_NCGR = 3,
+	NARC_stage_gra_spotlight_NCGR = 4,
+	NARC_stage_gra_sub_bg_NCGR = 5,
+	NARC_stage_gra_bg_audience_NSCR = 6,
+	NARC_stage_gra_maku_NSCR = 7,
+	NARC_stage_gra_sub_back_NSCR = 8,
+	NARC_stage_gra_spotlight_NCER = 9,
+	NARC_stage_gra_spotlight_NANR = 10,
+	NARC_stage_gra_back_00_nsbtx = 11,
+	NARC_stage_gra_back_01_nsbtx = 12,
+	NARC_stage_gra_shadow_tex_nsbtx = 13,
+	NARC_stage_gra_stage_ojb01_nsbtx = 14,
+	NARC_stage_gra_stage_ojb02_nsbtx = 15,
+	NARC_stage_gra_mus_eff_00_spa = 16,
+	NARC_stage_gra_mus_eff_01_spa = 17
 };
 
 /* NARC_STAGE_GRA_NAIX_ */

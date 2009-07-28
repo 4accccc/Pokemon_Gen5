@@ -30,6 +30,8 @@
 #define STA_AUDI_NUM_Y (5)
 #define STA_AUDI_NUM   (STA_AUDI_NUM_X*STA_AUDI_NUM_Y)
 
+#define STA_AUDI_TOP (2)
+
 #define STA_AUDI_SURFACE (CLSYS_DEFREND_SUB)
 
 #define STA_AUDI_LOOK_DELAY (GFL_STD_MtRand0( 60 )+1)
@@ -55,7 +57,7 @@ typedef enum
 //ŠÏ‹qƒ[ƒN
 typedef struct
 {
-  GFL_CLWK* cell;
+//  GFL_CLWK* cell;
   u8  trgPoke;
   u8  delay;
   u16 lookPos;
@@ -75,7 +77,7 @@ struct _STA_AUDI_SYS
   BOOL attentionPokeFlg[MUSICAL_POKE_MAX];
   BOOL isUpdateAttention;
 
-  GFL_CLUNIT* cellUnit;
+//  GFL_CLUNIT* cellUnit;
   STA_AUDI_WORK audience[STA_AUDI_NUM];
 };
 
@@ -143,7 +145,7 @@ void	STA_AUDI_UpdateSystem( STA_AUDI_SYS *work )
       {
         const u8 anm = GFL_STD_MtRand0( 4 );
         const u8 num = GFL_STD_MtRand0( STA_AUDI_NUM );
-        GFL_CLACT_WK_SetAnmSeq( work->audience[num].cell, anm );
+//        GFL_CLACT_WK_SetAnmSeq( work->audience[num].cell, anm );
       }
     }
   }
@@ -165,7 +167,7 @@ static void STA_AUDI_InitGraphic( STA_AUDI_SYS *work )
 {
   u8 i;
   ARCHANDLE *arcHandle = GFL_ARC_OpenDataHandle( ARCID_STAGE_AUDIENCE , work->heapId );
-
+/*
   work->pltIdx = GFL_CLGRP_PLTT_Register( arcHandle , 
                             NARC_stage_audience_audience_obj_NCLR , 
                             CLSYS_DRAW_SUB , 
@@ -185,20 +187,21 @@ static void STA_AUDI_InitGraphic( STA_AUDI_SYS *work )
                                 work->anmIdx[i] ,
                                 work->heapId  );
   }
-
+*/
   GFL_ARC_CloseDataHandle(arcHandle);
 }
 
 static void STA_AUDI_TermGraphic( STA_AUDI_SYS *work )
 {
   u8 i;
+  /*
   for( i=0;i<STA_AUDI_NUM;i++ )
   {
     GFL_CLGRP_CGR_Release(work->ncgIdx[i]);
     GFL_CLGRP_CELLANIM_Release(work->anmIdx[i]);
   }
   GFL_CLGRP_PLTT_Release(work->pltIdx);
-
+  */
 }
 
 //--------------------------------------------------------------
@@ -207,6 +210,7 @@ static void STA_AUDI_TermGraphic( STA_AUDI_SYS *work )
 static void STA_AUDI_InitCell( STA_AUDI_SYS *work )
 {
   u8 x,y;
+  /*
   GFL_CLWK_DATA initWork;
   work->cellUnit = GFL_CLACT_UNIT_Create( STA_AUDI_NUM , 0 , work->heapId );
   
@@ -235,17 +239,76 @@ static void STA_AUDI_InitCell( STA_AUDI_SYS *work )
       work->audience[i].trgPoke = STA_AUDI_NO_TARGET;
     }
   }
+  */
+  for( y=0;y<STA_AUDI_NUM_Y;y++ )
+  {
+    const s8 ofs = (y%2==0 ? 4 : -4 ) + GFL_STD_MtRand0(3)-1;
+    for( x=0;x<STA_AUDI_NUM_X;x++ )
+    {
+      u8 ix,iy;
+      u16 topCharNo;
+      BOOL isFlip = FALSE;
+      const u8 i = x + y*STA_AUDI_NUM_X;
+      
+      if( x<2 )
+      {
+        isFlip = TRUE;
+        topCharNo = 0x08+1024;  //1024‚Í…•½”½“]
+      }
+      else if( x<4 )
+      {
+        isFlip = TRUE;
+        topCharNo = 0x0c+1024;  //1024‚Í…•½”½“]
+      }
+      else if( x<6 )
+      {
+        topCharNo = 0x0c;
+      }
+      else
+      {
+        topCharNo = 0x08;
+      }
+      
+      for( iy=0;iy<4;iy++ )
+      {
+        for( ix=0;ix<4;ix++ )
+        {
+          u8 scrX;
+          if( isFlip == TRUE )
+          {
+            scrX = x*4+(3-ix);
+          }
+          else
+          {
+            scrX = x*4+ix;
+          }
+          GFL_BG_FillScreen( ACT_FRAME_SUB_AUDI_FACE , 
+                             topCharNo+ix+(0x20*iy) , 
+                             scrX , y*4+STA_AUDI_TOP+iy ,
+                             1 , 1 , 0 );
+          
+        }
+      }
+
+      work->audience[i].selfPos = x*32 + 16;
+      work->audience[i].delay = STA_AUDI_LOOK_DELAY;
+      work->audience[i].trgPoke = STA_AUDI_NO_TARGET;
+    }
+  }
+  GFL_BG_LoadScreenReq( ACT_FRAME_SUB_AUDI_FACE );
+  
 }
 
 static void STA_AUDI_TermCell( STA_AUDI_SYS *work )
 {
   u8 i;
+  /*
   for( i=0;i<STA_AUDI_NUM;i++ )
   {
     GFL_CLACT_WK_Remove( work->audience[i].cell );
   }
   GFL_CLACT_UNIT_Delete( work->cellUnit );
-  
+  */
 }
 
 static void STA_AUDI_UpdateAudience( STA_AUDI_SYS *work )
@@ -270,11 +333,11 @@ static void STA_AUDI_UpdateAudienceFunc( STA_AUDI_SYS *work , STA_AUDI_WORK *aud
       audiWork->lookPos = STA_AUDI_NO_LOOK;
       if( audiWork->selfPos < 128 )
       {
-        GFL_CLACT_WK_SetAnmSeq( audiWork->cell , SAP_RIGHT_SMALL );
+        //GFL_CLACT_WK_SetAnmSeq( audiWork->cell , SAP_RIGHT_SMALL );
       }
       else
       {
-        GFL_CLACT_WK_SetAnmSeq( audiWork->cell , SAP_LEFT_SMALL );
+        //GFL_CLACT_WK_SetAnmSeq( audiWork->cell , SAP_LEFT_SMALL );
       }
     }
     else
@@ -289,21 +352,21 @@ static void STA_AUDI_UpdateAudienceFunc( STA_AUDI_SYS *work , STA_AUDI_WORK *aud
       
       if( posOffset < -STA_AUDI_BIG_ANGLE_OFFSET )
       {
-        GFL_CLACT_WK_SetAnmSeq( audiWork->cell , SAP_LEFT_BIG );
+        //GFL_CLACT_WK_SetAnmSeq( audiWork->cell , SAP_LEFT_BIG );
       }
       else
       if( posOffset > STA_AUDI_BIG_ANGLE_OFFSET )
       {
-        GFL_CLACT_WK_SetAnmSeq( audiWork->cell , SAP_RIGHT_BIG );
+        //GFL_CLACT_WK_SetAnmSeq( audiWork->cell , SAP_RIGHT_BIG );
       }
       else
       if( posOffset < 0 )
       {
-        GFL_CLACT_WK_SetAnmSeq( audiWork->cell , SAP_LEFT_SMALL );
+        //GFL_CLACT_WK_SetAnmSeq( audiWork->cell , SAP_LEFT_SMALL );
       }
       else
       {
-        GFL_CLACT_WK_SetAnmSeq( audiWork->cell , SAP_RIGHT_SMALL );
+        //GFL_CLACT_WK_SetAnmSeq( audiWork->cell , SAP_RIGHT_SMALL );
       }
     }
     audiWork->delay = STA_AUDI_LOOK_DELAY;

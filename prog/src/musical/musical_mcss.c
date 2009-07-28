@@ -27,7 +27,7 @@
 
 #define	MUS_MCSS_CONST(x)	( x << MUS_MCSS_DEFAULT_SHIFT )
 
-#define	MUS_MCSS_TEX_ADRS	(0x30000)
+#define	MUS_MCSS_TEX_ADRS	(0x30000) //4体でVRAM2面使用時用 適宜変えること！！
 #define	MUS_MCSS_TEX_SIZE	(0x4000)
 #define	MUS_MCSS_PAL_ADRS	(0x1000)
 #define	MUS_MCSS_PAL_SIZE	(0x0020)
@@ -144,10 +144,6 @@ MUS_MCSS_SYS_WORK*	MUS_MCSS_Init( int max, HEAPID heapID )
 	MUS_MCSS_InitRenderer( mcss_sys );
 #endif //USE_RENDER
 
-	//テクスチャ系の転送先アドレスをセット（可変に出来る予定）
-#ifdef DEBUG_ONLY_FOR_sogabe
-#warning MCSS TEX PAL ADRS Not Changeability
-#endif
 	mcss_sys->texAdrs = MUS_MCSS_TEX_ADRS;
 	mcss_sys->palAdrs = MUS_MCSS_PAL_ADRS;
 
@@ -819,6 +815,16 @@ void	MUS_MCSS_ResetOrthoMode( MUS_MCSS_SYS_WORK *mcss_sys )
 
 //--------------------------------------------------------------------------
 /**
+ * テクスチャVRAM開始アドレスの変更(何かを読み込んだ後に使うとマズイ
+ */
+//--------------------------------------------------------------------------
+void			MUS_MCSS_SetTexAddres( MUS_MCSS_SYS_WORK *mcss_sys , u32 adr )
+{
+  mcss_sys->texAdrs = adr;
+}
+
+//--------------------------------------------------------------------------
+/**
  * ポジションゲット
  */
 //--------------------------------------------------------------------------
@@ -979,6 +985,20 @@ void	MUS_MCSS_ResetVanishFlag( MUS_MCSS_WORK *mcss )
 
 //--------------------------------------------------------------------------
 //--------------------------------------------------------------------------
+
+//MCSS_WORKでデータをコピーする(前後ろ切り替え時 コピー元mcss,コピー先mcss
+void MUS_MCSS_CopyState( MUS_MCSS_WORK *srcMcss , MUS_MCSS_WORK *dstMcss )
+{
+  dstMcss->pos            = srcMcss->pos;
+  dstMcss->scale          = srcMcss->scale;
+  dstMcss->shadow_scale   = srcMcss->shadow_scale;
+  dstMcss->mepachi_flag   = srcMcss->mepachi_flag;
+  dstMcss->anm_stop_flag  = srcMcss->anm_stop_flag;
+  dstMcss->vanish_flag    = srcMcss->vanish_flag;
+  dstMcss->rotZ           = srcMcss->rotZ;
+  dstMcss->rotOfsBase     = srcMcss->rotOfsBase;
+  dstMcss->rotOfs         = srcMcss->rotOfs;
+}
 
 //--------------------------------------------------------------------------
 /**

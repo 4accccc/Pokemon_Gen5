@@ -43,13 +43,6 @@
 //======================================================================
 #pragma mark [> define
 
-#define ACT_FRAME_MAIN_3D   GFL_BG_FRAME0_M
-#define ACT_FRAME_MAIN_FONT   GFL_BG_FRAME1_M
-#define ACT_FRAME_MAIN_CURTAIN  GFL_BG_FRAME2_M
-#define ACT_FRAME_MAIN_BG   GFL_BG_FRAME3_M
-
-#define ACT_FRAME_SUB_BG    GFL_BG_FRAME1_S
-#define ACT_FRAME_SUB_INFO    GFL_BG_FRAME3_S
 
 #define ACT_PAL_INFO    (0xE)
 #define ACT_PAL_FONT    (0xF)
@@ -157,15 +150,15 @@ static void STA_ACT_StartScript( ACTING_WORK *work );
 
 
 static const GFL_DISP_VRAM vramBank = {
-  GX_VRAM_BG_128_C,       // メイン2DエンジンのBG
+  GX_VRAM_BG_128_D,       // メイン2DエンジンのBG
   GX_VRAM_BGEXTPLTT_23_G,     // メイン2DエンジンのBG拡張パレット
-  GX_VRAM_SUB_BG_48_HI,     // サブ2DエンジンのBG
+  GX_VRAM_SUB_BG_32_H,     // サブ2DエンジンのBG
   GX_VRAM_SUB_BGEXTPLTT_NONE,   // サブ2DエンジンのBG拡張パレット
   GX_VRAM_OBJ_16_F,       // メイン2DエンジンのOBJ
   GX_VRAM_OBJEXTPLTT_NONE,    // メイン2DエンジンのOBJ拡張パレット
-  GX_VRAM_SUB_OBJ_128_D,     // サブ2DエンジンのOBJ
+  GX_VRAM_SUB_OBJ_16_I,     // サブ2DエンジンのOBJ
   GX_VRAM_SUB_OBJEXTPLTT_NONE,  // サブ2DエンジンのOBJ拡張パレット
-  GX_VRAM_TEX_01_AB,        // テクスチャイメージスロット
+  GX_VRAM_TEX_012_ABC,        // テクスチャイメージスロット
   GX_VRAM_TEXPLTT_0123_E,     // テクスチャパレットスロット
   GX_OBJVRAMMODE_CHAR_1D_32K,
   GX_OBJVRAMMODE_CHAR_1D_128K
@@ -441,19 +434,35 @@ static void STA_ACT_SetupGraphic( ACTING_WORK *work )
       GX_BG_SCRBASE_0x6000, GX_BG_CHARBASE_0x10000,0x10000,
       GX_BG_EXTPLTT_23, 3, 0, 0, FALSE  // pal, pri, areaover, dmy, mosaic
     };
-
+    
+    
+    //SUB bg 32K
     // BG1 SUB (背景
     static const GFL_BG_BGCNT_HEADER header_sub1 = {
       0, 0, 0x800, 0, // scrX, scrY, scrbufSize, scrbufofs,
       GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
-      GX_BG_SCRBASE_0x7800, GX_BG_CHARBASE_0x00000,0x7000,
+      GX_BG_SCRBASE_0x6800, GX_BG_CHARBASE_0x00000,0x4000,
       GX_BG_EXTPLTT_01, 3, 0, 0, FALSE  // pal, pri, areaover, dmy, mosaic
+    };
+    // BG2 SUB (観客の首
+    static const GFL_BG_BGCNT_HEADER header_sub2 = {
+      0, 0, 0x800, 0, // scrX, scrY, scrbufSize, scrbufofs,
+      GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
+      GX_BG_SCRBASE_0x7000, GX_BG_CHARBASE_0x00000,0x0000,
+      GX_BG_EXTPLTT_01, 2, 0, 0, FALSE  // pal, pri, areaover, dmy, mosaic
+    };
+    // BG0 SUB (観客の顔
+    static const GFL_BG_BGCNT_HEADER header_sub0 = {
+      0, 0, 0x800, 0, // scrX, scrY, scrbufSize, scrbufofs,
+      GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
+      GX_BG_SCRBASE_0x7800, GX_BG_CHARBASE_0x00000,0x0000,
+      GX_BG_EXTPLTT_01, 1, 0, 0, FALSE  // pal, pri, areaover, dmy, mosaic
     };
     // BG3 SUB (Info
     static const GFL_BG_BGCNT_HEADER header_sub3 = {
       0, 0, 0x800, 0, // scrX, scrY, scrbufSize, scrbufofs,
       GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
-      GX_BG_SCRBASE_0x7000, GX_BG_CHARBASE_0x08000,0x4000,
+      GX_BG_SCRBASE_0x6000, GX_BG_CHARBASE_0x04000,0x1000,
       GX_BG_EXTPLTT_01, 0, 0, 0, FALSE  // pal, pri, areaover, dmy, mosaic
     };
 
@@ -462,6 +471,8 @@ static void STA_ACT_SetupGraphic( ACTING_WORK *work )
     STA_ACT_SetupBgFunc( &header_main2, ACT_FRAME_MAIN_CURTAIN , GFL_BG_MODE_TEXT);
     STA_ACT_SetupBgFunc( &header_main3, ACT_FRAME_MAIN_BG , GFL_BG_MODE_256X16);
     STA_ACT_SetupBgFunc( &header_sub1 , ACT_FRAME_SUB_BG , GFL_BG_MODE_TEXT);
+    STA_ACT_SetupBgFunc( &header_sub2 , ACT_FRAME_SUB_AUDI_NECK , GFL_BG_MODE_TEXT);
+    STA_ACT_SetupBgFunc( &header_sub0 , ACT_FRAME_SUB_AUDI_FACE , GFL_BG_MODE_TEXT);
     STA_ACT_SetupBgFunc( &header_sub3 , ACT_FRAME_SUB_INFO , GFL_BG_MODE_TEXT);
     
     GFL_BG_SetVisible( ACT_FRAME_MAIN_3D , TRUE );
@@ -572,12 +583,14 @@ static void STA_ACT_SetupBg( ACTING_WORK *work )
   GFL_ARCHDL_UTIL_TransVramScreen( arcHandle , NARC_stage_gra_maku_NSCR , 
                     ACT_FRAME_MAIN_CURTAIN ,  0 , 0, FALSE , work->heapId );
 
-  GFL_ARCHDL_UTIL_TransVramPalette( arcHandle , NARC_stage_gra_audience_NCLR , 
+  GFL_ARCHDL_UTIL_TransVramPalette( arcHandle , NARC_stage_gra_sub_bg_NCLR , 
                     PALTYPE_SUB_BG , 0 , 0 , work->heapId );
-  GFL_ARCHDL_UTIL_TransVramBgCharacter( arcHandle , NARC_stage_gra_audience_NCGR ,
+  GFL_ARCHDL_UTIL_TransVramBgCharacter( arcHandle , NARC_stage_gra_sub_bg_NCGR ,
                     ACT_FRAME_SUB_BG , 0 , 0, FALSE , work->heapId );
-  GFL_ARCHDL_UTIL_TransVramScreen( arcHandle , NARC_stage_gra_audience_NSCR , 
+  GFL_ARCHDL_UTIL_TransVramScreen( arcHandle , NARC_stage_gra_sub_back_NSCR , 
                     ACT_FRAME_SUB_BG ,  0 , 0, FALSE , work->heapId );
+  GFL_ARCHDL_UTIL_TransVramScreen( arcHandle , NARC_stage_gra_bg_audience_NSCR , 
+                    ACT_FRAME_SUB_AUDI_NECK ,  0 , 0, FALSE , work->heapId );
 
   GFL_ARC_CloseDataHandle(arcHandle);
 
@@ -627,6 +640,7 @@ static void STA_ACT_SetupPokemon( ACTING_WORK *work )
   const fx32 XBase = FX32_CONST(512.0f/(MUSICAL_POKE_MAX+1));
   
   work->drawSys = MUS_POKE_DRAW_InitSystem( work->heapId );
+  MUS_POKE_DRAW_SetTexAddres( work->drawSys , 0x40000 );
   work->itemDrawSys = MUS_ITEM_DRAW_InitSystem( work->bbdSys , MUSICAL_POKE_MAX*MUS_POKE_EQUIP_MAX, work->heapId );
   
   work->pokeSys = STA_POKE_InitSystem( work->heapId , work->drawSys , work->itemDrawSys , work->bbdSys );

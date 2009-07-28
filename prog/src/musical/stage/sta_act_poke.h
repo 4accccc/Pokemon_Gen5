@@ -67,5 +67,7 @@ void STA_POKE_SetShowFlg( STA_POKE_SYS *work , STA_POKE_WORK *drawWork , const B
 BOOL STA_POKE_GetShowFlg( STA_POKE_SYS *work , STA_POKE_WORK *drawWork );
 STA_POKE_DIR STA_POKE_GetPokeDir( STA_POKE_SYS *work , STA_POKE_WORK *pokeWork );
 void STA_POKE_SetPokeDir( STA_POKE_SYS *work , STA_POKE_WORK *pokeWork , const STA_POKE_DIR dir );
+void STA_POKE_SetFrontBack( STA_POKE_SYS *work , STA_POKE_WORK *pokeWork , const BOOL isFront );
+void STA_POKE_SetDrawItem( STA_POKE_SYS *work , STA_POKE_WORK *pokeWork , const BOOL isDrawItem );
 
 #endif STA_ACT_POKE_H__

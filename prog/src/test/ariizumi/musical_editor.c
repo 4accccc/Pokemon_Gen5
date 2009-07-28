@@ -1085,7 +1085,7 @@ static void MusicalSetting_LoadPoke( MUS_EDIT_LOCAL_WORK *work )
   VecFx32 pos = {MUSICAL_POS_X( 128.0f ),MUSICAL_POS_Y( 112.0f ),FX32_CONST(40.0f)};
   if( work->pokeWork == NULL )
   {
-    work->pokeWork = MUS_POKE_DRAW_Add( work->pokeSys , musPoke );
+    work->pokeWork = MUS_POKE_DRAW_Add( work->pokeSys , musPoke , TRUE );
     MUS_POKE_DRAW_SetPosition( work->pokeWork , &pos );
     MUS_POKE_DRAW_SetShowFlg( work->pokeWork , TRUE );
   }

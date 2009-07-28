@@ -73,6 +73,7 @@ extern	MUS_MCSS_WORK*	MUS_MCSS_Add( MUS_MCSS_SYS_WORK *mcss_sys, fx32	pos_x, fx3
 extern	void			MUS_MCSS_Del( MUS_MCSS_SYS_WORK *mcss_sys, MUS_MCSS_WORK *mcss );
 extern	void			MUS_MCSS_SetOrthoMode( MUS_MCSS_SYS_WORK *mcss_sys );
 extern	void			MUS_MCSS_ResetOrthoMode( MUS_MCSS_SYS_WORK *mcss_sys );
+extern	void			MUS_MCSS_SetTexAddres( MUS_MCSS_SYS_WORK *mcss_sys , u32 adr );
 extern	void			MUS_MCSS_GetPosition( MUS_MCSS_WORK *mcss, VecFx32 *pos );
 extern	void			MUS_MCSS_SetPosition( MUS_MCSS_WORK *mcss, VecFx32 *pos );
 extern	void			MUS_MCSS_GetScale( MUS_MCSS_WORK *mcss, VecFx32 *scale );
@@ -88,5 +89,8 @@ extern	void			MUS_MCSS_ChangeAnm( MUS_MCSS_WORK *mcss , const u8 anmIdx );
 extern	int				MUS_MCSS_GetVanishFlag( MUS_MCSS_WORK *mcss );
 extern	void			MUS_MCSS_SetVanishFlag( MUS_MCSS_WORK *mcss );
 extern	void			MUS_MCSS_ResetVanishFlag( MUS_MCSS_WORK *mcss );
+
+//MCSS_WORKでデータをコピーする(前後ろ切り替え時 コピー元mcss,コピー先mcss
+extern	void			MUS_MCSS_CopyState( MUS_MCSS_WORK *srcMcss , MUS_MCSS_WORK *dstMcss );
 
 #endif	//MUSICAL_MCSS_H_

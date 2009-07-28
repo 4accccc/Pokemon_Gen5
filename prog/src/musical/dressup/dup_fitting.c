@@ -921,7 +921,7 @@ static void DUP_FIT_SetupPokemon( FITTING_WORK *work )
   VecFx32 pos = {FIT_POKE_POS_X_FX,FIT_POKE_POS_Y_FX,FIT_POKE_POS_Z_FX};
 //  VecFx32 pos = {FX32_ONE*10,FX32_ONE*10,FX32_ONE*-7};  //ˆÊ’u‚Í“K“–
   work->drawSys = MUS_POKE_DRAW_InitSystem( work->heapId );
-  work->drawWork = MUS_POKE_DRAW_Add( work->drawSys , work->initWork->musPoke );
+  work->drawWork = MUS_POKE_DRAW_Add( work->drawSys , work->initWork->musPoke , FALSE );
   work->pokeData = MUS_POKE_DRAW_GetPokeData( work->drawWork);
   MUS_POKE_DRAW_SetPosition( work->drawWork , &pos);
   

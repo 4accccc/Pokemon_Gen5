@@ -40,6 +40,8 @@ struct _STA_POKE_WORK
 {
   BOOL    isEnable;
   BOOL    isUpdate; //座標計算が発生したか？
+  BOOL    isFront;
+  BOOL    isDrawItem;
   
   VecFx32         pokePos;
   VecFx32         scale;
@@ -160,6 +162,17 @@ static void STA_POKE_UpdatePokeFunc( STA_POKE_SYS *work , STA_POKE_WORK *pokeWor
     
   }
   */
+#if DEB_ARI|1
+    if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_X )
+    {
+      STA_POKE_SetFrontBack( work , pokeWork , !pokeWork->isFront );
+    }
+    if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_Y )
+    {
+      STA_POKE_SetDrawItem( work , pokeWork , !pokeWork->isDrawItem );
+    }
+#endif
+
   if( pokeWork->isUpdate == TRUE )
   {
     VecFx32 musPos;
@@ -200,51 +213,63 @@ static void STA_POKE_UpdateItemFunc( STA_POKE_SYS *work , STA_POKE_WORK *pokeWor
   {
     if( pokeWork->itemWork[ePos] != NULL )
     {
-      MUS_POKE_EQUIP_DATA *equipData = MUS_POKE_DRAW_GetEquipData( pokeWork->drawWork , ePos );
-      if( equipData->isEnable == TRUE )
+      if( pokeWork->isDrawItem == TRUE &&
+          pokeWork->isFront == TRUE )
       {
-        const BOOL flipS = ( equipData->scale.x < 0 ? TRUE : FALSE);
-        const u16 itemRot = ( flipS==TRUE ? 0x10000-equipData->itemRot : equipData->itemRot);
-        const u16 rotZ = 0x10000-equipData->rot;//( flipS==TRUE ? 0x10000-equipData->rot : equipData->rot);
-
-        MtxFx33 rotWork;
-        VecFx32 rotOfs;
-        VecFx32 ofs;
-        MTX_RotZ33( &rotWork , -FX_SinIdx( rotZ ) , FX_CosIdx( rotZ ) );
-        MTX_MultVec33( &equipData->ofs , &rotWork , &ofs );
-        
+      
+        MUS_POKE_EQUIP_DATA *equipData = MUS_POKE_DRAW_GetEquipData( pokeWork->drawWork , ePos );
+        if( equipData->isEnable == TRUE )
         {
-          MTX_MultVec33( &equipData->rotOfs , &rotWork , &rotOfs );
-          VEC_Subtract( &equipData->rotOfs , &rotOfs , &rotOfs );
-        }
+          const BOOL flipS = ( equipData->scale.x < 0 ? TRUE : FALSE);
+          const u16 itemRot = ( flipS==TRUE ? 0x10000-equipData->itemRot : equipData->itemRot);
+          const u16 rotZ = 0x10000-equipData->rot;//( flipS==TRUE ? 0x10000-equipData->rot : equipData->rot);
 
-        pos.x = (equipData->pos.x+ofs.x+FX32_CONST(128.0f) + rotOfs.x);
-        pos.y = (equipData->pos.y+ofs.y+FX32_CONST(96.0f) + rotOfs.y);
-        if( MUS_ITEM_DRAW_IsBackItem( pokeWork->itemWork[ePos] ) == TRUE )
-        {
-          //背面用アイテム
-          pos.z = pokeWork->pokePos.z-FX32_CONST(20.0f);
-        }
-        else
-        {
-          //とりあえずポケの前に出す
-          pos.z = pokeWork->pokePos.z+FX32_HALF;  
-        }
+          MtxFx33 rotWork;
+          VecFx32 rotOfs;
+          VecFx32 ofs;
+          MTX_RotZ33( &rotWork , -FX_SinIdx( rotZ ) , FX_CosIdx( rotZ ) );
+          MTX_MultVec33( &equipData->ofs , &rotWork , &ofs );
+          
+          {
+            MTX_MultVec33( &equipData->rotOfs , &rotWork , &rotOfs );
+            VEC_Subtract( &equipData->rotOfs , &rotOfs , &rotOfs );
+          }
 
-        //OS_Printf("[%.2f][%.2f]\n",F32_CONST(equipData->pos.z),F32_CONST(pokePos.z));
-        MUS_ITEM_DRAW_SetPosition(  work->itemDrawSys , 
-                      pokeWork->itemWork[ePos] ,
-                      &pos );
-        MUS_ITEM_DRAW_SetRotation(  work->itemDrawSys , 
-                      pokeWork->itemWork[ePos] ,
-                      itemRot-rotZ );
-        MUS_ITEM_DRAW_SetSize(    work->itemDrawSys , 
-                      pokeWork->itemWork[ePos] ,
-                      equipData->scale.x /16 /4,
-                      equipData->scale.y /16 /4);
-//        MUS_ITEM_DRAW_SetFlipS( work->itemDrawSys , 
-//                    pokeWork->itemWork[ePos] ,
-//                    flipS );
+          pos.x = (equipData->pos.x+ofs.x+FX32_CONST(128.0f) + rotOfs.x);
+          pos.y = (equipData->pos.y+ofs.y+FX32_CONST(96.0f) + rotOfs.y);
+          if( MUS_ITEM_DRAW_IsBackItem( pokeWork->itemWork[ePos] ) == TRUE )
+          {
+            //背面用アイテム
+            pos.z = pokeWork->pokePos.z-FX32_CONST(20.0f);
+          }
+          else
+          {
+            //とりあえずポケの前に出す
+            pos.z = pokeWork->pokePos.z+FX32_HALF;  
+          }
+
+          //OS_Printf("[%.2f][%.2f]\n",F32_CONST(equipData->pos.z),F32_CONST(pokePos.z));
+          MUS_ITEM_DRAW_SetPosition(  work->itemDrawSys , 
+                        pokeWork->itemWork[ePos] ,
+                        &pos );
+          MUS_ITEM_DRAW_SetRotation(  work->itemDrawSys , 
+                        pokeWork->itemWork[ePos] ,
+                        itemRot-rotZ );
+          MUS_ITEM_DRAW_SetSize(    work->itemDrawSys , 
+                        pokeWork->itemWork[ePos] ,
+                        equipData->scale.x /16 /4,
+                        equipData->scale.y /16 /4);
+          MUS_ITEM_DRAW_SetDrawEnable( work->itemDrawSys , 
+                          pokeWork->itemWork[ePos] , TRUE );
+  //        MUS_ITEM_DRAW_SetFlipS( work->itemDrawSys , 
+  //                    pokeWork->itemWork[ePos] ,
+  //                    flipS );
+        }
+      }
+      else
+      {
+        MUS_ITEM_DRAW_SetDrawEnable( work->itemDrawSys , 
+                        pokeWork->itemWork[ePos] , FALSE );
       }
     }
   }
@@ -362,7 +387,9 @@ STA_POKE_WORK* STA_POKE_CreatePoke( STA_POKE_SYS *work , MUSICAL_POKE_PARAM *mus
 
   pokeWork->isEnable = TRUE;
   pokeWork->isUpdate = TRUE;
-  pokeWork->drawWork = MUS_POKE_DRAW_Add( work->drawSys , musPoke );
+  pokeWork->isFront = TRUE;
+  pokeWork->isDrawItem = FALSE;
+  pokeWork->drawWork = MUS_POKE_DRAW_Add( work->drawSys , musPoke , TRUE );
   pokeWork->pokeData = MUS_POKE_DRAW_GetPokeData( pokeWork->drawWork );
   VEC_Set( &pokeWork->pokePos , 0,0,0 );
   VEC_Set( &pokeWork->posOfs , 0,0,0 );
@@ -518,4 +545,18 @@ void STA_POKE_SetPokeDir( STA_POKE_SYS *work , STA_POKE_WORK *pokeWork , const S
   pokeWork->dir = dir;
   pokeWork->isUpdate = TRUE;
 }
+
+void STA_POKE_SetFrontBack( STA_POKE_SYS *work , STA_POKE_WORK *pokeWork , const BOOL isFront )
+{
+  pokeWork->isFront = isFront;
+  MUS_POKE_DRAW_SetFrontBack( pokeWork->drawWork , pokeWork->isFront );
+  pokeWork->isUpdate = TRUE;
+}
+
+void STA_POKE_SetDrawItem( STA_POKE_SYS *work , STA_POKE_WORK *pokeWork , const BOOL isDrawItem )
+{
+  pokeWork->isDrawItem = isDrawItem;
+  pokeWork->isUpdate = TRUE;
+}
+
 
