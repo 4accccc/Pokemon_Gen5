@@ -78,7 +78,10 @@ SUBDIRS	=	wmi \
 			iss_unit \
 			townmap \
 			unionroom \
-			winframe
+			unionroom \
+			winframe \
+			trdata \
+			trmsg
 
 include $(RESOURCE_MACRO)
 
