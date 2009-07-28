@@ -38,7 +38,7 @@ include	$(NITROSYSTEM_ROOT)/build/buildtools/modulerules
 #IPATH	=	-I../eventdata
 
 #target
-TARGET_DIR = $(PROJECT_ROOT)/prog/arc/fieldmap
+TARGET_DIR = $(PROJECT_ARCDIR)fieldmap
 TARGET_NARC = script_seq.narc
 TARGET_NAIX = $(TARGET_NARC:.narc=.naix)
 
@@ -78,6 +78,7 @@ do-build: $(SCRSRCS_BIN)
 	@$(MWLD) -dis -o $*.elf $*.o
 	@elf2bin $*.elf
 	@rm $*.o $*.elf temp_$*.s
+	@gawk -f scr_tools/ev_def.awk $<
 endif #CONVERTUSER
 
 #narc
@@ -89,8 +90,9 @@ $(TARGET_DIR)/$(TARGET_NARC): $(TARGET_NARC)
 
 ifeq ($(CONVERTUSER),true) #CONVERTUSER
 $(TARGET_NARC): $(SCRSRCS_BIN)
-	nnsarc -i -c -l -n $(TARGET_NARC) $(SCRSRCS_BIN) > arc_result.txt
-	$(NAIXCUT) $(TARGET_NAIX)
+	@echo "スクリプトデータをアーカイブします"
+	@nnsarc -i -c -l -n $(TARGET_NARC) $(SCRSRCS_BIN) > arc_result.txt
+	@$(NAIXCUT) $(TARGET_NAIX)
 endif
 
 #----------------------------------------------------------------------------
