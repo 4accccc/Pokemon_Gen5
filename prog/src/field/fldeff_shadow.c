@@ -65,6 +65,7 @@ struct _TAG_FLDEFF_SHADOW
   GFL_G3D_OBJ *g3d_obj;
   
   VecFx32 rotate;
+  VecFx32 scale;
 };
 
 //--------------------------------------------------------------
@@ -143,6 +144,11 @@ void * FLDEFF_SHADOW_Init( FLDEFF_CTRL *fectrl, HEAPID heapID )
 	sd = GFL_HEAP_AllocClearMemory( heapID, sizeof(FLDEFF_SHADOW) );
 	sd->fectrl = fectrl;
   
+  { //wb
+    VecFx32 scale = {FX32_ONE,FX32_ONE,0xc00};
+    sd->scale = scale;
+  }
+  
 	shadow_InitResource( sd );
 	return( sd );
 }
@@ -180,6 +186,21 @@ void FLDEFF_SHADOW_SetGlobalRotate(
   sd->rotate.x = rot_x;
   sd->rotate.y = rot_y;
   sd->rotate.z = rot_z;
+}
+
+//--------------------------------------------------------------
+/**
+ * 影　グローバル縮尺値を指定
+ * @param fectrl FLDEFF_CTRL
+ * @pram scale 縮尺値
+ * @retval nothing
+ */
+//--------------------------------------------------------------
+void FLDEFF_SHADOW_SetGlobalScale( FLDEFF_CTRL *fectrl, const VecFx32 *scale )
+{
+	FLDEFF_SHADOW *sd = FLDEFF_CTRL_GetEffectWork(
+      fectrl, FLDEFF_PROCID_SHADOW  );
+  sd->scale = *scale;
 }
 
 //======================================================================
@@ -337,6 +358,7 @@ static void shadowTask_Draw( FLDEFF_TASK *task, void *wk )
     const VecFx32 *rot = &work->eff_shadow->rotate;
     GFL_CALC3D_MTX_CreateRot(
         (u16)rot->x, (u16)rot->y, (u16)rot->z, &status.rotate );
+    status.scale = work->eff_shadow->scale;
   }
 #endif
 
