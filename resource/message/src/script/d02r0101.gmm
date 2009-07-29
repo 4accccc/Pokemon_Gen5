@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-07-29T12:06:34"/>
+	<create user="matsumiya" host="W00207" date="2009-07-29T12:11:39"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -336,9 +336,10 @@
 	</lock>
 
 
-	<row id="msg_d02r0101_boy2_01">
+	<row id="msg_d02r0101_sportsm_01">
 		<comment>♀
 ・7月ROM用メッセージ</comment>
+		<attribute name="キャラ指定">SPORTSM</attribute>
 		<language name="JPN" width="256">まいにち　はしりつづけて
 めざすは　イッシュちほうの[BE:00:ページ切り替え（行送り）]
 マラソンチャンピオン！</language>
