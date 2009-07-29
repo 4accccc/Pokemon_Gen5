@@ -37,9 +37,11 @@
 //-----------
 // 表示設定
 //-----------
-#define PALETTE_NO          (0)					// パレット番号
+#define BG_PALETTE_NO       (0)					// BGパレット番号
 #define BG_FRAME            (GFL_BG_FRAME3_M)	// 使用するBGフレーム
 #define BG_FRAME_PRIORITY   (1)					// BGフレームのプライオリティ
+
+#define OBJ_PALETTE_NO (1)                      // OBJパレット番号
 
 #define	COLOR_NO_LETTER     (1)		            // 文字本体のカラー番号
 #define	COLOR_NO_SHADOW     (1)		            // 影部分のカラー番号
@@ -764,7 +766,7 @@ static void SetupBG( FIELD_PLACE_NAME* p_sys )
 	p_sys->pBmpWin = GFL_BMPWIN_Create( 
 			BG_FRAME,
 			BMPWIN_POS_X_CHAR, BMPWIN_POS_Y_CHAR, BMPWIN_WIDTH_CHAR, BMPWIN_HEIGHT_CHAR,
-			PALETTE_NO, GFL_BMP_CHRAREA_GET_F );
+			BG_PALETTE_NO, GFL_BMP_CHRAREA_GET_F );
 
 	// パレット・キャラクタ・スクリーンを転送
 	LoadBGCharacterData( p_sys, ARCID_PLACE_NAME, NARC_place_name_place_name_back_NCGR );
@@ -918,7 +920,7 @@ static void LoadBGPaletteData( FIELD_PLACE_NAME* p_sys, u32 arc_id, u32 data_id 
 	p_src   = GFL_HEAP_AllocMemoryLo( p_sys->heapID, size );				// データバッファ確保
 	GFL_ARC_LoadDataByHandle( p_h_arc, data_id, p_src );					// データ取得
 	NNS_G2dGetUnpackedPaletteData( p_src, &p_palette );						// バイナリからデータを展開
-	GFL_BG_LoadPalette( BG_FRAME, p_palette->pRawData, 0x20, PALETTE_NO );	// パレットデータ転送
+	GFL_BG_LoadPalette( BG_FRAME, p_palette->pRawData, 0x20, BG_PALETTE_NO );	// パレットデータ転送
 	GFL_HEAP_FreeMemory( p_src );											// データバッファ解放
 	GFL_ARC_CloseDataHandle( p_h_arc );										// アーカイブデータハンドルクローズ
 }
@@ -939,7 +941,7 @@ static void LoadClactResource( FIELD_PLACE_NAME* p_sys )
 	p_sys->hResource_PLTT[ PLTT_RES_INDEX_CHAR_UNIT ] = 
 		GFL_CLGRP_PLTT_RegisterEx( 
 				p_arc_handle, NARC_place_name_place_name_string_NCLR,
-				CLSYS_DRAW_MAIN, 1 * 32, 0, 1, p_sys->heapID );
+				CLSYS_DRAW_MAIN, OBJ_PALETTE_NO * 32, 0, 1, p_sys->heapID );
 
 	GFL_ARC_CloseDataHandle( p_arc_handle );
 }
