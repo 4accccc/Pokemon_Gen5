@@ -2650,7 +2650,13 @@ static BOOL DMenuCallProc_DebugSkyJump( DEBUG_MENU_EVENT_WORK *p_wk )
 	GFL_STD_MemClear( p_sky->p_param, sizeof(TOWNMAP_PARAM) );
 	p_sky->p_param->mode			= TOWNMAP_MODE_SKY;
 	p_sky->p_param->is_debug	= TRUE;
-
+	{
+		GAMEDATA		*p_gamedata;
+		PLAYER_WORK *p_player;
+		p_gamedata	= GAMESYSTEM_GetGameData( p_sky->p_gamesys );
+		p_player		= GAMEDATA_GetMyPlayerWork( p_gamedata );
+		p_sky->p_param->zoneID		= PLAYERWORK_getZoneID(p_player);
+	}
 	return TRUE;
 }
 
