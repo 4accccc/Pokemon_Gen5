@@ -1341,6 +1341,7 @@
 #ifndef ZONE_D01_EVC_H
 #define ZONE_D01_EVC_H
 
+#define D01_BOY2                           0
 
 #endif //ZONE_D01_EVC_H
 //#include "tmp/d01r0101.h"
@@ -7342,14 +7343,34 @@ const CONNECT_DATA DOOR_EVENT_D01[] = {
 	},
 };
 const int ConnectCount_D01 = NELEMS(DOOR_EVENT_D01);
+const FLDMMDL_HEADER OBJ_EVENT_D01[] = {
+	{
+		D01_BOY2,
+		BOY2,
+		MV_RND,
+		EV_TYPE_NORMAL,
+		0,
+		SCRID_D01_TALKOBJ_BOY2,
+		DIR_DOWN,
+		0,
+		0,
+		0,
+		0,
+		1,
+		808,
+		583,
+		0,
+	},
+};
+const int ObjCount_D01 = NELEMS(OBJ_EVENT_D01);
 
 static const EVENTDATA_TABLE event_d01 = {
 	0,
-	0,
+	1,
 	4,
 	0,
 	(void *)NULL,
-	(void *)NULL,
+	(void *)&OBJ_EVENT_D01,
 	(void *)&DOOR_EVENT_D01,
 	(void *)NULL,
 };
