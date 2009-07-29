@@ -175,7 +175,7 @@ int BTLV_CLACT_AddEx( BTLV_CLACT_WORK *bclw, ARCID arcID,
   GF_ASSERT( index < BTLV_CLACT_CLWK_MAX );
 
   bclw->bccl[ index ].charID = GFL_CLGRP_CGR_Register( hdl, ncgrID, FALSE, CLSYS_DRAW_MAIN, bclw->heapID );
-  bclw->bccl[ index ].plttID = GFL_CLGRP_PLTT_RegisterComp( hdl, nclrID, CLSYS_DRAW_MAIN, 0, bclw->heapID );
+  bclw->bccl[ index ].plttID = GFL_CLGRP_PLTT_Register( hdl, nclrID, CLSYS_DRAW_MAIN, 0, bclw->heapID );
   bclw->bccl[ index ].cellID = GFL_CLGRP_CELLANIM_Register( hdl, ncerID, nanrID, bclw->heapID );
 
   //パレットをPaletteWorkにロード
