@@ -374,14 +374,14 @@ sub encode_game_strcode {	# source local
 				$EncodeSkipCR_Flag = 0;
 			}
 		}
-		elsif($t eq "▼")
+		elsif($t eq "▽")
 		{
 			$ret .= pack('S', TAG_CODE);
 			$ret .= pack('S', TAGCODE_CTRL_STREAM_LINEFEED );	# 改行コントロール
 			$ret .= pack('S', 0 );		# パラメータ数=0
 			$EncodeSkipCR_Flag = 1;		# 次の改行は無視する
 		}
-		elsif($t eq "▽")
+		elsif($t eq "▼")
 		{
 			$ret .= pack('S', TAG_CODE);
 			$ret .= pack('S', TAGCODE_CTRL_STREAM_PAGECLEAR );	# 改行コントロール
