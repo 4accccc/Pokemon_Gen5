@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-07-11T14:26:42"/>
+	<create user="matsumiya" host="W00207" date="2009-07-29T22:39:26"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -292,7 +292,7 @@
 	</lock>
 
 
-	<row id="msg_c01r0402_middleman2_01">
+	<row id="msg_c01r0402_middleman2_01" back-color="#808080,,,#808080,,#808080,#808080,,,,,,#808080,,,,,,">
 		<comment>♂
 ・クリア前</comment>
 		<attribute name="キャラ指定">MIDDLEMAN2
@@ -307,7 +307,7 @@
 たしかに　そうかも　しれんなあ</language>
 	</row>
 
-	<row id="msg_c01r0402_middleman2_02">
+	<row id="msg_c01r0402_middleman2_02" back-color="#808080,,,#808080,,#808080,#808080,,,,,,#808080,,,,,,">
 		<comment>♂
 ・クリア後（仮）</comment>
 		<attribute name="キャラ指定">MIDDLEMAN2
@@ -326,7 +326,7 @@
 競い合えば　いいんだよなあ</language>
 	</row>
 
-	<row id="msg_c01r0402_babyboy1_01">
+	<row id="msg_c01r0402_babyboy1_01" back-color="#808080,,,#808080,,#808080,#808080,,,,,,#808080,,,,,,">
 		<attribute name="キャラ指定">BABYBOY1
 男の子</attribute>
 		<language name="JPN" width="256">みんな　かんがえることが　おなじなら
