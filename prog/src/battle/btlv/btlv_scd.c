@@ -328,7 +328,7 @@ static const GFL_UI_TP_HITTBL BattleMenuTouchData[] = {
 ///技選択タッチパネル領域設定
 static const GFL_UI_TP_HITTBL SkillMenuTouchData[] = {
   //UP DOWN LEFT RIGHT
-  {0x13*8, 0x18*8, 1*8, 0x1f*8},    //キャンセル
+  {0x12*8, 0x18*8, 0x16*8, 255},  //キャンセル
   {3*8, 10*8, 0*8, 0x10*8},   //技1
   {3*8, 10*8, 0x10*8, 255}, //技2
   {0xb*8, 0x12*8, 0*8, 0x10*8}, //技3
@@ -584,7 +584,7 @@ static const GFL_UI_TP_HITTBL PokeSeleMenuTouchData[] = {
   {1*8, 0xa*8, 0x11*8, 255},    //ターゲットB
   {0xb*8, 0x12*8, 0x11*8, 255},   //ターゲットC
   {1*8, 0xa*8, 0*8, 0xf*8},     //ターゲットD
-  {0x13*8, 0x18*8, 1*8, 0x1f*8},    //キャンセル
+  {0x12*8, 0x18*8, 0x16*8, 255},  //キャンセル
   { GFL_UI_TP_HIT_END, 0, 0, 0 }
 };
 // ↑描画位置から上記テーブルインデックスを引くためのテーブル
