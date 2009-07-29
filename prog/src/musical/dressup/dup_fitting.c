@@ -43,6 +43,9 @@
 #define FIT_FRAME_SUB_CURTAIN_R    GFL_BG_FRAME1_S
 #define FIT_FRAME_SUB_TOP    GFL_BG_FRAME0_S
 
+#define FIT_PLT_OBJ_MAIN_BUTTON (0)
+#define FIT_PLT_OBJ_MAIN_EFFECT (2)
+
 #define FIT_PAL_INFO    (0xE)
 
 #define FIT_ANIME_SPD (6)
@@ -167,6 +170,7 @@ static const u16 ITEM_SWING_ANGLE_SORT_ADD_VALUE = 0x200;
 #define EFFECT_UP_NUM (8)   //上画面のきらきらの数
 #define EFFECT_UP_LIMIT_X (56)
 #define EFFECT_UP_LIMIT_Y (90)
+#define EFFECT_END_EFFECT_CNT (60)   //上画面のきらきらの数
 
 //======================================================================
 //  enum
@@ -182,6 +186,7 @@ typedef enum
   
   DUS_FADEIN_WAIT,
   DUS_FADEOUT_WAIT,
+  DUS_WAIT_END_EFFECT,
   
 }DUP_STATE;
 
@@ -197,10 +202,13 @@ typedef enum
 typedef enum
 {
   DOR_BUTTON_PLT,
+  DOR_EFFECT_DOWN_PLT,
   DOR_EFFECT_UP_PLT,
   DOR_BUTTON_NCG,
+  DOR_EFFECT_DOWN_NCG,
   DOR_EFFECT_UP_NCG,
   DOR_BUTTON_ANM,
+  DOR_EFFECT_DOWN_ANM,
   DOR_EFFECT_UP_ANM,
   
   DUR_PLT_START = DOR_BUTTON_PLT,
@@ -298,7 +306,9 @@ struct _FITTING_WORK
   
   //演出系
   GFL_CLWK  *clwkEffectUp[EFFECT_UP_NUM];
+  GFL_CLWK  *clwkEffectDown;
   u8        effUpCnt[EFFECT_UP_NUM];
+  u8        endEffCnt;
 };
 
 //======================================================================
@@ -376,7 +386,7 @@ static const GFL_DISP_VRAM vramBank = {
   GX_VRAM_SUB_OBJEXTPLTT_NONE,  // サブ2DエンジンのOBJ拡張パレット
   GX_VRAM_TEX_01_AB,        // テクスチャイメージスロット
   GX_VRAM_TEXPLTT_01_FG,      // テクスチャパレットスロット
-  GX_OBJVRAMMODE_CHAR_1D_32K,
+  GX_OBJVRAMMODE_CHAR_1D_64K,
   GX_OBJVRAMMODE_CHAR_1D_32K
 };
 //  A テクスチャ
@@ -538,6 +548,21 @@ FITTING_RETURN  DUP_FIT_LoopFitting( FITTING_WORK *work )
     break;
     
   case DUS_FADEOUT_WAIT:
+    if( work->isOpenCurtain == TRUE )
+    {
+      /*
+      //次へで終了したとき
+      GFL_CLACTPOS cellPos;
+      work->endEffCnt++;
+      cellPos.x = BUTTON_ASSEPT_POS_X;
+      cellPos.y = BUTTON_ASSEPT_POS_Y+work->endEffCnt;
+      GFL_CLACT_WK_SetPos( work->buttonCell[0] , &cellPos , CLSYS_DEFREND_MAIN );
+
+      cellPos.x = BUTTON_RETURN_POS_X;
+      cellPos.y = BUTTON_RETURN_POS_Y+work->endEffCnt;
+      GFL_CLACT_WK_SetPos( work->buttonCell[1] , &cellPos , CLSYS_DEFREND_MAIN );
+      */
+    }
     if( WIPE_SYS_EndCheck() == TRUE )
     {
       return FIT_RET_GO_END;
@@ -579,9 +604,30 @@ FITTING_RETURN  DUP_FIT_LoopFitting( FITTING_WORK *work )
   case DUS_CHECK_MAIN:
     if( DUP_CHECK_CheckMain( work ) == FIT_RET_GO_END )
     {
+      work->state = DUS_WAIT_END_EFFECT;
+      work->endEffCnt = 0;
+      GFL_CLACT_WK_SetDrawEnable( work->clwkEffectDown, TRUE );
+    }
+    break;
+  case DUS_WAIT_END_EFFECT:
+    work->endEffCnt++;
+    {
+      GFL_CLACTPOS cellPos;
+      cellPos.x = BUTTON_ASSEPT_POS_X;
+      cellPos.y = BUTTON_ASSEPT_POS_Y+work->endEffCnt*2;
+      GFL_CLACT_WK_SetPos( work->buttonCell[0] , &cellPos , CLSYS_DEFREND_MAIN );
+
+      cellPos.x = BUTTON_RETURN_POS_X;
+      cellPos.y = BUTTON_RETURN_POS_Y+work->endEffCnt*2;
+      GFL_CLACT_WK_SetPos( work->buttonCell[1] , &cellPos , CLSYS_DEFREND_MAIN );
+    }
+
+    if( work->endEffCnt > EFFECT_END_EFFECT_CNT )
+    {
       WIPE_SYS_Start( WIPE_PATTERN_WMS , WIPE_TYPE_FADEOUT , WIPE_TYPE_FADEOUT , 
                       WIPE_FADE_WHITE , 18 , WIPE_DEF_SYNC , work->heapId );
       work->state = DUS_FADEOUT_WAIT;
+      work->isOpenCurtain = TRUE;
       
     }
     break;
@@ -887,12 +933,15 @@ static void DUP_FIT_SetupBgObj( FITTING_WORK *work )
   GFL_BG_SetScrollReq( FIT_FRAME_SUB_CURTAIN_R , GFL_BG_SCROLL_X_SET , -128 );
 
   //Obj用Res
-  work->objResIdx[DOR_BUTTON_PLT] = GFL_CLGRP_PLTT_Register( arcHandle , NARC_dressup_gra_obj_main_NCLR , CLSYS_DRAW_MAIN , 0 , work->heapId  );
+  work->objResIdx[DOR_BUTTON_PLT] = GFL_CLGRP_PLTT_Register( arcHandle , NARC_dressup_gra_obj_main_NCLR , CLSYS_DRAW_MAIN , FIT_PLT_OBJ_MAIN_BUTTON*32 , work->heapId  );
   work->objResIdx[DOR_BUTTON_NCG] = GFL_CLGRP_CGR_Register( arcHandle , NARC_dressup_gra_obj_main_NCGR , FALSE , CLSYS_DRAW_MAIN , work->heapId  );
   work->objResIdx[DOR_BUTTON_ANM] = GFL_CLGRP_CELLANIM_Register( arcHandle , NARC_dressup_gra_obj_main_NCER , NARC_dressup_gra_obj_main_NANR, work->heapId  );
   work->objResIdx[DOR_EFFECT_UP_PLT] = GFL_CLGRP_PLTT_Register( arcHandle , NARC_dressup_gra_anime_ue_NCLR , CLSYS_DRAW_SUB , 0 , work->heapId  );
   work->objResIdx[DOR_EFFECT_UP_NCG] = GFL_CLGRP_CGR_Register( arcHandle , NARC_dressup_gra_anime_ue_NCGR , FALSE , CLSYS_DRAW_SUB , work->heapId  );
   work->objResIdx[DOR_EFFECT_UP_ANM] = GFL_CLGRP_CELLANIM_Register( arcHandle , NARC_dressup_gra_anime_ue_NCER , NARC_dressup_gra_anime_ue_NANR, work->heapId  );
+  work->objResIdx[DOR_EFFECT_DOWN_PLT] = GFL_CLGRP_PLTT_Register( arcHandle , NARC_dressup_gra_anime_sita_NCLR , CLSYS_DRAW_MAIN , FIT_PLT_OBJ_MAIN_EFFECT*32 , work->heapId  );
+  work->objResIdx[DOR_EFFECT_DOWN_NCG] = GFL_CLGRP_CGR_Register( arcHandle , NARC_dressup_gra_anime_sita_NCGR , FALSE , CLSYS_DRAW_MAIN , work->heapId  );
+  work->objResIdx[DOR_EFFECT_DOWN_ANM] = GFL_CLGRP_CELLANIM_Register( arcHandle , NARC_dressup_gra_anime_sita_NCER , NARC_dressup_gra_anime_sita_NANR, work->heapId  );
   
   {
   //セルの生成
@@ -2728,7 +2777,6 @@ static FITTING_RETURN DUP_CHECK_CheckMain(  FITTING_WORK *work )
   case 0: //決定ボタン
     DUP_CHECK_SaveNowEquip( work );
     PMSND_PlaySystemSE( SEQ_SE_DECIDE1 );
-    work->isOpenCurtain = TRUE;
     return FIT_RET_GO_END;
     break;
   case 1: //戻るボタン
@@ -3079,6 +3127,7 @@ static void DUP_EFFECT_InitCell( FITTING_WORK *work )
 {
   u8 i;
   
+  //下用
   for( i=0;i<EFFECT_UP_NUM;i++ )
   {
     //セルの生成
@@ -3097,7 +3146,24 @@ static void DUP_EFFECT_InitCell( FITTING_WORK *work )
     GFL_CLACT_WK_SetAutoAnmFlag( work->clwkEffectUp[i], TRUE );
     work->effUpCnt[i] = 0;
   }
-  
+
+  //上用
+  {
+    //セルの生成
+    GFL_CLWK_DATA cellInitData;
+    cellInitData.pos_x = 128;
+    cellInitData.pos_y = 96;
+    cellInitData.anmseq = 0;
+    cellInitData.softpri = 0;
+    cellInitData.bgpri = 0;
+    work->clwkEffectDown = GFL_CLACT_WK_Create( work->cellUnit ,
+              work->objResIdx[DOR_EFFECT_DOWN_PLT],
+              work->objResIdx[DOR_EFFECT_DOWN_NCG],
+              work->objResIdx[DOR_EFFECT_DOWN_ANM],
+              &cellInitData ,CLSYS_DEFREND_MAIN , work->heapId );
+    GFL_CLACT_WK_SetDrawEnable( work->clwkEffectDown, FALSE );
+    GFL_CLACT_WK_SetAutoAnmFlag( work->clwkEffectDown, TRUE );
+  }
 }
 static void DUP_EFFECT_TermCell( FITTING_WORK *work )
 {
@@ -3106,8 +3172,8 @@ static void DUP_EFFECT_TermCell( FITTING_WORK *work )
   {
     GFL_CLACT_WK_Remove( work->clwkEffectUp[i] );
   }
+  GFL_CLACT_WK_Remove( work->clwkEffectDown );
 }
-
 static void DUP_EFFECT_UpdateCell( FITTING_WORK *work )
 {
   u8 i;
