@@ -61,8 +61,9 @@ enum {
 	NARC_battgra_wb_gauge_num_NCER = 47,
 	NARC_battgra_wb_gauge_num_NANR = 48,
 	NARC_battgra_wb_gauge_m_ball_NCGR = 49,
-	NARC_battgra_wb_gauge_m_ball_NCER = 50,
-	NARC_battgra_wb_gauge_m_ball_NANR = 51
+	NARC_battgra_wb_gauge_m_ball_NCLR = 50,
+	NARC_battgra_wb_gauge_m_ball_NCER = 51,
+	NARC_battgra_wb_gauge_m_ball_NANR = 52
 };
 
 /* NARC_BATTGRA_WB_NAIX_ */
