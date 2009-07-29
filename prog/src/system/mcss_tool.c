@@ -13,6 +13,7 @@
 
 #include "arc_def.h"
 #include "pokegra/pokegra_wb.naix"
+#include "trgra/trgra_wb.naix"
 
 //============================================================================================
 /**
@@ -55,15 +56,24 @@ enum{
 	POKEGRA_NCEC
 };
 
+//トレーナー一体を構成するMCSS用ファイルの構成
+enum{
+	TRGRA_NCBR,
+	TRGRA_NCER,
+	TRGRA_NANR,
+	TRGRA_NMCR,
+	TRGRA_NMAR,
+	TRGRA_NCEC,
+	TRGRA_NCLR,
+
+	TRGRA_FILE_MAX,			//トレーナー一体を構成するMCSS用ファイルの総数
+};
+
 //============================================================================================
 /**
  *	プロトタイプ宣言
  */
 //============================================================================================
-
-void	MCSS_TOOL_MakeMAWPP( const POKEMON_PARAM *pp, MCSS_ADD_WORK *maw, int dir );
-void	MCSS_TOOL_MakeMAWPPP( const POKEMON_PASO_PARAM *ppp, MCSS_ADD_WORK *maw, int dir );
-void	MCSS_TOOL_MakeMAWParam( int mons_no, int form_no, int sex, int rare, MCSS_ADD_WORK *maw, int dir );
 
 //============================================================================================
 /**
@@ -146,5 +156,29 @@ void	MCSS_TOOL_MakeMAWParam( int	mons_no, int form_no, int sex, int rare, MCSS_A
 	maw->nmcr = file_start + file_offset + POKEGRA_NMCR;
 	maw->nmar = file_start + file_offset + POKEGRA_NMAR;
 	maw->ncec = file_start + file_offset + POKEGRA_NCEC;
+}
+
+//============================================================================================
+/**
+ *	パラメータからMCSS_ADD_WORKを生成する
+ *
+ * @param[in]   tr_type トレーナータイプ
+ * @param[out]  maw     MCSS_ADD_WORKワークへのポインタ
+ * @param[in]   dir     トレーナーの向き（MCSS_DIR_FRONT:正面、MCSS_DIR_BACK:背面）
+ */
+//============================================================================================
+void	MCSS_TOOL_MakeMAWTrainer( int	tr_type, MCSS_ADD_WORK *maw, int dir )
+{
+	int	file_start = NARC_trgra_wb_trwb_football_NCBR + TRGRA_FILE_MAX * tr_type;	//トレーナータイプからファイルのオフセットを計算
+	int	file_offset = 0;	//向きの計算（現状はない）
+
+	maw->arcID = ARCID_TRGRA;
+	maw->ncbr = file_start + file_offset + TRGRA_NCBR;
+	maw->nclr = file_start + file_offset + TRGRA_NCLR;
+	maw->ncer = file_start + file_offset + TRGRA_NCER;
+	maw->nanr = file_start + file_offset + TRGRA_NANR;
+	maw->nmcr = file_start + file_offset + TRGRA_NMCR;
+	maw->nmar = file_start + file_offset + TRGRA_NMAR;
+	maw->ncec = file_start + file_offset + TRGRA_NCEC;
 }
 
