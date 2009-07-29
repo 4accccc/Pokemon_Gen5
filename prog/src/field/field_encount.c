@@ -36,7 +36,7 @@
 #define LONG_GRASS_PERCENT (30) ///<長い草の中にいるときの加算確率
 #define CYCLE_PERCENT (30) ///<自転車に乗っているときの加算確率
 
-#define HEAPID_BTLPARAM (GFL_HEAPID_APP) ///<バトルパラメタ用HEAPID
+#define HEAPID_BTLPARAM (HEAPID_PROC) ///<バトルパラメタ用HEAPID
 
 //--------------------------------------------------------------
 /// エンカウントデータ要素
