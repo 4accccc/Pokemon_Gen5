@@ -49,15 +49,19 @@ endif
 #------------------------------------------------------------------------------
 #	make do-build ルール
 #------------------------------------------------------------------------------
-do-build:	subdir $(TARGETDIR_ARC)/$(targetname).narc
+do-build:	subdir $(TARGETDIR_ARC)/$(targetname).narc $(TARGETDIR_ARC)/$(targetname).naix $(TARGETDIR_H)/$(targetname).h
 
 subdir:
 	@$(MAKE_SUBDIR)
 
 # narc のコピーだけ実行する
-$(TARGETDIR_ARC)/$(targetname).narc: $(targetname).narc $(targetname).naix $(targetname).h
+$(TARGETDIR_ARC)/$(targetname).narc: $(targetname).narc
 	$(COPY) $(targetname).narc $(TARGETDIR_ARC)
+
+$(TARGETDIR_ARC)/$(targetname).naix: $(targetname).naix
 	$(COPY) $(targetname).naix $(TARGETDIR_ARC) 
+
+$(TARGETDIR_H)/$(targetname).h: $(targetname).h
 	$(COPY) $(targetname).h		 $(TARGETDIR_H) 
 
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、元ファイルからコンバートするルールを有効にする
