@@ -24,7 +24,7 @@ typedef struct _COLOSSEUM_SYSTEM * COLOSSEUM_SYSTEM_PTR;
 //==============================================================================
 //  äOïîä÷êîêÈåæ
 //==============================================================================
-extern COLOSSEUM_SYSTEM_PTR Colosseum_InitSystem(GAMEDATA *game_data, FIELD_MAIN_WORK *fieldWork, MYSTATUS *myst);
+extern COLOSSEUM_SYSTEM_PTR Colosseum_InitSystem(GAMEDATA *game_data, FIELD_MAIN_WORK *fieldWork, MYSTATUS *myst, BOOL intrude);
 extern void Colosseum_ExitSystem(COLOSSEUM_SYSTEM_PTR clsys);
 extern void Colosseum_CommReadySet(COLOSSEUM_SYSTEM_PTR clsys, BOOL flag);
 extern void Colosseum_Mine_SetStandingPostion(COLOSSEUM_SYSTEM_PTR clsys, int stand_position);

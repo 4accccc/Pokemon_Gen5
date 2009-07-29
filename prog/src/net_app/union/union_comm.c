@@ -27,7 +27,7 @@
 //  定数定義
 //==============================================================================
 ///HEAPID_UNIONで確保するヒープサイズ
-#define HEAP_SIZE_UNION               (0xa000)
+#define HEAP_SIZE_UNION               (0x9800)  //(0xa000)
 
 ///通信ステータス
 enum{
@@ -100,7 +100,7 @@ static const GFLNetInitializeStruct aGFLNetInit = {
 	TRUE,		// CRC計算
 	FALSE,		// MP通信＝親子型通信モードかどうか
 	GFL_NET_TYPE_WIRELESS,		//通信タイプの指定
-	TRUE,		// 親が再度初期化した場合、つながらないようにする場合TRUE
+	FALSE,		// 親が再度初期化した場合、つながらないようにする場合TRUE
 	WB_NET_UNION,	//GameServiceID
 #if GFL_NET_IRC
 	IRC_TIMEOUT_STANDARD,	// 赤外線タイムアウト時間

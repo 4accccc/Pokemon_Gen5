@@ -34,7 +34,7 @@
  * @retval  COLOSSEUM_SYSTEM_PTR		
  */
 //==================================================================
-COLOSSEUM_SYSTEM_PTR Colosseum_InitSystem(GAMEDATA *game_data, FIELD_MAIN_WORK *fieldWork, MYSTATUS *myst)
+COLOSSEUM_SYSTEM_PTR Colosseum_InitSystem(GAMEDATA *game_data, FIELD_MAIN_WORK *fieldWork, MYSTATUS *myst, BOOL intrude)
 {
   COLOSSEUM_SYSTEM_PTR clsys;
   int i, my_net_id;
@@ -68,6 +68,7 @@ COLOSSEUM_SYSTEM_PTR Colosseum_InitSystem(GAMEDATA *game_data, FIELD_MAIN_WORK *
   my_basic->sex = MyStatus_GetMySex(myst);
   my_basic->trainer_view = MyStatus_GetTrainerView(myst);
   my_basic->occ = TRUE;
+  my_basic->force_entry = (intrude == TRUE) ? FALSE : TRUE;
   
   //自分のトレーナーカード情報セット
   TRAINERCARD_GetSelfData(clsys->recvbuf.tr_card[my_net_id], game_data, TRUE);

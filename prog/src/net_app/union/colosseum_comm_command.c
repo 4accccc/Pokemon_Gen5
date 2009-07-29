@@ -165,14 +165,19 @@ static void _ColosseumRecv_BasicStatus(const int netID, const int size, const vo
 
 //==================================================================
 /**
- * データ送信：座標パッケージ
+ * データ送信：基本情報
  * @param   select_list		選択結果(UNION_MSG_MENU_SELECT_???)
+ * @param   parent_only   TRUE:親のみに送信。　FALSE:全員に送信
  * @retval  BOOL		TRUE:送信成功。　FALSE:失敗
  */
 //==================================================================
-BOOL ColosseumSend_BasicStatus(COLOSSEUM_BASIC_STATUS *basic_status)
+BOOL ColosseumSend_BasicStatus(COLOSSEUM_BASIC_STATUS *basic_status, BOOL parent_only)
 {
-  return GFL_NET_SendDataEx(GFL_NET_HANDLE_GetCurrentHandle(), GFL_NET_SENDID_ALLUSER, 
+  NetID send_id;
+  
+  send_id = (parent_only == TRUE) ? GFL_NET_NO_PARENTMACHINE : GFL_NET_SENDID_ALLUSER;
+  OS_TPrintf("コロシアム：基本情報送信：send_id = %d\n", send_id);
+  return GFL_NET_SendDataEx(GFL_NET_HANDLE_GetCurrentHandle(), send_id, 
     COLOSSEUM_CMD_BASIC_STATUS, sizeof(COLOSSEUM_BASIC_STATUS), 
     basic_status, TRUE, FALSE, TRUE);
 }

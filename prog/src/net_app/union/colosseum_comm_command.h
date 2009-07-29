@@ -51,7 +51,8 @@ extern void Colosseum_AddCommandTable(UNION_SYSTEM_PTR unisys);
 extern void Colosseum_DelCommandTable(void);
 
 extern BOOL ColosseumSend_Shutdown(COMM_PLAYER_PACKAGE *pos_package);
-extern BOOL ColosseumSend_BasicStatus(COLOSSEUM_BASIC_STATUS *basic_status);
+extern BOOL ColosseumSend_EntryStatus(COLOSSEUM_BASIC_STATUS *basic_status);
+extern BOOL ColosseumSend_BasicStatus(COLOSSEUM_BASIC_STATUS *basic_status, BOOL parent_only);
 extern BOOL ColosseumSend_TrainerCard(TR_CARD_DATA *send_card);
 extern BOOL ColosseumSend_PosPackage(COMM_PLAYER_PACKAGE *pos_package);
 extern BOOL ColosseumSend_StandingPositionConfirm(COLOSSEUM_SYSTEM_PTR clsys);
@@ -59,4 +60,5 @@ extern BOOL ColosseumSend_AnswerStandingPosition(COLOSSEUM_SYSTEM_PTR clsys, int
 extern BOOL ColosseumSend_Pokeparty(POKEPARTY *pokeparty);
 extern BOOL ColosseumSend_StandingPos(u8 *standing_pos);
 extern BOOL ColosseumSend_Leave(void);
+extern BOOL ColosseumSend_EntryAnswer(int send_netid, COMM_ENTRY_ANSWER answer);
 

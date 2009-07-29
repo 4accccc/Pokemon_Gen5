@@ -10,6 +10,8 @@
 
 #include "net_app/union/comm_player.h"
 #include "app\trainer_card.h"
+#include "field/field_msgbg.h"
+#include "net_app/comm_entry_menu.h"
 
 
 //==============================================================================
@@ -33,7 +35,8 @@ typedef struct{
   u8 sex;
   u8 trainer_view;
   u8 occ;               ///< TRUE:データ有効
-  u8 padding[3];
+  u8 force_entry;       ///< TRUE:強制エントリー
+  u8 padding[2];
 }COLOSSEUM_BASIC_STATUS;
 
 ///親だけが持つシステムデータ
@@ -46,7 +49,8 @@ typedef struct{
 typedef struct{
   u8 stand_position;          ///<自分の立ち位置
   u8 answer_stand_position;   ///<立ち位置使用許可の返事受信バッファ
-  u8 padding[2];
+  u8 entry_answer;            ///<エントリー結果
+  u8 padding;
 }COLOSSEUM_MINE_WORK;
 
 ///受信バッファ
@@ -74,11 +78,14 @@ typedef struct _COLOSSEUM_SYSTEM{
   COLOSSEUM_BASIC_STATUS basic_status[COLOSSEUM_MEMBER_MAX];  ///<各プレイヤーの基本情報
   u8 comm_ready;                            ///<TRUE:基本情報の交換が済んだので自由に通信してOK
   u8 colosseum_leave;                       ///<TRUE:退出処理に入っている
-  u8 padding[2];
+  u8 entry_all_ready;                       ///<TRUE:全員のエントリーが完了
+  u8 padding;
   
   COLOSSEUM_PARENT_WORK parentsys;          ///<親データ
   COLOSSEUM_MINE_WORK mine;                 ///<自分データ
   COLOSSEUM_RECV_BUF recvbuf;               ///<受信バッファ
+  
+  COMM_ENTRY_MENU_PTR entry_menu;           ///<参加募集メニュー管理
 }COLOSSEUM_SYSTEM;
 
 

@@ -75,6 +75,7 @@ enum{
   UNION_STATUS_SHUTDOWN,    ///<切断
   
   UNION_STATUS_COLOSSEUM_MEMBER_WAIT,   ///<コロシアム：メンバー集合待ち
+  UNION_STATUS_COLOSSEUM_FIRST_DATA_SHARING,  ///<コロシアム：最初のデータ共有
   UNION_STATUS_COLOSSEUM_NORMAL,        ///<コロシアム：フリー移動
   UNION_STATUS_COLOSSEUM_STANDPOSITION, ///<コロシアム：立ち位置にたった
   UNION_STATUS_COLOSSEUM_STANDING_BACK, ///<コロシアム：立ち位置から後退
@@ -287,7 +288,8 @@ typedef struct{
   UNION_TRCARD trcard;        ///<トレーナーカード情報
   UNION_PARTY party;          ///<一緒に遊んでいる相手のパラメータ
   u16 talk_obj_id;             ///<話しかけた相手のCharacterIndex
-  u8 padding[2];
+  u8 intrude;                 ///<TRUE:乱入参加
+  u8 padding;
 }UNION_MY_COMM;
 
 ///ユニオンルーム内での自分の状況

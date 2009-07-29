@@ -14,6 +14,7 @@
 #include "app/trainer_card.h"
 #include "field_comm_main.h"
 #include "field_comm_data.h"
+#include "system/main.h"
 
 //======================================================================
 //  define
@@ -87,7 +88,13 @@ FIELD_COMM_DATA * FIELD_COMM_DATA_InitSystem( HEAPID heapID )
 
   //最初はヒープの確保と全初期化
   comm_data = GFL_HEAP_AllocClearMemory( heapID , sizeof(FIELD_COMM_DATA) );
+#if 0 //※check@@ ヒープが足りないので暫定でHEAPID_PROCを使用する
   comm_data->heapID_ = heapID;
+#elif 0
+  comm_data->heapID_ = HEAPID_PROC;
+#else
+  comm_data->heapID_ = HEAPID_FIELDMAP;
+#endif
   FIELD_COMM_DATA_InitOneCharaData( &comm_data->selfData_ );
   for( i=0;i<FIELD_COMM_MEMBER_MAX;i++ )
   {

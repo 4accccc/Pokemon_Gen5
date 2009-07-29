@@ -16,6 +16,9 @@
 #include "system/net_err.h"
 #include "net/network_define.h"
 #include "union_comm_command.h"
+#include "union_types.h"
+#include "union_local.h"
+#include "colosseum.h"
 
 
 //==============================================================================
@@ -26,6 +29,9 @@ static void _UnionRecv_Shutdown(const int netID, const int size, const void* pDa
 static void _UnionRecv_MainMenuListResult(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
 static void _UnionRecv_MainMenuListResultAnswer(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
 static void _UnionRecv_TrainerCardParam(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
+static void _UnionRecv_ColosseumEntryStatus(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
+static void _UnionRecv_ColosseumEntryAnswer(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
+static void _UnionRecv_ColosseumEntryAllReady(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
 
 
 //==============================================================================
@@ -37,6 +43,9 @@ const NetRecvFuncTable Union_CommPacketTbl[] = {
   {_UnionRecv_MainMenuListResult, NULL},      //UNION_CMD_MAINMENU_LIST_RESULT
   {_UnionRecv_MainMenuListResultAnswer, NULL},      //UNION_CMD_MAINMENU_LIST_RESULT_ANSWER
   {_UnionRecv_TrainerCardParam, _RecvHugeBuffer},        //UNION_CMD_TRAINERCARD_PARAM
+  {_UnionRecv_ColosseumEntryStatus, _RecvHugeBuffer},   //UNION_CMD_COLOSSEUM_ENTRY
+  {_UnionRecv_ColosseumEntryAnswer, _RecvHugeBuffer},   //UNION_CMD_COLOSSEUM_ENTRY_ANSWER
+  {_UnionRecv_ColosseumEntryAllReady, NULL},            //UNION_CMD_COLOSSEUM_ENTRY_ALL_READY
 };
 SDK_COMPILER_ASSERT(NELEMS(Union_CommPacketTbl) == UNION_CMD_NUM);
 
@@ -204,3 +213,131 @@ BOOL UnionSend_TrainerCardParam(UNION_SYSTEM_PTR unisys)
     UNION_CMD_TRAINERCARD_PARAM, sizeof(TR_CARD_DATA), 
     unisys->my_situation.mycomm.trcard.my_card, TRUE, FALSE, TRUE);
 }
+
+//==============================================================================
+//  
+//==============================================================================
+//--------------------------------------------------------------
+/**
+ * @brief   コマンド受信：コロシアム：エントリー情報
+ * @param   netID      送ってきたID
+ * @param   size       パケットサイズ
+ * @param   pData      データ
+ * @param   pWork      ワークエリア
+ * @param   pHandle    受け取る側の通信ハンドル
+ * @retval  none  
+ */
+//--------------------------------------------------------------
+static void _UnionRecv_ColosseumEntryStatus(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle)
+{
+  UNION_SYSTEM_PTR unisys = pWork;
+  COLOSSEUM_SYSTEM_PTR clsys = unisys->colosseum_sys;
+  const COLOSSEUM_BASIC_STATUS *p_basic = pData;
+  
+  if(clsys == NULL || clsys->cps == NULL || clsys->entry_menu == NULL){
+    GF_ASSERT(0);
+    return; //準備が出来ていないので受け取らない
+  }
+  
+  OS_TPrintf("コロシアム：エントリー情報受信：net_id = %d\n", netID);
+  CommEntryMenu_Entry(clsys->entry_menu, netID, p_basic->name, p_basic->id, p_basic->sex, p_basic->force_entry);
+}
+
+//==================================================================
+/**
+ * データ送信：コロシアム：エントリー情報
+ * @param   select_list		選択結果(UNION_MSG_MENU_SELECT_???)
+ * @param   parent_only   TRUE:親のみに送信。　FALSE:全員に送信
+ * @retval  BOOL		TRUE:送信成功。　FALSE:失敗
+ */
+//==================================================================
+BOOL UnionSend_ColosseumEntryStatus(COLOSSEUM_BASIC_STATUS *basic_status)
+{
+  OS_TPrintf("コロシアム：エントリー情報送信\n");
+  return GFL_NET_SendDataEx(GFL_NET_HANDLE_GetCurrentHandle(), GFL_NET_NO_PARENTMACHINE, 
+    UNION_CMD_COLOSSEUM_ENTRY, sizeof(COLOSSEUM_BASIC_STATUS), 
+    basic_status, TRUE, FALSE, TRUE);
+}
+
+//==============================================================================
+//  
+//==============================================================================
+//--------------------------------------------------------------
+/**
+ * @brief   コマンド受信：コロシアム：エントリー結果
+ * @param   netID      送ってきたID
+ * @param   size       パケットサイズ
+ * @param   pData      データ
+ * @param   pWork      ワークエリア
+ * @param   pHandle    受け取る側の通信ハンドル
+ * @retval  none  
+ */
+//--------------------------------------------------------------
+static void _UnionRecv_ColosseumEntryAnswer(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle)
+{
+  UNION_SYSTEM_PTR unisys = pWork;
+  COLOSSEUM_SYSTEM_PTR clsys = unisys->colosseum_sys;
+  const COMM_ENTRY_ANSWER *answer = pData;
+  
+  if(clsys == NULL){
+    GF_ASSERT(0);
+    return; //準備が出来ていないので受け取らない
+  }
+  
+  OS_TPrintf("コロシアム：エントリー結果受信：answer = %d\n", *answer);
+  clsys->mine.entry_answer = *answer;
+}
+
+//==================================================================
+/**
+ * データ送信：コロシアム：エントリー結果
+ * @param   
+ * @retval  BOOL		TRUE:送信成功。　FALSE:失敗
+ */
+//==================================================================
+BOOL UnionSend_ColosseumEntryAnswer(int send_netid, COMM_ENTRY_ANSWER answer)
+{
+  return GFL_NET_SendDataEx(GFL_NET_HANDLE_GetCurrentHandle(), send_netid, UNION_CMD_COLOSSEUM_ENTRY_ANSWER, sizeof(COMM_ENTRY_ANSWER), &answer, TRUE, FALSE, FALSE);
+}
+
+//==============================================================================
+//  
+//==============================================================================
+//--------------------------------------------------------------
+/**
+ * @brief   コマンド受信：コロシアム：エントリー全員揃った
+ * @param   netID      送ってきたID
+ * @param   size       パケットサイズ
+ * @param   pData      データ
+ * @param   pWork      ワークエリア
+ * @param   pHandle    受け取る側の通信ハンドル
+ * @retval  none  
+ */
+//--------------------------------------------------------------
+static void _UnionRecv_ColosseumEntryAllReady(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle)
+{
+  UNION_SYSTEM_PTR unisys = pWork;
+  COLOSSEUM_SYSTEM_PTR clsys = unisys->colosseum_sys;
+  const COMM_ENTRY_ANSWER *answer = pData;
+  
+  if(clsys == NULL){
+    GF_ASSERT(0);
+    return; //準備が出来ていないので受け取らない
+  }
+  
+  OS_TPrintf("コロシアム：エントリー全員揃った受信\n");
+  clsys->entry_all_ready = TRUE;
+}
+
+//==================================================================
+/**
+ * データ送信：コロシアム：エントリー全員揃った
+ * @param   
+ * @retval  BOOL		TRUE:送信成功。　FALSE:失敗
+ */
+//==================================================================
+BOOL UnionSend_ColosseumEntryAllReady(void)
+{
+  return GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(), UNION_CMD_COLOSSEUM_ENTRY_ALL_READY, 0, NULL);
+}
+
