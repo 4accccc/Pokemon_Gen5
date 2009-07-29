@@ -269,7 +269,6 @@ static void APP_TASKMENU_CreateMenuWin( APP_TASKMENU_WORK *work )
     {
       charAdr = (u32)(work->ncgData->pRawData);
     }
-    OS_TPrintf("[%x]\n",charAdr);
     GFL_STD_MemCopy32( (void*)charAdr , GFL_BMP_GetCharacterAdrs(GFL_BMPWIN_GetBmp( work->menuWin[i] )) ,
                      APP_TASKMENU_PLATE_NCG_SIZE );
 
