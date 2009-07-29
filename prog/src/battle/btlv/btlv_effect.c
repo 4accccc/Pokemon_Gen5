@@ -377,7 +377,7 @@ void  BTLV_EFFECT_SetTrainer( int trtype, int position, int pos_x, int pos_y, in
   {
     pos_x = pos_x >> FX32_SHIFT;
     pos_y = pos_y >> FX32_SHIFT;
-    bew->trainer_index[ position - BTLV_MCSS_POS_MAX ] = BTLV_CLACT_Add( bew->bclw, ARCID_TRGRA, trtype * 4, pos_x, pos_y );
+    bew->trainer_index[ position - BTLV_MCSS_POS_MAX ] = BTLV_CLACT_Add( bew->bclw, ARCID_TRBGRA, trtype * 4, pos_x, pos_y );
   }
 }
 

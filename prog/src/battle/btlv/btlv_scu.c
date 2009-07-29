@@ -705,12 +705,20 @@ static BOOL btlin_trainer_single( int* seq, void* wk_adrs )
     {
       BTLV_BALL_GAUGE_PARAM bbgp;
       int i;
+      TrainerID tr_id = BTL_MAIN_GetTrainerID( wk->mainModule );
+      int poke_count = TT_TrainerDataParaGet( tr_id, ID_TD_poke_count );
 
       for( i = 0 ; i < TEMOTI_POKEMAX ; i++ )
       { 
-        bbgp.status[ i ] = BTLV_BALL_GAUGE_STATUS_NONE;
+        if( i < poke_count )
+        { 
+          bbgp.status[ i ] = BTLV_BALL_GAUGE_STATUS_ALIVE;
+        }
+        else
+        { 
+          bbgp.status[ i ] = BTLV_BALL_GAUGE_STATUS_NONE;
+        }
       }
-      bbgp.status[ 0 ] = BTLV_BALL_GAUGE_STATUS_ALIVE;
       bbgp.type = BTLV_BALL_GAUGE_TYPE_ENEMY;
 
       BTLV_EFFECT_SetBallGauge( &bbgp );
@@ -730,7 +738,7 @@ static BOOL btlin_trainer_single( int* seq, void* wk_adrs )
   case 4:
     if( !BTLV_EFFECT_CheckExecute() )
     { 
-      BTL_STR_MakeStringStd( wk->strBuf, BTL_STRID_STD_Encount, 1, subwk->pokeID );
+      BTL_STR_MakeStringStd( wk->strBuf, BTL_STRID_STD_PutSingle_Enemy, 1, subwk->pokeID );
       BTLV_SCU_StartMsg( wk, wk->strBuf, BTLV_MSGWAIT_STD );
       (*seq)++;
     }
