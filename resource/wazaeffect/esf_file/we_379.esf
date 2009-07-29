@@ -1,11 +1,17 @@
 EFFSEQ
 $0001
-C:\home\pokemon_wb\resource\particle\wazaeffect\w_001.spa
+C:\home\pokemon_wb\resource\particle\wazaeffect\w_379.spa
 #001
 %00
-パーティクルデータロード	w_001
-パーティクル再生	w_001	W_001_001_BALL_BURN	攻撃側	方向無し	0	0
-パーティクル再生	w_001	W_001_001_HIT_MARK	攻撃側	方向無し	0	0
+カメラ移動	追従	攻撃側	16	0	8
+エフェクト終了待ち	すべて
+パーティクルデータロード	w_379
+パーティクル再生	w_379	W_379_379_PTRICK_HAND2	攻撃側	方向無し	2	0
+カメラ移動	追従	初期位置	16	0	8
+パーティクル再生	w_379	W_379_379_PTRICK_BALL	攻撃側	方向無し	2	0
+パーティクル再生	w_379	W_379_379_PTRICK_HAND1	攻撃側	方向無し	2	0
+エフェクト終了待ち	すべて
+タイマーによるウエイト	0
 エフェクト終了待ち	すべて
 エフェクト終了
 &
