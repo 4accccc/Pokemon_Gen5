@@ -2736,7 +2736,7 @@ static void handler_DokudokuDama( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* f
   BTL_HANDEX_PARAM_ADD_SICK* param = BTL_SVFLOW_HANDLERWORK_Push( flowWk, BTL_HANDEX_ADD_SICK, pokeID );
 
   param->sickID = WAZASICK_DOKU;
-  param->sickCont = BTL_CALC_MakeMoudokuSickCont();
+  param->sickCont = BPP_SICKCONT_MakeMoudokuCont();
   param->fAlmost = FALSE;
   param->poke_cnt = 1;
   param->pokeID[0] = pokeID;
@@ -2757,7 +2757,7 @@ static void handler_DokudokuDama_UseTmp( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_
     param->pokeID[0] = pokeID;
     param->poke_cnt = 1;
     param->sickID = WAZASICK_DOKU;
-    param->sickCont = BTL_CALC_MakeMoudokuSickCont();
+    param->sickCont = BPP_SICKCONT_MakeMoudokuCont();
     param->fAlmost = TRUE;
   }
 }

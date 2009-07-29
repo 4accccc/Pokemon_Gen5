@@ -373,22 +373,6 @@ BPP_SICK_CONT BTL_CALC_MakeDefaultPokeSickCont( PokeSick sick )
 }
 //=============================================================================================
 /**
- * もうどく状態の継続パラメータを作成
- *
- * @param   cont    [out]
- *
- */
-//=============================================================================================
-BPP_SICK_CONT BTL_CALC_MakeMoudokuSickCont( void )
-{
-  BPP_SICK_CONT cont;
-  cont.raw = 0;
-  cont.type = WAZASICK_CONT_TURN;
-  cont.turn.count = 0;
-  return cont;
-}
-//=============================================================================================
-/**
  * ワザ系状態異常の継続パラメータ（ターン数型）を作成
  *
  * @param   turn_count

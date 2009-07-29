@@ -13,6 +13,8 @@
 
 #include "poke_tool/poketype.h"
 
+#include "btl_const.h"
+
 //===================================================================
 // 単純なプロセス処理構造
 //===================================================================
@@ -70,53 +72,6 @@ static inline BOOL BTL_UTIL_CallProc( BTL_PROC* proc )
   }
   return TRUE;
 }
-
-
-//===================================================================
-// ポケモンタイプを合成して１変数として扱うための措置
-//===================================================================
-typedef u16 PokeTypePair;
-
-static inline PokeTypePair PokeTypePair_Make( PokeType type1, PokeType type2 )
-{
-  return ( (((type1)&0xff)<<8) | (type2&0xff) );
-}
-static inline PokeTypePair PokeTypePair_MakePure( PokeType type )
-{
-  return PokeTypePair_Make( type, type );
-}
-
-static inline PokeType PokeTypePair_GetType1( PokeTypePair pair )
-{
-  return (pair >> 8) & 0xff;
-}
-
-static inline PokeType PokeTypePair_GetType2( PokeTypePair pair )
-{
-  return pair & 0xff;
-}
-
-static inline void PokeTypePair_Split( PokeTypePair pair, PokeType* type1, PokeType* type2 )
-{
-  *type1 = PokeTypePair_GetType1( pair );
-  *type2 = PokeTypePair_GetType2( pair );
-}
-
-static inline BOOL PokeTypePair_IsMatch( PokeTypePair pair, PokeType type )
-{
-  if( PokeTypePair_GetType1(pair) == type ){
-    return TRUE;
-  }
-  if( PokeTypePair_GetType2(pair) == type ){
-    return TRUE;
-  }
-  return FALSE;
-}
-static inline BOOL PokeTypePair_IsPure( PokeTypePair pair )
-{
-  return PokeTypePair_GetType1(pair) == PokeTypePair_GetType2(pair);
-}
-
 
 //===================================================================
 // 状態異常等の継続パラメータ
@@ -226,6 +181,14 @@ static inline BPP_SICK_CONT BPP_SICKCONT_MakePermanentParam( u8 param )
   cont.permanent.param = param;
   return cont;
 }
+static inline BPP_SICK_CONT BPP_SICKCONT_MakeMoudokuCont( void )
+{
+  BPP_SICK_CONT cont;
+  cont.raw = 0;
+  cont.type = WAZASICK_CONT_PERMANENT;
+  cont.permanent.count_max = BTL_MOUDOKU_COUNT_MAX;
+  return cont;
+}
 
 static inline BOOL BPP_SICKCONT_IsMoudokuCont( BPP_SICK_CONT cont )
 {
@@ -258,6 +221,53 @@ static inline u8 BPP_SICKCONT_GetParam( BPP_SICK_CONT cont )
     return cont.permanent.param;
   }
   return 0;
+}
+
+
+
+//===================================================================
+// ポケモンタイプを合成して１変数として扱うための措置
+//===================================================================
+typedef u16 PokeTypePair;
+
+static inline PokeTypePair PokeTypePair_Make( PokeType type1, PokeType type2 )
+{
+  return ( (((type1)&0xff)<<8) | (type2&0xff) );
+}
+static inline PokeTypePair PokeTypePair_MakePure( PokeType type )
+{
+  return PokeTypePair_Make( type, type );
+}
+
+static inline PokeType PokeTypePair_GetType1( PokeTypePair pair )
+{
+  return (pair >> 8) & 0xff;
+}
+
+static inline PokeType PokeTypePair_GetType2( PokeTypePair pair )
+{
+  return pair & 0xff;
+}
+
+static inline void PokeTypePair_Split( PokeTypePair pair, PokeType* type1, PokeType* type2 )
+{
+  *type1 = PokeTypePair_GetType1( pair );
+  *type2 = PokeTypePair_GetType2( pair );
+}
+
+static inline BOOL PokeTypePair_IsMatch( PokeTypePair pair, PokeType type )
+{
+  if( PokeTypePair_GetType1(pair) == type ){
+    return TRUE;
+  }
+  if( PokeTypePair_GetType2(pair) == type ){
+    return TRUE;
+  }
+  return FALSE;
+}
+static inline BOOL PokeTypePair_IsPure( PokeTypePair pair )
+{
+  return PokeTypePair_GetType1(pair) == PokeTypePair_GetType2(pair);
 }
 
 //===================================================================
