@@ -21,7 +21,7 @@
 //  define
 //======================================================================
 #define TRACKBIT_ALL (0xffff) ///<全track ON
-#define TRACKBIT_ACTION ((1<<8)|(1<<9)) ///<アクション用BGM Track
+#define TRACKBIT_ACTION ((1<<8)|(1<<9)) ///<アクション用BGM Track 9,10
 #define TRACKBIT_STILL (TRACKBIT_ALL^TRACKBIT_ACTION) ///<Action Track OFF
 
 #define PUSH_MAX (1) ///<BGM退避回数最大

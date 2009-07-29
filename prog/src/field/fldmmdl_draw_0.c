@@ -630,7 +630,7 @@ static void DrawBlAct_DrawAlwaysAnime( MMDL *mmdl )
 	actSys = MMDL_BLACTCONT_GetBbdActSys( MMDL_GetBlActCont(mmdl) );
 	dir = MMDL_GetDirDisp( mmdl );
   
-	anm_id = DRAW_STA_WALK_8F * DIR_MAX4;
+	anm_id = DRAW_STA_WALK_16F * DIR_MAX4;
 	anm_id += dir;
 	
 	if( work->set_anm_dir != dir ){ //•ûŒüXV
