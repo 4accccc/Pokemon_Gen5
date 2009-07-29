@@ -87,7 +87,7 @@ GFL_PROC_DATA Musical_ProcData =
 static const u16 musPokeArr[]=
 {
   MONSNO_PIKATYUU,
-  MONSNO_WANIBAAN,
+  MONSNO_REIBAAN,
   MONSNO_ONOKKUSU,
   MONSNO_PURUNSU,
   
