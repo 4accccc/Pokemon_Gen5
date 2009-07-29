@@ -58,7 +58,12 @@ static const GFL_UI_TP_HITTBL bttndata[] = {  //上下左右
 	{	22*_1CHAR,  25*_1CHAR,  26*_1CHAR, 28*_1CHAR },  //x
 	{	22*_1CHAR,  25*_1CHAR,  30*_1CHAR, 32*_1CHAR },  //リターン
 
-	{	2*_1CHAR,  20*_1CHAR,  18*_1CHAR, 30*_1CHAR },  //アイテム一覧エリア
+	{	1*_1CHAR+12,   4*_1CHAR+11,  18*_1CHAR, 29*_1CHAR },  //アイテム一覧エリア1
+	{	4*_1CHAR+12,   7*_1CHAR+11,  18*_1CHAR, 29*_1CHAR },  //アイテム一覧エリア2
+	{	7*_1CHAR+12,  11*_1CHAR+11,  18*_1CHAR, 29*_1CHAR },  //アイテム一覧エリア3
+	{11*_1CHAR+12,  14*_1CHAR+11,  18*_1CHAR, 29*_1CHAR },  //アイテム一覧エリア4
+	{14*_1CHAR+12,  17*_1CHAR+11,  18*_1CHAR, 29*_1CHAR },  //アイテム一覧エリア5
+	{17*_1CHAR+12,  20*_1CHAR+11,  18*_1CHAR, 29*_1CHAR },  //アイテム一覧エリア6
   
   {GFL_UI_TP_HIT_END,0,0,0},		 //終了データ
 };
@@ -600,6 +605,11 @@ static void _itemSelectState(FIELD_ITEMMENU_WORK* pWork)
       pWork->ret_item = item->id;
     }
   }
+  if(pWork->mode == BAG_MODE_POKELIST){
+    pWork->ret_code = BAG_NEXTPROC_ITEMEQUIP;
+    _CHANGE_STATE(pWork,NULL);
+  }
+
   _itemUseWindowRewrite(pWork);
 
   ITEMDISP_ItemInfoMessageMake( pWork,pWork->ret_item );
@@ -1009,8 +1019,23 @@ static void _BttnCallBack( u32 bttnid, u32 event, void* p_work )
     pWork->ret_code = BAG_NEXTPROC_RETURN;
     _CHANGE_STATE(pWork, NULL);
   }
-  else if(BUTTONID_ITEM_AREA == bttnid){
-    _CHANGE_STATE(pWork,_itemSelectState);
+  else{ // if(bttnid >= BUTTONID_ITEM_AREA){
+    if(_itemKindSelectMenu == pWork->state){
+      int backup = pWork->curpos;
+      int nowno = ITEMMENU_GetItemIndex(pWork);
+      int length = ITEMMENU_GetItemPocketNumber( pWork);
+
+      if(pWork->curpos != (bttnid-BUTTONID_ITEM_AREA)){
+        pWork->curpos = bttnid - BUTTONID_ITEM_AREA;
+        if(length <= ITEMMENU_GetItemIndex(pWork)){
+          pWork->curpos = backup;
+          return;
+        }
+      }
+      _ItemChange(pWork, nowno, ITEMMENU_GetItemIndex(pWork));
+      ITEMDISP_scrollCursorChangePos(pWork, ITEMMENU_GetItemIndex(pWork));
+      _CHANGE_STATE(pWork,_itemSelectState);
+    }
     return;
   }
 

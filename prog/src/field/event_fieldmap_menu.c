@@ -756,6 +756,7 @@ static const BOOL FMenuReturnProc_Bag(FMENU_EVENT_WORK* mwk)
     return FALSE;
   case BAG_NEXTPROC_RETURN:      // 通常
     return FALSE;
+  case BAG_NEXTPROC_ITEMEQUIP:  //装備　アイテムリストに戻る
   case BAG_NEXTPROC_HAVE:    // もたせる => ポケモンリスト起動
     {
       PLIST_DATA *plData = GFL_HEAP_AllocMemory( HEAPID_PROC , sizeof(PLIST_DATA) );
@@ -763,7 +764,12 @@ static const BOOL FMenuReturnProc_Bag(FMENU_EVENT_WORK* mwk)
       
       plData->pp = GAMEDATA_GetMyPokemon(gmData);
       plData->ret_sel = 0;
-      plData->mode = PL_MODE_ITEMSET;    //アイテムをセットする呼び出し
+      if(BAG_NEXTPROC_ITEMEQUIP==pBag->ret_code){
+        plData->mode = PL_MODE_ITEMSET_RET;
+      }
+      else{
+        plData->mode = PL_MODE_ITEMSET;    //アイテムをセットする呼び出し
+      }
       plData->item = pBag->ret_item;     //アイテムID
       plData->myitem = pBag->pMyItem;    // アイテムデータ
 

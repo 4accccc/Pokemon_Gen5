@@ -70,6 +70,7 @@ enum BAG_NEXTPROC_ENUM
   BAG_NEXTPROC_EXIT,
   BAG_NEXTPROC_RETURN,
   BAG_NEXTPROC_HAVE,  //もたせる
+  BAG_NEXTPROC_ITEMEQUIP,  //ポケモンリストのアイテム装備に戻る
   BAG_NEXTPROC_EXITEM,
 
 };
@@ -186,10 +187,13 @@ struct _DEBUGITEM_PARAM {
 #define _DISP_INITY (1)
 #define _DISP_SIZEX (12)
 #define _DISP_SIZEY (20)
-#define _BUTTON_WIN_PAL   (12)  // ウインドウ
-#define _BUTTON_MSG_PAL   (11)  // メッセージフォント
 #define _SUBLIST_NORMAL_PAL   (9)   //サブメニューの通常パレット
 #define _SUBLIST_SELECT_PAL   (10)  //サブメニューの選択パレット
+#define _SUBLIST_CANCEL_PAL   (11)  //サブメニューのキャンセルパレット
+#define _BUTTON_MSG_PAL   (12)  // メッセージフォント
+#define _BUTTON_WIN_PAL   (13)  // ウインドウ
+
+#define _PAL_BAG_PARTS_CELL (10)  // バッグのパーツCELLのパレット展開位置
 
 #define	FBMP_COL_WHITE		(15)
 #define WINCLR_COL(col)	(((col)<<4)|(col))

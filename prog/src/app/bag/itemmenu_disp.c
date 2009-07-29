@@ -306,7 +306,7 @@ void ITEMDISP_graphicInit(FIELD_ITEMMENU_WORK* pWork)
 
     //下画面アイコン
     pWork->cellRes[_PLT_BAGPOCKET] = GFL_CLGRP_PLTT_RegisterEx(
-      p_handle , NARC_bag_bag_parts_d_NCLR , CLSYS_DRAW_MAIN , 9*32 , 0 , 2 , pWork->heapID  );
+      p_handle , NARC_bag_bag_parts_d_NCLR , CLSYS_DRAW_MAIN , _PAL_BAG_PARTS_CELL*32 , 0 , 2 , pWork->heapID  );
     
     pWork->cellRes[_NCG_BAGPOCKET] = GFL_CLGRP_CGR_Register(
       p_handle , NARC_bag_bag_parts_d_NCGR , FALSE , CLSYS_DRAW_MAIN , pWork->heapID  );
@@ -845,7 +845,7 @@ void ITEMDISP_scrollCursorMove(FIELD_ITEMMENU_WORK* pWork)
 
 //------------------------------------------------------------------------------
 /**
- * @brief   指しているアイテム番号からるクロールカーソル位置を設定
+ * @brief   指しているアイテム番号からスクロールカーソル位置を設定
  * @retval  none
  */
 //------------------------------------------------------------------------------
