@@ -550,6 +550,35 @@ static void _itemMovePosition(FIELD_ITEMMENU_WORK* pWork)
     _windowRewrite(pWork);
   }
 }
+//------------------------------------------------------------------------------
+/**
+ * @brief   技マシン確認中 はいいえまち
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+
+static void _itemTecniqueUseYesNo(FIELD_ITEMMENU_WORK* pWork)
+{
+  u32 ret = TOUCH_SW_Main( pWork->pTouchSWSys );
+
+  switch(ret){
+  case TOUCH_SW_RET_YES:
+    ITEMDISP_ListPlateClear( pWork );
+    pWork->ret_code = BAG_NEXTPROC_WAZASET;
+    _CHANGE_STATE(pWork,NULL);
+    break;
+  case TOUCH_SW_RET_NO:
+    ITEMDISP_ListPlateClear( pWork );
+    _CHANGE_STATE(pWork,_itemKindSelectMenu);
+    break;
+  default:
+    break;
+  }
+
+
+}
+
+
 
 //------------------------------------------------------------------------------
 /**
@@ -563,12 +592,29 @@ static void _itemTecniqueUseWait(FIELD_ITEMMENU_WORK* pWork)
   if(!ITEMDISP_MessageEndCheck(pWork)){
     return;
   }
+  {
+    TOUCH_SW_PARAM param;
 
-  //@@OO  こみっとするのでとりあえず
+    param.bg_frame = GFL_BG_FRAME3_M;
+    param.char_offs = 12;			// キャラクタ転送オフセット (ｷｬﾗｸﾀ単位 1/32byte)  @@OO VRAM自動に変更予定
+    param.pltt_offs = 2;			// パレット転送オフセット（ﾊﾟﾚｯﾄ1本分単位 1/32byte） ２本分使用するので注意！pltt_offsとpltt_offs+1が潰れます
+    param.x = 26;					// x座標（ｷｬﾗｸﾀ単位）
+    param.y = 6;					// y座標（ｷｬﾗｸﾀ単位）
+    param.kt_st = GFL_APP_KTST_KEY;				// キーorタッチのステータス
+    param.key_pos = 0;			// キーの初期カレント
+    param.type = TOUCH_SW_TYPE_S;				// 表示タイプ(TOUCH_SW_TYPE_S,TOUCH_SW_TYPE_L)
+
+    TOUCH_SW_Init(pWork->pTouchSWSys, &param);
+  }
+  _CHANGE_STATE(pWork,_itemTecniqueUseYesNo);
+
+
+#if 0
   _CHANGE_STATE(pWork,_itemKindSelectMenu);
   ITEMDISP_ListPlateClear( pWork );
   APP_TASKMENU_CloseMenu(pWork->pAppTask);
   pWork->pAppTask=NULL;
+#endif
 }
 
 //------------------------------------------------------------------------------
@@ -1182,6 +1228,8 @@ static GFL_PROC_RESULT FieldItemMenuProc_Init( GFL_PROC * proc, int * seq, void 
 
   pWork->pMsgTcblSys = GFL_TCBL_Init( pWork->heapID , pWork->heapID , 1 , 0 );
 
+  pWork->pTouchSWSys = TOUCH_SW_AllocWork(pWork->heapID);
+  
 	pWork->pocketNameWin = GFL_BMPWIN_Create(
 		GFL_BG_FRAME2_M,
 		_POCKETNAME_DISP_INITX, _POCKETNAME_DISP_INITY,
@@ -1241,6 +1289,8 @@ static GFL_PROC_RESULT FieldItemMenuProc_End( GFL_PROC * proc, int * seq, void *
 
   ITEMDISP_upMessageDelete(pWork);
   ITEMDISP_graphicDelete(pWork);
+
+  TOUCH_SW_FreeWork(pWork->pTouchSWSys);
 
   GFL_TCBL_Exit(pWork->pMsgTcblSys);// = GFL_TCBL_Init( work->heapId , work->heapId , 1 , 0 );
 

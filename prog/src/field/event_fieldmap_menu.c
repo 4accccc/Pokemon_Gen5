@@ -756,6 +756,7 @@ static const BOOL FMenuReturnProc_Bag(FMENU_EVENT_WORK* mwk)
     return FALSE;
   case BAG_NEXTPROC_RETURN:      // 通常
     return FALSE;
+  case BAG_NEXTPROC_WAZASET:
   case BAG_NEXTPROC_ITEMEQUIP:  //装備　アイテムリストに戻る
   case BAG_NEXTPROC_HAVE:    // もたせる => ポケモンリスト起動
     {
@@ -764,7 +765,11 @@ static const BOOL FMenuReturnProc_Bag(FMENU_EVENT_WORK* mwk)
       
       plData->pp = GAMEDATA_GetMyPokemon(gmData);
       plData->ret_sel = 0;
-      if(BAG_NEXTPROC_ITEMEQUIP==pBag->ret_code){
+
+      if(BAG_NEXTPROC_WAZASET == pBag->ret_code){
+        plData->mode = PL_MODE_WAZASET;
+      }
+      else if(BAG_NEXTPROC_ITEMEQUIP==pBag->ret_code){
         plData->mode = PL_MODE_ITEMSET_RET;
       }
       else{

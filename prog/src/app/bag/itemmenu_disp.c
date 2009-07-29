@@ -316,8 +316,6 @@ void ITEMDISP_graphicInit(FIELD_ITEMMENU_WORK* pWork)
     pWork->cellRes[_ANM_BAGPOCKET] = GFL_CLGRP_CELLANIM_Register(
       p_handle, NARC_bag_bag_parts_d_NCER, NARC_bag_bag_parts_d_NANR , pWork->heapID);
 
-
-    
     GFL_ARC_CloseDataHandle(p_handle);
   }
 
@@ -655,6 +653,16 @@ void ITEMDISP_CellResourceCreate( FIELD_ITEMMENU_WORK* pWork )
   int i;
   ARCHANDLE *archandle = GFL_ARC_OpenDataHandle( ARCID_BAG , pWork->heapID );
 
+  //下画面メニューのチェックマーク
+  pWork->cellRes[_PTL_CHECK] = GFL_CLGRP_PLTT_RegisterEx(
+    archandle , NARC_bag_bag_win04_d_NCLR , CLSYS_DRAW_MAIN , _PAL_MENU_CHECKBOX_CELL*32 , 0 , 1 , pWork->heapID  );
+  pWork->cellRes[_NCG_CHECK] = GFL_CLGRP_CGR_Register(
+    archandle , NARC_bag_bag_win04_d_NCGR , FALSE , CLSYS_DRAW_MAIN , pWork->heapID  );
+  pWork->cellRes[_ANM_CHECK] = GFL_CLGRP_CELLANIM_Register(
+    archandle, NARC_bag_bag_win04_d_NCER, NARC_bag_bag_win04_d_NANR , pWork->heapID);
+  
+  //下画面メニューリスト
+  
   pWork->cellRes[_PLT_CUR] = GFL_CLGRP_PLTT_RegisterEx( archandle ,
         NARC_bag_bag_win03_d_NCLR , CLSYS_DRAW_MAIN ,
         0 , 0 , 2 , pWork->heapID  );
@@ -743,7 +751,16 @@ void ITEMDISP_CellCreate( FIELD_ITEMMENU_WORK* pWork )
         pWork->listRes[ i ],pWork->cellRes[_PLT_CUR],  pWork->cellRes[_ANM_LIST],
         &cellInitData ,CLSYS_DEFREND_MAIN , pWork->heapID );
 
+      cellInitData.pos_x -= 3 * 8;
+      cellInitData.anmseq = 1;
+      pWork->listMarkCell[i] = GFL_CLACT_WK_Create(
+        pWork->cellUnit ,
+        pWork->cellRes[_NCG_CHECK],pWork->cellRes[_PTL_CHECK],  pWork->cellRes[_ANM_CHECK],
+        &cellInitData ,CLSYS_DEFREND_MAIN , pWork->heapID );
+
+      
       GFL_CLACT_WK_SetDrawEnable( pWork->listCell[i] , FALSE );
+      GFL_CLACT_WK_SetDrawEnable( pWork->listMarkCell[i] , FALSE );
 
     }
   }
@@ -816,6 +833,12 @@ void ITEMDISP_CellVramTrans( FIELD_ITEMMENU_WORK* pWork )
       dest_adrs += (4)*32;
       GX_LoadOBJ(&charbuff[(12*32)], dest_adrs, (32*4));
       GFL_CLACT_WK_SetDrawEnable( pWork->listCell[i] , pWork->bListEnable[i] );
+      if(pWork->pocketno == BAG_POKE_EVENT){
+        GFL_CLACT_WK_SetDrawEnable( pWork->listMarkCell[i] , pWork->bListEnable[i] );
+      }
+      else{
+        GFL_CLACT_WK_SetDrawEnable( pWork->listMarkCell[i] , FALSE );
+      }
     }
 	}
 }

@@ -23,6 +23,7 @@
 #include "gamesystem/game_data.h"
 #include "system/bmp_winframe.h"
 #include "system/bmp_menulist.h"
+#include "system/touch_subwindow.h"
 
 #include "message.naix"
 #include "msg/msg_d_field.h"
@@ -39,7 +40,7 @@ extern const GFL_PROC_DATA ItemMenuProcData;
 
 
 #define ITEM_LIST_NUM (8)
-#define _CELLUNIT_NUM (22)
+#define _CELLUNIT_NUM (30)
 
 #define _SCROLL_TOP_Y  (8)  //スクロールバーの最初の位置
 #define _SCROLL_BOTTOM_Y  (8*20)  //スクロールバーの最後の位置
@@ -56,8 +57,9 @@ enum _ITEMLISTCELL_RESOURCE
   _ANM_CUR,
   _ANM_LIST,
   _ANM_COMMON,
-
-
+  _PTL_CHECK,
+  _NCG_CHECK,
+  _ANM_CHECK,
   _PLT_BAGPOCKET,  
   _NCG_BAGPOCKET,  
   _ANM_BAGPOCKET,  
@@ -71,6 +73,7 @@ enum BAG_NEXTPROC_ENUM
   BAG_NEXTPROC_RETURN,
   BAG_NEXTPROC_HAVE,  //もたせる
   BAG_NEXTPROC_ITEMEQUIP,  //ポケモンリストのアイテム装備に戻る
+  BAG_NEXTPROC_WAZASET, //技セット
   BAG_NEXTPROC_EXITEM,
 
 };
@@ -124,8 +127,9 @@ struct _DEBUGITEM_PARAM {
 
   u32 listRes[ITEM_LIST_NUM];  //アイテムリスト
   GFL_BMP_DATA* listBmp[ITEM_LIST_NUM];
-  GFL_CLWK  *listCell[ITEM_LIST_NUM];
+  GFL_CLWK  *listCell[ITEM_LIST_NUM];     //アイテムの一覧OBJ
   u32 bListEnable[ITEM_LIST_NUM];
+  GFL_CLWK  *listMarkCell[ITEM_LIST_NUM];  //チェックマーク
   
 	GFL_BUTTON_MAN* pButton;
 	GFL_TCB *g3dVintr; //3D用vIntrTaskハンドル
@@ -139,7 +143,7 @@ struct _DEBUGITEM_PARAM {
   GFL_CLWK  *clwkBarIcon[5];
 	GFL_TCBLSYS *pMsgTcblSys;
   PRINT_STREAM* pStream;
-
+  TOUCH_SW_SYS* pTouchSWSys;
   GFL_BMPWIN* winWaza;
   GFL_BMPWIN* winItemName;
   GFL_BMPWIN* winItemNum;
@@ -196,6 +200,7 @@ struct _DEBUGITEM_PARAM {
 #define _BUTTON_WIN_PAL   (13)  // ウインドウ
 
 #define _PAL_BAG_PARTS_CELL (10)  // バッグのパーツCELLのパレット展開位置
+#define _PAL_MENU_CHECKBOX_CELL (12)  // チェックボックスのパレット展開位置
 
 #define	FBMP_COL_WHITE		(15)
 #define WINCLR_COL(col)	(((col)<<4)|(col))
