@@ -42,6 +42,15 @@ typedef enum{
 
   BTLV_MCSS_POS_MAX,
 
+  BTLV_MCSS_POS_TR_AA = BTLV_MCSS_POS_F + 1,
+  BTLV_MCSS_POS_TR_BB,
+  BTLV_MCSS_POS_TR_A,
+  BTLV_MCSS_POS_TR_B,
+  BTLV_MCSS_POS_TR_C,
+  BTLV_MCSS_POS_TR_D,
+
+  BTLV_MCSS_POS_TOTAL,    //ポケモンとトレーナーをあわせたMAX値
+
   BTLV_MCSS_POS_PAIR_BIT = 0x02,
   BTLV_MCSS_POS_ERROR = 0xff
 }BtlvMcssPos;
@@ -68,7 +77,9 @@ extern  void            BTLV_MCSS_Exit( BTLV_MCSS_WORK *bmw );
 extern  void            BTLV_MCSS_Main( BTLV_MCSS_WORK *bmw );
 extern  void            BTLV_MCSS_Draw( BTLV_MCSS_WORK *bmw );
 extern  void            BTLV_MCSS_Add( BTLV_MCSS_WORK *bmw, const POKEMON_PARAM *pp, int position );
+extern  void            BTLV_MCSS_AddTrainer( BTLV_MCSS_WORK *bmw, int tr_type, int position );
 extern  void            BTLV_MCSS_Del( BTLV_MCSS_WORK *bmw, int position );
+extern  void            BTLV_MCSS_SetPosition( BTLV_MCSS_WORK *bmw, int position, fx32 pos_x, fx32 pos_y, fx32 pos_z );
 extern  void            BTLV_MCSS_SetOrthoMode( BTLV_MCSS_WORK *bmw );
 extern  void            BTLV_MCSS_ResetOrthoMode( BTLV_MCSS_WORK *bmw );
 extern  void            BTLV_MCSS_SetMepachiFlag( BTLV_MCSS_WORK *bmw, int position, int flag );

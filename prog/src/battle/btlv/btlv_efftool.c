@@ -161,13 +161,11 @@ BOOL	BTLV_EFFTOOL_CalcParam( EFFTOOL_MOVE_WORK *emw, VecFx32 *now_value )
  *	@retval	•ÏŠ·‚µ‚½ƒrƒbƒg
  */
 //============================================================================================
-u8	BTLV_EFFTOOL_Pos2Bit( BtlvMcssPos pos )
+u32	BTLV_EFFTOOL_Pos2Bit( BtlvMcssPos pos )
 {
-	static	u8 bit_table[ BTLV_MCSS_POS_MAX ] = { 0x01, 0x02, 0x04, 0x08, 0x10, 0x20, 0x40, 0x80 };
+	GF_ASSERT( pos < BTLV_MCSS_POS_TOTAL );
 
-	GF_ASSERT( pos < BTLV_MCSS_POS_MAX );
-
-	return bit_table[ pos ];
+	return ( 1 << pos );
 }
 
 //============================================================================================

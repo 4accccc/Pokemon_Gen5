@@ -23,7 +23,7 @@
  */
 //============================================================================================
 
-#define BTLV_MCSS_MAX ( 6 ) //BTLV_MCSSで管理するMCSSのMAX値
+#define BTLV_MCSS_MAX ( BTLV_MCSS_POS_TOTAL ) //BTLV_MCSSで管理するMCSSのMAX値
 
 #define BTLV_MCSS_DEFAULT_SHIFT ( FX32_SHIFT - 4 )          //ポリゴン１辺の基準の長さにするシフト値
 #define BTLV_MCSS_DEFAULT_LINE  ( 1 << BTLV_MCSS_DEFAULT_SHIFT )  //ポリゴン１辺の基準の長さ
@@ -38,17 +38,17 @@ struct _BTLV_MCSS_WORK
 {
   GFL_TCBSYS*     tcb_sys;
   MCSS_SYS_WORK*  mcss_sys;
-  MCSS_WORK*      mcss[ BTLV_MCSS_POS_MAX ];
-  int             callback_count[ BTLV_MCSS_POS_MAX ];    //コールバックが呼ばれた回数をカウント
+  MCSS_WORK*      mcss[ BTLV_MCSS_MAX ];
+  int             callback_count[ BTLV_MCSS_MAX ];    //コールバックが呼ばれた回数をカウント
 
   u8              poke_mcss_proj_mode   :1;
   u8                                    :7;
-  u8              poke_mcss_tcb_move_execute;
-  u8              poke_mcss_tcb_scale_execute;
-  u8              poke_mcss_tcb_rotate_execute;
+  u32             poke_mcss_tcb_move_execute;
+  u32             poke_mcss_tcb_scale_execute;
+  u32             poke_mcss_tcb_rotate_execute;
 
-  u8              poke_mcss_tcb_blink_execute;
-  u8              poke_mcss_tcb_alpha_execute;
+  u32             poke_mcss_tcb_blink_execute;
+  u32             poke_mcss_tcb_alpha_execute;
   HEAPID          heapID;
 };
 
@@ -76,7 +76,8 @@ typedef struct
  */
 //============================================================================================
 
-static  void  BTLV_MCSS_MakeMAW( const POKEMON_PARAM *pp, MCSS_ADD_WORK *maw, int position );
+static  void  BTLV_MCSS_MakeMAW( const POKEMON_PARAM *pp, MCSS_ADD_WORK* maw, int position );
+static  void  BTLV_MCSS_MakeMAWTrainer( int tr_type, MCSS_ADD_WORK* maw, int position );
 static  void  BTLV_MCSS_SetDefaultScale( BTLV_MCSS_WORK *bmw, int position );
 
 static  void  BTLV_MCSS_TCBInitialize( BTLV_MCSS_WORK *bmw, int position, int type, VecFx32 *start, VecFx32 *end,
@@ -121,6 +122,12 @@ static  const VecFx32 poke_pos_table[]={
   { FX_F32_TO_FX32(  2.0f - 4.964f ), FX_F32_TO_FX32( 0.7f ), FX_F32_TO_FX32( -11.0f ) },   //POS_D
   { FX_F32_TO_FX32( -2.5f + 3.845f ), FX_F32_TO_FX32( 0.7f ), FX_F32_TO_FX32(  10.0f ) },   //POS_E
   { FX_F32_TO_FX32(  4.5f - 4.964f ), FX_F32_TO_FX32( 0.7f ), FX_F32_TO_FX32( -10.0f ) },   //POS_F
+  { FX_F32_TO_FX32( -2.5f + 3.000f ), FX_F32_TO_FX32( 0.0f ), FX_F32_TO_FX32(   7.5f - 0.5f ) },    //POS_TR_AA
+  { FX_F32_TO_FX32(  4.5f - 4.200f ), FX_F32_TO_FX32( 0.0f ), FX_F32_TO_FX32( -25.0f ) },   //POS_TR_BB
+  { FX_F32_TO_FX32( -3.5f + 3.500f ), FX_F32_TO_FX32( 0.0f ), FX_F32_TO_FX32(   8.5f ) },   //POS_TR_A
+  { FX_F32_TO_FX32(  6.0f - 4.200f ), FX_F32_TO_FX32( 0.0f ), FX_F32_TO_FX32(  -9.0f ) },   //POS_TR_B
+  { FX_F32_TO_FX32( -0.5f + 3.845f ), FX_F32_TO_FX32( 0.0f ), FX_F32_TO_FX32(   9.0f ) },   //POS_TR_C
+  { FX_F32_TO_FX32(  2.0f - 4.964f ), FX_F32_TO_FX32( 0.0f ), FX_F32_TO_FX32( -11.0f ) },   //POS_TR_D
 };
 
 //============================================================================================
@@ -128,7 +135,7 @@ static  const VecFx32 poke_pos_table[]={
  *  ポケモンの立ち位置によるスケール補正テーブル
  */
 //============================================================================================
-static  const fx32  poke_scale_table[ 2 ][ BTLV_MCSS_POS_MAX ]={
+static  const fx32  poke_scale_table[ 2 ][ BTLV_MCSS_POS_TOTAL ]={
   {
     0x1030,   //POS_AA
     0x119b,   //POS_BB
@@ -138,8 +145,20 @@ static  const fx32  poke_scale_table[ 2 ][ BTLV_MCSS_POS_MAX ]={
     0x1320,   //POS_D
     0x1000 * 2, //POS_E
     0x1000,   //POS_F
+    0x1030,   //POS_TR_AA
+    0x119b,   //POS_TR_BB
+    0x0f00,   //POS_TR_A
+    0x10e0,   //POS_TR_B
+    0x0d00,   //POS_TR_C
+    0x1320,   //POS_TR_D
   },
   {
+    FX32_ONE * 16 * 2,
+    FX32_ONE * 16,
+    FX32_ONE * 16 * 2,
+    FX32_ONE * 16,
+    FX32_ONE * 16 * 2,
+    FX32_ONE * 16,
     FX32_ONE * 16 * 2,
     FX32_ONE * 16,
     FX32_ONE * 16 * 2,
@@ -153,7 +172,7 @@ static  const fx32  poke_scale_table[ 2 ][ BTLV_MCSS_POS_MAX ]={
 
 //============================================================================================
 /**
- *  システム初期化
+ * @brief システム初期化
  *
  * @param[in] tcb_sys システム内で使用するTCBSYS構造体へのポインタ
  * @param[in] heapID  ヒープID
@@ -171,7 +190,7 @@ BTLV_MCSS_WORK  *BTLV_MCSS_Init( GFL_TCBSYS *tcb_sys, HEAPID heapID )
 
 //============================================================================================
 /**
- *  システム終了
+ * @brief システム終了
  *
  * @param[in] bmw BTLV_MCSS管理ワークへのポインタ
  */
@@ -184,7 +203,7 @@ void  BTLV_MCSS_Exit( BTLV_MCSS_WORK *bmw )
 
 //============================================================================================
 /**
- *  システムメイン
+ * @brief システムメイン
  *
  * @param[in] bmw BTLV_MCSS管理ワークへのポインタ
  */
@@ -196,7 +215,7 @@ void  BTLV_MCSS_Main( BTLV_MCSS_WORK *bmw )
 
 //============================================================================================
 /**
- *  描画
+ * @brief 描画
  *
  * @param[in] bmw BTLV_MCSS管理ワークへのポインタ
  */
@@ -208,7 +227,7 @@ void  BTLV_MCSS_Draw( BTLV_MCSS_WORK *bmw )
 
 //============================================================================================
 /**
- *  BTLV_MCSS追加
+ * @brief BTLV_MCSS追加
  *
  * @param[in] bmw     BTLV_MCSS管理ワークへのポインタ
  * @param[in] pp      POKEMON_PARAM構造体へのポインタ
@@ -219,7 +238,7 @@ void  BTLV_MCSS_Add( BTLV_MCSS_WORK *bmw, const POKEMON_PARAM *pp, int position 
 {
   MCSS_ADD_WORK maw;
 
-  GF_ASSERT( position < BTLV_MCSS_POS_MAX );
+  GF_ASSERT( position < BTLV_MCSS_POS_TOTAL );
   GF_ASSERT_MSG( bmw->mcss[ position ] == NULL, "pos=%d", position );
 
   BTLV_MCSS_MakeMAW( pp, &maw, position );
@@ -236,7 +255,35 @@ void  BTLV_MCSS_Add( BTLV_MCSS_WORK *bmw, const POKEMON_PARAM *pp, int position 
 
 //============================================================================================
 /**
- *  BTLV_MCSS削除
+ * @brief BTLV_MCSS追加
+ *
+ * @param[in] bmw     BTLV_MCSS管理ワークへのポインタ
+ * @param[in] pp      POKEMON_PARAM構造体へのポインタ
+ * @param[in] position  ポケモンの立ち位置
+ */
+//============================================================================================
+void  BTLV_MCSS_AddTrainer( BTLV_MCSS_WORK *bmw, int tr_type, int position )
+{
+  MCSS_ADD_WORK maw;
+
+  GF_ASSERT( position < BTLV_MCSS_POS_TOTAL );
+  GF_ASSERT_MSG( bmw->mcss[ position ] == NULL, "pos=%d", position );
+
+  BTLV_MCSS_MakeMAWTrainer( tr_type, &maw, position );
+  bmw->mcss[ position ] = MCSS_Add( bmw->mcss_sys,
+                    poke_pos_table[ position ].x,
+                    poke_pos_table[ position ].y,
+                    poke_pos_table[ position ].z,
+                    &maw );
+
+  BTLV_MCSS_SetDefaultScale( bmw, position );
+
+  MCSS_SetAnimCtrlCallBack( bmw->mcss[ position ], position, BTLV_MCSS_CallBackFunctorFrame, 1 );
+}
+
+//============================================================================================
+/**
+ * @brief BTLV_MCSS削除
  *
  * @param[in] bmw     BTLV_MCSS管理ワークへのポインタ
  * @param[in] position  ポケモンの立ち位置
@@ -250,7 +297,29 @@ void  BTLV_MCSS_Del( BTLV_MCSS_WORK *bmw, int position )
 
 //============================================================================================
 /**
- *  正射影描画モードON
+ * @brief 座標セット
+ *
+ * @param[in] bmw       BTLV_MCSS管理ワークへのポインタ
+ * @param[in] position  座標セットするMCSSの立ち位置
+ * @param[in] pos_x     X座標
+ * @param[in] pos_y     Y座標
+ * @param[in] pos_z     Z座標
+ */
+//============================================================================================
+void  BTLV_MCSS_SetPosition( BTLV_MCSS_WORK *bmw, int position, fx32 pos_x, fx32 pos_y, fx32 pos_z )
+{ 
+  VecFx32 pos;
+
+  pos.x = pos_x;
+  pos.y = pos_y;
+  pos.z = pos_z;
+
+  MCSS_SetPosition( bmw->mcss[ position ], &pos );
+}
+
+//============================================================================================
+/**
+ * @brief 正射影描画モードON
  *
  * @param[in] bmw     BTLV_MCSS管理ワークへのポインタ
  */
@@ -263,7 +332,7 @@ void  BTLV_MCSS_SetOrthoMode( BTLV_MCSS_WORK *bmw )
 
   bmw->poke_mcss_proj_mode = BTLV_MCSS_PROJ_ORTHO;
 
-  for( position = 0 ; position < BTLV_MCSS_POS_MAX ; position++ ){
+  for( position = 0 ; position < BTLV_MCSS_POS_TOTAL ; position++ ){
     if( bmw->mcss[ position ] ){
       BTLV_MCSS_SetDefaultScale( bmw, position );
     }
@@ -272,7 +341,7 @@ void  BTLV_MCSS_SetOrthoMode( BTLV_MCSS_WORK *bmw )
 
 //============================================================================================
 /**
- *  正射影描画モードOFF
+ * @brief 正射影描画モードOFF
  *
  * @param[in] bmw     BTLV_MCSS管理ワークへのポインタ
  */
@@ -285,7 +354,7 @@ void  BTLV_MCSS_ResetOrthoMode( BTLV_MCSS_WORK *bmw )
 
   bmw->poke_mcss_proj_mode = BTLV_MCSS_PROJ_PERSPECTIVE;
 
-  for( position = 0 ; position < BTLV_MCSS_POS_MAX ; position++ ){
+  for( position = 0 ; position < BTLV_MCSS_POS_TOTAL ; position++ ){
     if( bmw->mcss[ position ] ){
       BTLV_MCSS_SetDefaultScale( bmw, position );
     }
@@ -294,7 +363,7 @@ void  BTLV_MCSS_ResetOrthoMode( BTLV_MCSS_WORK *bmw )
 
 //============================================================================================
 /**
- *  メパチ処理
+ * @brief メパチ処理
  *
  * @param[in] bmw     BTLV_MCSS管理ワークへのポインタ
  * @param[in] position  メパチさせたいポケモンの立ち位置
@@ -317,7 +386,7 @@ void  BTLV_MCSS_SetMepachiFlag( BTLV_MCSS_WORK *bmw, int position, int flag )
 
 //============================================================================================
 /**
- *  アニメストップ処理
+ * @brief アニメストップ処理
  *
  * @param[in] bmw     BTLV_MCSS管理ワークへのポインタ
  * @param[in] position  アニメストップさせたいポケモンの立ち位置
@@ -337,7 +406,7 @@ void  BTLV_MCSS_SetAnmStopFlag( BTLV_MCSS_WORK *bmw, int position, int flag )
 
 //============================================================================================
 /**
- *  バニッシュフラグ取得
+ * @brief バニッシュフラグ取得
  *
  * @param[in] bmw     BTLV_MCSS管理ワークへのポインタ
  * @param[in] position  フラグ操作させたいポケモンの立ち位置
@@ -351,7 +420,7 @@ int   BTLV_MCSS_GetVanishFlag( BTLV_MCSS_WORK *bmw, int position )
 
 //============================================================================================
 /**
- *  バニッシュ処理
+ * @brief バニッシュ処理
  *
  * @param[in] bmw     BTLV_MCSS管理ワークへのポインタ
  * @param[in] position  フラグ操作させたいポケモンの立ち位置
@@ -374,7 +443,7 @@ void  BTLV_MCSS_SetVanishFlag( BTLV_MCSS_WORK *bmw, int position, int flag )
 
 //============================================================================================
 /**
- *  ポケモンの初期立ち位置を取得
+ * @brief ポケモンの初期立ち位置を取得
  *
  * @param[out]  pos     初期立ち位置を格納するワークへのポインタ
  * @param[in] position  取得するポケモンの立ち位置
@@ -389,7 +458,7 @@ void  BTLV_MCSS_GetPokeDefaultPos( VecFx32 *pos, int position )
 
 //============================================================================================
 /**
- *  ポケモンの初期拡縮率を取得
+ * @brief ポケモンの初期拡縮率を取得
  *
  * @param[in] position  取得するポケモンの立ち位置
  */
@@ -401,7 +470,7 @@ fx32  BTLV_MCSS_GetPokeDefaultScale( BTLV_MCSS_WORK *bmw, int position )
 
 //============================================================================================
 /**
- *  ポケモンの初期拡縮率を取得
+ * @brief ポケモンの初期拡縮率を取得
  *
  * @param[in] position  取得するポケモンの立ち位置
  * @param[in] proj      取得する射影方法
@@ -414,7 +483,7 @@ fx32  BTLV_MCSS_GetPokeDefaultScaleEx( BTLV_MCSS_WORK *bmw, int position, BTLV_M
 
 //============================================================================================
 /**
- *  ポケモンのスケール値を取得
+ * @brief ポケモンのスケール値を取得
  *
  * @param[in] bmw     BTLV_MCSS管理ワークへのポインタ
  * @param[in] position  取得するポケモンの立ち位置
@@ -428,7 +497,7 @@ void  BTLV_MCSS_GetScale( BTLV_MCSS_WORK *bmw, int position, VecFx32 *scale )
 
 //============================================================================================
 /**
- *  ポケモンのスケール値を格納
+ * @brief ポケモンのスケール値を格納
  *
  * @param[in] bmw     BTLV_MCSS管理ワークへのポインタ
  * @param[in] position  格納するポケモンの立ち位置
@@ -444,7 +513,7 @@ void  BTLV_MCSS_SetScale( BTLV_MCSS_WORK *bmw, int position, VecFx32 *scale )
 
 //============================================================================================
 /**
- *  ポケモン移動
+ * @brief ポケモン移動
  *
  * @param[in] bmw     BTLV_MCSS管理ワークへのポインタ
  * @param[in] position  移動するポケモンの立ち位置
@@ -462,13 +531,21 @@ void  BTLV_MCSS_MovePosition( BTLV_MCSS_WORK *bmw, int position, int type, VecFx
   VecFx32 start;
 
   MCSS_GetPosition( bmw->mcss[ position ], &start );
+  //移動の補間は相対指定とする
+  if( type == EFFTOOL_CALCTYPE_INTERPOLATION )
+  { 
+    pos->x += start.x;
+    pos->y += start.y;
+    pos->z += start.z;
+
+  }
   BTLV_MCSS_TCBInitialize( bmw, position, type, &start, pos, frame, wait, count, TCB_BTLV_MCSS_Move );
   bmw->poke_mcss_tcb_move_execute |= BTLV_EFFTOOL_Pos2Bit( position );
 }
 
 //============================================================================================
 /**
- *  ポケモン拡縮
+ * @brief ポケモン拡縮
  *
  * @param[in] bmw     BTLV_MCSS管理ワークへのポインタ
  * @param[in] position  拡縮するポケモンの立ち位置
@@ -492,7 +569,7 @@ void  BTLV_MCSS_MoveScale( BTLV_MCSS_WORK *bmw, int position, int type, VecFx32 
 
 //============================================================================================
 /**
- *  ポケモン回転
+ * @brief ポケモン回転
  *
  * @param[in] bmw     BTLV_MCSS管理ワークへのポインタ
  * @param[in] position  回転するポケモンの立ち位置
@@ -516,7 +593,7 @@ void  BTLV_MCSS_MoveRotate( BTLV_MCSS_WORK *bmw, int position, int type, VecFx32
 
 //============================================================================================
 /**
- *  ポケモンまばたき
+ * @brief ポケモンまばたき
  *
  * @param[in] bmw     BTLV_MCSS管理ワークへのポインタ
  * @param[in] position  まばたきるポケモンの立ち位置
@@ -552,7 +629,7 @@ void  BTLV_MCSS_MoveBlink( BTLV_MCSS_WORK *bmw, int position, int type, int wait
 
 //============================================================================================
 /**
- *  ポケモンα値
+ * @brief ポケモンα値
  *
  * @param[in] bmw       BTLV_MCSS管理ワークへのポインタ
  * @param[in] position  α値セットするポケモンの立ち位置
@@ -581,7 +658,7 @@ void  BTLV_MCSS_MoveAlpha( BTLV_MCSS_WORK *bmw, int position, int type, int alph
 }
 //============================================================================================
 /**
- *  タスクが起動中かチェック
+ * @brief タスクが起動中かチェック
  *
  * @param[in] bmw     BTLV_MCSS管理ワークへのポインタ
  * @param[in] position  ポケモンの立ち位置
@@ -608,7 +685,7 @@ BOOL  BTLV_MCSS_CheckTCBExecute( BTLV_MCSS_WORK *bmw, int position )
 
 //============================================================================================
 /**
- *  指定された立ち位置のポケモンが存在するかチェック
+ * @brief 指定された立ち位置のポケモンが存在するかチェック
  *
  * @param[in] bmw     BTLV_MCSS管理ワークへのポインタ
  * @param[in] position  ポケモンの立ち位置
@@ -623,7 +700,7 @@ BOOL  BTLV_MCSS_CheckExistPokemon( BTLV_MCSS_WORK *bmw, int position )
 
 //============================================================================================
 /**
- *  指定された立ち位置のポケモンにパレットフェードをセットする
+ * @brief 指定された立ち位置のポケモンにパレットフェードをセットする
  *
  * @param[in] bmw       BTLV_MCSS管理ワークへのポインタ
  * @param[in] position  ポケモンの立ち位置
@@ -641,7 +718,7 @@ void  BTLV_MCSS_SetPaletteFade( BTLV_MCSS_WORK *bmw, int position, u8 start_evy,
 
 //============================================================================================
 /**
- *  POKEMON_PARAMからMCSS_ADD_WORKを生成する
+ * @brief POKEMON_PARAMからMCSS_ADD_WORKを生成する
  *
  * @param[in] pp      POKEMON_PARAM構造体へのポインタ
  * @param[out]  maw     MCSS_ADD_WORKワークへのポインタ
@@ -657,14 +734,30 @@ static  void  BTLV_MCSS_MakeMAW( const POKEMON_PARAM *pp, MCSS_ADD_WORK *maw, in
 
 //============================================================================================
 /**
- *  ポケモンデフォルトスケールセット
+ * @brief tr_typeからMCSS_ADD_WORKを生成する
+ *
+ * @param[in]   pp      POKEMON_PARAM構造体へのポインタ
+ * @param[out]  maw     MCSS_ADD_WORKワークへのポインタ
+ * @param[in]   position  ポケモンの立ち位置
+ */
+//============================================================================================
+static  void  BTLV_MCSS_MakeMAWTrainer( int tr_type, MCSS_ADD_WORK* maw, int position )
+{ 
+  int dir = ( ( position & 1 ) ) ? MCSS_DIR_FRONT : MCSS_DIR_BACK;
+
+  MCSS_TOOL_MakeMAWTrainer( tr_type, maw, dir );
+}
+
+//============================================================================================
+/**
+ * @brief ポケモンデフォルトスケールセット
  */
 //============================================================================================
 static  void  BTLV_MCSS_SetDefaultScale( BTLV_MCSS_WORK *bmw, int position )
 {
   VecFx32     scale;
 
-  GF_ASSERT( position < BTLV_MCSS_POS_MAX );
+  GF_ASSERT( position < BTLV_MCSS_POS_TOTAL );
   GF_ASSERT( bmw->mcss[ position ] );
 
   VEC_Set( &scale,
@@ -684,7 +777,7 @@ static  void  BTLV_MCSS_SetDefaultScale( BTLV_MCSS_WORK *bmw, int position )
 
 //============================================================================================
 /**
- *  ポケモン操作系タスク初期化処理
+ * @brief ポケモン操作系タスク初期化処理
  */
 //============================================================================================
 static  void  BTLV_MCSS_TCBInitialize( BTLV_MCSS_WORK *bmw, int position, int type, VecFx32 *start, VecFx32 *end, int frame, int wait, int count, GFL_TCB_FUNC *func )
@@ -726,7 +819,7 @@ static  void  BTLV_MCSS_TCBInitialize( BTLV_MCSS_WORK *bmw, int position, int ty
 
 //============================================================================================
 /**
- *  ポケモン移動タスク
+ * @brief ポケモン移動タスク
  */
 //============================================================================================
 static  void  TCB_BTLV_MCSS_Move( GFL_TCB *tcb, void *work )
@@ -740,7 +833,7 @@ static  void  TCB_BTLV_MCSS_Move( GFL_TCB *tcb, void *work )
   ret = BTLV_EFFTOOL_CalcParam( &pmtw->emw, &now_pos );
   MCSS_SetPosition( bmw->mcss[ pmtw->position ], &now_pos );
   if( ret == TRUE ){
-    bmw->poke_mcss_tcb_move_execute &= ( BTLV_EFFTOOL_Pos2Bit( pmtw->position ) ^ 0xff );
+    bmw->poke_mcss_tcb_move_execute &= ( BTLV_EFFTOOL_Pos2Bit( pmtw->position ) ^ BTLV_EFFTOOL_POS2BIT_XOR );
     GFL_HEAP_FreeMemory( work );
     GFL_TCB_DeleteTask( tcb );
   }
@@ -748,7 +841,7 @@ static  void  TCB_BTLV_MCSS_Move( GFL_TCB *tcb, void *work )
 
 //============================================================================================
 /**
- *  ポケモン拡縮タスク
+ * @brief ポケモン拡縮タスク
  */
 //============================================================================================
 static  void  TCB_BTLV_MCSS_Scale( GFL_TCB *tcb, void *work )
@@ -762,7 +855,7 @@ static  void  TCB_BTLV_MCSS_Scale( GFL_TCB *tcb, void *work )
   ret = BTLV_EFFTOOL_CalcParam( &pmtw->emw, &now_scale );
   MCSS_SetOfsScale( bmw->mcss[ pmtw->position ], &now_scale );
   if( ret == TRUE ){
-    bmw->poke_mcss_tcb_scale_execute &= ( BTLV_EFFTOOL_Pos2Bit( pmtw->position ) ^ 0xff );
+    bmw->poke_mcss_tcb_scale_execute &= ( BTLV_EFFTOOL_Pos2Bit( pmtw->position ) ^ BTLV_EFFTOOL_POS2BIT_XOR );
     GFL_HEAP_FreeMemory( work );
     GFL_TCB_DeleteTask( tcb );
   }
@@ -770,7 +863,7 @@ static  void  TCB_BTLV_MCSS_Scale( GFL_TCB *tcb, void *work )
 
 //============================================================================================
 /**
- *  ポケモン回転タスク
+ * @brief ポケモン回転タスク
  */
 //============================================================================================
 static  void  TCB_BTLV_MCSS_Rotate( GFL_TCB *tcb, void *work )
@@ -784,7 +877,7 @@ static  void  TCB_BTLV_MCSS_Rotate( GFL_TCB *tcb, void *work )
   ret = BTLV_EFFTOOL_CalcParam( &pmtw->emw, &now_rotate );
   MCSS_SetRotate( bmw->mcss[ pmtw->position ], &now_rotate );
   if( ret == TRUE ){
-    bmw->poke_mcss_tcb_rotate_execute &= ( BTLV_EFFTOOL_Pos2Bit( pmtw->position ) ^ 0xff );
+    bmw->poke_mcss_tcb_rotate_execute &= ( BTLV_EFFTOOL_Pos2Bit( pmtw->position ) ^ BTLV_EFFTOOL_POS2BIT_XOR );
     GFL_HEAP_FreeMemory( work );
     GFL_TCB_DeleteTask( tcb );
   }
@@ -792,7 +885,7 @@ static  void  TCB_BTLV_MCSS_Rotate( GFL_TCB *tcb, void *work )
 
 //============================================================================================
 /**
- *  ポケモンまばたきタスク
+ * @brief ポケモンまばたきタスク
  */
 //============================================================================================
 static  void  TCB_BTLV_MCSS_Blink( GFL_TCB *tcb, void *work )
@@ -804,7 +897,7 @@ static  void  TCB_BTLV_MCSS_Blink( GFL_TCB *tcb, void *work )
     pmtw->emw.wait = pmtw->emw.wait_tmp;
     BTLV_MCSS_SetMepachiFlag( pmtw->bmw, pmtw->position, BTLV_MCSS_MEPACHI_FLIP );
     if( --pmtw->emw.count == 0 ){
-      bmw->poke_mcss_tcb_blink_execute &= ( BTLV_EFFTOOL_Pos2Bit( pmtw->position ) ^ 0xff );
+      bmw->poke_mcss_tcb_blink_execute &= ( BTLV_EFFTOOL_Pos2Bit( pmtw->position ) ^ BTLV_EFFTOOL_POS2BIT_XOR );
       GFL_HEAP_FreeMemory( work );
       GFL_TCB_DeleteTask( tcb );
     }
@@ -816,7 +909,7 @@ static  void  TCB_BTLV_MCSS_Blink( GFL_TCB *tcb, void *work )
 
 //============================================================================================
 /**
- *  ポケモンα値タスク
+ * @brief ポケモンα値タスク
  */
 //============================================================================================
 static  void  TCB_BTLV_MCSS_Alpha( GFL_TCB *tcb, void *work )
@@ -832,7 +925,7 @@ static  void  TCB_BTLV_MCSS_Alpha( GFL_TCB *tcb, void *work )
   ret = BTLV_EFFTOOL_CalcParam( &pmtw->emw, &now_alpha );
   MCSS_SetAlpha( bmw->mcss[ pmtw->position ], now_alpha.x );
   if( ret == TRUE ){
-    bmw->poke_mcss_tcb_alpha_execute &= ( BTLV_EFFTOOL_Pos2Bit( pmtw->position ) ^ 0xff );
+    bmw->poke_mcss_tcb_alpha_execute &= ( BTLV_EFFTOOL_Pos2Bit( pmtw->position ) ^ BTLV_EFFTOOL_POS2BIT_XOR );
     GFL_HEAP_FreeMemory( work );
     GFL_TCB_DeleteTask( tcb );
   }
@@ -840,7 +933,7 @@ static  void  TCB_BTLV_MCSS_Alpha( GFL_TCB *tcb, void *work )
 
 //============================================================================================
 /**
- *  指定したフレームで呼ばれるコールバック関数
+ * @brief 指定したフレームで呼ばれるコールバック関数
  */
 //============================================================================================
 static  void  BTLV_MCSS_CallBackFunctorFrame( u32 data, fx32 currentFrame )
@@ -853,7 +946,7 @@ static  void  BTLV_MCSS_CallBackFunctorFrame( u32 data, fx32 currentFrame )
 #ifdef PM_DEBUG
 //============================================================================================
 /**
- *  BTLV_MCSS追加（デバッグ用）
+ * @brief BTLV_MCSS追加（デバッグ用）
  *
  * @param[in] bmw     BTLV_MCSS管理ワークへのポインタ
  * @param[in] madw    MCSS_ADD_DEBUG_WORK構造体へのポインタ
@@ -862,7 +955,7 @@ static  void  BTLV_MCSS_CallBackFunctorFrame( u32 data, fx32 currentFrame )
 //============================================================================================
 void  BTLV_MCSS_AddDebug( BTLV_MCSS_WORK *bmw, const MCSS_ADD_DEBUG_WORK *madw, int position )
 {
-  GF_ASSERT( position < BTLV_MCSS_POS_MAX );
+  GF_ASSERT( position < BTLV_MCSS_POS_TOTAL );
   if( bmw->mcss[ position ] ){
     BTLV_MCSS_Del( bmw, position );
   }

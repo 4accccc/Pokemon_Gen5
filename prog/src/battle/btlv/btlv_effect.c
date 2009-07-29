@@ -53,6 +53,7 @@ struct _BTLV_EFFECT_WORK
   BTLV_CAMERA_WORK  *bcw;
   BTLV_CLACT_WORK   *bclw;
   BTLV_GAUGE_WORK   *bgw;
+  BTLV_BALL_GAUGE_WORK *bbgw[ BTLV_BALL_GAUGE_TYPE_MAX ];
   GFL_TCB           *v_tcb;
   int               execute_flag;
   HEAPID            heapID;
@@ -350,10 +351,10 @@ BOOL  BTLV_EFFECT_CheckExistPokemon( int position )
  * @param[in] pos_y     セットするトレーナーのY座標（０で立ち位置のY座標を代入）
  */
 //============================================================================================
-void  BTLV_EFFECT_SetTrainer( int trtype, int position, int pos_x, int pos_y )
+void  BTLV_EFFECT_SetTrainer( int trtype, int position, int pos_x, int pos_y, int pos_z )
 {
-  GF_ASSERT( position < BTLV_MCSS_POS_MAX );
-  GF_ASSERT( bew->trainer_index[ position ] == BTLV_EFFECT_TRAINER_INDEX_NONE );
+  GF_ASSERT( ( position - BTLV_MCSS_POS_MAX ) < BTLV_MCSS_POS_MAX );
+  GF_ASSERT( bew->trainer_index[ position - BTLV_MCSS_POS_MAX ] == BTLV_EFFECT_TRAINER_INDEX_NONE );
 
 #if 0
   if( pos_x == 0 )
@@ -363,8 +364,21 @@ void  BTLV_EFFECT_SetTrainer( int trtype, int position, int pos_x, int pos_y )
   {
   }
 #endif
-
-  bew->trainer_index[ position ] = BTLV_CLACT_Add( bew->bclw, ARCID_TRGRA, trtype * 4, pos_x, pos_y );
+  if( position & 1 )
+  { 
+    BTLV_MCSS_AddTrainer( bew->bmw, trtype, position );
+    if( ( pos_x != 0 ) || ( pos_y != 0 ) || ( pos_z != 0 ) )
+    { 
+      BTLV_MCSS_SetPosition( bew->bmw, position, pos_x, pos_y, pos_z );
+    }
+    bew->trainer_index[ position - BTLV_MCSS_POS_MAX ] = position;
+  }
+  else
+  {
+    pos_x = pos_x >> FX32_SHIFT;
+    pos_y = pos_y >> FX32_SHIFT;
+    bew->trainer_index[ position - BTLV_MCSS_POS_MAX ] = BTLV_CLACT_Add( bew->bclw, ARCID_TRGRA, trtype * 4, pos_x, pos_y );
+  }
 }
 
 //============================================================================================
@@ -376,11 +390,19 @@ void  BTLV_EFFECT_SetTrainer( int trtype, int position, int pos_x, int pos_y )
 //============================================================================================
 void  BTLV_EFFECT_DelTrainer( int position )
 {
-  GF_ASSERT( position < BTLV_MCSS_POS_MAX );
-  GF_ASSERT_MSG( bew->trainer_index[ position ] != BTLV_EFFECT_TRAINER_INDEX_NONE, "pos=%d", position );
+  GF_ASSERT( position - BTLV_MCSS_POS_MAX < BTLV_MCSS_POS_MAX );
+  GF_ASSERT_MSG( bew->trainer_index[ position - BTLV_MCSS_POS_MAX ] != BTLV_EFFECT_TRAINER_INDEX_NONE, "pos=%d", position );
 
-  BTLV_CLACT_Delete( bew->bclw, bew->trainer_index[ position ] );
-  bew->trainer_index[ position ] = BTLV_EFFECT_TRAINER_INDEX_NONE;
+  if( position & 1 )
+  { 
+    BTLV_MCSS_Del( bew->bmw, position );
+    bew->trainer_index[ position - BTLV_MCSS_POS_MAX ] = BTLV_EFFECT_TRAINER_INDEX_NONE;
+  }
+  else
+  { 
+    BTLV_CLACT_Delete( bew->bclw, bew->trainer_index[ position - BTLV_MCSS_POS_MAX ] );
+    bew->trainer_index[ position - BTLV_MCSS_POS_MAX ] = BTLV_EFFECT_TRAINER_INDEX_NONE;
+  }
 }
 
 //============================================================================================
@@ -428,6 +450,40 @@ void  BTLV_EFFECT_CalcGauge( int position, int value )
 BOOL  BTLV_EFFECT_CheckExecuteGauge( void )
 {
   return BTLV_GAUGE_CheckExecute( bew->bgw );
+}
+
+//============================================================================================
+/**
+ * @brief  指定された位置にボールゲージをセット
+ *
+ * @param[in] bbgp  ボールゲージ用初期化パラメータ
+ */
+//============================================================================================
+void  BTLV_EFFECT_SetBallGauge( const BTLV_BALL_GAUGE_PARAM* bbgp )
+{
+  bew->bbgw[ bbgp->type ] = BTLV_BALL_GAUGE_Create( bbgp, bew->heapID );
+}
+
+//============================================================================================
+/**
+ * @brief  指定された位置のボールゲージを削除
+ *
+ * @param[in] type  削除するゲージタイプ
+ */
+//============================================================================================
+void  BTLV_EFFECT_DelBallGauge( BTLV_BALL_GAUGE_TYPE type )
+{
+  BTLV_BALL_GAUGE_Delete( bew->bbgw[ type ] );
+}
+
+//============================================================================================
+/**
+ * @brief  ゲージが計算中かチェック
+ */
+//============================================================================================
+BOOL  BTLV_EFFECT_CheckExecuteBallGauge( BTLV_BALL_GAUGE_TYPE type )
+{
+  return BTLV_BALL_GAUGE_CheckExecute( bew->bbgw[ type ] );
 }
 
 //============================================================================================

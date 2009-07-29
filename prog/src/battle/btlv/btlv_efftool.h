@@ -16,6 +16,8 @@
 #define	EFFTOOL_CALCTYPE_ROUNDTRIP	  	( 2 )	//指定した区間を往復計算（スタート地点とゴール地点の往復）
 #define	EFFTOOL_CALCTYPE_ROUNDTRIP_LONG	( 3 )	//指定した区間を往復計算（スタート地点を基準に＋－方向の往復）
 
+#define BTLV_EFFTOOL_POS2BIT_XOR  ( 0xffffffff )  //ビット反転する時にXORマスクする値
+
 #ifndef __ASM_NO_DEF_
 
 #include "btlv_mcss.h"
@@ -49,7 +51,7 @@ typedef struct
 extern	void	BTLV_EFFTOOL_CalcMoveVector( VecFx32 *start, VecFx32 *end, VecFx32 *out, fx32 flame );
 extern	void	BTLV_EFFTOOL_CheckMove( fx32 *now_pos, fx32 *vec, fx32 *move_pos, BOOL *ret );
 extern	BOOL	BTLV_EFFTOOL_CalcParam( EFFTOOL_MOVE_WORK *emw, VecFx32 *now_param );
-extern	u8		BTLV_EFFTOOL_Pos2Bit( BtlvMcssPos no );
+extern	u32		BTLV_EFFTOOL_Pos2Bit( BtlvMcssPos no );
 extern  void  BTLV_EFFTOOL_CalcPaletteFade( EFFTOOL_PAL_FADE_WORK* epfw );
 
 static	inline	u32	BTLV_EFFTOOL_No2Bit( u32 no )

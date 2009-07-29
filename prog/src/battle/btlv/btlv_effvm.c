@@ -1042,11 +1042,12 @@ static VMCMD_RESULT VMEC_TRAINER_SET( VMHANDLE *vmh, void *context_work )
 {
   BTLV_EFFVM_WORK *bevw = ( BTLV_EFFVM_WORK* )context_work;
   int   index = ( int )VMGetU32( vmh );
-  int   position = ( int )VMGetU32( vmh );
+  int   position = EFFVM_GetPosition( vmh, ( int )VMGetU32( vmh ) );
   int   pos_x = ( int )VMGetU32( vmh );
   int   pos_y = ( int )VMGetU32( vmh );
+  int   pos_z = ( int )VMGetU32( vmh );
 
-  BTLV_EFFECT_SetTrainer( index, position , pos_x, pos_y );
+  BTLV_EFFECT_SetTrainer( index, position , pos_x, pos_y, pos_z );
 
   return bevw->control_mode;
 }
@@ -1382,7 +1383,7 @@ static  BOOL  VWF_EFFECT_END_CHECK( VMHANDLE *vmh, void *context_work )
   {
     BtlvMcssPos pos;
 
-    for( pos = 0 ; pos < BTLV_MCSS_POS_MAX ; pos++ )
+    for( pos = 0 ; pos < BTLV_MCSS_POS_TOTAL ; pos++ )
     {
       if( BTLV_MCSS_CheckTCBExecute( BTLV_EFFECT_GetMcssWork(), pos ) == TRUE )
       {
@@ -1540,6 +1541,14 @@ static  int   EFFVM_GetPosition( VMHANDLE *vmh, int pos_flag )
   case BTLEFF_POKEMON_POS_B:
   case BTLEFF_POKEMON_POS_C:
   case BTLEFF_POKEMON_POS_D:
+  case BTLEFF_POKEMON_POS_E:
+  case BTLEFF_POKEMON_POS_F:
+  case BTLEFF_TRAINER_POS_AA:
+  case BTLEFF_TRAINER_POS_BB:
+  case BTLEFF_TRAINER_POS_A:
+  case BTLEFF_TRAINER_POS_B:
+  case BTLEFF_TRAINER_POS_C:
+  case BTLEFF_TRAINER_POS_D:
     position = BTLV_MCSS_POS_AA + pos_flag - BTLEFF_POKEMON_POS_AA;
     break;
   default:
@@ -1548,7 +1557,7 @@ static  int   EFFVM_GetPosition( VMHANDLE *vmh, int pos_flag )
     break;
   }
 
-  if( position != BTLV_MCSS_POS_ERROR )
+  if( ( position != BTLV_MCSS_POS_ERROR ) && ( position < BTLV_MCSS_POS_MAX ) )
   {
     if( BTLV_EFFECT_CheckExistPokemon( position ) == TRUE )
     {

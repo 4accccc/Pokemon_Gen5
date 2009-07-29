@@ -15,6 +15,7 @@
 #include "btlv_mcss.h"
 #include "btlv_clact.h"
 #include "btlv_gauge.h"
+#include "btlv_b_gauge.h"
 
 #include "btlv_efftool.h"
 #include "btlv_effvm.h"
@@ -33,6 +34,9 @@ enum{
   BTLEFF_SINGLE_ENCOUNT_3,
   BTLEFF_CAMERA_WORK,
   BTLEFF_CAMERA_INIT,
+  BTLEFF_SINGLE_TRAINER_ENCOUNT_1,
+  BTLEFF_SINGLE_TRAINER_ENCOUNT_2,
+  BTLEFF_SINGLE_TRAINER_ENCOUNT_3,
 };
 
 typedef struct _BTLV_EFFECT_WORK BTLV_EFFECT_WORK;
@@ -76,12 +80,15 @@ extern  BOOL              BTLV_EFFECT_CheckExecute( void );
 extern  void              BTLV_EFFECT_SetPokemon( const POKEMON_PARAM *pp, int position );
 extern  void              BTLV_EFFECT_DelPokemon( int position );
 extern  BOOL              BTLV_EFFECT_CheckExistPokemon( int position );
-extern  void              BTLV_EFFECT_SetTrainer( int trtype, int position, int pos_x, int pos_y );
+extern  void              BTLV_EFFECT_SetTrainer( int trtype, int position, int pos_x, int pos_y, int pos_z );
 extern  void              BTLV_EFFECT_DelTrainer( int position );
 extern  void              BTLV_EFFECT_SetGauge( const POKEMON_PARAM* pp, int position );
 extern  void              BTLV_EFFECT_DelGauge( int position );
 extern  void              BTLV_EFFECT_CalcGauge( int position, int value );
 extern  BOOL              BTLV_EFFECT_CheckExecuteGauge( void );
+extern  void              BTLV_EFFECT_SetBallGauge( const BTLV_BALL_GAUGE_PARAM* bbgp );
+extern  void              BTLV_EFFECT_DelBallGauge( BTLV_BALL_GAUGE_TYPE type );
+extern  BOOL              BTLV_EFFECT_CheckExecuteBallGauge( BTLV_BALL_GAUGE_TYPE type );
 extern  void              BTLV_EFFECT_SetPaletteFade( int model, u8 start_evy, u8 end_evy, u8 wait, u16 rgb );
 extern  BOOL              BTLV_EFFECT_CheckExecutePaletteFade( int model );
 extern  void              BTLV_EFFECT_SetVanishFlag( int model, int flag );
