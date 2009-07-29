@@ -11,6 +11,7 @@
 #include "arc/arc_def.h"
 #include "arc/iss_unit.naix"
 #include "arc/fieldmap/zone_id.h"
+#include "field_sound.h"
 
 
 //=====================================================================================================
@@ -151,11 +152,11 @@ void ISS_UNIT_Update( const ISS_UNIT* p_unit, int x, int y, int z )
 
 	// 音量を調整する
 	volume = GetVolumeByGrid( p_unit, x, y, z );
-	PMSND_ChangeBGMVolume( TRACK_MASK, volume );
+	FIELD_SOUND_ChangeBGMActionVolume( volume );
+	//PMSND_ChangeBGMVolume( TRACK_MASK, volume );
 
 
 	// DEBUG: デバッグ出力
-	/*
 	if( p_unit->isActive )
 	{
 		OBATA_Printf( "---------------------\n" );
@@ -163,7 +164,6 @@ void ISS_UNIT_Update( const ISS_UNIT* p_unit, int x, int y, int z )
 		OBATA_Printf( "volume = %d\n", volume );
 		OBATA_Printf( "x, y, z = %d, %d, %d\n", p_unit->x, p_unit->y, p_unit->z );
 	}
-	*/
 }
 
 
