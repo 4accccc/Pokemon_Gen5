@@ -881,8 +881,16 @@ static GFL_PROC_RESULT TOWNMAP_PROC_Init( GFL_PROC *p_proc, int *p_seq, void *p_
 		const PLACE_DATA *cp_data	= NULL;
 		GFL_POINT pos;
 		cp_data	= PLACE_GetDataByZoneID( &p_wk->place, p_param->zoneID );
-		pos.x	= PLACEDATA_GetParam( cp_data, TOWNMAP_DATA_PARAM_CURSOR_X );
-		pos.y	= PLACEDATA_GetParam( cp_data, TOWNMAP_DATA_PARAM_CURSOR_Y );
+		if( cp_data )
+		{	
+			pos.x	= PLACEDATA_GetParam( cp_data, TOWNMAP_DATA_PARAM_CURSOR_X );
+			pos.y	= PLACEDATA_GetParam( cp_data, TOWNMAP_DATA_PARAM_CURSOR_Y );
+		}
+		else
+		{	
+			pos.x	= 128;
+			pos.y	= 96;
+		}
 		CURSOR_SetPos( &p_wk->cursor, &pos );
 	}
 
@@ -3169,12 +3177,21 @@ static void PLACEMARK_Init( PLACE_MARK *p_wk, const PLACE_DATA *cp_data, GFL_CLU
 	{	
 		GFL_CLWK_DATA	cldata;
 		GFL_STD_MemClear( &cldata, sizeof(GFL_CLWK_DATA) );
-		cldata.pos_x	= PLACEDATA_GetParam(cp_data,TOWNMAP_DATA_PARAM_POS_X );
-		cldata.pos_y	= PLACEDATA_GetParam(cp_data,TOWNMAP_DATA_PARAM_POS_Y );
+		if( cp_data )
+		{	
+			cldata.pos_x	= PLACEDATA_GetParam(cp_data,TOWNMAP_DATA_PARAM_POS_X );
+			cldata.pos_y	= PLACEDATA_GetParam(cp_data,TOWNMAP_DATA_PARAM_POS_Y );
+		}
+
 		p_wk->p_clwk	= GFL_CLACT_WK_Create( p_clunit, chr, plt, cel, &cldata, 0, heapID );
 		GFL_CLACT_WK_SetBgPri( p_wk->p_clwk, TOWNMAP_BG_PRIORITY_BAR_M+1 );
 		GFL_CLACT_WK_SetSoftPri( p_wk->p_clwk, OBJ_PRIORITY_MARK );
 		GFL_CLACT_WK_SetAnmSeq( p_wk->p_clwk, 6 );
+
+		if( cp_data == NULL )
+		{	
+			GFL_CLACT_WK_SetDrawEnable( p_wk->p_clwk, FALSE );
+		}
 	}
 }
 //----------------------------------------------------------------------------
@@ -3202,8 +3219,11 @@ static void PLACEMARK_Exit( PLACE_MARK *p_wk )
 static void PLACEMARK_SetPos( PLACE_MARK *p_wk, const GFL_POINT *cp_wld )
 {	
 	GFL_CLACTPOS clpos;
-	clpos.x	= PLACEDATA_GetParam(p_wk->cp_data,TOWNMAP_DATA_PARAM_POS_X ) + cp_wld->x;
-	clpos.y	= PLACEDATA_GetParam(p_wk->cp_data,TOWNMAP_DATA_PARAM_POS_Y ) + cp_wld->y;
+	if( p_wk->cp_data )
+	{	
+		clpos.x	= PLACEDATA_GetParam(p_wk->cp_data,TOWNMAP_DATA_PARAM_POS_X ) + cp_wld->x;
+		clpos.y	= PLACEDATA_GetParam(p_wk->cp_data,TOWNMAP_DATA_PARAM_POS_Y ) + cp_wld->y;
+	}
 	GFL_CLACT_WK_SetPos( p_wk->p_clwk, &clpos, 0 );
 }
 //----------------------------------------------------------------------------
@@ -3216,7 +3236,10 @@ static void PLACEMARK_SetPos( PLACE_MARK *p_wk, const GFL_POINT *cp_wld )
 //-----------------------------------------------------------------------------
 static void PLACEMARK_SetVisible( PLACE_MARK *p_wk, BOOL is_visible )
 {	
-	GFL_CLACT_WK_SetDrawEnable( p_wk->p_clwk, is_visible );
+	if( p_wk->cp_data )
+	{	
+		GFL_CLACT_WK_SetDrawEnable( p_wk->p_clwk, is_visible );
+	}
 }
 //=============================================================================
 /**
