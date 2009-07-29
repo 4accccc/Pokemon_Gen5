@@ -1,0 +1,25 @@
+/*****************************************************************************
+	Archive file index definition.
+	File: trbgra.naix
+
+	This file was created by NINTENDO NITRO-System Archiver.
+
+
+ *****************************************************************************/
+
+#ifndef NARC_TRBGRA_NAIX_
+#define NARC_TRBGRA_NAIX_
+
+enum {
+	NARC_trbgra_tbwb_hero_NCGR = 0,
+	NARC_trbgra_tbwb_hero_NCLR = 1,
+	NARC_trbgra_tbwb_hero_NCER = 2,
+	NARC_trbgra_tbwb_hero_NANR = 3,
+	NARC_trbgra_tbwb_heroine_NCGR = 4,
+	NARC_trbgra_tbwb_heroine_NCLR = 5,
+	NARC_trbgra_tbwb_heroine_NCER = 6,
+	NARC_trbgra_tbwb_heroine_NANR = 7
+};
+
+/* NARC_TRBGRA_NAIX_ */
+#endif

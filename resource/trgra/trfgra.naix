@@ -1,0 +1,73 @@
+/*****************************************************************************
+	Archive file index definition.
+	File: trfgra.naix
+
+	This file was created by NINTENDO NITRO-System Archiver.
+
+
+ *****************************************************************************/
+
+#ifndef NARC_TRFGRA_NAIX_
+#define NARC_TRFGRA_NAIX_
+
+enum {
+	NARC_trfgra_trwb_hero_NCBR = 0,
+	NARC_trfgra_trwb_hero_NCER = 1,
+	NARC_trfgra_trwb_hero_NANR = 2,
+	NARC_trfgra_trwb_hero_NMCR = 3,
+	NARC_trfgra_trwb_hero_NMAR = 4,
+	NARC_trfgra_trwb_hero_NCEC = 5,
+	NARC_trfgra_trwb_hero_NCLR = 6,
+	NARC_trfgra_trwb_heroine_NCBR = 7,
+	NARC_trfgra_trwb_heroine_NCER = 8,
+	NARC_trfgra_trwb_heroine_NANR = 9,
+	NARC_trfgra_trwb_heroine_NMCR = 10,
+	NARC_trfgra_trwb_heroine_NMAR = 11,
+	NARC_trfgra_trwb_heroine_NCEC = 12,
+	NARC_trfgra_trwb_heroine_NCLR = 13,
+	NARC_trfgra_trwb_tanpan_NCBR = 14,
+	NARC_trfgra_trwb_tanpan_NCER = 15,
+	NARC_trfgra_trwb_tanpan_NANR = 16,
+	NARC_trfgra_trwb_tanpan_NMCR = 17,
+	NARC_trfgra_trwb_tanpan_NMAR = 18,
+	NARC_trfgra_trwb_tanpan_NCEC = 19,
+	NARC_trfgra_trwb_tanpan_NCLR = 20,
+	NARC_trfgra_trwb_mini_NCBR = 21,
+	NARC_trfgra_trwb_mini_NCER = 22,
+	NARC_trfgra_trwb_mini_NANR = 23,
+	NARC_trfgra_trwb_mini_NMCR = 24,
+	NARC_trfgra_trwb_mini_NMAR = 25,
+	NARC_trfgra_trwb_mini_NCEC = 26,
+	NARC_trfgra_trwb_mini_NCLR = 27,
+	NARC_trfgra_trwb_schoolb_NCBR = 28,
+	NARC_trfgra_trwb_schoolb_NCER = 29,
+	NARC_trfgra_trwb_schoolb_NANR = 30,
+	NARC_trfgra_trwb_schoolb_NMCR = 31,
+	NARC_trfgra_trwb_schoolb_NMAR = 32,
+	NARC_trfgra_trwb_schoolb_NCEC = 33,
+	NARC_trfgra_trwb_schoolb_NCLR = 34,
+	NARC_trfgra_trwb_schoolg_NCBR = 35,
+	NARC_trfgra_trwb_schoolg_NCER = 36,
+	NARC_trfgra_trwb_schoolg_NANR = 37,
+	NARC_trfgra_trwb_schoolg_NMCR = 38,
+	NARC_trfgra_trwb_schoolg_NMAR = 39,
+	NARC_trfgra_trwb_schoolg_NCEC = 40,
+	NARC_trfgra_trwb_schoolg_NCLR = 41,
+	NARC_trfgra_trwb_tennis_NCBR = 42,
+	NARC_trfgra_trwb_tennis_NCER = 43,
+	NARC_trfgra_trwb_tennis_NANR = 44,
+	NARC_trfgra_trwb_tennis_NMCR = 45,
+	NARC_trfgra_trwb_tennis_NMAR = 46,
+	NARC_trfgra_trwb_tennis_NCEC = 47,
+	NARC_trfgra_trwb_tennis_NCLR = 48,
+	NARC_trfgra_trwb_football_NCBR = 49,
+	NARC_trfgra_trwb_football_NCER = 50,
+	NARC_trfgra_trwb_football_NANR = 51,
+	NARC_trfgra_trwb_football_NMCR = 52,
+	NARC_trfgra_trwb_football_NMAR = 53,
+	NARC_trfgra_trwb_football_NCEC = 54,
+	NARC_trfgra_trwb_football_NCLR = 55
+};
+
+/* NARC_TRFGRA_NAIX_ */
+#endif

@@ -13,9 +13,12 @@ USERS	=	sogabe
 #------------------------------------------------------------------------------
 #※ここに作成するnarc名を書く
 #------------------------------------------------------------------------------
-targetname	= trgra_wb
-NARCNAME	= $(targetname).narc
-NAIXNAME	= $(targetname).naix
+targetname_f	= trfgra
+targetname_b	= trbgra
+NARCNAME_F	= $(targetname_f).narc
+NAIXNAME_F	= $(targetname_f).naix
+NARCNAME_B	= $(targetname_b).narc
+NAIXNAME_B	= $(targetname_b).naix
 
 #------------------------------------------------------------------------------
 #※コピー先へのパスを書く（通常はPROJECT_ARCDIRでよい）
@@ -35,7 +38,8 @@ SUBDIRS	=
 endif
 
 #NARCに必要なscrファイル名
-SCRFILE = trgra_wb.scr
+SCRFILE_F = trfgra_wb.scr
+SCRFILE_B = trbgra_wb.scr
 
 #リソースファイルの存在するディレクトリを指定
 RES_DIR = ../../../pokemon_wb_doc/trgra/
@@ -103,24 +107,34 @@ endif
 #------------------------------------------------------------------------------
 #	make do-build ルール
 #------------------------------------------------------------------------------
-do-build:	$(TARGETDIR)/$(NARCNAME)
+do-build:	$(TARGETDIR)/$(NARCNAME_F) $(TARGETDIR)/$(NARCNAME_B)
 
-$(TARGETDIR)/$(NARCNAME):	$(NARCNAME) $(NAIXNAME)
-	$(COPY)	$(NARCNAME) $(TARGETDIR)
-	$(COPY) $(NAIXNAME) $(TARGETDIR)
+$(TARGETDIR)/$(NARCNAME_F):	$(NARCNAME_F) $(NAIXNAME_F)
+	$(COPY)	$(NARCNAME_F) $(TARGETDIR)
+	$(COPY) $(NAIXNAME_F) $(TARGETDIR)
+
+$(TARGETDIR)/$(NARCNAME_B):	$(NARCNAME_B) $(NAIXNAME_B)
+	$(COPY)	$(NARCNAME_B) $(TARGETDIR)
+	$(COPY) $(NAIXNAME_B) $(TARGETDIR)
 
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
 
-do-build:	$(SCRFILE) $(NARCNAME)
+#do-build:	$(SCRFILE) $(NARCNAME)
+do-build:	$(NARCNAME_F) $(NARCNAME_B)
 
 #本来、scrファイルはトレーナーデータから生成されるがそれまでの暫定処置
 #$(SCRFILE): $(RUBY_DIR)mkscr.rb
 #	ls -1 tbwb*.NCER > ncer.lst
 #	ruby $(RUBY_DIR)mkscr.rb ncer.lst $(SCRFILE)
 
-$(NARCNAME): $(notdir $(NCGFILE:.ncg=.NCGR)) $(notdir $(NCEFILE:.nce=.NCER)) $(notdir $(NCLFILE:.ncl=.NCLR)) $(SCRFILE)
-	nnsarc -c -l -n -i $(NARCNAME) -S $(SCRFILE)
-	$(NAIXCUT) $(NAIXNAME)
+$(NARCNAME_F): $(notdir $(MCSSNCGFILE:.ncg=.NCBR)) $(notdir $(MCSSNCEFILE:.nce=.NCER)) $(notdir $(MCSSNCLFILE:.ncl=.NCLR)) $(SCRFILE_F)
+	nnsarc -c -l -n -i $(NARCNAME_F) -S $(SCRFILE_F)
+	$(NAIXCUT) $(NAIXNAME_F)
+
+$(NARCNAME_B): $(notdir $(OBJNCGFILE:.ncg=.NCBR)) $(notdir $(OBJNCEFILE:.nce=.NCER)) $(notdir $(OBJNCLFILE:.ncl=.NCLR)) $(SCRFILE_B)
+	nnsarc -c -l -n -i $(NARCNAME_B) -S $(SCRFILE_B)
+	$(NAIXCUT) $(NAIXNAME_B)
+
 
 endif
 
@@ -130,10 +144,14 @@ endif
 clean:
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
 	-rm -f *.N*R
-	-rm -f $(NARCNAME)
-	-rm -f $(NAIXNAME)
+	-rm -f $(NARCNAME_F)
+	-rm -f $(NAIXNAME_F)
+	-rm -f $(NARCNAME_B)
+	-rm -f $(NAIXNAME_B)
 endif
-	-rm -f $(TARGETDIR)/$(NARCNAME)
-	-rm -f $(TARGETDIR)/$(NAIXNAME)
+	-rm -f $(TARGETDIR)/$(NARCNAME_F)
+	-rm -f $(TARGETDIR)/$(NAIXNAME_F)
+	-rm -f $(TARGETDIR)/$(NARCNAME_B)
+	-rm -f $(TARGETDIR)/$(NAIXNAME_B)
 
 
