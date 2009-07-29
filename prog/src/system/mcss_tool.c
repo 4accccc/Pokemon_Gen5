@@ -13,7 +13,6 @@
 
 #include "arc_def.h"
 #include "pokegra/pokegra_wb.naix"
-#include "trgra/trgra_wb.naix"
 
 //============================================================================================
 /**
@@ -169,10 +168,10 @@ void	MCSS_TOOL_MakeMAWParam( int	mons_no, int form_no, int sex, int rare, MCSS_A
 //============================================================================================
 void	MCSS_TOOL_MakeMAWTrainer( int	tr_type, MCSS_ADD_WORK *maw, int dir )
 {
-	int	file_start = NARC_trgra_wb_trwb_football_NCBR + TRGRA_FILE_MAX * tr_type;	//トレーナータイプからファイルのオフセットを計算
+	int	file_start = TRGRA_FILE_MAX * tr_type;	//トレーナータイプからファイルのオフセットを計算
 	int	file_offset = 0;	//向きの計算（現状はない）
 
-	maw->arcID = ARCID_TRGRA;
+	maw->arcID = ARCID_TRFGRA;
 	maw->ncbr = file_start + file_offset + TRGRA_NCBR;
 	maw->nclr = file_start + file_offset + TRGRA_NCLR;
 	maw->ncer = file_start + file_offset + TRGRA_NCER;
