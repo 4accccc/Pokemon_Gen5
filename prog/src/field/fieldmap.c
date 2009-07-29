@@ -79,7 +79,7 @@
 #endif //USE_DEBUGWIN_SYSTEM
 
 #include "field_place_name.h"
-#include "iss_unit.h"		
+#include "iss_unit_city.h"		
 #include "field_cars.h"
 
 #include "field_sound.h"
@@ -194,7 +194,7 @@ struct _FIELDMAP_WORK
 	FLDMSGBG *fldMsgBG;
 
 	FIELD_PLACE_NAME* placeNameSys;	// 地名表示ウィンドウ
-	ISS_UNIT* issUnit;				// 街ISSユニット
+	ISS_UNIT_CITY* issUnit;			// 街ISSユニット
 	FIELD_CARS* cars;
 
 	
@@ -454,9 +454,6 @@ static MAINSEQ_RESULT mainSeqFunc_setup(GAMESYS_WORK *gsys, FIELDMAP_WORK *field
   // 地名表示システム作成
   fieldWork->placeNameSys = FIELD_PLACE_NAME_Create( fieldWork->heapID, fieldWork->fldMsgBG );
 
-  // 街ISSユニットの作成
-  fieldWork->issUnit = ISS_UNIT_Create( fieldWork->map_id, fieldWork->heapID );
-
   fieldWork->camera_control = FIELD_CAMERA_Create(
       fieldWork,
       ZONEDATA_GetCameraID(fieldWork->map_id),
@@ -544,6 +541,10 @@ static MAINSEQ_RESULT mainSeqFunc_setup(GAMESYS_WORK *gsys, FIELDMAP_WORK *field
     TAMADA_Printf( "Start Dir = %04x\n", pw->direction );
   }
 
+  // 街ISSユニットの作成
+  fieldWork->issUnit = ISS_UNIT_CITY_Create( fieldWork->field_player, fieldWork->map_id, fieldWork->heapID );
+
+  // H01の車・船表示システム
   fieldWork->cars = FIELD_CARS_Create( fieldWork->field_player, fieldWork->map_id, fieldWork->heapID );
   
   //エッジマーキング設定セットアップ
@@ -713,20 +714,9 @@ static MAINSEQ_RESULT mainSeqFunc_update_top(GAMESYS_WORK *gsys, FIELDMAP_WORK *
 	// フィールドマップ用制御タスクシステム
 	FLDMAPFUNC_Sys_Main( fieldWork->fldmapFuncSys );
 
-  // TEMP: 街ISSユニットによる音量調整
-  {
-	  int gx, gy, gz;
-      VecFx32 player_pos;
+    // ISSユニットによる音量調整
+	ISS_UNIT_CITY_Update( fieldWork->issUnit );
 
-	  // グリッド座標を算
-      FIELD_PLAYER_GetPos(fieldWork->field_player, &player_pos);
-	  gx = (int)( ( FX_Div( player_pos.x, FIELD_CONST_GRID_FX32_SIZE) & FX32_INT_MASK ) >> FX32_SHIFT );
-	  gy = (int)( ( FX_Div( player_pos.y, FIELD_CONST_GRID_FX32_SIZE) & FX32_INT_MASK ) >> FX32_SHIFT );
-	  gz = (int)( ( FX_Div( player_pos.z, FIELD_CONST_GRID_FX32_SIZE) & FX32_INT_MASK ) >> FX32_SHIFT );
-
-	  // ボリュームを更新
-	  ISS_UNIT_Update( fieldWork->issUnit, gx, gy, gz );
-  }
   FLDMSGBG_PrintMain( fieldWork->fldMsgBG );
 
   return MAINSEQ_RESULT_CONTINUE;
@@ -784,7 +774,7 @@ static MAINSEQ_RESULT mainSeqFunc_free(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldW
   FIELD_PLACE_NAME_Delete( fieldWork->placeNameSys );
 
   // 街ISSユニットの破棄
-  ISS_UNIT_Delete( fieldWork->issUnit );
+  ISS_UNIT_CITY_Delete( fieldWork->issUnit );
 
   FIELD_CARS_Delete( fieldWork->cars );
 
@@ -1876,7 +1866,7 @@ static void fldmap_ZoneChange( FIELDMAP_WORK *fieldWork )
 	FIELD_PLACE_NAME_ZoneChange( fieldWork->placeNameSys, new_zone_id );
 
 	// ISSユニットにゾーンの切り替えを通達
-	ISS_UNIT_ZoneChange( fieldWork->issUnit, new_zone_id );
+	ISS_UNIT_CITY_ZoneChange( fieldWork->issUnit, new_zone_id );
 
 	//ゾーンID更新
 	lc->zone_id = new_zone_id;
