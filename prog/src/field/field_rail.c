@@ -1034,7 +1034,7 @@ static RAIL_KEY updateLineMove_new(FIELD_RAIL * rail, RAIL_KEY key, u32 count_up
 					ofs_max = getLineOfsMax( right, rail->ofs_unit, rail->rail_dat );
 					next_line_width_max = getLineWidthOfsMax( right, 0, ofs_max, rail->rail_dat );
 					//右側LINEは始端からの場合
-					if(rail->line_ofs < next_line_width_max)
+					if(rail->line_ofs <= next_line_width_max)
 					{
 						return setLine(rail, right, key,
 								rail->width_ofs,
@@ -1048,7 +1048,7 @@ static RAIL_KEY updateLineMove_new(FIELD_RAIL * rail, RAIL_KEY key, u32 count_up
 					ofs_max = getLineOfsMax( right, rail->ofs_unit, rail->rail_dat );
 					next_line_width_max = getLineWidthOfsMax( right, ofs_max, ofs_max, rail->rail_dat );
 					//右側LINEは始端からの場合
-					if(rail->line_ofs < next_line_width_max)
+					if(rail->line_ofs <= next_line_width_max)
 					{
 						return setLine(rail, right, key,
 								ofs_max - rail->width_ofs,
@@ -1069,7 +1069,7 @@ static RAIL_KEY updateLineMove_new(FIELD_RAIL * rail, RAIL_KEY key, u32 count_up
 					ofs_max = getLineOfsMax( right, rail->ofs_unit, rail->rail_dat );
 					next_line_width_max = getLineWidthOfsMax( right, 0, ofs_max, rail->rail_dat );
 					//右側LINEは終端からの場合
-					if( rail->line_ofs >= nLine_ofs_max - next_line_width_max )
+					if( rail->line_ofs >= (nLine_ofs_max - next_line_width_max) )
 					{
 						return setLine(rail, right, key,
 								rail->width_ofs,
@@ -1083,7 +1083,7 @@ static RAIL_KEY updateLineMove_new(FIELD_RAIL * rail, RAIL_KEY key, u32 count_up
 					ofs_max = getLineOfsMax( right, rail->ofs_unit, rail->rail_dat );
 					next_line_width_max = getLineWidthOfsMax( right, ofs_max, ofs_max, rail->rail_dat );
 					//右側LINEは終端からの場合
-					if( rail->line_ofs >= nLine_ofs_max - next_line_width_max )
+					if( rail->line_ofs >= (nLine_ofs_max - next_line_width_max) )
 					{
 						return setLine(rail, right, key,
 								ofs_max - rail->width_ofs,
@@ -1116,7 +1116,7 @@ static RAIL_KEY updateLineMove_new(FIELD_RAIL * rail, RAIL_KEY key, u32 count_up
 					ofs_max = getLineOfsMax( left, rail->ofs_unit, rail->rail_dat );
 					next_line_width_max = getLineWidthOfsMax( left, 0, ofs_max, rail->rail_dat );
 					//左側LINEは始端からの場合
-					if(rail->line_ofs < next_line_width_max)
+					if(rail->line_ofs <= next_line_width_max)
 					{
 						return setLine(rail, left, key,
 								MATH_ABS(rail->width_ofs), 
@@ -1130,7 +1130,7 @@ static RAIL_KEY updateLineMove_new(FIELD_RAIL * rail, RAIL_KEY key, u32 count_up
 					ofs_max = getLineOfsMax( left, rail->ofs_unit, rail->rail_dat );
 					next_line_width_max = getLineWidthOfsMax( left, ofs_max, ofs_max, rail->rail_dat );
 					//左側LINEは始端からの場合
-					if(rail->line_ofs < next_line_width_max)
+					if(rail->line_ofs <= next_line_width_max)
 					{
 						return setLine(rail, left, key,
 								ofs_max - MATH_ABS(rail->width_ofs),
@@ -1151,7 +1151,7 @@ static RAIL_KEY updateLineMove_new(FIELD_RAIL * rail, RAIL_KEY key, u32 count_up
 					ofs_max = getLineOfsMax( left, rail->ofs_unit, rail->rail_dat );
 					next_line_width_max = getLineWidthOfsMax( left, 0, ofs_max, rail->rail_dat );
 					//左側LINEは終端からの場合
-					if( rail->line_ofs >= nLine_ofs_max - next_line_width_max )
+					if( rail->line_ofs >= (nLine_ofs_max - next_line_width_max) )
 					{
 						return setLine(rail, left, key,
 								MATH_ABS(rail->width_ofs),
@@ -1165,7 +1165,7 @@ static RAIL_KEY updateLineMove_new(FIELD_RAIL * rail, RAIL_KEY key, u32 count_up
 					ofs_max = getLineOfsMax( left, rail->ofs_unit, rail->rail_dat );
 					next_line_width_max = getLineWidthOfsMax( left, ofs_max, ofs_max, rail->rail_dat );
 					//左側LINEは終端からの場合
-					if( rail->line_ofs >= nLine_ofs_max - next_line_width_max )
+					if( rail->line_ofs >= (nLine_ofs_max - next_line_width_max) )
 					{
 						return setLine(rail, left, key,
 								ofs_max - MATH_ABS(rail->width_ofs),
@@ -1358,6 +1358,7 @@ static s32 getLineOfsMax( const RAIL_LINE * line, fx32 unit, const RAIL_DAT* rai
 	RAIL_LINE_DIST_FUNC* dist_func;
   fx32 dist;
   s32 div;
+  s32 amari;
 
 	point_s = getRailDatPoint( rail_dat, line->point_s );
 	point_e = getRailDatPoint( rail_dat, line->point_e );
@@ -1377,6 +1378,18 @@ static s32 getLineOfsMax( const RAIL_LINE * line, fx32 unit, const RAIL_DAT* rai
 		div = 0;
 	}
 
+  // RAIL_WALK_OFSで割り切れる値にする
+  amari = div % RAIL_WALK_OFS;
+  if( amari >=  (RAIL_WALK_OFS/2) )
+  {
+    div += RAIL_WALK_OFS - amari;
+    TOMOYA_Printf( "ラインオフセット　あまり　があります。 amari=%d\n", amari );
+  }
+  else if( amari )
+  {
+    div -= amari;
+    TOMOYA_Printf( "ラインオフセット　あまり　があります。 amari=%d\n", amari );
+  }
 
 //  OS_TPrintf( "div = %d dist = 0x%x unit = 0x%x\n", div, dist, unit );
 
