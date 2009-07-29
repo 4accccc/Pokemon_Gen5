@@ -108,8 +108,11 @@ $(TARGETDIR)$(WOTBL):	$(WOTBL)
 #	make cleanルール
 #------------------------------------------------------------------------------
 clean:
+ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
 	-rm -f $(PERSONAL)
+#	-rm -f $(GROWTBL)
 	-rm -f $(WOTBL)
+endif
 	-rm -f $(TARGETDIR)$(PERSONAL)
 	-rm -f $(TARGETDIR)$(GROWTBL)
 	-rm -f $(TARGETDIR)$(WOTBL)
