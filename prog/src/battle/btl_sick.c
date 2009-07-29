@@ -284,8 +284,8 @@ static int getCureStrID( WazaSick sick, BOOL fUseItem )
     s16       strID_notItem;
     s16       strID_useItem;
   }dispatchTbl[] = {
-    { WAZASICK_DOKU,      BTL_STRID_SET_PokeSick_Cure,    BTL_STRID_SET_UseItem_CureDoku    },
-    { POKESICK_YAKEDO,    BTL_STRID_SET_PokeSick_Cure,    BTL_STRID_SET_UseItem_CureYakedo  },
+    { WAZASICK_DOKU,      BTL_STRID_SET_DokuCure,         BTL_STRID_SET_UseItem_CureDoku    },
+    { POKESICK_YAKEDO,    BTL_STRID_SET_YakedoCure   ,    BTL_STRID_SET_UseItem_CureYakedo  },
     { WAZASICK_NEMURI,    BTL_STRID_SET_NemuriWake,       BTL_STRID_SET_UseItem_CureNemuri  },
     { WAZASICK_KOORI,     BTL_STRID_SET_KoriMelt,         BTL_STRID_SET_UseItem_CureKoori   },
     { WAZASICK_MAHI,      BTL_STRID_SET_MahiCure,         BTL_STRID_SET_UseItem_CureMahi    },

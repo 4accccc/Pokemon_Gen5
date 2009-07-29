@@ -218,6 +218,7 @@ typedef enum {
   BTL_HANDEX_POSEFF_ADD,    ///< 位置エフェクト追加
   BTL_HANDEX_CHANGE_TOKUSEI,///< とくせい書き換え
   BTL_HANDEX_SET_ITEM,      ///< アイテム書き換え
+  BTL_HANDEX_EQUIP_ITEM,    ///< アイテム効果発動
   BTL_HANDEX_CONSUME_ITEM,  ///< 自分でアイテムを消費
   BTL_HANDEX_SWAP_ITEM,     ///< アイテム入れ替え
   BTL_HANDEX_UPDATE_WAZA,   ///< ワザ書き換え
@@ -463,6 +464,16 @@ typedef struct {
   u16             succeedStrID;
   int             succeedStrArgs[ BTL_STR_ARG_MAX ];
 }BTL_HANDEX_PARAM_SWAP_ITEM;
+
+/**
+ *  アイテム効果を強制発動
+ */
+typedef struct {
+  BTL_HANDEX_PARAM_HEADER  header;
+  u8              pokeID;            ///< 対象ポケモンID
+  u16             itemID;
+}BTL_HANDEX_PARAM_EQUIP_ITEM;
+
 
 typedef struct {
   BTL_HANDEX_PARAM_HEADER  header;

@@ -106,13 +106,13 @@ typedef enum {
   BTL_EVENT_ICHIGEKI_CHECK,         ///< 一撃必殺チェック
   BTL_EVENT_NOT_WAZA_DAMAGE,        ///< ワザ以外のダメージチェック
   BTL_EVENT_USE_ITEM,               ///< アイテム使用
+  BTL_EVENT_USE_ITEM_TMP,           ///< アイテム一時使用
   BTL_EVENT_TURNCHECK_BEGIN,        ///< ターンチェック（先頭）
   BTL_EVENT_TURNCHECK_END,          ///< ターンチェック（終端）
   BTL_EVENT_WEATHER_CHANGE,         ///< 天候の変化（直前）
   BTL_EVENT_WEATHER_CHANGE_AFTER,   ///< 天候の変化（直後）
   BTL_EVENT_CALC_WEATHER_DAMAGE,    ///< 天候ダメージ計算
   BTL_EVENT_SIMPLE_DAMAGE_ENABLE,   ///< ワザ以外ダメージ有効判定
-  BTL_EVENT_SIMPLE_DAMAGE_REACTION, ///< ワザ以外ダメージ後の反応チェック
   BTL_EVENT_AFTER_DAMAGE,           ///< ダメージワザ処理直後
   BTL_EVENT_SKILL_SWAP,             ///< とくせい入れ替え
   BTL_EVENT_CHECK_PUSHOUT,          ///< ふきとばし系ワザチェック
