@@ -319,6 +319,7 @@ void FIELD_RAIL_MAN_SetLocation(FIELD_RAIL_MAN * man, const RAIL_LOCATION * loca
     // 点初期化
     rail->type          = FIELD_RAIL_TYPE_POINT;
     rail->point         = &man->rail_dat.point_table[ location->rail_index ];
+    rail->width_ofs_max = rail->point->width_ofs_max[0];
   }
   else
   {
@@ -864,6 +865,7 @@ static RAIL_KEY updateLineMove_new(FIELD_RAIL * rail, RAIL_KEY key, u32 count_up
   s32 nLine_ofs_max = getLineOfsMax( nLine, rail->ofs_unit, rail->rail_dat ); // 今のLINEのオフセット最大値
   s32 ofs_max;  // 各ラインのオフセット最大値
 	s32 next_line_width_max;
+	s32 now_line_width_max;
 
   if (key == nLine->key)
   {//正方向キーの場合
@@ -871,14 +873,21 @@ static RAIL_KEY updateLineMove_new(FIELD_RAIL * rail, RAIL_KEY key, u32 count_up
     const RAIL_LINE * front = RAILPOINT_getLineByKey(nPoint, key, rail->rail_dat);
     const RAIL_LINE * left = RAILPOINT_getLineByKey(nPoint, getAntiClockwiseKey(key), rail->rail_dat);
     const RAIL_LINE * right = RAILPOINT_getLineByKey(nPoint, getClockwiseKey(key), rail->rail_dat);
+    BOOL width_over = FALSE;
     //const RAIL_LINE * back = RAILPOINT_getLineByKey(nPoint, getReverseKey(key), rail->rail_dat);
     TAMADA_Printf("↑");
     rail->line_ofs += count_up;
-    // 今の道幅チェック
     if (rail->line_ofs <= nLine_ofs_max) {
-			return updateLine( rail, nLine, nLine_ofs_max, key );
+      // 今の道幅チェック オーバーしてなければ、通常の更新
+      now_line_width_max = getLineWidthOfsMax( nLine, rail->line_ofs, nLine_ofs_max, rail->rail_dat );
+      if( now_line_width_max >= rail->width_ofs )
+      {
+        return key;
+      }
+      // オーバーしていたら、他の道に遷移する
+      width_over = TRUE;
 		}
-    if (front)
+    if ((front!=NULL) && (width_over == FALSE))
     { //正面移行処理
       debugCheckPointData(nPoint, rail->rail_dat);
 			// 幅チェック
@@ -892,27 +901,37 @@ static RAIL_KEY updateLineMove_new(FIELD_RAIL * rail, RAIL_KEY key, u32 count_up
 						/*ofs_max*/ofs_max); //そのまま
 			}
     }
-    if (left && rail->width_ofs < 0)
+    if ( (left && rail->width_ofs < 0) )
     { //左側移行処理
       if ( isLinePoint_S( rail->rail_dat, left, nPoint ) )
       { //始端の場合
         debugCheckPointData(nPoint, rail->rail_dat);
         ofs_max = getLineOfsMax( left, rail->ofs_unit, rail->rail_dat );
-        return setLine(rail, left, key,
-            /*l_ofs*/rail->width_ofs,
-            /*w_ofs*/0,
-            /*ofs_max*/ofs_max); 
+			  next_line_width_max = getLineWidthOfsMax( left, -rail->width_ofs, ofs_max, rail->rail_dat );
+        // 左側ラインの範囲内かチェック
+        if( (-rail->width_ofs <= ofs_max) && (next_line_width_max >= MATH_ABS(rail->line_ofs-nLine_ofs_max)) )
+        {
+          return setLine(rail, left, key,
+              /*l_ofs*/-rail->width_ofs,
+              /*w_ofs*/rail->line_ofs-nLine_ofs_max,
+              /*ofs_max*/ofs_max); 
+        }
       }
       else if (isLinePoint_E( rail->rail_dat, left, nPoint ))
       { //終端の場合
         debugCheckPointData(nPoint, rail->rail_dat);
         ofs_max = getLineOfsMax( left, rail->ofs_unit, rail->rail_dat );
-        return setLine(rail, left, key,
-            /*l_ofs*/ofs_max + rail->width_ofs, //width_ofs < 0なので実質減算
-            /*w_ofs*/0,
-            /*ofs_max*/ofs_max); 
+			  next_line_width_max = getLineWidthOfsMax( left, ofs_max+rail->width_ofs, ofs_max, rail->rail_dat );
+        // 左側ラインの範囲内かチェック
+        if( (-rail->width_ofs >= ofs_max) && (next_line_width_max >= MATH_ABS(rail->line_ofs-nLine_ofs_max)) )
+        {
+          return setLine(rail, left, key,
+              /*l_ofs*/ofs_max + rail->width_ofs, //width_ofs < 0なので実質減算
+              /*w_ofs*/rail->line_ofs-nLine_ofs_max,
+              /*ofs_max*/ofs_max); 
+        }
       }
-      else GF_ASSERT_MSG(0, "%sから%sへの接続異常\n", nLine->name, left->name);
+      else GF_ASSERT_MSG(width_over, "%sから%sへの接続異常\n", nLine->name, left->name);
     }
     if (right && rail->width_ofs > 0)
     { //右側移行処理
@@ -920,21 +939,36 @@ static RAIL_KEY updateLineMove_new(FIELD_RAIL * rail, RAIL_KEY key, u32 count_up
       { //始端の場合
         debugCheckPointData(nPoint, rail->rail_dat);
         ofs_max = getLineOfsMax( right, rail->ofs_unit, rail->rail_dat );
-        return setLine(rail, right, key,
-            /*l_ofs*/rail->width_ofs,
-            /*w_ofs*/0,
-            /*ofs_max*/ofs_max); 
+			  next_line_width_max = getLineWidthOfsMax( right, rail->width_ofs, ofs_max, rail->rail_dat );
+        // 右側ラインの範囲内かチェック
+        if( (rail->width_ofs >= ofs_max) && (next_line_width_max >= MATH_ABS(rail->line_ofs-nLine_ofs_max)) )
+        {
+          return setLine(rail, right, key,
+              /*l_ofs*/rail->width_ofs,
+              /*w_ofs*/rail->line_ofs-nLine_ofs_max,
+              /*ofs_max*/ofs_max); 
+        }
       }
 			else if ( isLinePoint_E( rail->rail_dat, right, nPoint ) )
       { //終端の場合
         debugCheckPointData(nPoint, rail->rail_dat);
         ofs_max = getLineOfsMax( right, rail->ofs_unit, rail->rail_dat );
-        return setLine(rail, right, key,
-            /*l_ofs*/ofs_max - rail->width_ofs,
-            /*w_ofs*/0,
-            /*ofs_max*/ofs_max);
+			  next_line_width_max = getLineWidthOfsMax( right, ofs_max - rail->width_ofs, ofs_max, rail->rail_dat );
+        // 右側ラインの範囲内かチェック
+        if( (rail->width_ofs >= ofs_max) && (next_line_width_max >= MATH_ABS(rail->line_ofs-nLine_ofs_max)) )
+        {
+          return setLine(rail, right, key,
+              /*l_ofs*/ofs_max - rail->width_ofs,
+              /*w_ofs*/rail->line_ofs-nLine_ofs_max,
+              /*ofs_max*/ofs_max);
+        }
       }
-      else GF_ASSERT_MSG(0, "%sから%sへの接続異常\n", nLine->name, left->name);
+      else GF_ASSERT_MSG(width_over, "%sから%sへの接続異常\n", nLine->name, left->name);
+    }
+
+    if( width_over )
+    {
+			return updateLine( rail, nLine, nLine_ofs_max, key );
     }
 
     //行くあてがない…LINEそのまま、加算をとりけし
@@ -948,12 +982,21 @@ static RAIL_KEY updateLineMove_new(FIELD_RAIL * rail, RAIL_KEY key, u32 count_up
     const RAIL_LINE * left = RAILPOINT_getLineByKey(nPoint, getClockwiseKey(key), rail->rail_dat);
     const RAIL_LINE * right = RAILPOINT_getLineByKey(nPoint, getAntiClockwiseKey(key), rail->rail_dat);
     const RAIL_LINE * back = RAILPOINT_getLineByKey(nPoint, key, rail->rail_dat);
+    BOOL width_over = FALSE;
     TAMADA_Printf("↓");
     rail->line_ofs -= count_up;
     if (rail->line_ofs >= 0) {
-			return updateLine( rail, nLine, nLine_ofs_max, key );
+
+      // 今の道幅チェック オーバーしてなければ、通常の更新
+      now_line_width_max = getLineWidthOfsMax( nLine, rail->line_ofs, nLine_ofs_max, rail->rail_dat );
+      if( now_line_width_max >= rail->width_ofs )
+      {
+        return key;
+      }
+      // オーバーしていたら、他の道に遷移する
+      width_over = TRUE;
 		}
-    if (back)
+    if ((back != NULL) && (width_over == FALSE))
     {//背面移行処理
       debugCheckPointData(nPoint, rail->rail_dat);
       ofs_max = getLineOfsMax( back, rail->ofs_unit, rail->rail_dat );
@@ -973,21 +1016,31 @@ static RAIL_KEY updateLineMove_new(FIELD_RAIL * rail, RAIL_KEY key, u32 count_up
       { //始端の場合
         debugCheckPointData(nPoint, rail->rail_dat);
         ofs_max = getLineOfsMax( left, rail->ofs_unit, rail->rail_dat );
-        return setLine(rail, left, key,
-            /*l_ofs*/rail->width_ofs,
-            /*w_ofs*/0,
-          /*ofs_max*/ofs_max);
+			  next_line_width_max = getLineWidthOfsMax( left, -rail->width_ofs, ofs_max, rail->rail_dat );
+        // 左側ラインの範囲内かチェック
+        if( (-rail->width_ofs <= ofs_max) && (next_line_width_max >= MATH_ABS(rail->line_ofs)) )
+        {
+          return setLine(rail, left, key,
+              /*l_ofs*/-rail->width_ofs,
+              /*w_ofs*/rail->line_ofs,
+            /*ofs_max*/ofs_max);
+        }
       }
 			else if ( isLinePoint_E( rail->rail_dat, left, nPoint ) )
       { //終端の場合
         debugCheckPointData(nPoint, rail->rail_dat);
         ofs_max = getLineOfsMax( right, rail->ofs_unit, rail->rail_dat );
-        return setLine(rail, right, key,
-            /*l_ofs*/ofs_max + rail->width_ofs, //width_ofs < 0なので実質減算
-            /*w_ofs*/0,
-          /*ofs_max*/ofs_max);
+			  next_line_width_max = getLineWidthOfsMax( left, ofs_max+rail->width_ofs, ofs_max, rail->rail_dat );
+        // 左側ラインの範囲内かチェック
+        if( (-rail->width_ofs <= ofs_max) && (next_line_width_max >= MATH_ABS(rail->line_ofs)) )
+        {
+          return setLine(rail, right, key,
+              /*l_ofs*/ofs_max + rail->width_ofs, //width_ofs < 0なので実質減算
+              /*w_ofs*/rail->line_ofs,
+            /*ofs_max*/ofs_max);
+        }
       }
-      else GF_ASSERT_MSG(0, "%sから%sへの接続異常\n", nLine->name, left->name);
+      else GF_ASSERT_MSG(width_over, "%sから%sへの接続異常\n", nLine->name, left->name);
     }
     if (right && rail->width_ofs > 0)
     { //右側移行処理
@@ -995,21 +1048,37 @@ static RAIL_KEY updateLineMove_new(FIELD_RAIL * rail, RAIL_KEY key, u32 count_up
       { //始端の場合
         debugCheckPointData(nPoint, rail->rail_dat);
         ofs_max = getLineOfsMax( right, rail->ofs_unit, rail->rail_dat );
-        return setLine(rail, right, key,
-            /*l_ofs*/rail->width_ofs,
-            /*w_ofs*/0,
-          /*ofs_max*/ofs_max);
+			  next_line_width_max = getLineWidthOfsMax( right, rail->width_ofs, ofs_max, rail->rail_dat );
+        // 右側ラインの範囲内かチェック
+        if( (rail->width_ofs <= ofs_max) && (next_line_width_max >= MATH_ABS(rail->line_ofs)) )
+        {
+          return setLine(rail, right, key,
+              /*l_ofs*/rail->width_ofs,
+              /*w_ofs*/rail->line_ofs,
+            /*ofs_max*/ofs_max);
+        } 
       }
 			if ( isLinePoint_E( rail->rail_dat, right, nPoint ) )
       { //終端の場合
         debugCheckPointData(nPoint, rail->rail_dat);
         ofs_max = getLineOfsMax( right, rail->ofs_unit, rail->rail_dat );
-        return setLine(rail, right, key,
-            /*l_ofs*/ofs_max - rail->width_ofs,
-            /*w_ofs*/0,
-          /*ofs_max*/ofs_max);
+			  next_line_width_max = getLineWidthOfsMax( right, ofs_max - rail->width_ofs, ofs_max, rail->rail_dat );
+        // 右側ラインの範囲内かチェック
+        if( (rail->width_ofs <= ofs_max) && (next_line_width_max >= MATH_ABS(rail->line_ofs)) )
+        {
+          return setLine(rail, right, key,
+              /*l_ofs*/ofs_max - rail->width_ofs,
+              /*w_ofs*/rail->line_ofs,
+            /*ofs_max*/ofs_max);
+        }
       }
-      else GF_ASSERT_MSG(0, "%sから%sへの接続異常\n", nLine->name, right->name);
+      else GF_ASSERT_MSG(width_over, "%sから%sへの接続異常\n", nLine->name, right->name);
+    }
+
+    //  幅オーバー処理
+    if( width_over )
+    {
+			return updateLine( rail, nLine, nLine_ofs_max, key );
     }
     //行くあてがない…LINEそのまま、減算を取り消し
     rail->line_ofs = 0;
