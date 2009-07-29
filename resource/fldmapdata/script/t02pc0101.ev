@@ -97,6 +97,7 @@ ev_t02pc0101_doctor_guide:
 
   _OBJ_PAUSE_CLEAR_ALL
   _LDVAL SVSCRWK_START,1
+  _LDVAL WK_0907ROM04,1
 
   _END
 
