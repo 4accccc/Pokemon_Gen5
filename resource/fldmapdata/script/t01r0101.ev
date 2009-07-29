@@ -9,6 +9,13 @@
   .include  "t01r0101.h"
 
 //--------------------------------------------------------------
+//	T01R0101で使う定数
+//--------------------------------------------------------------
+#define CHECK_X01a (3)
+#define CHECK_X01b (4)
+#define CHECK_Z01a (3)
+
+//--------------------------------------------------------------
 //               スクリプト本体
 //--------------------------------------------------------------
 
@@ -36,6 +43,7 @@ _EVENT_DATA_END
 //  _END
 
 /**************************************************************/
+	_ANIME_DATA AC_WALK_L_8F,2
 /*    MAMA                                            */
 /**************************************************************/
 ev_t01r0101_mama_first:
@@ -43,9 +51,20 @@ ev_t01r0101_mama_first:
 	_IFVAL_JUMP WK_0907ROM07,EQ,1,mama_end
 
 mama_first:
-	_OBJ_ANIME T01R0101_MAMA,mama_first1 //主人公に隣接
+	_PLAYER_POS_GET SCWK_TEMP0,SCWK_TEMP1 //自機座標取得
+	_IFVAL_JUMP SCWK_TEMP0,EQ,3,pos_3_3
+	_IFVAL_JUMP SCWK_TEMP0,EQ,4,pos_4_3
+
+pos_3_3:
+	_OBJ_ANIME T01R0101_MAMA,mama_first_3 //主人公に隣接
+	_OBJ_ANIME_WAIT
+	_JUMP mama_first_01
+
+pos_4_3:
+	_OBJ_ANIME T01R0101_MAMA,mama_first_4 //主人公に隣接
 	_OBJ_ANIME_WAIT
 
+mama_first_01:
 	_PLAYER_NAME 0 //プレイヤー名を反映
 	_TALKWIN_OPEN
 	_TALKMSG_ALLPUT msg_t01r0101_mama_01
@@ -62,6 +81,7 @@ mama_first:
 	_JUMP mama_end
 
 mama_end:
+	_TURN_HERO_SITE
 	_TALKWIN_OPEN
 	_TALKMSG_ALLPUT msg_t01r0101_mama_04
 	_AB_KEYWAIT
@@ -70,9 +90,9 @@ mama_end:
 
 
 /**************************************************************/
-/*  T01R0101 MAMA_FIRST1                     */
+/*  T01R0101 MAMA_FIRST1_X3 */
 /**************************************************************/
-_ANIME_LABEL mama_first1
+_ANIME_LABEL mama_first_3
 	_ANIME_DATA AC_DIR_L,1
 	_ANIME_DATA AC_DIR_U,1
 	_ANIME_DATA AC_MARK_GYOE,1
@@ -81,4 +101,18 @@ _ANIME_LABEL mama_first1
 	_ANIME_DATA AC_DIR_L,1
 	_ANIME_DATA AC_WAIT_8F,1
 	_ANIME_DATA ACMD_END,0
+
+/**************************************************************/
+/*  T01R0101 MAMA_FIRST1_X4                    */
+/**************************************************************/
+_ANIME_LABEL mama_first_4
+	_ANIME_DATA AC_DIR_L,1
+	_ANIME_DATA AC_DIR_U,1
+	_ANIME_DATA AC_MARK_GYOE,1
+	_ANIME_DATA AC_WALK_L_8F,1
+	_ANIME_DATA AC_WALK_U_8F,4
+	_ANIME_DATA AC_DIR_L,1
+	_ANIME_DATA AC_WAIT_8F,1
+	_ANIME_DATA ACMD_END,0
+
 
