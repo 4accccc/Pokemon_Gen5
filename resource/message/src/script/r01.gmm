@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-07-29T10:54:52"/>
+	<create user="matsumiya" host="W00207" date="2009-07-29T16:03:56"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="538"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="692"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -346,7 +346,7 @@
 では　きみたちに
 モンスターボールも　わたそう！[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">アララギ『見てくれたかい！？
-今の　ナイス捕獲を！？[BE:01:ページ切り替え（クリア）]
+今の　ナイスな　捕獲を！？[BE:01:ページ切り替え（クリア）]
 ポイントを　解説すると
 まず　ポケモンの[BE:00:ページ切り替え（行送り）]
 ＨＰ……　体力を　減らすこと！[BE:01:ページ切り替え（クリア）]
@@ -398,8 +398,9 @@
 		<attribute name="キャラ指定">友達♂</attribute>
 		<language name="JPN" width="256">ともだち♂『いいたいこと　いったら
 いっちゃったよ　はかせ……[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">ともだち♂『いいたいこと　いったら
-いっちゃったよ　博士……[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">ともだち♂『初めて　ポケモンの
+捕獲を　みたけれど……[BE:00:ページ切り替え（行送り）]
+すごい　迫力　なんだね[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_r01_black_03" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
@@ -408,8 +409,8 @@
 		<attribute name="キャラ指定">友達♂</attribute>
 		<language name="JPN" width="256">とにかく　おれたちも
 カラクサタウンに　むかおう[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">そうだね　僕たちも
-カラクサタウンに　向かおうか[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">それでは　僕たちも
+カラクサタウンに　向かおう[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_r01_white_01">
@@ -445,7 +446,8 @@
 		<comment>♂</comment>
 		<attribute name="キャラ指定">友達♂</attribute>
 		<language name="JPN" width="256">ともだち♂『きゃっか[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">ともだち♂『さあ　行こうか[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">ともだち♂『さあ　行こうか
+博士も　待っているだろうし[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_r01_white_03">
@@ -483,10 +485,10 @@
 ポケモンの　かいふくは[BE:00:ページ切り替え（行送り）]
 じたくで　しろよ[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">ともだち♂『なるほどね
-それは　おもしろいね[BE:01:ページ切り替え（クリア）]
+それは　おもしろいな[BE:01:ページ切り替え（クリア）]
 図鑑の　ページも　うまるから
-博士にも　喜んでもらえるし[BE:01:ページ切り替え（クリア）]
-オッケイ！　じゃあ
+博士にも　喜んでもらえる[BE:01:ページ切り替え（クリア）]
+そうだね　それでは
 カラクサタウンに　着くまで[BE:00:ページ切り替え（行送り）]
 ポケモンの　回復は[BE:00:ページ切り替え（行送り）]
 自宅で……　ということで[BE:01:ページ切り替え（クリア）]</language>
