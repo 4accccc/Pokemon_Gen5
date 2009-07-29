@@ -149,18 +149,19 @@ SRCS  +=    $(SOUNDSRC) \
         net_app/union/union_beacon_tool.c \
         app/wifi_note/wifi_note.c \
         app/pokelist/pokelist.c \
-		app/p_status/p_status.c \
+        app/p_status/p_status.c \
         test/camera_adjust_view.c \
         system/selbox.c \
         gamesystem/game_comm.c \
         field/field_comm/game_beacon_search.c \
         debug/debugwin_sys.c \
-		test/tetsu/debug_common.c \
+        test/tetsu/debug_common.c \
         system/fld_wipe_3dobj.c \
         debug/debug_system_group.c \
-		app/app_menu_common.c \
-		app/app_taskmenu.c \
-		tr_tool/tr_tool.c
+        app/app_menu_common.c \
+        app/app_taskmenu.c \
+        field/field_sound.c \
+        tr_tool/tr_tool.c
 
 
 #================================================

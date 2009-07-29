@@ -25,6 +25,7 @@
 #include "field/field_rail_loader.h"    //FIELD_RAIL_LOADER
 #include "field/fldmmdl.h"
 #include "field/eventwork.h"
+#include "field/field_sound_proc.h"
 
 //============================================================================================
 //============================================================================================
@@ -347,6 +348,15 @@ extern int GAMEDATA_GetFieldMapWalkCount(GAMEDATA *gamedata);
  */
 //------------------------------------------------------------------
 extern void GAMEDATA_SetFieldMapWalkCount(GAMEDATA *gamedata,int count);
+
+//--------------------------------------------------------------
+/**
+ * @brief FIELD_SOUND取得
+ * @param   gamedata	GAMEDATAへのポインタ
+ * @return  FIELD_SOUND*
+ */
+//--------------------------------------------------------------
+FIELD_SOUND * GAMEDATA_GetFieldSound( GAMEDATA *gamedata );
 
 //============================================================================================
 //	SAVE_CONTROL_WORKへのアクセス
