@@ -48,6 +48,7 @@ typedef struct
 struct _TAG_SCRCMD_WORK
 {
 	HEAPID heapID;
+  HEAPID temp_heapID;
 	SCRCMD_WORK_HEADER head;
 	
 	GFL_MSGDATA *msgData;
@@ -75,11 +76,12 @@ struct _TAG_SCRCMD_WORK
  */
 //--------------------------------------------------------------
 SCRCMD_WORK * SCRCMD_WORK_Create(
-	const SCRCMD_WORK_HEADER *head, HEAPID heapID )
+	const SCRCMD_WORK_HEADER *head, HEAPID heapID, HEAPID temp_heapID )
 {
 	SCRCMD_WORK *work;
 	work = GFL_HEAP_AllocClearMemoryLo( heapID, sizeof(SCRCMD_WORK) );
 	work->heapID = heapID;
+  work->temp_heapID = temp_heapID;
 	work->head = *head;
 	return( work );
 }
@@ -310,8 +312,13 @@ BOOL SCRCMD_WORK_CheckMMdlAnmTCB( SCRCMD_WORK *work )
 //--------------------------------------------------------------
 void SCRCMD_WORK_CreateMsgData( SCRCMD_WORK *work, u32 datID )
 {
+#if 0
 	GFL_MSGDATA *msgData = GFL_MSG_Create(
 		GFL_MSG_LOAD_NORMAL, ARCID_SCRIPT_MESSAGE, datID, work->heapID );
+#else
+	GFL_MSGDATA *msgData = GFL_MSG_Create(
+		GFL_MSG_LOAD_NORMAL, ARCID_SCRIPT_MESSAGE, datID, work->temp_heapID );
+#endif
 	SCRCMD_WORK_SetMsgData( work, msgData );
 }
 

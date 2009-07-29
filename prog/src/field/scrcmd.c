@@ -529,7 +529,8 @@ static VMCMD_RESULT EvCmdVMMachineAdd( VMHANDLE *core, void *wk )
   id = VMGetU16(core);
 
   //仮想マシン追加
-  *vm = SCRIPT_AddVMachine( gsys, sc, SCRCMD_WORK_GetHeapID(work), id );
+  *vm = SCRIPT_AddVMachine( gsys, sc,
+      SCRCMD_WORK_GetHeapID(work), SCRCMD_WORK_GetHeapID(work), id );
   (*vm_machine_count)++;
   
   //イベントと切り離したTCB動作にするかも？
@@ -582,7 +583,8 @@ static VMCMD_RESULT EvCmdChangeCommonScr( VMHANDLE *core, void *wk )
   
   //仮想マシン追加
   //*vm = VMMachineAdd(fsys,scr_id,&ScriptCmdTbl[0],&ScriptCmdTbl[EVCMD_MAX]);
-  *vm = SCRIPT_AddVMachine( gsys, sc, SCRCMD_WORK_GetHeapID(work), scr_id );
+  *vm = SCRIPT_AddVMachine( gsys, sc,
+      SCRCMD_WORK_GetHeapID(work), SCRCMD_WORK_GetHeapID(work), scr_id );
   (*vm_machine_count)++;
 
   VMCMD_SetWait( core, EvChangeCommonScrWait );

@@ -49,7 +49,7 @@ typedef struct
 //======================================================================
 //‰Šú‰»Aíœ
 extern SCRCMD_WORK * SCRCMD_WORK_Create(
-	const SCRCMD_WORK_HEADER *head, HEAPID heapID );
+	const SCRCMD_WORK_HEADER *head, HEAPID heapID, HEAPID temp_heapID );
 extern void SCRCMD_WORK_Delete( SCRCMD_WORK *work );
 
 //QÆAæ“¾

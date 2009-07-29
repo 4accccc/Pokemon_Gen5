@@ -155,6 +155,8 @@ struct _TAG_SCRIPT_WORK
 	SCRIPT_FLDPARAM fld_param;
   
   GMEVENT *gmevent; //スクリプトを実行しているGMEVENT*
+  
+  HEAPID temp_heapID;
 };
 
 //--------------------------------------------------------------
@@ -184,7 +186,7 @@ typedef struct{
 //======================================================================
 //	プロトタイプ宣言
 //======================================================================
-static SCRIPT_WORK* EvScriptWork_Alloc( HEAPID heapID );
+static SCRIPT_WORK * EvScriptWork_Alloc( HEAPID heapID, HEAPID temp_heapID );
 static void script_del( VMHANDLE* core );
 static void EvScriptWork_Init( SCRIPT_WORK *sc, GAMESYS_WORK *gsys,
 	u16 scr_id, MMDL *obj, void* ret_wk);
@@ -289,13 +291,12 @@ static u16 SpScriptSearch_Sub( const u8 * p, u8 key );
  */
 //--------------------------------------------------------------
 GMEVENT * SCRIPT_SetEventScript( GAMESYS_WORK *gsys, u16 scr_id, MMDL *obj,
-		HEAPID heapID, const SCRIPT_FLDPARAM *fparam )
+		HEAPID temp_heapID, const SCRIPT_FLDPARAM *fparam )
 {
 	GMEVENT *event;
 	SCRIPT_WORK *sc;
 	
-  heapID = HEAPID_PROC;
-	sc = EvScriptWork_Alloc( heapID );		//ワーク確保
+	sc = EvScriptWork_Alloc( HEAPID_PROC, temp_heapID );		//ワーク確保
 	sc->fld_param = *fparam;
 	EvScriptWork_Init( sc, gsys, scr_id, obj, NULL );	//初期設定
 	event = FldScript_CreateControlEvent( sc );
@@ -344,7 +345,7 @@ void SCRIPT_SetTrainerEyeData( GMEVENT *event, MMDL *mmdl,
 void SCRIPT_CallScript( GMEVENT *event,
 	u16 scr_id, MMDL *obj, void *ret_script_wk, HEAPID heapID )
 {
-	SCRIPT_WORK *sc = EvScriptWork_Alloc( heapID );	//ワーク確保
+	SCRIPT_WORK *sc = EvScriptWork_Alloc( HEAPID_PROC, heapID );	//ワーク確保
 	EvScriptWork_Init( sc, GMEVENT_GetGameSysWork(event), scr_id, obj, ret_script_wk );	//初期設定
 	FldScript_CallControlEvent( sc, event );
 }
@@ -365,7 +366,7 @@ void SCRIPT_CallScript( GMEVENT *event,
 void SCRIPT_ChangeScript( GMEVENT *event,
 		u16 scr_id, MMDL *obj, HEAPID heapID )
 {
-	SCRIPT_WORK *sc = EvScriptWork_Alloc( heapID );	//ワーク確保
+	SCRIPT_WORK *sc = EvScriptWork_Alloc( HEAPID_PROC, heapID );	//ワーク確保
 	EvScriptWork_Init( sc, GMEVENT_GetGameSysWork(event), scr_id, obj, NULL );	//初期設定
 	FldScript_ChangeControlEvent( sc, event );
 }
@@ -466,7 +467,7 @@ static BOOL GMEVENT_ControlScript(GMEVENT_CONTROL * event)
  * @retval	"スクリプト制御ワークのアドレス"
  */
 //--------------------------------------------------------------
-static SCRIPT_WORK * EvScriptWork_Alloc( HEAPID heapID )
+static SCRIPT_WORK * EvScriptWork_Alloc( HEAPID heapID, HEAPID temp_heapID )
 {
 	SCRIPT_WORK *sc;
 	
@@ -477,6 +478,7 @@ static SCRIPT_WORK * EvScriptWork_Alloc( HEAPID heapID )
 	
 	sc->magic_no = SCRIPT_MAGIC_NO;
 	sc->heapID = heapID;
+  sc->temp_heapID = temp_heapID;
 	return sc;
 }
 
@@ -575,6 +577,7 @@ VMHANDLE * SCRIPT_AddVMachine(
 		GAMESYS_WORK *gsys,
 		SCRIPT_WORK *sc,
 		HEAPID heapID,
+    HEAPID temp_heapID,
 		u16 scr_id )
 {
 	SCRCMD_WORK_HEADER head;
@@ -587,7 +590,7 @@ VMHANDLE * SCRIPT_AddVMachine(
 	head.mmdlsys = GAMEDATA_GetMMdlSys( head.gdata );
 	head.script = sc;
 	
-	work = SCRCMD_WORK_Create( &head, heapID );
+	work = SCRCMD_WORK_Create( &head, heapID, temp_heapID );
 	
 	init.stack_size = 0x0100;
 	init.reg_size = 0x0100;
@@ -873,6 +876,9 @@ void * SCRIPT_GetSubMemberWork( SCRIPT_WORK *sc, u32 id )
 	//HEAPID wb
 	case ID_EVSCR_WK_HEAPID:
 		return &sc->heapID;
+  //TEMP_HEAPID wb
+  case ID_EVSCR_WK_TEMP_HEAPID:
+    return &sc->temp_heapID;
 	//SCRIPT_FLDPARAM wb
 	case ID_EVSCR_WK_FLDPARAM:
 		return &sc->fld_param;
@@ -1065,7 +1071,7 @@ static GMEVENT_RESULT FldScriptEvent_ControlScript(
 
 		//仮想マシン追加
 		sc->vm[VMHANDLE_MAIN] = SCRIPT_AddVMachine(
-				sc->gsys, sc, sc->heapID, sc->script_id );
+				sc->gsys, sc, sc->heapID, sc->temp_heapID, sc->script_id );
 		sc->vm_machine_count = 1;
 		
 		//メッセージ関連
@@ -1942,13 +1948,13 @@ void GameStartScriptInit( FLDCOMMON_WORK* fsys )
 #else //wb
 void SCRIPT_CallGameStartInitScript( GAMESYS_WORK *gsys, HEAPID heapID )
 {
-  SCRIPT_WORK *sc = EvScriptWork_Alloc( heapID );
+  SCRIPT_WORK *sc = EvScriptWork_Alloc( HEAPID_PROC, heapID );
 //  sc->fld_param = NULL;
   EvScriptWork_Init( sc, gsys, SCRID_INIT_SCRIPT, NULL, NULL );
   
   {
     VMHANDLE *core = NULL;
-    core = SCRIPT_AddVMachine( sc->gsys, sc, sc->heapID, sc->script_id );
+    core = SCRIPT_AddVMachine( sc->gsys, sc, sc->heapID, sc->temp_heapID, sc->script_id );
     while( VM_Control(core) == TRUE ){};
     script_del( core );
   }
@@ -1962,7 +1968,7 @@ void SCRIPT_CallGameStartInitScript( GAMESYS_WORK *gsys, HEAPID heapID )
  * @param	scr_id		スクリプトID
  * @return	none
  *
- * 注意！
+ * 注意HEAPID_PROC, ！
  * SCRIPTを確保していないので、
  * SCWK_ANSWERなどのワークは使用することが出来ない！
  * LOCALWORK0などを使用するようにする！

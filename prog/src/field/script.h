@@ -146,6 +146,8 @@ enum{
 	ID_EVSCR_WK_FLDPARAM,
 	//GMEVENT
   ID_EVSCR_WK_GMEVENT,
+  //TEMP HEAPID
+  ID_EVSCR_WK_TEMP_HEAPID,
 
 	ID_EVSCR_WK_END,				//ワークの終了ID
 };
@@ -204,7 +206,7 @@ typedef struct
 //--------------------------------------------------------------
 extern GMEVENT * SCRIPT_SetEventScript(
 		GAMESYS_WORK *gsys, u16 scr_id, MMDL *obj,
-		HEAPID heapID, const SCRIPT_FLDPARAM *fparam );
+		HEAPID temp_heapID, const SCRIPT_FLDPARAM *fparam );
 
 extern void SCRIPT_SetTrainerEyeData( GMEVENT *event, MMDL *mmdl,
     s16 range, u16 dir, u16 scr_id, u16 tr_id, int tr_type, int tr_no );
@@ -246,7 +248,7 @@ extern void SCRIPT_ChangeScript( GMEVENT *event,
  */
 //--------------------------------------------------------------
 extern VMHANDLE * SCRIPT_AddVMachine(
-	GAMESYS_WORK *gsys, SCRIPT_WORK *sc, HEAPID heapID, u16 scr_id );
+	GAMESYS_WORK *gsys, SCRIPT_WORK *sc, HEAPID heapID, HEAPID temp_heapID, u16 scr_id );
 
 //======================================================================
 //	スクリプト制御ワークのメンバーアクセス
