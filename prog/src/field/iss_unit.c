@@ -157,6 +157,7 @@ void ISS_UNIT_Update( const ISS_UNIT* p_unit, int x, int y, int z )
 
 
 	// DEBUG: デバッグ出力
+	/*
 	if( p_unit->isActive )
 	{
 		OBATA_Printf( "---------------------\n" );
@@ -164,6 +165,7 @@ void ISS_UNIT_Update( const ISS_UNIT* p_unit, int x, int y, int z )
 		OBATA_Printf( "volume = %d\n", volume );
 		OBATA_Printf( "x, y, z = %d, %d, %d\n", p_unit->x, p_unit->y, p_unit->z );
 	}
+	*/
 }
 
 
