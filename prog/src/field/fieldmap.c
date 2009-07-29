@@ -80,7 +80,6 @@
 
 #include "field_place_name.h"
 #include "iss_unit.h"		
-#include "sound/bgm_info.h"
 #include "field_cars.h"
 
 //======================================================================
@@ -194,7 +193,6 @@ struct _FIELDMAP_WORK
 
 	FIELD_PLACE_NAME* placeNameSys;	// 地名表示ウィンドウ
 	ISS_UNIT* issUnit;				// 街ISSユニット
-	BGM_INFO_SYS* bgmInfoSys;		// BGM情報
 	FIELD_CARS* cars;
 
 	
@@ -456,9 +454,6 @@ static MAINSEQ_RESULT mainSeqFunc_setup(GAMESYS_WORK *gsys, FIELDMAP_WORK *field
 
   // 街ISSユニットの作成
   fieldWork->issUnit = ISS_UNIT_Create( fieldWork->map_id, fieldWork->heapID );
-
-  // BGM情報管理システムを作成
-  fieldWork->bgmInfoSys = BGM_INFO_CreateSystem( fieldWork->heapID );
 
   fieldWork->camera_control = FIELD_CAMERA_Create(
       fieldWork,
@@ -788,9 +783,6 @@ static MAINSEQ_RESULT mainSeqFunc_free(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldW
 
   // 街ISSユニットの破棄
   ISS_UNIT_Delete( fieldWork->issUnit );
-
-  // BGM情報管理システムの破棄
-  BGM_INFO_DeleteSystem( fieldWork->bgmInfoSys );
 
   FIELD_CARS_Delete( fieldWork->cars );
 
