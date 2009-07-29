@@ -11,7 +11,9 @@
 #define NARC_AREA_MAP_ITP_NAIX_
 
 enum {
-	NARC_area_map_itp_area00_itp_itpdat = 0
+	NARC_area_map_itp_area00_itp_itpdat = 0,
+	NARC_area_map_itp_kawa_test_itp1_itpdat = 1,
+	NARC_area_map_itp_kawa_test_itp2_itpdat = 2
 };
 
 /* NARC_AREA_MAP_ITP_NAIX_ */
