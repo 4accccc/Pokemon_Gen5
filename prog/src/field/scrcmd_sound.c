@@ -18,6 +18,7 @@
 
 #include "fieldmap.h"
 #include "field/zonedata.h"
+#include "field_sound.h"
 
 #include "script.h"
 #include "script_def.h"
@@ -55,10 +56,7 @@ VMCMD_RESULT EvCmdBgmPlay( VMHANDLE *core, void *wk )
 #if 0
   Snd_BgmPlay( music );
 #else //wb
-  {
-	  u16 trackBit = 0xfcff;	// track 9,10 OFF
-	  PMSND_PlayNextBGM_EX( music, trackBit, 60, 0 );
-  }
+	PMSND_PlayBGM( music );
 #endif
   return VMCMD_RESULT_CONTINUE;
 }
@@ -353,13 +351,16 @@ VMCMD_RESULT EvCmdSeWait(VMHANDLE *core, void *wk)
 //--------------------------------------------------------------
 VMCMD_RESULT EvCmdMePlay(VMHANDLE *core, void *wk )
 {
-  u16 trackBit = 0xffff;
   u16 no = VMGetU16( core );
   
-  PMSND_PauseBGM( TRUE );
-  PMSND_PushBGM();
+  {
+    SCRCMD_WORK *work = wk;
+    GAMEDATA *gdata = SCRCMD_WORK_GetGameData( work );
+    FIELD_SOUND *fsnd = GAMEDATA_GetFieldSound( gdata );
+    FIELD_SOUND_PushBGM( fsnd );
+  }
   
-  PMSND_PlayBGM_EX( no, trackBit );
+  PMSND_PlayBGM( no );
   return VMCMD_RESULT_CONTINUE;
 }
 
@@ -373,8 +374,10 @@ VMCMD_RESULT EvCmdMePlay(VMHANDLE *core, void *wk )
 static BOOL EvWaitMe( VMHANDLE *core, void *wk )
 {
   if( PMSND_CheckPlayBGM() == FALSE ){
-    PMSND_PopBGM();
-    PMSND_PauseBGM( FALSE );
+    SCRCMD_WORK *work = wk;
+    GAMEDATA *gdata = SCRCMD_WORK_GetGameData( work );
+    FIELD_SOUND *fsnd = GAMEDATA_GetFieldSound( gdata );
+    FIELD_SOUND_PopBGM( fsnd );
     return TRUE;
   }
   

@@ -47,6 +47,7 @@
 #include "savedata/box_savedata.h"  //デバッグアイテム生成用
 #include "app/townmap.h"
 
+#include "field_sound.h"
 
 //======================================================================
 //	define
@@ -1096,8 +1097,11 @@ static GMEVENT_RESULT DMenuMusicalSelectEvent(
         typedef void (* CHANGE_FUNC)(DEB_MENU_MUS_WORK*);
         CHANGE_FUNC func = (CHANGE_FUNC)ret;
         func(work);
-        PMSND_PauseBGM(TRUE);
-        PMSND_PushBGM();
+        {
+          GAMEDATA *gdata = GAMESYSTEM_GetGameData( work->gmSys );
+          FIELD_SOUND *fsnd = GAMEDATA_GetFieldSound( gdata );
+          FIELD_SOUND_PushBGM( fsnd );
+        }
         GMEVENT_CallEvent(work->gmEvent, work->newEvent);
     		(*seq)++;
     		return( GMEVENT_RES_CONTINUE );
@@ -1126,8 +1130,12 @@ static GMEVENT_RESULT DMenuMusicalSelectEvent(
       GFL_HEAP_FreeMemory( work->pokePara );
       work->pokePara = NULL;
     }
-    PMSND_PopBGM();
-    PMSND_PauseBGM(FALSE);
+    
+    {
+      GAMEDATA *gdata = GAMESYSTEM_GetGameData( work->gmSys );
+      FIELD_SOUND *fsnd = GAMEDATA_GetFieldSound( gdata );
+      FIELD_SOUND_PopBGM( fsnd );
+    }  
     PMSND_FadeInBGM(60);
 		return( GMEVENT_RES_FINISH );
     
@@ -2692,9 +2700,11 @@ static GMEVENT_RESULT DMenuSkyJump( GMEVENT *p_event, int *p_seq, void *p_wk_adr
 	switch(*p_seq )
 	{	
 	case SEQ_INIT:
-
-		PMSND_PauseBGM(TRUE);
-		PMSND_PushBGM();
+    {
+      GAMEDATA *gdata = GAMESYSTEM_GetGameData( p_wk->p_gamesys );
+      FIELD_SOUND *fsnd = GAMEDATA_GetFieldSound( gdata );
+      FIELD_SOUND_PushBGM( fsnd );
+    }
 		*p_seq	= SEQ_FLD_FADEOUT;
 		break;
 
@@ -2747,7 +2757,6 @@ static GMEVENT_RESULT DMenuSkyJump( GMEVENT *p_event, int *p_seq, void *p_wk_adr
 		}
 		*p_seq	= SEQ_FLD_OPEN;
 		break;
-
 	case SEQ_FLD_OPEN:
 		GMEVENT_CallEvent(p_wk->p_event, EVENT_FieldOpen(p_wk->p_gamesys));
 		*p_seq	= SEQ_FLD_FADEIN;

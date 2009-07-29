@@ -30,6 +30,8 @@
 
 #include "event_encount_effect.h"
 
+#include "field_sound.h"
+
 extern const GFL_PROC_DATA DebugSogabeMainProcData;
 
 //======================================================================
@@ -167,15 +169,16 @@ static GMEVENT_RESULT fieldBattleEvent(
 
   switch (*seq) {
   case 0:
-    // サウンドテスト
-    // ＢＧＭ一時停止→退避
-    PMSND_PauseBGM(TRUE);
-    PMSND_PushBGM();
-
+    {
+      GAMEDATA *gdata = GAMESYSTEM_GetGameData( gsys );
+      FIELD_SOUND *fsnd = GAMEDATA_GetFieldSound( gdata );
+      FIELD_SOUND_PushBGM( fsnd );
+    }
+    
     // サウンドテスト
     // 戦闘用ＢＧＭセット
     PMSND_PlayBGM(dbw->para.musicDefault);
-
+    
     //エンカウントエフェクト
     GMEVENT_CallEvent( event,
         EVENT_FieldEncountEffect(gsys,dbw->fieldmap) );
@@ -207,10 +210,11 @@ static GMEVENT_RESULT fieldBattleEvent(
     break;
   case 5:
     GMEVENT_CallEvent(event, EVENT_FieldOpen(gsys));
-    // サウンドテスト
-    // ＢＧＭ取り出し→再開
-    PMSND_PopBGM();
-    PMSND_PauseBGM(FALSE);
+    {
+      GAMEDATA *gdata = GAMESYSTEM_GetGameData( gsys );
+      FIELD_SOUND *fsnd = GAMEDATA_GetFieldSound( gdata );
+      FIELD_SOUND_PopBGM( fsnd );
+    }
     PMSND_FadeInBGM(60);
     //
     (*seq) ++;
@@ -323,8 +327,11 @@ static GMEVENT_RESULT DebugBattleEvent(
     GMEVENT_CallEvent(event, EVENT_FieldClose(gsys, dbw->fieldmap));
     // サウンドテスト
     // ＢＧＭ一時停止→退避
-    PMSND_PauseBGM(TRUE);
-    PMSND_PushBGM();
+    {
+      GAMEDATA *gdata = GAMESYSTEM_GetGameData( gsys );
+      FIELD_SOUND *fsnd = GAMEDATA_GetFieldSound( gdata );
+      FIELD_SOUND_PushBGM( fsnd );
+    }
     (*seq)++;
     break;
   case 1:
@@ -352,10 +359,11 @@ static GMEVENT_RESULT DebugBattleEvent(
     break;
   case 4:
     GMEVENT_CallEvent(event, EVENT_FieldOpen(gsys));
-    // サウンドテスト
-    // ＢＧＭ取り出し→再開
-    PMSND_PopBGM();
-    PMSND_PauseBGM(FALSE);
+    {
+      GAMEDATA *gdata = GAMESYSTEM_GetGameData( gsys );
+      FIELD_SOUND *fsnd = GAMEDATA_GetFieldSound( gdata );
+      FIELD_SOUND_PopBGM( fsnd );
+    }
     PMSND_FadeInBGM(60);
     //
     (*seq) ++;

@@ -21,7 +21,7 @@
 //  define
 //======================================================================
 #define TRACKBIT_ALL (0xffff) ///<全track ON
-#define TRACKBIT_ACTION ((1<<9)|(1<<10)) ///<アクション用BGM Track
+#define TRACKBIT_ACTION ((1<<8)|(1<<9)) ///<アクション用BGM Track
 #define TRACKBIT_STILL (TRACKBIT_ALL^TRACKBIT_ACTION) ///<Action Track OFF
 
 #define PUSH_MAX (1) ///<BGM退避回数最大
@@ -112,7 +112,7 @@ void FIELD_SOUND_PlayNextBGM( u32 bgmNo )
  * @retval nothing
  */
 //--------------------------------------------------------------
-void FIELD_SOUND_ChgangeBGMTrackAction( void )
+void FIELD_SOUND_ChangeBGMTrackAction( void )
 {
 	u16 trackBit = TRACKBIT_ALL;
 	PMSND_ChangeBGMtrack( trackBit );

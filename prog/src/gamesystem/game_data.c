@@ -56,6 +56,9 @@ struct _GAMEDATA{
   FIELD_RAIL_LOADER * railLoader;   ///<フィールドレールデータ管理へのポインタ
   MMDLSYS *mmdlsys;
   EVENTWORK *eventwork;
+  
+  FIELD_SOUND *field_sound; ///<フィールドサウンド管理
+
   int fieldmap_walk_count; ///<フィールドマップ歩数カウント
   u8 season_id;				///<季節指定ID
   u8 subscreen_mode; ///< フィールド下画面の状態
@@ -132,6 +135,9 @@ GAMEDATA * GAMEDATA_Create(HEAPID heapID)
   gd->railLoader = FIELD_RAIL_LOADER_Create( heapID );
   //動作モデル
   gd->mmdlsys = MMDLSYS_CreateSystem( heapID, MMDL_MDL_MAX );
+  
+  //フィールドサウンド管理
+  gd->field_sound = FIELD_SOUND_Create( heapID );
 
   gd->bagcursor = MYITEM_BagCursorAlloc( heapID );
   gd->myitem = SaveControl_DataPtrGet(gd->sv_control_ptr, GMDATA_ID_MYITEM);
@@ -155,6 +161,7 @@ void GAMEDATA_Delete(GAMEDATA * gamedata)
   MMDLSYS_FreeSystem(gamedata->mmdlsys);
 	FIELD_RAIL_LOADER_Delete( gamedata->railLoader );
   EVENTDATA_SYS_Delete(gamedata->evdata);
+  FIELD_SOUND_Delete( gamedata->field_sound );
   GFL_HEAP_FreeMemory(gamedata);
 }
 //------------------------------------------------------------------
@@ -488,6 +495,18 @@ int GAMEDATA_GetFieldMapWalkCount(GAMEDATA *gamedata)
 void GAMEDATA_SetFieldMapWalkCount(GAMEDATA *gamedata,int count)
 {
   gamedata->fieldmap_walk_count = count;
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief FIELD_SOUND取得
+ * @param   gamedata	GAMEDATAへのポインタ
+ * @return  FIELD_SOUND*
+ */
+//--------------------------------------------------------------
+FIELD_SOUND * GAMEDATA_GetFieldSound( GAMEDATA *gamedata )
+{
+  return( gamedata->field_sound );
 }
 
 //============================================================================================

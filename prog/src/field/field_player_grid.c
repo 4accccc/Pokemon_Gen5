@@ -20,6 +20,8 @@
 
 #include "fldeff_namipoke.h"
 
+#include "field_sound.h"
+
 //======================================================================
 //	define
 //======================================================================
@@ -177,8 +179,10 @@ static void gjikiSwim_SetMove_Hitch(
 	u32 key_trg, u32 key_cont, u16 dir, BOOL debug_flag );
 
 //サウンド
+#if 0
 static void gjiki_Sound_MoveStop( void );
 static void gjiki_Sound_Move( void );
+#endif
 
 //======================================================================
 //	グリッド移動 フィールドプレイヤー制御
@@ -599,8 +603,7 @@ static void gjiki_SetMove_Stop(
 	gjiki->move_state = PLAYER_MOVE_STOP;
 	
   FIELD_PLAYER_SetMoveValue( gjiki->fld_player, PLAYER_MOVE_VALUE_STOP );
-
-	gjiki_Sound_MoveStop();
+  FIELD_SOUND_ChangeBGMTrackStill();
 }
 
 //--------------------------------------------------------------
@@ -636,8 +639,7 @@ static void gjiki_SetMove_Walk(
 	gjiki->move_state = PLAYER_MOVE_WALK;
 
   FIELD_PLAYER_SetMoveValue( gjiki->fld_player, PLAYER_MOVE_VALUE_WALK );
-	
-	gjiki_Sound_Move();
+  FIELD_SOUND_ChangeBGMTrackAction();
 }
 
 //--------------------------------------------------------------
@@ -664,7 +666,7 @@ static void gjiki_SetMove_Turn(
 	gjiki->move_state = PLAYER_MOVE_TURN;
 	
   FIELD_PLAYER_SetMoveValue( gjiki->fld_player, PLAYER_MOVE_VALUE_TURN );
-	gjiki_Sound_MoveStop();
+  FIELD_SOUND_ChangeBGMTrackStill();
 }
 
 //--------------------------------------------------------------
@@ -692,7 +694,7 @@ static void gjiki_SetMove_Hitch(
 	
   FIELD_PLAYER_SetMoveValue( gjiki->fld_player, PLAYER_MOVE_VALUE_STOP );
   PMSND_PlaySE( SEQ_SE_WALL_HIT );
-	gjiki_Sound_MoveStop();
+  FIELD_SOUND_ChangeBGMTrackStill();
 }
 
 //--------------------------------------------------------------
@@ -721,7 +723,7 @@ static void gjiki_SetMove_Jump(
   
   FIELD_PLAYER_SetMoveValue( gjiki->fld_player, PLAYER_MOVE_VALUE_WALK );
   PMSND_PlaySE( SEQ_SE_DANSA );
-	gjiki_Sound_Move();
+  FIELD_SOUND_ChangeBGMTrackAction();
 }
 
 //======================================================================
@@ -1011,8 +1013,7 @@ static void gjikiSwim_SetMove_Stop(
 	gjiki->move_state = PLAYER_MOVE_STOP;
 	
   FIELD_PLAYER_SetMoveValue( gjiki->fld_player, PLAYER_MOVE_VALUE_STOP );
-
-	gjiki_Sound_MoveStop();
+  FIELD_SOUND_ChangeBGMTrackStill();
 }
 
 //--------------------------------------------------------------
@@ -1046,8 +1047,7 @@ static void gjikiSwim_SetMove_Walk(
 	gjiki->move_state = PLAYER_MOVE_WALK;
 
   FIELD_PLAYER_SetMoveValue( gjiki->fld_player, PLAYER_MOVE_VALUE_WALK );
-	
-	gjiki_Sound_Move();
+  FIELD_SOUND_ChangeBGMTrackAction();
 }
 
 //--------------------------------------------------------------
@@ -1074,7 +1074,7 @@ static void gjikiSwim_SetMove_Turn(
 	gjiki->move_state = PLAYER_MOVE_TURN;
 	
   FIELD_PLAYER_SetMoveValue( gjiki->fld_player, PLAYER_MOVE_VALUE_TURN );
-	gjiki_Sound_MoveStop();
+  FIELD_SOUND_ChangeBGMTrackStill();
 }
 
 //--------------------------------------------------------------
@@ -1102,7 +1102,7 @@ static void gjikiSwim_SetMove_Hitch(
 	
   FIELD_PLAYER_SetMoveValue( gjiki->fld_player, PLAYER_MOVE_VALUE_STOP );
   PMSND_PlaySE( SEQ_SE_WALL_HIT );
-	gjiki_Sound_MoveStop();
+  FIELD_SOUND_ChangeBGMTrackStill();
 }
 
 //======================================================================
@@ -1404,8 +1404,7 @@ static void gjikiCycle_SetMove_Stop(
 	gjiki->move_state = PLAYER_MOVE_STOP;
 	
   FIELD_PLAYER_SetMoveValue( gjiki->fld_player, PLAYER_MOVE_VALUE_STOP );
-
-	gjiki_Sound_MoveStop();
+  FIELD_SOUND_ChangeBGMTrackStill();
 }
 
 //--------------------------------------------------------------
@@ -1439,8 +1438,7 @@ static void gjikiCycle_SetMove_Walk(
 	gjiki->move_state = PLAYER_MOVE_WALK;
 
   FIELD_PLAYER_SetMoveValue( gjiki->fld_player, PLAYER_MOVE_VALUE_WALK );
-	
-	gjiki_Sound_Move();
+  FIELD_SOUND_ChangeBGMTrackAction();
 }
 
 //--------------------------------------------------------------
@@ -1467,7 +1465,7 @@ static void gjikiCycle_SetMove_Turn(
 	gjiki->move_state = PLAYER_MOVE_TURN;
 	
   FIELD_PLAYER_SetMoveValue( gjiki->fld_player, PLAYER_MOVE_VALUE_TURN );
-	gjiki_Sound_MoveStop();
+  FIELD_SOUND_ChangeBGMTrackStill();
 }
 
 //--------------------------------------------------------------
@@ -1495,7 +1493,7 @@ static void gjikiCycle_SetMove_Hitch(
 	
   FIELD_PLAYER_SetMoveValue( gjiki->fld_player, PLAYER_MOVE_VALUE_STOP );
   PMSND_PlaySE( SEQ_SE_WALL_HIT );
-	gjiki_Sound_MoveStop();
+  FIELD_SOUND_ChangeBGMTrackStill();
 }
 
 //--------------------------------------------------------------
@@ -1524,7 +1522,7 @@ static void gjikiCycle_SetMove_Jump(
   
   FIELD_PLAYER_SetMoveValue( gjiki->fld_player, PLAYER_MOVE_VALUE_WALK );
   PMSND_PlaySE( SEQ_SE_DANSA );
-	gjiki_Sound_Move();
+  FIELD_SOUND_ChangeBGMTrackAction();
 }
 
 //======================================================================
@@ -1667,6 +1665,7 @@ static void (* const data_gjikiRequestProcTbl[FIELD_PLAYER_GRID_REQBIT_MAX])( FI
 //======================================================================
 //	サウンド
 //======================================================================
+#if 0
 //--------------------------------------------------------------
 /**
  * サウンドテスト　自機停止
@@ -1694,6 +1693,7 @@ static void gjiki_Sound_Move( void )
 	u16 trackBit = 0xffff; // 全track ON
 	PMSND_ChangeBGMtrack(trackBit);
 }
+#endif
 
 //======================================================================
 //  ツール

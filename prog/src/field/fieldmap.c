@@ -1942,7 +1942,6 @@ static void zoneChange_SetWeather( FIELDMAP_WORK *fieldWork, u32 zone_id )
 	u32 w_no = ZONEDATA_GetWeatherID( zone_id );
 	FIELD_WEATHER *we = FIELDMAP_GetFieldWeather( fieldWork );
 	
-	
 	if( w_no != WEATHER_NO_NUM && w_no != FIELD_WEATHER_GetWeatherNo(we) ){
 		FIELD_WEATHER_Change( we, w_no );
 	}

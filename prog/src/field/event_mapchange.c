@@ -33,6 +33,7 @@
 
 #include "fieldmap/zone_id.h"   //¦check@ƒ†ƒjƒIƒ“‚ÌSubScreenİ’èb’è‘Îˆ‚Ìˆ×
 
+#include "field_sound.h"
 
 static void UpdateMapParams(GAMESYS_WORK * gsys, const LOCATION * loc_req);
 static void SetMMdl( GAMESYS_WORK *gsys, const LOCATION *loc_req, GAMEINIT_MODE mode );

@@ -258,7 +258,7 @@ VMCMD_RESULT EvCmdEyeTrainerTypeGet( VMHANDLE *core, void *wk )
 {
   SCRCMD_WORK *work = wk;
   SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
-	u16 *type	= SCRIPT_GetMemberWork( sc, ID_EVSCR_TR0_TYPE ); //TR0_TYPEŒÅ’è
+	u16 *type	= SCRIPT_GetMemberWork( sc, ID_EVSCR_TR0_TYPE ); //WB kari TR0_TYPEŒÅ’è
 	u16 *ret_wk	= SCRCMD_GetVMWork( core, work );
 	*ret_wk = *type;
 	return 0;

@@ -17,6 +17,7 @@
 #include "gamesystem/game_data.h"
 
 #include "field/fieldmap.h"
+#include "field/field_sound.h"
 
 #include "./event_fieldmap_control.h"
 #include "./event_ircbattle.h"
@@ -105,11 +106,12 @@ static GMEVENT_RESULT EVENT_IrcBattleMain(GMEVENT * event, int *  seq, void * wo
   GAMESYS_WORK * gsys = dbw->gsys;
   switch (*seq) {
 	case _IRCBATTLE_START:
-		// サウンドテスト
-		// ＢＧＭ一時停止→退避
-		PMSND_PauseBGM(TRUE);
-		PMSND_PushBGM();
-
+    {
+      GAMEDATA *gdata = GAMESYSTEM_GetGameData( gsys );
+      FIELD_SOUND *fsnd = GAMEDATA_GetFieldSound( gdata );
+      FIELD_SOUND_PushBGM( fsnd );
+    }
+    
 		GMEVENT_CallEvent(event, EVENT_FieldFadeOut(gsys, dbw->fieldmap, FIELD_FADE_BLACK));
 		(*seq) ++;
 		break;
@@ -265,12 +267,12 @@ static GMEVENT_RESULT EVENT_IrcBattleMain(GMEVENT * event, int *  seq, void * wo
     (*seq) ++;
     break;
   case _FIELD_END:
-		// サウンドテスト
-		// ＢＧＭ取り出し→再開
-		PMSND_PopBGM();
-		PMSND_PauseBGM(FALSE);
+    {
+      GAMEDATA *gdata = GAMESYSTEM_GetGameData( gsys );
+      FIELD_SOUND *fsnd = GAMEDATA_GetFieldSound( gdata );
+      FIELD_SOUND_PopBGM( fsnd );
+    }
 		PMSND_FadeInBGM(60);
-
     return GMEVENT_RES_FINISH;
 
 	//相性チェックはプロセス移動

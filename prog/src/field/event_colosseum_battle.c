@@ -15,6 +15,7 @@
 #include "gamesystem/game_data.h"
 
 #include "field/fieldmap.h"
+#include "field/field_sound.h"
 
 #include "./event_fieldmap_control.h"
 
@@ -67,11 +68,11 @@ static GMEVENT_RESULT EVENT_ColosseumBattleMain(GMEVENT * event, int *  seq, voi
   
   switch (*seq) {
 	case 0:
-		// サウンドテスト
-		// ＢＧＭ一時停止→退避
-		PMSND_PauseBGM(TRUE);
-		PMSND_PushBGM();
-
+    {
+      GAMEDATA *gdata = GAMESYSTEM_GetGameData( gsys );
+      FIELD_SOUND *fsnd = GAMEDATA_GetFieldSound( gdata );
+      FIELD_SOUND_PushBGM( fsnd );
+    }
     GMEVENT_CallEvent( event, EVENT_ObjPauseAll(gsys, cbw->fieldmap) );
     (*seq)++;
     break;
@@ -125,14 +126,13 @@ static GMEVENT_RESULT EVENT_ColosseumBattleMain(GMEVENT * event, int *  seq, voi
     (*seq) ++;
     break;
   case 9:
-		// サウンドテスト
-		// ＢＧＭ取り出し→再開
-		PMSND_PopBGM();
-		PMSND_PauseBGM(FALSE);
+    {
+      GAMEDATA *gdata = GAMESYSTEM_GetGameData( gsys );
+      FIELD_SOUND *fsnd = GAMEDATA_GetFieldSound( gdata );
+      FIELD_SOUND_PopBGM( fsnd );
+    }
 		PMSND_FadeInBGM(60);
-
     return GMEVENT_RES_FINISH;
-
   default:
     GF_ASSERT(0);
     break;

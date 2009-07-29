@@ -33,7 +33,7 @@
 extern void FIELD_SOUND_PlayNextBGM( u32 bgmNo );
 
 //フィールドBGM トラック関連
-extern void FIELD_SOUND_ChgangeBGMTrackAction( void );
+extern void FIELD_SOUND_ChangeBGMTrackAction( void );
 extern void FIELD_SOUND_ChangeBGMTrackStill( void );
 extern void FIELD_SOUND_ChangeBGMVolume( int vol );
 extern void FIELD_SOUND_ChangeBGMActionVolume( int vol );
