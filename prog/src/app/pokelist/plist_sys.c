@@ -964,7 +964,15 @@ static void PLIST_SelectPokeInit( PLIST_WORK *work )
     GFL_CLACT_WK_SetDrawEnable( work->clwkCursor[0] , FALSE );
     if( work->pokeCursor <= PL_SEL_POS_POKE6 )
     {
-      PLIST_PLATE_SetActivePlate( work , work->plateWork[work->pokeCursor] , FALSE );
+      //通常時はTPはプレート非アクティブ。交換時はアクティブ
+      if( work->mainSeq == PSMS_CHANGE_POKE )
+      {
+        PLIST_PLATE_SetActivePlate( work , work->plateWork[work->pokeCursor] , TRUE );
+      }
+      else
+      {
+        PLIST_PLATE_SetActivePlate( work , work->plateWork[work->pokeCursor] , FALSE );
+      }
     }
   }
   
@@ -1013,6 +1021,10 @@ static void PLIST_SelectPokeTerm( PLIST_WORK *work )
   switch( work->selectState )
   {
   case PSSEL_SELECT:
+    //カーソルは非表示
+    GFL_CLACT_WK_SetDrawEnable( work->clwkCursor[0] , FALSE );
+
+    /*
     //カーソルを変更
     if( work->pokeCursor == PL_SEL_POS_POKE1 )
     {
@@ -1023,7 +1035,7 @@ static void PLIST_SelectPokeTerm( PLIST_WORK *work )
       GFL_CLACT_WK_SetAnmSeq( work->clwkCursor[0] , PCA_SELECT_B );
     }
     GFL_CLACT_WK_SetBgPri( work->clwkCursor[0] , 2 );
-    
+    */
     work->selectPokePara = PokeParty_GetMemberPointer(work->plData->pp, work->pokeCursor );
 
     work->plData->ret_sel = work->pokeCursor;
@@ -1294,9 +1306,9 @@ static void PLIST_SelectPokeUpdateTP( PLIST_WORK *work )
       work->selectState = PSSEL_SELECT;
       work->pokeCursor = plateIdx[ret];
 
-      PLIST_SelectPokeSetCursor( work , work->pokeCursor );
-      PLIST_PLATE_SetActivePlate( work , work->plateWork[work->pokeCursor] , TRUE );
+      //PLIST_SelectPokeSetCursor( work , work->pokeCursor );
       PLIST_PLATE_SetActivePlate( work , work->plateWork[befPos] , FALSE );
+      PLIST_PLATE_SetActivePlate( work , work->plateWork[work->pokeCursor] , TRUE );
       work->platePalAnmCnt = PLIST_PLATE_ACTIVE_ANM_CNT;
 
       work->ktst = GFL_APP_KTST_TOUCH;
