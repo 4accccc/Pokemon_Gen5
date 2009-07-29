@@ -23,6 +23,8 @@
 #include "gamesystem/game_data.h"
 #include "system/bmp_winframe.h"
 
+#include "gamesystem/msgspeed.h"
+
 #include "message.naix"
 #include "bag.naix"
 #include "item_icon.naix"
@@ -818,6 +820,11 @@ void ITEMDISP_CellVramTrans( FIELD_ITEMMENU_WORK* pWork )
 	}
 }
 
+//      GX_LoadOBJ(&charbuff[ 0*32], dest_adrs + (11)*32, (32*5));
+//     GX_LoadOBJ(&charbuff[12*32], dest_adrs + (19)*32, (32*5));
+//      GX_LoadOBJ(&charbuff[ 5*32], dest_adrs + (40)*32, (32*7));
+//      GX_LoadOBJ(&charbuff[17*32], dest_adrs + (48)*32, (32*7));
+
 
 //------------------------------------------------------------------------------
 /**
@@ -1294,7 +1301,40 @@ void ITEMDISP_ItemInfoWindowDisp( FIELD_ITEMMENU_WORK *pWork )
 
   GFL_BMP_Clear(GFL_BMPWIN_GetBmp(pwin), 15);
   GFL_FONTSYS_SetColor(1, 2, 15);
+#if 0
   PRINTSYS_Print( GFL_BMPWIN_GetBmp(pwin), 0, 0, pWork->pExpStrBuf, pWork->fontHandle);
+#else
+
+//==============================================================================================
+/**
+ * プリントストリームを利用した文字列描画（通常版 - コールバックなし）
+ *
+ * @param   dst     描画先Bitmap
+ * @param   xpos    描画開始Ｘ座標（ドット）
+ * @param   ypos    描画開始Ｙ座標（ドット）
+ * @param   str     文字列
+ * @param   font    フォントハンドラ
+ * @param   wait    １文字描画ごとのウェイトフレーム数（※）
+ * @param   tcbsys    使用するGFL_TCBLシステムポインタ
+ * @param   tcbpri    使用するタスクプライオリティ
+ * @param   heapID    使用するヒープID
+ *
+ * @retval  PRINT_STREAM* ストリームハンドル
+ *
+ * ※ wait に-2 以下の値を設定することで、毎フレーム２文字以上の描画を行う。-2（２文字）, -3（３文字）...
+ */
+//==============================================================================================
+//extern PRINT_STREAM* PRINTSYS_PrintStream(
+//    GFL_BMPWIN* dst, u16 xpos, u16 ypos, const STRBUF* str, GFL_FONT* font,
+//    int wait, GFL_TCBLSYS* tcbsys, u32 tcbpri, HEAPID heapID, u16 clearColor );
+
+
+  pWork->pStream = PRINTSYS_PrintStream(pwin ,0,0, pWork->pExpStrBuf, pWork->fontHandle,
+                       MSGSPEED_GetWait(), pWork->pMsgTcblSys, 2, pWork->heapID, 15);
+
+  
+#endif
+
   BmpWinFrame_Write( pwin, WINDOW_TRANS_ON_V, GFL_ARCUTIL_TRANSINFO_GetPos(pWork->bgchar), _BUTTON_WIN_PAL );
 
   GFL_BMPWIN_TransVramCharacter(pwin);
@@ -1315,3 +1355,26 @@ void ITEMDISP_ItemInfoMessageMake( FIELD_ITEMMENU_WORK *pWork,int id )
   WORDSET_ExpandStr( pWork->WordSet, pWork->pExpStrBuf, pWork->pStrBuf  );
 }
 
+
+
+BOOL ITEMDISP_MessageEndCheck(FIELD_ITEMMENU_WORK* pWork)
+{
+  if(pWork->pStream){
+    int state = PRINTSYS_PrintStreamGetState( pWork->pStream );
+    switch(state){
+    case PRINTSTREAM_STATE_DONE:
+      PRINTSYS_PrintStreamDelete( pWork->pStream );
+      pWork->pStream = NULL;
+      break;
+    case PRINTSTREAM_STATE_PAUSE:
+      if(GFL_UI_KEY_GetTrg() == PAD_BUTTON_DECIDE){
+        PRINTSYS_PrintStreamReleasePause( pWork->pStream );
+      }
+      break;
+    default:
+      break;
+    }
+    return FALSE;  //まだ終わってない
+  }
+  return TRUE;// 終わっている
+}

@@ -137,6 +137,8 @@ struct _DEBUGITEM_PARAM {
   GFL_CLWK  *clwkWazaKind;
   GFL_CLWK  *clwkWazaType;
   GFL_CLWK  *clwkBarIcon[5];
+	GFL_TCBLSYS *pMsgTcblSys;
+  PRINT_STREAM* pStream;
 
   GFL_BMPWIN* winWaza;
   GFL_BMPWIN* winItemName;
@@ -252,4 +254,5 @@ extern void ITEMDISP_WazaInfoWindowChange( FIELD_ITEMMENU_WORK *pWork );
 
 extern void ITEMDISP_ItemInfoWindowDisp( FIELD_ITEMMENU_WORK *pWork );
 extern void ITEMDISP_ItemInfoMessageMake( FIELD_ITEMMENU_WORK *pWork,int id );
+extern BOOL ITEMDISP_MessageEndCheck(FIELD_ITEMMENU_WORK* pWork);
 

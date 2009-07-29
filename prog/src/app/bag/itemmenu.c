@@ -58,12 +58,12 @@ static const GFL_UI_TP_HITTBL bttndata[] = {  //上下左右
 	{	22*_1CHAR,  25*_1CHAR,  26*_1CHAR, 28*_1CHAR },  //x
 	{	22*_1CHAR,  25*_1CHAR,  30*_1CHAR, 32*_1CHAR },  //リターン
 
-	{	1*_1CHAR+12,   4*_1CHAR+11,  18*_1CHAR, 29*_1CHAR },  //アイテム一覧エリア1
-	{	4*_1CHAR+12,   7*_1CHAR+11,  18*_1CHAR, 29*_1CHAR },  //アイテム一覧エリア2
-	{	7*_1CHAR+12,  11*_1CHAR+11,  18*_1CHAR, 29*_1CHAR },  //アイテム一覧エリア3
-	{11*_1CHAR+12,  14*_1CHAR+11,  18*_1CHAR, 29*_1CHAR },  //アイテム一覧エリア4
-	{14*_1CHAR+12,  17*_1CHAR+11,  18*_1CHAR, 29*_1CHAR },  //アイテム一覧エリア5
-	{17*_1CHAR+12,  20*_1CHAR+11,  18*_1CHAR, 29*_1CHAR },  //アイテム一覧エリア6
+	{	1*_1CHAR+4,   4*_1CHAR+3,  18*_1CHAR, 29*_1CHAR },  //アイテム一覧エリア1
+	{	4*_1CHAR+4,   7*_1CHAR+3,  18*_1CHAR, 29*_1CHAR },  //アイテム一覧エリア2
+	{	7*_1CHAR+4,  11*_1CHAR+3,  18*_1CHAR, 29*_1CHAR },  //アイテム一覧エリア3
+	{11*_1CHAR+4,  14*_1CHAR+3,  18*_1CHAR, 29*_1CHAR },  //アイテム一覧エリア4
+	{14*_1CHAR+4,  17*_1CHAR+3,  18*_1CHAR, 29*_1CHAR },  //アイテム一覧エリア5
+	{17*_1CHAR+4,  20*_1CHAR+3,  18*_1CHAR, 29*_1CHAR },  //アイテム一覧エリア6
   
   {GFL_UI_TP_HIT_END,0,0,0},		 //終了データ
 };
@@ -553,6 +553,43 @@ static void _itemMovePosition(FIELD_ITEMMENU_WORK* pWork)
 
 //------------------------------------------------------------------------------
 /**
+ * @brief   技マシン確認中
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+
+static void _itemTecniqueUseWait(FIELD_ITEMMENU_WORK* pWork)
+{
+  if(!ITEMDISP_MessageEndCheck(pWork)){
+    return;
+  }
+
+  //@@OO  こみっとするのでとりあえず
+  _CHANGE_STATE(pWork,_itemKindSelectMenu);
+  ITEMDISP_ListPlateClear( pWork );
+  APP_TASKMENU_CloseMenu(pWork->pAppTask);
+  pWork->pAppTask=NULL;
+}
+
+//------------------------------------------------------------------------------
+/**
+ * @brief   技マシン起動
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+
+static void _itemTecniqueUseInit(FIELD_ITEMMENU_WORK* pWork)
+{
+
+  GFL_MSG_GetString( pWork->MsgManager, msg_bag_065, pWork->pStrBuf );
+  WORDSET_RegisterWazaName(pWork->WordSet, 0, ITEM_GetWazaNo( pWork->ret_item ));
+  WORDSET_ExpandStr( pWork->WordSet, pWork->pExpStrBuf, pWork->pStrBuf  );
+  ITEMDISP_ItemInfoWindowDisp( pWork );
+  _CHANGE_STATE(pWork,_itemTecniqueUseWait);
+}
+
+//------------------------------------------------------------------------------
+/**
  * @brief   アイテムを選択してどういう動作を行うかきいているところ
  * @retval  none
  */
@@ -561,12 +598,19 @@ static void _itemMovePosition(FIELD_ITEMMENU_WORK* pWork)
 static void _itemSelectWait(FIELD_ITEMMENU_WORK* pWork)
 {
   BOOL bClear=FALSE;
-  
-  if(GFL_UI_KEY_GetTrg() == PAD_BUTTON_DECIDE){
+
+  if(!ITEMDISP_MessageEndCheck(pWork)){
+    return;
+  }
+  if(APP_TASKMENU_IsFinish(pWork->pAppTask)){
     int selectno = APP_TASKMENU_GetCursorPos(pWork->pAppTask);
     pWork->ret_code2 = pWork->submenuList[selectno];
     OS_Printf("ret_code2 %d %d\n", pWork->ret_code2,selectno);
-    if(BAG_MENU_YAMERU==pWork->ret_code2){
+
+    if((BAG_MENU_TSUKAU==pWork->ret_code2)&&(pWork->pocketno==BAG_POKE_WAZA)){
+       _CHANGE_STATE(pWork,_itemTecniqueUseInit);
+    }
+    else if(BAG_MENU_YAMERU==pWork->ret_code2){
       _CHANGE_STATE(pWork,_itemKindSelectMenu);
     }
     else{
@@ -638,6 +682,11 @@ static void _itemKindSelectMenu(FIELD_ITEMMENU_WORK* pWork)
 	u32	ret=0;
   BOOL bChange=FALSE;
 
+	GFL_BMN_Main( pWork->pButton );
+	if(pWork->state == NULL){
+		return;
+	}
+  
 	if(GFL_UI_KEY_GetTrg() == PAD_BUTTON_DECIDE){
     _CHANGE_STATE(pWork,_itemSelectState);
     return;
@@ -994,8 +1043,11 @@ static void _BttnCallBack( u32 bttnid, u32 event, void* p_work )
     return;
   }
   
+
+  
   if(BAG_POKE_MAX > bttnid){
-    pocketno = bttnid;
+    int id2no[]={1,2,3,4,0};
+    pocketno = id2no[bttnid];  //どうぐのあたりが広い為、順番を最後にしている
   }
   else if(BUTTONID_LEFT == bttnid){
     pocketno = pWork->pocketno;
@@ -1033,7 +1085,8 @@ static void _BttnCallBack( u32 bttnid, u32 event, void* p_work )
         }
       }
       _ItemChange(pWork, nowno, ITEMMENU_GetItemIndex(pWork));
-      ITEMDISP_scrollCursorChangePos(pWork, ITEMMENU_GetItemIndex(pWork));
+//      ITEMDISP_scrollCursorChangePos(pWork, ITEMMENU_GetItemIndex(pWork));
+      _windowRewrite(pWork);
       _CHANGE_STATE(pWork,_itemSelectState);
     }
     return;
@@ -1127,7 +1180,7 @@ static GFL_PROC_RESULT FieldItemMenuProc_Init( GFL_PROC * proc, int * seq, void 
 
 	pWork->g3dVintr = GFUser_VIntr_CreateTCB( _VBlank, (void*)pWork, 0 );
 
-
+  pWork->pMsgTcblSys = GFL_TCBL_Init( pWork->heapID , pWork->heapID , 1 , 0 );
 
 	pWork->pocketNameWin = GFL_BMPWIN_Create(
 		GFL_BG_FRAME2_M,
@@ -1155,7 +1208,6 @@ static GFL_PROC_RESULT FieldItemMenuProc_Main( GFL_PROC * proc, int * seq, void 
 	FIELD_ITEMMENU_WORK* pWork = ppWork;
 	StateFunc* state = pWork->state;
 
-	GFL_BMN_Main( pWork->pButton );
 	if(state == NULL){
 		return GFL_PROC_RES_FINISH;
 	}
@@ -1164,7 +1216,9 @@ static GFL_PROC_RESULT FieldItemMenuProc_Main( GFL_PROC * proc, int * seq, void 
 	}
 	state(pWork);
 	_dispMain(pWork);
-	
+
+  GFL_TCBL_Main( pWork->pMsgTcblSys );
+  
 	return GFL_PROC_RES_CONTINUE;
 
 }
@@ -1187,6 +1241,9 @@ static GFL_PROC_RESULT FieldItemMenuProc_End( GFL_PROC * proc, int * seq, void *
 
   ITEMDISP_upMessageDelete(pWork);
   ITEMDISP_graphicDelete(pWork);
+
+  GFL_TCBL_Exit(pWork->pMsgTcblSys);// = GFL_TCBL_Init( work->heapId , work->heapId , 1 , 0 );
+
   
 	GFL_MSG_Delete(pWork->MsgManager);
 	GFL_MSG_Delete(pWork->MsgManagerItemInfo);
