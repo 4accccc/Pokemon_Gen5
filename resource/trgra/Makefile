@@ -22,20 +22,26 @@ NAIXNAME	= $(targetname).naix
 #------------------------------------------------------------------------------
 TARGETDIR	= $(PROJECT_ARCDIR)trgra
 
+#共通ルールファイルのインクルード
+include $(PROJECT_RSCDIR)\macro_define
+
 #------------------------------------------------------------------------------
 #※サブディレクトリでもMakeしたい場合、ここにディレクトリ名を書く
 #------------------------------------------------------------------------------
+ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
+SUBDIRS	= ./conv/
+else
 SUBDIRS	=
-
-
-#共通ルールファイルのインクルード
-include $(PROJECT_RSCDIR)\macro_define
+endif
 
 #NARCに必要なscrファイル名
 SCRFILE = trgra_wb.scr
 
 #リソースファイルの存在するディレクトリを指定
 RES_DIR = ../../../pokemon_wb_doc/trgra/
+
+#LINK情報をCNV書き換えたファイルを格納するディレクトリを指定
+COPY_DIR = ./conv/
 
 #コンバートしたファイルを格納するディレクトリを指定
 CNV_DIR = ./
@@ -46,19 +52,51 @@ G2D_DIR =	../../lib/NitroSystem/tools/win/bin/
 #clact_conv.rb
 RUBY_DIR = ../../tools/clact/
 
+#スクリプトが存在するディレクトリを指定
+SCRIPT_DIR = ../../tools/trgra/
+
 #コンバート対象のファイルツリーを生成
-NCGFILE	:= $(wildcard $(RES_DIR)*.ncg)
-NCEFILE	:= $(wildcard $(RES_DIR)*.nce)
-NCLFILE	:= $(wildcard $(RES_DIR)*.ncl)
+OBJNCGFILE	:= $(wildcard $(RES_DIR)tbwb_*.ncg)
+OBJNCEFILE	:= $(wildcard $(RES_DIR)tbwb_*.nce)
+OBJNCLFILE	:= $(wildcard $(RES_DIR)tbwb_*.ncl)
+
+MCSSNCGFILE	:= $(wildcard $(RES_DIR)trwb_*.ncg)
+MCSSNCEFILE	:= $(wildcard $(RES_DIR)trwb_*.nce)
+MCSSNMCFILE	:= $(wildcard $(RES_DIR)trwb_*.nmc)
+MCSSNCLFILE	:= $(wildcard $(RES_DIR)trwb_*.ncl)
 
 .PHONY:	do-build clean subdir
 
+#------------------------------------------------------------------------------
+#	make do-build ルール
+#------------------------------------------------------------------------------
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
 .SUFFIXES:	.ncg.nce.ncl
 
-do-build: $(notdir $(NCEFILE:.nce=.NCER))
+do-build:	sub_dir ncg nce nmc ncl $(notdir $(OBJNCEFILE:.nce=.NCER))
 %.NCER: $(RES_DIR)%.nce
 	ruby $(RUBY_DIR)clact_conv.rb $(RES_DIR)$*.nce $(RES_DIR)$*.ncg $(RES_DIR)$*.ncl $(G2D_DIR) $(CNV_DIR)
+
+
+sub_dir:
+	@$(MAKE_SUBDIR)
+
+#nmcデータからの生成ルール
+ncg: $(notdir $(MCSSNCGFILE:.ncg=.NCBR))
+%.NCBR: $(RES_DIR)%.ncg
+	perl $(SCRIPT_DIR)tr_ncgc.pl $(COPY_DIR)$(notdir $<) $(CNV_DIR)
+
+nce: $(notdir $(MCSSNCEFILE:.nce=.NCEC))
+%.NCEC: $(RES_DIR)%.nce $(SCRIPT_DIR)tr_nce.pl
+	perl $(SCRIPT_DIR)tr_nce.pl $(COPY_DIR)$(notdir $<) $(CNV_DIR)
+
+nmc: $(notdir $(MCSSNMCFILE:.nmc=.NMCR))
+%.NMCR: $(RES_DIR)%.nmc $(RES_DIR)%.nce
+	perl $(SCRIPT_DIR)tr_nmc.pl $(COPY_DIR)$(notdir $<) $(CNV_DIR)
+
+ncl: $(notdir $(MCSSNCLFILE:.ncl=.NCLR))
+%.NCLR: $(RES_DIR)%.ncl
+	perl $(SCRIPT_DIR)tr_ncl.pl $(COPY_DIR)$(notdir $<) $(CNV_DIR)
 
 endif
 
@@ -76,9 +114,9 @@ ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
 do-build:	$(SCRFILE) $(NARCNAME)
 
 #本来、scrファイルはトレーナーデータから生成されるがそれまでの暫定処置
-$(SCRFILE): $(RUBY_DIR)mkscr.rb
-	ls -1 tbwb*.NCER > ncer.lst
-	ruby $(RUBY_DIR)mkscr.rb ncer.lst $(SCRFILE)
+#$(SCRFILE): $(RUBY_DIR)mkscr.rb
+#	ls -1 tbwb*.NCER > ncer.lst
+#	ruby $(RUBY_DIR)mkscr.rb ncer.lst $(SCRFILE)
 
 $(NARCNAME): $(notdir $(NCGFILE:.ncg=.NCGR)) $(notdir $(NCEFILE:.nce=.NCER)) $(notdir $(NCLFILE:.ncl=.NCLR)) $(SCRFILE)
 	nnsarc -c -l -n -i $(NARCNAME) -S $(SCRFILE)
@@ -91,8 +129,7 @@ endif
 #------------------------------------------------------------------------------
 clean:
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
-#	-rm -f *.N*R
-#	-rm -f *.N*C
+	-rm -f *.N*R
 	-rm -f $(NARCNAME)
 	-rm -f $(NAIXNAME)
 endif
