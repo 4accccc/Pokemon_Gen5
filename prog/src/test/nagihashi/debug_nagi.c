@@ -314,22 +314,10 @@ static const LISTDATA_FUNCTION	sc_list_funciton[]	=
 //=====================================
 static const LIST_SETUP_TBL sc_list_data_home[]	=
 {	
-
-#if 0
-	{	
-		L"オーラチェック", LISTDATA_SEQ_PROC_AURA
-	},
-	{	
-		L"リズムチェック",LISTDATA_SEQ_PROC_RHYTHM
-	},
-	{	
-		L"結果表示", LISTDATA_SEQ_PROC_RESULT
-	},
-#endif
 	{	
 		L"相性診断画面へ", LISTDATA_SEQ_PROC_COMPATIBLE
 	},
-#if 0
+#if 1
 	{	
 		L"相性診断（ひとり）", LISTDATA_SEQ_PROC_COMPATIBLE_DEBUG
 	},
@@ -339,10 +327,11 @@ static const LIST_SETUP_TBL sc_list_data_home[]	=
 	{	
 		L"リズム（ひとり）", LISTDATA_SEQ_PROC_RHYTHM_DEBUG
 	},
-#endif
 	{	
 		L"運命値チェック", LISTDATA_SEQ_PROC_NAME_DEBUG,
 	},
+#endif
+#if 0
 	{	
 		L"ランキング", LISTDATA_SEQ_PROC_RANKING_DEBUG,
 	},
@@ -352,6 +341,8 @@ static const LIST_SETUP_TBL sc_list_data_home[]	=
 	{	
 		L"ランクデータフル",	LISTDATA_SEQ_RANKDATA_FULL,
 	},
+#endif
+#if 1
 	{	
 		L"タウンマップ", LISTDATA_SEQ_PROC_TOWNMAP,
 	},
@@ -361,6 +352,7 @@ static const LIST_SETUP_TBL sc_list_data_home[]	=
 	{	
 		L"もどる", LISTDATA_SEQ_RETURN
 	},
+#endif
 };
 
 static const LIST_SETUP_TBL sc_list_data_page1[]	=

@@ -190,3 +190,4 @@
 	ARCID_TRTBL_OFS "trtblofs.narc"   # トレーナーメッセージ用オフセットテーブル
 	ARCID_TRDATA "trdata.narc"   # 野良トレーナーデータ
 	ARCID_TRPOKE "trpoke.narc"   # 野良トレーナー持ちポケモンデータ
+	ARCID_IRCCOMPATIBLE	"irccompatible_gra.narc"	#相性ゲーム共通グラフィックデータ

@@ -82,7 +82,8 @@ SUBDIRS	=	wmi \
 			winframe \
 			trgra \
 			trdata \
-			trmsg
+			trmsg \
+			irc_compatible
 
 include $(RESOURCE_MACRO)
 

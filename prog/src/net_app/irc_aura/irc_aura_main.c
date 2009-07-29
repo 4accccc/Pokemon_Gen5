@@ -24,6 +24,8 @@
 #include "print/wordset.h"
 #include "system/bmp_winframe.h"
 
+#include "net_app/irc_appbar.h"
+
 //	archive
 #include "arc_def.h"
 #include "font/font.naix"
@@ -52,6 +54,7 @@ FS_EXTERN_OVERLAY(irc_result);
 */
 //=============================================================================
 #ifdef PM_DEBUG
+#define DEBUG_IRC_COMPATIBLE_ONLYPLAY
 #endif //PM_DEBUG
 
 #ifdef DEBUG_IRC_COMPATIBLE_ONLYPLAY
@@ -118,7 +121,7 @@ enum{
 	AURA_BG_PAL_M_10,		// 使用してない
 	AURA_BG_PAL_M_11,		// 使用してない
 	AURA_BG_PAL_M_12,		// 使用してない
-	AURA_BG_PAL_M_13,		// 使用してない
+	AURA_BG_PAL_M_13,		// APPBAR
 	AURA_BG_PAL_M_14,		// フォント用PLT
 	AURA_BG_PAL_M_15,		// INFOWIN
 
@@ -155,9 +158,9 @@ enum{
 	AURA_OBJ_PAL_M_10,		// 使用してない
 	AURA_OBJ_PAL_M_11,		// 使用してない
 	AURA_OBJ_PAL_M_12,		// 使用してない
-	AURA_OBJ_PAL_M_13,		// 使用してない
-	AURA_OBJ_PAL_M_14,		// 使用してない
-	AURA_OBJ_PAL_M_15,		// 使用してない
+	AURA_OBJ_PAL_M_13,		// APPBAR
+	AURA_OBJ_PAL_M_14,		// APPBAR
+	AURA_OBJ_PAL_M_15,		// APPBAR
 
 
 	// サブ画面OBJ
@@ -262,7 +265,6 @@ typedef enum{
 //=====================================
 enum {
 	MSGWNDID_TEXT,
-	MSGWNDID_RETURN,
 
 	MSGWNDID_MAX,
 };
@@ -304,6 +306,11 @@ enum
 #define AOR_MSGWND_DEBUG_H	(4)
 
 //-------------------------------------
+///	モデル数
+//=====================================
+#define G3D_MDL_MAX					(2)
+
+//-------------------------------------
 ///	デバッグ用人数セーブ機能
 //=====================================
 #ifdef DEBUG_IRC_COMPATIBLE_ONLYPLAY
@@ -326,11 +333,25 @@ typedef struct
 	GFL_ARCUTIL_TRANSINFO	frame_char;
 } GRAPHIC_BG_WORK;
 //-------------------------------------
+///	3Dリソース
+//=====================================
+typedef struct 
+{
+	GFL_G3D_RES	*p_res;
+	GFL_G3D_RND	*p_rnd;
+	GFL_G3D_OBJ	*p_obj;
+	GFL_G3D_OBJSTATUS	status;
+	BOOL	is_visible;
+} G3D_MDL_WORK;
+
+//-------------------------------------
 ///	3D描画環境
 //=====================================
 typedef struct 
 {
 	GFL_G3D_CAMERA		*p_camera;
+	G3D_MDL_WORK			mdl[G3D_MDL_MAX];
+	fx32							alpha;
 } GRAPHIC_3D_WORK;
 //-------------------------------------
 ///	円
@@ -511,6 +532,9 @@ struct _AURA_MAIN_WORK
 	//結果表示
 	AURA_ONLYRESULT_WORK	onlyresult;
 
+	//下画面バー
+	APPBAR_WORK	*p_appbar;
+
 	//結果
 	GFL_POINT		trg_left[DEBUG_PLAYER_SAVE_NUM];
 	GFL_POINT		trg_right[DEBUG_PLAYER_SAVE_NUM];
@@ -535,6 +559,7 @@ static void GRAPHIC_Init( GRAPHIC_WORK *p_wk, HEAPID heapID );
 static void GRAPHIC_Exit( GRAPHIC_WORK *p_wk );
 static void GRAPHIC_Draw( GRAPHIC_WORK *p_wk );
 static GFL_CLWK* GRAPHIC_GetClwk( const GRAPHIC_WORK *cp_wk, CLWKID id );
+static GFL_CLUNIT * GRAPHIC_GetClunit( const GRAPHIC_WORK *cp_wk );
 static TOUCH_EFFECT_SYS * GRAPHIC_GetTouchEffWk( GRAPHIC_WORK *p_wk );
 static void GRAPHIC_WriteBmpwinFrame( GRAPHIC_WORK *p_wk, GFL_BMPWIN *p_bmpwin );
 static void Graphic_VBlankTask( GFL_TCB *p_tcb, void *p_work );
@@ -549,12 +574,20 @@ static void GRAPHIC_OBJ_Exit( GRAPHIC_OBJ_WORK *p_wk );
 static void GRAPHIC_OBJ_Main( GRAPHIC_OBJ_WORK *p_wk );
 static void GRAPHIC_OBJ_VBlankFunction( GRAPHIC_OBJ_WORK *p_wk );
 static GFL_CLWK* GRAPHIC_OBJ_GetClwk( const GRAPHIC_OBJ_WORK *cp_wk, CLWKID id );
+static GFL_CLUNIT * GRAPHIC_OBJ_GetClunit( const GRAPHIC_OBJ_WORK *cp_wk );
 //3d
 static void GRAPHIC_3D_Init( GRAPHIC_3D_WORK *p_wk, HEAPID heapID );
 static void GRAPHIC_3D_Exit( GRAPHIC_3D_WORK *p_wk );
 static void GRAPHIC_3D_StartDraw( GRAPHIC_3D_WORK *p_wk );
 static void GRAPHIC_3D_EndDraw( GRAPHIC_3D_WORK *p_wk );
 static void Graphic_3d_SetUp( void );
+//3d_mdl
+static void G3DMDL_Load( G3D_MDL_WORK *p_wk, ARCHANDLE *p_handle, u16 dataID, HEAPID heapID );
+static void G3DMDL_UnLoad( G3D_MDL_WORK *p_wk );
+static void G3DMDL_Draw( G3D_MDL_WORK *p_wk );
+static void G3DMDL_SetPos( G3D_MDL_WORK *p_wk, const VecFx32 *cp_trans );
+static void G3DMDL_SetScale( G3D_MDL_WORK *p_wk, const VecFx32 *cp_scale );
+static void G3DMDL_SetVisible( G3D_MDL_WORK *p_wk, BOOL is_visible );
 //MSG_WORK
 static void MSG_Init( MSG_WORK *p_wk, MSG_FONT_TYPE font, HEAPID heapID );
 static void MSG_Exit( MSG_WORK *p_wk );
@@ -625,7 +658,6 @@ static BOOL TP_GetRectCont( const GFL_RECT *cp_rect, GFL_POINT *p_cont );
 static void TouchMarker_SetPos( AURA_MAIN_WORK *p_wk, const GFL_POINT *cp_pos );
 static void TouchMarker_OffVisible( AURA_MAIN_WORK *p_wk );
 static u8		CalcScore( AURA_MAIN_WORK *p_wk );
-static BOOL TouchReturnBtn( void );
 
 #ifdef DEBUG_AURA_MSG
 static void DEBUGAURA_PRINT_UpDate( AURA_MAIN_WORK *p_wk );
@@ -726,7 +758,6 @@ static const GFL_BG_BGCNT_HEADER sc_bgcnt_data[ GRAPHIC_BG_FRAME_MAX ] =
 		GX_BG_SCRBASE_0x0800, GX_BG_CHARBASE_0x0c000, GFL_BG_CHRSIZ_256x256,
 		GX_BG_EXTPLTT_01, 1, 0, 0, FALSE
 	},
-
 };
 
 //-------------------------------------
@@ -808,10 +839,6 @@ static GFL_PROC_RESULT IRC_AURA_PROC_Init( GFL_PROC *p_proc, int *p_seq, void *p
 	}
 	MSGWND_Init( &p_wk->msgwnd[MSGWNDID_TEXT], sc_bgcnt_frame[GRAPHIC_BG_FRAME_S_TEXT],
 			MSGWND_TEXT_X, MSGWND_TEXT_Y, MSGWND_TEXT_W, MSGWND_TEXT_H, HEAPID_IRCAURA );
-	MSGWND_Init( &p_wk->msgwnd[MSGWNDID_RETURN], sc_bgcnt_frame[GRAPHIC_BG_FRAME_M_TEXT],
-			MSGWND_RETURN_X, MSGWND_RETURN_Y, MSGWND_RETURN_W, MSGWND_RETURN_H, HEAPID_IRCAURA );
-//	GRAPHIC_WriteBmpwinFrame( &p_wk->grp, MSGWND_GetBmpWin( &p_wk->msgwnd[MSGWNDID_RETURN]) );
-	MSGWND_PrintCenter( &p_wk->msgwnd[MSGWNDID_RETURN], &p_wk->msg, AURA_BTN_000 );
 
 	{	
 		int i;
@@ -820,6 +847,12 @@ static GFL_PROC_RESULT IRC_AURA_PROC_Init( GFL_PROC *p_proc, int *p_seq, void *p
 			SHAKESEARCH_Init( &p_wk->shake_left[ i ] );
 			SHAKESEARCH_Init( &p_wk->shake_right[ i ] );
 		}
+	}
+
+	//APPBAR
+	{	
+		GFL_CLUNIT	*p_unit	= GRAPHIC_GetClunit( &p_wk->grp );
+		p_wk->p_appbar	= APPBAR_Init( APPBAR_OPTION_MASK_CLOSE, p_unit, sc_bgcnt_frame[INFOWIN_BG_FRAME], AURA_BG_PAL_M_13, AURA_OBJ_PAL_M_13, APP_COMMON_MAPPING_128K, HEAPID_IRCAURA );
 	}
 
 DEBUG_ONLYPLAY_IF
@@ -852,10 +885,14 @@ static GFL_PROC_RESULT IRC_AURA_PROC_Exit( GFL_PROC *p_proc, int *p_seq, void *p
 	p_wk	= p_work;
 
 
+
 DEBUG_ONLYPLAY_IF
 	DEBUGPRINT_Close();
 	DEBUGPRINT_Exit();
 DEBUG_ONLYPLAY_ENDIF
+
+	//APPBAR
+	APPBAR_Exit( p_wk->p_appbar );
 
 	//モジュール破棄
 	{	
@@ -966,6 +1003,8 @@ static GFL_PROC_RESULT IRC_AURA_PROC_Main( GFL_PROC *p_proc, int *p_seq, void *p
 	//シーンを継続的に送る
 	COMPATIBLE_IRC_SendSceneContinue( p_wk->p_param->p_irc );
 
+	APPBAR_Main( p_wk->p_appbar );
+
 	return GFL_PROC_RES_CONTINUE;
 }
 //=============================================================================
@@ -1062,13 +1101,13 @@ static void GRAPHIC_Draw( GRAPHIC_WORK* p_wk )
 	GRAPHIC_OBJ_Main( &p_wk->obj );
 
 	GRAPHIC_3D_StartDraw( &p_wk->g3d );
-	//NNS系の3D描画
+/*	//NNS系の3D描画
 	//なし
 	NNS_G3dGeFlushBuffer();
 	//SDK系の3D描画
 
 	TOUCH_EFFECT_Draw( &p_wk->touch_eff );
-
+*/
 	GRAPHIC_3D_EndDraw( &p_wk->g3d );
 
 /*
@@ -1095,6 +1134,19 @@ static GFL_CLWK* GRAPHIC_GetClwk( const GRAPHIC_WORK *cp_wk, CLWKID id )
 	return GRAPHIC_OBJ_GetClwk( &cp_wk->obj, id );
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief	CLUNIT取得
+ *
+ *	@param	const GRAPHIC_WORK *cp_wk		ワーク
+ *
+ *	@return	CLUNIT
+ */
+//-----------------------------------------------------------------------------
+static GFL_CLUNIT * GRAPHIC_GetClunit( const GRAPHIC_WORK *cp_wk )
+{	
+	return GRAPHIC_OBJ_GetClunit( &cp_wk->obj );
+}
 //----------------------------------------------------------------------------
 /**
  *	@brief	タッチ演出ワーク取得
@@ -1407,6 +1459,19 @@ static GFL_CLWK* GRAPHIC_OBJ_GetClwk( const GRAPHIC_OBJ_WORK *cp_wk, CLWKID id )
 	return cp_wk->p_clwk[id];
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief	OBJ描画	CLUNIT取得
+ *
+ *	@param	const GRAPHIC_OBJ_WORK *cp_wk		ワーク
+ *
+ *	@return	CLUNIT
+ */
+//-----------------------------------------------------------------------------
+static GFL_CLUNIT * GRAPHIC_OBJ_GetClunit( const GRAPHIC_OBJ_WORK *cp_wk )
+{	
+	return cp_wk->p_clunit;
+}
 //=============================================================================
 /**
  *					GRAPHIC_3D
@@ -1422,7 +1487,7 @@ static GFL_CLWK* GRAPHIC_OBJ_GetClwk( const GRAPHIC_OBJ_WORK *cp_wk, CLWKID id )
 //-----------------------------------------------------------------------------
 static void GRAPHIC_3D_Init( GRAPHIC_3D_WORK *p_wk, HEAPID heapID )
 {
-	static const VecFx32 sc_CAMERA_PER_POS		= { 0,0,FX32_CONST(5) };
+	static const VecFx32 sc_CAMERA_PER_POS		= { 0,0,-FX32_CONST( 70 ) };
 	static const VecFx32 sc_CAMERA_PER_UP			= { 0,FX32_ONE,0 };
 	static const VecFx32 sc_CAMERA_PER_TARGET	= { 0,0,FX32_CONST( 0 ) };
 
@@ -1430,15 +1495,28 @@ static void GRAPHIC_3D_Init( GRAPHIC_3D_WORK *p_wk, HEAPID heapID )
 		CAMERA_PER_FOVY	=	(40),
 		CAMERA_PER_ASPECT =	(FX32_ONE * 4 / 3),
 		CAMERA_PER_NEAR	=	(FX32_ONE * 1),
-		CAMERA_PER_FER	=	(FX32_ONE * 2),
+		CAMERA_PER_FER	=	(FX32_ONE * 1000),
 		CAMERA_PER_SCALEW	=(0),
 	};
 
 	GFL_G3D_Init( GFL_G3D_VMANLNK, GFL_G3D_TEX128K,
 			GFL_G3D_VMANLNK, GFL_G3D_PLT32K, 0, heapID, Graphic_3d_SetUp );
+
 	p_wk->p_camera = GFL_G3D_CAMERA_CreatePerspective( CAMERA_PER_FOVY, CAMERA_PER_ASPECT,
 				CAMERA_PER_NEAR, CAMERA_PER_FER, CAMERA_PER_SCALEW, 
 				&sc_CAMERA_PER_POS, &sc_CAMERA_PER_UP, &sc_CAMERA_PER_TARGET, heapID );
+
+	//読み込み
+	{	
+		ARCHANDLE	*p_handle	= GFL_ARC_OpenDataHandle( ARCID_IRCAURA_GRAPHIC, heapID );
+
+		G3DMDL_Load( &p_wk->mdl[0], p_handle, NARC_ircaura_gra_aura_nsbmd, heapID );
+		G3DMDL_Load( &p_wk->mdl[1], p_handle, NARC_ircaura_gra_aura_nsbmd, heapID );
+		G3DMDL_SetVisible( &p_wk->mdl[0], TRUE );
+		G3DMDL_SetVisible( &p_wk->mdl[1], TRUE );
+
+		GFL_ARC_CloseDataHandle( p_handle );
+	}
 }
 
 //----------------------------------------------------------------------------
@@ -1450,6 +1528,15 @@ static void GRAPHIC_3D_Init( GRAPHIC_3D_WORK *p_wk, HEAPID heapID )
 //-----------------------------------------------------------------------------
 static void GRAPHIC_3D_Exit( GRAPHIC_3D_WORK *p_wk )
 {
+	//解放
+	{	
+		int i;
+		for( i = 0; i < G3D_MDL_MAX; i++ )
+		{	
+			G3DMDL_UnLoad( &p_wk->mdl[i] );
+		}
+	}
+
 	GFL_G3D_CAMERA_Delete( p_wk->p_camera );
 	GFL_G3D_Exit();
 }
@@ -1463,9 +1550,19 @@ static void GRAPHIC_3D_Exit( GRAPHIC_3D_WORK *p_wk )
 //-----------------------------------------------------------------------------
 static void GRAPHIC_3D_StartDraw( GRAPHIC_3D_WORK *p_wk )
 {	
+
 	GFL_G3D_DRAW_Start();
 	GFL_G3D_CAMERA_Switching( p_wk->p_camera );
 	GFL_G3D_DRAW_SetLookAt();
+
+	//描画
+	{	
+		int i;
+		for( i = 0; i < G3D_MDL_MAX; i++ )
+		{	
+			G3DMDL_Draw( &p_wk->mdl[i] );
+		}
+	}
 }
 
 //----------------------------------------------------------------------------
@@ -1534,6 +1631,129 @@ static void Graphic_3d_SetUp( void )
 
 	//レンダリングスワップバッファ
 	GFL_G3D_SetSystemSwapBufferMode( GX_SORTMODE_AUTO, GX_BUFFERMODE_Z );
+}
+//=============================================================================
+/**
+ *				3DMDL
+ */
+//=============================================================================
+//----------------------------------------------------------------------------
+/**
+ *	@brief	3Dモデル読み込み
+ *
+ *	@param	G3D_MDL_WORK *p_wk	ワーク
+ *	@param	*p_handle						ハンドル
+ *	@param	dataID							データID
+ *	@param	heapID							ヒープID
+ */
+//-----------------------------------------------------------------------------
+static void G3DMDL_Load( G3D_MDL_WORK *p_wk, ARCHANDLE *p_handle, u16 dataID, HEAPID heapID )
+{	
+	//ワーククリア
+	GFL_STD_MemClear(p_wk, sizeof(G3D_MDL_WORK));
+
+	//モデル読み込み
+	{	
+		BOOL			result;
+
+		GFL_G3D_RES	*p_tex	= NULL;
+		GFL_G3D_RES	*p_mdl	= NULL;
+
+		p_wk->p_res	= GFL_G3D_CreateResourceHandle( p_handle, dataID );
+		GF_ASSERT( p_wk->p_res != NULL );
+
+		if( GFL_G3D_CheckResourceType( p_wk->p_res, GFL_G3D_RES_CHKTYPE_TEX ) ){
+			p_tex	= p_wk->p_res;
+			result	= GFL_G3D_TransVramTexture( p_tex );
+			GF_ASSERT( result );
+		}
+
+		if( GFL_G3D_CheckResourceType( p_wk->p_res, GFL_G3D_RES_CHKTYPE_MDL ) ){
+			p_mdl	= p_wk->p_res;
+			p_wk->p_rnd	= GFL_G3D_RENDER_Create( p_mdl, 0, p_tex );	
+			p_wk->p_obj	= GFL_G3D_OBJECT_Create( p_wk->p_rnd, NULL, 0 );
+		}
+
+		//アルファを保存しておく
+		//p_wk->alpha	= NNS_G3dMdlGetMdlAlpha( G3D_OBJECT_GetMdl( p_wk->p_obj ), 0 );
+	}
+
+	//座標
+	{	
+		MTX_Identity33( &p_wk->status.rotate );
+		VEC_Set( &p_wk->status.scale, FX32_ONE, FX32_ONE, FX32_ONE );
+	}
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	解放
+ *
+ *	@param	G3D_MDL_WORK *p_wk ワーク
+ *
+ */
+//-----------------------------------------------------------------------------
+static void G3DMDL_UnLoad( G3D_MDL_WORK *p_wk )
+{	
+	//破棄
+	GFL_G3D_OBJECT_Delete( p_wk->p_obj );
+	GFL_G3D_RENDER_Delete( p_wk->p_rnd );
+	GFL_G3D_DeleteResource( p_wk->p_res );
+
+	//クリア
+	GFL_STD_MemClear(p_wk, sizeof(G3D_MDL_WORK));
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	描画
+ *
+ *	@param	G3D_MDL_WORK *p_wk ワーク
+ */
+//-----------------------------------------------------------------------------
+static void G3DMDL_Draw( G3D_MDL_WORK *p_wk )
+{	
+	if( p_wk->is_visible )
+	{	
+		GFL_G3D_DRAW_DrawObject( p_wk->p_obj, &p_wk->status );
+
+
+
+	}
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	座標設定
+ *
+ *	@param	G3D_MDL_WORK *p_wk	ワーク
+ *	@param	VecFx32 *cp_trans		座標
+ */
+//-----------------------------------------------------------------------------
+static void G3DMDL_SetPos( G3D_MDL_WORK *p_wk, const VecFx32 *cp_trans )
+{	
+	p_wk->status.trans	= *cp_trans;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	スケール設定
+ *
+ *	@param	G3D_MDL_WORK *p_wk	ワーク
+ *	@param	VecFx32 *cp_scale		スケール
+ */
+//-----------------------------------------------------------------------------
+static void G3DMDL_SetScale( G3D_MDL_WORK *p_wk, const VecFx32 *cp_scale )
+{	
+	p_wk->status.scale	= *cp_scale;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	表示フラグ設定
+ *
+ *	@param	G3D_MDL_WORK *p_wk	ワーク
+ *	@param	is_visible				TRUEで描画FALSEで非表示
+ */
+//-----------------------------------------------------------------------------
+static void G3DMDL_SetVisible( G3D_MDL_WORK *p_wk, BOOL is_visible )
+{	
+	p_wk->is_visible	= is_visible;
 }
 //=============================================================================
 /**
@@ -2234,18 +2454,23 @@ DEBUG_ONLYPLAY_ENDIF
 		break;
 	}
 
-	if( TouchReturnBtn() )
+	if( APPBAR_GetTrg(p_wk->p_appbar) == APPBAR_ICON_CLOSE )
 	{
 		PMSND_PlaySystemSE( SEQ_SE_CANCEL1 );	
 		p_wk->p_param->result	= IRCAURA_RESULT_RETURN;
 		SEQ_End( p_wk );
 	}	
 	
+
+DEBUG_ONLYPLAY_IF
+DEBUG_ONLYPLAY_ELSE
 	//シーンが異なるチェック
 	if( COMPATIBLE_IRC_CompScene( p_wk->p_param->p_irc ) != 0 )
 	{	
 		SEQ_Change( p_wk, SEQFUNC_SceneError );
 	}
+DEBUG_ONLYPLAY_ENDIF
+
 }
 //----------------------------------------------------------------------------
 /**
@@ -2340,18 +2565,21 @@ DEBUG_ONLYPLAY_ENDIF
 		break;
 	}
 
-	if( TouchReturnBtn() )
+	if( APPBAR_GetTrg(p_wk->p_appbar) == APPBAR_ICON_CLOSE )
 	{
 		PMSND_PlaySystemSE( SEQ_SE_CANCEL1 );
 		p_wk->p_param->result	= IRCAURA_RESULT_RETURN;
 		SEQ_End( p_wk );
 	}
 
+DEBUG_ONLYPLAY_IF
+DEBUG_ONLYPLAY_ELSE
 	//シーンが異なるチェック
 	if( COMPATIBLE_IRC_CompScene( p_wk->p_param->p_irc ) != 0 )
 	{	
 		SEQ_Change( p_wk, SEQFUNC_SceneError );
 	}
+DEBUG_ONLYPLAY_ENDIF
 }
 //----------------------------------------------------------------------------
 /**
@@ -2436,18 +2664,21 @@ DEBUG_ONLYPLAY_ENDIF
 	}
 
 
-	if( TouchReturnBtn() )
+	if( APPBAR_GetTrg(p_wk->p_appbar) == APPBAR_ICON_CLOSE )
 	{
 		PMSND_PlaySystemSE( SEQ_SE_CANCEL1 );
 		p_wk->p_param->result	= IRCAURA_RESULT_RETURN;
 		SEQ_End( p_wk );
 	}
 
+DEBUG_ONLYPLAY_IF
+DEBUG_ONLYPLAY_ELSE
 	//シーンが異なるチェック
 	if( COMPATIBLE_IRC_CompScene( p_wk->p_param->p_irc ) != 0 )
 	{	
 		SEQ_Change( p_wk, SEQFUNC_SceneError );
 	}
+DEBUG_ONLYPLAY_ENDIF
 }
 //----------------------------------------------------------------------------
 /**
@@ -2477,7 +2708,7 @@ DEBUG_ONLYPLAY_IF
 		break;
 
 	case SEQ_MAIN:
-		if(	TouchReturnBtn() )
+		if( APPBAR_GetTrg(p_wk->p_appbar) == APPBAR_ICON_CLOSE )
 		{
 			SEQ_End( p_wk );
 		}
@@ -2558,14 +2789,17 @@ DEBUG_ONLYPLAY_ELSE
 		return;	//↓のアサートを通過しないため
 	}
 
+DEBUG_ONLYPLAY_IF
+DEBUG_ONLYPLAY_ELSE
 	//シーンが異なるチェック
 	if( *p_seq < SEQ_SCENE && COMPATIBLE_IRC_CompScene( p_wk->p_param->p_irc ) != 0 )
 	{	
 		SEQ_Change( p_wk, SEQFUNC_SceneError );
 	}
+DEBUG_ONLYPLAY_ENDIF
 
 	//戻るボタン
-	if( TouchReturnBtn() )
+	if( APPBAR_GetTrg(p_wk->p_appbar) == APPBAR_ICON_CLOSE )
 	{
 		PMSND_PlaySystemSE( SEQ_SE_CANCEL1 );	
 		p_wk->p_param->result	= IRCAURA_RESULT_RETURN;
@@ -3878,32 +4112,6 @@ DEBUG_ONLYPLAY_ENDIF
 	}
 
 	return (pos_score + shake_score)/2;
-}
-
-//----------------------------------------------------------------------------
-/**
- *	@brief	戻るボタンを押したかどうか
- *
- *	@param	void 
- *
- *	@return
- */
-//-----------------------------------------------------------------------------
-static BOOL TouchReturnBtn( void )
-{	
-
-	u32 x;
-	u32 y;
-	if( GFL_UI_TP_GetPointTrg( &x, &y) )
-	{	
-		if( ((u32)( x - MSGWND_RETURN_X*8) < (u32)(MSGWND_RETURN_W*8))
-				&	((u32)( y - MSGWND_RETURN_Y*8) < (u32)(MSGWND_RETURN_H*8))
-			){
-			return TRUE;
-		}
-
-	}
-	return FALSE;
 }
 
 //=============================================================================

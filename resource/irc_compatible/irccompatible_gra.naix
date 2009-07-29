@@ -1,0 +1,48 @@
+/*****************************************************************************
+	Archive file index definition.
+	File: irccompatible_gra.naix
+
+	This file was created by NINTENDO NITRO-System Archiver.
+
+
+ *****************************************************************************/
+
+#ifndef NARC_IRCCOMPATIBLE_GRA_NAIX_
+#define NARC_IRCCOMPATIBLE_GRA_NAIX_
+
+enum {
+	NARC_irccompatible_gra_aura_bg_NCLR = 0,
+	NARC_irccompatible_gra_aura_bg_guide_NCLR = 1,
+	NARC_irccompatible_gra_aura_obj_NCLR = 2,
+	NARC_irccompatible_gra_aura_obj_touch_NCLR = 3,
+	NARC_irccompatible_gra_aura_bg_NCGR = 4,
+	NARC_irccompatible_gra_aura_bg_guide_NCGR = 5,
+	NARC_irccompatible_gra_aura_obj_NCGR = 6,
+	NARC_irccompatible_gra_aura_obj_touch_NCGR = 7,
+	NARC_irccompatible_gra_shita_frame_01_NCGR = 8,
+	NARC_irccompatible_gra_shita_frame_02_NCGR = 9,
+	NARC_irccompatible_gra_title_rogo_NCGR = 10,
+	NARC_irccompatible_gra_ue_frame_NCGR = 11,
+	NARC_irccompatible_gra_aura_obj_NCER = 12,
+	NARC_irccompatible_gra_aura_obj_touch_NCER = 13,
+	NARC_irccompatible_gra_aura_bg_block_b_NSCR = 14,
+	NARC_irccompatible_gra_aura_bg_guide_l_NSCR = 15,
+	NARC_irccompatible_gra_aura_bg_guide_r_NSCR = 16,
+	NARC_irccompatible_gra_aura_bg_hert_b_NSCR = 17,
+	NARC_irccompatible_gra_aura_bg_hert_b_nuki_NSCR = 18,
+	NARC_irccompatible_gra_aura_bg_hert_s_NSCR = 19,
+	NARC_irccompatible_gra_aura_bg_hert_s_nuki_NSCR = 20,
+	NARC_irccompatible_gra_aura_bg_suji_NSCR = 21,
+	NARC_irccompatible_gra_title_aishou_NSCR = 22,
+	NARC_irccompatible_gra_title_aura_NSCR = 23,
+	NARC_irccompatible_gra_title_ketsuka_NSCR = 24,
+	NARC_irccompatible_gra_title_rhythm_NSCR = 25,
+	NARC_irccompatible_gra_aura_obj_NANR = 26,
+	NARC_irccompatible_gra_aura_obj_touch_NANR = 27,
+	NARC_irccompatible_gra_aura_nsbmd = 28,
+	NARC_irccompatible_gra_aura_nsbca = 29,
+	NARC_irccompatible_gra_aura_nsbma = 30
+};
+
+/* NARC_IRCCOMPATIBLE_GRA_NAIX_ */
+#endif

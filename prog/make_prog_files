@@ -607,7 +607,8 @@ SRCS_OVERLAY_COMPATI_CHECK = net_app/compatible/compati_check.c \
 #===> SRCS_OVERLAY_DEV_WIRELESS
 #===> SRCS_OVERLAY_DEV_IRC
 SRCS_OVERLAY_IRC_COMPATIBLE	= net_app/irc_compatible/compatible_irc_sys.c \
-															net_app/irc_compatible/irc_compatible.c
+															net_app/irc_compatible/irc_compatible.c \
+															net_app/irc_compatible/irc_appbar.c
 
 #赤外線ミニゲームメニュー
 #===> SRCS_OVERLAY_IRC_COMPATIBLE
