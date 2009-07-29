@@ -227,6 +227,7 @@ typedef enum {
   BTL_HANDEX_QUIT_BATTLE,   ///< バトル離脱
   BTL_HANDEX_CHANGE_MEMBER, ///< メンバー交換
   BTL_HANDEX_BATONTOUCH,    ///< バトンタッチ（ランク効果等の引き継ぎ）
+  BTL_HANDEX_ADD_SHRINK,    ///< ひるませる
 
   BTL_HANDEX_MAX,
 
@@ -512,6 +513,16 @@ typedef struct {
   u8  userPokeID;     ///< 状態を引き継がせるポケID
   u8  targetPokeID;   ///< 状態を引き継ぐポケID
 }BTL_HANDEX_PARAM_BATONTOUCH;
+
+/**
+ * ひるませる処理ワーク
+ */
+typedef struct {
+  BTL_HANDEX_PARAM_HEADER  header;
+  u8  pokeID;     ///< 対象ポケID
+  u8  per;        ///< 確率
+}BTL_HANDEX_PARAM_ADD_SHRINK;
+
 
 
 extern void* BTL_SVFLOW_HANDLERWORK_Push( BTL_SVFLOW_WORK* wk, BtlEventHandlerExhibition eq_type, u8 userPokeID );

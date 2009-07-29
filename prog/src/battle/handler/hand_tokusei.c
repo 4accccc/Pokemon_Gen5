@@ -2068,7 +2068,7 @@ static BTL_EVENT_FACTOR*  HAND_TOK_ADD_Rinpun( u16 pri, u16 tokID, u8 pokeID )
  *  とくせい「てんのめぐみ」
  */
 //------------------------------------------------------------------------------
-// 追加効果（ひるみ、状態異常，ランク効果共通）ハンドラ
+// 追加効果（状態異常，ランク効果共通）ハンドラ
 static void handler_TennoMegumi( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
   if( pokeID == BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) )
@@ -2081,9 +2081,9 @@ static void handler_TennoMegumi( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* fl
 static BTL_EVENT_FACTOR*  HAND_TOK_ADD_TennoMegumi( u16 pri, u16 tokID, u8 pokeID )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_ADD_SICK,       handler_TennoMegumi },  // 追加効果（状態異常）チェックハンドラ
-    { BTL_EVENT_ADD_RANK_TARGET,handler_TennoMegumi },  // 追加効果（ランク効果）チェックハンドラ
-    { BTL_EVENT_SHRINK_CHECK,   handler_TennoMegumi },  // ひるみチェックハンドラ
+    { BTL_EVENT_ADD_SICK,         handler_TennoMegumi },  // 追加効果（状態異常）チェックハンドラ
+    { BTL_EVENT_ADD_RANK_TARGET,  handler_TennoMegumi },  // 追加効果（ランク効果）チェックハンドラ
+    { BTL_EVENT_WAZA_SHRINK_PER,  handler_TennoMegumi },  // ひるみチェックハンドラ
     { BTL_EVENT_NULL, NULL },
   };
   return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_TOKUSEI, tokID, pri, pokeID, HandlerTable );

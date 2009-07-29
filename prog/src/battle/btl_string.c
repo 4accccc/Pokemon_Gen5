@@ -498,6 +498,7 @@ void BTL_STR_MakeStringSet( STRBUF* buf, BtlStrID_SET strID, const int* args )
     { BTL_STRID_SET_Item_DamageShrink,    ms_set_item_common },
     { BTL_STRID_SET_Recycle,              ms_set_item_common },
     { BTL_STRID_SET_Tuibamu,              ms_set_item_common },
+    { BTL_STRID_SET_Nagetukeru,           ms_set_item_common },
     { BTL_STRID_SET_UseItem_Rankup_ATK,   ms_set_kinomi_rankup },
     { BTL_STRID_SET_UseItem_RecoverPP,    ms_set_item_recover_pp },
     { BTL_STRID_SET_KaifukuFuji,          ms_set_waza_sp },
