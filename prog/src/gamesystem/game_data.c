@@ -32,6 +32,7 @@
 #include "field/field_subscreen.h" //FIELD_SUBSCREEN_ACTION
 #include "field/rail_location.h"    //RAIL_LOCATION
 #include "field/field_rail_loader.h"    //FIELD_RAIL_LOADER
+#include "sound/bgm_info.h"
 
 //============================================================================================
 //============================================================================================
@@ -52,6 +53,8 @@ struct _GAMEDATA{
   BAG_CURSOR* bagcursor;  ///< バッグカーソルの管理構造体ポインタ
   MYITEM_PTR myitem;			///<手持ちアイテムセーブデータへのポインタ
   POKEPARTY *my_pokeparty;	///<手持ちポケモンセーブデータへのポインタ
+
+  BGM_INFO_SYS* bgm_info_sys;	// BGM情報取得システム
 
   FIELD_RAIL_LOADER * railLoader;   ///<フィールドレールデータ管理へのポインタ
   MMDLSYS *mmdlsys;
@@ -111,6 +114,9 @@ GAMEDATA * GAMEDATA_Create(HEAPID heapID)
   gd->entrance_loc = Situation_GetStartLocation(st);
   gd->special_loc = Situation_GetStartLocation(st);
 
+  // BGM情報取得システムを作成(BGM情報を読み込む)
+  gd->bgm_info_sys = BGM_INFO_CreateSystem( heapID );
+
   //レール状況データのクリア
   RAIL_LOCATION_Init(&gd->railLoc);
 
@@ -157,6 +163,7 @@ GAMEDATA * GAMEDATA_Create(HEAPID heapID)
 //------------------------------------------------------------------
 void GAMEDATA_Delete(GAMEDATA * gamedata)
 {
+	BGM_INFO_DeleteSystem(gamedata->bgm_info_sys);
   GFL_HEAP_FreeMemory(gamedata->bagcursor);
   MMDLSYS_FreeSystem(gamedata->mmdlsys);
 	FIELD_RAIL_LOADER_Delete( gamedata->railLoader );
@@ -317,6 +324,18 @@ MYSTATUS * GAMEDATA_GetMyStatusPlayer(GAMEDATA * gamedata, u32 player_id)
 FIELD_RAIL_LOADER * GAMEDATA_GetFieldRailLoader(GAMEDATA * gamedata)
 {
   return gamedata->railLoader;
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief BGM_INFO_SYSへのポインタ取得
+ * @param gamedata    GAMEDATAへのポインタ
+ * preturn BGM_INFO_SYS BGM情報取得システムへのポインタ
+ */
+//--------------------------------------------------------------
+extern BGM_INFO_SYS * GAMEDATA_GetBGMInfoSys(GAMEDATA * gamedata)
+{
+	return gamedata->bgm_info_sys;
 }
 
 //--------------------------------------------------------------

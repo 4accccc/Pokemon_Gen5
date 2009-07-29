@@ -26,6 +26,7 @@
 #include "field/fldmmdl.h"
 #include "field/eventwork.h"
 #include "field/field_sound_proc.h"
+#include "sound/bgm_info.h"
 
 //============================================================================================
 //============================================================================================
@@ -209,6 +210,15 @@ extern MYSTATUS * GAMEDATA_GetMyStatusPlayer(GAMEDATA * gamedata, u32 player_id)
  */
 //--------------------------------------------------------------
 extern FIELD_RAIL_LOADER * GAMEDATA_GetFieldRailLoader(GAMEDATA * gamedata);
+
+//--------------------------------------------------------------
+/**
+ * @brief BGM_INFO_SYSへのポインタ取得
+ * @param gamedata    GAMEDATAへのポインタ
+ * preturn BGM_INFO_SYS BGM情報取得システムへのポインタ
+ */
+//--------------------------------------------------------------
+extern BGM_INFO_SYS * GAMEDATA_GetBGMInfoSys(GAMEDATA * gamedata);
 
 //--------------------------------------------------------------
 /**
