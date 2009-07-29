@@ -1376,12 +1376,17 @@ static void SEQFUNC_Main( SEQ_WORK *p_seqwk, int *p_seq, void *p_param_adrs )
 				GFL_POINT wld;
 
 				INFO_Update( &p_wk->info, cp_data );
-				PLACEWND_Start( &p_wk->placewnd, cp_data );
 				PLACE_Active( &p_wk->place, cp_data );
 				p_wk->cp_select	= cp_data;
 
 				PLACE_GetWldPos(&p_wk->place, &wld );
 				CURSOR_SetTarget( &p_wk->cursor, cp_data, &wld );
+
+				//Šg‘å’†‚Í‚Å‚È‚¢
+				if( !p_wk->is_scale )
+				{	
+					PLACEWND_Start( &p_wk->placewnd, cp_data );
+				}
 			}
 			else if( cp_data == NULL && p_wk->cp_select )
 			{	
@@ -1405,6 +1410,12 @@ static void SEQFUNC_Main( SEQ_WORK *p_seqwk, int *p_seq, void *p_param_adrs )
 			CURSOR_SetTarget( &p_wk->cursor, NULL, NULL );
 			p_wk->cp_select	= NULL;
 		}
+	}
+
+	//Šg‘å’†‚Í‚Å‚È‚¢
+	if( p_wk->is_scale )
+	{	
+		PLACEWND_SetVisible( &p_wk->placewnd, FALSE );
 	}
 
 	//ƒ}ƒbƒv”»’è’†‚Íˆø‚«¢‚ê‚È‚¢
