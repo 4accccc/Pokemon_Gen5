@@ -6,7 +6,7 @@
 
   .include  "scr_seq_def.h"
   .include  "../../../prog/include/msg/script/msg_r01.h"
-  .include  "../eventdata/zone_r01evc.h"
+  .include  "r01.h"
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -15,6 +15,7 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
+_EVENT_DATA ev_r01_poke_getdemo
 _EVENT_DATA ev_r01_talkobj_boy1
 _EVENT_DATA ev_r01_talkobj_girl1
 _EVENT_DATA ev_r01_talkobj_man1
@@ -38,20 +39,187 @@ _EVENT_DATA_END
 //  _END
 
 /**************************************************************/
+/*   R01　ポケモン捕獲デモ                                    */
+/**************************************************************/
+ev_r01_poke_getdemo:
+//POSイベント、本来であれば主人公移動アニメ（POSごとに）
+//ライバル、アニメ＋メッセージ
+	_OBJ_ANIME R01_RIVAL,anime_R01_pokeget0
+	_OBJ_ANIME_WAIT
+	_TALKWIN_OPEN
+	_TALKMSG_ALLPUT msg_r01_black_01
+	_AB_KEYWAIT
+	_TALKWIN_CLOSE
+
+//博士、メッセージ＋アニメ
+	_TALKWIN_OPEN
+	_TALKMSG_ALLPUT msg_r01_hakase2_01
+	_AB_KEYWAIT
+	_TALKWIN_CLOSE
+	_OBJ_ANIME R01_HAKASE2,anime_R01_pokeget1
+	_OBJ_ANIME_WAIT
+//画面フェード
+/*	_BGM_PLAY BANK_BGM_BATTLE01*/
+	_WHITE_OUT 8
+	_DISP_FADE_END_CHECK
+	_AB_KEYWAIT
+	_WHITE_IN 8
+	_DISP_FADE_END_CHECK
+
+/*	_BGM_STOP
+	_BGM_NOW_MAP_PLAY*/
+	
+//博士、メッセージ＋退場アニメ
+	_OBJ_ANIME R01_HAKASE2,anime_R01_pokeget1a
+	_OBJ_ANIME_WAIT
+
+	_TALKWIN_OPEN
+	_TALKMSG_ALLPUT msg_r01_hakase2_02
+	_AB_KEYWAIT
+	_TALKWIN_CLOSE
+
+	_PLAYER_NAME 0 //プレイヤー名を反映
+	_TALKWIN_OPEN
+	_TALKMSG_ALLPUT msg_r01_test_01
+	//ME鳴らす
+	_ME_PLAY SEQ_ME_ITEM //通常アイテム入手時ME
+	_ME_WAIT
+
+	_AB_KEYWAIT
+	_TALKWIN_CLOSE
+
+	_TALKWIN_OPEN
+	_TALKMSG_ALLPUT msg_r01_hakase2_03
+	_AB_KEYWAIT
+	_TALKWIN_CLOSE
+
+	_OBJ_ANIME R01_HAKASE2,anime_R01_pokeget2
+	_OBJ_ANIME_WAIT
+	_OBJ_DEL R01_HAKASE2
+
+//ライバル、アニメ＋メッセージ
+	_OBJ_ANIME R01_RIVAL,anime_R01_pokeget3
+	_OBJ_ANIME_WAIT
+	_TALKWIN_OPEN
+	_TALKMSG_ALLPUT msg_r01_black_02
+	_AB_KEYWAIT
+	_TALKWIN_CLOSE
+
+	_OBJ_ANIME R01_RIVAL,anime_R01_pokeget4
+	_OBJ_ANIME_WAIT
+	_TALKWIN_OPEN
+	_TALKMSG_ALLPUT msg_r01_black_03
+	_AB_KEYWAIT
+	_TALKWIN_CLOSE
+
+//サポート、アニメ＋メッセージ
+	_TALKWIN_OPEN
+	_TALKMSG_ALLPUT msg_r01_white_01
+	_AB_KEYWAIT
+	_TALKWIN_CLOSE
+
+	_OBJ_ANIME R01_HEROINE,anime_R01_pokeget5
+	_OBJ_ANIME_WAIT
+
+	_PLAYER_NAME 0 //プレイヤー名を反映
+	_TALKWIN_OPEN
+	_TALKMSG_ALLPUT msg_r01_white_02
+	_AB_KEYWAIT
+	_TALKWIN_CLOSE
+
+//ライバル
+	_TALKWIN_OPEN
+	_TALKMSG_ALLPUT msg_r01_black_04
+	_AB_KEYWAIT
+	_TALKWIN_CLOSE
+
+//サポート
+	_TALKWIN_OPEN
+	_TALKMSG_ALLPUT msg_r01_white_03
+	_AB_KEYWAIT
+	_TALKWIN_CLOSE
+
+//ライバル
+	_TALKWIN_OPEN
+	_TALKMSG_ALLPUT msg_r01_black_05
+	_AB_KEYWAIT
+	_TALKWIN_CLOSE
+
+//サポート
+	_TALKWIN_OPEN
+	_TALKMSG_ALLPUT msg_r01_white_04 //本来であればポケモン名
+	_AB_KEYWAIT
+	_TALKWIN_CLOSE
+
+//ライバル、サポート退場アニメ
+	_OBJ_ANIME R01_RIVAL,anime_R01_pokeget6
+	_OBJ_ANIME R01_HEROINE,anime_R01_pokeget7
+	_OBJ_ANIME_WAIT
+
+	_OBJ_DEL R01_RIVAL
+	_OBJ_DEL R01_HEROINE
+
+  _LDVAL SVSCRWK_START,1
+  _LDVAL WK_0907ROM02,1
+  _END
+
+
+/**************************************************************/
 /*                                                            */
 /**************************************************************/
 
 ev_r01_talkobj_boy1:
 	_TALK_OBJ_PAUSE_ALL //動作モデルをポーズします
 	_TURN_HERO_SITE //自機の方向へ振り向きます
-	_TALKWIN_OPEN //会話ウィンドウを開きます
-	_TALKMSG_ALLPUT msg_r01_boy1_01 //会話ウィンドウにmsg_r01_boy1_01を表示します
 
-	_YES_NO_WIN SCWK_ANSWER
-	_TALKWIN_CLOSE //会話ウィンドウを閉じます
 
-	_IFVAL_JUMP SCWK_ANSWER,EQ,0,talkobj_boy1_yes
-	_IFVAL_JUMP SCWK_ANSWER,EQ,1,talkobj_boy1_no
+	IF $WK_0907ROM06 == 0 THEN
+
+		_TALKWIN_OPEN //会話ウィンドウを開きます
+		_TALKMSG_ALLPUT msg_r01_boy1_01 //会話ウィンドウにmsg_r01_boy1_01を表示します
+		_YES_NO_WIN SCWK_ANSWER
+		_TALKWIN_CLOSE //会話ウィンドウを閉じます
+
+		IF $SCWK_ANSWER == 0 THEN
+			$WK_0907ROM06 = 1
+			_TALKWIN_OPEN
+			_TALKMSG_ALLPUT msg_r01_boy1_02
+			_AB_KEYWAIT
+			_TALKWIN_CLOSE
+			//段差を降りるアニメ+段差を降りるSE
+			_SE_PLAY SEQ_SE_DANSA
+			_OBJ_ANIME R01_BOY1,test01anime
+			_OBJ_ANIME_WAIT
+			_SE_WAIT
+
+			_TURN_HERO_SITE
+			_TALKWIN_OPEN
+			_TALKMSG_ALLPUT msg_r01_boy1_03
+			_AB_KEYWAIT
+			_TALKWIN_CLOSE
+		ELSE
+			_OBJ_ANIME R01_BOY1,test02anime
+			_OBJ_ANIME_WAIT
+			_TALKWIN_OPEN
+			_TALKMSG_ALLPUT msg_r01_boy1_04
+			_AB_KEYWAIT
+			_TALKWIN_CLOSE
+		ENDIF
+
+	ELSE
+			_TALKWIN_OPEN
+			_TALKMSG_ALLPUT msg_r01_boy1_03
+			_AB_KEYWAIT
+			_TALKWIN_CLOSE
+
+	ENDIF
+	_OBJ_PAUSE_CLEAR_ALL //動作モデルポーズを解除します
+	_END //イベントを終了します
+
+
+/*
+		_IFVAL_JUMP SCWK_ANSWER,EQ,0,talkobj_boy1_yes
+		_IFVAL_JUMP SCWK_ANSWER,EQ,1,talkobj_boy1_no
 
 talkobj_boy1_yes:
 	_TALKWIN_OPEN
@@ -60,7 +228,7 @@ talkobj_boy1_yes:
   	_TALKWIN_CLOSE
 	//段差を降りるアニメ+段差を降りるSE
 	_SE_PLAY SEQ_SE_DANSA
-	_OBJ_ANIME R01BOY1,test01anime
+	_OBJ_ANIME R01_BOY1,test01anime
 	_OBJ_ANIME_WAIT
 	_SE_WAIT
 
@@ -72,7 +240,7 @@ talkobj_boy1_yes:
 	_JUMP talkobj_boy1_end
 
 talkobj_boy1_no:
-	_OBJ_ANIME R01BOY1,test02anime
+	_OBJ_ANIME R01_BOY1,test02anime
 	_OBJ_ANIME_WAIT
 	_TALKWIN_OPEN
 	_TALKMSG_ALLPUT msg_r01_boy1_04
@@ -82,6 +250,7 @@ talkobj_boy1_no:
 talkobj_boy1_end:
 	_OBJ_PAUSE_CLEAR_ALL //動作モデルポーズを解除します
 	_END //イベントを終了します
+*/
 
 /**************************************************************/
 /*                                                            */
@@ -116,6 +285,74 @@ ev_r01_talkobj_man1:
 */
 	_OBJ_PAUSE_CLEAR_ALL
 	_END
+
+
+
+/**************************************************************/
+/*   R01　捕獲デモ用：ライバルが博士を見る                    */
+/**************************************************************/
+_ANIME_LABEL	anime_R01_pokeget0
+	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	AC_WAIT_8F,1
+	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	ACMD_END,0
+
+/**************************************************************/
+/*   R01　捕獲デモ用：博士、草むらに入る 　                   */
+/**************************************************************/
+_ANIME_LABEL	anime_R01_pokeget1
+	_ANIME_DATA	AC_WALK_U_8F,2
+	_ANIME_DATA	ACMD_END,0
+
+/**************************************************************/
+/*   R01　捕獲デモ用：博士、草むらからでる　                   */
+/**************************************************************/
+_ANIME_LABEL	anime_R01_pokeget1a
+	_ANIME_DATA	AC_WALK_D_8F,3
+	_ANIME_DATA	AC_WAIT_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+/**************************************************************/
+/*   R01　捕獲デモ用：博士退場                    */
+/**************************************************************/
+_ANIME_LABEL	anime_R01_pokeget2
+	_ANIME_DATA	AC_WALK_U_8F,12
+	_ANIME_DATA	ACMD_END,0
+
+/**************************************************************/
+/*   R01　捕獲デモ用：ライバル上向き 　                   */
+/**************************************************************/
+_ANIME_LABEL	anime_R01_pokeget3
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	ACMD_END,0
+
+/**************************************************************/
+/*   R01　捕獲デモ用：ライバル主人公を見る                   */
+/**************************************************************/
+_ANIME_LABEL	anime_R01_pokeget4
+	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	ACMD_END,0
+
+/**************************************************************/
+/*   R01　捕獲デモ用：サポート！ 　                   */
+/**************************************************************/
+_ANIME_LABEL	anime_R01_pokeget5
+	_ANIME_DATA	AC_MARK_GYOE,1
+	_ANIME_DATA	ACMD_END,0
+
+/**************************************************************/
+/*   R01　捕獲デモ用：ライバル退場                    */
+/**************************************************************/
+_ANIME_LABEL	anime_R01_pokeget6
+	_ANIME_DATA	AC_WALK_U_8F,12
+	_ANIME_DATA	ACMD_END,0
+
+/**************************************************************/
+/*   R01　捕獲デモ用：サポート退場　                   */
+/**************************************************************/
+_ANIME_LABEL	anime_R01_pokeget7
+	_ANIME_DATA	AC_WALK_U_8F,12
+	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------
 //	アニメーションデータ
