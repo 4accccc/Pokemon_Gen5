@@ -430,7 +430,7 @@ sub tag_bin {
 	# 次にタグ種類コード（2byte）
 	$tag_hi  = hex($elems[0]);
 	$tag_lo  = hex($elems[1]);
-	$tag_type = hex($tag_hi) * 256 + hex($tag_lo);
+	$tag_type = $tag_hi * 256 + $tag_lo;
 	$tag_val .= pack('S', $tag_type);
 
 	# 次にパラメータ数（2byte）
