@@ -22,13 +22,17 @@
 #include "print/gf_font.h"
 #include "print/printsys.h"
 #include "print/wordset.h"
+#include "system/bmp_winframe.h"
+
+#include "net_app/irc_appbar.h"
+
 
 //	archive
 #include "arc_def.h"
 #include "font/font.naix"
 #include "message.naix"
 #include "msg/msg_irc_rhythm.h"
-#include "ircrhythm_gra.naix"
+#include "irccompatible_gra.naix"
 
 //	rhythm
 #include "net_app/irc_rhythm.h"
@@ -126,13 +130,13 @@ static s_is_debug_only_play	= 0;
 //=====================================
 enum{	
 	// メイン画面BG
-	RHYTHM_BG_PAL_M_00 = 0,//背景用BG
-	RHYTHM_BG_PAL_M_01,		// 使用してない
-	RHYTHM_BG_PAL_M_02,		// 使用してない
-	RHYTHM_BG_PAL_M_03,		// 使用してない
-	RHYTHM_BG_PAL_M_04,		// 使用してない
-	RHYTHM_BG_PAL_M_05,		// 使用してない
-	RHYTHM_BG_PAL_M_06,		// 使用してない
+	RHYTHM_BG_PAL_M_00 = 0,//背景用B
+	RHYTHM_BG_PAL_M_01,		// 
+	RHYTHM_BG_PAL_M_02,		// 
+	RHYTHM_BG_PAL_M_03,		// 
+	RHYTHM_BG_PAL_M_04,		// 
+	RHYTHM_BG_PAL_M_05,		// 
+	RHYTHM_BG_PAL_M_06,		// 背景用ここまで
 	RHYTHM_BG_PAL_M_07,		// 使用してない
 	RHYTHM_BG_PAL_M_08,		// 使用してない
 	RHYTHM_BG_PAL_M_09,		// 使用してない
@@ -140,18 +144,18 @@ enum{
 	RHYTHM_BG_PAL_M_11,		// 使用してない
 	RHYTHM_BG_PAL_M_12,		// 使用してない
 	RHYTHM_BG_PAL_M_13,		// 使用してない
-	RHYTHM_BG_PAL_M_14,		// フォント
+	RHYTHM_BG_PAL_M_14,		// APPBAR
 	RHYTHM_BG_PAL_M_15,		// INFOWIN
 
 
 	// サブ画面BG
-	RHYTHM_BG_PAL_S_00 = 0,	//使用していない
-	RHYTHM_BG_PAL_S_01,		// 使用してない
-	RHYTHM_BG_PAL_S_02,		// 使用してない
-	RHYTHM_BG_PAL_S_03,		// 使用してない
-	RHYTHM_BG_PAL_S_04,		// 使用してない
-	RHYTHM_BG_PAL_S_05,		// 使用してない
-	RHYTHM_BG_PAL_S_06,		// 使用してない
+	RHYTHM_BG_PAL_S_00 = 0,	//背景用
+	RHYTHM_BG_PAL_S_01,		//
+	RHYTHM_BG_PAL_S_02,		//
+	RHYTHM_BG_PAL_S_03,		//
+	RHYTHM_BG_PAL_S_04,		//
+	RHYTHM_BG_PAL_S_05,		//
+	RHYTHM_BG_PAL_S_06,		// 背景用ここまで	//上画面用バー＆フォント
 	RHYTHM_BG_PAL_S_07,		// 使用してない
 	RHYTHM_BG_PAL_S_08,		// 使用してない
 	RHYTHM_BG_PAL_S_09,		// 使用してない
@@ -159,26 +163,26 @@ enum{
 	RHYTHM_BG_PAL_S_11,		// 使用してない
 	RHYTHM_BG_PAL_S_12,		// 使用してない
 	RHYTHM_BG_PAL_S_13,		// 使用してない
-	RHYTHM_BG_PAL_S_14,		//	フォント
+	RHYTHM_BG_PAL_S_14,		// 使用してない
 	RHYTHM_BG_PAL_S_15,		// 使用してない
 
 	// メイン画面OBJ
-	RHYTHM_OBJ_PAL_M_00 = 0,// タッチ反応OBJ
-	RHYTHM_OBJ_PAL_M_01,		// 使用してない
-	RHYTHM_OBJ_PAL_M_02,		// 使用してない
-	RHYTHM_OBJ_PAL_M_03,		// 使用してない
-	RHYTHM_OBJ_PAL_M_04,		// 使用してない
-	RHYTHM_OBJ_PAL_M_05,		// 使用してない
-	RHYTHM_OBJ_PAL_M_06,		// 使用してない
-	RHYTHM_OBJ_PAL_M_07,		// 使用してない
-	RHYTHM_OBJ_PAL_M_08,		// 使用してない
-	RHYTHM_OBJ_PAL_M_09,		// 使用してない
-	RHYTHM_OBJ_PAL_M_10,		// 使用してない
+	RHYTHM_OBJ_PAL_M_00 = 0,// OBJ用
+	RHYTHM_OBJ_PAL_M_01,		// 
+	RHYTHM_OBJ_PAL_M_02,		// 
+	RHYTHM_OBJ_PAL_M_03,		// 
+	RHYTHM_OBJ_PAL_M_04,		// 
+	RHYTHM_OBJ_PAL_M_05,		// 
+	RHYTHM_OBJ_PAL_M_06,		// 
+	RHYTHM_OBJ_PAL_M_07,		// 
+	RHYTHM_OBJ_PAL_M_08,		// 
+	RHYTHM_OBJ_PAL_M_09,		// 
+	RHYTHM_OBJ_PAL_M_10,		// OBJ用
 	RHYTHM_OBJ_PAL_M_11,		// 使用してない
 	RHYTHM_OBJ_PAL_M_12,		// 使用してない
-	RHYTHM_OBJ_PAL_M_13,		// 使用してない
-	RHYTHM_OBJ_PAL_M_14,		// 使用してない
-	RHYTHM_OBJ_PAL_M_15,		// 使用してない
+	RHYTHM_OBJ_PAL_M_13,		// APPBAR
+	RHYTHM_OBJ_PAL_M_14,		// APPBAR
+	RHYTHM_OBJ_PAL_M_15,		// APPBAR
 
 
 	// サブ画面OBJ
@@ -219,11 +223,6 @@ enum{
 #define	MSGWND_TEXT_Y	(18)
 #define	MSGWND_TEXT_W	(30)
 #define	MSGWND_TEXT_H	(5)
-
-#define	MSGWND_RETURN_X	(1)
-#define	MSGWND_RETURN_Y	(22)
-#define	MSGWND_RETURN_W	(30)
-#define	MSGWND_RETURN_H	(2)
 
 //-------------------------------------
 ///	カウント
@@ -270,7 +269,6 @@ typedef enum{
 //=====================================
 typedef enum {
 	MSGWNDID_TEXT,
-	MSGWNDID_RETURN,
 
 	MSGWNDID_MAX
 } MSGWNDID;
@@ -310,7 +308,7 @@ enum
 //=====================================
 typedef struct
 {
-	int dummy;
+	GFL_ARCUTIL_TRANSINFO	frame_char;		//上画面用メッセージフレーム
 } GRAPHIC_BG_WORK;
 
 //-------------------------------------
@@ -445,6 +443,9 @@ struct _RHYTHM_MAIN_WORK
 	//結果表示
 	RHYTHM_ONLYRESULT_WORK	onlyresult;
 
+	//下画面バー
+	APPBAR_WORK			*p_appbar;
+
 	//シーケンス管理
 	SEQ_FUNCTION		seq_function;
 	u16		seq;
@@ -483,6 +484,7 @@ static void GRAPHIC_Init( GRAPHIC_WORK *p_wk, HEAPID heapID );
 static void GRAPHIC_Exit( GRAPHIC_WORK *p_wk );
 static void GRAPHIC_Draw( GRAPHIC_WORK *p_wk );
 static GFL_CLWK* GRAPHIC_GetClwk( const GRAPHIC_WORK *cp_wk, CLWKID id );
+static GFL_CLUNIT * GRAPHIC_GetClunit( const GRAPHIC_WORK *cp_wk );
 static void Graphic_VBlankTask( GFL_TCB *p_tcb, void *p_work );
 //BG
 static void GRAPHIC_BG_Init( GRAPHIC_BG_WORK *p_wk, HEAPID heapID );
@@ -494,6 +496,7 @@ static void GRAPHIC_OBJ_Exit( GRAPHIC_OBJ_WORK *p_wk );
 static void GRAPHIC_OBJ_Main( GRAPHIC_OBJ_WORK *p_wk );
 static void GRAPHIC_OBJ_VBlankFunction( GRAPHIC_OBJ_WORK *p_wk );
 static GFL_CLWK* GRAPHIC_OBJ_GetClwk( const GRAPHIC_OBJ_WORK *cp_wk, CLWKID id );
+static GFL_CLUNIT * GRAPHIC_OBJ_GetClunit( const GRAPHIC_OBJ_WORK *cp_wk );
 //MSG_WORK
 static void MSG_Init( MSG_WORK *p_wk, MSG_FONT_TYPE font, HEAPID heapID );
 static void MSG_Exit( MSG_WORK *p_wk );
@@ -543,7 +546,6 @@ static BOOL TP_GetDiamondTrg( const GFL_POINT *cp_diamond, GFL_POINT *p_trg );
 static void TouchMarker_SetPos( RHYTHM_MAIN_WORK *p_wk, const GFL_POINT *cp_pos );
 static void TouchMarker_Main( RHYTHM_MAIN_WORK *p_wk );
 static u8		CalcScore( const RHYTHM_MAIN_WORK *cp_wk );
-static BOOL TouchReturnBtn( void );
 
 #ifdef DEBUG_RHYTHM_MSG
 static void DEBUGRHYTHM_PRINT_UpDate( RHYTHM_MAIN_WORK *p_wk );
@@ -592,15 +594,15 @@ const GFL_PROC_DATA IrcRhythm_ProcData	=
 typedef enum 
 {
 	GRAPHIC_BG_FRAME_M_INFOWIN,
-	GRAPHIC_BG_FRAME_M_TEXT	= GRAPHIC_BG_FRAME_M_INFOWIN,
 	GRAPHIC_BG_FRAME_M_BACK,
+	GRAPHIC_BG_FRAME_S_ROGO,
 	GRAPHIC_BG_FRAME_S_TEXT,
 	GRAPHIC_BG_FRAME_S_BACK,
 	GRAPHIC_BG_FRAME_MAX
 } GRAPHIC_BG_FRAME;
 static const u32 sc_bgcnt_frame[ GRAPHIC_BG_FRAME_MAX ] = 
 {
-	INFOWIN_BG_FRAME, GFL_BG_FRAME1_M, GFL_BG_FRAME0_S, GFL_BG_FRAME1_S,
+	INFOWIN_BG_FRAME, GFL_BG_FRAME1_M, GFL_BG_FRAME0_S, GFL_BG_FRAME1_S, GFL_BG_FRAME2_S,
 };
 static const GFL_BG_BGCNT_HEADER sc_bgcnt_data[ GRAPHIC_BG_FRAME_MAX ] = 
 {
@@ -618,18 +620,25 @@ static const GFL_BG_BGCNT_HEADER sc_bgcnt_data[ GRAPHIC_BG_FRAME_MAX ] =
 		GX_BG_SCRBASE_0x0800, GX_BG_CHARBASE_0x08000, GFL_BG_CHRSIZ_256x256,
 		GX_BG_EXTPLTT_01, 1, 0, 0, FALSE
 	},
-	// GRAPHIC_BG_FRAME_S_TEXT
+	// GRAPHIC_BG_FRAME_S_ROGO
 	{
 		0, 0, 0x800, 0,
 		GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
 		GX_BG_SCRBASE_0x0000, GX_BG_CHARBASE_0x04000, GFL_BG_CHRSIZ_256x256,
+		GX_BG_EXTPLTT_01, 1, 0, 0, FALSE
+	},
+	// GRAPHIC_BG_FRAME_S_TEXT
+	{
+		0, 0, 0x800, 0,
+		GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
+		GX_BG_SCRBASE_0x0800, GX_BG_CHARBASE_0x0c000, GFL_BG_CHRSIZ_256x256,
 		GX_BG_EXTPLTT_01, 0, 0, 0, FALSE
 	},
 	// GRAPHIC_BG_FRAME_S_BACK
 	{
 		0, 0, 0x800, 0,
 		GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
-		GX_BG_SCRBASE_0x0800, GX_BG_CHARBASE_0x0c000, GFL_BG_CHRSIZ_256x256,
+		GX_BG_SCRBASE_0x1000, GX_BG_CHARBASE_0x08000, GFL_BG_CHRSIZ_256x256,
 		GX_BG_EXTPLTT_01, 1, 0, 0, FALSE
 	},
 
@@ -772,13 +781,17 @@ static GFL_PROC_RESULT IRC_RHYTHM_PROC_Init( GFL_PROC *p_proc, int *p_seq, void 
 	}
 	MSGWND_Init( &p_wk->msgwnd[MSGWNDID_TEXT], sc_bgcnt_frame[GRAPHIC_BG_FRAME_S_TEXT],
 			MSGWND_TEXT_X, MSGWND_TEXT_Y, MSGWND_TEXT_W, MSGWND_TEXT_H, HEAPID_IRCRHYTHM );
-	MSGWND_Init( &p_wk->msgwnd[MSGWNDID_RETURN], sc_bgcnt_frame[GRAPHIC_BG_FRAME_M_TEXT],
-			MSGWND_RETURN_X, MSGWND_RETURN_Y, MSGWND_RETURN_W, MSGWND_RETURN_H, HEAPID_IRCRHYTHM );
-	MSGWND_PrintCenter( &p_wk->msgwnd[MSGWNDID_RETURN], &p_wk->msg, RHYTHM_BTN_000 );
+	BmpWinFrame_Write( p_wk->msgwnd[MSGWNDID_TEXT].p_bmpwin, WINDOW_TRANS_ON, 
+					GFL_ARCUTIL_TRANSINFO_GetPos(p_wk->grp.bg.frame_char), RHYTHM_BG_PAL_S_06 );
 
 	RHYTHMNET_Init( &p_wk->net, p_wk->p_param->p_irc );
 
 	RHYTHMSEARCH_Init( &p_wk->search );
+
+	{	
+		GFL_CLUNIT	*p_unit	= GRAPHIC_GetClunit( &p_wk->grp );
+		p_wk->p_appbar	= APPBAR_Init( APPBAR_OPTION_MASK_CLOSE, p_unit, sc_bgcnt_frame[GRAPHIC_BG_FRAME_M_INFOWIN], RHYTHM_BG_PAL_M_14, RHYTHM_OBJ_PAL_M_13, APP_COMMON_MAPPING_128K, HEAPID_IRCRHYTHM );
+	}
 
 DEBUG_ONLYPLAY_IF
 	DEBUGPRINT_Init( sc_bgcnt_frame[GRAPHIC_BG_FRAME_S_BACK], FALSE, HEAPID_IRCRHYTHM );
@@ -828,6 +841,9 @@ DEBUG_ONLYPLAY_IF
 	DEBUGPRINT_Close();
 	DEBUGPRINT_Exit();
 DEBUG_ONLYPLAY_ENDIF
+
+	//APPBAR
+	APPBAR_Exit( p_wk->p_appbar );	
 
 	RHYTHMNET_Exit( &p_wk->net );
 
@@ -944,6 +960,9 @@ static GFL_PROC_RESULT IRC_RHYTHM_PROC_Main( GFL_PROC *p_proc, int *p_seq, void 
 
 	GRAPHIC_Draw( &p_wk->grp );
 
+	//APPBAR
+	APPBAR_Main( p_wk->p_appbar );
+
 	//シーンを継続的に送る
 	COMPATIBLE_IRC_SendSceneContinue( p_wk->p_param->p_irc );
 
@@ -1049,7 +1068,19 @@ static GFL_CLWK* GRAPHIC_GetClwk( const GRAPHIC_WORK *cp_wk, CLWKID id )
 {	
 	return GRAPHIC_OBJ_GetClwk( &cp_wk->obj, id );
 }
-
+//----------------------------------------------------------------------------
+/**
+ *	@brief	CLUNIT取得
+ *
+ *	@param	const GRAPHIC_WORK *cp_wk		ワーク
+ *
+ *	@return	CLUNIT
+ */
+//-----------------------------------------------------------------------------
+static GFL_CLUNIT * GRAPHIC_GetClunit( const GRAPHIC_WORK *cp_wk )
+{	
+	return GRAPHIC_OBJ_GetClunit( &cp_wk->obj );
+}
 //----------------------------------------------------------------------------
 /**
  *	@brief	VBlank用タスク
@@ -1113,16 +1144,32 @@ static void GRAPHIC_BG_Init( GRAPHIC_BG_WORK* p_wk, HEAPID heapID )
 	{	
 		ARCHANDLE *p_handle;
 
-		p_handle	= GFL_ARC_OpenDataHandle( ARCID_IRCRHYTHM_GRAPHIC, heapID );
+		p_handle	= GFL_ARC_OpenDataHandle( ARCID_IRCCOMPATIBLE, heapID );
+		//パレット
+		GFL_ARCHDL_UTIL_TransVramPalette( p_handle, NARC_irccompatible_gra_aura_bg_NCLR,
+				PALTYPE_MAIN_BG, RHYTHM_BG_PAL_M_00*0x20, 0, heapID );
+		GFL_ARCHDL_UTIL_TransVramPalette( p_handle, NARC_irccompatible_gra_aura_bg_NCLR,
+				PALTYPE_SUB_BG, RHYTHM_BG_PAL_S_00*0x20, 0, heapID );
 
-		GFL_ARCHDL_UTIL_TransVramPalette( p_handle, NARC_ircrhythm_gra_rhythm_bg_back_NCLR,
-				PALTYPE_MAIN_BG, PALTYPE_MAIN_BG*0x20, 0x20, heapID );
+		//キャラ
+		GFL_ARCHDL_UTIL_TransVramBgCharacter( p_handle, NARC_irccompatible_gra_aura_bg_NCGR,
+				sc_bgcnt_frame[GRAPHIC_BG_FRAME_M_BACK], 0, 0, FALSE, heapID );
+		GFL_ARCHDL_UTIL_TransVramBgCharacter( p_handle, NARC_irccompatible_gra_aura_bg_NCGR,
+				sc_bgcnt_frame[GRAPHIC_BG_FRAME_S_BACK], 0, 0, FALSE, heapID );
+		GFL_ARCHDL_UTIL_TransVramBgCharacter( p_handle, NARC_irccompatible_gra_title_rogo_NCGR,
+				sc_bgcnt_frame[GRAPHIC_BG_FRAME_S_ROGO], 0, 0, FALSE, heapID );
 	
-		GFL_ARCHDL_UTIL_TransVramBgCharacter( p_handle, NARC_ircrhythm_gra_rhythm_bg_back_NCGR,
-				sc_bgcnt_frame[ GRAPHIC_BG_FRAME_M_BACK], 0, 0, FALSE, heapID );
+		//スクリーン
+		GFL_ARCHDL_UTIL_TransVramScreen( p_handle, NARC_irccompatible_gra_aura_bg_hert_s_NSCR,
+				sc_bgcnt_frame[GRAPHIC_BG_FRAME_M_BACK], 0, 0, FALSE, heapID );
+		GFL_ARCHDL_UTIL_TransVramScreen( p_handle, NARC_irccompatible_gra_aura_bg_hert_s_NSCR,
+				sc_bgcnt_frame[GRAPHIC_BG_FRAME_S_BACK], 0, 0, FALSE, heapID );
+		GFL_ARCHDL_UTIL_TransVramScreen( p_handle, NARC_irccompatible_gra_title_rhythm_NSCR,
+				sc_bgcnt_frame[GRAPHIC_BG_FRAME_S_ROGO], 0, 0, FALSE, heapID );
 
-		GFL_ARCHDL_UTIL_TransVramScreen( p_handle, NARC_ircrhythm_gra_rhythm_bg_back_NSCR,
-				sc_bgcnt_frame[ GRAPHIC_BG_FRAME_M_BACK], 0, 0, FALSE, heapID );
+		//ワク
+		GFL_BG_FillCharacter( sc_bgcnt_frame[ GRAPHIC_BG_FRAME_S_TEXT], 0, 1, 0 );
+		p_wk->frame_char	= GFL_ARCHDL_UTIL_TransVramBgCharacterAreaMan( p_handle, NARC_irccompatible_gra_ue_frame_NCGR, sc_bgcnt_frame[ GRAPHIC_BG_FRAME_S_TEXT], 0, FALSE, heapID );
 
 		GFL_ARC_CloseDataHandle( p_handle );
 	}
@@ -1138,12 +1185,22 @@ static void GRAPHIC_BG_Init( GRAPHIC_BG_WORK* p_wk, HEAPID heapID )
 //-----------------------------------------------------------------------------
 static void GRAPHIC_BG_Exit( GRAPHIC_BG_WORK* p_wk )
 {	
-	int i;
 
-	// BGコントロール破棄
-	for( i = 0; i < GRAPHIC_BG_FRAME_MAX; i++ )
-	{
-		GFL_BG_FreeBGControl( sc_bgcnt_frame[i] );
+	//リソース破棄
+	{	
+		GFL_BG_FreeCharacterArea(sc_bgcnt_frame[ GRAPHIC_BG_FRAME_S_TEXT],
+				GFL_ARCUTIL_TRANSINFO_GetPos(p_wk->frame_char),
+				GFL_ARCUTIL_TRANSINFO_GetSize(p_wk->frame_char));
+		GFL_BG_FillCharacterRelease(sc_bgcnt_frame[ GRAPHIC_BG_FRAME_S_TEXT],1,0);
+	}
+
+	{	
+		int i;
+		// BGコントロール破棄
+		for( i = 0; i < GRAPHIC_BG_FRAME_MAX; i++ )
+		{
+			GFL_BG_FreeBGControl( sc_bgcnt_frame[i] );
+		}
 	}
 
 	// BGシステム破棄
@@ -1197,16 +1254,16 @@ static void GRAPHIC_OBJ_Init( GRAPHIC_OBJ_WORK *p_wk, const GFL_DISP_VRAM* cp_vr
 	{	
 		ARCHANDLE *p_handle;
 
-		p_handle	= GFL_ARC_OpenDataHandle( ARCID_IRCRHYTHM_GRAPHIC, heapID );
+		p_handle	= GFL_ARC_OpenDataHandle( ARCID_IRCCOMPATIBLE, heapID );
 
 		p_wk->reg_id[OBJREGID_TOUCH_PLT]	= GFL_CLGRP_PLTT_Register( p_handle, 
-				NARC_ircrhythm_gra_rhythm_obj_touch_NCLR, CLSYS_DRAW_MAIN, RHYTHM_OBJ_PAL_M_00*0x20, heapID );
+				NARC_irccompatible_gra_aura_obj_NCLR, CLSYS_DRAW_MAIN, RHYTHM_OBJ_PAL_M_00*0x20, heapID );
 
 		p_wk->reg_id[OBJREGID_TOUCH_CHR]	= GFL_CLGRP_CGR_Register( p_handle,
-				NARC_ircrhythm_gra_rhythm_obj_touch_NCGR, FALSE, CLSYS_DRAW_MAIN, heapID );
+				NARC_irccompatible_gra_aura_obj_NCGR, FALSE, CLSYS_DRAW_MAIN, heapID );
 
 		p_wk->reg_id[OBJREGID_TOUCH_CEL]	= GFL_CLGRP_CELLANIM_Register( p_handle,
-				NARC_ircrhythm_gra_rhythm_obj_touch_NCER, NARC_ircrhythm_gra_rhythm_obj_touch_NANR, heapID );
+				NARC_irccompatible_gra_aura_obj_NCER, NARC_irccompatible_gra_aura_obj_NANR, heapID );
 
 		GFL_ARC_CloseDataHandle( p_handle );
 	}
@@ -1300,7 +1357,19 @@ static GFL_CLWK* GRAPHIC_OBJ_GetClwk( const GRAPHIC_OBJ_WORK *cp_wk, CLWKID id )
 	GF_ASSERT( id < CLWKID_MAX );
 	return cp_wk->p_clwk[id];
 }
-
+//----------------------------------------------------------------------------
+/**
+ *	@brief	OBJ描画	CLUNIT取得
+ *
+ *	@param	const GRAPHIC_OBJ_WORK *cp_wk		ワーク
+ *
+ *	@return	CLUNIT
+ */
+//-----------------------------------------------------------------------------
+static GFL_CLUNIT * GRAPHIC_OBJ_GetClunit( const GRAPHIC_OBJ_WORK *cp_wk )
+{	
+	return cp_wk->p_clunit;
+}
 //=============================================================================
 /**
  *					MSG
@@ -1346,8 +1415,6 @@ static void MSG_Init( MSG_WORK *p_wk, MSG_FONT_TYPE font, HEAPID heapID )
 	{	
 		GFL_ARC_UTIL_TransVramPalette( ARCID_FONT, NARC_font_default_nclr, PALTYPE_SUB_BG, TEXTSTR_PLT_NO*0x20, 0x20, heapID );
 		GFL_ARC_UTIL_TransVramPalette( ARCID_FONT, NARC_font_default_nclr, PALTYPE_MAIN_BG, TEXTSTR_PLT_NO*0x20, 0x20, heapID );
-		GFL_BG_SetBackGroundColor( sc_bgcnt_frame[ GRAPHIC_BG_FRAME_S_TEXT], GX_RGB(31,31,31) );
-		GFL_BG_SetBackGroundColor( sc_bgcnt_frame[ GRAPHIC_BG_FRAME_M_TEXT], GX_RGB(31,31,31) );
 	}
 }
 
@@ -1979,7 +2046,7 @@ DEBUG_ONLYPLAY_ENDIF
 	}
 
 
-	if( TouchReturnBtn() )
+	if( APPBAR_GetTrg(p_wk->p_appbar) == APPBAR_ICON_CLOSE )
 	{
 		PMSND_PlaySystemSE( SEQ_SE_CANCEL1 );
 		p_wk->p_param->result	= IRCRHYTHM_RESULT_RETURN;
@@ -2004,7 +2071,7 @@ DEBUG_ONLYPLAY_ENDIF
 static void SEQFUNC_Result( RHYTHM_MAIN_WORK *p_wk, u16 *p_seq )
 {	
 DEBUG_ONLYPLAY_IF
-	if(	TouchReturnBtn()	)
+	if(	APPBAR_GetTrg(p_wk->p_appbar) == APPBAR_ICON_CLOSE )
 	{	
 		p_wk->p_param->score	= CalcScore( p_wk );
 		OS_Printf( "リズムチェック %d点\n", p_wk->p_param->score );
@@ -2041,7 +2108,7 @@ DEBUG_ONLYPLAY_ELSE
 			*p_seq	= SEQ_MSG_PRINT;
 		}
 
-		if( TouchReturnBtn() )
+		if( APPBAR_GetTrg(p_wk->p_appbar) == APPBAR_ICON_CLOSE )
 		{
 			COMPATIBLE_IRC_Cancel( p_wk->p_param->p_irc );
 			PMSND_PlaySystemSE( SEQ_SE_CANCEL1 );
@@ -2125,10 +2192,7 @@ DEBUG_ONLYPLAY_ELSE
 		//画面上のものを消去
 		GFL_BG_SetVisible( sc_bgcnt_frame[GRAPHIC_BG_FRAME_M_BACK], FALSE );
 		MSGWND_Clear( &p_wk->msgwnd[MSGWNDID_TEXT] );
-		MSGWND_Clear( &p_wk->msgwnd[MSGWNDID_RETURN] );
 
-		//新たに結果画面作成
-		RHYTHM_ONLYRESULT_Init( &p_wk->onlyresult, sc_bgcnt_frame[GRAPHIC_BG_FRAME_M_TEXT], &p_wk->msg, &p_wk->search, HEAPID_IRCRHYTHM );
 
 		*p_seq	= SEQ_FADEOUT_START;
 		break;
@@ -2762,31 +2826,6 @@ DEBUG_ONLYPLAY_ENDIF
 		OS_Printf( "間隔 %d点\n", diff_score/9 );
 	}
 	return (prog_score + (diff_score/9) )/2;
-}
-//----------------------------------------------------------------------------
-/**
- *	@brief	戻るボタンを押したかどうか
- *
- *	@param	void 
- *
- *	@return
- */
-//-----------------------------------------------------------------------------
-static BOOL TouchReturnBtn( void )
-{	
-
-	u32 x;
-	u32 y;
-	if( GFL_UI_TP_GetPointTrg( &x, &y) )
-	{	
-		if( ((u32)( x - MSGWND_RETURN_X*8) < (u32)(MSGWND_RETURN_W*8))
-				&	((u32)( y - MSGWND_RETURN_Y*8) < (u32)(MSGWND_RETURN_H*8))
-			){
-			return TRUE;
-		}
-
-	}
-	return FALSE;
 }
 
 //----------------------------------------------------------------------------
