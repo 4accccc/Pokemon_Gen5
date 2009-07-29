@@ -321,7 +321,7 @@ static GFL_PROC_RESULT MusicalProc_Main( GFL_PROC * proc, int * seq , void *pwk,
       MUSICAL_STAGE_SetData_Player( work->actInitWork , 1 , work->musPoke );
       MUSICAL_STAGE_SetData_NPC( work->actInitWork , 0 , MONSNO_ONOKKUSU , HEAPID_MUSICAL_PROC );
       MUSICAL_STAGE_SetData_NPC( work->actInitWork , 2 , MONSNO_PIKATYUU  , HEAPID_MUSICAL_PROC );
-      MUSICAL_STAGE_SetData_NPC( work->actInitWork , 3 , MONSNO_WANIBAAN , HEAPID_MUSICAL_PROC );
+      MUSICAL_STAGE_SetData_NPC( work->actInitWork , 3 , MONSNO_REIBAAN , HEAPID_MUSICAL_PROC );
 
       MUSICAL_STAGE_SetEquip( work->actInitWork , 0 , MUS_POKE_EQU_EAR_L , 7 , 0 );
       MUSICAL_STAGE_SetEquip( work->actInitWork , 0 , MUS_POKE_EQU_BODY  , 9 , 0 );
