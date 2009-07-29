@@ -9466,9 +9466,17 @@ const FLDMMDL_HEADER OBJ_EVENT_T01R0101[] = {
 };
 const int ObjCount_T01R0101 = NELEMS(OBJ_EVENT_T01R0101);
 const POS_EVENT_DATA POS_EVENT_T01R0101[] = {
-	{//POSID_T01R0101_01 = 0
+	{//POSID_T01R0101_02 = 0
 		SCRID_T01R0101_MAMA_FIRST,
-		3, 2,
+		4, 3,
+		1, 1,
+		0,  //height
+		0,
+		WK_0907ROM07,
+	},
+	{//POSID_T01R0101_01 = 1
+		SCRID_T01R0101_MAMA_FIRST,
+		3, 3,
 		1, 1,
 		0,  //height
 		0,
@@ -9481,7 +9489,7 @@ static const EVENTDATA_TABLE event_t01r0101 = {
 	0,
 	1,
 	4,
-	1,
+	2,
 	(void *)NULL,
 	(void *)&OBJ_EVENT_T01R0101,
 	(void *)&DOOR_EVENT_T01R0101,
