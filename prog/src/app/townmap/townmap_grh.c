@@ -403,8 +403,8 @@ static void TownMap_Graphic_Init( void )
 static void TownMap_Graphic_VBlankTask( GFL_TCB *p_tcb, void *p_wk_adrs )
 {	
 	TOWNMAP_GRAPHIC_SYS *p_wk	= p_wk_adrs;
-	GRAPHIC_BG_VBlankFunction( &p_wk->bg );
 	GRAPHIC_OBJ_VBlankFunction( &p_wk->obj );
+	GRAPHIC_BG_VBlankFunction( &p_wk->bg );
 }
 //=============================================================================
 /**
@@ -668,7 +668,6 @@ static void GRAPHIC_OBJ_Exit( GRAPHIC_OBJ_WORK *p_wk )
 static void GRAPHIC_OBJ_Main( GRAPHIC_OBJ_WORK *p_wk )
 {	
 	GFL_CLACT_SYS_Main();
-
 }
 //----------------------------------------------------------------------------
 /**
