@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
- * @file   iss_unit.h
+ * @file   iss_unit_city.h
  * @brief  街ISSユニット
  * @author obata_toshihiro
  * @date   2009.07.16
@@ -55,3 +55,24 @@ void ISS_UNIT_CITY_Update( const ISS_UNIT_CITY* p_unit );
  */
 //----------------------------------------------------------------------------
 void ISS_UNIT_CITY_ZoneChange( ISS_UNIT_CITY* p_unit, u16 next_zone_id );
+
+//----------------------------------------------------------------------------
+/**
+ * @brief 動作状態を設定する
+ *
+ * @param p_unit 設定を変更するISSユニット
+ * @param active 動作させるかどうか
+ */
+//----------------------------------------------------------------------------
+extern void ISS_UNIT_CITY_SetActive( ISS_UNIT_CITY* p_unit, BOOL active );
+
+//----------------------------------------------------------------------------
+/**
+ * @breif 動作状態を取得する
+ *
+ * @param p_unit 状態を調べるISSユニット
+ * 
+ * @return 動作中かどうか
+ */
+//----------------------------------------------------------------------------
+extern BOOL ISS_UNIT_CITY_IsActive( const ISS_UNIT_CITY* p_unit );
