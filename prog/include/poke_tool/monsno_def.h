@@ -1,10 +1,10 @@
 
 //============================================================================================
 /**
- * @file	monsno.h
+ * @file	MONSNO.H
  * @bfief	モンスターNoのDefine定義
  * @author	HisashiSogabe
- * @date	2009.5.25
+ * @date	2009.7.29
  *	パーソナルコンバータから生成されました
  */
 //============================================================================================
@@ -508,26 +508,46 @@
 #define	MONSNO_PINBOO	(494)
 #define	MONSNO_MOGURYUU	(495)
 #define	MONSNO_GORIDARUMA	(496)
-#define	MONSNO_WANIMEGANE	(497)
-#define	MONSNO_WANIGURASU	(498)
-#define	MONSNO_WANIBAAN	(499)
-#define	MONSNO_HAGOROMUSI	(500)
+#define	MONSNO_WANIGURASU	(497)
+#define	MONSNO_SANDAIRU	(498)
+#define	MONSNO_REIBAAN	(499)
+#define	MONSNO_HAGOMORI	(500)
 #define	MONSNO_HAKISIIDO	(501)
 #define	MONSNO_ONOKKUSU	(502)
 #define	MONSNO_KAAMENTO	(503)
 #define	MONSNO_BANBIINA	(504)
-#define	MONSNO_BATOROODO	(505)
+#define	MONSNO_KENHOROU	(505)
 #define	MONSNO_PURUNSU	(506)
-#define	MONSNO_KOBATO	(507)
+#define	MONSNO_MAMEBATO	(507)
 #define	MONSNO_RAIBURA	(508)
-#define	MONSNO_BAKUPAKU	(509)
-#define	MONSNO_YURIKONE	(510)
-#define	MONSNO_OOBATO	(511)
-#define	MONSNO_PANTIINU	(512)
+#define	MONSNO_YUMEBAKURA	(509)
+#define	MONSNO_TYURINE	(510)
+#define	MONSNO_HATOOBOO	(511)
+#define	MONSNO_DOREDHIA	(512)
 #define	MONSNO_MOKOUMORI	(513)
-#define	MONSNO_TAMAGO	(514)
-#define	MONSNO_DAMETAMAGO	(515)
-#define	MONSNO_END	(513)
-#define	MONSNO_MAX	(515)
+#define	MONSNO_MOKOTTO	(514)
+#define	MONSNO_MERIKOTTO	(515)
+#define	MONSNO_SABOTTEN	(516)
+#define	MONSNO_HAGAKURE	(517)
+#define	MONSNO_GUROKKEN	(518)
+#define	MONSNO_KAAOKEN	(519)
+#define	MONSNO_SIKIZIKA	(520)
+#define	MONSNO_HIDARUMA	(521)
+#define	MONSNO_ZOROA	(522)
+#define	MONSNO_ZOROAAKU	(523)
+#define	MONSNO_SIROBEA	(524)
+#define	MONSNO_SYAABEA	(525)
+#define	MONSNO_TIRATTI	(526)
+#define	MONSNO_TIRANII	(527)
+#define	MONSNO_DOGOUMORI	(528)
+#define	MONSNO_PURUKINGU	(529)
+#define	MONSNO_TYAAKU	(530)
+#define	MONSNO_DOTYAKKU	(531)
+#define	MONSNO_NASUKATTI	(532)
+#define	MONSNO_MUZYAZYA	(533)
+#define	MONSNO_TAMAGO	(534)
+#define	MONSNO_DAMETAMAGO	(535)
+#define	MONSNO_END	(533)
+#define	MONSNO_MAX	(535)
 
 #endif __MONSNO_H_
