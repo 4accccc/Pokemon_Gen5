@@ -487,7 +487,8 @@ static void PSTATUS_SUB_PokeCreateMcss( PSTATUS_WORK *work , PSTATUS_SUB_WORK *s
 {
   MCSS_ADD_WORK addWork;
   VecFx32 scale = {FX32_ONE*16,FX32_ONE*16,FX32_ONE};
-  VecFx32 shadowScale = {FX32_ONE,FX32_CONST(2.2f),FX32_ONE};
+  VecFx32 shadowScale = {PSTATUS_SUB_SHADOW_SCALE_X , PSTATUS_SUB_SHADOW_SCALE_Y , PSTATUS_SUB_SHADOW_SCALE_Z};
+  VecFx32 shadowOffset= {PSTATUS_SUB_SHADOW_OFFSET_X , PSTATUS_SUB_SHADOW_OFFSET_Y , PSTATUS_SUB_SHADOW_OFFSET_Z};
   
   work->shadowRotate = 302*65536/360;
   
@@ -502,6 +503,8 @@ static void PSTATUS_SUB_PokeCreateMcss( PSTATUS_WORK *work , PSTATUS_SUB_WORK *s
     MCSS_SetShadowRotate( subWork->pokeMcss , work->shadowRotate );
     MCSS_SetShadowOffset( subWork->pokeMcss , &work->shadowOfs );
   #else
+    MCSS_SetShadowRotate( subWork->pokeMcss , PSTATUS_SUB_SHADOW_ROTATE );
+    MCSS_SetShadowOffset( subWork->pokeMcss , &shadowOffset );
     MCSS_SetShadowScale( subWork->pokeMcss , &shadowScale );
   #endif
   }
@@ -515,7 +518,9 @@ static void PSTATUS_SUB_PokeCreateMcss( PSTATUS_WORK *work , PSTATUS_SUB_WORK *s
     MCSS_SetShadowRotate( subWork->pokeMcssBack , work->shadowRotate );
     MCSS_SetShadowOffset( subWork->pokeMcssBack , &work->shadowOfs );
   #else
-    MCSS_SetShadowScale( subWork->pokeMcssBack , &shadowScale );
+    MCSS_SetShadowRotate( subWork->pokeMcss , PSTATUS_SUB_SHADOW_ROTATE );
+    MCSS_SetShadowOffset( subWork->pokeMcss , &shadowOffset );
+    MCSS_SetShadowScale( subWork->pokeMcss , &shadowScale );
   #endif
   }
   MCSS_ResetVanishFlag( subWork->pokeMcss );

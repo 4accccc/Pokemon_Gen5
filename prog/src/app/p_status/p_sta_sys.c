@@ -1376,9 +1376,9 @@ static void PSTATUS_DEB_Draw_OfsZ( void* userWork , DEBUGWIN_ITEM* item );
 
 static void PSTATUS_InitDebug( PSTATUS_WORK *work )
 {
-  VEC_Set( &work->shadowScale , FX32_ONE , FX32_CONST(2.2f) , FX32_ONE );
+  VEC_Set( &work->shadowScale , PSTATUS_SUB_SHADOW_SCALE_X , PSTATUS_SUB_SHADOW_SCALE_Y , PSTATUS_SUB_SHADOW_SCALE_Z );
   work->shadowRotate = 0xD6C1;
-  VEC_Set( &work->shadowOfs , 0 , 0 , -FX32_ONE );
+  VEC_Set( &work->shadowOfs , PSTATUS_SUB_SHADOW_OFFSET_X , PSTATUS_SUB_SHADOW_OFFSET_Y , PSTATUS_SUB_SHADOW_OFFSET_Z );
   
   DEBUGWIN_InitProc( PSTATUS_BG_SUB_STR , work->fontHandle );
   DEBUGWIN_ChangeLetterColor( 0,0,0 );
