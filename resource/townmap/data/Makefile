@@ -55,7 +55,7 @@ subdir:
 	@$(MAKE_SUBDIR)
 
 # narc のコピーだけ実行する
-$(TARGETDIR_ARC)/$(targetname).narc: $(targetname).narc
+$(TARGETDIR_ARC)/$(targetname).narc: $(targetname).narc $(targetname).naix $(targetname).h
 	$(COPY) $(targetname).narc $(TARGETDIR_ARC)
 	$(COPY) $(targetname).naix $(TARGETDIR_ARC) 
 	$(COPY) $(targetname).h		 $(TARGETDIR_H) 
