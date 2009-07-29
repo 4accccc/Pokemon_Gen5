@@ -158,11 +158,8 @@ SRCS  +=    $(SOUNDSRC) \
 		test/tetsu/debug_common.c \
         system/fld_wipe_3dobj.c \
         debug/debug_system_group.c \
-		field/field_place_name.c \
-		field/iss_unit.c \
 		app/app_menu_common.c \
-		app/app_taskmenu.c \
-		field/field_cars.c
+		app/app_taskmenu.c 
 
 
 #================================================
@@ -343,7 +340,11 @@ SRCS_OVERLAY_FIELDMAP		=	field/field_proc.c \
         net_app/union/union_subdisp.c \
         field/fldeff_footmark.c \
         field/fldeff_reflect.c \
-        field/scrcmd_musical.c
+        field/scrcmd_musical.c \
+		field/field_place_name.c \
+		field/iss_unit.c \
+		field/field_cars.c
+
 
 # フィールド天気
 #===> SRCS_OVERLAY_FIELDMAP
