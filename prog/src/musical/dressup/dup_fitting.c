@@ -237,7 +237,7 @@ struct _FITTING_WORK
   int     animeCnt; 
   
   //上画面カーテン系
-  u8      scrollCnt;
+  u8      curtainScrollCnt;
   BOOL    isOpenCurtain;
   
   //TP系
@@ -309,6 +309,7 @@ struct _FITTING_WORK
   GFL_CLWK  *clwkEffectDown;
   u8        effUpCnt[EFFECT_UP_NUM];
   u8        endEffCnt;
+  u8        bgScrollCnt;
 };
 
 //======================================================================
@@ -423,8 +424,9 @@ FITTING_WORK* DUP_FIT_InitFitting( FITTING_INIT_WORK *initWork , HEAPID heapId )
   work->listSwingAngle = 0;
   work->listSwingSpeed = 0;
   work->isDemo = FALSE;
-  work->scrollCnt = 0;
+  work->curtainScrollCnt = 0;
   work->isOpenCurtain = FALSE;
+  work->bgScrollCnt = 0;
 
   work->listSpeed = 0;
   work->snapPos = MUS_POKE_EQU_INVALID;
@@ -548,21 +550,6 @@ FITTING_RETURN  DUP_FIT_LoopFitting( FITTING_WORK *work )
     break;
     
   case DUS_FADEOUT_WAIT:
-    if( work->isOpenCurtain == TRUE )
-    {
-      /*
-      //次へで終了したとき
-      GFL_CLACTPOS cellPos;
-      work->endEffCnt++;
-      cellPos.x = BUTTON_ASSEPT_POS_X;
-      cellPos.y = BUTTON_ASSEPT_POS_Y+work->endEffCnt;
-      GFL_CLACT_WK_SetPos( work->buttonCell[0] , &cellPos , CLSYS_DEFREND_MAIN );
-
-      cellPos.x = BUTTON_RETURN_POS_X;
-      cellPos.y = BUTTON_RETURN_POS_Y+work->endEffCnt;
-      GFL_CLACT_WK_SetPos( work->buttonCell[1] , &cellPos , CLSYS_DEFREND_MAIN );
-      */
-    }
     if( WIPE_SYS_EndCheck() == TRUE )
     {
       return FIT_RET_GO_END;
@@ -654,25 +641,30 @@ FITTING_RETURN  DUP_FIT_LoopFitting( FITTING_WORK *work )
 
 
   //スクロール系
-  GFL_BG_SetScrollReq( FIT_FRAME_MAIN_BG , GFL_BG_SCROLL_X_INC , 1 );
-  GFL_BG_SetScrollReq( FIT_FRAME_MAIN_BG , GFL_BG_SCROLL_Y_DEC , 1 );
+  work->bgScrollCnt++;
+  if( work->bgScrollCnt > 1 )
+  {
+    work->bgScrollCnt = 0;
+    GFL_BG_SetScrollReq( FIT_FRAME_MAIN_BG , GFL_BG_SCROLL_X_INC , 1 );
+    GFL_BG_SetScrollReq( FIT_FRAME_MAIN_BG , GFL_BG_SCROLL_Y_DEC , 1 );
+  }
   
   if( work->isOpenCurtain == FALSE )
   {
-    if( work->scrollCnt < DUP_CURTAIN_SCROLL_MAX )
+    if( work->curtainScrollCnt < DUP_CURTAIN_SCROLL_MAX )
     {
-      work->scrollCnt += DUP_CURTAIN_SCROLL_VALUE;
-      GFL_BG_SetScrollReq( FIT_FRAME_SUB_CURTAIN_L , GFL_BG_SCROLL_X_SET , 128 - work->scrollCnt );
-      GFL_BG_SetScrollReq( FIT_FRAME_SUB_CURTAIN_R , GFL_BG_SCROLL_X_SET , -128 + work->scrollCnt );
+      work->curtainScrollCnt += DUP_CURTAIN_SCROLL_VALUE;
+      GFL_BG_SetScrollReq( FIT_FRAME_SUB_CURTAIN_L , GFL_BG_SCROLL_X_SET , 128 - work->curtainScrollCnt );
+      GFL_BG_SetScrollReq( FIT_FRAME_SUB_CURTAIN_R , GFL_BG_SCROLL_X_SET , -128 + work->curtainScrollCnt );
     }
   }
   else
   {
-    if( work->scrollCnt > 0 )
+    if( work->curtainScrollCnt > 0 )
     {
-      work->scrollCnt -= DUP_CURTAIN_SCROLL_VALUE;
-      GFL_BG_SetScrollReq( FIT_FRAME_SUB_CURTAIN_L , GFL_BG_SCROLL_X_SET , 128 - work->scrollCnt );
-      GFL_BG_SetScrollReq( FIT_FRAME_SUB_CURTAIN_R , GFL_BG_SCROLL_X_SET , -128 + work->scrollCnt );
+      work->curtainScrollCnt -= DUP_CURTAIN_SCROLL_VALUE;
+      GFL_BG_SetScrollReq( FIT_FRAME_SUB_CURTAIN_L , GFL_BG_SCROLL_X_SET , 128 - work->curtainScrollCnt );
+      GFL_BG_SetScrollReq( FIT_FRAME_SUB_CURTAIN_R , GFL_BG_SCROLL_X_SET , -128 + work->curtainScrollCnt );
     }
   }
 
