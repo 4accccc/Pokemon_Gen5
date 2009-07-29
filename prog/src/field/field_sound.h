@@ -10,10 +10,11 @@
 #include <gflib.h>
 #include "system/gfl_use.h"
 
+#include "gamesystem/gamesystem.h"
+#include "gamesystem/game_data.h"
+
 #include "sound/pm_sndsys.h"
 #include "sound/wb_sound_data.sadl"
-
-#include "field/fieldmap_proc.h"
 
 #include "field_sound_proc.h"
 
@@ -30,6 +31,7 @@
 //======================================================================
 
 //フィールドBGM 再生
+extern void FIELD_SOUND_PlayBGM( u32 bgmNo );
 extern void FIELD_SOUND_PlayNextBGM( u32 bgmNo );
 
 //フィールドBGM トラック関連
@@ -40,7 +42,7 @@ extern void FIELD_SOUND_ChangeBGMActionVolume( int vol );
 
 //フィールドBGM BGMナンバー
 extern u32 FIELD_SOUND_GetFieldBGMNo(
-    FIELDMAP_WORK *fieldMap, u32 zone_id );
+    GAMEDATA *gdata, PLAYER_MOVE_FORM form, u32 zone_id );
 
 //フィールドBGM BGM退避、復帰
 extern void FIELD_SOUND_PushBGM( FIELD_SOUND *fsnd );

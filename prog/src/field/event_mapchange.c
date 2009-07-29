@@ -706,9 +706,17 @@ static void SetMMdl( GAMESYS_WORK *gsys, const LOCATION *loc_req, GAMEINIT_MODE 
 static void setNextBGM(GAMEDATA * gamedata, u16 zone_id)
 {
   //取り急ぎ。常にフェードインで始まる
+#if 0
   u16 trackBit = 0xfcff;	// track 9,10 OFF
   u16 nextBGM = ZONEDATA_GetBGMID(zone_id, GAMEDATA_GetSeasonID(gamedata));
-  PMSND_PlayNextBGM_EX(nextBGM, trackBit, 30, 0);
+//  PMSND_PlayNextBGM_EX(nextBGM, trackBit, 30, 0);
+  PMSND_PlayBGM_EX(nextBGM, 0xfcff );
+#else
+  PLAYER_WORK *player = GAMEDATA_GetPlayerWork( gamedata, 0 );
+  PLAYER_MOVE_FORM form = PLAYERWORK_GetMoveForm( player );
+  u32 no = FIELD_SOUND_GetFieldBGMNo( gamedata, form, zone_id );
+  FIELD_SOUND_PlayBGM( no );
+#endif
 }
 //============================================================================================
 //============================================================================================

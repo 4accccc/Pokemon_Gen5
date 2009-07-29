@@ -82,6 +82,8 @@
 #include "iss_unit.h"		
 #include "field_cars.h"
 
+#include "field_sound.h"
+
 //======================================================================
 //	define
 //======================================================================
@@ -1226,7 +1228,11 @@ const DEPEND_FUNCTIONS * FIELDMAP_GetDependFunctions( const FIELDMAP_WORK * fiel
 //--------------------------------------------------------------
 u16 FIELDMAP_GetZoneID( const FIELDMAP_WORK * fieldWork )
 {
+#if 0
   return fieldWork->map_id;
+#else
+  return fieldWork->location.zone_id;
+#endif
 }
 
 
@@ -1909,6 +1915,7 @@ static void zoneChange_SetMMdl( GAMEDATA *gdata,
 //--------------------------------------------------------------
 static void zoneChange_SetBGM( GAMEDATA *gdata, u32 zone_id )
 {
+#if 0
 	u16 trackBit = 0xfcff;	// track 9,10 OFF
 
 	u16 nextBGM = ZONEDATA_GetBGMID(
@@ -1919,6 +1926,12 @@ static void zoneChange_SetBGM( GAMEDATA *gdata, u32 zone_id )
 			PMSND_PlayNextBGM_EX( nextBGM, trackBit, 60, 0 );
 		}
 	}
+#else
+  PLAYER_WORK *player = GAMEDATA_GetPlayerWork( gdata, 0 );
+  PLAYER_MOVE_FORM form = PLAYERWORK_GetMoveForm( player );
+  u32 no = FIELD_SOUND_GetFieldBGMNo( gdata, form, zone_id );
+  FIELD_SOUND_PlayNextBGM( no );
+#endif
 }
 
 //--------------------------------------------------------------

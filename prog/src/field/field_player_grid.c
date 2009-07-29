@@ -1530,6 +1530,16 @@ static void gjikiCycle_SetMove_Jump(
 //======================================================================
 static void (* const data_gjikiRequestProcTbl[FIELD_PLAYER_GRID_REQBIT_MAX])( FIELD_PLAYER_GRID *gjiki );
 
+static void gjiki_PlayBGM( FIELD_PLAYER_GRID *gjiki )
+{
+  GAMESYS_WORK *gsys = FIELDMAP_GetGameSysWork( gjiki->fieldWork );
+  GAMEDATA *gdata = GAMESYSTEM_GetGameData( gsys );
+  PLAYER_MOVE_FORM form = FIELD_PLAYER_GetMoveForm( gjiki->fld_player );
+  u32 zone_id = FIELDMAP_GetZoneID( gjiki->fieldWork );
+  u32 no = FIELD_SOUND_GetFieldBGMNo( gdata, form, zone_id );
+  FIELD_SOUND_PlayNextBGM( no );
+}
+
 //--------------------------------------------------------------
 /**
  * 自機リクエスト 
@@ -1589,6 +1599,7 @@ static void gjikiReq_SetNormal( FIELD_PLAYER_GRID *gjiki )
   }
 
   FIELD_PLAYER_SetMoveForm( gjiki->fld_player, PLAYER_MOVE_FORM_NORMAL );
+  gjiki_PlayBGM( gjiki );
 }
 
 //--------------------------------------------------------------
@@ -1613,6 +1624,7 @@ static void gjikiReq_SetCycle( FIELD_PLAYER_GRID *gjiki )
   }
    
   FIELD_PLAYER_SetMoveForm( gjiki->fld_player, PLAYER_MOVE_FORM_CYCLE );
+  gjiki_PlayBGM( gjiki );
 }
 
 //--------------------------------------------------------------
@@ -1637,6 +1649,7 @@ static void gjikiReq_SetSwim( FIELD_PLAYER_GRID *gjiki )
   }
   
   FIELD_PLAYER_SetMoveForm( gjiki->fld_player, PLAYER_MOVE_FORM_SWIM );
+  gjiki_PlayBGM( gjiki );
   
   if( gjiki->fldeff_joint == NULL ){ //波乗りポケモン
     u16 dir;
@@ -1771,6 +1784,7 @@ void FIELD_PLAYER_SetNaminori( FIELD_PLAYER_GRID *gjiki )
   }
   
   FIELD_PLAYER_SetMoveForm( gjiki->fld_player, PLAYER_MOVE_FORM_SWIM );
+  gjiki_PlayBGM( gjiki );
 }
 
 //--------------------------------------------------------------
@@ -1797,6 +1811,7 @@ void FIELD_PLAYER_SetNaminoriEnd( FIELD_PLAYER_GRID *gjiki )
   }
   
   FIELD_PLAYER_SetMoveForm( gjiki->fld_player, PLAYER_MOVE_FORM_NORMAL );
+  gjiki_PlayBGM( gjiki );
   
   if( gjiki->fldeff_joint != NULL ){
     FLDEFF_TASK_CallDelete( gjiki->fldeff_joint );

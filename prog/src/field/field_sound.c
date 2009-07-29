@@ -40,7 +40,7 @@ struct _TAG_FIELD_SOUND
 //======================================================================
 //  proto
 //======================================================================
-static u32 fsnd_GetMapBGMIndex( FIELDMAP_WORK *fieldMap, u32 zone_id );
+static u32 fsnd_GetMapBGMIndex( GAMEDATA *gdata, u32 zone_id );
 static void fsnd_PushCount( FIELD_SOUND *fsnd );
 static void fsnd_PopCount( FIELD_SOUND *fsnd );
 
@@ -78,6 +78,30 @@ void FIELD_SOUND_Delete( FIELD_SOUND *fsnd )
 //======================================================================
 //--------------------------------------------------------------
 /**
+ * フィールドBGM  BGM再生
+ * @param bgmNo 再生するBGMナンバー
+ * @retval nothing
+ */
+//--------------------------------------------------------------
+void FIELD_SOUND_PlayBGM( u32 bgmNo )
+{ 
+  u32 now;
+  
+  OS_Printf( "BGMNO %d\n", bgmNo );
+  if( bgmNo == 0 ){
+    return;
+  }
+  
+//  now = PMSND_GetBGMsoundNo();
+  now = PMSND_GetNextBGMsoundNo();
+  
+  if( now != bgmNo ){
+    PMSND_PlayBGM_EX( bgmNo, TRACKBIT_STILL );
+  }
+}
+
+//--------------------------------------------------------------
+/**
  * フィールドBGM フェードアウト → BGM再生
  * @param bgmNo 再生するBGMナンバー
  * @retval nothing
@@ -87,6 +111,7 @@ void FIELD_SOUND_PlayNextBGM( u32 bgmNo )
 { 
   u32 now;
   
+  OS_Printf( "BGMNO %d\n", bgmNo );
   if( bgmNo == 0 ){
     return;
   }
@@ -166,15 +191,9 @@ void FIELD_SOUND_ChangeBGMActionVolume( int vol )
  * @retval u16 フィールドBGMナンバー
  */
 //--------------------------------------------------------------
-u32 FIELD_SOUND_GetFieldBGMNo( FIELDMAP_WORK *fieldMap, u32 zone_id )
+u32 FIELD_SOUND_GetFieldBGMNo(
+    GAMEDATA *gdata, PLAYER_MOVE_FORM form, u32 zone_id )
 {
-  PLAYER_MOVE_FORM form;
-  FIELD_PLAYER *fld_player;
-  
-  fld_player = FIELDMAP_GetFieldPlayer( fieldMap );
-  form = FIELD_PLAYER_GetMoveForm( fld_player );
-//  zone_id = FIELDMAP_GetZoneID( fieldMap );
-  
   if( form == PLAYER_MOVE_FORM_SWIM ){
     return( SEQ_NAMINORI );
   }
@@ -183,7 +202,7 @@ u32 FIELD_SOUND_GetFieldBGMNo( FIELDMAP_WORK *fieldMap, u32 zone_id )
     return( SEQ_BICYCLE );
   }
   
-  return( fsnd_GetMapBGMIndex(fieldMap,zone_id) );
+  return( fsnd_GetMapBGMIndex(gdata,zone_id) );
 }
 
 //======================================================================
@@ -227,10 +246,8 @@ void FIELD_SOUND_PopBGM( FIELD_SOUND *fsnd )
  * @retval u16 BGM Index
  */
 //--------------------------------------------------------------
-static u32 fsnd_GetMapBGMIndex( FIELDMAP_WORK *fieldMap, u32 zone_id )
+static u32 fsnd_GetMapBGMIndex( GAMEDATA *gdata, u32 zone_id )
 {
-  GAMESYS_WORK *gsys = FIELDMAP_GetGameSysWork( fieldMap );
-  GAMEDATA *gdata = GAMESYSTEM_GetGameData( gsys );
   u16 idx = ZONEDATA_GetBGMID( zone_id, GAMEDATA_GetSeasonID(gdata) );
   return( idx );
 }
