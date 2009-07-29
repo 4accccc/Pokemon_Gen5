@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="taya" host="W00146" date="2009-07-29T01:29:05"/>
+	<create user="taya" host="W00146" date="2009-07-29T20:02:59"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -421,12 +421,12 @@
 
 	<dialog left="130" top="0" right="811" bottom="508" maximized="no" rayout="Vertical2">
 		<comment-input left="677" top="618" right="1024" bottom="768" visible="no"/>
-		<tag-palette left="701" top="473" right="1132" bottom="871" visible="no"/>
+		<tag-palette left="701" top="473" right="1132" bottom="871" visible="yes"/>
 		<band id="0" index="0" style="0001" width="506"/>
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="673"/>
 		<band id="3" index="3" style="0000" width="673"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -643,14 +643,14 @@
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]　の
 ぼうぎょ　が　ぐーんと　あがった！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]　の
-ぼうぎょ　が　ぐーんと上がった！</language>
+防御　が　ぐーんと上がった！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_RankupEx_DEF_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]　の
 ぼうぎょ　が　ぐーんと　あがった！</language>
 		<language name="JPN_KANJI" width="216">相手の　[1:02:ポケモンニックネーム:0]　の
-ぼうぎょ　が　ぐーんと上がった！</language>
+防御　が　ぐーんと上がった！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_RankupEx_SPATK">
@@ -1564,67 +1564,109 @@
 毒のダメージを受けた！</language>
 	</row>
 
+	<row id="BTL_STRID_SET_DokuCure">
+		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]の　どくは
+きれいさっぱり　なくなった！</language>
+		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]の　毒は
+きれいさっぱり　無くなった！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_DokuCure_Y">
+		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]の　どくは
+きれいさっぱり　なくなった！</language>
+		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]の　毒は
+きれいさっぱり　無くなった！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_DokuCure_E">
+		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]の　どくは
+きれいさっぱり　なくなった！</language>
+		<language name="JPN_KANJI" width="216">相手の　[1:02:ポケモンニックネーム:0]の　毒は
+きれいさっぱり　無くなった！</language>
+	</row>
+
 	<row id="BTL_STRID_SET_YakedoGet">
 		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]　は
-やけど　を　うけた！</language>
+やけどを　おった！</language>
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]　は
-火傷を　受けた！</language>
+やけどを　負った！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_YakedoGet_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]　は
-やけどを　うけた！</language>
+やけどを　おった！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]　は
-火傷を　受けた！</language>
+やけどを　負った！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_YakedoGet_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]　は
-やけどを　うけた！</language>
+やけどを　おった！</language>
 		<language name="JPN_KANJI" width="216">相手の　[1:02:ポケモンニックネーム:0]　は
-火傷を　受けた！</language>
+やけどを　負った！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_YakedoGetSP">
 		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]　は
-[1:09:どうぐ名:1]で　やけどを　うけた！</language>
+[1:09:どうぐ名:1]で　やけどを　おった！</language>
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]　は
-[1:09:どうぐ名:1]で　火傷を　受けた！</language>
+[1:09:どうぐ名:1]で　やけどを　負った！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_YakedoGetSP_Y">
 		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]　は
-[1:09:どうぐ名:1]で　やけどを　うけた！</language>
+[1:09:どうぐ名:1]で　やけどを　おった！</language>
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]　は
-[1:09:どうぐ名:1]で　火傷を　受けた！</language>
+[1:09:どうぐ名:1]で　やけどを　負った！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_YakedoGetSP_E">
 		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]　は
-[1:09:どうぐ名:1]で　やけどを　うけた！</language>
+[1:09:どうぐ名:1]で　やけどを　おった！</language>
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]　は
-[1:09:どうぐ名:1]で　火傷を　受けた！</language>
+[1:09:どうぐ名:1]で　やけどを　負った！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_YakedoDamage">
 		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]　は
-やけど　のダメージを　うけた！</language>
+やけどの　ダメージを　うけた！</language>
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]　は
-火傷のダメージを受けた！</language>
+やけどの　ダメージを　受けた！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_YakedoDamage_Y">
-		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]　は
-やけど　のダメージを　うけた！</language>
-		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]　は
-火傷のダメージを受けた！</language>
+		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]　は
+やけどの　ダメージを　うけた！</language>
+		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]　は
+やけどの　ダメージを　受けた！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_YakedoDamage_E">
-		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]　は
-やけど　のダメージを　うけた！</language>
-		<language name="JPN_KANJI" width="216">相手の　[1:02:ポケモンニックネーム:0]　は
-火傷のダメージを受けた！</language>
+		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]　は
+やけどの　ダメージを　うけた！</language>
+		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]　は
+やけどの　ダメージを　受けた！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_YakedoCure">
+		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]の
+やけどが　なおった！</language>
+		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]の
+やけどが　治った！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_YakedoCure_Y">
+		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]の
+やけどが　なおった！</language>
+		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]の
+やけどが　治った！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_YakedoCure_E">
+		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]の
+やけどが　なおった！</language>
+		<language name="JPN_KANJI" width="216">相手の　[1:02:ポケモンニックネーム:0]の
+やけどが　治った！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_MahiGet">
@@ -4030,6 +4072,28 @@
 こうげきと　ぼうぎょを　いれかえた！</language>
 		<language name="JPN_KANJI" width="216">相手の　[1:02:ポケモンニックネーム:0]は
 攻撃と防御を　入れ替えた！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_Tuibamu">
+		<comment>ついばむ・むしくい</comment>
+		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は
+[1:09:どうぐ名:1]を　うばって　たべた！</language>
+		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
+[1:09:どうぐ名:1]を　奪って　食べた！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_Tuibamu_Y">
+		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は
+[1:09:どうぐ名:1]を　うばって　たべた！</language>
+		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]は
+[1:09:どうぐ名:1]を　奪って　食べた！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_Tuibamu_E">
+		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は
+[1:09:どうぐ名:1]を　うばって　たべた！</language>
+		<language name="JPN_KANJI" width="216">相手の　[1:02:ポケモンニックネーム:0]は
+[1:09:どうぐ名:1]を　奪って　食べた！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_SinpiNoMamori_Exe">
