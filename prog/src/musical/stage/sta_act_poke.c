@@ -559,4 +559,8 @@ void STA_POKE_SetDrawItem( STA_POKE_SYS *work , STA_POKE_WORK *pokeWork , const 
   pokeWork->isUpdate = TRUE;
 }
 
+const VecFx32* STA_POKE_GetRotOffset( STA_POKE_SYS *work , STA_POKE_WORK *pokeWork )
+{
+  return MUS_POKE_DRAW_GetRotateOfs( pokeWork->drawWork );
+}
 

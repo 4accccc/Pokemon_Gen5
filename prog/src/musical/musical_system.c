@@ -318,13 +318,13 @@ static GFL_PROC_RESULT MusicalProc_Main( GFL_PROC * proc, int * seq , void *pwk,
           GFL_HEAP_GetHeapFreeSize( GFL_HEAPID_APP ) ,
           GFI_HEAP_GetHeapAllocatableSize( GFL_HEAPID_APP ) );
       work->actInitWork = MUSICAL_STAGE_CreateStageWork( HEAPID_MUSICAL_PROC , work->commWork );
-      MUSICAL_STAGE_SetData_Player( work->actInitWork , 0 , work->musPoke );
-      MUSICAL_STAGE_SetData_NPC( work->actInitWork , 1 , MONSNO_RAITYUU , HEAPID_MUSICAL_PROC );
-      MUSICAL_STAGE_SetData_NPC( work->actInitWork , 2 , MONSNO_EREBUU  , HEAPID_MUSICAL_PROC );
-      MUSICAL_STAGE_SetData_NPC( work->actInitWork , 3 , MONSNO_RUKARIO , HEAPID_MUSICAL_PROC );
+      MUSICAL_STAGE_SetData_Player( work->actInitWork , 1 , work->musPoke );
+      MUSICAL_STAGE_SetData_NPC( work->actInitWork , 0 , MONSNO_ONOKKUSU , HEAPID_MUSICAL_PROC );
+      MUSICAL_STAGE_SetData_NPC( work->actInitWork , 2 , MONSNO_PIKATYUU  , HEAPID_MUSICAL_PROC );
+      MUSICAL_STAGE_SetData_NPC( work->actInitWork , 3 , MONSNO_WANIBAAN , HEAPID_MUSICAL_PROC );
 
-      MUSICAL_STAGE_SetEquip( work->actInitWork , 1 , MUS_POKE_EQU_EAR_L , 7 , 0 );
-      MUSICAL_STAGE_SetEquip( work->actInitWork , 1 , MUS_POKE_EQU_BODY  , 9 , 0 );
+      MUSICAL_STAGE_SetEquip( work->actInitWork , 0 , MUS_POKE_EQU_EAR_L , 7 , 0 );
+      MUSICAL_STAGE_SetEquip( work->actInitWork , 0 , MUS_POKE_EQU_BODY  , 9 , 0 );
 
       MUSICAL_STAGE_SetEquip( work->actInitWork , 2 , MUS_POKE_EQU_HAND_R , 31 , 0 );
       MUSICAL_STAGE_SetEquip( work->actInitWork , 2 , MUS_POKE_EQU_HEAD   , 15 , 0 );

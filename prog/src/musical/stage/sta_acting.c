@@ -78,7 +78,6 @@ enum
 //  typedef struct
 //======================================================================
 #pragma mark [> struct
-//スポットライト
 
 struct _ACTING_WORK
 {
@@ -87,6 +86,7 @@ struct _ACTING_WORK
   BOOL  updateScroll;
   u16   scrollOffset;
   u16   makuOffset;
+  u8    playerIdx;
   
   GFL_TCB   *vblankFuncTcb;
 
@@ -117,12 +117,15 @@ struct _ACTING_WORK
   
   STA_AUDI_SYS  *audiSys;
   
+  STA_EFF_WORK   *transEffWork[MUSICAL_POKE_MAX];
+  
   //メッセージ用
   GFL_TCBLSYS     *tcblSys;
   GFL_BMPWIN      *msgWin;
   GFL_FONT      *fontHandle;
   PRINT_STREAM    *printHandle;
   GFL_MSGDATA     *msgHandle;
+  STRBUF          *msgStr;
 };
 
 //======================================================================
@@ -147,6 +150,8 @@ static void STA_ACT_UpdateMessage( ACTING_WORK *work );
 
 static void STA_ACT_StartScript( ACTING_WORK *work );
 
+static void STA_ACT_InitTransEffect( ACTING_WORK *work );
+static void STA_ACT_TermTransEffect( ACTING_WORK *work );
 
 
 static const GFL_DISP_VRAM vramBank = {
@@ -178,6 +183,7 @@ static const GFL_DISP_VRAM vramBank = {
 //--------------------------------------------------------------
 ACTING_WORK*  STA_ACT_InitActing( STAGE_INIT_WORK *initWork , HEAPID heapId )
 {
+  u8 i;
   ACTING_WORK *work = GFL_HEAP_AllocMemory( heapId , sizeof( ACTING_WORK ));
   
   work->heapId = heapId;
@@ -188,6 +194,21 @@ ACTING_WORK*  STA_ACT_InitActing( STAGE_INIT_WORK *initWork , HEAPID heapId )
   work->scriptData = NULL;
 
   work->vblankFuncTcb = GFUser_VIntr_CreateTCB( STA_ACT_VBlankFunc , (void*)work , 64 );
+  
+  //自キャラの選択
+  for( i=0;i<MUSICAL_POKE_MAX;i++ )
+  {
+    if( work->initWork->musPoke[i].charaType == MUS_CHARA_PLAYER )
+    {
+      work->playerIdx = i;
+      break;
+    }
+  }
+  if( MUSICAL_POKE_MAX == i )
+  {
+    GF_ASSERT_MSG( MUSICAL_POKE_MAX == i , "Musical stage:Player poke is not found!!!\n");
+    work->playerIdx = 1;
+  }
 
   STA_ACT_SetupGraphic( work );
   STA_ACT_SetupBg( work );
@@ -200,6 +221,8 @@ ACTING_WORK*  STA_ACT_InitActing( STAGE_INIT_WORK *initWork , HEAPID heapId )
   work->audiSys = STA_AUDI_InitSystem( work->heapId , work );
 
   work->scriptSys = STA_SCRIPT_InitSystem( work->heapId , work );
+
+  STA_ACT_InitTransEffect( work );
   
   INFOWIN_Init( ACT_FRAME_SUB_INFO,ACT_PAL_INFO,NULL,work->heapId);
 
@@ -227,6 +250,8 @@ void  STA_ACT_TermActing( ACTING_WORK *work )
   G2_SetBlendAlpha( GX_BLEND_PLANEMASK_NONE , GX_BLEND_PLANEMASK_NONE , 31 , 31 );
   
   INFOWIN_Exit();
+
+  STA_ACT_TermTransEffect( work );
   
   STA_SCRIPT_ExitSystem( work->scriptSys );
   if( work->scriptData != NULL )
@@ -234,6 +259,10 @@ void  STA_ACT_TermActing( ACTING_WORK *work )
     GFL_HEAP_FreeMemory( work->scriptData );
   }
 
+  if( work->msgStr != NULL )
+  {
+    GFL_STR_DeleteBuffer( work->msgStr );
+  }
   GFL_MSG_Delete( work->msgHandle );
   GFL_BMPWIN_Delete( work->msgWin );
   GFL_FONT_Delete( work->fontHandle );
@@ -744,7 +773,30 @@ static void STA_ACT_UpdateScroll( ACTING_WORK *work )
     
     work->updateScroll = TRUE;
   }
+  
+  //プレイヤー追従処理
+  if( (GFL_UI_KEY_GetCont() & (PAD_KEY_RIGHT|PAD_KEY_LEFT)) == 0 )
 #endif
+  {
+    s16 scroll;
+    VecFx32 pos;
+    STA_POKE_GetPosition( work->pokeSys , work->pokeWork[work->playerIdx] , &pos );
+    scroll = FX_FX32_TO_F32( pos.x )-128;
+    if( scroll > ACT_BG_SCROLL_MAX )
+    {
+      scroll = ACT_BG_SCROLL_MAX;
+    }
+    else if( scroll < 0 )
+    {
+      scroll = 0;
+    }
+    if( scroll != work->scrollOffset )
+    {
+      work->scrollOffset = scroll;
+      work->updateScroll = TRUE;
+    }
+  }
+  
   
   if( work->updateScroll == TRUE )
   {
@@ -831,6 +883,7 @@ static void STA_ACT_SetupMessage( ACTING_WORK *work )
   
   work->tcblSys = GFL_TCBL_Init( work->heapId , work->heapId , 3 , 0x100 );
   work->printHandle = NULL;
+  work->msgStr = NULL;
 }
 
 static void STA_ACT_UpdateMessage( ACTING_WORK *work )
@@ -859,14 +912,16 @@ void STA_ACT_ShowMessage( ACTING_WORK *work , const u16 msgNo , const u8 msgSpd 
   }
 
   {
-    STRBUF  *str = GFL_STR_CreateBuffer( 128 , work->heapId );
+    if( work->msgStr != NULL )
+    {
+      GFL_STR_DeleteBuffer( work->msgStr );
+      work->msgStr = NULL;
+    }
     
     GFL_BMP_Clear( GFL_BMPWIN_GetBmp( work->msgWin ) , 0 );
-    
-    GFL_MSG_GetString( work->msgHandle , msgNo , str );
-    work->printHandle = PRINTSYS_PrintStream( work->msgWin , 0,0, str ,work->fontHandle ,
+    work->msgStr = GFL_MSG_CreateString( work->msgHandle , msgNo );
+    work->printHandle = PRINTSYS_PrintStream( work->msgWin , 0,0, work->msgStr ,work->fontHandle ,
                         msgSpd , work->tcblSys , 2 , work->heapId , 0 );
-    GFL_STR_DeleteBuffer( str );
   }
 }
 
@@ -877,6 +932,11 @@ void STA_ACT_HideMessage( ACTING_WORK *work )
     GF_ASSERT_MSG( NULL , "Message is not finish!!\n" )
     PRINTSYS_PrintStreamDelete( work->printHandle );
     work->printHandle = NULL;
+  }
+  if( work->msgStr != NULL )
+  {
+    GFL_STR_DeleteBuffer( work->msgStr );
+    work->msgStr = NULL;
   }
   GFL_BMP_Clear( GFL_BMPWIN_GetBmp( work->msgWin ) , 0 );
   GFL_BMPWIN_TransVramCharacter( work->msgWin );
@@ -898,6 +958,42 @@ void  STA_ACT_StopBgm(  ACTING_WORK *work )
   SND_STRM_Release();
 }
 
+//
+#pragma mark [> trans effect func
+static void STA_ACT_InitTransEffect( ACTING_WORK *work )
+{
+  u8 i;
+  for( i=0;i<MUSICAL_POKE_MAX;i++ )
+  {
+    //TODO ステータスでエフェクトの種類変わる？
+    work->transEffWork[i] = STA_EFF_CreateEffect( work->effSys , NARC_stage_gra_mus_eff_trans_1_spa );
+  }
+}
+
+static void STA_ACT_TermTransEffect( ACTING_WORK *work )
+{
+  u8 i;
+  for( i=0;i<MUSICAL_POKE_MAX;i++ )
+  {
+    STA_EFF_DeleteEffect( work->effSys , work->transEffWork[i] );
+  }
+}
+
+void STA_ACT_PlayTransEffect( ACTING_WORK *work , const u8 idx )
+{
+  //TODO エフェクトの種類変わったら再生エミッタも変わる。今は1個
+  u8 i;
+  VecFx32 pos;
+  const VecFx32 *ofs = STA_POKE_GetRotOffset( work->pokeSys , work->pokeWork[idx] );
+  STA_POKE_GetPosition( work->pokeSys , work->pokeWork[idx] , &pos );
+  pos.x = ACT_POS_X_FX(pos.x - FX32_CONST(work->scrollOffset) + ofs->x );
+  pos.y = ACT_POS_Y_FX(pos.y + ofs->y );
+  pos.z = FX32_CONST(180.0f);
+  for( i=0;i<1;i++ )
+  {
+    STA_EFF_CreateEmitter( work->transEffWork[idx] , i , &pos );
+  }
+}
 
 #pragma mark [> offer func
 //--------------------------------------------------------------

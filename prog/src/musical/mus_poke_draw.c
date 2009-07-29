@@ -331,7 +331,6 @@ static void MUS_POKE_MCSS_CallBack( const u8 pltNo , MUS_MCSS_CELL_DATA *cellDat
 //ミュージカル専用ポケモンMCSS読み込み
 #pragma mark [> McssFileFunc
 //ポケモン一体を構成するMCSS用ファイルの構成
-//背面が存在しない。総数は11個
 enum{
 	MUS_POKEGRA_FRONT_M_NCGR = 0,
 	MUS_POKEGRA_FRONT_F_NCGR,

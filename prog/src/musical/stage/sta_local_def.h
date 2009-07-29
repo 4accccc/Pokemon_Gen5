@@ -38,7 +38,7 @@
 #define ACT_OBJECT_MAX (5)
 
 //エフェクト関係
-#define ACT_EFFECT_MAX (3)
+#define ACT_EFFECT_MAX (8)  //変身エフェクトのためちょっと多め
 
 //スポットライト関係
 #define ACT_LIGHT_MAX	(4)

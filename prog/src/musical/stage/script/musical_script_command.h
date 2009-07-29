@@ -57,7 +57,8 @@
 #define SCRIPT_ENUM_PokeActionRotate    (38)
 #define SCRIPT_ENUM_PokeSetFrontBack    (39)
 #define SCRIPT_ENUM_PokeDispItem    (40)
-#define SEQ_END             (41)
+#define SCRIPT_ENUM_PokeTransEffect    (41)
+#define SEQ_END             (42)
 
 #ifndef __C_NO_DEF_
 
@@ -369,6 +370,21 @@
   .short  SCRIPT_ENUM_PokeDispItem
   .long \pokeNo
   .long \flg
+  .endm
+  
+//======================================================================
+/**
+ * @brief ポケモン：変身エフェクト再生
+ *
+ * #param_num 1
+ * @param pokeNo  ポケモン番号(-1で事前登録対象)
+ *
+ * #param VALUE_INT pokeNo
+ */
+//======================================================================
+  .macro  ComPokeTransEffect pokeNo
+  .short  SCRIPT_ENUM_PokeTransEffect
+  .long \pokeNo
   .endm
 
 #pragma mark [>Pokemon Action Command

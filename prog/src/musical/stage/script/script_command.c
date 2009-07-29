@@ -744,7 +744,7 @@ SCRIPT_FUNC_DEF( PokeSetFrontBack )
   STA_SCRIPT_SYS *work = scriptWork->sysWork;
   const s32 pokeNoTemp = ScriptFunc_GetValueS32();
   const s32 pokeNoBit = ScriptFunc_GetPokeBit( scriptWork , pokeNoTemp );
-  const s32 dir = ScriptFunc_GetValueS32();
+  const s32 flg = ScriptFunc_GetValueS32();
   u8  pokeNo;
 
   STA_POKE_SYS  *pokeSys = STA_ACT_GetPokeSys( work->actWork );
@@ -755,7 +755,7 @@ SCRIPT_FUNC_DEF( PokeSetFrontBack )
     if( pokeNoBit & (1<<pokeNo) )
     {
       STA_POKE_WORK *pokeWork = STA_ACT_GetPokeWork( work->actWork , (u8)pokeNo );
-      STA_POKE_SetFrontBack( pokeSys , pokeWork , (dir==0 ? SPD_LEFT : SPD_RIGHT) );
+      STA_POKE_SetFrontBack( pokeSys , pokeWork , (flg==0 ? FALSE : TRUE) );
     }
   }
 
@@ -769,7 +769,7 @@ SCRIPT_FUNC_DEF( PokeDispItem )
   STA_SCRIPT_SYS *work = scriptWork->sysWork;
   const s32 pokeNoTemp = ScriptFunc_GetValueS32();
   const s32 pokeNoBit = ScriptFunc_GetPokeBit( scriptWork , pokeNoTemp );
-  const s32 dir = ScriptFunc_GetValueS32();
+  const s32 flg = ScriptFunc_GetValueS32();
   u8  pokeNo;
 
   STA_POKE_SYS  *pokeSys = STA_ACT_GetPokeSys( work->actWork );
@@ -780,12 +780,37 @@ SCRIPT_FUNC_DEF( PokeDispItem )
     if( pokeNoBit & (1<<pokeNo) )
     {
       STA_POKE_WORK *pokeWork = STA_ACT_GetPokeWork( work->actWork , (u8)pokeNo );
-      STA_POKE_SetDrawItem( pokeSys , pokeWork , (dir==0 ? SPD_LEFT : SPD_RIGHT) );
+      STA_POKE_SetDrawItem( pokeSys , pokeWork , (flg==0 ? FALSE : TRUE) );
     }
   }
 
   return SFT_CONTINUE;
 }
+
+//ポケモン 変身エフェクト
+SCRIPT_FUNC_DEF( PokeTransEffect )
+{
+  STA_SCRIPT_WORK *scriptWork = (STA_SCRIPT_WORK*)context_work;
+  STA_SCRIPT_SYS *work = scriptWork->sysWork;
+  const s32 pokeNoTemp = ScriptFunc_GetValueS32();
+  const s32 pokeNoBit = ScriptFunc_GetPokeBit( scriptWork , pokeNoTemp );
+  u8  pokeNo;
+
+  STA_POKE_SYS  *pokeSys = STA_ACT_GetPokeSys( work->actWork );
+  SCRIPT_PRINT_LABEL(PokeTransEffect);
+
+  for( pokeNo=0;pokeNo<MUSICAL_POKE_MAX;pokeNo++ )
+  {
+    if( pokeNoBit & (1<<pokeNo) )
+    {
+      STA_POKE_WORK *pokeWork = STA_ACT_GetPokeWork( work->actWork , (u8)pokeNo );
+      STA_ACT_PlayTransEffect( work->actWork , pokeNo );
+    }
+  }
+
+  return SFT_CONTINUE;
+}
+
 #pragma mark [>PokemonAction
 //ポケモンアクション・跳ねる
 typedef struct
