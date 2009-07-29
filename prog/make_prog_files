@@ -159,7 +159,8 @@ SRCS  +=    $(SOUNDSRC) \
         system/fld_wipe_3dobj.c \
         debug/debug_system_group.c \
 		app/app_menu_common.c \
-		app/app_taskmenu.c 
+		app/app_taskmenu.c \
+		tr_tool/tr_tool.c
 
 
 #================================================
@@ -535,6 +536,7 @@ SRCS_OVERLAY_BATTLE =	battle/btl_main.c \
 			battle/btlv/btlv_clact.c \
 			battle/btlv/btlv_input.c \
 			battle/btlv/btlv_gauge.c \
+			battle/btlv/btlv_b_gauge.c \
 			battle/btlv/wazatype_panel.c
 
 #			battle/btlv/b_app_tool.c \
