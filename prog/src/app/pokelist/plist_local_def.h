@@ -77,6 +77,7 @@
 typedef enum
 {
   PCR_PLT_OBJ_COMMON,
+  PCR_PLT_BAR_ICON,
   PCR_PLT_ITEM_ICON,
   PCR_PLT_CONDITION,
   PCR_PLT_HP_BASE,
@@ -119,6 +120,7 @@ typedef enum
 #define PLIST_OBJPLT_CONDITION (4)  //1本
 #define PLIST_OBJPLT_HP_BASE   (5)  //1本
 #define PLIST_OBJPLT_POKEICON  (6)  //3本
+#define PLIST_OBJPLT_BAR_ICON  (9)  //3本
 
 //バーのアイコンの種類
 enum PLIST_BARICON_TYPE

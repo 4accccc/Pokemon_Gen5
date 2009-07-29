@@ -281,6 +281,15 @@ static void PLIST_MENU_CreateItem(  PLIST_WORK *work , PLIST_MENU_WORK *menuWork
     {
       menuWork->itemWork[i].msgColor = PRINTSYS_LSB_Make( PLIST_FONT_MENU_LETTER,PLIST_FONT_MENU_SHADOW,PLIST_FONT_MENU_BACK);
     }
+    
+    if( menuWork->itemArr[i] == PMIT_CLOSE )
+    {
+      menuWork->itemWork[i].isReturn = TRUE;
+    }
+    else
+    {
+      menuWork->itemWork[i].isReturn = FALSE;
+    }
   }
 }
 

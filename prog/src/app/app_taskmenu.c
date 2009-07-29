@@ -29,6 +29,8 @@
 #define APP_TASKMENU_PLATE_WIDTH (13)
 #define APP_TASKMENU_PLATE_HEIGHT (3)
 
+#define APP_TASKMENU_PLATE_NCG_SIZE (0x20*APP_TASKMENU_PLATE_WIDTH*APP_TASKMENU_PLATE_HEIGHT)
+
 //決定時点滅アニメ
 #define APP_TASKMENU_ANM_CNT (16)
 #define APP_TASKMENU_ANM_INTERVAL (4)
@@ -253,13 +255,23 @@ static void APP_TASKMENU_CreateMenuWin( APP_TASKMENU_WORK *work )
   
   for(i=0;i<work->initWork.itemNum;i++)
   {
+    u32 charAdr;
     work->menuWin[i] = GFL_BMPWIN_Create( work->initWork.bgFrame ,
                         APP_TASKMENU_PLATE_LEFT , menuTop+(i*APP_TASKMENU_PLATE_HEIGHT) , 
                         APP_TASKMENU_PLATE_WIDTH , APP_TASKMENU_PLATE_HEIGHT , 
                         work->initWork.palNo+1 , GFL_BMP_CHRAREA_GET_B );
     //プレートの絵を送る
-    GFL_STD_MemCopy32( work->ncgData->pRawData , GFL_BMP_GetCharacterAdrs(GFL_BMPWIN_GetBmp( work->menuWin[i] )) ,
-                     0x20*APP_TASKMENU_PLATE_WIDTH*APP_TASKMENU_PLATE_HEIGHT );
+    if( work->itemWork[i].isReturn == TRUE )
+    {
+      charAdr = (u32)(work->ncgData->pRawData) + APP_TASKMENU_PLATE_NCG_SIZE;
+    }
+    else
+    {
+      charAdr = (u32)(work->ncgData->pRawData);
+    }
+    OS_TPrintf("[%x]\n",charAdr);
+    GFL_STD_MemCopy32( (void*)charAdr , GFL_BMP_GetCharacterAdrs(GFL_BMPWIN_GetBmp( work->menuWin[i] )) ,
+                     APP_TASKMENU_PLATE_NCG_SIZE );
 
     PRINTSYS_PrintQueColor( work->initWork.printQue , GFL_BMPWIN_GetBmp( work->menuWin[i] ), 
                         8+2 , 4+2 , work->itemWork[i].str , work->initWork.fontHandle , work->itemWork[i].msgColor );

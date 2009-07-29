@@ -29,6 +29,7 @@
 #include "plist_snd_def.h"
 
 #include "app/p_status.h" //Proc切り替え用
+#include "app/app_menu_common.h"
 
 #include "test/ariizumi/ari_debug.h"
 
@@ -37,10 +38,10 @@
 //======================================================================
 #pragma mark [> define
 
-#define PLIST_BARICON_Y (180)
-#define PLIST_BARICON_EXIT_X   (212)  //抜ける(×マーク
-#define PLIST_BARICON_RETURN_X_MENU (240)  //戻る(矢印
-#define PLIST_BARICON_RETURN_X_BAR (236)  //戻る(矢印
+#define PLIST_BARICON_Y (168)
+#define PLIST_BARICON_EXIT_X   (200)  //抜ける(×マーク
+#define PLIST_BARICON_RETURN_X_MENU (224)  //戻る(矢印
+#define PLIST_BARICON_RETURN_X_BAR (224)  //戻る(矢印
 
 #define PLIST_CHANGE_ANM_COUNT (16)
 #define PLIST_CHANGE_ANM_VALUE (1)    //移動量(キャラ単位
@@ -611,24 +612,24 @@ static void PLIST_InitCell( PLIST_WORK *work )
     GFL_CLWK_DATA cellInitData;
     cellInitData.pos_x = PLIST_BARICON_RETURN_X_BAR;
     cellInitData.pos_y = PLIST_BARICON_Y;
-    cellInitData.anmseq = PBA_RETURN_NORMAL;
+    cellInitData.anmseq = APP_COMMON_BARICON_RETURN;
     cellInitData.softpri = 0;
     cellInitData.bgpri = 0;
     
     //こっちはメニューのときも上に出るのでbgpri0
     work->clwkBarIcon[PBT_RETURN] = GFL_CLACT_WK_Create( work->cellUnit ,
               work->cellRes[PCR_NCG_BAR_ICON],
-              work->cellRes[PCR_PLT_OBJ_COMMON],
+              work->cellRes[PCR_PLT_BAR_ICON],
               work->cellRes[PCR_ANM_BAR_ICON],
               &cellInitData ,CLSYS_DEFREND_MAIN , work->heapId );
     
     //こっちはメニューのとき消えるのでbgpri1
     cellInitData.pos_x = PLIST_BARICON_EXIT_X-4;
-    cellInitData.anmseq = PBA_EXIT_NORMAL;
+    cellInitData.anmseq = APP_COMMON_BARICON_CLOSE;
     cellInitData.bgpri = 1;
     work->clwkBarIcon[PBT_EXIT] = GFL_CLACT_WK_Create( work->cellUnit ,
               work->cellRes[PCR_NCG_BAR_ICON],
-              work->cellRes[PCR_PLT_OBJ_COMMON],
+              work->cellRes[PCR_PLT_BAR_ICON],
               work->cellRes[PCR_ANM_BAR_ICON],
               &cellInitData ,CLSYS_DEFREND_MAIN , work->heapId );
   }
@@ -737,8 +738,6 @@ static void PLIST_LoadResource( PLIST_WORK *work )
         NARC_pokelist_gra_list_cursor_NCGR , FALSE , CLSYS_DRAW_MAIN , work->heapId  );
   work->cellRes[PCR_NCG_BALL] = GFL_CLGRP_CGR_Register( arcHandle , 
         NARC_pokelist_gra_list_ball_NCGR , FALSE , CLSYS_DRAW_MAIN , work->heapId  );
-  work->cellRes[PCR_NCG_BAR_ICON] = GFL_CLGRP_CGR_Register( arcHandle , 
-        NARC_pokelist_gra_bar_icon_NCGR , FALSE , CLSYS_DRAW_MAIN , work->heapId  );
   work->cellRes[PCR_NCG_ITEM_ICON] = GFL_CLGRP_CGR_Register( arcHandle , 
         NARC_pokelist_gra_item_icon_NCGR , FALSE , CLSYS_DRAW_MAIN , work->heapId  );
   work->cellRes[PCR_NCG_CONDITION] = GFL_CLGRP_CGR_Register( arcHandle , 
@@ -751,8 +750,6 @@ static void PLIST_LoadResource( PLIST_WORK *work )
         NARC_pokelist_gra_list_cursor_NCER , NARC_pokelist_gra_list_cursor_NANR, work->heapId  );
   work->cellRes[PCR_ANM_BALL] = GFL_CLGRP_CELLANIM_Register( arcHandle , 
         NARC_pokelist_gra_list_ball_NCER , NARC_pokelist_gra_list_ball_NANR, work->heapId  );
-  work->cellRes[PCR_ANM_BAR_ICON] = GFL_CLGRP_CELLANIM_Register( arcHandle , 
-        NARC_pokelist_gra_bar_icon_NCER , NARC_pokelist_gra_bar_icon_NANR, work->heapId  );
   work->cellRes[PCR_ANM_ITEM_ICON] = GFL_CLGRP_CELLANIM_Register( arcHandle , 
         NARC_pokelist_gra_item_icon_NCER , NARC_pokelist_gra_item_icon_NANR, work->heapId  );
   work->cellRes[PCR_ANM_CONDITION] = GFL_CLGRP_CELLANIM_Register( arcHandle , 
@@ -773,6 +770,22 @@ static void PLIST_LoadResource( PLIST_WORK *work )
           POKEICON_GetCellArcIndex() , POKEICON_GetAnmArcIndex(), work->heapId  );
     
     GFL_ARC_CloseDataHandle(arcHandlePoke);
+  }
+  //共通素材
+  {
+    ARCHANDLE *arcHandleCommon = GFL_ARC_OpenDataHandle( APP_COMMON_GetArcId() , work->heapId );
+
+    work->cellRes[PCR_PLT_BAR_ICON] = GFL_CLGRP_PLTT_Register( arcHandle , 
+          APP_COMMON_GetBarIconPltArcIdx() , CLSYS_DRAW_MAIN , 
+          PLIST_OBJPLT_BAR_ICON*32 , work->heapId  );
+    work->cellRes[PCR_NCG_BAR_ICON] = GFL_CLGRP_CGR_Register( arcHandle , 
+          APP_COMMON_GetBarIconCharArcIdx() , FALSE , CLSYS_DRAW_MAIN , work->heapId  );
+    work->cellRes[PCR_ANM_BAR_ICON] = GFL_CLGRP_CELLANIM_Register( arcHandle , 
+          APP_COMMON_GetBarIconCellArcIdx(APP_COMMON_MAPPING_128K) , 
+          APP_COMMON_GetBarIconAnimeArcIdx(APP_COMMON_MAPPING_128K), 
+          work->heapId  );
+    
+    GFL_ARC_CloseDataHandle(arcHandleCommon);
   }
   
   //アニメ用に、プレートの選択色のパレットを退避
@@ -935,8 +948,9 @@ static void PLIST_SelectPokeInit( PLIST_WORK *work )
   work->subSeq  = PSSS_INIT;
   work->menuRet = PMIT_NONE;
   
-  if( work->ktst == GFL_APP_KTST_KEY || 
-      GFL_CLACT_WK_GetDrawEnable( work->clwkCursor[0] ) == TRUE )
+//  if( work->ktst == GFL_APP_KTST_KEY || 
+//      GFL_CLACT_WK_GetDrawEnable( work->clwkCursor[0] ) == TRUE )
+  if( work->ktst == GFL_APP_KTST_KEY )
   {
     if( work->pokeCursor <= PL_SEL_POS_POKE6 )
     {
@@ -948,6 +962,10 @@ static void PLIST_SelectPokeInit( PLIST_WORK *work )
   else
   {
     GFL_CLACT_WK_SetDrawEnable( work->clwkCursor[0] , FALSE );
+    if( work->pokeCursor <= PL_SEL_POS_POKE6 )
+    {
+      PLIST_PLATE_SetActivePlate( work , work->plateWork[work->pokeCursor] , FALSE );
+    }
   }
   
   GFL_CLACT_WK_SetDrawEnable( work->clwkBarIcon[PBT_EXIT] , work->canExit );
@@ -1482,21 +1500,21 @@ static void PLIST_SelectMenuInit( PLIST_WORK *work )
   //BG・プレート・パラメータを見えにくくする
   G2_SetBlendBrightness( GX_BLEND_PLANEMASK_BG3 | GX_BLEND_PLANEMASK_BG2 | GX_BLEND_PLANEMASK_BG1 | GX_BLEND_PLANEMASK_OBJ , 8 );
   //戻るアイコンだけカラー効果がかからないようにWindowを使う
+  //戻るアイコンはBGに乗ったので対応不要。だけど通信アイコンのため残す
   //FIXME 通信アイコン対応
-  G2_SetWnd0Position( PLIST_BARICON_RETURN_X_MENU - 12 , PLIST_BARICON_Y - 12 ,
-                      PLIST_BARICON_RETURN_X_MENU + 12 , PLIST_BARICON_Y + 12 );
+  G2_SetWnd0Position( PLIST_BARICON_RETURN_X_MENU , PLIST_BARICON_Y ,
+                      PLIST_BARICON_RETURN_X_MENU + 24, PLIST_BARICON_Y + 24 );
   G2_SetWnd0InsidePlane( GX_WND_PLANEMASK_BG0 | GX_WND_PLANEMASK_BG1 | GX_WND_PLANEMASK_BG2 | GX_WND_PLANEMASK_BG3 | GX_WND_PLANEMASK_OBJ , FALSE );
   G2_SetWndOutsidePlane( GX_WND_PLANEMASK_BG0 | GX_WND_PLANEMASK_BG1 | GX_WND_PLANEMASK_BG2 | GX_WND_PLANEMASK_BG3 | GX_WND_PLANEMASK_OBJ , TRUE );
   work->isActiveWindowMask = TRUE;
 
   {
-    GFL_CLACTPOS curPos;
-    curPos.x = PLIST_BARICON_RETURN_X_MENU;
-    curPos.y = PLIST_BARICON_Y;
-    GFL_CLACT_WK_SetPos( work->clwkBarIcon[PBT_RETURN] , &curPos , CLSYS_DRAW_MAIN );
     GFL_CLACT_WK_SetDrawEnable( work->clwkBarIcon[PBT_EXIT] , FALSE );
+    GFL_CLACT_WK_SetDrawEnable( work->clwkBarIcon[PBT_RETURN] , FALSE );
   }
   GFL_BG_LoadScreenV_Req(PLIST_BG_MENU);
+  
+  GFL_UI_SetTouchOrKey( work->ktst );
 }
 
 //--------------------------------------------------------------
@@ -1507,10 +1525,7 @@ static void PLIST_SelectMenuTerm( PLIST_WORK *work )
   PLIST_MENU_CloseMenu( work , work->menuWork );
   PLIST_MSG_CloseWindow( work , work->msgWork );
   {
-    GFL_CLACTPOS curPos;
-    curPos.x = PLIST_BARICON_RETURN_X_BAR;
-    curPos.y = PLIST_BARICON_Y;
-    GFL_CLACT_WK_SetPos( work->clwkBarIcon[PBT_RETURN] , &curPos , CLSYS_DRAW_MAIN );
+    GFL_CLACT_WK_SetDrawEnable( work->clwkBarIcon[PBT_RETURN] , TRUE );
   }
   
   G2_SetBlendAlpha( GX_BLEND_PLANEMASK_BG2|GX_BLEND_PLANEMASK_OBJ , 
@@ -1518,6 +1533,8 @@ static void PLIST_SelectMenuTerm( PLIST_WORK *work )
                     16 , 10 );
   work->isActiveWindowMask = FALSE;
   GFL_BG_ClearScreenCodeVReq(PLIST_BG_MENU,0);
+  work->ktst = GFL_UI_CheckTouchOrKey();
+
   
 }
 

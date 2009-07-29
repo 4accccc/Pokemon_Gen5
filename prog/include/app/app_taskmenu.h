@@ -19,8 +19,9 @@ typedef struct _APP_TASKMENU_WORK APP_TASKMENU_WORK;
 //タスクメニュー 初期化ワーク １項目
 typedef struct
 {
-  STRBUF  *str;           
+  STRBUF  *str;
   PRINTSYS_LSB msgColor;
+  BOOL    isReturn;       //戻るマークの表示
 }APP_TASKMENU_ITEMWORK;
 
 //タスクメニュー 初期化ワーク
