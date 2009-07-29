@@ -80,6 +80,7 @@ SUBDIRS	=	wmi \
 			unionroom \
 			unionroom \
 			winframe \
+			trgra \
 			trdata \
 			trmsg
 
