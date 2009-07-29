@@ -18,6 +18,7 @@
 #include "poke_tool/monsno_def.h"
 #include "poke_tool/pokeparty.h"
 #include "poke_tool/poke_tool.h"
+#include "tr_tool/tr_tool.h"
 
 #include "sound/wb_sound_data.sadl"
 
@@ -577,6 +578,64 @@ static void enc_CreateBattleParam(
     }
     
     enc_AddPartyPokemon( param->partyEnemy1, monsNo, lv, id, heapID );
+  }
+  
+  { //2vs2時の味方AI（不要ならnull）
+    param->partyPartner = NULL;
+  }
+
+  { //2vs2時の２番目敵AI用（不要ならnull）
+    param->partyEnemy2 = NULL;
+  }
+  
+  { //プレイヤーステータス
+    param->statusPlayer = SaveData_GetMyStatus( SaveControl_GetPointer() );
+  }
+  
+  { //BGM設定
+    //デフォルト時のBGMナンバー
+//  param->musicDefault = SEQ_WB_BA_TEST_250KB;
+    param->musicDefault = SEQ_VS_NORAPOKE;
+    //ピンチ時のBGMナンバー
+    param->musicPinch = SEQ_WB_BA_PINCH_TEST_150KB;
+  }
+}
+
+//--------------------------------------------------------------
+/**
+ * バトルパラム作成（トレーナー戦）
+ * @param
+ * @retval
+ */
+//--------------------------------------------------------------
+static void enc_CreateTrainerBattleParam(
+    FIELD_ENCOUNT *enc,
+    BATTLE_SETUP_PARAM *param, HEAPID heapID,
+    TrainerID tr_id )
+{
+  GAMESYS_WORK *gsys = enc->gsys;
+  GAMEDATA *gdata = enc->gdata;
+  
+  { //各設定
+    param->engine = BTL_ENGINE_ALONE;
+    param->rule = BTL_RULE_SINGLE;
+    param->competitor = BTL_COMPETITOR_TRAINER;
+    param->netHandle = NULL;
+    param->commMode = BTL_COMM_NONE;
+    param->netID = 0;
+  }
+
+  { //プレイヤーパーティ追加
+    param->partyPlayer = PokeParty_AllocPartyWork( heapID );
+    PokeParty_Copy( GAMEDATA_GetMyPokemon(gdata), param->partyPlayer );
+  }
+  
+  { //対戦相手の手持ちポケモン生成
+    param->partyEnemy1 = PokeParty_AllocPartyWork( heapID );
+
+    param->trID = tr_id;
+    
+    TT_EncountTrainerDataMake( param, heapID );
   }
   
   { //2vs2時の味方AI（不要ならnull）
