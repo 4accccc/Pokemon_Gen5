@@ -12,7 +12,6 @@
 
 #include "field/areadata.h"
 #include "field_g3d_mapper.h"
-#include "fieldmap_resist.h"
 
 #include "map/dp3format.h"
 //============================================================================================

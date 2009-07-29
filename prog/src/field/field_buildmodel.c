@@ -17,7 +17,6 @@
 #include "field_bmanime.h"
 
 #include "field_g3d_mapper.h"		//下記ヘッダに必要
-#include "fieldmap_resist.h"		//FLDMAPPER_RESISTDATA_OBJTBLなど
 
 #include "system/el_scoreboard.h"
 
@@ -123,10 +122,6 @@ struct _FIELD_BMODEL_MAN
   BMODEL_ID subModels[BMODEL_ENTRY_MAX];
 
 	ARCID model_arcid;
-
-  //FLDMAPPERに引き渡すための生成データ保持ワーク
-	FLDMAPPER_RESISTDATA_OBJTBL	gobjData_Tbl;
-	FLDMAPPER_RESISTOBJDATA resistObjTbl[BMODEL_ENTRY_MAX * 2];
   
   STRBUF * elb_str[FIELD_BMODEL_ELBOARD_ID_MAX];
   ELBOARD_TEX * elb_tex[FIELD_BMODEL_ELBOARD_ID_MAX];
@@ -153,7 +148,6 @@ struct _FIELD_BMODEL_MAN
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 static void makeIDToEntryTable(FIELD_BMODEL_MAN * man);
-static void makeResistObjTable(FIELD_BMODEL_MAN * man);
 static u16 calcArcIndex(u16 area_id);
 
 static void loadBModelIDList(FIELD_BMODEL_MAN * man, u16 arc_id, u16 file_id);
@@ -334,8 +328,6 @@ void FIELD_BMODEL_MAN_Load(FIELD_BMODEL_MAN * man, u16 zoneid, const AREADATA * 
   //必要な配置モデルデータの読み込み
   loadBmInfo(man, model_info_dataid);
 
-  //FLDMAPPERに引き渡すデータを生成
-	makeResistObjTable(man);
 
   CreateGlobalObj_forBModel(man);
 }
@@ -524,30 +516,6 @@ static u16 calcArcIndex(u16 area_id)
 	return 0;	//とりあえず
 }
 
-
-//------------------------------------------------------------------
-/**
- * @brief FLDMAPPERでの登録に使用できるデータを生成
- */
-//------------------------------------------------------------------
-static void makeResistObjTable(FIELD_BMODEL_MAN * man)
-{
-	static const FLDMAPPER_RESISTDATA_OBJTBL init = {	
-		0, NULL, 0, 0, NULL, 0
-	};
-	int i;
-	FLDMAPPER_RESISTDATA_OBJTBL * resist = &man->gobjData_Tbl;
-	FLDMAPPER_RESISTOBJDATA * mapperObj = man->resistObjTbl;
-	GFL_STD_MemFill16(mapperObj, NON_LOWQ, sizeof(man->resistObjTbl));
-	for (i = 0; i < man->entryCount; i++)
-	{	
-		mapperObj[i].highQ_ID = man->entryToIDTable[i];
-	}
-	*resist = init;
-	resist->objArcID = man->model_arcid;
-	resist->objData = mapperObj;
-	resist->objCount = man->entryCount;
-}
 
 //============================================================================================
 //
@@ -975,22 +943,21 @@ static void CreateGlobalObj_forBModel(FIELD_BMODEL_MAN * man)
   MAKE_OBJ_PARAM objParam;
   ARCID anmArcID;
   GFL_G3D_MAP_GLOBALOBJ * globalObj = &man->globalObj;
-  const FLDMAPPER_RESISTDATA_OBJTBL * gobjTbl = &man->gobjData_Tbl;
 
-	if( gobjTbl->objCount == 0 ){
+  u32 entryCount = man->entryCount;
+
+	if( entryCount == 0 ){
     return;
   }
 
-  man->gResCount = gobjTbl->objCount;
-  man->gResource = GFL_HEAP_AllocClearMemory
-          ( man->heapID, sizeof(GLOBAL_RESOURCE) * gobjTbl->objCount );
-  man->gObjCount = gobjTbl->objCount;
-  man->gObject = GFL_HEAP_AllocClearMemory(
-      man->heapID, sizeof(GLOBAL_OBJ) * gobjTbl->objCount );
+  man->gResCount = entryCount;
+  man->gResource = GFL_HEAP_AllocClearMemory ( man->heapID, sizeof(GLOBAL_RESOURCE) * entryCount );
 
-  globalObj->gobjCount = gobjTbl->objCount;
-  globalObj->gobj = GFL_HEAP_AllocClearMemory
-          ( man->heapID, sizeof(GFL_G3D_MAP_OBJ) * gobjTbl->objCount );
+  man->gObjCount = entryCount;
+  man->gObject = GFL_HEAP_AllocClearMemory( man->heapID, sizeof(GLOBAL_OBJ) * entryCount );
+
+  globalObj->gobjCount = entryCount;
+  globalObj->gobj = GFL_HEAP_AllocClearMemory ( man->heapID, sizeof(GFL_G3D_MAP_OBJ) * entryCount );
 
   MAKE_OBJ_PARAM_init(&objParam);
   anmArcID = FIELD_BMODEL_MAN_GetAnimeArcID(man);
@@ -1001,11 +968,12 @@ static void CreateGlobalObj_forBModel(FIELD_BMODEL_MAN * man)
     const u16 * anmIDs;
     const FIELD_BMANIME_DATA * anmData;
     GLOBAL_RESOURCE * objRes = &man->gResource[i];
+    BMODEL_ID bm_id = man->entryToIDTable[i];
 
-    MAKE_RES_PARAM_set(&objParam.mdl, gobjTbl->objArcID, gobjTbl->objData[i].highQ_ID, 0);
+    MAKE_RES_PARAM_set(&objParam.mdl, man->model_arcid, bm_id, 0);
     
     //配置モデルに対応したアニメデータを取得 
-    anmData = FIELD_BMODEL_MAN_GetAnimeData(man, gobjTbl->objData[i].highQ_ID);
+    anmData = FIELD_BMODEL_MAN_GetAnimeData(man, bm_id);
     count = FIELD_BMANIME_DATA_getAnimeCount(anmData);
     anmIDs = FIELD_BMANIME_DATA_getAnimeFileID(anmData);
 
@@ -1019,9 +987,12 @@ static void CreateGlobalObj_forBModel(FIELD_BMODEL_MAN * man)
       }
     }
 
-    //TAMADA_Printf("BM:Create Rsc %d (%d)\n", i, gobjTbl->objData[i].highQ_ID);
+    TAMADA_Printf("BM:Create Rsc %d (%d)\n", i, bm_id);
     createGlobalResource( objRes, &objParam );
-    FIELD_BMANIME_DATA_entryTexData( man, anmData, objRes->g3DresTex );
+    {
+      GFL_G3D_RES* resTex = objRes->g3DresTex ? objRes->g3DresTex : objRes->g3DresMdl;
+      FIELD_BMANIME_DATA_entryTexData( man, anmData, resTex );
+    }
   }
 
   for ( i = 0; i < man->gObjCount; i++ )
@@ -1029,9 +1000,10 @@ static void CreateGlobalObj_forBModel(FIELD_BMODEL_MAN * man)
     const FIELD_BMANIME_DATA * anmData;
     GLOBAL_OBJ * gObj = &man->gObject[i];
     GLOBAL_RESOURCE * objRes = &man->gResource[i];
+    BMODEL_ID bm_id = man->entryToIDTable[i];
     createGlobalObj( gObj, objRes );
 
-    anmData = FIELD_BMODEL_MAN_GetAnimeData(man, gobjTbl->objData[i].highQ_ID);
+    anmData = FIELD_BMODEL_MAN_GetAnimeData(man, bm_id);
     if (FIELD_BMANIME_DATA_getAnimeType(anmData) == BMANIME_TYPE_ETERNAL)
     {
       int j;
@@ -1043,8 +1015,8 @@ static void CreateGlobalObj_forBModel(FIELD_BMODEL_MAN * man)
     globalObj->gobj[i].g3DobjHQ = gObj->g3Dobj;
     globalObj->gobj[i].g3DobjLQ = NULL;
   }
-
 }
+
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
@@ -1100,9 +1072,9 @@ static void createGlobalResource( GLOBAL_RESOURCE * objRes, const MAKE_OBJ_PARAM
 		objRes->g3DresTex = NULL;
 		resTex = objRes->g3DresMdl;
 	}
-	DEBUG_Field_Grayscale(resTex);
   if (GFL_G3D_CheckResourceType( resTex, GFL_G3D_RES_CHKTYPE_TEX ) == TRUE)
   {
+	  DEBUG_Field_Grayscale(resTex);
 	  GFL_G3D_TransVramTexture( resTex );
   } else {
     const MAKE_RES_PARAM * prm;
