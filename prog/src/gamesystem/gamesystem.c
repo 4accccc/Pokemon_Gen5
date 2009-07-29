@@ -31,9 +31,12 @@
 enum {
 	HEAPID_GAMESYS = HEAPID_PROC,
 	
-	HEAPSIZE_GAMESYS = 0x7000,
+	HEAPSIZE_GAMESYS = 0x6000,
 	//x200000
 };
+
+///HEAPID_UNIONのヒープサイズ
+#define HEAPSIZE_APP_CONTROL      (0x1000)
 
 //------------------------------------------------------------------
 /**
@@ -86,6 +89,9 @@ static GFL_PROC_RESULT GameMainProcInit(GFL_PROC * proc, int * seq, void * pwk, 
 	GAME_INIT_WORK *game_init = pwk;
 	
 	GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_GAMESYS, HEAPSIZE_GAMESYS );
+	//パレスしながら戦闘もフィールドもするのでここで確保
+	GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_APP_CONTROL, HEAPSIZE_APP_CONTROL );
+	
 	gsys = GFL_PROC_AllocWork(proc, work_size, HEAPID_GAMESYS);
 	GFL_STD_MemClear(gsys, work_size);
 	GameSysWork = gsys;

@@ -2036,7 +2036,7 @@ static void FIELDMAP_CommBoot(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork, HEAP
   	}
     break;
   default:  //ƒpƒŒƒX
-  fieldWork->commSys = FIELD_COMM_MAIN_InitSystem( heapID, GFL_HEAPID_APP, GAMESYSTEM_GetGameCommSysPtr(gsys) );
+  fieldWork->commSys = FIELD_COMM_MAIN_InitSystem( heapID, HEAPID_APP_CONTROL, GAMESYSTEM_GetGameCommSysPtr(gsys) );
   FIELD_COMM_MAIN_CommFieldMapInit(FIELD_COMM_MAIN_GetCommFieldSysPtr(fieldWork->commSys));
 	FIELD_COMM_MAIN_SetCommActor(fieldWork->commSys,
       GAMEDATA_GetMMdlSys(GAMESYSTEM_GetGameData(gsys)));

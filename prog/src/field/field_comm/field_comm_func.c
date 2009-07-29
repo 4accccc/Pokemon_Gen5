@@ -294,8 +294,8 @@ void * FIELD_COMM_FUNC_InitCommSystem( int *seq, void *pwk )
 
   COMM_FIELD_SYS_PTR commField;
   FIELD_INVALID_PARENT_WORK *invalid_parent = pwk;
-
-  commField = FIELD_COMM_MAIN_CommFieldSysAlloc(GFL_HEAP_LOWID(GFL_HEAPID_APP), invalid_parent->game_comm);
+  
+  commField = FIELD_COMM_MAIN_CommFieldSysAlloc(GFL_HEAP_LOWID(HEAPID_APP_CONTROL), invalid_parent->game_comm);
   
   GFL_NET_Init( &aGFLNetInit , FIELD_COMM_FUNC_FinishInitCallback , commField );
   {
@@ -915,7 +915,7 @@ const BOOL  FIELD_COMM_FUNC_Send_SelfProfile( const int sendNetID , COMM_FIELD_S
   MYSTATUS *myst = GAMEDATA_GetMyStatus(GameCommSys_GetGameData(game_comm));
   
   //FIXME:IDÇ∆Ç©ÇÃê≥ÇµÇ¢éùÇ¡ÇƒóàÇÈï˚ñ@Ç™ÇÌÇ©ÇÁÇ»Ç¢ÇÃÇ≈âºèàóù
-  namebuf = MyStatus_CreateNameString(myst, GFL_HEAPID_APP);
+  namebuf = MyStatus_CreateNameString(myst, HEAPID_APP_CONTROL);
   GFL_STR_GetStringCode(namebuf, profile.name, PERSON_NAME_SIZE + EOM_SIZE);
   GFL_STR_DeleteBuffer(namebuf);
   profile.ID_ = 1000+GFL_NET_GetNetID( selfHandle );
