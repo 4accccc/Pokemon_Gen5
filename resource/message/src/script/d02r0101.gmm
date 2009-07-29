@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-07-29T12:14:34"/>
+	<create user="matsumiya" host="W00207" date="2009-07-29T12:24:45"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -353,11 +353,13 @@
 ・7月ROM用メッセージ</comment>
 		<attribute name="キャラ指定">MOUNTAIN</attribute>
 		<language name="JPN" width="256">この　もりのみち　だけどよ
-きを　きったんじゃなくて[BE:00:ページ切り替え（行送り）]
-べつのばしょに　うえかえたんだってよ</language>
+きった　きは　たしか……[BE:01:ページ切り替え（クリア）]
+あー　わすれたなあ
+どこかで　つかわれてるって　きいたけど</language>
 		<language name="JPN_KANJI" width="256">この　森の道　だけどよ
-木を　切ったんじゃなくて[BE:00:ページ切り替え（行送り）]
-別の場所に　植え替えたんだってよ</language>
+切った　木は　確か……[BE:01:ページ切り替え（クリア）]
+あー　忘れたなあ
+どこかで　使われてるって　聞いたけど</language>
 	</row>
 
 	<row id="msg_d02r0101_assistantw_01">
