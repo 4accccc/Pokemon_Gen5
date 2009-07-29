@@ -60,7 +60,7 @@ static GFL_PROC_RESULT FieldMapProcInit
       }
       else
       {
-        heap_size = 0x149000;
+        heap_size = 0x148000;
       }
     }
   	GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_FIELDMAP, heap_size );
