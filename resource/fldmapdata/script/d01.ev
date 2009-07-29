@@ -19,7 +19,7 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA    ev_d01
+_EVENT_DATA    ev_d01_talkobj_boy2
 _EVENT_DATA_END
 
 
@@ -30,9 +30,15 @@ _EVENT_DATA_END
 //  _END
 
 /**************************************************************/
-/*                                                            */
+/*  D01 BOY2の会話用イベントスクリプト                      */
 /**************************************************************/
-ev_d01:
-  //とりあえず最初のラベルだけ生成している
+ ev_d01_talkobj_boy2:
+	_TALK_OBJ_PAUSE_ALL
+	_TURN_HERO_SITE
+	_TALKWIN_OPEN
+	_TALKMSG_ALLPUT mes_d01_boy2_01
+	_AB_KEYWAIT
+  _TALKWIN_CLOSE
+  _OBJ_PAUSE_CLEAR_ALL
   _END
 
