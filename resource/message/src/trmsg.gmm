@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<?xml-stylesheet type="text/xsl" href="" ?>
+
+<gmml version="4.4">
+
+<head>
+	<create user="sogabe" host="W00086" date="2005-09-02T15:24:51"/>
+	<generator name="MessageEditor" version="4.8.9.2"/>
+</head>
+
+<body language="japanese">
+	<color>
+		<list entry="0" r="00" g="00" b="00" a="FF"/>
+		<list entry="1" r="FF" g="00" b="00" a="FF"/>
+		<list entry="2" r="00" g="FF" b="00" a="FF"/>
+		<list entry="3" r="00" g="00" b="FF" a="FF"/>
+	</color>
+
+	<tag-table>
+		<group entry="0" japanese="タググループ" english="タググループ">
+		</group>
+
+		<group entry="254" japanese="文字列展開" english="Word">
+		</group>
+
+		<set japanese="黒" english="Black" value="FF:00:色:0"/>
+		<set japanese="赤" english="Red" value="FF:00:色:1"/>
+		<set japanese="緑" english="Green" value="FF:00:色:2"/>
+		<set japanese="青" english="Blue" value="FF:00:色:3"/>
+		<set japanese="500%" english="500%" value="FF:01:サイズ:500"/>
+		<set japanese="400%" english="400%" value="FF:01:サイズ:400"/>
+		<set japanese="300%" english="300%" value="FF:01:サイズ:300"/>
+		<set japanese="200%" english="200%" value="FF:01:サイズ:200"/>
+		<set japanese="150%" english="150%" value="FF:01:サイズ:150"/>
+		<set japanese="100%" english="100%" value="FF:01:サイズ:100"/>
+		<set japanese="75%" english="75%" value="FF:01:サイズ:75"/>
+		<set japanese="50%" english="50%" value="FF:01:サイズ:50"/>
+	</tag-table>
+
+	<columns>
+		<id position="0" width="100"/>
+		<group default=" 0:デフォルト" position="1" width="100">
+			<list entry="0" japanese="デフォルト" english="Default" colorID="0"/>
+		</group>
+		<number position="-1" width="100"/>
+		<comment position="2" width="100"/>
+		<erase position="3" width="100"/>
+		<language japanese="日本語" english="日本語">
+			<message position="4" width="100"/>
+			<font default="" position="5" width="100">
+			</font>
+			<size position="6" width="100"/>
+			<space position="7" width="100"/>
+			<width position="8" width="100"/>
+			<line position="9" width="100"/>
+		</language>
+	</columns>
+
+	<dialog left="28" top="301" right="733" bottom="921" maximized="no" rayout="Vertical2">
+		<comment-input left="733" top="771" right="1080" bottom="921" visible="yes"/>
+		<tag-palette left="733" top="375" right="1080" bottom="771" visible="yes"/>
+		<band id="0" index="0" style="0000" width="530"/>
+		<band id="1" index="1" style="0000" width="165"/>
+		<band id="2" index="2" style="0000" width="560"/>
+		<band id="3" index="3" style="0000" width="135"/>
+		<band id="4" index="4" style="0000" width="697"/>
+		<edit entry="0" language="日本語" mode="Edit" spell-check="-1"/>
+		<edit entry="1" language="日本語" mode="Preview" spell-check="-1"/>
+		<edit entry="2" language="日本語" mode="Source" spell-check="-1"/>
+		<edit entry="3" language="日本語" mode="Source" spell-check="-1"/>
+	</dialog>
+
+	<output default="デフォルト">
+		<target japanese="デフォルト" english="default" endian="big" encoding="Shift_JIS" letter-list-encoding="Shift_JIS" header-file-encoding="Shift_JIS" language="日本語">
+			<struct name="JMSMesgEntry" id="" message="mesgOffset">
+			</struct>
+			<entry sort="id" id-block="no" flowlabel-block="no"/>
+			<header divide="no" id-prefix="JMS_" query-prefix="JMS_QUERY_" flownode-prefix="JMS_FLOWNODE_" id="" struct="" query=""/>
+		</target>
+	</output>
+
+
+	<lock>
+		<operation add_message="no" header_setting="no" tag_setting="no" output_setting="no" display="no" sort="no" flowchart_window="no"/>
+	</lock>
+
+
+	<row id="TRID_TANPAN_01_TRMSG_FIGHT_START">
+		<language name="日本語">トレーナーと　トレーナーの
+めが　あうって　ことは……[BE:01:ページ切り替え（クリア）]
+ポケモンしょうぶの　はじまりさ！[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="TRID_TANPAN_01_TRMSG_FIGHT_LOSE">
+		<language name="日本語">なんだ！？
+きみ　つよすぎるぞ！？</language>
+	</row>
+
+	<row id="TRID_TANPAN_01_TRMSG_FIGHT_AFTER">
+		<language name="日本語">くさむらに　はいって
+やせいポケモンと　しょうぶ！[BE:01:ページ切り替え（クリア）]
+と　そのまえに
+ポケモンセンターに　いかなきゃ</language>
+	</row>
+
+	<row id="TRID_MINI_01_TRMSG_FIGHT_START">
+		<language name="日本語">わたし　ポケモンしょうぶが
+だいすき　なの！[BE:01:ページ切り替え（クリア）]
+だって　かわいい　ポケモンが
+さらに　かわいく　たたかうんだもん！[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="TRID_MINI_01_TRMSG_FIGHT_LOSE">
+		<language name="日本語">まけても　わたしの　ポケモン
+かわいいんだもん……！</language>
+	</row>
+
+	<row id="TRID_MINI_01_TRMSG_FIGHT_AFTER">
+		<language name="日本語">まけても　なみだは　ながさない
+だって　わたし　つよくなるから！</language>
+	</row>
+
+	<row id="TRID_SCHOOLB_01_TRMSG_FIGHT_START">
+		<language name="日本語">トレーナーズスクールで
+まなんだ　ちしきを　つかうとき！[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="TRID_SCHOOLB_01_TRMSG_FIGHT_LOSE">
+		<language name="日本語">むぎゅ！</language>
+	</row>
+
+	<row id="TRID_SCHOOLB_01_TRMSG_FIGHT_AFTER">
+		<language name="日本語">きみの　すごさに　あっとうされて
+まなんだ　ちしきを　わすれていたよ</language>
+	</row>
+
+	<row id="TRID_SCHOOLG_01_TRMSG_FIGHT_START">
+		<language name="日本語">まだ　つよくない　ポケモンでも
+トレーナーの　のうりょくで[BE:00:ページ切り替え（行送り）]
+ちからを　はっき　できますわ[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="TRID_SCHOOLG_01_TRMSG_FIGHT_LOSE">
+		<language name="日本語">まあ　くやしい！
+わたし　まけましたわ</language>
+	</row>
+
+	<row id="TRID_SCHOOLG_01_TRMSG_FIGHT_AFTER">
+		<language name="日本語">トレーナーの　ちからぶそくで
+まけると　ポケモンが　かわいそうね</language>
+	</row>
+
+	<row id="TRID_TENNIS_01_TRMSG_FIGHT_START">
+		<language name="日本語">テニスプレイヤーが
+どんな　ポケモンを　つかうか[BE:00:ページ切り替え（行送り）]
+よそうが　つくかしら？[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="TRID_TENNIS_01_TRMSG_FIGHT_LOSE">
+		<language name="日本語">あたしの　まけで　ゲームセット
+これは　よそうがい　ね……</language>
+	</row>
+
+	<row id="TRID_TENNIS_01_TRMSG_FIGHT_AFTER">
+		<language name="日本語">もっと　きびしい　コースを
+せめれば　よかったわ……</language>
+	</row>
+
+	<row id="TRID_FOOTBALL_01_TRMSG_FIGHT_START">
+		<language name="日本語">アメフトの　すごさを　つたえるため
+いまから　さくせんかいし！[BE:01:ページ切り替え（クリア）]
+ハット！　ハット！　ハット！[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="TRID_FOOTBALL_01_TRMSG_FIGHT_LOSE">
+		<language name="日本語">さくせんしっぱい……！</language>
+	</row>
+
+	<row id="TRID_FOOTBALL_01_TRMSG_FIGHT_AFTER">
+		<language name="日本語">ポケモンどうしの　れんけいぶそくか
+オレじしんの　れんしゅうぶそく　か</language>
+	</row>
+
+
+	<flowchart-group-list>
+		<flowchart-group japanese="root" english="root" group-id="0" parent-id="-1"/>
+	</flowchart-group-list>
+</body>
+
+</gmml>
