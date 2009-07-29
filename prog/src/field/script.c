@@ -1077,8 +1077,8 @@ static GMEVENT_RESULT FldScriptEvent_ControlScript(
 		//メッセージ関連
 		sc->wordset = WORDSET_CreateEx(
 			WORDSET_SCRIPT_SETNUM, WORDSET_SCRIPT_BUFLEN, sc->heapID );
-		sc->msg_buf = GFL_STR_CreateBuffer( SCR_MSG_BUF_SIZE, sc->heapID );
-		sc->tmp_buf = GFL_STR_CreateBuffer( SCR_MSG_BUF_SIZE, sc->heapID );
+		sc->msg_buf = GFL_STR_CreateBuffer( SCR_MSG_BUF_SIZE, sc->temp_heapID );
+		sc->tmp_buf = GFL_STR_CreateBuffer( SCR_MSG_BUF_SIZE, sc->temp_heapID );
 		
 		(*seq)++;
 	case 1:
