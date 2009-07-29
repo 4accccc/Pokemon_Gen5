@@ -312,7 +312,7 @@ BOOL SCRCMD_WORK_CheckMMdlAnmTCB( SCRCMD_WORK *work )
 //--------------------------------------------------------------
 void SCRCMD_WORK_CreateMsgData( SCRCMD_WORK *work, u32 datID )
 {
-#if 0
+#if 0 //テンポラリ用HEAPIDに変更。
 	GFL_MSGDATA *msgData = GFL_MSG_Create(
 		GFL_MSG_LOAD_NORMAL, ARCID_SCRIPT_MESSAGE, datID, work->heapID );
 #else

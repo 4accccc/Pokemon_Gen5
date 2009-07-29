@@ -258,6 +258,6 @@ static void fsnd_PushCount( FIELD_SOUND *fsnd )
 static void fsnd_PopCount( FIELD_SOUND *fsnd )
 {
   fsnd->push_count--;
-  GF_ASSERT(fsnd->push_count>0 && "FIELD SOUND POP COUNT ERROR" );
+  GF_ASSERT(fsnd->push_count>=0 && "FIELD SOUND POP COUNT ERROR" );
 }
 
