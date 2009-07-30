@@ -75,7 +75,7 @@ ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
 .SUFFIXES: .NCLR .ncl .ncg .NCGR .NSCR .nsc .NCER .nce .imd .ica .iva .ima .itp .ita .nsbmd .nsbtx .nsbca .nsbma .nsbva .nsbtp
 
 .ncl.NCLR:
-	g2dcvtr $< -pcm
+	g2dcvtr $<
 
 .nce.NCER:
 	g2dcvtr $< -br
