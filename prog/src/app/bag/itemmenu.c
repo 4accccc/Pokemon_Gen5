@@ -532,6 +532,7 @@ static void _itemMovePosition(FIELD_ITEMMENU_WORK* pWork)
   BOOL bChange=FALSE;
   u32 trg = GFL_UI_KEY_GetTrg();
 
+ 	GFL_UI_KEY_SetRepeatSpeed(1, 6);
   
   if((trg == PAD_BUTTON_A) || (trg == PAD_BUTTON_SELECT)){  //”½‰f
     MYITEM_ITEM_STCopy(pWork->pMyItem, pWork->ScrollItem, pWork->pocketno, FALSE);

@@ -9,13 +9,6 @@
 
 #pragma once
 
-#undef GLOBAL
-#ifdef ITEM_H_GLOBAL
-#define GLOBAL  /*  */
-#else
-#define GLOBAL  extern
-#endif
-
 #include <gflib.h>
 #include "item/itemsym.h"
 #include "item/itemequip.h"
@@ -170,7 +163,7 @@ typedef enum{
  * @return  none
  */
 //--------------------------------------------------------------------------------------------
-GLOBAL void ItemPutIn( void * item, u16 pos1, u16 pos2 );
+extern void ItemPutIn( void * item, u16 pos1, u16 pos2 );
 
 //============================================================================================
 //============================================================================================
@@ -193,7 +186,7 @@ GLOBAL void ItemPutIn( void * item, u16 pos1, u16 pos2 );
  * @li  type = ITEM_GET_AGB_NUM   : AGBのアイテム番号
  */
 //--------------------------------------------------------------------------------------------
-GLOBAL u16 ITEM_GetIndex( u16 item, u16 type );
+extern u16 ITEM_GetIndex( u16 item, u16 type );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -205,7 +198,7 @@ GLOBAL u16 ITEM_GetIndex( u16 item, u16 type );
  * @retval  "ITEM_DUMMY_ID != DPのアイテム番号"
  */
 //--------------------------------------------------------------------------------------------
-GLOBAL u16 ITEM_CnvAgbItem( u16 agb );
+extern u16 ITEM_CnvAgbItem( u16 agb );
 
 //--------------------------------------------------------------
 /**
@@ -214,7 +207,7 @@ GLOBAL u16 ITEM_CnvAgbItem( u16 agb );
  * @retval  アイテムアイコンのアーカイブID
  */
 //--------------------------------------------------------------
-GLOBAL u16 ITEM_GetIconArcID(void);
+extern u16 ITEM_GetIconArcID(void);
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -225,7 +218,7 @@ GLOBAL u16 ITEM_GetIconArcID(void);
  * @return  セルアーカイブインデックス
  */
 //--------------------------------------------------------------------------------------------
-GLOBAL u16 ITEM_GetIconCell(void);
+extern u16 ITEM_GetIconCell(void);
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -236,7 +229,7 @@ GLOBAL u16 ITEM_GetIconCell(void);
  * @return  セルアニメアーカイブインデックス
  */
 //--------------------------------------------------------------------------------------------
-GLOBAL u16 ITEM_GetIconCellAnm(void);
+extern u16 ITEM_GetIconCellAnm(void);
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -253,7 +246,7 @@ GLOBAL u16 ITEM_GetIconCellAnm(void);
  * @li  type = ITEM_GET_ICON_PAL  : アイコンのパレットデータ
  */
 //--------------------------------------------------------------------------------------------
-GLOBAL void * ITEM_GetItemArcData( u16 item, u16 type, HEAPID heap_id );
+extern void * ITEM_GetItemArcData( u16 item, u16 type, HEAPID heap_id );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -266,7 +259,7 @@ GLOBAL void * ITEM_GetItemArcData( u16 item, u16 type, HEAPID heap_id );
  * @return  none
  */
 //--------------------------------------------------------------------------------------------
-GLOBAL void ITEM_GetItemName( STRBUF* buf, u16 item, HEAPID heap_id );
+extern void ITEM_GetItemName( STRBUF* buf, u16 item, HEAPID heap_id );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -279,7 +272,7 @@ GLOBAL void ITEM_GetItemName( STRBUF* buf, u16 item, HEAPID heap_id );
  * @return  説明
  */
 //--------------------------------------------------------------------------------------------
-GLOBAL void ITEM_GetInfo( STRBUF * buf, u16 item, HEAPID heap_id );
+extern void ITEM_GetInfo( STRBUF * buf, u16 item, HEAPID heap_id );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -292,7 +285,7 @@ GLOBAL void ITEM_GetInfo( STRBUF * buf, u16 item, HEAPID heap_id );
  * @return  指定パラメータ
  */
 //--------------------------------------------------------------------------------------------
-GLOBAL s32 ITEM_GetParam( u16 item, u16 param, HEAPID heap_id );
+extern s32 ITEM_GetParam( u16 item, u16 param, HEAPID heap_id );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -304,7 +297,7 @@ GLOBAL s32 ITEM_GetParam( u16 item, u16 param, HEAPID heap_id );
  * @return  指定パラメータ
  */
 //--------------------------------------------------------------------------------------------
-GLOBAL s32 ITEM_GetBufParam( ITEMDATA * item, u16 param );
+extern s32 ITEM_GetBufParam( ITEMDATA * item, u16 param );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -315,7 +308,7 @@ GLOBAL s32 ITEM_GetBufParam( ITEMDATA * item, u16 param );
  * @return  技番号
  */
 //--------------------------------------------------------------------------------------------
-GLOBAL const u16 ITEM_GetWazaNo( u16 item );
+extern const u16 ITEM_GetWazaNo( u16 item );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -327,7 +320,7 @@ GLOBAL const u16 ITEM_GetWazaNo( u16 item );
  * @retval  "FALSE = 秘伝技以外"
  */
 //--------------------------------------------------------------------------------------------
-GLOBAL u8 ITEM_CheckHidenWaza( u16 waza );
+extern u8 ITEM_CheckHidenWaza( u16 waza );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -338,7 +331,7 @@ GLOBAL u8 ITEM_CheckHidenWaza( u16 waza );
  * @return  技マシン番号
  */
 //--------------------------------------------------------------------------------------------
-GLOBAL u8 ITEM_GetWazaMashineNo( u16 item );
+extern u8 ITEM_GetWazaMashineNo( u16 item );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -350,7 +343,7 @@ GLOBAL u8 ITEM_GetWazaMashineNo( u16 item );
  * @retval  "FALSE = メール以外"
  */
 //--------------------------------------------------------------------------------------------
-GLOBAL u8 ITEM_CheckMail( u16 item );
+extern u8 ITEM_CheckMail( u16 item );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -361,7 +354,7 @@ GLOBAL u8 ITEM_CheckMail( u16 item );
  * @return  デザインID
  */
 //--------------------------------------------------------------------------------------------
-GLOBAL u8 ITEM_GetMailDesign( u16 item );
+extern u8 ITEM_GetMailDesign( u16 item );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -372,7 +365,7 @@ GLOBAL u8 ITEM_GetMailDesign( u16 item );
  * @return  アイテム番号
  */
 //--------------------------------------------------------------------------------------------
-GLOBAL u16 ITEM_MailNumGet( u8 design );
+extern u16 ITEM_MailNumGet( u8 design );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -384,7 +377,7 @@ GLOBAL u16 ITEM_MailNumGet( u8 design );
  * @retval  "FALSE = 木の実以外"
  */
 //--------------------------------------------------------------------------------------------
-GLOBAL u8 ITEM_CheckNuts( u16 item );
+extern u8 ITEM_CheckNuts( u16 item );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -395,7 +388,7 @@ GLOBAL u8 ITEM_CheckNuts( u16 item );
  * @return  木の実番号
  */
 //--------------------------------------------------------------------------------------------
-GLOBAL u8 ITEM_GetNutsNo( u16 item );
+extern u8 ITEM_GetNutsNo( u16 item );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -406,7 +399,7 @@ GLOBAL u8 ITEM_GetNutsNo( u16 item );
  * @return  アイテム番号
  */
 //--------------------------------------------------------------------------------------------
-GLOBAL u16 ITEM_GetNutsID( u8 id );
+extern u16 ITEM_GetNutsID( u8 id );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -418,7 +411,7 @@ GLOBAL u16 ITEM_GetNutsID( u8 id );
  * @retval  "FALSE = 漢方薬"
  */
 //--------------------------------------------------------------------------------------------
-GLOBAL u8 ITEM_CheckKanpouyaku( u16 item );
+extern u8 ITEM_CheckKanpouyaku( u16 item );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -429,7 +422,7 @@ GLOBAL u8 ITEM_CheckKanpouyaku( u16 item );
  * @retval  確保したメモリのアドレス
  */
 //--------------------------------------------------------------------------------------------
-GLOBAL  void  *ITEM_LoadDataTable(HEAPID heapID);
+extern  void  *ITEM_LoadDataTable(HEAPID heapID);
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -441,7 +434,7 @@ GLOBAL  void  *ITEM_LoadDataTable(HEAPID heapID);
  * @retval  取得したアドレス
  */
 //--------------------------------------------------------------------------------------------
-GLOBAL  ITEMDATA  *ITEM_GetDataPointer(ITEMDATA *item,u16 index);
+extern  ITEMDATA  *ITEM_GetDataPointer(ITEMDATA *item,u16 index);
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -455,7 +448,17 @@ GLOBAL  ITEMDATA  *ITEM_GetDataPointer(ITEMDATA *item,u16 index);
  *  基本、金銀で追加されたもの
  */
 //--------------------------------------------------------------------------------------------
-GLOBAL BOOL ITEM_CheckPokeAdd( u16 item );
+extern BOOL ITEM_CheckPokeAdd( u16 item );
 
-#undef GLOBAL
+
+//--------------------------------------------------------------------------------------------
+/**
+ * 古いアイテムで今は使われていないかどうか検査する
+ * @param item  アイテム番号
+ * @retval  TRUE  = つかえる
+ * @retval  FALSE = つかえない
+ */
+//--------------------------------------------------------------------------------------------
+extern BOOL ITEM_CheckEnable( u16 item );
+
 

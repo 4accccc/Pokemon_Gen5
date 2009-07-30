@@ -45,6 +45,8 @@
 #include "field_event_check.h"
 #include "event_debug_item.h" //EVENT_DebugItemMake
 #include "savedata/box_savedata.h"  //デバッグアイテム生成用
+#include  "item/itemsym.h"  //ITEM_DATA_MAX
+#include  "item/item.h"  //ITEM_CheckEnable
 #include "app/townmap.h"
 
 #include "field_sound.h"
@@ -156,6 +158,7 @@ static BOOL DMenuCallProc_ControlRtcList( DEBUG_MENU_EVENT_WORK *wk );
 static BOOL DMenuCallProc_Naminori( DEBUG_MENU_EVENT_WORK *wk );
 static BOOL DMenuCallProc_DebugItem( DEBUG_MENU_EVENT_WORK *wk );
 static BOOL DMenuCallProc_BoxMax( DEBUG_MENU_EVENT_WORK *wk );
+static BOOL DMenuCallProc_MyItemMax( DEBUG_MENU_EVENT_WORK *wk );
 
 static BOOL DMenuCallProc_DebugSkyJump( DEBUG_MENU_EVENT_WORK *p_wk );
 
@@ -189,6 +192,7 @@ static const FLDMENUFUNC_LIST DATA_DebugMenuList[] =
   { DEBUG_FIELD_STR31, DMenuCallProc_Naminori },
   { DEBUG_FIELD_STR32, DMenuCallProc_DebugItem },
   { DEBUG_FIELD_STR37, DMenuCallProc_BoxMax },
+  { DEBUG_FIELD_STR39, DMenuCallProc_MyItemMax },
   { DEBUG_FIELD_STR36, DMenuCallProc_ControlFog },
 	{ DEBUG_FIELD_STR01, NULL },
 };
@@ -2608,6 +2612,29 @@ static BOOL DMenuCallProc_BoxMax( DEBUG_MENU_EVENT_WORK *wk )
 #endif
 	return( FALSE );
 }
+
+//--------------------------------------------------------------
+/**
+ * @brief   バッグにアイテムを限界までいれる
+ * @param   wk DEBUG_MENU_EVENT_WORK*
+ * @retval  BOOL TRUE=イベント継続
+ */
+//--------------------------------------------------------------
+
+static BOOL DMenuCallProc_MyItemMax( DEBUG_MENU_EVENT_WORK *wk )
+{
+	u32	i;
+  MYITEM_PTR myitem = GAMEDATA_GetMyItem(GAMESYSTEM_GetGameData(wk->gmSys));
+
+	for( i = 0; i < ITEM_DATA_MAX; i++ ){
+    if( ITEM_CheckEnable( i ) ){
+      MYITEM_AddItem(myitem , i, 2, GFL_HEAPID_APP );
+    }
+	}
+	return( FALSE );
+}
+
+
 
 //======================================================================
 //  デバッグメニュー そらを飛ぶ

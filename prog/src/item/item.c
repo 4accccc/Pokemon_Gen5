@@ -736,3 +736,20 @@ BOOL ITEM_CheckPokeAdd( u16 item )
 
   return TRUE;
 }
+
+
+//--------------------------------------------------------------------------------------------
+/**
+ * 古いアイテムで今は使われていないかどうか検査する
+ * @param item  アイテム番号
+ * @retval  TRUE  = つかえる
+ * @retval  FALSE = つかえない
+ */
+//--------------------------------------------------------------------------------------------
+BOOL ITEM_CheckEnable( u16 item )
+{
+  //中身は修正予定
+  return (ItemDataIndex[item].arc_cgx != NARC_item_icon_item_dumy_NCGR);
+}
+
+
