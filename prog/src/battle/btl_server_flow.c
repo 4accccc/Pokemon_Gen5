@@ -365,9 +365,8 @@ static void scPut_MeromeroAct( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp );
 static void scPut_ConfDamage( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u32 damage );
 static void scPut_CurePokeSick( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, WazaSick sick );
 static void scPut_WazaMsg( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, WazaID waza );
-static WazaSick scPut_CureSick( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, BtlWazaSickEx exSickCode );
+static WazaSick scPut_CureSick( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, BtlWazaSickEx exSickCode, BPP_SICK_CONT* oldCont );
 static WazaSick trans_sick_code( const BTL_POKEPARAM* bpp, BtlWazaSickEx exCode );
-static void scPut_CureSickMsg( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, WazaSick sick, u16 itemID );
 static void scPut_WazaExecuteFailMsg( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, WazaID waza, SV_WazaFailCause cause );
 static void scPut_ResetSameWazaCounter( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp );
 static void scPut_WazaFail( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, WazaID waza );
@@ -398,7 +397,6 @@ static void scPut_DecrementPP( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, u8 
 static void scPut_RecoverPP( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u8 wazaIdx, u8 volume, u16 itemID );
 static void scPut_EatNutsAct( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp );
 static void scPut_RemoveItem( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp );
-static void scPut_AddSickDefaultMsg( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp, WazaSick sickID, BPP_SICK_CONT sickCont );
 static void scPut_ActFlag_Set( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, BppActFlag flagID );
 static void scPut_ActFlag_Clear( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp );
 static void scPut_SetContFlag( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, BppContFlag flag );
@@ -2933,7 +2931,9 @@ static BOOL scproc_AddSick( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* target, BTL_POKE
     BTL_SICK_AddProc( wk, target, sick );
 
     if( msgCallbackParam == NULL ){
-      scPut_AddSickDefaultMsg( wk, target, sick, sickCont );
+      BTL_HANDEX_STR_PARAMS   str;
+      BTL_SICK_MakeDefaultMsg( sick, sickCont, target, &str );
+      handexSub_putString( wk, &str );
     }else{
       msgCallbackParam->func( wk, target, msgCallbackParam->arg );
     }
@@ -4332,13 +4332,15 @@ static void scPut_WazaMsg( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, W
  * @param   itemID  アイテム使用による回復ならアイテムID／それ以外は ITEM_DUMMY_DATA
  */
 //----------------------------------------------------------------------------------
-static WazaSick scPut_CureSick( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, BtlWazaSickEx exSickCode )
+static WazaSick scPut_CureSick( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, BtlWazaSickEx exSickCode, BPP_SICK_CONT* oldCont )
 {
   WazaSick sick = trans_sick_code( bpp, exSickCode );
 
   if( sick != WAZASICK_NULL )
   {
     u8 pokeID = BPP_GetID( bpp );
+
+    *oldCont = BPP_GetSickCont( bpp, sick );
 
     if( sick < POKESICK_MAX ){
       BPP_CurePokeSick( bpp );
@@ -4381,43 +4383,16 @@ static WazaSick trans_sick_code( const BTL_POKEPARAM* bpp, BtlWazaSickEx exCode 
       }
     }
   }
-  // 通常コード時は罹患していないポケ系状態異常を指定されたらNULLを返す
+  // 通常コード時は罹患していない状態異常を指定されたらNULLを返す
   else{
-    result = exCode;
-
-    if( (poke_sick != POKESICK_NULL)
-    &&  (result < POKESICK_MAX)
-    &&  (result != poke_sick)
-    ){
+    if( BPP_CheckSick(bpp, exCode) ){
+      result = exCode;
+    }else{
       result = WAZASICK_NULL;
     }
   }
 
   return result;
-}
-//----------------------------------------------------------------------------------
-/**
- * [Put]状態異常回復処理の標準メッセージ出力コマンド生成
- *
- * @param   wk
- * @param   bpp
- * @param   sick
- * @param   itemID
- */
-//----------------------------------------------------------------------------------
-static void scPut_CureSickMsg( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, WazaSick sick, u16 itemID )
-{
-  BOOL fUseItem = (itemID != ITEM_DUMMY_DATA);
-  int strID = BTL_SICK_GetDefaultSickCureStrID( sick, fUseItem );
-  if( strID >= 0 )
-  {
-    u8 pokeID = BPP_GetID( bpp );
-    if( fUseItem ){
-      SCQUE_PUT_MSG_SET( wk->que, strID, pokeID, itemID );
-    }else{
-      SCQUE_PUT_MSG_SET( wk->que, strID, pokeID );
-    }
-  }
 }
 //--------------------------------------------------------------------------
 /**
@@ -4908,24 +4883,6 @@ static void scPut_RemoveItem( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp )
   BTL_HANDLER_ITEM_Remove( bpp );
   BPP_RemoveItem( bpp );
   SCQUE_PUT_OP_RemoveItem( wk->que, BPP_GetID(bpp) );
-}
-//----------------------------------------------------------------------------------
-/**
- * [Put] 状態異常メッセージセット
- *
- * @param   wk
- * @param   bpp
- * @param   sickID
- * @param   sickCont
- */
-//----------------------------------------------------------------------------------
-static void scPut_AddSickDefaultMsg( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp, WazaSick sickID, BPP_SICK_CONT sickCont )
-{
-  u8 pokeID = BPP_GetID( bpp );
-  int strID = BTL_SICK_GetDefaultSickStrID( sickID, sickCont );
-  if( strID >= 0 ){
-    SCQUE_PUT_MSG_SET( wk->que, strID, pokeID );
-  }
 }
 //----------------------------------------------------------------------------------
 /**
@@ -7893,14 +7850,22 @@ static u8 scproc_HandEx_cureSick( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HE
       pp_target = BTL_POKECON_GetPokeParam( wk->pokeCon, param->pokeID[i] );
       if( !BPP_IsDead(pp_target) )
       {
-        cured_sick = scPut_CureSick( wk, pp_target, param->sickCode );
-        if( !param->fStdMsgDisable ){
-          scPut_CureSickMsg( wk, pp_target, cured_sick, itemID );
+        BPP_SICK_CONT oldCont;
+        cured_sick = scPut_CureSick( wk, pp_target, param->sickCode, &oldCont );
+        if( cured_sick != WAZASICK_NULL )
+        {
+          if( !param->fStdMsgDisable )
+          {
+            BTL_HANDEX_STR_PARAMS  str;
+            if( BTL_SICK_MakeDefaultCureMsg(cured_sick, oldCont, pp_target, itemID, &str) ){
+              handexSub_putString( wk, &str );
+            }
+          }
+          else if( param->fExMsg ){
+            scPut_Message_Set( wk, pp_target, param->exStrID );
+          }
+          result = 1;
         }
-        else if( param->fExMsg ){
-          scPut_Message_Set( wk, pp_target, param->exStrID );
-        }
-        result = 1;
       }
     }
   }
@@ -7951,7 +7916,9 @@ static void handex_addsick_msg( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* target
   if( param->exStr.type != BTL_STRTYPE_NULL ){
     handexSub_putString( wk, &param->exStr );
   }else{
-    scPut_AddSickDefaultMsg( wk, target, param->sickID, param->sickCont );
+    BTL_HANDEX_STR_PARAMS  str;
+    BTL_SICK_MakeDefaultMsg( param->sickID, param->sickCont, target, &str );
+    handexSub_putString( wk, &param->exStr );
   }
 }
 /**

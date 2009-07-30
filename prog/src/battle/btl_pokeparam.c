@@ -1246,6 +1246,9 @@ void BPP_WazaSick_TurnCheck( BTL_POKEPARAM* bpp, BtlSickTurnCheckFunc callbackFu
     {
       u32 turnMax = BPP_SICCONT_GetTurnMax( bpp->sickCont[sick] );
       BOOL fCure = FALSE;
+      BPP_SICK_CONT oldCont;
+
+      oldCont = bpp->sickCont[ sick ];
 
       // 継続ターン経過チェック
       if( turnMax )
@@ -1280,7 +1283,7 @@ void BPP_WazaSick_TurnCheck( BTL_POKEPARAM* bpp, BtlSickTurnCheckFunc callbackFu
         }
       }
       if( callbackFunc != NULL ){
-        callbackFunc( bpp, sick, fCure, callbackWork );
+        callbackFunc( bpp, sick, oldCont, fCure, callbackWork );
       }
     }
   }

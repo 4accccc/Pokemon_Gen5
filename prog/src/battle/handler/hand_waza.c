@@ -360,6 +360,8 @@ static BTL_EVENT_FACTOR*  ADD_Narikiri( u16 pri, WazaID waza, u8 pokeID );
 static void handler_Narikiri( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static BTL_EVENT_FACTOR*  ADD_TonboGaeri( u16 pri, WazaID waza, u8 pokeID );
 static void handler_TonboGaeri( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static BTL_EVENT_FACTOR*  ADD_KousokuSpin( u16 pri, WazaID waza, u8 pokeID );
+static void handler_KousokuSpin( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static BTL_EVENT_FACTOR*  ADD_BatonTouch( u16 pri, WazaID waza, u8 pokeID );
 static void handler_BatonTouch( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static BTL_EVENT_FACTOR*  ADD_Teleport( u16 pri, WazaID waza, u8 pokeID );
@@ -659,6 +661,7 @@ BOOL  BTL_HANDLER_Waza_Add( const BTL_POKEPARAM* pp, WazaID waza )
     { WAZANO_SUNAZIGOKU,      ADD_Makituku      },
     { WAZANO_MAGUMASUTOOMU,   ADD_Makituku      },
     { WAZANO_UZUSIO,          ADD_Uzusio        },
+    { WAZANO_HUKITOBASI,      ADD_KousokuSpin    },
   };
 
   int i;
@@ -4120,7 +4123,6 @@ static void handler_Fumituke( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowW
     }
   }
 }
-
 //----------------------------------------------------------------------------------
 /**
  * みねうち
@@ -5783,6 +5785,69 @@ static void handler_TonboGaeri( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flo
 
       param = BTL_SVFLOW_HANDLERWORK_Push( flowWk, BTL_HANDEX_CHANGE_MEMBER, pokeID );
       param->pokeID = pokeID;
+    }
+  }
+}
+//----------------------------------------------------------------------------------
+/**
+ * こうそくスピン
+ */
+//----------------------------------------------------------------------------------
+static BTL_EVENT_FACTOR*  ADD_KousokuSpin( u16 pri, WazaID waza, u8 pokeID )
+{
+  static const BtlEventHandlerTable HandlerTable[] = {
+    { BTL_EVENT_WAZA_DMG_AFTER,  handler_KousokuSpin   },         // ダメージ直後
+    { BTL_EVENT_NULL, NULL },
+  };
+  return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_WAZA, waza, pri, pokeID, HandlerTable );
+}
+static void handler_KousokuSpin( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+{
+  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
+  {
+    const BTL_POKEPARAM* bpp = BTL_SVFLOW_RECEPT_GetPokeParam( flowWk, pokeID );
+    BTL_HANDEX_PARAM_CURE_SICK* cure_param;
+    BTL_HANDEX_PARAM_SIDEEFF_REMOVE* side_param;
+    BTL_HANDEX_PARAM_MESSAGE* msg_param;
+    BtlSide  side;
+
+    if( BPP_CheckSick(bpp, WAZASICK_YADORIGI) ){
+      cure_param = BTL_SVFLOW_HANDLERWORK_Push( flowWk, BTL_HANDEX_CURE_SICK, pokeID );
+      cure_param->poke_cnt = 1;
+      cure_param->pokeID[0] = pokeID;
+      cure_param->sickCode = WAZASICK_YADORIGI;
+    }
+    if( BPP_CheckSick(bpp, WAZASICK_BIND) ){
+      cure_param = BTL_SVFLOW_HANDLERWORK_Push( flowWk, BTL_HANDEX_CURE_SICK, pokeID );
+      cure_param->poke_cnt = 1;
+      cure_param->pokeID[0] = pokeID;
+      cure_param->sickCode = WAZASICK_BIND;
+    }
+
+    side = BTL_MAINUTIL_PokeIDtoSide( pokeID );
+    if( BTL_HANDER_SIDE_IsExist(side, BTL_SIDEEFF_MAKIBISI)
+    ){
+      side_param = BTL_SVFLOW_HANDLERWORK_Push( flowWk, BTL_HANDEX_SIDEEFF_REMOVE, pokeID );
+      side_param->side = side;
+      BTL_CALC_BITFLG_Construction( side_param->flags, sizeof(side_param->flags) );
+      BTL_CALC_BITFLG_Set( side_param->flags, BTL_SIDEEFF_MAKIBISI );
+
+      msg_param = BTL_SVFLOW_HANDLERWORK_Push( flowWk, BTL_HANDEX_MESSAGE, pokeID );
+      HANDEX_STR_Setup( &msg_param->str, BTL_STRTYPE_SET, BTL_STRID_SET_KousokuSpin );
+      HANDEX_STR_AddArg( &msg_param->str, pokeID );
+      HANDEX_STR_AddArg( &msg_param->str, WAZANO_MAKIBISI );
+    }
+    if( BTL_HANDER_SIDE_IsExist(side, BTL_SIDEEFF_DOKUBISI)
+    ){
+      side_param = BTL_SVFLOW_HANDLERWORK_Push( flowWk, BTL_HANDEX_SIDEEFF_REMOVE, pokeID );
+      side_param->side = side;
+      BTL_CALC_BITFLG_Construction( side_param->flags, sizeof(side_param->flags) );
+      BTL_CALC_BITFLG_Set( side_param->flags, BTL_SIDEEFF_DOKUBISI );
+
+      msg_param = BTL_SVFLOW_HANDLERWORK_Push( flowWk, BTL_HANDEX_MESSAGE, pokeID );
+      HANDEX_STR_Setup( &msg_param->str, BTL_STRTYPE_SET, BTL_STRID_SET_KousokuSpin );
+      HANDEX_STR_AddArg( &msg_param->str, pokeID );
+      HANDEX_STR_AddArg( &msg_param->str, WAZANO_DOKUBISI );
     }
   }
 }

@@ -271,9 +271,17 @@ static void initGraphicSystems( MAIN_WORK* wk )
       GX_BG_SCRBASE_0x5800, GX_BG_CHARBASE_0x10000, 0x8000,
       GX_BG_EXTPLTT_01, 0, 0, 0, FALSE
     };
+    static const GFL_BG_BGCNT_HEADER bgcntText2 = {
+      0, 0, 0x800, 0,
+      GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_256,
+      GX_BG_SCRBASE_0x4000, GX_BG_CHARBASE_0x18000, 0x8000,
+      GX_BG_EXTPLTT_01, 0, 0, 0, FALSE
+    };
 
     GFL_BG_SetBGControl( GFL_BG_FRAME0_M,   &bgcntText,   GFL_BG_MODE_TEXT );
     GFL_BG_SetBGControl( GFL_BG_FRAME0_S,   &bgcntText,   GFL_BG_MODE_TEXT );
+
+    GFL_BG_SetBGControl( GFL_BG_FRAME1_M,   &bgcntText2,   GFL_BG_MODE_TEXT );
 
     GFL_BG_SetVisible( GFL_BG_FRAME0_M,   VISIBLE_ON );
     GFL_BG_SetVisible( GFL_BG_FRAME1_M,   VISIBLE_OFF );
@@ -877,11 +885,11 @@ static BOOL SUBPROC_GoBattle( GFL_PROC* proc, int* seq, void* pwk, void* mywk )
       {
         para->rule = BTL_RULE_DOUBLE;
       }
-      para->competitor = BTL_COMPETITOR_WILD;
+      para->competitor = BTL_COMPETITOR_TRAINER;
+      para->trID = 2;
 
       para->netHandle = NULL;
       para->commMode = BTL_COMM_NONE;
-      para->commPos = 0;
       para->netID = 0;
 
       para->partyPlayer = PokeParty_AllocPartyWork( HEAPID_CORE );  ///< プレイヤーのパーティ
@@ -891,21 +899,22 @@ static BOOL SUBPROC_GoBattle( GFL_PROC* proc, int* seq, void* pwk, void* mywk )
       para->statusPlayer = SaveData_GetMyStatus( SaveControl_GetPointer() );
 
     #ifdef DEBUG_ONLY_FOR_taya
-      setup_party( HEAPID_CORE, para->partyPlayer, MONSNO_ENEKORORO,  MONSNO_PIKATYUU, MONSNO_GURAADON, MONSNO_KAIOOGA, 0 );
-      setup_party( HEAPID_CORE, para->partyEnemy1, MONSNO_GENGAA,    MONSNO_AABOKKU, MONSNO_YADOKINGU, MONSNO_REKKUUZA, 0 );
+      setup_party( HEAPID_CORE, para->partyPlayer, MONSNO_NOZUPASU,   MONSNO_PIKATYUU, MONSNO_GURAADON, MONSNO_KAIOOGA, 0 );
+      setup_party( HEAPID_CORE, para->partyEnemy1, MONSNO_MANYUURA,  MONSNO_AABOKKU, MONSNO_YADOKINGU, MONSNO_REKKUUZA, 0 );
       {
         POKEMON_PARAM* pp = PokeParty_GetMemberPointer( para->partyEnemy1, 0 );
         PP_SetWazaPos( pp, WAZANO_HANERU, 0 );
         PP_SetWazaPos( pp, WAZANO_NULL, 1 );
         PP_SetWazaPos( pp, WAZANO_NULL, 2 );
         PP_SetWazaPos( pp, WAZANO_NULL, 3 );
+        PP_Put( pp, ID_PARA_item, ITEM_OUZYANOSIRUSI );
 
         pp = PokeParty_GetMemberPointer( para->partyPlayer, 0 );
-        PP_SetWazaPos( pp, WAZANO_MIYABURU,   0 );
-        PP_SetWazaPos( pp, WAZANO_HATAKU,    1 );
-        PP_SetWazaPos( pp, WAZANO_NOMIKOMU,    2 );
-        PP_SetWazaPos( pp, WAZANO_TOKERU,  3 );
-        PP_Put( pp, ID_PARA_item, ITEM_OKKANOMI );
+        PP_SetWazaPos( pp, WAZANO_NAGETUKERU,     0 );
+        PP_SetWazaPos( pp, WAZANO_HANERU,         1 );
+        PP_SetWazaPos( pp, WAZANO_DOKUNOKONA,     2 );
+        PP_SetWazaPos( pp, WAZANO_HONOONOUZU,     3 );
+        PP_Put( pp, ID_PARA_item, ITEM_OUZYANOSIRUSI );
 
         pp = PokeParty_GetMemberPointer( para->partyEnemy1, 1 );
         PP_Put( pp, ID_PARA_speabino,   POKETOKUSEI_HEDOROEKI );
@@ -1125,7 +1134,6 @@ static BOOL SUBPROC_CommBattle( GFL_PROC* proc, int* seq, void* pwk, void* mywk 
       para->netHandle = GFL_NET_HANDLE_GetCurrentHandle();
       para->netID = GFL_NET_GetNetID( para->netHandle );
       para->commMode = BTL_COMM_DS;
-      para->commPos = para->netID;
       para->multiMode = 0;
 
       para->partyPlayer = PokeParty_AllocPartyWork( HEAPID_CORE );  ///< プレイヤーのパーティ
@@ -1134,12 +1142,10 @@ static BOOL SUBPROC_CommBattle( GFL_PROC* proc, int* seq, void* pwk, void* mywk 
       para->partyEnemy2 = NULL;   ///< 2vs2時の２番目敵AI用（不要ならnull）
       para->statusPlayer = SaveData_GetMyStatus( SaveControl_GetPointer() );
 
-      if( para->netID == 0 )
-      {
+      if( para->netID == 0 ){
         setup_party( HEAPID_CORE, para->partyPlayer, MONSNO_PORIGON, MONSNO_PIKATYUU, MONSNO_RIZAADON, 0 );
       }
-      else
-      {
+      else{
         setup_party( HEAPID_CORE, para->partyPlayer, MONSNO_YADOKINGU, MONSNO_METAGUROSU, MONSNO_SUTAAMII, 0 );
       }
 
@@ -1294,7 +1300,6 @@ static BOOL SUBPROC_MultiBattle( GFL_PROC* proc, int* seq, void* pwk, void* mywk
       TAYA_Printf("[DTAYA] Multi Timing Sync Finish! NetHandle=%p\n", para->netHandle);
       para->netID = GFL_NET_GetNetID( para->netHandle );
       para->commMode = BTL_COMM_DS;
-      para->commPos = para->netID;
       para->multiMode = 1;
 
       para->partyPlayer = PokeParty_AllocPartyWork( HEAPID_CORE );  ///< プレイヤーのパーティ

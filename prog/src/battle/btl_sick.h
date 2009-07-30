@@ -15,9 +15,12 @@
 
 extern void BTL_SICK_AddProc( BTL_SVFLOW_WORK* flowWk, BTL_POKEPARAM* bpp, WazaSick sick );
 
-extern void BTL_SICK_TurnCheckCallback( BTL_POKEPARAM* bpp, WazaSick sick, BOOL fCure, void* work );
-extern int BTL_SICK_GetDefaultSickStrID( WazaSick sickID, BPP_SICK_CONT cont );
+extern void BTL_SICK_TurnCheckCallback( BTL_POKEPARAM* bpp, WazaSick sick, BPP_SICK_CONT oldCont, BOOL fCure, void* work );
 extern int BTL_SICK_GetDefaultSickCureStrID( WazaSick sickID, BOOL fUseItem );
+
+extern void BTL_SICK_MakeDefaultMsg( WazaSick sickID, BPP_SICK_CONT cont, const BTL_POKEPARAM* bpp, BTL_HANDEX_STR_PARAMS* str );
+BOOL BTL_SICK_MakeDefaultCureMsg( WazaSick sickID, BPP_SICK_CONT cont, const BTL_POKEPARAM* bpp,
+  u16 itemID, BTL_HANDEX_STR_PARAMS* str );
 
 extern void BTL_SICK_CheckNotEffectByType( BTL_SVFLOW_WORK* flowWk, const BTL_POKEPARAM* defender );
 extern void BTL_SICK_CheckDamageAffinity(  BTL_SVFLOW_WORK* flowWk, const BTL_POKEPARAM* defender );

@@ -293,7 +293,7 @@ extern int BPP_RankEffectUpLimit( const BTL_POKEPARAM* pp, BppValueID rankType )
 extern int BPP_RankEffectDownLimit( const BTL_POKEPARAM* pp, BppValueID rankType );
 
 //-------------------------
-typedef void (*BtlSickTurnCheckFunc)( BTL_POKEPARAM* bpp, WazaSick sick, BOOL fCure, void* work );
+typedef void (*BtlSickTurnCheckFunc)( BTL_POKEPARAM* bpp, WazaSick sick, BPP_SICK_CONT oldCont, BOOL fCure, void* work );
 
 
 extern void BPP_SetWazaSick( BTL_POKEPARAM* pp, WazaSick sick, BPP_SICK_CONT contParam );
