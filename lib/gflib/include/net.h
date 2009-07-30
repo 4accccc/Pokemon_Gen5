@@ -432,7 +432,7 @@ extern void GFL_NET_ChangeoverConnect(NetStepEndCallback callback);
  * @return   none
  */
 //==============================================================================
-extern void GFL_NET_ChangeoverConnect_IRCWIRELESS(NetStepEndCallback callback,NetPreStepEndCallback precallback);
+extern void GFL_NET_ChangeoverConnect_IRCWIRELESS(NetStepEndCallback callback,NetPreStepEndCallback precallback,NetStepEndCallback ircendcallback);
 
 //==============================================================================
 /**

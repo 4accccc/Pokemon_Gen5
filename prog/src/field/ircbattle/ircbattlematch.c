@@ -297,12 +297,21 @@ static void _connectCallBack(void* pWk, int netID)
 }
 
 
-static void _wirelessConnectCallback(void* pWk)
+
+//--------------------------------------------------------------
+/**
+ * @brief   赤外線終了ワイヤレス開始コールバック
+ * @param   pCtl    デバッグワーク
+ * @retval  none
+ */
+//--------------------------------------------------------------
+
+static void _ircConnectEndCallback(void* pWk)
 {
   IRC_BATTLE_MATCH *pWork = pWk;
   int no;
 
-#if 1 //
+  // 画像交換
   {
     ARCHANDLE* p_handle = GFL_ARC_OpenDataHandle( ARCID_IRCBATTLE, pWork->heapID );
 
@@ -322,6 +331,25 @@ static void _wirelessConnectCallback(void* pWk)
     GFL_BG_SetVisible( GFL_BG_FRAME3_S, VISIBLE_ON );
     GFL_ARC_CloseDataHandle( p_handle );
   }
+
+
+
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief   接続完了コールバック
+ * @param   pCtl    デバッグワーク
+ * @retval  none
+ */
+//--------------------------------------------------------------
+
+static void _wirelessConnectCallback(void* pWk)
+{
+  IRC_BATTLE_MATCH *pWork = pWk;
+  int no;
+
+#if 1 //
 
   _CHANGE_STATE(pWork,NULL);
 
@@ -693,7 +721,7 @@ static void _workEnd(IRC_BATTLE_MATCH* pWork)
 static void _ircInitWait(IRC_BATTLE_MATCH* pWork)
 {
   if(GFL_NET_IsInit() == TRUE){	//初期化終了待ち
-    GFL_NET_ChangeoverConnect_IRCWIRELESS(_wirelessConnectCallback,_wirelessPreConnectCallback); // 専用の自動接続
+    GFL_NET_ChangeoverConnect_IRCWIRELESS(_wirelessConnectCallback,_wirelessPreConnectCallback,_ircConnectEndCallback); // 専用の自動接続
     _CHANGE_STATE(pWork,_ircMatchWait);
   }
 }

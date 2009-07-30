@@ -91,6 +91,10 @@ struct _EVENT_IRCBATTLE_WORK{
   BOOL isEndProc;
   int selectType;
 	IRC_COMPATIBLE_PARAM	compatible_param;	//赤外線メニューに渡す情報
+#if PM_DEBUG
+  int debugseq;
+#endif
+
 };
 
 static void _battleParaFree(EVENT_IRCBATTLE_WORK *dbw);
@@ -104,6 +108,14 @@ static GMEVENT_RESULT EVENT_IrcBattleMain(GMEVENT * event, int *  seq, void * wo
 {
   EVENT_IRCBATTLE_WORK * dbw = work;
   GAMESYS_WORK * gsys = dbw->gsys;
+
+#if PM_DEBUG
+  if(dbw->debugseq != *seq){
+    OS_TPrintf("e irc %d\n");
+    dbw->debugseq = *seq;
+  }
+#endif
+
   switch (*seq) {
 	case _IRCBATTLE_START:
     {
@@ -219,7 +231,6 @@ static GMEVENT_RESULT EVENT_IrcBattleMain(GMEVENT * event, int *  seq, void * wo
     }
     NET_PRINT("バトル完了 event_ircbattle\n");
     GFL_OVERLAY_Unload( FS_OVERLAY_ID( battle ) );
-		_battleParaFree(dbw);
 		(*seq) = _CALL_NET_END;
     break;
   case _CALL_IRCBATTLE_FRIEND:  //  ともだちコード交換
@@ -257,6 +268,7 @@ static GMEVENT_RESULT EVENT_IrcBattleMain(GMEVENT * event, int *  seq, void * wo
     }
     break;
   case _FIELD_OPEN:
+    _battleParaFree(dbw);
     OS_TPrintf("_FIELD_OPEN\n");
     GMEVENT_CallEvent(event, EVENT_FieldOpen(gsys));
     (*seq) ++;
