@@ -1029,17 +1029,17 @@
 		<language name="JPN" width="256">RECOVERY</language>
 		<language name="JPN_KANJI" width="256">RECOVERY</language>
 	</row>
-	<row id="msg_seq_se_dummy17">
-		<language name="JPN" width="256">DUMMY17</language>
-		<language name="JPN_KANJI" width="256">DUMMY17</language>
+	<row id="msg_seq_se_tb_start">
+		<language name="JPN" width="256">TB-START</language>
+		<language name="JPN_KANJI" width="256">TB-START</language>
 	</row>
-	<row id="msg_seq_se_dummy18">
-		<language name="JPN" width="256">DUMMY18</language>
-		<language name="JPN_KANJI" width="256">DUMMY18</language>
+	<row id="msg_seq_se_tb_kon">
+		<language name="JPN" width="256">TB-KON</language>
+		<language name="JPN_KANJI" width="256">TB-KON</language>
 	</row>
-	<row id="msg_seq_se_dummy19">
-		<language name="JPN" width="256">DUMMY19</language>
-		<language name="JPN_KANJI" width="256">DUMMY19</language>
+	<row id="msg_seq_se_tb_kara">
+		<language name="JPN" width="256">TB-KARA</language>
+		<language name="JPN_KANJI" width="256">TB-KARA</language>
 	</row>
 	<row id="msg_seq_se_dummy20">
 		<language name="JPN" width="256">DUMMY20</language>
@@ -1172,6 +1172,34 @@
 	<row id="msg_seq_se_w307_04">
 		<language name="JPN" width="256">W307-04</language>
 		<language name="JPN_KANJI" width="256">W307-04</language>
+	</row>
+	<row id="msg_seq_se_w006_01">
+		<language name="JPN" width="256">W006-01</language>
+		<language name="JPN_KANJI" width="256">W006-01</language>
+	</row>
+	<row id="msg_seq_se_w006_02">
+		<language name="JPN" width="256">W006-02</language>
+		<language name="JPN_KANJI" width="256">W006-02</language>
+	</row>
+	<row id="msg_seq_se_w006_03">
+		<language name="JPN" width="256">W006-03</language>
+		<language name="JPN_KANJI" width="256">W006-03</language>
+	</row>
+	<row id="msg_seq_se_w006_04">
+		<language name="JPN" width="256">W006-04</language>
+		<language name="JPN_KANJI" width="256">W006-04</language>
+	</row>
+	<row id="msg_seq_se_w014_01">
+		<language name="JPN" width="256">W014-01</language>
+		<language name="JPN_KANJI" width="256">W014-01</language>
+	</row>
+	<row id="msg_seq_se_w014_02">
+		<language name="JPN" width="256">W014-02</language>
+		<language name="JPN_KANJI" width="256">W014-02</language>
+	</row>
+	<row id="msg_seq_se_w014_03">
+		<language name="JPN" width="256">W014-03</language>
+		<language name="JPN_KANJI" width="256">W014-03</language>
 	</row>
 	<row id="msg_seq_se_pasa1">
 		<language name="JPN" width="256">PASA1</language>
@@ -2552,18 +2580,6 @@
 	<row id="msg_seq_se_reapoke">
 		<language name="JPN" width="256">REAPOKE</language>
 		<language name="JPN_KANJI" width="256">REAPOKE</language>
-	</row>
-	<row id="msg_seq_se_tb_start">
-		<language name="JPN" width="256">TB-START</language>
-		<language name="JPN_KANJI" width="256">TB-START</language>
-	</row>
-	<row id="msg_seq_se_tb_kon">
-		<language name="JPN" width="256">TB-KON</language>
-		<language name="JPN_KANJI" width="256">TB-KON</language>
-	</row>
-	<row id="msg_seq_se_tb_kara">
-		<language name="JPN" width="256">TB-KARA</language>
-		<language name="JPN_KANJI" width="256">TB-KARA</language>
 	</row>
 	<row id="msg_seq_se_egg01">
 		<language name="JPN" width="256">EGG01</language>
