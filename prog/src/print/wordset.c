@@ -672,6 +672,51 @@ void WORDSET_RegisterLocalPlaceName( WORDSET* wordset, u32 bufID, u32 countryID,
 	}
 }
 
+//------------------------------------------------------------------
+/**
+ * 指定バッファにトレーナー種別を登録
+ *
+ * @param   wordset		ワードセットオブジェクト
+ * @param   bufID		何番のバッファに登録するか
+ * @param   trID		トレーナー種別ID
+ *
+ */
+//------------------------------------------------------------------
+void WORDSET_RegisterTrTypeName( WORDSET* wordset, u32 bufID, TrainerID trID )
+{
+	//tr_tool/tr_tool.hをインクルードして
+	//TT_TrainerTypeSexGet(trID)とすることでトレーナーの性別が取得できます
+	GFL_MSGDATA*  man = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_trtype_dat, wordset->heapID );
+  int tr_type = TT_TrainerDataParaGet( trID, ID_TD_tr_type );
+	if( man )
+	{
+		GFL_MSG_GetString( man, tr_type, wordset->tmpBuf );
+		RegisterWord( wordset, bufID, wordset->tmpBuf, NULL );
+		GFL_MSG_Delete( man );
+	}
+}
+
+//------------------------------------------------------------------
+/**
+ * 指定バッファにトレーナー名を登録
+ *
+ * @param   wordset		ワードセットオブジェクト
+ * @param   bufID     何番のバッファに登録するか
+ * @param   trID      トレーナー種別ID
+ *
+ */
+//------------------------------------------------------------------
+void WORDSET_RegisterTrainerName( WORDSET* wordset, u32 bufID, TrainerID trID )
+{
+	GFL_MSGDATA* man = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_trname_dat, wordset->heapID );
+	if( man )
+	{
+		GFL_MSG_GetString( man, trID, wordset->tmpBuf );
+		RegisterWord( wordset, bufID, wordset->tmpBuf, NULL );
+		GFL_MSG_Delete(man);
+	}
+}
+
 
 
 //======================================================================================================
