@@ -64,6 +64,9 @@ pos_4_3:
 	_OBJ_ANIME_WAIT
 
 mama_first_01:
+	_OBJ_ANIME MMDL_ID_PLAYER,anime_t01r0101_mama
+	_OBJ_ANIME_WAIT
+
 	_PLAYER_NAME 0 //プレイヤー名を反映
 	_TALKWIN_OPEN
 	_TALKMSG_ALLPUT msg_t01r0101_mama_01
@@ -87,6 +90,13 @@ mama_end:
 	_TALKWIN_CLOSE
   _END
 
+/**************************************************************/
+/*  T01R0101 主人公、ママを見る */
+/**************************************************************/
+_ANIME_LABEL anime_t01r0101_mama
+	_ANIME_DATA AC_DIR_R,1
+	_ANIME_DATA AC_WAIT_8F,1
+	_ANIME_DATA ACMD_END,0
 
 /**************************************************************/
 /*  T01R0101 MAMA_FIRST1_X3 */
