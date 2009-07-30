@@ -127,6 +127,12 @@ static GFL_PROC_RESULT PokeListProc_Init( GFL_PROC * proc, int * seq , void *pwk
         plData->in_max = 4;
         plData->in_lv = 100;
       }
+      else
+      if( GFL_UI_KEY_GetCont() & PAD_BUTTON_X )
+      {
+        plData->mode = PL_MODE_ITEMUSE;
+        plData->item = 10;
+      }
       GFL_UI_SetTouchOrKey( GFL_APP_KTST_TOUCH );
     }
     

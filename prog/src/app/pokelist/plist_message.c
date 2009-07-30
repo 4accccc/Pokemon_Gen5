@@ -255,6 +255,13 @@ void PLIST_MSG_AddWordSet_PokeName( PLIST_WORK *work , PLIST_MSG_WORK *msgWork ,
   WORDSET_RegisterPokeNickName( msgWork->wordSet , wordSetIdx , pp );
 }
 
+void PLIST_MSG_AddWordSet_ItemName( PLIST_WORK *work , PLIST_MSG_WORK *msgWork , u8 wordSetIdx , u16 itemIdx )
+{
+  GF_ASSERT( msgWork->wordSet != NULL );
+
+  WORDSET_RegisterItemName( msgWork->wordSet , wordSetIdx , itemIdx );
+}
+
 #pragma mark [> util
 //--------------------------------------------------------------
 //	ウィンドウクリア

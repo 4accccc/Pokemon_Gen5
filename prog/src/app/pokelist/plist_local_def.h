@@ -165,12 +165,15 @@ typedef enum
   PSCS_MAX,
 }PLIST_SYS_CHANGEPROC_SEQ;
 
+typedef struct _PLIST_WORK PLIST_WORK;
 typedef struct _PLIST_PLATE_WORK PLIST_PLATE_WORK;
 typedef struct _PLIST_MSG_WORK   PLIST_MSG_WORK;
 typedef struct _PLIST_MENU_WORK  PLIST_MENU_WORK;
 typedef struct _PLIST_DEBUG_WORK PLIST_DEBUG_WORK;
 
-typedef struct
+typedef void (*PSTATUS_CellbackFunc)(PLIST_WORK *work);
+
+struct _PLIST_WORK
 {
   HEAPID heapId;
   GFL_TCB *vBlankTcb;
@@ -203,6 +206,7 @@ typedef struct
   GFL_FONT *fontHandle;
   GFL_FONT *sysFontHandle;
   PRINT_QUE *printQue;
+  PSTATUS_CellbackFunc msgCallBack;  //メッセージ終了時のコールバック
   
   //画面下ウィンドウ管理
   PLIST_MSG_WORK  *msgWork;
@@ -234,5 +238,5 @@ typedef struct
 #if USE_DEBUGWIN_SYSTEM
   PLIST_DEBUG_WORK *debWork;
 #endif
-}PLIST_WORK;
+};
 

@@ -643,6 +643,41 @@ static const BOOL FMenuReturnProc_PokeList(FMENU_EVENT_WORK* mwk)
       return TRUE;
     }
     break;
+  case PL_RET_BAG:      // メニュー「つよさをみる」
+    {
+      FIELD_ITEMMENU_WORK *epp;
+      const VecFx32 *aPos;
+      GAMEDATA* pGameData = GAMESYSTEM_GetGameData(mwk->gmSys);
+      PLAYER_WORK *playerWork = GAMEDATA_GetMyPlayerWork( pGameData );
+      //FLDMAPPER *g3Dmapper = FIELDMAP_GetFieldG3Dmapper(mwk->fieldWork);
+      
+      epp = GFL_HEAP_AllocClearMemory(GFL_HEAPID_APP, sizeof(FIELD_ITEMMENU_WORK));
+      epp->ctrl = SaveControl_GetPointer();
+      epp->gsys = mwk->gmSys;
+      epp->fieldmap = mwk->fieldWork;
+      epp->heapID = GFL_HEAPID_APP;
+      epp->mode = BAG_MODE_FIELD;   //フィールドから呼ばれる
+      //FIXME 前面のアトリビュート取得
+      epp->icwk.NowAttr = 0;
+      epp->icwk.FrontAttr = 0;
+//      aPos = PLAYERWORK_getPosition( playerWork );
+//      epp->icwk.NowAttr = MAPATTR_GetAttribute(g3Dmapper, aPos);
+//      FIELD_PLAYER_GetDirPos((FIELD_PLAYER*)fld_player, FIELD_PLAYER_GetDir(fld_player), &aPos);
+//      epp->icwk.FrontAttr = MAPATTR_GetAttribute(g3Dmapper, aPos);
+      epp->icwk.gsys = mwk->gmSys;
+      //ゾーンＩＤ
+      epp->icwk.zone_id = PLAYERWORK_getZoneID(GAMEDATA_GetMyPlayerWork(pGameData ));
+      //連れ歩き
+      epp->icwk.Companion = FALSE;
+      epp->mystatus = GAMEDATA_GetMyStatus(pGameData);
+
+      if ( PLAYERWORK_GetMoveForm(GAMEDATA_GetMyPlayerWork(pGameData)) == PLAYER_MOVE_FORM_CYCLE ){
+        epp->cycle_flg = TRUE;
+      }
+      
+      FMenu_SetNextSubProc( mwk ,FMENU_APP_BAG , epp );
+      return TRUE;
+    }
   
   default:
     return FALSE;

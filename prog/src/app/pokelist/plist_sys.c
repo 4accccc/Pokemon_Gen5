@@ -154,6 +154,7 @@ static void PLIST_ReleaseResource( PLIST_WORK *work );
 
 //モード別処理系
 static void PLIST_InitMode_Select( PLIST_WORK *work );
+static void PLIST_TermMode_Select_Decide( PLIST_WORK *work );
 static void PLIST_InitMode_Menu( PLIST_WORK *work );
 
 //ポケモン選択
@@ -182,11 +183,15 @@ static void PLIST_ChangeAnimeUpdatePlate( PLIST_WORK *work );
 
 //メッセージ待ち
 static void PLIST_MessageWait( PLIST_WORK *work );
-static void PLIST_MessageWaitInit( PLIST_WORK *work , u32 msgId );
+static void PLIST_MessageWaitInit( PLIST_WORK *work , u32 msgId , PSTATUS_CellbackFunc msgCallBack );
 
 //Proc切り替え
 static void PLIST_ChangeProcInit( PLIST_WORK *work , GFL_PROC_DATA *procData , FSOverlayID overlayId , void *parentWork );
 static void PLIST_ChangeProcUpdate( PLIST_WORK *work );
+
+//メッセージコールバック
+static void PSTATUS_MSGCB_ReturnSelectCommon( PLIST_WORK *work );
+static void PSTATUS_MSGCB_ExitCommon( PLIST_WORK *work );
 
 //デバッグメニュー
 static void PLIST_InitDebug( PLIST_WORK *work );
@@ -855,6 +860,39 @@ static void PLIST_InitMode_Select( PLIST_WORK *work )
   }
   PLIST_SelectPokeInit( work );
 }
+//--------------------------------------------------------------------------
+//  モード別の開放(ポケモン選択
+//--------------------------------------------------------------------------
+static void PLIST_TermMode_Select_Decide( PLIST_WORK *work )
+{
+  switch( work->plData->mode )
+  {
+  case PL_MODE_FIELD:
+  case PL_MODE_BATTLE:
+    PLIST_SelectMenuInit( work );
+    //中で一緒にメニューを開く
+    PLIST_InitMode_Menu( work );
+    
+    break;
+    
+  case PL_MODE_ITEMUSE:
+  case PL_MODE_SHINKA:
+  case PL_MODE_ITEMSET:
+  case PL_MODE_MAILSET:
+    
+    work->plData->ret_mode = PL_RET_BAG;
+    
+    PLIST_MSG_CreateWordSet( work , work->msgWork );
+    PLIST_MSG_AddWordSet_ItemName( work , work->msgWork , 0 , work->plData->item );
+    PLIST_MessageWaitInit( work , mes_pokelist_deb_01 , PSTATUS_MSGCB_ExitCommon );
+    PLIST_MSG_DeleteWordSet( work , work->msgWork );
+    break;
+  
+  default:
+    GF_ASSERT_MSG( NULL , "PLIST mode まだ作ってない！[%d]\n" , work->plData->mode );
+    break;
+  }
+}
 
 //--------------------------------------------------------------------------
 //  モード別の初期化(メニュー
@@ -1037,12 +1075,11 @@ static void PLIST_SelectPokeTerm( PLIST_WORK *work )
     GFL_CLACT_WK_SetBgPri( work->clwkCursor[0] , 2 );
     */
     work->selectPokePara = PokeParty_GetMemberPointer(work->plData->pp, work->pokeCursor );
-
     work->plData->ret_sel = work->pokeCursor;
-    PLIST_SelectMenuInit( work );
-    //中で一緒にメニューを開く
-    PLIST_InitMode_Menu( work );
     PMSND_PlaySystemSE( PLIST_SND_DECIDE );
+    
+    PLIST_TermMode_Select_Decide( work );
+    
     break;
 
   case PSSEL_DECIDE:
@@ -1121,12 +1158,12 @@ static void PLIST_SelectPokeTerm_Battle( PLIST_WORK *work )
 {
   if( work->plData->in_min > work->btlJoinNum )
   {
-    PLIST_MessageWaitInit( work , mes_pokelist_04_60_1 + (work->plData->in_min-1) );
+    PLIST_MessageWaitInit( work , mes_pokelist_04_60_1 + (work->plData->in_min-1) , PSTATUS_MSGCB_ReturnSelectCommon );
   }
   else
   if( work->plData->in_max < work->btlJoinNum )
   {
-    PLIST_MessageWaitInit( work , mes_pokelist_04_62_1 + (work->plData->in_max-1) );
+    PLIST_MessageWaitInit( work , mes_pokelist_04_62_1 + (work->plData->in_max-1) , PSTATUS_MSGCB_ReturnSelectCommon );
   }
   else
   {
@@ -1658,15 +1695,14 @@ static void PLIST_MessageWait( PLIST_WORK *work )
   if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A ||
       GFL_UI_TP_GetTrg() == TRUE )
   {
-    PLIST_MSG_CloseWindow( work , work->msgWork );
-    work->mainSeq = PSMS_SELECT_POKE;
-    PLIST_InitMode_Select( work );
+    work->msgCallBack(work);
   }
 }
 
-static void PLIST_MessageWaitInit( PLIST_WORK *work , u32 msgId )
+static void PLIST_MessageWaitInit( PLIST_WORK *work , u32 msgId , PSTATUS_CellbackFunc msgCallBack )
 {
   work->mainSeq = PSMS_MSG_WAIT;
+  work->msgCallBack = msgCallBack;
   PLIST_MSG_OpenWindow( work , work->msgWork , PMT_MESSAGE );
   PLIST_MSG_DrawMessageNoWait( work , work->msgWork , msgId );
   GFL_CLACT_WK_SetDrawEnable( work->clwkBarIcon[PBT_RETURN] , FALSE );
@@ -1939,6 +1975,19 @@ void PLIST_UTIL_DrawValueStrFuncSys( PLIST_WORK *work , GFL_BMPWIN *bmpWin ,
 
   GFL_STR_DeleteBuffer( srcStr );
   GFL_STR_DeleteBuffer( dstStr );
+}
+
+#pragma mark [>message callback
+static void PSTATUS_MSGCB_ReturnSelectCommon( PLIST_WORK *work )
+{
+  PLIST_MSG_CloseWindow( work , work->msgWork );
+  work->mainSeq = PSMS_SELECT_POKE;
+  PLIST_InitMode_Select( work );
+}
+
+static void PSTATUS_MSGCB_ExitCommon( PLIST_WORK *work )
+{
+  work->mainSeq = PSMS_FADEOUT;
 }
 
 
