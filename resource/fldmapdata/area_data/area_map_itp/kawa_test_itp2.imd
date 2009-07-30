@@ -3,18 +3,18 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="fuchino" host="W00152" date="2009-07-29T23:10:06" source="kawa_test_itp.mb"/>
+	<create user="fuchino" host="W00152" date="2009-07-30T12:36:36" source="kawa_test_itp2.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 </head>
 
 <body>
 
-<original_create user="fuchino" host="W00152" date="2009-07-29T23:10:06" source="kawa_test_itp.mb"/>
+<original_create user="fuchino" host="W00152" date="2009-07-30T12:36:36" source="kawa_test_itp2.mb"/>
 <original_generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 
 <model_info
-	pos_scale="3"
+	pos_scale="0"
 	scaling_rule="standard"
 	vertex_style="direct"
 	magnify="1.000000"
@@ -27,7 +27,7 @@
 	use_primitive_strip="on"
 />
 
-<box_test pos_scale="4" xyz="-1.000000 -0.500000 -4.000000" whd="0.375000 0.000000 5.000000"/>
+<box_test pos_scale="3" xyz="-2.487793 2.487549 -2.487793" whd="4.975342 0.000000 4.975342"/>
 
 <tex_image_array size="4">
 	<tex_image index="0" name="kawa_fuchi.1"
@@ -122,7 +122,7 @@
 		emission="0 0 0"
 		shininess_table_flag="off"
 		tex_image_idx="0" tex_palette_idx="0"
-		tex_tiling="clamp repeat"
+		tex_tiling="clamp clamp"
 		tex_scale="1.000000 1.000000"
 		tex_rotate="0.000000"
 		tex_translate="0.000000 0.000000"
@@ -138,9 +138,9 @@
 	<polygon index="0" name="polygon0"
 		vertex_size="4" polygon_size="1"
 		triangle_size="0" quad_size="1"
-		volume_min="-2.000000 -1.000000 -8.000000"
-		volume_max="-1.250000 -1.000000 2.000000"
-		volume_r="8.306641"
+		volume_min="-0.500000 0.500000 -0.500000"
+		volume_max="0.500000 0.500000 0.500000"
+		volume_r="0.865967"
 		mtx_prim_size="1"
 		nrm_flag="on" clr_flag="off" tex_flag="on"
 	>
@@ -151,13 +151,13 @@
 					<mtx idx="0"/>
 					<tex st="0.000000 16.000000"/>
 					<nrm xyz="0.000000 0.998047 0.000000"/>
-					<pos_s xyz="-1.250000 -1.000000 -8.000000"/>
+					<pos_s xyz="-0.500000 0.500000 0.500000"/>
 					<tex st="8.000000 16.000000"/>
-					<pos_xy xy="-2.000000 -1.000000"/>
-					<tex st="8.000000 144.000000"/>
-					<pos_xz xz="-2.000000 2.000000"/>
-					<tex st="0.000000 144.000000"/>
-					<pos_xy xy="-1.250000 -1.000000"/>
+					<pos_xy xy="0.500000 0.500000"/>
+					<tex st="8.000000 0.000000"/>
+					<pos_xz xz="0.500000 -0.500000"/>
+					<tex st="0.000000 0.000000"/>
+					<pos_xy xy="-0.500000 0.500000"/>
 				</primitive>
 			</primitive_array>
 		</mtx_prim>
@@ -165,23 +165,23 @@
 </polygon_array>
 
 <node_array size="1">
-	<node index="0" name="polySurface1" kind="mesh"
+	<node index="0" name="pCube1" kind="mesh"
 		parent="-1"
 		child="-1"
 		brother_next="-1"
 		brother_prev="-1"
 		draw_mtx="on"
 		billboard="off"
-		scale="1.000000 1.000000 1.000000"
+		scale="39.803955 39.803955 39.803955"
 		rotate="0.000000 0.000000 0.000000"
 		translate="0.000000 0.000000 0.000000"
 		visibility="on"
 		display_size="1"
 		vertex_size="4" polygon_size="1"
 		triangle_size="0" quad_size="1"
-		volume_min="-2.000000 -1.000000 -8.000000"
-		volume_max="-1.250000 -1.000000 2.000000"
-		volume_r="8.306641"
+		volume_min="-0.500000 0.500000 -0.500000"
+		volume_max="0.500000 0.500000 0.500000"
+		volume_r="0.865967"
 	>
 		<display index="0" material="0" polygon="0" priority="0"/>
 	</node>
