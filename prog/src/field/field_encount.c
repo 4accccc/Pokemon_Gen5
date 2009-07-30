@@ -190,7 +190,8 @@ static BOOL enc_SetEncountData(
     int tbl_max );
 
 static u32 enc_GetPercentRand( void );
-static const ENCOUNT_DATA * enc_GetEncountData( FIELD_ENCOUNT *enc );
+static const ENCOUNT_DATA * enc_GetEncountData(
+    FIELD_ENCOUNT *enc, MAPATTR attr );
 
 static void enc_SetSpaStruct(
     FIELD_ENCOUNT *enc,
@@ -202,6 +203,7 @@ static void enc_AddWalkCount( FIELD_ENCOUNT *enc );
 static void enc_ClearWalkCount( FIELD_ENCOUNT *enc );
 
 static const ENCOUNT_DATA dataTestEncountData;
+static const ENCOUNT_DATA dataTestEncountData01;
 
 //======================================================================
 //  フィールドエンカウント
@@ -275,13 +277,13 @@ BOOL FIELD_ENCOUNT_CheckEncount( FIELD_ENCOUNT *enc )
   
   ENCOUNT_LOCATION enc_loc;
   
+  const ENCOUNT_DATA *data;
+
 	ENC_COMMON_DATA enc_data[ENC_MONS_NUM_MAX];
   
   FIELD_PLAYER *fplayer = FIELDMAP_GetFieldPlayer( enc->fwork );
   FLDMAPPER *mapper = FIELDMAP_GetFieldG3Dmapper( enc->fwork );
   
-  const ENCOUNT_DATA *data = enc_GetEncountData( enc );
-
   BATTLE_SETUP_PARAM *setup;
 	ENC_FLD_SPA fld_spa;
   
@@ -291,6 +293,8 @@ BOOL FIELD_ENCOUNT_CheckEncount( FIELD_ENCOUNT *enc )
   if( attr == MAPATTR_ERROR ){
     return( FALSE );
   }
+  
+  data = enc_GetEncountData( enc, attr );
 
   //090713 ROM用 水アトリビュートエンカウント無効
   #if 1 
@@ -438,7 +442,7 @@ static u32 enc_GetAttrPercent( FIELD_ENCOUNT *enc,
 #endif
   
   if( (attr_flag & MAPATTR_FLAGBIT_ENCOUNT) ){ //エンカウントフラグ
-    const ENCOUNT_DATA *data = enc_GetEncountData( enc );
+    const ENCOUNT_DATA *data = enc_GetEncountData( enc, attr );
 
 #ifdef DEBUG_WB_FORCE_GROUND    
     attr_flag = 0; //wb 仮 地上で固定
@@ -1029,8 +1033,15 @@ static u32 enc_GetPercentRand( void )
  * @retval
  */
 //--------------------------------------------------------------
-static const ENCOUNT_DATA * enc_GetEncountData( FIELD_ENCOUNT *enc )
+static const ENCOUNT_DATA * enc_GetEncountData(
+    FIELD_ENCOUNT *enc, MAPATTR attr )
 {
+  MAPATTR_VALUE attr_value = MAPATTR_GetAttrValue( attr );
+
+  if( MAPATTR_VALUE_CheckEncountGrassB(attr_value) ){
+    return( &dataTestEncountData01 );
+  }
+  
   return( &dataTestEncountData );
 }
 
@@ -1778,67 +1789,67 @@ static const ENCOUNT_DATA dataTestEncountData01 =
   30, //エンカウント率
   { //通常エンカウントポケモン
     {
-      5,  //レベル
+      15,  //レベル
       MONSNO_GORIDARUMA,
     },
     {
-      5,  //レベル
+      15,  //レベル
       MONSNO_REIBAAN,
     },
     {
-      5,  //レベル
+      15,  //レベル
       MONSNO_HAKISIIDO,
     },
     {
-      5,  //レベル
+      15,  //レベル
       MONSNO_ONOKKUSU,
     },
     {
-      5,  //レベル
+      15,  //レベル
       MONSNO_KAAMENTO,
     },
     {
-      5,  //レベル
+      15,  //レベル
       MONSNO_KENHOROU,
     },
     {
-      5,  //レベル
+      15,  //レベル
       MONSNO_YUMEBAKURA,
     },
     {
-      5,  //レベル
+      15,  //レベル
       MONSNO_DOREDHIA,
     },
     {
-      5,  //レベル
+      15,  //レベル
       MONSNO_MERIKOTTO,
     },
     {
-      5,  //レベル
+      15,  //レベル
       MONSNO_SIKIZIKA,
     },
     {
-      5,  //レベル
+      15,  //レベル
       MONSNO_ZOROAAKU,
     },
     {
-      5,  //レベル
+      15,  //レベル
       MONSNO_SYAABEA,
     },
     {
-      5,  //レベル
+      15,  //レベル
       MONSNO_TIRATTI,
     },
     {
-      5,  //レベル
+      15,  //レベル
       MONSNO_DOGOUMORI,
     },
     {
-      5,  //レベル
+      15,  //レベル
       MONSNO_PURUKINGU,
     },
     {
-      5,  //レベル
+      15,  //レベル
       MONSNO_DOTYAKKU,
     },
   },

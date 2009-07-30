@@ -83,10 +83,7 @@ MAPATTR_FLAG MAPATTR_GetAttrFlag( const MAPATTR attr )
 //--------------------------------------------------------------
 BOOL MAPATTR_VALUE_CheckLongGrass( const MAPATTR_VALUE val )
 {
-  if( val == 0x06 || val == 0x07 ){
-    return( TRUE );
-  }
-  return( FALSE );
+  return (val == 0x06 || val == 0x07);
 }
 
 //--------------------------------------------------------------
@@ -98,10 +95,7 @@ BOOL MAPATTR_VALUE_CheckLongGrass( const MAPATTR_VALUE val )
 //--------------------------------------------------------------
 BOOL MAPATTR_VALUE_CheckJumpUp( const MAPATTR_VALUE val )
 {
-  if( val == 0x74 ){
-    return( TRUE );
-  }
-  return( FALSE );
+  return (val == 0x74);
 }
 
 //--------------------------------------------------------------
@@ -113,10 +107,7 @@ BOOL MAPATTR_VALUE_CheckJumpUp( const MAPATTR_VALUE val )
 //--------------------------------------------------------------
 BOOL MAPATTR_VALUE_CheckJumpDown( const MAPATTR_VALUE val )
 {
-  if( val == 0x75 ){
-    return( TRUE );
-  }
-  return( FALSE );
+  return (val == 0x75);
 }
 
 //--------------------------------------------------------------
@@ -128,10 +119,7 @@ BOOL MAPATTR_VALUE_CheckJumpDown( const MAPATTR_VALUE val )
 //--------------------------------------------------------------
 BOOL MAPATTR_VALUE_CheckumpLeft( const MAPATTR_VALUE val )
 {
-  if( val == 0x73 ){
-    return( TRUE );
-  }
-  return( FALSE );
+  return (val == 0x73);
 }
 
 //--------------------------------------------------------------
@@ -143,10 +131,7 @@ BOOL MAPATTR_VALUE_CheckumpLeft( const MAPATTR_VALUE val )
 //--------------------------------------------------------------
 BOOL MAPATTR_VALUE_CheckJumpRight( const MAPATTR_VALUE val )
 {
-  if( val == 0x72 ){
-    return( TRUE );
-  }
-  return( FALSE );
+  return (val == 0x72);
 }
 
 //--------------------------------------------------------------
@@ -158,11 +143,9 @@ BOOL MAPATTR_VALUE_CheckJumpRight( const MAPATTR_VALUE val )
 //--------------------------------------------------------------
 BOOL MAPATTR_VALUE_CheckCounter( const MAPATTR_VALUE val )
 {
-  if( val == 0xd4 ){
-    return( TRUE );
-  }
-  return( FALSE );
+  return (val == 0xd4);
 }
+
 //--------------------------------------------------------------
 /**
  * アトリビュートバリュー チェック マット
@@ -317,5 +300,85 @@ BOOL MAPATTR_VALUE_CheckShopShelf2( const MAPATTR_VALUE val )
 BOOL MAPATTR_VALUE_CheckShopShelf3( const MAPATTR_VALUE val )
 {
   return (val == 0xe1);
+}
+
+//--------------------------------------------------------------
+/**
+ * アトリビュートバリュー チェック 草むらエンカウントA1
+ * @param val MAPATTR_VALUE
+ * @retval BOOL FALSE=違う
+ */
+//--------------------------------------------------------------
+BOOL MAPATTR_VALUE_CheckEncountGrassA1( const MAPATTR_VALUE val )
+{
+  return (val == 0x02);
+}
+
+//--------------------------------------------------------------
+/**
+ * アトリビュートバリュー チェック 草むらエンカウントA2
+ * @param val MAPATTR_VALUE
+ * @retval BOOL FALSE=違う
+ */
+//--------------------------------------------------------------
+BOOL MAPATTR_VALUE_CheckEncountGrassA2( const MAPATTR_VALUE val )
+{
+  return (val == 0x03);
+}
+
+//--------------------------------------------------------------
+/**
+ * アトリビュートバリュー チェック 草むらエンカウントB1
+ * @param val MAPATTR_VALUE
+ * @retval BOOL FALSE=違う
+ */
+//--------------------------------------------------------------
+BOOL MAPATTR_VALUE_CheckEncountGrassB1( const MAPATTR_VALUE val )
+{
+  return (val == 0x04);
+}
+
+//--------------------------------------------------------------
+/**
+ * アトリビュートバリュー チェック 草むらエンカウントB2
+ * @param val MAPATTR_VALUE
+ * @retval BOOL FALSE=違う
+ */
+//--------------------------------------------------------------
+BOOL MAPATTR_VALUE_CheckEncountGrassB2( const MAPATTR_VALUE val )
+{
+  return (val == 0x05);
+}
+
+//--------------------------------------------------------------
+/**
+ * アトリビュートバリュー チェック 草むらエンカウントA群(A1,A2)
+ * @param val MAPATTR_VALUE
+ * @retval BOOL FALSE=違う
+ */
+//--------------------------------------------------------------
+BOOL MAPATTR_VALUE_CheckEncountGrassA( const MAPATTR_VALUE val )
+{
+  if( MAPATTR_VALUE_CheckEncountGrassA1(val) == TRUE ||
+      MAPATTR_VALUE_CheckEncountGrassA2(val) == TRUE ){
+    return( TRUE );
+  }
+  return( FALSE );
+}
+
+//--------------------------------------------------------------
+/**
+ * アトリビュートバリュー チェック 草むらエンカウントB群(B1,B2)
+ * @param val MAPATTR_VALUE
+ * @retval BOOL FALSE=違う
+ */
+//--------------------------------------------------------------
+BOOL MAPATTR_VALUE_CheckEncountGrassB( const MAPATTR_VALUE val )
+{
+  if( MAPATTR_VALUE_CheckEncountGrassB1(val) == TRUE ||
+      MAPATTR_VALUE_CheckEncountGrassB2(val) == TRUE ){
+    return( TRUE );
+  }
+  return( FALSE );
 }
 

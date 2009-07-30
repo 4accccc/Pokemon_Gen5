@@ -26,7 +26,7 @@
 //  debug
 //--------------------------------------------------------------
 #ifdef DEBUG_ONLY_FOR_kagaya
-#define DEBUG_REFLECT_CHECK //定義で映り込みチェック
+//#define DEBUG_REFLECT_CHECK //定義で映り込みチェック
 #endif
 
 //--------------------------------------------------------------
@@ -561,11 +561,13 @@ static void MMdl_MapAttrGrassProc_12(
 	}
 	#else
   {
-    MAPATTR_FLAG flag = MAPATTR_GetAttrFlag( now );
+    if( now != MAPATTR_ERROR ){
+      MAPATTR_FLAG flag = MAPATTR_GetAttrFlag( now );
     
-    if( (flag&MAPATTR_FLAGBIT_GRASS) ){
-      FLDEFF_CTRL *fectrl = mmdl_GetFldEffCtrl( fmmdl );
-      FLDEFF_GRASS_SetMMdl( fectrl, fmmdl, TRUE );
+      if( (flag&MAPATTR_FLAGBIT_GRASS) ){
+        FLDEFF_CTRL *fectrl = mmdl_GetFldEffCtrl( fmmdl );
+        FLDEFF_GRASS_SetMMdl( fectrl, fmmdl, TRUE );
+      }
     }
   }
   #endif
@@ -619,17 +621,19 @@ static void MMdl_MapAttrFootMarkProc_1(
 		return;
 	}
 	#else
-  MAPATTR_FLAG flag = MAPATTR_GetAttrFlag( old );
+  if( old != MAPATTR_ERROR ){
+    MAPATTR_FLAG flag = MAPATTR_GetAttrFlag( old );
   
-  if( (flag & MAPATTR_FLAGBIT_FOOTMARK) ){
-    FLDEFF_CTRL *fectrl = mmdl_GetFldEffCtrl( fmmdl );
-    FOOTMARK_TYPE type = FOOTMARK_TYPE_HUMAN;
+    if( (flag & MAPATTR_FLAGBIT_FOOTMARK) ){
+      FLDEFF_CTRL *fectrl = mmdl_GetFldEffCtrl( fmmdl );
+      FOOTMARK_TYPE type = FOOTMARK_TYPE_HUMAN;
     
-    if( prm->footmark_type == MMDL_FOOTMARK_CYCLE ){
-      type = FOOTMARK_TYPE_CYCLE;
-    }
+      if( prm->footmark_type == MMDL_FOOTMARK_CYCLE ){
+        type = FOOTMARK_TYPE_CYCLE;
+      }
 
-    FLDEFF_FOOTMARK_SetMMdl( fmmdl, fectrl, type );
+      FLDEFF_FOOTMARK_SetMMdl( fmmdl, fectrl, type );
+    }
   }
   #endif
 }
@@ -1066,44 +1070,48 @@ static void MMdl_MapAttrReflect_01(
   if( prm->reflect_type == MMDL_REFLECT_NON ){
     return;
   }
-
+  
   if( MMDL_CheckStatusBitReflect(fmmdl) == FALSE )
   {
+    MAPATTR_FLAG flag;
     MAPATTR hit_attr = MAPATTR_ERROR;
-    MAPATTR_FLAG flag = MAPATTR_GetAttrFlag( now );
     
     #ifdef DEBUG_REFLECT_CHECK
-    flag = MAPATTR_FLAGBIT_REFLECT;
+    now = MAPATTR_FLAGBIT_REFLECT << 16;
     #endif
     
-    if( (flag&MAPATTR_FLAGBIT_REFLECT) )
-    {
-      hit_attr = now;
-      #ifdef DEBUG_REFLECT_CHECK
-      hit_attr = 0;
-      #endif
-    }
-    else
-    {
-      MAPATTR next = MMDL_GetMapDirAttr( fmmdl, DIR_DOWN );
-      flag = MAPATTR_GetAttrFlag( next );
-      
+    if( now != MAPATTR_ERROR ){
+      MAPATTR_FLAG flag = MAPATTR_GetAttrFlag( now );
+    
       if( (flag&MAPATTR_FLAGBIT_REFLECT) )
       {
-        hit_attr = next;
+        hit_attr = now;
+        #ifdef DEBUG_REFLECT_CHECK
+        hit_attr = 0;
+        #endif
       }
-    }
+      else
+      {
+        MAPATTR next = MMDL_GetMapDirAttr( fmmdl, DIR_DOWN );
+        flag = MAPATTR_GetAttrFlag( next );
+      
+        if( (flag&MAPATTR_FLAGBIT_REFLECT) )
+        {
+          hit_attr = next;
+        }
+      }
     
-    if( hit_attr != MAPATTR_ERROR )
-    {
-      REFLECT_TYPE type;
-      FLDEFF_CTRL *fectrl = mmdl_GetFldEffCtrl( fmmdl );
-      MMDLSYS *fmmdlsys = (MMDLSYS*)MMDL_GetMMdlSys( fmmdl );
+      if( hit_attr != MAPATTR_ERROR )
+      {
+        REFLECT_TYPE type;
+        FLDEFF_CTRL *fectrl = mmdl_GetFldEffCtrl( fmmdl );
+        MMDLSYS *fmmdlsys = (MMDLSYS*)MMDL_GetMMdlSys( fmmdl );
       
-      MMDL_SetStatusBitReflect( fmmdl, TRUE );
+        MMDL_SetStatusBitReflect( fmmdl, TRUE );
       
-      type = REFLECT_TYPE_POND; //本来はアトリビュート識別してタイプ決定
-      FLDEFF_REFLECT_SetMMdl( fmmdlsys, fmmdl, fectrl, type );
+        type = REFLECT_TYPE_POND; //本来はアトリビュート識別してタイプ決定
+        FLDEFF_REFLECT_SetMMdl( fmmdlsys, fmmdl, fectrl, type );
+      }
     }
   }
   #endif
@@ -1143,13 +1151,21 @@ static void MMdl_MapAttrReflect_2(
   }
 
   {
+    MAPATTR_FLAG flag = MAPATTR_FLAGBIT_NONE;
 		MAPATTR attr = MMDL_GetMapDirAttr( fmmdl, DIR_DOWN );
-    MAPATTR_FLAG flag = MAPATTR_GetAttrFlag( attr );
+    
     #ifdef DEBUG_REFLECT_CHECK
-    flag = MAPATTR_FLAGBIT_REFLECT;
+    attr = MAPATTR_FLAGBIT_REFLECT << 16;
     #endif
-    if( (flag&MAPATTR_FLAGBIT_REFLECT) == 0 ){
-			MMDL_SetStatusBitReflect( fmmdl, FALSE );
+    
+    if( attr == MAPATTR_ERROR ){
+		  MMDL_SetStatusBitReflect( fmmdl, FALSE );
+    }else{
+      flag = MAPATTR_GetAttrFlag( attr );
+
+      if( (flag&MAPATTR_FLAGBIT_REFLECT) == 0 ){
+		    MMDL_SetStatusBitReflect( fmmdl, FALSE );
+      }
     }
   }
   #endif
@@ -1533,15 +1549,6 @@ static BOOL MMdl_HitCheckMoveAttr(
       if( (attr_flag&MAPATTR_FLAGBIT_HITCH) == 0 ){
         return( FALSE );
       }
-      /*
-      #define MAP_ATTR_FLAG_HITCH (1<<0)
-			u16 val = attr & 0xffff;
-			u16 flag = (attr&0xffff0000) >> 16;
-			
-			if( (flag & MAP_ATTR_FLAG_HITCH) == 0 ){ //移動可能フラグ
-				return( FALSE );	//移動可能アトリビュート
-			}
-      */
 		}
 	}
 	#endif

@@ -21,6 +21,7 @@
 //--------------------------------------------------------------
 typedef enum
 {
+  MAPATTR_FLAGBIT_NONE = 0, ///<何も無し
   MAPATTR_FLAGBIT_HITCH = (1<<0), ///<進入不可フラグ ON=不可
   MAPATTR_FLAGBIT_WATER = (1<<1), ///<水アトリビュート ON=水
   MAPATTR_FLAGBIT_ENCOUNT = (1<<2), ///<敵出現フラグ ON=出現
@@ -69,3 +70,10 @@ extern BOOL MAPATTR_VALUE_CheckDustBox( const MAPATTR_VALUE val );
 extern BOOL MAPATTR_VALUE_CheckShopShelf1( const MAPATTR_VALUE val );
 extern BOOL MAPATTR_VALUE_CheckShopShelf2( const MAPATTR_VALUE val );
 extern BOOL MAPATTR_VALUE_CheckShopShelf3( const MAPATTR_VALUE val );
+
+extern BOOL MAPATTR_VALUE_CheckEncountGrassA1( const MAPATTR_VALUE val );
+extern BOOL MAPATTR_VALUE_CheckEncountGrassA2( const MAPATTR_VALUE val );
+extern BOOL MAPATTR_VALUE_CheckEncountGrassB1( const MAPATTR_VALUE val );
+extern BOOL MAPATTR_VALUE_CheckEncountGrassB2( const MAPATTR_VALUE val );
+extern BOOL MAPATTR_VALUE_CheckEncountGrassA( const MAPATTR_VALUE val );
+extern BOOL MAPATTR_VALUE_CheckEncountGrassB( const MAPATTR_VALUE val );

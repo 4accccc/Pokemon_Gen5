@@ -1779,7 +1779,7 @@ static VMCMD_RESULT EvCmdTrainerFlagSet( VMHANDLE * core, void *wk )
   EVENTWORK *ev = GAMEDATA_GetEventWork( gdata );
   u16 flag = SCRCMD_GetVMWorkValue(core,work);  //トレーナーIDを渡す！　ワークナンバーを渡すのはダメ！
   SCRIPT_SetEventFlagTrainer( ev, flag );
-  OS_Printf( "トレーナーフラグセット ID=%d", flag );
+  KAGAYA_Printf( "トレーナーフラグセット ID=%d", flag );
   return VMCMD_RESULT_CONTINUE;
 }
 
@@ -1843,7 +1843,7 @@ static VMCMD_RESULT EvCmdTrainerMessageSet( VMHANDLE *core, void *wk )
   u8 *win_open_flag = SCRIPT_GetMemberWork( sc, ID_EVSCR_WIN_OPEN_FLAG );
   u8 *msg_index      = SCRIPT_GetMemberWork( sc, ID_EVSCR_MSGINDEX );
   
-  OS_Printf( "TR ID =%d, KIND ID =%d\n", tr_id, kind_id );
+  KAGAYA_Printf( "TR ID =%d, KIND ID =%d\n", tr_id, kind_id );
 
   TT_TrainerMessageGet(
       tr_id, kind_id, *msgbuf, SCRCMD_WORK_GetHeapID(work) );

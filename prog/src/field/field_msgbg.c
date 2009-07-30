@@ -1103,7 +1103,7 @@ FLDMENUFUNC * FLDMENUFUNC_AddYesNoMenu(
   const FLDMENUFUNC_LIST menuList[2] = {
     { msgid_yesno_yes, (void*)0 }, { msgid_yesno_no, (void*)1 }, };
   
-  OS_Printf( "fmb HEAPID = %d\n", fmb->heapID );
+  KAGAYA_Printf( "fmb HEAPID = %d\n", fmb->heapID );
 
   msgData = FLDMSGBG_CreateMSGDATA( fmb, NARC_message_yesnomenu_dat );
   listData = FLDMENUFUNC_CreateMakeListData(
@@ -1437,7 +1437,7 @@ static void fldTalkMsgWin_Add(
       30, 4,
       15 );
 #else
-  OS_Printf( "ウィンドウ %d,%d,%d\n", pos->x, pos->y, pos->z );
+  KAGAYA_Printf( "ウィンドウ %d,%d,%d\n", pos->x, pos->y, pos->z );
   
   FLDMSGBG_SetBlendAlpha();
 
@@ -1669,7 +1669,8 @@ static const FLDMENUFUNC_HEADER DATA_MenuHeader_YesNo =
 	0,		//ラベル表示Ｘ座標
 	13,		//項目表示Ｘ座標
 	0,		//カーソル表示Ｘ座標
-	0,		//表示Ｙ座標
+//	0,		//表示Ｙ座標
+	3,		//表示Ｙ座標
 	1,		//表示文字色
 	15,		//表示背景色
 	2,		//表示文字影色
