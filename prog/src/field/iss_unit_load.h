@@ -8,7 +8,7 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////
 #pragma once
 #include <gflib.h>
-#include "field_player.h"
+#include "gamesystem/playerwork.h"
 
 
 // 道路ISSユニット構造体の不完全型の宣言
@@ -26,7 +26,7 @@ typedef struct _ISS_UNIT_LOAD ISS_UNIT_LOAD;
  * @return 道路ISSユニット
  */
 //----------------------------------------------------------------------------
-extern ISS_UNIT_LOAD* ISS_UNIT_LOAD_Create( FIELD_PLAYER* p_player, u16 zone_id, HEAPID heap_id );
+extern ISS_UNIT_LOAD* ISS_UNIT_LOAD_Create( PLAYER_WORK* p_player, u16 zone_id, HEAPID heap_id );
 
 //----------------------------------------------------------------------------
 /**

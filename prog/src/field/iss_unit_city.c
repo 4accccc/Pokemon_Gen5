@@ -7,13 +7,11 @@
  */
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////
 #include "iss_unit_city.h"
-#include "sound/pm_sndsys.h"
+#include "field_sound.h"
+#include "gamesystem/playerwork.h"
+#include "field/field_const.h"		// FIELD_CONST_GRID_FX32_SIZE
 #include "arc/arc_def.h"
 #include "arc/iss_unit.naix"
-#include "arc/fieldmap/zone_id.h"
-#include "field_sound.h"
-#include "field_player.h"
-#include "field/field_const.h"
 
 
 //=====================================================================================================
@@ -57,25 +55,20 @@ static BOOL IsCover( const VOLUME_SPACE* p_vs, int cx, int cy, int cz, int x, in
  * @breif 街ISSユニット構造体
  */
 //=====================================================================================================
-struct _ISS_UNIT_CITY
+typedef struct
 {
-	// 使用するヒープID
-	HEAPID heapID;
+	// 配置場所のゾーンID
+	u16 zoneID;
 
-	// 監視対象プレイヤー
-	FIELD_PLAYER* pPlayer;
-
-	// 起動状態
-	BOOL isActive;
-
-	// 街ISSユニットの座標(単位:グリッド)
+	// 座標(単位:グリッド)
 	int x;
 	int y;
 	int z;
-	
-	// 街ISSユニットの音量空間
+
+	// 音量空間
 	VOLUME_SPACE volumeSpace[ VOLUME_SPACE_NUM ];
-};
+}
+UNIT;
 
 //-----------------------------------------------------------------
 /**
@@ -84,16 +77,46 @@ struct _ISS_UNIT_CITY
 //-----------------------------------------------------------------
 
 // グリッド座標を求める
-static void CalcGrid( const VecFx32* p_vec, int* dest_x, int* dest_y, int* dest_z );
+static void CalcGrid( const VecFx32* p_vec, int* dest_x, int* dest_y, int* dest_z ); 
 
 // 指定位置に該当する音量を取得する
-static int GetVolumeByGrid( const ISS_UNIT_CITY* p_unit, const VecFx32* p_pos );
+static int GetVolume( const UNIT* p_unit, const VecFx32* p_pos );
+
+
+//=====================================================================================================
+/**
+ * @breif 街ISSユニット構造体
+ */
+//=====================================================================================================
+struct _ISS_UNIT_CITY
+{
+	// 使用するヒープID
+	HEAPID heapID;
+
+	// 監視対象プレイヤー
+	PLAYER_WORK* pPlayer;
+
+	// 起動状態
+	BOOL isActive;		// 動作中かどうか
+	u8   activeUnitNo;	// 動作中のユニット番号
+
+	// ISSユニット情報
+	u8    unitNum;		// ユニット数
+	UNIT* unitData;		// ユニット配列
+};
+
+//-----------------------------------------------------------------
+/**
+ * 非公開関数のプロトタイプ宣言
+ */
+//-----------------------------------------------------------------
 
 // リトルエンディアンのu16値取得関数
 static u16 GetU16( u8* data, int pos );
 
-// 指定したゾーンに応じた街ISSユニットにセットアップする
-static void SetupCityISSUnit( ISS_UNIT_CITY* p_unit, u16 zone_id );
+// 全ての街ISSユニットのデータを読み込む
+static void LoadUnitData( ISS_UNIT_CITY* p_sys );
+
 
 
 //=====================================================================================================
@@ -113,59 +136,74 @@ static void SetupCityISSUnit( ISS_UNIT_CITY* p_unit, u16 zone_id );
  * @return 街ISSユニット
  */
 //----------------------------------------------------------------------------
-ISS_UNIT_CITY* ISS_UNIT_CITY_Create( FIELD_PLAYER* p_player, u16 zone_id, HEAPID heap_id )
+ISS_UNIT_CITY* ISS_UNIT_CITY_Create( PLAYER_WORK* p_player, u16 zone_id, HEAPID heap_id )
 {
-	ISS_UNIT_CITY* p_unit;
+	ISS_UNIT_CITY* p_sys;
 
 	// メモリ確保
-	p_unit = (ISS_UNIT_CITY*)GFL_HEAP_AllocMemory( heap_id, sizeof( ISS_UNIT_CITY ) );
+	p_sys = (ISS_UNIT_CITY*)GFL_HEAP_AllocMemory( heap_id, sizeof( ISS_UNIT_CITY ) );
 
-	// 初期設定
-	p_unit->heapID  = heap_id;
-	p_unit->pPlayer = p_player;
-	ISS_UNIT_CITY_ZoneChange( p_unit, zone_id );
+	// 初期化
+	p_sys->heapID       = heap_id;
+	p_sys->pPlayer      = p_player;
+	p_sys->isActive     = FALSE;
+	p_sys->activeUnitNo = 0;
+	p_sys->unitNum      = 0;
+	p_sys->unitData     = NULL;
+
+	// ユニット情報の読み込み
+	LoadUnitData( p_sys );
+
+	// 設定
+	ISS_UNIT_CITY_ZoneChange( p_sys, zone_id );
 	
 	// 作成した街ISSユニットを返す
-	return p_unit;
+	return p_sys;
 }
 
 //----------------------------------------------------------------------------
 /**
  * @brief  街ISSユニットを破棄する
  *
- * @param p_unit 破棄する街ISSユニット 
+ * @param p_sys 破棄する街ISSシステム
  */
 //----------------------------------------------------------------------------
-void ISS_UNIT_CITY_Delete( ISS_UNIT_CITY* p_unit )
+void ISS_UNIT_CITY_Delete( ISS_UNIT_CITY* p_sys )
 {
-	GFL_HEAP_FreeMemory( p_unit );
+	// 各ユニットを破棄
+	GFL_HEAP_FreeMemory( p_sys->unitData );
+
+	// 本体の破棄
+	GFL_HEAP_FreeMemory( p_sys );
 }
 
 //----------------------------------------------------------------------------
 /**
  * @brief プレイヤーを監視し, 音量を調整する
  *
- * @param p_unit 操作対象のユニット
+ * @param p_sys 動作対象の街ISSシステム
  */
 //----------------------------------------------------------------------------
-void ISS_UNIT_CITY_Update( const ISS_UNIT_CITY* p_unit )
+void ISS_UNIT_CITY_Update( ISS_UNIT_CITY* p_sys )
 {
 	int volume;
-	VecFx32 pos;
+	const VecFx32* p_pos = NULL;
 
 	// 起動していなければ, 何もしない
-	if( p_unit->isActive != TRUE ) return;
+	if( p_sys->isActive != TRUE ) return;
 
 	// 音量を調整する
-	FIELD_PLAYER_GetPos( p_unit->pPlayer, &pos );
-	volume = GetVolumeByGrid( p_unit, &pos );
+	p_pos  = PLAYERWORK_getPosition( p_sys->pPlayer );
+	volume = GetVolume( &p_sys->unitData[ p_sys->activeUnitNo ], p_pos );
 	FIELD_SOUND_ChangeBGMActionVolume( volume );
 
 	// DEBUG: デバッグ出力
-	if( p_unit->isActive )
+	if( p_sys->isActive )
 	{
+		UNIT* p_unit = &p_sys->unitData[ p_sys->activeUnitNo ];
 		OBATA_Printf( "---------------------\n" );
 		OBATA_Printf( "City ISS Unit is active\n" );
+		OBATA_Printf( "active unit no = %d\n", p_sys->activeUnitNo );
 		OBATA_Printf( "volume = %d\n", volume );
 		OBATA_Printf( "x, y, z = %d, %d, %d\n", p_unit->x, p_unit->y, p_unit->z );
 	}
@@ -176,14 +214,38 @@ void ISS_UNIT_CITY_Update( const ISS_UNIT_CITY* p_unit )
 /**
  * @brief ゾーン切り替えを通知する
  *
- * @param p_unit       通知対象の街ISSユニット
+ * @param p_sys        通知対象の街ISSシステム
  * @param next_zone_id 新しいゾーンID
  */
 //---------------------------------------------------------------------------
-void ISS_UNIT_CITY_ZoneChange( ISS_UNIT_CITY* p_unit, u16 next_zone_id )
+void ISS_UNIT_CITY_ZoneChange( ISS_UNIT_CITY* p_sys, u16 next_zone_id )
 {
-	// アーカイブからデータを読み直す
-	SetupCityISSUnit( p_unit, next_zone_id );
+	int i;
+
+	// DEBUG:
+	{
+		int i;
+		OBATA_Printf( "next zone id = %d\n", next_zone_id );
+		for( i=0; i<p_sys->unitNum; i++ )
+		{
+			OBATA_Printf( "zone if of unit[%d] = %d\n", i, p_sys->unitData[i].zoneID );
+		}
+	}
+	
+	// 新しいゾーンIDを持つユニットを探す
+	for( i=0; i<p_sys->unitNum; i++ )
+	{
+		// 発見 ==> システム起動
+		if( p_sys->unitData[i].zoneID == next_zone_id )
+		{
+			p_sys->isActive     = TRUE;
+			p_sys->activeUnitNo = i;
+			return;
+		}
+	}
+
+	// 指定ゾーンIDにISSユニットが存在しない場合 ==> システム停止
+	p_sys->isActive = FALSE;
 }
 
 
@@ -274,7 +336,7 @@ static void CalcGrid( const VecFx32* p_vec, int* dest_x, int* dest_y, int* dest_
 	*dest_x = (int)( ( FX_Div( p_vec->x, FIELD_CONST_GRID_FX32_SIZE) & FX32_INT_MASK ) >> FX32_SHIFT );
 	*dest_y = (int)( ( FX_Div( p_vec->y, FIELD_CONST_GRID_FX32_SIZE) & FX32_INT_MASK ) >> FX32_SHIFT );
 	*dest_z = (int)( ( FX_Div( p_vec->z, FIELD_CONST_GRID_FX32_SIZE) & FX32_INT_MASK ) >> FX32_SHIFT );
-}
+} 
 
 //---------------------------------------------------------------------------- 
 /**
@@ -286,7 +348,7 @@ static void CalcGrid( const VecFx32* p_vec, int* dest_x, int* dest_y, int* dest_
  * @return 指定した主人公座標における音量[0, 127]
  */
 //---------------------------------------------------------------------------- 
-static int GetVolumeByGrid( const ISS_UNIT_CITY* p_unit, const VecFx32* p_pos )
+static int GetVolume( const UNIT* p_unit, const VecFx32* p_pos )
 {
 	int i;
 	int volume = 0;
@@ -303,12 +365,12 @@ static int GetVolumeByGrid( const ISS_UNIT_CITY* p_unit, const VecFx32* p_pos )
 			break;
 		}
 
+		// 主人公が属する, 最も小さい空間に設定された音量を取得する
 		volume = p_unit->volumeSpace[i].volume;
 	}
 
 	return volume;
 }
-
 
 //---------------------------------------------------------------------------- 
 /**
@@ -332,71 +394,106 @@ static u16 GetU16( u8* data, int pos )
 
 //---------------------------------------------------------------------------- 
 /**
- * @brief 指定したゾーンに応じたユニットにセットアップする
+ * @brief 全ての街ISSユニットデータを読み込む
  *
- * @param p_unit  データを設定するユニット
+ * @param p_sys   データを設定する街ISSシステム
  * @param zone_id ゾーンID
- */
+ *
+ * [バイナリ・データ・フォーマット]
+ * 
+ * [0] ユニット数
+ * 
+ * [1] ユニットのゾーンID
+ * [2] 
+ * [3] ユニットデータへの, 先頭からのオフセット
+ * [4] 
+ * 
+ * [1]-[4]がユニット数だけ存在
+ *
+ * [x+ 0] ゾーンID 
+ * [x+ 1] 
+ * [x+ 2] x座標 
+ * [x+ 3] 
+ * [x+ 4] y座標 
+ * [x+ 5] 
+ * [x+ 6] z座標 
+ * [x+ 7] 
+ * [x+ 8] 音量1
+ * [x+ 9] 音量2
+ * [x+10] 音量3
+ * [x+11] 音量4
+ * [x+12] x範囲1 
+ * [x+13] x範囲2 
+ * [x+14] x範囲3 
+ * [x+15] x範囲4 
+ * [x+16] y範囲1 
+ * [x+17] y範囲2 
+ * [x+18] y範囲3 
+ * [x+19] y範囲4 
+ * [x+20] z範囲1 
+ * [x+21] z範囲2 
+ * [x+22] z範囲3 
+ * [x+23] z範囲4 
+ *
+ * [x+0]-[x+23]がユニット数だけ存在
+ */   
 //---------------------------------------------------------------------------- 
-static void SetupCityISSUnit( ISS_UNIT_CITY* p_unit, u16 zone_id )
+static void LoadUnitData( ISS_UNIT_CITY* p_sys )
 {
 	int i;
-	int pos;		// 参照位置
+	int pos = 0;	// 参照位置
 	u8* header;		// ヘッダ部の先頭アドレス
-	u16 offset;		// データ部先頭へのオフセット
-	u8 table_size;	// 参照テーブルに登録されているデータの数
+	u8 unit_num;	// ユニット数
+	u16* zone_id;	// 各ユニットのゾーンID
+	u16* offset;	// 各ユニットデータ先頭部へのオフセット
 
-	// アーカイブデータの読み出し
-	header = (u8*)GFL_ARC_UTIL_Load( ARCID_ISS_UNIT, NARC_iss_unit_iss_unit_bin, FALSE, p_unit->heapID );
+	// アーカイブデータの読み込み
+	header = (u8*)GFL_ARC_UTIL_Load( ARCID_ISS_UNIT, NARC_iss_unit_iss_unit_bin, FALSE, p_sys->heapID );
 
-	// 指定ゾーンIDがテーブルに登録されているかどうかを検索
-	offset     = 0;
-	pos        = 0;
-	table_size = header[ pos++ ];	// テーブルサイズを取得
-	for( i=0; i<table_size; i++ )
+	// ユニット数を取得
+	unit_num = header[ pos++ ];	
+
+	// テーブルを作成
+	zone_id = (u16*)GFL_HEAP_AllocMemoryLo( p_sys->heapID, sizeof( u16 ) * unit_num );
+	offset  = (u16*)GFL_HEAP_AllocMemoryLo( p_sys->heapID, sizeof( u16 ) * unit_num );
+
+	// テーブルデータを取得
+	for( i=0; i<unit_num; i++ )
 	{
-		u16 id = GetU16( header, pos );
-		pos += 2;
-		
-		// 指定ゾーンIDを発見したら, オフセットを取得し検索終了
-		if( id == zone_id )
-		{
-			offset = GetU16( header, pos );
-			break;
-		} 
-		pos += 2;
+		zone_id[i] = GetU16( header, pos );		pos += 2;	// ゾーンID
+		offset[i]  = GetU16( header, pos );		pos += 2;	// オフセット
 	}
 	
-	// ユニットのセットアップ
-	if( 0 < offset )	// (指定ゾーンに街ISSユニットが存在する場合)
+	// 全ユニットのセットアップ
+	p_sys->unitNum  = unit_num;
+	p_sys->unitData = (UNIT*)GFL_HEAP_AllocMemory( p_sys->heapID, sizeof( UNIT ) * unit_num );
+	for( i=0; i<unit_num; i++ )
 	{
-		u8* data = header + offset;		// データ部の先頭アドレス
-		p_unit->isActive = TRUE;
-		p_unit->x = GetU16( data, 2 );
-		p_unit->y = GetU16( data, 4 );
-		p_unit->z = GetU16( data, 6 );
-		p_unit->volumeSpace[0].volume = *( (u8*)( data +  8 ) );
-		p_unit->volumeSpace[1].volume = *( (u8*)( data +  9 ) );
-		p_unit->volumeSpace[2].volume = *( (u8*)( data + 10 ) );
-		p_unit->volumeSpace[3].volume = *( (u8*)( data + 11 ) );
-		p_unit->volumeSpace[0].x_range = *( (u8*)( data + 12 ) );
-		p_unit->volumeSpace[1].x_range = *( (u8*)( data + 13 ) );
-		p_unit->volumeSpace[2].x_range = *( (u8*)( data + 14 ) );
-		p_unit->volumeSpace[3].x_range = *( (u8*)( data + 15 ) );
-		p_unit->volumeSpace[0].y_range = *( (u8*)( data + 16 ) );
-		p_unit->volumeSpace[1].y_range = *( (u8*)( data + 17 ) );
-		p_unit->volumeSpace[2].y_range = *( (u8*)( data + 18 ) );
-		p_unit->volumeSpace[3].y_range = *( (u8*)( data + 19 ) );
-		p_unit->volumeSpace[0].z_range = *( (u8*)( data + 20 ) );
-		p_unit->volumeSpace[1].z_range = *( (u8*)( data + 21 ) );
-		p_unit->volumeSpace[2].z_range = *( (u8*)( data + 22 ) );
-		p_unit->volumeSpace[3].z_range = *( (u8*)( data + 23 ) );
-	}
-	else		// (指定ゾーンに街ISSユニットが存在しない場合)
-	{
-		p_unit->isActive = FALSE;
+		u8* data = header + offset[i];				// データ部の先頭アドレス
+		p_sys->unitData[i].zoneID = zone_id[i];
+		p_sys->unitData[i].x = GetU16( data, 2 );
+		p_sys->unitData[i].y = GetU16( data, 4 );
+		p_sys->unitData[i].z = GetU16( data, 6 );
+		p_sys->unitData[i].volumeSpace[0].volume = *( (u8*)( data +  8 ) );
+		p_sys->unitData[i].volumeSpace[1].volume = *( (u8*)( data +  9 ) );
+		p_sys->unitData[i].volumeSpace[2].volume = *( (u8*)( data + 10 ) );
+		p_sys->unitData[i].volumeSpace[3].volume = *( (u8*)( data + 11 ) );
+		p_sys->unitData[i].volumeSpace[0].x_range = *( (u8*)( data + 12 ) );
+		p_sys->unitData[i].volumeSpace[1].x_range = *( (u8*)( data + 13 ) );
+		p_sys->unitData[i].volumeSpace[2].x_range = *( (u8*)( data + 14 ) );
+		p_sys->unitData[i].volumeSpace[3].x_range = *( (u8*)( data + 15 ) );
+		p_sys->unitData[i].volumeSpace[0].y_range = *( (u8*)( data + 16 ) );
+		p_sys->unitData[i].volumeSpace[1].y_range = *( (u8*)( data + 17 ) );
+		p_sys->unitData[i].volumeSpace[2].y_range = *( (u8*)( data + 18 ) );
+		p_sys->unitData[i].volumeSpace[3].y_range = *( (u8*)( data + 19 ) );
+		p_sys->unitData[i].volumeSpace[0].z_range = *( (u8*)( data + 20 ) );
+		p_sys->unitData[i].volumeSpace[1].z_range = *( (u8*)( data + 21 ) );
+		p_sys->unitData[i].volumeSpace[2].z_range = *( (u8*)( data + 22 ) );
+		p_sys->unitData[i].volumeSpace[3].z_range = *( (u8*)( data + 23 ) );
 	}
 	
 	// 後始末
+	GFL_HEAP_FreeMemory( zone_id );
+	GFL_HEAP_FreeMemory( offset );
 	GFL_HEAP_FreeMemory( header );
-}
+} 

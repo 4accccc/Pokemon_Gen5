@@ -8,7 +8,7 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////
 #pragma once
 #include <gflib.h>
-#include "field_player.h"
+#include "gamesystem/playerwork.h"
 
 
 // 街ISSユニット構造体の不完全型の宣言
@@ -26,7 +26,7 @@ typedef struct _ISS_UNIT_CITY ISS_UNIT_CITY;
  * @return 街ISSユニット
  */
 //----------------------------------------------------------------------------
-ISS_UNIT_CITY* ISS_UNIT_CITY_Create( FIELD_PLAYER* p_player, u16 zone_id, HEAPID heap_id );
+ISS_UNIT_CITY* ISS_UNIT_CITY_Create( PLAYER_WORK* p_player, u16 zone_id, HEAPID heap_id );
 
 //----------------------------------------------------------------------------
 /**
@@ -44,7 +44,7 @@ void ISS_UNIT_CITY_Delete( ISS_UNIT_CITY* p_unit );
  * @param p_unit 操作対象のユニット
  */
 //----------------------------------------------------------------------------
-void ISS_UNIT_CITY_Update( const ISS_UNIT_CITY* p_unit );
+void ISS_UNIT_CITY_Update( ISS_UNIT_CITY* p_unit );
 
 //----------------------------------------------------------------------------
 /**

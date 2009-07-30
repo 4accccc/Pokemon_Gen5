@@ -79,7 +79,7 @@
 #endif //USE_DEBUGWIN_SYSTEM
 
 #include "field_place_name.h"
-#include "iss_unit_city.h"		
+#include "iss_unit.h"		
 #include "field_cars.h"
 
 #include "field_sound.h"
@@ -194,7 +194,7 @@ struct _FIELDMAP_WORK
 	FLDMSGBG *fldMsgBG;
 
 	FIELD_PLACE_NAME* placeNameSys;	// 地名表示ウィンドウ
-	ISS_UNIT_CITY* issUnit;			// 街ISSユニット
+	ISS_UNIT* issUnit;			// ISSユニット
 	FIELD_CARS* cars;
 
 	
@@ -541,8 +541,8 @@ static MAINSEQ_RESULT mainSeqFunc_setup(GAMESYS_WORK *gsys, FIELDMAP_WORK *field
     TAMADA_Printf( "Start Dir = %04x\n", pw->direction );
   }
 
-  // 街ISSユニットの作成
-  fieldWork->issUnit = ISS_UNIT_CITY_Create( fieldWork->field_player, fieldWork->map_id, fieldWork->heapID );
+  // ISSユニットの作成
+  fieldWork->issUnit = ISS_UNIT_Create( gdata, fieldWork->map_id, fieldWork->heapID );
 
   // H01の車・船表示システム
   fieldWork->cars = FIELD_CARS_Create( fieldWork->field_player, fieldWork->map_id, fieldWork->heapID );
@@ -715,7 +715,7 @@ static MAINSEQ_RESULT mainSeqFunc_update_top(GAMESYS_WORK *gsys, FIELDMAP_WORK *
 	FLDMAPFUNC_Sys_Main( fieldWork->fldmapFuncSys );
 
     // ISSユニットによる音量調整
-	ISS_UNIT_CITY_Update( fieldWork->issUnit );
+	ISS_UNIT_Update( fieldWork->issUnit );
 
   FLDMSGBG_PrintMain( fieldWork->fldMsgBG );
 
@@ -773,8 +773,8 @@ static MAINSEQ_RESULT mainSeqFunc_free(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldW
   // 地名表示システム破棄
   FIELD_PLACE_NAME_Delete( fieldWork->placeNameSys );
 
-  // 街ISSユニットの破棄
-  ISS_UNIT_CITY_Delete( fieldWork->issUnit );
+  // ISSユニットの破棄
+  ISS_UNIT_Delete( fieldWork->issUnit );
 
   FIELD_CARS_Delete( fieldWork->cars );
 
@@ -1868,7 +1868,7 @@ static void fldmap_ZoneChange( FIELDMAP_WORK *fieldWork )
 	FIELD_PLACE_NAME_ZoneChange( fieldWork->placeNameSys, new_zone_id );
 
 	// ISSユニットにゾーンの切り替えを通達
-	ISS_UNIT_CITY_ZoneChange( fieldWork->issUnit, new_zone_id );
+	ISS_UNIT_ZoneChange( fieldWork->issUnit, new_zone_id );
 
 	//ゾーンID更新
 	lc->zone_id = new_zone_id;
