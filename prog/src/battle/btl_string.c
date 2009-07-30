@@ -110,6 +110,7 @@ static inline u16 get_setPtnStrID( u8 pokeID, u16 originStrID, u8 ptnNum );
 static void ms_std_simple( STRBUF* dst, BtlStrID_STD strID );
 static void ms_encount( STRBUF* dst, BtlStrID_STD strID, const int* args );
 static void ms_encount_double( STRBUF* dst, BtlStrID_STD strID, const int* args );
+static void ms_encount_tr1( STRBUF* dst, BtlStrID_STD strID, const int* args );
 static void ms_put_single( STRBUF* dst, BtlStrID_STD strID, const int* args );
 static void ms_put_double( STRBUF* dst, BtlStrID_STD strID, const int* args );
 static void ms_put_single_npc( STRBUF* dst, BtlStrID_STD strID, const int* args );
@@ -322,6 +323,7 @@ void BTL_STR_MakeStringStdWithArgArray( STRBUF* buf, BtlStrID_STD strID, const i
   }funcTbl[] = {
     { BTL_STRID_STD_Encount_Wild1,    ms_encount },
     { BTL_STRID_STD_Encount_Wild2,    ms_encount_double },
+    { BTL_STRID_STD_Encount_NPC1,     ms_encount_tr1 },
     { BTL_STRID_STD_PutSingle,        ms_put_single },
     { BTL_STRID_STD_PutDouble,        ms_put_double },
     { BTL_STRID_STD_PutSingle_NPC1,   ms_put_single_npc },
@@ -382,6 +384,14 @@ static void ms_encount_double( STRBUF* dst, BtlStrID_STD strID, const int* args 
   GFL_MSG_GetString( SysWork.msg[MSGSRC_STD], strID, SysWork.tmpBuf );
   WORDSET_ExpandStr( SysWork.wset, dst, SysWork.tmpBuf );
 }
+// 野生エンカウントダブル
+static void ms_encount_tr1( STRBUF* dst, BtlStrID_STD strID, const int* args )
+{
+  WORDSET_RegisterTrTypeName( SysWork.wset, 0, args[0] );
+  WORDSET_RegisterTrainerName( SysWork.wset, 1, args[0] );
+  GFL_MSG_GetString( SysWork.msg[MSGSRC_STD], strID, SysWork.tmpBuf );
+  WORDSET_ExpandStr( SysWork.wset, dst, SysWork.tmpBuf );
+}
 // ゆけっ！シングル
 static void ms_put_single( STRBUF* dst, BtlStrID_STD strID, const int* args )
 {
@@ -403,7 +413,7 @@ static void ms_put_single_npc( STRBUF* dst, BtlStrID_STD strID, const int* args 
 {
   WORDSET_RegisterTrTypeName( SysWork.wset, 0, args[0] );
   WORDSET_RegisterTrainerName( SysWork.wset, 1, args[1] );
-  register_PokeNickname( args[2], BUFIDX_POKE_1ST );
+  register_PokeNickname( args[2], 2 );
   GFL_MSG_GetString( SysWork.msg[MSGSRC_STD], strID, SysWork.tmpBuf );
   WORDSET_ExpandStr( SysWork.wset, dst, SysWork.tmpBuf );
 }

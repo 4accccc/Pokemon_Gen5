@@ -672,6 +672,7 @@ static BOOL btlin_trainer_single( int* seq, void* wk_adrs )
     BtlPokePos  pokePos;
     u8          viewPos;
     u8  pokeID;
+    u8  trID;
   }ProcWork;
 
   BTLV_SCU* wk = wk_adrs;
@@ -682,6 +683,7 @@ static BOOL btlin_trainer_single( int* seq, void* wk_adrs )
     {
       TrainerID tr_id = BTL_MAIN_GetTrainerID( wk->mainModule );
       int trtype = TT_TrainerDataParaGet( tr_id, ID_TD_tr_type );
+      subwk->trID = tr_id;
       BTLV_EFFECT_SetTrainer( trtype, BTLV_MCSS_POS_TR_BB, 0, 0, 0 );
     }
     subwk->viewPos = BTLV_MCSS_POS_BB;
@@ -722,7 +724,7 @@ static BOOL btlin_trainer_single( int* seq, void* wk_adrs )
       bbgp.type = BTLV_BALL_GAUGE_TYPE_ENEMY;
 
       BTLV_EFFECT_SetBallGauge( &bbgp );
-      BTL_STR_MakeStringStd( wk->strBuf, BTL_STRID_STD_Encount_NPC1, 1, subwk->pokeID );
+      BTL_STR_MakeStringStd( wk->strBuf, BTL_STRID_STD_Encount_NPC1, 2, subwk->trID, subwk->trID );
       BTLV_SCU_StartMsg( wk, wk->strBuf, BTLV_MSGWAIT_STD );
       (*seq)++;
     }
