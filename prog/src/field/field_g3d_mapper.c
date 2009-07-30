@@ -24,8 +24,6 @@
 
 #include "system/g3d_tool.h"
 
-#include "field_bmanime.h"  //FIELD_BMANIME_DATA‚È‚Ç
-
 #include "field_hit_check.h"
 
 //============================================================================================
