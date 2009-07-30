@@ -856,6 +856,10 @@ static void DUP_FIT_SetupGraphic( FITTING_WORK *work )
     DUP_FIT_SetupBgFunc( &header_sub2 , FIT_FRAME_SUB_CURTAIN_L );
     
     GFL_BG_SetVisible( FIT_FRAME_MAIN_3D , TRUE );
+
+    G2S_SetBlendAlpha( GX_BLEND_PLANEMASK_NONE , 
+                      GX_BLEND_PLANEMASK_BG0|GX_BLEND_PLANEMASK_BG1|GX_BLEND_PLANEMASK_BG2|GX_BLEND_PLANEMASK_BG3 ,
+                      4 , 16 );
   }
 
   { //OBJ‚Ì‰Šú‰»
@@ -3136,6 +3140,7 @@ static void DUP_EFFECT_InitCell( FITTING_WORK *work )
               &cellInitData ,CLSYS_DEFREND_SUB , work->heapId );
     GFL_CLACT_WK_SetDrawEnable( work->clwkEffectUp[i], TRUE );
     GFL_CLACT_WK_SetAutoAnmFlag( work->clwkEffectUp[i], TRUE );
+    GFL_CLACT_WK_SetObjMode( work->clwkEffectUp[i], GX_OAM_MODE_NORMAL );
     work->effUpCnt[i] = 0;
   }
 
@@ -3171,6 +3176,7 @@ static void DUP_EFFECT_UpdateCell( FITTING_WORK *work )
   u8 i;
   for( i=0;i<EFFECT_UP_NUM;i++ )
   {
+    GFL_CLACT_WK_SetObjMode( work->clwkEffectUp[i], GX_OAM_MODE_NORMAL );
     if( work->effUpCnt[i] == 0 )
     {
       GFL_CLACTPOS pos;
