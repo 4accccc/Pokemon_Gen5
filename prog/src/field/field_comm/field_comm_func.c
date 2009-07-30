@@ -69,7 +69,8 @@ typedef struct
   u16 zoneID_;  //ここは通信用のIDとして変換して抑えられる
   u8  talkState_;
   u8  palace_area;  ///<※check　field_commのシステムに乗っかっている現状、ここにパレスのデータも入れる。別に作成した場合、ここから消す
-  u8  padding[2];
+  u8  mission_no;
+  u8  padding;
 }FIELD_COMM_PLAYER_PACKET;
 
 //再送信用パケット情報
@@ -742,7 +743,7 @@ const BOOL FIELD_COMM_FUNC_IsGetUserData( FIELD_COMM_FUNC *commFunc )
 //--------------------------------------------------------------
 // 自分のデータ送信
 //--------------------------------------------------------------
-const BOOL  FIELD_COMM_FUNC_Send_SelfData( FIELD_COMM_FUNC *commFunc, FIELD_COMM_DATA *commData, int palace_area )
+const BOOL  FIELD_COMM_FUNC_Send_SelfData( FIELD_COMM_FUNC *commFunc, FIELD_COMM_DATA *commData, int palace_area, int mission_no )
 {
   PLAYER_WORK *plWork = NULL;
   const VecFx32 *pos;
@@ -764,7 +765,8 @@ const BOOL  FIELD_COMM_FUNC_Send_SelfData( FIELD_COMM_FUNC *commFunc, FIELD_COMM
   commFunc->plPkt_.dir_ = dir >> 14;// / 0x4000;   //送信データを小さくする為、indexに変換
   commFunc->plPkt_.talkState_ = talkState;
   commFunc->plPkt_.palace_area = palace_area;
-
+  commFunc->plPkt_.mission_no = mission_no;
+  
 //  ARI_TPrintf("SEND[ ][%d][%d][%d][%x]\n",commFunc->plPkt_.posX_,commFunc->plPkt_.posY_,commFunc->plPkt_.posZ_,dir);
   {
     GFL_NETHANDLE *selfHandle = GFL_NET_HANDLE_GetCurrentHandle();
@@ -787,11 +789,13 @@ void  FIELD_COMM_FUNC_Post_SelfData( const int netID, const int size , const voi
   COMM_FIELD_SYS_PTR commField = pWork;
   FIELD_COMM_FUNC *commFunc = FIELD_COMM_SYS_GetCommFuncWork(commField);
   FIELD_COMM_DATA *commData = FIELD_COMM_SYS_GetCommDataWork(commField);
-
+  GAME_COMM_SYS_PTR game_comm = FIELD_COMM_SYS_GetGameCommSys(commField);
+  
   //自分のデータも一応セットしておく(同期用に使う
   const FIELD_COMM_PLAYER_PACKET *pkt = (FIELD_COMM_PLAYER_PACKET*)pData;
   VecFx32 pos;
   u16 dir;
+  u8 mission_no;
 
   //パケットデータを戻す
   pos.x = FX32_CONST( pkt->posX_ );
@@ -812,11 +816,18 @@ void  FIELD_COMM_FUNC_Post_SelfData( const int netID, const int size , const voi
     PLAYERWORK_setPalaceArea( plWork, pkt->palace_area );
     FIELD_COMM_DATA_SetCharaData_IsValid( commData, netID , TRUE );
     FIELD_COMM_DATA_SetTalkState( commData, netID , pkt->talkState_ );
-    GameCommStatus_SetPlayerStatus(FIELD_COMM_SYS_GetGameCommSys(commField), netID, pkt->zoneID_, pkt->palace_area);
+    
+    if(netID == 0){
+      mission_no = pkt->mission_no;
+    }
+    else{
+      mission_no = GameCommStatus_GetPlayerStatus_MissionNo(game_comm, GFL_NET_GetNetID(GFL_NET_HANDLE_GetCurrentHandle()));
+    }
+    GameCommStatus_SetPlayerStatus(FIELD_COMM_SYS_GetGameCommSys(commField), 
+      netID, pkt->zoneID_, pkt->palace_area, mission_no);
   }
   
   {//ゾーン違いによるアクター表示・非表示設定
-    GAME_COMM_SYS_PTR game_comm = FIELD_COMM_SYS_GetGameCommSys(commField);
     PLAYER_WORK *my_player = GAMEDATA_GetMyPlayerWork(GameCommSys_GetGameData(game_comm));
     ZONEID my_zone_id = PLAYERWORK_getZoneID( my_player );
     BOOL *vanish_flag = FIELD_COMM_SYS_GetCommActorVanishFlag(commField, netID);

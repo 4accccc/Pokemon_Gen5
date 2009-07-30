@@ -135,7 +135,7 @@ FIELD_COMM_MAIN* FIELD_COMM_MAIN_InitSystem( HEAPID heapID , HEAPID commHeapID, 
   commSys = GFL_HEAP_AllocClearMemory( heapID , sizeof(FIELD_COMM_MAIN) );
   commSys->heapID_ = heapID;
   commSys->game_comm = game_comm;
-  commSys->palace = PALACE_SYS_Alloc(heapID);
+  commSys->palace = PALACE_SYS_Alloc(heapID, game_comm);
   if(GameCommSys_BootCheck(game_comm) == GAME_COMM_NO_INVASION){
     commSys->commField_ = GameCommSys_GetAppWork(game_comm);
     PALACE_SYS_SetArea(commSys->palace, FIELD_COMM_SYS_GetInvalidNetID(commSys->commField_));
@@ -665,11 +665,11 @@ void  FIELD_COMM_MAIN_UpdateCommSystem( FIELD_MAIN_WORK *fieldWork ,
     return;
   }
 
-  if(commSys->commField_ != NULL)
+  if(commSys->commField_ != NULL && FIELD_COMM_SYS_GetExitReq(commSys->commField_) == FALSE)
   {
     u8 i;
 ////    FIELD_COMM_FUNC_UpdateSystem( commSys->commField_ );
-    PALACE_SYS_Update(commSys->palace, GAMESYSTEM_GetMyPlayerWork( gameSys ), pcActor, commSys->commField_, fieldWork);
+    PALACE_SYS_Update(commSys->palace, GAMESYSTEM_GetMyPlayerWork( gameSys ), pcActor, commSys->commField_, fieldWork, commSys->game_comm);
     if( FIELD_COMM_FUNC_GetMemberNum() > 1 && FIELD_COMM_SYS_GetExitReq(commSys->commField_) == FALSE )
     //if( FIELD_COMM_FUNC_GetCommMode( commFunc ) == FIELD_COMM_MODE_CONNECT )
     {
@@ -708,8 +708,12 @@ static void FIELD_COMM_MAIN_UpdateSelfData( FIELD_MAIN_WORK *fieldWork ,
   //dir = FieldMainGrid_GetPlayerDir( fieldWork );
   FIELD_COMM_DATA_SetSelfData_Pos( commData, &zoneID , &pos , &dir );
   if(FIELD_COMM_SYS_GetExitReq(commSys->commField_) == FALSE){
+    int mission_no = 0;
+    if(commSys->palace != NULL){
+      mission_no = PALACE_SYS_GetMissionNo(commSys->palace);
+    }
     FIELD_COMM_FUNC_Send_SelfData( 
-      commFunc, commData, FIELD_COMM_SYS_GetInvalidNetID(commSys->commField_ ));
+      commFunc, commData, FIELD_COMM_SYS_GetInvalidNetID(commSys->commField_ ), mission_no);
   }
 }
 

@@ -25,7 +25,7 @@ typedef struct _COMM_FIELD_SYS{
   u8 invalid_netid;           ///<侵入先ROMのnet_id
   u8 exit_recv;               ///<TRUE:終了フラグ
   u8 recv_profile;            ///<プロフィール受信フラグ(bit管理)
-  u8 padding;
+  u8 mission_no;              ///<ミッション番号
 }COMM_FIELD_SYS;
 
 
