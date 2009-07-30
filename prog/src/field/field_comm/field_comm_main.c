@@ -669,7 +669,7 @@ void  FIELD_COMM_MAIN_UpdateCommSystem( FIELD_MAIN_WORK *fieldWork ,
   {
     u8 i;
 ////    FIELD_COMM_FUNC_UpdateSystem( commSys->commField_ );
-    PALACE_SYS_Update(commSys->palace, GAMESYSTEM_GetMyPlayerWork( gameSys ), pcActor, commSys->commField_);
+    PALACE_SYS_Update(commSys->palace, GAMESYSTEM_GetMyPlayerWork( gameSys ), pcActor, commSys->commField_, fieldWork);
     if( FIELD_COMM_FUNC_GetMemberNum() > 1 && FIELD_COMM_SYS_GetExitReq(commSys->commField_) == FALSE )
     //if( FIELD_COMM_FUNC_GetCommMode( commFunc ) == FIELD_COMM_MODE_CONNECT )
     {

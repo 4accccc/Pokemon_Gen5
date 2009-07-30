@@ -24,7 +24,8 @@ typedef struct _COMM_FIELD_SYS{
   BOOL comm_act_vanish[FIELD_COMM_MEMBER_MAX];   ///<TRUE:非表示
   u8 invalid_netid;           ///<侵入先ROMのnet_id
   u8 exit_recv;               ///<TRUE:終了フラグ
-  u8 padding[2];
+  u8 recv_profile;            ///<プロフィール受信フラグ(bit管理)
+  u8 padding;
 }COMM_FIELD_SYS;
 
 
@@ -144,4 +145,35 @@ void FIELD_COMM_SYS_SetExitReq(COMM_FIELD_SYS_PTR commField)
 BOOL FIELD_COMM_SYS_GetExitReq(COMM_FIELD_SYS_PTR commField)
 {
   return commField->exit_recv;
+}
+
+//==================================================================
+/**
+ * プロフィール受信フラグをセットする
+ *
+ * @param   commField		
+ * @param   net_id		
+ */
+//==================================================================
+void FIELD_COMM_SYS_SetRecvProfile(COMM_FIELD_SYS_PTR commField, int net_id)
+{
+  commField->recv_profile |= 1 << net_id;
+}
+
+//==================================================================
+/**
+ * プロフィール受信フラグを取得する
+ *
+ * @param   commField		
+ * @param   net_id		
+ *
+ * @retval  BOOL		TRUE:受信している
+ */
+//==================================================================
+BOOL FIELD_COMM_SYS_GetRecvProfile(COMM_FIELD_SYS_PTR commField, int net_id)
+{
+  if(commField->recv_profile & (1 << net_id)){
+    return TRUE;
+  }
+  return FALSE;
 }

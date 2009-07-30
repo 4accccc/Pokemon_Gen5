@@ -936,19 +936,23 @@ void  FIELD_COMM_FUNC_Post_SelfProfile( const int netID, const int size , const 
 {
   COMM_FIELD_SYS_PTR commField = pWork;
   FIELD_COMM_DATA *commData = FIELD_COMM_SYS_GetCommDataWork(commField);
+  GAME_COMM_SYS_PTR game_comm = FIELD_COMM_SYS_GetGameCommSys(commField);
   const FIELD_COMM_CHARA_PROFILE *prof = (FIELD_COMM_CHARA_PROFILE*)pData;
   PLAYER_WORK *plWork = FIELD_COMM_DATA_GetCharaData_PlayerWork( commData, netID );
+  MYSTATUS *myst;
+  
   ARI_TPrintf("FieldComm Post SelfProfile[%d:%d]\n",netID,prof->ID_);
 
   plWork->mystatus.id = prof->ID_;
   plWork->mystatus.sex = prof->sex_;
   plWork->mystatus.region_code = prof->regionCode_;
   MyStatus_SetMyName(&plWork->mystatus, prof->name);
-  if(pNetHandle != GFL_NET_HANDLE_GetCurrentHandle()){//gamedataの方にもセット
-    GAME_COMM_SYS_PTR game_comm = FIELD_COMM_SYS_GetGameCommSys(commField);
-    MYSTATUS *myst = GAMEDATA_GetMyStatusPlayer(GameCommSys_GetGameData(game_comm), netID);
-    MyStatus_SetMyName(myst, prof->name);
-  }
+
+  //gamedataの方にもセット
+  myst = GAMEDATA_GetMyStatusPlayer(GameCommSys_GetGameData(game_comm), netID);
+  MyStatus_SetMyName(myst, prof->name);
+  FIELD_COMM_SYS_SetRecvProfile(commField, netID);
+
   FIELD_COMM_DATA_SetCharaData_State( commData, netID , FCCS_EXIST_DATA );
 }
 

@@ -25,4 +25,6 @@ extern void FIELD_COMM_SYS_SetInvalidNetID(COMM_FIELD_SYS_PTR commField, int inv
 extern int FIELD_COMM_SYS_GetInvalidNetID(COMM_FIELD_SYS_PTR commField);
 extern void FIELD_COMM_SYS_SetExitReq(COMM_FIELD_SYS_PTR commField);
 extern BOOL FIELD_COMM_SYS_GetExitReq(COMM_FIELD_SYS_PTR commField);
+extern void FIELD_COMM_SYS_SetRecvProfile(COMM_FIELD_SYS_PTR commField, int net_id);
+extern BOOL FIELD_COMM_SYS_GetRecvProfile(COMM_FIELD_SYS_PTR commField, int net_id);
 

@@ -21,6 +21,7 @@
 #include "system/main.h"
 #include "message.naix"
 #include "msg/msg_invasion.h"
+#include "system/bmp_oam.h"
 
 
 //==============================================================================
@@ -55,10 +56,13 @@ typedef struct _PALACE_SYS_WORK{
   u8 area;          ///<自機が居るエリア番号
   u8 entry_count;   ///<参加したプレイヤー数(プレイヤーが抜けても減らない)
   u8 entry_count_max; ///今までの最大参加人数
-  u8 padding;
+  u8 init_name_draw;
 
   GFL_CLUNIT *clunit;
   PALACE_DEBUG_NUMBER number;
+  BMPOAM_SYS_PTR bmpoam_sys;
+  BMPOAM_ACT_PTR bmpact;
+  GFL_BMP_DATA *bmp;
 }PALACE_SYS_WORK;
 
 
@@ -66,7 +70,8 @@ typedef struct _PALACE_SYS_WORK{
 //  プロトタイプ宣言
 //==============================================================================
 static void PALACE_SYS_PosUpdate(PALACE_SYS_PTR palace, PLAYER_WORK *plwork, FIELD_PLAYER *fldply, COMM_FIELD_SYS_PTR comm_field);
-static void PALACE_DEBUG_UpdateNumber(PALACE_SYS_PTR palace);
+static void PALACE_DEBUG_UpdateNumber(PALACE_SYS_PTR palace, FIELD_MAIN_WORK *fieldWork, COMM_FIELD_SYS_PTR comm_field);
+static void _DEBUG_NameDraw(PALACE_SYS_PTR palace, FIELD_MAIN_WORK *fieldWork, int area_no);
 
 
 //==============================================================================
@@ -87,6 +92,7 @@ PALACE_SYS_PTR PALACE_SYS_Alloc(HEAPID heap_id)
   
   palace = GFL_HEAP_AllocClearMemory(heap_id, sizeof(PALACE_SYS_WORK));
   PALACE_SYS_InitWork(palace);
+
   return palace;
 }
 
@@ -125,7 +131,7 @@ void PALACE_SYS_Free(PALACE_SYS_PTR palace)
  * @param   palace		
  */
 //==================================================================
-void PALACE_SYS_Update(PALACE_SYS_PTR palace, PLAYER_WORK *plwork, FIELD_PLAYER *fldply, COMM_FIELD_SYS_PTR comm_field)
+void PALACE_SYS_Update(PALACE_SYS_PTR palace, PLAYER_WORK *plwork, FIELD_PLAYER *fldply, COMM_FIELD_SYS_PTR comm_field, FIELD_MAIN_WORK *fieldWork)
 {
   int net_num;
   int first_create;
@@ -137,7 +143,7 @@ void PALACE_SYS_Update(PALACE_SYS_PTR palace, PLAYER_WORK *plwork, FIELD_PLAYER 
   //始めて通信確立した時のパレスの初期位置設定
   //※check　ちょっとやっつけっぽい。
   //正しくは通信確立時のコールバック内でパレスのエリア初期位置をセットしてあげるのがよい
-  first_create = PALACE_DEBUG_CreateNumberAct(palace, GFL_HEAP_LOWID(GFL_HEAPID_APP));
+  first_create = PALACE_DEBUG_CreateNumberAct(palace, GFL_HEAP_LOWID(HEAPID_FIELDMAP), fieldWork);
   if(palace->clunit != NULL){
     if(GFL_NET_GetConnectNum() > 1){
       if(palace->area == PALACE_AREA_NO_NULL){
@@ -171,7 +177,7 @@ void PALACE_SYS_Update(PALACE_SYS_PTR palace, PLAYER_WORK *plwork, FIELD_PLAYER 
   //自機の位置確認し、ワープ処理
   PALACE_SYS_PosUpdate(palace, plwork, fldply, comm_field);
 
-  PALACE_DEBUG_UpdateNumber(palace);
+  PALACE_DEBUG_UpdateNumber(palace, fieldWork, comm_field);
 }
 
 //--------------------------------------------------------------
@@ -325,7 +331,7 @@ void PALACE_SYS_FriendPosConvert(PALACE_SYS_PTR palace, int friend_area,
  * @param   heap_id		
  */
 //--------------------------------------------------------------
-BOOL PALACE_DEBUG_CreateNumberAct(PALACE_SYS_PTR palace, HEAPID heap_id)
+BOOL PALACE_DEBUG_CreateNumberAct(PALACE_SYS_PTR palace, HEAPID heap_id, FIELD_MAIN_WORK *fieldWork)
 {
   PALACE_DEBUG_NUMBER *number = &palace->number;
 
@@ -333,8 +339,9 @@ BOOL PALACE_DEBUG_CreateNumberAct(PALACE_SYS_PTR palace, HEAPID heap_id)
     return FALSE;
   }
 
-  palace->clunit = GFL_CLACT_UNIT_Create( 1, 10, heap_id );
-  
+  palace->clunit = GFL_CLACT_UNIT_Create( 8, 10, heap_id );
+  palace->bmpoam_sys = BmpOam_Init(heap_id, palace->clunit);
+
   {//リソース登録
     ARCHANDLE *handle;
 
@@ -361,6 +368,28 @@ BOOL PALACE_DEBUG_CreateNumberAct(PALACE_SYS_PTR palace, HEAPID heap_id)
     GFL_CLACT_WK_SetAutoAnmFlag(number->clact, TRUE); //オートアニメON
     GFL_CLACT_WK_SetDrawEnable(number->clact, FALSE);
   }
+  
+  //名前描画用BMPOAM
+  {
+    BMPOAM_ACT_DATA bmphead = {
+      NULL, 
+      64,
+      8,
+      0,
+      0,
+      0,
+      0,
+      CLSYS_DEFREND_MAIN,
+      CLSYS_DRAW_MAIN,
+    };
+    
+    palace->bmp = GFL_BMP_Create(10, 2, GFL_BMP_16_COLOR, heap_id);
+    bmphead.bmp = palace->bmp;
+    bmphead.pltt_index = number->pltt_id;
+    palace->bmpact = BmpOam_ActorAdd(palace->bmpoam_sys, &bmphead);
+    palace->init_name_draw = TRUE;
+  }
+
   return TRUE;
 }
 
@@ -379,6 +408,11 @@ void PALACE_DEBUG_DeleteNumberAct(PALACE_SYS_PTR palace)
     return;
   }
   
+  BmpOam_ActorDel(palace->bmpact);
+  BmpOam_Exit(palace->bmpoam_sys);
+  palace->bmpoam_sys = NULL;
+  GFL_BMP_Delete(palace->bmp);
+
   GFL_CLACT_WK_Remove(number->clact);
 
   GFL_CLGRP_CGR_Release(number->cgr_id);
@@ -412,16 +446,53 @@ void PALACE_DEBUG_EnableNumberAct(PALACE_SYS_PTR palace, BOOL enable)
  * @param   palace		
  */
 //--------------------------------------------------------------
-static void PALACE_DEBUG_UpdateNumber(PALACE_SYS_PTR palace)
+static void PALACE_DEBUG_UpdateNumber(PALACE_SYS_PTR palace, FIELD_MAIN_WORK *fieldWork, COMM_FIELD_SYS_PTR comm_field)
 {
   PALACE_DEBUG_NUMBER *number = &palace->number;
+  int before_anmseq;
   
+  if(FIELD_COMM_SYS_GetRecvProfile(comm_field, palace->area) == FALSE){
+    return;
+  }
+  if(palace->init_name_draw){
+    _DEBUG_NameDraw(palace, fieldWork, number->anmseq);
+    palace->init_name_draw = 0;
+    return;
+  }
   if(palace->clunit == NULL || palace->area == number->anmseq || palace->area == PALACE_AREA_NO_NULL){
     return;
   }
   
   number->anmseq = palace->area % 4;  //数字アニメは4パターンしか用意していない
   GFL_CLACT_WK_SetAnmSeq( number->clact, number->anmseq );
+
+  _DEBUG_NameDraw(palace, fieldWork, number->anmseq);
+}
+
+//--------------------------------------------------------------
+/**
+ * 名前描画
+ *
+ * @param   palace		
+ * @param   fieldWork		
+ * @param   area_no		
+ */
+//--------------------------------------------------------------
+static void _DEBUG_NameDraw(PALACE_SYS_PTR palace, FIELD_MAIN_WORK *fieldWork, int area_no)
+{
+  FLDMSGBG *msgBG = FIELDMAP_GetFldMsgBG( fieldWork );
+  GFL_FONT *fontHandle = FLDMSGBG_GetFontHandle( msgBG );
+  GAMESYS_WORK *gsys = FIELDMAP_GetGameSysWork( fieldWork );
+  GAMEDATA *gdata = GAMESYSTEM_GetGameData(gsys);
+  MYSTATUS *myst = GAMEDATA_GetMyStatusPlayer(gdata, area_no);
+  STRBUF *namebuf;
+  
+  OS_TPrintf("name draw area_no = %d\n", area_no);
+  namebuf = MyStatus_CreateNameString(myst, HEAPID_FIELDMAP);
+  GFL_BMP_Clear(palace->bmp, 0);
+  PRINTSYS_Print(palace->bmp, 0, 0, namebuf, fontHandle);
+  BmpOam_ActorBmpTrans(palace->bmpact);
+  GFL_STR_DeleteBuffer(namebuf);
 }
 
 //==============================================================================
@@ -507,3 +578,4 @@ static GMEVENT_RESULT DebugPalaceNGWinEvent( GMEVENT *event, int *seq, void *wk 
 
   return( GMEVENT_RES_CONTINUE );
 }
+
