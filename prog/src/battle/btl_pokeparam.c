@@ -145,6 +145,8 @@ struct _BTL_POKEPARAM {
   u8  wazaCnt;
   u8  formNo;
 
+  u16 migawariHP;
+
 //  u32 dmy;
 };
 
@@ -218,6 +220,7 @@ BTL_POKEPARAM*  BTL_POKEPARAM_Create( const POKEMON_PARAM* pp, u8 pokeID, HEAPID
   bpp->prevWazaID = WAZANO_NULL;
   bpp->sameWazaCounter = 0;
   bpp->actionAgility = 0;
+  bpp->migawariHP = 0;
 
   flgbuf_clear( bpp->turnFlag, sizeof(bpp->turnFlag) );
   flgbuf_clear( bpp->contFlag, sizeof(bpp->contFlag) );
@@ -1620,6 +1623,8 @@ void BPP_Clear_ForDead( BTL_POKEPARAM* bpp )
   clearUsedWazaFlag( bpp );
   clearCounter( bpp );
 
+  BPP_MIGAWARI_Delete( bpp );
+
   clearWazaSickWork( bpp, TRUE );
   Effrank_Init( &bpp->varyParam );
 }
@@ -1981,6 +1986,10 @@ void BPP_BatonTouchParam( BTL_POKEPARAM* target, const BTL_POKEPARAM* user )
   }
 }
 
+
+
+
+
 //---------------------------------------------------------------------------------------------
 // bitフラグバッファ処理
 //---------------------------------------------------------------------------------------------
@@ -2060,6 +2069,38 @@ BOOL BPP_HENSIN_Set( BTL_POKEPARAM* bpp, const BTL_POKEPARAM* target )
   }
 
   return FALSE;
+}
+
+
+//---------------------------------------------------------------------------------------------
+// みがわり関連
+//---------------------------------------------------------------------------------------------
+
+void BPP_MIGAWARI_Create( BTL_POKEPARAM* bpp, u16 migawariHP )
+{
+  GF_ASSERT(bpp->migawariHP==0);
+  bpp->migawariHP = migawariHP;
+}
+void BPP_MIGAWARI_Delete( BTL_POKEPARAM* bpp )
+{
+  bpp->migawariHP = 0;
+}
+BOOL BPP_MIGAWARI_IsExist( const BTL_POKEPARAM* bpp )
+{
+  return bpp->migawariHP != 0;
+}
+
+BOOL BPP_MIGAWARI_AddDamage( BTL_POKEPARAM* bpp, u16 damage )
+{
+  GF_ASSERT(bpp->migawariHP==0);
+
+  if( bpp->migawariHP <= damage ){
+    bpp->migawariHP = 0;
+    return TRUE;
+  }else{
+    bpp->migawariHP -= damage;
+    return FALSE;
+  }
 }
 
 

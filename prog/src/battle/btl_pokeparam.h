@@ -352,5 +352,10 @@ extern void BPP_WAZADMGREC_Add( BTL_POKEPARAM* pp, const BPP_WAZADMG_REC* rec );
 extern u8   BPP_WAZADMGREC_GetCount( const BTL_POKEPARAM* pp, u8 turn_ridx );
 extern BOOL BPP_WAZADMGREC_Get( const BTL_POKEPARAM* pp, u8 turn_ridx, u8 rec_ridx, BPP_WAZADMG_REC* dst );
 
+extern void BPP_MIGAWARI_Create( BTL_POKEPARAM* bpp, u16 migawariHP );
+extern void BPP_MIGAWARI_Delete( BTL_POKEPARAM* bpp );
+extern BOOL BPP_MIGAWARI_IsExist( const BTL_POKEPARAM* bpp );
+extern BOOL BPP_MIGAWARI_AddDamage( BTL_POKEPARAM* bpp, u16 damage );
+
 
 #endif

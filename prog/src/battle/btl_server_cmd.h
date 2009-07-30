@@ -63,6 +63,8 @@ typedef enum {
   SC_OP_REMOVE_FLDEFF,      ///< フィールドエフェクト削除
   SC_OP_SET_POKE_COUNTER,   ///< ポケモンカウンタ値セット
   SC_OP_BATONTOUCH,         ///< バトンタッチ
+  SC_OP_MIGAWARI_CREATE,    ///< みがわり作成
+  SC_OP_MIGAWARI_DELETE,    ///< みがわり削除
   SC_ACT_WAZA_EFFECT,
   SC_ACT_WAZA_EFFECT_EX,    ///< 【アクション】ワザエフェクト拡張（溜めターンエフェクトなどに使用）
   SC_ACT_WAZA_DMG,          ///< 【アクション】[ AtClient, DefClient, wazaIdx, Affinity ]
@@ -354,6 +356,14 @@ static inline void SCQUE_PUT_OP_SetPokeCounter( BTL_SERVER_CMD_QUE* que, u8 poke
 static inline void SCQUE_PUT_OP_BatonTouch( BTL_SERVER_CMD_QUE* que, u8 userPokeID, u8 targetPokeID )
 {
   SCQUE_PUT_Common( que, SC_OP_BATONTOUCH, userPokeID, targetPokeID );
+}
+static inline void SCQUE_PUT_OP_MigawariCreate( BTL_SERVER_CMD_QUE* que, u8 pokeID, u16 migawariHP )
+{
+  SCQUE_PUT_Common( que, SC_OP_MIGAWARI_CREATE, pokeID, migawariHP );
+}
+static inline void SCQUE_PUT_OP_MigawariDelete( BTL_SERVER_CMD_QUE* que, u8 pokeID )
+{
+  SCQUE_PUT_Common( que, SC_OP_MIGAWARI_DELETE, pokeID );
 }
 
 
