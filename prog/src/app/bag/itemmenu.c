@@ -111,6 +111,7 @@ static void _itemKindSelectMenu(FIELD_ITEMMENU_WORK* pWork);
 static void _changeState(FIELD_ITEMMENU_WORK* pWork,StateFunc state)
 {
 	pWork->state = state;
+  GFL_UI_KEY_SetRepeatSpeed(8, 15);  //Œ³‚É–ß‚·
 }
 
 //------------------------------------------------------------------------------
@@ -736,6 +737,8 @@ static void _itemKindSelectMenu(FIELD_ITEMMENU_WORK* pWork)
 	u32	ret=0;
   BOOL bChange=FALSE;
 
+ 	GFL_UI_KEY_SetRepeatSpeed(1, 6);
+
 	GFL_BMN_Main( pWork->pButton );
 	if(pWork->state == NULL){
 		return;
@@ -1290,7 +1293,6 @@ static GFL_PROC_RESULT FieldItemMenuProc_Init( GFL_PROC * proc, int * seq, void 
 	pWork->fontHandle = GFL_FONT_Create( ARCID_FONT , NARC_font_large_nftr ,
 																		GFL_FONT_LOADTYPE_FILE , FALSE , pWork->heapID );
 
-	GFL_UI_KEY_SetRepeatSpeed(1, 6);
 	ITEMDISP_upMessageCreate(pWork);
   ITEMDISP_CellResourceCreate(pWork);
   ITEMDISP_InitPocketCell( pWork );
