@@ -44,7 +44,7 @@
 #define APP_TASKMENU_ANIME_E_G (25)
 #define APP_TASKMENU_ANIME_E_B (30)
 //プレートのアニメする色
-#define APP_TASKMENU_ANIME_COL (0x7)
+#define APP_TASKMENU_ANIME_COL (0x6)
 
 #define APP_TASKMENU_SND_CURSOR (SEQ_SE_SELECT1)
 #define APP_TASKMENU_SND_DECIDE (SEQ_SE_DECIDE1)
@@ -97,13 +97,22 @@ static void APP_TASKMENU_UpdateTP( APP_TASKMENU_WORK *work );
 APP_TASKMENU_WORK* APP_TASKMENU_OpenMenu( APP_TASKMENU_INITWORK *initWork )
 {
   APP_TASKMENU_WORK *work = GFL_HEAP_AllocMemory( initWork->heapId , sizeof( APP_TASKMENU_WORK ) );
-  const CLSYS_DRAW_TYPE mainSubType = ( work->initWork.bgFrame <= GFL_BG_FRAME3_M ? CLSYS_DRAW_MAIN : CLSYS_DRAW_SUB );
+  PALTYPE palType;
 
   work->initWork = *initWork;
 
+  if( work->initWork.bgFrame <= GFL_BG_FRAME3_M )
+  {
+    palType = PALTYPE_MAIN_BG;
+  }
+  else
+  {
+    palType = PALTYPE_SUB_BG;
+  }
+
   //プレートの土台の絵
   GFL_ARC_UTIL_TransVramPalette( APP_COMMON_GetArcId() , NARC_app_menu_common_task_menu_NCLR , 
-                    mainSubType , work->initWork.palNo*32 , 32*2 , work->initWork.heapId );
+                    palType , work->initWork.palNo*32 , 32*2 , work->initWork.heapId );
   work->ncgRes = GFL_ARC_UTIL_LoadBGCharacter( APP_COMMON_GetArcId() , NARC_app_menu_common_task_menu_NCGR , FALSE , 
                     &work->ncgData , work->initWork.heapId );
   
@@ -219,7 +228,6 @@ void APP_TASKMENU_UpdateMenu( APP_TASKMENU_WORK *work )
                                         work->initWork.palNo * 32 + APP_TASKMENU_ANIME_COL*2 ,
                                         &work->transCol , 2 );
   }
-  
 }
 
 //--------------------------------------------------------------
