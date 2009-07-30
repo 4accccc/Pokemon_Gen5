@@ -674,6 +674,7 @@
 #define DOOR_ID_C03P06_C03_EXIT15        30
 #define DOOR_ID_C03P06_C03_EXIT16        31
 #define DOOR_ID_C03P06_C03PC0101_EXIT01  32
+#define DOOR_ID_C03P06_C03R0101_EXIT01   33
 
 #endif //ZONE_C03P06_EVD_H
 //このファイルはdata/c03p06.mevから自動生成されました
@@ -859,6 +860,22 @@
 
 
 #endif //ZONE_C03PC0101_EVC_H
+//#include "tmp/c03r0101.h"
+//このファイルはdata/c03r0101.mevから自動生成されました
+#ifndef ZONE_C03R0101_EVD_H
+#define ZONE_C03R0101_EVD_H
+
+#define DOOR_ID_C03R0101_C03P06_EXIT01    0
+#define DOOR_ID_C03R0101_C03P06_EXIT03    1
+#define DOOR_ID_C03R0101_C03P06_EXIT02    2
+
+#endif //ZONE_C03R0101_EVD_H
+//このファイルはdata/c03r0101.mevから自動生成されました
+#ifndef ZONE_C03R0101_EVC_H
+#define ZONE_C03R0101_EVC_H
+
+
+#endif //ZONE_C03R0101_EVC_H
 //#include "tmp/c03r0201.h"
 //このファイルはdata/c03r0201.mevから自動生成されました
 #ifndef ZONE_C03R0201_EVD_H
@@ -5423,13 +5440,19 @@ const CONNECT_DATA DOOR_EVENT_C03P06[] = {
 		EXIT_DIR_RIGHT,//direction
 		EXIT_TYPE_DOOR //type
 	},
+	{//DOOR_ID_C03P06_C03R0101_EXIT01 = 33
+		{400, 0, 336},
+		ZONE_ID_C03R0101, DOOR_ID_C03R0101_C03P06_EXIT02,
+		EXIT_DIR_LEFT,//direction
+		EXIT_TYPE_DOOR //type
+	},
 };
 const int ConnectCount_C03P06 = NELEMS(DOOR_EVENT_C03P06);
 
 static const EVENTDATA_TABLE event_c03p06 = {
 	0,
 	0,
-	33,
+	34,
 	0,
 	(void *)NULL,
 	(void *)NULL,
@@ -5992,6 +6015,39 @@ static const EVENTDATA_TABLE event_c03pc0101 = {
 	(void *)NULL,
 	(void *)NULL,
 	(void *)&DOOR_EVENT_C03PC0101,
+	(void *)NULL,
+};
+#include "../script/c03r0101_def.h"
+const CONNECT_DATA DOOR_EVENT_C03R0101[] = {
+	{//DOOR_ID_C03R0101_C03P06_EXIT01 = 0
+		{80, 0, 128},
+		ZONE_ID_C03P06, DOOR_ID_C03P06_C03R0101_EXIT01,
+		EXIT_DIR_UP,//direction
+		EXIT_TYPE_MAT //type
+	},
+	{//DOOR_ID_C03R0101_C03P06_EXIT03 = 1
+		{112, 0, 128},
+		ZONE_ID_C03P06, DOOR_ID_C03P06_C03R0101_EXIT01,
+		EXIT_DIR_UP,//direction
+		EXIT_TYPE_MAT //type
+	},
+	{//DOOR_ID_C03R0101_C03P06_EXIT02 = 2
+		{96, 0, 128},
+		ZONE_ID_C03P06, DOOR_ID_C03P06_C03R0101_EXIT01,
+		EXIT_DIR_UP,//direction
+		EXIT_TYPE_MAT //type
+	},
+};
+const int ConnectCount_C03R0101 = NELEMS(DOOR_EVENT_C03R0101);
+
+static const EVENTDATA_TABLE event_c03r0101 = {
+	0,
+	0,
+	3,
+	0,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)&DOOR_EVENT_C03R0101,
 	(void *)NULL,
 };
 #include "../script/c03r0201_def.h"
@@ -11313,6 +11369,7 @@ static const EVENTDATA_TOTAL_TABLES TotalTables[] = {
 	{ ZONE_ID_C03P12, &event_c03p12 },
 	{ ZONE_ID_C03P13, &event_c03p13 },
 	{ ZONE_ID_C03PC0101, &event_c03pc0101 },
+	{ ZONE_ID_C03R0101, &event_c03r0101 },
 	{ ZONE_ID_C03R0201, &event_c03r0201 },
 	{ ZONE_ID_C04, &event_c04 },
 	{ ZONE_ID_C05, &event_c05 },
