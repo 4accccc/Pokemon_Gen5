@@ -309,3 +309,19 @@ BOOL CommPlayer_Mine_DataUpdate(COMM_PLAYER_SYS_PTR cps, COMM_PLAYER_PACKAGE *pa
   return FALSE;
 }
 
+//==================================================================
+/**
+ * 指定座標(グリッド)位置にいる通信アクターのIndexを返す
+ *
+ * @param   cps		      
+ * @param   gx		      調べるグリッド座標X
+ * @param   gz		      調べるグリッド座標Z
+ * @param   out_index		Index格納先
+ *
+ * @retval  BOOL		TRUE:通信アクターが指定座標にいる
+ */
+//==================================================================
+BOOL CommPlayer_SearchGridPos(COMM_PLAYER_SYS_PTR cps, s16 gx, s16 gz, u32 *out_index)
+{
+  return FIELD_COMM_ACTOR_CTRL_SearchGridPos(cps->act_ctrl, gx, gz, out_index);
+}

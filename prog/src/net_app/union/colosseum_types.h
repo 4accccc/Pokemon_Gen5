@@ -43,6 +43,8 @@ typedef struct{
 typedef struct{
   u8 stand_position[COLOSSEUM_MEMBER_MAX];  ///<各メンバーがどの立ち位置にいるか
   u8 answer_stand_position[COLOSSEUM_MEMBER_MAX];   ///<立ち位置確認を送ってきたメンバーへの返事
+  u8 battle_ready[COLOSSEUM_MEMBER_MAX];    ///<各メンバーが戦闘準備できたか
+  u8 battle_ready_cancel[COLOSSEUM_MEMBER_MAX];    ///<各メンバーから戦闘準備キャンセル要求
 }COLOSSEUM_PARENT_WORK;
 
 ///自分のローカルデータ
@@ -50,7 +52,7 @@ typedef struct{
   u8 stand_position;          ///<自分の立ち位置
   u8 answer_stand_position;   ///<立ち位置使用許可の返事受信バッファ
   u8 entry_answer;            ///<エントリー結果
-  u8 padding;
+  u8 battle_ready;            ///<TRUE:戦闘準備完了
 }COLOSSEUM_MINE_WORK;
 
 ///受信バッファ
@@ -79,13 +81,16 @@ typedef struct _COLOSSEUM_SYSTEM{
   u8 comm_ready;                            ///<TRUE:基本情報の交換が済んだので自由に通信してOK
   u8 colosseum_leave;                       ///<TRUE:退出処理に入っている
   u8 entry_all_ready;                       ///<TRUE:全員のエントリーが完了
-  u8 padding;
+  u8 all_battle_ready;                      ///<TRUE:全員の戦闘準備完了
   
   COLOSSEUM_PARENT_WORK parentsys;          ///<親データ
   COLOSSEUM_MINE_WORK mine;                 ///<自分データ
   COLOSSEUM_RECV_BUF recvbuf;               ///<受信バッファ
   
   COMM_ENTRY_MENU_PTR entry_menu;           ///<参加募集メニュー管理
+  
+  u8 talk_obj_id;                           ///<話しかけ相手のOBJ_ID
+  u8 padding[3];
 }COLOSSEUM_SYSTEM;
 
 

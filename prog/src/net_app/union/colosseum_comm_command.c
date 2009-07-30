@@ -32,6 +32,10 @@ static void _ColosseumRecv_AnswerStandingPosition(const int netID, const int siz
 static void _ColosseumRecv_Pokeparty(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
 static void _ColosseumRecv_StandingPos(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
 static void _ColosseumRecv_Leave(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
+static void _ColosseumRecv_BattleReady(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
+static void _ColosseumRecv_BattleReadyCancel(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
+static void _ColosseumRecv_BattleReadyCancelOK(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
+static void _ColosseumRecv_AllBattleReady(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
 
 
 //==============================================================================
@@ -47,6 +51,10 @@ const NetRecvFuncTable Colosseum_CommPacketTbl[] = {
   {_ColosseumRecv_AnswerStandingPosition, NULL},    //COLOSSEUM_CMD_ANSWER_STANDPOS
   {_ColosseumRecv_Pokeparty, _RecvHugeBuffer},      //COLOSSEUM_CMD_POKEPARTY
   {_ColosseumRecv_StandingPos, NULL},               //COLOSSEUM_CMD_STANDING_POS
+  {_ColosseumRecv_BattleReady, NULL},               //COLOSSEUM_CMD_BATTLE_READY
+  {_ColosseumRecv_BattleReadyCancel, NULL},         //COLOSSEUM_CMD_BATTLE_READY_CANCEL
+  {_ColosseumRecv_BattleReadyCancelOK, NULL},       //COLOSSEUM_CMD_BATTLE_READY_CANCEL_OK
+  {_ColosseumRecv_AllBattleReady, NULL},            //COLOSSEUM_CMD_ALL_BATTLE_READY
   {_ColosseumRecv_Leave, NULL},                     //COLOSSEUM_CMD_LEAVE
 };
 SDK_COMPILER_ASSERT(NELEMS(Colosseum_CommPacketTbl) == COLOSSEUM_CMD_NUM);
@@ -464,6 +472,174 @@ BOOL ColosseumSend_StandingPos(u8 *standing_pos)
 {
   return GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(), 
     COLOSSEUM_CMD_STANDING_POS, sizeof(u8) * COLOSSEUM_MEMBER_MAX, standing_pos);
+}
+
+//==============================================================================
+//  
+//==============================================================================
+//--------------------------------------------------------------
+/**
+ * @brief   コマンド受信：退出
+ * @param   netID      送ってきたID
+ * @param   size       パケットサイズ
+ * @param   pData      データ
+ * @param   pWork      ワークエリア
+ * @param   pHandle    受け取る側の通信ハンドル
+ * @retval  none  
+ */
+//--------------------------------------------------------------
+static void _ColosseumRecv_BattleReady(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle)
+{
+  UNION_SYSTEM_PTR unisys = pWork;
+  COLOSSEUM_SYSTEM_PTR clsys = unisys->colosseum_sys;
+
+  if(clsys == NULL){
+    GF_ASSERT(0);
+    return; //準備が出来ていないので受け取らない
+  }
+  
+  OS_TPrintf("コロシアム：戦闘準備完了：net_id = %d\n", netID);
+  clsys->parentsys.battle_ready[netID] = TRUE;
+}
+
+//==================================================================
+/**
+ * データ送信：退出
+ * @param   
+ * @retval  BOOL		TRUE:送信成功。　FALSE:失敗
+ */
+//==================================================================
+BOOL ColosseumSend_BattleReady(void)
+{
+  //親機にだけ送信
+  return GFL_NET_SendDataEx(GFL_NET_HANDLE_GetCurrentHandle(), GFL_NET_NO_PARENTMACHINE, 
+    COLOSSEUM_CMD_BATTLE_READY, 0, NULL, TRUE, FALSE, FALSE);
+}
+
+//==============================================================================
+//  
+//==============================================================================
+//--------------------------------------------------------------
+/**
+ * @brief   コマンド受信：戦闘準備キャンセル
+ * @param   netID      送ってきたID
+ * @param   size       パケットサイズ
+ * @param   pData      データ
+ * @param   pWork      ワークエリア
+ * @param   pHandle    受け取る側の通信ハンドル
+ * @retval  none  
+ */
+//--------------------------------------------------------------
+static void _ColosseumRecv_BattleReadyCancel(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle)
+{
+  UNION_SYSTEM_PTR unisys = pWork;
+  COLOSSEUM_SYSTEM_PTR clsys = unisys->colosseum_sys;
+
+  if(clsys == NULL){
+    GF_ASSERT(0);
+    return; //準備が出来ていないので受け取らない
+  }
+  
+  clsys->parentsys.battle_ready_cancel[netID] = TRUE;
+  clsys->parentsys.battle_ready[netID] = FALSE;
+  OS_TPrintf("コロシアム：戦闘準備完了キャンセル受信：net_id = %d\n", netID);
+}
+
+//==================================================================
+/**
+ * データ送信：戦闘準備キャンセル
+ * @param   
+ * @retval  BOOL		TRUE:送信成功。　FALSE:失敗
+ */
+//==================================================================
+BOOL ColosseumSend_BattleReadyCancel(void)
+{
+  //親機にだけ送信
+  return GFL_NET_SendDataEx(GFL_NET_HANDLE_GetCurrentHandle(), GFL_NET_NO_PARENTMACHINE, 
+    COLOSSEUM_CMD_BATTLE_READY_CANCEL, 0, NULL, TRUE, FALSE, FALSE);
+}
+
+//==============================================================================
+//  
+//==============================================================================
+//--------------------------------------------------------------
+/**
+ * @brief   コマンド受信：戦闘準備キャンセルOK
+ * @param   netID      送ってきたID
+ * @param   size       パケットサイズ
+ * @param   pData      データ
+ * @param   pWork      ワークエリア
+ * @param   pHandle    受け取る側の通信ハンドル
+ * @retval  none  
+ */
+//--------------------------------------------------------------
+static void _ColosseumRecv_BattleReadyCancelOK(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle)
+{
+  UNION_SYSTEM_PTR unisys = pWork;
+  COLOSSEUM_SYSTEM_PTR clsys = unisys->colosseum_sys;
+
+  if(clsys == NULL){
+    GF_ASSERT(0);
+    return; //準備が出来ていないので受け取らない
+  }
+  
+  clsys->mine.battle_ready = FALSE;
+  OS_TPrintf("コロシアム：戦闘準備完了キャンセルOK受信：net_id = %d\n", netID);
+}
+
+//==================================================================
+/**
+ * データ送信：戦闘準備キャンセルOK
+ * @param   
+ * @retval  BOOL		TRUE:送信成功。　FALSE:失敗
+ */
+//==================================================================
+BOOL ColosseumSend_BattleReadyCancelOK(int send_netid)
+{
+  //対象の子にだけ送信
+  return GFL_NET_SendDataEx(GFL_NET_HANDLE_GetCurrentHandle(), send_netid, 
+    COLOSSEUM_CMD_BATTLE_READY_CANCEL_OK, 0, NULL, TRUE, FALSE, FALSE);
+}
+
+//==============================================================================
+//  
+//==============================================================================
+//--------------------------------------------------------------
+/**
+ * @brief   コマンド受信：全員戦闘準備完了
+ * @param   netID      送ってきたID
+ * @param   size       パケットサイズ
+ * @param   pData      データ
+ * @param   pWork      ワークエリア
+ * @param   pHandle    受け取る側の通信ハンドル
+ * @retval  none  
+ */
+//--------------------------------------------------------------
+static void _ColosseumRecv_AllBattleReady(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle)
+{
+  UNION_SYSTEM_PTR unisys = pWork;
+  COLOSSEUM_SYSTEM_PTR clsys = unisys->colosseum_sys;
+
+  if(clsys == NULL){
+    GF_ASSERT(0);
+    return; //準備が出来ていないので受け取らない
+  }
+  
+  clsys->all_battle_ready = TRUE;
+  OS_TPrintf("コロシアム：全員戦闘準備完了受信：net_id = %d\n", netID);
+}
+
+//==================================================================
+/**
+ * データ送信：全員戦闘準備完了
+ * @param   
+ * @retval  BOOL		TRUE:送信成功。　FALSE:失敗
+ */
+//==================================================================
+BOOL ColosseumSend_AllBattleReady(void)
+{
+  return GFL_NET_SendDataEx(GFL_NET_HANDLE_GetCurrentHandle(), GFL_NET_SENDID_ALLUSER, 
+    COLOSSEUM_CMD_ALL_BATTLE_READY, 0, NULL, TRUE, FALSE, FALSE);
 }
 
 //==============================================================================

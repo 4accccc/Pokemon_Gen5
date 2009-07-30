@@ -80,8 +80,10 @@ enum{
   UNION_STATUS_COLOSSEUM_STANDPOSITION, ///<コロシアム：立ち位置にたった
   UNION_STATUS_COLOSSEUM_STANDING_BACK, ///<コロシアム：立ち位置から後退
   UNION_STATUS_COLOSSEUM_POKELIST,      ///<コロシアム：ポケモンリスト呼び出し
+  UNION_STATUS_COLOSSEUM_BATTLE_READY_WAIT, ///<コロシアム：全員が戦闘準備できるのを待つ
   UNION_STATUS_COLOSSEUM_BATTLE,        ///<コロシアム：戦闘画面呼び出し
   UNION_STATUS_COLOSSEUM_LEAVE,         ///<コロシアム：退出処理
+  UNION_STATUS_COLOSSEUM_TRAINER_CARD,  ///<コロシアム：トレーナーカード呼び出し
   
   UNION_STATUS_CHAT,        ///<チャット編集中
   
@@ -126,6 +128,9 @@ enum{
   UNION_TIMING_TRAINERCARD_PARAM,       ///<トレーナーカードの情報交換前
   UNION_TIMING_TRAINERCARD_PROC_BEFORE, ///<トレーナーカード画面呼び出し前
   UNION_TIMING_TRAINERCARD_PROC_AFTER,  ///<トレーナーカード画面終了後
+
+  UNION_TIMING_TRADE_PROC_BEFORE,       ///<ポケモン交換画面呼び出し前
+  UNION_TIMING_TRADE_PROC_AFTER,        ///<ポケモン交換画面呼び出し後
   
   UNION_TIMING_COLOSSEUM_PROC_BEFORE,   ///<コロシアム遷移前の同期取り
   UNION_TIMING_COLOSSEUM_MEMBER_ENTRY_AFTER,  ///<コロシアム：メンバー集まった後の同期取り
@@ -143,6 +148,7 @@ enum{
 typedef enum{
   UNION_SUBPROC_ID_NULL,              ///<サブPROC無し
   UNION_SUBPROC_ID_TRAINERCARD,       ///<トレーナーカード
+  UNION_SUBPROC_ID_TRADE,             ///<ポケモン交換
   UNION_SUBPROC_ID_COLOSSEUM_WARP_1VS1_SINGLE_50,    ///<コロシアム遷移
   UNION_SUBPROC_ID_COLOSSEUM_WARP_1VS1_SINGLE_FREE,    ///<コロシアム遷移
   UNION_SUBPROC_ID_COLOSSEUM_WARP_1VS1_SINGLE_STANDARD,    ///<コロシアム遷移
@@ -153,6 +159,7 @@ typedef enum{
   UNION_SUBPROC_ID_UNION_WARP,              ///<ユニオンルーム遷移
   UNION_SUBPROC_ID_POKELIST,                ///<ポケモンリスト呼び出し
   UNION_SUBPROC_ID_BATTLE,                  ///<戦闘遷移
+  UNION_SUBPROC_ID_COLOSSEUM_TRAINERCARD,   ///<コロシアムでのトレーナーカード
   
   UNION_SUBPROC_ID_MAX,
 }UNION_SUBPROC_ID;

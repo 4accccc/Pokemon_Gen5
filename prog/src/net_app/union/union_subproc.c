@@ -25,6 +25,8 @@
 #include "field/event_colosseum_battle.h"
 #include "savedata/sp_ribbon_save.h"
 
+#include "field\ircbattle\ircpokemontrade.h"
+
 
 //==============================================================================
 //  構造体定義
@@ -43,6 +45,7 @@ typedef struct{
 static GMEVENT_RESULT UnionSubProc_GameChangeEvent(GMEVENT * event, int * seq, void * work);
 
 static BOOL SubEvent_TrainerCard(GAMESYS_WORK *gsys, UNION_SYSTEM_PTR unisys, FIELD_MAIN_WORK *fieldWork, void *pwk, GMEVENT * parent_event, GMEVENT **child_event, u8 *seq);
+static BOOL SubEvent_Trade(GAMESYS_WORK *gsys, UNION_SYSTEM_PTR unisys, FIELD_MAIN_WORK *fieldWork, void *pwk, GMEVENT * parent_event, GMEVENT **child_event, u8 *seq);
 static BOOL SubEvent_ColosseumWarp(GAMESYS_WORK *gsys, UNION_SYSTEM_PTR unisys, FIELD_MAIN_WORK *fieldWork, void *pwk, GMEVENT * parent_event, GMEVENT **child_event, u8 *seq);
 static BOOL SubEvent_ColosseumWarpMulti(GAMESYS_WORK *gsys, UNION_SYSTEM_PTR unisys, FIELD_MAIN_WORK *fieldWork, void *pwk, GMEVENT * parent_event, GMEVENT **child_event, u8 *seq);
 static BOOL SubEvent_UnionWarp(GAMESYS_WORK *gsys, UNION_SYSTEM_PTR unisys, FIELD_MAIN_WORK *fieldWork, void *pwk, GMEVENT * parent_event, GMEVENT **child_event, u8 *seq);
@@ -55,6 +58,7 @@ static BOOL SubEvent_Battle(GAMESYS_WORK *gsys, UNION_SYSTEM_PTR unisys, FIELD_M
 //--------------------------------------------------------------
 FS_EXTERN_OVERLAY(pokelist);
 FS_EXTERN_OVERLAY(poke_status);
+FS_EXTERN_OVERLAY(ircbattlematch);
 
 
 //==============================================================================
@@ -75,6 +79,11 @@ static const struct{
   {//UNION_SUBPROC_ID_TRAINERCARD
     SubEvent_TrainerCard,
     UNION_PLAY_CATEGORY_TRAINERCARD, 
+    UNION_PLAY_CATEGORY_TALK,
+  },
+  {//UNION_SUBPROC_ID_TRADE
+    SubEvent_Trade,
+    UNION_PLAY_CATEGORY_TRADE, 
     UNION_PLAY_CATEGORY_TALK,
   },
   {//UNION_SUBPROC_ID_COLOSSEUM_WARP_1VS1_SINGLE_50
@@ -124,6 +133,11 @@ static const struct{
   },
   {//UNION_SUBPROC_ID_BATTLE
     SubEvent_Battle,
+    UNION_PLAY_CATEGORY_MAX,  //MAX=変更しない
+    UNION_PLAY_CATEGORY_MAX,
+  },
+  {//UNION_SUBPROC_ID_COLOSSEUM_TRAINERCARD
+    SubEvent_TrainerCard,
     UNION_PLAY_CATEGORY_MAX,  //MAX=変更しない
     UNION_PLAY_CATEGORY_MAX,
   },
@@ -287,6 +301,34 @@ static BOOL SubEvent_TrainerCard(GAMESYS_WORK *gsys, UNION_SYSTEM_PTR unisys, FI
   case 0:
     *child_event = EVENT_FieldSubProc(
   	    gsys, fieldWork, TRCARD_OVERLAY_ID, &TrCardSysCommProcData, pwk);
+    break;
+  default:
+    return TRUE;
+  }
+  
+  (*seq)++;
+  return FALSE;
+}
+
+//--------------------------------------------------------------
+/**
+ * イベント：ポケモン交換
+ *
+ * @param   gsys		
+ * @param   unisys		
+ * @param   fieldWork		
+ * @param   pwk		
+ * @param   seq		
+ *
+ * @retval  GMEVENT *		
+ */
+//--------------------------------------------------------------
+static BOOL SubEvent_Trade(GAMESYS_WORK *gsys, UNION_SYSTEM_PTR unisys, FIELD_MAIN_WORK *fieldWork, void *pwk, GMEVENT * parent_event, GMEVENT **child_event, u8 *seq)
+{
+  switch(*seq){
+  case 0:
+    *child_event = EVENT_FieldSubProc(
+  	    gsys, fieldWork, FS_OVERLAY_ID(ircbattlematch), &IrcPokemonTradeProcData, pwk);
     break;
   default:
     return TRUE;

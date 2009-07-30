@@ -27,7 +27,7 @@
 //  定数定義
 //==============================================================================
 ///HEAPID_UNIONで確保するヒープサイズ
-#define HEAP_SIZE_UNION               (0x9800)  //(0xa000)
+#define HEAP_SIZE_UNION               (0x8a00)  //(0x9800)  //(0xa000)
 
 ///通信ステータス
 enum{
@@ -471,6 +471,8 @@ static void UnionComm_Colosseum_Update(UNION_SYSTEM_PTR unisys)
 
   //立ち位置への返事リクエストが貯まっているなら送信を行う
   Colosseum_Parent_SendAnswerStandingPosition(unisys->colosseum_sys);
+  //戦闘準備完了の返事リクエストが貯まっているなら送信を行う
+  Colosseum_Parent_BattleReadyAnswer(unisys->colosseum_sys);
 }
 
 //--------------------------------------------------------------

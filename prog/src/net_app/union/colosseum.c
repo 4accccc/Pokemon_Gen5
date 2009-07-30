@@ -231,6 +231,47 @@ void Colosseum_Parent_SendAnswerStandingPosition(COLOSSEUM_SYSTEM_PTR clsys)
 
 //==================================================================
 /**
+ * 親機専用命令：戦闘準備キャンセルの要求があれば送信を行う
+ *               全員の戦闘準備が完了しているのであれば、それの送信を行う
+ *
+ * @param   clsys		
+ */
+//==================================================================
+void Colosseum_Parent_BattleReadyAnswer(COLOSSEUM_SYSTEM_PTR clsys)
+{
+  int i, ready_count;
+  
+  if(GFL_NET_IsParentMachine() == FALSE){
+    return;
+  }
+  
+  ready_count = 0;
+  for(i = 0; i < COLOSSEUM_MEMBER_MAX; i++){
+    if(clsys->parentsys.battle_ready[i] == TRUE){
+      ready_count++;
+    }
+  }
+  if(ready_count == GFL_NET_GetConnectNum()){
+    if(ColosseumSend_AllBattleReady() == TRUE){
+      for(i = 0; i < COLOSSEUM_MEMBER_MAX; i++){  //送信成功したなら今までの受信バッファはクリア
+        clsys->parentsys.battle_ready[i] = FALSE;
+        clsys->parentsys.battle_ready_cancel[i] = FALSE;
+      }
+    }
+  }
+  else{ //既に全員準備OKの場合は今更キャンセルさせない
+    for(i = 0; i < COLOSSEUM_MEMBER_MAX; i++){
+      if(clsys->parentsys.battle_ready_cancel[i] == TRUE){
+        if(ColosseumSend_BattleReadyCancelOK(i) == TRUE){
+          clsys->parentsys.battle_ready_cancel[i] = FALSE;
+        }
+      }
+    }
+  }
+}
+
+//==================================================================
+/**
  * 通信プレイヤーの座標パッケージをセット
  *
  * @param   clsys		
