@@ -180,12 +180,16 @@ GMEVENT * DEBUG_EVENT_GameEnd( GAMESYS_WORK * gsys, FIELD_MAIN_WORK * fieldmap)
 //
 //============================================================================================
 //------------------------------------------------------------------
+/**
+ * @brief マップ遷移処理イベント用ワーク
+ */
 //------------------------------------------------------------------
 typedef struct {
 	GAMESYS_WORK * gsys;
 	GAMEDATA * gamedata;
 	FIELD_MAIN_WORK * fieldmap;
-	LOCATION loc_req;
+  u16 before_zone_id;         ///<遷移前マップID
+	LOCATION loc_req;           ///<遷移先指定
   EXIT_TYPE exit_type;
 }MAPCHANGE_WORK;
 
@@ -443,8 +447,11 @@ static GMEVENT_RESULT EVENT_MapChange(GMEVENT * event, int *seq, void*work)
 		(*seq) ++;
 		break;
 	case 6:
-		fieldmap = GAMESYSTEM_GetFieldMapWork(gsys);
-    FIELD_PLACE_NAME_ZoneChange(FIELDMAP_GetPlaceNameSys(fieldmap), mcw->loc_req.zone_id);
+    if (ZONEDATA_GetPlaceNameID(mcw->before_zone_id) != ZONEDATA_GetPlaceNameID(mcw->loc_req.zone_id) )
+    {
+      fieldmap = GAMESYSTEM_GetFieldMapWork(gsys);
+      FIELD_PLACE_NAME_ZoneChange(FIELDMAP_GetPlaceNameSys(fieldmap), mcw->loc_req.zone_id);
+    }
 		return GMEVENT_RES_FINISH;
 
 	}
@@ -455,6 +462,16 @@ static GMEVENT_RESULT EVENT_MapChange(GMEVENT * event, int *seq, void*work)
 //============================================================================================
 //------------------------------------------------------------------
 //------------------------------------------------------------------
+static void MAPCHANGE_WORK_init(MAPCHANGE_WORK * mcw, GAMESYS_WORK * gsys)
+{
+  mcw->gsys = gsys;
+  mcw->gamedata = GAMESYSTEM_GetGameData( gsys );
+  mcw->fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
+  mcw->before_zone_id = FIELDMAP_GetZoneID( mcw->fieldmap );
+}
+
+//------------------------------------------------------------------
+//------------------------------------------------------------------
 GMEVENT * DEBUG_EVENT_ChangeMapPos(GAMESYS_WORK * gsys, FIELD_MAIN_WORK * fieldmap,
 		u16 zone_id, const VecFx32 * pos, u16 dir )
 {
@@ -463,9 +480,7 @@ GMEVENT * DEBUG_EVENT_ChangeMapPos(GAMESYS_WORK * gsys, FIELD_MAIN_WORK * fieldm
 
 	event = GMEVENT_Create(gsys, NULL, EVENT_MapChange, sizeof(MAPCHANGE_WORK));
 	mcw = GMEVENT_GetEventWork(event);
-	mcw->gsys = gsys;
-	mcw->fieldmap = fieldmap;
-	mcw->gamedata = GAMESYSTEM_GetGameData(gsys);
+  MAPCHANGE_WORK_init( mcw, gsys );
 	
 	LOCATION_SetDirect(&mcw->loc_req, zone_id, dir, pos->x, pos->y, pos->z);
   mcw->exit_type = EXIT_TYPE_NONE;
@@ -484,9 +499,8 @@ GMEVENT * DEBUG_EVENT_ChangeMapDefaultPos(GAMESYS_WORK * gsys,
 
 	event = GMEVENT_Create(gsys, NULL, EVENT_MapChange, sizeof(MAPCHANGE_WORK));
 	mcw = GMEVENT_GetEventWork(event);
-	mcw->gsys = gsys;
-	mcw->fieldmap = fieldmap;
-	mcw->gamedata = GAMESYSTEM_GetGameData(gsys);
+  MAPCHANGE_WORK_init( mcw, gsys );
+
 	LOCATION_DEBUG_SetDefaultPos(&mcw->loc_req, zone_id);
   mcw->exit_type = EXIT_TYPE_NONE;
 	return event;
@@ -504,9 +518,7 @@ GMEVENT * EVENT_ChangeMapByConnect(GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap
 
 	event = GMEVENT_Create(gsys, NULL, EVENT_MapChange, sizeof(MAPCHANGE_WORK));
 	mcw = GMEVENT_GetEventWork(event);
-	mcw->gsys = gsys;
-	mcw->fieldmap = fieldmap;
-	mcw->gamedata = GAMESYSTEM_GetGameData(gsys);
+  MAPCHANGE_WORK_init( mcw, gsys );
 
 	if (CONNECTDATA_IsSpecialExit(cnct))
   {
