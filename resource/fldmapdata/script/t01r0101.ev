@@ -46,7 +46,6 @@ _EVENT_DATA_END
 /*    MAMA                                            */
 /**************************************************************/
 ev_t01r0101_mama_first:
-#if 0
 	_IFVAL_JUMP WK_0907ROM07,EQ,0,mama_first
 	_IFVAL_JUMP WK_0907ROM07,EQ,1,mama_end
 
@@ -81,7 +80,6 @@ mama_first_01:
 
  	_LDVAL SVSCRWK_START,1
  	_LDVAL WK_0907ROM07,1
-#endif
 	_JUMP mama_end
 
 mama_end:
