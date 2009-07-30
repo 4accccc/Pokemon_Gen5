@@ -1041,6 +1041,14 @@ WAZA_SICKCONT_PARAM WAZADATA_GetSickCont( WazaID id )
 u32 WAZADATA_GetSickPer( WazaID id )
 {
   // @@@ ¡‚Í‚Ä‚«‚Æ‚¤‚É
+
+  const SEQ_PARAM* seq = getSeqParam( id );
+  if( (seq != NULL)
+  &&  (seq->wseq == WSEQ_BIND) || (seq->wseq == WSEQ_BIND2)
+  ){
+    return 100;
+  }
+
   return WT_WazaDataParaGet( id, ID_WTD_addeffect );
 }
 //=============================================================================================
