@@ -51,7 +51,7 @@ ev_t02_babygirl1_1:
 	_TALKMSG_ALLPUT msg_t01_babygirl1_01
 	_AB_KEYWAIT
 	_TALKWIN_CLOSE
-
+/*
 	_OBJ_ANIME T02_BABYGIRL1_1,test01anime
 	_OBJ_ANIME_WAIT
 
@@ -60,7 +60,7 @@ ev_t02_babygirl1_1:
 	_TALKMSG_ALLPUT msg_t01_babygirl1_02
 	_AB_KEYWAIT
 	_TALKWIN_CLOSE
-
+*/
 	_OBJ_PAUSE_CLEAR_ALL
 	_END
 
