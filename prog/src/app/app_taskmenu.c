@@ -97,12 +97,13 @@ static void APP_TASKMENU_UpdateTP( APP_TASKMENU_WORK *work );
 APP_TASKMENU_WORK* APP_TASKMENU_OpenMenu( APP_TASKMENU_INITWORK *initWork )
 {
   APP_TASKMENU_WORK *work = GFL_HEAP_AllocMemory( initWork->heapId , sizeof( APP_TASKMENU_WORK ) );
+  const CLSYS_DRAW_TYPE mainSubType = ( work->initWork.bgFrame <= GFL_BG_FRAME3_M ? CLSYS_DRAW_MAIN : CLSYS_DRAW_SUB );
 
   work->initWork = *initWork;
 
   //ƒvƒŒ[ƒg‚Ì“y‘ä‚ÌŠG
   GFL_ARC_UTIL_TransVramPalette( APP_COMMON_GetArcId() , NARC_app_menu_common_task_menu_NCLR , 
-                    work->initWork.bgFrame , work->initWork.palNo*32 , 32*2 , work->initWork.heapId );
+                    mainSubType , work->initWork.palNo*32 , 32*2 , work->initWork.heapId );
   work->ncgRes = GFL_ARC_UTIL_LoadBGCharacter( APP_COMMON_GetArcId() , NARC_app_menu_common_task_menu_NCGR , FALSE , 
                     &work->ncgData , work->initWork.heapId );
   
