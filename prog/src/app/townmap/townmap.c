@@ -85,7 +85,7 @@ static const GFL_POINT sc_center_pos =
 //-------------------------------------
 ///	PLACE
 //=====================================
-#define PLACE_PULL_R				(10)
+#define PLACE_PULL_R				(12)
 #define PLACE_PULL_STRONG		(FX32_CONST(1))	//吸い込む強さ（カーソルより弱く）
 #define PLACEDATA_ANIME_SEQ_VANISH	(0xFF)
 enum
@@ -3192,6 +3192,7 @@ static void PLACEMARK_Init( PLACE_MARK *p_wk, const PLACE_DATA *cp_data, GFL_CLU
 		GFL_CLACT_WK_SetBgPri( p_wk->p_clwk, TOWNMAP_BG_PRIORITY_BAR_M+1 );
 		GFL_CLACT_WK_SetSoftPri( p_wk->p_clwk, OBJ_PRIORITY_MARK );
 		GFL_CLACT_WK_SetAnmSeq( p_wk->p_clwk, 6 );
+		GFL_CLACT_WK_SetAutoAnmFlag( p_wk->p_clwk, TRUE );
 
 		if( cp_data == NULL )
 		{	
