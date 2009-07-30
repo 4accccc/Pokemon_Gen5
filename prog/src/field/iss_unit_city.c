@@ -201,11 +201,18 @@ void ISS_UNIT_CITY_Update( ISS_UNIT_CITY* p_sys )
 	if( p_sys->isActive )
 	{
 		UNIT* p_unit = &p_sys->unitData[ p_sys->activeUnitNo ];
+		/*
 		OBATA_Printf( "---------------------\n" );
 		OBATA_Printf( "City ISS Unit is active\n" );
 		OBATA_Printf( "active unit no = %d\n", p_sys->activeUnitNo );
 		OBATA_Printf( "volume = %d\n", volume );
 		OBATA_Printf( "x, y, z = %d, %d, %d\n", p_unit->x, p_unit->y, p_unit->z );
+		*/
+		OS_Printf( "---------------------\n" );
+		OS_Printf( "City ISS Unit is active\n" );
+		OS_Printf( "active unit no = %d\n", p_sys->activeUnitNo );
+		OS_Printf( "volume = %d\n", volume );
+		OS_Printf( "x, y, z = %d, %d, %d\n", p_unit->x, p_unit->y, p_unit->z );
 	}
 }
 	
