@@ -1,0 +1,18 @@
+/*****************************************************************************
+	Archive file index definition.
+	File: pl_keycursor.naix
+
+	This file was created by NINTENDO NITRO-System Archiver.
+
+	Update:2009-07-30T19:39:58
+ *****************************************************************************/
+
+#ifndef NARC_PL_KEYCURSOR_NAIX_
+#define NARC_PL_KEYCURSOR_NAIX_
+
+enum {
+	NARC_pl_keycursor_win_cursol1_ncg = 0
+};
+
+/* NARC_PL_KEYCURSOR_NAIX_ */
+#endif

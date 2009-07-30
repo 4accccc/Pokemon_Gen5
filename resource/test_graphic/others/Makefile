@@ -34,7 +34,9 @@ TARGET_NAMES	= \
 	d_goto.naix \
 	d_goto.narc \
 	config_gra.narc \
-	config_gra.naix
+	config_gra.naix \
+	pl_keycursor.narc \
+	pl_keycursor.naix
 
 TARGETS	= $(addprefix $(TARGET_DIR)/,$(TARGET_NAMES))
 
