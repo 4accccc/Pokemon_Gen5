@@ -2710,15 +2710,9 @@ static GMEVENT_RESULT DMenuSkyJump( GMEVENT *p_event, int *p_seq, void *p_wk_adr
 {	
 	enum
 	{	
-		SEQ_INIT,
-		SEQ_FLD_FADEOUT,
-		SEQ_FLD_CLOSE,
 		SEQ_CALL_PROC,
-		SEQ_PROC_MAIN,
-		SEQ_END_PROC,
-		SEQ_FLD_OPEN,
-		SEQ_FLD_FADEIN,
-		SEQ_PLACE_NAME,
+		SEQ_PROC_END,
+		SEQ_CHANGE_MAP,
 		SEQ_EXIT,
 	};
 
@@ -2726,88 +2720,25 @@ static GMEVENT_RESULT DMenuSkyJump( GMEVENT *p_event, int *p_seq, void *p_wk_adr
 
 	switch(*p_seq )
 	{	
-	case SEQ_INIT:
-    {
-      GAMEDATA *gdata = GAMESYSTEM_GetGameData( p_wk->p_gamesys );
-      FIELD_SOUND *fsnd = GAMEDATA_GetFieldSound( gdata );
-      FIELD_SOUND_PushBGM( fsnd );
-    }
-		*p_seq	= SEQ_FLD_FADEOUT;
-		break;
-
-	case SEQ_FLD_FADEOUT:
-		GMEVENT_CallEvent(p_wk->p_event, EVENT_FieldFadeOut(p_wk->p_gamesys, p_wk->p_field, 0));
-		*p_seq	= SEQ_FLD_CLOSE;
-		break;
-
-	case SEQ_FLD_CLOSE:
-		GMEVENT_CallEvent(p_wk->p_event, EVENT_FieldClose(p_wk->p_gamesys, p_wk->p_field));
-		*p_seq	= SEQ_CALL_PROC;
-		break;
-
 	case SEQ_CALL_PROC:
-		GAMESYSTEM_CallProc(p_wk->p_gamesys, FS_OVERLAY_ID(townmap), &TownMap_ProcData, p_wk->p_param);
-		*p_seq	= SEQ_PROC_MAIN;
+		GMEVENT_CallEvent( p_wk->p_event, EVENT_FieldSubProc( p_wk->p_gamesys, p_wk->p_field,
+        FS_OVERLAY_ID(townmap), &TownMap_ProcData, p_wk->p_param ) );
+		*p_seq	= SEQ_PROC_END;
 		break;
 
-	case SEQ_PROC_MAIN:
-		if( !GAMESYSTEM_IsProcExists(p_wk->p_gamesys) )
-		{	
-			*p_seq	= SEQ_END_PROC;
-		}
-		break;
-
-	case SEQ_END_PROC:
+	case SEQ_PROC_END:
 		if( p_wk->p_param->select == TOWNMAP_SELECT_SKY )
 		{	
-			GAMEDATA		*p_gamedata;
-			PLAYER_WORK *p_player;
-			LOCATION		location;
-
-			VecFx32	pos;
-			u32 zoneID;
-			
-			p_gamedata	= GAMESYSTEM_GetGameData( p_wk->p_gamesys );
-			p_player		= GAMEDATA_GetMyPlayerWork( p_gamedata );
-
-			LOCATION_Init( &location );
-#if 0
-			LOCATION_SetDirect( &location, p_wk->p_param->zoneID, 0, 
-					p_wk->p_param->grid.x, 0, p_wk->p_param->grid.y );
-#else
-			LOCATION_DEBUG_SetDefaultPos(&location, p_wk->p_param->zoneID);
-#endif
-
-			PLAYERWORK_setZoneID( p_player, location.zone_id );
-			PLAYERWORK_setPosition( p_player, &location.pos );
-			GAMEDATA_SetStartLocation( p_gamedata, &location );
+			*p_seq	= SEQ_CHANGE_MAP;
 		}
-		*p_seq	= SEQ_FLD_OPEN;
-		break;
-	case SEQ_FLD_OPEN:
-		GMEVENT_CallEvent(p_wk->p_event, EVENT_FieldOpen(p_wk->p_gamesys));
-		*p_seq	= SEQ_FLD_FADEIN;
-		break;
-
-	case SEQ_FLD_FADEIN:
-		GMEVENT_CallEvent(p_wk->p_event, EVENT_FieldFadeIn(p_wk->p_gamesys, p_wk->p_field, 0));
-		*p_seq	= SEQ_PLACE_NAME;
-		break;
-
-	case SEQ_PLACE_NAME:
-		if( p_wk->p_param->select == TOWNMAP_SELECT_SKY )
-		{		
-			FIELDMAP_WORK * fieldmap = GAMESYSTEM_GetFieldMapWork(p_wk->p_gamesys);
-			FIELD_PLACE_NAME_ZoneChange(FIELDMAP_GetPlaceNameSys(fieldmap), p_wk->p_param->zoneID);
+		else
+		{	
+			*p_seq	= SEQ_EXIT;
 		}
+		break;
 
-		{
-      GAMEDATA *gdata = GAMESYSTEM_GetGameData( p_wk->p_gamesys );
-      FIELD_SOUND *fsnd = GAMEDATA_GetFieldSound( gdata );
-      FIELD_SOUND_PopBGM( fsnd );
-    }  
-    PMSND_FadeInBGM(60);
-
+	case SEQ_CHANGE_MAP:
+		GMEVENT_CallEvent( p_wk->p_event, DEBUG_EVENT_ChangeMapDefaultPos( p_wk->p_gamesys, p_wk->p_field, p_wk->p_param->zoneID ) );
 		*p_seq	= SEQ_EXIT;
 		break;
 
