@@ -450,17 +450,17 @@ static void DEBUG_MyPokeAdd(GAMESYS_WORK * gsys)
   myStatus = GAMEDATA_GetMyStatus(GAMESYSTEM_GetGameData(gsys));
   name = MyStatus_GetMyName( myStatus );
   
-	pp = PP_Create(MONSNO_REIBAAN, 100, 123456, GFL_HEAPID_APP);
+	pp = PP_Create(MONSNO_ONOKKUSU, 100, 123456, GFL_HEAPID_APP);
   PP_Put( pp , ID_PARA_oyaname_raw , (u32)name );
   PP_Put( pp , ID_PARA_oyasex , MyStatus_GetMySex( myStatus ) );
 	PokeParty_Add(party, pp);
 
-	PP_Setup(pp, MONSNO_ONOKKUSU, 100, 123456);
+	PP_Setup(pp, MONSNO_YUMEBAKURA, 100, 123456);
   PP_Put( pp , ID_PARA_oyaname_raw , (u32)name );
   PP_Put( pp , ID_PARA_oyasex , MyStatus_GetMySex( myStatus ) );
 	PokeParty_Add(party, pp);
 
-	PP_Setup(pp, MONSNO_BANBIINA, 100, 123456);
+	PP_Setup(pp, MONSNO_TIRATTI, 100, 123456);
   PP_Put( pp , ID_PARA_oyaname_raw , (u32)name );
   PP_Put( pp , ID_PARA_oyasex , MyStatus_GetMySex( myStatus ) );
 	PokeParty_Add(party, pp);
