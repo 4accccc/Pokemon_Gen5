@@ -320,7 +320,7 @@ static const int initNoData[NOIDX_MAX] = {
 };
 
 #define NAMEMSG_STARTIDX_BGM	(msg_seq_dummy)
-#define NAMEMSG_STARTIDX_SE		(msg_seq_se_message)
+#define NAMEMSG_STARTIDX_SE		(msg_seq_se_dummy)
 #define NAMEMSG_STARTIDX_VOICE	(msg_seq_pv)
 
 //============================================================================================
