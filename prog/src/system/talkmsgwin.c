@@ -35,6 +35,9 @@
  */
 //============================================================================================
 #define TALKWIN_MODE (1)
+
+#define MSGPOS_090730ROM //定義でメッセージ位置を修正
+
 //------------------------------------------------------------------
 /**
  * @brief	定数
@@ -60,7 +63,11 @@ typedef enum {
 #define TALKMSGWIN_FLOAT_MAX	(TALKMSGWIN_NUM - 2)
 
 #define TWIN_FIX_SIZX		(28)
+#ifndef MSGPOS_090730ROM
 #define TWIN_FIX_SIZY		(5)
+#else
+#define TWIN_FIX_SIZY		(4)
+#endif
 #define TWIN_FIX_POSX		(2)
 #define TWIN_FIX_POSY_U (2)
 #define TWIN_FIX_POSY_D (24 - (TWIN_FIX_SIZY+2))
@@ -555,7 +562,11 @@ static void setupWindow(	TALKMSGWIN_SYS*		tmsgwinSys,
 			tmsgwin->writey = 0;
 			GF_ASSERT(0);
 		} else {
+#ifndef MSGPOS_090730ROM
 			tmsgwin->writey = (setup->winsy*8 - height)/2;
+#else
+			tmsgwin->writey = 2;
+#endif
 		}
 	}
 
