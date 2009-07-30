@@ -712,6 +712,8 @@ void PSTATUS_RIBBON_DispPage_Trans( PSTATUS_WORK *work , PSTATUS_RIBBON_WORK *ri
   ribbonWork->isDisp = TRUE;
   ribbonWork->isMoveRibbon = TRUE;
   
+  //バーアイコン処理
+  GFL_CLACT_WK_SetAnmSeq( work->clwkBarIcon[SBT_PAGE3] , SBA_PAGE3_SELECT );
 }
 
 //--------------------------------------------------------------
@@ -743,6 +745,9 @@ void PSTATUS_RIBBON_ClearPage_Trans( PSTATUS_WORK *work , PSTATUS_RIBBON_WORK *r
   GFL_BG_LoadScreenReq( PSTATUS_BG_PARAM );
   
   ribbonWork->isDisp = FALSE;
+
+  //バーアイコン処理
+  GFL_CLACT_WK_SetAnmSeq( work->clwkBarIcon[SBT_PAGE3] , SBA_PAGE3_NORMAL );
 }
 
 void PSTATUS_RIBBON_CreateRibbonBar( PSTATUS_WORK *work , PSTATUS_RIBBON_WORK *ribbonWork )

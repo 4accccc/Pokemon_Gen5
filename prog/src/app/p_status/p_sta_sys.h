@@ -14,6 +14,7 @@
 #include "print/wordset.h"
 #include "p_sta_local_def.h"
 
+
 extern const BOOL PSTATUS_InitPokeStatus( PSTATUS_WORK *work );
 extern const BOOL PSTATUS_TermPokeStatus( PSTATUS_WORK *work );
 extern const PSTATUS_RETURN_TYPE PSTATUS_UpdatePokeStatus( PSTATUS_WORK *work );

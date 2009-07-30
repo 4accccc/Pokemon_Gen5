@@ -114,7 +114,8 @@ const BOOL PSTATUS_InitPokeStatus( PSTATUS_WORK *work )
   work->mosaicEffSeq = SMES_NONE;
   work->mosaicCnt = 0;
   work->mainSeq = SMS_FADEIN;
-
+  work->clwkExitButton = NULL;
+  
 #if PM_DEBUG
   work->calcPP = NULL;
 #endif
@@ -211,9 +212,13 @@ const PSTATUS_RETURN_TYPE PSTATUS_UpdatePokeStatus( PSTATUS_WORK *work )
     break;
     
   case SMS_FADEOUT:
-    WIPE_SYS_Start( WIPE_PATTERN_WMS , WIPE_TYPE_FADEOUT , WIPE_TYPE_FADEOUT , 
-                    WIPE_FADE_BLACK , WIPE_DEF_DIV , WIPE_DEF_SYNC , work->heapId );
-    work->mainSeq = SMS_FADEOUT_WAIT;
+    if( work->clwkExitButton == NULL ||
+        GFL_CLACT_WK_CheckAnmActive( work->clwkExitButton ) == FALSE )
+    {
+      WIPE_SYS_Start( WIPE_PATTERN_WMS , WIPE_TYPE_FADEOUT , WIPE_TYPE_FADEOUT , 
+                      WIPE_FADE_BLACK , WIPE_DEF_DIV , WIPE_DEF_SYNC , work->heapId );
+      work->mainSeq = SMS_FADEOUT_WAIT;
+    }
     break;
     
   case SMS_FADEOUT_WAIT:
@@ -275,7 +280,6 @@ const PSTATUS_RETURN_TYPE PSTATUS_UpdatePokeStatus( PSTATUS_WORK *work )
   GFL_G3D_DRAW_End();
 
   //背景スクロール
-  if(0)//無効
   {
     const u32 vCount = OS_GetVBlankCount();
     work->scrollCnt += vCount - work->befVCount;
@@ -558,9 +562,6 @@ static void PSTATUS_LoadResource( PSTATUS_WORK *work )
 
   //OBJリソース
   //パレット
-  work->cellRes[SCR_PLT_ICON] = GFL_CLGRP_PLTT_RegisterEx( archandle , 
-        NARC_p_status_gra_p_st_obj_d_NCLR , CLSYS_DRAW_MAIN , 
-        PSTATUS_OBJPLT_ICON*32 , 0 , 5 , work->heapId  );
   work->cellRes[SCR_PLT_BALL] = GFL_CLGRP_PLTT_RegisterEx( archandle , 
         NARC_p_status_gra_ball00_NCLR , CLSYS_DRAW_MAIN , 
         PSTATUS_OBJPLT_BALL*32 , 0 , 1 , work->heapId  );
@@ -654,7 +655,17 @@ static void PSTATUS_LoadResource( PSTATUS_WORK *work )
           NARC_app_menu_common_p_st_bunrui_buturi_NCGR , FALSE , CLSYS_DRAW_SUB , work->heapId  );
     work->cellRes[SCR_NCG_SKILL_TYPE_TOKUSHU] = GFL_CLGRP_CGR_Register( archandleCommon , 
           NARC_app_menu_common_p_st_bunrui_tokusyu_NCGR , FALSE , CLSYS_DRAW_SUB , work->heapId  );
-
+    //ボタン
+    work->cellRes[SCR_PLT_ICON_COMMON] = GFL_CLGRP_PLTT_RegisterEx( archandleCommon , 
+          APP_COMMON_GetBarIconPltArcIdx() , CLSYS_DRAW_MAIN , 
+          PSTATUS_OBJPLT_ICON*32 , 0 , APP_COMMON_BARICON_PLT_NUM , work->heapId  );
+    work->cellRes[SCR_NCG_ICON_COMMON] = GFL_CLGRP_CGR_Register( archandleCommon , 
+          APP_COMMON_GetBarIconCharArcIdx() , FALSE , CLSYS_DRAW_MAIN , work->heapId  );
+    work->cellRes[SCR_ANM_ICON_COMMON] = GFL_CLGRP_CELLANIM_Register( archandleCommon , 
+          APP_COMMON_GetBarIconCellArcIdx(APP_COMMON_MAPPING_128K) , 
+          APP_COMMON_GetBarIconAnimeArcIdx(APP_COMMON_MAPPING_128K), 
+          work->heapId  );
+    
     GFL_ARC_CloseDataHandle(archandleCommon);
   }
 
@@ -709,14 +720,14 @@ static void PSTATUS_InitCell( PSTATUS_WORK *work )
   {
     const u8 anmIdxArr[SBT_MAX] =
     {
-      SBA_PAGE1_SELECT,
+      SBA_PAGE1_NORMAL,
       SBA_PAGE2_NORMAL,
       SBA_PAGE3_NORMAL,
-      SBA_CHECK,
-      SBA_BUTTON_UP,
-      SBA_BUTTON_DOWN,
-      SBA_BUTTON_EXIT,
-      SBA_BUTTON_RETURN,
+      APP_COMMON_BARICON_CHECK_OFF,
+      APP_COMMON_BARICON_CURSOR_UP,
+      APP_COMMON_BARICON_CURSOR_DOWN,
+      APP_COMMON_BARICON_CLOSE,
+      APP_COMMON_BARICON_RETURN,
     };
     const u8 posXArr[SBT_MAX] =
     {
@@ -736,17 +747,33 @@ static void PSTATUS_InitCell( PSTATUS_WORK *work )
     
     for( i=0;i<SBT_MAX;i++ )
     {
+      u32 ncgRes;
+      u32 anmRes;
+      if( i<=SBT_PAGE3 )
+      {
+        ncgRes = work->cellRes[SCR_NCG_ICON];
+        anmRes = work->cellRes[SCR_ANM_ICON];
+      }
+      else
+      {
+        ncgRes = work->cellRes[SCR_NCG_ICON_COMMON];
+        anmRes = work->cellRes[SCR_ANM_ICON_COMMON];
+      }
       cellInitData.pos_x = posXArr[i];
       cellInitData.pos_y = ( i == SBT_CHECK ? PSTATUS_BAR_CELL_Y+4 : PSTATUS_BAR_CELL_Y);
       cellInitData.anmseq = anmIdxArr[i];
       work->clwkBarIcon[i] = GFL_CLACT_WK_Create( work->cellUnit ,
-                work->cellRes[SCR_NCG_ICON],
-                work->cellRes[SCR_PLT_ICON],
-                work->cellRes[SCR_ANM_ICON],
+                ncgRes,
+                work->cellRes[SCR_PLT_ICON_COMMON],
+                anmRes,
                 &cellInitData ,CLSYS_DEFREND_MAIN , work->heapId );
-
+      GFL_CLACT_WK_SetAutoAnmFlag( work->clwkBarIcon[i] , TRUE );
       GFL_CLACT_WK_SetDrawEnable( work->clwkBarIcon[i] , TRUE );
     }
+    
+    cellInitData.pos_x = 0;
+    cellInitData.pos_y = 0;
+    cellInitData.anmseq = 0;
     work->clwkTypeIcon[0] = GFL_CLACT_WK_Create( work->cellUnit ,
               work->cellResTypeNcg[0],
               work->cellRes[SCR_PLT_POKE_TYPE],
@@ -870,6 +897,7 @@ static const BOOL PSTATUS_UpdateKey( PSTATUS_WORK *work )
     {
       work->dataPos++;
       PSTATUS_RefreshDisp( work );
+      GFL_CLACT_WK_SetAnmSeq( work->clwkBarIcon[SBT_CURSOR_DOWN] , APP_COMMON_BARICON_CURSOR_DOWN_ON );
       return TRUE;
     }
   }
@@ -880,6 +908,7 @@ static const BOOL PSTATUS_UpdateKey( PSTATUS_WORK *work )
     {
       work->dataPos--;
       PSTATUS_RefreshDisp( work );
+      GFL_CLACT_WK_SetAnmSeq( work->clwkBarIcon[SBT_CURSOR_UP] , APP_COMMON_BARICON_CURSOR_UP_ON );
       return TRUE;
     }
   }
@@ -909,6 +938,8 @@ static const BOOL PSTATUS_UpdateKey( PSTATUS_WORK *work )
     work->retVal = SRT_RETURN;
     work->psData->ret_mode = PST_RET_CANCEL;
     work->mainSeq = SMS_FADEOUT;
+    GFL_CLACT_WK_SetAnmSeq( work->clwkBarIcon[SBT_RETURN] , APP_COMMON_BARICON_RETURN_ON );
+    work->clwkExitButton = work->clwkBarIcon[SBT_RETURN];
     return TRUE;
   }
   else
@@ -917,6 +948,8 @@ static const BOOL PSTATUS_UpdateKey( PSTATUS_WORK *work )
     work->retVal = SRT_EXIT;
     work->psData->ret_mode = PST_RET_EXIT;
     work->mainSeq = SMS_FADEOUT;
+    GFL_CLACT_WK_SetAnmSeq( work->clwkBarIcon[SBT_EXIT] , APP_COMMON_BARICON_CLOSE_ON );
+    work->clwkExitButton = work->clwkBarIcon[SBT_EXIT];
     return TRUE;
   }
   return FALSE;
@@ -958,6 +991,7 @@ static void PSTATUS_UpdateTP( PSTATUS_WORK *work )
     {
       work->dataPos--;
       PSTATUS_RefreshDisp( work );
+      GFL_CLACT_WK_SetAnmSeq( work->clwkBarIcon[SBT_CURSOR_UP] , APP_COMMON_BARICON_CURSOR_UP_ON );
     }
     break;
   case SBT_CURSOR_DOWN:
@@ -965,17 +999,22 @@ static void PSTATUS_UpdateTP( PSTATUS_WORK *work )
     {
       work->dataPos++;
       PSTATUS_RefreshDisp( work );
+      GFL_CLACT_WK_SetAnmSeq( work->clwkBarIcon[SBT_CURSOR_DOWN] , APP_COMMON_BARICON_CURSOR_DOWN_ON );
     }
     break;
   case SBT_EXIT:
     work->retVal = SRT_EXIT;
     work->psData->ret_mode = PST_RET_CANCEL;
     work->mainSeq = SMS_FADEOUT;
+    GFL_CLACT_WK_SetAnmSeq( work->clwkBarIcon[SBT_EXIT] , APP_COMMON_BARICON_CLOSE_ON );
+    work->clwkExitButton = work->clwkBarIcon[SBT_EXIT];
     break;
   case SBT_RETURN:
     work->retVal = SRT_RETURN;
     work->psData->ret_mode = PST_RET_EXIT;
     work->mainSeq = SMS_FADEOUT;
+    GFL_CLACT_WK_SetAnmSeq( work->clwkBarIcon[SBT_RETURN] , APP_COMMON_BARICON_RETURN_ON );
+    work->clwkExitButton = work->clwkBarIcon[SBT_RETURN];
     break;
     
   }
@@ -989,6 +1028,46 @@ static void PSTATUS_UpdateTP( PSTATUS_WORK *work )
 void PSTATUS_SetActiveBarButton( PSTATUS_WORK *work , const BOOL isActive )
 {
   work->isActiveBarButton = isActive;
+
+  //バーアイコン処理
+  if( isActive == FALSE )
+  {
+    if( work->page != PPT_INFO )
+    {
+      GFL_CLACT_WK_SetAnmSeq( work->clwkBarIcon[SBT_PAGE1] , SBA_PAGE1_OFF );
+    }
+    if( work->page != PPT_SKILL )
+    {
+      GFL_CLACT_WK_SetAnmSeq( work->clwkBarIcon[SBT_PAGE2] , SBA_PAGE2_OFF );
+    }
+    if( work->page != PPT_RIBBON )
+    {
+      GFL_CLACT_WK_SetAnmSeq( work->clwkBarIcon[SBT_PAGE3] , SBA_PAGE3_OFF );
+    }
+    GFL_CLACT_WK_SetAnmSeq( work->clwkBarIcon[SBT_CURSOR_UP] , APP_COMMON_BARICON_CURSOR_UP_OFF );
+    GFL_CLACT_WK_SetAnmSeq( work->clwkBarIcon[SBT_CURSOR_DOWN] , APP_COMMON_BARICON_CURSOR_DOWN_OFF );
+    GFL_CLACT_WK_SetAnmSeq( work->clwkBarIcon[SBT_EXIT] , APP_COMMON_BARICON_CLOSE_OFF );
+    GFL_CLACT_WK_SetAnmSeq( work->clwkBarIcon[SBT_RETURN] , APP_COMMON_BARICON_RETURN_OFF );
+  }
+  else
+  {
+    if( work->page != PPT_INFO )
+    {
+      GFL_CLACT_WK_SetAnmSeq( work->clwkBarIcon[SBT_PAGE1] , SBA_PAGE1_NORMAL );
+    }
+    if( work->page != PPT_SKILL )
+    {
+      GFL_CLACT_WK_SetAnmSeq( work->clwkBarIcon[SBT_PAGE2] , SBA_PAGE2_NORMAL );
+    }
+    if( work->page != PPT_RIBBON )
+    {
+      GFL_CLACT_WK_SetAnmSeq( work->clwkBarIcon[SBT_PAGE3] , SBA_PAGE3_NORMAL );
+    }
+    GFL_CLACT_WK_SetAnmSeq( work->clwkBarIcon[SBT_CURSOR_UP] , APP_COMMON_BARICON_CURSOR_UP );
+    GFL_CLACT_WK_SetAnmSeq( work->clwkBarIcon[SBT_CURSOR_DOWN] , APP_COMMON_BARICON_CURSOR_DOWN );
+    GFL_CLACT_WK_SetAnmSeq( work->clwkBarIcon[SBT_EXIT] , APP_COMMON_BARICON_CLOSE );
+    GFL_CLACT_WK_SetAnmSeq( work->clwkBarIcon[SBT_RETURN] , APP_COMMON_BARICON_RETURN );
+  }
 }
 
 #pragma mark [>util

@@ -313,6 +313,9 @@ void PSTATUS_INFO_DispPage_Trans( PSTATUS_WORK *work , PSTATUS_INFO_WORK *infoWo
       GFL_CLACT_WK_SetDrawEnable( work->clwkTypeIcon[1] , FALSE );
     }
   }
+  
+  //バーアイコン処理
+  GFL_CLACT_WK_SetAnmSeq( work->clwkBarIcon[SBT_PAGE1] , SBA_PAGE1_SELECT );
 }
 //--------------------------------------------------------------
 //	ページのクリア
@@ -344,6 +347,9 @@ void PSTATUS_INFO_ClearPage_Trans( PSTATUS_WORK *work , PSTATUS_INFO_WORK *infoW
 
   GFL_CLACT_WK_SetDrawEnable( work->clwkTypeIcon[0] , FALSE );
   GFL_CLACT_WK_SetDrawEnable( work->clwkTypeIcon[1] , FALSE );
+
+  //バーアイコン処理
+  GFL_CLACT_WK_SetAnmSeq( work->clwkBarIcon[SBT_PAGE1] , SBA_PAGE1_NORMAL );
 }
 
 //--------------------------------------------------------------

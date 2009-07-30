@@ -549,6 +549,9 @@ void PSTATUS_SKILL_DispPage_Trans( PSTATUS_WORK *work , PSTATUS_SKILL_WORK *skil
     PSTATUS_SKILL_DispPlate_Trans( work , skillWork , &skillWork->plateWork[i] );
   }
 
+  //バーアイコン処理
+  GFL_CLACT_WK_SetAnmSeq( work->clwkBarIcon[SBT_PAGE2] , SBA_PAGE2_SELECT );
+
 }
 
 //--------------------------------------------------------------
@@ -593,6 +596,9 @@ void PSTATUS_SKILL_ClearPage_Trans( PSTATUS_WORK *work , PSTATUS_SKILL_WORK *ski
   
   GFL_CLACT_WK_SetDrawEnable( work->clwkTypeIcon[0] , FALSE );
   GFL_CLACT_WK_SetDrawEnable( work->clwkTypeIcon[1] , FALSE );
+
+  //バーアイコン処理
+  GFL_CLACT_WK_SetAnmSeq( work->clwkBarIcon[SBT_PAGE2] , SBA_PAGE2_NORMAL );
 
 }
 
