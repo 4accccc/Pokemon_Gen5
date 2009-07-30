@@ -33,6 +33,9 @@ extern void FIELD_COMM_ACTOR_CTRL_AddActor(
 extern void FIELD_COMM_ACTOR_CTRL_DeleteActro(
     FIELD_COMM_ACTOR_CTRL *act_ctrl, u32 id );
 
+extern BOOL FIELD_COMM_ACTOR_CTRL_SearchGridPos(
+    FIELD_COMM_ACTOR_CTRL *act_ctrl, s16 gx, s16 gz, u32 *outID );
+
 extern void MMDL_MoveCommActor_Init( MMDL *fmmdl );
 extern void MMDL_MoveCommActor_Delete( MMDL *fmmdl );
 extern void MMDL_MoveCommActor_Move( MMDL *fmmdl );

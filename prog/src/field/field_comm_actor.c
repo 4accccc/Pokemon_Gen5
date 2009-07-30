@@ -180,6 +180,38 @@ void FIELD_COMM_ACTOR_CTRL_DeleteActro(
 
 //--------------------------------------------------------------
 /**
+ * フィールド通信用アクター制御　指定座標にいる通信アクターIDを返す
+ * @param FIELD_COMM_ACTOR_CTRL
+ * @param gx 調べるグリッドX座標
+ * @param gz 調べるグリッドZ座標
+ * @param outID gx,gzに居るアクターIDの格納先
+ * @retval BOOL TRUE=gx,gzに通信アクターがいる。FALSE=居ない
+ */
+//--------------------------------------------------------------
+BOOL FIELD_COMM_ACTOR_CTRL_SearchGridPos(
+    FIELD_COMM_ACTOR_CTRL *act_ctrl, s16 gx, s16 gz, u32 *outID )
+{
+  MMDL *mmdl;
+  
+  mmdl = MMDLSYS_SearchGridPos( act_ctrl->fmmdlsys, gx, gz, FALSE );
+  
+  if( mmdl != NULL ){
+    int i;
+    FIELD_COMM_ACTOR *act = act_ctrl->act_tbl;
+    
+    for( i = 0; i < act_ctrl->max; i++, act++ ){
+      if( act->fmmdl != NULL && act->fmmdl == mmdl ){
+        *outID = act->id;
+        return( TRUE );
+      }
+    }
+  }
+  
+  return( FALSE );
+}
+
+//--------------------------------------------------------------
+/**
  * フィールド通信用アクター　アクター削除処理
  * @param act FIELD_COMM_ACTOR
  * @retval nothing
@@ -318,6 +350,9 @@ static void fldcommAct_fmmdl_SetWatchData(
   work->comm_actor = comm_actor;
 }
 
+//======================================================================
+//  parts
+//======================================================================
 //--------------------------------------------------------------
 /**
  * 360度方向->４方向に
