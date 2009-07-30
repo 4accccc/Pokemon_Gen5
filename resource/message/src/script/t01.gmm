@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-07-17T18:26:36"/>
+	<create user="matsumiya" host="W00207" date="2009-07-30T17:33:49"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -251,7 +251,7 @@
 			<line position="-1" width="100"/>
 		</language>
 		<language japanese="JPN_KANJI" english="JPN_KANJI">
-			<message position="3" width="246"/>
+			<message position="3" width="257"/>
 			<font default=" 0:large" position="6" width="106">
 				<list entry="0" file="W:\font\large.nftr"/>
 				<list entry="1" file="W:\font\small.nftr"/>
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -307,12 +307,12 @@
 どこかに　いきたい　きもち[BE:01:ページ切り替え（クリア）]
 オレにも　よくわかるけど　さきに
 アララギはかせに　あいにいこうな[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">ともだち♂『あのな　[1:00:トレーナー名:0]！[BE:01:ページ切り替え（クリア）]
+		<language name="JPN_KANJI" width="256">ともだち♂『[1:00:トレーナー名:0]！[BE:01:ページ切り替え（クリア）]
 少しでも　はやく
 ポケモンと　一緒に[BE:00:ページ切り替え（行送り）]
-どこかに　行きたい　気持ち[BE:01:ページ切り替え（クリア）]
-オレにも　よくわかるけど　先に
-アララギ博士に　会いに行こうな[BE:01:ページ切り替え（クリア）]</language>
+どこかに　行きたい　気持ちは[BE:01:ページ切り替え（クリア）]
+僕にも　よくわかるけど　先に
+アララギ博士に　会いに行こうよ[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_t01_black_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
@@ -325,9 +325,9 @@
 ぜったい　あいつ　いえで
 のんびり　しているからさ[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">ともだち♂『悪いけど　ともだち♀の
-家まで　行ってくれない？[BE:01:ページ切り替え（クリア）]
-絶対　あいつ　家で
-のんびり　しているからさ[BE:01:ページ切り替え（クリア）]</language>
+家まで　行ってくれないか？[BE:01:ページ切り替え（クリア）]
+いつもどおり　絶対　家で
+のんびり　しているはずだから[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_t01_white_01">
@@ -351,10 +351,10 @@
 よし　みんな　そろったし
 なかに　はいるぞ！[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">ともだち♂『ん……
-なんか　あったのか？[BE:01:ページ切り替え（クリア）]
+なんか　あった？[BE:01:ページ切り替え（クリア）]
 まあ　いいか[BE:01:ページ切り替え（クリア）]
-よし　みんな　そろったし
-中に　入るぞ！[BE:01:ページ切り替え（クリア）]</language>
+みんな　そろったし
+中に　入ろう！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_t01_bigman_01">

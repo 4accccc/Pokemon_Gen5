@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-07-29T22:52:10"/>
+	<create user="matsumiya" host="W00207" date="2009-07-30T17:35:28"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -315,7 +315,7 @@
 		<band id="2" index="3" style="0000" width="540"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="694"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -427,7 +427,8 @@
 		<language name="JPN_KANJI" width="256">ともだち♂『おつかれさま[BE:01:ページ切り替え（クリア）]
 と　いいたいところ　だけど
 こっちも　相手してもらえるかな？[BE:01:ページ切り替え（クリア）]
-体力は　満タン……[BE:01:ページ切り替え（クリア）]
+キミの　ポケモンの　体力は
+満タン……[BE:01:ページ切り替え（クリア）]
 これなら　キズぐすりは
 使わなくても　大丈夫だね[BE:01:ページ切り替え（クリア）]</language>
 	</row>
@@ -444,14 +445,14 @@
 はかせに　おれいを　いいにいこう[BE:01:ページ切り替え（クリア）]
 じゃあ　ポケモンけんきゅうじょで
 まっているから！[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">ともだち♂『……フゥ
-これが　ポケモン勝負　なんだ！[BE:01:ページ切り替え（クリア）]
-トレーナーに　なったって
-実感できるよね[BE:01:ページ切り替え（クリア）]
-よしっ！
-博士に　お礼を　いいに行こう[BE:01:ページ切り替え（クリア）]
+		<language name="JPN_KANJI" width="256">ともだち♂『すごい！
+これが　ポケモン勝負なんだ！[BE:01:ページ切り替え（クリア）]
+僕たち　ようやく
+トレーナーに　なったんだね[BE:01:ページ切り替え（クリア）]
+それじゃあ
+博士に　お礼を　いいに行こうよ[BE:01:ページ切り替え（クリア）]
 僕は　ポケモン研究所で
-待っているよ！[BE:01:ページ切り替え（クリア）]</language>
+待っているから！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_t01r0102_white_test05" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
