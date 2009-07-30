@@ -10,5 +10,5 @@
 
 #pragma once
 
-#define	NEW_POKEMON_COUNT	( 7 ) 	//WBからの新ポケの総数
+#define	NEW_POKEMON_COUNT	( 21 ) 	//WBからの新ポケの総数
 
