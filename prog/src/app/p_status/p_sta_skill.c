@@ -1075,11 +1075,11 @@ static const BOOL PSTATUS_SKILL_UpdateKey( PSTATUS_WORK *work , PSTATUS_SKILL_WO
   if( GFL_UI_KEY_GetTrg() == PAD_BUTTON_B &&
       skillWork->isChangeMode == TRUE )
   {
-    skillWork->isChangeMode = FALSE;
-    skillWork->changeTarget = PSTATUS_SKILL_PLATE_NUM;
     PSTATUS_SKILL_ChangeColor( &skillWork->plateWork[skillWork->changeTarget] , 0 );
     PSTATUS_SKILL_UpdateCursorPos( work , skillWork , skillWork->cursorPos );
     GFL_CLACT_WK_SetDrawEnable( skillWork->clwkTargetCur , FALSE );
+    skillWork->isChangeMode = FALSE;
+    skillWork->changeTarget = PSTATUS_SKILL_PLATE_NUM;
     return TRUE;
   }
   else 
@@ -1128,7 +1128,8 @@ static const BOOL PSTATUS_SKILL_UpdateKey( PSTATUS_WORK *work , PSTATUS_SKILL_WO
 //--------------------------------------------------------------
 static void PSTATUS_SKILL_UpdateTP( PSTATUS_WORK *work , PSTATUS_SKILL_WORK *skillWork )
 {
-  if( work->barButtonHit == SBT_RETURN )
+  if( work->barButtonHit == SBT_RETURN &&
+      work->isActiveBarButton == FALSE )
   {
     //–ß‚é‚ª‰Ÿ‚³‚ê‚½
     PSTATUS_SetActiveBarButton( work , TRUE );
