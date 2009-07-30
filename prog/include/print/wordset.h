@@ -16,6 +16,8 @@
 #include "net_app/wifi_lobby/wflby_def.h"  //WFLBY_GAMETYPEetc
 #include "savedata/mystatus.h"
 #include "net_app/wifi_country.h"
+#include "tr_tool/tr_tool.h"
+#include "tr_tool/trno_def.h"
 
 typedef struct _WORDSET  WORDSET;
 
@@ -53,6 +55,8 @@ extern void WORDSET_RegisterPokeTypeName( WORDSET* wordset, u32 bufID, u32 typeI
 extern void WORDSET_RegisterPlayerName( WORDSET* wordset, u32 bufID, const MYSTATUS* my );
 extern void WORDSET_RegisterCountryName( WORDSET* wordset, u32 bufID, u32 countryID );
 extern void WORDSET_RegisterLocalPlaceName(WORDSET* wordset,u32 bufID,u32 countryID,u32 placeID);
+extern void WORDSET_RegisterTrTypeName( WORDSET* wordset, u32 bufID, TrainerID trID );
+extern void WORDSET_RegisterTrainerName( WORDSET* wordset, u32 bufID, TrainerID trID );
 extern void WORDSET_ExpandStr( const WORDSET* wordset, STRBUF* dstbuf, const STRBUF* srcbuf );
 extern void WORDSET_ClearAllBuffer( WORDSET* wordset );
 
