@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="taya" host="W00146" date="2009-07-30T20:41:43"/>
+	<create user="taya" host="W00146" date="2009-07-30T22:33:01"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -421,7 +421,7 @@
 
 	<dialog left="130" top="0" right="811" bottom="508" maximized="no" rayout="Vertical2">
 		<comment-input left="677" top="618" right="1024" bottom="768" visible="no"/>
-		<tag-palette left="701" top="473" right="1132" bottom="871" visible="yes"/>
+		<tag-palette left="701" top="473" right="1132" bottom="871" visible="no"/>
 		<band id="0" index="0" style="0001" width="506"/>
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="673"/>
@@ -2102,6 +2102,27 @@
 		<language name="JPN_KANJI" width="216">相手の　[1:02:ポケモンニックネーム:0]は
 [1:07:わざ名:1]の▽
 ダメージを　うけている</language>
+	</row>
+
+	<row id="BTL_STRID_SET_BindCure">
+		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は
+[1:07:わざ名:1]から　かいほうされた！</language>
+		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
+[1:07:わざ名:1]から　解放された！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_BindCure_Y">
+		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は
+[1:07:わざ名:1]から　かいほうされた！</language>
+		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]は
+[1:07:わざ名:1]から　解放された！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_BindCure_E">
+		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は
+[1:07:わざ名:1]から　かいほうされた！</language>
+		<language name="JPN_KANJI" width="216">相手の　[1:02:ポケモンニックネーム:0]は
+[1:07:わざ名:1]から　解放された！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_ReactionDmg">
@@ -4146,6 +4167,28 @@
 [1:09:どうぐ名:1]を　なげつけた！</language>
 		<language name="JPN_KANJI" width="216">相手の　[1:02:ポケモンニックネーム:0]は
 [1:09:どうぐ名:1]を　投げつけた！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_KousokuSpin">
+		<comment>こうそくスピン</comment>
+		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は
+[1:07:わざ名:1]を　ふきとばした！</language>
+		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
+[1:07:わざ名:1]を　吹き飛ばした！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_KousokuSpin_Y">
+		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は
+[1:07:わざ名:1]を　ふきとばした！</language>
+		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]は
+[1:07:わざ名:1]を　吹き飛ばした！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_KousokuSpin_E">
+		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は
+[1:07:わざ名:1]を　ふきとばした！</language>
+		<language name="JPN_KANJI" width="216">相手の　[1:02:ポケモンニックネーム:0]は
+[1:07:わざ名:1]を　吹き飛ばした！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_SinpiNoMamori_Exe">
