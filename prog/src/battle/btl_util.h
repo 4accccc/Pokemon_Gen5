@@ -85,30 +85,35 @@ static inline BOOL BTL_UTIL_CallProc( BTL_PROC* proc )
 typedef struct  {
 
   union {
-    u16    raw;
+    u32    raw;
     struct {
-      u16  type : 3;
-      u16  _0   : 12;
+      u32  type : 4;
+      u32  _0   : 28;
     };
     struct {
-      u16  type_turn : 3;
-      u16  count     : 5;
-      u16  param     : 8;
+      u32  type_turn : 4;   ///< ターン数型
+      u32  count     : 6;   ///< 有効ターン数
+      u32  param     : 16;  ///< パラメータ16bit
+      u32  _1        : 6;
     }turn;
     struct {
-      u16  type_poke : 3;
-      u16  ID        : 6;
-      u16  _2        : 6;
+      u32  type_poke : 4;   ///< ポケ依存型
+      u32  ID        : 6;   ///< 対象ポケID
+      u32  param     : 16;  ///< パラメータ16bit
+      u32  _2        : 6;
     }poke;
     struct {
-      u16  type_perm : 3;
-      u16  count_max : 5;
-      u16  param     : 8;
+      u32  type_perm : 4;   ///< 永続型
+      u32  count_max : 6;   ///< ターンカウントアップ最大数
+      u32  param     : 16;  ///< パラメータ16bit
+      u32  _3        : 6;
     }permanent;
     struct {
-       u16 type_poketurn : 3;
-       u16 count         : 5;
-       u16 pokeID        : 8;
+      u32 type_poketurn : 4;  ///< ターン数・ポケ依存混合型
+      u32 count         : 6;  ///< 有効ターン数
+      u32 pokeID        : 6;  ///< 対象ポケID
+      u32 param         : 16; ///< パラメータ16bit
+      u32 _4            : 1;
     }poketurn;
   };
 
@@ -122,7 +127,13 @@ static inline BPP_SICK_CONT  BPP_SICKCONT_MakeNull( void )
   cont.type = WAZASICK_CONT_NONE;
   return cont;
 }
-
+static inline BOOL BPP_SICKCONT_IsNull( BPP_SICK_CONT cont )
+{
+  return cont.type == WAZASICK_CONT_NONE;
+}
+/*
+ *  ターン数型 作成
+ */
 static inline BPP_SICK_CONT BPP_SICKCONT_MakeTurn( u8 turns )
 {
   BPP_SICK_CONT  cont;
@@ -132,6 +143,9 @@ static inline BPP_SICK_CONT BPP_SICKCONT_MakeTurn( u8 turns )
   cont.turn.param = 0;
   return cont;
 }
+/*
+ *  ターン数型（パラメータ付き）作成
+ */
 static inline BPP_SICK_CONT BPP_SICKCONT_MakeTurnParam( u8 turns, u8 param )
 {
   BPP_SICK_CONT  cont;
@@ -141,6 +155,64 @@ static inline BPP_SICK_CONT BPP_SICKCONT_MakeTurnParam( u8 turns, u8 param )
   cont.turn.param = param;
   return cont;
 }
+/*
+ *  ポケ依存型作成
+ */
+static inline BPP_SICK_CONT BPP_SICKCONT_MakePoke( u8 pokeID )
+{
+  BPP_SICK_CONT  cont;
+  cont.raw = 0;
+  cont.type = WAZASICK_CONT_POKE;
+  cont.poke.ID = pokeID;
+  return cont;
+}
+/*
+ *  永続型作成
+ */
+static inline BPP_SICK_CONT BPP_SICKCONT_MakePermanent( void )
+{
+  BPP_SICK_CONT cont;
+  cont.raw = 0;
+  cont.type = WAZASICK_CONT_PERMANENT;
+  return cont;
+}
+/*
+ *  永続型（ターン数カウントアップ）作成
+ */
+static inline BPP_SICK_CONT BPP_SICKCONT_MakePermanentInc( u8 count_max )
+{
+  BPP_SICK_CONT cont;
+  cont.raw = 0;
+  cont.type = WAZASICK_CONT_PERMANENT;
+  cont.permanent.count_max = count_max;
+  return cont;
+}
+/*
+ *  永続型（パラメータ付き）作成
+ */
+static inline BPP_SICK_CONT BPP_SICKCONT_MakePermanentParam( u16 param )
+{
+  BPP_SICK_CONT cont;
+  cont.raw = 0;
+  cont.type = WAZASICK_CONT_PERMANENT;
+  cont.permanent.param = param;
+  return cont;
+}
+/*
+ *  永続型（ターン数カウントアップ＆パラメータ付き）作成
+ */
+static inline BPP_SICK_CONT BPP_SICKCONT_MakePermanentIncParam( u8 count_max, u16 param )
+{
+  BPP_SICK_CONT cont;
+  cont.raw = 0;
+  cont.type = WAZASICK_CONT_PERMANENT;
+  cont.permanent.count_max = count_max;
+  cont.permanent.param = param;
+  return cont;
+}
+/*
+ *  ターン数・ポケ依存混合型作成
+ */
 static inline BPP_SICK_CONT BPP_SICKCONT_MakePokeTurn( u8 pokeID, u8 turns )
 {
   BPP_SICK_CONT  cont;
@@ -150,37 +222,21 @@ static inline BPP_SICK_CONT BPP_SICKCONT_MakePokeTurn( u8 pokeID, u8 turns )
   cont.poketurn.pokeID = pokeID;
   return cont;
 }
-static inline BPP_SICK_CONT BPP_SICKCONT_MakePoke( u8 pokeID )
+/*
+ *  ターン数・ポケ依存混合型（パラメータ付き）作成
+ */
+static inline BPP_SICK_CONT BPP_SICKCONT_MakePokeTurnParam( u8 pokeID, u8 turns, u16 param )
 {
   BPP_SICK_CONT  cont;
   cont.raw = 0;
-  cont.type = WAZASICK_CONT_POKE;
-  cont.poke.ID = pokeID;
+  cont.type = WAZASICK_CONT_POKETURN;
+  cont.poketurn.count = turns;
+  cont.poketurn.pokeID = pokeID;
+  cont.poketurn.param = param;
   return cont;
 }
-static inline BPP_SICK_CONT BPP_SICKCONT_MakePermanent( void )
-{
-  BPP_SICK_CONT cont;
-  cont.raw = 0;
-  cont.type = WAZASICK_CONT_PERMANENT;
-  return cont;
-}
-static inline BPP_SICK_CONT BPP_SICKCONT_MakePermanentInc( u8 count_max )
-{
-  BPP_SICK_CONT cont;
-  cont.raw = 0;
-  cont.type = WAZASICK_CONT_PERMANENT;
-  cont.permanent.count_max = count_max;
-  return cont;
-}
-static inline BPP_SICK_CONT BPP_SICKCONT_MakePermanentParam( u8 param )
-{
-  BPP_SICK_CONT cont;
-  cont.raw = 0;
-  cont.type = WAZASICK_CONT_PERMANENT;
-  cont.permanent.param = param;
-  return cont;
-}
+
+
 static inline BPP_SICK_CONT BPP_SICKCONT_MakeMoudokuCont( void )
 {
   BPP_SICK_CONT cont;
@@ -189,12 +245,14 @@ static inline BPP_SICK_CONT BPP_SICKCONT_MakeMoudokuCont( void )
   cont.permanent.count_max = BTL_MOUDOKU_COUNT_MAX;
   return cont;
 }
-
 static inline BOOL BPP_SICKCONT_IsMoudokuCont( BPP_SICK_CONT cont )
 {
   return ((cont.type == WAZASICK_CONT_PERMANENT) && (cont.permanent.count_max > 0));
 }
 
+/*
+ *  依存ポケIDを取得（ポケ依存でなければ BTL_POKEID_NULL）
+ */
 static inline u8 BPP_SICKCONT_GetPokeID( BPP_SICK_CONT cont )
 {
   if( cont.type == WAZASICK_CONT_POKE ){
@@ -205,6 +263,9 @@ static inline u8 BPP_SICKCONT_GetPokeID( BPP_SICK_CONT cont )
   }
   return BTL_POKEID_NULL;
 }
+/*
+ *  有効ターン数を取得（ターン数制限がなければ 0）
+ */
 static inline u8 BPP_SICCONT_GetTurnMax( BPP_SICK_CONT cont )
 {
   if( cont.type == WAZASICK_CONT_TURN ){
@@ -215,14 +276,37 @@ static inline u8 BPP_SICCONT_GetTurnMax( BPP_SICK_CONT cont )
   }
   return 0;
 }
+/*
+ *  設定パラメータを取得
+ */
 static inline u8 BPP_SICKCONT_GetParam( BPP_SICK_CONT cont )
 {
   if( cont.type == WAZASICK_CONT_PERMANENT ){
     return cont.permanent.param;
   }
+  if( cont.type == WAZASICK_CONT_POKE ){
+    return cont.poke.param;
+  }
+  if( cont.type == WAZASICK_CONT_POKETURN ){
+    return cont.poketurn.param;
+  }
   return 0;
 }
-
+/*
+ *  パラメータだけ設定し直し
+ */
+static inline void BPP_SICKCONT_AddParam( BPP_SICK_CONT* cont, u16 param )
+{
+  if( cont->type == WAZASICK_CONT_PERMANENT ){
+    cont->permanent.param = param;
+  }
+  if( cont->type == WAZASICK_CONT_POKE ){
+    cont->poke.param = param;
+  }
+  if( cont->type == WAZASICK_CONT_POKETURN ){
+    cont->poketurn.param = param;
+  }
+}
 
 
 //===================================================================

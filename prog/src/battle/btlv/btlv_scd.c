@@ -538,7 +538,7 @@ static BOOL selectWaza_loop( int* seq, void* wk_adrs )
 //----------------------------------------------------------------------------------
 static BtlvScd_SelAction_Result  check_unselectable_waza( BTLV_SCD* wk, const BTL_POKEPARAM* bpp, u8 waza_idx )
 {
-  if( BPP_GetContFlag(bpp, BPP_CONTFLG_KODAWARI_LOCK) )
+  if( BPP_CONTFLAG_Get(bpp, BPP_CONTFLG_KODAWARI_LOCK) )
   {
     WazaID  select_waza = BPP_WAZA_GetID( bpp, waza_idx );
     if( select_waza != BPP_GetPrevWazaID(bpp) ){

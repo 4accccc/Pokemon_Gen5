@@ -440,8 +440,8 @@ static void handler_side_StealthRock( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WOR
       param->poke_cnt = 1;
       param->pokeID[0] = pokeID;
       param->damage[0] = BTL_CALC_QuotMaxHP( bpp, denom );
-      param->fSucceedStrEx = TRUE;
-      param->succeedStrID = BTL_STRID_SET_StealthRockDamage;
+      HANDEX_STR_Setup( &param->exStr, BTL_STRTYPE_SET, BTL_STRID_SET_StealthRockDamage );
+      HANDEX_STR_AddArg( &param->exStr, pokeID );
     }
   }
 }
@@ -484,8 +484,8 @@ static void handler_side_Makibisi( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* 
         param->poke_cnt = 1;
         param->pokeID[0] = pokeID;
         param->damage[0] = BTL_CALC_QuotMaxHP( bpp, denom );
-        param->fSucceedStrEx = TRUE;
-        param->succeedStrID = BTL_STRID_SET_MakibisiDamage;
+        HANDEX_STR_Setup( &param->exStr, BTL_STRTYPE_SET, BTL_STRID_SET_MakibisiDamage );
+        HANDEX_STR_AddArg( &param->exStr, pokeID );
       }
     }
   }

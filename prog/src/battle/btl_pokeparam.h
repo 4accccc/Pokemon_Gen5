@@ -215,7 +215,7 @@ extern BOOL BPP_IsPPFull( const BTL_POKEPARAM* pp, u8 wazaIdx );
 
 extern BOOL BPP_TURNFLAG_Get( const BTL_POKEPARAM* pp, BppTurnFlag flagID );
 extern BOOL BPP_GetActFlag( const BTL_POKEPARAM* pp, BppActFlag flagID );
-extern BOOL BPP_GetContFlag( const BTL_POKEPARAM* pp, BppContFlag flagID );
+extern BOOL BPP_CONTFLAG_Get( const BTL_POKEPARAM* pp, BppContFlag flagID );
 extern u16 BPP_GetTurnCount( const BTL_POKEPARAM* pp );
 extern u16 BPP_GetAppearTurn( const BTL_POKEPARAM* pp );
 

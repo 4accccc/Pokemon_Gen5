@@ -16,6 +16,7 @@ static int getWazaSickDamageStrID( WazaSick sick );
 static void cont_HorobiNoUta( BTL_SVFLOW_WORK* flowWk, BTL_POKEPARAM* bpp, u8 pokeID );
 static void cont_Yadorigi( BTL_SVFLOW_WORK* flowWk, BTL_POKEPARAM* bpp, u8 pokeID );
 static void cont_NeWoHaru( BTL_SVFLOW_WORK* flowWk, BTL_POKEPARAM* bpp, u8 pokeID );
+static void cont_Bind( BTL_SVFLOW_WORK* flowWk, BTL_POKEPARAM* bpp, u8 pokeID );
 static void cureProc( BTL_SVFLOW_WORK* flowWk, BTL_POKEPARAM* bpp, u8 pokeID, WazaSick sick );
 static void cure_Akubi( BTL_SVFLOW_WORK* flowWk, BTL_POKEPARAM* bpp );
 static void cure_HorobiNoUta( BTL_SVFLOW_WORK* flowWk, BTL_POKEPARAM* bpp );
@@ -71,6 +72,7 @@ static void contProc( BTL_SVFLOW_WORK* flowWk, BTL_POKEPARAM* bpp, u8 pokeID, Wa
   case WAZASICK_HOROBINOUTA:    cont_HorobiNoUta( flowWk, bpp, pokeID ); break;
   case WAZASICK_YADORIGI:       cont_Yadorigi( flowWk, bpp, pokeID ); break;
   case WAZASICK_NEWOHARU:       cont_NeWoHaru( flowWk, bpp, pokeID ); break;
+  case WAZASICK_BIND:           cont_Bind( flowWk, bpp, pokeID ); break;
   }
 }
 
@@ -88,8 +90,8 @@ static void contDamageCommon( BTL_SVFLOW_WORK* flowWk, const BTL_POKEPARAM* bpp,
 
   strID = getWazaSickDamageStrID( sick );
   if( strID >= 0 ){
-    param->fSucceedStrEx = TRUE;
-    param->succeedStrID = strID;
+    HANDEX_STR_Setup( &param->exStr, BTL_STRTYPE_SET, strID );
+    HANDEX_STR_AddArg( &param->exStr, pokeID );
   }
 }
 /**
@@ -131,8 +133,8 @@ static void cont_Yadorigi( BTL_SVFLOW_WORK* flowWk, BTL_POKEPARAM* bpp, u8 pokeI
   dmg_param->poke_cnt = 1;
   dmg_param->pokeID[0] = pokeID;
   dmg_param->damage[0] = damage;
-  dmg_param->fSucceedStrEx = TRUE;
-  dmg_param->succeedStrID = BTL_STRID_SET_YadorigiTurn;
+  HANDEX_STR_Setup( &dmg_param->exStr, BTL_STRTYPE_SET, BTL_STRID_SET_YadorigiTurn );
+  HANDEX_STR_AddArg( &dmg_param->exStr, pokeID );
 
   {
     BPP_SICK_CONT  cont = BPP_GetSickCont( bpp, WAZASICK_YADORIGI );
@@ -164,6 +166,28 @@ static void cont_NeWoHaru( BTL_SVFLOW_WORK* flowWk, BTL_POKEPARAM* bpp, u8 pokeI
     HANDEX_STR_AddArg( &param->exStr, pokeID );
   }
 }
+/**
+ *  ‚Ü‚«‚Â‚­‘¼FŒp‘±
+ */
+static void cont_Bind( BTL_SVFLOW_WORK* flowWk, BTL_POKEPARAM* bpp, u8 pokeID )
+{
+  if( !BPP_IsDead(bpp) )
+  {
+    BTL_HANDEX_PARAM_DAMAGE* param = BTL_SVFLOW_HANDLERWORK_Push( flowWk, BTL_HANDEX_DAMAGE, pokeID );
+    BPP_SICK_CONT cont = BPP_GetSickCont( bpp, WAZASICK_BIND );
+    WazaID waza = BPP_SICKCONT_GetParam( cont );
+
+    param->poke_cnt = 1;
+    param->pokeID[0] = pokeID;
+    param->damage[0] = BTL_CALC_QuotMaxHP( bpp, 16 );
+
+    HANDEX_STR_Setup( &param->exStr, BTL_STRTYPE_SET, BTL_STRID_SET_Bind );
+    HANDEX_STR_AddArg( &param->exStr, pokeID );
+    HANDEX_STR_AddArg( &param->exStr, waza );
+  }
+}
+
+
 
 //----------------------------------------------------------------------------------------------
 // ó‘ÔˆÙí‰ñ•œ

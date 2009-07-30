@@ -116,8 +116,6 @@ extern void BTL_SERVER_RECEPT_HP_Add( BTL_SVFLOW_WORK* wk, u8 PokeID, int value 
 extern void BTL_SVFLOW_RECEPT_ChangeWeather( BTL_SVFLOW_WORK* wk, BtlWeather weather );
 extern void BTL_SVFLOW_RECEPT_CurePokeSick( BTL_SVFLOW_WORK* wk, u8 pokeID );
 extern void BTL_SVFLOW_RECEPT_CureWazaSick( BTL_SVFLOW_WORK* wk, u8 pokeID, WazaSick sick );
-extern void BTL_SVFLOW_RECEPT_AddSick( BTL_SVFLOW_WORK* wk, u8 targetPokeID, u8 attackPokeID,
-  WazaSick sick, BPP_SICK_CONT contParam, BOOL fAlmost );
 extern void BTL_SVFLOW_RECEPT_CantEscapeAdd( BTL_SVFLOW_WORK* wk, u8 pokeID, BtlCantEscapeCode code );
 extern void BTL_SVFLOW_RECEPT_CantEscapeSub( BTL_SVFLOW_WORK* wk, u8 pokeID, BtlCantEscapeCode code );
 extern void BTL_SVFLOW_RECEPT_TraceTokusei( BTL_SVFLOW_WORK* wk, u8 pokeID, u8 targetPokeID );
@@ -304,10 +302,9 @@ typedef struct {
 typedef struct {
  BTL_HANDEX_PARAM_HEADER   header;   ///< 共有ヘッダ
  u8   poke_cnt;                      ///< 対象ポケモン数
- u8   fSucceedStrEx;                 ///< 成功時メッセージ表示
- u16  succeedStrID;                  ///< 成功時メッセージID
  u8   pokeID[ BTL_POS_MAX ];         ///< 対象ポケモンID
  u16  damage[ BTL_POS_MAX ];         ///< ダメージ量
+ BTL_HANDEX_STR_PARAMS     exStr;    ///< 成功時メッセージ
 }BTL_HANDEX_PARAM_DAMAGE;
 
 typedef struct {

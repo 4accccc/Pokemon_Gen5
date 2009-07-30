@@ -75,7 +75,6 @@ typedef enum {
   SC_ACT_DEAD,              ///< 【ポケモンひんし】[ ClientID ]
   SC_ACT_MEMBER_OUT,        ///< 【ポケモン退場】[ ClientID, memberIdx ]
   SC_ACT_MEMBER_IN,         ///< 【ポケモンイン】[ ClientID, posIdx, memberIdx ]
-  SC_ACT_SICK_SET,          ///<  状態異常をくらった
   SC_ACT_SICK_DMG,          ///<  アクション／ターンチェック時の状態異常ダメージ
   SC_ACT_WEATHER_DMG,       ///< 天候による一斉ダメージ処理[ weather, pokeCnt ]
   SC_ACT_WEATHER_START,     ///< 天候変化
@@ -166,6 +165,24 @@ static inline u32 scque_read3byte( BTL_SERVER_CMD_QUE* que )
     return data;
   }
 }
+static inline void scque_put4byte( BTL_SERVER_CMD_QUE* que, u32 data )
+{
+  GF_ASSERT(que->writePtr < (BTL_SERVER_CMD_QUE_SIZE-3));
+  que->buffer[ que->writePtr++ ] = (data >> 24)&0xff;
+  que->buffer[ que->writePtr++ ] = (data >> 16)&0xff;
+  que->buffer[ que->writePtr++ ] = (data >> 8)&0xff;
+  que->buffer[ que->writePtr++ ] = (data & 0xff);
+}
+static inline u32 scque_read4byte( BTL_SERVER_CMD_QUE* que )
+{
+  GF_ASSERT(que->readPtr < (que->writePtr-3));
+  {
+    u32 data = ( (que->buffer[que->readPtr]<<24) | (que->buffer[que->readPtr+1]<<16)
+               | (que->buffer[que->readPtr+2]<<8) | (que->buffer[que->readPtr+3]) );
+    que->readPtr += 4;
+    return data;
+  }
+}
 
 //----------------------------------------------------------------------------------------------
 //----------------------------------------------------------------------------------------------
@@ -220,7 +237,7 @@ static inline void SCQUE_PUT_OP_RankSet5( BTL_SERVER_CMD_QUE* que, u8 pokeID, u8
 }
 
 
-static inline void SCQUE_PUT_OP_SetSick( BTL_SERVER_CMD_QUE* que, u8 pokeID, u16 sick, u16 contParam )
+static inline void SCQUE_PUT_OP_SetSick( BTL_SERVER_CMD_QUE* que, u8 pokeID, u8 sick, u32 contParam )
 {
   SCQUE_PUT_Common( que, SC_OP_SICK_SET, pokeID, sick, contParam );
 }
@@ -424,11 +441,6 @@ static inline void SCQUE_PUT_ACT_WeatherEnd( BTL_SERVER_CMD_QUE* que, u8 weather
   SCQUE_PUT_Common( que, SC_ACT_WEATHER_END, weather );
 }
 
-static inline void SCQUE_PUT_ACT_SickSet( BTL_SERVER_CMD_QUE* que, u8 pokeID, u16 sick )
-{
-  SCQUE_PUT_Common( que, SC_ACT_SICK_SET, pokeID, sick );
-}
-
 static inline void SCQUE_PUT_ACT_SimpleHP( BTL_SERVER_CMD_QUE* que, u8 pokeID )
 {
   SCQUE_PUT_Common( que, SC_ACT_SIMPLE_HP, pokeID );
@@ -442,10 +454,6 @@ static inline void SCQUE_PUT_ACT_KINOMI( BTL_SERVER_CMD_QUE* que, u8 pokeID )
 {
   SCQUE_PUT_Common( que, SC_ACT_KINOMI, pokeID );
 }
-
-
-
-
 static inline void SCQUE_PUT_SickDamage( BTL_SERVER_CMD_QUE* que, u8 pokeID, u8 sick, u8 damage )
 {
   SCQUE_PUT_Common( que, SC_ACT_SICK_DMG, pokeID, sick, damage );

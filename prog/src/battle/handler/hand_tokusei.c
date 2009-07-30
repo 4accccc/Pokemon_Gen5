@@ -3178,18 +3178,21 @@ static BTL_EVENT_FACTOR*  HAND_TOK_ADD_DenkiEngine( u16 pri, u16 tokID, u8 pokeI
 static void handler_NoGuard( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
   // 攻撃側が誰であれ、必中状態にする
-  u8 atkID = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID_ATK );
+  u8 atkID = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID );
   const BTL_POKEPARAM* attacker = BTL_SVFLOW_RECEPT_GetPokeParam( flowWk, atkID );
   if( !BPP_CheckSick(attacker, WAZASICK_MUSTHIT) )
   {
-    BPP_SICK_CONT cont = BPP_SICKCONT_MakeTurn( 1 );
-    BTL_SVFLOW_RECEPT_AddSick( flowWk, atkID, pokeID, WAZASICK_MUSTHIT, cont, TRUE );
+    BTL_HANDEX_PARAM_ADD_SICK* param = BTL_SVFLOW_HANDLERWORK_Push( flowWk, BTL_HANDEX_ADD_SICK, pokeID );
+    param->poke_cnt = 1;
+    param->pokeID[0] = atkID;
+    param->sickID = WAZASICK_MUSTHIT;;
+    param->sickCont = BPP_SICKCONT_MakeTurn( 1 );
   }
 }
 static BTL_EVENT_FACTOR*  HAND_TOK_ADD_NoGuard( u16 pri, u16 tokID, u8 pokeID )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_NOEFFECT_TYPE_CHECK,        handler_NoGuard },  // タイプによる無効化チェックハンドラ
+    { BTL_EVENT_WAZA_EXECUTE_FIX,        handler_NoGuard },  // タイプによる無効化チェックハンドラ
     { BTL_EVENT_NULL, NULL },
   };
   return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_TOKUSEI, tokID, pri, pokeID, HandlerTable );
@@ -3763,8 +3766,9 @@ static void handler_HedoroEki( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flow
       param->poke_cnt = 1;
       param->pokeID[0] = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID_ATK );
       param->damage[0] = damage;
-      param->fSucceedStrEx = TRUE;
-      param->succeedStrID = BTL_STRID_SET_HedoroEki;
+      HANDEX_STR_Setup( &param->exStr, BTL_STRTYPE_SET, BTL_STRID_SET_HedoroEki );
+      HANDEX_STR_AddArg( &param->exStr, param->pokeID[0] );
+
     }
     BTL_SVFLOW_HANDLERWORK_Push( flowWk, BTL_HANDEX_TOKWIN_OUT, pokeID );
   }

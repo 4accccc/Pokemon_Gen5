@@ -707,7 +707,7 @@ static void setWaruagakiAction( BTL_ACTION_PARAM* dst, BTL_CLIENT* wk, const BTL
 static BOOL is_unselectable_waza( BTL_CLIENT* wk, const BTL_POKEPARAM* bpp, WazaID waza, STR_PARAM* strParam )
 {
   // こだわりアイテム効果（最初に使ったワザしか選べない）
-  if( BPP_GetContFlag(bpp, BPP_CONTFLG_KODAWARI_LOCK) )
+  if( BPP_CONTFLAG_Get(bpp, BPP_CONTFLG_KODAWARI_LOCK) )
   {
     if( waza != BPP_GetPrevWazaID(bpp) ){
       if( strParam != NULL )
@@ -1226,7 +1226,6 @@ static BOOL SubProc_UI_ServerCmd( BTL_CLIENT* wk, int* seq )
     { SC_ACT_MEMBER_IN,         scProc_ACT_MemberIn       },
     { SC_ACT_RANKUP,            scProc_ACT_RankUp         },
     { SC_ACT_RANKDOWN,          scProc_ACT_RankDown       },
-    { SC_ACT_SICK_SET,          scProc_ACT_SickSet        },
     { SC_ACT_SICK_DMG,          scProc_ACT_SickDamage     },
     { SC_ACT_WEATHER_DMG,       scProc_ACT_WeatherDmg     },
     { SC_ACT_WEATHER_START,     scProc_ACT_WeatherStart   },

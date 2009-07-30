@@ -1831,16 +1831,11 @@ static void handler_OujaNoSirusi( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* f
   // 自分が攻撃側で
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
   {
-    // ダメージワザのとき
-    WazaID  waza = BTL_EVENTVAR_GetValue( BTL_EVAR_WAZAID );
-    if( WAZADATA_IsDamage(waza) )
-    {
-      // ひるみ確率０なら、アイテム威力値に書き換え
-      u8 per = BTL_EVENTVAR_GetValue( BTL_EVAR_ADD_PER );
-      if( per == 0 ){
-        per = common_GetItemParam( myHandle, flowWk, ITEM_PRM_ATTACK );
-        BTL_EVENTVAR_RewriteValue( BTL_EVAR_ADD_PER, per );
-      }
+    // ひるみ確率０なら、アイテム威力値に書き換え
+    u8 per = BTL_EVENTVAR_GetValue( BTL_EVAR_ADD_PER );
+    if( per == 0 ){
+      per = common_GetItemParam( myHandle, flowWk, ITEM_PRM_ATTACK );
+      BTL_EVENTVAR_RewriteValue( BTL_EVAR_ADD_PER, per );
     }
   }
 }
@@ -1872,16 +1867,11 @@ static void handler_SurudoiTume( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* fl
   // 自分が攻撃側で
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
   {
-    // ダメージワザのとき
-    WazaID  waza = BTL_EVENTVAR_GetValue( BTL_EVAR_WAZAID );
-    if( WAZADATA_IsDamage(waza) )
-    {
-      // ひるみ確率０なら、アイテム威力値に書き換え
-      u8 per = BTL_EVENTVAR_GetValue( BTL_EVAR_ADD_PER );
-      if( per == 0 ){
-        per = common_GetItemParam( myHandle, flowWk, ITEM_PRM_ATTACK );
-        BTL_EVENTVAR_RewriteValue( BTL_EVAR_ADD_PER, per );
-      }
+    // ひるみ確率０なら、アイテム威力値に書き換え
+    u8 per = BTL_EVENTVAR_GetValue( BTL_EVAR_ADD_PER );
+    if( per == 0 ){
+      per = common_GetItemParam( myHandle, flowWk, ITEM_PRM_ATTACK );
+      BTL_EVENTVAR_RewriteValue( BTL_EVAR_ADD_PER, per );
     }
   }
 }

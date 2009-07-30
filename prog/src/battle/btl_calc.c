@@ -317,24 +317,32 @@ u16 BTL_CALC_RecvWeatherDamage( const BTL_POKEPARAM* bpp, BtlWeather weather )
 //=============================================================================================
 void BTL_CALC_WazaSickContToBppSickCont( WAZA_SICKCONT_PARAM wazaSickCont, const BTL_POKEPARAM* attacker, BPP_SICK_CONT* sickCont )
 {
-  sickCont->raw = 0;
-  sickCont->type = wazaSickCont.type;
-
   switch( sickCont->type ){
   case WAZASICK_CONT_POKE:
     GF_ASSERT(attacker!=NULL);
-    sickCont->poke.ID = BPP_GetID( attacker );
+    {
+      *sickCont = BPP_SICKCONT_MakePoke( BPP_GetID(attacker) );
+    }
     break;
 
   case WAZASICK_CONT_TURN:
     {
-      sickCont->turn.count = BTL_CALC_RandRange( wazaSickCont.turnMin, wazaSickCont.turnMax );
+      u8 turn = BTL_CALC_RandRange( wazaSickCont.turnMin, wazaSickCont.turnMax );
+      *sickCont = BPP_SICKCONT_MakeTurn( turn );
     }
     break;
 
   case WAZASICK_CONT_PERMANENT:
-    sickCont->permanent.count_max = wazaSickCont.turnMax;
-    sickCont->permanent.param = wazaSickCont.turnMin;
+    *sickCont = BPP_SICKCONT_MakePermanentIncParam( wazaSickCont.turnMax, wazaSickCont.turnMin );
+    break;
+
+  case WAZASICK_CONT_POKETURN:
+    GF_ASSERT(attacker!=NULL);
+    {
+      u8 pokeID = BPP_GetID( attacker );
+      u8 turn = BTL_CALC_RandRange( wazaSickCont.turnMin, wazaSickCont.turnMax );
+      *sickCont = BPP_SICKCONT_MakePokeTurn( pokeID, turn );
+    }
     break;
   }
 }

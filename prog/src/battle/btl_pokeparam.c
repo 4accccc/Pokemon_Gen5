@@ -697,7 +697,7 @@ BOOL BPP_GetActFlag( const BTL_POKEPARAM* pp, BppActFlag flagID )
  * @retval  BOOL
  */
 //=============================================================================================
-BOOL BPP_GetContFlag( const BTL_POKEPARAM* pp, BppContFlag flagID )
+BOOL BPP_CONTFLAG_Get( const BTL_POKEPARAM* pp, BppContFlag flagID )
 {
   return flgbuf_get( pp->contFlag, flagID );
 }
@@ -1483,33 +1483,33 @@ u8 BPP_GetSickTurnCount( const BTL_POKEPARAM* bpp, WazaSick sick )
  * @retval  int
  */
 //=============================================================================================
-int BPP_CalcSickDamage( const BTL_POKEPARAM* pp, WazaSick sick )
+int BPP_CalcSickDamage( const BTL_POKEPARAM* bpp, WazaSick sick )
 {
-  if( BPP_CheckSick(pp, sick) )
+  if( BPP_CheckSick(bpp, sick) )
   {
     switch( sick ){
     case WAZASICK_DOKU:
       // カウンタが0なら通常の「どく」
-      if( pp->wazaSickCounter[sick] == 0 ){
-        return BTL_CALC_QuotMaxHP( pp, 8 );
+      if( bpp->wazaSickCounter[sick] == 0 ){
+        return BTL_CALC_QuotMaxHP( bpp, 8 );
       }
       // カウンタが1～なら「どくどく」
       else{
-        return (pp->baseParam.hpMax / 16) * pp->wazaSickCounter[sick];
+        return (bpp->baseParam.hpMax / 16) * bpp->wazaSickCounter[sick];
       }
       break;
 
     case WAZASICK_YAKEDO:
-      return BTL_CALC_QuotMaxHP( pp, 8 );
+      return BTL_CALC_QuotMaxHP( bpp, 8 );
 
     case WAZASICK_AKUMU:
-      if( BPP_CheckSick(pp, WAZASICK_NEMURI) ){
-        return BTL_CALC_QuotMaxHP( pp, 4 );
+      if( BPP_CheckSick(bpp, WAZASICK_NEMURI) ){
+        return BTL_CALC_QuotMaxHP( bpp, 4 );
       }
       break;
 
     case WAZASICK_NOROI:
-      return BTL_CALC_QuotMaxHP( pp, 4 );
+      return BTL_CALC_QuotMaxHP( bpp, 4 );
 
     default:
       return 0;

@@ -47,6 +47,7 @@ typedef enum {
   SC_ARGFMT_5_5_5bit    = SC_ARGFMT(3,1),
   SC_ARGFMT_5_5_14bit   = SC_ARGFMT(3,2),
   SC_ARGFMT_112byte     = SC_ARGFMT(3,3),
+  SC_ARGFMT_114byte     = SC_ARGFMT(3,4),
 
   // à¯êîÇSå¬ÇÃå^
   SC_ARGFMT_53bit_12byte = SC_ARGFMT(4,0),
@@ -82,7 +83,7 @@ static const u8 ServerCmdToFmtTbl[] = {
   SC_ARGFMT_53bit_1byte,      // SC_OP_RANK_UP
   SC_ARGFMT_53bit_1byte,      // SC_OP_RANK_DOWN
   SC_ARGFMT_555555bit,        // SC_OP_RANK_SET5
-  SC_ARGFMT_112byte,          // SC_OP_SICK_SET
+  SC_ARGFMT_114byte,          // SC_OP_SICK_SET
   SC_ARGFMT_1byte,            // SC_OP_CURE_POKESICK
   SC_ARGFMT_12byte,           // SC_OP_CURE_WAZASICK
   SC_ARGFMT_53bit_12byte,     // SC_OP_MEMBER_IN
@@ -121,7 +122,6 @@ static const u8 ServerCmdToFmtTbl[] = {
   SC_ARGFMT_1byte,            // SC_ACT_DEAD
   SC_ARGFMT_1byte,            // SC_ACT_MEMBER_OUT
   SC_ARGFMT_53bit_1byte,      // SC_ACT_MEMBER_IN
-  SC_ARGFMT_12byte,           // SC_ACT_SICK_SET
   SC_ARGFMT_5_5_14bit,        // SC_ACT_SICK_DMG
   SC_ARGFMT_4_4bit,           // SC_ACT_WEATHER_DMG,
   SC_ARGFMT_1byte,            // SC_ACT_WEATHER_START,
@@ -281,6 +281,13 @@ static void put_core( BTL_SERVER_CMD_QUE* que, ServerCmd cmd, ScArgFormat fmt, c
       scque_put2byte( que, args[2] );
     }
     break;
+  case SC_ARGFMT_114byte:
+    {
+      scque_put1byte( que, args[0] );
+      scque_put1byte( que, args[1] );
+      scque_put4byte( que, args[2] );
+    }
+    break;
   case SC_ARGFMT_53bit_12byte:
     scque_put1byte( que, pack1_2args(args[0], args[1], 5, 3) );
     scque_put1byte( que, args[2] );
@@ -386,6 +393,13 @@ static void read_core( BTL_SERVER_CMD_QUE* que, ScArgFormat fmt, int* args )
       args[0] = scque_read1byte( que );
       args[1] = scque_read1byte( que );
       args[2] = scque_read2byte( que );
+    }
+    break;
+  case SC_ARGFMT_114byte:
+    {
+      args[0] = scque_read1byte( que );
+      args[1] = scque_read1byte( que );
+      args[2] = scque_read4byte( que );
     }
     break;
   case SC_ARGFMT_53bit_12byte:
