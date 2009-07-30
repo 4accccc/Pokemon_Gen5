@@ -1,10 +1,10 @@
 #event data
-#save date:2009/07/29 19:30:14
+#save date:2009/07/30 11:29:21
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\c03p02.wms
 #SECTION START:OBJ_EVENT
 #Map Event List data
-#save date:2009/07/29 19:30:14
+#save date:2009/07/30 11:29:21
 2
 #hold event type:
 1
@@ -14,7 +14,7 @@ C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\c03p02.wms
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT
 #Map Event List data
-#save date:2009/07/29 19:30:14
+#save date:2009/07/30 11:29:21
 2
 #hold event type:
 1
@@ -24,7 +24,7 @@ C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\c03p02.wms
 #SECTION End:BG_EVENT
 #SECTION START:POS_EVENT
 #Map Event List data
-#save date:2009/07/29 19:30:14
+#save date:2009/07/30 11:29:21
 2
 #hold event type:
 1
@@ -34,12 +34,12 @@ C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\c03p02.wms
 #SECTION End:POS_EVENT
 #SECTION START:DOOR_EVENT
 #Map Event List data
-#save date:2009/07/29 19:30:14
+#save date:2009/07/30 11:29:21
 2
 #hold event type:
 1
 #hold event number:
-54
+55
 #event number: 0
 #Door Event Label
 DOOR_ID_C03P02_C03P03_EXIT01
@@ -332,13 +332,13 @@ DOOR_ID_C03P02_C03P07_EXIT01
 #Next Zone ID Name
 ZONE_ID_C03P07
 #Next Door ID Name
-DOOR_ID_C03P07_C03P02_EXIT05
+DOOR_ID_C03P07_C03P02_EXIT01
 #Door Direction
 EXIT_DIR_UP
 #Door Type
 EXIT_TYPE_NONE
 #position
-32 0 -192
+-32 0 -192
 #event number: 23
 #Door Event Label
 DOOR_ID_C03P02_C03P07_EXIT02
@@ -351,7 +351,7 @@ EXIT_DIR_UP
 #Door Type
 EXIT_TYPE_NONE
 #position
-16 0 -192
+-16 0 -192
 #event number: 24
 #Door Event Label
 DOOR_ID_C03P02_C03P07_EXIT03
@@ -390,7 +390,7 @@ EXIT_DIR_UP
 #Door Type
 EXIT_TYPE_NONE
 #position
--16 0 -192
+16 0 -192
 #event number: 27
 #Door Event Label
 DOOR_ID_C03P02_C03P08_EXIT02
@@ -468,7 +468,7 @@ EXIT_DIR_UP
 #Door Type
 EXIT_TYPE_NONE
 #position
--32 0 -192
+-48 0 -192
 #event number: 33
 #Door Event Label
 DOOR_ID_C03P02_C03P04_EXIT05
@@ -731,16 +731,29 @@ EXIT_TYPE_NONE
 80 0 160
 #event number: 53
 #Door Event Label
-DOOR_ID_C03P02_C03P07_EXIT000
+DOOR_ID_C03P02_C03P07_EXIT05
 #Next Zone ID Name
 ZONE_ID_C03P07
 #Next Door ID Name
-DOOR_ID_C03P07_C03P02_EXIT01
+DOOR_ID_C03P07_C03P02_EXIT05
 #Door Direction
 EXIT_DIR_UP
 #Door Type
 EXIT_TYPE_NONE
 #position
--48 0 -192
+32 0 -192
+#event number: 54
+#Door Event Label
+DOOR_ID_C03P02_C03P07_EXIT06
+#Next Zone ID Name
+ZONE_ID_C03P07
+#Next Door ID Name
+DOOR_ID_C03P07_C03P02_EXIT06
+#Door Direction
+EXIT_DIR_UP
+#Door Type
+EXIT_TYPE_NONE
+#position
+48 0 -192
 #Map Event List Data End
 #SECTION End:DOOR_EVENT
