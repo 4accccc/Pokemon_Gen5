@@ -513,6 +513,20 @@ void  BTLV_MCSS_SetScale( BTLV_MCSS_WORK *bmw, int position, VecFx32 *scale )
 
 //============================================================================================
 /**
+ * @brief ポケモンの影バニッシュフラグを格納
+ *
+ * @param[in] bmw       BTLV_MCSS管理ワークへのポインタ
+ * @param[in] position  格納するポケモンの立ち位置
+ * @param[in] flag      格納するスケール値
+ */
+//============================================================================================
+void  BTLV_MCSS_SetShadowVanishFlag( BTLV_MCSS_WORK *bmw, int position, u8 flag )
+{
+  MCSS_SetShadowVanishFlag( bmw->mcss[ position ], flag );
+}
+
+//============================================================================================
+/**
  * @brief ポケモン移動
  *
  * @param[in] bmw     BTLV_MCSS管理ワークへのポインタ
