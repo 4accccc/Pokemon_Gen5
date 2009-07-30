@@ -9,6 +9,14 @@
 //  .include  "../eventdata/tmp/zone_t02pc0101evc.h"
   .include  "t02pc0101.h"
 
+/**************************************************************/	
+/*    T02PC0101で使う定数                                     */
+/**************************************************************/
+#define CHECK_X01a (6)
+#define CHECK_X01b (7)
+#define CHECK_X01c (8)
+#define CHECK_Z01a (18)
+
 //--------------------------------------------------------------
 //               スクリプト本体
 //--------------------------------------------------------------
@@ -42,9 +50,26 @@ _EVENT_DATA_END
 /*     博士によるポケセン案内イベント                         */
 /**************************************************************/
 ev_t02pc0101_doctor_guide:
-	_OBJ_ANIME MMDL_ID_PLAYER,anime_t02pc0101_guide00
+	_PLAYER_POS_GET SCWK_TEMP0,SCWK_TEMP1 //自機座標取得
+	_IFVAL_JUMP SCWK_TEMP0,EQ,6,pos_6_18
+	_IFVAL_JUMP SCWK_TEMP0,EQ,7,pos_7_18
+	_IFVAL_JUMP SCWK_TEMP0,EQ,8,pos_8_18
+
+pos_6_18:
+	_OBJ_ANIME MMDL_ID_PLAYER,anime_t02pc0101_guide00a
+	_OBJ_ANIME_WAIT
+	_JUMP doctor_guide_start
+
+pos_7_18:
+	_OBJ_ANIME MMDL_ID_PLAYER,anime_t02pc0101_guide00b
+	_OBJ_ANIME_WAIT
+	_JUMP doctor_guide_start
+
+pos_8_18:
+	_OBJ_ANIME MMDL_ID_PLAYER,anime_t02pc0101_guide00c
 	_OBJ_ANIME_WAIT
 
+doctor_guide_start:
 	_TALK_OBJ_PAUSE_ALL
 	_TURN_HERO_SITE
 	_TALKWIN_OPEN
@@ -92,6 +117,7 @@ ev_t02pc0101_doctor_guide:
 
 	_OBJ_ANIME T02PC0101_DOCTOR,anime_t02pc0101_guide04
 	_OBJ_ANIME_WAIT
+
 //博士の動作モデルを削除する処理
 	_OBJ_DEL T02PC0101_DOCTOR
 
@@ -129,9 +155,25 @@ ev_t02pc0101_middlewoman1_1:
 
 
 /**************************************************************/
-/*     主人公、博士の前まで移動                     */
+/*     主人公、博士の前まで移動pos_6_18                     */
 /**************************************************************/
-_ANIME_LABEL	anime_t02pc0101_guide00
+_ANIME_LABEL	anime_t02pc0101_guide00a
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+/**************************************************************/
+/*     主人公、博士の前まで移動pos_7_18                     */
+/**************************************************************/
+_ANIME_LABEL	anime_t02pc0101_guide00b
+	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+/**************************************************************/
+/*     主人公、博士の前まで移動pos_8_18                     */
+/**************************************************************/
+_ANIME_LABEL	anime_t02pc0101_guide00c
+	_ANIME_DATA	AC_WALK_L_8F,1
 	_ANIME_DATA	AC_WALK_U_8F,1
 	_ANIME_DATA	ACMD_END,0
 
