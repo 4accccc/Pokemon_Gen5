@@ -1201,6 +1201,34 @@
 		<language name="JPN" width="256">W014-03</language>
 		<language name="JPN_KANJI" width="256">W014-03</language>
 	</row>
+	<row id="msg_seq_se_w015_01">
+		<language name="JPN" width="256">W015-01</language>
+		<language name="JPN_KANJI" width="256">W015-01</language>
+	</row>
+	<row id="msg_seq_se_w017_01">
+		<language name="JPN" width="256">W017-01</language>
+		<language name="JPN_KANJI" width="256">W017-01</language>
+	</row>
+	<row id="msg_seq_se_w018_01">
+		<language name="JPN" width="256">W018-01</language>
+		<language name="JPN_KANJI" width="256">W018-01</language>
+	</row>
+	<row id="msg_seq_se_w018_02">
+		<language name="JPN" width="256">W018-02</language>
+		<language name="JPN_KANJI" width="256">W018-02</language>
+	</row>
+	<row id="msg_seq_se_w020_01">
+		<language name="JPN" width="256">W020-01</language>
+		<language name="JPN_KANJI" width="256">W020-01</language>
+	</row>
+	<row id="msg_seq_se_w022_01">
+		<language name="JPN" width="256">W022-01</language>
+		<language name="JPN_KANJI" width="256">W022-01</language>
+	</row>
+	<row id="msg_seq_se_w022_02">
+		<language name="JPN" width="256">W022-02</language>
+		<language name="JPN_KANJI" width="256">W022-02</language>
+	</row>
 	<row id="msg_seq_se_pasa1">
 		<language name="JPN" width="256">PASA1</language>
 		<language name="JPN_KANJI" width="256">PASA1</language>
