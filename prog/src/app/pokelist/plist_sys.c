@@ -21,6 +21,7 @@
 
 #include "pokeicon/pokeicon.h"
 #include "waza_tool/wazano_def.h"
+#include "item/item.h"
 
 #include "plist_sys.h"
 #include "plist_plate.h"
@@ -854,6 +855,12 @@ static void PLIST_InitMode_Select( PLIST_WORK *work )
     work->canExit = FALSE;
     break;
   
+  case PL_MODE_WAZASET:
+    PLIST_MSG_OpenWindow( work , work->msgWork , PMT_BAR );
+    PLIST_MSG_DrawMessageNoWait( work , work->msgWork , mes_pokelist_02_05 );
+    work->canExit = FALSE;
+    break;
+
   default:
     GF_ASSERT_MSG( NULL , "PLIST mode まだ作ってない！[%d]\n" , work->plData->mode );
     break;
@@ -887,8 +894,23 @@ static void PLIST_TermMode_Select_Decide( PLIST_WORK *work )
     PLIST_MessageWaitInit( work , mes_pokelist_deb_01 , PSTATUS_MSGCB_ExitCommon );
     PLIST_MSG_DeleteWordSet( work , work->msgWork );
     break;
+
+  case PL_MODE_WAZASET:
+    //FIXME本当に覚えられるか？
+    work->plData->ret_mode = PL_RET_BAG;
+    work->plData->waza = ITEM_GetWazaNo(work->plData->item);
+    PLIST_MSG_CreateWordSet( work , work->msgWork );
+    PLIST_MSG_AddWordSet_PokeName( work , work->msgWork , 0 , work->selectPokePara );
+    PLIST_MSG_AddWordSet_SkillName( work , work->msgWork , 1 , work->plData->waza );
+    PLIST_MessageWaitInit( work , mes_pokelist_04_11 , PSTATUS_MSGCB_ExitCommon );
+    PLIST_MSG_DeleteWordSet( work , work->msgWork );
+
+    break;
   
   default:
+    PLIST_SelectMenuInit( work );
+    //中で一緒にメニューを開く
+    PLIST_InitMode_Menu( work );
     GF_ASSERT_MSG( NULL , "PLIST mode まだ作ってない！[%d]\n" , work->plData->mode );
     break;
   }
@@ -1921,6 +1943,15 @@ const BOOL PLIST_UTIL_IsBattleMenu( const PLIST_WORK *work )
     return TRUE;
   }
   return FALSE;
+}
+
+//--------------------------------------------------------------
+//	今渡されている技が覚えられるか？
+//--------------------------------------------------------------
+const PLIST_SKILL_CAN_LEARN PLIST_UTIL_CheckLearnSkill( PLIST_WORK *work , const POKEMON_PARAM *pp )
+{
+    //FIXME 正しい技チェック
+  return LSCL_OK;
 }
 
 //--------------------------------------------------------------

@@ -463,7 +463,7 @@ static void PLIST_PLATE_DrawParam( PLIST_WORK *work , PLIST_PLATE_WORK *plateWor
     GFL_CLACT_WK_SetDrawEnable( plateWork->conditionIcon , TRUE );
   }
   
-  //HPorバトル参加順
+  //HPorバトル参加順or技教え
   if( plateWork->btlOrder != PPBO_INVALLID )
   {
     //バトル参加順
@@ -486,6 +486,29 @@ static void PLIST_PLATE_DrawParam( PLIST_WORK *work , PLIST_PLATE_WORK *plateWor
     PLIST_UTIL_DrawStrFunc( work , plateWork->bmpWin , strId ,
                     PLIST_PLATE_STR_BTL_ORDER_X , PLIST_PLATE_STR_BTL_ORDER_Y , fontCol );
     
+  }
+  else
+  if( work->plData->mode == PL_MODE_WAZASET )
+  {
+    u32 strId;
+    const PLIST_SKILL_CAN_LEARN learnType = PLIST_UTIL_CheckLearnSkill( work , plateWork->pp );
+    
+    switch( learnType )
+    {
+    case LSCL_OK:
+      strId = mes_pokelist_06_07;
+      break;
+      
+    case LSCL_NG:
+      strId = mes_pokelist_06_08;
+      break;
+      
+    case LSCL_LEARN:
+      strId = mes_pokelist_06_09;
+      break;
+    }
+    PLIST_UTIL_DrawStrFunc( work , plateWork->bmpWin , strId ,
+                    PLIST_PLATE_STR_BTL_ORDER_X , PLIST_PLATE_STR_BTL_ORDER_Y , fontCol );
   }
   else
   {

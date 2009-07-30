@@ -14,6 +14,13 @@
 #include "plist_local_def.h"
 #include "print/wordset.h"
 
+typedef enum
+{
+  LSCL_OK,    //覚えられる
+  LSCL_NG,    //覚えられない
+  LSCL_LEARN, //すでに覚えている
+}PLIST_SKILL_CAN_LEARN;
+
 extern const BOOL PLIST_InitPokeList( PLIST_WORK *work );
 extern const BOOL PLIST_TermPokeList( PLIST_WORK *work );
 extern const BOOL PLIST_UpdatePokeList( PLIST_WORK *work );
@@ -24,6 +31,7 @@ extern const BOOL PLIST_UpdatePokeList( PLIST_WORK *work );
 //--------------------------------------------------------------
 extern u32 PLIST_UTIL_CheckFieldWaza( const POKEMON_PARAM *pp , const u8 wazaPos );
 extern const BOOL PLIST_UTIL_IsBattleMenu( const PLIST_WORK *work );
+extern const PLIST_SKILL_CAN_LEARN PLIST_UTIL_CheckLearnSkill( PLIST_WORK *work , const POKEMON_PARAM *pp );
 
 //文字描画用
 extern void PLIST_UTIL_DrawStrFunc( PLIST_WORK *work , GFL_BMPWIN *bmpWin , 

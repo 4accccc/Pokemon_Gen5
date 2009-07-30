@@ -262,6 +262,13 @@ void PLIST_MSG_AddWordSet_ItemName( PLIST_WORK *work , PLIST_MSG_WORK *msgWork ,
   WORDSET_RegisterItemName( msgWork->wordSet , wordSetIdx , itemIdx );
 }
 
+void PLIST_MSG_AddWordSet_SkillName( PLIST_WORK *work , PLIST_MSG_WORK *msgWork , u8 wordSetIdx , u16 skillNo )
+{
+  GF_ASSERT( msgWork->wordSet != NULL );
+
+  WORDSET_RegisterWazaName( msgWork->wordSet , wordSetIdx , skillNo );
+}
+
 #pragma mark [> util
 //--------------------------------------------------------------
 //	ウィンドウクリア
