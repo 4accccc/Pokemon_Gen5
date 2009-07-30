@@ -8,9 +8,10 @@
 #define	SCRID_C01_TALKOBJ_CLEANINGM		(4)
 #define	SCRID_C01_TALKOBJ_BREEDERW		(5)
 #define	SCRID_C01_TALKOBJ_WOMAN2		(6)
-#define	SCRID_C01_SIGN1		(7)
-#define	SCRID_C01_SIGN2		(8)
-#define	SCRID_C01_SIGN3		(9)
-#define	SCRID_C01_DATA_MAX		(9)		//�ő吔
+#define	SCRID_C01_TALKOBJ_BABYGIRL		(7)
+#define	SCRID_C01_SIGN1		(8)
+#define	SCRID_C01_SIGN2		(9)
+#define	SCRID_C01_SIGN3		(10)
+#define	SCRID_C01_DATA_MAX		(10)		//�ő吔
 
 #endif //_C01_DEF_H_

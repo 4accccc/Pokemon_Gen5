@@ -25,6 +25,8 @@ _EVENT_DATA    ev_c01_talkobj_boy2
 _EVENT_DATA    ev_c01_talkobj_cleaningm
 _EVENT_DATA    ev_c01_talkobj_breederw
 _EVENT_DATA    ev_c01_talkobj_woman2
+_EVENT_DATA    ev_c01_talkobj_babygirl
+
 _EVENT_DATA    ev_c01_sign1
 _EVENT_DATA    ev_c01_sign2
 _EVENT_DATA    ev_c01_sign3
@@ -135,6 +137,40 @@ ev_c01_talkobj_woman2:
 	_TALKMSG_ALLPUT msg_c01_woman2_01
 	_AB_KEYWAIT
   _TALKWIN_CLOSE
+  _OBJ_PAUSE_CLEAR_ALL
+  _END
+
+/**************************************************************/
+/*  C01 BABYGIRLのランダム会話用イベントスクリプト            */
+/**************************************************************/
+ev_c01_talkobj_babygirl:
+  _TALK_OBJ_PAUSE_ALL
+  _TURN_HERO_SITE
+
+  _GET_RND SCWK_ANSWER,3
+  _IFVAL_JUMP SCWK_ANSWER,EQ,0,babygirl1_01
+  _IFVAL_JUMP SCWK_ANSWER,EQ,1,babygirl1_02
+  _IFVAL_JUMP SCWK_ANSWER,EQ,2,babygirl1_03
+
+babygirl1_01:
+	_TALKWIN_OPEN
+	_TALKMSG_ALLPUT msg_c01_babygirl1_01
+	_JUMP babygirl_end
+
+babygirl1_02:
+	_TALKWIN_OPEN
+	_TALKMSG_ALLPUT msg_c01_babygirl1_02
+	_JUMP babygirl_end
+
+babygirl1_03:
+	_TALKWIN_OPEN
+	_TALKMSG_ALLPUT msg_c01_babygirl1_03
+	_JUMP babygirl_end
+
+babygirl_end:
+	_AB_KEYWAIT
+	_TALKWIN_CLOSE
+
   _OBJ_PAUSE_CLEAR_ALL
   _END
 
