@@ -215,7 +215,7 @@ void FIELD_RAIL_POSFUNC_StraitLine(const FIELD_RAIL * rail, VecFx32 * pos)
     VecFx32 width;
 		s32 width_ofs = FIELD_RAIL_GetWidthOfs( rail );
 		fx32 ofs_unit = FIELD_RAIL_GetOfsUnit( rail );
-    fx32 w_ofs = width_ofs * ofs_unit;
+    fx32 w_ofs = FX_Mul( width_ofs<<FX32_SHIFT, ofs_unit );
     VEC_CrossProduct(&val, &xzNormal, &width);
     VEC_Normalize(&width, &width);
     VEC_MultAdd(w_ofs, &width, pos, pos);
@@ -256,7 +256,7 @@ void FIELD_RAIL_POSFUNC_CurveLine(const FIELD_RAIL * rail, VecFx32 * pos)
   VecFx32 center, vec_s, vec_e, vec_i;
 	s32 line_ofs			= FIELD_RAIL_GetLineOfs( rail );
 	s32 line_ofs_max	= FIELD_RAIL_GetLineOfsMax( rail );
-  fx32 ofs = (line_ofs * FX32_ONE) / line_ofs_max;
+  fx32 ofs = FX_Div( (line_ofs * FX32_ONE), line_ofs_max*FX32_ONE );
   VecFx32 pos_sub;
 
 
@@ -291,16 +291,17 @@ void FIELD_RAIL_POSFUNC_CurveLine(const FIELD_RAIL * rail, VecFx32 * pos)
     VecFx32 normal;
 		s32 width_ofs = FIELD_RAIL_GetWidthOfs( rail );
 		fx32 ofs_unit = FIELD_RAIL_GetOfsUnit( rail );
+    fx32 ofs_w = FX_Mul( width_ofs<<FX32_SHIFT, ofs_unit );
     
 		VEC_Normalize(&vec_i, &w_vec);
     VEC_CrossProduct( &w_vec, &pos_sub, &normal );
     if( normal.y < 0 )
     {
-  		VEC_MultAdd(-(width_ofs) * ofs_unit, &w_vec, pos, pos);
+  		VEC_MultAdd(-(ofs_w), &w_vec, pos, pos);
     }
     else
     {
-  		VEC_MultAdd(width_ofs * ofs_unit, &w_vec, pos, pos);
+  		VEC_MultAdd(ofs_w, &w_vec, pos, pos);
     }
 	}
 
@@ -497,7 +498,7 @@ void FIELD_RAIL_CAMERAFUNC_OfsAngleCamera(const FIELD_RAIL_MAN* man)
   {
     u32 div = FIELD_RAIL_GetLineOfsMax(rail);
 		s32 line_ofs = FIELD_RAIL_GetLineOfs(rail);
-    fx32 t = FX32_ONE * line_ofs / div;
+    fx32 t = FX_Div( FX32_ONE * line_ofs, div * FX32_ONE );
 
     getVectorFromAngleValue(&c_s, cs_work->yaw, cs_work->pitch, cs_work->len);
     getVectorFromAngleValue(&c_e, ce_work->yaw, ce_work->pitch, ce_work->len);

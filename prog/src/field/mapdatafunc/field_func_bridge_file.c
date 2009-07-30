@@ -191,11 +191,15 @@ BOOL FieldLoadMapData_BridgeFile( GFL_G3D_MAP* g3Dmap, void * exWork )
 void FieldGetAttr_BridgeFile( GFL_G3D_MAP_ATTRINFO* attrInfo, const void* mapdata, 
 					const VecFx32* posInBlock, const fx32 map_width, const fx32 map_height )
 {
+  // 090731 橋、C3には現在アトリビュートはない
+  attrInfo->mapAttrCount = 0;
+#if 0
 	BridgePackHeaderSt * fileHeader = (void*)((u8*)mapdata + sizeof(MAP_HEIGHT_INFO));
 	MHI_PTR mhi = (MHI_PTR)mapdata;
 	u32 pol_count;
 	pol_count = GetDPFormatHeight(posInBlock->x, posInBlock->z, mhi, attrInfo);
 	attrInfo->mapAttrCount = pol_count;
+#endif
 #if 0
 	if (FieldEasyTP_TouchDirGet() == FLDEASYTP_TCHDIR_UP) {
 		fx32 outY;

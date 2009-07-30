@@ -157,6 +157,12 @@ static RAIL_KEY getReverseKey(RAIL_KEY key);
 static RAIL_KEY getClockwiseKey(RAIL_KEY key);
 static RAIL_KEY getAntiClockwiseKey(RAIL_KEY key);
 
+
+
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+static void initMoveParam(FIELD_RAIL_MAN * man );
+
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 static void initRail(FIELD_RAIL * rail, const RAIL_DAT* rail_dat );
@@ -277,6 +283,9 @@ void FIELD_RAIL_MAN_Load(FIELD_RAIL_MAN * man, const RAIL_SETTING * setting)
 
   // ポイント、ラインテーブル設定
 	initRailDat( &man->rail_dat, setting );
+
+  // 動作パラメータ初期化
+  initMoveParam( man );
 }
 
 //----------------------------------------------------------------------------
@@ -328,6 +337,7 @@ void FIELD_RAIL_MAN_SetLocation(FIELD_RAIL_MAN * man, const RAIL_LOCATION * loca
   RAIL_LOCATION_Dump(location);
   // 初期化
   initRail( rail, &man->rail_dat );
+  initMoveParam( man );
 
   if( location->type==FIELD_RAIL_TYPE_POINT )
   {
@@ -1988,3 +1998,15 @@ static u32 getLineIndex( const FIELD_RAIL_MAN * man, const RAIL_LINE* line )
   return 0; // フリーズ回避
 }
 
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  レールシステム　動作パラメータの初期化
+ */
+//-----------------------------------------------------------------------------
+static void initMoveParam(FIELD_RAIL_MAN * man )
+{
+	man->req_move   = 0;
+	man->ofs_move   = 0;
+	man->key_save_move= 0;
+}
