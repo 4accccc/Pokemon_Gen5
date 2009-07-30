@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-07-30T17:33:49"/>
+	<create user="matsumiya" host="W00207" date="2009-07-30T19:57:55"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -307,7 +307,7 @@
 どこかに　いきたい　きもち[BE:01:ページ切り替え（クリア）]
 オレにも　よくわかるけど　さきに
 アララギはかせに　あいにいこうな[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">ともだち♂『[1:00:トレーナー名:0]！[BE:01:ページ切り替え（クリア）]
+		<language name="JPN_KANJI" width="256">クロック『[1:00:トレーナー名:0]！[BE:01:ページ切り替え（クリア）]
 少しでも　はやく
 ポケモンと　一緒に[BE:00:ページ切り替え（行送り）]
 どこかに　行きたい　気持ちは[BE:01:ページ切り替え（クリア）]
@@ -324,7 +324,7 @@
 いえまで　いってくれない？[BE:01:ページ切り替え（クリア）]
 ぜったい　あいつ　いえで
 のんびり　しているからさ[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">ともだち♂『悪いけど　ともだち♀の
+		<language name="JPN_KANJI" width="256">クロック『悪いけど　ホワイティの
 家まで　行ってくれないか？[BE:01:ページ切り替え（クリア）]
 いつもどおり　絶対　家で
 のんびり　しているはずだから[BE:01:ページ切り替え（クリア）]</language>
@@ -336,7 +336,7 @@
 　友達♂の隣に配置</comment>
 		<attribute name="キャラ指定">友達♀</attribute>
 		<language name="JPN" width="256">ともだち♀『まってたよ！</language>
-		<language name="JPN_KANJI" width="256">ともだち♀『待ってたよ！</language>
+		<language name="JPN_KANJI" width="256">ホワイティ『待ってたよ！</language>
 	</row>
 
 	<row id="msg_t01_black_03" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
@@ -350,7 +350,7 @@
 まあ　いいか[BE:01:ページ切り替え（クリア）]
 よし　みんな　そろったし
 なかに　はいるぞ！[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">ともだち♂『ん……
+		<language name="JPN_KANJI" width="256">クロック『ん……
 なんか　あった？[BE:01:ページ切り替え（クリア）]
 まあ　いいか[BE:01:ページ切り替え（クリア）]
 みんな　そろったし

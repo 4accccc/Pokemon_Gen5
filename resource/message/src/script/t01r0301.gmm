@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-07-30T14:39:17"/>
+	<create user="matsumiya" host="W00207" date="2009-07-30T20:01:13"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -304,7 +304,7 @@
 おお！　かわいい　ポケモンだなあ
 ついに　きみたちも[BE:00:ページ切り替え（行送り）]
 トレーナーとして　たびだつんだなあ[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">？？？パパ『おお！　[1:00:トレーナー名:0][BE:01:ページ切り替え（クリア）]
+		<language name="JPN_KANJI" width="256">クロックのパパ『おお！　[1:00:トレーナー名:0][BE:01:ページ切り替え（クリア）]
 聞いたよ！　博士から
 ポケモンを　もらうんだって[BE:01:ページ切り替え（クリア）]
 って　もう　もらったのか！
@@ -322,7 +322,7 @@
 けんきゅうじょに　いるのね　きっと[BE:01:ページ切り替え（クリア）]
 なんていうか　りちぎ　というか
 きまじめ　なのよね　あのこ</language>
-		<language name="JPN_KANJI" width="256">？？？ママ『これからも
+		<language name="JPN_KANJI" width="256">クロックのママ『これからも
 ともだち♂と　仲良くしてね[BE:01:ページ切り替え（クリア）]
 あまり　感情とか　表にださないし
 一緒にいて　大変かも　知れないけれど</language>
