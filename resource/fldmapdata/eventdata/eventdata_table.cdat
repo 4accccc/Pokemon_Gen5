@@ -1354,6 +1354,10 @@
 #define DOOR_ID_C08_R09_EXIT04            1
 #define DOOR_ID_C08_R09_EXIT03            2
 #define DOOR_ID_C08_R09_EXIT02            3
+#define DOOR_ID_C08_R11_EXIT01            4
+#define DOOR_ID_C08_R11_EXIT02            5
+#define DOOR_ID_C08_R11_EXIT03            6
+#define DOOR_ID_C08_R11_EXIT04            7
 
 #endif //ZONE_C08_EVD_H
 //このファイルはdata/c08.mevから自動生成されました
@@ -2099,6 +2103,45 @@
 
 
 #endif //ZONE_R09_EVC_H
+//#include "tmp/r11.h"
+//このファイルはdata/r11.mevから自動生成されました
+#ifndef ZONE_R11_EVD_H
+#define ZONE_R11_EVD_H
+
+#define DOOR_ID_R11_C08_EXIT01            0
+#define DOOR_ID_R11_C08_EXIT05            1
+#define DOOR_ID_R11_C08_EXIT04            2
+#define DOOR_ID_R11_C08_EXIT03            3
+#define DOOR_ID_R11_C08_EXIT02            4
+#define DOOR_ID_R11_R12_EXIT01            5
+#define DOOR_ID_R11_R12_EXIT04            6
+#define DOOR_ID_R11_R12_EXIT03            7
+#define DOOR_ID_R11_R12_EXIT02            8
+
+#endif //ZONE_R11_EVD_H
+//このファイルはdata/r11.mevから自動生成されました
+#ifndef ZONE_R11_EVC_H
+#define ZONE_R11_EVC_H
+
+
+#endif //ZONE_R11_EVC_H
+//#include "tmp/r12.h"
+//このファイルはdata/r12.mevから自動生成されました
+#ifndef ZONE_R12_EVD_H
+#define ZONE_R12_EVD_H
+
+#define DOOR_ID_R12_R11_EXIT01            0
+#define DOOR_ID_R12_R11_EXIT04            1
+#define DOOR_ID_R12_R11_EXIT03            2
+#define DOOR_ID_R12_R11_EXIT02            3
+
+#endif //ZONE_R12_EVD_H
+//このファイルはdata/r12.mevから自動生成されました
+#ifndef ZONE_R12_EVC_H
+#define ZONE_R12_EVC_H
+
+
+#endif //ZONE_R12_EVC_H
 //#include "tmp/r15.h"
 //このファイルはdata/r15.mevから自動生成されました
 #ifndef ZONE_R15_EVD_H
@@ -7477,13 +7520,37 @@ const CONNECT_DATA DOOR_EVENT_C08[] = {
 		EXIT_DIR_RIGHT,//direction
 		EXIT_TYPE_MAT //type
 	},
+	{//DOOR_ID_C08_R11_EXIT01 = 4
+		{6304, 0, 2592},
+		ZONE_ID_R11, DOOR_ID_R11_C08_EXIT01,
+		EXIT_DIR_LEFT,//direction
+		EXIT_TYPE_NONE //type
+	},
+	{//DOOR_ID_C08_R11_EXIT02 = 5
+		{6304, 0, 2608},
+		ZONE_ID_R11, DOOR_ID_R11_C08_EXIT02,
+		EXIT_DIR_LEFT,//direction
+		EXIT_TYPE_NONE //type
+	},
+	{//DOOR_ID_C08_R11_EXIT03 = 6
+		{6304, 0, 2624},
+		ZONE_ID_R11, DOOR_ID_R11_C08_EXIT03,
+		EXIT_DIR_LEFT,//direction
+		EXIT_TYPE_NONE //type
+	},
+	{//DOOR_ID_C08_R11_EXIT04 = 7
+		{6304, 0, 2640},
+		ZONE_ID_R11, DOOR_ID_R11_C08_EXIT04,
+		EXIT_DIR_LEFT,//direction
+		EXIT_TYPE_NONE //type
+	},
 };
 const int ConnectCount_C08 = NELEMS(DOOR_EVENT_C08);
 
 static const EVENTDATA_TABLE event_c08 = {
 	0,
 	0,
-	4,
+	8,
 	0,
 	(void *)NULL,
 	(void *)NULL,
@@ -9638,19 +9705,19 @@ static const EVENTDATA_TABLE event_r06 = {
 #include "../script/r06r0101_def.h"
 const CONNECT_DATA DOOR_EVENT_R06R0101[] = {
 	{//DOOR_ID_R06R0101_R06_EXIT01 = 0
-		{64, 0, 176},
+		{112, 0, 160},
 		ZONE_ID_R06, DOOR_ID_R06_R06R0101_EXIT01,
 		EXIT_DIR_UP,//direction
 		EXIT_TYPE_MAT //type
 	},
 	{//DOOR_ID_R06R0101_R06_EXIT03 = 1
-		{96, 0, 176},
+		{144, 0, 160},
 		ZONE_ID_R06, DOOR_ID_R06_R06R0101_EXIT01,
 		EXIT_DIR_UP,//direction
 		EXIT_TYPE_MAT //type
 	},
 	{//DOOR_ID_R06R0101_R06_EXIT02 = 2
-		{80, 0, 176},
+		{128, 0, 160},
 		ZONE_ID_R06, DOOR_ID_R06_R06R0101_EXIT01,
 		EXIT_DIR_UP,//direction
 		EXIT_TYPE_MAT //type
@@ -9768,6 +9835,114 @@ static const EVENTDATA_TABLE event_r09 = {
 	(void *)NULL,
 	(void *)NULL,
 	(void *)&DOOR_EVENT_R09,
+	(void *)NULL,
+};
+#include "../script/r11_def.h"
+const CONNECT_DATA DOOR_EVENT_R11[] = {
+	{//DOOR_ID_R11_C08_EXIT01 = 0
+		{7264, 0, 2864},
+		ZONE_ID_C08, DOOR_ID_C08_R11_EXIT01,
+		EXIT_DIR_RIGHT,//direction
+		EXIT_TYPE_NONE //type
+	},
+	{//DOOR_ID_R11_C08_EXIT05 = 1
+		{7264, 0, 2928},
+		ZONE_ID_C08, DOOR_ID_C08_R11_EXIT01,
+		EXIT_DIR_RIGHT,//direction
+		EXIT_TYPE_NONE //type
+	},
+	{//DOOR_ID_R11_C08_EXIT04 = 2
+		{7264, 0, 2912},
+		ZONE_ID_C08, DOOR_ID_C08_R11_EXIT04,
+		EXIT_DIR_RIGHT,//direction
+		EXIT_TYPE_NONE //type
+	},
+	{//DOOR_ID_R11_C08_EXIT03 = 3
+		{7264, 0, 2896},
+		ZONE_ID_C08, DOOR_ID_C08_R11_EXIT03,
+		EXIT_DIR_RIGHT,//direction
+		EXIT_TYPE_NONE //type
+	},
+	{//DOOR_ID_R11_C08_EXIT02 = 4
+		{7264, 0, 2880},
+		ZONE_ID_C08, DOOR_ID_C08_R11_EXIT02,
+		EXIT_DIR_RIGHT,//direction
+		EXIT_TYPE_NONE //type
+	},
+	{//DOOR_ID_R11_R12_EXIT01 = 5
+		{8048, 0, 2800},
+		ZONE_ID_R12, DOOR_ID_R12_R11_EXIT01,
+		EXIT_DIR_LEFT,//direction
+		EXIT_TYPE_NONE //type
+	},
+	{//DOOR_ID_R11_R12_EXIT04 = 6
+		{8048, 0, 2848},
+		ZONE_ID_R12, DOOR_ID_R12_R11_EXIT04,
+		EXIT_DIR_LEFT,//direction
+		EXIT_TYPE_NONE //type
+	},
+	{//DOOR_ID_R11_R12_EXIT03 = 7
+		{8048, 0, 2832},
+		ZONE_ID_R12, DOOR_ID_R12_R11_EXIT03,
+		EXIT_DIR_LEFT,//direction
+		EXIT_TYPE_NONE //type
+	},
+	{//DOOR_ID_R11_R12_EXIT02 = 8
+		{8048, 0, 2816},
+		ZONE_ID_R12, DOOR_ID_R12_R11_EXIT02,
+		EXIT_DIR_LEFT,//direction
+		EXIT_TYPE_NONE //type
+	},
+};
+const int ConnectCount_R11 = NELEMS(DOOR_EVENT_R11);
+
+static const EVENTDATA_TABLE event_r11 = {
+	0,
+	0,
+	9,
+	0,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)&DOOR_EVENT_R11,
+	(void *)NULL,
+};
+#include "../script/r12_def.h"
+const CONNECT_DATA DOOR_EVENT_R12[] = {
+	{//DOOR_ID_R12_R11_EXIT01 = 0
+		{9440, 0, 2768},
+		ZONE_ID_R11, DOOR_ID_R11_R12_EXIT01,
+		EXIT_DIR_RIGHT,//direction
+		EXIT_TYPE_NONE //type
+	},
+	{//DOOR_ID_R12_R11_EXIT04 = 1
+		{9440, 0, 2816},
+		ZONE_ID_R11, DOOR_ID_R11_R12_EXIT04,
+		EXIT_DIR_RIGHT,//direction
+		EXIT_TYPE_NONE //type
+	},
+	{//DOOR_ID_R12_R11_EXIT03 = 2
+		{9440, 0, 2800},
+		ZONE_ID_R11, DOOR_ID_R11_R12_EXIT03,
+		EXIT_DIR_RIGHT,//direction
+		EXIT_TYPE_NONE //type
+	},
+	{//DOOR_ID_R12_R11_EXIT02 = 3
+		{9440, 0, 2784},
+		ZONE_ID_R11, DOOR_ID_R11_R12_EXIT02,
+		EXIT_DIR_RIGHT,//direction
+		EXIT_TYPE_NONE //type
+	},
+};
+const int ConnectCount_R12 = NELEMS(DOOR_EVENT_R12);
+
+static const EVENTDATA_TABLE event_r12 = {
+	0,
+	0,
+	4,
+	0,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)&DOOR_EVENT_R12,
 	(void *)NULL,
 };
 #include "../script/r15_def.h"
@@ -11455,6 +11630,8 @@ static const EVENTDATA_TOTAL_TABLES TotalTables[] = {
 	{ ZONE_ID_R06R0101, &event_r06r0101 },
 	{ ZONE_ID_R08, &event_r08 },
 	{ ZONE_ID_R09, &event_r09 },
+	{ ZONE_ID_R11, &event_r11 },
+	{ ZONE_ID_R12, &event_r12 },
 	{ ZONE_ID_R15, &event_r15 },
 	{ ZONE_ID_R16, &event_r16 },
 	{ ZONE_ID_T01, &event_t01 },
