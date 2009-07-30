@@ -108,6 +108,8 @@ extern  u8              MCSS_GetAlpha( MCSS_WORK *mcss );
 extern  void	          MCSS_SetAlpha( MCSS_WORK *mcss, u8 alpha );
 extern  u8              MCSS_GetShadowAlpha( MCSS_WORK *mcss );
 extern  void	          MCSS_SetShadowAlpha( MCSS_WORK *mcss, u8 alpha );
+extern  u8              MCSS_GetShadowVanishFlag( MCSS_WORK *mcss );
+extern  void	          MCSS_SetShadowVanishFlag( MCSS_WORK *mcss, u8 flag );
 extern  BOOL            MCSS_CheckExecutePaletteFade( MCSS_WORK*  mcss );
 extern  void            MCSS_SetTextureTransAdrs( MCSS_SYS_WORK* mcss_sys, u32 adrs );
 extern  void            MCSS_SetTexPaletteTransAdrs( MCSS_SYS_WORK* mcss_sys, u32 adrs );
