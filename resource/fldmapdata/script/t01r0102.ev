@@ -32,13 +32,11 @@ _EVENT_DATA    ev_t01r0102_bed
 _EVENT_DATA_END
 
 
-
 /**************************************************************/
 /*            FLAG_CHANGE_LABEL                               */
 /**************************************************************/
 //ev_t01r0102_flag_change:
 //  _END
-
 
 
 /**************************************************************/
@@ -67,7 +65,6 @@ ev_t01r0102_white_test01:
   _TALKWIN_CLOSE
   _OBJ_PAUSE_CLEAR_ALL
   _END
-
 
 /**************************************************************/
 /*  T01R0102 ポケモン入手イベント用スクリプト　 */
@@ -112,7 +109,7 @@ ev_t01r0102_poke_get2:
 	_IFVAL_JUMP SCWK_ANSWER,EQ,1,t01r0102_poke_get_no
 
 t01r0102_poke_get_no:
-  _OBJ_PAUSE_CLEAR_ALL
+	_OBJ_PAUSE_CLEAR_ALL
   _END
 
 t01r0102_poke_get_yes:
@@ -133,40 +130,46 @@ t01r0102_poke_get_yes:
 	_OBJ_ANIME T01R0102_RIVAL,anime_t01r0102_poke_get
 	_OBJ_ANIME_WAIT
 //サポート、ライバルの台詞
-	_TALK_OBJ_PAUSE_ALL
 	_TALKWIN_OPEN
-	_TALKMSG_ALLPUT msg_t01r0102_white_test02
+	_TALKMSG_ALLPUT msg_t01r0102_white_test02 //サポート
 	_AB_KEYWAIT
 	_TALKWIN_CLOSE
 
-	_TALK_OBJ_PAUSE_ALL
+	_OBJ_ANIME T01R0102_HEROINE,anime_t01r0102_turn
+	_OBJ_ANIME_WAIT
+
 	_TALKWIN_OPEN
-	_TALKMSG_ALLPUT msg_t01r0102_black_test02
+	_TALKMSG_ALLPUT msg_t01r0102_white_test02a //サポート
 	_AB_KEYWAIT
 	_TALKWIN_CLOSE
-	
+
+	_TALKWIN_OPEN
+	_TALKMSG_ALLPUT msg_t01r0102_black_test02 //ライバル
+	_AB_KEYWAIT
+	_TALKWIN_CLOSE
+
+//ここで画面フェード
+	_BLACK_OUT 8
+	_DISP_FADE_END_CHECK
+
 //ボール削除
 	_OBJ_DEL T01R0102_BALL1
 	_OBJ_DEL T01R0102_BALL2
 	_OBJ_DEL T01R0102_BALL3
 
-//ここで画面フェード
-	_BLACK_OUT 8
-	_DISP_FADE_END_CHECK
 	_AB_KEYWAIT
 	_BLACK_IN 8
 	_DISP_FADE_END_CHECK
-
-/*
-	_LDVAL SVSCRWK_START,1
-*/
 
 //サポートとポケモン勝負
 ev_t01r0102_poke_battle:
 //ここでサポート専用曲
 	_BGM_PLAY SEQ_E_SUPPORT_M
 
-	_TALK_OBJ_PAUSE_ALL
+	_OBJ_ANIME MMDL_ID_PLAYER,anime_t01r0102_battle
+	_OBJ_ANIME T01R0102_HEROINE,anime_t01r0102_battle01
+	_OBJ_ANIME_WAIT
+
 	_PLAYER_NAME 0 //プレイヤー名を反映
 	_TALKWIN_OPEN
 	_TALKMSG_ALLPUT msg_t01r0102_white_test03
@@ -179,7 +182,6 @@ ev_t01r0102_poke_battle:
 	_BLACK_IN 8
 	_DISP_FADE_END_CHECK
 
-	_TALK_OBJ_PAUSE_ALL
 	_TALKWIN_OPEN
 	_TALKMSG_ALLPUT msg_t01r0102_white_test04
 	_AB_KEYWAIT
@@ -191,7 +193,6 @@ ev_t01r0102_poke_battle:
 //ここでライバル専用曲
 	_BGM_PLAY SEQ_E_RIVAL1
 
-	_TALK_OBJ_PAUSE_ALL
 	_TALKWIN_OPEN
 	_TALKMSG_ALLPUT msg_t01r0102_black_test03
 	_AB_KEYWAIT
@@ -204,20 +205,19 @@ ev_t01r0102_poke_battle:
 	_DISP_FADE_END_CHECK
 //ここでライバル専用曲終了
 	_BGM_STOP
+	_BGM_NOW_MAP_PLAY //マップ曲呼び出し
 
-	_TALK_OBJ_PAUSE_ALL
 	_TALKWIN_OPEN
 	_TALKMSG_ALLPUT msg_t01r0102_black_test04
 	_AB_KEYWAIT
 	_TALKWIN_CLOSE
-//ライバル退場アニメ
+//ライバル退場アニメ＋階段SE
 	_OBJ_ANIME T01R0102_RIVAL,anime_t01r0102_byebye1
 	_OBJ_ANIME_WAIT
 	_SE_PLAY SEQ_SE_KAIDAN
 	_SE_WAIT
 	_OBJ_DEL T01R0102_RIVAL
 
-	_TALK_OBJ_PAUSE_ALL
 	_TALKWIN_OPEN
 	_TALKMSG_ALLPUT msg_t01r0102_white_test05
 	_AB_KEYWAIT
@@ -227,12 +227,12 @@ ev_t01r0102_poke_battle:
 	_OBJ_ANIME_WAIT
 	_SE_PLAY SEQ_SE_KAIDAN
 	_SE_WAIT
-	_OBJ_DEL T01R0102_HEROINE
-
-	_OBJ_PAUSE_CLEAR_ALL
-
+	_OBJ_DEL T01R0102_HEROINE	
+/*
+	_LDVAL SVSCRWK_START,1
+	_LDVAL WK_0907ROM00,1
+*/
   _END
-
 
 /**************************************************************/
 /*  T01R0102 GAME MACHINEのBG用イベントスクリプト*/
@@ -293,6 +293,30 @@ _ANIME_LABEL	anime_t01r0102_poke_get
 	_ANIME_DATA	ACMD_END,0
 
 /**************************************************************/
+/*     サポート、ライバルを見る　　　　                     */
+/**************************************************************/
+_ANIME_LABEL	anime_t01r0102_turn
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	AC_WAIT_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+/**************************************************************/
+/*     主人公、右向き　　　　                     */
+/**************************************************************/
+_ANIME_LABEL	anime_t01r0102_battle
+	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	AC_WAIT_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+/**************************************************************/
+/*     サポート、左向き　　　　                     */
+/**************************************************************/
+_ANIME_LABEL	anime_t01r0102_battle01
+	_ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA	AC_WAIT_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+/**************************************************************/
 /*     ライバル、退場　　　　                     */
 /**************************************************************/
 _ANIME_LABEL	anime_t01r0102_byebye1
@@ -311,5 +335,4 @@ _ANIME_LABEL	anime_t01r0102_byebye2
 	_ANIME_DATA	AC_DIR_R,1
 	_ANIME_DATA	AC_WAIT_8F,2
 	_ANIME_DATA	ACMD_END,0
-
 
