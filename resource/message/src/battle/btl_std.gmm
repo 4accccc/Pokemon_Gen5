@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="taya" host="W00146" date="2009-07-30T14:50:45"/>
+	<create user="taya" host="W00146" date="2009-07-31T03:38:01"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -327,7 +327,7 @@
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="673"/>
 		<band id="3" index="3" style="0000" width="673"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -709,7 +709,7 @@
 
 	<row id="BTL_STRID_STD_YubiWoFuru">
 		<comment>ゆびをふる</comment>
-		<language name="JPN" width="216">ゆびをふったら　[1:07:わざ名:0]　がでた！</language>
+		<language name="JPN" width="216">ゆびをふったら　[1:07:わざ名:0]がでた！</language>
 		<language name="JPN_KANJI" width="216">指を振ったら　[1:07:わざ名:0]　が出た！</language>
 	</row>
 
@@ -725,6 +725,14 @@
 		<comment>ねこにこばん</comment>
 		<language name="JPN" width="216">こばんが　あたりに　ちらばった！</language>
 		<language name="JPN_KANJI" width="216">小判が　あたりに　散らばった！</language>
+	</row>
+
+	<row id="BTL_STRID_STD_MigawariFail">
+		<comment>みがわり</comment>
+		<language name="JPN" width="216">しかし　みがわりを　だすには
+たいりょくが　たりなかった！</language>
+		<language name="JPN_KANJI" width="216">しかし 身代わりを出すには
+体力が 足りなかった！</language>
 	</row>
 
 	<row id="BTL_STRID_STD_Reflector">
