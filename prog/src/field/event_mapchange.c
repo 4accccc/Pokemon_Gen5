@@ -204,6 +204,7 @@ static GMEVENT_RESULT EVENT_FadeOut_ExitTypeNone(GMEVENT * event, int *seq, void
   switch (*seq)
   {
   case 0:
+    setNextBGM(gamedata, mcw->loc_req.zone_id);
 		GMEVENT_CallEvent(event, EVENT_FieldFadeOut(gsys, fieldmap, 0));
     ++ *seq;
     break;
@@ -228,11 +229,11 @@ static GMEVENT_RESULT EVENT_FadeOut_ExitTypeDoor(GMEVENT * event, int *seq, void
     ++ *seq;
     break;
   case 1:
-    setNextBGM(gamedata, mcw->loc_req.zone_id);
     GMEVENT_CallEvent( event, EVENT_PlayerOneStepAnime(gsys, fieldmap) );
     ++ *seq;
     break;
   case 2:
+    setNextBGM(gamedata, mcw->loc_req.zone_id);
 		GMEVENT_CallEvent(event, EVENT_FieldFadeOut(gsys, fieldmap, 0));
     ++ *seq;
     break;
@@ -253,11 +254,11 @@ static GMEVENT_RESULT EVENT_FadeOut_ExitTypeStep(GMEVENT * event, int *seq, void
   switch (*seq)
   {
   case 0:
-    setNextBGM(gamedata, mcw->loc_req.zone_id);
     GMEVENT_CallEvent( event, EVENT_PlayerOneStepAnime(gsys, fieldmap) );
     ++ *seq;
     break;
   case 1:
+    setNextBGM(gamedata, mcw->loc_req.zone_id);
 		GMEVENT_CallEvent(event, EVENT_FieldFadeOut(gsys, fieldmap, 0));
     ++ *seq;
     break;
@@ -629,10 +630,18 @@ static void MakeNewRailLocation(GAMEDATA * gamedata, EVENTDATA_SYSTEM * evdata, 
   FIELD_RAIL_LOADER * railLoader = GAMEDATA_GetFieldRailLoader(gamedata);
   RAIL_LOCATION railLoc;
   RAIL_LOCATION_Init(&railLoc);
+  GAMEDATA_SetRailLocation(gamedata, &railLoc);
 
-  if (ZONEDATA_DEBUG_IsRailMap(loc_req->zone_id) == TRUE
-      && loc_req->type != LOCATION_TYPE_DIRECT)
+  if (ZONEDATA_DEBUG_IsRailMap(loc_req->zone_id) == FALSE) return;
+
+  if (loc_req->type == LOCATION_TYPE_DIRECT)
   {
+    railLoc.type = FIELD_RAIL_TYPE_POINT;
+    railLoc.rail_index = 0;
+    railLoc.line_ofs = 0;
+    railLoc.width_ofs = 0;
+    railLoc.key = RAIL_KEY_NULL;
+  } else {
     LOCATION loc_tmp;
     BOOL result;
     u32 exit_id = 0;
@@ -727,6 +736,7 @@ static void setNextBGM(GAMEDATA * gamedata, u16 zone_id)
   PLAYER_WORK *player = GAMEDATA_GetPlayerWork( gamedata, 0 );
   PLAYER_MOVE_FORM form = PLAYERWORK_GetMoveForm( player );
   u32 no = FIELD_SOUND_GetFieldBGMNo( gamedata, form, zone_id );
+  OS_Printf("NEXT BGM NO=%d\n",no);
   FIELD_SOUND_PlayBGM( no );
 #endif
 }
