@@ -25,13 +25,22 @@
 //--------------------------------------------------------------------
 //              スクリプトテーブル
 //--------------------------------------------------------------------
-_EVENT_DATA  ev_TANPAN_01
+_EVENT_DATA  ev_R02_TRAINER_01
+_EVENT_DATA  ev_R02_TRAINER_02
+_EVENT_DATA  ev_R02_TRAINER_03
+_EVENT_DATA  ev_R02_TRAINER_04
+_EVENT_DATA  ev_R02_TRAINER_05
+_EVENT_DATA  ev_R02_TRAINER_06
 _EVENT_DATA  ev_trainer_talk_battle
 _EVENT_DATA  ev_trainer_move_battle
 _EVENT_DATA_END
 
-ev_TANPAN_01:
-
+ev_R02_TRAINER_01:
+ev_R02_TRAINER_02:
+ev_R02_TRAINER_03:
+ev_R02_TRAINER_04:
+ev_R02_TRAINER_05:
+ev_R02_TRAINER_06:
 //scr_copy_awk_label
 //コンバートに必要！
 
@@ -41,97 +50,102 @@ ev_TANPAN_01:
 //  SCWK_TEMP3  退避トレーナーID
 //******************************************************************
 ev_trainer_talk_battle:
-/*
-  _TALK_OBJ_START
-
+	_TALK_OBJ_PAUSE_ALL
+	_TURN_HERO_SITE
+  
   //トレーナーID取得
   _TRAINER_ID_GET    SCWK_TEMP0
 
+  /*
   //かくれみのアニメチェック
-  _MOVE_CODE_GET    SCWK_PARAM1,SCWK_TARGET_OBJID  //戻り値取得ワーク、話しかけ対象OBJID
-  _IFVAL_CALL      SCWK_PARAM1,EQ,MV_HIDE_SNOW,ev_trainer_talk_battle_hide_pulloff
-  _IFVAL_CALL      SCWK_PARAM1,EQ,MV_HIDE_SAND,ev_trainer_talk_battle_hide_pulloff
-  _IFVAL_CALL      SCWK_PARAM1,EQ,MV_HIDE_GRND,ev_trainer_talk_battle_hide_pulloff
-  _IFVAL_CALL      SCWK_PARAM1,EQ,MV_HIDE_KUSA,ev_trainer_talk_battle_hide_pulloff
-
+  //戻り値取得ワーク、話しかけ対象OBJID
+  _MOVE_CODE_GET   SCWK_PARAM1,SCWK_TARGET_OBJID
+  _IFVAL_CALL SCWK_PARAM1,EQ,MV_HIDE_SNOW,ev_trainer_talk_battle_hide_pulloff
+  _IFVAL_CALL SCWK_PARAM1,EQ,MV_HIDE_SAND,ev_trainer_talk_battle_hide_pulloff
+  _IFVAL_CALL SCWK_PARAM1,EQ,MV_HIDE_GRND,ev_trainer_talk_battle_hide_pulloff
+  _IFVAL_CALL SCWK_PARAM1,EQ,MV_HIDE_KUSA,ev_trainer_talk_battle_hide_pulloff
+  */
+  
   //すでに勝利しているトレーナーかチェックして、戦闘勝利後の会話へ
-  _IF_TR_FLAGON_JUMP  SCWK_TEMP0,ev_trainer_talk_after
-
+  _IF_TR_FLAGON_JUMP SCWK_TEMP0,ev_trainer_talk_after
+  
   //トレーナータイプ取得(シングル、ダブル、タッグ)
   _TRAINER_TYPE_GET SCWK_ANSWER
-  _IFVAL_JUMP    SCWK_ANSWER,NE,SCR_EYE_TR_TYPE_DOUBLE,ev_trainer_common_10  //ダブルでない時
-
+  //ダブルでない時
+  _IFVAL_JUMP SCWK_ANSWER,NE,SCR_EYE_TR_TYPE_DOUBLE,ev_trainer_common_10
+  
+  /*
   //ダブルだったらチェックする！
   //ここで手持ちが2匹かチェックしないと、戦闘に進んでしまうのでダメ！
   _2VS2_BATTLE_CHECK  SCWK_ANSWER
   _IFVAL_JUMP      SCWK_ANSWER,EQ,0,ev_trainer_talk_battle_poke_one
-
+  */
   _JUMP    ev_trainer_common_10
-*/
   _END
 
 ev_trainer_common_10:
-/*
-  _TRAINER_BGM_SET  SCWK_TEMP0                //視線曲セット
+  _TRAINER_BGM_SET SCWK_TEMP0                //視線曲セット
   _TALKWIN_OPEN
-  _TRAINER_TALK_TYPE_GET  SCWK_PARAM0,SCWK_PARAM1,SCWK_PARAM2  //メッセージを取得
-  _TRAINER_MSG_SET  SCWK_TEMP0,SCWK_PARAM0
-  _JUMP        ev_trainer_common_11
-*/
+  
+  _TRAINER_TALK_TYPE_GET SCWK_PARAM0,SCWK_PARAM1,SCWK_PARAM2 //メッセージ取得
+  _TRAINER_MSG_SET SCWK_TEMP0,SCWK_PARAM0
+
+  _JUMP ev_trainer_common_11
   _END
 
 ev_trainer_common_11:
-/*
-  //_TRAINER_MSG_SET  SCWK_TEMP0,SCWK_PARAM0
-  //_AB_KEYWAIT
+//  _TRAINER_MSG_SET  SCWK_TEMP0,SCWK_PARAM0
+#if 0
+//  _AB_KEYWAIT
+#else //wb
+  _AB_KEYWAIT
+#endif
   _TALKWIN_CLOSE
-
+  
+  /*
   //通常、再戦トレーナーにかかわらず、
   //戦闘後に表示方向固定の動作コードをセットするように変更(06.07.10)
   //話しかけのみしか使えないコマンドなので注意！
   _BTL_SEARCHER_DIR_MV_SET
-
+  */
+  
   //戦闘呼び出し
-  _TRAINER_BTL_SET  SCWK_TEMP0,0
+  _TRAINER_BTL_SET SCWK_TEMP0,0
   _TRAINER_LOSE_CHECK  SCWK_ANSWER
-  _IFVAL_JUMP      SCWK_ANSWER,EQ,0,ev_trainer_battle_lose
+  _IFVAL_JUMP SCWK_ANSWER,EQ,0,ev_trainer_battle_lose
 
   //これを外さないと、再戦トレーナーIDが書き換わってしまう！
   //トレーナーID取得(一応)
   //_TRAINER_ID_GET  SCWK_TEMP0
-
+  
   //トレーナーフラグセット
   _TRAINER_FLAG_SET  SCWK_TEMP0
-
+  
   _TALK_OBJ_END
-*/
   _END
 
 //--------------------------------------------------------------------
 //  戦闘勝利後の会話
 //--------------------------------------------------------------------
 ev_trainer_talk_after:
-/*
+  /*
   //話しかけたトレーナーが再戦可能かチェック
   _REVENGE_TRAINER_SEARCH SCWK_TEMP0,SCWK_ANSWER
   _IFVAL_JUMP        SCWK_ANSWER,NE,0,ev_trainer_revenge
+  */
   _JUMP        ev_trainer_talk_after_normal
-*/
   _END
 
 ev_trainer_talk_after_normal:
-/*
   _TALKWIN_OPEN
-
+  
   //メッセージを取得
   _TRAINER_TALK_TYPE_GET  SCWK_PARAM0,SCWK_PARAM1,SCWK_PARAM2
   _TRAINER_MSG_SET  SCWK_TEMP0,SCWK_PARAM1
-  _LAST_KEYWAIT
-  //_AB_KEYWAIT
+  _AB_KEYWAIT
 
   _TALKWIN_CLOSE
   _TALK_OBJ_END
-*/
   _END
 
 //--------------------------------------------------------------------
@@ -250,7 +264,7 @@ ev_trainer_move_battle:
   //視線移動スクリプトコマンドの中で
   //対象のOBJの動作ポーズを解除するようにしている！
   //_PROGRAM      TR_BGM_SET
-
+  
   //トレーナータイプ取得(シングル、ダブル、タッグ)
   _EYE_TRAINER_TYPE_GET SCWK_ANSWER
   _IFVAL_JUMP    SCWK_ANSWER,EQ,SCR_EYE_TR_TYPE_SINGLE,ev_trainer_type_single
@@ -284,7 +298,7 @@ ev_trainer_type_single:
   
   _TRAINER_BTL_SET  SCWK_TEMP0,0
   _TRAINER_LOSE_CHECK  SCWK_ANSWER
-  _IFVAL_JUMP      SCWK_ANSWER,EQ,0,ev_trainer_battle_lose
+  _IFVAL_JUMP SCWK_ANSWER,EQ,0,ev_trainer_battle_lose
 
   //トレーナーフラグセット
   _EYE_TRAINER_ID_GET  SCR_EYE_TR_0,SCWK_ANSWER

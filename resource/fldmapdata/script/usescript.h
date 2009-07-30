@@ -98,7 +98,7 @@
 #define EV_WIN_B_CANCEL (0xfffe)
 
 //フェード共通速度
-#define DISP_FADE_SPEED (1)
+#define DISP_FADE_SPEED (8)
 
 //======================================================================
 //	
