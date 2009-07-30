@@ -774,7 +774,7 @@ void ITEMDISP_CellMessagePrint( FIELD_ITEMMENU_WORK* pWork )
 	for(i = 0; i< ITEM_LIST_NUM ; i++){
 		ITEM_ST * item;
 
-    pWork->bListEnable[i]=FALSE;
+    pWork->nListEnable[i]=FALSE;
 
     if(pWork->oamlistpos+i < 0){
       continue;
@@ -784,13 +784,29 @@ void ITEMDISP_CellMessagePrint( FIELD_ITEMMENU_WORK* pWork )
 		if((item==NULL) || (item->id==ITEM_DUMMY_DATA)){
 			continue;
 		}
-    GFL_BMP_Clear(pWork->listBmp[i],3);
-    GFL_FONTSYS_SetColor( 0xf, 0xe, 3 );
-    GFL_MSG_GetString(  pWork->MsgManager, MSG_ITEM_STR001, pWork->pStrBuf );
-    WORDSET_RegisterItemName(pWork->WordSet, 0, item->id);
-    WORDSET_ExpandStr( pWork->WordSet, pWork->pExpStrBuf, pWork->pStrBuf  );
-    PRINTSYS_Print( pWork->listBmp[i], 0, 0, pWork->pExpStrBuf, pWork->fontHandle);
-    pWork->bListEnable[i]=TRUE;
+    {
+      void * itemdata;
+      itemdata = ITEM_GetItemArcData( item->id, ITEM_GET_DATA, pWork->heapID );
+    
+      GFL_BMP_Clear(pWork->listBmp[i],3);
+      GFL_FONTSYS_SetColor( 0xf, 0xe, 3 );
+      GFL_MSG_GetString(  pWork->MsgManager, MSG_ITEM_STR001, pWork->pStrBuf );
+      WORDSET_RegisterItemName(pWork->WordSet, 0, item->id);
+      WORDSET_ExpandStr( pWork->WordSet, pWork->pExpStrBuf, pWork->pStrBuf  );
+      PRINTSYS_Print( pWork->listBmp[i], 0, 0, pWork->pExpStrBuf, pWork->fontHandle);
+      
+      if( ITEM_GetBufParam( itemdata, ITEM_PRM_CNV ) == 0 ){
+        pWork->nListEnable[ i ] = 3;
+      }
+      else if(ITEMMENU_GetPosCnvButtonItem(pWork,item->id)==-1){
+        pWork->nListEnable[ i ] = 2;
+      }
+      else{
+        pWork->nListEnable[ i ] = 1;
+      }
+      GFL_HEAP_FreeMemory( itemdata );
+
+    }
 	}
 
 
@@ -832,12 +848,20 @@ void ITEMDISP_CellVramTrans( FIELD_ITEMMENU_WORK* pWork )
       GX_LoadOBJ(&charbuff[0*32], dest_adrs, (32*4));
       dest_adrs += (4)*32;
       GX_LoadOBJ(&charbuff[(12*32)], dest_adrs, (32*4));
-      GFL_CLACT_WK_SetDrawEnable( pWork->listCell[i] , pWork->bListEnable[i] );
-      if(pWork->pocketno == BAG_POKE_EVENT){
-        GFL_CLACT_WK_SetDrawEnable( pWork->listMarkCell[i] , pWork->bListEnable[i] );
+
+      if(pWork->nListEnable[i]){
+        if(pWork->pocketno == BAG_POKE_EVENT){
+          GFL_CLACT_WK_SetAnmSeq( pWork->listMarkCell[i] , pWork->nListEnable[i]-1 );
+          GFL_CLACT_WK_SetDrawEnable( pWork->listMarkCell[i] , TRUE );
+        }
+        else{
+          GFL_CLACT_WK_SetDrawEnable( pWork->listMarkCell[i] , FALSE );
+        }
+        GFL_CLACT_WK_SetDrawEnable( pWork->listCell[i] , TRUE );
       }
       else{
         GFL_CLACT_WK_SetDrawEnable( pWork->listMarkCell[i] , FALSE );
+        GFL_CLACT_WK_SetDrawEnable( pWork->listCell[i] , FALSE );
       }
     }
 	}

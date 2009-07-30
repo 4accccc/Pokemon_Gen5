@@ -24,12 +24,9 @@ struct _MYITEM {
 	ITEM_ST MyNormalItem[ BAG_NORMAL_ITEM_MAX ];	// 手持ちの普通の道具
 	ITEM_ST MyEventItem[ BAG_EVENT_ITEM_MAX ];		// 手持ちの大切な道具
 	ITEM_ST MySkillItem[ BAG_WAZA_ITEM_MAX ];		// 手持ちの技マシン
-//	ITEM_ST MySealItem[ BAG_SEAL_ITEM_MAX ];		// 手持ちのシール
 	ITEM_ST MyDrugItem[ BAG_DRUG_ITEM_MAX ];		// 手持ちの薬
 	ITEM_ST MyNutsItem[ BAG_NUTS_ITEM_MAX ];		// 手持ちの木の実
-//	ITEM_ST MyBallItem[ BAG_BALL_ITEM_MAX ];		// 手持ちのモンスターボール
-//	ITEM_ST MyBattleItem[ BAG_BATTLE_ITEM_MAX ];	// 手持ちの戦闘用アイテム
-	u32	cnv_button;									// 便利ボタン
+	u32	cnv_button[DUMMY_SHORTCUT_MAX];									// 便利ボタン @@OO削除予定  便利ウインドウは統合管理される
 };
 
 // フィールドのバッグのカーソル位置
@@ -157,9 +154,9 @@ void MYITEM_ITEM_STCopy(MYITEM_PTR myitem, ITEM_ST* itemst, int pocket, int bMyG
  * @return	アイテム番号
  */
 //------------------------------------------------------------------
-u32 MYITEM_CnvButtonItemGet( const MYITEM_PTR myitem )
+u32 MYITEM_CnvButtonItemGet( const MYITEM_PTR myitem, int index )
 {
-	return myitem->cnv_button;
+	return myitem->cnv_button[index];
 }
 
 //------------------------------------------------------------------
@@ -170,9 +167,10 @@ u32 MYITEM_CnvButtonItemGet( const MYITEM_PTR myitem )
  * @return	アイテム番号
  */
 //------------------------------------------------------------------
-void MYITEM_CnvButtonItemSet( MYITEM_PTR myitem, u32 setitem )
+void MYITEM_CnvButtonItemSet( MYITEM_PTR myitem, int index , u32 setitem )
 {
-	myitem->cnv_button = setitem;
+  GF_ASSERT(index < DUMMY_SHORTCUT_MAX);
+	myitem->cnv_button[index] = setitem;
 }
 
 //------------------------------------------------------------------

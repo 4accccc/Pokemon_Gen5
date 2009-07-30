@@ -48,9 +48,10 @@
 
 
 //ならびは savedata/myitem_savedata.hに準拠
+// コールバックは_BttnCallBack
 static const GFL_UI_TP_HITTBL bttndata[] = {  //上下左右
 
-#include "bag_btnpos.h"
+#include "bag_btnpos.h"  //バッグの絵のタッチエリア
 
 	{	22*_1CHAR,  25*_1CHAR,   1*_1CHAR,  3*_1CHAR },  //左
 	{	22*_1CHAR,  25*_1CHAR,  15*_1CHAR, 18*_1CHAR },  //右
@@ -64,6 +65,13 @@ static const GFL_UI_TP_HITTBL bttndata[] = {  //上下左右
 	{11*_1CHAR+4,  14*_1CHAR+3,  18*_1CHAR, 29*_1CHAR },  //アイテム一覧エリア4
 	{14*_1CHAR+4,  17*_1CHAR+3,  18*_1CHAR, 29*_1CHAR },  //アイテム一覧エリア5
 	{17*_1CHAR+4,  20*_1CHAR+3,  18*_1CHAR, 29*_1CHAR },  //アイテム一覧エリア6
+  
+	{	1*_1CHAR+4,   4*_1CHAR+3,  15*_1CHAR, 18*_1CHAR },  //だいじなものチェックエリア1
+	{	4*_1CHAR+4,   7*_1CHAR+3,  15*_1CHAR, 18*_1CHAR },  //だいじなものチェックエリア2
+	{	7*_1CHAR+4,  11*_1CHAR+3,  15*_1CHAR, 18*_1CHAR },  //だいじなものチェックエリア3
+	{11*_1CHAR+4,  14*_1CHAR+3,  15*_1CHAR, 18*_1CHAR },  //だいじなものチェックエリア4
+	{14*_1CHAR+4,  17*_1CHAR+3,  15*_1CHAR, 18*_1CHAR },  //だいじなものチェックエリア5
+	{17*_1CHAR+4,  20*_1CHAR+3,  15*_1CHAR, 18*_1CHAR },  //だいじなものチェックエリア6
   
   {GFL_UI_TP_HIT_END,0,0,0},		 //終了データ
 };
@@ -998,7 +1006,7 @@ static void ItemMenuMake( FIELD_ITEMMENU_WORK * pWork, u8* tbl )
 		// とうろく
 		// かいじょ
 		if( ITEM_GetBufParam( itemdata, ITEM_PRM_CNV ) != 0 ){
-			if( MYITEM_CnvButtonItemGet( pWork->pMyItem ) == item->id ){
+			if( ITEMMENU_GetPosCnvButtonItem( pWork, item->id  ) != -1 ){
 				tbl[BAG_MENU_SUB] = BAG_MENU_KAIZYO;
 			}else{
 				tbl[BAG_MENU_SUB] = BAG_MENU_TOUROKU;
@@ -1065,8 +1073,57 @@ static void _itemUseWindowRewrite(FIELD_ITEMMENU_WORK* pWork)
 
     
 	}
+}
 
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief	便利登録されていたら順番を返す
+ */
+//-----------------------------------------------------------------------------
+
+int ITEMMENU_GetPosCnvButtonItem(FIELD_ITEMMENU_WORK* pWork, int no)
+{
+  int i;
+  for(i = 0 ; i < DUMMY_SHORTCUT_MAX ; i++){
+    if(no == MYITEM_CnvButtonItemGet( pWork->pMyItem, i)){
+      return i;
+    }
+  }
+  return -1;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	チェックを追加
+ */
+//-----------------------------------------------------------------------------
+
+BOOL ITEMMENU_AddCnvButtonItem(FIELD_ITEMMENU_WORK* pWork, int no)
+{
+  int i;
+  for(i = 0 ; i < DUMMY_SHORTCUT_MAX ; i++){
+    if(0 == MYITEM_CnvButtonItemGet( pWork->pMyItem, i)){
+      MYITEM_CnvButtonItemSet( pWork->pMyItem, i, no);
+      return TRUE;
+    }
+  }
+  return FALSE;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	チェックを消す
+ */
+//-----------------------------------------------------------------------------
+
+void ITEMMENU_RemoveCnvButtonItem(FIELD_ITEMMENU_WORK* pWork, int no)
+{
+  int i=ITEMMENU_GetPosCnvButtonItem(pWork,no);
+
+  if(i!=-1){
+    MYITEM_CnvButtonItemSet( pWork->pMyItem, i, 0);
+  }
 }
 
 
@@ -1084,13 +1141,11 @@ static void _BttnCallBack( u32 bttnid, u32 event, void* p_work )
 {
   FIELD_ITEMMENU_WORK* pWork = p_work;
   int pocketno = -1;
+  int length = ITEMMENU_GetItemPocketNumber(pWork);
 
   if(event!=GFL_BMN_EVENT_TOUCH){
     return;
   }
-  
-
-  
   if(BAG_POKE_MAX > bttnid){
     int id2no[]={1,2,3,4,0};
     pocketno = id2no[bttnid];  //どうぐのあたりが広い為、順番を最後にしている
@@ -1117,11 +1172,10 @@ static void _BttnCallBack( u32 bttnid, u32 event, void* p_work )
     pWork->ret_code = BAG_NEXTPROC_RETURN;
     _CHANGE_STATE(pWork, NULL);
   }
-  else{ // if(bttnid >= BUTTONID_ITEM_AREA){
+  else if((bttnid >= BUTTONID_ITEM_AREA) && (bttnid < BUTTONID_CHECK_AREA)){
     if(_itemKindSelectMenu == pWork->state){
       int backup = pWork->curpos;
       int nowno = ITEMMENU_GetItemIndex(pWork);
-      int length = ITEMMENU_GetItemPocketNumber( pWork);
 
       if(pWork->curpos != (bttnid-BUTTONID_ITEM_AREA)){
         pWork->curpos = bttnid - BUTTONID_ITEM_AREA;
@@ -1137,10 +1191,35 @@ static void _BttnCallBack( u32 bttnid, u32 event, void* p_work )
     }
     return;
   }
+  else if(bttnid >= BUTTONID_CHECK_AREA){
+    if(pWork->pocketno == BAG_POKE_EVENT){
+      int no = bttnid - BUTTONID_CHECK_AREA + pWork->oamlistpos + 1;
+      ITEM_ST * item = ITEMMENU_GetItem( pWork, no );
+      if(length <= no){
+        return;
+      }
+      {
+        void * itemdata;
+        int ret;
+        itemdata = ITEM_GetItemArcData( item->id, ITEM_GET_DATA, pWork->heapID );
+        ret = ITEM_GetBufParam( itemdata, ITEM_PRM_CNV );
+        GFL_HEAP_FreeMemory( itemdata );
+        if( ret == 0 ){
+          return;
+        }
+      }
 
-  
 
-  
+      
+      if(ITEMMENU_GetPosCnvButtonItem(pWork,item->id)!=-1){//チェックつき
+        ITEMMENU_RemoveCnvButtonItem(pWork,item->id);
+      }
+      else{
+        ITEMMENU_AddCnvButtonItem(pWork,item->id);
+      }
+      _windowRewrite(pWork);
+    }
+  }
 
   if(pocketno != -1){
     _pocketCursorChange(pWork, pWork->pocketno, pocketno);

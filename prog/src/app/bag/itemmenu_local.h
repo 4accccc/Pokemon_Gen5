@@ -128,7 +128,7 @@ struct _DEBUGITEM_PARAM {
   u32 listRes[ITEM_LIST_NUM];  //アイテムリスト
   GFL_BMP_DATA* listBmp[ITEM_LIST_NUM];
   GFL_CLWK  *listCell[ITEM_LIST_NUM];     //アイテムの一覧OBJ
-  u32 bListEnable[ITEM_LIST_NUM];
+  u32 nListEnable[ITEM_LIST_NUM];
   GFL_CLWK  *listMarkCell[ITEM_LIST_NUM];  //チェックマーク
   
 	GFL_BUTTON_MAN* pButton;
@@ -223,6 +223,7 @@ struct _DEBUGITEM_PARAM {
 #define BUTTONID_EXIT   (7)
 #define BUTTONID_RETURN   (8)
 #define BUTTONID_ITEM_AREA (9)
+#define BUTTONID_CHECK_AREA (15)
 
 
 #define FLD_SUBSCR_FADE_DIV (1)
@@ -261,3 +262,6 @@ extern void ITEMDISP_ItemInfoWindowDisp( FIELD_ITEMMENU_WORK *pWork );
 extern void ITEMDISP_ItemInfoMessageMake( FIELD_ITEMMENU_WORK *pWork,int id );
 extern BOOL ITEMDISP_MessageEndCheck(FIELD_ITEMMENU_WORK* pWork);
 
+extern int ITEMMENU_GetPosCnvButtonItem(FIELD_ITEMMENU_WORK* pWork, int no);
+extern BOOL ITEMMENU_AddCnvButtonItem(FIELD_ITEMMENU_WORK* pWork, int no);
+extern void ITEMMENU_RemoveCnvButtonItem(FIELD_ITEMMENU_WORK* pWork, int no);

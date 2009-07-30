@@ -43,6 +43,7 @@ typedef	struct {
 
 #define	BAG_POKE_MAX		( 5 )		// ポケット最大数
 
+#define DUMMY_SHORTCUT_MAX (10) //便利ぼたん@@OO削除予定
 
 //==============================================================================
 //	型定義
@@ -80,8 +81,8 @@ extern BOOL MYITEM_CheckItemPocket( MYITEM_PTR myitem, u32 pocket );
 extern u32 MYITEM_GetItemPocketNumber( MYITEM_PTR myitem, u32 pocket );
 extern ITEM_ST * MYITEM_PosItemGet( MYITEM_PTR myitem, u16 pocket, u16 pos );
 extern void MYITEM_BattlePocketItemMake( MYITEM_PTR myitem, ITEM_ST * make[], u32 heap );
-extern u32 MYITEM_CnvButtonItemGet( const MYITEM_PTR myitem );
-extern void MYITEM_CnvButtonItemSet( MYITEM_PTR myitem, u32 item );
+extern u32 MYITEM_CnvButtonItemGet( const MYITEM_PTR myitem, int index );
+extern void MYITEM_CnvButtonItemSet( MYITEM_PTR myitem, int index, u32 item );
 
 //----------------------------------------------------------
 //	ITEMLIST操作のための関数
