@@ -1801,7 +1801,7 @@ static void _setBeacon(void* buff, int size)
 	else{
 		WHSetGameInfo(buff, size, pInit->ggid, pNetWL->_sTgid);
 	}
-	NET_PRINT("ビーコン設定\n");
+//	NET_PRINT("ビーコン設定\n");
 }
 
 

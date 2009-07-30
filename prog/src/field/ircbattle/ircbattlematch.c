@@ -55,6 +55,7 @@ static void Snd_SePlay(int a){}
 #define _BUTTON_WIN_HEIGHT (5)    // ウインドウ高さ
 #define _BUTTON_WIN_PAL   (14)  // ウインドウ
 #define _BUTTON_MSG_PAL   (13)  // メッセージフォント
+#define _START_PAL   (12)  // スタートウインドウ
 
 #define	_BUTTON_WIN_CGX_SIZE   ( 18+12 )
 #define	_BUTTON_WIN_CGX	( 2 )
@@ -214,6 +215,7 @@ struct _IRC_BATTLE_MATCH {
   GFL_ARCUTIL_TRANSINFO bgchar;
   GFL_ARCUTIL_TRANSINFO bgchar2;
   GFL_ARCUTIL_TRANSINFO subchar;
+  GFL_ARCUTIL_TRANSINFO subchar3;
   CONNECT_BG_PALANM cbp;		// Wifi接続画面のBGパレットアニメ制御構造体
   BOOL bParent;
 };
@@ -298,9 +300,35 @@ static void _connectCallBack(void* pWk, int netID)
 static void _wirelessConnectCallback(void* pWk)
 {
   IRC_BATTLE_MATCH *pWork = pWk;
+  int no;
 
+#if 1 //
+  {
+    ARCHANDLE* p_handle = GFL_ARC_OpenDataHandle( ARCID_IRCBATTLE, pWork->heapID );
+
+    if(pWork->selectType==EVENTIRCBTL_ENTRYMODE_FRIEND || pWork->selectType==EVENTIRCBTL_ENTRYMODE_TRADE){
+      no = NARC_ircbattle_c_start_NSCR;
+    }
+    else{
+      no = NARC_ircbattle_b_start_NSCR;
+    }
+
+
+    // サブ画面BG0スクリーン転送
+    GFL_ARCHDL_UTIL_TransVramScreenCharOfs( p_handle, no,
+                                            GFL_BG_FRAME3_S, 0,
+                                            _START_PAL*0x1000+GFL_ARCUTIL_TRANSINFO_GetPos(pWork->subchar3), 0, 0,
+                                            pWork->heapID);
+    GFL_BG_SetVisible( GFL_BG_FRAME3_S, VISIBLE_ON );
+    GFL_ARC_CloseDataHandle( p_handle );
+  }
+
+  _CHANGE_STATE(pWork,NULL);
+
+#else
   GFL_FADE_SetMasterBrightReq(GFL_FADE_MASTER_BRIGHT_BLACKOUT, 0, 16, _BRIGHTNESS_SYNC);
   _CHANGE_STATE(pWork,_ircStartTiming);
+#endif
 }
 
 
@@ -409,6 +437,21 @@ static void _createBg(IRC_BATTLE_MATCH* pWork)
     GFL_BG_FillScreen( frame,	0x0000, 0, 0, 32, 32, GFL_BG_SCRWRT_PALIN );
     GFL_BG_LoadScreenReq( frame );
   }
+  {
+    int frame = GFL_BG_FRAME3_S;
+    GFL_BG_BGCNT_HEADER TextBgCntDat = {
+      0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
+      GX_BG_SCRBASE_0xf800, GX_BG_CHARBASE_0x10000, 0x8000,GX_BG_EXTPLTT_01,
+      0, 0, 0, FALSE
+      };
+
+    GFL_BG_SetBGControl(
+      frame, &TextBgCntDat, GFL_BG_MODE_TEXT );
+
+    GFL_BG_FillScreen( frame,	0x0000, 0, 0, 32, 32, GFL_BG_SCRWRT_PALIN );
+    GFL_BG_LoadScreenReq( frame );
+  }
+
 }
 
 
@@ -528,6 +571,16 @@ static void _modeInit(IRC_BATTLE_MATCH* pWork)
 
     //パレットアニメシステム作成
     ConnectBGPalAnm_Init(&pWork->cbp, p_handle, NARC_ircbattle_connect_anm_NCLR, pWork->heapID);
+
+
+
+    // サブ画面BG3キャラ転送
+    pWork->subchar3 = GFL_ARCHDL_UTIL_TransVramBgCharacterAreaMan( p_handle, NARC_ircbattle_start_NCGR,
+                                                                  GFL_BG_FRAME3_S, 0, 0, pWork->heapID);
+    GFL_ARCHDL_UTIL_TransVramPalette(p_handle, NARC_ircbattle_start2_NCLR, PALTYPE_SUB_BG,
+                                     0x20*_START_PAL, 0x20, pWork->heapID);
+
+
     GFL_ARC_CloseDataHandle( p_handle );
   }
 
@@ -780,10 +833,16 @@ static void _ircStartTiming(IRC_BATTLE_MATCH* pWork)
   //  OS_TPrintf("接続人数 = %d\n", GFL_NET_GetConnectNum());
   //    }
   // ワイプ終了待ち
+
+  
+#if 1
+  _CHANGE_STATE(pWork,NULL);
+
+#else
   if( GFL_FADE_CheckFade() ){
     _CHANGE_STATE(pWork,NULL);
   }
-
+#endif
 }
 
 //--------------------------------------------------------------

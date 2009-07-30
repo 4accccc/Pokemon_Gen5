@@ -1360,6 +1360,7 @@ static void _modeSelectMenuWait(C_GEAR_WORK* pWork)
 	if(pWork->msgCountDown > 0){
 		pWork->msgCountDown--;
 	}
+
 	if(pWork->msgCountDown <= 0){
 		GAME_COMM_SYS_PTR pGC = GAMESYSTEM_GetGameCommSysPtr(pWork->pGameSys);
 		GAME_COMM_INFO_MESSAGE infomsg;

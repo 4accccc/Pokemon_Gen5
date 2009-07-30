@@ -210,7 +210,7 @@ static GMEVENT_RESULT EVENT_IrcBattleMain(GMEVENT * event, int *  seq, void * wo
     PMSND_PlayBGM(dbw->para.musicDefault);
 
     GAMESYSTEM_CallProc(gsys, NO_OVERLAY_ID, &BtlProcData, &dbw->para);
-    GFL_FADE_SetMasterBrightReq(GFL_FADE_MASTER_BRIGHT_BLACKOUT, 16, 0, 1);
+//    GFL_FADE_SetMasterBrightReq(GFL_FADE_MASTER_BRIGHT_BLACKOUT, 16, 0, 1);
     (*seq)++;
     break;
   case _WAIT_BATTLE:
