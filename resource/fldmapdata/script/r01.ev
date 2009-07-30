@@ -8,6 +8,17 @@
   .include  "../../../prog/include/msg/script/msg_r01.h"
   .include  "r01.h"
 
+/**************************************************************/	
+/*    R01で使う定数                                     */
+/**************************************************************/
+#define CHECK_X01a (786)
+#define CHECK_X01b (787)
+#define CHECK_X01c (788)
+#define CHECK_X01d (789)
+#define CHECK_X01e (790)
+#define CHECK_X01f (791)
+#define CHECK_Z01a (729)
+
 //--------------------------------------------------------------
 //               スクリプト本体
 //--------------------------------------------------------------
@@ -42,7 +53,40 @@ _EVENT_DATA_END
 /*   R01　ポケモン捕獲デモ                                    */
 /**************************************************************/
 ev_r01_poke_getdemo:
-//POSイベント、本来であれば主人公移動アニメ（POSごとに）
+//POSイベント、POSごとに主人公移動アニメ
+	_PLAYER_POS_GET SCWK_TEMP0,SCWK_TEMP1 //自機座標取得
+	_IFVAL_JUMP SCWK_TEMP0,EQ,786,pos_786_729
+	_IFVAL_JUMP SCWK_TEMP0,EQ,787,pos_787_729
+/*	_IFVAL_JUMP SCWK_TEMP0,EQ,787,pos_787_729 */
+	_IFVAL_JUMP SCWK_TEMP0,EQ,789,pos_789_729
+	_IFVAL_JUMP SCWK_TEMP0,EQ,790,pos_790_729
+	_IFVAL_JUMP SCWK_TEMP0,EQ,791,pos_791_729
+
+pos_786_729:
+	_OBJ_ANIME MMDL_ID_PLAYER,anime_r01_guide00a
+	_OBJ_ANIME_WAIT
+	_JUMP poke_getdemo_start
+
+pos_787_729:
+	_OBJ_ANIME MMDL_ID_PLAYER,anime_r01_guide00b
+	_OBJ_ANIME_WAIT
+	_JUMP poke_getdemo_start
+
+pos_789_729:
+	_OBJ_ANIME MMDL_ID_PLAYER,anime_r01_guide00c
+	_OBJ_ANIME_WAIT
+	_JUMP poke_getdemo_start
+
+pos_790_729:
+	_OBJ_ANIME MMDL_ID_PLAYER,anime_r01_guide00d
+	_OBJ_ANIME_WAIT
+	_JUMP poke_getdemo_start
+
+pos_791_729:
+	_OBJ_ANIME MMDL_ID_PLAYER,anime_r01_guide00e
+	_OBJ_ANIME_WAIT
+
+poke_getdemo_start:
 //ライバル、アニメ＋メッセージ
 	_OBJ_ANIME R01_RIVAL,anime_R01_pokeget0
 	_OBJ_ANIME_WAIT
@@ -65,7 +109,6 @@ ev_r01_poke_getdemo:
 	_AB_KEYWAIT
 	_WHITE_IN 8
 	_DISP_FADE_END_CHECK
-
 /*	_BGM_STOP
 	_BGM_NOW_MAP_PLAY*/
 	
@@ -287,6 +330,50 @@ ev_r01_talkobj_man1:
 	_END
 
 
+/**************************************************************/
+/*   R01　捕獲デモ用：POSで主人公移動                    */
+/**************************************************************/
+_ANIME_LABEL	anime_r01_guide00a
+	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	AC_WALK_R_8F,2
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	ACMD_END,0
+
+/**************************************************************/
+/*   R01　捕獲デモ用：POSで主人公移動                    */
+/**************************************************************/
+_ANIME_LABEL	anime_r01_guide00b
+	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	ACMD_END,0
+
+/**************************************************************/
+/*   R01　捕獲デモ用：POSで主人公移動                    */
+/**************************************************************/
+_ANIME_LABEL	anime_r01_guide00c
+	_ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	ACMD_END,0
+
+/**************************************************************/
+/*   R01　捕獲デモ用：POSで主人公移動                    */
+/**************************************************************/
+_ANIME_LABEL	anime_r01_guide00d
+	_ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA	AC_WALK_L_8F,2
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	ACMD_END,0
+
+/**************************************************************/
+/*   R01　捕獲デモ用：POSで主人公移動                    */
+/**************************************************************/
+_ANIME_LABEL	anime_r01_guide00e
+	_ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA	AC_WALK_L_8F,3
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	ACMD_END,0
 
 /**************************************************************/
 /*   R01　捕獲デモ用：ライバルが博士を見る                    */
@@ -301,7 +388,7 @@ _ANIME_LABEL	anime_R01_pokeget0
 /*   R01　捕獲デモ用：博士、草むらに入る 　                   */
 /**************************************************************/
 _ANIME_LABEL	anime_R01_pokeget1
-	_ANIME_DATA	AC_WALK_U_8F,2
+	_ANIME_DATA	AC_WALK_U_8F,4
 	_ANIME_DATA	ACMD_END,0
 
 /**************************************************************/
@@ -309,7 +396,7 @@ _ANIME_LABEL	anime_R01_pokeget1
 /**************************************************************/
 _ANIME_LABEL	anime_R01_pokeget1a
 	_ANIME_DATA	AC_MARK_GYOE,1
-	_ANIME_DATA	AC_WALK_D_8F,3
+	_ANIME_DATA	AC_WALK_D_8F,4
 	_ANIME_DATA	AC_WAIT_8F,1
 	_ANIME_DATA	ACMD_END,0
 
