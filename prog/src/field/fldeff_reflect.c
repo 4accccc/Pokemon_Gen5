@@ -350,7 +350,11 @@ static void reflectTask_UpdateBlAct( u16 actID, void *wk )
     pos.z += z + REF_OFFS_Z;
     
 	  if( MMDL_GetMapPosHeight(work->head.mmdl,&pos,&y) == FALSE ){
+#if 1 //高さ取得エラー
       pos.y = 0; //高さ取得エラー
+#else
+      pos.y -= offs[0];
+#endif
     }else{
       pos.y -= offs[work->head.type];
     }
