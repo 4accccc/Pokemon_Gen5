@@ -2773,6 +2773,14 @@ static GMEVENT_RESULT DMenuSkyJump( GMEVENT *p_event, int *p_seq, void *p_wk_adr
 			FIELDMAP_WORK * fieldmap = GAMESYSTEM_GetFieldMapWork(p_wk->p_gamesys);
 			FIELD_PLACE_NAME_ZoneChange(FIELDMAP_GetPlaceNameSys(fieldmap), p_wk->p_param->zoneID);
 		}
+
+		{
+      GAMEDATA *gdata = GAMESYSTEM_GetGameData( p_wk->p_gamesys );
+      FIELD_SOUND *fsnd = GAMEDATA_GetFieldSound( gdata );
+      FIELD_SOUND_PopBGM( fsnd );
+    }  
+    PMSND_FadeInBGM(60);
+
 		*p_seq	= SEQ_EXIT;
 		break;
 
