@@ -738,7 +738,8 @@ static BOOL btlin_trainer_single( int* seq, void* wk_adrs )
     }
     break;
   case 4:
-    if( !BTLV_EFFECT_CheckExecute() )
+    if( ( msgWinVisible_Update(&wk->msgwinVisibleWork) ) &&
+        ( !BTLV_EFFECT_CheckExecute() ) )
     {
       TrainerID  trID = BTL_MAIN_GetTrainerID( wk->mainModule );
       BTL_STR_MakeStringStd( wk->strBuf, BTL_STRID_STD_PutSingle_NPC1, 3, trID, trID, subwk->pokeID );
@@ -755,7 +756,8 @@ static BOOL btlin_trainer_single( int* seq, void* wk_adrs )
     }
     break;
   case 6:
-    if( !BTLV_EFFECT_CheckExecute() )
+    if( ( msgWinVisible_Update(&wk->msgwinVisibleWork) ) &&
+        ( !BTLV_EFFECT_CheckExecute() ) )
     {
       BTLV_BALL_GAUGE_PARAM bbgp;
       int i;
@@ -766,9 +768,8 @@ static BOOL btlin_trainer_single( int* seq, void* wk_adrs )
       }
       bbgp.status[ 0 ] = BTLV_BALL_GAUGE_STATUS_ALIVE;
       bbgp.type = BTLV_BALL_GAUGE_TYPE_MINE;
-      BTLV_EFFECT_SetBallGauge( &bbgp );
       BTLV_EFFECT_DelBallGauge( BTLV_BALL_GAUGE_TYPE_ENEMY );
-      statwin_disp_start( &wk->statusWin[ subwk->pokePos ] );
+      BTLV_EFFECT_SetBallGauge( &bbgp );
       (*seq)++;
     }
     break;
@@ -776,6 +777,7 @@ static BOOL btlin_trainer_single( int* seq, void* wk_adrs )
 //    if( !BTLV_EFFECT_CheckExecuteBallGauge( BTLV_BALL_GAUGE_TYPE_MINE ) )
     {
       const MYSTATUS* status = BTL_MAIN_GetPlayerStatus( wk->mainModule );
+      statwin_disp_start( &wk->statusWin[ subwk->pokePos ] );
       if( MyStatus_GetMySex(status) == PM_MALE ){
         BTLV_EFFECT_Add( BTLEFF_SINGLE_ENCOUNT_2_MALE );
       }else{

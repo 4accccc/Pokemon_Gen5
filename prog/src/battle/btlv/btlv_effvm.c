@@ -80,6 +80,10 @@ typedef struct{
   fx32    angle;      //放物線現在角度
   fx32    speed;      //スピード
   int     move_frame; //移動するフレーム数
+  int     move_type;  //移動タイプ
+  int     wait;
+  fx32    wait_tmp;
+  fx32    wait_tmp_plus;
 }BTLV_EFFVM_EMITTER_MOVE_WORK;
 
 //SE再生用パラメータ構造体
@@ -712,6 +716,7 @@ static VMCMD_RESULT VMEC_PARTICLE_DELETE( VMHANDLE *vmh, void *context_work )
   int     ptc_no = EFFVM_GetPtcNo( bevw, datID );
 
   EFFVM_DeleteEmitter( bevw->ptc[ ptc_no ] );
+  bevw->ptc[ ptc_no ] = NULL;
 
   return bevw->control_mode;
 }
@@ -1750,8 +1755,19 @@ static  void  EFFVM_InitEmitterPos( GFL_EMIT_PTR emit )
     GF_ASSERT( bevw->temp_work_count < TEMP_WORK_SIZE );
 
     beemw->angle = 0;
+    beemw->wait = 0;
+    beemw->wait_tmp = 0;
+    beemw->wait_tmp_plus = 0;
+    beemw->move_type = beeiw->move_type;
     beemw->move_frame = beeiw->move_frame >> FX32_SHIFT;
-    beemw->speed = FX_Div( ( 0x8000 << FX32_SHIFT ), beeiw->move_frame );
+    if( beeiw->move_type == BTLEFF_EMITTER_MOVE_CURVE_HALF )
+    { 
+      beemw->speed = FX_Div( ( 0x6000 << FX32_SHIFT ), beeiw->move_frame );
+    }
+    else
+    { 
+      beemw->speed = FX_Div( ( 0x8000 << FX32_SHIFT ), beeiw->move_frame );
+    }
     beemw->radius_x = VEC_Distance( &src, &dst ) / 2;
     if( beeiw->move_type == BTLEFF_EMITTER_MOVE_STRAIGHT )
     {
@@ -1832,6 +1848,21 @@ static  void  EFFVM_MoveEmitter( GFL_EMIT_PTR emit, unsigned int flag )
   if( ( beemw->move_frame == 0 ) || ( flag == SPL_EMITTER_CALLBACK_FRONT ) )
   {
     return;
+  }
+
+  if( beemw->move_type == BTLEFF_EMITTER_MOVE_CURVE_HALF )
+  { 
+    if( beemw->wait )
+    { 
+      beemw->wait--;
+      return;
+    }
+    else
+    { 
+      beemw->wait_tmp_plus += 0x0c;
+      beemw->wait_tmp += beemw->wait_tmp_plus;
+      beemw->wait = ( beemw->wait_tmp >> FX32_SHIFT );
+    }
   }
 
   beemw->move_frame--;

@@ -13,6 +13,8 @@
 #include "btlv_effect.h"
 #include "btlv_b_gauge.h"
 
+#include "sound/pm_sndsys.h"
+
 #include "arc_def.h"
 #include "battle/battgra_wb.naix"
 
@@ -50,10 +52,10 @@ enum
   BTLV_BALL_GAUGE_STOP_OFFSET = 2,
 
   BTLV_BALL_GAUGE_MOVE_OFFSET = 128,
-  BTLV_BALL_GAUGE_MOVE_SPEED = 8,
-  BTLV_BALL_GAUGE_ARROW_MOVE_SPEED = 12,
+  BTLV_BALL_GAUGE_MOVE_SPEED = 12,
+  BTLV_BALL_GAUGE_ARROW_MOVE_SPEED = 16,
 
-  BTLV_BALL_GAUGE_MOVE_WAIT = 8,
+  BTLV_BALL_GAUGE_MOVE_WAIT = 6,
 };
 
 //============================================================================================
@@ -87,6 +89,8 @@ struct _BTLV_BALL_GAUGE_WORK
   int                   seq_no;
 
   int                   tcb_execute;
+
+  int                   player_no;
 
   HEAPID                heapID;
 };
@@ -227,6 +231,8 @@ BTLV_BALL_GAUGE_WORK* BTLV_BALL_GAUGE_Create( const BTLV_BALL_GAUGE_PARAM* bbgp,
 
   GFL_ARC_CloseDataHandle( handle );
 
+  PMSND_PlaySE( SEQ_SE_TB_START );
+
   return bbgw;
 }
 
@@ -343,7 +349,21 @@ static  void  TCB_BTLV_BALL_GAUGE_Anime( GFL_TCB* tcb, void* work )
       }
       else if( bbgw->bbgcl[ i ].now_pos.x == bbgw->bbgcl[ i ].stop_pos )
       { 
+        int se_no;
         GFL_CLACT_WK_SetAnmSeq( bbgw->bbgcl[ i ].clwk, bbgw->bbgcl[ i ].stop_anm_no );
+        switch( bbgw->bbgcl[ i ].stop_anm_no ){ 
+        case BTLV_BALL_GAUGE_ANM_NONE:
+          se_no = SEQ_SE_TB_KARA;
+          break;
+        case BTLV_BALL_GAUGE_ANM_ARROW_M:
+        case BTLV_BALL_GAUGE_ANM_ARROW_E:
+          break;
+        default:
+          se_no = SEQ_SE_TB_KON;
+          break;
+        }
+        PMSND_PlaySE_byPlayerID( se_no, bbgw->player_no );
+        bbgw->player_no ^= 1;
       }
       GFL_CLACT_WK_SetPos( bbgw->bbgcl[ i ].clwk, &bbgw->bbgcl[ i ].now_pos, CLSYS_DEFREND_MAIN );
     }
