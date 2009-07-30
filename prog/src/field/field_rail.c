@@ -21,6 +21,11 @@
 //============================================================================================
 // 歩きオフセット
 #define RAIL_WALK_OFS	(8)
+// 歩きカウント
+#define RAIL_WALK_COUNT (1)
+#define RAIL_RUN_COUNT (2)
+#define RAIL_DEBUG_COUNT (4)
+
 //============================================================================================
 //
 //
@@ -134,6 +139,7 @@ struct _FIELD_RAIL_MAN{
 
   /// 移動が起きた最新のキーバリュー
   int last_active_key;
+  RAIL_KEY last_way;
 
   FIELD_RAIL now_rail;
 
@@ -145,6 +151,7 @@ struct _FIELD_RAIL_MAN{
 //============================================================================================
 //------------------------------------------------------------------
 //------------------------------------------------------------------
+static int RailKeyTokeyCont(RAIL_KEY key);
 static RAIL_KEY keyContToRailKey(int cont);
 static RAIL_KEY getReverseKey(RAIL_KEY key);
 static RAIL_KEY getClockwiseKey(RAIL_KEY key);
@@ -234,6 +241,7 @@ FIELD_RAIL_MAN * FIELD_RAIL_MAN_Create(HEAPID heapID, FIELD_CAMERA * camera)
   man->field_camera = camera;
   //man->line_ofs = 0;
   man->last_active_key = 0;
+  man->last_way = RAIL_KEY_NULL;
   initRail(&man->now_rail, &man->rail_dat);
 
   return man;
@@ -309,6 +317,13 @@ void FIELD_RAIL_MAN_GetLocation(const FIELD_RAIL_MAN * man, RAIL_LOCATION * loca
 void FIELD_RAIL_MAN_SetLocation(FIELD_RAIL_MAN * man, const RAIL_LOCATION * location)
 {
   FIELD_RAIL * rail = &man->now_rail;
+  int i;
+  const RAIL_LINE* line = NULL;
+  int width_ofs_max;
+  u32 line_ofs_max;
+  int line_ofs;
+  int width_ofs;
+  int key;
 
   RAIL_LOCATION_Dump(location);
   // 初期化
@@ -319,21 +334,46 @@ void FIELD_RAIL_MAN_SetLocation(FIELD_RAIL_MAN * man, const RAIL_LOCATION * loca
     // 点初期化
     rail->type          = FIELD_RAIL_TYPE_POINT;
     rail->point         = &man->rail_dat.point_table[ location->rail_index ];
+
     rail->width_ofs_max = rail->point->width_ofs_max[0];
+
+    for( i=0; i<RAIL_CONNECT_LINE_MAX; i++ )
+    {
+      if( rail->point->lines[i] != RAIL_TBL_NULL )
+      {
+        if( line == NULL )
+        {
+          line = &man->rail_dat.line_table[ rail->point->lines[i] ];
+          line_ofs  = 0;
+          width_ofs = 0;
+          key       = rail->point->keys[i];
+        }
+        else
+        {
+          OS_TPrintf( "rail::SetLocation Point ラインが複数あります。\n" );
+        }
+      }
+    }
+    GF_ASSERT( line );
   }
   else
   {
-    int width_ofs_max;
-    u32 line_ofs_max;
-    const RAIL_LINE* line;
     
     // ライン初期化
-    line                = &man->rail_dat.line_table[ location->rail_index ];
-    line_ofs_max        = getLineOfsMax( line, rail->ofs_unit, &man->rail_dat );
-    width_ofs_max       = getLineWidthOfsMax( line, location->line_ofs, line_ofs_max, &man->rail_dat );
-
-    setLineData( rail, line, location->key, location->line_ofs, location->width_ofs, line_ofs_max, width_ofs_max );
+    line        = &man->rail_dat.line_table[ location->rail_index ];
+    line_ofs    = location->line_ofs;
+    width_ofs   = location->width_ofs;
+    key         = location->key;
   }
+
+  line_ofs_max  = getLineOfsMax( line, rail->ofs_unit, &man->rail_dat );
+  width_ofs_max = getLineWidthOfsMax( line, line_ofs, line_ofs_max, &man->rail_dat );
+  setLineData( rail, line, key, line_ofs, width_ofs, line_ofs_max, width_ofs_max );
+
+
+  // 方向設定
+  man->last_active_key |= RailKeyTokeyCont(key);
+  man->last_way = key;
 }
 
 
@@ -427,6 +467,21 @@ int FIELD_RAIL_MAN_GetActionKey( const FIELD_RAIL_MAN * man )
 	return man->last_active_key;
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief	レールシステム　最後に移動した方向を取得
+ *
+ *	@param	man		
+ *
+ *	@return	方向
+ */
+//-----------------------------------------------------------------------------
+RAIL_KEY FIELD_RAIL_MAN_GetActionWay( const FIELD_RAIL_MAN * man )
+{
+	GF_ASSERT( man );
+	return man->last_way;
+}
+
 //------------------------------------------------------------------
 /**
  * @brief 現在位置のアップデート
@@ -444,7 +499,7 @@ void FIELD_RAIL_MAN_Update(FIELD_RAIL_MAN * man, int key_cont)
     return;
   }
 
-	man->last_active_key = 0;
+  man->last_active_key = 0;
 
 	if( man->req_move == FALSE )
 	{
@@ -460,25 +515,35 @@ void FIELD_RAIL_MAN_Update(FIELD_RAIL_MAN * man, int key_cont)
 	
 	if( man->req_move )
 	{
-
 		FIELD_RAIL_TYPE type = man->now_rail.type;
 		RAIL_KEY set_key = RAIL_KEY_NULL;
 		RAIL_KEY key = keyContToRailKey(man->key_save_move);
 		u32 count_up;
 
 
+#ifdef PM_DEBUG
 		if( man->key_save_move & PAD_BUTTON_R )
 		{
-			count_up = 4;
+			count_up = RAIL_DEBUG_COUNT;
 		}
 		else if( man->key_save_move & PAD_BUTTON_B )
 		{
-			count_up = 2;
+			count_up = RAIL_RUN_COUNT;
 		}
 		else
 		{
-			count_up = 1;
+			count_up = RAIL_WALK_COUNT;
 		}
+#else
+		if( man->key_save_move & PAD_BUTTON_B )
+		{
+			count_up = RAIL_RUN_COUNT;
+		}
+		else
+		{
+			count_up = RAIL_WALK_COUNT;
+		}
+#endif
 
 		man->ofs_move += count_up;
 		
@@ -497,7 +562,13 @@ void FIELD_RAIL_MAN_Update(FIELD_RAIL_MAN * man, int key_cont)
 		{
 			OS_TPrintf("RAIL:%s :line_ofs=%d line_ofs_max=%d width_ofs=%d\n",
 					debugGetRailKeyName(set_key), man->now_rail.line_ofs, man->now_rail.line_ofs_max, man->now_rail.width_ofs);
-			man->last_active_key = man->key_save_move;
+      if( count_up == RAIL_RUN_COUNT )
+      {
+        man->last_active_key |= PAD_BUTTON_B;
+      }
+      man->last_active_key |= RailKeyTokeyCont( set_key );
+
+      man->last_way = set_key;
 		}
 
 		if (type != man->now_rail.type)
@@ -1581,6 +1652,22 @@ static RAIL_KEY updateLine( FIELD_RAIL * rail, const RAIL_LINE * line, u32 line_
 	}
 
 	return key;
+}
+
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+static int RailKeyTokeyCont(RAIL_KEY key)
+{
+  static const u16 sc_KEYCONT[ RAIL_KEY_MAX ] = 
+  {
+    0,
+    PAD_KEY_UP,
+    PAD_KEY_RIGHT,
+    PAD_KEY_DOWN,
+    PAD_KEY_LEFT,
+  };
+
+  return sc_KEYCONT[ key ];
 }
 
 //------------------------------------------------------------------

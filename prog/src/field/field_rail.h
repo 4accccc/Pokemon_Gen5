@@ -257,3 +257,4 @@ extern void FIELD_RAIL_MAN_GetDirection(const FIELD_RAIL_MAN * man, VecFx32 * di
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 extern int FIELD_RAIL_MAN_GetActionKey( const FIELD_RAIL_MAN * man );
+extern RAIL_KEY FIELD_RAIL_MAN_GetActionWay( const FIELD_RAIL_MAN * man );

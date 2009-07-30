@@ -33,7 +33,6 @@
 ///	NOGRID_MOVE_WORK
 //--------------------------------------------------------------
 typedef struct {
-	VecFx32 last_pos;
 	VecFx32 player_way;
 }NOGRID_MOVE_WORK;
 
@@ -110,6 +109,8 @@ static void mapCtrlNoGrid_Create(
 	FIELD_PLAYER_SetDir( fld_player, dir );
 
   FIELD_CAMERA_SetTargetPos( camera, pos );
+
+  FIELD_PLAYER_NOGRID_Rail_SetUp( fld_player, FIELD_RAIL_MAN_GetActionWay( railMan ), &work->player_way );
 }
 
 //--------------------------------------------------------------
@@ -175,14 +176,6 @@ static void mapCtrlNoGrid_Main( FIELDMAP_WORK *fieldWork, VecFx32 *pos )
     FIELD_PLAYER_SetPos( fld_player, pos );
     PLAYERWORK_setPosition( player, pos );
 
-		// ˆÚ“®•ûŒü‚ÌÝ’è
-		if( VEC_Distance( pos, &work->last_pos ) != 0 )
-		{
-			VEC_Subtract( pos, &work->last_pos, &work->player_way );
-
-			work->last_pos = *pos;
-		}
-		
 		rail_action_key = FIELD_RAIL_MAN_GetActionKey( railMan );
 		FIELD_PLAYER_NOGRID_Rail_Move( fld_player, FIELDMAP_GetFldEffCtrl(fieldWork), &work->player_way, rail_action_key, FIELDMAP_GetFieldCamera(fieldWork) );
   }
