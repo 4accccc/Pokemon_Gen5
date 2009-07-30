@@ -1,11 +1,16 @@
 EFFSEQ
 $0001
-C:\home\pokemon_wb\resource\particle\wazaeffect\w_001.spa
+C:\home\pokemon_wb\resource\particle\wazaeffect\w_114.spa
 #001
 %00
-パーティクルデータロード	w_001
-パーティクル再生	w_001	W_001_001_BALL_BURN	攻撃側	方向無し	0	0
-パーティクル再生	w_001	W_001_001_HIT_MARK	攻撃側	方向無し	0	0
+射影モード	透視射影
+BGのパレットフェード	すべて	0	3	1	0:0:0
+パーティクルデータロード	w_114
+パーティクル再生	w_114	W_114_114_KUROKIRI_MIST1	POS_AA	方向無し	4	0
+パーティクル再生	w_114	W_114_114_KUROKIRI_MIST2	POS_AA	方向無し	4	0
+エフェクト終了待ち	すべて
+BGのパレットフェード	すべて	3	0	1	0:0:0
+射影モード	正射影
 エフェクト終了待ち	すべて
 エフェクト終了
 &
