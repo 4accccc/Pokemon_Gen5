@@ -39,7 +39,7 @@ RES_DIR = ./esf_file/
 CNV_DIR = ./
 
 #コンバート対象のファイルツリーを生成
-WAZAEFFSRCS	:= $(wildcard $(RES_DIR)*.esf)
+WAZAEFFSRCS	:= $(wildcard $(RES_DIR)?e_???.esf)
 
 .PHONY:	do-build clean subdir
 
