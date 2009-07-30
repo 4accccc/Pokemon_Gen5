@@ -341,11 +341,11 @@ void BTLV_SCU_StartBtlIn( BTLV_SCU* wk )
   if( BTL_MAIN_GetRule(wk->mainModule) == BTL_RULE_SINGLE )
   {
       if( BTL_MAIN_GetCompetitor( wk->mainModule ) == BTL_COMPETITOR_TRAINER)   ///< ゲーム内トレーナー
-      { 
+      {
         BTL_UTIL_SetupProc( &wk->proc, wk, NULL, btlin_trainer_single );
       }
       else
-      { 
+      {
         BTL_UTIL_SetupProc( &wk->proc, wk, NULL, btlin_wild_single );
       }
   }
@@ -411,7 +411,7 @@ static BOOL btlin_wild_single( int* seq, void* wk_adrs )
   case 2:
     if( !BTLV_EFFECT_CheckExecute() )
     {
-      BTL_STR_MakeStringStd( wk->strBuf, BTL_STRID_STD_Encount, 1, subwk->pokeID );
+      BTL_STR_MakeStringStd( wk->strBuf, BTL_STRID_STD_Encount_Wild1, 1, subwk->pokeID );
       BTLV_SCU_StartMsg( wk, wk->strBuf, BTLV_MSGWAIT_STD );
       (*seq)++;
     }
@@ -501,7 +501,7 @@ static BOOL btlin_wild_double( int* seq, void* wk_adrs )
       subwk[1].pp = BTL_POKECON_GetFrontPokeDataConst( wk->pokeCon, subwk[1].pos );
       subwk[1].pokeID = BPP_GetID( subwk[1].pp );
 
-      BTL_STR_MakeStringStd( wk->strBuf, BTL_STRID_STD_Encount_Double, 2, subwk[0].pokeID, subwk[1].pokeID );
+      BTL_STR_MakeStringStd( wk->strBuf, BTL_STRID_STD_Encount_Wild2, 2, subwk[0].pokeID, subwk[1].pokeID );
       BTLV_SCU_StartMsg( wk, wk->strBuf, BTLV_MSGWAIT_STD );
       GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT, 16, 0, 2 );
       (*seq)++;
@@ -594,7 +594,7 @@ static BOOL btlin_comm_double_multi( int* seq, void* wk_adrs )
       subwk[1].pp = BTL_POKECON_GetFrontPokeDataConst( wk->pokeCon, subwk[1].pos );
       subwk[1].pokeID = BPP_GetID( subwk[1].pp );
 
-      BTL_STR_MakeStringStd( wk->strBuf, BTL_STRID_STD_Encount_Double, 2, subwk[0].pokeID, subwk[1].pokeID );
+      BTL_STR_MakeStringStd( wk->strBuf, BTL_STRID_STD_Encount_Wild2, 2, subwk[0].pokeID, subwk[1].pokeID );
       BTLV_SCU_StartMsg( wk, wk->strBuf, BTLV_MSGWAIT_STD );
       GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT, 16, 0, 2 );
       (*seq)++;
@@ -709,20 +709,20 @@ static BOOL btlin_trainer_single( int* seq, void* wk_adrs )
       int poke_count = TT_TrainerDataParaGet( tr_id, ID_TD_poke_count );
 
       for( i = 0 ; i < TEMOTI_POKEMAX ; i++ )
-      { 
+      {
         if( i < poke_count )
-        { 
+        {
           bbgp.status[ i ] = BTLV_BALL_GAUGE_STATUS_ALIVE;
         }
         else
-        { 
+        {
           bbgp.status[ i ] = BTLV_BALL_GAUGE_STATUS_NONE;
         }
       }
       bbgp.type = BTLV_BALL_GAUGE_TYPE_ENEMY;
 
       BTLV_EFFECT_SetBallGauge( &bbgp );
-      BTL_STR_MakeStringStd( wk->strBuf, BTL_STRID_STD_Encount, 1, subwk->pokeID );
+      BTL_STR_MakeStringStd( wk->strBuf, BTL_STRID_STD_Encount_NPC1, 1, subwk->pokeID );
       BTLV_SCU_StartMsg( wk, wk->strBuf, BTLV_MSGWAIT_STD );
       (*seq)++;
     }
@@ -737,15 +737,15 @@ static BOOL btlin_trainer_single( int* seq, void* wk_adrs )
     break;
   case 4:
     if( !BTLV_EFFECT_CheckExecute() )
-    { 
-      BTL_STR_MakeStringStd( wk->strBuf, BTL_STRID_STD_PutSingle_Enemy, 1, subwk->pokeID );
+    {
+      BTL_STR_MakeStringStd( wk->strBuf, BTL_STRID_STD_PutSingle_NPC1, 1, subwk->pokeID );
       BTLV_SCU_StartMsg( wk, wk->strBuf, BTLV_MSGWAIT_STD );
       (*seq)++;
     }
     break;
   case 5:
     if( BTLV_SCU_WaitMsg(wk) )
-    { 
+    {
       BTLV_EFFECT_AddByPos( subwk->viewPos, BTLEFF_SINGLE_TRAINER_ENCOUNT_3 );
       msgWinVisible_Hide( &wk->msgwinVisibleWork );
       (*seq)++;
@@ -753,12 +753,12 @@ static BOOL btlin_trainer_single( int* seq, void* wk_adrs )
     break;
   case 6:
     if( !BTLV_EFFECT_CheckExecute() )
-    { 
+    {
       BTLV_BALL_GAUGE_PARAM bbgp;
       int i;
 
       for( i = 0 ; i < TEMOTI_POKEMAX ; i++ )
-      { 
+      {
         bbgp.status[ i ] = BTLV_BALL_GAUGE_STATUS_NONE;
       }
       bbgp.status[ 0 ] = BTLV_BALL_GAUGE_STATUS_ALIVE;
@@ -771,7 +771,7 @@ static BOOL btlin_trainer_single( int* seq, void* wk_adrs )
     break;
   case 7:
 //    if( !BTLV_EFFECT_CheckExecuteBallGauge( BTLV_BALL_GAUGE_TYPE_MINE ) )
-    { 
+    {
       const MYSTATUS* status = BTL_MAIN_GetPlayerStatus( wk->mainModule );
       if( MyStatus_GetMySex(status) == PM_MALE ){
         BTLV_EFFECT_Add( BTLEFF_SINGLE_ENCOUNT_2_MALE );

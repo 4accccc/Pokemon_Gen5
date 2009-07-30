@@ -876,7 +876,7 @@ static BOOL subprocMemberIn( int* seq, void* wk_adrs )
   case 0:
     {
       u16 strID = BTL_MAIN_IsOpponentClientID(wk->mainModule, wk->myClientID, subwk->clientID)?
-          BTL_STRID_STD_PutSingle_Enemy : BTL_STRID_STD_PutSingle;
+          BTL_STRID_STD_PutSingle_NPC1 : BTL_STRID_STD_PutSingle;
       BTL_STR_MakeStringStd( wk->strBuf, strID, 1, subwk->pokeID );
       BTLV_SCU_StartMsg( wk->scrnU, wk->strBuf, BTLV_MSGWAIT_NONE );
       (*seq)++;

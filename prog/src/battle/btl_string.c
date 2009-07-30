@@ -320,11 +320,11 @@ void BTL_STR_MakeStringStdWithArgArray( STRBUF* buf, BtlStrID_STD strID, const i
     BtlStrID_STD   strID;
     void  (* const func)( STRBUF* buf, BtlStrID_STD strID, const int* args );
   }funcTbl[] = {
-    { BTL_STRID_STD_Encount,          ms_encount },
-    { BTL_STRID_STD_Encount_Double,   ms_encount_double },
+    { BTL_STRID_STD_Encount_Wild1,    ms_encount },
+    { BTL_STRID_STD_Encount_Wild2,    ms_encount_double },
     { BTL_STRID_STD_PutSingle,        ms_put_single },
     { BTL_STRID_STD_PutDouble,        ms_put_double },
-    { BTL_STRID_STD_PutSingle_Enemy,  ms_put_single_enemy },
+    { BTL_STRID_STD_PutSingle_NPC1,   ms_put_single_enemy },
     { BTL_STRID_STD_MemberOut1,       ms_out_member1 },
     { BTL_STRID_STD_SelectAction,     ms_select_action_ready },
     { BTL_STRID_STD_KodawariLock,     ms_kodawari_lock },
