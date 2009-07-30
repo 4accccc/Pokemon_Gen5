@@ -460,6 +460,7 @@ static void loadCameraParameters(FIELD_CAMERA * camera)
   GF_ASSERT( camera->type * sizeof(FLD_CAMERA_PARAM) < size );
   GFL_ARC_LoadDataOfsByHandle(handle, file_id,
       camera->type * sizeof(FLD_CAMERA_PARAM), sizeof(FLD_CAMERA_PARAM), &param);
+#if 0
   TAMADA_Printf("FIELD CAMERA INIT INFO\n");
   TAMADA_Printf("FIELD CAMERA TYPE =%d\n",camera->type);
   TAMADA_Printf("dist = %08x\n", param.Distance);
@@ -469,6 +470,7 @@ static void loadCameraParameters(FIELD_CAMERA * camera)
   TAMADA_Printf("shift = %08x,%08x,%08x\n", param.Shift.x, param.Shift.y, param.Shift.z );
   TAMADA_Printf("now near = %d\n", FX_Whole( FIELD_CAMERA_GetNear(camera) ) );
   TAMADA_Printf("now far = %d\n", FX_Whole( FIELD_CAMERA_GetFar(camera) ) );
+#endif
 
   camera->angle_len = param.Distance * FX32_ONE;
   camera->angle_pitch = param.Angle.x;
