@@ -254,7 +254,7 @@ void PSTATUS_SUB_InitCell( PSTATUS_WORK *work , PSTATUS_SUB_WORK *subWork )
     GFL_CLWK_DATA cellInitData;
     cellInitData.pos_y = markPosY;
     cellInitData.softpri = 10;
-    cellInitData.bgpri = 0;
+    cellInitData.bgpri = 1;
     
     for( i=0;i<SSMT_MAX;i++ )
     {
