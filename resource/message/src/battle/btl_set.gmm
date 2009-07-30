@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="taya" host="W00146" date="2009-07-29T21:35:19"/>
+	<create user="taya" host="W00146" date="2009-07-30T20:41:43"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -1488,6 +1488,7 @@
 	</row>
 
 	<row id="BTL_STRID_SET_DokuGet_Y">
+		<comment>どく</comment>
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]　は
 どく　を　あびた！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]　は
@@ -1586,6 +1587,7 @@
 	</row>
 
 	<row id="BTL_STRID_SET_YakedoGet">
+		<comment>やけど</comment>
 		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]　は
 やけどを　おった！</language>
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]　は
@@ -1670,6 +1672,7 @@
 	</row>
 
 	<row id="BTL_STRID_SET_MahiGet">
+		<comment>まひ</comment>
 		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]　は
 からだが　まひ　した！</language>
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]　は
@@ -1733,6 +1736,7 @@
 	</row>
 
 	<row id="BTL_STRID_SET_KoriGet">
+		<comment>こおり</comment>
 		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]　は
 こおってしまった！</language>
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]　は
@@ -2072,6 +2076,32 @@
 しょうたいを　みやぶった！</language>
 		<language name="JPN_KANJI" width="216">相手の　[1:02:ポケモンニックネーム:0]の
 正体を　見破った！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_Bind">
+		<comment>まきつく等</comment>
+		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は　[1:07:わざ名:1]の
+ダメージを　うけている</language>
+		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は　[1:07:わざ名:1]の
+ダメージを　受けている</language>
+	</row>
+
+	<row id="BTL_STRID_SET_Bind_Y">
+		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は
+[1:07:わざ名:1]の▽
+ダメージを　うけている</language>
+		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]は
+[1:07:わざ名:1]の▽
+ダメージを　うけている</language>
+	</row>
+
+	<row id="BTL_STRID_SET_Bind_E">
+		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は
+[1:07:わざ名:1]の▽
+ダメージを　うけている</language>
+		<language name="JPN_KANJI" width="216">相手の　[1:02:ポケモンニックネーム:0]は
+[1:07:わざ名:1]の▽
+ダメージを　うけている</language>
 	</row>
 
 	<row id="BTL_STRID_SET_ReactionDmg">
