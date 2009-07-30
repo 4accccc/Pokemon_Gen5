@@ -929,6 +929,17 @@ static u32 FIELD_GRANM_Itp_GetTransTexSize( const GFL_G3D_RES* cp_anmtex, u32 an
 		1,			//   GX_TEXFMT_A5I3 = 6,
 		0xff,		//   GX_TEXFMT_DIRECT = 7
 	};        
+  static const u16 sc_TEXSIZE[] = 
+  {
+    8,
+    16,
+    32,
+    64,
+    128,
+    256,
+    512,
+    1024,
+  };
 
 
 	// テクスチャ情報取得
@@ -949,11 +960,13 @@ static u32 FIELD_GRANM_Itp_GetTransTexSize( const GFL_G3D_RES* cp_anmtex, u32 an
 
 	//テクスチャの横サイズを取得
 	s_size = (cp_dict_tex->texImageParam & NNS_G3D_TEXIMAGE_PARAM_S_SIZE_MASK)>>NNS_G3D_TEXIMAGE_PARAM_S_SIZE_SHIFT;
-	s_size <<= 4;
+	s_size = sc_TEXSIZE[s_size];
 
 	//テクスチャの縦サイズを取得
 	t_size = (cp_dict_tex->texImageParam & NNS_G3D_TEXIMAGE_PARAM_T_SIZE_MASK)>>NNS_G3D_TEXIMAGE_PARAM_T_SIZE_SHIFT;
-	t_size <<= 4;
+	t_size = sc_TEXSIZE[t_size];
+
+  TOMOYA_Printf( "s_size %d t_size %d\n", s_size, t_size );
 
 	//バイトサイズを計算
 	byte_size = (s_size*t_size)/texel_size;
