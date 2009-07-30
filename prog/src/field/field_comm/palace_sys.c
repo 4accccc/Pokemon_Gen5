@@ -22,6 +22,7 @@
 #include "message.naix"
 #include "msg/msg_invasion.h"
 #include "system/bmp_oam.h"
+#include "msg\msg_d_matsu.h"
 
 
 //==============================================================================
@@ -56,13 +57,17 @@ typedef struct _PALACE_SYS_WORK{
   u8 area;          ///<自機が居るエリア番号
   u8 entry_count;   ///<参加したプレイヤー数(プレイヤーが抜けても減らない)
   u8 entry_count_max; ///今までの最大参加人数
-  u8 init_name_draw;
+  u8 init_name_draw:1;
+  u8 mission_print:1;
+  u8            :6;
 
   GFL_CLUNIT *clunit;
   PALACE_DEBUG_NUMBER number;
   BMPOAM_SYS_PTR bmpoam_sys;
   BMPOAM_ACT_PTR bmpact;
   GFL_BMP_DATA *bmp;
+  GFL_MSGDATA *msgdata;
+  FLDMSGWIN *fld_msgwin;
 }PALACE_SYS_WORK;
 
 
@@ -72,6 +77,9 @@ typedef struct _PALACE_SYS_WORK{
 static void PALACE_SYS_PosUpdate(PALACE_SYS_PTR palace, PLAYER_WORK *plwork, FIELD_PLAYER *fldply, COMM_FIELD_SYS_PTR comm_field);
 static void PALACE_DEBUG_UpdateNumber(PALACE_SYS_PTR palace, FIELD_MAIN_WORK *fieldWork, COMM_FIELD_SYS_PTR comm_field);
 static void _DEBUG_NameDraw(PALACE_SYS_PTR palace, FIELD_MAIN_WORK *fieldWork, int area_no);
+static void _WindowSetup(PALACE_SYS_PTR palace, FIELD_MAIN_WORK *fieldWork);
+static void _WindowDelete(PALACE_SYS_PTR palace);
+static void _WindowPrint(PALACE_SYS_PTR palace, u32 msg_id);
 
 
 //==============================================================================
@@ -178,6 +186,17 @@ void PALACE_SYS_Update(PALACE_SYS_PTR palace, PLAYER_WORK *plwork, FIELD_PLAYER 
   PALACE_SYS_PosUpdate(palace, plwork, fldply, comm_field);
 
   PALACE_DEBUG_UpdateNumber(palace, fieldWork, comm_field);
+  
+  if(palace->mission_print == FALSE 
+      && FIELD_COMM_SYS_GetRecvProfile(comm_field, 0) == TRUE)
+  {
+    GAMESYS_WORK *gsys = FIELDMAP_GetGameSysWork( fieldWork );
+    GAMEDATA *gdata = GAMESYSTEM_GetGameData(gsys);
+    MYSTATUS *myst = GAMEDATA_GetMyStatusPlayer(gdata, 0);
+    
+    _WindowPrint(palace, DM_MSG_PALACE000 + (MyStatus_GetID(myst) % 3));
+    palace->mission_print = TRUE;
+  }
 }
 
 //--------------------------------------------------------------
@@ -359,7 +378,7 @@ BOOL PALACE_DEBUG_CreateNumberAct(PALACE_SYS_PTR palace, HEAPID heap_id, FIELD_M
   
   {//アクター生成
     static const GFL_CLWK_DATA clwkdata = {
-      16, 16, 0, 1, 0,
+      16, 40, 0, 1, 0,
     };
     
     number->clact = GFL_CLACT_WK_Create(
@@ -373,8 +392,8 @@ BOOL PALACE_DEBUG_CreateNumberAct(PALACE_SYS_PTR palace, HEAPID heap_id, FIELD_M
   {
     BMPOAM_ACT_DATA bmphead = {
       NULL, 
-      64,
-      8,
+      48,
+      40,
       0,
       0,
       0,
@@ -390,6 +409,8 @@ BOOL PALACE_DEBUG_CreateNumberAct(PALACE_SYS_PTR palace, HEAPID heap_id, FIELD_M
     palace->init_name_draw = TRUE;
   }
 
+  _WindowSetup(palace, fieldWork);
+  
   return TRUE;
 }
 
@@ -407,6 +428,8 @@ void PALACE_DEBUG_DeleteNumberAct(PALACE_SYS_PTR palace)
   if(palace->clunit == NULL){
     return;
   }
+
+  _WindowDelete(palace);
   
   BmpOam_ActorDel(palace->bmpact);
   BmpOam_Exit(palace->bmpoam_sys);
@@ -493,6 +516,51 @@ static void _DEBUG_NameDraw(PALACE_SYS_PTR palace, FIELD_MAIN_WORK *fieldWork, i
   PRINTSYS_Print(palace->bmp, 0, 0, namebuf, fontHandle);
   BmpOam_ActorBmpTrans(palace->bmpact);
   GFL_STR_DeleteBuffer(namebuf);
+}
+
+//--------------------------------------------------------------
+/**
+ * ミッション：メッセージウィンドウセットアップ
+ *
+ * @param   palace		
+ * @param   fieldWork		
+ */
+//--------------------------------------------------------------
+static void _WindowSetup(PALACE_SYS_PTR palace, FIELD_MAIN_WORK *fieldWork)
+{
+  FLDMSGBG *fldmsg_bg = FIELDMAP_GetFldMsgBG(fieldWork);
+  
+  palace->msgdata = FLDMSGBG_CreateMSGDATA( fldmsg_bg, NARC_message_d_matsu_dat );
+  palace->fld_msgwin = FLDMSGWIN_Add( fldmsg_bg, palace->msgdata, 1, 1, 30, 2);
+  
+}
+
+//--------------------------------------------------------------
+/**
+ * ミッション：メッセージウィンドウ削除
+ *
+ * @param   palace		
+ */
+//--------------------------------------------------------------
+static void _WindowDelete(PALACE_SYS_PTR palace)
+{
+  FLDMSGWIN_ClearWindow(palace->fld_msgwin);
+  FLDMSGWIN_Delete(palace->fld_msgwin);
+
+  FLDMSGBG_DeleteMSGDATA(palace->msgdata);
+}
+
+//--------------------------------------------------------------
+/**
+ * ミッション：メッセージ描画
+ *
+ * @param   palace		
+ * @param   msg_id		
+ */
+//--------------------------------------------------------------
+static void _WindowPrint(PALACE_SYS_PTR palace, u32 msg_id)
+{
+  FLDMSGWIN_Print(palace->fld_msgwin, 0, 0, msg_id);
 }
 
 //==============================================================================

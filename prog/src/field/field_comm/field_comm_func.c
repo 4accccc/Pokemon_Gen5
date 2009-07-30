@@ -905,6 +905,7 @@ typedef struct
   u16 ID_;
   u8  sex_:1;
   u8  regionCode_:7;
+  u32 myst_id;
 }FIELD_COMM_CHARA_PROFILE;
 const BOOL  FIELD_COMM_FUNC_Send_SelfProfile( const int sendNetID , COMM_FIELD_SYS_PTR commField )
 {
@@ -921,6 +922,7 @@ const BOOL  FIELD_COMM_FUNC_Send_SelfProfile( const int sendNetID , COMM_FIELD_S
   profile.ID_ = 1000+GFL_NET_GetNetID( selfHandle );
   profile.sex_ = 0;
   profile.regionCode_ = 0;
+  profile.myst_id = MyStatus_GetID(myst);
   {
     const BOOL ret = GFL_NET_SendDataEx( selfHandle , sendNetID ,
         FC_CMD_SELF_PROFILE , sizeof( FIELD_COMM_CHARA_PROFILE ) ,
@@ -951,6 +953,7 @@ void  FIELD_COMM_FUNC_Post_SelfProfile( const int netID, const int size , const 
   //gamedata‚Ì•û‚É‚àƒZƒbƒg
   myst = GAMEDATA_GetMyStatusPlayer(GameCommSys_GetGameData(game_comm), netID);
   MyStatus_SetMyName(myst, prof->name);
+  MyStatus_SetID(myst, prof->myst_id);
   FIELD_COMM_SYS_SetRecvProfile(commField, netID);
 
   FIELD_COMM_DATA_SetCharaData_State( commData, netID , FCCS_EXIST_DATA );
