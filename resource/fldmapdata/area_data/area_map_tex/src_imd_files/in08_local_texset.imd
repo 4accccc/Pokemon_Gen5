@@ -3,7 +3,7 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="fujiwara_maiko" host="W00194" date="2009-07-29T11:19:02"/>
+	<create user="fujiwara_maiko" host="W00194" date="2009-07-30T17:29:04"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="NNS_3DMaterialEditor" version="2.8.0.20050620"/>
 </head>
@@ -38,14 +38,14 @@
 		path="C:/home/wb_data3d/field/in08/map/tex/b03_kabe.tga"
 	>
 		<bitmap size="64">
-			2222 2122 2222 2222 3333 2133 3333 3333
-			4444 2044 4444 4444 4444 2444 4444 4444
-			4444 2444 4444 4444 4444 2444 4444 4444
-			4444 2444 4444 4444 4444 2444 4444 4444
-			4444 2444 4444 4444 4444 2444 4444 4444
-			4444 2444 4444 4444 4444 2044 4444 4444
-			4444 2144 4444 4444 4444 2144 4444 4444
-			4444 2044 4444 4444 4444 2444 4444 4444
+			3333 3233 3333 3333 4444 3144 4444 4444
+			5555 3055 5555 5555 5555 3555 5555 5555
+			5555 3555 5555 5555 5555 3555 5555 5555
+			5555 3555 5555 5555 5555 3555 5555 5555
+			5555 3555 5555 5555 5555 3555 5555 5555
+			5555 3555 5555 5555 5555 3055 5555 5555
+			5555 3255 5555 5555 5555 3155 5555 5555
+			5555 3055 5555 5555 5555 3555 5555 5555
 		</bitmap>
 	</tex_image>
 	<tex_image index="1" name="b03_kabe2"
@@ -85,10 +85,10 @@
 		path="C:/home/wb_data3d/field/in08/map/tex/b03_yuka.tga"
 	>
 		<bitmap size="32">
-			0000 5555 0000 5555 0000 5555 0000 5555
-			0000 5555 0000 5555 0000 5555 0000 5555
-			5555 0000 5555 0000 5555 0000 5555 0000
-			5555 0000 5555 0000 5555 0000 5555 0000
+			5550 0555 5554 1555 5555 5555 5555 5555
+			4055 5555 0055 5555 0055 5554 0155 5550
+			0555 5540 1555 5500 5555 5500 5555 5501
+			5555 5555 5555 5555 5554 1555 5550 0555
 		</bitmap>
 	</tex_image>
 	<tex_image index="4" name="gsihiki"
@@ -352,13 +352,13 @@
 		0000 67df 7fff 7fff
 	</tex_palette>
 	<tex_palette index="1" name="b03_kabe_pl" color_size="8">
-		360d 3e2e 4294 56f8 677b 7fff 7fff 7fff
+		322c 3a2d 3e4d 4294 56f8 677b 7fff 7fff
 	</tex_palette>
 	<tex_palette index="2" name="b03_mat1_pl" color_size="8">
 		294a 2d6b 318c 39ce 7fff 7fff 7fff 7fff
 	</tex_palette>
 	<tex_palette index="3" name="b03_yuka_pl" color_size="4">
-		5294 5ad6 7fff 7fff
+		4ab4 4ed6 7fff 7fff
 	</tex_palette>
 	<tex_palette index="4" name="gsihiki_pl" color_size="16">
 		4a7a 4eda 52bc 56fc 635e 637e 677e 679e
