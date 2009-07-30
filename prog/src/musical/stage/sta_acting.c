@@ -73,6 +73,22 @@ enum
 //  enum
 //======================================================================
 #pragma mark [> enum
+typedef enum
+{
+  //フェード
+  AMS_FADEIN,
+  AMS_WAIT_FADEIN,
+  AMS_FADEOUT,
+  AMS_WAIT_FADEOUT,
+
+  //メイン
+  AMS_ACTING_START,
+  AMS_ACTING_MAIN,
+
+  //通信用
+  AMS_COMM_START_SYNC,
+}ACTING_MAIN_SEQ;
+
 
 //======================================================================
 //  typedef struct
@@ -87,6 +103,8 @@ struct _ACTING_WORK
   u16   scrollOffset;
   u16   makuOffset;
   u8    playerIdx;
+  
+  ACTING_MAIN_SEQ mainSeq;
   
   GFL_TCB   *vblankFuncTcb;
 
@@ -192,22 +210,30 @@ ACTING_WORK*  STA_ACT_InitActing( STAGE_INIT_WORK *initWork , HEAPID heapId )
   work->scrollOffset = 0;
   work->makuOffset = 0;
   work->scriptData = NULL;
+  work->mainSeq = AMS_FADEIN;
 
   work->vblankFuncTcb = GFUser_VIntr_CreateTCB( STA_ACT_VBlankFunc , (void*)work , 64 );
   
   //自キャラの選択
-  for( i=0;i<MUSICAL_POKE_MAX;i++ )
+  if( work->initWork->commWork == NULL )
   {
-    if( work->initWork->musPoke[i].charaType == MUS_CHARA_PLAYER )
+    for( i=0;i<MUSICAL_POKE_MAX;i++ )
     {
-      work->playerIdx = i;
-      break;
+      if( work->initWork->musPoke[i].charaType == MUS_CHARA_PLAYER )
+      {
+        work->playerIdx = i;
+        break;
+      }
+    }
+    if( MUSICAL_POKE_MAX == i )
+    {
+      GF_ASSERT_MSG( MUSICAL_POKE_MAX != i , "Musical stage:Player poke is not found!!!\n");
+      work->playerIdx = 1;
     }
   }
-  if( MUSICAL_POKE_MAX == i )
+  else
   {
-    GF_ASSERT_MSG( MUSICAL_POKE_MAX == i , "Musical stage:Player poke is not found!!!\n");
-    work->playerIdx = 1;
+    work->playerIdx = GFL_NET_GetNetID(GFL_NET_HANDLE_GetCurrentHandle());
   }
 
   STA_ACT_SetupGraphic( work );
@@ -226,10 +252,6 @@ ACTING_WORK*  STA_ACT_InitActing( STAGE_INIT_WORK *initWork , HEAPID heapId )
   
   INFOWIN_Init( ACT_FRAME_SUB_INFO,ACT_PAL_INFO,NULL,work->heapId);
 
-  //フェードないので仮処理
-  GX_SetMasterBrightness(0);  
-  GXS_SetMasterBrightness(0);
-  
 #if USE_DEBUGWIN_SYSTEM
   DEBUGWIN_InitProc( ACT_FRAME_MAIN_CURTAIN , work->fontHandle );
   DEBUGWIN_ChangeLetterColor( 31,31,31 );
@@ -301,7 +323,7 @@ void  STA_ACT_TermActing( ACTING_WORK *work )
 
 ACTING_RETURN STA_ACT_LoopActing( ACTING_WORK *work )
 {
-#if DEB_ARI|1
+#if DEB_ARI|0
   if( STA_SCRIPT_GetRunningScriptNum( work->scriptSys ) == 0 )
   {
     if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A )
@@ -361,6 +383,67 @@ ACTING_RETURN STA_ACT_LoopActing( ACTING_WORK *work )
 
 #endif
 
+  switch( work->mainSeq )
+  {
+  case AMS_FADEIN:
+    WIPE_SYS_Start( WIPE_PATTERN_WMS , WIPE_TYPE_FADEIN , WIPE_TYPE_FADEIN , 
+                    WIPE_FADE_BLACK , WIPE_DEF_DIV , WIPE_DEF_SYNC , work->heapId );
+    work->mainSeq = AMS_WAIT_FADEIN;
+    
+    break;
+    
+  case AMS_WAIT_FADEIN:
+    if( WIPE_SYS_EndCheck() == TRUE )
+    {
+      if( work->initWork->commWork != NULL )
+      {
+        work->mainSeq = AMS_COMM_START_SYNC;
+        MUS_COMM_SendTimingCommand( work->initWork->commWork , MUS_COMM_TIMMING_START_SCRIPT );
+      }
+      else
+      {
+        work->mainSeq = AMS_ACTING_START;
+      }
+    }
+    break;
+    
+  case AMS_FADEOUT:
+    WIPE_SYS_Start( WIPE_PATTERN_WMS , WIPE_TYPE_FADEOUT , WIPE_TYPE_FADEOUT , 
+                    WIPE_FADE_BLACK , WIPE_DEF_DIV , WIPE_DEF_SYNC , work->heapId );
+    work->mainSeq = AMS_WAIT_FADEOUT;
+    break;
+    
+  case AMS_WAIT_FADEOUT:
+    if( WIPE_SYS_EndCheck() == TRUE )
+    {
+      return ACT_RET_GO_END;
+    }
+    break;
+  
+  case AMS_ACTING_START:
+    work->scriptData = GFL_ARC_UTIL_Load( ARCID_MUSICAL_SCRIPT , NARC_musical_script_mus_002_001_bin , FALSE , work->heapId );
+    STA_ACT_StartScript( work );
+    work->mainSeq = AMS_ACTING_MAIN;
+    break;
+  
+  case AMS_ACTING_MAIN:
+    if( STA_SCRIPT_GetRunningScriptNum( work->scriptSys ) == 0 )
+    {
+      GFL_HEAP_FreeMemory( work->scriptData );
+      work->scriptData = NULL;
+      work->mainSeq = AMS_FADEOUT;
+    }
+    break;
+    
+  case AMS_COMM_START_SYNC:
+    if( MUS_COMM_CheckTimingCommand( work->initWork->commWork , MUS_COMM_TIMMING_START_SCRIPT ) == TRUE )
+    {
+      work->mainSeq = AMS_ACTING_START;
+    }
+    break;
+    
+  }
+
   INFOWIN_Update();
   STA_ACT_UpdateScroll(work);
 
@@ -397,7 +480,7 @@ ACTING_RETURN STA_ACT_LoopActing( ACTING_WORK *work )
   //OBJの更新
   GFL_CLACT_SYS_Main();
 
-#if DEB_ARI|1
+#if DEB_ARI|0
   if( GFL_UI_KEY_GetCont() & PAD_BUTTON_SELECT &&
     GFL_UI_KEY_GetCont() & PAD_BUTTON_START )
   {
