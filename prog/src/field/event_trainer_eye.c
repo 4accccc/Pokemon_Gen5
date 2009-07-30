@@ -736,7 +736,7 @@ static int eyeMeetMove_JikiTurnSet( EV_EYEMEET_MOVE_WORK *work )
     if( MMDL_CheckPossibleAcmd(j_mmdl) == TRUE )
     {
       u16 code = MMDL_ChangeDirAcmdCode( turn_dir, AC_DIR_U );
-      MMDL_OnStatusBit( j_mmdl, MMDL_STABIT_PAUSE_DIR );
+//    MMDL_OnStatusBit( j_mmdl, MMDL_STABIT_PAUSE_DIR );
       MMDL_SetAcmd( j_mmdl, code );
       work->seq_no = SEQNO_TRMOVE_JIKI_TURN;
     }

@@ -50,6 +50,14 @@
 #define TR_FLAG_START 1360 //トレーナーID対応フラグ開始位置
 #define TR_FLAG_MAX (USRFLAG_MAX-TR_FLAG_START)	//トレーナーID対応フラグ最大数
 
+//wb 0907ROM用トレーナーフラグ
+#define TR_FLAG_R01_0907ROM_00 (TR_FLAG_START+0)
+#define TR_FLAG_R01_0907ROM_01 (TR_FLAG_START+1)
+#define TR_FLAG_R01_0907ROM_02 (TR_FLAG_START+2)
+#define TR_FLAG_R01_0907ROM_03 (TR_FLAG_START+3)
+#define TR_FLAG_R01_0907ROM_04 (TR_FLAG_START+4)
+#define TR_FLAG_R01_0907ROM_05 (TR_FLAG_START+5)
+
 //--------------------------------------------------------------
 //  セーブしないフラグ関連定義 制御フラグ
 //--------------------------------------------------------------

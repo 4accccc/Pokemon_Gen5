@@ -119,6 +119,18 @@ HEAPID SCRCMD_WORK_GetHeapID( SCRCMD_WORK *work )
 
 //--------------------------------------------------------------
 /**
+ * SCRCMD_WORK テンポラリ用HEAPID取得
+ * @param
+ * @retval
+ */
+//--------------------------------------------------------------
+HEAPID SCRCMD_WORK_GetTempHeapID( SCRCMD_WORK *work )
+{
+  return( work->temp_heapID );
+}
+
+//--------------------------------------------------------------
+/**
  * SCRCMD_WORK GAMESYS_WORK取得
  * @param	work	SCRCMD_WORK
  * @retval	GAMESYS_WORK
@@ -312,10 +324,10 @@ BOOL SCRCMD_WORK_CheckMMdlAnmTCB( SCRCMD_WORK *work )
 //--------------------------------------------------------------
 void SCRCMD_WORK_CreateMsgData( SCRCMD_WORK *work, u32 datID )
 {
-#if 0 //テンポラリ用HEAPIDに変更。
+#if 1
 	GFL_MSGDATA *msgData = GFL_MSG_Create(
 		GFL_MSG_LOAD_NORMAL, ARCID_SCRIPT_MESSAGE, datID, work->heapID );
-#else
+#else //テンポラリ用HEAPIDに変更。
 	GFL_MSGDATA *msgData = GFL_MSG_Create(
 		GFL_MSG_LOAD_NORMAL, ARCID_SCRIPT_MESSAGE, datID, work->temp_heapID );
 #endif

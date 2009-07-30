@@ -31,6 +31,8 @@
 #include "eventdata_local.h"
 #include "field/eventdata_sxy.h"
 
+#include "tr_tool/tr_tool.h"
+
 #include "scrcmd_trainer.h"
 #include "scrcmd_sound.h"
 #include "scrcmd_musical.h"
@@ -1840,13 +1842,11 @@ static VMCMD_RESULT EvCmdTrainerMessageSet( VMHANDLE *core, void *wk )
   GFL_MSGDATA *msgData = SCRCMD_WORK_GetMsgData( work );
   u8 *win_open_flag = SCRIPT_GetMemberWork( sc, ID_EVSCR_WIN_OPEN_FLAG );
   u8 *msg_index      = SCRIPT_GetMemberWork( sc, ID_EVSCR_MSGINDEX );
+  
+  OS_Printf( "TR ID =%d, KIND ID =%d\n", tr_id, kind_id );
 
-#if 0 //pl null
-  TT_TrainerMessageGet( tr_id, kind_id, *pbuf, HEAPID_WORLD );
-#else //wb kari
-  GFL_MSG_GetString( msgData, 0, *tmpbuf );
-  WORDSET_ExpandStr( *wordset, *msgbuf, *tmpbuf );
-#endif
+  TT_TrainerMessageGet(
+      tr_id, kind_id, *msgbuf, SCRCMD_WORK_GetHeapID(work) );
   
   {
     u16 dir;

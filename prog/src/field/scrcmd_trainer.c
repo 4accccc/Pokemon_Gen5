@@ -352,8 +352,8 @@ VMCMD_RESULT EvCmdTrainerBattleSet( VMHANDLE *core, void *wk )
     SCRIPT_FLDPARAM *fparam =
       SCRIPT_GetMemberWork( sc, ID_EVSCR_WK_FLDPARAM );
     GMEVENT *ev_battle =
-      DEBUG_EVENT_Battle( *gsys, fparam->fieldMap );
-    
+//      DEBUG_EVENT_Battle( *gsys, fparam->fieldMap );
+      EVENT_TrainerBattle( *gsys, fparam->fieldMap, tr_id_0 );
     GMEVENT_CallEvent( *event, ev_battle );
   }
 	return 0;
@@ -429,9 +429,9 @@ VMCMD_RESULT EvCmdTrainerTalkTypeGet( VMHANDLE *core, void *wk )
 	*wk1 = start_type;
 	*wk2 = after_type;
 	*wk3 = one_type;
-	//OS_Printf( "start_type = %d\n", *wk1 );
-	//OS_Printf( "after_type = %d\n", *wk2 );
-	//OS_Printf( "one_type = %d\n", *wk3 );
+	OS_Printf( "start_type = %d\n", *wk1 );
+	OS_Printf( "after_type = %d\n", *wk2 );
+	OS_Printf( "one_type = %d\n", *wk3 );
 	return 0;
 }
 
@@ -482,9 +482,9 @@ VMCMD_RESULT EvCmdRevengeTrainerTalkTypeGet( VMHANDLE *core, void *wk )
 	*wk1 = start_type;
 	*wk2 = after_type;
 	*wk3 = one_type;
-	//OS_Printf( "start_type = %d\n", *wk1 );
-	//OS_Printf( "after_type = %d\n", *wk2 );
-	//OS_Printf( "one_type = %d\n", *wk3 );
+  OS_Printf( "start_type = %d\n", *wk1 );
+	OS_Printf( "after_type = %d\n", *wk2 );
+	OS_Printf( "one_type = %d\n", *wk3 );
 	return 0;
 }
 

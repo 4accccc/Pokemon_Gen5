@@ -40,3 +40,5 @@ extern BOOL FIELD_ENCOUNT_CheckEncount( FIELD_ENCOUNT *enc );
 
 extern void FIELD_ENCOUNT_GetBattleSetupParam(
     FIELD_ENCOUNT *enc, BATTLE_SETUP_PARAM *setup );
+extern void FIELD_ENCOUNT_SetTrainerBattleSetupParam(
+    FIELD_ENCOUNT *enc, BATTLE_SETUP_PARAM *setup, int tr_id, HEAPID heapID );

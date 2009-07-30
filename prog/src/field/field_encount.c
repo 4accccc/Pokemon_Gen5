@@ -27,6 +27,8 @@
 //======================================================================
 #define FENCOUNT_PL_NULL ///<PL処理無効
 
+#define DEBUG_WB_FORCE_GROUND //エンカウントデータを地上固定する
+
 #define CALC_SHIFT (8) ///<計算シフト値
 #define WALK_COUNT_GLOBAL (8) ///<エンカウントしない歩数
 #define WALK_COUNT_MAX (0xffff) ///<歩数カウント最大
@@ -43,8 +45,8 @@
 //--------------------------------------------------------------
 #if 0
 #define ENC_MONS_NUM_NORMAL (12)
-#else //5月ROM、新ポケを一通り見せる為、一時的に増やす
-#define ENC_MONS_NUM_NORMAL (20)
+#else //7月ROM、新ポケを一通り見せる為、一時的に増やす
+#define ENC_MONS_NUM_NORMAL (24)
 #endif
 #define ENC_MONS_NUM_GENERATE (2)
 #define ENC_MONS_NUM_NOON (2)
@@ -120,6 +122,7 @@ typedef struct _TAG_NON_GROUND_ENC_MONSTER_DAT
 //--------------------------------------------------------------
 typedef struct _TAG_ENCOUNT_DATA
 {
+  int wb_normal_encount_max; //kari
 	int EncProbGround;
 	GROUND_ENC_MONSTER_DAT NormalEnc[ENC_MONS_NUM_NORMAL];
 	int GenerateEnc[ENC_MONS_NUM_GENERATE]; //大量発生
@@ -183,7 +186,8 @@ static BOOL enc_SetEncountData(
     FIELD_ENCOUNT *enc,
     BATTLE_SETUP_PARAM *param,
     const ENC_FLD_SPA *inFldSpa,
-    const ENC_COMMON_DATA *enc_data, u32 location, HEAPID heapID );
+    const ENC_COMMON_DATA *enc_data, u32 location, HEAPID heapID,
+    int tbl_max );
 
 static u32 enc_GetPercentRand( void );
 static const ENCOUNT_DATA * enc_GetEncountData( FIELD_ENCOUNT *enc );
@@ -358,7 +362,7 @@ BOOL FIELD_ENCOUNT_CheckEncount( FIELD_ENCOUNT *enc )
     int i; 
     BOOL book_get;
     
-		for( i = 0; i < ENC_MONS_NUM_NORMAL; i++ ){
+		for( i = 0; i < data->wb_normal_encount_max; i++ ){
 			enc_data[i].MonsNo = data->NormalEnc[i].MonsterNo;
 			enc_data[i].LvMax = data->NormalEnc[i].Level;
 			enc_data[i].LvMin = data->NormalEnc[i].Level;
@@ -376,7 +380,8 @@ BOOL FIELD_ENCOUNT_CheckEncount( FIELD_ENCOUNT *enc )
       //まだ
     }else{ //通常対戦
       ret = enc_SetEncountData(
-          enc, setup, &fld_spa, enc_data, enc_loc, HEAPID_BTLPARAM );
+          enc, setup, &fld_spa, enc_data, enc_loc, HEAPID_BTLPARAM,
+          data->wb_normal_encount_max );
     }
   }
   else if( enc_loc == ENCOUNT_LOCATION_WATER ) //水
@@ -389,7 +394,8 @@ BOOL FIELD_ENCOUNT_CheckEncount( FIELD_ENCOUNT *enc )
     }
      
     ret = enc_SetEncountData(
-          enc, setup, &fld_spa, enc_data, enc_loc, HEAPID_BTLPARAM );
+          enc, setup, &fld_spa, enc_data, enc_loc, HEAPID_BTLPARAM,
+          ENC_MONS_NUM_SEA );
   }
   else //エラー
   {
@@ -433,7 +439,11 @@ static u32 enc_GetAttrPercent( FIELD_ENCOUNT *enc,
   
   if( (attr_flag & MAPATTR_FLAGBIT_ENCOUNT) ){ //エンカウントフラグ
     const ENCOUNT_DATA *data = enc_GetEncountData( enc );
-    
+
+#ifdef DEBUG_WB_FORCE_GROUND    
+    attr_flag = 0; //wb 仮 地上で固定
+#endif
+
     if( (attr_flag & MAPATTR_FLAGBIT_WATER) ){ //水
       *outEncLocation = ENCOUNT_LOCATION_WATER;
       per = data->EncProbSea;
@@ -442,7 +452,7 @@ static u32 enc_GetAttrPercent( FIELD_ENCOUNT *enc,
       per = data->EncProbGround;
     }
   }
-  
+   
   return( per );
 }
 
@@ -569,7 +579,7 @@ static void enc_CreateBattleParam(
   { //一体目のポケモン追加
     param->partyEnemy1 = PokeParty_AllocPartyWork( heapID );
     
-    //MonsNo 0 仮対処
+    //MonsNo 0 チェック
     if( monsNo == 0 ){
 #ifdef DEBUG_ONLY_FOR_kagaya
       GF_ASSERT( 0 );
@@ -610,7 +620,7 @@ static void enc_CreateBattleParam(
 //--------------------------------------------------------------
 static void enc_CreateTrainerBattleParam(
     FIELD_ENCOUNT *enc,
-    BATTLE_SETUP_PARAM *param, HEAPID heapID,
+    BATTLE_SETUP_PARAM *param, const HEAPID heapID,
     TrainerID tr_id )
 {
   GAMESYS_WORK *gsys = enc->gsys;
@@ -626,6 +636,7 @@ static void enc_CreateTrainerBattleParam(
   }
 
   { //プレイヤーパーティ追加
+    KAGAYA_Printf( "バトルパラム作成 HEAPID=%d\n", heapID );
     param->partyPlayer = PokeParty_AllocPartyWork( heapID );
     PokeParty_Copy( GAMEDATA_GetMyPokemon(gdata), param->partyPlayer );
   }
@@ -661,6 +672,21 @@ static void enc_CreateTrainerBattleParam(
 
 //--------------------------------------------------------------
 /**
+ * フィールドエンカウント　トレーナー用BATTLE_SETUP_PARAM*作成
+ * @param enc FIELD_ENCOUNT*
+ * @param tr_id トレーナーID
+ * @retval nothing
+ */
+//--------------------------------------------------------------
+void FIELD_ENCOUNT_SetTrainerBattleSetupParam(
+    FIELD_ENCOUNT *enc, BATTLE_SETUP_PARAM *setup, int tr_id, HEAPID heapID )
+{
+  KAGAYA_Printf( "トレーナーバトルパラム作成 HEAPID=%d\n", heapID );
+  enc_CreateTrainerBattleParam( enc, setup, heapID, tr_id );
+}
+
+//--------------------------------------------------------------
+/**
  * PP追加
  * @param
  * @retval
@@ -669,9 +695,16 @@ static void enc_CreateTrainerBattleParam(
 static void enc_AddPartyPokemon(
     POKEPARTY *party, u32 monsNo, u32 lv, u32 id, HEAPID heapID ) 
 {
-  POKEMON_PARAM *pp = PP_Create( monsNo, lv, id, heapID );
-  PokeParty_Add( party, pp );
-  GFL_HEAP_FreeMemory( pp );
+  {
+    //monsNo
+    KAGAYA_Printf( "PP追加 %d\n", monsNo );
+  }
+
+  {
+    POKEMON_PARAM *pp = PP_Create( monsNo, lv, id, heapID );
+    PokeParty_Add( party, pp );
+    GFL_HEAP_FreeMemory( pp );
+  }
 }
 
 //--------------------------------------------------------------
@@ -708,7 +741,7 @@ static const void enc_FreeBattleSetupParam( BATTLE_SETUP_PARAM *param)
  * @return u8 エンカウントデータのテーブル番号
  */
 //--------------------------------------------------------------
-static u32 enc_GetRandWildGroundPokeTblNo( void )
+static u32 enc_GetRandWildGroundPokeTblNo( int max )
 {
 	u32	i;
   
@@ -728,7 +761,7 @@ static u32 enc_GetRandWildGroundPokeTblNo( void )
 	return	11;								//  1%
 #else
   //現状 新ポケを全て見せる為に無作為
-  i %= ENC_MONS_NUM_NORMAL;
+  i %= max;
   return( i );
 #endif
 }
@@ -907,7 +940,8 @@ static BOOL enc_SetEncountData(
     FIELD_ENCOUNT *enc,
     BATTLE_SETUP_PARAM *param,
     const ENC_FLD_SPA *inFldSpa,
-    const ENC_COMMON_DATA *enc_data, u32 location, HEAPID heapID )
+    const ENC_COMMON_DATA *enc_data, u32 location, HEAPID heapID,
+    int tbl_max )
 {
   BOOL result = FALSE;
   u32 lv = 0, no = 0;
@@ -922,7 +956,7 @@ static BOOL enc_SetEncountData(
     }
     
     if( result == FALSE ){
-      no = enc_GetRandWildGroundPokeTblNo();
+      no = enc_GetRandWildGroundPokeTblNo( tbl_max );
     }
     
 		//隠し特性による最大レベルポケモン選出(地上)
@@ -1102,6 +1136,9 @@ static void enc_ClearWalkCount( FIELD_ENCOUNT *enc )
 //======================================================================
 //  data
 //======================================================================
+#include "poke_tool/monsno_def.h"
+
+#if 0 //0905ROM用
 //--------------------------------------------------------------
 //  仮エンカウントデータ  
 //--------------------------------------------------------------
@@ -1194,6 +1231,615 @@ static const ENCOUNT_DATA dataTestEncountData =
     {
       5,  //レベル
       513,//モコウモリ
+    },
+  },
+
+  { //大量発生
+    5, 5,
+  },
+  { //昼エンカウント
+    5, 5,
+  },
+  { //夜エンカウント
+    5, 5,
+  },
+  { //揺れ草
+    0, 0, 0, 0,
+  },
+  
+  { //フォルム変更確率
+    0,0,0,0,0,
+  },
+  
+  0, //アンノーン出現テーブル
+  
+  { //AGBスロット ルビーエンカウントデータ
+    0, 0,
+  },
+  { //AGBスロット サファイアエンカウントデータ
+    0, 0, 
+  },
+  { //AGBスロット エメラルドエンカウントデータ
+    0, 0,
+  },
+  { //AGBスロット 赤エンカウントデータ
+    0, 0,
+  },
+  { //AGBスロット 緑エンカウントデータ
+    0, 0,
+  },
+  
+  30, //海エンカウント率
+  { //海エンカウントポケモン
+    {
+      10,
+      5,
+      494,//ピンボー
+    },
+    {
+      10,
+      5,
+      495,//モグリュー
+    },
+    {
+      10,
+      5,
+      496,//ゴリダルマ
+    },
+    {
+      10,
+      5,
+      497,//ワニメガネ
+    },
+    {
+      10,
+      5,
+      498,//ワニグラス
+    },
+  },
+  
+  30, //岩砕きエンカウント率
+  { //岩砕きエンカウントポケモン
+    {
+      10,
+      5,
+      494,//ピンボー
+    },
+    {
+      10,
+      5,
+      495,//モグリュー
+    },
+    {
+      10,
+      5,
+      496,//ゴリダルマ
+    },
+    {
+      10,
+      5,
+      497,//ワニメガネ
+    },
+    {
+      10,
+      5,
+      498,//ワニグラス
+    },
+  },
+  
+  30, //ボロ釣竿エンカウント率
+  { //ボロ釣竿エンカウントポケモン
+    {
+      10,
+      5,
+      494,//ピンボー
+    },
+    {
+      10,
+      5,
+      495,//モグリュー
+    },
+    {
+      10,
+      5,
+      496,//ゴリダルマ
+    },
+    {
+      10,
+      5,
+      497,//ワニメガネ
+    },
+    {
+      10,
+      5,
+      498,//ワニグラス
+    },
+  },
+  
+  30, //いい釣竿エンカウント率
+  { //いい釣竿エンカウントポケモン
+    {
+      10,
+      5,
+      494,//ピンボー
+    },
+    {
+      10,
+      5,
+      495,//モグリュー
+    },
+    {
+      10,
+      5,
+      496,//ゴリダルマ
+    },
+    {
+      10,
+      5,
+      497,//ワニメガネ
+    },
+    {
+      10,
+      5,
+      498,//ワニグラス
+    },
+  },
+  
+  30, //凄い釣竿エンカウント率
+  { //凄い釣竿エンカウントポケモン
+    {
+      10,
+      5,
+      494,//ピンボー
+    },
+    {
+      10,
+      5,
+      495,//モグリュー
+    },
+    {
+      10,
+      5,
+      496,//ゴリダルマ
+    },
+    {
+      10,
+      5,
+      497,//ワニメガネ
+    },
+    {
+      10,
+      5,
+      498,//ワニグラス
+    },
+  },
+};
+#endif //0905ROM用
+
+#if 0
+494	ピンボー
+495	モグリュー
+497	ワニグラス
+498	サンダイル
+500	ハゴモリ
+504	バンビーナ
+506	プルンス
+507	マメバト
+508	ライブラ
+510	チュリネ
+511	ハトーボー
+513	モコウモリ
+514	モコット
+516	サボッテン
+#define	MONSNO_SABOTTEN	(516)
+517	ハガクレ
+#define	MONSNO_HAGAKURE	(517)
+518	グロッケン
+#define	MONSNO_GUROKKEN	(518)
+519	カーオケン
+#define	MONSNO_KAAOKEN	(519)
+521	ヒダルマ
+#define	MONSNO_HIDARUMA	(521)
+522	ゾロア
+#define	MONSNO_ZOROA	(522)
+524	シロベア
+#define	MONSNO_SIROBEA	(524)
+526	チラッチ
+#define	MONSNO_TIRATTI	(526)
+530	チャーク
+#define	MONSNO_TYAAKU	(530)
+532	ナスカッチ
+#define	MONSNO_NASUKATTI	(532)
+533	ムジャジャ
+#define	MONSNO_MUZYAZYA	(533)
+
+496	ゴリダルマ
+#define	MONSNO_GORIDARUMA	(496)
+499	レイバーン
+#define	MONSNO_REIBAAN	(499)
+501	ハキシード
+#define	MONSNO_HAKISIIDO	(501)
+502	オノックス
+#define	MONSNO_ONOKKUSU	(502)
+503	カーメント
+#define	MONSNO_KAAMENTO	(503)
+505	ケンホロウ
+#define	MONSNO_KENHOROU	(505)
+509	ユメバクラ
+#define	MONSNO_YUMEBAKURA	(509)
+512	ドレディア
+#define	MONSNO_DOREDHIA	(512)
+515	メリコット
+#define	MONSNO_MERIKOTTO	(515)
+520	シキジカ
+#define	MONSNO_SIKIZIKA	(520)
+523	ゾロアーク
+#define	MONSNO_ZOROAAKU	(523)
+525	シャーベア
+#define	MONSNO_SYAABEA	(525)
+527	チラニー
+#define	MONSNO_TIRATTI	(526)
+528	ドゴウモリ
+#define	MONSNO_DOGOUMORI	(528)
+529	プルキング
+#define	MONSNO_PURUKINGU	(529)
+531	ドチャック
+#define	MONSNO_DOTYAKKU	(531)
+#endif
+
+//090731ROM用 GRASS A
+static const ENCOUNT_DATA dataTestEncountData =
+{
+  24, //通常エンカウントポケモン数
+  30, //エンカウント率
+  { //通常エンカウントポケモン
+    {
+      5,  //レベル
+      MONSNO_PINBOO,
+    },
+    {
+      5,  //レベル
+      MONSNO_MOGURYUU,
+    },
+    {
+      5,  //レベル
+      MONSNO_WANIGURASU,
+    },
+    {
+      5,  //レベル
+      MONSNO_SANDAIRU,
+    },
+    {
+      5,  //レベル
+      MONSNO_HAGOMORI,
+    },
+    {
+      5,  //レベル
+      MONSNO_BANBIINA,
+    },
+    {
+      5,  //レベル
+      MONSNO_PURUNSU,
+    },
+    {
+      5,  //レベル
+      MONSNO_MAMEBATO,
+    },
+    {
+      5,  //レベル
+      MONSNO_RAIBURA,
+    },
+    {
+      5,  //レベル
+      MONSNO_TYURINE,
+    },
+    {
+      5,  //レベル
+      MONSNO_HATOOBOO,
+    },
+    {
+      5,  //レベル
+      MONSNO_MOKOUMORI,
+    },
+    {
+      5,  //レベル
+      MONSNO_MOKOTTO,
+    },
+    {
+      5,  //レベル
+      MONSNO_SABOTTEN,
+    },
+    {
+      5,  //レベル
+      MONSNO_HAGAKURE,
+    },
+    {
+      5,  //レベル
+      MONSNO_GUROKKEN,
+    },
+    {
+      5,  //レベル
+      MONSNO_KAAOKEN,
+    },
+    {
+      5,  //レベル
+      MONSNO_HIDARUMA,
+    },
+    {
+      5,  //レベル
+      MONSNO_ZOROA,
+    },
+    {
+      5,  //レベル
+      MONSNO_SIROBEA,
+    },
+    {
+      5,  //レベル
+      MONSNO_TIRATTI,
+    },
+    {
+      5,  //レベル
+      MONSNO_TYAAKU,
+    },
+    {
+      5,  //レベル
+      MONSNO_NASUKATTI,
+    },
+    {
+      5,  //レベル
+      MONSNO_MUZYAZYA,
+    },
+  },
+
+  { //大量発生
+    5, 5,
+  },
+  { //昼エンカウント
+    5, 5,
+  },
+  { //夜エンカウント
+    5, 5,
+  },
+  { //揺れ草
+    0, 0, 0, 0,
+  },
+  
+  { //フォルム変更確率
+    0,0,0,0,0,
+  },
+  
+  0, //アンノーン出現テーブル
+  
+  { //AGBスロット ルビーエンカウントデータ
+    0, 0,
+  },
+  { //AGBスロット サファイアエンカウントデータ
+    0, 0, 
+  },
+  { //AGBスロット エメラルドエンカウントデータ
+    0, 0,
+  },
+  { //AGBスロット 赤エンカウントデータ
+    0, 0,
+  },
+  { //AGBスロット 緑エンカウントデータ
+    0, 0,
+  },
+  
+  30, //海エンカウント率
+  { //海エンカウントポケモン
+    {
+      10,
+      5,
+      494,//ピンボー
+    },
+    {
+      10,
+      5,
+      495,//モグリュー
+    },
+    {
+      10,
+      5,
+      496,//ゴリダルマ
+    },
+    {
+      10,
+      5,
+      497,//ワニメガネ
+    },
+    {
+      10,
+      5,
+      498,//ワニグラス
+    },
+  },
+  
+  30, //岩砕きエンカウント率
+  { //岩砕きエンカウントポケモン
+    {
+      10,
+      5,
+      494,//ピンボー
+    },
+    {
+      10,
+      5,
+      495,//モグリュー
+    },
+    {
+      10,
+      5,
+      496,//ゴリダルマ
+    },
+    {
+      10,
+      5,
+      497,//ワニメガネ
+    },
+    {
+      10,
+      5,
+      498,//ワニグラス
+    },
+  },
+  
+  30, //ボロ釣竿エンカウント率
+  { //ボロ釣竿エンカウントポケモン
+    {
+      10,
+      5,
+      494,//ピンボー
+    },
+    {
+      10,
+      5,
+      495,//モグリュー
+    },
+    {
+      10,
+      5,
+      496,//ゴリダルマ
+    },
+    {
+      10,
+      5,
+      497,//ワニメガネ
+    },
+    {
+      10,
+      5,
+      498,//ワニグラス
+    },
+  },
+  
+  30, //いい釣竿エンカウント率
+  { //いい釣竿エンカウントポケモン
+    {
+      10,
+      5,
+      494,//ピンボー
+    },
+    {
+      10,
+      5,
+      495,//モグリュー
+    },
+    {
+      10,
+      5,
+      496,//ゴリダルマ
+    },
+    {
+      10,
+      5,
+      497,//ワニメガネ
+    },
+    {
+      10,
+      5,
+      498,//ワニグラス
+    },
+  },
+  
+  30, //凄い釣竿エンカウント率
+  { //凄い釣竿エンカウントポケモン
+    {
+      10,
+      5,
+      494,//ピンボー
+    },
+    {
+      10,
+      5,
+      495,//モグリュー
+    },
+    {
+      10,
+      5,
+      496,//ゴリダルマ
+    },
+    {
+      10,
+      5,
+      497,//ワニメガネ
+    },
+    {
+      10,
+      5,
+      498,//ワニグラス
+    },
+  },
+};
+
+static const ENCOUNT_DATA dataTestEncountData01 =
+{
+  16, //通常エンカウントポケモン数
+  30, //エンカウント率
+  { //通常エンカウントポケモン
+    {
+      5,  //レベル
+      MONSNO_GORIDARUMA,
+    },
+    {
+      5,  //レベル
+      MONSNO_REIBAAN,
+    },
+    {
+      5,  //レベル
+      MONSNO_HAKISIIDO,
+    },
+    {
+      5,  //レベル
+      MONSNO_ONOKKUSU,
+    },
+    {
+      5,  //レベル
+      MONSNO_KAAMENTO,
+    },
+    {
+      5,  //レベル
+      MONSNO_KENHOROU,
+    },
+    {
+      5,  //レベル
+      MONSNO_YUMEBAKURA,
+    },
+    {
+      5,  //レベル
+      MONSNO_DOREDHIA,
+    },
+    {
+      5,  //レベル
+      MONSNO_MERIKOTTO,
+    },
+    {
+      5,  //レベル
+      MONSNO_SIKIZIKA,
+    },
+    {
+      5,  //レベル
+      MONSNO_ZOROAAKU,
+    },
+    {
+      5,  //レベル
+      MONSNO_SYAABEA,
+    },
+    {
+      5,  //レベル
+      MONSNO_TIRATTI,
+    },
+    {
+      5,  //レベル
+      MONSNO_DOGOUMORI,
+    },
+    {
+      5,  //レベル
+      MONSNO_PURUKINGU,
+    },
+    {
+      5,  //レベル
+      MONSNO_DOTYAKKU,
     },
   },
 

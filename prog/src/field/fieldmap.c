@@ -1678,6 +1678,7 @@ static void fldmapMain_MMDL_Init( FIELDMAP_WORK *fieldWork )
   MMDLSYS_SetJoinShadow( fmmdlsys, TRUE );
   
 #ifdef DEBUG_ONLY_FOR_kagaya
+  /*
   #define OBJID_TEST_TRAINER (128)
   #include "../../../resource/fldmapdata/script/trainer_def.h"
   
@@ -1692,16 +1693,17 @@ static void fldmapMain_MMDL_Init( FIELDMAP_WORK *fieldWork )
         OBJID_TEST_TRAINER,
         BOY1,
         MV_DOWN,
-        EV_TYPE_TRAINER, 0, SCRID_TANPAN_01,
+        EV_TYPE_TRAINER, 0, SCRID_R01_TRAINER_02,
         DIR_DOWN,
         4, 0, 0,
         0, 0,
-        753,814,0,
+        785,748,0,
       };
       
       MMDLSYS_AddMMdl( mmdlsys, &head, ZONE_ID_T01 );
     }
   }
+  */
 #endif
 }
 

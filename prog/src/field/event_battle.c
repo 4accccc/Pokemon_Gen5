@@ -81,7 +81,7 @@ const u32 data_EncountPoke200905Max;
 //======================================================================
 //--------------------------------------------------------------
 /**
- * デバッグイベント フィールドバトルイベント
+ * フィールドバトルイベント作成
  * @param gsys  GAMESYS_WORK
  * @param fieldmap FIELDMAP_WORK
  * @retval GMEVENT*
@@ -151,6 +151,39 @@ GMEVENT * EVENT_Battle( GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldmap )
   
   return event;
 }
+
+//--------------------------------------------------------------
+/**
+ * フィールドトレーナーバトルイベント
+ * @param gsys  GAMESYS_WORK
+ * @param fieldmap FIELDMAP_WORK
+ * @retval GMEVENT*
+ */
+//--------------------------------------------------------------
+GMEVENT * EVENT_TrainerBattle(
+    GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldmap, int tr_id )
+{
+  GMEVENT * event;
+  BATTLE_SETUP_PARAM * para;
+  DEBUG_BATTLE_WORK * dbw;
+
+  event = GMEVENT_Create(
+      gsys, NULL, fieldBattleEvent, sizeof(DEBUG_BATTLE_WORK) );
+
+  dbw = GMEVENT_GetEventWork(event);
+  dbw->gsys = gsys;
+  dbw->fieldmap = fieldmap;
+  para = &dbw->para;
+  
+  {
+    FIELD_ENCOUNT *enc = FIELDMAP_GetEncount( fieldmap );
+    FIELD_ENCOUNT_SetTrainerBattleSetupParam(
+        enc, para, tr_id, HEAPID_PROC );
+  }
+  
+  return event;
+}
+
 
 //--------------------------------------------------------------
 /**

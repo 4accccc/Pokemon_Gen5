@@ -51,7 +51,8 @@ enum
 	WORDSET_SCRIPT_BUFLEN = 64,		//デフォルトバッファ長（文字数）
 };
 
-#define SCR_MSG_BUF_SIZE	(1024)				//メッセージバッファサイズ
+//#define SCR_MSG_BUF_SIZE	(1024)				//メッセージバッファサイズ
+#define SCR_MSG_BUF_SIZE	(512)				//メッセージバッファサイズ
 
 //======================================================================
 //	struct
@@ -295,7 +296,7 @@ GMEVENT * SCRIPT_SetEventScript( GAMESYS_WORK *gsys, u16 scr_id, MMDL *obj,
 {
 	GMEVENT *event;
 	SCRIPT_WORK *sc;
-	
+
 	sc = EvScriptWork_Alloc( HEAPID_PROC, temp_heapID );		//ワーク確保
 	sc->fld_param = *fparam;
 	EvScriptWork_Init( sc, gsys, scr_id, obj, NULL );	//初期設定
@@ -1077,8 +1078,8 @@ static GMEVENT_RESULT FldScriptEvent_ControlScript(
 		//メッセージ関連
 		sc->wordset = WORDSET_CreateEx(
 			WORDSET_SCRIPT_SETNUM, WORDSET_SCRIPT_BUFLEN, sc->heapID );
-		sc->msg_buf = GFL_STR_CreateBuffer( SCR_MSG_BUF_SIZE, sc->temp_heapID );
-		sc->tmp_buf = GFL_STR_CreateBuffer( SCR_MSG_BUF_SIZE, sc->temp_heapID );
+		sc->msg_buf = GFL_STR_CreateBuffer( SCR_MSG_BUF_SIZE, sc->heapID );
+		sc->tmp_buf = GFL_STR_CreateBuffer( SCR_MSG_BUF_SIZE, sc->heapID );
 		
 		(*seq)++;
 	case 1:
