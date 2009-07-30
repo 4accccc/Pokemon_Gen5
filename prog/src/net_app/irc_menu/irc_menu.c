@@ -60,7 +60,7 @@ enum{
 	IRC_MENU_BG_PAL_M_04,		//								//相性チェック用バー&フォント
 	IRC_MENU_BG_PAL_M_05,		//　						//ランキング用バー＆フォント
 	IRC_MENU_BG_PAL_M_06,		// 背景ここまで	
-	IRC_MENU_BG_PAL_M_07,		// 使用してない
+	IRC_MENU_BG_PAL_M_07,		// 背景
 	IRC_MENU_BG_PAL_M_08,		// 使用してない
 	IRC_MENU_BG_PAL_M_09,		// 使用してない
 	IRC_MENU_BG_PAL_M_10,		// 使用してない
@@ -78,8 +78,8 @@ enum{
 	IRC_MENU_BG_PAL_S_04,		// 
 	IRC_MENU_BG_PAL_S_05,		//
 	IRC_MENU_BG_PAL_S_06,		// 背景ここまで	//上画面用バー＆フォント
-	IRC_MENU_BG_PAL_S_07,		// 使用してない
-	IRC_MENU_BG_PAL_S_08,		// 使用してない
+	IRC_MENU_BG_PAL_S_07,		// 背景
+	IRC_MENU_BG_PAL_S_08,		// 背景
 	IRC_MENU_BG_PAL_S_09,		// 使用してない
 	IRC_MENU_BG_PAL_S_10,		// 使用してない
 	IRC_MENU_BG_PAL_S_11,		// 使用してない
@@ -126,12 +126,6 @@ enum{
 };
 
 //-------------------------------------
-///	情報バー
-//=====================================
-#define INFOWIN_PLT_NO		(IRC_MENU_BG_PAL_M_15)
-#define INFOWIN_BG_FRAME	(GFL_BG_FRAME0_M)
-
-//-------------------------------------
 ///	文字
 //=====================================
 #define TEXTSTR_PLT_NO				(IRC_MENU_BG_PAL_S_00)
@@ -165,16 +159,25 @@ enum{
 ///	OBJ登録ID
 //=====================================
 enum {
-	OBJREGID_DUMMY,
+	OBJREGID_TOUCH_PLT,
+	OBJREGID_TOUCH_CHR,
+	OBJREGID_TOUCH_CEL,
 
 	OBJREGID_MAX
 };
 
 //-------------------------------------
+///	CLWK
+//=====================================
+#define BACKOBJ_CLWK_MAX	(6)
+
+//-------------------------------------
 ///	CLWK取得
 //=====================================
-typedef enum{	
-	CLWKID_DUMMY,
+typedef enum
+{	
+	CLWKID_BACKOBJ_TOP,
+	CLWKID_BACKOBJ_END = CLWKID_BACKOBJ_TOP + BACKOBJ_CLWK_MAX,
 	
 	CLWKID_MAX
 }CLWKID;
@@ -201,6 +204,13 @@ typedef struct {
 	u32					reg_id[OBJREGID_MAX];
 	GFL_CLWK	 *p_clwk[CLWKID_MAX];
 } GRAPHIC_OBJ_WORK;
+//-------------------------------------
+///	背面OBJ動作
+//=====================================
+typedef struct 
+{
+	GFL_CLWK	*p_clwk[BACKOBJ_CLWK_MAX];
+} OBJMOVE_WORK;
 //-------------------------------------
 ///	描画関係
 //=====================================
@@ -380,7 +390,7 @@ typedef enum
 } GRAPHIC_BG_FRAME;
 static const u32 sc_bgcnt_frame[ GRAPHIC_BG_FRAME_MAX ] = 
 {
-	INFOWIN_BG_FRAME, GFL_BG_FRAME1_M, GFL_BG_FRAME2_M, GFL_BG_FRAME3_M, GFL_BG_FRAME0_S, GFL_BG_FRAME1_S, GFL_BG_FRAME2_S,
+	GFL_BG_FRAME0_M, GFL_BG_FRAME1_M, GFL_BG_FRAME2_M, GFL_BG_FRAME3_M, GFL_BG_FRAME0_S, GFL_BG_FRAME1_S, GFL_BG_FRAME2_S,
 };
 static const GFL_BG_BGCNT_HEADER sc_bgcnt_data[ GRAPHIC_BG_FRAME_MAX ] = 
 {
@@ -505,14 +515,14 @@ static GFL_PROC_RESULT IRC_MENU_PROC_Init( GFL_PROC *p_proc, int *p_seq, void *p
 		{	
 			comm	= GAMESYSTEM_GetGameCommSysPtr(p_wk->p_param->p_gamesys);
 		}
-		INFOWIN_Init( INFOWIN_BG_FRAME, INFOWIN_PLT_NO, comm, HEAPID_IRCCOMPATIBLE );
+		INFOWIN_Init( sc_bgcnt_frame[GRAPHIC_BG_FRAME_M_INFOWIN], IRC_MENU_BG_PAL_M_15, comm, HEAPID_IRCCOMPATIBLE );
 	}
 	
 	BUTTON_Init( &p_wk->btn, sc_bgcnt_frame[GRAPHIC_BG_FRAME_M_BTN],
 			sc_btn_setp_tbl, NELEMS(sc_btn_setp_tbl), &p_wk->msg, p_wk->bg.frame_char, HEAPID_IRCCOMPATIBLE );
 
 	MSGWND_Init( &p_wk->msgwnd, sc_bgcnt_frame[GRAPHIC_BG_FRAME_S_TEXT],
-			MSGWND_MSG_X, MSGWND_MSG_Y, MSGWND_MSG_W, MSGWND_MSG_H, IRC_MENU_BG_PAL_S_06, HEAPID_IRCCOMPATIBLE );
+			MSGWND_MSG_X, MSGWND_MSG_Y, MSGWND_MSG_W, MSGWND_MSG_H, IRC_MENU_BG_PAL_S_08, HEAPID_IRCCOMPATIBLE );
 	BmpWinFrame_Write( p_wk->msgwnd.p_bmpwin, WINDOW_TRANS_ON, 
 					GFL_ARCUTIL_TRANSINFO_GetPos(p_wk->bg.frame_char2), IRC_MENU_BG_PAL_S_06 );
 
@@ -521,7 +531,7 @@ static GFL_PROC_RESULT IRC_MENU_PROC_Init( GFL_PROC *p_proc, int *p_seq, void *p
 
 	{	
 		GFL_CLUNIT	*p_unit	= GRAPHIC_GetClunit( &p_wk->grp );
-		p_wk->p_appbar	= APPBAR_Init( APPBAR_OPTION_MASK_CLOSE, p_unit, sc_bgcnt_frame[INFOWIN_BG_FRAME], IRC_MENU_BG_PAL_M_14, IRC_MENU_OBJ_PAL_M_00, APP_COMMON_MAPPING_128K, HEAPID_IRCCOMPATIBLE );
+		p_wk->p_appbar	= APPBAR_Init( APPBAR_OPTION_MASK_CLOSE, p_unit, sc_bgcnt_frame[GRAPHIC_BG_FRAME_M_INFOWIN], IRC_MENU_BG_PAL_M_14, IRC_MENU_OBJ_PAL_M_00, APP_COMMON_MAPPING_128K, HEAPID_IRCCOMPATIBLE );
 	}
 
 	switch( p_wk->p_param->mode )
@@ -938,6 +948,45 @@ static void GRAPHIC_OBJ_Init( GRAPHIC_OBJ_WORK *p_wk, const GFL_DISP_VRAM* cp_vr
 	//表示
 	GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_OBJ, VISIBLE_ON );
 	GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_OBJ, VISIBLE_ON );
+
+	//リソース読み込み
+	{	
+		ARCHANDLE *p_handle;
+
+		p_handle	= GFL_ARC_OpenDataHandle( ARCID_IRCCOMPATIBLE, heapID );
+
+		p_wk->reg_id[OBJREGID_TOUCH_PLT]	= GFL_CLGRP_PLTT_Register( p_handle, 
+				NARC_irccompatible_gra_aura_obj_NCLR, CLSYS_DRAW_SUB, IRC_MENU_OBJ_PAL_S_00*0x20, heapID );
+
+		p_wk->reg_id[OBJREGID_TOUCH_CHR]	= GFL_CLGRP_CGR_Register( p_handle,
+				NARC_irccompatible_gra_aura_obj_NCGR, FALSE, CLSYS_DRAW_SUB, heapID );
+
+		p_wk->reg_id[OBJREGID_TOUCH_CEL]	= GFL_CLGRP_CELLANIM_Register( p_handle,
+				NARC_irccompatible_gra_aura_obj_NCER, NARC_irccompatible_gra_aura_obj_NANR, heapID );
+
+		GFL_ARC_CloseDataHandle( p_handle );
+	}
+
+	//CLWK作成
+	{	
+		int i;
+		GFL_CLWK_DATA	cldata;
+		GFL_STD_MemClear( &cldata, sizeof(GFL_CLWK_DATA) );
+
+		for( i = CLWKID_BACKOBJ_TOP; i < CLWKID_BACKOBJ_END; i++ )
+		{	
+			p_wk->p_clwk[i]	= GFL_CLACT_WK_Create( p_wk->p_clunit, 
+					p_wk->reg_id[OBJREGID_TOUCH_CHR],
+					p_wk->reg_id[OBJREGID_TOUCH_PLT],
+					p_wk->reg_id[OBJREGID_TOUCH_CEL],
+					&cldata,
+					CLSYS_DEFREND_SUB,
+					heapID
+					);
+			GFL_CLACT_WK_SetDrawEnable( p_wk->p_clwk[i], FALSE );
+		}
+
+	}
 }
 //----------------------------------------------------------------------------
 /**
@@ -949,6 +998,27 @@ static void GRAPHIC_OBJ_Init( GRAPHIC_OBJ_WORK *p_wk, const GFL_DISP_VRAM* cp_vr
 //-----------------------------------------------------------------------------
 static void GRAPHIC_OBJ_Exit( GRAPHIC_OBJ_WORK *p_wk )
 {	
+
+	//セル破棄
+	{	
+		int i;
+		for( i = 0; i < CLWKID_MAX; i++ )
+		{
+			if( p_wk->p_clwk[i] )
+			{	
+				GFL_CLACT_WK_Remove( p_wk->p_clwk[i] );
+			}
+		}
+	}
+
+	//リソース破棄
+	{	
+		GFL_CLGRP_PLTT_Release( p_wk->reg_id[OBJREGID_TOUCH_PLT] );
+		GFL_CLGRP_CGR_Release( p_wk->reg_id[OBJREGID_TOUCH_CHR] );
+		GFL_CLGRP_CELLANIM_Release( p_wk->reg_id[OBJREGID_TOUCH_CEL] );
+	}
+
+
 	//システム破棄
 	GFL_CLACT_UNIT_Delete( p_wk->p_clunit );
 	GFL_CLACT_SYS_Delete();
@@ -1226,7 +1296,6 @@ static void MSGWND_Print( MSGWND_WORK* p_wk, const MSG_WORK *cp_msg, u32 strID, 
 	GFL_MSG_GetString( cp_msgdata, strID, p_wk->p_strbuf );
 
 	//表示
-	GFL_FONTSYS_SetColor( 0xe, 0xe, 0 );
 	PRINT_UTIL_Print( &p_wk->print_util, p_que, x, y, p_wk->p_strbuf, p_font );
 }
 
@@ -1989,10 +2058,30 @@ static BOOL BUTTON_IsTouch( const BUTTON_WORK *cp_wk, u32 *p_btnID )
 {	
 	if( cp_wk->is_touch )
 	{	
+		int i;
 		if( p_btnID )
 		{	
 			*p_btnID	= cp_wk->select_btn_id;
 		}
+
+		for( i = 0; i < cp_wk->btn_num; i++ )
+		{	
+			if( i == cp_wk->select_btn_id )
+			{	
+				GFL_BMPWIN	*p_bmpwin	= cp_wk->p_bmpwin[i];
+				u8 frm;
+				u8 x, y, w, h;
+				frm	= GFL_BMPWIN_GetFrame(p_bmpwin);
+				x		= GFL_BMPWIN_GetPosX(p_bmpwin);
+				y		= GFL_BMPWIN_GetPosY(p_bmpwin);
+				w		= GFL_BMPWIN_GetSizeX(p_bmpwin);
+				h		= GFL_BMPWIN_GetSizeY(p_bmpwin);
+				GFL_BG_ChangeScreenPalette( frm, x-1, y-1, w+2, h+2, IRC_MENU_BG_PAL_S_07 );
+				GFL_BG_LoadScreenReq( frm );
+			}
+		}
+
+
 		return TRUE;
 	}
 

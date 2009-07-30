@@ -31,7 +31,7 @@
 #include "font/font.naix"
 #include "message.naix"
 #include "msg/msg_irc_aura.h"
-#include "ircaura_gra.naix"
+#include "irccompatible_gra.naix"
 
 //	aura
 #include "net_app/irc_aura.h"
@@ -55,6 +55,9 @@ FS_EXTERN_OVERLAY(irc_result);
 //=============================================================================
 #ifdef PM_DEBUG
 #define DEBUG_IRC_COMPATIBLE_ONLYPLAY
+
+
+static GFL_POINT s_pos	= {0};
 #endif //PM_DEBUG
 
 #ifdef DEBUG_IRC_COMPATIBLE_ONLYPLAY
@@ -108,16 +111,16 @@ static s_is_debug_only_play	= 0;
 //=====================================
 enum{	
 	// メイン画面BG
-	AURA_BG_PAL_M_00 = 0,//GUIDE用BG
-	AURA_BG_PAL_M_01,		// 窓枠用
-	AURA_BG_PAL_M_02,		// 使用してない
-	AURA_BG_PAL_M_03,		// 使用してない
-	AURA_BG_PAL_M_04,		// 使用してない
-	AURA_BG_PAL_M_05,		// 使用してない
-	AURA_BG_PAL_M_06,		// 使用してない
-	AURA_BG_PAL_M_07,		// 使用してない
-	AURA_BG_PAL_M_08,		// 使用してない
-	AURA_BG_PAL_M_09,		// 使用してない
+	AURA_BG_PAL_M_00 = 0,//背景
+	AURA_BG_PAL_M_01,		// 
+	AURA_BG_PAL_M_02,		// 
+	AURA_BG_PAL_M_03,		// 
+	AURA_BG_PAL_M_04,		// 
+	AURA_BG_PAL_M_05,		// 
+	AURA_BG_PAL_M_06,		// 
+	AURA_BG_PAL_M_07,		// 
+	AURA_BG_PAL_M_08,		// 背景
+	AURA_BG_PAL_M_09,		// ガイド
 	AURA_BG_PAL_M_10,		// 使用してない
 	AURA_BG_PAL_M_11,		// 使用してない
 	AURA_BG_PAL_M_12,		// 使用してない
@@ -127,16 +130,16 @@ enum{
 
 
 	// サブ画面BG
-	AURA_BG_PAL_S_00 = 0,	//フォント
-	AURA_BG_PAL_S_01,		// 使用してない
-	AURA_BG_PAL_S_02,		// 使用してない
-	AURA_BG_PAL_S_03,		// 使用してない
-	AURA_BG_PAL_S_04,		// 使用してない
-	AURA_BG_PAL_S_05,		// 使用してない
-	AURA_BG_PAL_S_06,		// 使用してない
-	AURA_BG_PAL_S_07,		// 使用してない
-	AURA_BG_PAL_S_08,		// 使用してない
-	AURA_BG_PAL_S_09,		// 使用してない
+	AURA_BG_PAL_S_00 = 0,	//背景
+	AURA_BG_PAL_S_01,		// 
+	AURA_BG_PAL_S_02,		// 
+	AURA_BG_PAL_S_03,		// 
+	AURA_BG_PAL_S_04,		// 
+	AURA_BG_PAL_S_05,		// 
+	AURA_BG_PAL_S_06,		// 
+	AURA_BG_PAL_S_07,		// 
+	AURA_BG_PAL_S_08,		// 背景
+	AURA_BG_PAL_S_09,		// ガイド
 	AURA_BG_PAL_S_10,		// 使用してない
 	AURA_BG_PAL_S_11,		// 使用してない
 	AURA_BG_PAL_S_12,		// 使用してない
@@ -181,12 +184,6 @@ enum{
 	AURA_OBJ_PAL_S_14,		// 使用してない
 	AURA_OBJ_PAL_S_15,		// 使用してない
 };
-
-//-------------------------------------
-///	情報バー
-//=====================================
-#define INFOWIN_PLT_NO		(AURA_BG_PAL_M_15)
-#define INFOWIN_BG_FRAME	(GFL_BG_FRAME1_M)
 
 //-------------------------------------
 ///	文字
@@ -251,11 +248,19 @@ enum {
 
 	OBJREGID_MAX
 };
+
+//-------------------------------------
+///	CLWK
+//=====================================
+#define BACKOBJ_CLWK_MAX	(6)
+
 //-------------------------------------
 ///	CLWK取得
 //=====================================
-typedef enum{	
-	CLWKID_TOUCH,
+typedef enum
+{	
+	CLWKID_BACKOBJ_TOP,
+	CLWKID_BACKOBJ_END = CLWKID_BACKOBJ_TOP + BACKOBJ_CLWK_MAX,
 	
 	CLWKID_MAX
 }CLWKID;
@@ -320,6 +325,22 @@ enum
 #define DEBUG_PLAYER_SAVE_NUM (1)
 #endif //DEBUG_IRC_COMPATIBLE_ONLYPLAY
 
+//-------------------------------------
+///	3Dリソース
+//=====================================
+typedef enum
+{	
+	G3D_MDL_ANM_ICA,
+	G3D_MDL_ANM_IMA,
+	G3D_MDL_ANM_MAX
+}G3D_MDL_ANM;
+typedef struct 
+{
+	u16 imdID;
+	u16 anmID[G3D_MDL_ANM_MAX];
+} G3D_MDL_SETUP;
+
+
 //=============================================================================
 /**
  *					構造体宣言
@@ -338,8 +359,10 @@ typedef struct
 typedef struct 
 {
 	GFL_G3D_RES	*p_res;
+	GFL_G3D_RES *p_anm_res[G3D_MDL_ANM_MAX];
 	GFL_G3D_RND	*p_rnd;
 	GFL_G3D_OBJ	*p_obj;
+	GFL_G3D_ANM	*p_anm[G3D_MDL_ANM_MAX];
 	GFL_G3D_OBJSTATUS	status;
 	BOOL	is_visible;
 } G3D_MDL_WORK;
@@ -353,6 +376,7 @@ typedef struct
 	G3D_MDL_WORK			mdl[G3D_MDL_MAX];
 	fx32							alpha;
 } GRAPHIC_3D_WORK;
+#if 0
 //-------------------------------------
 ///	円
 //=====================================
@@ -374,8 +398,10 @@ typedef struct{
 	u16								rot[CIRCLE_MAX];
 	u16								rot_add[CIRCLE_MAX];
 }TOUCH_EFFECT_WORK;
+#endif
 typedef struct {
-	TOUCH_EFFECT_WORK	wk[TOUCHEFFID_MAX];
+	//TOUCH_EFFECT_WORK	wk[TOUCHEFFID_MAX];
+	G3D_MDL_WORK			*p_mdl[TOUCHEFFID_MAX];
 	GFL_POINT					left;
 } TOUCH_EFFECT_SYS;
 
@@ -580,9 +606,10 @@ static void GRAPHIC_3D_Init( GRAPHIC_3D_WORK *p_wk, HEAPID heapID );
 static void GRAPHIC_3D_Exit( GRAPHIC_3D_WORK *p_wk );
 static void GRAPHIC_3D_StartDraw( GRAPHIC_3D_WORK *p_wk );
 static void GRAPHIC_3D_EndDraw( GRAPHIC_3D_WORK *p_wk );
+static G3D_MDL_WORK *GRAPHIC_3D_GetObj( const GRAPHIC_3D_WORK *cp_wk, u16 idx );
 static void Graphic_3d_SetUp( void );
 //3d_mdl
-static void G3DMDL_Load( G3D_MDL_WORK *p_wk, ARCHANDLE *p_handle, u16 dataID, HEAPID heapID );
+static void G3DMDL_Load( G3D_MDL_WORK *p_wk, ARCHANDLE *p_handle, const G3D_MDL_SETUP *cp_setup, HEAPID heapID );
 static void G3DMDL_UnLoad( G3D_MDL_WORK *p_wk );
 static void G3DMDL_Draw( G3D_MDL_WORK *p_wk );
 static void G3DMDL_SetPos( G3D_MDL_WORK *p_wk, const VecFx32 *cp_trans );
@@ -597,8 +624,7 @@ static PRINT_QUE* MSG_GetPrintQue( const MSG_WORK *cp_wk );
 static const GFL_MSGDATA * MSG_GetMsgDataConst( const MSG_WORK *cp_wk );
 static WORDSET * MSG_GetWordSet( const MSG_WORK *cp_wk );
 //MSG_WINDOW
-static void MSGWND_Init( MSGWND_WORK* p_wk, u8 bgframe,
-		u8 x, u8 y, u8 w, u8 h, HEAPID heapID );
+static void MSGWND_Init( MSGWND_WORK* p_wk, u8 bgframe, u8 x, u8 y, u8 w, u8 h, u8 plt, HEAPID heapID );
 static void MSGWND_Exit( MSGWND_WORK* p_wk );
 static BOOL MSGWND_Main( MSGWND_WORK *p_wk, const MSG_WORK *cp_msg );
 static void MSGWND_Print( MSGWND_WORK* p_wk, const MSG_WORK *cp_msg, u32 strID, u16 x, u16 y );
@@ -608,10 +634,11 @@ static void MSGWND_PrintPlayerName( MSGWND_WORK* p_wk, const MSG_WORK *cp_msg, u
 static void MSGWND_Clear( MSGWND_WORK* p_wk );
 static GFL_BMPWIN *MSGWND_GetBmpWin( const MSGWND_WORK* cp_wk );
 //ONLYRESULT
+#if 0
 static void AURA_ONLYRESULT_Init( AURA_ONLYRESULT_WORK* p_wk, u8 frm, const MSG_WORK *cp_msg, const SHAKE_SEARCH_WORK *cp_search,  HEAPID heapID );
 static void AURA_ONLYRESULT_Exit( AURA_ONLYRESULT_WORK* p_wk );
 static BOOL AURA_ONLYRESULT_Main( AURA_ONLYRESULT_WORK* p_wk );
-
+#endif
 //SEQ
 static void SEQ_Change( AURA_MAIN_WORK *p_wk, SEQ_FUNCTION	seq_function );
 static void SEQ_End( AURA_MAIN_WORK *p_wk );
@@ -630,6 +657,7 @@ static void AURANET_GetResultData( const AURANET_WORK *cp_wk, AURANET_RESULT_DAT
 static void NETRECV_Result( const int netID, const int size, const void* cp_data, void* p_work, GFL_NETHANDLE* p_net_handle );
 static u8* NETRECV_GetBufferAddr(int netID, void* pWork, int size);
 //円プリミティブ
+#if 0
 static void CIRCLE_Init( CIRCLE_WORK *p_wk, u32 vtx_num, HEAPID heapID );
 static void CIRCLE_Exit( CIRCLE_WORK *p_wk );
 static void CIRCLE_Draw( CIRCLE_WORK *p_wk );
@@ -644,9 +672,9 @@ static void CIRCLE_GetScale( const CIRCLE_WORK *cp_wk, VecFx32 *p_scale );
 static void CIRCLE_GetRot( const CIRCLE_WORK *cp_wk, MtxFx33 *p_rot );
 static BOOL CIRCLE_GetVisible( const CIRCLE_WORK *cp_wk );
 static void Circle_DrawLine( VecFx16 *p_start, VecFx16 *p_end );
-
+#endif
 //演出
-static void TOUCH_EFFECT_Init( TOUCH_EFFECT_SYS *p_sys, HEAPID heapID );
+static void TOUCH_EFFECT_Init( TOUCH_EFFECT_SYS *p_sys, const GRAPHIC_3D_WORK *cp_g3d, HEAPID heapID );
 static void TOUCH_EFFECT_Exit( TOUCH_EFFECT_SYS *p_sys );
 static void TOUCH_EFFECT_Draw( TOUCH_EFFECT_SYS *p_wk );
 static void TOUCH_EFFECT_SetVisible( TOUCH_EFFECT_SYS *p_wk, TOUCHEFFID id, BOOL is_visible );
@@ -655,9 +683,15 @@ static void TOUCH_EFFECT_SetPos( TOUCH_EFFECT_SYS *p_wk, TOUCHEFFID id, u32 x, u
 //汎用
 static BOOL TP_GetRectTrg( const GFL_RECT *cp_rect, GFL_POINT *p_trg );
 static BOOL TP_GetRectCont( const GFL_RECT *cp_rect, GFL_POINT *p_cont );
-static void TouchMarker_SetPos( AURA_MAIN_WORK *p_wk, const GFL_POINT *cp_pos );
-static void TouchMarker_OffVisible( AURA_MAIN_WORK *p_wk );
 static u8		CalcScore( AURA_MAIN_WORK *p_wk );
+static void ARCHDL_UTIL_TransVramScreenEx( ARCHANDLE *handle, ARCDATID datID, u32 frm, u32 chr_ofs, u8 src_x, u8 src_y, u8 src_w, u8 src_h, u8 dst_x, u8 dst_y, u8 dst_w, u8 dst_h, u8 plt, BOOL compressedFlag, HEAPID heapID );
+typedef enum
+{	
+	GUIDE_VISIBLE_LEFT	= 1<<0,
+	GUIDE_VISIBLE_RIGHT	= 1<<1,
+	GUIDE_VISIBLE_BOTH	= GUIDE_VISIBLE_LEFT|GUIDE_VISIBLE_RIGHT,
+}GUIDE_VISIBLE_MASK;
+static void GUIDE_SetVisible( GUIDE_VISIBLE_MASK msk, HEAPID heapID );
 
 #ifdef DEBUG_AURA_MSG
 static void DEBUGAURA_PRINT_UpDate( AURA_MAIN_WORK *p_wk );
@@ -710,16 +744,16 @@ const GFL_PROC_DATA IrcAura_ProcData	=
 typedef enum 
 {
 	GRAPHIC_BG_FRAME_M_INFOWIN,
-	GRAPHIC_BG_FRAME_M_TEXT	= GRAPHIC_BG_FRAME_M_INFOWIN,
-	GRAPHIC_BG_FRAME_M_GUIDE_L,
-	GRAPHIC_BG_FRAME_M_GUIDE_R,
+	GRAPHIC_BG_FRAME_M_GUIDE,
+	GRAPHIC_BG_FRAME_M_BACK,
+	GRAPHIC_BG_FRAME_S_ROGO,
 	GRAPHIC_BG_FRAME_S_TEXT,
 	GRAPHIC_BG_FRAME_S_BACK,
 	GRAPHIC_BG_FRAME_MAX
 } GRAPHIC_BG_FRAME;
 static const u32 sc_bgcnt_frame[ GRAPHIC_BG_FRAME_MAX ] = 
 {
-	INFOWIN_BG_FRAME, GFL_BG_FRAME2_M, GFL_BG_FRAME3_M, GFL_BG_FRAME0_S, GFL_BG_FRAME1_S,
+	GFL_BG_FRAME1_M, GFL_BG_FRAME2_M, GFL_BG_FRAME3_M, GFL_BG_FRAME0_S, GFL_BG_FRAME1_S,GFL_BG_FRAME2_S,
 };
 static const GFL_BG_BGCNT_HEADER sc_bgcnt_data[ GRAPHIC_BG_FRAME_MAX ] = 
 {
@@ -730,33 +764,40 @@ static const GFL_BG_BGCNT_HEADER sc_bgcnt_data[ GRAPHIC_BG_FRAME_MAX ] =
 		GX_BG_SCRBASE_0x0000, GX_BG_CHARBASE_0x04000, GFL_BG_CHRSIZ_256x256,
 		GX_BG_EXTPLTT_01, 0, 0, 0, FALSE
 	},
-	// GRAPHIC_BG_FRAME_M_GUIDE_L
-	{
-		0, 0, 0x800, 0,
-		GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
-		GX_BG_SCRBASE_0x0800, GX_BG_CHARBASE_0x08000, GFL_BG_CHRSIZ_256x256,
-		GX_BG_EXTPLTT_01, 1, 0, 0, FALSE
-	},
-	// GRAPHIC_BG_FRAME_M_GUIDE_R
+	// GRAPHIC_BG_FRAME_M_GUIDE
 	{
 		0, 0, 0x800, 0,
 		GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
 		GX_BG_SCRBASE_0x1000, GX_BG_CHARBASE_0x08000, GFL_BG_CHRSIZ_256x256,
 		GX_BG_EXTPLTT_01, 1, 0, 0, FALSE
 	},
-	// GRAPHIC_BG_FRAME_S_TEXT
+	// GRAPHIC_BG_FRAME_M_BACK
+	{
+		0, 0, 0x800, 0,
+		GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
+		GX_BG_SCRBASE_0x1800, GX_BG_CHARBASE_0x10000, GFL_BG_CHRSIZ_256x256,
+		GX_BG_EXTPLTT_01, 2, 0, 0, FALSE
+	},
+	// GRAPHIC_BG_FRAME_S_ROGO
 	{
 		0, 0, 0x800, 0,
 		GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
 		GX_BG_SCRBASE_0x0000, GX_BG_CHARBASE_0x04000, GFL_BG_CHRSIZ_256x256,
 		GX_BG_EXTPLTT_01, 0, 0, 0, FALSE
 	},
+	// GRAPHIC_BG_FRAME_S_TEXT
+	{
+		0, 0, 0x800, 0,
+		GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
+		GX_BG_SCRBASE_0x0800, GX_BG_CHARBASE_0x08000, GFL_BG_CHRSIZ_256x256,
+		GX_BG_EXTPLTT_01, 1, 0, 0, FALSE
+	},
 	// GRAPHIC_BG_FRAME_S_BACK
 	{
 		0, 0, 0x800, 0,
 		GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
-		GX_BG_SCRBASE_0x0800, GX_BG_CHARBASE_0x0c000, GFL_BG_CHRSIZ_256x256,
-		GX_BG_EXTPLTT_01, 1, 0, 0, FALSE
+		GX_BG_SCRBASE_0x1000, GX_BG_CHARBASE_0x10000, GFL_BG_CHRSIZ_256x256,
+		GX_BG_EXTPLTT_01, 2, 0, 0, FALSE
 	},
 };
 
@@ -835,10 +876,12 @@ static GFL_PROC_RESULT IRC_AURA_PROC_Init( GFL_PROC *p_proc, int *p_seq, void *p
 		{	
 			comm	= GAMESYSTEM_GetGameCommSysPtr(p_wk->p_param->p_gamesys);
 		}
-		INFOWIN_Init( INFOWIN_BG_FRAME, INFOWIN_PLT_NO, comm, HEAPID_IRCAURA );
+		INFOWIN_Init( sc_bgcnt_frame[GRAPHIC_BG_FRAME_M_INFOWIN], AURA_BG_PAL_M_15, comm, HEAPID_IRCAURA );
 	}
 	MSGWND_Init( &p_wk->msgwnd[MSGWNDID_TEXT], sc_bgcnt_frame[GRAPHIC_BG_FRAME_S_TEXT],
-			MSGWND_TEXT_X, MSGWND_TEXT_Y, MSGWND_TEXT_W, MSGWND_TEXT_H, HEAPID_IRCAURA );
+			MSGWND_TEXT_X, MSGWND_TEXT_Y, MSGWND_TEXT_W, MSGWND_TEXT_H, AURA_BG_PAL_S_08, HEAPID_IRCAURA );
+	BmpWinFrame_Write( p_wk->msgwnd[MSGWNDID_TEXT].p_bmpwin, WINDOW_TRANS_ON, 
+					GFL_ARCUTIL_TRANSINFO_GetPos(p_wk->grp.bg.frame_char), AURA_BG_PAL_S_06 );
 
 	{	
 		int i;
@@ -852,7 +895,7 @@ static GFL_PROC_RESULT IRC_AURA_PROC_Init( GFL_PROC *p_proc, int *p_seq, void *p
 	//APPBAR
 	{	
 		GFL_CLUNIT	*p_unit	= GRAPHIC_GetClunit( &p_wk->grp );
-		p_wk->p_appbar	= APPBAR_Init( APPBAR_OPTION_MASK_CLOSE, p_unit, sc_bgcnt_frame[INFOWIN_BG_FRAME], AURA_BG_PAL_M_13, AURA_OBJ_PAL_M_13, APP_COMMON_MAPPING_128K, HEAPID_IRCAURA );
+		p_wk->p_appbar	= APPBAR_Init( APPBAR_OPTION_MASK_CLOSE, p_unit, sc_bgcnt_frame[GRAPHIC_BG_FRAME_M_INFOWIN], AURA_BG_PAL_M_13, AURA_OBJ_PAL_M_13, APP_COMMON_MAPPING_128K, HEAPID_IRCAURA );
 	}
 
 DEBUG_ONLYPLAY_IF
@@ -1005,6 +1048,31 @@ static GFL_PROC_RESULT IRC_AURA_PROC_Main( GFL_PROC *p_proc, int *p_seq, void *p
 
 	APPBAR_Main( p_wk->p_appbar );
 
+#ifdef PM_DEBUG
+	if( GFL_UI_KEY_GetTrg() & PAD_KEY_UP )
+	{	
+		s_pos.y		+= 1;
+		NAGI_Printf( "Dpos X%d Y%d\n", s_pos.x, s_pos.y );
+	}
+	if( GFL_UI_KEY_GetTrg() & PAD_KEY_DOWN )
+	{	
+		s_pos.y		-= 1;
+		NAGI_Printf( "Dpos X%d Y%d\n", s_pos.x, s_pos.y );
+	}
+	if( GFL_UI_KEY_GetTrg() & PAD_KEY_LEFT )
+	{	
+		s_pos.x		-= 1;
+		NAGI_Printf( "Dpos X%d Y%d\n", s_pos.x, s_pos.y );
+	}
+	if( GFL_UI_KEY_GetTrg() & PAD_KEY_RIGHT )
+	{	
+		s_pos.x		+= 1;
+		NAGI_Printf( "Dpos X%d Y%d\n", s_pos.x, s_pos.y );
+	}
+
+#endif 
+
+
 	return GFL_PROC_RES_CONTINUE;
 }
 //=============================================================================
@@ -1031,7 +1099,7 @@ static void GRAPHIC_Init( GRAPHIC_WORK* p_wk, HEAPID heapID )
 		GX_VRAM_SUB_BGEXTPLTT_NONE, // サブ2DエンジンのBG拡張パレット
 		GX_VRAM_OBJ_64_E,						// メイン2DエンジンのOBJ
 		GX_VRAM_OBJEXTPLTT_NONE,		// メイン2DエンジンのOBJ拡張パレット
-		GX_VRAM_SUB_OBJ_16_I,       // サブ2DエンジンのOBJ
+		GX_VRAM_SUB_OBJ_128_D,       // サブ2DエンジンのOBJ
 		GX_VRAM_SUB_OBJEXTPLTT_NONE,// サブ2DエンジンのOBJ拡張パレット
 		GX_VRAM_TEX_NONE,						// テクスチャイメージスロット
 		GX_VRAM_TEXPLTT_NONE,				// テクスチャパレットスロット
@@ -1047,7 +1115,6 @@ static void GRAPHIC_Init( GRAPHIC_WORK* p_wk, HEAPID heapID )
 
 	// VRAMバンク設定
 	GFL_DISP_SetBank( &sc_vramSetTable );
-	//GX_SetBankForLCDC(GX_VRAM_LCDC_B);	//Capture用
 
 	// ディスプレイON
 	GFL_DISP_SetDispSelect( GX_DISP_SELECT_SUB_MAIN );
@@ -1061,8 +1128,7 @@ static void GRAPHIC_Init( GRAPHIC_WORK* p_wk, HEAPID heapID )
 	GRAPHIC_BG_Init( &p_wk->bg, heapID );
 	GRAPHIC_3D_Init( &p_wk->g3d, heapID );
 
-	TOUCH_EFFECT_Init( &p_wk->touch_eff, heapID );
-
+	TOUCH_EFFECT_Init( &p_wk->touch_eff, &p_wk->g3d, heapID );
 
 	//VBlackTask登録
 	p_wk->p_vblank_task	= GFUser_VIntr_CreateTCB(Graphic_VBlankTask, p_wk, 0 );
@@ -1079,6 +1145,7 @@ static void GRAPHIC_Init( GRAPHIC_WORK* p_wk, HEAPID heapID )
 //-----------------------------------------------------------------------------
 static void GRAPHIC_Exit( GRAPHIC_WORK* p_wk )
 {
+
 	GFL_TCB_DeleteTask( p_wk->p_vblank_task );
 
 	TOUCH_EFFECT_Exit( &p_wk->touch_eff );
@@ -1110,15 +1177,7 @@ static void GRAPHIC_Draw( GRAPHIC_WORK* p_wk )
 */
 	GRAPHIC_3D_EndDraw( &p_wk->g3d );
 
-/*
-	GX_SetCapture(GX_CAPTURE_SIZE_256x192,  // Capture size
-                      GX_CAPTURE_MODE_AB,			   // Capture mode
-                      GX_CAPTURE_SRCA_2D3D,						 // Blend src A
-                      GX_CAPTURE_SRCB_VRAM_0x00000,     // Blend src B
-                      GX_CAPTURE_DEST_VRAM_B_0x00000,   // Output VRAM
-                      14,             // Blend parameter for src A
-                      14);            // Blend parameter for src B
-*/}
+}
 //----------------------------------------------------------------------------
 /**
  *	@brief	CLWK取得
@@ -1216,7 +1275,6 @@ static void GRAPHIC_BG_Init( GRAPHIC_BG_WORK* p_wk, HEAPID heapID )
 	{
 		static const GFL_BG_SYS_HEADER sc_bg_sys_header = 
 		{
-		//	GX_DISPMODE_VRAM_B,GX_BGMODE_0,GX_BGMODE_0,GX_BG0_AS_3D
 			GX_DISPMODE_GRAPHICS,GX_BGMODE_0,GX_BGMODE_0,GX_BG0_AS_3D
 		};	
 		GFL_BG_SetBGMode( &sc_bg_sys_header );
@@ -1236,29 +1294,47 @@ static void GRAPHIC_BG_Init( GRAPHIC_BG_WORK* p_wk, HEAPID heapID )
 
 	//読み込み設定
 	{	
-		ARCHANDLE *p_handle;
+		ARCHANDLE	*p_handle	= GFL_ARC_OpenDataHandle( ARCID_IRCCOMPATIBLE, heapID );
 
-		p_handle	= GFL_ARC_OpenDataHandle( ARCID_IRCAURA_GRAPHIC, heapID );
+		//パレット
+		GFL_ARCHDL_UTIL_TransVramPalette( p_handle, NARC_irccompatible_gra_aura_bg_NCLR,
+				PALTYPE_MAIN_BG, AURA_BG_PAL_M_00*0x20, 0, heapID );
+		GFL_ARCHDL_UTIL_TransVramPalette( p_handle, NARC_irccompatible_gra_aura_bg_NCLR,
+				PALTYPE_SUB_BG, AURA_BG_PAL_S_00*0x20, 0, heapID );
+		GFL_ARCHDL_UTIL_TransVramPalette( p_handle, NARC_irccompatible_gra_aura_bg_guide_NCLR,
+				PALTYPE_MAIN_BG, AURA_BG_PAL_M_09*0x20, 0, heapID );
 
-		GFL_ARCHDL_UTIL_TransVramPalette( p_handle, NARC_ircaura_gra_aura_bg_guide_NCLR,
-				PALTYPE_MAIN_BG, PALTYPE_MAIN_BG*0x20, 0x20, heapID );
+		//キャラ
+		GFL_ARCHDL_UTIL_TransVramBgCharacter( p_handle, NARC_irccompatible_gra_aura_bg_NCGR,
+				sc_bgcnt_frame[GRAPHIC_BG_FRAME_M_BACK], 0, 0, FALSE, heapID );
+		GFL_ARCHDL_UTIL_TransVramBgCharacter( p_handle, NARC_irccompatible_gra_aura_bg_NCGR,
+				sc_bgcnt_frame[GRAPHIC_BG_FRAME_S_BACK], 0, 0, FALSE, heapID );
+		GFL_ARCHDL_UTIL_TransVramBgCharacter( p_handle, NARC_irccompatible_gra_title_rogo_NCGR,
+				sc_bgcnt_frame[GRAPHIC_BG_FRAME_S_ROGO], 0, 0, FALSE, heapID );
+		GFL_ARCHDL_UTIL_TransVramBgCharacter( p_handle, NARC_irccompatible_gra_aura_bg_guide_NCGR,
+				sc_bgcnt_frame[GRAPHIC_BG_FRAME_M_GUIDE], 0, 0, FALSE, heapID );
 	
-		GFL_ARCHDL_UTIL_TransVramBgCharacter( p_handle, NARC_ircaura_gra_aura_bg_guide_NCGR,
-				sc_bgcnt_frame[ GRAPHIC_BG_FRAME_M_GUIDE_L], 0, 0, FALSE, heapID );
+		//スクリーン
+		GFL_ARCHDL_UTIL_TransVramScreen( p_handle, NARC_irccompatible_gra_aura_bg_hert_s_NSCR,
+				sc_bgcnt_frame[GRAPHIC_BG_FRAME_M_BACK], 0, 0, FALSE, heapID );
+		GFL_ARCHDL_UTIL_TransVramScreen( p_handle, NARC_irccompatible_gra_aura_bg_hert_s_NSCR,
+				sc_bgcnt_frame[GRAPHIC_BG_FRAME_S_BACK], 0, 0, FALSE, heapID );
+		GFL_ARCHDL_UTIL_TransVramScreen( p_handle, NARC_irccompatible_gra_title_aura_NSCR,
+				sc_bgcnt_frame[GRAPHIC_BG_FRAME_S_ROGO], 0, 0, FALSE, heapID );
+		GFL_ARCHDL_UTIL_TransVramScreen( p_handle, NARC_irccompatible_gra_aura_bg_guide_l_NSCR,
+				sc_bgcnt_frame[GRAPHIC_BG_FRAME_M_GUIDE], 0, 0, FALSE, heapID );	
 
-		GFL_ARCHDL_UTIL_TransVramScreen( p_handle, NARC_ircaura_gra_aura_bg_guide_l_NSCR,
-				sc_bgcnt_frame[ GRAPHIC_BG_FRAME_M_GUIDE_L], 0, 0, FALSE, heapID );
+		GUIDE_SetVisible( GUIDE_VISIBLE_LEFT, heapID );
 
-		GFL_ARCHDL_UTIL_TransVramScreen( p_handle, NARC_ircaura_gra_aura_bg_guide_r_NSCR,
-				sc_bgcnt_frame[ GRAPHIC_BG_FRAME_M_GUIDE_R], 0, 0, FALSE, heapID );
+		//ワク
+		GFL_BG_FillCharacter( sc_bgcnt_frame[ GRAPHIC_BG_FRAME_S_TEXT], 0, 1, 0 );
+		p_wk->frame_char	= GFL_ARCHDL_UTIL_TransVramBgCharacterAreaMan( p_handle, NARC_irccompatible_gra_ue_frame_NCGR, sc_bgcnt_frame[ GRAPHIC_BG_FRAME_S_TEXT], 0, FALSE, heapID );
 
 		GFL_ARC_CloseDataHandle( p_handle );
-
-		GFL_BG_FillCharacter( sc_bgcnt_frame[ GRAPHIC_BG_FRAME_M_TEXT], 0x00, 1, 0 );
-		p_wk->frame_char	= BmpWinFrame_GraphicSetAreaMan(sc_bgcnt_frame[ GRAPHIC_BG_FRAME_M_TEXT], AURA_BG_PAL_M_01, MENU_TYPE_SYSTEM, heapID);
 	}
 
-	GFL_BG_SetVisible( sc_bgcnt_frame[ GRAPHIC_BG_FRAME_M_GUIDE_R], VISIBLE_OFF );
+	//3dは半透明
+	G2_SetBlendAlpha( GX_BLEND_PLANEMASK_BG0|GX_BLEND_PLANEMASK_BG2,GX_BLEND_PLANEMASK_BG2|GX_BLEND_PLANEMASK_BG3, 13, 0 );
 }
 
 //----------------------------------------------------------------------------
@@ -1273,12 +1349,15 @@ static void GRAPHIC_BG_Exit( GRAPHIC_BG_WORK* p_wk )
 {	
 	int i;
 
+	//アルファ
+	G2_BlendNone();
+
 	//読み込み破棄
 	{	
-		GFL_BG_FreeCharacterArea(sc_bgcnt_frame[ GRAPHIC_BG_FRAME_M_TEXT],
+		GFL_BG_FreeCharacterArea(sc_bgcnt_frame[ GRAPHIC_BG_FRAME_S_TEXT],
 				GFL_ARCUTIL_TRANSINFO_GetPos(p_wk->frame_char),
 				GFL_ARCUTIL_TRANSINFO_GetSize(p_wk->frame_char));
-		GFL_BG_FillCharacterRelease(sc_bgcnt_frame[ GRAPHIC_BG_FRAME_M_TEXT], 1,0);
+		GFL_BG_FillCharacterRelease(sc_bgcnt_frame[ GRAPHIC_BG_FRAME_S_TEXT], 1,0);
 	}
 
 	// BGコントロール破棄
@@ -1348,41 +1427,43 @@ static void GRAPHIC_OBJ_Init( GRAPHIC_OBJ_WORK *p_wk, const GFL_DISP_VRAM* cp_vr
 	GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_OBJ, VISIBLE_ON );
 	GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_OBJ, VISIBLE_ON );
 
-#if 0
 	//リソース読み込み
 	{	
 		ARCHANDLE *p_handle;
 
-		p_handle	= GFL_ARC_OpenDataHandle( ARCID_IRCAURA_GRAPHIC, heapID );
+		p_handle	= GFL_ARC_OpenDataHandle( ARCID_IRCCOMPATIBLE, heapID );
 
 		p_wk->reg_id[OBJREGID_TOUCH_PLT]	= GFL_CLGRP_PLTT_Register( p_handle, 
-				NARC_ircaura_gra_aura_obj_touch_NCLR, CLSYS_DRAW_MAIN, AURA_OBJ_PAL_M_00*0x20, heapID );
+				NARC_irccompatible_gra_aura_obj_NCLR, CLSYS_DRAW_SUB, AURA_OBJ_PAL_S_00*0x20, heapID );
 
 		p_wk->reg_id[OBJREGID_TOUCH_CHR]	= GFL_CLGRP_CGR_Register( p_handle,
-				NARC_ircaura_gra_aura_obj_touch_NCGR, FALSE, CLSYS_DRAW_MAIN, heapID );
+				NARC_irccompatible_gra_aura_obj_NCGR, FALSE, CLSYS_DRAW_SUB, heapID );
 
 		p_wk->reg_id[OBJREGID_TOUCH_CEL]	= GFL_CLGRP_CELLANIM_Register( p_handle,
-				NARC_ircaura_gra_aura_obj_touch_NCER, NARC_ircaura_gra_aura_obj_touch_NANR, heapID );
+				NARC_irccompatible_gra_aura_obj_NCER, NARC_irccompatible_gra_aura_obj_NANR, heapID );
 
 		GFL_ARC_CloseDataHandle( p_handle );
 	}
 
 	//CLWK作成
 	{	
+		int i;
 		GFL_CLWK_DATA	cldata;
 		GFL_STD_MemClear( &cldata, sizeof(GFL_CLWK_DATA) );
-		p_wk->p_clwk[CLWKID_TOUCH]	= GFL_CLACT_WK_Create( p_wk->p_clunit, 
-				p_wk->reg_id[OBJREGID_TOUCH_CHR],
-				p_wk->reg_id[OBJREGID_TOUCH_PLT],
-				p_wk->reg_id[OBJREGID_TOUCH_CEL],
-				&cldata,
-				CLSYS_DEFREND_MAIN,
-				heapID
-				);
+
+		for( i = CLWKID_BACKOBJ_TOP; i < CLWKID_BACKOBJ_END; i++ )
+		{	
+			p_wk->p_clwk[i]	= GFL_CLACT_WK_Create( p_wk->p_clunit, 
+					p_wk->reg_id[OBJREGID_TOUCH_CHR],
+					p_wk->reg_id[OBJREGID_TOUCH_PLT],
+					p_wk->reg_id[OBJREGID_TOUCH_CEL],
+					&cldata,
+					CLSYS_DEFREND_SUB,
+					heapID
+					);
+			GFL_CLACT_WK_SetDrawEnable( p_wk->p_clwk[i], FALSE );
+		}
 	}
-#endif
-
-
 }
 //----------------------------------------------------------------------------
 /**
@@ -1394,13 +1475,15 @@ static void GRAPHIC_OBJ_Init( GRAPHIC_OBJ_WORK *p_wk, const GFL_DISP_VRAM* cp_vr
 //-----------------------------------------------------------------------------
 static void GRAPHIC_OBJ_Exit( GRAPHIC_OBJ_WORK *p_wk )
 {	
-#if 0
-	//CLWK破棄
+	//セル破棄
 	{	
 		int i;
 		for( i = 0; i < CLWKID_MAX; i++ )
-		{	
-			GFL_CLACT_WK_Remove( p_wk->p_clwk[i] );
+		{
+			if( p_wk->p_clwk[i] )
+			{	
+				GFL_CLACT_WK_Remove( p_wk->p_clwk[i] );
+			}
 		}
 	}
 
@@ -1410,7 +1493,7 @@ static void GRAPHIC_OBJ_Exit( GRAPHIC_OBJ_WORK *p_wk )
 		GFL_CLGRP_CGR_Release( p_wk->reg_id[OBJREGID_TOUCH_CHR] );
 		GFL_CLGRP_CELLANIM_Release( p_wk->reg_id[OBJREGID_TOUCH_CEL] );
 	}
-#endif 
+
 
 	//システム破棄
 	GFL_CLACT_UNIT_Delete( p_wk->p_clunit );
@@ -1508,12 +1591,18 @@ static void GRAPHIC_3D_Init( GRAPHIC_3D_WORK *p_wk, HEAPID heapID )
 
 	//読み込み
 	{	
-		ARCHANDLE	*p_handle	= GFL_ARC_OpenDataHandle( ARCID_IRCAURA_GRAPHIC, heapID );
+		static const G3D_MDL_SETUP	sc_aura_setup	=
+		{	
+			NARC_irccompatible_gra_aura_nsbmd,
+			{	
+				NARC_irccompatible_gra_aura_nsbca,
+				NARC_irccompatible_gra_aura_nsbma,
+			}
+		};
+		ARCHANDLE	*p_handle	= GFL_ARC_OpenDataHandle( ARCID_IRCCOMPATIBLE, heapID );
 
-		G3DMDL_Load( &p_wk->mdl[0], p_handle, NARC_ircaura_gra_aura_nsbmd, heapID );
-		G3DMDL_Load( &p_wk->mdl[1], p_handle, NARC_ircaura_gra_aura_nsbmd, heapID );
-		G3DMDL_SetVisible( &p_wk->mdl[0], TRUE );
-		G3DMDL_SetVisible( &p_wk->mdl[1], TRUE );
+		G3DMDL_Load( &p_wk->mdl[0], p_handle, &sc_aura_setup, heapID );
+		G3DMDL_Load( &p_wk->mdl[1], p_handle, &sc_aura_setup, heapID );
 
 		GFL_ARC_CloseDataHandle( p_handle );
 	}
@@ -1577,6 +1666,19 @@ static void GRAPHIC_3D_EndDraw( GRAPHIC_3D_WORK *p_wk )
 	GFL_G3D_DRAW_End();
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief	モデル取得
+ *
+ *	@param	const GRAPHIC_3D_WORK *cp_wk	ワーク
+ *
+ *	@return	モデル
+ */
+//-----------------------------------------------------------------------------
+static G3D_MDL_WORK *GRAPHIC_3D_GetObj( const GRAPHIC_3D_WORK *cp_wk, u16 idx )
+{	
+	return (G3D_MDL_WORK*)(&cp_wk->mdl[ idx ]);
+}
 //----------------------------------------------------------------------------
 /**
  *	@brief	環境セットアップコールバック関数
@@ -1647,7 +1749,7 @@ static void Graphic_3d_SetUp( void )
  *	@param	heapID							ヒープID
  */
 //-----------------------------------------------------------------------------
-static void G3DMDL_Load( G3D_MDL_WORK *p_wk, ARCHANDLE *p_handle, u16 dataID, HEAPID heapID )
+static void G3DMDL_Load( G3D_MDL_WORK *p_wk, ARCHANDLE *p_handle, const G3D_MDL_SETUP *cp_setup, HEAPID heapID )
 {	
 	//ワーククリア
 	GFL_STD_MemClear(p_wk, sizeof(G3D_MDL_WORK));
@@ -1659,7 +1761,7 @@ static void G3DMDL_Load( G3D_MDL_WORK *p_wk, ARCHANDLE *p_handle, u16 dataID, HE
 		GFL_G3D_RES	*p_tex	= NULL;
 		GFL_G3D_RES	*p_mdl	= NULL;
 
-		p_wk->p_res	= GFL_G3D_CreateResourceHandle( p_handle, dataID );
+		p_wk->p_res	= GFL_G3D_CreateResourceHandle( p_handle, cp_setup->imdID );
 		GF_ASSERT( p_wk->p_res != NULL );
 
 		if( GFL_G3D_CheckResourceType( p_wk->p_res, GFL_G3D_RES_CHKTYPE_TEX ) ){
@@ -1668,10 +1770,29 @@ static void G3DMDL_Load( G3D_MDL_WORK *p_wk, ARCHANDLE *p_handle, u16 dataID, HE
 			GF_ASSERT( result );
 		}
 
-		if( GFL_G3D_CheckResourceType( p_wk->p_res, GFL_G3D_RES_CHKTYPE_MDL ) ){
+		if( GFL_G3D_CheckResourceType( p_wk->p_res, GFL_G3D_RES_CHKTYPE_MDL ) )
+		{
+			int i;
+
 			p_mdl	= p_wk->p_res;
 			p_wk->p_rnd	= GFL_G3D_RENDER_Create( p_mdl, 0, p_tex );	
-			p_wk->p_obj	= GFL_G3D_OBJECT_Create( p_wk->p_rnd, NULL, 0 );
+
+			// アニメーション作成
+			for( i = 0; i<G3D_MDL_ANM_MAX; i++ )
+			{
+				p_wk->p_anm_res[i]	= GFL_G3D_CreateResourceHandle( p_handle, cp_setup->anmID[i] );
+
+				p_wk->p_anm[i]			= GFL_G3D_ANIME_Create( p_wk->p_rnd, p_wk->p_anm_res[i], 0 );
+			}
+
+			//	OBJ作成
+			p_wk->p_obj	= GFL_G3D_OBJECT_Create( p_wk->p_rnd, p_wk->p_anm, G3D_MDL_ANM_MAX );
+
+			// アニメーション反映
+			for( i=0; i<G3D_MDL_ANM_MAX; i++ )
+			{
+				GFL_G3D_OBJECT_EnableAnime( p_wk->p_obj, i );
+			}
 		}
 
 		//アルファを保存しておく
@@ -1694,9 +1815,24 @@ static void G3DMDL_Load( G3D_MDL_WORK *p_wk, ARCHANDLE *p_handle, u16 dataID, HE
 //-----------------------------------------------------------------------------
 static void G3DMDL_UnLoad( G3D_MDL_WORK *p_wk )
 {	
-	//破棄
+	int i;
+
+	//OBJ破棄
 	GFL_G3D_OBJECT_Delete( p_wk->p_obj );
+	for( i = 0; i<G3D_MDL_ANM_MAX; i++ )
+	{
+		if( p_wk->p_anm[i] )
+		{	
+			GFL_G3D_ANIME_Delete( p_wk->p_anm[i] );
+		}
+	}
 	GFL_G3D_RENDER_Delete( p_wk->p_rnd );
+
+	//リソース破棄
+	for( i = 0; i<G3D_MDL_ANM_MAX; i++ )
+	{
+		GFL_G3D_DeleteResource( p_wk->p_anm_res[i] );
+	}
 	GFL_G3D_DeleteResource( p_wk->p_res );
 
 	//クリア
@@ -1713,10 +1849,13 @@ static void G3DMDL_Draw( G3D_MDL_WORK *p_wk )
 {	
 	if( p_wk->is_visible )
 	{	
+		int i;
+		for( i = 0; i<G3D_MDL_ANM_MAX; i++ )
+		{
+			GFL_G3D_OBJECT_LoopAnimeFrame( p_wk->p_obj, i, FX32_ONE);
+		}
+
 		GFL_G3D_DRAW_DrawObject( p_wk->p_obj, &p_wk->status );
-
-
-
 	}
 }
 //----------------------------------------------------------------------------
@@ -1798,11 +1937,9 @@ static void MSG_Init( MSG_WORK *p_wk, MSG_FONT_TYPE font, HEAPID heapID )
 	p_wk->p_wordset	= WORDSET_Create( heapID );
 
 	{	
+/*		GFL_ARC_UTIL_TransVramPalette( ARCID_FONT, NARC_font_default_nclr, PALTYPE_SUB_BG, TEXTSTR_PLT_NO*0x20, 0x20, heapID );
 		GFL_ARC_UTIL_TransVramPalette( ARCID_FONT, NARC_font_default_nclr, PALTYPE_SUB_BG, TEXTSTR_PLT_NO*0x20, 0x20, heapID );
-		GFL_ARC_UTIL_TransVramPalette( ARCID_FONT, NARC_font_default_nclr, PALTYPE_SUB_BG, TEXTSTR_PLT_NO*0x20, 0x20, heapID );
-		GFL_BG_SetBackGroundColor( sc_bgcnt_frame[ GRAPHIC_BG_FRAME_S_TEXT], GX_RGB(31,31,31) );
-		GFL_BG_SetBackGroundColor( sc_bgcnt_frame[ GRAPHIC_BG_FRAME_M_TEXT], GX_RGB(0,0,0) );
-	}
+*/	}
 }
 
 //----------------------------------------------------------------------------
@@ -1914,10 +2051,10 @@ static WORDSET * MSG_GetWordSet( const MSG_WORK *cp_wk )
  *
  */
 //-----------------------------------------------------------------------------
-static void MSGWND_Init( MSGWND_WORK* p_wk, u8 bgframe, u8 x, u8 y, u8 w, u8 h, HEAPID heapID )
+static void MSGWND_Init( MSGWND_WORK* p_wk, u8 bgframe, u8 x, u8 y, u8 w, u8 h, u8 plt, HEAPID heapID )
 {	
 	GFL_STD_MemClear( p_wk, sizeof(MSGWND_WORK) );
-	p_wk->p_bmpwin	= GFL_BMPWIN_Create( bgframe, x, y, w, h, TEXTSTR_PLT_NO, GFL_BMP_CHRAREA_GET_B );
+	p_wk->p_bmpwin	= GFL_BMPWIN_Create( bgframe, x, y, w, h, plt, GFL_BMP_CHRAREA_GET_B );
 	p_wk->p_strbuf	= GFL_STR_CreateBuffer( TEXTSTR_BUFFER_LENGTH, heapID );
 	PRINT_UTIL_Setup( &p_wk->print_util, p_wk->p_bmpwin );
 	GFL_BMPWIN_MakeTransWindow( p_wk->p_bmpwin );
@@ -1976,7 +2113,7 @@ static void MSGWND_Print( MSGWND_WORK* p_wk, const MSG_WORK *cp_msg, u32 strID, 
 	p_font	= MSG_GetFont( cp_msg );
 
 	//一端消去
-	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(p_wk->p_bmpwin), 0 );	
+	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(p_wk->p_bmpwin), 0xF );	
 
 	//文字列作成
 	GFL_MSG_GetString( cp_msgdata, strID, p_wk->p_strbuf );
@@ -2010,7 +2147,7 @@ static void MSGWND_PrintCenter( MSGWND_WORK* p_wk, const MSG_WORK *cp_msg, u32 s
 	p_font	= MSG_GetFont( cp_msg );
 
 	//一端消去
-	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(p_wk->p_bmpwin), 0 );	
+	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(p_wk->p_bmpwin), 0xF );	
 
 	//文字列作成
 	GFL_MSG_GetString( cp_msgdata, strID, p_wk->p_strbuf );
@@ -2047,7 +2184,7 @@ static void MSGWND_PrintNumber( MSGWND_WORK* p_wk, const MSG_WORK *cp_msg, u32 s
 	WORDSET *p_wordset;
 	
 	//一端消去
-	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(p_wk->p_bmpwin), 0 );	
+	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(p_wk->p_bmpwin), 0xF );	
 
 	//モジュール取得
 	p_wordset		= MSG_GetWordSet( cp_msg );
@@ -2154,6 +2291,7 @@ static GFL_BMPWIN *MSGWND_GetBmpWin( const MSGWND_WORK* cp_wk )
  *				個人結果画面
  */
 //=============================================================================
+#if 0
 //----------------------------------------------------------------------------
 /**
  *	@brief	個人結果画面	初期化
@@ -2318,6 +2456,7 @@ static BOOL AURA_ONLYRESULT_Main( AURA_ONLYRESULT_WORK* p_wk )
 
 	return FALSE;
 }
+#endif
 //=============================================================================
 /**
  *				SEQ
@@ -2423,9 +2562,7 @@ DEBUG_ONLYPLAY_ENDIF
 			}
 		}
 
-		TouchMarker_OffVisible( p_wk );
-		GFL_BG_SetVisible( sc_bgcnt_frame[ GRAPHIC_BG_FRAME_M_GUIDE_R], VISIBLE_OFF );
-		GFL_BG_SetVisible( sc_bgcnt_frame[ GRAPHIC_BG_FRAME_M_GUIDE_L], VISIBLE_ON );
+		GUIDE_SetVisible( GUIDE_VISIBLE_LEFT, HEAPID_IRCAURA );
 
 		*p_seq	= SEQ_MAIN;
 		break;
@@ -2500,7 +2637,6 @@ DEBUG_ONLYPLAY_ELSE
 	p_shake_left	= &p_wk->shake_left[0];
 DEBUG_ONLYPLAY_ENDIF
 
-	TouchMarker_OffVisible( p_wk );
 
 	switch( *p_seq )
 	{	
@@ -2511,7 +2647,8 @@ DEBUG_ONLYPLAY_ENDIF
 			if( SHAKESEARCH_Main( p_shake_left, &sc_left ) )
 			{	
 				MSGWND_Print( &p_wk->msgwnd[MSGWNDID_TEXT], &p_wk->msg, AURA_STR_002, 0, 0 );
-				GFL_BG_SetVisible( sc_bgcnt_frame[ GRAPHIC_BG_FRAME_M_GUIDE_R], VISIBLE_ON );
+				GUIDE_SetVisible( GUIDE_VISIBLE_BOTH, HEAPID_IRCAURA );
+
 				*p_seq	= SEQ_WAIT_RIGHT;
 			}
 
@@ -2524,7 +2661,6 @@ DEBUG_ONLYPLAY_ENDIF
 				TOUCH_EFFECT_SetPos( p_touch, TOUCHEFFID_LEFT, pos.x, pos.y );
 			}
 
-			TouchMarker_SetPos( p_wk, &pos );
 		}
 		else
 		{	
@@ -2536,7 +2672,6 @@ DEBUG_ONLYPLAY_ENDIF
 	case SEQ_WAIT_RIGHT:
 		if( TP_GetRectCont( &sc_right, p_trg_right ) )
 		{	
-			TouchMarker_SetPos( p_wk, p_trg_right );
 
 
 			MSGWND_Print( &p_wk->msgwnd[MSGWNDID_TEXT], &p_wk->msg, AURA_STR_001, 0, 0 );
@@ -2552,7 +2687,6 @@ DEBUG_ONLYPLAY_ENDIF
 		}
 		else if( TP_GetRectCont( &sc_left, &pos ) )
 		{	
-			TouchMarker_SetPos( p_wk, &pos );
 		}
 		else
 		{
@@ -2606,7 +2740,6 @@ DEBUG_ONLYPLAY_ELSE
 	p_shake_right	= &p_wk->shake_right[0];
 DEBUG_ONLYPLAY_ENDIF
 
-	TouchMarker_OffVisible( p_wk );
 
 	switch( *p_seq )
 	{	
@@ -2643,7 +2776,6 @@ DEBUG_ONLYPLAY_ENDIF
 				TOUCH_EFFECT_SetPos( p_touch, TOUCHEFFID_RIGHT, pos.x, pos.y );
 			}
 
-			TouchMarker_SetPos( p_wk, &pos );
 		}
 		else
 		{	
@@ -3063,6 +3195,7 @@ static u8* NETRECV_GetBufferAddr(int netID, void* p_work, int size)
  *				円プリミティブ
  */
 //=============================================================================
+#if 0
 //----------------------------------------------------------------------------
 /**
  *	@brief	円プリミティブを作成
@@ -3314,6 +3447,7 @@ static void Circle_DrawLine( VecFx16 *p_start, VecFx16 *p_end )
 	G3_Vtx( p_end->x, p_end->y, p_end->z);
 #endif
 }
+#endif
 //=============================================================================
 /**
  *				演出
@@ -3328,7 +3462,7 @@ static void Circle_DrawLine( VecFx16 *p_start, VecFx16 *p_end )
  *
  */
 //-----------------------------------------------------------------------------
-static void TOUCH_EFFECT_Init( TOUCH_EFFECT_SYS *p_sys, HEAPID heapID )
+static void TOUCH_EFFECT_Init( TOUCH_EFFECT_SYS *p_sys, const GRAPHIC_3D_WORK *cp_g3d, HEAPID heapID )
 {	
 	GFL_STD_MemClear( p_sys, sizeof(TOUCH_EFFECT_SYS) );
 
@@ -3337,8 +3471,10 @@ static void TOUCH_EFFECT_Init( TOUCH_EFFECT_SYS *p_sys, HEAPID heapID )
 		VecFx32	scale;
 		for( j = 0; j < TOUCHEFFID_MAX; j++ )
 		{	
+			p_sys->p_mdl[j]	= GRAPHIC_3D_GetObj( cp_g3d, j );
+			G3DMDL_SetVisible( p_sys->p_mdl[j], FALSE );
+#if 0
 			TOUCH_EFFECT_WORK	*p_wk	= &p_sys->wk[j];
-
 			for( i = 0; i < CIRCLE_MAX; i++ )
 			{	
 				CIRCLE_Init( &p_wk->c[i], CIRCLE_VTX_MAX, heapID );
@@ -3350,6 +3486,7 @@ static void TOUCH_EFFECT_Init( TOUCH_EFFECT_SYS *p_sys, HEAPID heapID )
 				CIRCLE_SetScale( &p_wk->c[i], &scale );
 				CIRCLE_SetVisible( &p_wk->c[i], FALSE );
 			}
+#endif
 		}
 	}
 }
@@ -3368,12 +3505,14 @@ static void TOUCH_EFFECT_Exit( TOUCH_EFFECT_SYS *p_sys )
 		int i,j;
 		for( j = 0; j < TOUCHEFFID_MAX; j++ )
 		{	
-			TOUCH_EFFECT_WORK	*p_wk	= &p_sys->wk[j];
 
+#if 0
+			TOUCH_EFFECT_WORK	*p_wk	= &p_sys->wk[j];
 			for( i = 0; i < CIRCLE_MAX; i++ )
 			{	
 				CIRCLE_Exit( &p_wk->c[i] );
 			}
+#endif
 		}
 	}
 	GFL_STD_MemClear( p_sys, sizeof(TOUCH_EFFECT_SYS) );
@@ -3393,6 +3532,9 @@ static void TOUCH_EFFECT_Draw( TOUCH_EFFECT_SYS *p_sys )
 
 	for( j = 0; j < TOUCHEFFID_MAX; j++ )
 	{	
+
+		G3DMDL_Draw( p_sys->p_mdl[i] );
+#if 0
 		TOUCH_EFFECT_WORK	*p_wk	= &p_sys->wk[j];
 
 		for( i = 0; i < CIRCLE_MAX; i++ )
@@ -3409,6 +3551,7 @@ static void TOUCH_EFFECT_Draw( TOUCH_EFFECT_SYS *p_sys )
 
 			CIRCLE_Draw( &p_wk->c[i] );
 		}
+#endif
 	}
 }
 
@@ -3424,7 +3567,11 @@ static void TOUCH_EFFECT_Draw( TOUCH_EFFECT_SYS *p_sys )
 static void TOUCH_EFFECT_SetVisible( TOUCH_EFFECT_SYS *p_sys, TOUCHEFFID id, BOOL is_visible )
 {	
 	int i;
+
+	G3DMDL_SetVisible( p_sys->p_mdl[id], is_visible );
+#if 0
 	TOUCH_EFFECT_WORK	*p_wk	= &p_sys->wk[id];
+
 	for( i = 0; i < CIRCLE_MAX; i++ )
 	{	
 		CIRCLE_SetVisible( &p_wk->c[i], is_visible );
@@ -3433,6 +3580,7 @@ static void TOUCH_EFFECT_SetVisible( TOUCH_EFFECT_SYS *p_sys, TOUCHEFFID id, BOO
 			p_wk->rot[i]	= 0;
 		}
 	}
+#endif
 }
 
 //----------------------------------------------------------------------------
@@ -3447,20 +3595,32 @@ static void TOUCH_EFFECT_SetVisible( TOUCH_EFFECT_SYS *p_sys, TOUCHEFFID id, BOO
 //-----------------------------------------------------------------------------
 static void TOUCH_EFFECT_SetPos( TOUCH_EFFECT_SYS *p_sys, TOUCHEFFID id, u32 x, u32 y )
 {	
+	enum
+	{	
+		AURA_DISTANCE_OFS	= 64,
+	};
 
-	TOUCH_EFFECT_WORK	*p_wk	= &p_sys->wk[id];
+//	TOUCH_EFFECT_WORK	*p_wk	= &p_sys->wk[id];
 	VecFx32	near;
 	VecFx32	far;
+	VecFx32	v;
 	int i;
 
 	switch( id )
 	{
 	case TOUCHEFFID_LEFT:
 		NNS_G3dScrPosToWorldLine( x, y, &near, &far );
+		VEC_Subtract( &far, &near, &v );
+		VEC_Normalize( &v, &v );
+		VEC_MultAdd( FX32_CONST(AURA_DISTANCE_OFS), &v, &near, &near );
+		G3DMDL_SetPos( p_sys->p_mdl[id], &near );
+
+#if 0
 		for( i = 0; i < CIRCLE_MAX; i++ )
 		{	
 			CIRCLE_SetTrans( &p_wk->c[i], &near );
 		}
+#endif
 		p_sys->left.x	= x;
 		p_sys->left.y	= y;
 		break;
@@ -3473,10 +3633,17 @@ static void TOUCH_EFFECT_SetPos( TOUCH_EFFECT_SYS *p_sys, TOUCHEFFID id, u32 x, 
 	//		NAGI_Printf( "X 左%d 中%d 右%d", p_wk->left.x, x, pos.x );
 		//	NAGI_Printf( "Y 左%d 中%d 右%d", p_wk->left.y, y, pos.y );
 			NNS_G3dScrPosToWorldLine( pos.x, pos.y, &near, &far );
+			VEC_Subtract( &far, &near, &v );
+			VEC_Normalize( &v, &v );
+			VEC_MultAdd( FX32_CONST(AURA_DISTANCE_OFS), &v, &near, &near );
+			G3DMDL_SetPos( p_sys->p_mdl[id], &near );
+
+#if 0
 			for( i = 0; i < CIRCLE_MAX; i++ )
 			{	
 				CIRCLE_SetTrans( &p_wk->c[i], &near );
 			}
+#endif
 		}
 		break;
 	}
@@ -3932,44 +4099,6 @@ static void DEBUGAURA_PRINT_UpDate( AURA_MAIN_WORK *p_wk )
 	OS_Printf( "↑○%d番目のゲーム　プリント終了↑↑↑↑↑↑↑↑\n", p_wk->debug_game_cnt );
 }
 #endif //DEBUG_AURA_MSG
-
-//----------------------------------------------------------------------------
-/**
- *	@brief	タッチマーカーの位置を決定し表示
- *
- *	@param	AURA_MAIN_WORK *p_wk	ワーク
- *	@param	GFL_POINT *p_pos	位置
- *
- */
-//-----------------------------------------------------------------------------
-static void TouchMarker_SetPos( AURA_MAIN_WORK *p_wk, const GFL_POINT *cp_pos )
-{	
-/*	GFL_CLWK	*p_marker;
-	p_marker	= GRAPHIC_GetClwk( &p_wk->grp, CLWKID_TOUCH );
-	GFL_CLACT_WK_SetDrawEnable( p_marker, TRUE );
-
-	{
-		GFL_CLACTPOS clpos;
-		clpos.x	= cp_pos->x;
-		clpos.y	= cp_pos->y;
-		GFL_CLACT_WK_SetPos( p_marker, &clpos, 0 );
-	}
-*/}
-
-//----------------------------------------------------------------------------
-/**
- *	@brief	タッチマーカーの表示をOFF
- *
- *	@param	AURA_MAIN_WORK *p_wk	ワーク
- *
- */
-//-----------------------------------------------------------------------------
-static void TouchMarker_OffVisible( AURA_MAIN_WORK *p_wk )
-{	
-/*	GFL_CLWK	*p_marker;
-	p_marker	= GRAPHIC_GetClwk( &p_wk->grp, CLWKID_TOUCH );
-	GFL_CLACT_WK_SetDrawEnable( p_marker, FALSE );
-*/}
 //----------------------------------------------------------------------------
 /**
  *	@brief	スコア計算
@@ -4112,6 +4241,140 @@ DEBUG_ONLYPLAY_ENDIF
 	}
 
 	return (pos_score + shake_score)/2;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	Screenデータの　VRAM転送拡張版（読み込んだスクリーンの一部範囲をバッファに張りつける）
+ *
+ *	@param	ARCHANDLE *handle	ハンドル
+ *	@param	datID							データID
+ *	@param	frm								フレーム
+ *	@param	chr_ofs						キャラオフセット
+ *	@param	src_x							転送元ｘ座標
+ *	@param	src_y							転送元Y座標
+ *	@param	src_w							転送元幅			//データの全体の大きさ
+ *	@param	src_h							転送元高さ		//データの全体の大きさ
+ *	@param	dst_x							転送先X座標
+ *	@param	dst_y							転送先Y座標
+ *	@param	dst_w							転送先幅
+ *	@param	dst_h							転送先高さ
+ *	@param	plt								パレット番号
+ *	@param	compressedFlag		圧縮フラグ
+ *	@param	heapID						一時バッファ用ヒープID
+ *
+ */
+//-----------------------------------------------------------------------------
+static void ARCHDL_UTIL_TransVramScreenEx( ARCHANDLE *handle, ARCDATID datID, u32 frm, u32 chr_ofs, u8 src_x, u8 src_y, u8 src_w, u8 src_h, u8 dst_x, u8 dst_y, u8 dst_w, u8 dst_h, u8 plt, BOOL compressedFlag, HEAPID heapID )
+{	
+	void *p_src_arc;
+	NNSG2dScreenData* p_scr_data;
+
+	//読み込み
+	p_src_arc = GFL_ARCHDL_UTIL_Load( handle, datID, compressedFlag, GetHeapLowID(heapID) );
+
+	//アンパック
+	if(!NNS_G2dGetUnpackedScreenData( p_src_arc, &p_scr_data ) )
+	{	
+		GF_ASSERT(0);	//スクリーンデータじゃないよ
+	}
+
+	//エラー
+	GF_ASSERT( src_w * src_h * 2 <= p_scr_data->szByte );
+
+	//キャラオフセット計算
+	if( chr_ofs )
+	{	
+		int i;
+		if( GFL_BG_GetScreenColorMode( frm ) == GX_BG_COLORMODE_16 )
+		{
+			u16 *p_scr16;
+			
+			p_scr16	=	(u16 *)&p_scr_data->rawData;
+			for( i = 0; i < src_w * src_h ; i++ )
+			{
+				p_scr16[i]	+= chr_ofs;
+			}	
+		}
+		else
+		{	
+			GF_ASSERT(0);	//256版は作ってない
+		}
+	}
+
+	//書き込み
+	if( GFL_BG_GetScreenBufferAdrs( frm ) != NULL )
+	{	
+		GFL_BG_WriteScreenExpand( frm, dst_x, dst_y, dst_w, dst_h,
+				&p_scr_data->rawData, src_x, src_y, src_w, src_h );	
+		GFL_BG_ChangeScreenPalette( frm, dst_x, dst_y, dst_w, dst_h, plt );
+		GFL_BG_LoadScreenReq( frm );
+	}
+	else
+	{	
+		GF_ASSERT(0);	//バッファがない
+	}
+
+	GFL_HEAP_FreeMemory( p_src_arc );
+}	
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	ガイドBGの表示設定
+ *
+ *	@param	GUIDE_VISIBLE_MASK msk	マスク値
+ *	@param	heapID									読み込みテンポラリ用
+ */
+//-----------------------------------------------------------------------------
+static void GUIDE_SetVisible( GUIDE_VISIBLE_MASK msk, HEAPID heapID )
+{	
+	enum
+	{	
+		GUIDE_DST_L_X	= 0,
+		GUIDE_DST_L_Y	= 0,
+		GUIDE_DST_L_W	= 16,
+		GUIDE_DST_L_H	= 24,
+
+		GUIDE_DST_R_X	= 16,
+		GUIDE_DST_R_Y	= 0,
+		GUIDE_DST_R_W	= 16,
+		GUIDE_DST_R_H	= 24,
+	};
+
+	ARCHANDLE	*p_handle	= GFL_ARC_OpenDataHandle( ARCID_IRCCOMPATIBLE, heapID );
+
+	if( msk & GUIDE_VISIBLE_LEFT )
+	{	
+		ARCHDL_UTIL_TransVramScreenEx( p_handle, NARC_irccompatible_gra_aura_bg_guide_l_NSCR,
+				sc_bgcnt_frame[GRAPHIC_BG_FRAME_M_GUIDE],
+				0, 0, 0, 16, 24, 
+				GUIDE_DST_L_X, GUIDE_DST_L_Y, GUIDE_DST_L_W, GUIDE_DST_L_H,
+				AURA_BG_PAL_M_09, FALSE, heapID );
+	}
+	else
+	{	
+		GFL_BG_FillScreen( sc_bgcnt_frame[GRAPHIC_BG_FRAME_M_GUIDE], 0,
+				GUIDE_DST_L_X,GUIDE_DST_L_Y,GUIDE_DST_L_W,GUIDE_DST_L_H,
+				AURA_BG_PAL_M_09 );
+	}
+
+	if( msk & GUIDE_VISIBLE_RIGHT )
+	{	
+		ARCHDL_UTIL_TransVramScreenEx( p_handle, NARC_irccompatible_gra_aura_bg_guide_r_NSCR,
+				sc_bgcnt_frame[GRAPHIC_BG_FRAME_M_GUIDE],
+				0, 0, 0, 16, 24, 
+				GUIDE_DST_R_X, GUIDE_DST_R_Y, GUIDE_DST_R_W, GUIDE_DST_R_H,
+				AURA_BG_PAL_M_09, FALSE, heapID );
+	}
+	else
+	{	
+		GFL_BG_FillScreen( sc_bgcnt_frame[GRAPHIC_BG_FRAME_M_GUIDE], 0,
+				GUIDE_DST_R_X,GUIDE_DST_R_Y,GUIDE_DST_R_W,GUIDE_DST_R_H,
+				AURA_BG_PAL_M_09 );
+	}
+
+	GFL_BG_LoadScreenReq(sc_bgcnt_frame[GRAPHIC_BG_FRAME_M_GUIDE]);
+
+	GFL_ARC_CloseDataHandle( p_handle );
 }
 
 //=============================================================================

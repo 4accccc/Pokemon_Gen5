@@ -239,9 +239,6 @@ static GFL_PROC_RESULT IRC_COMPATIBLE_PROC_Init( GFL_PROC *p_proc, int *p_seq, v
 
 //デバッグ時はNULLのときでも動く
 //（デバッグからはGAMESYS_WORKを渡せないため）
-#ifndef PM_DEBUG
-	GF_ASSERT( p_param );
-#endif //PM_DEBUG
 
 	//ヒープ作成
 	GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_IRCCOMPATIBLE_SYSTEM, 0x08000 );
