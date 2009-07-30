@@ -202,10 +202,13 @@ poke_getdemo_start:
 	_OBJ_DEL R01_RIVAL
 	_OBJ_DEL R01_HEROINE
 
+	_FLAG_SET FV_R01_HAKASE
+	_FLAG_SET FV_R01_RIVAL
+	_FLAG_SET FV_R01_SUPPORT
+
   _LDVAL SVSCRWK_START,1
   _LDVAL WK_0907ROM02,1
   _END
-
 
 /**************************************************************/
 /*                                                            */
