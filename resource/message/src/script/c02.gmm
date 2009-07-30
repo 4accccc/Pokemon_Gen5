@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-07-21T12:16:58"/>
+	<create user="matsumiya" host="W00207" date="2009-07-30T17:49:02"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -444,8 +444,8 @@ C03ジムリーダー</attribute>
 ・仮</comment>
 		<attribute name="キャラ指定">アコーディオン
 ・ISS用</attribute>
-		<language name="JPN" width="256">アコーディオン　きいてくれるかい？</language>
-		<language name="JPN_KANJI" width="256">アコーディオン　きいてくれるかい？</language>
+		<language name="JPN" width="256">アコーディオンの　ねいろ　どうですか？</language>
+		<language name="JPN_KANJI" width="256">アコーディオンの　音色　どうですか？</language>
 	</row>
 
 	<row id="msg_c02_sign1_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
