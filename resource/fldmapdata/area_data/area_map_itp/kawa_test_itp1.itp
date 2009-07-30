@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="Shift_JIS"?>
+
+<itp version="1.6.0">
+
+<head>
+	<create user="fuchino" host="W00152" date="2009-07-29T23:28:01" source="kawa_test_itp1.mb"/>
+	<title>Texture Pattern Animation Data for NINTENDO NITRO-System</title>
+	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
+</head>
+
+<body>
+
+<tex_pattern_info
+	frame_size="5"
+	tool_start_frame="1"
+	tool_end_frame="5"
+	compress_material="on" material_size="1 1"
+/>
+
+<tex_pattern_list_data image_size="2" palette_size="2">
+	<image_name index="0" name="kawa_nose.1"/>
+	<image_name index="1" name="kawa_nose.2"/>
+	<palette_name index="0" name="kawa_nose.1_pl"/>
+	<palette_name index="1" name="kawa_nose.2_pl"/>
+</tex_pattern_list_data>
+
+<tex_pattern_data>
+	<frame_idx size="3">
+		0 1 4
+	</frame_idx>
+	<image_idx size="3">
+		0 1 0
+	</image_idx>
+	<palette_idx size="3">
+		0 1 0
+	</palette_idx>
+</tex_pattern_data>
+
+<tex_pattern_anm_array size="1">
+	<tex_pattern_anm index="0" material_name="kawa_nose_lm1" data_size="3" data_head="0"/>
+</tex_pattern_anm_array>
+
+</body>
+
+</itp>
