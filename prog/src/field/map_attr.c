@@ -311,7 +311,7 @@ BOOL MAPATTR_VALUE_CheckShopShelf3( const MAPATTR_VALUE val )
 //--------------------------------------------------------------
 BOOL MAPATTR_VALUE_CheckEncountGrassA1( const MAPATTR_VALUE val )
 {
-  return (val == 0x02);
+  return (val == 0x04);
 }
 
 //--------------------------------------------------------------
@@ -323,7 +323,7 @@ BOOL MAPATTR_VALUE_CheckEncountGrassA1( const MAPATTR_VALUE val )
 //--------------------------------------------------------------
 BOOL MAPATTR_VALUE_CheckEncountGrassA2( const MAPATTR_VALUE val )
 {
-  return (val == 0x03);
+  return (val == 0x05);
 }
 
 //--------------------------------------------------------------
@@ -335,7 +335,7 @@ BOOL MAPATTR_VALUE_CheckEncountGrassA2( const MAPATTR_VALUE val )
 //--------------------------------------------------------------
 BOOL MAPATTR_VALUE_CheckEncountGrassB1( const MAPATTR_VALUE val )
 {
-  return (val == 0x04);
+  return (val == 0x06);
 }
 
 //--------------------------------------------------------------
@@ -347,7 +347,7 @@ BOOL MAPATTR_VALUE_CheckEncountGrassB1( const MAPATTR_VALUE val )
 //--------------------------------------------------------------
 BOOL MAPATTR_VALUE_CheckEncountGrassB2( const MAPATTR_VALUE val )
 {
-  return (val == 0x05);
+  return (val == 0x07);
 }
 
 //--------------------------------------------------------------
