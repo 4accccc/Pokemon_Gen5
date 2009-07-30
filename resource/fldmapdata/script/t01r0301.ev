@@ -15,7 +15,8 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA    ev_t01r0301_oldwoman1_1
+_EVENT_DATA    ev_t01r0301_middleman2
+_EVENT_DATA    ev_t01r0301_middlewoman2
 _EVENT_DATA_END
 
 
@@ -36,14 +37,28 @@ _EVENT_DATA_END
 //  _END
 
 /**************************************************************/
-/*                                                            */
+/*  T01R0301　ライバル父     　　　　　　　　　　　　　　　　 */
 /**************************************************************/
-ev_t01r0301_oldwoman1_1:
+ev_t01r0301_middleman2:
 	_TALK_OBJ_PAUSE_ALL
 	_TURN_HERO_SITE
 	_TALKWIN_OPEN
-	_TALKMSG_ALLPUT msg_t01r0301_test_01
+	_TALKMSG_ALLPUT msg_t01r0301_middleman2_01
 	_AB_KEYWAIT
   _TALKWIN_CLOSE
   _OBJ_PAUSE_CLEAR_ALL
   _END
+
+/**************************************************************/
+/*  T01R0301　ライバル母     　　　　　　　　　　　　　　　　 */
+/**************************************************************/
+ev_t01r0301_middlewoman2:
+	_TALK_OBJ_PAUSE_ALL
+	_TURN_HERO_SITE
+	_TALKWIN_OPEN
+	_TALKMSG_ALLPUT msg_t01r0301_middlewoman2_01
+	_AB_KEYWAIT
+  _TALKWIN_CLOSE
+  _OBJ_PAUSE_CLEAR_ALL
+  _END
+
