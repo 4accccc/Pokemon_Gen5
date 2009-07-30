@@ -257,6 +257,7 @@ void FIELD_RAIL_POSFUNC_CurveLine(const FIELD_RAIL * rail, VecFx32 * pos)
 	s32 line_ofs			= FIELD_RAIL_GetLineOfs( rail );
 	s32 line_ofs_max	= FIELD_RAIL_GetLineOfsMax( rail );
   fx32 ofs = (line_ofs * FX32_ONE) / line_ofs_max;
+  VecFx32 pos_sub;
 
 
 	// Y座標は、線形で求める。
@@ -277,16 +278,30 @@ void FIELD_RAIL_POSFUNC_CurveLine(const FIELD_RAIL * rail, VecFx32 * pos)
 	vec_s.y = 0;
 	vec_e.y = 0;
 
+  VEC_Subtract( &vec_e, &vec_s, &pos_sub );
+  pos_sub.y = 0;
+  VEC_Normalize( &pos_sub, &pos_sub );
+
 	
 	getIntermediateVector(&vec_i, &vec_s, &vec_e, ofs);
 	VEC_Add(&center, &vec_i, pos);
 
 	{
 		VecFx32 w_vec;
+    VecFx32 normal;
 		s32 width_ofs = FIELD_RAIL_GetWidthOfs( rail );
 		fx32 ofs_unit = FIELD_RAIL_GetOfsUnit( rail );
+    
 		VEC_Normalize(&vec_i, &w_vec);
-		VEC_MultAdd(-(width_ofs) * ofs_unit, &w_vec, pos, pos);
+    VEC_CrossProduct( &w_vec, &pos_sub, &normal );
+    if( normal.y < 0 )
+    {
+  		VEC_MultAdd(-(width_ofs) * ofs_unit, &w_vec, pos, pos);
+    }
+    else
+    {
+  		VEC_MultAdd(width_ofs * ofs_unit, &w_vec, pos, pos);
+    }
 	}
 
   if (GFL_UI_KEY_GetTrg() & PAD_BUTTON_B)
@@ -611,6 +626,8 @@ void FIELD_RAIL_CAMERAFUNC_FixLenCircleCamera( const FIELD_RAIL_MAN * man )
   VecFx32 target;
 	const RAIL_CAMERAFUNC_FIXLEN_CIRCLE_WORK* work;
 
+
+
 	cline = FIELD_RAIL_GetCameraSet( rail );
 
 	work = (const RAIL_CAMERAFUNC_FIXLEN_CIRCLE_WORK*)cline->work;
@@ -618,6 +635,7 @@ void FIELD_RAIL_CAMERAFUNC_FixLenCircleCamera( const FIELD_RAIL_MAN * man )
   // pitch len の計算
   pitch = work->pitch;
   len   = work->len;
+
 
   target.x = work->target_x;
   target.y = work->target_y;
@@ -674,4 +692,46 @@ static void updateCircleCamera( const FIELD_RAIL_MAN * man, u16 pitch, fx32 len,
 	FIELD_CAMERA_SetTargetPos( p_camera, cp_target );
 	FIELD_CAMERA_SetCameraPos( p_camera, &camera_pos );
 }
+
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ライン、ターゲット変更 円動作カメラ
+ */
+//-----------------------------------------------------------------------------
+void FIELD_RAIL_CAMERAFUNC_TargetChangeCircleCamera( const FIELD_RAIL_MAN * man )
+{
+	const FIELD_RAIL* rail = FIELD_RAIL_MAN_GetNowRail( man );
+  const RAIL_CAMERA_SET * cline;
+  u16 pitch;
+  fx32 len;
+  VecFx32 target;
+	const RAIL_CAMERAFUNC_TARGETCHANGE_CIRCLE_WORK* work;
+	u32 type;
+  s32 ofs, ofs_max;
+
+	type = FIELD_RAIL_GetType( rail );
+  // レールで使ってね
+  GF_ASSERT( type == FIELD_RAIL_TYPE_LINE );
+
+  ofs_max = FIELD_RAIL_GetLineOfsMax(rail); 
+  ofs = FIELD_RAIL_GetLineOfs(rail);
+
+
+	cline = FIELD_RAIL_GetCameraSet( rail );
+
+	work = (const RAIL_CAMERAFUNC_TARGETCHANGE_CIRCLE_WORK*)cline->work;
+
+  // pitch len の計算
+  pitch = work->pitch;
+  len   = work->len;
+
+  target.x = work->target_sx + FX_Div( FX_Mul( work->target_ex - work->target_sx, ofs<<FX32_SHIFT ), ofs_max<<FX32_SHIFT );
+  target.y = work->target_sy + FX_Div( FX_Mul( work->target_ey - work->target_sy, ofs<<FX32_SHIFT ), ofs_max<<FX32_SHIFT );
+  target.z = work->target_sz + FX_Div( FX_Mul( work->target_ez - work->target_sz, ofs<<FX32_SHIFT ), ofs_max<<FX32_SHIFT );
+
+  updateCircleCamera( man, pitch, len, &target );
+}
+
 
