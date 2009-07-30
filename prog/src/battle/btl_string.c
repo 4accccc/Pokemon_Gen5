@@ -112,7 +112,7 @@ static void ms_encount( STRBUF* dst, BtlStrID_STD strID, const int* args );
 static void ms_encount_double( STRBUF* dst, BtlStrID_STD strID, const int* args );
 static void ms_put_single( STRBUF* dst, BtlStrID_STD strID, const int* args );
 static void ms_put_double( STRBUF* dst, BtlStrID_STD strID, const int* args );
-static void ms_put_single_enemy( STRBUF* dst, BtlStrID_STD strID, const int* args );
+static void ms_put_single_npc( STRBUF* dst, BtlStrID_STD strID, const int* args );
 static void ms_select_action_ready( STRBUF* dst, BtlStrID_STD strID, const int* args );
 static void ms_out_member1( STRBUF* dst, BtlStrID_STD strID, const int* args );
 static void ms_kodawari_lock( STRBUF* dst, BtlStrID_STD strID, const int* args );
@@ -324,7 +324,7 @@ void BTL_STR_MakeStringStdWithArgArray( STRBUF* buf, BtlStrID_STD strID, const i
     { BTL_STRID_STD_Encount_Wild2,    ms_encount_double },
     { BTL_STRID_STD_PutSingle,        ms_put_single },
     { BTL_STRID_STD_PutDouble,        ms_put_double },
-    { BTL_STRID_STD_PutSingle_NPC1,   ms_put_single_enemy },
+    { BTL_STRID_STD_PutSingle_NPC1,   ms_put_single_npc },
     { BTL_STRID_STD_MemberOut1,       ms_out_member1 },
     { BTL_STRID_STD_SelectAction,     ms_select_action_ready },
     { BTL_STRID_STD_KodawariLock,     ms_kodawari_lock },
@@ -398,10 +398,12 @@ static void ms_put_double( STRBUF* dst, BtlStrID_STD strID, const int* args )
   GFL_MSG_GetString( SysWork.msg[MSGSRC_STD], strID, SysWork.tmpBuf );
   WORDSET_ExpandStr( SysWork.wset, dst, SysWork.tmpBuf );
 }
-// あいてがくりだしたシングル
-static void ms_put_single_enemy( STRBUF* dst, BtlStrID_STD strID, const int* args )
+// NPCトレーナーがくりだしたシングル  arg0:TrainerID,  arg1:TrainerID,  arg2:pokeID
+static void ms_put_single_npc( STRBUF* dst, BtlStrID_STD strID, const int* args )
 {
-  register_PokeNickname( args[0], BUFIDX_POKE_1ST );
+  WORDSET_RegisterTrTypeName( SysWork.wset, 0, args[0] );
+  WORDSET_RegisterTrainerName( SysWork.wset, 1, args[1] );
+  register_PokeNickname( args[2], BUFIDX_POKE_1ST );
   GFL_MSG_GetString( SysWork.msg[MSGSRC_STD], strID, SysWork.tmpBuf );
   WORDSET_ExpandStr( SysWork.wset, dst, SysWork.tmpBuf );
 }
