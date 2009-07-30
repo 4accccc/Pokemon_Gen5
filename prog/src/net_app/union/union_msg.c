@@ -60,11 +60,11 @@ static const struct{
 static const FLDMENUFUNC_LIST MainMenuList[] =
 {
   {msg_union_select_01, (void*)UNION_PLAY_CATEGORY_TRAINERCARD},   //挨拶
-  {msg_union_select_02, (void*)UNION_PLAY_CATEGORY_PICTURE},   //お絵かき
-  {msg_union_select_03, (void*)UNION_MENU_NO_SEND_BATTLE},   //対戦
   {msg_union_select_04, (void*)UNION_PLAY_CATEGORY_TRADE},   //交換
+  {msg_union_select_03, (void*)UNION_MENU_NO_SEND_BATTLE},   //対戦
   {msg_union_select_06, (void*)UNION_PLAY_CATEGORY_GURUGURU}, //ぐるぐる交換
   {msg_union_select_07, (void*)UNION_PLAY_CATEGORY_RECORD},   //レコードコーナー
+  {msg_union_select_02, (void*)UNION_PLAY_CATEGORY_PICTURE},   //お絵かき
   {msg_union_select_05, (void*)UNION_MENU_SELECT_CANCEL},   //やめる
 };
 
