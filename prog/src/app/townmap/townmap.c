@@ -86,7 +86,7 @@ static const GFL_POINT sc_center_pos =
 ///	PLACE
 //=====================================
 #define PLACE_PULL_R				(10)
-#define PLACE_PULL_STRONG		(FX32_CONST(2))	//吸い込む強さ（カーソルより弱く）
+#define PLACE_PULL_STRONG		(FX32_CONST(1))	//吸い込む強さ（カーソルより弱く）
 #define PLACEDATA_ANIME_SEQ_VANISH	(0xFF)
 enum
 {	
@@ -1357,25 +1357,9 @@ static void SEQFUNC_Main( SEQ_WORK *p_seqwk, int *p_seq, void *p_param_adrs )
 	if( !is_map_move )
 	{	
 
-		//選択処理
-		if( p_wk->p_param->mode == TOWNMAP_MODE_SKY )
-		{
-			const PLACE_DATA *cp_data;
-			const PLACE_DATA *cp_now;
-			cp_data	= CURSOR_GetTarget( &p_wk->cursor );
-			cp_now	= PLACE_Hit( &p_wk->place, &p_wk->cursor );
+		//※１
 
-			if( cp_data != NULL && cp_data == cp_now && CURSOR_GetTrg( &p_wk->cursor )
-					&& PLACEDATA_GetParam( cp_data, TOWNMAP_DATA_PARAM_SKY_FLAG  ) )
-			{	
-				p_wk->p_param->select	= TOWNMAP_SELECT_SKY;
-				p_wk->p_param->zoneID	= PLACEDATA_GetParam( cp_data, TOWNMAP_DATA_PARAM_ZONE_ID );
-				p_wk->p_param->grid.x	= PLACEDATA_GetParam( cp_data, TOWNMAP_DATA_PARAM_WARP_X );
-				p_wk->p_param->grid.y	= PLACEDATA_GetParam( cp_data, TOWNMAP_DATA_PARAM_WARP_Y );
-				SEQ_SetNext( p_seqwk, SEQFUNC_FadeIn );
-			}
-		}
-
+		//当たり判定
 		{	
 			const PLACE_DATA *cp_data;
 			cp_data	= PLACE_Hit( &p_wk->place, &p_wk->cursor );
@@ -1403,6 +1387,27 @@ static void SEQFUNC_Main( SEQ_WORK *p_seqwk, int *p_seq, void *p_param_adrs )
 				PLACE_NonActive( &p_wk->place );
 				CURSOR_SetTarget( &p_wk->cursor, NULL, NULL );
 				p_wk->cp_select	= NULL;
+			}
+		}
+
+
+		//選択処理
+		//このifを※１に写すと1発タッチでとばなくなる
+		if( p_wk->p_param->mode == TOWNMAP_MODE_SKY )
+		{
+			const PLACE_DATA *cp_data;
+			const PLACE_DATA *cp_now;
+			cp_data	= CURSOR_GetTarget( &p_wk->cursor );
+			cp_now	= PLACE_Hit( &p_wk->place, &p_wk->cursor );
+
+			if( cp_data != NULL && cp_data == cp_now && CURSOR_GetTrg( &p_wk->cursor )
+					&& PLACEDATA_GetParam( cp_data, TOWNMAP_DATA_PARAM_SKY_FLAG  ) )
+			{	
+				p_wk->p_param->select	= TOWNMAP_SELECT_SKY;
+				p_wk->p_param->zoneID	= PLACEDATA_GetParam( cp_data, TOWNMAP_DATA_PARAM_ZONE_ID );
+				p_wk->p_param->grid.x	= PLACEDATA_GetParam( cp_data, TOWNMAP_DATA_PARAM_WARP_X );
+				p_wk->p_param->grid.y	= PLACEDATA_GetParam( cp_data, TOWNMAP_DATA_PARAM_WARP_Y );
+				SEQ_SetNext( p_seqwk, SEQFUNC_FadeIn );
 			}
 		}
 	}
