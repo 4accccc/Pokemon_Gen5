@@ -587,6 +587,8 @@ static	void	MCSS_DrawAct( MCSS_WORK *mcss,
 	G3_Vtx( 0, -MCSS_DEFAULT_LINE, 0 );
 	G3_End();
 
+  if( mcss->shadow_vanish_flag == 0 )
+  { 
   //影描画
  	G3_MtxMode( GX_MTXMODE_PROJECTION );
  	G3_RestoreMtx( 0 );
@@ -622,6 +624,7 @@ static	void	MCSS_DrawAct( MCSS_WORK *mcss,
  	G3_TexCoord( tex_s,				tex_t + scale_y );
  	G3_Vtx( 0, -MCSS_DEFAULT_LINE, 0 );
  	G3_End();
+  }
 
 	if( mcss_ortho_mode == 0 ){
 		*pos_z_default -= MCSS_DEFAULT_Z;
@@ -1122,6 +1125,31 @@ u8    MCSS_GetShadowAlpha( MCSS_WORK *mcss )
 void  MCSS_SetShadowAlpha( MCSS_WORK *mcss, u8 shadow_alpha )
 {
   mcss->shadow_alpha = shadow_alpha;
+}
+
+//--------------------------------------------------------------------------
+/**
+ * @brief 影のバニッシュフラグをゲット
+ *
+ * @param[in] mcss MCSSワーク構造体のポインタ
+ */
+//--------------------------------------------------------------------------
+u8    MCSS_GetShadowVanishFlag( MCSS_WORK *mcss )
+{
+  return mcss->shadow_vanish_flag;
+}
+
+//--------------------------------------------------------------------------
+/**
+ * @brief 影のバニッシュフラグをセット
+ *
+ * @param[in]	mcss		セットするマルチセルワーク構造体
+ * @param[in]	flag		セットする値
+ */
+//--------------------------------------------------------------------------
+void  MCSS_SetShadowVanishFlag( MCSS_WORK *mcss, u8 flag )
+{
+  mcss->shadow_vanish_flag = flag;
 }
 
 //--------------------------------------------------------------------------

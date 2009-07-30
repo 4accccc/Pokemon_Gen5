@@ -87,7 +87,8 @@ struct _MCSS_WORK
 	u32														pal_fade_flag	:1;			//パレットフェードフラグ
 	u32                           is_load_resource:1;   //リソース読み込み完了フラグ
   u32                           shadow_alpha  :9;     //影アルファ(32で通常の半分を
-	u32																					:10;    
+	u32														shadow_vanish_flag:1;    
+	u32																					:9;    
 	int														index;								//登録INDEX
 	int														heapID;								//使用するヒープID
 
