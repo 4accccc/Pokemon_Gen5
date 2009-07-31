@@ -1,7 +1,7 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
- * @file   iss_unit_load.h
- * @brief  道路ISSユニット
+ * @file   iss_road_sys.h
+ * @brief  道路ISSシステム
  * @author obata_toshihiro
  * @date   2009.07.29
  */
@@ -11,58 +11,58 @@
 #include "gamesystem/playerwork.h"
 
 
-// 道路ISSユニット構造体の不完全型の宣言
-typedef struct _ISS_UNIT_LOAD ISS_UNIT_LOAD;
+// 道路ISSシステム構造体の不完全型の宣言
+typedef struct _ISS_ROAD_SYS ISS_ROAD_SYS;
 
 
 //----------------------------------------------------------------------------
 /**
- * @brief  道路ISSユニットを作成する
+ * @brief  道路ISSシステムを作成する
  *
  * @param  p_player 監視対象のプレイヤー
  * @param  zone_id  ゾーンID
  * @param  heap_id  使用するヒープID
  * 
- * @return 道路ISSユニット
+ * @return 道路ISSシステム
  */
 //----------------------------------------------------------------------------
-extern ISS_UNIT_LOAD* ISS_UNIT_LOAD_Create( PLAYER_WORK* p_player, u16 zone_id, HEAPID heap_id );
+extern ISS_ROAD_SYS* ISS_ROAD_SYS_Create( PLAYER_WORK* p_player, u16 zone_id, HEAPID heap_id );
 
 //----------------------------------------------------------------------------
 /**
- * @brief  道路ISSユニットを破棄する
+ * @brief  道路ISSシステムを破棄する
  *
- * @param p_unit 破棄する道路ISSユニット 
+ * @param p_sys 破棄する道路ISSシステム 
  */
 //----------------------------------------------------------------------------
-extern void ISS_UNIT_LOAD_Delete( ISS_UNIT_LOAD* p_unit );
+extern void ISS_ROAD_SYS_Delete( ISS_ROAD_SYS* p_sys );
 
 //----------------------------------------------------------------------------
 /**
  * @brief プレイヤーを監視し, 音量を調整する
  *
- * @param p_unit 操作対象のユニット
+ * @param p_sys 操作対象のシステム
  */
 //----------------------------------------------------------------------------
-extern void ISS_UNIT_LOAD_Update( ISS_UNIT_LOAD* p_unit );
+extern void ISS_ROAD_SYS_Update( ISS_ROAD_SYS* p_sys );
 
 //----------------------------------------------------------------------------
 /**
  * @brief 動作状態を設定する
  *
- * @param p_unit 設定を変更するISSユニット
+ * @param p_sys 設定を変更するISSシステム
  * @param active 動作させるかどうか
  */
 //----------------------------------------------------------------------------
-extern void ISS_UNIT_LOAD_SetActive( ISS_UNIT_LOAD* p_unit, BOOL active );
+extern void ISS_ROAD_SYS_SetActive( ISS_ROAD_SYS* p_sys, BOOL active );
 
 //----------------------------------------------------------------------------
 /**
  * @breif 動作状態を取得する
  *
- * @param p_unit 状態を調べるISSユニット
+ * @param p_sys 状態を調べるISSシステム
  * 
  * @return 動作中かどうか
  */
 //----------------------------------------------------------------------------
-extern BOOL ISS_UNIT_LOAD_IsActive( const ISS_UNIT_LOAD* p_unit );
+extern BOOL ISS_ROAD_SYS_IsActive( const ISS_ROAD_SYS* p_sys );

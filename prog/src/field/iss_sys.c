@@ -7,8 +7,8 @@
  */
 ///////////////////////////////////////////////////////////////////////////////////////////
 #include "iss_sys.h"
-#include "iss_unit_city.h"
-#include "iss_unit_load.h"
+#include "iss_city_sys.h"
+#include "iss_road_sys.h"
 #include "field_sound.h"
 #include "sound/bgm_info.h"
 #include "../../../resource/sound/bgm_info/iss_type.h"
@@ -43,8 +43,8 @@ struct _ISS_SYS
 	BOOL surfing;
 
 	// 各ISSシステム
-	ISS_UNIT_CITY* pCityUnit;	// 街
-	ISS_UNIT_LOAD* pLoadUnit;	// 道路
+	ISS_CITY_SYS* pIssCitySys;	// 街
+	ISS_ROAD_SYS* pIssRoadSys;	// 道路
 };
 
 
@@ -94,8 +94,8 @@ ISS_SYS* ISS_SYS_Create( GAMEDATA* p_gdata, u16 zone_id, HEAPID heap_id )
 	p_sys->pGameData   = p_gdata;
 	p_sys->cycle       = FALSE;
 	p_sys->surfing     = FALSE;
-	p_sys->pCityUnit   = ISS_UNIT_CITY_Create( p_player, zone_id, heap_id );
-	p_sys->pLoadUnit   = ISS_UNIT_LOAD_Create( p_player, zone_id, heap_id );
+	p_sys->pIssCitySys   = ISS_CITY_SYS_Create( p_player, zone_id, heap_id );
+	p_sys->pIssRoadSys   = ISS_ROAD_SYS_Create( p_player, zone_id, heap_id );
 	ISS_SYS_ZoneChange( p_sys, zone_id );
 	
 	// 作成したISSシステムを返す
@@ -111,8 +111,8 @@ ISS_SYS* ISS_SYS_Create( GAMEDATA* p_gdata, u16 zone_id, HEAPID heap_id )
 void ISS_SYS_Delete( ISS_SYS* p_sys )
 {
 	// 各ISSシステムを破棄
-	ISS_UNIT_CITY_Delete( p_sys->pCityUnit );
-	ISS_UNIT_LOAD_Delete( p_sys->pLoadUnit );
+	ISS_CITY_SYS_Delete( p_sys->pIssCitySys );
+	ISS_ROAD_SYS_Delete( p_sys->pIssRoadSys );
 
 	// 本体を破棄
 	GFL_HEAP_FreeMemory( p_sys );
@@ -134,10 +134,10 @@ void ISS_SYS_Update( ISS_SYS* p_sys )
 	SurfingCheck( p_sys );
 
 	// 街ISS
-	ISS_UNIT_CITY_Update( p_sys->pCityUnit );
+	ISS_CITY_SYS_Update( p_sys->pIssCitySys );
 
 	// 道路ISS
-	ISS_UNIT_LOAD_Update( p_sys->pLoadUnit );
+	ISS_ROAD_SYS_Update( p_sys->pIssRoadSys );
 }
 	
 
@@ -170,16 +170,16 @@ void ISS_SYS_ZoneChange( ISS_SYS* p_sys, u16 next_zone_id )
 	iss_type  = BGM_INFO_GetIssType( p_bgm_info_sys, bgm_index );
 
 	// 街ISS
-	ISS_UNIT_CITY_ZoneChange( p_sys->pCityUnit, next_zone_id );
+	ISS_CITY_SYS_ZoneChange( p_sys->pIssCitySys, next_zone_id );
 
 	// 道路ISS
 	if( iss_type == ISS_TYPE_LOAD )
 	{
-		ISS_UNIT_LOAD_SetActive( p_sys->pLoadUnit, TRUE );
+		ISS_ROAD_SYS_SetActive( p_sys->pIssRoadSys, TRUE );
 	}
 	else
 	{
-		ISS_UNIT_LOAD_SetActive( p_sys->pLoadUnit, FALSE );
+		ISS_ROAD_SYS_SetActive( p_sys->pIssRoadSys, FALSE );
 	}
 
 	// DEBUG:
@@ -212,8 +212,8 @@ void CycleCheck( ISS_SYS* p_sys )
 	if( ( p_sys->cycle == FALSE ) && ( form == PLAYER_MOVE_FORM_CYCLE ) )
 	{
 		p_sys->cycle = TRUE;
-		ISS_UNIT_CITY_SetActive( p_sys->pCityUnit, FALSE );
-		ISS_UNIT_LOAD_SetActive( p_sys->pLoadUnit, FALSE );
+		ISS_CITY_SYS_SetActive( p_sys->pIssCitySys, FALSE );
+		ISS_ROAD_SYS_SetActive( p_sys->pIssRoadSys, FALSE );
 	}
 
 	// 自転車から降りるのを検出したら, ゾーン切り替え時と同じ処理
@@ -242,8 +242,8 @@ void SurfingCheck( ISS_SYS* p_sys )
 	if( ( p_sys->surfing == FALSE ) && ( form == PLAYER_MOVE_FORM_SWIM ) )
 	{
 		p_sys->surfing = TRUE;
-		ISS_UNIT_CITY_SetActive( p_sys->pCityUnit, FALSE );
-		ISS_UNIT_LOAD_SetActive( p_sys->pLoadUnit, FALSE );
+		ISS_CITY_SYS_SetActive( p_sys->pIssCitySys, FALSE );
+		ISS_ROAD_SYS_SetActive( p_sys->pIssRoadSys, FALSE );
 	}
 
 	// 自転車から降りるのを検出したら, ゾーン切り替え時と同じ処理

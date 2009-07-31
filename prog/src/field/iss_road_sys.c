@@ -1,12 +1,12 @@
 /////////////////////////////////////////////////////////////////////////////////////////////
 /**
- * @file   iss_unit_load.h
- * @brief  道路ISSユニット
+ * @file   iss_road_sys.h
+ * @brief  道路ISSシステム
  * @author obata_toshihiro
  * @date   2009.07.29
  */
 /////////////////////////////////////////////////////////////////////////////////////////////
-#include "iss_unit_load.h"
+#include "iss_road_sys.h"
 #include "field_sound.h"
 #include "gamesystem/playerwork.h"
 
@@ -36,10 +36,10 @@ BOOL IsVecEqual( const VecFx32* p_vec1, const VecFx32* p_vec2 );
 
 //===========================================================================================
 /**
- * @breif 道路ISSユニット構造体
+ * @breif 道路ISSシステム構造体
  */
 //===========================================================================================
-struct _ISS_UNIT_LOAD
+struct _ISS_ROAD_SYS
 {
 	// 使用するヒープID
 	HEAPID heapID;
@@ -66,84 +66,84 @@ struct _ISS_UNIT_LOAD
 
 //----------------------------------------------------------------------------
 /**
- * @brief  道路ISSユニットを作成する
+ * @brief  道路ISSシステムを作成する
  *
  * @param  p_player 監視対象のプレイヤー
  * @param  zone_id  ゾーンID
  * @param  heap_id  使用するヒープID
  * 
- * @return 道路ISSユニット
+ * @return 道路ISSシステム
  */
 //----------------------------------------------------------------------------
-ISS_UNIT_LOAD* ISS_UNIT_LOAD_Create( PLAYER_WORK* p_player, u16 zone_id, HEAPID heap_id )
+ISS_ROAD_SYS* ISS_ROAD_SYS_Create( PLAYER_WORK* p_player, u16 zone_id, HEAPID heap_id )
 {
-	ISS_UNIT_LOAD* p_unit;
+	ISS_ROAD_SYS* p_sys;
 
 	// メモリ確保
-	p_unit = (ISS_UNIT_LOAD*)GFL_HEAP_AllocMemory( heap_id, sizeof( ISS_UNIT_LOAD ) );
+	p_sys = (ISS_ROAD_SYS*)GFL_HEAP_AllocMemory( heap_id, sizeof( ISS_ROAD_SYS ) );
 
 	// 初期設定
-	p_unit->heapID        = heap_id;
-	p_unit->isActive      = FALSE;
-	p_unit->volume        = MIN_VOLUME;
-	p_unit->pPlayer       = p_player;
-	p_unit->prevPlayerPos = *( PLAYERWORK_getPosition( p_player ) );
+	p_sys->heapID        = heap_id;
+	p_sys->isActive      = FALSE;
+	p_sys->volume        = MIN_VOLUME;
+	p_sys->pPlayer       = p_player;
+	p_sys->prevPlayerPos = *( PLAYERWORK_getPosition( p_player ) );
 	
-	// 作成した道路ISSユニットを返す
-	return p_unit;
+	// 作成した道路ISSシステムを返す
+	return p_sys;
 }
 
 //----------------------------------------------------------------------------
 /**
- * @brief  道路ISSユニットを破棄する
+ * @brief  道路ISSシステムを破棄する
  *
- * @param p_unit 破棄する道路ISSユニット 
+ * @param p_sys 破棄する道路ISSシステム 
  */
 //----------------------------------------------------------------------------
-void ISS_UNIT_LOAD_Delete( ISS_UNIT_LOAD* p_unit )
+void ISS_ROAD_SYS_Delete( ISS_ROAD_SYS* p_sys )
 {
-	GFL_HEAP_FreeMemory( p_unit );
+	GFL_HEAP_FreeMemory( p_sys );
 }
 
 //----------------------------------------------------------------------------
 /**
  * @brief プレイヤーを監視し, 音量を調整する
  *
- * @param p_unit 操作対象のユニット
+ * @param p_sys 操作対象のシステム
  */
 //----------------------------------------------------------------------------
-void ISS_UNIT_LOAD_Update( ISS_UNIT_LOAD* p_unit )
+void ISS_ROAD_SYS_Update( ISS_ROAD_SYS* p_sys )
 {
 	const VecFx32* p_player_pos = NULL;
 
 	// 起動していなければ, 何もしない
-	if( p_unit->isActive != TRUE ) return;
+	if( p_sys->isActive != TRUE ) return;
 
 	// 主人公の座標を取得
-	p_player_pos = PLAYERWORK_getPosition( p_unit->pPlayer );
+	p_player_pos = PLAYERWORK_getPosition( p_sys->pPlayer );
 
 	// 音量調整
-	if( IsVecEqual( p_player_pos, &p_unit->prevPlayerPos ) )
+	if( IsVecEqual( p_player_pos, &p_sys->prevPlayerPos ) )
 	{
-		p_unit->volume -= FADE_OUT_SPEED;
-		if( p_unit->volume < MIN_VOLUME ) p_unit->volume = MIN_VOLUME;
+		p_sys->volume -= FADE_OUT_SPEED;
+		if( p_sys->volume < MIN_VOLUME ) p_sys->volume = MIN_VOLUME;
 	}
 	else
 	{
-		p_unit->volume += FADE_IN_SPEED;
-		if( MAX_VOLUME < p_unit->volume ) p_unit->volume = MAX_VOLUME;
+		p_sys->volume += FADE_IN_SPEED;
+		if( MAX_VOLUME < p_sys->volume ) p_sys->volume = MAX_VOLUME;
 	}
-	FIELD_SOUND_ChangeBGMActionVolume( p_unit->volume );
+	FIELD_SOUND_ChangeBGMActionVolume( p_sys->volume );
 
 	// 記憶主人公座標を更新
-	p_unit->prevPlayerPos = *p_player_pos;
+	p_sys->prevPlayerPos = *p_player_pos;
 
 	// DEBUG: デバッグ出力
-	if( p_unit->isActive )
+	if( p_sys->isActive )
 	{
 		OBATA_Printf( "-----------------------\n" );
 		OBATA_Printf( "Load ISS Unit is active\n" );
-		OBATA_Printf( "volume = %d\n", p_unit->volume );
+		OBATA_Printf( "volume = %d\n", p_sys->volume );
 	}
 }
 
@@ -154,24 +154,24 @@ void ISS_UNIT_LOAD_Update( ISS_UNIT_LOAD* p_unit )
  * @param active 動作させるかどうか
  */
 //----------------------------------------------------------------------------
-extern void ISS_UNIT_LOAD_SetActive( ISS_UNIT_LOAD* p_unit, BOOL active )
+extern void ISS_ROAD_SYS_SetActive( ISS_ROAD_SYS* p_sys, BOOL active )
 {
-	p_unit->isActive = active;
-	p_unit->volume   = MIN_VOLUME;	// 音量を最小に戻す
+	p_sys->isActive = active;
+	p_sys->volume   = MIN_VOLUME;	// 音量を最小に戻す
 }
 
 //----------------------------------------------------------------------------
 /**
  * @breif 動作状態を取得する
  *
- * @param p_unit 状態を調べるISSユニット
+ * @param p_sys 状態を調べるISSシステム
  * 
  * @return 動作中かどうか
  */
 //----------------------------------------------------------------------------
-extern BOOL ISS_UNIT_LOAD_IsActive( const ISS_UNIT_LOAD* p_unit )
+extern BOOL ISS_ROAD_SYS_IsActive( const ISS_ROAD_SYS* p_sys )
 {
-	return p_unit->isActive;
+	return p_sys->isActive;
 }
 
 
