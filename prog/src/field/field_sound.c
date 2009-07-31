@@ -96,7 +96,8 @@ void FIELD_SOUND_PlayBGM( u32 bgmNo )
   now = PMSND_GetNextBGMsoundNo();
   
   if( now != bgmNo ){
-    PMSND_PlayBGM_EX( bgmNo, TRACKBIT_STILL );
+    PMSND_PlayBGM_EX( bgmNo, TRACKBIT_ALL );
+    //PMSND_PlayBGM_EX( bgmNo, TRACKBIT_STILL );
   }
 }
 
@@ -123,7 +124,8 @@ void FIELD_SOUND_PlayNextBGM( u32 bgmNo )
     u8 fadeOutFrame = 60; //kari
     u8 fadeInFrame = 0; //kari
     PMSND_PlayNextBGM_EX(
-        bgmNo, TRACKBIT_STILL, fadeOutFrame, fadeInFrame );
+        //bgmNo, TRACKBIT_STILL, fadeOutFrame, fadeInFrame );
+        bgmNo, TRACKBIT_ALL, fadeOutFrame, fadeInFrame );
   }
 }
 
