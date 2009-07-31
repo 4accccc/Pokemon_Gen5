@@ -336,7 +336,7 @@
 	<row id="TRID_TANPAN_01_TRMSG_FIGHT_START">
 		<language name="JPN">トレーナーと　トレーナーの
 めが　あうって　ことは……[BE:01:ページ切り替え（クリア）]
-ポケモンしょうぶの　はじまりさ！[BE:01:ページ切り替え（クリア）]</language>
+ポケモンしょうぶの　はじまりさ！</language>
 	</row>
 
 	<row id="TRID_TANPAN_01_TRMSG_FIGHT_LOSE">
@@ -355,7 +355,7 @@
 		<language name="JPN">わたし　ポケモンしょうぶが
 だいすき　なの！[BE:01:ページ切り替え（クリア）]
 だって　かわいい　ポケモンが
-さらに　かわいく　たたかうんだもん！[BE:01:ページ切り替え（クリア）]</language>
+さらに　かわいく　たたかうんだもん！</language>
 	</row>
 
 	<row id="TRID_MINI_01_TRMSG_FIGHT_LOSE">
@@ -370,7 +370,7 @@
 
 	<row id="TRID_SCHOOLB_01_TRMSG_FIGHT_START">
 		<language name="JPN">トレーナーズスクールで
-まなんだ　ちしきを　つかうとき！[BE:01:ページ切り替え（クリア）]</language>
+まなんだ　ちしきを　つかうとき！</language>
 	</row>
 
 	<row id="TRID_SCHOOLB_01_TRMSG_FIGHT_LOSE">
@@ -385,7 +385,7 @@
 	<row id="TRID_SCHOOLG_01_TRMSG_FIGHT_START">
 		<language name="JPN">まだ　つよくない　ポケモンでも
 トレーナーの　のうりょくで[BE:00:ページ切り替え（行送り）]
-ちからを　はっき　できますわ[BE:01:ページ切り替え（クリア）]</language>
+ちからを　はっき　できますわ</language>
 	</row>
 
 	<row id="TRID_SCHOOLG_01_TRMSG_FIGHT_LOSE">
@@ -401,7 +401,7 @@
 	<row id="TRID_TENNIS_01_TRMSG_FIGHT_START">
 		<language name="JPN">テニスプレイヤーが
 どんな　ポケモンを　つかうか[BE:00:ページ切り替え（行送り）]
-よそうが　つくかしら？[BE:01:ページ切り替え（クリア）]</language>
+よそうが　つくかしら？</language>
 	</row>
 
 	<row id="TRID_TENNIS_01_TRMSG_FIGHT_LOSE">
@@ -417,7 +417,7 @@
 	<row id="TRID_FOOTBALL_01_TRMSG_FIGHT_START">
 		<language name="JPN">アメフトの　すごさを　つたえるため
 いまから　さくせんかいし！[BE:01:ページ切り替え（クリア）]
-ハット！　ハット！　ハット！[BE:01:ページ切り替え（クリア）]</language>
+ハット！　ハット！　ハット！</language>
 	</row>
 
 	<row id="TRID_FOOTBALL_01_TRMSG_FIGHT_LOSE">
