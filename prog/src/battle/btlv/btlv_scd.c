@@ -876,6 +876,7 @@ static BOOL selectTarget_loop( int* seq, void* wk_adrs )
         }
         else
         {
+          SePlayCancel();
           wk->selTargetDone = FALSE;
           return TRUE;
         }
