@@ -5392,7 +5392,7 @@ static void handler_HikariNoKabe( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* f
 {
   BPP_SICK_CONT  cont = BPP_SICKCONT_MakeTurn( 5 );
   BtlSide side = BTL_MAINUTIL_PokeIDtoSide( pokeID );
-  common_SideEffect( myHandle, flowWk, side, work, side, BTL_SIDEEFF_HIKARINOKABE, cont, BTL_STRID_STD_HikariNoKabe );
+  common_SideEffect( myHandle, flowWk, pokeID, work, side, BTL_SIDEEFF_HIKARINOKABE, cont, BTL_STRID_STD_HikariNoKabe );
 }
 //----------------------------------------------------------------------------------
 /**
@@ -5530,6 +5530,7 @@ static void handler_StealthRock( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* fl
 static void common_SideEffect( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work,
   BtlSide side, BtlSideEffect effect, BPP_SICK_CONT cont, u16 strID )
 {
+  BTL_Printf("ワシ=%d, 使ったポケ=%dよ\n", pokeID, BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK));
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
   {
     if( BTL_HANDLER_SIDE_Add(side, effect, cont) )
@@ -5537,6 +5538,7 @@ static void common_SideEffect( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flow
       BTL_HANDEX_PARAM_MESSAGE* param = BTL_SVFLOW_HANDLERWORK_Push( flowWk, BTL_HANDEX_MESSAGE, pokeID );
       HANDEX_STR_Setup( &param->str, BTL_STRTYPE_STD, strID );
       HANDEX_STR_AddArg( &param->str, side );
+      BTL_Printf("サイドエフェクト発動　文字列=%d\n", strID);
     }
   }
 }
