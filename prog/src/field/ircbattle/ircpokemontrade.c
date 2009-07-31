@@ -227,8 +227,8 @@ static void _endWaitState(IRC_POKEMON_TRADE* pWork);
 ///通信コマンドテーブル
 static const NetRecvFuncTable _PacketTbl[] = {
 	{_recvSelectPokemon,   _setChangePokemonBuffer},    ///_NETCMD_SELECT_POKEMON
-	{_recvChangePokemon,   NULL},    ///_NETCMD_SELECT_POKEMON
-	{_recvChangeYesNo,   NULL},    ///_NETCMD_SELECT_POKEMON
+	{_recvChangePokemon,   NULL},    ///_NETCMD_CHANGE_POKEMON
+	{_recvChangeYesNo,   NULL},    ///_NETCMD_CHANGE_YESNO
 	{_recvChangeCancel,   NULL},    ///_NETCMD_SELECT_POKEMON
 	{_recvEndReq, NULL},
 	{_recvEnd, NULL},
@@ -798,7 +798,10 @@ static void _changeWaitState(IRC_POKEMON_TRADE* pWork)
 	_InitBoxIcon(pWork->pBox,pWork->nowBoxno,pWork);  //再描画
 
 	_msgWindowCreate(pWork, IRCBTL_STR_23);
-	
+
+	pWork->bPokemonSet[0]=FALSE;
+	pWork->bPokemonSet[1]=FALSE;
+  
 	_CHANGE_STATE(pWork, _messageWaitState);
 }
 
@@ -877,7 +880,7 @@ static void _touchState(IRC_POKEMON_TRADE* pWork)
 	}
 
 
-	if(GFL_UI_TP_GetPointTrg(&x,&y)==TRUE){
+	if(GFL_UI_TP_GetPointTrg(&x, &y)==TRUE){
 		if((x >=  CHANGEBUTTON_X) && ((CHANGEBUTTON_X+CHANGEBUTTON_WIDTH) > x)){
 			if((y >=  CHANGEBUTTON_Y) && ((CHANGEBUTTON_Y+CHANGEBUTTON_HEIGHT) > y)){   //交換ボタンを押す
 				if(pWork->bPokemonSet[0] && pWork->bPokemonSet[1]){  //両方のポケモンがいる場合
