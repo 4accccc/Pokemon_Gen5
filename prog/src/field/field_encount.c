@@ -1838,7 +1838,7 @@ static const ENCOUNT_DATA dataTestEncountData01 =
     },
     {
       15,  //ƒŒƒxƒ‹
-      MONSNO_TIRATTI,
+      MONSNO_TIRANII,
     },
     {
       15,  //ƒŒƒxƒ‹
