@@ -931,7 +931,7 @@ const BOOL  FIELD_COMM_FUNC_Send_SelfProfile( const int sendNetID , COMM_FIELD_S
   GFL_STR_GetStringCode(namebuf, profile.name, PERSON_NAME_SIZE + EOM_SIZE);
   GFL_STR_DeleteBuffer(namebuf);
   profile.ID_ = 1000+GFL_NET_GetNetID( selfHandle );
-  profile.sex_ = 0;
+  profile.sex_ = MyStatus_GetMySex(myst);
   profile.regionCode_ = 0;
   profile.myst_id = MyStatus_GetID(myst);
   {
@@ -965,6 +965,7 @@ void  FIELD_COMM_FUNC_Post_SelfProfile( const int netID, const int size , const 
   myst = GAMEDATA_GetMyStatusPlayer(GameCommSys_GetGameData(game_comm), netID);
   MyStatus_SetMyName(myst, prof->name);
   MyStatus_SetID(myst, prof->myst_id);
+  MyStatus_SetMySex(myst, prof->sex_);
   FIELD_COMM_SYS_SetRecvProfile(commField, netID);
 
   FIELD_COMM_DATA_SetCharaData_State( commData, netID , FCCS_EXIST_DATA );

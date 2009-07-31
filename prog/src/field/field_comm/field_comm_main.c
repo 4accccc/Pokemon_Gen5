@@ -763,11 +763,12 @@ static void FIELD_COMM_MAIN_UpdateCharaData( FIELD_MAIN_WORK *fieldWork ,
 
           if( FIELD_COMM_DATA_GetCharaData_IsExist(commData, i) == FALSE )
           {
+            u16 objcode = (setPlWork->mystatus.sex == 0) ? HERO : HEROINE;
             BOOL *vanish_flag = FIELD_COMM_SYS_GetCommActorVanishFlag(commSys->commField_, i);
             *vanish_flag = TRUE;
             //未初期化なキャラなので、初期化する
             FIELD_COMM_ACTOR_CTRL_AddActor( commSys->actCtrl_,
-                0, HERO, &setPlWork->direction, &setPlWork->position, vanish_flag );
+                0, objcode, &setPlWork->direction, &setPlWork->position, vanish_flag );
             FIELD_COMM_DATA_SetCharaData_IsExist(commData, i,TRUE);
             OS_TPrintf("登録バニッシュFlag = %d\n", i);
           }
