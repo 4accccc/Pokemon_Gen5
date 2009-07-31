@@ -1975,7 +1975,8 @@ static void MainModules( IRC_MENU_MAIN_WORK *p_wk )
 	{	
 		MSGWND_Main( &p_wk->msgwnd, &p_wk->msg );
 	}
-	BACKOBJ_Main( &p_wk->backobj );
+	//‚P‚½‚ñ’âŽ~
+	//BACKOBJ_Main( &p_wk->backobj );
 
 	//APPBAR
 	APPBAR_Main( p_wk->p_appbar );

@@ -1104,7 +1104,8 @@ static GFL_PROC_RESULT IRC_AURA_PROC_Main( GFL_PROC *p_proc, int *p_seq, void *p
 			MSGWND_Main( &p_wk->msgwnd[i], &p_wk->msg );
 		}
 	}	
-	BACKOBJ_Main( &p_wk->backobj );
+	//1‚½‚ñ’âŽ~
+	//BACKOBJ_Main( &p_wk->backobj );
 	GRAPHIC_Draw( &p_wk->grp );
 
 	//ƒV[ƒ“‚ðŒp‘±“I‚É‘—‚é

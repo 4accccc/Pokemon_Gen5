@@ -312,10 +312,16 @@ BOOL COMPATIBLE_IRC_InitWait( COMPATIBLE_IRC_SYS *p_sys )
 	switch( p_sys->seq )
 	{
 	case SEQ_INIT_START:
+		if( GFL_NET_IsInit())
+		{	
+			p_sys->seq	= SEQ_INIT_MENU;
+		}
+		else
 		{
 			GFLNetInitializeStruct net_init = sc_net_init;
 			net_init.irc_timeout = p_sys->irc_timeout;
 			GFL_NET_Init( &net_init, NET_INIT_InitCallBack, p_sys );
+			;
 		}
 		p_sys->seq	= SEQ_INIT_WAIT;
 		break;

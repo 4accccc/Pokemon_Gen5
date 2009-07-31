@@ -1060,10 +1060,12 @@ static GFL_PROC_RESULT IRC_RHYTHM_PROC_Main( GFL_PROC *p_proc, int *p_seq, void 
 
 	{		
 		int i;
-		for( i = 0; i < BACKOBJ_SYS_NUM; i++ )
+		//‚P‚½‚ñ‚Ä‚¢‚µ
+/*		for( i = 0; i < BACKOBJ_SYS_NUM; i++ )
 		{	
 			BACKOBJ_Main( &p_wk->backobj[i] );
-		}
+		}	
+		*/BACKOBJ_Main( &p_wk->backobj[BACKOBJ_SYS_MAIN] );
 	}
 
 	//APPBAR
