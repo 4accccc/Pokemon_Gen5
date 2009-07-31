@@ -86,6 +86,7 @@ extern  void              BTLV_EFFECT_SetGauge( const POKEMON_PARAM* pp, int pos
 extern  void              BTLV_EFFECT_DelGauge( int position );
 extern  void              BTLV_EFFECT_CalcGauge( int position, int value );
 extern  BOOL              BTLV_EFFECT_CheckExecuteGauge( void );
+extern  void              BTLV_EFFECT_SetGaugeDrawEnable( BOOL on_off );
 extern  void              BTLV_EFFECT_SetBallGauge( const BTLV_BALL_GAUGE_PARAM* bbgp );
 extern  void              BTLV_EFFECT_DelBallGauge( BTLV_BALL_GAUGE_TYPE type );
 extern  BOOL              BTLV_EFFECT_CheckExecuteBallGauge( BTLV_BALL_GAUGE_TYPE type );
