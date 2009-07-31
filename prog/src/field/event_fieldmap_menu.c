@@ -385,23 +385,29 @@ static GMEVENT_RESULT FldMapMenuEvent( GMEVENT *event, int *seq, void *wk )
     break;
     
   case FMENUSTATE_FIELD_OPEN:
-    {
+/*    {
       GAMESYS_WORK *gameSys = GMEVENT_GetGameSysWork( event );
       GAMEDATA *gameData = GAMESYSTEM_GetGameData( gameSys );
-      GAMEDATA_SetSubScreenMode(gameData,mwk->return_subscreen_mode);//FIELD_SUBSCREEN_NORMAL);
-    }
+      GAMEDATA_SetSubScreenMode(gameData,mwk->return_subscreen_mode);
+    } */
 		GMEVENT_CallEvent(event, EVENT_FieldOpen(mwk->gmSys));
     mwk->state = FMENUSTATE_FIELD_FADEIN;
     break;
     
   case FMENUSTATE_FIELD_FADEIN:
 		GMEVENT_CallEvent(event, EVENT_FieldFadeIn(mwk->gmSys, mwk->fieldWork, 0));
-    if(mwk->return_subscreen_mode == FIELD_SUBSCREEN_NORMAL){
+#if 0
+    if(mwk->return_subscreen_mode == FIELD_SUBSCREEN_NORMAL)
+    {
       mwk->state = FMENUSTATE_EXIT_MENU;
     }
-    else{
+    else
+    {
       mwk->state = FMENUSTATE_RETURN_MENU;
     }
+#else
+    mwk->state = FMENUSTATE_RETURN_MENU;
+#endif
     break;
 
   case FMENUSTATE_CALL_SUB_PROC:
