@@ -298,10 +298,20 @@ static int getDefaultSickStrID( WazaSick sickID, BPP_SICK_CONT cont )
   case WAZASICK_NEWOHARU:   strID = BTL_STRID_SET_NeWoHaru; break;
   case WAZASICK_SASIOSAE:   strID = BTL_STRID_SET_Sasiosae; break;
   case WAZASICK_POWERTRICK: strID = BTL_STRID_SET_PowerTrick; break;
-  case WAZASICK_BIND:       strID = BTL_STRID_SET_Bind; break;
+
   case WAZASICK_DOKU:
     strID = BPP_SICKCONT_IsMoudokuCont(cont)? BTL_STRID_SET_MoudokuGet : BTL_STRID_SET_DokuGet;
     break;
+
+  /*  @@@ まきつきは使用されたワザに応じてメッセージを変えるのだ…
+  case WAZASICK_BIND:
+    {
+      WazaID  waza = BPP_SICKCONT_GetParam( cont );
+      switch( waza ){
+      }
+    }
+    break;
+  */
 
   default:
     break;

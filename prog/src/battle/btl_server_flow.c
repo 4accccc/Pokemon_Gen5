@@ -6478,7 +6478,6 @@ static WazaSick scEvent_CheckAddSick( BTL_SVFLOW_WORK* wk, WazaID waza,
   u8 per = WAZADATA_GetSickPer( waza );
 
   BTL_CALC_WazaSickContToBppSickCont( waza_contParam, attacker, &sickCont );
-  BTL_Printf("元々の継続パラ:%08x, type=%d, para=%d\n", sickCont.raw, sickCont.type, BPP_SICKCONT_GetParam(sickCont));
 
   BTL_EVENTVAR_Push();
     BTL_EVENTVAR_SetValue( BTL_EVAR_POKEID_DEF, BPP_GetID(defender) );
@@ -6490,14 +6489,12 @@ static WazaSick scEvent_CheckAddSick( BTL_SVFLOW_WORK* wk, WazaID waza,
     per = BTL_EVENTVAR_GetValue( BTL_EVAR_ADD_PER );
     sick = BTL_EVENTVAR_GetValue( BTL_EVAR_SICKID );
     sickCont.raw = BTL_EVENTVAR_GetValue( BTL_EVAR_SICK_CONT );
-    BTL_Printf("設定された継続パラ:%08x, %d\n", sickCont.raw, BPP_SICKCONT_GetParam(sickCont));
   BTL_EVENTVAR_Pop();
 
   if( sick != WAZASICK_NULL )
   {
     if( perOccur(per) ){
       *pSickCont = sickCont;
-      BTL_Printf("継続パラセットした\n");
       return sick;
     }
   }
