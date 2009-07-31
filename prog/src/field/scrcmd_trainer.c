@@ -28,6 +28,8 @@
 
 #include "event_battle.h"
 
+#include "field_sound.h"
+
 #if 0
 #include "battle/battle_common.h"	//↓インクルードに必要
 #include "ev_trainer.h"				//EvTrainer
@@ -523,6 +525,12 @@ VMCMD_RESULT EvCmdTrainerBgmSet( VMHANDLE *core, void *wk )
 	return 1;
 #else //wb kari
   u16 tr_id = SCRCMD_GetVMWorkValue(core,wk);
+  SCRCMD_WORK *work = wk;
+  GAMEDATA *gdata = SCRCMD_WORK_GetGameData( work );
+  FIELD_SOUND *fsnd = GAMEDATA_GetFieldSound( gdata );
+
+  FIELD_SOUND_PushBGM( fsnd );
+  PMSND_PlayBGM( SEQ_EYE_01 ); //wb kari
   return 0;
 #endif
 }
