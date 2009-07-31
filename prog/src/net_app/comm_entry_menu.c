@@ -404,7 +404,8 @@ static DECIDE_TYPE CommEntryMenu_DecideUpdate(COMM_ENTRY_MENU_PTR em)
         return DECIDE_TYPE_OK;
       }
       else{
-        return DECIDE_TYPE_NG;
+        return DECIDE_TYPE_OK;
+//        return DECIDE_TYPE_NG;
       }
     }
     break;
