@@ -116,8 +116,6 @@ static GMEVENT_RESULT EVENT_IrcBattleMain(GMEVENT * event, int *  seq, void * wo
   }
 #endif
 
-	NAGI_Printf( "SEQ %d\n", *seq );
-
   switch (*seq) {
 	case _IRCBATTLE_START:
     {
