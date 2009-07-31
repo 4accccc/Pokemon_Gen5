@@ -314,15 +314,18 @@ BOOL FLDMAPPER_CheckTrans( const FLDMAPPER* g3Dmapper )
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 const GFL_G3D_MAP_GLOBALOBJ_ST * FLDMAPPER_CreateObjStatusList
-( const FLDMAPPER* g3Dmapper, const FLDHIT_RECT * rect, HEAPID heapID, u32 * num )
+( const FLDMAPPER* g3Dmapper, const FLDHIT_RECT * rect, u32 * num )
 {
   enum { MAPOBJ_MAX = 32 };
   int i, j, k;
   int count = 0;
   GFL_G3D_MAP_GLOBALOBJ_ST *status;
   VecFx32 map_pos;
-  u8 * set = GFL_HEAP_AllocClearMemory(heapID, g3Dmapper->blockNum * MAPOBJ_MAX );
-  GFL_G3D_MAP_GLOBALOBJ_ST * st;
+  u8 * search_area = GFL_HEAP_AllocClearMemory(g3Dmapper->heapID, g3Dmapper->blockNum * MAPOBJ_MAX );
+  GFL_G3D_MAP_GLOBALOBJ_ST * result_struct = NULL;
+
+  TAMADA_Printf("Search Rect (%d, %d) - ( %d, %d)\n",
+      FX_Whole(rect->left), FX_Whole(rect->top), FX_Whole(rect->right), FX_Whole(rect->bottom) );
 
 	for ( i=0; i<g3Dmapper->blockNum; i++ ){
     GFL_G3D_MAP_GetTrans( g3Dmapper->blockWk[i].g3Dmap, &map_pos);
@@ -335,46 +338,42 @@ const GFL_G3D_MAP_GLOBALOBJ_ST * FLDMAPPER_CreateObjStatusList
         continue;
       }
       VEC_Add( &status->trans, &map_pos, &trans );
+      TAMADA_Printf("BLOCK:%d IDX:%02d POS(%d, %d)\n", i, j, FX_Whole(trans.x), FX_Whole(trans.z) );
       if (rect->top <= trans.z && trans.z <= rect->bottom
           && rect->left <= trans.x && trans.x <= rect->right)
       {
-        set[MAPOBJ_MAX * i + j] = 1;
+        search_area[MAPOBJ_MAX * i + j] = 1;
+        count ++;
+        TAMADA_Printf("Search Hit.\n");
       }
     }
   }
 
-  for (i = 0; i < MAPOBJ_MAX * g3Dmapper->blockNum; i++)
+  if (count != 0)
   {
-    if (set[i] ) count ++;
-  }
-  if (count == 0)
-  {
-    *num = 0;
-    GFL_HEAP_FreeMemory(set);
-    return NULL;
-  }
-
-  st = GFL_HEAP_AllocClearMemory(heapID, sizeof(GFL_G3D_MAP_GLOBALOBJ_ST) * count);
-  for (i=0, k=0; i<MAPOBJ_MAX * g3Dmapper->blockNum; i++)
-  {
-    if(set[i])
+    result_struct = GFL_HEAP_AllocClearMemory(g3Dmapper->heapID, sizeof(GFL_G3D_MAP_GLOBALOBJ_ST) * count);
+    for (i=0, k=0; i<MAPOBJ_MAX * g3Dmapper->blockNum; i++)
     {
-      GFL_G3D_MAP_GetTrans( g3Dmapper->blockWk[i / MAPOBJ_MAX].g3Dmap, &map_pos);
-      j = i % MAPOBJ_MAX;
-		  status = GFL_G3D_MAP_GetGlobalObj( g3Dmapper->blockWk[i / MAPOBJ_MAX].g3Dmap, j );
-      if (status == NULL)
+      if(search_area[i])
       {
-        GF_ASSERT(0);
+        GFL_G3D_MAP_GetTrans( g3Dmapper->blockWk[i / MAPOBJ_MAX].g3Dmap, &map_pos);
+        j = i % MAPOBJ_MAX;
+        status = GFL_G3D_MAP_GetGlobalObj( g3Dmapper->blockWk[i / MAPOBJ_MAX].g3Dmap, j );
+        if (status == NULL)
+        {
+          GF_ASSERT(0);
+        }
+        result_struct[k] = *status;
+        VEC_Add( &result_struct[k].trans, &map_pos, &result_struct[k].trans );
+        k ++;
       }
-      st[k] = *status;
-      VEC_Add( &st[k].trans, &map_pos, &st[k].trans );
-      k ++;
     }
   }
+
   *num = count;
 
-  GFL_HEAP_FreeMemory(set);
-  return st;
+  GFL_HEAP_FreeMemory(search_area);
+  return result_struct;
 }
 
 //============================================================================================

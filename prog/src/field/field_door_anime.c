@@ -16,11 +16,26 @@
 #include "fieldmap.h"
 #include "field_player.h"
 #include "field_buildmodel.h"
-#include "../arc/fieldmap/buildmodel_outdoor.naix"
+
+#include "field/field_const.h"
+#include "field_door_anime.h"
+
+//============================================================================================
+//============================================================================================
+static GMEVENT_RESULT FieldDoorAnimeEvent(GMEVENT * event, int *seq, void * work);
+
+static void makeRect(FLDHIT_RECT * rect, const VecFx32 * pos);
+static void getPlayerFrontPos(FIELDMAP_WORK * fieldmap, VecFx32 * pos);
+static void * searchDoorObject(FIELDMAP_WORK *fieldmap, const VecFx32 *pos);
 
 
 //============================================================================================
 //============================================================================================
+enum {
+  //アニメデータの定義順に依存している。
+  ANM_INDEX_DOOR_OPEN = 0,
+  ANM_INDEX_DOOR_CLOSE,
+};
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 typedef struct {
@@ -28,72 +43,45 @@ typedef struct {
   GAMEDATA * gamedata;
   FIELDMAP_WORK * fieldmap;
   HEAPID heapID;
-  GFL_G3D_MAP_GLOBALOBJ_ST * st;
   FIELD_BMODEL * entry;
+  int anm_idx;
+  VecFx32 pos;
 }FIELD_DOOR_ANIME_WORK;
 
-
-static void makeRect(FLDHIT_RECT * rect, VecFx32 * pos);
-static void getPlayerFrontPos(FIELDMAP_WORK * fieldmap, VecFx32 * pos);
 //------------------------------------------------------------------
 //------------------------------------------------------------------
-GMEVENT_RESULT FieldDoorInAnime(GMEVENT * event, int *seq, void * work)
+static GMEVENT_RESULT FieldDoorAnimeEvent(GMEVENT * event, int *seq, void * work)
 {
   FIELD_DOOR_ANIME_WORK * fdaw = work;
-  VecFx32 pos;
-  FLDHIT_RECT rect;
-  u32 num;
+  
   FLDMAPPER * fldmapper = FIELDMAP_GetFieldG3Dmapper(fdaw->fieldmap);
   FIELD_BMODEL_MAN * bmodel_man = FLDMAPPER_GetBuildModelManager(fldmapper);
-  //u32 idx = FIELD_BMODEL_MAN_GetEntryIndex(bmodel_man, NARC_buildmodel_outdoor_p_door_nsbmd);
-  u32 idx = FIELD_BMODEL_MAN_GetEntryIndex(bmodel_man, NARC_output_buildmodel_outdoor_door01_nsbmd);
-  int i;
 
   switch (*seq) {
   case 0:
-    fdaw->entry = NULL;
-    getPlayerFrontPos(fdaw->fieldmap, &pos);
-    makeRect(&rect, &pos);
-    (const GFL_G3D_MAP_GLOBALOBJ_ST *)fdaw->st =
-      FLDMAPPER_CreateObjStatusList( fldmapper, &rect, fdaw->heapID, &num);
-    if (fdaw->st == NULL) return GMEVENT_RES_FINISH;
-    for (i = 0; i < num; i++)
-    {
-      FIELD_BMODEL * bmodel;
-      if (fdaw->st[i].id == idx)
-      {
-        fdaw->st[i].trans.z += 16 * FX32_ONE;
-        bmodel = FIELD_BMODEL_Create(bmodel_man, fldmapper, &fdaw->st[i]);
-        FIELD_BMODEL_MAN_EntryBuildModel(bmodel_man, bmodel);
-        FIELD_BMODEL_SetAnime(bmodel, 0);
-        fdaw->entry = bmodel;
-        TAMADA_Printf("id:%2d rotate:%04x\n", fdaw->st[i].id, fdaw->st[i].rotate);
-        TAMADA_Printf("x,y,z (%d,%d,%d)\n",
-            FX_Whole(fdaw->st[i].trans.x),
-            FX_Whole(fdaw->st[i].trans.y),
-            FX_Whole(fdaw->st[i].trans.z) );
-        break;
-      }
-    }
-    
-
+    fdaw->entry = searchDoorObject(fdaw->fieldmap, &fdaw->pos);
+    if (fdaw->entry == NULL) return GMEVENT_RES_FINISH;
+    FIELD_BMODEL_MAN_SetAnime(bmodel_man, fdaw->entry, fdaw->anm_idx, BMANM_REQ_START);
     ++ *seq;
     break;
+
   case 1:
     if (fdaw->entry == NULL)
     {
       ++ *seq;
       break;
     }
-    if (FIELD_BMODEL_GetAnimeStatus(fdaw->entry) == TRUE)
+    if (FIELD_BMODEL_MAN_GetAnimeStatus(bmodel_man, fdaw->entry, fdaw->anm_idx) == TRUE)
     {
-      FIELD_BMODEL_MAN_releaseBuildModel(bmodel_man, fdaw->entry);
-      FIELD_BMODEL_Delete(fdaw->entry);
+      if (fdaw->anm_idx == ANM_INDEX_DOOR_OPEN) {
+        FIELD_BMODEL_MAN_SetAnime(bmodel_man, fdaw->entry, fdaw->anm_idx, BMANM_REQ_STOP);
+      } else {
+        FIELD_BMODEL_MAN_SetAnime(bmodel_man, fdaw->entry, fdaw->anm_idx, BMANM_REQ_END);
+      }
       fdaw->entry = NULL;
     }
     break;
   case 2:
-    GFL_HEAP_FreeMemory((void*)fdaw->st);
     return GMEVENT_RES_FINISH;
 
     ++ *seq;
@@ -112,34 +100,65 @@ GMEVENT_RESULT FieldDoorInAnime(GMEVENT * event, int *seq, void * work)
 }
 //------------------------------------------------------------------
 //------------------------------------------------------------------
-GMEVENT * EVENT_FieldDoorInAnime(GAMESYS_WORK * gsys, FIELDMAP_WORK *fieldmap)
+GMEVENT * EVENT_FieldDoorOpenAnime(GAMESYS_WORK * gsys, FIELDMAP_WORK *fieldmap)
 {
   GMEVENT * event;
   FIELD_DOOR_ANIME_WORK * fdaw;
-  event = GMEVENT_Create( gsys, NULL, FieldDoorInAnime, sizeof(FIELD_DOOR_ANIME_WORK) );
+  event = GMEVENT_Create( gsys, NULL, FieldDoorAnimeEvent, sizeof(FIELD_DOOR_ANIME_WORK) );
   fdaw = GMEVENT_GetEventWork(event);
   fdaw->gsys = gsys;
   fdaw->gamedata = GAMESYSTEM_GetGameData(gsys);
   fdaw->fieldmap = fieldmap;
   fdaw->heapID = FIELDMAP_GetHeapID(fieldmap);
+  fdaw->anm_idx = ANM_INDEX_DOOR_OPEN;
+  getPlayerFrontPos(fieldmap, &fdaw->pos);
   return event;
 }
 
+//============================================================================================
+//============================================================================================
 //------------------------------------------------------------------
 //------------------------------------------------------------------
-static void makeRect(FLDHIT_RECT * rect, VecFx32 * pos)
+GMEVENT * EVENT_FieldDoorClose(GAMESYS_WORK * gsys, FIELDMAP_WORK *fieldmap)
 {
-  rect->top = pos->z - 16 * FX32_ONE;
-  rect->bottom = pos->z + 16 * FX32_ONE;
-  rect->left = pos->x - 16 * FX32_ONE;
-  rect->right = pos->x + 16 * FX32_ONE;
+  GMEVENT * event;
+  FIELD_DOOR_ANIME_WORK * fdaw;
+  event = GMEVENT_Create(gsys, NULL, FieldDoorAnimeEvent, sizeof(FIELD_DOOR_ANIME_WORK));
+  fdaw = GMEVENT_GetEventWork(event);
+  fdaw->gsys = gsys;
+  fdaw->gamedata = GAMESYSTEM_GetGameData(gsys);
+  fdaw->fieldmap = fieldmap;
+  fdaw->heapID = FIELDMAP_GetHeapID(fieldmap);
+  fdaw->anm_idx = ANM_INDEX_DOOR_CLOSE;
+  {
+    FIELD_PLAYER * player = FIELDMAP_GetFieldPlayer(fieldmap);
+    FIELD_PLAYER_GetPos(player, &fdaw->pos);
+  }
+  return event;
+}
+
+//============================================================================================
+//============================================================================================
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+
+//============================================================================================
+//============================================================================================
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+static void makeRect(FLDHIT_RECT * rect, const VecFx32 * pos)
+{
+  enum { RECT_SIZE = (FIELD_CONST_GRID_SIZE * 2) << FX32_SHIFT };
+  rect->top = pos->z - RECT_SIZE;
+  rect->bottom = pos->z + RECT_SIZE;
+  rect->left = pos->x - RECT_SIZE;
+  rect->right = pos->x + RECT_SIZE;
 }
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 static void getPlayerFrontPos(FIELDMAP_WORK * fieldmap, VecFx32 * pos)
 {
-  enum { GRIDSIZE = 16 * FX32_ONE };
   FIELD_PLAYER * player = FIELDMAP_GetFieldPlayer(fieldmap);
   u16 dir;
 
@@ -149,14 +168,46 @@ static void getPlayerFrontPos(FIELDMAP_WORK * fieldmap, VecFx32 * pos)
     dir = MMDL_GetDirDisp( fmmdl );
   }
 	switch( dir ) {
-	case DIR_UP:		pos->z -= GRIDSIZE; break;
-	case DIR_DOWN:	pos->z += GRIDSIZE; break;
-	case DIR_LEFT:	pos->x -= GRIDSIZE; break;
-	case DIR_RIGHT:	pos->x += GRIDSIZE; break;
+	case DIR_UP:		pos->z -= FIELD_CONST_GRID_FX32_SIZE; break;
+	case DIR_DOWN:	pos->z += FIELD_CONST_GRID_FX32_SIZE; break;
+	case DIR_LEFT:	pos->x -= FIELD_CONST_GRID_FX32_SIZE; break;
+	case DIR_RIGHT:	pos->x += FIELD_CONST_GRID_FX32_SIZE; break;
 	default:
                   GF_ASSERT(0);
   }
 }
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+static void * searchDoorObject(FIELDMAP_WORK *fieldmap, const VecFx32 *pos)
+{
+  FLDHIT_RECT rect;
+  void * entry = NULL;
+
+  makeRect(&rect, pos);
+
+  {
+    FLDMAPPER * fldmapper = FIELDMAP_GetFieldG3Dmapper(fieldmap);
+    FIELD_BMODEL_MAN * bmodel_man = FLDMAPPER_GetBuildModelManager(fldmapper);
+    const GFL_G3D_MAP_GLOBALOBJ_ST * st;
+    u32 num;
+    int i;
+
+    st = FLDMAPPER_CreateObjStatusList( fldmapper, &rect, &num);
+    if (st == NULL) return NULL;
+
+    for (i = 0; i < num; i++)
+    {
+      if (FIELD_BMODEL_MAN_IsDoor(bmodel_man, &st[i]) == TRUE)
+      {
+        entry = FIELD_BMODEL_MAN_GetObjHandle(bmodel_man, &st[i]);
+        break;
+      }
+    }
+    GFL_HEAP_FreeMemory((void*)st);
+  }
+  return entry;
+}
+
 
 
 

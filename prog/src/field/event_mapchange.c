@@ -35,6 +35,8 @@
 
 #include "field_sound.h"
 
+#include "field_door_anime.h"
+
 static void UpdateMapParams(GAMESYS_WORK * gsys, const LOCATION * loc_req);
 static void SetMMdl( GAMESYS_WORK *gsys, const LOCATION *loc_req, GAMEINIT_MODE mode );
 static void setFirstBGM(GAMEDATA * gamedata, u16 zone_id);	
@@ -228,7 +230,7 @@ static GMEVENT_RESULT EVENT_FadeOut_ExitTypeDoor(GMEVENT * event, int *seq, void
   switch (*seq)
   {
   case 0:
-    GMEVENT_CallEvent( event, EVENT_FieldDoorInAnime(gsys, fieldmap) );
+    GMEVENT_CallEvent( event, EVENT_FieldDoorOpenAnime(gsys, fieldmap) );
     ++ *seq;
     break;
   case 1:
@@ -342,6 +344,7 @@ static GMEVENT_RESULT EVENT_FadeIn_ExitTypeDoor(GMEVENT * event, int *seq, void 
     break;
   case 1:
     //ドアを開くアニメ適用
+    GMEVENT_CallEvent( event, EVENT_FieldDoorOpenAnime(gsys, fieldmap) );
     ++ *seq;
     break;
   case 2:
@@ -351,6 +354,7 @@ static GMEVENT_RESULT EVENT_FadeIn_ExitTypeDoor(GMEVENT * event, int *seq, void 
     break;
   case 3:
     //ドアを閉じるアニメ適用
+    GMEVENT_CallEvent( event, EVENT_FieldDoorClose(gsys, fieldmap) );
     ++ *seq;
     break;
   case 4:
@@ -443,6 +447,7 @@ static GMEVENT_RESULT EVENT_MapChange(GMEVENT * event, int *seq, void*work)
         const CONNECT_DATA * cnct = EVENTDATA_GetConnectByID(evdata, mcw->loc_req.exit_id);
         type = CONNECTDATA_GetExitType(cnct);
       }
+      TAMADA_Printf("FADE IN EVENT TYPE: %d\n", type);
       sub_event = GMEVENT_Create( gsys, NULL, fadeInEventTable[type], sizeof(MAPCHANGE_WORK));
       sub_work = GMEVENT_GetEventWork(sub_event);
       *sub_work = *mcw;
