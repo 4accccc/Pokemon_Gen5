@@ -579,6 +579,7 @@ static void _itemTecniqueUseYesNo(FIELD_ITEMMENU_WORK* pWork)
     break;
   case TOUCH_SW_RET_NO:
     ITEMDISP_ListPlateClear( pWork );
+    GFL_BG_ClearScreen(GFL_BG_FRAME3_M);
     _CHANGE_STATE(pWork,_itemKindSelectMenu);
     break;
   default:
@@ -1346,6 +1347,9 @@ static GFL_PROC_RESULT FieldItemMenuProc_Main( GFL_PROC * proc, int * seq, void 
 	state(pWork);
 	_dispMain(pWork);
 
+  PRINTSYS_QUE_Main(pWork->SysMsgQue);
+
+  
   GFL_TCBL_Main( pWork->pMsgTcblSys );
   
 	return GFL_PROC_RES_CONTINUE;

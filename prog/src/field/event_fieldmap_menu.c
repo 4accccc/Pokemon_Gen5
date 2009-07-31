@@ -623,6 +623,13 @@ static const BOOL FMenuReturnProc_PokeList(FMENU_EVENT_WORK* mwk)
   switch( plData->ret_mode )
   {
   case PL_RET_NORMAL:      // ’Êí
+    if(plData->ret_sel == PL_SEL_POS_EXIT2){
+      {
+        GAMEDATA *gmData = GAMESYSTEM_GetGameData(mwk->gmSys);
+        GAMEDATA_SetSubScreenMode(gmData,FIELD_SUBSCREEN_NORMAL);
+      } 
+      mwk->bForceExit = TRUE;
+    }
     return FALSE;
     break;
     
