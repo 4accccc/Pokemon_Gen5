@@ -755,6 +755,7 @@ static void _itemKindSelectMenu(FIELD_ITEMMENU_WORK* pWork)
     return;
   }
 	if(GFL_UI_KEY_GetTrg() == PAD_BUTTON_B){
+    pWork->ret_code = BAG_NEXTPROC_RETURN;
     _CHANGE_STATE(pWork,NULL);
     return;
   }
