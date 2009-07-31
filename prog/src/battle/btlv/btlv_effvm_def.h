@@ -256,21 +256,23 @@ ex)
 #define	EC_POKEMON_SET_MEPACHI_FLAG	( 15 )
 #define	EC_POKEMON_SET_ANM_FLAG			( 16 )
 #define	EC_POKEMON_PAL_FADE					( 17 )
-#define	EC_TRAINER_SET							( 18 )
-#define	EC_TRAINER_MOVE							( 19 )
-#define	EC_TRAINER_ANIME_SET				( 20 )
-#define	EC_TRAINER_DEL							( 21 )
-#define	EC_BG_PAL_FADE		   				( 22 )
-#define	EC_BG_VANISH								( 23 )
-#define	EC_SE_PLAY									( 24 )
-#define	EC_SE_STOP									( 25 )
-#define	EC_SE_PITCH									( 26 )
-#define	EC_EFFECT_END_WAIT					( 27 )
-#define	EC_WAIT											( 28 )
-#define	EC_CONTROL_MODE							( 29 )
+#define	EC_POKEMON_VANISH					  ( 18 )
+#define	EC_POKEMON_SHADOW_VANISH	  ( 19 )
+#define	EC_TRAINER_SET							( 20 )
+#define	EC_TRAINER_MOVE							( 21 )
+#define	EC_TRAINER_ANIME_SET				( 22 )
+#define	EC_TRAINER_DEL							( 23 )
+#define	EC_BG_PAL_FADE		   				( 24 )
+#define	EC_BG_VANISH								( 25 )
+#define	EC_SE_PLAY									( 26 )
+#define	EC_SE_STOP									( 27 )
+#define	EC_SE_PITCH									( 28 )
+#define	EC_EFFECT_END_WAIT					( 29 )
+#define	EC_WAIT											( 30 )
+#define	EC_CONTROL_MODE							( 31 )
 
 //終了コマンドは必ず一番下になるようにする
-#define	EC_SEQ_END									( 30 )
+#define	EC_SEQ_END									( 32 )
 
 #ifndef __C_NO_DEF_
 
@@ -762,8 +764,8 @@ ex)
  * @param	pos			アニメ操作するポケモンの立ち位置
  * @param	flag		アニメフラグ
  *
- * #param	COMBOBOX_TEXT	攻撃側	攻撃側ペア	防御側	防御側ペア
- * #param	COMBOBOX_VALUE	BTLEFF_POKEMON_SIDE_ATTACK BTLEFF_POKEMON_SIDE_ATTACK_PAIR BTLEFF_POKEMON_SIDE_DEFENCE BTLEFF_POKEMON_SIDE_DEFENCE_PAIR
+ * #param	COMBOBOX_TEXT	攻撃側	攻撃側ペア	防御側	防御側ペア	POS_AA	POS_BB	POS_A	POS_B	POS_C	POS_D POS_E POS_F POS_TR_AA POS_TR_BB POS_TR_A  POS_TR_B  POS_TR_C  POS_TR_D 
+ * #param	COMBOBOX_VALUE	BTLEFF_POKEMON_SIDE_ATTACK BTLEFF_POKEMON_SIDE_ATTACK_PAIR BTLEFF_POKEMON_SIDE_DEFENCE BTLEFF_POKEMON_SIDE_DEFENCE_PAIR	BTLEFF_POKEMON_POS_AA	BTLEFF_POKEMON_POS_BB	BTLEFF_POKEMON_POS_A	BTLEFF_POKEMON_POS_B	BTLEFF_POKEMON_POS_C	BTLEFF_POKEMON_POS_D  BTLEFF_POKEMON_POS_E  BTLEFF_POKEMON_POS_F  BTLEFF_TRAINER_POS_AA BTLEFF_TRAINER_POS_BB BTLEFF_TRAINER_POS_A BTLEFF_TRAINER_POS_B BTLEFF_TRAINER_POS_C BTLEFF_TRAINER_POS_D
  * #param	COMBOBOX_TEXT	アニメストップ	アニメスタート
  * #param	COMBOBOX_VALUE	BTLEFF_ANM_STOP	BTLEFF_ANM_START
  */
@@ -800,6 +802,46 @@ ex)
 	.long		\end_evy
 	.long		\wait
 	.long		( ( ( \b >> BTLEFF_FX32_SHIFT ) & 0x1f ) << 10 ) | ( ( ( \g >> BTLEFF_FX32_SHIFT ) & 0x1f ) << 5 ) | ( ( \r >> BTLEFF_FX32_SHIFT ) & 0x1f )
+	.endm
+
+//======================================================================
+/**
+ * @brief	ポケモンバニッシュ
+ *
+ * #param_num	2
+ * @param	pos			バニッシュ操作するポケモンの立ち位置
+ * @param	flag		バニッシュフラグ
+ *
+ * #param	COMBOBOX_TEXT	攻撃側	攻撃側ペア	防御側	防御側ペア	POS_AA	POS_BB	POS_A	POS_B	POS_C	POS_D POS_E POS_F POS_TR_AA POS_TR_BB POS_TR_A  POS_TR_B  POS_TR_C  POS_TR_D 
+ * #param	COMBOBOX_VALUE	BTLEFF_POKEMON_SIDE_ATTACK BTLEFF_POKEMON_SIDE_ATTACK_PAIR BTLEFF_POKEMON_SIDE_DEFENCE BTLEFF_POKEMON_SIDE_DEFENCE_PAIR	BTLEFF_POKEMON_POS_AA	BTLEFF_POKEMON_POS_BB	BTLEFF_POKEMON_POS_A	BTLEFF_POKEMON_POS_B	BTLEFF_POKEMON_POS_C	BTLEFF_POKEMON_POS_D  BTLEFF_POKEMON_POS_E  BTLEFF_POKEMON_POS_F  BTLEFF_TRAINER_POS_AA BTLEFF_TRAINER_POS_BB BTLEFF_TRAINER_POS_A BTLEFF_TRAINER_POS_B BTLEFF_TRAINER_POS_C BTLEFF_TRAINER_POS_D
+ * #param	COMBOBOX_TEXT	バニッシュオン	バニッシュオフ
+ * #param	COMBOBOX_VALUE	BTLEFF_VANISH_ON	BTLEFF_VANISH_OFF
+ */
+//======================================================================
+	.macro	POKEMON_VANISH	pos, flag
+	.short	EC_POKEMON_VANISH
+	.long		\pos
+	.long		\flag
+	.endm
+
+//======================================================================
+/**
+ * @brief	ポケモン影バニッシュ
+ *
+ * #param_num	2
+ * @param	pos			バニッシュ操作するポケモンの立ち位置
+ * @param	flag		バニッシュフラグ
+ *
+ * #param	COMBOBOX_TEXT	攻撃側	攻撃側ペア	防御側	防御側ペア	POS_AA	POS_BB	POS_A	POS_B	POS_C	POS_D POS_E POS_F POS_TR_AA POS_TR_BB POS_TR_A  POS_TR_B  POS_TR_C  POS_TR_D 
+ * #param	COMBOBOX_VALUE	BTLEFF_POKEMON_SIDE_ATTACK BTLEFF_POKEMON_SIDE_ATTACK_PAIR BTLEFF_POKEMON_SIDE_DEFENCE BTLEFF_POKEMON_SIDE_DEFENCE_PAIR	BTLEFF_POKEMON_POS_AA	BTLEFF_POKEMON_POS_BB	BTLEFF_POKEMON_POS_A	BTLEFF_POKEMON_POS_B	BTLEFF_POKEMON_POS_C	BTLEFF_POKEMON_POS_D  BTLEFF_POKEMON_POS_E  BTLEFF_POKEMON_POS_F  BTLEFF_TRAINER_POS_AA BTLEFF_TRAINER_POS_BB BTLEFF_TRAINER_POS_A BTLEFF_TRAINER_POS_B BTLEFF_TRAINER_POS_C BTLEFF_TRAINER_POS_D
+ * #param	COMBOBOX_TEXT	バニッシュオン	バニッシュオフ
+ * #param	COMBOBOX_VALUE	BTLEFF_VANISH_ON	BTLEFF_VANISH_OFF
+ */
+//======================================================================
+	.macro	POKEMON_SHADOW_VANISH	pos, flag
+	.short	EC_POKEMON_SHADOW_VANISH
+	.long		\pos
+	.long		\flag
 	.endm
 
 //======================================================================
