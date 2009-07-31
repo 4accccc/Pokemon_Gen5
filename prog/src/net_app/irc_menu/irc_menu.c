@@ -585,7 +585,7 @@ static GFL_PROC_RESULT IRC_MENU_PROC_Init( GFL_PROC *p_proc, int *p_seq, void *p
 	GFL_BG_SetVisible( sc_bgcnt_frame[GRAPHIC_BG_FRAME_M_TEXT], FALSE );
 
 
-	BACKOBJ_Init( &p_wk->backobj, &p_wk->grp, BACKOBJ_MOVE_TYPE_RAIN, BACKOBJ_COLOR_BLUE, CLWKID_BACKOBJ_TOP, CLSYS_DEFREND_SUB );
+	BACKOBJ_Init( &p_wk->backobj, &p_wk->grp, BACKOBJ_MOVE_TYPE_RAIN, BACKOBJ_COLOR_RED, CLWKID_BACKOBJ_TOP, CLSYS_DEFREND_SUB );
 
 	{	
 		GFL_CLUNIT	*p_unit	= GRAPHIC_GetClunit( &p_wk->grp );
