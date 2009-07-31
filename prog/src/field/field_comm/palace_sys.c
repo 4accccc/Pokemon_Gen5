@@ -500,7 +500,7 @@ static void PALACE_DEBUG_UpdateNumber(PALACE_SYS_PTR palace, FIELD_MAIN_WORK *fi
   PALACE_DEBUG_NUMBER *number = &palace->number;
   int before_anmseq;
   
-  if(FIELD_COMM_SYS_GetRecvProfile(comm_field, palace->area) == FALSE){
+  if(FIELD_COMM_SYS_GetRecvProfile(comm_field, number->anmseq) == FALSE){
     return;
   }
   if(palace->init_name_draw){
