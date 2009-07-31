@@ -13,12 +13,18 @@
 #include "sound/pm_sndsys.h"
 
 #include "arc_def.h"
+#include "message.naix"
+#include "font/font.naix"
 #include "musical_item.naix"
 #include "dressup_gra.naix"
+#include "msg/msg_dress_up.h"
 
+#include "print/printsys.h"
+#include "print/wordset.h"
 #include "infowin/infowin.h"
 #include "test/ariizumi/ari_debug.h"
 #include "savedata/musical_save.h"
+#include "system/bmp_winframe.h"
 #include "musical/musical_local.h"
 #include "musical/mus_poke_draw.h"
 #include "musical/mus_item_draw.h"
@@ -39,6 +45,7 @@
 #define FIT_FRAME_MAIN_MIRROR GFL_BG_FRAME2_M //読み替えて共用？
 #define FIT_FRAME_MAIN_BG   GFL_BG_FRAME3_M
 #define FIT_FRAME_SUB_BG    GFL_BG_FRAME3_S
+#define FIT_FRAME_SUB_MSG    GFL_BG_FRAME3_S
 #define FIT_FRAME_SUB_CURTAIN_L    GFL_BG_FRAME2_S
 #define FIT_FRAME_SUB_CURTAIN_R    GFL_BG_FRAME1_S
 #define FIT_FRAME_SUB_TOP    GFL_BG_FRAME0_S
@@ -46,7 +53,12 @@
 #define FIT_PLT_OBJ_MAIN_BUTTON (0)
 #define FIT_PLT_OBJ_MAIN_EFFECT (2)
 
+#define FIT_PLT_BG_SUB_MSGWIN (0xC)
+#define FIT_PLT_BG_SUB_FONT (0xE)
+
 #define FIT_PAL_INFO    (0xE)
+
+#define FIT_MSGWIN_CHAR_TOP (128)  //仮数値BG決定してから
 
 #define FIT_ANIME_SPD (6)
 #define FIT_ANIME_MAX (192)
@@ -153,6 +165,12 @@ static const u16 ITEM_SWING_ANGLE_SORT_ADD_VALUE = 0x200;
 #define DUP_CURTAIN_SCROLL_MAX (128)
 #define DUP_CURTAIN_SCROLL_VALUE (8)
 
+//Msg系
+#define DUP_MSGWIN_LEFT (1)
+#define DUP_MSGWIN_TOP (19)
+#define DUP_MSGWIN_WIDTH (30)
+#define DUP_MSGWIN_HEIGHT (4)
+
 #pragma mark [> define check
 //チェック画面
 #define BUTTON_SIZE_X (64)
@@ -236,10 +254,6 @@ struct _FITTING_WORK
   DUP_STATE state;
   int     animeCnt; 
   
-  //上画面カーテン系
-  u8      curtainScrollCnt;
-  BOOL    isOpenCurtain;
-  
   //TP系
   BOOL tpIsTrg;
   BOOL tpIsTouch;
@@ -310,6 +324,18 @@ struct _FITTING_WORK
   u8        effUpCnt[EFFECT_UP_NUM];
   u8        endEffCnt;
   u8        bgScrollCnt;
+
+  //上画面系
+  u8      curtainScrollCnt;
+  BOOL    isOpenCurtain;
+  BOOL    isUpdateMsg;  //描画中
+  BOOL    isDispMsg;    //表示中
+  
+  //Msg系
+  GFL_MSGDATA *msgHandle;
+  GFL_FONT *fontHandle;
+  PRINT_QUE *printQue;
+  GFL_BMPWIN *msgWin;  
 };
 
 //======================================================================
@@ -330,6 +356,8 @@ static void DUP_FIT_SetupStartItem( FITTING_WORK *work , const u16 itemId );
 static void DUP_FIT_TermItem( FITTING_WORK *work );
 static void DUP_FIT_CalcItemListAngle( FITTING_WORK *work , u16 angle , s16 moveAngle , u16 sizeX , u16 sizeY );
 static void DUP_FIT_CheckItemListPallet( FITTING_WORK *work );
+static void DUP_FIT_InitMessage( FITTING_WORK *work );
+static void DUP_FIT_TermMessage( FITTING_WORK *work );
 
 static void DUP_FIT_UpdateTpMain( FITTING_WORK *work );
 static void DUP_FIT_UpdateTpList( FITTING_WORK *work , s16 subX , s16 subY );
@@ -426,6 +454,8 @@ FITTING_WORK* DUP_FIT_InitFitting( FITTING_INIT_WORK *initWork , HEAPID heapId )
   work->isDemo = FALSE;
   work->curtainScrollCnt = 0;
   work->isOpenCurtain = FALSE;
+  work->isDispMsg = FALSE;
+  work->isUpdateMsg = FALSE;
   work->bgScrollCnt = 0;
 
   work->listSpeed = 0;
@@ -435,6 +465,7 @@ FITTING_WORK* DUP_FIT_InitFitting( FITTING_INIT_WORK *initWork , HEAPID heapId )
   DUP_FIT_SetupPokemon( work );
   DUP_FIT_SetupItem( work );
   DUP_EFFECT_InitCell( work );
+  DUP_FIT_InitMessage( work );
 
   INFOWIN_Init( FIT_FRAME_MAIN_INFO,FIT_PAL_INFO,NULL,work->heapId);
   work->vBlankTcb = GFUser_VIntr_CreateTCB( DUP_FIT_VBlankFunc , work , 8 );
@@ -474,6 +505,7 @@ void  DUP_FIT_TermFitting( FITTING_WORK *work )
 {
   u8 i;
   INFOWIN_Exit();
+  DUP_FIT_TermMessage( work );
 
   DUP_EFFECT_TermCell( work );
   GFL_CLACT_WK_Remove( work->buttonCell[0] );
@@ -657,9 +689,55 @@ FITTING_RETURN  DUP_FIT_LoopFitting( FITTING_WORK *work )
       GFL_BG_SetScrollReq( FIT_FRAME_SUB_CURTAIN_L , GFL_BG_SCROLL_X_SET , 128 - work->curtainScrollCnt );
       GFL_BG_SetScrollReq( FIT_FRAME_SUB_CURTAIN_R , GFL_BG_SCROLL_X_SET , -128 + work->curtainScrollCnt );
     }
+    else if( work->isDispMsg == FALSE )
+    {
+      work->isDispMsg = TRUE;
+      work->isUpdateMsg = TRUE;
+      GFL_BG_ClearScreenCode( FIT_FRAME_SUB_MSG , 0 );
+      work->msgWin = GFL_BMPWIN_Create( FIT_FRAME_SUB_MSG , 
+                        DUP_MSGWIN_LEFT , DUP_MSGWIN_TOP ,
+                        DUP_MSGWIN_WIDTH , DUP_MSGWIN_HEIGHT ,
+                        FIT_PLT_BG_SUB_FONT , GFL_BMP_CHRAREA_GET_B );
+      GFL_BMP_Clear( GFL_BMPWIN_GetBmp(work->msgWin) , 0xf );
+      
+      {
+        WORDSET *wordSet = WORDSET_Create( work->heapId );
+        STRBUF *workStr = GFL_MSG_CreateString( work->msgHandle , DUP_MSG_01 ); 
+        STRBUF *srcStr  = GFL_STR_CreateBuffer( 128 , work->heapId );
+
+        WORDSET_RegisterPokeNickName( wordSet , 0 , work->initWork->musPoke->pokePara );
+
+        WORDSET_ExpandStr( wordSet , srcStr , workStr );
+        PRINTSYS_PrintQueColor( work->printQue , GFL_BMPWIN_GetBmp( work->msgWin ) , 
+                2 , 2 , srcStr , work->fontHandle , PRINTSYS_LSB_Make(1,2,0) );
+        GFL_STR_DeleteBuffer( workStr );
+        GFL_STR_DeleteBuffer( srcStr );
+        WORDSET_Delete( wordSet );
+
+      }
+
+      TalkWinFrame_Write( work->msgWin , WINDOW_TRANS_ON_V , 
+                          FIT_MSGWIN_CHAR_TOP , FIT_PLT_BG_SUB_MSGWIN );
+    }
   }
   else
   {
+    if( work->isDispMsg == TRUE )
+    {
+      work->isDispMsg = FALSE;
+      GFL_BG_SetPriority( FIT_FRAME_SUB_MSG , 3 );
+      GFL_BG_SetPriority( FIT_FRAME_SUB_TOP , 0 );
+      GFL_BG_SetPriority( GFL_BG_FRAME1_S , 1 );
+      GFL_BG_SetPriority( GFL_BG_FRAME2_S , 2 );
+      
+      GFL_ARC_UTIL_TransVramScreen( ARCID_DRESSUP_GRA , NARC_dressup_gra_test_bg_u_NSCR , 
+                  FIT_FRAME_SUB_BG ,  0 , 0, FALSE , work->heapId );
+      GFL_BG_LoadScreenV_Req( FIT_FRAME_SUB_BG );
+      
+      GFL_BMPWIN_Delete( work->msgWin );
+
+    }
+    else
     if( work->curtainScrollCnt > 0 )
     {
       work->curtainScrollCnt -= DUP_CURTAIN_SCROLL_VALUE;
@@ -667,6 +745,20 @@ FITTING_RETURN  DUP_FIT_LoopFitting( FITTING_WORK *work )
       GFL_BG_SetScrollReq( FIT_FRAME_SUB_CURTAIN_R , GFL_BG_SCROLL_X_SET , -128 + work->curtainScrollCnt );
     }
   }
+
+  if( work->isUpdateMsg == TRUE &&
+      PRINTSYS_QUE_IsFinished( work->printQue ) == TRUE )
+  {
+    work->isUpdateMsg = FALSE;
+    GFL_BMPWIN_MakeTransWindow_VBlank(work->msgWin);
+    GFL_BG_SetPriority( FIT_FRAME_SUB_TOP , 1 );
+    GFL_BG_SetPriority( GFL_BG_FRAME1_S , 2 );
+    GFL_BG_SetPriority( GFL_BG_FRAME2_S , 3 );
+    GFL_BG_SetPriority( FIT_FRAME_SUB_MSG , 0 );
+  }
+
+  //メッセージ
+  PRINTSYS_QUE_Main( work->printQue );
 
 #if DEB_ARI
   if( GFL_UI_KEY_GetCont() & PAD_BUTTON_SELECT &&
@@ -840,7 +932,7 @@ static void DUP_FIT_SetupGraphic( FITTING_WORK *work )
     static const GFL_BG_BGCNT_HEADER header_sub3 = {
       0, 0, 0x800, 0, // scrX, scrY, scrbufSize, scrbufofs,
       GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
-      GX_BG_SCRBASE_0x7800, GX_BG_CHARBASE_0x08000,0x8000,
+      GX_BG_SCRBASE_0x7800, GX_BG_CHARBASE_0x10000,0x8000,
       GX_BG_EXTPLTT_01, 0, 0, 0, FALSE  // pal, pri, areaover, dmy, mosaic
     };
 
@@ -914,6 +1006,8 @@ static void DUP_FIT_SetupBgObj( FITTING_WORK *work )
   GFL_ARCHDL_UTIL_TransVramPalette( arcHandle , NARC_dressup_gra_test_bg_NCLR , 
                     PALTYPE_SUB_BG , 0 , 0 , work->heapId );
   GFL_ARCHDL_UTIL_TransVramBgCharacter( arcHandle , NARC_dressup_gra_test_bg_u3_NCGR ,
+                    FIT_FRAME_SUB_TOP , 0 , 0, FALSE , work->heapId );
+  GFL_ARCHDL_UTIL_TransVramBgCharacter( arcHandle , NARC_dressup_gra_test_bg_u_NCGR ,
                     FIT_FRAME_SUB_BG , 0 , 0, FALSE , work->heapId );
 
   GFL_ARCHDL_UTIL_TransVramScreen( arcHandle , NARC_dressup_gra_test_bg_u3_NSCR , 
@@ -1240,6 +1334,28 @@ static void DUP_FIT_TermItem( FITTING_WORK *work )
   DUP_FIT_ITEMGROUP_DeleteGroup( work->itemGroupAnime );
   
   MUS_ITEM_DRAW_TermSystem( work->itemDrawSys );
+}
+
+static void DUP_FIT_InitMessage( FITTING_WORK *work )
+{
+  work->fontHandle = GFL_FONT_Create( ARCID_FONT , NARC_font_large_nftr , GFL_FONT_LOADTYPE_FILE , FALSE , work->heapId );
+  
+  //メッセージ
+  work->msgHandle = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL , ARCID_MESSAGE , NARC_message_dress_up_dat , work->heapId );
+
+  GFL_ARC_UTIL_TransVramPalette( ARCID_FONT , NARC_font_default_nclr , PALTYPE_SUB_BG , FIT_PLT_BG_SUB_FONT*16*2, 16*2, work->heapId );
+  
+  work->printQue = PRINTSYS_QUE_Create( work->heapId );
+
+  BmpWinFrame_GraphicSet( FIT_FRAME_SUB_BG , FIT_MSGWIN_CHAR_TOP , FIT_PLT_BG_SUB_MSGWIN ,
+                          0 , work->heapId );
+}
+
+static void DUP_FIT_TermMessage( FITTING_WORK *work )
+{
+  PRINTSYS_QUE_Delete( work->printQue );
+  GFL_MSG_Delete( work->msgHandle );
+  GFL_FONT_Delete( work->fontHandle );
 }
 
 #pragma mark [> FittingFunc
@@ -3176,6 +3292,9 @@ static void DUP_EFFECT_UpdateCell( FITTING_WORK *work )
   u8 i;
   for( i=0;i<EFFECT_UP_NUM;i++ )
   {
+    //
+
+    GFL_CLACT_WK_SetBgPri( work->clwkEffectUp[i] , GFL_BG_GetPriority(FIT_FRAME_SUB_TOP) );
     GFL_CLACT_WK_SetObjMode( work->clwkEffectUp[i], GX_OAM_MODE_NORMAL );
     if( work->effUpCnt[i] == 0 )
     {
