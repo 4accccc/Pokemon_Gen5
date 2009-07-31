@@ -36,11 +36,14 @@
 #include "app/bag/itemmenu_local.h" //ItemMenuProcData
 #include "app/pokelist.h"   //PokeList_ProcData・PLIST_DATA
 #include "app/p_status.h"   //PokeList_ProcData・PLIST_DATA
+#include "app/townmap.h" //TOWNMAP_PARAM
 
-extern const GFL_PROC_DATA DebugAriizumiMainProcData;
+extern const GFL_PROC_DATA TownMap_ProcData;
+extern const GFL_PROC_DATA TrainerCardProcData;
 extern const GFL_PROC_DATA TrainerCardProcData;
 FS_EXTERN_OVERLAY(bag);
 FS_EXTERN_OVERLAY(poke_status);
+FS_EXTERN_OVERLAY(townmap);
 
 //======================================================================
 //  define
@@ -219,7 +222,9 @@ static const FMENU_SUBPROC_DATA FldMapMenu_SubProcData[FMENU_APP_MAX] =
     FMenuReturnProc_PokeStatus
   },
   { //  FMENU_APP_TOWNMAP,
-    0 , NULL , NULL
+    FS_OVERLAY_ID(townmap),
+    &TownMap_ProcData,
+    NULL
   },
 };
 
@@ -794,6 +799,15 @@ static const BOOL FMenuReturnProc_Bag(FMENU_EVENT_WORK* mwk)
     return FALSE;
   case BAG_NEXTPROC_RETURN:      // めにゅーもどり
     return FALSE;
+  case BAG_NEXTPROC_TOWNMAP:
+    {
+      TOWNMAP_PARAM* pTown = GFL_HEAP_AllocClearMemory( HEAPID_PROC , sizeof(TOWNMAP_PARAM) );
+      pTown->mode			= TOWNMAP_MODE_MAP;
+      pTown->is_debug	= TRUE;
+      FMenu_SetNextSubProc( mwk ,FMENU_APP_TOWNMAP , pTown );
+    }
+    return TRUE;
+    
   case BAG_NEXTPROC_WAZASET:
   case BAG_NEXTPROC_ITEMEQUIP:  //装備　アイテムリストに戻る
   case BAG_NEXTPROC_HAVE:    // もたせる => ポケモンリスト起動

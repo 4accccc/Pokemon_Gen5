@@ -670,6 +670,10 @@ static void _itemSelectWait(FIELD_ITEMMENU_WORK* pWork)
     else if(BAG_MENU_YAMERU==pWork->ret_code2){
       _CHANGE_STATE(pWork,_itemKindSelectMenu);
     }
+    else if(pWork->ret_item == ITEM_TAUNMAPPU){
+      pWork->ret_code = BAG_NEXTPROC_TOWNMAP;
+      _CHANGE_STATE(pWork,NULL);
+    }
     else{
       pWork->ret_code = BAG_NEXTPROC_HAVE;
       _CHANGE_STATE(pWork,NULL);
