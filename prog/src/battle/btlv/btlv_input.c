@@ -305,6 +305,8 @@ struct _BTLV_INPUT_WORK
   GFL_TCB*              main_loop;      //scdにメインループが存在しないのでBTLV_EFFECTのTCBを間借りしてメインを回す
 
 	HEAPID                heapID;
+
+  u8                    button_exist[ 6 ];  //押せるボタンかどうかチェック
 };
 
 typedef struct
@@ -578,9 +580,15 @@ void BTLV_INPUT_CreateScreen( BTLV_INPUT_WORK* biw, BTLV_INPUT_SCRTYPE type, voi
     break;
   case BTLV_INPUT_SCRTYPE_COMMAND:
     { 
+      int i;
       TCB_TRANSFORM_WORK* ttw = GFL_HEAP_AllocClearMemory( biw->heapID, sizeof( TCB_TRANSFORM_WORK ) );
       biw->tcb_execute_flag = 1;
       ttw->biw = biw;
+
+      for( i = 0 ; i < 4 ; i++ )
+      { 
+        biw->button_exist[ i ] = TRUE;  //押せるボタンかどうかチェック
+      }
 
       if( biw->scr_type == BTLV_INPUT_SCRTYPE_WAZA )
       { 
@@ -634,6 +642,7 @@ void BTLV_INPUT_CreateScreen( BTLV_INPUT_WORK* biw, BTLV_INPUT_SCRTYPE type, voi
 //============================================================================================
 int BTLV_INPUT_CheckInput( BTLV_INPUT_WORK* biw, const GFL_UI_TP_HITTBL* tp_tbl )
 { 
+  int hit;
   //下画面変形中は入力を無視
   if( biw->tcb_execute_flag )
   { 
@@ -642,7 +651,16 @@ int BTLV_INPUT_CheckInput( BTLV_INPUT_WORK* biw, const GFL_UI_TP_HITTBL* tp_tbl 
 
   //本来はここでキー入力の方も処理したい
 
-  return GFL_UI_TP_HitTrg( tp_tbl );
+  hit = GFL_UI_TP_HitTrg( tp_tbl );
+
+  if( hit != GFL_UI_TP_HIT_NONE )
+  { 
+    if( biw->button_exist[ hit ] == FALSE )
+    { 
+      hit = GFL_UI_TP_HIT_NONE;
+    }
+  }
+  return hit;
 }
 
 //============================================================================================
@@ -1301,6 +1319,7 @@ static  void  BTLV_INPUT_CreateWazaScreen( BTLV_INPUT_WORK* biw, const BTLV_INPU
         PRINTSYS_Print( biw->bmp_data, pp_pos[ i ][ 0 ] - ( dot_len / 2 ), pp_pos[ i ][ 1 ], pp_p, biw->font );
         GFL_FONTSYS_SetColor( letter, shadow, back );
       }
+      biw->button_exist[ i ] = ( biwp->pp[ i ] != 0 );  //押せるボタンかどうかチェック
     }
   }
 
@@ -1350,6 +1369,7 @@ static  void  BTLV_INPUT_CreateDirScreen( BTLV_INPUT_WORK* biw, const BTLV_INPUT
                       monsname_pos[ i ][ 1 ], monsname_p, biw->font );
       GFL_STR_DeleteBuffer( monsname_src );
     }
+    biw->button_exist[ i ] = ( bisp->bidp[ i ].hp != 0 );  //押せるボタンかどうかチェック
   }
 
   WORDSET_Delete( wordset );

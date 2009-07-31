@@ -328,11 +328,11 @@ static const GFL_UI_TP_HITTBL BattleMenuTouchData[] = {
 ///技選択タッチパネル領域設定
 static const GFL_UI_TP_HITTBL SkillMenuTouchData[] = {
   //UP DOWN LEFT RIGHT
-  {0x12*8, 0x18*8, 0x16*8, 255},  //キャンセル
   {3*8, 10*8, 0*8, 0x10*8},   //技1
   {3*8, 10*8, 0x10*8, 255}, //技2
   {0xb*8, 0x12*8, 0*8, 0x10*8}, //技3
   {0xb*8, 0x12*8, 0x10*8, 255}, //技4
+  {0x12*8, 0x18*8, 0x16*8, 255},  //キャンセル
   { GFL_UI_TP_HIT_END, 0, 0, 0 }
 };
 
@@ -505,18 +505,17 @@ static BOOL selectWaza_loop( int* seq, void* wk_adrs )
   if( hit != GFL_UI_TP_HIT_NONE )
   {
     //キャンセルが押された
-    if( hit == 0 )
+    if( hit == 4 )
     {
       SePlayCancel();
       BTL_ACTION_SetNULL( wk->destActionParam );
       return TRUE;
     }
-    else if( hit <= BPP_WAZA_GetCount( wk->bpp ) )
+    else if( hit < BPP_WAZA_GetCount( wk->bpp ) )
     {
       WazaID waza;
-
-      //キャンセルが先頭にはいっているので、デクリメントして正規の選択位置にする
-      waza = BPP_WAZA_GetID( wk->bpp, --hit );
+     
+      waza = BPP_WAZA_GetID( wk->bpp, hit );
       BTL_ACTION_SetFightParam( wk->destActionParam, waza, BTL_POS_NULL );
 
       SePlayDecide();
@@ -767,12 +766,12 @@ static void stwdraw_button( const u8* pos, u8 count, u8 format, BTLV_SCD* wk )
     vpos = BTL_MAIN_BtlPosToViewPos( wk->mainModule, *pos );
     vpos -= BTLV_MCSS_POS_A;
 
-    bisp.bidp[ vpos ].hp = PP_Get( pp, ID_PARA_hp, NULL );
+    bisp.bidp[ vpos ].hp = BPP_GetValue( bpp, BPP_HP );
     if( bisp.bidp[ vpos ].hp )
     {
-      int mons_no = PP_Get( pp, ID_PARA_monsno, NULL );
+      int mons_no = BPP_GetMonsNo( bpp );
       bisp.bidp[ vpos ].pp = pp;
-      bisp.bidp[ vpos ].hpmax = PP_Get( pp, ID_PARA_hpmax, NULL );
+      bisp.bidp[ vpos ].hpmax = BPP_GetValue( bpp, BPP_MAX_HP );
       bisp.bidp[ vpos ].exist = 1;
       if( ( mons_no == MONSNO_NIDORAN_M ) || ( mons_no == MONSNO_NIDORAN_F ) )
       {
@@ -780,10 +779,10 @@ static void stwdraw_button( const u8* pos, u8 count, u8 format, BTLV_SCD* wk )
       }
       else
       {
-        bisp.bidp[ vpos ].sex = PP_Get( pp, ID_PARA_sex, NULL );
+        bisp.bidp[ vpos ].sex = BPP_GetValue( bpp, BPP_SEX );
       }
 
-      if( PP_Get( pp, ID_PARA_condition, NULL ) )
+      if( BPP_GetPokeSick( bpp ) )
       {
         bisp.bidp[ vpos ].status = BTLV_INPUT_STATUS_NG;
       }
@@ -858,7 +857,8 @@ static BOOL selectTarget_loop( int* seq, void* wk_adrs )
   switch( *seq ){
   case 0:
     {
-      int hit = GFL_UI_TP_HitTrg( PokeSeleMenuTouchData );
+      int hit = BTLV_INPUT_CheckInput( wk->biw, PokeSeleMenuTouchData );
+//      int hit = GFL_UI_TP_HitTrg( PokeSeleMenuTouchData );
       if( hit != GFL_UI_TP_HIT_NONE )
       {
 //        Sub_TouchEndDelete( wk->bip, TRUE, TRUE );
