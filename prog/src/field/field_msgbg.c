@@ -24,6 +24,10 @@
 #include "sound/pm_sndsys.h"
 #include "sound/wb_sound_data.sadl"
 
+/*
+extern GFL_BMPWIN * TALKMSGWIN_GetBmpWin( TALKMSGWIN_SYS* tmsgwinSys, int tmsgwinIdx );
+*/
+
 //======================================================================
 //	define
 //======================================================================
@@ -1405,7 +1409,39 @@ struct _TAG_FLDTALKMSGWIN
   STRBUF *strBuf;
   int talkMsgWinIdx;
   TALKMSGWIN_SYS *talkMsgWinSys; //FLDMSGBGより
+  
+  s16 cursor_anm_no;
+  s16 cursor_anm_frame;
+  u16 cursor_put_flag;
+  u16 cursor_clear_flag;
+  GFL_BMP_DATA *cursor_bmp;
 };
+
+#if 0
+const u8 ALIGN4 skip_cursor_Character[128] = {
+0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00, 0x00,0x00,0x00,0x00,0x44,0x44,0x44,0x44,
+0x42,0x44,0x44,0x44,0x20,0x44,0x44,0x24, 0x00,0x42,0x44,0x22,0x00,0x20,0x24,0x02,
+0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00, 0x00,0x00,0x00,0x00,0x24,0x00,0x00,0x00,
+0x22,0x00,0x00,0x00,0x02,0x00,0x00,0x00, 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,
+
+0x00,0x00,0x22,0x00,0x00,0x00,0x00,0x00, 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,
+0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00, 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,
+0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00, 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,
+0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00, 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,
+};
+#else
+const u8 ALIGN4 skip_cursor_Character[128] = {
+0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00, 0x00,0x00,0x00,0x00,0x22,0x22,0x22,0x22,
+0x21,0x22,0x22,0x22,0x10,0x22,0x22,0x12, 0x00,0x21,0x22,0x11,0x00,0x10,0x12,0x01,
+0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00, 0x00,0x00,0x00,0x00,0x12,0x00,0x00,0x00,
+0x11,0x00,0x00,0x00,0x01,0x00,0x00,0x00, 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,
+
+0x00,0x00,0x11,0x00,0x00,0x00,0x00,0x00, 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,
+0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00, 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,
+0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00, 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,
+0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00, 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,
+};
+#endif
 
 //--------------------------------------------------------------
 /**
@@ -1427,6 +1463,25 @@ static void fldTalkMsgWin_Add(
   
   tmsg->talkMsgWinSys = fmb->talkMsgWinSys;
   tmsg->talkMsgWinIdx = idx;
+  
+  { //キー送りカーソル
+#if 0
+	  void * arc;
+	  NNSG2dCharacterData *dat;
+    
+    arc = GFL_ARC_UTIL_Load( ARCID_PL_KEYCURSOR, 0, 0, fmb->heapID );
+    GF_ASSERT( arc != NULL );
+		NNS_G2dGetUnpackedBGCharacterData( arc, &dat );
+       
+    tmsg->cursor_bmp = GFL_BMP_CreateWithData(
+        (u8*)dat->pRawData, 2, 2, GFL_BMP_16_COLOR, fmb->heapID );
+    GFL_HEAP_FreeMemory( arc );
+#else
+    tmsg->cursor_bmp = GFL_BMP_CreateWithData(
+        (u8*)skip_cursor_Character,
+        2, 2, GFL_BMP_16_COLOR, fmb->heapID );
+#endif
+  }
 
 #if 0 
   TALKMSGWIN_CreateFloatWindowIdx(
@@ -1519,6 +1574,11 @@ void FLDTALKMSGWIN_Delete( FLDTALKMSGWIN *tmsg )
   }
   
   TALKMSGWIN_DeleteWindow( tmsg->talkMsgWinSys, tmsg->talkMsgWinIdx );
+  
+  { //キー送りカーソル
+		GFL_BMP_Delete( tmsg->cursor_bmp );
+  }
+
   GFL_HEAP_FreeMemory( tmsg );
 }
 
@@ -1534,7 +1594,8 @@ BOOL FLDTALKMSGWIN_Print( FLDTALKMSGWIN *tmsg )
   int trg,cont;
   PRINTSTREAM_STATE state;
   PRINT_STREAM *stream;
-  
+  PRINTSTREAM_PAUSE_TYPE pause_type;
+
   if( TALKMSGWIN_CheckPrintOn(
         tmsg->talkMsgWinSys,tmsg->talkMsgWinIdx) == FALSE ){
     return( FALSE );
@@ -1548,6 +1609,8 @@ BOOL FLDTALKMSGWIN_Print( FLDTALKMSGWIN *tmsg )
   
   switch( state ){
   case PRINTSTREAM_STATE_RUNNING: //実行中
+    tmsg->cursor_clear_flag = FALSE;
+
     if( (trg & PAD_BUTTON_A) ){
       tmsg->flag_key_trg = TRUE;
     }
@@ -1563,6 +1626,56 @@ BOOL FLDTALKMSGWIN_Print( FLDTALKMSGWIN *tmsg )
       PMSND_PlaySystemSE( SEQ_SE_MESSAGE );
       PRINTSYS_PrintStreamReleasePause( stream );
       tmsg->flag_key_trg = FALSE;
+      
+      if( tmsg->cursor_put_flag == TRUE ){
+        u16 x,y,offs;
+        u16 tbl[3] = { 0, 1, 2 };
+        GFL_BMPWIN *twin_bmp = TALKMSGWIN_GetBmpWin(
+            tmsg->talkMsgWinSys,tmsg->talkMsgWinIdx );
+		    GFL_BMP_DATA *bmp = GFL_BMPWIN_GetBmp( twin_bmp );
+        
+        x = GFL_BMP_GetSizeX( bmp ) - 11;
+        y = GFL_BMP_GetSizeY( bmp ) - 9;
+        offs = tbl[tmsg->cursor_anm_no];
+
+        GFL_BMP_Fill( bmp, x, y+offs, 10, 7, 0x0f );
+		    GFL_BMPWIN_TransVramCharacter( twin_bmp );
+        
+        tmsg->cursor_anm_no = 0;
+        tmsg->cursor_anm_frame = 0;
+        tmsg->cursor_put_flag = FALSE;
+        tmsg->cursor_clear_flag = TRUE;
+      }
+    }
+    
+    pause_type = PRINTSYS_PrintStreamGetPauseType( stream );
+    
+//    if( pause_type == PRINTSTREAM_PAUSE_LINEFEED ){
+    if( tmsg->cursor_clear_flag == FALSE ){
+      u16 x,y,offs;
+      u16 tbl[3] = { 0, 1, 2 };
+      GFL_BMPWIN *twin_bmp = TALKMSGWIN_GetBmpWin(
+          tmsg->talkMsgWinSys,tmsg->talkMsgWinIdx );
+		  GFL_BMP_DATA *bmp = GFL_BMPWIN_GetBmp( twin_bmp );
+      
+      x = GFL_BMP_GetSizeX( bmp ) - 11;
+      y = GFL_BMP_GetSizeY( bmp ) - 9;
+      offs = tbl[tmsg->cursor_anm_no];
+      
+      GFL_BMP_Fill( bmp, x, y+offs, 10, 7, 0x0f );
+      
+      tmsg->cursor_anm_frame++;
+      if( tmsg->cursor_anm_frame >= 4 ){
+        tmsg->cursor_anm_frame = 0;
+        tmsg->cursor_anm_no++;
+        tmsg->cursor_anm_no %= 3;
+      }
+		  
+      offs = tbl[tmsg->cursor_anm_no];
+      
+      GFL_BMP_Print( tmsg->cursor_bmp, bmp, 0, 2, x, y+offs, 10, 7, 0x00 );
+		  GFL_BMPWIN_TransVramCharacter( twin_bmp );
+      tmsg->cursor_put_flag = TRUE;
     }
     break;
   case PRINTSTREAM_STATE_DONE: //終了

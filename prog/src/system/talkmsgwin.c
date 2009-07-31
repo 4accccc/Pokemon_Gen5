@@ -469,7 +469,12 @@ PRINT_STREAM*	TALKMSGWIN_GetPrintStream( TALKMSGWIN_SYS* tmsgwinSys, int tmsgwin
 }
 
 //------------------------------------------------------------------
+GFL_BMPWIN * TALKMSGWIN_GetBmpWin( TALKMSGWIN_SYS* tmsgwinSys, int tmsgwinIdx )
+{
+	GF_ASSERT( (tmsgwinIdx>=0)&&(tmsgwinIdx<TALKMSGWIN_NUM) );
 
+	return tmsgwinSys->tmsgwin[tmsgwinIdx].bmpwin; 
+}
 
 
 
