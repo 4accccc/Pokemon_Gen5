@@ -1967,8 +1967,8 @@ static void OBJNUMBER_Start( OBJNUMBER_WORK *p_wk, int fig )
 	GF_ASSERT( fig < CLWK_NUMBER_MAX );
 	if( p_wk->is_end[ fig ] == FALSE )
 	{	
-		//3‚ÌŒ…‚ª0‚¨‚Æ‚«‚Í‚â‚ç‚È‚¢
-		if( fig == 2 && p_wk->number[fig] == 0 )
+		//3‚ÌŒ…‚ª0‚Ì‚Æ‚«‚Í‚â‚ç‚È‚¢
+		if( fig == 0 && p_wk->number[CLWK_NUMBER_MAX -1 - fig] == 0 )
 		{	
 			p_wk->is_end[fig]	= TRUE;
 		}
