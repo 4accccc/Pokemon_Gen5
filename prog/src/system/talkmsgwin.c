@@ -559,13 +559,13 @@ static void setupWindow(	TALKMSGWIN_SYS*		tmsgwinSys,
 
 		if(width > (setup->winsx * 8)){
 			tmsgwin->writex = 0;
-			GF_ASSERT(0);
+      OS_Printf("文字幅オーバー！！！\n");
 		} else {
 			tmsgwin->writex = (setup->winsx*8 - width)/2;
 		}
 		if(height > (setup->winsy * 8)){
 			tmsgwin->writey = 0;
-			GF_ASSERT(0);
+      OS_Printf("文字列オーバー！！！\n");
 		} else {
 #ifndef MSGPOS_090730ROM
 			tmsgwin->writey = (setup->winsy*8 - height)/2;
