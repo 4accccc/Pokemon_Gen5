@@ -1322,6 +1322,7 @@ static  void  BTLV_INPUT_CreateWazaScreen( BTLV_INPUT_WORK* biw, const BTLV_INPU
       biw->button_exist[ i ] = ( biwp->pp[ i ] != 0 );  //押せるボタンかどうかチェック
     }
   }
+  biw->button_exist[ i ] = TRUE;  //押せるボタンかどうかチェック
 
   WORDSET_Delete( wordset );
   GFL_STR_DeleteBuffer( wazaname_p );
@@ -1371,6 +1372,7 @@ static  void  BTLV_INPUT_CreateDirScreen( BTLV_INPUT_WORK* biw, const BTLV_INPUT
     }
     biw->button_exist[ i ] = ( bisp->bidp[ i ].hp != 0 );  //押せるボタンかどうかチェック
   }
+  biw->button_exist[ i ] = TRUE;  //押せるボタンかどうかチェック
 
   WORDSET_Delete( wordset );
   GFL_STR_DeleteBuffer( monsname_p );
