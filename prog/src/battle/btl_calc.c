@@ -317,7 +317,7 @@ u16 BTL_CALC_RecvWeatherDamage( const BTL_POKEPARAM* bpp, BtlWeather weather )
 //=============================================================================================
 void BTL_CALC_WazaSickContToBppSickCont( WAZA_SICKCONT_PARAM wazaSickCont, const BTL_POKEPARAM* attacker, BPP_SICK_CONT* sickCont )
 {
-  switch( sickCont->type ){
+  switch( wazaSickCont.type ){
   case WAZASICK_CONT_POKE:
     GF_ASSERT(attacker!=NULL);
     {

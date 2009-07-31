@@ -119,6 +119,7 @@ static BOOL SubProc_AI_NotifyPokeData( BTL_CLIENT* wk, int* seq );
 static BOOL SubProc_UI_Initialize( BTL_CLIENT* wk, int* seq );
 static BOOL SubProc_AI_Initialize( BTL_CLIENT* wk, int *seq );
 static BOOL SubProc_UI_SelectAction( BTL_CLIENT* wk, int* seq );
+static void _get_use_item( BTL_CLIENT* wk, const BTL_POKEPARAM* bpp, u8 procPokeIdx, u16* itemID, u16* targetID );
 static BOOL is_action_unselectable( BTL_CLIENT* wk, const BTL_POKEPARAM* bpp, BTL_ACTION_PARAM* action );
 static BOOL is_waza_unselectable( BTL_CLIENT* wk, const BTL_POKEPARAM* bpp, BTL_ACTION_PARAM* action );
 static void setWaruagakiAction( BTL_ACTION_PARAM* dst, BTL_CLIENT* wk, const BTL_POKEPARAM* bpp );
@@ -374,6 +375,7 @@ static BOOL SubProc_UI_SelectAction( BTL_CLIENT* wk, int* seq )
     SEQ_CHECK_DONE,
     SEQ_CHECK_ESCAPE,
     SEQ_CHECK_FIGHT,
+    SEQ_CHECK_ITEM,
     SEQ_SELECT_WAZA_START,
     SEQ_SELECT_WAZA_WAIT,
     SEQ_CHECK_WAZA_TARGET,
@@ -425,6 +427,9 @@ static BOOL SubProc_UI_SelectAction( BTL_CLIENT* wk, int* seq )
       // 「たたかう」を選んだら、各種条件分岐
       case BTL_ACTION_FIGHT:
         (*seq) = SEQ_CHECK_FIGHT;
+        break;
+      case BTL_ACTION_ITEM:
+//        (*seq) = SEQ_CHECK_ITEM;
         break;
       }
     }
@@ -482,8 +487,14 @@ static BOOL SubProc_UI_SelectAction( BTL_CLIENT* wk, int* seq )
     break;
 
   case SEQ_SELECT_TARGET_WAIT:
-    if( BTLV_UI_SelectTarget_Wait(wk->viewCore) ){
-      (*seq) = SEQ_CHECK_DONE;
+    {
+      BtlvResult result = BTLV_UI_SelectTarget_Wait( wk->viewCore );
+      if( result == BTLV_RESULT_DONE ){
+        (*seq) = SEQ_CHECK_DONE;
+      }else if( result == BTLV_RESULT_CANCEL ){
+        BTL_Printf("もどるおされた\n");
+        (*seq) = SEQ_SELECT_WAZA_START;
+      }
     }
     break;
 
@@ -563,6 +574,20 @@ static BOOL SubProc_UI_SelectAction( BTL_CLIENT* wk, int* seq )
     }
     break;
 
+  case SEQ_CHECK_ITEM:
+    // @@@ 仮作成でーす。ホントは下画面操作が入る。
+    {
+      u16 itemID, targetIdx;
+      _get_use_item( wk, wk->procPoke, wk->procPokeIdx, &itemID, &targetIdx );
+      if( itemID != ITEM_DUMMY_DATA ){
+        BTL_ACTION_SetItemParam( wk->procAction, itemID, targetIdx );
+        (*seq)=SEQ_RETURN_START;
+      }else{
+        (*seq)=SEQ_CHECK_ACTION;
+      }
+    }
+    break;
+
   case SEQ_CANT_ESCAPE:
     if( BTLV_WaitMsg(wk->viewCore) )
     {
@@ -603,6 +628,84 @@ static BOOL SubProc_UI_SelectAction( BTL_CLIENT* wk, int* seq )
   }
 
   return FALSE;
+}
+// @@@ すごく仮作成なアイテム自動選択処理（いずれ消します）
+static void _get_use_item( BTL_CLIENT* wk, const BTL_POKEPARAM* bpp, u8 procPokeIdx, u16* itemID, u16* targetID )
+{
+  u8 pokeID = BPP_GetID( bpp );
+  u8 clientID = BTL_MAINUTIL_PokeIDtoClientID( pokeID );
+  const BTL_PARTY* party = BTL_POKECON_GetPartyDataConst( wk->pokeCon, clientID );
+
+  *itemID = ITEM_DUMMY_DATA;
+
+  // 誰か死んでたら げんきのかけら
+  {
+    int i, cnt = BTL_PARTY_GetMemberCount( party );
+    const BTL_POKEPARAM* member;
+    for(i=0; i<cnt; ++i){
+      member = BTL_PARTY_GetMemberDataConst( party, i );
+      if( BPP_IsDead(member) && (member != bpp) ){
+        *itemID = ITEM_GENKINOKAKERA;
+        *targetID = i;
+        return;
+      }
+    }
+  }
+
+  // 自分が状態異常なら、それぞれ対応した治療薬
+  {
+    PokeSick sick = BPP_GetPokeSick( bpp );
+    if( sick != POKESICK_NULL )
+    {
+      switch( sick ){
+      case POKESICK_DOKU:    *itemID = ITEM_DOKUKESI; break;
+      case POKESICK_MAHI:    *itemID = ITEM_MAHINAOSI; break;
+      case POKESICK_YAKEDO:  *itemID = ITEM_YAKEDONAOSI; break;
+      case POKESICK_NEMURI:  *itemID = ITEM_NEMUKEZAMASI; break;
+      case POKESICK_KOORI:   *itemID = ITEM_KOORINAOSI; break;
+      }
+      *targetID = procPokeIdx;
+      return;
+    }
+
+    if( BPP_CheckSick(bpp, WAZASICK_KONRAN) ){
+      *itemID = ITEM_NANDEMONAOSI;
+      *targetID = procPokeIdx;
+      return;
+    }
+  }
+
+  // 自分の体力が半分以下なら、回復薬
+  {
+    u32 maxHP = BPP_GetValue( bpp, BPP_MAX_HP );
+    if( BPP_GetValue(bpp, BPP_HP) < (maxHP/2) )
+    {
+      *itemID = ITEM_IIKIZUGUSURI;
+      *targetID = procPokeIdx;
+      return;
+    }
+  }
+
+  // それ以外なら、まだ天井まで上がりきっていない能力のアップ効果
+  {
+    u8 tbl[ BPP_AGILITY+1 - BPP_ATTACK ];
+    u8 val, cnt, i;
+    for(val=BPP_ATTACK,cnt=0; val<BPP_AGILITY; ++val){
+      if( BPP_IsRankEffectValid(bpp, val, 1) ){
+        tbl[cnt++] = val;
+      }
+    }
+    i = GFL_STD_MtRand( cnt );
+    val = tbl[i];
+    switch( val ){
+    case BPP_ATTACK:      *itemID = ITEM_PURASUPAWAA; break;
+    case BPP_DEFENCE:     *itemID = ITEM_DHIFENDAA; break;
+    case BPP_SP_ATTACK:   *itemID = ITEM_SUPESYARUAPPU; break;
+    case BPP_SP_DEFENCE:  *itemID = ITEM_SUPESYARUGAADO; break;
+    case BPP_AGILITY:     *itemID = ITEM_SUPIIDAA; break;
+    }
+    *targetID = procPokeIdx;
+  }
 }
 
 //----------------------------------------------------------------------------------

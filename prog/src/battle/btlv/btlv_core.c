@@ -472,9 +472,15 @@ void BTLV_UI_SelectTarget_Start( BTLV_CORE* core, const BTL_POKEPARAM* bpp, BTL_
  * @retval  BOOL    I—¹‚µ‚Ä‚¢‚½‚çTRUE
  */
 //=============================================================================================
-BOOL BTLV_UI_SelectTarget_Wait( BTLV_CORE* core )
+BtlvResult BTLV_UI_SelectTarget_Wait( BTLV_CORE* core )
 {
-  return mainproc_call( core );
+  if( mainproc_call(core) ){
+    if( BTLV_SCD_IsSelTargetDone(core->scrnD) ){
+      return BTLV_RESULT_DONE;
+    }
+    return BTLV_RESULT_CANCEL;
+  }
+  return BTLV_RESULT_NONE;
 }
 
 

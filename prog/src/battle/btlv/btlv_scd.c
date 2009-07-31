@@ -834,6 +834,12 @@ static BOOL stw_draw_wait( BTLV_SCD* wk )
 //=============================================================================================
 //  ワザターゲット選択（確認）処理
 //=============================================================================================
+
+BOOL BTLV_SCD_IsSelTargetDone( BTLV_SCD* wk )
+{
+  return wk->selTargetDone;
+}
+
 static BOOL selectTarget_init( int* seq, void* wk_adrs )
 {
   BTLV_SCD* wk = wk_adrs;
@@ -842,6 +848,7 @@ static BOOL selectTarget_init( int* seq, void* wk_adrs )
 
   seltgt_init_setup_work( &wk->selTargetWork, wk );
   stw_draw( &wk->selTargetWork, wk );
+  wk->selTargetDone = FALSE;
   return TRUE;
 }
 static BOOL selectTarget_loop( int* seq, void* wk_adrs )

@@ -290,6 +290,9 @@ static inline u8 BPP_SICKCONT_GetParam( BPP_SICK_CONT cont )
   if( cont.type == WAZASICK_CONT_POKETURN ){
     return cont.poketurn.param;
   }
+  if( cont.type == WAZASICK_CONT_TURN ){
+    return cont.turn.param;
+  }
   return 0;
 }
 /*
@@ -299,12 +302,19 @@ static inline void BPP_SICKCONT_AddParam( BPP_SICK_CONT* cont, u16 param )
 {
   if( cont->type == WAZASICK_CONT_PERMANENT ){
     cont->permanent.param = param;
+    return;
   }
-  if( cont->type == WAZASICK_CONT_POKE ){
+  else if( cont->type == WAZASICK_CONT_POKE ){
     cont->poke.param = param;
+    return;
   }
-  if( cont->type == WAZASICK_CONT_POKETURN ){
+  else if( cont->type == WAZASICK_CONT_POKETURN ){
     cont->poketurn.param = param;
+    return;
+  }
+  else if( cont->type == WAZASICK_CONT_TURN ){
+    cont->turn.param = param;
+    return;
   }
 }
 

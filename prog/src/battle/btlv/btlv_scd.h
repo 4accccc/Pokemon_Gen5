@@ -76,5 +76,7 @@ extern void BTLV_SCD_StartCommWaitInfo( BTLV_SCD* wk );
 extern BOOL BTLV_SCD_WaitCommWaitInfo( BTLV_SCD* wk );
 extern void BTLV_SCD_ClearCommWaitInfo( BTLV_SCD* wk );
 
+extern BOOL BTLV_SCD_IsSelTargetDone( BTLV_SCD* wk );
+
 
 #endif

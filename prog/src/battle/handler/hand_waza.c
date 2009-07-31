@@ -1674,9 +1674,10 @@ static void handler_Makituku( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowW
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
   {
     BPP_SICK_CONT cont;
+    WazaID waza = BTL_EVENT_FACTOR_GetSubID( myHandle );
 
     cont.raw = BTL_EVENTVAR_GetValue( BTL_EVAR_SICK_CONT );
-    BPP_SICKCONT_AddParam( &cont, BTL_EVENT_FACTOR_GetSubID(myHandle) );
+    BPP_SICKCONT_AddParam( &cont, waza );
     BTL_EVENTVAR_RewriteValue( BTL_EVAR_SICK_CONT, cont.raw );
   }
 }

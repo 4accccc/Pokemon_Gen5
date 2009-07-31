@@ -47,6 +47,19 @@ typedef enum {
 
 }BtlvCmd;
 
+//----------------------------------------------------------------------
+/**
+ *  戻り値チェック
+ */
+//----------------------------------------------------------------------
+typedef enum {
+
+  BTLV_RESULT_NONE = 0,
+  BTLV_RESULT_DONE,
+  BTLV_RESULT_CANCEL,
+
+}BtlvResult;
+
 
 //=============================================================================================
 /**
@@ -109,7 +122,7 @@ extern void BTLV_UI_SelectWaza_Start( BTLV_CORE* core, const BTL_POKEPARAM* bpp,
 extern BOOL BTLV_UI_SelectWaza_Wait( BTLV_CORE* core );
 
 extern void BTLV_UI_SelectTarget_Start( BTLV_CORE* core, const BTL_POKEPARAM* bpp, BTL_ACTION_PARAM* dest );
-extern BOOL BTLV_UI_SelectTarget_Wait( BTLV_CORE* core );
+extern BtlvResult BTLV_UI_SelectTarget_Wait( BTLV_CORE* core );
 
 extern void BTLV_UI_Cleanup( BTLV_CORE* core );
 
