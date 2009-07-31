@@ -1935,7 +1935,18 @@ static void OBJNUMBER_Init( OBJNUMBER_WORK *p_wk, const GRAPHIC_WORK *cp_grp, in
 		for( i = 0; i < CLWK_NUMBER_MAX; i++ )
 		{	
 			p_wk->p_clwk[i]	= GRAPHIC_GetClwk( cp_grp, CLWKID_NUMBER_TOP + i );
-			clpos.x	= 256/2 + 40 * (i-1);
+
+			//100未満なら2桁なのでセンタリング
+			if( number < 100 )
+			{	
+				//センタリング
+				clpos.x	= 256/2 + 40 * (i-1) - 20;
+			}
+			else
+			{
+				//通常処理
+				clpos.x	= 256/2 + 40 * (i-1);
+			}
 			clpos.y	= 92;
 			GFL_CLACT_WK_SetPos( p_wk->p_clwk[i], &clpos, 0 );
 			GFL_CLACT_WK_SetAffineParam( p_wk->p_clwk[i], NNS_G2D_RND_AFFINE_OVERWRITE_DOUBLE );

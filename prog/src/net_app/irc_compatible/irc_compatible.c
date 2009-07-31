@@ -1095,7 +1095,7 @@ static u32 RULE_CalcScore( u32 rhythm_score, u32 aura_score, const MYSTATUS *cp_
 		GFL_STR_DeleteBuffer( p_myname );
 	}
 
-#if 1
+#if 0
 	score	= rhythm_score*40 + aura_score*40 + name_score*20;
 	score	= score/100;
 	score	= MATH_CLAMP( score, 0, 100 );

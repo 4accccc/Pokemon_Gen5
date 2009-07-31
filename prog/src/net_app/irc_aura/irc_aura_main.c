@@ -1652,9 +1652,19 @@ static void GRAPHIC_3D_Init( GRAPHIC_3D_WORK *p_wk, HEAPID heapID )
 	GFL_G3D_Init( GFL_G3D_VMANLNK, GFL_G3D_TEX128K,
 			GFL_G3D_VMANLNK, GFL_G3D_PLT32K, 0, heapID, Graphic_3d_SetUp );
 
+#if 0
+	//éÀâe
 	p_wk->p_camera = GFL_G3D_CAMERA_CreatePerspective( CAMERA_PER_FOVY, CAMERA_PER_ASPECT,
 				CAMERA_PER_NEAR, CAMERA_PER_FER, CAMERA_PER_SCALEW, 
 				&sc_CAMERA_PER_POS, &sc_CAMERA_PER_UP, &sc_CAMERA_PER_TARGET, heapID );
+#else
+	//ê≥éÀâe
+	p_wk->p_camera = GFL_G3D_CAMERA_CreateOrtho( 
+		// const fx32 top, const fx32 bottom, const fx32 left, const fx32 right, 
+			FX32_CONST(24), -FX32_CONST(24), -FX32_CONST(32), FX32_CONST(32),
+				CAMERA_PER_NEAR, CAMERA_PER_FER, CAMERA_PER_SCALEW, 
+			&sc_CAMERA_PER_POS, &sc_CAMERA_PER_UP, &sc_CAMERA_PER_TARGET, heapID );
+#endif
 
 	//ì«Ç›çûÇ›
 	{	

@@ -291,6 +291,10 @@ typedef enum
 #define BACKOBJ_ONE_MOVE_SYNC_MAX	(160)
 #define BACKOBJ_ONE_MOVE_SYNC_DIF	(BACKOBJ_ONE_MOVE_SYNC_MAX-BACKOBJ_ONE_MOVE_SYNC_MIN)
 
+#define BACKOBJ_ONE_EMIT_SYNC_MIN	(40)
+#define BACKOBJ_ONE_EMIT_SYNC_MAX	(45)
+#define BACKOBJ_ONE_EMIT_SYNC_DIF	(BACKOBJ_ONE_EMIT_SYNC_MAX-BACKOBJ_ONE_EMIT_SYNC_MIN)
+
 enum
 {
 	BACKOBJ_SYS_MAIN,
@@ -3085,6 +3089,14 @@ static void BACKOBJ_StartEmit( BACKOBJ_WORK *p_wk, const GFL_POINT *cp_pos )
 	u16 rot;
 	GFL_POINT	end;
 
+	VecFx32	start_v;
+	VecFx32	end_v;
+	VecFx32	v;
+
+	start_v.x	= cp_pos->x << FX32_SHIFT;
+	start_v.y	= cp_pos->y << FX32_SHIFT;
+	start_v.z	= 0;
+
 	for( j = 0; j < 12; j++ )
 	{	
 		for( i = 0; i < BACKOBJ_CLWK_MAX; i++ )
@@ -3094,7 +3106,21 @@ static void BACKOBJ_StartEmit( BACKOBJ_WORK *p_wk, const GFL_POINT *cp_pos )
 				rot	= GFUser_GetPublicRand(0xFFFF);
 				end.x	= (FX_SinIdx(rot) * 256) >> FX32_SHIFT;
 				end.y	= (FX_CosIdx(rot) * 256) >> FX32_SHIFT;
-				sync	= BACKOBJ_ONE_MOVE_SYNC_MIN + GFUser_GetPublicRand(BACKOBJ_ONE_MOVE_SYNC_DIF);
+
+				end_v.x	= end.x << FX32_SHIFT;
+				end_v.y	= end.y << FX32_SHIFT;
+				end_v.z	= 0;
+
+				VEC_Subtract( &end_v, &start_v, &v );
+				VEC_Normalize( &v, &v );
+
+				end.x	= (v.x * 256) >> FX32_SHIFT;
+				end.y	= (v.y * 256) >> FX32_SHIFT;
+
+				end.x += cp_pos->x;
+				end.y	+= cp_pos->y;
+
+				sync	= BACKOBJ_ONE_EMIT_SYNC_MIN + GFUser_GetPublicRand(BACKOBJ_ONE_EMIT_SYNC_DIF);
 				BACKOBJ_ONE_Start( &p_wk->wk[i], cp_pos, &end, sync );
 				break;
 			}

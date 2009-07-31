@@ -328,9 +328,12 @@ static const LIST_SETUP_TBL sc_list_data_home[]	=
 		L"リズム（ひとり）", LISTDATA_SEQ_PROC_RHYTHM_DEBUG
 	},
 	{	
-		L"運命値チェック", LISTDATA_SEQ_PROC_NAME_DEBUG,
+		L"結果", LISTDATA_SEQ_PROC_RESULT,
 	},
 #endif
+	{	
+		L"運命値チェック", LISTDATA_SEQ_PROC_NAME_DEBUG,
+	},
 #if 0
 	{	
 		L"ランキング", LISTDATA_SEQ_PROC_RANKING_DEBUG,
@@ -699,7 +702,8 @@ static void LISTDATA_ChangeProcRhythm( DEBUG_NAGI_MAIN_WORK *p_wk )
 FS_EXTERN_OVERLAY(irc_result);
 static void LISTDATA_ChangeProcResult( DEBUG_NAGI_MAIN_WORK *p_wk )
 {	
-	p_wk->result_param.score	= 100;
+	GFL_STD_MemClear( &p_wk->result_param, sizeof(IRC_RESULT_PARAM) );
+	p_wk->result_param.score	= 80;
 	DEBUG_NAGI_COMMAND_ChangeProc( p_wk, FS_OVERLAY_ID(irc_result), &IrcResult_ProcData, &p_wk->result_param );
 }
 //----------------------------------------------------------------------------

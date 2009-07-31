@@ -25,6 +25,7 @@ typedef struct {
 	COMPATIBLE_IRC_SYS	*p_irc;		//[in]赤外線システム
 	MYSTATUS						*p_you_status;//[in]通信相手のステータス（バッファを渡してください）
 	u8									score;		//[in]ゲームの点数
+	u8									dummy[3];	//パディング
 }IRC_RESULT_PARAM;
 
 
