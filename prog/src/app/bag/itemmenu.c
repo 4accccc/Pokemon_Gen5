@@ -53,18 +53,18 @@ static const GFL_UI_TP_HITTBL bttndata[] = {  //上下左右
 
 #include "bag_btnpos.h"  //バッグの絵のタッチエリア
 
-	{	22*_1CHAR,  25*_1CHAR,   1*_1CHAR,  3*_1CHAR },  //左
-	{	22*_1CHAR,  25*_1CHAR,  15*_1CHAR, 18*_1CHAR },  //右
+	{	21*_1CHAR,  24*_1CHAR,   1*_1CHAR,  3*_1CHAR },  //左
+	{	21*_1CHAR,  24*_1CHAR,  15*_1CHAR, 18*_1CHAR },  //右
 
-	{	22*_1CHAR,  25*_1CHAR,  26*_1CHAR, 28*_1CHAR },  //x
-	{	22*_1CHAR,  25*_1CHAR,  30*_1CHAR, 32*_1CHAR },  //リターン
+	{	21*_1CHAR,  24*_1CHAR,  26*_1CHAR, 28*_1CHAR },  //x
+	{	21*_1CHAR,  24*_1CHAR,  30*_1CHAR, 32*_1CHAR },  //リターン
 
-	{	1*_1CHAR+4,   4*_1CHAR+3,  18*_1CHAR, 29*_1CHAR },  //アイテム一覧エリア1
-	{	4*_1CHAR+4,   7*_1CHAR+3,  18*_1CHAR, 29*_1CHAR },  //アイテム一覧エリア2
-	{	7*_1CHAR+4,  11*_1CHAR+3,  18*_1CHAR, 29*_1CHAR },  //アイテム一覧エリア3
-	{11*_1CHAR+4,  14*_1CHAR+3,  18*_1CHAR, 29*_1CHAR },  //アイテム一覧エリア4
-	{14*_1CHAR+4,  17*_1CHAR+3,  18*_1CHAR, 29*_1CHAR },  //アイテム一覧エリア5
-	{17*_1CHAR+4,  20*_1CHAR+3,  18*_1CHAR, 29*_1CHAR },  //アイテム一覧エリア6
+	{	1*_1CHAR+4,   4*_1CHAR+3,  18*_1CHAR, 28*_1CHAR },  //アイテム一覧エリア1
+	{	4*_1CHAR+4,   7*_1CHAR+3,  18*_1CHAR, 28*_1CHAR },  //アイテム一覧エリア2
+	{	7*_1CHAR+4,  11*_1CHAR+3,  18*_1CHAR, 28*_1CHAR },  //アイテム一覧エリア3
+	{11*_1CHAR+4,  14*_1CHAR+3,  18*_1CHAR, 28*_1CHAR },  //アイテム一覧エリア4
+	{14*_1CHAR+4,  17*_1CHAR+3,  18*_1CHAR, 28*_1CHAR },  //アイテム一覧エリア5
+	{17*_1CHAR+4,  20*_1CHAR+3,  18*_1CHAR, 28*_1CHAR },  //アイテム一覧エリア6
   
 	{	1*_1CHAR+4,   4*_1CHAR+3,  15*_1CHAR, 18*_1CHAR },  //だいじなものチェックエリア1
 	{	4*_1CHAR+4,   7*_1CHAR+3,  15*_1CHAR, 18*_1CHAR },  //だいじなものチェックエリア2
@@ -1320,7 +1320,6 @@ static GFL_PROC_RESULT FieldItemMenuProc_Init( GFL_PROC * proc, int * seq, void 
 	GFL_BMPWIN_MakeScreen( pWork->pocketNameWin );
   _pocketMessageDisp(pWork, pWork->pocketno);
   ITEMDISP_ChangePocketCell( pWork, pWork->pocketno );
-  ITEMDISP_ListPlateCreate(pWork);
 
 	_CHANGE_STATE(pWork, _itemKindSelectMenu);
 	return GFL_PROC_RES_FINISH;
@@ -1404,7 +1403,7 @@ static GFL_PROC_RESULT FieldItemMenuProc_End( GFL_PROC * proc, int * seq, void *
 	PRINTSYS_QUE_Clear(pWork->SysMsgQue);
 	PRINTSYS_QUE_Delete(pWork->SysMsgQue);
   GFL_BMN_Delete(pWork->pButton);
-  ITEMDISP_ListPlateDelete(pWork);
+//  ITEMDISP_ListPlateDelete(pWork);
 
 	GFL_BMPWIN_Exit();
 	GFL_BG_Exit();

@@ -176,6 +176,7 @@ extern void GFL_ARCHDL_UTIL_TransVramScreen(ARCHANDLE *handle, ARCDATID datID, u
 //--------------------------------------------------------------------------------------------
 extern	void GFL_ARC_UTIL_TransVramScreenCharOfs(ARCID arcID, ARCDATID datID, u32 frm, u32 offs, u32 chr_ofs, u32 transSize, BOOL compressedFlag, HEAPID heapID);
 extern void GFL_ARCHDL_UTIL_TransVramScreenCharOfs(ARCHANDLE *handle, ARCDATID datID, u32 frm, u32 offs, u32 chr_ofs, u32 transSize, BOOL compressedFlag, HEAPID heapID);
+extern void GFL_ARCHDL_UTIL_TransVramScreenCharOfsVBlank(ARCHANDLE *handle, ARCDATID datID, u32 frm, u32 offs, u32 chr_ofs, u32 transSize, BOOL compressedFlag, HEAPID heapID);
 
 //------------------------------------------------------------------
 /**

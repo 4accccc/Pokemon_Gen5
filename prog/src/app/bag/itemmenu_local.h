@@ -42,8 +42,8 @@ extern const GFL_PROC_DATA ItemMenuProcData;
 #define ITEM_LIST_NUM (8)
 #define _CELLUNIT_NUM (30)
 
-#define _SCROLL_TOP_Y  (8)  //スクロールバーの最初の位置
-#define _SCROLL_BOTTOM_Y  (8*20)  //スクロールバーの最後の位置
+#define _SCROLL_TOP_Y  (8+8)  //スクロールバーの最初の位置
+#define _SCROLL_BOTTOM_Y  (8*19)  //スクロールバーの最後の位置
 
 #define _SUBMENU_LISTMAX (8)
 
@@ -243,8 +243,6 @@ extern void ITEMDISP_CellVramTrans( FIELD_ITEMMENU_WORK* pWork );
 extern void ITEMDISP_scrollCursorMove(FIELD_ITEMMENU_WORK* pWork);
 extern void ITEMDISP_scrollCursorChangePos(FIELD_ITEMMENU_WORK* pWork, int num);
 
-extern void ITEMDISP_ListPlateCreate( FIELD_ITEMMENU_WORK* pWork );
-extern void ITEMDISP_ListPlateDelete( FIELD_ITEMMENU_WORK* pWork );
 
 extern int ITEMMENU_GetItemIndex(FIELD_ITEMMENU_WORK* pWork);
 extern int ITEMMENU_GetItemPocketNumber(FIELD_ITEMMENU_WORK* pWork);

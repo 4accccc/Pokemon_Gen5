@@ -302,8 +302,8 @@ void ITEMDISP_graphicInit(FIELD_ITEMMENU_WORK* pWork)
                                             GFL_BG_FRAME1_S, 0,
                                             GFL_ARCUTIL_TRANSINFO_GetPos(pWork->subbg2), 0, 0, pWork->heapID);
 
-    GFL_ARCHDL_UTIL_TransVramPalette( p_handle, NARC_bag_p_list_NCLR,
-                                      PALTYPE_MAIN_BG, _SUBLIST_NORMAL_PAL*0x20, 2*0x20,  pWork->heapID);
+//    GFL_ARCHDL_UTIL_TransVramPalette( p_handle, NARC_bag_p_list_NCLR,
+  //                                    PALTYPE_MAIN_BG, _SUBLIST_NORMAL_PAL*0x20, 2*0x20,  pWork->heapID);
 
 
     //下画面アイコン
@@ -1044,42 +1044,6 @@ void ITEMDISP_ChangePocketCell( FIELD_ITEMMENU_WORK* pWork,int pocketno )
 
 }
 
-
-//------------------------------------------------------------------------------
-/**
- * @brief   リストプレートの初期化
- * @retval  none
- */
-//------------------------------------------------------------------------------
-void ITEMDISP_ListPlateCreate( FIELD_ITEMMENU_WORK* pWork )
-{
-  int i;
-  //プレートの土台の絵
-  pWork->ncgRes =
-    GFL_ARC_UTIL_LoadBGCharacter( ARCID_BAG ,
-                                  NARC_bag_list_sel_NCGR , FALSE , 
-                                  &pWork->ncgData , pWork->heapID );
-
-  for(i = 0;i<elementof(pWork->menuWin);i++){
-    pWork->menuWin[i] = GFL_BMPWIN_Create( GFL_BG_FRAME3_M ,
-                                           32-13 , 24 - (elementof(pWork->menuWin)*3) + (i*3),
-                                           13 , 3 , 
-                                           _SUBLIST_NORMAL_PAL , GFL_BMP_CHRAREA_GET_B );
-  }
-  
-}
-
-
-//------------------------------------------------------------------------------
-/**
- * @brief   リストプレートのクリア
- * @retval  none
- */
-//------------------------------------------------------------------------------
-void ITEMDISP_ListPlateSelectChange( FIELD_ITEMMENU_WORK* pWork , int selectNo)
-{
-}
-
 //------------------------------------------------------------------------------
 /**
  * @brief   リストプレートのクリア
@@ -1102,26 +1066,6 @@ void ITEMDISP_ListPlateClear( FIELD_ITEMMENU_WORK* pWork )
 
 
 
-
-//------------------------------------------------------------------------------
-/**
- * @brief   リストプレートの開放
- * @retval  none
- */
-//------------------------------------------------------------------------------
-void ITEMDISP_ListPlateDelete( FIELD_ITEMMENU_WORK* pWork )
-{
-  //プレートの土台の絵
-  int i;
-
-  for(i = 0 ; i < elementof(pWork->menuWin) ; i++){
-    GFL_BMPWIN_ClearScreen(pWork->menuWin[i]);
-    GFL_BMPWIN_Delete(pWork->menuWin[i]);
-  }
-  GFL_BG_LoadScreenV_Req(GFL_BG_FRAME3_M);
-  GFL_HEAP_FreeMemory( pWork->ncgRes );
-  pWork->ncgRes=NULL;
-}
 
 
 //------------------------------------------------------------------------------
@@ -1148,7 +1092,7 @@ void ITEMDISP_MenuWinDisp(  FIELD_ITEMMENU_WORK *pWork , int *menustr,int num )
   for(i=0;i<num;i++){
     pWork->appitem[i].str = GFL_STR_CreateBuffer(100, pWork->heapID);
     GFL_MSG_GetString(pWork->MsgManager, menustr[i], pWork->appitem[i].str);
-    pWork->appitem[i].msgColor = PRINTSYS_LSB_Make( 0xe,0xf,0);
+    pWork->appitem[i].msgColor = PRINTSYS_LSB_Make( 0xd,0xf,0);
   }
   pWork->pAppTask = APP_TASKMENU_OpenMenu(&appinit);
   for(i=0;i<num;i++){
@@ -1189,12 +1133,12 @@ void ITEMDISP_ItemInfoWindowChange(FIELD_ITEMMENU_WORK *pWork,int pocketno )
 {
   ARCHANDLE* p_handle = GFL_ARC_OpenDataHandle( ARCID_BAG, pWork->heapID );
   if(pocketno!=BAG_POKE_WAZA){
-    GFL_ARCHDL_UTIL_TransVramScreenCharOfs(
+    GFL_ARCHDL_UTIL_TransVramScreenCharOfsVBlank(
       p_handle, NARC_bag_bag_win01_u_NSCR, GFL_BG_FRAME1_S, 0,
       GFL_ARCUTIL_TRANSINFO_GetPos(pWork->subbg2), 0, 0, pWork->heapID);
   }
   else{
-    GFL_ARCHDL_UTIL_TransVramScreenCharOfs(
+    GFL_ARCHDL_UTIL_TransVramScreenCharOfsVBlank(
       p_handle, NARC_bag_bag_win02_u_NSCR, GFL_BG_FRAME1_S, 0,
       GFL_ARCUTIL_TRANSINFO_GetPos(pWork->subbg2), 0, 0, pWork->heapID);
   }
