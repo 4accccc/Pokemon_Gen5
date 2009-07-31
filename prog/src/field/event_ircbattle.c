@@ -116,6 +116,8 @@ static GMEVENT_RESULT EVENT_IrcBattleMain(GMEVENT * event, int *  seq, void * wo
   }
 #endif
 
+	NAGI_Printf( "SEQ %d\n", *seq );
+
   switch (*seq) {
 	case _IRCBATTLE_START:
     {
@@ -143,7 +145,7 @@ static GMEVENT_RESULT EVENT_IrcBattleMain(GMEVENT * event, int *  seq, void * wo
     }
 		if(dbw->selectType == EVENTIRCBTL_ENTRYMODE_COMPATIBLE )
 		{	
-			*seq = _CALL_IRCCOMMPATIBLE;//_FIELD_FADEOUT_IRCBATTLE;
+			*seq = _FIELD_FADEOUT_IRCBATTLE;
 		}
 		else if(dbw->selectType == EVENTIRCBTL_ENTRYMODE_EXIT){
 			*seq = _FIELD_OPEN;
@@ -293,7 +295,8 @@ static GMEVENT_RESULT EVENT_IrcBattleMain(GMEVENT * event, int *  seq, void * wo
     (*seq)++;
 		break;
 	case _FIELD_END_IRCBATTLE:
-		GMEVENT_CallEvent(event, EVENT_FieldClose(gsys, dbw->fieldmap));
+		//すでにCloseされている
+		//GMEVENT_CallEvent(event, EVENT_FieldClose(gsys, dbw->fieldmap));
     (*seq)++;
 		break;
 	case _CALL_IRCCOMMPATIBLE:	//相性チェック画面へ
