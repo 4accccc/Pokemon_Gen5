@@ -182,6 +182,7 @@ static void tokwin_cleanup( TOK_WIN* tokwin );
 static void tokwin_disp_first( TOK_WIN* tokwin );
 static void tokwin_hide( TOK_WIN* tokwin );
 static void tokwin_disp( TOK_WIN* tokwin );
+static void bbgp_make( BTLV_SCU* wk, BTLV_BALL_GAUGE_PARAM* bbgp, BtlvMcssPos pos, BTLV_BALL_GAUGE_TYPE type );
 
 
 
@@ -706,23 +707,8 @@ static BOOL btlin_trainer_single( int* seq, void* wk_adrs )
     if( !BTLV_EFFECT_CheckExecute() )
     {
       BTLV_BALL_GAUGE_PARAM bbgp;
-      int i;
-      TrainerID tr_id = BTL_MAIN_GetTrainerID( wk->mainModule );
-      int poke_count = TT_TrainerDataParaGet( tr_id, ID_TD_poke_count );
 
-      for( i = 0 ; i < TEMOTI_POKEMAX ; i++ )
-      {
-        if( i < poke_count )
-        {
-          bbgp.status[ i ] = BTLV_BALL_GAUGE_STATUS_ALIVE;
-        }
-        else
-        {
-          bbgp.status[ i ] = BTLV_BALL_GAUGE_STATUS_NONE;
-        }
-      }
-      bbgp.type = BTLV_BALL_GAUGE_TYPE_ENEMY;
-
+      bbgp_make( wk, &bbgp, BTLV_MCSS_POS_BB, BTLV_BALL_GAUGE_TYPE_ENEMY );
       BTLV_EFFECT_SetBallGauge( &bbgp );
       BTL_STR_MakeStringStd( wk->strBuf, BTL_STRID_STD_Encount_NPC1, 2, subwk->trID, subwk->trID );
       BTLV_SCU_StartMsg( wk, wk->strBuf, BTLV_MSGWAIT_STD );
@@ -760,14 +746,8 @@ static BOOL btlin_trainer_single( int* seq, void* wk_adrs )
         ( !BTLV_EFFECT_CheckExecute() ) )
     {
       BTLV_BALL_GAUGE_PARAM bbgp;
-      int i;
 
-      for( i = 0 ; i < TEMOTI_POKEMAX ; i++ )
-      {
-        bbgp.status[ i ] = BTLV_BALL_GAUGE_STATUS_NONE;
-      }
-      bbgp.status[ 0 ] = BTLV_BALL_GAUGE_STATUS_ALIVE;
-      bbgp.type = BTLV_BALL_GAUGE_TYPE_MINE;
+      bbgp_make( wk, &bbgp, BTLV_MCSS_POS_AA, BTLV_BALL_GAUGE_TYPE_MINE );
       BTLV_EFFECT_DelBallGauge( BTLV_BALL_GAUGE_TYPE_ENEMY );
       BTLV_EFFECT_SetBallGauge( &bbgp );
       (*seq)++;
@@ -1923,5 +1903,54 @@ static void tokwin_disp( TOK_WIN* tokwin )
 {
   GFL_BMPWIN_MakeScreen( tokwin->win );
   GFL_BG_LoadScreenReq( GFL_BMPWIN_GetFrame(tokwin->win) );
+}
+
+
+//=============================================================================================
+/**
+ * @brief ボールゲージセットアップパラメータ生成
+ *
+ * @param[in]   wk
+ * @param[out]  bbgp  セットアップパラメータ構造体のポインタ
+ * @param[in]   pos   セットアップするポケモンの立ち位置
+ * @param[in]   type  ボールゲージタイプ
+ *
+ */
+//=============================================================================================
+static void bbgp_make( BTLV_SCU* wk, BTLV_BALL_GAUGE_PARAM* bbgp, BtlvMcssPos pos, BTLV_BALL_GAUGE_TYPE type )
+{ 
+  int i;
+  BtlPokePos b_pos = BTL_MAIN_ViewPosToBtlPos( wk->mainModule, pos );
+  const BTL_PARTY*      bparty = BTL_POKECON_GetPartyDataConst( wk->pokeCon,
+                                                                BTL_MAIN_BtlPosToClientID( wk->mainModule, b_pos)
+                                                              );
+  const BTL_POKEPARAM*  bpp;
+  int count = BTL_PARTY_GetMemberCount( bparty );
+  
+  bbgp->type = type;
+
+  for( i = 0 ; i < TEMOTI_POKEMAX ; i++ )
+  { 
+    if( i < count )
+    { 
+      bpp = BTL_PARTY_GetMemberDataConst( bparty, i );
+      if( BPP_IsDead( bpp ) )
+      { 
+        bbgp->status[ i ] = BTLV_BALL_GAUGE_STATUS_DEAD;
+      }
+      else if( BPP_GetPokeSick( bpp ) != POKESICK_NULL )
+      { 
+        bbgp->status[ i ] = BTLV_BALL_GAUGE_STATUS_NG;
+      }
+      else
+      { 
+        bbgp->status[ i ] = BTLV_BALL_GAUGE_STATUS_ALIVE;
+      }
+    }
+    else   
+    { 
+      bbgp->status[ i ] = BTLV_BALL_GAUGE_STATUS_NONE;
+    }
+  }
 }
 
