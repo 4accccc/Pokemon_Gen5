@@ -1789,7 +1789,8 @@ static BOOL statwin_erase( STATUS_WIN* stwin, u8 line )
 
   return line == height;
 #else
-  BTLV_EFFECT_DelGauge( stwin->pokePos );
+  u8 viewPos = BTL_MAIN_BtlPosToViewPos( stwin->parentWk->mainModule, stwin->pokePos );
+  BTLV_EFFECT_DelGauge( viewPos );
 
   return TRUE;
 #endif
