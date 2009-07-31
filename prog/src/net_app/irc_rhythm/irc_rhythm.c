@@ -1671,6 +1671,7 @@ static void MSGWND_Init( MSGWND_WORK* p_wk, u8 bgframe, u8 x, u8 y, u8 w, u8 h, 
 	p_wk->p_bmpwin	= GFL_BMPWIN_Create( bgframe, x, y, w, h, plt, GFL_BMP_CHRAREA_GET_B );
 	p_wk->p_strbuf	= GFL_STR_CreateBuffer( TEXTSTR_BUFFER_LENGTH, heapID );
 	PRINT_UTIL_Setup( &p_wk->print_util, p_wk->p_bmpwin );
+	MSGWND_Clear( p_wk );
 	GFL_BMPWIN_MakeTransWindow( p_wk->p_bmpwin );
 }
 //----------------------------------------------------------------------------
@@ -1836,7 +1837,7 @@ static void MSGWND_PrintPlayerName( MSGWND_WORK* p_wk, const MSG_WORK *cp_msg, u
 	WORDSET *p_wordset;
 	
 	//ˆê’[Á‹Ž
-	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(p_wk->p_bmpwin), 0 );	
+	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(p_wk->p_bmpwin), 0xF );	
 
 	//ƒ‚ƒWƒ…[ƒ‹Žæ“¾
 	p_wordset		= MSG_GetWordSet( cp_msg );
@@ -1872,7 +1873,7 @@ static void MSGWND_PrintPlayerName( MSGWND_WORK* p_wk, const MSG_WORK *cp_msg, u
 //-----------------------------------------------------------------------------
 static void MSGWND_Clear( MSGWND_WORK* p_wk )
 {	
-	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(p_wk->p_bmpwin), 0 );	
+	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(p_wk->p_bmpwin), 0xF );	
 	GFL_BMPWIN_TransVramCharacter( p_wk->p_bmpwin );
 }
 //=============================================================================

@@ -343,6 +343,8 @@ typedef struct
 	u16		sync_max[CLWK_NUMBER_MAX];
 	fx32	scale_add[CLWK_NUMBER_MAX];
 	BOOL	start[CLWK_NUMBER_MAX];
+	u8		number[CLWK_NUMBER_MAX];	//3桁
+	u32		is_end[CLWK_NUMBER_MAX];
 } OBJNUMBER_WORK;
 
 //-------------------------------------
@@ -421,6 +423,7 @@ struct _RESULT_MAIN_WORK
 
 	//その他汎用
 	u32		cnt;
+	s32		num;
 
 	//引数
 	IRC_RESULT_PARAM	*p_param;
@@ -486,6 +489,9 @@ static void SEQFUNC_DecideScore( RESULT_MAIN_WORK *p_wk, u16 *p_seq );
 static void OBJNUMBER_Init( OBJNUMBER_WORK *p_wk, const GRAPHIC_WORK *cp_grp, int number );
 static void OBJNUMBER_Start( OBJNUMBER_WORK *p_wk, int fig );
 static BOOL OBJNUMBER_Main( OBJNUMBER_WORK *p_wk );
+static BOOL OBJNUMBER_IsEnd( const OBJNUMBER_WORK *cp_wk, u16 fig );
+static u8 OBJNUMBER_GetFig( const OBJNUMBER_WORK *cp_wk, int fig );
+static s16 OBJNUMBER_GetFigPosX( const OBJNUMBER_WORK *cp_wk, int fig );
 static void ObjNumber_SetNumber( OBJNUMBER_WORK *p_wk, int number );
 //NUMBERSCROLL
 static void NUMBERSCROLL_Init( NUMBERSCROLL_WORK *p_wk, u8 frm );
@@ -493,6 +499,8 @@ static void NUMBERSCROLL_Exit( NUMBERSCROLL_WORK *p_wk );
 static void NUMBERSCROLL_Main( NUMBERSCROLL_WORK *p_wk );
 static void NUMBERSCROLL_Start( NUMBERSCROLL_WORK *p_wk );
 static void NUMBERSCROLL_SetVisibleReq( NUMBERSCROLL_WORK *p_wk, BOOL is_vanish );
+static u8  NUMBERSCROLL_GetNumberOfs( const NUMBERSCROLL_WORK *cp_wk, u8 num );
+static s16 NUMBERSCROLL_GetPos( const NUMBERSCROLL_WORK *cp_wk );
 //BACKOBJ
 static void BACKOBJ_Init( BACKOBJ_WORK *p_wk, const GRAPHIC_WORK *cp_grp, BACKOBJ_MOVE_TYPE type, BACKOBJ_COLOR color, u32 clwk_ofs, int sf_type );
 static void BACKOBJ_Exit( BACKOBJ_WORK *p_wk );
@@ -686,7 +694,10 @@ static GFL_PROC_RESULT IRC_RESULT_PROC_Init( GFL_PROC *p_proc, int *p_seq, void 
 	DEBUGPRINT_Init( sc_bgcnt_frame[GRAPHIC_BG_FRAME_S_BACK], FALSE, HEAPID_IRCRESULT );
 	DEBUGPRINT_Open();
 
-	COMPATIBLE_IRC_SetScene( p_wk->p_param->p_irc, COMPATIBLE_SCENE_RESULT );
+	if( p_wk->p_param->p_irc )
+	{	
+		COMPATIBLE_IRC_SetScene( p_wk->p_param->p_irc, COMPATIBLE_SCENE_RESULT );
+	}
 
 	SEQ_Change( p_wk, SEQFUNC_StartGame );
 	return GFL_PROC_RES_FINISH;
@@ -859,7 +870,10 @@ static GFL_PROC_RESULT IRC_RESULT_PROC_Main( GFL_PROC *p_proc, int *p_seq, void 
 #endif
 
 	//シーンを継続的に送る
-	COMPATIBLE_IRC_SendSceneContinue( p_wk->p_param->p_irc );
+	if( p_wk->p_param->p_irc )
+	{	
+		COMPATIBLE_IRC_SendSceneContinue( p_wk->p_param->p_irc );
+	}
 
 	return GFL_PROC_RES_CONTINUE;
 }
@@ -1584,10 +1598,15 @@ static void MSGWND_PrintCenter( MSGWND_WORK* p_wk, const MSG_WORK *cp_msg, u32 s
 	GFL_MSG_GetString( cp_msgdata, strID, p_wk->p_strbuf );
 
 	//センター位置計算
+#if  0
 	x	= GFL_BMPWIN_GetSizeX( p_wk->p_bmpwin )*4;
 	y	= GFL_BMPWIN_GetSizeY( p_wk->p_bmpwin )*4;
 	x	-= PRINTSYS_GetStrWidth( p_wk->p_strbuf, p_font, 0 )/2;
 	y	-= PRINTSYS_GetStrHeight( p_wk->p_strbuf, p_font )/2;
+#else
+		x	= 0;
+		y	= 0;
+#endif
 
 	//表示
 	PRINT_UTIL_Print( &p_wk->print_util, p_que, x, y, p_wk->p_strbuf, p_font );
@@ -1639,10 +1658,15 @@ static void MSGWND_PrintNumberCenter( MSGWND_WORK* p_wk, const MSG_WORK *cp_msg,
 		p_font	= MSG_GetFont( cp_msg );
 
 		//センター位置計算
+#if 0
 		x	= GFL_BMPWIN_GetSizeX( p_wk->p_bmpwin )*4;
 		y	= GFL_BMPWIN_GetSizeY( p_wk->p_bmpwin )*4;
 		x	-= PRINTSYS_GetStrWidth( p_wk->p_strbuf, p_font, 0 )/2;
 		y	-= PRINTSYS_GetStrHeight( p_wk->p_strbuf, p_font )/2;
+#else
+		x	= 0;
+		y	= 0;
+#endif
 
 		PRINT_UTIL_Print( &p_wk->print_util, p_que, x, y, p_wk->p_strbuf, p_font );
 	}
@@ -1766,12 +1790,19 @@ static void SEQ_End( RESULT_MAIN_WORK *p_wk )
 //-----------------------------------------------------------------------------
 static void SEQFUNC_StartGame( RESULT_MAIN_WORK *p_wk, u16 *p_seq )
 {	
-	IRC_COMPATIBLE_SAVEDATA *p_sv	= IRC_COMPATIBLE_SV_GetSavedata( SaveControl_GetPointer() );
+	IRC_COMPATIBLE_SAVEDATA *p_sv;
 	u8 score				= p_wk->p_param->score;
-	MYSTATUS *p_you	= p_wk->p_param->p_you_status;
+	MYSTATUS *p_you;
+	
+	if( p_wk->p_param->p_you_status )
+	{	
 
-	//セーブする
-	IRC_COMPATIBLE_SV_AddRanking( p_sv, MyStatus_GetMyName(p_you), score, MyStatus_GetID(p_you) );
+		p_sv	= IRC_COMPATIBLE_SV_GetSavedata( SaveControl_GetPointer() );
+		p_you	= p_wk->p_param->p_you_status;
+
+		//セーブする
+		IRC_COMPATIBLE_SV_AddRanking( p_sv, MyStatus_GetMyName(p_you), score, MyStatus_GetID(p_you) );
+	}
 	SEQ_Change( p_wk, SEQFUNC_DecideScore );
 }
 //----------------------------------------------------------------------------
@@ -1788,13 +1819,16 @@ static void SEQFUNC_DecideScore( RESULT_MAIN_WORK *p_wk, u16 *p_seq )
 	{	
 		SEQ_INIT_WAIT,
 		SEQ_START_ALPHA,
+		SEQ_MAIN_WAIT,
 		SEQ_MAIN,
+		SEQ_END_ALPHA,
+		SEQ_END_WAIT,
 	};
 
 	switch( *p_seq )
 	{	
 	case SEQ_INIT_WAIT:
-		if( p_wk->cnt++ < 30 )
+		if( p_wk->cnt++ > 100 )
 		{	
 			p_wk->cnt	= 0;
 			*p_seq		= SEQ_START_ALPHA;
@@ -1804,11 +1838,68 @@ static void SEQFUNC_DecideScore( RESULT_MAIN_WORK *p_wk, u16 *p_seq )
 	case SEQ_START_ALPHA:
 		NUMBERSCROLL_Start( &p_wk->numscroll );
 		NUMBERSCROLL_SetVisibleReq( &p_wk->numscroll, TRUE );
-		*p_seq		= SEQ_MAIN;
+		*p_seq		= SEQ_MAIN_WAIT;
+		break;
+
+	case SEQ_MAIN_WAIT:
+		if( p_wk->cnt++ > 30 )
+		{	
+			p_wk->cnt	= 0;
+			p_wk->num	= 2;
+			*p_seq		= SEQ_MAIN;
+		}
 		break;
 
 	case SEQ_MAIN:
+		{	
+			u8 target_num;
+			s16 ofs;
+			s16 now_pos;
+			s16 target_pos;
+
+			if( OBJNUMBER_IsEnd( &p_wk->number, p_wk->num ) )
+			{	
+				p_wk->num--;
+				if( p_wk->num == -1 )
+				{	
+					*p_seq	= SEQ_END_ALPHA;
+					break;
+				}
+			}
+
+			now_pos			= NUMBERSCROLL_GetPos( &p_wk->numscroll );
+
+			target_num	= OBJNUMBER_GetFig( &p_wk->number, p_wk->num );
+			target_pos	= OBJNUMBER_GetFigPosX( &p_wk->number, p_wk->num );	
+			ofs					= NUMBERSCROLL_GetNumberOfs( &p_wk->numscroll, target_num );
+			now_pos			+= ofs;
+
+			now_pos			= MATH_IAbs( now_pos );
+			now_pos			%= 256;
+			NAGI_Printf( " target%d now%d num%d ofs%d\n", target_pos, now_pos, target_num, ofs );
+
+			if( (target_pos-16 <= now_pos && now_pos <= target_pos+16) )
+			{	
+				OBJNUMBER_Start( &p_wk->number, p_wk->num );
+			}
+		}
 		break;
+		
+	case SEQ_END_ALPHA:
+		NUMBERSCROLL_SetVisibleReq( &p_wk->numscroll, FALSE );
+		MSGWND_PrintNumberCenter( &p_wk->msgwnd[MSGWNDID_SUB], &p_wk->msg, RESULT_STR_001,
+				p_wk->p_param->score, 2 );
+
+		*p_seq		= SEQ_END_WAIT;
+		break;
+
+	case SEQ_END_WAIT:
+		break;
+	}
+
+	if( APPBAR_GetTrg(p_wk->p_appbar) == APPBAR_ICON_CLOSE )
+	{	
+		SEQ_End( p_wk );
 	}
 
 	OBJNUMBER_Main( &p_wk->number );
@@ -1840,6 +1931,7 @@ static void OBJNUMBER_Init( OBJNUMBER_WORK *p_wk, const GRAPHIC_WORK *cp_grp, in
 
 		scale.x	= SCALE_MIN;
 		scale.y	= SCALE_MIN;
+		//0が1桁１が2桁・・・
 		for( i = 0; i < CLWK_NUMBER_MAX; i++ )
 		{	
 			p_wk->p_clwk[i]	= GRAPHIC_GetClwk( cp_grp, CLWKID_NUMBER_TOP + i );
@@ -1872,9 +1964,21 @@ static void OBJNUMBER_Init( OBJNUMBER_WORK *p_wk, const GRAPHIC_WORK *cp_grp, in
 //-----------------------------------------------------------------------------
 static void OBJNUMBER_Start( OBJNUMBER_WORK *p_wk, int fig )
 {
-	int clwkID	= CLWK_NUMBER_MAX + 1 - fig;
-	p_wk->start[ clwkID ]	= TRUE;
-	GFL_CLACT_WK_SetDrawEnable( p_wk->p_clwk[ clwkID ], TRUE );
+	GF_ASSERT( fig < CLWK_NUMBER_MAX );
+	if( p_wk->is_end[ fig ] == FALSE )
+	{	
+		//3の桁が0おときはやらない
+		if( fig == 2 && p_wk->number[fig] == 0 )
+		{	
+			p_wk->is_end[fig]	= TRUE;
+		}
+		else
+		{	
+			p_wk->start[ fig ]	= TRUE;
+			NAGI_Printf( "start! ID%d\n", fig );
+			GFL_CLACT_WK_SetDrawEnable( p_wk->p_clwk[ fig ], TRUE );
+		}
+	}
 }
 
 //----------------------------------------------------------------------------
@@ -1898,8 +2002,8 @@ static BOOL OBJNUMBER_Main( OBJNUMBER_WORK *p_wk )
 		if( p_wk->start[i] )
 		{	
 			GFL_CLACT_WK_GetScale( p_wk->p_clwk[i],	&scale );
-			scale.x	+= p_wk->scale_add[i] * p_wk->sync[i];
-			scale.y	+= p_wk->scale_add[i] * p_wk->sync[i];
+			scale.x	+= p_wk->scale_add[i];
+			scale.y	+= p_wk->scale_add[i];
 			
 
 			if( p_wk->sync[i]++ > p_wk->sync_max[i] )
@@ -1907,6 +2011,7 @@ static BOOL OBJNUMBER_Main( OBJNUMBER_WORK *p_wk )
 				scale.x	= FX32_ONE;
 				scale.y	= FX32_ONE;
 				p_wk->start[i]	= FALSE;
+				p_wk->is_end[i]	= TRUE;
 			}
 
 			GFL_CLACT_WK_SetScale( p_wk->p_clwk[i],	&scale );
@@ -1914,6 +2019,59 @@ static BOOL OBJNUMBER_Main( OBJNUMBER_WORK *p_wk )
 	}
 
 	return FALSE;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	終了検知
+ *
+ *	@param	const OBJNUMBER_WORK *cp_wk		ワーク
+ *
+ *	@return	TRUEで終了	FALSEで処理中
+ */
+//-----------------------------------------------------------------------------
+static BOOL OBJNUMBER_IsEnd( const OBJNUMBER_WORK *cp_wk, u16 fig )
+{	
+	GF_ASSERT( fig < CLWK_NUMBER_MAX );
+	return cp_wk->is_end[ fig ];
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	桁の数字を取得
+ *
+ *	@param	const OBJNUMBER_WORK *cp_wk	ワーク
+ *	@param	fig		桁ー１
+ *
+ *	@return	桁の数字
+ */
+//-----------------------------------------------------------------------------
+static u8 OBJNUMBER_GetFig( const OBJNUMBER_WORK *cp_wk, int fig )
+{	
+	GF_ASSERT( fig < CLWK_NUMBER_MAX );
+	//NAGI_Printf( "桁 num%d keta%d\n",  cp_wk->number[ fig ], fig );
+	return cp_wk->number[ fig ];
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	桁の位置Xを取得
+ *
+ *	@param	const OBJNUMBER_WORK *cp_wk	ワーク
+ *	@param	fig		桁ー１
+ *
+ *	@return	桁の位置X
+ */
+//-----------------------------------------------------------------------------
+static s16 OBJNUMBER_GetFigPosX( const OBJNUMBER_WORK *cp_wk, int fig )
+{	
+	GFL_CLACTPOS	pos;
+
+	GF_ASSERT( fig < CLWK_NUMBER_MAX );
+
+
+	GFL_CLACT_WK_GetPos( cp_wk->p_clwk[ fig ], &pos, 0 );
+	//NAGI_Printf( "位置 x%d keta%d\n",  pos.x, fig );
+	return pos.x;
 }
 //----------------------------------------------------------------------------
 /**
@@ -1935,7 +2093,6 @@ static void ObjNumber_SetNumber( OBJNUMBER_WORK *p_wk, int number )
 	};
 	u8 fig;
 	u8 n;
-	u8 num;
 	int i;
 
 	//何桁か調べる
@@ -1966,10 +2123,11 @@ static void ObjNumber_SetNumber( OBJNUMBER_WORK *p_wk, int number )
 	}
 
 	//OBJのアニメを桁の数値に合わせる
-	for( i = 0; i < fig; i++ )
+	for( i = 0; i < /*fig*/CLWK_NUMBER_MAX; i++ )
 	{
-		num	= number % sc_num_table[ i+1 ] / sc_num_table[ i ];
-		GFL_CLACT_WK_SetAnmSeq( p_wk->p_clwk[CLWK_NUMBER_MAX-1-i], num );
+		p_wk->number[i]	= number % sc_num_table[ i+1 ] / sc_num_table[ i ];
+		//+1はセルの順番
+		GFL_CLACT_WK_SetAnmSeq( p_wk->p_clwk[CLWK_NUMBER_MAX-1-i], p_wk->number[i] + 1 );
 	}
 }
 //=============================================================================
@@ -1990,7 +2148,7 @@ static void NUMBERSCROLL_Init( NUMBERSCROLL_WORK *p_wk, u8 frm )
 	p_wk->frm = frm;
 	
 	G2_SetBlendAlpha( GX_BLEND_PLANEMASK_BG1, GX_BLEND_PLANEMASK_BG2, 0, 0 );
-	GFL_BG_SetVisible( p_wk->frm, TRUE );
+	GFL_BG_SetVisible( p_wk->frm, FALSE );
 }
 //----------------------------------------------------------------------------
 /**
@@ -2026,6 +2184,10 @@ static void NUMBERSCROLL_Main( NUMBERSCROLL_WORK *p_wk )
 		{	
 			p_wk->alpha	= p_wk->alpha_end;
 			p_wk->is_vanish_req	= FALSE;
+			if( p_wk->is_vanish == FALSE )
+			{	
+				GFL_BG_SetVisible( p_wk->frm, FALSE );
+			}
 		}
 		G2_ChangeBlendAlpha( p_wk->alpha >> FX32_SHIFT, 0 );
 	}
@@ -2060,6 +2222,7 @@ static void NUMBERSCROLL_SetVisibleReq( NUMBERSCROLL_WORK *p_wk, BOOL is_vanish 
 
 		if( p_wk->is_vanish )
 		{	
+			GFL_BG_SetVisible( p_wk->frm, TRUE );
 			p_wk->alpha			= 0;
 			p_wk->alpha_end	= FX32_CONST(NUMBERSCROLL_ALPHA);
 		}
@@ -2070,6 +2233,61 @@ static void NUMBERSCROLL_SetVisibleReq( NUMBERSCROLL_WORK *p_wk, BOOL is_vanish 
 		}
 		p_wk->alpha_add	= (p_wk->alpha_end - p_wk->alpha) / NUMBERSCROLL_ALPHA_SYNC;
 	}
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	現在の数字取得
+ *
+ *	@param	const NUMBERSCROLL_WORK *cp_wk 
+ *
+ *	@return	座標取得
+ */
+//-----------------------------------------------------------------------------
+static u8  NUMBERSCROLL_GetNumberOfs( const NUMBERSCROLL_WORK *cp_wk, u8 num )
+{	
+	static const sc_number_pos[]	=
+	{	
+		//0, 1,  2,  3,  4,   5,   6,   7,  8,   9
+		16, 40, 64, 86, 112, 136, 160, 184, 207, 231 
+	};
+
+#if 0
+	int i;
+	int x;
+	
+	x	= GFL_BG_GetScrollX( cp_wk->frm );
+	NAGI_Printf( "pos%d\n", x );
+	x	= MATH_IAbs(x);
+	NAGI_Printf( "pos%d\n", x );
+	x	%=	256;
+	NAGI_Printf( "pos%d\n", x );
+	for( i = 0; i < NELEMS(sc_number_pos) - 1; i++ )
+	{	
+		if( sc_number_pos[i] < x && x < sc_number_pos[i+1] )
+		{	
+			NAGI_Printf( "num%d\n", i );
+			return i;
+		}
+	}
+
+	return 9;
+#else
+	GF_ASSERT( num < NELEMS(sc_number_pos) );
+	return sc_number_pos[ num ];
+#endif
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	座標を取得
+ *
+ *	@param	const NUMBERSCROLL_WORK *cp_wk	ワーク
+ *
+ *	@return	座標を取得
+ */
+//-----------------------------------------------------------------------------
+static s16 NUMBERSCROLL_GetPos( const NUMBERSCROLL_WORK *cp_wk )
+{	
+	return GFL_BG_GetScrollX( cp_wk->frm );
 }
 //=============================================================================
 /**
