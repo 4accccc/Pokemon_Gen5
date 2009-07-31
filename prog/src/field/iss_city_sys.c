@@ -197,6 +197,8 @@ void ISS_CITY_SYS_Update( ISS_CITY_SYS* p_sys )
 	volume = GetVolume( &p_sys->unitData[ p_sys->activeUnitNo ], p_pos );
 	FIELD_SOUND_ChangeBGMActionVolume( volume );
 
+	OBATA_Printf( "vol = %d\n", volume );
+
 	// DEBUG: デバッグ出力
 	if( p_sys->isActive )
 	{
