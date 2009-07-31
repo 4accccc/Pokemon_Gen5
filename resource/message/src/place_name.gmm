@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="obata_toshihiro" host="W00209" date="2009-07-10T19:35:41"/>
+	<create user="matsumiya" host="W00207" date="2009-07-30T11:04:58"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -312,7 +312,7 @@
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="697"/>
 		<band id="3" index="3" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -359,8 +359,8 @@
 	</row>
 
 	<row id="MAPNAME_C3YAGURUMA">
-		<language name="JPN" width="256">ヤグルマシティ</language>
-		<language name="JPN_KANJI" width="256">ヤグルマシティ</language>
+		<language name="JPN" width="256">ヒウンシティ</language>
+		<language name="JPN_KANJI" width="256">ヒウンシティ</language>
 	</row>
 
 	<row id="MAPNAME_C4RAIMON">
@@ -484,8 +484,8 @@
 	</row>
 
 	<row id="MAPNAME_D1">
-		<language name="JPN" width="256">（こうじょうあと）</language>
-		<language name="JPN_KANJI" width="256">（工場跡）</language>
+		<language name="JPN" width="256">ゆめのあとち</language>
+		<language name="JPN_KANJI" width="256">夢の跡地</language>
 	</row>
 
 	<row id="MAPNAME_D2">
@@ -494,8 +494,8 @@
 	</row>
 
 	<row id="MAPNAME_D3">
-		<language name="JPN" width="256">（さばく）</language>
-		<language name="JPN_KANJI" width="256">（砂漠）</language>
+		<language name="JPN" width="256">リゾートデザート</language>
+		<language name="JPN_KANJI" width="256">リゾートデザート</language>
 	</row>
 
 	<row id="MAPNAME_D4">
@@ -519,22 +519,22 @@
 	</row>
 
 	<row id="MAPNAME_D8">
-		<language name="JPN" width="256">（りゅうのとう）</language>
-		<language name="JPN_KANJI" width="256">（竜の塔）</language>
+		<language name="JPN" width="256">リュウラセンのとう</language>
+		<language name="JPN_KANJI" width="256">リュウラセンの塔</language>
 	</row>
 
 	<row id="MAPNAME_D9">
-		<language name="JPN" width="256"></language>
+		<language name="JPN" width="256">チャンピオンロード</language>
 		<language name="JPN_KANJI" width="256">チャンピオンロード</language>
 	</row>
 
 	<row id="MAPNAME_D10">
-		<language name="JPN" width="256"></language>
+		<language name="JPN" width="256">ポケモンリーグ</language>
 		<language name="JPN_KANJI" width="256">ポケモンリーグ</language>
 	</row>
 
 	<row id="MAPNAME_D11">
-		<language name="JPN" width="256"></language>
+		<language name="JPN" width="256">Ｎのしろ</language>
 		<language name="JPN_KANJI" width="256">Ｎの城</language>
 	</row>
 
