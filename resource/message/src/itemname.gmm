@@ -217,57 +217,57 @@
 
 	<row id="ITEMNAME_017">
 		<language name="JPN" width="256">キズぐすり</language>
-		<language name="JPN_KANJI" width="256">傷薬</language>
+		<language name="JPN_KANJI" width="256">キズぐすり</language>
 	</row>
 
 	<row id="ITEMNAME_018">
 		<language name="JPN" width="256">どくけし</language>
-		<language name="JPN_KANJI" width="256">毒消し</language>
+		<language name="JPN_KANJI" width="256">どくけし</language>
 	</row>
 
 	<row id="ITEMNAME_019">
 		<language name="JPN" width="256">やけどなおし</language>
-		<language name="JPN_KANJI" width="256">焼けど直し</language>
+		<language name="JPN_KANJI" width="256">やけどなおし</language>
 	</row>
 
 	<row id="ITEMNAME_020">
 		<language name="JPN" width="256">こおりなおし</language>
-		<language name="JPN_KANJI" width="256">氷り直し</language>
+		<language name="JPN_KANJI" width="256">こおりなおし</language>
 	</row>
 
 	<row id="ITEMNAME_021">
 		<language name="JPN" width="256">ねむけざまし</language>
-		<language name="JPN_KANJI" width="256">眠気覚まし</language>
+		<language name="JPN_KANJI" width="256">ねむけざまし</language>
 	</row>
 
 	<row id="ITEMNAME_022">
 		<language name="JPN" width="256">まひなおし</language>
-		<language name="JPN_KANJI" width="256">麻痺直し</language>
+		<language name="JPN_KANJI" width="256">まひなおし</language>
 	</row>
 
 	<row id="ITEMNAME_023">
 		<language name="JPN" width="256">かいふくのくすり</language>
-		<language name="JPN_KANJI" width="256">回復の薬</language>
+		<language name="JPN_KANJI" width="256">かいふくのくすり</language>
 	</row>
 
 	<row id="ITEMNAME_024">
 		<language name="JPN" width="256">まんたんのくすり</language>
-		<language name="JPN_KANJI" width="256">満タンの薬</language>
+		<language name="JPN_KANJI" width="256">まんたんのくすり</language>
 	</row>
 
 	<row id="ITEMNAME_025">
 		<language name="JPN" width="256">すごいキズぐすり</language>
-		<language name="JPN_KANJI" width="256">凄い傷薬</language>
+		<language name="JPN_KANJI" width="256">すごいキズぐすり</language>
 	</row>
 
 	<row id="ITEMNAME_026">
 		<language name="JPN" width="256">いいキズぐすり</language>
-		<language name="JPN_KANJI" width="256">いい傷薬</language>
+		<language name="JPN_KANJI" width="256">いいキズぐすり</language>
 	</row>
 
 	<row id="ITEMNAME_027">
 		<language name="JPN" width="256">なんでもなおし</language>
-		<language name="JPN_KANJI" width="256">何でも直し</language>
+		<language name="JPN_KANJI" width="256">なんでもなおし</language>
 	</row>
 
 	<row id="ITEMNAME_028">
