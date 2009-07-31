@@ -48,6 +48,16 @@ extern GFL_BMPWIN * TALKMSGWIN_GetBmpWin( TALKMSGWIN_SYS* tmsgwinSys, int tmsgwi
 //	typedef struct
 //======================================================================
 //--------------------------------------------------------------
+/// KEYCURSOR_WORK
+//--------------------------------------------------------------
+typedef struct
+{
+  u8 cursor_anm_no;
+  u8 cursor_anm_frame;
+  GFL_BMP_DATA *bmp_cursor;
+}KEYCURSOR_WORK;
+
+//--------------------------------------------------------------
 ///	FLDMSGPRINT
 //--------------------------------------------------------------
 struct _TAG_FLDMSGPRINT
@@ -132,11 +142,19 @@ struct _TAG_FLDMSGWIN_STREAM
 static void FldMenuFuncH_BmpMenuListH(
 	BMPMENULIST_HEADER *menuH, const FLDMENUFUNC_HEADER *fmenuH );
 
+static void keyCursor_Init( KEYCURSOR_WORK *work, HEAPID heapID );
+static void keyCursor_Delete( KEYCURSOR_WORK *work );
+static void keyCursor_Clear(
+    KEYCURSOR_WORK *work, GFL_BMP_DATA *bmp, u16 n_col );
+static void keyCursor_Write(
+    KEYCURSOR_WORK *work, GFL_BMP_DATA *bmp, u16 n_col );
+
 static GFL_BMPWIN * FldBmpWinFrame_Init( u32 bgFrame, HEAPID heapID,
 	u16 pos_x, u16 pos_y, u16 size_x, u16 size_y );
 static void FldBmpWinFrame_Delete( GFL_BMPWIN *bmpwin );
 
 static const FLDMENUFUNC_HEADER DATA_MenuHeader_YesNo;
+static const u8 ALIGN4 skip_cursor_Character[128];
 
 //======================================================================
 //	FLDMSGBG	フィールドメッセージBG関連
@@ -1399,6 +1417,13 @@ void FLDMSGWIN_STREAM_WriteWindow( FLDMSGWIN_STREAM *msgWin )
 //======================================================================
 //  FLDTALKMSGWIN
 //======================================================================
+enum
+{
+  CURSOR_FLAG_NONE = 0,
+  CURSOR_FLAG_WRITE,
+  CURSOR_FLAG_END,
+};
+
 //--------------------------------------------------------------
 /// FLDTALKMSGWIN
 //--------------------------------------------------------------
@@ -1406,42 +1431,13 @@ struct _TAG_FLDTALKMSGWIN
 {
   u8 flag_key_trg;
   u8 flag_key_cont;
+  u8 flag_key_pause_clear;
+  u8 flag_cursor;
   STRBUF *strBuf;
   int talkMsgWinIdx;
   TALKMSGWIN_SYS *talkMsgWinSys; //FLDMSGBGより
-  
-  s16 cursor_anm_no;
-  s16 cursor_anm_frame;
-  u16 cursor_put_flag;
-  u16 cursor_clear_flag;
-  GFL_BMP_DATA *cursor_bmp;
+  KEYCURSOR_WORK cursor_work;
 };
-
-#if 0
-const u8 ALIGN4 skip_cursor_Character[128] = {
-0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00, 0x00,0x00,0x00,0x00,0x44,0x44,0x44,0x44,
-0x42,0x44,0x44,0x44,0x20,0x44,0x44,0x24, 0x00,0x42,0x44,0x22,0x00,0x20,0x24,0x02,
-0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00, 0x00,0x00,0x00,0x00,0x24,0x00,0x00,0x00,
-0x22,0x00,0x00,0x00,0x02,0x00,0x00,0x00, 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,
-
-0x00,0x00,0x22,0x00,0x00,0x00,0x00,0x00, 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,
-0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00, 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,
-0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00, 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,
-0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00, 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,
-};
-#else
-const u8 ALIGN4 skip_cursor_Character[128] = {
-0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00, 0x00,0x00,0x00,0x00,0x22,0x22,0x22,0x22,
-0x21,0x22,0x22,0x22,0x10,0x22,0x22,0x12, 0x00,0x21,0x22,0x11,0x00,0x10,0x12,0x01,
-0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00, 0x00,0x00,0x00,0x00,0x12,0x00,0x00,0x00,
-0x11,0x00,0x00,0x00,0x01,0x00,0x00,0x00, 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,
-
-0x00,0x00,0x11,0x00,0x00,0x00,0x00,0x00, 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,
-0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00, 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,
-0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00, 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,
-0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00, 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,
-};
-#endif
 
 //--------------------------------------------------------------
 /**
@@ -1464,36 +1460,6 @@ static void fldTalkMsgWin_Add(
   tmsg->talkMsgWinSys = fmb->talkMsgWinSys;
   tmsg->talkMsgWinIdx = idx;
   
-  { //キー送りカーソル
-#if 0
-	  void * arc;
-	  NNSG2dCharacterData *dat;
-    
-    arc = GFL_ARC_UTIL_Load( ARCID_PL_KEYCURSOR, 0, 0, fmb->heapID );
-    GF_ASSERT( arc != NULL );
-		NNS_G2dGetUnpackedBGCharacterData( arc, &dat );
-       
-    tmsg->cursor_bmp = GFL_BMP_CreateWithData(
-        (u8*)dat->pRawData, 2, 2, GFL_BMP_16_COLOR, fmb->heapID );
-    GFL_HEAP_FreeMemory( arc );
-#else
-    tmsg->cursor_bmp = GFL_BMP_CreateWithData(
-        (u8*)skip_cursor_Character,
-        2, 2, GFL_BMP_16_COLOR, fmb->heapID );
-#endif
-  }
-
-#if 0 
-  TALKMSGWIN_CreateFloatWindowIdx(
-      tmsg->talkMsgWinSys,
-      0,
-      (VecFx32*)pos, strBuf,
-      1, 19,
-      30, 4,
-      15 );
-#else
-  KAGAYA_Printf( "ウィンドウ %d,%d,%d\n", pos->x, pos->y, pos->z );
-  
   FLDMSGBG_SetBlendAlpha();
 
   switch( idx ){
@@ -1510,7 +1476,10 @@ static void fldTalkMsgWin_Add(
   }
   
   TALKMSGWIN_OpenWindow( tmsg->talkMsgWinSys, tmsg->talkMsgWinIdx );
-#endif
+  
+  keyCursor_Init( &tmsg->cursor_work, fmb->heapID );
+  
+  KAGAYA_Printf( "ウィンドウ %d,%d,%d\n", pos->x, pos->y, pos->z );
 }
 
 //--------------------------------------------------------------
@@ -1574,11 +1543,7 @@ void FLDTALKMSGWIN_Delete( FLDTALKMSGWIN *tmsg )
   }
   
   TALKMSGWIN_DeleteWindow( tmsg->talkMsgWinSys, tmsg->talkMsgWinIdx );
-  
-  { //キー送りカーソル
-		GFL_BMP_Delete( tmsg->cursor_bmp );
-  }
-
+  keyCursor_Delete( &tmsg->cursor_work );
   GFL_HEAP_FreeMemory( tmsg );
 }
 
@@ -1609,8 +1574,9 @@ BOOL FLDTALKMSGWIN_Print( FLDTALKMSGWIN *tmsg )
   
   switch( state ){
   case PRINTSTREAM_STATE_RUNNING: //実行中
-    tmsg->cursor_clear_flag = FALSE;
-
+    tmsg->flag_cursor = CURSOR_FLAG_NONE;
+    tmsg->flag_key_pause_clear = FALSE;
+    
     if( (trg & PAD_BUTTON_A) ){
       tmsg->flag_key_trg = TRUE;
     }
@@ -1622,60 +1588,30 @@ BOOL FLDTALKMSGWIN_Print( FLDTALKMSGWIN *tmsg )
     }
     break;
   case PRINTSTREAM_STATE_PAUSE: //一時停止中
-    if( (trg & PAD_BUTTON_A) ){
-      PMSND_PlaySystemSE( SEQ_SE_MESSAGE );
-      PRINTSYS_PrintStreamReleasePause( stream );
-      tmsg->flag_key_trg = FALSE;
-      
-      if( tmsg->cursor_put_flag == TRUE ){
-        u16 x,y,offs;
-        u16 tbl[3] = { 0, 1, 2 };
-        GFL_BMPWIN *twin_bmp = TALKMSGWIN_GetBmpWin(
-            tmsg->talkMsgWinSys,tmsg->talkMsgWinIdx );
-		    GFL_BMP_DATA *bmp = GFL_BMPWIN_GetBmp( twin_bmp );
-        
-        x = GFL_BMP_GetSizeX( bmp ) - 11;
-        y = GFL_BMP_GetSizeY( bmp ) - 9;
-        offs = tbl[tmsg->cursor_anm_no];
-
-        GFL_BMP_Fill( bmp, x, y+offs, 10, 7, 0x0f );
-		    GFL_BMPWIN_TransVramCharacter( twin_bmp );
-        
-        tmsg->cursor_anm_no = 0;
-        tmsg->cursor_anm_frame = 0;
-        tmsg->cursor_put_flag = FALSE;
-        tmsg->cursor_clear_flag = TRUE;
-      }
-    }
-    
-    pause_type = PRINTSYS_PrintStreamGetPauseType( stream );
-    
-//    if( pause_type == PRINTSTREAM_PAUSE_LINEFEED ){
-    if( tmsg->cursor_clear_flag == FALSE ){
-      u16 x,y,offs;
-      u16 tbl[3] = { 0, 1, 2 };
+    if( tmsg->flag_key_pause_clear == FALSE ){ //既にポーズクリア済みか？
       GFL_BMPWIN *twin_bmp = TALKMSGWIN_GetBmpWin(
-          tmsg->talkMsgWinSys,tmsg->talkMsgWinIdx );
+          tmsg->talkMsgWinSys, tmsg->talkMsgWinIdx );
 		  GFL_BMP_DATA *bmp = GFL_BMPWIN_GetBmp( twin_bmp );
       
-      x = GFL_BMP_GetSizeX( bmp ) - 11;
-      y = GFL_BMP_GetSizeY( bmp ) - 9;
-      offs = tbl[tmsg->cursor_anm_no];
-      
-      GFL_BMP_Fill( bmp, x, y+offs, 10, 7, 0x0f );
-      
-      tmsg->cursor_anm_frame++;
-      if( tmsg->cursor_anm_frame >= 4 ){
-        tmsg->cursor_anm_frame = 0;
-        tmsg->cursor_anm_no++;
-        tmsg->cursor_anm_no %= 3;
+      if( (trg & PAD_BUTTON_A) ){
+        PMSND_PlaySystemSE( SEQ_SE_MESSAGE );
+        PRINTSYS_PrintStreamReleasePause( stream );
+        
+        if( tmsg->flag_cursor == CURSOR_FLAG_WRITE ){
+          keyCursor_Clear( &tmsg->cursor_work, bmp, 0x0f );
+        }
+        
+        tmsg->flag_key_trg = FALSE;
+        tmsg->flag_key_pause_clear = TRUE;
+        tmsg->flag_cursor = CURSOR_FLAG_END;
       }
-		  
-      offs = tbl[tmsg->cursor_anm_no];
       
-      GFL_BMP_Print( tmsg->cursor_bmp, bmp, 0, 2, x, y+offs, 10, 7, 0x00 );
+      if( tmsg->flag_cursor != CURSOR_FLAG_END ){
+        keyCursor_Write( &tmsg->cursor_work, bmp, 0x0f );
+        tmsg->flag_cursor = CURSOR_FLAG_WRITE;
+      }
+      
 		  GFL_BMPWIN_TransVramCharacter( twin_bmp );
-      tmsg->cursor_put_flag = TRUE;
     }
     break;
   case PRINTSTREAM_STATE_DONE: //終了
@@ -1683,6 +1619,90 @@ BOOL FLDTALKMSGWIN_Print( FLDTALKMSGWIN *tmsg )
   }
   
   return( FALSE );
+}
+
+//======================================================================
+//  キー送りカーソル
+//======================================================================
+//--------------------------------------------------------------
+/**
+ * キー送りカーソル 初期化
+ * @param work KEYCURSOR_WORK
+ * @param heapID HEAPID
+ * @retval nothing
+ */
+//--------------------------------------------------------------
+static void keyCursor_Init( KEYCURSOR_WORK *work, HEAPID heapID )
+{
+  MI_CpuClear8( work, sizeof(KEYCURSOR_WORK) );
+  work->bmp_cursor = GFL_BMP_CreateWithData(
+        (u8*)skip_cursor_Character,
+        2, 2, GFL_BMP_16_COLOR, heapID );
+}
+
+//--------------------------------------------------------------
+/**
+ * キー送りカーソル 削除
+ * @param work KEYCURSOR_WORK
+ * @retval nothing
+ */
+//--------------------------------------------------------------
+static void keyCursor_Delete( KEYCURSOR_WORK *work )
+{
+  GFL_BMP_Delete( work->bmp_cursor );
+}
+
+//--------------------------------------------------------------
+/**
+ * キー送りカーソル クリア
+ * @param work KEYCURSOR_WORK
+ * @param bmp 表示先GFL_BMP_DATA
+ * @param n_col 透明色指定 0-15,GF_BMPPRT_NOTNUKI	
+ * @retval nothing
+ */
+//--------------------------------------------------------------
+static void keyCursor_Clear(
+    KEYCURSOR_WORK *work, GFL_BMP_DATA *bmp, u16 n_col )
+{
+  u16 x,y,offs;
+  u16 tbl[3] = { 0, 1, 2 };
+  
+  x = GFL_BMP_GetSizeX( bmp ) - 11;
+  y = GFL_BMP_GetSizeY( bmp ) - 9;
+  offs = tbl[work->cursor_anm_no];
+  GFL_BMP_Fill( bmp, x, y+offs, 10, 7, n_col );
+}
+
+//--------------------------------------------------------------
+/**
+ * キー送りカーソル 表示
+ * @param work KEYCURSOR_WORK
+ * @param bmp 表示先GFL_BMP_DATA
+ * @param n_col 透明色指定 0-15,GF_BMPPRT_NOTNUKI	
+ * @retval nothing
+ */
+//--------------------------------------------------------------
+static void keyCursor_Write(
+    KEYCURSOR_WORK *work, GFL_BMP_DATA *bmp, u16 n_col )
+{
+  u16 x,y,offs;
+  u16 tbl[3] = { 0, 1, 2 };
+  
+  keyCursor_Clear( work, bmp, n_col );
+  
+  work->cursor_anm_frame++;
+  
+  if( work->cursor_anm_frame >= 4 ){
+    work->cursor_anm_frame = 0;
+    work->cursor_anm_no++;
+    work->cursor_anm_no %= 3;
+  }
+
+  x = GFL_BMP_GetSizeX( bmp ) - 11;
+  y = GFL_BMP_GetSizeY( bmp ) - 9;
+  offs = tbl[work->cursor_anm_no];
+  
+  GFL_BMP_Print( work->bmp_cursor, bmp, 0, 2, x, y+offs, 10, 7, 0x00 );
 }
 
 //======================================================================
@@ -1697,20 +1717,6 @@ BOOL FLDTALKMSGWIN_Print( FLDTALKMSGWIN *tmsg )
 //--------------------------------------------------------------
 void FLDMSGBG_SetBlendAlpha( void )
 {
-#if 0 //フィールドマップ側で対応
-  { //バトルのウィンドウ変更に対応
-    #if 0
-    int mask =
-      GX_WND_PLANEMASK_BG0 | GX_WND_PLANEMASK_BG1 |
-      GX_WND_PLANEMASK_BG2 | GX_WND_PLANEMASK_BG3 | 
-      GX_WND_PLANEMASK_OBJ;
-    G2_SetWnd0InsidePlane( mask, TRUE );
-    #else
-    GX_SetVisibleWnd( GX_WNDMASK_NONE );
-    #endif
-  }
-#endif
-  
   {
     int plane1 = GX_BLEND_PLANEMASK_BG1; 
   	int plane2 = GX_BLEND_PLANEMASK_BG0|GX_BLEND_PLANEMASK_BG2|
@@ -1798,3 +1804,31 @@ static const FLDMENUFUNC_HEADER DATA_MenuHeader_YesNo =
 	0,		//表示サイズY キャラ単位
 };
 
+//--------------------------------------------------------------
+/// 送りカーソルデータ
+//--------------------------------------------------------------
+#if 0
+static const u8 ALIGN4 skip_cursor_Character[128] = {
+0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00, 0x00,0x00,0x00,0x00,0x44,0x44,0x44,0x44,
+0x42,0x44,0x44,0x44,0x20,0x44,0x44,0x24, 0x00,0x42,0x44,0x22,0x00,0x20,0x24,0x02,
+0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00, 0x00,0x00,0x00,0x00,0x24,0x00,0x00,0x00,
+0x22,0x00,0x00,0x00,0x02,0x00,0x00,0x00, 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,
+
+0x00,0x00,0x22,0x00,0x00,0x00,0x00,0x00, 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,
+0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00, 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,
+0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00, 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,
+0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00, 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,
+};
+#else
+static const u8 ALIGN4 skip_cursor_Character[128] = {
+0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00, 0x00,0x00,0x00,0x00,0x22,0x22,0x22,0x22,
+0x21,0x22,0x22,0x22,0x10,0x22,0x22,0x12, 0x00,0x21,0x22,0x11,0x00,0x10,0x12,0x01,
+0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00, 0x00,0x00,0x00,0x00,0x12,0x00,0x00,0x00,
+0x11,0x00,0x00,0x00,0x01,0x00,0x00,0x00, 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,
+
+0x00,0x00,0x11,0x00,0x00,0x00,0x00,0x00, 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,
+0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00, 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,
+0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00, 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,
+0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00, 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,
+};
+#endif
