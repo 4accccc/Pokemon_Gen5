@@ -11,7 +11,7 @@
 #include "field_camera.h"
 	
 #include "arc_def.h"
-#include "fieldmap/field_camera_data.naix"
+#include "arc/fieldmap/field_camera_data.naix"
 //============================================================================================
 //============================================================================================
 
@@ -102,39 +102,11 @@ struct _FIELD_CAMERA {
 };
 
 
+//============================================================================================
+//============================================================================================
 #include "../resource/fldmapdata/camera_data/fieldcameraformat.h"
-#if 0
-//------------------------------------------------------------------
-/**
- * @brief	カメラパラメータ
- */
-//------------------------------------------------------------------
-typedef struct {
-	fx32			Distance;
-	VecFx32			Angle;
-	u16				View;
-	u16				PerspWay;
-	fx32			Near;
-	fx32			Far;
-	VecFx32			Shift;
-}FIELD_CAMERA_PARAM;
-
-static const FIELD_CAMERA_PARAM FieldCameraParam[] = {
-	{
-	},
-};
-#endif
 
 
-//------------------------------------------------------------------
-/**
- * @brief	場面ごとのカメラ制御関数テーブル定義
- */
-//------------------------------------------------------------------
-typedef struct {
-	void (*init_func)(FIELD_CAMERA * camera);
-	void (*control)(FIELD_CAMERA * camera, u16 key_cont);
-}CAMERA_FUNC_TABLE;
 
 static void createTraceData(const int inHistNum, const int inDelay,
 						const int inTraceMask, const int inHeapID,
@@ -146,54 +118,11 @@ static void traceUpdate(FIELD_CAMERA * camera);
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 static void loadCameraParameters(FIELD_CAMERA * camera);
-static void initGridParameter(FIELD_CAMERA * camera);
 
-static void initBridgeParameter(FIELD_CAMERA * camera);
-
-static void initC3Parameter(FIELD_CAMERA * camera);
-
-static void initPokeCenParameter(FIELD_CAMERA * camera);
-static void initH01P01Parameter(FIELD_CAMERA * camera);
-//static void ControlPokeCenParameter(FIELD_CAMERA * camera, u16 key_cont);
-/*
-static void ControlGridParameter(FIELD_CAMERA * camera, u16 key_cont);
-static void ControlBridgeParameter(FIELD_CAMERA * camera, u16 key_cont);
-static void ControlC3Parameter(FIELD_CAMERA * camera, u16 key_cont);
-*/
 static void ControlParameter( FIELD_CAMERA * camera, u16 key_cont );
 static void ControlParameter_CalcCamera( FIELD_CAMERA * camera, u16 key_cont );
 static void ControlParameter_CalcTarget( FIELD_CAMERA * camera, u16 key_cont );
 static void ControlParameter_Direct( FIELD_CAMERA * camera, u16 key_cont );
-
-//============================================================================================
-//============================================================================================
-//------------------------------------------------------------------
-/**
- * @brief	場面ごとのカメラ制御関数テーブル定義
- */
-//------------------------------------------------------------------
-static const CAMERA_FUNC_TABLE CameraFuncTable[] = {
-	{
-		initGridParameter,
-		ControlParameter,
-	},
-	{
-		initBridgeParameter,
-		ControlParameter,
-	},
-	{
-		initC3Parameter,
-		ControlParameter,
-	},
-  {
-    initPokeCenParameter,
-    ControlParameter,
-  },
-  {
-    initH01P01Parameter,
-    ControlParameter,
-  },
-};
 
 
 //============================================================================================
@@ -216,7 +145,6 @@ FIELD_CAMERA* FIELD_CAMERA_Create(
 	enum { CAMERA_LENGTH = 16 };
 
 	GF_ASSERT(cam != NULL);
-	GF_ASSERT(type < FIELD_CAMERA_TYPE_MAX);
 	TAMADA_Printf("FIELD CAMERA TYPE = %d\n", type);
 	camera->fieldWork = fieldWork;
 	camera->type = type;
@@ -243,7 +171,6 @@ FIELD_CAMERA* FIELD_CAMERA_Create(
   }
 
   loadCameraParameters(camera);
-	//CameraFuncTable[camera->type].init_func(camera);
 
 	createTraceData(	FIELD_CAMERA_TRACE_BUFF, FIELD_CAMERA_DELAY,
 							CAM_TRACE_MASK_Y, heapID, camera);
@@ -269,7 +196,6 @@ void	FIELD_CAMERA_Delete( FIELD_CAMERA* camera )
 void FIELD_CAMERA_Main( FIELD_CAMERA* camera, u16 key_cont)
 {
   ControlParameter(camera, key_cont);
-	//CameraFuncTable[camera->type].control(camera, key_cont);
 }
 
 
@@ -313,152 +239,22 @@ FIELD_CAMERA_MODE FIELD_CAMERA_GetMode( const FIELD_CAMERA * camera )
 //============================================================================================
 //------------------------------------------------------------------
 //------------------------------------------------------------------
-static void initGridParameter(FIELD_CAMERA * camera)
-{
-#if 0
-  camera->angle_len = 0x00ED * FX32_ONE;
-  camera->angle_pitch = 0x25d8;
-	
-	FIELD_CAMERA_SetFar( camera, (1024 << FX32_SHIFT) );
-	
-  // ターゲット補正値
-  VEC_Set( &camera->target_offset, 0, 0x4000, 0 );
-
-  GFL_G3D_SetSystemSwapBufferMode( GX_SORTMODE_MANUAL, GX_BUFFERMODE_Z );
-#endif
-}
-
-//------------------------------------------------------------------
-//------------------------------------------------------------------
-static void initPokeCenParameter(FIELD_CAMERA * camera)
-{
-#if 0
-  camera->angle_len = 0x00d5 * FX32_ONE;
-  camera->angle_pitch = 0x1bd8;
-	
-	FIELD_CAMERA_SetFar( camera, (1024 << FX32_SHIFT) );
-	
-  // ターゲット補正値
-  VEC_Set( &camera->target_offset, 0, 0x18066, 0xfffef197 );
-
-  GFL_G3D_SetSystemSwapBufferMode( GX_SORTMODE_MANUAL, GX_BUFFERMODE_W );
-#endif
-}
-
-//------------------------------------------------------------------
-//  未設定なのでデフォルトと一緒
-//------------------------------------------------------------------
-static void initH01P01Parameter(FIELD_CAMERA * camera)
-{
-#if 0
-  camera->angle_len = 0x004d * FX32_ONE;
-  camera->angle_pitch = 0x05d8;
-	
-	FIELD_CAMERA_SetFar( camera, (1024 << FX32_SHIFT) );
-	
-  // ターゲット補正値
-  VEC_Set( &camera->target_offset, 0, 0x199f7, 0x09ed );
-
-  GFL_G3D_SetSystemSwapBufferMode( GX_SORTMODE_MANUAL, GX_BUFFERMODE_W );
-#endif
-}
-
-//------------------------------------------------------------------
-//------------------------------------------------------------------
-static void initC3Parameter(FIELD_CAMERA * camera)
-{
-#if 0
-	enum { 
-		CAMERA_LENGTH = 0x308,
-		CAMERA_HEIGHT = 0x07c,
-
-		CAMERA_ANGLE_LENGTH = 0x315000,
-	};
-	VecFx32 trans = {0x2f6f36, 0x4000, 0x301402};
-
-	
-	// 距離
-	camera->angle_len = CAMERA_ANGLE_LENGTH;
-
-	// X軸の角度
-	{
-		fx32 cos;
-		VecFx32 vec0 = { 0,0,FX32_ONE };
-		VecFx32 vec1 = { 0 };
-
-		vec1.z = CAMERA_LENGTH;
-		vec1.y = CAMERA_HEIGHT;
-
-		VEC_Normalize( &vec0, &vec0 );
-		VEC_Normalize( &vec1, &vec1 );
-
-		cos = VEC_DotProduct( &vec0, &vec1 );
-		camera->angle_pitch = FX_AcosIdx( cos );
-	}
-	
-	FIELD_CAMERA_SetTargetPos(camera, &trans);
-
-	FIELD_CAMERA_SetFar(camera, 0x680000);
-	FIELD_CAMERA_SetNear(camera, 0x64000);
-	camera->watch_target = NULL;
-
-  // ターゲット補正値
-  VEC_Set( &camera->target_offset, 0, 0, 0 );
-
-  GFL_G3D_SetSystemSwapBufferMode( GX_SORTMODE_MANUAL, GX_BUFFERMODE_W );
-#endif
-}
-
-//------------------------------------------------------------------
-//------------------------------------------------------------------
-static void initBridgeParameter(FIELD_CAMERA * camera)
-{
-#if 0
-	enum { 
-		CAMERA_LENGTH = 0x90000,
-		CAMERA_HEIGHT = 0x3a000,
-	};
-
-
-	// 距離
-	camera->angle_len = FX_Mul( CAMERA_LENGTH, CAMERA_LENGTH ) + FX_Mul( CAMERA_HEIGHT, CAMERA_HEIGHT );
-	camera->angle_len = FX_Sqrt( camera->angle_len );
-
-	// X軸の角度
-	{
-		fx32 cos;
-		VecFx32 vec0 = { 0,0,FX32_ONE };
-		VecFx32 vec1 = { 0 };
-
-		vec1.z = CAMERA_LENGTH;
-		vec1.y = CAMERA_HEIGHT;
-
-		VEC_Normalize( &vec0, &vec0 );
-		VEC_Normalize( &vec1, &vec1 );
-
-		cos = VEC_DotProduct( &vec0, &vec1 );
-		camera->angle_pitch = FX_AcosIdx( cos );
-	}
-
-	FIELD_CAMERA_SetFar(camera, 4096 << FX32_SHIFT );
-
-  // ターゲット補正値
-  VEC_Set( &camera->target_offset, 0, 0x4000, 0 );
-
-  GFL_G3D_SetSystemSwapBufferMode( GX_SORTMODE_MANUAL, GX_BUFFERMODE_W );
-#endif
-}
-//------------------------------------------------------------------
-//------------------------------------------------------------------
 static void loadCameraParameters(FIELD_CAMERA * camera)
 {
+  enum {
+    FILE_ID = NARC_field_camera_data_field_camera_bin,
+    ARC_ID  = ARCID_FIELD_CAMERA,
+  };
   FLD_CAMERA_PARAM param;
-  u16 file_id = NARC_field_camera_data_field_camera_bin;
-  u16 arc_id = ARCID_FIELD_CAMERA;
-  ARCHANDLE * handle = GFL_ARC_OpenDataHandle(arc_id, camera->heapID);
-  u16 size = GFL_ARC_GetDataSizeByHandle(handle, file_id);
-  GF_ASSERT( camera->type * sizeof(FLD_CAMERA_PARAM) < size );
-  GFL_ARC_LoadDataOfsByHandle(handle, file_id,
+  ARCHANDLE * handle = GFL_ARC_OpenDataHandle(ARC_ID, camera->heapID);
+  u16 size = GFL_ARC_GetDataSizeByHandle(handle, FILE_ID);
+  if ( camera->type * sizeof(FLD_CAMERA_PARAM) >= size )
+  {
+    OS_TPrintf("カメラタイプ（%d）が指定できません\n", camera->type);
+    GF_ASSERT(0);
+    camera->type = 0;
+  }
+  GFL_ARC_LoadDataOfsByHandle(handle, FILE_ID,
       camera->type * sizeof(FLD_CAMERA_PARAM), sizeof(FLD_CAMERA_PARAM), &param);
 #if 0
   TAMADA_Printf("FIELD CAMERA INIT INFO\n");
