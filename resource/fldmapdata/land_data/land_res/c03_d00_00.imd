@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="lee_hyunjung" host="W00154A" date="2009-07-22T19:04:09" source="c03_d00_00c.mb"/>
+	<create user="lee_hyunjung" host="W00154A" date="2009-07-31T14:42:31" source="c03_d00_00.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 </head>
 
 <body>
 
-<original_create user="lee_hyunjung" host="W00154A" date="2009-07-22T19:04:09" source="c03_d00_00c.mb"/>
+<original_create user="lee_hyunjung" host="W00154A" date="2009-07-31T14:42:31" source="c03_d00_00.mb"/>
 <original_generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 
 <model_info
@@ -566,16 +566,20 @@
 	</tex_image>
 	<tex_image index="10" name="c3_yuka2"
 		width="16" height="16" original_width="16" original_height="16"
-		format="palette4"
+		format="palette16"
 		color0_mode="color"
-		palette_name="yuka2"
+		palette_name="yukablock"
 		path="C:/home/wb_data3d/field/out05/map/tex/c3_yuka2.tga"
 	>
-		<bitmap size="32">
-			aaf0 05aa aaf0 05aa aaf0 05aa aaf0 05aa
-			aaf0 05aa aaf0 05aa aaf0 05aa aaf0 05aa
-			aaf0 05aa aaf0 05aa aaf0 05aa aaf0 05aa
-			aaf0 05aa aaf0 05aa 5550 0555 0000 0000
+		<bitmap size="64">
+			0034 0000 0000 4322 0034 1111 1111 4322
+			0034 1111 1111 4322 0034 1111 1111 4322
+			0034 1111 1111 4322 0034 1111 1111 4322
+			0034 1111 1111 4322 0034 1111 1111 4322
+			0034 1111 1111 4322 0034 1111 1111 4322
+			0034 1111 1111 4322 0034 1111 1111 4322
+			0034 1111 1111 4322 2234 2222 2222 4322
+			3334 3333 3333 4333 4444 4444 4444 4444
 		</bitmap>
 	</tex_image>
 	<tex_image index="11" name="c3test_block"
@@ -686,18 +690,18 @@
 		width="16" height="16" original_width="16" original_height="16"
 		format="palette16"
 		color0_mode="transparency"
-		palette_name="c3test_buil8"
+		palette_name="buil8"
 		path="C:/home/wb_data3d/field/out05/map/tex/c3test_buil8.tga"
 	>
 		<bitmap size="64">
 			7777 7777 7777 7777 3333 3333 3333 3333
 			1255 5521 2555 5211 3333 3333 3333 3333
 			1111 1111 1111 1111 5555 5555 5555 5555
-			5555 7775 5777 2255 5555 1132 2311 5665
-			3333 0012 2100 3333 2222 0012 2100 2222
-			2222 0012 2100 2222 2222 0012 2100 2222
-			3333 0012 2100 3333 5566 1122 2211 5555
-			5445 2225 5222 5555 5555 5555 5555 5555
+			5555 7755 5577 2255 5555 1325 5231 5665
+			3333 0123 3210 3333 2222 0122 2210 2222
+			2222 0122 2210 2222 2222 0122 2210 2222
+			3333 0123 3210 3333 5566 1225 5221 5555
+			5445 2255 5522 5555 5555 5555 5555 5555
 		</bitmap>
 	</tex_image>
 	<tex_image index="16" name="gaito2"
@@ -857,42 +861,42 @@
 </tex_image_array>
 
 <tex_palette_array size="20">
-	<tex_palette index="0" name="c1_b01_4_pl" color_size="4">
+	<tex_palette index="0" name="buil8" color_size="8">
+		0000 39ce 4631 4a52 4e73 5294 56b5 6318
+	</tex_palette>
+	<tex_palette index="1" name="c1_b01_4_pl" color_size="4">
 		7339 420f 7fff 7fff
 	</tex_palette>
-	<tex_palette index="1" name="c3_bayblock2_pl" color_size="8">
+	<tex_palette index="2" name="c3_bayblock2_pl" color_size="8">
 		4e73 4ed7 52b5 5719 5af7 6339 7fff 7fff
 	</tex_palette>
-	<tex_palette index="2" name="c3_buil01_b_pl" color_size="16">
+	<tex_palette index="3" name="c3_buil01_b_pl" color_size="16">
 		1084 1ce7 2d28 356a 41ee 4631 5ef7 6318
 		6739 6b5a 7fff 7fff 7fff 7fff 7fff 7fff
 	</tex_palette>
-	<tex_palette index="3" name="c3_buil03_a_pl" color_size="8">
+	<tex_palette index="4" name="c3_buil03_a_pl" color_size="8">
 		2d28 41aa 6ad0 7712 7b55 7f77 7fba 7fff
 	</tex_palette>
-	<tex_palette index="4" name="c3_green" color_size="4">
+	<tex_palette index="5" name="c3_green" color_size="4">
 		3eb2 2a4d 220b 326f
 	</tex_palette>
-	<tex_palette index="5" name="c3_oku_pl" color_size="8">
+	<tex_palette index="6" name="c3_oku_pl" color_size="8">
 		739c 7fff 6b5a 5ef7 56b5 4631 7fff 7fff
 	</tex_palette>
-	<tex_palette index="6" name="c3_road_pl" color_size="4">
+	<tex_palette index="7" name="c3_road_pl" color_size="4">
 		5ef7 6318 6739 7fff
 	</tex_palette>
-	<tex_palette index="7" name="c3_test" color_size="24">
+	<tex_palette index="8" name="c3_test" color_size="24">
 		0000 1062 18cf 1cf3 1d17 2108 2185 24e5
 		2536 2949 2d6a 2e08 318c 32ce 3e18 4631
 		56d6 62f7 673a 7a48 7cfc 7fff 7fff 7fff
 	</tex_palette>
-	<tex_palette index="8" name="c3_tree2_pl" color_size="16">
+	<tex_palette index="9" name="c3_tree2_pl" color_size="16">
 		7fff 2103 1564 0dc4 0dc5 166b 0ca7 150c
 		10c9 7fff 7fff 7fff 7fff 7fff 7fff 7fff
 	</tex_palette>
-	<tex_palette index="9" name="c3_yuka1_pl" color_size="4">
+	<tex_palette index="10" name="c3_yuka1_pl" color_size="4">
 		4631 4a52 4a53 4e73
-	</tex_palette>
-	<tex_palette index="10" name="c3test_buil8" color_size="8">
-		0000 39ce 4631 4a52 4e73 5294 56b5 6318
 	</tex_palette>
 	<tex_palette index="11" name="gaito2_pl" color_size="24">
 		0000 03ff 16f0 190a 1bff 1f34 22ea 256d
@@ -921,8 +925,8 @@
 	<tex_palette index="18" name="t2_buil6_b" color_size="8">
 		0000 1465 1c86 1cc7 20a7 24e8 2d0a 7fff
 	</tex_palette>
-	<tex_palette index="19" name="yuka2" color_size="4">
-		5294 56b5 5ad6 6318
+	<tex_palette index="19" name="yukablock" color_size="8">
+		6318 5ad6 56b5 5294 4e73 7fff 7fff 7fff
 	</tex_palette>
 </tex_palette_array>
 
@@ -968,7 +972,7 @@
 		specular="0 0 0"
 		emission="0 0 0"
 		shininess_table_flag="off"
-		tex_image_idx="2" tex_palette_idx="2"
+		tex_image_idx="2" tex_palette_idx="3"
 		tex_tiling="repeat repeat"
 		tex_scale="1.000000 1.000000"
 		tex_rotate="0.000000"
@@ -1016,7 +1020,7 @@
 		specular="0 0 0"
 		emission="0 0 0"
 		shininess_table_flag="off"
-		tex_image_idx="3" tex_palette_idx="3"
+		tex_image_idx="3" tex_palette_idx="4"
 		tex_tiling="repeat repeat"
 		tex_scale="1.000000 1.000000"
 		tex_rotate="0.000000"
@@ -1040,7 +1044,7 @@
 		specular="0 0 0"
 		emission="0 0 0"
 		shininess_table_flag="off"
-		tex_image_idx="15" tex_palette_idx="10"
+		tex_image_idx="15" tex_palette_idx="0"
 		tex_tiling="repeat repeat"
 		tex_scale="1.000000 1.000000"
 		tex_rotate="0.000000"
@@ -1088,7 +1092,7 @@
 		specular="0 0 0"
 		emission="0 0 0"
 		shininess_table_flag="off"
-		tex_image_idx="8" tex_palette_idx="8"
+		tex_image_idx="8" tex_palette_idx="9"
 		tex_tiling="repeat repeat"
 		tex_scale="1.000000 1.000000"
 		tex_rotate="0.000000"
@@ -1112,7 +1116,7 @@
 		specular="0 0 0"
 		emission="0 0 0"
 		shininess_table_flag="off"
-		tex_image_idx="0" tex_palette_idx="0"
+		tex_image_idx="0" tex_palette_idx="1"
 		tex_tiling="repeat repeat"
 		tex_scale="1.000000 1.000000"
 		tex_rotate="0.000000"
@@ -1232,7 +1236,7 @@
 		specular="0 0 0"
 		emission="0 0 0"
 		shininess_table_flag="off"
-		tex_image_idx="4" tex_palette_idx="4"
+		tex_image_idx="4" tex_palette_idx="5"
 		tex_tiling="repeat repeat"
 		tex_scale="1.000000 1.000000"
 		tex_rotate="0.000000"
@@ -1256,7 +1260,7 @@
 		specular="0 0 0"
 		emission="0 0 0"
 		shininess_table_flag="off"
-		tex_image_idx="5" tex_palette_idx="5"
+		tex_image_idx="5" tex_palette_idx="6"
 		tex_tiling="repeat repeat"
 		tex_scale="1.000000 1.000000"
 		tex_rotate="0.000000"
@@ -1323,7 +1327,7 @@
 		specular="0 0 0"
 		emission="0 0 0"
 		shininess_table_flag="off"
-		tex_image_idx="1" tex_palette_idx="1"
+		tex_image_idx="1" tex_palette_idx="2"
 		tex_tiling="repeat repeat"
 		tex_scale="1.000000 1.000000"
 		tex_rotate="0.000000"
@@ -1347,7 +1351,7 @@
 		specular="0 0 0"
 		emission="0 0 0"
 		shininess_table_flag="off"
-		tex_image_idx="7" tex_palette_idx="7"
+		tex_image_idx="7" tex_palette_idx="8"
 		tex_tiling="repeat repeat"
 		tex_scale="1.000000 1.000000"
 		tex_rotate="0.000000"
@@ -1419,7 +1423,7 @@
 		specular="0 0 0"
 		emission="0 0 0"
 		shininess_table_flag="off"
-		tex_image_idx="6" tex_palette_idx="6"
+		tex_image_idx="6" tex_palette_idx="7"
 		tex_tiling="repeat repeat"
 		tex_scale="1.000000 1.000000"
 		tex_rotate="0.000000"
@@ -1443,7 +1447,7 @@
 		specular="0 0 0"
 		emission="0 0 0"
 		shininess_table_flag="off"
-		tex_image_idx="9" tex_palette_idx="9"
+		tex_image_idx="9" tex_palette_idx="10"
 		tex_tiling="repeat repeat"
 		tex_scale="1.000000 1.000000"
 		tex_rotate="0.000000"

@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="lee_hyunjung" host="W00154A" date="2009-07-30T13:21:53" source="c03_b00_00.mb"/>
+	<create user="lee_hyunjung" host="W00154A" date="2009-07-31T15:03:59" source="c03_b00_00.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 </head>
 
 <body>
 
-<original_create user="lee_hyunjung" host="W00154A" date="2009-07-30T13:21:53" source="c03_b00_00.mb"/>
+<original_create user="lee_hyunjung" host="W00154A" date="2009-07-31T15:03:59" source="c03_b00_00.mb"/>
 <original_generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 
 <model_info
@@ -888,16 +888,20 @@
 	</tex_image>
 	<tex_image index="18" name="c3_yuka2"
 		width="16" height="16" original_width="16" original_height="16"
-		format="palette4"
+		format="palette16"
 		color0_mode="color"
-		palette_name="yuka2"
+		palette_name="yukablock"
 		path="C:/home/wb_data3d/field/out05/map/tex/c3_yuka2.tga"
 	>
-		<bitmap size="32">
-			aaf0 05aa aaf0 05aa aaf0 05aa aaf0 05aa
-			aaf0 05aa aaf0 05aa aaf0 05aa aaf0 05aa
-			aaf0 05aa aaf0 05aa aaf0 05aa aaf0 05aa
-			aaf0 05aa aaf0 05aa 5550 0555 0000 0000
+		<bitmap size="64">
+			0034 0000 0000 4322 0034 1111 1111 4322
+			0034 1111 1111 4322 0034 1111 1111 4322
+			0034 1111 1111 4322 0034 1111 1111 4322
+			0034 1111 1111 4322 0034 1111 1111 4322
+			0034 1111 1111 4322 0034 1111 1111 4322
+			0034 1111 1111 4322 0034 1111 1111 4322
+			0034 1111 1111 4322 2234 2222 2222 4322
+			3334 3333 3333 4333 4444 4444 4444 4444
 		</bitmap>
 	</tex_image>
 	<tex_image index="19" name="c3test_buil3"
@@ -1108,8 +1112,8 @@
 	<tex_palette index="21" name="light" color_size="8">
 		7fff 7fff 7fff 7fff 7fff 7fff 7fff 7fff
 	</tex_palette>
-	<tex_palette index="22" name="yuka2" color_size="4">
-		5294 56b5 5ad6 6318
+	<tex_palette index="22" name="yukablock" color_size="8">
+		6318 5ad6 56b5 5294 4e73 7fff 7fff 7fff
 	</tex_palette>
 </tex_palette_array>
 
