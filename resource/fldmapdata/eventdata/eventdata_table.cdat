@@ -2526,7 +2526,7 @@ static const EVENTDATA_TABLE event_bcwftest = {
 #include "../script/c01_def.h"
 const CONNECT_DATA DOOR_EVENT_C01[] = {
 	{//DOOR_ID_C01_EXIT10 = 0
-		{12512, 0, 9376},
+		{12512, 0, 9392},
 		ZONE_ID_C01PC0101, DOOR_ID_C01PC0101_EXIT02,
 		EXIT_DIR_DOWN,//direction
 		EXIT_TYPE_DOOR //type
@@ -3532,7 +3532,7 @@ const CONNECT_DATA DOOR_EVENT_C02[] = {
 		EXIT_TYPE_DOOR //type
 	},
 	{//DOOR_ID_C02_C02PC0101_EXIT01 = 5
-		{10176, 0, 9552},
+		{10176, 0, 9568},
 		ZONE_ID_C02PC0101, DOOR_ID_C02PC0101_C02_EXIT02,
 		EXIT_DIR_DOWN,//direction
 		EXIT_TYPE_DOOR //type
@@ -10568,7 +10568,7 @@ static const EVENTDATA_TABLE event_t01r0401 = {
 #include "../script/t02_def.h"
 const CONNECT_DATA DOOR_EVENT_T02[] = {
 	{//DOOR_ID_T02_EXIT01 = 0
-		{12672, 0, 10496},
+		{12672, 0, 10512},
 		ZONE_ID_T02PC0101, DOOR_ID_T02PC0101_EXIT02,
 		EXIT_DIR_DOWN,//direction
 		EXIT_TYPE_DOOR //type
