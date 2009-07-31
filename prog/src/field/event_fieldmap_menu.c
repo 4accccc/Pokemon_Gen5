@@ -756,6 +756,11 @@ static const BOOL FMenuReturnProc_PokeStatus(FMENU_EVENT_WORK* mwk)
     break;
 
   case PST_RET_EXIT:
+    {
+      GAMEDATA *gmData = GAMESYSTEM_GetGameData(mwk->gmSys);
+      GAMEDATA_SetSubScreenMode(gmData,FIELD_SUBSCREEN_NORMAL);
+    } 
+    mwk->bForceExit = TRUE;
     return FALSE;
     break;
   }
