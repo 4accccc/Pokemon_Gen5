@@ -69,6 +69,9 @@ struct _GFL_CAMADJUST {
 	STRBUF*					strBufTmp;
 
 	u16						scrnBuf[32*32];
+
+  s32     touch_bttn;
+  s32     touch_count;
 };
 
 #define CHR_SIZ			(0x20)
@@ -82,6 +85,22 @@ static BOOL CAMADJUST_ControlTrg( GFL_CAMADJUST* gflCamAdjust );
 static BOOL CAMADJUST_ControlCont( GFL_CAMADJUST* gflCamAdjust );
 static void CAMADJUST_NumPrint( GFL_CAMADJUST* gflCamAdjust, int bmpIdx, u16 num, u32 vramChr );
 static void CAMADJUST_printWipeSw( GFL_CAMADJUST* gflCamAdjust );
+
+
+#define TOUCH_REPEAT_WAIT_TYPE ( 2 )
+static const u8 sc_TOUCH_REPEAT_WAIT[ TOUCH_REPEAT_WAIT_TYPE ] = 
+{
+  8,
+  0
+};
+static const s32 sc_TOUCH_REPEAT_WAIT_TYPE_COUNT[ TOUCH_REPEAT_WAIT_TYPE ] = 
+{
+  32,
+  90,
+};
+static void CAMADJUST_TOUCH_InitRepeat( GFL_CAMADJUST* gflCamAdjust );
+static void CAMADJUST_TOUCH_Control( GFL_CAMADJUST* gflCamAdjust, int now_button );
+static int CAMADJUST_TOUCH_GetRepeat( const GFL_CAMADJUST* gflCamAdjust );
 
 //============================================================================================
 /**
@@ -124,6 +143,9 @@ extern GFL_CAMADJUST*	GFL_CAMADJUST_Create( const GFL_CAMADJUST_SETUP* setup, HE
 	gflCamAdjust->fontHandle = GFL_FONT_Create
 		(ARCID_FONT, NARC_font_small_nftr, GFL_FONT_LOADTYPE_FILE, FALSE ,gflCamAdjust->heapID);
 	gflCamAdjust->printQue = PRINTSYS_QUE_Create(gflCamAdjust->heapID);
+
+  // 初期化
+  CAMADJUST_TOUCH_InitRepeat( gflCamAdjust );
 
 	return gflCamAdjust;
 }
@@ -359,7 +381,7 @@ static const GFL_UI_TP_HITTBL eventContTouchPanelTable[TPBTN_CONT_MAX + 1] = {
 };
 
 //------------------------------------------------------------------
-#define ANGLE_ROTATE_SPD			(0x100)
+#define ANGLE_ROTATE_SPD			(0x80)
 #define	CAMERA_TARGET_HEIGHT	(4 * FX32_ONE)
 #define CAMLEN_MVSPD					(8 * FX32_ONE)
 #define	CAMANGLEH_MAX					(0x4000 - ANGLE_ROTATE_SPD)
@@ -382,6 +404,9 @@ static BOOL CAMADJUST_ControlCont( GFL_CAMADJUST* gflCamAdjust )
 	if(gflCamAdjust->pFar == NULL){ return TRUE; }
 	if(gflCamAdjust->pFovy == NULL){ return TRUE; }
 
+  CAMADJUST_TOUCH_Control( gflCamAdjust, tblPos );
+  tblPos = CAMADJUST_TOUCH_GetRepeat(gflCamAdjust);
+  
 	if(tblPos == GFL_UI_TP_HIT_NONE){
 		return TRUE;
 	} 
@@ -552,4 +577,63 @@ static void CAMADJUST_printWipeSw( GFL_CAMADJUST* gflCamAdjust )
 	gflCamAdjust->scrnBuf[0x11 * 32 + 0x0d] = scrData + 2;
 	gflCamAdjust->scrnBuf[0x11 * 32 + 0x0e] = scrData + 3;
 }
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  リピートワークのクリア
+ */
+//-----------------------------------------------------------------------------
+static void CAMADJUST_TOUCH_InitRepeat( GFL_CAMADJUST* gflCamAdjust )
+{
+  gflCamAdjust->touch_bttn    = GFL_UI_TP_HIT_NONE;
+  gflCamAdjust->touch_count   = 0;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  リピートコントロール
+ */
+//-----------------------------------------------------------------------------
+static void CAMADJUST_TOUCH_Control( GFL_CAMADJUST* gflCamAdjust, int now_button )
+{
+  if(gflCamAdjust->touch_bttn != now_button)
+  {
+    gflCamAdjust->touch_bttn    = now_button;
+    gflCamAdjust->touch_count   = 0;
+  }
+  else
+  {
+    if( (gflCamAdjust->touch_count + 1) <= sc_TOUCH_REPEAT_WAIT_TYPE_COUNT[ TOUCH_REPEAT_WAIT_TYPE-1 ] )
+    {
+      gflCamAdjust->touch_count ++;
+    }
+  }
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  リピート取得
+ *
+ *	@param	gflCamAdjust 
+ */
+//-----------------------------------------------------------------------------
+static int CAMADJUST_TOUCH_GetRepeat( const GFL_CAMADJUST* gflCamAdjust )
+{
+  int i;
+  for( i=0; i<TOUCH_REPEAT_WAIT_TYPE; i++ )
+  {
+    if( sc_TOUCH_REPEAT_WAIT_TYPE_COUNT[i] >= gflCamAdjust->touch_count )
+    {
+      if( (gflCamAdjust->touch_count % sc_TOUCH_REPEAT_WAIT[i]) == 0 )
+      {
+        return gflCamAdjust->touch_bttn;
+      }
+      break;
+    }
+  }
+  return GFL_UI_TP_HIT_NONE;
+}
+
+
 

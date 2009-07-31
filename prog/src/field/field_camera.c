@@ -780,7 +780,7 @@ void FIELD_CAMERA_DEBUG_BindSubScreen(FIELD_CAMERA * camera, void * param, FIELD
   }
   else if( type == FIELD_CAMERA_DEBUG_BIND_TARGET_POS )
   {
-    camera->debug_target_yaw    = 0x10000 - camera->angle_yaw;
+    camera->debug_target_yaw    = camera->angle_yaw - 0x8000;
     camera->debug_target_pitch  = 0x10000 - camera->angle_pitch;
     camera->debug_target_len    = camera->angle_len;
     GFL_CAMADJUST_SetCameraParam(	gflCamAdjust,
