@@ -1017,14 +1017,14 @@ static void PSTATUS_UpdateTP( PSTATUS_WORK *work )
     break;
   case SBT_EXIT:
     work->retVal = SRT_EXIT;
-    work->psData->ret_mode = PST_RET_CANCEL;
+    work->psData->ret_mode = PST_RET_EXIT;
     work->mainSeq = SMS_FADEOUT;
     GFL_CLACT_WK_SetAnmSeq( work->clwkBarIcon[SBT_EXIT] , APP_COMMON_BARICON_CLOSE_ON );
     work->clwkExitButton = work->clwkBarIcon[SBT_EXIT];
     break;
   case SBT_RETURN:
     work->retVal = SRT_RETURN;
-    work->psData->ret_mode = PST_RET_EXIT;
+    work->psData->ret_mode = PST_RET_CANCEL;
     work->mainSeq = SMS_FADEOUT;
     GFL_CLACT_WK_SetAnmSeq( work->clwkBarIcon[SBT_RETURN] , APP_COMMON_BARICON_RETURN_ON );
     work->clwkExitButton = work->clwkBarIcon[SBT_RETURN];
