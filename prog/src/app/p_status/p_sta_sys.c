@@ -88,6 +88,8 @@ static void PSTATUS_UpdateTP( PSTATUS_WORK *work );
 static void PSTATUS_RefreshDisp( PSTATUS_WORK *work );
 static void PSTATUS_WaitDisp( PSTATUS_WORK *work );
 
+static void PSTATUS_PALANIM_UpdatePalletAnime( PSTATUS_WORK *work );
+
 #if PM_DEBUG
 void PSTATUS_UTIL_DebugCreatePP( PSTATUS_WORK *work );
 #endif
@@ -133,6 +135,14 @@ const BOOL PSTATUS_InitPokeStatus( PSTATUS_WORK *work )
   PSTATUS_InitCell( work );
 
   work->vBlankTcb = GFUser_VIntr_CreateTCB( PSTATUS_VBlankFunc , work , 8 );
+
+  //パレットアニメ用
+  work->anmCnt = 0;
+  //アニメ用に、パレットを退避
+  {
+    u32 palAdr = (HW_OBJ_PLTT+PSTATUS_PALANIM_PAL_NO*32+PSTATUS_PALANIM_PAL_POS*2);
+    GFL_STD_MemCopy16( (void*)(palAdr) , work->anmPalBase , PSTATUS_PALANIM_PAL_POS*2 );
+  }
   
   //最初の表示処理
   PSTATUS_SUB_DispPage( work , work->subWork );
@@ -295,6 +305,9 @@ const PSTATUS_RETURN_TYPE PSTATUS_UpdatePokeStatus( PSTATUS_WORK *work )
     }
   }
 
+  //パレット転送
+  PSTATUS_PALANIM_UpdatePalletAnime( work );
+  
   return SRT_CONTINUE;
 }
 
@@ -562,6 +575,10 @@ static void PSTATUS_LoadResource( PSTATUS_WORK *work )
 
   //OBJリソース
   //パレット
+    //ボタン
+  work->cellRes[SCR_PLT_ICON_COMMON] = GFL_CLGRP_PLTT_RegisterEx( archandle , 
+        NARC_p_status_gra_p_st_obj_d_NCLR , CLSYS_DRAW_MAIN , 
+        PSTATUS_OBJPLT_ICON*32 , 0 , APP_COMMON_BARICON_PLT_NUM+1 , work->heapId  );
   work->cellRes[SCR_PLT_BALL] = GFL_CLGRP_PLTT_RegisterEx( archandle , 
         NARC_p_status_gra_ball00_NCLR , CLSYS_DRAW_MAIN , 
         PSTATUS_OBJPLT_BALL*32 , 0 , 1 , work->heapId  );
@@ -655,10 +672,6 @@ static void PSTATUS_LoadResource( PSTATUS_WORK *work )
           NARC_app_menu_common_p_st_bunrui_buturi_NCGR , FALSE , CLSYS_DRAW_SUB , work->heapId  );
     work->cellRes[SCR_NCG_SKILL_TYPE_TOKUSHU] = GFL_CLGRP_CGR_Register( archandleCommon , 
           NARC_app_menu_common_p_st_bunrui_tokusyu_NCGR , FALSE , CLSYS_DRAW_SUB , work->heapId  );
-    //ボタン
-    work->cellRes[SCR_PLT_ICON_COMMON] = GFL_CLGRP_PLTT_RegisterEx( archandleCommon , 
-          APP_COMMON_GetBarIconPltArcIdx() , CLSYS_DRAW_MAIN , 
-          PSTATUS_OBJPLT_ICON*32 , 0 , APP_COMMON_BARICON_PLT_NUM , work->heapId  );
     work->cellRes[SCR_NCG_ICON_COMMON] = GFL_CLGRP_CGR_Register( archandleCommon , 
           APP_COMMON_GetBarIconCharArcIdx() , FALSE , CLSYS_DRAW_MAIN , work->heapId  );
     work->cellRes[SCR_ANM_ICON_COMMON] = GFL_CLGRP_CELLANIM_Register( archandleCommon , 
@@ -1018,6 +1031,89 @@ static void PSTATUS_UpdateTP( PSTATUS_WORK *work )
     break;
     
   }
+}
+
+#pragma mark [>pallet anime
+static void PSTATUS_PALANIM_UpdatePalletAnime( PSTATUS_WORK *work )
+{
+  u8 i;
+  s8 colOfs;
+  if( work->anmCnt + PSTATUS_PALANIM_SPEED >= 0x10000 )
+  {
+    work->anmCnt = PSTATUS_PALANIM_SPEED + work->anmCnt - 0x10000;
+  }
+  else
+  {
+    work->anmCnt += PSTATUS_PALANIM_SPEED;
+  }
+  
+  /*
+  //色の補正値計算
+  colOfs = (s8)(FX_FX32_TO_F32( FX_SinIdx( work->anmCnt )*PSTATUS_PALANIM_COL_LENGTH ));
+  OS_TPrintf("[%d]\n",colOfs);
+  for( i=0;i<PSTATUS_PALANIM_NUM;i++ )
+  {
+    s8 r = (work->anmPalBase[i]&GX_RGB_R_MASK)>>GX_RGB_R_SHIFT;
+    s8 g = (work->anmPalBase[i]&GX_RGB_G_MASK)>>GX_RGB_G_SHIFT;
+    s8 b = (work->anmPalBase[i]&GX_RGB_B_MASK)>>GX_RGB_B_SHIFT;
+//      r = (r<anmRate*2?0:r-(anmRate*2));
+//      g = (g<anmRate*2?0:g-(anmRate*2));
+//      b = (b<anmRate*2?0:b-(anmRate*2));
+    r+=colOfs;
+    g+=colOfs;
+    b+=colOfs;
+    if( r < 0 ) r = 0;
+    if( g < 0 ) g = 0;
+    if( b < 0 ) b = 0;
+    if( r > 31 ) r = 31;
+    if( g > 31 ) g = 31;
+    if( b > 31 ) b = 31;
+    work->anmPal[i] = GX_RGB(r,g,b);
+
+  }
+  */
+  {
+    //青
+//    const u16 startCol[PSTATUS_PALANIM_NUM] = { 0x4e2c,0x39a9,0x2506,0x1083 };
+//    const u16 endCol[PSTATUS_PALANIM_NUM] = { 0x7f96,0x7332,0x62af,0x522b };
+    //白
+    const u16 startCol[PSTATUS_PALANIM_NUM] = { 0x5a94,0x4a10,0x398c,0x39ad };
+    const u16 endCol[PSTATUS_PALANIM_NUM] = { 0x7fff,0x7fff,0x5e52,0x5231 };
+    //白青
+//    const u16 startCol[PSTATUS_PALANIM_NUM] = { 0x7fff,0x7fff,0x5e52,0x5231 };
+//    const u16 endCol[PSTATUS_PALANIM_NUM] = { 0x7f96,0x7332,0x62af,0x522b };
+    const float rate = FX_FX32_TO_F32((FX_SinIdx(work->anmCnt)+FX16_ONE)/2);
+  for( i=0;i<PSTATUS_PALANIM_NUM;i++ )
+  {
+    s8 r,b,g;
+    s8 sr = (startCol[i]&GX_RGB_R_MASK)>>GX_RGB_R_SHIFT;
+    s8 sg = (startCol[i]&GX_RGB_G_MASK)>>GX_RGB_G_SHIFT;
+    s8 sb = (startCol[i]&GX_RGB_B_MASK)>>GX_RGB_B_SHIFT;
+    s8 er = (endCol[i]&GX_RGB_R_MASK)>>GX_RGB_R_SHIFT;
+    s8 eg = (endCol[i]&GX_RGB_G_MASK)>>GX_RGB_G_SHIFT;
+    s8 eb = (endCol[i]&GX_RGB_B_MASK)>>GX_RGB_B_SHIFT;
+
+    r = sr + ((er-sr)*rate);
+    g = sg + ((eg-sg)*rate);
+    b = sb + ((eb-sb)*rate);
+
+    if( r < 0 ) r = 0;
+    if( g < 0 ) g = 0;
+    if( b < 0 ) b = 0;
+    if( r > 31 ) r = 31;
+    if( g > 31 ) g = 31;
+    if( b > 31 ) b = 31;
+    work->anmPal[i] = GX_RGB(r,g,b);
+    
+//    OS_TPrintf("[%4x]",GX_RGB(r,g,b));
+  }
+//  OS_TPrintf("\n");
+
+  }
+  NNS_GfdRegisterNewVramTransferTask( NNS_GFD_DST_2D_OBJ_PLTT_MAIN ,
+                                      PSTATUS_PALANIM_PAL_NO * 32 + PSTATUS_PALANIM_PAL_POS * 2 ,
+                                      work->anmPal , 2*PSTATUS_PALANIM_NUM );
+  
 }
 
 //外部からの操作関数

@@ -78,6 +78,14 @@
 #define PSTATUS_OBJPLT_SUB_POKE_TYPE (0x5)  //3本
 #define PSTATUS_OBJPLT_SUB_RIBBON (0x0)  //5本
 
+//パレットアニメ用
+#define PSTATUS_PALANIM_PAL_NO (3)
+#define PSTATUS_PALANIM_PAL_POS (6)
+#define PSTATUS_PALANIM_NUM (4)
+#define PSTATUS_PALANIM_SPEED (0x400) //0x10000で一周
+#define PSTATUS_PALANIM_COL_LENGTH (8)
+
+
 //OBJリソースIdx
 enum PSTATUS_CEL_RESOURCE
 {
@@ -157,6 +165,8 @@ enum PSTATUS_BARICON_TYPE
   SBT_MAX,
 };
 
+
+#pragma mark[>define
 //BARの座標
 #define PSTATUS_BAR_CELL_Y (168)
 #define PSTATUS_BAR_CELL_PAGE1_X (0)
@@ -167,8 +177,6 @@ enum PSTATUS_BARICON_TYPE
 #define PSTATUS_BAR_CELL_CURSOR_DOWN_X (168)
 #define PSTATUS_BAR_CELL_CURSOR_EXIT (200)
 #define PSTATUS_BAR_CELL_CURSOR_RETURN (232)
-
-#pragma mark[>define
 
 typedef enum
 {
@@ -260,6 +268,11 @@ typedef struct
   GFL_CLWK    *clwkBarIcon[SBT_MAX];
   GFL_CLWK    *clwkTypeIcon[2];
   GFL_CLWK    *clwkExitButton;  //終了ボタンのアニメ終了検出用
+  
+  //パレットアニメ
+  u16   anmCnt;
+  u16   anmPalBase[PSTATUS_PALANIM_NUM];
+  u16   anmPal[PSTATUS_PALANIM_NUM];
 
   //pppの時ppに変換するよう
   POKEMON_PARAM *calcPP;
