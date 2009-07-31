@@ -824,7 +824,8 @@ static void DUP_FIT_SetupGraphic( FITTING_WORK *work )
   WIPE_SetBrightness(WIPE_DISP_SUB,WIPE_FADE_BLACK);
   WIPE_ResetWndMask(WIPE_DISP_MAIN);
   WIPE_ResetWndMask(WIPE_DISP_SUB);
-  
+  G2_BlendNone();
+  G2S_BlendNone();
   GX_SetDispSelect(GX_DISP_SELECT_SUB_MAIN);
   GFL_DISP_SetBank( &vramBank );
   
