@@ -1,10 +1,10 @@
 #event data
-#save date:2009/07/16 16:49:25
+#save date:2009/07/31 11:46:18
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\c01r0202.wms
 #SECTION START:OBJ_EVENT
 #Map Event List data
-#save date:2009/07/16 16:49:25
+#save date:2009/07/31 11:46:18
 2
 #hold event type:
 1
@@ -96,12 +96,12 @@ DIR_DOWN
 #Move Limit Z Number
 2
 #position
--192 0 176
+-176 0 176
 #Map Event List Data End
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT
 #Map Event List data
-#save date:2009/07/16 16:49:25
+#save date:2009/07/31 11:46:18
 2
 #hold event type:
 1
@@ -111,7 +111,7 @@ DIR_DOWN
 #SECTION End:BG_EVENT
 #SECTION START:POS_EVENT
 #Map Event List data
-#save date:2009/07/16 16:49:25
+#save date:2009/07/31 11:46:18
 2
 #hold event type:
 1
@@ -121,7 +121,7 @@ DIR_DOWN
 #SECTION End:POS_EVENT
 #SECTION START:DOOR_EVENT
 #Map Event List data
-#save date:2009/07/16 16:49:25
+#save date:2009/07/31 11:46:18
 2
 #hold event type:
 1
