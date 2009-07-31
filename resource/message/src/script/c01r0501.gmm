@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-07-25T18:10:18"/>
+	<create user="matsumiya" host="W00207" date="2009-07-31T14:35:47"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -342,12 +342,12 @@
 テクニックが　あるんだよね[BE:01:ページ切り替え（クリア）]
 ポケモンが　しんかする　しゅんかん
 ビーボタンを　おすことで[BE:00:ページ切り替え（行送り）]
-ポケモンが　おどろき　しんかをやめる[BE:01:ページ切り替え（クリア）]</language>
+ポケモンが　おどろき　しんかをやめる</language>
 		<language name="JPN_KANJI" width="256">進化キャンセル　という
 テクニックが　あるんだよね[BE:01:ページ切り替え（クリア）]
 ポケモンが　進化する　瞬間
 ビーボタンを　押すことで[BE:00:ページ切り替え（行送り）]
-ポケモンが　驚き　進化をやめる[BE:01:ページ切り替え（クリア）]</language>
+ポケモンが　驚き　進化をやめる</language>
 	</row>
 
 	<row id="msg_c01r0501_trainerm_01">
