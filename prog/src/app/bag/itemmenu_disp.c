@@ -112,7 +112,7 @@ void _createSubBg(void)
     GFL_BG_SetBGControl( GFL_BG_FRAME0_M, &TextBgCntDat, GFL_BG_MODE_TEXT );
     GFL_BG_ClearFrame( GFL_BG_FRAME0_M );
     GFL_BG_LoadScreenReq( GFL_BG_FRAME0_M );
-    GFL_BG_SetVisible( GFL_BG_FRAME0_M, VISIBLE_ON );
+    GFL_BG_SetVisible( GFL_BG_FRAME0_M, VISIBLE_OFF );
 
   }
   {
@@ -126,7 +126,7 @@ void _createSubBg(void)
     GFL_BG_SetBGControl( GFL_BG_FRAME1_M, &TextBgCntDat, GFL_BG_MODE_TEXT );
     GFL_BG_ClearFrame( GFL_BG_FRAME1_M );
     GFL_BG_LoadScreenReq( GFL_BG_FRAME1_M );
-    GFL_BG_SetVisible( GFL_BG_FRAME1_M, VISIBLE_ON );
+    GFL_BG_SetVisible( GFL_BG_FRAME1_M, VISIBLE_OFF );
 
   }
   {
@@ -140,7 +140,7 @@ void _createSubBg(void)
     GFL_BG_SetBGControl( GFL_BG_FRAME2_M, &TextBgCntDat, GFL_BG_MODE_TEXT );
     GFL_BG_ClearFrame( GFL_BG_FRAME2_M );
     GFL_BG_LoadScreenReq( GFL_BG_FRAME2_M );
-    GFL_BG_SetVisible( GFL_BG_FRAME2_M, VISIBLE_ON );
+    GFL_BG_SetVisible( GFL_BG_FRAME2_M, VISIBLE_OFF );
 
   }
   {
@@ -155,7 +155,7 @@ void _createSubBg(void)
     GFL_BG_FillCharacter( GFL_BG_FRAME3_M, 0x00, 1, 0 );
     GFL_BG_ClearFrame( GFL_BG_FRAME3_M );
     GFL_BG_LoadScreenReq( GFL_BG_FRAME3_M );
-    GFL_BG_SetVisible( GFL_BG_FRAME3_M, VISIBLE_ON );
+    GFL_BG_SetVisible( GFL_BG_FRAME3_M, VISIBLE_OFF );
 
   }
 
@@ -170,7 +170,7 @@ void _createSubBg(void)
 
     GFL_BG_SetBGControl(
       frame, &TextBgCntDat, GFL_BG_MODE_TEXT );
-    GFL_BG_SetVisible( frame, VISIBLE_ON );
+    GFL_BG_SetVisible( frame, VISIBLE_OFF );
     GFL_BG_LoadScreenReq( frame );
   }
   {
@@ -184,7 +184,7 @@ void _createSubBg(void)
     GFL_BG_SetBGControl(
       frame, &TextBgCntDat, GFL_BG_MODE_TEXT );
 
-    GFL_BG_SetVisible( frame, VISIBLE_ON );
+    GFL_BG_SetVisible( frame, VISIBLE_OFF );
     GFL_BG_FillCharacter( frame, 0x00, 1, 0 );
     GFL_BG_FillScreen( frame,	0x0000, 0, 0, 32, 32, GFL_BG_SCRWRT_PALIN );
     GFL_BG_LoadScreenReq( frame );
@@ -198,7 +198,7 @@ void _createSubBg(void)
       };
     GFL_BG_SetBGControl(
       frame, &TextBgCntDat, GFL_BG_MODE_TEXT );
-    GFL_BG_SetVisible( frame, VISIBLE_ON );
+    GFL_BG_SetVisible( frame, VISIBLE_OFF );
     GFL_BG_LoadScreenReq( frame );
   }
 }
@@ -237,6 +237,21 @@ static GFL_DISP_VRAM _defVBTbl = {
   GX_OBJVRAMMODE_CHAR_1D_128K,
   GX_OBJVRAMMODE_CHAR_1D_32K,
 };
+
+
+
+
+void ITEMDISP_SetVisible(void)
+{
+    GFL_BG_SetVisible( GFL_BG_FRAME0_M, VISIBLE_ON );
+    GFL_BG_SetVisible( GFL_BG_FRAME1_M, VISIBLE_ON );
+    GFL_BG_SetVisible( GFL_BG_FRAME2_M, VISIBLE_ON );
+    GFL_BG_SetVisible( GFL_BG_FRAME3_M, VISIBLE_ON );
+    GFL_BG_SetVisible( GFL_BG_FRAME0_S, VISIBLE_ON );
+    GFL_BG_SetVisible( GFL_BG_FRAME1_S, VISIBLE_ON );
+    GFL_BG_SetVisible( GFL_BG_FRAME2_S, VISIBLE_ON );
+}
+
 
 //------------------------------------------------------------------------------
 /**

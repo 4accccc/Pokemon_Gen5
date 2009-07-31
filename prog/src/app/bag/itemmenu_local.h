@@ -177,6 +177,7 @@ struct _DEBUGITEM_PARAM {
 	HEAPID heapID;
 	u32 bgchar;
   BOOL bChange;
+  int count;
 
   int ret_code;  //バッグメニューを終わる際の次の動作
   int ret_code2;
@@ -264,3 +265,5 @@ extern BOOL ITEMDISP_MessageEndCheck(FIELD_ITEMMENU_WORK* pWork);
 extern int ITEMMENU_GetPosCnvButtonItem(FIELD_ITEMMENU_WORK* pWork, int no);
 extern BOOL ITEMMENU_AddCnvButtonItem(FIELD_ITEMMENU_WORK* pWork, int no);
 extern void ITEMMENU_RemoveCnvButtonItem(FIELD_ITEMMENU_WORK* pWork, int no);
+extern void ITEMDISP_SetVisible(void);
+

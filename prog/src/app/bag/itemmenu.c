@@ -1260,6 +1260,14 @@ static void	_VBlank( GFL_TCB *tcb, void *work )
 }
 
 
+static void _startState(FIELD_ITEMMENU_WORK* pWork)
+{
+  ITEMDISP_SetVisible();  
+  if (GFL_FADE_CheckFade() == FALSE) {
+    _CHANGE_STATE(pWork, _itemKindSelectMenu);
+  }
+}
+
 //------------------------------------------------------------------------------
 /**
  * @brief   ƒvƒƒZƒX‰Šú‰»
@@ -1270,6 +1278,8 @@ static void	_VBlank( GFL_TCB *tcb, void *work )
 static GFL_PROC_RESULT FieldItemMenuProc_Init( GFL_PROC * proc, int * seq, void * ppWork, void * mypWork )
 {
 	FIELD_ITEMMENU_WORK* pWork = ppWork;
+
+  GFL_FADE_SetMasterBrightReq(GFL_FADE_MASTER_BRIGHT_BLACKOUT, 16, 0, 0);
 
 	GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_ITEMMENU, 0x28000 );
 	pWork->heapID = HEAPID_ITEMMENU;
@@ -1327,7 +1337,8 @@ static GFL_PROC_RESULT FieldItemMenuProc_Init( GFL_PROC * proc, int * seq, void 
   _pocketMessageDisp(pWork, pWork->pocketno);
   ITEMDISP_ChangePocketCell( pWork, pWork->pocketno );
 
-	_CHANGE_STATE(pWork, _itemKindSelectMenu);
+  pWork->count=2;
+	_CHANGE_STATE(pWork, _startState);
 	return GFL_PROC_RES_FINISH;
 }
 
@@ -1344,6 +1355,7 @@ static GFL_PROC_RESULT FieldItemMenuProc_Main( GFL_PROC * proc, int * seq, void 
 	StateFunc* state = pWork->state;
 
 	if(state == NULL){
+    GFL_FADE_SetMasterBrightReq(GFL_FADE_MASTER_BRIGHT_BLACKOUT, 0, 16, 0);
 		return GFL_PROC_RES_FINISH;
 	}
 	if( WIPE_SYS_EndCheck() != TRUE ){
@@ -1372,6 +1384,11 @@ static GFL_PROC_RESULT FieldItemMenuProc_End( GFL_PROC * proc, int * seq, void *
 {
 	FIELD_ITEMMENU_WORK* pWork = ppWork;
 
+  if (GFL_FADE_CheckFade() == TRUE) {
+    return GFL_PROC_RES_CONTINUE;
+  }
+  
+ // GFL_FADE_SetMasterBrightReq(GFL_FADE_MASTER_BRIGHT_BLACKOUT, 0, 16, 0);
 	GFL_TCB_DeleteTask( pWork->g3dVintr );
 
   MYITEM_FieldBagPocketSet(pWork->pBagCursor, pWork->pocketno);
