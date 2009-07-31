@@ -165,11 +165,38 @@ enum {
 
 	OBJREGID_MAX
 };
-
 //-------------------------------------
-///	CLWK
+///		BACKOBJ
 //=====================================
-#define BACKOBJ_CLWK_MAX	(6)
+//後ろOBJの数
+#define BACKOBJ_CLWK_MAX	(32)
+//
+typedef enum
+{
+	BACKOBJ_MOVE_TYPE_RAIN,		//雨のように上から降り注ぐ
+	BACKOBJ_MOVE_TYPE_EMITER,	//放出
+	BACKOBJ_MOVE_TYPE_GATHER,	//集中
+} BACKOBJ_MOVE_TYPE;
+
+//OBJのパレットと対応している
+typedef enum
+{
+	BACKOBJ_COLOR_RED			= 1,
+	BACKOBJ_COLOR_ORANGE	= 5,
+	BACKOBJ_COLOR_YELLOW	= 6,
+	BACKOBJ_COLOR_YEGREEN	= 7,
+	BACKOBJ_COLOR_GREEN		= 8,
+	BACKOBJ_COLOR_WATER		= 9,
+	BACKOBJ_COLOR_BLUE		= 0xA,
+} BACKOBJ_COLOR;
+
+//１つのOBJが動くまでのシンク
+#define BACKOBJ_MOVE_SYNC	(10)
+
+#define BACKOBJ_ONE_MOVE_SYNC_MIN	(110)
+#define BACKOBJ_ONE_MOVE_SYNC_MAX	(160)
+#define BACKOBJ_ONE_MOVE_SYNC_DIF	(BACKOBJ_ONE_MOVE_SYNC_MAX-BACKOBJ_ONE_MOVE_SYNC_MIN)
+
 
 //-------------------------------------
 ///	CLWK取得
@@ -181,6 +208,8 @@ typedef enum
 	
 	CLWKID_MAX
 }CLWKID;
+
+
 
 //=============================================================================
 /**
@@ -204,13 +233,6 @@ typedef struct {
 	u32					reg_id[OBJREGID_MAX];
 	GFL_CLWK	 *p_clwk[CLWKID_MAX];
 } GRAPHIC_OBJ_WORK;
-//-------------------------------------
-///	背面OBJ動作
-//=====================================
-typedef struct 
-{
-	GFL_CLWK	*p_clwk[BACKOBJ_CLWK_MAX];
-} OBJMOVE_WORK;
 //-------------------------------------
 ///	描画関係
 //=====================================
@@ -239,7 +261,27 @@ typedef struct
 	PRINT_UTIL        print_util;
 	STRBUF*						p_strbuf;
 } MSGWND_WORK;
-
+//-------------------------------------
+///	BACKOBJ	背面ぴかぴか
+//=====================================
+typedef struct
+{	
+	GFL_CLWK					*p_clwk;
+	int								sf_type;
+	BOOL							is_req;
+	VecFx32						start;
+	VecFx32						end;
+	u32								sync_now;
+	u32								sync_max;
+} BACKOBJ_ONE;
+typedef struct 
+{
+	BACKOBJ_ONE				wk[BACKOBJ_CLWK_MAX];
+	BACKOBJ_MOVE_TYPE	type;
+	BACKOBJ_COLOR			color;
+	u32								sync_now;	//１つのワークを開始するまでのシンク
+	u32								sync_max;
+} BACKOBJ_WORK;
 //-------------------------------------
 ///	ボタン
 //=====================================
@@ -277,9 +319,12 @@ struct _IRC_MENU_MAIN_WORK
 	MSG_WORK				msg;
 	MSGWND_WORK			msgwnd;
 	BUTTON_WORK			btn;
+	BACKOBJ_WORK		backobj;
 	
 	//下画面
 	APPBAR_WORK			*p_appbar;
+
+	
 
 	//シーケンス管理
 	SEQ_FUNCTION		seq_function;
@@ -310,6 +355,7 @@ static GFL_PROC_RESULT IRC_MENU_PROC_Main( GFL_PROC *p_proc, int *p_seq, void *p
 static void GRAPHIC_Init( GRAPHIC_WORK *p_wk, HEAPID heapID );
 static void GRAPHIC_Exit( GRAPHIC_WORK *p_wk );
 static void GRAPHIC_Draw( GRAPHIC_WORK *p_wk );
+static GFL_CLWK* GRAPHIC_GetClwk( const GRAPHIC_WORK *cp_wk, CLWKID id );
 static GFL_CLUNIT * GRAPHIC_GetClunit( const GRAPHIC_WORK *cp_wk );
 static void Graphic_VBlankTask( GFL_TCB *p_tcb, void *p_work );
 //BG
@@ -356,6 +402,16 @@ static void BUTTON_Exit( BUTTON_WORK *p_wk );
 static void BUTTON_Main( BUTTON_WORK *p_wk );
 static BOOL BUTTON_IsTouch( const BUTTON_WORK *cp_wk, u32 *p_btnID );
 static void Button_TouchCallBack( u32 btnID, u32 event, void *p_param );
+//BACKOBJ
+static void BACKOBJ_Init( BACKOBJ_WORK *p_wk, const GRAPHIC_WORK *cp_grp, BACKOBJ_MOVE_TYPE type, BACKOBJ_COLOR color, u32 clwk_ofs, int sf_type );
+static void BACKOBJ_Exit( BACKOBJ_WORK *p_wk );
+static void BACKOBJ_Main( BACKOBJ_WORK *p_wk );
+static void BACKOBJ_StartEmit( BACKOBJ_WORK *p_wk, const GFL_POINT *cp_pos );
+//BACKOBJ_ONE
+static void BACKOBJ_ONE_Init( BACKOBJ_ONE *p_wk, GFL_CLWK *p_clwk, BACKOBJ_COLOR color, int sf_type );
+static void BACKOBJ_ONE_Main( BACKOBJ_ONE *p_wk );
+static void BACKOBJ_ONE_Start( BACKOBJ_ONE *p_wk, const GFL_POINT *cp_start, const GFL_POINT *cp_end, u32 sync );
+static BOOL BACKOBJ_ONE_IsMove( const BACKOBJ_ONE *cp_wk );
 //汎用
 static void MainModules( IRC_MENU_MAIN_WORK *p_wk );
 static BOOL TP_GetRectTrg( const BUTTON_SETUP *cp_btn );
@@ -406,21 +462,21 @@ static const GFL_BG_BGCNT_HEADER sc_bgcnt_data[ GRAPHIC_BG_FRAME_MAX ] =
 		0, 0, 0x800, 0,
 		GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
 		GX_BG_SCRBASE_0x0800, GX_BG_CHARBASE_0x08000, GFL_BG_CHRSIZ_256x256,
-		GX_BG_EXTPLTT_01, 1, 0, 0, FALSE
+		GX_BG_EXTPLTT_01, 0, 0, 0, FALSE
 	},
 	// GRAPHIC_BG_FRAME_M_BTN
 	{
 		0, 0, 0x800, 0,
 		GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
 		GX_BG_SCRBASE_0x1000, GX_BG_CHARBASE_0x0c000, GFL_BG_CHRSIZ_256x256,
-		GX_BG_EXTPLTT_01, 2, 0, 0, FALSE
+		GX_BG_EXTPLTT_01, 1, 0, 0, FALSE
 	},
 	// GRAPHIC_BG_FRAME_M_BACK
 	{	
 		0, 0, 0x800, 0,
 		GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
 		GX_BG_SCRBASE_0x1800, GX_BG_CHARBASE_0x10000, GFL_BG_CHRSIZ_256x256,
-		GX_BG_EXTPLTT_01, 3, 0, 0, FALSE
+		GX_BG_EXTPLTT_01, 2, 0, 0, FALSE
 
 	},
 	// GRAPHIC_BG_FRAME_S_ROGO
@@ -529,6 +585,8 @@ static GFL_PROC_RESULT IRC_MENU_PROC_Init( GFL_PROC *p_proc, int *p_seq, void *p
 	GFL_BG_SetVisible( sc_bgcnt_frame[GRAPHIC_BG_FRAME_M_TEXT], FALSE );
 
 
+	BACKOBJ_Init( &p_wk->backobj, &p_wk->grp, BACKOBJ_MOVE_TYPE_RAIN, BACKOBJ_COLOR_BLUE, CLWKID_BACKOBJ_TOP, CLSYS_DEFREND_SUB );
+
 	{	
 		GFL_CLUNIT	*p_unit	= GRAPHIC_GetClunit( &p_wk->grp );
 		p_wk->p_appbar	= APPBAR_Init( APPBAR_OPTION_MASK_CLOSE, p_unit, sc_bgcnt_frame[GRAPHIC_BG_FRAME_M_INFOWIN], IRC_MENU_BG_PAL_M_14, IRC_MENU_OBJ_PAL_M_00, APP_COMMON_MAPPING_128K, HEAPID_IRCCOMPATIBLE );
@@ -580,6 +638,7 @@ static GFL_PROC_RESULT IRC_MENU_PROC_Exit( GFL_PROC *p_proc, int *p_seq, void *p
 	APPBAR_Exit( p_wk->p_appbar );	
 
 	//モジュール破棄
+	BACKOBJ_Exit( &p_wk->backobj );
 	BUTTON_Exit( &p_wk->btn );
 
 	MSGWND_Exit( &p_wk->msgwnd );
@@ -696,7 +755,7 @@ static void GRAPHIC_Init( GRAPHIC_WORK* p_wk, HEAPID heapID )
 		GX_VRAM_SUB_BGEXTPLTT_NONE, // サブ2DエンジンのBG拡張パレット
 		GX_VRAM_OBJ_128_B,						// メイン2DエンジンのOBJ
 		GX_VRAM_OBJEXTPLTT_NONE,		// メイン2DエンジンのOBJ拡張パレット
-		GX_VRAM_SUB_OBJ_16_I,       // サブ2DエンジンのOBJ
+		GX_VRAM_SUB_OBJ_128_D,       // サブ2DエンジンのOBJ
 		GX_VRAM_SUB_OBJEXTPLTT_NONE,// サブ2DエンジンのOBJ拡張パレット
 		GX_VRAM_TEX_NONE,						// テクスチャイメージスロット
 		GX_VRAM_TEXPLTT_NONE,				// テクスチャパレットスロット
@@ -749,6 +808,20 @@ static void GRAPHIC_Exit( GRAPHIC_WORK* p_wk )
 static void GRAPHIC_Draw( GRAPHIC_WORK* p_wk )
 {
 	GRAPHIC_OBJ_Main( &p_wk->obj );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	CLWK取得
+ *
+ *	@param	const GRAPHIC_WORK *cp_wk	ワーク
+ *	@param	id	CLWKのID
+ *
+ *	@return	CLWK
+ */
+//-----------------------------------------------------------------------------
+static GFL_CLWK* GRAPHIC_GetClwk( const GRAPHIC_WORK *cp_wk, CLWKID id )
+{	
+	return GRAPHIC_OBJ_GetClwk( &cp_wk->obj, id );
 }
 //----------------------------------------------------------------------------
 /**
@@ -984,8 +1057,10 @@ static void GRAPHIC_OBJ_Init( GRAPHIC_OBJ_WORK *p_wk, const GFL_DISP_VRAM* cp_vr
 					heapID
 					);
 			GFL_CLACT_WK_SetDrawEnable( p_wk->p_clwk[i], FALSE );
+			GFL_CLACT_WK_SetBgPri( p_wk->p_clwk[i], 3 );
+			GFL_CLACT_WK_SetAutoAnmFlag( p_wk->p_clwk[i], TRUE );
+			GFL_CLACT_WK_SetAnmSeq( p_wk->p_clwk[i], 0 );
 		}
-
 	}
 }
 //----------------------------------------------------------------------------
@@ -1900,6 +1975,7 @@ static void MainModules( IRC_MENU_MAIN_WORK *p_wk )
 	{	
 		MSGWND_Main( &p_wk->msgwnd, &p_wk->msg );
 	}
+	BACKOBJ_Main( &p_wk->backobj );
 
 	//APPBAR
 	APPBAR_Main( p_wk->p_appbar );
@@ -2107,6 +2183,250 @@ static void Button_TouchCallBack( u32 btnID, u32 event, void *p_param )
 	{	
 		p_wk->select_btn_id	= btnID;
 	}
+}
+//=============================================================================
+/**
+ *			BACKOBJ
+ */
+//=============================================================================
+//----------------------------------------------------------------------------
+/**
+ *	@brief
+ *
+ *	@param	BACKOBJ_WORK *p_wk		ワーク
+ *	@param	GRAPHIC_WORK *cp_grp	CLWK受け取り用グラフィック
+ *	@param	type									動作タイプ
+ *	@param	color									色
+ *	@param	clwk_ofs							CLWKオフセット何番から使い始めるか
+ */
+//-----------------------------------------------------------------------------
+static void BACKOBJ_Init( BACKOBJ_WORK *p_wk, const GRAPHIC_WORK *cp_grp, BACKOBJ_MOVE_TYPE type, BACKOBJ_COLOR color, u32 clwk_ofs, int sf_type )
+{	
+	GFL_STD_MemClear( p_wk, sizeof(BACKOBJ_WORK) );
+	p_wk->type	= type;
+	p_wk->color	= color;
+	p_wk->sync_now	= 0;
+	p_wk->sync_max	= BACKOBJ_MOVE_SYNC;
+	{	
+		int i;
+		GFL_CLWK *p_clwk;
+		for( i = 0; i < BACKOBJ_CLWK_MAX; i++ )
+		{	
+			p_clwk	= GRAPHIC_GetClwk( cp_grp, clwk_ofs + i );
+			BACKOBJ_ONE_Init( &p_wk->wk[i], p_clwk, color, sf_type );
+		}
+	}
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	破棄
+ *
+ *	@param	BACKOBJ_WORK *p_wk	ワーク
+ *
+ */
+//-----------------------------------------------------------------------------
+static void BACKOBJ_Exit( BACKOBJ_WORK *p_wk )
+{	
+	GFL_STD_MemClear( p_wk, sizeof(BACKOBJ_WORK) );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	メイン処理
+ *
+ *	@param	BACKOBJ_WORK *p_wk ワーク
+ */
+//-----------------------------------------------------------------------------
+static void BACKOBJ_Main( BACKOBJ_WORK *p_wk )
+{	
+	int i;
+	u32 sync;
+	u16 rot;
+	GFL_POINT	start;
+	GFL_POINT	end;
+
+	//タイプ別移動
+	switch( p_wk->type )
+	{	
+	case BACKOBJ_MOVE_TYPE_RAIN:		//雨
+		if( p_wk->sync_now++ > p_wk->sync_max )
+		{	
+			p_wk->sync_now	= 0;
+			for( i = 0; i < BACKOBJ_CLWK_MAX; i++ )
+			{	
+				if( !BACKOBJ_ONE_IsMove( &p_wk->wk[i] ) )
+				{	
+					u8	up_or_down	= GFUser_GetPublicRand(2);
+
+					start.x	= GFUser_GetPublicRand(256);
+					start.y	= -36;
+					end.x		= start.x;
+					end.y		= 192 + 36;
+					sync	= BACKOBJ_ONE_MOVE_SYNC_MIN + GFUser_GetPublicRand(BACKOBJ_ONE_MOVE_SYNC_DIF);
+					if( up_or_down )
+					{	
+						BACKOBJ_ONE_Start( &p_wk->wk[i], &end, &start, sync );
+					}
+					else
+					{	
+						BACKOBJ_ONE_Start( &p_wk->wk[i], &start, &end, sync );
+					}
+					break;
+				}
+			}
+		}
+		break;
+
+	case BACKOBJ_MOVE_TYPE_EMITER:	//放出
+		/* BACKOBJ_StartEmitで行う  */
+		break;
+
+	case BACKOBJ_MOVE_TYPE_GATHER:	//集中
+		if( p_wk->sync_now++ > p_wk->sync_max )
+		{	
+			p_wk->sync_now	= 0;
+			for( i = 0; i < BACKOBJ_CLWK_MAX; i++ )
+			{	
+				if( !BACKOBJ_ONE_IsMove( &p_wk->wk[i] ) )
+				{	
+					u16 rot	= GFUser_GetPublicRand(0xFFFF);
+					start.x	= (FX_SinIdx(rot) * 256) >> FX32_SHIFT;
+					start.y	= (FX_CosIdx(rot) * 256) >> FX32_SHIFT;
+					end.x		= 128;
+					end.y		= 96;
+					sync	= BACKOBJ_ONE_MOVE_SYNC_MIN + GFUser_GetPublicRand(BACKOBJ_ONE_MOVE_SYNC_DIF);
+					BACKOBJ_ONE_Start( &p_wk->wk[i], &start, &end, sync );
+					break;
+				}
+			}
+		}
+		break;
+	}
+
+
+	//ワーク動作
+	{	
+		for( i = 0; i < BACKOBJ_CLWK_MAX; i++ )
+		{	
+			BACKOBJ_ONE_Main( &p_wk->wk[i] );
+		}
+	}
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	放出開始
+ *
+ *	@param	BACKOBJ_WORK *p_wk	ワーク
+ *	@param	GFL_POINT *cp_pos		放出開始座標
+ */
+//-----------------------------------------------------------------------------
+static void BACKOBJ_StartEmit( BACKOBJ_WORK *p_wk, const GFL_POINT *cp_pos )
+{	
+	int i;
+	u32 sync;
+	u16 rot;
+	GFL_POINT	end;
+	for( i = 0; i < BACKOBJ_CLWK_MAX; i++ )
+	{	
+		if( !BACKOBJ_ONE_IsMove( &p_wk->wk[i] ) )
+		{
+			rot	= GFUser_GetPublicRand(0xFFFF);
+			end.x	= (FX_SinIdx(rot) * 256) >> FX32_SHIFT;
+			end.y	= (FX_CosIdx(rot) * 256) >> FX32_SHIFT;
+			sync	= BACKOBJ_ONE_MOVE_SYNC_MIN + GFUser_GetPublicRand(BACKOBJ_ONE_MOVE_SYNC_DIF);
+			BACKOBJ_ONE_Start( &p_wk->wk[i], cp_pos, &end, sync );
+		}
+	}
+}
+//=============================================================================
+/**
+ *		背面OBJ1個
+ */
+//=============================================================================
+//----------------------------------------------------------------------------
+/**
+ *	@brief	初期化
+ *
+ *	@param	BACKOBJ_ONE *p_wk	ワーク
+ *	@param	*p_clwk						アクター
+ *	@param	color							色
+ */
+//-----------------------------------------------------------------------------
+static void BACKOBJ_ONE_Init( BACKOBJ_ONE *p_wk, GFL_CLWK *p_clwk, BACKOBJ_COLOR color, int sf_type )
+{	
+	GFL_STD_MemClear( p_wk, sizeof(BACKOBJ_ONE) );
+	p_wk->p_clwk	= p_clwk;
+	p_wk->sf_type	= sf_type;
+
+	GFL_CLACT_WK_SetPlttOffs( p_wk->p_clwk, color, CLWK_PLTTOFFS_MODE_PLTT_TOP );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	メイン処理
+ *
+ *	@param	BACKOBJ_ONE *p_wk ワーク
+ */
+//-----------------------------------------------------------------------------
+static void BACKOBJ_ONE_Main( BACKOBJ_ONE *p_wk )
+{	
+	if( p_wk->is_req )
+	{	
+		GFL_CLACTPOS pos;
+		VecFx32	v;
+		VecFx32	v2;
+		fx32 mag;
+		VEC_Subtract( &p_wk->end, &p_wk->start, &v );
+		mag	= VEC_Mag( &v );
+		VEC_Normalize( &v, &v );
+		mag = mag * p_wk->sync_now / p_wk->sync_max;
+		VEC_MultAdd( mag, &v, &p_wk->start, &v2 );
+
+		pos.x	= v2.x >> FX32_SHIFT;
+		pos.y	= v2.y >> FX32_SHIFT;
+
+		if( p_wk->sync_now++ > p_wk->sync_max )
+		{	
+			pos.x	= p_wk->end.x;
+			pos.y	= p_wk->end.y;
+			GFL_CLACT_WK_SetDrawEnable( p_wk->p_clwk, FALSE );
+
+			p_wk->is_req	= FALSE;
+		}
+
+		GFL_CLACT_WK_SetPos( p_wk->p_clwk, &pos, p_wk->sf_type );
+	}
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	移動開始
+ *
+ *	@param	BACKOBJ_ONE *p_wk		ワーク
+ *	@param	GFL_POINT *cp_start	開始座標
+ *	@param	GFL_POINT *cp_end		終了座標
+ *	@param	sync								移動シンク
+ */
+//-----------------------------------------------------------------------------
+static void BACKOBJ_ONE_Start( BACKOBJ_ONE *p_wk, const GFL_POINT *cp_start, const GFL_POINT *cp_end, u32 sync )
+{	
+	p_wk->is_req		= TRUE;
+	VEC_Set( &p_wk->start, FX32_CONST(cp_start->x), FX32_CONST(cp_start->y), 0 );
+	VEC_Set( &p_wk->end, FX32_CONST(cp_end->x), FX32_CONST(cp_end->y), 0 );
+	p_wk->sync_now	= 0;
+	p_wk->sync_max	= sync;
+	GFL_CLACT_WK_SetDrawEnable( p_wk->p_clwk, TRUE );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	動作中フラグ取得
+ *
+ *	@param	const BACKOBJ_ONE *cp_wk	ワーク
+ *
+ *	@return	TRUEならば動作中	FALSEならば動いていない
+ */
+//-----------------------------------------------------------------------------
+static BOOL BACKOBJ_ONE_IsMove( const BACKOBJ_ONE *cp_wk )
+{	
+	return cp_wk->is_req;
 }
 //=============================================================================
 /**

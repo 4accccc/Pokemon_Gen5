@@ -249,18 +249,67 @@ typedef enum {
 ///	OBJ登録ID
 //=====================================
 enum {
-	OBJREGID_TOUCH_PLT,
-	OBJREGID_TOUCH_CHR,
-	OBJREGID_TOUCH_CEL,
+	OBJREGID_TOUCH_PLT_M,
+	OBJREGID_TOUCH_CHR_M,
+	OBJREGID_TOUCH_CEL_M,
+	OBJREGID_TOUCH_PLT_S,
+	OBJREGID_TOUCH_CHR_S,
+	OBJREGID_TOUCH_CEL_S,
 
 	OBJREGID_MAX
 };
+
+//-------------------------------------
+///		BACKOBJ
+//=====================================
+//後ろOBJの数
+#define BACKOBJ_CLWK_MAX	(48)
+//
+typedef enum
+{
+	BACKOBJ_MOVE_TYPE_RAIN,		//雨のように上から降り注ぐ
+	BACKOBJ_MOVE_TYPE_EMITER,	//放出
+	BACKOBJ_MOVE_TYPE_GATHER,	//集中
+} BACKOBJ_MOVE_TYPE;
+
+//OBJのパレットと対応している
+typedef enum
+{
+	BACKOBJ_COLOR_RED			= 1,
+	BACKOBJ_COLOR_ORANGE	= 5,
+	BACKOBJ_COLOR_YELLOW	= 6,
+	BACKOBJ_COLOR_YEGREEN	= 7,
+	BACKOBJ_COLOR_GREEN		= 8,
+	BACKOBJ_COLOR_WATER		= 9,
+	BACKOBJ_COLOR_BLUE		= 0xA,
+} BACKOBJ_COLOR;
+
+//１つのOBJが動くまでのシンク
+#define BACKOBJ_MOVE_SYNC	(10)
+
+#define BACKOBJ_ONE_MOVE_SYNC_MIN	(110)
+#define BACKOBJ_ONE_MOVE_SYNC_MAX	(160)
+#define BACKOBJ_ONE_MOVE_SYNC_DIF	(BACKOBJ_ONE_MOVE_SYNC_MAX-BACKOBJ_ONE_MOVE_SYNC_MIN)
+
+enum
+{
+	BACKOBJ_SYS_MAIN,
+	BACKOBJ_SYS_SUB,
+	BACKOBJ_SYS_NUM,
+} ;
+
+
 //-------------------------------------
 ///	CLWK取得
 //=====================================
-typedef enum{	
-	CLWKID_TOUCH,
+typedef enum
+{	
+	CLWKID_BACKOBJ_TOP_S,
+	CLWKID_BACKOBJ_END_S = CLWKID_BACKOBJ_TOP_S + BACKOBJ_CLWK_MAX,
 	
+	CLWKID_BACKOBJ_TOP_M,
+	CLWKID_BACKOBJ_END_M = CLWKID_BACKOBJ_TOP_M + BACKOBJ_CLWK_MAX,
+
 	CLWKID_MAX
 }CLWKID;
 
@@ -382,6 +431,27 @@ typedef struct {
 } RHYTHMNET_WORK;
 
 //-------------------------------------
+///	BACKOBJ	背面ぴかぴか
+//=====================================
+typedef struct
+{	
+	GFL_CLWK					*p_clwk;
+	int								sf_type;
+	BOOL							is_req;
+	VecFx32						start;
+	VecFx32						end;
+	u32								sync_now;
+	u32								sync_max;
+} BACKOBJ_ONE;
+typedef struct 
+{
+	BACKOBJ_ONE				wk[BACKOBJ_CLWK_MAX];
+	BACKOBJ_MOVE_TYPE	type;
+	BACKOBJ_COLOR			color;
+	u32								sync_now;	//１つのワークを開始するまでのシンク
+	u32								sync_max;
+} BACKOBJ_WORK;
+//-------------------------------------
 ///	個人成績画面
 //=====================================
 typedef struct 
@@ -442,6 +512,9 @@ struct _RHYTHM_MAIN_WORK
 
 	//結果表示
 	RHYTHM_ONLYRESULT_WORK	onlyresult;
+
+	//背面ぴかぴか
+	BACKOBJ_WORK		backobj[BACKOBJ_SYS_NUM];
 
 	//下画面バー
 	APPBAR_WORK			*p_appbar;
@@ -544,9 +617,17 @@ static void NETRECV_Result( const int netID, const int size, const void* cp_data
 static u8* NETRECV_GetBufferAddr(int netID, void* pWork, int size);
 //汎用
 static BOOL TP_GetDiamondTrg( const GFL_POINT *cp_diamond, GFL_POINT *p_trg );
-static void TouchMarker_SetPos( RHYTHM_MAIN_WORK *p_wk, const GFL_POINT *cp_pos );
-static void TouchMarker_Main( RHYTHM_MAIN_WORK *p_wk );
 static u8		CalcScore( const RHYTHM_MAIN_WORK *cp_wk );
+//BACKOBJ
+static void BACKOBJ_Init( BACKOBJ_WORK *p_wk, const GRAPHIC_WORK *cp_grp, BACKOBJ_MOVE_TYPE type, BACKOBJ_COLOR color, u32 clwk_ofs, int sf_type );
+static void BACKOBJ_Exit( BACKOBJ_WORK *p_wk );
+static void BACKOBJ_Main( BACKOBJ_WORK *p_wk );
+static void BACKOBJ_StartEmit( BACKOBJ_WORK *p_wk, const GFL_POINT *cp_pos );
+//BACKOBJ_ONE
+static void BACKOBJ_ONE_Init( BACKOBJ_ONE *p_wk, GFL_CLWK *p_clwk, BACKOBJ_COLOR color, int sf_type );
+static void BACKOBJ_ONE_Main( BACKOBJ_ONE *p_wk );
+static void BACKOBJ_ONE_Start( BACKOBJ_ONE *p_wk, const GFL_POINT *cp_start, const GFL_POINT *cp_end, u32 sync );
+static BOOL BACKOBJ_ONE_IsMove( const BACKOBJ_ONE *cp_wk );
 
 #ifdef DEBUG_RHYTHM_MSG
 static void DEBUGRHYTHM_PRINT_UpDate( RHYTHM_MAIN_WORK *p_wk );
@@ -789,6 +870,10 @@ static GFL_PROC_RESULT IRC_RHYTHM_PROC_Init( GFL_PROC *p_proc, int *p_seq, void 
 
 	RHYTHMSEARCH_Init( &p_wk->search );
 
+	BACKOBJ_Init( &p_wk->backobj[BACKOBJ_SYS_SUB], &p_wk->grp, BACKOBJ_MOVE_TYPE_RAIN, BACKOBJ_COLOR_GREEN, CLWKID_BACKOBJ_TOP_S, CLSYS_DEFREND_SUB );
+
+	BACKOBJ_Init( &p_wk->backobj[BACKOBJ_SYS_MAIN], &p_wk->grp, BACKOBJ_MOVE_TYPE_EMITER, BACKOBJ_COLOR_BLUE, CLWKID_BACKOBJ_TOP_M, CLSYS_DEFREND_MAIN );
+
 	{	
 		GFL_CLUNIT	*p_unit	= GRAPHIC_GetClunit( &p_wk->grp );
 		p_wk->p_appbar	= APPBAR_Init( APPBAR_OPTION_MASK_CLOSE, p_unit, sc_bgcnt_frame[GRAPHIC_BG_FRAME_M_INFOWIN], RHYTHM_BG_PAL_M_14, RHYTHM_OBJ_PAL_M_13, APP_COMMON_MAPPING_128K, HEAPID_IRCRHYTHM );
@@ -842,6 +927,14 @@ DEBUG_ONLYPLAY_IF
 	DEBUGPRINT_Close();
 	DEBUGPRINT_Exit();
 DEBUG_ONLYPLAY_ENDIF
+
+	{		
+		int i;
+		for( i = 0; i < BACKOBJ_SYS_NUM; i++ )
+		{	
+			BACKOBJ_Exit( &p_wk->backobj[i] );
+		}
+	}
 
 	//APPBAR
 	APPBAR_Exit( p_wk->p_appbar );	
@@ -960,6 +1053,14 @@ static GFL_PROC_RESULT IRC_RHYTHM_PROC_Main( GFL_PROC *p_proc, int *p_seq, void 
 	}
 
 	GRAPHIC_Draw( &p_wk->grp );
+
+	{		
+		int i;
+		for( i = 0; i < BACKOBJ_SYS_NUM; i++ )
+		{	
+			BACKOBJ_Main( &p_wk->backobj[i] );
+		}
+	}
 
 	//APPBAR
 	APPBAR_Main( p_wk->p_appbar );
@@ -1257,34 +1358,64 @@ static void GRAPHIC_OBJ_Init( GRAPHIC_OBJ_WORK *p_wk, const GFL_DISP_VRAM* cp_vr
 
 		p_handle	= GFL_ARC_OpenDataHandle( ARCID_IRCCOMPATIBLE, heapID );
 
-		p_wk->reg_id[OBJREGID_TOUCH_PLT]	= GFL_CLGRP_PLTT_Register( p_handle, 
+		p_wk->reg_id[OBJREGID_TOUCH_PLT_M]	= GFL_CLGRP_PLTT_Register( p_handle, 
 				NARC_irccompatible_gra_aura_obj_NCLR, CLSYS_DRAW_MAIN, RHYTHM_OBJ_PAL_M_00*0x20, heapID );
 
-		p_wk->reg_id[OBJREGID_TOUCH_CHR]	= GFL_CLGRP_CGR_Register( p_handle,
+		p_wk->reg_id[OBJREGID_TOUCH_CHR_M]	= GFL_CLGRP_CGR_Register( p_handle,
 				NARC_irccompatible_gra_aura_obj_NCGR, FALSE, CLSYS_DRAW_MAIN, heapID );
 
-		p_wk->reg_id[OBJREGID_TOUCH_CEL]	= GFL_CLGRP_CELLANIM_Register( p_handle,
+		p_wk->reg_id[OBJREGID_TOUCH_CEL_M]	= GFL_CLGRP_CELLANIM_Register( p_handle,
 				NARC_irccompatible_gra_aura_obj_NCER, NARC_irccompatible_gra_aura_obj_NANR, heapID );
 
+		p_wk->reg_id[OBJREGID_TOUCH_PLT_S]	= GFL_CLGRP_PLTT_Register( p_handle, 
+				NARC_irccompatible_gra_aura_obj_NCLR, CLSYS_DRAW_SUB, RHYTHM_OBJ_PAL_S_00*0x20, heapID );
+
+		p_wk->reg_id[OBJREGID_TOUCH_CHR_S]	= GFL_CLGRP_CGR_Register( p_handle,
+				NARC_irccompatible_gra_aura_obj_NCGR, FALSE, CLSYS_DRAW_SUB, heapID );
+
+		p_wk->reg_id[OBJREGID_TOUCH_CEL_S]	= GFL_CLGRP_CELLANIM_Register( p_handle,
+				NARC_irccompatible_gra_aura_obj_NCER, NARC_irccompatible_gra_aura_obj_NANR, heapID );
 		GFL_ARC_CloseDataHandle( p_handle );
 	}
 
 	//CLWK作成
 	{	
+		int i;
 		GFL_CLWK_DATA	cldata;
 		GFL_STD_MemClear( &cldata, sizeof(GFL_CLWK_DATA) );
 
-		p_wk->p_clwk[CLWKID_TOUCH]	= GFL_CLACT_WK_Create( p_wk->p_clunit, 
-				p_wk->reg_id[OBJREGID_TOUCH_CHR],
-				p_wk->reg_id[OBJREGID_TOUCH_PLT],
-				p_wk->reg_id[OBJREGID_TOUCH_CEL],
-				&cldata,
-				CLSYS_DEFREND_MAIN,
-				heapID
-				);
+		for( i = CLWKID_BACKOBJ_TOP_S; i < CLWKID_BACKOBJ_END_S; i++  )
+		{	
+			p_wk->p_clwk[i]	= GFL_CLACT_WK_Create( p_wk->p_clunit, 
+					p_wk->reg_id[OBJREGID_TOUCH_CHR_S],
+					p_wk->reg_id[OBJREGID_TOUCH_PLT_S],
+					p_wk->reg_id[OBJREGID_TOUCH_CEL_S],
+					&cldata,
+					CLSYS_DEFREND_SUB,
+					heapID
+					);
+			GFL_CLACT_WK_SetDrawEnable( p_wk->p_clwk[i], FALSE );
+			GFL_CLACT_WK_SetBgPri( p_wk->p_clwk[i], 3 );
+			GFL_CLACT_WK_SetAutoAnmFlag( p_wk->p_clwk[i], TRUE );
+			GFL_CLACT_WK_SetAnmSeq( p_wk->p_clwk[i], 0 );
+		}
 
+		for( i = CLWKID_BACKOBJ_TOP_M; i < CLWKID_BACKOBJ_END_M; i++  )
+		{	
+			p_wk->p_clwk[i]	= GFL_CLACT_WK_Create( p_wk->p_clunit, 
+					p_wk->reg_id[OBJREGID_TOUCH_CHR_M],
+					p_wk->reg_id[OBJREGID_TOUCH_PLT_M],
+					p_wk->reg_id[OBJREGID_TOUCH_CEL_M],
+					&cldata,
+					CLSYS_DEFREND_MAIN,
+					heapID
+					);
+			GFL_CLACT_WK_SetDrawEnable( p_wk->p_clwk[i], FALSE );
+			GFL_CLACT_WK_SetBgPri( p_wk->p_clwk[i], 3 );
+			GFL_CLACT_WK_SetAutoAnmFlag( p_wk->p_clwk[i], TRUE );
+			GFL_CLACT_WK_SetAnmSeq( p_wk->p_clwk[i], 0 );
+		}
 
-		GFL_CLACT_WK_SetDrawEnable( p_wk->p_clwk[CLWKID_TOUCH], FALSE );
 	}
 }
 //----------------------------------------------------------------------------
@@ -1302,15 +1433,21 @@ static void GRAPHIC_OBJ_Exit( GRAPHIC_OBJ_WORK *p_wk )
 		int i;
 		for( i = 0; i < CLWKID_MAX; i++ )
 		{	
-			GFL_CLACT_WK_Remove( p_wk->p_clwk[i] );
+			if( p_wk->p_clwk[i] )
+			{	
+				GFL_CLACT_WK_Remove( p_wk->p_clwk[i] );
+			}
 		}
 	}
 
 	//リソース破棄
 	{	
-		GFL_CLGRP_PLTT_Release( p_wk->reg_id[OBJREGID_TOUCH_PLT] );
-		GFL_CLGRP_CGR_Release( p_wk->reg_id[OBJREGID_TOUCH_CHR] );
-		GFL_CLGRP_CELLANIM_Release( p_wk->reg_id[OBJREGID_TOUCH_CEL] );
+		GFL_CLGRP_PLTT_Release( p_wk->reg_id[OBJREGID_TOUCH_PLT_M] );
+		GFL_CLGRP_CGR_Release( p_wk->reg_id[OBJREGID_TOUCH_CHR_M] );
+		GFL_CLGRP_CELLANIM_Release( p_wk->reg_id[OBJREGID_TOUCH_CEL_M] );
+		GFL_CLGRP_PLTT_Release( p_wk->reg_id[OBJREGID_TOUCH_PLT_S] );
+		GFL_CLGRP_CGR_Release( p_wk->reg_id[OBJREGID_TOUCH_CHR_S] );
+		GFL_CLGRP_CELLANIM_Release( p_wk->reg_id[OBJREGID_TOUCH_CEL_S] );
 	}
 
 	//システム破棄
@@ -2012,12 +2149,11 @@ DEBUG_ONLYPLAY_IF
 DEBUG_ONLYPLAY_ENDIF
 
 
-	TouchMarker_Main( p_wk );
 	for( i = 0; i< NELEMS(sc_diamond_pos); i++ )
 	{
 		if( TP_GetDiamondTrg( &sc_diamond_pos[i], NULL ) )
 		{	
-			TouchMarker_SetPos( p_wk, &sc_diamond_pos[i] );
+			BACKOBJ_StartEmit( &p_wk->backobj[BACKOBJ_SYS_MAIN], &sc_diamond_pos[i] );
 			RHYTHMSEARCH_SetData( p_search, &sc_diamond_pos[i] );
 			break;
 		}
@@ -2235,7 +2371,6 @@ DEBUG_ONLYPLAY_ELSE
 
 DEBUG_ONLYPLAY_ENDIF
 
-	TouchMarker_Main( p_wk );
 
 }
 
@@ -2662,28 +2797,6 @@ static BOOL TP_GetDiamondTrg( const GFL_POINT *cp_diamond, GFL_POINT *p_trg )
 
 //----------------------------------------------------------------------------
 /**
- *	@brief	タッチマーカーの表示をOFF
- *
- *	@param	RHYTHM_MAIN_WORK *p_wk	ワーク
- *
- */
-//-----------------------------------------------------------------------------
-static void TouchMarker_Main( RHYTHM_MAIN_WORK *p_wk )
-{	
-	GFL_CLWK	*p_marker;
-	p_marker	= GRAPHIC_GetClwk( &p_wk->grp, CLWKID_TOUCH );
-
-	if( GFL_CLACT_WK_GetDrawEnable( p_marker ) )
-	{	
-		if( p_wk->marker_cnt++ > TOUCHMARKER_VISIBLE_CNT )
-		{	
-			GFL_CLACT_WK_SetDrawEnable( p_marker, FALSE );
-		}
-	}
-}
-
-//----------------------------------------------------------------------------
-/**
  *	@brief	スコア計算
  *
  *	@param	RHYTHM_MAIN_WORK *p_wk	ワーク
@@ -2829,27 +2942,256 @@ DEBUG_ONLYPLAY_ENDIF
 	}
 	return (prog_score + (diff_score/9) )/2;
 }
-
+//=============================================================================
+/**
+ *			BACKOBJ
+ */
+//=============================================================================
 //----------------------------------------------------------------------------
 /**
- *	@brief	タッチマーカーの座標を設定し表示
+ *	@brief
  *
- *	@param	RHYTHM_MAIN_WORK *p_wk	ワーク
- *	@param	GFL_POINT *cp_pos				座標
+ *	@param	BACKOBJ_WORK *p_wk		ワーク
+ *	@param	GRAPHIC_WORK *cp_grp	CLWK受け取り用グラフィック
+ *	@param	type									動作タイプ
+ *	@param	color									色
+ *	@param	clwk_ofs							CLWKオフセット何番から使い始めるか
+ */
+//-----------------------------------------------------------------------------
+static void BACKOBJ_Init( BACKOBJ_WORK *p_wk, const GRAPHIC_WORK *cp_grp, BACKOBJ_MOVE_TYPE type, BACKOBJ_COLOR color, u32 clwk_ofs, int sf_type )
+{	
+	GFL_STD_MemClear( p_wk, sizeof(BACKOBJ_WORK) );
+	p_wk->type	= type;
+	p_wk->color	= color;
+	p_wk->sync_now	= 0;
+	p_wk->sync_max	= BACKOBJ_MOVE_SYNC;
+	{	
+		int i;
+		GFL_CLWK *p_clwk;
+		for( i = 0; i < BACKOBJ_CLWK_MAX; i++ )
+		{	
+			p_clwk	= GRAPHIC_GetClwk( cp_grp, clwk_ofs + i );
+			BACKOBJ_ONE_Init( &p_wk->wk[i], p_clwk, color, sf_type );
+		}
+	}
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	破棄
+ *
+ *	@param	BACKOBJ_WORK *p_wk	ワーク
  *
  */
 //-----------------------------------------------------------------------------
-static void TouchMarker_SetPos( RHYTHM_MAIN_WORK *p_wk, const GFL_POINT *cp_pos )
+static void BACKOBJ_Exit( BACKOBJ_WORK *p_wk )
 {	
-	GFL_CLACTPOS clpos;
-	GFL_CLWK	*p_marker;
-	p_marker	= GRAPHIC_GetClwk( &p_wk->grp, CLWKID_TOUCH );
-	clpos.x	= cp_pos->x+1;
-	clpos.y	= cp_pos->y+1;
-	GFL_CLACT_WK_SetPos( p_marker, &clpos, 0 );
-	GFL_CLACT_WK_SetDrawEnable( p_marker, TRUE );
-	p_wk->marker_cnt	= 0;
+	GFL_STD_MemClear( p_wk, sizeof(BACKOBJ_WORK) );
 }
+//----------------------------------------------------------------------------
+/**
+ *	@brief	メイン処理
+ *
+ *	@param	BACKOBJ_WORK *p_wk ワーク
+ */
+//-----------------------------------------------------------------------------
+static void BACKOBJ_Main( BACKOBJ_WORK *p_wk )
+{	
+	int i;
+	u32 sync;
+	u16 rot;
+	GFL_POINT	start;
+	GFL_POINT	end;
+
+	//タイプ別移動
+	switch( p_wk->type )
+	{	
+	case BACKOBJ_MOVE_TYPE_RAIN:		//雨
+		if( p_wk->sync_now++ > p_wk->sync_max )
+		{	
+			p_wk->sync_now	= 0;
+			for( i = 0; i < BACKOBJ_CLWK_MAX; i++ )
+			{	
+				if( !BACKOBJ_ONE_IsMove( &p_wk->wk[i] ) )
+				{	
+					u8	up_or_down	= GFUser_GetPublicRand(2);
+
+					start.x	= GFUser_GetPublicRand(256);
+					start.y	= -36;
+					end.x		= start.x;
+					end.y		= 192 + 36;
+					sync	= BACKOBJ_ONE_MOVE_SYNC_MIN + GFUser_GetPublicRand(BACKOBJ_ONE_MOVE_SYNC_DIF);
+					if( up_or_down )
+					{	
+						BACKOBJ_ONE_Start( &p_wk->wk[i], &end, &start, sync );
+					}
+					else
+					{	
+						BACKOBJ_ONE_Start( &p_wk->wk[i], &start, &end, sync );
+					}
+					break;
+				}
+			}
+		}
+		break;
+
+	case BACKOBJ_MOVE_TYPE_EMITER:	//放出
+		/* BACKOBJ_StartEmitで行う  */
+		break;
+
+	case BACKOBJ_MOVE_TYPE_GATHER:	//集中
+		if( p_wk->sync_now++ > p_wk->sync_max )
+		{	
+			p_wk->sync_now	= 0;
+			for( i = 0; i < BACKOBJ_CLWK_MAX; i++ )
+			{	
+				if( !BACKOBJ_ONE_IsMove( &p_wk->wk[i] ) )
+				{	
+					u16 rot	= GFUser_GetPublicRand(0xFFFF);
+					start.x	= (FX_SinIdx(rot) * 256) >> FX32_SHIFT;
+					start.y	= (FX_CosIdx(rot) * 256) >> FX32_SHIFT;
+					end.x		= 128;
+					end.y		= 96;
+					sync	= BACKOBJ_ONE_MOVE_SYNC_MIN + GFUser_GetPublicRand(BACKOBJ_ONE_MOVE_SYNC_DIF);
+					BACKOBJ_ONE_Start( &p_wk->wk[i], &start, &end, sync );
+					break;
+				}
+			}
+		}
+		break;
+	}
+
+
+	//ワーク動作
+	{	
+		for( i = 0; i < BACKOBJ_CLWK_MAX; i++ )
+		{	
+			BACKOBJ_ONE_Main( &p_wk->wk[i] );
+		}
+	}
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	放出開始
+ *
+ *	@param	BACKOBJ_WORK *p_wk	ワーク
+ *	@param	GFL_POINT *cp_pos		放出開始座標
+ */
+//-----------------------------------------------------------------------------
+static void BACKOBJ_StartEmit( BACKOBJ_WORK *p_wk, const GFL_POINT *cp_pos )
+{	
+	int i, j;
+	u32 sync;
+	u16 rot;
+	GFL_POINT	end;
+
+	for( j = 0; j < 12; j++ )
+	{	
+		for( i = 0; i < BACKOBJ_CLWK_MAX; i++ )
+		{	
+			if( !BACKOBJ_ONE_IsMove( &p_wk->wk[i] ) )
+			{
+				rot	= GFUser_GetPublicRand(0xFFFF);
+				end.x	= (FX_SinIdx(rot) * 256) >> FX32_SHIFT;
+				end.y	= (FX_CosIdx(rot) * 256) >> FX32_SHIFT;
+				sync	= BACKOBJ_ONE_MOVE_SYNC_MIN + GFUser_GetPublicRand(BACKOBJ_ONE_MOVE_SYNC_DIF);
+				BACKOBJ_ONE_Start( &p_wk->wk[i], cp_pos, &end, sync );
+				break;
+			}
+		}
+	}
+}
+//=============================================================================
+/**
+ *		背面OBJ1個
+ */
+//=============================================================================
+//----------------------------------------------------------------------------
+/**
+ *	@brief	初期化
+ *
+ *	@param	BACKOBJ_ONE *p_wk	ワーク
+ *	@param	*p_clwk						アクター
+ *	@param	color							色
+ */
+//-----------------------------------------------------------------------------
+static void BACKOBJ_ONE_Init( BACKOBJ_ONE *p_wk, GFL_CLWK *p_clwk, BACKOBJ_COLOR color, int sf_type )
+{	
+	GFL_STD_MemClear( p_wk, sizeof(BACKOBJ_ONE) );
+	p_wk->p_clwk	= p_clwk;
+	p_wk->sf_type	= sf_type;
+
+	GFL_CLACT_WK_SetPlttOffs( p_wk->p_clwk, color, CLWK_PLTTOFFS_MODE_PLTT_TOP );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	メイン処理
+ *
+ *	@param	BACKOBJ_ONE *p_wk ワーク
+ */
+//-----------------------------------------------------------------------------
+static void BACKOBJ_ONE_Main( BACKOBJ_ONE *p_wk )
+{	
+	if( p_wk->is_req )
+	{	
+		GFL_CLACTPOS pos;
+		VecFx32	v;
+		VecFx32	v2;
+		fx32 mag;
+		VEC_Subtract( &p_wk->end, &p_wk->start, &v );
+		mag	= VEC_Mag( &v );
+		VEC_Normalize( &v, &v );
+		mag = mag * p_wk->sync_now / p_wk->sync_max;
+		VEC_MultAdd( mag, &v, &p_wk->start, &v2 );
+
+		pos.x	= v2.x >> FX32_SHIFT;
+		pos.y	= v2.y >> FX32_SHIFT;
+
+		if( p_wk->sync_now++ > p_wk->sync_max )
+		{	
+			pos.x	= p_wk->end.x;
+			pos.y	= p_wk->end.y;
+			GFL_CLACT_WK_SetDrawEnable( p_wk->p_clwk, FALSE );
+
+			p_wk->is_req	= FALSE;
+		}
+
+		GFL_CLACT_WK_SetPos( p_wk->p_clwk, &pos, p_wk->sf_type );
+	}
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	移動開始
+ *
+ *	@param	BACKOBJ_ONE *p_wk		ワーク
+ *	@param	GFL_POINT *cp_start	開始座標
+ *	@param	GFL_POINT *cp_end		終了座標
+ *	@param	sync								移動シンク
+ */
+//-----------------------------------------------------------------------------
+static void BACKOBJ_ONE_Start( BACKOBJ_ONE *p_wk, const GFL_POINT *cp_start, const GFL_POINT *cp_end, u32 sync )
+{	
+	p_wk->is_req		= TRUE;
+	VEC_Set( &p_wk->start, FX32_CONST(cp_start->x), FX32_CONST(cp_start->y), 0 );
+	VEC_Set( &p_wk->end, FX32_CONST(cp_end->x), FX32_CONST(cp_end->y), 0 );
+	p_wk->sync_now	= 0;
+	p_wk->sync_max	= sync;
+	GFL_CLACT_WK_SetDrawEnable( p_wk->p_clwk, TRUE );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	動作中フラグ取得
+ *
+ *	@param	const BACKOBJ_ONE *cp_wk	ワーク
+ *
+ *	@return	TRUEならば動作中	FALSEならば動いていない
+ */
+//-----------------------------------------------------------------------------
+static BOOL BACKOBJ_ONE_IsMove( const BACKOBJ_ONE *cp_wk )
+{	
+	return cp_wk->is_req;
+}
+
 
 #ifdef DEBUG_RHYTHM_MSG
 //----------------------------------------------------------------------------
