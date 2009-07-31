@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-07-28T11:38:40"/>
+	<create user="matsumiya" host="W00207" date="2009-07-31T11:58:18"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -315,7 +315,7 @@
 		<band id="2" index="3" style="0000" width="217"/>
 		<band id="3" index="4" style="0000" width="478"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -348,13 +348,13 @@
 　いいえ→msg_common_pc_heal_04</comment>
 		<attribute name="キャラ指定">ポケセン受付１</attribute>
 		<language name="JPN" width="256">おつかれさまです！
-ポケモン　センター　です[BE:01:ページ切り替え（クリア）][BE:01:ページ切り替え（クリア）]
+ポケモン　センター　です[BE:01:ページ切り替え（クリア）]
 ここでは　ポケモンの
 たいりょく　かいふくを　します[BE:01:ページ切り替え（クリア）]
 あなたの　ポケモンを
 やすませて　あげますか？</language>
 		<language name="JPN_KANJI" width="256">おつかれさまです！
-ポケモン　センター　です[BE:01:ページ切り替え（クリア）][BE:01:ページ切り替え（クリア）]
+ポケモン　センター　です[BE:01:ページ切り替え（クリア）]
 ここでは　ポケモンの
 体力回復を　します[BE:01:ページ切り替え（クリア）]
 あなたの　ポケモンを
@@ -368,13 +368,13 @@
 　いいえ→msg_common_pc_heal_04</comment>
 		<attribute name="キャラ指定">ポケセン受付１</attribute>
 		<language name="JPN" width="256">おはようございます！
-ポケモン　センター　です▼
+ポケモン　センター　です[BE:01:ページ切り替え（クリア）]
 ここでは　ポケモンの
-たいりょく　かいふくを　します▼
+たいりょく　かいふくを　します[BE:01:ページ切り替え（クリア）]
 あなたの　ポケモンを
 やすませて　あげますか？</language>
 		<language name="JPN_KANJI" width="256">おはようございます！
-ポケモン　センター　です▼
+ポケモン　センター　です[BE:01:ページ切り替え（クリア）]
 ここでは　ポケモンの
 体力回復を　します[BE:01:ページ切り替え（クリア）]
 あなたの　ポケモンを
@@ -388,13 +388,13 @@
 　いいえ→msg_common_pc_heal_04</comment>
 		<attribute name="キャラ指定">ポケセン受付１</attribute>
 		<language name="JPN" width="256">こんにちは！
-ポケモン　センター　です▼
+ポケモン　センター　です[BE:01:ページ切り替え（クリア）]
 ここでは　ポケモンの
-たいりょく　かいふくを　します▼
+たいりょく　かいふくを　します[BE:01:ページ切り替え（クリア）]
 あなたの　ポケモンを
 やすませて　あげますか？</language>
 		<language name="JPN_KANJI" width="256">こんにちは！
-ポケモン　センター　です▼
+ポケモン　センター　です[BE:01:ページ切り替え（クリア）]
 ここでは　ポケモンの
 体力回復を　します[BE:01:ページ切り替え（クリア）]
 あなたの　ポケモンを
