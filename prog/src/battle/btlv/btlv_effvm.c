@@ -304,6 +304,9 @@ BOOL    BTLV_EFFVM_Main( VMHANDLE *vmh )
 
   if( ( ret == FALSE ) && ( bevw->sequence ) )
   {
+    //HPƒQ[ƒW•\Ž¦
+//    BTLV_EFFECT_SetGaugeDrawEnable( TRUE );
+
     GFL_HEAP_FreeMemory( bevw->sequence );
     bevw->sequence = NULL;
   }
@@ -357,6 +360,9 @@ void  BTLV_EFFVM_Start( VMHANDLE *vmh, BtlvMcssPos from, BtlvMcssPos to, WazaID 
   }
 
   start_ofs = (int *)&bevw->sequence[ table_ofs ];
+
+  //HPƒQ[ƒW”ñ•\Ž¦
+//  BTLV_EFFECT_SetGaugeDrawEnable( FALSE );
 
   VM_Start( vmh, &bevw->sequence[ start_ofs[ 0 ] ] );
 }
@@ -1583,6 +1589,31 @@ static  int   EFFVM_GetPosition( VMHANDLE *vmh, int pos_flag )
     break;
   case BTLEFF_POKEMON_SIDE_DEFENCE:   //–hŒä‘¤
     position = bevw->defence_pos;
+    if( position == BTLV_MCSS_POS_ERROR )
+    { 
+      if( bevw->attack_pos & 1 )
+      { 
+        if( BTLV_EFFECT_CheckExistPokemon( BTLV_MCSS_POS_A ) == TRUE )
+        { 
+          return BTLV_MCSS_POS_A;
+        }
+        else
+        { 
+          return BTLV_MCSS_POS_C;
+        }
+      }
+      else
+      { 
+        if( BTLV_EFFECT_CheckExistPokemon( BTLV_MCSS_POS_B ) == TRUE )
+        { 
+          return BTLV_MCSS_POS_B;
+        }
+        else
+        { 
+          return BTLV_MCSS_POS_D;
+        }
+      }
+    }
     break;
   case BTLEFF_POKEMON_SIDE_DEFENCE_PAIR:  //–hŒä‘¤ƒyƒA
     if( bevw->defence_pos > BTLV_MCSS_POS_BB ){
