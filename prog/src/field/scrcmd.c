@@ -1679,6 +1679,7 @@ static VMCMD_RESULT EvCmdObjTurn( VMHANDLE *core, void *wk )
   }
   
   MMDL_SetDirDisp( *fmmdl, dir );
+  MMDL_SetDrawStatus( *fmmdl, DRAW_STA_STOP );
   return VMCMD_RESULT_CONTINUE;
 }
 

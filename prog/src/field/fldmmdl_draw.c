@@ -204,14 +204,16 @@ const OBJCODE_STATE * MMDL_GetOBJCodeState( const MMDL *fmmdl )
 //--------------------------------------------------------------
 BOOL MMDL_CheckDrawPause( const MMDL * fmmdl )
 {
-	if( MMDL_CheckStatusBit(fmmdl,MMDL_STABIT_PAUSE_ANM) ){
-		return( TRUE );
-	}else if( MMDL_CheckStatusBitMoveProcPause(fmmdl) ){
+  if( MMDL_CheckStatusBitMoveProcPause(fmmdl) ){
 		if( MMDL_CheckStatusBitAcmd(fmmdl) == FALSE ){
 			return( TRUE );
 		}
 	}
 	
+	if( MMDL_CheckStatusBit(fmmdl,MMDL_STABIT_PAUSE_ANM) ){
+		return( TRUE );
+	}
+
 	return( FALSE );
 }
 
