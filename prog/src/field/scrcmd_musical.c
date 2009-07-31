@@ -28,6 +28,8 @@
 #include "poke_tool/monsno_def.h" //ドレスアップ仮データ用
 #include "event_fieldmap_control.h"
 
+#include "field_sound.h"
+
 #include "scrcmd_musical.h"
 
 //======================================================================
@@ -94,6 +96,12 @@ VMCMD_RESULT EvCmdMusicalCall( VMHANDLE *core, void *wk )
     GMEVENT_CallEvent( *sc_event, call_event );
   }
   
+  {
+    FIELD_SOUND *fsnd = GAMEDATA_GetFieldSound( gdata );
+    FIELD_SOUND_PushBGM( fsnd );
+    PMSND_FadeOutBGM( 30 );
+  }
+  
   return VMCMD_RESULT_CONTINUE;
 }
 
@@ -120,6 +128,14 @@ static GMEVENT_RESULT event_Musical(
     {
       MUSICAL_INIT_WORK *init = &ev_musical_work->init;
       GFL_HEAP_FreeMemory( init->pokePara );
+    }
+
+    {
+      GAMESYS_WORK *gsys =  GMEVENT_GetGameSysWork( event );
+      GAMEDATA *gdata = GAMESYSTEM_GetGameData( gsys );
+      FIELD_SOUND *fsnd = GAMEDATA_GetFieldSound( gdata );
+      FIELD_SOUND_PopBGM( fsnd );
+      PMSND_FadeInBGM( 30 );
     }
     (*seq)++;
     return( GMEVENT_RES_FINISH );
