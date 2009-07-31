@@ -82,6 +82,7 @@ extern void *GameCommSys_GetAppWork(GAME_COMM_SYS_PTR gcsp);
 extern GAMEDATA * GameCommSys_GetGameData(GAME_COMM_SYS_PTR gcsp);
 extern void GameCommStatus_SetPlayerStatus(GAME_COMM_SYS_PTR gcsp, int comm_net_id, ZONEID zone_id, u8 invasion_netid, u8 mission_no);
 extern u8 GameCommStatus_GetPlayerStatus_MissionNo(GAME_COMM_SYS_PTR gcsp, int comm_net_id);
+extern u8 GameCommStatus_GetPlayerStatus_InvasionNetID(GAME_COMM_SYS_PTR gcsp, int comm_net_id);
 extern BOOL GameCommInfo_GetMessage(GAME_COMM_SYS_PTR gcsp, GAME_COMM_INFO_MESSAGE *dest_msg);
 
 

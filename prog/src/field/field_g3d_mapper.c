@@ -547,18 +547,32 @@ BOOL DEBUG_Field_Grayscale(GFL_G3D_RES *g3Dres)
 	NNSG3dResTex*			texture;
   u32 sz;
   void* pData;
+  GAME_COMM_SYS_PTR game_comm;
+  int invasion_netid, white_mode = 0;
   
-  if(GameCommSys_BootCheck( GAMESYSTEM_GetGameCommSysPtr( DEBUG_GameSysWorkPtrGet() ) ) != GAME_COMM_NO_INVASION){
+  game_comm = GAMESYSTEM_GetGameCommSysPtr( DEBUG_GameSysWorkPtrGet() );
+  if(GameCommSys_BootCheck( game_comm ) != GAME_COMM_NO_INVASION){
     return FALSE;
   }
   
+  invasion_netid = GameCommStatus_GetPlayerStatus_InvasionNetID(game_comm, GFL_NET_GetNetID( GFL_NET_HANDLE_GetCurrentHandle()));
+  if(invasion_netid == GFL_NET_GetNetID(GFL_NET_HANDLE_GetCurrentHandle())){
+    return FALSE;
+  }
+  white_mode = invasion_netid & 1;
+
 	header = GFL_G3D_GetResourceFileHeader(g3Dres);
 	texture = NNS_G3dGetTex( header ); 
 
 	if( texture ){
     sz = (u32)texture->plttInfo.sizePltt << 3;
     pData = (u8*)texture + texture->plttInfo.ofsPlttData;
-    PaletteGrayScale(pData, sz / sizeof(u16));
+    if(white_mode == 0){
+      PaletteGrayScale(pData, sz / sizeof(u16));
+    }
+    else{
+      PaletteGrayScaleFlip(pData, sz / sizeof(u16));
+    }
 		return TRUE;
 	}
 	return FALSE;

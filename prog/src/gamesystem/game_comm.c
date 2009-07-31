@@ -351,9 +351,11 @@ void GameCommSys_ExitReq(GAME_COMM_SYS_PTR gcsp)
 //==================================================================
 void GameCommSys_ChangeReq(GAME_COMM_SYS_PTR gcsp, GAME_COMM_NO game_comm_no, void *parent_work)
 {
-  GF_ASSERT(gcsp->sub_work.seq == GCSSEQ_UPDATE);
+  GF_ASSERT(gcsp->sub_work.seq >= GCSSEQ_UPDATE);
   
-  GameCommSub_SeqSet(&gcsp->sub_work, GCSSEQ_EXIT);
+  if(gcsp->sub_work.seq == GCSSEQ_UPDATE){
+    GameCommSub_SeqSet(&gcsp->sub_work, GCSSEQ_EXIT);
+  }
   gcsp->reserve_comm_game_no = game_comm_no;
   gcsp->reserve_parent_work = parent_work;
 }
@@ -590,6 +592,22 @@ u8 GameCommStatus_GetPlayerStatus_MissionNo(GAME_COMM_SYS_PTR gcsp, int comm_net
 {
   GAME_COMM_PLAYER_STATUS *player_status = &gcsp->player_status[comm_net_id];
   return player_status->mission_no;
+}
+
+//==================================================================
+/**
+ * 通信プレイヤーステータスから侵入先NetIDを取得
+ *
+ * @param   gcsp		
+ * @param   comm_net_id		
+ *
+ * @retval  u8		ミッション番号
+ */
+//==================================================================
+u8 GameCommStatus_GetPlayerStatus_InvasionNetID(GAME_COMM_SYS_PTR gcsp, int comm_net_id)
+{
+  GAME_COMM_PLAYER_STATUS *player_status = &gcsp->player_status[comm_net_id];
+  return player_status->invasion_netid;
 }
 
 
