@@ -1516,6 +1516,7 @@ static void SEQ_End( IRC_MENU_MAIN_WORK *p_wk )
 static void SEQFUNC_Connect( IRC_MENU_MAIN_WORK *p_wk, u16 *p_seq )
 {	
 	enum{	
+		SEQ_BOOT,
 		SEQ_MSG_STARTNET,
 		SEQ_CONNECT,
 		SEQ_MSG_PRINT,
@@ -1534,6 +1535,11 @@ static void SEQFUNC_Connect( IRC_MENU_MAIN_WORK *p_wk, u16 *p_seq )
 
 	switch( *p_seq )
 	{	
+	case SEQ_BOOT:
+		COMPATIBLE_IRC_Cancel( p_wk->p_param->p_irc );
+		*p_seq	= SEQ_MSG_STARTNET;
+		break;
+
 	case SEQ_MSG_STARTNET:
 		if(COMPATIBLE_IRC_InitWait( p_wk->p_param->p_irc ) )
 		{	
