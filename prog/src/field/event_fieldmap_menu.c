@@ -130,6 +130,7 @@ struct _TAG_FMENU_EVENT_WORK
   void *subProcWork;
   
   FIELD_SUBSCREEN_MODE return_subscreen_mode;
+  BOOL bForceExit;
 };
 
 
@@ -385,19 +386,13 @@ static GMEVENT_RESULT FldMapMenuEvent( GMEVENT *event, int *seq, void *wk )
     break;
     
   case FMENUSTATE_FIELD_OPEN:
-/*    {
-      GAMESYS_WORK *gameSys = GMEVENT_GetGameSysWork( event );
-      GAMEDATA *gameData = GAMESYSTEM_GetGameData( gameSys );
-      GAMEDATA_SetSubScreenMode(gameData,mwk->return_subscreen_mode);
-    } */
 		GMEVENT_CallEvent(event, EVENT_FieldOpen(mwk->gmSys));
     mwk->state = FMENUSTATE_FIELD_FADEIN;
     break;
     
   case FMENUSTATE_FIELD_FADEIN:
 		GMEVENT_CallEvent(event, EVENT_FieldFadeIn(mwk->gmSys, mwk->fieldWork, 0));
-#if 0
-    if(mwk->return_subscreen_mode == FIELD_SUBSCREEN_NORMAL)
+    if(mwk->bForceExit)
     {
       mwk->state = FMENUSTATE_EXIT_MENU;
     }
@@ -405,9 +400,6 @@ static GMEVENT_RESULT FldMapMenuEvent( GMEVENT *event, int *seq, void *wk )
     {
       mwk->state = FMENUSTATE_RETURN_MENU;
     }
-#else
-    mwk->state = FMENUSTATE_RETURN_MENU;
-#endif
     break;
 
   case FMENUSTATE_CALL_SUB_PROC:
@@ -518,7 +510,8 @@ static BOOL FMenuCallProc_Bag( FMENU_EVENT_WORK *mwk )
   FIELD_ITEMMENU_WORK *epp;
 	GAMEDATA* pGameData = GAMESYSTEM_GetGameData(mwk->gmSys);
   
-  epp = GFL_HEAP_AllocClearMemory(GFL_HEAPID_APP, sizeof(FIELD_ITEMMENU_WORK));
+  epp = GFL_HEAP_AllocClearMemory(HEAPID_PROC, sizeof(FIELD_ITEMMENU_WORK));
+//  epp = GFL_HEAP_AllocClearMemory(GFL_HEAPID_APP, sizeof(FIELD_ITEMMENU_WORK));
   epp->ctrl = SaveControl_GetPointer();
   epp->gsys = mwk->gmSys;
   epp->fieldmap = mwk->fieldWork;
@@ -785,10 +778,14 @@ static const BOOL FMenuReturnProc_Bag(FMENU_EVENT_WORK* mwk)
   switch( pBag->ret_code )
   {
   case BAG_NEXTPROC_EXIT:      //CGEARもどり
-    mwk->return_subscreen_mode = FIELD_SUBSCREEN_NORMAL;
+
+    {
+      GAMEDATA *gmData = GAMESYSTEM_GetGameData(mwk->gmSys);
+      GAMEDATA_SetSubScreenMode(gmData,FIELD_SUBSCREEN_NORMAL);
+    } 
+    mwk->bForceExit = TRUE;
     return FALSE;
   case BAG_NEXTPROC_RETURN:      // めにゅーもどり
-    mwk->return_subscreen_mode = FIELD_SUBSCREEN_TOPMENU;
     return FALSE;
   case BAG_NEXTPROC_WAZASET:
   case BAG_NEXTPROC_ITEMEQUIP:  //装備　アイテムリストに戻る
