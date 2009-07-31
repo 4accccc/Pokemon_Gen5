@@ -169,6 +169,8 @@ static GMEVENT_RESULT FMenuReportEvent( GMEVENT *event, int *seq, void *wk );
 static const BOOL FMenuReturnProc_PokeList(FMENU_EVENT_WORK* mwk);
 static const BOOL FMenuReturnProc_PokeStatus(FMENU_EVENT_WORK* mwk);
 static const BOOL FMenuReturnProc_Bag(FMENU_EVENT_WORK* mwk);
+static const BOOL FMenuReturnProc_TownMap(FMENU_EVENT_WORK* mwk);
+
 static void FMenuTakeFieldInfo(FMENU_EVENT_WORK* mwk);
 
 //--------------------------------------------------------------
@@ -224,7 +226,7 @@ static const FMENU_SUBPROC_DATA FldMapMenu_SubProcData[FMENU_APP_MAX] =
   { //  FMENU_APP_TOWNMAP,
     FS_OVERLAY_ID(townmap),
     &TownMap_ProcData,
-    NULL
+    FMenuReturnProc_TownMap
   },
 };
 
@@ -840,6 +842,42 @@ static const BOOL FMenuReturnProc_Bag(FMENU_EVENT_WORK* mwk)
   return FALSE;
 }
 
+
+//--------------------------------------------------------------
+/**
+ * 子Proc後処理 Bag
+ * @param mwk FMENU_EVENT_WORK
+ * @retval  BOOL  TRUE=別のProcを呼び出す(mwk->subProcTypeに次のprocを設定してください
+ *                FALSE=Fieldに戻る
+ */
+//--------------------------------------------------------------
+static const BOOL FMenuReturnProc_TownMap(FMENU_EVENT_WORK* mwk)
+{
+    {
+      FIELD_ITEMMENU_WORK *epp;
+      GAMEDATA* pGameData = GAMESYSTEM_GetGameData(mwk->gmSys);
+      
+      epp = GFL_HEAP_AllocClearMemory(HEAPID_PROC, sizeof(FIELD_ITEMMENU_WORK));
+      epp->ctrl = SaveControl_GetPointer();
+      epp->gsys = mwk->gmSys;
+      epp->fieldmap = mwk->fieldWork;
+      epp->heapID = GFL_HEAPID_APP;
+      epp->mode = BAG_MODE_FIELD;   //フィールドから呼ばれる
+
+      GFL_STD_MemCopy(&mwk->icwk , &epp->icwk, sizeof(ITEMCHECK_WORK));
+
+      epp->mystatus = GAMEDATA_GetMyStatus(pGameData);
+
+      if ( PLAYERWORK_GetMoveForm(GAMEDATA_GetMyPlayerWork(pGameData)) == PLAYER_MOVE_FORM_CYCLE ){
+        epp->cycle_flg = TRUE;
+      }
+      
+      FMenu_SetNextSubProc( mwk ,FMENU_APP_BAG , epp );
+      return TRUE;
+    }
+
+  
+}
 
 
 #pragma mark [>UtilFunc
