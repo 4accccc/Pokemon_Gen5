@@ -42,6 +42,7 @@ static void SetMMdl( GAMESYS_WORK *gsys, const LOCATION *loc_req, GAMEINIT_MODE 
 static void setFirstBGM(GAMEDATA * gamedata, u16 zone_id);	
 static void setNextBGM(GAMEDATA * gamedata, u16 zone_id);
 
+static void setPlayerVanish(FIELDMAP_WORK * fieldmap, BOOL vanish_flag);
 //============================================================================================
 //
 //	イベント：ゲーム開始
@@ -339,6 +340,7 @@ static GMEVENT_RESULT EVENT_FadeIn_ExitTypeDoor(GMEVENT * event, int *seq, void 
   {
   case 0:
     //自機を消す
+    setPlayerVanish( fieldmap, TRUE );
 		GMEVENT_CallEvent(event, EVENT_FieldFadeIn(gsys, fieldmap, 0));
     ++ *seq;
     break;
@@ -349,6 +351,7 @@ static GMEVENT_RESULT EVENT_FadeIn_ExitTypeDoor(GMEVENT * event, int *seq, void 
     break;
   case 2:
     //自機出現、一歩移動アニメ
+    setPlayerVanish( fieldmap, FALSE );
     GMEVENT_CallEvent( event, EVENT_PlayerOneStepAnime(gsys, fieldmap) );
     ++ *seq;
     break;
@@ -756,4 +759,10 @@ static void setFirstBGM(GAMEDATA * gamedata, u16 zone_id)
 //============================================================================================
 //--------------------------------------------------------------
 //--------------------------------------------------------------
+static void setPlayerVanish(FIELDMAP_WORK * fieldmap, BOOL vanish_flag)
+{
+  FIELD_PLAYER * player = FIELDMAP_GetFieldPlayer(fieldmap);
+  MMDL *fmmdl = FIELD_PLAYER_GetMMdl( player );
+  MMDL_SetStatusBitVanish( fmmdl, vanish_flag );
+}
 
