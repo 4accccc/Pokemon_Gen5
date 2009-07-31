@@ -169,6 +169,7 @@ extern void PaletteTrans_AutoSet(PALETTE_FADE_PTR pfd, int on_off);
 extern void SoftFade(const u16 *src, u16 *dest, u16 col_num, u8 evy, u16 next_rgb);
 
 extern void PaletteGrayScale(u16* pal, int pal_size);
+extern void PaletteGrayScaleFlip(u16* pal, int pal_size);
 extern void PaletteColorChange(u16* pal, int pal_size, int rp, int gp, int bp);
 extern void PokeColorChange(PALETTE_FADE_PTR pfd, u32 fileIdx, u32 dataIdx, u32 heap,
               FADEREQ req, u32 trans_size, u16 pos, int r, int g, int b);
