@@ -77,6 +77,8 @@ static void blactAnmControl_Update( ANMCNT_WORK *work,
   }
   else if( status != work->set_anm_status ) //ステータス更新
   {
+    init_flag = TRUE;
+    
     if( status == DRAW_STA_STOP ) //停止タイプ
     {
       work->next_walk_frmidx = GFL_BBDACT_GetAnimeFrmIdx( actSys, actID );
@@ -110,7 +112,6 @@ static void blactAnmControl_Update( ANMCNT_WORK *work,
         }
       }
       
-      init_flag = TRUE;
       GF_ASSERT( work->next_walk_frmidx < 4 );
 		  GFL_BBDACT_SetAnimeIdx( actSys, actID, anm_idx );
       GFL_BBDACT_SetAnimeFrmIdx( actSys, actID, work->next_walk_frmidx );
