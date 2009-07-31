@@ -354,12 +354,22 @@ void FIELD_RAIL_MAN_SetLocation(FIELD_RAIL_MAN * man, const RAIL_LOCATION * loca
         if( line == NULL )
         {
           line = &man->rail_dat.line_table[ rail->point->lines[i] ];
-          line_ofs  = 0;
-          width_ofs = 0;
-          key       = rail->point->keys[i];
+          if( line->point_s == location->rail_index )
+          {
+            line_ofs  = 0;
+            width_ofs = 0;
+            key       = rail->point->keys[i];
+          }
+          else if( line->point_e == location->rail_index )
+          {
+            line_ofs  = getLineOfsMax( line, rail->ofs_unit, &man->rail_dat );
+            width_ofs = 0;
+            key       = rail->point->keys[i];
+          }
         }
         else
         {
+          // 複数候補がある場合には、最初に見つかったラインを使用します。
           OS_TPrintf( "rail::SetLocation Point ラインが複数あります。\n" );
         }
       }
@@ -380,6 +390,7 @@ void FIELD_RAIL_MAN_SetLocation(FIELD_RAIL_MAN * man, const RAIL_LOCATION * loca
   width_ofs_max = getLineWidthOfsMax( line, line_ofs, line_ofs_max, &man->rail_dat );
   setLineData( rail, line, key, line_ofs, width_ofs, line_ofs_max, width_ofs_max );
 
+  TOMOYA_Printf( "key %d\n", key );
 
   // 方向設定
   man->last_active_key |= RailKeyTokeyCont(key);
@@ -577,7 +588,6 @@ void FIELD_RAIL_MAN_Update(FIELD_RAIL_MAN * man, int key_cont)
         man->last_active_key |= PAD_BUTTON_B;
       }
       man->last_active_key |= RailKeyTokeyCont( set_key );
-
       man->last_way = set_key;
 		}
 

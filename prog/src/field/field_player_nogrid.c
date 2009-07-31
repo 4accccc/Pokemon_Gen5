@@ -80,7 +80,7 @@ void FIELD_PLAYER_NOGRID_Rail_SetUp( FIELD_PLAYER *fld_player, RAIL_KEY way, Vec
  *	@param	cp_camera			カメラ情報
  */
 //-----------------------------------------------------------------------------
-void FIELD_PLAYER_NOGRID_Rail_Move( FIELD_PLAYER *fld_player, FLDEFF_CTRL *fectrl, VecFx32* p_playerway, int key, const FIELD_CAMERA* cp_camera )
+void FIELD_PLAYER_NOGRID_Rail_Move( FIELD_PLAYER *fld_player, FLDEFF_CTRL *fectrl, VecFx32* p_playerway, int key, RAIL_KEY way, const FIELD_CAMERA* cp_camera )
 {
 	VecFx32 target;
 	VecFx32 camerapos;
@@ -147,8 +147,27 @@ void FIELD_PLAYER_NOGRID_Rail_Move( FIELD_PLAYER *fld_player, FLDEFF_CTRL *fectr
 
 	
 	// カメラの方向と主人公の方向から、向きを決定
-	if( !((p_playerway->x == p_playerway->z) && (p_playerway->x == p_playerway->y) && (p_playerway->x == 0)) )
+	if( (p_playerway->x == p_playerway->z) && (p_playerway->x == p_playerway->y) && (p_playerway->x == 0) )
 	{
+    if( way == RAIL_KEY_UP )
+    {
+      MMDL_SetDirDisp(fmmdl,DIR_UP);
+    }
+    else if( way == RAIL_KEY_DOWN )
+    {
+      MMDL_SetDirDisp(fmmdl,DIR_DOWN);
+    }
+    else if( way == RAIL_KEY_LEFT )
+    {
+      MMDL_SetDirDisp(fmmdl,DIR_LEFT);
+    }
+    else if( way == RAIL_KEY_RIGHT )
+    {
+      MMDL_SetDirDisp(fmmdl,DIR_RIGHT);
+    }
+  }
+  else
+  {
 		cos =  VEC_DotProduct( &pl_way, &camera_way );
 		VEC_CrossProduct( &pl_way, &camera_way, &cross );
 

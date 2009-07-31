@@ -171,13 +171,15 @@ static void mapCtrlNoGrid_Main( FIELDMAP_WORK *fieldWork, VecFx32 *pos )
     PLAYER_WORK *player = GAMEDATA_GetMyPlayerWork(
         GAMESYSTEM_GetGameData(FIELDMAP_GetGameSysWork(fieldWork)) );
 		int rail_action_key;
+    int way;
 
     FIELD_RAIL_MAN_GetPos(railMan, pos );
     FIELD_PLAYER_SetPos( fld_player, pos );
     PLAYERWORK_setPosition( player, pos );
 
 		rail_action_key = FIELD_RAIL_MAN_GetActionKey( railMan );
-		FIELD_PLAYER_NOGRID_Rail_Move( fld_player, FIELDMAP_GetFldEffCtrl(fieldWork), &work->player_way, rail_action_key, FIELDMAP_GetFieldCamera(fieldWork) );
+    way             = FIELD_RAIL_MAN_GetActionWay( railMan );
+		FIELD_PLAYER_NOGRID_Rail_Move( fld_player, FIELDMAP_GetFldEffCtrl(fieldWork), &work->player_way, rail_action_key, way, FIELDMAP_GetFieldCamera(fieldWork) );
   }
 	else
   {
