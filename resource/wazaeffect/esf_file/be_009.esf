@@ -6,8 +6,8 @@ C:\home\pokemon_wb\resource\particle\wazaeffect\be_ball_normal_1.spa
 C:\home\pokemon_wb\resource\particle\wazaeffect\w_157.spa
 #001
 %00
-パーティクルデータロード	be_m_ball_00_kaiten
 パーティクルデータロード	be_ball_normal_1
+パーティクルデータロード	be_m_ball_00_kaiten
 パーティクルデータロード	w_157
 SE再生	SEQ_SE_NAGERU	デフォルト	0	0	127	0	0
 パーティクル再生	be_m_ball_00_kaiten	BE_M_BALL_00_KAITEN_M_BALL_00_KAITEN		POS_BB	方向無し	4
@@ -33,6 +33,7 @@ SE再生	SEQ_SE_BOWA2	デフォルト	0	0	127	0	0
 パーティクル再生	w_157	W_157_157_IWA_KEMURI	POS_BB	方向無し	1	0
 ポケモン移動	POS_BB	追従	0	-3	10	0	0
 タイマーによるウエイト	5
+SE再生	SEQ_SE_W011_01	デフォルト	0	0	127	0	0
 射影モード	正射影
 カメラ移動（座標指定）	追従（相対指定）	0:1:0	0:1:0	2	0	0
 エフェクト終了待ち	カメラ
