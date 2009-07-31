@@ -1,7 +1,7 @@
 //////////////////////////////////////////////////////////////////////////////////////
 /**
- * @file   iss_unit.h
- * @brief  ISSユニット
+ * @file   iss_sys.h
+ * @brief  ISSシステム
  * @author obata_toshihiro
  * @date   2009.07.29
  */
@@ -11,47 +11,47 @@
 #include "gamesystem/game_data.h"
 
 
-// ISSユニット構造体の不完全型の宣言
-typedef struct _ISS_UNIT ISS_UNIT;
+// ISSシステム構造体の不完全型の宣言
+typedef struct _ISS_SYS ISS_SYS;
 
 
 //----------------------------------------------------------------------------
 /**
- * @brief  ISSユニットを作成する
+ * @brief  ISSシステムを作成する
  *
  * @param p_gdata	監視対象ゲームデータ
  * @param zone_id   ゾーンID
  * @param heap_id   使用するヒープID
  * 
- * @return ISSユニット
+ * @return ISSシステム
  */
 //----------------------------------------------------------------------------
-extern ISS_UNIT* ISS_UNIT_Create( GAMEDATA* p_gdata, u16 zone_id, HEAPID heap_id );
+extern ISS_SYS* ISS_SYS_Create( GAMEDATA* p_gdata, u16 zone_id, HEAPID heap_id );
 
 //----------------------------------------------------------------------------
 /**
- * @brief  ISSユニットを破棄する
+ * @brief  ISSシステムを破棄する
  *
- * @param p_unit 破棄するISSユニット 
+ * @param p_unit 破棄するISSシステム 
  */
 //----------------------------------------------------------------------------
-extern void ISS_UNIT_Delete( ISS_UNIT* p_unit );
+extern void ISS_SYS_Delete( ISS_SYS* p_unit );
 
 //----------------------------------------------------------------------------
 /**
  * @brief プレイヤーを監視し, 音量を調整する
  *
- * @param p_unit 操作対象のユニット
+ * @param p_unit 操作対象のシステム
  */
 //----------------------------------------------------------------------------
-extern void ISS_UNIT_Update( ISS_UNIT* p_unit );
+extern void ISS_SYS_Update( ISS_SYS* p_unit );
 
 //----------------------------------------------------------------------------
 /**
  * @brief ゾーン切り替えを通知する
  *
- * @param p_unit       通知対象のISSユニット
+ * @param p_unit       通知対象のISSシステム
  * @param next_zone_id 新しいゾーンID
  */
 //----------------------------------------------------------------------------
-void ISS_UNIT_ZoneChange( ISS_UNIT* p_unit, u16 next_zone_id );
+void ISS_SYS_ZoneChange( ISS_SYS* p_unit, u16 next_zone_id );

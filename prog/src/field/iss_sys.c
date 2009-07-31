@@ -1,12 +1,12 @@
 ///////////////////////////////////////////////////////////////////////////////////////////
 /**
- * @file   iss_unit.h
- * @brief  ISSユニット
+ * @file   iss_sys.h
+ * @brief  ISSシステム
  * @author obata_toshihiro
  * @date   2009.07.16
  */
 ///////////////////////////////////////////////////////////////////////////////////////////
-#include "iss_unit.h"
+#include "iss_sys.h"
 #include "iss_unit_city.h"
 #include "iss_unit_load.h"
 #include "field_sound.h"
@@ -28,7 +28,7 @@
  * @brief ISSシステムワーク
  */
 //=========================================================================================
-struct _ISS_UNIT
+struct _ISS_SYS
 {
 	// 使用するヒープID
 	HEAPID heapID;
@@ -42,7 +42,7 @@ struct _ISS_UNIT
 	// なみのり状態かどうか
 	BOOL surfing;
 
-	// 各ISSユニット
+	// 各ISSシステム
 	ISS_UNIT_CITY* pCityUnit;	// 街
 	ISS_UNIT_LOAD* pLoadUnit;	// 道路
 };
@@ -55,10 +55,10 @@ struct _ISS_UNIT
 //=========================================================================================
 
 // 主人公の自転車状態を監視する
-void CycleCheck( ISS_UNIT* p_sys );
+void CycleCheck( ISS_SYS* p_sys );
 
 // 主人公のなみのり状態を監視する
-void SurfingCheck( ISS_UNIT* p_sys );
+void SurfingCheck( ISS_SYS* p_sys );
 
 
 //=========================================================================================
@@ -69,25 +69,25 @@ void SurfingCheck( ISS_UNIT* p_sys );
 
 //----------------------------------------------------------------------------
 /**
- * @brief  ISSユニットを作成する
+ * @brief  ISSシステムを作成する
  *
  * @param p_gdata	監視対象ゲームデータ
  * @param zone_id   ゾーンID
  * @param heap_id   使用するヒープID
  * 
- * @return ISSユニット
+ * @return ISSシステム
  */
 //----------------------------------------------------------------------------
-ISS_UNIT* ISS_UNIT_Create( GAMEDATA* p_gdata, u16 zone_id, HEAPID heap_id )
+ISS_SYS* ISS_SYS_Create( GAMEDATA* p_gdata, u16 zone_id, HEAPID heap_id )
 {
-	ISS_UNIT* p_sys;
+	ISS_SYS* p_sys;
 	PLAYER_WORK* p_player;
 
 	// 監視対象の主人公を取得
 	p_player = GAMEDATA_GetMyPlayerWork( p_gdata );
 
 	// メモリ確保
-	p_sys = (ISS_UNIT*)GFL_HEAP_AllocMemory( heap_id, sizeof( ISS_UNIT ) );
+	p_sys = (ISS_SYS*)GFL_HEAP_AllocMemory( heap_id, sizeof( ISS_SYS ) );
 
 	// 初期設定
 	p_sys->heapID      = heap_id;
@@ -96,48 +96,48 @@ ISS_UNIT* ISS_UNIT_Create( GAMEDATA* p_gdata, u16 zone_id, HEAPID heap_id )
 	p_sys->surfing     = FALSE;
 	p_sys->pCityUnit   = ISS_UNIT_CITY_Create( p_player, zone_id, heap_id );
 	p_sys->pLoadUnit   = ISS_UNIT_LOAD_Create( p_player, zone_id, heap_id );
-	ISS_UNIT_ZoneChange( p_sys, zone_id );
+	ISS_SYS_ZoneChange( p_sys, zone_id );
 	
-	// 作成したISSユニットを返す
+	// 作成したISSシステムを返す
 	return p_sys;
 }
 
 //----------------------------------------------------------------------------
 /**
- * @brief  ISSユニットを破棄する
- * * @param p_unit 破棄するISSユニット 
+ * @brief  ISSシステムを破棄する
+ * * @param p_sys 破棄するISSシステム 
  */
 //----------------------------------------------------------------------------
-void ISS_UNIT_Delete( ISS_UNIT* p_unit )
+void ISS_SYS_Delete( ISS_SYS* p_sys )
 {
-	// 各ISSユニットを破棄
-	ISS_UNIT_CITY_Delete( p_unit->pCityUnit );
-	ISS_UNIT_LOAD_Delete( p_unit->pLoadUnit );
+	// 各ISSシステムを破棄
+	ISS_UNIT_CITY_Delete( p_sys->pCityUnit );
+	ISS_UNIT_LOAD_Delete( p_sys->pLoadUnit );
 
 	// 本体を破棄
-	GFL_HEAP_FreeMemory( p_unit );
+	GFL_HEAP_FreeMemory( p_sys );
 }
 
 //----------------------------------------------------------------------------
 /**
  * @brief プレイヤーを監視し, 音量を調整する
  *
- * @param p_unit 操作対象のユニット
+ * @param p_sys 操作対象のシステム
  */
 //----------------------------------------------------------------------------
-void ISS_UNIT_Update( ISS_UNIT* p_unit )
+void ISS_SYS_Update( ISS_SYS* p_sys )
 {
 	// 自転車チェック
-	CycleCheck( p_unit );
+	CycleCheck( p_sys );
 
 	// なみのりチェック
-	SurfingCheck( p_unit );
+	SurfingCheck( p_sys );
 
 	// 街ISS
-	ISS_UNIT_CITY_Update( p_unit->pCityUnit );
+	ISS_UNIT_CITY_Update( p_sys->pCityUnit );
 
 	// 道路ISS
-	ISS_UNIT_LOAD_Update( p_unit->pLoadUnit );
+	ISS_UNIT_LOAD_Update( p_sys->pLoadUnit );
 }
 	
 
@@ -145,11 +145,11 @@ void ISS_UNIT_Update( ISS_UNIT* p_unit )
 /**
  * @brief ゾーン切り替えを通知する
  *
- * @param p_unit       通知対象のISSユニット
+ * @param p_sys       通知対象のISSシステム
  * @param next_zone_id 新しいゾーンID
  */
 //---------------------------------------------------------------------------
-void ISS_UNIT_ZoneChange( ISS_UNIT* p_unit, u16 next_zone_id )
+void ISS_SYS_ZoneChange( ISS_SYS* p_sys, u16 next_zone_id )
 {
 	PLAYER_WORK*     p_player;
 	PLAYER_MOVE_FORM form;
@@ -158,32 +158,32 @@ void ISS_UNIT_ZoneChange( ISS_UNIT* p_unit, u16 next_zone_id )
 	int              iss_type;
 
 	// 自転車orなみのり中なら, ISSに変更はない
-	if( p_unit->cycle | p_unit->surfing ) return;
+	if( p_sys->cycle | p_sys->surfing ) return;
 
 	// 各オブジェクトを取得
-	p_player       = GAMEDATA_GetMyPlayerWork( p_unit->pGameData );
+	p_player       = GAMEDATA_GetMyPlayerWork( p_sys->pGameData );
 	form           = PLAYERWORK_GetMoveForm( p_player );
-	p_bgm_info_sys = GAMEDATA_GetBGMInfoSys( p_unit->pGameData );
+	p_bgm_info_sys = GAMEDATA_GetBGMInfoSys( p_sys->pGameData );
 
 	// 切り替え先ゾーンのISSタイプを取得
-	bgm_index = FIELD_SOUND_GetFieldBGMNo( p_unit->pGameData, form, next_zone_id );
+	bgm_index = FIELD_SOUND_GetFieldBGMNo( p_sys->pGameData, form, next_zone_id );
 	iss_type  = BGM_INFO_GetIssType( p_bgm_info_sys, bgm_index );
 
 	// 街ISS
-	ISS_UNIT_CITY_ZoneChange( p_unit->pCityUnit, next_zone_id );
+	ISS_UNIT_CITY_ZoneChange( p_sys->pCityUnit, next_zone_id );
 
 	// 道路ISS
 	if( iss_type == ISS_TYPE_LOAD )
 	{
-		ISS_UNIT_LOAD_SetActive( p_unit->pLoadUnit, TRUE );
+		ISS_UNIT_LOAD_SetActive( p_sys->pLoadUnit, TRUE );
 	}
 	else
 	{
-		ISS_UNIT_LOAD_SetActive( p_unit->pLoadUnit, FALSE );
+		ISS_UNIT_LOAD_SetActive( p_sys->pLoadUnit, FALSE );
 	}
 
 	// DEBUG:
-	OBATA_Printf( "ISS_UNIT_ZoneChange()\n" );
+	OBATA_Printf( "ISS_SYS_ZoneChange()\n" );
 	OBATA_Printf( "seq = %d, iss_type = %d\n", bgm_index, iss_type );
 }
 
@@ -199,7 +199,7 @@ void ISS_UNIT_ZoneChange( ISS_UNIT* p_unit, u16 next_zone_id )
  * @brief 主人公の自転車状態を監視する
  */
 //----------------------------------------------------------------------------
-void CycleCheck( ISS_UNIT* p_sys )
+void CycleCheck( ISS_SYS* p_sys )
 {
 	PLAYER_WORK*     p_player;
 	PLAYER_MOVE_FORM form;
@@ -220,7 +220,7 @@ void CycleCheck( ISS_UNIT* p_sys )
 	if( ( p_sys->cycle == TRUE ) && ( form != PLAYER_MOVE_FORM_CYCLE ) )
 	{
 		p_sys->cycle = FALSE;
-		ISS_UNIT_ZoneChange( p_sys, PLAYERWORK_getZoneID( p_player ) );
+		ISS_SYS_ZoneChange( p_sys, PLAYERWORK_getZoneID( p_player ) );
 	}
 }
 
@@ -229,7 +229,7 @@ void CycleCheck( ISS_UNIT* p_sys )
  * @brief 主人公のなみのり状態を監視する
  */
 //----------------------------------------------------------------------------
-void SurfingCheck( ISS_UNIT* p_sys )
+void SurfingCheck( ISS_SYS* p_sys )
 {
 	PLAYER_WORK*     p_player;
 	PLAYER_MOVE_FORM form;
@@ -250,6 +250,6 @@ void SurfingCheck( ISS_UNIT* p_sys )
 	if( ( p_sys->surfing == TRUE ) && ( form != PLAYER_MOVE_FORM_SWIM ) )
 	{
 		p_sys->surfing = FALSE;
-		ISS_UNIT_ZoneChange( p_sys, PLAYERWORK_getZoneID( p_player ) );
+		ISS_SYS_ZoneChange( p_sys, PLAYERWORK_getZoneID( p_player ) );
 	}
 }
