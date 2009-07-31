@@ -587,14 +587,14 @@ static	void	MCSS_DrawAct( MCSS_WORK *mcss,
 	G3_Vtx( 0, -MCSS_DEFAULT_LINE, 0 );
 	G3_End();
 
-  if( mcss->shadow_vanish_flag == 0 )
-  { 
   //‰e•`‰æ
  	G3_MtxMode( GX_MTXMODE_PROJECTION );
  	G3_RestoreMtx( 0 );
  	G3_MtxMode( GX_MTXMODE_POSITION_VECTOR );
  	G3_RestoreMtx( MCSS_SHADOW_MTX );
 
+  if( mcss->shadow_vanish_flag == 0 )
+  { 
  	G3_TexPlttBase( shadow_palette->vramLocation.baseAddrOfVram[NNS_G2D_VRAM_TYPE_3DMAIN], shadow_palette->fmt);
  	G3_PolygonAttr( GX_LIGHTMASK_NONE,				// no lights
        				    GX_POLYGONMODE_MODULATE,	// modulation mode
