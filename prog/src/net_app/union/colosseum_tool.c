@@ -36,18 +36,18 @@ typedef struct{
 //--------------------------------------------------------------
 //  立ち位置座標
 //--------------------------------------------------------------
-///1vs1の時の立ち位置座標
+///1vs1の時の立ち位置座標(グリッド座標)
 static const POINT_S16 ColosseumStandingPos_1vs1[] = {
-  {72, 88},   //左
-  {136, 88},  //右
+  {4, 5},   //左
+  {8, 5},  //右
 };
 
-///マルチの時の立ち位置座標
+///マルチの時の立ち位置座標(グリッド座標)
 static const POINT_S16 ColosseumStandingPos_multi[] = {
-  {72, 72},       //左上
-  {136, 72},      //右上
-  {72, 104},      //左下
-  {136, 104},     //右下
+  {4, 4},     //左上
+  {8, 4},     //右上
+  {4, 6},     //左下
+  {8, 6},     //右下
 };
 
 //--------------------------------------------------------------
@@ -207,18 +207,20 @@ void ColosseumTool_Clear_ReceiveStandingPos(COLOSSEUM_SYSTEM_PTR clsys)
 //==================================================================
 BOOL ColosseumTool_CheckStandingPosition(FIELD_MAIN_WORK *fieldWork, int entry_num, int *stand_pos)
 {
-  VecFx32 pos;
   FIELD_PLAYER * player = FIELDMAP_GetFieldPlayer(fieldWork);
   int i;
+  s16 grid_x, grid_z;
+  MMDL *player_mmdl;
   
   *stand_pos = 0;
   
-  FIELD_PLAYER_GetPos(player, &pos);
-  pos.x >>= FX32_SHIFT;
-  pos.z >>= FX32_SHIFT;
+  player_mmdl = FIELD_PLAYER_GetMMdl( player );
+  grid_x = MMDL_GetGridPosX(player_mmdl);
+  grid_z = MMDL_GetGridPosZ(player_mmdl);
+
   if(entry_num == 2){
     for(i = 0; i < NELEMS(ColosseumStandingPos_1vs1); i++){
-      if(pos.x == ColosseumStandingPos_1vs1[i].x && pos.z == ColosseumStandingPos_1vs1[i].z){
+      if(grid_x == ColosseumStandingPos_1vs1[i].x && grid_z == ColosseumStandingPos_1vs1[i].z){
         *stand_pos = i;
         return TRUE;
       }
@@ -226,7 +228,7 @@ BOOL ColosseumTool_CheckStandingPosition(FIELD_MAIN_WORK *fieldWork, int entry_n
   }
   else{
     for(i = 0; i < NELEMS(ColosseumStandingPos_multi); i++){
-      if(pos.x == ColosseumStandingPos_multi[i].x && pos.z == ColosseumStandingPos_multi[i].z){
+      if(grid_x == ColosseumStandingPos_multi[i].x && grid_z == ColosseumStandingPos_multi[i].z){
         *stand_pos = i;
         return TRUE;
       }
