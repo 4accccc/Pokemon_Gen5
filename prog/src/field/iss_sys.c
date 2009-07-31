@@ -14,6 +14,7 @@
 #include "../../../resource/sound/bgm_info/iss_type.h"
 #include "gamesystem/playerwork.h"
 #include "gamesystem/game_data.h"
+#include "sound/pm_sndsys.h" // TEST:
 
 
 //=========================================================================================
@@ -116,6 +117,9 @@ void ISS_SYS_Delete( ISS_SYS* p_sys )
 
 	// 本体を破棄
 	GFL_HEAP_FreeMemory( p_sys );
+
+	// 9, 10トラックの音量を元に戻す
+	FIELD_SOUND_ChangeBGMActionVolume( 127 );
 }
 
 //----------------------------------------------------------------------------
@@ -138,6 +142,20 @@ void ISS_SYS_Update( ISS_SYS* p_sys )
 
 	// 道路ISS
 	ISS_ROAD_SYS_Update( p_sys->pIssRoadSys );
+
+
+	// TEST:
+	{ 
+		if( PMSND_CheckPlayBGM() )
+		{
+			OBATA_Printf( "---BGM実行中---\n" );
+		}
+
+		if( PMSND_CheckFadeOnBGM() )
+		{
+			OBATA_Printf( "===BGMフェード実行中===\n" ); 
+		}
+	}
 }
 	
 
