@@ -24,13 +24,27 @@
 //	struct
 //======================================================================
 //--------------------------------------------------------------
+/// ANMCNT_WORK
+//--------------------------------------------------------------
+typedef struct
+{
+  u8 set_anm_dir;
+  u8 set_anm_status;
+  u8 next_walk_frmidx;
+  u8 dmy;
+}ANMCNT_WORK;
+
+//--------------------------------------------------------------
 ///	DRAW_BLACT_WORK
 //--------------------------------------------------------------
 typedef struct
 {
-	GFL_BBDACT_ACTUNIT_ID actID;
+	u16 actID;
 	u8 set_anm_dir;
 	u8 set_anm_status;
+  
+  ANMCNT_WORK anmcnt_work;
+
 #if 0
   fx32 TestScale;
   fx32 TestScaleAdd;
@@ -40,6 +54,86 @@ typedef struct
 //======================================================================
 //	proto
 //======================================================================
+static void blactAnmControl_Init( ANMCNT_WORK *work )
+{
+  MI_CpuClear8( work, sizeof(ANMCNT_WORK) );
+}
+
+static void blactAnmControl_Update( ANMCNT_WORK *work,
+    MMDL *mmdl, GFL_BBDACT_SYS *actSys, u16 actID )
+{
+  u16 init_flag = FALSE;
+  u16 dir = MMDL_GetDirDisp( mmdl );
+  u16 status = MMDL_GetDrawStatus( mmdl );
+  u16 anm_idx = (status * DIR_MAX4) + dir;
+  
+  if( dir != work->set_anm_dir ) //方向更新
+  {
+    init_flag = TRUE;
+    work->set_anm_dir = dir;
+    work->set_anm_status = status;
+    work->next_walk_frmidx = 0;
+		GFL_BBDACT_SetAnimeIdx( actSys, actID, anm_idx );
+  }
+  else if( status != work->set_anm_status ) //ステータス更新
+  {
+    if( status == DRAW_STA_STOP ) //停止タイプ
+    {
+      work->next_walk_frmidx = GFL_BBDACT_GetAnimeFrmIdx( actSys, actID );
+      
+      {
+        u8 tbl[4] = {0,2,2,0};
+        
+        if( work->next_walk_frmidx >= 4 ){
+          work->next_walk_frmidx = 0;
+        }
+        
+        work->next_walk_frmidx = tbl[work->next_walk_frmidx];
+      }
+      
+		  GFL_BBDACT_SetAnimeIdx( actSys, actID, anm_idx );
+    }
+    else //歩きタイプ
+    {
+      if( work->set_anm_status != DRAW_STA_STOP ) //移動系アニメを行っていた
+      {
+        work->next_walk_frmidx =
+          GFL_BBDACT_GetAnimeFrmIdx( actSys, actID );
+        
+        if( work->next_walk_frmidx >= 2 )
+        {
+          work->next_walk_frmidx = 0;
+        }
+        else
+        {
+          work->next_walk_frmidx = 2;
+        }
+      }
+      
+      init_flag = TRUE;
+      GF_ASSERT( work->next_walk_frmidx < 4 );
+		  GFL_BBDACT_SetAnimeIdx( actSys, actID, anm_idx );
+      GFL_BBDACT_SetAnimeFrmIdx( actSys, actID, work->next_walk_frmidx );
+    }
+    
+    work->set_anm_status = status;
+  }
+  
+  {
+		BOOL flag = TRUE;
+    
+		if( init_flag == FALSE && MMDL_CheckDrawPause(mmdl) == TRUE ){
+			flag = FALSE;
+		}
+		GFL_BBDACT_SetAnimeEnable( actSys, actID, flag );
+    
+    flag = TRUE; 
+    if( MMDL_CheckStatusBitVanish(mmdl) == TRUE ){
+      flag = FALSE;
+    }
+    GFL_BBDACT_SetDrawEnable( actSys, actID, flag );
+	}
+}
 
 //======================================================================
 //	描画処理　描画無し
@@ -134,7 +228,8 @@ static void DrawHero_Init( MMDL *mmdl )
 	work->set_anm_dir = DIR_NOT;
   
   code = MMDL_GetOBJCode( mmdl );
-  
+  blactAnmControl_Init( &work->anmcnt_work );
+
 	if( MMDL_BLACTCONT_AddActor(mmdl,code,&work->actID) == TRUE ){
     MMDL_CallDrawProc( mmdl );
   }
@@ -160,6 +255,13 @@ static void DrawHero_Delete( MMDL *mmdl )
 	MMDL_BLACTCONT_DeleteActor( mmdl, work->actID );
 }
 
+#if 0
+void	GFL_BBDACT_SetAnimeIdx(
+    GFL_BBDACT_SYS* bbdActSys, u16 actIdx, u16 animeIdx );
+void	GFL_BBDACT_SetAnimeFrmIdx(
+    GFL_BBDACT_SYS* bbdActSys, u16 actIdx, u16 animeFrmIdx )
+#endif
+
 //--------------------------------------------------------------
 /**
  * 描画処理　ビルボード　自機専用　描画
@@ -167,6 +269,29 @@ static void DrawHero_Delete( MMDL *mmdl )
  * @retval	nothing
  */
 //--------------------------------------------------------------
+static void DrawHero_Draw( MMDL *mmdl )
+{
+	VecFx32 pos;
+	DRAW_BLACT_WORK *work;
+	GFL_BBDACT_SYS *actSys;
+	
+	work = MMDL_GetDrawProcWork( mmdl );
+  
+  if( work->actID == MMDL_BLACTID_NULL ){ //未登録
+    return;
+  }
+  
+	actSys = MMDL_BLACTCONT_GetBbdActSys( MMDL_GetBlActCont(mmdl) );
+	blactAnmControl_Update( &work->anmcnt_work, mmdl, actSys, work->actID );
+  
+	MMDL_GetDrawVectorPos( mmdl, &pos );
+	pos.y += MMDL_BBD_OFFS_POS_Y;
+  pos.z += MMDL_BBD_OFFS_POS_Z;
+  GFL_BBD_SetObjectTrans(
+		GFL_BBDACT_GetBBDSystem(actSys), work->actID, &pos );
+}
+
+#if 0
 static void DrawHero_Draw( MMDL *mmdl )
 {
 	VecFx32 pos;
@@ -186,6 +311,7 @@ static void DrawHero_Draw( MMDL *mmdl )
 	dir = MMDL_GetDirDisp( mmdl );
 	status = MMDL_GetDrawStatus( mmdl );
 	GF_ASSERT( status < DRAW_STA_MAX_HERO );
+  
 	anm_id = status * DIR_MAX4;
 	anm_id += dir;
 	
@@ -277,6 +403,7 @@ static void DrawHero_Draw( MMDL *mmdl )
   }
 #endif
 }
+#endif
 
 //--------------------------------------------------------------
 /**
@@ -336,9 +463,16 @@ static void DrawCycleHero_Draw( MMDL *mmdl )
 	dir = MMDL_GetDirDisp( mmdl );
 	status = MMDL_GetDrawStatus( mmdl );
 	GF_ASSERT( status < DRAW_STA_MAX_HERO );
+
+#if 0  //無理
+  if( status == DRAW_STA_WALK_4F ){ //090731 速度は4Fだが8Fで見せたいと要望
+    status = DRAW_STA_WALK_8F;
+  }
+#endif
+
 	anm_id = status * DIR_MAX4;
 	anm_id += dir;
-	
+  
 	if( work->set_anm_dir != dir ){ //方向更新
 		work->set_anm_dir = dir;
 		work->set_anm_status = status;
@@ -509,6 +643,7 @@ static void DrawBlAct_Init( MMDL *mmdl )
 	work->set_anm_dir = DIR_NOT;
   
   code = MMDL_GetOBJCode( mmdl );
+  blactAnmControl_Init( &work->anmcnt_work );
 
 	if( MMDL_BLACTCONT_AddActor(mmdl,code,&work->actID) == TRUE ){
     MMDL_CallDrawProc( mmdl );
@@ -536,6 +671,29 @@ static void DrawBlAct_Delete( MMDL *mmdl )
  * @retval	nothing
  */
 //--------------------------------------------------------------
+static void DrawBlAct_Draw( MMDL *mmdl )
+{
+	VecFx32 pos;
+	DRAW_BLACT_WORK *work;
+	GFL_BBDACT_SYS *actSys;
+	
+	work = MMDL_GetDrawProcWork( mmdl );
+  
+  if( work->actID == MMDL_BLACTID_NULL ){ //未登録
+    return;
+  }
+  
+	actSys = MMDL_BLACTCONT_GetBbdActSys( MMDL_GetBlActCont(mmdl) );
+	blactAnmControl_Update( &work->anmcnt_work, mmdl, actSys, work->actID );
+  
+	MMDL_GetDrawVectorPos( mmdl, &pos );
+	pos.y += MMDL_BBD_OFFS_POS_Y;
+  pos.z += MMDL_BBD_OFFS_POS_Z;
+  GFL_BBD_SetObjectTrans(
+		GFL_BBDACT_GetBBDSystem(actSys), work->actID, &pos );
+}
+
+#if 0
 static void DrawBlAct_Draw( MMDL *mmdl )
 {
 	VecFx32 pos;
@@ -605,6 +763,7 @@ static void DrawBlAct_Draw( MMDL *mmdl )
     GFL_BBDACT_SetDrawEnable( actSys, work->actID, flag );
 	}
 }
+#endif
 
 //--------------------------------------------------------------
 /**
