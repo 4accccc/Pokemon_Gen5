@@ -385,13 +385,23 @@ static GMEVENT_RESULT FldMapMenuEvent( GMEVENT *event, int *seq, void *wk )
     break;
     
   case FMENUSTATE_FIELD_OPEN:
+    {
+      GAMESYS_WORK *gameSys = GMEVENT_GetGameSysWork( event );
+      GAMEDATA *gameData = GAMESYSTEM_GetGameData( gameSys );
+      GAMEDATA_SetSubScreenMode(gameData,mwk->return_subscreen_mode);//FIELD_SUBSCREEN_NORMAL);
+    }
 		GMEVENT_CallEvent(event, EVENT_FieldOpen(mwk->gmSys));
     mwk->state = FMENUSTATE_FIELD_FADEIN;
     break;
     
   case FMENUSTATE_FIELD_FADEIN:
 		GMEVENT_CallEvent(event, EVENT_FieldFadeIn(mwk->gmSys, mwk->fieldWork, 0));
-    mwk->state = FMENUSTATE_RETURN_MENU;
+    if(mwk->return_subscreen_mode == FIELD_SUBSCREEN_NORMAL){
+      mwk->state = FMENUSTATE_EXIT_MENU;
+    }
+    else{
+      mwk->state = FMENUSTATE_RETURN_MENU;
+    }
     break;
 
   case FMENUSTATE_CALL_SUB_PROC:
@@ -768,9 +778,11 @@ static const BOOL FMenuReturnProc_Bag(FMENU_EVENT_WORK* mwk)
   
   switch( pBag->ret_code )
   {
-  case BAG_NEXTPROC_EXIT:      // 通常
+  case BAG_NEXTPROC_EXIT:      //CGEARもどり
+    mwk->return_subscreen_mode = FIELD_SUBSCREEN_NORMAL;
     return FALSE;
-  case BAG_NEXTPROC_RETURN:      // 通常
+  case BAG_NEXTPROC_RETURN:      // めにゅーもどり
+    mwk->return_subscreen_mode = FIELD_SUBSCREEN_TOPMENU;
     return FALSE;
   case BAG_NEXTPROC_WAZASET:
   case BAG_NEXTPROC_ITEMEQUIP:  //装備　アイテムリストに戻る
