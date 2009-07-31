@@ -194,6 +194,9 @@ struct _BTLV_GAUGE_WORK
 
   BTLV_GAUGE_CLWK bgcl[ BTLV_GAUGE_CLWK_MAX ];
 
+  u32             vanish_flag :1;
+  u32                         :31;
+
   HEAPID          heapID;
 };
 
@@ -541,6 +544,19 @@ BOOL  BTLV_GAUGE_CheckExecute( BTLV_GAUGE_WORK *bgw )
     }
   }
   return FALSE;
+}
+
+//============================================================================================
+/**
+ *  @brief  ゲージ表示/非表示
+ *
+ *  @param[in] bgw    BTLV_GAUGE_WORK管理構造体へのポインタ
+ *  @param[in] on_off TRUE:表示 FALSE:非表示
+ */
+//============================================================================================
+void  BTLV_GAUGE_SetDrawEnable( BTLV_GAUGE_WORK* bgw, BOOL on_off )
+{ 
+  GFL_CLACT_UNIT_SetDrawEnable( bgw->clunit, on_off );
 }
 
 //--------------------------------------------------------------
