@@ -450,11 +450,13 @@ static BOOL OneselfSeq_NormalUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION 
   }
 
   if(GFL_NET_GetConnectNum() > 1){
-    GF_ASSERT_MSG(0, "Normalなのに接続！！！！\n");
+//    GF_ASSERT_MSG(0, "Normalなのに接続！！！！\n");
+    OS_TPrintf("Normalなのに接続！！！！\n");
     //※check　暫定で先頭のビーコンデータを接続相手として代入しておく
     //         本来であればNormalで接続は出来ないようにする
     UnionOneself_ReqStatus(unisys, UNION_STATUS_TALK_PARENT);
-    UnionMySituation_SetParam(unisys, UNION_MYSITU_PARAM_IDX_CONNECT_PC, &unisys->receive_beacon[0]);
+    UnionMySituation_SetParam(unisys, UNION_MYSITU_PARAM_IDX_CONNECT_PC, situ->last_calling_pc);
+    _PlayerMinePause(unisys, fieldWork, TRUE);
     return TRUE;
   }
   
@@ -473,6 +475,7 @@ static BOOL OneselfSeq_NormalUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION 
       if(unisys->receive_beacon[buf_no].beacon.play_category == UNION_PLAY_CATEGORY_UNION){
         UnionMySituation_SetParam(unisys, 
           UNION_MYSITU_PARAM_IDX_CALLING_PC, &unisys->receive_beacon[buf_no]);
+        situ->last_calling_pc = &unisys->receive_beacon[buf_no];
         UnionOneself_ReqStatus(unisys, UNION_STATUS_CONNECT_REQ);
       }
       else{

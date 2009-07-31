@@ -317,6 +317,7 @@ typedef struct{
   u8 next_union_status;       ///<次に実行するプレイヤーの状況(UNION_STATUS_???)
   u8 func_proc;
   u8 func_seq;
+  UNION_BEACON_PC *last_calling_pc; ///<最後に話しかけた人のポインタ  ※check　暫定処理
 }UNION_MY_SITUATION;
 
 //--------------------------------------------------------------
