@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-07-14T12:08:07"/>
+	<create user="matsumiya" host="W00207" date="2009-07-31T11:52:47"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -302,19 +302,19 @@
 たたかうときに　きびしいぞ！</language>
 		<language name="JPN_KANJI" width="256">６匹　連れ歩ける　ポケモンだが[BE:01:ページ切り替え（クリア）]
 同じ　タイプばかり　そろえると
-苦手な　タイプの　ポケモンと[BE:00:ページ切り替え（行送り）]
-戦うときに　きびしいぞ！</language>
+苦手タイプの　ポケモンとの[BE:00:ページ切り替え（行送り）]
+勝負は　きびしく　なるだろうな！</language>
 	</row>
 
 	<row id="msg_c01r0302_breederw_01">
 		<comment>？？？</comment>
 		<attribute name="キャラ指定">BREEDERW
 ブリーダー♀</attribute>
-		<language name="JPN" width="256">６ひきを　まんべんなく
+		<language name="JPN" width="256">ポケモン　６ひきを　まんべんなく
 そだてるのは　たいへん　だから[BE:01:ページ切り替え（クリア）]
 ３びきくらいを　じゅうてんてきに
 そだてている　トレーナーも　いるってよ</language>
-		<language name="JPN_KANJI" width="256">６匹を　満遍なく
+		<language name="JPN_KANJI" width="256">ポケモン　６匹を　満遍なく
 育てるのは　大変だから[BE:01:ページ切り替え（クリア）]
 ３匹くらいを　重点的に
 育てている　トレーナーも　いるってよ</language>
@@ -327,7 +327,7 @@
 		<attribute name="キャラ指定">ポケモン
 ・未定</attribute>
 		<language name="JPN" width="256">ポケモン『？？？</language>
-		<language name="JPN_KANJI" width="256">ポケモン『？？？</language>
+		<language name="JPN_KANJI" width="256">ポケモン『ぴかぴかー！</language>
 	</row>
 
 	<row id="msg_c01r0302_poke2_01">
@@ -337,7 +337,7 @@
 		<attribute name="キャラ指定">ポケモン
 ・未定</attribute>
 		<language name="JPN" width="256">ポケモン『？？？</language>
-		<language name="JPN_KANJI" width="256">ポケモン『？？？</language>
+		<language name="JPN_KANJI" width="256">ポケモン『ぷかぷかー！</language>
 	</row>
 
 	<flowchart-group-list>
