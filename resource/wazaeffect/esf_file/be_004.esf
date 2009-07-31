@@ -10,7 +10,6 @@ C:\home\pokemon_wb\resource\particle\wazaeffect\w_157.spa
 パーティクルデータロード	be_ball_normal_1
 パーティクルデータロード	be_m_ball_00_kaiten
 パーティクルデータロード	w_157
-タイマーによるウエイト	25
 トレーナーアニメセット	0	1
 タイマーによるウエイト	20
 SE再生	SEQ_SE_NAGERU	デフォルト	0	0	127	0	0
@@ -23,6 +22,8 @@ SE再生	SEQ_SE_BOWA2	デフォルト	0	0	127	0	0
 パーティクル再生	be_ball_normal_1	BE_BALL_NORMAL_1_BALL_NORMAL_1	POS_AA	方向無し	4	0
 パーティクル再生	be_ball_normal_1	BE_BALL_NORMAL_1_BALL_NORMAL_2	POS_AA	方向無し	4	0
 パーティクル再生	be_ball_normal_1	BE_BALL_NORMAL_1_BALL_NORMAL_3	POS_AA	方向無し	4	0
+ポケモンアニメ	POS_AA	アニメストップ
+ポケモン影バニッシュ	POS_AA	バニッシュオン
 ポケモンパレットフェード	POS_AA	16	16	0	31:31:31
 ポケモン拡縮	POS_AA	追従	0.7	0.7	32	0	0
 トレーナー削除	8
@@ -43,6 +44,8 @@ SE再生	SEQ_SE_BOWA2	デフォルト	0	0	127	0	0
 エフェクト終了待ち	カメラ
 カメラ移動（座標指定）	追従（相対指定）	0:-1:0	0:-1:0	2	0	0
 エフェクト終了待ち	カメラ
+ポケモンアニメ	POS_AA	アニメスタート
+ポケモン影バニッシュ	POS_AA	バニッシュオフ
 タイマーによるウエイト	5
 制御モード変更	継続
 カメラ移動	追従	初期位置	10	0	8
