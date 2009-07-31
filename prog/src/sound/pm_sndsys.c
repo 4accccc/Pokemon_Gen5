@@ -620,6 +620,10 @@ static void PMSND_CancelSystemFadeBGM( void )
 	if(fadeStatus.active == TRUE){
 		u32	nowSoundIdx = SOUNDMAN_GetHierarchyPlayerSoundIdx();
 		if( nowSoundIdx != fadeStatus.nextSoundIdx ){
+			while(fadeStatus.seq != 0){
+				PMSND_SystemFadeBGM();
+				OS_Printf("ƒTƒEƒ“ƒh“Ç‚İ‚İ‚ªŠ®—¹‚µ‚Ä‚¢‚È‚¢‚Ì‚Éˆê’â~‚âŠK‘w‘€ì‚ğ‚µ‚æ‚¤‚Æ‚µ‚Ä‚¢‚é\n");
+			}
 			PMSND_PlayBGM_EX(fadeStatus.nextSoundIdx, fadeStatus.nextTrackBit);
 		}
 		PMSND_ResetSystemFadeBGM();
