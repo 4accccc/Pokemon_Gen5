@@ -837,7 +837,7 @@ static void PLIST_InitMode_Select( PLIST_WORK *work )
   case PL_MODE_BATTLE:
 //    PLIST_MSG_OpenWindow( work , work->msgWork , PMT_BAR );
 //    PLIST_MSG_DrawMessageNoWait( work , work->msgWork , mes_pokelist_02_06 );
-    GFL_CLACT_WK_SetDrawEnable( work->clwkBarIcon[PBT_RETURN] , TRUE );
+    GFL_CLACT_WK_SetDrawEnable( work->clwkBarIcon[PBT_RETURN] , FALSE );
     work->canExit = FALSE;
     break;
     
@@ -1041,10 +1041,12 @@ static void PLIST_SelectPokeInit( PLIST_WORK *work )
   //ƒoƒgƒ‹ˆ—
   if( PLIST_UTIL_IsBattleMenu(work) == TRUE )
   {
+    GFL_CLACT_WK_SetDrawEnable( work->clwkBarIcon[PBT_RETURN] , FALSE );
+
     work->btlMenuWin[0] = PLIST_MENU_CreateMenuWin_BattleMenu( work , work->menuWork ,
-                              mes_pokelist_01_01 , PLIST_BATTLE_BUTTON_DECIDE_X , PLIST_BATTLE_BUTTON_DECIDE_Y );
+                              mes_pokelist_01_01 , PLIST_BATTLE_BUTTON_DECIDE_X , PLIST_BATTLE_BUTTON_DECIDE_Y , FALSE );
     work->btlMenuWin[1] = PLIST_MENU_CreateMenuWin_BattleMenu( work , work->menuWork ,
-                              mes_pokelist_01_02 , PLIST_BATTLE_BUTTON_CANCEL_X , PLIST_BATTLE_BUTTON_CANCEL_Y );
+                              mes_pokelist_01_02 , PLIST_BATTLE_BUTTON_CANCEL_X , PLIST_BATTLE_BUTTON_CANCEL_Y , TRUE );
   }
 }
 

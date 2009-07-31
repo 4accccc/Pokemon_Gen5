@@ -14,9 +14,11 @@
 
 #include "arc_def.h"
 #include "pokelist_gra.naix"
+#include "app_menu_common.naix"
 #include "message.naix"
 #include "msg/msg_pokelist.h"
 #include "msg/msg_wazaname.h"
+#include "app/app_menu_common.h"
 
 #include "print/wordset.h"
 #include "system/bmp_winframe.h"
@@ -95,7 +97,9 @@ PLIST_MENU_WORK* PLIST_MENU_CreateSystem( PLIST_WORK *work )
   u8 i;
   PLIST_MENU_WORK* menuWork = GFL_HEAP_AllocMemory( work->heapId , sizeof( PLIST_MENU_WORK ) );
   //プレートの土台の絵
-  menuWork->ncgRes = GFL_ARC_UTIL_LoadBGCharacter( ARCID_POKELIST , NARC_pokelist_gra_list_sel_NCGR , FALSE , 
+  GFL_ARC_UTIL_TransVramPalette( APP_COMMON_GetArcId() , NARC_app_menu_common_task_menu_NCLR , 
+                    PALTYPE_MAIN_BG , PLIST_BG_PLT_MENU_ACTIVE*32 , 32*2 , work->heapId );
+  menuWork->ncgRes = GFL_ARC_UTIL_LoadBGCharacter( APP_COMMON_GetArcId() , NARC_app_menu_common_task_menu_NCGR , FALSE , 
                     &menuWork->ncgData , work->heapId );
   return menuWork;
 }
@@ -338,7 +342,7 @@ static STRBUF* PLIST_MENU_CreateMenuStr( PLIST_WORK *work , PLIST_MENU_WORK *men
 //--------------------------------------------------------------
 //	バトル選択用に座標指定で出せるように
 //--------------------------------------------------------------
-GFL_BMPWIN* PLIST_MENU_CreateMenuWin_BattleMenu( PLIST_WORK *work , PLIST_MENU_WORK *menuWork , u32 strId , u8 charX , u8 charY )
+GFL_BMPWIN* PLIST_MENU_CreateMenuWin_BattleMenu( PLIST_WORK *work , PLIST_MENU_WORK *menuWork , u32 strId , u8 charX , u8 charY , const BOOL isReturn )
 {
   
   //FIXME これのprintQueのUpdateが無いので後で足すこと
@@ -352,8 +356,17 @@ GFL_BMPWIN* PLIST_MENU_CreateMenuWin_BattleMenu( PLIST_WORK *work , PLIST_MENU_W
                   PLIST_MENU_PLATE_WIDTH , PLIST_MENU_PLATE_HEIGHT , 
                   PLIST_BG_PLT_MENU_NORMAL , GFL_BMP_CHRAREA_GET_B );
   //プレートの絵を送る
-  GFL_STD_MemCopy32( menuWork->ncgData->pRawData , GFL_BMP_GetCharacterAdrs(GFL_BMPWIN_GetBmp( bmpWin )) ,
-                   0x20*PLIST_MENU_PLATE_WIDTH*PLIST_MENU_PLATE_HEIGHT );
+  if( isReturn == FALSE )
+  {
+    GFL_STD_MemCopy32( menuWork->ncgData->pRawData , GFL_BMP_GetCharacterAdrs(GFL_BMPWIN_GetBmp( bmpWin )) ,
+                    0x20*PLIST_MENU_PLATE_WIDTH*PLIST_MENU_PLATE_HEIGHT );
+  }
+  else
+  {
+    GFL_STD_MemCopy32( (void*)((u32)menuWork->ncgData->pRawData + 0x20*PLIST_MENU_PLATE_WIDTH*PLIST_MENU_PLATE_HEIGHT) , 
+                    GFL_BMP_GetCharacterAdrs(GFL_BMPWIN_GetBmp( bmpWin )) ,
+                    0x20*PLIST_MENU_PLATE_WIDTH*PLIST_MENU_PLATE_HEIGHT );
+  }
   col = PRINTSYS_LSB_Make( PLIST_FONT_MENU_LETTER,PLIST_FONT_MENU_SHADOW,PLIST_FONT_MENU_BACK);
 //  PRINTSYS_PrintQueColor( work->printQue , GFL_BMPWIN_GetBmp( bmpWin ), 
 //                      8+PLIST_MSG_STR_OFS_X , 4+PLIST_MSG_STR_OFS_Y , str , work->fontHandle , col );
