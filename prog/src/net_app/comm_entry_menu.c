@@ -347,7 +347,11 @@ static void CommEntryMenu_ExaminationUpdate(COMM_ENTRY_MENU_PTR em)
         user->status = USER_STATUS_COMPLETION;
       }
       else{
+      #if 0
         user->status = USER_STATUS_REFUSE;
+      #else
+        user->status = USER_STATUS_COMPLETION;
+      #endif
       }
       FLDMENUFUNC_DeleteMenu(yesno->menufunc);
       yesno->menufunc = NULL;
@@ -404,8 +408,11 @@ static DECIDE_TYPE CommEntryMenu_DecideUpdate(COMM_ENTRY_MENU_PTR em)
         return DECIDE_TYPE_OK;
       }
       else{
+      #if 0
+        return DECIDE_TYPE_NG;
+      #else
         return DECIDE_TYPE_OK;
-//        return DECIDE_TYPE_NG;
+      #endif
       }
     }
     break;
