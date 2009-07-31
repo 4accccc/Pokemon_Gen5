@@ -611,6 +611,7 @@ static void PMSND_ResetSystemFadeBGM( void )
 	//最大値に更新
 	NNS_SndPlayerSetVolume(SOUNDMAN_GetHierarchyPlayerSndHandle(), 127);
 
+	fadeStatus.seq = 0;
 	deleteSoundPlayThread();
 }
 
@@ -666,7 +667,7 @@ static void PMSND_SystemFadeBGM( void )
 		}
 		NNS_SndArcSetLoadBlockSize(BGM_BLOCKLOAD_SIZE);	//分割ロード指定
 
-		createSoundPlayThread( fadeStatus.nextSoundIdx, THREADLOAD_SEQBANK );
+		createSoundPlayThread(fadeStatus.nextSoundIdx, THREADLOAD_SEQBANK);
 		fadeStatus.volumeCounter = 0;
 		fadeStatus.seq = 1;
 		break;
@@ -674,20 +675,21 @@ static void PMSND_SystemFadeBGM( void )
 		if(checkEndSoundPlayThread() == TRUE){
 			SOUNDMAN_LoadHierarchyPlayer_forThread_heapsvSB();// サウンド階層構造用設定
 
-			createSoundPlayThread( fadeStatus.nextSoundIdx, THREADLOAD_WAVE );
+			createSoundPlayThread( fadeStatus.nextSoundIdx, THREADLOAD_WAVE);
 			fadeStatus.seq = 2;
 		} else {
 			OS_Sleep(1);
 		}
+		break;
 	case 2:
 		if(checkEndSoundPlayThread() == TRUE){
 			NNS_SndArcSetLoadBlockSize(0);	//分割ロードなしに復帰
 
-			SOUNDMAN_LoadHierarchyPlayer_forThread_end( fadeStatus.nextSoundIdx );
+			SOUNDMAN_LoadHierarchyPlayer_forThread_end(fadeStatus.nextSoundIdx);
 
 			// サウンド再生開始
 			NNS_SndArcPlayerStartSeqEx
-					(SOUNDMAN_GetHierarchyPlayerSndHandle(), PLAYER_BGM, -1, -1, fadeStatus.nextSoundIdx );
+					(SOUNDMAN_GetHierarchyPlayerSndHandle(), PLAYER_BGM, -1, -1, fadeStatus.nextSoundIdx);
 			NNS_SndPlayerSetVolume(pBgmHandle, 0);
 			fadeStatus.seq = 0;
 		} else {
