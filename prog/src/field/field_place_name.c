@@ -23,7 +23,7 @@
  */
 //=================================================================================== 
 // 最大文字数
-#define MAX_NAME_LENGTH 16
+#define MAX_NAME_LENGTH (16)
 
 // 絶対値に変換する
 #define ABS( n ) ( ((n)<0)? -(n) : (n) )
@@ -53,6 +53,8 @@
 #define ALPHA_VALUE_2 ( 4)						// 第1対象面のαブレンディング係数
 
 #define Y_CENTER_POS ( CHAR_SIZE * 2 - 1 )		// 背景帯の中心y座標
+
+#define LAUNCH_INTERVAL (3)	// 文字発射間隔[単位：フレーム]
 
 //--------------------
 // アーカイブ・データ
@@ -427,7 +429,6 @@ struct _FIELD_PLACE_NAME
 	u32	  currentZoneID;	// 現在表示中の地名に対応するゾーンID
 	u32   nextZoneID;		// 次に表示する地名に対応するゾーンID
 	u8    launchNum;		// 発射済み文字数
-	u8    launchInterval;	// 発射間隔
 
 	// 地名
 	STRBUF* pNameBuf;		// 表示中の地名文字列
@@ -1008,7 +1009,12 @@ static void WritePlaceName( FIELD_PLACE_NAME* p_sys, u32 zone_id )
 	p_sys->nameLength = GFL_STR_GetBufferLength( p_sys->pNameBuf );	// 文字数を取得
 
 	// 文字数チェック
-	GF_ASSERT_MSG( ( p_sys->nameLength <= MAX_NAME_LENGTH ), "最大文字数をオーバーしています。" );
+	//GF_ASSERT_MSG( ( p_sys->nameLength < MAX_NAME_LENGTH ), "最大文字数をオーバーしています。" );	// 止めない
+	if( MAX_NAME_LENGTH < p_sys->nameLength )
+	{
+		OBATA_Printf( "地名の最大文字数をオーバーしています。\n" );
+		p_sys->nameLength =	MAX_NAME_LENGTH;
+	}
 
 	// 1文字ずつ設定
 	for( i=0; i<p_sys->nameLength; i++ )
@@ -1076,9 +1082,6 @@ static void SetCharUnitAction( FIELD_PLACE_NAME* p_sys )
 			param.dx += p_sys->charUnit[i].width + 1;
 		}
 	}
-
-	// 発射間隔を設定
-	p_sys->launchInterval = 3;
 }
 
 //-----------------------------------------------------------------------------------
@@ -1205,8 +1208,9 @@ static void RecoveryBitmapWindow( FIELD_PLACE_NAME* p_sys )
 	GFL_BMP_DATA* p_src = p_sys->pBGOriginalBmp;
 	GFL_BMP_DATA* p_dst = GFL_BMPWIN_GetBmp( p_sys->pBmpWin );
 
-	GFL_BMP_Copy( p_src, p_dst );						// オリジナルをコピーして
-	GFL_BMPWIN_TransVramCharacter( p_sys->pBmpWin );	// VRAMに転送
+	// オリジナル(文字が書き込まれていない状態)をコピーして, VRAMに転送
+	GFL_BMP_Copy( p_src, p_dst );	
+	GFL_BMPWIN_TransVramCharacter( p_sys->pBmpWin );	
 }
 
 //-----------------------------------------------------------------------------------
@@ -1296,7 +1300,7 @@ static void Process_WAIT_1( FIELD_PLACE_NAME* p_sys )
 static void Process_LAUNCH( FIELD_PLACE_NAME* p_sys )
 {
 	// 一定間隔が経過したら, 文字を発射
-	if( p_sys->stateCount % p_sys->launchInterval == 0 )
+	if( p_sys->stateCount % LAUNCH_INTERVAL == 0 )
 	{
 		// 発射
 		LaunchCharUnit( p_sys, p_sys->launchNum );
