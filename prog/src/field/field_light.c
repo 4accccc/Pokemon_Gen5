@@ -1361,7 +1361,7 @@ static void FIELD_LIGHT_ReflectSub( const FIELD_LIGHT* cp_sys, FIELD_FOG_WORK* p
 
 		FIELD_FOG_SetColorRgb( p_fog, cp_sys->reflect_data.fog_color );
 
-		G3X_SetClearColor(cp_sys->reflect_data.bg_color,31,0x7fff,63,FALSE);
+		G3X_SetClearColor(cp_sys->reflect_data.bg_color,31,0x7fff,0,FALSE);
 		
 	}
 }
@@ -1400,7 +1400,7 @@ static void FIELD_LIGHT_ForceReflect( const FIELD_LIGHT* cp_sys, FIELD_FOG_WORK*
 
 	FIELD_FOG_SetColorRgb( p_fog, cp_sys->reflect_data.fog_color );
 
-	G3X_SetClearColor(cp_sys->reflect_data.bg_color,31,0x7fff,63,FALSE);
+	G3X_SetClearColor(cp_sys->reflect_data.bg_color,31,0x7fff,0,FALSE);
 }
 
 //----------------------------------------------------------------------------

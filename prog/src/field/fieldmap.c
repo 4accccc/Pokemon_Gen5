@@ -1433,7 +1433,7 @@ static void fldmap_G3D_CallBackSetUp( void )
 	
 	// クリアカラーの設定
 	//color,alpha,depth,polygonID,fog
-	G3X_SetClearColor(GX_RGB(0,0,0),31,0x7fff,63,FALSE);
+	G3X_SetClearColor(GX_RGB(0,0,0),31,0x7fff,0,FALSE);
 	
 	G3X_SetEdgeColorTable( fldmapdata_edgeColorTable ); 
 	G3X_EdgeMarking( FALSE );
