@@ -667,6 +667,10 @@ static void _itemSelectWait(FIELD_ITEMMENU_WORK* pWork)
     if((BAG_MENU_TSUKAU==pWork->ret_code2)&&(pWork->pocketno==BAG_POKE_WAZA)){
        _CHANGE_STATE(pWork,_itemTecniqueUseInit);
     }
+    else if((BAG_MENU_TSUKAU==pWork->ret_code2)&&( 1==ITEM_GetParam( pWork->ret_item, ITEM_PRM_EVOLUTION, pWork->heapID )  )){
+      pWork->ret_code = BAG_NEXTPROC_EVOLUTION;
+      _CHANGE_STATE(pWork,NULL);
+    }
     else if(BAG_MENU_TSUKAU==pWork->ret_code2){
       pWork->ret_code = BAG_NEXTPROC_ITEMUSE;
       _CHANGE_STATE(pWork,NULL);

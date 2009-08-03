@@ -816,11 +816,9 @@ static const BOOL FMenuReturnProc_Bag(FMENU_EVENT_WORK* mwk)
   case BAG_NEXTPROC_RETURN:      // めにゅーもどり
     return FALSE;
   case BAG_NEXTPROC_RIDECYCLE:
-    
+    return FALSE;
   case BAG_NEXTPROC_DROPCYCLE:
-    
-
-    
+    return FALSE;
   case BAG_NEXTPROC_TOWNMAP:
     {
       TOWNMAP_PARAM* pTown = GFL_HEAP_AllocClearMemory( HEAPID_PROC , sizeof(TOWNMAP_PARAM) );
@@ -847,6 +845,9 @@ static const BOOL FMenuReturnProc_Bag(FMENU_EVENT_WORK* mwk)
         break;
       case BAG_NEXTPROC_ITEMUSE:
         plData->mode = PL_MODE_ITEMUSE;
+        break;
+      case BAG_NEXTPROC_EVOLUTION:
+        plData->mode = PL_MODE_SHINKA;
         break;
       default:
         plData->mode = PL_MODE_ITEMSET;    //アイテムをセットする呼び出し

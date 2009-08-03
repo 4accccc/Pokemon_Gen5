@@ -1100,6 +1100,11 @@ void ITEMDISP_MenuWinDisp(  FIELD_ITEMMENU_WORK *pWork , int *menustr,int num )
   appinit.itemWork =  &pWork->appitem[0];
   appinit.bgFrame =  GFL_BG_FRAME3_M;
   appinit.palNo = _SUBLIST_NORMAL_PAL;
+
+  appinit.posType = ATPT_RIGHT_DOWN;
+  appinit.charPosX = 32;
+  appinit.charPosY = 24;
+
   appinit.msgHandle = pWork->MsgManager;
   appinit.fontHandle =  pWork->fontHandle;
   appinit.printQue =  pWork->SysMsgQue;
