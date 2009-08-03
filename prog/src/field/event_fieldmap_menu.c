@@ -449,6 +449,28 @@ static GMEVENT_RESULT FldMapMenuEvent( GMEVENT *event, int *seq, void *wk )
 
 }
 
+//----------------------------------------------------------------------
+//  フィールドマップに直接戻る流れを埋め込む
+//----------------------------------------------------------------------
+
+static void FieldMap_SetExitSequence(FMENU_EVENT_WORK *mwk)
+{
+  {
+    GAMEDATA *gmData = GAMESYSTEM_GetGameData(mwk->gmSys);
+    if(mwk->return_subscreen_mode == FIELD_SUBSCREEN_UNION)
+    {
+       GAMEDATA_SetSubScreenMode(gmData,FIELD_SUBSCREEN_UNION);
+    }
+    else
+    {
+       GAMEDATA_SetSubScreenMode(gmData,FIELD_SUBSCREEN_NORMAL);
+    }
+  } 
+  mwk->bForceExit = TRUE;
+}
+
+
+
 #pragma mark [>MenuCallProc
 //----------------------------------------------------------------------
 //  以下メニュー決定時処理
@@ -631,11 +653,7 @@ static const BOOL FMenuReturnProc_PokeList(FMENU_EVENT_WORK* mwk)
   {
   case PL_RET_NORMAL:      // 通常
     if(plData->ret_sel == PL_SEL_POS_EXIT2){
-      {
-        GAMEDATA *gmData = GAMESYSTEM_GetGameData(mwk->gmSys);
-        GAMEDATA_SetSubScreenMode(gmData,FIELD_SUBSCREEN_NORMAL);
-      } 
-      mwk->bForceExit = TRUE;
+      FieldMap_SetExitSequence(mwk);
     }
     return FALSE;
     break;
@@ -756,11 +774,7 @@ static const BOOL FMenuReturnProc_PokeStatus(FMENU_EVENT_WORK* mwk)
     break;
 
   case PST_RET_EXIT:
-    {
-      GAMEDATA *gmData = GAMESYSTEM_GetGameData(mwk->gmSys);
-      GAMEDATA_SetSubScreenMode(gmData,FIELD_SUBSCREEN_NORMAL);
-    } 
-    mwk->bForceExit = TRUE;
+    FieldMap_SetExitSequence(mwk);
     return FALSE;
     break;
   }
@@ -797,15 +811,16 @@ static const BOOL FMenuReturnProc_Bag(FMENU_EVENT_WORK* mwk)
   switch( pBag->ret_code )
   {
   case BAG_NEXTPROC_EXIT:      //CGEARもどり
-
-    {
-      GAMEDATA *gmData = GAMESYSTEM_GetGameData(mwk->gmSys);
-      GAMEDATA_SetSubScreenMode(gmData,FIELD_SUBSCREEN_NORMAL);
-    } 
-    mwk->bForceExit = TRUE;
+    FieldMap_SetExitSequence(mwk);
     return FALSE;
   case BAG_NEXTPROC_RETURN:      // めにゅーもどり
     return FALSE;
+  case BAG_NEXTPROC_RIDECYCLE:
+    
+  case BAG_NEXTPROC_DROPCYCLE:
+    
+
+    
   case BAG_NEXTPROC_TOWNMAP:
     {
       TOWNMAP_PARAM* pTown = GFL_HEAP_AllocClearMemory( HEAPID_PROC , sizeof(TOWNMAP_PARAM) );
@@ -814,10 +829,9 @@ static const BOOL FMenuReturnProc_Bag(FMENU_EVENT_WORK* mwk)
       FMenu_SetNextSubProc( mwk ,FMENU_APP_TOWNMAP , pTown );
     }
     return TRUE;
-    
-  case BAG_NEXTPROC_WAZASET:
-  case BAG_NEXTPROC_ITEMEQUIP:  //装備　アイテムリストに戻る
-  case BAG_NEXTPROC_HAVE:    // もたせる => ポケモンリスト起動
+  case BAG_NEXTPROC_EXITEM:
+    break;
+  default:
     {
       PLIST_DATA *plData = GFL_HEAP_AllocMemory( HEAPID_PROC , sizeof(PLIST_DATA) );
       GAMEDATA *gmData = GAMESYSTEM_GetGameData(mwk->gmSys);
@@ -825,14 +839,19 @@ static const BOOL FMenuReturnProc_Bag(FMENU_EVENT_WORK* mwk)
       plData->pp = GAMEDATA_GetMyPokemon(gmData);
       plData->ret_sel = 0;
 
-      if(BAG_NEXTPROC_WAZASET == pBag->ret_code){
+      switch(pBag->ret_code){
+      case BAG_NEXTPROC_WAZASET:
         plData->mode = PL_MODE_WAZASET;
-      }
-      else if(BAG_NEXTPROC_ITEMEQUIP==pBag->ret_code){
+        break;
+      case BAG_NEXTPROC_ITEMEQUIP:
         plData->mode = PL_MODE_ITEMSET_RET;
-      }
-      else{
+        break;
+      case BAG_NEXTPROC_ITEMUSE:
+        plData->mode = PL_MODE_ITEMUSE;
+        break;
+      default:
         plData->mode = PL_MODE_ITEMSET;    //アイテムをセットする呼び出し
+        break;
       }
       plData->item = pBag->ret_item;     //アイテムID
       plData->myitem = pBag->pMyItem;    // アイテムデータ
@@ -840,9 +859,6 @@ static const BOOL FMenuReturnProc_Bag(FMENU_EVENT_WORK* mwk)
       FMenu_SetNextSubProc( mwk ,FMENU_APP_POKELIST , plData );
       return TRUE;
     }
-  case BAG_NEXTPROC_EXITEM:
-  default:
-    break;
   }
   return FALSE;
 }
@@ -858,7 +874,10 @@ static const BOOL FMenuReturnProc_Bag(FMENU_EVENT_WORK* mwk)
 //--------------------------------------------------------------
 static const BOOL FMenuReturnProc_TownMap(FMENU_EVENT_WORK* mwk)
 {
-    {
+  TOWNMAP_PARAM* pTown = mwk->subProcWork;
+
+  
+  {
       FIELD_ITEMMENU_WORK *epp;
       GAMEDATA* pGameData = GAMESYSTEM_GetGameData(mwk->gmSys);
       
