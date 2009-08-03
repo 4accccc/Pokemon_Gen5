@@ -83,6 +83,8 @@
 
 #include "field_sound.h"
 
+#include "fieldmap_ctrl_grid.h"
+
 //======================================================================
 //	define
 //======================================================================
@@ -981,6 +983,45 @@ void FIELDMAP_ForceUpdate( FIELDMAP_WORK *fieldWork )
 	FLDMAPPER_SetPos( fieldWork->g3Dmapper, &fieldWork->now_pos );
 }
 
+//--------------------------------------------------------------
+/**
+ * フィールドマップ　自機にアイテム、自転車を使用。
+ * 歩行形態の場合は自転車に。自転車乗りの場合は歩行形態に。
+ * @param fieldWork FIELDMAP_WORK
+ * @retval BOOL TRUE=使用した FALSE=使用不可
+ */
+//--------------------------------------------------------------
+BOOL FIELDMAP_SetPlayerItemCycle( FIELDMAP_WORK *fieldWork )
+{
+  FLDMAP_CTRLTYPE type;
+  
+  type = FIELDMAP_GetMapControlType( fieldWork );
+  
+  if( type == FLDMAP_CTRLTYPE_GRID )
+  {
+    PLAYER_MOVE_FORM form;
+    FIELD_PLAYER_GRID *gjiki;
+    FIELDMAP_CTRL_GRID *gridMap;
+    
+    form = FIELD_PLAYER_GetMoveForm( fieldWork->field_player );
+    gridMap = FIELDMAP_GetMapCtrlWork( fieldWork );
+    gjiki = FIELDMAP_CTRL_GRID_GetFieldPlayerGrid( gridMap );
+    
+    if( form == PLAYER_MOVE_FORM_CYCLE )
+    {
+      FIELD_PLAYER_GRID_SetRequest( gjiki, FIELD_PLAYER_GRID_REQBIT_NORMAL );
+      return( TRUE );
+    }
+    else if( form == PLAYER_MOVE_FORM_NORMAL )
+    {
+      FIELD_PLAYER_GRID_SetRequest( gjiki, FIELD_PLAYER_GRID_REQBIT_CYCLE );
+      return( TRUE );
+    }
+  }
+  
+  return( FALSE );
+}
+
 //======================================================================
 //	フィールドマップ　参照、設定
 //======================================================================
@@ -1346,7 +1387,6 @@ FLDMAPFUNC_SYS * FIELDMAP_GetFldmapFuncSys( FIELDMAP_WORK * fieldWork )
 {
 	return fieldWork->fldmapFuncSys;
 }
-
 
 //======================================================================
 //	フィールドマップ　サブ　BG関連
