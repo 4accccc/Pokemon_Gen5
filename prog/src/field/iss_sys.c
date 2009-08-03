@@ -64,8 +64,8 @@ void CycleCheck( ISS_SYS* p_sys );
 // 主人公のなみのり状態を監視する
 void SurfingCheck( ISS_SYS* p_sys );
 
-// 戦闘エンカウントの発生を監視する
-void BattleCheck( ISS_SYS* p_sys );
+// BGMの変化を監視する
+void BGMChangeCheck( ISS_SYS* p_sys );
 
 
 //=========================================================================================
@@ -144,8 +144,8 @@ void ISS_SYS_Update( ISS_SYS* p_sys )
 	// なみのりチェック
 	SurfingCheck( p_sys );
 
-	// 戦闘チェック
-	BattleCheck( p_sys );
+	// BGM変更チェック
+	BGMChangeCheck( p_sys );
 
 	// 街ISS
 	ISS_CITY_SYS_Update( p_sys->pIssCitySys );
@@ -265,36 +265,37 @@ void SurfingCheck( ISS_SYS* p_sys )
 		p_sys->surfing = FALSE;
 		ISS_SYS_ZoneChange( p_sys, PLAYERWORK_getZoneID( p_player ) );
 	}
-}
+} 
 
 //----------------------------------------------------------------------------
 /**
- * @brief 戦闘エンカウントの発生を監視する
+ * @brief BGMの変化を監視する
+ *
+ * @param 動かすシステム
  */
 //----------------------------------------------------------------------------
-void BattleCheck( ISS_SYS* p_sys )
+void BGMChangeCheck( ISS_SYS* p_sys )
 {
-	PLAYER_WORK*     p_player;
-	PLAYER_MOVE_FORM form;
-	BGM_INFO_SYS*    p_bgm_info_sys;
-	int              iss_type;
+	PLAYER_WORK*  p_player       = GAMEDATA_GetMyPlayerWork( p_sys->pGameData );
+	BGM_INFO_SYS* p_bgm_info_sys = GAMEDATA_GetBGMInfoSys( p_sys->pGameData );
+	int           bgm_no;
+	int           iss_type;
 
-	if( !ISS_ROAD_SYS_IsActive( p_sys->pIssRoadSys ) ) return;
-	
-	// 各オブジェクトを取得
-	p_player       = GAMEDATA_GetMyPlayerWork( p_sys->pGameData );
-	form           = PLAYERWORK_GetMoveForm( p_player );
-	p_bgm_info_sys = GAMEDATA_GetBGMInfoSys( p_sys->pGameData );
+	// 次に再生予定のBGMのISSタイプを取得
+	// (次のBGMが指定されていない場合, 現在再生中のBGMのISSタイプを取得する)
+	bgm_no   = PMSND_GetNextBGMsoundNo();
+	iss_type = BGM_INFO_GetIssType( p_bgm_info_sys, bgm_no ); 
 
-	// 切り替え先ゾーンのISSタイプを取得
-	p_sys->bgmNo = PMSND_GetNextBGMsoundNo();
-	iss_type     = BGM_INFO_GetIssType( p_bgm_info_sys, p_sys->bgmNo ); 
-
-	// 道路ISSのBGMでなかったら, 道路ISSを停止する
+	// 道路ISSのBGMでなかったら, 起動中の道路ISSシステムを停止する
 	if( iss_type != ISS_TYPE_LOAD )
 	{
-		ISS_ROAD_SYS_SetActive( p_sys->pIssRoadSys, FALSE );
-		FIELD_SOUND_ChangeBGMActionVolume( 127 );
-	}
+		if( ISS_ROAD_SYS_IsActive( p_sys->pIssRoadSys ) == TRUE )
+		{
+			ISS_ROAD_SYS_SetActive( p_sys->pIssRoadSys, FALSE );
+			FIELD_SOUND_ChangeBGMActionVolume( 127 );
 
+			// DEBUG:
+			OBATA_Printf( "BGM change ==> ISS road system off\n" ); 
+		}
+	}
 }
