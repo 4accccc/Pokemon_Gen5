@@ -1592,15 +1592,24 @@ static void scproc_TrainerItem_Root( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u1
     target = BTL_PARTY_GetMemberData( party, targetIdx );
   }
 
+  // @@@ ポケモンID渡してるが、クライアントIDにすべきか、あるいは両方かも？
+  {
+    int arg[2];
+    arg[0] = BPP_GetID(bpp);
+    arg[1] = itemID;
+    scPut_Message_StdEx( wk, BTL_STRID_STD_UseItem, 2, arg );
+  }
+
   hem_state = Hem_PushState( &wk->HEManager );
 
   for(i=0; i<NELEMS(ItemEffectTbl); ++i){
     itemParam = BTL_CALC_ITEM_GetParam( itemID, ItemEffectTbl[i].effect );
     if( itemParam ){
+      BTL_Printf("ItemID[%d], Param[%d]=Hit!\n", itemID, itemParam );
       ItemEffectTbl[i].func( wk, target, itemID, itemParam, actParam );
     }
   }
-
+  scproc_HandEx_Root( wk, ITEM_DUMMY_DATA );
   Hem_PopState( &wk->HEManager, hem_state );
 }
 // アイテム効果：ねむり回復

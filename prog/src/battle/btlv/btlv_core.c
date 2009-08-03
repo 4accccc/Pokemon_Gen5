@@ -511,18 +511,9 @@ void BTLV_ACT_WazaEffect_Start( BTLV_CORE* wk, BtlPokePos atPokePos, BtlPokePos 
 {
   BtlvMcssPos  at_pos, def_pos;
 
-  if( waza == WAZANO_IWANADARE ){
-    BTL_Printf("  IWANADARE! : defPokePos=%d\n", defPokePos);
-  }
-
-
   at_pos = BTL_MAIN_BtlPosToViewPos( wk->mainModule, atPokePos );
   def_pos = (defPokePos != BTL_POS_NULL)?
       BTL_MAIN_BtlPosToViewPos( wk->mainModule, defPokePos ) : BTLV_MCSS_POS_ERROR;
-
-  if( waza == WAZANO_IWANADARE ){
-    BTL_Printf("  IWANADARE! : defViewPos=%d\n", def_pos);
-  }
 
 
   BTLV_SCU_StartWazaEffect( wk->scrnU, at_pos, def_pos, waza, turnType, continueCount );

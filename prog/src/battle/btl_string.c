@@ -111,6 +111,7 @@ static void ms_std_simple( STRBUF* dst, BtlStrID_STD strID );
 static void ms_encount( STRBUF* dst, BtlStrID_STD strID, const int* args );
 static void ms_encount_double( STRBUF* dst, BtlStrID_STD strID, const int* args );
 static void ms_encount_tr1( STRBUF* dst, BtlStrID_STD strID, const int* args );
+static void ms_put_tr_item( STRBUF* dst, BtlStrID_STD strID, const int* args );
 static void ms_put_single( STRBUF* dst, BtlStrID_STD strID, const int* args );
 static void ms_put_double( STRBUF* dst, BtlStrID_STD strID, const int* args );
 static void ms_put_single_npc( STRBUF* dst, BtlStrID_STD strID, const int* args );
@@ -327,6 +328,7 @@ void BTL_STR_MakeStringStdWithArgArray( STRBUF* buf, BtlStrID_STD strID, const i
     { BTL_STRID_STD_PutSingle,        ms_put_single },
     { BTL_STRID_STD_PutDouble,        ms_put_double },
     { BTL_STRID_STD_PutSingle_NPC1,   ms_put_single_npc },
+    { BTL_STRID_STD_UseItem,          ms_put_tr_item },
     { BTL_STRID_STD_MemberOut1,       ms_out_member1 },
     { BTL_STRID_STD_SelectAction,     ms_select_action_ready },
     { BTL_STRID_STD_KodawariLock,     ms_kodawari_lock },
@@ -389,6 +391,14 @@ static void ms_encount_tr1( STRBUF* dst, BtlStrID_STD strID, const int* args )
 {
   WORDSET_RegisterTrTypeName( SysWork.wset, 0, args[0] );
   WORDSET_RegisterTrainerName( SysWork.wset, 1, args[0] );
+  GFL_MSG_GetString( SysWork.msg[MSGSRC_STD], strID, SysWork.tmpBuf );
+  WORDSET_ExpandStr( SysWork.wset, dst, SysWork.tmpBuf );
+}
+static void ms_put_tr_item( STRBUF* dst, BtlStrID_STD strID, const int* args )
+{
+  // @@@ 後々はNPC，通信対戦とも共通の構成で名前を引っ張れるようにする。
+  // @@@ 現状はアイテム名だけを参照
+  WORDSET_RegisterItemName( SysWork.wset, 1, args[1] );
   GFL_MSG_GetString( SysWork.msg[MSGSRC_STD], strID, SysWork.tmpBuf );
   WORDSET_ExpandStr( SysWork.wset, dst, SysWork.tmpBuf );
 }
@@ -521,6 +531,7 @@ void BTL_STR_MakeStringSet( STRBUF* buf, BtlStrID_SET strID, const int* args )
     { BTL_STRID_SET_DelayAttack,          ms_set_waza_sp },
     { BTL_STRID_SET_Bind,                 ms_set_waza_sp },
     { BTL_STRID_SET_BindCure,             ms_set_waza_sp },
+    { BTL_STRID_SET_PP_Recover,           ms_set_waza_sp },
     { BTL_STRID_SET_Urami,                ms_set_waza_num },
     { BTL_STRID_SET_HorobiCountDown,      ms_set_poke_num },
     { BTL_STRID_SET_Takuwaeru,            ms_set_poke_num },

@@ -447,9 +447,9 @@ static BOOL selectActionRoot_loop( int* seq, void* wk_adrs )
     wk->selActionResult = action[ hit ];
 
     switch( wk->selActionResult ){
-    // @@@ 現状アイテム選択は実装されていないので
+    // @@@ 現状アイテム選択はクライアント側で状況に応じて勝手に行っている
     case BTL_ACTION_ITEM:
-      return FALSE;
+      break;
 
     case BTL_ACTION_ESCAPE:
       BTL_ACTION_SetEscapeParam( wk->destActionParam );
@@ -514,7 +514,7 @@ static BOOL selectWaza_loop( int* seq, void* wk_adrs )
     else if( hit < BPP_WAZA_GetCount( wk->bpp ) )
     {
       WazaID waza;
-     
+
       waza = BPP_WAZA_GetID( wk->bpp, hit );
       BTL_ACTION_SetFightParam( wk->destActionParam, waza, BTL_POS_NULL );
 

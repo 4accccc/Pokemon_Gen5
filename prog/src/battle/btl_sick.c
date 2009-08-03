@@ -196,20 +196,17 @@ static void cont_Bind( BTL_SVFLOW_WORK* flowWk, BTL_POKEPARAM* bpp, u8 pokeID )
 //----------------------------------------------------------------------------------------------
 static void cureProc( BTL_SVFLOW_WORK* flowWk, BTL_POKEPARAM* bpp, u8 pokeID, WazaSick sick, BPP_SICK_CONT oldCont )
 {
-  int strID = getCureStrID( sick, FALSE );
-  if( strID >= 0 )
+  BTL_HANDEX_STR_PARAMS  str;
+  if( BTL_SICK_MakeDefaultCureMsg(sick, oldCont, bpp, ITEM_DUMMY_DATA, &str) )
   {
     BTL_HANDEX_PARAM_MESSAGE* param = BTL_SVFLOW_HANDLERWORK_Push( flowWk, BTL_HANDEX_MESSAGE, pokeID );
-    HANDEX_STR_Setup( &param->str, BTL_STRTYPE_SET, strID );
-    HANDEX_STR_AddArg( &param->str, pokeID );
-    return;
+    param->str = str;
   }
 
   switch( sick ){
   case WAZASICK_AKUBI:       cure_Akubi( flowWk, bpp ); break;
   case WAZASICK_HOROBINOUTA: cure_HorobiNoUta( flowWk, bpp ); break;
   case WAZASICK_SASIOSAE:    cure_Sasiosae( flowWk, bpp ); break;
-  case WAZASICK_BIND:        cure_Bind( flowWk, bpp, oldCont ); break;
   }
 }
 
@@ -370,8 +367,8 @@ static int getCureStrID( WazaSick sick, BOOL fUseItem )
     { WAZASICK_ENCORE,    BTL_STRID_SET_EncoreCure,       -1                                },
     { WAZASICK_KANASIBARI,BTL_STRID_SET_KanasibariCure,   -1                                },
     { WAZASICK_SASIOSAE,  BTL_STRID_SET_SasiosaeCure,     -1                                },
-    { WAZASICK_BIND,      BTL_STRID_SET_BindCure,         -1                                },
-    { WAZASICK_YADORIGI,  BTL_STRID_SET_BindCure,         -1                                },
+    { WAZASICK_BIND,      BTL_STRID_SET_BindCure,         BTL_STRID_SET_BindCure            },
+    { WAZASICK_YADORIGI,  BTL_STRID_SET_BindCure,         BTL_STRID_SET_BindCure            },
 
     { WAZASICK_KONRAN,    -1,                             BTL_STRID_SET_UseItem_CureKonran  },
     { WAZASICK_MEROMERO,  -1,                             BTL_STRID_SET_UseItem_CureMero    },
@@ -405,19 +402,18 @@ BOOL BTL_SICK_MakeDefaultCureMsg( WazaSick sickID, BPP_SICK_CONT oldCont, const 
   BOOL fUseItem = (itemID != ITEM_DUMMY_DATA );
   int strID = getCureStrID( sickID, fUseItem );
   if( strID ){
-    BTL_HANDEX_STR_PARAMS  str;
-
-    HANDEX_STR_Setup( &str, BTL_STRTYPE_SET, strID );
-    HANDEX_STR_AddArg( &str, BPP_GetID( bpp ) );
+    HANDEX_STR_Setup( str, BTL_STRTYPE_SET, strID );
+    HANDEX_STR_AddArg( str, BPP_GetID( bpp ) );
     if( fUseItem ){
-      HANDEX_STR_AddArg( &str, itemID );
+      HANDEX_STR_AddArg( str, itemID );
     }
 
     switch( sickID ){
     case WAZASICK_BIND:
+    case WAZASICK_YADORIGI:
       {
         WazaID  waza = BPP_SICKCONT_GetParam( oldCont );
-        HANDEX_STR_AddArg( &str, waza );
+        HANDEX_STR_AddArg( str, waza );
       }
       break;
     }

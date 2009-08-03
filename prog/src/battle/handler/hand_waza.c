@@ -1678,6 +1678,7 @@ static void handler_Makituku( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowW
 
     cont.raw = BTL_EVENTVAR_GetValue( BTL_EVAR_SICK_CONT );
     BPP_SICKCONT_AddParam( &cont, waza );
+    BTL_Printf("  Šª‚«•t‚­Œn : poketurn, pokeID=%d, turn=%d\n", cont.poketurn.pokeID, cont.poketurn.count);
     BTL_EVENTVAR_RewriteValue( BTL_EVAR_SICK_CONT, cont.raw );
   }
 }

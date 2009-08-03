@@ -1065,8 +1065,12 @@ void BTLV_SCU_StartWazaEffect( BTLV_SCU* wk, BtlvMcssPos atPos, BtlvMcssPos defP
   param.turn_count = turnType;
   param.continue_count = continueCount;
 
-//  @@@ ターゲットの居ないワザを出すと止まることがあるのでコメントアウトしている  taya
+#ifdef DEBUG_ONLY_FOR_taya
+//  @@@ ロジックを追うのにエフェクトが出る時間が無駄なのでオフる
+//  BTLV_EFFECT_AddWazaEffect( &param );
+#else
   BTLV_EFFECT_AddWazaEffect( &param );
+#endif
 }
 
 //=============================================================================================
@@ -1919,7 +1923,7 @@ static void tokwin_disp( TOK_WIN* tokwin )
  */
 //=============================================================================================
 static void bbgp_make( BTLV_SCU* wk, BTLV_BALL_GAUGE_PARAM* bbgp, BtlvMcssPos pos, BTLV_BALL_GAUGE_TYPE type )
-{ 
+{
   int i;
   BtlPokePos b_pos = BTL_MAIN_ViewPosToBtlPos( wk->mainModule, pos );
   const BTL_PARTY*      bparty = BTL_POKECON_GetPartyDataConst( wk->pokeCon,
@@ -1927,29 +1931,29 @@ static void bbgp_make( BTLV_SCU* wk, BTLV_BALL_GAUGE_PARAM* bbgp, BtlvMcssPos po
                                                               );
   const BTL_POKEPARAM*  bpp;
   int count = BTL_PARTY_GetMemberCount( bparty );
-  
+
   bbgp->type = type;
 
   for( i = 0 ; i < TEMOTI_POKEMAX ; i++ )
-  { 
+  {
     if( i < count )
-    { 
+    {
       bpp = BTL_PARTY_GetMemberDataConst( bparty, i );
       if( BPP_IsDead( bpp ) )
-      { 
+      {
         bbgp->status[ i ] = BTLV_BALL_GAUGE_STATUS_DEAD;
       }
       else if( BPP_GetPokeSick( bpp ) != POKESICK_NULL )
-      { 
+      {
         bbgp->status[ i ] = BTLV_BALL_GAUGE_STATUS_NG;
       }
       else
-      { 
+      {
         bbgp->status[ i ] = BTLV_BALL_GAUGE_STATUS_ALIVE;
       }
     }
-    else   
-    { 
+    else
+    {
       bbgp->status[ i ] = BTLV_BALL_GAUGE_STATUS_NONE;
     }
   }
