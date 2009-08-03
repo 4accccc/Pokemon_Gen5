@@ -1,9 +1,9 @@
 //============================================================================================
 /**
- * @file	btlv_input.c
- * @brief	戦闘下画面
- * @author	soga
- * @date	2009.06.29
+ * @file  btlv_input.c
+ * @brief 戦闘下画面
+ * @author  soga
+ * @date  2009.06.29
  */
 //============================================================================================
 #include <gflib.h>
@@ -32,7 +32,7 @@
 
 //============================================================================================
 /**
- *	定数宣言
+ *  定数宣言
  */
 //============================================================================================
 
@@ -79,7 +79,7 @@
 #define TTC2S_END_SCALE   ( FX32_ONE * 3 )
 
 //TCB_SCREEN_ANIME用のスクロール値
-enum{ 
+enum{
   TSA_SCROLL_X = 0,
   TSA_SCROLL_Y,
 
@@ -96,13 +96,13 @@ enum{
 };
 
 typedef enum
-{ 
+{
   SCREEN_ANIME_DIR_FORWARD = 0,
   SCREEN_ANIME_DIR_BACKWARD,
 }SCREEN_ANIME_DIR;
 
 //TCB_BUTTON～系定義
-enum{ 
+enum{
   BUTTON_ANIME_MAX = 6,     //3対3時の攻撃対象選択がマックスのはず
 
   BUTTON2_APPEAR_ANIME = 8,
@@ -146,7 +146,7 @@ enum{
 };
 
 typedef enum
-{ 
+{
   BUTTON_TYPE_WAZA = 0,
   BUTTON_TYPE_DIR_4 = 0,
   BUTTON_TYPE_DIR_6 = 1,
@@ -155,7 +155,7 @@ typedef enum
 }BUTTON_TYPE;
 
 typedef enum
-{ 
+{
   BUTTON_ANIME_TYPE_APPEAR = 0,
   BUTTON_ANIME_TYPE_VANISH,
   BUTTON_ANIME_TYPE_MAX,
@@ -163,10 +163,10 @@ typedef enum
 
 //技選択ボタン表示位置定義
 enum
-{ 
+{
   BUTTON_UP_Y1 = 8 + 2,
   BUTTON_UP_Y2 = 24 + 2,
-  
+
   BUTTON_DOWN_Y1 = 56 + 2,
   BUTTON_DOWN_Y2 = 72 + 2,
 
@@ -200,11 +200,11 @@ enum
 
 //攻撃対象選択ボタン表示位置定義
 enum
-{ 
+{
   //4ボタン
   BUTTON4_UP_Y1 = 8 + 2,
   BUTTON4_UP_Y2 = 24 + 2,
-  
+
   BUTTON4_DOWN_Y1 = 56 + 2,
   BUTTON4_DOWN_Y2 = 72 + 2,
 
@@ -226,7 +226,7 @@ static  const GFL_CLWK_DATA WazaTypeIconObjParam = {
 
 //技タイプアイコンの表示座標
 enum
-{ 
+{
   WAZATYPE_X1 = 32,
   WAZATYPE_Y1 = 64,
   WAZATYPE_X2 = 128 + WAZATYPE_X1,
@@ -246,7 +246,7 @@ ALIGN4  static  const u16 WazaIconPos[][2] = {  //0:X, 1:Y
 
 //ボールゲージ座標定義
 enum
-{ 
+{
   BTLV_INPUT_BALLGAUGE_ENEMY_X = ( 128 + ( 8 * 3 ) - 4 ),
   BTLV_INPUT_BALLGAUGE_ENEMY_Y = ( 6 * 8 ),
   BTLV_INPUT_BALLGAUGE_MINE_X = ( 128 - ( 16 * 3 ) + 8 ),
@@ -255,12 +255,12 @@ enum
 
 //============================================================================================
 /**
- *	構造体宣言
+ *  構造体宣言
  */
 //============================================================================================
 
 typedef struct
-{ 
+{
   GFL_CLWK*   clwk;
   s16         pos_x;
   s16         pos_y;
@@ -304,19 +304,19 @@ struct _BTLV_INPUT_WORK
   //メインループTCB
   GFL_TCB*              main_loop;      //scdにメインループが存在しないのでBTLV_EFFECTのTCBを間借りしてメインを回す
 
-	HEAPID                heapID;
+  HEAPID                heapID;
 
   u8                    button_exist[ 6 ];  //押せるボタンかどうかチェック
 };
 
 typedef struct
-{ 
+{
   BTLV_INPUT_WORK*  biw;
   int               seq_no;
 }TCB_TRANSFORM_WORK;
 
 typedef struct
-{ 
+{
   BTLV_INPUT_WORK*  biw;
   fx32              start_scale;
   fx32              end_scale;
@@ -324,7 +324,7 @@ typedef struct
 }TCB_SCALE_UP;
 
 typedef struct
-{ 
+{
   BTLV_INPUT_WORK*  biw;
   int               scroll_y;
   int               scroll_speed;
@@ -332,7 +332,7 @@ typedef struct
 }TCB_SCROLL_UP;
 
 typedef struct
-{ 
+{
   BTLV_INPUT_WORK*  biw;
   int               count;
   SCREEN_ANIME_DIR  dir;
@@ -340,21 +340,21 @@ typedef struct
 }TCB_SCREEN_ANIME;
 
 typedef struct
-{ 
+{
   BTLV_INPUT_WORK*  biw;
   GFL_CLUNIT*       clunit;
   GFL_CLWK*         clwk[ BUTTON_ANIME_MAX ];
 }TCB_BUTTON_ANIME;
 
 typedef struct
-{ 
+{
   const GFL_CLACTPOS  pos[ BUTTON_ANIME_MAX ];          //座標
   int                 anm_no[ BUTTON_ANIME_TYPE_MAX ];  //アニメーションナンバー
 }BUTTON_ANIME_PARAM;
 
 //============================================================================================
 /**
- *	プロトタイプ宣言
+ *  プロトタイプ宣言
  */
 //============================================================================================
 static  void  BTLV_INPUT_LoadResource( BTLV_INPUT_WORK* biw );
@@ -374,7 +374,7 @@ static  void  TCB_ScreenAnime( GFL_TCB* tcb, void* work );
 static  void  SetupButtonAnime( BTLV_INPUT_WORK* biw, BUTTON_TYPE type, BUTTON_ANIME_TYPE anm_type );
 static  void  TCB_ButtonAnime( GFL_TCB* tcb, void* work );
 
-static  void	BTLV_INPUT_MainTCB( GFL_TCB* tcb, void* work );
+static  void  BTLV_INPUT_MainTCB( GFL_TCB* tcb, void* work );
 static  void  FontLenGet( const STRBUF *str, GFL_FONT *font, int *ret_dot_len, int *ret_char_len );
 static  void  BTLV_INPUT_CreateWazaScreen( BTLV_INPUT_WORK* biw, const BTLV_INPUT_WAZA_PARAM *biwp );
 static  void  BTLV_INPUT_CreateDirScreen( BTLV_INPUT_WORK* biw, const BTLV_INPUT_SCENE_PARAM *bisp );
@@ -396,9 +396,9 @@ static  void  BTLV_INPUT_DeleteBallGauge( BTLV_INPUT_WORK* biw );
 //============================================================================================
 BTLV_INPUT_WORK*  BTLV_INPUT_Init( BTLV_INPUT_TYPE type, GFL_FONT* font, HEAPID heapID )
 {
-	BTLV_INPUT_WORK *biw = GFL_HEAP_AllocClearMemory( heapID, sizeof( BTLV_INPUT_WORK ) );
+  BTLV_INPUT_WORK *biw = GFL_HEAP_AllocClearMemory( heapID, sizeof( BTLV_INPUT_WORK ) );
 
-	biw->heapID = heapID;
+  biw->heapID = heapID;
 
   biw->handle   = GFL_ARC_OpenDataHandle( ARCID_BATTGRA, biw->heapID );
   biw->tcbwork  = GFL_HEAP_AllocClearMemory( biw->heapID, GFL_TCB_CalcSystemWorkSize( BTLV_INPUT_TCB_MAX ) );
@@ -428,7 +428,7 @@ BTLV_INPUT_WORK*  BTLV_INPUT_Init( BTLV_INPUT_TYPE type, GFL_FONT* font, HEAPID 
 
   BTLV_INPUT_CreateScreen( biw, BTLV_INPUT_SCRTYPE_STANDBY, NULL );
 
-	return biw;
+  return biw;
 }
 
 //============================================================================================
@@ -438,17 +438,17 @@ BTLV_INPUT_WORK*  BTLV_INPUT_Init( BTLV_INPUT_TYPE type, GFL_FONT* font, HEAPID 
  *  @param[in]  biw システム管理構造体のポインタ
  */
 //============================================================================================
-void	BTLV_INPUT_Exit( BTLV_INPUT_WORK* biw )
+void  BTLV_INPUT_Exit( BTLV_INPUT_WORK* biw )
 {
   GFL_CLGRP_CGR_Release( biw->objcharID );
   GFL_CLGRP_CELLANIM_Release( biw->objcellID );
   GFL_CLGRP_PLTT_Release( biw->objplttID );
 
-  { 
+  {
     int i;
 
     for( i = 0 ; i < PTL_WAZA_MAX ; i++ )
-    { 
+    {
       GFL_CLGRP_CGR_Release( biw->wazatype_charID[ i ] );
     }
   }
@@ -469,7 +469,7 @@ void	BTLV_INPUT_Exit( BTLV_INPUT_WORK* biw )
 
   GFL_ARC_CloseDataHandle( biw->handle );
 
-	GFL_HEAP_FreeMemory( biw );
+  GFL_HEAP_FreeMemory( biw );
 }
 
 //============================================================================================
@@ -479,7 +479,7 @@ void	BTLV_INPUT_Exit( BTLV_INPUT_WORK* biw )
  *  @param[in]  biw システム管理構造体のポインタ
  */
 //============================================================================================
-void	BTLV_INPUT_Main( BTLV_INPUT_WORK* biw )
+void  BTLV_INPUT_Main( BTLV_INPUT_WORK* biw )
 {
 //  GFL_TCB_Main( biw->tcbsys );
 //  INFOWIN_Update();
@@ -492,7 +492,7 @@ void	BTLV_INPUT_Main( BTLV_INPUT_WORK* biw )
  *  @param[in]  biw システム管理構造体のポインタ
  */
 //============================================================================================
-static  void	BTLV_INPUT_MainTCB( GFL_TCB* tcb, void* work )
+static  void  BTLV_INPUT_MainTCB( GFL_TCB* tcb, void* work )
 {
   BTLV_INPUT_WORK* biw = (BTLV_INPUT_WORK *)work;
   GFL_TCB_Main( biw->tcbsys );
@@ -501,11 +501,11 @@ static  void	BTLV_INPUT_MainTCB( GFL_TCB* tcb, void* work )
 
 //============================================================================================
 /**
- *	@brief  下画面BGフレーム設定
+ *  @brief  下画面BGフレーム設定
  */
 //============================================================================================
 void BTLV_INPUT_SetFrame( void )
-{ 
+{
   int i;
 
   for( i = 0 ; i < NELEMS( bibf ) ; i++ )
@@ -519,7 +519,7 @@ void BTLV_INPUT_SetFrame( void )
 
 //============================================================================================
 /**
- *	@brief  下画面BGフレーム設定解放
+ *  @brief  下画面BGフレーム設定解放
  */
 //============================================================================================
 void BTLV_INPUT_FreeFrame( void )
@@ -534,21 +534,21 @@ void BTLV_INPUT_FreeFrame( void )
 
 //============================================================================================
 /**
- *	@brief  下画面生成
+ *  @brief  下画面生成
  *
  *  @param[in]  biw   システム管理構造体のポインタ
- *	@param[in]  type  生成するスクリーンタイプ
- *	@param[in]  param 生成に必要なパラメータ構造体のポインタ
+ *  @param[in]  type  生成するスクリーンタイプ
+ *  @param[in]  param 生成に必要なパラメータ構造体のポインタ
  */
 //============================================================================================
 void BTLV_INPUT_CreateScreen( BTLV_INPUT_WORK* biw, BTLV_INPUT_SCRTYPE type, void* param )
 {
   BTLV_INPUT_ClearWazaScreen( biw );
 
-  switch( type ){ 
+  switch( type ){
   case BTLV_INPUT_SCRTYPE_STANDBY:
     if( biw->scr_type == BTLV_INPUT_SCRTYPE_STANDBY )
-    { 
+    {
       MtxFx22 mtx;
 
       MTX_Scale22( &mtx, FX32_ONE * 3, FX32_ONE * 3 );
@@ -561,7 +561,7 @@ void BTLV_INPUT_CreateScreen( BTLV_INPUT_WORK* biw, BTLV_INPUT_SCRTYPE type, voi
       GFL_BG_SetVisible( GFL_BG_FRAME3_S, VISIBLE_ON );
     }
     else
-    { 
+    {
       TCB_TRANSFORM_WORK* ttw = GFL_HEAP_AllocClearMemory( biw->heapID, sizeof( TCB_TRANSFORM_WORK ) );
       biw->tcb_execute_flag = 1;
       ttw->biw = biw;
@@ -569,7 +569,7 @@ void BTLV_INPUT_CreateScreen( BTLV_INPUT_WORK* biw, BTLV_INPUT_SCRTYPE type, voi
       BTLV_INPUT_DeleteBallGauge( biw );
 
       if( biw->scr_type == BTLV_INPUT_SCRTYPE_COMMAND )
-      { 
+      {
         GFL_TCB_AddTask( biw->tcbsys, TCB_TransformCommand2Standby, ttw, 1 );
       }
       else
@@ -579,19 +579,19 @@ void BTLV_INPUT_CreateScreen( BTLV_INPUT_WORK* biw, BTLV_INPUT_SCRTYPE type, voi
     }
     break;
   case BTLV_INPUT_SCRTYPE_COMMAND:
-    { 
+    {
       int i;
       TCB_TRANSFORM_WORK* ttw = GFL_HEAP_AllocClearMemory( biw->heapID, sizeof( TCB_TRANSFORM_WORK ) );
       biw->tcb_execute_flag = 1;
       ttw->biw = biw;
 
       for( i = 0 ; i < 4 ; i++ )
-      { 
+      {
         biw->button_exist[ i ] = TRUE;  //押せるボタンかどうかチェック
       }
 
       if( biw->scr_type == BTLV_INPUT_SCRTYPE_WAZA )
-      { 
+      {
         GFL_TCB_AddTask( biw->tcbsys, TCB_TransformWaza2Command, ttw, 1 );
       }
       else
@@ -602,7 +602,7 @@ void BTLV_INPUT_CreateScreen( BTLV_INPUT_WORK* biw, BTLV_INPUT_SCRTYPE type, voi
     }
     break;
   case BTLV_INPUT_SCRTYPE_WAZA:
-    { 
+    {
       TCB_TRANSFORM_WORK* ttw = GFL_HEAP_AllocClearMemory( biw->heapID, sizeof( TCB_TRANSFORM_WORK ) );
 
       BTLV_INPUT_CreateWazaScreen( biw, ( const BTLV_INPUT_WAZA_PARAM * )param );
@@ -612,7 +612,7 @@ void BTLV_INPUT_CreateScreen( BTLV_INPUT_WORK* biw, BTLV_INPUT_SCRTYPE type, voi
     }
     break;
   case BTLV_INPUT_SCRTYPE_DIR:
-    { 
+    {
       TCB_TRANSFORM_WORK* ttw = GFL_HEAP_AllocClearMemory( biw->heapID, sizeof( TCB_TRANSFORM_WORK ) );
 
       BTLV_INPUT_CreateDirScreen( biw, ( const BTLV_INPUT_SCENE_PARAM * )param );
@@ -635,17 +635,17 @@ void BTLV_INPUT_CreateScreen( BTLV_INPUT_WORK* biw, BTLV_INPUT_SCRTYPE type, voi
 
 //============================================================================================
 /**
- *	@brief  入力チェック
+ *  @brief  入力チェック
  *
  *  @param[in]  tp_tbl  タッチパネルテーブル
  */
 //============================================================================================
 int BTLV_INPUT_CheckInput( BTLV_INPUT_WORK* biw, const GFL_UI_TP_HITTBL* tp_tbl )
-{ 
+{
   int hit;
   //下画面変形中は入力を無視
   if( biw->tcb_execute_flag )
-  { 
+  {
     return  GFL_UI_TP_HIT_NONE;
   }
 
@@ -654,9 +654,9 @@ int BTLV_INPUT_CheckInput( BTLV_INPUT_WORK* biw, const GFL_UI_TP_HITTBL* tp_tbl 
   hit = GFL_UI_TP_HitTrg( tp_tbl );
 
   if( hit != GFL_UI_TP_HIT_NONE )
-  { 
+  {
     if( biw->button_exist[ hit ] == FALSE )
-    { 
+    {
       hit = GFL_UI_TP_HIT_NONE;
     }
   }
@@ -665,14 +665,14 @@ int BTLV_INPUT_CheckInput( BTLV_INPUT_WORK* biw, const GFL_UI_TP_HITTBL* tp_tbl 
 
 //============================================================================================
 /**
- *	@brief  下画面リソースロード
+ *  @brief  下画面リソースロード
  *
- *	@param[in]  biw  下画面管理構造体
+ *  @param[in]  biw  下画面管理構造体
  */
 //============================================================================================
 static  void  BTLV_INPUT_LoadResource( BTLV_INPUT_WORK* biw )
-{ 
-//	NARC_battgra_wb_battle_w_bg1b_NSCR = 18,
+{
+//  NARC_battgra_wb_battle_w_bg1b_NSCR = 18,
   GFL_ARCHDL_UTIL_TransVramBgCharacter( biw->handle, NARC_battgra_wb_battle_w_bg_NCGR,
                                         GFL_BG_FRAME0_S, 0, 0, FALSE, biw->heapID );
   GFL_ARCHDL_UTIL_TransVramBgCharacter( biw->handle, NARC_battgra_wb_battle_w_bg3_NCGR,
@@ -716,14 +716,14 @@ static  void  BTLV_INPUT_LoadResource( BTLV_INPUT_WORK* biw )
 
 //============================================================================================
 /**
- *	@brief  下画面変形タスク（待機→コマンド選択）
+ *  @brief  下画面変形タスク（待機→コマンド選択）
  */
 //============================================================================================
 static  void  TCB_TransformStandby2Command( GFL_TCB* tcb, void* work )
-{ 
+{
   TCB_TRANSFORM_WORK* ttw = (TCB_TRANSFORM_WORK *)work;
 
-  switch( ttw->seq_no ){ 
+  switch( ttw->seq_no ){
   case 0:
     PMSND_PlaySE( SEQ_SE_OPEN2 );
     GFL_BG_SetScroll( GFL_BG_FRAME1_S, GFL_BG_SCROLL_X_SET, TTS2C_FRAME1_SCROLL_X );
@@ -738,7 +738,7 @@ static  void  TCB_TransformStandby2Command( GFL_TCB* tcb, void* work )
   case 1:
   default:
     if( ttw->biw->tcb_execute_count == 0 )
-    { 
+    {
       GFL_BG_SetVisible( GFL_BG_FRAME0_S, VISIBLE_ON );
       GFL_BG_SetVisible( GFL_BG_FRAME1_S, VISIBLE_ON );
       GFL_BG_SetVisible( GFL_BG_FRAME3_S, VISIBLE_OFF );
@@ -752,14 +752,14 @@ static  void  TCB_TransformStandby2Command( GFL_TCB* tcb, void* work )
 
 //============================================================================================
 /**
- *	@brief  下画面変形タスク（コマンド選択→技選択）
+ *  @brief  下画面変形タスク（コマンド選択→技選択）
  */
 //============================================================================================
 static  void  TCB_TransformCommand2Waza( GFL_TCB* tcb, void* work )
-{ 
+{
   TCB_TRANSFORM_WORK* ttw = (TCB_TRANSFORM_WORK *)work;
 
-  switch( ttw->seq_no ){ 
+  switch( ttw->seq_no ){
   case 0:
     SetupScrollUp( ttw->biw, TTC2W_START_SCROLL_X, TTC2W_START_SCROLL_Y, TTC2W_SCROLL_SPEED, TTC2W_SCROLL_COUNT );
     SetupScreenAnime( ttw->biw, 0, SCREEN_ANIME_DIR_FORWARD );
@@ -772,7 +772,7 @@ static  void  TCB_TransformCommand2Waza( GFL_TCB* tcb, void* work )
   case 1:
   default:
     if( ttw->biw->tcb_execute_count == 0 )
-    { 
+    {
       GFL_BMPWIN_TransVramCharacter( ttw->biw->bmp_win );
       GFL_CLACT_UNIT_SetDrawEnable( ttw->biw->wazatype_clunit, TRUE );
       GFL_BG_SetScroll( GFL_BG_FRAME1_S, GFL_BG_SCROLL_X_SET, TSA_SCROLL_X3 );
@@ -787,14 +787,14 @@ static  void  TCB_TransformCommand2Waza( GFL_TCB* tcb, void* work )
 
 //============================================================================================
 /**
- *	@brief  下画面変形タスク（技選択→コマンド選択）
+ *  @brief  下画面変形タスク（技選択→コマンド選択）
  */
 //============================================================================================
 static  void  TCB_TransformWaza2Command( GFL_TCB* tcb, void* work )
-{ 
+{
   TCB_TRANSFORM_WORK* ttw = (TCB_TRANSFORM_WORK *)work;
 
-  switch( ttw->seq_no ){ 
+  switch( ttw->seq_no ){
   case 0:
     SetupScrollUp( ttw->biw, TTW2C_START_SCROLL_X, TTW2C_START_SCROLL_Y, TTW2C_SCROLL_SPEED, TTW2C_SCROLL_COUNT );
     SetupScreenAnime( ttw->biw, 0, SCREEN_ANIME_DIR_BACKWARD );
@@ -807,7 +807,7 @@ static  void  TCB_TransformWaza2Command( GFL_TCB* tcb, void* work )
   case 1:
   default:
     if( ttw->biw->tcb_execute_count == 0 )
-    { 
+    {
       ttw->biw->tcb_execute_flag = 0;
       GFL_HEAP_FreeMemory( ttw );
       GFL_TCB_DeleteTask( tcb );
@@ -818,16 +818,16 @@ static  void  TCB_TransformWaza2Command( GFL_TCB* tcb, void* work )
 
 //============================================================================================
 /**
- *	@brief  下画面変形タスク（技選択→攻撃対象選択）
+ *  @brief  下画面変形タスク（技選択→攻撃対象選択）
  */
 //============================================================================================
 static  void  TCB_TransformWaza2Dir( GFL_TCB* tcb, void* work )
-{ 
+{
   TCB_TRANSFORM_WORK* ttw = (TCB_TRANSFORM_WORK *)work;
 
   //現状、どんな演出になるか決まっていないので、表示だけしてタスク終了
   /*
-  switch( ttw->seq_no ){ 
+  switch( ttw->seq_no ){
   case 0:
     SetupScrollUp( ttw->biw, TTW2C_START_SCROLL_X, TTW2C_START_SCROLL_Y, TTW2C_SCROLL_SPEED, TTW2C_SCROLL_COUNT );
     SetupScreenAnime( ttw->biw, 0, SCREEN_ANIME_DIR_BACKWARD );
@@ -840,7 +840,7 @@ static  void  TCB_TransformWaza2Dir( GFL_TCB* tcb, void* work )
   case 1:
   default:
     if( ttw->biw->tcb_execute_count == 0 )
-    { 
+    {
       ttw->biw->tcb_execute_flag = 0;
       GFL_HEAP_FreeMemory( ttw );
       GFL_TCB_DeleteTask( tcb );
@@ -856,14 +856,14 @@ static  void  TCB_TransformWaza2Dir( GFL_TCB* tcb, void* work )
 
 //============================================================================================
 /**
- *	@brief  下画面変形タスク（コマンド選択→スタンバイ）
+ *  @brief  下画面変形タスク（コマンド選択→スタンバイ）
  */
 //============================================================================================
 static  void  TCB_TransformCommand2Standby( GFL_TCB* tcb, void* work )
-{ 
+{
   TCB_TRANSFORM_WORK* ttw = (TCB_TRANSFORM_WORK *)work;
 
-  switch( ttw->seq_no ){ 
+  switch( ttw->seq_no ){
   case 0:
     SetupScaleChange( ttw->biw, TTC2S_START_SCALE, TTC2S_END_SCALE, TTC2S_SCALE_SPEED );
     GFL_BG_SetVisible( GFL_BG_FRAME0_S, VISIBLE_OFF );
@@ -874,7 +874,7 @@ static  void  TCB_TransformCommand2Standby( GFL_TCB* tcb, void* work )
   case 1:
   default:
     if( ttw->biw->tcb_execute_count == 0 )
-    { 
+    {
       ttw->biw->tcb_execute_flag = 0;
       GFL_HEAP_FreeMemory( ttw );
       GFL_TCB_DeleteTask( tcb );
@@ -885,14 +885,14 @@ static  void  TCB_TransformCommand2Standby( GFL_TCB* tcb, void* work )
 
 //============================================================================================
 /**
- *	@brief  下画面変形タスク（技選択→スタンバイ）
+ *  @brief  下画面変形タスク（技選択→スタンバイ）
  */
 //============================================================================================
 static  void  TCB_TransformWaza2Standby( GFL_TCB* tcb, void* work )
-{ 
+{
   TCB_TRANSFORM_WORK* ttw = (TCB_TRANSFORM_WORK *)work;
 
-  switch( ttw->seq_no ){ 
+  switch( ttw->seq_no ){
   case 0:
     SetupScreenAnime( ttw->biw, 0, SCREEN_ANIME_DIR_BACKWARD );
     SetupButtonAnime( ttw->biw, BUTTON_TYPE_WAZA, BUTTON_ANIME_TYPE_VANISH );
@@ -904,7 +904,7 @@ static  void  TCB_TransformWaza2Standby( GFL_TCB* tcb, void* work )
   case 1:
   default:
     if( ttw->biw->tcb_execute_count == 0 )
-    { 
+    {
       SetupScaleChange( ttw->biw, TTC2S_START_SCALE, TTC2S_END_SCALE, TTC2S_SCALE_SPEED );
       GFL_BG_SetVisible( GFL_BG_FRAME0_S, VISIBLE_OFF );
       GFL_BG_SetVisible( GFL_BG_FRAME1_S, VISIBLE_OFF );
@@ -914,7 +914,7 @@ static  void  TCB_TransformWaza2Standby( GFL_TCB* tcb, void* work )
     break;
   case 2:
     if( ttw->biw->tcb_execute_count == 0 )
-    { 
+    {
       ttw->biw->tcb_execute_flag = 0;
       GFL_HEAP_FreeMemory( ttw );
       GFL_TCB_DeleteTask( tcb );
@@ -925,7 +925,7 @@ static  void  TCB_TransformWaza2Standby( GFL_TCB* tcb, void* work )
 
 //============================================================================================
 /**
- *	@brief  スケール変更処理セットアップ
+ *  @brief  スケール変更処理セットアップ
  *
  *  @param[in]  biw           システム管理構造体のポインタ
  *  @param[in]  start_scale   スケール初期値
@@ -934,7 +934,7 @@ static  void  TCB_TransformWaza2Standby( GFL_TCB* tcb, void* work )
  */
 //============================================================================================
 static  void  SetupScaleChange( BTLV_INPUT_WORK* biw, fx32 start_scale, fx32 end_scale, fx32 scale_speed )
-{ 
+{
   TCB_SCALE_UP* tsu = GFL_HEAP_AllocMemory( biw->heapID, sizeof( TCB_SCALE_UP ) );
 
   tsu->biw          = biw;
@@ -949,11 +949,11 @@ static  void  SetupScaleChange( BTLV_INPUT_WORK* biw, fx32 start_scale, fx32 end
 
 //============================================================================================
 /**
- *	@brief  スケール変更処理タスク
+ *  @brief  スケール変更処理タスク
  */
 //============================================================================================
 static  void  TCB_ScaleChange( GFL_TCB* tcb, void* work )
-{ 
+{
   TCB_SCALE_UP* tsu = ( TCB_SCALE_UP * )work;
   MtxFx22 mtx;
 
@@ -963,7 +963,7 @@ static  void  TCB_ScaleChange( GFL_TCB* tcb, void* work )
   GFL_BG_SetAffineScroll( GFL_BG_FRAME3_S, GFL_BG_SCROLL_X_SET, 128, &mtx, 256, 256 );
   GFL_BG_SetAffineScroll( GFL_BG_FRAME3_S, GFL_BG_SCROLL_Y_SET, 128 + 40, &mtx, 256, 256 );
   if( tsu->start_scale == tsu->end_scale )
-  { 
+  {
     tsu->biw->tcb_execute_count--;
     GFL_HEAP_FreeMemory( tsu );
     GFL_TCB_DeleteTask( tcb );
@@ -972,7 +972,7 @@ static  void  TCB_ScaleChange( GFL_TCB* tcb, void* work )
 
 //============================================================================================
 /**
- *	@brief  スクリーンスクロール処理セットアップ
+ *  @brief  スクリーンスクロール処理セットアップ
  *
  *  @param[in]  scroll_x      初期X座標
  *  @param[in]  scroll_y      初期Y座標
@@ -981,7 +981,7 @@ static  void  TCB_ScaleChange( GFL_TCB* tcb, void* work )
  */
 //============================================================================================
 static  void  SetupScrollUp( BTLV_INPUT_WORK* biw, int scroll_x, int scroll_y, int scroll_speed, int scroll_count )
-{ 
+{
   TCB_SCROLL_UP* tsu = GFL_HEAP_AllocMemory( biw->heapID, sizeof( TCB_SCROLL_UP ) );
 
   GFL_BG_SetScroll( GFL_BG_FRAME0_S, GFL_BG_SCROLL_X_SET, scroll_x );
@@ -999,11 +999,11 @@ static  void  SetupScrollUp( BTLV_INPUT_WORK* biw, int scroll_x, int scroll_y, i
 
 //============================================================================================
 /**
- *	@brief  スクリーンスクロール処理タスク
+ *  @brief  スクリーンスクロール処理タスク
  */
 //============================================================================================
 static  void  TCB_ScrollUp( GFL_TCB* tcb, void* work )
-{ 
+{
   TCB_SCROLL_UP* tsu = ( TCB_SCROLL_UP * )work;
 
   tsu->scroll_y += tsu->scroll_speed;
@@ -1011,7 +1011,7 @@ static  void  TCB_ScrollUp( GFL_TCB* tcb, void* work )
   GFL_BG_SetScroll( GFL_BG_FRAME0_S, GFL_BG_SCROLL_Y_SET, tsu->scroll_y );
 
   if( --tsu->scroll_count == 0 )
-  { 
+  {
     tsu->biw->tcb_execute_count--;
     GFL_HEAP_FreeMemory( tsu );
     GFL_TCB_DeleteTask( tcb );
@@ -1020,14 +1020,14 @@ static  void  TCB_ScrollUp( GFL_TCB* tcb, void* work )
 
 //============================================================================================
 /**
- *	@brief  スクリーンアニメ処理セットアップ
+ *  @brief  スクリーンアニメ処理セットアップ
  *
- *	@param[in]  index 読み込むスクリーンリソースインデックス
- *	@param[in]  dir   アニメーションの向き
+ *  @param[in]  index 読み込むスクリーンリソースインデックス
+ *  @param[in]  dir   アニメーションの向き
  */
 //============================================================================================
 static  void  SetupScreenAnime( BTLV_INPUT_WORK* biw, int index, SCREEN_ANIME_DIR dir )
-{ 
+{
   TCB_SCREEN_ANIME* tsa = GFL_HEAP_AllocMemory( biw->heapID, sizeof( TCB_SCREEN_ANIME ) );
 
   tsa->biw    = biw;
@@ -1044,25 +1044,25 @@ static  void  SetupScreenAnime( BTLV_INPUT_WORK* biw, int index, SCREEN_ANIME_DI
 
 //============================================================================================
 /**
- *	@brief  スクリーンアニメ処理タスク
+ *  @brief  スクリーンアニメ処理タスク
  */
 //============================================================================================
 static  void  TCB_ScreenAnime( GFL_TCB* tcb, void* work )
-{ 
+{
   TCB_SCREEN_ANIME* tsa = ( TCB_SCREEN_ANIME * )work;
-  static  const int TSA_scroll_table[ 2 ][ 2 ][ 2 ] = { 
-    { 
+  static  const int TSA_scroll_table[ 2 ][ 2 ][ 2 ] = {
+    {
       { TSA_SCROLL_X1, TSA_SCROLL_Y1 },
       { TSA_SCROLL_X2, TSA_SCROLL_Y2 },
     },
-    { 
+    {
       { TSA_SCROLL_X1, TSA_SCROLL_Y1 },
       { TSA_SCROLL_X0, TSA_SCROLL_Y0 },
     }
   };
 
   if( --tsa->wait )
-  { 
+  {
     return;
   }
 
@@ -1072,7 +1072,7 @@ static  void  TCB_ScreenAnime( GFL_TCB* tcb, void* work )
   GFL_BG_SetScroll( GFL_BG_FRAME1_S, GFL_BG_SCROLL_Y_SET, TSA_scroll_table[ tsa->dir ][ tsa->count++ ][ TSA_SCROLL_Y ] );
 
   if( tsa->count >= 2 )
-  { 
+  {
     tsa->biw->tcb_execute_count--;
     GFL_HEAP_FreeMemory( tsa );
     GFL_TCB_DeleteTask( tcb );
@@ -1081,23 +1081,23 @@ static  void  TCB_ScreenAnime( GFL_TCB* tcb, void* work )
 
 //============================================================================================
 /**
- *	@brief  ボタンアニメ処理セットアップ
+ *  @brief  ボタンアニメ処理セットアップ
  *
- *	@param[in]  type      ボタンタイプ
- *	@param[in]  anm_type  ボタンアニメタイプ
+ *  @param[in]  type      ボタンタイプ
+ *  @param[in]  anm_type  ボタンアニメタイプ
  */
 //============================================================================================
 static  void  SetupButtonAnime( BTLV_INPUT_WORK* biw, BUTTON_TYPE type, BUTTON_ANIME_TYPE anm_type )
-{ 
+{
   TCB_BUTTON_ANIME* tba = GFL_HEAP_AllocMemory( biw->heapID, sizeof( TCB_BUTTON_ANIME ) );
   static const GFL_CLWK_DATA button = {
     0, 0,     //x, y
     0, 0, 2,  //アニメ番号、優先順位、BGプライオリティ
   };
-  static  const BUTTON_ANIME_PARAM bap[ BUTTON_TYPE_MAX ] = { 
-    { 
+  static  const BUTTON_ANIME_PARAM bap[ BUTTON_TYPE_MAX ] = {
+    {
       //BUTTON_TYPE_WAZA & BUTTON_TYPE_DIR_4
-      { 
+      {
         { BUTTON4_X1, BUTTON4_Y1 },
         { BUTTON4_X2, BUTTON4_Y2 },
         { BUTTON4_X3, BUTTON4_Y3 },
@@ -1107,9 +1107,9 @@ static  void  SetupButtonAnime( BTLV_INPUT_WORK* biw, BUTTON_TYPE type, BUTTON_A
       },
       { BUTTON4_APPEAR_ANIME, BUTTON4_VANISH_ANIME },
     },
-    { 
+    {
       //BUTTON_TYPE_DIR_6
-      { 
+      {
         { BUTTON6_X1, BUTTON6_Y1 },
         { BUTTON6_X2, BUTTON6_Y2 },
         { BUTTON6_X3, BUTTON6_Y3 },
@@ -1119,9 +1119,9 @@ static  void  SetupButtonAnime( BTLV_INPUT_WORK* biw, BUTTON_TYPE type, BUTTON_A
       },
       { BUTTON6_APPEAR_ANIME, BUTTON6_VANISH_ANIME },
     },
-    { 
+    {
       //BUTTON_TYPE_YES_NO
-      { 
+      {
         { BUTTON2_X1, BUTTON2_Y1 },
         { BUTTON2_X2, BUTTON2_Y2 },
         { -1, -1 },
@@ -1138,9 +1138,9 @@ static  void  SetupButtonAnime( BTLV_INPUT_WORK* biw, BUTTON_TYPE type, BUTTON_A
   tba->clunit = GFL_CLACT_UNIT_Create( BUTTON_ANIME_MAX, 0, biw->heapID );
 
   for( i = 0 ; i < BUTTON_ANIME_MAX ; i++ )
-  { 
+  {
     if( bap[ type ].pos[ i ].x == -1 )
-    { 
+    {
       tba->clwk[ i ] = NULL;
       continue;
     }
@@ -1159,28 +1159,28 @@ static  void  SetupButtonAnime( BTLV_INPUT_WORK* biw, BUTTON_TYPE type, BUTTON_A
 
 //============================================================================================
 /**
- *	@brief  ボタンアニメ処理タスク
+ *  @brief  ボタンアニメ処理タスク
  */
 //============================================================================================
 static  void  TCB_ButtonAnime( GFL_TCB* tcb, void* work )
-{ 
+{
   TCB_BUTTON_ANIME* tba = ( TCB_BUTTON_ANIME * )work;
   int i;
 
   for( i = 0 ; i < BUTTON_ANIME_MAX ; i++ )
-  { 
+  {
     if( tba->clwk[ i ] )
-    { 
+    {
       if( GFL_CLACT_WK_CheckAnmActive( tba->clwk[ i ] ) )
-      { 
+      {
         return;
       }
     }
   }
   for( i = 0 ; i < PTL_WAZA_MAX ; i++ )
-  { 
+  {
     if( tba->clwk[ i ] )
-    { 
+    {
       GFL_CLACT_WK_Remove( tba->clwk[ i ] );
     }
   }
@@ -1232,22 +1232,22 @@ static  void  BTLV_INPUT_CreateWazaScreen( BTLV_INPUT_WORK* biw, const BTLV_INPU
   WORDSET *wordset;
   PRINTSYS_LSB color;
   GFL_MSGDATA *msg = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_btlv_input_dat, biw->heapID );
-  static  const int wazaname_pos[ PTL_WAZA_MAX ][ 2 ] = 
-  { 
+  static  const int wazaname_pos[ PTL_WAZA_MAX ][ 2 ] =
+  {
     { WAZANAME_X1, WAZANAME_Y1 },
     { WAZANAME_X2, WAZANAME_Y2 },
     { WAZANAME_X3, WAZANAME_Y3 },
     { WAZANAME_X4, WAZANAME_Y4 },
   };
-  static  const int ppmsg_pos[ PTL_WAZA_MAX ][ 2 ] = 
-  { 
+  static  const int ppmsg_pos[ PTL_WAZA_MAX ][ 2 ] =
+  {
     { PPMSG_X1, PPMSG_Y1 },
     { PPMSG_X2, PPMSG_Y2 },
     { PPMSG_X3, PPMSG_Y3 },
     { PPMSG_X4, PPMSG_Y4 },
   };
-  static  const int pp_pos[ PTL_WAZA_MAX ][ 2 ] = 
-  { 
+  static  const int pp_pos[ PTL_WAZA_MAX ][ 2 ] =
+  {
     { PP_X1, PP_Y1 },
     { PP_X2, PP_Y2 },
     { PP_X3, PP_Y3 },
@@ -1266,7 +1266,7 @@ static  void  BTLV_INPUT_CreateWazaScreen( BTLV_INPUT_WORK* biw, const BTLV_INPU
   for(i = 0; i < PTL_WAZA_MAX; i++){
     if( biwp->wazano[ i ] ){
       //技タイプアイコン
-      { 
+      {
         void *arc_data;
         void *obj_vram;
         NNSG2dImageProxy image;
@@ -1307,7 +1307,7 @@ static  void  BTLV_INPUT_CreateWazaScreen( BTLV_INPUT_WORK* biw, const BTLV_INPU
       WORDSET_ExpandStr(wordset, pp_p, pp_src);
       color = PP_FontColorGet( biwp->pp[ i ], biwp->ppmax[ i ] );
 
-      { 
+      {
         u8 letter, shadow, back;
 
         GFL_FONTSYS_GetColor( &letter, &shadow, &back );
@@ -1348,8 +1348,8 @@ static  void  BTLV_INPUT_CreateDirScreen( BTLV_INPUT_WORK* biw, const BTLV_INPUT
   WORDSET *wordset;
   PRINTSYS_LSB color;
   GFL_MSGDATA *msg = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_btlv_input_dat, biw->heapID );
-  static  const int monsname_pos[ PTL_WAZA_MAX ][ 2 ] = 
-  { 
+  static  const int monsname_pos[ PTL_WAZA_MAX ][ 2 ] =
+  {
     { MONSNAME4_X3, MONSNAME4_Y3 },
     { MONSNAME4_X2, MONSNAME4_Y2 },
     { MONSNAME4_X4, MONSNAME4_Y4 },
@@ -1386,16 +1386,16 @@ static  void  BTLV_INPUT_CreateDirScreen( BTLV_INPUT_WORK* biw, const BTLV_INPUT
  */
 //--------------------------------------------------------------
 static  void  BTLV_INPUT_ClearWazaScreen( BTLV_INPUT_WORK* biw )
-{ 
+{
   int i;
 
   GFL_BMP_Clear( biw->bmp_data, 0x00 );
   GFL_BMPWIN_TransVramCharacter( biw->bmp_win );
 
   for( i = 0 ; i < PTL_WAZA_MAX ; i++ )
-  { 
+  {
     if( biw->wazatype_wk[ i ] )
-    { 
+    {
       GFL_CLACT_WK_Remove( biw->wazatype_wk[ i ] );
       biw->wazatype_wk[ i ] = NULL;
     }
@@ -1454,7 +1454,7 @@ static PRINTSYS_LSB PP_FontColorGet(int pp, int pp_max)
  */
 //--------------------------------------------------------------
 static  void  BTLV_INPUT_CreateBallGauge( BTLV_INPUT_WORK* biw, const BTLV_INPUT_DIR_PARAM *bidp, int type )
-{ 
+{
   BTLV_INPUT_BALLGAUGE* bib;
   int                   i;
   GFL_CLACTPOS          pos;
@@ -1466,7 +1466,7 @@ static  void  BTLV_INPUT_CreateBallGauge( BTLV_INPUT_WORK* biw, const BTLV_INPUT
   };
 
   if( type )
-  { 
+  {
     bib = biw->ballgauge_enemy;
     pos.x = BTLV_INPUT_BALLGAUGE_ENEMY_X;
     pos.y = BTLV_INPUT_BALLGAUGE_ENEMY_Y;
@@ -1474,7 +1474,7 @@ static  void  BTLV_INPUT_CreateBallGauge( BTLV_INPUT_WORK* biw, const BTLV_INPUT
     anm_ofs = 4;
   }
   else
-  { 
+  {
     bib = biw->ballgauge_mine;
     pos.x = BTLV_INPUT_BALLGAUGE_MINE_X;
     pos.y = BTLV_INPUT_BALLGAUGE_MINE_Y;
@@ -1483,8 +1483,8 @@ static  void  BTLV_INPUT_CreateBallGauge( BTLV_INPUT_WORK* biw, const BTLV_INPUT
   }
 
   for( i = 0 ; i < TEMOTI_POKEMAX ; i++ )
-  { 
-    GF_ASSERT( bib[ i ].clwk == NULL );
+  {
+    GF_ASSERT( bib[ i ].clwk == NULL )
     bib[ i ].clwk = GFL_CLACT_WK_Create( biw->ballgauge_clunit, biw->objcharID, biw->objplttID, biw->objcellID,
                                           &ballgauge, CLSYS_DEFREND_SUB, biw->heapID );
     GFL_CLACT_WK_SetPos( bib[ i ].clwk, &pos, CLSYS_DEFREND_SUB );
@@ -1504,26 +1504,26 @@ static  void  BTLV_INPUT_CreateBallGauge( BTLV_INPUT_WORK* biw, const BTLV_INPUT
  */
 //--------------------------------------------------------------
 static  void  BTLV_INPUT_DeleteBallGauge( BTLV_INPUT_WORK* biw )
-{ 
+{
   BTLV_INPUT_BALLGAUGE* bib;
   int                   i;
   int                   type;
 
   for( type = 0 ; type < 2 ; type++ )
-  { 
+  {
     if( type )
-    { 
+    {
       bib = biw->ballgauge_enemy;
     }
     else
-    { 
+    {
       bib = biw->ballgauge_mine;
     }
 
     for( i = 0 ; i < TEMOTI_POKEMAX ; i++ )
-    { 
+    {
       if( bib[ i ].clwk )
-      { 
+      {
         GFL_CLACT_WK_Remove( bib[ i ].clwk );
         bib[ i ].clwk = NULL;
       }

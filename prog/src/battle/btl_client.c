@@ -581,7 +581,7 @@ static BOOL SubProc_UI_SelectAction( BTL_CLIENT* wk, int* seq )
       BTL_Printf("itemID=%d\n", itemID);
       if( itemID != ITEM_DUMMY_DATA ){
         BTL_ACTION_SetItemParam( wk->procAction, itemID, targetIdx );
-        (*seq)=SEQ_RETURN_START;
+        (*seq)=SEQ_CHECK_DONE;
       }else{
         (*seq)=SEQ_CHECK_ACTION;
       }

@@ -401,7 +401,7 @@ BOOL BTL_SICK_MakeDefaultCureMsg( WazaSick sickID, BPP_SICK_CONT oldCont, const 
 {
   BOOL fUseItem = (itemID != ITEM_DUMMY_DATA );
   int strID = getCureStrID( sickID, fUseItem );
-  if( strID ){
+  if( strID >= 0 ){
     HANDEX_STR_Setup( str, BTL_STRTYPE_SET, strID );
     HANDEX_STR_AddArg( str, BPP_GetID( bpp ) );
     if( fUseItem ){

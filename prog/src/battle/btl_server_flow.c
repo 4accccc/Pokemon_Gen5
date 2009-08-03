@@ -1605,7 +1605,6 @@ static void scproc_TrainerItem_Root( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u1
   for(i=0; i<NELEMS(ItemEffectTbl); ++i){
     itemParam = BTL_CALC_ITEM_GetParam( itemID, ItemEffectTbl[i].effect );
     if( itemParam ){
-      BTL_Printf("ItemID[%d], Param[%d]=Hit!\n", itemID, itemParam );
       ItemEffectTbl[i].func( wk, target, itemID, itemParam, actParam );
     }
   }
@@ -1667,7 +1666,7 @@ static u8 ItemEff_Relive( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 itemID, i
     case ITEM_RECOVER_HP_HALF:
       param->recoverHP = BTL_CALC_QuotMaxHP(bpp, 2 ); break;
     default:
-      param->recoverHP = itemParam; break;
+      param->recoverHP = BTL_CALC_ITEM_GetParam( itemID, ITEM_PRM_HP_RCV_POINT ); break;
     }
     return TRUE;
   }
@@ -1707,9 +1706,10 @@ static u8 ItemEff_PP_Rcv( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 itemID, i
   {
     u8 pokeID = BPP_GetID( bpp );
     u8 volume = BPP_WAZA_GetPPShort( bpp, actParam );
-    if( itemParam != ITEM_RECOVER_PP_FULL ){
-      if( volume > itemParam ){
-        volume = itemParam;
+    u8 ppValue = BTL_CALC_ITEM_GetParam( itemID, ITEM_PRM_PP_RCV_POINT );
+    if( ppValue != ITEM_RECOVER_PP_FULL ){
+      if( volume > ppValue ){
+        volume = ppValue;
       }
     }
     if( volume )
@@ -1762,7 +1762,7 @@ static u8 ItemEff_HP_Rcv( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 itemID, i
     case ITEM_RECOVER_HP_HALF:
       param->recoverHP = BTL_CALC_QuotMaxHP(bpp, 2 ); break;
     default:
-      param->recoverHP = itemParam; break;
+      param->recoverHP = BTL_CALC_ITEM_GetParam( itemID, ITEM_PRM_HP_RCV_POINT ); break;
     }
 
     HANDEX_STR_Setup( &param->exStr, BTL_STRTYPE_SET, BTL_STRID_SET_HP_Recover );
@@ -8540,7 +8540,6 @@ static void handexSub_putString( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_STR_PARAM
     scPut_Message_StdEx( wk, strParam->ID, strParam->argCnt, strParam->args );
     break;
   case BTL_STRTYPE_SET:
-    BTL_Printf("SETメッセージ出す\n");
     scPut_Message_SetEx( wk, strParam->ID, strParam->argCnt, strParam->args );
     break;
   }
