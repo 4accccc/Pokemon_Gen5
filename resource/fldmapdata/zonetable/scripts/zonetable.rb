@@ -271,7 +271,8 @@ class ZoneDataFile < OutputFile
 				"enc_dummy"
 			end
 		#window = column[@cl.cWINDOW].upcase
-		window = column[@cl.cWINDOW]
+		#window = column[@cl.cWINDOW]
+    window = 0
 		maptype = column[@cl.cMAPTYPE]
 		if !(maptype =~ /^MAPTYPE_/) then
 			STDERR.puts "マップタイプの指定がおかしい!:#{maptype}:\n"

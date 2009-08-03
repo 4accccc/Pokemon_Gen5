@@ -69,7 +69,7 @@ enum {
 #include "../script/script_seq.naix"      //script ID 定義ファイル
 #include "../../message/script_message.naix"     //message archive ID定義ファイル
 #include "..\..\message\dst\msg_place_name.h"   //地名表示用文字列ID定義ファイル
-#include "..\..\place_name\area_win_gra.naix"   //地名表示ウィンドウリソースID定義ファイル
+//#include "..\..\place_name\area_win_gra.naix"   //地名表示ウィンドウリソースID定義ファイル
 
 enum {
 	//sp_scr_dummy = NARC_scr_seq_sp_dummy_bin,
