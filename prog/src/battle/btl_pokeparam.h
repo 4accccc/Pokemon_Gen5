@@ -204,6 +204,7 @@ extern WazaID BPP_WAZA_GetID( const BTL_POKEPARAM* pp, u8 idx );
 extern WazaID BPP_WAZA_GetParticular( const BTL_POKEPARAM* pp, u8 idx, u8* PP, u8* PPMax );
 extern u8 BPP_WAZA_SearchIdx( const BTL_POKEPARAM* pp, WazaID waza );
 extern u16 BPP_WAZA_GetPP( const BTL_POKEPARAM* pp, u8 wazaIdx );
+extern u8 BPP_WAZA_GetPPShort( const BTL_POKEPARAM* bpp, u8 idx );
 
 extern int BPP_GetValue( const BTL_POKEPARAM* pp, BppValueID vid );
 extern int BPP_GetValue_Base( const BTL_POKEPARAM* pp, BppValueID vid );

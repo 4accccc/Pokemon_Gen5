@@ -398,21 +398,48 @@ u8 BPP_WAZA_GetUsedCount( const BTL_POKEPARAM* pp )
   return cnt;
 }
 
-WazaID BPP_WAZA_GetID( const BTL_POKEPARAM* pp, u8 idx )
+WazaID BPP_WAZA_GetID( const BTL_POKEPARAM* bpp, u8 idx )
 {
-  GF_ASSERT(idx < pp->wazaCnt);
-  return pp->waza[idx].number;
+  GF_ASSERT(idx < bpp->wazaCnt);
+  return bpp->waza[idx].number;
 }
 
-WazaID BPP_WAZA_GetParticular( const BTL_POKEPARAM* pp, u8 idx, u8* PP, u8* PPMax )
+//=============================================================================================
+/**
+ * [ワザパラメータ] ID, 現PP, 最大PPを一度に取得
+ *
+ * @param   bpp
+ * @param   idx     対象ワザインデックス
+ * @param   PP      [out] 現PPを取得する変数アドレス
+ * @param   PPMax   [out] 最大PPを取得する変数アドレス
+ *
+ * @retval  WazaID  ワザID
+ */
+//=============================================================================================
+WazaID BPP_WAZA_GetParticular( const BTL_POKEPARAM* bpp, u8 idx, u8* PP, u8* PPMax )
 {
-  GF_ASSERT(idx < pp->wazaCnt);
-  *PP = pp->waza[idx].pp;
-  *PPMax = pp->waza[idx].ppMax;
+  GF_ASSERT(idx < bpp->wazaCnt);
+  *PP = bpp->waza[idx].pp;
+  *PPMax = bpp->waza[idx].ppMax;
 
-  return pp->waza[idx].number;
+  return bpp->waza[idx].number;
 }
 
+//=============================================================================================
+/**
+ * [ワザパラメータ] PP不足分を取得
+ *
+ * @param   bpp
+ * @param   idx       対象ワザインデックス
+ *
+ * @retval  u8        PP不足分
+ */
+//=============================================================================================
+u8 BPP_WAZA_GetPPShort( const BTL_POKEPARAM* bpp, u8 idx )
+{
+  GF_ASSERT(idx < bpp->wazaCnt);
+  return (bpp->waza[idx].ppMax - bpp->waza[idx].pp);
+}
 
 PokeTypePair BPP_GetPokeType( const BTL_POKEPARAM* pp )
 {

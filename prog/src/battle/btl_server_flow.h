@@ -88,7 +88,6 @@ extern SVCL_WORK* BTL_SERVER_GetClientWork( BTL_SERVER* server, u8 clientID );
 extern SVCL_WORK* BTL_SERVER_GetClientWorkIfEnable( BTL_SERVER* server, u8 clientID );
 
 extern u8 BTL_SVCL_GetNumActPoke( SVCL_WORK* clwk );
-extern u8 BTL_SVCL_GetNumCoverPos( SVCL_WORK* clwk );
 extern const BTL_ACTION_PARAM* BTL_SVCL_GetPokeAction( SVCL_WORK* clwk, u8 posIdx );
 
 
@@ -226,6 +225,7 @@ typedef enum {
   BTL_HANDEX_CHANGE_MEMBER, ///< メンバー交換
   BTL_HANDEX_BATONTOUCH,    ///< バトンタッチ（ランク効果等の引き継ぎ）
   BTL_HANDEX_ADD_SHRINK,    ///< ひるませる
+  BTL_HANDEX_RELIVE,        ///< 生き返らせる
 
   BTL_HANDEX_MAX,
 
@@ -319,6 +319,7 @@ typedef struct {
  u8   volume;                        ///< PP量
  u8   pokeID;                        ///< 対象ポケモンID
  u8   wazaIdx;                       ///< 対象ワザインデックス
+ BTL_HANDEX_STR_PARAMS     exStr;    ///< 成功時メッセージ
 }BTL_HANDEX_PARAM_PP;
 
 typedef struct {
@@ -520,7 +521,14 @@ typedef struct {
   u8  per;        ///< 確率
 }BTL_HANDEX_PARAM_ADD_SHRINK;
 
-
+/**
+ * 生き返らせる処理ワーク
+ */
+typedef struct {
+  BTL_HANDEX_PARAM_HEADER  header;
+  u8   pokeID;        ///< 対象ポケID
+  u16  recoverHP;     ///< 回復HP量
+}BTL_HANDEX_PARAM_RELIVE;
 
 extern void* BTL_SVFLOW_HANDLERWORK_Push( BTL_SVFLOW_WORK* wk, BtlEventHandlerExhibition eq_type, u8 userPokeID );
 extern u8 BTL_SERVERFLOW_RECEPT_GetTargetPokeID( BTL_SVFLOW_WORK* wk, BtlExPos exPos, u8* dst_pokeID );

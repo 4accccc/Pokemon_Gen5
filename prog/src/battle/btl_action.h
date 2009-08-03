@@ -35,26 +35,31 @@ typedef union {
   }gen;
 
   struct {
-    u32 cmd     : 3;
+    u32 cmd       : 3;
     u32 targetPos : 3;
     u32 waza      : 16;
+    u32 _0        : 9;
   }fight;
 
   struct {
     u32 cmd       : 3;
-    u32 number    : 16;
-    u32 targetIdx : 3;
+    u32 targetIdx : 3;  ///< 対象ポケモンのパーティ内インデックス
+    u32 number    : 16; ///< アイテムID
+    u32 param     : 8;  ///< サブパラメータ（PP回復時、どのワザに適用するか、など）
+    u32 _1        : 1;
   }item;
 
   struct {
-    u32 cmd       : 3;
-    u32 posIdx    : 3;  // 入れ替え対象位置ID
-    u32 memberIdx : 3;  // 選ばれたポケモンのパーティ内インデックス
+    u32 cmd         : 3;
+    u32 posIdx      : 3;  // 入れ替え対象位置ID
+    u32 memberIdx   : 3;  // 選ばれたポケモンのパーティ内インデックス
     u32 depleteFlag : 1;
+    u32 _2          : 22;
   }change;
 
   struct {
     u32 cmd     : 3;
+    u32 _3      : 29;
   }escape;
 
 
@@ -73,6 +78,7 @@ static void BTL_ACTION_SetItemParam( BTL_ACTION_PARAM* p, u16 itemNumber, u8 tar
   p->item.cmd = BTL_ACTION_ITEM;
   p->item.number = itemNumber;
   p->item.targetIdx = targetIdx;
+  p->item.param = 0;
 }
 // 入れ替えポケモン選択アクション（選択対象は未定）
 static inline void BTL_ACTION_SetChangeBegin( BTL_ACTION_PARAM* p )

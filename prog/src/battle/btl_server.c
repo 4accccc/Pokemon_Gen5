@@ -582,12 +582,6 @@ u8 BTL_SVCL_GetNumActPoke( SVCL_WORK* clwk )
   GF_ASSERT(clwk->adapter);
   return BTL_ADAPTER_GetReturnDataCount( clwk->adapter );
 }
-
-u8 BTL_SVCL_GetNumCoverPos( SVCL_WORK* clwk )
-{
-  return clwk->numCoverPos;
-}
-
 const BTL_ACTION_PARAM* BTL_SVCL_GetPokeAction( SVCL_WORK* clwk, u8 posIdx )
 {
   GF_ASSERT(clwk->adapter);

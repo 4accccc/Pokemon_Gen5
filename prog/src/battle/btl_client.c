@@ -429,7 +429,7 @@ static BOOL SubProc_UI_SelectAction( BTL_CLIENT* wk, int* seq )
         (*seq) = SEQ_CHECK_FIGHT;
         break;
       case BTL_ACTION_ITEM:
-//        (*seq) = SEQ_CHECK_ITEM;
+        (*seq) = SEQ_CHECK_ITEM;
         break;
       }
     }
@@ -492,7 +492,6 @@ static BOOL SubProc_UI_SelectAction( BTL_CLIENT* wk, int* seq )
       if( result == BTLV_RESULT_DONE ){
         (*seq) = SEQ_CHECK_DONE;
       }else if( result == BTLV_RESULT_CANCEL ){
-        BTL_Printf("‚à‚Ç‚é‚¨‚³‚ê‚½\n");
         (*seq) = SEQ_SELECT_WAZA_START;
       }
     }
@@ -1080,6 +1079,7 @@ static u8 calc_puttable_pokemons( BTL_CLIENT* wk, u8* list )
       {
         if( list )
         {
+          BTL_Printf(" %d”Ô–Ú‚Í‘I‚×‚Ü‚·\n", i);
           list[cnt] = i;
         }
         cnt++;
@@ -1279,6 +1279,7 @@ static BOOL SubProc_AI_SelectPokemon( BTL_CLIENT* wk, int* seq )
       {
         BTL_MAIN_BtlPosToClientID_and_PosIdx( wk->mainModule, wk->myChangePokePos[i], &clientID, &posIdx );
         BTL_ACTION_SetChangeParam( &wk->actionParam[i], posIdx, puttableList[i] );
+        BTL_Printf(" %d”Ô–Ú‚ðV‚½‚Éo‚µ‚Ü‚·\n", puttableList[i] );
       }
       wk->returnDataPtr = &(wk->actionParam[0]);
       wk->returnDataSize = sizeof(wk->actionParam[0]) * numSelect;

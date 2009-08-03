@@ -203,13 +203,14 @@ static void handler_pos_MikadukiNoMai( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WO
     // ‘SƒƒUPP‘S‰ñ•œ
     {
       u32 i;
-      u8 pp, ppMax;
+      u8 volume;
       for(i=0; i<PTL_WAZA_MAX; ++i){
-        if( BPP_WAZA_GetParticular(bpp, i, &pp, &ppMax) != WAZANO_NULL )
+        volume = BPP_WAZA_GetPPShort( bpp, i );
+        if( volume )
         {
           BTL_HANDEX_PARAM_PP* param = BTL_SVFLOW_HANDLERWORK_Push( flowWk, BTL_HANDEX_RECOVER_PP, pokeID );
           param->pokeID = pokeID;
-          param->volume = (ppMax - pp);
+          param->volume = volume;
           param->wazaIdx = i;
         }
       }
