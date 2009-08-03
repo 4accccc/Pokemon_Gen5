@@ -128,6 +128,9 @@ void PLIST_MENU_OpenMenu( PLIST_WORK *work , PLIST_MENU_WORK *menuWork , PLIST_M
   taskInitWork.itemWork = menuWork->itemWork;
   taskInitWork.bgFrame = PLIST_BG_MENU;
   taskInitWork.palNo = PLIST_BG_PLT_MENU_ACTIVE;
+  taskInitWork.posType = ATPT_RIGHT_DOWN;
+  taskInitWork.charPosX = 32;
+  taskInitWork.charPosY = 24;
   taskInitWork.msgHandle = work->msgHandle;
   taskInitWork.fontHandle = work->fontHandle;
   taskInitWork.printQue = work->printQue;

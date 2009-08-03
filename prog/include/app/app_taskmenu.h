@@ -15,6 +15,13 @@
 //タスクメニュー ワーク
 typedef struct _APP_TASKMENU_WORK APP_TASKMENU_WORK;
 
+//位置指定が左上か右下か
+typedef enum
+{
+  ATPT_LEFT_UP,     //左上
+  ATPT_RIGHT_DOWN,  //右下
+  
+}APP_TASKMENU_POS_TYPE;
 
 //タスクメニュー 初期化ワーク １項目
 typedef struct
@@ -35,6 +42,11 @@ typedef struct
   //BG関係
   u8  bgFrame;
   u8  palNo;    //パレット2本使います
+  
+  //位置
+  APP_TASKMENU_POS_TYPE posType;
+  u8  charPosX; //ウィンドウ開始位置(キャラ単位
+  u8  charPosY;
   
   //メッセージ関係
   GFL_MSGDATA *msgHandle;
