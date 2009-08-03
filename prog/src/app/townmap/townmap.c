@@ -150,7 +150,7 @@ enum
 	APPBAR_RES_MAX
 };
 //アイコン種類
-enum
+typedef enum
 {	
 	APPBAR_BARICON_CLOSE,
 	APPBAR_BARICON_RETURN,
@@ -162,7 +162,7 @@ enum
 	APPBAR_BARICON_SCALE_UP,
 	APPBAR_BARICON_SCALE_DOWN,
 	APPBAR_BARICON_MAX,
-};
+}APPBAR_BARICON_TYPE;
 //位置
 //バー
 #define APPBAR_MENUBAR_X	(0)
@@ -180,6 +180,49 @@ enum
 
 #define APPBAR_ICON_W	(24)
 #define APPBAR_ICON_H	(24)
+
+//アクティブアニメ
+static const u16 sc_appbar_icon_active_anm[]	=
+{	
+  APP_COMMON_BARICON_CLOSE,
+  APP_COMMON_BARICON_RETURN,
+  APP_COMMON_BARICON_CURSOR_DOWN,
+  APP_COMMON_BARICON_CURSOR_UP,
+  APP_COMMON_BARICON_CURSOR_LEFT,
+  APP_COMMON_BARICON_CURSOR_RIGHT,
+  APP_COMMON_BARICON_CHECK_ON,
+	7,
+	8,
+};
+
+//押し中アニメ
+static const u16 sc_appbar_icon_push_anm[]	=
+{	
+  APP_COMMON_BARICON_CLOSE_ON,
+  APP_COMMON_BARICON_RETURN_ON,
+  APP_COMMON_BARICON_CURSOR_DOWN_ON,
+  APP_COMMON_BARICON_CURSOR_UP_ON,
+  APP_COMMON_BARICON_CURSOR_LEFT_ON,
+  APP_COMMON_BARICON_CURSOR_RIGHT_ON,
+  APP_COMMON_BARICON_CHECK_ON,
+	9,
+	10,
+};
+
+//パッシブアニメ
+static const u16 sc_appbar_icon_passive_anm[]	=
+{	
+  APP_COMMON_BARICON_CLOSE_OFF,
+  APP_COMMON_BARICON_RETURN_OFF,
+  APP_COMMON_BARICON_CURSOR_DOWN_OFF,
+  APP_COMMON_BARICON_CURSOR_UP_OFF,
+  APP_COMMON_BARICON_CURSOR_LEFT_OFF,
+  APP_COMMON_BARICON_CURSOR_RIGHT_OFF,
+	APP_COMMON_BARICON_CHECK_OFF,
+	11,
+	12,
+};
+
 //-------------------------------------
 ///	CURSOR
 //=====================================
@@ -288,6 +331,8 @@ enum
 typedef struct 
 {
 	GFL_CLWK	*p_clwk[APPBAR_BARICON_MAX];
+	BOOL			active[APPBAR_BARICON_MAX];
+	BOOL			active_req[APPBAR_BARICON_MAX];
 	u32				res[APPBAR_RES_MAX];
 	u32				bg_frm;
 	GFL_ARCUTIL_TRANSINFO				chr_pos;
@@ -489,10 +534,6 @@ typedef struct
 	//拡大中かどうか
 	BOOL	is_scale;
 	
-	//BG動作を1シンク遅らせるためのシーケンス
-	u16	move_seq;
-	u16 dummy;
-
 #ifdef PM_DEBUG
 	BOOL	is_print_debug;
 	BOOL	is_place_visible_debug;
@@ -540,6 +581,7 @@ static void APPBAR_Exit( APPBAR_WORK *p_wk );
 static void APPBAR_Main( APPBAR_WORK *p_wk );
 static APPBAR_SELECT APPBAR_GetTrg( const APPBAR_WORK *cp_wk );
 static APPBAR_SELECT APPBAR_GetCont( const APPBAR_WORK *cp_wk );
+static void APPBAR_SetActive( APPBAR_WORK *p_wk, APPBAR_BARICON_TYPE icon, BOOL is_active );
 static void ARCHDL_UTIL_TransVramScreenEx( ARCHANDLE *handle, ARCDATID datID, u32 frm, u32 chr_ofs, u8 src_x, u8 src_y, u8 src_w, u8 src_h, u8 dst_x, u8 dst_y, u8 dst_w, u8 dst_h,  u8 plt, BOOL compressedFlag, HEAPID heapID );
 //-------------------------------------
 ///	CURSOR
@@ -1345,16 +1387,11 @@ static void SEQFUNC_Main( SEQ_WORK *p_seqwk, int *p_seq, void *p_param_adrs )
 			GFL_POINT	pos;
 			PLACE_GetWldPos( &p_wk->place, &pos );
 
-			//BGの移動を遅らせる処理
-			switch( p_wk->move_seq )
-			{
-			default:
-				MAP_AddWldPos( &p_wk->map, &add );
-				//OBJとBGは方向が逆
-				add.x	*= -1;
-				add.y *= -1;
-				PLACE_AddWldPos( &p_wk->place, &add );
-			}
+			MAP_AddWldPos( &p_wk->map, &add );
+			//OBJとBGは方向が逆
+			add.x	*= -1;
+			add.y *= -1;
+			PLACE_AddWldPos( &p_wk->place, &add );
 		}
 
 	}
@@ -1474,6 +1511,10 @@ static void SEQFUNC_Main( SEQ_WORK *p_seqwk, int *p_seq, void *p_param_adrs )
 
 			PLACE_SetVisible( &p_wk->place, FALSE );
 
+			//アイコンのアクティブせってい
+			APPBAR_SetActive( &p_wk->appbar, APPBAR_BARICON_SCALE_UP, FALSE );
+			APPBAR_SetActive( &p_wk->appbar, APPBAR_BARICON_SCALE_DOWN, TRUE );
+
 			p_wk->is_scale	= TRUE;
 		}
 		break;
@@ -1489,6 +1530,10 @@ static void SEQFUNC_Main( SEQ_WORK *p_seqwk, int *p_seq, void *p_param_adrs )
 			MAP_Scale( &p_wk->map, FX32_CONST(1), &src_pos, &sc_center_pos );
 			
 			PLACE_SetVisible( &p_wk->place, FALSE );
+
+			//アイコンのアクティブせってい
+			APPBAR_SetActive( &p_wk->appbar, APPBAR_BARICON_SCALE_DOWN, FALSE );
+			APPBAR_SetActive( &p_wk->appbar, APPBAR_BARICON_SCALE_UP, TRUE );
 
 			p_wk->is_scale	= FALSE;
 		}
@@ -1723,6 +1768,19 @@ static void APPBAR_Init( APPBAR_WORK *p_wk, APPBAR_OPTION_MASK mask, GFL_CLUNIT*
 			}
 		}
 	}
+
+
+	//初期は全部アクティブにする
+	{	
+		int i;
+		for( i = 0; i < APPBAR_BARICON_MAX; i++ )
+		{
+			p_wk->active[i]	= p_wk->active_req[i]	= TRUE;
+		}
+	}
+
+	//scale_downはパッシブ
+	APPBAR_SetActive( p_wk, APPBAR_BARICON_SCALE_DOWN, FALSE );
 }
 //----------------------------------------------------------------------------
 /**
@@ -1852,7 +1910,7 @@ static void APPBAR_Main( APPBAR_WORK *p_wk )
 	p_wk->cont	= APPBAR_SELECT_NONE;
 	for( i = 0; i < NELEMS(sc_hit_tbl); i++ )
 	{	
-		if( p_wk->mode & sc_mask_tbl[i] )
+		if( p_wk->mode & sc_mask_tbl[i] && p_wk->active[i] )
 		{	
 #if 0
 			if( CURSOR_GetPointTrg( cp_cursor, &x, &y ) )
@@ -1865,6 +1923,10 @@ static void APPBAR_Main( APPBAR_WORK *p_wk )
 						&	((u32)( y - sc_hit_tbl[i].rect.top) <=
 							(u32)(sc_hit_tbl[i].rect.bottom - sc_hit_tbl[i].rect.top)))
 				{
+
+					//アニメスタート
+					GFL_CLACT_WK_SetAnmSeq( p_wk->p_clwk[i], sc_appbar_icon_push_anm[i] );
+					GFL_CLACT_WK_SetAutoAnmFlag( p_wk->p_clwk[i], TRUE );
 					p_wk->trg	= i;
 				}
 			}
@@ -1900,6 +1962,28 @@ static void APPBAR_Main( APPBAR_WORK *p_wk )
 	{	
 		p_wk->cont	= APPBAR_SELECT_CUR_R;
 	}
+
+	//アクティブアニメせっていリクエスト
+	//	押し状態のアニメが止まっていたら変更する
+	for( i = 0; i < APPBAR_BARICON_MAX; i++ )
+	{	
+		//せっていされていて、リクエストと現在が違ったら
+		//さらにアニメが停止していたら
+		if( (p_wk->mode & sc_mask_tbl[i] )
+				&& (p_wk->active_req[i] != p_wk->active[i] )
+				&& !GFL_CLACT_WK_CheckAnmActive(p_wk->p_clwk[i]))
+		{	
+			p_wk->active[i]	= p_wk->active_req[i];
+			if( p_wk->active[i] )
+			{	
+				GFL_CLACT_WK_SetAnmSeq( p_wk->p_clwk[i], sc_appbar_icon_active_anm[i] );
+			}
+			else
+			{	
+				GFL_CLACT_WK_SetAnmSeq( p_wk->p_clwk[i], sc_appbar_icon_passive_anm[i] );
+			}
+		}
+	}
 }
 //----------------------------------------------------------------------------
 /**
@@ -1926,6 +2010,18 @@ static APPBAR_SELECT APPBAR_GetTrg( const APPBAR_WORK *cp_wk )
 static APPBAR_SELECT APPBAR_GetCont( const APPBAR_WORK *cp_wk )
 {	
 	return cp_wk->cont;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	アクティブフラグせってい
+ *
+ *	@param	APPBAR_WORK *p_wk	ワーク
+ *	@param	is_active					TRUEでアクティブ	FALSEでパッシブ
+ */
+//-----------------------------------------------------------------------------
+static void APPBAR_SetActive( APPBAR_WORK *p_wk, APPBAR_BARICON_TYPE icon, BOOL is_active )
+{	
+	p_wk->active_req[ icon ]	= is_active;
 }
 //----------------------------------------------------------------------------
 /**
@@ -3364,6 +3460,7 @@ static void MAP_Main( MAP_WORK *p_wk )
 		MTX_Scale22( &p_wk->mtx, p_wk->now_scale, p_wk->now_scale );
 		GFL_BG_SetAffine( p_wk->map_frm, &p_wk->mtx, sc_center_pos.x, sc_center_pos.y );
 		GFL_BG_SetAffine( p_wk->road_frm, &p_wk->mtx, sc_center_pos.x, sc_center_pos.y );
+
 #if 0
 		GFL_BG_SetAffineScroll( p_wk->map_frm, GFL_BG_SCROLL_X_SET, p_wk->pos.x,
 				&p_wk->mtx, sc_center_pos.x, sc_center_pos.y );
