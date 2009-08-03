@@ -872,14 +872,12 @@ static void LISTDATA_ChangeProcTownMap( DEBUG_NAGI_MAIN_WORK *p_wk )
 {	
 	GFL_STD_MemClear( &p_wk->townmap_param, sizeof(TOWNMAP_PARAM) );
 	p_wk->townmap_param.mode			= TOWNMAP_MODE_MAP;
-	p_wk->townmap_param.is_debug	= TRUE;
 	DEBUG_NAGI_COMMAND_ChangeProc( p_wk, FS_OVERLAY_ID(townmap), &TownMap_ProcData, &p_wk->townmap_param );
 }
 static void LISTDATA_ChangeProcSkyJump( DEBUG_NAGI_MAIN_WORK *p_wk )
 {	
 	GFL_STD_MemClear( &p_wk->townmap_param, sizeof(TOWNMAP_PARAM) );
-	p_wk->townmap_param.mode			= TOWNMAP_MODE_SKY;
-	p_wk->townmap_param.is_debug	= TRUE;
+	p_wk->townmap_param.mode			= TOWNMAP_MODE_DEBUGSKY;
 	DEBUG_NAGI_COMMAND_ChangeProc( p_wk, FS_OVERLAY_ID(townmap), &TownMap_ProcData, &p_wk->townmap_param );
 }
 //----------------------------------------------------------------------------

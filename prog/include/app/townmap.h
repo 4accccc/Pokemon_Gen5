@@ -23,6 +23,7 @@ typedef enum
 {
 	TOWNMAP_MODE_SKY,	//そらをとぶモード
 	TOWNMAP_MODE_MAP,	//タウンマップ見るモード
+	TOWNMAP_MODE_DEBUGSKY,		//デバッグ空を飛ぶモード
 
 	TOWNMAP_MODE_MAX
 } TOWNMAP_MODE;
@@ -51,7 +52,6 @@ typedef enum
 typedef struct 
 {
 	TOWNMAP_MODE		mode;			//[in]			動作モード
-	BOOL						is_debug;	//[in]			デバッグフラグどこでも空を飛べるようになる
 	TOWNMAP_SELECT	select;		//[out]			選択の種類
 	u16							zoneID;		//[in/out]	[in]主人公が今いるゾーンID[out]空を飛ぶゾーンID
 	u16							dummy;		// zoneIDはu16

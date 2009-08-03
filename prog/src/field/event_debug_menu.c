@@ -2683,8 +2683,7 @@ static BOOL DMenuCallProc_DebugSkyJump( DEBUG_MENU_EVENT_WORK *p_wk )
 	//タウンマップワーク設定
 	p_sky->p_param	= GFL_HEAP_AllocMemory( HEAPID_PROC, sizeof(TOWNMAP_PARAM) );
 	GFL_STD_MemClear( p_sky->p_param, sizeof(TOWNMAP_PARAM) );
-	p_sky->p_param->mode			= TOWNMAP_MODE_SKY;
-	p_sky->p_param->is_debug	= TRUE;
+	p_sky->p_param->mode			= TOWNMAP_MODE_DEBUGSKY;
 	{
 		GAMEDATA		*p_gamedata;
 		PLAYER_WORK *p_player;

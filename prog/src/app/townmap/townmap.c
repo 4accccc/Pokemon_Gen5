@@ -173,7 +173,7 @@ enum
 #define APPBAR_ICON_Y	(168)
 #define APPBAR_ICON_CUR_L_X				(16)
 #define APPBAR_ICON_CUR_R_X				(38)
-#define APPBAR_ICON_SCALE_DOWN_X	(144)
+#define APPBAR_ICON_SCALE_DOWN_X	(136)
 #define APPBAR_ICON_SCALE_UP_X		(168)
 #define APPBAR_ICON_CLOSE_X				(200)
 #define APPBAR_ICON_RETURN_X			(232)
@@ -830,9 +830,20 @@ static GFL_PROC_RESULT TOWNMAP_PROC_Init( GFL_PROC *p_proc, int *p_seq, void *p_
 	{	
 		u32 appbar_mode;
 
-		if( p_wk->p_param->mode == TOWNMAP_MODE_SKY )
+		if( p_wk->p_param->mode == TOWNMAP_MODE_MAP )
 		{	
-			appbar_mode	= APPBAR_OPTION_MASK_SKY;
+			appbar_mode	= APPBAR_OPTION_MASK_TOWN;
+		}
+		else
+		{	
+			if( p_wk->p_param->mode == TOWNMAP_MODE_DEBUGSKY )
+			{	
+				appbar_mode	= APPBAR_OPTION_MASK_TOWN;
+			}
+			else
+			{	
+				appbar_mode	= APPBAR_OPTION_MASK_SKY;
+			}
 
 			//空を飛ぶモードならばメッセージ面追加
 			MSGWND_Init( &p_wk->msgwnd,
@@ -849,10 +860,6 @@ static GFL_PROC_RESULT TOWNMAP_PROC_Init( GFL_PROC *p_proc, int *p_seq, void *p_
 			GFL_FONTSYS_SetColor( 0xf, 1, 0 );
 			MSGWND_Print( &p_wk->msgwnd, 0, MSGWND_STR_SKY_X, MSGWND_STR_SKY_Y );
 			GFL_FONTSYS_SetDefaultColor();
-		}
-		else
-		{	
-			appbar_mode	= APPBAR_OPTION_MASK_TOWN;
 		}
 
 		APPBAR_Init( &p_wk->appbar,appbar_mode,
@@ -872,7 +879,7 @@ static GFL_PROC_RESULT TOWNMAP_PROC_Init( GFL_PROC *p_proc, int *p_seq, void *p_
 					GFL_BG_SCROLL_Y_SET, -4 );
 
 	//場所作成
-	PLACE_Init( &p_wk->place, p_param->zoneID, p_wk->p_data, p_wk->p_grh, HEAPID_TOWNMAP, p_param->is_debug );
+	PLACE_Init( &p_wk->place, p_param->zoneID, p_wk->p_data, p_wk->p_grh, HEAPID_TOWNMAP, FALSE );
 
 	//カーソル作成
 	CURSOR_Init( &p_wk->cursor, TOWNMAP_GRAPHIC_GetClwk( p_wk->p_grh, TOWNMAP_OBJ_CLWK_CURSOR ),
@@ -979,7 +986,7 @@ static GFL_PROC_RESULT TOWNMAP_PROC_Exit( GFL_PROC *p_proc, int *p_seq, void *p_
 	PLACEWND_Exit( &p_wk->placewnd );
 
 	//空を飛ぶモードならばメッセージ面破棄
-	if( p_wk->p_param->mode == TOWNMAP_MODE_SKY )
+	if( p_wk->p_param->mode != TOWNMAP_MODE_MAP )
 	{	
 		MSGWND_Exit( &p_wk->msgwnd );
 	}
@@ -1393,7 +1400,7 @@ static void SEQFUNC_Main( SEQ_WORK *p_seqwk, int *p_seq, void *p_param_adrs )
 
 		//選択処理
 		//このifを※１に写すと1発タッチでとばなくなる
-		if( p_wk->p_param->mode == TOWNMAP_MODE_SKY )
+		if( p_wk->p_param->mode == TOWNMAP_MODE_SKY || p_wk->p_param->mode == TOWNMAP_MODE_DEBUGSKY )
 		{
 			const PLACE_DATA *cp_data;
 			const PLACE_DATA *cp_now;
@@ -1436,7 +1443,11 @@ static void SEQFUNC_Main( SEQ_WORK *p_seqwk, int *p_seq, void *p_param_adrs )
 
 	///モジュールメイン処理
 	APPBAR_Main( &p_wk->appbar );
-	CURSOR_Main( &p_wk->cursor, &p_wk->place );
+
+	if( !MAP_IsScale( &p_wk->map ) )
+	{	
+		CURSOR_Main( &p_wk->cursor, &p_wk->place );
+	}
 	PLACE_Main( &p_wk->place );
 	MAP_Main( &p_wk->map );
 	PLACEWND_Main( &p_wk->placewnd );

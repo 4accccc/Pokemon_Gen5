@@ -825,7 +825,6 @@ static const BOOL FMenuReturnProc_Bag(FMENU_EVENT_WORK* mwk)
     {
       TOWNMAP_PARAM* pTown = GFL_HEAP_AllocClearMemory( HEAPID_PROC , sizeof(TOWNMAP_PARAM) );
       pTown->mode			= TOWNMAP_MODE_MAP;
-      pTown->is_debug	= TRUE;
       FMenu_SetNextSubProc( mwk ,FMENU_APP_TOWNMAP , pTown );
     }
     return TRUE;
