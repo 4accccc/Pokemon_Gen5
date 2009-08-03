@@ -1124,7 +1124,6 @@ static void SetState( FIELD_PLACE_NAME* p_sys, STATE next_state )
 			RecoveryBitmapWindow( p_sys );				// ビットマップウィンドウを復帰
 			WritePlaceName( p_sys, p_sys->nextZoneID );	// 新しい地名を書き込む
 			SetCharUnitAction( p_sys );					// 文字ユニットの動きをセット
-			GFL_BG_SetVisible( BG_FRAME, VISIBLE_ON );	// BGを表示
 			break;
 		case STATE_WAIT_1:
 			break;
@@ -1381,6 +1380,9 @@ static void Draw_FADE_IN( FIELD_PLACE_NAME* p_sys )
 {
 	int val1, val2;
 	float rate;
+
+	// BGを表示
+	GFL_BG_SetVisible( BG_FRAME, VISIBLE_ON );	
 	
 	// αブレンディング係数を更新
 	rate  = (float)p_sys->stateCount / (float)PROCESS_TIME_FADE_IN;
