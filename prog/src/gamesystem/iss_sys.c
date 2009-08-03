@@ -9,7 +9,7 @@
 #include "iss_sys.h"
 #include "iss_city_sys.h"
 #include "iss_road_sys.h"
-#include "field_sound.h"
+#include "../field/field_sound.h"
 #include "sound/bgm_info.h"
 #include "../../../resource/sound/bgm_info/iss_type.h"
 #include "gamesystem/playerwork.h"
@@ -22,6 +22,9 @@
  * @brief 定数・マクロ
  */
 //=========================================================================================
+
+// 再生中BGM番号の無効値
+#define INVALID_BGM_NO (0xffff)
 
 
 //=========================================================================================
@@ -48,7 +51,10 @@ struct _ISS_SYS
 	ISS_ROAD_SYS* pIssRoadSys;	// 道路
 
 	// 再生中のBGM番号
-	int bgmNo; 
+	u16 bgmNo; 
+
+	// フレームカウンタ
+	u32 frame;
 };
 
 
@@ -79,13 +85,12 @@ void BGMChangeCheck( ISS_SYS* p_sys );
  * @brief  ISSシステムを作成する
  *
  * @param p_gdata	監視対象ゲームデータ
- * @param zone_id   ゾーンID
  * @param heap_id   使用するヒープID
  * 
  * @return ISSシステム
  */
 //----------------------------------------------------------------------------
-ISS_SYS* ISS_SYS_Create( GAMEDATA* p_gdata, u16 zone_id, HEAPID heap_id )
+ISS_SYS* ISS_SYS_Create( GAMEDATA* p_gdata, HEAPID heap_id )
 {
 	ISS_SYS* p_sys;
 	PLAYER_WORK* p_player;
@@ -101,10 +106,10 @@ ISS_SYS* ISS_SYS_Create( GAMEDATA* p_gdata, u16 zone_id, HEAPID heap_id )
 	p_sys->pGameData   = p_gdata;
 	p_sys->cycle       = FALSE;
 	p_sys->surfing     = FALSE;
-	p_sys->pIssCitySys = ISS_CITY_SYS_Create( p_player, zone_id, heap_id );
-	p_sys->pIssRoadSys = ISS_ROAD_SYS_Create( p_player, zone_id, heap_id );
-	p_sys->bgmNo       = 0;
-	ISS_SYS_ZoneChange( p_sys, zone_id );
+	p_sys->pIssCitySys = ISS_CITY_SYS_Create( p_player, heap_id );
+	p_sys->pIssRoadSys = ISS_ROAD_SYS_Create( p_player, heap_id );
+	p_sys->bgmNo       = INVALID_BGM_NO;
+	p_sys->frame       = 0;
 	
 	// 作成したISSシステムを返す
 	return p_sys;
@@ -137,7 +142,9 @@ void ISS_SYS_Delete( ISS_SYS* p_sys )
  */
 //----------------------------------------------------------------------------
 void ISS_SYS_Update( ISS_SYS* p_sys )
-{
+{ 
+	p_sys->frame++;
+
 	// 自転車チェック
 	CycleCheck( p_sys );
 
@@ -150,8 +157,8 @@ void ISS_SYS_Update( ISS_SYS* p_sys )
 	// 街ISS
 	ISS_CITY_SYS_Update( p_sys->pIssCitySys );
 
-	// 道路ISS
-	ISS_ROAD_SYS_Update( p_sys->pIssRoadSys ); 
+	// 道路ISS(主人公が30fpsで動作するため, 道路ISSもそれに合わせる)
+	if( p_sys->frame % 2 == 0 ) ISS_ROAD_SYS_Update( p_sys->pIssRoadSys ); 
 }
 	
 
@@ -173,27 +180,9 @@ void ISS_SYS_ZoneChange( ISS_SYS* p_sys, u16 next_zone_id )
 	// 自転車orなみのり中なら, ISSに変更はない
 	if( p_sys->cycle | p_sys->surfing ) return;
 
-	// 各オブジェクトを取得
-	p_player       = GAMEDATA_GetMyPlayerWork( p_sys->pGameData );
-	form           = PLAYERWORK_GetMoveForm( p_player );
-	p_bgm_info_sys = GAMEDATA_GetBGMInfoSys( p_sys->pGameData );
-
-	// 切り替え先ゾーンのISSタイプを取得
-	p_sys->bgmNo = FIELD_SOUND_GetFieldBGMNo( p_sys->pGameData, form, next_zone_id );
-	iss_type     = BGM_INFO_GetIssType( p_bgm_info_sys, p_sys->bgmNo );
-
 	// 街ISS
 	ISS_CITY_SYS_ZoneChange( p_sys->pIssCitySys, next_zone_id );
 
-	// 道路ISS
-	if( iss_type == ISS_TYPE_LOAD )
-	{
-		ISS_ROAD_SYS_SetActive( p_sys->pIssRoadSys, TRUE );
-	}
-	else
-	{
-		ISS_ROAD_SYS_SetActive( p_sys->pIssRoadSys, FALSE );
-	}
 
 	// DEBUG:
 	OBATA_Printf( "ISS_SYS_ZoneChange()\n" );
@@ -225,8 +214,8 @@ void CycleCheck( ISS_SYS* p_sys )
 	if( ( p_sys->cycle == FALSE ) && ( form == PLAYER_MOVE_FORM_CYCLE ) )
 	{
 		p_sys->cycle = TRUE;
-		ISS_CITY_SYS_SetActive( p_sys->pIssCitySys, FALSE );
-		ISS_ROAD_SYS_SetActive( p_sys->pIssRoadSys, FALSE );
+		ISS_CITY_SYS_Off( p_sys->pIssCitySys );
+		ISS_ROAD_SYS_Off( p_sys->pIssRoadSys );
 	}
 
 	// 自転車から降りるのを検出したら, ゾーン切り替え時と同じ処理
@@ -255,8 +244,8 @@ void SurfingCheck( ISS_SYS* p_sys )
 	if( ( p_sys->surfing == FALSE ) && ( form == PLAYER_MOVE_FORM_SWIM ) )
 	{
 		p_sys->surfing = TRUE;
-		ISS_CITY_SYS_SetActive( p_sys->pIssCitySys, FALSE );
-		ISS_ROAD_SYS_SetActive( p_sys->pIssRoadSys, FALSE );
+		ISS_CITY_SYS_Off( p_sys->pIssCitySys );
+		ISS_ROAD_SYS_Off( p_sys->pIssRoadSys );
 	}
 
 	// 自転車から降りるのを検出したら, ゾーン切り替え時と同じ処理
@@ -283,19 +272,44 @@ void BGMChangeCheck( ISS_SYS* p_sys )
 
 	// 次に再生予定のBGMのISSタイプを取得
 	// (次のBGMが指定されていない場合, 現在再生中のBGMのISSタイプを取得する)
-	bgm_no   = PMSND_GetNextBGMsoundNo();
+	bgm_no   = PMSND_GetBGMsoundNo();
 	iss_type = BGM_INFO_GetIssType( p_bgm_info_sys, bgm_no ); 
 
 	// 道路ISSのBGMでなかったら, 起動中の道路ISSシステムを停止する
 	if( iss_type != ISS_TYPE_LOAD )
 	{
-		if( ISS_ROAD_SYS_IsActive( p_sys->pIssRoadSys ) == TRUE )
+		if( ISS_ROAD_SYS_IsOn( p_sys->pIssRoadSys ) == TRUE )
 		{
-			ISS_ROAD_SYS_SetActive( p_sys->pIssRoadSys, FALSE );
+			ISS_ROAD_SYS_Off( p_sys->pIssRoadSys );
 			FIELD_SOUND_ChangeBGMActionVolume( 127 );
 
 			// DEBUG:
 			OBATA_Printf( "BGM change ==> ISS road system off\n" ); 
 		}
 	}
+	// 道路ISSのBGMだったら, 停止中の道路ISSシステムを起動する
+	else
+	{
+		if( ISS_ROAD_SYS_IsOn( p_sys->pIssRoadSys ) != TRUE )
+		{
+			ISS_ROAD_SYS_On( p_sys->pIssRoadSys );
+		}
+	}
+
+	// 街ISSのBGMだったら, 停止中の街ISSシステムを起動する
+	if( iss_type == ISS_TYPE_CITY )
+	{
+		if( ISS_CITY_SYS_IsOn( p_sys->pIssCitySys ) != TRUE )
+		{
+			ISS_CITY_SYS_On( p_sys->pIssCitySys );
+		}
+	}
+	// 街ISSのBGMでなかったら, 起動中の街ISSシステムを停止する
+	else
+	{
+		if( ISS_CITY_SYS_IsOn( p_sys->pIssCitySys ) == TRUE )
+		{
+			ISS_CITY_SYS_Off( p_sys->pIssCitySys );
+		}
+	} 
 }

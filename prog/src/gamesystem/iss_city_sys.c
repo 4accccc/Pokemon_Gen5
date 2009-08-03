@@ -7,9 +7,9 @@
  */
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////
 #include "iss_city_sys.h"
-#include "field_sound.h"
+#include "../field/field_sound.h"
 #include "gamesystem/playerwork.h"
-#include "field/field_const.h"		// FIELD_CONST_GRID_FX32_SIZE
+#include "../../include/field/field_const.h"		// FIELD_CONST_GRID_FX32_SIZE
 #include "arc/arc_def.h"
 #include "arc/iss_unit.naix"
 
@@ -20,10 +20,13 @@
  */
 //===================================================================================================== 
 // 1つの街ISSユニットが持つ音量空間の数
-#define VOLUME_SPACE_NUM 4
+#define VOLUME_SPACE_NUM (4)
 
 // 絶対値を取得する
 #define ABS(n) ( (n)>0? (n) : -(n) )
+
+// 無効ユニット番号(街ISSのBGMが鳴っているが, ISSユニットが配置されていない状況)
+#define INVALID_UNIT_NO (0xff)
 
 
 //=====================================================================================================
@@ -130,13 +133,12 @@ static void LoadUnitData( ISS_CITY_SYS* p_sys );
  * @brief  街ISSシステムを作成する
  *
  * @param  p_player 監視対象のプレイヤー
- * @param  zone_id  ゾーンID
  * @param  heap_id  使用するヒープID
  * 
  * @return 街ISSシステム
  */
 //----------------------------------------------------------------------------
-ISS_CITY_SYS* ISS_CITY_SYS_Create( PLAYER_WORK* p_player, u16 zone_id, HEAPID heap_id )
+ISS_CITY_SYS* ISS_CITY_SYS_Create( PLAYER_WORK* p_player, HEAPID heap_id )
 {
 	ISS_CITY_SYS* p_sys;
 
@@ -147,15 +149,12 @@ ISS_CITY_SYS* ISS_CITY_SYS_Create( PLAYER_WORK* p_player, u16 zone_id, HEAPID he
 	p_sys->heapID       = heap_id;
 	p_sys->pPlayer      = p_player;
 	p_sys->isActive     = FALSE;
-	p_sys->activeUnitNo = 0;
+	p_sys->activeUnitNo = INVALID_UNIT_NO;
 	p_sys->unitNum      = 0;
 	p_sys->unitData     = NULL;
 
 	// ユニット情報の読み込み
 	LoadUnitData( p_sys );
-
-	// 設定
-	ISS_CITY_SYS_ZoneChange( p_sys, zone_id );
 	
 	// 作成した街ISSシステムを返す
 	return p_sys;
@@ -192,12 +191,18 @@ void ISS_CITY_SYS_Update( ISS_CITY_SYS* p_sys )
 	// 起動していなければ, 何もしない
 	if( p_sys->isActive != TRUE ) return;
 
+	// ISSユニットが配置されていなければ, 音量0
+	if( p_sys->activeUnitNo == INVALID_UNIT_NO )
+	{
+		FIELD_SOUND_ChangeBGMActionVolume( 0 ); 
+		OBATA_Printf( "City ISS Unit is active. But there is not a unit. volume = 0\n" );
+		return;
+	}
+
 	// 音量を調整する
 	p_pos  = PLAYERWORK_getPosition( p_sys->pPlayer );
 	volume = GetVolume( &p_sys->unitData[ p_sys->activeUnitNo ], p_pos );
 	FIELD_SOUND_ChangeBGMActionVolume( volume );
-
-	OBATA_Printf( "vol = %d\n", volume );
 
 	// DEBUG: デバッグ出力
 	if( p_sys->isActive )
@@ -224,6 +229,20 @@ void ISS_CITY_SYS_ZoneChange( ISS_CITY_SYS* p_sys, u16 next_zone_id )
 {
 	int i;
 
+	// 新しいゾーンIDを持つユニットを探す
+	for( i=0; i<p_sys->unitNum; i++ )
+	{
+		// 発見 ==> ユニット番号を更新
+		if( p_sys->unitData[i].zoneID == next_zone_id )
+		{ 
+			p_sys->activeUnitNo = i;
+			return;
+		}
+	}
+
+	// 指定ゾーンIDにISSユニットが存在しない場合
+	p_sys->activeUnitNo = INVALID_UNIT_NO;
+
 	// DEBUG:
 	{
 		int i;
@@ -233,33 +252,36 @@ void ISS_CITY_SYS_ZoneChange( ISS_CITY_SYS* p_sys, u16 next_zone_id )
 			OBATA_Printf( "zone if of unit[%d] = %d\n", i, p_sys->unitData[i].zoneID );
 		}
 	}
-	
-	// 新しいゾーンIDを持つユニットを探す
-	for( i=0; i<p_sys->unitNum; i++ )
-	{
-		// 発見 ==> システム起動
-		if( p_sys->unitData[i].zoneID == next_zone_id )
-		{ p_sys->isActive     = TRUE;
-			p_sys->activeUnitNo = i;
-			return;
-		}
-	}
-
-	// 指定ゾーンIDにISSユニットが存在しない場合 ==> システム停止
-	p_sys->isActive = FALSE;
 }
-
 
 //----------------------------------------------------------------------------
 /**
- * @brief 動作状態を設定する
+ * @brief システムを起動する
  *
- * @param active 動作させるかどうか
+ * @param p_sys 起動するシステム
  */
 //----------------------------------------------------------------------------
-extern void ISS_CITY_SYS_SetActive( ISS_CITY_SYS* p_sys, BOOL active )
+void ISS_CITY_SYS_On( ISS_CITY_SYS* p_sys )
 {
-	p_sys->isActive = active;
+	// すでに起動している場合, 何もしない
+	if( p_sys->isActive != TRUE )
+	{
+		// 起動し, ISSユニットを更新する
+		p_sys->isActive = TRUE;
+		ISS_CITY_SYS_ZoneChange( p_sys, PLAYERWORK_getZoneID( p_sys->pPlayer ) );
+	}
+}
+
+//----------------------------------------------------------------------------
+/**
+ * @brief システムを停止させる
+ *
+ * @param p_sys 停止させるシステム
+ */
+//----------------------------------------------------------------------------
+void ISS_CITY_SYS_Off( ISS_CITY_SYS* p_sys )
+{
+	p_sys->isActive = FALSE;
 }
 
 //----------------------------------------------------------------------------
@@ -271,7 +293,7 @@ extern void ISS_CITY_SYS_SetActive( ISS_CITY_SYS* p_sys, BOOL active )
  * @return 動作中かどうか
  */
 //----------------------------------------------------------------------------
-extern BOOL ISS_CITY_SYS_IsActive( const ISS_CITY_SYS* p_sys )
+BOOL ISS_CITY_SYS_IsOn( const ISS_CITY_SYS* p_sys )
 {
 	return p_sys->isActive;
 }

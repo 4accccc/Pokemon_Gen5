@@ -16,6 +16,7 @@ extern "C" {
 #include "gamesystem/game_data.h"
 #include "gamesystem/playerwork.h"
 #include "gamesystem/game_comm.h"
+#include "gamesystem/iss_sys.h"
 
 //============================================================================================
 //============================================================================================
@@ -144,6 +145,11 @@ extern void GAMESYSTEM_SetFieldMapWork(GAMESYS_WORK * gsys, void * fieldmap);
  */
 //------------------------------------------------------------------
 extern BOOL GAMESYSTEM_CheckFieldMapWork( const GAMESYS_WORK *gsys );
+
+//--------------------------------------------------------------
+//	ISSƒVƒXƒeƒ€Žæ“¾
+//--------------------------------------------------------------
+extern ISS_SYS * GAMESYSTEM_GetIssSystem( GAMESYS_WORK * gsys );
 
 //------------------------------------------------------------------
 /**

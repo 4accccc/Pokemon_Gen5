@@ -12,6 +12,7 @@
 #include "gamesystem/game_init.h"
 #include "gamesystem/game_event.h"
 #include "gamesystem/game_data.h"
+#include "gamesystem/iss_sys.h"
 
 #include "system/main.h"
 
@@ -701,6 +702,12 @@ static void UpdateMapParams(GAMESYS_WORK * gsys, const LOCATION * loc_req)
 		PLAYERWORK_setPosition(mywork, &loc.pos);
 		direction = GetDirValueByDirID(loc.dir_id);
 		PLAYERWORK_setDirection(mywork, direction);
+	}
+
+	// ISSにゾーン切り替えを通知
+	{
+		ISS_SYS* iss = GAMESYSTEM_GetIssSystem( gsys );
+		ISS_SYS_ZoneChange( iss, loc.zone_id );
 	}
 	
 	//開始位置を記憶しておく

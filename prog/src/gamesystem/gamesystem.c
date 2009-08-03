@@ -15,6 +15,7 @@
 #include "gamesystem/game_data.h"
 #include "gamesystem/playerwork.h"
 #include "gamesystem/game_event.h"
+#include "gamesystem/iss_sys.h"
 
 #include "gamesystem/game_init.h"
 
@@ -25,6 +26,9 @@
 #include "item/item.h"  //デバッグアイテム生成用
 #include "savedata/box_savedata.h"  //デバッグアイテム生成用
 #endif
+
+
+
 
 //============================================================================================
 //============================================================================================
@@ -195,6 +199,8 @@ struct _GAMESYS_WORK {
 	void * fieldmap;
 	GAME_COMM_SYS_PTR game_comm;    ///<ゲーム通信管理ワークへのポインタ
 	void * comm_infowin;		///<INFOWIN通信ワーク
+
+	ISS_SYS * iss_sys;		// ISSシステム
 	
 	u8 always_net;          ///<TRUE:常時通信
 	u8 padding[3];
@@ -222,12 +228,14 @@ static void GAMESYS_WORK_Init(GAMESYS_WORK * gsys, HEAPID heapID, GAME_INIT_WORK
 	gsys->fieldmap = NULL;
 	gsys->game_comm = GameCommSys_Alloc(gsys->heapID, gsys->gamedata);
 	gsys->comm_infowin = NULL;
+	gsys->iss_sys = ISS_SYS_Create( gsys->gamedata, heapID );
 	gsys->always_net = init_param->always_net;
 }
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 static void GAMESYS_WORK_Delete(GAMESYS_WORK * gsys)
 {
+	ISS_SYS_Delete(gsys->iss_sys);
 	GAMEDATA_Delete(gsys->gamedata);
 	GameCommSys_Free(gsys->game_comm);
 }
@@ -272,6 +280,9 @@ static BOOL GameSystem_Main(GAMESYS_WORK * gsys)
 	}
 	//メインプロセス
 	gsys->proc_result = GFL_PROC_LOCAL_Main(gsys->procsys);
+
+	// ISSシステムメイン
+	ISS_SYS_Update( gsys->iss_sys );
 
 	if(GAMEDATA_IsFrameSpritMode(gsys->gamedata)) //フレーム分割状態にいる場合
 	{
@@ -406,6 +417,14 @@ BOOL GAMESYSTEM_CheckFieldMapWork( const GAMESYS_WORK *gsys )
     return TRUE;
   }
   return FALSE;
+}
+
+//--------------------------------------------------------------
+//	ISSシステム取得
+//--------------------------------------------------------------
+ISS_SYS * GAMESYSTEM_GetIssSystem( GAMESYS_WORK * gsys )
+{
+	return gsys->iss_sys;
 }
 
 //==================================================================

@@ -20,13 +20,12 @@ typedef struct _ISS_ROAD_SYS ISS_ROAD_SYS;
  * @brief  道路ISSシステムを作成する
  *
  * @param  p_player 監視対象のプレイヤー
- * @param  zone_id  ゾーンID
  * @param  heap_id  使用するヒープID
  * 
  * @return 道路ISSシステム
  */
 //----------------------------------------------------------------------------
-extern ISS_ROAD_SYS* ISS_ROAD_SYS_Create( PLAYER_WORK* p_player, u16 zone_id, HEAPID heap_id );
+extern ISS_ROAD_SYS* ISS_ROAD_SYS_Create( PLAYER_WORK* p_player, HEAPID heap_id );
 
 //----------------------------------------------------------------------------
 /**
@@ -48,13 +47,21 @@ extern void ISS_ROAD_SYS_Update( ISS_ROAD_SYS* p_sys );
 
 //----------------------------------------------------------------------------
 /**
- * @brief 動作状態を設定する
+ * @brief システムを起動する
  *
- * @param p_sys 設定を変更するISSシステム
- * @param active 動作させるかどうか
+ * @param p_sys 起動するシステム
  */
 //----------------------------------------------------------------------------
-extern void ISS_ROAD_SYS_SetActive( ISS_ROAD_SYS* p_sys, BOOL active );
+extern void ISS_ROAD_SYS_On( ISS_ROAD_SYS* p_sys );
+
+//----------------------------------------------------------------------------
+/**
+ * @brief システムを停止させる
+ *
+ * @param p_sys 停止させるシステム
+ */
+//----------------------------------------------------------------------------
+extern void ISS_ROAD_SYS_Off( ISS_ROAD_SYS* p_sys );
 
 //----------------------------------------------------------------------------
 /**
@@ -65,4 +72,4 @@ extern void ISS_ROAD_SYS_SetActive( ISS_ROAD_SYS* p_sys, BOOL active );
  * @return 動作中かどうか
  */
 //----------------------------------------------------------------------------
-extern BOOL ISS_ROAD_SYS_IsActive( const ISS_ROAD_SYS* p_sys );
+extern BOOL ISS_ROAD_SYS_IsOn( const ISS_ROAD_SYS* p_sys );

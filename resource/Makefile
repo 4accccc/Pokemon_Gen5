@@ -12,6 +12,7 @@ SUBDIRS	=	wmi \
 			bag \
 			test_graphic\
 			message\
+			place_name \
 			field_weather \
 			field_weather_light \
 			field_light \
@@ -73,7 +74,6 @@ SUBDIRS	=	wmi \
 			bucket \
 			p_status \
 			app_menu_common \
-			place_name \
 			irc_ranking \
 			iss_unit \
 			townmap \

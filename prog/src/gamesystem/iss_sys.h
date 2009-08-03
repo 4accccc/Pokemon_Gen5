@@ -20,13 +20,12 @@ typedef struct _ISS_SYS ISS_SYS;
  * @brief  ISSシステムを作成する
  *
  * @param p_gdata	監視対象ゲームデータ
- * @param zone_id   ゾーンID
  * @param heap_id   使用するヒープID
  * 
  * @return ISSシステム
  */
 //----------------------------------------------------------------------------
-extern ISS_SYS* ISS_SYS_Create( GAMEDATA* p_gdata, u16 zone_id, HEAPID heap_id );
+extern ISS_SYS* ISS_SYS_Create( GAMEDATA* p_gdata, HEAPID heap_id );
 
 //----------------------------------------------------------------------------
 /**
@@ -54,4 +53,4 @@ extern void ISS_SYS_Update( ISS_SYS* p_unit );
  * @param next_zone_id 新しいゾーンID
  */
 //----------------------------------------------------------------------------
-void ISS_SYS_ZoneChange( ISS_SYS* p_unit, u16 next_zone_id );
+extern void ISS_SYS_ZoneChange( ISS_SYS* p_unit, u16 next_zone_id );
