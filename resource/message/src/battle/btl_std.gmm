@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="taya" host="W00146" date="2009-07-31T03:38:01"/>
+	<create user="taya" host="W00146" date="2009-08-03T16:29:05"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -327,7 +327,7 @@
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="673"/>
 		<band id="3" index="3" style="0000" width="673"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -451,6 +451,12 @@
 		<language name="JPN_KANJI" width="216">[1:00:トレーナー名:0]は
 [1:02:ポケモンニックネーム:1]と▽
 [1:02:ポケモンニックネーム:2]を　くりだした！</language>
+	</row>
+
+	<row id="BTL_STRID_STD_UseItem" back-color=",#00ff00,,,#00ff00,,,#00ff00,#00ff00,#00ff00,#00ff00,,,,,,,">
+		<comment>どうぐを使う</comment>
+		<language name="JPN" width="216">[1:09:どうぐ名:1]を　つかった！</language>
+		<language name="JPN_KANJI" width="216">[1:09:どうぐ名:1]を　使った！</language>
 	</row>
 
 	<row id="BTL_STRID_STD_MemberOut1" back-color=",#00ff00,,,#00ff00,,,#00ff00,#00ff00,#00ff00,#00ff00,,,,,,,">
