@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-08-04T12:08:39"/>
+	<create user="matsumiya" host="W00207" date="2009-08-04T12:39:37"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -229,7 +229,7 @@
 	</tag-table>
 
 	<columns>
-		<id position="0" width="152"/>
+		<id position="0" width="162"/>
 		<group default=" 0:デフォルト" position="-1" width="100">
 			<list entry="0" japanese="デフォルト" english="Default" colorID="0"/>
 			<list entry="1" japanese="グループ 1" english="グループ 1" colorID="0"/>
@@ -292,7 +292,7 @@
 	</lock>
 
 
-	<row id="msg_c05r0501_test1_01">
+	<row id="msg_c05r0501_gentleman_01">
 		<comment>・仮メッセージ</comment>
 		<attribute name="キャラ指定">？？？</attribute>
 		<language name="JPN" width="256">いきるとは　まようこと[BE:01:ページ切り替え（クリア）]
@@ -303,7 +303,7 @@
 それぞれの　答えを　みつけなさい</language>
 	</row>
 
-	<row id="msg_c05r0501_test1_01">
+	<row id="msg_c05r0501_veteranm_01">
 		<comment>・仮メッセージ</comment>
 		<attribute name="キャラ指定">？？？</attribute>
 		<language name="JPN" width="256">つよい　こころ　とは　なんだろう？
@@ -316,7 +316,7 @@
 トレーナーや　ポケモンは　いるのか？</language>
 	</row>
 
-	<row id="msg_c05r0501_test1_01">
+	<row id="msg_c05r0501_girl2_01">
 		<comment>・仮メッセージ</comment>
 		<attribute name="キャラ指定">？？？</attribute>
 		<language name="JPN" width="256">よろこぶこと……[BE:01:ページ切り替え（クリア）]
@@ -327,7 +327,7 @@
 悲しみの　意味を　知るべきです</language>
 	</row>
 
-	<row id="msg_c05r0501_test1_01">
+	<row id="msg_c05r0501_oldwoman_01">
 		<comment>・仮メッセージ</comment>
 		<attribute name="キャラ指定">？？？</attribute>
 		<language name="JPN" width="256">いきること　しぬこと……
@@ -336,7 +336,7 @@
 だれも　選べないのです</language>
 	</row>
 
-	<row id="msg_c05r0501_test1_01">
+	<row id="msg_c05r0501_mountain_01">
 		<comment>・仮メッセージ</comment>
 		<attribute name="キャラ指定">？？？</attribute>
 		<language name="JPN" width="256">ひとも　ポケモンも
@@ -351,7 +351,7 @@
 キャパが　あるとは　思えないのです</language>
 	</row>
 
-	<row id="msg_c05r0501_test1_01">
+	<row id="msg_c05r0501_man1_01">
 		<comment>・仮メッセージ</comment>
 		<attribute name="キャラ指定">？？？</attribute>
 		<language name="JPN" width="256">いきると　いうことは
@@ -364,7 +364,7 @@
 そのことを　忘れないように……</language>
 	</row>
 
-	<row id="msg_c05r0501_test1_01">
+	<row id="msg_c05r0501_woman2_01">
 		<comment>・仮メッセージ</comment>
 		<attribute name="キャラ指定">？？？</attribute>
 		<language name="JPN" width="256">しあわせとは　はかないもの……[BE:01:ページ切り替え（クリア）]
