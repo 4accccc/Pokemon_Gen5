@@ -458,8 +458,8 @@ ex)
  * #param	VALUE_FX32	パーティクル再生方向Y角度
  */
 //======================================================================
-	.macro	PARTICLE_PLAY_COODINATE	num, index, start_pos_x, start_pos_y, start_pos_z, dir_pos_x, dir_pos_y, dir_pos_z, ofs_y, dir_angle
-	.short	EC_PARTICLE_PLAY_COODINATE
+	.macro	PARTICLE_PLAY_COORDINATE	num, index, start_pos_x, start_pos_y, start_pos_z, dir_pos_x, dir_pos_y, dir_pos_z, ofs_y, dir_angle
+	.short	EC_PARTICLE_PLAY_COORDINATE
 	.long		\num
 	.long		\index
 	.long		\start_pos_x
