@@ -20,6 +20,7 @@
 #include "msg/msg_pokelist.h"
 
 #include "pokeicon/pokeicon.h"
+#include "savedata/myitem_savedata.h"
 #include "waza_tool/wazano_def.h"
 #include "item/item.h"
 
@@ -154,6 +155,7 @@ static void PLIST_LoadResource( PLIST_WORK *work );
 static void PLIST_ReleaseResource( PLIST_WORK *work );
 
 //モード別処理系
+static void PLIST_InitMode( PLIST_WORK *work );
 static void PLIST_InitMode_Select( PLIST_WORK *work );
 static void PLIST_TermMode_Select_Decide( PLIST_WORK *work );
 static void PLIST_InitMode_Menu( PLIST_WORK *work );
@@ -201,6 +203,12 @@ static void PSTATUS_MSGCB_ForgetSkill_ForgetCheck( PLIST_WORK *work );
 static void PSTATUS_MSGCB_ForgetSkill_ForgetCheckCB( PLIST_WORK *work , const int retVal );
 static void PSTATUS_MSGCB_ForgetSkill_SkillCancel( PLIST_WORK *work );
 static void PSTATUS_MSGCB_ForgetSkill_SkillCancelCB( PLIST_WORK *work , const int retVal );
+static void PSTATUS_MSGCB_ForgetSkill_SkillForget( PLIST_WORK *work );
+
+//外部数値操作
+static void PSTATUS_LearnSkillEmpty( PLIST_WORK *work , POKEMON_PARAM *pp );
+static void PSTATUS_LearnSkillFull( PLIST_WORK *work  , POKEMON_PARAM *pp , u8 pos );
+static void PSTATUS_UseItem( PLIST_WORK *work );
 
 //デバッグメニュー
 static void PLIST_InitDebug( PLIST_WORK *work );
@@ -272,7 +280,7 @@ const BOOL PLIST_InitPokeList( PLIST_WORK *work )
 
   
   //モード別初期化
-  PLIST_InitMode_Select( work );
+  PLIST_InitMode( work );
 
   //まとめて読み込む
   GFL_BG_LoadScreenV_Req(PLIST_BG_MAIN_BG);
@@ -335,7 +343,7 @@ const BOOL PLIST_UpdatePokeList( PLIST_WORK *work )
   case PSMS_FADEIN_WAIT:
     if( WIPE_SYS_EndCheck() == TRUE )
     {
-      work->mainSeq = PSMS_SELECT_POKE;
+      work->mainSeq = work->nextMainSeq;
     }
     break;
     
@@ -841,6 +849,56 @@ static void PLIST_ReleaseResource( PLIST_WORK *work )
 }
 
 #pragma mark [>accorde mode
+
+//--------------------------------------------------------------------------
+//  モード別の初期化(開始時
+//--------------------------------------------------------------------------
+static void PLIST_InitMode( PLIST_WORK *work )
+{
+  switch( work->plData->mode )
+  {
+  case PL_MODE_FIELD:
+  case PL_MODE_BATTLE:
+  case PL_MODE_ITEMUSE:
+  case PL_MODE_SHINKA:
+  case PL_MODE_ITEMSET:
+  case PL_MODE_MAILSET:
+  case PL_MODE_WAZASET:
+    //選択画面へ
+    PLIST_InitMode_Select( work );
+    work->nextMainSeq = PSMS_SELECT_POKE;
+    break;
+
+  case PL_MODE_WAZASET_RET:
+    work->selectPokePara = PokeParty_GetMemberPointer(work->plData->pp, work->plData->ret_sel );
+    if( work->plData->waza_pos < 4 )
+    {
+      //技が決定した
+      const u32 wazaNo = PP_Get( work->selectPokePara , ID_PARA_waza1+work->plData->waza_pos , NULL );
+      PLIST_MSG_CreateWordSet( work , work->msgWork );
+      PLIST_MSG_AddWordSet_PokeName( work , work->msgWork , 0 , work->selectPokePara );
+      PLIST_MSG_AddWordSet_SkillName( work , work->msgWork , 1 , wazaNo );
+      PLIST_MessageWaitInit( work , mes_pokelist_04_10 , TRUE , PSTATUS_MSGCB_ForgetSkill_SkillForget );
+      PLIST_MSG_DeleteWordSet( work , work->msgWork );
+    }
+    else
+    {
+      //選択キャンセル→覚えるのをあきらめますか？
+      PLIST_MSG_CreateWordSet( work , work->msgWork );
+      PLIST_MSG_AddWordSet_SkillName( work , work->msgWork , 1 , work->plData->waza );
+      PLIST_MessageWaitInit( work , mes_pokelist_04_07 , FALSE , PSTATUS_MSGCB_ForgetSkill_SkillCancel );
+      PLIST_MSG_DeleteWordSet( work , work->msgWork );
+    }
+    work->nextMainSeq = PSMS_MSG_WAIT;
+    work->mainSeq = PSMS_FADEIN;
+
+    break;
+
+  default:
+    GF_ASSERT_MSG( NULL , "PLIST mode まだ作ってない！[%d]\n" , work->plData->mode );
+    break;
+  }}
+
 //--------------------------------------------------------------------------
 //  モード別の初期化(ポケモン選択
 //--------------------------------------------------------------------------
@@ -916,7 +974,6 @@ static void PLIST_TermMode_Select_Decide( PLIST_WORK *work )
     break;
 
   case PL_MODE_WAZASET:
-    //FIXME本当に覚えられるか？
     switch( PLIST_UTIL_CheckLearnSkill( work , work->selectPokePara ) )
     {
     case LSCL_OK:
@@ -926,6 +983,12 @@ static void PLIST_TermMode_Select_Decide( PLIST_WORK *work )
       PLIST_MSG_AddWordSet_SkillName( work , work->msgWork , 1 , work->plData->waza );
       PLIST_MessageWaitInit( work , mes_pokelist_04_11 , TRUE , PSTATUS_MSGCB_ExitCommon );
       PLIST_MSG_DeleteWordSet( work , work->msgWork );
+      
+      PSTATUS_LearnSkillEmpty( work , work->selectPokePara );
+      if( work->plData->item != 0 )
+      {
+        PSTATUS_UseItem( work );
+      }
       break;
     
     case LSCL_OK_FULL:
@@ -2190,6 +2253,45 @@ static void PSTATUS_MSGCB_ForgetSkill_SkillCancelCB( PLIST_WORK *work , const in
     PLIST_MessageWaitInit( work , mes_pokelist_04_06 , FALSE , PSTATUS_MSGCB_ForgetSkill_ForgetCheck );
     PLIST_MSG_DeleteWordSet( work , work->msgWork );
   }
+}
+
+//12のポカン
+static void PSTATUS_MSGCB_ForgetSkill_SkillForget( PLIST_WORK *work )
+{
+  PLIST_MSG_CloseWindow( work , work->msgWork );
+
+  work->plData->ret_mode = PL_RET_BAG;
+  PLIST_MSG_CreateWordSet( work , work->msgWork );
+  PLIST_MSG_AddWordSet_PokeName( work , work->msgWork , 0 , work->selectPokePara );
+  PLIST_MSG_AddWordSet_SkillName( work , work->msgWork , 1 , work->plData->waza );
+  PLIST_MessageWaitInit( work , mes_pokelist_04_11 , TRUE , PSTATUS_MSGCB_ExitCommon );
+  PLIST_MSG_DeleteWordSet( work , work->msgWork );
+  
+  PSTATUS_LearnSkillFull( work , work->selectPokePara , work->plData->waza_pos );
+  if( work->plData->item != 0 )
+  {
+    PSTATUS_UseItem( work );
+  }
+}
+
+#pragma mark [>outer value
+//外の数値をいじる
+//新しく技を覚える(空きあり
+static void PSTATUS_LearnSkillEmpty( PLIST_WORK *work , POKEMON_PARAM *pp )
+{
+  PP_SetWaza( pp , work->plData->waza );
+}
+
+//新しく技を覚える(空き無し
+static void PSTATUS_LearnSkillFull( PLIST_WORK *work  , POKEMON_PARAM *pp , u8 pos )
+{
+  PP_SetWazaPos( pp , work->plData->waza , pos );
+}
+
+//アイテムを消費する
+static void PSTATUS_UseItem( PLIST_WORK *work )
+{
+  MYITEM_SubItem( work->plData->myitem , work->plData->item , 1 , work->heapId );
 }
 
 #pragma mark [>debug

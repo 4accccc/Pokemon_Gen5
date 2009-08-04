@@ -134,6 +134,10 @@ struct _TAG_FMENU_EVENT_WORK
   
   FIELD_SUBSCREEN_MODE return_subscreen_mode;
   BOOL bForceExit;
+  
+  //アプリ間で引継ぎが必要な数値
+  u8  selPoke;
+  u16 selItem;
 };
 
 
@@ -677,7 +681,7 @@ static const BOOL FMenuReturnProc_PokeList(FMENU_EVENT_WORK* mwk)
       return TRUE;
     }
     break;
-  case PL_RET_BAG:      // メニュー「つよさをみる」
+  case PL_RET_BAG:      // アイテム→リスト→アイテム
     {
       FIELD_ITEMMENU_WORK *epp;
       GAMEDATA* pGameData = GAMESYSTEM_GetGameData(mwk->gmSys);
@@ -700,6 +704,31 @@ static const BOOL FMenuReturnProc_PokeList(FMENU_EVENT_WORK* mwk)
       FMenu_SetNextSubProc( mwk ,FMENU_APP_BAG , epp );
       return TRUE;
     }
+    break;
+    
+  case PL_RET_WAZASET:  //忘れる技選択
+    {
+      PSTATUS_DATA *psData = GFL_HEAP_AllocMemory( HEAPID_PROC , sizeof(PSTATUS_DATA) );
+      GAMEDATA *gmData = GAMESYSTEM_GetGameData(mwk->gmSys);
+      SAVE_CONTROL_WORK *svWork = GAMEDATA_GetSaveControlWork( gmData );
+      
+      psData->ppd = (void*)plData->pp;
+      psData->cfg = plData->cfg;
+      psData->ribbon = (u8*)SP_RIBBON_SAVE_GetSaveData(svWork);
+
+      psData->ppt = PST_PP_TYPE_POKEPARTY;
+      psData->max = PokeParty_GetPokeCount( plData->pp );
+      psData->mode = PST_MODE_WAZAADD;
+      psData->pos = plData->ret_sel;
+      psData->waza = plData->waza;
+      
+      mwk->selPoke = plData->ret_sel;
+      mwk->selItem = plData->item;
+      
+      FMenu_SetNextSubProc( mwk ,FMENU_APP_STATUS , psData );
+    }
+    return TRUE;
+    break;
   
   default:
     return FALSE;
@@ -765,8 +794,27 @@ static const BOOL FMenuReturnProc_PokeStatus(FMENU_EVENT_WORK* mwk)
       SAVE_CONTROL_WORK *svWork = GAMEDATA_GetSaveControlWork( gmData );
       
       plData->pp = GAMEDATA_GetMyPokemon(gmData);
-      plData->mode = PL_MODE_FIELD;
-      plData->ret_sel = psData->pos;
+      plData->myitem = GAMEDATA_GetMyItem(gmData);
+      if( psData->mode == PST_MODE_WAZAADD )
+      {
+        plData->mode = PL_MODE_WAZASET_RET;
+        plData->ret_sel = mwk->selPoke;
+        plData->item = mwk->selItem;
+        plData->waza = psData->waza;
+        if( psData->ret_mode == PST_RET_DECIDE )
+        {
+          plData->waza_pos = psData->pos;
+        }
+        else
+        {
+          plData->waza_pos = 0xFF;
+        }
+      }
+      else
+      {
+        plData->mode = PL_MODE_FIELD;
+        plData->ret_sel = psData->pos;
+      }
 
       FMenu_SetNextSubProc( mwk ,FMENU_APP_POKELIST , plData );
       return TRUE;
@@ -853,8 +901,9 @@ static const BOOL FMenuReturnProc_Bag(FMENU_EVENT_WORK* mwk)
         plData->mode = PL_MODE_ITEMSET;    //アイテムをセットする呼び出し
         break;
       }
+      plData->waza = 0;
       plData->item = pBag->ret_item;     //アイテムID
-      plData->myitem = pBag->pMyItem;    // アイテムデータ
+      plData->myitem = GAMEDATA_GetMyItem(gmData);    // アイテムデータ
 
       FMenu_SetNextSubProc( mwk ,FMENU_APP_POKELIST , plData );
       return TRUE;

@@ -182,6 +182,7 @@ struct _PLIST_WORK
   
   int ktst;     //KeyToushState
   u8  mainSeq;
+  u8  nextMainSeq;
   u8  subSeq;
   u8  selectState;
   BOOL isActiveWindowMask;  //ƒƒjƒ…[o‚½‚Æ‚«‚ÌWndMask‚ÌON/OFF‚ÌVBlankØ‚è‘Ö‚¦‚æ‚¤
