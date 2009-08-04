@@ -208,6 +208,8 @@ typedef enum
   PPT_SKILL,    //‹Z
   PPT_RIBBON,   //ƒŠƒ{ƒ“
   
+  PPT_SKILL_ADD,    //‹ZŒn
+
   PPT_MAX,
 }PSTATUS_PAGE_TYPE;
 

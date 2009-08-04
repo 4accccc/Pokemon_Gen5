@@ -15,12 +15,14 @@
 #include "print/str_tool.h"
 #include "app/app_menu_common.h"
 #include "waza_tool/wazadata.h"
+#include "waza_tool/waza_tool.h"
 
 #include "arc_def.h"
 #include "message.naix"
 #include "p_status_gra.naix"
 
 #include "p_sta_sys.h"
+#include "p_sta_oam.h"
 #include "p_sta_skill.h"
 
 #include "test/ariizumi/ari_debug.h"
@@ -170,7 +172,8 @@ typedef struct
   
   GFL_CLWK   *clwkPlate;
   GFL_CLWK   *clwkType;
-  GFL_BMPWIN *bmpWin;
+  GFL_BMP_DATA *bmpData;
+  PSTA_OAM_ACT_PTR bmpOam;
   
 }PSTATUS_SKILL_PLATE;
 
@@ -186,6 +189,7 @@ struct _PSTATUS_SKILL_WORK
   
   u8   cursorPos;
   u8   changeTarget;
+  u8   wazaPlateNum;
   u32  holdTpx;
   u32  holdTpy;
 
@@ -208,6 +212,8 @@ struct _PSTATUS_SKILL_WORK
   GFL_CLWK *clwkTargetCur;
   GFL_CLWK *clwkArrow;
   
+  PSTA_OAM_SYS_PTR bmpOamSys;
+
   PSTATUS_SKILL_PLATE plateWork[PSTATUS_SKILL_PLATE_NUM];
 };
 
@@ -226,6 +232,9 @@ static void PSTATUS_SKILL_DrawStrSkill( PSTATUS_WORK *work , PSTATUS_SKILL_WORK 
 static void PSTATUS_SKILL_UpdateUI( PSTATUS_WORK *work , PSTATUS_SKILL_WORK *skillWork );
 static const BOOL PSTATUS_SKILL_UpdateKey( PSTATUS_WORK *work , PSTATUS_SKILL_WORK *skillWork );
 static void PSTATUS_SKILL_UpdateTP( PSTATUS_WORK *work , PSTATUS_SKILL_WORK *skillWork );
+static const BOOL PSTATUS_SKILL_UpdateKey_WazaAdd( PSTATUS_WORK *work , PSTATUS_SKILL_WORK *skillWork );
+static void PSTATUS_SKILL_UpdateTP_WazaAdd( PSTATUS_WORK *work , PSTATUS_SKILL_WORK *skillWork );
+static void PSTATUS_SKILL_UpdateKey_CursorMove( PSTATUS_WORK *work , PSTATUS_SKILL_WORK *skillWork );
 static void PSTATUS_SKILL_UpdateCursorPos( PSTATUS_WORK *work , PSTATUS_SKILL_WORK *skillWork , const u8 newPos );
 static void PSTATUS_SKILL_SwapSkill( PSTATUS_WORK *work , PSTATUS_SKILL_WORK *skillWork , const u8 pos1 , const u8 pos2 );
 
@@ -265,7 +274,7 @@ static const u8 platePos[PSTATUS_SKILL_PLATE_NUM][2] =
   { 1 , 6 },
   { 1 ,10 },
   { 1 ,14 },
-  { 1 ,21 },
+  { 1 ,20 },
 };
 
 //--------------------------------------------------------------
@@ -283,6 +292,15 @@ PSTATUS_SKILL_WORK* PSTATUS_SKILL_Init( PSTATUS_WORK *work )
   skillWork->isWaitSwapSkill = FALSE;
   skillWork->isChangeMode = FALSE;
   skillWork->changeTarget = PSTATUS_SKILL_PLATE_NUM;
+  
+  if( work->psData->mode == PST_MODE_WAZAADD )
+  {
+    skillWork->wazaPlateNum = 5;
+  }
+  else
+  {
+    skillWork->wazaPlateNum = 4;
+  }
   
   for( i=0;i<PSTATUS_SKILL_PLATE_NUM;i++ )
   {
@@ -401,6 +419,8 @@ void PSTATUS_SKILL_LoadResource( PSTATUS_WORK *work , PSTATUS_SKILL_WORK *skillW
   skillWork->scrResUpSkillTitle = GFL_ARCHDL_UTIL_LoadScreen( archandle , NARC_p_status_gra_p_st_skilltitle_u2_NSCR ,
                     FALSE , &skillWork->scrDataUpSkillTitle , work->heapId );
 
+  skillWork->bmpOamSys = PSTA_OAM_Init( work->heapId , work->cellUnit );
+
 }
 
 //--------------------------------------------------------------
@@ -414,6 +434,8 @@ void PSTATUS_SKILL_ReleaseResource( PSTATUS_WORK *work , PSTATUS_SKILL_WORK *ski
   {
     PSTATUS_SKILL_ClearPage( work , skillWork );
   }
+  
+  PSTA_OAM_Exit( skillWork->bmpOamSys );
 
   GFL_HEAP_FreeMemory( skillWork->scrResDown );
   GFL_HEAP_FreeMemory( skillWork->scrResUpStatus );
@@ -479,7 +501,7 @@ void PSTATUS_SKILL_InitCell( PSTATUS_WORK *work , PSTATUS_SKILL_WORK *skillWork 
   } 
 
   //基本はcellの初期かなのでここで
-  for( i=0;i<4;i++ )
+  for( i=0;i<skillWork->wazaPlateNum;i++ )
   {
     PSTATUS_SKILL_InitPlate( work , skillWork , &skillWork->plateWork[i] , i );
   }
@@ -489,7 +511,7 @@ void PSTATUS_SKILL_InitCell( PSTATUS_WORK *work , PSTATUS_SKILL_WORK *skillWork 
 void PSTATUS_SKILL_TermCell( PSTATUS_WORK *work , PSTATUS_SKILL_WORK *skillWork )
 {
   u8 i;
-  for( i=0;i<4;i++ )
+  for( i=0;i<skillWork->wazaPlateNum;i++ )
   {
     PSTATUS_SKILL_TermPlate( work , skillWork , &skillWork->plateWork[i] );
   }
@@ -520,7 +542,7 @@ void PSTATUS_SKILL_DispPage( PSTATUS_WORK *work , PSTATUS_SKILL_WORK *skillWork 
 
   PSTATUS_SKILL_DispStatusPage( work , skillWork );
 
-  for( i=0;i<4;i++ )
+  for( i=0;i<skillWork->wazaPlateNum;i++ )
   {
     PSTATUS_SKILL_DispPlate( work , skillWork , &skillWork->plateWork[i] );
   }
@@ -544,7 +566,7 @@ void PSTATUS_SKILL_DispPage_Trans( PSTATUS_WORK *work , PSTATUS_SKILL_WORK *skil
 
   PSTATUS_SKILL_DispStatusPage_Trans( work , skillWork );
 
-  for( i=0;i<4;i++ )
+  for( i=0;i<skillWork->wazaPlateNum;i++ )
   {
     PSTATUS_SKILL_DispPlate_Trans( work , skillWork , &skillWork->plateWork[i] );
   }
@@ -560,7 +582,7 @@ void PSTATUS_SKILL_DispPage_Trans( PSTATUS_WORK *work , PSTATUS_SKILL_WORK *skil
 void PSTATUS_SKILL_ClearPage( PSTATUS_WORK *work , PSTATUS_SKILL_WORK *skillWork )
 {
   u8 i;
-  for( i=0;i<4;i++ )
+  for( i=0;i<skillWork->wazaPlateNum;i++ )
   {
     PSTATUS_SKILL_ClearPlate( work , skillWork , &skillWork->plateWork[i] );
   }
@@ -579,7 +601,7 @@ void PSTATUS_SKILL_ClearPage_Trans( PSTATUS_WORK *work , PSTATUS_SKILL_WORK *ski
 {
   u8 i;
   
-  for( i=0;i<4;i++ )
+  for( i=0;i<skillWork->wazaPlateNum;i++ )
   {
     PSTATUS_SKILL_ClearPlate_Trans( work , skillWork , &skillWork->plateWork[i] );
   }
@@ -679,7 +701,7 @@ static void PSTATUS_SKILL_DispSkillInfoPage_Trans( PSTATUS_WORK *work , PSTATUS_
   GFL_CLACT_WK_SetDrawEnable( skillWork->clwkHpBar , FALSE );
   GFL_CLACT_WK_SetDrawEnable( skillWork->clwkWazaKind , TRUE );
 
-  for( i=0;i<4;i++ )
+  for( i=0;i<skillWork->wazaPlateNum;i++ )
   {
     PSTATUS_SKILL_DispPlate_Trans( work , skillWork , &skillWork->plateWork[i] );
   }
@@ -981,15 +1003,142 @@ static void PSTATUS_SKILL_DrawStrSkill( PSTATUS_WORK *work , PSTATUS_SKILL_WORK 
   skillWork->isUpdateStrSkill = TRUE;
 }
 
+#pragma mark [>Disp wazaadd
+//--------------------------------------------------------------
+//	ページの表示
+//--------------------------------------------------------------
+void PSTATUS_SKILL_DispPage_WazaAdd( PSTATUS_WORK *work , PSTATUS_SKILL_WORK *skillWork )
+{
+  u8 i;
+   
+  for( i=0;i<PSBT_MAX;i++ )
+  {
+    skillWork->upBmpWin[i] = GFL_BMPWIN_Create( PSTATUS_BG_SUB_STR ,
+                winPos[i][0] , winPos[i][1] , winPos[i][2] , winPos[i][3] ,
+                PSTATUS_BG_SUB_PLT_FONT , GFL_BMP_CHRAREA_GET_B );
+  }
+  //HPバーだけパレット違うの対応
+  GFL_BMPWIN_SetPalette( skillWork->upBmpWin[PSBT_HP_GAUGE] , PSTATUS_BG_SUB_PLT_HPBAR );
+
+  PSTATUS_SKILL_DispSkillInfoPage( work , skillWork );
+
+  for( i=0;i<skillWork->wazaPlateNum;i++ )
+  {
+    PSTATUS_SKILL_DispPlate( work , skillWork , &skillWork->plateWork[i] );
+  }
+  skillWork->cursorPos = 0xFF;
+  skillWork->isDisp = TRUE;
+}
+//--------------------------------------------------------------
+//	ページの表示(転送タイミング
+//--------------------------------------------------------------
+void PSTATUS_SKILL_DispPage_Trans_WazaAdd( PSTATUS_WORK *work , PSTATUS_SKILL_WORK *skillWork )
+{
+  u8 i;
+
+   //Window下地の張替え
+  GFL_BG_WriteScreenExpand( PSTATUS_BG_PLATE , 
+//                    0 , 0 , PSTATUS_MAIN_PAGE_WIDTH , 24 ,
+                    0 , 0 , 32 , 24 ,
+                    skillWork->scrDataDown->rawData ,
+                    0 , 0 , 32 , 32 );
+  GFL_BG_LoadScreenV_Req( PSTATUS_BG_PLATE );
+
+  PSTATUS_SKILL_DispSkillInfoPage_Trans( work , skillWork );
+
+  for( i=0;i<skillWork->wazaPlateNum;i++ )
+  {
+    PSTATUS_SKILL_DispPlate_Trans( work , skillWork , &skillWork->plateWork[i] );
+  }
+
+  //バーアイコン処理
+  GFL_CLACT_WK_SetAnmSeq( work->clwkBarIcon[SBT_PAGE2] , SBA_PAGE2_SELECT );
+
+  //押されてるモード
+  if( work->ktst == GFL_APP_END_KEY )
+  {
+    skillWork->cursorPos = 0;
+    PSTATUS_SetActiveBarButton( work , FALSE );
+    PSTATUS_SKILL_UpdateCursorPos( work , skillWork , skillWork->cursorPos );
+  }
+  else
+  {
+    skillWork->cursorPos = 0;
+    PSTATUS_SetActiveBarButton( work , FALSE );
+    PSTATUS_SKILL_UpdateCursorPos( work , skillWork , skillWork->cursorPos );
+  }
+  
+
+}
+
+//--------------------------------------------------------------
+//	ページのクリア
+//--------------------------------------------------------------
+void PSTATUS_SKILL_ClearPage_WazaAdd( PSTATUS_WORK *work , PSTATUS_SKILL_WORK *skillWork )
+{
+  u8 i;
+  for( i=0;i<skillWork->wazaPlateNum;i++ )
+  {
+    PSTATUS_SKILL_ClearPlate( work , skillWork , &skillWork->plateWork[i] );
+  }
+  for( i=0;i<PSBT_MAX;i++ )
+  {
+    GFL_BMPWIN_Delete( skillWork->upBmpWin[i] );
+  }
+  
+  skillWork->isDisp = FALSE;
+}
+
+//--------------------------------------------------------------
+//	ページのクリア(転送タイミング
+//--------------------------------------------------------------
+void PSTATUS_SKILL_ClearPage_Trans_WazaAdd( PSTATUS_WORK *work , PSTATUS_SKILL_WORK *skillWork )
+{
+  u8 i;
+  
+  for( i=0;i<skillWork->wazaPlateNum;i++ )
+  {
+    PSTATUS_SKILL_ClearPlate_Trans( work , skillWork , &skillWork->plateWork[i] );
+  }
+  GFL_BG_FillScreen( PSTATUS_BG_PARAM , 0 , 0 , 0 , 
+                     PSTATUS_MAIN_PAGE_WIDTH , 21 ,
+                     GFL_BG_SCRWRT_PALNL );
+  GFL_BG_LoadScreenReq( PSTATUS_BG_PARAM );
+  
+  GFL_BG_ClearScreenCodeVReq( PSTATUS_BG_SUB_STR , 0 );
+  GFL_BG_LoadScreenV_Req( PSTATUS_BG_SUB_STR );
+
+  GFL_CLACT_WK_SetDrawEnable( skillWork->clwkHpBar , FALSE );
+  GFL_CLACT_WK_SetDrawEnable( skillWork->clwkWazaKind , FALSE );
+  
+  GFL_CLACT_WK_SetDrawEnable( work->clwkTypeIcon[0] , FALSE );
+  GFL_CLACT_WK_SetDrawEnable( work->clwkTypeIcon[1] , FALSE );
+
+  //バーアイコン処理
+  GFL_CLACT_WK_SetAnmSeq( work->clwkBarIcon[SBT_PAGE2] , SBA_PAGE2_NORMAL );
+
+}
 #pragma mark [>UI
 //--------------------------------------------------------------
 //	操作系更新
 //--------------------------------------------------------------
 static void PSTATUS_SKILL_UpdateUI( PSTATUS_WORK *work , PSTATUS_SKILL_WORK *skillWork )
 {
-  if( PSTATUS_SKILL_UpdateKey( work , skillWork ) == FALSE )
+  if( work->psData->mode != PST_MODE_WAZAADD )
   {
-    PSTATUS_SKILL_UpdateTP( work , skillWork );
+    //通常時操作
+    if( PSTATUS_SKILL_UpdateKey( work , skillWork ) == FALSE )
+    {
+      PSTATUS_SKILL_UpdateTP( work , skillWork );
+    }
+  }
+  else
+  {
+    //技入れ替え操作
+    if( PSTATUS_SKILL_UpdateKey_WazaAdd( work , skillWork ) == FALSE )
+    {
+      PSTATUS_SKILL_UpdateTP_WazaAdd( work , skillWork );
+    }
   }
 
   if( GFL_UI_TP_GetCont() == FALSE )
@@ -1011,6 +1160,7 @@ static const BOOL PSTATUS_SKILL_UpdateKey( PSTATUS_WORK *work , PSTATUS_SKILL_WO
   
   if( work->isActiveBarButton == TRUE )
   {
+    //初回のAボタン
     if( GFL_UI_KEY_GetTrg() == PAD_BUTTON_A )
     {
       skillWork->cursorPos = 0;
@@ -1025,6 +1175,7 @@ static const BOOL PSTATUS_SKILL_UpdateKey( PSTATUS_WORK *work , PSTATUS_SKILL_WO
   if( GFL_UI_KEY_GetTrg() == PAD_BUTTON_B &&
       skillWork->isChangeMode == FALSE )
   {
+    //技確認から通常へ
     //戻る
     PSTATUS_SetActiveBarButton( work , TRUE );
     PSTATUS_SKILL_ChangeColor( &skillWork->plateWork[skillWork->cursorPos] , 0 );
@@ -1036,6 +1187,7 @@ static const BOOL PSTATUS_SKILL_UpdateKey( PSTATUS_WORK *work , PSTATUS_SKILL_WO
   else 
   if( work->ktst == GFL_APP_END_TOUCH )
   {
+    //タッチモードからキー操作へ
     if( GFL_UI_KEY_GetTrg() )
     {
         work->ktst = GFL_APP_END_KEY;
@@ -1047,6 +1199,7 @@ static const BOOL PSTATUS_SKILL_UpdateKey( PSTATUS_WORK *work , PSTATUS_SKILL_WO
   else 
   if( GFL_UI_KEY_GetTrg() == PAD_BUTTON_A )
   {
+    //Aボタン操作
     if( skillWork->isChangeMode == FALSE )
     {
       //入れ替えモードへ
@@ -1061,6 +1214,7 @@ static const BOOL PSTATUS_SKILL_UpdateKey( PSTATUS_WORK *work , PSTATUS_SKILL_WO
     }
     else
     {
+      //入れ替えの確定
       if( skillWork->changeTarget != skillWork->cursorPos )
       {
         //入れ替え確定
@@ -1081,6 +1235,7 @@ static const BOOL PSTATUS_SKILL_UpdateKey( PSTATUS_WORK *work , PSTATUS_SKILL_WO
   if( GFL_UI_KEY_GetTrg() == PAD_BUTTON_B &&
       skillWork->isChangeMode == TRUE )
   {
+    //入れ替えの取り消し
     PSTATUS_SKILL_ChangeColor( &skillWork->plateWork[skillWork->changeTarget] , 0 );
     PSTATUS_SKILL_UpdateCursorPos( work , skillWork , skillWork->cursorPos );
     GFL_CLACT_WK_SetDrawEnable( skillWork->clwkTargetCur , FALSE );
@@ -1092,36 +1247,7 @@ static const BOOL PSTATUS_SKILL_UpdateKey( PSTATUS_WORK *work , PSTATUS_SKILL_WO
   if( GFL_UI_KEY_GetTrg() == PAD_KEY_UP ||
       GFL_UI_KEY_GetTrg() == PAD_KEY_DOWN )
   {
-    const POKEMON_PASO_PARAM *ppp = PSTATUS_UTIL_GetCurrentPPP( work );
-    GFL_CLACTPOS cellPos;
-    int newCursorPos = skillWork->cursorPos;
-    int moveVal;
-    if( GFL_UI_KEY_GetTrg() == PAD_KEY_UP )
-    {
-      moveVal = -1;
-    }
-    else
-    {
-      moveVal = 1;
-    }
-    
-    do
-    {
-      if( newCursorPos + moveVal < 0 )
-      {
-        newCursorPos = 3;
-      }
-      else if( newCursorPos + moveVal > 3 )
-      {
-        newCursorPos = 0;
-      }
-      else
-      {
-        newCursorPos += moveVal;
-      }
-    }while( PPP_Get( ppp , ID_PARA_waza1+newCursorPos , NULL ) == 0 );
-    
-    PSTATUS_SKILL_UpdateCursorPos( work , skillWork , newCursorPos );
+    PSTATUS_SKILL_UpdateKey_CursorMove( work , skillWork );
     return TRUE;
   }
 
@@ -1293,6 +1419,152 @@ static void PSTATUS_SKILL_UpdateTP( PSTATUS_WORK *work , PSTATUS_SKILL_WORK *ski
 }
 
 //--------------------------------------------------------------
+//	キー操作更新
+//--------------------------------------------------------------
+static const BOOL PSTATUS_SKILL_UpdateKey_WazaAdd( PSTATUS_WORK *work , PSTATUS_SKILL_WORK *skillWork )
+{
+  if( GFL_UI_KEY_GetTrg() == PAD_BUTTON_B )
+  {
+    //戻る
+    work->retVal = SRT_RETURN;
+    work->psData->ret_mode = PST_RET_CANCEL;
+    work->mainSeq = SMS_FADEOUT;
+    GFL_CLACT_WK_SetAnmSeq( work->clwkBarIcon[SBT_RETURN] , APP_COMMON_BARICON_RETURN_ON );
+    work->clwkExitButton = work->clwkBarIcon[SBT_RETURN];
+    return TRUE;
+  }
+  else 
+  if( work->ktst == GFL_APP_END_TOUCH )
+  {
+    //タッチモードからキー操作へ
+    if( GFL_UI_KEY_GetTrg() )
+    {
+        work->ktst = GFL_APP_END_KEY;
+        skillWork->changeTarget = PSTATUS_SKILL_PLATE_NUM;
+        PSTATUS_SKILL_UpdateCursorPos( work , skillWork , skillWork->cursorPos );
+        return TRUE;
+    }
+  }
+  else 
+  if( GFL_UI_KEY_GetTrg() == PAD_BUTTON_A )
+  {
+    //決定
+    work->retVal = SRT_RETURN;
+    work->psData->ret_sel = skillWork->cursorPos;
+    work->psData->ret_mode = PST_RET_DECIDE;
+    work->mainSeq = SMS_FADEOUT;
+    work->clwkExitButton = NULL;
+    
+    return TRUE;
+  }
+  else 
+  if( GFL_UI_KEY_GetTrg() == PAD_KEY_UP ||
+      GFL_UI_KEY_GetTrg() == PAD_KEY_DOWN )
+  {
+    PSTATUS_SKILL_UpdateKey_CursorMove( work , skillWork );
+    return TRUE;
+  }
+  
+  return FALSE;
+}
+
+//--------------------------------------------------------------
+//	TP操作更新
+//--------------------------------------------------------------
+static void PSTATUS_SKILL_UpdateTP_WazaAdd( PSTATUS_WORK *work , PSTATUS_SKILL_WORK *skillWork )
+{
+  if( work->barButtonHit == SBT_RETURN )
+  {
+    //戻る
+    work->retVal = SRT_RETURN;
+    work->psData->ret_mode = PST_RET_CANCEL;
+    work->mainSeq = SMS_FADEOUT;
+    GFL_CLACT_WK_SetAnmSeq( work->clwkBarIcon[SBT_RETURN] , APP_COMMON_BARICON_RETURN_ON );
+    work->clwkExitButton = work->clwkBarIcon[SBT_RETURN];
+  }
+  else
+  {
+    //プレートとのタッチ判定
+    u8 i;
+    int ret;
+    //当たり判定の作成
+    GFL_UI_TP_HITTBL hitTbl[PSTATUS_SKILL_PLATE_NUM+1];
+    for( i=0;i<PSTATUS_SKILL_PLATE_NUM;i++ )
+    {
+      PSTATUS_SKILL_GetTPRect( &skillWork->plateWork[i] , &hitTbl[i] );
+    }
+    hitTbl[PSTATUS_SKILL_PLATE_NUM].circle.code = GFL_UI_TP_HIT_END;
+
+    ret = GFL_UI_TP_HitTrg( hitTbl );
+    if( ret != GFL_UI_TP_HIT_NONE )
+    {
+      if( ret < 4 )
+      {
+        const POKEMON_PASO_PARAM *ppp = PSTATUS_UTIL_GetCurrentPPP( work );
+        if( PPP_Get( ppp , ID_PARA_waza1+ret , NULL ) != 0 )
+        {
+          //決定
+          work->retVal = SRT_RETURN;
+          work->psData->ret_sel = ret;
+          work->psData->ret_mode = PST_RET_DECIDE;
+          work->mainSeq = SMS_FADEOUT;
+          work->clwkExitButton = NULL;
+        }
+      }
+      else
+      {
+        //決定
+        work->retVal = SRT_RETURN;
+        work->psData->ret_sel = ret;
+        work->psData->ret_mode = PST_RET_DECIDE;
+        work->mainSeq = SMS_FADEOUT;
+        work->clwkExitButton = NULL;
+      }
+    }
+
+  
+  }
+  
+}
+
+//--------------------------------------------------------------
+//	カーソル更新
+//--------------------------------------------------------------
+static void PSTATUS_SKILL_UpdateKey_CursorMove( PSTATUS_WORK *work , PSTATUS_SKILL_WORK *skillWork )
+{
+  const POKEMON_PASO_PARAM *ppp = PSTATUS_UTIL_GetCurrentPPP( work );
+  GFL_CLACTPOS cellPos;
+  int newCursorPos = skillWork->cursorPos;
+  int moveVal;
+  if( GFL_UI_KEY_GetTrg() == PAD_KEY_UP )
+  {
+    moveVal = -1;
+  }
+  else
+  {
+    moveVal = 1;
+  }
+  
+  do
+  {
+    if( newCursorPos + moveVal < 0 )
+    {
+      newCursorPos = skillWork->wazaPlateNum-1;
+    }
+    else if( newCursorPos + moveVal > skillWork->wazaPlateNum-1 )
+    {
+      newCursorPos = 0;
+    }
+    else
+    {
+      newCursorPos += moveVal;
+    }
+  }while( PPP_Get( ppp , ID_PARA_waza1+newCursorPos , NULL ) == 0 );
+  
+  PSTATUS_SKILL_UpdateCursorPos( work , skillWork , newCursorPos );
+}
+
+//--------------------------------------------------------------
 //	カーソルの位置が変わったとき呼ぶ
 //--------------------------------------------------------------
 static void PSTATUS_SKILL_UpdateCursorPos( PSTATUS_WORK *work , PSTATUS_SKILL_WORK *skillWork , const u8 newPos )
@@ -1390,7 +1662,7 @@ static void PSTATUS_SKILL_InitPlate( PSTATUS_WORK *work , PSTATUS_SKILL_WORK *sk
     cellInitData.pos_x = platePos[idx][0] * 8;
     cellInitData.pos_y = platePos[idx][1] * 8;
     cellInitData.softpri = 10;
-    cellInitData.bgpri = 2;
+    cellInitData.bgpri = 1;
     cellInitData.anmseq = plateWork->idx;
     
     plateWork->clwkPlate = GFL_CLACT_WK_Create( work->cellUnit ,
@@ -1403,7 +1675,7 @@ static void PSTATUS_SKILL_InitPlate( PSTATUS_WORK *work , PSTATUS_SKILL_WORK *sk
       //タイプ
     cellInitData.pos_x = platePos[plateWork->idx][0]*8 +PSTATUS_SKILL_PLATE_TYPE_X;
     cellInitData.pos_y = platePos[plateWork->idx][1]*8 +PSTATUS_SKILL_PLATE_TYPE_Y;
-    cellInitData.softpri = 12;
+    cellInitData.softpri = 8;
     cellInitData.bgpri = 1;
     cellInitData.anmseq = 0;
     plateWork->clwkType = GFL_CLACT_WK_Create( work->cellUnit ,
@@ -1449,18 +1721,36 @@ static void PSTATUS_SKILL_DispPlate( PSTATUS_WORK *work , PSTATUS_SKILL_WORK *sk
 {
   const POKEMON_PARAM *pp = PSTATUS_UTIL_GetCurrentPP( work );
   
-  const u32 wazaNo = PP_Get( pp , ID_PARA_waza1+plateWork->idx , NULL );
+  u32 wazaNo;
+  u32 nowpp;
+  u32 maxpp;
+  if( plateWork->idx < 4 )
+  {
+    wazaNo = PP_Get( pp , ID_PARA_waza1+plateWork->idx , NULL );
+    nowpp = PP_Get( pp , ID_PARA_pp1+plateWork->idx , NULL );
+    maxpp = PP_Get( pp , ID_PARA_pp_max1+plateWork->idx , NULL );
+  }
+  else
+  {
+    wazaNo = work->psData->waza;
+    nowpp = WT_WazaDataParaGet( wazaNo , ID_WTD_pp );
+    maxpp = nowpp;
+  }
+/*
   plateWork->bmpWin = GFL_BMPWIN_Create( PSTATUS_BG_PARAM ,
                 platePos[plateWork->idx][0]+PSTATUS_SKILL_PLATE_WIN_LEFT , platePos[plateWork->idx][1]+PSTATUS_SKILL_PLATE_WIN_TOP ,
                 PSTATUS_SKILL_PLATE_WIN_WIDTH , PSTATUS_SKILL_PLATE_WIN_HEIGHT ,
                 PSTATUS_BG_PLT_FONT , GFL_BMP_CHRAREA_GET_B );
+*/
+  plateWork->bmpData = GFL_BMP_Create( PSTATUS_SKILL_PLATE_WIN_WIDTH , PSTATUS_SKILL_PLATE_WIN_HEIGHT ,
+                                       GFL_BMP_16_COLOR , work->heapId );
   //文字の表示
   {
     GFL_MSGDATA *msgHandelSkill = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL , ARCID_MESSAGE , NARC_message_wazaname_dat , work->heapId );
     {
       //技名
       STRBUF *srcStr = GFL_MSG_CreateString( msgHandelSkill , wazaNo );
-      PRINTSYS_PrintQueColor( work->printQue , GFL_BMPWIN_GetBmp( plateWork->bmpWin ) , 
+      PRINTSYS_PrintQueColor( work->printQue , plateWork->bmpData , 
               PSTATUS_SKILL_PLATE_WAZANAME_X , PSTATUS_SKILL_PLATE_WAZANAME_Y , srcStr , 
               work->fontHandle , PSTATUS_STR_COL_BLACK );
 
@@ -1470,24 +1760,22 @@ static void PSTATUS_SKILL_DispPlate( PSTATUS_WORK *work , PSTATUS_SKILL_WORK *sk
     if( wazaNo != 0 )
     {
       //現在PP
-      PSTATUS_UTIL_DrawStrFunc( work , plateWork->bmpWin , mes_status_06_08 ,
+      PSTATUS_UTIL_DrawStrFuncBmp( work , plateWork->bmpData , mes_status_06_08 ,
                                 PSTATUS_SKILL_PLATE_PPSTR_X , PSTATUS_SKILL_PLATE_PPSTR_Y , PSTATUS_STR_COL_BLACK );
       {
         WORDSET *wordSet = WORDSET_Create( work->heapId );
-        const u32 nowpp = PP_Get( pp , ID_PARA_pp1+plateWork->idx , NULL );
         WORDSET_RegisterNumber( wordSet , 0 , nowpp , 3 , STR_NUM_DISP_SPACE , STR_NUM_CODE_DEFAULT );
-        PSTATUS_UTIL_DrawValueStrFuncRight( work , plateWork->bmpWin , wordSet , mes_status_06_09 , 
+        PSTATUS_UTIL_DrawValueStrFuncRightBmp( work , plateWork->bmpData , wordSet , mes_status_06_09 , 
                                        PSTATUS_SKILL_PLATE_NOWPP_X , PSTATUS_SKILL_PLATE_NOWPP_Y , PSTATUS_STR_COL_BLACK );
         WORDSET_Delete( wordSet );
       }
-      PSTATUS_UTIL_DrawStrFunc( work , plateWork->bmpWin , mes_status_04_09 ,
+      PSTATUS_UTIL_DrawStrFuncBmp( work , plateWork->bmpData , mes_status_04_09 ,
                                 PSTATUS_SKILL_PLATE_SLASH_X , PSTATUS_SKILL_PLATE_SLASH_Y , PSTATUS_STR_COL_BLACK );
       //最大PP
       {
         WORDSET *wordSet = WORDSET_Create( work->heapId );
-        const u32 maxpp = PP_Get( pp , ID_PARA_pp_max1+plateWork->idx , NULL );
         WORDSET_RegisterNumber( wordSet , 0 , maxpp , 3 , STR_NUM_DISP_SPACE , STR_NUM_CODE_DEFAULT );
-        PSTATUS_UTIL_DrawValueStrFunc( work , plateWork->bmpWin , wordSet , mes_status_06_14 , 
+        PSTATUS_UTIL_DrawValueStrFuncBmp( work , plateWork->bmpData , wordSet , mes_status_06_14 , 
                                        PSTATUS_SKILL_PLATE_MAXPP_X , PSTATUS_SKILL_PLATE_MAXPP_Y , PSTATUS_STR_COL_BLACK );
         WORDSET_Delete( wordSet );
       }
@@ -1495,9 +1783,23 @@ static void PSTATUS_SKILL_DispPlate( PSTATUS_WORK *work , PSTATUS_SKILL_WORK *sk
     else
     {
       //技無しの線
-      PSTATUS_UTIL_DrawStrFunc( work , plateWork->bmpWin , mes_status_06_27 ,
+      PSTATUS_UTIL_DrawStrFuncBmp( work , plateWork->bmpData , mes_status_06_27 ,
                                 PSTATUS_SKILL_PLATE_NONE_X , PSTATUS_SKILL_PLATE_NONE_Y , PSTATUS_STR_COL_BLACK );
     }
+  }
+  //文字用OAM
+  {
+    PSTA_OAM_ACT_DATA oamData;
+    oamData.x = (platePos[plateWork->idx][0]+PSTATUS_SKILL_PLATE_WIN_LEFT)*8;
+    oamData.y = (platePos[plateWork->idx][1]+PSTATUS_SKILL_PLATE_WIN_TOP)*8;
+    oamData.pltt_index = work->cellRes[SCR_PLT_RIBBON_BAR]; //文字はリボンと同じパレットで
+    oamData.pal_offset = 0;
+    oamData.soft_pri = 0;
+    oamData.bg_pri = 1;
+    oamData.setSerface = CLSYS_DEFREND_MAIN;
+    oamData.draw_type = CLSYS_DRAW_MAIN;
+    oamData.bmp = plateWork->bmpData;
+    plateWork->bmpOam = PSTA_OAM_ActorAdd( skillWork->bmpOamSys , &oamData );
   }
 
   plateWork->isUpdateStr = TRUE;
@@ -1530,7 +1832,8 @@ static void PSTATUS_SKILL_DispPlate_Trans( PSTATUS_WORK *work , PSTATUS_SKILL_WO
       GFL_CLACT_WK_SetDrawEnable( plateWork->clwkType , FALSE );
     }
 
-    GFL_BMPWIN_MakeTransWindow_VBlank( plateWork->bmpWin );
+    //GFL_BMPWIN_MakeTransWindow_VBlank( plateWork->bmpWin );
+    PSTA_OAM_ActorBmpTrans( plateWork->bmpOam );
     GFL_CLACT_WK_SetDrawEnable( plateWork->clwkPlate , TRUE );
 
     plateWork->isUpdateStr = FALSE;
@@ -1542,7 +1845,9 @@ static void PSTATUS_SKILL_DispPlate_Trans( PSTATUS_WORK *work , PSTATUS_SKILL_WO
 //--------------------------------------------------------------
 static void PSTATUS_SKILL_ClearPlate( PSTATUS_WORK *work , PSTATUS_SKILL_WORK *skillWork , PSTATUS_SKILL_PLATE *plateWork )
 {
-  GFL_BMPWIN_Delete( plateWork->bmpWin );
+//  GFL_BMPWIN_Delete( plateWork->bmpWin );
+  GFL_BMP_Delete( plateWork->bmpData );
+  PSTA_OAM_ActorDel( plateWork->bmpOam );
 }
 //--------------------------------------------------------------
 //	スキルプレートの消去

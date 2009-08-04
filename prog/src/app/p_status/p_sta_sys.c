@@ -108,7 +108,6 @@ const BOOL PSTATUS_InitPokeStatus( PSTATUS_WORK *work )
   work->befDataPos = 0xFF;
   work->scrollCnt = 0;
   work->befVCount = OS_GetVBlankCount();
-  work->page = PPT_INFO;
   work->befPage = PPT_MAX;
   work->isActiveBarButton = TRUE;
   work->retVal = SRT_CONTINUE;
@@ -117,6 +116,7 @@ const BOOL PSTATUS_InitPokeStatus( PSTATUS_WORK *work )
   work->mosaicCnt = 0;
   work->mainSeq = SMS_FADEIN;
   work->clwkExitButton = NULL;
+  work->ktst = GFL_UI_CheckTouchOrKey();
   
 #if PM_DEBUG
   work->calcPP = NULL;
@@ -145,9 +145,20 @@ const BOOL PSTATUS_InitPokeStatus( PSTATUS_WORK *work )
   }
   
   //最初の表示処理
-  PSTATUS_SUB_DispPage( work , work->subWork );
-  PSTATUS_INFO_DispPage( work , work->infoWork );
-  PSTATUS_RIBBON_CreateRibbonBar( work , work->ribbonWork );
+  if( work->psData->mode == PST_MODE_WAZAADD )
+  {
+    work->page = PPT_SKILL_ADD;
+    PSTATUS_SUB_DispPage( work , work->subWork );
+    PSTATUS_SKILL_DispPage_WazaAdd( work , work->skillWork );
+    PSTATUS_RIBBON_CreateRibbonBar( work , work->ribbonWork );
+  }
+  else
+  {
+  work->page = PPT_INFO;
+    PSTATUS_SUB_DispPage( work , work->subWork );
+    PSTATUS_INFO_DispPage( work , work->infoWork );
+    PSTATUS_RIBBON_CreateRibbonBar( work , work->ribbonWork );
+  }
   
 
 #if USE_DEBUGWIN_SYSTEM
@@ -259,6 +270,7 @@ const PSTATUS_RETURN_TYPE PSTATUS_UpdatePokeStatus( PSTATUS_WORK *work )
           PSTATUS_INFO_Main( work , work->infoWork );
           break;
         case PPT_SKILL:
+        case PPT_SKILL_ADD:
           PSTATUS_SKILL_Main( work , work->skillWork );
           break;
         case PPT_RIBBON:
@@ -435,7 +447,7 @@ static void PSTATUS_InitGraphic( PSTATUS_WORK *work )
     GFL_CLACT_SYS_Create( &cellSysInitData , &vramBank ,work->heapId );
 
     //TODO 個数は適当
-    work->cellUnit  = GFL_CLACT_UNIT_Create( 64 , 0, work->heapId );
+    work->cellUnit  = GFL_CLACT_UNIT_Create( 96 , 0, work->heapId );
     GFL_CLACT_UNIT_SetDefaultRend( work->cellUnit );
     
     GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_OBJ , TRUE );
@@ -805,6 +817,19 @@ static void PSTATUS_InitCell( PSTATUS_WORK *work )
     }
   }
   
+  //技モードではリターン以外消す
+  if( work->psData->mode == PST_MODE_WAZAADD )
+  {
+    u8 i;
+    for( i=0;i<SBT_MAX;i++ )
+    {
+      if( i != SBT_RETURN )
+      {
+        GFL_CLACT_WK_SetDrawEnable( work->clwkBarIcon[i] , FALSE );
+      }
+    }
+  }
+  
   PSTATUS_SUB_InitCell( work , work->subWork );
   PSTATUS_RIBBON_InitCell( work , work->ribbonWork );
   PSTATUS_SKILL_InitCell( work , work->skillWork );
@@ -1143,7 +1168,11 @@ void PSTATUS_SetActiveBarButton( PSTATUS_WORK *work , const BOOL isActive )
     GFL_CLACT_WK_SetAnmSeq( work->clwkBarIcon[SBT_CURSOR_UP] , APP_COMMON_BARICON_CURSOR_UP_OFF );
     GFL_CLACT_WK_SetAnmSeq( work->clwkBarIcon[SBT_CURSOR_DOWN] , APP_COMMON_BARICON_CURSOR_DOWN_OFF );
     GFL_CLACT_WK_SetAnmSeq( work->clwkBarIcon[SBT_EXIT] , APP_COMMON_BARICON_CLOSE_OFF );
-    GFL_CLACT_WK_SetAnmSeq( work->clwkBarIcon[SBT_RETURN] , APP_COMMON_BARICON_RETURN_OFF );
+    //技モードではリターン暗くならない
+    if( work->psData->mode != PST_MODE_WAZAADD )
+    {
+      GFL_CLACT_WK_SetAnmSeq( work->clwkBarIcon[SBT_RETURN] , APP_COMMON_BARICON_RETURN_OFF );
+    }
   }
   else
   {
@@ -1198,6 +1227,9 @@ static void PSTATUS_RefreshDisp( PSTATUS_WORK *work )
   case PPT_RIBBON:
     PSTATUS_RIBBON_ClearPage( work , work->ribbonWork );
     break;
+  case PPT_SKILL_ADD:
+    PSTATUS_SKILL_ClearPage_WazaAdd( work , work->skillWork );
+    break;
   }
 
   switch( work->page )
@@ -1210,6 +1242,9 @@ static void PSTATUS_RefreshDisp( PSTATUS_WORK *work )
     break;
   case PPT_RIBBON:
     PSTATUS_RIBBON_DispPage( work , work->ribbonWork );
+    break;
+  case PPT_SKILL_ADD:
+    PSTATUS_SKILL_DispPage_WazaAdd( work , work->skillWork );
     break;
   }
   
@@ -1284,6 +1319,9 @@ static void PSTATUS_WaitDisp( PSTATUS_WORK *work )
     case PPT_RIBBON:
       PSTATUS_RIBBON_ClearPage_Trans( work , work->ribbonWork );
       break;
+    case PPT_SKILL_ADD:
+      PSTATUS_SKILL_ClearPage_Trans_WazaAdd( work , work->skillWork );
+      break;
     }
 
     switch( work->page )
@@ -1296,6 +1334,9 @@ static void PSTATUS_WaitDisp( PSTATUS_WORK *work )
       break;
     case PPT_RIBBON:
       PSTATUS_RIBBON_DispPage_Trans( work , work->ribbonWork );
+      break;
+    case PPT_SKILL_ADD:
+      PSTATUS_SKILL_DispPage_Trans_WazaAdd( work , work->skillWork );
       break;
     }
     
@@ -1420,6 +1461,18 @@ void PSTATUS_UTIL_SetCurrentPPPFast( PSTATUS_WORK *work , const BOOL isFast )
 #endif
   }
 }
+//--------------------------------------------------------------
+//	文字の描画(bmp
+//--------------------------------------------------------------
+void PSTATUS_UTIL_DrawStrFuncBmp( PSTATUS_WORK *work , GFL_BMP_DATA *bmpData , 
+                                      const u16 strId , const u16 posX , const u16 posY , const u16 col )
+{
+  STRBUF *srcStr;
+  srcStr = GFL_MSG_CreateString( work->msgHandle , strId ); 
+  PRINTSYS_PrintQueColor( work->printQue , bmpData , 
+          posX , posY , srcStr , work->fontHandle , col );
+  GFL_STR_DeleteBuffer( srcStr );
+}
 
 //--------------------------------------------------------------
 //	文字の描画
@@ -1427,11 +1480,7 @@ void PSTATUS_UTIL_SetCurrentPPPFast( PSTATUS_WORK *work , const BOOL isFast )
 void PSTATUS_UTIL_DrawStrFunc( PSTATUS_WORK *work , GFL_BMPWIN *bmpWin , 
                                       const u16 strId , const u16 posX , const u16 posY , const u16 col )
 {
-  STRBUF *srcStr;
-  srcStr = GFL_MSG_CreateString( work->msgHandle , strId ); 
-  PRINTSYS_PrintQueColor( work->printQue , GFL_BMPWIN_GetBmp( bmpWin ) , 
-          posX , posY , srcStr , work->fontHandle , col );
-  GFL_STR_DeleteBuffer( srcStr );
+  PSTATUS_UTIL_DrawStrFuncBmp( work , GFL_BMPWIN_GetBmp( bmpWin ) , strId , posX , posY , col );
 }
 
 //--------------------------------------------------------------
@@ -1450,9 +1499,9 @@ void PSTATUS_UTIL_DrawStrFuncRight( PSTATUS_WORK *work , GFL_BMPWIN *bmpWin ,
 }
 
 //--------------------------------------------------------------
-//	文字の描画(値用
+//	文字の描画(値用 bmp
 //--------------------------------------------------------------
-void PSTATUS_UTIL_DrawValueStrFunc( PSTATUS_WORK *work , GFL_BMPWIN *bmpWin , 
+void PSTATUS_UTIL_DrawValueStrFuncBmp( PSTATUS_WORK *work , GFL_BMP_DATA *bmpData , 
                                       WORDSET *wordSet, const u16 strId , const u16 posX , const u16 posY , const u16 col )
 {
   STRBUF *srcStr;
@@ -1460,8 +1509,37 @@ void PSTATUS_UTIL_DrawValueStrFunc( PSTATUS_WORK *work , GFL_BMPWIN *bmpWin ,
 
   srcStr = GFL_MSG_CreateString( work->msgHandle , strId ); 
   WORDSET_ExpandStr( wordSet , dstStr , srcStr );
-  PRINTSYS_PrintQueColor( work->printQue , GFL_BMPWIN_GetBmp( bmpWin ) , 
+  PRINTSYS_PrintQueColor( work->printQue , bmpData , 
           posX , posY , dstStr , work->fontHandle , col );
+
+  GFL_STR_DeleteBuffer( srcStr );
+  GFL_STR_DeleteBuffer( dstStr );
+}
+//--------------------------------------------------------------
+//	文字の描画(値用
+//--------------------------------------------------------------
+void PSTATUS_UTIL_DrawValueStrFunc( PSTATUS_WORK *work , GFL_BMPWIN *bmpWin , 
+                                      WORDSET *wordSet, const u16 strId , const u16 posX , const u16 posY , const u16 col )
+{
+  PSTATUS_UTIL_DrawValueStrFuncBmp( work , GFL_BMPWIN_GetBmp( bmpWin ) , wordSet ,
+                                    strId , posX , posY , col );
+}
+
+//--------------------------------------------------------------
+//	文字の描画(値用 bmp
+//--------------------------------------------------------------
+void PSTATUS_UTIL_DrawValueStrFuncRightBmp( PSTATUS_WORK *work , GFL_BMP_DATA *bmpData ,
+                                      WORDSET *wordSet, const u16 strId , const u16 posX , const u16 posY , const u16 col )
+{
+  STRBUF *srcStr;
+  STRBUF *dstStr = GFL_STR_CreateBuffer( 16, work->heapId );
+  u32 width;
+
+  srcStr = GFL_MSG_CreateString( work->msgHandle , strId ); 
+  WORDSET_ExpandStr( wordSet , dstStr , srcStr );
+  width = PRINTSYS_GetStrWidth( dstStr , work->fontHandle , 0 );
+  PRINTSYS_PrintQueColor( work->printQue , bmpData , 
+          posX-width , posY , dstStr , work->fontHandle , col );
 
   GFL_STR_DeleteBuffer( srcStr );
   GFL_STR_DeleteBuffer( dstStr );
@@ -1473,18 +1551,8 @@ void PSTATUS_UTIL_DrawValueStrFunc( PSTATUS_WORK *work , GFL_BMPWIN *bmpWin ,
 void PSTATUS_UTIL_DrawValueStrFuncRight( PSTATUS_WORK *work , GFL_BMPWIN *bmpWin , 
                                       WORDSET *wordSet, const u16 strId , const u16 posX , const u16 posY , const u16 col )
 {
-  STRBUF *srcStr;
-  STRBUF *dstStr = GFL_STR_CreateBuffer( 16, work->heapId );
-  u32 width;
-
-  srcStr = GFL_MSG_CreateString( work->msgHandle , strId ); 
-  WORDSET_ExpandStr( wordSet , dstStr , srcStr );
-  width = PRINTSYS_GetStrWidth( dstStr , work->fontHandle , 0 );
-  PRINTSYS_PrintQueColor( work->printQue , GFL_BMPWIN_GetBmp( bmpWin ) , 
-          posX-width , posY , dstStr , work->fontHandle , col );
-
-  GFL_STR_DeleteBuffer( srcStr );
-  GFL_STR_DeleteBuffer( dstStr );
+  PSTATUS_UTIL_DrawValueStrFuncRightBmp( work , GFL_BMPWIN_GetBmp( bmpWin ) , wordSet ,
+                                         strId , posX , posY , col );
 }
 
 

@@ -138,6 +138,12 @@ static GFL_PROC_RESULT PokeStatusProc_Init( GFL_PROC * proc, int * seq , void *p
         ribbonArr[3] = 55; //カントリー：夏休み
       }
       
+      if( GFL_UI_KEY_GetCont() & PAD_BUTTON_X )
+      {
+        psData->mode = PST_MODE_WAZAADD;
+        psData->waza = 10;
+      }
+      
       GFL_UI_SetTouchOrKey( GFL_APP_KTST_TOUCH );
     }
     

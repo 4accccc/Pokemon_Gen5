@@ -30,3 +30,8 @@ void PSTATUS_SKILL_DispPage( PSTATUS_WORK *work , PSTATUS_SKILL_WORK *skillWork 
 void PSTATUS_SKILL_ClearPage( PSTATUS_WORK *work , PSTATUS_SKILL_WORK *skillWork );
 void PSTATUS_SKILL_DispPage_Trans( PSTATUS_WORK *work , PSTATUS_SKILL_WORK *skillWork );
 void PSTATUS_SKILL_ClearPage_Trans( PSTATUS_WORK *work , PSTATUS_SKILL_WORK *skillWork );
+//ï\é¶îÒï\é¶êÿÇËë÷Ç¶ãZã≥Ç¶óp
+void PSTATUS_SKILL_DispPage_WazaAdd( PSTATUS_WORK *work , PSTATUS_SKILL_WORK *skillWork );
+void PSTATUS_SKILL_ClearPage_WazaAdd( PSTATUS_WORK *work , PSTATUS_SKILL_WORK *skillWork );
+void PSTATUS_SKILL_DispPage_Trans_WazaAdd( PSTATUS_WORK *work , PSTATUS_SKILL_WORK *skillWork );
+void PSTATUS_SKILL_ClearPage_Trans_WazaAdd( PSTATUS_WORK *work , PSTATUS_SKILL_WORK *skillWork );

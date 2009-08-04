@@ -25,11 +25,17 @@ extern POKEMON_PARAM* PSTATUS_UTIL_GetCurrentPP( PSTATUS_WORK *work );
 extern void PSTATUS_UTIL_SetCurrentPPPFast( PSTATUS_WORK *work , const BOOL isFast );
 
 //•¶Žš•`‰æ
+extern void PSTATUS_UTIL_DrawStrFuncBmp( PSTATUS_WORK *work , GFL_BMP_DATA *bmpData , 
+                                      const u16 strId , const u16 posX , const u16 posY , const u16 col );
 extern void PSTATUS_UTIL_DrawStrFunc( PSTATUS_WORK *work , GFL_BMPWIN *bmpWin , 
                                       const u16 strId , const u16 posX , const u16 posY , const u16 col );
 extern void PSTATUS_UTIL_DrawStrFuncRight( PSTATUS_WORK *work , GFL_BMPWIN *bmpWin , 
                                       const u16 strId , const u16 posX , const u16 posY , const u16 col );
+extern void PSTATUS_UTIL_DrawValueStrFuncBmp( PSTATUS_WORK *work , GFL_BMP_DATA *bmpData , 
+                                      WORDSET *wordSet, const u16 strId , const u16 posX , const u16 posY , const u16 col );
 extern void PSTATUS_UTIL_DrawValueStrFunc( PSTATUS_WORK *work , GFL_BMPWIN *bmpWin , 
+                                      WORDSET *wordSet, const u16 strId , const u16 posX , const u16 posY , const u16 col );
+extern void PSTATUS_UTIL_DrawValueStrFuncRightBmp( PSTATUS_WORK *work , GFL_BMP_DATA *bmpData ,
                                       WORDSET *wordSet, const u16 strId , const u16 posX , const u16 posY , const u16 col );
 extern void PSTATUS_UTIL_DrawValueStrFuncRight( PSTATUS_WORK *work , GFL_BMPWIN *bmpWin , 
                                       WORDSET *wordSet, const u16 strId , const u16 posX , const u16 posY , const u16 col );
