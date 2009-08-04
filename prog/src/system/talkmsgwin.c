@@ -1118,6 +1118,7 @@ static u32 setupWindowBG( TALKMSGWIN_SYS* tmsgwinSys, TALKMSGWIN_SYS_SETUP* setu
 	//GFL_BG_FillCharacter(setup->ini.frameID, 0, 1, 0);	// 先頭にクリアキャラ配置
 	GFL_BG_ClearScreen(setup->ini.frameID);
 
+#if 0
 	//パレット転送
 	{
 		PALTYPE paltype = PALTYPE_MAIN_BG;
@@ -1164,6 +1165,7 @@ static u32 setupWindowBG( TALKMSGWIN_SYS* tmsgwinSys, TALKMSGWIN_SYS_SETUP* setu
 																	setup->heapID);
 #endif
 	}
+#endif
 	//キャラクター転送
 	chrSiz = GFL_ARC_UTIL_TransVramBgCharacter(	ARCID_TALKWIN_TEST, 
 																							NARC_talkwin_test_talkwin_NCGR,
