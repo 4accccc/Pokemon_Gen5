@@ -228,9 +228,9 @@ static GFL_PROC_RESULT EffectViewerProcInit( GFL_PROC * proc, int * seq, void * 
   //3DŠÖ˜A‰Šú‰»
   {
     GFL_G3D_Init( GFL_G3D_VMANLNK, GFL_G3D_TEX128K, GFL_G3D_VMANLNK, GFL_G3D_PLT16K, 0, evw->heapID, NULL );
-    GFL_G3D_SetSystemSwapBufferMode( GX_SORTMODE_AUTO, GX_BUFFERMODE_Z );
+    GFL_G3D_SetSystemSwapBufferMode( GX_SORTMODE_MANUAL, GX_BUFFERMODE_Z );
     G3X_AlphaBlend( TRUE );
-//    G3X_AlphaTest( TRUE, 31 );
+    G3X_AlphaTest( FALSE, 31 );
     G3X_EdgeMarking( TRUE );
     G3X_AntiAlias( TRUE );
     GFL_BG_SetBGControl3D( 1 );
