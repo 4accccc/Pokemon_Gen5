@@ -19,7 +19,7 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA    ev_c05r0201
+_EVENT_DATA    ev_c05r0201_talkobj_oldman1
 _EVENT_DATA_END
 
 
@@ -30,9 +30,15 @@ _EVENT_DATA_END
 //  _END
 
 /**************************************************************/
-/*                                                            */
+/*  C05R0201 OLDMAN1の会話用イベントスクリプト*/
 /**************************************************************/
-ev_c05r0201:
-  //とりあえず最初のラベルだけ生成している
+ev_c05r0201_talkobj_oldman1:
+	_TALK_OBJ_PAUSE_ALL
+	_TURN_HERO_SITE
+	_TALKWIN_OPEN
+	_TALKMSG_ALLPUT msg_c05r0201_oldman1_01
+	_AB_KEYWAIT
+  _TALKWIN_CLOSE
+  _OBJ_PAUSE_CLEAR_ALL
   _END
 

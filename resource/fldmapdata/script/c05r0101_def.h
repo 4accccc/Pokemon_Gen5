@@ -2,7 +2,9 @@
 #define _C05R0101_DEF_H_
 
 //スクリプトデータID定義 
-#define	SCRID_C05R0101		(1)
-#define	SCRID_C05R0101_DATA_MAX		(1)		//最大数
+#define	SCRID_C05R0101_TALKOBJ_WOMAN1		(1)
+#define	SCRID_C05R0101_TALKOBJ_BOY1		(2)
+#define	SCRID_C05R0101_POKEMON		(3)
+#define	SCRID_C05R0101_DATA_MAX		(3)		//最大数
 
 #endif //_C05R0101_DEF_H_

@@ -19,7 +19,9 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA    ev_c05r0101
+_EVENT_DATA    ev_c05r0101_talkobj_woman1
+_EVENT_DATA    ev_c05r0101_talkobj_boy1
+_EVENT_DATA    ev_c05r0101_pokemon
 _EVENT_DATA_END
 
 
@@ -30,9 +32,40 @@ _EVENT_DATA_END
 //  _END
 
 /**************************************************************/
-/*                                                            */
+/*  C05R0101 WOMAN1の会話用イベントスクリプト*/
 /**************************************************************/
-ev_c05r0101:
-  //とりあえず最初のラベルだけ生成している
+ev_c05r0101_talkobj_woman1:
+	_TALK_OBJ_PAUSE_ALL
+	_TURN_HERO_SITE
+	_TALKWIN_OPEN
+	_TALKMSG_ALLPUT msg_c05r0101_woman1_01
+	_AB_KEYWAIT
+  _TALKWIN_CLOSE
+  _OBJ_PAUSE_CLEAR_ALL
   _END
 
+/**************************************************************/
+/*  C05R0101 BOY1の会話用イベントスクリプト*/
+/**************************************************************/
+ev_c05r0101_talkobj_boy1:
+	_TALK_OBJ_PAUSE_ALL
+	_TURN_HERO_SITE
+	_TALKWIN_OPEN
+	_TALKMSG_ALLPUT msg_c05r0101_boy1_01
+	_AB_KEYWAIT
+  _TALKWIN_CLOSE
+  _OBJ_PAUSE_CLEAR_ALL
+  _END
+
+/**************************************************************/
+/*  C05R0101 POKEMONの会話用イベントスクリプト*/
+/**************************************************************/
+ev_c05r0101_pokemon:
+	_TALK_OBJ_PAUSE_ALL
+	_TURN_HERO_SITE
+	_TALKWIN_OPEN
+	_TALKMSG_ALLPUT msg_c05r0101_pokemon_01//鳴き声処理追加
+	_AB_KEYWAIT
+  _TALKWIN_CLOSE
+  _OBJ_PAUSE_CLEAR_ALL
+  _END

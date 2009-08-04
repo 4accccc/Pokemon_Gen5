@@ -19,7 +19,8 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA    ev_c05r0301
+_EVENT_DATA    ev_c05r0301_talkobj_trainerm
+_EVENT_DATA    ev_c05r0301_talkobj_woman2
 _EVENT_DATA_END
 
 
@@ -30,9 +31,28 @@ _EVENT_DATA_END
 //  _END
 
 /**************************************************************/
-/*                                                            */
+/*  C05R0301 TRAINERMの会話用イベントスクリプト*/
 /**************************************************************/
-ev_c05r0301:
-  //とりあえず最初のラベルだけ生成している
+ev_c05r0301_talkobj_trainerm:
+	_TALK_OBJ_PAUSE_ALL
+	_TURN_HERO_SITE
+	_TALKWIN_OPEN
+	_TALKMSG_ALLPUT msg_c05r0301_trainerm_01
+	_AB_KEYWAIT
+  _TALKWIN_CLOSE
+  _OBJ_PAUSE_CLEAR_ALL
+  _END
+
+/**************************************************************/
+/*  C05R0301 WOMAN2の会話用イベントスクリプト*/
+/**************************************************************/
+ev_c05r0301_talkobj_woman2:
+	_TALK_OBJ_PAUSE_ALL
+	_TURN_HERO_SITE
+	_TALKWIN_OPEN
+	_TALKMSG_ALLPUT msg_c05r0301_woman2_01
+	_AB_KEYWAIT
+  _TALKWIN_CLOSE
+  _OBJ_PAUSE_CLEAR_ALL
   _END
 

@@ -19,7 +19,13 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA    ev_c05r0601
+_EVENT_DATA    ev_c05r0601_talkobj_man3
+_EVENT_DATA    ev_c05r0601_talkobj_woman2
+_EVENT_DATA    ev_c05r0601_talkobj_badman
+_EVENT_DATA    ev_c05r0601_talkobj_sunglasses
+_EVENT_DATA    ev_c05r0601_talkobj_trainerw
+_EVENT_DATA    ev_c05r0601_talkobj_nurse
+_EVENT_DATA    ev_c05r0601_talkobj_workman
 _EVENT_DATA_END
 
 
@@ -30,9 +36,93 @@ _EVENT_DATA_END
 //  _END
 
 /**************************************************************/
-/*                                                            */
+/*  C05R0601 MAN3の会話用イベントスクリプト*/
 /**************************************************************/
-ev_c05r0601:
-  //とりあえず最初のラベルだけ生成している
+ev_c05r0601_talkobj_man3:
+	_TALK_OBJ_PAUSE_ALL
+	_TURN_HERO_SITE
+	_TALKWIN_OPEN
+	_TALKMSG_ALLPUT msg_c05r0601_man3_01
+	_AB_KEYWAIT
+  _TALKWIN_CLOSE
+  _OBJ_PAUSE_CLEAR_ALL
+  _END
+
+/**************************************************************/
+/*  C05R0601 WOMAN2の会話用イベントスクリプト*/
+/**************************************************************/
+ev_c05r0601_talkobj_woman2:
+	_TALK_OBJ_PAUSE_ALL
+	_TURN_HERO_SITE
+	_TALKWIN_OPEN
+	_TALKMSG_ALLPUT msg_c05r0601_woman2_01
+	_AB_KEYWAIT
+  _TALKWIN_CLOSE
+  _OBJ_PAUSE_CLEAR_ALL
+  _END
+
+/**************************************************************/
+/*  C05R0601 BADMANの会話用イベントスクリプト*/
+/**************************************************************/
+ev_c05r0601_talkobj_badman:
+	_TALK_OBJ_PAUSE_ALL
+	_TURN_HERO_SITE
+	_TALKWIN_OPEN
+	_TALKMSG_ALLPUT msg_c05r0601_badman_01
+	_AB_KEYWAIT
+  _TALKWIN_CLOSE
+  _OBJ_PAUSE_CLEAR_ALL
+  _END
+
+/**************************************************************/
+/*  C05R0601 SUNGLASSESの会話用イベントスクリプト*/
+/**************************************************************/
+ev_c05r0601_talkobj_sunglasses:
+	_TALK_OBJ_PAUSE_ALL
+	_TURN_HERO_SITE
+	_TALKWIN_OPEN
+	_TALKMSG_ALLPUT msg_c05r0601_sunglasses_01
+	_AB_KEYWAIT
+  _TALKWIN_CLOSE
+  _OBJ_PAUSE_CLEAR_ALL
+  _END
+
+/**************************************************************/
+/*  C05R0601 TRAINERWの会話用イベントスクリプト*/
+/**************************************************************/
+ev_c05r0601_talkobj_trainerw:
+	_TALK_OBJ_PAUSE_ALL
+	_TURN_HERO_SITE
+	_TALKWIN_OPEN
+	_TALKMSG_ALLPUT msg_c05r0601_trainerw_01
+	_AB_KEYWAIT
+  _TALKWIN_CLOSE
+  _OBJ_PAUSE_CLEAR_ALL
+  _END
+
+/**************************************************************/
+/*  C05R0601 NURSEの会話用イベントスクリプト*/
+/**************************************************************/
+ev_c05r0601_talkobj_nurse:
+	_TALK_OBJ_PAUSE_ALL
+	_TURN_HERO_SITE
+	_TALKWIN_OPEN
+	_TALKMSG_ALLPUT msg_c05r0601_nurse_01
+	_AB_KEYWAIT
+  _TALKWIN_CLOSE
+  _OBJ_PAUSE_CLEAR_ALL
+  _END
+
+/**************************************************************/
+/*  C05R0601 WORKMANの会話用イベントスクリプト*/
+/**************************************************************/
+ev_c05r0601_talkobj_workman:
+	_TALK_OBJ_PAUSE_ALL
+	_TURN_HERO_SITE
+	_TALKWIN_OPEN
+	_TALKMSG_ALLPUT msg_c05r0601_workman_01
+	_AB_KEYWAIT
+  _TALKWIN_CLOSE
+  _OBJ_PAUSE_CLEAR_ALL
   _END
 
