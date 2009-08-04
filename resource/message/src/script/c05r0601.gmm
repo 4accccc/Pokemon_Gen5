@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-06-25T17:16:15"/>
+	<create user="matsumiya" host="W00207" date="2009-08-04T12:36:29"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -292,11 +292,84 @@
 	</lock>
 
 
-	<row id="msg_c05r0601_test1_01">
-		<comment>？？？</comment>
-		<attribute name="キャラ指定">？？？</attribute>
-		<language name="JPN" width="256">テストメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+	<row id="msg_c05r0601_man3_01">
+		<comment>♂
+・仮メッセージ
+・売り子その１</comment>
+		<attribute name="キャラ指定">MAN3</attribute>
+		<language name="JPN" width="256">もってけ　ドロボー！[BE:01:ページ切り替え（クリア）]
+おっと　もっていくまえに
+おかねは　おいていってくれよ！</language>
+		<language name="JPN_KANJI" width="256">もってけ　ドロボー！[BE:01:ページ切り替え（クリア）]
+おっと　もっていくまえに
+おかねは　おいていってくれよ！</language>
+	</row>
+
+	<row id="msg_c05r0601_woman2_01">
+		<comment>♀
+・仮メッセージ
+・売り子その２</comment>
+		<attribute name="キャラ指定">WOMAN2</attribute>
+		<language name="JPN" width="256">こんにちは！
+なんでも　みていってくださいね</language>
+		<language name="JPN_KANJI" width="256">こんにちは！
+なんでも　みていってくださいね</language>
+	</row>
+
+	<row id="msg_c05r0601_badman_01">
+		<comment>♂
+・仮メッセージ
+・売り子その３</comment>
+		<attribute name="キャラ指定">BADMAN</attribute>
+		<language name="JPN" width="256">らっしゃえ！
+きょうは　おかいどく　だよ！</language>
+		<language name="JPN_KANJI" width="256">らっしゃえ！
+きょうは　おかいどく　だよ！</language>
+	</row>
+
+	<row id="msg_c05r0601_sunglasses_01">
+		<comment>♂
+・仮メッセージ
+・売り子その４</comment>
+		<attribute name="キャラ指定">SUNGLASSES</attribute>
+		<language name="JPN" width="256">あなたー　よくきたー！
+なんでも　かってけー！</language>
+		<language name="JPN_KANJI" width="256">あなたー　よくきたー！
+なんでも　かってけー！</language>
+	</row>
+
+	<row id="msg_c05r0601_trainerw_01">
+		<comment>♀
+・仮メッセージ</comment>
+		<attribute name="キャラ指定">TRAINERW</attribute>
+		<language name="JPN" width="256">なんていうか　なんていうか
+こう　ものが　あふれていると[BE:00:ページ切り替え（行送り）]
+エネルギーを　かんじちゃう</language>
+		<language name="JPN_KANJI" width="256">なんていうか　なんていうか
+こう　ものが　あふれていると[BE:00:ページ切り替え（行送り）]
+エネルギーを　かんじちゃうね</language>
+	</row>
+
+	<row id="msg_c05r0601_nurse_01">
+		<comment>♀
+・仮メッセージ</comment>
+		<attribute name="キャラ指定">NURSE</attribute>
+		<language name="JPN" width="256">ホドモエは　りゅうつうの　まち[BE:01:ページ切り替え（クリア）]
+とおい　ちほうの
+めずらしい　しなも　そろってるわ！</language>
+		<language name="JPN_KANJI" width="256">ホドモエは　りゅうつうの　まち[BE:01:ページ切り替え（クリア）]
+とおい　ちほうの
+めずらしい　しなも　そろってるわ！</language>
+	</row>
+
+	<row id="msg_c05r0601_workman_01">
+		<comment>♂
+・仮メッセージ</comment>
+		<attribute name="キャラ指定">WORKMAN</attribute>
+		<language name="JPN" width="256">せかいが　うみで　つながるかぎり
+この　いちばには　なんでも　そろう！</language>
+		<language name="JPN_KANJI" width="256">せかいが　うみで　つながるかぎり
+この　いちばには　なんでも　そろう！</language>
 	</row>
 
 	<flowchart-group-list>

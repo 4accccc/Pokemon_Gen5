@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-06-25T17:15:56"/>
+	<create user="matsumiya" host="W00207" date="2009-08-04T11:46:49"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -292,11 +292,32 @@
 	</lock>
 
 
-	<row id="msg_c05r0301_test1_01">
+	<row id="msg_c05r0301_trainerm_01">
 		<comment>？？？</comment>
-		<attribute name="キャラ指定">？？？</attribute>
-		<language name="JPN" width="256">テストメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+		<attribute name="キャラ指定">TRAINERM</attribute>
+		<language name="JPN" width="256">ジムリーダーの　ヤーコンさんは
+りゅうつうで　おおもうけ　した[BE:00:ページ切り替え（行送り）]
+この　まちの　じつりょくしゃ！[BE:01:ページ切り替え（クリア）]
+ジムに　いる　トレーナーたちは
+かれの　かいしゃの　しゃいん　さ！</language>
+		<language name="JPN_KANJI" width="256">ジムリーダーの　ヤーコンさんは
+流通で　大もうけ　した[BE:00:ページ切り替え（行送り）]
+この　街の　実力者！[BE:01:ページ切り替え（クリア）]
+ジムに　いる　トレーナーたちは
+彼の　会社の　社員なのさ！</language>
+	</row>
+
+	<row id="msg_c05r0301_woman2_01">
+		<comment>？？？</comment>
+		<attribute name="キャラ指定">WOMAN2</attribute>
+		<language name="JPN" width="256">いってみれば　ヤーコンさんは
+この　ホドモエの　おうさま[BE:01:ページ切り替え（クリア）]
+だけど　いつも　しんどそう……
+えらいひとって　たいへん　なのね</language>
+		<language name="JPN_KANJI" width="256">いってみれば　ヤーコンさんは
+この　ホドモエの　王様[BE:01:ページ切り替え（クリア）]
+だけど　いつも　問題を抱えていて
+しんどそう……　偉い人って　大変ね</language>
 	</row>
 
 	<flowchart-group-list>

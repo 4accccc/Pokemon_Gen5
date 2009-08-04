@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-06-25T17:16:08"/>
+	<create user="matsumiya" host="W00207" date="2009-08-04T12:08:39"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -293,10 +293,86 @@
 
 
 	<row id="msg_c05r0501_test1_01">
-		<comment>？？？</comment>
+		<comment>・仮メッセージ</comment>
 		<attribute name="キャラ指定">？？？</attribute>
-		<language name="JPN" width="256">テストメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+		<language name="JPN" width="256">いきるとは　まようこと[BE:01:ページ切り替え（クリア）]
+なやみ　とまどうたびに
+それぞれの　こたえを　みつけなさい</language>
+		<language name="JPN_KANJI" width="256">生きるとは　迷うこと[BE:01:ページ切り替え（クリア）]
+悩み　戸惑うたびに
+それぞれの　答えを　みつけなさい</language>
+	</row>
+
+	<row id="msg_c05r0501_test1_01">
+		<comment>・仮メッセージ</comment>
+		<attribute name="キャラ指定">？？？</attribute>
+		<language name="JPN" width="256">つよい　こころ　とは　なんだろう？
+やさしさとは　どういうことだ？[BE:01:ページ切り替え（クリア）]
+それを　もっている
+トレーナーや　ポケモンは　いるのか？</language>
+		<language name="JPN_KANJI" width="256">強い心　とは　なんだろう？
+優しさとは　どういうことだ？[BE:01:ページ切り替え（クリア）]
+それを　持っている
+トレーナーや　ポケモンは　いるのか？</language>
+	</row>
+
+	<row id="msg_c05r0501_test1_01">
+		<comment>・仮メッセージ</comment>
+		<attribute name="キャラ指定">？？？</attribute>
+		<language name="JPN" width="256">よろこぶこと……[BE:01:ページ切り替え（クリア）]
+その　ほんとうの　いみをしりたいなら
+かなしみの　いみを　しるべきです</language>
+		<language name="JPN_KANJI" width="256">喜ぶこと……[BE:01:ページ切り替え（クリア）]
+その　本当の　意味を　知りたいなら
+悲しみの　意味を　知るべきです</language>
+	</row>
+
+	<row id="msg_c05r0501_test1_01">
+		<comment>・仮メッセージ</comment>
+		<attribute name="キャラ指定">？？？</attribute>
+		<language name="JPN" width="256">いきること　しぬこと……
+だれも　えらべないのです</language>
+		<language name="JPN_KANJI" width="256">生きること　死ぬこと……
+だれも　選べないのです</language>
+	</row>
+
+	<row id="msg_c05r0501_test1_01">
+		<comment>・仮メッセージ</comment>
+		<attribute name="キャラ指定">？？？</attribute>
+		<language name="JPN" width="256">ひとも　ポケモンも
+じぶんのために　なにかをする……[BE:00:ページ切り替え（行送り）]
+だれかのために　なにかをする……[BE:00:ページ切り替え（行送り）]
+どちらを　だいじに　すべきでしょうか</language>
+		<language name="JPN_KANJI" width="256">人も　ポケモンも
+自分のために　何かをする……[BE:00:ページ切り替え（行送り）]
+だれかのために　何かをする……[BE:00:ページ切り替え（行送り）]
+その　どちらを　大事にすべきでしょう[BE:01:ページ切り替え（クリア）]
+私には　どちらも　大事にするほどの
+キャパが　あるとは　思えないのです</language>
+	</row>
+
+	<row id="msg_c05r0501_test1_01">
+		<comment>・仮メッセージ</comment>
+		<attribute name="キャラ指定">？？？</attribute>
+		<language name="JPN" width="256">いきると　いうことは
+あたえられた　じかんを　つかうこと[BE:01:ページ切り替え（クリア）]
+じかんは　とりもどせません
+そのことを　わすれないように……</language>
+		<language name="JPN_KANJI" width="256">生きると　いうことは
+与えられた　時間を　使うこと[BE:01:ページ切り替え（クリア）]
+時間は　取り戻せません
+そのことを　忘れないように……</language>
+	</row>
+
+	<row id="msg_c05r0501_test1_01">
+		<comment>・仮メッセージ</comment>
+		<attribute name="キャラ指定">？？？</attribute>
+		<language name="JPN" width="256">しあわせとは　はかないもの……[BE:01:ページ切り替え（クリア）]
+ですから　えいえんの　しあわせ　など
+あるはずもなく　よくばらないことです</language>
+		<language name="JPN_KANJI" width="256">幸せとは　はかないもの……[BE:01:ページ切り替え（クリア）]
+ですから　永遠の　幸せ　など
+あるはずもなく　欲張らないことです</language>
 	</row>
 
 	<flowchart-group-list>

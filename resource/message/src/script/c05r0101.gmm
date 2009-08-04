@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-06-25T16:56:46"/>
+	<create user="matsumiya" host="W00207" date="2009-08-04T11:47:05"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -292,11 +292,27 @@
 	</lock>
 
 
-	<row id="msg_c05r0101_test1_01">
-		<comment>？？？</comment>
-		<attribute name="キャラ指定">？？？</attribute>
-		<language name="JPN" width="256">テストメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+	<row id="msg_c05r0101_woman1_01">
+		<comment>♀
+・仮メッセージ</comment>
+		<attribute name="キャラ指定">WOMAN1</attribute>
+		<language name="JPN" width="256">なにか　サブイベント</language>
+		<language name="JPN_KANJI" width="256">なにか　サブイベントの　予定</language>
+	</row>
+
+	<row id="msg_c05r0101_boy1_01">
+		<comment>♂
+・仮メッセージ</comment>
+		<attribute name="キャラ指定">BOY1</attribute>
+		<language name="JPN" width="256">サブイベントの　ほそく</language>
+		<language name="JPN_KANJI" width="256">サブイベントの　補足</language>
+	</row>
+
+	<row id="msg_c05r0101_pokemon_01">
+		<comment>ポケモン</comment>
+		<attribute name="キャラ指定">POKEMON</attribute>
+		<language name="JPN" width="256">ポケモン『ぶぶー！</language>
+		<language name="JPN_KANJI" width="256">ポケモン『ぶぶー！</language>
 	</row>
 
 	<flowchart-group-list>
