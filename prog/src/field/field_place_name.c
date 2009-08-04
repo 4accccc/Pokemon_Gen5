@@ -44,7 +44,7 @@
 #define OBJ_PALETTE_NO (1)                      // OBJパレット番号
 
 #define	COLOR_NO_LETTER     (1)		            // 文字本体のカラー番号
-#define	COLOR_NO_SHADOW     (1)		            // 影部分のカラー番号
+#define	COLOR_NO_SHADOW     (2)		            // 影部分のカラー番号
 #define	COLOR_NO_BACKGROUND (0)					// 背景部のカラー番号
 
 #define ALPHA_PLANE_1 (GX_BLEND_PLANEMASK_BG3)	// αブレンドの第1対象面
