@@ -496,6 +496,7 @@ static void PLIST_PLATE_DrawParam( PLIST_WORK *work , PLIST_PLATE_WORK *plateWor
     switch( learnType )
     {
     case LSCL_OK:
+    case LSCL_OK_FULL:
       strId = mes_pokelist_06_07;
       break;
       

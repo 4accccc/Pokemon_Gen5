@@ -121,6 +121,10 @@
 #define PSTATUS_SKILL_PLATE_NONE_X (48+PSTATUS_STR_OFS_X)
 #define PSTATUS_SKILL_PLATE_NONE_Y (16 +PSTATUS_STR_OFS_Y)
 
+#define PSTATUS_SKILL_PLATE_FORGET_X ( 0+PSTATUS_STR_OFS_X)
+#define PSTATUS_SKILL_PLATE_FORGET_Y ( 8 +PSTATUS_STR_OFS_Y)
+
+
 //======================================================================
 //	enum
 //======================================================================
@@ -185,6 +189,7 @@ struct _PSTATUS_SKILL_WORK
   BOOL isUpdateStrSkill;
   BOOL isWaitSwapSkill;
   BOOL isChangeMode;
+  BOOL isForgetConfirm;
   BOOL isHoldTp;
   
   u8   cursorPos;
@@ -213,6 +218,8 @@ struct _PSTATUS_SKILL_WORK
   GFL_CLWK *clwkArrow;
   
   PSTA_OAM_SYS_PTR bmpOamSys;
+  GFL_BMP_DATA *bmpDataForget;
+  PSTA_OAM_ACT_PTR bmpOamForget;
 
   PSTATUS_SKILL_PLATE plateWork[PSTATUS_SKILL_PLATE_NUM];
 };
@@ -237,6 +244,7 @@ static void PSTATUS_SKILL_UpdateTP_WazaAdd( PSTATUS_WORK *work , PSTATUS_SKILL_W
 static void PSTATUS_SKILL_UpdateKey_CursorMove( PSTATUS_WORK *work , PSTATUS_SKILL_WORK *skillWork );
 static void PSTATUS_SKILL_UpdateCursorPos( PSTATUS_WORK *work , PSTATUS_SKILL_WORK *skillWork , const u8 newPos );
 static void PSTATUS_SKILL_SwapSkill( PSTATUS_WORK *work , PSTATUS_SKILL_WORK *skillWork , const u8 pos1 , const u8 pos2 );
+static void PSTATUS_SKILL_ChangeForgetConfirmPlate( PSTATUS_WORK *work , PSTATUS_SKILL_WORK *skillWork , const BOOL isDisp );
 
 static void PSTATUS_SKILL_InitPlate( PSTATUS_WORK *work , PSTATUS_SKILL_WORK *skillWork , PSTATUS_SKILL_PLATE *plateWork , const u8 idx );
 static void PSTATUS_SKILL_TermPlate( PSTATUS_WORK *work , PSTATUS_SKILL_WORK *skillWork , PSTATUS_SKILL_PLATE *plateWork );
@@ -291,6 +299,7 @@ PSTATUS_SKILL_WORK* PSTATUS_SKILL_Init( PSTATUS_WORK *work )
   skillWork->isUpdateStrSkill = FALSE;
   skillWork->isWaitSwapSkill = FALSE;
   skillWork->isChangeMode = FALSE;
+  skillWork->isForgetConfirm = FALSE;
   skillWork->changeTarget = PSTATUS_SKILL_PLATE_NUM;
   
   if( work->psData->mode == PST_MODE_WAZAADD )
@@ -432,7 +441,14 @@ void PSTATUS_SKILL_ReleaseResource( PSTATUS_WORK *work , PSTATUS_SKILL_WORK *ski
   //ここで描画物の開放もしておく
   if( skillWork->isDisp == TRUE )
   {
-    PSTATUS_SKILL_ClearPage( work , skillWork );
+    if( work->psData->mode == PST_MODE_WAZAADD )
+    {
+      PSTATUS_SKILL_ClearPage_WazaAdd( work , skillWork );
+    }
+    else
+    {
+      PSTATUS_SKILL_ClearPage( work , skillWork );
+    }
   }
   
   PSTA_OAM_Exit( skillWork->bmpOamSys );
@@ -1026,6 +1042,38 @@ void PSTATUS_SKILL_DispPage_WazaAdd( PSTATUS_WORK *work , PSTATUS_SKILL_WORK *sk
   {
     PSTATUS_SKILL_DispPlate( work , skillWork , &skillWork->plateWork[i] );
   }
+  
+  //「忘れる」bmpOam作成
+  {
+    skillWork->bmpDataForget = GFL_BMP_Create( PSTATUS_SKILL_PLATE_WIN_WIDTH , PSTATUS_SKILL_PLATE_WIN_HEIGHT ,
+                                         GFL_BMP_16_COLOR , work->heapId );
+    PSTATUS_UTIL_DrawStrFuncBmp( work , skillWork->bmpDataForget , mes_status_13 ,
+                              PSTATUS_SKILL_PLATE_FORGET_X , PSTATUS_SKILL_PLATE_FORGET_Y , PSTATUS_STR_COL_BLACK );
+    /*
+    STRBUF *srcStr;
+    u32 width;
+    srcStr = GFL_MSG_CreateString( work->msgHandle , mes_status_13 ); 
+    width = PRINTSYS_GetStrWidth( srcStr , work->fontHandle , 0 )/2;
+    PRINTSYS_PrintQueColor( work->printQue , GFL_BMPWIN_GetBmp( bmpWin ) , 
+            posX-width , posY , srcStr , work->fontHandle , col );
+    GFL_STR_DeleteBuffer( srcStr );
+    */
+  }
+  {
+    PSTA_OAM_ACT_DATA oamData;
+    oamData.x = (platePos[4][0]+PSTATUS_SKILL_PLATE_WIN_LEFT)*8;
+    oamData.y = (platePos[4][1]+PSTATUS_SKILL_PLATE_WIN_TOP)*8;
+    oamData.pltt_index = work->cellRes[SCR_PLT_RIBBON_BAR]; //文字はリボンと同じパレットで
+    oamData.pal_offset = 0;
+    oamData.soft_pri = 0;
+    oamData.bg_pri = 1;
+    oamData.setSerface = CLSYS_DEFREND_MAIN;
+    oamData.draw_type = CLSYS_DRAW_MAIN;
+    oamData.bmp = skillWork->bmpDataForget;
+    skillWork->bmpOamForget = PSTA_OAM_ActorAdd( skillWork->bmpOamSys , &oamData );
+    PSTA_OAM_ActorSetDrawEnable( skillWork->bmpOamForget , FALSE );
+  }
+  
   skillWork->cursorPos = 0xFF;
   skillWork->isDisp = TRUE;
 }
@@ -1077,6 +1125,8 @@ void PSTATUS_SKILL_DispPage_Trans_WazaAdd( PSTATUS_WORK *work , PSTATUS_SKILL_WO
 void PSTATUS_SKILL_ClearPage_WazaAdd( PSTATUS_WORK *work , PSTATUS_SKILL_WORK *skillWork )
 {
   u8 i;
+  GFL_BMP_Delete( skillWork->bmpDataForget );
+  PSTA_OAM_ActorDel( skillWork->bmpOamForget );
   for( i=0;i<skillWork->wazaPlateNum;i++ )
   {
     PSTATUS_SKILL_ClearPlate( work , skillWork , &skillWork->plateWork[i] );
@@ -1425,13 +1475,31 @@ static const BOOL PSTATUS_SKILL_UpdateKey_WazaAdd( PSTATUS_WORK *work , PSTATUS_
 {
   if( GFL_UI_KEY_GetTrg() == PAD_BUTTON_B )
   {
-    //戻る
-    work->retVal = SRT_RETURN;
-    work->psData->ret_mode = PST_RET_CANCEL;
-    work->mainSeq = SMS_FADEOUT;
-    GFL_CLACT_WK_SetAnmSeq( work->clwkBarIcon[SBT_RETURN] , APP_COMMON_BARICON_RETURN_ON );
-    work->clwkExitButton = work->clwkBarIcon[SBT_RETURN];
-    return TRUE;
+    if( skillWork->isForgetConfirm == FALSE )
+    {
+      //戻る
+      work->ktst = GFL_APP_END_KEY;
+      work->retVal = SRT_RETURN;
+      work->psData->ret_mode = PST_RET_CANCEL;
+      work->mainSeq = SMS_FADEOUT;
+      GFL_CLACT_WK_SetAnmSeq( work->clwkBarIcon[SBT_RETURN] , APP_COMMON_BARICON_RETURN_ON );
+      work->clwkExitButton = work->clwkBarIcon[SBT_RETURN];
+      return TRUE;
+    }
+    else
+    {
+      //入れ替えの取り消し
+      work->ktst = GFL_APP_END_KEY;
+      PSTATUS_SKILL_ChangeColor( &skillWork->plateWork[skillWork->changeTarget] , 0 );
+      PSTATUS_SKILL_UpdateCursorPos( work , skillWork , skillWork->cursorPos );
+      GFL_CLACT_WK_SetDrawEnable( skillWork->clwkTargetCur , FALSE );
+      skillWork->isForgetConfirm = FALSE;
+      skillWork->cursorPos = skillWork->changeTarget;
+      skillWork->changeTarget = PSTATUS_SKILL_PLATE_NUM;
+      PSTATUS_SKILL_UpdateCursorPos( work , skillWork , skillWork->cursorPos );
+
+      PSTATUS_SKILL_ChangeForgetConfirmPlate( work , skillWork , FALSE );
+    }
   }
   else 
   if( work->ktst == GFL_APP_END_TOUCH )
@@ -1439,22 +1507,55 @@ static const BOOL PSTATUS_SKILL_UpdateKey_WazaAdd( PSTATUS_WORK *work , PSTATUS_
     //タッチモードからキー操作へ
     if( GFL_UI_KEY_GetTrg() )
     {
-        work->ktst = GFL_APP_END_KEY;
-        skillWork->changeTarget = PSTATUS_SKILL_PLATE_NUM;
-        PSTATUS_SKILL_UpdateCursorPos( work , skillWork , skillWork->cursorPos );
-        return TRUE;
+      work->ktst = GFL_APP_END_KEY;
+      skillWork->changeTarget = PSTATUS_SKILL_PLATE_NUM;
+      PSTATUS_SKILL_UpdateCursorPos( work , skillWork , skillWork->cursorPos );
+      return TRUE;
+    }
+  }
+  else 
+  if( skillWork->isForgetConfirm )
+  {
+    //確認時操作
+    if( GFL_UI_KEY_GetTrg() == PAD_BUTTON_A )
+    {
+      //決定
+      work->ktst = GFL_APP_END_KEY;
+      work->retVal = SRT_RETURN;
+      work->psData->ret_sel = skillWork->changeTarget;
+      work->psData->ret_mode = PST_RET_DECIDE;
+      work->mainSeq = SMS_FADEOUT;
+      work->clwkExitButton = NULL;
     }
   }
   else 
   if( GFL_UI_KEY_GetTrg() == PAD_BUTTON_A )
   {
-    //決定
-    work->retVal = SRT_RETURN;
-    work->psData->ret_sel = skillWork->cursorPos;
-    work->psData->ret_mode = PST_RET_DECIDE;
-    work->mainSeq = SMS_FADEOUT;
-    work->clwkExitButton = NULL;
-    
+    work->ktst = GFL_APP_END_KEY;
+    if( skillWork->cursorPos < 4 )
+    {
+      //確認モードへ
+      GFL_CLACTPOS cellPos;
+      skillWork->isForgetConfirm = TRUE;
+      skillWork->changeTarget = skillWork->cursorPos;
+      PSTATUS_SKILL_ChangeColor( &skillWork->plateWork[skillWork->cursorPos] , 2 );
+      skillWork->cursorPos = 4;
+      PSTATUS_SKILL_UpdateCursorPos( work , skillWork , skillWork->cursorPos );
+
+      PSTATUS_SKILL_GetCursorPos( &skillWork->plateWork[skillWork->changeTarget] , &cellPos );
+      GFL_CLACT_WK_SetPos( skillWork->clwkTargetCur , &cellPos , CLSYS_DEFREND_MAIN );
+      GFL_CLACT_WK_SetDrawEnable( skillWork->clwkTargetCur , TRUE );
+      
+      PSTATUS_SKILL_ChangeForgetConfirmPlate( work , skillWork , TRUE );
+    }
+    else
+    {
+      //覚える技を選んだので終了
+      work->retVal = SRT_RETURN;
+      work->psData->ret_mode = PST_RET_CANCEL;
+      work->mainSeq = SMS_FADEOUT;
+      work->clwkExitButton = NULL;
+    }
     return TRUE;
   }
   else 
@@ -1475,12 +1576,31 @@ static void PSTATUS_SKILL_UpdateTP_WazaAdd( PSTATUS_WORK *work , PSTATUS_SKILL_W
 {
   if( work->barButtonHit == SBT_RETURN )
   {
-    //戻る
-    work->retVal = SRT_RETURN;
-    work->psData->ret_mode = PST_RET_CANCEL;
-    work->mainSeq = SMS_FADEOUT;
-    GFL_CLACT_WK_SetAnmSeq( work->clwkBarIcon[SBT_RETURN] , APP_COMMON_BARICON_RETURN_ON );
-    work->clwkExitButton = work->clwkBarIcon[SBT_RETURN];
+    if( skillWork->isForgetConfirm == FALSE )
+    {
+      //戻る
+      work->retVal = SRT_RETURN;
+      work->psData->ret_mode = PST_RET_CANCEL;
+      work->mainSeq = SMS_FADEOUT;
+      GFL_CLACT_WK_SetAnmSeq( work->clwkBarIcon[SBT_RETURN] , APP_COMMON_BARICON_RETURN_ON );
+      work->clwkExitButton = work->clwkBarIcon[SBT_RETURN];
+    }
+    else
+    {
+      //入れ替えの取り消し
+      work->ktst = GFL_APP_END_TOUCH;
+      
+      PSTATUS_SKILL_ChangeColor( &skillWork->plateWork[skillWork->changeTarget] , 0 );
+      PSTATUS_SKILL_UpdateCursorPos( work , skillWork , skillWork->cursorPos );
+      GFL_CLACT_WK_SetDrawEnable( skillWork->clwkTargetCur , FALSE );
+      skillWork->isForgetConfirm = FALSE;
+      skillWork->cursorPos = skillWork->changeTarget;
+      skillWork->changeTarget = PSTATUS_SKILL_PLATE_NUM;
+      PSTATUS_SKILL_UpdateCursorPos( work , skillWork , skillWork->cursorPos );
+
+      PSTATUS_SKILL_ChangeForgetConfirmPlate( work , skillWork , FALSE );
+      
+    }
   }
   else
   {
@@ -1498,27 +1618,54 @@ static void PSTATUS_SKILL_UpdateTP_WazaAdd( PSTATUS_WORK *work , PSTATUS_SKILL_W
     ret = GFL_UI_TP_HitTrg( hitTbl );
     if( ret != GFL_UI_TP_HIT_NONE )
     {
-      if( ret < 4 )
+      if( skillWork->isForgetConfirm == FALSE )
       {
-        const POKEMON_PASO_PARAM *ppp = PSTATUS_UTIL_GetCurrentPPP( work );
-        if( PPP_Get( ppp , ID_PARA_waza1+ret , NULL ) != 0 )
+        if( ret < 4 )
         {
-          //決定
+          const POKEMON_PASO_PARAM *ppp = PSTATUS_UTIL_GetCurrentPPP( work );
+          if( PPP_Get( ppp , ID_PARA_waza1+ret , NULL ) != 0 )
+          {
+            //確認モードへ
+            GFL_CLACTPOS cellPos;
+            work->ktst = GFL_APP_END_TOUCH;
+            skillWork->isForgetConfirm = TRUE;
+            //一回カーソル位置を変えてから
+            PSTATUS_SKILL_UpdateCursorPos( work , skillWork , ret );
+            skillWork->changeTarget = ret;
+            PSTATUS_SKILL_ChangeColor( &skillWork->plateWork[ret] , 2 );
+            skillWork->cursorPos = 4;
+            //ここでもう一回変える
+            PSTATUS_SKILL_UpdateCursorPos( work , skillWork , skillWork->cursorPos );
+
+            PSTATUS_SKILL_GetCursorPos( &skillWork->plateWork[skillWork->changeTarget] , &cellPos );
+            GFL_CLACT_WK_SetPos( skillWork->clwkTargetCur , &cellPos , CLSYS_DEFREND_MAIN );
+            GFL_CLACT_WK_SetDrawEnable( skillWork->clwkTargetCur , FALSE );
+            
+            PSTATUS_SKILL_ChangeForgetConfirmPlate( work , skillWork , TRUE );
+          }
+        }
+        else
+        {
+          //覚える技を選んだので終了
+          work->ktst = GFL_APP_END_TOUCH;
           work->retVal = SRT_RETURN;
-          work->psData->ret_sel = ret;
-          work->psData->ret_mode = PST_RET_DECIDE;
+          work->psData->ret_mode = PST_RET_CANCEL;
           work->mainSeq = SMS_FADEOUT;
           work->clwkExitButton = NULL;
         }
       }
       else
       {
-        //決定
-        work->retVal = SRT_RETURN;
-        work->psData->ret_sel = ret;
-        work->psData->ret_mode = PST_RET_DECIDE;
-        work->mainSeq = SMS_FADEOUT;
-        work->clwkExitButton = NULL;
+        if( ret == 4 )
+        {
+          //決定
+          work->ktst = GFL_APP_END_TOUCH;
+          work->retVal = SRT_RETURN;
+          work->psData->ret_sel = skillWork->changeTarget;
+          work->psData->ret_mode = PST_RET_DECIDE;
+          work->mainSeq = SMS_FADEOUT;
+          work->clwkExitButton = NULL;
+        }
       }
     }
 
@@ -1636,15 +1783,44 @@ static void PSTATUS_SKILL_SwapSkill( PSTATUS_WORK *work , PSTATUS_SKILL_WORK *sk
   
   //表示的な処理
   {
+    /*
     PSTATUS_SKILL_ClearPlate( work , skillWork , &skillWork->plateWork[pos1] );
     PSTATUS_SKILL_ClearPlate( work , skillWork , &skillWork->plateWork[pos2] );
     PSTATUS_SKILL_DispPlate( work , skillWork , &skillWork->plateWork[pos1] );
     PSTATUS_SKILL_DispPlate( work , skillWork , &skillWork->plateWork[pos2] );
-
+    */
+    PSTA_OAM_SwapBmp( skillWork->plateWork[pos1].bmpOam , skillWork->plateWork[pos2].bmpOam );
+    skillWork->plateWork[pos1].isUpdateStr = TRUE;
+    skillWork->plateWork[pos2].isUpdateStr = TRUE;
     //カーソル位置が変わらないので手動で技表示更新
     PSTATUS_SKILL_DispSkillInfoPage( work , skillWork );
 
     skillWork->isWaitSwapSkill = TRUE;
+  }
+}
+
+//--------------------------------------------------------------
+//	"忘れる"の表示切替
+//--------------------------------------------------------------
+static void PSTATUS_SKILL_ChangeForgetConfirmPlate( PSTATUS_WORK *work , PSTATUS_SKILL_WORK *skillWork , const BOOL isDisp )
+{
+  PSTATUS_SKILL_PLATE *plateWork = &skillWork->plateWork[4];
+  if( isDisp == TRUE )
+  {
+    GFL_CLACT_WK_SetAnmSeq( plateWork->clwkPlate , 3*PSTATUS_SKILL_PLATE_NUM );
+    PSTA_OAM_ActorSetDrawEnable( plateWork->bmpOam , FALSE );
+    GFL_CLACT_WK_SetDrawEnable( plateWork->clwkType , FALSE );
+    
+    PSTA_OAM_ActorBmpTrans( skillWork->bmpOamForget );
+    PSTA_OAM_ActorSetDrawEnable( skillWork->bmpOamForget , TRUE );
+  }
+  else
+  {
+    PSTA_OAM_ActorSetDrawEnable( skillWork->bmpOamForget , FALSE );
+    GFL_CLACT_WK_SetDrawEnable( plateWork->clwkType , TRUE );
+
+    PSTATUS_SKILL_ChangeColor( plateWork , 0 );
+    PSTA_OAM_ActorSetDrawEnable( plateWork->bmpOam , TRUE );
   }
 }
 

@@ -128,10 +128,17 @@ static GFL_PROC_RESULT PokeListProc_Init( GFL_PROC * proc, int * seq , void *pwk
         plData->in_lv = 100;
       }
       else
-      if( GFL_UI_KEY_GetCont() & PAD_BUTTON_X )
+      if( GFL_UI_KEY_GetCont() & PAD_BUTTON_Y )
       {
         plData->mode = PL_MODE_ITEMUSE;
-        plData->item = 10;
+        plData->item = 17; //傷薬
+      }
+      else
+      if( GFL_UI_KEY_GetCont() & PAD_BUTTON_X )
+      {
+        plData->mode = PL_MODE_WAZASET;
+        plData->item = 328; //技マシン気合パンチ
+        plData->waza = 0;
       }
       GFL_UI_SetTouchOrKey( GFL_APP_KTST_TOUCH );
     }

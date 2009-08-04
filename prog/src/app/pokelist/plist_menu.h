@@ -29,6 +29,8 @@ typedef enum
   PMIT_GIVE,    //持たせる
   PMIT_TAKE,    //預かる
   
+  PMIT_YES,    //はい
+  PMIT_NO,     //いいえ
 
   PMIT_END_LIST,    //リスト終端用
   
@@ -51,6 +53,7 @@ extern PLIST_MENU_WORK* PLIST_MENU_CreateSystem( PLIST_WORK *work );
 extern void PLIST_MENU_DeleteSystem( PLIST_WORK *work , PLIST_MENU_WORK *menuWork );
 
 extern void PLIST_MENU_OpenMenu( PLIST_WORK *work , PLIST_MENU_WORK *menuWork , PLIST_MENU_ITEM_TYPE *itemArr );
+extern void PLIST_MENU_OpenMenu_YesNo( PLIST_WORK *work , PLIST_MENU_WORK *menuWork );
 extern void PLIST_MENU_CloseMenu( PLIST_WORK *work , PLIST_MENU_WORK *menuWork );
 extern void PLIST_MENU_UpdateMenu( PLIST_WORK *work , PLIST_MENU_WORK *menuWork );
 

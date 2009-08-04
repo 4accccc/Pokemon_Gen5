@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ariizumi_nobuhiko" host="W00147" date="2009-07-29T21:44:22"/>
+	<create user="ariizumi_nobuhiko" host="W00147" date="2009-08-04T17:12:13"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -305,13 +305,13 @@
 		</language>
 	</columns>
 
-	<dialog left="1453" top="241" right="2157" bottom="869" maximized="no" rayout="Vertical2">
+	<dialog left="1498" top="207" right="2203" bottom="835" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
-		<band id="0" index="0" style="0000" width="529"/>
+		<band id="0" index="0" style="0000" width="530"/>
 		<band id="1" index="1" style="0000" width="165"/>
-		<band id="2" index="2" style="0000" width="696"/>
-		<band id="3" index="3" style="0000" width="696"/>
+		<band id="2" index="2" style="0000" width="697"/>
+		<band id="3" index="3" style="0000" width="697"/>
 		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
@@ -587,15 +587,15 @@ PP値上昇アイテムで技選択するとき</comment>
 1：技マシンの技名
 </comment>
 		<language name="JPN" width="216" line="2">[1:02:ポケモンニックネーム:0]は　あたらしく
-[1:07:わざ名:1]を　おぼえたい……
+[1:07:わざ名:1]を　おぼえたい……[BE:01:ページ切り替え（クリア）]
 しかし　[1:02:ポケモンニックネーム:0]は　わざを　４つ
-おぼえるので　せいいっぱいだ！
+おぼえるので　せいいっぱいだ！[BE:01:ページ切り替え（クリア）]
 [1:07:わざ名:1]の　かわりに
 ほかの　わざを　わすれさせますか？</language>
 		<language name="JPN_KANJI" width="216" line="2">[1:02:ポケモンニックネーム:0]は　あたらしく
-[1:07:わざ名:1]を　おぼえたい……
+[1:07:わざ名:1]を　おぼえたい……[BE:01:ページ切り替え（クリア）]
 しかし　[1:02:ポケモンニックネーム:0]は　わざを　４つ
-おぼえるので　せいいっぱいだ！
+おぼえるので　せいいっぱいだ！[BE:01:ページ切り替え（クリア）]
 [1:07:わざ名:1]の　かわりに
 ほかの　わざを　わすれさせますか？</language>
 	</row>
@@ -688,10 +688,10 @@ PP値上昇アイテムで技選択するとき</comment>
 0：選択したポケモンニックネーム
 1：技マシンの技名</comment>
 		<language name="JPN" width="216" line="2">[1:02:ポケモンニックネーム:0]と　[1:07:わざ名:1]は
-あいしょうが　わるかった！
+あいしょうが　わるかった！[BE:01:ページ切り替え（クリア）]
 [1:07:わざ名:1]は　おぼえられない！</language>
 		<language name="JPN_KANJI" width="216" line="2">[1:02:ポケモンニックネーム:0]と　[1:07:わざ名:1]は
-あいしょうが　わるかった！
+あいしょうが　わるかった！[BE:01:ページ切り替え（クリア）]
 [1:07:わざ名:1]は　おぼえられない！</language>
 	</row>
 
@@ -1699,6 +1699,18 @@ PP値上昇アイテムで技選択するとき</comment>
 		<comment>道具使用仮</comment>
 		<language name="JPN" width="216">[1:09:どうぐ名:0]を　つかった！</language>
 		<language name="JPN_KANJI" width="216">[1:09:どうぐ名:0]を　使った！</language>
+	</row>
+
+	<row id="mes_pokelist_yes">
+		<comment>はい：汎用</comment>
+		<language name="JPN" width="216">はい</language>
+		<language name="JPN_KANJI" width="216">はい</language>
+	</row>
+
+	<row id="mes_pokelist_no">
+		<comment>いいえ：汎用</comment>
+		<language name="JPN" width="216">いいえ</language>
+		<language name="JPN_KANJI" width="216">いいえ</language>
 	</row>
 
 	<flowchart-group-list>

@@ -15,6 +15,7 @@
 #include "arc_def.h"
 #include "msg/msg_pokelist.h"
 
+#include "gamesystem\msgspeed.h"
 #include "print/wordset.h"
 #include "system/bmp_winframe.h"
 
@@ -124,6 +125,15 @@ void PLIST_MSG_UpdateSystem( PLIST_WORK *work , PLIST_MSG_WORK *msgWork )
       msgWork->printHandle = NULL;
       GFL_STR_DeleteBuffer( msgWork->streamStr );
     }
+    else
+    if( PRINTSYS_PrintStreamGetState( msgWork->printHandle ) == PRINTSTREAM_STATE_PAUSE )
+    {
+      if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A ||
+          GFL_UI_TP_GetTrg() == TRUE )
+      {
+        PRINTSYS_PrintStreamReleasePause( msgWork->printHandle );
+      }
+    }
   }
   
   //printQueの更新
@@ -230,6 +240,47 @@ void PLIST_MSG_DrawMessageNoWait( PLIST_WORK *work , PLIST_MSG_WORK *msgWork , c
   msgWork->printHandle = PRINTSYS_PrintStream( msgWork->bmpWin , 0 , 0 , msgWork->streamStr ,
             work->fontHandle , -64 , msgWork->tcblSys , 0 , work->heapId , PLIST_FONT_MSG_BACK );
 */
+}
+
+//--------------------------------------------------------------
+//	メッセージ 描画(ストリーム
+//--------------------------------------------------------------
+void PLIST_MSG_DrawMessageStream( PLIST_WORK *work , PLIST_MSG_WORK *msgWork , const u32 msgId )
+{
+  STRBUF *str = GFL_MSG_CreateString( work->msgHandle , msgId ); 
+  if( msgWork->wordSet != NULL )
+  {
+    STRBUF *workStr = GFL_STR_CreateBuffer( 128 , work->heapId );
+    WORDSET_ExpandStr( msgWork->wordSet , workStr , str );
+    GFL_STR_DeleteBuffer( str );
+    str = workStr;
+  }
+
+  PLIST_MSG_ClearWindow( work , msgWork );
+
+  if( msgWork->printHandle != NULL )
+  {
+    ARI_TPrintf("PLIST_MSG PrintHandle is busy!!\n");
+    PRINTSYS_PrintStreamDelete( msgWork->printHandle );
+    GFL_STR_DeleteBuffer( msgWork->streamStr );
+  }
+  msgWork->streamStr = str; 
+  
+  msgWork->printHandle = PRINTSYS_PrintStream( msgWork->bmpWin , 0 , 0 , msgWork->streamStr ,
+            work->fontHandle , MSGSPEED_GetWait() , msgWork->tcblSys , 0 , work->heapId , PLIST_FONT_MSG_BACK );
+}
+
+//--------------------------------------------------------------
+//	メッセージ終了待ち
+//--------------------------------------------------------------
+const BOOL PLIST_MSG_IsFinishMessage( PLIST_WORK *work , PLIST_MSG_WORK *msgWork )
+{
+  if( msgWork->printHandle == NULL && 
+      msgWork->isUpdateMsg == FALSE )
+  {
+    return TRUE;
+  }
+  return FALSE;
 }
 
 #pragma mark [> wordset

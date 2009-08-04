@@ -147,6 +147,7 @@ typedef enum
   PSMS_CHANGE_ANM,
   PSMS_MENU,        //メニュー処理中
   PSMS_MSG_WAIT,    //メッセージ諸々
+  PSMS_YESNO_WAIT,    //はい・いいえ待ち
   PSMS_FADEOUT,
   PSMS_FADEOUT_WAIT,
   
@@ -171,7 +172,8 @@ typedef struct _PLIST_MSG_WORK   PLIST_MSG_WORK;
 typedef struct _PLIST_MENU_WORK  PLIST_MENU_WORK;
 typedef struct _PLIST_DEBUG_WORK PLIST_DEBUG_WORK;
 
-typedef void (*PSTATUS_CellbackFunc)(PLIST_WORK *work);
+typedef void (*PSTATUS_CallbackFunc)(PLIST_WORK *work);
+typedef void (*PSTATUS_CallbackFuncYesNo)(PLIST_WORK *work,const int retVal);
 
 struct _PLIST_WORK
 {
@@ -206,7 +208,9 @@ struct _PLIST_WORK
   GFL_FONT *fontHandle;
   GFL_FONT *sysFontHandle;
   PRINT_QUE *printQue;
-  PSTATUS_CellbackFunc msgCallBack;  //メッセージ終了時のコールバック
+  BOOL isMsgWaitKey;    //メッセージの完了のキー待ちをするか？
+  PSTATUS_CallbackFunc msgCallBack;  //メッセージ終了時のコールバック
+  PSTATUS_CallbackFuncYesNo yesNoCallBack;  //はい・いいえコールバック
   
   //画面下ウィンドウ管理
   PLIST_MSG_WORK  *msgWork;

@@ -44,3 +44,6 @@ extern void PSTA_OAM_ActorBmpTrans(PSTA_OAM_ACT_PTR bact);
 extern void PSTA_OAM_ActorGetPos(PSTA_OAM_ACT_PTR bact, s16 *x, s16 *y);
 extern void PSTA_OAM_ActorSetPos(PSTA_OAM_ACT_PTR bact, s16 x, s16 y);
 
+//bmp の入れ替え(同じサイズのbmp限定！！入れ替え後要Trans
+extern void PSTA_OAM_SwapBmp(PSTA_OAM_ACT_PTR act1, PSTA_OAM_ACT_PTR act2);
+

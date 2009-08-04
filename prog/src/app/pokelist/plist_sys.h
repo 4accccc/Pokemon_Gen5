@@ -16,7 +16,8 @@
 
 typedef enum
 {
-  LSCL_OK,    //覚えられる
+  LSCL_OK,       //覚えられる
+  LSCL_OK_FULL,  //覚えられる(でも技いっぱい
   LSCL_NG,    //覚えられない
   LSCL_LEARN, //すでに覚えている
 }PLIST_SKILL_CAN_LEARN;

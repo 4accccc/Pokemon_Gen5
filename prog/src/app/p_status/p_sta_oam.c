@@ -344,6 +344,20 @@ void PSTA_OAM_ActorSetPos(PSTA_OAM_ACT_PTR bact, s16 x, s16 y)
   }
 }
 
+//--------------------------------------------------------------
+/**
+ * @brief   bmpの入れ替え(同じサイズのもの限定！！
+ *          入れ替え後要Trans
+ */
+//--------------------------------------------------------------
+void PSTA_OAM_SwapBmp(PSTA_OAM_ACT_PTR act1, PSTA_OAM_ACT_PTR act2)
+{
+  GFL_BMP_DATA *tempBmp;
+  tempBmp = act1->bmp;
+  act1->bmp = act2->bmp;
+  act2->bmp = tempBmp;
+}
+
 //==============================================================================
 //  ローカル関数
 //==============================================================================
@@ -411,3 +425,4 @@ static void _FOLocal_CommonResourceFree(PSTA_OAM_SYS_PTR bsp)
     }
   }
 }
+

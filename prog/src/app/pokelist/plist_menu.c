@@ -135,6 +135,34 @@ void PLIST_MENU_OpenMenu( PLIST_WORK *work , PLIST_MENU_WORK *menuWork , PLIST_M
   taskInitWork.fontHandle = work->fontHandle;
   taskInitWork.printQue = work->printQue;
   
+  GFL_UI_SetTouchOrKey( work->ktst );
+  menuWork->taskMenuWork = APP_TASKMENU_OpenMenu( &taskInitWork );
+}
+
+//--------------------------------------------------------------
+//	メニュー開く(YesNo
+//--------------------------------------------------------------
+void PLIST_MENU_OpenMenu_YesNo( PLIST_WORK *work , PLIST_MENU_WORK *menuWork )
+{
+  u8 i;
+  APP_TASKMENU_INITWORK taskInitWork;
+  PLIST_MENU_ITEM_TYPE itemArr[3] = {PMIT_YES,PMIT_NO,PMIT_END_LIST};
+  
+  PLIST_MENU_CreateItem( work,menuWork,itemArr );
+
+  taskInitWork.heapId = work->heapId;
+  taskInitWork.itemNum = menuWork->itemNum;
+  taskInitWork.itemWork = menuWork->itemWork;
+  taskInitWork.bgFrame = PLIST_BG_MENU;
+  taskInitWork.palNo = PLIST_BG_PLT_MENU_ACTIVE;
+  taskInitWork.posType = ATPT_RIGHT_DOWN;
+  taskInitWork.charPosX = 32;
+  taskInitWork.charPosY = 18;
+  taskInitWork.msgHandle = work->msgHandle;
+  taskInitWork.fontHandle = work->fontHandle;
+  taskInitWork.printQue = work->printQue;
+  
+  GFL_UI_SetTouchOrKey( work->ktst );
   menuWork->taskMenuWork = APP_TASKMENU_OpenMenu( &taskInitWork );
 }
 
@@ -150,6 +178,8 @@ void PLIST_MENU_CloseMenu( PLIST_WORK *work , PLIST_MENU_WORK *menuWork )
   {
     GFL_STR_DeleteBuffer( menuWork->itemWork[i].str );
   }
+  work->ktst = GFL_UI_CheckTouchOrKey();
+
 }
 
 
@@ -270,6 +300,16 @@ static void PLIST_MENU_CreateItem(  PLIST_WORK *work , PLIST_MENU_WORK *menuWork
       menuWork->itemNum += 1;
       break;
 
+    case PMIT_YES:    //はい
+      menuWork->itemArr[menuWork->itemNum] = PMIT_YES;
+      menuWork->itemNum += 1;
+      break;
+
+    case PMIT_NO:   //いいえ
+      menuWork->itemArr[menuWork->itemNum] = PMIT_NO;
+      menuWork->itemNum += 1;
+      break;
+
     
     default:
       GF_ASSERT_MSG(0,"PLIST_MENU Invalid item type!![%d]\n",itemArr[arrNum-(i+1)] );
@@ -317,6 +357,8 @@ static STRBUF* PLIST_MENU_CreateMenuStr( PLIST_WORK *work , PLIST_MENU_WORK *men
     0 ,          //PMIT_SET_JOIN,    //参加する(参加しない)
     mes_pokelist_05_16 ,  //  PMIT_GIVE,    //持たせる
     mes_pokelist_05_17 ,  //  PMIT_TAKE,    //預かる
+    mes_pokelist_yes ,  //  PMIT_YES,    //はい
+    mes_pokelist_no ,   //  PMIT_NO,    //いいえ
     0 ,          //PMIT_WAZA_1,   //秘伝用技スロット１
     0 ,          //PMIT_WAZA_2,   //秘伝用技スロット２
     0 ,          //PMIT_WAZA_3,   //秘伝用技スロット３
