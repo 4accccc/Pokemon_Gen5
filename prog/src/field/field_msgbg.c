@@ -199,9 +199,15 @@ FLDMSGBG * FLDMSGBG_Setup( HEAPID heapID, GFL_G3D_CAMERA *g3Dcamera )
 	}
 	
 	{	//フォントパレット
+#if 0
 		GFL_ARC_UTIL_TransVramPalette(
 			ARCID_FONT, NARC_font_default_nclr,
 			PALTYPE_MAIN_BG, FLDMSGBG_PANO_FONT*32, 32, fmb->heapID );
+#else　//吹き出しウィンドウ用のパレットに変更
+		GFL_ARC_UTIL_TransVramPalette(
+			ARCID_FONT, NARC_font_talkwin_nclr,
+			PALTYPE_MAIN_BG, FLDMSGBG_PANO_FONT*32, 32, fmb->heapID );
+#endif
 	}
 	
 	{	//window frame
