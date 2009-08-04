@@ -407,8 +407,8 @@ static void APP_TASKMENU_UpdateTP( APP_TASKMENU_WORK *work )
   //ÉeÅ[ÉuÉãÇÃçÏê¨
   for( i=0 ; i<work->initWork.itemNum ; i++ )
   {
-    hitTbl[i].rect.top    = menuTop + (APP_TASKMENU_PLATE_HEIGHT*8*i);
-    hitTbl[i].rect.bottom = menuTop + (APP_TASKMENU_PLATE_HEIGHT*8*(i+1));
+    hitTbl[i].rect.top    = menuTop*8 + (APP_TASKMENU_PLATE_HEIGHT*8*i);
+    hitTbl[i].rect.bottom = menuTop*8 + (APP_TASKMENU_PLATE_HEIGHT*8*(i+1));
     hitTbl[i].rect.left   = menuLeft*8;
     hitTbl[i].rect.right  = (menuLeft+APP_TASKMENU_PLATE_WIDTH)*8 - 1;
   }
