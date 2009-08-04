@@ -84,7 +84,7 @@ typedef struct _TAG_DEBUG_MENU_EVENT_WORK DEBUG_MENU_EVENT_WORK;
 ///	メニュー呼び出し関数
 ///	BOOL TRUE=イベント継続 FALSE==デバッグメニューイベント終了
 //--------------------------------------------------------------
-typedef BOOL (* D_MENU_CALLPROC)(DEBUG_MENU_EVENT_WORK*);
+typedef BOOL (* DEBUG_MENU_CALLPROC)(DEBUG_MENU_EVENT_WORK*);
 
 //--------------------------------------------------------------
 ///	DEBUG_MENU_LISTDATA
@@ -108,7 +108,7 @@ struct _TAG_DEBUG_MENU_EVENT_WORK
 	GAMESYS_WORK *gmSys;
 	FIELD_MAIN_WORK * fieldWork;
 	
-	D_MENU_CALLPROC call_proc;
+	DEBUG_MENU_CALLPROC call_proc;
 	GFL_MSGDATA *msgData;
 	FLDMENUFUNC *menuFunc;
 };
@@ -118,82 +118,85 @@ struct _TAG_DEBUG_MENU_EVENT_WORK
 //======================================================================
 static GMEVENT_RESULT DebugMenuEvent( GMEVENT *event, int *seq, void *wk );
 
-static BOOL DMenuCallProc_GridCamera( DEBUG_MENU_EVENT_WORK *wk );
-static BOOL DMenuCallProc_GridScaleSwitch( DEBUG_MENU_EVENT_WORK *wk );
-static BOOL DMenuCallProc_GridScaleControl( DEBUG_MENU_EVENT_WORK *wk );
+static BOOL debugMenuCallProc_GridCamera( DEBUG_MENU_EVENT_WORK *wk );
+static BOOL debugMenuCallProc_GridScaleSwitch( DEBUG_MENU_EVENT_WORK *wk );
+static BOOL debugMenuCallProc_GridScaleControl( DEBUG_MENU_EVENT_WORK *wk );
 
-static BOOL DMenuCallProc_OpenStartComm( DEBUG_MENU_EVENT_WORK *wk );
-static BOOL DMenuCallProc_OpenStartInvasion( DEBUG_MENU_EVENT_WORK *wk );
+static BOOL debugMenuCallProc_OpenStartComm( DEBUG_MENU_EVENT_WORK *wk );
+static BOOL debugMenuCallProc_OpenStartInvasion( DEBUG_MENU_EVENT_WORK *wk );
 
-static BOOL DMenuCallProc_MapZoneSelect( DEBUG_MENU_EVENT_WORK *wk );
-static BOOL DMenuCallProc_OpenCommDebugMenu( DEBUG_MENU_EVENT_WORK *wk );
-static BOOL DMenuCallProc_OpenIRCBTLMenu( DEBUG_MENU_EVENT_WORK *wk );
-static BOOL DMenuCallProc_OpenClubMenu( DEBUG_MENU_EVENT_WORK *wk );
+static BOOL debugMenuCallProc_MapZoneSelect( DEBUG_MENU_EVENT_WORK *wk );
+static BOOL debugMenuCallProc_OpenCommDebugMenu( DEBUG_MENU_EVENT_WORK *wk );
+static BOOL debugMenuCallProc_OpenIRCBTLMenu( DEBUG_MENU_EVENT_WORK *wk );
+static BOOL debugMenuCallProc_OpenClubMenu( DEBUG_MENU_EVENT_WORK *wk );
 
-static DMenuCallProc_MapSeasonSelect( DEBUG_MENU_EVENT_WORK *wk );
-static DMenuCallProc_SubscreenSelect( DEBUG_MENU_EVENT_WORK *wk );
-static DMenuCallProc_MusicalSelect( DEBUG_MENU_EVENT_WORK *wk );
+static debugMenuCallProc_MapSeasonSelect( DEBUG_MENU_EVENT_WORK *wk );
+static debugMenuCallProc_SubscreenSelect( DEBUG_MENU_EVENT_WORK *wk );
+static debugMenuCallProc_MusicalSelect( DEBUG_MENU_EVENT_WORK *wk );
 
 static void DEBUG_SetMenuWorkZoneIDNameAll(
 		FLDMENUFUNC_LISTDATA *list, HEAPID heapID );
 static void DEBUG_SetMenuWorkZoneIDName(
 		FLDMENUFUNC_LISTDATA *list, HEAPID heapID, u32 zoneID );
 
-static BOOL DMenuCallProc_ControlCamera( DEBUG_MENU_EVENT_WORK *wk );
-static BOOL DMenuCallProc_ControlTarget( DEBUG_MENU_EVENT_WORK *wk );
+static BOOL debugMenuCallProc_ControlCamera( DEBUG_MENU_EVENT_WORK *wk );
+static BOOL debugMenuCallProc_ControlTarget( DEBUG_MENU_EVENT_WORK *wk );
 
-static BOOL DMenuCallProc_CameraList( DEBUG_MENU_EVENT_WORK *wk );
+static BOOL debugMenuCallProc_CameraList( DEBUG_MENU_EVENT_WORK *wk );
 
-static BOOL DMenuCallProc_MMdlList( DEBUG_MENU_EVENT_WORK *wk );
+static BOOL debugMenuCallProc_MMdlList( DEBUG_MENU_EVENT_WORK *wk );
 
-static BOOL DMenuCallProc_ControlLight( DEBUG_MENU_EVENT_WORK *wk );
-static BOOL DMenuCallProc_ControlFog( DEBUG_MENU_EVENT_WORK *wk );
+static BOOL debugMenuCallProc_ControlLight( DEBUG_MENU_EVENT_WORK *wk );
+static BOOL debugMenuCallProc_ControlFog( DEBUG_MENU_EVENT_WORK *wk );
 
-static BOOL DMenuCallProc_WeatherList( DEBUG_MENU_EVENT_WORK *wk );
+static BOOL debugMenuCallProc_WeatherList( DEBUG_MENU_EVENT_WORK *wk );
 
-static BOOL DMenuCallProc_FieldPosData( DEBUG_MENU_EVENT_WORK *wk );
+static BOOL debugMenuCallProc_FieldPosData( DEBUG_MENU_EVENT_WORK *wk );
 
-static BOOL DMenuCallProc_ControlRtcList( DEBUG_MENU_EVENT_WORK *wk );
+static BOOL debugMenuCallProc_ControlRtcList( DEBUG_MENU_EVENT_WORK *wk );
 
-static BOOL DMenuCallProc_Naminori( DEBUG_MENU_EVENT_WORK *wk );
-static BOOL DMenuCallProc_DebugItem( DEBUG_MENU_EVENT_WORK *wk );
-static BOOL DMenuCallProc_BoxMax( DEBUG_MENU_EVENT_WORK *wk );
-static BOOL DMenuCallProc_MyItemMax( DEBUG_MENU_EVENT_WORK *wk );
+static BOOL debugMenuCallProc_Naminori( DEBUG_MENU_EVENT_WORK *wk );
+static BOOL debugMenuCallProc_DebugItem( DEBUG_MENU_EVENT_WORK *wk );
+static BOOL debugMenuCallProc_BoxMax( DEBUG_MENU_EVENT_WORK *wk );
+static BOOL debugMenuCallProc_MyItemMax( DEBUG_MENU_EVENT_WORK *wk );
 
-static BOOL DMenuCallProc_DebugSkyJump( DEBUG_MENU_EVENT_WORK *p_wk );
+static BOOL debugMenuCallProc_DebugSkyJump( DEBUG_MENU_EVENT_WORK *p_wk );
+
+static BOOL debugMenuCallProc_ChangePlayerSex( DEBUG_MENU_EVENT_WORK *wk );
 
 //======================================================================
 //  デバッグメニューリスト
 //======================================================================
 //--------------------------------------------------------------
-///	デバッグメニューリスト　汎用
+///	デバッグメニューリスト
 ///	データを追加する事でメニューの項目も増えます。
 //--------------------------------------------------------------
 static const FLDMENUFUNC_LIST DATA_DebugMenuList[] =
 {
-	{	DEBUG_FIELD_STR38, DMenuCallProc_DebugSkyJump },
-	{ DEBUG_FIELD_STR17, DMenuCallProc_FieldPosData },
-	{ DEBUG_FIELD_STR02, DMenuCallProc_ControlCamera },
-	{ DEBUG_FIELD_STR20, DMenuCallProc_ControlTarget },
-	{ DEBUG_FIELD_STR03, DMenuCallProc_GridScaleSwitch },
-	{ DEBUG_FIELD_STR04, DMenuCallProc_GridScaleControl },
-	{ DEBUG_FIELD_STR05, DMenuCallProc_MapZoneSelect },
-	{ DEBUG_FIELD_STR06, DMenuCallProc_MapSeasonSelect},
-	{ DEBUG_FIELD_STR07, DMenuCallProc_CameraList },
-	{ DEBUG_FIELD_STR13, DMenuCallProc_MMdlList },
-	{ DEBUG_FIELD_C_CHOICE00, DMenuCallProc_OpenCommDebugMenu },
-	{ DEBUG_FIELD_STR12, DMenuCallProc_OpenIRCBTLMenu },
-	{ DEBUG_FIELD_STR19, DMenuCallProc_OpenClubMenu },
-	{ DEBUG_FIELD_STR22, DMenuCallProc_ControlRtcList },
-	{ DEBUG_FIELD_STR15, DMenuCallProc_ControlLight },
-	{ DEBUG_FIELD_STR16, DMenuCallProc_WeatherList },
-  { DEBUG_FIELD_STR_SUBSCRN, DMenuCallProc_SubscreenSelect },
-  { DEBUG_FIELD_STR21 , DMenuCallProc_MusicalSelect },
-  { DEBUG_FIELD_STR31, DMenuCallProc_Naminori },
-  { DEBUG_FIELD_STR32, DMenuCallProc_DebugItem },
-  { DEBUG_FIELD_STR37, DMenuCallProc_BoxMax },
-  { DEBUG_FIELD_STR39, DMenuCallProc_MyItemMax },
-  { DEBUG_FIELD_STR36, DMenuCallProc_ControlFog },
+	{	DEBUG_FIELD_STR38, debugMenuCallProc_DebugSkyJump },
+	{ DEBUG_FIELD_STR17, debugMenuCallProc_FieldPosData },
+	{ DEBUG_FIELD_STR02, debugMenuCallProc_ControlCamera },
+	{ DEBUG_FIELD_STR20, debugMenuCallProc_ControlTarget },
+	{ DEBUG_FIELD_STR03, debugMenuCallProc_GridScaleSwitch },
+	{ DEBUG_FIELD_STR04, debugMenuCallProc_GridScaleControl },
+	{ DEBUG_FIELD_STR05, debugMenuCallProc_MapZoneSelect },
+	{ DEBUG_FIELD_STR06, debugMenuCallProc_MapSeasonSelect},
+	{ DEBUG_FIELD_STR07, debugMenuCallProc_CameraList },
+	{ DEBUG_FIELD_STR13, debugMenuCallProc_MMdlList },
+	{ DEBUG_FIELD_C_CHOICE00, debugMenuCallProc_OpenCommDebugMenu },
+	{ DEBUG_FIELD_STR12, debugMenuCallProc_OpenIRCBTLMenu },
+	{ DEBUG_FIELD_STR19, debugMenuCallProc_OpenClubMenu },
+	{ DEBUG_FIELD_STR22, debugMenuCallProc_ControlRtcList },
+	{ DEBUG_FIELD_STR15, debugMenuCallProc_ControlLight },
+	{ DEBUG_FIELD_STR16, debugMenuCallProc_WeatherList },
+  { DEBUG_FIELD_STR_SUBSCRN, debugMenuCallProc_SubscreenSelect },
+  { DEBUG_FIELD_STR21 , debugMenuCallProc_MusicalSelect },
+  { DEBUG_FIELD_STR31, debugMenuCallProc_Naminori },
+  { DEBUG_FIELD_STR32, debugMenuCallProc_DebugItem },
+  { DEBUG_FIELD_STR37, debugMenuCallProc_BoxMax },
+  { DEBUG_FIELD_STR39, debugMenuCallProc_MyItemMax },
+  { DEBUG_FIELD_STR36, debugMenuCallProc_ControlFog },
+	{ DEBUG_FIELD_STR40, debugMenuCallProc_ChangePlayerSex },
 	{ DEBUG_FIELD_STR01, NULL },
 };
 
@@ -201,30 +204,32 @@ static const FLDMENUFUNC_LIST DATA_DebugMenuList[] =
 ///	デバッグメニューリスト	グリッド実験マップ用。
 ///	データを追加する事でメニューの項目も増えます。
 //--------------------------------------------------------------
+#if 0 //使わなくなりました。
 static const FLDMENUFUNC_LIST DATA_DebugMenuListGrid[] =
 {
-	{	DEBUG_FIELD_STR38, DMenuCallProc_DebugSkyJump },
-	{ DEBUG_FIELD_STR17, DMenuCallProc_FieldPosData },
-	{ DEBUG_FIELD_STR02, DMenuCallProc_ControlCamera },
-	{ DEBUG_FIELD_STR20, DMenuCallProc_ControlTarget },
-	{ DEBUG_FIELD_STR03, DMenuCallProc_GridScaleSwitch },
-	{ DEBUG_FIELD_STR04, DMenuCallProc_GridScaleControl },
-	{ DEBUG_FIELD_STR05, DMenuCallProc_MapZoneSelect },
-	{ DEBUG_FIELD_STR06, DMenuCallProc_MapSeasonSelect},
-	{ DEBUG_FIELD_STR07, DMenuCallProc_CameraList },
-	{ DEBUG_FIELD_STR13, DMenuCallProc_MMdlList },
-	{ DEBUG_FIELD_C_CHOICE00, DMenuCallProc_OpenCommDebugMenu },
-	{ DEBUG_FIELD_STR12, DMenuCallProc_OpenIRCBTLMenu },
-	{ DEBUG_FIELD_STR19, DMenuCallProc_OpenClubMenu },
-	{ DEBUG_FIELD_STR22, DMenuCallProc_ControlRtcList },
-	{ DEBUG_FIELD_STR15, DMenuCallProc_ControlLight },
-	{ DEBUG_FIELD_STR16, DMenuCallProc_WeatherList },
-  { DEBUG_FIELD_STR_SUBSCRN, DMenuCallProc_SubscreenSelect },
-  { DEBUG_FIELD_STR21 , DMenuCallProc_MusicalSelect },
-  { DEBUG_FIELD_STR31, DMenuCallProc_Naminori },
-  { DEBUG_FIELD_STR32, DMenuCallProc_DebugItem },
+	{	DEBUG_FIELD_STR38, debugMenuCallProc_DebugSkyJump },
+	{ DEBUG_FIELD_STR17, debugMenuCallProc_FieldPosData },
+	{ DEBUG_FIELD_STR02, debugMenuCallProc_ControlCamera },
+	{ DEBUG_FIELD_STR20, debugMenuCallProc_ControlTarget },
+	{ DEBUG_FIELD_STR03, debugMenuCallProc_GridScaleSwitch },
+	{ DEBUG_FIELD_STR04, debugMenuCallProc_GridScaleControl },
+	{ DEBUG_FIELD_STR05, debugMenuCallProc_MapZoneSelect },
+	{ DEBUG_FIELD_STR06, debugMenuCallProc_MapSeasonSelect},
+	{ DEBUG_FIELD_STR07, debugMenuCallProc_CameraList },
+	{ DEBUG_FIELD_STR13, debugMenuCallProc_MMdlList },
+	{ DEBUG_FIELD_C_CHOICE00, debugMenuCallProc_OpenCommDebugMenu },
+	{ DEBUG_FIELD_STR12, debugMenuCallProc_OpenIRCBTLMenu },
+	{ DEBUG_FIELD_STR19, debugMenuCallProc_OpenClubMenu },
+	{ DEBUG_FIELD_STR22, debugMenuCallProc_ControlRtcList },
+	{ DEBUG_FIELD_STR15, debugMenuCallProc_ControlLight },
+	{ DEBUG_FIELD_STR16, debugMenuCallProc_WeatherList },
+  { DEBUG_FIELD_STR_SUBSCRN, debugMenuCallProc_SubscreenSelect },
+  { DEBUG_FIELD_STR21 , debugMenuCallProc_MusicalSelect },
+  { DEBUG_FIELD_STR31, debugMenuCallProc_Naminori },
+  { DEBUG_FIELD_STR32, debugMenuCallProc_DebugItem },
 	{ DEBUG_FIELD_STR01, NULL },
 };
+#endif
 
 //--------------------------------------------------------------
 ///	デバッグメニューリストテーブル
@@ -237,6 +242,7 @@ static const DEBUG_MENU_LISTDATA DATA_DebugMenuListTbl[] =
 		NELEMS(DATA_DebugMenuList),
 		DATA_DebugMenuList
 	},
+#if 0
 	{	//実験マップ　グリッド移動
 		D_MENU_CHARSIZE_X,
 		D_MENU_CHARSIZE_Y,
@@ -255,6 +261,7 @@ static const DEBUG_MENU_LISTDATA DATA_DebugMenuListTbl[] =
 		NELEMS(DATA_DebugMenuListGrid),
 		DATA_DebugMenuListGrid
 	},
+#endif
 };
 
 //メニュー最大数
@@ -315,8 +322,13 @@ GMEVENT * DEBUG_EVENT_DebugMenu(
 	dmew->gmEvent = event;
 	dmew->fieldWork = fieldWork;
 	dmew->heapID = heapID;
+  
+#if 0
 	dmew->page_id = page_id;
-	
+#else
+  dmew->page_id = 0;
+#endif
+  
 	if( dmew->page_id >= D_MENULISTTBL_MAX ){
 		OS_Printf( "debug menu number error\n" );
 		dmew->page_id = 0;
@@ -385,7 +397,7 @@ static GMEVENT_RESULT DebugMenuEvent( GMEVENT *event, int *seq, void *wk )
 			}else if( ret == FLDMENUFUNC_CANCEL ){	//キャンセル
 				(*seq)++;
 			}else{							//決定
-				work->call_proc = (D_MENU_CALLPROC)ret;
+				work->call_proc = (DEBUG_MENU_CALLPROC)ret;
 				(*seq)++;
 			}
 		}
@@ -419,7 +431,7 @@ static GMEVENT_RESULT DebugMenuEvent( GMEVENT *event, int *seq, void *wk )
  * @retval	BOOL	TRUE=イベント継続
  */
 //--------------------------------------------------------------
-static BOOL DMenuCallProc_GridCamera( DEBUG_MENU_EVENT_WORK *wk )
+static BOOL debugMenuCallProc_GridCamera( DEBUG_MENU_EVENT_WORK *wk )
 {
 	DEBUG_MENU_EVENT_WORK *d_menu = wk;
 	FIELD_MAIN_WORK *fieldWork = wk->fieldWork;
@@ -437,7 +449,7 @@ static BOOL DMenuCallProc_GridCamera( DEBUG_MENU_EVENT_WORK *wk )
  * @retval	BOOL	TRUE=イベント継続
  */
 //--------------------------------------------------------------
-static BOOL DMenuCallProc_GridScaleSwitch( DEBUG_MENU_EVENT_WORK *wk )
+static BOOL debugMenuCallProc_GridScaleSwitch( DEBUG_MENU_EVENT_WORK *wk )
 {
 #if 0
 	DEBUG_MENU_EVENT_WORK *d_menu = wk;
@@ -456,7 +468,7 @@ static BOOL DMenuCallProc_GridScaleSwitch( DEBUG_MENU_EVENT_WORK *wk )
  * @retval	BOOL	TRUE=イベント継続
  */
 //--------------------------------------------------------------
-static BOOL DMenuCallProc_GridScaleControl( DEBUG_MENU_EVENT_WORK *wk )
+static BOOL debugMenuCallProc_GridScaleControl( DEBUG_MENU_EVENT_WORK *wk )
 {
 #if 0
 	DEBUG_MENU_EVENT_WORK *d_menu = wk;
@@ -475,7 +487,7 @@ static BOOL DMenuCallProc_GridScaleControl( DEBUG_MENU_EVENT_WORK *wk )
  * @retval	BOOL	TRUE=イベント継続
  */
 //--------------------------------------------------------------
-static BOOL DMenuCallProc_OpenCommDebugMenu( DEBUG_MENU_EVENT_WORK *wk )
+static BOOL debugMenuCallProc_OpenCommDebugMenu( DEBUG_MENU_EVENT_WORK *wk )
 {
 	GMEVENT *event = wk->gmEvent;
 	const HEAPID heapID = wk->heapID;
@@ -499,7 +511,7 @@ static BOOL DMenuCallProc_OpenCommDebugMenu( DEBUG_MENU_EVENT_WORK *wk )
  * @retval	BOOL	TRUE=イベント継続
  */
 //--------------------------------------------------------------
-static BOOL DMenuCallProc_OpenIRCBTLMenu( DEBUG_MENU_EVENT_WORK *wk )
+static BOOL debugMenuCallProc_OpenIRCBTLMenu( DEBUG_MENU_EVENT_WORK *wk )
 {
 	GMEVENT *event = wk->gmEvent;
 	FIELD_MAIN_WORK *fieldWork = wk->fieldWork;
@@ -518,7 +530,7 @@ static BOOL DMenuCallProc_OpenIRCBTLMenu( DEBUG_MENU_EVENT_WORK *wk )
  * @retval	BOOL	TRUE=イベント継続
  */
 //--------------------------------------------------------------
-static BOOL DMenuCallProc_OpenClubMenu( DEBUG_MENU_EVENT_WORK *wk )
+static BOOL debugMenuCallProc_OpenClubMenu( DEBUG_MENU_EVENT_WORK *wk )
 {
 	GMEVENT *event = wk->gmEvent;
 	FIELD_MAIN_WORK *fieldWork = wk->fieldWork;
@@ -527,10 +539,6 @@ static BOOL DMenuCallProc_OpenClubMenu( DEBUG_MENU_EVENT_WORK *wk )
     EVENT_WiFiClub(gameSys, fieldWork, event);
 	return( TRUE );
 }
-
-
-
-
 
 //======================================================================
 //	デバッグメニュー どこでもジャンプ
@@ -552,7 +560,7 @@ typedef struct
 //--------------------------------------------------------------
 ///	proto
 //--------------------------------------------------------------
-static GMEVENT_RESULT DMenuZoneSelectEvent(
+static GMEVENT_RESULT debugMenuZoneSelectEvent(
 		GMEVENT *event, int *seq, void *work );
 
 ///	どこでもジャンプ　メニューヘッダー
@@ -585,7 +593,7 @@ static const FLDMENUFUNC_HEADER DATA_DebugMenuList_ZoneSel =
  * @retval	BOOL	TRUE=イベント継続
  */
 //--------------------------------------------------------------
-static BOOL DMenuCallProc_MapZoneSelect( DEBUG_MENU_EVENT_WORK *wk )
+static BOOL debugMenuCallProc_MapZoneSelect( DEBUG_MENU_EVENT_WORK *wk )
 {
 	GAMESYS_WORK *gsys = wk->gmSys;
 	GMEVENT *event = wk->gmEvent;
@@ -594,7 +602,7 @@ static BOOL DMenuCallProc_MapZoneSelect( DEBUG_MENU_EVENT_WORK *wk )
 	DEBUG_ZONESEL_EVENT_WORK *work;
 	
 	GMEVENT_Change( event,
-		DMenuZoneSelectEvent, sizeof(DEBUG_ZONESEL_EVENT_WORK) );
+		debugMenuZoneSelectEvent, sizeof(DEBUG_ZONESEL_EVENT_WORK) );
 	
 	work = GMEVENT_GetEventWork( event );
 	MI_CpuClear8( work, sizeof(DEBUG_ZONESEL_EVENT_WORK) );
@@ -615,7 +623,7 @@ static BOOL DMenuCallProc_MapZoneSelect( DEBUG_MENU_EVENT_WORK *wk )
  * @retval	GMEVENT_RESULT
  */
 //--------------------------------------------------------------
-static GMEVENT_RESULT DMenuZoneSelectEvent(
+static GMEVENT_RESULT debugMenuZoneSelectEvent(
 		GMEVENT *event, int *seq, void *wk )
 {
 	DEBUG_ZONESEL_EVENT_WORK *work = wk;
@@ -672,7 +680,7 @@ static GMEVENT_RESULT DMenuZoneSelectEvent(
 //--------------------------------------------------------------
 //	proto
 //--------------------------------------------------------------
-static GMEVENT_RESULT DMenuSeasonSelectEvent(
+static GMEVENT_RESULT debugMenuSeasonSelectEvent(
 		GMEVENT *event, int *seq, void *wk );
 
 //--------------------------------------------------------------
@@ -682,7 +690,7 @@ static GMEVENT_RESULT DMenuSeasonSelectEvent(
  * @retval	BOOL	TRUE=イベント継続
  */
 //--------------------------------------------------------------
-static DMenuCallProc_MapSeasonSelect( DEBUG_MENU_EVENT_WORK *wk )
+static debugMenuCallProc_MapSeasonSelect( DEBUG_MENU_EVENT_WORK *wk )
 {
 	HEAPID heapID = wk->heapID;
 	GMEVENT *event = wk->gmEvent;
@@ -694,7 +702,7 @@ static DMenuCallProc_MapSeasonSelect( DEBUG_MENU_EVENT_WORK *wk )
 	DEBUG_ZONESEL_EVENT_WORK *work;
 	
 		GMEVENT_Change( event,
-			DMenuSeasonSelectEvent, sizeof(DEBUG_ZONESEL_EVENT_WORK) );
+			debugMenuSeasonSelectEvent, sizeof(DEBUG_ZONESEL_EVENT_WORK) );
 		work = GMEVENT_GetEventWork( event );
 		MI_CpuClear8( work, sizeof(DEBUG_ZONESEL_EVENT_WORK) );
 	
@@ -725,7 +733,7 @@ static const FLDMENUFUNC_LIST DATA_SeasonMenuList[PMSEASON_TOTAL] =
  * @retval	GMEVENT_RESULT
  */
 //--------------------------------------------------------------
-static GMEVENT_RESULT DMenuSeasonSelectEvent(
+static GMEVENT_RESULT debugMenuSeasonSelectEvent(
 		GMEVENT *event, int *seq, void *wk )
 {
 	DEBUG_ZONESEL_EVENT_WORK *work = wk;
@@ -812,7 +820,7 @@ typedef struct {
 //--------------------------------------------------------------
 //	proto
 //--------------------------------------------------------------
-static GMEVENT_RESULT DMenuSubscreenSelectEvent(
+static GMEVENT_RESULT debugMenuSubscreenSelectEvent(
 		GMEVENT *event, int *seq, void *wk );
 static void setupTouchCameraSubscreen(DMESSWORK * dmess);
 static void setupSoundViewerSubscreen(DMESSWORK * dmess);
@@ -829,7 +837,7 @@ static void setupDebugLightSubscreen(DMESSWORK * dmess);
  * @retval	BOOL	TRUE=イベント継続
  */
 //--------------------------------------------------------------
-static DMenuCallProc_SubscreenSelect( DEBUG_MENU_EVENT_WORK *wk )
+static debugMenuCallProc_SubscreenSelect( DEBUG_MENU_EVENT_WORK *wk )
 {
 	HEAPID heapID = wk->heapID;
 	GMEVENT *event = wk->gmEvent;
@@ -838,7 +846,7 @@ static DMenuCallProc_SubscreenSelect( DEBUG_MENU_EVENT_WORK *wk )
 	DMESSWORK *work;
 	
 		GMEVENT_Change( event,
-			DMenuSubscreenSelectEvent, sizeof(DMESSWORK) );
+			debugMenuSubscreenSelectEvent, sizeof(DMESSWORK) );
 		work = GMEVENT_GetEventWork( event );
 		MI_CpuClear8( work, sizeof(DMESSWORK) );
 	
@@ -871,7 +879,7 @@ static const FLDMENUFUNC_LIST DATA_SubcreenMenuList[FIELD_SUBSCREEN_MODE_MAX] =
  * @retval	GMEVENT_RESULT
  */
 //--------------------------------------------------------------
-static GMEVENT_RESULT DMenuSubscreenSelectEvent(
+static GMEVENT_RESULT debugMenuSubscreenSelectEvent(
 		GMEVENT *event, int *seq, void *wk )
 {
 	DMESSWORK *work = wk;
@@ -1004,7 +1012,7 @@ typedef struct {
 	DRESSUP_INIT_WORK *dupInitWork;
 	u8  menuRet;
 }DEBUG_MENU_EVENT_MUSICAL_SELECT_WORK, DEB_MENU_MUS_WORK;
-static GMEVENT_RESULT DMenuMusicalSelectEvent( GMEVENT *event, int *seq, void *wk );
+static GMEVENT_RESULT debugMenuMusicalSelectEvent( GMEVENT *event, int *seq, void *wk );
 
 static void setupMusicalDressup(DEB_MENU_MUS_WORK * work);
 static void setupMusicarShowPart(DEB_MENU_MUS_WORK * work);
@@ -1017,7 +1025,7 @@ static void setupMusicarAll(DEB_MENU_MUS_WORK * work);
  * @retval	BOOL	TRUE=イベント継続
  */
 //--------------------------------------------------------------
-static DMenuCallProc_MusicalSelect( DEBUG_MENU_EVENT_WORK *wk )
+static debugMenuCallProc_MusicalSelect( DEBUG_MENU_EVENT_WORK *wk )
 {
 	HEAPID heapID = wk->heapID;
 	GMEVENT *event = wk->gmEvent;
@@ -1026,7 +1034,7 @@ static DMenuCallProc_MusicalSelect( DEBUG_MENU_EVENT_WORK *wk )
 	DEB_MENU_MUS_WORK *work;
 	
 		GMEVENT_Change( event,
-			DMenuMusicalSelectEvent, sizeof(DEB_MENU_MUS_WORK) );
+			debugMenuMusicalSelectEvent, sizeof(DEB_MENU_MUS_WORK) );
 		work = GMEVENT_GetEventWork( event );
 		MI_CpuClear8( work, sizeof(DEB_MENU_MUS_WORK) );
 	
@@ -1058,7 +1066,7 @@ static const FLDMENUFUNC_LIST DATA_MusicalMenuList[3] =
  * @retval	GMEVENT_RESULT
  */
 //--------------------------------------------------------------
-static GMEVENT_RESULT DMenuMusicalSelectEvent(
+static GMEVENT_RESULT debugMenuMusicalSelectEvent(
 		GMEVENT *event, int *seq, void *wk )
 {
 	DEB_MENU_MUS_WORK *work = wk;
@@ -1357,7 +1365,7 @@ typedef struct
 //--------------------------------------------------------------
 ///	proto
 //--------------------------------------------------------------
-static GMEVENT_RESULT DMenuControlCamera(
+static GMEVENT_RESULT debugMenuControlCamera(
 		GMEVENT *event, int *seq, void *wk );
 
 //--------------------------------------------------------------
@@ -1367,7 +1375,7 @@ static GMEVENT_RESULT DMenuControlCamera(
  * @retval	BOOL	TRUE=イベント継続
  */
 //--------------------------------------------------------------
-static BOOL DMenuCallProc_ControlCamera( DEBUG_MENU_EVENT_WORK *wk )
+static BOOL debugMenuCallProc_ControlCamera( DEBUG_MENU_EVENT_WORK *wk )
 {
 	DEBUG_CTLCAMERA_WORK *work;
 	GAMESYS_WORK *gsys = wk->gmSys;
@@ -1375,7 +1383,7 @@ static BOOL DMenuCallProc_ControlCamera( DEBUG_MENU_EVENT_WORK *wk )
 	HEAPID heapID = wk->heapID;
 	FIELD_MAIN_WORK *fieldWork = wk->fieldWork;
 	
-	GMEVENT_Change( event, DMenuControlCamera, sizeof(DEBUG_CTLCAMERA_WORK) );
+	GMEVENT_Change( event, debugMenuControlCamera, sizeof(DEBUG_CTLCAMERA_WORK) );
 	work = GMEVENT_GetEventWork( event );
 	MI_CpuClear8( work, sizeof(DEBUG_CTLCAMERA_WORK) );
 	
@@ -1409,7 +1417,7 @@ static BOOL DMenuCallProc_ControlCamera( DEBUG_MENU_EVENT_WORK *wk )
  * @retval	BOOL	TRUE=イベント継続
  */
 //--------------------------------------------------------------
-static BOOL DMenuCallProc_ControlTarget( DEBUG_MENU_EVENT_WORK *wk )
+static BOOL debugMenuCallProc_ControlTarget( DEBUG_MENU_EVENT_WORK *wk )
 {
 	DEBUG_CTLCAMERA_WORK *work;
 	GAMESYS_WORK *gsys = wk->gmSys;
@@ -1417,7 +1425,7 @@ static BOOL DMenuCallProc_ControlTarget( DEBUG_MENU_EVENT_WORK *wk )
 	HEAPID heapID = wk->heapID;
 	FIELD_MAIN_WORK *fieldWork = wk->fieldWork;
 	
-	GMEVENT_Change( event, DMenuControlCamera, sizeof(DEBUG_CTLCAMERA_WORK) );
+	GMEVENT_Change( event, debugMenuControlCamera, sizeof(DEBUG_CTLCAMERA_WORK) );
 	work = GMEVENT_GetEventWork( event );
 	MI_CpuClear8( work, sizeof(DEBUG_CTLCAMERA_WORK) );
 	
@@ -1451,7 +1459,7 @@ static BOOL DMenuCallProc_ControlTarget( DEBUG_MENU_EVENT_WORK *wk )
  * @retval	GMEVENT_RESULT
  */
 //--------------------------------------------------------------
-static GMEVENT_RESULT DMenuControlCamera(
+static GMEVENT_RESULT debugMenuControlCamera(
 		GMEVENT *event, int *seq, void *wk )
 {
 	DEBUG_CTLCAMERA_WORK *work = wk;
@@ -1486,7 +1494,7 @@ typedef struct
 //--------------------------------------------------------------
 ///	proto
 //--------------------------------------------------------------
-static GMEVENT_RESULT DMenuTestCameraListEvent(
+static GMEVENT_RESULT debugMenuTestCameraListEvent(
 		GMEVENT *event, int *seq, void *work );
 
 ///カメラリスト最大
@@ -1531,7 +1539,7 @@ static const FLDMENUFUNC_LIST DATA_TestCameraMenuList[TESTCAMERALISTMAX] =
  * @retval	BOOL	TRUE=イベント継続
  */
 //--------------------------------------------------------------
-static BOOL DMenuCallProc_CameraList( DEBUG_MENU_EVENT_WORK *wk )
+static BOOL debugMenuCallProc_CameraList( DEBUG_MENU_EVENT_WORK *wk )
 {
 	GAMESYS_WORK *gsys = wk->gmSys;
 	GMEVENT *event = wk->gmEvent;
@@ -1540,7 +1548,7 @@ static BOOL DMenuCallProc_CameraList( DEBUG_MENU_EVENT_WORK *wk )
 	DEBUG_TESTCAMERALIST_EVENT_WORK *work;
 	
 	GMEVENT_Change( event,
-		DMenuTestCameraListEvent, sizeof(DEBUG_TESTCAMERALIST_EVENT_WORK) );
+		debugMenuTestCameraListEvent, sizeof(DEBUG_TESTCAMERALIST_EVENT_WORK) );
 	
 	work = GMEVENT_GetEventWork( event );
 	MI_CpuClear8( work, sizeof(DEBUG_TESTCAMERALIST_EVENT_WORK) );
@@ -1561,7 +1569,7 @@ static BOOL DMenuCallProc_CameraList( DEBUG_MENU_EVENT_WORK *wk )
  * @retval	GMEVENT_RESULT
  */
 //--------------------------------------------------------------
-static GMEVENT_RESULT DMenuTestCameraListEvent(
+static GMEVENT_RESULT debugMenuTestCameraListEvent(
 		GMEVENT *event, int *seq, void *wk )
 {
 	DEBUG_ZONESEL_EVENT_WORK *work = wk;
@@ -1659,7 +1667,7 @@ typedef struct
 //--------------------------------------------------------------
 ///	proto
 //--------------------------------------------------------------
-static GMEVENT_RESULT DMenuMMdlListEvent(
+static GMEVENT_RESULT debugMenuMMdlListEvent(
 		GMEVENT *event, int *seq, void *wk );
 static u16 * DEBUG_GetOBJCodeStrBuf( HEAPID heapID, u16 code );
 static void DEBUG_SetMenuWorkMMdlList(
@@ -1695,7 +1703,7 @@ static const FLDMENUFUNC_HEADER DATA_DebugMenuList_MMdlList =
  * @retval	BOOL	TRUE=イベント継続
  */
 //--------------------------------------------------------------
-static BOOL DMenuCallProc_MMdlList( DEBUG_MENU_EVENT_WORK *wk )
+static BOOL debugMenuCallProc_MMdlList( DEBUG_MENU_EVENT_WORK *wk )
 {
 	GAMESYS_WORK *gsys = wk->gmSys;
 	GMEVENT *event = wk->gmEvent;
@@ -1704,7 +1712,7 @@ static BOOL DMenuCallProc_MMdlList( DEBUG_MENU_EVENT_WORK *wk )
 	DEBUG_MMDLLIST_EVENT_WORK *work;
 	
 	GMEVENT_Change( event,
-		DMenuMMdlListEvent, sizeof(DEBUG_MMDLLIST_EVENT_WORK) );
+		debugMenuMMdlListEvent, sizeof(DEBUG_MMDLLIST_EVENT_WORK) );
 	
 	work = GMEVENT_GetEventWork( event );
 	MI_CpuClear8( work, sizeof(DEBUG_MMDLLIST_EVENT_WORK) );
@@ -1731,7 +1739,7 @@ static BOOL DMenuCallProc_MMdlList( DEBUG_MENU_EVENT_WORK *wk )
  * @retval	GMEVENT_RESULT
  */
 //--------------------------------------------------------------
-static GMEVENT_RESULT DMenuMMdlListEvent(
+static GMEVENT_RESULT debugMenuMMdlListEvent(
 		GMEVENT *event, int *seq, void *wk )
 {
 	DEBUG_MMDLLIST_EVENT_WORK *work = wk;
@@ -1923,7 +1931,7 @@ typedef struct
 //--------------------------------------------------------------
 ///	proto
 //--------------------------------------------------------------
-static GMEVENT_RESULT DMenuControlLight(
+static GMEVENT_RESULT debugMenuControlLight(
 		GMEVENT *event, int *seq, void *wk );
 
 //--------------------------------------------------------------
@@ -1933,7 +1941,7 @@ static GMEVENT_RESULT DMenuControlLight(
  * @retval	BOOL	TRUE=イベント継続
  */
 //--------------------------------------------------------------
-static BOOL DMenuCallProc_ControlLight( DEBUG_MENU_EVENT_WORK *wk )
+static BOOL debugMenuCallProc_ControlLight( DEBUG_MENU_EVENT_WORK *wk )
 {
 	DEBUG_CTLLIGHT_WORK *work;
 	GAMESYS_WORK *gsys = wk->gmSys;
@@ -1941,7 +1949,7 @@ static BOOL DMenuCallProc_ControlLight( DEBUG_MENU_EVENT_WORK *wk )
 	HEAPID heapID = wk->heapID;
 	FIELD_MAIN_WORK *fieldWork = wk->fieldWork;
 	
-	GMEVENT_Change( event, DMenuControlLight, sizeof(DEBUG_CTLLIGHT_WORK) );
+	GMEVENT_Change( event, debugMenuControlLight, sizeof(DEBUG_CTLLIGHT_WORK) );
 	work = GMEVENT_GetEventWork( event );
 	MI_CpuClear8( work, sizeof(DEBUG_CTLLIGHT_WORK) );
 	
@@ -1962,7 +1970,7 @@ static BOOL DMenuCallProc_ControlLight( DEBUG_MENU_EVENT_WORK *wk )
  * @retval	GMEVENT_RESULT
  */
 //--------------------------------------------------------------
-static GMEVENT_RESULT DMenuControlLight(
+static GMEVENT_RESULT debugMenuControlLight(
 		GMEVENT *event, int *seq, void *wk )
 {
 	DEBUG_CTLLIGHT_WORK *work = wk;
@@ -2062,10 +2070,10 @@ typedef struct
 //--------------------------------------------------------------
 ///	proto
 //--------------------------------------------------------------
-static GMEVENT_RESULT DMenuControlFog(
+static GMEVENT_RESULT debugMenuControlFog(
 		GMEVENT *event, int *seq, void *wk );
 
-static BOOL DMenuCallProc_ControlFog( DEBUG_MENU_EVENT_WORK *wk )
+static BOOL debugMenuCallProc_ControlFog( DEBUG_MENU_EVENT_WORK *wk )
 {
 	DEBUG_CTLFOG_WORK *work;
 	GAMESYS_WORK *gsys = wk->gmSys;
@@ -2073,7 +2081,7 @@ static BOOL DMenuCallProc_ControlFog( DEBUG_MENU_EVENT_WORK *wk )
 	HEAPID heapID = wk->heapID;
 	FIELD_MAIN_WORK *fieldWork = wk->fieldWork;
 	
-	GMEVENT_Change( event, DMenuControlFog, sizeof(DEBUG_CTLFOG_WORK) );
+	GMEVENT_Change( event, debugMenuControlFog, sizeof(DEBUG_CTLFOG_WORK) );
 	work = GMEVENT_GetEventWork( event );
 	MI_CpuClear8( work, sizeof(DEBUG_CTLFOG_WORK) );
 	
@@ -2094,7 +2102,7 @@ static BOOL DMenuCallProc_ControlFog( DEBUG_MENU_EVENT_WORK *wk )
  * @retval	GMEVENT_RESULT
  */
 //--------------------------------------------------------------
-static GMEVENT_RESULT DMenuControlFog(
+static GMEVENT_RESULT debugMenuControlFog(
 		GMEVENT *event, int *seq, void *wk )
 {
 	DEBUG_CTLFOG_WORK *work = wk;
@@ -2194,7 +2202,7 @@ typedef struct
 //--------------------------------------------------------------
 ///	proto
 //--------------------------------------------------------------
-static GMEVENT_RESULT DMenuWeatherListEvent(
+static GMEVENT_RESULT debugMenuWeatherListEvent(
 		GMEVENT *event, int *seq, void *work );
 
 ///テストカメラリスト メニューヘッダー
@@ -2241,7 +2249,7 @@ static const FLDMENUFUNC_LIST DATA_WeatherMenuList[] =
  * @retval	BOOL	TRUE=イベント継続
  */
 //--------------------------------------------------------------
-static BOOL DMenuCallProc_WeatherList( DEBUG_MENU_EVENT_WORK *wk )
+static BOOL debugMenuCallProc_WeatherList( DEBUG_MENU_EVENT_WORK *wk )
 {
 	GAMESYS_WORK *gsys = wk->gmSys;
 	GMEVENT *event = wk->gmEvent;
@@ -2250,7 +2258,7 @@ static BOOL DMenuCallProc_WeatherList( DEBUG_MENU_EVENT_WORK *wk )
 	DEBUG_WEATERLIST_EVENT_WORK *work;
 	
 	GMEVENT_Change( event,
-		DMenuWeatherListEvent, sizeof(DEBUG_WEATERLIST_EVENT_WORK) );
+		debugMenuWeatherListEvent, sizeof(DEBUG_WEATERLIST_EVENT_WORK) );
 	
 	work = GMEVENT_GetEventWork( event );
 	MI_CpuClear8( work, sizeof(DEBUG_WEATERLIST_EVENT_WORK) );
@@ -2271,7 +2279,7 @@ static BOOL DMenuCallProc_WeatherList( DEBUG_MENU_EVENT_WORK *wk )
  * @retval	GMEVENT_RESULT
  */
 //--------------------------------------------------------------
-static GMEVENT_RESULT DMenuWeatherListEvent(
+static GMEVENT_RESULT debugMenuWeatherListEvent(
 		GMEVENT *event, int *seq, void *wk )
 {
 	DEBUG_ZONESEL_EVENT_WORK *work = wk;
@@ -2330,7 +2338,7 @@ static GMEVENT_RESULT DMenuWeatherListEvent(
  * @retval	BOOL	TRUE=イベント継続
  */
 //--------------------------------------------------------------
-static BOOL DMenuCallProc_FieldPosData( DEBUG_MENU_EVENT_WORK *wk )
+static BOOL debugMenuCallProc_FieldPosData( DEBUG_MENU_EVENT_WORK *wk )
 {
 	FIELD_DEBUG_WORK *debug = FIELDMAP_GetDebugWork( wk->fieldWork );
 	FIELD_DEBUG_SetPosPrint( debug );
@@ -2357,7 +2365,7 @@ typedef struct
 //--------------------------------------------------------------
 ///	proto
 //--------------------------------------------------------------
-static GMEVENT_RESULT DMenuControlTimeListEvent(
+static GMEVENT_RESULT debugMenuControlTimeListEvent(
 		GMEVENT *event, int *seq, void *work );
 
 
@@ -2422,7 +2430,7 @@ static const FLDMENUFUNC_LIST DATA_ControlTimeMenuList[CONT_TIME_TYPE_NUM] =
  * @retval	BOOL	TRUE=イベント継続
  */
 //--------------------------------------------------------------
-static BOOL DMenuCallProc_ControlRtcList( DEBUG_MENU_EVENT_WORK *wk )
+static BOOL debugMenuCallProc_ControlRtcList( DEBUG_MENU_EVENT_WORK *wk )
 {
 	GAMESYS_WORK *gsys = wk->gmSys;
 	GMEVENT *event = wk->gmEvent;
@@ -2431,7 +2439,7 @@ static BOOL DMenuCallProc_ControlRtcList( DEBUG_MENU_EVENT_WORK *wk )
 	DEBUG_CONTROL_TIME_LIST_EVENT_WORK *work;
 	
 	GMEVENT_Change( event,
-		DMenuControlTimeListEvent, sizeof(DEBUG_CONTROL_TIME_LIST_EVENT_WORK) );
+		debugMenuControlTimeListEvent, sizeof(DEBUG_CONTROL_TIME_LIST_EVENT_WORK) );
 	
 	work = GMEVENT_GetEventWork( event );
 	MI_CpuClear8( work, sizeof(DEBUG_CONTROL_TIME_LIST_EVENT_WORK) );
@@ -2452,7 +2460,7 @@ static BOOL DMenuCallProc_ControlRtcList( DEBUG_MENU_EVENT_WORK *wk )
  * @retval	GMEVENT_RESULT
  */
 //--------------------------------------------------------------
-static GMEVENT_RESULT DMenuControlTimeListEvent(
+static GMEVENT_RESULT debugMenuControlTimeListEvent(
 		GMEVENT *event, int *seq, void *wk )
 {
 	DEBUG_CONTROL_TIME_LIST_EVENT_WORK *work = wk;
@@ -2540,7 +2548,7 @@ static GMEVENT_RESULT DMenuControlTimeListEvent(
  * @retval BOOL TRUE=イベント継続
  */
 //--------------------------------------------------------------
-static BOOL DMenuCallProc_Naminori( DEBUG_MENU_EVENT_WORK *wk )
+static BOOL debugMenuCallProc_Naminori( DEBUG_MENU_EVENT_WORK *wk )
 {
   if( FIELDMAP_GetMapControlType(wk->fieldWork) != FLDMAP_CTRLTYPE_GRID ){
     return( FALSE );
@@ -2560,7 +2568,7 @@ static BOOL DMenuCallProc_Naminori( DEBUG_MENU_EVENT_WORK *wk )
  * @retval  BOOL TRUE=イベント継続
  */
 //--------------------------------------------------------------
-static BOOL DMenuCallProc_DebugItem( DEBUG_MENU_EVENT_WORK *wk )
+static BOOL debugMenuCallProc_DebugItem( DEBUG_MENU_EVENT_WORK *wk )
 {
 	GMEVENT *event = wk->gmEvent;
 	FIELD_MAIN_WORK *fieldWork = wk->fieldWork;
@@ -2579,7 +2587,7 @@ static BOOL DMenuCallProc_DebugItem( DEBUG_MENU_EVENT_WORK *wk )
  */
 //--------------------------------------------------------------
 
-static BOOL DMenuCallProc_BoxMax( DEBUG_MENU_EVENT_WORK *wk )
+static BOOL debugMenuCallProc_BoxMax( DEBUG_MENU_EVENT_WORK *wk )
 {
 #if 1
 	GAMESYS_WORK	*gameSys	= wk->gmSys;
@@ -2621,7 +2629,7 @@ static BOOL DMenuCallProc_BoxMax( DEBUG_MENU_EVENT_WORK *wk )
  */
 //--------------------------------------------------------------
 
-static BOOL DMenuCallProc_MyItemMax( DEBUG_MENU_EVENT_WORK *wk )
+static BOOL debugMenuCallProc_MyItemMax( DEBUG_MENU_EVENT_WORK *wk )
 {
 	u32	i;
   MYITEM_PTR myitem = GAMEDATA_GetMyItem(GAMESYSTEM_GetGameData(wk->gmSys));
@@ -2653,7 +2661,7 @@ typedef struct
 //-------------------------------------
 ///		PROTOTYPE
 //=====================================
-static GMEVENT_RESULT DMenuSkyJump( GMEVENT *p_event, int *p_seq, void *p_wk_adrs );
+static GMEVENT_RESULT debugMenuSkyJump( GMEVENT *p_event, int *p_seq, void *p_wk_adrs );
 //----------------------------------------------------------------------------
 /**
  *	@brief	デバッグ空を飛ぶ
@@ -2663,7 +2671,7 @@ static GMEVENT_RESULT DMenuSkyJump( GMEVENT *p_event, int *p_seq, void *p_wk_adr
  *	@return	TRUEイベント継続	FALSE終了
  */
 //-----------------------------------------------------------------------------
-static BOOL DMenuCallProc_DebugSkyJump( DEBUG_MENU_EVENT_WORK *p_wk )
+static BOOL debugMenuCallProc_DebugSkyJump( DEBUG_MENU_EVENT_WORK *p_wk )
 {	
 	GAMESYS_WORK	*p_gamesys	= p_wk->gmSys;
 	GMEVENT				*p_event		= p_wk->gmEvent;
@@ -2671,7 +2679,7 @@ static BOOL DMenuCallProc_DebugSkyJump( DEBUG_MENU_EVENT_WORK *p_wk )
 	DEBUG_SKYJUMP_EVENT_WORK	*p_sky;
 
 	//イヴェント
-	GMEVENT_Change( p_event, DMenuSkyJump, sizeof(DEBUG_SKYJUMP_EVENT_WORK) );
+	GMEVENT_Change( p_event, debugMenuSkyJump, sizeof(DEBUG_SKYJUMP_EVENT_WORK) );
 	p_sky = GMEVENT_GetEventWork( p_event );
 	GFL_STD_MemClear( p_sky, sizeof(DEBUG_SKYJUMP_EVENT_WORK) );
 	
@@ -2705,7 +2713,7 @@ static BOOL DMenuCallProc_DebugSkyJump( DEBUG_MENU_EVENT_WORK *p_wk )
  *	@return	終了コード
  */
 //-----------------------------------------------------------------------------
-static GMEVENT_RESULT DMenuSkyJump( GMEVENT *p_event, int *p_seq, void *p_wk_adrs )
+static GMEVENT_RESULT debugMenuSkyJump( GMEVENT *p_event, int *p_seq, void *p_wk_adrs )
 {	
 	enum
 	{	
@@ -2751,3 +2759,36 @@ static GMEVENT_RESULT DMenuSkyJump( GMEVENT *p_event, int *p_seq, void *p_wk_adr
 
 	return GMEVENT_RES_CONTINUE ;
 }
+
+//======================================================================
+//  デバッグメニュー　自機男女切り替え
+//======================================================================
+//--------------------------------------------------------------
+/**
+ * デバッグメニュー　自機男女切り替え
+ * @param wk DEBUG_MENU_EVENT_WORK
+ * @retval  BOOL TRUE=イベント継続
+ */
+//--------------------------------------------------------------
+static BOOL debugMenuCallProc_ChangePlayerSex( DEBUG_MENU_EVENT_WORK *wk )
+{
+  int sex;
+  GAMESYS_WORK *gsys = wk->gmSys;
+  GMEVENT *event = wk->gmEvent;
+  HEAPID heapID = wk->heapID;
+  FIELDMAP_WORK *fieldMap = wk->fieldWork;
+  u16 zone_id = FIELDMAP_GetZoneID( fieldMap );
+  GAMEDATA *gdata = GAMESYSTEM_GetGameData( gsys );
+  MYSTATUS *mystatus = GAMEDATA_GetMyStatus( gdata );
+  SAVE_CONTROL_WORK *save = GAMEDATA_GetSaveControlWork( gdata );
+  MYSTATUS *s_mystatus = SaveData_GetMyStatus( save );
+  
+  sex = MyStatus_GetMySex( mystatus );
+  sex ^= 1;
+  MyStatus_SetMySex( mystatus, sex );
+  MyStatus_SetMySex( s_mystatus, sex );
+  
+  DEBUG_EVENT_ChangeEventMapChange( gsys, event, fieldMap, zone_id );
+  return( TRUE );
+}
+

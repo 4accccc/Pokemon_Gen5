@@ -476,14 +476,6 @@ u16 MMDL_ChangeDirAcmdCode( u16 dir, u16 code )
 	GF_ASSERT( dir < DIR_MAX4 );
 	tbl = DATA_AcmdCodeDirChangeTbl;
 	
-#ifdef DEBUG_MMDL_FRAME_60
-	if( code >= AC_WALK_U_8F && code <= AC_WALK_R_8F ){
-		code = AC_WALK_U_16F;
-	}else if( code >= AC_WALK_U_4F && code <= AC_WALK_R_4F ){
-		code = AC_WALK_U_8F;
-	}
-#endif
-	
 	do{
 		i = 0;
 		dir_tbl = *tbl;
@@ -744,6 +736,7 @@ static int AC_Walk_1( MMDL * mmdl )
 	MMDL_CallDrawProc( mmdl );						//1ƒtƒŒ[ƒ€i‚ß‚é
 	MMDL_SetDrawStatus( mmdl, DRAW_STA_STOP );
 #else
+  //
 #endif
 	MMDL_IncAcmdSeq( mmdl );
 	
@@ -1115,11 +1108,7 @@ static int AC_WalkR1F_0( MMDL * mmdl )
 //--------------------------------------------------------------
 static int AC_DashU4F_0( MMDL * mmdl )
 {
-#ifdef DEBUG_MMDL_FRAME_60
-	AcWalkWorkInit( mmdl, DIR_UP, GRID_VALUE_SPEED_8, GRID_FRAME_8, DRAW_STA_DASH_4F ); 
-#else
 	AcWalkWorkInit( mmdl, DIR_UP, GRID_VALUE_SPEED_4, GRID_FRAME_4, DRAW_STA_DASH_4F ); 
-#endif
 	return( TRUE );
 }
 
@@ -1132,11 +1121,7 @@ static int AC_DashU4F_0( MMDL * mmdl )
 //--------------------------------------------------------------
 static int AC_DashD4F_0( MMDL * mmdl )
 {
-#ifdef DEBUG_MMDL_FRAME_60
-	AcWalkWorkInit( mmdl, DIR_DOWN, GRID_VALUE_SPEED_8, GRID_FRAME_8, DRAW_STA_DASH_4F ); 
-#else	
 	AcWalkWorkInit( mmdl, DIR_DOWN, GRID_VALUE_SPEED_4, GRID_FRAME_4, DRAW_STA_DASH_4F ); 
-#endif
 	return( TRUE );
 }
 
@@ -1149,11 +1134,7 @@ static int AC_DashD4F_0( MMDL * mmdl )
 //--------------------------------------------------------------
 static int AC_DashL4F_0( MMDL * mmdl )
 {
-#ifdef DEBUG_MMDL_FRAME_60
-	AcWalkWorkInit( mmdl, DIR_LEFT, GRID_VALUE_SPEED_8, GRID_FRAME_8, DRAW_STA_DASH_4F ); 
-#else
 	AcWalkWorkInit( mmdl, DIR_LEFT, GRID_VALUE_SPEED_4, GRID_FRAME_4, DRAW_STA_DASH_4F ); 
-#endif
 	return( TRUE );
 }
 
@@ -1166,11 +1147,7 @@ static int AC_DashL4F_0( MMDL * mmdl )
 //--------------------------------------------------------------
 static int AC_DashR4F_0( MMDL * mmdl )
 {
-#ifdef DEBUG_MMDL_FRAME_60
-	AcWalkWorkInit( mmdl, DIR_RIGHT, GRID_VALUE_SPEED_8, GRID_FRAME_8, DRAW_STA_DASH_4F ); 
-#else
 	AcWalkWorkInit( mmdl, DIR_RIGHT, GRID_VALUE_SPEED_4, GRID_FRAME_4, DRAW_STA_DASH_4F ); 
-#endif
 	return( TRUE );
 }
 
@@ -1224,7 +1201,6 @@ static int AC_StayWalk_1( MMDL * mmdl )
 	MMDL_OnStatusBit( mmdl, MMDL_STABIT_ACMD_END );
 	MMDL_SetDrawStatus( mmdl, DRAW_STA_STOP );
 	MMDL_IncAcmdSeq( mmdl );
-	
 	return( TRUE );
 }
 
