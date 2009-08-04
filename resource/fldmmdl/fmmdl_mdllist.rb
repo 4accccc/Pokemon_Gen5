@@ -232,7 +232,7 @@ end
 #-----------------------------------------------------------------------
 #	動作モデルデータ一行コンバート
 #-----------------------------------------------------------------------
-def convert_line( no, line, wfile, idxfile, symfile )
+def convert_line( no, line, wfile, idxfile, symfile, sel_res )
 	str = line.split( "," )
 	
 	#OBJコード 2
@@ -244,7 +244,13 @@ def convert_line( no, line, wfile, idxfile, symfile )
 	if( word == STR_DRAWTYPE_NON ) #表示タイプ　無し
 		ret = 0
 	else
-		word = str[RBDEF_NUM_RESFILE_NAME_0]
+    xlsline = RBDEF_NUM_RESFILE_NAME_0
+    
+    if( sel_res != "0" )
+      xlsline = RBDEF_NUM_RESFILE_NAME_1
+    end
+    
+		word = str[xlsline]
     
     #正規表現で文字列".imd"を削除する。が、何故か'm'文字まで削除してしまう
 		#/(\A.*[^\.imd])/ =~ word
@@ -409,6 +415,12 @@ if( symbol_filename == nil )
 	exit 1
 end
 
+sel_res = ARGV[6]
+if( sel_res != "0" && sel_res != "1" )
+  printf( "ERROR!! fmmdl_mdllist.rb sel_res\n" )
+  exit 1
+end
+
 txtfile = File.open( xlstxt_filename, "r" );
 residxfile = File.open( residx_filename, "r" );
 binfile = File.open( bin_filename, "wb" );
@@ -436,7 +448,7 @@ while line = txtfile.gets			#パラメタコンバート
 		break
 	end
 	
-	ret = convert_line( no, line, binfile, residxfile, symfile )
+	ret = convert_line( no, line, binfile, residxfile, symfile, sel_res )
 	
 	if( ret == RET_FALSE )
 		error_end( bin_filename, code_filename, codestr_filename,

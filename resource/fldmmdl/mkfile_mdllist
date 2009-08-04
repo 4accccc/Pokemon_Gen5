@@ -3,6 +3,7 @@
 #	動作モデル　動作モデルリストコンバート
 #======================================================================
 include mkdefine
+include selectres.txt
 include $(PROJECT_RSCDIR)/macro_define
 
 #ターゲット　モデルパラメタアーカイブデータ
@@ -43,8 +44,8 @@ $(DIR_TARGET_COPY_SRC)/$(SYMBOL_H): $(SYMBOL_H)
 endif
 
 ifeq	($(CONVERTUSER),true) #CONVERTUSER
-$(TARGET_MDLPRM_ARC): $(FMMDLLIST_CSV) $(RES_ARCIDX) $(SYMBOL_H)
-	ruby $(RUBY_MDLLIST) $(FMMDLLIST_CSV) $(RES_ARCIDX) $(TARGET_MDLRPM_BIN) $(TARGET_OBJCODE_H) $(OBJCODE_STR_FILE) $(SYMBOL_H)
+$(TARGET_MDLPRM_ARC): $(FMMDLLIST_CSV) $(RES_ARCIDX) $(SYMBOL_H) selectres.txt
+	ruby $(RUBY_MDLLIST) $(FMMDLLIST_CSV) $(RES_ARCIDX) $(TARGET_MDLRPM_BIN) $(TARGET_OBJCODE_H) $(OBJCODE_STR_FILE) $(SYMBOL_H) $(SELECT_LINE_RES_MDL)
 	nnsarc -i -c -l -n $(TARGET_MDLPRM_ARC) $(TARGET_MDLRPM_BIN) $(OBJCODE_STR_FILE) > arc_result_list.txt
 	$(NAIXCUT) $(TARGET_MDLPRM_ARCIDX)
 endif
