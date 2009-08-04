@@ -1105,7 +1105,7 @@ static void setup_core( BTLV_CORE* wk, HEAPID heapID )
   //3D関連初期化 soga
   {
     GFL_G3D_Init( GFL_G3D_VMANLNK, GFL_G3D_TEX128K, GFL_G3D_VMANLNK, GFL_G3D_PLT16K, 0, heapID, NULL );
-    GFL_G3D_SetSystemSwapBufferMode( GX_SORTMODE_AUTO, GX_BUFFERMODE_Z );
+    GFL_G3D_SetSystemSwapBufferMode( GX_SORTMODE_MANUAL, GX_BUFFERMODE_W );
     G3X_AlphaBlend( TRUE );
 //    G3X_AlphaTest( TRUE, 31 );    //alpha0でワイヤーフレームにならないようにする
     G3X_EdgeMarking( TRUE );
