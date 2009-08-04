@@ -62,10 +62,7 @@ SUBDIRS	=	wmi \
 			particle/wazaeffect \
 			others \
 			wazaeffect \
-			irc_aura \
 			field_menu \
-			irc_rhythm \
-			irc_result \
 			worldtimer \
 			worldtimer \
 			pokelist \
@@ -83,7 +80,8 @@ SUBDIRS	=	wmi \
 			trgra \
 			trdata \
 			trmsg \
-			irc_compatible
+			irc_compatible \
+			worldtrade
 
 include $(RESOURCE_MACRO)
 

@@ -159,12 +159,9 @@
 	ARCID_AREA_ITP				"fieldmap/area_map_itp.narc"	#エリア地面アニメーションデータ
 	ARCID_AREA_ITP_TEX		"fieldmap/area_map_itp_tex.narc"	#エリア地面アニメーションデータ
 	ARCID_AREA_ITP_TBL		"fieldmap/area_map_itp_tbl.narc"	#エリア地面アニメーションデータ
-	ARCID_IRCAURA_GRAPHIC	"ircaura_gra.narc"	#赤外線オーラチェックゲーム用絵素材
 	ARCID_FIELD_MENU		"field_menu.narc"	#フィールドメニュー
 	ARCID_TRFGRA	"trgra/trfgra.narc"	#トレーナーグラフィック（正面）
 	ARCID_TRBGRA	"trgra/trbgra.narc"	#トレーナーグラフィック（背面）
-	ARCID_IRCRHYTHM_GRAPHIC	"ircrhythm_gra.narc"	#赤外線リズムチェックゲーム用絵素材
-	ARCID_IRCRESULT_GRAPHIC "ircresult_gra.narc" #赤外線結果表示用絵
 	ARCID_TALKWIN_TEST "talkwin_test.narc" #会話ウインドウ（テスト）
 	ARCID_SHADOW_TEST "shadow_test.narc" #影描画（テスト）
   ARCID_FLDEFF "fieldmap/fldeff.narc" #フィールドエフェクト
