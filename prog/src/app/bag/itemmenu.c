@@ -569,23 +569,24 @@ static void _itemMovePosition(FIELD_ITEMMENU_WORK* pWork)
 
 static void _itemTecniqueUseYesNo(FIELD_ITEMMENU_WORK* pWork)
 {
-  u32 ret = TOUCH_SW_Main( pWork->pTouchSWSys );
+  u32 ret = 0;//= TOUCH_SW_Main( pWork->pTouchSWSys );
 
-  switch(ret){
-  case TOUCH_SW_RET_YES:
-    ITEMDISP_ListPlateClear( pWork );
-    pWork->ret_code = BAG_NEXTPROC_WAZASET;
-    _CHANGE_STATE(pWork,NULL);
-    break;
-  case TOUCH_SW_RET_NO:
-    ITEMDISP_ListPlateClear( pWork );
-    GFL_BG_ClearScreen(GFL_BG_FRAME3_M);
-    _CHANGE_STATE(pWork,_itemKindSelectMenu);
-    break;
-  default:
-    break;
+  if(APP_TASKMENU_IsFinish(pWork->pAppTask)){
+    int selectno = APP_TASKMENU_GetCursorPos(pWork->pAppTask);
+
+    if(selectno==0){
+      ITEMDISP_ListPlateClear( pWork );
+      pWork->ret_code = BAG_NEXTPROC_WAZASET;
+      _CHANGE_STATE(pWork,NULL);
+    }
+    else{
+      ITEMDISP_ListPlateClear( pWork );
+      GFL_BG_ClearScreen(GFL_BG_FRAME3_M);
+      _CHANGE_STATE(pWork,_itemKindSelectMenu);
+    }
+    APP_TASKMENU_CloseMenu(pWork->pAppTask);
+    pWork->pAppTask=NULL;
   }
-
 
 }
 
@@ -603,6 +604,38 @@ static void _itemTecniqueUseWait(FIELD_ITEMMENU_WORK* pWork)
   if(!ITEMDISP_MessageEndCheck(pWork)){
     return;
   }
+
+#if 1
+  {
+    int i;
+    APP_TASKMENU_INITWORK appinit;
+
+    appinit.heapId = pWork->heapID;
+    appinit.itemNum =  2;
+    appinit.itemWork =  &pWork->appitem[0];
+    appinit.bgFrame =  GFL_BG_FRAME3_M;
+    appinit.palNo = _SUBLIST_NORMAL_PAL;
+
+    appinit.posType = ATPT_RIGHT_DOWN;
+    appinit.charPosX = 32;
+    appinit.charPosY = 12;
+
+    appinit.msgHandle = pWork->MsgManager;
+    appinit.fontHandle = pWork->fontHandle;
+    appinit.printQue = pWork->SysMsgQue;
+
+    pWork->appitem[0].str = GFL_STR_CreateBuffer(100, pWork->heapID);
+    GFL_MSG_GetString(pWork->MsgManager, MSG_ITEM_STR003, pWork->appitem[0].str);
+    pWork->appitem[0].msgColor = PRINTSYS_LSB_Make( 0xe,0xf,0);
+    pWork->appitem[1].str = GFL_STR_CreateBuffer(100, pWork->heapID);
+    GFL_MSG_GetString(pWork->MsgManager, MSG_ITEM_STR004, pWork->appitem[1].str);
+    pWork->appitem[1].msgColor = PRINTSYS_LSB_Make( 0xe,0xf,0);
+    pWork->pAppTask = APP_TASKMENU_OpenMenu(&appinit);
+    GFL_STR_DeleteBuffer(pWork->appitem[0].str);
+    GFL_STR_DeleteBuffer(pWork->appitem[1].str);
+  }
+#else
+
   {
     TOUCH_SW_PARAM param;
 
@@ -617,8 +650,9 @@ static void _itemTecniqueUseWait(FIELD_ITEMMENU_WORK* pWork)
 
     TOUCH_SW_Init(pWork->pTouchSWSys, &param);
   }
-  _CHANGE_STATE(pWork,_itemTecniqueUseYesNo);
+#endif
 
+  _CHANGE_STATE(pWork,_itemTecniqueUseYesNo);
 
 #if 0
   _CHANGE_STATE(pWork,_itemKindSelectMenu);
@@ -668,11 +702,19 @@ static void _itemSelectWait(FIELD_ITEMMENU_WORK* pWork)
        _CHANGE_STATE(pWork,_itemTecniqueUseInit);
     }
     else if((BAG_MENU_TSUKAU==pWork->ret_code2)&&( 1==ITEM_GetParam( pWork->ret_item, ITEM_PRM_EVOLUTION, pWork->heapID )  )){
-      pWork->ret_code = BAG_NEXTPROC_EVOLUTION;
+      pWork->ret_code = BAG_NEXTPROC_EVOLUTION;  //i‰»
+      _CHANGE_STATE(pWork,NULL);
+    }
+    else if((ITEM_ZITENSYA == pWork->ret_item) && (BAG_MENU_TSUKAU==pWork->ret_code2)){
+      pWork->ret_code = BAG_NEXTPROC_RIDECYCLE;  //‚Ì‚é
+      _CHANGE_STATE(pWork,NULL);
+    }
+    else if((ITEM_ZITENSYA == pWork->ret_item) && (BAG_MENU_ORIRU==pWork->ret_code2)){
+      pWork->ret_code = BAG_NEXTPROC_DROPCYCLE;  //‚¨‚è‚é
       _CHANGE_STATE(pWork,NULL);
     }
     else if(BAG_MENU_TSUKAU==pWork->ret_code2){
-      pWork->ret_code = BAG_NEXTPROC_ITEMUSE;
+      pWork->ret_code = BAG_NEXTPROC_ITEMUSE;  
       _CHANGE_STATE(pWork,NULL);
     }
     else if(BAG_MENU_YAMERU==pWork->ret_code2){
@@ -1334,7 +1376,7 @@ static GFL_PROC_RESULT FieldItemMenuProc_Init( GFL_PROC * proc, int * seq, void 
 
   pWork->pMsgTcblSys = GFL_TCBL_Init( pWork->heapID , pWork->heapID , 1 , 0 );
 
-  pWork->pTouchSWSys = TOUCH_SW_AllocWork(pWork->heapID);
+//  pWork->pTouchSWSys = TOUCH_SW_AllocWork(pWork->heapID);
   
 	pWork->pocketNameWin = GFL_BMPWIN_Create(
 		GFL_BG_FRAME2_M,
@@ -1405,7 +1447,7 @@ static GFL_PROC_RESULT FieldItemMenuProc_End( GFL_PROC * proc, int * seq, void *
   ITEMDISP_upMessageDelete(pWork);
   ITEMDISP_graphicDelete(pWork);
 
-  TOUCH_SW_FreeWork(pWork->pTouchSWSys);
+//  TOUCH_SW_FreeWork(pWork->pTouchSWSys);
 
   GFL_TCBL_Exit(pWork->pMsgTcblSys);// = GFL_TCBL_Init( work->heapId , work->heapId , 1 , 0 );
 

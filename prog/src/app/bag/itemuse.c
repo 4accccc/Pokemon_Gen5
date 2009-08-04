@@ -24,7 +24,6 @@ typedef void * (*CNVFUNC_CALL)(void*);
 
 // 便利ボタンワーク
 typedef struct {
-	//FIELDSYS_WORK * fsys;
 	ITEMCHECK_WORK	icwk;
 	CNVFUNC_CALL	call;
 	void * app_wk;

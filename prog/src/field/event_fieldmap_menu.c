@@ -27,6 +27,7 @@
 #include "field/event_fieldmap_menu.h"
 #include "field/fieldmap.h"
 #include "field/map_attr.h"
+#include "field/itemuse_event.h"
 
 #include "savedata/sp_ribbon_save.h"
 
@@ -39,7 +40,6 @@
 #include "app/townmap.h" //TOWNMAP_PARAM
 
 extern const GFL_PROC_DATA TownMap_ProcData;
-extern const GFL_PROC_DATA TrainerCardProcData;
 extern const GFL_PROC_DATA TrainerCardProcData;
 FS_EXTERN_OVERLAY(bag);
 FS_EXTERN_OVERLAY(poke_status);
@@ -72,6 +72,7 @@ typedef enum
   FMENUSTATE_WAIT_RETURN,
   FMENUSTATE_RETURN_MENU,
   FMENUSTATE_EXIT_MENU,
+  FMENUSTATE_EXIT_SUB,
   
   //フィールド出入り系
   FMENUSTATE_FIELD_FADEOUT,
@@ -100,6 +101,16 @@ typedef enum
   
   FMENU_APP_MAX,
 }FMENU_APP_TYPE;
+
+
+typedef enum
+{
+  FMENU_ITEMUSE_NONE,  //何もしない
+  //フィールドに戻ってから呼ばれるもの
+  FMENU_ITEMUSE_CYCLE,
+  
+  FMENU_ITEMUSE_MAX,
+}FMENU_ITEMUSE_TYPE;
 
 //======================================================================
 //  typedef struct
@@ -134,6 +145,8 @@ struct _TAG_FMENU_EVENT_WORK
   
   FIELD_SUBSCREEN_MODE return_subscreen_mode;
   BOOL bForceExit;
+	GFL_PROC_DATA *endProcData;
+  FMENU_ITEMUSE_TYPE itemuseEventType;
   
   //アプリ間で引継ぎが必要な数値
   u8  selPoke;
@@ -147,6 +160,12 @@ typedef struct
 	const GFL_PROC_DATA *procData;
   FMENU_RETURN_PROC_FUNC retFunc;
 }FMENU_SUBPROC_DATA;
+
+typedef struct
+{
+  FSOverlayID ovId;
+  ItemUseEventFunc *eventCreate;
+}FMENU_ITEMUSE_EVENT_DATA;
 
 //======================================================================
 //  proto
@@ -234,6 +253,22 @@ static const FMENU_SUBPROC_DATA FldMapMenu_SubProcData[FMENU_APP_MAX] =
   },
 };
 
+
+
+
+static const FMENU_ITEMUSE_EVENT_DATA FldMapMenu_ItemUseData[FMENU_ITEMUSE_MAX] =
+{
+  { //  DUMMY
+    0, 
+    NULL,
+  },
+  { //  FMENU_USE_SUBPROC_DATA
+    FS_OVERLAY_ID(itemuse), 
+    &EVENT_CycleUse ,
+  },
+};
+
+
 //======================================================================
 //  イベント：フィールドマップメニュー
 //======================================================================
@@ -291,6 +326,7 @@ GMEVENT * EVENT_UnionMapMenu(
 
   return event;
 }
+
 
 //--------------------------------------------------------------
 /**
@@ -381,6 +417,20 @@ static GMEVENT_RESULT FldMapMenuEvent( GMEVENT *event, int *seq, void *wk )
       MMDLSYS_ClearPauseMoveProc( fldMdlSys );
       FIELD_SUBSCREEN_Change(FIELDMAP_GetFieldSubscreenWork(mwk->fieldWork), mwk->return_subscreen_mode);
     }
+    {
+      if(mwk->itemuseEventType){  
+        GFL_OVERLAY_Load( FldMapMenu_ItemUseData[mwk->itemuseEventType].ovId );
+        GMEVENT_CallEvent(event, FldMapMenu_ItemUseData[mwk->itemuseEventType].eventCreate(mwk->gmSys) );
+        mwk->state = FMENUSTATE_EXIT_SUB;
+      }
+      else{
+        return( GMEVENT_RES_FINISH );
+      }
+    }
+    break;
+
+  case FMENUSTATE_EXIT_SUB:
+    GFL_OVERLAY_Unload( FldMapMenu_ItemUseData[mwk->itemuseEventType].ovId );
     return( GMEVENT_RES_FINISH );
     break;
     
@@ -864,8 +914,9 @@ static const BOOL FMenuReturnProc_Bag(FMENU_EVENT_WORK* mwk)
   case BAG_NEXTPROC_RETURN:      // めにゅーもどり
     return FALSE;
   case BAG_NEXTPROC_RIDECYCLE:
-    return FALSE;
   case BAG_NEXTPROC_DROPCYCLE:
+    mwk->itemuseEventType = FMENU_ITEMUSE_CYCLE;
+    FieldMap_SetExitSequence(mwk);  //自転車乗り降り
     return FALSE;
   case BAG_NEXTPROC_TOWNMAP:
     {

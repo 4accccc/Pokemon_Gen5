@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ohno" host="W00141" date="2009-07-19T18:23:36"/>
+	<create user="ohno" host="W00141" date="2009-08-03T21:17:03"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -1407,6 +1407,16 @@ const u8 str_konanoryou[]
 	<row id="MSG_ITEM_STR002" back-color="#ffff00,,,,,,#ffff00,#ffff00,,#ffff00,#ffff00,,,,,,,">
 		<language name="JPN" width="160">×[2:02:３桁:0]</language>
 		<language name="JPN_KANJI" width="160">×[2:02:３桁:0]</language>
+	</row>
+
+	<row id="MSG_ITEM_STR003" back-color="#ffff00,,,,,,#ffff00,#ffff00,,#ffff00,#ffff00,,,,,,,">
+		<language name="JPN" width="160">はい</language>
+		<language name="JPN_KANJI" width="160">はい</language>
+	</row>
+
+	<row id="MSG_ITEM_STR004" back-color="#ffff00,,,,,,#ffff00,#ffff00,,#ffff00,#ffff00,,,,,,,">
+		<language name="JPN" width="160">いいえ</language>
+		<language name="JPN_KANJI" width="160">いいえ</language>
 	</row>
 
 	<flowchart-group-list>
