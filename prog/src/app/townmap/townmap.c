@@ -51,7 +51,7 @@
 #define DEBUG_POS_CHECK
 static GFL_POINT s_debug_pos	=
 {	
-	0
+	80, 25
 };
 #endif //PM_DEBUG
 
@@ -65,6 +65,9 @@ static GFL_POINT s_debug_pos	=
 #define MAP_SCALE_MOVE_LIMIT_LEFT		(-256/2)
 #define MAP_SCALE_MOVE_LIMIT_BOTTOM	(MAP_SCALE_MOVE_LIMIT_TOP+192 - (APPBAR_MENUBAR_H*GFL_BG_1CHRDOTSIZ))
 #define MAP_SCALE_MOVE_LIMIT_RIGHT	(MAP_SCALE_MOVE_LIMIT_LEFT+256)
+
+#define MAP_SCALE_CENTER_DISTANCE_UP			(70)
+#define MAP_SCALE_CENTER_DISTANCE_DOWN		(20)
 
 //OBJ優先度
 enum
@@ -1082,16 +1085,6 @@ static GFL_PROC_RESULT TOWNMAP_PROC_Main( GFL_PROC *p_proc, int *p_seq, void *p_
 	//描画
 	TOWNMAP_GRAPHIC_Draw( p_wk->p_grh );
 
-	//終了
-	if( SEQ_IsEnd( &p_wk->seq ) )
-	{	
-		return GFL_PROC_RES_FINISH;
-	}
-	else
-	{	
-		return GFL_PROC_RES_CONTINUE;
-	}
-
 #ifdef PM_DEBUG
 #if 0
 	if( GFL_UI_KEY_GetCont() & PAD_BUTTON_L )
@@ -1119,6 +1112,16 @@ static GFL_PROC_RESULT TOWNMAP_PROC_Main( GFL_PROC *p_proc, int *p_seq, void *p_
 	}
 #endif
 #endif //PM_DEBUG
+
+	//終了
+	if( SEQ_IsEnd( &p_wk->seq ) )
+	{	
+		return GFL_PROC_RES_FINISH;
+	}
+	else
+	{	
+		return GFL_PROC_RES_CONTINUE;
+	}
 }
 //=============================================================================
 /**
@@ -1506,6 +1509,25 @@ static void SEQFUNC_Main( SEQ_WORK *p_seqwk, int *p_seq, void *p_param_adrs )
 		{	
 			GFL_POINT next_pos;
 			CURSOR_GetPos( &p_wk->cursor, &next_pos );
+
+			//中心座標より一定距離離れないように
+			//はなれすぎると、画面外が見えるので
+			{	
+				VecFx32 v;
+				fx32	distance;
+				v.x	= (next_pos.x	- sc_center_pos.x) << FX32_SHIFT;
+				v.y	= (next_pos.y - sc_center_pos.y) <<FX32_SHIFT;
+				v.z	= 0;
+				distance	= VEC_Mag(&v);
+				VEC_Normalize( &v, &v );
+
+				if( distance >> FX32_SHIFT > MAP_SCALE_CENTER_DISTANCE_UP )
+				{	
+					next_pos.x	= sc_center_pos.x + ((v.x * MAP_SCALE_CENTER_DISTANCE_UP) >> FX32_SHIFT);
+					next_pos.y	= sc_center_pos.y + ((v.y * MAP_SCALE_CENTER_DISTANCE_UP) >> FX32_SHIFT);
+				}
+			}
+
 			PLACE_Scale( &p_wk->place, FX32_CONST(2), &sc_center_pos, &next_pos );
 			MAP_Scale( &p_wk->map, FX32_CONST(0.5), &sc_center_pos, &next_pos );
 
@@ -1526,6 +1548,25 @@ static void SEQFUNC_Main( SEQ_WORK *p_seqwk, int *p_seq, void *p_param_adrs )
 			//NAGI_Printf( "WLD X%d Y%d\n", src_pos.x, src_pos.y );
 			src_pos.x	= src_pos.x + 256/2;
 			src_pos.y	= src_pos.y + 192/2;
+
+			//中心座標より一定距離離れないように
+			//はなれすぎると、画面外が見えるので
+			{	
+				VecFx32 v;
+				fx32	distance;
+				v.x	= (src_pos.x	- sc_center_pos.x) << FX32_SHIFT;
+				v.y	= (src_pos.y - sc_center_pos.y) <<FX32_SHIFT;
+				v.z	= 0;
+				distance	= VEC_Mag(&v);
+				VEC_Normalize( &v, &v );
+
+				if( distance >> FX32_SHIFT > MAP_SCALE_CENTER_DISTANCE_DOWN )
+				{	
+					src_pos.x	= sc_center_pos.x + ((v.x * MAP_SCALE_CENTER_DISTANCE_DOWN) >> FX32_SHIFT);
+					src_pos.y	= sc_center_pos.y + ((v.y * MAP_SCALE_CENTER_DISTANCE_DOWN) >> FX32_SHIFT);
+				}
+			}
+
 			PLACE_Scale( &p_wk->place, FX32_CONST(1), &src_pos, &sc_center_pos );
 			MAP_Scale( &p_wk->map, FX32_CONST(1), &src_pos, &sc_center_pos );
 			
@@ -1765,6 +1806,7 @@ static void APPBAR_Init( APPBAR_WORK *p_wk, APPBAR_OPTION_MASK mask, GFL_CLUNIT*
 			{	
 				GFL_CLACT_WK_SetBgPri( p_wk->p_clwk[i], TOWNMAP_BG_PRIORITY_BAR_M );
 				GFL_CLACT_WK_SetSoftPri( p_wk->p_clwk[i], OBJ_PRIORITY_FRONTEND );
+				GFL_CLACT_WK_SetAutoAnmFlag( p_wk->p_clwk[i], TRUE );
 			}
 		}
 	}
@@ -1912,6 +1954,7 @@ static void APPBAR_Main( APPBAR_WORK *p_wk )
 	{	
 		if( p_wk->mode & sc_mask_tbl[i] && p_wk->active[i] )
 		{	
+			//カーソルでバーを押せなくなった
 #if 0
 			if( CURSOR_GetPointTrg( cp_cursor, &x, &y ) )
 #else
@@ -1926,22 +1969,9 @@ static void APPBAR_Main( APPBAR_WORK *p_wk )
 
 					//アニメスタート
 					GFL_CLACT_WK_SetAnmSeq( p_wk->p_clwk[i], sc_appbar_icon_push_anm[i] );
-					GFL_CLACT_WK_SetAutoAnmFlag( p_wk->p_clwk[i], TRUE );
 					p_wk->trg	= i;
 				}
 			}
-#if 0
-			if( GFL_UI_TP_GetPointCont( &x, &y ) )
-			{	
-				if( ((u32)( x - sc_hit_tbl[i].rect.left) <= 
-							(u32)(sc_hit_tbl[i].rect.right - sc_hit_tbl[i].rect.left))
-						&	((u32)( y - sc_hit_tbl[i].rect.top) <=
-							(u32)(sc_hit_tbl[i].rect.bottom - sc_hit_tbl[i].rect.top)))
-				{
-					p_wk->cont	= i;
-				}
-			}
-#endif
 		}
 	}
 
@@ -2556,6 +2586,7 @@ static void PLACE_Exit( PLACE_WORK *p_wk )
 static void PLACE_Main( PLACE_WORK *p_wk )
 {	
 #ifdef PM_DEBUG
+#if 0
 	if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A )
 	{	
 		const PLACE_DATA *cp_data	= &p_wk->p_place[7];
@@ -2570,6 +2601,7 @@ static void PLACE_Main( PLACE_WORK *p_wk )
 
 		NAGI_Printf( "WLD X%d Y%d\n", p_wk->pos.x, p_wk->pos.y );
 	}
+#endif
 #endif //PM_DEBUG
 }
 //----------------------------------------------------------------------------
@@ -2734,10 +2766,12 @@ static const PLACE_DATA* PLACE_Hit( const PLACE_WORK *cp_wk, const CURSOR_WORK *
 
 	CURSOR_GetPos( cp_cursor, &pos );
 
+#if 0
 	if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A )
 	{	
 		NAGI_Printf( "CUR x%d y%d\n", pos.x, pos.y );
 	}
+#endif
 
 	//当たり判定
 	for( i = 0; i < cp_wk->data_num; i++ )
@@ -3419,14 +3453,44 @@ static void MAP_Main( MAP_WORK *p_wk )
 		//中心座標計算
 		//中心座標計算といいつつも、中心は常に画面中心で、
 		//中心がずれて見えるように座標をずらす
-		add_pos.x	= (FX32_CONST(p_wk->next_pos.x - p_wk->init_pos.x))/MAP_SCALE_SYNC;
-		add_pos.y	= (FX32_CONST(p_wk->next_pos.y - p_wk->init_pos.y))/MAP_SCALE_SYNC;
+		add_pos.x	= ((p_wk->next_pos.x - p_wk->init_pos.x)<<FX32_SHIFT);
+		add_pos.y	= ((p_wk->next_pos.y - p_wk->init_pos.y)<<FX32_SHIFT);
 		//NAGI_Printf( "add X%d Y%d\n", add_pos.x>> FX32_SHIFT, add_pos.y>> FX32_SHIFT );
-		p_wk->pos.x	= p_wk->init_pos.x + ((add_pos.x * p_wk->sync) >> FX32_SHIFT);
-		p_wk->pos.y	= p_wk->init_pos.y + ((add_pos.y * p_wk->sync) >> FX32_SHIFT);
+		p_wk->pos.x	= p_wk->init_pos.x + ((add_pos.x * p_wk->sync/MAP_SCALE_SYNC) >> FX32_SHIFT);
+		p_wk->pos.y	= p_wk->init_pos.y + ((add_pos.y * p_wk->sync/MAP_SCALE_SYNC) >> FX32_SHIFT);
+		//NAGI_Printf( "now X%d Y%d\n", p_wk->pos.x, p_wk->pos.y );
+
+#if 1
+		//制限計算
+		{	
+			int add_top;
+			int add_bottom;
+			int add_left;
+			int add_right;
+
+			add_top			= MAP_SCALE_MOVE_LIMIT_TOP / MAP_SCALE_SYNC;
+			add_bottom	= MAP_SCALE_MOVE_LIMIT_BOTTOM / MAP_SCALE_SYNC;
+			add_left		= MAP_SCALE_MOVE_LIMIT_LEFT	/ MAP_SCALE_SYNC;
+			add_right		= MAP_SCALE_MOVE_LIMIT_RIGHT / MAP_SCALE_SYNC;
+			if( p_wk->next_scale == FX32_ONE )
+			{	
+				p_wk->limit_top		= MAP_SCALE_MOVE_LIMIT_TOP - (add_top * p_wk->sync) ;
+				p_wk->limit_bottom= MAP_SCALE_MOVE_LIMIT_BOTTOM - (add_bottom * p_wk->sync);
+				p_wk->limit_left	= MAP_SCALE_MOVE_LIMIT_LEFT - (add_left * p_wk->sync);
+				p_wk->limit_right	= MAP_SCALE_MOVE_LIMIT_RIGHT - (add_right * p_wk->sync);
+			}
+			else
+			{	
+				p_wk->limit_top		= add_top * p_wk->sync;
+				p_wk->limit_bottom= add_bottom * p_wk->sync;
+				p_wk->limit_left	= add_left * p_wk->sync;
+				p_wk->limit_right	= add_right * p_wk->sync;
+			}
+		}
+#endif
 
 		//終了条件
-		if( p_wk->sync++ > MAP_SCALE_SYNC )
+		if( p_wk->sync++ >= MAP_SCALE_SYNC )
 		{	
 			p_wk->sync	= 0;
 			p_wk->is_scale_req	= FALSE;
@@ -3438,6 +3502,8 @@ static void MAP_Main( MAP_WORK *p_wk )
 
 			//拡大すると動作範囲も変更
 			{	
+
+
 				if( p_wk->next_scale == FX32_ONE )
 				{	
 					p_wk->limit_top			= 0;
@@ -3461,15 +3527,8 @@ static void MAP_Main( MAP_WORK *p_wk )
 		GFL_BG_SetAffine( p_wk->map_frm, &p_wk->mtx, sc_center_pos.x, sc_center_pos.y );
 		GFL_BG_SetAffine( p_wk->road_frm, &p_wk->mtx, sc_center_pos.x, sc_center_pos.y );
 
-#if 0
-		GFL_BG_SetAffineScroll( p_wk->map_frm, GFL_BG_SCROLL_X_SET, p_wk->pos.x,
-				&p_wk->mtx, sc_center_pos.x, sc_center_pos.y );
-		GFL_BG_SetAffineScroll( p_wk->map_frm, GFL_BG_SCROLL_Y_SET, p_wk->pos.y,
-				&p_wk->mtx, sc_center_pos.x, sc_center_pos.y );
-		GFL_BG_SetAffineScroll( p_wk->road_frm, GFL_BG_SCROLL_X_SET, p_wk->pos.x,
-				&p_wk->mtx, sc_center_pos.x, sc_center_pos.y );
-		GFL_BG_SetAffineScroll( p_wk->road_frm, GFL_BG_SCROLL_Y_SET, p_wk->pos.y,
-				&p_wk->mtx, sc_center_pos.x, sc_center_pos.y );
+#if 1
+		MAP_SetWldPos( p_wk, &p_wk->pos );
 #else
 		GFL_BG_SetScrollReq( p_wk->map_frm, GFL_BG_SCROLL_X_SET, p_wk->pos.x );
 		GFL_BG_SetScrollReq( p_wk->map_frm, GFL_BG_SCROLL_Y_SET, p_wk->pos.y );
@@ -3507,7 +3566,7 @@ static void MAP_Scale( MAP_WORK *p_wk, fx32 scale, const GFL_POINT *cp_center_st
 	p_wk->init_pos.y	= cp_center_start->y - 96;
 	p_wk->next_pos.x	= cp_center_end->x - 128;
 	p_wk->next_pos.y	= cp_center_end->y - 96;
-	//NAGI_Printf( "Scale start sx%d sy%d ex%d ey%d", p_wk->init_pos.x, p_wk->init_pos.y, 
+	//NAGI_Printf( "Scale start sx%d sy%d ex%d ey%d\n", p_wk->init_pos.x, p_wk->init_pos.y, 
 		//	p_wk->next_pos.x, p_wk->next_pos.y);
 
 
@@ -3555,16 +3614,6 @@ static void MAP_SetWldPos( MAP_WORK *p_wk, const GFL_POINT *cp_pos )
 	p_wk->pos.x	= MATH_CLAMP( cp_pos->x, p_wk->limit_left, p_wk->limit_right );
 	p_wk->pos.y	= MATH_CLAMP( cp_pos->y, p_wk->limit_top, p_wk->limit_bottom );
 
-#if 0
-	GFL_BG_SetAffineScroll( p_wk->map_frm, GFL_BG_SCROLL_X_SET, p_wk->pos.x,
-			&p_wk->mtx, sc_center_pos.x, sc_center_pos.y );
-	GFL_BG_SetAffineScroll( p_wk->map_frm, GFL_BG_SCROLL_Y_SET, p_wk->pos.y,
-			&p_wk->mtx, sc_center_pos.x, sc_center_pos.y );
-	GFL_BG_SetAffineScroll( p_wk->road_frm, GFL_BG_SCROLL_X_SET, p_wk->pos.x,
-			&p_wk->mtx, sc_center_pos.x, sc_center_pos.y );
-	GFL_BG_SetAffineScroll( p_wk->road_frm, GFL_BG_SCROLL_Y_SET, p_wk->pos.y,
-			&p_wk->mtx, sc_center_pos.x, sc_center_pos.y );
-#else
 	GFL_BG_SetScrollReq( p_wk->map_frm, GFL_BG_SCROLL_X_SET, p_wk->pos.x );
 	GFL_BG_SetScrollReq( p_wk->map_frm, GFL_BG_SCROLL_Y_SET, p_wk->pos.y );
 	GFL_BG_SetRotateCenterReq( p_wk->map_frm, GFL_BG_CENTER_X_SET, sc_center_pos.x );
@@ -3578,7 +3627,6 @@ static void MAP_SetWldPos( MAP_WORK *p_wk, const GFL_POINT *cp_pos )
 	GFL_BG_SetRotateCenterReq( p_wk->road_frm, GFL_BG_CENTER_Y_SET, sc_center_pos.y );
 	GFL_BG_SetScaleReq( p_wk->road_frm, GFL_BG_SCALE_X_SET, p_wk->now_scale );
 	GFL_BG_SetScaleReq( p_wk->road_frm, GFL_BG_SCALE_Y_SET, p_wk->now_scale );
-#endif
 }
 //----------------------------------------------------------------------------
 /**
