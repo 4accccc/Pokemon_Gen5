@@ -72,7 +72,7 @@ SUBDIRS	=	wmi \
 			p_status \
 			app_menu_common \
 			irc_ranking \
-			iss_unit \
+			iss \
 			townmap \
 			unionroom \
 			unionroom \

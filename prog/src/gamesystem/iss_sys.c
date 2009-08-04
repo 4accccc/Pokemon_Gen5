@@ -9,12 +9,14 @@
 #include "iss_sys.h"
 #include "iss_city_sys.h"
 #include "iss_road_sys.h"
+#include "iss_dungeon_sys.h"
 #include "../field/field_sound.h"
 #include "sound/bgm_info.h"
 #include "../../../resource/sound/bgm_info/iss_type.h"
 #include "gamesystem/playerwork.h"
 #include "gamesystem/game_data.h"
-#include "sound/pm_sndsys.h" // TEST:
+#include "sound/pm_sndsys.h" 
+#include "arc/fieldmap/zone_id.h"	// TEMP:
 
 
 //=========================================================================================
@@ -47,8 +49,9 @@ struct _ISS_SYS
 	BOOL surfing;
 
 	// 各ISSシステム
-	ISS_CITY_SYS* pIssCitySys;	// 街
-	ISS_ROAD_SYS* pIssRoadSys;	// 道路
+	ISS_CITY_SYS*    pIssCitySys;		// 街
+	ISS_ROAD_SYS*    pIssRoadSys;		// 道路
+	ISS_DUNGEON_SYS* pIssDungeonSys;	// ダンジョン 
 
 	// 再生中のBGM番号
 	u16 bgmNo; 
@@ -102,14 +105,15 @@ ISS_SYS* ISS_SYS_Create( GAMEDATA* p_gdata, HEAPID heap_id )
 	p_sys = (ISS_SYS*)GFL_HEAP_AllocMemory( heap_id, sizeof( ISS_SYS ) );
 
 	// 初期設定
-	p_sys->heapID      = heap_id;
-	p_sys->pGameData   = p_gdata;
-	p_sys->cycle       = FALSE;
-	p_sys->surfing     = FALSE;
-	p_sys->pIssCitySys = ISS_CITY_SYS_Create( p_player, heap_id );
-	p_sys->pIssRoadSys = ISS_ROAD_SYS_Create( p_player, heap_id );
-	p_sys->bgmNo       = INVALID_BGM_NO;
-	p_sys->frame       = 0;
+	p_sys->heapID         = heap_id;
+	p_sys->pGameData      = p_gdata;
+	p_sys->cycle          = FALSE;
+	p_sys->surfing        = FALSE;
+	p_sys->pIssCitySys    = ISS_CITY_SYS_Create( p_player, heap_id );
+	p_sys->pIssRoadSys    = ISS_ROAD_SYS_Create( p_player, heap_id );
+	p_sys->pIssDungeonSys = ISS_DUNGEON_SYS_Create( p_player, heap_id );
+	p_sys->bgmNo          = INVALID_BGM_NO;
+	p_sys->frame          = 0;
 	
 	// 作成したISSシステムを返す
 	return p_sys;
@@ -126,6 +130,7 @@ void ISS_SYS_Delete( ISS_SYS* p_sys )
 	// 各ISSシステムを破棄
 	ISS_CITY_SYS_Delete( p_sys->pIssCitySys );
 	ISS_ROAD_SYS_Delete( p_sys->pIssRoadSys );
+	ISS_DUNGEON_SYS_Delete( p_sys->pIssDungeonSys );
 
 	// 本体を破棄
 	GFL_HEAP_FreeMemory( p_sys );
@@ -159,6 +164,44 @@ void ISS_SYS_Update( ISS_SYS* p_sys )
 
 	// 道路ISS(主人公が30fpsで動作するため, 道路ISSもそれに合わせる)
 	if( p_sys->frame % 2 == 0 ) ISS_ROAD_SYS_Update( p_sys->pIssRoadSys ); 
+	
+	// ダンジョンISS
+	ISS_DUNGEON_SYS_Update( p_sys->pIssDungeonSys );
+
+
+	// TEMP:
+	/*
+	{
+		static int tempo = 256;
+		static int pitch = 0;
+		int key = GFL_UI_KEY_GetCont();
+
+		if( key & PAD_BUTTON_L )
+		{
+			if( key & PAD_KEY_LEFT )
+			{
+				tempo -= 1;
+				if( tempo < 0 ) tempo = 0;
+			}
+			if( key & PAD_KEY_RIGHT )
+			{
+				tempo += 1;
+			}
+			if( key & PAD_KEY_UP )
+			{
+				pitch += 1;
+			}
+			if( key & PAD_KEY_DOWN )
+			{
+				pitch -= 1;
+			}
+		}
+		PMSND_SetStatusBGM( tempo, pitch, 0 );
+
+		OBATA_Printf( "tempo = %d\n", tempo );
+		OBATA_Printf( "pitch = %d\n", pitch );
+	}
+	*/
 }
 	
 
@@ -175,7 +218,6 @@ void ISS_SYS_ZoneChange( ISS_SYS* p_sys, u16 next_zone_id )
 	PLAYER_WORK*     p_player;
 	PLAYER_MOVE_FORM form;
 	BGM_INFO_SYS*    p_bgm_info_sys;
-	int              iss_type;
 
 	// 自転車orなみのり中なら, ISSに変更はない
 	if( p_sys->cycle | p_sys->surfing ) return;
@@ -183,10 +225,11 @@ void ISS_SYS_ZoneChange( ISS_SYS* p_sys, u16 next_zone_id )
 	// 街ISS
 	ISS_CITY_SYS_ZoneChange( p_sys->pIssCitySys, next_zone_id );
 
+	// ダンジョンISS
+	ISS_DUNGEON_SYS_ZoneChange( p_sys->pIssDungeonSys, next_zone_id );
 
 	// DEBUG:
 	OBATA_Printf( "ISS_SYS_ZoneChange()\n" );
-	OBATA_Printf( "seq = %d, iss_type = %d\n", p_sys->bgmNo, iss_type );
 }
 
 
@@ -216,6 +259,7 @@ void CycleCheck( ISS_SYS* p_sys )
 		p_sys->cycle = TRUE;
 		ISS_CITY_SYS_Off( p_sys->pIssCitySys );
 		ISS_ROAD_SYS_Off( p_sys->pIssRoadSys );
+		ISS_DUNGEON_SYS_Off( p_sys->pIssDungeonSys );
 	}
 
 	// 自転車から降りるのを検出したら, ゾーン切り替え時と同じ処理
@@ -246,6 +290,7 @@ void SurfingCheck( ISS_SYS* p_sys )
 		p_sys->surfing = TRUE;
 		ISS_CITY_SYS_Off( p_sys->pIssCitySys );
 		ISS_ROAD_SYS_Off( p_sys->pIssRoadSys );
+		ISS_DUNGEON_SYS_Off( p_sys->pIssDungeonSys );
 	}
 
 	// 自転車から降りるのを検出したら, ゾーン切り替え時と同じ処理
@@ -310,6 +355,23 @@ void BGMChangeCheck( ISS_SYS* p_sys )
 		if( ISS_CITY_SYS_IsOn( p_sys->pIssCitySys ) == TRUE )
 		{
 			ISS_CITY_SYS_Off( p_sys->pIssCitySys );
+		}
+	} 
+
+	// ダンジョンISSのBGMだったら, 停止中のダンジョンISSシステムを起動する
+	if( iss_type == ISS_TYPE_DUNGEON )
+	{
+		if( ISS_DUNGEON_SYS_IsOn( p_sys->pIssDungeonSys ) != TRUE )
+		{
+			ISS_DUNGEON_SYS_On( p_sys->pIssDungeonSys );
+		}
+	}
+	// ダンジョンISSのBGMでなかったら, 起動中のダンジョンISSシステムを停止する
+	else
+	{
+		if( ISS_DUNGEON_SYS_IsOn( p_sys->pIssDungeonSys ) == TRUE )
+		{
+			ISS_DUNGEON_SYS_Off( p_sys->pIssDungeonSys );
 		}
 	} 
 }

@@ -11,7 +11,7 @@
 #include "gamesystem/playerwork.h"
 #include "../../include/field/field_const.h"		// FIELD_CONST_GRID_FX32_SIZE
 #include "arc/arc_def.h"
-#include "arc/iss_unit.naix"
+#include "arc/iss.naix"
 
 
 //=====================================================================================================
@@ -471,7 +471,7 @@ static void LoadUnitData( ISS_CITY_SYS* p_sys )
 	u16* offset;	// 各ユニットデータ先頭部へのオフセット
 
 	// アーカイブデータの読み込み
-	header = (u8*)GFL_ARC_UTIL_Load( ARCID_ISS_UNIT, NARC_iss_unit_iss_unit_bin, FALSE, p_sys->heapID );
+	header = (u8*)GFL_ARC_UTIL_Load( ARCID_ISS_UNIT, NARC_iss_city_bin, FALSE, p_sys->heapID );
 
 	// ユニット数を取得
 	unit_num = header[ pos++ ];	

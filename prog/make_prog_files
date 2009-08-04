@@ -164,6 +164,7 @@ SRCS  +=    $(SOUNDSRC) \
         tr_tool/tr_tool.c \
 		gamesystem/iss_city_sys.c \
 		gamesystem/iss_road_sys.c \
+		gamesystem/iss_dungeon_sys.c \
 		gamesystem/iss_sys.c
 
 

@@ -160,8 +160,8 @@ end
 
 #----------------------------------------------------------------------------------
 
-src_filename = "iss_unit.txt"
-dst_filename = "iss_unit.bin"
+src_filename = "city.txt"
+dst_filename = "city.bin"
 
 
 # ヘッダ(データ・テーブル)を作成

@@ -12,7 +12,7 @@ USERS	= obata_toshihiro
 #------------------------------------------------------------------------------
 #※ここに作成するnarc名を書く
 #------------------------------------------------------------------------------
-targetname = iss_unit
+targetname = iss
 
 #------------------------------------------------------------------------------
 #※コピー先へのパスを書く（通常はPROJECT_ARCDIRでよい）
@@ -28,7 +28,7 @@ SUBDIRS	=
 include	$(PROJECT_RSCDIR)\macro_define
 
 
-CONVERTDATA = iss_unit.bin
+CONVERTDATA = city.bin dungeon.bin
 
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
 # サフィックスルールを定義することで 依存関係を自動で判断してくれる
@@ -59,11 +59,17 @@ $(targetname).narc: $(CONVERTDATA)
 	$(NAIXCUT) $(targetname).naix
 
 
-iss_unit.txt: iss_unit.xls
-	$(PROJECT_ROOT)tools/exceltool/exceltabconv iss_unit.xls
+city.txt: city.xls
+	$(PROJECT_ROOT)tools/exceltool/exceltabconv city.xls
 
-iss_unit.bin: iss_unit.txt
-	ruby iss_unit.rb iss_unit.txt
+city.bin: city.txt
+	ruby city.rb city.txt
+
+dungeon.txt: dungeon.xls
+	$(PROJECT_ROOT)tools/exceltool/exceltabconv dungeon.xls
+
+dungeon.bin: dungeon.txt
+	ruby dungeon.rb dungeon.txt
 
 endif
 
