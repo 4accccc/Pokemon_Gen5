@@ -10,6 +10,7 @@
 #	symbolfilename 読み込むシンボルファイル名
 #=======================================================================
 $KCODE = "SJIS"
+load "rbdefine"
 
 #=======================================================================
 #	パラメタフォーマット
@@ -54,31 +55,6 @@ STR_NULL = "" #NULL文字
 STR_END = "#END" #終端文字列
 STR_CODEMAX = "OBJCODEMAX" #コード最大
 STR_DRAWTYPE_NON = "DRAWTYPE_NON" #表示タイプ無し
-
-#管理表文字位置 名称
-STRPRMNO_CODENAME = (3)
-#管理表文字位置 表示コード
-STRPRMNO_CODE = (7)
-#管理表文字位置 モデルファイル名
-STRPRMNO_MDLFILENAME = (8)
-#管理表文字位置 表示タイプ
-STRPRMNO_DRAWTYPE = (9)
-#管理表文字位置 処理関数
-STRPRMNO_DRAWPROC = (10)
-#管理表文字位置 影表示
-STRPRMNO_SHADOW = (11)
-#管理表文字位置 足跡種類
-STRPRMNO_FOOTMARK = (12)
-#管理表文字位置 映り込み
-STRPRMNO_REFLECT = (13)
-#管理表文字位置 モデルサイズ
-STRPRMNO_MDLSIZE = (14)
-#管理表文字位置 テクスチャサイズ
-STRPRMNO_TEXSIZE = (15)
-#管理表文字位置 アニメーションID
-STRPRMNO_ANMID = (16)
-#管理表文字位置 性別
-STRPRMNO_SEX = (4)
 
 #表示コード文字列 一文字列最長 ヌル文字含む
 CODESTRBUF = (16)
@@ -211,13 +187,13 @@ def codefile_write( codefile, codestrfile, txtfile )
 		str = line.split( "," )
 		
 		codefile.printf( "#define %s (0x%x) //%d %s\n",
-			str[STRPRMNO_CODE], no, no, str[STRPRMNO_CODENAME] );
+			str[RBDEF_NUM_CODE], no, no, str[RBDEF_NUM_CODENAME] );
 		
 		codestr = Array.new( CODESTRBUF );	#文字列バッファ
 		codestr.fill( "\000".unpack('C*'), 0..CODESTRBUF ) #ヌル文字で埋め尽くし
 		
 		i = 0
-		strbuf = str[STRPRMNO_CODE]
+		strbuf = str[RBDEF_NUM_CODE]
 		while strbuf[i]
 			codestr[i] = strbuf[i]
 			i = i + 1
@@ -264,11 +240,11 @@ def convert_line( no, line, wfile, idxfile, symfile )
 	wfile.write( ary.pack("S*") )
   
 	#アーカイブインデックス テクスチャ 2 (4)
-	word = str[STRPRMNO_DRAWTYPE]
+	word = str[RBDEF_NUM_DRAWTYPE]
 	if( word == STR_DRAWTYPE_NON ) #表示タイプ　無し
 		ret = 0
 	else
-		word = str[STRPRMNO_MDLFILENAME]
+		word = str[RBDEF_NUM_RESFILE_NAME_0]
     
     #正規表現で文字列".imd"を削除する。が、何故か'm'文字まで削除してしまう
 		#/(\A.*[^\.imd])/ =~ word
@@ -287,7 +263,7 @@ def convert_line( no, line, wfile, idxfile, symfile )
 	wfile.write( ary.pack("S*") )
 	
 	#表示タイプ 1 (5)
-	word = str[STRPRMNO_DRAWTYPE]
+	word = str[RBDEF_NUM_DRAWTYPE]
 	ret = hfile_search( symfile, word )
 	if( ret == RET_ERROR )
 		printf( "ERROR 表示タイプ異常 %s\n", word )
@@ -297,7 +273,7 @@ def convert_line( no, line, wfile, idxfile, symfile )
 	wfile.write( ary.pack("C*") )
 	
 	#処理関数 1 (6)
-	word = str[STRPRMNO_DRAWPROC]
+	word = str[RBDEF_NUM_DRAWPROC]
 	ret = hfile_search( symfile, word )
 	if( ret == RET_ERROR )
 		printf( "ERROR 処理関数異常異常 %s\n", word )
@@ -307,7 +283,7 @@ def convert_line( no, line, wfile, idxfile, symfile )
 	wfile.write( ary.pack("C*") )
 	
 	#影表示 1 (7)
-	word = str[STRPRMNO_SHADOW]
+	word = str[RBDEF_NUM_SHADOW]
 	if( word != "○" )
 		ret = 1
 	else
@@ -317,7 +293,7 @@ def convert_line( no, line, wfile, idxfile, symfile )
 	wfile.write( ary.pack("C*") )
 	
 	#足跡種類 1 (8)
-	word = str[STRPRMNO_FOOTMARK]
+	word = str[RBDEF_NUM_FOOTMARK]
 	ret = hfile_search( symfile, word )
 	if( ret == RET_ERROR )
 		printf( "ERROR 足跡種類異常 %s\n", word )
@@ -327,7 +303,7 @@ def convert_line( no, line, wfile, idxfile, symfile )
 	wfile.write( ary.pack("C*") )
 	
 	#映り込み 1 (9)
-	word = str[STRPRMNO_REFLECT]
+	word = str[RBDEF_NUM_REFLECT]
 	if( word != "○" )
 		ret = 0
 	else
@@ -337,7 +313,7 @@ def convert_line( no, line, wfile, idxfile, symfile )
 	wfile.write( ary.pack("C*") )
 	
 	#モデルサイズ 1 (10)
-	word = str[STRPRMNO_MDLSIZE]
+	word = str[RBDEF_NUM_MDLSIZE]
 	ret = hfile_search( symfile, word )
 	if( ret == RET_ERROR )
 		printf( "ERROR モデルサイズ異常 %s\n", word )
@@ -347,7 +323,7 @@ def convert_line( no, line, wfile, idxfile, symfile )
 	wfile.write( ary.pack("C*") )
 	
 	#テクスチャサイズ 1 (11)
-	word = str[STRPRMNO_TEXSIZE]
+	word = str[RBDEF_NUM_TEXSIZE]
 	ret = hfile_search( symfile, word )
 	if( ret == RET_ERROR )
 		printf( "ERROR テクスチャサイズ異常 %s\n", word )
@@ -357,7 +333,7 @@ def convert_line( no, line, wfile, idxfile, symfile )
 	wfile.write( ary.pack("C*") )
 	
 	#アニメID 1 (12)
-	word = str[STRPRMNO_ANMID]
+	word = str[RBDEF_NUM_ANMID]
 	ret = hfile_search( symfile, word )
 	if( ret == RET_ERROR )
 		printf( "ERROR アニメID異常 _%s_\n", word )
@@ -367,7 +343,7 @@ def convert_line( no, line, wfile, idxfile, symfile )
 	wfile.write( ary.pack("C*") )
 	
   #性別 1 (13)
-  word = str[STRPRMNO_SEX]
+  word = str[RBDEF_NUM_SEX]
   if( word == "男" )
     ret = 0
   elsif( word == "女" )

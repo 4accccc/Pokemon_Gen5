@@ -3,6 +3,7 @@
 #	動作モデル　リソースファイル　リスト作成
 #======================================================================
 include mkdefine
+include selectres.txt
 include $(PROJECT_RSCDIR)/macro_define
 
 RUBY_LIST_RES = fmmdl_restbl.rb
@@ -19,14 +20,14 @@ EXCELCONV = $(PROJECT_ROOT)/tools/exceltool/ExcelSeetConv.exe
 do-build: $(FMMDLLIST_RES)
 
 #リソースリスト作成
-$(FMMDLLIST_RES): $(FMMDLLIST_XLS)
+$(FMMDLLIST_RES): $(FMMDLLIST_XLS) selectres.txt
 	$(EXCELCONV) -o $(FMMDLLIST_CSV) -p 1 -s csv $(FMMDLLIST_XLS)
-	ruby $(RUBY_LIST_RES) $(FMMDLLIST_CSV) $(FMMDLLIST_RES) $(DIR_RES)
+	ruby $(RUBY_LIST_RES) $(FMMDLLIST_CSV) $(FMMDLLIST_RES) $(DIR_RES) $(SELECT_LINE_RES_MDL)
 
 #dmyres
 dmyres:
 	$(EXCELCONV) -o $(FMMDLLIST_CSV) -p 1 -s csv $(FMMDLLIST_XLS)
-	ruby $(RUBY_LIST_RES) $(FMMDLLIST_CSV) $(FMMDLLIST_RES) $(DIR_RES) $(FMMDL_DMYFILE)
+	ruby $(RUBY_LIST_RES) $(FMMDLLIST_CSV) $(FMMDLLIST_RES) $(DIR_RES) $(SELECT_LINE_RES_MDL) $(FMMDL_DMYFILE)
 
 #clean
 clean:

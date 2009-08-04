@@ -2,7 +2,8 @@
 # fmmdl_restbl.rb
 # フィールド動作モデル リソーステーブル作成
 # 
-# 引数 fmmdl_restbl.rb xlstxt_filename restbl_filename res_dir dmyfile
+# 引数 fmmdl_restbl.rb
+# xlstxt_filename restbl_filename res_dir select_res dmyfile
 # 
 # xlstxt_filename
 # 動作モデルリスト表 テキスト変換済みファイル名
@@ -13,17 +14,20 @@
 # res_dir
 # リソースファイルが置かれているディレクトリ
 # 
+# select_res
+# xlstxt_filenameで指定されている複数のリソースファイルの内、どちらを使うか
+# 0=製品反映モデルファイルを使用 1=テスト用を使用
+#
 # dmyfile　※任意
 # ダミーファイル　dmyfileが指定されていて
 # リソースファイルが無い場合、dmyfileをリソースファイルに置き換えます。
 #=======================================================================
 $KCODE = "SJIS"
+load "rbdefine"
 
 #=======================================================================
 #	定数
 #=======================================================================
-RESFILE_NAME_NO = (8) #リストファイル　リソースファイル名記述箇所
-
 STR_ERROR = "ERROR"
 STR_END = "#END"
 
@@ -54,8 +58,15 @@ end
 #	指定番号のリソースファイル名を取得
 #	戻り値 nil=無し,STR_ERROR=エラー,STR_END=終了
 #=======================================================================
-def xlstxt_get_resfile_name( xlstxt_file, no )
+def xlstxt_get_resfile_name( xlstxt_file, no, sel_res )
 	xlstxt_file.pos = 0
+  
+  xlsline = RBDEF_NUM_RESFILE_NAME_0
+
+  if( sel_res != "0" )
+    xlsline = RBDEF_NUM_RESFILE_NAME_1
+  end
+  
 	line = xlstxt_file.gets #一行目飛ばし
 	
 	if( line == nil )
@@ -70,8 +81,8 @@ def xlstxt_get_resfile_name( xlstxt_file, no )
 		end
 		
 		if( no <= 0 )	#指定位置
-			if( str[RESFILE_NAME_NO] != "" && str[RESFILE_NAME_NO] != nil )
-				return str[RESFILE_NAME_NO]
+			if( str[xlsline] != "" && str[xlsline] != nil )
+				return str[xlsline]
 			else
 				break
 			end
@@ -88,11 +99,18 @@ end
 #	戻り値 RET_TRUE=指定ファイル名が存在している RET_FALSE=無し
 #	戻り値 nil=無し,STR_ERROR=エラー,STR_END=終了
 #=======================================================================
-def xlstxt_check_resfile_name( xlstxt_file, check_no, check_str )
+def xlstxt_check_resfile_name( xlstxt_file, check_no, check_str, sel_res )
 	no = 0
 	xlstxt_file.pos = 0
-	line = xlstxt_file.gets #一行目飛ばし
 	
+  xlsline = RBDEF_NUM_RESFILE_NAME_0
+  
+  if( sel_res != "0" )
+    xlsline = RBDEF_NUM_RESFILE_NAME_1
+  end
+  
+	line = xlstxt_file.gets #一行目飛ばし
+
 	if( line == nil )
 		return RET_FALSE
 	end
@@ -105,8 +123,8 @@ def xlstxt_check_resfile_name( xlstxt_file, check_no, check_str )
 		end
 		
 		if( no < check_no )	#指定位置より前
-			if( str[RESFILE_NAME_NO] != "" && str[RESFILE_NAME_NO] != nil )
-				if( str[RESFILE_NAME_NO] == check_str )
+			if( str[xlsline] != "" && str[xlsline] != nil )
+				if( str[xlsline] == check_str )
 					return RET_TRUE
 				end
 			end
@@ -147,10 +165,17 @@ if( FileTest.directory?(resdir_path) != true )
 	exit 1
 end
 
+sel_res = ARGV[3]
+
+if( sel_res != "0" && sel_res != "1" )
+  printf( "ERROR!! fmmdl_restbl.rb sel_res\n" )
+  exit 1
+end
+
 dmyfile = nil
 
-if( ARGV[3] != nil )
-	dmyfile = sprintf( "%s\/%s", resdir_path, ARGV[3] )
+if( ARGV[4] != nil )
+	dmyfile = sprintf( "%s\/%s", resdir_path, ARGV[4] )
 	if( FileTest.exist?(dmyfile) != true )
 		printf( "ERROR!! fmmdl_restbl.rb dmyfile\n" )
 		exit 1
@@ -165,7 +190,7 @@ flag = 0
 restbl_file.printf( "FMMDL_RESLIST =" )
 
 loop{
-	str = xlstxt_get_resfile_name( xlstxt_file, no )
+	str = xlstxt_get_resfile_name( xlstxt_file, no, sel_res )
 	
 	if( str == STR_ERROR )
 		printf( "ERROR!! fmmdl_restbl.rb %sが異常です\n", xlstxt_filename )
@@ -178,7 +203,7 @@ loop{
 	end
 	
 	if( str != nil )
-		if( xlstxt_check_resfile_name(xlstxt_file,no,str) == RET_FALSE )
+		if( xlstxt_check_resfile_name(xlstxt_file,no,str,sel_res) == RET_FALSE )
 			restbl_file.printf( " \\\n" )
 			path = sprintf( "%s\/%s", resdir_path, str )
 		

@@ -5,8 +5,9 @@
 include mkdefine
 include $(PROJECT_RSCDIR)/macro_define
 
-TARGET_RES_ARC = fldmmdl_mdlres.narc
-TARGET_RES_ARCIDX = $(TARGET_RES_ARC:.narc=.naix)
+TARGET_RES_ARC = $(FMMDL_RES_ARC_FILE)
+#TARGET_RES_ARCIDX = $(TARGET_RES_ARC:.narc=.naix)
+TARGET_RES_ARCIDX = $(FMMDL_RES_ARCIDX_FILE)
 
 #FMMDL_RESLIST
 -include $(FMMDLLIST_RES)

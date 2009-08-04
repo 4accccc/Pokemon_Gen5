@@ -17,7 +17,7 @@ TARGET_OBJCODE_H = fldmmdl_objcode.h
 OBJCODE_STR_FILE = fldmmdl_objcodestr.bin
 
 #モデルリソースアーカイブインデックス
-RES_ARCIDX = fldmmdl_mdlres.naix
+RES_ARCIDX = $(FMMDL_RES_ARCIDX_FILE)
 
 #コンバート用rubyファイル
 RUBY_MDLLIST = fmmdl_mdllist.rb
@@ -43,7 +43,7 @@ $(DIR_TARGET_COPY_SRC)/$(SYMBOL_H): $(SYMBOL_H)
 endif
 
 ifeq	($(CONVERTUSER),true) #CONVERTUSER
-$(TARGET_MDLPRM_ARC): $(FMMDLLIST_CSV) $(SYMBOL_H)
+$(TARGET_MDLPRM_ARC): $(FMMDLLIST_CSV) $(RES_ARCIDX) $(SYMBOL_H)
 	ruby $(RUBY_MDLLIST) $(FMMDLLIST_CSV) $(RES_ARCIDX) $(TARGET_MDLRPM_BIN) $(TARGET_OBJCODE_H) $(OBJCODE_STR_FILE) $(SYMBOL_H)
 	nnsarc -i -c -l -n $(TARGET_MDLPRM_ARC) $(TARGET_MDLRPM_BIN) $(OBJCODE_STR_FILE) > arc_result_list.txt
 	$(NAIXCUT) $(TARGET_MDLPRM_ARCIDX)

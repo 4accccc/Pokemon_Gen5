@@ -41,3 +41,8 @@ FMMDL_DMYFILE = dmymdl.imd
 #リスト用シンボル定義ヘッダーファイル
 #
 SYMBOL_H = fldmmdl_list_symbol.h
+
+#モデルリソース　リソースアーカイブファイル名
+#
+FMMDL_RES_ARC_FILE = fldmmdl_mdlres.narc
+FMMDL_RES_ARCIDX_FILE = fldmmdl_mdlres.naix
