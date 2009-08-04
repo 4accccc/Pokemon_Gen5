@@ -187,6 +187,16 @@ void	GFL_QUAT_MakeQuaternionPos(GFL_QUATERNION *qt,u32 pos1_x,u32 pos1_y,u32 pos
 //--------------------------------------------------------------------------------------------
 extern	void	GFL_QUAT_MakeRotateMatrix(MtxFx44 *mtx,GFL_QUATERNION *qt);
 
+//==================================================================
+/**
+ * GFL_QUATERNION構造体をコピー
+ *
+ * @param   dest		代入先
+ * @param   src		  コピー元
+ */
+//==================================================================
+extern void GFL_QUAT_Copy(GFL_QUATERNION *dest, const GFL_QUATERNION *src);
+
 #ifdef __cplusplus
 }/* extern "C" */
 #endif
