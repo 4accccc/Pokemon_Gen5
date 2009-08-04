@@ -1118,7 +1118,6 @@ static u32 setupWindowBG( TALKMSGWIN_SYS* tmsgwinSys, TALKMSGWIN_SYS_SETUP* setu
 	//GFL_BG_FillCharacter(setup->ini.frameID, 0, 1, 0);	// 先頭にクリアキャラ配置
 	GFL_BG_ClearScreen(setup->ini.frameID);
 
-#if 0
 	//パレット転送
 	{
 		PALTYPE paltype = PALTYPE_MAIN_BG;
@@ -1137,12 +1136,14 @@ static u32 setupWindowBG( TALKMSGWIN_SYS* tmsgwinSys, TALKMSGWIN_SYS_SETUP* setu
 			break;
 		}
 #if TALKWIN_MODE
+#if 0
 		GFL_ARC_UTIL_TransVramPalette(ARCID_TALKWIN_TEST, 
 																	NARC_talkwin_test_talkwin2_NCLR,
 																	paltype,
 																	setup->ini.fontPltID * PLTT_SIZ,
 																	PLTT_SIZ,
 																	setup->heapID);
+#endif
 		GFL_ARC_UTIL_TransVramPalette(ARCID_TALKWIN_TEST, 
 																	NARC_talkwin_test_talkwin2_NCLR,
 																	paltype,
@@ -1151,12 +1152,14 @@ static u32 setupWindowBG( TALKMSGWIN_SYS* tmsgwinSys, TALKMSGWIN_SYS_SETUP* setu
 																	setup->heapID);
 		setBGAlpha(tmsgwinSys, setup);
 #else
+#if 0
 		GFL_ARC_UTIL_TransVramPalette(ARCID_FONT, 
 																	NARC_font_default_nclr,
 																	paltype,
 																	setup->ini.fontPltID * PLTT_SIZ,
 																	PLTT_SIZ,
 																	setup->heapID);
+#endif
 		GFL_ARC_UTIL_TransVramPalette(ARCID_TALKWIN_TEST, 
 																	NARC_talkwin_test_talkwin_NCLR,
 																	paltype,
@@ -1165,7 +1168,6 @@ static u32 setupWindowBG( TALKMSGWIN_SYS* tmsgwinSys, TALKMSGWIN_SYS_SETUP* setu
 																	setup->heapID);
 #endif
 	}
-#endif
 	//キャラクター転送
 	chrSiz = GFL_ARC_UTIL_TransVramBgCharacter(	ARCID_TALKWIN_TEST, 
 																							NARC_talkwin_test_talkwin_NCGR,
