@@ -1,3 +1,4 @@
 "large.nftr"
 "small.nftr"
 "default.nclr"
+"talkwin.nclr"
