@@ -62,13 +62,13 @@ typedef enum {
 
 #define TALKMSGWIN_FLOAT_MAX	(TALKMSGWIN_NUM - 2)
 
-#define TWIN_FIX_SIZX		(28)
+#define TWIN_FIX_SIZX		(30)
 #ifndef MSGPOS_090730ROM
 #define TWIN_FIX_SIZY		(5)
 #else
 #define TWIN_FIX_SIZY		(4)
 #endif
-#define TWIN_FIX_POSX		(2)
+#define TWIN_FIX_POSX		(1)
 #define TWIN_FIX_POSY_U (2)
 #define TWIN_FIX_POSY_D (24 - (TWIN_FIX_SIZY+2))
 #define TWIN_FIX_TAIL_X	(7)
@@ -1271,9 +1271,9 @@ static void writeWindow( TALKMSGWIN_SYS* tmsgwinSys, TMSGWIN* tmsgwin )
 	u16	chrOffs = tmsgwinSys->setup.chrNumOffs;
 
 	if(px == 0){ overL = TRUE; }
-	if((px + sx) == 32-1){ overR = TRUE; }
+	if((px + sx) == 32){ overR = TRUE; }
 	if(py == 0){ overU = TRUE; }
-	if((py + sy) == 24-1){ overD = TRUE; }
+	if((py + sy) == 24){ overD = TRUE; }
 
 	//•¶Žš•`‰æ—Ìˆæ
 	GFL_BMPWIN_MakeScreen(tmsgwin->bmpwin);
