@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-06-25T17:16:02"/>
+	<create user="matsumiya" host="W00207" date="2009-08-04T11:17:48"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -292,11 +292,30 @@
 	</lock>
 
 
-	<row id="msg_c05r0401_test1_01">
-		<comment>？？？</comment>
-		<attribute name="キャラ指定">？？？</attribute>
-		<language name="JPN" width="256">テストメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+	<row id="msg_c05r0401_workman_01">
+		<comment>♂
+・仮メッセージ</comment>
+		<attribute name="キャラ指定">WORKMAN</attribute>
+		<language name="JPN" width="256">オイラは　はたらくー♪
+れいとうコンテナでー♪[BE:01:ページ切り替え（クリア）]
+ん？　れいとうコンテナは
+まちの　いちばん　みなみ　だぞ</language>
+		<language name="JPN_KANJI" width="256">オイラは　働くー♪
+冷凍コンテナでー♪[BE:01:ページ切り替え（クリア）]
+ん？　冷凍コンテナは
+街の　一番　南だぞ</language>
+	</row>
+
+	<row id="msg_c05r0401_middlewoman_01">
+		<comment>♀
+・仮メッセージ</comment>
+		<attribute name="キャラ指定">MIDDLEWOMAN</attribute>
+		<language name="JPN" width="256">れいとうコンテナの　なかには
+やせいの　ポケモンも　いるのよ[BE:01:ページ切り替え（クリア）]
+なんというか　おおらか　だよね</language>
+		<language name="JPN_KANJI" width="256">冷凍コンテナの　中には
+野生の　ポケモンも　いるのよ[BE:01:ページ切り替え（クリア）]
+なんというか　おおらか　だよね</language>
 	</row>
 
 	<flowchart-group-list>
