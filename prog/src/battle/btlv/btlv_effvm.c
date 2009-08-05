@@ -846,6 +846,26 @@ static VMCMD_RESULT VMEC_POKEMON_MOVE( VMHANDLE *vmh, void *context_work )
 static VMCMD_RESULT VMEC_POKEMON_CIRCLE_MOVE( VMHANDLE *vmh, void *context_work )
 { 
   BTLV_EFFVM_WORK *bevw = ( BTLV_EFFVM_WORK* )context_work;
+  BTLV_MCSS_MOVE_CIRCLE_PARAM bmmcp;
+  bmmcp.position = EFFVM_GetPosition( vmh, ( int )VMGetU32( vmh ) );
+
+  //立ち位置情報がエラーのときは、コマンド実行しない
+  if( bmmcp.position != BTLV_MCSS_POS_ERROR )
+  {
+    bmmcp.axis              = ( int )VMGetU32( vmh );
+    bmmcp.shift             = ( int )VMGetU32( vmh );
+	  bmmcp.radius_h          = ( fx32 )VMGetU32( vmh );
+	  bmmcp.radius_v          = ( fx32 )VMGetU32( vmh );
+	  bmmcp.frame             = ( int )VMGetU32( vmh ) >> FX32_SHIFT;
+  	bmmcp.rotate_wait       = ( int )VMGetU32( vmh ) >> FX32_SHIFT;
+  	bmmcp.count             = ( int )VMGetU32( vmh ) >> FX32_SHIFT;
+	  bmmcp.rotate_after_wait = ( int )VMGetU32( vmh );
+
+    if( bmmcp.count )
+    { 
+      BTLV_MCSS_MoveCircle( BTLV_EFFECT_GetMcssWork(), &bmmcp );
+    }
+  }
 
   return bevw->control_mode;
 }

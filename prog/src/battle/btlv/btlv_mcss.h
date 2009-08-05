@@ -72,6 +72,24 @@ typedef enum{
 
 typedef struct _BTLV_MCSS_WORK BTLV_MCSS_WORK;
 
+typedef struct
+{ 
+  BTLV_MCSS_WORK* bmw;
+  BtlvMcssPos     position;
+  int             axis;               //âÒì]é≤
+  int             shift;              //âÒì]ÉVÉtÉg
+	fx32	          radius_h;           //â°ï˚å¸îºåa
+	fx32	          radius_v;           //ècï˚å¸îºåa
+	int		          frame;              //1âÒì]âΩÉtÉåÅ[ÉÄÇ©
+	int		          rotate_wait;        //âÒì]ÉEÉGÉCÉg
+	int		          count;              //âÒì]êî
+	int		          rotate_after_wait;  //1âÒì]ÇµÇΩå„ÇÃÉEÉGÉCÉg
+  int             angle;
+  int             speed;
+  int             rotate_wait_count;
+  int             rotate_after_wait_count;
+}BTLV_MCSS_MOVE_CIRCLE_PARAM;
+
 extern  BTLV_MCSS_WORK* BTLV_MCSS_Init( GFL_TCBSYS *tcb_sys, HEAPID heapID );
 extern  void            BTLV_MCSS_Exit( BTLV_MCSS_WORK *bmw );
 extern  void            BTLV_MCSS_Main( BTLV_MCSS_WORK *bmw );
@@ -101,6 +119,7 @@ extern  void            BTLV_MCSS_MoveRotate( BTLV_MCSS_WORK *bmw, int position,
 extern  void            BTLV_MCSS_MoveBlink( BTLV_MCSS_WORK *bmw, int position, int type, int wait, int count );
 extern  void            BTLV_MCSS_MoveAlpha( BTLV_MCSS_WORK *bmw, int position, int type,
                                              int alpha, int frame, int wait, int count );
+extern  void            BTLV_MCSS_MoveCircle( BTLV_MCSS_WORK *bmw, BTLV_MCSS_MOVE_CIRCLE_PARAM* bmmcp );
 extern  BOOL            BTLV_MCSS_CheckTCBExecute( BTLV_MCSS_WORK *bmw, int position );
 extern  BOOL            BTLV_MCSS_CheckExistPokemon( BTLV_MCSS_WORK *bmw, int position );
 extern  void            BTLV_MCSS_SetPaletteFade( BTLV_MCSS_WORK *bmw, int position,

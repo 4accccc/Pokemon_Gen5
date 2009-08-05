@@ -87,6 +87,7 @@ static  void  TCB_BTLV_MCSS_Scale( GFL_TCB *tcb, void *work );
 static  void  TCB_BTLV_MCSS_Rotate( GFL_TCB *tcb, void *work );
 static  void  TCB_BTLV_MCSS_Blink( GFL_TCB *tcb, void *work );
 static  void  TCB_BTLV_MCSS_Alpha( GFL_TCB *tcb, void *work );
+static  void  TCB_BTLV_MCSS_MoveCircle( GFL_TCB *tcb, void *work );
 
 static  void  BTLV_MCSS_CallBackFunctorFrame( u32 data, fx32 currentFrame );
 
@@ -670,6 +671,45 @@ void  BTLV_MCSS_MoveAlpha( BTLV_MCSS_WORK *bmw, int position, int type, int alph
   BTLV_MCSS_TCBInitialize( bmw, position, type, &start, &end, frame, wait, count, TCB_BTLV_MCSS_Alpha );
   bmw->poke_mcss_tcb_alpha_execute |= BTLV_EFFTOOL_Pos2Bit( position );
 }
+
+//============================================================================================
+/**
+ * @brief ポケモン円運動
+ *
+ * @param[in] bmw       BTLV_MCSS管理ワークへのポインタ
+ * @param[in] bmmcp     円運動パラメータ構造体
+ */
+//============================================================================================
+void  BTLV_MCSS_MoveCircle( BTLV_MCSS_WORK *bmw, BTLV_MCSS_MOVE_CIRCLE_PARAM* bmmcp )
+{ 
+  BTLV_MCSS_MOVE_CIRCLE_PARAM* bmmcp_p = GFL_HEAP_AllocMemory( bmw->heapID, sizeof( BTLV_MCSS_MOVE_CIRCLE_PARAM ) );
+
+  bmmcp_p->bmw                      = bmw;
+  bmmcp_p->position                 = bmmcp->position;
+  bmmcp_p->axis                     = bmmcp->axis;
+  bmmcp_p->shift                    = bmmcp->shift;
+	bmmcp_p->radius_h                 = bmmcp->radius_h;
+	bmmcp_p->radius_v                 = bmmcp->radius_v;
+	bmmcp_p->frame                    = bmmcp->frame;
+	bmmcp_p->rotate_wait              = bmmcp->rotate_wait;
+	bmmcp_p->count                    = bmmcp->count;
+	bmmcp_p->rotate_after_wait        = bmmcp->rotate_after_wait;
+  bmmcp_p->rotate_wait_count        = 0;
+  bmmcp_p->rotate_after_wait_count  = 0;
+  if( bmmcp_p->axis & 1 )
+  { 
+    bmmcp_p->angle  = 0x10000;
+  }
+  else
+  { 
+    bmmcp_p->angle  = 0;
+  }
+  bmmcp_p->speed  = 0x10000 / bmmcp->frame;
+
+  GFL_TCB_AddTask( bmw->tcb_sys, TCB_BTLV_MCSS_MoveCircle, bmmcp_p, 0 );
+  bmw->poke_mcss_tcb_move_execute |= BTLV_EFFTOOL_Pos2Bit( bmmcp_p->position );
+}
+
 //============================================================================================
 /**
  * @brief タスクが起動中かチェック
@@ -940,6 +980,96 @@ static  void  TCB_BTLV_MCSS_Alpha( GFL_TCB *tcb, void *work )
   MCSS_SetAlpha( bmw->mcss[ pmtw->position ], now_alpha.x );
   if( ret == TRUE ){
     bmw->poke_mcss_tcb_alpha_execute &= ( BTLV_EFFTOOL_Pos2Bit( pmtw->position ) ^ BTLV_EFFTOOL_POS2BIT_XOR );
+    GFL_HEAP_FreeMemory( work );
+    GFL_TCB_DeleteTask( tcb );
+  }
+}
+
+//============================================================================================
+/**
+ * @brief ポケモン円運動タスク
+ */
+//============================================================================================
+static  BTLV_MCSS_MOVE_CIRCLE_PARAM*  bmmcp_pp = NULL;
+static  void  TCB_BTLV_MCSS_MoveCircle( GFL_TCB *tcb, void *work )
+{ 
+  BTLV_MCSS_MOVE_CIRCLE_PARAM*  bmmcp = ( BTLV_MCSS_MOVE_CIRCLE_PARAM * )work;
+  BTLV_MCSS_WORK *bmw = bmmcp->bmw;
+  VecFx32 ofs = { 0, 0, 0 };
+  fx32  sin, cos;
+
+  bmmcp_pp = bmmcp;
+
+  if( bmmcp->rotate_after_wait_count ==0 )
+  { 
+    if( bmmcp->rotate_wait_count == bmmcp->rotate_wait )
+    { 
+      bmmcp->rotate_wait_count = 0;
+      if( bmmcp->axis & 1 )
+      { 
+        bmmcp->angle -= bmmcp->speed;
+      }
+      else
+      { 
+        bmmcp->angle += bmmcp->speed;
+      }
+      if( bmmcp->angle & 0xffff0000 )
+      { 
+        bmmcp->angle &= 0x0000ffff;
+        bmmcp->count--;
+        bmmcp->rotate_after_wait_count = bmmcp->rotate_after_wait;
+      }
+      if( bmmcp->count )
+      { 
+        switch( bmmcp->shift ){ 
+        case BTLEFF_SHIFT_H_P:    //シフトＨ＋
+          sin = FX_Mul( FX_SinIdx( ( bmmcp->angle + 0x4000 ) & 0xffff ), bmmcp->radius_h ) * -1;
+          cos = FX_Mul( FX_CosIdx( ( bmmcp->angle + 0x4000 ) & 0xffff ), bmmcp->radius_v ) * -1;
+          sin += bmmcp->radius_h;
+          break;
+        case BTLEFF_SHIFT_H_M:    //シフトＨ－
+          sin = FX_Mul( FX_SinIdx( ( bmmcp->angle + 0x4000 ) & 0xffff ), bmmcp->radius_h ) - bmmcp->radius_h;
+          cos = FX_Mul( FX_CosIdx( ( bmmcp->angle + 0x4000 ) & 0xffff ), bmmcp->radius_v );
+          break;
+        case BTLEFF_SHIFT_V_P:    //シフトＶ＋
+          sin = FX_Mul( FX_SinIdx( bmmcp->angle ), bmmcp->radius_h ) * -1;
+          cos = FX_Mul( FX_CosIdx( bmmcp->angle ), bmmcp->radius_v ) * -1;
+          cos += bmmcp->radius_v;
+          break;
+        case BTLEFF_SHIFT_V_M:    //シフトＶ－
+          sin = FX_Mul( FX_SinIdx( bmmcp->angle ), bmmcp->radius_h );
+          cos = FX_Mul( FX_CosIdx( bmmcp->angle ), bmmcp->radius_v ) - bmmcp->radius_v;
+          break;
+        }
+        switch( ( bmmcp->axis & 7 ) >> 1 ){ 
+        default:
+        case 0:   //X軸
+          ofs.z = sin;
+          ofs.y = cos;
+          break;
+        case 1:   //Y軸
+          ofs.x = sin;
+          ofs.z = cos;
+          break;
+        case 2:   //Z軸
+          ofs.x = sin;
+          ofs.y = cos;
+          break;
+        }
+      }
+      MCSS_SetOfsPosition( bmw->mcss[ bmmcp->position ], &ofs );
+    }
+    else
+    {
+      bmmcp->rotate_wait_count++;
+    }
+  }
+  else
+  { 
+    bmmcp->rotate_after_wait_count--;
+  }
+  if( bmmcp->count == 0 ){
+    bmw->poke_mcss_tcb_move_execute &= ( BTLV_EFFTOOL_Pos2Bit( bmmcp->position ) ^ BTLV_EFFTOOL_POS2BIT_XOR );
     GFL_HEAP_FreeMemory( work );
     GFL_TCB_DeleteTask( tcb );
   }

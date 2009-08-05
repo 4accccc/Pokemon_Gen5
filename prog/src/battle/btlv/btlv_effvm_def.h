@@ -115,6 +115,19 @@
 #define	BTLEFF_ANM_STOP												( MCSS_ANM_STOP_ON )
 #define	BTLEFF_ANM_START											( MCSS_ANM_STOP_OFF )
 
+//ポケモン円移動
+#define BTLEFF_AXIS_X_L                       ( 0 )     //Ｘ軸左
+#define BTLEFF_AXIS_X_R                       ( 1 )     //Ｘ軸右
+#define BTLEFF_AXIS_Y_L                       ( 2 )     //Ｙ軸左
+#define BTLEFF_AXIS_Y_R                       ( 3 )     //Ｙ軸右
+#define BTLEFF_AXIS_Z_L                       ( 4 )     //Ｚ軸左
+#define BTLEFF_AXIS_Z_R                       ( 5 )     //Ｚ軸右
+
+#define BTLEFF_SHIFT_H_P                      ( 0 )     //シフトＨ＋
+#define BTLEFF_SHIFT_H_M                      ( 1 )     //シフトＨ－
+#define BTLEFF_SHIFT_V_P                      ( 2 )     //シフトＶ＋
+#define BTLEFF_SHIFT_V_M                      ( 3 )     //シフトＶ－
+
 //トレーナー操作
 #define	BTLEFF_TRAINER_MOVE_DIRECT						( EFFTOOL_CALCTYPE_DIRECT )
 #define	BTLEFF_TRAINER_MOVE_INTERPOLATION			( EFFTOOL_CALCTYPE_INTERPOLATION )
@@ -603,7 +616,7 @@ ex)
  * @param	shift			      	回転シフト
  * @param	radius_h	        横方向半径
  * @param	radius_v	        縦方向半径
- * @param	rotate_param			回転フレーム数（1回転何フレームでするか） 移動ウエイト  回転カウント
+ * @param	rotate_param			回転フレーム数（1回転何フレームでするか）:移動ウエイト:回転カウント
  * @param	rotate_after_wait 1回転したあとのウエイト（2回転以上で意味のある値です）
  *
  * #param	COMBOBOX_TEXT	攻撃側	攻撃側ペア	防御側	防御側ペア
