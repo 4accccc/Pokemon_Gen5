@@ -1,0 +1,149 @@
+#=======================================================================
+# ev_def.rb
+# スクリプトファイル*.evからスクリプトIDを生成し、*_def.hに書き込む
+#=======================================================================
+$KCODE = "SJIS"
+
+#=======================================================================
+# 定数
+#=======================================================================
+RET_ERROR = (0xffffffff)
+
+#=======================================================================
+# 関数
+#=======================================================================
+#-----------------------------------------------------------------------
+# 異常終了
+#-----------------------------------------------------------------------
+def error_end( file0, file1, file2, filepath_del )
+  file0.close
+  file1.close
+  file2.close
+  File.delete( filepath_del )
+  printf( "ERROR ev_def create\n" )
+end
+
+#-----------------------------------------------------------------------
+# ヘッダーファイル 指定の文字列が含まれたdefine定義の数値検索
+# hfile 検索するヘッダーファイル
+# search 検索する文字列
+# none_str 検索から外す文字列 nil=無し
+# error_ret searchが無い場合に返す値
+#-----------------------------------------------------------------------
+def hfile_search( hfile, search, none_str, error_ret )
+  pos = hfile.pos
+  hfile.pos = 0
+  
+  num = error_ret
+  search = search.strip
+  
+  while line = hfile.gets
+    line = line.strip
+    
+    if( line =~ /\A#define/ )
+      len = line.length
+      str = line.split()
+      
+      if( none_str != nil && str[1].include?(none_str) )
+        next #無効となる文字を含んでいる
+      end
+      
+      if( str[1].include?(search) ) #シンボル search含み
+        str_num = str[2] #シンボル数値
+        
+        if( str_num =~ /\A0x/ ) #16進
+          /([\A0x0-9a-fA-F]+)/ =~ str_num
+          str_num = $1
+          num = str_num.hex
+        else					#10進
+          /([\A0-9]+)/ =~ str_num
+          str_num = $1
+          num = str_num.to_i
+        end
+        
+        break
+      end
+    end
+  end
+  
+  hfile.pos = pos
+  return num
+end
+
+#=======================================================================
+# *_def.h生成
+#=======================================================================
+fname_ev = ARGV[0]
+
+if( fname_ev == nil )
+  printf( "ERROR SCRIPT ev_def file name none\n" )
+  exit 1
+end
+
+fname_id = ARGV[1]
+
+if( fname_id == nil )
+  printf( "ERROR SCRIPT ev_def id file name none\n" )
+  exit 1
+end
+
+file_ev = File.open( fname_ev, "r" )
+file_id = File.open( fname_id, "r" )
+
+fname_def_h = fname_ev.gsub( "\.ev", "_def\.h" )
+file_def_h = File.open( fname_def_h, "w" )
+
+fname_ev_big = File::basename( fname_ev )
+fname_ev_big = fname_ev_big.gsub( "\.ev", "" )
+fname_ev_big = fname_ev_big.upcase
+
+#開始ID検索
+start_id = hfile_search( file_id, fname_ev_big, "_END", RET_ERROR )
+
+if( start_id == RET_ERROR )
+  start_id = hfile_search( file_id, "ID_START_SCR_OFFSET", nil, RET_ERROR )
+  
+  if( start_id == RET_ERROR )
+    error_end( file_ev, file_id, file_def_h, fname_def_h )
+    exit 1
+  end
+end
+
+#ID定義
+file_def_h.printf( "\/\/%s\n", fname_def_h )
+file_def_h.printf( "\/\/このファイルはコンバータによって作成されました\n\n" )
+file_def_h.printf( "#ifndef _%s_DEF_H_\n", fname_ev_big )
+file_def_h.printf( "#define _%s_DEF_H_\n\n", fname_ev_big )
+file_def_h.printf( "\/\/スクリプトデータID定義\n" )
+
+while line = file_ev.gets
+  line = line.strip
+  
+  if( line =~ /\A_EVENT_DATA_END/ )
+    break
+  end
+  
+  if( line =~ /\A_EVENT_DATA/ )
+    str = line.split()
+    id_name = str[1]
+    
+    if( id_name == nil )
+      printf( "ERROR ev_def EVENT_DATA label name none\n" )
+      error_end( file_ev, file_id, file_def_h, fname_def_h )
+      exit 1
+    end
+    
+    id_name = id_name.gsub( /\Aev_/, "" ) #先頭のev_を削除
+    id_name = id_name.upcase
+    
+    file_def_h.printf( "#define SCRID_%s (%d)\n", id_name, start_id )
+    start_id = start_id + 1
+  end
+end
+
+file_def_h.printf( "\n#endif \/\/_%s_DEF_H_", fname_ev_big )
+
+#終了
+file_def_h.close
+file_id.close
+file_ev.close
