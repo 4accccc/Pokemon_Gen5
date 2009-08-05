@@ -89,12 +89,11 @@ ifeq ($(CONVERTUSER),true) #CONVERTUSER
 	@gawk -f scr_tools/ev_def.awk $<
 endif #CONVERTUSER
 
-ifeq ($(CONVERTUSER),true) #CONVERTUSER
+#script.narc
 $(TARGET_NARC): $(SCRSRCS_BIN)
 	@echo "スクリプトデータをアーカイブします"
 	@nnsarc -i -c -l -n $(TARGET_NARC) $(SCRSRCS_BIN) > arc_result.txt
 	@$(NAIXCUT) $(TARGET_NAIX)
-endif
 
 #----------------------------------------------------------------------------
 #	mklst
