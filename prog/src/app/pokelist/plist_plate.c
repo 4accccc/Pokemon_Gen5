@@ -135,7 +135,6 @@ static void PLIST_PLATE_CreateCell( PLIST_WORK *work , PLIST_PLATE_WORK *plateWo
 static void PLIST_PLATE_CreatePokeIcon( PLIST_WORK *work , PLIST_PLATE_WORK *plateWork );
 static void PLIST_PLATE_DrawParam( PLIST_WORK *work , PLIST_PLATE_WORK *plateWork );
 static void PLIST_PLATE_DrawHPBar( PLIST_WORK *work , PLIST_PLATE_WORK *plateWork );
-static void PLIST_PLATE_ReDrawParam( PLIST_WORK *work , PLIST_PLATE_WORK *plateWork );
 static const u8 PLIST_PLATE_GetHPRate( PLIST_PLATE_WORK *plateWork );
 static void PLIST_PLATE_CalcCellPos( PLIST_PLATE_WORK *plateWork , const s16 x , const s16 y , GFL_CLACTPOS *pos );
 
@@ -553,6 +552,10 @@ static void PLIST_PLATE_DrawParam( PLIST_WORK *work , PLIST_PLATE_WORK *plateWor
     {
       GFL_CLACT_WK_SetDrawEnable( plateWork->itemIcon , TRUE );
     }
+    else
+    {
+      GFL_CLACT_WK_SetDrawEnable( plateWork->itemIcon , FALSE );
+    }
   }
  
   //ポケアイコンアニメ
@@ -880,7 +883,7 @@ void PLIST_PLATE_ResetParam( PLIST_WORK *work , PLIST_PLATE_WORK *plateWork , PO
 //--------------------------------------------------------------
 //文字だけ再描画
 //--------------------------------------------------------------
-static void PLIST_PLATE_ReDrawParam( PLIST_WORK *work , PLIST_PLATE_WORK *plateWork )
+void PLIST_PLATE_ReDrawParam( PLIST_WORK *work , PLIST_PLATE_WORK *plateWork )
 {
   GFL_BMP_Clear( GFL_BMPWIN_GetBmp( plateWork->bmpWin ) , 0 );
   PLIST_PLATE_DrawParam( work , plateWork );

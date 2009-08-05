@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ariizumi_nobuhiko" host="W00147" date="2009-08-04T19:23:11"/>
+	<create user="ariizumi_nobuhiko" host="W00147" date="2009-08-05T16:37:44"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -305,7 +305,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1498" top="207" right="2203" bottom="835" maximized="no" rayout="Vertical2">
+	<dialog left="1476" top="178" right="2181" bottom="806" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="0" style="0000" width="530"/>
@@ -849,11 +849,11 @@ PP値上昇アイテムで技選択するとき</comment>
 0：選択したポケモンニックネーム
 1：道具名</comment>
 		<language name="JPN" width="216" line="4">[1:02:ポケモンニックネーム:0]は　すでに
-[1:09:どうぐ名:1]を　もっています
+[1:09:どうぐ名:1]を　もっています[BE:01:ページ切り替え（クリア）]
 もっている　どうぐを
 とりかえますか？</language>
 		<language name="JPN_KANJI" width="216" line="4">[1:02:ポケモンニックネーム:0]は　すでに
-[1:09:どうぐ名:1]を　もっています
+[1:09:どうぐ名:1]を　もっています[BE:01:ページ切り替え（クリア）]
 もっている　どうぐを
 とりかえますか？</language>
 	</row>

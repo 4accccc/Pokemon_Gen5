@@ -205,10 +205,14 @@ static void PSTATUS_MSGCB_ForgetSkill_SkillCancel( PLIST_WORK *work );
 static void PSTATUS_MSGCB_ForgetSkill_SkillCancelCB( PLIST_WORK *work , const int retVal );
 static void PSTATUS_MSGCB_ForgetSkill_SkillForget( PLIST_WORK *work );
 
+static void PSTATUS_MSGCB_ItemSet_CheckChangeItem( PLIST_WORK *work );
+static void PSTATUS_MSGCB_ItemSet_CheckChangeItemCB( PLIST_WORK *work , const int retVal );
+
 //外部数値操作
 static void PSTATUS_LearnSkillEmpty( PLIST_WORK *work , POKEMON_PARAM *pp );
 static void PSTATUS_LearnSkillFull( PLIST_WORK *work  , POKEMON_PARAM *pp , u8 pos );
-static void PSTATUS_UseItem( PLIST_WORK *work );
+static void PSTATUS_SubItem( PLIST_WORK *work , u16 itemNo );
+static void PSTATUS_AddItem( PLIST_WORK *work , u16 itemNo );
 
 //デバッグメニュー
 static void PLIST_InitDebug( PLIST_WORK *work );
@@ -870,6 +874,7 @@ static void PLIST_InitMode( PLIST_WORK *work )
     break;
 
   case PL_MODE_WAZASET_RET:
+    work->pokeCursor = work->plData->ret_sel;
     work->selectPokePara = PokeParty_GetMemberPointer(work->plData->pp, work->plData->ret_sel );
     if( work->plData->waza_pos < 4 )
     {
@@ -891,7 +896,40 @@ static void PLIST_InitMode( PLIST_WORK *work )
     }
     work->nextMainSeq = PSMS_MSG_WAIT;
     work->mainSeq = PSMS_FADEIN;
-
+    break;
+    
+  case PL_MODE_ITEMSET_RET:
+    if( work->plData->item == 0 )
+    {
+      //キャンセルされた
+      //選択画面へ
+      PLIST_InitMode_Select( work );
+      work->nextMainSeq = PSMS_SELECT_POKE;
+    }
+    else
+    {
+      const u32 itemNo = PP_Get( work->selectPokePara , ID_PARA_item , NULL );
+      if( itemNo == 0 )
+      {
+        PLIST_MSG_CreateWordSet( work , work->msgWork );
+        PLIST_MSG_AddWordSet_PokeName( work , work->msgWork , 0 , work->selectPokePara );
+        PLIST_MSG_AddWordSet_ItemName( work , work->msgWork , 1 , work->plData->item );
+        PLIST_MessageWaitInit( work , mes_pokelist_04_59 , TRUE , PSTATUS_MSGCB_ReturnSelectCommon );
+        PLIST_MSG_DeleteWordSet( work , work->msgWork );
+        
+        PP_Put( work->selectPokePara , ID_PARA_item , work->plData->item );
+        PSTATUS_SubItem( work , work->plData->item );
+      }
+      else
+      {
+        PLIST_MSG_CreateWordSet( work , work->msgWork );
+        PLIST_MSG_AddWordSet_PokeName( work , work->msgWork , 0 , work->selectPokePara );
+        PLIST_MSG_AddWordSet_ItemName( work , work->msgWork , 1 , itemNo );
+        PLIST_MessageWaitInit( work , mes_pokelist_04_28 , FALSE , PSTATUS_MSGCB_ItemSet_CheckChangeItem );
+        PLIST_MSG_DeleteWordSet( work , work->msgWork );
+        
+      }
+    }
     break;
 
   default:
@@ -962,15 +1000,44 @@ static void PLIST_TermMode_Select_Decide( PLIST_WORK *work )
     
   case PL_MODE_ITEMUSE:
   case PL_MODE_SHINKA:
+    {
+      work->plData->ret_mode = PL_RET_BAG;
+      
+      PLIST_MSG_CreateWordSet( work , work->msgWork );
+      PLIST_MSG_AddWordSet_ItemName( work , work->msgWork , 0 , work->plData->item );
+      PLIST_MessageWaitInit( work , mes_pokelist_deb_01 , TRUE , PSTATUS_MSGCB_ExitCommon );
+      PLIST_MSG_DeleteWordSet( work , work->msgWork );
+    }
+    break;
+
   case PL_MODE_ITEMSET:
   case PL_MODE_MAILSET:
-    
-    work->plData->ret_mode = PL_RET_BAG;
-    
-    PLIST_MSG_CreateWordSet( work , work->msgWork );
-    PLIST_MSG_AddWordSet_ItemName( work , work->msgWork , 0 , work->plData->item );
-    PLIST_MessageWaitInit( work , mes_pokelist_deb_01 , TRUE , PSTATUS_MSGCB_ExitCommon );
-    PLIST_MSG_DeleteWordSet( work , work->msgWork );
+    {
+      //FIXME メール処理
+      const u32 itemNo = PP_Get( work->selectPokePara , ID_PARA_item , NULL );
+      if( itemNo == 0 )
+      {
+        work->plData->ret_mode = PL_RET_BAG;
+        
+        PLIST_MSG_CreateWordSet( work , work->msgWork );
+        PLIST_MSG_AddWordSet_PokeName( work , work->msgWork , 0 , work->selectPokePara );
+        PLIST_MSG_AddWordSet_ItemName( work , work->msgWork , 1 , work->plData->item );
+        PLIST_MessageWaitInit( work , mes_pokelist_04_59 , TRUE , PSTATUS_MSGCB_ExitCommon );
+        PLIST_MSG_DeleteWordSet( work , work->msgWork );
+        
+        PP_Put( work->selectPokePara , ID_PARA_item , work->plData->item );
+        PSTATUS_SubItem( work , work->plData->item );
+      }
+      else
+      {
+        PLIST_MSG_CreateWordSet( work , work->msgWork );
+        PLIST_MSG_AddWordSet_PokeName( work , work->msgWork , 0 , work->selectPokePara );
+        PLIST_MSG_AddWordSet_ItemName( work , work->msgWork , 1 , itemNo );
+        PLIST_MessageWaitInit( work , mes_pokelist_04_28 , FALSE , PSTATUS_MSGCB_ItemSet_CheckChangeItem );
+        PLIST_MSG_DeleteWordSet( work , work->msgWork );
+        
+      }
+    }
     break;
 
   case PL_MODE_WAZASET:
@@ -987,7 +1054,7 @@ static void PLIST_TermMode_Select_Decide( PLIST_WORK *work )
       PSTATUS_LearnSkillEmpty( work , work->selectPokePara );
       if( work->plData->item != 0 )
       {
-        PSTATUS_UseItem( work );
+        PSTATUS_SubItem( work , work->plData->item );
       }
       break;
     
@@ -1163,6 +1230,10 @@ static void PLIST_SelectPokeInit( PLIST_WORK *work )
                               mes_pokelist_01_01 , PLIST_BATTLE_BUTTON_DECIDE_X , PLIST_BATTLE_BUTTON_DECIDE_Y , FALSE );
     work->btlMenuWin[1] = PLIST_MENU_CreateMenuWin_BattleMenu( work , work->menuWork ,
                               mes_pokelist_01_02 , PLIST_BATTLE_BUTTON_CANCEL_X , PLIST_BATTLE_BUTTON_CANCEL_Y , TRUE );
+  }
+  else
+  {
+    GFL_CLACT_WK_SetDrawEnable( work->clwkBarIcon[PBT_RETURN] , TRUE );
   }
 }
 
@@ -1804,12 +1875,42 @@ static void PLIST_SelectMenuExit( PLIST_WORK *work )
     PLIST_InitMode_Select( work );
     break;
     
+  case PMIT_TAKE:
+    {
+      //FIXME メール処理
+      const u32 itemNo = PP_Get( work->selectPokePara , ID_PARA_item , NULL );
+      if( itemNo == 0 )
+      {
+        PLIST_MSG_CreateWordSet( work , work->msgWork );
+        PLIST_MSG_AddWordSet_PokeName( work , work->msgWork , 0 , work->selectPokePara );
+        PLIST_MessageWaitInit( work , mes_pokelist_04_29 , TRUE , PSTATUS_MSGCB_ReturnSelectCommon );
+        PLIST_MSG_DeleteWordSet( work , work->msgWork );
+      }
+      else
+      {
+        PLIST_MSG_CreateWordSet( work , work->msgWork );
+        PLIST_MSG_AddWordSet_PokeName( work , work->msgWork , 0 , work->selectPokePara );
+        PLIST_MSG_AddWordSet_ItemName( work , work->msgWork , 1 , itemNo );
+        PLIST_MessageWaitInit( work , mes_pokelist_04_30 , TRUE , PSTATUS_MSGCB_ReturnSelectCommon );
+        PLIST_MSG_DeleteWordSet( work , work->msgWork );
+        
+        PP_Put( work->selectPokePara , ID_PARA_item , 0 );
+        PSTATUS_AddItem( work , itemNo );
+        PLIST_PLATE_ReDrawParam( work , work->plateWork[work->pokeCursor] );
+      }
+    }
+    break;
+
+  case PMIT_GIVE:
+    work->mainSeq = PSMS_FADEOUT;
+    work->plData->ret_sel = work->pokeCursor;
+    work->plData->ret_mode = PL_RET_ITEMSET;
+    break;
+
   case PMIT_WAZA_1:
   case PMIT_WAZA_2:
   case PMIT_WAZA_3:
   case PMIT_WAZA_4:
-  case PMIT_GIVE:
-  case PMIT_TAKE:
     OS_TPrintf("まだ作ってない！\n");
     PLIST_SelectPokeSetCursor( work , work->pokeCursor );
     work->selectPokePara = NULL;
@@ -2270,9 +2371,68 @@ static void PSTATUS_MSGCB_ForgetSkill_SkillForget( PLIST_WORK *work )
   PSTATUS_LearnSkillFull( work , work->selectPokePara , work->plData->waza_pos );
   if( work->plData->item != 0 )
   {
-    PSTATUS_UseItem( work );
+    PSTATUS_SubItem( work , work->plData->item );
   }
 }
+
+//アイテムセット すでに持ってる
+static void PSTATUS_MSGCB_ItemSet_CheckChangeItem( PLIST_WORK *work )
+{
+  PLIST_YesNoWaitInit( work , PSTATUS_MSGCB_ItemSet_CheckChangeItemCB );
+}
+static void PSTATUS_MSGCB_ItemSet_CheckChangeItemCB( PLIST_WORK *work , const int retVal )
+{
+
+  if( retVal == PMIT_YES )
+  {
+    //はいアイテム入れ替え
+    const u32 haveItemNo = PP_Get( work->selectPokePara , ID_PARA_item , NULL );
+
+    PLIST_MSG_CloseWindow( work , work->msgWork );
+
+    PLIST_MSG_CreateWordSet( work , work->msgWork );
+    PLIST_MSG_AddWordSet_ItemName( work , work->msgWork , 1 , haveItemNo );
+    PLIST_MSG_AddWordSet_ItemName( work , work->msgWork , 2 , work->plData->item );
+    if( work->plData->mode == PL_MODE_ITEMSET_RET )
+    {
+      //リストから開始なので戻る
+      //ついでにモードをフィールドに戻してしまう
+      work->plData->mode = PL_MODE_FIELD;
+      PLIST_MessageWaitInit( work , mes_pokelist_04_32 , TRUE , PSTATUS_MSGCB_ReturnSelectCommon );
+    }
+    else
+    {
+      //アイテムから来たので終了
+      work->plData->ret_mode = PL_RET_BAG;
+      PLIST_MessageWaitInit( work , mes_pokelist_04_32 , TRUE , PSTATUS_MSGCB_ExitCommon );
+    }
+    PLIST_MSG_DeleteWordSet( work , work->msgWork );
+
+    PP_Put( work->selectPokePara , ID_PARA_item , work->plData->item );
+    PSTATUS_SubItem( work , work->plData->item );
+    PSTATUS_AddItem( work , work->plData->item );
+  }
+  else
+  {
+    //いいえ
+    if( work->plData->mode == PL_MODE_ITEMSET_RET )
+    {
+      //リストから開始なので戻る
+      //ついでにモードをフィールドに戻してしまう
+      work->plData->mode = PL_MODE_FIELD;
+      PLIST_MSG_CloseWindow( work , work->msgWork );
+      work->mainSeq = PSMS_SELECT_POKE;
+      PLIST_InitMode_Select( work );
+    }
+    else
+    {
+      //アイテムから来たので終了
+      work->mainSeq = PSMS_FADEOUT;
+    }
+  }
+  
+}
+
 
 #pragma mark [>outer value
 //外の数値をいじる
@@ -2289,9 +2449,14 @@ static void PSTATUS_LearnSkillFull( PLIST_WORK *work  , POKEMON_PARAM *pp , u8 p
 }
 
 //アイテムを消費する
-static void PSTATUS_UseItem( PLIST_WORK *work )
+static void PSTATUS_SubItem( PLIST_WORK *work , u16 itemNo )
 {
-  MYITEM_SubItem( work->plData->myitem , work->plData->item , 1 , work->heapId );
+  MYITEM_SubItem( work->plData->myitem , itemNo , 1 , work->heapId );
+}
+//アイテムを増やす
+static void PSTATUS_AddItem( PLIST_WORK *work , u16 itemNo )
+{
+  MYITEM_AddItem( work->plData->myitem , itemNo , 1 , work->heapId );
 }
 
 #pragma mark [>debug

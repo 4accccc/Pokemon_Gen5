@@ -561,8 +561,10 @@ static BOOL FMenuCallProc_PokeStatus( FMENU_EVENT_WORK *mwk )
   GMEVENT * newEvent;
   
   PLIST_DATA *plistData;
+  GAMEDATA *gmData = GAMESYSTEM_GetGameData(mwk->gmSys);
   plistData = GFL_HEAP_AllocClearMemory(HEAPID_PROC, sizeof(PLIST_DATA));
-  plistData->pp = GAMEDATA_GetMyPokemon(GAMESYSTEM_GetGameData(mwk->gmSys));
+  plistData->pp = GAMEDATA_GetMyPokemon(gmData);
+  plistData->myitem = GAMEDATA_GetMyItem(gmData);    // アイテムデータ
   plistData->mode = PL_MODE_FIELD;
   plistData->ret_sel = PL_SEL_POS_POKE1;
 
@@ -731,6 +733,37 @@ static const BOOL FMenuReturnProc_PokeList(FMENU_EVENT_WORK* mwk)
       return TRUE;
     }
     break;
+  
+  
+  //もたせる　でアイテム画面へ
+  case PL_RET_ITEMSET:
+    {
+      FIELD_ITEMMENU_WORK *epp;
+      GAMEDATA *gmData = GAMESYSTEM_GetGameData(mwk->gmSys);
+      epp = GFL_HEAP_AllocClearMemory(HEAPID_PROC, sizeof(FIELD_ITEMMENU_WORK));
+    //  epp = GFL_HEAP_AllocClearMemory(GFL_HEAPID_APP, sizeof(FIELD_ITEMMENU_WORK));
+      epp->ctrl = SaveControl_GetPointer();
+      epp->gsys = mwk->gmSys;
+      epp->fieldmap = mwk->fieldWork;
+    	epp->heapID = GFL_HEAPID_APP;
+    	epp->mode = BAG_MODE_POKELIST;   //リストから呼ばれる
+
+      GFL_STD_MemCopy(&mwk->icwk , &epp->icwk, sizeof(ITEMCHECK_WORK));
+
+    	epp->mystatus = GAMEDATA_GetMyStatus(gmData);
+
+      if ( PLAYERWORK_GetMoveForm(GAMEDATA_GetMyPlayerWork(gmData)) == PLAYER_MOVE_FORM_CYCLE ){
+        epp->cycle_flg = TRUE;
+      }
+      
+      //データ退避
+      mwk->selPoke = plData->ret_sel;
+      
+      FMenu_SetNextSubProc( mwk ,FMENU_APP_BAG , epp );
+    }
+    return TRUE;
+    break;
+    
   case PL_RET_BAG:      // アイテム→リスト→アイテム
     {
       FIELD_ITEMMENU_WORK *epp;
