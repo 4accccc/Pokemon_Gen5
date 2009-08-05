@@ -463,7 +463,7 @@ static MAINSEQ_RESULT mainSeqFunc_setup(GAMESYS_WORK *gsys, FIELDMAP_WORK *field
       fieldWork->heapID );
 
   // railシステム初期化
-  fieldWork->railMan = FIELD_RAIL_MAN_Create( fieldWork->heapID, fieldWork->camera_control );
+  fieldWork->railMan = FIELD_RAIL_MAN_Create( fieldWork->heapID, FIELD_RAIL_WORK_MAX, fieldWork->camera_control );
 
 	// sceneareaデータ読み込みシステム
 	fieldWork->sceneAreaLoader = FLD_SCENEAREA_LOADER_Create( fieldWork->heapID );
@@ -530,9 +530,12 @@ static MAINSEQ_RESULT mainSeqFunc_setup(GAMESYS_WORK *gsys, FIELDMAP_WORK *field
     //保存した位置を反映する
     if (ZONEDATA_DEBUG_IsRailMap(fieldWork->map_id) == TRUE)
     { 
+      // 09/08/05 現状は、レール移動時のプレイヤーに大してロケーションが設定できないため、仮の処理で、ロケーション設定を行う。 tomoya takahashi
+#ifdef PM_DEBUG
       const RAIL_LOCATION * railLoc = GAMEDATA_GetRailLocation( gdata );
-      FIELD_RAIL_MAN_SetLocation(fieldWork->railMan, railLoc);
-      FIELD_RAIL_MAN_GetPos( fieldWork->railMan, &fieldWork->now_pos );
+      FIELD_RAIL_WORK_SetLocation( FIELD_RAIL_MAN_DEBUG_GetBindWork( fieldWork->railMan ), railLoc );
+#endif
+      FIELD_RAIL_MAN_GetBindWorkPos( fieldWork->railMan, &fieldWork->now_pos );
     }
 
     FLDMAPPER_SetPos( fieldWork->g3Dmapper, &fieldWork->now_pos );
@@ -654,6 +657,7 @@ static MAINSEQ_RESULT mainSeqFunc_ready(GAMESYS_WORK *gsys, FIELDMAP_WORK *field
 //--------------------------------------------------------------
 static MAINSEQ_RESULT mainSeqFunc_update_top(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork )
 {
+  
 	//キーの分割取得カウンタをリセット
 	GFL_UI_ResetFrameRate();
 	//ゾーン更新処理
@@ -666,9 +670,9 @@ static MAINSEQ_RESULT mainSeqFunc_update_top(GAMESYS_WORK *gsys, FIELDMAP_WORK *
 		VecFx32 rail_pos;
 
     // レールシステムメイン
-	  FIELD_RAIL_MAN_Update(fieldWork->railMan, GFL_UI_KEY_GetCont() );
+	  FIELD_RAIL_MAN_Update(fieldWork->railMan );
     FIELD_RAIL_MAN_UpdateCamera(fieldWork->railMan);
-		FIELD_RAIL_MAN_GetPos( fieldWork->railMan, &rail_pos );
+		FIELD_RAIL_MAN_GetBindWorkPos( fieldWork->railMan, &rail_pos );
 		FLD_SCENEAREA_Update( fieldWork->sceneArea, &rail_pos );
     
     //登録テーブルごとに個別のメイン処理を呼び出し
@@ -713,6 +717,7 @@ static MAINSEQ_RESULT mainSeqFunc_update_top(GAMESYS_WORK *gsys, FIELDMAP_WORK *
 
   FLDMSGBG_PrintMain( fieldWork->fldMsgBG );
 
+
   return MAINSEQ_RESULT_CONTINUE;
 }
 
@@ -731,6 +736,7 @@ static MAINSEQ_RESULT mainSeqFunc_update_tail(GAMESYS_WORK *gsys, FIELDMAP_WORK 
 
 	// ゲームデータのフレーム分割用カウンタをリセット
 	GAMEDATA_ResetFrameSpritCount(GAMESYSTEM_GetGameData(gsys));
+
   return MAINSEQ_RESULT_CONTINUE;
 }
 
@@ -751,7 +757,10 @@ static MAINSEQ_RESULT mainSeqFunc_free(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldW
   {
 		GAMEDATA *gamedata = GAMESYSTEM_GetGameData( gsys );
     RAIL_LOCATION railLoc;
-    FIELD_RAIL_MAN_GetLocation(fieldWork->railMan, &railLoc);
+    // 09/08/05 現状は、レール移動時のプレイヤーからロケーションを取得できないため、仮の処理で、ロケーション取得を行う。 tomoya takahashi
+#ifdef PM_DEBUG
+    FIELD_RAIL_WORK_GetLocation(FIELD_RAIL_MAN_DEBUG_GetBindWork(fieldWork->railMan), &railLoc);
+#endif
     GAMEDATA_SetRailLocation(gamedata, &railLoc);
   }
 
@@ -970,9 +979,9 @@ void FIELDMAP_ForceUpdate( FIELDMAP_WORK *fieldWork )
 	VecFx32 rail_pos;
 
   // レールシステムメイン
-  FIELD_RAIL_MAN_Update(fieldWork->railMan, GFL_UI_KEY_GetCont() );
+  FIELD_RAIL_MAN_Update(fieldWork->railMan );
   FIELD_RAIL_MAN_UpdateCamera(fieldWork->railMan);
-	FIELD_RAIL_MAN_GetPos( fieldWork->railMan, &rail_pos );
+	FIELD_RAIL_MAN_GetBindWorkPos( fieldWork->railMan, &rail_pos );
 	FLD_SCENEAREA_Update( fieldWork->sceneArea, &rail_pos );
   
 	//登録テーブルごとに個別のメイン処理を呼び出し

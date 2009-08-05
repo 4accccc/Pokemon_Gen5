@@ -2,7 +2,7 @@
 /**
  *	GAME FREAK inc.
  *
- *	@file		field_rail_func.h
+ *	@file		field_work_func.h
  *	@brief	フィールドレール　基本関数郡
  *	@author	tomoya takahashi
  *	@date		2009.07.06
@@ -26,7 +26,7 @@ extern "C"{
 //------------------------------------------------------------------
 //  直線
 //------------------------------------------------------------------
-extern void FIELD_RAIL_POSFUNC_StraitLine(const FIELD_RAIL * rail, VecFx32 * pos);
+extern void FIELD_RAIL_POSFUNC_StraitLine(const FIELD_RAIL_WORK * work, VecFx32 * pos);
 
 //------------------------------------------------------------------
 //  カーブ
@@ -38,7 +38,7 @@ typedef struct
 	fx32 y;
 	fx32 z;
 } RAIL_POSFUNC_CURVE_WORK;
-extern void FIELD_RAIL_POSFUNC_CurveLine(const FIELD_RAIL * rail, VecFx32 * pos);
+extern void FIELD_RAIL_POSFUNC_CurveLine(const FIELD_RAIL_WORK * work, VecFx32 * pos);
 
 
 //-----------------------------------------------------------------------------

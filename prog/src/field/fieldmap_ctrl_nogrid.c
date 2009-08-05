@@ -13,6 +13,7 @@
 #include "fieldmap.h"
 #include "field_player_nogrid.h"
 #include "fldeff_shadow.h"
+#include "field/zonedata.h"
 
 #include "gamesystem/game_data.h"  //PLAYER_WORK
 
@@ -33,7 +34,7 @@
 ///	NOGRID_MOVE_WORK
 //--------------------------------------------------------------
 typedef struct {
-	VecFx32 player_way;
+  FIELD_PLAYER_NOGRID_WORK player_work;
 }NOGRID_MOVE_WORK;
 
 static const RAIL_LOCATION locationStart = {
@@ -83,11 +84,15 @@ static void mapCtrlNoGrid_Create(
 	work = GFL_HEAP_AllocClearMemory( FIELDMAP_GetHeapID( fieldWork ), sizeof(NOGRID_MOVE_WORK) );
 	FIELDMAP_SetMapCtrlWork( fieldWork, work );
 
-	FIELD_RAIL_LOADER_Load( railLoader, NARC_field_rail_data_h01_dat, FIELDMAP_GetHeapID(fieldWork) );
+	FIELD_RAIL_LOADER_Load( railLoader, ZONEDATA_GetRailDataID( FIELDMAP_GetZoneID(fieldWork) ), FIELDMAP_GetHeapID(fieldWork) );
   FIELD_RAIL_MAN_Load(railMan, FIELD_RAIL_LOADER_GetData(railLoader));
-  FIELD_RAIL_MAN_SetLocation( railMan, &locationStart );
+  work->player_work.railwork = FIELD_RAIL_MAN_CreateWork(railMan);  // 移動管理１オブジェ生成
+  
+  // ロケーションの設定
+  FIELD_RAIL_WORK_SetLocation( work->player_work.railwork, &locationStart );
   //FIELD_RAIL_MAN_Load(railMan, &point_c03_start);
-  FIELD_RAIL_MAN_GetPos(railMan, pos );
+  FIELD_RAIL_WORK_GetPos(work->player_work.railwork, pos );
+  FIELD_RAIL_MAN_BindCamera( railMan, work->player_work.railwork );
 //  FIELD_CAMERA_BindNoCamera(camera, TRUE);
 //
 	
@@ -110,7 +115,7 @@ static void mapCtrlNoGrid_Create(
 
   FIELD_CAMERA_SetTargetPos( camera, pos );
 
-  FIELD_PLAYER_NOGRID_Rail_SetUp( fld_player, FIELD_RAIL_MAN_GetActionWay( railMan ), &work->player_way );
+  FIELD_PLAYER_NOGRID_Rail_SetUp( fld_player, &work->player_work );
 }
 
 //--------------------------------------------------------------
@@ -122,10 +127,13 @@ static void mapCtrlNoGrid_Create(
 //--------------------------------------------------------------
 static void mapCtrlNoGrid_Delete( FIELDMAP_WORK *fieldWork )
 {
+  FIELD_RAIL_MAN* railMan = FIELDMAP_GetFieldRailMan( fieldWork );
 	FIELD_RAIL_LOADER* railLoader = FIELDMAP_GetFieldRailLoader(fieldWork);
 	NOGRID_MOVE_WORK *work = FIELDMAP_GetMapCtrlWork( fieldWork );
 
 	FIELD_RAIL_LOADER_Clear( railLoader );
+  FIELD_RAIL_MAN_DeleteWork( railMan, work->player_work.railwork );
+  FIELD_RAIL_MAN_UnBindCamera( railMan );
 	//DeletePlayerAct( fieldWork->field_player );
 	GFL_HEAP_FreeMemory( work );
 }
@@ -150,7 +158,7 @@ static void mapCtrlNoGrid_Main( FIELDMAP_WORK *fieldWork, VecFx32 *pos )
   //デバッグのため、レール処理をON/OFF
   if (key_trg & PAD_BUTTON_L)
   {
-    FIELD_RAIL_MAN_SetActiveFlag(railMan, !rail_flag);
+    FIELD_RAIL_WORK_SetActiveFlag(work->player_work.railwork, !rail_flag);
     if (!rail_flag)
     {
 			FIELD_CAMERA_SetMode( FIELDMAP_GetFieldCamera(fieldWork), FIELD_CAMERA_MODE_DIRECT_POS );
@@ -170,16 +178,12 @@ static void mapCtrlNoGrid_Main( FIELDMAP_WORK *fieldWork, VecFx32 *pos )
   {
     PLAYER_WORK *player = GAMEDATA_GetMyPlayerWork(
         GAMESYSTEM_GetGameData(FIELDMAP_GetGameSysWork(fieldWork)) );
-		int rail_action_key;
-    int way;
 
-    FIELD_RAIL_MAN_GetPos(railMan, pos );
-    FIELD_PLAYER_SetPos( fld_player, pos );
+		FIELD_PLAYER_NOGRID_Rail_Move( fld_player, FIELDMAP_GetFldEffCtrl(fieldWork), FIELDMAP_GetFieldCamera(fieldWork), GFL_UI_KEY_GetCont(), &work->player_work );
+
+    FIELD_PLAYER_GetPos( fld_player, pos );
     PLAYERWORK_setPosition( player, pos );
 
-		rail_action_key = FIELD_RAIL_MAN_GetActionKey( railMan );
-    way             = FIELD_RAIL_MAN_GetActionWay( railMan );
-		FIELD_PLAYER_NOGRID_Rail_Move( fld_player, FIELDMAP_GetFldEffCtrl(fieldWork), &work->player_way, rail_action_key, way, FIELDMAP_GetFieldCamera(fieldWork) );
   }
 	else
   {

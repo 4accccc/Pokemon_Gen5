@@ -263,11 +263,10 @@ u32 FLD_SCENEAREA_LOADER_DEBUG_GetDataSize( const FLD_SCENEAREA_LOADER* cp_sys )
 //-----------------------------------------------------------------------------
 static BOOL C3_SCENEAREA_CheckArea( const FLD_SCENEAREA* cp_sys, const FLD_SCENEAREA_DATA* cp_data, const VecFx32* cp_pos )
 {
-  VecFx32 normal_vec = {0,0,-FX32_ONE};
   VecFx32 npos;
   fx32 dist;
   u32 rotate;
-  VecFx32 target, normal;
+  VecFx32 target;
   const FLD_SCENEAREA_CIRCLE_PARAM* cp_param = (FLD_SCENEAREA_CIRCLE_PARAM*)cp_data->area;
 
   VEC_Set( &target, cp_param->center_x, cp_param->center_y, cp_param->center_z );
@@ -277,16 +276,31 @@ static BOOL C3_SCENEAREA_CheckArea( const FLD_SCENEAREA* cp_sys, const FLD_SCENE
   npos.y  = 0;
   dist    = VEC_Mag( &npos );
   VEC_Normalize( &npos, &npos );
-  rotate  = FX_AcosIdx( VEC_DotProduct( &npos, &normal_vec ) );
+  rotate  = FX_Atan2Idx( npos.x, npos.z );
+  /*
   VEC_CrossProduct( &npos, &normal_vec, &normal );
   if( normal.y < 0 ){
     rotate = 0x10000 - rotate;
-  }
+  }*/
 
   // ƒGƒŠƒA“à”»’è
-  if( (cp_param->rot_start <= rotate) && (cp_param->rot_end > rotate) ){
-    if( (cp_param->dist_min <= dist) && (cp_param->dist_max > dist) ){
-      return TRUE;
+  if( (cp_param->dist_min <= dist) && (cp_param->dist_max > dist) ){
+    // rot_end - rot_start‚ª180“xˆÈã‚È‚çA‚O‚ð’Ê‰ß‚·‚é‚P‚W‚O‚ÌŠp“x
+    if( cp_param->rot_end < cp_param->rot_start )
+    {
+      TOMOYA_Printf( "rot_end %d rot_start %d rotate %d\n", cp_param->rot_end, cp_param->rot_start, rotate );
+      if( ((cp_param->rot_end >= rotate) && (rotate >= 0)) ||
+          ((0x10000 > rotate) && (rotate >= cp_param->rot_start)) )
+      {
+        return TRUE;
+      }
+    }
+    else
+    {
+      if( (cp_param->rot_start <= rotate) && (cp_param->rot_end > rotate) )
+      {
+        return TRUE;
+      }
     }
   }
 

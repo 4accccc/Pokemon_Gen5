@@ -72,7 +72,8 @@ typedef struct {
   FLD_SCENEAREA* p_sceneArea;
 	FLD_SCENEAREA_LOADER* p_scenearealoader;
 
-	VecFx32 player_way;
+
+  FIELD_PLAYER_NOGRID_WORK player_work;
 
 }C3_MOVE_WORK;
 
@@ -143,8 +144,6 @@ static void mapCtrlC3_Create(
   // レール起動
 	FIELD_RAIL_LOADER_Load( p_rail_loader, NARC_field_rail_data_c3_dat, FIELDMAP_GetHeapID(fieldWork) );
   FIELD_RAIL_MAN_Load(railMan, FIELD_RAIL_LOADER_GetData(p_rail_loader));
-  FIELD_RAIL_MAN_SetLocation( railMan, &sc_RAIL_START_LOCATION );
-  FIELD_RAIL_MAN_GetPos(railMan, pos );
 
   // シーンエリア
   work->p_sceneArea = FIELDMAP_GetFldSceneArea( fieldWork );
@@ -156,10 +155,19 @@ static void mapCtrlC3_Create(
 			FLD_SCENEAREA_LOADER_GetFunc(work->p_scenearealoader) );
 	
 	fld_player = FIELDMAP_GetFieldPlayer( fieldWork );
+  
+
+  work->player_work.railwork = FIELD_RAIL_MAN_CreateWork( railMan );
+  FIELD_RAIL_MAN_BindCamera( railMan, work->player_work.railwork );
+  FIELD_RAIL_WORK_SetLocation( work->player_work.railwork, &sc_RAIL_START_LOCATION );
+
+  FIELD_RAIL_WORK_GetPos(work->player_work.railwork, pos );
+
+  FIELD_PLAYER_NOGRID_Rail_SetUp( fld_player, &work->player_work );
+
+
 	FIELD_PLAYER_SetPos( fld_player, pos);
 	FIELD_PLAYER_SetDir( fld_player, dir );
-
-  FIELD_PLAYER_NOGRID_Rail_SetUp( fld_player, FIELD_RAIL_MAN_GetActionWay( railMan ), &work->player_way );
 }
 
 //--------------------------------------------------------------
@@ -172,6 +180,7 @@ static void mapCtrlC3_Create(
 static void mapCtrlC3_Delete( FIELDMAP_WORK *fieldWork )
 {
 	C3_MOVE_WORK *work = FIELDMAP_GetMapCtrlWork( fieldWork );
+  FIELD_RAIL_MAN* railMan = FIELDMAP_GetFieldRailMan( fieldWork );
 	FIELD_RAIL_LOADER* p_rail_loader = FIELDMAP_GetFieldRailLoader(fieldWork);
 
   FLD_SCENEAREA_Release( work->p_sceneArea );
@@ -179,6 +188,9 @@ static void mapCtrlC3_Delete( FIELDMAP_WORK *fieldWork )
 	FLD_SCENEAREA_LOADER_Clear( work->p_scenearealoader );
 
 	FIELD_RAIL_LOADER_Clear( p_rail_loader );
+
+  FIELD_RAIL_MAN_DeleteWork( railMan, work->player_work.railwork );
+  FIELD_RAIL_MAN_UnBindCamera( railMan );
 
 	GFL_HEAP_FreeMemory( work );
 
@@ -206,18 +218,13 @@ static void mapCtrlC3_Main( FIELDMAP_WORK *fieldWork, VecFx32 *pos )
   //デバッグのため、レール処理をON/OFF
   if (key_trg & PAD_BUTTON_L)
   {
-    FIELD_RAIL_MAN_SetActiveFlag(railMan, !rail_flag);
+    FIELD_RAIL_WORK_SetActiveFlag(mwk->player_work.railwork, !rail_flag);
     FLD_SCENEAREA_SetActiveFlag(mwk->p_sceneArea, !rail_flag);
   }
 
   if (rail_flag)
   {
-		int rail_action_key;
-    int way;
     // レール動作
-    FIELD_RAIL_MAN_GetPos(railMan, pos );
-    FIELD_PLAYER_SetPos( fld_player, pos );
-    PLAYERWORK_setPosition( player, pos );
     
     // シーンエリア処理でカメラ上書き
     if( FLD_SCENEAREA_GetUpdateFuncID( mwk->p_sceneArea ) == FLD_SCENEAREA_UPDATE_CIRCLE ){
@@ -226,9 +233,11 @@ static void mapCtrlC3_Main( FIELDMAP_WORK *fieldWork, VecFx32 *pos )
     }
 
 		// 移動方向の設定
-		rail_action_key = FIELD_RAIL_MAN_GetActionKey( railMan );
-    way             = FIELD_RAIL_MAN_GetActionWay( railMan );
-		FIELD_PLAYER_NOGRID_Rail_Move( fld_player, FIELDMAP_GetFldEffCtrl(fieldWork), &mwk->player_way, rail_action_key, way, FIELDMAP_GetFieldCamera(fieldWork) );
+		FIELD_PLAYER_NOGRID_Rail_Move( fld_player, FIELDMAP_GetFldEffCtrl(fieldWork), FIELDMAP_GetFieldCamera(fieldWork), GFL_UI_KEY_GetCont(), &mwk->player_work );
+
+
+    FIELD_PLAYER_GetPos( fld_player, pos );
+    PLAYERWORK_setPosition( player, pos );
 //		TOMOYA_Printf( "pos->y 0x%x\n", pos->y );
   }	
   else

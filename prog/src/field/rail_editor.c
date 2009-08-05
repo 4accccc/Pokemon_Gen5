@@ -1095,7 +1095,7 @@ static void RE_Reflect_Rail( DEBUG_RAIL_EDITOR* p_wk )
 	void* p_setdata;
 
 	// ロケーション取得
-	FIELD_RAIL_MAN_GetLocation( p_rail, &location );
+	FIELD_RAIL_WORK_GetLocation( FIELD_RAIL_MAN_DEBUG_GetBindWork(p_rail), &location );
 
 	// レール情報ローダーに設定
 	FIELD_RAIL_LOADER_Clear( p_railload );
@@ -1107,7 +1107,7 @@ static void RE_Reflect_Rail( DEBUG_RAIL_EDITOR* p_wk )
 	FIELD_RAIL_MAN_Load( p_rail,  FIELD_RAIL_LOADER_GetData( p_railload ) );
 
 	// ロケーション設定
-	FIELD_RAIL_MAN_SetLocation( p_rail, &location );
+	FIELD_RAIL_WORK_SetLocation( FIELD_RAIL_MAN_DEBUG_GetBindWork(p_rail), &location );
 
 	// 描画反映
 	{
@@ -1197,10 +1197,10 @@ static void RE_JumpPoint( DEBUG_RAIL_EDITOR* p_wk )
 		location.line_ofs			= 0;
 		location.width_ofs		= 0;
 		location.key					= 0;
-		FIELD_RAIL_MAN_SetLocation( p_rail, &location );
+		FIELD_RAIL_WORK_SetLocation( FIELD_RAIL_MAN_DEBUG_GetBindWork(p_rail), &location );
 
 		// 位置を人物に設定
-		FIELD_RAIL_MAN_GetPos( p_rail, &pos );
+		FIELD_RAIL_MAN_GetBindWorkPos( p_rail, &pos );
 		// 
 		FIELD_PLAYER_SetPos( FIELDMAP_GetFieldPlayer( p_wk->p_fieldmap ), &pos );
 	}
@@ -1225,10 +1225,10 @@ static void RE_JumpLine( DEBUG_RAIL_EDITOR* p_wk )
 		location.line_ofs			= 0;
 		location.width_ofs		= 0;
 		location.key					= 0;
-		FIELD_RAIL_MAN_SetLocation( p_rail, &location );
+		FIELD_RAIL_WORK_SetLocation( FIELD_RAIL_MAN_DEBUG_GetBindWork(p_rail), &location );
 
 		// 位置を人物に設定
-		FIELD_RAIL_MAN_GetPos( p_rail, &pos );
+		FIELD_RAIL_MAN_GetBindWorkPos( p_rail, &pos );
 		// 
 		FIELD_PLAYER_SetPos( FIELDMAP_GetFieldPlayer( p_wk->p_fieldmap ), &pos );
 	}
@@ -1264,7 +1264,7 @@ static void RE_JumpArea( DEBUG_RAIL_EDITOR* p_wk )
 				VecFx32 pl_pos;
 				u16 _rotate;
 
-				_rotate = (u16)((u32)cp_wk->rot_start + 0x8000);
+				_rotate = (u16)((u32)cp_wk->rot_start);
 
 				FIELD_PLAYER_GetPos( p_player, &pl_pos );
 				FIELD_CAMERA_GetTargetPos( p_camera, &target );
@@ -1528,9 +1528,9 @@ static void RE_InputPoint_Rail( DEBUG_RAIL_EDITOR* p_wk )
 
 
 	// レールシステムメイン
-	FIELD_RAIL_MAN_Update(p_rail, GFL_UI_KEY_GetCont() );
+	FIELD_RAIL_MAN_Update(p_rail );
 	FIELD_RAIL_MAN_UpdateCamera(p_rail);
-	FIELD_RAIL_MAN_GetPos( p_rail, &pos );
+	FIELD_RAIL_MAN_GetBindWorkPos( p_rail, &pos );
 	FLD_SCENEAREA_Update( p_scenearea, &pos );
 
   FIELD_PLAYER_SetPos( p_player, &pos );
@@ -1639,7 +1639,7 @@ static void RE_InitInputPoint_FreeCircle( DEBUG_RAIL_EDITOR* p_wk )
 	
 	// レール情報のラインの中心データをターゲットに設定
 	FIELD_CAMERA_GetTargetPos( p_camera, &target );	// 今のターゲットで初期化
-	FIELD_RAIL_MAN_GetLocation( p_rail, &location	);
+	FIELD_RAIL_WORK_GetLocation( FIELD_RAIL_MAN_DEBUG_GetBindWork(p_rail), &location	);
 	if( location.type == FIELD_RAIL_TYPE_LINE )
 	{
 		linepos_set = cp_rail_setting->line_table[ location.rail_index ].line_pos_set;
@@ -2039,7 +2039,7 @@ static void RE_Send_RailLocationData( DEBUG_RAIL_EDITOR* p_wk )
 	RAIL_LOCATION location;
 	BOOL result;
 
-	FIELD_RAIL_MAN_GetLocation( p_rail, &location );
+	FIELD_RAIL_WORK_GetLocation( FIELD_RAIL_MAN_DEBUG_GetBindWork(p_rail), &location );
 
 	p_senddata->header.data_type = RE_MCS_DATA_RAILLOCATIONDATA;
 	p_senddata->rail_type = location.type;

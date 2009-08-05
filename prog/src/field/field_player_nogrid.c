@@ -41,13 +41,14 @@ static BOOL nogridPC_Move_CalcSetGroundMove(
  *	@brief  プレイヤー動作　レールシステム版　初期化
  *
  *	@param	fld_player      ワーク
- *	@param	way             方向（キー）
+ *	@param  railWork        レール動作ワーク
  *	@param	p_playerway     プレイヤー方向ワーク（内部で初期化）
  */
 //-----------------------------------------------------------------------------
-void FIELD_PLAYER_NOGRID_Rail_SetUp( FIELD_PLAYER *fld_player, RAIL_KEY way, VecFx32* p_playerway )
+void FIELD_PLAYER_NOGRID_Rail_SetUp( FIELD_PLAYER *fld_player, FIELD_PLAYER_NOGRID_WORK* p_wk )
 {
 	MMDL *fmmdl;
+  u32 way = FIELD_RAIL_WORK_GetActionKey( p_wk->railwork );
 
 	fmmdl = FIELD_PLAYER_GetMMdl( fld_player );
 
@@ -68,7 +69,7 @@ void FIELD_PLAYER_NOGRID_Rail_SetUp( FIELD_PLAYER *fld_player, RAIL_KEY way, Vec
 		MMDL_SetDirDisp(fmmdl,DIR_RIGHT);
   }
 
-  VEC_Set( p_playerway, 0,0,0 );
+  VEC_Set( &p_wk->way, 0,0,0 );
 }
 
 //----------------------------------------------------------------------------
@@ -76,11 +77,13 @@ void FIELD_PLAYER_NOGRID_Rail_SetUp( FIELD_PLAYER *fld_player, RAIL_KEY way, Vec
  *	@brief	フィールド　ノーグリッド　レール動作
  *
  *	@param	fld_player		フィールドプレイヤー
- *	@param	key						キー
+ *  @param  fectrl        影操作用;
  *	@param	cp_camera			カメラ情報
+ *	@param  key           キーコント
+ *	@param  p_wk          補助ワーク
  */
 //-----------------------------------------------------------------------------
-void FIELD_PLAYER_NOGRID_Rail_Move( FIELD_PLAYER *fld_player, FLDEFF_CTRL *fectrl, VecFx32* p_playerway, int key, RAIL_KEY way, const FIELD_CAMERA* cp_camera )
+void FIELD_PLAYER_NOGRID_Rail_Move( FIELD_PLAYER *fld_player, FLDEFF_CTRL *fectrl, const FIELD_CAMERA* cp_camera, int key, FIELD_PLAYER_NOGRID_WORK* p_wk )
 {
 	VecFx32 target;
 	VecFx32 camerapos;
@@ -90,6 +93,9 @@ void FIELD_PLAYER_NOGRID_Rail_Move( FIELD_PLAYER *fld_player, FLDEFF_CTRL *fectr
 	fx32 cos;
 	VecFx32 cross;
 	MMDL *fmmdl;
+  u32 rail_key;
+  u32 rail_frame;
+  u32 way;
 
 	fmmdl = FIELD_PLAYER_GetMMdl( fld_player );
 
@@ -111,44 +117,62 @@ void FIELD_PLAYER_NOGRID_Rail_Move( FIELD_PLAYER *fld_player, FLDEFF_CTRL *fectr
 	{
     if( key & PAD_KEY_UP )
     {
-      VEC_Set( p_playerway, camera_way.x, 0, camera_way.z );
+      rail_key = RAIL_KEY_UP;
+      VEC_Set( &p_wk->way, camera_way.x, 0, camera_way.z );
     }
     else if( key & PAD_KEY_DOWN )
     {
-      VEC_Set( p_playerway, -camera_way.x, 0, -camera_way.z );
+      rail_key = RAIL_KEY_DOWN;
+      VEC_Set( &p_wk->way, -camera_way.x, 0, -camera_way.z );
     }
     else if( key & PAD_KEY_LEFT )
     {
-      VEC_Set( p_playerway, camera_way.z, 0, -camera_way.x );
+      rail_key = RAIL_KEY_LEFT;
+      VEC_Set( &p_wk->way, camera_way.z, 0, -camera_way.x );
     }
     else if( key & PAD_KEY_RIGHT )
     {
-      VEC_Set( p_playerway, -camera_way.z, 0, camera_way.x );
+      rail_key = RAIL_KEY_RIGHT;
+      VEC_Set( &p_wk->way, -camera_way.z, 0, camera_way.x );
     }
     
-		if( key & PAD_BUTTON_B )
+#ifdef PM_DEBUG
+    if( key & PAD_BUTTON_R )
+    {
+      rail_frame = RAIL_FRAME_2;
+			MMDL_SetDrawStatus(fmmdl,DRAW_STA_WALK_8F);
+    }
+    else if( key & PAD_BUTTON_B )
+#else
+    if( key & PAD_BUTTON_B )
+#endif
 		{	
+      rail_frame = RAIL_FRAME_4;
 			MMDL_SetDrawStatus(fmmdl,DRAW_STA_DASH_4F);
 		}
 		else
 		{
+      rail_frame = RAIL_FRAME_8;
 			MMDL_SetDrawStatus(fmmdl,DRAW_STA_WALK_8F);
 		}
+
+    FIELD_RAIL_WORK_ForwardReq( p_wk->railwork, rail_frame, rail_key );
 	}
-	else
+	else if( FIELD_RAIL_WORK_GetLastAction( p_wk->railwork ) == FALSE )
 	{
 		MMDL_SetDrawStatus(fmmdl,DRAW_STA_STOP);
 	}
 
 	// 主人公方向
-	pl_way = *p_playerway;
+	pl_way = p_wk->way;
 	pl_way.y = 0;	// 平面で考える
 	VEC_Normalize( &pl_way, &pl_way );
 
 	
 	// カメラの方向と主人公の方向から、向きを決定
-	if( (p_playerway->x == p_playerway->z) && (p_playerway->x == p_playerway->y) && (p_playerway->x == 0) )
+	if( (p_wk->way.x == p_wk->way.z) && (p_wk->way.x == p_wk->way.y) && (p_wk->way.x == 0) )
 	{
+    way = FIELD_RAIL_WORK_GetActionKey( p_wk->railwork );
     if( way == RAIL_KEY_UP )
     {
       MMDL_SetDirDisp(fmmdl,DIR_UP);
@@ -201,6 +225,14 @@ void FIELD_PLAYER_NOGRID_Rail_Move( FIELD_PLAYER *fld_player, FLDEFF_CTRL *fectr
 		// プレイヤー方向の設定
 		FIELD_PLAYER_SetDir( fld_player, FX_Atan2Idx( pl_way.x, pl_way.z ) );
 	}
+
+  // プレイヤー位置制御
+//  if( FIELD_RAIL_WORK_GetLastAction( p_wk->railwork ) )
+  {
+    VecFx32 pos;
+    FIELD_RAIL_WORK_GetPos( p_wk->railwork, &pos );
+    FIELD_PLAYER_SetPos( fld_player, &pos );
+  }
 }
 
 

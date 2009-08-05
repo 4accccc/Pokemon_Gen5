@@ -13,13 +13,22 @@
 #include "field_camera.h"
 #include "field/field_rail_loader.h"
 #include "field/rail_location.h"
+
+
+//------------------------------------------------------------------
+// レールシステム、WBでのワーク数
+//------------------------------------------------------------------
+#define FIELD_RAIL_WORK_MAX (48)
+
+
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 typedef struct _FIELD_RAIL_MAN FIELD_RAIL_MAN;
 
 //------------------------------------------------------------------
+// 1つのレール動作ワーク
 //------------------------------------------------------------------
-typedef struct _FIELD_RAIL FIELD_RAIL;
+typedef struct _FIELD_RAIL_WORK FIELD_RAIL_WORK;
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
@@ -84,7 +93,7 @@ typedef struct _RAIL_LINEPOS_SET{
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
-typedef void (RAIL_POS_FUNC)(const FIELD_RAIL * man, VecFx32 * pos);
+typedef void (RAIL_POS_FUNC)(const FIELD_RAIL_WORK * work, VecFx32 * pos);
 typedef void (RAIL_CAMERA_FUNC)(const FIELD_RAIL_MAN * man);
 typedef fx32 (RAIL_LINE_DIST_FUNC)(const RAIL_POINT * point_s, const RAIL_POINT * point_e, const RAIL_LINEPOS_SET * line_pos_set );
 
@@ -118,6 +127,22 @@ typedef enum {
 
   FIELD_RAIL_TYPE_MAX
 }FIELD_RAIL_TYPE;
+
+
+//------------------------------------------------------------------
+/**
+ * @brief   １歩速度指定
+ *
+ * 外部から、移動速度、を指定するためのコマンド
+ */
+//------------------------------------------------------------------
+typedef enum {  
+  RAIL_FRAME_8,
+  RAIL_FRAME_4,
+  RAIL_FRAME_2,
+
+  RAIL_FRAME_MAX,
+}RAIL_FRAME;
 
 
 //------------------------------------------------------------------
@@ -212,13 +237,13 @@ struct _RAIL_SETTING{
 //============================================================================================
 //
 //
-//  レール制御のための関数群
+//  レールシステム制御のための関数群
 //
 //
 //============================================================================================
 //------------------------------------------------------------------
 //------------------------------------------------------------------
-extern FIELD_RAIL_MAN * FIELD_RAIL_MAN_Create(HEAPID heapID, FIELD_CAMERA * camera);
+extern FIELD_RAIL_MAN * FIELD_RAIL_MAN_Create(HEAPID heapID, u32 work_num, FIELD_CAMERA * camera);
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
@@ -226,14 +251,34 @@ extern void FIELD_RAIL_MAN_Delete(FIELD_RAIL_MAN * man);
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
-extern void FIELD_RAIL_MAN_Update(FIELD_RAIL_MAN * man, int key_cont);
-
-//------------------------------------------------------------------
-//------------------------------------------------------------------
 extern void FIELD_RAIL_MAN_Load(FIELD_RAIL_MAN * man, const RAIL_SETTING * setting);
-extern void FIELD_RAIL_MAN_GetLocation(const FIELD_RAIL_MAN * man, RAIL_LOCATION * location);
-extern void FIELD_RAIL_MAN_SetLocation(FIELD_RAIL_MAN * man, const RAIL_LOCATION * location);
 
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+extern void FIELD_RAIL_MAN_Update(FIELD_RAIL_MAN * man);
+
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+extern void FIELD_RAIL_MAN_UpdateCamera(const FIELD_RAIL_MAN * man);
+
+
+//------------------------------------------------------------------
+// 移動管理1物体の生成・破棄
+//------------------------------------------------------------------
+extern FIELD_RAIL_WORK* FIELD_RAIL_MAN_CreateWork( FIELD_RAIL_MAN * man );
+extern void FIELD_RAIL_MAN_DeleteWork( FIELD_RAIL_MAN * man, FIELD_RAIL_WORK* work );
+
+//------------------------------------------------------------------
+// バインドするFIELD_RAIL_WORKの設定
+//------------------------------------------------------------------
+extern void FIELD_RAIL_MAN_BindCamera( FIELD_RAIL_MAN * man, const FIELD_RAIL_WORK* work );
+extern void FIELD_RAIL_MAN_UnBindCamera( FIELD_RAIL_MAN * man );
+extern void FIELD_RAIL_MAN_GetBindWorkPos( const FIELD_RAIL_MAN * man, VecFx32* pos );
+#ifdef PM_DEBUG
+// 仮処理 色々な部分で、RAILMANからLocationなどを取得しているため、作成
+// これを使用している部分は後々は、PLAYERの情報から取得できるようになるはず
+extern FIELD_RAIL_WORK* FIELD_RAIL_MAN_DEBUG_GetBindWork( const FIELD_RAIL_MAN * man );
+#endif
 
 //------------------------------------------------------------------
 //  たぶんデバッグ用途のみ
@@ -241,20 +286,35 @@ extern void FIELD_RAIL_MAN_SetLocation(FIELD_RAIL_MAN * man, const RAIL_LOCATION
 extern void FIELD_RAIL_MAN_SetActiveFlag(FIELD_RAIL_MAN * man, BOOL flag);
 extern BOOL FIELD_RAIL_MAN_GetActiveFlag(const FIELD_RAIL_MAN *man);
 
+
+//============================================================================================
+//
+//
+//  レール移動制御のための関数群
+//
+//
+//============================================================================================
 //------------------------------------------------------------------
+// １歩移動リクエスト
 //------------------------------------------------------------------
-extern void FIELD_RAIL_MAN_GetPos(const FIELD_RAIL_MAN * man, VecFx32 * pos);
+extern BOOL FIELD_RAIL_WORK_ForwardReq( FIELD_RAIL_WORK * work, RAIL_FRAME frame, RAIL_KEY key );
+
+extern void FIELD_RAIL_WORK_GetLocation(const FIELD_RAIL_WORK * work, RAIL_LOCATION * location);
+extern void FIELD_RAIL_WORK_SetLocation(FIELD_RAIL_WORK * work, const RAIL_LOCATION * location);
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
-extern void FIELD_RAIL_MAN_UpdateCamera(const FIELD_RAIL_MAN * man);
+extern void FIELD_RAIL_WORK_GetPos(const FIELD_RAIL_WORK * work, VecFx32 * pos);
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
-extern void FIELD_RAIL_MAN_GetDirection(const FIELD_RAIL_MAN * man, VecFx32 * dir);
+extern RAIL_FRAME FIELD_RAIL_WORK_GetActionFrame( const FIELD_RAIL_WORK * work );
+extern RAIL_KEY FIELD_RAIL_WORK_GetActionKey( const FIELD_RAIL_WORK * work );
+extern BOOL FIELD_RAIL_WORK_GetLastAction( const FIELD_RAIL_WORK * work );
 
 
 //------------------------------------------------------------------
+// ワーク単位の動作設定
 //------------------------------------------------------------------
-extern int FIELD_RAIL_MAN_GetActionKey( const FIELD_RAIL_MAN * man );
-extern RAIL_KEY FIELD_RAIL_MAN_GetActionWay( const FIELD_RAIL_MAN * man );
+extern void FIELD_RAIL_WORK_SetActiveFlag( FIELD_RAIL_WORK * work, BOOL flag );
+extern BOOL FIELD_RAIL_WORK_IsActive( const FIELD_RAIL_WORK * work );
