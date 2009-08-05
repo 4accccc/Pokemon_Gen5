@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="Shift_JIS"?>
+
+<imd version="1.6.0">
+
+<head>
+	<create user="ariizumi_nobuhiko" host="W00147" date="2009-02-16T11:35:09" source="item01.mb"/>
+	<title>Model Data for NINTENDO NITRO-System</title>
+	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
+</head>
+
+<body>
+
+<original_create user="ariizumi_nobuhiko" host="W00147" date="2009-02-16T11:35:09" source="item01.mb"/>
+<original_generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
+
+<model_info
+	pos_scale="0"
+	scaling_rule="standard"
+	vertex_style="direct"
+	magnify="1.000000"
+	tool_start_frame="1"
+	tex_matrix_mode="maya"
+	compress_node="none" node_size="1 1"
+	compress_material="off" material_size="1 1"
+	output_texture="used"
+	force_full_weight="off"
+	use_primitive_strip="on"
+/>
+
+<box_test pos_scale="0" xyz="-0.500000 0.000000 -0.500000" whd="1.000000 0.000000 1.000000"/>
+
+<tex_image_array size="1">
+	<tex_image index="0" name="item23"
+		width="32" height="32" original_width="32" original_height="32"
+		format="palette16"
+		color0_mode="transparency"
+		palette_name="item23_pl"
+		path="C:/home/pokemon_wb_doc/staff/ariizumi_nobuhiko/musical_item/maya/tex/item23.tga"
+	>
+		<bitmap size="256">
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 7700 7777 0007 0000 0000 0000
+			0000 0000 aa77 aaaa 077a 0000 0000 0000
+			0000 7700 aaaa aaaa 7aaa 0007 0000 0000
+			0000 aa70 aaaa aaaa aaaa 007a 0000 0000
+			0000 aaa7 aaaa aaaa aaaa 07aa 0000 0000
+			7000 aaaa aaaa aaaa aaaa 7aaa 0000 0000
+			a700 aaaa aaaa aaaa aaaa aaaa 0007 0000
+			a700 abba aaaa aaaa aaaa aaaa 0007 0000
+			aa70 abba aaaa 8999 aaaa aaaa 007a 0000
+			aa70 bbbb 98aa 9999 aaa9 aaaa 007a 0000
+			bb70 bbbb 999a 9999 aa99 aaaa 007a 0000
+			bb70 bbbb 9999 9999 a899 aaaa 001a 0000
+			bb70 bbbb 6999 9961 a999 aaaa 111a 0000
+			bb70 9bbb 1999 9911 7999 aaaa 221a 0011
+			b700 9b22 1999 9919 7999 aaaa 2221 0133
+			2200 9255 1999 9914 7999 7aaa 1111 1333
+			5200 9255 1999 9911 7999 177a 0000 1331
+			5100 9235 6999 9961 7799 0177 0000 0110
+			1000 9872 9999 8899 7778 0011 0000 0000
+			0000 77a1 8888 7888 1177 1111 0001 0000
+			0000 7aa1 7777 7777 1777 7777 0001 0000
+			0000 aa10 7771 7aaa 1777 1777 0000 0000
+			0000 1100 a710 aaaa 7177 7777 0001 0000
+			0000 0000 1100 7aaa 1011 7771 0001 0000
+			0000 0000 0000 1111 0000 1110 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+		</bitmap>
+	</tex_image>
+</tex_image_array>
+
+<tex_palette_array size="1">
+	<tex_palette index="0" name="item23_pl" color_size="16">
+		0000 1ce7 225a 231e 39ce 3f9e 4e73 65ea
+		6739 77bd 7a8c 7b32 7fff 7fff 7fff 7fff
+	</tex_palette>
+</tex_palette_array>
+
+<material_array size="1">
+	<material index="0" name="lambert7"
+		light0="on" light1="off" light2="off" light3="off"
+		face="front"
+		alpha="31"
+		wire_mode="off"
+		polygon_mode="modulate"
+		polygon_id="0"
+		fog_flag="off"
+		depth_test_decal="off"
+		translucent_update_depth="off"
+		render_1_pixel="off"
+		far_clipping="off"
+		diffuse="25 25 25"
+		ambient="0 0 0"
+		specular="0 0 0"
+		emission="0 0 0"
+		shininess_table_flag="off"
+		tex_image_idx="0" tex_palette_idx="0"
+		tex_tiling="repeat repeat"
+		tex_scale="1.000000 1.000000"
+		tex_rotate="0.000000"
+		tex_translate="0.000000 0.000000"
+		tex_gen_mode="none"
+	/>
+</material_array>
+
+<matrix_array size="1">
+	<matrix index="0" mtx_weight="1" node_idx="0"/>
+</matrix_array>
+
+<polygon_array size="1">
+	<polygon index="0" name="polygon0"
+		vertex_size="4" polygon_size="1"
+		triangle_size="0" quad_size="1"
+		volume_min="-0.500000 0.000000 -0.500000"
+		volume_max="0.500000 0.000000 0.500000"
+		volume_r="0.707031"
+		mtx_prim_size="1"
+		nrm_flag="on" clr_flag="off" tex_flag="on"
+	>
+		<mtx_prim index="0">
+			<mtx_list size="1">0</mtx_list>
+			<primitive_array size="1">
+				<primitive index="0" type="quads" vertex_size="4">
+					<mtx idx="0"/>
+					<tex st="0.000000 32.000000"/>
+					<nrm xyz="0.000000 0.998047 0.000000"/>
+					<pos_s xyz="-0.500000 0.000000 0.500000"/>
+					<tex st="32.000000 32.000000"/>
+					<pos_xy xy="0.500000 0.000000"/>
+					<tex st="32.000000 0.000000"/>
+					<pos_xz xz="0.500000 -0.500000"/>
+					<tex st="0.000000 0.000000"/>
+					<pos_xy xy="-0.500000 0.000000"/>
+				</primitive>
+			</primitive_array>
+		</mtx_prim>
+	</polygon>
+</polygon_array>
+
+<node_array size="1">
+	<node index="0" name="pPlane1" kind="mesh"
+		parent="-1"
+		child="-1"
+		brother_next="-1"
+		brother_prev="-1"
+		draw_mtx="on"
+		billboard="off"
+		scale="1.000000 1.000000 1.000000"
+		rotate="0.000000 0.000000 0.000000"
+		translate="0.000000 0.000000 0.000000"
+		visibility="on"
+		display_size="1"
+		vertex_size="4" polygon_size="1"
+		triangle_size="0" quad_size="1"
+		volume_min="-0.500000 0.000000 -0.500000"
+		volume_max="0.500000 0.000000 0.500000"
+		volume_r="0.707031"
+	>
+		<display index="0" material="0" polygon="0" priority="0"/>
+	</node>
+</node_array>
+
+<output_info vertex_size="4" polygon_size="1"
+	triangle_size="0" quad_size="1"/>
+
+</body>
+
+</imd>

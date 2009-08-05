@@ -86,6 +86,7 @@ ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、中間ファイル削除
 	rm -f *.nsbtx
 	rm -f *.narc
 	rm -f *.naix
+	rm -f *.bin
 	rm -f $(targetname).narc
 	rm -f $(targetname).naix
 endif

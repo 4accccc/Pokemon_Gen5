@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="Shift_JIS"?>
+
+<imd version="1.6.0">
+
+<head>
+	<create user="ariizumi_nobuhiko" host="W00147" date="2009-02-17T19:07:56" source="untitled"/>
+	<title>Model Data for NINTENDO NITRO-System</title>
+	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
+</head>
+
+<body>
+
+<original_create user="ariizumi_nobuhiko" host="W00147" date="2009-02-17T19:07:56" source="untitled"/>
+<original_generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
+
+<model_info
+	pos_scale="0"
+	scaling_rule="standard"
+	vertex_style="direct"
+	magnify="1.000000"
+	tool_start_frame="1"
+	tex_matrix_mode="maya"
+	compress_node="none" node_size="1 1"
+	compress_material="off" material_size="1 1"
+	output_texture="used"
+	force_full_weight="off"
+	use_primitive_strip="on"
+/>
+
+<box_test pos_scale="0" xyz="-0.500000 0.000000 -0.500000" whd="1.000000 0.000000 1.000000"/>
+
+<tex_image_array size="1">
+	<tex_image index="0" name="item31"
+		width="32" height="64" original_width="32" original_height="64"
+		format="palette16"
+		color0_mode="transparency"
+		palette_name="item31_pl"
+		path="C:/home/pokemon_wb_doc/staff/ariizumi_nobuhiko/musical_item/maya/tex/item31.tga"
+	>
+		<bitmap size="512">
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 5000 0555 0000
+			0000 0000 0000 0000 0000 3550 5466 0005
+			0000 0000 0000 0000 0000 7745 4634 0051
+			0000 0000 0000 0000 0000 9975 6347 0054
+			0000 0000 0000 0000 5000 9974 6447 0546
+			0000 0000 0000 0000 2000 7744 3474 0246
+			0000 0000 0000 0000 2200 4441 4797 0236
+			0000 0000 0000 0000 bb55 4418 4474 0536
+			0000 0000 0000 5000 bbbb 458a 4444 0056
+			0000 0000 0000 b580 8bbb 4288 4444 0021
+			0000 0000 0000 bbb5 888b 4228 2444 0002
+			0000 0000 5800 8bbb 2888 2002 0222 0000
+			0000 0000 bb50 888b 0228 0000 0000 0000
+			0000 8000 abb5 2888 0282 0000 0000 0000
+			0000 b500 88ab 8228 0258 0000 0000 0000
+			0000 ab50 2888 5882 0022 0000 0000 0000
+			0000 8820 5228 5555 0002 0000 0000 0000
+			0000 2200 2002 5522 0002 0000 0000 0000
+			0000 0000 0000 aa20 0002 0000 0000 0000
+			0000 0000 0000 aa50 0002 0000 0000 0000
+			0000 0000 0000 bb50 0002 0000 0000 0000
+			0000 0000 0000 9950 0002 0000 0000 0000
+			0000 0000 0000 7750 0002 0000 0000 0000
+			0000 0000 0000 7750 0002 0000 0000 0000
+			0000 0000 0000 9950 0002 0000 0000 0000
+			0000 0000 0000 9950 0002 0000 0000 0000
+			0000 0000 0000 bb50 0002 0000 0000 0000
+			0000 0000 0000 bb50 0002 0000 0000 0000
+			0000 0000 0000 9950 0002 0000 0000 0000
+			0000 0000 0000 9950 0002 0000 0000 0000
+			0000 0000 0000 9950 0002 0000 0000 0000
+			0000 0000 0000 9950 0002 0000 0000 0000
+			0000 0000 0000 bb50 0002 0000 0000 0000
+			0000 0000 0000 bb50 0002 0000 0000 0000
+			0000 0000 0000 bb50 0002 0000 0000 0000
+			0000 0000 0000 bb50 0002 0000 0000 0000
+			0000 0000 0000 bb50 0002 0000 0000 0000
+			0000 0000 0000 bb50 0002 0000 0000 0000
+			0000 0000 0000 bb50 0002 0000 0000 0000
+			0000 0000 0000 bb50 0002 0000 0000 0000
+			0000 0000 0000 bb50 0002 0000 0000 0000
+			0000 0000 0000 bb50 0002 0000 0000 0000
+			0000 0000 1110 bb51 1112 0001 0000 0000
+			0000 1100 4471 bb54 4442 1114 0000 0000
+			0000 4412 4474 9924 4442 4444 0021 0000
+			2000 5558 4444 9925 4452 5544 0285 0000
+			b200 555b 5555 aa22 5522 5555 2bb5 0000
+			b500 58bb 5555 2225 5552 b855 5bbb 0000
+			b820 bbbb bbbb 5555 bb55 bbbb 8bbb 0002
+			8820 bbbb bbbb 555b bbb5 bbbb 88bb 0002
+			8820 bb88 bbbb bbbb bbbb bbbb 8888 0002
+			8820 88a8 bbb8 bbbb bbbb 888b 888a 0002
+			8200 aaaa 888a 8888 8888 aaa8 28aa 0000
+			2000 aaa2 aaaa aaaa aaaa aaaa 022a 0000
+			0000 2220 aaaa aaaa aaaa 22aa 0002 0000
+			0000 0000 2222 2222 2222 0022 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+		</bitmap>
+	</tex_image>
+</tex_image_array>
+
+<tex_palette_array size="1">
+	<tex_palette index="0" name="item31_pl" color_size="16">
+		0000 18f8 1ce7 231e 257e 39ce 3f9e 421f
+		4e73 5f1f 6739 77bd 7fff 7fff 7fff 7fff
+	</tex_palette>
+</tex_palette_array>
+
+<material_array size="1">
+	<material index="0" name="lambert7"
+		light0="on" light1="off" light2="off" light3="off"
+		face="front"
+		alpha="31"
+		wire_mode="off"
+		polygon_mode="modulate"
+		polygon_id="0"
+		fog_flag="off"
+		depth_test_decal="off"
+		translucent_update_depth="off"
+		render_1_pixel="off"
+		far_clipping="off"
+		diffuse="25 25 25"
+		ambient="0 0 0"
+		specular="0 0 0"
+		emission="0 0 0"
+		shininess_table_flag="off"
+		tex_image_idx="0" tex_palette_idx="0"
+		tex_tiling="repeat repeat"
+		tex_scale="1.000000 1.000000"
+		tex_rotate="0.000000"
+		tex_translate="0.000000 0.000000"
+		tex_gen_mode="none"
+	/>
+</material_array>
+
+<matrix_array size="1">
+	<matrix index="0" mtx_weight="1" node_idx="0"/>
+</matrix_array>
+
+<polygon_array size="1">
+	<polygon index="0" name="polygon0"
+		vertex_size="4" polygon_size="1"
+		triangle_size="0" quad_size="1"
+		volume_min="-0.500000 0.000000 -0.500000"
+		volume_max="0.500000 0.000000 0.500000"
+		volume_r="0.707031"
+		mtx_prim_size="1"
+		nrm_flag="on" clr_flag="off" tex_flag="on"
+	>
+		<mtx_prim index="0">
+			<mtx_list size="1">0</mtx_list>
+			<primitive_array size="1">
+				<primitive index="0" type="quads" vertex_size="4">
+					<mtx idx="0"/>
+					<tex st="0.000000 64.000000"/>
+					<nrm xyz="0.000000 0.998047 0.000000"/>
+					<pos_s xyz="-0.500000 0.000000 0.500000"/>
+					<tex st="32.000000 64.000000"/>
+					<pos_xy xy="0.500000 0.000000"/>
+					<tex st="32.000000 0.000000"/>
+					<pos_xz xz="0.500000 -0.500000"/>
+					<tex st="0.000000 0.000000"/>
+					<pos_xy xy="-0.500000 0.000000"/>
+				</primitive>
+			</primitive_array>
+		</mtx_prim>
+	</polygon>
+</polygon_array>
+
+<node_array size="1">
+	<node index="0" name="pPlane1" kind="mesh"
+		parent="-1"
+		child="-1"
+		brother_next="-1"
+		brother_prev="-1"
+		draw_mtx="on"
+		billboard="off"
+		scale="1.000000 1.000000 1.000000"
+		rotate="0.000000 0.000000 0.000000"
+		translate="0.000000 0.000000 0.000000"
+		visibility="on"
+		display_size="1"
+		vertex_size="4" polygon_size="1"
+		triangle_size="0" quad_size="1"
+		volume_min="-0.500000 0.000000 -0.500000"
+		volume_max="0.500000 0.000000 0.500000"
+		volume_r="0.707031"
+	>
+		<display index="0" material="0" polygon="0" priority="0"/>
+	</node>
+</node_array>
+
+<output_info vertex_size="4" polygon_size="1"
+	triangle_size="0" quad_size="1"/>
+
+</body>
+
+</imd>
