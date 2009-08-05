@@ -7,7 +7,7 @@
 #
 #----------------------------------------------------------------------------
 #ëŒè€ÉÜÅ[ÉUÅ[
-USERS = kagaya matsumiya tamada
+USERS = kagaya matsumiya tamada nakatsui
 #ã§í 
 include $(PROJECT_RSCDIR)/macro_define
 
@@ -63,9 +63,16 @@ endif
 #----------------------------------------------------------------------------
 #	make
 #----------------------------------------------------------------------------
+#narc
+do-build: $(TARGET_DIR)/$(TARGET_NARC)
+
+$(TARGET_DIR)/$(TARGET_NARC): $(TARGET_NARC)
+	$(COPY) $(TARGET_NARC) $(TARGET_DIR)
+	$(COPY) $(TARGET_NAIX) $(TARGET_DIR)
+
 ifeq ($(CONVERTUSER),true) #CONVERTUSER
 #*.ev
-do-build: $(SCRSRCS_BIN)
+#do-build: $(SCRSRCS_BIN)
 
 #common_scr.bin
 #common_scr.bin: ../../../include/msgdata/msg_common_scr.h
@@ -80,13 +87,6 @@ do-build: $(SCRSRCS_BIN)
 	@rm $*.o $*.elf temp_$*.s
 	@gawk -f scr_tools/ev_def.awk $<
 endif #CONVERTUSER
-
-#narc
-do-build: $(TARGET_DIR)/$(TARGET_NARC)
-
-$(TARGET_DIR)/$(TARGET_NARC): $(TARGET_NARC)
-	$(COPY) $(TARGET_NARC) $(TARGET_DIR)
-	$(COPY) $(TARGET_NAIX) $(TARGET_DIR)
 
 ifeq ($(CONVERTUSER),true) #CONVERTUSER
 $(TARGET_NARC): $(SCRSRCS_BIN)
@@ -116,3 +116,6 @@ diff:
 	-cp $(TARGET_NARC) old.narc
 	$(MAKE)
 	-fc /b $(TARGET_NARC) old.narc
+
+test:
+	@echo $(SCRIPTFILES)
