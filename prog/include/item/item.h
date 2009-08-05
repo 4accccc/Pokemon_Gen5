@@ -151,7 +151,8 @@ typedef enum{
 // HP 回復量定義 (下記以外なら、その値分だけ回復する）
 enum {
   ITEM_RECOVER_HP_FULL = 255,   ///< 全回復
-  ITEM_RECOVER_HP_HALF = 254,   ///< MAXの半分まで回復
+  ITEM_RECOVER_HP_HALF = 254,   ///< MAXの半分回復
+  ITEM_RECOVER_HP_QUOT = 253,   ///< MAXの1/4回復
 };
 
 // PP 回復量定義 (下記以外なら、その値分だけ回復する）
