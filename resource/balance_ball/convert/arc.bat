@@ -1,6 +1,6 @@
 cd data/conv_gra
 
-nnsarc -c -i -n manene.narc *.*
+nnsarc -c -i -n balance_ball.narc *.*
 
 move *.narc ../../
 move *.naix ../../

@@ -81,7 +81,8 @@ SUBDIRS	=	wmi \
 			trdata \
 			trmsg \
 			irc_compatible \
-			worldtrade
+			worldtrade \
+			balance_ball
 
 include $(RESOURCE_MACRO)
 

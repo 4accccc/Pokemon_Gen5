@@ -63,12 +63,12 @@ subdir:
 # narc のコピーだけ実行する
 $(TARGETDIR)/$(targetname).narc: $(targetname).narc
 	$(COPY) $(targetname).narc $(TARGETDIR)
-	$(COPY) $(targetname)_def.h $(TARGETDIR) 
+	$(COPY) $(targetname).naix $(TARGETDIR) 
 
 
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、元ファイルからコンバートするルールを有効にする
 # コピー先のnarcが古い場合実行する
-$(targetname).narc: $(lsources) $(gsources) $(esources) $(ssources) $(ulsources) $(ugsources) $(uesources) $(ussources) $(elsources) $(egsources) $(eesources) $(essources) $(isources) $(icasources) *.bat makefile *.lst
+$(targetname).narc: $(lsources) $(gsources) $(esources) $(ssources) $(ulsources) $(ugsources) $(uesources) $(ussources) $(elsources) $(egsources) $(eesources) $(essources) $(isources) $(icasources) *.bat makefile
 	copy.bat
 	cnv.bat
 	arc.bat

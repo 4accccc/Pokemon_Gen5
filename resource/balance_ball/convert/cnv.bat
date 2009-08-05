@@ -70,8 +70,6 @@ g2dcvtr bottom_hakusyu.nce		-br
 g2dcvtr upper_oam.ncl
 g2dcvtr upper_bg.ncl
 
-g2dcvtr touchpen.nce -br
-
 move *.N*R conv_gra
 move *.nsb* conv_gra
 
