@@ -5,8 +5,8 @@
   .text
 
   .include  "scr_seq_def.h"
-  .include  "../../../prog/include/msg/script/msg_dummy.h"
-  //.include  "../eventdata/zone_dummyevc.h"
+  //.include  "../../../prog/include/msg/script/msg_dummy.h"
+  //.include  "zone_dummy.h"
 
 //--------------------------------------------------------------
 //               スクリプト本体
