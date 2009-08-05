@@ -71,6 +71,19 @@
 #define PSTATUS_SUB_TOUCH_LEFT ( 152)
 #define PSTATUS_SUB_TOUCH_RIGHT ( 255)
 
+//カメラ定義
+#define PSTATUS_SUB_CAMERA_FRONT_X (FX32_CONST(-41.0f))
+#define PSTATUS_SUB_CAMERA_BACK_X (FX32_CONST(-66.0f))
+
+
+//くすぐり系定義
+#define PSTATUS_SUB_TICKLE_WIDHT (8)  //くすぐり幅
+#define PSTATUS_SUB_TICKLE_TIME (20)  //くすぐり有効時間
+#define PSTATUS_SUB_TICKLE_NUM (4)  //くすぐり回数
+
+//ジャンプ系定義
+#define PSTATUS_SUB_JUMP_TIME (10)
+#define PSTATUS_SUB_JUMP_HEIGHT (2)  //FX16にかけるので整数でOK
 
 //======================================================================
 //	enum
@@ -91,6 +104,15 @@ enum
   SSMT_MAX,
 }PSTAUTS_SUB_MARK_TYPE;
 
+//くすぐりの方向
+typedef enum
+{
+  SSTD_NONE,  //初回
+  SSTD_LEFT,  //左に行った
+  SSTD_RIGHT, //右に行った
+  
+}PSTATUS_SUB_TICKLE_DIR;
+
 //======================================================================
 //	typedef struct
 //======================================================================
@@ -100,7 +122,6 @@ struct _PSTATUS_SUB_WORK
   MCSS_WORK     *pokeMcss;
   MCSS_WORK     *pokeMcssBack;
   
-  BOOL        isUpdateStr;
   BOOL        isDispFront;
   
   GFL_BMPWIN  *bmpWinUpper;
@@ -108,6 +129,18 @@ struct _PSTATUS_SUB_WORK
   
   GFL_CLWK    *clwkBall;
   GFL_CLWK    *clwkMark[SSMT_MAX];
+  
+  //TPくすぐり操作用
+  BOOL        IsHoldTp;
+  PSTATUS_SUB_TICKLE_DIR tickleDir;
+  u32         befTpx;
+  u32         befTpy;
+  u8          holdCnt;
+  u8          tickleNum;
+  
+  //ジャンプ演出管理
+  BOOL        isJumpPoke;
+  u8          jumpCnt;
 
 };
 
@@ -116,6 +149,8 @@ struct _PSTATUS_SUB_WORK
 //======================================================================
 #pragma mark [> proto
 static void PSTATUS_SUB_DrawStr( PSTATUS_WORK *work , PSTATUS_SUB_WORK *subWork , const POKEMON_PASO_PARAM *ppp );
+
+static void PSTATUS_SUB_UpdateTP( PSTATUS_WORK *work , PSTATUS_SUB_WORK *subWork );
 
 static void PSTATUS_SUB_PokeCreateMcss( PSTATUS_WORK *work , PSTATUS_SUB_WORK *subWork , const POKEMON_PASO_PARAM *ppp );
 static void PSTATUS_SUB_PokeDeleteMcss( PSTATUS_WORK *work , PSTATUS_SUB_WORK *subWork );
@@ -130,8 +165,8 @@ PSTATUS_SUB_WORK* PSTATUS_SUB_Init( PSTATUS_WORK *work )
   subWork = GFL_HEAP_AllocMemory( work->heapId , sizeof(PSTATUS_SUB_WORK) );
   subWork->pokeMcss = NULL;
   subWork->pokeMcssBack = NULL;
-  subWork->isUpdateStr = FALSE;
-
+  subWork->IsHoldTp = FALSE;
+  subWork->isJumpPoke = FALSE;
   subWork->isDispFront = TRUE;
 
   return subWork;
@@ -151,43 +186,48 @@ void PSTATUS_SUB_Term( PSTATUS_WORK *work , PSTATUS_SUB_WORK *subWork )
 //--------------------------------------------------------------
 void PSTATUS_SUB_Main( PSTATUS_WORK *work , PSTATUS_SUB_WORK *subWork )
 {
-  /*
-  if( subWork->isUpdateStr == TRUE )
+  if( subWork->isJumpPoke == FALSE )
   {
-    if( PRINTSYS_QUE_IsExistTarget( work->printQue , GFL_BMPWIN_GetBmp( subWork->bmpWinUpper )) == FALSE && 
-        PRINTSYS_QUE_IsExistTarget( work->printQue , GFL_BMPWIN_GetBmp( subWork->bmpWinDown )) == FALSE )
-    {
-      subWork->isUpdateStr = FALSE;
-      GFL_BMPWIN_MakeTransWindow_VBlank( subWork->bmpWinUpper );
-      GFL_BMPWIN_MakeTransWindow_VBlank( subWork->bmpWinDown );
-    }
+    PSTATUS_SUB_UpdateTP( work , subWork );
   }
-  */
+  else
   {
-    //当たり判定作成
-    GFL_UI_TP_HITTBL hitTbl[2] =
-    {
-      { PSTATUS_SUB_TOUCH_TOP , PSTATUS_SUB_TOUCH_BOTTOM , PSTATUS_SUB_TOUCH_LEFT , PSTATUS_SUB_TOUCH_RIGHT },
-      { GFL_UI_TP_HIT_END ,0,0,0 },
-    };
+    //ポケモンジャンプ処理
+    VecFx32 cam_pos = {PSTATUS_SUB_CAMERA_FRONT_X,FX32_CONST(0.0f),FX32_CONST(101.0f)};
+    VecFx32 ofs={0,0,0};
     
-    const int ret = GFL_UI_TP_HitTrg( hitTbl );
+    subWork->jumpCnt++;
     
-    if( ret == 0 )
+    if( subWork->jumpCnt > PSTATUS_SUB_JUMP_TIME/2 &&
+        subWork->isDispFront == FALSE )
     {
-      subWork->isDispFront = !subWork->isDispFront;
-
-      if( subWork->isDispFront == TRUE )
-      {
-        MCSS_ResetVanishFlag( subWork->pokeMcss );
-        MCSS_SetVanishFlag( subWork->pokeMcssBack );
-      }
-      else
-      {
-        MCSS_SetVanishFlag( subWork->pokeMcss );
-        MCSS_ResetVanishFlag( subWork->pokeMcssBack );
-      }
+      MCSS_ResetVanishFlag( subWork->pokeMcss );
+      MCSS_SetVanishFlag( subWork->pokeMcssBack );
+      subWork->isDispFront = TRUE;
     }
+
+    if( subWork->jumpCnt >= PSTATUS_SUB_JUMP_TIME )
+    {
+      
+      subWork->isJumpPoke = FALSE;
+    }
+    else
+    {
+      u16 rad;
+      fx32 sin;
+      const fx32 camSubX = (PSTATUS_SUB_CAMERA_FRONT_X-PSTATUS_SUB_CAMERA_BACK_X);
+      const fx32 camOfsX = camSubX*subWork->jumpCnt/PSTATUS_SUB_JUMP_TIME;
+      cam_pos.x = PSTATUS_SUB_CAMERA_BACK_X+camOfsX;
+      
+      rad = subWork->jumpCnt*0x8000/PSTATUS_SUB_JUMP_TIME;
+      sin = FX_SinIdx( rad );
+      ofs.y = (sin*PSTATUS_SUB_JUMP_HEIGHT);
+      
+    }
+    MCSS_SetOfsPosition( subWork->pokeMcss , &ofs );
+    MCSS_SetOfsPosition( subWork->pokeMcssBack , &ofs );
+    GFL_G3D_CAMERA_SetPos( work->camera , &cam_pos );
+    GFL_G3D_CAMERA_Switching( work->camera );
   }
 }
 
@@ -351,6 +391,15 @@ void PSTATUS_SUB_DispPage_Trans( PSTATUS_WORK *work , PSTATUS_SUB_WORK *subWork 
     
   }
   subWork->isDispFront = TRUE;
+  subWork->isJumpPoke = FALSE;
+  {
+    VecFx32 ofs={0,0,0};
+    static const VecFx32 cam_pos = {PSTATUS_SUB_CAMERA_FRONT_X,FX32_CONST(0.0f),FX32_CONST(101.0f)};
+    MCSS_SetOfsPosition( subWork->pokeMcss , &ofs );
+    MCSS_SetOfsPosition( subWork->pokeMcssBack , &ofs );
+    GFL_G3D_CAMERA_SetPos( work->camera , &cam_pos );
+    GFL_G3D_CAMERA_Switching( work->camera );
+  }
 
 }
 
@@ -473,9 +522,127 @@ void PSTATUS_SUB_DrawStr( PSTATUS_WORK *work , PSTATUS_SUB_WORK *subWork , const
     GFL_STR_DeleteBuffer( dstStr );
     WORDSET_Delete( wordSet );
   }
+  
+}
 
+#pragma mark [>UI
+static void PSTATUS_SUB_UpdateTP( PSTATUS_WORK *work , PSTATUS_SUB_WORK *subWork )
+{
+  u32 tpx,tpy;
+  //当たり判定作成
+  GFL_UI_TP_HITTBL hitTbl[2] =
+  {
+    { PSTATUS_SUB_TOUCH_TOP , PSTATUS_SUB_TOUCH_BOTTOM , PSTATUS_SUB_TOUCH_LEFT , PSTATUS_SUB_TOUCH_RIGHT },
+    { GFL_UI_TP_HIT_END ,0,0,0 },
+  };
+  
+  GFL_UI_TP_GetPointCont( &tpx,&tpy );
+  if( subWork->isDispFront == TRUE )
+  {
+    //くすぐり判定
+    const int retCont = GFL_UI_TP_HitCont( hitTbl );
+    if( retCont == 0 )
+    {
+      if( subWork->IsHoldTp == FALSE )
+      {
+        subWork->IsHoldTp = TRUE;
+        subWork->tickleDir = SSTD_NONE;
+        subWork->befTpx = tpx;
+        subWork->befTpy = tpy;
+        subWork->holdCnt = 0;
+        subWork->tickleNum = 0;
+      }
+      else
+      {
+        const int subX = subWork->befTpx - tpx;
+        if( ( subWork->tickleDir == SSTD_NONE || subWork->tickleDir == SSTD_LEFT ) &&
+            subX > PSTATUS_SUB_TICKLE_WIDHT )
+        {
+          subWork->tickleNum++;
+          subWork->tickleDir = SSTD_RIGHT;
+          subWork->holdCnt = 0;
+          subWork->befTpx = tpx;
+          subWork->befTpy = tpy;
+        }
+        else
+        if( ( subWork->tickleDir == SSTD_NONE || subWork->tickleDir == SSTD_RIGHT ) &&
+            subX < -PSTATUS_SUB_TICKLE_WIDHT )
+        {
+          subWork->tickleNum++;
+          subWork->tickleDir = SSTD_LEFT;
+          subWork->holdCnt = 0;
+          subWork->befTpx = tpx;
+          subWork->befTpy = tpy;
+        }
+        else
+        {
+          subWork->holdCnt++;
+          if( subWork->holdCnt > PSTATUS_SUB_TICKLE_TIME )
+          {
+            //時間かかりすぎでリセット
+            subWork->tickleDir = SSTD_NONE;
+            subWork->holdCnt = 0;
+            subWork->tickleNum = 0;
+            subWork->befTpx = tpx;
+            subWork->befTpy = tpy;
+          }
+        }
+        if( subWork->tickleNum >= PSTATUS_SUB_TICKLE_NUM )
+        {
+          //ひっくり返る！
+          static const VecFx32 cam_pos = {PSTATUS_SUB_CAMERA_BACK_X,FX32_CONST(0.0f),FX32_CONST(101.0f)};
+          MCSS_SetVanishFlag( subWork->pokeMcss );
+          MCSS_ResetVanishFlag( subWork->pokeMcssBack );
+          GFL_G3D_CAMERA_SetPos( work->camera , &cam_pos );
+          GFL_G3D_CAMERA_Switching( work->camera );
+          subWork->isDispFront = FALSE;
+          subWork->IsHoldTp = FALSE;
+        }
+      }
+    }
+    else
+    {
+      subWork->IsHoldTp = FALSE;
+    }
+  }
+  else
+  {
+    //タッチでジャンプ
+    //くすぐり判定
+    const int retCont = GFL_UI_TP_HitTrg( hitTbl );
+    if( retCont == 0 )
+    {
+      subWork->isJumpPoke = TRUE;
+      subWork->jumpCnt = 0;
+    }
+  }
+  
+  
+/*  
+  const int ret = GFL_UI_TP_HitTrg( hitTbl );
+  
+  if( ret == 0 )
+  {
+    subWork->isDispFront = !subWork->isDispFront;
 
-  subWork->isUpdateStr = TRUE;
+    if( subWork->isDispFront == TRUE )
+    {
+      static const VecFx32 cam_pos = {FX32_CONST(-41.0f),FX32_CONST(0.0f),FX32_CONST(101.0f)};
+      MCSS_ResetVanishFlag( subWork->pokeMcss );
+      MCSS_SetVanishFlag( subWork->pokeMcssBack );
+      GFL_G3D_CAMERA_SetPos( work->camera , &cam_pos );
+      GFL_G3D_CAMERA_Switching( work->camera );
+    }
+    else
+    {
+      static const VecFx32 cam_pos = {FX32_CONST(-66.0f),FX32_CONST(0.0f),FX32_CONST(101.0f)};
+      MCSS_SetVanishFlag( subWork->pokeMcss );
+      MCSS_ResetVanishFlag( subWork->pokeMcssBack );
+      GFL_G3D_CAMERA_SetPos( work->camera , &cam_pos );
+      GFL_G3D_CAMERA_Switching( work->camera );
+    }
+  }
+*/
   
 }
 
@@ -488,6 +655,7 @@ static void PSTATUS_SUB_PokeCreateMcss( PSTATUS_WORK *work , PSTATUS_SUB_WORK *s
   MCSS_ADD_WORK addWork;
   VecFx32 scale = {FX32_ONE*16,FX32_ONE*16,FX32_ONE};
   VecFx32 shadowScale = {PSTATUS_SUB_SHADOW_SCALE_X , PSTATUS_SUB_SHADOW_SCALE_Y , PSTATUS_SUB_SHADOW_SCALE_Z};
+  VecFx32 shadowScaleBack = {PSTATUS_SUB_SHADOW_SCALE_BACK_X , PSTATUS_SUB_SHADOW_SCALE_BACK_Y , PSTATUS_SUB_SHADOW_SCALE_BACK_Z};
   VecFx32 shadowOffset= {PSTATUS_SUB_SHADOW_OFFSET_X , PSTATUS_SUB_SHADOW_OFFSET_Y , PSTATUS_SUB_SHADOW_OFFSET_Z};
   
   work->shadowRotate = 302*65536/360;
@@ -498,30 +666,18 @@ static void PSTATUS_SUB_PokeCreateMcss( PSTATUS_WORK *work , PSTATUS_SUB_WORK *s
     subWork->pokeMcss = MCSS_Add( work->mcssSys , PSTATUS_MCSS_POS_X , PSTATUS_MCSS_POS_Y ,0 , &addWork );
     MCSS_SetScale( subWork->pokeMcss , &scale );
     MCSS_SetShadowAlpha( subWork->pokeMcss , 2 );
-  #if USE_DEBUGWIN_SYSTEM
-    MCSS_SetShadowScale( subWork->pokeMcss , &work->shadowScale );
-    MCSS_SetShadowRotate( subWork->pokeMcss , work->shadowRotate );
-    MCSS_SetShadowOffset( subWork->pokeMcss , &work->shadowOfs );
-  #else
     MCSS_SetShadowRotate( subWork->pokeMcss , PSTATUS_SUB_SHADOW_ROTATE );
     MCSS_SetShadowOffset( subWork->pokeMcss , &shadowOffset );
     MCSS_SetShadowScale( subWork->pokeMcss , &shadowScale );
-  #endif
   }
   {
     MCSS_TOOL_MakeMAWPPP( ppp , &addWork , MCSS_DIR_BACK );
     subWork->pokeMcssBack = MCSS_Add( work->mcssSys , PSTATUS_MCSS_POS_X , PSTATUS_MCSS_POS_Y ,0 , &addWork );
     MCSS_SetScale( subWork->pokeMcssBack , &scale );
     MCSS_SetShadowAlpha( subWork->pokeMcssBack , 2 );
-  #if USE_DEBUGWIN_SYSTEM
-    MCSS_SetShadowScale( subWork->pokeMcssBack , &work->shadowScale );
-    MCSS_SetShadowRotate( subWork->pokeMcssBack , work->shadowRotate );
-    MCSS_SetShadowOffset( subWork->pokeMcssBack , &work->shadowOfs );
-  #else
-    MCSS_SetShadowRotate( subWork->pokeMcss , PSTATUS_SUB_SHADOW_ROTATE );
-    MCSS_SetShadowOffset( subWork->pokeMcss , &shadowOffset );
-    MCSS_SetShadowScale( subWork->pokeMcss , &shadowScale );
-  #endif
+    MCSS_SetShadowRotate( subWork->pokeMcssBack , PSTATUS_SUB_SHADOW_ROTATE );
+    MCSS_SetShadowOffset( subWork->pokeMcssBack , &shadowOffset );
+    MCSS_SetShadowScale( subWork->pokeMcssBack , &shadowScaleBack );
   }
   MCSS_ResetVanishFlag( subWork->pokeMcss );
   MCSS_SetVanishFlag( subWork->pokeMcssBack );

@@ -368,7 +368,7 @@ static void PSTATUS_InitGraphic( PSTATUS_WORK *work )
       0, 0, 0x800, 0, // scrX, scrY, scrbufSize, scrbufofs,
       GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
       GX_BG_SCRBASE_0x6000, GX_BG_CHARBASE_0x08000,0x8000,
-      GX_BG_EXTPLTT_01, 1, 0, 0, FALSE  // pal, pri, areaover, dmy, mosaic
+      GX_BG_EXTPLTT_01, 0, 0, 0, FALSE  // pal, pri, areaover, dmy, mosaic
     };
     // BG2 MAIN (“y‘ä
     static const GFL_BG_BGCNT_HEADER header_main2 = {
@@ -419,7 +419,6 @@ static void PSTATUS_InitGraphic( PSTATUS_WORK *work )
     PSTATUS_SetupBgFunc( &header_main2 , PSTATUS_BG_PLATE , GFL_BG_MODE_TEXT );
     PSTATUS_SetupBgFunc( &header_main3 , PSTATUS_BG_MAIN_BG , GFL_BG_MODE_TEXT );
     
-    GFL_BG_SetBGControl3D( 0 );
     GFL_BG_SetVisible( PSTATUS_BG_3D , TRUE );
     
     PSTATUS_SetupBgFunc( &header_sub0 , PSTATUS_BG_SUB_STR  , GFL_BG_MODE_TEXT );
@@ -488,6 +487,7 @@ static void PSTATUS_InitGraphic( PSTATUS_WORK *work )
     G3X_EdgeMarking( TRUE );
     
     GFL_G3D_SetSystemSwapBufferMode( GX_SORTMODE_AUTO , GX_BUFFERMODE_Z );
+    GFL_BG_SetBGControl3D( 1 );
   }
   //MCSS
   {
@@ -768,7 +768,7 @@ static void PSTATUS_InitCell( PSTATUS_WORK *work )
     u8 i;
     GFL_CLWK_DATA cellInitData;
     cellInitData.softpri = 10;
-    cellInitData.bgpri = 1;
+    cellInitData.bgpri = 0;
     
     for( i=0;i<SBT_MAX;i++ )
     {
@@ -1171,7 +1171,7 @@ void PSTATUS_SetActiveBarButton( PSTATUS_WORK *work , const BOOL isActive )
     //‹Zƒ‚[ƒh‚Å‚ÍƒŠƒ^[ƒ“ˆÃ‚­‚È‚ç‚È‚¢
     if( work->psData->mode != PST_MODE_WAZAADD )
     {
-      GFL_CLACT_WK_SetAnmSeq( work->clwkBarIcon[SBT_RETURN] , APP_COMMON_BARICON_RETURN_OFF );
+//    GFL_CLACT_WK_SetAnmSeq( work->clwkBarIcon[SBT_RETURN] , APP_COMMON_BARICON_RETURN_OFF );
     }
   }
   else

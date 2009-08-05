@@ -489,6 +489,7 @@ void PSTATUS_SKILL_InitCell( PSTATUS_WORK *work , PSTATUS_SKILL_WORK *skillWork 
               &cellInitData ,CLSYS_DEFREND_SUB , work->heapId );
     GFL_CLACT_WK_SetDrawEnable( skillWork->clwkWazaKind , FALSE );
     
+    cellInitData.bgpri = 0;
     skillWork->clwkCur = GFL_CLACT_WK_Create( work->cellUnit ,
               work->cellRes[SCR_NCG_SKILL_CUR],
               work->cellRes[SCR_PLT_CURSOR_COMMON],
@@ -1228,6 +1229,7 @@ static const BOOL PSTATUS_SKILL_UpdateKey( PSTATUS_WORK *work , PSTATUS_SKILL_WO
     //技確認から通常へ
     //戻る
     PSTATUS_SetActiveBarButton( work , TRUE );
+    GFL_CLACT_WK_SetAnmSeq( work->clwkBarIcon[SBT_RETURN] , APP_COMMON_BARICON_RETURN_ON );
     PSTATUS_SKILL_ChangeColor( &skillWork->plateWork[skillWork->cursorPos] , 0 );
     GFL_CLACT_WK_SetDrawEnable( skillWork->clwkCur , FALSE );
     PSTATUS_SKILL_DispStatusPage( work , skillWork );
@@ -1315,6 +1317,7 @@ static void PSTATUS_SKILL_UpdateTP( PSTATUS_WORK *work , PSTATUS_SKILL_WORK *ski
   {
     //戻るが押された
     PSTATUS_SetActiveBarButton( work , TRUE );
+    GFL_CLACT_WK_SetAnmSeq( work->clwkBarIcon[SBT_RETURN] , APP_COMMON_BARICON_RETURN_ON );
     PSTATUS_SKILL_ChangeColor( &skillWork->plateWork[skillWork->cursorPos] , 0 );
     GFL_CLACT_WK_SetDrawEnable( skillWork->clwkCur , FALSE );
     PSTATUS_SKILL_DispStatusPage( work , skillWork );
@@ -1838,7 +1841,7 @@ static void PSTATUS_SKILL_InitPlate( PSTATUS_WORK *work , PSTATUS_SKILL_WORK *sk
     cellInitData.pos_x = platePos[idx][0] * 8;
     cellInitData.pos_y = platePos[idx][1] * 8;
     cellInitData.softpri = 10;
-    cellInitData.bgpri = 1;
+    cellInitData.bgpri = 0;
     cellInitData.anmseq = plateWork->idx;
     
     plateWork->clwkPlate = GFL_CLACT_WK_Create( work->cellUnit ,
@@ -1852,7 +1855,7 @@ static void PSTATUS_SKILL_InitPlate( PSTATUS_WORK *work , PSTATUS_SKILL_WORK *sk
     cellInitData.pos_x = platePos[plateWork->idx][0]*8 +PSTATUS_SKILL_PLATE_TYPE_X;
     cellInitData.pos_y = platePos[plateWork->idx][1]*8 +PSTATUS_SKILL_PLATE_TYPE_Y;
     cellInitData.softpri = 8;
-    cellInitData.bgpri = 1;
+    cellInitData.bgpri = 0;
     cellInitData.anmseq = 0;
     plateWork->clwkType = GFL_CLACT_WK_Create( work->cellUnit ,
           work->cellResTypeNcg[0],
@@ -1923,12 +1926,14 @@ static void PSTATUS_SKILL_DispPlate( PSTATUS_WORK *work , PSTATUS_SKILL_WORK *sk
   //文字の表示
   {
     GFL_MSGDATA *msgHandelSkill = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL , ARCID_MESSAGE , NARC_message_wazaname_dat , work->heapId );
+    //ここのフォントはOBJのパレットを使っているので注意！！！ 
+    PRINTSYS_LSB col = PRINTSYS_LSB_Make( 1,2,0 );
     {
       //技名
       STRBUF *srcStr = GFL_MSG_CreateString( msgHandelSkill , wazaNo );
       PRINTSYS_PrintQueColor( work->printQue , plateWork->bmpData , 
               PSTATUS_SKILL_PLATE_WAZANAME_X , PSTATUS_SKILL_PLATE_WAZANAME_Y , srcStr , 
-              work->fontHandle , PSTATUS_STR_COL_BLACK );
+              work->fontHandle , col );
 
       GFL_STR_DeleteBuffer( srcStr );
       GFL_MSG_Delete( msgHandelSkill );
@@ -1937,22 +1942,22 @@ static void PSTATUS_SKILL_DispPlate( PSTATUS_WORK *work , PSTATUS_SKILL_WORK *sk
     {
       //現在PP
       PSTATUS_UTIL_DrawStrFuncBmp( work , plateWork->bmpData , mes_status_06_08 ,
-                                PSTATUS_SKILL_PLATE_PPSTR_X , PSTATUS_SKILL_PLATE_PPSTR_Y , PSTATUS_STR_COL_BLACK );
+                                PSTATUS_SKILL_PLATE_PPSTR_X , PSTATUS_SKILL_PLATE_PPSTR_Y , col );
       {
         WORDSET *wordSet = WORDSET_Create( work->heapId );
         WORDSET_RegisterNumber( wordSet , 0 , nowpp , 3 , STR_NUM_DISP_SPACE , STR_NUM_CODE_DEFAULT );
         PSTATUS_UTIL_DrawValueStrFuncRightBmp( work , plateWork->bmpData , wordSet , mes_status_06_09 , 
-                                       PSTATUS_SKILL_PLATE_NOWPP_X , PSTATUS_SKILL_PLATE_NOWPP_Y , PSTATUS_STR_COL_BLACK );
+                                       PSTATUS_SKILL_PLATE_NOWPP_X , PSTATUS_SKILL_PLATE_NOWPP_Y , col );
         WORDSET_Delete( wordSet );
       }
       PSTATUS_UTIL_DrawStrFuncBmp( work , plateWork->bmpData , mes_status_04_09 ,
-                                PSTATUS_SKILL_PLATE_SLASH_X , PSTATUS_SKILL_PLATE_SLASH_Y , PSTATUS_STR_COL_BLACK );
+                                PSTATUS_SKILL_PLATE_SLASH_X , PSTATUS_SKILL_PLATE_SLASH_Y , col );
       //最大PP
       {
         WORDSET *wordSet = WORDSET_Create( work->heapId );
         WORDSET_RegisterNumber( wordSet , 0 , maxpp , 3 , STR_NUM_DISP_SPACE , STR_NUM_CODE_DEFAULT );
         PSTATUS_UTIL_DrawValueStrFuncBmp( work , plateWork->bmpData , wordSet , mes_status_06_14 , 
-                                       PSTATUS_SKILL_PLATE_MAXPP_X , PSTATUS_SKILL_PLATE_MAXPP_Y , PSTATUS_STR_COL_BLACK );
+                                       PSTATUS_SKILL_PLATE_MAXPP_X , PSTATUS_SKILL_PLATE_MAXPP_Y , col );
         WORDSET_Delete( wordSet );
       }
     }
@@ -1960,7 +1965,7 @@ static void PSTATUS_SKILL_DispPlate( PSTATUS_WORK *work , PSTATUS_SKILL_WORK *sk
     {
       //技無しの線
       PSTATUS_UTIL_DrawStrFuncBmp( work , plateWork->bmpData , mes_status_06_27 ,
-                                PSTATUS_SKILL_PLATE_NONE_X , PSTATUS_SKILL_PLATE_NONE_Y , PSTATUS_STR_COL_BLACK );
+                                PSTATUS_SKILL_PLATE_NONE_X , PSTATUS_SKILL_PLATE_NONE_Y , col );
     }
   }
   //文字用OAM
@@ -1971,7 +1976,7 @@ static void PSTATUS_SKILL_DispPlate( PSTATUS_WORK *work , PSTATUS_SKILL_WORK *sk
     oamData.pltt_index = work->cellRes[SCR_PLT_RIBBON_BAR]; //文字はリボンと同じパレットで
     oamData.pal_offset = 0;
     oamData.soft_pri = 0;
-    oamData.bg_pri = 1;
+    oamData.bg_pri = 0;
     oamData.setSerface = CLSYS_DEFREND_MAIN;
     oamData.draw_type = CLSYS_DRAW_MAIN;
     oamData.bmp = plateWork->bmpData;

@@ -17,6 +17,7 @@
 #include "print/global_msg.h"
 #include "print/printsys.h"
 #include "print/wordset.h"
+#include "app/app_menu_common.h"
 
 #include "arc_def.h"
 #include "p_status_gra.naix"
@@ -90,7 +91,6 @@ typedef struct
 
   GFL_BMP_DATA *bmpData;
   PSTA_OAM_ACT_PTR bmpOam;
-  GFL_CLWK *clwkRibbonBar;
   
 }PSTATUS_RIBBON_DISP_WORK;
 
@@ -247,7 +247,7 @@ void PSTATUS_RIBBON_InitCell( PSTATUS_WORK *work , PSTATUS_RIBBON_WORK *ribbonWo
     cellInitData.pos_x = 0;
     cellInitData.pos_y = 0;
     cellInitData.softpri = 10;
-    cellInitData.bgpri = 1;
+    cellInitData.bgpri = 0;
     cellInitData.anmseq = 0;
     
     ribbonWork->clwkCur = GFL_CLACT_WK_Create( work->cellUnit ,
@@ -297,10 +297,6 @@ void PSTATUS_RIBBON_TermCell( PSTATUS_WORK *work , PSTATUS_RIBBON_WORK *ribbonWo
   GFL_CLACT_WK_Remove( ribbonWork->clwkCur );
   for( i=0;i<PSTATUS_RIBBON_BAR_NUM;i++ )
   {
-    //GFL_CLACT_WK_Remove( ribbonWork->ribbonDispWork[i].clwkRibbonBar );
-    //GFL_BMP_Clear( ribbonWork->ribbonDispWork[i].bmpData , 0 );
-    //PSTA_OAM_ActorBmpTrans( ribbonWork->ribbonDispWork[i].bmpOam );
-
     PSTA_OAM_ActorDel( ribbonWork->ribbonDispWork[i].bmpOam );
     GFL_BMP_Delete( ribbonWork->ribbonDispWork[i].bmpData );
   }
@@ -364,6 +360,7 @@ static const BOOL PSTATUS_RIBBON_UpdateKey( PSTATUS_WORK *work , PSTATUS_RIBBON_
   {
     //–ß‚é
     PSTATUS_SetActiveBarButton( work , TRUE );
+    GFL_CLACT_WK_SetAnmSeq( work->clwkBarIcon[SBT_RETURN] , APP_COMMON_BARICON_RETURN_ON );
     GFL_CLACT_WK_SetDrawEnable( ribbonWork->clwkCur , FALSE );
     ribbonWork->selectIdx = 0xFF;
     ribbonWork->selectType = PSTATUS_RIBBON_INVALID_TYPE;
@@ -456,6 +453,7 @@ static void PSTATUS_RIBBON_UpdateTP( PSTATUS_WORK *work , PSTATUS_RIBBON_WORK *r
   {
     //–ß‚é‚ª‰Ÿ‚³‚ê‚½
     PSTATUS_SetActiveBarButton( work , TRUE );
+    GFL_CLACT_WK_SetAnmSeq( work->clwkBarIcon[SBT_RETURN] , APP_COMMON_BARICON_RETURN_ON );
     GFL_CLACT_WK_SetDrawEnable( ribbonWork->clwkCur , FALSE );
     ribbonWork->selectIdx = 0xFF;
     ribbonWork->selectType = PSTATUS_RIBBON_INVALID_TYPE;
@@ -574,6 +572,11 @@ static const int PSTATUS_RIBBON_CheckTouchBar( PSTATUS_WORK *work , PSTATUS_RIBB
     {
       hitTbl[i].circle.code = GFL_UI_TP_SKIP;
     }
+    if( PSTATUS_RIBBON_GetRibbonType( ribbonWork , i ) == PSTATUS_RIBBON_INVALID_TYPE  )
+    {
+      hitTbl[i].circle.code = GFL_UI_TP_SKIP;
+    }
+
   }
   hitTbl[PSTATUS_RIBBON_BAR_NUM].circle.code = GFL_UI_TP_HIT_END;
   
