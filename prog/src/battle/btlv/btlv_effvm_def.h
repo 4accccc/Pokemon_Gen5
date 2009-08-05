@@ -52,6 +52,10 @@
 
 #define	BTLEFF_CAMERA_POS_NONE					( 0xffffffff )
 
+//カメラゆれ
+#define	BTLEFF_CAMERA_SHAKE_VERTICAL		( 0 )
+#define	BTLEFF_CAMERA_SHAKE_HORIZON		  ( 1 )
+
 //射影モード
 #define	BTLEFF_CAMERA_PROJECTION_ORTHO					( 0 )
 #define	BTLEFF_CAMERA_PROJECTION_PERSPECTIVE		( 1 )
@@ -254,38 +258,39 @@ ex)
 #define	EC_CAMERA_MOVE							( 0 )
 #define	EC_CAMERA_MOVE_COORDINATE		( 1 )
 #define	EC_CAMERA_MOVE_ANGLE				( 2 )
-#define	EC_CAMERA_PROJECTION				( 3 )
-#define	EC_PARTICLE_LOAD						( 4 )
-#define	EC_PARTICLE_PLAY						( 5 )
-#define	EC_PARTICLE_PLAY_COORDINATE	( 6 )
-#define	EC_PARTICLE_DELETE					( 7 )
-#define	EC_EMITTER_MOVE							( 8 )
-#define	EC_EMITTER_MOVE_COORDINATE	( 9 )
-#define	EC_POKEMON_MOVE							( 10 )
-#define	EC_POKEMON_CIRCLE_MOVE			( 11 )
-#define	EC_POKEMON_SCALE						( 12 )
-#define	EC_POKEMON_ROTATE						( 13 )
-#define	EC_POKEMON_ALPHA						( 14 )
-#define	EC_POKEMON_SET_MEPACHI_FLAG	( 15 )
-#define	EC_POKEMON_SET_ANM_FLAG			( 16 )
-#define	EC_POKEMON_PAL_FADE					( 17 )
-#define	EC_POKEMON_VANISH					  ( 18 )
-#define	EC_POKEMON_SHADOW_VANISH	  ( 19 )
-#define	EC_TRAINER_SET							( 20 )
-#define	EC_TRAINER_MOVE							( 21 )
-#define	EC_TRAINER_ANIME_SET				( 22 )
-#define	EC_TRAINER_DEL							( 23 )
-#define	EC_BG_PAL_FADE		   				( 24 )
-#define	EC_BG_VANISH								( 25 )
-#define	EC_SE_PLAY									( 26 )
-#define	EC_SE_STOP									( 27 )
-#define	EC_SE_PITCH									( 28 )
-#define	EC_EFFECT_END_WAIT					( 29 )
-#define	EC_WAIT											( 30 )
-#define	EC_CONTROL_MODE							( 31 )
+#define	EC_CAMERA_SHAKE				      ( 3 )
+#define	EC_CAMERA_PROJECTION				( 4 )
+#define	EC_PARTICLE_LOAD						( 5 )
+#define	EC_PARTICLE_PLAY						( 6 )
+#define	EC_PARTICLE_PLAY_COORDINATE	( 7 )
+#define	EC_PARTICLE_DELETE					( 8 )
+#define	EC_EMITTER_MOVE							( 9 )
+#define	EC_EMITTER_MOVE_COORDINATE	( 10 )
+#define	EC_POKEMON_MOVE							( 11 )
+#define	EC_POKEMON_CIRCLE_MOVE			( 12 )
+#define	EC_POKEMON_SCALE						( 13 )
+#define	EC_POKEMON_ROTATE						( 14 )
+#define	EC_POKEMON_ALPHA						( 15 )
+#define	EC_POKEMON_SET_MEPACHI_FLAG	( 16 )
+#define	EC_POKEMON_SET_ANM_FLAG			( 17 )
+#define	EC_POKEMON_PAL_FADE					( 18 )
+#define	EC_POKEMON_VANISH					  ( 19 )
+#define	EC_POKEMON_SHADOW_VANISH	  ( 20 )
+#define	EC_TRAINER_SET							( 21 )
+#define	EC_TRAINER_MOVE							( 22 )
+#define	EC_TRAINER_ANIME_SET				( 23 )
+#define	EC_TRAINER_DEL							( 24 )
+#define	EC_BG_PAL_FADE		   				( 25 )
+#define	EC_BG_VANISH								( 26 )
+#define	EC_SE_PLAY									( 27 )
+#define	EC_SE_STOP									( 28 )
+#define	EC_SE_PITCH									( 29 )
+#define	EC_EFFECT_END_WAIT					( 30 )
+#define	EC_WAIT											( 31 )
+#define	EC_CONTROL_MODE							( 32 )
 
 //終了コマンドは必ず一番下になるようにする
-#define	EC_SEQ_END									( 32 )
+#define	EC_SEQ_END									( 33 )
 
 #ifndef __C_NO_DEF_
 
@@ -386,6 +391,37 @@ ex)
 	.long		\frame
 	.long		\wait
 	.long		\brake
+	.endm
+
+//======================================================================
+/**
+ * @brief		カメラゆれ
+ *
+ * #param_num	6
+ * @param	dir     ゆれ方向
+ * @param	value   ゆれ幅
+ * @param	offset	ゆれ幅オフセット
+ * @param	frame   １ゆれにかかるフレーム
+ * @param	wait    １フレーム毎のウエイト
+ * @param	count   ゆれ回数
+ *
+ * #param	COMBOBOX_TEXT	縦ゆれ	横ゆれ
+ * #param	COMBOBOX_VALUE	BTLEFF_CAMERA_SHAKE_VERTICAL	BTLEFF_CAMERA_SHAKE_HORIZON
+ * #param	VALUE_FX32	ゆれ幅
+ * #param	VALUE_FX32	ゆれ幅オフセット（１ゆれごと）
+ * #param	VALUE_INT	１ゆれにかかるフレーム
+ * #param	VALUE_INT	１フレーム毎のウエイト
+ * #param	VALUE_INT	ゆれ回数
+ */
+//======================================================================
+	.macro	CAMERA_SHAKE	dir, value, offset, frame, wait, count
+	.short	EC_CAMERA_SHAKE
+	.long		\dir
+	.long		\value
+	.long		\offset
+	.long		\frame
+	.long		\wait
+	.long		\count
 	.endm
 
 //======================================================================

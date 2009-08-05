@@ -19,6 +19,8 @@ extern	void							BTLV_CAMERA_MoveCameraPosition( BTLV_CAMERA_WORK *bcw, VecFx32
 extern	void							BTLV_CAMERA_MoveCameraAngle( BTLV_CAMERA_WORK *bcw, int phi, int theta );
 extern	void							BTLV_CAMERA_MoveCameraInterpolation( BTLV_CAMERA_WORK *bcw, VecFx32 *pos, VecFx32 *target,
 																															 int flame, int wait, int brake );
+extern  void              BTLV_CAMERA_Shake( BTLV_CAMERA_WORK *bcw, int dir, fx32 value, fx32 offset,
+                                             int frame, int wait, int count );
 extern	void							BTLV_CAMERA_GetCameraPosition( BTLV_CAMERA_WORK *bcw, VecFx32 *pos, VecFx32 *target );
 extern	void							BTLV_CAMERA_GetCameraPositionAngle( BTLV_CAMERA_WORK *bcw, int phi, int theta,
 																															VecFx32 *pos, VecFx32 *target );

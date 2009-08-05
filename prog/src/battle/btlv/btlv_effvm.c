@@ -115,6 +115,7 @@ void      BTLV_EFFVM_Stop( VMHANDLE *vmh );
 static VMCMD_RESULT VMEC_CAMERA_MOVE( VMHANDLE *vmh, void *context_work );
 static VMCMD_RESULT VMEC_CAMERA_MOVE_COODINATE( VMHANDLE *vmh, void *context_work );
 static VMCMD_RESULT VMEC_CAMERA_MOVE_ANGLE( VMHANDLE *vmh, void *context_work );
+static VMCMD_RESULT VMEC_CAMERA_SHAKE( VMHANDLE *vmh, void *context_work );
 static VMCMD_RESULT VMEC_CAMERA_PROJECTION( VMHANDLE *vmh, void *context_work );
 static VMCMD_RESULT VMEC_PARTICLE_LOAD( VMHANDLE *vmh, void *context_work );
 static VMCMD_RESULT VMEC_PARTICLE_PLAY( VMHANDLE *vmh, void *context_work );
@@ -213,6 +214,7 @@ static const VMCMD_FUNC btlv_effect_command_table[]={
   VMEC_CAMERA_MOVE,
   VMEC_CAMERA_MOVE_COODINATE,
   VMEC_CAMERA_MOVE_ANGLE,
+  VMEC_CAMERA_SHAKE,
   VMEC_CAMERA_PROJECTION,
   VMEC_PARTICLE_LOAD,
   VMEC_PARTICLE_PLAY,
@@ -582,6 +584,29 @@ static VMCMD_RESULT VMEC_CAMERA_MOVE_ANGLE( VMHANDLE *vmh, void *context_work )
     }
     break;
   }
+
+  return bevw->control_mode;
+}
+
+//============================================================================================
+/**
+ *  カメラゆれ
+ *
+ * @param[in] vmh       仮想マシン制御構造体へのポインタ
+ * @param[in] context_work  コンテキストワークへのポインタ
+ */
+//============================================================================================
+static VMCMD_RESULT VMEC_CAMERA_SHAKE( VMHANDLE *vmh, void *context_work )
+{
+  BTLV_EFFVM_WORK *bevw = (BTLV_EFFVM_WORK *)context_work;
+  int dir     = ( int )VMGetU32( vmh );
+  fx32 value  = ( fx32 )VMGetU32( vmh );
+  fx32 offset = ( fx32 )VMGetU32( vmh );
+  int frame   = ( int )VMGetU32( vmh );
+  int wait    = ( int )VMGetU32( vmh );
+  int count   = ( int )VMGetU32( vmh );
+
+  BTLV_CAMERA_Shake( BTLV_EFFECT_GetCameraWork(), dir, value, offset, frame, wait, count );
 
   return bevw->control_mode;
 }
@@ -1838,10 +1863,6 @@ static  void  EFFVM_InitEmitterPos( GFL_EMIT_PTR emit )
   src.y += beeiw->ofs_y;
   dst.y += beeiw->ofs_y;
 
-  //マグネットとコンバージェンスの座標にdstを代入
-  GFL_PTC_SetEmitterMagnetPos( emit, &dst );
-  GFL_PTC_SetEmitterConvergencePos( emit, &dst );
-
   if( beeiw->move_type )
   {
     BTLV_EFFVM_WORK *bevw = (BTLV_EFFVM_WORK *)VM_GetContext( beeiw->vmh );
@@ -1921,6 +1942,10 @@ static  void  EFFVM_InitEmitterPos( GFL_EMIT_PTR emit )
     dst.x -= src.x;
     dst.y -= src.y;
     dst.z -= src.z;
+
+    //マグネットとコンバージェンスの座標にdstを代入
+    GFL_PTC_SetEmitterMagnetPos( emit, &dst );
+    GFL_PTC_SetEmitterConvergencePos( emit, &dst );
 
     VEC_Normalize( &dst, &dst );
 
