@@ -52,9 +52,13 @@ endif
 
 #----------------------------------------------------------------------------
 #	clean
+# MakeÇ≈ê∂ê¨Ç≥ÇÍÇÈ*.narcÇÕmake cleanÇÃçÌèúëŒè€Ç…Ç∑ÇÈ
 #----------------------------------------------------------------------------
-#MakeÇ≈ê∂ê¨Ç≥ÇÍÇÈ*.narcÇÕmake cleanÇÃçÌèúëŒè€Ç…Ç∑ÇÈ
+ifeq ($(CONVERTUSER),true) #CONVERTUSER
+LDIRT_CLEAN	= $(TARGET_DIR)/$(TARGET_NARC) $(TARGET_DIR)/$(TARGET_NAIX) $(SCRSRCS_BIN)
+else
 LDIRT_CLEAN	= $(TARGET_DIR)/$(TARGET_NARC) $(TARGET_DIR)/$(TARGET_NAIX)
+endif
 
 #----------------------------------------------------------------------------
 #	SUFFIXES
