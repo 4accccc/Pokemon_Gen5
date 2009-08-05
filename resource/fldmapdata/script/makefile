@@ -34,6 +34,12 @@ include	$(NITROSYSTEM_ROOT)/build/buildtools/commondefs
 #ModuleÉãÅ[Éã
 include	$(NITROSYSTEM_ROOT)/build/buildtools/modulerules
 
+#ev_def
+EV_DEF = ruby ./scr_tools/ev_def.rb
+
+#script_offset_id.h
+SCR_OFFS_ID_H = ../../../prog/src/field/script_offset_id.h
+
 #eventdata WB NULL
 #IPATH	=	-I../eventdata
 
@@ -90,8 +96,10 @@ ifeq ($(CONVERTUSER),true) #CONVERTUSER
 	@$(MWLD) -dis -o $*.elf $*.o
 	@elf2bin $*.elf
 	@rm $*.o $*.elf temp_$*.s
-	@gawk -f scr_tools/ev_def.awk $<
+	@$(EV_DEF) $< $(SCR_OFFS_ID_H)
 endif #CONVERTUSER
+
+#	gawk -f scr_tools/ev_def.awk $< 
 
 #script.narc
 $(TARGET_NARC): $(SCRSRCS_BIN)

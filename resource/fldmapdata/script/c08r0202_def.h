@@ -1,8 +1,10 @@
+//c08r0202_def.h
+//このファイルはコンバータによって作成されました
+
 #ifndef _C08R0202_DEF_H_
 #define _C08R0202_DEF_H_
 
-//スクリプトデータID定義 
-#define	SCRID_C08R0202		(1)
-#define	SCRID_C08R0202_DATA_MAX		(1)		//最大数
+//スクリプトデータID定義
+#define SCRID_C08R0202 (1)
 
 #endif //_C08R0202_DEF_H_

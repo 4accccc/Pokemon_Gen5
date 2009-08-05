@@ -1,8 +1,10 @@
+//t03pc0101_def.h
+//このファイルはコンバータによって作成されました
+
 #ifndef _T03PC0101_DEF_H_
 #define _T03PC0101_DEF_H_
 
-//スクリプトデータID定義 
-#define	SCRID_T03PC0101		(1)
-#define	SCRID_T03PC0101_DATA_MAX		(1)		//最大数
+//スクリプトデータID定義
+#define SCRID_T03PC0101 (1)
 
 #endif //_T03PC0101_DEF_H_

@@ -1,8 +1,10 @@
+//c08gym0101_def.h
+//このファイルはコンバータによって作成されました
+
 #ifndef _C08GYM0101_DEF_H_
 #define _C08GYM0101_DEF_H_
 
-//スクリプトデータID定義 
-#define	SCRID_C08GYM0101		(1)
-#define	SCRID_C08GYM0101_DATA_MAX		(1)		//最大数
+//スクリプトデータID定義
+#define SCRID_C08GYM0101 (1)
 
 #endif //_C08GYM0101_DEF_H_
