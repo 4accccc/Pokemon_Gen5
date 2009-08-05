@@ -1838,6 +1838,10 @@ static  void  EFFVM_InitEmitterPos( GFL_EMIT_PTR emit )
   src.y += beeiw->ofs_y;
   dst.y += beeiw->ofs_y;
 
+  //マグネットとコンバージェンスの座標にdstを代入
+  GFL_PTC_SetEmitterMagnetPos( emit, &dst );
+  GFL_PTC_SetEmitterConvergencePos( emit, &dst );
+
   if( beeiw->move_type )
   {
     BTLV_EFFVM_WORK *bevw = (BTLV_EFFVM_WORK *)VM_GetContext( beeiw->vmh );
