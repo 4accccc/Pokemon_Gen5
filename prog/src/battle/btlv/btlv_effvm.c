@@ -1778,7 +1778,6 @@ static  void  EFFVM_InitEmitterPos( GFL_EMIT_PTR emit )
 {
   BTLV_EFFVM_EMIT_INIT_WORK *beeiw = ( BTLV_EFFVM_EMIT_INIT_WORK* )GFL_PTC_GetTempPtr();
   VecFx32 src,dst;
-  VecFx16 dir;
 
   switch( beeiw->src ){
   case BTLEFF_CAMERA_POS_AA:
@@ -1843,8 +1842,8 @@ static  void  EFFVM_InitEmitterPos( GFL_EMIT_PTR emit )
   {
     BTLV_EFFVM_WORK *bevw = (BTLV_EFFVM_WORK *)VM_GetContext( beeiw->vmh );
     BTLV_EFFVM_EMITTER_MOVE_WORK  *beemw;
-    u16     angle;
     VecFx32 rot_axis,line_vec,std_vec;
+    u16     angle;
 
     bevw->temp_work[ bevw->temp_work_count ] = GFL_HEAP_AllocMemory( bevw->heapID, sizeof( BTLV_EFFVM_EMITTER_MOVE_WORK ) );
     beemw = ( BTLV_EFFVM_EMITTER_MOVE_WORK *)bevw->temp_work[ bevw->temp_work_count ];
@@ -1909,20 +1908,40 @@ static  void  EFFVM_InitEmitterPos( GFL_EMIT_PTR emit )
   //srcとdstが一緒のときは、方向なし
   if( beeiw->src != beeiw->dst )
   {
+    MtxFx43 mtx43;
+    VecFx32 rot_axis,line_vec,std_vec;
+    VecFx16 dir;
+    u16     angle;
+    u16     spin_axis = SPL_FLD_SPIN_AXIS_TYPE_Z;
+
     dst.x -= src.x;
     dst.y -= src.y;
     dst.z -= src.z;
 
-//ベクトルを正規化して方向を求めるバージョン
-#if 1
+    VEC_Normalize( &dst, &dst );
+
+    GFL_PTC_GetEmitterAxis( emit, &dir );
+    VEC_Set( &std_vec, dir.x, dir.y, dir.z );
+
+    //内積を求めて角度を出す
+    angle = FX_AcosIdx( VEC_DotProduct( &std_vec, &dst ) );
+
+    //外積を求めて回転軸を出す
+    VEC_CrossProduct( &std_vec, &line_vec, &rot_axis );
+    VEC_Normalize( &rot_axis, &rot_axis );
+
+    //回転行列を生成する
+    MTX_RotAxis43( &mtx43, &rot_axis, FX_SinIdx( angle ), FX_CosIdx( angle ) );
+
+    MTX_MultVec43( &dst, &mtx43, &dst );
     VEC_Normalize( &dst, &dst );
     VEC_Fx16Set( &dir, dst.x, dst.y, dst.z );
-#else
-//ベクトルから角度を求めて方向を計算するバージョン
-    dir.x = FX_CosIdx( FX_Atan2Idx( dst.z, dst.x ) );
-    dir.y = 0;
-    dir.z = FX_SinIdx( FX_Atan2Idx( dst.z, dst.x ) );
-#endif
+
+    if( angle < 0x2000 || ( angle > 0x6000 && angle < 0xa000 ) || angle > 0xe000 )
+    { 
+      spin_axis = SPL_FLD_SPIN_AXIS_TYPE_X;
+    }
+    GFL_PTC_SetEmitterSpinAxisType( emit, &spin_axis );
 
     GFL_PTC_SetEmitterAxis( emit, &dir );
   }
