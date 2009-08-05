@@ -343,7 +343,10 @@ enum {
 	NARC_map_land_data_m_gstation01_00_00_3dppack = 329,
 	NARC_map_land_data_m_gstation02_00_00_3dppack = 330,
 	NARC_map_land_data_m_closseum02_00_00_3dppack = 331,
-	NARC_map_land_data_m_stadium03_00_00_3dppack = 332
+	NARC_map_land_data_m_stadium03_00_00_3dppack = 332,
+	NARC_map_land_data_m_villa01_00_00_3dppack = 333,
+	NARC_map_land_data_m_villa02_00_00_3dppack = 334,
+	NARC_map_land_data_m_football01_00_00_3dppack = 335
 };
 
 /* NARC_MAP_LAND_DATA_NAIX_ */

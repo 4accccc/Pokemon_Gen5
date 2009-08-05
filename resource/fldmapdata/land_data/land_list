@@ -334,4 +334,7 @@ CONCAT_TARGET = \
 	$(DIR_LANDRES)/m_gstation01_00_00.bin $(DIR_LANDRES)/m_gstation01_00_00.imd \
 	$(DIR_LANDRES)/m_gstation02_00_00.bin $(DIR_LANDRES)/m_gstation02_00_00.imd \
 	$(DIR_LANDRES)/m_closseum02_00_00.bin $(DIR_LANDRES)/m_closseum02_00_00.imd \
-	$(DIR_LANDRES)/m_stadium03_00_00.bin $(DIR_LANDRES)/m_stadium03_00_00.imd
+	$(DIR_LANDRES)/m_stadium03_00_00.bin $(DIR_LANDRES)/m_stadium03_00_00.imd \
+	$(DIR_LANDRES)/m_villa01_00_00.bin $(DIR_LANDRES)/m_villa01_00_00.imd \
+	$(DIR_LANDRES)/m_villa02_00_00.bin $(DIR_LANDRES)/m_villa02_00_00.imd \
+	$(DIR_LANDRES)/m_football01_00_00.bin $(DIR_LANDRES)/m_football01_00_00.imd
