@@ -58,6 +58,14 @@ $(targetname).narc: $(CONVERTDATA)
 	nnsarc -r -l -n -i $(targetname) $^
 	$(NAIXCUT) $(targetname).naix
 
+# 不要な中間ファイルを削除
+	rm -f encount.txt
+	rm -f hatch.txt
+	rm -f weather.txt
+	rm -f encount.bin
+	rm -f hatch.bin
+	rm -f weather.bin
+
 
 encount.txt: encount.xls
 	$(PROJECT_ROOT)tools/exceltool/exceltabconv encount.xls
@@ -77,12 +85,6 @@ hatch.bin: hatch.txt
 weather.bin: weather.txt
 	ruby weather.rb 
 
-	rm -f encount.txt
-	rm -f hatch.txt
-	rm -f weather.txt
-	rm -f encount.bin
-	rm -f hatch.bin
-	rm -f weather.bin
 
 endif
 
