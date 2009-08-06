@@ -96,18 +96,6 @@ static void mapCtrlNoGrid_Create(
 //  FIELD_CAMERA_BindNoCamera(camera, TRUE);
 //
 	
-	{
-		MMDLSYS *mmdlsys = FIELDMAP_GetMMdlSys( fieldWork );
-		MMDL_BLACTCONT_SetGlobalScaleOne( mmdlsys );
-
-	}
-
-	{
-		FLDEFF_CTRL *fectrl = FIELDMAP_GetFldEffCtrl(fieldWork);
-		VecFx32 shadow_scale = { FX32_CONST(0.570f), FX32_CONST(0.570f), FX32_CONST(0.570f) };
-		FLDEFF_SHADOW_SetGlobalScale( fectrl, &shadow_scale );
-	}
-	
   fld_player = FIELDMAP_GetFieldPlayer( fieldWork );
 
 	FIELD_PLAYER_SetPos( fld_player, pos );
