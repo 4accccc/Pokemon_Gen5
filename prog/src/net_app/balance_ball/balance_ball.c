@@ -11,6 +11,7 @@
 //==============================================================================
 
 #include <gflib.h>
+#include "system/main.h"
 #include "system/wipe.h"
 
 #include "net_app/balance_ball.h"
@@ -22,6 +23,11 @@
 #include "bb_client.h"
 #include "system/gfl_use.h"
 #include "net_old/comm_def.h"
+#include "net_old\comm_system.h"
+#include "net_old\comm_state.h"
+#include "net_old\comm_info.h"
+#include "net_old\comm_tool.h"
+#include "net_old\comm_command.h"
 
 #define BB_COMM_END_CMD	( 999 )
 
@@ -51,6 +57,28 @@ static void BB_TcbMain(BB_WORK *wk);
 #define BB_WIRE_RESS_ICON_PAL		( 14 )
 #define BB_WIRE_RESS_ICON_PAL_SIZ	( 32 )
 
+//==============================================================================
+//  データ
+//==============================================================================
+static const GFL_DISP_VRAM vramSetTable = {
+	GX_VRAM_BG_128_A,				// メイン2DエンジンのBG
+	GX_VRAM_BGEXTPLTT_NONE,			// メイン2DエンジンのBG拡張パレット
+	GX_VRAM_SUB_BG_128_C,			// サブ2DエンジンのBG
+	GX_VRAM_SUB_BGEXTPLTT_NONE,		// サブ2DエンジンのBG拡張パレット
+	GX_VRAM_OBJ_64_E,				// メイン2DエンジンのOBJ
+	GX_VRAM_OBJEXTPLTT_NONE,		// メイン2DエンジンのOBJ拡張パレット
+	GX_VRAM_SUB_OBJ_16_I,			// サブ2DエンジンのOBJ
+	GX_VRAM_SUB_OBJEXTPLTT_NONE,	// サブ2DエンジンのOBJ拡張パレット
+	GX_VRAM_TEX_0_B,				// テクスチャイメージスロット
+	GX_VRAM_TEXPLTT_01_FG,			// テクスチャパレットスロット
+	GX_OBJVRAMMODE_CHAR_1D_128K,	// メインOBJマッピングモード
+	GX_OBJVRAMMODE_CHAR_1D_128K,		// サブOBJマッピングモード
+};
+
+
+//==============================================================================
+//  
+//==============================================================================
 enum {
 	
 	eBB_SEQ_ENTRY_INIT		= 0,
@@ -87,10 +115,15 @@ enum {
 
 static void BalanceBall_MainInit( BB_WORK* wk )
 {
+	u16 anm_index;
 //	BB_WORK* wk = GFL_PROC_AllocWork( proc, sizeof( BB_WORK ), HEAPID_BB );
 //	GFL_STD_MemFill( wk, 0, sizeof( BB_WORK ) );
 
+#if WB_FIX
 	wk->seed_tmp = gf_get_seed();		///< 乱数のタネ退避
+#else
+	wk->seed_tmp = bb_gf_get_seed();		///< 乱数のタネ退避
+#endif
 
 	BB_SystemInit( wk );
 	
@@ -102,8 +135,11 @@ static void BalanceBall_MainInit( BB_WORK* wk )
 #endif
 
 	///< wi-fi アイコン( パレットをpalette_fade に渡す )
-    CLACT_U_WmIcon_SetReserveAreaCharManager( NNS_G2D_VRAM_TYPE_2DMAIN, GX_OBJVRAMMODE_CHAR_1D_128K );
-    CLACT_U_WmIcon_SetReserveAreaPlttManager( NNS_G2D_VRAM_TYPE_2DMAIN );
+#if WB_FIX
+  CLACT_U_WmIcon_SetReserveAreaCharManager( NNS_G2D_VRAM_TYPE_2DMAIN, GX_OBJVRAMMODE_CHAR_1D_128K);
+  CLACT_U_WmIcon_SetReserveAreaPlttManager( NNS_G2D_VRAM_TYPE_2DMAIN );
+#endif
+
 #if WB_TEMP_FIX
 	WirelessIconEasy();
 	{
@@ -143,7 +179,7 @@ static void BalanceBall_MainInit( BB_WORK* wk )
 	
 	///< 2D リソース読み込み
 	BB_disp_BG_Load( wk );
-	BB_disp_ResourceLoad( wk );
+	BB_disp_ResourceLoad( wk, wk->p_client );
 	BB_disp_Manene_Add( wk, wk->p_client );
 	BB_disp_Hand_Add( wk->p_client );
 	BB_disp_Hanabi_OAM_Add( wk->p_client );
@@ -157,33 +193,48 @@ static void BalanceBall_MainInit( BB_WORK* wk )
 		{	
 			int i;
 			int data[][2] = {
-				{ NARC_manene_kami_blue_nsbmd, NARC_manene_kami_blue_nsbca	},
-				{ NARC_manene_kami_eme_nsbmd,  NARC_manene_kami_eme_nsbca	},
-				{ NARC_manene_kami_mizu_nsbmd, NARC_manene_kami_mizu_nsbca	},
-				{ NARC_manene_kami_pur_nsbmd,  NARC_manene_kami_pur_nsbca	},
-				{ NARC_manene_kami_blue_nsbmd, NARC_manene_kami_blue_nsbca	},
-				{ NARC_manene_kami_eme_nsbmd,  NARC_manene_kami_eme_nsbca	},
-				{ NARC_manene_kami_mizu_nsbmd, NARC_manene_kami_mizu_nsbca	},
-				{ NARC_manene_kami_pur_nsbmd,  NARC_manene_kami_pur_nsbca	},
-				{ NARC_manene_kami_blue_nsbmd, NARC_manene_kami_blue_nsbca	},
-				{ NARC_manene_kami_eme_nsbmd,  NARC_manene_kami_eme_nsbca	},
-				{ NARC_manene_kami_mizu_nsbmd, NARC_manene_kami_mizu_nsbca	},
-				{ NARC_manene_kami_pur_nsbmd,  NARC_manene_kami_pur_nsbca	},
-				{ NARC_manene_kami_blue_nsbmd, NARC_manene_kami_blue_nsbca	},
-				{ NARC_manene_kami_eme_nsbmd,  NARC_manene_kami_eme_nsbca	},
-				{ NARC_manene_kami_mizu_nsbmd, NARC_manene_kami_mizu_nsbca	},
-				{ NARC_manene_kami_pur_nsbmd,  NARC_manene_kami_pur_nsbca	},
+				{ NARC_balance_ball_kami_blue_nsbmd, NARC_balance_ball_kami_blue_nsbca	},
+				{ NARC_balance_ball_kami_eme_nsbmd,  NARC_balance_ball_kami_eme_nsbca	},
+				{ NARC_balance_ball_kami_mizu_nsbmd, NARC_balance_ball_kami_mizu_nsbca	},
+				{ NARC_balance_ball_kami_pur_nsbmd,  NARC_balance_ball_kami_pur_nsbca	},
+				{ NARC_balance_ball_kami_blue_nsbmd, NARC_balance_ball_kami_blue_nsbca	},
+				{ NARC_balance_ball_kami_eme_nsbmd,  NARC_balance_ball_kami_eme_nsbca	},
+				{ NARC_balance_ball_kami_mizu_nsbmd, NARC_balance_ball_kami_mizu_nsbca	},
+				{ NARC_balance_ball_kami_pur_nsbmd,  NARC_balance_ball_kami_pur_nsbca	},
+				{ NARC_balance_ball_kami_blue_nsbmd, NARC_balance_ball_kami_blue_nsbca	},
+				{ NARC_balance_ball_kami_eme_nsbmd,  NARC_balance_ball_kami_eme_nsbca	},
+				{ NARC_balance_ball_kami_mizu_nsbmd, NARC_balance_ball_kami_mizu_nsbca	},
+				{ NARC_balance_ball_kami_pur_nsbmd,  NARC_balance_ball_kami_pur_nsbca	},
+				{ NARC_balance_ball_kami_blue_nsbmd, NARC_balance_ball_kami_blue_nsbca	},
+				{ NARC_balance_ball_kami_eme_nsbmd,  NARC_balance_ball_kami_eme_nsbca	},
+				{ NARC_balance_ball_kami_mizu_nsbmd, NARC_balance_ball_kami_mizu_nsbca	},
+				{ NARC_balance_ball_kami_pur_nsbmd,  NARC_balance_ball_kami_pur_nsbca	},
 			};
 			for ( i = 0; i < BB_KAMI_HUBUKI_MAX; i++ ){
 				BB_disp_Model_Load( &wk->p_client->bb3d_kami[ i ], wk->sys.p_handle_bb, data[ i ][ 0 ] );
 				BB_disp_Model_Init( &wk->p_client->bb3d_kami[ i ], wk->rule.ball_type ); 
 			
+			#if WB_FIX
 				D3DOBJ_AnmLoadH( &wk->p_client->bb3d_kami[ i ].anm[ 0 ], &wk->p_client->bb3d_kami[ i ].mdl,
 								 wk->sys.p_handle_bb, data[ i ][ 1 ], HEAPID_BB, &wk->sys.allocator );
+			#else
+				wk->p_client->bb3d_kami[i].p_anmres[0] = GFL_G3D_CreateResourceHandle( 
+					wk->sys.p_handle_bb, data[i][1] );
+				wk->p_client->bb3d_kami[ i ].anm[ 0 ] = GFL_G3D_ANIME_Create( 
+					wk->p_client->bb3d_kami[i].g3drnd, wk->p_client->bb3d_kami[i].p_anmres[0], 0 ); 
+			#endif
+			
+			#if WB_FIX
 				D3DOBJ_AddAnm( &wk->p_client->bb3d_kami[ i ].obj, &wk->p_client->bb3d_kami[ i ].anm[ 0 ] );
 				D3DOBJ_AnmSet( &wk->p_client->bb3d_kami[ i ].anm[ 0 ], 0 );
 				D3DOBJ_SetDraw( &wk->p_client->bb3d_kami[ i ].obj, FALSE );
-				
+			#else
+			  anm_index = GFL_G3D_OBJECT_AddAnime(wk->p_client->bb3d_kami[i].g3dobj, 
+			    wk->p_client->bb3d_kami[ i ].anm[ 0 ]);
+  			GFL_G3D_OBJECT_EnableAnime( wk->p_client->bb3d_kami[i].g3dobj, anm_index );
+  			wk->p_client->bb3d_kami[i].draw_flag = FALSE;
+			#endif
+			
 				{
 					int ofs = 5;
 					
@@ -207,24 +258,28 @@ static void BalanceBall_MainInit( BB_WORK* wk )
 				}					
 			}
 		}	
-		BB_disp_Model_Load( &wk->p_client->bb3d_spot, wk->sys.p_handle_bb, NARC_manene_spotlight_nsbmd );
+		BB_disp_Model_Load( &wk->p_client->bb3d_spot, wk->sys.p_handle_bb, NARC_balance_ball_spotlight_nsbmd );
 		BB_disp_Model_Init( &wk->p_client->bb3d_spot, wk->rule.ball_type );
+#if WB_FIX
 		D3DOBJ_SetDraw( &wk->p_client->bb3d_spot.obj, FALSE ); 
+#else
+    wk->p_client->bb3d_spot.draw_flag = FALSE;
+#endif
 
 		{
 			int ball_res[] = {
-				NARC_manene_ball_red_nsbmd,
-				NARC_manene_ball_blue_nsbmd,
-				NARC_manene_ball_yellow_nsbmd,
-				NARC_manene_ball_green_nsbmd,
+				NARC_balance_ball_ball_red_nsbmd,
+				NARC_balance_ball_ball_blue_nsbmd,
+				NARC_balance_ball_ball_yellow_nsbmd,
+				NARC_balance_ball_ball_green_nsbmd,
 			};
 			int res_id = ball_res[ NetID_To_PlayerNo( wk, wk->netid ) ];
 			BB_disp_Model_Load( &wk->p_client->bb3d_ball, wk->sys.p_handle_bb, res_id );
 			BB_disp_Model_Init( &wk->p_client->bb3d_ball, wk->rule.ball_type );
 			
-			BB_disp_Model_Load( &wk->p_client->bb3d_mane[ 0 ], wk->sys.p_handle_bb, NARC_manene_manene_nsbmd );
-			BB_disp_Model_Load( &wk->p_client->bb3d_mane[ 1 ], wk->sys.p_handle_bb, NARC_manene_manene_ochita_nsbmd );
-			BB_disp_Model_Load( &wk->p_client->bb3d_mane[ 2 ], wk->sys.p_handle_bb, NARC_manene_manene_fukki_nsbmd );		
+			BB_disp_Model_Load( &wk->p_client->bb3d_mane[ 0 ], wk->sys.p_handle_bb, NARC_balance_ball_manene_nsbmd );
+			BB_disp_Model_Load( &wk->p_client->bb3d_mane[ 1 ], wk->sys.p_handle_bb, NARC_balance_ball_manene_ochita_nsbmd );
+			BB_disp_Model_Load( &wk->p_client->bb3d_mane[ 2 ], wk->sys.p_handle_bb, NARC_balance_ball_manene_fukki_nsbmd );		
 			BB_disp_Model_Init( &wk->p_client->bb3d_mane[ 0 ], wk->rule.ball_type );
 			BB_disp_Model_Init( &wk->p_client->bb3d_mane[ 1 ], wk->rule.ball_type );
 			BB_disp_Model_Init( &wk->p_client->bb3d_mane[ 2 ], wk->rule.ball_type );
@@ -239,34 +294,74 @@ static void BalanceBall_MainInit( BB_WORK* wk )
 				b3d = &wk->p_client->bb3d_mane[ 0 ];
 				
 				///< 歩く
-				anime = NARC_manene_manene_aruku_nsbca;
+				anime = NARC_balance_ball_manene_aruku_nsbca;
+			#if WB_FIX
 				D3DOBJ_AnmLoadH( &b3d->anm[ 0 ], &b3d->mdl, wk->sys.p_handle_bb, anime, HEAPID_BB, &wk->sys.allocator );
 				D3DOBJ_AddAnm( &b3d->obj, &b3d->anm[ 0 ] );
 				D3DOBJ_AnmSet( &b3d->anm[ 0 ], 0 );
-				
+			#else
+				b3d->p_anmres[0] = GFL_G3D_CreateResourceHandle( wk->sys.p_handle_bb, anime );
+				b3d->anm[ 0 ] = GFL_G3D_ANIME_Create( b3d->g3drnd, b3d->p_anmres[0], 0 ); 
+
+			  anm_index = GFL_G3D_OBJECT_AddAnime(b3d->g3dobj, b3d->anm[ 0 ]);
+  			//GFL_G3D_OBJECT_EnableAnime( b3d->g3dobj, anm_index );
+			#endif
+			
 				///< あらら
-				anime = NARC_manene_manene_arara_nsbca;
+				anime = NARC_balance_ball_manene_arara_nsbca;
+			#if WB_FIX
 				D3DOBJ_AnmLoadH( &b3d->anm[ 1 ], &b3d->mdl, wk->sys.p_handle_bb, anime, HEAPID_BB, &wk->sys.allocator );
 				D3DOBJ_AnmSet( &b3d->anm[ 1 ], 0 );
-				
+			#else
+				b3d->p_anmres[1] = GFL_G3D_CreateResourceHandle( wk->sys.p_handle_bb, anime );
+				b3d->anm[ 1 ] = GFL_G3D_ANIME_Create( b3d->g3drnd, b3d->p_anmres[1], 0 ); 
+
+			  anm_index = GFL_G3D_OBJECT_AddAnime(b3d->g3dobj, b3d->anm[ 1 ]);
+  			//GFL_G3D_OBJECT_EnableAnime( b3d->g3dobj, anm_index );
+			#endif
+			
 				///< おっとっと
-				anime = NARC_manene_manene_ottoto_nsbca;
+			#if WB_FIX
+				anime = NARC_balance_ball_manene_ottoto_nsbca;
 				D3DOBJ_AnmLoadH( &b3d->anm[ 2 ], &b3d->mdl, wk->sys.p_handle_bb, anime, HEAPID_BB, &wk->sys.allocator );
 				D3DOBJ_AnmSet( &b3d->anm[ 2 ], 0 );
-				
+			#else
+				b3d->p_anmres[2] = GFL_G3D_CreateResourceHandle( wk->sys.p_handle_bb, anime );
+				b3d->anm[ 2 ] = GFL_G3D_ANIME_Create( b3d->g3drnd, b3d->p_anmres[2], 0 ); 
+
+			  anm_index = GFL_G3D_OBJECT_AddAnime(b3d->g3dobj, b3d->anm[ 2 ]);
+  			//GFL_G3D_OBJECT_EnableAnime( b3d->g3dobj, anm_index );
+			#endif
+			
 				///< 落ちるアニメ
 				b3d = &wk->p_client->bb3d_mane[ 1 ];
-				anime = NARC_manene_manene_ochita_nsbca;			
+				anime = NARC_balance_ball_manene_ochita_nsbca;			
+			#if WB_FIX
 				D3DOBJ_AnmLoadH( &b3d->anm[ 0 ], &b3d->mdl, wk->sys.p_handle_bb, anime, HEAPID_BB, &wk->sys.allocator );
 				D3DOBJ_AddAnm( &b3d->obj, &b3d->anm[ 0 ] );
 				D3DOBJ_AnmSet( &b3d->anm[ 0 ], 0 );
-				
+			#else
+				b3d->p_anmres[0] = GFL_G3D_CreateResourceHandle( wk->sys.p_handle_bb, anime );
+				b3d->anm[ 0 ] = GFL_G3D_ANIME_Create( b3d->g3drnd, b3d->p_anmres[0], 0 ); 
+
+			  anm_index = GFL_G3D_OBJECT_AddAnime(b3d->g3dobj, b3d->anm[ 0 ]);
+  			GFL_G3D_OBJECT_EnableAnime( b3d->g3dobj, anm_index );
+			#endif
+			
 				///< 復帰アニメ
 				b3d = &wk->p_client->bb3d_mane[ 2 ];
-				anime = NARC_manene_manene_fukki_nsbca;			
+				anime = NARC_balance_ball_manene_fukki_nsbca;			
+			#if WB_FIX
 				D3DOBJ_AnmLoadH( &b3d->anm[ 0 ], &b3d->mdl, wk->sys.p_handle_bb, anime, HEAPID_BB, &wk->sys.allocator );
 				D3DOBJ_AddAnm( &b3d->obj, &b3d->anm[ 0 ] );
 				D3DOBJ_AnmSet( &b3d->anm[ 0 ], 0 );
+			#else
+				b3d->p_anmres[0] = GFL_G3D_CreateResourceHandle( wk->sys.p_handle_bb, anime );
+				b3d->anm[ 0 ] = GFL_G3D_ANIME_Create( b3d->g3drnd, b3d->p_anmres[0], 0 ); 
+
+			  anm_index = GFL_G3D_OBJECT_AddAnime(b3d->g3dobj, b3d->anm[ 0 ]);
+  			GFL_G3D_OBJECT_EnableAnime( b3d->g3dobj, anm_index );
+			#endif
 			}
 		}
 		
@@ -279,7 +374,11 @@ static void BalanceBall_MainInit( BB_WORK* wk )
 	}		
 //	wk->p_client->bb3d_mane[ 0 ].pos.y -= FX32_CONST( Action_MoveValue_3Y() );
 //	wk->p_client->bb3d_mane[ 0 ].pos.z += FX32_CONST( Action_MoveValue_3Z() );
+#if WB_FIX
 	wk->count_down = MNGM_COUNT_Init( CATS_GetClactSetPtr( wk->sys.crp ), HEAPID_BB );	
+#else
+	wk->count_down = MNGM_COUNT_Init( wk->sys.clunit, HEAPID_BB, wk->sys.plttslot );	
+#endif
 	PaletteWorkSet_VramCopy( wk->sys.pfd, FADE_MAIN_OBJ, 0 * 16, 16 * 0x20 );
 	
 	if ( wk->parent_wk->vchat ){
@@ -331,6 +430,13 @@ GFL_PROC_RESULT BalanceBallProc_Init( GFL_PROC* proc, int* seq, void * pwk, void
 
 	MNGM_ENRES_PARAM_Init( &wk->entry_param, wk->parent_wk->wifi_lobby, wk->parent_wk->p_save, wk->parent_wk->vchat, &wk->parent_wk->lobby_wk );
 
+ 	bb_gf_rand_init();
+
+  //フォント読み込み
+  wk->font_handle = GFL_FONT_Create( ARCID_FONT, NARC_font_large_nftr,
+			GFL_FONT_LOADTYPE_FILE, FALSE, HEAPID_BB );
+	wk->printQue = PRINTSYS_QUE_Create( HEAPID_BB );
+
 	return GFL_PROC_RES_FINISH;
 }
 
@@ -345,7 +451,11 @@ static void BB_PenDemo( BB_CLIENT* wk, u32 x, u32 y )
 		if ( wk->bb3d_ball.pow_count != 0 ){
 			bMove = Quaternion_Rotation_Pow( &wk->bb3d_ball, 1.0f );
 		//	bMove = Quaternion_Rotation_Pow( &wk->bb3d_mane[ 0 ], 0.5f );
+		#if 0 //バグのようなので修正 2009.08.04(火) matsuda
 			if ( bMove = TRUE )	{
+    #else
+      if(TRUE){ //今までの条件では常に真のはずなので、こうしてしまう matsuda
+    #endif
 				VecFx32 vec = { 0, BB_POINT_Y, 0 };
 				VecFx32 tmp;
 				MTX_MultVec43( &vec, &wk->bb3d_mane[ 0 ].tmp43, &wk->mane_pos );
@@ -371,14 +481,20 @@ static void BB_PenDemo( BB_CLIENT* wk, u32 x, u32 y )
 		}		
 		bMove = Quaternion_Rotation( &wk->bb3d_ball, x, y, wk->control.old_x, wk->control.old_y, BB_COEFFICIENT_AB_PEN, TRUE );
 	//	bMove = Quaternion_Rotation( &wk->bb3d_mane[ 0 ], x, y, wk->control.old_x, wk->control.old_y, BB_COEFFICIENT_AM - py, TRUE );		
+  #if 0 //バグのようなので修正 2009.08.04(火) matsuda
 		if ( bMove = TRUE ){
+  #else
+    if(TRUE){ //今までの条件では常に真のはずなので、こうしてしまう matsuda
+  #endif
 			VecFx32 vec = { 0, BB_POINT_Y, 0 };
 			VecFx32 tmp;
 			MTX_MultVec43( &vec, &wk->bb3d_mane[ 0 ].tmp43, &wk->mane_pos );
 		}		
+	#if WB_TEMP_FIX
 		if ( Snd_SePlayCheck( BB_SND_KIRAKIRA ) == 0 ){
 			Snd_SePlay( BB_SND_KIRAKIRA );			///< きらきら
 		}	
+	#endif
 		wk->control.old_x = x;
 		wk->control.old_y = y;
 	}
@@ -396,7 +512,11 @@ static BOOL PenDemo( BB_CLIENT* wk )
 		{ 0,0 },{ 10,0 },{ 20,0 },{ 30,0 },{ 40,0 },{ 50,0 },{ 60,0 },{ 70,0 },{ 80,0 },{ 90,0 },{ 0,0 },{ 0,0 },
 	};
 	
+#if WB_FIX
 	now = CATS_ObjectAnimeFrameGetCap( wk->cap_pen );
+#else
+  now = GFL_CLACT_WK_GetAnmFrame(wk->cap_pen);
+#endif
 //	OS_Printf( "now = %d\n", now );
 	index = ( wk->seq2 * 12 ) + now;
 	x = pos[ index ][ 0 ];
@@ -422,11 +542,23 @@ static BOOL PenDemo( BB_CLIENT* wk )
 	}
 	wk->seq = now;
 	if ( wk->seq2 == 2 ){
-		if ( CATS_ObjectAnimeSeqGetCap( wk->cap_pen ) != 2 ){
-			CATS_ObjectPosSetCap( wk->cap_pen, 128, 100 );
+		if ( GFL_CLACT_WK_GetAnmSeq( wk->cap_pen ) != 2 ){
+      GFL_CLACTPOS pos = {128, 100};
+			GFL_CLACT_WK_SetPos( wk->cap_pen, &pos, CLSYS_DEFREND_MAIN );
+		#if WB_FIX
 			CATS_ObjectAnimeSeqCheckSetCap( wk->cap_pen, 2 );
+		#else
+		  if(GFL_CLACT_WK_GetAnmSeq(wk->cap_pen) != 2){
+        GFL_CLACT_WK_SetAnmSeq(wk->cap_pen, 2);
+      }
+		#endif
+		#if WB_FIX
 			Quaternion_Identity( &wk->bb3d_ball.tq );
 			Quaternion_Identity( &wk->bb3d_ball.cq );
+		#else
+			GFL_QUAT_Identity( wk->bb3d_ball.tq );
+			GFL_QUAT_Identity( wk->bb3d_ball.cq );
+		#endif
 			Quaternion_Rotation( &wk->bb3d_ball, 0, 0, +5, +5, BB_COEFFICIENT_AMI, FALSE );
 			Quaternion_Rotation( &wk->bb3d_ball, 0, 0, -5, -5, BB_COEFFICIENT_AMI, FALSE );	
 		}
@@ -435,8 +567,13 @@ static BOOL PenDemo( BB_CLIENT* wk )
 		wk->seq  = 0;
 		wk->seq2 = 0;
 		GFL_CLACT_WK_SetDrawEnable( wk->cap_pen, FALSE );
+#if WB_FIX
 		Quaternion_Identity( &wk->bb3d_ball.tq );
 		Quaternion_Identity( &wk->bb3d_ball.cq );
+#else
+		GFL_QUAT_Identity( wk->bb3d_ball.tq );
+		GFL_QUAT_Identity( wk->bb3d_ball.cq );
+#endif
 		Quaternion_Rotation( &wk->bb3d_ball, 0, 0, +5, +5, BB_COEFFICIENT_AMI, FALSE );
 		Quaternion_Rotation( &wk->bb3d_ball, 0, 0, -5, -5, BB_COEFFICIENT_AMI, FALSE );	
 		return TRUE;
@@ -463,6 +600,9 @@ GFL_PROC_RESULT BalanceBallProc_Main( GFL_PROC* proc, int* seq, void * pwk, void
 	BB_WORK* wk = mywk;
 	BOOL bEnd = FALSE;
 	u32 dis_error;
+
+	PRINTSYS_QUE_Main(wk->printQue);
+  PRINT_UTIL_Trans(&wk->print_util_talk, wk->printQue);
 
 	// 切断エラーチェック
 	dis_error = BB_DIS_ERROR_Check( wk );
@@ -544,7 +684,7 @@ GFL_PROC_RESULT BalanceBallProc_Main( GFL_PROC* proc, int* seq, void * pwk, void
 		bEnd = TRUE;//BB_Client_JumpOnToBall( wk->p_client );
 		if ( bEnd == FALSE ){ break; }		
 	//	BB_disp_NameWinDel( wk->p_client );
-		BB_disp_InfoWinAdd( wk->p_client );
+		BB_disp_InfoWinAdd( wk, wk->p_client );
 		BB_Effect_Call( wk->p_client );
 		BB_Fever_Call( wk->p_client );
 		BB_MainSeq_Change( wk, bEnd, eBB_SEQ_PEN_DEMO, seq );
@@ -607,7 +747,9 @@ GFL_PROC_RESULT BalanceBallProc_Main( GFL_PROC* proc, int* seq, void * pwk, void
 						break;	
 					}
 			#else
+				#if WB_TEMP_FIX
 					Snd_SeStopBySeqNo( BB_SND_HAND, 0 );
+				#endif
 					CommSendData( CCMD_BB_END, NULL, 0 );
 			#endif
 				}
@@ -619,8 +761,10 @@ GFL_PROC_RESULT BalanceBallProc_Main( GFL_PROC* proc, int* seq, void * pwk, void
 	
 	case eBB_SEQ_MAIN_END_INIT:
 		bEnd = TRUE;
+	#if WB_TEMP_FIX
 		Snd_SeStopBySeqNo( BB_SND_HANABI, 0 );			///< 花火どがーん停止
 		Snd_SeStopBySeqNo( BB_SND_HAND, 0 );			///< 拍手も停止
+	#endif
 		MNGM_COUNT_StartTimeUp( wk->count_down, wk->tcbsys );
 		BB_MainSeq_Change( wk, bEnd, eBB_SEQ_MAIN_END, seq );
 		break;
@@ -675,11 +819,18 @@ GFL_PROC_RESULT BalanceBallProc_Main( GFL_PROC* proc, int* seq, void * pwk, void
 	case eBB_SEQ_FADE_OUT_WAIT:
 		bEnd = WIPE_SYS_EndCheck();
 		
+	#if 0 //バグっぽいので修正 2009.08.06(木) matsuda
 		if ( bEnd ){
 			MainResource_Delete( wk );
 		}
 		
 		BB_MainSeq_Change( wk, bEnd, eBB_SEQ_SCORE, seq );
+	#else
+		if ( bEnd ){
+			MainResource_Delete( wk );
+  		BB_MainSeq_Change( wk, bEnd, eBB_SEQ_SCORE, seq );
+		}
+	#endif
 		break;
 	
 	
@@ -783,8 +934,11 @@ static void MainResource_Delete( BB_WORK* wk )
 #endif
 	
 	///< 乱数のタネ戻す
+#if WB_FIX
 	gf_srand( wk->seed_tmp );
-
+#else
+	bb_gf_srand( wk->seed_tmp );
+#endif
 	///<
 
 	///< OAM リソース解放
@@ -802,22 +956,46 @@ static void MainResource_Delete( BB_WORK* wk )
 	BB_disp_Model_Delete( &wk->p_client->bb3d_spot );
 	
 //	D3DOBJ_AnmDelete( &wk->p_client->bb3d_spot.anm[ 0 ], &wk->sys.allocator );
+#if WB_FIX
 	D3DOBJ_AnmDelete( &wk->p_client->bb3d_mane[ 0 ].anm[ 0 ], &wk->sys.allocator );
 	D3DOBJ_AnmDelete( &wk->p_client->bb3d_mane[ 0 ].anm[ 1 ], &wk->sys.allocator );
 	D3DOBJ_AnmDelete( &wk->p_client->bb3d_mane[ 0 ].anm[ 2 ], &wk->sys.allocator );
 	D3DOBJ_AnmDelete( &wk->p_client->bb3d_mane[ 1 ].anm[ 0 ], &wk->sys.allocator );
 	D3DOBJ_AnmDelete( &wk->p_client->bb3d_mane[ 2 ].anm[ 0 ], &wk->sys.allocator );
-	
+#else
+  GFL_G3D_ANIME_Delete(wk->p_client->bb3d_mane[ 0 ].anm[ 0 ]);
+  GFL_G3D_DeleteResource( wk->p_client->bb3d_mane[ 0 ].p_anmres[ 0 ] );
+  GFL_G3D_ANIME_Delete(wk->p_client->bb3d_mane[ 0 ].anm[ 1 ]);
+  GFL_G3D_DeleteResource( wk->p_client->bb3d_mane[ 0 ].p_anmres[ 1 ] );
+  GFL_G3D_ANIME_Delete(wk->p_client->bb3d_mane[ 0 ].anm[ 2 ]);
+  GFL_G3D_DeleteResource( wk->p_client->bb3d_mane[ 0 ].p_anmres[ 2 ] );
+  GFL_G3D_ANIME_Delete(wk->p_client->bb3d_mane[ 1 ].anm[ 0 ]);
+  GFL_G3D_DeleteResource( wk->p_client->bb3d_mane[ 1 ].p_anmres[ 0 ] );
+  GFL_G3D_ANIME_Delete(wk->p_client->bb3d_mane[ 2 ].anm[ 0 ]);
+  GFL_G3D_DeleteResource( wk->p_client->bb3d_mane[ 2 ].p_anmres[ 0 ] );
+#endif
+
 	{
 		int i;
 		for ( i = 0; i < BB_KAMI_HUBUKI_MAX; i++ ){
 			BB_disp_Model_Delete( &wk->p_client->bb3d_kami[ i ] );
+	#if WB_FIX
 			D3DOBJ_AnmDelete( &wk->p_client->bb3d_kami[ i ].anm[ 0 ], &wk->sys.allocator );
 			D3DOBJ_AnmDelete( &wk->p_client->bb3d_kami[ i ].anm[ 1 ], &wk->sys.allocator );
+	#else
+	    if(wk->p_client->bb3d_kami[i].anm[0] != NULL){
+        GFL_G3D_ANIME_Delete(wk->p_client->bb3d_kami[i].anm[0]);
+    		GFL_G3D_DeleteResource( wk->p_client->bb3d_kami[i].p_anmres[0] );
+      }
+      if(wk->p_client->bb3d_kami[i].anm[1] != NULL){
+        GFL_G3D_ANIME_Delete(wk->p_client->bb3d_kami[i].anm[1]);
+    		GFL_G3D_DeleteResource( wk->p_client->bb3d_kami[i].p_anmres[1] );
+      }
+	#endif
 		}
 	}
 
-	MNGM_COUNT_Exit( wk->count_down );
+	MNGM_COUNT_Exit( wk->count_down, wk->sys.plttslot );
 
 	BB_SystemExit( wk );
 
@@ -873,6 +1051,11 @@ GFL_PROC_RESULT BalanceBallProc_Exit( GFL_PROC* proc, int* seq, void * pwk, void
 			u32 dis_error;
 			BB_WORK* wk = mywk;
 			dis_error = BB_DIS_ERROR_Check( wk );	// 切断エラーチェック
+
+      //フォント破棄
+    	GFL_FONT_Delete(wk->font_handle);
+    	//PrintQue破棄
+    	PRINTSYS_QUE_Delete(wk->printQue);
 
 			//TCBシステム削除
 			GFL_TCB_Exit( wk->tcbsys );
@@ -944,9 +1127,13 @@ static void BB_SystemInit( BB_WORK* wk )
 						0x1000, HEAPID_BB, NULL);
 	GFL_G3D_SetSystemSwapBufferMode(GX_SORTMODE_AUTO, GX_BUFFERMODE_W);
 
+#if WB_FIX
 	wk->sys.camera_p	= GFC_AllocCamera( HEAPID_BB );
 	BB_disp_CameraSet( wk );
-	
+#else
+	wk->sys.camera_p	= BB_disp_CameraSet( wk );
+#endif
+
 	PaletteTrans_AutoSet( wk->sys.pfd, TRUE );
 	PaletteFadeWorkAllocSet( wk->sys.pfd, FADE_MAIN_BG,	 0x200, HEAPID_BB );
 	PaletteFadeWorkAllocSet( wk->sys.pfd, FADE_SUB_BG,	 0x200, HEAPID_BB );
@@ -967,7 +1154,9 @@ static void BB_SystemInit( BB_WORK* wk )
 		G3X_SetEdgeColorTable( edge_color_table );
 	}
 	
+#if WB_FIX
 	sys_InitAllocator( &wk->sys.allocator, HEAPID_BB, 32 );
+#endif
 }
 
 
@@ -1015,9 +1204,15 @@ void BB_SystemExit( BB_WORK* wk )
 	GFL_G3D_CAMERA_Delete( wk->sys.camera_p );
 	
 	
+#if WB_FIX
 	CATS_ResourceDestructor_S( wk->sys.csp, wk->sys.crp );
 	CATS_FreeMemory( wk->sys.csp );
-	
+#else
+  GFL_CLACT_UNIT_Delete(wk->sys.clunit);
+  GFL_CLACT_SYS_Delete();
+  PLTTSLOT_Exit(wk->sys.plttslot);
+#endif
+
 	GFL_DISP_SetDispSelect(GFL_DISP_3D_TO_MAIN);
 	GFL_DISP_SetDispOn();
 	
@@ -1047,20 +1242,6 @@ static void BB_VramBankSet( void )
 	
 	//VRAM設定
 	{
-		GFL_DISP_VRAM vramSetTable = {
-			GX_VRAM_BG_128_A,				// メイン2DエンジンのBG
-			GX_VRAM_BGEXTPLTT_NONE,			// メイン2DエンジンのBG拡張パレット
-			GX_VRAM_SUB_BG_128_C,			// サブ2DエンジンのBG
-			GX_VRAM_SUB_BGEXTPLTT_NONE,		// サブ2DエンジンのBG拡張パレット
-			GX_VRAM_OBJ_64_E,				// メイン2DエンジンのOBJ
-			GX_VRAM_OBJEXTPLTT_NONE,		// メイン2DエンジンのOBJ拡張パレット
-			GX_VRAM_SUB_OBJ_16_I,			// サブ2DエンジンのOBJ
-			GX_VRAM_SUB_OBJEXTPLTT_NONE,	// サブ2DエンジンのOBJ拡張パレット
-			GX_VRAM_TEX_0_B,				// テクスチャイメージスロット
-			GX_VRAM_TEXPLTT_01_FG			// テクスチャパレットスロット
-			GX_OBJVRAMMODE_CHAR_1D_128K,	// メインOBJマッピングモード
-			GX_OBJVRAMMODE_CHAR_1D_32K,		// サブOBJマッピングモード
-		};
 		GFL_DISP_SetBank( &vramSetTable );
 
 		//VRAMクリア
@@ -1192,6 +1373,7 @@ static void BB_VramBankSet( void )
 //--------------------------------------------------------------
 static void BB_CATS_Init( BB_WORK* wk )
 {
+#if WB_FIX
 	wk->sys.csp = CATS_AllocMemory( HEAPID_BB );
 	{
 		const TCATS_OAM_INIT OamInit = {
@@ -1228,6 +1410,21 @@ static void BB_CATS_Init( BB_WORK* wk )
 		GF_ASSERT( active );
 	}
 	CLACT_U_SetSubSurfaceMatrix( CATS_EasyRenderGet( wk->sys.csp ), 0, BB_SURFACE_Y << FX32_SHIFT );
+#else
+	GFL_CLSYS_INIT clsys_init = GFL_CLSYSINIT_DEF_DIVSCREEN;
+	
+	clsys_init.oamst_main = GFL_CLSYS_OAMMAN_INTERVAL;	//通信アイコンの分
+	clsys_init.oamnum_main = 128-GFL_CLSYS_OAMMAN_INTERVAL;
+	clsys_init.tr_cell = 32;	//セルVram転送管理数
+	clsys_init.CGR_RegisterMax = 64 + 64;
+	clsys_init.CELL_RegisterMax = 128;
+	GFL_CLACT_SYS_Create(&clsys_init, &vramSetTable, HEAPID_BB);
+	
+	wk->sys.clunit = GFL_CLACT_UNIT_Create(255, 0, HEAPID_BB);
+	GFL_CLACT_UNIT_SetDefaultRend(wk->sys.clunit);
+
+	wk->sys.plttslot = PLTTSLOT_Init(HEAPID_BB, 15, 16);
+#endif
 }
 
 //--------------------------------------------------------------
@@ -1426,3 +1623,31 @@ static u32 BB_DIS_ERROR_Check( BB_WORK* wk )
 
 	return BB_DIS_ERROR_NONE;
 }
+
+#if (WB_FIX == 0)
+//ランダムの種を共有しているようなので、同じ計算式で出力する必要がある
+//その為、ランダム関数をDPから移植 2009.08.04(火) matsuda
+static u32 bb_gf_rand_next;
+
+void bb_gf_rand_init(void)
+{
+  bb_gf_rand_next = GFUser_GetPublicRand(GFL_STD_RAND_MAX);
+}
+
+u32 bb_gf_get_seed(void)
+{
+	return bb_gf_rand_next;
+}
+
+void bb_gf_srand(u32 seed)
+{
+	bb_gf_rand_next = seed;
+}
+
+//another_rand
+u16 bb_gf_rand(void)
+{
+    bb_gf_rand_next = bb_gf_rand_next *1103515245L + 24691;	// 
+    return (u16)(bb_gf_rand_next / 65536L) ;
+}
+#endif

@@ -134,8 +134,11 @@
 
 #define BB_SURFACE_LIMIT	( 192 + 32 )
 #define BB_SURFACE_Y		( 192 + 64 )
+#if WB_FIX
 #define BB_SURFACE_Y_FX		( ( 192 + 64 ) << FX32_SHIFT )
-
+#else
+#define BB_SURFACE_Y_FX		( 0 )
+#endif
 
 
 #define BB_CONST_INI_FRAME	( 8 )						///< ˆê’è—Ê‚Å“®‚­ÌÚ°Ñ

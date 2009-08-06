@@ -16,6 +16,16 @@
 #include "savedata/save_control.h"
 #include "net_app/wifi_lobby/minigame_tool.h"
 
+//--------------------------------------------------------------
+//	
+//--------------------------------------------------------------
+///デバッグ用定義
+//WB移植にあたって暫定的に無効化する部分を囲う
+#define WB_FIX			0	//0で無効化する
+//WB移植にあたって一時的に無効化する部分(移植作業を後回しにする所)
+#define WB_TEMP_FIX		0	//0で無効化する
+
+
 typedef struct {
 	WFLBY_MINIGAME_WK lobby_wk;
 
@@ -31,6 +41,12 @@ extern GFL_PROC_RESULT BalanceBallProc_Init( GFL_PROC* proc, int* seq, void * pw
 extern GFL_PROC_RESULT BalanceBallProc_Main( GFL_PROC* proc, int* seq, void * pwk, void * mywk );
 extern GFL_PROC_RESULT BalanceBallProc_Exit( GFL_PROC* proc, int* seq, void * pwk, void * mywk );
 
+#if (WB_FIX == 0)
+extern void bb_gf_rand_init(void);
+extern u32 bb_gf_get_seed(void);
+extern void bb_gf_srand(u32 seed);
+extern u16 bb_gf_rand(void);
+#endif
 
 #endif		// __BUCKET_H__
 

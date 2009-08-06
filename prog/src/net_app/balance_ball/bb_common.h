@@ -13,15 +13,18 @@
 #ifndef __BB_COMMON_H__
 #define __BB_COMMON_H__
 
+#include <gflib.h>
 #include "bb_local.h"
 #include "bb_game.h" 
+#include "arc_def.h"
+#include "print\printsys.h"
 
 
 #define HEAPID_BB			( HEAPID_BALANCE_BALL )
 #define HEAP_SIZE_BB		( 0x65000 )
 
-#define ARCID_BB_RES		( ARC_BALANCE_BALL_GRA )
-#define ARCID_COMMON_RES	( ARC_BUCKET_GRAPHIC )
+#define ARCID_BB_RES		( ARCID_BALANCE_BALL_GRA )
+#define ARCID_COMMON_RES	( ARCID_BUCKET_GRAPHIC )
 
 #define BB_BG_CGX_OFS		( 180 )
 #define BB_CGX_OFS			( 256 )
@@ -62,7 +65,11 @@ enum {
 #define BB_BALL_HIT_R		(  36 )
 #define BB_BALL_HIT_D		( BB_BALL_HIT_R * 2 )
 
+#if WB_FIX
 #define BB_SURFECE_OFS	( 64 )
+#else
+#define BB_SURFECE_OFS	( 0 )
+#endif
 #define BB_OAM_OX		( 0 )
 #define BB_MANE_PY		( 176 + BB_SURFECE_OFS )
 #define BB_MANE_OY		( 0 )
@@ -148,12 +155,27 @@ typedef struct {
 
 ///< 3D ball
 typedef struct {	
-    GFL_G3D_OBJSTATUS				obj;
-    GFL_G3D_OBJ			mdl;
-    GFL_G3D_ANM			anm[ 10 ];			///< とりあえず10個        
+  BOOL draw_flag;
+  VecFx32 obj_rotate;
+  GFL_G3D_RND *g3drnd;
+  GFL_G3D_OBJSTATUS				obj;
+#if WB_FIX
+  GFL_G3D_OBJ			*mdl;
+#else
+  GFL_G3D_OBJ     *g3dobj;
+#endif
+  GFL_G3D_RES     *p_mdlres;
+  GFL_G3D_ANM			*anm[ 10 ];			///< とりあえず10個        
+  GFL_G3D_RES     *p_anmres[10];
+#if WB_FIX
 	QUATERNION_MTX44	rt;					///< 計算用マトリックス
 	QUATERNION			tq;					///< クォータニオン
 	QUATERNION			cq;					///< クォータニオン
+#else
+	MtxFx44	            rt;					///< 計算用マトリックス
+	GFL_QUATERNION			*tq;					///< クォータニオン
+	GFL_QUATERNION			*cq;					///< クォータニオン
+#endif
 	MtxFx43				tmp43;				///< 実際の表示部分マトリックス
 	VecFx32				pos;
 	BOOL				bAnime;
@@ -194,8 +216,8 @@ typedef struct {
 	int				seq;
 	int				type;
 	int				wait;
-	GFL_CLWK	cap_mane;		///< 影ワークにも使う
-	GFL_CLWK	cap_ball;
+	GFL_CLWK*	cap_mane;		///< 影ワークにも使う
+	GFL_CLWK*	cap_ball;
 
 	BB_ADDMOVE_WORK_FX data;
 
@@ -208,7 +230,7 @@ typedef struct {
 	int				seq;
 	int				type;
 	int				wait;
-	GFL_CLWK	cap_kage;		///< 影ワークにも使う
+	GFL_CLWK*	cap_kage;		///< 影ワークにも使う
 
 	BB_ADDMOVE_WORK_FX data;
 	
@@ -296,7 +318,7 @@ typedef struct {
 ///< ライトのワーク
 typedef struct {
 	
-	GFL_CLWK	cap;
+	GFL_CLWK*	cap;
 	
 	int seq;
 	s16 rad;
@@ -348,6 +370,7 @@ typedef struct {
 	BB_SYS*	 sys;
 	BB_ADDMOVE_WORK_FX	scr_move[ 5 ];
 	
+	GFL_TCBSYS		*tcbsys;		///<TCBシステム(BB_WORKが持つポインタをもらっている)
 } BB_FEVER;
 
 ///< 個人エフェクト
@@ -379,7 +402,7 @@ typedef struct {
 
 	BOOL				active;
 	int					seq;
-	GFL_CLWK		cap[ STAR_DUST_MAX ];
+	GFL_CLWK*		cap[ STAR_DUST_MAX ];
 	BB_ADDMOVE_WORK_FX	data[ STAR_DUST_MAX ][ 2 ];
 	
 	BB_SYS*				sys;
@@ -411,18 +434,18 @@ typedef struct {
 	
 	BB_SYS*	sys;
 	
-	GFL_CLWK	cap_cd;
-	GFL_CLWK	cap_mane[ BB_PLAYER_NUM - 1 ];
-	GFL_CLWK	cap_ball[ BB_PLAYER_NUM - 1 ];
-	GFL_CLWK	cap_kage[ BB_PLAYER_NUM - 1 ];
+	GFL_CLWK*	cap_cd;
+	GFL_CLWK*	cap_mane[ BB_PLAYER_NUM - 1 ];
+	GFL_CLWK*	cap_ball[ BB_PLAYER_NUM - 1 ];
+	GFL_CLWK*	cap_kage[ BB_PLAYER_NUM - 1 ];
 
-	GFL_CLWK	cap_hanabi[ BB_KAMI_MAX ];
-	GFL_CLWK	cap_hand[ BB_HAND_MAX ];
+	GFL_CLWK*	cap_hanabi[ BB_KAMI_MAX ];
+	GFL_CLWK*	cap_hand[ BB_HAND_MAX ];
 	
-	GFL_CLWK	cap_light_s[ BB_LIGHT_MAX ];
-	GFL_CLWK	cap_light_m[ BB_LIGHT_MAX ];
+	GFL_CLWK*	cap_light_s[ BB_LIGHT_MAX ];
+	GFL_CLWK*	cap_light_m[ BB_LIGHT_MAX ];
 	
-	GFL_CLWK	cap_pen;
+	GFL_CLWK*	cap_pen;
 
 	u16				netid_to_capid[ BB_PLAYER_NUM ];
 	int				direc[ BB_PLAYER_NUM - 1 ];	
@@ -459,6 +482,10 @@ typedef struct {
 	BOOL			bAction;
 	
 	GFL_TCBSYS		*tcbsys;		///<TCBシステム(BB_WORKが持つポインタをもらっている)
+
+	u32 cgr_id[eBB_ID_MAX];
+	u32 cell_id[eBB_ID_MAX];
+	u32 pltt_id[eBB_ID_MAX];
 } BB_CLIENT;
 
 
@@ -499,6 +526,10 @@ typedef struct {
 	void				*tcb_work;		///<TCBシステムで使用するワーク
 	GFL_TCBSYS			*tcbsys;		///<TCBシステム
 	GFL_TCB *vintr_tcb;
+	
+  PRINT_UTIL print_util_talk;
+  GFL_FONT *font_handle;
+	PRINT_QUE *printQue;
 } BB_WORK;
 
 
@@ -513,7 +544,7 @@ extern int NetID_To_PlayerNo( BB_WORK* wk, int net_id );
 extern BOOL Quaternion_Rotation( BB_3D_MODEL* wk, int x, int y, int ox, int oy, f32 pow, BOOL pow_get_set );
 extern BOOL Quaternion_Rotation_Pow( BB_3D_MODEL* wk, f32 pow );
 
-extern void BB_disp_3DModelDraw( GFL_G3D_OBJSTATUS* obj, MtxFx43* mat43, VecFx32* pos );
+extern void BB_disp_3DModelDraw( GFL_G3D_OBJSTATUS* obj, BOOL *draw_flag, MtxFx43* mat43, VecFx32* pos, GFL_G3D_RND *g3drnd );
 extern void BB_disp_Model_Load( BB_3D_MODEL* wk, ARCHANDLE* p_handle, int id );
 extern void BB_disp_Model_Init( BB_3D_MODEL* wk, int flag );
 extern void BB_disp_Model_Delete( BB_3D_MODEL* wk );
@@ -522,18 +553,18 @@ extern void ManeneAnime_Set( BB_CLIENT* wk, int anime_no );
 extern void BB_ManeneAnime_CheckSet( BB_CLIENT* wk );
 extern int ManeneAnime_Get( BB_WORK* wk );
 extern void ManeneAnime_FlagSet( BB_WORK* wk, BOOL flag );
-extern void BB_disp_CameraSet( BB_WORK* wk );
-extern void BB_disp_ResourceLoad( BB_WORK* wk );
+extern GFL_G3D_CAMERA * BB_disp_CameraSet( BB_WORK* wk );
+extern void BB_disp_ResourceLoad( BB_WORK* bb_wk, BB_CLIENT *wk );
 extern void BB_disp_Hanabi_OAM_Add( BB_CLIENT* wk );
 extern void BB_disp_Hanabi_OAM_Enable( BB_CLIENT* wk, BOOL flag, int mode );
 extern void BB_disp_Hanabi_OAM_Update( BB_CLIENT* wk );
 extern void BB_disp_Hanabi_OAM_Del( BB_CLIENT* wk );
-extern void BB_disp_Manene_OAM_AnimeChangeCap( GFL_CLWK cap, int type, int anime );
+extern void BB_disp_Manene_OAM_AnimeChangeCap( GFL_CLWK* cap, int type, int anime );
 extern void BB_disp_Manene_OAM_AnimeChange( BB_CLIENT* wk, int netid, int anime );
 extern int BB_disp_Manene_OAM_AnimeCheck( BB_CLIENT* wk, int netid );
 extern void BB_disp_Manene_OAM_Update( BB_CLIENT* wk );
 extern void BB_disp_Manene_OAM_Del( BB_CLIENT* wk );
-extern void BB_disp_InfoWinAdd( BB_CLIENT* wk );
+extern void BB_disp_InfoWinAdd( BB_WORK *bb_wk, BB_CLIENT* wk );
 extern void BB_disp_InfoWinDel( BB_CLIENT* wk );
 extern void BB_disp_NameWinAdd( BB_WORK* bwk, BB_CLIENT* wk );
 extern void BB_disp_NameWinDel( BB_CLIENT* wk );
@@ -542,7 +573,9 @@ extern s16 Action_MoveValue_2Y( void );
 extern s16 Action_MoveValue_3Y( void );
 extern s16 Action_MoveValue_3Z( void );
 
+#if WB_FIX
 extern BOOL Debug_GameSetup( BB_WORK* work );
+#endif
 
 ///< 新規
 extern void BB_disp_BG_Load( BB_WORK* wk );
@@ -554,7 +587,7 @@ extern BOOL BB_AddMoveMainFx( BB_ADDMOVE_WORK_FX* p_work );
 extern void BB_MoveInit_FX( BB_ADDMOVE_WORK_FX* p_data, fx32 s_num, fx32 e_num, s32 count );
 extern BOOL BB_MoveMain_FX( BB_ADDMOVE_WORK_FX* p_data );
 
-extern GFL_CLWK BB_disp_Stardust_Add( BB_CLIENT* wk, s16 x, s16 y );
+extern GFL_CLWK* BB_disp_Stardust_Add( BB_CLIENT* wk, s16 x, s16 y );
 extern void BB_Stardust_Call( BB_CLIENT* wk, s16 x, s16 y );
 
 extern void BB_Effect_Call( BB_CLIENT* wk );

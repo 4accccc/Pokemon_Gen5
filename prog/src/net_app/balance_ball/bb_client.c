@@ -11,8 +11,15 @@
 //==============================================================================
 
 #include <gflib.h>
+#include "system/main.h"
 #include "bb_client.h"
 #include "bb_comm_cmd.h"
+#include "net_old/comm_def.h"
+#include "net_old\comm_system.h"
+#include "net_old\comm_state.h"
+#include "net_old\comm_info.h"
+#include "net_old\comm_tool.h"
+#include "net_old\comm_command.h"
 
 #include "bb_data.dat"
 
@@ -36,6 +43,7 @@ static void BB_Client_MyUpdateMain( BB_CLIENT* wk );
 static inline u32 BB_Rand( void );
 static inline s8 BB_inline_GetSign( void );
 static inline s8 BB_inline_GetSign_to_Value( s16 val );
+static void _BSUP_AnimeDelete(BB_3D_MODEL *bsup);
 
 s16 Action_MoveValue_3Y( void )
 {
@@ -114,7 +122,32 @@ BB_CLIENT* BB_Client_AllocMemory( int comm_num, u32 netid, BB_SYS* sys, GFL_TCBS
 	}	
 	
 	wk->game_sys.bFirstTouch = FALSE;
-	
+
+#if WB_FIX
+  ;
+#else
+  {
+    int i;
+    
+    wk->bb3d_ball.tq = GFL_QUAT_Init(HEAPID_BB);
+    wk->bb3d_ball.cq = GFL_QUAT_Init(HEAPID_BB);
+    for(i = 0; i < 3; i++){
+      wk->bb3d_mane[i].tq = GFL_QUAT_Init(HEAPID_BB);
+      wk->bb3d_mane[i].cq = GFL_QUAT_Init(HEAPID_BB);
+    }
+    wk->bb3d_spot.tq = GFL_QUAT_Init(HEAPID_BB);
+    wk->bb3d_spot.cq = GFL_QUAT_Init(HEAPID_BB);
+    for(i = 0; i < BB_KAMI_HUBUKI_MAX; i++){
+      wk->bb3d_kami[i].tq = GFL_QUAT_Init(HEAPID_BB);
+      wk->bb3d_kami[i].cq = GFL_QUAT_Init(HEAPID_BB);
+    }
+    wk->bb3d_lvbs.tq = GFL_QUAT_Init(HEAPID_BB);
+    wk->bb3d_lvbs.cq = GFL_QUAT_Init(HEAPID_BB);
+    wk->bb3d_lvup.tq = GFL_QUAT_Init(HEAPID_BB);
+    wk->bb3d_lvup.cq = GFL_QUAT_Init(HEAPID_BB);
+  }
+#endif
+
 	BB_Client_3D_PosInit( wk );
 	
 	return wk;
@@ -146,16 +179,30 @@ void BB_Client_3D_PosInit( BB_CLIENT* wk )
     wk->bb3d_mane[ 0 ].pow_count = 0;
     wk->bb3d_ball.pow_count = 0;
 
+#if WB_FIX
 	Quaternion_Identity( &wk->bb3d_ball.tq );
 	Quaternion_Identity( &wk->bb3d_ball.cq );
 	Quaternion_Identity( &wk->bb3d_mane[ 0 ].tq );
 	Quaternion_Identity( &wk->bb3d_mane[ 0 ].cq );
 	Quaternion_Identity( &wk->bb3d_spot.tq );
 	Quaternion_Identity( &wk->bb3d_spot.cq );
+#else
+	GFL_QUAT_Identity( wk->bb3d_ball.tq );
+	GFL_QUAT_Identity( wk->bb3d_ball.cq );
+	GFL_QUAT_Identity( wk->bb3d_mane[ 0 ].tq );
+	GFL_QUAT_Identity( wk->bb3d_mane[ 0 ].cq );
+	GFL_QUAT_Identity( wk->bb3d_spot.tq );
+	GFL_QUAT_Identity( wk->bb3d_spot.cq );
+#endif
 
 	for ( i = 0; i < BB_KAMI_HUBUKI_MAX; i++ ){
+#if WB_FIX
 		Quaternion_Identity( &wk->bb3d_kami[ i ].tq );
 		Quaternion_Identity( &wk->bb3d_kami[ i ].cq );
+#else
+		GFL_QUAT_Identity( wk->bb3d_kami[ i ].tq );
+		GFL_QUAT_Identity( wk->bb3d_kami[ i ].cq );
+#endif
 		Quaternion_Rotation( &wk->bb3d_kami[ i ], 0, 0, +5, +5, BB_COEFFICIENT_AMI, FALSE );
 		Quaternion_Rotation( &wk->bb3d_kami[ i ], 0, 0, -5, -5, BB_COEFFICIENT_AMI, FALSE );	
 	}
@@ -181,6 +228,27 @@ void BB_Client_3D_PosInit( BB_CLIENT* wk )
 //--------------------------------------------------------------
 void BB_Client_FreeMemory( BB_CLIENT* wk )
 {
+  {
+    int i;
+    
+    GFL_QUAT_Free(wk->bb3d_ball.tq);
+    GFL_QUAT_Free(wk->bb3d_ball.cq);
+    for(i = 0; i < 3; i++){
+      GFL_QUAT_Free(wk->bb3d_mane[i].tq);
+      GFL_QUAT_Free(wk->bb3d_mane[i].cq);
+    }
+    GFL_QUAT_Free(wk->bb3d_spot.tq);
+    GFL_QUAT_Free(wk->bb3d_spot.cq);
+    for(i = 0; i < BB_KAMI_HUBUKI_MAX; i++){
+      GFL_QUAT_Free(wk->bb3d_kami[i].tq);
+      GFL_QUAT_Free(wk->bb3d_kami[i].cq);
+    }
+    GFL_QUAT_Free(wk->bb3d_lvbs.tq);
+    GFL_QUAT_Free(wk->bb3d_lvbs.cq);
+    GFL_QUAT_Free(wk->bb3d_lvup.tq);
+    GFL_QUAT_Free(wk->bb3d_lvup.cq);
+  }
+
 	GFL_HEAP_FreeMemory( wk );
 }
 
@@ -383,10 +451,18 @@ static void BB_Manene_3D_Fall_Call( BB_CLIENT* wk )
 	ManeneAnime_Set( wk, ePAT_3D_ARUKU );
 	
 	///< 落下と復帰のanimeを初期化しておく
+#if WB_FIX
 	D3DOBJ_AnmSet( &wk->bb3d_mane[ 0 ].anm[ 0 ], 0 );
 	D3DOBJ_AnmSet( &wk->bb3d_mane[ 1 ].anm[ 0 ], 0 );
 	D3DOBJ_AnmSet( &wk->bb3d_mane[ 2 ].anm[ 0 ], 0 );
-	
+#else
+	{
+		int set_anmframe = 0;
+		GFL_G3D_OBJECT_SetAnimeFrame( wk->bb3d_mane[ 0 ].g3dobj, 0, &set_anmframe );
+		GFL_G3D_OBJECT_SetAnimeFrame( wk->bb3d_mane[ 1 ].g3dobj, 0, &set_anmframe );
+		GFL_G3D_OBJECT_SetAnimeFrame( wk->bb3d_mane[ 2 ].g3dobj, 0, &set_anmframe );
+	}
+#endif
 	GFL_TCB_AddTask( wk->tcbsys, BB_Manene_3D_Fall_TCB, sub_wk, BB_TCB_PRI_1 );
 }
 
@@ -482,7 +558,9 @@ void BB_Manene_3D_Fall_TCB( GFL_TCB* tcb, void* work )
 				BB_MoveInit_FX( &wk->dz, wk->model->pos.z, wk->model->pos.z + z_value, 4 );
 			}
 		}
+	#if WB_TEMP_FIX
 		Snd_SePlay( BB_SND_JUMP_OUT );	///< 落ちる音
+	#endif
 		wk->wait = 0;
 		wk->seq++;
 		break;
@@ -497,8 +575,13 @@ void BB_Manene_3D_Fall_TCB( GFL_TCB* tcb, void* work )
 			if ( bEnd[ 0 ] && bEnd[ 1 ] ){				
 				if ( wk->type == 0 ){
 					*wk->anime_type = eANM_CODE_FALL;
+				#if WB_FIX
 					Quaternion_Identity( &wk->model->tq );
 					Quaternion_Identity( &wk->model->cq );
+				#else
+					GFL_QUAT_Identity( wk->model->tq );
+					GFL_QUAT_Identity( wk->model->cq );
+				#endif
 					Quaternion_Rotation( wk->model, 0, 0, +5, +5, BB_COEFFICIENT_AMI, FALSE );
 					Quaternion_Rotation( wk->model, 0, 0, -5, -5, BB_COEFFICIENT_AMI, FALSE );
 					BB_MoveInit_FX( &wk->dy, wk->model->pos.y, wk->model->pos.y - y_value2, 8 );
@@ -532,7 +615,9 @@ void BB_Manene_3D_Fall_TCB( GFL_TCB* tcb, void* work )
 			wk->model->pos.z = wk->dz.x;			
 			if ( bEnd[ 0 ] && bEnd[ 1 ] ){
 				if ( wk->type == 0 ){
+	#if WB_TEMP_FIX
 					Snd_SePlay( BB_SND_LANDING );	///< 着地
+	#endif
 				//	*wk->anime_type = eANM_CODE_RECOVER;
 				}
 				wk->seq++;
@@ -545,7 +630,9 @@ void BB_Manene_3D_Fall_TCB( GFL_TCB* tcb, void* work )
 			//if ( wk->wait == ( BB_RECOVER_WAIT - 55 ) ){		///< ネジがおちたとき
 			//if ( wk->wait == ( BB_RECOVER_WAIT - 75 ) ){		///< ネジがおちたとき
 			if ( wk->wait == ( BB_RECOVER_WAIT - 82 ) ){		///< ネジがおちたとき
+	#if WB_TEMP_FIX
 				Snd_SePlay( BB_SND_NEJI );
+	#endif
 			}
 			if ( (++wk->wait) >= ( BB_RECOVER_WAIT - ( 50 ) ) ){
 				*wk->anime_type = eANM_CODE_RECOVER;
@@ -561,7 +648,9 @@ void BB_Manene_3D_Fall_TCB( GFL_TCB* tcb, void* work )
 		if ( wk->type == 0 ){
 			if ( (++wk->wait) >= ( BB_RECOVER_WAIT - ( 45 ) ) ){
 				*wk->anime_type = eANM_CODE_DEFAULT;
+	#if WB_TEMP_FIX
 				Snd_SePlay( BB_SND_JUMP_OUT );		///< 上る
+	#endif
 				wk->seq = 0;
 				wk->type++;
 			}
@@ -603,8 +692,13 @@ void BB_Client_Manene_3D_Recover_Action_TCB( GFL_TCB* tcb, void* work )
 	pos_y = action_3d_y_tbl_2[ wk->seq ];
 	
 	if ( pos_y == SKIP_CODE_1 ){
+#if WB_FIX
 		Quaternion_Identity( &wk->model->tq );
 		Quaternion_Identity( &wk->model->cq );	
+#else
+		GFL_QUAT_Identity( wk->model->tq );
+		GFL_QUAT_Identity( wk->model->cq );	
+#endif
 		Quaternion_Rotation( wk->model, 0, 0, +5, +5, BB_COEFFICIENT_AMI, FALSE );
 		Quaternion_Rotation( wk->model, 0, 0, -5, -5, BB_COEFFICIENT_AMI, FALSE );
 	
@@ -657,8 +751,12 @@ void BB_Client_Manene_Action_TCB( GFL_TCB* tcb, void* work )
 {
 	BB_MANENE_ACTION* wk = work;
 	
+#if WB_FIX
 	int frame = CATS_ObjectAnimeFrameGetCap( wk->cap_mane );
-	
+#else
+	int frame = GFL_CLACT_WK_GetAnmFrame( wk->cap_mane );
+#endif
+
 	if ( (WIPE_SYS_EndCheck() == FALSE) || (wk->sys->comm_err_data.dis_err == TRUE) ){
 		GFL_TCB_DeleteTask( tcb );
 		GFL_HEAP_FreeMemory( wk );
@@ -671,8 +769,15 @@ void BB_Client_Manene_Action_TCB( GFL_TCB* tcb, void* work )
 		{
 			fx32 x, y;
 			fx32 dat;
+			GFL_CLACTPOS pos;
+			
 			wk->wait = 0;		
+		#if WB_FIX
 			CATS_ObjectPosGetCapFx32( wk->cap_mane, &x, &y );		
+		#else
+		  GFL_CLACT_WK_GetPos(wk->cap_mane, &pos, CLSYS_DEFREND_SUB);
+		  y = pos.y * FX32_ONE;
+		#endif
 			if ( wk->type == 0 ){
 				BB_MoveInit_FX( &wk->data, y, y + FX32_CONST( 32 ), 16 );
 			}
@@ -689,9 +794,16 @@ void BB_Client_Manene_Action_TCB( GFL_TCB* tcb, void* work )
 		{
 			fx32 x, y;
 			BOOL bEnd;			
+			GFL_CLACTPOS pos;
 			bEnd = BB_MoveMain_FX( &wk->data );
+		#if WB_FIX
 			CATS_ObjectPosGetCapFx32( wk->cap_mane, &x, &y );
 			CATS_ObjectPosSetCapFx32( wk->cap_mane, x, wk->data.x );			
+		#else
+		  GFL_CLACT_WK_GetPos(wk->cap_mane, &pos, CLSYS_DEFREND_SUB);
+		  pos.y = FX_Whole(wk->data.x);
+		  GFL_CLACT_WK_SetPos(wk->cap_mane, &pos, CLSYS_DEFREND_SUB);
+		#endif
 			if ( bEnd ){
 				wk->seq++;
 			}
@@ -731,6 +843,7 @@ void BB_Client_Manene_Action_TCB( GFL_TCB* tcb, void* work )
 static void BB_Client_LevelUp_Action_TCB( GFL_TCB* tcb, void* work )
 {
 	BB_LEVEL_UP* wk = work;
+	GFL_CLSCALE scale;
 
 	if ( (WIPE_SYS_EndCheck() == FALSE) || (wk->sys->comm_err_data.dis_err == TRUE) ){
 		wk->bStart = FALSE;
@@ -741,16 +854,34 @@ static void BB_Client_LevelUp_Action_TCB( GFL_TCB* tcb, void* work )
 	switch ( wk->seq ){
 	case 0:
 		{
+		#if WB_FIX
 			f32 x, y;
+		#else
+		  fx32 y;
+		#endif
+		
 			GFL_CLACT_WK_SetAnmSeq( wk->cap_kage, eANM_LEVEL_EFF );
+		#if WB_FIX
 			CATS_ObjectPriSetCap( wk->cap_kage, 0 );			
-			CATS_ObjectAffineSetCap( wk->cap_kage, CLACT_AFFINE_DOUBLE );
+		#else
+		  GFL_CLACT_WK_SetSoftPri( wk->cap_kage, 0 );
+		#endif
+			GFL_CLACT_WK_SetAffineParam( wk->cap_kage, CLSYS_AFFINETYPE_DOUBLE );
+		#if WB_FIX
 			CATS_ObjectScaleGetCap( wk->cap_kage, &x, &y );
 			BB_MoveInit_FX( &wk->data, FX_F32_TO_FX32( y ), FX_F32_TO_FX32( 2.0f ), 2 );
+		#else
+		  y = GFL_CLACT_WK_GetTypeScale( wk->cap_kage, CLSYS_MAT_Y );
+			BB_MoveInit_FX( &wk->data, y, FX_F32_TO_FX32( 2.0f ), 2 );
+		#endif
 			
 			{
 				int ofs = ( *wk->level ) - 1;				
+			#if WB_FIX
 				CATS_ObjectPaletteOffsetSetCap( wk->cap_kage, ofs );
+			#else
+        GFL_CLACT_WK_SetPlttOffs( wk->cap_kage, ofs, CLWK_PLTTOFFS_MODE_OAM_COLOR );
+			#endif
 			}
 			wk->seq++;
 		}
@@ -760,7 +891,13 @@ static void BB_Client_LevelUp_Action_TCB( GFL_TCB* tcb, void* work )
 			fx32 x, y;
 			BOOL bEnd;
 			bEnd = BB_MoveMain_FX( &wk->data );			
+		#if WB_FIX
 			CATS_ObjectScaleSetCap( wk->cap_kage, 1.0f, FX_FX32_TO_F32( wk->data.x ) );
+		#else
+		  scale.x = FX32_ONE;
+		  scale.y = wk->data.x;
+		  GFL_CLACT_WK_SetScale( wk->cap_kage, &scale );
+		#endif
 			if ( bEnd ){
 				wk->seq++;
 			}
@@ -776,7 +913,13 @@ static void BB_Client_LevelUp_Action_TCB( GFL_TCB* tcb, void* work )
 			fx32 x, y;
 			BOOL bEnd;
 			bEnd = BB_MoveMain_FX( &wk->data );			
+		#if WB_FIX
 			CATS_ObjectScaleSetCap( wk->cap_kage, 1.0f, FX_FX32_TO_F32( wk->data.x ) );
+		#else
+		  scale.x = FX32_ONE;
+		  scale.y = wk->data.x;
+		  GFL_CLACT_WK_SetScale( wk->cap_kage, &scale );
+		#endif
 			if ( bEnd ){
 				wk->seq++;
 			}
@@ -803,7 +946,13 @@ static void BB_Client_LevelUp_Action_TCB( GFL_TCB* tcb, void* work )
 	case 5:
 		{
 			BOOL bEnd = BB_MoveMain_FX( &wk->data );			
+		#if WB_FIX
 			CATS_ObjectScaleSetCap( wk->cap_kage, 1.0f, FX_FX32_TO_F32( wk->data.x ) );
+		#else
+		  scale.x = FX32_ONE;
+		  scale.y = wk->data.x;
+		  GFL_CLACT_WK_SetScale( wk->cap_kage, &scale );
+		#endif
 			if ( bEnd ){
 				wk->seq = 4;
 				wk->type ^= 1;
@@ -813,10 +962,20 @@ static void BB_Client_LevelUp_Action_TCB( GFL_TCB* tcb, void* work )
 	
 	default:
 		///< 落下処理
+	#if WB_FIX
 		CATS_ObjectScaleSetCap( wk->cap_kage, 1.0f, 1.0f );
+	#else
+	  scale.x = FX32_ONE;
+	  scale.y = FX32_ONE;
+	  GFL_CLACT_WK_SetScale( wk->cap_kage, &scale );
+	#endif
 		GFL_CLACT_WK_SetAnmSeq( wk->cap_kage, eANM_KAGE );
+	#if WB_FIX
 		CATS_ObjectPriSetCap( wk->cap_kage, 2 );
-		CATS_ObjectAffineSetCap( wk->cap_kage, CLACT_AFFINE_NONE );
+	#else
+	  GFL_CLACT_WK_SetSoftPri( wk->cap_kage, 2 );
+	#endif
+		GFL_CLACT_WK_SetAffineParam( wk->cap_kage, CLSYS_AFFINETYPE_NONE );
 		wk->bStart = FALSE;
 		GFL_TCB_DeleteTask( tcb );
 	//	GFL_HEAP_FreeMemory( wk );
@@ -825,16 +984,16 @@ static void BB_Client_LevelUp_Action_TCB( GFL_TCB* tcb, void* work )
 }
 
 static const int data[ ][ 2 ] = {
-	{ NARC_manene_hikari1_base_nsbmd, NARC_manene_hikari1_josho_nsbmd },
-	{ NARC_manene_hikari2_base_nsbmd, NARC_manene_hikari2_josho_nsbmd },
-	{ NARC_manene_hikari3_base_nsbmd, NARC_manene_hikari3_josho_nsbmd },
-	{ NARC_manene_hikari4_base_nsbmd, NARC_manene_hikari4_josho_nsbmd },
-	{ NARC_manene_hikari4_base_nsbmd, NARC_manene_hikari4_josho_nsbmd },
+	{ NARC_balance_ball_hikari1_base_nsbmd, NARC_balance_ball_hikari1_josho_nsbmd },
+	{ NARC_balance_ball_hikari2_base_nsbmd, NARC_balance_ball_hikari2_josho_nsbmd },
+	{ NARC_balance_ball_hikari3_base_nsbmd, NARC_balance_ball_hikari3_josho_nsbmd },
+	{ NARC_balance_ball_hikari4_base_nsbmd, NARC_balance_ball_hikari4_josho_nsbmd },
+	{ NARC_balance_ball_hikari4_base_nsbmd, NARC_balance_ball_hikari4_josho_nsbmd },
 };
 static const int anime[ ][ 2 ] = {
-	{ NARC_manene_hikari_base_nsbca,  NARC_manene_hikari_base_nsbta },
-	{ NARC_manene_hikari_josho_nsbca, NARC_manene_hikari_josho_nsbta },
-	{ NARC_manene_hikari_josho_nsbca, NARC_manene_hikari_josho_nsbta },
+	{ NARC_balance_ball_hikari_base_nsbca,  NARC_balance_ball_hikari_base_nsbta },
+	{ NARC_balance_ball_hikari_josho_nsbca, NARC_balance_ball_hikari_josho_nsbta },
+	{ NARC_balance_ball_hikari_josho_nsbca, NARC_balance_ball_hikari_josho_nsbta },
 };
 static void BB_Client_3D_LevelUp_Action_TCB( GFL_TCB* tcb, void* work )
 {
@@ -842,14 +1001,20 @@ static void BB_Client_3D_LevelUp_Action_TCB( GFL_TCB* tcb, void* work )
 	BB_LEVEL_UP* wk = work;
 	BB_3D_MODEL* bs = wk->model_bs;
 	BB_3D_MODEL* up = wk->model_up;
-
+  u16 anm_index;
+  
 	if ( (WIPE_SYS_EndCheck() == FALSE) || (wk->sys->comm_err_data.dis_err == TRUE) ){
 		BB_disp_Model_Delete( bs );	
 		BB_disp_Model_Delete( up );
+	#if WB_FIX
 		D3DOBJ_AnmDelete( &bs->anm[ 0 ], &wk->sys->allocator );
 		D3DOBJ_AnmDelete( &bs->anm[ 1 ], &wk->sys->allocator );
 		D3DOBJ_AnmDelete( &up->anm[ 0 ], &wk->sys->allocator );
 		D3DOBJ_AnmDelete( &up->anm[ 1 ], &wk->sys->allocator );
+	#else
+	  _BSUP_AnimeDelete(bs);
+	  _BSUP_AnimeDelete(up);
+	#endif
 		wk->bStart = FALSE;
 		GFL_TCB_DeleteTask( tcb );
 		return;
@@ -871,6 +1036,7 @@ static void BB_Client_3D_LevelUp_Action_TCB( GFL_TCB* tcb, void* work )
 	
 	case 1:
 		///< アニメ読み込み
+	#if WB_FIX
 		D3DOBJ_AnmLoadH( &bs->anm[ 0 ], &bs->mdl, wk->sys->p_handle_bb, anime[ 0 ][ 0 ], HEAPID_BB, &wk->sys->allocator );								 
 		D3DOBJ_AnmLoadH( &bs->anm[ 1 ], &bs->mdl, wk->sys->p_handle_bb, anime[ 0 ][ 1 ], HEAPID_BB, &wk->sys->allocator );
 		D3DOBJ_AddAnm( &bs->obj, &bs->anm[ 0 ] );
@@ -878,9 +1044,25 @@ static void BB_Client_3D_LevelUp_Action_TCB( GFL_TCB* tcb, void* work )
 		D3DOBJ_AnmSet( &bs->anm[ 0 ], 0 );
 		D3DOBJ_AnmSet( &bs->anm[ 1 ], 0 );
 		D3DOBJ_SetDraw( &bs->obj, FALSE );
-		bs->bAnime = FALSE;					
+	#else
+		bs->p_anmres[0] = GFL_G3D_CreateResourceHandle( wk->sys->p_handle_bb, anime[0][0] );
+		bs->anm[ 0 ] = GFL_G3D_ANIME_Create( bs->g3drnd, bs->p_anmres[0], 0 ); 
+		bs->p_anmres[1] = GFL_G3D_CreateResourceHandle( wk->sys->p_handle_bb, anime[0][1] );
+		bs->anm[ 1 ] = GFL_G3D_ANIME_Create( bs->g3drnd, bs->p_anmres[1], 0 ); 
+	  anm_index = GFL_G3D_OBJECT_AddAnime(bs->g3dobj, bs->anm[ 0 ]);
+		GFL_G3D_OBJECT_EnableAnime( bs->g3dobj, anm_index );
+	  anm_index = GFL_G3D_OBJECT_AddAnime(bs->g3dobj, bs->anm[ 1 ]);
+		GFL_G3D_OBJECT_EnableAnime( bs->g3dobj, anm_index );
+		bs->draw_flag = FALSE;
+	#endif
+		bs->bAnime = FALSE;
+#if WB_FIX
 		Quaternion_Identity( &bs->tq );
 		Quaternion_Identity( &bs->cq );
+#else
+		GFL_QUAT_Identity( bs->tq );
+		GFL_QUAT_Identity( bs->cq );
+#endif
 		Quaternion_Rotation( bs, 0, 0, +5, +5, BB_COEFFICIENT_AMI, FALSE );
 		Quaternion_Rotation( bs, 0, 0, -5, -5, BB_COEFFICIENT_AMI, FALSE );	
 		wk->seq++;
@@ -894,7 +1076,8 @@ static void BB_Client_3D_LevelUp_Action_TCB( GFL_TCB* tcb, void* work )
 		break;		
 	
 	case 3:
-		///< アニメ読み込み			
+		///< アニメ読み込み
+	#if WB_FIX
 		D3DOBJ_AnmLoadH( &up->anm[ 0 ], &up->mdl, wk->sys->p_handle_bb, anime[ 1 ][ 0 ], HEAPID_BB, &wk->sys->allocator );								 
 		D3DOBJ_AnmLoadH( &up->anm[ 1 ], &up->mdl, wk->sys->p_handle_bb, anime[ 1 ][ 1 ], HEAPID_BB, &wk->sys->allocator );
 		D3DOBJ_AddAnm( &up->obj, &up->anm[ 0 ] );
@@ -902,25 +1085,51 @@ static void BB_Client_3D_LevelUp_Action_TCB( GFL_TCB* tcb, void* work )
 		D3DOBJ_AnmSet( &up->anm[ 0 ], 0 );
 		D3DOBJ_AnmSet( &up->anm[ 1 ], 0 );
 		D3DOBJ_SetDraw( &up->obj, TRUE );
+	#else
+		up->p_anmres[0] = GFL_G3D_CreateResourceHandle( wk->sys->p_handle_bb, anime[1][0] );
+		up->anm[ 0 ] = GFL_G3D_ANIME_Create( up->g3drnd, up->p_anmres[0], 0 ); 
+		up->p_anmres[1] = GFL_G3D_CreateResourceHandle( wk->sys->p_handle_bb, anime[1][1] );
+		up->anm[ 1 ] = GFL_G3D_ANIME_Create( up->g3drnd, up->p_anmres[1], 0 ); 
+	  anm_index = GFL_G3D_OBJECT_AddAnime(up->g3dobj, up->anm[ 0 ]);
+		GFL_G3D_OBJECT_EnableAnime( up->g3dobj, anm_index );
+	  anm_index = GFL_G3D_OBJECT_AddAnime(up->g3dobj, up->anm[ 1 ]);
+		GFL_G3D_OBJECT_EnableAnime( up->g3dobj, anm_index );
+		up->draw_flag = TRUE;
+	#endif
 		up->bAnime = TRUE;
+#if WB_FIX
 		Quaternion_Identity( &up->tq );
 		Quaternion_Identity( &up->cq );
+#else
+		GFL_QUAT_Identity( up->tq );
+		GFL_QUAT_Identity( up->cq );
+#endif
 		Quaternion_Rotation( up, 0, 0, +5, +5, BB_COEFFICIENT_AMI, FALSE );
 		Quaternion_Rotation( up, 0, 0, -5, -5, BB_COEFFICIENT_AMI, FALSE );
 		
 		if ( wk->rare_game ){
+		#if WB_FIX
 			D3DOBJ_SetMatrix( &bs->obj, 0, BB_MODEL_OFS_Y2, 0 );
 			D3DOBJ_SetMatrix( &up->obj, 0, BB_MODEL_OFS_Y2, 0 );
-		    bs->pos.y = BB_MODEL_OFS_Y2;
-		    up->pos.y = BB_MODEL_OFS_Y2;
+		#else
+    	VEC_Set(&bs->obj.trans, 0, BB_MODEL_OFS_Y2, 0 );
+    	VEC_Set(&up->obj.trans, 0, BB_MODEL_OFS_Y2, 0 );
+		#endif
+	    bs->pos.y = BB_MODEL_OFS_Y2;
+	    up->pos.y = BB_MODEL_OFS_Y2;
 		}
 		wk->seq++;
 		break;
 	
 	case 4:
 		if ( up->bAnime == FALSE ){
+		#if WB_FIX
 			D3DOBJ_SetDraw( &bs->obj, TRUE );
 			D3DOBJ_SetDraw( &up->obj, FALSE );
+		#else
+		  bs->draw_flag = TRUE;
+		  up->draw_flag = FALSE;
+		#endif
 			bs->bAnime = TRUE;
 			wk->seq++;
 		}
@@ -933,10 +1142,15 @@ static void BB_Client_3D_LevelUp_Action_TCB( GFL_TCB* tcb, void* work )
 		else if ( wk->old_level != *wk->level ){
 			BB_disp_Model_Delete( bs );	
 			BB_disp_Model_Delete( up );
+		#if WB_FIX
 			D3DOBJ_AnmDelete( &bs->anm[ 0 ], &wk->sys->allocator );
 			D3DOBJ_AnmDelete( &bs->anm[ 1 ], &wk->sys->allocator );
 			D3DOBJ_AnmDelete( &up->anm[ 0 ], &wk->sys->allocator );
 			D3DOBJ_AnmDelete( &up->anm[ 1 ], &wk->sys->allocator );			
+		#else
+  	  _BSUP_AnimeDelete(bs);
+  	  _BSUP_AnimeDelete(up);
+		#endif
 			wk->seq = 0;						
 		}
 		wk->old_level = *wk->level;
@@ -945,15 +1159,36 @@ static void BB_Client_3D_LevelUp_Action_TCB( GFL_TCB* tcb, void* work )
 	default:
 		BB_disp_Model_Delete( bs );	
 		BB_disp_Model_Delete( up );
+	#if WB_FIX
 		D3DOBJ_AnmDelete( &bs->anm[ 0 ], &wk->sys->allocator );
 		D3DOBJ_AnmDelete( &bs->anm[ 1 ], &wk->sys->allocator );
 		D3DOBJ_AnmDelete( &up->anm[ 0 ], &wk->sys->allocator );
 		D3DOBJ_AnmDelete( &up->anm[ 1 ], &wk->sys->allocator );
+	#else
+	  _BSUP_AnimeDelete(bs);
+	  _BSUP_AnimeDelete(up);
+	#endif
 		wk->bStart = FALSE;
 		GFL_TCB_DeleteTask( tcb );
 	//	GFL_HEAP_FreeMemory( wk );
 		break;
 	}
+}
+
+static void _BSUP_AnimeDelete(BB_3D_MODEL *bsup)
+{
+  int i;
+  
+  for(i = 0; i < 2; i++){
+    if(bsup->anm[i] != NULL){
+      GFL_G3D_ANIME_Delete(bsup->anm[ i ]);
+      bsup->anm[i] = NULL;
+    }
+    if(bsup->p_anmres[i] != NULL){
+      GFL_G3D_DeleteResource( bsup->p_anmres[ i ] );
+      bsup->p_anmres[i] = NULL;
+    }
+  }
 }
 
 
@@ -1236,7 +1471,9 @@ void BB_Client_GameCore( BB_CLIENT* wk )
 			}
 			BB_Client_3D_LevelUp_Action_Call( wk, wk->netid );
 			BB_Client_BonusPoint( wk );						///< ボーナスポイント付加
+	#if WB_TEMP_FIX
 			Snd_SePlay( BB_SND_LV_UP );
+	#endif
 		}
 
 		BB_Client_GameFeverUpdate( wk );					///< フィーバーできるかの判定
@@ -1283,19 +1520,19 @@ void BB_Client_TouchPanel_Main( BB_CLIENT* wk )
 		u32 x, y;
 		s16 mx, my;
 		BOOL bMove;
-		BOOL bHit = GF_TP_GetPointCont( &x, &y );
+		BOOL bHit = GFL_UI_TP_GetPointCont( &x, &y );
 		GFL_UI_TP_HITTBL* tbl;
 		int hitdata;
 
 		wk->game_sys.touch = FALSE;
 		if ( wk->rare_game ){
-			hitdata = GF_TP_HitSelf( ball_hit_tbl2, x, y );
+			hitdata = GFL_UI_TP_HitSelf( ball_hit_tbl2, x, y );
 		}
 		else {
-			hitdata = GF_TP_HitSelf( ball_hit_tbl, x, y );
+			hitdata = GFL_UI_TP_HitSelf( ball_hit_tbl, x, y );
 		}
 		
-		if ( hitdata == TP_HIT_NONE ){
+		if ( hitdata == GFL_UI_TP_HIT_NONE ){
 			
 			wk->control.old_x = 0;
 			wk->control.old_y = 0;
@@ -1303,7 +1540,11 @@ void BB_Client_TouchPanel_Main( BB_CLIENT* wk )
 			if ( wk->bb3d_ball.pow_count != 0 ){
 				Quaternion_Rotation_Pow( &wk->bb3d_ball, 1.0f );
 				bMove = Quaternion_Rotation_Pow( &wk->bb3d_mane[ 0 ], 0.5f );
+			#if 0  //間違っているようなので修正 2009.08.05(水) matsuda
 				if ( bMove = TRUE )	{
+      #else
+        if(TRUE){
+      #endif
 					VecFx32 vec = { 0, BB_POINT_Y, 0 };
 					VecFx32 tmp;
 					MTX_MultVec43( &vec, &wk->bb3d_mane[ 0 ].tmp43, &wk->mane_pos );
@@ -1340,7 +1581,11 @@ void BB_Client_TouchPanel_Main( BB_CLIENT* wk )
 			Quaternion_Rotation( &wk->bb3d_ball, x, y, wk->control.old_x, wk->control.old_y, BB_COEFFICIENT_AB_PEN, TRUE );
 			bMove = Quaternion_Rotation( &wk->bb3d_mane[ 0 ], x, y, wk->control.old_x, wk->control.old_y, py, TRUE );
 			
+		#if 0  //間違っているようなので修正 2009.08.05(水) matsuda
 			if ( bMove = TRUE ){
+    #else
+      if(TRUE){
+    #endif
 				VecFx32 vec = { 0, BB_POINT_Y, 0 };
 				VecFx32 tmp;
 				MTX_MultVec43( &vec, &wk->bb3d_mane[ 0 ].tmp43, &wk->mane_pos );
@@ -1350,9 +1595,11 @@ void BB_Client_TouchPanel_Main( BB_CLIENT* wk )
 				}
 			}
 			if ( x != 0 ){
+	#if WB_TEMP_FIX
 				if ( Snd_SePlayCheck( BB_SND_KIRAKIRA ) == 0 ){
 					Snd_SePlay( BB_SND_KIRAKIRA );			///< きらきら
 				}
+	#endif
 				BB_Stardust_Call( wk, x, y );
 			}
 			
@@ -1399,13 +1646,23 @@ static const BB_GAME_DATA game_data[][ 4 ] = {
 
 static inline u32 BB_Rand( void )
 {
+#if WB_FIX
 	u32 seed = gf_get_seed();
+#else
+	u32 seed = bb_gf_get_seed();
+#endif
 	u32 rand;
 	
+#if WB_FIX
 	rand = gf_rand();
 	
 	gf_srand( seed );
+#else
+	rand = bb_gf_rand();
 	
+	bb_gf_srand( seed );
+#endif
+
 //	OS_Printf( "引いた1 = %d\n", seed );
 //	OS_Printf( "引いた = %d\n", gf_get_seed() );
 	
@@ -1415,7 +1672,7 @@ static inline u32 BB_Rand( void )
 static inline s8 BB_inline_GetSign( void )
 {
 //	if ( BB_Rand() % 2 ){
-	if ( gf_rand() % 2 ){
+	if ( bb_gf_rand() % 2 ){
 //	if ( 0 ){
 		return +1;
 	}
@@ -1624,8 +1881,10 @@ void BB_Client_GameUpdate( BB_CLIENT* wk )
 			}
 			
 			pow  = game_data[ wk->game_sys.level ][ i ].pow;
+		#if (BB_COEFFICIENT_POW != 1)
 			pow *= BB_COEFFICIENT_POW;
-			
+		#endif
+		
 			///< まねねの位置から、次の傾きを検出
 			{
 				cx = wk->mane_pos.x >> FX32_SHIFT;
@@ -1724,7 +1983,9 @@ BOOL BB_Client_JumpOnToBall( BB_CLIENT* wk )
 	///< 下画面
 	if ( pos_3d_y == SKIP_CODE_1 || pos_3d_y == SKIP_CODE_2 ){
 		if ( wk->seq2 == 0 ){
+	#if WB_TEMP_FIX
 			Snd_SePlay( BB_SND_JUMP_IN );	///< 上る音
+	#endif
 		}
 		wk->seq2++;
 		pos_3d_y = action_3d_y_tbl[ max2 - 1 - wk->seq2 ];

@@ -12,6 +12,11 @@
 
 #include <gflib.h>
 #include "net\network_define.h"
+#include "net_old\comm_system.h"
+#include "net_old\comm_state.h"
+#include "net_old\comm_info.h"
+#include "net_old\comm_tool.h"
+#include "net_old\comm_command.h"
 
 
 #include "bb_common.h"
@@ -38,8 +43,12 @@ static void CommBB_Start( int netID, int size, void* pBuff, void* pWork )
 	
 	wk->rule = *( ( BB_RULE_COMM* )pBuff );
 	
+#if WB_FIX
 	gf_srand( wk->rule.rand );
-	
+#else
+	bb_gf_srand( wk->rule.rand );
+#endif
+
 	BB_cmd_StartSet( wk );
 	
 //	OS_Printf( " --- —”Ý’è = %d\n", wk->rule.rand );
@@ -124,7 +133,7 @@ static int CommBB_SizeMemberResult_Get( void )
 //
 //
 // -----------------------------------------
-static const NetRecvFuncTable _CommBBTbl[] = {	
+static const CommPacketTbl _CommBBTbl[] = {	
 	{ CommBB_Start,			CommBB_SizeRule_Get,		 NULL },
 	{ CommBB_End,			CommBB_SizeZero_Get,		 NULL },
 	{ CommBB_State,			CommBB_SizeState_Get,		 NULL },
@@ -138,11 +147,11 @@ static const NetRecvFuncTable _CommBBTbl[] = {
  *
  * @param	none	
  *
- * @retval	const NetRecvFuncTable*	
+ * @retval	const CommPacketTbl*	
  *
  */
 //--------------------------------------------------------------
-const NetRecvFuncTable* BB_CommCommandTclGet( void )
+const CommPacketTbl* BB_CommCommandTclGet( void )
 {
 	return _CommBBTbl;
 }
@@ -160,7 +169,7 @@ const NetRecvFuncTable* BB_CommCommandTclGet( void )
 //--------------------------------------------------------------
 int BB_CommCommandTblNumGet( void )
 {
-	return sizeof( _CommBBTbl ) / sizeof( NetRecvFuncTable );
+	return sizeof( _CommBBTbl ) / sizeof( CommPacketTbl );
 }
 
 

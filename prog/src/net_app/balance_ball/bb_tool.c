@@ -11,6 +11,8 @@
 //==============================================================================
 
 #include <gflib.h>
+#include <calctool.h>
+#include "system/main.h"
 #include "bb_common.h"
 
 #if 0
@@ -25,7 +27,7 @@
 
 typedef struct {
 	
-	GFL_CLWK cap;
+	GFL_CLWK* cap;
 	
 	fx32 x;
 	fx32 y;
@@ -78,10 +80,10 @@ static int BB_MOVE_SPEED_GET( int speed );
 static void BB_Fever_Main_TCB( GFL_TCB* tcb, void* work );
 static void Fever01_TCB( GFL_TCB* tcb, void* work );
 static void MoveInit( BB_LIGHT* wk );
-static BOOL FrameOut( BB_LIGHT* wk, int speed, int dir_lr, int dir_ud );
-static BOOL FrameIn( BB_LIGHT* wk, int speed, int dir_lr, int dir_ud );
-static BOOL FrameInM( BB_LIGHT* wk, int speed, int dir_lr, int dir_ud );
-static BOOL Roll( BB_LIGHT* wk, int speed, int dir_lr, int num );
+static BOOL FrameOut( BB_LIGHT* wk, int speed, int dir_lr, int dir_ud, u16 setsf );
+static BOOL FrameIn( BB_LIGHT* wk, int speed, int dir_lr, int dir_ud, u16 setsf );
+static BOOL FrameInM( BB_LIGHT* wk, int speed, int dir_lr, int dir_ud, u16 setsf );
+static BOOL Roll( BB_LIGHT* wk, int speed, int dir_lr, int num, u16 setsf );
 static void Fever02_TCB( GFL_TCB* tcb, void* work );
 static void Fever03_TCB( GFL_TCB* tcb, void* work );
 static void Fever04_TCB( GFL_TCB* tcb, void* work );
@@ -141,7 +143,9 @@ BOOL Quaternion_Rotation( BB_3D_MODEL* wk, int x, int y, int ox, int oy, f32 pow
 		fx32 tmp2 = FX_F32_TO_FX32( tmp );
 		sq = FX_Sqrt( tmp2 );
 		a = FX_FX32_TO_F32( sq );
+	#if 0 //BB_COEFFICIENT_Aが1.00なのでワーニングが出る 2009.08.06(木) matsuda
 		a *= BB_COEFFICIENT_A;
+	#endif
 	}
 
 	if ( a != 0.0 ) {
@@ -152,6 +156,7 @@ BOOL Quaternion_Rotation( BB_3D_MODEL* wk, int x, int y, int ox, int oy, f32 pow
 		f32 cos = FX_FX64C_TO_F32( cos64c );
 		f32 as = sin / a;
 
+#if WB_FIX
 		QUATERNION dq;
 
 		dq.q[0] = cos;
@@ -168,7 +173,28 @@ BOOL Quaternion_Rotation( BB_3D_MODEL* wk, int x, int y, int ox, int oy, f32 pow
 			f32 f = Quaternion_GetNorm( &wk->tq );
 			tmp = wk->tq;
 			Quaternion_DivReal( &wk->tq, &tmp, f );
-		}		
+		}
+#else
+    GFL_QUATERNION *dq = GFL_QUAT_Init(HEAPID_BB);
+
+    GFL_QUAT_Assign(dq, FX_F32_TO_FX32(cos), FX_F32_TO_FX32(dy*as), 
+      FX_F32_TO_FX32(dx*as), FX_F32_TO_FX32(0.0));
+
+    GFL_QUAT_Mul(wk->tq, dq, wk->cq);
+    GFL_QUAT_MakeRotateMatrix(&wk->rt, wk->tq);
+    GFL_QUAT_Copy(wk->cq, wk->tq);
+    MTX_Copy44To43(&wk->rt, &wk->tmp43);
+    {
+			GFL_QUATERNION *tmp = GFL_QUAT_Init(HEAPID_BB);
+			fx32 f = GFL_QUAT_Norm( wk->tq );
+			GFL_QUAT_Copy(tmp, wk->tq);
+			GFL_QUAT_DivReal( wk->tq, tmp, f );
+			GFL_QUAT_Free(tmp);
+    }
+    
+    GFL_QUAT_Free(dq);
+#endif
+
 		return TRUE;
 	}	
 	return FALSE;
@@ -204,7 +230,9 @@ BOOL Quaternion_Rotation_Pow( BB_3D_MODEL* wk, f32 pow )
 		fx32 tmp2 = FX_F32_TO_FX32( tmp );
 		sq = FX_Sqrt( tmp2 );
 		a = FX_FX32_TO_F32( sq );
+	#if 0 //BB_COEFFICIENT_Aが1.00なのでワーニングが出る 2009.08.06(木) matsuda
 		a *= BB_COEFFICIENT_A;
+	#endif
 	}
 
 	if ( a != 0.0 ) {
@@ -215,6 +243,7 @@ BOOL Quaternion_Rotation_Pow( BB_3D_MODEL* wk, f32 pow )
 		f32 cos = FX_FX64C_TO_F32( cos64c );
 		f32 as = sin / a;
 
+#if WB_FIX
 		QUATERNION dq;
 
 		dq.q[0] = cos;
@@ -226,7 +255,19 @@ BOOL Quaternion_Rotation_Pow( BB_3D_MODEL* wk, f32 pow )
 		Quaternion_SetMtx44( &wk->rt, &wk->tq );
 		Quaternion_Copy( &wk->cq, &wk->tq );
 		Quaternion_SetMtx44_to_MtxFx43( &wk->rt, &wk->tmp43 );
-		
+#else
+    GFL_QUATERNION *dq = GFL_QUAT_Init(HEAPID_BB);
+
+    GFL_QUAT_Assign(dq, FX_F32_TO_FX32(cos), FX_F32_TO_FX32(dy*as), 
+      FX_F32_TO_FX32(dx*as), FX_F32_TO_FX32(0.0));
+    
+    GFL_QUAT_Mul(wk->tq, dq, wk->cq);
+    GFL_QUAT_MakeRotateMatrix(&wk->rt, wk->tq);
+    GFL_QUAT_Copy(wk->cq, wk->tq);
+    MTX_Copy44To43(&wk->rt, &wk->tmp43);
+    
+    GFL_QUAT_Free(dq);
+#endif
 		return TRUE;
 	}	
 	return FALSE;
@@ -417,6 +458,7 @@ static void BB_Stardust_TCB( GFL_TCB* tcb, void* work )
 	BOOL bNext = TRUE;
 	const fx32 tbl1[] = { FX32_CONST( -5 ), FX32_CONST( +3 ), FX32_CONST( +4 ), FX32_CONST( -3 ), FX32_CONST( +3 ), FX32_CONST( -2 ) };
 	const fx32 tbl2[] = { FX32_CONST( +4 ), FX32_CONST( +5 ), FX32_CONST( -4 ), FX32_CONST( -5 ), FX32_CONST( -3 ), FX32_CONST( +2 ) };
+	GFL_CLACTPOS pos;
 	
 	if ( (WIPE_SYS_EndCheck() == FALSE) || (wk->sys->comm_err_data.dis_err == TRUE) ){
 		for ( i = 0; i < STAR_DUST_MAX; i++ ){
@@ -430,7 +472,13 @@ static void BB_Stardust_TCB( GFL_TCB* tcb, void* work )
 	switch ( wk->seq ){
 	case 0:
 		for ( i = 0; i < STAR_DUST_MAX; i++ ){
+	#if WB_FIX
 			CATS_ObjectPosGetCapFx32( wk->cap[ i ], &x, &y );
+	#else
+		  GFL_CLACT_WK_GetPos(wk->cap[i], &pos, CLSYS_DEFREND_MAIN);
+		  x = pos.x * FX32_ONE;
+		  y = pos.y * FX32_ONE;
+	#endif
 			BB_AddMoveReqFx( &wk->data[ i ][ 0 ], x, x + tbl1[ i ], FX_F32_TO_FX32( 0.3f ), STAR_DUST_EFF_WAIT );
 			BB_AddMoveReqFx( &wk->data[ i ][ 1 ], y, y + tbl2[ i ], FX_F32_TO_FX32( 0.2f ), STAR_DUST_EFF_WAIT );
 		}
@@ -442,8 +490,13 @@ static void BB_Stardust_TCB( GFL_TCB* tcb, void* work )
 			bEnd[ i ][ 0 ] = BB_AddMoveMainFx( &wk->data[ i ][ 0 ] );
 			bEnd[ i ][ 1 ] = BB_AddMoveMainFx( &wk->data[ i ][ 1 ] );
 
+		#if WB_FIX
 			CATS_ObjectPosSetCapFx32( wk->cap[ i ], wk->data[ i ][ 0 ].x, wk->data[ i ][ 1 ].x );
-			
+		#else
+		  pos.x = FX_Whole(wk->data[ i ][ 0 ].x);
+		  pos.y = FX_Whole(wk->data[ i ][ 1 ].x);
+		  GFL_CLACT_WK_SetPos(wk->cap[i], &pos, CLSYS_DEFREND_MAIN);
+		#endif
 			if ( bEnd[ i ][ 0 ] == FALSE || bEnd[ i ][ 1 ] == FALSE ){
 				bNext = FALSE;
 			}
@@ -493,7 +546,7 @@ void BB_Stardust_Call( BB_CLIENT* wk, s16 x, s16 y )
 			GFL_CLACT_WK_SetAnmSeq( wk->star[ i ].cap[ j ], ( ( x * ( i + 1 ) ) + ( y * ( j + 1 ) ) ) % 3 );
 		}
 		
-		GFL_TCB_AddTask( BB_Stardust_TCB, &wk->star[ i ], BB_TCB_PRI_1 );
+		GFL_TCB_AddTask( wk->tcbsys, BB_Stardust_TCB, &wk->star[ i ], BB_TCB_PRI_1 );
 		break;
 	}
 }
@@ -506,10 +559,18 @@ static inline void BB_Client_HanabiRadSet( EFFECT_ONE* wk )
 
 static inline void BB_Client_HanabiPosUpdate( EFFECT_ONE* wk, fx32 x, fx32 y )
 {	
+	GFL_CLACTPOS pos;
+
 	wk->x  += x;
 	wk->y  += y;
 	
+#if WB_FIX
 	CATS_ObjectPosSetCapFx32_SubSurface( wk->cap, wk->ox + wk->px + wk->rx + wk->x, wk->oy + wk->py + wk->ry + wk->y, FX32_CONST( BB_SURFACE_LIMIT ) );
+#else
+  pos.x = FX_Whole(wk->ox + wk->px + wk->rx + wk->x);
+  pos.y = FX_Whole(wk->oy + wk->py + wk->ry + wk->y);
+  GFL_CLACT_WK_SetPos(wk->cap, &pos, CLSYS_DEFREND_MAIN);
+#endif
 }
 
 
@@ -585,7 +646,9 @@ static void BB_Client_Effect_TCB( GFL_TCB* tcb, void* work )
 			if ( wk->wait == 0 ){
 				 wk->wait++;
 				 BB_disp_Hanabi_OAM_Enable( wk->client, TRUE, 0 );
+			#if WB_TEMP_FIX
 				 Snd_SePlay( BB_SND_HANABI );			///< 花火どがーん
+			#endif
 			}
 			if ( wk->wait > 30 ){
 				wk->seq = 1;
@@ -695,7 +758,7 @@ void BB_Client_EffectStart( BB_CLIENT* wk, BOOL* flag )
 	sub_wk->wait	= 0;
 	sub_wk->flag	= flag;
 	
-	GFL_TCB_AddTask( BB_Client_Effect_TCB, sub_wk, BB_TCB_PRI_1 );
+	GFL_TCB_AddTask( wk->tcbsys, BB_Client_Effect_TCB, sub_wk, BB_TCB_PRI_1 );
 }
 
 #define TEMP_WAIT	( 15 )
@@ -733,7 +796,11 @@ static void EFF_1( BB_EFF_WORK* wk )
 		break;
 
 	case 1:
+	#if WB_FIX
 		D3DOBJ_SetDraw( &mdl->obj, TRUE );
+	#else
+	  mdl->draw_flag = TRUE;
+	#endif
 		wk->temp[ 0 ] = 0;
 		wk->seq++;
 		break;
@@ -763,7 +830,11 @@ static void EFF_1( BB_EFF_WORK* wk )
 		wk->flag[ 0 ] = FALSE;
 		wk->active	  = FALSE;
 		wk->seq		  = 0;
+	#if WB_FIX
 		D3DOBJ_SetDraw( &mdl->obj, FALSE );
+	#else
+	  mdl->draw_flag = FALSE;
+	#endif
 		break;
 	}
 }
@@ -771,10 +842,11 @@ static void EFF_1( BB_EFF_WORK* wk )
 static void EFF_2( BB_EFF_WORK* wk )
 {
 	int i;
-	s16 x, y;
+//	s16 x, y;
 	s16 pos_in[] = { 188, 188, 180, 180 };
 	BOOL bEnd[ 4 ] = { TRUE,TRUE,TRUE,TRUE };
-	GFL_CLWK cap;
+	GFL_CLWK* cap;
+  GFL_CLACTPOS pos;
 	
 	if ( wk->active == FALSE ){ return; }
 	
@@ -783,11 +855,11 @@ static void EFF_2( BB_EFF_WORK* wk )
 		for ( i = 0; i < BB_HAND_MAX; i++ ){
 			cap = wk->data[ i ];
 			if ( cap == NULL ){ continue; }
-			CATS_ObjectPosGetCap( cap, &x, &y );
+      GFL_CLACT_WK_GetPos( cap, &pos, CLSYS_DEFREND_MAIN );
 			
-			if ( y > pos_in[ i ] ){				
-				y -= 6;	
-				CATS_ObjectPosSetCap( cap, x, y );
+			if ( pos.y > pos_in[ i ] ){				
+				pos.y -= 6;	
+  			GFL_CLACT_WK_SetPos( cap, &pos, CLSYS_DEFREND_MAIN );
 				bEnd[ i ] = FALSE;
 			}
 		}
@@ -813,10 +885,10 @@ static void EFF_2( BB_EFF_WORK* wk )
 		for ( i = 0; i < BB_HAND_MAX; i++ ){
 			cap = wk->data[ i ];
 			if ( cap == NULL ){ continue; }
-			CATS_ObjectPosGetCap( cap, &x, &y );
-			if ( y < BB_SURFACE_LIMIT ){				
-				y += 6;		
-				CATS_ObjectPosSetCap( cap, x, y );
+      GFL_CLACT_WK_GetPos( cap, &pos, CLSYS_DEFREND_MAIN );
+			if ( pos.y < BB_SURFACE_LIMIT ){				
+				pos.y += 6;		
+				GFL_CLACT_WK_SetPos( cap, &pos, CLSYS_DEFREND_MAIN );
 				bEnd[ i ] = FALSE;
 			}
 		}
@@ -849,8 +921,19 @@ static void EFF_3( BB_EFF_WORK* wk )
 	case 0:
 		for ( i = 0; i < BB_KAMI_HUBUKI_MAX; i++ ){
 			BB_3D_MODEL* b3d = wk->data[ i ];
+		#if WB_FIX
 			D3DOBJ_AnmSet( &b3d->anm[ 0 ], ( i * 20 ) % 40 );
+	  #else
+	    {
+  	    int set_anmframe = ( i * 20 ) % 40;
+    		GFL_G3D_OBJECT_SetAnimeFrame( b3d->g3dobj, 0, &set_anmframe );
+    	}
+	  #endif
+		#if WB_FIX
 			D3DOBJ_SetDraw( &b3d->obj, TRUE ); 
+		#else
+		  b3d->draw_flag = TRUE;
+		#endif
 		}
 		wk->temp[ 9 ] = 0;
 		wk->seq++;
@@ -867,7 +950,11 @@ static void EFF_3( BB_EFF_WORK* wk )
 	default:
 		for ( i = 0; i < BB_KAMI_HUBUKI_MAX; i++ ){
 			BB_3D_MODEL* b3d = wk->data[ i ];
+		#if WB_FIX
 			D3DOBJ_SetDraw( &b3d->obj, FALSE );  
+		#else
+		  b3d->draw_flag = FALSE;
+		#endif
 		}
 		wk->flag[ 0 ] = FALSE;
 		wk->active	  = FALSE;
@@ -935,7 +1022,9 @@ static void BB_Effect_Main_TCB( GFL_TCB* tcb, void* work )
 		}
 	case 4:
 		if ( wk->work[ 3 ].active == FALSE ){
+		#if WB_TEMP_FIX
 			Snd_SePlay( BB_SND_KANSEI );		///< 歓声
+		#endif
 			wk->work[ 3 ].active = TRUE;		
 			wk->work[ 3 ].flag[ 0 ] = FALSE;
 		}
@@ -946,7 +1035,9 @@ static void BB_Effect_Main_TCB( GFL_TCB* tcb, void* work )
 		}
 	case 2:
 		if ( wk->work[ 1 ].active == FALSE ){
+		#if WB_TEMP_FIX
 			Snd_SePlay( BB_SND_HAND );			///< 拍手
+		#endif
 			wk->work[ 1 ].active = TRUE;	
 			wk->work[ 1 ].flag[ 0 ] = FALSE;	
 		}
@@ -964,7 +1055,9 @@ static void BB_Effect_Main_TCB( GFL_TCB* tcb, void* work )
 			wk->work[ 2 ].flag[ 0 ] = TRUE;	///< 紙ふぶき終了
 			wk->work[ 3 ].flag[ 0 ] = TRUE;	///< 拍手x4とめる
 			wk->work[ 4 ].flag[ 0 ] = TRUE;	///< 花火とめる
+		#if WB_TEMP_FIX
 			Snd_SeStopBySeqNo( BB_SND_HAND, 0 );
+		#endif
 		}
 		break;
 	}
@@ -1018,11 +1111,13 @@ void BB_Effect_Call( BB_CLIENT* wk )
 			ewk->data[ 2 ] = NULL;
 			ewk->data[ 3 ] = NULL;
 			{
-				s16 x, y;
-				CATS_ObjectPosGetCap( wk->cap_hand[ 0 ], &x, &y );
-				CATS_ObjectPosSetCap( wk->cap_hand[ 0 ], x, BB_SURFACE_LIMIT );
-				CATS_ObjectPosGetCap( wk->cap_hand[ 1 ], &x, &y );
-				CATS_ObjectPosSetCap( wk->cap_hand[ 1 ], x, BB_SURFACE_LIMIT );
+        GFL_CLACTPOS pos;
+        GFL_CLACT_WK_GetPos( wk->cap_hand[ 0 ], &pos, CLSYS_DEFREND_MAIN );
+        pos.y = BB_SURFACE_LIMIT;
+				GFL_CLACT_WK_SetPos( wk->cap_hand[ 0 ], &pos, CLSYS_DEFREND_MAIN );
+        GFL_CLACT_WK_GetPos( wk->cap_hand[ 1 ], &pos, CLSYS_DEFREND_MAIN );
+        pos.y = BB_SURFACE_LIMIT;
+				GFL_CLACT_WK_SetPos( wk->cap_hand[ 1 ], &pos, CLSYS_DEFREND_MAIN );
 			}
 			break;
 
@@ -1043,11 +1138,13 @@ void BB_Effect_Call( BB_CLIENT* wk )
 			ewk->data[ 2 ] = wk->cap_hand[ 2 ];
 			ewk->data[ 3 ] = wk->cap_hand[ 3 ];
 			{
-				s16 x, y;
-				CATS_ObjectPosGetCap( wk->cap_hand[ 2 ], &x, &y );
-				CATS_ObjectPosSetCap( wk->cap_hand[ 2 ], x, BB_SURFACE_LIMIT );
-				CATS_ObjectPosGetCap( wk->cap_hand[ 3 ], &x, &y );
-				CATS_ObjectPosSetCap( wk->cap_hand[ 3 ], x, BB_SURFACE_LIMIT );
+        GFL_CLACTPOS pos;
+				GFL_CLACT_WK_GetPos( wk->cap_hand[ 2 ], &pos, CLSYS_DEFREND_MAIN );
+				pos.y = BB_SURFACE_LIMIT;
+				GFL_CLACT_WK_SetPos( wk->cap_hand[ 2 ], &pos, CLSYS_DEFREND_MAIN );
+				GFL_CLACT_WK_GetPos( wk->cap_hand[ 3 ], &pos, CLSYS_DEFREND_MAIN );
+				pos.y = BB_SURFACE_LIMIT;
+				GFL_CLACT_WK_SetPos( wk->cap_hand[ 3 ], &pos, CLSYS_DEFREND_MAIN );
 			}
 			break;
 
@@ -1058,7 +1155,7 @@ void BB_Effect_Call( BB_CLIENT* wk )
 		}
 	}
 	
-	wk->eff_sys.tcb = GFL_TCB_AddTask( BB_Effect_Main_TCB, &wk->eff_sys, BB_TCB_PRI_1 );
+	wk->eff_sys.tcb = GFL_TCB_AddTask( wk->tcbsys, BB_Effect_Main_TCB, &wk->eff_sys, BB_TCB_PRI_1 );
 }
 
 
@@ -1265,12 +1362,12 @@ static void BB_Fever_Main_TCB( GFL_TCB* tcb, void* work )
 				
 				for ( i = 0; i < BB_LIGHT_MAX; i++ ){
 					int col = fever_para[ level ].col[ i ];
-					CATS_ObjectPaletteOffsetSetCap( mvwk->main[ i ].cap, eBB_OAM_PAL_BD_LIGHT  + col );
+					GFL_CLACT_WK_SetPlttOffs( mvwk->main[ i ].cap, eBB_OAM_PAL_BD_LIGHT  + col, CLWK_PLTTOFFS_MODE_OAM_COLOR );
 					col = fever_para[ level ].col2[ i ];
-					CATS_ObjectPaletteOffsetSetCap( mvwk->sub[ i ].cap,  eBB_OAM_PAL_TD_MANENE + col ); 
+					GFL_CLACT_WK_SetPlttOffs( mvwk->sub[ i ].cap,  eBB_OAM_PAL_TD_MANENE + col, CLWK_PLTTOFFS_MODE_OAM_COLOR ); 
 				}
 				
-				GFL_TCB_AddTask( fever_para[ level ].tcb_func, wk, BB_TCB_PRI_2 );
+				GFL_TCB_AddTask( wk->tcbsys, fever_para[ level ].tcb_func, wk, BB_TCB_PRI_2 );
 //				OS_Printf( " level %d の エフェクトを登録\n ", level );
 			}
 		}
@@ -1302,7 +1399,7 @@ void BB_Fever_Call( BB_CLIENT* wk )
 	wk->fever_sys.wait	= 0;
 	wk->fever_sys.seq	= 0;
 	wk->fever_sys.bActive = FALSE;
-
+  wk->fever_sys.tcbsys = wk->tcbsys;
 	{
 		int i;
 		
@@ -1312,7 +1409,7 @@ void BB_Fever_Call( BB_CLIENT* wk )
 		}
 	}
 
-	wk->fever_sys.tcb	= GFL_TCB_AddTask( BB_Fever_Main_TCB, &wk->fever_sys, BB_TCB_PRI_1 );
+	wk->fever_sys.tcb	= GFL_TCB_AddTask( wk->tcbsys, BB_Fever_Main_TCB, &wk->fever_sys, BB_TCB_PRI_1 );
 }
 
 enum {
@@ -1343,7 +1440,8 @@ static void Fever01_TCB( GFL_TCB* tcb, void* work )
 	BB_LIGHT_MOVE* mvwk = &wk->mvwk;
 	BOOL bEnd[ 2 ];
 	fx32 ox, oy;
-	fx32 px, py;
+//	fx32 px, py;
+ 	GFL_CLACTPOS pos;
 
 	if ( (WIPE_SYS_EndCheck() == FALSE) || (wk->sys->comm_err_data.dis_err == TRUE) ){
 		GFL_TCB_DeleteTask( tcb );
@@ -1366,17 +1464,33 @@ static void Fever01_TCB( GFL_TCB* tcb, void* work )
 		mvwk->sub[ 0 ].ry	= BB_LIGHT_RY;
 		GFL_CLACT_WK_SetDrawEnable( mvwk->sub[ 0 ].cap, TRUE );
 		{
+		#if WB_FIX
 			CATS_ObjectPosGetCapFx32_SubSurface( mvwk->main[ 0 ].cap, &px, &py, BB_SURFACE_Y_FX );			
+		#endif
 			ox = ( mvwk->main[ 0 ].cx << FX32_SHIFT ) + ( GFL_CALC_Sin360R( mvwk->main[ 0 ].rad ) * mvwk->main[ 0 ].rx );
 			oy = ( mvwk->main[ 0 ].cy << FX32_SHIFT ) + ( GFL_CALC_Cos360R( mvwk->main[ 0 ].rad ) * mvwk->main[ 0 ].ry );			
+		#if WB_FIX
 			CATS_ObjectPosSetCapFx32_SubSurface( mvwk->main[ 0 ].cap, ox, oy, BB_SURFACE_Y_FX );
+		#else
+		  pos.x = FX_Whole(ox);
+		  pos.y = FX_Whole(oy);
+		  GFL_CLACT_WK_SetPos(mvwk->main[0].cap, &pos, CLSYS_DEFREND_MAIN);
+		#endif
 			BB_MoveInit_FX( &mvwk->main[ 0 ].mx, ox, ox + FX32_CONST( 180 ), BB_MOVE_SPEED_GET( mvwk->speed_m ) );
 			BB_MoveInit_FX( &mvwk->main[ 0 ].my, oy, oy - FX32_CONST(  BB_LIGHT_RY ), BB_MOVE_SPEED_GET( mvwk->speed_m ) );
 			
+		#if WB_FIX
 			CATS_ObjectPosGetCapFx32_SubSurface( mvwk->sub[ 0 ].cap, &px, &py, BB_SURFACE_Y_FX );			
+		#endif
 			ox = ( mvwk->sub[ 0 ].cx << FX32_SHIFT ) + ( GFL_CALC_Sin360R( mvwk->sub[ 0 ].rad ) * mvwk->sub[ 0 ].rx );
 			oy = ( mvwk->sub[ 0 ].cy << FX32_SHIFT ) - ( GFL_CALC_Cos360R( mvwk->sub[ 0 ].rad ) * mvwk->sub[ 0 ].ry );			
+		#if WB_FIX
 			CATS_ObjectPosSetCapFx32_SubSurface( mvwk->sub[ 0 ].cap, ox, oy, BB_SURFACE_Y_FX );
+		#else
+		  pos.x = FX_Whole(ox);
+		  pos.y = FX_Whole(oy);
+		  GFL_CLACT_WK_SetPos(mvwk->sub[0].cap, &pos, CLSYS_DEFREND_SUB);
+		#endif
 			BB_MoveInit_FX( &mvwk->sub[ 0 ].mx, ox, ox - FX32_CONST( 180 ), BB_MOVE_SPEED_GET( mvwk->speed ) );
 			BB_MoveInit_FX( &mvwk->sub[ 0 ].my, oy, oy + FX32_CONST(  BB_LIGHT_RY ), BB_MOVE_SPEED_GET( mvwk->speed ) );
 		}
@@ -1385,8 +1499,8 @@ static void Fever01_TCB( GFL_TCB* tcb, void* work )
 		wk->eff_seq++;
 
 	case 1:		
-		bEnd[ 0 ] = Roll( &mvwk->sub[ 0 ], mvwk->speed, BB_DIR_L, 1 );
-		bEnd[ 1 ] = FrameInM( &mvwk->main[ 0 ], mvwk->speed_m, BB_DIR_R, BB_DIR_D );		
+		bEnd[ 0 ] = Roll( &mvwk->sub[ 0 ], mvwk->speed, BB_DIR_L, 1, CLSYS_DEFREND_SUB);
+		bEnd[ 1 ] = FrameInM( &mvwk->main[ 0 ], mvwk->speed_m, BB_DIR_R, BB_DIR_D, CLSYS_DEFREND_MAIN);
 		if ( bEnd[ 0 ] && bEnd[ 1 ] ){
 			MoveInit( &mvwk->sub[ 0 ] );
 			MoveInit( &mvwk->main[ 0 ] );
@@ -1395,8 +1509,8 @@ static void Fever01_TCB( GFL_TCB* tcb, void* work )
 		break;
 	
 	case 2:		
-		bEnd[ 0 ] = FrameOut( &mvwk->sub[ 0 ], mvwk->speed, BB_DIR_L, BB_DIR_D );
-		bEnd[ 1 ] = FrameOut( &mvwk->main[ 0 ], mvwk->speed_m, BB_DIR_R, BB_DIR_U );		
+		bEnd[ 0 ] = FrameOut( &mvwk->sub[ 0 ], mvwk->speed, BB_DIR_L, BB_DIR_D, CLSYS_DEFREND_SUB );
+		bEnd[ 1 ] = FrameOut( &mvwk->main[ 0 ], mvwk->speed_m, BB_DIR_R, BB_DIR_U, CLSYS_DEFREND_MAIN);
 		if ( bEnd[ 0 ] && bEnd[ 1 ] ){
 			MoveInit( &mvwk->sub[ 0 ] );
 			MoveInit( &mvwk->main[ 0 ] );
@@ -1405,8 +1519,8 @@ static void Fever01_TCB( GFL_TCB* tcb, void* work )
 		break;
 	
 	case 3:		
-		bEnd[ 0 ] = FrameIn( &mvwk->sub[ 0 ], mvwk->speed, BB_DIR_L, BB_DIR_U );
-		bEnd[ 1 ] = FrameInM( &mvwk->main[ 0 ], mvwk->speed_m, BB_DIR_R, BB_DIR_D );		
+		bEnd[ 0 ] = FrameIn( &mvwk->sub[ 0 ], mvwk->speed, BB_DIR_L, BB_DIR_U, CLSYS_DEFREND_SUB);
+		bEnd[ 1 ] = FrameInM( &mvwk->main[ 0 ], mvwk->speed_m, BB_DIR_R, BB_DIR_D, CLSYS_DEFREND_MAIN);
 		if ( bEnd[ 0 ] && bEnd[ 1 ] ){
 			MoveInit( &mvwk->sub[ 0 ] );
 			MoveInit( &mvwk->main[ 0 ] );
@@ -1415,8 +1529,8 @@ static void Fever01_TCB( GFL_TCB* tcb, void* work )
 		break;
 	
 	case 4:
-		bEnd[ 0 ] = Roll( &mvwk->sub[ 0 ], mvwk->speed, BB_DIR_L, 1 );
-		bEnd[ 1 ] = FrameOut( &mvwk->main[ 0 ], mvwk->speed_m, BB_DIR_R, BB_DIR_U );		
+		bEnd[ 0 ] = Roll( &mvwk->sub[ 0 ], mvwk->speed, BB_DIR_L, 1, CLSYS_DEFREND_SUB );
+		bEnd[ 1 ] = FrameOut( &mvwk->main[ 0 ], mvwk->speed_m, BB_DIR_R, BB_DIR_U, CLSYS_DEFREND_MAIN);
 		if ( bEnd[ 0 ] && bEnd[ 1 ] ){
 			MoveInit( &mvwk->sub[ 0 ] );
 			MoveInit( &mvwk->main[ 0 ] );
@@ -1437,15 +1551,22 @@ static void MoveInit( BB_LIGHT* wk )
 	wk->seq = 0;
 }
 
-static BOOL FrameOut( BB_LIGHT* wk, int speed, int dir_lr, int dir_ud )
+static BOOL FrameOut( BB_LIGHT* wk, int speed, int dir_lr, int dir_ud, u16 setsf )
 {
 	BOOL bEnd[ 2 ];
 	fx32 ox, oy;
-	fx32 px, py;
-	
+//	fx32 px, py;
+	GFL_CLACTPOS pos;
+
 	switch ( wk->seq ){
 	case 0:
+	#if WB_FIX
 		CATS_ObjectPosGetCapFx32_SubSurface( wk->cap, &ox, &oy, BB_SURFACE_Y_FX );	
+	#else
+	  GFL_CLACT_WK_GetPos(wk->cap, &pos, setsf);
+	  ox = pos.x * FX32_ONE;
+	  oy = pos.y * FX32_ONE;
+	#endif
 		if ( dir_lr == BB_DIR_L ){
 			BB_MoveInit_FX( &wk->mx, ox, ox - FX32_CONST( 180 ), BB_MOVE_SPEED_GET( speed ) );
 		}
@@ -1463,7 +1584,13 @@ static BOOL FrameOut( BB_LIGHT* wk, int speed, int dir_lr, int dir_ud )
 	case 1:
 		bEnd[ 0 ] = BB_MoveMain_FX( &wk->mx );
 					BB_MoveMain_FX( &wk->my );
+	#if WB_FIX
 		CATS_ObjectPosSetCapFx32_SubSurface( wk->cap, wk->mx.x, wk->my.x, BB_SURFACE_Y_FX );
+	#else
+	  pos.x = FX_Whole(wk->mx.x);
+	  pos.y = FX_Whole(wk->my.x);
+	  GFL_CLACT_WK_SetPos(wk->cap, &pos, setsf);
+	#endif
 		if ( bEnd[ 0 ] ){
 			return TRUE;
 		}
@@ -1476,12 +1603,13 @@ static BOOL FrameOut( BB_LIGHT* wk, int speed, int dir_lr, int dir_ud )
 	return FALSE;
 }
 
-static BOOL FrameIn( BB_LIGHT* wk, int speed, int dir_lr, int dir_ud )
+static BOOL FrameIn( BB_LIGHT* wk, int speed, int dir_lr, int dir_ud, u16 setsf )
 {
 	BOOL bEnd[ 2 ];
 	fx32 ox, oy;
-	fx32 px, py;
-	
+//	fx32 px, py;
+	GFL_CLACTPOS pos;
+
 	switch ( wk->seq ){
 	case 0:		
 		if ( dir_lr == BB_DIR_L ){
@@ -1501,7 +1629,13 @@ static BOOL FrameIn( BB_LIGHT* wk, int speed, int dir_lr, int dir_ud )
 	case 1:
 		bEnd[ 0 ] = BB_MoveMain_FX( &wk->mx );
 					BB_MoveMain_FX( &wk->my );
+	#if WB_FIX
 		CATS_ObjectPosSetCapFx32_SubSurface( wk->cap, wk->mx.x, wk->my.x, BB_SURFACE_Y_FX );
+	#else
+	  pos.x = FX_Whole(wk->mx.x);
+	  pos.y = FX_Whole(wk->my.x);
+	  GFL_CLACT_WK_SetPos(wk->cap, &pos, setsf);
+	#endif
 		if ( bEnd[ 0 ] ){
 			return TRUE;
 		}
@@ -1514,11 +1648,12 @@ static BOOL FrameIn( BB_LIGHT* wk, int speed, int dir_lr, int dir_ud )
 	return FALSE;
 }
 
-static BOOL FrameInM( BB_LIGHT* wk, int speed, int dir_lr, int dir_ud )
+static BOOL FrameInM( BB_LIGHT* wk, int speed, int dir_lr, int dir_ud, u16 setsf )
 {
 	BOOL bEnd[ 2 ];
 	fx32 ox, oy;
-	fx32 px, py;
+//	fx32 px, py;
+	GFL_CLACTPOS pos;
 	
 	switch ( wk->seq ){
 	case 0:		
@@ -1539,7 +1674,13 @@ static BOOL FrameInM( BB_LIGHT* wk, int speed, int dir_lr, int dir_ud )
 	case 1:
 		bEnd[ 0 ] = BB_MoveMain_FX( &wk->mx );
 					BB_MoveMain_FX( &wk->my );
+	#if WB_FIX
 		CATS_ObjectPosSetCapFx32_SubSurface( wk->cap, wk->mx.x, wk->my.x, BB_SURFACE_Y_FX );
+	#else
+	  pos.x = FX_Whole(wk->mx.x);
+	  pos.y = FX_Whole(wk->my.x);
+	  GFL_CLACT_WK_SetPos(wk->cap, &pos, setsf);
+	#endif
 		if ( bEnd[ 0 ] ){
 			return TRUE;
 		}
@@ -1552,12 +1693,15 @@ static BOOL FrameInM( BB_LIGHT* wk, int speed, int dir_lr, int dir_ud )
 	return FALSE;
 }
 
-static BOOL Roll( BB_LIGHT* wk, int speed, int dir_lr, int num )
+static BOOL Roll( BB_LIGHT* wk, int speed, int dir_lr, int num, u16 setsf )
 {
 	BOOL bEnd[ 2 ];
 	fx32 ox, oy;
+#if WB_FIX
 	fx32 px, py;
-	
+#endif
+	GFL_CLACTPOS pos;
+
 	switch ( wk->seq ){
 	case 0:
 		wk->num = 0;
@@ -1569,7 +1713,9 @@ static BOOL Roll( BB_LIGHT* wk, int speed, int dir_lr, int num )
 		if ( wk->rad >= 360 ){
 			 wk->rad = 0;
 		}
+#if WB_FIX
 		CATS_ObjectPosGetCapFx32_SubSurface( wk->cap, &px, &py, BB_SURFACE_Y_FX );		
+#endif
 		if ( dir_lr == BB_DIR_L ){
 			ox = ( wk->cx << FX32_SHIFT ) - ( GFL_CALC_Sin360R( wk->rad ) * wk->rx );
 			oy = ( wk->cy << FX32_SHIFT ) - ( GFL_CALC_Cos360R( wk->rad ) * wk->ry );			
@@ -1578,7 +1724,13 @@ static BOOL Roll( BB_LIGHT* wk, int speed, int dir_lr, int num )
 			ox = ( wk->cx << FX32_SHIFT ) + ( GFL_CALC_Sin360R( wk->rad ) * wk->rx );
 			oy = ( wk->cy << FX32_SHIFT ) - ( GFL_CALC_Cos360R( wk->rad ) * wk->ry );
 		}
+#if WB_FIX
 		CATS_ObjectPosSetCapFx32_SubSurface( wk->cap, ox, oy, BB_SURFACE_Y_FX );
+#else
+	  pos.x = FX_Whole(ox);
+	  pos.y = FX_Whole(oy);
+	  GFL_CLACT_WK_SetPos(wk->cap, &pos, setsf);
+#endif
 		if ( wk->rad == 0 ){
 			wk->num++;
 			if ( wk->num >= num ){
@@ -1604,7 +1756,8 @@ static void Fever02_TCB( GFL_TCB* tcb, void* work )
 	BB_LIGHT_MOVE* mvwk = &wk->mvwk;
 	BOOL bEnd[ 4 ] = { TRUE, TRUE, TRUE, TRUE };
 	fx32 ox, oy;
-	fx32 px, py;
+//	fx32 px, py;
+	GFL_CLACTPOS pos;
 
 	if ( (WIPE_SYS_EndCheck() == FALSE) || (wk->sys->comm_err_data.dis_err == TRUE) ){
 		GFL_TCB_DeleteTask( tcb );
@@ -1628,15 +1781,31 @@ static void Fever02_TCB( GFL_TCB* tcb, void* work )
 			mvwk->sub[ i ].ry	= BB_LIGHT_RY;
 			GFL_CLACT_WK_SetDrawEnable( mvwk->sub[ i ].cap, TRUE );
 			
+		#if WB_FIX
 			CATS_ObjectPosGetCapFx32_SubSurface( mvwk->main[ i ].cap, &px, &py, BB_SURFACE_Y_FX );			
+		#endif
 			ox = ( mvwk->main[ i ].cx << FX32_SHIFT ) + ( GFL_CALC_Sin360R( mvwk->main[ i ].rad ) * mvwk->main[ i ].rx );
 			oy = ( mvwk->main[ i ].cy << FX32_SHIFT ) + ( GFL_CALC_Cos360R( mvwk->main[ i ].rad ) * mvwk->main[ i ].ry );			
+		#if WB_FIX
 			CATS_ObjectPosSetCapFx32_SubSurface( mvwk->main[ i ].cap, ox, oy, BB_SURFACE_Y_FX );
-			
+		#else
+  	  pos.x = FX_Whole(ox);
+  	  pos.y = FX_Whole(oy);
+  	  GFL_CLACT_WK_SetPos(mvwk->main[i].cap, &pos, CLSYS_DEFREND_MAIN);
+		#endif
+		
+		#if WB_FIX
 			CATS_ObjectPosGetCapFx32_SubSurface( mvwk->sub[ i ].cap, &px, &py, BB_SURFACE_Y_FX );			
+		#endif
 			ox = ( mvwk->sub[ i ].cx << FX32_SHIFT ) + ( GFL_CALC_Sin360R( mvwk->sub[ i ].rad ) * mvwk->sub[ i ].rx );
 			oy = ( mvwk->sub[ i ].cy << FX32_SHIFT ) - ( GFL_CALC_Cos360R( mvwk->sub[ i ].rad ) * mvwk->sub[ i ].ry );			
+		#if WB_FIX
 			CATS_ObjectPosSetCapFx32_SubSurface( mvwk->sub[ i ].cap, ox, oy, BB_SURFACE_Y_FX );
+		#else
+  	  pos.x = FX_Whole(ox);
+  	  pos.y = FX_Whole(oy);
+  	  GFL_CLACT_WK_SetPos(mvwk->sub[i].cap, &pos, CLSYS_DEFREND_SUB);
+		#endif
 		}
 		MoveInit( &mvwk->sub[ 0 ] );
 		MoveInit( &mvwk->sub[ 1 ] );
@@ -1646,9 +1815,9 @@ static void Fever02_TCB( GFL_TCB* tcb, void* work )
 		wk->eff_seq++;
 	
 	case 1:		
-		bEnd[ 0 ] = FrameOut( &mvwk->sub[ 0 ], mvwk->speed, BB_DIR_L, BB_DIR_D );
-		bEnd[ 1 ] = FrameIn( &mvwk->sub[ 1 ], mvwk->speed, BB_DIR_L, BB_DIR_U );
-		bEnd[ 2 ] = FrameInM( &mvwk->main[ 0 ], mvwk->speed_m, BB_DIR_R, BB_DIR_D );
+		bEnd[ 0 ] = FrameOut( &mvwk->sub[ 0 ], mvwk->speed, BB_DIR_L, BB_DIR_D, CLSYS_DEFREND_SUB );
+		bEnd[ 1 ] = FrameIn( &mvwk->sub[ 1 ], mvwk->speed, BB_DIR_L, BB_DIR_U, CLSYS_DEFREND_SUB);
+		bEnd[ 2 ] = FrameInM( &mvwk->main[ 0 ], mvwk->speed_m, BB_DIR_R, BB_DIR_D, CLSYS_DEFREND_MAIN);
 		bEnd[ 3 ] = TRUE;
 		if ( bEnd[ 0 ] && bEnd[ 1 ] && bEnd[ 2 ] && bEnd[ 3 ] ){
 			MoveInit( &mvwk->sub[ 0 ] );
@@ -1664,9 +1833,9 @@ static void Fever02_TCB( GFL_TCB* tcb, void* work )
 	
 	case 2:			
 		bEnd[ 0 ] = TRUE;
-		bEnd[ 1 ] = Roll( &mvwk->sub[ 1 ], mvwk->speed, BB_DIR_L, 1 );
-		bEnd[ 2 ] = FrameOut( &mvwk->main[ 0 ], mvwk->speed_m, BB_DIR_R, BB_DIR_U );
-		bEnd[ 3 ] = FrameInM( &mvwk->main[ 1 ], mvwk->speed_m, BB_DIR_R, BB_DIR_D );
+		bEnd[ 1 ] = Roll( &mvwk->sub[ 1 ], mvwk->speed, BB_DIR_L, 1, CLSYS_DEFREND_SUB );
+		bEnd[ 2 ] = FrameOut( &mvwk->main[ 0 ], mvwk->speed_m, BB_DIR_R, BB_DIR_U, CLSYS_DEFREND_MAIN);
+		bEnd[ 3 ] = FrameInM( &mvwk->main[ 1 ], mvwk->speed_m, BB_DIR_R, BB_DIR_D, CLSYS_DEFREND_MAIN);
 		
 		if ( bEnd[ 0 ] && bEnd[ 1 ] && bEnd[ 2 ] && bEnd[ 3 ] ){
 			MoveInit( &mvwk->sub[ 0 ] );
@@ -1680,10 +1849,10 @@ static void Fever02_TCB( GFL_TCB* tcb, void* work )
 		}
 	
 	case 3:	
-		bEnd[ 0 ] = FrameIn( &mvwk->sub[ 0 ], mvwk->speed, BB_DIR_L, BB_DIR_U );
-		bEnd[ 1 ] = FrameOut( &mvwk->sub[ 1 ], mvwk->speed, BB_DIR_L, BB_DIR_D );
+		bEnd[ 0 ] = FrameIn( &mvwk->sub[ 0 ], mvwk->speed, BB_DIR_L, BB_DIR_U, CLSYS_DEFREND_SUB);
+		bEnd[ 1 ] = FrameOut( &mvwk->sub[ 1 ], mvwk->speed, BB_DIR_L, BB_DIR_D, CLSYS_DEFREND_SUB );
 		bEnd[ 2 ] = TRUE;
-		bEnd[ 3 ] = FrameOut( &mvwk->main[ 1 ], mvwk->speed_m, BB_DIR_R, BB_DIR_U );
+		bEnd[ 3 ] = FrameOut( &mvwk->main[ 1 ], mvwk->speed_m, BB_DIR_R, BB_DIR_U, CLSYS_DEFREND_MAIN);
 		
 		if ( bEnd[ 0 ] && bEnd[ 1 ] && bEnd[ 2 ] && bEnd[ 3 ] ){
 			MoveInit( &mvwk->sub[ 0 ] );
@@ -1697,10 +1866,10 @@ static void Fever02_TCB( GFL_TCB* tcb, void* work )
 		}
 	
 	case 4:			
-		bEnd[ 0 ] = Roll( &mvwk->sub[ 0 ], mvwk->speed, BB_DIR_L, 1 );
+		bEnd[ 0 ] = Roll( &mvwk->sub[ 0 ], mvwk->speed, BB_DIR_L, 1, CLSYS_DEFREND_SUB );
 		bEnd[ 1 ] = TRUE;
 		bEnd[ 2 ] = TRUE;//FrameInM( &mvwk->main[ 0 ], mvwk->speed_m, BB_DIR_R, BB_DIR_D );
-		bEnd[ 3 ] = FrameOut( &mvwk->main[ 1 ], mvwk->speed_m, BB_DIR_R, BB_DIR_U );
+		bEnd[ 3 ] = FrameOut( &mvwk->main[ 1 ], mvwk->speed_m, BB_DIR_R, BB_DIR_U, CLSYS_DEFREND_MAIN);
 		
 		if ( bEnd[ 0 ] && bEnd[ 1 ] && bEnd[ 2 ] && bEnd[ 3 ] ){
 			MoveInit( &mvwk->sub[ 0 ] );
@@ -1733,7 +1902,8 @@ static void Fever03_TCB( GFL_TCB* tcb, void* work )
 	BB_LIGHT_MOVE* mvwk = &wk->mvwk;
 	BOOL bEnd[ 4 ] = { TRUE, TRUE, TRUE, TRUE };
 	fx32 ox, oy;
-	fx32 px, py;
+//	fx32 px, py;
+	GFL_CLACTPOS pos;
 
 	if ( (WIPE_SYS_EndCheck() == FALSE) || (wk->sys->comm_err_data.dis_err == TRUE) ){
 		GFL_TCB_DeleteTask( tcb );
@@ -1757,15 +1927,31 @@ static void Fever03_TCB( GFL_TCB* tcb, void* work )
 			mvwk->sub[ i ].ry	= BB_LIGHT_RY;
 			GFL_CLACT_WK_SetDrawEnable( mvwk->sub[ i ].cap, TRUE );
 			
+		#if WB_FIX
 			CATS_ObjectPosGetCapFx32_SubSurface( mvwk->main[ i ].cap, &px, &py, BB_SURFACE_Y_FX );			
+		#endif
 			ox = ( mvwk->main[ i ].cx << FX32_SHIFT ) + ( GFL_CALC_Sin360R( mvwk->main[ i ].rad ) * mvwk->main[ i ].rx );
 			oy = ( mvwk->main[ i ].cy << FX32_SHIFT ) + ( GFL_CALC_Cos360R( mvwk->main[ i ].rad ) * mvwk->main[ i ].ry );			
+		#if WB_FIX
 			CATS_ObjectPosSetCapFx32_SubSurface( mvwk->main[ i ].cap, ox, oy, BB_SURFACE_Y_FX );
+		#else
+  	  pos.x = FX_Whole(ox);
+  	  pos.y = FX_Whole(oy);
+  	  GFL_CLACT_WK_SetPos(mvwk->main[i].cap, &pos, CLSYS_DEFREND_MAIN);
+		#endif
 			
+		#if WB_FIX
 			CATS_ObjectPosGetCapFx32_SubSurface( mvwk->sub[ i ].cap, &px, &py, BB_SURFACE_Y_FX );			
+		#endif
 			ox = ( mvwk->sub[ i ].cx << FX32_SHIFT ) + ( GFL_CALC_Sin360R( mvwk->sub[ i ].rad ) * mvwk->sub[ i ].rx );
 			oy = ( mvwk->sub[ i ].cy << FX32_SHIFT ) - ( GFL_CALC_Cos360R( mvwk->sub[ i ].rad ) * mvwk->sub[ i ].ry );			
+		#if WB_FIX
 			CATS_ObjectPosSetCapFx32_SubSurface( mvwk->sub[ i ].cap, ox, oy, BB_SURFACE_Y_FX );
+		#else
+  	  pos.x = FX_Whole(ox);
+  	  pos.y = FX_Whole(oy);
+  	  GFL_CLACT_WK_SetPos(mvwk->sub[i].cap, &pos, CLSYS_DEFREND_SUB);
+		#endif
 		}
 		MoveInit( &mvwk->sub[ 0 ] );
 		MoveInit( &mvwk->sub[ 1 ] );
@@ -1775,9 +1961,9 @@ static void Fever03_TCB( GFL_TCB* tcb, void* work )
 		wk->eff_seq++;
 	
 	case 1:		
-		bEnd[ 0 ] = FrameOut( &mvwk->sub[ 0 ], mvwk->speed, BB_DIR_L, BB_DIR_D );
-		bEnd[ 1 ] = FrameIn( &mvwk->sub[ 1 ], mvwk->speed, BB_DIR_L, BB_DIR_U );
-		bEnd[ 2 ] = FrameInM( &mvwk->main[ 0 ], mvwk->speed_m, BB_DIR_R, BB_DIR_D );
+		bEnd[ 0 ] = FrameOut( &mvwk->sub[ 0 ], mvwk->speed, BB_DIR_L, BB_DIR_D, CLSYS_DEFREND_SUB);
+		bEnd[ 1 ] = FrameIn( &mvwk->sub[ 1 ], mvwk->speed, BB_DIR_L, BB_DIR_U, CLSYS_DEFREND_SUB);
+		bEnd[ 2 ] = FrameInM( &mvwk->main[ 0 ], mvwk->speed_m, BB_DIR_R, BB_DIR_D, CLSYS_DEFREND_MAIN);
 		bEnd[ 3 ] = TRUE;
 		if ( bEnd[ 0 ] && bEnd[ 1 ] && bEnd[ 2 ] && bEnd[ 3 ] ){
 			MoveInit( &mvwk->sub[ 0 ] );
@@ -1793,9 +1979,9 @@ static void Fever03_TCB( GFL_TCB* tcb, void* work )
 	
 	case 2:			
 		bEnd[ 0 ] = TRUE;
-		bEnd[ 1 ] = Roll( &mvwk->sub[ 1 ], mvwk->speed, BB_DIR_L, 2 );
-		bEnd[ 2 ] = FrameOut( &mvwk->main[ 0 ], mvwk->speed_m, BB_DIR_R, BB_DIR_U );
-		bEnd[ 3 ] = FrameInM( &mvwk->main[ 1 ], mvwk->speed_m, BB_DIR_R, BB_DIR_D );
+		bEnd[ 1 ] = Roll( &mvwk->sub[ 1 ], mvwk->speed, BB_DIR_L, 2, CLSYS_DEFREND_SUB );
+		bEnd[ 2 ] = FrameOut( &mvwk->main[ 0 ], mvwk->speed_m, BB_DIR_R, BB_DIR_U, CLSYS_DEFREND_MAIN);
+		bEnd[ 3 ] = FrameInM( &mvwk->main[ 1 ], mvwk->speed_m, BB_DIR_R, BB_DIR_D, CLSYS_DEFREND_MAIN);
 		
 		if ( bEnd[ 0 ] && bEnd[ 1 ] && bEnd[ 2 ] && bEnd[ 3 ] ){
 			MoveInit( &mvwk->sub[ 0 ] );
@@ -1809,10 +1995,10 @@ static void Fever03_TCB( GFL_TCB* tcb, void* work )
 		}
 	
 	case 3:	
-		bEnd[ 0 ] = FrameIn( &mvwk->sub[ 0 ], mvwk->speed, BB_DIR_L, BB_DIR_U );
-		bEnd[ 1 ] = FrameOut( &mvwk->sub[ 1 ], mvwk->speed, BB_DIR_L, BB_DIR_D );
+		bEnd[ 0 ] = FrameIn( &mvwk->sub[ 0 ], mvwk->speed, BB_DIR_L, BB_DIR_U, CLSYS_DEFREND_SUB );
+		bEnd[ 1 ] = FrameOut( &mvwk->sub[ 1 ], mvwk->speed, BB_DIR_L, BB_DIR_D, CLSYS_DEFREND_SUB );
 		bEnd[ 2 ] = TRUE;
-		bEnd[ 3 ] = FrameOut( &mvwk->main[ 1 ], mvwk->speed_m, BB_DIR_R, BB_DIR_U );
+		bEnd[ 3 ] = FrameOut( &mvwk->main[ 1 ], mvwk->speed_m, BB_DIR_R, BB_DIR_U, CLSYS_DEFREND_MAIN);
 		
 		if ( bEnd[ 0 ] && bEnd[ 1 ] && bEnd[ 2 ] && bEnd[ 3 ] ){
 			MoveInit( &mvwk->sub[ 0 ] );
@@ -1826,10 +2012,10 @@ static void Fever03_TCB( GFL_TCB* tcb, void* work )
 		}
 	
 	case 4:			
-		bEnd[ 0 ] = Roll( &mvwk->sub[ 0 ], mvwk->speed, BB_DIR_L, 2 );
+		bEnd[ 0 ] = Roll( &mvwk->sub[ 0 ], mvwk->speed, BB_DIR_L, 2, CLSYS_DEFREND_SUB );
 		bEnd[ 1 ] = TRUE;
 		bEnd[ 2 ] = TRUE;//FrameInM( &mvwk->main[ 0 ], mvwk->speed_m, BB_DIR_R, BB_DIR_D );
-		bEnd[ 3 ] = FrameOut( &mvwk->main[ 1 ], mvwk->speed_m, BB_DIR_R, BB_DIR_U );
+		bEnd[ 3 ] = FrameOut( &mvwk->main[ 1 ], mvwk->speed_m, BB_DIR_R, BB_DIR_U, CLSYS_DEFREND_MAIN);
 		
 		if ( bEnd[ 0 ] && bEnd[ 1 ] && bEnd[ 2 ] && bEnd[ 3 ] ){
 			MoveInit( &mvwk->sub[ 0 ] );
@@ -1862,7 +2048,8 @@ static void Fever04_TCB( GFL_TCB* tcb, void* work )
 	BB_LIGHT_MOVE* mvwk = &wk->mvwk;
 	BOOL bEnd[ 4 ] = { TRUE, TRUE, TRUE, TRUE };
 	fx32 ox, oy;
-	fx32 px, py;
+//	fx32 px, py;
+	GFL_CLACTPOS pos;
 
 	if ( (WIPE_SYS_EndCheck() == FALSE) || (wk->sys->comm_err_data.dis_err == TRUE) ){
 		GFL_TCB_DeleteTask( tcb );
@@ -1886,15 +2073,31 @@ static void Fever04_TCB( GFL_TCB* tcb, void* work )
 			mvwk->sub[ i ].ry	= BB_LIGHT_RY;
 			GFL_CLACT_WK_SetDrawEnable( mvwk->sub[ i ].cap, TRUE );
 			
+		#if WB_FIX
 			CATS_ObjectPosGetCapFx32_SubSurface( mvwk->main[ i ].cap, &px, &py, BB_SURFACE_Y_FX );			
+		#endif
 			ox = ( mvwk->main[ i ].cx << FX32_SHIFT ) + ( GFL_CALC_Sin360R( mvwk->main[ i ].rad ) * mvwk->main[ i ].rx );
 			oy = ( mvwk->main[ i ].cy << FX32_SHIFT ) + ( GFL_CALC_Cos360R( mvwk->main[ i ].rad ) * mvwk->main[ i ].ry );			
+		#if WB_FIX
 			CATS_ObjectPosSetCapFx32_SubSurface( mvwk->main[ i ].cap, ox, oy, BB_SURFACE_Y_FX );
+		#else
+  	  pos.x = FX_Whole(ox);
+  	  pos.y = FX_Whole(oy);
+  	  GFL_CLACT_WK_SetPos(mvwk->main[i].cap, &pos, CLSYS_DEFREND_MAIN);
+		#endif
 			
+		#if WB_FIX
 			CATS_ObjectPosGetCapFx32_SubSurface( mvwk->sub[ i ].cap, &px, &py, BB_SURFACE_Y_FX );			
+		#endif
 			ox = ( mvwk->sub[ i ].cx << FX32_SHIFT ) + ( GFL_CALC_Sin360R( mvwk->sub[ i ].rad ) * mvwk->sub[ i ].rx );
 			oy = ( mvwk->sub[ i ].cy << FX32_SHIFT ) - ( GFL_CALC_Cos360R( mvwk->sub[ i ].rad ) * mvwk->sub[ i ].ry );			
+		#if WB_FIX
 			CATS_ObjectPosSetCapFx32_SubSurface( mvwk->sub[ i ].cap, ox, oy, BB_SURFACE_Y_FX );
+		#else
+  	  pos.x = FX_Whole(ox);
+  	  pos.y = FX_Whole(oy);
+  	  GFL_CLACT_WK_SetPos(mvwk->sub[i].cap, &pos, CLSYS_DEFREND_SUB);
+		#endif
 		}
 		MoveInit( &mvwk->sub[ 0 ] );
 		MoveInit( &mvwk->sub[ 1 ] );
@@ -1904,9 +2107,9 @@ static void Fever04_TCB( GFL_TCB* tcb, void* work )
 		wk->eff_seq++;
 	
 	case 1:		
-		bEnd[ 0 ] = FrameOut( &mvwk->sub[ 0 ], mvwk->speed, BB_DIR_L, BB_DIR_D );
-		bEnd[ 1 ] = FrameIn( &mvwk->sub[ 1 ], mvwk->speed, BB_DIR_L, BB_DIR_U );
-		bEnd[ 2 ] = FrameInM( &mvwk->main[ 0 ], mvwk->speed_m, BB_DIR_R, BB_DIR_D );
+		bEnd[ 0 ] = FrameOut( &mvwk->sub[ 0 ], mvwk->speed, BB_DIR_L, BB_DIR_D, CLSYS_DEFREND_SUB );
+		bEnd[ 1 ] = FrameIn( &mvwk->sub[ 1 ], mvwk->speed, BB_DIR_L, BB_DIR_U, CLSYS_DEFREND_SUB );
+		bEnd[ 2 ] = FrameInM( &mvwk->main[ 0 ], mvwk->speed_m, BB_DIR_R, BB_DIR_D, CLSYS_DEFREND_MAIN);
 		bEnd[ 3 ] = TRUE;
 		if ( bEnd[ 0 ] && bEnd[ 1 ] && bEnd[ 2 ] && bEnd[ 3 ] ){
 			MoveInit( &mvwk->sub[ 0 ] );
@@ -1922,9 +2125,9 @@ static void Fever04_TCB( GFL_TCB* tcb, void* work )
 	
 	case 2:			
 		bEnd[ 0 ] = TRUE;
-		bEnd[ 1 ] = Roll( &mvwk->sub[ 1 ], mvwk->speed, BB_DIR_L, 1 );
-		bEnd[ 2 ] = FrameOut( &mvwk->main[ 0 ], mvwk->speed_m, BB_DIR_R, BB_DIR_U );
-		bEnd[ 3 ] = FrameInM( &mvwk->main[ 1 ], mvwk->speed_m, BB_DIR_R, BB_DIR_D );
+		bEnd[ 1 ] = Roll( &mvwk->sub[ 1 ], mvwk->speed, BB_DIR_L, 1, CLSYS_DEFREND_SUB );
+		bEnd[ 2 ] = FrameOut( &mvwk->main[ 0 ], mvwk->speed_m, BB_DIR_R, BB_DIR_U, CLSYS_DEFREND_MAIN);
+		bEnd[ 3 ] = FrameInM( &mvwk->main[ 1 ], mvwk->speed_m, BB_DIR_R, BB_DIR_D, CLSYS_DEFREND_MAIN);
 		
 		if ( bEnd[ 0 ] && bEnd[ 1 ] && bEnd[ 2 ] && bEnd[ 3 ] ){
 			MoveInit( &mvwk->sub[ 0 ] );
@@ -1938,7 +2141,7 @@ static void Fever04_TCB( GFL_TCB* tcb, void* work )
 		}
 	
 	case 3:
-		bEnd[ 1 ] = Roll( &mvwk->sub[ 1 ], mvwk->speed, BB_DIR_R, 1 );
+		bEnd[ 1 ] = Roll( &mvwk->sub[ 1 ], mvwk->speed, BB_DIR_R, 1, CLSYS_DEFREND_SUB );
 		if ( bEnd[ 1 ] ){
 			MoveInit( &mvwk->sub[ 1 ] );
 			wk->eff_seq++;
@@ -1948,10 +2151,10 @@ static void Fever04_TCB( GFL_TCB* tcb, void* work )
 		}
 	
 	case 4:	
-		bEnd[ 0 ] = FrameIn( &mvwk->sub[ 0 ], mvwk->speed, BB_DIR_L, BB_DIR_U );
-		bEnd[ 1 ] = FrameOut( &mvwk->sub[ 1 ], mvwk->speed, BB_DIR_L, BB_DIR_D );
+		bEnd[ 0 ] = FrameIn( &mvwk->sub[ 0 ], mvwk->speed, BB_DIR_L, BB_DIR_U, CLSYS_DEFREND_SUB );
+		bEnd[ 1 ] = FrameOut( &mvwk->sub[ 1 ], mvwk->speed, BB_DIR_L, BB_DIR_D, CLSYS_DEFREND_SUB );
 		bEnd[ 2 ] = TRUE;
-		bEnd[ 3 ] = FrameOut( &mvwk->main[ 1 ], mvwk->speed_m, BB_DIR_R, BB_DIR_U );
+		bEnd[ 3 ] = FrameOut( &mvwk->main[ 1 ], mvwk->speed_m, BB_DIR_R, BB_DIR_U, CLSYS_DEFREND_MAIN);
 		
 		if ( bEnd[ 0 ] && bEnd[ 1 ] && bEnd[ 2 ] && bEnd[ 3 ] ){
 			MoveInit( &mvwk->sub[ 0 ] );
@@ -1965,10 +2168,10 @@ static void Fever04_TCB( GFL_TCB* tcb, void* work )
 		}
 	
 	case 5:			
-		bEnd[ 0 ] = Roll( &mvwk->sub[ 0 ], mvwk->speed, BB_DIR_L, 1 );
+		bEnd[ 0 ] = Roll( &mvwk->sub[ 0 ], mvwk->speed, BB_DIR_L, 1, CLSYS_DEFREND_SUB );
 		bEnd[ 1 ] = TRUE;
 		bEnd[ 2 ] = TRUE;//FrameInM( &mvwk->main[ 0 ], mvwk->speed_m, BB_DIR_R, BB_DIR_D );
-		bEnd[ 3 ] = FrameOut( &mvwk->main[ 1 ], mvwk->speed_m, BB_DIR_R, BB_DIR_U );
+		bEnd[ 3 ] = FrameOut( &mvwk->main[ 1 ], mvwk->speed_m, BB_DIR_R, BB_DIR_U, CLSYS_DEFREND_MAIN);
 		
 		if ( bEnd[ 0 ] && bEnd[ 1 ] && bEnd[ 2 ] && bEnd[ 3 ] ){
 			MoveInit( &mvwk->sub[ 0 ] );
@@ -1982,7 +2185,7 @@ static void Fever04_TCB( GFL_TCB* tcb, void* work )
 		}
 	
 	case 6:
-		bEnd[ 0 ] = Roll( &mvwk->sub[ 0 ], mvwk->speed, BB_DIR_R, 1 );		
+		bEnd[ 0 ] = Roll( &mvwk->sub[ 0 ], mvwk->speed, BB_DIR_R, 1, CLSYS_DEFREND_SUB );		
 		if ( bEnd[ 0 ] ){
 			MoveInit( &mvwk->sub[ 0 ] );
 			if ( mvwk->cnt != 1 ){
@@ -2010,7 +2213,8 @@ static void Fever05_TCB( GFL_TCB* tcb, void* work )
 	BB_LIGHT_MOVE* mvwk = &wk->mvwk;
 	BOOL bEnd[ 4 ] = { TRUE, TRUE, TRUE, TRUE };
 	fx32 ox, oy;
-	fx32 px, py;
+//	fx32 px, py;
+	GFL_CLACTPOS pos;
 
 	if ( (WIPE_SYS_EndCheck() == FALSE) || (wk->sys->comm_err_data.dis_err == TRUE) ){
 		GFL_TCB_DeleteTask( tcb );
@@ -2034,15 +2238,31 @@ static void Fever05_TCB( GFL_TCB* tcb, void* work )
 			mvwk->sub[ i ].ry	= BB_LIGHT_RY;
 			GFL_CLACT_WK_SetDrawEnable( mvwk->sub[ i ].cap, TRUE );
 			
+		#if WB_FIX
 			CATS_ObjectPosGetCapFx32_SubSurface( mvwk->main[ i ].cap, &px, &py, BB_SURFACE_Y_FX );			
+		#endif
 			ox = ( mvwk->main[ i ].cx << FX32_SHIFT ) + ( GFL_CALC_Sin360R( mvwk->main[ i ].rad ) * mvwk->main[ i ].rx );
 			oy = ( mvwk->main[ i ].cy << FX32_SHIFT ) + ( GFL_CALC_Cos360R( mvwk->main[ i ].rad ) * mvwk->main[ i ].ry );			
+		#if WB_FIX
 			CATS_ObjectPosSetCapFx32_SubSurface( mvwk->main[ i ].cap, ox, oy, BB_SURFACE_Y_FX );
+		#else
+  	  pos.x = FX_Whole(ox);
+  	  pos.y = FX_Whole(oy);
+  	  GFL_CLACT_WK_SetPos(mvwk->main[i].cap, &pos, CLSYS_DEFREND_MAIN);
+		#endif
 			
+		#if WB_FIX
 			CATS_ObjectPosGetCapFx32_SubSurface( mvwk->sub[ i ].cap, &px, &py, BB_SURFACE_Y_FX );			
+		#endif
 			ox = ( mvwk->sub[ i ].cx << FX32_SHIFT ) + ( GFL_CALC_Sin360R( mvwk->sub[ i ].rad ) * mvwk->sub[ i ].rx );
 			oy = ( mvwk->sub[ i ].cy << FX32_SHIFT ) - ( GFL_CALC_Cos360R( mvwk->sub[ i ].rad ) * mvwk->sub[ i ].ry );			
+		#if WB_FIX
 			CATS_ObjectPosSetCapFx32_SubSurface( mvwk->sub[ i ].cap, ox, oy, BB_SURFACE_Y_FX );
+		#else
+  	  pos.x = FX_Whole(ox);
+  	  pos.y = FX_Whole(oy);
+  	  GFL_CLACT_WK_SetPos(mvwk->sub[i].cap, &pos, CLSYS_DEFREND_SUB);
+		#endif
 		}
 		OS_Printf( " こここ\n" );
 		MoveInit( &mvwk->sub[ 0 ] );
@@ -2053,9 +2273,9 @@ static void Fever05_TCB( GFL_TCB* tcb, void* work )
 		wk->eff_seq++;
 	
 	case 1:		
-		bEnd[ 0 ] = FrameOut( &mvwk->sub[ 0 ], mvwk->speed, BB_DIR_L, BB_DIR_D );
-		bEnd[ 1 ] = FrameIn( &mvwk->sub[ 1 ], mvwk->speed, BB_DIR_L, BB_DIR_U );
-		bEnd[ 2 ] = FrameInM( &mvwk->main[ 0 ], mvwk->speed_m, BB_DIR_R, BB_DIR_D );
+		bEnd[ 0 ] = FrameOut( &mvwk->sub[ 0 ], mvwk->speed, BB_DIR_L, BB_DIR_D, CLSYS_DEFREND_SUB);
+		bEnd[ 1 ] = FrameIn( &mvwk->sub[ 1 ], mvwk->speed, BB_DIR_L, BB_DIR_U, CLSYS_DEFREND_SUB );
+		bEnd[ 2 ] = FrameInM( &mvwk->main[ 0 ], mvwk->speed_m, BB_DIR_R, BB_DIR_D, CLSYS_DEFREND_MAIN);
 		bEnd[ 3 ] = TRUE;
 		if ( bEnd[ 0 ] && bEnd[ 1 ] && bEnd[ 2 ] && bEnd[ 3 ] ){
 			MoveInit( &mvwk->sub[ 0 ] );
@@ -2071,9 +2291,9 @@ static void Fever05_TCB( GFL_TCB* tcb, void* work )
 	
 	case 2:			
 		bEnd[ 0 ] = TRUE;
-		bEnd[ 1 ] = Roll( &mvwk->sub[ 1 ], mvwk->speed, BB_DIR_L, 1 );
-		bEnd[ 2 ] = FrameOut( &mvwk->main[ 0 ], mvwk->speed_m, BB_DIR_R, BB_DIR_U );
-		bEnd[ 3 ] = FrameInM( &mvwk->main[ 1 ], mvwk->speed_m, BB_DIR_R, BB_DIR_D );
+		bEnd[ 1 ] = Roll( &mvwk->sub[ 1 ], mvwk->speed, BB_DIR_L, 1, CLSYS_DEFREND_SUB );
+		bEnd[ 2 ] = FrameOut( &mvwk->main[ 0 ], mvwk->speed_m, BB_DIR_R, BB_DIR_U, CLSYS_DEFREND_MAIN);
+		bEnd[ 3 ] = FrameInM( &mvwk->main[ 1 ], mvwk->speed_m, BB_DIR_R, BB_DIR_D, CLSYS_DEFREND_MAIN);
 		
 		if ( bEnd[ 0 ] && bEnd[ 1 ] && bEnd[ 2 ] && bEnd[ 3 ] ){
 			MoveInit( &mvwk->sub[ 0 ] );
@@ -2087,7 +2307,7 @@ static void Fever05_TCB( GFL_TCB* tcb, void* work )
 		}
 	
 	case 3:
-		bEnd[ 1 ] = Roll( &mvwk->sub[ 1 ], mvwk->speed, BB_DIR_R, 1 );
+		bEnd[ 1 ] = Roll( &mvwk->sub[ 1 ], mvwk->speed, BB_DIR_R, 1, CLSYS_DEFREND_SUB );
 		if ( bEnd[ 1 ] ){
 			MoveInit( &mvwk->sub[ 1 ] );
 			wk->eff_seq++;
@@ -2097,10 +2317,10 @@ static void Fever05_TCB( GFL_TCB* tcb, void* work )
 		}
 	
 	case 4:	
-		bEnd[ 0 ] = FrameIn( &mvwk->sub[ 0 ], mvwk->speed, BB_DIR_L, BB_DIR_U );
-		bEnd[ 1 ] = FrameOut( &mvwk->sub[ 1 ], mvwk->speed, BB_DIR_L, BB_DIR_D );
+		bEnd[ 0 ] = FrameIn( &mvwk->sub[ 0 ], mvwk->speed, BB_DIR_L, BB_DIR_U, CLSYS_DEFREND_SUB );
+		bEnd[ 1 ] = FrameOut( &mvwk->sub[ 1 ], mvwk->speed, BB_DIR_L, BB_DIR_D, CLSYS_DEFREND_SUB);
 		bEnd[ 2 ] = TRUE;
-		bEnd[ 3 ] = FrameOut( &mvwk->main[ 1 ], mvwk->speed_m, BB_DIR_R, BB_DIR_U );
+		bEnd[ 3 ] = FrameOut( &mvwk->main[ 1 ], mvwk->speed_m, BB_DIR_R, BB_DIR_U, CLSYS_DEFREND_MAIN);
 		
 		if ( bEnd[ 0 ] && bEnd[ 1 ] && bEnd[ 2 ] && bEnd[ 3 ] ){
 			MoveInit( &mvwk->sub[ 0 ] );
@@ -2114,10 +2334,10 @@ static void Fever05_TCB( GFL_TCB* tcb, void* work )
 		}
 	
 	case 5:			
-		bEnd[ 0 ] = Roll( &mvwk->sub[ 0 ], mvwk->speed, BB_DIR_L, 1 );
+		bEnd[ 0 ] = Roll( &mvwk->sub[ 0 ], mvwk->speed, BB_DIR_L, 1, CLSYS_DEFREND_SUB );
 		bEnd[ 1 ] = TRUE;
 		bEnd[ 2 ] = TRUE;//FrameInM( &mvwk->main[ 0 ], mvwk->speed_m, BB_DIR_R, BB_DIR_D );
-		bEnd[ 3 ] = FrameOut( &mvwk->main[ 1 ], mvwk->speed_m, BB_DIR_R, BB_DIR_U );
+		bEnd[ 3 ] = FrameOut( &mvwk->main[ 1 ], mvwk->speed_m, BB_DIR_R, BB_DIR_U, CLSYS_DEFREND_MAIN);
 		
 		if ( bEnd[ 0 ] && bEnd[ 1 ] && bEnd[ 2 ] && bEnd[ 3 ] ){
 			MoveInit( &mvwk->sub[ 0 ] );
@@ -2131,7 +2351,7 @@ static void Fever05_TCB( GFL_TCB* tcb, void* work )
 		}
 	
 	case 6:
-		bEnd[ 0 ] = Roll( &mvwk->sub[ 0 ], mvwk->speed, BB_DIR_R, 1 );		
+		bEnd[ 0 ] = Roll( &mvwk->sub[ 0 ], mvwk->speed, BB_DIR_R, 1, CLSYS_DEFREND_SUB );		
 		if ( bEnd[ 0 ] ){
 			MoveInit( &mvwk->sub[ 0 ] );
 			if ( mvwk->cnt != 8 ){

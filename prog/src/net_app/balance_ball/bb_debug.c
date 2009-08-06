@@ -14,6 +14,9 @@
 
 #include "bb_game.h"
 
+
+#if WB_FIX  //@@@@@@@@@@@@@@@@@ デバッグ用関数のため、削除 @@@@@@@@@@@@@@@@@@@@@@@@@
+
 typedef struct {
 	
 	GFL_BMPWIN*	win;
@@ -65,5 +68,6 @@ BOOL Debug_GameSetup( BB_WORK* work )
 	return FALSE;
 }
 
+#endif  //@@@@@@@@@@@@@@@@ WB_FIX @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 
 #endif

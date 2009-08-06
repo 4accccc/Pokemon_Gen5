@@ -1096,7 +1096,6 @@ static void WFLBY_APLDATA_BB_Exit( WFLBY_APLDATA* p_data )
 //-----------------------------------------------------------------------------
 static void WFLBY_APLDATA_BB_Start( WFLBY_APL* p_sys, WFLBY_APLDATA* p_data )
 {
-#if WB_TEMP_FIX	//バランスボールはまだ移植していないのでリンクもしていない
 	FS_EXTERN_OVERLAY(balance_ball);
 	FS_EXTERN_OVERLAY(minigame_common);
 	// プロセス定義データ
@@ -1116,7 +1115,6 @@ static void WFLBY_APLDATA_BB_Start( WFLBY_APL* p_sys, WFLBY_APLDATA* p_data )
 	}
 	
 	WFLBY_APL_PROC_Start( p_sys, p_data, &Proc, FS_OVERLAY_ID(balance_ball) );
-#endif
 }
 
 //----------------------------------------------------------------------------
@@ -1129,7 +1127,6 @@ static void WFLBY_APLDATA_BB_Start( WFLBY_APL* p_sys, WFLBY_APLDATA* p_data )
 //-----------------------------------------------------------------------------
 static WFLBY_APL_RET WFLBY_APLDATA_BB_End( WFLBY_APL* p_sys, WFLBY_APLDATA* p_data )
 {
-#if WB_TEMP_FIX
 	// ミニゲーム共通オーバーレイ破棄
 	FS_EXTERN_OVERLAY(minigame_common);
 	GFL_OVERLAY_Unload( FS_OVERLAY_ID(minigame_common) );
@@ -1145,7 +1142,6 @@ static WFLBY_APL_RET WFLBY_APLDATA_BB_End( WFLBY_APL* p_sys, WFLBY_APLDATA* p_da
 	// 部屋に戻る
 	WFLBY_APLDATA_Start( p_sys, WFLBY_APL_ROOM );
 	
-#endif
 	return WFLBY_APL_RET_NONE;
 }
 

@@ -830,6 +830,16 @@ SRCS_OVERLAY_BUCKET =	net_app/bucket/bucket.c \
 						net_app/bucket/comm_bct_command.c \
 						net_app/bucket/comm_bct_command_func.c
 
+#wifi玉乗り
+#===> SRCS_OVERLAY_MINIGAME_COMMON
+SRCS_OVERLAY_BALANCE_BALL =	net_app/balance_ball/bb_comm_cmd.c		\
+							net_app/balance_ball/balance_ball.c	\
+							net_app/balance_ball/bb_disp.c			\
+							net_app/balance_ball/bb_server.c		\
+							net_app/balance_ball/bb_client.c		\
+							net_app/balance_ball/bb_debug.c		\
+							net_app/balance_ball/bb_tool.c
+
 # 松田デバッグ
 #===> SRCS_OVERLAY_NETOLD
 SRCS_OVERLAY_MATSUDA_DEBUG  = test/matsuda/d_matsu.c \

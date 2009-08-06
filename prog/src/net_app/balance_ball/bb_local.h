@@ -15,32 +15,21 @@
 
 #include "net_app/balance_ball.h"
 
-//#include "system/snd_tool.h"
-//#include "system/d3dobj.h"
-#include "system\font_arc.h"
-
-#include "strbuf.h"
-#include "include/gflib/msg_print.h"
-//#include "system/fontproc.h"
-#include "system/window.h"
-//#include "include/system/fontproc.h"
-#include "print\gf_font.h"
 #include "message.naix"
 
-#include "gflib/button_man.h"
-
-#include "src/graphic/bucket.naix"
+#include "bucket.naix"
 #include "balance_ball_gra.naix"
-#include "manene.naix"
+#include "balance_ball.naix"
 
-#include "system/quaternion.h"
-#include "src/net_app/wifi_lobby/minigame_tool.h"
+#include "net_app/wifi_lobby/minigame_tool.h"
 
 #include "system/wipe.h"
 
 #include "net_app/wifi_lobby/minigame_tool.h"
 
 #include "bb_snd.h"
+#include "system/palanm.h"
+#include "system/actor_tool.h"
 
 //#include "br_snd_def.h"
 
@@ -84,6 +73,8 @@ enum {
 	eBB_ID_HANABI,	
 	
 	eBB_ID_PEN,
+	
+	eBB_ID_MAX,
 };
 
 ///< セルアニメの定義
@@ -129,9 +120,13 @@ typedef struct {
 	ARCHANDLE*			p_handle_bb;		///< アーカイブハンドル ( 玉乗り用 )
 	ARCHANDLE*			p_handle_cr;		///< アーカイブハンドル ( 共通リソース )
 	
+#if WB_FIX
 	CATS_SYS_PTR		csp;				///< OAMシステム
 	CATS_RES_PTR		crp;				///< リソース一括管理
-
+#else
+  GFL_CLUNIT *clunit;
+  PLTTSLOT_SYS_PTR plttslot;
+#endif
 	
 	PALETTE_FADE_PTR	pfd;				///< パレットフェード
 	
@@ -144,8 +139,10 @@ typedef struct {
 //	GFL_MSGDATA*	man;
 //	FONTOAM_SYS_PTR		fontoam_sys;
 //	int					logo_color;
+#if WB_FIX
 	NNSFndAllocator		allocator;
-	
+#endif
+
 	BB_COMM_ERR_DATA	comm_err_data;
 	
 } BB_SYS;
