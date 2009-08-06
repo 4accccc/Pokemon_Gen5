@@ -168,17 +168,6 @@ static const FLDMAPPER_MAPDATA samplebridge[] = {
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
-//金銀形式バイナリデータサンプル
-#define DATID_GSMAP_GOBJ (2)
-static const FLDMAPPER_RESISTDATA_OBJBIN	gobjData_Bin = {
-	ARCID_GSAREAOBJ,
-	ARCID_GSOBJANMTBL,
-	DATID_GSMAP_GOBJ, 
-
-	ARCID_GSOBJ,
-	ARCID_GSOBJTEX,
-	ARCID_GSOBJANM,
-};
 
 #if 0
 //グローバルテクスチャサンプル（金銀マップテクスチャ）
