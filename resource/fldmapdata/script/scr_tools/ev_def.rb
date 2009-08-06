@@ -1,6 +1,9 @@
 #=======================================================================
 # ev_def.rb
 # スクリプトファイル*.evからスクリプトIDを生成し、*_def.hに書き込む
+# ev_def.rb ev_file offs_id_file
+# ev_file 変換する.evファイルパス
+# offs_id_file スクリプトID開始オフセットが定義されたファイルパス
 #=======================================================================
 $KCODE = "SJIS"
 
@@ -8,6 +11,9 @@ $KCODE = "SJIS"
 # 定数
 #=======================================================================
 RET_ERROR = (0xffffffff)
+
+#引数offs_id_fileで参照する開始スクリプトIDシンボル
+SCROFFS_START = "ID_START_SCR_OFFSET"
 
 #=======================================================================
 # 関数
@@ -101,7 +107,7 @@ fname_ev_big = fname_ev_big.upcase
 start_id = hfile_search( file_id, fname_ev_big, "_END", RET_ERROR )
 
 if( start_id == RET_ERROR )
-  start_id = hfile_search( file_id, "ID_START_SCR_OFFSET", nil, RET_ERROR )
+  start_id = hfile_search( file_id, SCROFFS_START, nil, RET_ERROR )
   
   if( start_id == RET_ERROR )
     error_end( file_ev, file_id, file_def_h, fname_def_h )
@@ -109,13 +115,14 @@ if( start_id == RET_ERROR )
   end
 end
 
-#ID定義
+#ファイル見出し書き込み
 file_def_h.printf( "\/\/%s\n", fname_def_h )
 file_def_h.printf( "\/\/このファイルはコンバータによって作成されました\n\n" )
 file_def_h.printf( "#ifndef _%s_DEF_H_\n", fname_ev_big )
 file_def_h.printf( "#define _%s_DEF_H_\n\n", fname_ev_big )
 file_def_h.printf( "\/\/スクリプトデータID定義\n" )
 
+#ID定義
 while line = file_ev.gets
   line = line.strip
   
@@ -141,6 +148,7 @@ while line = file_ev.gets
   end
 end
 
+#ファイル終端書き込み
 file_def_h.printf( "\n#endif \/\/_%s_DEF_H_", fname_ev_big )
 
 #終了
