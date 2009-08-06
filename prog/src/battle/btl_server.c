@@ -77,6 +77,8 @@ struct _BTL_SERVER {
 
   u8                  changePokePos[ BTL_POS_MAX ];
   u8                  changePokeCnt;
+  u8                  giveupClientID[ BTL_CLIENT_MAX ];
+  u8                  giveupClientCnt;
 
   HEAPID        heapID;
 };
@@ -121,6 +123,7 @@ BTL_SERVER* BTL_SERVER_Create( BTL_MAIN_MODULE* mainModule, BTL_POKE_CONTAINER* 
   sv->quitStep = QUITSTEP_NONE;
   sv->flowWork = NULL;
   sv->changePokeCnt = 0;
+  sv->giveupClientCnt = 0;
 
   {
     int i;
@@ -386,8 +389,13 @@ static BOOL ServerMain_SelectAction( BTL_SERVER* server, int* seq )
         (*seq)=0;
         break;
       case SVFLOW_RESULT_POKE_CHANGE:
-        BTL_Printf("次のポケモン選択へ\n");
-        setMainProc( server, ServerMain_SelectPokemon );
+        if( server->giveupClientCnt ){
+          (*seq) = 3;
+        }else{
+          // 空き位置があり、入場可能なポケモンがいる場合
+          GF_ASSERT( server->changePokeCnt );
+          setMainProc( server, ServerMain_SelectPokemon );
+        }
         break;
       default:
         GF_ASSERT(0);
@@ -398,7 +406,25 @@ static BOOL ServerMain_SelectAction( BTL_SERVER* server, int* seq )
       }
     }
     break;
+
+  case 3:
+    // @@@ ここで勝ち負け引き分け判定が入るが、とりあえず終了させる
+    // @@@ マルチの場合、ここでは終わらないこともあり得る
+    PMSND_PlayBGM( SEQ_WIN1 );
+    (*seq)++;
+    break;
+  case 4:
+    {
+      u8 touch = ( (GFL_UI_KEY_GetTrg() & PAD_BUTTON_A) != 0);
+      u8 bgm_end = !PMSND_CheckPlayBGM();
+      if( touch || bgm_end )
+      {
+        return TRUE;
+      }
+    }
+    break;
   }
+
   return FALSE;
 }
 
@@ -406,45 +432,10 @@ static BOOL ServerMain_SelectPokemon( BTL_SERVER* server, int* seq )
 {
   switch( *seq ){
   case 0:
-    {
-      u8 loseClientCount;
-      int i;
-
-      loseClientCount = 0;
-
-      for(i=0; i<server->numClient; i++)
-      {
-        if( BTL_PARTY_GetAliveMemberCount(server->client[i].party) == 0 )
-        {
-          loseClientCount++;
-        }
-      }
-
-      // 続行
-      if( loseClientCount == 0 )
-      {
-        GF_ASSERT( server->changePokeCnt );
-        BTL_Printf("負けたクライアントいないので次のポケモン選択へ  交替されるポケ数=%d\n", server->changePokeCnt);
-        SetAdapterCmdEx( server, BTL_ACMD_SELECT_POKEMON, server->changePokePos,
-            server->changePokeCnt*sizeof(server->changePokePos[0]) );
-        (*seq)++;
-      }
-      // 決着
-      else
-      {
-        // 勝敗決定
-        if( loseClientCount == 1 )
-        {
-//          server->quitStep = QUITSTEP_REQ;
-        }
-        // 引き分け
-        else
-        {
-//          server->quitStep = QUITSTEP_REQ;
-        }
-        (*seq) = 3;
-      }
-    }
+    BTL_Printf("負けたクライアントいないので次のポケモン選択へ  交替されるポケ数=%d\n", server->changePokeCnt);
+    SetAdapterCmdEx( server, BTL_ACMD_SELECT_POKEMON, server->changePokePos,
+        server->changePokeCnt*sizeof(server->changePokePos[0]) );
+    (*seq)++;
     break;
 
   case 1:
@@ -471,22 +462,6 @@ static BOOL ServerMain_SelectPokemon( BTL_SERVER* server, int* seq )
       else
       {
         setMainProc( server, ServerMain_SelectAction );
-      }
-    }
-    break;
-
-  case 3:
-     //
-     PMSND_PlayBGM( SEQ_WIN1 );
-     (*seq)++;
-     break;
-  case 4:
-    {
-      u8 touch = ( (GFL_UI_KEY_GetTrg() & PAD_BUTTON_A) != 0);
-      u8 bgm_end = !PMSND_CheckPlayBGM();
-      if( touch || bgm_end )
-      {
-        return TRUE;
       }
     }
     break;
@@ -554,9 +529,12 @@ static void ResetAdapterCmd( BTL_SERVER* server )
 //--------------------------------------------------------------------------------------
 SVCL_WORK* BTL_SERVER_GetClientWork( BTL_SERVER* server, u8 clientID )
 {
-  GF_ASSERT_MSG( (clientID<NELEMS(server->client)), "clientID=%d", clientID);
-  GF_ASSERT_MSG(server->client[clientID].myID != CLIENT_DISABLE_ID, "clientID=%d", clientID);
-  return &(server->client[clientID]);
+  if( (clientID < NELEMS(server->client))
+  &&  (server->client[clientID].myID != CLIENT_DISABLE_ID)
+  ){
+    return &server->client[ clientID ];
+  }
+  return NULL;
 }
 //--------------------------------------------------------------------------------------
 /**
@@ -605,6 +583,7 @@ void BTL_SERVER_AddBonusMoney( BTL_SERVER* server, u32 volume )
 void BTL_SERVER_InitChangePokemonReq( BTL_SERVER* server )
 {
   server->changePokeCnt = 0;
+  server->giveupClientCnt = 0;
 }
 
 void BTL_SERVER_RequestChangePokemon( BTL_SERVER* server, BtlPokePos pos )
@@ -618,6 +597,14 @@ void BTL_SERVER_RequestChangePokemon( BTL_SERVER* server, BtlPokePos pos )
       }
     }
     server->changePokePos[ server->changePokeCnt++ ] = pos;
+  }
+}
+
+void BTL_SERVER_NotifyGiveupClientID( BTL_SERVER* server, u8 clientID )
+{
+  GF_ASSERT(server->giveupClientCnt < BTL_CLIENT_MAX);
+  {
+    server->giveupClientID[ server->giveupClientCnt++ ] = clientID;
   }
 }
 

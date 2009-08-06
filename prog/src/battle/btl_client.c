@@ -227,8 +227,7 @@ BTL_CLIENT* BTL_CLIENT_Create(
   wk->numCoverPos = numCoverPos;
   wk->procPokeIdx = 0;
   wk->basePos = clientID;
-  for(i=0; i<NELEMS(wk->frontPokeEmpty); i++)
-  {
+  for(i=0; i<NELEMS(wk->frontPokeEmpty); ++i){
     wk->frontPokeEmpty[i] = FALSE;
   }
   wk->cmdQue = GFL_HEAP_AllocClearMemory( heapID, sizeof(BTL_SERVER_CMD_QUE) );
@@ -950,11 +949,11 @@ static BOOL SubProc_AI_SelectAction( BTL_CLIENT* wk, int* seq )
 {
   // @@@ この関数は現在しぬほど適当に作られている。taya
   const BTL_POKEPARAM* pp;
-  u8 i;
+  u8 i = 0;
 
   for(i=0; i<wk->numCoverPos; ++i)
   {
-    pp = BTL_CLIENT_GetFrontPokeData( wk, i );
+    pp = BTL_PARTY_GetMemberDataConst( wk->myParty, i );
     if( !BPP_IsDead(pp) )
     {
       u8 wazaCount, wazaIdx, mypos, targetPos;
@@ -2532,19 +2531,6 @@ const BTL_PARTY* BTL_CLIENT_GetParty( const BTL_CLIENT* client )
 
 //=============================================================================================
 /**
- * 現在、行動選択処理中のポケモンデータを取得
- *
- * @param   client
- *
- * @retval  const BTL_POKEPARAM*
- */
-//=============================================================================================
-const BTL_POKEPARAM* BTL_CLIENT_GetProcPokeData( const BTL_CLIENT* client )
-{
-  return BTL_CLIENT_GetFrontPokeData( client, client->procPokeIdx );
-}
-//=============================================================================================
-/**
  * 現在、行動選択処理中のポケモン位置IDを取得
  *
  * @param   client
@@ -2556,22 +2542,6 @@ BtlPokePos BTL_CLIENT_GetProcPokePos( const BTL_CLIENT* client )
 {
   return client->basePos + client->procPokeIdx*2;
 }
-//=============================================================================================
-/**
- * 戦闘に出ているポケモンのポケモンデータを取得
- *
- * @param   client
- * @param   posIdx
- *
- * @retval  const BTL_POKEPARAM*
- */
-//=============================================================================================
-const BTL_POKEPARAM* BTL_CLIENT_GetFrontPokeData( const BTL_CLIENT* client, u8 posIdx )
-{
-  GF_ASSERT_MSG(posIdx<client->numCoverPos, "posIdx=%d, numCoverPos=%d", posIdx, client->numCoverPos);
-  return BTL_PARTY_GetMemberDataConst( client->myParty, posIdx );
-}
-
 
 
 

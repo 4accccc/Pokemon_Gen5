@@ -1,10 +1,10 @@
 //=============================================================================================
 /**
- * @file	btl_client.h
- * @brief	ポケモンWB バトルシステム	クライアントモジュール
- * @author	taya
+ * @file  btl_client.h
+ * @brief ポケモンWB バトルシステム クライアントモジュール
+ * @author  taya
  *
- * @date	2008.09.06	作成
+ * @date  2008.09.06  作成
  */
 //=============================================================================================
 #ifndef __BTL_CLIENT_H__
@@ -12,34 +12,34 @@
 
 //--------------------------------------------------------------
 /**
- *	クライアントモジュールハンドラ型定義
+ *  クライアントモジュールハンドラ型定義
  */
 //--------------------------------------------------------------
-typedef struct _BTL_CLIENT		BTL_CLIENT;
+typedef struct _BTL_CLIENT    BTL_CLIENT;
 
 
 //--------------------------------------------------------------
 /**
- *	逃げ・交換禁止コード
+ *  逃げ・交換禁止コード
  */
 //--------------------------------------------------------------
 
 typedef enum {
 
-	BTL_CANTESC_START = 0,
+  BTL_CANTESC_START = 0,
 
-	BTL_CANTESC_KAGEFUMI = BTL_CANTESC_START,
-	BTL_CANTESC_ARIJIGOKU,
-	BTL_CANTESC_JIRYOKU,
+  BTL_CANTESC_KAGEFUMI = BTL_CANTESC_START,
+  BTL_CANTESC_ARIJIGOKU,
+  BTL_CANTESC_JIRYOKU,
 
-	BTL_CANTESC_MAX,
-	BTL_CANTESC_NULL = BTL_CANTESC_MAX,
+  BTL_CANTESC_MAX,
+  BTL_CANTESC_NULL = BTL_CANTESC_MAX,
 
 }BtlCantEscapeCode;
 
 
 //----------------------------------------------------------------------
-// 参照ヘッダ include 
+// 参照ヘッダ include
 //----------------------------------------------------------------------
 #include "battle/battle.h"
 #include "btl_main.h"
@@ -49,8 +49,8 @@ typedef enum {
 
 
 extern BTL_CLIENT* BTL_CLIENT_Create(
-	BTL_MAIN_MODULE* mainModule, BTL_POKE_CONTAINER* pokecon, BtlCommMode commMode,
-	GFL_NETHANDLE* netHandle, u16 clientID, u16 numCoverPos, BtlThinkerType clientType, HEAPID heapID );
+  BTL_MAIN_MODULE* mainModule, BTL_POKE_CONTAINER* pokecon, BtlCommMode commMode,
+  GFL_NETHANDLE* netHandle, u16 clientID, u16 numCoverPos, BtlThinkerType clientType, HEAPID heapID );
 
 extern void BTL_CLIENT_Delete( BTL_CLIENT* wk );
 
@@ -64,9 +64,7 @@ extern BOOL BTL_CLIENT_Main( BTL_CLIENT* client );
 
 extern u8 BTL_CLIENT_GetClientID( const BTL_CLIENT* client );
 extern const BTL_PARTY* BTL_CLIENT_GetParty( const BTL_CLIENT* client );
-extern const BTL_POKEPARAM* BTL_CLIENT_GetProcPokeData( const BTL_CLIENT* client );
 extern BtlPokePos BTL_CLIENT_GetProcPokePos( const BTL_CLIENT* client );
-extern const BTL_POKEPARAM* BTL_CLIENT_GetFrontPokeData( const BTL_CLIENT* client, u8 posIdx );
 
 
 

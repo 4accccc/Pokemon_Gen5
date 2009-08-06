@@ -16,71 +16,121 @@
 /*--------------------------------------------------------------------------*/
 /* Prototypes                                                               */
 /*--------------------------------------------------------------------------*/
-static void set_pos_state( BTL_POSPOKE_WORK* wk, const BTL_POKE_CONTAINER* pokeCon, BtlPokePos pos );
+static void set_pos_state( BTL_POSPOKE_WORK* wk, const BTL_MAIN_MODULE* mainModule, const BTL_POKE_CONTAINER* pokeCon, BtlPokePos pos );
 
 
 
-void BTL_POSPOKE_InitWork( BTL_POSPOKE_WORK* wk, const BTL_POKE_CONTAINER* pokeCon, BtlRule rule )
+void BTL_POSPOKE_InitWork( BTL_POSPOKE_WORK* wk, const BTL_MAIN_MODULE* mainModule, const BTL_POKE_CONTAINER* pokeCon, BtlRule rule )
 {
   u32 i;
 
   for(i=0; i<NELEMS(wk->state); ++i){
-    wk->state[i] = POSPOKE_EMPTY;
+    wk->state[i].fEnable = FALSE;
   }
 
   switch( rule ){
   case BTL_RULE_TRIPLE:
-    set_pos_state( wk, pokeCon, BTL_POS_1ST_2 );
-    set_pos_state( wk, pokeCon, BTL_POS_2ND_2 );
+    set_pos_state( wk, mainModule, pokeCon, BTL_POS_1ST_2 );
+    set_pos_state( wk, mainModule, pokeCon, BTL_POS_2ND_2 );
     /* fallthru */
   case BTL_RULE_DOUBLE:
-    set_pos_state( wk, pokeCon, BTL_POS_1ST_1 );
-    set_pos_state( wk, pokeCon, BTL_POS_2ND_1 );
+    set_pos_state( wk, mainModule, pokeCon, BTL_POS_1ST_1 );
+    set_pos_state( wk, mainModule, pokeCon, BTL_POS_2ND_1 );
     /* fallthru */
   case BTL_RULE_SINGLE:
-    set_pos_state( wk, pokeCon, BTL_POS_1ST_0 );
-    set_pos_state( wk, pokeCon, BTL_POS_2ND_0 );
+    set_pos_state( wk, mainModule, pokeCon, BTL_POS_1ST_0 );
+    set_pos_state( wk, mainModule, pokeCon, BTL_POS_2ND_0 );
     break;
   }
 }
-void BTL_POSPOKE_Update( BTL_POSPOKE_WORK* wk, const BTL_POKE_CONTAINER* pokeCon )
+static void set_pos_state( BTL_POSPOKE_WORK* wk, const BTL_MAIN_MODULE* mainModule, const BTL_POKE_CONTAINER* pokeCon, BtlPokePos pos )
+{
+  const BTL_POKEPARAM* bpp;
+  u8 clientID, memberIdx;
+
+  BTL_MAIN_BtlPosToClientID_and_PosIdx( mainModule, pos, &clientID, &memberIdx );
+  bpp = BTL_POKECON_GetClientPokeDataConst( pokeCon, clientID, memberIdx );
+  if( bpp != NULL )
+  {
+    wk->state[ pos ].existPokeID = BPP_GetID( bpp );
+  }
+  else
+  {
+    wk->state[ pos ].existPokeID = BTL_POKEID_NULL;
+  }
+  wk->state[ pos ].clientID = clientID;
+  wk->state[ pos ].fEnable = TRUE;
+}
+
+//=============================================================================================
+/**
+ * ポケモン退場の通知受け取り
+ *
+ * @param   wk
+ * @param   pokeID
+ */
+//=============================================================================================
+void BTL_POSPOKE_PokeOut( BTL_POSPOKE_WORK* wk, u8 pokeID )
 {
   u32 i;
-  for(i=0; i<NELEMS(wk->state); ++i){
-    if( wk->state[i] != POSPOKE_EMPTY ){
-      set_pos_state( wk, pokeCon, i );
-    }
-  }
-}
-static void set_pos_state( BTL_POSPOKE_WORK* wk, const BTL_POKE_CONTAINER* pokeCon, BtlPokePos pos )
-{
-  const BTL_POKEPARAM* bpp = BTL_POKECON_GetFrontPokeDataConst( pokeCon, pos );
-  if( (bpp != NULL)
-  &&  (!BPP_IsDead(bpp) )
-  ){
-    wk->state[ pos ] = POSPOKE_EXIST;
-  }
-  else{
-    wk->state[ pos ] = POSPOKE_DEAD;
-  }
-}
-
-void BTL_POSPOKE_Compair( const BTL_POSPOKE_WORK* wk_before, const BTL_POSPOKE_WORK* wk_after, BTL_POSPOKE_COMPAIR_RESULT* result )
-{
-  u32 i, cnt;
-  for(i=0, cnt=0; i<NELEMS(wk_before->state); ++i)
+  for(i=0; i<NELEMS(wk->state); ++i)
   {
-    if( (wk_before->state[i] == POSPOKE_EXIST)
-    &&  (wk_after->state[i] == POSPOKE_DEAD)
-    ){
-      result->pos[ cnt++ ] = i;
+    if( wk->state[i].fEnable && (wk->state[i].existPokeID == pokeID) ){
+      wk->state[i].existPokeID = BTL_POKEID_NULL;
+      return;
     }
   }
-  result->count = cnt;
+  GF_ASSERT_MSG(0, "not exist pokeID=%d\n", pokeID);
 }
-void BTL_POSPOKE_CopyWork( const BTL_POSPOKE_WORK* src, BTL_POSPOKE_WORK* dst )
+//=============================================================================================
+/**
+ * ポケモン入場の通知受け取り
+ *
+ * @param   wk
+ * @param   pokeID
+ */
+//=============================================================================================
+void BTL_POSPOKE_PokeIn( BTL_POSPOKE_WORK* wk, BtlPokePos pos,  u8 pokeID )
 {
-  GFL_STD_MemCopy( src, dst, sizeof(BTL_POSPOKE_WORK) );
+  GF_ASSERT(wk->state[pos].fEnable);
+  wk->state[pos].existPokeID = pokeID;
 }
 
+//=============================================================================================
+/**
+ * 指定クライアントの担当している「位置」の内、空きになっている数を返す
+ *
+ * @param   wk
+ * @param   clientID
+ * @param   pos         [out] 空き位置ID（BtlPokePos）
+ *
+ * @retval  u8    空き位置数
+ */
+//=============================================================================================
+u8 BTL_POSPOKE_GetClientEmptyPos( const BTL_POSPOKE_WORK* wk, u8 clientID, u8* pos )
+{
+  u32 i, cnt=0;
+  for(i=0; i<NELEMS(wk->state); ++i)
+  {
+    if( wk->state[i].fEnable && (wk->state[i].clientID == clientID) )
+    {
+      if( wk->state[i].existPokeID == BTL_POKEID_NULL ){
+        pos[ cnt++ ] = i;
+      }
+    }
+  }
+  return cnt;
+}
+
+BOOL BTL_POSPOKE_IsExistPokemon( const BTL_POSPOKE_WORK* wk, u8 pokeID )
+{
+  u32 i;
+  for(i=0; i<NELEMS(wk->state); ++i)
+  {
+    if( wk->state[i].fEnable && (wk->state[i].existPokeID == pokeID) ){
+      return TRUE;
+    }
+  }
+  return FALSE;
+}
 

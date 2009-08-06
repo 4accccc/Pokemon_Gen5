@@ -686,69 +686,6 @@ static inline u8 stwdraw_vpos_to_tblidx( u8 vpos )
 
 static void stwdraw_button( const u8* pos, u8 count, u8 format, BTLV_SCD* wk )
 {
-#if 0
-  const BTL_POKEPARAM* bpp;
-  const POKEMON_PARAM* pp;
-  BINPUT_SCENE_POKE bsp;
-  u8 vpos;
-  WazaID waza = wk->destActionParam->fight.waza;
-
-  MI_CpuClear16( &bsp, sizeof( BINPUT_SCENE_POKE ) );
-
-  bsp.pokesele_type = WAZADATA_GetTarget( waza );
-  bsp.client_type = BTL_MAIN_PokeIDtoPokePos( wk->mainModule, wk->pokeCon, BPP_GetID(wk->bpp) );
-
-  while( count-- )
-  {
-    bpp = BTL_POKECON_GetFrontPokeDataConst( wk->pokeCon, *pos );
-    pp  = BPP_GetSrcData( bpp );
-    vpos = BTL_MAIN_BtlPosToViewPos( wk->mainModule, *pos );
-
-    bsp.dspp[ *pos ].hp = PP_Get( pp, ID_PARA_hp, NULL );
-    if( bsp.dspp[ *pos ].hp )
-    {
-      int mons_no = PP_Get( pp, ID_PARA_monsno, NULL );
-      bsp.dspp[ *pos ].pp = pp;
-      bsp.dspp[ *pos ].hpmax = PP_Get( pp, ID_PARA_hpmax, NULL );
-      bsp.dspp[ *pos ].exist = 1;
-      if( ( mons_no == MONSNO_NIDORAN_M ) || ( mons_no == MONSNO_NIDORAN_F ) )
-      {
-        bsp.dspp[ *pos ].sex = PTL_SEX_UNKNOWN;
-      }
-      else
-      {
-        bsp.dspp[ *pos ].sex = PP_Get( pp, ID_PARA_sex, NULL );
-      }
-
-      if( PP_Get( pp, ID_PARA_condition, NULL ) )
-      {
-        bsp.dspp[ *pos ].status = COMSEL_STATUS_NG;
-      }
-      else
-      {
-        bsp.dspp[ *pos ].status = COMSEL_STATUS_ALIVE;
-      }
-    }
-    else
-    {
-      bsp.dspp[ *pos ].exist = 0;
-      bsp.dspp[ *pos ].status = COMSEL_STATUS_DEAD;
-    }
-    pos++;
-  }
-
-  {
-    ARCHANDLE* hdl_bg;
-    ARCHANDLE* hdl_obj;
-
-    hdl_bg  = GFL_ARC_OpenDataHandle( ARCID_BATT_BG,  wk->heapID );
-    hdl_obj = GFL_ARC_OpenDataHandle( ARCID_BATT_OBJ, wk->heapID );
-    BINPUT_CreateBG( hdl_bg, hdl_obj, wk->bip, BINPUT_TYPE_POKE, FALSE, &bsp );
-
-    GFL_ARC_CloseDataHandle( hdl_bg );
-    GFL_ARC_CloseDataHandle( hdl_obj );
-  }
-#else
   const BTL_POKEPARAM*    bpp;
   const POKEMON_PARAM*    pp;
   BTLV_INPUT_SCENE_PARAM  bisp;
@@ -801,7 +738,6 @@ static void stwdraw_button( const u8* pos, u8 count, u8 format, BTLV_SCD* wk )
   }
 
   BTLV_INPUT_CreateScreen( wk->biw, BTLV_INPUT_SCRTYPE_DIR, &bisp );
-#endif
 }
 static void stw_draw( const SEL_TARGET_WORK* stw, BTLV_SCD* work )
 {
