@@ -25,7 +25,7 @@ include $(PROJECT_RSCDIR)/macro_define
 
 #コピー先
 #
-TARGET_DIR		= $(PROJECT_ARCDIR)/test_graphic
+TARGET_DIR		= $(PROJECT_ARCDIR)/fieldmap
 
 #アーカイブデータ
 #
