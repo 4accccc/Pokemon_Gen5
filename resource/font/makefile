@@ -42,6 +42,7 @@ ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
 do-build: $(IMGFILE:.bmp=.nftr)
 %.nftr: %.bmp
 	fontcvtrc -i bmp -if $< -io pokemon_wb.xlor -ib 2 -o nitro -of $@
+	xcopy /D /Y $@ w:\font
 
 do-build: $(COLFILE:.ncl=.nclr)
 %.nclr: %.ncl
