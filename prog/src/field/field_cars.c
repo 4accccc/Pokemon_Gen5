@@ -23,20 +23,20 @@
 #define TRAILER_NUM (2)
 
 // トレーラの移動範囲
-#define RAIL_MIN_Z (600)
-#define RAIL_MAX_Z (2115)
+#define RAIL_MIN_Z (1200)
+#define RAIL_MAX_Z (4230)
 
-#define RAIL_X_01 (990)
-#define RAIL_X_02 (1060)
-#define RAIL_Y    (245)
+#define RAIL_X_01 (1756)
+#define RAIL_X_02 (1895)
+#define RAIL_Y    (490) 
 
 // トレーラーの移動速度
 #define TRAILER_SPEED_MAX (8)
 #define TRAILER_SPEED_MIN (5)
 
 // 発車範囲(プレイヤー位置)
-#define START_MIN_Z   (750)
-#define START_MAX_Z  (2000)
+#define START_MIN_Z   (1500)
+#define START_MAX_Z  (4000)  
 
 // 発車間隔(単位:フレーム)
 #define START_MIN_INTERVAL   (60)
@@ -47,14 +47,14 @@
 #define SHIP_NUM (1)
 
 // 船の移動範囲
-#define SHIP_RAIL_MIN_X (600)
-#define SHIP_RAIL_MAX_X (1500)
+#define SHIP_RAIL_MIN_X (600) 
+#define SHIP_RAIL_MAX_X (3000) 
 #define SHIP_RAIL_Y     (-35)
-#define SHIP_RAIL_Z     (1300)
+#define SHIP_RAIL_Z     (2386)  
 
 // 船の発車範囲(プレイヤー位置)
-#define SHIP_START_MIN_Z   (750)
-#define SHIP_START_MAX_Z  (2000)
+#define SHIP_START_MIN_Z   (1286)
+#define SHIP_START_MAX_Z  (3786)  
 
 // 船の移動速度
 #define SHIP_SPEED_MAX (3)
