@@ -158,7 +158,8 @@ ev_t01_posevent_test1:
   _AB_KEYWAIT
   _TALKWIN_CLOSE
   _OBJ_PAUSE_CLEAR_ALL
-  _LDVAL SVSCRWK_START,1
+  _LDVAL WK_0907ROM00,1
+  //_LDVAL SVSCRWK_START,1
   _END
 
 //-------------------------------------------------------------

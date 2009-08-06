@@ -112,15 +112,14 @@
 //src/field
 #include "../../../prog/src/field/script_def.h"
 
-//イベントワーク、フラグ evwkdef.h
-#include "../../../prog/src/field/eventwork_def.h"
+//イベントワーク、フラグ
+#include "../flagwork/flag_define.h"  //イベントフラグ
+#include "../flagwork/work_define.h"  //イベントワーク
 
 //サウンドラベル
 #include "../../sound/wb_sound_data.sadl"
 
 #if 0 //wb null
-#include "saveflag.h"								//フラグ、ワーク定義
-#include "savework.h"
 
 #include "../../../include/pm_version.h"
 
