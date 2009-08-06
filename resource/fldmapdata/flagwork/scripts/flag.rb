@@ -75,12 +75,17 @@ class PMFlagData
     raiseError "フォーマット異常です.#{column[COL_ACTIVE]}" if column[COL_ACTIVE] != "active"
     raiseError "フォーマット異常です.#{column[COL_COMMENT]}" if column[COL_COMMENT] != "comment"
 
-    lines.each{|line|
+    lines.each_with_index{|line, index|
       column = line.split(",")
       if line =~ /^#END/ then
         break
       end
-      number = Integer(column[COL_NUMBER])
+      begin
+        number = Integer(column[COL_NUMBER])
+      rescue
+        puts "#{line}"
+        raiseError("numberに数値でない値#{column[COL_NUMBER]}が指定されています")
+      end
       name = column[COL_NAME]
       active = column[COL_ACTIVE]
       comment = column[COL_COMMENT]
@@ -137,11 +142,11 @@ class FLAGMANAGER
   COL_MAX = 2
   COL_PREFIX = 3
 
-  attr_reader :filename, :tmpfile, :flagdatas
+  attr_reader :manager_filename, :tmpfile, :flagdatas
 
   def initialize(filename)
-    @filename = filename
-    command = "#{XLS2TAB} #{@filename}"
+    @manager_filename = filename
+    command = "#{XLS2TAB} #{@manager_filename}"
     @tmpfile = `#{command}`.split("\n")
     @flagdatas = Array.new
     read_list(@tmpfile)
@@ -150,7 +155,7 @@ class FLAGMANAGER
 
   #エラー処理
   def raiseError(string, count)
-    raise FlagReadError, "#{@filename}:#{count}:\n #{string}"
+    raise FlagReadError, "#{@manager_filename}:#{count}:\n #{string}"
   end
 
   #読み込み処理
@@ -224,18 +229,25 @@ class FLAGMANAGER
   end
 
   def write_defines()
+    sym = File.basename(@manager_filename,".*").upcase
+    flag_min = -1
     flag_max = 0
+    output_content = ""
+    @flagdatas.each{|flagdata|
+      output_content += flagdata.write_define()
+      if flag_min < 0 then flag_min = flagdata.start_no end
+      flag_max = flagdata.start_no + flagdata.max
+    }
     output = ""
     output += "/* 自動生成フラグ定義ファイル 開始*/"
     output += "\#pragma once"
     output += "\n\n"
-    @flagdatas.each{|flagdata|
-      output += flagdata.write_define()
-      flag_max = flagdata.start_no + flagdata.max
-    }
+    output += sprintf("\#define %s_TOTAL_MIN  %5d /* 0x%04x */\n",sym, flag_min, flag_min)
     
+    output += output_content
+
     output += "\n\n"
-    output += sprintf("\#define FLAG_TOTAL_MAX  %5d /* 0x%04x */\n",flag_max, flag_max)
+    output += sprintf("\#define %s_TOTAL_MAX  %5d /* 0x%04x */\n",sym, flag_max, flag_max)
     output += "\n\n"
     output += "/* 自動生成フラグ定義ファイル 終了*/"
     output += "\n\n"

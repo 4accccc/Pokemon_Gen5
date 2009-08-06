@@ -1,5 +1,6 @@
 /* 自動生成フラグ定義ファイル 開始*/#pragma once
 
+#define FLAGS_TOTAL_MIN      0 /* 0x0000 */
 /* flags "local_flag.xls" 0 ～ 99 */
 
 #define FH_AREA_START                        0 /* 0x0000  */
@@ -2560,7 +2561,7 @@
 
 
 
-#define FLAG_TOTAL_MAX   2912 /* 0x0b60 */
+#define FLAGS_TOTAL_MAX   2912 /* 0x0b60 */
 
 
 /* 自動生成フラグ定義ファイル 終了*/

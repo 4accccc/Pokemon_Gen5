@@ -17,7 +17,8 @@ USERS	=	tamada matsumiya suginaka_katsunori
 #----------------------------------------------------------------------------
 #※ここに作成するファイル名を書く
 #----------------------------------------------------------------------------
-TARGETNAME	= flag_define.h
+FLAGTARGET	= flag_define.h
+WORKTARGET	= work_define.h
 
 #------------------------------------------------------------------------------
 #※コピー先へのパスを書く（通常はPROJECT_ARCDIRでよい）
@@ -32,16 +33,14 @@ include $(PROJECT_RSCDIR)macro_define
 
 #----------------------------------------------------------------------------
 #----------------------------------------------------------------------------
-DATAFILES	= $(wildcard *.xls)
+FLAGFILES	= $(wildcard *_flag.xls)
+WORKFILES	= $(wildcard *_work.xls)
 
 #----------------------------------------------------------------------------
 #	ツールへのパス指定
 #----------------------------------------------------------------------------
 
 XLS2TAB		= ruby $(PROJECT_ROOT)/tools/exceltool/xls2xml/tab_out.rb
-
-
-WORKDIR		= tmp
 
 #----------------------------------------------------------------------------
 #
@@ -50,30 +49,34 @@ WORKDIR		= tmp
 #----------------------------------------------------------------------------
 .PHONY:	do-build clean 
 
-do-build: $(TARGETDIR)/$(TARGETNAME)
+do-build: $(TARGETDIR)/$(FLAGTARGET) $(TARGETDIR)/$(WORKTARGET)
 
-$(TARGETDIR)/$(TARGETNAME):	$(TARGETNAME)
-	$(COPY) $(TARGETNAME) $(TARGETDIR)/$(TARGETNAME)
+$(TARGETDIR)/$(FLAGTARGET):	$(FLAGTARGET)
+	$(COPY) $(FLAGTARGET) $(TARGETDIR)/$(FLAGTARGET)
 
+$(TARGETDIR)/$(WORKTARGET):	$(WORKTARGET)
+	$(COPY) $(WORKTARGET) $(TARGETDIR)/$(WORKTARGET)
 
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ動作させる
 
-#zonetable.txt	--(zonetable.rb)-->	zone_id.h
-$(TARGETNAME): $(DATAFILES)
+
+$(FLAGTARGET): flags.xls $(FLAGFILES)
 	@echo フラグ生成開始...
 	ruby scripts/flag.rb flags.xls flag_define.h
 	@echo フラグ生成終了！！
 
+$(WORKTARGET):	works.xls $(WORKFILES)
+	@echo ワーク生成開始
+	ruby scripts/flag.rb works.xls work_define.h
+	@echo ワーク生成終了！！
 endif
 
 clean:
-	@rm -f $(TARGETDIR)/$(TARGETNAME)
+	@rm -f $(TARGETDIR)/$(FLAGTARGET)
+	@rm -f $(TARGETDIR)/$(WORKTARGET)
 	@
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ動作させる
-	@rm -f $(TARGETNAME)
+	@rm -f $(FLAGTARGET) $(WORKTARGET)
 endif
 
-
-test:
-	ruby scripts/flag.rb
 
