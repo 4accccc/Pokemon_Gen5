@@ -21,7 +21,6 @@
 
 #ifdef PM_DEBUG
 
-#define DEBUG_C03P02_CAMERA
 
 #endif
 
@@ -453,13 +452,8 @@ void FIELD_RAIL_CAMERAFUNC_FixAngleCamera(const FIELD_RAIL_MAN* man)
   {
     VecFx32 camPos;
     u16 yaw = (u16)cp_wk->yaw;
-#ifdef DEBUG_C03P02_CAMERA
-    u16 pitch = FIELD_CAMERA_GetAnglePitch( FIELD_RAIL_MAN_GetCamera(man) );
-    fx32 len = FIELD_CAMERA_GetAngleLen( FIELD_RAIL_MAN_GetCamera(man) );
-#else
     u16 pitch = (u16)cp_wk->pitch;
     fx32 len = cp_wk->len;
-#endif
 
     getVectorFromAngleValue(&camPos, yaw, pitch, len);
     VEC_Add(&camPos, &pos, &camPos);
@@ -511,17 +505,10 @@ void FIELD_RAIL_CAMERAFUNC_OfsAngleCamera(const FIELD_RAIL_MAN* man)
     u32 div = FIELD_RAIL_GetLineOfsMax(work);
 		s32 line_ofs = FIELD_RAIL_GetLineOfs(work);
     fx32 t = FX_Div( FX32_ONE * line_ofs, div * FX32_ONE );
-#ifdef DEBUG_C03P02_CAMERA
-    u16 pitch_s = FIELD_CAMERA_GetAnglePitch( FIELD_RAIL_MAN_GetCamera(man) );
-    fx32 len_s = FIELD_CAMERA_GetAngleLen( FIELD_RAIL_MAN_GetCamera(man) );
-    u16 pitch_e = FIELD_CAMERA_GetAnglePitch( FIELD_RAIL_MAN_GetCamera(man) );
-    fx32 len_e = FIELD_CAMERA_GetAngleLen( FIELD_RAIL_MAN_GetCamera(man) );
-#else
     u16 pitch_s = cs_work->pitch;
     fx32 len_s = cs_work->len;
     u16 pitch_e = ce_work->pitch;
     fx32 len_e = ce_work->len;
-#endif
 
 
     getVectorFromAngleValue(&c_s, cs_work->yaw, pitch_s, len_s);
