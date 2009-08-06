@@ -1459,7 +1459,7 @@ void ITEMDISP_NumFrameDisp(FIELD_ITEMMENU_WORK* pWork)
 
 void ITEMDISP_TrashNumDisp(FIELD_ITEMMENU_WORK* pWork,int num)
 {
-  GFL_BMP_Clear(GFL_BMPWIN_GetBmp(pWork->winNumFrame), 0 );
+  GFL_BMP_Clear(GFL_BMPWIN_GetBmp(pWork->winNumFrame), 3 );
   GFL_FONTSYS_SetColor( 0xf, 0xa, 3 );
   GFL_MSG_GetString(  pWork->MsgManager, MSG_ITEM_STR002, pWork->pStrBuf );
   WORDSET_RegisterNumber(pWork->WordSet, 0, num,
