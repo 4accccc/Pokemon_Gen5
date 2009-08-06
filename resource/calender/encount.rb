@@ -8,11 +8,47 @@
 # 
 # [0] データ数(u16)
 # [1]
-# [2] 月(u8)              |
-# [3] 日(u8)              |----- データ数の分だけ繰り返す
-# [4] 出現率の変化値(u8)  |
+# [2] 月(u8)          |
+# [3] 日(u8)          |----- データ数の分だけ繰り返す
+# [4] 出現率番号(u8)  |
 # 
 ###################################################################
+
+
+#==================================================================
+#
+# @brief 1対の月・日・出現率番号を保持するクラス
+#
+#==================================================================
+class EncountInfo
+
+  # コンストラクタ
+  def initialize( m, d, val )
+    @month = m
+    @day   = d
+    @no    = val
+  end 
+
+  # ゲッター・メソッド
+  def month
+    @month
+  end
+
+  def day
+    @day
+  end
+
+  def no
+    @no
+  end
+
+  # 文字列取得メソッド
+  def to_s
+    "#@month/#@day = #@no"
+  end 
+
+end
+
 
 #==================================================================
 #
@@ -75,11 +111,8 @@ SRC_FILENAME = "encount.txt"  # 入力ファイル名
 DST_FILENAME = "encount.bin"  # 出力ファイル名
 
 
-line_index = 0;    # 行インデックス
-month = Array.new  # 月配列
-date  = Array.new  # 日配列
-rate  = Array.new  # 出現率配列
-
+line_index = 0;          # 行インデックス
+data       = Array.new   # 全[月・日・出現率番号]データ
 
 #-----------------------------------
 # 読み込み
@@ -104,9 +137,10 @@ file.each do |line|
 		line_split = line.split( /\t/ )
 
     # 各データを取り出す
-    month << GetMonthValue( line_split[ ROW_INDEX_DATE ] )
-    date  << GetDayValue( line_split[ ROW_INDEX_DATE ] )
-    rate  << line_split[ ROW_INDEX_ENCOUNT_NO ].to_i
+    month  = GetMonthValue( line_split[ ROW_INDEX_DATE ] )
+    day    = GetDayValue( line_split[ ROW_INDEX_DATE ] )
+    no     = line_split[ ROW_INDEX_ENCOUNT_NO ].to_i 
+    data  << EncountInfo.new( month, day, no )
 
   end
 
@@ -126,13 +160,13 @@ file.close
 file = File.open( DST_FILENAME, "wb" )
 
 # OUT: データ数(u16)
-file.write( [ date.length ].pack( "S" ) )
+file.write( [ data.length ].pack( "S" ) )
 
 # すべてのデータを出力する
-0.upto( date.length - 1 ) do |i| 
+0.upto( data.length - 1 ) do |i| 
 
   # OUT: 月(u8), 日(u8), 出現率番号(u8)
-  write_data = [ month[i], date[i], rate[i] ]
+  write_data = [ data[i].month, data[i].day, data[i].no ]
   file.write( write_data.pack( "CCC" ) )
   
 end
@@ -145,8 +179,8 @@ file.close
 # DEBUG:
 #-----------------------------------
 =begin
-puts "data num = " + date.length.to_s
-0.upto( date.length - 1 ) do |i|
-  puts month[i].to_s + "/" + date[i].to_s + " = " + rate[i].to_s
+puts "data num = " + data.length.to_s
+0.upto( data.length - 1 ) do |i|
+  puts data[i].to_s
 end
 =end
