@@ -76,18 +76,24 @@ end
 #==================================================================
 class ZoneWeatherInfo
 
+  #----------------
   # コンストラクタ
+  #----------------
   def initialize( zone )
     @zone_id = zone        # ゾーンID
     @data    = Array.new   # 天気情報配列
   end
 
+  #----------------
   # データ数取得
+  #----------------
   def GetDataNum
     @data.length
   end
 
+  #--------------------
   # データ取得メソッド
+  #--------------------
   def GetZoneID
     @zone_id
   end
@@ -104,7 +110,9 @@ class ZoneWeatherInfo
     @data[i].day
   end
 
+  #-------------------
   # データ設定メソッド
+  #-------------------
   def SetWeatherNo( i, weather_no )
     @data[i].weather = weather_no
   end
@@ -117,12 +125,16 @@ class ZoneWeatherInfo
     @data[i].day = day
   end
 
+  #--------------------
   # データ追加メソッド
+  #--------------------
   def AddData( weather_info )
     @data << weather_info
   end
 
+  #--------------
   # 圧縮メソッド
+  #--------------
   def Compress
     prev = -1
     del  = false
@@ -138,7 +150,9 @@ class ZoneWeatherInfo
     end
   end
 
+  #--------------------
   # 文字列取得メソッド
+  #--------------------
   def to_s
     str = "zone id = #@zone_id\n"
     str += "data num = "
