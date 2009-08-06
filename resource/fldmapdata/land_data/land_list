@@ -35,7 +35,6 @@ CONCAT_TARGET = \
 	$(DIR_LANDRES)/map22_25.bin $(DIR_LANDRES)/map22_25.imd \
 	$(DIR_LANDRES)/map22_24.bin $(DIR_LANDRES)/map22_24.imd \
 	$(DIR_LANDRES)/map23_24.bin $(DIR_LANDRES)/map23_24.imd \
-	$(DIR_LANDRES)/map23_22.bin $(DIR_LANDRES)/map23_22.imd \
 	$(DIR_LANDRES)/map22_22.bin $(DIR_LANDRES)/map22_22.imd \
 	$(DIR_LANDRES)/map22_23.bin $(DIR_LANDRES)/map22_23.imd \
 	$(DIR_LANDRES)/map21_22.bin $(DIR_LANDRES)/map21_22.imd \
@@ -274,6 +273,7 @@ CONCAT_TARGET = \
 	$(DIR_LANDRES)/m_buill02_00_00.bin $(DIR_LANDRES)/m_buill02_00_00.imd \
 	$(DIR_LANDRES)/m_grow01_00_00.bin $(DIR_LANDRES)/m_grow01_00_00.imd \
 	$(DIR_LANDRES)/m_school01_00_00.bin $(DIR_LANDRES)/m_school01_00_00.imd \
+	$(DIR_LANDRES)/m_nschool01_00_00.bin $(DIR_LANDRES)/m_nschool01_00_00.imd \
 	$(DIR_LANDRES)/m_cafe01_00_00.bin $(DIR_LANDRES)/m_cafe01_00_00.imd \
 	$(DIR_LANDRES)/m_whouse01_00_00.bin $(DIR_LANDRES)/m_whouse01_00_00.imd \
 	$(DIR_LANDRES)/m_buill03_00_00.bin $(DIR_LANDRES)/m_buill03_00_00.imd \
@@ -293,12 +293,9 @@ CONCAT_TARGET = \
 	$(DIR_LANDRES)/m_h04_00_00.bin $(DIR_LANDRES)/m_h04_00_00.imd \
 	$(DIR_LANDRES)/m_atelier01_00_00.bin $(DIR_LANDRES)/m_atelier01_00_00.imd \
 	$(DIR_LANDRES)/m_whouse02_00_00.bin $(DIR_LANDRES)/m_whouse02_00_00.imd \
-	$(DIR_LANDRES)/m_cafe01_00_00.bin $(DIR_LANDRES)/m_cafe01_00_00.imd \
-	$(DIR_LANDRES)/m_school01_00_00.bin $(DIR_LANDRES)/m_school01_00_00.imd \
 	$(DIR_LANDRES)/m_gate02_00_00.bin $(DIR_LANDRES)/m_gate02_00_00.imd \
 	$(DIR_LANDRES)/m_gym0101_00_00.bin $(DIR_LANDRES)/m_gym0101_00_00.imd \
 	$(DIR_LANDRES)/m_museum01_00_00.bin $(DIR_LANDRES)/m_museum01_00_00.imd \
-	$(DIR_LANDRES)/m_nschool01_00_00.bin $(DIR_LANDRES)/m_nschool01_00_00.imd \
 	$(DIR_LANDRES)/m_pc02_00_00.bin $(DIR_LANDRES)/m_pc02_00_00.imd \
 	$(DIR_LANDRES)/m_gts01_00_00.bin $(DIR_LANDRES)/m_gts01_00_00.imd \
 	$(DIR_LANDRES)/m_gym0201_00_00.bin $(DIR_LANDRES)/m_gym0201_00_00.imd \

@@ -14,7 +14,7 @@ include $(PROJECT_RSCDIR)/macro_define
 #---------------------------------------------------------------
 TARGET_ARC			= map_land_data.narc
 TARGET_ARCIDX		= $(TARGET_ARC:.narc=.naix)
-TARGET_DIR			= $(PROJECT_ARCDIR)/test_graphic
+TARGET_DIR			= $(PROJECT_ARCDIR)/fieldmap
 
 #---------------------------------------------------------------
 #	各要素
@@ -35,6 +35,8 @@ DIR_MATRIX		= ../map_matrix
 include land_list
 #G3D_IMD
 include land_model_list
+#LAND_3DPPACK_LIST
+include land_depend_list
 
 G3D_NSBMD = $(G3D_IMD:.imd=.nsbmd)
 G3D_NSBMD := $(subst $(DIR_LANDRES)/,$(DIR_G3DCVTR),$(G3D_NSBMD))
@@ -57,12 +59,10 @@ MK_GROUNDTOOL = mkmapdmy.rb
 #---------------------------------------------------------------
 #	データ生成ルール
 #---------------------------------------------------------------
-.SUFFIXES: .3dppack .nsbmd #.nsbtx
-
 #nsbmd
-%.nsbmd: ../$(DIR_LANDRES)/%.imd
-	@echo create nsbmd $@
-	$(G3DCVTR) $(subst $(DIR_G3DCVTR),$(DIR_LANDRES)/,$(@:.nsbmd=.imd)) -o $@
+#%.nsbmd: ../$(DIR_LANDRES)/%.imd
+#	@echo create nsbmd $@
+#	$(G3DCVTR) $(subst $(DIR_G3DCVTR),$(DIR_LANDRES)/,$(@:.nsbmd=.imd)) -o $@
 
 #nsbtx
 #%.nsbtx: ../$(DIR_LANDRES)/%.imd
@@ -79,12 +79,12 @@ MK_GROUNDTOOL = mkmapdmy.rb
 #	@echo create 3dppack $@
 #	$(BINLINKER) $(subst $(DIR_3DPPACK),$(DIR_G3DCVTR)/,$*.nsbmd) $(subst $(DIR_3DPPACK),$(DIR_G3DCVTR)/,$*.nsbtx) $(subst $(DIR_3DPPACK),$(DIR_G3DCVTR)/,$*.nsbtp) $(subst $(DIR_3DPPACK),$(DIR_LANDRES)/,$*.bin) $(subst $(DIR_3DPPACK),$(DIR_LANDRES)/,$*.3dmd) $*.3dppack 3D
 
-%.3dppack: ../$(DIR_G3DCVTR)/%.nsbmd  ../$(DIR_LANDRES)/%.bin ../$(DIR_LANDRES)/%.3dmd
-	@echo create 3dppack $@
-	$(BINLINKER) $(subst $(DIR_3DPPACK),$(DIR_G3DCVTR)/,$*.nsbmd) \
-  $(subst $(DIR_3DPPACK),$(DIR_LANDRES)/,$*.bin) \
-  $(subst $(DIR_3DPPACK),$(DIR_LANDRES)/,$*.3dmd) \
-  $*.3dppack WB
+#%.3dppack: ../$(DIR_G3DCVTR)/%.nsbmd  ../$(DIR_LANDRES)/%.bin ../$(DIR_LANDRES)/%.3dmd
+#	@echo create 3dppack $@
+#	$(BINLINKER) $(subst $(DIR_3DPPACK),$(DIR_G3DCVTR)/,$*.nsbmd) \
+# $(subst $(DIR_3DPPACK),$(DIR_LANDRES)/,$*.bin) \
+#  $(subst $(DIR_3DPPACK),$(DIR_LANDRES)/,$*.3dmd) \
+#  $*.3dppack WB
 
 #---------------------------------------------------------------
 #	ターゲット
@@ -103,10 +103,12 @@ $(TARGET_DIR)/$(TARGET_ARC): $(TARGET_ARC)
 	
 #コンバート
 ifeq	($(CONVERTUSER),true) #CONVERTUSER
-#$(TARGET_ARC): $(G3D_NSBMD) $(G3D_NSBTX) $(G3D_3DMD) $(G3D_3DPPACK)
-$(TARGET_ARC): $(G3D_NSBMD) $(G3D_3DMD) $(G3D_3DPPACK)
+$(TARGET_ARC): $(LAND_3DPPACK_LIST)
 	nnsarc -i -c -l -n $(TARGET_ARC) -S $(LAND_ARCLIST) > arc_result.txt
 	$(NAIXCUT) $(TARGET_ARCIDX)
+
+.SUFFIXES: .3dppack .nsbmd
+include land_make_depend
 endif
 
 #---------------------------------------------------------------
