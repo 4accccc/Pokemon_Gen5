@@ -180,6 +180,7 @@ enum {
 	GFL_NET_TYPE_IRC,			///<赤外線通信
 	GFL_NET_TYPE_IRC_WIRELESS,	///<赤外線通信でマッチング後、ワイヤレス通信へ移行
 	GFL_NET_TYPE_WIRELESS_SCANONLY,	///<ワイヤレス通信(スキャン専用・電源ランプ非点滅)
+	GFL_NET_TYPE_WIFI_GTS,		///<GTS通信（WIFIデバイスのロードのみ行う）
 };
 
 enum{
