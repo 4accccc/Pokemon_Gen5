@@ -748,6 +748,43 @@ static void put1char_normal( GFL_BMP_DATA* dst, u16 xpos, u16 ypos, GFL_FONT* fo
 {
   GFL_FONT_GetBitMap( fontHandle, charCode, GFL_BMP_GetCharacterAdrs(SystemWork.charBuffer), size );
   GFL_BMP_Print( SystemWork.charBuffer, dst, 0, 0, xpos+size->left_width, ypos, size->glyph_width, size->height, 0x00 );
+
+  #if 0
+  if( GFL_UI_KEY_GetCont() & PAD_BUTTON_DEBUG )
+  {
+    u32 x, y, dx, dy, pix;
+    ISDPrintSetBlockingMode(1);
+    TAYA_Printf("*** charCode=%04x, height=%d ***\n", charCode, size->height );
+    for(y=0; y<16; ++y)
+    {
+      for(x=0; x<16; ++x)
+      {
+        pix = GFL_BMP_GetPixel( SystemWork.charBuffer, x, y );
+        TAYA_Printf("%x", pix);
+      }
+        TAYA_Printf("\n");
+    }
+    TAYA_Printf("=========>\n");
+    dx = xpos+size->left_width;
+    dy = ypos;
+    for(y=0; y<size->height; ++y)
+    {
+      for(x=0; x<size->glyph_width; ++x)
+      {
+        pix = GFL_BMP_GetPixel( dst, dx+x, dy+y );
+        if( pix != 0x0f ){
+          TAYA_Printf("%x", pix);
+        }else{
+          TAYA_Printf(" ");
+        }
+      }
+      TAYA_Printf("\n");
+    }
+    TAYA_Printf("\n");
+    ISDPrintSetBlockingMode(0);
+  }
+  #endif
+
 }
 //------------------------------------------------------------------
 /**
