@@ -9,9 +9,7 @@ include	$(PROJECT_RSCDIR)/macro_define
 
 TARGET_NAMES = \
 	fldmmdl_btx.narc \
-	fldmmdl_btx.naix \
-	mmodel.naix \
-	mmodel.narc
+	fldmmdl_btx.naix 
 	
 TARGET_DIR = $(PROJECT_ARCDIR)/test_graphic
 
