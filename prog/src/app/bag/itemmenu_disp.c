@@ -331,6 +331,12 @@ void ITEMDISP_graphicInit(FIELD_ITEMMENU_WORK* pWork)
     pWork->cellRes[_ANM_BAGPOCKET] = GFL_CLGRP_CELLANIM_Register(
       p_handle, NARC_bag_bag_parts_d_NCER, NARC_bag_bag_parts_d_NANR , pWork->heapID);
 
+    //数字のフレーム
+    pWork->numFrameBg =
+      GFL_ARCHDL_UTIL_TransVramBgCharacterAreaMan(
+        p_handle, NARC_bag_bag_win05_d_NCGR, GFL_BG_FRAME3_M, 0, 0, pWork->heapID);
+
+    
     GFL_ARC_CloseDataHandle(p_handle);
   }
 
@@ -443,6 +449,9 @@ void ITEMDISP_graphicDelete(FIELD_ITEMMENU_WORK* pWork)
   GFL_BG_FreeCharacterArea(GFL_BG_FRAME1_S,
                            GFL_ARCUTIL_TRANSINFO_GetPos(pWork->subbg2),
 													 GFL_ARCUTIL_TRANSINFO_GetSize(pWork->subbg2));
+  GFL_BG_FreeCharacterArea(GFL_BG_FRAME3_M,
+                           GFL_ARCUTIL_TRANSINFO_GetPos(pWork->numFrameBg),
+													 GFL_ARCUTIL_TRANSINFO_GetSize(pWork->numFrameBg));
   GFL_BG_FreeCharacterArea(GFL_BG_FRAME0_M,
                            GFL_ARCUTIL_TRANSINFO_GetPos(pWork->mainbg),
 													 GFL_ARCUTIL_TRANSINFO_GetSize(pWork->mainbg));
@@ -532,6 +541,7 @@ void ITEMDISP_upMessageDelete(FIELD_ITEMMENU_WORK* pWork)
   GFL_BMPWIN_Delete(pWork->winItemReport);
   GFL_BMPWIN_Delete(pWork->winItemNum);
   GFL_BMPWIN_Delete(pWork->winWaza);
+  GFL_BMPWIN_Delete(pWork->winNumFrame);
 
   GFL_CLACT_WK_Remove( pWork->scrollCur );
   GFL_CLACT_WK_Remove( pWork->cellicon );
@@ -565,6 +575,11 @@ void ITEMDISP_upMessageCreate(FIELD_ITEMMENU_WORK* pWork)
 		_BUTTON_MSG_PAL, GFL_BMP_CHRAREA_GET_B );
 
 
+  pWork->winNumFrame =
+    GFL_BMPWIN_Create(
+      GFL_BG_FRAME3_M,	_WINNUM_INITX, _WINNUM_INITY, _WINNUM_SIZEX, _WINNUM_SIZEY,	_WINNUM_PAL,
+      GFL_BMP_CHRAREA_GET_B );
+  
   pWork->winItemName = GFL_BMPWIN_Create(
     ITEMREPORT_FRAME,
     _UP_ITEMNAME_INITX, _UP_ITEMNAME_INITY,
@@ -1366,7 +1381,12 @@ void ITEMDISP_ItemInfoMessageMake( FIELD_ITEMMENU_WORK *pWork,int id )
   WORDSET_ExpandStr( pWork->WordSet, pWork->pExpStrBuf, pWork->pStrBuf  );
 }
 
-
+//------------------------------------------------------------------------------
+/**
+ * @brief   メッセージの終了待ち
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
 
 BOOL ITEMDISP_MessageEndCheck(FIELD_ITEMMENU_WORK* pWork)
 {
@@ -1389,3 +1409,28 @@ BOOL ITEMDISP_MessageEndCheck(FIELD_ITEMMENU_WORK* pWork)
   }
   return TRUE;// 終わっている
 }
+
+//------------------------------------------------------------------------------
+/**
+ * @brief   数字フレームの表示
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+
+void ITEMDISP_NumFrameDisp(FIELD_ITEMMENU_WORK* pWork,int num)
+{
+  ARCHANDLE* p_handle = GFL_ARC_OpenDataHandle( ARCID_BAG, pWork->heapID );
+
+  GFL_FONTSYS_SetColor( 0xe, 0xf, 0 );
+  PRINTSYS_Print( GFL_BMPWIN_GetBmp(pWork->winNumFrame), 8, 4, pWork->pStrBuf, pWork->fontHandle);
+  GFL_BMPWIN_TransVramCharacter(pWork->winNumFrame);
+  GFL_BMPWIN_MakeScreen(pWork->winNumFrame);
+
+  GFL_ARCHDL_UTIL_TransVramScreenCharOfsVBlank(
+    p_handle, NARC_bag_bag_win05_d_NSCR, GFL_BG_FRAME3_M, 0,
+    GFL_ARCUTIL_TRANSINFO_GetPos(pWork->numFrameBg), 0, 0, pWork->heapID);
+
+  GFL_ARC_CloseDataHandle(p_handle);
+
+}
+

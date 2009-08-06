@@ -679,6 +679,14 @@ static void _itemTecniqueUseInit(FIELD_ITEMMENU_WORK* pWork)
   _CHANGE_STATE(pWork,_itemTecniqueUseWait);
 }
 
+
+static void _itemTrash(FIELD_ITEMMENU_WORK* pWork)
+{
+
+
+
+}
+
 //------------------------------------------------------------------------------
 /**
  * @brief   アイテムを選択してどういう動作を行うかきいているところ
@@ -698,7 +706,7 @@ static void _itemSelectWait(FIELD_ITEMMENU_WORK* pWork)
     pWork->ret_code2 = pWork->submenuList[selectno];
     OS_Printf("ret_code2 %d %d\n", pWork->ret_code2,selectno);
 
-    if((BAG_MENU_TSUKAU==pWork->ret_code2)&&(pWork->pocketno==BAG_POKE_WAZA)){
+    if((BAG_MENU_TSUKAU==pWork->ret_code2)&&(pWork->pocketno==BAG_POKE_WAZA)){ //技マシン
        _CHANGE_STATE(pWork,_itemTecniqueUseInit);
     }
     else if((BAG_MENU_TSUKAU==pWork->ret_code2)&&( 1==ITEM_GetParam( pWork->ret_item, ITEM_PRM_EVOLUTION, pWork->heapID )  )){
@@ -714,14 +722,18 @@ static void _itemSelectWait(FIELD_ITEMMENU_WORK* pWork)
       _CHANGE_STATE(pWork,NULL);
     }
     else if(BAG_MENU_TSUKAU==pWork->ret_code2){
-      pWork->ret_code = BAG_NEXTPROC_ITEMUSE;  
+      pWork->ret_code = BAG_NEXTPROC_ITEMUSE;  //つかう
       _CHANGE_STATE(pWork,NULL);
     }
-    else if(BAG_MENU_YAMERU==pWork->ret_code2){
+    else if(BAG_MENU_SUTERU==pWork->ret_code2){  //すてる
+
+      _CHANGE_STATE(pWork,_itemTrash);
+    }
+    else if(BAG_MENU_YAMERU==pWork->ret_code2){  //やめる
       _CHANGE_STATE(pWork,_itemKindSelectMenu);
     }
     else if(pWork->ret_item == ITEM_TAUNMAPPU){
-      pWork->ret_code = BAG_NEXTPROC_TOWNMAP;
+      pWork->ret_code = BAG_NEXTPROC_TOWNMAP;  //タウンマップ
       _CHANGE_STATE(pWork,NULL);
     }
     else{
@@ -764,14 +776,12 @@ static void _itemSelectState(FIELD_ITEMMENU_WORK* pWork)
     pWork->ret_code = BAG_NEXTPROC_ITEMEQUIP;
     _CHANGE_STATE(pWork,NULL);
   }
-
-  _itemUseWindowRewrite(pWork);
-
-  ITEMDISP_ItemInfoMessageMake( pWork,pWork->ret_item );
-  ITEMDISP_ItemInfoWindowDisp( pWork );
-
-  _CHANGE_STATE(pWork,_itemSelectWait);
-  
+  else{
+    _itemUseWindowRewrite(pWork);
+    ITEMDISP_ItemInfoMessageMake( pWork,pWork->ret_item );
+    ITEMDISP_ItemInfoWindowDisp( pWork );
+    _CHANGE_STATE(pWork,_itemSelectWait);
+  }
 }
 
 
