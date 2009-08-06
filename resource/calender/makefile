@@ -77,6 +77,12 @@ hatch.bin: hatch.txt
 weather.bin: weather.txt
 	ruby weather.rb 
 
+	rm -f encount.txt
+	rm -f hatch.txt
+	rm -f weather.txt
+	rm -f encount.bin
+	rm -f hatch.bin
+	rm -f weather.bin
 
 endif
 
