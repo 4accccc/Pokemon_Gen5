@@ -386,8 +386,7 @@ SRCS_OVERLAY_UNION_ROOM = net_app/union/union_chara.c \
 
 # マッパーサンプル
 #===> main
-SRCS_OVERLAY_WATANABE_SAMPLE  = test/tetsu/sample/samplemain.c \
-        test/tetsu/sample/g3d_mapper.c \
+SRCS_OVERLAY_WATANABE_SAMPLE  = test/tetsu/sample/g3d_mapper.c \
         test/tetsu/sample/sample_net.c \
         test/tetsu/sample/g3dmapfunc/func_mapeditor_file.c \
         test/tetsu/sample/g3dmapfunc/func_pmcustom_file.c \
