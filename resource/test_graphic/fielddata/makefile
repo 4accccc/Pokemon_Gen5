@@ -8,14 +8,6 @@
 include	$(PROJECT_RSCDIR)/macro_define
 
 TARGET_NAMES = \
-	fieldmap_act.naix \
-	fieldmap_act.narc \
-	fieldmap_map.naix \
-	fieldmap_map.narc \
-	menu_gra.naix \
-	menu_gra.narc \
-	testgridmap_a.narc \
-	testgridmap_a.naix \
 	fldmmdl_btx.narc \
 	fldmmdl_btx.naix \
 	mmodel.naix \

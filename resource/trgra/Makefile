@@ -14,11 +14,8 @@ USERS	=	sogabe
 #※ここに作成するnarc名を書く
 #------------------------------------------------------------------------------
 targetname_f	= trfgra
-targetname_b	= trbgra
 NARCNAME_F	= $(targetname_f).narc
 NAIXNAME_F	= $(targetname_f).naix
-NARCNAME_B	= $(targetname_b).narc
-NAIXNAME_B	= $(targetname_b).naix
 
 #------------------------------------------------------------------------------
 #※コピー先へのパスを書く（通常はPROJECT_ARCDIRでよい）
@@ -39,7 +36,6 @@ endif
 
 #NARCに必要なscrファイル名
 SCRFILE_F = trfgra_wb.scr
-SCRFILE_B = trbgra_wb.scr
 
 #リソースファイルの存在するディレクトリを指定
 RES_DIR = ../../../pokemon_wb_doc/trgra/
@@ -131,9 +127,6 @@ $(NARCNAME_F): $(notdir $(MCSSNCGFILE:.ncg=.NCBR)) $(notdir $(MCSSNCEFILE:.nce=.
 	nnsarc -c -l -n -i $(NARCNAME_F) -S $(SCRFILE_F)
 	$(NAIXCUT) $(NAIXNAME_F)
 
-$(NARCNAME_B): $(notdir $(OBJNCGFILE:.ncg=.NCBR)) $(notdir $(OBJNCEFILE:.nce=.NCER)) $(notdir $(OBJNCLFILE:.ncl=.NCLR)) $(SCRFILE_B)
-	nnsarc -c -l -n -i $(NARCNAME_B) -S $(SCRFILE_B)
-	$(NAIXCUT) $(NAIXNAME_B)
 
 
 endif
@@ -146,12 +139,8 @@ ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
 	-rm -f *.N*R
 	-rm -f $(NARCNAME_F)
 	-rm -f $(NAIXNAME_F)
-	-rm -f $(NARCNAME_B)
-	-rm -f $(NAIXNAME_B)
 endif
 	-rm -f $(TARGETDIR)/$(NARCNAME_F)
 	-rm -f $(TARGETDIR)/$(NAIXNAME_F)
-	-rm -f $(TARGETDIR)/$(NARCNAME_B)
-	-rm -f $(TARGETDIR)/$(NAIXNAME_B)
 
 

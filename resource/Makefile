@@ -18,7 +18,6 @@ SUBDIRS	=	wmi \
 			field_light \
 			fldmmdl \
 			fldmapdata\
-			test3dp\
 			pokegra\
 			battle\
 			personal\

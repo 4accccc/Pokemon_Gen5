@@ -1,7 +1,7 @@
 
 include $(PROJECT_RSCDIR)\macro_define
 
-SUBDIRS	=	sample_map others fieldmap fielddata mb_test easy_pokelist rail_editor
+SUBDIRS	=	others fielddata mb_test easy_pokelist rail_editor
 
 .PHONY:	do-build clean
 
