@@ -35,6 +35,19 @@ class WeatherInfo
     @weather = weather  # 天気
   end
 
+  # アクセッサ・メソッド
+  def weather
+    @weather
+  end
+
+  def month
+    @month
+  end
+
+  def day
+    @day
+  end
+
   # 文字列取得メソッド
   def to_s
     "#@month/#@day = #@weather"
@@ -56,6 +69,28 @@ class ZoneWeatherInfo
     @data    = Array.new   # 天気情報配列
   end
 
+  # データ数取得
+  def GetDataNum
+    @data.length
+  end
+
+  # データ取得メソッド
+  def GetZoneID
+    @zone_id
+  end
+
+  def GetWeatherNo( i )
+    @data[i].weather
+  end
+
+  def GetMonth( i )
+    @data[i].month
+  end
+
+  def GetDay( i )
+    @data[i].day
+  end
+
   # データ追加メソッド
   def AddData( data )
     @data << data
@@ -64,12 +99,12 @@ class ZoneWeatherInfo
   # 圧縮メソッド
   def Compress
     prev = -1
-    del  = false;
+    del  = false
     @data.reject! do |d| 
       # 前日と同じ天気なら, 削除する
       if d.weather == prev then 
         del = true  
-      elsif
+      else
         del = false
       end   
       prev = d.weather
@@ -79,11 +114,15 @@ class ZoneWeatherInfo
 
   # 文字列取得メソッド
   def to_s
-    str = "zone id = #@zone_id, data num = #data.length\n"
+    str = "zone id = #@zone_id\n"
+    str += "data num = "
+    str += (@data.length).to_s
+    str += "\n"
     @data.each do |d|
       str += d.to_s
       str += "\n"
     end
+    str
   end 
 
 end
@@ -237,6 +276,7 @@ month      = Array.new # 月配列(366日分)
 date       = Array.new # 日にち配列(366日分)
 weather    = Array.new # 天気配列(各ゾーン366日分)
 
+info_array = Array.new
 
 #-----------------------------------
 # 全データの読み込み
@@ -273,78 +313,50 @@ end
 end
 
 
-#-----------------------------------
-# 圧縮
-#----------------------------------- 
-month_comp   = Array.new  
-date_comp    = Array.new
-weather_comp = Array.new
-
-0.upto( zone_id.length - 1 ) do |i|
-  # 前日と天気が変わらない日を削除(月)
-  index = 0
-  temp = month.reject { |val|
-    del = false
-    if( index == 0 ) then
-      del = false
-    elsif( weather[i][index-1] == weather[i][index] ) then
-      del = true
-    end
-    index += 1
-    del         # ブロック最後の評価で削除するかどうかが決まる
-  } 
-  month_comp << temp
-
-  # 前日と天気が変わらない日を削除(日)
-  index = 0
-  temp = date.reject { |val|
-    del = false
-    if( index == 0 ) then
-      del = false
-    elsif( weather[i][index-1] == weather[i][index] ) then
-      del = true
-    end
-    index += 1
-    del         # ブロック最後の評価で削除するかどうかが決まる
-  }
-  date_comp << temp
-
-  # 前日と天気が変わらない日を削除(天気)
-  prev = -1 
-  temp = weather[i].reject { |val|
-    del = ( prev == val )
-    prev = val
-    del         # ブロック最後の評価で削除するかどうかが決まる
-  }
-  weather_comp << temp
+# まとめる
+0.upto( zone_id.length - 1 ) do |i| 
+  data = ZoneWeatherInfo.new( zone_id[i] )
+  0.upto( month.length - 1 ) do |j|
+    data.AddData( WeatherInfo.new( month[j], date[j], weather[i][j] ) )
+  end
+  info_array << data
 end
 
 
+# DEBUG:
 =begin
-0.upto( weather_comp[1].length - 1 ) do |i|
-  puts month_comp[1][i].to_s + "/" + date_comp[1][i].to_s + " = " + weather_comp[1][i]
+0.upto( info_array.length - 1 ) do |i|
+  puts info_array[i].to_s
 end
 =end
 
+
+#-----------------------------------
+# 圧縮
+#----------------------------------- 
+# 圧縮
+info_array.each do |info|
+  info.Compress
+end
+
+# DEBUG:
+=begin
+info_array.each do |info|
+  puts info.to_s
+end
+=end
 
 #-----------------------------------
 # オフセット計算
 #----------------------------------- 
 offset = Array.new
 
-pos = 2 + 4 * zone_id.length
-0.upto( zone_id.length - 1 ) do |i|
+pos = 2 + 4 * info_array.length
+0.upto( info_array.length - 1 ) do |i|
   offset << pos
   pos += 2
-  pos += weather_comp[i].length * 3
+  pos += info_array[i].GetDataNum * 3
 end
-
-
-=begin
-0.upto( zone_id.length - 1 ) do |i|
-  puts offset[i]
-end
-=end
 
 
 #-----------------------------------
@@ -355,21 +367,21 @@ end
 file = File.open( DST_FILENAME, "wb" )
 
 # OUT: 登録ゾーン数(u16)
-file.write( [ zone_id.length ].pack( "S" ) )
+file.write( [ info_array.length ].pack( "S" ) )
 
 # すべてのゾーンIDとオフセットの組を出力する
-0.upto( zone_id.length - 1 ) do |i|
+0.upto( info_array.length - 1 ) do |i|
   # OUT: ゾーンID(u16), オフセット(u16)
-  file.write( [ zone_id[i], offset[i] ].pack( "SS" ) )
+  file.write( [ info_array[i].GetZoneID, offset[i] ].pack( "SS" ) )
 end
 
 # 全ゾーンのデータを出力
-0.upto( zone_id.length - 1 ) do |i|
+info_array.each do |info|
   # OUT: データ数(u16)
-  file.write( [ weather_comp[i].length ].pack( "S" ) )
+  file.write( [ info.GetDataNum ].pack( "S" ) )
   # OUT: 月(u8)・日(u8)・天気(u8)
-  0.upto( weather_comp[i].length - 1 ) do |j|
-    file.write( [ month_comp[i][j], date_comp[i][j], weather_comp[i][j] ].pack( "CCC" ) )
+  0.upto( info.GetDataNum - 1 ) do |i|
+    file.write( [ info.GetMonth(i), info.GetDay(i), info.GetWeatherNo(i) ].pack( "CCC" ) )
   end
 end
 
