@@ -178,7 +178,9 @@ file.close
 #-----------------------------------
 # DEBUG:
 #-----------------------------------
+=begin
 puts "data num = " + data.length.to_s
 0.upto( data.length - 1 ) do |i|
   puts data[i].to_s
 end
+=end

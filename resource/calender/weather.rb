@@ -20,6 +20,74 @@
 # 
 ###################################################################
 
+
+#==================================================================
+#
+# @brief 1対の月・日・天気を保持するクラス
+#
+#==================================================================
+class WeatherInfo
+
+  # コンストラクタ
+  def initialize( month, day, weather )
+    @month   = month    # 月
+    @day     = day      # 日
+    @weather = weather  # 天気
+  end
+
+  # 文字列取得メソッド
+  def to_s
+    "#@month/#@day = #@weather"
+  end 
+
+end
+
+
+#==================================================================
+#
+# @brief 1つのゾーンのデータを保持するクラス
+#
+#==================================================================
+class ZoneWeatherInfo
+
+  # コンストラクタ
+  def initialize( zone )
+    @zone_id = zone        # ゾーンID
+    @data    = Array.new   # 天気情報配列
+  end
+
+  # データ追加メソッド
+  def AddData( data )
+    @data << data
+  end
+
+  # 圧縮メソッド
+  def Compress
+    prev = -1
+    del  = false;
+    @data.reject! do |d| 
+      # 前日と同じ天気なら, 削除する
+      if d.weather == prev then 
+        del = true  
+      elsif
+        del = false
+      end   
+      prev = d.weather
+      del
+    end
+  end
+
+  # 文字列取得メソッド
+  def to_s
+    str = "zone id = #@zone_id, data num = #data.length\n"
+    @data.each do |d|
+      str += d.to_s
+      str += "\n"
+    end
+  end 
+
+end
+
   
 #==================================================================
 #
