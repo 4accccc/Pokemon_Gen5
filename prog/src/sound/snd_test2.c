@@ -23,11 +23,16 @@
 #include "print/printsys.h"
 #include "print/str_tool.h"
 
-#include "sound/snd_viewer.h"
 #include "sound/pm_sndsys.h"
 #include "sound/pm_wb_voice.h"
 
+#include "sound/snd_viewer.h"
+#include "sound/snd_viewer_mcs.h"
+
 #include "arc/soundtest.naix"
+
+#define DS_MCS_SRC
+#include "sound/snd_viewer_mcs_comm.h"
 //============================================================================================
 /**
  *
@@ -331,38 +336,38 @@ static const int initNoData[NOIDX_MAX] = {
  */
 //============================================================================================
 typedef struct {
-	HEAPID				heapID;
-	int					seq;
+	HEAPID					heapID;
+	int							seq;
 
-	GFL_SNDVIEWER*		gflSndViewer;
-	GFL_SKB*			gflSkb;
-	BOOL				gflSkbSw;
+	GFL_SNDVIEWER*	gflSndViewer;
+	GFL_SKB*				gflSkb;
+	BOOL						gflSkbSw;
 
-	void*				skbStrBuf;
+	void*						skbStrBuf;
 
-	GFL_TCB*			g2dVintr;
+	GFL_TCB*				g2dVintr;
 
 	PRINT_QUE*			printQue;
-	GFL_FONT*			fontHandle;
+	GFL_FONT*				fontHandle;
 	GFL_MSGDATA*		msgman;
 	GFL_MSGDATA*		monsmsgman;
 
 	GFL_BMPWIN*			bmpwinName[NAMEIDX_MAX];	
 	PRINT_UTIL			printUtilName[NAMEIDX_MAX];
-	STRBUF*				setName[NAMEIDX_MAX];
+	STRBUF*					setName[NAMEIDX_MAX];
 
 	GFL_BMPWIN*			bmpwinNo[NOIDX_MAX];	
 	PRINT_UTIL			printUtilNo[NOIDX_MAX];
-	int					setNo[NOIDX_MAX];	
+	int							setNo[NOIDX_MAX];	
 
-	STRBUF*				setNoBuffer;
+	STRBUF*					setNoBuffer;
 
-	int					mode;
-	BOOL				bgmPauseSw;
-	BOOL				reverbFlag;
+	int							mode;
+	BOOL						bgmPauseSw;
+	BOOL						reverbFlag;
 
-	u16					tpTrgRepeatFrame;
-	u16					tpTrgRepeatCount;
+	u16							tpTrgRepeatFrame;
+	u16							tpTrgRepeatCount;
 }SOUNDTEST_WORK;
 
 enum {
@@ -540,6 +545,10 @@ static void numberDec(SOUNDTEST_WORK* sw, int idx, int min );
 
 static void setSelectName(SOUNDTEST_WORK* sw);
 static void writeButton(SOUNDTEST_WORK* sw, u8 x, u8 y, BOOL flag );
+
+static void mcsControl(HEAPID heapID);
+static void mcsControlEnd(void);
+static void mcsControlReset(HEAPID heapID);
 //------------------------------------------------------------------
 /**
  *
@@ -576,6 +585,7 @@ static BOOL	SoundTest(SOUNDTEST_WORK* sw)
 		break;
 
 	case 1:
+		mcsControl(sw->heapID);
 		{
 			//soundStatusコントロール設定
 			u16 flag;
@@ -595,6 +605,7 @@ static BOOL	SoundTest(SOUNDTEST_WORK* sw)
 		break;
 
 	case 2:
+		mcsControlEnd();
 		RemoveSoundTestSys(sw);
 		return FALSE;
 	}
@@ -837,6 +848,7 @@ static BOOL checkTouchPanelEventTrg(SOUNDTEST_WORK* sw)
 			PMSND_PauseBGM(FALSE);
 			sw->bgmPauseSw = FALSE;
 		}
+		mcsControlReset(sw->heapID);
 		break;
 
 	case SNDTEST_TPEV_BGM_STOP:
@@ -1120,72 +1132,42 @@ static void printNo(SOUNDTEST_WORK* sw, int idx, u32 numberSize )
 
 
 
-
-
-
-
-
-
-
-#if 0
-#define SEQ_VARIABLE_NUM (16)
-typedef struct {
-	s16		val;
-	BOOL	enable;
-}SEQ_BACKUP_STATUS;
-
-typedef struct {
-	SEQ_BACKUP_STATUS	localVariable[SEQ_VARIABLE_NUM];
-	SEQ_BACKUP_STATUS	globalVariable[SEQ_VARIABLE_NUM];
-}SEQ_BACKUP_PARAM;
-
-static SEQ_BACKUP_PARAM seqBackupParam;
-
-static void SeqBackup( NNSSndHandle* handle )
+//============================================================================================
+/**
+ *
+ *
+ *
+ *
+ *
+ * @brief	MCS通信処理
+ *
+ *
+ *
+ *
+ *
+ */
+//============================================================================================
+static void mcsControl(HEAPID heapID)
 {
-	int		i;
-	s16		val;
-	BOOL	enable;
+	BOOL recvResult;
 
-	for( i=0; i<SEQ_VARIABLE_NUM; i++ ){
-		enable = NNS_SndPlayerReadVariable( handle, i, &val ); 
-		seqBackupParam.localVariable[i].enable = enable;
-		seqBackupParam.localVariable[i].val = val;
-		if( enable == TRUE ){
-			OS_Printf("read success varNum = %d\n", i);
-		} else {
-			OS_Printf("read failed varNum = %d\n", i);
-		}
+	if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_Y ){
+		// MCS接続処理
+		GFL_MCS_SNDVIEWER_Exit();
+		GFL_MCS_SNDVIEWER_Init(heapID);
 	}
-	for( i=0; i<SEQ_VARIABLE_NUM; i++ ){
-		enable = NNS_SndPlayerReadGlobalVariable( i, &val ); 
-		seqBackupParam.globalVariable[i].enable = enable;
-		seqBackupParam.globalVariable[i].val = val;
-	}
+	GFL_MCS_SNDVIEWER_Main(heapID);
 }
 
-static void SeqRecover( NNSSndHandle* handle )
+static void mcsControlEnd(void)
 {
-	int		i;
-	s16		val;
-	BOOL	result;
-
-	for( i=0; i<SEQ_VARIABLE_NUM; i++ ){
-		if( seqBackupParam.localVariable[i].enable == TRUE ){
-			val = seqBackupParam.localVariable[i].val;
-			result = NNS_SndPlayerWriteVariable( handle, i, val ); 
-			if( result == TRUE ){
-				OS_Printf("write success varNum = %d\n", i);
-			} else {
-				OS_Printf("write failed varNum = %d\n", i);
-			}
-		}
-	}
-	for( i=0; i<SEQ_VARIABLE_NUM; i++ ){
-		if( seqBackupParam.globalVariable[i].enable == TRUE ){
-			val = seqBackupParam.globalVariable[i].val;
-			NNS_SndPlayerWriteGlobalVariable( i, val ); 
-		}
-	}
+	GFL_MCS_SNDVIEWER_Exit();
 }
-#endif
+
+static void mcsControlReset(HEAPID heapID)
+{
+	u32 param[PNUM_COMM_PANEL_RESET] = {0};
+
+	MCS_Sound_Send(COMM_PANEL_RESET, param, heapID);
+}
+
