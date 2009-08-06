@@ -40,34 +40,15 @@
 
 	ARCID_FATAL_ERROR	"test_graphic/fatal_error.narc"	#fatalエラー画面表示
 	ARCID_D_TAYA		"test_graphic/d_taya.narc"		#
-	ARCID_SAMPLE		"test_graphic/test3d.narc"		#
-	ARCID_MAPOBJ		"test_graphic/mapobj.narc"		#
-	ARCID_EFFECT		"test_graphic/spaEffect.narc"	#
 	ARCID_FLDACT		"test_graphic/fld_act.narc"		#
-	ARCID_FLDMAP		"test_graphic/fld_map.narc"		#
-	ARCID_FLDBLD		"test_graphic/build_model.narc"	#
-	ARCID_TEST3D		"test_graphic/test3d.narc"		#
-	ARCID_SAMPLEMAP		"test_graphic/sample_map.narc"	#
-	ARCID_TEST3DP		"test_graphic/test3dp.narc"		#3D表示テスト用データ
 	ARCID_RAIL_EDITOR "test_graphic/rail_editor.narc"   # レールエディター
 	ARCID_SNDSTRM			"snd_strm.narc"	# サウンドストリーミング
 	ARCID_WMI			"wmi.narc"	# 通信アイコン
 	ARCID_LAYOUT		"layout.narc"	# レイアウトエディタから吐き出したもの
-	ARCID_D_GOTO		"test_graphic/d_goto.narc"		#
 	ARCID_MESSAGE		"message.narc"		# メッセージデータ
 	ARCID_SCRIPT_MESSAGE	"script_message.narc"		# メッセージデータ
-	ARCID_FLDMAP_SAMPLE "test_graphic/fieldmap_sample.narc" #
-	ARCID_FLDMAP_MAPDATA "test_graphic/fieldmap_map.narc"   #
-	ARCID_FLDMAP_ACTOR   "test_graphic/fieldmap_act.narc"   #
-	ARCID_GSOBJ			"test_graphic/bm_field.narc"	#
-	ARCID_GSOBJANM		"test_graphic/bm_anime.narc"	#
-	ARCID_GSOBJTEX		"test_graphic/areabm_texset.narc"	#
-	ARCID_GSOBJANMTBL	"test_graphic/bm_info_out.narc"	#
-	ARCID_GSAREAOBJ		"test_graphic/area_build.narc"	#
 	ARCID_POKEGRA		"pokegra/pokegra_wb.narc"	#
 	ARCID_FLDMAP_WINFRAME "winframe.narc"   # ウィンドウフレーム
-	ARCID_FLDMAP_MENU_GRA "test_graphic/menu_gra.narc"   # メニューグラフィック
-	ARCID_FLDMAP_TESTGRIDMAP_ATTR "test_graphic/testgridmap_a.narc" #テストマップ
 	ARCID_PTC			"particle/wazaeffect/spa.narc" #技エフェクトパーティクル
 	ARCID_POKEICON		"poke_icon.narc"				#ポケモンアイコン
 	ARCID_MB_TEST		"test_graphic/mb_test.narc"		#マルチブートテスト用(親
@@ -145,7 +126,6 @@
 	ARCID_WIFI_NOTE		"wifi_note.narc"	#友だち手帳
 	ARCID_RECORD_GRA		"record_gra.narc"	#レコード交換
 	ARCID_TRF_GRA		"test_graphic/trbgra.narc"	#トレーナー(仮
-	ARCID_TRB_GRA		"test_graphic/trbgra.narc"	#トレーナー(仮
 	ARCID_SELBOX_GRA	"selbox_gra.narc"			#selbox用
 	ARCID_MUSICAL_SCRIPT	"musical_script.narc"		#ミュージカルスクリプト
 	ARCID_OTHERS		"others.narc"
