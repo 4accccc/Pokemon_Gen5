@@ -120,6 +120,7 @@ SRCS  +=    $(SOUNDSRC) \
         app/pms_input/pms_input.c \
         app/pms_input/pmsi_param.c \
         sound/snd_viewer.c \
+        sound/snd_viewer_mcs.c \
         mystery/comm_mystery_gift.c \
         system/laster.c \
         field/fldmmdl.c \
