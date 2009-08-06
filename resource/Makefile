@@ -82,7 +82,8 @@ SUBDIRS	=	wmi \
 			trmsg \
 			irc_compatible \
 			worldtrade \
-			balance_ball
+			balance_ball \
+			calender
 
 include $(RESOURCE_MACRO)
 
