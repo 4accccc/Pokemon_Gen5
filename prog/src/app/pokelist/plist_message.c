@@ -220,8 +220,8 @@ void PLIST_MSG_DrawMessageNoWait( PLIST_WORK *work , PLIST_MSG_WORK *msgWork , c
   //Que‚Íe‚Ì‚à‚Ì‚ðŽg‚¤
   PLIST_MSG_ClearWindow( work , msgWork );
 
-  PRINTSYS_PrintQue( work->printQue , GFL_BMPWIN_GetBmp( msgWork->bmpWin ) , 
-          PLIST_MSG_STR_OFS_X , PLIST_MSG_STR_OFS_Y , str , work->fontHandle );
+  PRINTSYS_PrintQueColor( work->printQue , GFL_BMPWIN_GetBmp( msgWork->bmpWin ) , 
+          PLIST_MSG_STR_OFS_X , PLIST_MSG_STR_OFS_Y , str , work->fontHandle , PLIST_FONT_COLOR_BLACK );
 
   msgWork->isUpdateMsg = TRUE;
   GFL_STR_DeleteBuffer( str );

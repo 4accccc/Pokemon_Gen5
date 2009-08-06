@@ -45,6 +45,7 @@
 #define PLIST_FONT_MSG_BACK (0xF)
 #define PLIST_FONT_MSG_LETTER (0x1)
 #define PLIST_FONT_MSG_SHADOW (0x2)
+#define PLIST_FONT_COLOR_BLACK (PRINTSYS_LSB_Make(1,2,0))
 
 //プレートの文字はHPバーと同じパレット
 #define PLIST_FONT_PARAM_LETTER (0xF)

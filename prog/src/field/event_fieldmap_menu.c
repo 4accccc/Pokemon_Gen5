@@ -974,6 +974,7 @@ static const BOOL FMenuReturnProc_Bag(FMENU_EVENT_WORK* mwk)
         break;
       case BAG_NEXTPROC_ITEMEQUIP:
         plData->mode = PL_MODE_ITEMSET_RET;
+        plData->ret_sel = mwk->selPoke; 
         break;
       case BAG_NEXTPROC_ITEMUSE:
         plData->mode = PL_MODE_ITEMUSE;

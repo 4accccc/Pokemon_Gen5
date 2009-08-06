@@ -481,7 +481,8 @@ SRCS_OVERLAY_POKELIST = test/matsuda/easy_pokelist.c\
 		app/pokelist/plist_sys.c \
 		app/pokelist/plist_plate.c \
 		app/pokelist/plist_message.c \
-		app/pokelist/plist_menu.c
+		app/pokelist/plist_menu.c \
+		app/pokelist/plist_item.c
 
 #ポケモンステータス
 #===> SRCS_OVERLAY_DEV_IRC

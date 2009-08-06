@@ -701,6 +701,7 @@ static void PLIST_InitMessage( PLIST_WORK *work )
   
   //キューが足りなかったので追加(デフォルト1024
   work->printQue = PRINTSYS_QUE_CreateEx( 2048 , work->heapId );
+  GFL_FONTSYS_SetDefaultColor();
 }
 
 //--------------------------------------------------------------------------
@@ -896,13 +897,18 @@ static void PLIST_InitMode( PLIST_WORK *work )
     }
     work->nextMainSeq = PSMS_MSG_WAIT;
     work->mainSeq = PSMS_FADEIN;
+    work->canExit = FALSE;
     break;
     
   case PL_MODE_ITEMSET_RET:
+    work->pokeCursor = work->plData->ret_sel;
+    work->selectPokePara = PokeParty_GetMemberPointer(work->plData->pp, work->plData->ret_sel );
     if( work->plData->item == 0 )
     {
       //キャンセルされた
       //選択画面へ
+      //ついでにモードをフィールドに戻してしまう
+      work->plData->mode = PL_MODE_FIELD;
       PLIST_InitMode_Select( work );
       work->nextMainSeq = PSMS_SELECT_POKE;
     }
@@ -919,6 +925,9 @@ static void PLIST_InitMode( PLIST_WORK *work )
         
         PP_Put( work->selectPokePara , ID_PARA_item , work->plData->item );
         PSTATUS_SubItem( work , work->plData->item );
+        PLIST_PLATE_ReDrawParam( work , work->plateWork[work->pokeCursor] );
+        //ついでにモードをフィールドに戻してしまう
+        work->plData->mode = PL_MODE_FIELD;
       }
       else
       {
@@ -930,6 +939,9 @@ static void PLIST_InitMode( PLIST_WORK *work )
         
       }
     }
+    work->nextMainSeq = PSMS_MSG_WAIT;
+    work->mainSeq = PSMS_FADEIN;
+    work->canExit = TRUE;
     break;
 
   default:
@@ -1027,6 +1039,7 @@ static void PLIST_TermMode_Select_Decide( PLIST_WORK *work )
         
         PP_Put( work->selectPokePara , ID_PARA_item , work->plData->item );
         PSTATUS_SubItem( work , work->plData->item );
+        PLIST_PLATE_ReDrawParam( work , work->plateWork[work->pokeCursor] );
       }
       else
       {
