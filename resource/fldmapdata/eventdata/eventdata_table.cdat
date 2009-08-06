@@ -10403,13 +10403,13 @@ static const EVENTDATA_TABLE event_d07r0601 = {
 #include "../script/h01_def.h"
 const CONNECT_DATA DOOR_EVENT_H01[] = {
 	{//DOOR_ID_H01_H01P01_EXIT01 = 0
-		{405, 32, 2879},
+		{1429, 32, 4415},
 		ZONE_ID_H01P01, DOOR_ID_H01P01_H01_EXIT01,
 		EXIT_DIR_NON,//direction
 		EXIT_TYPE_NONE //type
 	},
 	{//DOOR_ID_H01_C03_EXIT01 = 1
-		{799, 32, -1265},
+		{1823, 32, 287},
 		ZONE_ID_C03, DOOR_ID_C03_H01_EXIT01,
 		EXIT_DIR_NON,//direction
 		EXIT_TYPE_NONE //type
