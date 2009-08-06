@@ -679,12 +679,30 @@ static void _itemTecniqueUseInit(FIELD_ITEMMENU_WORK* pWork)
   _CHANGE_STATE(pWork,_itemTecniqueUseWait);
 }
 
+//------------------------------------------------------------------------------
+/**
+ * @brief   アイテムを捨てる為の操作
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+
+static void _itemTrashWait(FIELD_ITEMMENU_WORK* pWork)
+{
+}
+
+//------------------------------------------------------------------------------
+/**
+ * @brief   アイテムを捨てる為の表示
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
 
 static void _itemTrash(FIELD_ITEMMENU_WORK* pWork)
 {
 
+  ITEMDISP_NumFrameDisp(pWork,100);
 
-
+  _CHANGE_STATE(pWork,_itemTrashWait);
 }
 
 //------------------------------------------------------------------------------
@@ -773,6 +791,7 @@ static void _itemSelectState(FIELD_ITEMMENU_WORK* pWork)
     }
   }
   if(pWork->mode == BAG_MODE_POKELIST){
+//    pWork->ret_code = BAG_NEXTPROC_ITEMHAVE_RET;
     pWork->ret_code = BAG_NEXTPROC_ITEMEQUIP;
     _CHANGE_STATE(pWork,NULL);
   }

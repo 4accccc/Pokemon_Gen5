@@ -938,6 +938,7 @@ static const BOOL FMenuReturnProc_ReturnField(FMENU_EVENT_WORK* mwk)
 static const BOOL FMenuReturnProc_Bag(FMENU_EVENT_WORK* mwk)
 {
   FIELD_ITEMMENU_WORK *pBag = mwk->subProcWork;
+  BOOL bPokeList = FALSE;
   
   switch( pBag->ret_code )
   {
@@ -945,7 +946,14 @@ static const BOOL FMenuReturnProc_Bag(FMENU_EVENT_WORK* mwk)
     FieldMap_SetExitSequence(mwk);
     return FALSE;
   case BAG_NEXTPROC_RETURN:      // めにゅーもどり
-    return FALSE;
+    if(pBag->mode == BAG_MODE_POKELIST){   //リストから呼ばれていた場合
+      bPokeList=TRUE;
+      pBag->ret_item=0;
+    }
+    else{
+      return FALSE;
+    }
+    break;
   case BAG_NEXTPROC_RIDECYCLE:
   case BAG_NEXTPROC_DROPCYCLE:
     mwk->itemuseEventType = FMENU_ITEMUSE_CYCLE;
@@ -961,46 +969,54 @@ static const BOOL FMenuReturnProc_Bag(FMENU_EVENT_WORK* mwk)
   case BAG_NEXTPROC_EXITEM:
     break;
   default:
-    {
-      PLIST_DATA *plData = GFL_HEAP_AllocMemory( HEAPID_PROC , sizeof(PLIST_DATA) );
-      GAMEDATA *gmData = GAMESYSTEM_GetGameData(mwk->gmSys);
-      
-      plData->pp = GAMEDATA_GetMyPokemon(gmData);
-      plData->ret_sel = 0;
-
-      switch(pBag->ret_code){
-      case BAG_NEXTPROC_WAZASET:
-        plData->mode = PL_MODE_WAZASET;
-        break;
-      case BAG_NEXTPROC_ITEMEQUIP:
-        plData->mode = PL_MODE_ITEMSET_RET;
-        plData->ret_sel = mwk->selPoke; 
-        break;
-      case BAG_NEXTPROC_ITEMUSE:
-        plData->mode = PL_MODE_ITEMUSE;
-        break;
-      case BAG_NEXTPROC_EVOLUTION:
-        plData->mode = PL_MODE_SHINKA;
-        break;
-      default:
-        plData->mode = PL_MODE_ITEMSET;    //アイテムをセットする呼び出し
-        break;
-      }
-      plData->waza = 0;
-      plData->item = pBag->ret_item;     //アイテムID
-      plData->myitem = GAMEDATA_GetMyItem(gmData);    // アイテムデータ
-
-      FMenu_SetNextSubProc( mwk ,FMENU_APP_POKELIST , plData );
-      return TRUE;
-    }
+    bPokeList = TRUE;
+      break;
   }
+
+
+  if(bPokeList){
+    PLIST_DATA *plData = GFL_HEAP_AllocMemory( HEAPID_PROC , sizeof(PLIST_DATA) );
+    GAMEDATA *gmData = GAMESYSTEM_GetGameData(mwk->gmSys);
+      
+    plData->pp = GAMEDATA_GetMyPokemon(gmData);
+    plData->ret_sel = 0;
+
+    switch(pBag->ret_code){
+    case BAG_NEXTPROC_WAZASET:
+      plData->mode = PL_MODE_WAZASET;
+      break;
+    case BAG_NEXTPROC_ITEMEQUIP:
+      plData->mode = PL_MODE_ITEMSET_RET;
+      plData->ret_sel = mwk->selPoke; 
+      break;
+    case BAG_NEXTPROC_ITEMUSE:
+      plData->mode = PL_MODE_ITEMUSE;
+      break;
+    case BAG_NEXTPROC_EVOLUTION:
+      plData->mode = PL_MODE_SHINKA;
+      break;
+    case BAG_NEXTPROC_ITEMHAVE_RET:
+      plData->mode = PL_MODE_ITEMSET_RET;
+      break;
+    default:
+      plData->mode = PL_MODE_ITEMSET;    //アイテムをセットする呼び出し
+      break;
+    }
+    plData->waza = 0;
+    plData->item = pBag->ret_item;     //アイテムID
+    plData->myitem = GAMEDATA_GetMyItem(gmData);    // アイテムデータ
+    
+    FMenu_SetNextSubProc( mwk ,FMENU_APP_POKELIST , plData );
+    return TRUE;
+  }
+  
   return FALSE;
 }
 
 
 //--------------------------------------------------------------
 /**
- * 子Proc後処理 Bag
+ * 子Proc後処理 タウンマップ
  * @param mwk FMENU_EVENT_WORK
  * @retval  BOOL  TRUE=別のProcを呼び出す(mwk->subProcTypeに次のprocを設定してください
  *                FALSE=Fieldに戻る

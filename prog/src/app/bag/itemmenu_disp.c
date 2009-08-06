@@ -1421,15 +1421,28 @@ void ITEMDISP_NumFrameDisp(FIELD_ITEMMENU_WORK* pWork,int num)
 {
   ARCHANDLE* p_handle = GFL_ARC_OpenDataHandle( ARCID_BAG, pWork->heapID );
 
-  GFL_FONTSYS_SetColor( 0xe, 0xf, 0 );
-  PRINTSYS_Print( GFL_BMPWIN_GetBmp(pWork->winNumFrame), 8, 4, pWork->pStrBuf, pWork->fontHandle);
-  GFL_BMPWIN_TransVramCharacter(pWork->winNumFrame);
-  GFL_BMPWIN_MakeScreen(pWork->winNumFrame);
+//  GFL_FONTSYS_SetColor( 0xe, 0xf, 0 );
+//  PRINTSYS_Print( GFL_BMPWIN_GetBmp(pWork->winNumFrame), 8, 4, pWork->pStrBuf, pWork->fontHandle);
+//  GFL_BMPWIN_TransVramCharacter(pWork->winNumFrame);
+//  GFL_BMPWIN_MakeScreen(pWork->winNumFrame);
 
-  GFL_ARCHDL_UTIL_TransVramScreenCharOfsVBlank(
-    p_handle, NARC_bag_bag_win05_d_NSCR, GFL_BG_FRAME3_M, 0,
-    GFL_ARCUTIL_TRANSINFO_GetPos(pWork->numFrameBg), 0, 0, pWork->heapID);
+  {
+    void* arcData = GFL_ARCHDL_UTIL_Load( p_handle, NARC_bag_bag_win05_d_NSCR, 0, pWork->heapID );
 
+    NNSG2dScreenData* scrnData;
+    if( NNS_G2dGetUnpackedScreenData( arcData, &scrnData ) )
+    {
+
+
+      GFL_BG_WriteScreen(
+        GFL_BG_FRAME3_M, &scrnData->rawData,_WINNUM_INITX,_WINNUM_INITY,_WINNUM_SIZEX,_WINNUM_SIZEY);
+      GFL_HEAP_FreeMemory( arcData );
+
+      GFL_BG_LoadScreenV_Req(GFL_BG_FRAME3_M);
+    }
+
+  }
+  
   GFL_ARC_CloseDataHandle(p_handle);
 
 }

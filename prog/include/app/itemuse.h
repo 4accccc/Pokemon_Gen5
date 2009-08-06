@@ -25,6 +25,7 @@ enum BAG_NEXTPROC_ENUM
   BAG_NEXTPROC_RETURN,   //手前に戻る
   BAG_NEXTPROC_HAVE,  // ポケモンにアイテムをもたせる
   BAG_NEXTPROC_ITEMEQUIP,  //ポケモンリストのアイテム装備に戻る
+  BAG_NEXTPROC_ITEMHAVE_RET,  //ポケモンリストのアイテム装備に戻るが、キャンセルのとき
   BAG_NEXTPROC_ITEMUSE,  //使う
   BAG_NEXTPROC_WAZASET, //技セット
   BAG_NEXTPROC_TOWNMAP, //タウンマップ
