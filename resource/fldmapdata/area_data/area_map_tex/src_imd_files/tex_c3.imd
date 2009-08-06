@@ -3,7 +3,7 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="lee_hyunjung" host="W00154A" date="2009-08-05T20:54:18"/>
+	<create user="lee_hyunjung" host="W00154A" date="2009-08-06T19:57:42"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="NNS_3DMaterialEditor" version="2.8.0.20050620"/>
 </head>
@@ -4364,7 +4364,7 @@
 		format="palette16"
 		color0_mode="color"
 		palette_name="d5_conte01a_pl"
-		path="C:/home/wb_data3d/field/out05/map/tex/d5_conte01a.tga"
+		path="C:/home/wb_data3d/build_model/outdoor/d5_container_01/tex/d5_conte01a.tga"
 	>
 		<bitmap size="512">
 			3333 3333 3333 bb83 338b 3333 3333 3333
@@ -4438,7 +4438,7 @@
 		format="palette4"
 		color0_mode="color"
 		palette_name="d5_conte01b_pl"
-		path="C:/home/wb_data3d/field/out05/map/tex/d5_conte01b.tga"
+		path="C:/home/wb_data3d/build_model/outdoor/d5_container_01/tex/d5_conte01b.tga"
 	>
 		<bitmap size="128">
 			ffff ffff ffff ffff aaaa aaaa aaaa faaa
@@ -4464,7 +4464,7 @@
 		format="palette16"
 		color0_mode="color"
 		palette_name="d5_conte02a_pl"
-		path="C:/home/wb_data3d/field/out05/map/tex/d5_conte02a.tga"
+		path="C:/home/wb_data3d/build_model/outdoor/d5_container_02/tex/d5_conte02a.tga"
 	>
 		<bitmap size="512">
 			3333 3333 3333 8873 3378 3333 3333 3333
@@ -4538,7 +4538,7 @@
 		format="palette4"
 		color0_mode="color"
 		palette_name="d5_conte02b_pl"
-		path="C:/home/wb_data3d/field/out05/map/tex/d5_conte02b.tga"
+		path="C:/home/wb_data3d/build_model/outdoor/d5_container_02/tex/d5_conte02b.tga"
 	>
 		<bitmap size="128">
 			ffff ffff ffff ffff aaaa aaaa aaaa faaa
@@ -4752,7 +4752,7 @@
 		width="8" height="8" original_width="8" original_height="8"
 		format="a3i5"
 		palette_name="h_kage_pl"
-		path="C:/home/wb_data3d/field/out05/map/tex/h_kage.tga"
+		path="C:/home/wb_data3d/build_model/outdoor/common_tex/h_kage.tga"
 	>
 		<bitmap size="32">
 			2020 2020 2020 2020 2020 2020 2020 2020
