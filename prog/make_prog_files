@@ -162,10 +162,10 @@ SRCS  +=    $(SOUNDSRC) \
         app/app_taskmenu.c \
         field/field_sound.c \
         tr_tool/tr_tool.c \
-		gamesystem/iss_city_sys.c \
-		gamesystem/iss_road_sys.c \
-		gamesystem/iss_dungeon_sys.c \
-		gamesystem/iss_sys.c
+        gamesystem/iss_city_sys.c \
+        gamesystem/iss_road_sys.c \
+        gamesystem/iss_dungeon_sys.c \
+        gamesystem/iss_sys.c
 
 
 #================================================
@@ -347,8 +347,12 @@ SRCS_OVERLAY_FIELDMAP		=	field/field_proc.c \
         field/fldeff_footmark.c \
         field/fldeff_reflect.c \
         field/scrcmd_musical.c \
-		field/field_place_name.c \
-		field/field_cars.c
+        field/field_place_name.c \
+        field/field_cars.c \
+        field/calender_encount.c \
+        field/calender_hatch.c \
+        field/calender_weather.c \
+        field/calender.c
 
 
 # フィールド天気
