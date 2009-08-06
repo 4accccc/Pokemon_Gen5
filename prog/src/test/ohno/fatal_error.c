@@ -13,7 +13,7 @@
 #include "system/gfl_use.h"
 #include "system\main.h"
 
-#include "test_graphic/fatal_error.naix"
+#include "net_err.naix"
 #include "fatal_error.h"
 
 #include "arc_def.h"
@@ -119,9 +119,9 @@ void FatalError_Disp(GFL_NETHANDLE* pNet,int errNo,void* pWork)
 	}
 
 	//âÊñ ê∂ê¨
-	GFL_ARC_UTIL_TransVramBgCharacter(ARCID_FATAL_ERROR,NARC_fatal_error_fatal_error_lz_NCGR,GFL_BG_FRAME2_M,0,0,1,GFL_HEAPID_APP);
-	GFL_ARC_UTIL_TransVramScreen(ARCID_FATAL_ERROR,NARC_fatal_error_fatal_error_lz_NSCR,GFL_BG_FRAME2_M,0,0,1,GFL_HEAPID_APP);
-	GFL_ARC_UTIL_TransVramPalette(ARCID_FATAL_ERROR,NARC_fatal_error_fatal_error_NCLR,PALTYPE_MAIN_BG,0,0x100,GFL_HEAPID_APP);
+	GFL_ARC_UTIL_TransVramBgCharacter(ARCID_NET_ERR,NARC_net_err_net_err_NCGR,GFL_BG_FRAME2_M,0,0,0,GFL_HEAPID_APP);
+	GFL_ARC_UTIL_TransVramScreen(ARCID_NET_ERR,NARC_net_err_net_err_NSCR,GFL_BG_FRAME2_M,0,0,0,GFL_HEAPID_APP);
+	GFL_ARC_UTIL_TransVramPalette(ARCID_NET_ERR,NARC_net_err_net_err_NCLR,PALTYPE_MAIN_BG,0,0x100,GFL_HEAPID_APP);
 
 	GFL_DISP_SetDispOn();
 	GFL_DISP_SetDispSelect( GFL_DISP_3D_TO_SUB );

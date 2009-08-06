@@ -14,8 +14,14 @@
 #include "system/main.h"
 #include "arc_def.h"
 
-//#include "../goto/comm_error.h"
 #include "layout.naix"
+#include "system/gfl_use.h"
+#include "arc_def.h"
+#include "system/bmp_menu.h"
+#include "system/bmp_winframe.h"
+#include "message.naix"
+#include "msg/msg_d_field.h"
+#include "font/font.naix" //NARC_font_large_nftr
 
 //======================================================================
 //	struct
@@ -182,6 +188,8 @@ static GFL_PROC_RESULT DebugLayoutMainProcInit( GFL_PROC * proc, int * seq, void
 	G2_BlendNone();
 	GFL_BG_Init( wk->heapID );
 	GFL_BMPWIN_Init( wk->heapID );
+  GFL_FONTSYS_Init();
+  
 /*		
 	{
 		static const GFL_BG_SYS_HEADER sysHeader = {
@@ -349,15 +357,6 @@ const GFL_PROC_DATA		DebugLayoutMainProcData = {
  * @data	08.09.29
  */
 //======================================================================
-#include <gflib.h>
-#include "system/gfl_use.h"
-#include "arc_def.h"
-#include "system/bmp_menu.h"
-#include "system/bmp_winframe.h"
-#include "message.naix"
-
-#include "test_graphic/d_taya.naix"
-#include "msg/msg_d_field.h"
 
 
 //======================================================================
@@ -476,9 +475,6 @@ DEBUG_FLDMENU * LayoutDebugMenu_Init( u32 heapID )
 		GFL_BG_SetPriority( d_menu->bgFrame, 0 );
 		GFL_BG_SetPriority( GFL_BG_FRAME0_M, 1 );
 
-		GFL_ARC_UTIL_TransVramPalette(
-			ARCID_D_TAYA, NARC_d_taya_default_nclr,
-			PALTYPE_MAIN_BG, DEBUG_FONT_PANO*32, 32, d_menu->heapID );
 
 		GFL_BG_FillCharacter( d_menu->bgFrame, 0x00, 1, 0 );
 		GFL_BG_FillScreen( d_menu->bgFrame,
@@ -545,10 +541,13 @@ void LayoutDebugMenu_Create( DEBUG_FLDMENU *d_menu )
 			NARC_message_d_field_dat, d_menu->heapID );
 		
 		d_menu->strbuf = GFL_STR_CreateBuffer( 1024, d_menu->heapID );
-		
-		d_menu->fontHandle = GFL_FONT_Create( ARCID_D_TAYA,
-			 NARC_d_taya_lc12_2bit_nftr,
-			GFL_FONT_LOADTYPE_FILE, FALSE, d_menu->heapID );
+
+    d_menu->fontHandle = GFL_FONT_Create( ARCID_FONT , NARC_font_large_nftr ,
+                                          GFL_FONT_LOADTYPE_FILE , FALSE , d_menu->heapID );
+    
+//		d_menu->fontHandle = GFL_FONT_Create( ARCID_D_TAYA,
+//			 NARC_d_taya_lc12_2bit_nftr,
+//			GFL_FONT_LOADTYPE_FILE, FALSE, d_menu->heapID );
 
 		PRINTSYS_Init( d_menu->heapID );
 		d_menu->printQue = PRINTSYS_QUE_Create( d_menu->heapID );

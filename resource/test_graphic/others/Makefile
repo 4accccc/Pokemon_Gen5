@@ -6,8 +6,6 @@ TARGET_DIR	= $(PROJECT_ARCDIR)/test_graphic
 TARGET_NAMES	= \
 	d_taya.naix \
 	d_taya.narc \
-	fatal_error.naix \
-	fatal_error.narc \
 	fld_act.naix \
 	fld_act.narc \
 	spa.narc \
