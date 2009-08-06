@@ -12,9 +12,7 @@ TARGET_NAMES	= \
 	titledemo.naix \
 	titledemo.narc \
 	map_tex_set.narc \
-	land_data.narc \
-	config_gra.narc \
-	config_gra.naix
+	land_data.narc 
 
 TARGETS	= $(addprefix $(TARGET_DIR)/,$(TARGET_NAMES))
 
