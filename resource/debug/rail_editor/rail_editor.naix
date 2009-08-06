@@ -1,0 +1,22 @@
+/*****************************************************************************
+	Archive file index definition.
+	File: rail_editor.naix
+
+	This file was created by NINTENDO NITRO-System Archiver.
+
+
+ *****************************************************************************/
+
+#ifndef NARC_RAIL_EDITOR_NAIX_
+#define NARC_RAIL_EDITOR_NAIX_
+
+enum {
+	NARC_rail_editor_rail_editor_line_nsbmd = 0,
+	NARC_rail_editor_rail_editor_point_nsbmd = 1,
+	NARC_rail_editor_rail_editor_position_nsbca = 2,
+	NARC_rail_editor_rail_editor_position_nsbma = 3,
+	NARC_rail_editor_rail_editor_position_nsbmd = 4
+};
+
+/* NARC_RAIL_EDITOR_NAIX_ */
+#endif
