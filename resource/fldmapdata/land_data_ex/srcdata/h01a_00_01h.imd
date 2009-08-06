@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="fuchino" host="W00152" date="2009-07-18T20:19:22" source="h01a_00_01h.mb"/>
+	<create user="fuchino" host="W00152" date="2009-08-05T13:44:56" source="h01a_00_01h.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 </head>
 
 <body>
 
-<original_create user="fuchino" host="W00152" date="2009-07-18T20:19:22" source="h01a_00_01h.mb"/>
+<original_create user="fuchino" host="W00152" date="2009-08-05T13:44:56" source="h01a_00_01h.mb"/>
 <original_generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 
 <model_info
@@ -27,21 +27,21 @@
 	use_primitive_strip="on"
 />
 
-<box_test pos_scale="8" xyz="-1.654053 -0.122314 -2.000000" whd="3.716309 1.090820 4.000000"/>
+<box_test pos_scale="9" xyz="-1.654053 -0.122314 -2.000000" whd="3.278809 1.090820 4.000000"/>
 
 <vtx_pos_data pos_size="24">
-	3.875000 1.937500 4.000000
-	4.125000 1.937500 4.000000
-	3.875000 1.937500 0.250000
-	4.125000 1.937500 0.250000
-	3.875000 1.937500 0.250000
-	4.125000 1.937500 0.250000
-	3.875000 1.937500 -4.000000
-	4.125000 1.937500 -4.000000
+	3.000000 1.937500 4.000000
+	3.250000 1.937500 4.000000
+	3.000000 1.937500 0.250000
+	3.250000 1.937500 0.250000
+	3.000000 1.937500 0.250000
+	3.250000 1.937500 0.250000
+	3.000000 1.937500 -4.000000
+	3.250000 1.937500 -4.000000
 	0.000000 -0.244629 3.307861
-	3.307861 -0.244629 3.307861
+	2.432861 -0.244629 3.307861
 	0.000000 -0.244629 0.000000
-	3.307861 -0.244629 0.000000
+	2.432861 -0.244629 0.000000
 	-3.307861 -0.192871 3.307861
 	0.000000 -0.244629 3.307861
 	-3.307861 -0.192871 0.000000
@@ -51,9 +51,9 @@
 	-3.307861 -0.192871 -3.307861
 	0.000000 -0.244629 -3.307861
 	0.000000 -0.244629 0.000000
-	3.307861 -0.244629 0.000000
+	2.432861 -0.244629 0.000000
 	0.000000 -0.244629 -3.307861
-	3.307861 -0.244629 -3.307861
+	2.432861 -0.244629 -3.307861
 </vtx_pos_data>
 
 <tex_image_array size="2">
@@ -163,9 +163,9 @@
 	<polygon index="0" name="polygon0"
 		vertex_size="8" polygon_size="2"
 		triangle_size="0" quad_size="2"
-		volume_min="3.875000 1.937500 -4.000000"
-		volume_max="4.125000 1.937500 4.000000"
-		volume_r="6.063721"
+		volume_min="3.000000 1.937500 -4.000000"
+		volume_max="3.250000 1.937500 4.000000"
+		volume_r="5.506104"
 		mtx_prim_size="1"
 		nrm_flag="on" clr_flag="off" tex_flag="on"
 	>
@@ -199,8 +199,8 @@
 		vertex_size="16" polygon_size="4"
 		triangle_size="0" quad_size="4"
 		volume_min="-3.307861 -0.244629 -3.307861"
-		volume_max="3.307861 -0.192871 3.307861"
-		volume_r="4.684326"
+		volume_max="2.432861 -0.192871 3.307861"
+		volume_r="4.681885"
 		mtx_prim_size="1"
 		nrm_flag="on" clr_flag="off" tex_flag="on"
 	>
@@ -256,7 +256,7 @@
 		brother_prev="-1"
 		draw_mtx="on"
 		billboard="off"
-		scale="1.000000 1.000000 1.000000"
+		scale="2.000000 2.000000 2.000000"
 		rotate="0.000000 0.000000 0.000000"
 		translate="0.000000 0.000000 0.000000"
 		visibility="on"
@@ -264,8 +264,8 @@
 		vertex_size="24" polygon_size="6"
 		triangle_size="0" quad_size="6"
 		volume_min="-3.307861 -0.244629 -4.000000"
-		volume_max="4.125000 1.937500 4.000000"
-		volume_r="6.063721"
+		volume_max="3.250000 1.937500 4.000000"
+		volume_r="5.506104"
 	>
 		<display index="0" material="0" polygon="0" priority="0"/>
 		<display index="1" material="1" polygon="1" priority="0"/>
