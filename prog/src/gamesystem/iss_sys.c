@@ -16,7 +16,6 @@
 #include "gamesystem/playerwork.h"
 #include "gamesystem/game_data.h"
 #include "sound/pm_sndsys.h" 
-#include "arc/fieldmap/zone_id.h"	// TEMP:
 
 
 //=========================================================================================
@@ -114,7 +113,8 @@ ISS_SYS* ISS_SYS_Create( GAMEDATA* p_gdata, HEAPID heap_id )
 	p_sys->pIssDungeonSys = ISS_DUNGEON_SYS_Create( p_player, heap_id );
 	p_sys->bgmNo          = INVALID_BGM_NO;
 	p_sys->frame          = 0;
-	
+
+
 	// ì¬‚µ‚½ISSƒVƒXƒeƒ€‚ğ•Ô‚·
 	return p_sys;
 }
