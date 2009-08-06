@@ -6,6 +6,7 @@ include $(PROJECT_RSCDIR)\macro_define
 #zonetable‚ª––”öA‚Æ‚¢‚¤‡”Ô‚Í•ÏX‚µ‚Ä‚Í‚¢‚¯‚È‚¢B
 
 SUBDIRS	=	zonetable/zoneindex \
+					flagwork \
 					area_data \
 					land_data \
 					camera_data \
