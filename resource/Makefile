@@ -83,6 +83,8 @@ SUBDIRS	=	wmi \
 			worldtrade \
 			balance_ball \
 			calender \
+			footprint_board \
+			pokefoot \
 			debug \
 			config
 

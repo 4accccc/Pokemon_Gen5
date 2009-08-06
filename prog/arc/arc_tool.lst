@@ -168,4 +168,6 @@
 	ARCID_TRPOKE "trpoke.narc"   # 野良トレーナー持ちポケモンデータ
 	ARCID_IRCCOMPATIBLE	"irccompatible_gra.narc"	#相性ゲーム共通グラフィックデータ
   ARCID_BALANCE_BALL_GRA "balance_ball.narc"    #ころころマネネ
+  ARCID_FOOTPRINT_GRA     "footprint_board.narc"  #足跡ボードグラフィック
+	ARCID_POKEFOOT_GRA      "pokefoot.narc"			# ポケモン足跡グラフィックデータ
   ARCID_CALENDER "calender.narc"  # カレンダー情報
