@@ -1934,37 +1934,43 @@ static  void  EFFVM_InitEmitterPos( GFL_EMIT_PTR emit )
   if( beeiw->src != beeiw->dst )
   {
     MtxFx43 mtx43;
-    VecFx32 rot_axis, line_vec, std_vec;
+    VecFx32 src_vec, dst_vec, rot_axis;
     VecFx16 dir;
     u16     angle;
     u16     spin_axis = SPL_FLD_SPIN_AXIS_TYPE_Z;
 
-    line_vec.x = dst.x - src.x;
-    line_vec.y = dst.y - src.y;
-    line_vec.z = dst.z - src.z;
+    dst.x -= src.x;
+    dst.y -= src.y;
+    dst.z -= src.z;
 
-    //マグネットとコンバージェンスの座標にline_vecを代入
-    GFL_PTC_SetEmitterMagnetPos( emit, &line_vec );
-    GFL_PTC_SetEmitterConvergencePos( emit, &line_vec );
+    //マグネットとコンバージェンスの座標にdstを代入
+    GFL_PTC_SetEmitterMagnetPos( emit, &dst );
+    GFL_PTC_SetEmitterConvergencePos( emit, &dst );
 
-    VEC_Normalize( &line_vec, &line_vec );
+    dst_vec.x = dst.x;
+    dst_vec.y = 0;
+    dst_vec.z = dst.z;
 
     GFL_PTC_GetEmitterAxis( emit, &dir );
-    VEC_Set( &std_vec, dir.x, dir.y, dir.z );
+    VEC_Set( &src_vec, dir.x, 0, dir.z );
+
+    VEC_Normalize( &src_vec, &src_vec );
+    VEC_Normalize( &dst_vec, &dst_vec );
 
     //内積を求めて角度を出す
-    angle = FX_AcosIdx( VEC_DotProduct( &std_vec, &line_vec ) );
+    angle = FX_AcosIdx( VEC_DotProduct( &src_vec, &dst_vec ) );
 
     //外積を求めて回転軸を出す
-    VEC_CrossProduct( &std_vec, &line_vec, &rot_axis );
+    VEC_CrossProduct( &src_vec, &dst_vec, &rot_axis );
     VEC_Normalize( &rot_axis, &rot_axis );
 
     //回転行列を生成する
     MTX_RotAxis43( &mtx43, &rot_axis, FX_SinIdx( angle ), FX_CosIdx( angle ) );
 
-    MTX_MultVec43( &std_vec, &mtx43, &std_vec );
-    VEC_Normalize( &std_vec, &std_vec );
-    VEC_Fx16Set( &dir, std_vec.x, std_vec.y, std_vec.z );
+    VEC_Set( &src_vec, dir.x, dir.y, dir.z );
+    MTX_MultVec43( &src_vec, &mtx43, &src_vec );
+    VEC_Normalize( &src_vec, &src_vec );
+    VEC_Fx16Set( &dir, src_vec.x, src_vec.y, src_vec.z );
 
     if( angle < 0x2000 || ( angle > 0x6000 && angle < 0xa000 ) || angle > 0xe000 )
     { 
