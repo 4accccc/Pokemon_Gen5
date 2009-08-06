@@ -5,11 +5,15 @@ SUBDIRS	=	rail_editor easy_pokelist
 
 TARGET_NAMES = \
 	mmodel.naix \
-	mmodel.narc
+	mmodel.narc \
+	fld_act.naix \
+	fld_act.narc 
 	
-TARGET_DIR = $(PROJECT_ARCDIR)/debug
+TARGET_DIR = $(PROJECT_ARCDIR)debug
 
-.PHONY:	do-build clean
+TARGETS = $(addprefix $(TARGET_DIR)/,$(TARGET_NAMES))
+
+.PHONY:	do-build clean install
 
 $(TARGET_DIR)/%.narc:	%.narc
 	$(COPY) $^ $@
@@ -17,8 +21,13 @@ $(TARGET_DIR)/%.narc:	%.narc
 $(TARGET_DIR)/%.naix:	%.naix
 	$(COPY) $^ $@
 
-do-build:
+do-build: install
+
 	@$(MAKE_SUBDIR)
+
+install: $(TARGETS)
 
 clean:
 	@$(MAKE_SUBDIR)
+
+	rm -f $(TARGETS)
