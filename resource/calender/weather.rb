@@ -35,7 +35,7 @@ class WeatherInfo
     @weather = weather  # 天気
   end
 
-  # アクセッサ・メソッド
+  # アクセッサ(ゲッター)メソッド
   def weather
     @weather
   end
@@ -46,6 +46,19 @@ class WeatherInfo
 
   def day
     @day
+  end
+
+  # アクセッサ(セッター)メソッド
+  def weather=( w )
+    @weather = w
+  end
+
+  def month=( m )
+    @month = m
+  end
+
+  def day=( d )
+    @day = d
   end
 
   # 文字列取得メソッド
@@ -91,9 +104,22 @@ class ZoneWeatherInfo
     @data[i].day
   end
 
+  # データ設定メソッド
+  def SetWeatherNo( i, weather_no )
+    @data[i].weather = weather_no
+  end
+
+  def SetMonth( i, month )
+    @data[i].month = month
+  end
+
+  def SetDay( i, day )
+    @data[i].day = day
+  end
+
   # データ追加メソッド
-  def AddData( data )
-    @data << data
+  def AddData( weather_info )
+    @data << weather_info
   end
 
   # 圧縮メソッド
@@ -270,12 +296,6 @@ ROW_INDEX_FIRST_ZONE  = 3 # 最初のゾーン指定の列番号
 SRC_FILENAME = "weather.txt"  # 入力ファイル名
 DST_FILENAME = "weather.bin"  # 出力ファイル名
 
-
-zone_id    = Array.new # ゾーンID配列
-month      = Array.new # 月配列(366日分)
-date       = Array.new # 日にち配列(366日分)
-weather    = Array.new # 天気配列(各ゾーン366日分)
-
 info_array = Array.new
 
 #-----------------------------------
@@ -290,43 +310,33 @@ file.close
 item  = lines[ LINE_INDEX_ZONE_NAME ].split( /\t/ )
 ROW_INDEX_FIRST_ZONE.upto( item.length - 1 ) do |i|
   zone_name  = item[i].strip
-  zone_id   << GetZoneIDValue( zone_name )
+  zone_id    = GetZoneIDValue( zone_name )
+  info_array << ZoneWeatherInfo.new( zone_id )
 end
 
-# すべての日にちを取得
+# 全データを読み込む
 LINE_INDEX_START.upto( lines.length - 1 ) do |i|
-  item   = lines[i].split( /\t/ )
-  month << GetMonthValue( item[ ROW_INDEX_DATE ] )
-  date  << GetDayValue( item[ ROW_INDEX_DATE ] )
-end
-
-# 登録されている全ゾーンを処理する
-0.upto( zone_id.length - 1 ) do |i|
-  array = Array.new
-  # 366日すべての天気を取得
-  LINE_INDEX_START.upto( lines.length - 1 ) do |j|
-    item         = lines[j].split( /\t/ )
-    str_weather  = item[ ROW_INDEX_FIRST_ZONE + i ].strip
-    array       << GetWeatherNo( str_weather )
+  # 日にちを取得し, 各ゾーンのデータに設定
+  item   = lines[i].split( /\t/ ) 
+  month  = GetMonthValue( item[ ROW_INDEX_DATE ] )
+  day    = GetDayValue( item[ ROW_INDEX_DATE ] )
+  info_array.each do |info|
+    info.AddData( WeatherInfo.new( month, day, 0 ) )
   end
-  weather << array
-end
 
-
-# まとめる
-0.upto( zone_id.length - 1 ) do |i| 
-  data = ZoneWeatherInfo.new( zone_id[i] )
-  0.upto( month.length - 1 ) do |j|
-    data.AddData( WeatherInfo.new( month[j], date[j], weather[i][j] ) )
+  # 各ゾーンの天気を取得
+  0.upto( info_array.length - 1 ) do |j|
+    str_weather = item[ ROW_INDEX_FIRST_ZONE + j ].strip
+    weather_no  = GetWeatherNo( str_weather )
+    info_array[j].SetWeatherNo( i - LINE_INDEX_START, weather_no )
   end
-  info_array << data
 end
 
 
 # DEBUG:
 =begin
-0.upto( info_array.length - 1 ) do |i|
-  puts info_array[i].to_s
+info_array.each do |info|
+  puts info.to_s
 end
 =end
 
@@ -334,7 +344,7 @@ end
 #-----------------------------------
 # 圧縮
 #----------------------------------- 
-# 圧縮
+# 前日と同じ天気のデータを消去
 info_array.each do |info|
   info.Compress
 end
