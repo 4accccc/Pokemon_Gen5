@@ -3,18 +3,18 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="fuchino" host="W00152" date="2009-07-29T14:47:45" source="h01_ship.mb"/>
+	<create user="fuchino" host="W00152" date="2009-08-06T11:58:00" source="h01_ship.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 </head>
 
 <body>
 
-<original_create user="fuchino" host="W00152" date="2009-07-29T14:47:45" source="h01_ship.mb"/>
+<original_create user="fuchino" host="W00152" date="2009-08-06T11:58:00" source="h01_ship.mb"/>
 <original_generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 
 <model_info
-	pos_scale="5"
+	pos_scale="6"
 	scaling_rule="standard"
 	vertex_style="direct"
 	magnify="1.000000"
@@ -27,7 +27,7 @@
 	use_primitive_strip="on"
 />
 
-<box_test pos_scale="6" xyz="-3.000000 0.125000 -1.000000" whd="5.750000 1.125000 2.000000"/>
+<box_test pos_scale="7" xyz="-3.000000 0.125000 -1.000000" whd="5.750000 1.125000 2.000000"/>
 
 <tex_image_array size="1">
 	<tex_image index="0" name="h01_ship01"
