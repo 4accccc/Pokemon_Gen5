@@ -87,7 +87,7 @@ void CALENDER_Delete( CALENDER* p_sys )
  * @param p_date  日付指定
  * @param zone_id ゾーン指定
  *
- * @return 天気番号
+ * @return 天気番号( WEATHER_NO_XXXX )
  *         指定ゾーンが登録されていない場合, 無効値 WEATHER_NO_NONE が返る
  */
 //----------------------------------------------------------------------------- 
