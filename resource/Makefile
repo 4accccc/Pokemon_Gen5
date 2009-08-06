@@ -83,7 +83,8 @@ SUBDIRS	=	wmi \
 			worldtrade \
 			balance_ball \
 			calender \
-			debug
+			debug \
+			config
 
 include $(RESOURCE_MACRO)
 
