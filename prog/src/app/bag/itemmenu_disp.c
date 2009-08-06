@@ -243,13 +243,13 @@ static GFL_DISP_VRAM _defVBTbl = {
 
 void ITEMDISP_SetVisible(void)
 {
-    GFL_BG_SetVisible( GFL_BG_FRAME0_M, VISIBLE_ON );
-    GFL_BG_SetVisible( GFL_BG_FRAME1_M, VISIBLE_ON );
-    GFL_BG_SetVisible( GFL_BG_FRAME2_M, VISIBLE_ON );
-    GFL_BG_SetVisible( GFL_BG_FRAME3_M, VISIBLE_ON );
-    GFL_BG_SetVisible( GFL_BG_FRAME0_S, VISIBLE_ON );
-    GFL_BG_SetVisible( GFL_BG_FRAME1_S, VISIBLE_ON );
-    GFL_BG_SetVisible( GFL_BG_FRAME2_S, VISIBLE_ON );
+  GFL_BG_SetVisible( GFL_BG_FRAME0_M, VISIBLE_ON );
+  GFL_BG_SetVisible( GFL_BG_FRAME1_M, VISIBLE_ON );
+  GFL_BG_SetVisible( GFL_BG_FRAME2_M, VISIBLE_ON );
+  GFL_BG_SetVisible( GFL_BG_FRAME3_M, VISIBLE_ON );
+  GFL_BG_SetVisible( GFL_BG_FRAME0_S, VISIBLE_ON );
+  GFL_BG_SetVisible( GFL_BG_FRAME1_S, VISIBLE_ON );
+  GFL_BG_SetVisible( GFL_BG_FRAME2_S, VISIBLE_ON );
 }
 
 
@@ -317,26 +317,28 @@ void ITEMDISP_graphicInit(FIELD_ITEMMENU_WORK* pWork)
                                             GFL_BG_FRAME1_S, 0,
                                             GFL_ARCUTIL_TRANSINFO_GetPos(pWork->subbg2), 0, 0, pWork->heapID);
 
-//    GFL_ARCHDL_UTIL_TransVramPalette( p_handle, NARC_bag_p_list_NCLR,
-  //                                    PALTYPE_MAIN_BG, _SUBLIST_NORMAL_PAL*0x20, 2*0x20,  pWork->heapID);
+    //    GFL_ARCHDL_UTIL_TransVramPalette( p_handle, NARC_bag_p_list_NCLR,
+    //                                    PALTYPE_MAIN_BG, _SUBLIST_NORMAL_PAL*0x20, 2*0x20,  pWork->heapID);
 
 
     //下画面アイコン
     pWork->cellRes[_PLT_BAGPOCKET] = GFL_CLGRP_PLTT_RegisterEx(
       p_handle , NARC_bag_bag_parts_d_NCLR , CLSYS_DRAW_MAIN , _PAL_BAG_PARTS_CELL*32 , 0 , 2 , pWork->heapID  );
-    
+
     pWork->cellRes[_NCG_BAGPOCKET] = GFL_CLGRP_CGR_Register(
       p_handle , NARC_bag_bag_parts_d_NCGR , FALSE , CLSYS_DRAW_MAIN , pWork->heapID  );
-    
+
     pWork->cellRes[_ANM_BAGPOCKET] = GFL_CLGRP_CELLANIM_Register(
       p_handle, NARC_bag_bag_parts_d_NCER, NARC_bag_bag_parts_d_NANR , pWork->heapID);
 
     //数字のフレーム
+    GFL_ARCHDL_UTIL_TransVramPalette( p_handle, NARC_bag_bag_win01_d_NCLR,
+                                      PALTYPE_MAIN_BG, 1*0x20, 2*0x20,  pWork->heapID);
     pWork->numFrameBg =
       GFL_ARCHDL_UTIL_TransVramBgCharacterAreaMan(
         p_handle, NARC_bag_bag_win05_d_NCGR, GFL_BG_FRAME3_M, 0, 0, pWork->heapID);
 
-    
+
     GFL_ARC_CloseDataHandle(p_handle);
   }
 
@@ -353,11 +355,11 @@ void ITEMDISP_graphicInit(FIELD_ITEMMENU_WORK* pWork)
   {
     ARCHANDLE *archandle = GFL_ARC_OpenDataHandle( ARCID_APP_MENU_COMMON , pWork->heapID );
     //下画面バー
-    GFL_ARCHDL_UTIL_TransVramPalette( archandle , NARC_app_menu_common_menu_bar_NCLR , 
+    GFL_ARCHDL_UTIL_TransVramPalette( archandle , NARC_app_menu_common_menu_bar_NCLR ,
                                       PALTYPE_MAIN_BG , 8*32 , 32 , pWork->heapID );
     pWork->barbg = GFL_ARCHDL_UTIL_TransVramBgCharacterAreaMan( archandle , NARC_app_menu_common_menu_bar_NCGR ,
                                                                 GFL_BG_FRAME1_M , 0 , 0, pWork->heapID );
-    GFL_ARCHDL_UTIL_TransVramScreenCharOfs( archandle , NARC_app_menu_common_menu_bar_NSCR , 
+    GFL_ARCHDL_UTIL_TransVramScreenCharOfs( archandle , NARC_app_menu_common_menu_bar_NSCR ,
                                             GFL_BG_FRAME1_M , 0 ,
                                             0x8000+GFL_ARCUTIL_TRANSINFO_GetPos(pWork->barbg),0, 0, pWork->heapID );
     GFL_BG_LoadScreenReq( GFL_BG_FRAME1_M );
@@ -365,15 +367,15 @@ void ITEMDISP_graphicInit(FIELD_ITEMMENU_WORK* pWork)
     //下画面アイコン
     pWork->cellRes[_PLT_COMMON] = GFL_CLGRP_PLTT_RegisterEx(
       archandle , NARC_app_menu_common_bar_button_NCLR , CLSYS_DRAW_MAIN , 7*32 , 0 , APP_COMMON_BARICON_PLT_NUM , pWork->heapID  );
-    
+
     pWork->cellRes[_NCG_COMMON] = GFL_CLGRP_CGR_Register(
       archandle , NARC_app_menu_common_bar_button_128k_NCGR , FALSE , CLSYS_DRAW_MAIN , pWork->heapID  );
-    
+
     pWork->cellRes[_ANM_COMMON] = GFL_CLGRP_CELLANIM_Register(
       archandle, NARC_app_menu_common_bar_button_128k_NCER, NARC_app_menu_common_bar_button_128k_NANR , pWork->heapID);
 
 
-    
+
     GFL_ARC_CloseDataHandle(archandle);
   }
   //下画面ボタン
@@ -385,24 +387,24 @@ void ITEMDISP_graphicInit(FIELD_ITEMMENU_WORK* pWork)
     ARCHANDLE *archandleCommon = GFL_ARC_OpenDataHandle( APP_COMMON_GetArcId() , pWork->heapID );
 
     //タイプアイコン
-    pWork->commonCell[SCR_PLT_SUB_POKE_TYPE] = GFL_CLGRP_PLTT_RegisterEx( archandleCommon , 
-          APP_COMMON_GetPokeTypePltArcIdx() , CLSYS_DRAW_SUB , 
-          _OBJPLT_SUB_POKE_TYPE*32 , 0 , APP_COMMON_POKETYPE_PLT_NUM , pWork->heapID  );
-    pWork->commonCell[SCR_ANM_SUB_POKE_TYPE] = GFL_CLGRP_CELLANIM_Register( archandleCommon , 
-          APP_COMMON_GetPokeTypeCellArcIdx(APP_COMMON_MAPPING_32K) , 
-          APP_COMMON_GetPokeTypeAnimeArcIdx(APP_COMMON_MAPPING_32K), pWork->heapID  );
+    pWork->commonCell[SCR_PLT_SUB_POKE_TYPE] = GFL_CLGRP_PLTT_RegisterEx( archandleCommon ,
+                                                                          APP_COMMON_GetPokeTypePltArcIdx() , CLSYS_DRAW_SUB ,
+                                                                          _OBJPLT_SUB_POKE_TYPE*32 , 0 , APP_COMMON_POKETYPE_PLT_NUM , pWork->heapID  );
+    pWork->commonCell[SCR_ANM_SUB_POKE_TYPE] = GFL_CLGRP_CELLANIM_Register( archandleCommon ,
+                                                                            APP_COMMON_GetPokeTypeCellArcIdx(APP_COMMON_MAPPING_32K) ,
+                                                                            APP_COMMON_GetPokeTypeAnimeArcIdx(APP_COMMON_MAPPING_32K), pWork->heapID  );
     //技タイプ
-    pWork->commonCell[SCR_NCG_SKILL_TYPE_HENKA] = GFL_CLGRP_CGR_Register( archandleCommon , 
-          NARC_app_menu_common_p_st_bunrui_henka_NCGR , FALSE , CLSYS_DRAW_SUB , pWork->heapID  );
-    pWork->commonCell[SCR_NCG_SKILL_TYPE_BUTURI] = GFL_CLGRP_CGR_Register( archandleCommon , 
-          NARC_app_menu_common_p_st_bunrui_buturi_NCGR , FALSE , CLSYS_DRAW_SUB , pWork->heapID  );
-    pWork->commonCell[SCR_NCG_SKILL_TYPE_TOKUSHU] = GFL_CLGRP_CGR_Register( archandleCommon , 
-          NARC_app_menu_common_p_st_bunrui_tokusyu_NCGR , FALSE , CLSYS_DRAW_SUB , pWork->heapID  );
+    pWork->commonCell[SCR_NCG_SKILL_TYPE_HENKA] = GFL_CLGRP_CGR_Register( archandleCommon ,
+                                                                          NARC_app_menu_common_p_st_bunrui_henka_NCGR , FALSE , CLSYS_DRAW_SUB , pWork->heapID  );
+    pWork->commonCell[SCR_NCG_SKILL_TYPE_BUTURI] = GFL_CLGRP_CGR_Register( archandleCommon ,
+                                                                           NARC_app_menu_common_p_st_bunrui_buturi_NCGR , FALSE , CLSYS_DRAW_SUB , pWork->heapID  );
+    pWork->commonCell[SCR_NCG_SKILL_TYPE_TOKUSHU] = GFL_CLGRP_CGR_Register( archandleCommon ,
+                                                                            NARC_app_menu_common_p_st_bunrui_tokusyu_NCGR , FALSE , CLSYS_DRAW_SUB , pWork->heapID  );
     //属性
     for( i=0;i<POKETYPE_MAX;i++ )
     {
-      pWork->commonCellTypeNcg[i] = GFL_CLGRP_CGR_Register( archandleCommon , 
-         APP_COMMON_GetPokeTypeCharArcIdx(i) , FALSE , CLSYS_DRAW_SUB , pWork->heapID );
+      pWork->commonCellTypeNcg[i] = GFL_CLGRP_CGR_Register( archandleCommon ,
+                                                            APP_COMMON_GetPokeTypeCharArcIdx(i) , FALSE , CLSYS_DRAW_SUB , pWork->heapID );
     }
 
     GFL_ARC_CloseDataHandle(archandleCommon);
@@ -415,7 +417,7 @@ void ITEMDISP_graphicInit(FIELD_ITEMMENU_WORK* pWork)
     cellInitData1.softpri = 1;
     cellInitData1.bgpri = 1;
     cellInitData1.anmseq = 0;
-    
+
     pWork->clwkWazaKind = GFL_CLACT_WK_Create(
       pWork->cellUnit ,
       pWork->commonCell[SCR_NCG_SKILL_TYPE_HENKA], pWork->commonCell[SCR_PLT_SUB_POKE_TYPE],  pWork->commonCell[SCR_ANM_SUB_POKE_TYPE],
@@ -434,10 +436,10 @@ void ITEMDISP_graphicInit(FIELD_ITEMMENU_WORK* pWork)
 
     GFL_CLACT_WK_SetDrawEnable( pWork->clwkWazaKind , FALSE );
     GFL_CLACT_WK_SetDrawEnable( pWork->clwkWazaType , FALSE );
-  }  
+  }
 
 
-  
+
 }
 
 void ITEMDISP_graphicDelete(FIELD_ITEMMENU_WORK* pWork)
@@ -445,19 +447,19 @@ void ITEMDISP_graphicDelete(FIELD_ITEMMENU_WORK* pWork)
 
   GFL_BG_FreeCharacterArea(GFL_BG_FRAME0_S,
                            GFL_ARCUTIL_TRANSINFO_GetPos(pWork->subbg),
-													 GFL_ARCUTIL_TRANSINFO_GetSize(pWork->subbg));
+                           GFL_ARCUTIL_TRANSINFO_GetSize(pWork->subbg));
   GFL_BG_FreeCharacterArea(GFL_BG_FRAME1_S,
                            GFL_ARCUTIL_TRANSINFO_GetPos(pWork->subbg2),
-													 GFL_ARCUTIL_TRANSINFO_GetSize(pWork->subbg2));
+                           GFL_ARCUTIL_TRANSINFO_GetSize(pWork->subbg2));
   GFL_BG_FreeCharacterArea(GFL_BG_FRAME3_M,
                            GFL_ARCUTIL_TRANSINFO_GetPos(pWork->numFrameBg),
-													 GFL_ARCUTIL_TRANSINFO_GetSize(pWork->numFrameBg));
+                           GFL_ARCUTIL_TRANSINFO_GetSize(pWork->numFrameBg));
   GFL_BG_FreeCharacterArea(GFL_BG_FRAME0_M,
                            GFL_ARCUTIL_TRANSINFO_GetPos(pWork->mainbg),
-													 GFL_ARCUTIL_TRANSINFO_GetSize(pWork->mainbg));
+                           GFL_ARCUTIL_TRANSINFO_GetSize(pWork->mainbg));
   GFL_BG_FreeCharacterArea(GFL_BG_FRAME1_M,
                            GFL_ARCUTIL_TRANSINFO_GetPos(pWork->barbg),
-													 GFL_ARCUTIL_TRANSINFO_GetSize(pWork->barbg));
+                           GFL_ARCUTIL_TRANSINFO_GetSize(pWork->barbg));
 
 }
 
@@ -471,7 +473,7 @@ void ITEMDISP_graphicDelete(FIELD_ITEMMENU_WORK* pWork)
 void ITEMDISP_upMessageRewrite(FIELD_ITEMMENU_WORK* pWork)
 {
   int wazano;
- // ITEM_ST * item = MYITEM_PosItemGet( pWork->pMyItem, pWork->pocketno, ITEMMENU_GetItemIndex(pWork) );
+  // ITEM_ST * item = MYITEM_PosItemGet( pWork->pMyItem, pWork->pocketno, ITEMMENU_GetItemIndex(pWork) );
   ITEM_ST * item = ITEMMENU_GetItem( pWork,ITEMMENU_GetItemIndex(pWork) );
 
   if((item==NULL) || (item->id==ITEM_DUMMY_DATA)){
@@ -483,7 +485,7 @@ void ITEMDISP_upMessageRewrite(FIELD_ITEMMENU_WORK* pWork)
   GFL_BMP_Clear(GFL_BMPWIN_GetBmp(pWork->winItemName), 0 );
   GFL_BMP_Clear(GFL_BMPWIN_GetBmp(pWork->winItemNum), 0 );
   GFL_BMP_Clear(GFL_BMPWIN_GetBmp(pWork->winItemReport), 0 );
-  
+
   GFL_FONTSYS_SetDefaultColor();
 
   if(wazano == 0){
@@ -532,7 +534,7 @@ void ITEMDISP_upMessageRewrite(FIELD_ITEMMENU_WORK* pWork)
 void ITEMDISP_upMessageDelete(FIELD_ITEMMENU_WORK* pWork)
 {
   int i;
-  
+
   GFL_BMPWIN_ClearScreen(pWork->winItemName);
   GFL_BMPWIN_ClearScreen(pWork->winItemNum);
   GFL_BMPWIN_ClearScreen(pWork->winItemReport);
@@ -554,7 +556,7 @@ void ITEMDISP_upMessageDelete(FIELD_ITEMMENU_WORK* pWork)
   }
 
   GFL_CLACT_UNIT_Delete(pWork->cellUnit);
-  
+
   GFL_CLACT_SYS_Delete();
 
 }
@@ -569,17 +571,17 @@ void ITEMDISP_upMessageDelete(FIELD_ITEMMENU_WORK* pWork)
 void ITEMDISP_upMessageCreate(FIELD_ITEMMENU_WORK* pWork)
 {
   pWork->winWaza= GFL_BMPWIN_Create(
-		ITEMREPORT_FRAME,
-		0, 19,
-		32, 5,
-		_BUTTON_MSG_PAL, GFL_BMP_CHRAREA_GET_B );
+    ITEMREPORT_FRAME,
+    0, 19,
+    32, 5,
+    _BUTTON_MSG_PAL, GFL_BMP_CHRAREA_GET_B );
 
 
   pWork->winNumFrame =
     GFL_BMPWIN_Create(
       GFL_BG_FRAME3_M,	_WINNUM_INITX, _WINNUM_INITY, _WINNUM_SIZEX, _WINNUM_SIZEY,	_WINNUM_PAL,
       GFL_BMP_CHRAREA_GET_B );
-  
+
   pWork->winItemName = GFL_BMPWIN_Create(
     ITEMREPORT_FRAME,
     _UP_ITEMNAME_INITX, _UP_ITEMNAME_INITY,
@@ -603,7 +605,7 @@ void ITEMDISP_upMessageCreate(FIELD_ITEMMENU_WORK* pWork)
   GFL_BMPWIN_MakeScreen( pWork->winItemNum );
   GFL_BMPWIN_MakeScreen( pWork->winItemReport );
   GFL_BMPWIN_MakeScreen( pWork->winWaza );
-  
+
   {
     ARCHANDLE* p_handle = GFL_ARC_OpenDataHandle( ARCID_ITEMICON, pWork->heapID );
 
@@ -629,13 +631,13 @@ static void _itemiconAnim(FIELD_ITEMMENU_WORK* pWork,int itemid)
     GFL_CLGRP_PLTT_Release( pWork->objRes[_CLACT_PLT] );
   }
 
-  
+
   {
     ARCHANDLE* p_handle = GFL_ARC_OpenDataHandle( ARCID_ITEMICON, pWork->heapID );
 
     pWork->objRes[_CLACT_PLT] = GFL_CLGRP_PLTT_RegisterEx( p_handle ,
-                                                         ITEM_GetIndex(itemid,ITEM_GET_ICON_PAL) ,
-                                                         CLSYS_DRAW_SUB , 0, 0, 1 , pWork->heapID );
+                                                           ITEM_GetIndex(itemid,ITEM_GET_ICON_PAL) ,
+                                                           CLSYS_DRAW_SUB , 0, 0, 1 , pWork->heapID );
     pWork->objRes[_CLACT_CHR] = GFL_CLGRP_CGR_Register( p_handle ,
                                                         ITEM_GetIndex(itemid,ITEM_GET_ICON_CGX) ,
                                                         FALSE , CLSYS_DRAW_SUB , pWork->heapID );
@@ -690,12 +692,12 @@ void ITEMDISP_CellResourceCreate( FIELD_ITEMMENU_WORK* pWork )
     archandle , NARC_bag_bag_win04_d_NCGR , FALSE , CLSYS_DRAW_MAIN , pWork->heapID  );
   pWork->cellRes[_ANM_CHECK] = GFL_CLGRP_CELLANIM_Register(
     archandle, NARC_bag_bag_win04_d_NCER, NARC_bag_bag_win04_d_NANR , pWork->heapID);
-  
+
   //下画面メニューリスト
-  
+
   pWork->cellRes[_PLT_CUR] = GFL_CLGRP_PLTT_RegisterEx( archandle ,
-        NARC_bag_bag_win03_d_NCLR , CLSYS_DRAW_MAIN ,
-        0 , 0 , 2 , pWork->heapID  );
+                                                        NARC_bag_bag_win03_d_NCLR , CLSYS_DRAW_MAIN ,
+                                                        0 , 0 , 2 , pWork->heapID  );
 
   pWork->cellRes[_NCG_CUR] = GFL_CLGRP_CGR_Register(
     archandle , NARC_bag_bag_win03_d_NCGR ,
@@ -703,7 +705,7 @@ void ITEMDISP_CellResourceCreate( FIELD_ITEMMENU_WORK* pWork )
 
   pWork->cellRes[_ANM_CUR] = GFL_CLGRP_CELLANIM_Register(
     archandle , NARC_bag_bag_win03_d_NCER,NARC_bag_bag_win03_d_NANR ,
-     pWork->heapID  );
+    pWork->heapID  );
 
 
   for( i=0 ; i < ITEM_LIST_NUM ; i++ )
@@ -717,11 +719,11 @@ void ITEMDISP_CellResourceCreate( FIELD_ITEMMENU_WORK* pWork )
 
   pWork->cellRes[_ANM_LIST] = GFL_CLGRP_CELLANIM_Register(
     archandle , NARC_bag_bag_win01_d_NCER, NARC_bag_bag_win01_d_NANR ,
-     pWork->heapID  );
+    pWork->heapID  );
 
 
 
-  
+
   GFL_ARC_CloseDataHandle(archandle);
 }
 
@@ -737,14 +739,14 @@ void ITEMDISP_CellCreate( FIELD_ITEMMENU_WORK* pWork )
     cellInitData.softpri = 1;
     cellInitData.bgpri = 2;
     cellInitData.anmseq = 0;
-    
+
     pWork->scrollCur = GFL_CLACT_WK_Create(
       pWork->cellUnit ,
       pWork->cellRes[_NCG_CUR], pWork->cellRes[_PLT_CUR],  pWork->cellRes[_ANM_CUR],
       &cellInitData ,CLSYS_DEFREND_MAIN , pWork->heapID );
 
     GFL_CLACT_WK_SetDrawEnable( pWork->scrollCur , TRUE );
-  }  
+  }
 
 
   //選択カーソル
@@ -755,16 +757,16 @@ void ITEMDISP_CellCreate( FIELD_ITEMMENU_WORK* pWork )
     cellInitData.softpri = 1;
     cellInitData.bgpri = 2;
     cellInitData.anmseq = 1;
-    
+
     pWork->clwkCur = GFL_CLACT_WK_Create(
       pWork->cellUnit ,
       pWork->cellRes[_NCG_CUR], pWork->cellRes[_PLT_CUR],  pWork->cellRes[_ANM_CUR],
       &cellInitData ,CLSYS_DEFREND_MAIN , pWork->heapID );
 
     GFL_CLACT_WK_SetDrawEnable( pWork->clwkCur , TRUE );
-  }  
-  
-    //セルの作成
+  }
+
+  //セルの作成
   {
     int i;
     for( i=0 ; i < ITEM_LIST_NUM ; i++ )
@@ -775,7 +777,7 @@ void ITEMDISP_CellCreate( FIELD_ITEMMENU_WORK* pWork )
       cellInitData.softpri = 10;
       cellInitData.bgpri = 3;
       cellInitData.anmseq = 0;
-    
+
       pWork->listCell[i] = GFL_CLACT_WK_Create(
         pWork->cellUnit ,
         pWork->listRes[ i ],pWork->cellRes[_PLT_CUR],  pWork->cellRes[_ANM_LIST],
@@ -788,7 +790,7 @@ void ITEMDISP_CellCreate( FIELD_ITEMMENU_WORK* pWork )
         pWork->cellRes[_NCG_CHECK],pWork->cellRes[_PTL_CHECK],  pWork->cellRes[_ANM_CHECK],
         &cellInitData ,CLSYS_DEFREND_MAIN , pWork->heapID );
 
-      
+
       GFL_CLACT_WK_SetDrawEnable( pWork->listCell[i] , FALSE );
       GFL_CLACT_WK_SetDrawEnable( pWork->listMarkCell[i] , FALSE );
 
@@ -801,30 +803,30 @@ void ITEMDISP_CellMessagePrint( FIELD_ITEMMENU_WORK* pWork )
 {
   int i;
 
-	for(i = 0; i< ITEM_LIST_NUM ; i++){
-		ITEM_ST * item;
+  for(i = 0; i< ITEM_LIST_NUM ; i++){
+    ITEM_ST * item;
 
     pWork->nListEnable[i]=FALSE;
 
     if(pWork->oamlistpos+i < 0){
       continue;
     }
-//    item = MYITEM_PosItemGet( pWork->pMyItem, pWork->pocketno,  pWork->oamlistpos+i  );
+    //    item = MYITEM_PosItemGet( pWork->pMyItem, pWork->pocketno,  pWork->oamlistpos+i  );
     item = ITEMMENU_GetItem( pWork , pWork->oamlistpos+i);
-		if((item==NULL) || (item->id==ITEM_DUMMY_DATA)){
-			continue;
-		}
+    if((item==NULL) || (item->id==ITEM_DUMMY_DATA)){
+      continue;
+    }
     {
       void * itemdata;
       itemdata = ITEM_GetItemArcData( item->id, ITEM_GET_DATA, pWork->heapID );
-    
+
       GFL_BMP_Clear(pWork->listBmp[i],3);
       GFL_FONTSYS_SetColor( 0xf, 0xe, 3 );
       GFL_MSG_GetString(  pWork->MsgManager, MSG_ITEM_STR001, pWork->pStrBuf );
       WORDSET_RegisterItemName(pWork->WordSet, 0, item->id);
       WORDSET_ExpandStr( pWork->WordSet, pWork->pExpStrBuf, pWork->pStrBuf  );
       PRINTSYS_Print( pWork->listBmp[i], 0, 0, pWork->pExpStrBuf, pWork->fontHandle);
-      
+
       if( ITEM_GetBufParam( itemdata, ITEM_PRM_CNV ) == 0 ){
         pWork->nListEnable[ i ] = 3;
       }
@@ -837,10 +839,10 @@ void ITEMDISP_CellMessagePrint( FIELD_ITEMMENU_WORK* pWork )
       GFL_HEAP_FreeMemory( itemdata );
 
     }
-	}
+  }
 
 
-  
+
 }
 
 
@@ -857,13 +859,13 @@ void ITEMDISP_CellVramTrans( FIELD_ITEMMENU_WORK* pWork )
     pos.y = 24 * pWork->curpos + 24;
     GFL_CLACT_WK_SetPos( pWork->clwkCur ,  &pos, CLWK_SETSF_NONE );
   }
-	for(i = 0; i< ITEM_LIST_NUM ; i++){
+  for(i = 0; i< ITEM_LIST_NUM ; i++){
     {
       u32 dest_adrs = GFL_CLGRP_CGR_GetAddr( pWork->listRes[i], CLSYS_DRAW_MAIN);
       u8* charbuff = GFL_BMP_GetCharacterAdrs(pWork->listBmp[i]);
       u32 size = GFL_BMP_GetBmpDataSize(pWork->listBmp[i]);
       DC_FlushRange(charbuff, size);
-      
+
       dest_adrs += (8)*32;
       GX_LoadOBJ(&charbuff[8*32], dest_adrs, (32*4));
       dest_adrs += (4)*32;
@@ -894,7 +896,7 @@ void ITEMDISP_CellVramTrans( FIELD_ITEMMENU_WORK* pWork )
         GFL_CLACT_WK_SetDrawEnable( pWork->listCell[i] , FALSE );
       }
     }
-	}
+  }
 }
 
 //      GX_LoadOBJ(&charbuff[ 0*32], dest_adrs + (11)*32, (32*5));
@@ -951,7 +953,7 @@ void ITEMDISP_scrollCursorChangePos(FIELD_ITEMMENU_WORK* pWork, int num)
       y=_SCROLL_BOTTOM_Y;
     }
 
-    
+
     GFL_CLACT_WK_GetPos( pWork->scrollCur , &pos, CLWK_SETSF_NONE );
     pos.y = y;
     GFL_CLACT_WK_SetPos( pWork->scrollCur ,  &pos, CLWK_SETSF_NONE );
@@ -985,34 +987,34 @@ static void ITEMDISP_InitTaskBar( FIELD_ITEMMENU_WORK* pWork )
     GFL_CLWK_DATA cellInitData;
     cellInitData.softpri = 10;
     cellInitData.bgpri = 1;
-    
+
     for( i = 0;i < elementof(anmIdxArr) ; i++ )
     {
       cellInitData.pos_x = posXArr[i];
       cellInitData.pos_y = 21*8;
       cellInitData.anmseq = anmIdxArr[i];
       pWork->clwkBarIcon[i] = GFL_CLACT_WK_Create( pWork->cellUnit ,
-                pWork->cellRes[_NCG_COMMON],
-                pWork->cellRes[_PLT_COMMON],
-                pWork->cellRes[_ANM_COMMON],
-                &cellInitData ,CLSYS_DEFREND_MAIN , pWork->heapID );
+                                                   pWork->cellRes[_NCG_COMMON],
+                                                   pWork->cellRes[_PLT_COMMON],
+                                                   pWork->cellRes[_ANM_COMMON],
+                                                   &cellInitData ,CLSYS_DEFREND_MAIN , pWork->heapID );
 
       GFL_CLACT_WK_SetDrawEnable( pWork->clwkBarIcon[i] , TRUE );
     }
 
   }
-  
+
 }
 
 
 
 
 
-#define    NANR_bag_parts_d_taisetsu    0 // 
-#define    NANR_bag_parts_d_waza    1 // 
-#define    NANR_bag_parts_d_kinomi    2 // 
-#define    NANR_bag_parts_d_kaifuku    3 // 
-#define    NANR_bag_parts_d_dougu    4 // 
+#define    NANR_bag_parts_d_taisetsu    0 //
+#define    NANR_bag_parts_d_waza    1 //
+#define    NANR_bag_parts_d_kinomi    2 //
+#define    NANR_bag_parts_d_kaifuku    3 //
+#define    NANR_bag_parts_d_dougu    4 //
 
 
 
@@ -1032,7 +1034,7 @@ void ITEMDISP_InitPocketCell( FIELD_ITEMMENU_WORK* pWork )
     GFL_CLWK_DATA cellInitData;
     cellInitData.softpri = 10;
     cellInitData.bgpri = 1;
-    
+
     cellInitData.pos_x = 0;
     cellInitData.pos_y = 0;
     cellInitData.anmseq = 0;
@@ -1085,9 +1087,9 @@ void ITEMDISP_ListPlateClear( FIELD_ITEMMENU_WORK* pWork )
   //プレートの土台の絵
   int i;
 
-//  for(i = 0 ; i < elementof(pWork->menuWin) ; i++){
+  //  for(i = 0 ; i < elementof(pWork->menuWin) ; i++){
   //  GFL_BMPWIN_ClearScreen(pWork->menuWin[i]);
-//  }
+  //  }
   //メッセージウインドのクリアも
   GFL_BMPWIN_ClearScreen(pWork->itemInfoDispWin);
   BmpWinFrame_Clear(pWork->itemInfoDispWin,WINDOW_TRANS_ON_V);
@@ -1123,7 +1125,7 @@ void ITEMDISP_MenuWinDisp(  FIELD_ITEMMENU_WORK *pWork , int *menustr,int num )
   appinit.msgHandle = pWork->MsgManager;
   appinit.fontHandle =  pWork->fontHandle;
   appinit.printQue =  pWork->SysMsgQue;
-  
+
   for(i=0;i<num;i++){
     pWork->appitem[i].str = GFL_STR_CreateBuffer(100, pWork->heapID);
     GFL_MSG_GetString(pWork->MsgManager, menustr[i], pWork->appitem[i].str);
@@ -1152,7 +1154,7 @@ void ITEMDISP_MenuWinDisp(  FIELD_ITEMMENU_WORK *pWork , int *menustr,int num )
     GFL_BMPWIN_TransVramCharacter(pwin);
     GFL_BMPWIN_MakeScreen(pwin);
   }
-  ITEMDISP_ListPlateSelectChange(pWork, 0);  
+  ITEMDISP_ListPlateSelectChange(pWork, 0);
   GFL_BG_LoadScreenV_Req(GFL_BG_FRAME3_M);
 #endif
 }
@@ -1194,8 +1196,8 @@ static void _wazaKindDisp( FIELD_ITEMMENU_WORK *pWork ,int wazaNo)
     const int type = WAZADATA_GetDamageType( wazaNo );
     GFL_CLGRP_CGR_GetProxy( pWork->commonCell[SCR_NCG_SKILL_TYPE_HENKA+type] , &imageProxy );
     GFL_CLACT_WK_SetImgProxy( pWork->clwkWazaKind , &imageProxy );
-    GFL_CLACT_WK_SetPlttOffs( pWork->clwkWazaKind , 
-                              APP_COMMON_GetWazaKindPltOffset(type) , 
+    GFL_CLACT_WK_SetPlttOffs( pWork->clwkWazaKind ,
+                              APP_COMMON_GetWazaKindPltOffset(type) ,
                               CLWK_PLTTOFFS_MODE_PLTT_TOP );
     GFL_CLACT_WK_SetDrawEnable( pWork->clwkWazaKind, TRUE );
   }
@@ -1213,8 +1215,8 @@ static void _wazaTypeDisp( FIELD_ITEMMENU_WORK *pWork ,int wazaNo)
     int type1 = WAZADATA_GetType(wazaNo);
     GFL_CLGRP_CGR_GetProxy( pWork->commonCellTypeNcg[type1] , &imageProxy );
     GFL_CLACT_WK_SetImgProxy( pWork->clwkWazaType , &imageProxy );
-    GFL_CLACT_WK_SetPlttOffs( pWork->clwkWazaType , 
-                              APP_COMMON_GetPokeTypePltOffset(type1) , 
+    GFL_CLACT_WK_SetPlttOffs( pWork->clwkWazaType ,
+                              APP_COMMON_GetPokeTypePltOffset(type1) ,
                               CLWK_PLTTOFFS_MODE_PLTT_TOP );
     GFL_CLACT_WK_SetDrawEnable( pWork->clwkWazaType , TRUE );
   }
@@ -1235,13 +1237,13 @@ void ITEMDISP_WazaInfoWindowChange( FIELD_ITEMMENU_WORK *pWork )
   int ppnum = WT_PPMaxGet(wazano, 0);
   int pow = WT_WazaDataParaGet( wazano, ID_WTD_damage );
   int hit = WT_WazaDataParaGet( wazano, ID_WTD_hitprobability );
-  
+
   GFL_BG_LoadScreenV_Req(GFL_BG_FRAME1_S);
   if(wazano==0){
     GFL_BMPWIN_ClearScreen(pwin);
     GFL_CLACT_WK_SetDrawEnable( pWork->clwkWazaKind, FALSE );
     GFL_CLACT_WK_SetDrawEnable( pWork->clwkWazaType, FALSE );
-    
+
     return;
   }
   else{
@@ -1251,7 +1253,7 @@ void ITEMDISP_WazaInfoWindowChange( FIELD_ITEMMENU_WORK *pWork )
 
   _wazaKindDisp(pWork,wazano);
   _wazaTypeDisp(pWork,wazano);
-  
+
   //タイプ
   GFL_MSG_GetString(  pWork->MsgManager, mes_bag_107, pWork->pStrBuf );
   PRINTSYS_Print( GFL_BMPWIN_GetBmp(pwin), 8, 4, pWork->pStrBuf, pWork->fontHandle);
@@ -1275,7 +1277,7 @@ void ITEMDISP_WazaInfoWindowChange( FIELD_ITEMMENU_WORK *pWork )
     WORDSET_ExpandStr( pWork->WordSet, pWork->pExpStrBuf, pWork->pStrBuf  );
     PRINTSYS_Print( GFL_BMPWIN_GetBmp(pwin), 22*8, 4, pWork->pExpStrBuf, pWork->fontHandle);
   }
-      //命中
+  //命中
   GFL_MSG_GetString(  pWork->MsgManager, mes_bag_097, pWork->pStrBuf );
   PRINTSYS_Print( GFL_BMPWIN_GetBmp(pwin), 8*14, 24, pWork->pStrBuf, pWork->fontHandle);
 
@@ -1284,13 +1286,13 @@ void ITEMDISP_WazaInfoWindowChange( FIELD_ITEMMENU_WORK *pWork )
     PRINTSYS_Print( GFL_BMPWIN_GetBmp(pwin), 22*8, 24, pWork->pStrBuf, pWork->fontHandle);
   }
   else{
-  //めいちゅうの桁数
+    //めいちゅうの桁数
     GFL_MSG_GetString(  pWork->MsgManager, mes_bag_100, pWork->pStrBuf );
     WORDSET_RegisterNumber(pWork->WordSet, 0, hit, 3, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT);
     WORDSET_ExpandStr( pWork->WordSet, pWork->pExpStrBuf, pWork->pStrBuf  );
     PRINTSYS_Print( GFL_BMPWIN_GetBmp(pwin), 22*8, 24, pWork->pExpStrBuf, pWork->fontHandle);
   }
-    //PP
+  //PP
   GFL_MSG_GetString(  pWork->MsgManager, mes_bag_095, pWork->pStrBuf );
   PRINTSYS_Print( GFL_BMPWIN_GetBmp(pwin), 27*8, 4, pWork->pStrBuf, pWork->fontHandle);
 
@@ -1299,8 +1301,8 @@ void ITEMDISP_WazaInfoWindowChange( FIELD_ITEMMENU_WORK *pWork )
   WORDSET_RegisterNumber(pWork->WordSet, 0, ppnum, 2, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT);
   WORDSET_ExpandStr( pWork->WordSet, pWork->pExpStrBuf, pWork->pStrBuf  );
   PRINTSYS_Print( GFL_BMPWIN_GetBmp(pwin), 29*8, 4, pWork->pExpStrBuf, pWork->fontHandle);
-  
-  
+
+
   GFL_BMPWIN_TransVramCharacter(pwin);
 
 }
@@ -1316,11 +1318,11 @@ void ITEMDISP_WazaInfoWindowChange( FIELD_ITEMMENU_WORK *pWork )
 void ITEMDISP_ItemInfoWindowDisp( FIELD_ITEMMENU_WORK *pWork )
 {
   GFL_BMPWIN* pwin;
-  
+
   if(pWork->itemInfoDispWin==NULL){
     pWork->itemInfoDispWin = GFL_BMPWIN_Create(
       GFL_BG_FRAME3_M ,
-      1 , 1, 30 ,4 , 
+      1 , 1, 30 ,4 ,
       _BUTTON_MSG_PAL , GFL_BMP_CHRAREA_GET_B );
   }
   pwin = pWork->itemInfoDispWin;
@@ -1331,34 +1333,34 @@ void ITEMDISP_ItemInfoWindowDisp( FIELD_ITEMMENU_WORK *pWork )
   PRINTSYS_Print( GFL_BMPWIN_GetBmp(pwin), 0, 0, pWork->pExpStrBuf, pWork->fontHandle);
 #else
 
-//==============================================================================================
-/**
- * プリントストリームを利用した文字列描画（通常版 - コールバックなし）
- *
- * @param   dst     描画先Bitmap
- * @param   xpos    描画開始Ｘ座標（ドット）
- * @param   ypos    描画開始Ｙ座標（ドット）
- * @param   str     文字列
- * @param   font    フォントハンドラ
- * @param   wait    １文字描画ごとのウェイトフレーム数（※）
- * @param   tcbsys    使用するGFL_TCBLシステムポインタ
- * @param   tcbpri    使用するタスクプライオリティ
- * @param   heapID    使用するヒープID
- *
- * @retval  PRINT_STREAM* ストリームハンドル
- *
- * ※ wait に-2 以下の値を設定することで、毎フレーム２文字以上の描画を行う。-2（２文字）, -3（３文字）...
- */
-//==============================================================================================
-//extern PRINT_STREAM* PRINTSYS_PrintStream(
-//    GFL_BMPWIN* dst, u16 xpos, u16 ypos, const STRBUF* str, GFL_FONT* font,
-//    int wait, GFL_TCBLSYS* tcbsys, u32 tcbpri, HEAPID heapID, u16 clearColor );
+  //==============================================================================================
+  /**
+   * プリントストリームを利用した文字列描画（通常版 - コールバックなし）
+   *
+   * @param   dst     描画先Bitmap
+   * @param   xpos    描画開始Ｘ座標（ドット）
+   * @param   ypos    描画開始Ｙ座標（ドット）
+   * @param   str     文字列
+   * @param   font    フォントハンドラ
+   * @param   wait    １文字描画ごとのウェイトフレーム数（※）
+   * @param   tcbsys    使用するGFL_TCBLシステムポインタ
+   * @param   tcbpri    使用するタスクプライオリティ
+   * @param   heapID    使用するヒープID
+   *
+   * @retval  PRINT_STREAM* ストリームハンドル
+   *
+   * ※ wait に-2 以下の値を設定することで、毎フレーム２文字以上の描画を行う。-2（２文字）, -3（３文字）...
+   */
+  //==============================================================================================
+  //extern PRINT_STREAM* PRINTSYS_PrintStream(
+  //    GFL_BMPWIN* dst, u16 xpos, u16 ypos, const STRBUF* str, GFL_FONT* font,
+  //    int wait, GFL_TCBLSYS* tcbsys, u32 tcbpri, HEAPID heapID, u16 clearColor );
 
 
   pWork->pStream = PRINTSYS_PrintStream(pwin ,0,0, pWork->pExpStrBuf, pWork->fontHandle,
-                       MSGSPEED_GetWait(), pWork->pMsgTcblSys, 2, pWork->heapID, 15);
+                                        MSGSPEED_GetWait(), pWork->pMsgTcblSys, 2, pWork->heapID, 15);
 
-  
+
 #endif
 
   BmpWinFrame_Write( pwin, WINDOW_TRANS_ON_V, GFL_ARCUTIL_TRANSINFO_GetPos(pWork->bgchar), _BUTTON_WIN_PAL );
@@ -1417,33 +1419,92 @@ BOOL ITEMDISP_MessageEndCheck(FIELD_ITEMMENU_WORK* pWork)
  */
 //------------------------------------------------------------------------------
 
-void ITEMDISP_NumFrameDisp(FIELD_ITEMMENU_WORK* pWork,int num)
+void ITEMDISP_NumFrameDisp(FIELD_ITEMMENU_WORK* pWork)
 {
   ARCHANDLE* p_handle = GFL_ARC_OpenDataHandle( ARCID_BAG, pWork->heapID );
 
-//  GFL_FONTSYS_SetColor( 0xe, 0xf, 0 );
-//  PRINTSYS_Print( GFL_BMPWIN_GetBmp(pWork->winNumFrame), 8, 4, pWork->pStrBuf, pWork->fontHandle);
-//  GFL_BMPWIN_TransVramCharacter(pWork->winNumFrame);
-//  GFL_BMPWIN_MakeScreen(pWork->winNumFrame);
 
   {
     void* arcData = GFL_ARCHDL_UTIL_Load( p_handle, NARC_bag_bag_win05_d_NSCR, 0, pWork->heapID );
+    NNSG2dScreenData *scrnData;
 
-    NNSG2dScreenData* scrnData;
     if( NNS_G2dGetUnpackedScreenData( arcData, &scrnData ) )
     {
+      int i,xs=scrnData->screenWidth/8,ys=scrnData->screenHeight/8;
+      u16* buff=(u16*)&scrnData->rawData;
 
+      for(i=0;i<(xs*ys);i++){
+        buff[i] += GFL_ARCUTIL_TRANSINFO_GetPos(pWork->numFrameBg) | 0x1000;
+      }
 
       GFL_BG_WriteScreen(
-        GFL_BG_FRAME3_M, &scrnData->rawData,_WINNUM_INITX,_WINNUM_INITY,_WINNUM_SIZEX,_WINNUM_SIZEY);
-      GFL_HEAP_FreeMemory( arcData );
-
+        GFL_BG_FRAME3_M, &scrnData->rawData,_WINNUM_SCR_INITX,_WINNUM_SCR_INITY,
+        scrnData->screenWidth/8,scrnData->screenHeight/8);
       GFL_BG_LoadScreenV_Req(GFL_BG_FRAME3_M);
     }
+    GFL_HEAP_FreeMemory( arcData );
 
   }
-  
+
   GFL_ARC_CloseDataHandle(p_handle);
 
 }
 
+//------------------------------------------------------------------------------
+/**
+ * @brief   数字の表示
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+
+void ITEMDISP_TrashNumDisp(FIELD_ITEMMENU_WORK* pWork,int num)
+{
+  GFL_BMP_Clear(GFL_BMPWIN_GetBmp(pWork->winNumFrame), 0 );
+  GFL_FONTSYS_SetColor( 0xf, 0xa, 3 );
+  GFL_MSG_GetString(  pWork->MsgManager, MSG_ITEM_STR002, pWork->pStrBuf );
+  WORDSET_RegisterNumber(pWork->WordSet, 0, num,
+                         3, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT);
+  WORDSET_ExpandStr( pWork->WordSet, pWork->pExpStrBuf, pWork->pStrBuf  );
+  PRINTSYS_Print( GFL_BMPWIN_GetBmp(pWork->winNumFrame), 0, 2, pWork->pExpStrBuf, pWork->fontHandle);
+  GFL_BMPWIN_TransVramCharacter(pWork->winNumFrame);
+  GFL_BMPWIN_MakeScreen(pWork->winNumFrame);
+
+}
+
+//------------------------------------------------------------------------------
+/**
+ * @brief   はいいいえウインドウ
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+
+
+void ITEMDISP_YesNoStart(FIELD_ITEMMENU_WORK* pWork)
+{
+  int i;
+  APP_TASKMENU_INITWORK appinit;
+
+  appinit.heapId = pWork->heapID;
+  appinit.itemNum =  2;
+  appinit.itemWork =  &pWork->appitem[0];
+  appinit.bgFrame =  GFL_BG_FRAME3_M;
+  appinit.palNo = _SUBLIST_NORMAL_PAL;
+
+  appinit.posType = ATPT_RIGHT_DOWN;
+  appinit.charPosX = 32;
+  appinit.charPosY = 12;
+
+  appinit.msgHandle = pWork->MsgManager;
+  appinit.fontHandle = pWork->fontHandle;
+  appinit.printQue = pWork->SysMsgQue;
+
+  pWork->appitem[0].str = GFL_STR_CreateBuffer(100, pWork->heapID);
+  GFL_MSG_GetString(pWork->MsgManager, MSG_ITEM_STR003, pWork->appitem[0].str);
+  pWork->appitem[0].msgColor = PRINTSYS_LSB_Make( 0xe,0xf,0);
+  pWork->appitem[1].str = GFL_STR_CreateBuffer(100, pWork->heapID);
+  GFL_MSG_GetString(pWork->MsgManager, MSG_ITEM_STR004, pWork->appitem[1].str);
+  pWork->appitem[1].msgColor = PRINTSYS_LSB_Make( 0xe,0xf,0);
+  pWork->pAppTask = APP_TASKMENU_OpenMenu(&appinit);
+  GFL_STR_DeleteBuffer(pWork->appitem[0].str);
+  GFL_STR_DeleteBuffer(pWork->appitem[1].str);
+}

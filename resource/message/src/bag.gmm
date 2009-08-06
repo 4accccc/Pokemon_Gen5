@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ohno" host="W00141" date="2009-08-03T21:17:03"/>
+	<create user="ohno" host="W00141" date="2009-08-06T16:52:05"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -737,9 +737,9 @@ const u8 msg_item_del02[]
 ０＝道具名
 １＝数字２桁（道具最大数）</comment>
 		<language name="JPN" font=" 1:small">[1:09:どうぐ名:0]を
-[2:01:２桁:1]コ　すてました</language>
+[2:02:３桁:1]コ　すてました</language>
 		<language name="JPN_KANJI" font=" 1:small">[1:09:どうぐ名:0]を
-[2:01:２桁:1]コ　すてました</language>
+[2:02:３桁:1]コ　すてました</language>
 	</row>
 
 	<row id="msg_bag_056">

@@ -151,7 +151,7 @@ struct _DEBUGITEM_PARAM {
   int subbg2;
   int barbg;
   int numFrameBg;
-
+  int trashNum;
 	int pocketno;  //今さしているポケット番号
 	int curpos;   //今さしているカーソル番号
   int oamlistpos; //OAMLIST の 先頭位置 -1から開始
@@ -209,11 +209,14 @@ struct _DEBUGITEM_PARAM {
 #define _POCKETNAME_DISP_SIZEY (3)
 
 //数字入力のウインドウの位置
-#define _WINNUM_INITX (16)
-#define _WINNUM_INITY (12)
-#define _WINNUM_SIZEX (16)
-#define _WINNUM_SIZEY (4)
-#define _WINNUM_PAL (0)
+#define _WINNUM_INITX (17)
+#define _WINNUM_INITY (13)
+#define _WINNUM_SIZEX (11)
+#define _WINNUM_SIZEY (2)
+#define _WINNUM_PAL (1)
+
+#define _WINNUM_SCR_INITX (16)
+#define _WINNUM_SCR_INITY (12)
 
 
 
@@ -263,6 +266,8 @@ extern int ITEMMENU_GetPosCnvButtonItem(FIELD_ITEMMENU_WORK* pWork, int no);
 extern BOOL ITEMMENU_AddCnvButtonItem(FIELD_ITEMMENU_WORK* pWork, int no);
 extern void ITEMMENU_RemoveCnvButtonItem(FIELD_ITEMMENU_WORK* pWork, int no);
 extern void ITEMDISP_SetVisible(void);
-extern void ITEMDISP_NumFrameDisp(FIELD_ITEMMENU_WORK* pWork,int num);
+extern void ITEMDISP_NumFrameDisp(FIELD_ITEMMENU_WORK* pWork);
+extern void ITEMDISP_TrashNumDisp(FIELD_ITEMMENU_WORK* pWork,int num);
+extern void ITEMDISP_YesNoStart(FIELD_ITEMMENU_WORK* pWork);
 
 
