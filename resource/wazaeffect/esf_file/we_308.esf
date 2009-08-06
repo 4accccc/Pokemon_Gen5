@@ -1,11 +1,13 @@
 EFFSEQ
 $0001
-C:\home\pokemon_wb\resource\particle\wazaeffect\w_001.spa
+C:\home\pokemon_wb\resource\particle\wazaeffect\w_308.spa
 #001
 %00
-パーティクルデータロード	w_001
-パーティクル再生	w_001	W_001_001_BALL_BURN	攻撃側	方向無し	0	0
-パーティクル再生	w_001	W_001_001_HIT_MARK	攻撃側	方向無し	0	0
+パーティクルデータロード	w_308
+エミッタ移動	w_308	W_308_308_BUBBLE_BEAM	直線	攻撃側	防御側	2:0:0
+エミッタ移動	w_308	W_308_308_WATER_BEAM1	直線	攻撃側	防御側	2:0:0
+エミッタ移動	w_308	W_308_308_WATER_BEAM2	直線	攻撃側	防御側	2:0:0
+パーティクル再生	w_308	W_308_308_WATER_BIG	攻撃側	方向無し	0	0
 エフェクト終了待ち	すべて
 エフェクト終了
 &
