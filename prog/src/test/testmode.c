@@ -193,6 +193,14 @@ static BOOL TESTMODE_ITEM_SelectFuncSelectName( TESTMODE_WORK *work , const int 
 	#define QuickSelectFunc		TESTMODE_ITEM_SelectFuncAri
 #elif defined DEBUG_ONLY_FOR_nagihashi_toru
 	#define QuickSelectFunc		TESTMODE_ITEM_SelectFuncNagi
+#elif defined DEBUG_ONLY_FOR_fujiwara
+	#define QuickSelectFunc		TESTMODE_ITEM_SelectFuncSogabe
+#elif defined DEBUG_ONLY_FOR_toyama
+	#define QuickSelectFunc		TESTMODE_ITEM_SelectFuncSogabe
+#elif defined DEBUG_ONLY_FOR_shota_kageyama
+	#define QuickSelectFunc		TESTMODE_ITEM_SelectFuncSogabe
+#elif defined DEBUG_ONLY_FOR_sounduser
+	#define QuickSelectFunc		TESTMODE_ITEM_SelectFuncSogabe
 #endif
 
 
