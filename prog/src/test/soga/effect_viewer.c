@@ -261,9 +261,9 @@ static GFL_PROC_RESULT EffectViewerProcInit( GFL_PROC * proc, int * seq, void * 
       },
       ///<FRAME3_M
       {
-        0, 0, 0x0800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
+        0, 0, 0x2000, 0, GFL_BG_SCRSIZ_512x512, GX_BG_COLORMODE_16,
         GX_BG_SCRBASE_0x1000, GX_BG_CHARBASE_0x0c000, GFL_BG_CHRSIZ_256x256,
-        GX_BG_EXTPLTT_01, 0, 0, 0, FALSE
+        GX_BG_EXTPLTT_01, 1, 0, 0, FALSE
       },
       ///<FRAME0_S
       {
@@ -521,6 +521,7 @@ static  void  EffectViewerRead( EFFECT_VIEWER_WORK *evw )
       MCS_Write( MCS_WRITE_CH, &head, 4 );
       OS_TPrintf("receive head:%d\n",size);
     }
+    BTLV_EFFVM_ClearUnpackInfo( BTLV_EFFECT_GetVMHandle() );
   }
 }
 
