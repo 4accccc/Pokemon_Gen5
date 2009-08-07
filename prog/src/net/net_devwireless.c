@@ -55,7 +55,7 @@ static int _DevGetIconLevelFunc(void);
 static int _DevGetError(void);  ///< エラーを得る
 static void _DevSetNoChildErrorSet(BOOL bOn);
 static void _DevSetClinetConnect(BOOL bEnable);
-
+static BOOL _DevCrossScan(void);
 
 //--------------------------------------------
 // 構造体
@@ -109,6 +109,7 @@ static GFLNetDevTable netDevTbl={
 	NULL, //DevGetSendLockFlagFunc DevGetSendLockFlag;  ///< 送信ロックフラグを取得
 	NULL, //DevConnectWorkInitFunc DevConnectWorkInit;           ///<初めての接続後のワーク設定
 	_DevSetClinetConnect, //DevSetClientConnectFunc DevSetClientConnect; ///< 子機がつながってよいかどうかハードレベルで調整
+  _DevCrossScan, //すれ違い通信
 
 	NULL, //DevLobbyLoginFunc DevLobbyLogin;		///<Wi-Fi広場にログイン	DWC_LOBBY_Login
 	NULL, //DevDebugSetRoomFunc DevDebugSetRoom;	///<デバッグ用 部屋データ設定 DWC_LOBBY_DEBUG_SetRoomData
@@ -601,3 +602,15 @@ static void _DevSetClinetConnect(BOOL bEnable)
 {
 	GFL_NET_WHPipeSetClientConnect(bEnable);
 }
+
+//------------------------------------------------------------------------------
+/**
+ * @brief   すれ違い通信開始
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+static BOOL _DevCrossScan(void)
+{
+  return GFL_NET_WLCrossoverInit();
+}
+

@@ -547,6 +547,7 @@ typedef struct{
 	u16 negoIDSend;
 	u16 negoIDRecv;
 	u16 beaconSendNum;
+  u16 beaconScanNum;
 	/* 親機接続時に使用する設定 */
 	u8 sConnectionSsid[(WM_SIZE_CHILD_SSID/4)*4];
 	HEAPID heapID;
@@ -1447,6 +1448,7 @@ BOOL WH_StartScan(WHStartScanCallbackFunc callback, const u8 *macAddr, u16 chann
 	_pWmInfo->sChannelIndex = channel;
 	_pWmInfo->sScanExParam.channelList = 1;
 	_pWmInfo->sAutoConnectFlag = FALSE;          // 自動接続はしない
+  _pWmInfo->beaconScanNum = 0;  //ビーコンカウント０
 
 	// 検索するMACアドレスの条件を設定
 	if (macAddr != NULL)
@@ -1574,6 +1576,8 @@ static void WH_StateOutStartScan(void *arg)
 	BOOL found;
 	int state = cb->state;
 
+  _pWmInfo->beaconScanNum++;  //回数を数える
+
 	// スキャンコマンドに失敗した場合
 	if (cb->errcode != WM_ERRCODE_SUCCESS)
 	{
@@ -1668,7 +1672,6 @@ static void WH_StateOutStartScan(void *arg)
 		NET_PRINT("スキャン失敗\n");
 		return;
 	}
-
 	// チャンネルを変更して再スキャンを開始します。
 	if (!WH_StateInStartScan()) {
 		WH_ChangeSysState(WH_SYSSTATE_ERROR);
@@ -3643,6 +3646,20 @@ u16 WHGetBeaconSendNum(void)
 {
 	return _pWmInfo->beaconSendNum;
 }
+
+
+/*---------------------------------------------------------------------------*
+  Name:         WHGetBeaconSendNum
+  Description:  ビーコンスキャンを何回行ったかを得る
+  Arguments:    none
+  Returns:      送った回数
+ *---------------------------------------------------------------------------*/
+
+u16 WHGetBeaconScanNum(void)
+{
+	return _pWmInfo->beaconScanNum;
+}
+
 
 /*---------------------------------------------------------------------------*
   Name:         WHSetDisconnectCallBack

@@ -8,8 +8,7 @@
 //=============================================================================
 
 
-#ifndef __NET_WIRELESS_H__
-#define __NET_WIRELESS_H__
+#pragma once
 
 #include "gflib.h"
 #include "wih.h"
@@ -150,22 +149,6 @@ extern void GFL_NET_WLResetScanChangeFlag(void);
  */
 //==============================================================================
 extern int GFL_NET_WLGetParentConnectionNum(int index);
-//==============================================================================
-/**
- * @brief   すぐに接続していい人が見つかった場合indexを返す
- * @param   none
- * @retval  該当したらindexを返す
- */
-//==============================================================================
-extern int GFL_NET_WLGetFastConnectIndex(void);
-//==============================================================================
-/**
- * @brief   次のレベルで繋いでいい人がいたらそのindexを返します
- * @param   none
- * @retval  該当したらindexを返す
- */
-//==============================================================================
-extern int GFL_NET_WLGetNextConnectIndex(void);
 //==============================================================================
 /**
  * @brief   子機　MP状態で接続
@@ -471,5 +454,14 @@ extern BOOL GFI_NET_WHPipeEnd(NetDevEndCallback callback);
 
 extern void GFL_NET_WHPipeSetClientConnect(BOOL bEnable);
 
-#endif  //__NET_WIRELESS_H__
+//-------------------------------------------------------------
+/**
+ * @brief   すれ違い通信開始
+ * @param   none
+ * @retval  nene
+ */
+//-------------------------------------------------------------
+extern BOOL GFL_NET_WLCrossoverInit(void);
+
+
 

@@ -771,6 +771,15 @@ extern void WHSetGameInfo(void* pBuff, int size, int ggid, int tgid);
 extern u16 WHGetBeaconSendNum(void);
 
 /*---------------------------------------------------------------------------*
+  Name:         WHGetBeaconSendNum
+  Description:  ビーコンスキャンを何回行ったかを得る
+  Arguments:    none
+  Returns:      行った回数
+ *---------------------------------------------------------------------------*/
+
+extern u16 WHGetBeaconScanNum(void);
+
+/*---------------------------------------------------------------------------*
   Name:         WHSetDisconnectCallBack
   Description:  接続が切れた際に呼ばれるコールバック関数登録
   Arguments:    コールバック

@@ -103,6 +103,7 @@ static GFLNetDevTable netDevTbl={
 	_DevGetSendLockFlagFunc,
 	_DevConnectWorkInitFunc,
 	NULL, //DevSetClientConnectFunc DevSetClientConnect; ///< 子機がつながってよいかどうかハードレベルで調整
+  NULL, //DevCrossScanFunc
 
 	NULL, //DevLobbyLoginFunc DevLobbyLogin;		///<Wi-Fi広場にログイン	DWC_LOBBY_Login
 	NULL, //DevDebugSetRoomFunc DevDebugSetRoom;	///<デバッグ用 部屋データ設定 DWC_LOBBY_DEBUG_SetRoomData

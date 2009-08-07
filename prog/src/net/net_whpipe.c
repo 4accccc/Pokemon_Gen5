@@ -20,6 +20,7 @@
 
 #include "net_whpipe.h"
 //#include "gf_standard.h"
+#include "system/gfl_use.h"
 
 //#include "../tool/net_ring_buff.h"
 
@@ -142,6 +143,10 @@ struct _NET_WL_WORK {
 	u8 bEntry;        ///< 子機の新規参入
 	u8 bScanCallBack;  ///< 親のスキャンがかかった場合TRUE, いつもはFALSE
 	u8 bChange;   ///<ビーコン変更フラグ
+  u8 crossChannel;
+  u8 CrossRand;
+  u8 dummy;
+  //u8 = 16byte
 } ;
 
 //#define _NET_WL_WORK  GFL_NETWL;
@@ -615,6 +620,7 @@ BOOL GFL_NET_WLFinalize(void)
 	if(pNetWL){
 		if(pNetWL->disconnectType == _DISCONNECT_NONE){
 			//            pNetWL->disconnectType = _DISCONNECT_END;
+      _CHANGE_STATE(NULL);
 			WH_Finalize();
 			return TRUE;
 		}
@@ -795,72 +801,6 @@ static int _getParentNum(int machNum)
 		}
 	}
 	return -1;
-}
-
-//-------------------------------------------------------------
-/**
- * @brief   すぐに接続していい人が見つかった場合indexを返す
- * @param   none
- * @retval  該当したらindexを返す
- */
-//-------------------------------------------------------------
-
-int GFL_NET_WLGetFastConnectIndex(void)
-{
-	GFL_NETWL* pNetWL = _pNetWL;
-	int i,num;
-
-	if(GFL_NET_WLGetParentCount()==0){
-		return -1;
-	}
-	for (i = SCAN_PARENT_COUNT_MAX -1; i >= 0; i--) {
-		if(pNetWL->bconUnCatchTime[i] != 0){
-			if(_isMachBackupMacAddress(&pNetWL->sBssDesc[i].bssid[0])){  // 古いMACに合致
-				num = GFL_NET_WLGetParentConnectionNum(i);
-				if(( num > 1) && (num < GFL_NET_MACHINE_MAX)){      // 本親に該当した まだ参加可能
-					return i;
-				}
-			}
-		}
-	}
-	return -1;
-}
-
-//-------------------------------------------------------------
-/**
- * @brief   次のレベルで繋いでいい人がいたらそのindexを返します
- * @param   none
- * @retval  該当したらindexを返す
- */
-//-------------------------------------------------------------
-
-int GFL_NET_WLGetNextConnectIndex(void)
-{
-	GFL_NETWL* pNetWL = _pNetWL;
-	int i;
-
-	if(GFL_NET_WLGetParentCount()==0){  // ビーコンが無い状態
-		return -1;
-	}
-	for (i = SCAN_PARENT_COUNT_MAX-1; i >= 0; i--) {
-		if(pNetWL->bconUnCatchTime[i] != 0){
-			if(_isMachBackupMacAddress(&pNetWL->sBssDesc[i].bssid[0])){  // 古いMACに合致
-				NET_PRINT("昔の親 %d\n",i);
-				return i;
-			}
-		}
-	}
-	i = _getParentNum(1);
-	if(i != -1 ){
-		NET_PRINT("履歴なし本親 %d \n", i);
-		return i;
-	}
-	i = _getParentNum(0);
-	if(i != -1){
-		NET_PRINT("履歴なし仮親 %d \n", i);
-		return i;
-	}
-	return i;
 }
 
 static BOOL _parentFindCallback(WMBssDesc* pBeacon)
@@ -1924,3 +1864,98 @@ void GFL_NET_WHPipeSetClientConnect(BOOL bEnable)
 		WH_SetJudgeAcceptFunc(&_connectDisable);
 	}
 }
+
+//-------------------------------------------------------------
+/**
+ * @brief   すれ違い通信
+ * @param   bEnable  つなぐ時はTRUE
+ * @retval  TRUE
+ */
+//-------------------------------------------------------------
+
+static void _crossScanShootStart(GFL_NETWL* pNetWL);
+
+
+static void _crossScanWait(GFL_NETWL* pNetWL)
+{
+  pNetWL->CrossRand--;
+  
+  if( pNetWL->CrossRand == 0){
+//  if(pNetWL->CrossRand < WHGetBeaconSendNum()){
+    WH_Finalize();
+  //  OS_TPrintf("_crossScanWait %d \n",OS_GetVBlankCount()/60);
+    
+    _CHANGE_STATE(_crossScanShootStart);
+  }
+}
+
+
+static void _crossScanShootEndWait(GFL_NETWL* pNetWL)
+{
+  if(GFL_NET_WLIsStateIdle()){
+    u8 ch[]={1,7,13};
+    pNetWL->crossChannel++;
+    if(pNetWL->crossChannel >= elementof(ch)){
+      pNetWL->crossChannel=0;
+    }
+		GFI_NET_BeaconSetInfo();
+    if( WH_ParentConnect(WH_CONNECTMODE_MP_PARENT, pNetWL->_sTgid, ch[pNetWL->crossChannel], 1 )){
+      pNetWL->CrossRand = 180 + GFUser_GetPublicRand(32);
+//      pNetWL->CrossRand= GFUser_GetPublicRand(5);
+      _CHANGE_STATE(_crossScanWait);  // 親機になる
+    }
+  }
+}
+
+
+
+static void _crossScanShootWait(GFL_NETWL* pNetWL)
+{
+  pNetWL->CrossRand--;
+  
+  if( pNetWL->CrossRand == 0){
+//  if( pNetWL->CrossRand < WHGetBeaconScanNum()){
+    WH_EndScan(); //スキャン終了
+    _CHANGE_STATE(_crossScanShootEndWait);  // スキャン終了待ち
+  }
+}
+
+
+static void _crossScanShootStart(GFL_NETWL* pNetWL)
+{
+  if(WH_GetSystemState() == WH_SYSSTATE_IDLE){
+    if(WH_StartScan(_scanCallback, NULL, 0)){
+      pNetWL->CrossRand = 60+GFUser_GetPublicRand(40);
+      _CHANGE_STATE(_crossScanShootWait);  // スキャン待ち
+		}
+	}
+}
+
+//-------------------------------------------------------------
+/**
+ * @brief   すれ違い通信開始
+ * @param   none
+ * @retval  nene
+ */
+//-------------------------------------------------------------
+BOOL GFL_NET_WLCrossoverInit(void)
+{
+	GFL_NETWL* pNetWL = _pNetWL;
+
+	if(pNetWL == NULL){
+		return FALSE;
+  }
+
+  _commInit(pNetWL);
+
+  GFL_NET_WLChildBconDataInit(); // データの初期化
+	{
+		WH_SetReceiver(_receiverFunc);
+		pNetWL->bSetReceiver = TRUE;
+	}
+
+  _CHANGE_STATE(_crossScanShootStart);
+
+  return TRUE;
+}
+
