@@ -44,7 +44,7 @@
 #include "worldtrade_local.h"
 
 #include "net_app/connect_anm.h"
-
+#include "net/network_define.h"
 
 //#include "msgdata/msg_ev_win.h"
 
@@ -59,12 +59,18 @@
 //============================================================================================
 //	定数定義
 //============================================================================================
-
+// ポインタ参照だけできる世界交換ワーク構造体
+typedef struct _WORLDTRADE_WORK WORLDTRADE_WORK;	
 
 
 //============================================================================================
 //	プロトタイプ宣言
 //============================================================================================
+// プロセス定義データ
+static GFL_PROC_RESULT WorldTradeProc_Init( GFL_PROC * proc, int * seq, void * param, void * work );
+static GFL_PROC_RESULT WorldTradeProc_Main( GFL_PROC * proc, int * seq, void * param, void * work );
+static GFL_PROC_RESULT WorldTradeProc_End( GFL_PROC * proc, int * seq, void * param, void * work );
+
 
 /*** 関数プロトタイプ ***/
 static void VBlankFunc( GFL_TCB *, void *work );
@@ -115,7 +121,12 @@ WORLDTRADE_WORK *debug_worldtrade;
 //============================================================================================
 //	プロセス関数
 //============================================================================================
-
+const GFL_PROC_DATA WorldTrade_ProcData	=
+{	
+	WorldTradeProc_Init,
+	WorldTradeProc_Main,
+	WorldTradeProc_End,
+};
 
 
 //--------------------------------------------------------------------------------------------
@@ -128,7 +139,7 @@ WORLDTRADE_WORK *debug_worldtrade;
  * @return	処理状況
  */
 //--------------------------------------------------------------------------------------------
-GFL_PROC_RESULT WorldTradeProc_Init( GFL_PROC * proc, int * seq, void * param, void * work )
+static GFL_PROC_RESULT WorldTradeProc_Init( GFL_PROC * proc, int * seq, void * param, void * work )
 {
 	WORLDTRADE_WORK * wk;
 	
@@ -248,26 +259,24 @@ GFL_PROC_RESULT WorldTradeProc_Init( GFL_PROC * proc, int * seq, void * param, v
 				NULL,
 				NULL,
 				NULL,
-				0,
+				MYDWC_HEAPSIZE,
 				TRUE,
 #endif  //GFL_NET_WIFI
-				0,
+				0x444,  //ggid  DP=0x333,RANGER=0x178,WII=0x346
 				GFL_HEAPID_APP,
 				HEAPID_NETWORK,
 				HEAPID_WIFI,
 				HEAPID_IRC,
-				0,
-				0,
-				0,
-				0,
-				0,
-				0,
-				0,
+				GFL_WICON_POSX,GFL_WICON_POSY,        // 通信アイコンXY位置
+				_MAXNUM,     // 最大接続人数
+				_MAXSIZE,  //最大送信バイト数
+				_BCON_GET_NUM,    // 最大ビーコン収集数				TRUE,
+				FALSE,
 				GFL_NET_TYPE_WIFI_GTS,
-				0,
-				0,
+				TRUE,
+				WB_NET_WIFIGTS,
 #if GFL_NET_IRC
-				0,
+				IRC_TIMEOUT_STANDARD,
 #endif	//GFL_NET_IRC
 			};
 			GFL_NET_Init( &net_init, NULL, NULL );
@@ -298,7 +307,7 @@ GFL_PROC_RESULT WorldTradeProc_Init( GFL_PROC * proc, int * seq, void * param, v
  */
 //--------------------------------------------------------------------------------------------
 
-GFL_PROC_RESULT WorldTradeProc_Main( GFL_PROC * proc, int * seq, void * param, void * work )
+static GFL_PROC_RESULT WorldTradeProc_Main( GFL_PROC * proc, int * seq, void * param, void * work )
 {
 	WORLDTRADE_WORK * wk  = work;
 
@@ -397,7 +406,7 @@ GFL_PROC_RESULT WorldTradeProc_Main( GFL_PROC * proc, int * seq, void * param, v
  * @return	処理状況
  */
 //--------------------------------------------------------------------------------------------
-GFL_PROC_RESULT WorldTradeProc_End( GFL_PROC * proc, int * seq, void * param, void * work )
+static GFL_PROC_RESULT WorldTradeProc_End( GFL_PROC * proc, int * seq, void * param, void * work )
 {
 	WORLDTRADE_WORK  *wk    = work;
 	int i;

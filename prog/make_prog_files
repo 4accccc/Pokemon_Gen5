@@ -417,12 +417,6 @@ SRCS_OVERLAY_TOWNMAP = app/townmap/townmap.c \
 #===> main
 SRCS_OVERLAY_SOUND_DEBUG  = sound/snd_test2.c
 
-
-#	名木橋デバッグ
-#===> main
-SRCS_OVERLAY_NAGIHASHI_DEBUG	= test/nagihashi/debug_nagi.c \
-																test/nagihashi/debug_irc_name.c
-
 # 有泉デバッグ
 #===> main
 SRCS_OVERLAY_ARIIZUMI_DEBUG = test/ariizumi/debug_ariizumi.c
@@ -720,8 +714,7 @@ SRCS_OVERLAY_PALACE = app/palace/palace_edit.c \
 
 
 #WIFI 世界 共通
-#===> SRCS_OVERLAY_DEV_WIFILIB
-#LIB=>          libdwcgsghttp.a
+#===> SRCS_OVERLAY_DEV_WIFI
 #LIB=>          libdwcnd.a
 #LIB=>          libdwcnhttp.a
 SRCS_OVERLAY_DPW_COMMON   = libdpw/dpwi_encrypt.c \
@@ -864,7 +857,7 @@ SRCS_OVERLAY_MATSUDA_DEBUG  = test/matsuda/d_matsu.c \
         test/matsuda/palace_block.c \
         test/matsuda/palace_block2.c
 
-#wifi_worldtrade
+#wifiGTS
 #===> SRCS_OVERLAY_DPW_COMMON
 SRCS_OVERLAY_WORLDTRADE	= net_app/wifi_worldtrade/worldtrade.c \
 													net_app/wifi_worldtrade/worldtrade_box.c \
@@ -881,6 +874,10 @@ SRCS_OVERLAY_WORLDTRADE	= net_app/wifi_worldtrade/worldtrade.c \
 													net_app/wifi_worldtrade/worldtrade_upload.c \
 													net_app/wifi_worldtrade/worldtrade_adapter.c
 
+#	名木橋デバッグ
+#===> main
+SRCS_OVERLAY_NAGIHASHI_DEBUG	= test/nagihashi/debug_nagi.c \
+																test/nagihashi/debug_irc_name.c
 
 #MCSライブラリ
 #===> SRCS_OVERLAY_FIELDMAP

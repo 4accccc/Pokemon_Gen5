@@ -89,6 +89,7 @@ enum NetworkServiceID_e {
 	WB_NET_COLOSSEUM,       ///<コロシアム
   WB_NET_IRCTRADE,       ///<赤外線ぽけ交換
   WB_NET_IRCFRIEND,       ///<赤外線ともだち交換
+	WB_NET_WIFIGTS,					///<GTS
 	
   WB_NET_SERVICEID_MAX   // 終端
 };
@@ -122,6 +123,7 @@ enum NetworkCommandHeaderNo_e {
 	GFL_NET_CMD_COLOSSEUM = (WB_NET_COLOSSEUM<<8),      ///<コロシアム
   GFL_NET_CMD_IRCTRADE = (WB_NET_IRCBATTLE<<8),  ///< IRCぽけこうかん
   GFL_NET_CMD_IRCFRIEND = (WB_NET_IRCFRIEND<<8),  ///< IRCともだちこうかん
+	GFL_NET_CMD_WIFIGTS		= (WB_NET_WIFIGTS<<8),		///< GTS
 };
 
 

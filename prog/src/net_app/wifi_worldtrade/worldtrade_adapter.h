@@ -101,6 +101,11 @@ typedef int SBOX_CB_MODE;
 
 typedef void PHC_SVDATA;
 
+
+#define _MAXNUM   (2)         // 最大接続人数
+#define _MAXSIZE  (80)        // 最大送信バイト数
+#define _BCON_GET_NUM (16)    // 最大ビーコン収集数
+
 //=============================================================================
 /**
  *					置き換える予定だが、まだ定義されていない関数

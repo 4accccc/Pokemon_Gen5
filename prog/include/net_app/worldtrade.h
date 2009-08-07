@@ -23,14 +23,8 @@
 //============================================================================================
 //	定義
 //============================================================================================
+extern const GFL_PROC_DATA WorldTrade_ProcData;
 
-// プロセス定義データ
-extern GFL_PROC_RESULT WorldTradeProc_Init( GFL_PROC * proc, int * seq, void * param, void * work );
-extern GFL_PROC_RESULT WorldTradeProc_Main( GFL_PROC * proc, int * seq, void * param, void * work );
-extern GFL_PROC_RESULT WorldTradeProc_End( GFL_PROC * proc, int * seq, void * param, void * work );
-
-// ポインタ参照だけできる世界交換ワーク構造体
-typedef struct _WORLDTRADE_WORK WORLDTRADE_WORK;	
 
 
 typedef struct{

@@ -59,6 +59,17 @@ FS_EXTERN_OVERLAY( compatible_irc_sys );
 //=====================================
 #define CIRCLE_MAX		(10)
 
+//-------------------------------------
+///	
+//=====================================
+typedef enum 
+{
+	PROC_TYPE_NONE,
+	PROC_TYPE_CALL,
+	PROC_TYPE_NEXT,
+} PROC_TYPE;
+
+
 //=============================================================================
 /**
  *					構造体宣言
@@ -141,7 +152,7 @@ typedef struct
 	BOOL	is_temp_modules;
 
 	BOOL	is_end;
-	BOOL	is_proc;
+	PROC_TYPE	proc_type;
 
 	//Proc切り替え用
 	FSOverlayID overlay_Id;
@@ -175,7 +186,8 @@ static GFL_PROC_RESULT DEBUG_PROC_NAGI_Init( GFL_PROC *p_proc, int *p_seq, void 
 static GFL_PROC_RESULT DEBUG_PROC_NAGI_Exit( GFL_PROC *p_proc, int *p_seq, void *p_parent, void *p_work );
 static GFL_PROC_RESULT DEBUG_PROC_NAGI_Main( GFL_PROC *p_proc, int *p_seq, void *p_parent, void *p_work );
 //汎用
-static void DEBUG_NAGI_COMMAND_ChangeProc( DEBUG_NAGI_MAIN_WORK * p_wk, FSOverlayID ov_id, const GFL_PROC_DATA *p_procdata, void *p_work );
+static void DEBUG_NAGI_COMMAND_CallProc( DEBUG_NAGI_MAIN_WORK * p_wk, FSOverlayID ov_id, const GFL_PROC_DATA *p_procdata, void *p_work );
+static void DEBUG_NAGI_COMMAND_NextProc( DEBUG_NAGI_MAIN_WORK * p_wk, FSOverlayID ov_id, const GFL_PROC_DATA *p_procdata, void *p_work );
 static void DEBUG_NAGI_COMMAND_ChangeMenu( DEBUG_NAGI_MAIN_WORK * p_wk, const LIST_SETUP_TBL *cp_tbl, u32 tbl_max );
 static void DEBUG_NAGI_COMMAND_End( DEBUG_NAGI_MAIN_WORK *p_wk );
 
@@ -207,18 +219,18 @@ static GFL_FONT*	MSG_GetFont( const MSG_WORK *cp_wk );
 static PRINT_QUE* MSG_GetPrintQue( const MSG_WORK *cp_wk );
 //LISTFUNC
 typedef void (*LISTDATA_FUNCTION)( DEBUG_NAGI_MAIN_WORK *p_wk );
-static void LISTDATA_ChangeProcAura( DEBUG_NAGI_MAIN_WORK *p_wk );
-static void LISTDATA_ChangeProcRhythm( DEBUG_NAGI_MAIN_WORK *p_wk );
-static void LISTDATA_ChangeProcResult( DEBUG_NAGI_MAIN_WORK *p_wk );
-static void LISTDATA_ChangeProcCompatible( DEBUG_NAGI_MAIN_WORK *p_wk );
-static void LISTDATA_ChangeProcCompatibleDebug( DEBUG_NAGI_MAIN_WORK *p_wk );
-static void LISTDATA_ChangeProcNameDebug( DEBUG_NAGI_MAIN_WORK *p_wk );
-static void LISTDATA_ChangeProcRankingDebug( DEBUG_NAGI_MAIN_WORK *p_wk );
-static void LISTDATA_ChangeProcGts( DEBUG_NAGI_MAIN_WORK *p_wk );
+static void LISTDATA_CallProcAura( DEBUG_NAGI_MAIN_WORK *p_wk );
+static void LISTDATA_CallProcRhythm( DEBUG_NAGI_MAIN_WORK *p_wk );
+static void LISTDATA_CallProcResult( DEBUG_NAGI_MAIN_WORK *p_wk );
+static void LISTDATA_CallProcCompatible( DEBUG_NAGI_MAIN_WORK *p_wk );
+static void LISTDATA_CallProcCompatibleDebug( DEBUG_NAGI_MAIN_WORK *p_wk );
+static void LISTDATA_CallProcNameDebug( DEBUG_NAGI_MAIN_WORK *p_wk );
+static void LISTDATA_CallProcRankingDebug( DEBUG_NAGI_MAIN_WORK *p_wk );
+static void LISTDATA_CallProcGts( DEBUG_NAGI_MAIN_WORK *p_wk );
 static void LISTDATA_AddRankData( DEBUG_NAGI_MAIN_WORK *p_wk );
 static void LISTDATA_FullRankData( DEBUG_NAGI_MAIN_WORK *p_wk );
-static void LISTDATA_ChangeProcTownMap( DEBUG_NAGI_MAIN_WORK *p_wk );
-static void LISTDATA_ChangeProcSkyJump( DEBUG_NAGI_MAIN_WORK *p_wk );
+static void LISTDATA_CallProcTownMap( DEBUG_NAGI_MAIN_WORK *p_wk );
+static void LISTDATA_CallProcSkyJump( DEBUG_NAGI_MAIN_WORK *p_wk );
 static void LISTDATA_Return( DEBUG_NAGI_MAIN_WORK *p_wk );
 static void LISTDATA_NextListHome( DEBUG_NAGI_MAIN_WORK *p_wk );
 static void LISTDATA_NextListPage1( DEBUG_NAGI_MAIN_WORK *p_wk );
@@ -298,21 +310,21 @@ enum
 };
 static const LISTDATA_FUNCTION	sc_list_funciton[]	= 
 {	
-	LISTDATA_ChangeProcAura,
-	LISTDATA_ChangeProcRhythm,
-	LISTDATA_ChangeProcResult,
-	LISTDATA_ChangeProcCompatible,
-	LISTDATA_ChangeProcCompatibleDebug,
+	LISTDATA_CallProcAura,
+	LISTDATA_CallProcRhythm,
+	LISTDATA_CallProcResult,
+	LISTDATA_CallProcCompatible,
+	LISTDATA_CallProcCompatibleDebug,
 	LISTDATA_Return,
-	LISTDATA_ChangeProcNameDebug,
-	LISTDATA_ChangeProcRankingDebug,
+	LISTDATA_CallProcNameDebug,
+	LISTDATA_CallProcRankingDebug,
 	LISTDATA_AddRankData,
 	LISTDATA_FullRankData,
-	LISTDATA_ChangeProcTownMap,
-	LISTDATA_ChangeProcSkyJump,
+	LISTDATA_CallProcTownMap,
+	LISTDATA_CallProcSkyJump,
 	LISTDATA_NextListHome,
 	LISTDATA_NextListPage1,
-	LISTDATA_ChangeProcGts,
+	LISTDATA_CallProcGts,
 };
 
 //-------------------------------------
@@ -416,6 +428,13 @@ static GFL_PROC_RESULT DEBUG_PROC_NAGI_Exit( GFL_PROC *p_proc, int *p_seq, void 
 
 	p_wk	= p_work;
 
+	if( p_wk->proc_type == PROC_TYPE_NEXT )
+	{	
+		//次のPROC予約
+		GFL_PROC_SysSetNextProc(
+				p_wk->overlay_Id, p_wk->p_procdata, p_wk->p_proc_work );
+	}
+
 	DeleteTemporaryModules( p_wk );
 
 	GFL_PROC_FreeWork( p_proc );
@@ -494,10 +513,15 @@ static GFL_PROC_RESULT DEBUG_PROC_NAGI_Main( GFL_PROC *p_proc, int *p_seq, void 
 			}
 
 			//PROC判定
-			if( p_wk->is_proc )
+			switch( p_wk->proc_type )
 			{	
-				p_wk->is_proc	= FALSE;
+			case PROC_TYPE_CALL:
+				p_wk->proc_type	= PROC_TYPE_NONE;
 				*p_seq	= SEQ_PROC_FADEIN_START;
+				break;
+			case PROC_TYPE_NEXT:
+				*p_seq	= SEQ_FADEIN_START;
+				break;
 			}
 		}
 		break;
@@ -564,16 +588,35 @@ static GFL_PROC_RESULT DEBUG_PROC_NAGI_Main( GFL_PROC *p_proc, int *p_seq, void 
  *
  */
 //-----------------------------------------------------------------------------
-static void DEBUG_NAGI_COMMAND_ChangeProc( DEBUG_NAGI_MAIN_WORK * p_wk, FSOverlayID ov_id, const GFL_PROC_DATA *p_procdata, void *p_work )
+static void DEBUG_NAGI_COMMAND_CallProc( DEBUG_NAGI_MAIN_WORK * p_wk, FSOverlayID ov_id, const GFL_PROC_DATA *p_procdata, void *p_work )
 {	
 	p_wk->overlay_Id	= ov_id;
 	p_wk->p_procdata	= p_procdata;
 	p_wk->p_proc_work	= p_work;
 //	p_wk->is_end	= TRUE;
 
-	p_wk->is_proc	= TRUE;
+	p_wk->proc_type	= PROC_TYPE_CALL;
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief	プロセス予約
+ *
+ *	@param	DEBUG_NAGI_MAIN_WORK * p_wk		ワーク
+ *	@param	ov_id											オーバーレイID
+ *	@param	GFL_PROC_DATA *p_procdata	プロセスデータ
+ *	@param	*p_work										渡す情報
+ */
+//-----------------------------------------------------------------------------
+static void DEBUG_NAGI_COMMAND_NextProc( DEBUG_NAGI_MAIN_WORK * p_wk, FSOverlayID ov_id, const GFL_PROC_DATA *p_procdata, void *p_work )
+{	
+	p_wk->overlay_Id	= ov_id;
+	p_wk->p_procdata	= p_procdata;
+	p_wk->p_proc_work	= p_work;
+//	p_wk->is_end	= TRUE;
+
+	p_wk->proc_type	= PROC_TYPE_NEXT;
+}
 //----------------------------------------------------------------------------
 /**
  *	@brief	メニューを切り替え
@@ -678,11 +721,11 @@ static void MainTemporaryModules( DEBUG_NAGI_MAIN_WORK *p_wk )
  */
 //-----------------------------------------------------------------------------
 FS_EXTERN_OVERLAY(irc_aura);
-static void LISTDATA_ChangeProcAura( DEBUG_NAGI_MAIN_WORK *p_wk )
+static void LISTDATA_CallProcAura( DEBUG_NAGI_MAIN_WORK *p_wk )
 {
 	GFL_STD_MemClear( &p_wk->aura_param, sizeof(IRC_AURA_PARAM) );
 	p_wk->aura_param.is_only_play	= TRUE;
-	DEBUG_NAGI_COMMAND_ChangeProc( p_wk, FS_OVERLAY_ID(irc_aura), &IrcAura_ProcData, &p_wk->aura_param );
+	DEBUG_NAGI_COMMAND_CallProc( p_wk, FS_OVERLAY_ID(irc_aura), &IrcAura_ProcData, &p_wk->aura_param );
 }
 
 //----------------------------------------------------------------------------
@@ -694,11 +737,11 @@ static void LISTDATA_ChangeProcAura( DEBUG_NAGI_MAIN_WORK *p_wk )
  */
 //-----------------------------------------------------------------------------
 FS_EXTERN_OVERLAY(irc_rhythm);
-static void LISTDATA_ChangeProcRhythm( DEBUG_NAGI_MAIN_WORK *p_wk )
+static void LISTDATA_CallProcRhythm( DEBUG_NAGI_MAIN_WORK *p_wk )
 {	
 	GFL_STD_MemClear( &p_wk->rhythm_param, sizeof(IRC_RHYTHM_PARAM) );
 	p_wk->rhythm_param.is_only_play	= TRUE;
-	DEBUG_NAGI_COMMAND_ChangeProc( p_wk, FS_OVERLAY_ID(irc_rhythm), &IrcRhythm_ProcData, &p_wk->rhythm_param );
+	DEBUG_NAGI_COMMAND_CallProc( p_wk, FS_OVERLAY_ID(irc_rhythm), &IrcRhythm_ProcData, &p_wk->rhythm_param );
 }
 //----------------------------------------------------------------------------
 /**
@@ -709,11 +752,11 @@ static void LISTDATA_ChangeProcRhythm( DEBUG_NAGI_MAIN_WORK *p_wk )
  */
 //-----------------------------------------------------------------------------
 FS_EXTERN_OVERLAY(irc_result);
-static void LISTDATA_ChangeProcResult( DEBUG_NAGI_MAIN_WORK *p_wk )
+static void LISTDATA_CallProcResult( DEBUG_NAGI_MAIN_WORK *p_wk )
 {	
 	GFL_STD_MemClear( &p_wk->result_param, sizeof(IRC_RESULT_PARAM) );
 	p_wk->result_param.score	= 80;
-	DEBUG_NAGI_COMMAND_ChangeProc( p_wk, FS_OVERLAY_ID(irc_result), &IrcResult_ProcData, &p_wk->result_param );
+	DEBUG_NAGI_COMMAND_CallProc( p_wk, FS_OVERLAY_ID(irc_result), &IrcResult_ProcData, &p_wk->result_param );
 }
 //----------------------------------------------------------------------------
 /**
@@ -724,11 +767,11 @@ static void LISTDATA_ChangeProcResult( DEBUG_NAGI_MAIN_WORK *p_wk )
  */
 //-----------------------------------------------------------------------------
 FS_EXTERN_OVERLAY(irc_compatible);
-static void LISTDATA_ChangeProcCompatible( DEBUG_NAGI_MAIN_WORK *p_wk )
+static void LISTDATA_CallProcCompatible( DEBUG_NAGI_MAIN_WORK *p_wk )
 {	
 	p_wk->compatible_param.p_gamesys	= NULL;
 	p_wk->compatible_param.is_only_play	= FALSE;
-	DEBUG_NAGI_COMMAND_ChangeProc( p_wk, FS_OVERLAY_ID(irc_compatible), &IrcCompatible_ProcData, &p_wk->compatible_param );
+	DEBUG_NAGI_COMMAND_CallProc( p_wk, FS_OVERLAY_ID(irc_compatible), &IrcCompatible_ProcData, &p_wk->compatible_param );
 }
 //----------------------------------------------------------------------------
 /**
@@ -738,11 +781,11 @@ static void LISTDATA_ChangeProcCompatible( DEBUG_NAGI_MAIN_WORK *p_wk )
  *
  */
 //-----------------------------------------------------------------------------
-static void LISTDATA_ChangeProcCompatibleDebug( DEBUG_NAGI_MAIN_WORK *p_wk )
+static void LISTDATA_CallProcCompatibleDebug( DEBUG_NAGI_MAIN_WORK *p_wk )
 {	
 	p_wk->compatible_param.p_gamesys	= NULL;
 	p_wk->compatible_param.is_only_play	= TRUE;
-	DEBUG_NAGI_COMMAND_ChangeProc( p_wk, FS_OVERLAY_ID(irc_compatible), &IrcCompatible_ProcData, &p_wk->compatible_param );
+	DEBUG_NAGI_COMMAND_CallProc( p_wk, FS_OVERLAY_ID(irc_compatible), &IrcCompatible_ProcData, &p_wk->compatible_param );
 }
 //----------------------------------------------------------------------------
 /**
@@ -752,9 +795,9 @@ static void LISTDATA_ChangeProcCompatibleDebug( DEBUG_NAGI_MAIN_WORK *p_wk )
  *
  */
 //-----------------------------------------------------------------------------
-static void LISTDATA_ChangeProcNameDebug( DEBUG_NAGI_MAIN_WORK *p_wk )
+static void LISTDATA_CallProcNameDebug( DEBUG_NAGI_MAIN_WORK *p_wk )
 {	
-	DEBUG_NAGI_COMMAND_ChangeProc( p_wk, NO_OVERLAY_ID, &DebugIrcName_ProcData, NULL );
+	DEBUG_NAGI_COMMAND_CallProc( p_wk, NO_OVERLAY_ID, &DebugIrcName_ProcData, NULL );
 }
 //----------------------------------------------------------------------------
 /**
@@ -765,9 +808,9 @@ static void LISTDATA_ChangeProcNameDebug( DEBUG_NAGI_MAIN_WORK *p_wk )
  */
 //-----------------------------------------------------------------------------
 FS_EXTERN_OVERLAY(irc_ranking);
-static void LISTDATA_ChangeProcRankingDebug( DEBUG_NAGI_MAIN_WORK *p_wk )
+static void LISTDATA_CallProcRankingDebug( DEBUG_NAGI_MAIN_WORK *p_wk )
 {	
-	DEBUG_NAGI_COMMAND_ChangeProc( p_wk, FS_OVERLAY_ID(irc_ranking), &IrcRanking_ProcData, NULL );
+	DEBUG_NAGI_COMMAND_CallProc( p_wk, FS_OVERLAY_ID(irc_ranking), &IrcRanking_ProcData, NULL );
 }
 //----------------------------------------------------------------------------
 /**
@@ -777,14 +820,8 @@ static void LISTDATA_ChangeProcRankingDebug( DEBUG_NAGI_MAIN_WORK *p_wk )
  */
 //-----------------------------------------------------------------------------
 FS_EXTERN_OVERLAY(worldtrade);
-static void LISTDATA_ChangeProcGts( DEBUG_NAGI_MAIN_WORK *p_wk )
+static void LISTDATA_CallProcGts( DEBUG_NAGI_MAIN_WORK *p_wk )
 {	
-	static const GFL_PROC_DATA sc_gts_proc =
-	{	
-		WorldTradeProc_Init,
-		WorldTradeProc_Main,
-		WorldTradeProc_End,
-	};
 
 	p_wk->gts_param.savedata				= SaveControl_GetPointer();
 	p_wk->gts_param.worldtrade_data	= SaveData_GetWorldTradeData(p_wk->gts_param.savedata);
@@ -805,7 +842,7 @@ static void LISTDATA_ChangeProcGts( DEBUG_NAGI_MAIN_WORK *p_wk )
 	p_wk->gts_param.connect					= 0;
 
 
-	DEBUG_NAGI_COMMAND_ChangeProc( p_wk, FS_OVERLAY_ID(worldtrade), &sc_gts_proc, &p_wk->gts_param );
+	DEBUG_NAGI_COMMAND_NextProc( p_wk, FS_OVERLAY_ID(worldtrade), &WorldTrade_ProcData, &p_wk->gts_param );
 }
 //----------------------------------------------------------------------------
 /**
@@ -915,17 +952,17 @@ static void LISTDATA_FullRankData( DEBUG_NAGI_MAIN_WORK *p_wk )
  */
 //-----------------------------------------------------------------------------
 FS_EXTERN_OVERLAY(townmap);
-static void LISTDATA_ChangeProcTownMap( DEBUG_NAGI_MAIN_WORK *p_wk )
+static void LISTDATA_CallProcTownMap( DEBUG_NAGI_MAIN_WORK *p_wk )
 {	
 	GFL_STD_MemClear( &p_wk->townmap_param, sizeof(TOWNMAP_PARAM) );
 	p_wk->townmap_param.mode			= TOWNMAP_MODE_MAP;
-	DEBUG_NAGI_COMMAND_ChangeProc( p_wk, FS_OVERLAY_ID(townmap), &TownMap_ProcData, &p_wk->townmap_param );
+	DEBUG_NAGI_COMMAND_CallProc( p_wk, FS_OVERLAY_ID(townmap), &TownMap_ProcData, &p_wk->townmap_param );
 }
-static void LISTDATA_ChangeProcSkyJump( DEBUG_NAGI_MAIN_WORK *p_wk )
+static void LISTDATA_CallProcSkyJump( DEBUG_NAGI_MAIN_WORK *p_wk )
 {	
 	GFL_STD_MemClear( &p_wk->townmap_param, sizeof(TOWNMAP_PARAM) );
 	p_wk->townmap_param.mode			= TOWNMAP_MODE_DEBUGSKY;
-	DEBUG_NAGI_COMMAND_ChangeProc( p_wk, FS_OVERLAY_ID(townmap), &TownMap_ProcData, &p_wk->townmap_param );
+	DEBUG_NAGI_COMMAND_CallProc( p_wk, FS_OVERLAY_ID(townmap), &TownMap_ProcData, &p_wk->townmap_param );
 }
 //----------------------------------------------------------------------------
 /**
