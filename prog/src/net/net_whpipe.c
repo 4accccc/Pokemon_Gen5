@@ -1894,13 +1894,14 @@ static void _crossScanShootEndWait(GFL_NETWL* pNetWL)
 {
   if(GFL_NET_WLIsStateIdle()){
     u8 ch[]={1,7,13};
-    pNetWL->crossChannel++;
+//    pNetWL->crossChannel++;
+    pNetWL->crossChannel = GFUser_GetPublicRand(elementof(ch));
     if(pNetWL->crossChannel >= elementof(ch)){
       pNetWL->crossChannel=0;
     }
 		GFI_NET_BeaconSetInfo();
     if( WH_ParentConnect(WH_CONNECTMODE_MP_PARENT, pNetWL->_sTgid, ch[pNetWL->crossChannel], 1 )){
-      pNetWL->CrossRand = 180 + GFUser_GetPublicRand(32);
+      pNetWL->CrossRand = 60 + GFUser_GetPublicRand(152);
 //      pNetWL->CrossRand= GFUser_GetPublicRand(5);
       _CHANGE_STATE(_crossScanWait);  // êeã@Ç…Ç»ÇÈ
     }
