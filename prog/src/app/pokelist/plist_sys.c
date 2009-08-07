@@ -28,6 +28,7 @@
 #include "plist_plate.h"
 #include "plist_message.h"
 #include "plist_menu.h"
+#include "plist_item.h"
 #include "plist_snd_def.h"
 
 #include "app/p_status.h" //Proc切り替え用
@@ -186,7 +187,6 @@ static void PLIST_ChangeAnimeUpdatePlate( PLIST_WORK *work );
 
 //メッセージ待ち
 static void PLIST_MessageWait( PLIST_WORK *work );
-static void PLIST_MessageWaitInit( PLIST_WORK *work , u32 msgId , const BOOL isWaitKey , PSTATUS_CallbackFunc msgCallBack );
 
 //はい・いいえ
 static void PLIST_YesNoWait( PLIST_WORK *work );
@@ -198,7 +198,6 @@ static void PLIST_ChangeProcUpdate( PLIST_WORK *work );
 
 //メッセージコールバック
 static void PSTATUS_MSGCB_ReturnSelectCommon( PLIST_WORK *work );
-static void PSTATUS_MSGCB_ExitCommon( PLIST_WORK *work );
 static void PSTATUS_MSGCB_ForgetSkill_ForgetCheck( PLIST_WORK *work );
 static void PSTATUS_MSGCB_ForgetSkill_ForgetCheckCB( PLIST_WORK *work , const int retVal );
 static void PSTATUS_MSGCB_ForgetSkill_SkillCancel( PLIST_WORK *work );
@@ -864,7 +863,6 @@ static void PLIST_InitMode( PLIST_WORK *work )
   {
   case PL_MODE_FIELD:
   case PL_MODE_BATTLE:
-  case PL_MODE_ITEMUSE:
   case PL_MODE_SHINKA:
   case PL_MODE_ITEMSET:
   case PL_MODE_MAILSET:
@@ -872,6 +870,24 @@ static void PLIST_InitMode( PLIST_WORK *work )
     //選択画面へ
     PLIST_InitMode_Select( work );
     work->nextMainSeq = PSMS_SELECT_POKE;
+    break;
+
+  case PL_MODE_ITEMUSE:
+    if( PLIST_ITEM_IsDeathRecoverAllItem( work , work->plData->item ) == TRUE )
+    {
+      PLIST_ITEM_UseAllDeathRecoverItem( work );
+      GF_ASSERT_MSG( NULL , "PLIST mode まだ作ってない！[%d]\n" , work->plData->mode );
+
+      PLIST_InitMode_Select( work );
+      work->nextMainSeq = PSMS_SELECT_POKE;
+      work->mainSeq = PSMS_FADEIN;
+    }
+    else
+    {
+      //選択画面へ
+      PLIST_InitMode_Select( work );
+      work->nextMainSeq = PSMS_SELECT_POKE;
+    }
     break;
 
   case PL_MODE_WAZASET_RET:
@@ -1011,6 +1027,24 @@ static void PLIST_TermMode_Select_Decide( PLIST_WORK *work )
     break;
     
   case PL_MODE_ITEMUSE:
+    {
+      const PLIST_ITEM_USE_CHECK ret = PLIST_ITEM_CanUseRecoverItem( work , work->plData->item , work->selectPokePara );
+      switch( ret )
+      {
+      case PIUC_OK:  //使える
+        break;
+        
+      case PIUC_NG:  //使えない
+        PLIST_ITEM_MSG_CanNotUseItem( work );
+        break;
+        
+      case PIUC_SELECT_SKILL:  //スキル選択へ
+        break;
+        
+      }
+    }
+    break;
+    
   case PL_MODE_SHINKA:
     {
       work->plData->ret_mode = PL_RET_BAG;
@@ -1966,7 +2000,7 @@ static void PLIST_MessageWait( PLIST_WORK *work )
   }
 }
 
-static void PLIST_MessageWaitInit( PLIST_WORK *work , u32 msgId , const BOOL isWaitKey , PSTATUS_CallbackFunc msgCallBack )
+void PLIST_MessageWaitInit( PLIST_WORK *work , u32 msgId , const BOOL isWaitKey , PSTATUS_CallbackFunc msgCallBack )
 {
   work->mainSeq = PSMS_MSG_WAIT;
   work->isMsgWaitKey = isWaitKey;
@@ -2307,7 +2341,7 @@ static void PSTATUS_MSGCB_ReturnSelectCommon( PLIST_WORK *work )
   PLIST_InitMode_Select( work );
 }
 
-static void PSTATUS_MSGCB_ExitCommon( PLIST_WORK *work )
+void PSTATUS_MSGCB_ExitCommon( PLIST_WORK *work )
 {
   work->mainSeq = PSMS_FADEOUT;
 }

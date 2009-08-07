@@ -1274,9 +1274,9 @@ static void PSTATUS_WaitDisp( PSTATUS_WORK *work )
   if( work->mosaicEffSeq == SMES_FADEOUT )
   {
     work->mosaicCnt += 1;
-    G2_SetBGMosaicSize( work->mosaicCnt,work->mosaicCnt );
-    G2S_SetBGMosaicSize( work->mosaicCnt,work->mosaicCnt );
-    if( work->mosaicCnt >= 5 )
+    G2_SetBGMosaicSize( work->mosaicCnt,work->mosaicCnt*2 );
+    G2S_SetBGMosaicSize( work->mosaicCnt,work->mosaicCnt*2 );
+    if( work->mosaicCnt >= 3 )
     {
       work->mosaicEffSeq = SMES_WAIT;
     }
@@ -1284,8 +1284,8 @@ static void PSTATUS_WaitDisp( PSTATUS_WORK *work )
   if( work->mosaicEffSeq == SMES_FADEIN )
   {
     work->mosaicCnt -= 1;
-    G2_SetBGMosaicSize( work->mosaicCnt,work->mosaicCnt );
-    G2S_SetBGMosaicSize( work->mosaicCnt,work->mosaicCnt );
+    G2_SetBGMosaicSize( work->mosaicCnt,work->mosaicCnt*2 );
+    G2S_SetBGMosaicSize( work->mosaicCnt,work->mosaicCnt*2 );
     if( work->mosaicCnt <= 0 )
     {
       work->isWaitDisp = FALSE;
