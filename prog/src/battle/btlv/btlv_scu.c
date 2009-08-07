@@ -217,22 +217,22 @@ void BTLV_SCU_Setup( BTLV_SCU* wk )
   static const GFL_BG_BGCNT_HEADER bgcntText = {
     0, 0, 0x800, 0,
     GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
-    GX_BG_SCRBASE_0x5800, GX_BG_CHARBASE_0x10000, 0x8000,
-    GX_BG_EXTPLTT_01, 0, 0, 0, FALSE
-  };
-  // 個別フレーム設定
-  static const GFL_BG_BGCNT_HEADER bgcntStat = {
-    0, 0, 0x800, 0,
-    GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
-    GX_BG_SCRBASE_0x6000, GX_BG_CHARBASE_0x08000, 0x8000,
+    GX_BG_SCRBASE_0x5000, GX_BG_CHARBASE_0x10000, 0x8000,
     GX_BG_EXTPLTT_01, 0, 0, 0, FALSE
   };
   // 個別フレーム設定
   static const GFL_BG_BGCNT_HEADER bgcntTok = {
     0, 0, 0x800, 0,
     GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
-    GX_BG_SCRBASE_0x6800, GX_BG_CHARBASE_0x08000, 0x8000,
+    GX_BG_SCRBASE_0x5800, GX_BG_CHARBASE_0x08000, 0x8000,
     GX_BG_EXTPLTT_01, 0, 0, 0, FALSE
+  };
+  // 個別フレーム設定
+  static const GFL_BG_BGCNT_HEADER bgcntStat = {
+    0, 0, 0x2000, 0,
+    GFL_BG_SCRSIZ_512x512, GX_BG_COLORMODE_16,
+    GX_BG_SCRBASE_0x6000, GX_BG_CHARBASE_0x08000, 0x8000,
+    GX_BG_EXTPLTT_01, 1, 0, 0, FALSE
   };
   u32 winfrm_charpos;
 
@@ -1750,7 +1750,7 @@ static void statwin_disp_start( STATUS_WIN* stwin )
   BTL_Printf("StatusWin (pos=%d) disp start!!\n", stwin->pokePos);
 #else
   u8 viewPos = BTL_MAIN_BtlPosToViewPos( stwin->parentWk->mainModule, stwin->pokePos );
-  BTLV_EFFECT_SetGauge( BPP_GetSrcData( stwin->bpp ), viewPos );
+  BTLV_EFFECT_SetGauge( stwin->bpp, viewPos );
 #endif
 }
 
