@@ -1,0 +1,20 @@
+/*****************************************************************************
+	Archive file index definition.
+	File: waza_eff_gra.naix
+
+	This file was created by NINTENDO NITRO-System Archiver.
+
+
+ *****************************************************************************/
+
+#ifndef NARC_WAZA_EFF_GRA_NAIX_
+#define NARC_WAZA_EFF_GRA_NAIX_
+
+enum {
+	NARC_waza_eff_gra_test_NCGR = 0,
+	NARC_waza_eff_gra_test_NSCR = 1,
+	NARC_waza_eff_gra_test_NCLR = 2
+};
+
+/* NARC_WAZA_EFF_GRA_NAIX_ */
+#endif
