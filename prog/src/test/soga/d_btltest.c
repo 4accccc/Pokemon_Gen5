@@ -32,6 +32,9 @@
 #include "message.naix"
 
 #include "battle/btlv/btlv_input.h"
+#include "battle/btlv/btlv_b_gauge.h"
+
+#include "tr_tool/tr_tool.h"
 
 #define BTLV_MCSS_1vs1    //1vs1•`‰æ
 
@@ -87,6 +90,7 @@ typedef struct
   GFL_FONT            *font;
   fx32                scale;
   fx32                scale_value;
+  BTLV_BALL_GAUGE_WORK* bbgw[ 2 ];
 }SOGA_WORK;
 
 static  void  MoveCamera( SOGA_WORK *wk );
@@ -265,6 +269,8 @@ static GFL_PROC_RESULT DebugBattleTestProcInit( GFL_PROC * proc, int * seq, void
   wk->scale = FX32_ONE * 3;
   wk->scale_value = -0x100;
 
+  wk->bbgw[ 0 ] = NULL;
+  wk->bbgw[ 1 ] = NULL;
 
   return GFL_PROC_RES_FINISH;
 }
@@ -308,6 +314,13 @@ static GFL_PROC_RESULT DebugBattleTestProcMain( GFL_PROC * proc, int * seq, void
     BTLV_CAMERA_MoveCameraInterpolation( wk->bcw, &pos, &target, 20, 0, 20 );
   }
 
+  if( trg & PAD_BUTTON_A )
+  {
+    STRBUF*  str = GFL_STR_CreateBuffer( 100, wk->heapID );
+    TT_TrainerMessageGet( 1, 0, str, wk->heapID );
+    GFL_STR_DeleteBuffer( str );
+  }
+
   MoveCamera( wk );
 
 #if 0
@@ -325,6 +338,7 @@ static GFL_PROC_RESULT DebugBattleTestProcMain( GFL_PROC * proc, int * seq, void
   }
 #endif
 
+#if 0
   if( trg & PAD_BUTTON_A )
   {
     BTLV_EFFECT_CalcGauge( BTLV_MCSS_POS_AA, -8 );
@@ -333,7 +347,47 @@ static GFL_PROC_RESULT DebugBattleTestProcMain( GFL_PROC * proc, int * seq, void
   {
     BTLV_EFFECT_CalcGauge( BTLV_MCSS_POS_AA, 12 );
   }
+  if( trg & PAD_BUTTON_X )
+  { 
+    if( wk->bbgw[ 0 ] )
+    { 
+      BTLV_BALL_GAUGE_Delete( wk->bbgw[ 0 ] );
+      wk->bbgw[ 0 ] = NULL;
+    }
+    if( wk->bbgw[ 1 ] )
+    { 
+      BTLV_BALL_GAUGE_Delete( wk->bbgw[ 1 ] );
+      wk->bbgw[ 1 ] = NULL;
+    }
+  }
+  if( trg & PAD_BUTTON_Y )
+  { 
+    BTLV_BALL_GAUGE_PARAM param;
+    int i;
 
+    if( wk->bbgw[ 0 ] )
+    { 
+      BTLV_BALL_GAUGE_Delete( wk->bbgw[ 0 ] );
+      wk->bbgw[ 0 ] = NULL;
+    }
+    if( wk->bbgw[ 1 ] )
+    { 
+      BTLV_BALL_GAUGE_Delete( wk->bbgw[ 1 ] );
+      wk->bbgw[ 1 ] = NULL;
+    }
+
+    param.type = BTLV_BALL_GAUGE_TYPE_ENEMY;
+    for( i = 0 ; i < TEMOTI_POKEMAX ; i++ )
+    { 
+      param.status[ i ] = BTLV_BALL_GAUGE_STATUS_ALIVE;
+    }
+    wk->bbgw[ 0 ]  = BTLV_BALL_GAUGE_Create( &param, wk->heapID );
+
+    param.type = BTLV_BALL_GAUGE_TYPE_MINE;
+
+    wk->bbgw[ 1 ]  = BTLV_BALL_GAUGE_Create( &param, wk->heapID );
+  }
+#endif
   BTLV_EFFECT_Main();
   BTLV_INPUT_Main( wk->biw );
 
@@ -507,8 +561,8 @@ static  void  set_pokemon( SOGA_WORK *wk )
     PP_Put( pp, ID_PARA_id_no, 0x10 );
     BTLV_EFFECT_SetPokemon( pp, BTLV_MCSS_POS_AA );
     BTLV_EFFECT_SetPokemon( pp, BTLV_MCSS_POS_BB );
-    BTLV_EFFECT_SetGauge( pp, BTLV_MCSS_POS_AA );
-    BTLV_EFFECT_SetGauge( pp, BTLV_MCSS_POS_BB );
+//    BTLV_EFFECT_SetGauge( pp, BTLV_MCSS_POS_AA );
+//    BTLV_EFFECT_SetGauge( pp, BTLV_MCSS_POS_BB );
 #else
 //2vs2
     PP_SetupEx( pp, MONSNO_AUSU + 1, 0, 0, 0, 255 );
