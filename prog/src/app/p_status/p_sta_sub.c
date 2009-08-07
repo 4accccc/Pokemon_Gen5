@@ -86,7 +86,7 @@
 #define PSTATUS_SUB_JUMP_HEIGHT (2)  //FX16にかけるので整数でOK
 
 //前→後ろアニメ定義
-#define PSTATUS_SUB_FLIP_TIME (4)
+#define PSTATUS_SUB_FLIP_TIME (3)
 
 //======================================================================
 //	enum
@@ -250,6 +250,7 @@ void PSTATUS_SUB_Main( PSTATUS_WORK *work , PSTATUS_SUB_WORK *subWork )
 
     if( subWork->flipAnimeCnt < PSTATUS_SUB_FLIP_TIME )
     {
+      /*
       const fx32 scaleX = (PSTATUS_SUB_SHADOW_SCALE_BACK_X - PSTATUS_SUB_SHADOW_SCALE_X)*subWork->flipAnimeCnt/PSTATUS_SUB_FLIP_TIME;
       const fx32 scaleY = (PSTATUS_SUB_SHADOW_SCALE_BACK_Y - PSTATUS_SUB_SHADOW_SCALE_Y)*subWork->flipAnimeCnt/PSTATUS_SUB_FLIP_TIME;
       const fx32 camX = (PSTATUS_SUB_CAMERA_BACK_X - PSTATUS_SUB_CAMERA_FRONT_X)*subWork->flipAnimeCnt/PSTATUS_SUB_FLIP_TIME;
@@ -257,6 +258,16 @@ void PSTATUS_SUB_Main( PSTATUS_WORK *work , PSTATUS_SUB_WORK *subWork )
       shadowScale.x = PSTATUS_SUB_SHADOW_SCALE_X + scaleX;
       shadowScale.y = PSTATUS_SUB_SHADOW_SCALE_Y + scaleY;
       cam_pos.x = PSTATUS_SUB_CAMERA_FRONT_X + camX;
+      */
+      //数値指定
+      const fx32 scareXArr[2] = { FX32_CONST(1.2f),FX32_CONST(1.4f) };
+      const fx32 scareYArr[2] = { FX32_CONST(2.2f),FX32_CONST(2.3f) };
+      const fx32 camXArr[2] = { FX32_CONST(-57.0f),FX32_CONST(-60.0f) };
+      const u8 arrIdx = subWork->flipAnimeCnt-1;
+      
+      shadowScale.x = scareXArr[arrIdx];
+      shadowScale.y = scareYArr[arrIdx];
+      cam_pos.x = camXArr[arrIdx];
       
       GFL_G3D_CAMERA_SetPos( work->camera , &cam_pos );
       GFL_G3D_CAMERA_Switching( work->camera );
