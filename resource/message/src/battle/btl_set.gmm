@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="taya" host="W00146" date="2009-08-03T15:09:31"/>
+	<create user="taya" host="W00146" date="2009-08-06T22:40:07"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -460,6 +460,27 @@
 	<row id="BTL_STRID_SET_Dead_E" back-color=",#00ff00,,,#00ff00,,,,,,,,,,,,,">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は　たおれた！</language>
 		<language name="JPN_KANJI" width="216">相手の　[1:02:ポケモンニックネーム:0]は　たおれた！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_Relive" back-color=",#00ff00,,,#00ff00,,,,,,,,,,,,,">
+		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は
+げんきを　とりもどした！</language>
+		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
+元気を　取り戻した！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_Relive_Y" back-color=",#00ff00,,,#00ff00,,,,,,,,,,,,,">
+		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は
+げんきを　とりもどした！</language>
+		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]は
+元気を　取り戻した！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_Relive_E" back-color=",#00ff00,,,#00ff00,,,,,,,,,,,,,">
+		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は
+げんきを　とりもどした！</language>
+		<language name="JPN_KANJI" width="216">相手の　[1:02:ポケモンニックネーム:0]は
+元気を　取り戻した！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_Rankup_ATK" back-color=",#00ff00,,#ffff00,#00ff00,,,,,,,,,,,,,">
