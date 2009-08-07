@@ -178,6 +178,29 @@
 #define BTLEFF_PAL_FADE_EFFECT                ( 3 )
 #define BTLEFF_PAL_FADE_ALL                   ( 4 )
 
+//背景で使用されているパレットをビットで表現
+#define BTLEFF_PAL_FADE_EFFECT_BIT            ( 0xff00 )
+
+//BGプライオリティ設定
+#define BTLEFF_BG_PRI_FRONT                   ( 0 )
+#define BTLEFF_BG_PRI_BACK                    ( 1 )
+
+//BGスクロール
+#define	BTLEFF_BG_SCROLL_DIRECT						    ( EFFTOOL_CALCTYPE_DIRECT )
+#define	BTLEFF_BG_SCROLL_INTERPOLATION			  ( EFFTOOL_CALCTYPE_INTERPOLATION )
+#define	BTLEFF_BG_SCROLL_ROUNDTRIP					  ( EFFTOOL_CALCTYPE_ROUNDTRIP )
+#define	BTLEFF_BG_SCROLL_ROUNDTRIP_LONG		    ( EFFTOOL_CALCTYPE_ROUNDTRIP_LONG )
+
+//BGラスタースクロール
+#define	BTLEFF_BG_RASTER_SCROLL_H						  ( 0 )
+#define	BTLEFF_BG_RASTER_SCROLL_V						  ( 1 )
+
+//BGα値
+#define	BTLEFF_BG_ALPHA_DIRECT					      ( EFFTOOL_CALCTYPE_DIRECT )
+#define	BTLEFF_BG_ALPHA_INTERPOLATION		      ( EFFTOOL_CALCTYPE_INTERPOLATION )
+#define	BTLEFF_BG_ALPHA_ROUNDTRIP				      ( EFFTOOL_CALCTYPE_ROUNDTRIP )
+#define	BTLEFF_BG_ALPHA_ROUNDTRIP_LONG	      ( EFFTOOL_CALCTYPE_ROUNDTRIP_LONG )
+
 //BG表示/非表示
 #define	BTLEFF_STAGE			( 0 )
 #define	BTLEFF_FIELD			( 1 )
@@ -256,41 +279,47 @@ ex)
 //命令シンボル宣言
 //COMMAND_START
 #define	EC_CAMERA_MOVE							( 0 )
-#define	EC_CAMERA_MOVE_COORDINATE		( 1 )
-#define	EC_CAMERA_MOVE_ANGLE				( 2 )
-#define	EC_CAMERA_SHAKE				      ( 3 )
-#define	EC_CAMERA_PROJECTION				( 4 )
-#define	EC_PARTICLE_LOAD						( 5 )
-#define	EC_PARTICLE_PLAY						( 6 )
-#define	EC_PARTICLE_PLAY_COORDINATE	( 7 )
-#define	EC_PARTICLE_DELETE					( 8 )
-#define	EC_EMITTER_MOVE							( 9 )
-#define	EC_EMITTER_MOVE_COORDINATE	( 10 )
-#define	EC_POKEMON_MOVE							( 11 )
-#define	EC_POKEMON_CIRCLE_MOVE			( 12 )
-#define	EC_POKEMON_SCALE						( 13 )
-#define	EC_POKEMON_ROTATE						( 14 )
-#define	EC_POKEMON_ALPHA						( 15 )
-#define	EC_POKEMON_SET_MEPACHI_FLAG	( 16 )
-#define	EC_POKEMON_SET_ANM_FLAG			( 17 )
-#define	EC_POKEMON_PAL_FADE					( 18 )
-#define	EC_POKEMON_VANISH					  ( 19 )
-#define	EC_POKEMON_SHADOW_VANISH	  ( 20 )
-#define	EC_TRAINER_SET							( 21 )
-#define	EC_TRAINER_MOVE							( 22 )
-#define	EC_TRAINER_ANIME_SET				( 23 )
-#define	EC_TRAINER_DEL							( 24 )
-#define	EC_BG_PAL_FADE		   				( 25 )
-#define	EC_BG_VANISH								( 26 )
-#define	EC_SE_PLAY									( 27 )
-#define	EC_SE_STOP									( 28 )
-#define	EC_SE_PITCH									( 29 )
-#define	EC_EFFECT_END_WAIT					( 30 )
-#define	EC_WAIT											( 31 )
-#define	EC_CONTROL_MODE							( 32 )
+#define	EC_CAMERA_MOVE_COORDINATE		( EC_CAMERA_MOVE              + 1 )
+#define	EC_CAMERA_MOVE_ANGLE				( EC_CAMERA_MOVE_COORDINATE   + 1 )
+#define	EC_CAMERA_SHAKE				      ( EC_CAMERA_MOVE_ANGLE        + 1 )
+#define	EC_CAMERA_PROJECTION				( EC_CAMERA_SHAKE             + 1 )
+#define	EC_PARTICLE_LOAD						( EC_CAMERA_PROJECTION        + 1 )
+#define	EC_PARTICLE_PLAY						( EC_PARTICLE_LOAD            + 1 )
+#define	EC_PARTICLE_PLAY_COORDINATE	( EC_PARTICLE_PLAY            + 1 )
+#define	EC_PARTICLE_DELETE					( EC_PARTICLE_PLAY_COORDINATE + 1 )
+#define	EC_EMITTER_MOVE							( EC_PARTICLE_DELETE          + 1 )
+#define	EC_EMITTER_MOVE_COORDINATE	( EC_EMITTER_MOVE             + 1 )
+#define	EC_POKEMON_MOVE							( EC_EMITTER_MOVE_COORDINATE  + 1 )
+#define	EC_POKEMON_CIRCLE_MOVE			( EC_POKEMON_MOVE             + 1 )
+#define	EC_POKEMON_SCALE						( EC_POKEMON_CIRCLE_MOVE      + 1 )
+#define	EC_POKEMON_ROTATE						( EC_POKEMON_SCALE            + 1 )
+#define	EC_POKEMON_ALPHA						( EC_POKEMON_ROTATE           + 1 )
+#define	EC_POKEMON_SET_MEPACHI_FLAG	( EC_POKEMON_ALPHA            + 1 )
+#define	EC_POKEMON_SET_ANM_FLAG			( EC_POKEMON_SET_MEPACHI_FLAG + 1 )
+#define	EC_POKEMON_PAL_FADE					( EC_POKEMON_SET_ANM_FLAG     + 1 )
+#define	EC_POKEMON_VANISH					  ( EC_POKEMON_PAL_FADE         + 1 )
+#define	EC_POKEMON_SHADOW_VANISH	  ( EC_POKEMON_VANISH           + 1 )
+#define	EC_TRAINER_SET							( EC_POKEMON_SHADOW_VANISH    + 1 )
+#define	EC_TRAINER_MOVE							( EC_TRAINER_SET              + 1 )
+#define	EC_TRAINER_ANIME_SET				( EC_TRAINER_MOVE             + 1 )
+#define	EC_TRAINER_DEL							( EC_TRAINER_ANIME_SET        + 1 )
+#define	EC_BG_LOAD	   				      ( EC_TRAINER_DEL              + 1 )
+#define	EC_BG_SCROLL		   				  ( EC_BG_LOAD                  + 1 )
+#define	EC_BG_RASTER_SCROLL		   	  ( EC_BG_SCROLL                + 1 )
+#define	EC_BG_PAL_ANM		   				  ( EC_BG_RASTER_SCROLL         + 1 )
+#define	EC_BG_PRIORITY		   				( EC_BG_PAL_ANM               + 1 )
+#define	EC_BG_ALPHA		   				    ( EC_BG_PRIORITY              + 1 )
+#define	EC_BG_PAL_FADE		   				( EC_BG_ALPHA                 + 1 )
+#define	EC_BG_VANISH								( EC_BG_PAL_FADE              + 1 )
+#define	EC_SE_PLAY									( EC_BG_VANISH                + 1 )
+#define	EC_SE_STOP									( EC_SE_PLAY                  + 1 )
+#define	EC_SE_PITCH									( EC_SE_STOP                  + 1 )
+#define	EC_EFFECT_END_WAIT					( EC_SE_PITCH                 + 1 )
+#define	EC_WAIT											( EC_EFFECT_END_WAIT          + 1 )
+#define	EC_CONTROL_MODE							( EC_WAIT                     + 1 )
 
 //終了コマンドは必ず一番下になるようにする
-#define	EC_SEQ_END									( 33 )
+#define	EC_SEQ_END									( EC_CONTROL_MODE + 1 )
 
 #ifndef __C_NO_DEF_
 
@@ -762,7 +791,7 @@ ex)
  * #param	COMBOBOX_TEXT	攻撃側	攻撃側ペア	防御側	防御側ペア	POS_AA	POS_BB	POS_A POS_B POS_C POS_D POS_E POS_F POS_TR_AA POS_TR_BB POS_TR_A  POS_TR_B  POS_TR_C  POS_TR_D 
  * #param	COMBOBOX_VALUE	BTLEFF_POKEMON_SIDE_ATTACK  BTLEFF_POKEMON_SIDE_ATTACK_PAIR BTLEFF_POKEMON_SIDE_DEFENCE BTLEFF_POKEMON_SIDE_DEFENCE_PAIR  BTLEFF_POKEMON_POS_AA BTLEFF_POKEMON_POS_BB BTLEFF_POKEMON_POS_A  BTLEFF_POKEMON_POS_B  BTLEFF_POKEMON_POS_C  BTLEFF_POKEMON_POS_D  BTLEFF_POKEMON_POS_E  BTLEFF_POKEMON_POS_F  BTLEFF_TRAINER_POS_AA BTLEFF_TRAINER_POS_BB BTLEFF_TRAINER_POS_A  BTLEFF_TRAINER_POS_B  BTLEFF_TRAINER_POS_C  BTLEFF_TRAINER_POS_D
  * #param	COMBOBOX_TEXT	ダイレクト	追従	往復	往復ロング
- * #param	COMBOBOX_VALUE	BTLEFF_POKEMON_ROTATE_DIRECT	BTLEFF_POKEMON_ROTATE_INTERPOLATION	BTLEFF_POKEMON_ROTATE_ROUNDTRIP	BTLEFF_POKEMON_ROTATE_ROUNDTRIP_LONG
+ * #param	COMBOBOX_VALUE	BTLEFF_POKEMON_ALPHA_DIRECT	BTLEFF_POKEMON_ALPHA_INTERPOLATION	BTLEFF_POKEMON_ALPHA_ROUNDTRIP	BTLEFF_POKEMON_ALPHA_ROUNDTRIP_LONG
  * #param	VALUE_INT	  α値
  * #param	VALUE_INT		フレーム数（設定したα値まで何フレームで到達するか）
  * #param	VALUE_INT		ウエイト
@@ -986,10 +1015,156 @@ ex)
 
 //======================================================================
 /**
+ * @brief	BGのロード
+ *
+ * #param_num	1
+ * @param	datID	アーカイブデータのdatID
+ *
+ * #param	FILE_DIALOG	.NCGR
+ */
+//======================================================================
+	.macro	BG_LOAD	datID
+	.short	EC_BG_LOAD
+	.long		\datID
+	.endm
+
+//======================================================================
+/**
+ * @brief	BGのスクロール
+ *
+ * #param_num	6
+ * @param	type				移動タイプ
+ * @param	move_pos_x	移動先X座標
+ * @param	move_pos_y	移動先Y座標
+ * @param	frame				移動フレーム数（目的地まで何フレームで到達するか）
+ * @param	wait				移動ウエイト
+ * @param	count				往復カウント（移動タイプが往復のときだけ有効）
+ *
+ * #param	COMBOBOX_TEXT	ダイレクト	追従	往復	往復ロング
+ * #param	COMBOBOX_VALUE	BTLEFF_BG_SCROLL_DIRECT	BTLEFF_BG_SCROLL_INTERPOLATION	BTLEFF_BG_SCROLL_ROUNDTRIP	BTLEFF_BG_SCROLL_ROUNDTRIP_LONG
+ * #param	VALUE_INT		移動先X座標
+ * #param	VALUE_INT		移動先Y座標
+ * #param	VALUE_INT		移動フレーム数
+ * #param	VALUE_INT		移動ウエイト
+ * #param	VALUE_INT		往復カウント（往復時有効）
+ */
+//======================================================================
+	.macro	BG_SCROLL	type, move_pos_x, move_pos_y, frame, wait, count
+	.short	EC_BG_SCROLL
+	.long   \type
+  .long   \move_pos_x
+  .long   \move_pos_y
+  .long   \frame
+  .long   \wait
+  .long   \count
+	.endm
+
+//======================================================================
+/**
+ * @brief	BGのラスタースクロール
+ *
+ * #param_num	4
+ * @param	type		ラスタータイプ
+ * @param	radius  サインカーブの半径
+ * @param	line	  サインカーブ1周を何ラインにするか
+ * @param	wait		ウエイト
+ *
+ * #param	COMBOBOX_TEXT 横  縦
+ * #param	COMBOBOX_VALUE  BTLEFF_BG_RASTER_SCROLL_H BTLEFF_BG_RASTER_SCROLL_V
+ * #param	VALUE_INT サインカーブの半径
+ * #param	VALUE_INT サインカーブ1周を何ラインにするか
+ * #param	VALUE_INT ウエイト
+ */
+//======================================================================
+  .macro  BG_RASTER_SCROLL  type, radius, line, wait
+  .short  EC_BG_RASTER_SCROLL
+  .long   \type
+  .long   \radius
+  .long   \line
+  .long   \wait
+  .endm
+
+//======================================================================
+/**
+ * @brief	BGのパレットアニメ
+ *
+ * #param_num	5
+ * @param	datID     アニメ用パレットのアーカイブデータID
+ * @param	trans_pal 送り先パレット
+ * @param	col_count 送るカラー数
+ * @param	offset		送り元パレットの更新オフセット
+ * @param	wait		  ウエイト
+ *
+ * #param	VALUE_INT アニメ用パレットのアーカイブデータID
+ * #param	VALUE_INT 送り先パレット
+ * #param	VALUE_INT 送るカラー数
+ * #param	VALUE_INT 送り元パレットの更新オフセット
+ * #param	VALUE_INT ウエイト
+ */
+//======================================================================
+  .macro  BG_PAL_ANM  datID, trans_pal, col_count, offset, wait
+  .short  EC_BG_PAL_ANM
+  .long   \datID
+  .long   \trans_pal
+  .long   \col_count
+  .long   \offset
+  .long   \wait
+  .endm
+
+//======================================================================
+/**
+ * @brief	BGのプライオリティ
+ *
+ * #param_num	1
+ * @param	pri	BGのプライオリティ
+ *
+ * #param	COMBOBOX_TEXT 前面  背面
+ * #param	COMBOBOX_VALUE BTLEFF_BG_PRI_FRONT  BTLEFF_BG_PRI_BACK
+ */
+//======================================================================
+  .macro  BG_PRIORITY pri
+  .short  EC_BG_PRIORITY
+  .long   \pri
+  .endm
+
+//======================================================================
+/**
+ * @brief	BGα値
+ *
+ * #param_num	6
+ * @param	bg_num	α値セットするBGの種類
+ * @param	type		α値タイプ
+ * @param	alpha	  α値
+ * @param	frame		フレーム数（設定したα値まで何フレームで到達するか）
+ * @param	wait		ウエイト
+ * @param	count		往復カウント（α値タイプが往復のときだけ有効）
+ *
+ * #param	COMBOBOX_TEXT お盆  フィールド  お盆＋フィールド  エフェクト面  すべて
+ * #param	COMBOBOX_VALUE  BTLEFF_PAL_FADE_STAGE BTLEFF_PAL_FADE_FIELD BTLEFF_PAL_FADE_3D  BTLEFF_PAL_FADE_EFFECT BTLEFF_PAL_FADE_ALL
+ * #param	COMBOBOX_TEXT	ダイレクト	追従	往復	往復ロング
+ * #param	COMBOBOX_VALUE	BTLEFF_BG_ALPHA_DIRECT	BTLEFF_BG_ALPHA_INTERPOLATION	BTLEFF_BG_ALPHA_ROUNDTRIP	BTLEFF_BG_ALPHA_ROUNDTRIP_LONG
+ * #param	VALUE_INT	  α値
+ * #param	VALUE_INT		フレーム数（設定したα値まで何フレームで到達するか）
+ * #param	VALUE_INT		ウエイト
+ * #param	VALUE_INT		往復カウント（往復時有効）
+ */
+//======================================================================
+  .macro  BG_ALPHA  bg_num, type, alpha, frame, wait, count
+  .short  EC_BG_ALPHA
+  .long   \bg_num
+  .long   \type
+  .long   \alpha
+  .long   \frame
+  .long   \wait
+  .long   \count
+  .endm
+
+//======================================================================
+/**
  * @brief	BGのパレットフェード
  *
  * #param_num	5
- * @param	bg_num    操作するBG
+ * @param	bg_num    操作する背景
  * @param	start_evy	START_EVY値
  * @param	end_evy		END_EVY値
  * @param	wait			ウエイト
@@ -1017,7 +1192,7 @@ ex)
  * @brief	BGの表示/非表示
  *
  * #param_num	2
- * @param	bg_num	操作するBG
+ * @param	bg_num	操作する背景
  * @param	sw			表示/非表示を指定
  *
  * #param	COMBOBOX_TEXT	お盆  フィールド  エフェクト

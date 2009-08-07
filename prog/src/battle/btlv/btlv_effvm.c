@@ -25,6 +25,7 @@
 enum{
   EFFVM_PTCNO_NONE = 0xffff,    //ptc_noの未格納のときの値
   TEMP_WORK_SIZE = 16,          //テンポラリワークのサイズ
+  BTLV_EFFVM_BG_PAL = 8,        //エフェクトBGのパレット開始位置
 };
 
 //============================================================================================
@@ -56,6 +57,7 @@ typedef struct{
   BOOL                        debug_flag;
   ARCDATID                    dat_id[ PARTICLE_GLOBAL_MAX ];
   u32                         dat_id_cnt;
+  void*                       unpack_info[ PARTICLE_GLOBAL_MAX ];
 #endif
 }BTLV_EFFVM_WORK;
 
@@ -137,6 +139,12 @@ static VMCMD_RESULT VMEC_TRAINER_SET( VMHANDLE *vmh, void *context_work );
 static VMCMD_RESULT VMEC_TRAINER_MOVE( VMHANDLE *vmh, void *context_work );
 static VMCMD_RESULT VMEC_TRAINER_ANIME_SET( VMHANDLE *vmh, void *context_work );
 static VMCMD_RESULT VMEC_TRAINER_DEL( VMHANDLE *vmh, void *context_work );
+static VMCMD_RESULT VMEC_BG_LOAD( VMHANDLE *vmh, void *context_work );
+static VMCMD_RESULT VMEC_BG_SCROLL( VMHANDLE *vmh, void *context_work );
+static VMCMD_RESULT VMEC_BG_RASTER_SCROLL( VMHANDLE *vmh, void *context_work );
+static VMCMD_RESULT VMEC_BG_PAL_ANM( VMHANDLE *vmh, void *context_work );
+static VMCMD_RESULT VMEC_BG_PRIORITY( VMHANDLE *vmh, void *context_work );
+static VMCMD_RESULT VMEC_BG_ALPHA( VMHANDLE *vmh, void *context_work );
 static VMCMD_RESULT VMEC_BG_PAL_FADE( VMHANDLE *vmh, void *context_work );
 static VMCMD_RESULT VMEC_BG_VANISH( VMHANDLE *vmh, void *context_work );
 static VMCMD_RESULT VMEC_SE_PLAY( VMHANDLE *vmh, void *context_work );
@@ -167,11 +175,17 @@ static  void  EFFVM_SePlay( int se_no, int player, int pitch, int vol, int mod_d
 static  void  TCB_EFFVM_SEPLAY( GFL_TCB* tcb, void* work );
 
 #ifdef PM_DEBUG
+typedef enum
+{ 
+  DPD_TYPE_PARTICLE = 0,
+  DPD_TYPE_BG,
+}DPD_TYPE;
+
 //デバッグ用関数
 void  BTLV_EFFVM_StartDebug( VMHANDLE *vmh, BtlvMcssPos from, BtlvMcssPos to, const VM_CODE *start, const DEBUG_PARTICLE_DATA *dpd );
 void  BTLV_EFFVM_DebugParticlePlay( VMHANDLE *vmh, GFL_PTC_PTR ptc, int index, int src, int dst, fx32 ofs_y, fx32 angle );
 
-static  u32   BTLV_EFFVM_GetDPDNo( BTLV_EFFVM_WORK *bevw, ARCDATID datID );
+static  u32   BTLV_EFFVM_GetDPDNo( BTLV_EFFVM_WORK *bevw, ARCDATID datID, DPD_TYPE type );
 #endif
 
 //============================================================================================
@@ -236,6 +250,12 @@ static const VMCMD_FUNC btlv_effect_command_table[]={
   VMEC_TRAINER_MOVE,
   VMEC_TRAINER_ANIME_SET,
   VMEC_TRAINER_DEL,
+  VMEC_BG_LOAD,
+  VMEC_BG_SCROLL,
+  VMEC_BG_RASTER_SCROLL,
+  VMEC_BG_PAL_ANM,
+  VMEC_BG_PRIORITY,
+  VMEC_BG_ALPHA,
   VMEC_BG_PAL_FADE,
   VMEC_BG_VANISH,
   VMEC_SE_PLAY,
@@ -262,7 +282,7 @@ static  const VM_INITIALIZER  vm_init={
 
 //============================================================================================
 /**
- *  VM初期化
+ * @brief VM初期化
  *
  * @param[in] heapID      ヒープID
  */
@@ -294,7 +314,7 @@ VMHANDLE  *BTLV_EFFVM_Init( GFL_TCBSYS *tcbsys, HEAPID heapID )
 
 //============================================================================================
 /**
- *  VM初期化
+ * @brief VM初期化
  *
  * @param[in] heapID      ヒープID
  */
@@ -318,7 +338,7 @@ BOOL    BTLV_EFFVM_Main( VMHANDLE *vmh )
 
 //============================================================================================
 /**
- *  VM終了
+ * @brief VM終了
  *
  * @param[in] vmh 仮想マシン制御構造体へのポインタ
  */
@@ -333,7 +353,7 @@ void  BTLV_EFFVM_Exit( VMHANDLE *vmh )
 
 //============================================================================================
 /**
- *  VM起動
+ * @brief VM起動
  *
  * @param[in] vmh 仮想マシン制御構造体へのポインタ
  */
@@ -371,7 +391,7 @@ void  BTLV_EFFVM_Start( VMHANDLE *vmh, BtlvMcssPos from, BtlvMcssPos to, WazaID 
 
 //============================================================================================
 /**
- *  VM強制停止
+ * @brief VM強制停止
  *
  * @param[in] vmh 仮想マシン制御構造体へのポインタ
  */
@@ -390,7 +410,7 @@ void      BTLV_EFFVM_Stop( VMHANDLE *vmh )
 
 //============================================================================================
 /**
- *  カメラ移動
+ * @brief カメラ移動
  *
  * @param[in] vmh       仮想マシン制御構造体へのポインタ
  * @param[in] context_work  コンテキストワークへのポインタ
@@ -490,7 +510,7 @@ static VMCMD_RESULT VMEC_CAMERA_MOVE( VMHANDLE *vmh, void *context_work )
 
 //============================================================================================
 /**
- *  カメラ移動（座標指定）
+ * @brief カメラ移動（座標指定）
  *
  * @param[in] vmh       仮想マシン制御構造体へのポインタ
  * @param[in] context_work  コンテキストワークへのポインタ
@@ -547,7 +567,7 @@ static VMCMD_RESULT VMEC_CAMERA_MOVE_COODINATE( VMHANDLE *vmh, void *context_wor
 
 //============================================================================================
 /**
- *  カメラ移動（角度指定）
+ * @brief カメラ移動（角度指定）
  *
  * @param[in] vmh       仮想マシン制御構造体へのポインタ
  * @param[in] context_work  コンテキストワークへのポインタ
@@ -590,7 +610,7 @@ static VMCMD_RESULT VMEC_CAMERA_MOVE_ANGLE( VMHANDLE *vmh, void *context_work )
 
 //============================================================================================
 /**
- *  カメラゆれ
+ * @brief カメラゆれ
  *
  * @param[in] vmh       仮想マシン制御構造体へのポインタ
  * @param[in] context_work  コンテキストワークへのポインタ
@@ -613,7 +633,7 @@ static VMCMD_RESULT VMEC_CAMERA_SHAKE( VMHANDLE *vmh, void *context_work )
 
 //============================================================================================
 /**
- *  射影モード
+ * @brief 射影モード
  *
  * @param[in] vmh       仮想マシン制御構造体へのポインタ
  * @param[in] context_work  コンテキストワークへのポインタ
@@ -632,7 +652,7 @@ static VMCMD_RESULT VMEC_CAMERA_PROJECTION( VMHANDLE *vmh, void *context_work )
 
 //============================================================================================
 /**
- *  パーティクルリソースロード
+ * @brief パーティクルリソースロード
  *
  * @param[in] vmh       仮想マシン制御構造体へのポインタ
  * @param[in] context_work  コンテキストワークへのポインタ
@@ -656,7 +676,7 @@ static VMCMD_RESULT VMEC_PARTICLE_LOAD( VMHANDLE *vmh, void *context_work )
     heap = GFL_HEAP_AllocMemory( bevw->heapID, PARTICLE_LIB_HEAP_SIZE );
     bevw->ptc[ ptc_no ] = GFL_PTC_Create( heap, PARTICLE_LIB_HEAP_SIZE, FALSE, bevw->heapID );
     ofs_p = (u32*)&bevw->dpd->adrs[ 0 ];
-    ofs = ofs_p[ BTLV_EFFVM_GetDPDNo( bevw, datID ) ];
+    ofs = ofs_p[ BTLV_EFFVM_GetDPDNo( bevw, datID, DPD_TYPE_PARTICLE ) ];
     resource = (void *)&bevw->dpd->adrs[ ofs ];
     GFL_PTC_SetResourceEx( bevw->ptc[ ptc_no ], resource, FALSE, GFUser_VIntr_GetTCBSYS() );
     return bevw->control_mode;
@@ -673,7 +693,7 @@ static VMCMD_RESULT VMEC_PARTICLE_LOAD( VMHANDLE *vmh, void *context_work )
 
 //============================================================================================
 /**
- *  パーティクル再生
+ * @brief パーティクル再生
  *
  * @param[in] vmh       仮想マシン制御構造体へのポインタ
  * @param[in] context_work  コンテキストワークへのポインタ
@@ -705,7 +725,7 @@ static VMCMD_RESULT VMEC_PARTICLE_PLAY( VMHANDLE *vmh, void *context_work )
 
 //============================================================================================
 /**
- *  パーティクル再生（座標指定）
+ * @brief パーティクル再生（座標指定）
  *
  * @param[in] vmh       仮想マシン制御構造体へのポインタ
  * @param[in] context_work  コンテキストワークへのポインタ
@@ -738,7 +758,7 @@ static VMCMD_RESULT VMEC_PARTICLE_PLAY_COORDINATE( VMHANDLE *vmh, void *context_
 
 //============================================================================================
 /**
- *  パーティクル削除
+ * @brief パーティクル削除
  *
  * @param[in] vmh       仮想マシン制御構造体へのポインタ
  * @param[in] context_work  コンテキストワークへのポインタ
@@ -758,7 +778,7 @@ static VMCMD_RESULT VMEC_PARTICLE_DELETE( VMHANDLE *vmh, void *context_work )
 
 //============================================================================================
 /**
- *  エミッタ移動
+ * @brief エミッタ移動
  *
  * @param[in] vmh       仮想マシン制御構造体へのポインタ
  * @param[in] context_work  コンテキストワークへのポインタ
@@ -790,7 +810,7 @@ static VMCMD_RESULT VMEC_EMITTER_MOVE( VMHANDLE *vmh, void *context_work )
 
 //============================================================================================
 /**
- *  エミッタ移動（座標指定）
+ * @brief エミッタ移動（座標指定）
  *
  * @param[in] vmh       仮想マシン制御構造体へのポインタ
  * @param[in] context_work  コンテキストワークへのポインタ
@@ -825,7 +845,7 @@ static VMCMD_RESULT VMEC_EMITTER_MOVE_COORDINATE( VMHANDLE *vmh, void *context_w
 
 //============================================================================================
 /**
- *  ポケモン移動
+ * @brief ポケモン移動
  *
  * @param[in] vmh       仮想マシン制御構造体へのポインタ
  * @param[in] context_work  コンテキストワークへのポインタ
@@ -862,7 +882,7 @@ static VMCMD_RESULT VMEC_POKEMON_MOVE( VMHANDLE *vmh, void *context_work )
 
 //============================================================================================
 /**
- *  ポケモン円運動
+ * @brief ポケモン円運動
  *
  * @param[in] vmh       仮想マシン制御構造体へのポインタ
  * @param[in] context_work  コンテキストワークへのポインタ
@@ -897,7 +917,7 @@ static VMCMD_RESULT VMEC_POKEMON_CIRCLE_MOVE( VMHANDLE *vmh, void *context_work 
 
 //============================================================================================
 /**
- *  ポケモン拡縮
+ * @brief ポケモン拡縮
  *
  * @param[in] vmh       仮想マシン制御構造体へのポインタ
  * @param[in] context_work  コンテキストワークへのポインタ
@@ -934,7 +954,7 @@ static VMCMD_RESULT VMEC_POKEMON_SCALE( VMHANDLE *vmh, void *context_work )
 
 //============================================================================================
 /**
- *  ポケモン回転
+ * @brief ポケモン回転
  *
  * @param[in] vmh       仮想マシン制御構造体へのポインタ
  * @param[in] context_work  コンテキストワークへのポインタ
@@ -971,7 +991,7 @@ static VMCMD_RESULT VMEC_POKEMON_ROTATE( VMHANDLE *vmh, void *context_work )
 
 //============================================================================================
 /**
- *  ポケモンα値
+ * @brief ポケモンα値
  *
  * @param[in] vmh       仮想マシン制御構造体へのポインタ
  * @param[in] context_work  コンテキストワークへのポインタ
@@ -1006,7 +1026,7 @@ static VMCMD_RESULT VMEC_POKEMON_ALPHA( VMHANDLE *vmh, void *context_work )
 
 //============================================================================================
 /**
- *  ポケモンメパチフラグセット
+ * @brief ポケモンメパチフラグセット
  *
  * @param[in] vmh       仮想マシン制御構造体へのポインタ
  * @param[in] context_work  コンテキストワークへのポインタ
@@ -1041,7 +1061,7 @@ static VMCMD_RESULT VMEC_POKEMON_SET_MEPACHI_FLAG( VMHANDLE *vmh, void *context_
 
 //============================================================================================
 /**
- *  ポケモンアニメーションフラグセット
+ * @brief ポケモンアニメーションフラグセット
  *
  * @param[in] vmh       仮想マシン制御構造体へのポインタ
  * @param[in] context_work  コンテキストワークへのポインタ
@@ -1065,7 +1085,7 @@ static VMCMD_RESULT VMEC_POKEMON_SET_ANM_FLAG( VMHANDLE *vmh, void *context_work
 
 //============================================================================================
 /**
- *  ポケモンパレットフェードセット
+ * @brief ポケモンパレットフェードセット
  *
  * @param[in] vmh       仮想マシン制御構造体へのポインタ
  * @param[in] context_work  コンテキストワークへのポインタ
@@ -1092,7 +1112,7 @@ static VMCMD_RESULT VMEC_POKEMON_PAL_FADE( VMHANDLE *vmh, void *context_work )
 
 //============================================================================================
 /**
- *  ポケモンバニッシュフラグセット
+ * @brief ポケモンバニッシュフラグセット
  *
  * @param[in] vmh       仮想マシン制御構造体へのポインタ
  * @param[in] context_work  コンテキストワークへのポインタ
@@ -1116,7 +1136,7 @@ static VMCMD_RESULT VMEC_POKEMON_VANISH( VMHANDLE *vmh, void *context_work )
 
 //============================================================================================
 /**
- *  ポケモン影バニッシュフラグセット
+ * @brief ポケモン影バニッシュフラグセット
  *
  * @param[in] vmh       仮想マシン制御構造体へのポインタ
  * @param[in] context_work  コンテキストワークへのポインタ
@@ -1140,7 +1160,7 @@ static VMCMD_RESULT VMEC_POKEMON_SHADOW_VANISH( VMHANDLE *vmh, void *context_wor
 
 //============================================================================================
 /**
- *  トレーナーセット
+ * @brief トレーナーセット
  *
  * @param[in] vmh       仮想マシン制御構造体へのポインタ
  * @param[in] context_work  コンテキストワークへのポインタ
@@ -1162,7 +1182,7 @@ static VMCMD_RESULT VMEC_TRAINER_SET( VMHANDLE *vmh, void *context_work )
 
 //============================================================================================
 /**
- *  トレーナー移動
+ * @brief トレーナー移動
  *
  * @param[in] vmh       仮想マシン制御構造体へのポインタ
  * @param[in] context_work  コンテキストワークへのポインタ
@@ -1193,7 +1213,7 @@ static VMCMD_RESULT VMEC_TRAINER_MOVE( VMHANDLE *vmh, void *context_work )
 
 //============================================================================================
 /**
- *  トレーナーアニメセット
+ * @brief トレーナーアニメセット
  *
  * @param[in] vmh       仮想マシン制御構造体へのポインタ
  * @param[in] context_work  コンテキストワークへのポインタ
@@ -1212,7 +1232,7 @@ static VMCMD_RESULT VMEC_TRAINER_ANIME_SET( VMHANDLE *vmh, void *context_work )
 
 //============================================================================================
 /**
- *  トレーナー削除
+ * @brief トレーナー削除
  *
  * @param[in] vmh       仮想マシン制御構造体へのポインタ
  * @param[in] context_work  コンテキストワークへのポインタ
@@ -1230,7 +1250,202 @@ static VMCMD_RESULT VMEC_TRAINER_DEL( VMHANDLE *vmh, void *context_work )
 
 //============================================================================================
 /**
- *  BGパレットフェード
+ * @brief	BGのロード
+ *
+ * @param[in] vmh       仮想マシン制御構造体へのポインタ
+ * @param[in] context_work  コンテキストワークへのポインタ
+ */
+//============================================================================================
+static VMCMD_RESULT VMEC_BG_LOAD( VMHANDLE *vmh, void *context_work )
+{ 
+  BTLV_EFFVM_WORK *bevw = ( BTLV_EFFVM_WORK* )context_work;
+  ARCDATID  datID = ( ARCDATID )VMGetU32( vmh );
+
+#ifdef PM_DEBUG
+  //デバッグ読み込みの場合は専用のバッファからロードする
+  if( bevw->debug_flag == TRUE )
+  {
+    u32   ofs;
+    u32*  ofs_p;
+    void* resource;
+    int   dpd_no = BTLV_EFFVM_GetDPDNo( bevw, datID, DPD_TYPE_BG );
+	  NNSG2dCharacterData* charData;
+	  NNSG2dScreenData* scrnData;
+		NNSG2dPaletteData* palData;
+
+    ofs_p = (u32*)&bevw->dpd->adrs[ 0 ];
+
+    ofs = ofs_p[ dpd_no ];
+    resource = (void *)&bevw->dpd->adrs[ ofs ];
+
+    if( bevw->unpack_info[ dpd_no ] == NULL )
+    { 
+	    NNS_G2dGetUnpackedBGCharacterData( resource, &charData );
+      bevw->unpack_info[ dpd_no ] = charData;
+    }
+    else
+    { 
+      charData = (NNSG2dCharacterData*)bevw->unpack_info[ dpd_no ];
+    }
+    GFL_BG_LoadCharacter( GFL_BG_FRAME3_M, charData->pRawData, 0x8000, 0 );
+
+    ofs = ofs_p[ dpd_no + 1 ];
+    resource = (void *)&bevw->dpd->adrs[ ofs ];
+
+    if( bevw->unpack_info[ dpd_no + 1 ] == NULL )
+    { 
+      NNS_G2dGetUnpackedScreenData( resource, &scrnData );
+      bevw->unpack_info[ dpd_no + 1 ] = scrnData;
+    }
+    else
+    { 
+      scrnData = (NNSG2dScreenData*)bevw->unpack_info[ dpd_no + 1 ];
+    }
+    GFL_BG_LoadScreen( GFL_BG_FRAME3_M, scrnData->rawData, 0x2000, 0 );
+
+    ofs = ofs_p[ dpd_no + 2 ];
+    resource = (void *)&bevw->dpd->adrs[ ofs ];
+    if( bevw->unpack_info[ dpd_no + 2 ] == NULL )
+    { 
+		  NNS_G2dGetUnpackedPaletteData( resource, &palData );
+      bevw->unpack_info[ dpd_no + 2 ] = palData;
+    }
+    else
+    { 
+      palData = (NNSG2dPaletteData*)bevw->unpack_info[ dpd_no + 2 ];
+    }
+    PaletteWorkSet( BTLV_EFFECT_GetPfd(), palData->pRawData, FADE_MAIN_BG, BTLV_EFFVM_BG_PAL * 16, palData->szByte );
+
+    return bevw->control_mode;
+  }
+#endif
+
+  GFL_ARC_UTIL_TransVramBgCharacter( ARCID_WAZAEFF_GRA, datID, GFL_BG_FRAME3_M, 0, 0, 0, bevw->heapID );
+  GFL_ARC_UTIL_TransVramScreen( ARCID_WAZAEFF_GRA, datID + 1, GFL_BG_FRAME3_M, 0, 0, 0, bevw->heapID );
+  PaletteWorkSetEx_Arc( BTLV_EFFECT_GetPfd(), ARCID_WAZAEFF_GRA, datID + 2, bevw->heapID, FADE_MAIN_BG, 0,
+                        BTLV_EFFVM_BG_PAL * 16, 0 );
+
+  return bevw->control_mode;
+}
+
+//============================================================================================
+/**
+ * @brief	BGのスクロール
+ *
+ * @param[in] vmh       仮想マシン制御構造体へのポインタ
+ * @param[in] context_work  コンテキストワークへのポインタ
+ */
+//============================================================================================
+static VMCMD_RESULT VMEC_BG_SCROLL( VMHANDLE *vmh, void *context_work )
+{ 
+  BTLV_EFFVM_WORK *bevw = ( BTLV_EFFVM_WORK* )context_work;
+  int type        = ( int )VMGetU32( vmh );
+  int move_pos_x  = ( int )VMGetU32( vmh );
+  int move_pos_y  = ( int )VMGetU32( vmh );
+  int frame       = ( int )VMGetU32( vmh );
+  int wait        = ( int )VMGetU32( vmh );
+  int count       = ( int )VMGetU32( vmh );
+
+  return bevw->control_mode;
+}
+
+//============================================================================================
+/**
+ * @brief	BGのラスタースクロール
+ *
+ * @param[in] vmh       仮想マシン制御構造体へのポインタ
+ * @param[in] context_work  コンテキストワークへのポインタ
+ */
+//============================================================================================
+static VMCMD_RESULT VMEC_BG_RASTER_SCROLL( VMHANDLE *vmh, void *context_work )
+{ 
+  BTLV_EFFVM_WORK *bevw = ( BTLV_EFFVM_WORK* )context_work;
+  int type    = ( int )VMGetU32( vmh );
+  int radius  = ( int )VMGetU32( vmh );
+  int line    = ( int )VMGetU32( vmh );
+  int wait    = ( int )VMGetU32( vmh );
+
+  return bevw->control_mode;
+}
+
+//============================================================================================
+/**
+ * @brief	BGのパレットアニメ
+ *
+ * @param[in] vmh       仮想マシン制御構造体へのポインタ
+ * @param[in] context_work  コンテキストワークへのポインタ
+ */
+//============================================================================================
+static VMCMD_RESULT VMEC_BG_PAL_ANM( VMHANDLE *vmh, void *context_work )
+{ 
+
+  BTLV_EFFVM_WORK *bevw = ( BTLV_EFFVM_WORK* )context_work;
+  int datID     = ( int )VMGetU32( vmh );
+  int trans_pal = ( int )VMGetU32( vmh );
+  int col_count = ( int )VMGetU32( vmh );
+  int offset    = ( int )VMGetU32( vmh );
+  int wait      = ( int )VMGetU32( vmh );
+
+  return bevw->control_mode;
+}
+
+//============================================================================================
+/**
+ * @brief	BGのプライオリティ
+ *
+ * @param[in] vmh       仮想マシン制御構造体へのポインタ
+ * @param[in] context_work  コンテキストワークへのポインタ
+ */
+//============================================================================================
+static VMCMD_RESULT VMEC_BG_PRIORITY( VMHANDLE *vmh, void *context_work )
+{ 
+  BTLV_EFFVM_WORK *bevw = ( BTLV_EFFVM_WORK* )context_work;
+  int pri = ( int )VMGetU32( vmh );
+
+  GFL_BG_SetPriority( GFL_BG_FRAME3_M, pri );
+
+  return bevw->control_mode;
+}
+
+//============================================================================================
+/**
+ * @brief	BGα値
+ *
+ * @param[in] vmh       仮想マシン制御構造体へのポインタ
+ * @param[in] context_work  コンテキストワークへのポインタ
+ */
+//============================================================================================
+static VMCMD_RESULT VMEC_BG_ALPHA( VMHANDLE *vmh, void *context_work )
+{ 
+  BTLV_EFFVM_WORK *bevw = ( BTLV_EFFVM_WORK* )context_work;
+  int bg_num  = ( int )VMGetU32( vmh );
+  int type    = ( int )VMGetU32( vmh );
+  int alpha   = ( int )VMGetU32( vmh );
+  int frame   = ( int )VMGetU32( vmh );
+  int wait    = ( int )VMGetU32( vmh );
+  int count   = ( int )VMGetU32( vmh );
+
+  if( alpha == 31 )
+  { 
+    G2_SetBlendAlpha( GX_BLEND_PLANEMASK_BG1,
+                      GX_BLEND_PLANEMASK_BG0 | GX_BLEND_PLANEMASK_BG2 | GX_BLEND_PLANEMASK_BG3 |
+                      GX_BLEND_PLANEMASK_OBJ | GX_BLEND_PLANEMASK_BD,
+                      31, 3 );
+  }
+  else
+  { 
+    G2_SetBlendAlpha( GX_BLEND_PLANEMASK_BG1 | GX_BLEND_PLANEMASK_BG3,
+                      GX_BLEND_PLANEMASK_BG0 | GX_BLEND_PLANEMASK_BG2 |
+                      GX_BLEND_PLANEMASK_OBJ | GX_BLEND_PLANEMASK_BD,
+                      31, alpha );
+  }
+
+  return bevw->control_mode;
+}
+
+//============================================================================================
+/**
+ * @brief BGパレットフェード
  *
  * @param[in] vmh       仮想マシン制御構造体へのポインタ
  * @param[in] context_work  コンテキストワークへのポインタ
@@ -1252,7 +1467,7 @@ static VMCMD_RESULT VMEC_BG_PAL_FADE( VMHANDLE *vmh, void *context_work )
 
 //============================================================================================
 /**
- * BGの表示/非表示
+ * @brief BGの表示/非表示
  *
  * @param[in] vmh       仮想マシン制御構造体へのポインタ
  * @param[in] context_work  コンテキストワークへのポインタ
@@ -1271,7 +1486,7 @@ static VMCMD_RESULT VMEC_BG_VANISH( VMHANDLE *vmh, void *context_work )
 
 //============================================================================================
 /**
- *  SE再生
+ * @brief SE再生
  *
  * @param[in] vmh       仮想マシン制御構造体へのポインタ
  * @param[in] context_work  コンテキストワークへのポインタ
@@ -1317,7 +1532,7 @@ static VMCMD_RESULT VMEC_SE_PLAY( VMHANDLE *vmh, void *context_work )
 
 //============================================================================================
 /**
- *  SEストップ
+ * @brief SEストップ
  *
  * @param[in] vmh       仮想マシン制御構造体へのポインタ
  * @param[in] context_work  コンテキストワークへのポインタ
@@ -1342,7 +1557,7 @@ static VMCMD_RESULT VMEC_SE_STOP( VMHANDLE *vmh, void *context_work )
 
 //============================================================================================
 /**
- *  SEピッチ変更
+ * @brief SEピッチ変更
  *
  * @param[in] vmh       仮想マシン制御構造体へのポインタ
  * @param[in] context_work  コンテキストワークへのポインタ
@@ -1357,7 +1572,7 @@ static VMCMD_RESULT VMEC_SE_PITCH( VMHANDLE *vmh, void *context_work )
 
 //============================================================================================
 /**
- *  エフェクト終了待ち
+ * @brief エフェクト終了待ち
  *
  * @param[in] vmh       仮想マシン制御構造体へのポインタ
  * @param[in] context_work  コンテキストワークへのポインタ
@@ -1379,7 +1594,7 @@ static VMCMD_RESULT VMEC_EFFECT_END_WAIT( VMHANDLE *vmh, void *context_work )
 
 //============================================================================================
 /**
- *  タイマーウエイト
+ * @brief タイマーウエイト
  *
  * @param[in] vmh       仮想マシン制御構造体へのポインタ
  * @param[in] context_work  コンテキストワークへのポインタ
@@ -1401,7 +1616,7 @@ static VMCMD_RESULT VMEC_WAIT( VMHANDLE *vmh, void *context_work )
 
 //============================================================================================
 /**
- *  コントロールモード変更
+ * @brief コントロールモード変更
  *
  * @param[in] vmh       仮想マシン制御構造体へのポインタ
  * @param[in] context_work  コンテキストワークへのポインタ
@@ -1418,7 +1633,7 @@ static VMCMD_RESULT VMEC_CONTROL_MODE( VMHANDLE *vmh, void *context_work )
 
 //============================================================================================
 /**
- *  エフェクトシーケンス終了
+ * @brief エフェクトシーケンス終了
  *
  * @param[in] vmh       仮想マシン制御構造体へのポインタ
  * @param[in] context_work  コンテキストワークへのポインタ
@@ -1455,6 +1670,13 @@ static VMCMD_RESULT VMEC_SEQ_END( VMHANDLE *vmh, void *context_work )
   bevw->debug_flag = FALSE;
 #endif
 
+  //BG周りの設定をデフォルトに戻しておく
+  GFL_BG_SetPriority( GFL_BG_FRAME3_M, 1 );
+  G2_SetBlendAlpha( GX_BLEND_PLANEMASK_BG1,
+                    GX_BLEND_PLANEMASK_BG0 | GX_BLEND_PLANEMASK_BG2 | GX_BLEND_PLANEMASK_BG3 |
+                    GX_BLEND_PLANEMASK_OBJ | GX_BLEND_PLANEMASK_BD,
+                    31, 3 );
+
   //SUSPENDモードに切り替えておく
   bevw->control_mode = VMCMD_RESULT_SUSPEND;
 
@@ -1464,7 +1686,7 @@ static VMCMD_RESULT VMEC_SEQ_END( VMHANDLE *vmh, void *context_work )
 //VM_WAIT_FUNC群
 //============================================================================================
 /**
- *  エフェクト終了チェック
+ * @brief エフェクト終了チェック
  *
  * @param[in] vmh       仮想マシン制御構造体へのポインタ
  * @param[in] context_work  コンテキストワークへのポインタ
@@ -1551,6 +1773,14 @@ static  BOOL  VWF_EFFECT_END_CHECK( VMHANDLE *vmh, void *context_work )
       return FALSE;
     }
   }
+  if( ( bevw->effect_end_wait_kind == BTLEFF_EFFENDWAIT_ALL ) ||
+      ( bevw->effect_end_wait_kind == BTLEFF_EFFENDWAIT_PALFADE_EFFECT ) )
+  { 
+    if( BTLV_EFFECT_CheckExecutePaletteFade( BTLEFF_PAL_FADE_EFFECT ) )
+    { 
+      return FALSE;
+    }
+  }
   //SE再生
   if( ( bevw->effect_end_wait_kind == BTLEFF_EFFENDWAIT_ALL ) ||
       ( bevw->effect_end_wait_kind == BTLEFF_EFFENDWAIT_SEALL ) )
@@ -1587,7 +1817,7 @@ static  BOOL  VWF_EFFECT_END_CHECK( VMHANDLE *vmh, void *context_work )
 
 //============================================================================================
 /**
- *  タイマーウエイト終了チェック
+ * @brief タイマーウエイト終了チェック
  *
  * @param[in] vmh       仮想マシン制御構造体へのポインタ
  * @param[in] context_work  コンテキストワークへのポインタ
@@ -1607,7 +1837,7 @@ static  BOOL  VWF_WAIT_CHECK( VMHANDLE *vmh, void *context_work )
 //非公開関数群
 //============================================================================================
 /**
- *  立ち位置情報の取得
+ * @brief 立ち位置情報の取得
  *
  * @param[in] vmh     仮想マシン制御構造体へのポインタ
  * @param[in] pos_flag  取得したいポジションフラグ
@@ -1707,7 +1937,7 @@ static  int   EFFVM_GetPosition( VMHANDLE *vmh, int pos_flag )
 
 //============================================================================================
 /**
- *  立ち位置情報の変換（反転フラグを見て適切な立ち位置を返す）
+ * @brief 立ち位置情報の変換（反転フラグを見て適切な立ち位置を返す）
  *
  * @param[in] vmh       仮想マシン制御構造体へのポインタ
  *
@@ -1728,7 +1958,7 @@ static  int   EFFVM_ConvPosition( VMHANDLE *vmh, BtlvMcssPos position )
 
 //============================================================================================
 /**
- *  パーティクルのdatIDを登録
+ * @brief パーティクルのdatIDを登録
  *
  * @param[in] bevw  エフェクト仮想マシンのワーク構造体へのポインタ
  * @param[in] datID アーカイブdatID
@@ -1767,7 +1997,7 @@ static  int EFFVM_RegistPtcNo( BTLV_EFFVM_WORK *bevw, ARCDATID datID )
 
 //============================================================================================
 /**
- *  パーティクルのdatIDからptc配列の添え字Noを取得
+ * @brief パーティクルのdatIDからptc配列の添え字Noを取得
  *
  * @param[in] bevw  エフェクト仮想マシンのワーク構造体へのポインタ
  * @param[in] datID アーカイブdatID
@@ -1794,7 +2024,7 @@ static  int EFFVM_GetPtcNo( BTLV_EFFVM_WORK *bevw, ARCDATID datID )
 
 //============================================================================================
 /**
- *  エミッタ生成時に呼ばれるエミッタ初期化用コールバック関数（立ち位置から計算）
+ * @brief エミッタ生成時に呼ばれるエミッタ初期化用コールバック関数（立ち位置から計算）
  *
  * @param[in] emit  エミッタワーク構造体へのポインタ
  */
@@ -1988,7 +2218,7 @@ static  void  EFFVM_InitEmitterPos( GFL_EMIT_PTR emit )
 
 //============================================================================================
 /**
- *  エミッタ移動用コールバック関数
+ * @brief エミッタ移動用コールバック関数
  *
  * @param[in] emit  エミッタワーク構造体へのポインタ
  * @param[in] flag  コールバックが呼ばれたタイミングを示すフラグ
@@ -2043,7 +2273,7 @@ static  void  EFFVM_MoveEmitter( GFL_EMIT_PTR emit, unsigned int flag )
 
 //============================================================================================
 /**
- *  エミッタ削除
+ * @brief エミッタ削除
  *
  * @param[in] ptc   削除するエミッタのGFL_PTC_PTR構造体
  */
@@ -2059,7 +2289,7 @@ static  void  EFFVM_DeleteEmitter( GFL_PTC_PTR ptc )
 
 //============================================================================================
 /**
- *  カメラの射影モードを変更
+ * @brief カメラの射影モードを変更
  *
  * @param[in] bevw  エフェクト仮想マシンのワーク構造体へのポインタ
  */
@@ -2078,7 +2308,7 @@ static  void  EFFVM_ChangeCameraProjection( BTLV_EFFVM_WORK *bevw )
 
 //============================================================================================
 /**
- *  SE再生
+ * @brief SE再生
  *
  * @param[in]	se_no	      再生するSEナンバー
  * @param[in] player      再生するPlayerNo
@@ -2109,7 +2339,7 @@ static  void  EFFVM_SePlay( int se_no, int player, int pitch, int vol, int mod_d
 //TCB関数
 //============================================================================================
 /**
- *  SE再生
+ * @brief SE再生
  */
 //============================================================================================
 static  void  TCB_EFFVM_SEPLAY( GFL_TCB* tcb, void* work )
@@ -2130,7 +2360,7 @@ static  void  TCB_EFFVM_SEPLAY( GFL_TCB* tcb, void* work )
 //デバッグ用関数
 //============================================================================================
 /**
- *  VM起動（デバッグ用アドレス指定バージョン）
+ * @brief VM起動（デバッグ用アドレス指定バージョン）
  *
  * @param[in] vmh 仮想マシン制御構造体へのポインタ
  */
@@ -2157,7 +2387,7 @@ void  BTLV_EFFVM_StartDebug( VMHANDLE *vmh, BtlvMcssPos from, BtlvMcssPos to, co
 
 //============================================================================================
 /**
- *  パーティクル再生（デバッグ用）
+ * @brief パーティクル再生（デバッグ用）
  *
  * @param[in] vmh   仮想マシン制御構造体へのポインタ
  * @param[in] ptc   GFL_PTC_PTR
@@ -2185,13 +2415,14 @@ void  BTLV_EFFVM_DebugParticlePlay( VMHANDLE *vmh, GFL_PTC_PTR ptc, int index, i
 
 //============================================================================================
 /**
- *  DEBUG_PARTICLE_DATAの配列の添え字をARCDATIDから取得する
+ * @brief DEBUG_PARTICLE_DATAの配列の添え字をARCDATIDから取得する
  *
  * @param[in] bevw  エフェクト管理構造体へのポインタ
  * @param[in] datID 取得するARCDATID
+ * @param[in] type  読み込むARCDATIDのタイプ（タイプによって、読み込むファイル数が違う）
  */
 //============================================================================================
-static  u32   BTLV_EFFVM_GetDPDNo( BTLV_EFFVM_WORK *bevw, ARCDATID datID )
+static  u32   BTLV_EFFVM_GetDPDNo( BTLV_EFFVM_WORK *bevw, ARCDATID datID, DPD_TYPE type )
 {
   int i;
 
@@ -2205,11 +2436,44 @@ static  u32   BTLV_EFFVM_GetDPDNo( BTLV_EFFVM_WORK *bevw, ARCDATID datID )
   if( i == bevw->dat_id_cnt )
   {
     GF_ASSERT( bevw->dat_id_cnt < PARTICLE_GLOBAL_MAX );
-    bevw->dat_id[ i ] = datID;
-    bevw->dat_id_cnt++;
+    switch( type ){ 
+    case DPD_TYPE_PARTICLE:
+      bevw->dat_id[ i ] = datID;
+      bevw->dat_id_cnt++;
+      break;
+    case DPD_TYPE_BG:
+      { 
+        int j;
+        for( j = 0 ; j < 3 ; j++ )
+        { 
+          bevw->dat_id[ i + j ] = datID;
+          bevw->dat_id_cnt++;
+        }
+      }
+      break;
+    }
   }
-
   return i;
+}
+
+//============================================================================================
+/**
+ * @brief リソースアンパック情報クリア
+ *        NCGR系はアンパックを1回しかしてはいけないので、アンパック情報を保持している
+ *        リソースを読み込んだタイミングでアンパック情報をクリアする
+ *
+ * @param[in] vmh 仮想マシン制御構造体へのポインタ
+ */
+//============================================================================================
+void  BTLV_EFFVM_ClearUnpackInfo( VMHANDLE *vmh )
+{ 
+  BTLV_EFFVM_WORK *bevw = (BTLV_EFFVM_WORK *)VM_GetContext( vmh );
+  int i;
+
+  for( i = 0 ; i < PARTICLE_GLOBAL_MAX ; i++ )
+  {
+    bevw->unpack_info[ i ] = NULL;
+  }
 }
 
 #endif PM_DEBUG

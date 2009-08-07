@@ -414,9 +414,9 @@ void  BTLV_EFFECT_DelTrainer( int position )
  * @param[in] position  セットするゲージ位置
  */
 //============================================================================================
-void  BTLV_EFFECT_SetGauge( const POKEMON_PARAM* pp, int position )
+void  BTLV_EFFECT_SetGauge( const BTL_POKEPARAM* bpp, int position )
 {
-  BTLV_GAUGE_Add( bew->bgw, pp, BTLV_GAUGE_TYPE_1vs1, position );
+  BTLV_GAUGE_Add( bew->bgw, bpp, BTLV_GAUGE_TYPE_1vs1, position );
 }
 
 //============================================================================================
@@ -522,6 +522,12 @@ void  BTLV_EFFECT_SetPaletteFade( int model, u8 start_evy, u8 end_evy, u8 wait, 
   { 
     BTLV_FIELD_SetPaletteFade( bew->bfw, start_evy, end_evy, wait, rgb );
   }
+  if( ( model == BTLEFF_PAL_FADE_EFFECT ) ||
+      ( model == BTLEFF_PAL_FADE_ALL ) )
+  { 
+    PaletteFadeReq( bew->pfd, PF_BIT_MAIN_BG, BTLEFF_PAL_FADE_EFFECT_BIT, wait, 
+                    start_evy, end_evy, rgb, bew->tcb_sys );
+  }
 }
 
 //============================================================================================
@@ -535,8 +541,9 @@ void  BTLV_EFFECT_SetPaletteFade( int model, u8 start_evy, u8 end_evy, u8 wait, 
 //============================================================================================
 BOOL  BTLV_EFFECT_CheckExecutePaletteFade( int model )
 { 
-  BOOL  ret_stage = FALSE;
-  BOOL  ret_field = FALSE;
+  BOOL  ret_stage   = FALSE;
+  BOOL  ret_field   = FALSE;
+  BOOL  ret_effect  = FALSE;
 
   if( ( model == BTLEFF_PAL_FADE_STAGE ) || 
       ( model == BTLEFF_PAL_FADE_3D ) || 
@@ -550,8 +557,13 @@ BOOL  BTLV_EFFECT_CheckExecutePaletteFade( int model )
   { 
     ret_field = BTLV_FIELD_CheckExecutePaletteFade( bew->bfw );
   }
+  if( ( model == BTLEFF_PAL_FADE_EFFECT ) ||
+      ( model == BTLEFF_PAL_FADE_ALL ) )
+  { 
+    ret_effect = ( PaletteFadeCheck( bew->pfd ) != 0 );
+  }
 
-  return ( ( ret_stage == TRUE ) || ( ret_field == TRUE ) );
+  return ( ( ret_stage == TRUE ) || ( ret_field == TRUE ) || ( ret_effect == TRUE ) );
 }
 
 //============================================================================================
@@ -573,6 +585,7 @@ void  BTLV_EFFECT_SetVanishFlag( int model, int flag )
     BTLV_FIELD_SetVanishFlag( bew->bfw, flag );
     break;
   case BTLEFF_EFFECT:
+    GFL_BG_SetVisible( GFL_BG_FRAME3_M, flag ^ 1 );
     break;
   }
 }
