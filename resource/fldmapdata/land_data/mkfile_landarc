@@ -49,11 +49,11 @@ $(TARGET_DIR)/$(TARGET_ARC): $(TARGET_ARC)
 	$(COPY) $(TARGET_ARCIDX) $(TARGET_DIR)
 	
 #コンバート
-ifeq	($(CONVERTUSER),true) #CONVERTUSER
 $(TARGET_ARC): $(LAND_DEPEND_LIST)
 	nnsarc -i -c -l -n $(TARGET_ARC) -S land_output_list > arc_result.txt
 	$(NAIXCUT) $(TARGET_ARCIDX)
 
+ifeq	($(CONVERTUSER),true) #CONVERTUSER
 #拡張子
 .SUFFIXES: .3dppack .nsbmd
 #dependルール
