@@ -33,7 +33,8 @@ SAVEDATASRC =   savedata/save_tbl.c \
         savedata/musical_save.c \
         savedata/randommap_save.c \
 				savedata/irc_compatible_savedata.c \
-        savedata/sp_ribbon_save.c 
+        savedata/sp_ribbon_save.c \
+				savedata/worldtrade_data.c
 
 
 #通信の常駐
@@ -723,7 +724,8 @@ SRCS_OVERLAY_PALACE = app/palace/palace_edit.c \
 #LIB=>          libdwcnd.a
 #LIB=>          libdwcnhttp.a
 SRCS_OVERLAY_DPW_COMMON   = libdpw/dpwi_encrypt.c \
-              libdpw/dpwi_session.c
+              libdpw/dpwi_session.c \
+							libdpw/dpw_tr.c
 
 # 古い通信プログラム WIFI広場以外使用禁止
 #===> SRCS_OVERLAY_DPW_COMMON
@@ -860,6 +862,24 @@ SRCS_OVERLAY_MATSUDA_DEBUG  = test/matsuda/d_matsu.c \
         test/matsuda/d_save.c \
         test/matsuda/palace_block.c \
         test/matsuda/palace_block2.c
+
+#wifi_worldtrade
+#===> SRCS_OVERLAY_DPW_COMMON
+SRCS_OVERLAY_WORLDTRADE	= net_app/wifi_worldtrade/worldtrade.c \
+													net_app/wifi_worldtrade/worldtrade_box.c \
+													net_app/wifi_worldtrade/worldtrade_demo.c \
+													net_app/wifi_worldtrade/worldtrade_deposit.c \
+													net_app/wifi_worldtrade/worldtrade_enter.c \
+													net_app/wifi_worldtrade/worldtrade_input.c \
+													net_app/wifi_worldtrade/worldtrade_mypoke.c \
+													net_app/wifi_worldtrade/worldtrade_partner.c \
+													net_app/wifi_worldtrade/worldtrade_search.c \
+													net_app/wifi_worldtrade/worldtrade_status.c \
+													net_app/wifi_worldtrade/worldtrade_sublcd.c \
+													net_app/wifi_worldtrade/worldtrade_title.c \
+													net_app/wifi_worldtrade/worldtrade_upload.c \
+													net_app/wifi_worldtrade/worldtrade_adapter.c
+
 
 #MCSライブラリ
 #===> SRCS_OVERLAY_FIELDMAP

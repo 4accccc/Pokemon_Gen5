@@ -32,6 +32,7 @@
 #include "savedata/randommap_save.h"
 #include "savedata/irc_compatible_savedata.h"
 #include "savedata/sp_ribbon_save.h"
+#include "savedata/worldtrade_data.h"
 #include "field/eventwork.h"
 
 //==============================================================================
@@ -245,6 +246,11 @@ static const GFL_SAVEDATA_TABLE SaveDataTbl_Normal[] = {
     (FUNC_GET_SIZE)EVENTWORK_GetWorkSize,
     (FUNC_INIT_WORK)EVENTWORK_InitWork,
   },
+	{	//GTS
+    GMDATA_ID_WORLDTRADEDATA,
+    (FUNC_GET_SIZE)WorldTradeData_GetWorkSize,
+    (FUNC_INIT_WORK)WorldTradeData_Init,
+	},
 };
 
 

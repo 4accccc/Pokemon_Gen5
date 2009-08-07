@@ -47,6 +47,7 @@ GFLNetDevTable* NET_DeviceLoad(int deviceNo)
   switch(deviceNo){
 #if SUPPORT_WIFI_
   case GFL_NET_TYPE_WIFI:
+	case GFL_NET_TYPE_WIFI_GTS:
 #if SUPPORT_OVERLAY_
     GFL_OVERLAY_Load( FS_OVERLAY_ID( dev_wifilib ) );
     GFL_OVERLAY_Load( FS_OVERLAY_ID( dev_wifi ) );
@@ -97,6 +98,7 @@ void NET_DeviceUnload(int deviceNo)
   switch(deviceNo){
 #if SUPPORT_WIFI_
   case GFL_NET_TYPE_WIFI:
+	case GFL_NET_TYPE_WIFI_GTS:
 #if SUPPORT_OVERLAY_
     GFL_OVERLAY_Unload( FS_OVERLAY_ID( dev_wifilib ) );
     GFL_OVERLAY_Unload( FS_OVERLAY_ID( dev_wifi ) );

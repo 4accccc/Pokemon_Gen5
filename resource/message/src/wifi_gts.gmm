@@ -1,0 +1,1929 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<?xml-stylesheet type="text/xsl" href="" ?>
+
+<gmml version="4.5">
+
+<head>
+	<create user="taya" host="W00146" date="2009-05-29T17:54:19"/>
+	<generator name="MessageEditor" version="4.9.2.5"/>
+</head>
+
+<body language="japanese">
+	<color>
+		<list entry="0" r="00" g="00" b="00" a="FF"/>
+		<list entry="1" r="FF" g="00" b="00" a="FF"/>
+		<list entry="2" r="00" g="00" b="FF" a="FF"/>
+		<list entry="3" r="00" g="8C" b="00" a="FF"/>
+	</color>
+
+	<tag-table>
+		<group entry="0" japanese="タググループ" english="タググループ">
+		</group>
+
+		<group entry="1" japanese="ポケモンＷＢ（単語）" english="PokemonDP" color="#c0c0c0">
+			<tag entry="00" japanese="トレーナー名" english="トレーナー名" view="EP" width="60" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="01" japanese="ポケモン種族名" english="ポケモン種族名" view="EP" width="60" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">ポケモンの名前。
+ピカチュウとかフシギダネとか。</comment>
+				<comment language="english">ポケモンの名前。
+ピカチュウとかフシギダネとか。</comment>
+			</tag>
+			<tag entry="02" japanese="ポケモンニックネーム" english="ポケモンニックネーム" view="EP" width="60" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">ポケモンのニックネーム</comment>
+				<comment language="english">ポケモンのニックネーム</comment>
+			</tag>
+			<tag entry="03" japanese="ポケモンタイプ" english="ポケモンタイプ" view="EP" width="48" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">みず、くさ、ほのお…とか。</comment>
+				<comment language="english">みず、くさ、ほのお…とか。</comment>
+			</tag>
+			<tag entry="04" japanese="ポケモン分類" english="ポケモン分類" view="EP" width="60" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">「DNAポケモン」など。</comment>
+				<comment language="english">「DNAポケモン」など。</comment>
+			</tag>
+			<tag entry="05" japanese="マップ名" english="マップ名" view="EP" width="120" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="06" japanese="とくせい名" english="とくせい名" view="EP" width="84" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="07" japanese="わざ名" english="わざ名" view="EP" width="84" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="08" japanese="せいかく" english="せいかく" view="EP" width="60" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="09" japanese="どうぐ名" english="どうぐ名" view="EP" width="96" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="10" japanese="グッズ名" english="グッズ名" view="EP" length="8" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="11" japanese="ボックス名" english="ボックス名" view="EP" width="96" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="13" japanese="ステータス名" english="ステータス名" view="EP" width="74" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">たいりょく、こうげきりょく、ぼうぎょりょく、とくこう、とくぼう、すばやさ、かいひりつ、めいちゅう</comment>
+				<comment language="english">たいりょく、こうげきりょく、ぼうぎょりょく、とくこう、とくぼう、すばやさ、かいひりつ、めいちゅう</comment>
+			</tag>
+			<tag entry="14" japanese="トレーナー種別名" english="トレーナー種別名" view="EP" width="120" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">「たんぱんこぞう」「エリートトレーナー」など</comment>
+				<comment language="english">「たんぱんこぞう」「エリートトレーナー」など</comment>
+			</tag>
+			<tag entry="17" japanese="特殊状態名" english="特殊状態名" view="EP" width="48" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">ポケモンの特殊状態です。</comment>
+				<comment language="english">ポケモンの特殊状態です。</comment>
+			</tag>
+			<tag entry="18" japanese="バッグのポケット名" english="バッグのポケット名" view="EP" width="132" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">バッグのポケットの名前。「ポケット」の部分も含む。</comment>
+				<comment language="english">バッグのポケットの名前。「ポケット」の部分も含む。</comment>
+			</tag>
+			<tag entry="26" japanese="カップ名" english="カップ名" view="EP" width="72" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">対戦のレギュレーション名</comment>
+				<comment language="english">対戦のレギュレーション名</comment>
+			</tag>
+			<tag entry="28" japanese="簡易会話単語" english="簡易会話単語" view="EP" width="84" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="31" japanese="アクセサリー名" english="アクセサリー名" view="EP" width="96" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">ポケモンにつけるアクセサリー</comment>
+				<comment language="english">ポケモンにつけるアクセサリー</comment>
+			</tag>
+			<tag entry="32" japanese="ジム名" english="ジム名" view="EP" width="72" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="33" japanese="時間帯" english="時間帯" view="EP" width="48" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">ぼうけんノートなどで使う</comment>
+				<comment language="english">ぼうけんノートなどで使う</comment>
+			</tag>
+			<tag entry="34" japanese="コンテスト名称" english="コンテスト名称" view="EP" width="120" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">コンテストのジャンル
+「○○○○○コンテスト」</comment>
+				<comment language="english">コンテストのジャンル
+「○○○○○コンテスト」</comment>
+			</tag>
+			<tag entry="35" japanese="コンテストランク" english="コンテストランク" view="EP" width="84" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">○○○○ランク
+「ランク」も含む</comment>
+				<comment language="english">○○○○ランク
+「ランク」も含む</comment>
+			</tag>
+			<tag entry="36" japanese="国名" english="国名" view="EP" width="216" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">プレイヤーが入力する、自分が住んでいる国名</comment>
+				<comment language="english">プレイヤーが入力する、自分が住んでいる国名</comment>
+			</tag>
+			<tag entry="37" japanese="地域名" english="地域名" view="EP" width="216" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">プレイヤーが入力する、自分が住んでいる地域名</comment>
+				<comment language="english">プレイヤーが入力する、自分が住んでいる地域名</comment>
+			</tag>
+			<tag entry="39" japanese="リボンの名前" english="リボンの名前" view="EP" width="168" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">リボンの名前</comment>
+				<comment language="english">リボンの名前</comment>
+			</tag>
+			<tag entry="40" japanese="広場ミニゲーム" english="広場ミニゲーム" view="EP" width="120" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">WiFi広場のミニゲーム名</comment>
+				<comment language="english">WiFi広場のミニゲーム名</comment>
+			</tag>
+			<tag entry="41" japanese="広場イベント名" english="広場イベント名" view="EP" width="60" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">WiFi広場イベント名</comment>
+				<comment language="english">WiFi広場イベント名</comment>
+			</tag>
+			<tag entry="42" japanese="広場アイテム名" english="広場アイテム名" view="EP" width="120" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">WiFi広場のアイテム名</comment>
+				<comment language="english">WiFi広場のアイテム名</comment>
+			</tag>
+			<tag entry="43" japanese="日本の挨拶" english="日本の挨拶" view="EP" width="143" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">日本の挨拶</comment>
+				<comment language="english">日本の挨拶</comment>
+			</tag>
+			<tag entry="44" japanese="英語の挨拶" english="英語の挨拶" view="EP" width="143" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">英語の挨拶</comment>
+				<comment language="english">英語の挨拶</comment>
+			</tag>
+			<tag entry="45" japanese="フランス語の挨拶" english="フランス語の挨拶" view="EP" width="143" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">フランス語の挨拶</comment>
+				<comment language="english">フランス語の挨拶</comment>
+			</tag>
+			<tag entry="46" japanese="ドイツ語の挨拶" english="ドイツ語の挨拶" view="EP" width="143" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">ドイツ語の挨拶</comment>
+				<comment language="english">ドイツ語の挨拶</comment>
+			</tag>
+			<tag entry="47" japanese="イタリア語の挨拶" english="イタリア語の挨拶" view="EP" width="143" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">イタリア語の挨拶</comment>
+				<comment language="english">イタリア語の挨拶</comment>
+			</tag>
+			<tag entry="48" japanese="スペイン語の挨拶" english="スペイン語の挨拶" view="EP" width="143" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">スペイン語の挨拶</comment>
+				<comment language="english">スペイン語の挨拶</comment>
+			</tag>
+		</group>
+
+		<group entry="2" japanese="ポケモンＷＢ（数値）" english="ポケモンＷＢ（数値）" color="#c0c0c0">
+			<tag entry="00" japanese="１桁" english="１桁" view="EP" width="8" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="01" japanese="２桁" english="２桁" view="EP" width="16" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="02" japanese="３桁" english="３桁" view="EP" width="24" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="03" japanese="４桁" english="４桁" view="EP" width="32" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="04" japanese="５桁" english="５桁" view="EP" width="40" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="05" japanese="６桁" english="６桁" view="EP" width="48" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">
+</comment>
+				<comment language="english">
+</comment>
+			</tag>
+			<tag entry="06" japanese="７桁" english="７桁" view="EP" width="56" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="07" japanese="８桁" english="８桁" view="EP" width="64" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+		</group>
+
+		<group entry="189" japanese="汎用コントロール" english="汎用コントロール" color="#c0c0c0">
+			<tag entry="00" japanese="カラー変更" english="カラー変更" view="EP" length="0" line="1">
+				<parameter number="0" japanese="文字色番号" english="文字色番号" type="int8"/>
+				<parameter number="1" japanese="影色番号" english="影色番号" type="int8"/>
+				<parameter number="2" japanese="背景色番号" english="背景色番号" type="int8"/>
+				<comment language="japanese">システムのカラータグより細かい設定が可能な低レベル版。
+ほとんどの場合、システムタグを使えば問題ないと思います。</comment>
+				<comment language="english">システムのカラータグより細かい設定が可能な低レベル版。
+ほとんどの場合、システムタグを使えば問題ないと思います。</comment>
+			</tag>
+			<tag entry="01" japanese="カラー変更リセット" english="カラー変更リセット" view="EP" length="0" line="1"/>
+			<tag entry="02" japanese="Ｘセンタリング" english="Ｘセンタリング" view="EP" length="0" line="1"/>
+			<tag entry="03" japanese="Ｘ右寄せ" english="Ｘ右寄せ" view="EP" length="0" line="1">
+				<parameter number="0" japanese="右スペース" english="右スペース" type="int8"/>
+				<comment language="japanese">当該行の文字列を
+ウィンドウ内で右寄せします。</comment>
+				<comment language="english">当該行の文字列を
+ウィンドウ内で右寄せします。</comment>
+			</tag>
+		</group>
+
+		<group entry="190" japanese="動的コントロール" english="Word" color="#c0c0c0">
+			<tag entry="00" japanese="ページ切り替え（行送り）" english="ページ切り替え（行送り）" view="EP" length="0" line="1"/>
+			<tag entry="01" japanese="ページ切り替え（クリア）" english="ページ切り替え（クリア）" view="EP" length="0" line="1"/>
+			<tag entry="02" japanese="ウェイト変更（単発）" english="ウェイト変更（単発）" view="EP" length="0" line="1">
+				<parameter number="0" japanese="フレーム数" english="フレーム数" type="int16"/>
+			</tag>
+			<tag entry="03" japanese="ウェイト変更（継続）" english="ウェイト変更（継続）" view="EP" length="0" line="1">
+				<parameter number="0" japanese="フレーム数" english="フレーム数" type="int16"/>
+			</tag>
+			<tag entry="04" japanese="ウェイトリセット" english="ウェイトリセット" view="EP" length="0" line="1"/>
+			<tag entry="05" japanese="コールバック引数変更（単発）" english="コールバック引数変更（単発）" view="EP" length="0" line="1">
+				<parameter number="0" japanese="引数" english="引数" type="int16"/>
+			</tag>
+			<tag entry="06" japanese="コールバック引数変更（継続）" english="コールバック引数変更（継続）" view="EP" length="0" line="1">
+				<parameter number="0" japanese="引数" english="引数" type="int16"/>
+			</tag>
+			<tag entry="07" japanese="コールバック引数リセット" english="コールバック引数リセット" view="EP" length="0" line="1"/>
+			<tag entry="08" japanese="描画領域クリア" english="描画領域クリア" view="EP" length="0" line="1"/>
+		</group>
+
+		<group entry="254" japanese="文字列展開" english="Word">
+		</group>
+
+		<set japanese="500%" english="500%" value="FF:01:サイズ:500"/>
+		<set japanese="400%" english="400%" value="FF:01:サイズ:400"/>
+		<set japanese="300%" english="300%" value="FF:01:サイズ:300"/>
+		<set japanese="200%" english="200%" value="FF:01:サイズ:200"/>
+		<set japanese="150%" english="150%" value="FF:01:サイズ:150"/>
+		<set japanese="100%" english="100%" value="FF:01:サイズ:100"/>
+		<set japanese="75%" english="75%" value="FF:01:サイズ:75"/>
+		<set japanese="50%" english="50%" value="FF:01:サイズ:50"/>
+		<set japanese="カラーデフォルト" english="Black" value="FF:00:色:0"/>
+		<set japanese="カラー１" english="Red" value="FF:00:色:1"/>
+		<set japanese="カラー２" english="Green" value="FF:00:色:2"/>
+		<set japanese="カラー３" english="Blue" value="FF:00:色:3"/>
+	</tag-table>
+
+	<columns>
+		<id position="0" width="117"/>
+		<group default=" 0:デフォルト" position="-1" width="100">
+			<list entry="0" japanese="デフォルト" english="Default" colorID="0"/>
+		</group>
+		<number position="-1" width="100"/>
+		<comment position="1" width="100"/>
+		<erase position="-1" width="100"/>
+		<language japanese="JPN" english="JPN">
+			<message position="2" width="274"/>
+			<font default=" 0:large" position="4" width="109">
+				<list entry="0" file="W:\font\large.nftr"/>
+				<list entry="1" file="W:\font\small.nftr"/>
+			</font>
+			<size position="-1" width="100"/>
+			<space position="-1" width="100"/>
+			<width position="6" width="70"/>
+			<line position="-1" width="100"/>
+		</language>
+		<language japanese="JPN_KANJI" english="JPN_KANJI">
+			<message position="3" width="246"/>
+			<font default=" 0:large" position="5" width="106">
+				<list entry="0" file="W:\font\large.nftr"/>
+				<list entry="1" file="W:\font\small.nftr"/>
+			</font>
+			<size position="-1" width="100"/>
+			<space position="-1" width="100"/>
+			<width position="7" width="75"/>
+			<line position="-1" width="100"/>
+		</language>
+	</columns>
+
+	<dialog left="248" top="176" right="953" bottom="796" maximized="no" rayout="Vertical2">
+		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
+		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
+		<band id="0" index="0" style="0000" width="530"/>
+		<band id="1" index="1" style="0000" width="165"/>
+		<band id="2" index="2" style="0000" width="697"/>
+		<band id="3" index="3" style="0000" width="697"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
+		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
+		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
+	</dialog>
+
+	<output default="デフォルト">
+		<target japanese="デフォルト" english="default" endian="big" encoding="Shift_JIS" letter-list-encoding="Shift_JIS" header-file-encoding="Shift_JIS" language="JPN">
+			<struct name="JMSMesgEntry" id="" message="mesgOffset">
+			</struct>
+			<entry sort="id" id-block="no" flowlabel-block="no"/>
+			<header divide="no" id-prefix="JMS_" query-prefix="JMS_QUERY_" flownode-prefix="JMS_FLOWNODE_" id="" struct="" query=""/>
+		</target>
+	</output>
+
+
+	<lock>
+		<operation add_message="no" header_setting="no" tag_setting="no" output_setting="no" display="no" sort="no" flowchart_window="no"/>
+	</lock>
+
+
+	<row id="msg_gtc_01_001">
+		<comment>端末メニューのあいさつメッセージ</comment>
+		<language name="JPN" width="216">ＧＴＳへ　ようこそ！</language>
+		<language name="JPN_KANJI" width="216">ＧＴＳへ　ようこそ！</language>
+	</row>
+
+	<row id="msg_gtc_01_002">
+		<comment>あずけていたポケモンが交換されていたときの
+メッセージ</comment>
+		<language name="JPN" width="216">あずけていた　ポケモンの
+こうかんが　せいりつ　しました！</language>
+		<language name="JPN_KANJI" width="216">あずけていた　ポケモンの
+こうかんが　せいりつ　しました！</language>
+	</row>
+
+	<row id="msg_gtc_01_003">
+		<comment>あずけていたポケモンが
+交換されずにタイムアウトしていたときの
+メッセージ</comment>
+		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は
+こうかん　されませんでした▼</language>
+		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
+こうかん　されませんでした▼</language>
+	</row>
+
+	<row id="msg_gtc_01_004">
+		<comment>あずけていたポケモンが
+交換されたけど、タイムアウトしてしまった場合の
+メッセージ</comment>
+		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は
+にげてしまった　みたい……▼</language>
+		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
+にげてしまった　みたい……▼</language>
+	</row>
+
+	<row id="msg_gtc_01_005">
+		<comment>端末メニューの選択メッセージ</comment>
+		<language name="JPN" width="216">おさがし　ですか？　おあずけ　ですか？</language>
+		<language name="JPN_KANJI" width="216">おさがし　ですか？　おあずけ　ですか？</language>
+	</row>
+
+	<row id="msg_gtc_01_006">
+		<comment>預けているポケモンの様子をみたときの
+メッセージ</comment>
+		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]を　どうしますか？</language>
+		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]を　どうしますか？</language>
+	</row>
+
+	<row id="msg_gtc_01_007">
+		<comment>預けているポケモンを引き取るかどうかの
+確認メッセージ</comment>
+		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]を　ひきとりますか？</language>
+		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]を　ひきとりますか？</language>
+	</row>
+
+	<row id="msg_gtc_01_008">
+		<comment>ＧＴＣから抜けるときのメッセージ</comment>
+		<language name="JPN" width="216">ＷｉーＦｉコネクション　から
+せつだん　しても　よろしい　ですか？</language>
+		<language name="JPN_KANJI" width="216">ＷｉーＦｉコネクション　から
+せつだん　しても　よろしい　ですか？</language>
+	</row>
+
+	<row id="msg_gtc_01_009">
+		<comment>ポケモンを探すときのメッセージ</comment>
+		<language name="JPN" width="216">どんな　ポケモンを　さがしますか？</language>
+		<language name="JPN_KANJI" width="216">どんな　ポケモンを　さがしますか？</language>
+	</row>
+
+	<row id="msg_gtc_01_010">
+		<comment>ほしいポケモンを選択するときのメッセージ</comment>
+		<language name="JPN" width="216">ほしい　ポケモンを　えらんでください</language>
+		<language name="JPN_KANJI" width="216">ほしい　ポケモンを　えらんでください</language>
+	</row>
+
+	<row id="msg_gtc_01_011">
+		<comment>ほしい性別を選択するときのメッセージ</comment>
+		<language name="JPN" width="216">せいべつを　えらんでください</language>
+		<language name="JPN_KANJI" width="216">せいべつを　えらんでください</language>
+	</row>
+
+	<row id="msg_gtc_01_012">
+		<comment>ほしいポケモンのレベルを選択するときの
+メッセージ</comment>
+		<language name="JPN" width="216">ポケモンのレベルを　きめてください</language>
+		<language name="JPN_KANJI" width="216">ポケモンのレベルを　きめてください</language>
+	</row>
+
+	<row id="msg_gtc_01_013">
+		<comment>探すポケモンを指定せずに、「さがす」を
+選択したとき</comment>
+		<language name="JPN" width="216">さがすポケモンを　えらんでください！</language>
+		<language name="JPN_KANJI" width="216">さがすポケモンを　えらんでください！</language>
+	</row>
+
+	<row id="msg_gtc_01_014">
+		<comment>サーバーに検索をかけているときのメッセージ</comment>
+		<language name="JPN" width="216">ポケモンを　さがしています　……</language>
+		<language name="JPN_KANJI" width="216">ポケモンを　さがしています　……</language>
+	</row>
+
+	<row id="msg_gtc_01_015">
+		<comment>条件に合致するポケモンが見つからなかったときの
+メッセージ</comment>
+		<language name="JPN" width="216">みつかりませんでした！</language>
+		<language name="JPN_KANJI" width="216">みつかりませんでした！</language>
+	</row>
+
+	<row id="msg_gtc_01_016">
+		<comment>さがすモードから抜けるときのメッセージ</comment>
+		<language name="JPN" width="216">さがすのを　やめますか？</language>
+		<language name="JPN_KANJI" width="216">さがすのを　やめますか？</language>
+	</row>
+
+	<row id="msg_gtc_01_017" back-color=",,,,,,#00ff00,,,,,,">
+		<comment>検索で見つかったポケモンと交換するかどうかの
+確認メッセージ</comment>
+		<language name="JPN" width="216">このトレーナーの　ポケモンと
+こうかん　しますか？</language>
+		<language name="JPN_KANJI" width="216">このトレーナーの　ポケモンと
+こうかん　しますか？</language>
+	</row>
+
+	<row id="msg_gtc_01_018">
+		<comment>替わりにあげるポケモンを選択するときの
+メッセージ</comment>
+		<language name="JPN" width="216">かわりのポケモンを　えらんでください</language>
+		<language name="JPN_KANJI" width="216">かわりのポケモンを　えらんでください</language>
+	</row>
+
+	<row id="msg_gtc_01_019">
+		<comment>替わりにあげるポケモンを選択したときの
+メッセージ</comment>
+		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]を　どうしますか？</language>
+		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]を　どうしますか？</language>
+	</row>
+
+	<row id="msg_gtc_01_020">
+		<comment>交換しようとしたポケモンが、ほかの誰かに
+交換されていたときのメッセージ</comment>
+		<language name="JPN" width="216">すでに　こうかん　されちゃった……</language>
+		<language name="JPN_KANJI" width="216">すでに　こうかん　されちゃった……</language>
+	</row>
+
+	<row id="msg_gtc_01_021">
+		<comment>替わりに選んだポケモンが、相手のほしいポケモンと
+一致しなかったときのメッセージ</comment>
+		<language name="JPN" width="216">していのポケモンと　ちがいますよ！</language>
+		<language name="JPN_KANJI" width="216">していのポケモンと　ちがいますよ！</language>
+	</row>
+
+	<row id="msg_gtc_01_022">
+		<comment>預けるポケモンを選択するときのメッセージ</comment>
+		<language name="JPN" width="216">あずけるポケモンを　えらんでください</language>
+		<language name="JPN_KANJI" width="216">あずけるポケモンを　えらんでください</language>
+	</row>
+
+	<row id="msg_gtc_01_023">
+		<comment>そのポケモンを預けるかどうかの確認メッセージ</comment>
+		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]を　あずけますか？</language>
+		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]を　あずけますか？</language>
+	</row>
+
+	<row id="msg_gtc_01_024">
+		<comment>ほしいポケモンを指定したあとの
+条件確認メッセージ</comment>
+		<language name="JPN" width="216">この　じょうけんで　よろしいですか？</language>
+		<language name="JPN_KANJI" width="216">この　じょうけんで　よろしいですか？</language>
+	</row>
+
+	<row id="msg_gtc_01_025">
+		<comment>あずけたポケモンの状態確認など
+サーバーの状態を確認しているときの
+メッセージ</comment>
+		<language name="JPN" width="216">ＧＴＳの　じょうたいを
+かくにんちゅう　です……</language>
+		<language name="JPN_KANJI" width="216">ＧＴＳの　じょうたいを
+かくにんちゅう　です……</language>
+	</row>
+
+	<row id="msg_gtc_01_026">
+		<comment>ボールカプセルがセットしてあるポケモンを
+預ける、交換しようとしたときの
+警告メッセージ</comment>
+		<language name="JPN" width="216">ボールカプセルが　はずれますが
+よろしい　ですか？</language>
+		<language name="JPN_KANJI" width="216">ボールカプセルが　はずれますが
+よろしい　ですか？</language>
+	</row>
+
+	<row id="msg_gtc_01_027">
+		<comment>交換に出そうとしたポケモンの名前、自分の名前、
+おやの名前、メールの名前がＮＧワードだった場合
+もしくは、ポケモンのパラメータに異常があった場合の
+警告メッセージ</comment>
+		<language name="JPN" width="216">このポケモンを
+こうかんに　だすことは　できません！▼</language>
+		<language name="JPN_KANJI" width="216">このポケモンを
+こうかんに　だすことは　できません！▼</language>
+	</row>
+
+	<row id="msg_gtc_01_028">
+		<comment>タマゴを交換に出そうとしたときの
+警告メッセージ</comment>
+		<language name="JPN" width="216">タマゴを　こうかんに
+だすことは　できません！▼</language>
+		<language name="JPN_KANJI" width="216">タマゴを　こうかんに
+だすことは　できません！▼</language>
+	</row>
+
+	<row id="msg_gtc_01_029">
+		<comment>てもちがいっぱいで、メールつきの
+ポケモンを受け取ることができない
+警告メッセージ</comment>
+		<language name="JPN" width="216">てもちが　いっぱいで　ポケモンを
+うけとる　ことが　できません！▼</language>
+		<language name="JPN_KANJI" width="216">てもちが　いっぱいで　ポケモンを
+うけとる　ことが　できません！▼</language>
+	</row>
+
+	<row id="msg_gtc_01_030">
+		<comment>ボックスがいっぱいで
+ポケモンを受け取ることができない
+警告メッセージ</comment>
+		<language name="JPN" width="216">ボックスが　いっぱいで　ポケモンを
+うけとる　ことが　できません！▼</language>
+		<language name="JPN_KANJI" width="216">ボックスが　いっぱいで　ポケモンを
+うけとる　ことが　できません！▼</language>
+	</row>
+
+	<row id="msg_gtc_01_031" back-color="#ff8000,,,#ff8000,,#ff8000,#ff8000,#ff8000,,,#ff8000,#ff8000,">
+		<comment>探しているポケモンが見つかったときの
+メッセージ→1秒ウエイトで自動送り→msg_gtc_01_033</comment>
+		<language name="JPN" width="216">こうかん　あいてが　みつかりました！</language>
+		<language name="JPN_KANJI" width="216">こうかん　あいてが　みつかりました！</language>
+	</row>
+
+	<row id="msg_gtc_01_032">
+		<comment>ＧＴＳに接続するときのタイトル</comment>
+		<language name="JPN" width="216">ＷｉーＦｉコネクションに　せつぞく</language>
+		<language name="JPN_KANJI" width="216">ＷｉーＦｉコネクションに　せつぞく</language>
+	</row>
+
+	<row id="msg_gtc_01_033" back-color="#ff8000,,,#ff8000,,#ff8000,#ff8000,#ff8000,,,#ff8000,#ff8000,">
+		<comment>探した相手をタッチするガイドメッセージ</comment>
+		<language name="JPN" width="216">『えらぶ』で　あいてを　きめてください</language>
+		<language name="JPN_KANJI" width="216">『えらぶ』で　あいてを　きめてください</language>
+	</row>
+
+	<row id="msg_gtc_01_034" back-color="#ff8000,,,#ff8000,,#ff8000,#ff8000,#ff8000,,,#ff8000,#ff8000,">
+		<comment>前と同じ条件で、探すを押したときのメッセージ</comment>
+		<language name="JPN" width="216">じょうけんを　かえて　ください</language>
+		<language name="JPN_KANJI" width="216">じょうけんを　かえて　ください</language>
+	</row>
+
+	<row id="msg_gtc_01_035" back-color="#ff8000,,,#ff8000,,#ff8000,#ff8000,#ff8000,,,#ff8000,#ff8000,">
+		<comment>預けたポケモンの「ようすをみる」ロックアウト時のメッセージ</comment>
+		<language name="JPN" width="216">しばらく　じかんを　おいてください</language>
+		<language name="JPN_KANJI" width="216">しばらく　じかんを　おいてください</language>
+	</row>
+
+	<row id="msg_gtc_01_036" back-color="#ff8000,,,,,,,#ff8000,,,#ff8000,#ff8000,">
+		<comment>てもちがいっぱいで、メールつきの
+ポケモンを受け取ることができない
+警告メッセージその２</comment>
+		<language name="JPN" width="216">てもちが　いっぱいで
+メールを　もっている　ポケモンを▽
+うけとることが　できません！▼</language>
+		<language name="JPN_KANJI" width="216">てもちが　いっぱいで
+メールを　もっている　ポケモンを▽
+うけとることが　できません！▼</language>
+	</row>
+
+	<row id="msg_gtc_01_037" back-color="#ff8000,,,,,,,#ff8000,,,#ff8000,#ff8000,">
+		<language name="JPN" width="216">てもちが　いっぱいで　うけとれません</language>
+		<language name="JPN_KANJI" width="216">てもちが　いっぱいで　うけとれません</language>
+	</row>
+
+	<row id="msg_gtc_01_038" back-color="#ff8000,,,,,,,#ff8000,,,#ff8000,#ff8000,">
+		<comment>配布用リボンがついているポケモンを
+あずけたり、交換に出そうとしたときの
+警告メッセージ</comment>
+		<language name="JPN" width="216">とくべつな　リボンが　ついているので
+こうかんに　だすことは　できません！▼</language>
+		<language name="JPN_KANJI" width="216">とくべつな　リボンが　ついているので
+こうかんに　だすことは　できません！▼</language>
+	</row>
+
+	<row id="msg_gtc_01_039" back-color="#ff8000,,,,,,,#ff8000,,,#ff8000,#ff8000,">
+		<comment>ＧＴＳ確認タイムアウトメッセージ</comment>
+		<language name="JPN" width="216">ＧＴＳの　かくにんに　しっぱいしました</language>
+		<language name="JPN_KANJI" width="216">ＧＴＳの　かくにんに　しっぱいしました</language>
+	</row>
+
+	<row id="msg_gtc_02_001">
+		<comment>端末メニュー画面タイトル</comment>
+		<language name="JPN" font=" 1:font_system" width="216">[BD:02:Ｘセンタリング]グローバル　トレード　システム</language>
+		<language name="JPN_KANJI" font=" 1:font_system" width="216">[BD:02:Ｘセンタリング]グローバル　トレード　システム</language>
+	</row>
+
+	<row id="msg_gtc_02_002_01">
+		<comment>メニュー画面項目１（ポケモンを預けている時）</comment>
+		<language name="JPN" font=" 1:font_system" width="216">[BD:02:Ｘセンタリング]ようすを　みる</language>
+		<language name="JPN_KANJI" font=" 1:font_system" width="216">[BD:02:Ｘセンタリング]ようすを　みる</language>
+	</row>
+
+	<row id="msg_gtc_02_002_02">
+		<comment>メニュー画面項目１（ポケモンを預けていない時）</comment>
+		<language name="JPN" font=" 1:font_system" width="216">[BD:02:Ｘセンタリング]ポケモンを　あずける</language>
+		<language name="JPN_KANJI" font=" 1:font_system" width="216">[BD:02:Ｘセンタリング]ポケモンを　あずける</language>
+	</row>
+
+	<row id="msg_gtc_02_003">
+		<comment>メニュー画面項目２</comment>
+		<language name="JPN" font=" 1:font_system" width="216">[BD:02:Ｘセンタリング]ポケモンを　さがす</language>
+		<language name="JPN_KANJI" font=" 1:font_system" width="216">[BD:02:Ｘセンタリング]ポケモンを　さがす</language>
+	</row>
+
+	<row id="msg_gtc_02_004">
+		<comment>メニュー画面項目３</comment>
+		<language name="JPN" font=" 1:font_system" width="216">[BD:02:Ｘセンタリング]しゅうりょう　する</language>
+		<language name="JPN_KANJI" font=" 1:font_system" width="216">[BD:02:Ｘセンタリング]しゅうりょう　する</language>
+	</row>
+
+	<row id="msg_gtc_02_005">
+		<comment>預けているポケモンの様子：
+ニックネーム</comment>
+		<language name="JPN" font=" 1:font_system" width="216">[1:02:ポケモンニックネーム:0]</language>
+		<language name="JPN_KANJI" font=" 1:font_system" width="216">[1:02:ポケモンニックネーム:0]</language>
+	</row>
+
+	<row id="msg_gtc_02_006">
+		<comment>預けているポケモンの様子：
+ポケモンの種類</comment>
+		<language name="JPN" font=" 1:font_system" width="216">[1:01:ポケモン種族名:1]</language>
+		<language name="JPN_KANJI" font=" 1:font_system" width="216">[1:01:ポケモン種族名:1]</language>
+	</row>
+
+	<row id="msg_gtc_02_007">
+		<comment>預けているポケモンの様子：
+レベル</comment>
+		<language name="JPN" font=" 1:font_system" width="216">Ｌｖ．[2:02:３桁:2]</language>
+		<language name="JPN_KANJI" font=" 1:font_system" width="216">Ｌｖ．[2:02:３桁:2]</language>
+	</row>
+
+	<row id="msg_gtc_02_008">
+		<comment>預けているポケモンの様子：
+もちもの項目名</comment>
+		<language name="JPN" font=" 1:font_system" width="216">もちもの</language>
+		<language name="JPN_KANJI" font=" 1:font_system" width="216">もちもの</language>
+	</row>
+
+	<row id="msg_gtc_02_009">
+		<comment>預けているポケモンの様子：
+もちものの名前</comment>
+		<language name="JPN" font=" 1:font_system" width="216">[1:09:どうぐ名:3]</language>
+		<language name="JPN_KANJI" font=" 1:font_system" width="216">[1:09:どうぐ名:3]</language>
+	</row>
+
+	<row id="msg_gtc_02_010">
+		<comment>預けているポケモンの様子：
+預けている人の名前の項目名</comment>
+		<language name="JPN" font=" 1:font_system" width="216">あずけたひと</language>
+		<language name="JPN_KANJI" font=" 1:font_system" width="216">あずけたひと</language>
+	</row>
+
+	<row id="msg_gtc_02_011">
+		<comment>預けているポケモンの様子：
+預けているポケモンの名前</comment>
+		<language name="JPN" font=" 1:font_system" width="216">[1:00:トレーナー名:4]</language>
+		<language name="JPN_KANJI" font=" 1:font_system" width="216">[1:00:トレーナー名:4]</language>
+	</row>
+
+	<row id="msg_gtc_02_012">
+		<comment>預けているポケモンの様子：
+ほしいポケモンの項目名</comment>
+		<language name="JPN" font=" 1:font_system" width="216">ほしいポケモン</language>
+		<language name="JPN_KANJI" font=" 1:font_system" width="216">ほしいポケモン</language>
+	</row>
+
+	<row id="msg_gtc_02_013">
+		<comment>預けているポケモンの様子：
+ほしいポケモンの名前</comment>
+		<language name="JPN" font=" 1:font_system" width="216">[1:01:ポケモン種族名:5]</language>
+		<language name="JPN_KANJI" font=" 1:font_system" width="216">[1:01:ポケモン種族名:5]</language>
+	</row>
+
+	<row id="msg_gtc_02_014">
+		<comment>預けているポケモンの様子：
+希望するレベル</comment>
+		<language name="JPN" font=" 1:font_system" width="216">Ｌｖ.[2:02:３桁:6]いじょう</language>
+		<language name="JPN_KANJI" font=" 1:font_system" width="216">Ｌｖ.[2:02:３桁:6]いじょう</language>
+	</row>
+
+	<row id="msg_gtc_02_015">
+		<comment>預けているポケモンの様子：
+希望レベルを指定していないとき</comment>
+		<language name="JPN" font=" 1:font_system" width="216">Ｌｖ.していなし</language>
+		<language name="JPN_KANJI" font=" 1:font_system" width="216">Ｌｖ.していなし</language>
+	</row>
+
+	<row id="msg_gtc_02_016">
+		<comment>預けているポケモンの様子：
+預けてるポケモンをひきとる選択項目</comment>
+		<language name="JPN" font=" 1:font_system" width="216">ひきとる</language>
+		<language name="JPN_KANJI" font=" 1:font_system" width="216">ひきとる</language>
+	</row>
+
+	<row id="msg_gtc_02_017">
+		<comment>預けているポケモンの様子：
+預けてるポケモンをそのままにしておく選択項目</comment>
+		<language name="JPN" font=" 1:font_system" width="216">そのまま</language>
+		<language name="JPN_KANJI" font=" 1:font_system" width="216">そのまま</language>
+	</row>
+
+	<row id="msg_gtc_02_018">
+		<language name="JPN" font=" 1:font_system" width="216">はい</language>
+		<language name="JPN_KANJI" font=" 1:font_system" width="216">はい</language>
+	</row>
+
+	<row id="msg_gtc_02_019">
+		<language name="JPN" font=" 1:font_system" width="216">いいえ</language>
+		<language name="JPN_KANJI" font=" 1:font_system" width="216">いいえ</language>
+	</row>
+
+	<row id="msg_gtc_02_020" back-color="#00ff00,,,#00ff00,,#00ff00,#00ff00,#00ff00,,,#00ff00,#00ff00,">
+		<comment>預けているポケモンの様子：
+検索ポケモンデータ閲覧画面：
+ポケモンの種類名の項目名</comment>
+		<language name="JPN" font=" 1:font_system" width="48">なまえ</language>
+		<language name="JPN_KANJI" font=" 1:font_system" width="48">なまえ</language>
+	</row>
+
+	<row id="msg_gtc_03_001">
+		<comment>ポケモンをさがす画面：
+ポケモンを探す画面のタイトル</comment>
+		<language name="JPN" font=" 1:font_system" width="216">ポケモンを　さがす</language>
+		<language name="JPN_KANJI" font=" 1:font_system" width="216">ポケモンを　さがす</language>
+	</row>
+
+	<row id="msg_gtc_03_002">
+		<comment>ポケモンをさがす画面：
+項目名</comment>
+		<language name="JPN" font=" 1:font_system" width="216">ポケモン</language>
+		<language name="JPN_KANJI" font=" 1:font_system" width="216">ポケモン</language>
+	</row>
+
+	<row id="msg_gtc_03_003">
+		<comment>ポケモンをさがす画面：
+入力されたポケモン名</comment>
+		<language name="JPN" font=" 1:font_system" width="216">[1:01:ポケモン種族名:0]</language>
+		<language name="JPN_KANJI" font=" 1:font_system" width="216">[1:01:ポケモン種族名:0]</language>
+	</row>
+
+	<row id="msg_gtc_03_004">
+		<comment>ポケモンをさがす画面：
+性別指定項目名</comment>
+		<language name="JPN" font=" 1:font_system" width="216">せいべつ</language>
+		<language name="JPN_KANJI" font=" 1:font_system" width="216">せいべつ</language>
+	</row>
+
+	<row id="msg_gtc_03_005">
+		<comment>ポケモンをさがす画面：
+入力された性別指定</comment>
+		<language name="JPN" font=" 1:font_system" width="216">[1:28:イメージクリップ背景:1]</language>
+		<language name="JPN_KANJI" font=" 1:font_system" width="216">[1:28:イメージクリップ背景:1]</language>
+	</row>
+
+	<row id="msg_gtc_03_006">
+		<comment>ポケモンをさがす画面：
+レベル指定項目名</comment>
+		<language name="JPN" font=" 1:font_system" width="216">レベル</language>
+		<language name="JPN_KANJI" font=" 1:font_system" width="216">レベル</language>
+	</row>
+
+	<row id="msg_gtc_03_007">
+		<comment>ポケモンをさがす画面：
+入力されたレベル指定</comment>
+		<language name="JPN" font=" 1:font_system" width="216">[1:29:GTC\:ポケモン分類項目:2]</language>
+		<language name="JPN_KANJI" font=" 1:font_system" width="216">[1:29:GTC\:ポケモン分類項目:2]</language>
+	</row>
+
+	<row id="msg_gtc_03_008">
+		<comment>ポケモンをさがす画面：
+さがすの選択項目</comment>
+		<language name="JPN" font=" 1:font_system" width="216">さがす</language>
+		<language name="JPN_KANJI" font=" 1:font_system" width="216">さがす</language>
+	</row>
+
+	<row id="msg_gtc_03_009" back-color=",,,#ff8000,,,#ff8080,,,,,,">
+		<comment>ポケモンをさがす画面：
+メニュー画面に戻る選択項目（他の画面と併用されていたのでポケモンを探すでは使用せず、別に分けた）</comment>
+		<language name="JPN" font=" 1:font_system" width="216">[BD:02:Ｘセンタリング]もどる</language>
+		<language name="JPN_KANJI" font=" 1:font_system" width="216">[BD:02:Ｘセンタリング]もどる</language>
+	</row>
+
+	<row id="msg_gtc_03_010">
+		<comment>ポケモンをさがす画面：
+検索ＨＩＴ時に相手をみるためのボタンテキスト</comment>
+		<language name="JPN" font=" 1:font_system" width="216">えらぶ</language>
+		<language name="JPN_KANJI" font=" 1:font_system" width="216">えらぶ</language>
+	</row>
+
+	<row id="msg_gtc_04_001">
+		<comment>検索ポケモンデータ閲覧画面：
+検索されたポケモンのニックネーム</comment>
+		<language name="JPN" font=" 1:font_system" width="216">[1:02:ポケモンニックネーム:0]</language>
+		<language name="JPN_KANJI" font=" 1:font_system" width="216">[1:02:ポケモンニックネーム:0]</language>
+	</row>
+
+	<row id="msg_gtc_04_002">
+		<comment>検索ポケモンデータ閲覧画面：
+検索されたポケモンの名前</comment>
+		<language name="JPN" font=" 1:font_system" width="216">[1:01:ポケモン種族名:1]</language>
+		<language name="JPN_KANJI" font=" 1:font_system" width="216">[1:01:ポケモン種族名:1]</language>
+	</row>
+
+	<row id="msg_gtc_04_003">
+		<comment>検索ポケモンデータ閲覧画面：
+検索されたポケモンのレベル</comment>
+		<language name="JPN" font=" 1:font_system" width="216">Ｌｖ．[2:02:３桁:2]</language>
+		<language name="JPN_KANJI" font=" 1:font_system" width="216">Ｌｖ．[2:02:３桁:2]</language>
+	</row>
+
+	<row id="msg_gtc_04_004">
+		<comment>検索ポケモンデータ閲覧画面：
+検索されたポケモンのもちもの項目名</comment>
+		<language name="JPN" font=" 1:font_system" width="216">もちもの</language>
+		<language name="JPN_KANJI" font=" 1:font_system" width="216">もちもの</language>
+	</row>
+
+	<row id="msg_gtc_04_005">
+		<comment>検索ポケモンデータ閲覧画面：
+検索されたポケモンのもちもの</comment>
+		<language name="JPN" font=" 1:font_system" width="216">[1:09:どうぐ名:3]</language>
+		<language name="JPN_KANJI" font=" 1:font_system" width="216">[1:09:どうぐ名:3]</language>
+	</row>
+
+	<row id="msg_gtc_04_006">
+		<comment>検索ポケモンデータ閲覧画面：
+検索されたポケモンをあずけた人項目名</comment>
+		<language name="JPN" font=" 1:font_system" width="216">あずけたひと</language>
+		<language name="JPN_KANJI" font=" 1:font_system" width="216">あずけたひと</language>
+	</row>
+
+	<row id="msg_gtc_04_007">
+		<comment>検索ポケモンデータ閲覧画面：
+検索されたポケモンをあずけた人の名前</comment>
+		<language name="JPN" font=" 1:font_system" width="216">[1:00:トレーナー名:4]</language>
+		<language name="JPN_KANJI" font=" 1:font_system" width="216">[1:00:トレーナー名:4]</language>
+	</row>
+
+	<row id="msg_gtc_04_008">
+		<comment>検索ポケモンデータ閲覧画面：
+検索されたポケモンの替わりにほしいポケモン項目名</comment>
+		<language name="JPN" font=" 1:font_system" width="216">ほしいポケモン</language>
+		<language name="JPN_KANJI" font=" 1:font_system" width="216">ほしいポケモン</language>
+	</row>
+
+	<row id="msg_gtc_04_009">
+		<comment>検索ポケモンデータ閲覧画面：
+検索されたポケモンの替わりにほしいポケモン名</comment>
+		<language name="JPN" font=" 1:font_system" width="216">[1:01:ポケモン種族名:5]</language>
+		<language name="JPN_KANJI" font=" 1:font_system" width="216">[1:01:ポケモン種族名:5]</language>
+	</row>
+
+	<row id="msg_gtc_04_010">
+		<comment>検索ポケモンデータ閲覧画面：
+検索されたポケモンの替わりにほしいポケモン性別指定</comment>
+		<language name="JPN" font=" 1:font_system" width="216">[1:28:イメージクリップ背景:6]</language>
+		<language name="JPN_KANJI" font=" 1:font_system" width="216">[1:28:イメージクリップ背景:6]</language>
+	</row>
+
+	<row id="msg_gtc_04_011">
+		<comment>検索ポケモンデータ閲覧画面：
+検索されたポケモンの替わりにほしいポケモンレベル指定</comment>
+		<language name="JPN" font=" 1:font_system" width="216">[1:29:GTC\:ポケモン分類項目:7]</language>
+		<language name="JPN_KANJI" font=" 1:font_system" width="216">[1:29:GTC\:ポケモン分類項目:7]</language>
+	</row>
+
+	<row id="msg_gtc_04_012">
+		<comment>検索ポケモンデータ閲覧画面：
+検索されたポケモンを預けた人が住んでる場所項目名</comment>
+		<language name="JPN" font=" 1:font_system" width="216">すんでいるばしょ</language>
+		<language name="JPN_KANJI" font=" 1:font_system" width="216">すんでいるばしょ</language>
+	</row>
+
+	<row id="msg_gtc_04_013">
+		<comment>検索ポケモンデータ閲覧画面：
+検索されたポケモンを預けた人が住んでいる国名</comment>
+		<language name="JPN" font=" 1:font_system" width="216">[1:36:国名:8]</language>
+		<language name="JPN_KANJI" font=" 1:font_system" width="216">[1:36:国名:8]</language>
+	</row>
+
+	<row id="msg_gtc_04_014">
+		<comment>検索ポケモンデータ閲覧画面：
+検索されたポケモンを預けた人が住んでいる地域名</comment>
+		<language name="JPN" font=" 1:font_system" width="216">[1:37:地域名:9]</language>
+		<language name="JPN_KANJI" font=" 1:font_system" width="216">[1:37:地域名:9]</language>
+	</row>
+
+	<row id="msg_gtc_04_015">
+		<comment>交換ポケモン提出選択画面：
+てもちポケモンウインドウ表示選択項目</comment>
+		<language name="JPN" font=" 1:font_system" width="216">てもち
+ポケモン</language>
+		<language name="JPN_KANJI" font=" 1:font_system" width="216">てもち
+ポケモン</language>
+	</row>
+
+	<row id="msg_gtc_04_016">
+		<comment>交換ポケモン提出選択画面：
+交換に出すポケモンの選択をやめる選択項目</comment>
+		<language name="JPN" font=" 1:font_system" width="216">やめる</language>
+		<language name="JPN_KANJI" font=" 1:font_system" width="216">やめる</language>
+	</row>
+
+	<row id="msg_gtc_04_017">
+		<comment>交換ポケモン提出選択画面：
+ボックス名表示用</comment>
+		<language name="JPN" font=" 1:font_system" width="216">[1:0B:ボックス名:0]</language>
+		<language name="JPN_KANJI" font=" 1:font_system" width="216">[1:0B:ボックス名:0]</language>
+	</row>
+
+	<row id="msg_gtc_04_018">
+		<comment>交換ポケモン提出選択画面：
+選択したポケモンの様子を見る選択項目名</comment>
+		<language name="JPN" font=" 1:font_system" width="216">ようすを　みる</language>
+		<language name="JPN_KANJI" font=" 1:font_system" width="216">ようすを　みる</language>
+	</row>
+
+	<row id="msg_gtc_04_019">
+		<comment>交換ポケモン提出選択画面：
+選択したポケモンを交換に出す選択項目名</comment>
+		<language name="JPN" font=" 1:font_system" width="216">こうかんする</language>
+		<language name="JPN_KANJI" font=" 1:font_system" width="216">こうかんする</language>
+	</row>
+
+	<row id="msg_gtc_04_020">
+		<comment>交換ポケモン提出選択画面：
+選択したポケモンを、やっぱりやめるときの選択項目名</comment>
+		<language name="JPN" font=" 1:font_system" width="216">やめる</language>
+		<language name="JPN_KANJI" font=" 1:font_system" width="216">やめる</language>
+	</row>
+
+	<row id="msg_gtc_04_021">
+		<comment>交換ポケモン提出選択画面：
+はい、いいえ選択用</comment>
+		<language name="JPN" font=" 1:font_system" width="216">はい</language>
+		<language name="JPN_KANJI" font=" 1:font_system" width="216">はい</language>
+	</row>
+
+	<row id="msg_gtc_04_022">
+		<comment>交換ポケモン提出選択画面：
+はい、いいえ選択用</comment>
+		<language name="JPN" font=" 1:font_system" width="216">いいえ</language>
+		<language name="JPN_KANJI" font=" 1:font_system" width="216">いいえ</language>
+	</row>
+
+	<row id="msg_gtc_04_023">
+		<comment>交換ポケモン提出選択画面：
+ボックスではなくてもちを見ている時のトレー名</comment>
+		<language name="JPN" font=" 1:font_system" width="216">てもち</language>
+		<language name="JPN_KANJI" font=" 1:font_system" width="216">てもち</language>
+	</row>
+
+	<row id="msg_gtc_04_024" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,#c0c0c0,,,#c0c0c0,#c0c0c0,">
+		<comment>検索ポケモンデータ閲覧画面：
+検索されたポケモンの種族の項目名</comment>
+		<language name="JPN" font=" 1:font_system" width="48">なまえ</language>
+		<language name="JPN_KANJI" font=" 1:font_system" width="48">なまえ</language>
+	</row>
+
+	<row id="msg_gtc_05_001" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,#c0c0c0,,,#c0c0c0,#c0c0c0,">
+		<comment>ポケモンをあずける画面：
+ポケモンをあずける画面タイトル</comment>
+		<language name="JPN" font=" 1:font_system" width="216">ポケモンを　あずける</language>
+		<language name="JPN_KANJI" font=" 1:font_system" width="216">ポケモンを　あずける</language>
+	</row>
+
+	<row id="msg_gtc_05_002">
+		<comment>ポケモンをあずける画面：
+ボックス名表示用</comment>
+		<language name="JPN" font=" 1:font_system" width="216">[1:0B:ボックス名:0]</language>
+		<language name="JPN_KANJI" font=" 1:font_system" width="216">[1:0B:ボックス名:0]</language>
+	</row>
+
+	<row id="msg_gtc_05_003">
+		<comment>ポケモンをあずける画面：
+てもちポケモンウインドウ表示選択項目</comment>
+		<language name="JPN" font=" 1:font_system" width="216">てもち
+ポケモン</language>
+		<language name="JPN_KANJI" font=" 1:font_system" width="216">てもち
+ポケモン</language>
+	</row>
+
+	<row id="msg_gtc_05_004">
+		<comment>ポケモンをあずける画面：
+交換に出すポケモンの選択をやめる選択項目</comment>
+		<language name="JPN" font=" 1:font_system" width="216">やめる</language>
+		<language name="JPN_KANJI" font=" 1:font_system" width="216">やめる</language>
+	</row>
+
+	<row id="msg_gtc_05_005">
+		<comment>ポケモンをあずける画面：
+選択したポケモンの様子を見る選択項目名</comment>
+		<language name="JPN" font=" 1:font_system" width="216">ようすを　みる</language>
+		<language name="JPN_KANJI" font=" 1:font_system" width="216">ようすを　みる</language>
+	</row>
+
+	<row id="msg_gtc_05_006">
+		<comment>ポケモンをあずける画面：
+選択したポケモンを預ける選択項目名</comment>
+		<language name="JPN" font=" 1:font_system" width="216">あずける</language>
+		<language name="JPN_KANJI" font=" 1:font_system" width="216">あずける</language>
+	</row>
+
+	<row id="msg_gtc_05_007">
+		<comment>ポケモンをあずける画面：
+選択したポケモンを、やっぱりやめるときの選択項目名</comment>
+		<language name="JPN" font=" 1:font_system" width="216">やめる</language>
+		<language name="JPN_KANJI" font=" 1:font_system" width="216">やめる</language>
+	</row>
+
+	<row id="msg_gtc_05_008">
+		<comment>ポケモンをあずける画面：
+ほしいポケモン入力確認ウインドウ項目名</comment>
+		<language name="JPN" font=" 1:font_system" width="216">ほしいポケモン</language>
+		<language name="JPN_KANJI" font=" 1:font_system" width="216">ほしいポケモン</language>
+	</row>
+
+	<row id="msg_gtc_05_009">
+		<comment>ポケモンをあずける画面：
+ほしいポケモン入力項目</comment>
+		<language name="JPN" font=" 1:font_system" width="216">[1:01:ポケモン種族名:0]</language>
+		<language name="JPN_KANJI" font=" 1:font_system" width="216">[1:01:ポケモン種族名:0]</language>
+	</row>
+
+	<row id="msg_gtc_05_010">
+		<comment>ポケモンをあずける画面：
+ほしいポケモンのレベル入力項目</comment>
+		<language name="JPN" font=" 1:font_system" width="216">[1:29:GTC\:ポケモン分類項目:1]</language>
+		<language name="JPN_KANJI" font=" 1:font_system" width="216">[1:29:GTC\:ポケモン分類項目:1]</language>
+	</row>
+
+	<row id="msg_gtc_05_011">
+		<comment>ポケモンをあずける画面：
+あずけるポケモン表示ウインドウ項目名</comment>
+		<language name="JPN" font=" 1:font_system" width="216">あずけるポケモン</language>
+		<language name="JPN_KANJI" font=" 1:font_system" width="216">あずけるポケモン</language>
+	</row>
+
+	<row id="msg_gtc_05_012">
+		<comment>ポケモンをあずける画面：
+あずけるポケモンのニックネーム</comment>
+		<language name="JPN" font=" 1:font_system" width="216">[1:02:ポケモンニックネーム:2]</language>
+		<language name="JPN_KANJI" font=" 1:font_system" width="216">[1:02:ポケモンニックネーム:2]</language>
+	</row>
+
+	<row id="msg_gtc_05_013">
+		<comment>ポケモンをあずける画面：
+あずけるポケモンのレベル表示</comment>
+		<language name="JPN" font=" 1:font_system" width="216">Ｌｖ．</language>
+		<language name="JPN_KANJI" font=" 1:font_system" width="216">Ｌｖ．</language>
+	</row>
+
+	<row id="msg_gtc_05_013_01">
+		<language name="JPN" font=" 1:font_system" width="216">[2:02:３桁:3]</language>
+		<language name="JPN_KANJI" font=" 1:font_system" width="216">[2:02:３桁:3]</language>
+	</row>
+
+	<row id="msg_gtc_05_013_02">
+		<comment>ポケモンをあずける画面：
+あずけるポケモンのレベル表示</comment>
+		<language name="JPN" font=" 1:font_system" width="216">Ｌｖ．[2:02:３桁:3]</language>
+		<language name="JPN_KANJI" font=" 1:font_system" width="216">Ｌｖ．[2:02:３桁:3]</language>
+	</row>
+
+	<row id="msg_gtc_05_014" back-color="#ff8080,,,,,,,,,,,,">
+		<comment>ポケモンをあずける画面：
+あずけるポケモンを選ぶ画面で、もどるときの項目</comment>
+		<language name="JPN" font=" 1:font_system" width="216">もどる</language>
+		<language name="JPN_KANJI" font=" 1:font_system" width="216">もどる</language>
+	</row>
+
+	<row id="msg_gtc_10_001">
+		<comment>選択項目（ポケモン分類）
+その１</comment>
+		<language name="JPN" font=" 1:font_system" width="216">ア</language>
+		<language name="JPN_KANJI" font=" 1:font_system" width="216">ア</language>
+	</row>
+
+	<row id="msg_gtc_10_002">
+		<comment>選択項目（ポケモン分類）
+その２</comment>
+		<language name="JPN" font=" 1:font_system" width="216">カ</language>
+		<language name="JPN_KANJI" font=" 1:font_system" width="216">カ</language>
+	</row>
+
+	<row id="msg_gtc_10_003">
+		<comment>選択項目（ポケモン分類）
+その３</comment>
+		<language name="JPN" font=" 1:font_system" width="216">サ</language>
+		<language name="JPN_KANJI" font=" 1:font_system" width="216">サ</language>
+	</row>
+
+	<row id="msg_gtc_10_004">
+		<comment>選択項目（ポケモン分類）
+その４</comment>
+		<language name="JPN" font=" 1:font_system" width="216">タ</language>
+		<language name="JPN_KANJI" font=" 1:font_system" width="216">タ</language>
+	</row>
+
+	<row id="msg_gtc_10_005">
+		<comment>選択項目（ポケモン分類）
+その５</comment>
+		<language name="JPN" font=" 1:font_system" width="216">ナ</language>
+		<language name="JPN_KANJI" font=" 1:font_system" width="216">ナ</language>
+	</row>
+
+	<row id="msg_gtc_10_006">
+		<comment>選択項目（ポケモン分類）
+その６</comment>
+		<language name="JPN" font=" 1:font_system" width="216">ハ</language>
+		<language name="JPN_KANJI" font=" 1:font_system" width="216">ハ</language>
+	</row>
+
+	<row id="msg_gtc_10_007">
+		<comment>選択項目（ポケモン分類）
+その７</comment>
+		<language name="JPN" font=" 1:font_system" width="216">マ</language>
+		<language name="JPN_KANJI" font=" 1:font_system" width="216">マ</language>
+	</row>
+
+	<row id="msg_gtc_10_008">
+		<comment>選択項目（ポケモン分類）
+その８</comment>
+		<language name="JPN" font=" 1:font_system" width="216">ヤ</language>
+		<language name="JPN_KANJI" font=" 1:font_system" width="216">ヤ</language>
+	</row>
+
+	<row id="msg_gtc_10_009">
+		<comment>選択項目（ポケモン分類）
+その９</comment>
+		<language name="JPN" font=" 1:font_system" width="216">ラ</language>
+		<language name="JPN_KANJI" font=" 1:font_system" width="216">ラ</language>
+	</row>
+
+	<row id="msg_gtc_10_010">
+		<comment>選択項目（ポケモン分類）
+その１０</comment>
+		<language name="JPN" font=" 1:font_system" width="216">ワ</language>
+		<language name="JPN_KANJI" font=" 1:font_system" width="216">ワ</language>
+	</row>
+
+	<row id="msg_gtc_11_001">
+		<comment>選択項目（ポケモン性別）
+性別指定なし</comment>
+		<language name="JPN" font=" 1:font_system" width="216">きにしない</language>
+		<language name="JPN_KANJI" font=" 1:font_system" width="216">きにしない</language>
+	</row>
+
+	<row id="msg_gtc_11_002">
+		<comment>選択項目（ポケモン性別）
+♂</comment>
+		<language name="JPN" font=" 1:font_system" width="216">♂</language>
+		<language name="JPN_KANJI" font=" 1:font_system" width="216">♂</language>
+	</row>
+
+	<row id="msg_gtc_11_003">
+		<comment>選択項目（ポケモン性別）
+♀</comment>
+		<language name="JPN" font=" 1:font_system" width="216">♀</language>
+		<language name="JPN_KANJI" font=" 1:font_system" width="216">♀</language>
+	</row>
+
+	<row id="msg_gtc_11_004">
+		<comment>選択項目（ポケモン性別）
+一つ前の選択にもどる</comment>
+		<language name="JPN" font=" 1:font_system" width="216">[BD:02:Ｘセンタリング]もどる</language>
+		<language name="JPN_KANJI" font=" 1:font_system" width="216">[BD:02:Ｘセンタリング]もどる</language>
+	</row>
+
+	<row id="msg_gtc_12_001">
+		<comment>選択項目（ポケモンレベル指定）
+レベル指定なし</comment>
+		<language name="JPN" font=" 1:font_system" width="216">きにしない</language>
+		<language name="JPN_KANJI" font=" 1:font_system" width="216">きにしない</language>
+	</row>
+
+	<row id="msg_gtc_12_002">
+		<comment>選択項目（ポケモンレベル指定）
+１０未満</comment>
+		<language name="JPN" font=" 1:font_system" width="216">Ｌｖ．１０みまん</language>
+		<language name="JPN_KANJI" font=" 1:font_system" width="216">Ｌｖ．１０みまん</language>
+	</row>
+
+	<row id="msg_gtc_12_003">
+		<comment>選択項目（ポケモンレベル指定）
+１０以上</comment>
+		<language name="JPN" font=" 1:font_system" width="216">Ｌｖ．１０いじょう</language>
+		<language name="JPN_KANJI" font=" 1:font_system" width="216">Ｌｖ．１０いじょう</language>
+	</row>
+
+	<row id="msg_gtc_12_004">
+		<comment>選択項目（ポケモンレベル指定）
+２０以上</comment>
+		<language name="JPN" font=" 1:font_system" width="216">Ｌｖ．２０いじょう</language>
+		<language name="JPN_KANJI" font=" 1:font_system" width="216">Ｌｖ．２０いじょう</language>
+	</row>
+
+	<row id="msg_gtc_12_005">
+		<comment>選択項目（ポケモンレベル指定）
+３０以上</comment>
+		<language name="JPN" font=" 1:font_system" width="216">Ｌｖ．３０いじょう</language>
+		<language name="JPN_KANJI" font=" 1:font_system" width="216">Ｌｖ．３０いじょう</language>
+	</row>
+
+	<row id="msg_gtc_12_006">
+		<comment>選択項目（ポケモンレベル指定）
+４０以上</comment>
+		<language name="JPN" font=" 1:font_system" width="216">Ｌｖ．４０いじょう</language>
+		<language name="JPN_KANJI" font=" 1:font_system" width="216">Ｌｖ．４０いじょう</language>
+	</row>
+
+	<row id="msg_gtc_12_007">
+		<comment>選択項目（ポケモンレベル指定）
+５０以上</comment>
+		<language name="JPN" font=" 1:font_system" width="216">Ｌｖ．５０いじょう</language>
+		<language name="JPN_KANJI" font=" 1:font_system" width="216">Ｌｖ．５０いじょう</language>
+	</row>
+
+	<row id="msg_gtc_12_008">
+		<comment>選択項目（ポケモンレベル指定）
+６０以上</comment>
+		<language name="JPN" font=" 1:font_system" width="216">Ｌｖ．６０いじょう</language>
+		<language name="JPN_KANJI" font=" 1:font_system" width="216">Ｌｖ．６０いじょう</language>
+	</row>
+
+	<row id="msg_gtc_12_009">
+		<comment>選択項目（ポケモンレベル指定）
+７０以上</comment>
+		<language name="JPN" font=" 1:font_system" width="216">Ｌｖ．７０いじょう</language>
+		<language name="JPN_KANJI" font=" 1:font_system" width="216">Ｌｖ．７０いじょう</language>
+	</row>
+
+	<row id="msg_gtc_12_010">
+		<comment>選択項目（ポケモンレベル指定）
+８０以上</comment>
+		<language name="JPN" font=" 1:font_system" width="216">Ｌｖ．８０いじょう</language>
+		<language name="JPN_KANJI" font=" 1:font_system" width="216">Ｌｖ．８０いじょう</language>
+	</row>
+
+	<row id="msg_gtc_12_011">
+		<comment>選択項目（ポケモンレベル指定）
+９０以上</comment>
+		<language name="JPN" font=" 1:font_system" width="216">Ｌｖ．９０いじょう</language>
+		<language name="JPN_KANJI" font=" 1:font_system" width="216">Ｌｖ．９０いじょう</language>
+	</row>
+
+	<row id="msg_gtc_12_012">
+		<comment>選択項目（ポケモンレベル指定）
+１００</comment>
+		<language name="JPN" font=" 1:font_system" width="216">Ｌｖ．１００</language>
+		<language name="JPN_KANJI" font=" 1:font_system" width="216">Ｌｖ．１００</language>
+	</row>
+
+	<row id="msg_gtc_12_013">
+		<comment>選択項目（ポケモンレベル指定）
+一つ前の選択にもどる</comment>
+		<language name="JPN" font=" 1:font_system" width="216">[BD:02:Ｘセンタリング]もどる</language>
+		<language name="JPN_KANJI" font=" 1:font_system" width="216">[BD:02:Ｘセンタリング]もどる</language>
+	</row>
+
+	<row id="msg_gtc_13_001">
+		<comment>サーバーに送るときの仮メッセージ</comment>
+		<language name="JPN" font=" 1:font_system" width="216">ポケモンを　ＧＴＳに
+おくりだして　います</language>
+		<language name="JPN_KANJI" font=" 1:font_system" width="216">ポケモンを　ＧＴＳに
+おくりだして　います</language>
+	</row>
+
+	<row id="msg_gtc_13_002">
+		<language name="JPN" font=" 1:font_system" width="216">ＧＴＳに　ポケモンが
+とうろくされました！▼</language>
+		<language name="JPN_KANJI" font=" 1:font_system" width="216">ＧＴＳに　ポケモンが
+とうろくされました！▼</language>
+	</row>
+
+	<row id="msg_gtc_14_001">
+		<language name="JPN" font=" 1:font_system" width="216">ポケモンを　ＧＴＳから
+うけとって　います</language>
+		<language name="JPN_KANJI" font=" 1:font_system" width="216">ポケモンを　ＧＴＳから
+うけとって　います</language>
+	</row>
+
+	<row id="msg_gtc_14_002">
+		<language name="JPN" font=" 1:font_system" width="216">ＧＴＳから　ポケモンを
+ひきとりました！▼</language>
+		<language name="JPN_KANJI" font=" 1:font_system" width="216">ＧＴＳから　ポケモンを
+ひきとりました！▼</language>
+	</row>
+
+	<row id="msg_gtc_15_001">
+		<language name="JPN" font=" 1:font_system" width="216">ＧＴＳと　ポケモンを　
+こうかんしています！</language>
+		<language name="JPN_KANJI" font=" 1:font_system" width="216">ＧＴＳと　ポケモンを　
+こうかんしています！</language>
+	</row>
+
+	<row id="msg_gtc_15_002">
+		<language name="JPN" font=" 1:font_system" width="216">ポケモンの　こうかんが
+せいりつ　しました！▼</language>
+		<language name="JPN_KANJI" font=" 1:font_system" width="216">ポケモンの　こうかんが
+せいりつ　しました！▼</language>
+	</row>
+
+	<row id="msg_gtc_15_003">
+		<language name="JPN" font=" 1:font_system" width="216">ざんねんですが　ほかのひとと
+こうかん　されていました▼</language>
+		<language name="JPN_KANJI" font=" 1:font_system" width="216">ざんねんですが　ほかのひとと
+こうかん　されていました▼</language>
+	</row>
+
+	<row id="msg_gtc_15_004">
+		<language name="JPN" font=" 1:font_system" width="216">ポケモンレポートに　かきこんでいます
+でんげんを　きらないでください</language>
+		<language name="JPN_KANJI" font=" 1:font_system" width="216">ポケモンレポートに　かきこんでいます
+でんげんを　きらないでください</language>
+	</row>
+
+	<row id="msg_gtc_15_005">
+		<language name="JPN" font=" 1:font_system" width="216">ただいま　ＧＴＳと　つうしんを
+おこなっています……</language>
+		<language name="JPN_KANJI" font=" 1:font_system" width="216">ただいま　ＧＴＳと　つうしんを
+おこなっています……</language>
+	</row>
+
+	<row id="msg_gtc_error_001">
+		<language name="JPN" font=" 1:font_system" width="216">ＧＴＳは
+げんざい　メンテナンスちゅう　です▼
+しばらく　おまちいただいたのち　
+ごりようください▼
+</language>
+		<language name="JPN_KANJI" font=" 1:font_system" width="216">ＧＴＳは
+げんざい　メンテナンスちゅう　です▼
+しばらく　おまちいただいたのち　
+ごりようください▼
+</language>
+	</row>
+
+	<row id="msg_gtc_error_002">
+		<language name="JPN" font=" 1:font_system" width="216">ＧＴＳは
+げんざい　こみあって　おります▼
+しばらく　おまちいただいたのち
+ごりようください▼</language>
+		<language name="JPN_KANJI" font=" 1:font_system" width="216">ＧＴＳは
+げんざい　こみあって　おります▼
+しばらく　おまちいただいたのち
+ごりようください▼</language>
+	</row>
+
+	<row id="msg_gtc_error_003">
+		<language name="JPN" font=" 1:font_system" width="216">けんさく　できません　でした…</language>
+		<language name="JPN_KANJI" font=" 1:font_system" width="216">けんさく　できません　でした…</language>
+	</row>
+
+	<row id="msg_gtc_error_004">
+		<comment>ポケモン検索画面でエラーが発生した時用。１行ウインドウに表示する</comment>
+		<language name="JPN" font=" 1:font_system" width="216">つうしんエラーが　はっせいしました</language>
+		<language name="JPN_KANJI" font=" 1:font_system" width="216">つうしんエラーが　はっせいしました</language>
+	</row>
+
+	<row id="msg_gtc_error_004_01">
+		<comment>サーバー確認画面で表示する際に使用するキー待ちつきのエラーテキスト</comment>
+		<language name="JPN" font=" 1:font_system" width="216">つうしんエラーが　はっせいしました▼</language>
+		<language name="JPN_KANJI" font=" 1:font_system" width="216">つうしんエラーが　はっせいしました▼</language>
+	</row>
+
+	<row id="msg_gtc_error_005">
+		<language name="JPN" font=" 1:font_system" width="216">ＧＴＳに　せつぞく
+できませんでした▼
+うけつけにもどります▼</language>
+		<language name="JPN_KANJI" font=" 1:font_system" width="216">ＧＴＳに　せつぞく
+できませんでした▼
+うけつけにもどります▼</language>
+	</row>
+
+	<row id="msg_gtc_error_006">
+		<language name="JPN" font=" 1:font_system" width="216">ＧＴＳとの　つうしんが
+せつだん　されました▼
+うけつけに　もどります▼</language>
+		<language name="JPN_KANJI" font=" 1:font_system" width="216">ＧＴＳとの　つうしんが
+せつだん　されました▼
+うけつけに　もどります▼</language>
+	</row>
+
+	<row id="msg_gtc_error_006_01">
+		<language name="JPN" font=" 1:font_system" width="216">ＧＴＳとの　つうしんが　せつだん　されました</language>
+		<language name="JPN_KANJI" font=" 1:font_system" width="216">ＧＴＳとの　つうしんが　せつだん　されました</language>
+	</row>
+
+	<row id="msg_gtc_error_006_02">
+		<language name="JPN" font=" 1:font_system" width="216">うけつけに　もどります</language>
+		<language name="JPN_KANJI" font=" 1:font_system" width="216">うけつけに　もどります</language>
+	</row>
+
+	<row id="msg_gtc_search_001">
+		<comment>検索条件：選択項目（ポケモンレベル指定）
+レベル指定なし ※プラチナで追加</comment>
+		<language name="JPN" font=" 1:font_system" width="216">きにしない</language>
+		<language name="JPN_KANJI" font=" 1:font_system" width="216">きにしない</language>
+	</row>
+
+	<row id="msg_gtc_search_002">
+		<comment>検索条件：選択項目（ポケモンレベル指定）
+レベル指定なし ※プラチナで追加</comment>
+		<language name="JPN" font=" 1:font_system" width="216">Ｌｖ．１から１０</language>
+		<language name="JPN_KANJI" font=" 1:font_system" width="216">Ｌｖ．１から１０</language>
+	</row>
+
+	<row id="msg_gtc_search_003">
+		<comment>検索条件：選択項目（ポケモンレベル指定）
+レベル指定なし ※プラチナで追加</comment>
+		<language name="JPN" font=" 1:font_system" width="216">Ｌｖ．１１から２０</language>
+		<language name="JPN_KANJI" font=" 1:font_system" width="216">Ｌｖ．１１から２０</language>
+	</row>
+
+	<row id="msg_gtc_search_004">
+		<comment>検索条件：選択項目（ポケモンレベル指定）
+レベル指定なし ※プラチナで追加</comment>
+		<language name="JPN" font=" 1:font_system" width="216">Ｌｖ．２１から３０</language>
+		<language name="JPN_KANJI" font=" 1:font_system" width="216">Ｌｖ．２１から３０</language>
+	</row>
+
+	<row id="msg_gtc_search_005">
+		<comment>検索条件：選択項目（ポケモンレベル指定）
+レベル指定なし ※プラチナで追加</comment>
+		<language name="JPN" font=" 1:font_system" width="216">Ｌｖ．３１から４０</language>
+		<language name="JPN_KANJI" font=" 1:font_system" width="216">Ｌｖ．３１から４０</language>
+	</row>
+
+	<row id="msg_gtc_search_006">
+		<comment>検索条件：選択項目（ポケモンレベル指定）
+レベル指定なし ※プラチナで追加</comment>
+		<language name="JPN" font=" 1:font_system" width="216">Ｌｖ．４１から５０</language>
+		<language name="JPN_KANJI" font=" 1:font_system" width="216">Ｌｖ．４１から５０</language>
+	</row>
+
+	<row id="msg_gtc_search_007">
+		<comment>検索条件：選択項目（ポケモンレベル指定）
+レベル指定なし ※プラチナで追加</comment>
+		<language name="JPN" font=" 1:font_system" width="216">Ｌｖ．５１から６０</language>
+		<language name="JPN_KANJI" font=" 1:font_system" width="216">Ｌｖ．５１から６０</language>
+	</row>
+
+	<row id="msg_gtc_search_008">
+		<comment>検索条件：選択項目（ポケモンレベル指定）
+レベル指定なし ※プラチナで追加</comment>
+		<language name="JPN" font=" 1:font_system" width="216">Ｌｖ．６１から７０</language>
+		<language name="JPN_KANJI" font=" 1:font_system" width="216">Ｌｖ．６１から７０</language>
+	</row>
+
+	<row id="msg_gtc_search_009">
+		<comment>検索条件：選択項目（ポケモンレベル指定）
+レベル指定なし ※プラチナで追加</comment>
+		<language name="JPN" font=" 1:font_system" width="216">Ｌｖ．７１から８０</language>
+		<language name="JPN_KANJI" font=" 1:font_system" width="216">Ｌｖ．７１から８０</language>
+	</row>
+
+	<row id="msg_gtc_search_010">
+		<comment>検索条件：選択項目（ポケモンレベル指定）
+レベル指定なし ※プラチナで追加</comment>
+		<language name="JPN" font=" 1:font_system" width="216">Ｌｖ．８１から９０</language>
+		<language name="JPN_KANJI" font=" 1:font_system" width="216">Ｌｖ．８１から９０</language>
+	</row>
+
+	<row id="msg_gtc_search_011">
+		<comment>検索条件：選択項目（ポケモンレベル指定）
+レベル指定なし ※プラチナで追加</comment>
+		<language name="JPN" font=" 1:font_system" width="216">Ｌｖ．９１から１００</language>
+		<language name="JPN_KANJI" font=" 1:font_system" width="216">Ｌｖ．９１から１００</language>
+	</row>
+
+	<row id="msg_gtc_search_012">
+		<comment>検索条件：選択項目（ポケモンレベル指定）
+一つ前の選択にもどる　※プラチナで追加</comment>
+		<language name="JPN" font=" 1:font_system" width="216">[BD:02:Ｘセンタリング]もどる</language>
+		<language name="JPN_KANJI" font=" 1:font_system" width="216">[BD:02:Ｘセンタリング]もどる</language>
+	</row>
+
+	<row id="msg_gtc_search_013">
+		<comment>検索条件：選択項目（ポケモンレベル指定）
+※プラチナで追加</comment>
+		<language name="JPN" font=" 1:font_system" width="216">すんでいるばしょ</language>
+		<language name="JPN_KANJI" font=" 1:font_system" width="216">すんでいるばしょ</language>
+	</row>
+
+	<row id="msg_gtc_search_014">
+		<comment>検索条件：選択項目（国指定）
+※プラチナで追加</comment>
+		<language name="JPN" font=" 1:font_system" width="216">[1:36:国名:0]</language>
+		<language name="JPN_KANJI" font=" 1:font_system" width="216">[1:36:国名:0]</language>
+	</row>
+
+	<row id="msg_gtc_search_015">
+		<comment>検索条件：選択項目（国指定）
+※プラチナで追加</comment>
+		<language name="JPN" font=" 1:font_system" width="216">きにしない</language>
+		<language name="JPN_KANJI" font=" 1:font_system" width="216">きにしない</language>
+	</row>
+
+	<row id="msg_gtc_search_015_01">
+		<comment>検索条件：選択項目（国指定）
+※金銀で追加
+リストで赤枠と被るので。</comment>
+		<language name="JPN" font=" 1:font_system" width="216">　きにしない</language>
+		<language name="JPN_KANJI" font=" 1:font_system" width="216">　きにしない</language>
+	</row>
+
+	<row id="msg_gtc_search_016">
+		<comment>検索条件：選択項目（国指定）
+※プラチナで追加</comment>
+		<language name="JPN" font=" 1:font_system" width="216">[BD:02:Ｘセンタリング]もどる</language>
+		<language name="JPN_KANJI" font=" 1:font_system" width="216">[BD:02:Ｘセンタリング]もどる</language>
+	</row>
+
+	<row id="msg_gtc_country_000">
+		<comment>ほしいポケモンの国を選択するときのメッセージ　※プラチナで追加</comment>
+		<language name="JPN" width="216">あいての　ちいきを　きめてください</language>
+		<language name="JPN_KANJI" width="216">あいての　ちいきを　きめてください</language>
+	</row>
+
+	<row id="msg_gtc_new_form">
+		<comment>プラチナから追加された新フォルムのポケモンを交換に出そうとしたときに表示させる注意文。
+※プラチナで追加</comment>
+		<language name="JPN" width="216">このフォルムの　ポケモンは
+こうかんに　だすことは　できません！▼</language>
+		<language name="JPN_KANJI" width="216">このフォルムの　ポケモンは
+こうかんに　だすことは　できません！▼</language>
+	</row>
+
+	<row id="msg_gtc_new_form_002">
+		<language name="JPN" width="216">ギザみみピチューは　
+こうかんに　だせません[2:07:タッチ待ちアイコン(ページ送り）]</language>
+		<language name="JPN_KANJI" width="216">ギザみみピチューは　
+こうかんに　だせません[2:07:タッチ待ちアイコン(ページ送り）]</language>
+	</row>
+
+	<row id="msg_gtc_new_item">
+		<comment>プラチナから追加された新アイテムのポケモンを交換に出そうとしたときに表示させる注意文。
+※プラチナで追加</comment>
+		<language name="JPN" width="216">このどうぐを　もっている　ポケモンは
+こうかんに　だすことは　できません！▼</language>
+		<language name="JPN_KANJI" width="216">このどうぐを　もっている　ポケモンは
+こうかんに　だすことは　できません！▼</language>
+	</row>
+
+	<row id="msg_gtc_pl_oya">
+		<comment>※プラチナで追加</comment>
+		<language name="JPN" font=" 1:font_system" width="216">おや</language>
+		<language name="JPN_KANJI" font=" 1:font_system" width="216">おや</language>
+	</row>
+
+	<row id="msg_gtc_email_error_000">
+		<comment>※プラチナで追加
+eメールエラー</comment>
+		<language name="JPN" font=" 1:font_system" width="216">にんしょうメールの　そうしんに
+しっぱいしました▼</language>
+		<language name="JPN_KANJI" font=" 1:font_system" width="216">にんしょうメールの　そうしんに
+しっぱいしました▼</language>
+	</row>
+
+	<row id="msg_gtc_email_error_001">
+		<comment>※プラチナで追加
+eメールエラー</comment>
+		<language name="JPN" font=" 1:font_system" width="216">つうしんエラーが　はっせいしました▼</language>
+		<language name="JPN_KANJI" font=" 1:font_system" width="216">つうしんエラーが　はっせいしました▼</language>
+	</row>
+
+	<row id="msg_gtc_email_error_002">
+		<comment>※プラチナで追加
+eメールエラー</comment>
+		<language name="JPN" font=" 1:font_system" width="216">ないように　もんだいがあり
+おくれませんでした▼</language>
+		<language name="JPN_KANJI" font=" 1:font_system" width="216">ないように　もんだいがあり
+おくれませんでした▼</language>
+	</row>
+
+	<row id="msg_gtc_email_error_003">
+		<comment>※プラチナで追加
+eメールエラー</comment>
+		<language name="JPN" font=" 1:font_system" width="216">サーバーが　メンテナンスちゅうです
+しばらく　まって　せつぞくしてください▼</language>
+		<language name="JPN_KANJI" font=" 1:font_system" width="216">サーバーが　メンテナンスちゅうです
+しばらく　まって　せつぞくしてください▼</language>
+	</row>
+
+	<row id="msg_gtc_email_error_004">
+		<comment>※プラチナで追加
+eメールエラー</comment>
+		<language name="JPN" font=" 1:font_system" width="216">ｅメールの　にんしょうに
+しっぱいしました▼</language>
+		<language name="JPN_KANJI" font=" 1:font_system" width="216">ｅメールの　にんしょうに
+しっぱいしました▼</language>
+	</row>
+
+	<row id="msg_gtc_cleanup_000">
+		<comment>※プラチナで追加</comment>
+		<language name="JPN" font=" 1:font_system" width="216">ＷｉーＦｉコネクション　から
+せつだんしています</language>
+		<language name="JPN_KANJI" font=" 1:font_system" width="216">ＷｉーＦｉコネクション　から
+せつだんしています</language>
+	</row>
+
+	<row id="msg_gtc_cleanup_001">
+		<comment>※プラチナで追加</comment>
+		<language name="JPN" font=" 1:font_system" width="216">ＷｉーＦｉコネクション　から
+せつだん　しました</language>
+		<language name="JPN_KANJI" font=" 1:font_system" width="216">ＷｉーＦｉコネクション　から
+せつだん　しました</language>
+	</row>
+
+	<row id="msg_gts_word_001">
+		<language name="JPN" font=" 1:font_system" width="216">ア</language>
+		<language name="JPN_KANJI" font=" 1:font_system" width="216">ア</language>
+	</row>
+
+	<row id="msg_gts_word_002">
+		<language name="JPN" font=" 1:font_system" width="216">イ</language>
+		<language name="JPN_KANJI" font=" 1:font_system" width="216">イ</language>
+	</row>
+
+	<row id="msg_gts_word_003">
+		<language name="JPN" font=" 1:font_system" width="216">ウ</language>
+		<language name="JPN_KANJI" font=" 1:font_system" width="216">ウ</language>
+	</row>
+
+	<row id="msg_gts_word_004">
+		<language name="JPN" font=" 1:font_system" width="216">エ</language>
+		<language name="JPN_KANJI" font=" 1:font_system" width="216">エ</language>
+	</row>
+
+	<row id="msg_gts_word_005">
+		<language name="JPN" font=" 1:font_system" width="216">オ</language>
+		<language name="JPN_KANJI" font=" 1:font_system" width="216">オ</language>
+	</row>
+
+	<row id="msg_gts_word_006">
+		<language name="JPN" font=" 1:font_system" width="216">カ</language>
+		<language name="JPN_KANJI" font=" 1:font_system" width="216">カ</language>
+	</row>
+
+	<row id="msg_gts_word_007">
+		<language name="JPN" font=" 1:font_system" width="216">キ</language>
+		<language name="JPN_KANJI" font=" 1:font_system" width="216">キ</language>
+	</row>
+
+	<row id="msg_gts_word_008">
+		<language name="JPN" font=" 1:font_system" width="216">ク</language>
+		<language name="JPN_KANJI" font=" 1:font_system" width="216">ク</language>
+	</row>
+
+	<row id="msg_gts_word_009">
+		<language name="JPN" font=" 1:font_system" width="216">ケ</language>
+		<language name="JPN_KANJI" font=" 1:font_system" width="216">ケ</language>
+	</row>
+
+	<row id="msg_gts_word_010">
+		<language name="JPN" font=" 1:font_system" width="216">コ</language>
+		<language name="JPN_KANJI" font=" 1:font_system" width="216">コ</language>
+	</row>
+
+	<row id="msg_gts_word_011">
+		<language name="JPN" font=" 1:font_system" width="216">サ</language>
+		<language name="JPN_KANJI" font=" 1:font_system" width="216">サ</language>
+	</row>
+
+	<row id="msg_gts_word_012">
+		<language name="JPN" font=" 1:font_system" width="216">シ</language>
+		<language name="JPN_KANJI" font=" 1:font_system" width="216">シ</language>
+	</row>
+
+	<row id="msg_gts_word_013">
+		<language name="JPN" font=" 1:font_system" width="216">ス</language>
+		<language name="JPN_KANJI" font=" 1:font_system" width="216">ス</language>
+	</row>
+
+	<row id="msg_gts_word_014">
+		<language name="JPN" font=" 1:font_system" width="216">セ</language>
+		<language name="JPN_KANJI" font=" 1:font_system" width="216">セ</language>
+	</row>
+
+	<row id="msg_gts_word_015">
+		<language name="JPN" font=" 1:font_system" width="216">ソ</language>
+		<language name="JPN_KANJI" font=" 1:font_system" width="216">ソ</language>
+	</row>
+
+	<row id="msg_gts_word_016">
+		<language name="JPN" font=" 1:font_system" width="216">タ</language>
+		<language name="JPN_KANJI" font=" 1:font_system" width="216">タ</language>
+	</row>
+
+	<row id="msg_gts_word_017">
+		<language name="JPN" font=" 1:font_system" width="216">チ</language>
+		<language name="JPN_KANJI" font=" 1:font_system" width="216">チ</language>
+	</row>
+
+	<row id="msg_gts_word_018">
+		<language name="JPN" font=" 1:font_system" width="216">ツ</language>
+		<language name="JPN_KANJI" font=" 1:font_system" width="216">ツ</language>
+	</row>
+
+	<row id="msg_gts_word_019">
+		<language name="JPN" font=" 1:font_system" width="216">テ</language>
+		<language name="JPN_KANJI" font=" 1:font_system" width="216">テ</language>
+	</row>
+
+	<row id="msg_gts_word_020">
+		<language name="JPN" font=" 1:font_system" width="216">ト</language>
+		<language name="JPN_KANJI" font=" 1:font_system" width="216">ト</language>
+	</row>
+
+	<row id="msg_gts_word_021">
+		<language name="JPN" font=" 1:font_system" width="216">ナ</language>
+		<language name="JPN_KANJI" font=" 1:font_system" width="216">ナ</language>
+	</row>
+
+	<row id="msg_gts_word_022">
+		<language name="JPN" font=" 1:font_system" width="216">ニ</language>
+		<language name="JPN_KANJI" font=" 1:font_system" width="216">ニ</language>
+	</row>
+
+	<row id="msg_gts_word_023">
+		<language name="JPN" font=" 1:font_system" width="216">ヌ</language>
+		<language name="JPN_KANJI" font=" 1:font_system" width="216">ヌ</language>
+	</row>
+
+	<row id="msg_gts_word_024">
+		<language name="JPN" font=" 1:font_system" width="216">ネ</language>
+		<language name="JPN_KANJI" font=" 1:font_system" width="216">ネ</language>
+	</row>
+
+	<row id="msg_gts_word_025">
+		<language name="JPN" font=" 1:font_system" width="216">ノ</language>
+		<language name="JPN_KANJI" font=" 1:font_system" width="216">ノ</language>
+	</row>
+
+	<row id="msg_gts_word_026">
+		<language name="JPN" font=" 1:font_system" width="216">ハ</language>
+		<language name="JPN_KANJI" font=" 1:font_system" width="216">ハ</language>
+	</row>
+
+	<row id="msg_gts_word_027">
+		<language name="JPN" font=" 1:font_system" width="216">ヒ</language>
+		<language name="JPN_KANJI" font=" 1:font_system" width="216">ヒ</language>
+	</row>
+
+	<row id="msg_gts_word_028">
+		<language name="JPN" font=" 1:font_system" width="216">フ</language>
+		<language name="JPN_KANJI" font=" 1:font_system" width="216">フ</language>
+	</row>
+
+	<row id="msg_gts_word_029">
+		<language name="JPN" font=" 1:font_system" width="216">ヘ</language>
+		<language name="JPN_KANJI" font=" 1:font_system" width="216">ヘ</language>
+	</row>
+
+	<row id="msg_gts_word_030">
+		<language name="JPN" font=" 1:font_system" width="216">ホ</language>
+		<language name="JPN_KANJI" font=" 1:font_system" width="216">ホ</language>
+	</row>
+
+	<row id="msg_gts_word_031">
+		<language name="JPN" font=" 1:font_system" width="216">マ</language>
+		<language name="JPN_KANJI" font=" 1:font_system" width="216">マ</language>
+	</row>
+
+	<row id="msg_gts_word_032">
+		<language name="JPN" font=" 1:font_system" width="216">ミ</language>
+		<language name="JPN_KANJI" font=" 1:font_system" width="216">ミ</language>
+	</row>
+
+	<row id="msg_gts_word_033">
+		<language name="JPN" font=" 1:font_system" width="216">ム</language>
+		<language name="JPN_KANJI" font=" 1:font_system" width="216">ム</language>
+	</row>
+
+	<row id="msg_gts_word_034">
+		<language name="JPN" font=" 1:font_system" width="216">メ</language>
+		<language name="JPN_KANJI" font=" 1:font_system" width="216">メ</language>
+	</row>
+
+	<row id="msg_gts_word_035">
+		<language name="JPN" font=" 1:font_system" width="216">モ</language>
+		<language name="JPN_KANJI" font=" 1:font_system" width="216">モ</language>
+	</row>
+
+	<row id="msg_gts_word_036">
+		<language name="JPN" font=" 1:font_system" width="216">ヤ</language>
+		<language name="JPN_KANJI" font=" 1:font_system" width="216">ヤ</language>
+	</row>
+
+	<row id="msg_gts_word_037">
+		<language name="JPN" font=" 1:font_system" width="216">ユ</language>
+		<language name="JPN_KANJI" font=" 1:font_system" width="216">ユ</language>
+	</row>
+
+	<row id="msg_gts_word_038">
+		<language name="JPN" font=" 1:font_system" width="216">ヨ</language>
+		<language name="JPN_KANJI" font=" 1:font_system" width="216">ヨ</language>
+	</row>
+
+	<row id="msg_gts_word_039">
+		<language name="JPN" font=" 1:font_system" width="216">ラ</language>
+		<language name="JPN_KANJI" font=" 1:font_system" width="216">ラ</language>
+	</row>
+
+	<row id="msg_gts_word_040">
+		<language name="JPN" font=" 1:font_system" width="216">リ</language>
+		<language name="JPN_KANJI" font=" 1:font_system" width="216">リ</language>
+	</row>
+
+	<row id="msg_gts_word_041">
+		<language name="JPN" font=" 1:font_system" width="216">ル</language>
+		<language name="JPN_KANJI" font=" 1:font_system" width="216">ル</language>
+	</row>
+
+	<row id="msg_gts_word_042">
+		<language name="JPN" font=" 1:font_system" width="216">レ</language>
+		<language name="JPN_KANJI" font=" 1:font_system" width="216">レ</language>
+	</row>
+
+	<row id="msg_gts_word_043">
+		<language name="JPN" font=" 1:font_system" width="216">ロ</language>
+		<language name="JPN_KANJI" font=" 1:font_system" width="216">ロ</language>
+	</row>
+
+	<row id="msg_gts_word_044">
+		<language name="JPN" font=" 1:font_system" width="216">ワ</language>
+		<language name="JPN_KANJI" font=" 1:font_system" width="216">ワ</language>
+	</row>
+
+	<row id="msg_gts_word_045">
+		<language name="JPN" font=" 1:font_system" width="216">　</language>
+		<language name="JPN_KANJI" font=" 1:font_system" width="216">　</language>
+	</row>
+
+	<row id="msg_gts_explain_001">
+		<language name="JPN" font=" 1:font_system" width="216">ＧＴＳ</language>
+		<language name="JPN_KANJI" font=" 1:font_system" width="216">ＧＴＳ</language>
+	</row>
+
+	<row id="msg_gts_explain_002">
+		<language name="JPN" font=" 1:font_system" width="216">ＧＴＳ
+ポケモンを　こうかんする</language>
+		<language name="JPN_KANJI" font=" 1:font_system" width="216">ＧＴＳ
+ポケモンを　こうかんする</language>
+	</row>
+
+	<row id="msg_gts_explain_003">
+		<language name="JPN" font=" 1:font_system" width="216">ＧＴＳ
+ようすを　みる</language>
+		<language name="JPN_KANJI" font=" 1:font_system" width="216">ＧＴＳ
+ようすを　みる</language>
+	</row>
+
+	<row id="msg_gts_explain_004">
+		<language name="JPN" font=" 1:font_system" width="216">ＧＴＳ
+ポケモンを　あずける</language>
+		<language name="JPN_KANJI" font=" 1:font_system" width="216">ＧＴＳ
+ポケモンを　あずける</language>
+	</row>
+
+	<row id="msg_gts_explain_005">
+		<language name="JPN" font=" 1:font_system" width="216">ＧＴＳ
+ポケモンを　さがす</language>
+		<language name="JPN_KANJI" font=" 1:font_system" width="216">ＧＴＳ
+ポケモンを　さがす</language>
+	</row>
+
+	<row id="msg_gtc_03_011">
+		<comment>ポケモンをさがす画面：
+メニュー画面に戻る選択項目</comment>
+		<language name="JPN" font=" 1:font_system" width="216">もどる</language>
+		<language name="JPN_KANJI" font=" 1:font_system" width="216">もどる</language>
+	</row>
+
+	<flowchart-group-list>
+		<flowchart-group japanese="root" english="root" group-id="0" parent-id="-1"/>
+	</flowchart-group-list>
+</body>
+
+</gmml>
