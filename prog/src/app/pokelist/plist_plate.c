@@ -96,6 +96,8 @@ struct _PLIST_PLATE_WORK
 {
   POKEMON_PARAM *pp;
   u8 idx;
+  u16 dispHp;  //HPだけアニメのため値を保存する
+  u16 nowHp;   //実際のHp
   BOOL isActive;
   BOOL isBlank;
   BOOL isUpdateStr;
@@ -154,7 +156,9 @@ PLIST_PLATE_WORK* PLIST_PLATE_CreatePlate( PLIST_WORK *work , const u8 idx , POK
   plateWork->isBlank = FALSE;
   plateWork->isActive = FALSE;
   plateWork->isUpdateStr = FALSE;
-  
+  //HPだけアニメのため値を保存する
+  plateWork->dispHp = PP_Get( plateWork->pp , ID_PARA_hp , NULL );
+  plateWork->nowHp = plateWork->dispHp;
   //BG系
   GFL_BG_WriteScreenExpand( PLIST_BG_PLATE , 
                       baseX+PLIST_BG_SCROLL_X_CHAR ,baseY ,
@@ -263,7 +267,7 @@ void PLIST_PLATE_UpdatePlate( PLIST_WORK *work , PLIST_PLATE_WORK *plateWork )
     {
       //選択中アイコンのアニメ
       if( PP_GetSick( plateWork->pp ) == POKESICK_NULL &&
-          PP_Get( plateWork->pp , ID_PARA_hp , NULL ) != 0 )
+          plateWork->dispHp != 0 )
       {
         GFL_CLACTPOS cellPos;
         PLIST_PLATE_CalcCellPos( plateWork , 
@@ -416,7 +420,7 @@ static void PLIST_PLATE_DrawParam( PLIST_WORK *work , PLIST_PLATE_WORK *plateWor
 
   //レベル
   if( (PP_GetSick( plateWork->pp ) == POKESICK_NULL &&
-      PP_Get( plateWork->pp , ID_PARA_hp , NULL ) != 0) ||
+      plateWork->dispHp != 0) ||
       plateWork->btlOrder != PPBO_INVALLID )  //バトルのときはレベル表示
   {
     
@@ -434,7 +438,7 @@ static void PLIST_PLATE_DrawParam( PLIST_WORK *work , PLIST_PLATE_WORK *plateWor
   else
   {
     //レベルの代わりに状態異常アイコン
-    if( PP_Get( plateWork->pp , ID_PARA_hp , NULL ) == 0 )
+    if( plateWork->dispHp == 0 )
     {
       GFL_CLACT_WK_SetAnmSeq( plateWork->conditionIcon , POKE_CONICON_HINSI );
     }
@@ -528,7 +532,7 @@ static void PLIST_PLATE_DrawParam( PLIST_WORK *work , PLIST_PLATE_WORK *plateWor
     //HP現在
     {
       WORDSET *wordSet = WORDSET_Create( work->heapId );
-      u32 hp = PP_Get( plateWork->pp , ID_PARA_hp , NULL );
+      u32 hp = plateWork->dispHp;
       WORDSET_RegisterNumber( wordSet , 0 , hp , 3 , STR_NUM_DISP_SPACE , STR_NUM_CODE_DEFAULT );
 
       PLIST_UTIL_DrawValueStrFuncSys( work , plateWork->bmpWin , 
@@ -990,7 +994,7 @@ static void PLIST_PLATE_CheckBattleOrder( PLIST_WORK *work , PLIST_PLATE_WORK *p
 static const u8 PLIST_PLATE_GetHPRate( PLIST_PLATE_WORK *plateWork )
 {
   const u32 hpmax = PP_Get( plateWork->pp , ID_PARA_hpmax , NULL );
-  const u32 hp = PP_Get( plateWork->pp , ID_PARA_hp , NULL );
+  const u32 hp = plateWork->dispHp;
   u8 rate = 100*hp/hpmax;
   
   if( hp != 0 && rate == 0 )

@@ -27,6 +27,7 @@
 #include "field/fieldmap.h"
 #include "field/map_attr.h"
 #include "field/itemuse_event.h"
+#include "field/zonedata.h"
 
 #include "savedata/sp_ribbon_save.h"
 
@@ -1018,6 +1019,8 @@ static const BOOL FMenuReturnProc_Bag(FMENU_EVENT_WORK* mwk)
       plData->mode = PL_MODE_ITEMSET;    //アイテムをセットする呼び出し
       break;
     }
+    
+    plData->place = ZONEDATA_GetPlaceNameID( GAMEDATA_GetMyPlayerWork(gmData)->zoneID ); 
     plData->waza = 0;
     plData->item = pBag->ret_item;     //アイテムID
     plData->myitem = GAMEDATA_GetMyItem(gmData);    // アイテムデータ

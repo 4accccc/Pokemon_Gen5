@@ -320,6 +320,12 @@ void PLIST_MSG_AddWordSet_SkillName( PLIST_WORK *work , PLIST_MSG_WORK *msgWork 
   WORDSET_RegisterWazaName( msgWork->wordSet , wordSetIdx , skillNo );
 }
 
+void PLIST_MSG_AddWordSet_StatusName( PLIST_WORK *work , PLIST_MSG_WORK *msgWork , u8 wordSetIdx , u16 statusId )
+{
+  GF_ASSERT( msgWork->wordSet != NULL );
+
+  WORDSET_RegisterPokeStatusName( msgWork->wordSet , wordSetIdx , statusId );
+}
 #pragma mark [> util
 //--------------------------------------------------------------
 //	ウィンドウクリア

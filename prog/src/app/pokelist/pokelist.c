@@ -131,7 +131,8 @@ static GFL_PROC_RESULT PokeListProc_Init( GFL_PROC * proc, int * seq , void *pwk
       if( GFL_UI_KEY_GetCont() & PAD_BUTTON_X )
       {
         plData->mode = PL_MODE_ITEMUSE;
-        plData->item = 17; //–ò
+        //plData->item = 17; //–ò
+        plData->item = 18; //“ÅÁ‚µ
         //plData->item = 44; //¹‚È‚éŠD
       }
       else

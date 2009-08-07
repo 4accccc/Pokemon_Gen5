@@ -49,7 +49,7 @@
 #define FIELD_MENU_ICON_SIZE_Y (32) 
 #define FIELD_MENU_CURSOR_SIZE_Y (44)
 //アイコン確定時のウェイト
-#define FIELD_MENU_ICON_DECIDE_ANIME_CNT (15) 
+#define FIELD_MENU_ICON_DECIDE_ANIME_CNT (4) 
 
 //カーソル不正位置
 #define FIELD_MENU_INVALU_CURSOR (0xFF)

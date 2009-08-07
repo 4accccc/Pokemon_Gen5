@@ -57,6 +57,7 @@ extern void WORDSET_RegisterCountryName( WORDSET* wordset, u32 bufID, u32 countr
 extern void WORDSET_RegisterLocalPlaceName(WORDSET* wordset,u32 bufID,u32 countryID,u32 placeID);
 extern void WORDSET_RegisterTrTypeName( WORDSET* wordset, u32 bufID, TrainerID trID );
 extern void WORDSET_RegisterTrainerName( WORDSET* wordset, u32 bufID, TrainerID trID );
+extern void WORDSET_RegisterPokeStatusName( WORDSET* wordset, u32 bufID, u8 statusID );
 extern void WORDSET_ExpandStr( const WORDSET* wordset, STRBUF* dstbuf, const STRBUF* srcbuf );
 extern void WORDSET_ClearAllBuffer( WORDSET* wordset );
 

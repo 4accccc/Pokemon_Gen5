@@ -53,6 +53,8 @@ typedef enum
   ITEM_TYPE_MEROMERO_RCV,   // メロメロ回復
   ITEM_TYPE_HP_RCV,     // HP回復
   ITEM_TYPE_DEATH_RCV,  // 瀕死回復 (WB追加
+  
+  //メッセージのステータスと順番依存！！
   ITEM_TYPE_HP_UP,      // HP努力値UP
   ITEM_TYPE_ATC_UP,     // 攻撃努力値UP
   ITEM_TYPE_DEF_UP,     // 防御努力値UP
@@ -60,6 +62,7 @@ typedef enum
   ITEM_TYPE_SPA_UP,     // 特攻努力値UP
   ITEM_TYPE_SPD_UP,     // 特防努力値UP
 
+  //メッセージのステータスと順番依存！！
   ITEM_TYPE_HP_DOWN,      // HP努力値DOWN
   ITEM_TYPE_ATC_DOWN,     // 攻撃努力値DOWN
   ITEM_TYPE_DEF_DOWN,     // 防御努力値DOWN
@@ -89,6 +92,8 @@ static const u16 PLIST_ITEM_UTIL_GetParamExpSum( POKEMON_PARAM *pp );
 static const BOOL PLIST_ITEM_UTIL_CanAddParamExp( POKEMON_PARAM *pp , const int id , u16 item );
 static const BOOL PLIST_ITEM_UTIL_CanSubParamExp( POKEMON_PARAM *pp , const int id , u16 item );
 static const s32 PLIST_ITEM_UTIL_GetFriendValue( POKEMON_PARAM *pp , u16 itemNo , HEAPID heapId );
+static void PLIST_ITEM_UTIL_ItemUseMessageCommon( PLIST_WORK *work , u16 msgId );
+static void PLIST_ITEM_UTIL_ItemUseMessageParamExp( PLIST_WORK *work , u16 msgId , u16 statusID );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -311,6 +316,34 @@ static u8 PLIST_ITEM_RecoverCheck( u16 item )
 }
 
 //--------------------------------------------------------------------------
+//  技選択が必要か？
+//--------------------------------------------------------------------------
+const BOOL PLIST_ITEM_IsNeedSelectSkill( PLIST_WORK *work , u16 itemNo )
+{
+  PLIST_ITEM_USE_TYPE useType = PLIST_ITEM_RecoverCheck( itemNo );
+  
+  switch( useType )
+  {
+  case ITEM_TYPE_PP_UP:      // ppUp系
+    return TRUE;
+    break;
+
+  case ITEM_TYPE_PP_3UP:     // pp3Up系
+    return TRUE;
+    break;
+
+  case ITEM_TYPE_PP_RCV:     // pp回復系
+    //単体使用か？
+    if( ITEM_GetParam( itemNo , ITEM_PRM_PP_RCV , work->heapId ) != 0 )
+    {
+      return TRUE;
+    }
+    break;  
+  }
+  return FALSE;
+}
+
+//--------------------------------------------------------------------------
 //  全体復活アイテムか？ と、言うか聖なる灰か？
 //--------------------------------------------------------------------------
 const BOOL PLIST_ITEM_IsDeathRecoverAllItem( PLIST_WORK *work , u16 itemNo )
@@ -325,385 +358,6 @@ const BOOL PLIST_ITEM_IsDeathRecoverAllItem( PLIST_WORK *work , u16 itemNo )
   }
 }
 
-//--------------------------------------------------------------------------
-//  対象のポケモンにアイテムが使えるか？
-//--------------------------------------------------------------------------
-const PLIST_ITEM_USE_CHECK PLIST_ITEM_CanUseRecoverItem( PLIST_WORK *work , u16 itemNo , POKEMON_PARAM *pp )
-{
-  PLIST_ITEM_USE_TYPE useType = PLIST_ITEM_RecoverCheck( itemNo );
-  
-  switch( useType )
-  {
-  case ITEM_TYPE_BTL_ST_UP:  // 戦闘用ステータスアップ系
-    return PIUC_NG;
-    break;
-
-  case ITEM_TYPE_ALLDETH_RCV:    // 全員瀕死回復
-    //ここを通る処理じゃない
-    return PIUC_NG;
-    break;
-
-  case ITEM_TYPE_LV_UP:      // LvUp系
-    if( PP_CalcLevel( pp ) < PTL_LEVEL_MAX )
-    {
-      return PIUC_OK;
-    }
-    break;
-
-  case ITEM_TYPE_NEMURI_RCV:   // 眠り回復
-    if( PP_GetSick( pp ) == POKESICK_NEMURI )
-    {
-      return PIUC_OK;
-    }
-    break;
-
-  case ITEM_TYPE_DOKU_RCV:     // 毒回復
-    if( PP_GetSick( pp ) == POKESICK_DOKU )
-    {
-      return PIUC_OK;
-    }
-    break;
-
-  case ITEM_TYPE_YAKEDO_RCV:   // 火傷回復
-    if( PP_GetSick( pp ) == POKESICK_YAKEDO )
-    {
-      return PIUC_OK;
-    }
-    break;
-
-  case ITEM_TYPE_KOORI_RCV:    // 氷回復
-    if( PP_GetSick( pp ) == POKESICK_KOORI )
-    {
-      return PIUC_OK;
-    }
-    break;
-
-  case ITEM_TYPE_MAHI_RCV:     // 麻痺回復
-    if( PP_GetSick( pp ) == POKESICK_MAHI )
-    {
-      return PIUC_OK;
-    }
-    break;
-
-  case ITEM_TYPE_KONRAN_RCV:   // 混乱回復
-    //バトルのみの異常
-    return PIUC_NG;
-    break;
-
-  case ITEM_TYPE_ALL_ST_RCV:   // 全快
-    if( PP_GetSick( pp ) != POKESICK_NULL )
-    {
-      return PIUC_OK;
-    }
-    break;
-
-  case ITEM_TYPE_MEROMERO_RCV:   // メロメロ回復
-    //バトルのみの異常
-    return PIUC_NG;
-    break;
-  
-  case ITEM_TYPE_DEATH_RCV:  // 瀕死回復 (WB追加
-    if( PP_Get( pp , ID_PARA_hp , NULL ) == 0 )
-    {
-      return PIUC_OK;
-    }
-    break;
-  
-  case ITEM_TYPE_HP_RCV:     // HP回復
-    //瀕死は含まない！
-    {
-      const u32 hp = PP_Get( pp , ID_PARA_hp , NULL );
-      const u32 hpmax = PP_Get( pp , ID_PARA_hpmax , NULL );
-      if( hp != 0 && hpmax != hp )
-      {
-        return PIUC_OK;
-      }
-    }
-    break;
-
-  case ITEM_TYPE_HP_UP:      // HP努力値UP
-    if( PLIST_ITEM_UTIL_CanAddParamExp( pp , ID_PARA_hp_exp , itemNo ) == TRUE )
-    {
-      return PIUC_OK;
-    }
-    break;
-
-  case ITEM_TYPE_ATC_UP:     // 攻撃努力値UP
-    if( PLIST_ITEM_UTIL_CanAddParamExp( pp , ID_PARA_pow_exp , itemNo ) == TRUE )
-    {
-      return PIUC_OK;
-    }
-    break;
-
-  case ITEM_TYPE_DEF_UP:     // 防御努力値UP
-    if( PLIST_ITEM_UTIL_CanAddParamExp( pp , ID_PARA_def_exp , itemNo ) == TRUE )
-    {
-      return PIUC_OK;
-    }
-    break;
-
-  case ITEM_TYPE_AGL_UP:     // 素早さ努力値UP
-    if( PLIST_ITEM_UTIL_CanAddParamExp( pp , ID_PARA_agi_exp , itemNo ) == TRUE )
-    {
-      return PIUC_OK;
-    }
-    break;
-
-  case ITEM_TYPE_SPA_UP:     // 特攻努力値UP
-    if( PLIST_ITEM_UTIL_CanAddParamExp( pp , ID_PARA_spepow_exp , itemNo ) == TRUE )
-    {
-      return PIUC_OK;
-    }
-    break;
-
-  case ITEM_TYPE_SPD_UP:     // 特防努力値UP
-    if( PLIST_ITEM_UTIL_CanAddParamExp( pp , ID_PARA_spedef_exp , itemNo ) == TRUE )
-    {
-      return PIUC_OK;
-    }
-    break;
-
-  case ITEM_TYPE_HP_DOWN:      // HP努力値DOWN
-    if( PLIST_ITEM_UTIL_CanSubParamExp(  pp , ID_PARA_hp_exp , itemNo ) == TRUE )
-    {
-      return PIUC_OK;
-    }
-    //なつき度変化があれば
-    if( PLIST_ITEM_UTIL_GetFriendValue( pp , itemNo , work->heapId ) != 0 &&
-        PP_Get( pp , ID_PARA_friend , NULL ) < PTL_FRIEND_MAX )
-    {
-      return PIUC_OK;
-    }
-    break;
-
-  case ITEM_TYPE_ATC_DOWN:     // 攻撃努力値DOWN
-    if( PLIST_ITEM_UTIL_CanSubParamExp(  pp , ID_PARA_pow_exp , itemNo ) == TRUE )
-    {
-      return PIUC_OK;
-    }
-    //なつき度変化があれば
-    if( PLIST_ITEM_UTIL_GetFriendValue( pp , itemNo , work->heapId ) != 0 &&
-        PP_Get( pp , ID_PARA_friend , NULL ) < PTL_FRIEND_MAX )
-    {
-      return PIUC_OK;
-    }
-    break;
-
-  case ITEM_TYPE_DEF_DOWN:     // 防御努力値DOWN
-    if( PLIST_ITEM_UTIL_CanSubParamExp(  pp , ID_PARA_def_exp , itemNo ) == TRUE )
-    {
-      return PIUC_OK;
-    }
-    //なつき度変化があれば
-    if( PLIST_ITEM_UTIL_GetFriendValue( pp , itemNo , work->heapId ) != 0 &&
-        PP_Get( pp , ID_PARA_friend , NULL ) < PTL_FRIEND_MAX )
-    {
-      return PIUC_OK;
-    }
-    break;
-
-  case ITEM_TYPE_AGL_DOWN:     // 素早さ努力値DOWN
-    if( PLIST_ITEM_UTIL_CanSubParamExp(  pp , ID_PARA_agi_exp , itemNo ) == TRUE )
-    {
-      return PIUC_OK;
-    }
-    //なつき度変化があれば
-    if( PLIST_ITEM_UTIL_GetFriendValue( pp , itemNo , work->heapId ) != 0 &&
-        PP_Get( pp , ID_PARA_friend , NULL ) < PTL_FRIEND_MAX )
-    {
-      return PIUC_OK;
-    }
-    break;
-
-  case ITEM_TYPE_SPA_DOWN:     // 特攻努力値DOWN
-    if( PLIST_ITEM_UTIL_CanSubParamExp(  pp , ID_PARA_spepow_exp , itemNo ) == TRUE )
-    {
-      return PIUC_OK;
-    }
-    //なつき度変化があれば
-    if( PLIST_ITEM_UTIL_GetFriendValue( pp , itemNo , work->heapId ) != 0 &&
-        PP_Get( pp , ID_PARA_friend , NULL ) < PTL_FRIEND_MAX )
-    {
-      return PIUC_OK;
-    }
-    break;
-
-  case ITEM_TYPE_SPD_DOWN:     // 特防努力値DOWN
-    if( PLIST_ITEM_UTIL_CanSubParamExp(  pp , ID_PARA_spedef_exp , itemNo ) == TRUE )
-    {
-      return PIUC_OK;
-    }
-    //なつき度変化があれば
-    if( PLIST_ITEM_UTIL_GetFriendValue( pp , itemNo , work->heapId ) != 0 &&
-        PP_Get( pp , ID_PARA_friend , NULL ) < PTL_FRIEND_MAX )
-    {
-      return PIUC_OK;
-    }
-    break;
-
-
-  case ITEM_TYPE_EVO:        // 進化系
-    //ここで行う処理ではない！
-    return PIUC_NG;
-    break;
-
-  case ITEM_TYPE_PP_UP:      // ppUp系
-    //とりあえず技のチェック
-    return PIUC_SELECT_SKILL;
-    break;
-
-  case ITEM_TYPE_PP_3UP:     // pp3Up系
-    //とりあえず技のチェック
-    return PIUC_SELECT_SKILL;
-    break;
-
-  case ITEM_TYPE_PP_RCV:     // pp回復系
-    if( ITEM_GetParam( itemNo , ITEM_PRM_PP_RCV , work->heapId ) != 0 )
-    {
-      //とりあえず技のチェック
-      return PIUC_SELECT_SKILL;
-    }
-    else
-    if( ITEM_GetParam( itemNo , ITEM_PRM_ALL_PP_RCV , work->heapId ) != 0 )
-    {
-      const BOOL isChangeMode = PP_FastModeOn( pp );
-      if( PP_Get( pp , ID_PARA_pp1 , NULL ) != PP_Get( pp , ID_PARA_pp_max1 , NULL ) ||
-          PP_Get( pp , ID_PARA_pp2 , NULL ) != PP_Get( pp , ID_PARA_pp_max2 , NULL ) ||
-          PP_Get( pp , ID_PARA_pp3 , NULL ) != PP_Get( pp , ID_PARA_pp_max3 , NULL ) ||
-          PP_Get( pp , ID_PARA_pp4 , NULL ) != PP_Get( pp , ID_PARA_pp_max4 , NULL ) )
-        {
-          PP_FastModeOff( pp , isChangeMode );
-          return PIUC_OK;
-        }
-      PP_FastModeOff( pp , isChangeMode );
-    }
-    GF_ASSERT_MSG(0,"ITEM_TYPE_PP_RCV item param invalid!!\n");
-    break;
-
-  case ITEM_TYPE_ETC:        // その他
-    return PIUC_NG;
-    break;
-  }
-  return PIUC_NG;
-  
-}
-
-#pragma mark [> use func
-//--------------------------------------------------------------------------
-//  全体復活アイテム と、言うか聖なる灰の使用
-//--------------------------------------------------------------------------
-void PLIST_ITEM_UseAllDeathRecoverItem( PLIST_WORK *work )
-{
-  /*
-  PLIST_ITEM_USE_TYPE useType = PLIST_ITEM_RecoverCheck( itemNo );
-  
-  switch( useType )
-  {
-  case ITEM_TYPE_BTL_ST_UP:  // 戦闘用ステータスアップ系
-    break;
-
-  case ITEM_TYPE_ALLDETH_RCV:    // 全員瀕死回復
-    break;
-
-  case ITEM_TYPE_LV_UP:      // LvUp系
-    break;
-
-  case ITEM_TYPE_NEMURI_RCV:   // 眠り回復
-    break;
-
-  case ITEM_TYPE_DOKU_RCV:     // 毒回復
-    break;
-
-  case ITEM_TYPE_YAKEDO_RCV:   // 火傷回復
-    break;
-
-  case ITEM_TYPE_KOORI_RCV:    // 氷回復
-    break;
-
-  case ITEM_TYPE_MAHI_RCV:     // 麻痺回復
-    break;
-
-  case ITEM_TYPE_KONRAN_RCV:   // 混乱回復
-    break;
-
-  case ITEM_TYPE_ALL_ST_RCV:   // 全快
-    break;
-
-  case ITEM_TYPE_MEROMERO_RCV:   // メロメロ回復
-    break;
-  
-  case ITEM_TYPE_DEATH_RCV:  // 瀕死回復 (WB追加
-    break;
-  
-  case ITEM_TYPE_HP_RCV:     // HP回復
-    break;
-
-  case ITEM_TYPE_HP_UP:      // HP努力値UP
-    break;
-
-  case ITEM_TYPE_ATC_UP:     // 攻撃努力値UP
-    break;
-
-  case ITEM_TYPE_DEF_UP:     // 防御努力値UP
-    break;
-
-  case ITEM_TYPE_AGL_UP:     // 素早さ努力値UP
-    break;
-
-  case ITEM_TYPE_SPA_UP:     // 特攻努力値UP
-    break;
-
-  case ITEM_TYPE_SPD_UP:     // 特防努力値UP
-    break;
-
-  case ITEM_TYPE_HP_DOWN:      // HP努力値DOWN
-    break;
-
-  case ITEM_TYPE_ATC_DOWN:     // 攻撃努力値DOWN
-    break;
-
-  case ITEM_TYPE_DEF_DOWN:     // 防御努力値DOWN
-    break;
-
-  case ITEM_TYPE_AGL_DOWN:     // 素早さ努力値DOWN
-    break;
-
-  case ITEM_TYPE_SPA_DOWN:     // 特攻努力値DOWN
-    break;
-
-  case ITEM_TYPE_SPD_DOWN:     // 特防努力値DOWN
-    break;
-
-
-  case ITEM_TYPE_EVO:        // 進化系
-    break;
-
-  case ITEM_TYPE_PP_UP:      // ppUp系
-    break;
-
-  case ITEM_TYPE_PP_3UP:     // pp3Up系
-    break;
-
-  case ITEM_TYPE_PP_RCV:     // pp回復系
-    break;
-
-  case ITEM_TYPE_ETC:        // その他
-    break;
-  }
-  
-  GF_ASSERT_MSG
-  PLIST_ITEM_MSG_CanNotUseItem( work );
-  */
-}
-
-//--------------------------------------------------------------------------
-//  通常アイテムの仕様(技単体使用・全体復活以外
-//--------------------------------------------------------------------------
-void PLIST_ITEM_UseRecoverItem( PLIST_WORK *work )
-{
-  
-}
-
 #pragma mark [> msg func
 //--------------------------------------------------------------------------
 //  アイテム使えないメッセージの表示
@@ -711,11 +365,109 @@ void PLIST_ITEM_UseRecoverItem( PLIST_WORK *work )
 void PLIST_ITEM_MSG_CanNotUseItem( PLIST_WORK *work )
 {
   work->plData->ret_mode = PL_RET_BAG;
-  
   PLIST_MSG_CreateWordSet( work , work->msgWork );
   PLIST_MSG_AddWordSet_ItemName( work , work->msgWork , 0 , work->plData->item );
   PLIST_MessageWaitInit( work , mes_pokelist_04_45 , TRUE , PSTATUS_MSGCB_ExitCommon );
   PLIST_MSG_DeleteWordSet( work , work->msgWork );
+}
+
+//--------------------------------------------------------------------------
+//  アイテム使った時の処理
+//--------------------------------------------------------------------------
+void PLIST_ITEM_MSG_UseItemFunc( PLIST_WORK *work )
+{
+  PLIST_ITEM_USE_TYPE useType = PLIST_ITEM_RecoverCheck( work->plData->item );
+  
+  switch( useType )
+  {
+  case ITEM_TYPE_BTL_ST_UP:  // 戦闘用ステータスアップ系
+    GF_ASSERT_MSG( 0,"使ってないはず。\n");
+    break;
+  case ITEM_TYPE_ALLDETH_RCV:    // 全員瀕死回復
+    break;
+  case ITEM_TYPE_LV_UP:      // LvUp系
+    break;
+  case ITEM_TYPE_NEMURI_RCV:   // 眠り回復
+    GF_ASSERT_MSG( 0,"使ってないはず。\n");
+    break;
+  case ITEM_TYPE_DOKU_RCV:     // 毒回復
+    PLIST_ITEM_UTIL_ItemUseMessageCommon( work , mes_pokelist_04_15 );
+    break;
+  case ITEM_TYPE_YAKEDO_RCV:   // 火傷回復
+    PLIST_ITEM_UTIL_ItemUseMessageCommon( work , mes_pokelist_04_17 );
+    break;
+  case ITEM_TYPE_KOORI_RCV:    // 氷回復
+    PLIST_ITEM_UTIL_ItemUseMessageCommon( work , mes_pokelist_04_18 );
+    break;
+  case ITEM_TYPE_MAHI_RCV:     // 麻痺回復
+    PLIST_ITEM_UTIL_ItemUseMessageCommon( work , mes_pokelist_04_16 );
+    break;
+  case ITEM_TYPE_KONRAN_RCV:   // 混乱回復
+    GF_ASSERT_MSG( 0,"使ってないはず。\n");
+    break;
+  case ITEM_TYPE_ALL_ST_RCV:   // 全快
+    PLIST_ITEM_UTIL_ItemUseMessageCommon( work , mes_pokelist_04_21 );
+    break;
+  case ITEM_TYPE_MEROMERO_RCV:   // メロメロ回復
+    GF_ASSERT_MSG( 0,"使ってないはず。\n");
+    break;
+  case ITEM_TYPE_HP_RCV:     // HP回復
+    break;
+  case ITEM_TYPE_DEATH_RCV:  // 瀕死回復 (WB追加
+    break;
+    
+  case ITEM_TYPE_HP_UP:      // HP努力値UP
+  case ITEM_TYPE_ATC_UP:     // 攻撃努力値UP
+  case ITEM_TYPE_DEF_UP:     // 防御努力値UP
+  case ITEM_TYPE_AGL_UP:     // 素早さ努力値UP
+  case ITEM_TYPE_SPA_UP:     // 特攻努力値UP
+  case ITEM_TYPE_SPD_UP:     // 特防努力値UP
+    {
+      u16 statusId = useType-ITEM_TYPE_HP_UP;
+      
+      PLIST_ITEM_UTIL_ItemUseMessageParamExp( work , mes_pokelist_04_25 , statusId );
+    }
+    break;
+
+  case ITEM_TYPE_HP_DOWN:      // HP努力値DOWN
+  case ITEM_TYPE_ATC_DOWN:     // 攻撃努力値DOWN
+  case ITEM_TYPE_DEF_DOWN:     // 防御努力値DOWN
+  case ITEM_TYPE_AGL_DOWN:     // 素早さ努力値DOWN
+  case ITEM_TYPE_SPA_DOWN:     // 特攻努力値DOWN
+  case ITEM_TYPE_SPD_DOWN:     // 特防努力値DOWN
+    {
+      u16 statusId = useType-ITEM_TYPE_HP_DOWN;
+      
+      if( PLIST_ITEM_UTIL_CanSubParamExp( work->selectPokePara , ID_PARA_hp_exp+statusId , work->plData->item ) == FALSE )
+      {
+        //基礎ポイントは下がらない！
+        PLIST_ITEM_UTIL_ItemUseMessageParamExp( work , mes_pokelist_04_53 , statusId );
+      }
+      else
+      if( PP_Get( work->selectPokePara , ID_PARA_friend , NULL ) == PTL_FRIEND_MAX )
+      {
+        //なつき度は上がらない！
+        PLIST_ITEM_UTIL_ItemUseMessageParamExp( work , mes_pokelist_04_52 , statusId );
+      }
+      else
+      {
+        PLIST_ITEM_UTIL_ItemUseMessageParamExp( work , mes_pokelist_04_51 , statusId );
+      }
+    }
+    break;
+
+  case ITEM_TYPE_EVO:        // 進化系
+    break;
+  case ITEM_TYPE_PP_UP:      // ppUp系
+    break;
+  case ITEM_TYPE_PP_3UP:     // pp3Up系
+    break;
+  case ITEM_TYPE_PP_RCV:     // pp回復系
+    break;
+  case ITEM_TYPE_ETC:        // その他
+    break;
+  }
+  
 }
 
 #pragma mark [> util
@@ -786,4 +538,30 @@ static const s32 PLIST_ITEM_UTIL_GetFriendValue( POKEMON_PARAM *pp , u16 itemNo 
   {
     return ITEM_GetParam( itemNo , ITEM_PRM_FRIEND3 , heapId );
   }
+}
+
+//--------------------------------------------------------------------------
+//  メッセージ表示汎用(WORDSET１にニックネーム 表示して終了
+//--------------------------------------------------------------------------
+static void PLIST_ITEM_UTIL_ItemUseMessageCommon( PLIST_WORK *work , u16 msgId )
+{
+  work->plData->ret_mode = PL_RET_BAG;
+  PLIST_MSG_CreateWordSet( work , work->msgWork );
+  PLIST_MSG_AddWordSet_PokeName( work , work->msgWork , 0 , work->selectPokePara );
+  PLIST_MessageWaitInit( work , msgId , TRUE , PSTATUS_MSGCB_ExitCommon );
+  PLIST_MSG_DeleteWordSet( work , work->msgWork );
+}
+
+//--------------------------------------------------------------------------
+//  メッセージ表示努力値(WORDSET１にニックネーム WORDSET２に努力値種類 表示して終了
+//--------------------------------------------------------------------------
+static void PLIST_ITEM_UTIL_ItemUseMessageParamExp( PLIST_WORK *work , u16 msgId , u16 statusID )
+{
+  work->plData->ret_mode = PL_RET_BAG;
+  PLIST_MSG_CreateWordSet( work , work->msgWork );
+  PLIST_MSG_AddWordSet_PokeName( work , work->msgWork , 0 , work->selectPokePara );
+  PLIST_MSG_AddWordSet_StatusName( work , work->msgWork , 1 , statusID );
+  PLIST_MessageWaitInit( work , msgId , TRUE , PSTATUS_MSGCB_ExitCommon );
+  PLIST_MSG_DeleteWordSet( work , work->msgWork );
+  
 }

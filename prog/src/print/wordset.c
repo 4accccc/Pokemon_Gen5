@@ -717,6 +717,27 @@ void WORDSET_RegisterTrainerName( WORDSET* wordset, u32 bufID, TrainerID trID )
 	}
 }
 
+//------------------------------------------------------------------
+/**
+ * 指定バッファにステータス名を登録
+ *
+ * @param   wordset		ワードセットオブジェクト
+ * @param   bufID     何番のバッファに登録するか
+ * @param   trID      ステータス(体力・攻撃・防御・素早さ・特攻・特防・命中・回避・最大HP
+ *
+ */
+//------------------------------------------------------------------
+void WORDSET_RegisterPokeStatusName( WORDSET* wordset, u32 bufID, u8 statusID )
+{
+	GFL_MSGDATA* man = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_status_dat, wordset->heapID );
+	if( man )
+	{
+    GFL_MSG_GetString( man, statusID, wordset->tmpBuf );
+    RegisterWord( wordset, bufID, wordset->tmpBuf, NULL );
+    GFL_MSG_Delete(man);
+	}
+}
+
 
 
 //======================================================================================================

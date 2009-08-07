@@ -30,6 +30,7 @@
 #include "plist_menu.h"
 #include "plist_item.h"
 #include "plist_snd_def.h"
+#include "status_rcv.h"
 
 #include "app/p_status.h" //Proc切り替え用
 #include "app/app_menu_common.h"
@@ -875,12 +876,10 @@ static void PLIST_InitMode( PLIST_WORK *work )
   case PL_MODE_ITEMUSE:
     if( PLIST_ITEM_IsDeathRecoverAllItem( work , work->plData->item ) == TRUE )
     {
-      PLIST_ITEM_UseAllDeathRecoverItem( work );
-      GF_ASSERT_MSG( NULL , "PLIST mode まだ作ってない！[%d]\n" , work->plData->mode );
+      OS_TPrintf( "PLIST mode まだ作ってない！\n");
 
       PLIST_InitMode_Select( work );
       work->nextMainSeq = PSMS_SELECT_POKE;
-      work->mainSeq = PSMS_FADEIN;
     }
     else
     {
@@ -1028,20 +1027,30 @@ static void PLIST_TermMode_Select_Decide( PLIST_WORK *work )
     
   case PL_MODE_ITEMUSE:
     {
-      const PLIST_ITEM_USE_CHECK ret = PLIST_ITEM_CanUseRecoverItem( work , work->plData->item , work->selectPokePara );
-      switch( ret )
+      /*
+      const BOOL isSelSkill = PLIST_ITEM_IsNeedSelectSkill( work , work->plData->item );
+      if( isSelSkill == TRUE )
       {
-      case PIUC_OK:  //使える
-        break;
-        
-      case PIUC_NG:  //使えない
-        PLIST_ITEM_MSG_CanNotUseItem( work );
-        break;
-        
-      case PIUC_SELECT_SKILL:  //スキル選択へ
-        break;
-        
+        //スキル選択へ
       }
+      else
+      {
+        const BOOL canUse = StatusRecoverCheck( work->selectPokePara , work->plData->item , 0 , work->heapId );
+        if( canUse == TRUE )
+        {
+          PLIST_ITEM_MSG_UseItemFunc( work );
+          
+          //実際に消費と適用
+          StatusRecover( work->selectPokePara , work->plData->item , 0 , work->plData->place , work->heapId );
+          PLIST_PLATE_ReDrawParam( work , work->plateWork[work->pokeCursor] );
+        }
+        else
+        {
+          PLIST_ITEM_MSG_CanNotUseItem( work );
+        }
+      }
+      */
+      PLIST_ITEM_MSG_CanNotUseItem( work );
     }
     break;
     
