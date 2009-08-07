@@ -1952,7 +1952,7 @@ GFL_PROC_RESULT WifiNoteProc_End( GFL_PROC * proc, int * seq , void *pwk, void *
 	// データワーク破棄
 	Data_Exit( &p_wk->data, p_wk->pp );
 	
-	GFL_HEAP_FreeMemory( p_wk->pp );
+	//GFL_HEAP_FreeMemory( p_wk->pp );  //この処理は外側で行われる
 
 	GFL_PROC_FreeWork( proc );				// PROCワーク開放
 	GFL_HEAP_DeleteHeap( HEAPID_WIFINOTE );

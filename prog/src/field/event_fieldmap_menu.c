@@ -37,12 +37,14 @@
 #include "app/pokelist.h"   //PokeList_ProcData・PLIST_DATA
 #include "app/p_status.h"   //PokeList_ProcData・PLIST_DATA
 #include "app/townmap.h" //TOWNMAP_PARAM
+#include "app/wifi_note.h" //
 
 extern const GFL_PROC_DATA TownMap_ProcData;
 extern const GFL_PROC_DATA TrainerCardProcData;
 FS_EXTERN_OVERLAY(bag);
 FS_EXTERN_OVERLAY(poke_status);
 FS_EXTERN_OVERLAY(townmap);
+FS_EXTERN_OVERLAY(wifinote);
 FS_EXTERN_OVERLAY(pokelist);
 
 //======================================================================
@@ -98,6 +100,7 @@ typedef enum
   //メニューから呼ばれるものから呼ばれるもの
   FMENU_APP_STATUS,
   FMENU_APP_TOWNMAP,
+  FMENU_APP_WIFINOTE,
   
   FMENU_APP_MAX,
 }FMENU_APP_TYPE;
@@ -249,6 +252,11 @@ static const FMENU_SUBPROC_DATA FldMapMenu_SubProcData[FMENU_APP_MAX] =
   { //  FMENU_APP_TOWNMAP,
     FS_OVERLAY_ID(townmap),
     &TownMap_ProcData,
+    FMenuReturnProc_TownMap
+  },
+  { //  ともだち手帳
+    FS_OVERLAY_ID(wifinote),
+    &WifiNoteProcData,
     FMenuReturnProc_TownMap
   },
 };
@@ -966,6 +974,14 @@ static const BOOL FMenuReturnProc_Bag(FMENU_EVENT_WORK* mwk)
       FMenu_SetNextSubProc( mwk ,FMENU_APP_TOWNMAP , pTown );
     }
     return TRUE;
+  case BAG_NEXTPROC_FRIENDNOTE:
+    {
+      WIFINOTE_PROC_PARAM* pFriend = GFL_HEAP_AllocClearMemory( HEAPID_PROC , sizeof(WIFINOTE_PROC_PARAM) );
+      pFriend->saveControlWork = GAMEDATA_GetSaveControlWork( GAMESYSTEM_GetGameData(mwk->gmSys) );
+      OS_TPrintf("SAVEWORK %x\n",pFriend->saveControlWork);
+      FMenu_SetNextSubProc( mwk ,FMENU_APP_WIFINOTE , pFriend );
+    }
+    return TRUE;
   case BAG_NEXTPROC_EXITEM:
     break;
   default:
@@ -1024,15 +1040,12 @@ static const BOOL FMenuReturnProc_Bag(FMENU_EVENT_WORK* mwk)
 //--------------------------------------------------------------
 static const BOOL FMenuReturnProc_TownMap(FMENU_EVENT_WORK* mwk)
 {
-  TOWNMAP_PARAM* pTown = mwk->subProcWork;
-
-  
   {
       FIELD_ITEMMENU_WORK *epp;
       GAMEDATA* pGameData = GAMESYSTEM_GetGameData(mwk->gmSys);
       
       epp = GFL_HEAP_AllocClearMemory(HEAPID_PROC, sizeof(FIELD_ITEMMENU_WORK));
-      epp->ctrl = SaveControl_GetPointer();
+      epp->ctrl = GAMEDATA_GetSaveControlWork( pGameData );
       epp->gsys = mwk->gmSys;
       epp->fieldmap = mwk->fieldWork;
       epp->heapID = GFL_HEAPID_APP;

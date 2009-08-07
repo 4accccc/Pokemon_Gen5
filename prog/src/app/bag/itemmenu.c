@@ -831,19 +831,23 @@ static void _itemSelectWait(FIELD_ITEMMENU_WORK* pWork)
       pWork->ret_code = BAG_NEXTPROC_DROPCYCLE;  //おりる
       _CHANGE_STATE(pWork,NULL);
     }
-    else if(BAG_MENU_TSUKAU==pWork->ret_code2){
-      pWork->ret_code = BAG_NEXTPROC_ITEMUSE;  //つかう
-      _CHANGE_STATE(pWork,NULL);
-    }
     else if(BAG_MENU_SUTERU==pWork->ret_code2){  //すてる
 
       _CHANGE_STATE(pWork,_itemTrash);
     }
+    else if(pWork->ret_item == ITEM_TAUNMAPPU){
+      pWork->ret_code = BAG_NEXTPROC_TOWNMAP;  //タウンマップ
+      _CHANGE_STATE(pWork,NULL);
+    }
+    else if(pWork->ret_item == ITEM_TOMODATITETYOU){
+      pWork->ret_code = BAG_NEXTPROC_FRIENDNOTE;  //ともだち手帳
+      _CHANGE_STATE(pWork,NULL);
+    }
     else if(BAG_MENU_YAMERU==pWork->ret_code2){  //やめる
       _CHANGE_STATE(pWork,_itemKindSelectMenu);
     }
-    else if(pWork->ret_item == ITEM_TAUNMAPPU){
-      pWork->ret_code = BAG_NEXTPROC_TOWNMAP;  //タウンマップ
+    else if(BAG_MENU_TSUKAU==pWork->ret_code2){
+      pWork->ret_code = BAG_NEXTPROC_ITEMUSE;  //つかう
       _CHANGE_STATE(pWork,NULL);
     }
     else{
