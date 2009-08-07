@@ -10,6 +10,9 @@
 
 #pragma once
 
+#include "../btl_common.h"
+#include "../btl_pokeparam.h"
+
 typedef enum
 { 
   BTLV_GAUGE_TYPE_1vs1 = 0,
@@ -24,7 +27,7 @@ typedef struct _BTLV_GAUGE_CLWK BTLV_GAUGE_CLWK;
 extern  BTLV_GAUGE_WORK*  BTLV_GAUGE_Init( HEAPID heapID );
 extern  void              BTLV_GAUGE_Exit( BTLV_GAUGE_WORK *bgw );
 extern  void              BTLV_GAUGE_Main( BTLV_GAUGE_WORK *bgw );
-extern  void              BTLV_GAUGE_Add( BTLV_GAUGE_WORK *bgw, const POKEMON_PARAM* pp, BTLV_GAUGE_TYPE type, BtlvMcssPos pos );
+extern  void              BTLV_GAUGE_Add( BTLV_GAUGE_WORK *bgw, const BTL_POKEPARAM* bpp, BTLV_GAUGE_TYPE type, BtlvMcssPos pos );
 extern  void              BTLV_GAUGE_Del( BTLV_GAUGE_WORK *bgw, BtlvMcssPos pos );
 extern  void              BTLV_GAUGE_SetPos( BTLV_GAUGE_WORK* bgw, BtlvMcssPos pos, int pos_x, int pos_y );
 extern  void              BTLV_GAUGE_Calc( BTLV_GAUGE_WORK *bgw, BtlvMcssPos pos, int damage );

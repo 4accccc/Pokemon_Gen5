@@ -310,7 +310,7 @@ void  BTLV_GAUGE_Main( BTLV_GAUGE_WORK *bgw )
  *  @param[in] pos  —§‚¿ˆÊ’u
  */
 //============================================================================================
-void  BTLV_GAUGE_Add( BTLV_GAUGE_WORK *bgw, const POKEMON_PARAM* pp, BTLV_GAUGE_TYPE type, BtlvMcssPos pos )
+void  BTLV_GAUGE_Add( BTLV_GAUGE_WORK *bgw, const BTL_POKEPARAM* bpp, BTLV_GAUGE_TYPE type, BtlvMcssPos pos )
 { 
   u32 arcdatid_char;
   u32 arcdatid_cell;
@@ -396,39 +396,43 @@ void  BTLV_GAUGE_Add( BTLV_GAUGE_WORK *bgw, const POKEMON_PARAM* pp, BTLV_GAUGE_
     BTLV_GAUGE_SetPos( bgw, pos, gauge_pos[ pos ].x, gauge_pos[ pos ].y );
   }
 
-  bgw->bgcl[ pos ].hp       = PP_Get( pp, ID_PARA_hp,     NULL );
-  bgw->bgcl[ pos ].hpmax    = PP_Get( pp, ID_PARA_hpmax,  NULL );
-  bgw->bgcl[ pos ].hp_work  = BTLV_GAUGE_HP_WORK_INIT_VALUE;
-
-  bgw->bgcl[ pos ].exp      = PP_Get( pp, ID_PARA_exp,    NULL );
-  bgw->bgcl[ pos ].expmax   = 0;
-  bgw->bgcl[ pos ].expadd   = 0;
-  bgw->bgcl[ pos ].exp_work = 0;
-  bgw->bgcl[ pos ].damage   = 0;
-
-  bgw->bgcl[ pos ].level    = PP_Get( pp, ID_PARA_level,  NULL );
-  bgw->bgcl[ pos ].status   = 0;
-  bgw->bgcl[ pos ].getball  = 0;
-  
   { 
-    u16 mons_no = PP_Get( pp, ID_PARA_monsno, NULL );
+    const POKEMON_PARAM*  pp = BPP_GetSrcData( bpp );
 
-    if( ( mons_no != MONSNO_NIDORAN_M ) && ( mons_no != MONSNO_NIDORAN_F ) )
+    bgw->bgcl[ pos ].hp       = BPP_GetValue( bpp, BPP_HP );
+    bgw->bgcl[ pos ].hpmax    = BPP_GetValue( bpp, BPP_MAX_HP );
+    bgw->bgcl[ pos ].hp_work  = BTLV_GAUGE_HP_WORK_INIT_VALUE;
+
+    bgw->bgcl[ pos ].exp      = PP_Get( pp, ID_PARA_exp,    NULL );
+    bgw->bgcl[ pos ].expmax   = 0;
+    bgw->bgcl[ pos ].expadd   = 0;
+    bgw->bgcl[ pos ].exp_work = 0;
+    bgw->bgcl[ pos ].damage   = 0;
+
+    bgw->bgcl[ pos ].level    = BPP_GetValue( bpp, BPP_LEVEL );
+    bgw->bgcl[ pos ].status   = 0;
+    bgw->bgcl[ pos ].getball  = 0;
+  
     { 
-      bgw->bgcl[ pos ].sex  = PP_Get( pp, ID_PARA_sex,    NULL );
+      u16 mons_no = BPP_GetMonsNo( bpp );
+
+      if( ( mons_no != MONSNO_NIDORAN_M ) && ( mons_no != MONSNO_NIDORAN_F ) )
+      { 
+        bgw->bgcl[ pos ].sex  = BPP_GetValue( bpp, BPP_SEX );
+      }
+      else
+      { 
+        bgw->bgcl[ pos ].sex  = PTL_SEX_UNKNOWN;
+      }
     }
-    else
-    { 
-      bgw->bgcl[ pos ].sex  = PTL_SEX_UNKNOWN;
-    }
+
+    GaugeProc( bgw->bgcl[ pos ].hpmax, bgw->bgcl[ pos ].hp, 0, &bgw->bgcl[ pos ].hp_work, BTLV_GAUGE_HP_CHARMAX, 1 );
+    PutNameOBJ( bgw, &bgw->bgcl[ pos ], pp );
+    PutSexOBJ( bgw, &bgw->bgcl[ pos ] );
+    PutGaugeOBJ( bgw, &bgw->bgcl[ pos ], BTLV_GAUGE_REQ_HP );
+    PutHPNumOBJ( bgw, &bgw->bgcl[ pos ], bgw->bgcl[ pos ].hp );
+    PutLVNumOBJ( bgw, &bgw->bgcl[ pos ] );
   }
-
-  GaugeProc( bgw->bgcl[ pos ].hpmax, bgw->bgcl[ pos ].hp, 0, &bgw->bgcl[ pos ].hp_work, BTLV_GAUGE_HP_CHARMAX, 1 );
-  PutNameOBJ( bgw, &bgw->bgcl[ pos ], pp );
-  PutSexOBJ( bgw, &bgw->bgcl[ pos ] );
-  PutGaugeOBJ( bgw, &bgw->bgcl[ pos ], BTLV_GAUGE_REQ_HP );
-  PutHPNumOBJ( bgw, &bgw->bgcl[ pos ], bgw->bgcl[ pos ].hp );
-  PutLVNumOBJ( bgw, &bgw->bgcl[ pos ] );
 }
 
 //============================================================================================
