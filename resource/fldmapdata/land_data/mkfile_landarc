@@ -43,6 +43,14 @@ endif
 #---------------------------------------------------------------
 do-build: $(TARGET_DIR)/$(TARGET_ARC)
 
+#SUFFIXESルール
+ifeq ($(CONVERTUSER),true) #CONVERTUSER
+#拡張子
+.SUFFIXES: .3dppack .nsbmd
+#dependルール
+include land_make_depend
+endif #CONVERTUSER
+
 #対象コピー
 $(TARGET_DIR)/$(TARGET_ARC): $(TARGET_ARC)
 	$(COPY) $(TARGET_ARC) $(TARGET_DIR)
@@ -52,13 +60,6 @@ $(TARGET_DIR)/$(TARGET_ARC): $(TARGET_ARC)
 $(TARGET_ARC): $(LAND_DEPEND_LIST)
 	nnsarc -i -c -l -n $(TARGET_ARC) -S land_output_list > arc_result.txt
 	$(NAIXCUT) $(TARGET_ARCIDX)
-
-ifeq	($(CONVERTUSER),true) #CONVERTUSER
-#拡張子
-.SUFFIXES: .3dppack .nsbmd
-#dependルール
-include land_make_depend
-endif #CONVERTUSER
 
 #---------------------------------------------------------------
 #	clean

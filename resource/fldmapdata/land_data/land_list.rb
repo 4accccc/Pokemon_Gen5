@@ -8,25 +8,47 @@
 #=======================================================================
 # 定数
 #=======================================================================
+#作成するファイル名
 FNAME_OUTPUT_LIST = "land_output_list"
 FNAME_MODEL_LIST = "land_model_list"
 FNAME_DEPEND_LIST = "land_depend_list"
 FNAME_MAKE_DEPEND = "land_make_depend"
 
+#land_outputディレクトリ名
 DIR_OUTPUT = "land_output"
+DIR_RES = "land_res"
 
+#makefileで定義されている各ディレクトリ名
 DIRSTR_OUTPUT = "$(DIR_OUTPUT)"
 DIRSTR_TEMP = "$(DIR_TEMP)"
 DIRSTR_RES = "$(DIR_RES)"
 
+#makefileで使用するラベル名
 LNAME_MODEL_LIST = "LAND_MODEL_LIST"
 LNAME_DEPEND_LIST = "LAND_DEPEND_LIST"
 
+#makefileで定義されている文字列
 STR_BINLINKER = "$(BINLINKER)"
 STR_G3DCVTR = "$(G3DCVTR)"
 
+#ダミーファイル
+FNAME_DMYFILE_GRID_3DMD = "dmygmap.3dmd"
+FNAME_DMYFILE_GRID_BIN = "dmygmap.bin"
+FNAME_DMYFILE_GRID_IMD = "dmygmap.imd"
+
 #=======================================================================
-# 
+#	ファイルコピー
+#=======================================================================
+def file_copy( srcpath, copypath )
+	open( srcpath, "rb" ){ |input|
+		open( copypath, "wb" ){ |output|
+			output.write( input.read )
+		}
+	}
+end
+
+#=======================================================================
+# 一覧作成
 #=======================================================================
 file_output_list = File.open( FNAME_OUTPUT_LIST, "w" )
 file_model_list = File.open( FNAME_MODEL_LIST, "w" )
@@ -58,14 +80,15 @@ while file_name = ARGV.shift
 		yen_flg = 1
 		column = line.split ","
 		name = column[1]
-    
+    type = column[2]
+
     #land_output_list
 		file_output_list.printf( "\"%s/%s.3dppack\"\n", DIR_OUTPUT, name )
     
     #land_model_list
 		file_model_list.printf( "\t%s/%s.imd", DIRSTR_RES, name )
     
-    #land_3dppack_list
+    #land_depend_list
 		file_depend_list.printf( "\t%s/%s.3dppack", DIRSTR_OUTPUT, name )
     
     #land_make_depend
@@ -96,6 +119,24 @@ while file_name = ARGV.shift
     
     file_make_depend.printf( "\t@%s %s/%s.imd -o %s/%s.nsbmd\n\n",
       STR_G3DCVTR, DIRSTR_RES, name, DIRSTR_TEMP, name )
+    
+    check = DIR_RES + "/" + name + ".imd"
+    if( FileTest.exist?(check) != true )
+      printf( "%s.imdをダミーファイルから生成します\n", name )
+      file_copy( DIR_RES+"/"+FNAME_DMYFILE_GRID_IMD, check )
+    end
+   
+    check = DIR_RES + "/" + name + ".bin"
+    if( FileTest.exist?(check) != true )
+      printf( "%s.binをダミーファイルから生成します\n", name )
+      file_copy( DIR_RES+"/"+FNAME_DMYFILE_GRID_BIN, check )
+    end
+    
+    check = DIR_RES + "/" + name + ".3dmd"
+    if( FileTest.exist?(check) != true )
+      printf( "%s.3dmdをダミーファイルから生成します\n", name )
+      file_copy( DIR_RES+"/"+FNAME_DMYFILE_GRID_3DMD, check )
+    end
 	end
 	file_csv.close
 end
