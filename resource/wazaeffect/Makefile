@@ -25,7 +25,7 @@ TARGETDIR	= $(PROJECT_ARCDIR)wazaeffect
 #------------------------------------------------------------------------------
 #※サブディレクトリでもMakeしたい場合、ここにディレクトリ名を書く
 #------------------------------------------------------------------------------
-SUBDIRS	=
+SUBDIRS	= graphic
 
 #共通ルールファイルのインクルード
 include $(PROJECT_RSCDIR)/macro_define
@@ -41,7 +41,7 @@ CNV_DIR = ./
 #コンバート対象のファイルツリーを生成
 WAZAEFFSRCS	:= $(wildcard $(RES_DIR)?e_???.esf)
 
-.PHONY:	do-build clean subdir
+.PHONY:	do-build clean sub_dir
 
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
 
@@ -62,9 +62,9 @@ endif
 #	make do-build ルール
 #------------------------------------------------------------------------------
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
-do-build:	$(NARCNAME) $(TARGETDIR)/$(NARCNAME)
+do-build:	sub_dir $(NARCNAME) $(TARGETDIR)/$(NARCNAME)
 else
-do-build:	$(TARGETDIR)/$(NARCNAME)
+do-build:	sub_dir $(TARGETDIR)/$(NARCNAME)
 endif
 
 $(TARGETDIR)/$(NARCNAME):	$(NARCNAME)
@@ -76,6 +76,9 @@ $(NARCNAME): $(notdir $(WAZAEFFSRCS:.esf=.bin))
 	nnsarc -c -l -n -i $(NARCNAME) we_*.bin be_*.bin
 	$(NAIXCUT) $(NAIXNAME)
 endif
+
+sub_dir:
+	@$(MAKE_SUBDIR)
 
 #------------------------------------------------------------------------------
 #	make cleanルール
