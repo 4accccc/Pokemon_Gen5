@@ -33,6 +33,7 @@
 #include "debug_irc_name.h"
 #include "net_app/irc_ranking.h"
 #include "app/townmap.h"
+#include "net_app/worldtrade.h"
 
 #include "savedata/irc_compatible_savedata.h"
 
@@ -152,6 +153,7 @@ typedef struct
 	IRC_AURA_PARAM				aura_param;
 	IRC_RHYTHM_PARAM			rhythm_param;
 	TOWNMAP_PARAM					townmap_param;
+	WORLDTRADE_PARAM			gts_param;
 } DEBUG_NAGI_MAIN_WORK;
 
 //-------------------------------------
@@ -212,6 +214,7 @@ static void LISTDATA_ChangeProcCompatible( DEBUG_NAGI_MAIN_WORK *p_wk );
 static void LISTDATA_ChangeProcCompatibleDebug( DEBUG_NAGI_MAIN_WORK *p_wk );
 static void LISTDATA_ChangeProcNameDebug( DEBUG_NAGI_MAIN_WORK *p_wk );
 static void LISTDATA_ChangeProcRankingDebug( DEBUG_NAGI_MAIN_WORK *p_wk );
+static void LISTDATA_ChangeProcGts( DEBUG_NAGI_MAIN_WORK *p_wk );
 static void LISTDATA_AddRankData( DEBUG_NAGI_MAIN_WORK *p_wk );
 static void LISTDATA_FullRankData( DEBUG_NAGI_MAIN_WORK *p_wk );
 static void LISTDATA_ChangeProcTownMap( DEBUG_NAGI_MAIN_WORK *p_wk );
@@ -289,6 +292,8 @@ enum
 	LISTDATA_SEQ_PROC_SKYJUMP,
 	LISTDATA_SEQ_NEXT_HOME,
 	LISTDATA_SEQ_NEXT_PAGE1,
+	LISTDATA_SEQ_PROC_GTS,
+
 	LISTDATA_SEQ_MAX,
 };
 static const LISTDATA_FUNCTION	sc_list_funciton[]	= 
@@ -307,6 +312,7 @@ static const LISTDATA_FUNCTION	sc_list_funciton[]	=
 	LISTDATA_ChangeProcSkyJump,
 	LISTDATA_NextListHome,
 	LISTDATA_NextListPage1,
+	LISTDATA_ChangeProcGts,
 };
 
 //-------------------------------------
@@ -317,7 +323,10 @@ static const LIST_SETUP_TBL sc_list_data_home[]	=
 	{	
 		L"‘Š«f’f‰æ–Ê‚Ö", LISTDATA_SEQ_PROC_COMPATIBLE
 	},
-#if 1
+	{	
+		L"GTS", LISTDATA_SEQ_PROC_GTS
+	},
+#if 0
 	{	
 		L"‘Š«f’fi‚Ğ‚Æ‚èj", LISTDATA_SEQ_PROC_COMPATIBLE_DEBUG
 	},
@@ -759,6 +768,44 @@ FS_EXTERN_OVERLAY(irc_ranking);
 static void LISTDATA_ChangeProcRankingDebug( DEBUG_NAGI_MAIN_WORK *p_wk )
 {	
 	DEBUG_NAGI_COMMAND_ChangeProc( p_wk, FS_OVERLAY_ID(irc_ranking), &IrcRanking_ProcData, NULL );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	GTSPROC‚Ö‚ÌˆÚ“®
+ *
+ *	@param	DEBUG_NAGI_MAIN_WORK *p_wk	ƒ[ƒN
+ */
+//-----------------------------------------------------------------------------
+FS_EXTERN_OVERLAY(worldtrade);
+static void LISTDATA_ChangeProcGts( DEBUG_NAGI_MAIN_WORK *p_wk )
+{	
+	static const GFL_PROC_DATA sc_gts_proc =
+	{	
+		WorldTradeProc_Init,
+		WorldTradeProc_Main,
+		WorldTradeProc_End,
+	};
+
+	p_wk->gts_param.savedata				= SaveControl_GetPointer();
+	p_wk->gts_param.worldtrade_data	= SaveData_GetWorldTradeData(p_wk->gts_param.savedata);
+	p_wk->gts_param.systemdata			= SaveData_GetSystemData(p_wk->gts_param.savedata);
+	p_wk->gts_param.myparty					= SaveData_GetTemotiPokemon(p_wk->gts_param.savedata);
+	p_wk->gts_param.mybox						= SaveData_GetBoxData(p_wk->gts_param.savedata);
+	p_wk->gts_param.zukanwork				= NULL;
+	p_wk->gts_param.wifilist				= SaveData_GetWifiListData(p_wk->gts_param.savedata);
+	p_wk->gts_param.wifihistory			= SaveData_GetWifiHistory(p_wk->gts_param.savedata);
+	p_wk->gts_param.mystatus				= SaveData_GetMyStatus(p_wk->gts_param.savedata);
+	p_wk->gts_param.config					= SaveData_GetConfig(p_wk->gts_param.savedata);
+	p_wk->gts_param.record					= SaveData_GetRecord(p_wk->gts_param.savedata);
+	p_wk->gts_param.myitem					= NULL;
+	
+	p_wk->gts_param.zukanmode				= 0;
+	p_wk->gts_param.profileId				= 0;
+	p_wk->gts_param.contestflag			= FALSE;
+	p_wk->gts_param.connect					= 0;
+
+
+	DEBUG_NAGI_COMMAND_ChangeProc( p_wk, FS_OVERLAY_ID(worldtrade), &sc_gts_proc, &p_wk->gts_param );
 }
 //----------------------------------------------------------------------------
 /**

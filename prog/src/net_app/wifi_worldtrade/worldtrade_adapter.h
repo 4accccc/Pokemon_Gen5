@@ -24,6 +24,7 @@
 #include "savedata/wifihistory.h"
 #include "savedata/myitem_savedata.h"
 #include "savedata/record.h"
+#include "field/eventdata_system.h"
 
 //tool
 #include "poke_tool/poke_tool.h"
@@ -99,7 +100,6 @@
 typedef int SBOX_CB_MODE;
 
 typedef void PHC_SVDATA;
-typedef void EVENTWORK;
 
 //=============================================================================
 /**

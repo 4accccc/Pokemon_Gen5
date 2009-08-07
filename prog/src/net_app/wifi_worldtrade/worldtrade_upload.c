@@ -26,6 +26,7 @@
 #include "print/wordset.h"
 #include "message.naix"
 #include "system/wipe.h"
+#include "pm_version.h"
 //#include "system/fontproc.h"
 //#include "system/fontoam.h"
 //#include "system/window.h"
@@ -1665,7 +1666,8 @@ static void MakeTradeExchangeInfomation( WORLDTRADE_WORK *wk, POKEMON_PARAM *pp 
 #endif
 
 	// 外国の人と交換が成立した場合はPHCでコースが一つ解放される
-	if( PP_Get(pp,ID_PARA_country_code, NULL) != CasetteLanguage ){
+	// TODO CasetteLanguageの実体がないためコメントアウト
+	if( PP_Get(pp,ID_PARA_country_code, NULL) != 0 ){	//CasetteLanguage ){
 		PHC_SVDATA *phc_svdata = SaveData_GetPhcSaveData( wk->param->savedata );
 		PhcSvData_SetCourseOpenFlag( phc_svdata, PHC_WIFI_OPEN_COURSE_NO );
 	}else{
