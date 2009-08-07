@@ -9,7 +9,7 @@
 
 #include <nitro.h>
 #include "gflib.h"
-#include "dwc_rap.h"
+#include "net/dwc_rap.h"
 #include "dwc_rapinitialize.h"
 #include "dwc_rapcommon.h"
 #include "dwc_rapfriend.h"

@@ -16,7 +16,7 @@
 
 //#include "../net_def.h"
 //#include "../net_local.h"
-#include "dwc_rap.h"
+#include "net/dwc_rap.h"
 #include "vchat.h"
 //#include "system/pm_debug_wifi.h"
 #include <vct.h>

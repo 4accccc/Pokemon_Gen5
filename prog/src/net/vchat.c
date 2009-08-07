@@ -9,7 +9,7 @@
 
 #include "gflib.h"
 
-#include "dwc_rap.h"
+#include "net/dwc_rap.h"
 #include "vchat.h"
 #include <vct.h>
 
