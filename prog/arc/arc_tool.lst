@@ -39,7 +39,7 @@
 #==================================================================================================
 
 	ARCID_D_TAYA		"test_graphic/d_taya.narc"		#
-	ARCID_FLDACT		"test_graphic/fld_act.narc"		#
+	ARCID_FLDACT		"debug/fld_act.narc"		#
 	ARCID_RAIL_EDITOR "test_graphic/rail_editor.narc"   # レールエディター
 	ARCID_SNDSTRM			"snd_strm.narc"	# サウンドストリーミング
 	ARCID_WMI			"wmi.narc"	# 通信アイコン
@@ -75,7 +75,7 @@
 	ARCID_ITEMICON		"item_icon.narc"		# アイテムアイコン
 	$VERSION_BLACK	ARCID_TITLE	"title.narc"	#ブラック版タイトル
 	$VERSION_WHITE	ARCID_TITLE	"title.narc"	#ホワイト版タイトル
-	ARCID_EASYPOKELIST	"test_graphic/easy_pokelist.narc"	#簡易ポケモンリスト
+	ARCID_EASYPOKELIST	"debug/easy_pokelist.narc"	#簡易ポケモンリスト
 	ARCID_CONFIG_GRA	"test_graphic/config_gra.narc"		#設定画面用データ
 	ARCID_IRCBATTLE		"ircbattle.narc"           #赤外線マッチングバトル
 	ARCID_C_GEAR		"c_gear.narc"           #コミュニケーションギア
@@ -85,7 +85,7 @@
 	ARCID_MYSTERY		"mystery.narc"			#不思議な贈り物
 	ARCID_STARTMENU		"startmenu.narc"		#スタートメニュー
 	ARCID_PALACE		"palace.narc"			#パレス
-	ARCID_FLDMMLD		"test_graphic/mmodel.narc"
+	ARCID_FLDMMLD		"debug/mmodel.narc"
 	ARCID_YN_TOUCH		"yn_touch.narc"			#YesNoボタン
 	ARCID_WLMNGM_TOOL_GRA	"wlmngm_tool.narc"	#WiFiロビーミニゲームツールグラフィック
 	ARCID_BALLOON_GRA	"balloon_gra.narc"		#風船割りミニゲーム
@@ -124,7 +124,7 @@
 	ARCID_FIELD_WEATHER_LIGHT	"field_weather_light.narc"	#フィールド天気ライトデータ
 	ARCID_WIFI_NOTE		"wifi_note.narc"	#友だち手帳
 	ARCID_RECORD_GRA		"record_gra.narc"	#レコード交換
-	ARCID_TRF_GRA		"test_graphic/trbgra.narc"	#トレーナー(仮
+	ARCID_TRF_GRA		"trgra/trbgra.narc"	#トレーナー(仮
 	ARCID_SELBOX_GRA	"selbox_gra.narc"			#selbox用
 	ARCID_MUSICAL_SCRIPT	"musical_script.narc"		#ミュージカルスクリプト
 	ARCID_OTHERS		"others.narc"
