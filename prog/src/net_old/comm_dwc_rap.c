@@ -44,7 +44,7 @@
 //#define CHEAK_HEAPSPACE
 
 // デバッグ出力を大量に吐き出す場合定義
-#if defined(DEBUG_ONLY_FOR_ohno) | defined(DEBUG_ONLY_FOR_tomoya_takahashi)
+#if defined(DEBUG_ONLY_FOR_ohno)
 #define DEBUGPRINT_ON
 #endif
 
