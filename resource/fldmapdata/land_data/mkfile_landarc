@@ -19,72 +19,19 @@ TARGET_DIR			= $(PROJECT_ARCDIR)/fieldmap
 #---------------------------------------------------------------
 #	各要素
 #---------------------------------------------------------------
-LAND_LIST		= land_list
-LAND_MODEL_LIST = land_model_list
-LAND_ARCLIST	= land_arc_list
-XLS_DATA		= map_list.xls
-FLDCSV			= field_list.csv
+DIR_OUTPUT = land_output/
+DIR_TEMP = land_temp/
+DIR_RES = land_res/
 
-DIR_G3DCVTR		= land_g3dcvtr/
-DIR_3DPPACK		= land_3dppack/
-DIR_LANDRES		= land_res/
-#DIR_LANDRES		= ../land_res/
-DIR_MATRIX		= ../map_matrix
-
-#CONCAT_TARGET
-include land_list
-#G3D_IMD
-include land_model_list
-#LAND_3DPPACK_LIST
-include land_depend_list
-
-G3D_NSBMD = $(G3D_IMD:.imd=.nsbmd)
-G3D_NSBMD := $(subst $(DIR_LANDRES)/,$(DIR_G3DCVTR),$(G3D_NSBMD))
-G3D_NSBTX = $(G3D_IMD:.imd=.nsbtx)
-G3D_NSBTX := $(subst $(DIR_LANDRES)/,$(DIR_G3DCVTR),$(G3D_NSBTX))
-G3D_BIN = $(G3D_IMD:.imd=.bin)
-G3D_3DMD = $(DIR_LANDRES)/*.3dmd
-G3D_3DPPACK = $(G3D_IMD:.imd=.3dppack)
-G3D_3DPPACK := $(subst $(DIR_LANDRES)/,$(DIR_3DPPACK),$(G3D_3DPPACK))
-
-G3DCV_TARGET = $(G3D_NSBMD) $(G3D_NSBTX)
-G3D3DPP_TARGET = $(G3D_NSBMD) $(G3D_NSBTX) $(G3D_BIN) $(G3D_3DMD)
-
-#---------------------------------------------------------------
-#	ツールへのパス指定
-#---------------------------------------------------------------
 G3DCVTR	= $(NITROSYSTEM_ROOT)/tools/win/bin/g3dcvtr.exe
-MK_GROUNDTOOL = mkmapdmy.rb
 
-#---------------------------------------------------------------
-#	データ生成ルール
-#---------------------------------------------------------------
-#nsbmd
-#%.nsbmd: ../$(DIR_LANDRES)/%.imd
-#	@echo create nsbmd $@
-#	$(G3DCVTR) $(subst $(DIR_G3DCVTR),$(DIR_LANDRES)/,$(@:.nsbmd=.imd)) -o $@
+include land_depend_list #LAND_DEPEND_LIST
 
-#nsbtx
-#%.nsbtx: ../$(DIR_LANDRES)/%.imd
-#	@echo create nsbtx $@
-#	$(G3DCVTR) $(subst $(DIR_G3DCVTR),$(DIR_LANDRES)/,$(@:.nsbtx=.imd)) -o $@ -etex
-
-#3dppack 3dmd
-#%.3dppack: ../$(DIR_LANDRES)/%.3dmd
-#	@echo create 3dppack $@
-#	$(BINLINKER) $(subst $(DIR_3DPPACK),$(DIR_G3DCVTR)/,$*.nsbmd) $(subst $(DIR_3DPPACK),$(DIR_G3DCVTR)/,$*.nsbtx) $(subst $(DIR_3DPPACK),$(DIR_G3DCVTR)/,$*.nsbtp) $(subst $(DIR_3DPPACK),$(DIR_LANDRES)/,$*.bin) $(subst $(DIR_3DPPACK),$(DIR_LANDRES)/,$*.3dmd) $*.3dppack 3D
-
-#3dppack nsbmd,nsbtx,bin
-#%.3dppack: ../$(DIR_G3DCVTR)/%.nsbmd ../$(DIR_G3DCVTR)/%.nsbtx ../$(DIR_LANDRES)/%.bin
-#	@echo create 3dppack $@
-#	$(BINLINKER) $(subst $(DIR_3DPPACK),$(DIR_G3DCVTR)/,$*.nsbmd) $(subst $(DIR_3DPPACK),$(DIR_G3DCVTR)/,$*.nsbtx) $(subst $(DIR_3DPPACK),$(DIR_G3DCVTR)/,$*.nsbtp) $(subst $(DIR_3DPPACK),$(DIR_LANDRES)/,$*.bin) $(subst $(DIR_3DPPACK),$(DIR_LANDRES)/,$*.3dmd) $*.3dppack 3D
-
-#%.3dppack: ../$(DIR_G3DCVTR)/%.nsbmd  ../$(DIR_LANDRES)/%.bin ../$(DIR_LANDRES)/%.3dmd
-#	@echo create 3dppack $@
-#	$(BINLINKER) $(subst $(DIR_3DPPACK),$(DIR_G3DCVTR)/,$*.nsbmd) \
-# $(subst $(DIR_3DPPACK),$(DIR_LANDRES)/,$*.bin) \
-#  $(subst $(DIR_3DPPACK),$(DIR_LANDRES)/,$*.3dmd) \
-#  $*.3dppack WB
+ifeq	($(CONVERTUSER),true) #CONVERTUSER
+include land_model_list #LAND_MODEL_LIST
+LAND_NSBMD_LIST = $(LAND_MODEL_LIST:.imd=.nsbmd)
+LAND_NSBMD_LIST := $(subst $(DIR_RES)/,$(DIR_TEMP),$(LAND_NSBMD_LIST))
+endif
 
 #---------------------------------------------------------------
 #	ターゲット
@@ -103,13 +50,15 @@ $(TARGET_DIR)/$(TARGET_ARC): $(TARGET_ARC)
 	
 #コンバート
 ifeq	($(CONVERTUSER),true) #CONVERTUSER
-$(TARGET_ARC): $(LAND_3DPPACK_LIST)
-	nnsarc -i -c -l -n $(TARGET_ARC) -S $(LAND_ARCLIST) > arc_result.txt
+$(TARGET_ARC): $(LAND_DEPEND_LIST)
+	nnsarc -i -c -l -n $(TARGET_ARC) -S land_output_list > arc_result.txt
 	$(NAIXCUT) $(TARGET_ARCIDX)
 
+#拡張子
 .SUFFIXES: .3dppack .nsbmd
+#dependルール
 include land_make_depend
-endif
+endif #CONVERTUSER
 
 #---------------------------------------------------------------
 #	clean
@@ -117,10 +66,9 @@ endif
 clean:
 	-rm -f $(TARGET_DIR)/$(TARGET_ARC)
 	-rm -f $(TARGET_DIR)/$(TARGET_ARCIDX)
-ifeq	($(CONVERTUSER),true) #CONVERTUSER
 	-rm -f $(TARGET_ARC)
 	-rm -f $(TARGET_ARCIDX)
-	-rm -f $(G3D_NSBMD)
-	-rm -f $(G3D_NSBTX)
-	-rm -f $(G3D_3DPPACK)
-endif
+ifeq	($(CONVERTUSER),true) #CONVERTUSER
+	-rm -f $(LAND_NSBMD_LIST)
+	-rm -f $(LAND_DEPEND_LIST)
+endif #CONVERTUSER

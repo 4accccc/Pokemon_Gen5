@@ -12,12 +12,16 @@ include $(PROJECT_RSCDIR)/macro_define
 #---------------------------------------------------------------
 #	各要素
 #---------------------------------------------------------------
-LAND_ARCLIST	= land_arc_list
-XLS_DATA		= map_list.xls
-FLDCSV			= field_list.csv
-DUNCSV      = dungeon_list.csv
-ROOMCSV     = room_list.csv
+LAND_LIST = land_output_list
+XLS_DATA = map_list.xls
+FLDCSV = field_list.csv
+DUNCSV = dungeon_list.csv
+ROOMCSV = room_list.csv
+
 CSVCVTR	= $(PROJECT_ROOT)/tools/exceltool/ExcelSeetConv.exe
+
+#clean対象
+TARGET_CLEAN = $(LAND_LIST) $(FLDCSV) $(DUNCSV) $(ROOMCSV)
 
 #---------------------------------------------------------------
 #	ターゲット
@@ -28,11 +32,11 @@ CSVCVTR	= $(PROJECT_ROOT)/tools/exceltool/ExcelSeetConv.exe
 #	build
 #---------------------------------------------------------------
 ifeq	($(CONVERTUSER),true) #CONVERTUSER
-do-build: $(LAND_ARCLIST)
+do-build: $(LAND_LIST)
 
 #リスト作成
-$(LAND_ARCLIST): $(XLS_DATA)
-	@echo create $(LAND_ARCLIST)
+$(LAND_LIST): $(XLS_DATA)
+	@echo create land list
 	$(CSVCVTR) -o $(FLDCSV) -p 1 -s csv $(XLS_DATA)	#フィールド
 	$(CSVCVTR) -o $(DUNCSV) -p 2 -s csv $(XLS_DATA) #ダンジョン
 	$(CSVCVTR) -o $(ROOMCSV) -p 3 -s csv $(XLS_DATA) #ルーム
@@ -46,7 +50,7 @@ endif
 #---------------------------------------------------------------
 ifeq	($(CONVERTUSER),true) #CONVERTUSER
 clean:
-	-rm -f $(LAND_ARCLIST)
+	-rm -f $(TARGET_CLEAN)
 else #非USERS
 clean:
 endif
