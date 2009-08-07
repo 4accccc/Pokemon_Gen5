@@ -33,15 +33,15 @@ end
 #	コマンドクラス
 class	Command
 	def	initialize
-		@com_str				#コマンド名（全角文字で書かれたもの）
-		@com_label				#コマンド名（.sファイルに吐き出す#defineで定義されたもの）
-		@param = []				#パラメータ
+		@com_str				      #コマンド名（全角文字で書かれたもの）
+		@com_label				    #コマンド名（.sファイルに吐き出す#defineで定義されたもの）
+		@param = []				    #パラメータ
 		@combobox_text = []		#コンボボックスで表示されていたリスト
 		@combobox_value = []	#コンボボックスで表示されていたリストに対応するラベル定義
-		@fd_ext_num = []		#FILE_DIALOGの拡張子指定をしたパラメータ番号
-		@fd_ext = []			#FILE_DIALOGの拡張子
-		@fdc_ext_num = []		#FILE_DIALOG_COMBOBOXの拡張子指定をしたパラメータ番号
-		@fdc_ext = []			#FILE_DIALOG_COMBOBOXの拡張子
+		@fd_ext_num = []		  #FILE_DIALOGの拡張子指定をしたパラメータ番号
+		@fd_ext = []			    #FILE_DIALOGの拡張子
+		@fdc_ext_num = []		  #FILE_DIALOG_COMBOBOXの拡張子指定をしたパラメータ番号
+		@fdc_ext = []			    #FILE_DIALOG_COMBOBOXの拡張子
 	end
 
 	def	set_com_str( str )
@@ -93,7 +93,6 @@ class	Command
 		end
 		if @combobox_text.size != @combobox_value.size
 			print @com_str + "のCOMBOBOX_TEXTとCOMBOBOX_VALUEの数が一致しません\n"
-			print "COMBOBOX_TEXTとCOMBOBOX_VALUEの数が一致しません\n"
 			print "区切り文字に全角スペースが含まれている可能性があります\n"
 			exit( 1 )
 		end
@@ -354,7 +353,6 @@ end
 				  num_str = split_data[ EFFNO_POS ][ 1 ].chr + split_data[ EFFNO_POS ][ 2 ].chr + split_data[ EFFNO_POS ][ 3 ].chr
           write_file = "we_" + num_str + ".s"
         end
-        p num_str
 				seq_table.clear
 				sequence.clear
 				inc_header.clear
@@ -385,6 +383,7 @@ end
 				fp_w.print("\t.include	" + ARGV[ ARGV_INC_DIR ] + "prog/include/system/mcss.h\n")
 				fp_w.print("\t.include	" + ARGV[ ARGV_INC_DIR ] + "prog/include/sound/wb_sound_data.sadl\n")
 				fp_w.print("\t.include	" + ARGV[ ARGV_INC_DIR ] + "prog/arc/particle/wazaeffect/spa_def.h\n")
+				fp_w.print("\t.include	" + ARGV[ ARGV_INC_DIR ] + "prog/arc/wazaeffect/waza_eff_gra_def.h\n")
 				inc_header.size.times { |inc|
 					fp_w.print("\t.include	" + ARGV[ ARGV_INC_DIR ] + "resource/particle/wazaeffect/" + inc_header[ inc ] + "\n")
 				}
@@ -449,7 +448,9 @@ end
 						str += format("0x%08x",angle)
 					when "FILE_DIALOG"
 						file_dialog = split_data[ param_num ] + com_list.get_com_str( split_data[ ESF_COM_STR_POS ] ).get_fd_ext( param_num -1 ) 
-						inc_header << file_dialog.sub( com_list.get_com_str( split_data[ ESF_COM_STR_POS ] ).get_fd_ext( param_num -1 ), ".h" )
+            if( File::extname( file_dialog ) == ".spa" )
+						  inc_header << file_dialog.sub( com_list.get_com_str( split_data[ ESF_COM_STR_POS ] ).get_fd_ext( param_num -1 ), ".h" )
+            end
 						file_list.size.times {|num|
 							file_name = File::basename( file_list[ num ] )
 							if file_name[ 0..5 ] == file_dialog[ 0..5 ]
@@ -461,7 +462,9 @@ end
 						str += file_dialog
 					when "FILE_DIALOG_WITH_ADD"
 						file_dialog = split_data[ param_num ] + com_list.get_com_str( split_data[ ESF_COM_STR_POS ] ).get_fd_ext( param_num -1 ) 
-						inc_header << file_dialog.sub( com_list.get_com_str( split_data[ ESF_COM_STR_POS ] ).get_fd_ext( param_num -1 ), ".h" )
+            if( File::extname( file_dialog ) == ".spa" )
+						  inc_header << file_dialog.sub( com_list.get_com_str( split_data[ ESF_COM_STR_POS ] ).get_fd_ext( param_num -1 ), ".h" )
+            end
 						file_list.size.times {|num|
 							file_name = File::basename( file_list[ num ] )
 							if file_name[ 0..5 ] == file_dialog[ 0..5 ]
@@ -473,7 +476,9 @@ end
 						str += file_dialog
 					when "FILE_DIALOG_COMBOBOX"
 						file_dialog = split_data[ param_num ] + com_list.get_com_str( split_data[ ESF_COM_STR_POS ] ).get_fdc_ext( param_num -1 ) 
-						inc_header << file_dialog.sub( com_list.get_com_str( split_data[ ESF_COM_STR_POS ] ).get_fdc_ext( param_num -1 ), ".h" )
+            if( File::extname( file_dialog ) == ".spa" )
+						  inc_header << file_dialog.sub( com_list.get_com_str( split_data[ ESF_COM_STR_POS ] ).get_fdc_ext( param_num -1 ), ".h" )
+            end
 						file_list.size.times {|num|
 							file_name = File::basename( file_list[ num ] )
 							if file_name[ 0..5 ] == file_dialog[ 0..5 ]
@@ -505,6 +510,10 @@ end
 		}
 		if bin_list.size == count
 			bin_list << bin_list_tmp[ tmp_num ]
+      if( File::extname( bin_list_tmp[ tmp_num ] ) == ".NCGR" )
+			  bin_list << File::dirname( bin_list_tmp[ tmp_num ] ) + "\\" + File::basename( bin_list_tmp[ tmp_num ], ".NCGR" ) + ".NSCR"
+			  bin_list << File::dirname( bin_list_tmp[ tmp_num ] ) + "\\" + File::basename( bin_list_tmp[ tmp_num ], ".NCGR" ) + ".NCLR"
+      end
 		end
 	}
 
