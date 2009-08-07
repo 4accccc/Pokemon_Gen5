@@ -41,7 +41,7 @@ ARCLIST_MAKE = perl $(PROJECT_ROOT)tools/arc_list_make.pl
 #	USERSで定義されている文字列に自分のユーザーIDがない場合は
 #	CONVERTUSERは定義されない
 #------------------------------------------------------------------------------
-ifneq	(,$(findstring $(USERNAME),$(USERS)))
+ifneq	(,$(filter $(USERNAME),$(USERS)))
 CONVERTUSER	= true
 else
 CONVERTUSER = false
