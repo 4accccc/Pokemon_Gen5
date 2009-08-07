@@ -368,6 +368,8 @@ typedef struct {
 
 	u16							tpTrgRepeatFrame;
 	u16							tpTrgRepeatCount;
+
+	u16							trackBit;
 }SOUNDTEST_WORK;
 
 enum {
@@ -427,6 +429,8 @@ static void	SoundWorkInitialize(SOUNDTEST_WORK* sw)
 	sw->printQue = PRINTSYS_QUE_Create(sw->heapID);
 
 	sw->gflSndViewer = GFL_SNDVIEWER_Create( &sndViewerData, sw->heapID );
+
+	sw->trackBit = 0;
 }
 
 static void	SoundWorkFinalize(SOUNDTEST_WORK* sw)
@@ -546,9 +550,10 @@ static void numberDec(SOUNDTEST_WORK* sw, int idx, int min );
 static void setSelectName(SOUNDTEST_WORK* sw);
 static void writeButton(SOUNDTEST_WORK* sw, u8 x, u8 y, BOOL flag );
 
-static void mcsControl(HEAPID heapID);
+static u32	mcsControl(HEAPID heapID);
 static void mcsControlEnd(void);
 static void mcsControlReset(HEAPID heapID);
+static void mcsControlSetTrackSt(HEAPID heapID, u32 trackSt);
 //------------------------------------------------------------------
 /**
  *
@@ -585,7 +590,16 @@ static BOOL	SoundTest(SOUNDTEST_WORK* sw)
 		break;
 
 	case 1:
-		mcsControl(sw->heapID);
+		{
+			u32 result = mcsControl(sw->heapID);
+			switch(result){
+			case 1:
+				// PC->MCS ê⁄ë±äÆóπ
+				mcsControlSetTrackSt(sw->heapID, sw->trackBit);
+				mcsControlReset(sw->heapID);
+				break;
+			}
+		}
 		{
 			//soundStatusÉRÉìÉgÉçÅ[Éãê›íË
 			u16 flag;
@@ -595,6 +609,14 @@ static BOOL	SoundTest(SOUNDTEST_WORK* sw)
 			GFL_SNDVIEWER_SetControl( sw->gflSndViewer, flag );
 		}
 		GFL_SNDVIEWER_Main(sw->gflSndViewer);
+
+		{
+			u16 trackBit = GFL_SNDVIEWER_GetTrackSt(sw->gflSndViewer);
+			if(sw->trackBit != trackBit){
+				sw->trackBit = trackBit;
+				mcsControlSetTrackSt(sw->heapID, sw->trackBit);
+			}
+		}
 
 		MainSoundTestSys(sw);
 		checkControlChange(sw);
@@ -1147,16 +1169,14 @@ static void printNo(SOUNDTEST_WORK* sw, int idx, u32 numberSize )
  *
  */
 //============================================================================================
-static void mcsControl(HEAPID heapID)
+static u32 mcsControl(HEAPID heapID)
 {
-	BOOL recvResult;
-
 	if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_Y ){
 		// MCSê⁄ë±èàóù
 		GFL_MCS_SNDVIEWER_Exit();
 		GFL_MCS_SNDVIEWER_Init(heapID);
 	}
-	GFL_MCS_SNDVIEWER_Main(heapID);
+	return GFL_MCS_SNDVIEWER_Main(heapID);
 }
 
 static void mcsControlEnd(void)
@@ -1169,5 +1189,13 @@ static void mcsControlReset(HEAPID heapID)
 	u32 param[PNUM_COMM_PANEL_RESET] = {0};
 
 	MCS_Sound_Send(COMM_PANEL_RESET, param, heapID);
+}
+
+static void mcsControlSetTrackSt(HEAPID heapID, u32 trackSt)
+{
+	u32 param[PNUM_COMM_SET_TRACKST];
+	param[0] = trackSt;
+
+	MCS_Sound_Send(COMM_SET_TRACKST, param, heapID);
 }
 

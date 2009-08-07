@@ -58,5 +58,5 @@ extern BOOL				GFL_SNDVIEWER_Main( GFL_SNDVIEWER* gflSndViewer );	//FALSEÇ≈èIóπ
 
 extern u16	GFL_SNDVIEWER_GetControl( GFL_SNDVIEWER* gflSndViewer );
 extern void	GFL_SNDVIEWER_SetControl( GFL_SNDVIEWER* gflSndViewer, u16 flag );
-
+extern u16	GFL_SNDVIEWER_GetTrackSt( GFL_SNDVIEWER* gflSndViewer );
 #endif

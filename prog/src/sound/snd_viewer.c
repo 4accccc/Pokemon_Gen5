@@ -93,39 +93,39 @@ typedef struct {
 }TRACK_STATUS;
 
 typedef struct {
-	u8			seq;
+	u8				seq;
 	SWITCH_ID	swID;
-	u8			tpy;
-	u8			rectL;
+	u8				tpy;
+	u8				rectL;
 }SWITCH_CONTROL;
 
 typedef struct {
 	TRACK_STATUS			trackStatus[TRACK_NUM];
 	SWITCH_STATUS			switchStatus[SWITCH_MAX];
-	u8						trackNum;
+	u8								trackNum;
 }PLAYER_STACK;
 
 struct _GFL_SNDVIEWER {
-	HEAPID					heapID;
-	int						seq;
+	HEAPID								heapID;
+	int										seq;
 	GFL_SNDVIEWER_SETUP		setup;
 	GFL_DISPUT_VRAMSV*		vramSv;
 
-	NNSSndHandle*			sndHandle;
-	u32						soundNo;
-	u32						playerNoIdx;
-	BOOL					reverb;
+	NNSSndHandle*					sndHandle;
+	u32										soundNo;
+	u32										playerNoIdx;
+	BOOL									reverb;
 
-	SNDChannelInfo			channelInfo[CHANNEL_NUM];
-	SNDTrackInfo			bgmTrackInfo[TRACK_NUM];
+	SNDChannelInfo				channelInfo[CHANNEL_NUM];
+	SNDTrackInfo					bgmTrackInfo[TRACK_NUM];
 
-	PLAYER_STACK			playerStack[PLAYER_STACK_NUM];
+	PLAYER_STACK					playerStack[PLAYER_STACK_NUM];
 
-	SWITCH_CONTROL			swControl;
-	GFL_UI_TP_HITTBL		eventSwitchTable[SWITCH_MAX+1];
+	SWITCH_CONTROL				swControl;
+	GFL_UI_TP_HITTBL			eventSwitchTable[SWITCH_MAX+1];
 
-	void*					volumeSwScrnPattern;
-	u16						scrnBuf[32*32];
+	void*									volumeSwScrnPattern;
+	u16										scrnBuf[32*32];
 };
 
 #define PLT_SIZ			(0x20)
@@ -211,6 +211,21 @@ void	GFL_SNDVIEWER_SetControl( GFL_SNDVIEWER* gflSndViewer, u16 flag )
 
 	gflSndViewer->setup.controlFlag = flag;
 	makeEventSwitchTable( gflSndViewer );
+}
+
+u16		GFL_SNDVIEWER_GetTrackSt( GFL_SNDVIEWER* gflSndViewer )
+{
+	u16 trackSt = 0; 
+	int i;
+
+	if( gflSndViewer == NULL ) return 0;
+
+	for( i=0; i<TRACK_NUM; i++ ){
+		if(PLAYER_TRACK_ADRS(i).active){
+			trackSt |= (0x0001 << i);
+		}
+	}
+	return trackSt;
 }
 
 //============================================================================================

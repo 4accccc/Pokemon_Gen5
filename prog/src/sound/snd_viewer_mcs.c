@@ -22,7 +22,7 @@ FS_EXTERN_OVERLAY(mcs_lib);
 static BOOL mcsExist = FALSE;
 static HEAPID heapID;
 
-static void MCS_Sound(u32 comm, u32* param);
+static u32 MCS_Sound(u32 comm, u32* param);
 //============================================================================================
 /**
  *
@@ -52,12 +52,13 @@ void	GFL_MCS_SNDVIEWER_Exit(void)
 	}
 }
 
-void	GFL_MCS_SNDVIEWER_Main(HEAPID heapID)
+u32	GFL_MCS_SNDVIEWER_Main(HEAPID heapID)
 {
 	u32 dataSize = 0;
+	u32 result = 0;
 
-	if(mcsExist == FALSE){ return; }
-	if(MCS_CheckEnable() == FALSE){ return; }
+	if(mcsExist == FALSE){ return 0; }
+	if(MCS_CheckEnable() == FALSE){ return 0; }
 
 	MCS_Main();
 	// データ受信チェック
@@ -73,11 +74,12 @@ void	GFL_MCS_SNDVIEWER_Main(HEAPID heapID)
 		//受信コマンド処理
 		switch(dataHeader->ID){
 		case GFL_MCS_SNDVIEWER_ID:
-			MCS_Sound(dataHeader->command, &dataHeader->param);
+			result = MCS_Sound(dataHeader->command, &dataHeader->param);
 			break;
 		}
 		GFL_HEAP_FreeMemory(dataHeader);
 	}
+	return result;
 }
 
 //============================================================================================
@@ -104,6 +106,9 @@ void MCS_Sound_Send(u32 comm, u32* param, HEAPID heapID)
 		case COMM_PANEL_RESET:
 			paramNum = PNUM_COMM_PANEL_RESET;
 			break;
+		case COMM_SET_TRACKST:
+			paramNum = PNUM_COMM_SET_TRACKST;
+			break;
 		}
 
 		size = sizeof(GFL_MCS_SNDVIEWER_HEADER) + sizeof(DWORD)*(paramNum-1);
@@ -114,10 +119,12 @@ void MCS_Sound_Send(u32 comm, u32* param, HEAPID heapID)
 		for(i=0; i<paramNum; i++){ (&dataHeader->param)[i] = param[i]; }
 
 		MCS_Write(0, dataHeader, size);
+
+		GFL_HEAP_FreeMemory(dataHeader);
 	}
 }
 
-static void MCS_Sound(u32 comm, u32* param)
+static u32 MCS_Sound(u32 comm, u32* param)
 {
 	int val;
 	u16 trackBit;
@@ -128,6 +135,11 @@ static void MCS_Sound(u32 comm, u32* param)
 	case COMM_PLAYERVOL_CHANGE:
 		val = param[0] & 0x7f;
 		NNS_SndPlayerSetVolume(PMSND_GetBGMhandlePointer(), val);
+		break;
+
+	case COMM_PLAYERPITCH_CHANGE:
+		val = param[0] & 0xffff;
+		NNS_SndPlayerSetTrackPitch(PMSND_GetBGMhandlePointer(), 0xffff, val);
 		break;
 
 	case COMM_PLAYERTEMPO_CHANGE:
@@ -174,6 +186,10 @@ static void MCS_Sound(u32 comm, u32* param)
 		trackBit = 0x0001 << param[1];
 		NNS_SndPlayerSetTrackPan(PMSND_GetBGMhandlePointer(), trackBit, val);
 		break;
+
+	case COMM_CONNECT:
+		return 1;	// 特殊外部処理
 	}
+	return 0;
 }
 
