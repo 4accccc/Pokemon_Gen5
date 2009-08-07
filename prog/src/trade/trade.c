@@ -18,7 +18,7 @@
 #include "test/performance.h"
 #include "font/font.naix"
 #include "pm_define.h"
-#include "test/easy_pokelist.h"
+#include "gamesystem/game_data.h"
 #include "net\network_define.h"
 #include "trade.h"
 #include "backup_system.h"

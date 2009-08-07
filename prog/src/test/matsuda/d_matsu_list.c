@@ -30,7 +30,6 @@
 #include "item/item.h"
 #include "poke_tool/pokeparty.h"
 #include "trade/trade_main.h"
-#include "test/easy_pokelist.h"
 
 #include "net_app/balloon.h"
 #include "net_app/compati_control.h"
@@ -187,12 +186,6 @@ static const D_MENULIST DebugMenuList[] = {
 		&DebugMatsudaMainProcData,
 		NULL,
 		FS_OVERLAY_ID(matsuda_debug)
-	},
-	{//簡易ポケモンリスト
-		DM_MSG_MENU005, 
-		&EasyPokeListData,				
-		NULL,
-		FS_OVERLAY_ID(pokelist)
 	},
 	{//簡易ポケモン交換
 		DM_MSG_MENU006, 

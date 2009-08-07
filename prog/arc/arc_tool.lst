@@ -75,7 +75,6 @@
 	ARCID_ITEMICON		"item_icon.narc"		# アイテムアイコン
 	$VERSION_BLACK	ARCID_TITLE	"title.narc"	#ブラック版タイトル
 	$VERSION_WHITE	ARCID_TITLE	"title.narc"	#ホワイト版タイトル
-	ARCID_EASYPOKELIST	"debug/easy_pokelist.narc"	#簡易ポケモンリスト
 	ARCID_CONFIG_GRA	"test_graphic/config_gra.narc"		#設定画面用データ
 	ARCID_IRCBATTLE		"ircbattle.narc"           #赤外線マッチングバトル
 	ARCID_C_GEAR		"c_gear.narc"           #コミュニケーションギア

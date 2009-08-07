@@ -18,7 +18,7 @@
 #include "test/performance.h"
 #include "font/font.naix"
 #include "pm_define.h"
-#include "test/easy_pokelist.h"
+#include "gamesystem/game_data.h"
 #include "trade.h"
 #include "trade/trade_main.h"
 #include "poke_tool/pokeparty.h"
@@ -31,7 +31,7 @@ typedef struct {
 	u16		seq;
 	POKEPARTY *party;
 	
-	EASY_POKELIST_PARENT epp;		///<ポケモンリスト呼び出しようワーク
+//	EASY_POKELIST_PARENT epp;		///<ポケモンリスト呼び出しようワーク
 	TRADE_DISP_PARENT trade_disp;	///<交換画面呼び出しようワーク
 }TRADE_MAIN_WORK;
 
@@ -108,7 +108,7 @@ static GFL_PROC_RESULT TradeMainProcInit( GFL_PROC * proc, int * seq, void * pwk
 	}
 	
 	//ポケモンリスト呼び出しようの構造体データ作成
-	tmw->epp.party = tmw->party;
+//	tmw->epp.party = tmw->party;
 	
 	//交換画面呼び出しようの構造体データ作成
 	tmw->trade_disp.party = tmw->party;
@@ -141,12 +141,13 @@ static GFL_PROC_RESULT TradeMainProcMain( GFL_PROC * proc, int * seq, void * pwk
 		case TRADE_MENU_CANCEL:
 			return GFL_PROC_RES_FINISH;
 		default:
-			GFL_PROC_SysCallProc(FS_OVERLAY_ID(pokelist), &EasyPokeListData, &tmw->epp);
+//			GFL_PROC_SysCallProc(FS_OVERLAY_ID(pokelist), &EasyPokeListData, &tmw->epp);
 			tmw->seq++;
 			break;
 		}
 		break;
 	case SEQ_LIST_RETURN:
+#if 0
 		if(tmw->epp.select_pos == -1){
 			tmw->trade_disp.select_menu = TRADE_MENU_NULL;
 			tmw->trade_disp.first_seq = TRADE_STARTUP_SEQ_SELECT;
@@ -155,6 +156,7 @@ static GFL_PROC_RESULT TradeMainProcMain( GFL_PROC * proc, int * seq, void * pwk
 			tmw->trade_disp.first_seq = TRADE_STARTUP_SEQ_CHANGE;
 			tmw->trade_disp.sel_mons = tmw->epp.select_pos;
 		}
+#endif
 		tmw->seq = SEQ_INIT;
 		break;
 	}

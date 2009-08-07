@@ -1,7 +1,7 @@
 
 include $(PROJECT_RSCDIR)\macro_define
 
-SUBDIRS	=	rail_editor easy_pokelist 
+SUBDIRS	=	rail_editor
 
 TARGET_NAMES = \
 	mmodel.naix \

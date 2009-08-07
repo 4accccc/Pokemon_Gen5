@@ -17,7 +17,6 @@
 
 #include "message.naix"
 #include "msg/msg_fldmapmenu.h"
-#include "test/easy_pokelist.h"
 
 #include "system/wipe.h"
 #include "gamesystem/game_comm.h"
@@ -44,6 +43,7 @@ extern const GFL_PROC_DATA TrainerCardProcData;
 FS_EXTERN_OVERLAY(bag);
 FS_EXTERN_OVERLAY(poke_status);
 FS_EXTERN_OVERLAY(townmap);
+FS_EXTERN_OVERLAY(pokelist);
 
 //======================================================================
 //  define

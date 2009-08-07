@@ -470,8 +470,7 @@ SRCS_OVERLAY_TESTMODE = test/testmode.c
 #===> SRCS_OVERLAY_DEV_IRC
 #===> SRCS_OVERLAY_DEV_WIRELESS
 #===> SRCS_OVERLAY_DEV_WIFI
-SRCS_OVERLAY_POKELIST = test/matsuda/easy_pokelist.c\
-        app/pokelist/pokelist.c \
+SRCS_OVERLAY_POKELIST = app/pokelist/pokelist.c \
 		app/pokelist/plist_sys.c \
 		app/pokelist/plist_plate.c \
 		app/pokelist/plist_message.c \
