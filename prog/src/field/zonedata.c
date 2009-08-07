@@ -279,6 +279,8 @@ int ZONEDATA_GetRailDataID(u16 zone_id)
     return NARC_field_rail_data_c3_dat;
   case ZONE_ID_H01:
     return NARC_field_rail_data_h01_dat;
+  case ZONE_ID_C03P02:
+    return NARC_field_rail_data_c3p02_dat;
   }
   return ZONEDATA_NO_RAILDATA_ID;
 }

@@ -35,6 +35,9 @@ extern "C"{
 //  関数ID　NULL
 #define FLD_SCENEAREA_FUNC_NULL	( 0xffff )
 
+// アクティブNONE
+#define FLD_SCENEAREA_ACTIVE_NONE (FLD_SCENEAREA_UPDATE_NONE)
+
 //-----------------------------------------------------------------------------
 /**
  *					構造体宣言
@@ -93,6 +96,7 @@ extern void FLD_SCENEAREA_Load( FLD_SCENEAREA* p_sys, const FLD_SCENEAREA_DATA* 
 extern void FLD_SCENEAREA_Release( FLD_SCENEAREA* p_sys );
 extern u32 FLD_SCENEAREA_Update( FLD_SCENEAREA* p_sys, const VecFx32* cp_pos );
 
+extern u32 FLD_SCENEAREA_GetActiveArea( const FLD_SCENEAREA* cp_sys );
 extern u32 FLD_SCENEAREA_GetUpdateFuncID( const FLD_SCENEAREA* cp_sys );
 
 extern void FLD_SCENEAREA_SetActiveFlag( FLD_SCENEAREA* p_sys, BOOL flag );

@@ -17,6 +17,7 @@
 #include "fieldmap_ctrl_grid.h"
 #include "fieldmap_ctrl_nogrid.h"
 #include "fieldmap_ctrl_c3.h"
+#include "fieldmap_ctrl_c3p02.h"
 
 typedef struct {
 	//横ブロック数, 縦ブロック数, ブロック１辺の幅, グラフィックアーカイブＩＤ, 実マップデータ
@@ -340,6 +341,48 @@ const SCENE_DATA resistMapTbl[] = {
 			FLD_MAPPER_BLOCK_MEMSIZE,	// 1ブロックメモリサイズ
 		},
 		&FieldMapCtrl_GridFunctions,
+		TRUE,
+	},
+  //RSC_NOGRID_DEFAULT = 0,
+	{	//実験マップ レール移動
+		{
+			FLDMAPPER_FILETYPE_NORMAL,
+			MAP_XZ_SIZE, 1024*FX32_ONE, 
+      3,3,
+      FLDMAPPER_MODE_SCROLL_XZ, 
+			ARCID_FLDMAP_LANDDATA,
+
+			1,  1, 1,		//dummy map matrix data
+			NULL, 
+
+			FLDMAPPER_TEXTYPE_NONE,	{ 0, 0 },
+			FLDMAPPER_RESIST_OBJTYPE_BMODEL,	NULL,
+			{0,2},	// 地面アニメーション
+
+			FLD_MAPPER_BLOCK_MEMSIZE,	// 1ブロックメモリサイズ
+		},
+		&FieldMapCtrl_NoGridFunctions,
+		TRUE,
+	},
+  //RSC_NOGRID_C03P02 = 0,
+	{	//実験マップ レール移動
+		{
+			FLDMAPPER_FILETYPE_NORMAL,
+			MAP_XZ_SIZE, 1024*FX32_ONE, 
+      3,3,
+      FLDMAPPER_MODE_SCROLL_XZ, 
+			ARCID_FLDMAP_LANDDATA,
+
+			1,  1, 1,		//dummy map matrix data
+			NULL, 
+
+			FLDMAPPER_TEXTYPE_NONE,	{ 0, 0 },
+			FLDMAPPER_RESIST_OBJTYPE_BMODEL,	NULL,
+			{0,2},	// 地面アニメーション
+
+			FLD_MAPPER_BLOCK_MEMSIZE,	// 1ブロックメモリサイズ
+		},
+		&FieldMapCtrl_C3P02Functions,
 		TRUE,
 	},
 };

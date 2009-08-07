@@ -20,7 +20,6 @@
  *					定数宣言
 */
 //-----------------------------------------------------------------------------
-#define FLD_SCENEAREA_ACTIVE_NONE (FLD_SCENEAREA_UPDATE_NONE)
 
 //-----------------------------------------------------------------------------
 /**
@@ -204,6 +203,22 @@ u32 FLD_SCENEAREA_Update( FLD_SCENEAREA* p_sys, const VecFx32* cp_pos )
   }
 
   return p_sys->active_area;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  アクティブエリアの取得
+ *
+ *	@param	cp_sys  システム
+ *
+ *	@retval アクティブエリア
+ *  @retval FLD_SCENEAREA_ACTIVE_NONE なし
+ */
+//-----------------------------------------------------------------------------
+u32 FLD_SCENEAREA_GetActiveArea( const FLD_SCENEAREA* cp_sys )
+{
+  GF_ASSERT( cp_sys );
+  return cp_sys->active_area;
 }
 
 //----------------------------------------------------------------------------

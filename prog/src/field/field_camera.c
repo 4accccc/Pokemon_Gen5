@@ -388,7 +388,7 @@ static void updateG3Dcamera(FIELD_CAMERA * camera)
 
 		if( camera->debug_subscreen_type == FIELD_CAMERA_DEBUG_BIND_NONE )
 		{
-			//traceUpdate( camera );
+//			traceUpdate( camera );
 		}
   }
   else
@@ -770,6 +770,7 @@ void FIELD_CAMERA_DEBUG_BindSubScreen(FIELD_CAMERA * camera, void * param, FIELD
   camera->debug_subscreen_type = type;
   if( type == FIELD_CAMERA_DEBUG_BIND_CAMERA_POS )
   {
+	  FIELD_CAMERA_SetMode( camera, FIELD_CAMERA_MODE_CALC_CAMERA_POS );
     GFL_CAMADJUST_SetCameraParam(	gflCamAdjust,
 																	&camera->angle_yaw, 
 																	&camera->angle_pitch, 
@@ -780,6 +781,7 @@ void FIELD_CAMERA_DEBUG_BindSubScreen(FIELD_CAMERA * camera, void * param, FIELD
   }
   else if( type == FIELD_CAMERA_DEBUG_BIND_TARGET_POS )
   {
+	  FIELD_CAMERA_SetMode( camera, FIELD_CAMERA_MODE_CALC_TARGET_POS );
     camera->debug_target_yaw    = camera->angle_yaw - 0x8000;
     camera->debug_target_pitch  = 0x10000 - camera->angle_pitch;
     camera->debug_target_len    = camera->angle_len;
