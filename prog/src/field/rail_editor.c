@@ -22,7 +22,7 @@
 #include "gamesystem/game_data.h"
 
 #include "arc/arc_def.h"
-#include "arc/test_graphic/rail_editor.naix"
+#include "arc/debug/rail_editor.naix"
 
 #include "field/fieldmap.h"
 #include "event_fieldmap_control.h"

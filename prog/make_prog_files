@@ -70,9 +70,8 @@ SRCS  +=    $(SOUNDSRC) \
         field/zonedata.c \
         field/areadata.c \
         field/location.c \
-        field/field_rail.c \
-        field/field_rail_func.c \
         field/field_rail_loader.c \
+        field/field_location.c \
         field/eventdata_system.c \
         field/event_fieldmap_control.c \
         field/event_mapchange.c \
@@ -333,6 +332,8 @@ SRCS_OVERLAY_FIELDMAP		=	field/field_proc.c \
         field/event_trainer_eye.c \
         field/scrcmd_trainer.c \
 				field/rail_editor.c \
+        field/field_rail.c \
+        field/field_rail_func.c \
         field/fldeff_gyoe.c \
         field/fieldmap_func.c \
         field/scrcmd_sound.c \

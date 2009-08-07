@@ -199,29 +199,14 @@ static u32 getLineIndex( const RAIL_SETTING * raildat, const RAIL_LINE* line );
 // １ワーク単位のアップデート
 static void FIELD_RAIL_WORK_Update(FIELD_RAIL_WORK * work);
 
+
 //============================================================================================
 //============================================================================================
-//------------------------------------------------------------------
-//------------------------------------------------------------------
 static void RAIL_LOCATION_Dump(const RAIL_LOCATION * railLoc)
 {
   TAMADA_Printf("RAIL_LOC:type = %d, rail_index = %d\n",railLoc->type, railLoc->rail_index);
   TAMADA_Printf("RAIL_LOC:line_ofs = %d, width_ofs = %d\n", railLoc->line_ofs, railLoc->width_ofs);
   TAMADA_Printf("RAIL_LOC:key = %s\n", debugGetRailKeyName(railLoc->key));
-}
-
-//------------------------------------------------------------------
-/**
- * @brief RAIL_LOCATION構造体の初期化処理
- */
-//------------------------------------------------------------------
-void RAIL_LOCATION_Init(RAIL_LOCATION * railLoc)
-{
-  railLoc->type = FIELD_RAIL_TYPE_POINT;
-  railLoc->rail_index = 0;
-  railLoc->line_ofs = 0;
-  railLoc->width_ofs = 0;
-  railLoc->key = RAIL_KEY_NULL;
 }
 
 //============================================================================================
