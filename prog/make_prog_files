@@ -117,7 +117,6 @@ SRCS  +=    $(SOUNDSRC) \
         system/touch_subwindow.c \
         app/trainercard/trcard_sys.c \
         app/name_input/name_input.c \
-        app/pms_input/pms_input.c \
         app/pms_input/pmsi_param.c \
         sound/snd_viewer.c \
         sound/snd_viewer_mcs.c \
@@ -143,12 +142,8 @@ SRCS  +=    $(SOUNDSRC) \
         test/matsuda/wflby_debug.c \
         test/ariizumi/debug_pause.c \
         system/wazatype_icon.c \
-        app/codein/codein.c \
-        app/codein/codein_pv.c \
-        app/codein/codein_disp.c \
         net_app/union/union_gra_tool.c \
         net_app/union/union_beacon_tool.c \
-        app/wifi_note/wifi_note.c \
         app/pokelist/pokelist.c \
         app/p_status/p_status.c \
         test/camera_adjust_view.c \
@@ -675,7 +670,18 @@ SRCS_OVERLAY_PMSINPUT = app/pms_input/pms_input_data.c \
         app/pms_input/pmsiv_edit.c \
         app/pms_input/pmsiv_sub.c \
         app/pms_input/pmsiv_tool.c \
+        app/pms_input/pms_input.c \
         app/pms_input/pmsiv_wordwin.c
+
+# 友達手帳(+コード入力
+#===> SRCS_OVERLAY_DEV_WIFI
+#===> SRCS_OVERLAY_DEV_WIRELESS
+#===> SRCS_OVERLAY_DEV_IRC
+SRCS_OVERLAY_WIFINOTE = app/wifi_note/wifi_note.c \
+        app/codein/codein.c \
+        app/codein/codein_pv.c \
+        app/codein/codein_disp.c
+
 
 
 # ミュージカル

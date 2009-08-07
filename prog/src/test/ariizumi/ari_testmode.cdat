@@ -70,6 +70,7 @@ static BOOL TESTMODE_ITEM_SelectFuncStage( TESTMODE_WORK *work , const int idx )
 FS_EXTERN_OVERLAY(pmsinput);
 FS_EXTERN_OVERLAY(pokelist);
 FS_EXTERN_OVERLAY(poke_status);
+FS_EXTERN_OVERLAY(wifinote);
 extern const GFL_PROC_DATA ProcData_PMSInput;
 static BOOL TESTMODE_ITEM_SelectDebWifiNote( TESTMODE_WORK *work , const int idx );
 static BOOL TESTMODE_ITEM_SelectDebPmsInput( TESTMODE_WORK *work , const int idx );
@@ -97,7 +98,7 @@ static BOOL TESTMODE_ITEM_SelectDebWifiNote( TESTMODE_WORK *work , const int idx
 {
   WIFINOTE_PROC_PARAM *procParam = GFL_HEAP_AllocMemory( GFL_HEAPID_APP , sizeof( WIFINOTE_PROC_PARAM));
   procParam->saveControlWork = SaveControl_GetPointer();
-	TESTMODE_COMMAND_ChangeProc(work,NO_OVERLAY_ID, &WifiNoteProcData, procParam );
+	TESTMODE_COMMAND_ChangeProc(work,FS_OVERLAY_ID(wifinote), &WifiNoteProcData, procParam );
 	return TRUE;
 	
 }
