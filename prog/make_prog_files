@@ -120,7 +120,6 @@ SRCS  +=    $(SOUNDSRC) \
         app/pms_input/pmsi_param.c \
         sound/snd_viewer.c \
         sound/snd_viewer_mcs.c \
-        mystery/comm_mystery_gift.c \
         system/laster.c \
         field/fldmmdl.c \
         field/fldmmdl_move.c \
@@ -581,6 +580,7 @@ SRCS_OVERLAY_IRCBATTLEMATCH = field/ircbattle/ircbattlematch.c \
 #===> SRCS_OVERLAY_DEV_WIRELESS
 #===> SRCS_OVERLAY_DEV_IRC
 SRCS_OVERLAY_MYSTERY = mystery/comm_mystery_func.c \
+      mystery/comm_mystery_gift.c \
       mystery/comm_mystery_state.c \
       mystery/comm_mystery_card.c \
       mystery/mysterylib.c \
