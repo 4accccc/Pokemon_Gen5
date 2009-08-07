@@ -77,6 +77,7 @@ void BTL_POSPOKE_PokeOut( BTL_POSPOKE_WORK* wk, u8 pokeID )
   {
     if( wk->state[i].fEnable && (wk->state[i].existPokeID == pokeID) ){
       wk->state[i].existPokeID = BTL_POKEID_NULL;
+      BTL_Printf(" poke[%d] out from pos[%d]\n", pokeID, i );
       return;
     }
   }
@@ -94,6 +95,7 @@ void BTL_POSPOKE_PokeIn( BTL_POSPOKE_WORK* wk, BtlPokePos pos,  u8 pokeID )
 {
   GF_ASSERT(wk->state[pos].fEnable);
   wk->state[pos].existPokeID = pokeID;
+  BTL_Printf(" poke[%d] in to pos[%d]\n", pokeID, pos );
 }
 
 //=============================================================================================

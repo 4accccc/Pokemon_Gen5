@@ -528,6 +528,7 @@ typedef struct {
   BTL_HANDEX_PARAM_HEADER  header;
   u8   pokeID;        ///< 対象ポケID
   u16  recoverHP;     ///< 回復HP量
+  BTL_HANDEX_STR_PARAMS  exStr; ///< 成功時メッセージ
 }BTL_HANDEX_PARAM_RELIVE;
 
 extern void* BTL_SVFLOW_HANDLERWORK_Push( BTL_SVFLOW_WORK* wk, BtlEventHandlerExhibition eq_type, u8 userPokeID );

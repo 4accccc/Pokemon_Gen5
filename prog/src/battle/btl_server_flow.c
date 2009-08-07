@@ -1530,8 +1530,7 @@ static void scproc_MemberIn( BTL_SVFLOW_WORK* wk, u8 clientID, u8 posIdx, u8 nex
   BPP_Clear_ForIn( bpp );
 
   SCQUE_PUT_OP_MemberIn( wk->que, clientID, posIdx, next_poke_idx, wk->turnCount );
-  if( !fBtlStart )
-  {
+  if( !fBtlStart ){
     SCQUE_PUT_ACT_MemberIn( wk->que, clientID, posIdx, next_poke_idx );
   }
 
@@ -1611,7 +1610,7 @@ static void scproc_TrainerItem_Root( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u1
     { ITEM_PRM_PANIC_RCV,     ItemEff_KonranRcv     },   // ¬—‰ñ•œ
     { ITEM_PRM_MEROMERO_RCV,  ItemEff_MeromeroRcv   },   // ƒƒƒƒ‰ñ•œ
     { ITEM_PRM_ABILITY_GUARD, ItemEff_EffectGuard   },   // ”\—ÍƒK[ƒh
-    { ITEM_PRM_DEATH_RCV,     ItemEff_Relive        },   // •mŽ€‰ñ•œ
+//    { ITEM_PRM_DEATH_RCV,     ItemEff_Relive        },   // •mŽ€‰ñ•œ
     { ITEM_PRM_ATTACK_UP,     ItemEff_AttackRank    },   // UŒ‚—ÍƒAƒbƒv
     { ITEM_PRM_DEFENCE_UP,    ItemEff_DefenceRank   },   // –hŒä—ÍƒAƒbƒv
     { ITEM_PRM_SP_ATTACK_UP,  ItemEff_SPAttackRank  },   // “ÁUƒAƒbƒv
@@ -1698,19 +1697,25 @@ static u8 ItemEff_EffectGuard( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 item
 }
 static u8 ItemEff_Relive( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 itemID, int itemParam, u8 actParam )
 {
-  if( BPP_IsDead(bpp) && (itemParam > 0))
+  if( BPP_IsDead(bpp))
   {
     u8 pokeID = BPP_GetID( bpp );
     BTL_HANDEX_PARAM_RELIVE* param = BTL_SVFLOW_HANDLERWORK_Push( wk, BTL_HANDEX_RELIVE, pokeID );
     param->pokeID = pokeID;
+
+    itemParam = BTL_CALC_ITEM_GetParam( itemID, ITEM_PRM_HP_RCV_POINT );
     switch( itemParam ){
     case ITEM_RECOVER_HP_FULL:
       param->recoverHP = BPP_GetValue( bpp, BPP_MAX_HP ); break;
     case ITEM_RECOVER_HP_HALF:
-      param->recoverHP = BTL_CALC_QuotMaxHP(bpp, 2 ); break;
+      param->recoverHP = BTL_CALC_QuotMaxHP( bpp, 2 ); break;
     default:
       param->recoverHP = BTL_CALC_ITEM_GetParam( itemID, ITEM_PRM_HP_RCV_POINT ); break;
     }
+
+    HANDEX_STR_Setup( &param->exStr, BTL_STRTYPE_SET, BTL_STRID_SET_Relive );
+    HANDEX_STR_AddArg( &param->exStr, pokeID );
+
     return TRUE;
   }
   return FALSE;
@@ -1794,18 +1799,24 @@ static u8 ItemEff_AllPP_Rcv( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 itemID
 }
 static u8 ItemEff_HP_Rcv( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 itemID, int itemParam, u8 actParam )
 {
-  if( !BPP_IsHPFull(bpp) )
-  {
+  if( BTL_CALC_ITEM_GetParam(itemID, ITEM_PRM_DEATH_RCV) ){
+    return ItemEff_Relive( wk, bpp, itemID, itemParam, actParam );
+  }
+
+  if( !BPP_IsHPFull(bpp)
+  &&  !BPP_IsDead(bpp)
+  ){
     u8 pokeID = BPP_GetID( bpp );
     BTL_HANDEX_PARAM_RECOVER_HP* param = BTL_SVFLOW_HANDLERWORK_Push( wk, BTL_HANDEX_RECOVER_HP, pokeID );
     param->pokeID = pokeID;
+    itemParam = BTL_CALC_ITEM_GetParam( itemID, ITEM_PRM_HP_RCV_POINT );
     switch( itemParam ){
     case ITEM_RECOVER_HP_FULL:
       param->recoverHP = BPP_GetValue( bpp, BPP_MAX_HP ); break;
     case ITEM_RECOVER_HP_HALF:
       param->recoverHP = BTL_CALC_QuotMaxHP(bpp, 2 ); break;
     default:
-      param->recoverHP = BTL_CALC_ITEM_GetParam( itemID, ITEM_PRM_HP_RCV_POINT ); break;
+      param->recoverHP = itemParam; break;
     }
 
     HANDEX_STR_Setup( &param->exStr, BTL_STRTYPE_SET, BTL_STRID_SET_HP_Recover );
@@ -8887,8 +8898,13 @@ static u8 scproc_HandEx_addShrink( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_H
 static u8 scproc_HandEx_relive( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header )
 {
   BTL_HANDEX_PARAM_RELIVE* param = (BTL_HANDEX_PARAM_RELIVE*)param_header;
-  // @@@ –¢ŽÀ‘•
-  return 0;
+  BTL_POKEPARAM* target = BTL_POKECON_GetPokeParam( wk->pokeCon, param->pokeID );
+  BPP_HpPlus( target, param->recoverHP );
+  SCQUE_PUT_OP_HpPlus( wk->que, param->pokeID, param->recoverHP );
+  wk->pokeDeadFlag[param->pokeID] = FALSE;
+  BTL_Printf("‰ñ•œHP—Ê=%d ... %d\n", param->recoverHP, BPP_GetValue(target,BPP_HP));
+  handexSub_putString( wk, &param->exStr );
+  return 1;
 }
 
 
