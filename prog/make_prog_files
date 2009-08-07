@@ -144,8 +144,6 @@ SRCS  +=    $(SOUNDSRC) \
         system/wazatype_icon.c \
         net_app/union/union_gra_tool.c \
         net_app/union/union_beacon_tool.c \
-        app/pokelist/pokelist.c \
-        app/p_status/p_status.c \
         test/camera_adjust_view.c \
         system/selbox.c \
         gamesystem/game_comm.c \
@@ -473,6 +471,7 @@ SRCS_OVERLAY_TESTMODE = test/testmode.c
 #===> SRCS_OVERLAY_DEV_WIRELESS
 #===> SRCS_OVERLAY_DEV_WIFI
 SRCS_OVERLAY_POKELIST = test/matsuda/easy_pokelist.c\
+        app/pokelist/pokelist.c \
 		app/pokelist/plist_sys.c \
 		app/pokelist/plist_plate.c \
 		app/pokelist/plist_message.c \
@@ -486,6 +485,7 @@ SRCS_OVERLAY_POKELIST = test/matsuda/easy_pokelist.c\
 #===> SRCS_OVERLAY_DEV_WIRELESS
 #===> SRCS_OVERLAY_DEV_WIFI
 SRCS_OVERLAY_POKE_STATUS = app/p_status/p_sta_sys.c \
+        app/p_status/p_status.c \
 		app/p_status/p_sta_sub.c \
 		app/p_status/p_sta_info.c \
 		app/p_status/p_sta_ribbon.c \
