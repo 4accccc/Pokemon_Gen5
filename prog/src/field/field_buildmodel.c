@@ -36,9 +36,6 @@ typedef EL_SCOREBOARD_TEX ELBOARD_TEX;
 //============================================================================================
 //============================================================================================
 
-#define BMID_ASSERT(bm_id) GF_ASSERT( (bm_id) < BMODEL_ID_MAX )
-#define ENTRYNO_ASSERT(entryNo) GF_ASSERT( (entryNo) < BMODEL_ENTRY_MAX ) 
-
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 enum { GLOBAL_OBJ_ANMCOUNT	= 4 };
@@ -78,7 +75,7 @@ enum {
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
-struct _FIELD_BMANIME_DATA
+typedef struct _FIELD_BMANIME_DATA
 { 
   u8 anm_type;  //BMANIME_TYPE  アニメの種類指定
   u8 prg_type;  //動作プログラムの種類指定
@@ -86,17 +83,8 @@ struct _FIELD_BMANIME_DATA
   u8 set_count; //
 
   ///アニメアーカイブ指定ID
-  u16 anm_id[GLOBAL_OBJ_ANMCOUNT];
-};
-
-//------------------------------------------------------------------
-//------------------------------------------------------------------
-struct _FIELD_BMODEL {
-  GFL_G3D_OBJ * gfl_obj;
-  BOOL suicide_flag;
-  GFL_G3D_OBJSTATUS g3dObjStatus;
-};
-
+  u16 IDs[GLOBAL_OBJ_ANMCOUNT];
+}FIELD_BMANIME_DATA;
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
@@ -116,6 +104,7 @@ typedef struct {
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 typedef struct {
+  BMODEL_ID     bm_id;
 	GFL_G3D_RES*	g3DresMdl;						//モデルリソース(High Q)
 	GFL_G3D_RES*	g3DresTex;						//テクスチャリソース
 	GFL_G3D_RES*	g3DresAnm[GLOBAL_OBJ_ANMCOUNT];	//アニメリソース
@@ -126,6 +115,14 @@ typedef struct {
   const OBJ_RES * res;
   BM_ANMMODE anmMode[GLOBAL_OBJ_ANMCOUNT];
 }OBJ_HND;
+
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+struct _FIELD_BMODEL {
+  OBJ_HND objHdl;
+  BOOL suicide_flag;
+  GFL_G3D_OBJSTATUS g3dObjStatus;
+};
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
@@ -144,9 +141,6 @@ struct _FIELD_BMODEL_MAN
   STRBUF * elb_str[FIELD_BMODEL_ELBOARD_ID_MAX];
   ELBOARD_TEX * elb_tex[FIELD_BMODEL_ELBOARD_ID_MAX];
 
-  FIELD_BMODEL * entryObj[BMODEL_USE_MAX];
-
-
 	GFL_G3D_MAP_GLOBALOBJ	g3dMapObj;						//共通オブジェクト
 
 	u32	objRes_Count;		  		//共通オブジェクトリソース数
@@ -154,13 +148,43 @@ struct _FIELD_BMODEL_MAN
 
   u32 objHdl_Count;
   OBJ_HND * objHdl;
+
+  FIELD_BMODEL * entryObj[BMODEL_USE_MAX];
 };
 
 //============================================================================================
+//
+//    デバッグ用関数
+//
 //============================================================================================
 //------------------------------------------------------------------
 //------------------------------------------------------------------
+static inline BMODEL_ID BMIDAssert(BMODEL_ID bm_id)
+{
+  if (bm_id >= BMODEL_ID_MAX)
+  {
+    OS_TPrintf("BuildModel ID over %d\n",bm_id );
+    GF_ASSERT(0);
+    bm_id = 0;
+  }
+  return bm_id;
+}
+#define BMID_ASSERT(bm_id) {bm_id = BMIDAssert(bm_id);}
 
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+static inline u8 EntryNoAssert(const FIELD_BMODEL_MAN * man, u8 entryNo)
+{
+  if (entryNo >= BMODEL_ENTRY_MAX || entryNo >= man->entryCount)
+  {
+    OS_TPrintf("BuildModel Entry No Over(%d)\n",entryNo);
+    GF_ASSERT(0);
+    entryNo = 0;
+  }
+  return entryNo;
+}
+
+#define ENTRYNO_ASSERT(man, entryNo) {entryNo = EntryNoAssert(man, entryNo);}
 
 //============================================================================================
 //============================================================================================
@@ -179,7 +203,6 @@ static BMIDtoEntryNo(const FIELD_BMODEL_MAN * man, BMODEL_ID id);
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
-static void FIELD_BMANIME_DATA_init(FIELD_BMANIME_DATA * data);
 
 static void createAllResource(FIELD_BMODEL_MAN * man);
 static void deleteAllResource(FIELD_BMODEL_MAN * man);
@@ -187,7 +210,26 @@ static void deleteAllResource(FIELD_BMODEL_MAN * man);
 static void createFullTimeObjHandle(FIELD_BMODEL_MAN * man, GFL_G3D_MAP_GLOBALOBJ * g3dMapObj);
 static void deleteFullTimeObjHandle(FIELD_BMODEL_MAN * man, GFL_G3D_MAP_GLOBALOBJ * g3dMapObj);
 
+static void OBJHND_initialize( OBJ_HND * objHdl, const OBJ_RES* objRes);
+static void OBJHND_finalize( OBJ_HND * objHdl );
+static void OBJHND_animate( OBJ_HND * objHdl );
+static void OBJHND_setAnime( OBJ_HND * objHdl, u32 anmNo, BMANM_REQUEST req);
+static BOOL OBJHND_getAnimeStatus(OBJ_HND * objHdl, u32 anmNo);
+
 static void DEBUG_dumpBMAnimeData(const FIELD_BMANIME_DATA * data);
+static u32 BMANIME_getCount(const FIELD_BMANIME_DATA * data);
+static void BMANIME_init(FIELD_BMANIME_DATA * data);
+//------------------------------------------------------------------
+//アニメデータの取得処理
+//------------------------------------------------------------------
+static const FIELD_BMANIME_DATA * getLoadedAnimeData(FIELD_BMODEL_MAN * man, u16 bm_id);
+//------------------------------------------------------------------
+//  テクスチャ情報の登録処理
+//------------------------------------------------------------------
+extern void FIELD_BMANIME_DATA_entryTexData(FIELD_BMODEL_MAN* man, const FIELD_BMANIME_DATA * data,
+    const GFL_G3D_RES * g3DresTex);
+
+
 //============================================================================================
 //============================================================================================
 //------------------------------------------------------------------
@@ -273,7 +315,8 @@ void FIELD_BMODEL_MAN_Main(FIELD_BMODEL_MAN * man)
   {
     if (man->entryObj[i])
     {
-      FIELD_BMODEL_RunAnime(man->entryObj[i]);
+      OBJ_HND * objHdl = &man->entryObj[i]->objHdl;
+      OBJHND_animate( objHdl );
     }
   }
 
@@ -281,29 +324,7 @@ void FIELD_BMODEL_MAN_Main(FIELD_BMODEL_MAN * man)
 
   for( i=0; i<man->objHdl_Count; i++ ){
     OBJ_HND * objHdl = &man->objHdl[i];
-    int anmNo;
-
-    if( objHdl->g3Dobj == NULL ){
-      continue;
-    }
-    for( anmNo=0; anmNo<GLOBAL_OBJ_ANMCOUNT; anmNo++ ){
-      BOOL result;
-      switch (objHdl->anmMode[anmNo])
-      {
-      case BM_ANMMODE_NOTHING:
-      case BM_ANMMODE_STOP:
-        break;
-      case BM_ANMMODE_TEMPORARY:
-        result = GFL_G3D_OBJECT_IncAnimeFrame( objHdl->g3Dobj, anmNo, FX32_ONE );
-        if (!result) {
-          objHdl->anmMode[anmNo] = BM_ANMMODE_STOP;
-        }
-        break;
-      case BM_ANMMODE_ETERNAL:
-        GFL_G3D_OBJECT_LoopAnimeFrame( objHdl->g3Dobj, anmNo, FX32_ONE ); 
-        break;
-      }
-    }
+    OBJHND_animate( objHdl );
   }
 
 }
@@ -373,19 +394,6 @@ void FIELD_BMODEL_MAN_Load(FIELD_BMODEL_MAN * man, u16 zoneid, const AREADATA * 
 }
 
 //------------------------------------------------------------------
-//------------------------------------------------------------------
-#if 0
-u16 FIELD_BMODEL_MAN_GetNarcIndex(const FIELD_BMODEL_MAN * man, BMODEL_ID id)
-{
-	int index;
-	GF_ASSERT(id < BMODEL_ID_MAX);
-	index = man->BMIDToEntryTable[id];
-	GF_ASSERT(index < BMODEL_ENTRY_MAX);
-	return man->entryToBMIDTable[index];
-}
-#endif
-
-//------------------------------------------------------------------
 /**
  * @brief 配置モデルIDを登録済み配置モデルのインデックスに変換する
  * @param man 配置モデルマネジャーへのポインタ
@@ -399,7 +407,7 @@ u8 FIELD_BMODEL_MAN_GetEntryIndex(const FIELD_BMODEL_MAN * man, BMODEL_ID id)
 static BMIDtoEntryNo(const FIELD_BMODEL_MAN * man, BMODEL_ID id)
 {
 	u8 entryNo;
-	GF_ASSERT(id < BMODEL_ID_MAX);
+  BMID_ASSERT( id );
 	entryNo = man->BMIDToEntryTable[id];
 	return entryNo;
 }
@@ -410,11 +418,11 @@ static BMIDtoEntryNo(const FIELD_BMODEL_MAN * man, BMODEL_ID id)
  * @param bm_id   配置モデルID
  */
 //------------------------------------------------------------------
-const FIELD_BMANIME_DATA * FIELD_BMODEL_MAN_GetAnimeData(FIELD_BMODEL_MAN * man, u16 bm_id)
+static const FIELD_BMANIME_DATA * getLoadedAnimeData(FIELD_BMODEL_MAN * man, u16 bm_id)
 { 
   u16 entryNo = man->BMIDToEntryTable[bm_id];
-  GF_ASSERT(bm_id < BMODEL_ID_MAX);
-  GF_ASSERT(entryNo < man->entryCount);
+  BMID_ASSERT( bm_id );
+  ENTRYNO_ASSERT( man, entryNo );
   return &man->bmInfo[entryNo].animeData;
 }
 
@@ -585,31 +593,17 @@ static u16 calcArcIndex(u16 area_id)
 //============================================================================================
 //------------------------------------------------------------------
 /**
- * @brief 保持しているアニメIDへのポインタを返す
- * @param data  アニメデータへのポインタ
- * @return  u16 * アニメID配列へのポインタ
- *
- * 配列長自体はFIELD_BMANIME_DATA_getAnimeCountで取得する
- */
-//------------------------------------------------------------------
-const u16 * FIELD_BMANIME_DATA_getAnimeFileID(const FIELD_BMANIME_DATA * data)
-{ 
-  return data->anm_id;
-}
-
-//------------------------------------------------------------------
-/**
  * @brief 保持しているアニメIDの数を返す
  * @param data  アニメデータへのポインタ
  * @param u32 保持しているアニメIDの数
  */
 //------------------------------------------------------------------
-u32 FIELD_BMANIME_DATA_getAnimeCount(const FIELD_BMANIME_DATA * data)
+static u32 BMANIME_getCount(const FIELD_BMANIME_DATA * data)
 { 
   u32 i,count;
   for (i = 0, count = 0; i < GLOBAL_OBJ_ANMCOUNT; i++)
   { 
-    if (data->anm_id[i] != BMANIME_NULL_ID)
+    if (data->IDs[i] != BMANIME_NULL_ID)
     { 
       count ++;
     }
@@ -618,34 +612,10 @@ u32 FIELD_BMANIME_DATA_getAnimeCount(const FIELD_BMANIME_DATA * data)
 }
 //------------------------------------------------------------------
 /**
- * @brief アニメ適用タイプを返す
- * @param data  アニメデータへのポインタ
- * @return  BMANIME_TYPE
- */
-//------------------------------------------------------------------
-BMANIME_TYPE FIELD_BMANIME_DATA_getAnimeType(const FIELD_BMANIME_DATA * data)
-{ 
-  return data->anm_type;
-}
-
-//------------------------------------------------------------------
-/**
- * @brief プログラムタイプを返す
- * @param data  アニメデータへのポインタ
- * @return  BMANIME_PROG_TYPE
- */
-//------------------------------------------------------------------
-BMANIME_PROG_TYPE FIELD_BMANIME_DATA_getProgType(const FIELD_BMANIME_DATA * data)
-{ 
-  return data->prg_type;
-}
-
-//------------------------------------------------------------------
-/**
  * @brief FIELD_BMANIME_DATAの初期化
  */
 //------------------------------------------------------------------
-static void FIELD_BMANIME_DATA_init(FIELD_BMANIME_DATA * data)
+static void BMANIME_init(FIELD_BMANIME_DATA * data)
 { 
   static const FIELD_BMANIME_DATA init = {  
     BMANIME_TYPE_NONE,  //アニメ適用の種類指定
@@ -677,7 +647,7 @@ static void DEBUG_dumpBMAnimeData(const FIELD_BMANIME_DATA * data)
   TAMADA_Printf("%d %d %d\n",data->prg_type, data->anm_count, data->set_count);
   for (i = 0; i < GLOBAL_OBJ_ANMCOUNT; i++)
   {
-    TAMADA_Printf("%04x ", data->anm_id[i]);
+    TAMADA_Printf("%04x ", data->IDs[i]);
   }
   TAMADA_Printf("\n");
 }
@@ -719,7 +689,7 @@ static void BMINFO_Load(FIELD_BMODEL_MAN * man, u16 file_id)
 static void BMINFO_init(BMINFO * bmInfo)
 {
   bmInfo->bm_id = 0;
-  FIELD_BMANIME_DATA_init(&bmInfo->animeData);
+  BMANIME_init(&bmInfo->animeData);
   bmInfo->prog_id = 0;
   bmInfo->sub_bm_id = BM_SUBMODEL_NULL_ID;
 }
@@ -868,9 +838,6 @@ static void MAKE_OBJ_PARAM_init(MAKE_OBJ_PARAM * objParam)
 
 
 
-static void createObjHandle( OBJ_HND * objHdl, const OBJ_RES* objRes);
-static void deleteObjHandle( OBJ_HND * objHdl );
-
 static void createResource( OBJ_RES * objRes, const MAKE_OBJ_PARAM * param);
 static void deleteResource( OBJ_RES * objRes );
 //------------------------------------------------------------------
@@ -904,9 +871,9 @@ static void createAllResource(FIELD_BMODEL_MAN * man)
       MAKE_RES_PARAM_set(&objParam.mdl, man->mdl_arc_id, bm_id, 0);
       
       //配置モデルに対応したアニメデータを取得 
-      anmData = FIELD_BMODEL_MAN_GetAnimeData(man, bm_id);
-      count = FIELD_BMANIME_DATA_getAnimeCount(anmData);
-      anmIDs = FIELD_BMANIME_DATA_getAnimeFileID(anmData);
+      anmData = getLoadedAnimeData(man, bm_id);
+      count = BMANIME_getCount(anmData);
+      anmIDs = anmData->IDs;
 
       for( j=0; j<GLOBAL_OBJ_ANMCOUNT; j++ )
       {
@@ -953,10 +920,10 @@ static void createFullTimeObjHandle(FIELD_BMODEL_MAN * man, GFL_G3D_MAP_GLOBALOB
     OBJ_HND * objHdl = &man->objHdl[i];
     OBJ_RES * objRes = &man->objRes[i];
     BMODEL_ID bm_id = man->entryToBMIDTable[i];
-    createObjHandle( objHdl, objRes );
+    OBJHND_initialize( objHdl, objRes );
 
-    anmData = FIELD_BMODEL_MAN_GetAnimeData(man, bm_id);
-    if (FIELD_BMANIME_DATA_getAnimeType(anmData) == BMANIME_TYPE_ETERNAL)
+    anmData = getLoadedAnimeData(man, bm_id);
+    if (anmData->anm_type == BMANIME_TYPE_ETERNAL)
     {
       int anmNo;
       for( anmNo=0; anmNo<GLOBAL_OBJ_ANMCOUNT; anmNo++ ){
@@ -987,7 +954,7 @@ static void deleteFullTimeObjHandle(FIELD_BMODEL_MAN * man, GFL_G3D_MAP_GLOBALOB
   if( man->objHdl != NULL ){
     int i;
     for( i=0; i<man->objHdl_Count; i++ ){
-			deleteObjHandle( &man->objHdl[i] );
+			OBJHND_finalize( &man->objHdl[i] );
     }
     GFL_HEAP_FreeMemory( man->objHdl );
     man->objHdl_Count = 0;
@@ -1054,7 +1021,36 @@ static void createResource( OBJ_RES * objRes, const MAKE_OBJ_PARAM * param)
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
-static void createObjHandle( OBJ_HND * objHdl, const OBJ_RES* objRes)
+static void deleteResource( OBJ_RES * objRes )
+{
+  int i;
+	GFL_G3D_RES*	resTex;
+
+  for( i=0; i<GLOBAL_OBJ_ANMCOUNT; i++ ){
+    if( objRes->g3DresAnm[i] != NULL ){
+      GFL_G3D_DeleteResource( objRes->g3DresAnm[i] );
+      objRes->g3DresAnm[i] = NULL;
+    }
+  }
+  if( objRes->g3DresTex == NULL ){
+    resTex = objRes->g3DresMdl;
+  } else {
+    resTex = objRes->g3DresTex;
+    GFL_G3D_DeleteResource( objRes->g3DresTex );
+    objRes->g3DresTex = NULL;
+  }
+  GFL_G3D_FreeVramTexture( resTex );
+
+  if( objRes->g3DresMdl != NULL ){
+    GFL_G3D_DeleteResource( objRes->g3DresMdl );
+    objRes->g3DresMdl = NULL;
+  }
+}
+
+
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+static void OBJHND_initialize( OBJ_HND * objHdl, const OBJ_RES* objRes)
 {
 	GFL_G3D_RND* g3Drnd;
 	GFL_G3D_RES* resTex;
@@ -1082,35 +1078,7 @@ static void createObjHandle( OBJ_HND * objHdl, const OBJ_RES* objRes)
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
-static void deleteResource( OBJ_RES * objRes )
-{
-  int i;
-	GFL_G3D_RES*	resTex;
-
-  for( i=0; i<GLOBAL_OBJ_ANMCOUNT; i++ ){
-    if( objRes->g3DresAnm[i] != NULL ){
-      GFL_G3D_DeleteResource( objRes->g3DresAnm[i] );
-      objRes->g3DresAnm[i] = NULL;
-    }
-  }
-  if( objRes->g3DresTex == NULL ){
-    resTex = objRes->g3DresMdl;
-  } else {
-    resTex = objRes->g3DresTex;
-    GFL_G3D_DeleteResource( objRes->g3DresTex );
-    objRes->g3DresTex = NULL;
-  }
-  GFL_G3D_FreeVramTexture( resTex );
-
-  if( objRes->g3DresMdl != NULL ){
-    GFL_G3D_DeleteResource( objRes->g3DresMdl );
-    objRes->g3DresMdl = NULL;
-  }
-}
-
-//------------------------------------------------------------------
-//------------------------------------------------------------------
-static void deleteObjHandle( OBJ_HND * objHdl )
+static void OBJHND_finalize( OBJ_HND * objHdl )
 {
 	GFL_G3D_RND*	g3Drnd;
 	GFL_G3D_ANM*	g3Danm[GLOBAL_OBJ_ANMCOUNT] = { NULL, NULL, NULL, NULL };
@@ -1135,6 +1103,91 @@ static void deleteObjHandle( OBJ_HND * objHdl )
 
 		GFL_G3D_RENDER_Delete( g3Drnd );
 	}
+}
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+static void OBJHND_animate( OBJ_HND * objHdl )
+{
+  int anmNo;
+
+  if( objHdl->g3Dobj == NULL ){
+    return;
+  }
+
+  for( anmNo=0; anmNo<GLOBAL_OBJ_ANMCOUNT; anmNo++ ){
+    BOOL result;
+    switch (objHdl->anmMode[anmNo])
+    {
+    case BM_ANMMODE_NOTHING:
+    case BM_ANMMODE_STOP:
+      break;
+    case BM_ANMMODE_TEMPORARY:
+      result = GFL_G3D_OBJECT_IncAnimeFrame( objHdl->g3Dobj, anmNo, FX32_ONE );
+      if (!result) {
+        objHdl->anmMode[anmNo] = BM_ANMMODE_STOP;
+      }
+      break;
+    case BM_ANMMODE_ETERNAL:
+      GFL_G3D_OBJECT_LoopAnimeFrame( objHdl->g3Dobj, anmNo, FX32_ONE ); 
+      break;
+    }
+  }
+}
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+static void disableAllAnime(OBJ_HND * objHdl)
+{
+  int idx;
+  for (idx = 0; idx < GLOBAL_OBJ_ANMCOUNT; idx++)
+  {
+    if (objHdl->anmMode[idx] != BM_ANMMODE_NOTHING) {
+      GFL_G3D_OBJECT_DisableAnime( objHdl->g3Dobj, idx );
+      objHdl->anmMode[idx] = BM_ANMMODE_NOTHING;
+    }
+  }
+}
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+static void OBJHND_setAnime( OBJ_HND * objHdl, u32 anmNo, BMANM_REQUEST req)
+{
+  if (anmNo >= GLOBAL_OBJ_ANMCOUNT)
+  {
+    GF_ASSERT(0);
+    anmNo = 0;
+  }
+  switch ((BMANM_REQUEST)req) {
+  case BMANM_REQ_START:
+    disableAllAnime( objHdl );
+    GFL_G3D_OBJECT_EnableAnime(objHdl->g3Dobj, anmNo );
+    GFL_G3D_OBJECT_ResetAnimeFrame(objHdl->g3Dobj, anmNo );
+    objHdl->anmMode[anmNo] = BM_ANMMODE_TEMPORARY;
+    break;
+  case BMANM_REQ_STOP:
+    if (objHdl->anmMode[anmNo] != BM_ANMMODE_NOTHING) {
+      objHdl->anmMode[anmNo] = BM_ANMMODE_STOP;
+    }
+    break;
+  case BMANM_REQ_END:
+    disableAllAnime( objHdl );
+    break;
+  }
+}
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+static BOOL OBJHND_getAnimeStatus(OBJ_HND * objHdl, u32 anmNo)
+{
+  GF_ASSERT(anmNo < GLOBAL_OBJ_ANMCOUNT);
+  switch (objHdl->anmMode[anmNo]) {
+  case BM_ANMMODE_NOTHING:
+    return TRUE;
+  case BM_ANMMODE_ETERNAL:
+    return FALSE;
+  case BM_ANMMODE_STOP:
+    return TRUE;
+  case BM_ANMMODE_TEMPORARY:
+    return FALSE;
+  }
+  return FALSE;
 }
 
 //============================================================================================
@@ -1197,53 +1250,26 @@ void FIELD_BMODEL_MAN_ResistMapObject
 //------------------------------------------------------------------
 BOOL FIELD_BMODEL_MAN_IsDoor(const FIELD_BMODEL_MAN * man, const GFL_G3D_MAP_GLOBALOBJ_ST * status)
 {
-  ENTRYNO_ASSERT( status->id );
-  return BMINFO_isDoor(&man->bmInfo[status->id]);
+  u8 entryNo = status->id;
+  ENTRYNO_ASSERT( man, entryNo );
+  return BMINFO_isDoor(&man->bmInfo[entryNo]);
 }
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 void * FIELD_BMODEL_MAN_GetObjHandle(FIELD_BMODEL_MAN * man, const GFL_G3D_MAP_GLOBALOBJ_ST * status)
 {
-  ENTRYNO_ASSERT( status->id );
-  return &man->objHdl[status->id];
+  u8 entryNo = status->id;
+  ENTRYNO_ASSERT( man, entryNo );
+  return &man->objHdl[entryNo];
 }
 
-//------------------------------------------------------------------
-//------------------------------------------------------------------
-static void disableAllAnime(OBJ_HND * objHdl)
-{
-  int idx;
-  for (idx = 0; idx < GLOBAL_OBJ_ANMCOUNT; idx++)
-  {
-    if (objHdl->anmMode[idx] != BM_ANMMODE_NOTHING) {
-      GFL_G3D_OBJECT_DisableAnime( objHdl->g3Dobj, idx );
-      objHdl->anmMode[idx] = BM_ANMMODE_NOTHING;
-    }
-  }
-}
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 void FIELD_BMODEL_MAN_SetAnime(FIELD_BMODEL_MAN * man, void * handle, u32 idx, BMANM_REQUEST req)
 {
   OBJ_HND * objHdl = (OBJ_HND *)handle;
-  GF_ASSERT(idx < GLOBAL_OBJ_ANMCOUNT);
-  switch ((BMANM_REQUEST)req) {
-  case BMANM_REQ_START:
-    disableAllAnime( objHdl );
-    GFL_G3D_OBJECT_EnableAnime(objHdl->g3Dobj, idx );
-    GFL_G3D_OBJECT_ResetAnimeFrame(objHdl->g3Dobj, idx );
-    objHdl->anmMode[idx] = BM_ANMMODE_TEMPORARY;
-    break;
-  case BMANM_REQ_STOP:
-    if (objHdl->anmMode[idx] != BM_ANMMODE_NOTHING) {
-      objHdl->anmMode[idx] = BM_ANMMODE_STOP;
-    }
-    break;
-  case BMANM_REQ_END:
-    disableAllAnime( objHdl );
-    break;
-  }
+  OBJHND_setAnime( objHdl, idx, req );
 }
 
 //------------------------------------------------------------------
@@ -1251,17 +1277,7 @@ void FIELD_BMODEL_MAN_SetAnime(FIELD_BMODEL_MAN * man, void * handle, u32 idx, B
 BOOL FIELD_BMODEL_MAN_GetAnimeStatus(FIELD_BMODEL_MAN *man, void * handle, u32 idx)
 {
   OBJ_HND * objHdl = (OBJ_HND *)handle;
-  GF_ASSERT(idx < GLOBAL_OBJ_ANMCOUNT);
-  switch (objHdl->anmMode[idx]) {
-  case BM_ANMMODE_NOTHING:
-    return TRUE;
-  case BM_ANMMODE_ETERNAL:
-    return FALSE;
-  case BM_ANMMODE_STOP:
-    return TRUE;
-  case BM_ANMMODE_TEMPORARY:
-    return FALSE;
-  }
+  return OBJHND_getAnimeStatus( objHdl, idx );
 }
 
 
@@ -1273,7 +1289,7 @@ BOOL FIELD_BMODEL_MAN_GetAnimeStatus(FIELD_BMODEL_MAN *man, void * handle, u32 i
 //------------------------------------------------------------------
 void FIELD_BMODEL_Draw( const FIELD_BMODEL * bmodel )
 {
-  GFL_G3D_DRAW_DrawObject( bmodel->gfl_obj, &bmodel->g3dObjStatus );
+  GFL_G3D_DRAW_DrawObject( bmodel->objHdl.g3Dobj, &bmodel->g3dObjStatus );
 #if 0
   fx32 sin, cos;
   NNSG3dRenderObj *NNSrnd;
@@ -1313,23 +1329,7 @@ FIELD_BMODEL * FIELD_BMODEL_Create(FIELD_BMODEL_MAN * man,
   GF_ASSERT( status->id < man->objRes_Count );
   objRes = &man->objRes[status->id];
   objHdl = &man->objHdl[status->id];
-  {
-    int i, count;
-	  GFL_G3D_ANM* anmTbl[GLOBAL_OBJ_ANMCOUNT];
-    GFL_G3D_RES* resTex = objRes->g3DresTex ? objRes->g3DresTex : objRes->g3DresMdl;
-	  GFL_G3D_RND* g3Drnd = GFL_G3D_RENDER_Create( objRes->g3DresMdl, 0, resTex );
-    count = GFL_G3D_OBJECT_GetAnimeCount( objHdl->g3Dobj );
-    for (i = 0; i < GLOBAL_OBJ_ANMCOUNT; i++)
-    {
-      if (i < count && objRes->g3DresAnm[i] != NULL) 
-      {
-        anmTbl[i] = GFL_G3D_ANIME_Create( g3Drnd, objRes->g3DresAnm[i], 0 );
-      } else {
-        anmTbl[i] = NULL;
-      }
-    }
-    bmodel->gfl_obj = GFL_G3D_OBJECT_Create( g3Drnd, anmTbl, GLOBAL_OBJ_ANMCOUNT );
-  }
+  OBJHND_initialize( &bmodel->objHdl, objRes );
   bmodel->suicide_flag = FALSE;
   return bmodel;
 }
@@ -1338,21 +1338,7 @@ FIELD_BMODEL * FIELD_BMODEL_Create(FIELD_BMODEL_MAN * man,
 //------------------------------------------------------------------
 void FIELD_BMODEL_Delete(FIELD_BMODEL * bmodel)
 {
-  int i;
-	GFL_G3D_RND*	g3Drnd;
-  g3Drnd = GFL_G3D_OBJECT_GetG3Drnd( bmodel->gfl_obj );
-  for (i = 0; i < GLOBAL_OBJ_ANMCOUNT; i++)
-  {
-    GFL_G3D_ANM * g3Danm = GFL_G3D_OBJECT_GetG3Danm( bmodel->gfl_obj, i );
-    if (g3Danm != NULL)
-    {
-      GFL_G3D_ANIME_Delete( g3Danm );
-    }
-  }
-  GFL_G3D_OBJECT_Delete( bmodel->gfl_obj );
-  GFL_G3D_RENDER_Delete( g3Drnd );
-  //テクスチャ、モデリング、リソースは借り物なので解放しない
-
+  OBJHND_finalize( &bmodel->objHdl );
   GFL_HEAP_FreeMemory(bmodel);
 }
 
@@ -1360,35 +1346,6 @@ void FIELD_BMODEL_Delete(FIELD_BMODEL * bmodel)
 //------------------------------------------------------------------
 void FIELD_BMODEL_SetAnime(FIELD_BMODEL * bmodel, u32 idx)
 {
-  GF_ASSERT(idx < GLOBAL_OBJ_ANMCOUNT);
-  GFL_G3D_OBJECT_EnableAnime(bmodel->gfl_obj, idx );
-  GFL_G3D_OBJECT_ResetAnimeFrame(bmodel->gfl_obj, idx );
+  OBJHND_setAnime(&bmodel->objHdl, idx, BMANM_REQ_START);
 }
-
-//------------------------------------------------------------------
-//------------------------------------------------------------------
-void FIELD_BMODEL_RunAnime(FIELD_BMODEL * bmodel)
-{
-  int i;
-  BOOL result;
-  for (i = 0; i < GLOBAL_OBJ_ANMCOUNT; i++)
-  {
-    GFL_G3D_ANM * g3Danm = GFL_G3D_OBJECT_GetG3Danm( bmodel->gfl_obj, i );
-    if (g3Danm == NULL) continue;
-    result = GFL_G3D_OBJECT_LoopAnimeFrame( bmodel->gfl_obj, i, FX32_ONE);
-    if (!result)
-    {
-      bmodel->suicide_flag = TRUE;
-      GFL_G3D_OBJECT_DisableAnime( bmodel->gfl_obj, i );
-    }
-  }
-}
-
-//------------------------------------------------------------------
-//------------------------------------------------------------------
-BOOL FIELD_BMODEL_GetAnimeStatus(FIELD_BMODEL * bmodel)
-{
-  return bmodel->suicide_flag;
-}
-
 
