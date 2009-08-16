@@ -119,10 +119,6 @@ extern void FLDMAPPER_GetSize( const FLDMAPPER* g3Dmapper, fx32* x, fx32* z );
 extern void FLDMAPPER_SetDrawOffset( FLDMAPPER *g3Dmapper, const VecFx32 *offs );
 extern void FLDMAPPER_GetDrawOffset( const FLDMAPPER *g3Dmapper, VecFx32 *offs );
 
-//------------------------------------------------------------------
-//------------------------------------------------------------------
-extern const GFL_G3D_MAP_GLOBALOBJ_ST * FLDMAPPER_CreateObjStatusList
-( const FLDMAPPER* g3Dmapper, const FLDHIT_RECT * rect, u32 * num );
 
 //--------------------------------------------------------------
 //--------------------------------------------------------------
