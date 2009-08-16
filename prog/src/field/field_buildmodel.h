@@ -135,16 +135,16 @@ extern void FIELD_BMODEL_MAN_EntryELStringID(const FIELD_BMODEL_MAN * man,
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
+typedef struct _G3DMAPOBJST G3DMAPOBJST;
 typedef struct _FIELD_BMODEL FIELD_BMODEL;
 //------------------------------------------------------------------
 //------------------------------------------------------------------
-extern FIELD_BMODEL * FIELD_BMODEL_Create(FIELD_BMODEL_MAN * man,
-    const FLDMAPPER * g3Dmapper, const GFL_G3D_MAP_GLOBALOBJ_ST * status);
+extern FIELD_BMODEL * FIELD_BMODEL_Create(FIELD_BMODEL_MAN * man, const G3DMAPOBJST * obj);
 extern void FIELD_BMODEL_Delete(FIELD_BMODEL * bmodel);
 extern void FIELD_BMODEL_Draw( const FIELD_BMODEL * bmodel );
-extern void FIELD_BMODEL_SetAnime(FIELD_BMODEL * bmodel, u32 idx);
-extern void FIELD_BMODEL_RunAnime(FIELD_BMODEL * bmodel);
-extern BOOL FIELD_BMODEL_GetAnimeStatus(FIELD_BMODEL * bmodel);
+extern void * FIELD_BMODEL_GetObjHandle( FIELD_BMODEL * bmodel );
+extern void FIELD_BMODEL_SetAnime(FIELD_BMODEL * bmodel, u32 idx, BMANM_REQUEST req);
+extern BOOL FIELD_BMODEL_GetAnimeStatus(FIELD_BMODEL * bmodel, u32 idx);
 
 extern void FIELD_BMODEL_MAN_EntryBuildModel(FIELD_BMODEL_MAN * man, FIELD_BMODEL * bmodel);
 extern void FIELD_BMODEL_MAN_releaseBuildModel(FIELD_BMODEL_MAN * man, FIELD_BMODEL * bmodel);
@@ -157,6 +157,17 @@ extern void FIELD_BMODEL_MAN_ReleaseAllMapObjects
 
 extern void FIELD_BMODEL_MAN_ResistMapObject
 (FIELD_BMODEL_MAN * man, GFL_G3D_MAP * g3Dmap, const PositionSt* objStatus, u32 objCount);
+
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+
+extern G3DMAPOBJST ** FIELD_BMODEL_MAN_CreateObjStatusList
+( FIELD_BMODEL_MAN* man, const FLDHIT_RECT * rect, u32 * num );
+
+extern BOOL FIELD_BMODEL_MAN_G3DMAPOBJSTisDoor
+(const FIELD_BMODEL_MAN * man, const G3DMAPOBJST * obj);
+
+extern void G3DMAPOBJST_changeViewFlag(G3DMAPOBJST * obj, BOOL flag);
 
 //============================================================================================
 //============================================================================================
