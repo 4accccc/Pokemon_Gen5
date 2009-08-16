@@ -13,11 +13,15 @@
 #include "gamesystem/game_event.h"
 #include "gamesystem/game_data.h"
 
+#include "field/field_const.h"
+
 #include "fieldmap.h"
 #include "field_player.h"
 #include "field_buildmodel.h"
 
-#include "field/field_const.h"
+#include "event_fieldmap_control.h" //EVENT_FieldFadeOut
+#include "event_mapchange.h"        //MAPCHANGE_setNextBGM
+#include "event_fldmmdl_control.h"  //EVENT_PlayerOneStepAnime
 #include "field_door_anime.h"
 
 //============================================================================================
@@ -26,7 +30,7 @@ static GMEVENT_RESULT FieldDoorAnimeEvent(GMEVENT * event, int *seq, void * work
 
 static void makeRect(FLDHIT_RECT * rect, const VecFx32 * pos);
 static void getPlayerFrontPos(FIELDMAP_WORK * fieldmap, VecFx32 * pos);
-static void * searchDoorObject(FIELDMAP_WORK *fieldmap, const VecFx32 *pos);
+static G3DMAPOBJST * searchDoorObject(FIELD_BMODEL_MAN * bmodel_man, const VecFx32 * pos);
 
 
 //============================================================================================
@@ -36,125 +40,256 @@ enum {
   ANM_INDEX_DOOR_OPEN = 0,
   ANM_INDEX_DOOR_CLOSE,
 };
+
+//============================================================================================
+//============================================================================================
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 typedef struct {
-  GAMESYS_WORK * gsys;
-  GAMEDATA * gamedata;
-  FIELDMAP_WORK * fieldmap;
-  HEAPID heapID;
+  //以下はワーク生成時にセットされる
+  GAMESYS_WORK * gsys;  //<<<ゲームシステムへのポインタ
+  LOCATION loc_req;     //<<<次のマップを指すロケーション指定（BGMフェード処理の係数）
+  VecFx32 pos;          //<<<ドアを検索する場所
+
+  //以下はシーケンス動作中にセットされる
   FIELD_BMODEL * entry;
-  int anm_idx;
-  VecFx32 pos;
+  G3DMAPOBJST * obj;
 }FIELD_DOOR_ANIME_WORK;
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
-static GMEVENT_RESULT FieldDoorAnimeEvent(GMEVENT * event, int *seq, void * work)
+static GMEVENT_RESULT ExitEvent_DoorOut(GMEVENT * event, int *seq, void * work)
 {
-  FIELD_DOOR_ANIME_WORK * fdaw = work;
-  
-  FLDMAPPER * fldmapper = FIELDMAP_GetFieldG3Dmapper(fdaw->fieldmap);
+  enum {
+    SEQ_DOOROUT_INIT = 0,
+    SEQ_DOOROUT_OPENANIME_START,
+    SEQ_DOOROUT_OPENANIME_WAIT,
+    SEQ_DOOROUT_PLAYER_STEP,
+    SEQ_DOOROUT_CLOSEANIME_START,
+    SEQ_DOOROUT_CLOSEANIME_WAIT,
+    SEQ_DOOROUT_END,
+  };
+	FIELD_DOOR_ANIME_WORK * fdaw = work;
+	GAMESYS_WORK  * gsys = fdaw->gsys;
+  GAMEDATA * gamedata = GAMESYSTEM_GetGameData( gsys );
+  FIELDMAP_WORK * fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
+
+  FLDMAPPER * fldmapper = FIELDMAP_GetFieldG3Dmapper(fieldmap);
   FIELD_BMODEL_MAN * bmodel_man = FLDMAPPER_GetBuildModelManager(fldmapper);
 
-  switch (*seq) {
-  case 0:
-    fdaw->entry = searchDoorObject(fdaw->fieldmap, &fdaw->pos);
-    if (fdaw->entry == NULL) return GMEVENT_RES_FINISH;
-    FIELD_BMODEL_MAN_SetAnime(bmodel_man, fdaw->entry, fdaw->anm_idx, BMANM_REQ_START);
-    ++ *seq;
+  switch (*seq)
+  {
+  case SEQ_DOOROUT_INIT:
+    //自機を消す
+    MAPCHANGE_setPlayerVanish( fieldmap, TRUE );
+		GMEVENT_CallEvent(event, EVENT_FieldFadeIn(gsys, fieldmap, 0));
+    *seq = SEQ_DOOROUT_OPENANIME_START;
     break;
 
-  case 1:
-    if (fdaw->entry == NULL)
-    {
-      ++ *seq;
+  case SEQ_DOOROUT_OPENANIME_START:
+    fdaw->obj = searchDoorObject(bmodel_man, &fdaw->pos);
+    if (fdaw->obj == NULL)
+    { /* エラーよけ、ドアがない場合 */
+      *seq = SEQ_DOOROUT_PLAYER_STEP;
       break;
     }
-    if (FIELD_BMODEL_MAN_GetAnimeStatus(bmodel_man, fdaw->entry, fdaw->anm_idx) == TRUE)
+
+    fdaw->entry = FIELD_BMODEL_Create( bmodel_man, fdaw->obj );
+    FIELD_BMODEL_MAN_EntryBuildModel( bmodel_man, fdaw->entry );
+    G3DMAPOBJST_changeViewFlag(fdaw->obj, FALSE);
+    FIELD_BMODEL_SetAnime( fdaw->entry, ANM_INDEX_DOOR_OPEN, BMANM_REQ_START);
+    *seq = SEQ_DOOROUT_OPENANIME_WAIT;
+    break;
+
+  case SEQ_DOOROUT_OPENANIME_WAIT:
     {
-      if (fdaw->anm_idx == ANM_INDEX_DOOR_OPEN) {
-        FIELD_BMODEL_MAN_SetAnime(bmodel_man, fdaw->entry, fdaw->anm_idx, BMANM_REQ_STOP);
-      } else {
-        FIELD_BMODEL_MAN_SetAnime(bmodel_man, fdaw->entry, fdaw->anm_idx, BMANM_REQ_END);
+      void * objHdl = FIELD_BMODEL_GetObjHandle( fdaw->entry );
+      if ( FIELD_BMODEL_GetAnimeStatus( fdaw->entry, ANM_INDEX_DOOR_OPEN) == TRUE)
+      {
+        FIELD_BMODEL_SetAnime( fdaw->entry, ANM_INDEX_DOOR_OPEN, BMANM_REQ_STOP);
+        *seq = SEQ_DOOROUT_PLAYER_STEP;
+        break;
       }
-      fdaw->entry = NULL;
     }
     break;
-  case 2:
-    return GMEVENT_RES_FINISH;
-
-    ++ *seq;
+  case SEQ_DOOROUT_PLAYER_STEP:
+    //自機出現、一歩移動アニメ
+    MAPCHANGE_setPlayerVanish( fieldmap, FALSE );
+    GMEVENT_CallEvent( event, EVENT_PlayerOneStepAnime(gsys, fieldmap) );
+    *seq = SEQ_DOOROUT_CLOSEANIME_START;
     break;
+
+  case SEQ_DOOROUT_CLOSEANIME_START:
+    if (fdaw->obj == NULL)
+    { /* エラーよけ、ドアがない場合 */
+      *seq = SEQ_DOOROUT_END;
+      break;
+    }
+    //ドアを閉じるアニメ適用
+    {
+      void * objHdl = FIELD_BMODEL_GetObjHandle( fdaw->entry );
+      FIELD_BMODEL_SetAnime( fdaw->entry, ANM_INDEX_DOOR_OPEN, BMANM_REQ_END);
+      FIELD_BMODEL_SetAnime( fdaw->entry, ANM_INDEX_DOOR_CLOSE, BMANM_REQ_START);
+    }
+    *seq = SEQ_DOOROUT_CLOSEANIME_WAIT;
+    break;
+
+  case SEQ_DOOROUT_CLOSEANIME_WAIT:
+    {
+      void * objHdl = FIELD_BMODEL_GetObjHandle( fdaw->entry );
+      if (FIELD_BMODEL_GetAnimeStatus( objHdl, ANM_INDEX_DOOR_OPEN) == TRUE)
+      {
+        FIELD_BMODEL_SetAnime( fdaw->entry, ANM_INDEX_DOOR_CLOSE, BMANM_REQ_END);
+        *seq = SEQ_DOOROUT_END;
+        break;
+      }
+    }
+  case SEQ_DOOROUT_END:
+    if (fdaw->entry)
+    {
+      FIELD_BMODEL_MAN_releaseBuildModel( bmodel_man, fdaw->entry );
+      FIELD_BMODEL_Delete( fdaw->entry );
+      fdaw->entry = NULL;
+    }
+    if (fdaw->obj)
+    {
+      G3DMAPOBJST_changeViewFlag(fdaw->obj, TRUE);
+      fdaw->obj = NULL;
+    }
+    return GMEVENT_RES_FINISH;
   }
-    //自機の目の前にドアを探す
-    //  自機の目の前の領域を取得
-    //  配置モデルを検索
-    //  ヒットした配置モデルの中にドアがあるかどうかをチェック
-    //
-    //ドアを開くアニメを実行
-    //  そのドアに適合したアニメを取得
-    //自機がドアに入るアニメを実行
-    //自機を消去
   return GMEVENT_RES_CONTINUE;
 }
+
 //------------------------------------------------------------------
+/**
+ * @brief ドアからでてくる一連の演出イベント
+ * @param gsys
+ * @param fieldmap
+ * @param loc
+ * @return  GMEVENT
+ */
 //------------------------------------------------------------------
-GMEVENT * EVENT_FieldDoorOpenAnime(GAMESYS_WORK * gsys, FIELDMAP_WORK *fieldmap)
+GMEVENT * EVENT_FieldDoorOutAnime( GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap )
 {
   GMEVENT * event;
   FIELD_DOOR_ANIME_WORK * fdaw;
-  event = GMEVENT_Create( gsys, NULL, FieldDoorAnimeEvent, sizeof(FIELD_DOOR_ANIME_WORK) );
-  fdaw = GMEVENT_GetEventWork(event);
+  event = GMEVENT_Create( gsys, NULL,ExitEvent_DoorOut, sizeof(FIELD_DOOR_ANIME_WORK) ); 
+
+  fdaw = GMEVENT_GetEventWork( event );
   fdaw->gsys = gsys;
-  fdaw->gamedata = GAMESYSTEM_GetGameData(gsys);
-  fdaw->fieldmap = fieldmap;
-  fdaw->heapID = FIELDMAP_GetHeapID(fieldmap);
-  fdaw->anm_idx = ANM_INDEX_DOOR_OPEN;
+  //fdaw->loc_req = * loc;
   getPlayerFrontPos(fieldmap, &fdaw->pos);
+
+  fdaw->entry = NULL;
+  fdaw->obj = NULL;
+  
   return event;
 }
 
-//============================================================================================
-//============================================================================================
 //------------------------------------------------------------------
 //------------------------------------------------------------------
-GMEVENT * EVENT_FieldDoorClose(GAMESYS_WORK * gsys, FIELDMAP_WORK *fieldmap)
+static GMEVENT_RESULT ExitEvent_DoorIn(GMEVENT * event, int *seq, void * work)
+{
+  enum {
+    SEQ_DOORIN_OPENANIME_START = 0,
+    SEQ_DOORIN_OPENANIME_WAIT,
+    SEQ_DOORIN_PLAYER_ONESTEP,
+    SEQ_DOORIN_FADEOUT,
+    SEQ_DOORIN_END,
+  };
+
+	FIELD_DOOR_ANIME_WORK * fdaw = work;
+	GAMESYS_WORK  * gsys = fdaw->gsys;
+  GAMEDATA * gamedata = GAMESYSTEM_GetGameData( gsys );
+  FIELDMAP_WORK * fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
+
+  FLDMAPPER * fldmapper = FIELDMAP_GetFieldG3Dmapper(fieldmap);
+  FIELD_BMODEL_MAN * bmodel_man = FLDMAPPER_GetBuildModelManager(fldmapper);
+
+  switch (*seq)
+  {
+  case SEQ_DOORIN_OPENANIME_START:
+    fdaw->obj = searchDoorObject(bmodel_man, &fdaw->pos);
+    if (fdaw->obj == NULL)
+    { /* エラーよけ、ドアがない場合 */
+      *seq = SEQ_DOORIN_FADEOUT;
+      break;
+    }
+
+    fdaw->entry = FIELD_BMODEL_Create( bmodel_man, fdaw->obj );
+    FIELD_BMODEL_MAN_EntryBuildModel( bmodel_man, fdaw->entry );
+    G3DMAPOBJST_changeViewFlag(fdaw->obj, FALSE);
+    FIELD_BMODEL_SetAnime( fdaw->entry, ANM_INDEX_DOOR_OPEN, BMANM_REQ_START);
+    *seq = SEQ_DOORIN_OPENANIME_WAIT;
+    break;
+
+  case SEQ_DOORIN_OPENANIME_WAIT:
+    if ( FIELD_BMODEL_GetAnimeStatus( fdaw->entry, ANM_INDEX_DOOR_OPEN) == TRUE)
+    {
+      FIELD_BMODEL_SetAnime( fdaw->entry, ANM_INDEX_DOOR_OPEN, BMANM_REQ_STOP);
+      *seq = SEQ_DOORIN_PLAYER_ONESTEP;
+      break;
+    }
+    break;
+
+  case SEQ_DOORIN_PLAYER_ONESTEP:
+    GMEVENT_CallEvent( event, EVENT_PlayerOneStepAnime(gsys, fieldmap) );
+    *seq = SEQ_DOORIN_FADEOUT;
+    break;
+
+  case SEQ_DOORIN_FADEOUT:
+    MAPCHANGE_setNextBGM(gamedata, fdaw->loc_req.zone_id);
+		GMEVENT_CallEvent( event, EVENT_FieldFadeOut(gsys, fieldmap, 0) );
+    *seq = SEQ_DOORIN_END;
+    break;
+
+  case SEQ_DOORIN_END:
+    if (fdaw->entry)
+    {
+      FIELD_BMODEL_MAN_releaseBuildModel( bmodel_man, fdaw->entry );
+      FIELD_BMODEL_Delete( fdaw->entry );
+      fdaw->entry = NULL;
+    }
+    if (fdaw->obj)
+    {
+      G3DMAPOBJST_changeViewFlag(fdaw->obj, TRUE);
+      fdaw->obj = NULL;
+    }
+    return GMEVENT_RES_FINISH;
+  }
+  return GMEVENT_RES_CONTINUE;
+}
+
+//------------------------------------------------------------------
+/**
+ * @brief ドアに入る一連の演出イベント
+ * @param gsys
+ * @param fieldmap
+ * @param loc
+ * @return  GMEVENT
+ */
+//------------------------------------------------------------------
+GMEVENT * EVENT_FieldDoorInAnime
+( GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap, const LOCATION * loc )
 {
   GMEVENT * event;
   FIELD_DOOR_ANIME_WORK * fdaw;
-  event = GMEVENT_Create(gsys, NULL, FieldDoorAnimeEvent, sizeof(FIELD_DOOR_ANIME_WORK));
-  fdaw = GMEVENT_GetEventWork(event);
+  event = GMEVENT_Create( gsys, NULL, ExitEvent_DoorIn, sizeof(FIELD_DOOR_ANIME_WORK) ); 
+
+  fdaw = GMEVENT_GetEventWork( event );
   fdaw->gsys = gsys;
-  fdaw->gamedata = GAMESYSTEM_GetGameData(gsys);
-  fdaw->fieldmap = fieldmap;
-  fdaw->heapID = FIELDMAP_GetHeapID(fieldmap);
-  fdaw->anm_idx = ANM_INDEX_DOOR_CLOSE;
-  {
-    FIELD_PLAYER * player = FIELDMAP_GetFieldPlayer(fieldmap);
-    FIELD_PLAYER_GetPos(player, &fdaw->pos);
-  }
+  fdaw->loc_req = * loc;
+  getPlayerFrontPos(fieldmap, &fdaw->pos);
+
+  fdaw->entry = NULL;
+  fdaw->obj = NULL;
+  
   return event;
 }
 
 //============================================================================================
 //============================================================================================
-//------------------------------------------------------------------
-//------------------------------------------------------------------
-
-//============================================================================================
-//============================================================================================
-//------------------------------------------------------------------
-//------------------------------------------------------------------
-static void makeRect(FLDHIT_RECT * rect, const VecFx32 * pos)
-{
-  enum { RECT_SIZE = (FIELD_CONST_GRID_SIZE * 2) << FX32_SHIFT };
-  rect->top = pos->z - RECT_SIZE;
-  rect->bottom = pos->z + RECT_SIZE;
-  rect->left = pos->x - RECT_SIZE;
-  rect->right = pos->x + RECT_SIZE;
-}
-
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 static void getPlayerFrontPos(FIELDMAP_WORK * fieldmap, VecFx32 * pos)
@@ -176,35 +311,54 @@ static void getPlayerFrontPos(FIELDMAP_WORK * fieldmap, VecFx32 * pos)
                   GF_ASSERT(0);
   }
 }
-//------------------------------------------------------------------
-//------------------------------------------------------------------
-static void * searchDoorObject(FIELDMAP_WORK *fieldmap, const VecFx32 *pos)
-{
-  FLDHIT_RECT rect;
-  void * entry = NULL;
 
-  makeRect(&rect, pos);
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+static void makeRect(FLDHIT_RECT * rect, const VecFx32 * pos)
+{
+  enum { RECT_SIZE = (FIELD_CONST_GRID_SIZE * 2) << FX32_SHIFT };
+  rect->top = pos->z - RECT_SIZE;
+  rect->bottom = pos->z + RECT_SIZE;
+  rect->left = pos->x - RECT_SIZE;
+  rect->right = pos->x + RECT_SIZE;
+}
+
+//------------------------------------------------------------------
+/**
+ * @brief 指定位置付近のドア配置モデルを検索する
+ * @param bmodel_man
+ * @param pos
+ * @return NULL   見つからなかった
+ * @return G3DMAPOBJST *  見つけたドア配置モデルへの参照
+ */
+//------------------------------------------------------------------
+static G3DMAPOBJST * searchDoorObject(FIELD_BMODEL_MAN * bmodel_man, const VecFx32 * pos)
+{
+  G3DMAPOBJST * entry = NULL;
+  G3DMAPOBJST ** array;
+  u32 result_num;
 
   {
-    FLDMAPPER * fldmapper = FIELDMAP_GetFieldG3Dmapper(fieldmap);
-    FIELD_BMODEL_MAN * bmodel_man = FLDMAPPER_GetBuildModelManager(fldmapper);
-    const GFL_G3D_MAP_GLOBALOBJ_ST * st;
-    u32 num;
+    //検索矩形を作成
+    FLDHIT_RECT rect;
+    makeRect(&rect, pos);
+    //矩形範囲内の配置モデルリストを生成する
+    array = FIELD_BMODEL_MAN_CreateObjStatusList(bmodel_man, &rect, &result_num);
+  }
+  {
     int i;
-
-    st = FLDMAPPER_CreateObjStatusList( fldmapper, &rect, &num);
-    if (st == NULL) return NULL;
-
-    for (i = 0; i < num; i++)
+    for (i = 0; i < result_num; i++)
     {
-      if (FIELD_BMODEL_MAN_IsDoor(bmodel_man, &st[i]) == TRUE)
+      if (FIELD_BMODEL_MAN_G3DMAPOBJSTisDoor(bmodel_man, array[i]) == TRUE)
       {
-        entry = FIELD_BMODEL_MAN_GetObjHandle(bmodel_man, &st[i]);
+        //取得した配置モデルリストから、ドアであるかチェック
+        entry = array[i];
         break;
       }
     }
-    GFL_HEAP_FreeMemory((void*)st);
   }
+  //矩形範囲内の配置モデルリストを解放する
+  GFL_HEAP_FreeMemory(array);
   return entry;
 }
 

@@ -23,7 +23,7 @@
 #include "field/eventdata_sxy.h"
 #include "field/fldmmdl.h"
 
-#include "./event_fieldmap_control.h"
+#include "event_fieldmap_control.h"
 #include "event_mapchange.h"
 #include "sound/pm_sndsys.h"		//サウンドシステム参照
 
@@ -43,7 +43,6 @@ static void SetMMdl( GAMESYS_WORK *gsys, const LOCATION *loc_req, GAMEINIT_MODE 
 static void setFirstBGM(GAMEDATA * gamedata, u16 zone_id);	
 static void setNextBGM(GAMEDATA * gamedata, u16 zone_id);
 
-static void setPlayerVanish(FIELDMAP_WORK * fieldmap, BOOL vanish_flag);
 //============================================================================================
 //
 //	イベント：ゲーム開始
@@ -228,23 +227,14 @@ static GMEVENT_RESULT EVENT_FadeOut_ExitTypeDoor(GMEVENT * event, int *seq, void
 	MAPCHANGE_WORK * mcw = work;
 	GAMESYS_WORK  * gsys = mcw->gsys;
 	FIELD_MAIN_WORK * fieldmap = mcw->fieldmap;
-	GAMEDATA * gamedata = mcw->gamedata;
+
   switch (*seq)
   {
   case 0:
-    GMEVENT_CallEvent( event, EVENT_FieldDoorOpenAnime(gsys, fieldmap) );
+    GMEVENT_CallEvent( event, EVENT_FieldDoorInAnime(gsys, fieldmap, &mcw->loc_req) );
     ++ *seq;
     break;
   case 1:
-    GMEVENT_CallEvent( event, EVENT_PlayerOneStepAnime(gsys, fieldmap) );
-    ++ *seq;
-    break;
-  case 2:
-    setNextBGM(gamedata, mcw->loc_req.zone_id);
-		GMEVENT_CallEvent(event, EVENT_FieldFadeOut(gsys, fieldmap, 0));
-    ++ *seq;
-    break;
-  case 3:
     return GMEVENT_RES_FINISH;
   }
   return GMEVENT_RES_CONTINUE;
@@ -336,32 +326,14 @@ static GMEVENT_RESULT EVENT_FadeIn_ExitTypeDoor(GMEVENT * event, int *seq, void 
 	MAPCHANGE_WORK * mcw = work;
 	GAMESYS_WORK  * gsys = mcw->gsys;
 	FIELD_MAIN_WORK * fieldmap = mcw->fieldmap;
-	GAMEDATA * gamedata = mcw->gamedata;
+
   switch (*seq)
   {
   case 0:
-    //自機を消す
-    setPlayerVanish( fieldmap, TRUE );
-		GMEVENT_CallEvent(event, EVENT_FieldFadeIn(gsys, fieldmap, 0));
+    GMEVENT_CallEvent( event, EVENT_FieldDoorOutAnime( gsys, fieldmap ) );
     ++ *seq;
     break;
   case 1:
-    //ドアを開くアニメ適用
-    GMEVENT_CallEvent( event, EVENT_FieldDoorOpenAnime(gsys, fieldmap) );
-    ++ *seq;
-    break;
-  case 2:
-    //自機出現、一歩移動アニメ
-    setPlayerVanish( fieldmap, FALSE );
-    GMEVENT_CallEvent( event, EVENT_PlayerOneStepAnime(gsys, fieldmap) );
-    ++ *seq;
-    break;
-  case 3:
-    //ドアを閉じるアニメ適用
-    GMEVENT_CallEvent( event, EVENT_FieldDoorClose(gsys, fieldmap) );
-    ++ *seq;
-    break;
-  case 4:
     return GMEVENT_RES_FINISH;
   }
   return GMEVENT_RES_CONTINUE;
@@ -394,6 +366,7 @@ static GMEVENT_RESULT EVENT_MapChange(GMEVENT * event, int *seq, void*work)
     {
       GMEVENT * sub_event;
       MAPCHANGE_WORK * sub_work;
+      TAMADA_Printf("FADE OUT EVENT TYPE: %d\n", mcw->exit_type);
       sub_event = GMEVENT_Create(gsys, NULL,
           fadeOutEventTable[mcw->exit_type], sizeof(MAPCHANGE_WORK));
       sub_work = GMEVENT_GetEventWork(sub_event);
@@ -754,6 +727,13 @@ static void setNextBGM(GAMEDATA * gamedata, u16 zone_id)
 }
 
 //--------------------------------------------------------------
+//--------------------------------------------------------------
+void MAPCHANGE_setNextBGM(GAMEDATA * gamedata, u16 zone_id)
+{
+  setNextBGM( gamedata, zone_id );
+}
+
+//--------------------------------------------------------------
 static void setFirstBGM(GAMEDATA * gamedata, u16 zone_id)
 {
   PLAYER_WORK *player = GAMEDATA_GetPlayerWork( gamedata, 0 );
@@ -766,7 +746,7 @@ static void setFirstBGM(GAMEDATA * gamedata, u16 zone_id)
 //============================================================================================
 //--------------------------------------------------------------
 //--------------------------------------------------------------
-static void setPlayerVanish(FIELDMAP_WORK * fieldmap, BOOL vanish_flag)
+void MAPCHANGE_setPlayerVanish(FIELDMAP_WORK * fieldmap, BOOL vanish_flag)
 {
   FIELD_PLAYER * player = FIELDMAP_GetFieldPlayer(fieldmap);
   MMDL *fmmdl = FIELD_PLAYER_GetMMdl( player );

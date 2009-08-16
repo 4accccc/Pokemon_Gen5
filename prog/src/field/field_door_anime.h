@@ -9,5 +9,8 @@
 //============================================================================================
 #pragma once
 
-extern GMEVENT * EVENT_FieldDoorOpenAnime(GAMESYS_WORK * gsys, FIELDMAP_WORK *fieldmap);
-extern GMEVENT * EVENT_FieldDoorClose(GAMESYS_WORK * gsys, FIELDMAP_WORK *fieldmap);
+extern GMEVENT * EVENT_FieldDoorInAnime
+( GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap, const LOCATION * loc );
+
+extern GMEVENT * EVENT_FieldDoorOutAnime
+( GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap );
