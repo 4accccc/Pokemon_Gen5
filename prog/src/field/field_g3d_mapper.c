@@ -191,7 +191,7 @@ FLDMAPPER*	FLDMAPPER_Create( HEAPID heapID )
 	
   g3Dmapper->granime = NULL;
   //  配置モデルマネジャー生成
-  g3Dmapper->bmodel_man = FIELD_BMODEL_MAN_Create(g3Dmapper->heapID);
+  g3Dmapper->bmodel_man = FIELD_BMODEL_MAN_Create(g3Dmapper->heapID, g3Dmapper);
 	return g3Dmapper;
 }
 

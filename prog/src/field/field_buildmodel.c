@@ -147,6 +147,8 @@ struct _FIELD_BMODEL_MAN
 {
 	HEAPID heapID;
 
+  FLDMAPPER * fldmapper;  //描画オフセット取得に必要。できたら不要にしたい
+
 	u8 BMIDToEntryTable[BMODEL_ID_MAX];
 
 	u16 entryCount;
@@ -262,11 +264,12 @@ static void G3DMAPOBJST_deleteByG3Dmap(FIELD_BMODEL_MAN * man, GFL_G3D_MAP * g3D
  * @param heapID
  */
 //------------------------------------------------------------------
-FIELD_BMODEL_MAN * FIELD_BMODEL_MAN_Create(HEAPID heapID)
+FIELD_BMODEL_MAN * FIELD_BMODEL_MAN_Create(HEAPID heapID, FLDMAPPER * fldmapper)
 {	
   int i;
 	FIELD_BMODEL_MAN * man = GFL_HEAP_AllocMemory(heapID, sizeof(FIELD_BMODEL_MAN));
 	man->heapID = heapID;
+  man->fldmapper = fldmapper;
 
   for (i = 0; i < FIELD_BMODEL_ELBOARD_ID_MAX; i ++) 
   { 
@@ -1232,7 +1235,6 @@ void FIELD_BMODEL_MAN_ResistAllMapObjects
 {
   GFL_G3D_MAP_GLOBALOBJ_ST status;
   int i, j, count;
-  BOOL hasSubModel;
 
   for( i=0, j = 0, count = objCount; i<count ; j++, i++ )
   {
@@ -1243,12 +1245,10 @@ void FIELD_BMODEL_MAN_ResistAllMapObjects
       GF_ASSERT(0);
     }
 
-    hasSubModel = FIELD_BMODEL_MAN_GetSubModel(man,
-          objStatus[i].resourceID, &status.trans, &status.id);
-
     FIELD_BMODEL_MAN_ResistMapObject(man, g3Dmap, &objStatus[i], j);
 
-    if (hasSubModel == TRUE)
+    if (TRUE == FIELD_BMODEL_MAN_GetSubModel(man,
+          objStatus[i].resourceID, &status.trans, &status.id) )
     {
       TAMADA_Printf("Resist Sub Model:index(%d) model id(%d)\n", i, status.id);
       j++;
@@ -1257,7 +1257,6 @@ void FIELD_BMODEL_MAN_ResistAllMapObjects
       status.trans.y += objStatus[i].ypos;
       status.trans.z -= objStatus[i].zpos;
       G3DMAPOBJST_create(man, g3Dmap, &status, j);
-      //GFL_G3D_MAP_ResistGlobalObj( g3Dmap, &status, j );
     }
 
   }
@@ -1291,6 +1290,7 @@ static inline BOOL G3DMAPOBJST_exists(const G3DMAPOBJST * obj)
 {
   return (obj->g3Dmap != NULL);
 }
+
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 static void G3DMAPOBJST_init(FIELD_BMODEL_MAN * man, G3DMAPOBJST * obj)
@@ -1313,12 +1313,12 @@ static G3DMAPOBJST * G3DMAPOBJST_create(
     G3DMAPOBJST * obj = &man->g3DmapObjSt[i];
     if ( G3DMAPOBJST_exists(obj) == FALSE )
     {
-      GFL_G3D_MAP_ResistGlobalObj( g3Dmap, status, idx);
+      GFL_G3D_MAP_ResistGlobalObj( g3Dmap, status, idx );
       obj->g3Dmap = g3Dmap;
       obj->entryNoBackup = GFL_G3D_MAP_OBJID_NULL;
       obj->index = idx;
       obj->viewFlag = TRUE;
-      obj->objSt = GFL_G3D_MAP_GetGlobalObj(g3Dmap, idx);
+      obj->objSt = GFL_G3D_MAP_GetGlobalObj( g3Dmap, idx );
 
       return obj;
     }
@@ -1367,7 +1367,7 @@ G3DMAPOBJST ** FIELD_BMODEL_MAN_CreateObjStatusList
     if ( G3DMAPOBJST_exists(obj) == FALSE ) continue;
     GFL_G3D_MAP_GetTrans( obj->g3Dmap, &pos );
     VEC_Add( &obj->objSt->trans, &pos, &pos );
-    if (rect->top <= pos.z && pos.z <= rect->bottom && rect->left <= pos.x && pos.x <= rect->right)
+    if ( FLDHIT_RECT_IsIncludePos( rect, pos.x, pos.z ) == TRUE )
     {
       result[count] = obj;
       count ++;
@@ -1409,9 +1409,6 @@ void G3DMAPOBJST_changeViewFlag(G3DMAPOBJST * obj, BOOL flag)
     obj->viewFlag = FALSE;
   }
 }
-
-//------------------------------------------------------------------
-//------------------------------------------------------------------
 
 //============================================================================================
 //============================================================================================
@@ -1473,6 +1470,7 @@ FIELD_BMODEL * FIELD_BMODEL_Create(FIELD_BMODEL_MAN * man, const G3DMAPOBJST * o
 {
   const OBJ_RES * objRes;
   const GFL_G3D_MAP_GLOBALOBJ_ST * status = obj->objSt;
+  VecFx32 drawOffset;
 
   FIELD_BMODEL * bmodel = GFL_HEAP_AllocMemory( man->heapID, sizeof(FIELD_BMODEL) );
   //ローテーション設定
@@ -1484,6 +1482,8 @@ FIELD_BMODEL * FIELD_BMODEL_Create(FIELD_BMODEL_MAN * man, const G3DMAPOBJST * o
   //位置設定：g3Dmapに依存せず表示するため、ここで座標加算しておく
   GFL_G3D_MAP_GetTrans( obj->g3Dmap, &bmodel->g3dObjStatus.trans );
   VEC_Add( &bmodel->g3dObjStatus.trans, &status->trans, &bmodel->g3dObjStatus.trans );
+  FLDMAPPER_GetDrawOffset( man->fldmapper, &drawOffset );
+  VEC_Add( &bmodel->g3dObjStatus.trans, &drawOffset, &bmodel->g3dObjStatus.trans );
   
   //スケール設定
   VEC_Set( &bmodel->g3dObjStatus.scale, FX32_ONE, FX32_ONE, FX32_ONE );
