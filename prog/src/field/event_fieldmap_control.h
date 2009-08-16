@@ -88,9 +88,4 @@ extern GMEVENT * EVENT_FieldClose(GAMESYS_WORK *gsys, FIELD_MAIN_WORK * fieldmap
 extern GMEVENT * EVENT_FieldSubProc(GAMESYS_WORK * gsys, FIELD_MAIN_WORK * fieldmap,
 		FSOverlayID ov_id, const GFL_PROC_DATA * proc_data, void * proc_work);
 
-//------------------------------------------------------------------
-/**
- */
-//------------------------------------------------------------------
-extern GMEVENT * DEBUG_EVENT_FieldSample(GAMESYS_WORK * gsys, FIELD_MAIN_WORK *fieldmap);
 

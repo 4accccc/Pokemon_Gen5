@@ -226,17 +226,6 @@ static GMEVENT_RESULT GameChangeEvent(GMEVENT * event, int * seq, void * work)
 	return GMEVENT_RES_CONTINUE;
 }
 
-#if 0
-FS_EXTERN_OVERLAY(watanabe_sample);
-extern const GFL_PROC_DATA TestProg1MainProcData;
-//------------------------------------------------------------------
-//------------------------------------------------------------------
-GMEVENT * DEBUG_EVENT_FieldSample(GAMESYS_WORK * gsys, FIELD_MAIN_WORK * fieldmap)
-{
-	return EVENT_FieldSubProc(gsys, fieldmap,
-			FS_OVERLAY_ID(watanabe_sample), &TestProg1MainProcData, NULL);
-}
-#endif
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
