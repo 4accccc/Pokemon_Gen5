@@ -84,24 +84,8 @@ static GMEVENT_RESULT ExitEvent_DoorOut(GMEVENT * event, int *seq, void * work)
   switch (*seq)
   {
   case SEQ_DOOROUT_INIT:
-    {
-      FIELD_PLAYER * player = FIELDMAP_GetFieldPlayer( fieldmap );
-      MMDL *         fmmdl  = FIELD_PLAYER_GetMMdl( player );
-      u16            dir    = MMDL_GetDirDisp( fmmdl );
-      FIELD_CAMERA* cam = FIELDMAP_GetFieldCamera( fieldmap );
-      if( dir == DIR_LEFT )
-      {
-        FIELD_CAMERA_SetAngleYaw( cam, 0xffff/360*270 );
-        FIELD_CAMERA_SetAnglePitch( cam, 0xffff/360*20 );
-        FIELD_CAMERA_SetAngleLen( cam, 100<<FX32_SHIFT );
-      }
-      else if( dir == DIR_RIGHT )
-      {
-        FIELD_CAMERA_SetAngleYaw( cam, 0xffff/360*90 );
-        FIELD_CAMERA_SetAnglePitch( cam, 0xffff/360*20 );
-        FIELD_CAMERA_SetAngleLen( cam, 100<<FX32_SHIFT );
-      }
-    }
+    // フェードインする前に, カメラの初期設定を行う
+    EVENT_CAMERA_ROTATE_PrepareDoorOut( fieldmap );
     //自機を消す
     MAPCHANGE_setPlayerVanish( fieldmap, TRUE );
 		GMEVENT_CallEvent(event, EVENT_FieldFadeIn(gsys, fieldmap, 0));
@@ -109,20 +93,7 @@ static GMEVENT_RESULT ExitEvent_DoorOut(GMEVENT * event, int *seq, void * work)
     break;
 
   case SEQ_DOOROUT_CAMERA_ROTATE:
-    {
-      FIELD_PLAYER * player = FIELDMAP_GetFieldPlayer( fieldmap );
-      MMDL *         fmmdl  = FIELD_PLAYER_GetMMdl( player );
-      u16            dir    = MMDL_GetDirDisp( fmmdl );
-
-      if( ( dir == DIR_LEFT ) )
-      {
-        GMEVENT_CallEvent( event, EVENT_CameraRotateRightDoorOut(gsys, fieldmap) );
-      } 
-      else if( ( dir == DIR_RIGHT ) )
-      {
-        GMEVENT_CallEvent( event, EVENT_CameraRotateLeftDoorOut(gsys, fieldmap) );
-      } 
-    } 
+    EVENT_CAMERA_ROTATE_CallDoorOutEvent( event, gsys, fieldmap );
     *seq = SEQ_DOOROUT_OPENANIME_START;
     break;
 
@@ -275,29 +246,8 @@ static GMEVENT_RESULT ExitEvent_DoorIn(GMEVENT * event, int *seq, void * work)
     break;
 
   case SEQ_DOORIN_CAMERA_ROTATE: 
-    {
-      FIELD_PLAYER * player = FIELDMAP_GetFieldPlayer( fieldmap );
-      MMDL *         fmmdl  = FIELD_PLAYER_GetMMdl( player );
-      u16            dir    = MMDL_GetDirDisp( fmmdl );
-
-      if( ( dir == DIR_LEFT ) )
-      {
-        GMEVENT_CallEvent( event, EVENT_CameraRotateLeftDoorIn(gsys, fieldmap) );
-      } 
-      else if( ( dir == DIR_RIGHT ) )
-      {
-        GMEVENT_CallEvent( event, EVENT_CameraRotateRightDoorIn(gsys, fieldmap) );
-      } 
-    }
-
-    if( fdaw->obj == NULL )
-    { // エラーよけ、ドアがない場合
-      *seq = SEQ_DOORIN_PLAYER_ONESTEP;
-    }
-    else
-    {
-      *seq = SEQ_DOORIN_PLAYER_ONESTEP;
-    }
+    EVENT_CAMERA_ROTATE_CallDoorInEvent( event, gsys, fieldmap ); 
+    *seq = SEQ_DOORIN_PLAYER_ONESTEP;
     break;
 
   case SEQ_DOORIN_PLAYER_ONESTEP:
