@@ -90,6 +90,8 @@ static GFL_PROC_RESULT PokeListProc_Init( GFL_PROC * proc, int * seq , void *pwk
         {
         case 1:
           PP_Put( pPara , ID_PARA_hp , 20 );
+          PP_Put( pPara , ID_PARA_pp1 , 3 );
+          PP_Put( pPara , ID_PARA_pp2 , 3 );
           break;
         case 2:
           PP_Put( pPara , ID_PARA_hp , 10 );
@@ -134,10 +136,14 @@ static GFL_PROC_RESULT PokeListProc_Init( GFL_PROC * proc, int * seq , void *pwk
         //plData->item = 17; //傷薬
         //plData->item = 26; //E傷薬
         //plData->item = 28; //元気のかけら
-        plData->item = 18; //毒消し
+        //plData->item = 18; //毒消し
         //plData->item = 47; //ブロムヘキシン
+        //plData->item = 38; //PPエイド
+        //plData->item = 41; //PPマックス
+        //plData->item = 51; //Pアップ
         
         //plData->item = 44; //聖なる灰
+        plData->item = 174; //マトマの実
       }
       else
       if( GFL_UI_KEY_GetCont() & PAD_BUTTON_Y )

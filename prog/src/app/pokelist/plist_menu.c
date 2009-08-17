@@ -250,6 +250,21 @@ static void PLIST_MENU_CreateItem(  PLIST_WORK *work , PLIST_MENU_WORK *menuWork
         }
       }
       break;
+      
+    case PMIT_WAZA: //PP回復用技リスト。自動で個数分追加します
+      {
+        u8 idx;
+        for( idx=0;idx<4;idx++ )
+        {
+          const u32 wazaID = PP_Get( work->selectPokePara , ID_PARA_waza1+idx , NULL );
+          if( wazaID != 0 )
+          {
+            menuWork->itemArr[menuWork->itemNum] = PMIT_WAZA_1+idx;
+            menuWork->itemNum += 1;
+          }
+        }
+      }
+      break;
 
     case PMIT_CHANGE:  //入れ替え
       menuWork->itemArr[menuWork->itemNum] = PMIT_CHANGE;
@@ -320,7 +335,8 @@ static void PLIST_MENU_CreateItem(  PLIST_WORK *work , PLIST_MENU_WORK *menuWork
   for( i=0;i<menuWork->itemNum;i++ )
   {
     menuWork->itemWork[i].str = PLIST_MENU_CreateMenuStr( work,menuWork,menuWork->itemArr[i] );
-    if( menuWork->itemArr[i] >= PMIT_WAZA_1 && menuWork->itemArr[i] <= PMIT_WAZA_4 )
+    if( menuWork->itemArr[i] >= PMIT_WAZA_1 && menuWork->itemArr[i] <= PMIT_WAZA_4 &&
+        work->plData->mode != PL_MODE_ITEMUSE ) //アイテム使用の時は普通の文字色
     {
       menuWork->itemWork[i].msgColor = PRINTSYS_LSB_Make( PLIST_FONT_MENU_WAZA_LETTER,PLIST_FONT_MENU_SHADOW,PLIST_FONT_MENU_BACK);
     }
@@ -350,6 +366,7 @@ static STRBUF* PLIST_MENU_CreateMenuStr( PLIST_WORK *work , PLIST_MENU_WORK *men
   {
     mes_pokelist_05_02 ,  //PMIT_STATSU,  //強さを見る
     0 ,          //PMIT_HIDEN,   //秘伝技。自動で個数分追加します
+    0 ,          //PMIT_WAZA,    //PP回復用技リスト。自動で個数分追加します
     mes_pokelist_05_01 ,  //PMIT_CHANGE,  //入れ替え
     mes_pokelist_05_03 ,  //PMIT_ITEM,    //持ち物
     mes_pokelist_05_08 ,  //PMIT_CLOSE,   //閉じる
@@ -359,10 +376,10 @@ static STRBUF* PLIST_MENU_CreateMenuStr( PLIST_WORK *work , PLIST_MENU_WORK *men
     mes_pokelist_05_17 ,  //  PMIT_TAKE,    //預かる
     mes_pokelist_yes ,  //  PMIT_YES,    //はい
     mes_pokelist_no ,   //  PMIT_NO,    //いいえ
-    0 ,          //PMIT_WAZA_1,   //秘伝用技スロット１
-    0 ,          //PMIT_WAZA_2,   //秘伝用技スロット２
-    0 ,          //PMIT_WAZA_3,   //秘伝用技スロット３
-    0 ,          //PMIT_WAZA_4,   //秘伝用技スロット４
+    0 ,          //PMIT_WAZA_1,   //技スロット１
+    0 ,          //PMIT_WAZA_2,   //技スロット２
+    0 ,          //PMIT_WAZA_3,   //技スロット３
+    0 ,          //PMIT_WAZA_4,   //技スロット４
     mes_pokelist_05_10 ,  //PMIT_RET_JOIN,      //参加する
     mes_pokelist_05_11 ,  //PMIT_JOIN_CANCEL,   //参加しない
   };
@@ -370,11 +387,12 @@ static STRBUF* PLIST_MENU_CreateMenuStr( PLIST_WORK *work , PLIST_MENU_WORK *men
   
   if( type >= PMIT_WAZA_1 && type <= PMIT_WAZA_4 )
   {
+    //技は特殊処理
     const u32 wazaID = PP_Get( work->selectPokePara , ID_PARA_waza1+(type-PMIT_WAZA_1) , NULL );
     GFL_MSGDATA *msgHandle = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL , ARCID_MESSAGE , NARC_message_wazaname_dat , work->heapId );
     
-    //秘伝技は特殊処理
     str = GFL_MSG_CreateString( msgHandle , wazaID );
+    GFL_MSG_Delete( msgHandle );
   }
   else
   {

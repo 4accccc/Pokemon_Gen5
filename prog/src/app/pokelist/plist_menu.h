@@ -15,11 +15,13 @@
 //メニューを初期化する際に渡すアイテム群
 //上から並べる
 //後半は決定後の戻り値にも使う
+//※増やしたらPLIST_MENU_CreateMenuStrの配列も修正すること
 typedef enum
 {
 	
   PMIT_STATSU,  //強さを見る
   PMIT_HIDEN,   //秘伝技。自動で個数分追加します
+  PMIT_WAZA,    //PP回復用技リスト。自動で個数分追加します
   PMIT_CHANGE,  //入れ替え
   PMIT_ITEM,    //持ち物
   PMIT_CLOSE,   //閉じる
@@ -35,10 +37,10 @@ typedef enum
   PMIT_END_LIST,    //リスト終端用
   
   //以下戻り値専用
-  PMIT_WAZA_1 = PMIT_END_LIST,   //秘伝用技スロット１
-  PMIT_WAZA_2,   //秘伝用技スロット２
-  PMIT_WAZA_3,   //秘伝用技スロット３
-  PMIT_WAZA_4,   //秘伝用技スロット４
+  PMIT_WAZA_1 = PMIT_END_LIST,   //技スロット１(メニューの順ではなく、PPで何番目の技か？
+  PMIT_WAZA_2,   //技スロット２
+  PMIT_WAZA_3,   //技スロット３
+  PMIT_WAZA_4,   //技スロット４
   
   PMIT_RET_JOIN,      //参加する
   PMIT_JOIN_CANCEL,   //参加しない

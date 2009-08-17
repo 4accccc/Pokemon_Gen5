@@ -435,6 +435,8 @@ static void PLIST_PLATE_DrawParam( PLIST_WORK *work , PLIST_PLATE_WORK *plateWor
                       PLIST_PLATE_STR_LEVEL_X , PLIST_PLATE_STR_LEVEL_Y , fontCol );
 
     WORDSET_Delete( wordSet );
+
+    GFL_CLACT_WK_SetDrawEnable( plateWork->conditionIcon , FALSE );
   }
   else
   {
@@ -912,6 +914,12 @@ const BOOL PLIST_PALTE_UpdateHpAnime( PLIST_WORK *work , PLIST_PLATE_WORK *plate
   if( plateWork->dispHp < plateWork->nowHp )
   {
     plateWork->dispHp++;
+
+    if( plateWork->dispHp == 1 )
+    {
+      //ライフが増えるので色の変更
+      PLIST_PLATE_ChangeColor( work , plateWork , PPC_NORMAL_SELECT );
+    }
     PLIST_PLATE_ReDrawParam( work , plateWork );
     return FALSE;
   }

@@ -886,10 +886,24 @@ static void PLIST_InitMode( PLIST_WORK *work )
   case PL_MODE_ITEMUSE:
     if( PLIST_ITEM_IsDeathRecoverAllItem( work , work->plData->item ) == TRUE )
     {
-      OS_TPrintf( "PLIST mode まだ作ってない！\n");
+      const int target = PLIST_ITEM_CanUseDeathRecoverAllItem( work );
 
-      PLIST_InitMode_Select( work );
-      work->nextMainSeq = PSMS_SELECT_POKE;
+      if( target != -1 )
+      {
+        work->pokeCursor = target;
+        work->selectPokePara = PokeParty_GetMemberPointer(work->plData->pp, target);
+
+        PLIST_ITEM_MSG_UseItemFunc( work );
+        StatusRecover( work->selectPokePara , work->plData->item , 0 , work->plData->place , work->heapId );
+        PLIST_PLATE_ReDrawParam( work , work->plateWork[work->pokeCursor] );
+
+        work->nextMainSeq = work->mainSeq;
+        work->mainSeq = PSMS_FADEIN;
+      }
+      else
+      {
+        PLIST_ITEM_MSG_CanNotUseItem( work );
+      }
     }
     else
     {
@@ -1041,6 +1055,9 @@ static void PLIST_TermMode_Select_Decide( PLIST_WORK *work )
       if( isSelSkill == TRUE )
       {
         //スキル選択へ
+        PLIST_SelectMenuInit( work );
+        //中で一緒にメニューを開く
+        PLIST_InitMode_Menu( work );
       }
       else
       {
@@ -1049,7 +1066,7 @@ static void PLIST_TermMode_Select_Decide( PLIST_WORK *work )
         {
           PLIST_ITEM_MSG_UseItemFunc( work );
           
-          //実際に消費と適用
+          //実際に適用
           StatusRecover( work->selectPokePara , work->plData->item , 0 , work->plData->place , work->heapId );
           PLIST_PLATE_ReDrawParam( work , work->plateWork[work->pokeCursor] );
           
@@ -1202,6 +1219,24 @@ static void PLIST_InitMode_Menu( PLIST_WORK *work )
     
     PLIST_MSG_DeleteWordSet( work , work->msgWork );
 
+    break;
+
+  case PL_MODE_ITEMUSE:
+    //アイテム使用で来るのはPP回復の技選択時
+    itemArr[0] = PMIT_WAZA;
+    itemArr[1] = PMIT_CLOSE;
+    itemArr[2] = PMIT_END_LIST;
+    
+    PLIST_MSG_CreateWordSet( work , work->msgWork );
+    PLIST_MSG_AddWordSet_PokeName( work , work->msgWork , 0 , work->selectPokePara );
+    
+    PLIST_MSG_OpenWindow( work , work->msgWork , PMT_MENU );
+    {
+      u32 msgId = PLIST_ITEM_GetWazaListMessage( work , work->plData->item );
+      PLIST_MSG_DrawMessageNoWait( work , work->msgWork , mes_pokelist_03_05 );
+    }
+    
+    PLIST_MSG_DeleteWordSet( work , work->msgWork );
     break;
     
   default:
@@ -1886,7 +1921,7 @@ static void PLIST_SelectMenuExit( PLIST_WORK *work )
     
     PLIST_MSG_OpenWindow( work , work->msgWork , PMT_BAR );
     PLIST_MSG_DrawMessageNoWait( work , work->msgWork , mes_pokelist_02_02 );
-    //個々はモード別処理ではなく、ただのセレクト初期化
+    //ここはモード別処理ではなく、ただのセレクト初期化
     PLIST_SelectPokeInit( work );
     
     break;
@@ -1975,11 +2010,32 @@ static void PLIST_SelectMenuExit( PLIST_WORK *work )
   case PMIT_WAZA_2:
   case PMIT_WAZA_3:
   case PMIT_WAZA_4:
-    OS_TPrintf("まだ作ってない！\n");
-    PLIST_SelectPokeSetCursor( work , work->pokeCursor );
-    work->selectPokePara = NULL;
-    work->mainSeq = PSMS_SELECT_POKE;
-    PLIST_InitMode_Select( work );
+    if( work->plData->mode == PL_MODE_ITEMUSE )
+    {
+      //PP回復アイテムの選択
+      const BOOL canUse = StatusRecoverCheck( work->selectPokePara , work->plData->item , work->menuRet-PMIT_WAZA_1 , work->heapId );
+      if( canUse == TRUE )
+      {
+        PLIST_ITEM_MSG_UseItemFunc( work );
+        
+        //実際に消費と適用
+        StatusRecover( work->selectPokePara , work->plData->item , work->menuRet-PMIT_WAZA_1 , work->plData->place , work->heapId );
+        PLIST_PLATE_ReDrawParam( work , work->plateWork[work->pokeCursor] );
+      }
+      else
+      {
+        PLIST_ITEM_MSG_CanNotUseItem( work );
+      }
+    }
+    else
+    {
+      //フィールド秘伝技
+      OS_TPrintf("まだ作ってない！\n");
+      PLIST_SelectPokeSetCursor( work , work->pokeCursor );
+      work->selectPokePara = NULL;
+      work->mainSeq = PSMS_SELECT_POKE;
+      PLIST_InitMode_Select( work );
+    }
     break;
 
   default:

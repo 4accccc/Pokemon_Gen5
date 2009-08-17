@@ -19,6 +19,7 @@
 #include "plist_plate.h"
 #include "plist_message.h"
 #include "plist_item.h"
+#include "status_rcv.h"
 
 //======================================================================
 //	define
@@ -90,6 +91,8 @@ typedef enum
 static u8 PLIST_ITEM_RecoverCheck( u16 item );
 
 static void PSTATUS_HPANMCB_ReturnRecoverHp( PLIST_WORK *work );
+static void PSTATUS_HPANMCB_ReturnRecoverAllDeath( PLIST_WORK *work );
+static void PSTATUS_MSGCB_RecoverAllDeath_NextPoke( PLIST_WORK *work );
 
 static const u16 PLIST_ITEM_UTIL_GetParamExpSum( POKEMON_PARAM *pp );
 static const BOOL PLIST_ITEM_UTIL_CanAddParamExp( POKEMON_PARAM *pp , const int id , u16 item );
@@ -361,6 +364,46 @@ const BOOL PLIST_ITEM_IsDeathRecoverAllItem( PLIST_WORK *work , u16 itemNo )
   }
 }
 
+//--------------------------------------------------------------------------
+//  ‘S‘Ì•œŠˆƒAƒCƒeƒ€‘ÎÛ‚ª‚¢‚é‚©(-1‚Å‹‚È‚¢
+//--------------------------------------------------------------------------
+const int PLIST_ITEM_CanUseDeathRecoverAllItem( PLIST_WORK *work )
+{
+  u8 i;
+  const u8 partyMax = PokeParty_GetPokeCount( work->plData->pp );
+  for( i=0;i<partyMax;i++ )
+  {
+    POKEMON_PARAM *pp = PokeParty_GetMemberPointer(work->plData->pp, i);
+    const BOOL canUse = StatusRecoverCheck( pp , work->plData->item , 0 , work->heapId );
+    if( canUse == TRUE )
+    {
+      return i;
+    }
+  }
+  return -1;
+}
+
+//--------------------------------------------------------------------------
+//  ƒAƒCƒeƒ€Žg—pŽžA‹Z‘I‘ð‚ÌMSG”Ô†‚ÌŽæ“¾
+//--------------------------------------------------------------------------
+u32 PLIST_ITEM_GetWazaListMessage( PLIST_WORK *work , u16 itemNo )
+{
+  PLIST_ITEM_USE_TYPE useType = PLIST_ITEM_RecoverCheck( itemNo );
+  
+  switch( useType )
+  {
+  case ITEM_TYPE_PP_UP:      // ppUpŒn
+  case ITEM_TYPE_PP_3UP:     // pp3UpŒn
+    return mes_pokelist_03_05;  //‚Ç‚Ì‹Z‚ð‘‚â‚·H
+    break;
+
+  case ITEM_TYPE_PP_RCV:     // pp‰ñ•œŒn
+    return mes_pokelist_03_04;  //‚Ç‚Ì‹Z‚ð‰ñ•œ‚·‚éH
+    break;  
+  }
+  return mes_pokelist_03_04;
+}
+
 #pragma mark [> msg func
 //--------------------------------------------------------------------------
 //  ƒAƒCƒeƒ€Žg‚¦‚È‚¢ƒƒbƒZ[ƒW‚Ì•\Ž¦
@@ -388,6 +431,10 @@ void PLIST_ITEM_MSG_UseItemFunc( PLIST_WORK *work )
     break;
 
   case ITEM_TYPE_ALLDETH_RCV:    // ‘Sˆõ•mŽ€‰ñ•œ
+    work->mainSeq = PSMS_INIT_HPANIME;
+    work->befHp = PLIST_PLATE_GetDispHp( work , work->plateWork[work->pokeCursor] );
+    work->hpAnimeCallBack = PSTATUS_HPANMCB_ReturnRecoverAllDeath;
+
     break;
 
   case ITEM_TYPE_LV_UP:      // LvUpŒn
@@ -476,10 +523,11 @@ void PLIST_ITEM_MSG_UseItemFunc( PLIST_WORK *work )
   case ITEM_TYPE_EVO:        // i‰»Œn
     break;
   case ITEM_TYPE_PP_UP:      // ppUpŒn
-    break;
   case ITEM_TYPE_PP_3UP:     // pp3UpŒn
+    PLIST_ITEM_UTIL_ItemUseMessageCommon( work , mes_pokelist_04_22 );
     break;
   case ITEM_TYPE_PP_RCV:     // pp‰ñ•œŒn
+    PLIST_ITEM_UTIL_ItemUseMessageCommon( work , mes_pokelist_04_19 );
     break;
   case ITEM_TYPE_ETC:        // ‚»‚Ì‘¼
     break;
@@ -508,6 +556,39 @@ static void PSTATUS_HPANMCB_ReturnRecoverHp( PLIST_WORK *work )
   PLIST_MSG_DeleteWordSet( work , work->msgWork );
 }
 
+static void PSTATUS_HPANMCB_ReturnRecoverAllDeath( PLIST_WORK *work )
+{
+  
+  work->plData->ret_mode = PL_RET_BAG;
+  PLIST_MSG_CreateWordSet( work , work->msgWork );
+  PLIST_MSG_AddWordSet_PokeName( work , work->msgWork , 0 , work->selectPokePara );
+  if( PLIST_ITEM_CanUseDeathRecoverAllItem( work ) != -1 )
+  {
+    //‘¼‚É‘ÎÛ‚ª‚¢‚é‚Ì‚Å‘±‚­
+    PLIST_MessageWaitInit( work , mes_pokelist_04_20 , TRUE , PSTATUS_MSGCB_RecoverAllDeath_NextPoke );
+  }
+  else
+  {
+    //‘¼‚É‘ÎÛ‚ª‚¢‚È‚¢‚Ì‚ÅI—¹
+    PLIST_MessageWaitInit( work , mes_pokelist_04_20 , TRUE , PSTATUS_MSGCB_ExitCommon );
+  }
+  PLIST_MSG_DeleteWordSet( work , work->msgWork );
+}
+
+static void PSTATUS_MSGCB_RecoverAllDeath_NextPoke( PLIST_WORK *work )
+{
+  const int target = PLIST_ITEM_CanUseDeathRecoverAllItem( work );
+
+  PLIST_MSG_CloseWindow( work , work->msgWork );
+  PLIST_PLATE_ChangeColor( work , work->plateWork[work->pokeCursor] , PPC_NORMAL );
+
+  work->pokeCursor = target;
+  work->selectPokePara = PokeParty_GetMemberPointer(work->plData->pp, target);
+
+  PLIST_ITEM_MSG_UseItemFunc( work );
+  StatusRecover( work->selectPokePara , work->plData->item , 0 , work->plData->place , work->heapId );
+  PLIST_PLATE_ReDrawParam( work , work->plateWork[work->pokeCursor] );
+}
 
 #pragma mark [> util
 //--------------------------------------------------------------------------
