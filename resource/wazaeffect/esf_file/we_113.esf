@@ -4,12 +4,16 @@ c:\home\pokemon_wb\resource\particle\wazaeffect\w_113.spa
 #001
 %00
 カメラ移動	追従	攻撃側	16	0	8
+SE再生	SEQ_SE_BC01	デフォルト	0	0	100	0	0
 エフェクト終了待ち	すべて
 パーティクルデータロード	w_113
 パーティクル再生	w_113	W_113_113_HIKARIKABE_KIRA01	攻撃側	方向無し	2	0
 パーティクル再生	w_113	W_113_113_HIKARIKABE_MIRRROR	攻撃側	方向無し	2	0
+SE再生	SEQ_SE_W113_01	SE1	0	-60	100	0	0
+SE再生	SEQ_SE_W113_02	SE2	20	0	100	0	0
 エフェクト終了待ち	すべて
 カメラ移動	追従	初期位置	16	0	8
+SE再生	SEQ_SE_BC02	デフォルト	0	0	100	0	0
 エフェクト終了待ち	すべて
 エフェクト終了
 &
