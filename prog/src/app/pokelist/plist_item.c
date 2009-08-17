@@ -16,6 +16,7 @@
 #include "msg/msg_pokelist.h"
 
 #include "plist_sys.h"
+#include "plist_plate.h"
 #include "plist_message.h"
 #include "plist_item.h"
 
@@ -87,6 +88,8 @@ typedef enum
 //======================================================================
 #pragma mark [> proto
 static u8 PLIST_ITEM_RecoverCheck( u16 item );
+
+static void PSTATUS_HPANMCB_ReturnRecoverHp( PLIST_WORK *work );
 
 static const u16 PLIST_ITEM_UTIL_GetParamExpSum( POKEMON_PARAM *pp );
 static const BOOL PLIST_ITEM_UTIL_CanAddParamExp( POKEMON_PARAM *pp , const int id , u16 item );
@@ -383,37 +386,51 @@ void PLIST_ITEM_MSG_UseItemFunc( PLIST_WORK *work )
   case ITEM_TYPE_BTL_ST_UP:  // 戦闘用ステータスアップ系
     GF_ASSERT_MSG( 0,"使ってないはず。\n");
     break;
+
   case ITEM_TYPE_ALLDETH_RCV:    // 全員瀕死回復
     break;
+
   case ITEM_TYPE_LV_UP:      // LvUp系
     break;
+
   case ITEM_TYPE_NEMURI_RCV:   // 眠り回復
     GF_ASSERT_MSG( 0,"使ってないはず。\n");
     break;
+
   case ITEM_TYPE_DOKU_RCV:     // 毒回復
     PLIST_ITEM_UTIL_ItemUseMessageCommon( work , mes_pokelist_04_15 );
     break;
+
   case ITEM_TYPE_YAKEDO_RCV:   // 火傷回復
     PLIST_ITEM_UTIL_ItemUseMessageCommon( work , mes_pokelist_04_17 );
     break;
+
   case ITEM_TYPE_KOORI_RCV:    // 氷回復
     PLIST_ITEM_UTIL_ItemUseMessageCommon( work , mes_pokelist_04_18 );
     break;
+
   case ITEM_TYPE_MAHI_RCV:     // 麻痺回復
     PLIST_ITEM_UTIL_ItemUseMessageCommon( work , mes_pokelist_04_16 );
     break;
+
   case ITEM_TYPE_KONRAN_RCV:   // 混乱回復
     GF_ASSERT_MSG( 0,"使ってないはず。\n");
     break;
+
   case ITEM_TYPE_ALL_ST_RCV:   // 全快
     PLIST_ITEM_UTIL_ItemUseMessageCommon( work , mes_pokelist_04_21 );
     break;
+
   case ITEM_TYPE_MEROMERO_RCV:   // メロメロ回復
     GF_ASSERT_MSG( 0,"使ってないはず。\n");
     break;
+
   case ITEM_TYPE_HP_RCV:     // HP回復
-    break;
   case ITEM_TYPE_DEATH_RCV:  // 瀕死回復 (WB追加
+    work->mainSeq = PSMS_INIT_HPANIME;
+    work->befHp = PLIST_PLATE_GetDispHp( work , work->plateWork[work->pokeCursor] );
+    work->hpAnimeCallBack = PSTATUS_HPANMCB_ReturnRecoverHp;
+
     break;
     
   case ITEM_TYPE_HP_UP:      // HP努力値UP
@@ -469,6 +486,28 @@ void PLIST_ITEM_MSG_UseItemFunc( PLIST_WORK *work )
   }
   
 }
+
+#pragma mark [> HPAnime CallBack
+static void PSTATUS_HPANMCB_ReturnRecoverHp( PLIST_WORK *work )
+{
+  u16 nowHp = PLIST_PLATE_GetDispHp( work , work->plateWork[work->pokeCursor] );
+  
+  work->plData->ret_mode = PL_RET_BAG;
+  PLIST_MSG_CreateWordSet( work , work->msgWork );
+  PLIST_MSG_AddWordSet_PokeName( work , work->msgWork , 0 , work->selectPokePara );
+  if( work->befHp != 0 )
+  {
+    PLIST_MSG_AddWordSet_Value( work , work->msgWork , 1 , nowHp-work->befHp , 3 );
+    PLIST_MessageWaitInit( work , mes_pokelist_04_14 , TRUE , PSTATUS_MSGCB_ExitCommon );
+  }
+  else
+  {
+    //瀕死から復活
+    PLIST_MessageWaitInit( work , mes_pokelist_04_20 , TRUE , PSTATUS_MSGCB_ExitCommon );
+  }
+  PLIST_MSG_DeleteWordSet( work , work->msgWork );
+}
+
 
 #pragma mark [> util
 //--------------------------------------------------------------------------

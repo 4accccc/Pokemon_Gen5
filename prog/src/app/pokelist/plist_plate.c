@@ -284,6 +284,7 @@ void PLIST_PLATE_UpdatePlate( PLIST_WORK *work , PLIST_PLATE_WORK *plateWork )
   }
 }
 
+
 //--------------------------------------------------------------
 //	セル作成
 //--------------------------------------------------------------
@@ -894,6 +895,32 @@ void PLIST_PLATE_ReDrawParam( PLIST_WORK *work , PLIST_PLATE_WORK *plateWork )
   PLIST_PLATE_DrawHPBar( work , plateWork );
 }
 
+#pragma mark [>HPbar anime
+//--------------------------------------------------------------
+//	HPバーアニメ初期化
+//--------------------------------------------------------------
+void PLIST_PALTE_InitHpAnime( PLIST_WORK *work , PLIST_PLATE_WORK *plateWork )
+{
+  plateWork->nowHp = PP_Get( plateWork->pp , ID_PARA_hp , NULL );
+}
+
+//--------------------------------------------------------------
+//	HPバーアニメ更新
+//--------------------------------------------------------------
+const BOOL PLIST_PALTE_UpdateHpAnime( PLIST_WORK *work , PLIST_PLATE_WORK *plateWork )
+{
+  if( plateWork->dispHp < plateWork->nowHp )
+  {
+    plateWork->dispHp++;
+    PLIST_PLATE_ReDrawParam( work , plateWork );
+    return FALSE;
+  }
+  else
+  {
+    return TRUE;
+  }
+}
+
 #pragma mark [>outer func
 //--------------------------------------------------------------
 //選択できるか？
@@ -945,6 +972,14 @@ void PLIST_PLATE_SetBattleOrder( PLIST_WORK *work , PLIST_PLATE_WORK *plateWork 
     plateWork->btlOrder = order;
     PLIST_PLATE_ReDrawParam( work , plateWork );
   }
+}
+
+//--------------------------------------------------------------
+//表示HP取得
+//--------------------------------------------------------------
+u16 PLIST_PLATE_GetDispHp( PLIST_WORK *work , PLIST_PLATE_WORK *plateWork )
+{
+  return plateWork->dispHp;
 }
 
 #pragma mark [>battle order

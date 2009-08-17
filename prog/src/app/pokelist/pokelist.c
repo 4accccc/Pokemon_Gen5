@@ -132,7 +132,11 @@ static GFL_PROC_RESULT PokeListProc_Init( GFL_PROC * proc, int * seq , void *pwk
       {
         plData->mode = PL_MODE_ITEMUSE;
         //plData->item = 17; //–ò
+        //plData->item = 26; //E–ò
+        //plData->item = 28; //Œ³‹C‚Ì‚©‚¯‚ç
         plData->item = 18; //“ÅÁ‚µ
+        //plData->item = 47; //ƒuƒƒ€ƒwƒLƒVƒ“
+        
         //plData->item = 44; //¹‚È‚éŠD
       }
       else
@@ -195,45 +199,11 @@ static GFL_PROC_RESULT PokeListProc_Main( GFL_PROC * proc, int * seq , void *pwk
 {
   PLIST_WORK *plWork = mywk;
   
-  if( plWork->reqChangeProc == FALSE )
+  if( PLIST_UpdatePokeList( plWork ) == TRUE )
   {
-    if( PLIST_UpdatePokeList( plWork ) == TRUE )
-    {
-        return GFL_PROC_RES_FINISH;
-    }
+      return GFL_PROC_RES_FINISH;
   }
-  else
-  {
-    switch( plWork->changeProcSeq )
-    {
-    case PSCS_INIT:
-      if( PLIST_TermPokeList( plWork ) == TRUE )
-      {
-        GFL_OVERLAY_Unload( FS_OVERLAY_ID(pokelist) );
-        GFL_PROC_SysCallProc( plWork->procOverlayId , plWork->procData , plWork->procParentWork );
-        plWork->changeProcSeq = PSCS_MAIN;
-      } 
-      break;
 
-    case PSCS_MAIN:
-      if( plWork->procParentWork != NULL )
-      {
-        GFL_HEAP_FreeMemory( plWork->procParentWork );
-      }
-      GFL_OVERLAY_Load( FS_OVERLAY_ID(pokelist) );
-      plWork->changeProcSeq = PSCS_TERM;
-      break;
-
-    case PSCS_TERM:
-      if( PLIST_InitPokeList( plWork ) == TRUE )
-      {
-        plWork->changeProcSeq = TRUE;
-      } 
-      break;
-
-    }
-  }
-    
   return GFL_PROC_RES_CONTINUE;
 }
 

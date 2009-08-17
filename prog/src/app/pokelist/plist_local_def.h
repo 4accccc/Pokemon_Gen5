@@ -149,10 +149,10 @@ typedef enum
   PSMS_MENU,        //メニュー処理中
   PSMS_MSG_WAIT,    //メッセージ諸々
   PSMS_YESNO_WAIT,    //はい・いいえ待ち
+  PSMS_INIT_HPANIME,
+  PSMS_HPANIME,     //HPバー処理中
   PSMS_FADEOUT,
   PSMS_FADEOUT_WAIT,
-  
-  PSMS_CHANGEPROC,
 
   PSMS_MAX,
 }PLIST_SYS_MAIN_SEQ;
@@ -205,6 +205,10 @@ struct _PLIST_WORK
   u8  btlJoinNum;   //バトル参加人数
   GFL_BMPWIN *btlMenuWin[2];  //バトル用決定・戻る
 
+  //HPアニメ処理
+  u16 befHp;  //回復前のHP
+  PSTATUS_CallbackFunc hpAnimeCallBack;
+  
   //MSG系
   GFL_MSGDATA *msgHandle;
   GFL_FONT *fontHandle;
@@ -232,13 +236,6 @@ struct _PLIST_WORK
   GFL_CLUNIT  *cellUnit;
   GFL_CLWK    *clwkCursor[2];
   GFL_CLWK    *clwkBarIcon[PBT_MAX];
-
-  //Proc切り替え用
-  PLIST_SYS_CHANGEPROC_SEQ changeProcSeq;
-  BOOL reqChangeProc;
-  FSOverlayID   procOverlayId;
-  GFL_PROC_DATA *procData;
-  void          *procParentWork;
 
   PLIST_DATA *plData;
 #if USE_DEBUGWIN_SYSTEM

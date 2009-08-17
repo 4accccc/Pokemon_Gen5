@@ -193,10 +193,6 @@ static void PLIST_MessageWait( PLIST_WORK *work );
 static void PLIST_YesNoWait( PLIST_WORK *work );
 static void PLIST_YesNoWaitInit( PLIST_WORK *work , PSTATUS_CallbackFuncYesNo yesNoCallBack );
 
-//Proc切り替え
-static void PLIST_ChangeProcInit( PLIST_WORK *work , GFL_PROC_DATA *procData , FSOverlayID overlayId , void *parentWork );
-static void PLIST_ChangeProcUpdate( PLIST_WORK *work );
-
 //メッセージコールバック
 static void PSTATUS_MSGCB_ReturnSelectCommon( PLIST_WORK *work );
 static void PSTATUS_MSGCB_ForgetSkill_ForgetCheck( PLIST_WORK *work );
@@ -233,10 +229,9 @@ const BOOL PLIST_InitPokeList( PLIST_WORK *work )
   work->changeTarget = PL_SEL_POS_MAX;
   work->canExit = FALSE;
   work->isActiveWindowMask = FALSE;
-  work->reqChangeProc = FALSE;
-  work->changeProcSeq = PSCS_INIT;
   work->btlJoinNum = 0;
   work->platePalAnmCnt = 0;
+  work->hpAnimeCallBack = NULL;
 
   if( work->plData->mode == PL_MODE_WAZASET )
   {
@@ -372,6 +367,25 @@ const BOOL PLIST_UpdatePokeList( PLIST_WORK *work )
     PLIST_YesNoWait( work );
     break;
 
+  case PSMS_INIT_HPANIME:
+    PLIST_PALTE_InitHpAnime( work , work->plateWork[work->pokeCursor] );
+    //break;    BreakThrough
+  case PSMS_HPANIME:
+    if( PLIST_PALTE_UpdateHpAnime( work , work->plateWork[work->pokeCursor] ) == TRUE )
+    {
+      //アニメ終了
+      if( work->hpAnimeCallBack != NULL )
+      {
+        work->hpAnimeCallBack( work );
+      }
+      else
+      {
+        //アサートいる？
+        work->mainSeq = PSMS_FADEOUT_WAIT;
+      }
+    }
+    break;
+
   case PSMS_FADEOUT:
 //    WIPE_SYS_Start( WIPE_PATTERN_WMS , WIPE_TYPE_SPLITOUT_VSIDE , WIPE_TYPE_SPLITOUT_VSIDE , 
 //                    WIPE_FADE_BLACK , WIPE_DEF_DIV , WIPE_DEF_SYNC , work->heapId );
@@ -385,10 +399,6 @@ const BOOL PLIST_UpdatePokeList( PLIST_WORK *work )
     {
       return TRUE;
     }
-    break;
-
-  case PSMS_CHANGEPROC:
-    PLIST_ChangeProcUpdate( work );
     break;
   }
   
@@ -1027,7 +1037,6 @@ static void PLIST_TermMode_Select_Decide( PLIST_WORK *work )
     
   case PL_MODE_ITEMUSE:
     {
-      /*
       const BOOL isSelSkill = PLIST_ITEM_IsNeedSelectSkill( work , work->plData->item );
       if( isSelSkill == TRUE )
       {
@@ -1043,14 +1052,13 @@ static void PLIST_TermMode_Select_Decide( PLIST_WORK *work )
           //実際に消費と適用
           StatusRecover( work->selectPokePara , work->plData->item , 0 , work->plData->place , work->heapId );
           PLIST_PLATE_ReDrawParam( work , work->plateWork[work->pokeCursor] );
+          
         }
         else
         {
           PLIST_ITEM_MSG_CanNotUseItem( work );
         }
       }
-      */
-      PLIST_ITEM_MSG_CanNotUseItem( work );
     }
     break;
     
@@ -2131,54 +2139,6 @@ static void PLIST_ChangeAnimeTerm( PLIST_WORK *work )
 //--------------------------------------------------------------
 static void PLIST_ChangeAnimeUpdatePlate( PLIST_WORK *work )
 {
-}
-
-#pragma mark [>changeProc
-//--------------------------------------------------------------
-//	Proc変更初期化
-//--------------------------------------------------------------
-static void PLIST_ChangeProcInit( PLIST_WORK *work , GFL_PROC_DATA *procData , FSOverlayID overlayId , void *parentWork )
-{
-  work->procData = procData;
-  work->procOverlayId = overlayId;
-  work->procParentWork = parentWork;
-  work->changeProcSeq = PSCS_INIT;
-
-  work->mainSeq = PSMS_CHANGEPROC;
-  work->subSeq = PSSS_FADEOUT;
-}
-
-//--------------------------------------------------------------
-//	Proc変更メイン
-//--------------------------------------------------------------
-static void PLIST_ChangeProcUpdate( PLIST_WORK *work )
-{
-  switch( work->subSeq )
-  {   
-  case PSSS_FADEOUT:
-    WIPE_SYS_Start( WIPE_PATTERN_WMS , WIPE_TYPE_FADEOUT , WIPE_TYPE_FADEOUT , 
-                    WIPE_FADE_BLACK , WIPE_DEF_DIV , WIPE_DEF_SYNC , work->heapId );
-    work->subSeq = PSSS_INIT;
-  
-    break;
-    
-  case PSSS_INIT:
-    if( WIPE_SYS_EndCheck() == TRUE )
-    {
-      work->reqChangeProc = TRUE;
-    }
-    break;
-/*    
-  case PSSS_MAIN:
-    if( work->procParentWork != NULL )
-    {
-      GFL_HEAP_FreeMemory( work->procParentWork );
-    }
-    PLIST_InitPokeList( work );
-    //上でmainSeqが切り替わるのでここで終了。
-    break;
-*/    
-  }
 }
 
 #pragma mark [>util

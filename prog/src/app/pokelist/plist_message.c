@@ -326,6 +326,14 @@ void PLIST_MSG_AddWordSet_StatusName( PLIST_WORK *work , PLIST_MSG_WORK *msgWork
 
   WORDSET_RegisterPokeStatusName( msgWork->wordSet , wordSetIdx , statusId );
 }
+
+void PLIST_MSG_AddWordSet_Value( PLIST_WORK *work , PLIST_MSG_WORK *msgWork , u8 wordSetIdx , u16 value , u8 keta )
+{
+  GF_ASSERT( msgWork->wordSet != NULL );
+
+  WORDSET_RegisterNumber( msgWork->wordSet , wordSetIdx , value , keta , STR_NUM_DISP_LEFT , STR_NUM_CODE_DEFAULT );
+}  
+
 #pragma mark [> util
 //--------------------------------------------------------------
 //	ウィンドウクリア
