@@ -24,6 +24,9 @@
 #include "event_fldmmdl_control.h"  //EVENT_PlayerOneStepAnime
 #include "field_door_anime.h"
 
+#include "event_camera_rotate.h"  // TEMP: カメラ回転テスト
+
+
 //============================================================================================
 //============================================================================================
 static GMEVENT_RESULT FieldDoorAnimeEvent(GMEVENT * event, int *seq, void * work);
@@ -62,6 +65,7 @@ static GMEVENT_RESULT ExitEvent_DoorOut(GMEVENT * event, int *seq, void * work)
 {
   enum {
     SEQ_DOOROUT_INIT = 0,
+    SEQ_DOOROUT_CAMERA_ROTATE,
     SEQ_DOOROUT_OPENANIME_START,
     SEQ_DOOROUT_OPENANIME_WAIT,
     SEQ_DOOROUT_PLAYER_STEP,
@@ -80,9 +84,45 @@ static GMEVENT_RESULT ExitEvent_DoorOut(GMEVENT * event, int *seq, void * work)
   switch (*seq)
   {
   case SEQ_DOOROUT_INIT:
+    {
+      FIELD_PLAYER * player = FIELDMAP_GetFieldPlayer( fieldmap );
+      MMDL *         fmmdl  = FIELD_PLAYER_GetMMdl( player );
+      u16            dir    = MMDL_GetDirDisp( fmmdl );
+      FIELD_CAMERA* cam = FIELDMAP_GetFieldCamera( fieldmap );
+      if( dir == DIR_LEFT )
+      {
+        FIELD_CAMERA_SetAngleYaw( cam, 0xffff/360*270 );
+        FIELD_CAMERA_SetAnglePitch( cam, 0xffff/360*20 );
+        FIELD_CAMERA_SetAngleLen( cam, 100<<FX32_SHIFT );
+      }
+      else if( dir == DIR_RIGHT )
+      {
+        FIELD_CAMERA_SetAngleYaw( cam, 0xffff/360*90 );
+        FIELD_CAMERA_SetAnglePitch( cam, 0xffff/360*20 );
+        FIELD_CAMERA_SetAngleLen( cam, 100<<FX32_SHIFT );
+      }
+    }
     //自機を消す
     MAPCHANGE_setPlayerVanish( fieldmap, TRUE );
 		GMEVENT_CallEvent(event, EVENT_FieldFadeIn(gsys, fieldmap, 0));
+    *seq = SEQ_DOOROUT_CAMERA_ROTATE;
+    break;
+
+  case SEQ_DOOROUT_CAMERA_ROTATE:
+    {
+      FIELD_PLAYER * player = FIELDMAP_GetFieldPlayer( fieldmap );
+      MMDL *         fmmdl  = FIELD_PLAYER_GetMMdl( player );
+      u16            dir    = MMDL_GetDirDisp( fmmdl );
+
+      if( ( dir == DIR_LEFT ) )
+      {
+        GMEVENT_CallEvent( event, EVENT_CameraRotateRightDoorOut(gsys, fieldmap) );
+      } 
+      else if( ( dir == DIR_RIGHT ) )
+      {
+        GMEVENT_CallEvent( event, EVENT_CameraRotateLeftDoorOut(gsys, fieldmap) );
+      } 
+    } 
     *seq = SEQ_DOOROUT_OPENANIME_START;
     break;
 
@@ -194,6 +234,7 @@ static GMEVENT_RESULT ExitEvent_DoorIn(GMEVENT * event, int *seq, void * work)
   enum {
     SEQ_DOORIN_OPENANIME_START = 0,
     SEQ_DOORIN_OPENANIME_WAIT,
+    SEQ_DOORIN_CAMERA_ROTATE,
     SEQ_DOORIN_PLAYER_ONESTEP,
     SEQ_DOORIN_FADEOUT,
     SEQ_DOORIN_END,
@@ -213,7 +254,7 @@ static GMEVENT_RESULT ExitEvent_DoorIn(GMEVENT * event, int *seq, void * work)
     fdaw->obj = searchDoorObject(bmodel_man, &fdaw->pos);
     if (fdaw->obj == NULL)
     { /* エラーよけ、ドアがない場合 */
-      *seq = SEQ_DOORIN_FADEOUT;
+      *seq = SEQ_DOORIN_CAMERA_ROTATE;
       break;
     }
 
@@ -228,8 +269,34 @@ static GMEVENT_RESULT ExitEvent_DoorIn(GMEVENT * event, int *seq, void * work)
     if ( FIELD_BMODEL_GetAnimeStatus( fdaw->entry, ANM_INDEX_DOOR_OPEN) == TRUE)
     {
       FIELD_BMODEL_SetAnime( fdaw->entry, ANM_INDEX_DOOR_OPEN, BMANM_REQ_STOP);
-      *seq = SEQ_DOORIN_PLAYER_ONESTEP;
+      *seq = SEQ_DOORIN_CAMERA_ROTATE;
       break;
+    }
+    break;
+
+  case SEQ_DOORIN_CAMERA_ROTATE: 
+    {
+      FIELD_PLAYER * player = FIELDMAP_GetFieldPlayer( fieldmap );
+      MMDL *         fmmdl  = FIELD_PLAYER_GetMMdl( player );
+      u16            dir    = MMDL_GetDirDisp( fmmdl );
+
+      if( ( dir == DIR_LEFT ) )
+      {
+        GMEVENT_CallEvent( event, EVENT_CameraRotateLeftDoorIn(gsys, fieldmap) );
+      } 
+      else if( ( dir == DIR_RIGHT ) )
+      {
+        GMEVENT_CallEvent( event, EVENT_CameraRotateRightDoorIn(gsys, fieldmap) );
+      } 
+    }
+
+    if( fdaw->obj == NULL )
+    { // エラーよけ、ドアがない場合
+      *seq = SEQ_DOORIN_PLAYER_ONESTEP;
+    }
+    else
+    {
+      *seq = SEQ_DOORIN_PLAYER_ONESTEP;
     }
     break;
 
