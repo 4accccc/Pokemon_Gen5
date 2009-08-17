@@ -126,13 +126,13 @@ void ISS_ROAD_SYS_Update( ISS_ROAD_SYS* p_sys )
 	{
 		p_sys->volume -= FADE_OUT_SPEED;
 		if( p_sys->volume < MIN_VOLUME ) p_sys->volume = MIN_VOLUME;
-		OBATA_Printf( "Load ISS Volume DOWN\n" );
+		//OBATA_Printf( "Load ISS Volume DOWN\n" ); // DEBUG:
 	}
 	else
 	{
 		p_sys->volume += FADE_IN_SPEED;
 		if( MAX_VOLUME < p_sys->volume ) p_sys->volume = MAX_VOLUME;
-		OBATA_Printf( "Load ISS Volume UP\n" );
+		//OBATA_Printf( "Load ISS Volume UP\n" );   // DEBUG:
 	}
 	FIELD_SOUND_ChangeBGMActionVolume( p_sys->volume );
 
