@@ -229,7 +229,7 @@ void ISS_SYS_ZoneChange( ISS_SYS* p_sys, u16 next_zone_id )
 	ISS_DUNGEON_SYS_ZoneChange( p_sys->pIssDungeonSys, next_zone_id );
 
 	// DEBUG:
-	OBATA_Printf( "ISS_SYS_ZoneChange()\n" );
+	//OBATA_Printf( "ISS_SYS_ZoneChange()\n" );
 }
 
 

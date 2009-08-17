@@ -80,10 +80,12 @@ static void SetBGMStatus( const BGM_PARAM* p_param )
 	PMSND_ChangeCaptureReverb( p_param->reverb, REVERB_SAMPLE_RATE, REVERB_VOLUME, REVERB_STOP_FRAME );
 
 	// DEBUG:
+  /*
 	OBATA_Printf( "Dungeon ISS SetBGMStatus\n" ); 
 	OBATA_Printf( "pitch  = %d\n", p_param->pitch );
 	OBATA_Printf( "tempo  = %d\n", p_param->tempo );
 	OBATA_Printf( "reverb = %d\n", p_param->reverb );
+  */
 }
 
 
@@ -182,9 +184,11 @@ static ISS_DATA* LoadIssData( HEAPID heap_id )
 		u16 offset  = GetU16( p_data, pos + 2 );
 
 		// DEBUG:
+    /*
 		OBATA_Printf( "pos[%d]     = %d\n", i, pos );
 		OBATA_Printf( "zone_id[%d] = %d\n", i, zone_id );
 		OBATA_Printf( "offset[%d]  = %d\n", i, offset );
+    */
 
 		iss_data->param[i].zoneID = GetU16( p_data, offset );
 		iss_data->param[i].pitch  = (s16)GetU16( p_data, offset + 2 );
@@ -194,6 +198,7 @@ static ISS_DATA* LoadIssData( HEAPID heap_id )
 
 
 	// DEBUG:
+  /*
 	OBATA_Printf( "------------------------LoadIssData\n" );
 	OBATA_Printf( "data_num = %d\n", data_num );
 	for( i=0; i<data_num; i++ )
@@ -203,6 +208,7 @@ static ISS_DATA* LoadIssData( HEAPID heap_id )
 		OBATA_Printf( "data[%d].tempo   = %d\n", i, iss_data->param[i].tempo ); 
 		OBATA_Printf( "data[%d].reverb  = %d\n", i, iss_data->param[i].reverb ); 
 	}
+  */
 
 	// “Ç‚İ‚ñ‚¾ƒf[ƒ^‚ğ•Ô‚·
 	return iss_data;

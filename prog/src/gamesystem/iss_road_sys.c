@@ -140,12 +140,14 @@ void ISS_ROAD_SYS_Update( ISS_ROAD_SYS* p_sys )
 	p_sys->prevPlayerPos = *p_player_pos;
 
 	// DEBUG: デバッグ出力
+  /*
 	if( p_sys->isActive )
 	{
 		OBATA_Printf( "-----------------------\n" );
 		OBATA_Printf( "Load ISS Unit is active\n" );
 		OBATA_Printf( "volume = %d\n", p_sys->volume );
 	}
+  */
 }
 
 //----------------------------------------------------------------------------

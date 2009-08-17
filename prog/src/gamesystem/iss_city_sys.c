@@ -195,7 +195,7 @@ void ISS_CITY_SYS_Update( ISS_CITY_SYS* p_sys )
 	if( p_sys->activeUnitNo == INVALID_UNIT_NO )
 	{
 		FIELD_SOUND_ChangeBGMActionVolume( 0 ); 
-		OBATA_Printf( "City ISS Unit is active. But there is not a unit. volume = 0\n" );
+		//OBATA_Printf( "City ISS Unit is active. But there is not a unit. volume = 0\n" ); // DEBUG:
 		return;
 	}
 
@@ -205,6 +205,7 @@ void ISS_CITY_SYS_Update( ISS_CITY_SYS* p_sys )
 	FIELD_SOUND_ChangeBGMActionVolume( volume );
 
 	// DEBUG: デバッグ出力
+  /*
 	if( p_sys->isActive )
 	{
 		UNIT* p_unit = &p_sys->unitData[ p_sys->activeUnitNo ];
@@ -214,6 +215,7 @@ void ISS_CITY_SYS_Update( ISS_CITY_SYS* p_sys )
 		OBATA_Printf( "volume = %d\n", volume );
 		OBATA_Printf( "x, y, z = %d, %d, %d\n", p_unit->x, p_unit->y, p_unit->z );
 	}
+  */
 }
 	
 
@@ -244,6 +246,7 @@ void ISS_CITY_SYS_ZoneChange( ISS_CITY_SYS* p_sys, u16 next_zone_id )
 	p_sys->activeUnitNo = INVALID_UNIT_NO;
 
 	// DEBUG:
+  /*
 	{
 		int i;
 		OBATA_Printf( "next zone id = %d\n", next_zone_id );
@@ -252,6 +255,7 @@ void ISS_CITY_SYS_ZoneChange( ISS_CITY_SYS* p_sys, u16 next_zone_id )
 			OBATA_Printf( "zone if of unit[%d] = %d\n", i, p_sys->unitData[i].zoneID );
 		}
 	}
+  */
 }
 
 //----------------------------------------------------------------------------
