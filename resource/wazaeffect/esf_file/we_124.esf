@@ -11,6 +11,9 @@ c:\home\pokemon_wb\resource\particle\wazaeffect\w_124.spa
 &
 #001
 %00
+SE再生	SEQ_SE_W015_01	SE1	0	-200	110	0	0
+SE再生	SEQ_SE_W124_01	SE2	0	0	100	0	0
+SE再生	SEQ_SE_DUMMY5	SE2	90	0	0	0	0
 パーティクルデータロード	w_124
 エミッタ移動	w_124	W_124_124_HEDOKO_KEMURI	放物線	攻撃側	防御側	2:30:4
 タイマーによるウエイト	20
@@ -21,8 +24,10 @@ c:\home\pokemon_wb\resource\particle\wazaeffect\w_124.spa
 タイマーによるウエイト	6
 ポケモンパレットフェード	防御側	0	12	2	30:0:30
 ポケモン拡縮	防御側	往復	0.3	-0.3	2	1	1
+SE再生	SEQ_SE_W123_01	SE2	0	90	120	0	0
 エフェクト終了待ち	すべて
 カメラ移動	追従	初期位置	16	0	8
+SE再生	SEQ_SE_BC02	デフォルト	0	0	100	0	0
 ポケモンパレットフェード	防御側	12	0	2	30:0:30
 ポケモンアニメ	防御側	アニメスタート
 エフェクト終了待ち	すべて
