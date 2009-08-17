@@ -348,7 +348,8 @@ SRCS_OVERLAY_FIELDMAP		=	field/field_proc.c \
         field/calender_encount.c \
         field/calender_hatch.c \
         field/calender_weather.c \
-        field/calender.c
+        field/calender.c \
+        field/event_camera_rotate.c
 
 
 # フィールド天気
