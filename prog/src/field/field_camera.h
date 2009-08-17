@@ -7,6 +7,8 @@
 #pragma once
 
 #include "field/fieldmap_proc.h"
+#include "../../../../resource/fldmapdata/camera_data/fieldcameraformat.h"
+
 
 //------------------------------------------------------------------
 /**
@@ -204,5 +206,7 @@ extern void FIELD_CAMERA_DEBUG_GetBindSubScreenTarget( const FIELD_CAMERA * came
 //------------------------------------------------------------------
 extern void FIELD_CAMERA_DEBUG_SetDefaultTarget( FIELD_CAMERA* camera, const VecFx32* target );
 extern const VecFx32* FIELD_CAMERA_DEBUG_GetDefaultTarget( const FIELD_CAMERA* camera );
+
+extern void FIELD_CAMERA_GetInitialParameter( const FIELD_CAMERA* camera, FLD_CAMERA_PARAM * result);
 #endif
 

@@ -846,6 +846,30 @@ const VecFx32* FIELD_CAMERA_DEBUG_GetDefaultTarget( const FIELD_CAMERA* camera )
 	return camera->default_target;
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief	デフォルトパラメータの取得
+ */
+//----------------------------------------------------------------------------- 
+void FIELD_CAMERA_GetInitialParameter( const FIELD_CAMERA* camera, FLD_CAMERA_PARAM * result)
+{
+  enum {
+    FILE_ID = NARC_field_camera_data_field_camera_bin,
+    ARC_ID  = ARCID_FIELD_CAMERA,
+  };
+  ARCHANDLE * handle = GFL_ARC_OpenDataHandle(ARC_ID, camera->heapID);
+  u16 size = GFL_ARC_GetDataSizeByHandle(handle, FILE_ID);
+  if ( camera->type * sizeof(FLD_CAMERA_PARAM) >= size )
+  {
+    OS_TPrintf("カメラタイプ（%d）が指定できません\n", camera->type);
+    GF_ASSERT(0);
+  }
+  GFL_ARC_LoadDataOfsByHandle(handle, FILE_ID,
+      camera->type * sizeof(FLD_CAMERA_PARAM), sizeof(FLD_CAMERA_PARAM), result);
+
+	GFL_ARC_CloseDataHandle(handle);
+}
+
 #endif  //PM_DEBUG
 
 //---------------------------------------------------------------------------
