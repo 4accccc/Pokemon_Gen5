@@ -501,6 +501,9 @@ typedef struct
   u8 dmy2; ///<ƒ_ƒ~[2
 }OBJCODE_PARAM;
 
+///ŠO•”‚©‚ç¶¬‚³‚ê‚éOBJCODE_PARAM”z—ñ‚Ì—v‘f”‚ÌŠi”[ƒTƒCƒY
+/// 0-3 OBJCODE_PARAM—v‘f”
+/// 4... —v‘f”•ª‚ÌOBJCODE_PARAM”z—ñ
 #define OBJCODE_PARAM_TOTAL_NUMBER_SIZE (sizeof(u32))
 
 //--------------------------------------------------------------
@@ -550,7 +553,7 @@ extern void MMDLSYS_DeleteProc( MMDLSYS *fos );
 extern void MMDLSYS_UpdateProc( MMDLSYS *fos );
 extern void MMDLSYS_VBlankProc( MMDLSYS *fos );
 
-extern void MMDLSYS_SetupDrawProc( MMDLSYS *fos );
+extern void MMDLSYS_SetupDrawProc( MMDLSYS *fos, const u16 *angleYaw );
 
 extern MMDL * MMDLSYS_AddMMdl(
 	const MMDLSYS *fos, const MMDL_HEADER *header, int zone_id );
@@ -608,6 +611,7 @@ extern const FLDMAPPER * MMDLSYS_GetG3DMapper( const MMDLSYS *fos );
 extern void MMDLSYS_SetFieldMapWork(
     MMDLSYS *fos, void *fieldMapWork );
 extern void * MMDLSYS_GetFieldMapWork( MMDLSYS *fos );
+extern u16 MMDLSYS_GetTargetCameraAngleYaw( const MMDLSYS *mmdlsys );
 
 extern void MMDL_OnStatusBit( MMDL *mmdl, MMDL_STABIT bit );
 extern void MMDL_OffStatusBit( MMDL *mmdl, MMDL_STABIT bit );
@@ -894,6 +898,7 @@ extern void MMDL_TOOL_GridPosToVectorPos(
     const s16 gx, const s16 gy, const s16 gz, VecFx32 *pos );
 extern u16 MMDL_TOOL_FlipDir( u16 dir );
 extern u16 MMDL_TOOL_GetRangeDir( int ax, int az, int bx, int bz );
+extern u16 MMDL_TOOL_GetAngleYawToDirFour( u16 dir, u16 angleYaw );
 
 //--------------------------------------------------------------
 //	fldmmdl_move_1.c

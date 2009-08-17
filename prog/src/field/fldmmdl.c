@@ -68,6 +68,8 @@ struct _TAG_MMDLSYS
 	const OBJCODE_PARAM *pOBJCodeParamTbl; ///<OBJCODE_PARAM
   
   void *fieldMapWork; ///<FIELDMAP_WORK <-各ワーク単位での接続が良い。
+  
+  const u16 *targetCameraAngleYaw; //グローバルで参照するカメラ
 };
 
 #define MMDLSYS_SIZE (sizeof(MMDLSYS)) ///<MMDLSYSサイズ
@@ -340,7 +342,12 @@ static void MMdlSys_DeleteProc( MMDLSYS *fos )
 void MMDLSYS_DeleteProc( MMDLSYS *fos )
 {
 //	MMDLSYS_DeleteMMdl( fos );
-	MMDLSYS_DeleteDraw( fos );
+  
+  { //いずれfldmmdl.c内で処理する。
+    MMDLSYS_DeleteDraw( fos );
+    fos->targetCameraAngleYaw = NULL;
+  }
+  
 	MMdlSys_DeleteProc( fos );
 }
 
@@ -384,8 +391,9 @@ void MMDLSYS_VBlankProc( MMDLSYS *fos )
  * @retval	nothing
  */
 //--------------------------------------------------------------
-void MMDLSYS_SetupDrawProc( MMDLSYS *fos )
+void MMDLSYS_SetupDrawProc( MMDLSYS *fos, const u16 *angleYaw )
 {
+  fos->targetCameraAngleYaw = angleYaw;
 	MMDLSYS_SetCompleteDrawInit( fos, TRUE );
 }
 
@@ -1411,6 +1419,22 @@ void * MMDLSYS_GetFieldMapWork( MMDLSYS *fos )
 {
   GF_ASSERT( fos->fieldMapWork != NULL );
   return( fos->fieldMapWork );
+}
+
+//--------------------------------------------------------------
+/**
+ * MMDLSYS 目標となるカメラ水平方向角度を取得。
+ * セットされていない場合は0を返す
+ * @param mmdlsys MMDLSYS
+ * @retval u16
+ */
+//--------------------------------------------------------------
+u16 MMDLSYS_GetTargetCameraAngleYaw( const MMDLSYS *mmdlsys )
+{
+  if( mmdlsys->targetCameraAngleYaw != NULL ){
+    return( *mmdlsys->targetCameraAngleYaw );
+  }
+  return( 0 );
 }
 
 //======================================================================

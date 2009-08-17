@@ -98,6 +98,7 @@ extern u16 FIELD_CAMERA_GetAnglePitch(const FIELD_CAMERA * camera );
 extern void FIELD_CAMERA_SetAnglePitch(FIELD_CAMERA * camera, u16 angle );
 extern u16 FIELD_CAMERA_GetAngleYaw(const FIELD_CAMERA * camera );
 extern void FIELD_CAMERA_SetAngleYaw(FIELD_CAMERA * camera, u16 angle );
+extern const u16 * FIELD_CAMERA_GetAngleYawAddress( const FIELD_CAMERA *camera );
 extern fx32 FIELD_CAMERA_GetAngleLen(const FIELD_CAMERA * camera );
 extern void FIELD_CAMERA_SetAngleLen(FIELD_CAMERA * camera, fx32 length );
 

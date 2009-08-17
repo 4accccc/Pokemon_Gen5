@@ -1701,8 +1701,11 @@ static void fldmapMain_MMDL_Init( FIELDMAP_WORK *fieldWork )
 	}
   
 	//動作モデル描画　セットアップ
-	MMDLSYS_SetupDrawProc( fieldWork->fldMMdlSys );
-	
+  {
+    const u16 *pAngle = FIELD_CAMERA_GetAngleYawAddress( fieldWork->camera_control );
+	  MMDLSYS_SetupDrawProc( fieldWork->fldMMdlSys, pAngle );
+	}
+  
 	//動作モデル　復帰
 	MMDLSYS_Pop( fieldWork->fldMMdlSys );
 

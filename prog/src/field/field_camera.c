@@ -737,6 +737,11 @@ void FIELD_CAMERA_SetAngleYaw(FIELD_CAMERA * camera, u16 angle )
 	camera->angle_yaw = angle;
 }
 
+const u16 * FIELD_CAMERA_GetAngleYawAddress( const FIELD_CAMERA *camera )
+{
+  return( &camera->angle_yaw );
+}
+
 //----------------------------------------------------------------------------
 /**
  *	@brief	カメラangle　ターゲットからの距離操作

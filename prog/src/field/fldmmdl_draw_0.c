@@ -54,6 +54,21 @@ typedef struct
 //======================================================================
 //	proto
 //======================================================================
+static void blact_SetCommonOffsPos( VecFx32 *pos )
+{
+  pos->y += MMDL_BBD_OFFS_POS_Y;
+  pos->z += MMDL_BBD_OFFS_POS_Z;
+}
+
+static u16 blact_GetDrawDir( MMDL *mmdl )
+{
+  const MMDLSYS *mmdlsys = MMDL_GetMMdlSys( mmdl );
+  u16 angle = MMDLSYS_GetTargetCameraAngleYaw( mmdlsys );
+  u16 dir = MMDL_GetDirDisp( mmdl );
+  dir = MMDL_TOOL_GetAngleYawToDirFour( dir, angle );
+  return( dir );
+}
+
 static void blactAnmControl_Init( ANMCNT_WORK *work )
 {
   MI_CpuClear8( work, sizeof(ANMCNT_WORK) );
@@ -63,7 +78,7 @@ static void blactAnmControl_Update( ANMCNT_WORK *work,
     MMDL *mmdl, GFL_BBDACT_SYS *actSys, u16 actID )
 {
   u16 init_flag = FALSE;
-  u16 dir = MMDL_GetDirDisp( mmdl );
+  u16 dir = blact_GetDrawDir( mmdl );
   u16 status = MMDL_GetDrawStatus( mmdl );
   u16 anm_idx = (status * DIR_MAX4) + dir;
   
@@ -286,8 +301,7 @@ static void DrawHero_Draw( MMDL *mmdl )
 	blactAnmControl_Update( &work->anmcnt_work, mmdl, actSys, work->actID );
   
 	MMDL_GetDrawVectorPos( mmdl, &pos );
-	pos.y += MMDL_BBD_OFFS_POS_Y;
-  pos.z += MMDL_BBD_OFFS_POS_Z;
+  blact_SetCommonOffsPos( &pos );
   GFL_BBD_SetObjectTrans(
 		GFL_BBDACT_GetBBDSystem(actSys), work->actID, &pos );
 }
@@ -461,7 +475,7 @@ static void DrawCycleHero_Draw( MMDL *mmdl )
   
 	actSys = MMDL_BLACTCONT_GetBbdActSys( MMDL_GetBlActCont(mmdl) );
 	
-	dir = MMDL_GetDirDisp( mmdl );
+  dir = blact_GetDrawDir( mmdl );
 	status = MMDL_GetDrawStatus( mmdl );
 	GF_ASSERT( status < DRAW_STA_MAX_HERO );
 
@@ -501,9 +515,7 @@ static void DrawCycleHero_Draw( MMDL *mmdl )
 	}
 	
 	MMDL_GetDrawVectorPos( mmdl, &pos );
-  
-	pos.y += MMDL_BBD_OFFS_POS_Y;
-  pos.z += MMDL_BBD_OFFS_POS_Z;
+  blact_SetCommonOffsPos( &pos );
 	
 	GFL_BBD_SetObjectTrans(
 		GFL_BBDACT_GetBBDSystem(actSys), work->actID, &pos );
@@ -563,7 +575,7 @@ static void DrawSwimHero_Draw( MMDL *mmdl )
   
 	actSys = MMDL_BLACTCONT_GetBbdActSys( MMDL_GetBlActCont(mmdl) );
 	
-	dir = MMDL_GetDirDisp( mmdl );
+  dir = blact_GetDrawDir( mmdl );
 	status = MMDL_GetDrawStatus( mmdl );
   GF_ASSERT( dir < DIR_MAX4 );
   anm_id = dir;
@@ -588,10 +600,8 @@ static void DrawSwimHero_Draw( MMDL *mmdl )
 	}
 	
 	MMDL_GetDrawVectorPos( mmdl, &pos );
-  
-	pos.y += MMDL_BBD_OFFS_POS_Y;
-  pos.z += MMDL_BBD_OFFS_POS_Z;
-	
+  blact_SetCommonOffsPos( &pos );
+
 	GFL_BBD_SetObjectTrans(
 		GFL_BBDACT_GetBBDSystem(actSys), work->actID, &pos );
 
@@ -688,8 +698,7 @@ static void DrawBlAct_Draw( MMDL *mmdl )
 	blactAnmControl_Update( &work->anmcnt_work, mmdl, actSys, work->actID );
   
 	MMDL_GetDrawVectorPos( mmdl, &pos );
-	pos.y += MMDL_BBD_OFFS_POS_Y;
-  pos.z += MMDL_BBD_OFFS_POS_Z;
+  blact_SetCommonOffsPos( &pos );
   GFL_BBD_SetObjectTrans(
 		GFL_BBDACT_GetBBDSystem(actSys), work->actID, &pos );
 }
@@ -788,7 +797,7 @@ static void DrawBlAct_DrawAlwaysAnime( MMDL *mmdl )
   }
   
 	actSys = MMDL_BLACTCONT_GetBbdActSys( MMDL_GetBlActCont(mmdl) );
-	dir = MMDL_GetDirDisp( mmdl );
+  dir = blact_GetDrawDir( mmdl );
   
 	anm_id = DRAW_STA_WALK_16F * DIR_MAX4;
 	anm_id += dir;
@@ -800,8 +809,7 @@ static void DrawBlAct_DrawAlwaysAnime( MMDL *mmdl )
 	}
 	
 	MMDL_GetDrawVectorPos( mmdl, &pos );
-  pos.y += MMDL_BBD_OFFS_POS_Y;
-  pos.z += MMDL_BBD_OFFS_POS_Z;
+  blact_SetCommonOffsPos( &pos );
 	
 	GFL_BBD_SetObjectTrans(
 		GFL_BBDACT_GetBBDSystem(actSys), work->actID, &pos );

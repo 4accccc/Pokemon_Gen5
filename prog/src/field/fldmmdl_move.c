@@ -2252,3 +2252,31 @@ static FLDEFF_CTRL * mmdl_GetFldEffCtrl( MMDL *mmdl )
   FIELDMAP_WORK *fieldMapWork = MMDLSYS_GetFieldMapWork( (MMDLSYS*)mmdlsys );
   return( FIELDMAP_GetFldEffCtrl(fieldMapWork) );
 }
+
+static const u8 data_angle8_4[8] = { 0, 1, 1, 2, 2, 3, 3, 0 };
+
+static const u8 data_angleChange360_4[4][4] =
+{
+  {DIR_UP,DIR_DOWN,DIR_LEFT,DIR_RIGHT}, //0
+  {DIR_RIGHT,DIR_LEFT,DIR_UP,DIR_DOWN}, //1
+  {DIR_DOWN,DIR_UP,DIR_RIGHT,DIR_LEFT}, //2
+  {DIR_LEFT,DIR_RIGHT,DIR_DOWN,DIR_UP}, //3
+};
+
+//--------------------------------------------------------------
+/**
+ * カメラ横角度から表示する４方向を取得
+ * @param dir 角度0時の方向。
+ * @param angleYaw カメラ角度
+ * @retval u16 DIR_UP等
+ */
+//--------------------------------------------------------------
+u16 MMDL_TOOL_GetAngleYawToDirFour( u16 dir, u16 angleYaw )
+{
+  angleYaw /= 0x2000; // /8
+  angleYaw = data_angle8_4[angleYaw];
+  angleYaw = data_angleChange360_4[angleYaw][dir];
+  GF_ASSERT( angleYaw < DIR_MAX4 );
+  return( angleYaw );
+}
+
