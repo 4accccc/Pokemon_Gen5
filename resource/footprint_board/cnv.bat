@@ -17,8 +17,8 @@ g2dcvtr ashiato_frame.nce -br -ncn
 g2dcvtr ashiato_gage.nce -br -ncn
 g2dcvtr foot_dummy.nce -br -ncn
 g2dcvtr wifi_mark.nce -br -ncn
-g2dcvtr a_board_font_s.ncl -pcm
-g2dcvtr a_board_font_b.ncl -pcm
+g2dcvtr a_board_font_s.ncl
+g2dcvtr a_board_font_b.ncl
 
 
 echo g3dコンバート

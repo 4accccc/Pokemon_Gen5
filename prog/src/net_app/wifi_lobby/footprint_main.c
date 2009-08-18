@@ -7,49 +7,42 @@
  */
 //==============================================================================
 #include <gflib.h>
-//#include "system/snd_tool.h"
+#include "system/main.h"
 #include "system/bmp_menulist.h"
 #include "print\printsys.h"
 #include "savedata\system_data.h"
 #include "system/bmp_menu.h"
-#include <procsys.h>
 #include "system/wipe.h"
-#include "system/window.h"
-#include <arc_tool.h>
-//#include "system/arc_util.h"
-//#include "system/msgdata_util.h"
 #include "print/wordset.h"
 #include "message.naix"
-//#include "system/fontproc.h"
-//#include "gflib/strbuf_family.h"
 #include "msg/msg_wflby_footprint.h"
-#include "system\font_arc.h"
 #include "savedata/config.h"
-//#include  "communication/wm_icon.h"
-//#include "system/fontoam.h"
-//#include "system/d3dobj.h"
-
 #include "net_app/wifi_lobby/wflby_system_def.h"
 #include "net_app/footprint_main.h"
 #include "footprint_common.h"
-#include "graphic/footprint_board.naix"
+#include "footprint_board.naix"
 #include "footprint_stamp.h"
 #include "footprint_comm.h"
 #include "footprint_tool.h"
 #include "footprint_id.h"
 #include "footprint_control.h"
 #include "footprint_snd_def.h"
-
-#include "battle/battle_common.h"	//POKEMON_TEMOTI_MAX定義
 #include "poke_tool/poke_tool.h"
 #include "poke_tool/pokeparty.h"
-#include "poke_tool/pokefoot.h"	//POKEFOOT_ARC_CHAR_DMMY定義の為
 #include "system/touch_subwindow.h"
-#include <tcb.h>
 #include "print\gf_font.h"
 #include "font/font.naix"
 #include "system/gfl_use.h"
 #include <calctool.h>
+#include "arc_def.h"
+#include "system/bmp_oam.h"
+#include "pm_define.h"
+#include "system/actor_tool.h"
+#include "sound/pm_sndsys.h"
+#include "system/bmp_winframe.h"
+#include "gamesystem/msgspeed.h"
+#include "poke_tool/monsno_def.h"
+#include "poke_tool/pokefoot.h"
 
 
 //==============================================================================
@@ -76,10 +69,12 @@
 ///カメラの注視点までの距離
 #define FOOTPRINT_CAMERA_DISTANCE		(0x7c000)	//(0x96 << FX32_SHIFT)
 
+#if WB_FIX
 ///カメラアングル
 static const CAMERA_ANGLE FootprintCameraAngle = {
 	GFL_CALC_GET_ROTA_NUM(0), GFL_CALC_GET_ROTA_NUM(0), GFL_CALC_GET_ROTA_NUM(0),
 };
+#endif
 
 //--------------------------------------------------------------
 //	ボードのモデル設定
@@ -119,8 +114,12 @@ static const CAMERA_ANGLE FootprintCameraAngle = {
 ///メイン画面＋サブ画面で使用するアクター総数
 #define FOOTPRINT_ACTOR_MAX					(64 + 64)	//メイン画面 + サブ画面
 
+///OBJで使用するパレット本数(メイン画面)
+#define FOOTPRINT_OAM_PLTT_MAX_MAIN				(16)
+///OBJで使用するパレット本数(サブ画面)
+#define FOOTPRINT_OAM_PLTT_MAX_SUB				(16)
 ///OBJで使用するパレット本数(上画面＋下画面)
-#define FOOTPRINT_OAM_PLTT_MAX				(16 + 16)
+#define FOOTPRINT_OAM_PLTT_MAX				(FOOTPRINT_OAM_PLTT_MAX_MAIN + FOOTPRINT_OAM_PLTT_MAX_SUB)
 
 ///OAMリソース：キャラ登録最大数(メイン画面 + サブ画面)
 #define FOOTPRINT_OAMRESOURCE_CHAR_MAX		(FOOTPRINT_CHAR_MAX)
@@ -224,15 +223,25 @@ enum{
 //==============================================================================
 ///ボード制御構造体
 typedef struct{
-	GFL_G3D_OBJ  mdl;
+	GFL_G3D_OBJ  *mdl;
 	GFL_G3D_OBJSTATUS      obj;
+	GFL_G3D_RND *rnder;
+	GFL_G3D_RES *p_mdlres;
+	VecFx32 obj_rotate;
+	BOOL draw_flag;
 }BOARD_PARAM;
 
 ///フォントアクターワーク
 typedef struct{
+#if WB_FIX
 	FONTOAM_OBJ_PTR fontoam;
 	CHAR_MANAGER_ALLOCDATA cma;
+#else
+  BMPOAM_ACT_PTR      fontoam;      // フォントOAMワーク
+#endif
 	u16 font_len;
+	u8 padding[2];
+	GFL_BMP_DATA *bmp;
 }FONT_ACTOR;
 
 
@@ -243,13 +252,23 @@ typedef struct _FOOTPRINT_SYS{
 	
 	void				*tcb_work;		///<TCBシステムで使用するワーク
 	GFL_TCBSYS			*tcbsys;		///<TCBシステム
+	GFL_TCBLSYS *tcblsys;
 	
 	PALETTE_FADE_PTR pfd;				///<パレットシステム
+#if WB_FIX
 	FONTOAM_SYS_PTR fontoam_sys;		///<フォントOAMシステムへのポインタ
+#else
+	BMPOAM_SYS_PTR fontoam_sys;	// FONTOAMのシステム
+#endif
 	GFL_TCB* update_tcb;					///<Update用TCBへのポインタ
+#if WB_FIX
 	CATS_SYS_PTR		csp;
 	CATS_RES_PTR		crp;
-	
+#else
+	GFL_CLUNIT			*clunit;	///<セルユニット
+	PLTTSLOT_SYS_PTR plttslot;
+#endif
+
 	TOUCH_SW_SYS *yesno_button;			///<ボタンの「はい・いいえ」システム
 	u8 yesno_button_use;				///<TRUE:「はい・いいえ」ボタンを使用中
 	u8 timeup_wait;						///<タイムアップしてから終了までの待ち時間
@@ -259,6 +278,7 @@ typedef struct _FOOTPRINT_SYS{
 	GFL_MSGDATA *msgman;						// 名前入力メッセージデータマネージャー
 
 	// BMPWIN描画周り
+	PRINT_UTIL name_print_util[FOOTPRINT_BMPWIN_NAME_MAX];
 	GFL_BMPWIN*		name_win[FOOTPRINT_BMPWIN_NAME_MAX]; //名前表示用のBMPWIN
 	GFL_BMPWIN*		talk_win;					 //会話メッセージ用のBMPWIN
 	STRBUF *talk_strbuf;				///<会話メッセージ用バッファ
@@ -280,16 +300,16 @@ typedef struct _FOOTPRINT_SYS{
 	int entry_list_update_timer;			///<参加者のユーザーIDリストを更新するタイムをカウント
 	
 	STAMP_SYSTEM_WORK ssw;				///<スタンプシステムワーク
-	STAMP_PARAM my_stamp_param[POKEMON_TEMOTI_MAX];		///<自分の手持ちスタンプパラメータ
+	STAMP_PARAM my_stamp_param[TEMOTI_POKEMAX];		///<自分の手持ちスタンプパラメータ
 	u8 select_no;						///<選択している足跡スタンプの番号
 	u8 yameru_pal_pos;					///<「やめる」フォントOAMのパレット番号
 	
-	GFL_CLWK cap_ink[POKEMON_TEMOTI_MAX];	///<インクアクター
-	GFL_CLWK cap_ink_foundation[POKEMON_TEMOTI_MAX];	///<インクの下地アクター
-	GFL_CLWK cap_ink_foot[POKEMON_TEMOTI_MAX];	///<インクの上に配置する足跡アクター
-	GFL_CLWK cap_name_frame;				///<名前を囲む枠アクター
-	GFL_CLWK cap_name_foot[FOOTPRINT_ENTRY_MAX];	///<名前の横の足跡アクター
-	GFL_CLWK cap_touch_eff[TOUCH_EFF_MAX];	///<タッチエフェクトアクター
+	GFL_CLWK *cap_ink[TEMOTI_POKEMAX];	///<インクアクター
+	GFL_CLWK *cap_ink_foundation[TEMOTI_POKEMAX];	///<インクの下地アクター
+	GFL_CLWK *cap_ink_foot[TEMOTI_POKEMAX];	///<インクの上に配置する足跡アクター
+	GFL_CLWK *cap_name_frame;				///<名前を囲む枠アクター
+	GFL_CLWK *cap_name_foot[FOOTPRINT_ENTRY_MAX];	///<名前の横の足跡アクター
+	GFL_CLWK *cap_touch_eff[TOUCH_EFF_MAX];	///<タッチエフェクトアクター
 	
 	u16 name_foot_monsno[FOOTPRINT_ENTRY_MAX];	///<名前の横に出しているポケモン番号
 	u16 name_foot_color[FOOTPRINT_ENTRY_MAX];	///<名前の横に出しているカラー
@@ -313,12 +333,22 @@ typedef struct _FOOTPRINT_SYS{
 	u32 cgr_id[CHARID_MAX];
 	u32 cell_id[CELLID_MAX];
 	u32 anm_id[CELLANMID_MAX];
+	
+	PRINT_STREAM *print_stream;
+	GFL_FONT *font_handle;
+	PRINT_QUE *printQue;
+
+	fx32 camera_distance;         ///<カメラ距離
+	FOOT_CAMERA_ANGLE camera_angle; ///<カメラ角度
+	VecFx32 camera_target;          
+	VecFx32 camera_up;          
 }FOOTPRINT_SYS;
 
 
 //==============================================================================
 //	CLACT用データ
 //==============================================================================
+#if WB_FIX
 static	const TCATS_OAM_INIT FootprintTcats = {
 	FOOTPRINT_OAM_START_MAIN, FOOTPRINT_OAM_END_MAIN,
 	FOOTPRINT_OAM_AFFINE_START_MAIN, FOOTPRINT_OAM_AFFINE_END_MAIN,
@@ -342,7 +372,27 @@ static const TCATS_RESOURCE_NUM_LIST FootprintResourceList = {
 	FOOTPRINT_OAMRESOURCE_MCELL_MAX,
 	FOOTPRINT_OAMRESOURCE_MCELLANM_MAX,
 };
+#endif
 
+static const GFL_DISP_VRAM vramSetTable = {
+	GX_VRAM_BG_128_C,				// メイン2DエンジンのBG
+	GX_VRAM_BGEXTPLTT_NONE,			// メイン2DエンジンのBG拡張パレット
+
+	GX_VRAM_SUB_BG_32_H,			// サブ2DエンジンのBG
+	GX_VRAM_SUB_BGEXTPLTT_NONE,		// サブ2DエンジンのBG拡張パレット
+
+	GX_VRAM_OBJ_64_E,				// メイン2DエンジンのOBJ
+	GX_VRAM_OBJEXTPLTT_NONE,		// メイン2DエンジンのOBJ拡張パレット
+
+	GX_VRAM_SUB_OBJ_16_I,			// サブ2DエンジンのOBJ
+	GX_VRAM_SUB_OBJEXTPLTT_NONE,	// サブ2DエンジンのOBJ拡張パレット
+
+	GX_VRAM_TEX_01_AB,				// テクスチャイメージスロット
+	GX_VRAM_TEXPLTT_01_FG,			// テクスチャパレットスロット
+
+	GX_OBJVRAMMODE_CHAR_1D_128K,	// メインOBJマッピングモード
+	GX_OBJVRAMMODE_CHAR_1D_32K,		// サブOBJマッピングモード
+};
 
 //==============================================================================
 //	データ
@@ -407,6 +457,7 @@ static const u16 MyInkPaletteEraseScrnCode[] = {	//1段目、2段目…
 //	アクターヘッダ
 //==============================================================================
 ///インク アクターヘッダ
+#if WB_FIX
 static const TCATS_OBJECT_ADD_PARAM_S InkObjParam = {
 	0,0, 0,		//x, y, z
 	0, SOFTPRI_INK, PALOFS_INK,		//アニメ番号、優先順位、パレット番号
@@ -422,8 +473,16 @@ static const TCATS_OBJECT_ADD_PARAM_S InkObjParam = {
 	ACTBGPRI_INK,			//BGプライオリティ
 	0,			//Vram転送フラグ
 };
+#else
+static const GFL_CLWK_DATA InkObjParam = {
+	0, 0,		//pos_x, pos_y
+	0, 			//anmseq
+	SOFTPRI_INK, ACTBGPRI_INK,	//softpri, bgpri
+};
+#endif
 
 ///インクの下地 アクターヘッダ
+#if WB_FIX
 static const TCATS_OBJECT_ADD_PARAM_S InkFoundationObjParam = {
 	0,0, 0,		//x, y, z
 	0, SOFTPRI_INK_FOUNDATION, PALOFS_INK_FOUNDATION,		//アニメ番号、優先順位、パレット番号
@@ -439,8 +498,16 @@ static const TCATS_OBJECT_ADD_PARAM_S InkFoundationObjParam = {
 	ACTBGPRI_INK_FOUNDATION,			//BGプライオリティ
 	0,			//Vram転送フラグ
 };
+#else
+static const GFL_CLWK_DATA InkFoundationObjParam = {
+	0, 0,		//pos_x, pos_y
+	0, 			//anmseq
+	SOFTPRI_INK_FOUNDATION, ACTBGPRI_INK_FOUNDATION,	//softpri, bgpri
+};
+#endif
 
 ///インクの上に配置する足跡 アクターヘッダ
+#if WB_FIX
 static const TCATS_OBJECT_ADD_PARAM_S InkFootObjParam = {
 	0,0, 0,		//x, y, z
 	0, SOFTPRI_INK_FOOT, 0,		//アニメ番号、優先順位、パレット番号
@@ -456,8 +523,16 @@ static const TCATS_OBJECT_ADD_PARAM_S InkFootObjParam = {
 	ACTBGPRI_INK_FOOT,			//BGプライオリティ
 	0,			//Vram転送フラグ
 };
+#else
+static const GFL_CLWK_DATA InkFootObjParam = {
+	0, 0,		//pos_x, pos_y
+	0, 			//anmseq
+	SOFTPRI_INK_FOOT, ACTBGPRI_INK_FOOT,	//softpri, bgpri
+};
+#endif
 
 ///インクパレットをタッチした時に出すエフェクト アクターヘッダ
+#if WB_FIX
 static const TCATS_OBJECT_ADD_PARAM_S TouchEffObjParam = {
 	0,0, 0,		//x, y, z
 	0, SOFTPRI_TOUCH_EFF, PALOFS_TOUCH_EFF,		//アニメ番号、優先順位、パレット番号
@@ -473,8 +548,16 @@ static const TCATS_OBJECT_ADD_PARAM_S TouchEffObjParam = {
 	ACTBGPRI_TOUCH_EFF,			//BGプライオリティ
 	0,			//Vram転送フラグ
 };
+#else
+static const GFL_CLWK_DATA TouchEffObjParam = {
+	0, 0,		//pos_x, pos_y
+	0, 			//anmseq
+	SOFTPRI_TOUCH_EFF, ACTBGPRI_TOUCH_EFF,	//softpri, bgpri
+};
+#endif
 
 ///名前を囲む枠 アクターヘッダ
+#if WB_FIX
 static const TCATS_OBJECT_ADD_PARAM_S NameFrameObjParam = {
 	0,0, 0,		//x, y, z
 	0, SOFTPRI_SUB_NAME_FRAME, PALOFS_SUB_NAME_FRAME,	//アニメ番号、優先順位、パレット番号
@@ -490,8 +573,16 @@ static const TCATS_OBJECT_ADD_PARAM_S NameFrameObjParam = {
 	ACTBGPRI_SUB_NAME_FRAME,			//BGプライオリティ
 	0,			//Vram転送フラグ
 };
+#else
+static const GFL_CLWK_DATA NameFrameObjParam = {
+	0, 0,		//pos_x, pos_y
+	0, 			//anmseq
+	SOFTPRI_SUB_NAME_FRAME, ACTBGPRI_SUB_NAME_FRAME,	//softpri, bgpri
+};
+#endif
 
 ///名前の横に出す足跡 アクターヘッダ
+#if WB_FIX
 static const TCATS_OBJECT_ADD_PARAM_S NameFootObjParam = {
 	0,0, 0,		//x, y, z
 	0, SOFTPRI_SUB_NAME_FOOT, PALOFS_SUB_NAME_FOOT,	//アニメ番号、優先順位、パレット番号
@@ -507,6 +598,13 @@ static const TCATS_OBJECT_ADD_PARAM_S NameFootObjParam = {
 	ACTBGPRI_SUB_NAME_FOOT,			//BGプライオリティ
 	0,			//Vram転送フラグ
 };
+#else
+static const GFL_CLWK_DATA NameFootObjParam = {
+	0, 0,		//pos_x, pos_y
+	0, 			//anmseq
+	SOFTPRI_SUB_NAME_FOOT, ACTBGPRI_SUB_NAME_FOOT,	//softpri, bgpri
+};
+#endif
 
 //==============================================================================
 //	プロトタイプ宣言
@@ -514,7 +612,7 @@ static const TCATS_OBJECT_ADD_PARAM_S NameFootObjParam = {
 static void Footprint_Update(GFL_TCB* tcb, void *work);
 static void VBlankFunc(GFL_TCB *tcb, void *work);
 static void FootPrint_VramBankSet(void);
-static void BgExit( GF_BGL_INI * ini );
+static void BgExit( void );
 static void BgGraphicSet( FOOTPRINT_SYS * fps, ARCHANDLE* p_handle );
 static void BmpWinInit( FOOTPRINT_SYS *fps );
 static void BmpWinDelete( FOOTPRINT_SYS *fps );
@@ -522,6 +620,7 @@ static void Footprint_3D_Init(int heap_id);
 static void FootprintSimpleSetUp(void);
 static void Footprint_3D_Exit(void);
 static void Footprint_CameraInit(FOOTPRINT_SYS *fps);
+static void GetPerspectiveScreenSize( u16 PerspWay, fx32 Dist, fx32 Aspect, fx32* pWidth, fx32* pHeight );
 static void Footprint_CameraExit(FOOTPRINT_SYS *fps);
 static void Model3DSet( FOOTPRINT_SYS * fps, ARCHANDLE* p_handle );
 static void Model3DDel(FOOTPRINT_SYS *fps);
@@ -537,17 +636,15 @@ static void DefaultActorDel_Main(FOOTPRINT_SYS *fps);
 static void DefaultActorSet_Sub(FOOTPRINT_SYS *fps);
 static void DefaultActorDel_Sub(FOOTPRINT_SYS *fps);
 static void MyInkPaletteSettings(FOOTPRINT_SYS *fps);
-static BOOL OBJFootCharRewrite(int monsno, int form_no, GFL_CLWK cap, ARCHANDLE *hdl_main, ARCHANDLE *hdl_mark, NNS_G2D_VRAM_TYPE vram_type, BOOL arceus_flg);
+static BOOL OBJFootCharRewrite(int monsno, int form_no, GFL_CLWK *cap, ARCHANDLE *hdl_main, ARCHANDLE *hdl_mark, NNS_G2D_VRAM_TYPE vram_type, BOOL arceus_flg);
 static void Footprint_TouchEffAdd(FOOTPRINT_SYS_PTR fps, int hit_pos);
 static void Footprint_SelectInkPaletteFade(FOOTPRINT_SYS_PTR fps, int hit_pos);
 static void Footprint_TouchEffUpdate(FOOTPRINT_SYS_PTR fps);
 static FOOTPRINT_NAME_UPDATE_STATUS FootPrintTool_NameAllUpdate(FOOTPRINT_SYS *fps);
 static void Sub_FontOamCreate(FOOTPRINT_SYS_PTR fps, FONT_ACTOR *font_actor, const STRBUF *str, 
-	FONT_TYPE font_type, PRINTSYS_LSB color, int pal_offset, int pal_id, 
+	PRINTSYS_LSB color, int pal_offset, int pal_id, 
 	int x, int y, int pos_center);
 static void Sub_FontOamDelete(FONT_ACTOR *font_actor);
-static void FontLenGet(const STRBUF *str, 
-	FONT_TYPE font_type, int *ret_dot_len, int *ret_char_len);
 static void Footprint_InkGaugeUpdate(FOOTPRINT_SYS_PTR fps);
 static BOOL Footprint_InkGauge_Consume(FOOTPRINT_SYS_PTR fps, int consume_num);
 
@@ -611,9 +708,15 @@ GFL_PROC_RESULT FootPrintProc_Init( GFL_PROC * proc, int * seq, void * pwk, void
 	fps->sv = WFLBY_SYSTEM_GetSaveData(fps->parent_work->wflby_sys);
 #endif
 
-    //TCBシステム作成
-    fps->tcb_work = GFL_HEAP_AllocClearMemory(HEAPID_FOOTPRINT, GFL_TCB_CalcSystemWorkSize( 64 ));
-    fps->tcbsys = GFL_TCB_Init(64, fps->tcb_work);
+  //TCBシステム作成
+  fps->tcb_work = GFL_HEAP_AllocClearMemory(HEAPID_FOOTPRINT, GFL_TCB_CalcSystemWorkSize( 64 ));
+  fps->tcbsys = GFL_TCB_Init(64, fps->tcb_work);
+
+  //フォント読み込み
+  fps->font_handle = GFL_FONT_Create( ARCID_FONT, NARC_font_large_nftr,
+			GFL_FONT_LOADTYPE_FILE, FALSE, HEAPID_FOOTPRINT );
+	fps->printQue = PRINTSYS_QUE_Create(HEAPID_FOOTPRINT);
+	fps->tcblsys = GFL_TCBL_Init(HEAPID_FOOTPRINT, HEAPID_FOOTPRINT, 8, 32);
 	
 	fps->arceus_flg = WFLBY_SYSTEM_FLAG_GetArceus(fps->parent_work->wflby_sys);
 	Footprint_MyCommStatusSet(fps);
@@ -649,19 +752,18 @@ GFL_PROC_RESULT FootPrintProc_Init( GFL_PROC * proc, int * seq, void * pwk, void
 	InitTPNoBuff(4);
 #endif
 
+#if WB_FIX
 	// ボタン用フォントを読み込み
 	FontProc_LoadFont(NET_FONT_BUTTON, HEAPID_FOOTPRINT);
+#endif
 
 	//メッセージマネージャ作成
 	fps->wordset		 = WORDSET_Create(HEAPID_FOOTPRINT);
 	fps->msgman       = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_wflby_footprint_dat, HEAPID_FOOTPRINT );
 
-	//フォントOAMシステム作成
-	fps->fontoam_sys = FONTOAM_SysInit(FOOT_FONTOAM_MAX, HEAPID_FOOTPRINT);
-
 	//ハンドルを開ける(足跡など頻繁にグラフィックロードが行われるのでハンドル開けっ放しにする
-	fps->handle_footprint = GFL_ARC_OpenDataHandle( ARC_FOOTPRINT_GRA, HEAPID_FOOTPRINT );
-	fps->handle_footmark = GFL_ARC_OpenDataHandle(ARC_POKEFOOT_GRA, HEAPID_FOOTPRINT);
+	fps->handle_footprint = GFL_ARC_OpenDataHandle( ARCID_FOOTPRINT_GRA, HEAPID_FOOTPRINT );
+	fps->handle_footmark = GFL_ARC_OpenDataHandle(ARCID_POKEFOOT_GRA, HEAPID_FOOTPRINT);
 
 	// BGグラフィック転送
 	BgGraphicSet( fps, fps->handle_footprint );
@@ -677,6 +779,7 @@ GFL_PROC_RESULT FootPrintProc_Init( GFL_PROC * proc, int * seq, void * pwk, void
 	fps->talk_strbuf = GFL_STR_CreateBuffer(256, HEAPID_FOOTPRINT);
 	
 	//アクターシステム作成
+#if WB_FIX
 	fps->csp=CATS_AllocMemory(HEAPID_FOOTPRINT);
 	CATS_SystemInit(fps->csp,&FootprintTcats,&FootprintCcmm,FOOTPRINT_OAM_PLTT_MAX);
 	//通信アイコン用にキャラ＆パレット制限
@@ -687,14 +790,39 @@ GFL_PROC_RESULT FootPrintProc_Init( GFL_PROC * proc, int * seq, void * pwk, void
 	CATS_ClactSetInit(fps->csp, fps->crp, FOOTPRINT_ACTOR_MAX);
 	CATS_ResourceManagerInit(fps->csp,fps->crp,&FootprintResourceList);
 	CLACT_U_SetSubSurfaceMatrix(CATS_EasyRenderGet(fps->csp), 0, FOOTPRINT_SUB_ACTOR_DISTANCE);
+#else
+	{
+		GFL_CLSYS_INIT clsys_init = GFL_CLSYSINIT_DEF_DIVSCREEN;
+		
+		clsys_init.oamst_main = GFL_CLSYS_OAMMAN_INTERVAL;	//通信アイコンの分
+		clsys_init.oamnum_main = 128-GFL_CLSYS_OAMMAN_INTERVAL;
+		clsys_init.tr_cell = 32;	//セルVram転送管理数
+		clsys_init.CGR_RegisterMax = FOOTPRINT_OAMRESOURCE_CHAR_MAX;
+		clsys_init.CELL_RegisterMax = FOOTPRINT_OAMRESOURCE_CELL_MAX;
+		GFL_CLACT_SYS_Create(&clsys_init, &vramSetTable, HEAPID_FOOTPRINT);
+		
+		fps->clunit = GFL_CLACT_UNIT_Create(FOOTPRINT_ACTOR_MAX, 0, HEAPID_FOOTPRINT);
+		GFL_CLACT_UNIT_SetDefaultRend(fps->clunit);
+
+		fps->plttslot = PLTTSLOT_Init(
+		  HEAPID_FOOTPRINT, FOOTPRINT_OAM_PLTT_MAX_MAIN, FOOTPRINT_OAM_PLTT_MAX_SUB);
+	}
+#endif
 
 	// Wifi通信アイコン
 #if WB_TEMP_FIX
     WirelessIconEasy();
 #endif
 
+	//フォントOAMシステム作成
+#if WB_FIX
+	fps->fontoam_sys = FONTOAM_SysInit(FOOT_FONTOAM_MAX, HEAPID_FOOTPRINT);
+#else
+	fps->fontoam_sys = BmpOam_Init(HEAPID_FOOTPRINT, fps->clunit);
+#endif
+
 	//スタンプシステム作成
-	StampSys_Init(&fps->ssw, fps->arceus_flg);
+	StampSys_Init(&fps->ssw, fps->arceus_flg, &fps->camera_distance, &fps->camera_angle, &fps->camera_target, &fps->camera_up);
 
 	//常駐OBJ登録
 	DefaultResourceSet_Main(fps, fps->handle_footprint);
@@ -864,29 +992,50 @@ GFL_PROC_RESULT FootPrintProc_Main( GFL_PROC * proc, int * seq, void * pwk, void
 	case SEQ_EXIT_SELECT_INIT:
 		//会話ウィンドウ描画
 		GFL_BMP_Clear(GFL_BMPWIN_GetBmp(fps->talk_win), 0xf);
+  	GFL_BMPWIN_MakeScreen(fps->talk_win);
 		TalkWinFrame_Write(fps->talk_win, WINDOW_TRANS_ON, 
 			WINCGX_TALKWIN_START, FOOT_MAINBG_TALKWIN_PAL);
 		//メッセージ表示
 		GFL_MSG_GetString(fps->msgman, msg_footprint_exit_select, fps->talk_strbuf);
-		fps->msg_index = PRINTSYS_PrintStream(/*引数内はまだ未対応*/&fps->talk_win, FONT_TALK, 
+	#if WB_FIX
+		fps->msg_index = PRINTSYS_PrintStream(/*引数内はまだ未対応*/fps->talk_win, FONT_TALK, 
 			fps->talk_strbuf, 0, 0, 
 			MSGSPEED_GetWait()/*CONFIG_GetMsgPrintSpeed(SaveData_GetConfig(fps->sv))*/, NULL);
+  #else
+    if(fps->print_stream != NULL){
+      PRINTSYS_PrintStreamDelete(fps->print_stream);
+    }
+    fps->print_stream = PRINTSYS_PrintStream(fps->talk_win, 0, 0, fps->talk_strbuf,
+      fps->font_handle, MSGSPEED_GetWait(), fps->tcblsys, 5, HEAPID_FOOTPRINT, 0xf);
+  #endif
 		(*seq)++;
 		break;
 	case SEQ_EXIT_SELECT_MSG_WAIT:
+#if WB_FIX
 		if(GF_MSG_PrintEndCheck(fps->msg_index) == 0){
-			//「はい・いいえ」ボタンを出す
-			TOUCH_SW_PARAM tsp;
-			
-			
-			tsp.bg_frame  = FOOT_FRAME_WIN;
-			tsp.char_offs = WINCGX_BUTTON_YESNO_START;
-			tsp.pltt_offs = FOOT_MAINBG_BUTTON_YESNO_PAL;
-			tsp.x		  = 25;
-			tsp.y		  = 6;
-			TOUCH_SW_Init(fps->yesno_button, &tsp);
-			
-			fps->yesno_button_use = TRUE;
+#else
+    GF_ASSERT(fps->print_stream != NULL);
+  	if(PRINTSYS_PrintStreamGetState(fps->print_stream) == PRINTSTREAM_STATE_DONE){
+  		PRINTSYS_PrintStreamDelete(fps->print_stream);
+  		fps->print_stream = NULL;
+#endif
+      {
+  			//「はい・いいえ」ボタンを出す
+  			TOUCH_SW_PARAM tsp = {
+    			FOOT_FRAME_WIN,
+    			WINCGX_BUTTON_YESNO_START,
+    			FOOT_MAINBG_BUTTON_YESNO_PAL,
+    			25,
+    			6,
+    			GFL_APP_KTST_TOUCH,
+    			0,
+    			TOUCH_SW_TYPE_S,
+    		};
+  			
+  			TOUCH_SW_Init(fps->yesno_button, &tsp);
+  			
+  			fps->yesno_button_use = TRUE;
+  		}
 			(*seq)++;
 		}
 		break;
@@ -928,15 +1077,31 @@ GFL_PROC_RESULT FootPrintProc_Main( GFL_PROC * proc, int * seq, void * pwk, void
 		GFL_BMP_Clear(GFL_BMPWIN_GetBmp(fps->talk_win), 0xf);
 		TalkWinFrame_Write(fps->talk_win, WINDOW_TRANS_ON, 
 			WINCGX_TALKWIN_START, FOOT_MAINBG_TALKWIN_PAL);
+  	GFL_BMPWIN_MakeScreen(fps->talk_win);
 		//メッセージ表示
 		GFL_MSG_GetString(fps->msgman, msg_footprint_timeup, fps->talk_strbuf);
-		fps->msg_index = PRINTSYS_PrintStream(/*引数内はまだ未対応*/&fps->talk_win, FONT_TALK, 
+#if WB_FIX
+		fps->msg_index = PRINTSYS_PrintStream(/*引数内はまだ未対応*/fps->talk_win, FONT_TALK, 
 			fps->talk_strbuf, 0, 0, 
 			MSGSPEED_GetWait()/*CONFIG_GetMsgPrintSpeed(SaveData_GetConfig(fps->sv))*/, NULL);
+#else
+    if(fps->print_stream != NULL){
+      PRINTSYS_PrintStreamDelete(fps->print_stream);
+    }
+    fps->print_stream = PRINTSYS_PrintStream(fps->talk_win, 0, 0, fps->talk_strbuf,
+      fps->font_handle, MSGSPEED_GetWait(), fps->tcblsys, 5, HEAPID_FOOTPRINT, 0xf);
+#endif
 		(*seq)++;
 		break;
 	case SEQ_TIMEUP_MSG_WAIT:
+#if WB_FIX
 		if(GF_MSG_PrintEndCheck(fps->msg_index) == 0){
+#else
+    GF_ASSERT(fps->print_stream != NULL);
+  	if(PRINTSYS_PrintStreamGetState(fps->print_stream) == PRINTSTREAM_STATE_DONE){
+  		PRINTSYS_PrintStreamDelete(fps->print_stream);
+  		fps->print_stream = NULL;
+#endif
 			(*seq)++;
 		}
 		break;
@@ -1023,6 +1188,9 @@ GFL_PROC_RESULT FootPrintProc_Main( GFL_PROC * proc, int * seq, void * pwk, void
 #endif
 
 	GFL_TCB_Main(fps->tcbsys);
+  GFL_TCBL_Main(fps->tcblsys);
+	PRINTSYS_QUE_Main(fps->printQue);
+
 	return GFL_PROC_RES_CONTINUE;
 }
 
@@ -1040,7 +1208,11 @@ GFL_PROC_RESULT FootPrintProc_End( GFL_PROC * proc, int * seq, void * pwk, void 
 {
 	FOOTPRINT_SYS * fps  = mywk;
 
-	GFL_TCB_DeleteTask(fps->tcbsys, fps->update_tcb);
+	if(fps->print_stream != NULL){
+		PRINTSYS_PrintStreamDelete(fps->print_stream);
+	}
+
+	GFL_TCB_DeleteTask(fps->update_tcb);
 
 	DefaultActorDel_Main(fps);
 	DefaultActorDel_Sub(fps);
@@ -1053,11 +1225,24 @@ GFL_PROC_RESULT FootPrintProc_End( GFL_PROC * proc, int * seq, void * pwk, void 
 
 	GFL_STR_DeleteBuffer(fps->talk_strbuf);
 	
+#if WB_FIX
 	//フォント削除
 	FontProc_UnloadFont(NET_FONT_BUTTON);
+#endif
+
+  //フォント破棄
+	GFL_FONT_Delete(fps->font_handle);
+	//PrintQue破棄
+	PRINTSYS_QUE_Delete(fps->printQue);
+	//TCBL破棄
+	GFL_TCBL_Exit(fps->tcblsys);
 
 	//フォントOAMシステム削除
+#if WB_FIX
 	FONTOAM_SysDelete(fps->fontoam_sys);
+#else
+	BmpOam_Exit( fps->fontoam_sys );
+#endif
 
 	// メッセージマネージャー・ワードセットマネージャー解放
 	GFL_MSG_Delete( fps->msgman );
@@ -1071,8 +1256,14 @@ GFL_PROC_RESULT FootPrintProc_End( GFL_PROC * proc, int * seq, void * pwk, void 
 	GFL_BMPWIN_Exit();
 
 	//アクターシステム削除
+#if WB_FIX
 	CATS_ResourceDestructor_S(fps->csp,fps->crp);
 	CATS_FreeMemory(fps->csp);
+#else
+	GFL_CLACT_UNIT_Delete(fps->clunit);
+	GFL_CLACT_SYS_Delete();
+	PLTTSLOT_Exit(fps->plttslot);
+#endif
 
 	//パレットフェードシステム削除
 	PaletteFadeWorkAllocFree(fps->pfd, FADE_MAIN_BG);
@@ -1145,7 +1336,9 @@ static void Footprint_Update(GFL_TCB* tcb, void *work)
 	Model3D_Update(fps);
 
 	GFL_CLACT_SYS_Main();
+#if WB_FIX
 	CATS_UpdateTransfer();
+#endif
 	GFL_G3D_DRAW_End();
 	
 
@@ -1182,6 +1375,8 @@ static void VBlankFunc(GFL_TCB *tcb, void *work)
 	DoVramTransferManager();
 #endif
 
+  PaletteWorkSet_VramCopy(fps->pfd, FADE_MAIN_BG, FOOT_MAINBG_BUTTON_YESNO_PAL*16, 0x40);
+  
 	GFL_CLACT_SYS_VBlankFunc();
 	PaletteFadeTrans(fps->pfd);
 	
@@ -1204,25 +1399,6 @@ static void FootPrint_VramBankSet(void)
 	
 	//VRAM設定
 	{
-		GFL_DISP_VRAM vramSetTable = {
-			GX_VRAM_BG_128_C,				// メイン2DエンジンのBG
-			GX_VRAM_BGEXTPLTT_NONE,			// メイン2DエンジンのBG拡張パレット
-
-			GX_VRAM_SUB_BG_32_H,			// サブ2DエンジンのBG
-			GX_VRAM_SUB_BGEXTPLTT_NONE,		// サブ2DエンジンのBG拡張パレット
-
-			GX_VRAM_OBJ_64_E,				// メイン2DエンジンのOBJ
-			GX_VRAM_OBJEXTPLTT_NONE,		// メイン2DエンジンのOBJ拡張パレット
-
-			GX_VRAM_SUB_OBJ_16_I,			// サブ2DエンジンのOBJ
-			GX_VRAM_SUB_OBJEXTPLTT_NONE,	// サブ2DエンジンのOBJ拡張パレット
-
-			GX_VRAM_TEX_01_AB,				// テクスチャイメージスロット
-			GX_VRAM_TEXPLTT_01_FG			// テクスチャパレットスロット
-
-			GX_OBJVRAMMODE_CHAR_1D_128K,	// メインOBJマッピングモード
-			GX_OBJVRAMMODE_CHAR_1D_32K,		// サブOBJマッピングモード
-		};
 		GFL_DISP_SetBank( &vramSetTable );
 
 		//VRAMクリア
@@ -1337,14 +1513,14 @@ static void FootPrint_VramBankSet(void)
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-static void BgExit( GF_BGL_INI * ini )
+static void BgExit( void )
 {
-	GFL_BG_FreeBGControl( ini, FOOT_SUBFRAME_PLATE );
-	GFL_BG_FreeBGControl( ini, FOOT_SUBFRAME_WIN );
-	GFL_BG_FreeBGControl( ini, FOOT_SUBFRAME_BG );
-	GFL_BG_FreeBGControl( ini, FOOT_FRAME_BG );
-	GFL_BG_FreeBGControl( ini, FOOT_FRAME_PANEL );
-	GFL_BG_FreeBGControl( ini, FOOT_FRAME_WIN );
+	GFL_BG_FreeBGControl( FOOT_SUBFRAME_PLATE );
+	GFL_BG_FreeBGControl( FOOT_SUBFRAME_WIN );
+	GFL_BG_FreeBGControl( FOOT_SUBFRAME_BG );
+	GFL_BG_FreeBGControl( FOOT_FRAME_BG );
+	GFL_BG_FreeBGControl( FOOT_FRAME_PANEL );
+	GFL_BG_FreeBGControl( FOOT_FRAME_WIN );
 
 }
 
@@ -1363,7 +1539,7 @@ static void BgGraphicSet( FOOTPRINT_SYS * fps, ARCHANDLE* p_handle )
 	u16 *panel_scrn;
 	
 	//-- メイン画面 --//
-	PaletteWorkSet_Arc(fps->pfd, ARC_FOOTPRINT_GRA, NARC_footprint_board_a_board_sita_NCLR, 
+	PaletteWorkSet_Arc(fps->pfd, ARCID_FOOTPRINT_GRA, NARC_footprint_board_a_board_sita_NCLR, 
 		HEAPID_FOOTPRINT, FADE_MAIN_BG, 0x200-0x40, 0);
 	GFL_ARCHDL_UTIL_TransVramBgCharacter(p_handle, NARC_footprint_board_a_board_sita_NCGR, 
 		FOOT_FRAME_PANEL, 0, 0, 0, HEAPID_FOOTPRINT);
@@ -1373,7 +1549,7 @@ static void BgGraphicSet( FOOTPRINT_SYS * fps, ARCHANDLE* p_handle )
 		FOOT_FRAME_BG, 0, 0, 0, HEAPID_FOOTPRINT);
 
 	//-- サブ画面 --//
-	PaletteWorkSet_Arc(fps->pfd, ARC_FOOTPRINT_GRA, NARC_footprint_board_ashiato_board_NCLR, 
+	PaletteWorkSet_Arc(fps->pfd, ARCID_FOOTPRINT_GRA, NARC_footprint_board_ashiato_board_NCLR, 
 		HEAPID_FOOTPRINT, FADE_SUB_BG, 0, 0);
 	if(fps->parent_work->board_type == FOOTPRINT_BOARD_TYPE_WHITE){
 		PaletteWorkCopy(fps->pfd, FADE_SUB_BG, 16*1, FADE_SUB_BG, 16*0, 0x20);
@@ -1384,7 +1560,7 @@ static void BgGraphicSet( FOOTPRINT_SYS * fps, ARCHANDLE* p_handle )
 		FOOT_SUBFRAME_PLATE, 0, 0, 0, HEAPID_FOOTPRINT);
 	GFL_ARCHDL_UTIL_TransVramScreen(p_handle, NARC_footprint_board_ashiato_board_bg_NSCR, 
 		FOOT_SUBFRAME_BG, 0, 0, 0, HEAPID_FOOTPRINT);
-	panel_scrn = GF_BGL_ScreenAdrsGet(FOOT_SUBFRAME_PLATE);
+	panel_scrn = GFL_BG_GetScreenBufferAdrs(FOOT_SUBFRAME_PLATE);
 	GFL_STD_MemCopy16(panel_scrn, fps->namelist_scrn, NAMELIST_SCRN_SIZE);
 	GFL_STD_MemClear16(panel_scrn, NAMELIST_SCRN_SIZE);
 	
@@ -1394,8 +1570,13 @@ static void BgGraphicSet( FOOTPRINT_SYS * fps, ARCHANDLE* p_handle )
 		win_type = CONFIG_GetWindowType(SaveData_GetConfig(fps->sv));
 		
 		// 会話ウィンドウパレット転送
+#if WB_FIX
 		PaletteWorkSet_Arc(fps->pfd, ARC_WINFRAME, TalkWinPalArcGet(win_type), HEAPID_FOOTPRINT, 
 			FADE_MAIN_BG, 0x20, FOOT_MAINBG_TALKWIN_PAL * 16);
+#else
+		PaletteWorkSet_Arc(fps->pfd, ARCID_FLDMAP_WINFRAME, BmpWinFrame_WinPalArcGet(), 
+		  HEAPID_FOOTPRINT, FADE_MAIN_BG, 0x20, FOOT_MAINBG_TALKWIN_PAL * 16);
+#endif
 		// 会話ウインドウグラフィック転送
 		TalkWinFrame_GraphicSet(FOOT_FRAME_WIN, WINCGX_TALKWIN_START, 
 			FOOT_MAINBG_TALKWIN_PAL,  win_type, HEAPID_FOOTPRINT);
@@ -1408,7 +1589,7 @@ static void BgGraphicSet( FOOTPRINT_SYS * fps, ARCHANDLE* p_handle )
 				FADE_SUB_BG, 0x20, FOOT_SUBBG_TALKFONT_PAL * 16);
 		}
 		else{
-			PaletteWorkSet_Arc(fps->pfd, ARC_FOOTPRINT_GRA, 
+			PaletteWorkSet_Arc(fps->pfd, ARCID_FOOTPRINT_GRA, 
 				NARC_footprint_board_a_board_font_s_NCLR, HEAPID_FOOTPRINT, 
 				FADE_SUB_BG, 0x20, FOOT_SUBBG_TALKFONT_PAL * 16);
 		}
@@ -1431,7 +1612,7 @@ static void DefaultResourceSet_Main(FOOTPRINT_SYS *fps, ARCHANDLE *hdl_main)
 	
 	//-- メイン画面OBJ常駐パレット --//
 	fps->pltt_id[PLTTID_OBJ_COMMON] = PLTTSLOT_ResourceSet(
-		fps->plttslot, hdl, NARC_footprint_board_a_board_eff_NCLR,
+		fps->plttslot, hdl_main, NARC_footprint_board_a_board_eff_NCLR,
 		CLSYS_DRAW_MAIN, FOOTPRINT_COMMON_PAL_NUM, HEAPID_FOOTPRINT);
 	pal_pos = GFL_CLGRP_PLTT_GetAddr(fps->pltt_id[PLTTID_OBJ_COMMON], CLSYS_DRAW_MAIN) / 0x20;
 	PaletteWorkSet_VramCopy(fps->pfd, FADE_MAIN_OBJ, pal_pos*16, FOOTPRINT_COMMON_PAL_NUM*0x20);
@@ -1444,7 +1625,7 @@ static void DefaultResourceSet_Main(FOOTPRINT_SYS *fps, ARCHANDLE *hdl_main)
 		NARC_footprint_board_ashiato_gage_NANR, HEAPID_FOOTPRINT);
 
 	//-- インクの上に配置する足跡 --//
-	for(i = 0; i < POKEMON_TEMOTI_MAX; i++){
+	for(i = 0; i < TEMOTI_POKEMAX; i++){
 		fps->cgr_id[CHARID_INK_FOOT_0 + i] = GFL_CLGRP_CGR_Register(hdl_main, 
 			NARC_footprint_board_wifi_mark_NCGR, FALSE, CLSYS_DRAW_MAIN, HEAPID_FOOTPRINT);
 	}
@@ -1455,7 +1636,7 @@ static void DefaultResourceSet_Main(FOOTPRINT_SYS *fps, ARCHANDLE *hdl_main)
 	//ダミーグラフィックは7、足跡データは4番のカラーで書かれているので、
 	//一本確保して、足跡用に割り当ててしまう。全てのカラーを足跡の色で埋める
 	fps->pltt_id[PLTTID_OBJ_INK_FOOT] = PLTTSLOT_ResourceSet(
-		wk->plttslot, hdl_main, NARC_footprint_board_a_board_eff_NCLR,
+		fps->plttslot, hdl_main, NARC_footprint_board_a_board_eff_NCLR,
 		CLSYS_DRAW_MAIN, 1, HEAPID_FOOTPRINT);
 	pal_pos = GFL_CLGRP_PLTT_GetAddr( fps->pltt_id[PLTTID_OBJ_INK_FOOT], CLSYS_DRAW_MAIN ) / 0x20;
 	PaletteWorkSet_VramCopy(fps->pfd, FADE_MAIN_OBJ, pal_pos*16, 1*0x20);
@@ -1476,7 +1657,7 @@ static void DefaultResourceSet_Main(FOOTPRINT_SYS *fps, ARCHANDLE *hdl_main)
 		NARC_footprint_board_a_board_eff_NANR, HEAPID_FOOTPRINT);
 		
 	//-- FONTOAM --//
-	fps->pltt_id[PLTTID_OBJ_FONTOAM] = PLTTSLOT_ResourceSet(wk->plttslot, hdl_main, 
+	fps->pltt_id[PLTTID_OBJ_FONTOAM] = PLTTSLOT_ResourceSet(fps->plttslot, hdl_main, 
 		NARC_footprint_board_a_board_font_b_NCLR, CLSYS_DRAW_MAIN, 1, HEAPID_FOOTPRINT);
 	fps->yameru_pal_pos 
 		= GFL_CLGRP_PLTT_GetAddr(fps->pltt_id[PLTTID_OBJ_FONTOAM], CLSYS_DRAW_MAIN) / 0x20;
@@ -1493,36 +1674,62 @@ static void DefaultResourceSet_Main(FOOTPRINT_SYS *fps, ARCHANDLE *hdl_main)
 static void DefaultActorSet_Main(FOOTPRINT_SYS *fps)
 {
 	int i;
+#if WB_FIX
 	TCATS_OBJECT_ADD_PARAM_S head;
-	
+#else
+  GFL_CLWK_DATA head;
+#endif
+
 	//-- インク --//
 	head = InkObjParam;
-	for(i = 0; i < POKEMON_TEMOTI_MAX; i++){
-		head.x = INK_POS_START_X + INK_POS_SPACE_X * i;
-		head.y = INK_POS_Y;
+	for(i = 0; i < TEMOTI_POKEMAX; i++){
+		head.pos_x = INK_POS_START_X + INK_POS_SPACE_X * i;
+		head.pos_y = INK_POS_Y;
+#if WB_FIX
 		fps->cap_ink[i] = CATS_ObjectAdd_S(fps->csp, fps->crp, &head);
+#else
+    fps->cap_ink[i] = GFL_CLACT_WK_Create( fps->clunit, fps->cgr_id[CHARID_INK], 
+      fps->pltt_id[PLTTID_OBJ_COMMON], fps->cell_id[CELLID_INK], &head, 
+      CLSYS_DEFREND_MAIN, HEAPID_FOOTPRINT);
+    GFL_CLACT_WK_SetPlttOffs( fps->cap_ink[i], PALOFS_INK, CLWK_PLTTOFFS_MODE_PLTT_TOP );
+#endif
 		GFL_CLACT_WK_SetAnmSeq(fps->cap_ink[i], i);
-		GFL_CLACT_WK_AddAnmFrame(fps->cap_ink[i]->act, FX32_ONE);
+		GFL_CLACT_WK_AddAnmFrame(fps->cap_ink[i], FX32_ONE);
 	}
 
 	//-- インクの下地 --//
 	head = InkFoundationObjParam;
-	for(i = 0; i < POKEMON_TEMOTI_MAX; i++){
-		head.x = INK_FOUNDATION_POS_START_X + INK_FOUNDATION_POS_SPACE_X * i;
-		head.y = INK_FOUNDATION_POS_Y;
+	for(i = 0; i < TEMOTI_POKEMAX; i++){
+		head.pos_x = INK_FOUNDATION_POS_START_X + INK_FOUNDATION_POS_SPACE_X * i;
+		head.pos_y = INK_FOUNDATION_POS_Y;
+#if WB_FIX
 		fps->cap_ink_foundation[i] = CATS_ObjectAdd_S(fps->csp, fps->crp, &head);
+#else
+    fps->cap_ink_foundation[i] = GFL_CLACT_WK_Create( fps->clunit, 
+      fps->cgr_id[CHARID_INK_FOUNDATION], 
+      fps->pltt_id[PLTTID_OBJ_COMMON], fps->cell_id[CELLID_INK_FOUNDATION], &head, 
+      CLSYS_DEFREND_MAIN, HEAPID_FOOTPRINT);
+    GFL_CLACT_WK_SetPlttOffs(fps->cap_ink[i], PALOFS_INK_FOUNDATION, CLWK_PLTTOFFS_MODE_PLTT_TOP);
+#endif
 		GFL_CLACT_WK_SetAnmSeq(fps->cap_ink_foundation[i], i);
-		GFL_CLACT_WK_AddAnmFrame(fps->cap_ink_foundation[i]->act, FX32_ONE);
+		GFL_CLACT_WK_AddAnmFrame(fps->cap_ink_foundation[i], FX32_ONE);
 	}
 	
 	//-- インクの上に配置する足跡 --//
 	head = InkFootObjParam;
-	for(i = 0; i < POKEMON_TEMOTI_MAX; i++){
-		head.x = INK_FOOT_POS_START_X + INK_FOOT_POS_SPACE_X * i;
-		head.y = INK_FOOT_POS_Y;
+	for(i = 0; i < TEMOTI_POKEMAX; i++){
+		head.pos_x = INK_FOOT_POS_START_X + INK_FOOT_POS_SPACE_X * i;
+		head.pos_y = INK_FOOT_POS_Y;
+#if WB_FIX
 		head.id[CLACT_U_CHAR_RES] = CHARID_INK_FOOT_0 + i;
 		fps->cap_ink_foot[i] = CATS_ObjectAdd_S(fps->csp, fps->crp, &head);
-		GFL_CLACT_WK_AddAnmFrame(fps->cap_ink_foot[i]->act, FX32_ONE);
+#else
+    fps->cap_ink_foot[i] = GFL_CLACT_WK_Create( fps->clunit, 
+      fps->cgr_id[CHARID_INK_FOOT_0 + i], 
+      fps->pltt_id[PLTTID_OBJ_INK_FOOT], fps->cell_id[CELLID_INK_FOOT], &head, 
+      CLSYS_DEFREND_MAIN, HEAPID_FOOTPRINT);
+#endif
+		GFL_CLACT_WK_AddAnmFrame(fps->cap_ink_foot[i], FX32_ONE);
 	}
 
 	//-- 「やめる」FONTOAM --//
@@ -1531,11 +1738,14 @@ static void DefaultActorSet_Main(FOOTPRINT_SYS *fps)
 		
 		str_ptr = GFL_MSG_CreateString(fps->msgman, msg_footprint_exit);
 		
-		Sub_FontOamCreate(fps, &fps->fontoam_exit, str_ptr, NET_FONT_BUTTON,
+		Sub_FontOamCreate(fps, &fps->fontoam_exit, str_ptr, 
 			GF_PRINTCOLOR_MAKE(1,2,3), 0, 
 			PLTTID_OBJ_FONTOAM, 0x1c * 8, 176, FONTOAM_CENTER);
+#if WB_FIX
 		FONTOAM_SetDrawFlag(fps->fontoam_exit.fontoam, TRUE);
-		
+#else
+   	BmpOam_ActorSetDrawEnable(fps->fontoam_exit.fontoam, TRUE);
+#endif
 		GFL_STR_DeleteBuffer(str_ptr);
 	}
 }
@@ -1552,17 +1762,17 @@ static void DefaultActorDel_Main(FOOTPRINT_SYS *fps)
 	int i;
 	
 	//-- インク --//
-	for(i = 0; i < POKEMON_TEMOTI_MAX; i++){
+	for(i = 0; i < TEMOTI_POKEMAX; i++){
 		GFL_CLACT_WK_Remove(fps->cap_ink[i]);
 	}
 	
 	//-- インクの下地 --//
-	for(i = 0; i < POKEMON_TEMOTI_MAX; i++){
+	for(i = 0; i < TEMOTI_POKEMAX; i++){
 		GFL_CLACT_WK_Remove(fps->cap_ink_foundation[i]);
 	}
 
 	//-- インクの上に配置する足跡 --//
-	for(i = 0; i < POKEMON_TEMOTI_MAX; i++){
+	for(i = 0; i < TEMOTI_POKEMAX; i++){
 		GFL_CLACT_WK_Remove(fps->cap_ink_foot[i]);
 	}
 
@@ -1583,7 +1793,7 @@ static void DefaultResourceSet_Sub(FOOTPRINT_SYS *fps, ARCHANDLE *hdl_main)
 	
 	//-- サブ画面OBJ常駐パレット --//
 	fps->pltt_id[PLTTID_SUB_OBJ_COMMON] = PLTTSLOT_ResourceSet(
-		wk->plttslot, hdl_main, NARC_footprint_board_ashiato_frame_NCLR,
+		fps->plttslot, hdl_main, NARC_footprint_board_ashiato_frame_NCLR,
 		CLSYS_DRAW_SUB, FOOTPRINT_SUB_COMMON_PAL_NUM, HEAPID_FOOTPRINT);
 	pal_pos = GFL_CLGRP_PLTT_GetAddr(fps->pltt_id[PLTTID_SUB_OBJ_COMMON], CLSYS_DRAW_SUB) / 0x20;
 	PaletteWorkSet_VramCopy(fps->pfd, FADE_SUB_OBJ, pal_pos*16, FOOTPRINT_SUB_COMMON_PAL_NUM*0x20);
@@ -1615,21 +1825,44 @@ static void DefaultResourceSet_Sub(FOOTPRINT_SYS *fps, ARCHANDLE *hdl_main)
 static void DefaultActorSet_Sub(FOOTPRINT_SYS *fps)
 {
 	int i;
+#if WB_FIX
 	TCATS_OBJECT_ADD_PARAM_S head;
-	
+#else
+  GFL_CLWK_DATA head;
+#endif
+
 	//-- 名前を囲む枠 --//
+#if WB_FIX
 	fps->cap_name_frame = CATS_ObjectAdd_S(fps->csp, fps->crp, &NameFrameObjParam);
-	GFL_CLACT_WK_AddAnmFrame(fps->cap_name_frame->act, FX32_ONE);
+#else
+  fps->cap_name_frame = GFL_CLACT_WK_Create( fps->clunit, 
+    fps->cgr_id[CHARID_SUB_NAME_FRAME], 
+    fps->pltt_id[PLTTID_SUB_OBJ_COMMON], fps->cell_id[CELLID_SUB_NAME_FRAME], &head, 
+    CLSYS_DEFREND_SUB, HEAPID_FOOTPRINT);
+  GFL_CLACT_WK_SetPlttOffs(fps->cap_name_frame, PALOFS_SUB_NAME_FRAME,CLWK_PLTTOFFS_MODE_PLTT_TOP);
+#endif
+	GFL_CLACT_WK_AddAnmFrame(fps->cap_name_frame, FX32_ONE);
 	GFL_CLACT_WK_SetDrawEnable(fps->cap_name_frame, FALSE);	//最初は非表示
 
 	//-- 名前の横の足跡 --//
 	head = NameFootObjParam;
 	for(i = 0; i < FOOTPRINT_ENTRY_MAX; i++){
+#if WB_FIX
 		head.id[CLACT_U_CHAR_RES] = CHARID_SUB_NAME_FOOT_0 + i;
 		fps->cap_name_foot[i] = CATS_ObjectAdd_S(fps->csp, fps->crp, &head);
 		CATS_ObjectPosSetCap_SubSurface(fps->cap_name_foot[i], 
 			Sub_FootmarkPos[i][0], Sub_FootmarkPos[i][1], FOOTPRINT_SUB_ACTOR_DISTANCE);
-		GFL_CLACT_WK_AddAnmFrame(fps->cap_name_foot[i]->act, FX32_ONE);
+#else
+    head.pos_x = Sub_FootmarkPos[i][0];
+    head.pos_y = Sub_FootmarkPos[i][1];
+    fps->cap_name_foot[i] = GFL_CLACT_WK_Create( fps->clunit, 
+      fps->cgr_id[CHARID_SUB_NAME_FOOT_0 + i], 
+      fps->pltt_id[PLTTID_SUB_OBJ_COMMON], fps->cell_id[CELLID_SUB_NAME_FOOT], &head, 
+      CLSYS_DEFREND_SUB, HEAPID_FOOTPRINT);
+    GFL_CLACT_WK_SetPlttOffs(
+      fps->cap_name_foot[i], PALOFS_SUB_NAME_FOOT, CLWK_PLTTOFFS_MODE_PLTT_TOP);
+#endif
+		GFL_CLACT_WK_AddAnmFrame(fps->cap_name_foot[i], FX32_ONE);
 		GFL_CLACT_WK_SetDrawEnable(fps->cap_name_foot[i], FALSE);	//最初は非表示
 	}
 }
@@ -1670,7 +1903,7 @@ static void MyInkPaletteSettings(FOOTPRINT_SYS *fps)
 	def_pal = PaletteWorkDefaultWorkGet(fps->pfd, FADE_MAIN_OBJ);
 	trans_pal = PaletteWorkTransWorkGet(fps->pfd, FADE_MAIN_OBJ);
 	
-	for(i = 0; i < POKEMON_TEMOTI_MAX; i++){
+	for(i = 0; i < TEMOTI_POKEMAX; i++){
 		if(fps->my_stamp_param[i].monsno == 0 || fps->my_stamp_param[i].monsno > MONSNO_END){
 			GFL_CLACT_WK_SetDrawEnable(fps->cap_ink[i], FALSE);
 			GFL_CLACT_WK_SetDrawEnable(fps->cap_ink_foundation[i], FALSE);
@@ -1723,10 +1956,14 @@ static void MyInkPaletteSettings(FOOTPRINT_SYS *fps)
  * @retval  FALSE:書き換えなかった
  */
 //--------------------------------------------------------------
-static BOOL OBJFootCharRewrite(int monsno, int form_no, GFL_CLWK cap, ARCHANDLE *hdl_main, ARCHANDLE *hdl_mark, NNS_G2D_VRAM_TYPE vram_type, BOOL arceus_flg)
+static BOOL OBJFootCharRewrite(int monsno, int form_no, GFL_CLWK *cap, ARCHANDLE *hdl_main, ARCHANDLE *hdl_mark, NNS_G2D_VRAM_TYPE vram_type, BOOL arceus_flg)
 {
 	void *obj_vram;
+#if WB_FIX
 	NNSG2dImageProxy * image;
+#else
+	NNSG2dImageProxy image;
+#endif
 	void *pSrc;
 	NNSG2dCharacterData *pChar;
 	u8 *read_up, *read_bottom;
@@ -1759,14 +1996,18 @@ static BOOL OBJFootCharRewrite(int monsno, int form_no, GFL_CLWK cap, ARCHANDLE 
 	else{
 		obj_vram = G2S_GetOBJCharPtr();
 	}
-	image = CLACT_ImageProxyGet(cap->act);
-	
+#if WB_FIX
+	image = CLACT_ImageProxyGet(cap);
+#else
+  GFL_CLACT_WK_GetImgProxy(cap, &image);
+#endif
+
 	//書き込み
 	GFL_STD_MemCopy16(read_up, (void*)((u32)obj_vram
-		+ image->vramLocation.baseAddrOfVram[vram_type]), 
+		+ image.vramLocation.baseAddrOfVram[vram_type]), 
 		0x20 * 2);
 	GFL_STD_MemCopy16(read_bottom, (void*)((u32)obj_vram + 0x20*2
-		+ image->vramLocation.baseAddrOfVram[vram_type]), 
+		+ image.vramLocation.baseAddrOfVram[vram_type]), 
 		0x20 * 2);
 	
 	GFL_HEAP_FreeMemory(pSrc);
@@ -1784,6 +2025,7 @@ static void Footprint_CameraInit(FOOTPRINT_SYS *fps)
 {
 	VecFx32	target = { FOOTPRINT_CAMERA_TX, FOOTPRINT_CAMERA_TY, FOOTPRINT_CAMERA_TZ };
 
+#if WB_FIX
 	fps->camera = GFC_AllocCamera( HEAPID_FOOTPRINT );
 
 	GFC_InitCameraTDA(&target, FOOTPRINT_CAMERA_DISTANCE, &FootprintCameraAngle,
@@ -1792,14 +2034,46 @@ static void Footprint_CameraInit(FOOTPRINT_SYS *fps)
 	GFC_SetCameraClip( FOOTPRINT_CAMERA_NEAR, FOOTPRINT_CAMERA_FAR, fps->camera);
 	
 	GFC_AttachCamera(fps->camera);
-	
+#else
+	fx32		fovySin;			// 視野角/2の正弦をとった値
+  fx32		fovyCos;			// 視野角/2の余弦をとった値
+	fx32	height, width;			// 高さと幅
+	fx32 aspect;
+	VecFx32	camup  = { 0, FX32_ONE, 0 };
+	VecFx32	pos;
+
+	fovySin  = FX_SinIdx( FOOTPRINT_CAMERA_PERSPWAY );
+	fovyCos  = FX_CosIdx( FOOTPRINT_CAMERA_PERSPWAY );
+	aspect = FX32_ONE * 4 / 3;
+	height = FX_Mul(FX_Div(fovySin, fovyCos), FOOTPRINT_CAMERA_DISTANCE);
+	width  = FX_Mul(height, aspect);
+
+	fps->camera_distance = FOOTPRINT_CAMERA_DISTANCE;
+	fps->camera_angle.x = GFL_CALC_GET_ROTA_NUM(0);
+	fps->camera_angle.y = GFL_CALC_GET_ROTA_NUM(0);
+	fps->camera_angle.z = GFL_CALC_GET_ROTA_NUM(0);
+	fps->camera_target = target;
+	fps->camera_up = camup;
+
+	Foot_SetCamPosByTarget_Dist_Ang(&pos, &fps->camera_angle, fps->camera_distance, &target);
+	fps->camera = GFL_G3D_CAMERA_CreateOrtho(height, -height, -width, width, 
+			FOOTPRINT_CAMERA_NEAR, FOOTPRINT_CAMERA_FAR, 0, 
+			&pos, &camup, &target, HEAPID_FOOTPRINT);
+	GFL_G3D_CAMERA_Switching(fps->camera);
+#endif
+
 	{//設定したカメラ位置での、ワールド空間の範囲を取得する
 		u16 persp_way;
 		fx32 distance, aspect;
 		fx32 width, height;
 		
+	#if WB_FIX
 		persp_way = GFC_GetCameraPerspWay(fps->camera);
 		distance = GFC_GetCameraDistance(fps->camera);
+	#else
+	  persp_way = FOOTPRINT_CAMERA_PERSPWAY;
+	  distance = FOOTPRINT_CAMERA_DISTANCE;
+	#endif
 		aspect = FX32_ONE * 4 / 3;
 		GetPerspectiveScreenSize(persp_way, distance, aspect, &width, &height);
 		OS_TPrintf("width = %d(%x), height = %d(%x)\n", width, width, height, height);
@@ -1807,6 +2081,41 @@ static void Footprint_CameraInit(FOOTPRINT_SYS *fps)
 		fps->world_width = width;
 		fps->world_height = height;
 	}
+}
+
+//----------------------------------------------------------------------------
+/**
+ *
+ *@brief	射影行列のデータから今の高さと幅を返す
+ *
+ *@param	PerspWay	視野角
+ *@param	Dist		ターゲットまでの距離
+ *@param	Aspect		アスペクト比	(幅/高さ)
+ *@param	pWidth		幅格納用
+ *@param	pHeight		高さ格納用
+ *
+ *@return	none
+ *
+ * プラチナのcalc3d.cから移植
+ */
+//-----------------------------------------------------------------------------
+static void GetPerspectiveScreenSize( u16 PerspWay, fx32 Dist, fx32 Aspect, fx32* pWidth, fx32* pHeight )
+{
+	fx32 fovySin;
+	fx32 fovyCos;
+	fx32 fovyTan;
+
+	fovySin = FX_SinIdx( PerspWay );
+	fovyCos = FX_CosIdx( PerspWay );
+
+	fovyTan = FX_Div( fovySin, fovyCos );
+	
+	// 高さを求める
+	*pHeight = FX_Mul(Dist, fovyTan);				// (fovySin / fovyCos)*TargetDist
+	*pHeight = FX_Mul(*pHeight, 2*FX32_ONE);		// ２かけると画面の高さになる
+	
+	// 幅を求める(アスペクトを4/3で固定)
+	*pWidth  = FX_Mul(*pHeight, Aspect );
 }
 
 //--------------------------------------------------------------
@@ -1839,16 +2148,33 @@ static void Model3DSet( FOOTPRINT_SYS * fps, ARCHANDLE* p_handle )
 		data_id = NARC_footprint_board_a_board1_nsbmd;
 	}
 	
-    //モデルデータ読み込み
+#if WB_FIX
+  //モデルデータ読み込み
 	D3DOBJ_MdlLoadH(&fps->board.mdl, p_handle, data_id, HEAPID_FOOTPRINT);
 
-    //レンダーオブジェクトに登録
-    D3DOBJ_Init( &fps->board.obj, &fps->board.mdl );
+  //レンダーオブジェクトに登録
+  D3DOBJ_Init( &fps->board.obj, &fps->board.mdl );
 
-    //座標設定
-    D3DOBJ_SetMatrix( &fps->board.obj, BOARD_X, BOARD_Y, BOARD_Z);
-    D3DOBJ_SetScale(&fps->board.obj, BOARD_SCALE, BOARD_SCALE, BOARD_SCALE);
-    D3DOBJ_SetDraw( &fps->board.obj, TRUE );
+  //座標設定
+  D3DOBJ_SetMatrix( &fps->board.obj, BOARD_X, BOARD_Y, BOARD_Z);
+  D3DOBJ_SetScale(&fps->board.obj, BOARD_SCALE, BOARD_SCALE, BOARD_SCALE);
+  D3DOBJ_SetDraw( &fps->board.obj, TRUE );
+#else
+  //モデルデータ読み込み
+  fps->board.p_mdlres = GFL_G3D_CreateResourceHandle( p_handle, data_id );
+  GFL_G3D_TransVramTexture(fps->board.p_mdlres);
+
+  //レンダーオブジェクトに登録
+  fps->board.rnder = GFL_G3D_RENDER_Create( fps->board.p_mdlres, 0, fps->board.p_mdlres );
+  fps->board.mdl = GFL_G3D_OBJECT_Create(fps->board.rnder, NULL, 0);  //アニメ無し
+
+  //座標設定
+  VEC_Set(&fps->board.obj.trans, BOARD_X, BOARD_Y, BOARD_Z);
+  VEC_Set(&fps->board.obj.scale, BOARD_SCALE, BOARD_SCALE, BOARD_SCALE);
+  MTX_Identity33(&fps->board.obj.rotate);
+  VEC_Set(&fps->board.obj_rotate, 0, 0, 0);
+  fps->board.draw_flag = TRUE;
+#endif
 }
 
 //--------------------------------------------------------------
@@ -1864,8 +2190,14 @@ static void Model3DSet( FOOTPRINT_SYS * fps, ARCHANDLE* p_handle )
 //--------------------------------------------------------------
 static void Model3DDel(FOOTPRINT_SYS *fps)
 {
-    // 全リソース破棄
-    D3DOBJ_MdlDelete( &fps->board.mdl ); 
+  // 全リソース破棄
+#if WB_FIX
+  D3DOBJ_MdlDelete( &fps->board.mdl ); 
+#else
+  GFL_G3D_OBJECT_Delete(fps->board.mdl);
+  GFL_G3D_RENDER_Delete(fps->board.rnder);
+  GFL_G3D_DeleteResource(fps->board.p_mdlres);
+#endif
 }
 
 //--------------------------------------------------------------
@@ -1897,9 +2229,13 @@ static void Model3D_Update(FOOTPRINT_SYS *fps)
 	//３Ｄ描画開始
 	GFL_G3D_DRAW_Start();
 	
+#if WB_FIX
 	GFC_AttachCamera(fps->camera);
 	GFC_SetCameraView(FOOTPRINT_CAMERA_MODE, fps->camera); //正射影設定
 	GFL_G3D_DRAW_SetLookAt();
+#else
+	GFL_G3D_DRAW_SetLookAt();
+#endif
 
 	// ライトとアンビエント
 	NNS_G3dGlbLightVector( 0, 0, -FX32_ONE, 0 );
@@ -1920,7 +2256,13 @@ static void Model3D_Update(FOOTPRINT_SYS *fps)
 	NNS_G3dGePushMtx();
 	{
 		//ボード
+	#if WB_FIX
 		D3DOBJ_Draw( &fps->board.obj );
+	#else
+	  if(fps->board.draw_flag == TRUE){
+    	GFL_G3D_DRAW_DrawObject(fps->board.mdl, &fps->board.obj);
+    }
+	#endif
 		//スタンプ
 		StampSys_ObjDraw(&fps->ssw);
 	}
@@ -1942,7 +2284,7 @@ static void BmpWinInit( FOOTPRINT_SYS *fps )
 	
 	//-- メイン画面 --//
 	fps->talk_win = GFL_BMPWIN_Create(FOOT_FRAME_WIN,
-		2, 1, 27, 4, FOOT_MAINBG_TALKFONT_PAL, GFL_BMP_CHRAREA_GET_F);
+		2, 1, 27, 4, FOOT_MAINBG_TALKFONT_PAL, GFL_BMP_CHRAREA_GET_B);
 	GFL_BMP_Clear(GFL_BMPWIN_GetBmp(fps->talk_win), 0xf);
 	GFL_BMPWIN_MakeScreen(fps->talk_win);
 	
@@ -1952,9 +2294,11 @@ static void BmpWinInit( FOOTPRINT_SYS *fps )
 		fps->name_win[i] = GFL_BMPWIN_Create(FOOT_SUBFRAME_WIN,
 			NameBmpwinPos[i][0], NameBmpwinPos[i][1], 
 			WINCGX_SUB_NAME_SIZE_X, WINCGX_SUB_NAME_SIZE_Y,
-			FOOT_SUBBG_TALKFONT_PAL, GFL_BMP_CHRAREA_GET_F);
+			FOOT_SUBBG_TALKFONT_PAL, GFL_BMP_CHRAREA_GET_B);
 		GFL_BMP_Clear(GFL_BMPWIN_GetBmp(fps->name_win[i]), 0x00);
 		GFL_BMPWIN_MakeScreen(fps->name_win[i]);
+		
+		PRINT_UTIL_Setup( &fps->name_print_util[i], fps->name_win[i] );
 	}
 }
 
@@ -1972,11 +2316,11 @@ static void BmpWinDelete( FOOTPRINT_SYS *fps )
 	int i;
 	
 	//-- メイン画面 --//
-	GFL_BMPWIN_Delete(&fps->talk_win);
+	GFL_BMPWIN_Delete(fps->talk_win);
 	
 	//-- サブ画面 --//
 	for(i = 0; i < FOOTPRINT_BMPWIN_NAME_MAX; i++){
-		GFL_BMPWIN_Delete(&fps->name_win[i]);
+		GFL_BMPWIN_Delete(fps->name_win[i]);
 	}
 }
 
@@ -2093,13 +2437,16 @@ static void Footprint_Temoti_to_StampParam(int board_type, SAVE_CONTROL_WORK * s
 	POKEMON_PARAM *pp;
 	int i;
 	
-	GFL_STD_MemClear(stamp_array, sizeof(STAMP_PARAM) * POKEMON_TEMOTI_MAX);
+	GFL_STD_MemClear(stamp_array, sizeof(STAMP_PARAM) * TEMOTI_POKEMAX);
 	
 	party = SaveData_GetTemotiPokemon(sv);
 	poke_max = PokeParty_GetPokeCount(party);
 	for(i = 0; i < poke_max; i++){
 		pp = PokeParty_GetMemberPointer(party, i);
 		stamp_array[i].monsno = PP_Get(pp, ID_PARA_monsno_egg, NULL);
+	#if 1
+	  stamp_array[i].monsno %= 494; //※check WBからの新規ポケモンの足跡データがまだないため、とりあえずプラチナまでのmonsnoにする。PLはWBの新規ポケモンのmonsnoが送られてきたらメタモン(足跡無)として解釈するはず。用意が出来たら確認する 2009.08.17(月) matsuda
+	#endif
 		stamp_array[i].personal_rnd = PP_Get(pp, ID_PARA_personal_rnd, NULL);
 		stamp_array[i].form_no = PP_Get(pp, ID_PARA_form_no, NULL);
 		stamp_array[i].color 
@@ -2197,14 +2544,14 @@ static FOOTPRINT_NAME_UPDATE_STATUS FootPrintTool_NameAllUpdate(FOOTPRINT_SYS *f
 			//変更があったものだけ再描画
 			if(chan_user.cp_tbl[i] != DWC_LOBBY_INVALID_USER_ID){
 				OS_TPrintf("新規ユーザー名描画 index = %d\n", i);
-				FootPrintTool_NameDraw(fps->msgman, fps->wordset, fps->name_win, 
-					fps->parent_work->wflby_sys, chan_user.cp_tbl[i]);
+				FootPrintTool_NameDraw(fps->msgman, fps->wordset, fps->name_win, fps->name_print_util,
+					fps->parent_work->wflby_sys, chan_user.cp_tbl[i], fps->printQue, fps->font_handle);
 				//名前リストのスクリーン描画
 				{
 					u16 *panel_scrn;
 					int x, y;
 					
-					panel_scrn = GF_BGL_ScreenAdrsGet(FOOT_SUBFRAME_PLATE);
+					panel_scrn = GFL_BG_GetScreenBufferAdrs(FOOT_SUBFRAME_PLATE);
 					for(y = Sub_ListScrnRange[i][1]; y < Sub_ListScrnRange[i][1] + Sub_ListScrnRange[i][3]; y++){
 						GFL_STD_MemCopy16(&fps->namelist_scrn[y*32 + Sub_ListScrnRange[i][0]], 
 							&panel_scrn[y*32 + Sub_ListScrnRange[i][0]], 
@@ -2230,8 +2577,15 @@ static FOOTPRINT_NAME_UPDATE_STATUS FootPrintTool_NameAllUpdate(FOOTPRINT_SYS *f
 			
 			//自分を表す枠の位置をセット
 			if(chan_user.cp_tbl[i] == fps->my_comm_status.user_id){
+			#if WB_FIX
 				CATS_ObjectPosSetCap_SubSurface(fps->cap_name_frame,
 					Sub_NameFramePos[i][0], Sub_NameFramePos[i][1], FOOTPRINT_SUB_ACTOR_DISTANCE);
+			#else
+			  GFL_CLACTPOS pos;
+			  pos.x = Sub_NameFramePos[i][0];
+			  pos.y = Sub_NameFramePos[i][1];
+	  		GFL_CLACT_WK_SetPos(fps->cap_name_frame, &pos, CLSYS_DEFREND_SUB);
+			#endif
 				GFL_CLACT_WK_SetDrawEnable(fps->cap_name_frame, TRUE);
 			}
 		}
@@ -2269,8 +2623,8 @@ static FOOTPRINT_NAME_UPDATE_STATUS FootPrintTool_NameAllUpdate(FOOTPRINT_SYS *f
 //--------------------------------------------------------------
 void Footprint_NameWrite(FOOTPRINT_SYS_PTR fps, s32 user_id)
 {
-	FootPrintTool_NameDraw(fps->msgman, fps->wordset, fps->name_win, 
-		fps->parent_work->wflby_sys, user_id);
+	FootPrintTool_NameDraw(fps->msgman, fps->wordset, fps->name_win, fps->name_print_util,
+		fps->parent_work->wflby_sys, user_id, fps->printQue, fps->font_handle);
 }
 
 //--------------------------------------------------------------
@@ -2296,17 +2650,30 @@ void Footprint_NameErase(FOOTPRINT_SYS_PTR fps, u32 user_index)
 //--------------------------------------------------------------
 static void Footprint_TouchEffAdd(FOOTPRINT_SYS_PTR fps, int hit_pos)
 {
+#if WB_FIX
 	TCATS_OBJECT_ADD_PARAM_S head;
+#else
+  GFL_CLWK_DATA head;
+#endif
 	int i;
 	
 	//タッチエフェクトアクター生成
 	head = TouchEffObjParam;
 	for(i = 0; i < TOUCH_EFF_MAX; i++){
 		if(fps->cap_touch_eff[i] == NULL){
-			head.x = INK_FOOT_POS_START_X + INK_FOOT_POS_SPACE_X * hit_pos;
-			head.y = INK_FOOT_POS_Y;
+			head.pos_x = INK_FOOT_POS_START_X + INK_FOOT_POS_SPACE_X * hit_pos;
+			head.pos_y = INK_FOOT_POS_Y;
+#if WB_FIX
 			fps->cap_touch_eff[i] = CATS_ObjectAdd_S(fps->csp, fps->crp, &head);
-//			GFL_CLACT_WK_AddAnmFrame(fps->cap_touch_eff[i]->act, FX32_ONE);
+#else
+      fps->cap_touch_eff[i] = GFL_CLACT_WK_Create( fps->clunit, 
+        fps->cgr_id[CHARID_TOUCH_EFF], 
+        fps->pltt_id[PLTTID_OBJ_COMMON], fps->cell_id[CELLID_TOUCH_EFF], &head, 
+        CLSYS_DEFREND_MAIN, HEAPID_FOOTPRINT);
+      GFL_CLACT_WK_SetPlttOffs(
+        fps->cap_touch_eff[i], PALOFS_TOUCH_EFF, CLWK_PLTTOFFS_MODE_PLTT_TOP);
+#endif
+//			GFL_CLACT_WK_AddAnmFrame(fps->cap_touch_eff[i], FX32_ONE);
 			break;
 		}
 	}
@@ -2333,7 +2700,7 @@ static void Footprint_SelectInkPaletteFade(FOOTPRINT_SYS_PTR fps, int hit_pos)
 	trans_pal = PaletteWorkTransWorkGet(fps->pfd, FADE_MAIN_OBJ);
 	//パレットをまず元通りにする
 	GFL_STD_MemCopy16(&def_pal[PALOFS_INK * 16 + COLOR_NO_INK_START], 
-		&trans_pal[PALOFS_INK * 16 + COLOR_NO_INK_START], POKEMON_TEMOTI_MAX * 2);
+		&trans_pal[PALOFS_INK * 16 + COLOR_NO_INK_START], TEMOTI_POKEMAX * 2);
 	//対象位置のパレットを暗くする
 	SoftFade(&def_pal[PALOFS_INK * 16 + COLOR_NO_INK_START + hit_pos],
 		&trans_pal[PALOFS_INK * 16 + COLOR_NO_INK_START + hit_pos], 
@@ -2358,7 +2725,7 @@ static void Footprint_TouchEffUpdate(FOOTPRINT_SYS_PTR fps)
 				fps->cap_touch_eff[i] = NULL;
 			}
 			else{
-				GFL_CLACT_WK_AddAnmFrame(fps->cap_touch_eff[i]->act, FX32_ONE);
+				GFL_CLACT_WK_AddAnmFrame(fps->cap_touch_eff[i], FX32_ONE);
 			}
 		}
 	}
@@ -2371,7 +2738,6 @@ static void Footprint_TouchEffUpdate(FOOTPRINT_SYS_PTR fps)
  * @param   aci			BIシステムワークへのポインタ
  * @param   font_actor	生成したフォントOAM関連のワーク代入先
  * @param   str			文字列
- * @param   font_type	フォントタイプ(NET_FONT_SYSTEM等)
  * @param   color		フォントカラー構成
  * @param   pal_offset	パレット番号オフセット
  * @param   pal_id		登録開始パレットID
@@ -2381,67 +2747,43 @@ static void Footprint_TouchEffUpdate(FOOTPRINT_SYS_PTR fps)
  */
 //--------------------------------------------------------------
 static void Sub_FontOamCreate(FOOTPRINT_SYS_PTR fps, FONT_ACTOR *font_actor, const STRBUF *str, 
-	FONT_TYPE font_type, PRINTSYS_LSB color, int pal_offset, int pal_id, 
+	PRINTSYS_LSB color, int pal_offset, int pal_id, 
 	int x, int y, int pos_center)
 {
-	FONTOAM_INIT finit;
-	GFL_BMPWIN* bmpwin;
-	CHAR_MANAGER_ALLOCDATA cma;
-	int vram_size;
-	FONTOAM_OBJ_PTR fontoam;
-	
-	CATS_RES_PTR crp;
+	BMPOAM_ACT_DATA head;
+	GFL_BMP_DATA *bmp;
 	int font_len, char_len;
 	
-	GF_ASSERT(font_actor->fontoam == NULL);
-	
-	
-	crp = fps->crp;
-	
 	//文字列のドット幅から、使用するキャラ数を算出する
-	FontLenGet(str, font_type, &font_len, &char_len);
+	font_len = PRINTSYS_GetStrWidth(str, fps->font_handle, 0);
+	char_len = font_len / 8;
+	if(FX_ModS32(font_len, 8) != 0){
+		char_len++;
+	}
 
 	//BMP作成
-	GF_BGL_BmpWinInit(&bmpwin);
-	GF_BGL_BmpWinObjAdd(&bmpwin, char_len, 16 / 8, 0, 0);
-	GF_STR_PrintExpand(&bmpwin, font_type, str, 0, 0, MSG_NO_PUT, color, 
-		0, 0, NULL);
-//	GF_STR_PrintColor(&bmpwin, font_type, str, 0, 0, MSG_NO_PUT, color, NULL );
-
-	vram_size = FONTOAM_NeedCharSize(&bmpwin, NNS_G2D_VRAM_TYPE_2DMAIN,  HEAPID_FOOTPRINT);
-	CharVramAreaAlloc(vram_size, CHARM_CONT_AREACONT, NNS_G2D_VRAM_TYPE_2DMAIN, &cma);
-	
+	bmp = GFL_BMP_Create(char_len, 16/8, GFL_BMP_16_COLOR, HEAPID_FOOTPRINT);
+  PRINTSYS_PrintColor( bmp, 0, 0, str, fps->font_handle, color);
+  
 	//座標位置修正
-	if(pos_center == FONTOAM_CENTER){
+	if(pos_center == TRUE){
 		x -= font_len / 2;
 	}
-//	y += ACTIN_SUB_ACTOR_DISTANCE_INTEGER - 8;
-	y -= 8;
 	
-	finit.fontoam_sys = fps->fontoam_sys;
-	finit.bmp = &bmpwin;
-	finit.clact_set = CATS_GetClactSetPtr(crp);
-	finit.pltt = CATS_PlttProxy(crp, pal_id);
-	finit.parent = NULL;
-	finit.char_ofs = cma.alloc_ofs;
-	finit.x = x;
-	finit.y = y;
-	finit.bg_pri = ACTBGPRI_EXIT_FONT;
-	finit.soft_pri = SOFTPRI_EXIT_FONT;
-	finit.draw_area = NNS_G2D_VRAM_TYPE_2DMAIN;
-	finit.heap = HEAPID_FOOTPRINT;
+	//フォントアクター作成
+	head.bmp = bmp;
+	head.x = x;
+	head.y = y - 8;
+	head.pltt_index = pal_id;
+	head.pal_offset = pal_offset;
+	head.soft_pri = SOFTPRI_EXIT_FONT;
+	head.bg_pri = ACTBGPRI_EXIT_FONT;
+	head.setSerface = CLWK_SETSF_NONE;
+	head.draw_type = CLSYS_DRAW_MAIN;
+	font_actor->fontoam = BmpOam_ActorAdd(fps->fontoam_sys, &head);
+	font_actor->bmp = bmp;
 	
-	fontoam = FONTOAM_Init(&finit);
-//	FONTOAM_SetPaletteOffset(fontoam, pal_offset);
-	FONTOAM_SetPaletteOffsetAddTransPlttNo(fontoam, pal_offset);
-	FONTOAM_SetMat(fontoam, x, y);
-	
-	//解放処理
-	GFL_BMPWIN_Delete(&bmpwin);
-	
-	font_actor->fontoam = fontoam;
-	font_actor->cma = cma;
-	font_actor->font_len = font_len;
+	BmpOam_ActorBmpTrans(font_actor->fontoam);
 }
 
 //--------------------------------------------------------------
@@ -2452,33 +2794,16 @@ static void Sub_FontOamCreate(FOOTPRINT_SYS_PTR fps, FONT_ACTOR *font_actor, con
 //--------------------------------------------------------------
 static void Sub_FontOamDelete(FONT_ACTOR *font_actor)
 {
+#if WB_FIX
 	FONTOAM_Delete(font_actor->fontoam);
 	CharVramAreaFree(&font_actor->cma);
-}
-
-//--------------------------------------------------------------
-/**
- * @brief   文字列の長さを取得する
- *
- * @param   str				文字列へのポインタ
- * @param   font_type		フォントタイプ
- * @param   ret_dot_len		ドット幅代入先
- * @param   ret_char_len	キャラ幅代入先
- */
-//--------------------------------------------------------------
-static void FontLenGet(const STRBUF *str, FONT_TYPE font_type, int *ret_dot_len, int *ret_char_len)
-{
-	int dot_len, char_len;
-	
-	//文字列のドット幅から、使用するキャラ数を算出する
-	dot_len = PRINTSYS_GetStrWidth(str, GFL_FONT* font/*font_type*/, 0);
-	char_len = dot_len / 8;
-	if(FX_ModS32(dot_len, 8) != 0){
-		char_len++;
+#else
+	BmpOam_ActorDel(font_actor->fontoam);
+	font_actor->fontoam = NULL;
+	if(font_actor->bmp != NULL){
+		GFL_BMP_Delete(font_actor->bmp);
 	}
-	
-	*ret_dot_len = dot_len;
-	*ret_char_len = char_len;
+#endif
 }
 
 //--------------------------------------------------------------
@@ -2508,10 +2833,17 @@ static void Footprint_InkGaugeUpdate(FOOTPRINT_SYS_PTR fps)
 	
 	//インクの量からゲージの現在地を決定
 	offset_y = INK_GAUGE_LEN - (fps->ink_calc >> 8);
-	for(i = 0; i < POKEMON_TEMOTI_MAX; i++){
+	for(i = 0; i < TEMOTI_POKEMAX; i++){
+#if WB_FIX
 		CATS_ObjectPosSetCap_SubSurface(fps->cap_ink[i],
 			INK_POS_START_X + INK_POS_SPACE_X * i, 
 			INK_POS_Y + offset_y, FOOTPRINT_SUB_ACTOR_DISTANCE);
+#else
+	  GFL_CLACTPOS pos;
+	  pos.x = INK_POS_START_X + INK_POS_SPACE_X * i;
+	  pos.y = INK_POS_Y + offset_y;
+		GFL_CLACT_WK_SetPos(fps->cap_ink[i], &pos, CLSYS_DEFREND_MAIN);
+#endif
 	}
 }
 
@@ -2559,6 +2891,7 @@ static BOOL Footprint_InkGauge_Consume(FOOTPRINT_SYS_PTR fps, int consume_num)
 static void Debug_CameraMove(FOOTPRINT_SYS *fps)
 {
 #ifdef PM_DEBUG
+#if WB_TEMP_FIX //デバッグ機能なのでとりあえず削除　必要になったら直す 2009.08.07(金)
 	VecFx32 move = {0,0,0};
 	fx32 value = FX32_ONE;
 	int add_angle = 64;
@@ -2641,6 +2974,7 @@ static void Debug_CameraMove(FOOTPRINT_SYS *fps)
 		OS_TPrintf("カメラ距離＝%d(16進:%x)\n", GFC_GetCameraDistance(fps->camera), GFC_GetCameraDistance(fps->camera));
 		break;
 	}
+#endif  //WB_TEMP_FIX
 #endif
 }
 

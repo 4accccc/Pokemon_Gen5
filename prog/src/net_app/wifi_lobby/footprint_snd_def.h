@@ -9,6 +9,7 @@
 #ifndef __FOOTPRINT_SND_DEF_H__
 #define __FOOTPRINT_SND_DEF_H__
 
+#if WB_FIX    //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 
 //==============================================================================
 //	効果音定義
@@ -44,6 +45,43 @@
 #define FOOTPRINT_SE_SP_BRAR_Y			(SEQ_SE_PL_TIMER03)
 #define FOOTPRINT_SE_SP_TARE			(SEQ_SE_PL_TIMER03)
 
+#else   //@@@@@@@@@@@@@@@@@@@@@@@@ WB_FIX @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+
+//==============================================================================
+//	効果音定義
+//==============================================================================
+///入室した人がいた時に鳴らすSE
+#define FOOTPRINT_SE_ENTRY			(SEQ_SE_SELECT1)
+///退室した人がいた時に鳴らすSE
+#define FOOTPRINT_SE_LEAVE_ROOM		(SEQ_SE_SELECT1)
+
+///スタンプを押した時の音
+#define FOOTPRINT_SE_STAMP			(SEQ_SE_SELECT1)
+//#define FOOTPRINT_SE_STAMP		(SEQ_SE_PL_STAMP)		//聞こえない
+
+///インクパレットをタッチしたとき
+#define FOOTPRINT_SE_TOUCH_INK		(SEQ_SE_SELECT1)
+///「やめる」をタッチしたとき
+#define FOOTPRINT_SE_TOUCH_EXIT		(SEQ_SE_SELECT1)
+
+///制限時間が来た時
+#define FOOTPRINT_SE_TIMEUP			(SEQ_SE_SELECT1)
+
+//--------------------------------------------------------------
+//	スペシャルエフェクト動作発動時に鳴らす音(エフェクトの長さが一定でないのなら個別にしないとダメ！)
+//--------------------------------------------------------------
+#define FOOTPRINT_SE_SP_NIJIMI			(SEQ_SE_SELECT1)
+#define FOOTPRINT_SE_SP_HAJIKE			(SEQ_SE_SELECT1)
+#define FOOTPRINT_SE_SP_ZIGZAG			(SEQ_SE_SELECT1)
+#define FOOTPRINT_SE_SP_DAKOU			(SEQ_SE_SELECT1)
+#define FOOTPRINT_SE_SP_KISEKI			(SEQ_SE_SELECT1)
+#define FOOTPRINT_SE_SP_YURE			(SEQ_SE_SELECT1)
+#define FOOTPRINT_SE_SP_KAKUDAI			(SEQ_SE_SELECT1)
+#define FOOTPRINT_SE_SP_BRAR_X			(SEQ_SE_SELECT1)
+#define FOOTPRINT_SE_SP_BRAR_Y			(SEQ_SE_SELECT1)
+#define FOOTPRINT_SE_SP_TARE			(SEQ_SE_SELECT1)
+
+#endif  //@@@@@@@@@@@@@@@@@@@@@@@@ WB_FIX @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 
 #endif	//__FOOTPRINT_SND_DEF_H__
 

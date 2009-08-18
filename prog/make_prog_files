@@ -765,12 +765,13 @@ SRCS_OVERLAY_WIFILOBBY_CONNECT    = net_app/wifi_lobby/wflby_connect.c
 #===> SRCS_OVERLAY_WIFILOBBY_COMMON
 SRCS_OVERLAY_LOBBYNEWS =	net_app/wifi_lobby/lobby_news.c 
 
-### #足跡ボード
-### #===> SRCS_OVERLAY_WIFILOBBY_COMMON
-### SRCS_OVERLAY_FOOTPRINT_BOARD =	net_app/wifi_lobby/footprint_main.c \
-### 								net_app/wifi_lobby/footprint_stamp.c \
-### 								net_app/wifi_lobby/footprint_tool.c \
-### 								net_app/wifi_lobby/footprint_comm.c
+#足跡ボード
+#===> SRCS_OVERLAY_WIFILOBBY_COMMON
+SRCS_OVERLAY_FOOTPRINT_BOARD =	net_app/wifi_lobby/footprint_main.c \
+								net_app/wifi_lobby/footprint_stamp.c \
+								net_app/wifi_lobby/footprint_tool.c \
+								net_app/wifi_lobby/footprint_comm.c \
+								poke_tool/pokefoot.c
 
 ### #WIFILOBBY
 ### #===>SRCS_OVERLAY_WIFILOBBY_COMMON

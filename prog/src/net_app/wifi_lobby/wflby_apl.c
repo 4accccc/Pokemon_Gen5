@@ -1319,7 +1319,6 @@ static WFLBY_APL_RET WFLBY_APLDATA_FOOT_End( WFLBY_APL* p_sys, WFLBY_APLDATA* p_
 //-----------------------------------------------------------------------------
 static void WFLBY_APLDATA_FOOT1_Start( WFLBY_APL* p_sys, WFLBY_APLDATA* p_data )
 {
-#if WB_TEMP_FIX
 	FOOTPRINT_PARAM* p_param;
 
 	FS_EXTERN_OVERLAY(footprint_board);
@@ -1334,7 +1333,6 @@ static void WFLBY_APLDATA_FOOT1_Start( WFLBY_APL* p_sys, WFLBY_APLDATA* p_data )
 	p_param->board_type		= FOOTPRINT_BOARD_TYPE_WHITE;
 
 	WFLBY_APL_PROC_Start( p_sys, p_data, &Proc, FS_OVERLAY_ID(footprint_board) );
-#endif
 }
 
 //----------------------------------------------------------------------------
@@ -1347,7 +1345,6 @@ static void WFLBY_APLDATA_FOOT1_Start( WFLBY_APL* p_sys, WFLBY_APLDATA* p_data )
 //-----------------------------------------------------------------------------
 static void WFLBY_APLDATA_FOOT2_Start( WFLBY_APL* p_sys, WFLBY_APLDATA* p_data )
 {
-#if WB_TEMP_FIX
 	FOOTPRINT_PARAM* p_param;
 
 	FS_EXTERN_OVERLAY(footprint_board);
@@ -1362,7 +1359,6 @@ static void WFLBY_APLDATA_FOOT2_Start( WFLBY_APL* p_sys, WFLBY_APLDATA* p_data )
 	p_param->board_type		= FOOTPRINT_BOARD_TYPE_BLACK;
 
 	WFLBY_APL_PROC_Start( p_sys, p_data, &Proc, FS_OVERLAY_ID(footprint_board) );
-#endif
 }
 
 

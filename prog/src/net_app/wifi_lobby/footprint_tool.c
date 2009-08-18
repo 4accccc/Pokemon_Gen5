@@ -7,23 +7,17 @@
  */
 //==============================================================================
 #include <gflib.h>
-//#include "system/snd_tool.h"
+#include "system/main.h"
 #include "system/bmp_menulist.h"
 #include "print\printsys.h"
 #include "savedata\system_data.h"
 #include "system/bmp_menu.h"
-#include <procsys.h>
 #include "system/wipe.h"
-#include "system/window.h"
-#include <arc_tool.h>
-//#include "system/arc_util.h"
-//#include "system/msgdata_util.h"
 #include "print/wordset.h"
 #include "message.naix"
 //#include "system/fontproc.h"
 //#include "gflib/strbuf_family.h"
 #include "msg/msg_wflby_footprint.h"
-#include "system\font_arc.h"
 #include "savedata/config.h"
 //#include  "communication/wm_icon.h"
 //#include "system/fontoam.h"
@@ -31,16 +25,18 @@
 #include "system/bmp_menulist.h"
 #include "system/bmp_menu.h"
 //#include "gflib/strbuf_family.h"
-#include "gflib/touchpanel.h"
 
 #include "net_app/wifi_lobby/wflby_system_def.h"
 #include "net_app/footprint_main.h"
 #include "footprint_common.h"
-#include "graphic/footprint_board.naix"
+#include "footprint_board.naix"
 #include "footprint_stamp.h"
 #include "footprint_comm.h"
 #include "footprint_tool.h"
 #include "footprint_snd_def.h"
+#include "arc_def.h"
+#include "poke_tool/monsno_def.h"
+
 
 //==============================================================================
 //	データ
@@ -49,7 +45,7 @@
 #include "footprint_foot.dat"
 
 ///インクパレットタッチパネル領域設定
-static const RECT_HIT_TBL InkPaletteTouchData[] = {
+static const GFL_UI_TP_HITTBL InkPaletteTouchData[] = {
 	//TOP BOTTOM LEFT RIGHT
 	{160, 192, 32*0, 32*1},
 	{160, 192, 32*1, 32*2},
@@ -58,7 +54,7 @@ static const RECT_HIT_TBL InkPaletteTouchData[] = {
 	{160, 192, 32*4, 32*5},
 	{160, 192, 32*5, 32*6},
 	{160, 192, 32*6, 255},		//やめる
-	{ RECT_HIT_END, 0, 0, 0 }
+	{ GFL_UI_TP_HIT_END, 0, 0, 0 }
 };
 
 
@@ -73,7 +69,7 @@ static const RECT_HIT_TBL InkPaletteTouchData[] = {
  * @param   user_index		サブチャンネルのユーザーID
  */
 //--------------------------------------------------------------
-void FootPrintTool_NameDraw(GFL_MSGDATA *msgman, WORDSET *wordset, GFL_BMPWIN *win[], WFLBY_SYSTEM *wflby_sys, s32 user_id)
+void FootPrintTool_NameDraw(GFL_MSGDATA *msgman, WORDSET *wordset, GFL_BMPWIN *win[], PRINT_UTIL print_util[], WFLBY_SYSTEM *wflby_sys, s32 user_id, PRINT_QUE *printQue, GFL_FONT *font_handle)
 {
 	const WFLBY_USER_PROFILE* wup;
 	MYSTATUS *my_status;
@@ -124,10 +120,19 @@ void FootPrintTool_NameDraw(GFL_MSGDATA *msgman, WORDSET *wordset, GFL_BMPWIN *w
 	else{
 		print_color = GF_PRINTCOLOR_MAKE(1,2,0);
 	}
+#if WB_FIX
 	PRINT_UTIL_PrintColor(/*引数内はまだ未移植*/&win[user_index], NET_FONT_SYSTEM, expand_src, 0, 0, 
 		MSG_ALLPUT, print_color, NULL);
+#else
+	PRINT_UTIL_PrintColor(
+	  &print_util[user_index], printQue, 0, 0, expand_src, font_handle, print_color);
+#endif
+#if WB_FIX
 	GF_BGL_BmpWinOn(&win[user_index]);
-	
+#else
+  GFL_BMPWIN_MakeTransWindow(win[user_index]);
+#endif
+
 	GFL_STR_DeleteBuffer(name_src);
 	GFL_STR_DeleteBuffer(message_src);
 	GFL_STR_DeleteBuffer(expand_src);
@@ -149,7 +154,7 @@ void FootPrintTool_NameErase(GFL_BMPWIN *win[], u32 user_index)
 		GF_ASSERT(0);
 		return;
 	}
-	GFL_BMPWIN_ClearTransWindow(&win[user_index]);
+	GFL_BMPWIN_ClearTransWindow(win[user_index]);
 }
 
 //--------------------------------------------------------------
@@ -181,7 +186,7 @@ int FootprintTool_InkPalTouchUpdate(STAMP_PARAM *my_stamp_array, int now_select_
 	int hit;
 	int ret = FOOT_TOUCH_RET_NULL;
 	
-	hit = GF_TP_RectHitTrg(InkPaletteTouchData);
+	hit = GFL_UI_TP_HitTrg(InkPaletteTouchData);
 	if(hit < 6){		//インクパレットを押した
 		if(now_select_no != hit 
 				&& my_stamp_array[hit].monsno != 0 && my_stamp_array[hit].monsno <= MONSNO_END){
@@ -212,10 +217,10 @@ int FootprintTool_InkPalTouchUpdate(STAMP_PARAM *my_stamp_array, int now_select_
 //--------------------------------------------------------------
 BOOL FootprintTool_FootDispCheck(int monsno, int form_no, BOOL arceus_flg)
 {
-	if(monsno == MONSNO_KIMAIRAN && form_no > 0){
+	if(monsno == MONSNO_GIRATHINA && form_no > 0){
 		return FALSE;	//フォルムチェンジしたギラティナだけ個別に判定
 	}
-	if(monsno == MONSNO_AUSU && arceus_flg == FALSE){
+	if(monsno == MONSNO_ARUSEUSU && arceus_flg == FALSE){
 		return FALSE;	//公開OKになっていない時はアルセウスは足跡無し扱いで判定
 	}
 	
@@ -235,7 +240,7 @@ BOOL FootprintTool_FootDispCheck(int monsno, int form_no, BOOL arceus_flg)
 //--------------------------------------------------------------
 BOOL FootprintTool_FootHitSizeGet(int monsno, int form_no)
 {
-	if(monsno == MONSNO_KIMAIRAN && form_no > 0){
+	if(monsno == MONSNO_GIRATHINA && form_no > 0){
 		return 2;	//フォルムチェンジしたギラティナだけ個別に判定
 	}
 	

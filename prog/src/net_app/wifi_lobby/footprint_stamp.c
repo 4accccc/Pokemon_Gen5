@@ -7,25 +7,23 @@
  */
 //==============================================================================
 #include <gflib.h>
-//#include "system/snd_tool.h"
-#include <arc_tool.h>
-//#include "system/arc_util.h"
-//#include "system/d3dobj.h"
+#include "system/main.h"
 #include "net_app/wifi_lobby/wflby_system_def.h"
 #include "footprint_common.h"
-#include "graphic/footprint_board.naix"
+#include "footprint_board.naix"
 #include "footprint_stamp.h"
-#include "poke_tool/monsno.h"
+#include "poke_tool/monsno_def.h"
 #include "poke_tool/pokefoot.h"	//POKEFOOT_ARC_CHAR_DMMY定義の為
-#include <procsys.h>
 #include "net_app/footprint_main.h"
 #include "system/wipe.h"
 #include "system/wipe_def.h"
 
-//#include "system/msgdata_util.h"
 #include "print/wordset.h"
 #include "footprint_tool.h"
 #include "footprint_snd_def.h"
+#include "arc_def.h"
+#include "sound/pm_sndsys.h"
+#include <calctool.h>
 
 
 //==============================================================================
@@ -89,6 +87,8 @@ typedef STAMP_RET (* STAMP_MOVE_FUNC)(STAMP_SYSTEM_WORK *ssw, STAMP_MOVE_PTR mov
 typedef void ( *STAMP_DRAW_FUNC )(STAMP_SYSTEM_WORK *ssw, STAMP_MOVE_PTR move);
 ///スタンプのあたり判定関数の型
 typedef BOOL (* STAMP_HITCHECK)(STAMP_SYSTEM_WORK *ssw, STAMP_MOVE_PTR move,STAMP_MOVE_PTR target);
+///スタンプの削除関数の型
+typedef void (* STAMP_DELETE_FUNC)(STAMP_MOVE_PTR move);
 
 ///スペシャルエフェクトの動作関数の型
 typedef BOOL (* SPECIAL_EFF_FUNC)(STAMP_SYSTEM_WORK *ssw, STAMP_SPECIAL_WORK *sp, GFL_G3D_CAMERA * camera);
@@ -104,6 +104,7 @@ typedef struct{
 	STAMP_MOVE_FUNC move_func;			///<動作関数
 	STAMP_DRAW_FUNC draw_func;			///<独自に描画処理を行う場合指定
 	STAMP_HITCHECK hitcheck_func;		///<ヒットチェック
+	STAMP_DELETE_FUNC delete_func;  ///<独自に削除処理を行う場合指定
 }STAMP_MOVE_DATA_TBL;
 
 ///スタンプの当たり判定チェック用のRECT型
@@ -113,6 +114,30 @@ typedef struct{
 	fx32 top;
 	fx32 bottom;
 }STAMP_HIT_RECT;
+
+//--------------------------------------------------------------
+//  
+//--------------------------------------------------------------
+///スタンプ3Dワーク
+typedef struct{
+	GFL_G3D_OBJ	*mdl;
+	GFL_G3D_OBJSTATUS		obj;
+	GFL_G3D_RND *rnder;
+	GFL_G3D_RES *pResMdl;
+	VecFx32 obj_rotate;
+	BOOL draw_flag;
+	
+	NNSG3dResMdl *pModel;
+	NNSG3dResTex *pMdlTex;
+}STAMP_3D;
+
+///スタンプ3DワークChild
+typedef struct{
+	GFL_G3D_OBJ	*mdl;
+	GFL_G3D_OBJSTATUS		obj;
+	VecFx32 obj_rotate;
+	BOOL draw_flag;
+}STAMP_3D_CHILD;
 
 //--------------------------------------------------------------
 //	消滅エフェクト
@@ -134,7 +159,7 @@ typedef struct{
 
 ///消滅エフェクト：はじけ
 typedef struct{
-	GFL_G3D_OBJSTATUS		child_obj[HAJIKE_OBJ_CHILD_NUM];	///<描画OBJ
+	STAMP_3D_CHILD		child_obj[HAJIKE_OBJ_CHILD_NUM];	///<描画OBJ
 	u16 frame;
 	u8 seq;
 	STAMP_HIT_RECT rect[HAJIKE_OBJ_CHILD_NUM + 1];	// +1 = 親の分
@@ -159,7 +184,7 @@ typedef struct{
 
 ///消滅エフェクト：軌跡
 typedef struct{
-	GFL_G3D_OBJSTATUS		child_obj[KISEKI_OBJ_CHILD_NUM];	///<描画OBJ
+	STAMP_3D_CHILD		child_obj[KISEKI_OBJ_CHILD_NUM];	///<描画OBJ
 	u16 frame;
 	u8 drop_no;
 	u8 obj_hit;			///<TRUE:他OBJと衝突した
@@ -186,7 +211,7 @@ typedef struct{
 
 ///消滅エフェクト：ブラーX
 typedef struct{
-	GFL_G3D_OBJSTATUS		child_obj[BRAR_X_OBJ_CHILD_NUM];	///<描画OBJ
+	STAMP_3D_CHILD		child_obj[BRAR_X_OBJ_CHILD_NUM];	///<描画OBJ
 	fx32 theta;
 	u16 alpha;
 	u8 polygon_id;
@@ -196,7 +221,7 @@ typedef struct{
 
 ///消滅エフェクト：ブラーY
 typedef struct{
-	GFL_G3D_OBJSTATUS		child_obj[BRAR_Y_OBJ_CHILD_NUM];	///<描画OBJ
+	STAMP_3D_CHILD		child_obj[BRAR_Y_OBJ_CHILD_NUM];	///<描画OBJ
 	fx32 theta;
 	u16 alpha;
 	u8 polygon_id;
@@ -239,8 +264,7 @@ typedef union{
 typedef struct _STAMP_MOVE_WORK{
 	STAMP_PARAM param;		///<スタンプパラメータ
 
-	GFL_G3D_OBJ	mdl;
-	GFL_G3D_OBJSTATUS		obj;
+	STAMP_3D s3d;
 	
 	ERASE_EFF_WORK erase_eff;	///<消滅エフェクト動作ワーク
 	
@@ -259,14 +283,13 @@ static STAMP_MOVE_PTR Stamp_Create(FOOTPRINT_SYS_PTR fps, STAMP_SYSTEM_WORK *ssw
 static void Stamp_Free(STAMP_MOVE_PTR move);
 static void Stamp_DeletePack(STAMP_SYSTEM_WORK *ssw, STAMP_MOVE_PTR move, int stamp_no);
 static void Stamp_PosConvert(FOOTPRINT_SYS_PTR fps, int x, int y, fx32 *ret_x, fx32 *ret_y);
-static BOOL Stamp_MdlLoadH(STAMP_SYSTEM_WORK *ssw, GFL_G3D_OBJ *p_mdl, ARCHANDLE *hdl_main, ARCHANDLE *hdl_mark, const STAMP_PARAM *param, BOOL arceus_flg);
+static BOOL Stamp_MdlLoadH(STAMP_SYSTEM_WORK *ssw, STAMP_3D *s3d, ARCHANDLE *hdl_main, ARCHANDLE *hdl_mark, const STAMP_PARAM *param, BOOL arceus_flg);
 static void Stamp_TexRewrite(NNSG3dResTex *pTex, ARCHANDLE *hdl_main, ARCHANDLE *hdl_mark, const STAMP_PARAM *param, BOOL arceus_flg);
 static void Stamp_TexDotErase(NNSG3dResTex *pTex, int move_type);
 static void Stamp_TexDotFlip(NNSG3dResTex *pTex, int move_type);
 static void VWaitTCB_MdlLoad(GFL_TCB* tcb, void *work);
-static BOOL Stamp_MdlTexKeyAreaSecure(NNSG3dResTex* tex);
-static BOOL Stamp_LoadTexDataSet(STAMP_SYSTEM_WORK *ssw, NNSG3dResTex *tex);
-static void Stamp_LoadTexDataFree(STAMP_SYSTEM_WORK *ssw, NNSG3dResTex *tex);
+static BOOL Stamp_LoadTexDataSet(STAMP_SYSTEM_WORK *ssw, GFL_G3D_RES *p_resmdl);
+static void Stamp_LoadTexDataFree(STAMP_SYSTEM_WORK *ssw, GFL_G3D_RES *p_resmdl);
 static BOOL StampMoveTool_MoveTypeSet(STAMP_MOVE_PTR move, int move_type);
 static u8 StampMoveTool_MoveTypeGet(const STAMP_PARAM *param);
 static int Stamp_PolygonIDGet(STAMP_SYSTEM_WORK *ssw);
@@ -278,6 +301,13 @@ static int Stamp_ChainAdd(STAMP_SYSTEM_WORK *ssw, int chain_work_no, int move_ty
 static void Stamp_ChainSub(STAMP_SYSTEM_WORK *ssw, int chain_work_no);
 static void Special_EffectSet(STAMP_SYSTEM_WORK *ssw);
 static BOOL SpecialFlashEff(STAMP_SYSTEM_WORK *ssw, SPECIAL_FLASH_WORK *flash_work, int game_status, int board_type);
+static void _StampMoveDraw(STAMP_3D *s3d);
+static void _StampMoveDrawChild(STAMP_3D_CHILD *child);
+static void _SetCameraDistance(STAMP_SYSTEM_WORK *ssw, fx32 distance, GFL_G3D_CAMERA *camera);
+static void _AddCameraDistance(STAMP_SYSTEM_WORK *ssw, const fx32 inDist,GFL_G3D_CAMERA* camera_ptr);
+static void _AddCameraAngleRev(STAMP_SYSTEM_WORK *ssw, const FOOT_CAMERA_ANGLE *inAngle,GFL_G3D_CAMERA *camera_ptr);
+static void _SetCameraAngleRev(STAMP_SYSTEM_WORK *ssw, const FOOT_CAMERA_ANGLE *inAngle,GFL_G3D_CAMERA *camera_ptr);
+static void _SetCameraAngleRot(STAMP_SYSTEM_WORK *ssw, const FOOT_CAMERA_ANGLE *inAngle,GFL_G3D_CAMERA *camera_ptr);
 
 static STAMP_RET StampMove_FirstWait(STAMP_SYSTEM_WORK *ssw, STAMP_MOVE_PTR move);
 static STAMP_RET StampMove_Nijimi(STAMP_SYSTEM_WORK *ssw, STAMP_MOVE_PTR move);
@@ -309,6 +339,11 @@ static BOOL StampHitcheck_BrarX(STAMP_SYSTEM_WORK *ssw,STAMP_MOVE_PTR move,STAMP
 static BOOL StampHitcheck_BrarY(STAMP_SYSTEM_WORK *ssw,STAMP_MOVE_PTR move,STAMP_MOVE_PTR target);
 static BOOL StampHitcheck_Tare(STAMP_SYSTEM_WORK *ssw,STAMP_MOVE_PTR move,STAMP_MOVE_PTR target);
 
+static void StampDel_Hajike(STAMP_MOVE_PTR move);
+static void StampDel_Kiseki(STAMP_MOVE_PTR move);
+static void StampDel_BrarX(STAMP_MOVE_PTR move);
+static void StampDel_BrarY(STAMP_MOVE_PTR move);
+
 static BOOL SpecialMove_Nijimi(STAMP_SYSTEM_WORK *ssw, STAMP_SPECIAL_WORK *sp, GFL_G3D_CAMERA * camera);
 static BOOL SpecialMove_Hajike(STAMP_SYSTEM_WORK *ssw, STAMP_SPECIAL_WORK *sp, GFL_G3D_CAMERA * camera);
 static BOOL SpecialMove_Zigzag(STAMP_SYSTEM_WORK *ssw, STAMP_SPECIAL_WORK *sp, GFL_G3D_CAMERA * camera);
@@ -319,23 +354,24 @@ static BOOL SpecialMove_Kakudai(STAMP_SYSTEM_WORK *ssw, STAMP_SPECIAL_WORK *sp, 
 static BOOL SpecialMove_BrarX(STAMP_SYSTEM_WORK *ssw, STAMP_SPECIAL_WORK *sp, GFL_G3D_CAMERA * camera);
 static BOOL SpecialMove_BrarY(STAMP_SYSTEM_WORK *ssw, STAMP_SPECIAL_WORK *sp, GFL_G3D_CAMERA * camera);
 static BOOL SpecialMove_Tare(STAMP_SYSTEM_WORK *ssw, STAMP_SPECIAL_WORK *sp, GFL_G3D_CAMERA * camera);
+static void Foot_RotateMtx(VecFx32 *rotate, MtxFx33 *dst_mtx);
 
 //==============================================================================
 //	シーケンステーブル
 //==============================================================================
 ///スタンプ動作関数テーブル		※MOVE_TYPE_???と並びを同じにしておくこと！
 static const STAMP_MOVE_DATA_TBL StampMoveDataTbl[] = {
-	{StampMove_FirstWait,	NULL,					StampHitcheck_FirstWait},
-	{StampMove_Nijimi,		StampDraw_Nijimi,		StampHitcheck_Nijimi},
-	{StampMove_Hajike,		StampDraw_Hajike,		StampHitcheck_Hajike},
-	{StampMove_Zigzag,		NULL,					StampHitcheck_Zigzag},
-	{StampMove_Dakou,		NULL,					StampHitcheck_Dakou},
-	{StampMove_Kiseki,		StampDraw_Kiseki,		StampHitcheck_Kiseki},
-	{StampMove_Yure,		NULL,					StampHitcheck_Yure},
-	{StampMove_Kakudai,		NULL,					StampHitcheck_Kakudai},
-	{StampMove_BrarX,		StampDraw_BrarX,		StampHitcheck_BrarX},
-	{StampMove_BrarY,		StampDraw_BrarY,		StampHitcheck_BrarY},
-	{StampMove_Tare,		NULL,					StampHitcheck_Tare},
+	{StampMove_FirstWait,	NULL,					StampHitcheck_FirstWait,      NULL},
+	{StampMove_Nijimi,		StampDraw_Nijimi,		StampHitcheck_Nijimi,   NULL},
+	{StampMove_Hajike,		StampDraw_Hajike,		StampHitcheck_Hajike,   StampDel_Hajike},
+	{StampMove_Zigzag,		NULL,					StampHitcheck_Zigzag,         NULL},
+	{StampMove_Dakou,		NULL,					StampHitcheck_Dakou,            NULL},
+	{StampMove_Kiseki,		StampDraw_Kiseki,		StampHitcheck_Kiseki,   StampDel_Kiseki},
+	{StampMove_Yure,		NULL,					StampHitcheck_Yure,             NULL},
+	{StampMove_Kakudai,		NULL,					StampHitcheck_Kakudai,        NULL},
+	{StampMove_BrarX,		StampDraw_BrarX,		StampHitcheck_BrarX,      StampDel_BrarX},
+	{StampMove_BrarY,		StampDraw_BrarY,		StampHitcheck_BrarY,      StampDel_BrarY},
+	{StampMove_Tare,		NULL,					StampHitcheck_Tare,             NULL},
 };
 
 ///スタンプの移動タイプ  ※StampMoveDataTbl、SpecialEffectDataTblと並びを同じにしておくこと！
@@ -453,8 +489,12 @@ static const s32 StampPosBaseY[] = {
 //--------------------------------------------------------------
 #ifdef PM_DEBUG
 static struct{
-	GFL_G3D_OBJ	mdl;
+	STAMP_3D s3d;
 	GFL_G3D_OBJSTATUS		obj[4];
+	GFL_G3D_OBJ	*mdl[4];
+	GFL_G3D_RND *rnder[4];
+	VecFx32 obj_rotate[4];
+	BOOL draw_flag[4];
 }DebugStamp;
 
 static u8 debug_sp_eff = 0;
@@ -474,10 +514,14 @@ static u8 debug_sp_eff = 0;
  * @param   arceus_flg	アルセウス公開フラグ(TRUE:公開OK)
  */
 //--------------------------------------------------------------
-void StampSys_Init(STAMP_SYSTEM_WORK *ssw, BOOL arceus_flg)
+void StampSys_Init(STAMP_SYSTEM_WORK *ssw, BOOL arceus_flg, fx32 *camera_distance, FOOT_CAMERA_ANGLE *camera_angle, VecFx32 *camera_target, VecFx32 *camera_up)
 {
 	GFL_STD_MemClear(ssw, sizeof(STAMP_SYSTEM_WORK));
-
+  ssw->camera_distance = camera_distance;
+  ssw->camera_angle = camera_angle;
+  ssw->camera_target = camera_target;
+  ssw->camera_up = camera_up;
+  
 #ifdef PM_DEBUG
 	{
 		ARCHANDLE *hdl_main, *hdl_mark;
@@ -486,13 +530,24 @@ void StampSys_Init(STAMP_SYSTEM_WORK *ssw, BOOL arceus_flg)
 		};
 		int i;
 		
-		hdl_main = GFL_ARC_OpenDataHandle( ARC_FOOTPRINT_GRA, HEAPID_FOOTPRINT );
-		hdl_mark = GFL_ARC_OpenDataHandle(ARC_POKEFOOT_GRA, HEAPID_FOOTPRINT);
+		hdl_main = GFL_ARC_OpenDataHandle( ARCID_FOOTPRINT_GRA, HEAPID_FOOTPRINT );
+		hdl_mark = GFL_ARC_OpenDataHandle(ARCID_POKEFOOT_GRA, HEAPID_FOOTPRINT);
 
-		Stamp_MdlLoadH(ssw, &DebugStamp.mdl, hdl_main, hdl_mark, &debug_stamp, arceus_flg);
+		Stamp_MdlLoadH(ssw, &DebugStamp.s3d, hdl_main, hdl_mark, &debug_stamp, arceus_flg);
 		for(i = 0; i < 4; i++){
-			D3DOBJ_Init( &DebugStamp.obj[i], &DebugStamp.mdl );
-			D3DOBJ_SetDraw( &DebugStamp.obj[i], FALSE );
+	#if WB_FIX
+			D3DOBJ_Init( &DebugStamp.s3d.obj[i], &DebugStamp.s3d.mdl );
+			D3DOBJ_SetDraw( &DebugStamp.s3d.obj[i], FALSE );
+	#else
+      DebugStamp.rnder[i] = 
+        GFL_G3D_RENDER_Create( DebugStamp.s3d.pResMdl, 0, DebugStamp.s3d.pResMdl );
+      DebugStamp.mdl[i] = GFL_G3D_OBJECT_Create(DebugStamp.rnder[i], NULL, 0);
+      VEC_Set(&DebugStamp.obj[i].trans, 0, 0, 0);
+      VEC_Set(&DebugStamp.obj[i].scale, FX32_ONE, FX32_ONE, FX32_ONE);
+      MTX_Identity33(&DebugStamp.obj[i].rotate);
+      VEC_Set(&DebugStamp.obj_rotate[i], 0, 0, 0);
+      DebugStamp.draw_flag[i] = FALSE;
+	#endif
 		}
 
 		GFL_ARC_CloseDataHandle( hdl_main );
@@ -518,7 +573,17 @@ void StampSys_Exit(STAMP_SYSTEM_WORK *ssw)
 		}
 	}
 #ifdef PM_DEBUG
-	D3DOBJ_MdlDelete(&DebugStamp.mdl);
+#if WB_FIX
+	for(i = 0; i < 4; i++){
+  	D3DOBJ_MdlDelete(&DebugStamp.mdl);
+  }
+#else
+	for(i = 0; i < 4; i++){
+    GFL_G3D_OBJECT_Delete(DebugStamp.mdl[i]);
+    GFL_G3D_RENDER_Delete(DebugStamp.rnder[i]);
+  }
+  GFL_G3D_DeleteResource(DebugStamp.s3d.pResMdl);
+#endif
 #endif
 }
 
@@ -631,16 +696,54 @@ void StampSys_ObjDraw(STAMP_SYSTEM_WORK *ssw)
 				StampMoveDataTbl[move->move_type].draw_func(ssw, move);
 			}
 			else{
-				D3DOBJ_Draw(&move->obj);
+		#if WB_FIX
+				D3DOBJ_Draw(&move->s3d.obj);
+		#else
+		    _StampMoveDraw(&move->s3d);
+		#endif
 			}
 		}
 	}
 
 #ifdef PM_DEBUG
 	for(i = 0; i < 4; i++){
+	#if WB_FIX
 		D3DOBJ_Draw(&DebugStamp.obj[i]);
+	#else
+	  if(DebugStamp.draw_flag[i] == TRUE){
+      GFL_G3D_DRAW_DrawObject(DebugStamp.mdl[i], &DebugStamp.obj[i]);
+    }
+	#endif
 	}
 #endif
+}
+
+//--------------------------------------------------------------
+/**
+ * スタンプ描画(親)
+ *
+ * @param   s3d		
+ */
+//--------------------------------------------------------------
+static void _StampMoveDraw(STAMP_3D *s3d)
+{
+  if(s3d->draw_flag == TRUE){
+    GFL_G3D_DRAW_DrawObject(s3d->mdl, &s3d->obj);
+  }
+}
+
+//--------------------------------------------------------------
+/**
+ * スタンプ描画(子)
+ *
+ * @param   child		
+ */
+//--------------------------------------------------------------
+static void _StampMoveDrawChild(STAMP_3D_CHILD *child)
+{
+  if(child->draw_flag == TRUE){
+    GFL_G3D_DRAW_DrawObject(child->mdl, &child->obj);
+  }
 }
 
 //--------------------------------------------------------------
@@ -719,17 +822,12 @@ void StampSys_HitCheck(STAMP_SYSTEM_WORK *ssw)
 void StampSys_VWaitUpdate(STAMP_SYSTEM_WORK *ssw, int game_status)
 {
 	int i;
-	NNSG3dResTex **tex;
+	GFL_G3D_RES **tex;
 	
 	tex = ssw->load_tex;
 	for(i = 0; i < LOAD_TEX_BUFFER_MAX; i++){
 		if(*tex != NULL){
-			//DMA転送するのでフラッシュする
-			DC_FlushRange( *tex, (*tex)->header.size );
-			// VRAMへのロード
-			NNS_G3dTexLoad(*tex, TRUE);
-			NNS_G3dPlttLoad(*tex, TRUE);
-			
+      GFL_G3D_TransOnlyTexture(*tex);
 			*tex = NULL;
 			OS_TPrintf("転送した %d\n", i);
 		}
@@ -779,22 +877,70 @@ static STAMP_MOVE_PTR Stamp_Create(FOOTPRINT_SYS_PTR fps, STAMP_SYSTEM_WORK *ssw
 	}
 	
 	//モデルデータ読み込み
-	//D3DOBJ_MdlLoadH(&move->mdl, hdl_main, NARC_footprint_board_ashiato_nsbmd, HEAPID_FOOTPRINT);
-	mdl_ret = Stamp_MdlLoadH(ssw, &move->mdl, hdl_main, hdl_mark, &move->param, arceus_flg);
+	//D3DOBJ_MdlLoadH(&move->s3d.mdl, hdl_main, NARC_footprint_board_ashiato_nsbmd, HEAPID_FOOTPRINT);
+	mdl_ret = Stamp_MdlLoadH(ssw, &move->s3d, hdl_main, hdl_mark, &move->param, arceus_flg);
 	if(mdl_ret == FALSE){
 		return NULL;
 	}
 	
+#if WB_FIX
 	//レンダーオブジェクトに登録
-	D3DOBJ_Init( &move->obj, &move->mdl );
+	D3DOBJ_Init( &move->s3d.obj, &move->s3d.mdl );
 	
 	//座標設定
 	Stamp_PosConvert(fps, param->x, param->y, &x, &y);
-	D3DOBJ_SetMatrix( &move->obj, x, y, STAMP_POS_Z);
-	D3DOBJ_SetScale(&move->obj, STAMP_SCALE, STAMP_SCALE, STAMP_SCALE);
-	D3DOBJ_SetDraw( &move->obj, FALSE );
+	D3DOBJ_SetMatrix( &move->s3d.obj, x, y, STAMP_POS_Z);
+	D3DOBJ_SetScale(&move->s3d.obj, STAMP_SCALE, STAMP_SCALE, STAMP_SCALE);
+	D3DOBJ_SetDraw( &move->s3d.obj, FALSE );
+#else
+	//レンダーオブジェクトに登録
+  move->s3d.rnder = GFL_G3D_RENDER_Create( move->s3d.pResMdl, 0, move->s3d.pResMdl );
+  move->s3d.mdl = GFL_G3D_OBJECT_Create(move->s3d.rnder, NULL, 0);  //アニメ無し
 	
+	//座標設定
+	Stamp_PosConvert(fps, param->x, param->y, &x, &y);
+  VEC_Set(&move->s3d.obj.trans, x, y, STAMP_POS_Z);
+  VEC_Set(&move->s3d.obj.scale, STAMP_SCALE, STAMP_SCALE, STAMP_SCALE);
+  MTX_Identity33(&move->s3d.obj.rotate);
+  VEC_Set(&move->s3d.obj_rotate, 0, 0, 0);
+  move->s3d.draw_flag = FALSE;
+#endif
+
 	return move;
+}
+
+//--------------------------------------------------------------
+/**
+ * スタンプ(子)を生成する
+ *
+ * @param   parent_s3d		親スタンプへのポインタ
+ *
+ * @retval  STAMP_3D_CHILD *		
+ */
+//--------------------------------------------------------------
+static void _StampChildAdd(STAMP_3D *parent_s3d, STAMP_3D_CHILD *child)
+{
+  child->mdl = GFL_G3D_OBJECT_Create(parent_s3d->rnder, NULL, 0);
+  VEC_Set(&child->obj.trans, 0, 0, STAMP_POS_Z);
+  VEC_Set(&child->obj.scale, STAMP_SCALE, STAMP_SCALE, STAMP_SCALE);
+  MTX_Identity33(&child->obj.rotate);
+  VEC_Set(&child->obj_rotate, 0, 0, 0);
+  child->draw_flag = TRUE;
+}
+
+//--------------------------------------------------------------
+/**
+ * スタンプ(子)を削除する
+ *
+ * @param   parent_s3d		親スタンプへのポインタ
+ *
+ * @retval  STAMP_3D_CHILD *		
+ */
+//--------------------------------------------------------------
+static void _StampChildDel(STAMP_3D *parent_s3d, STAMP_3D_CHILD *child)
+{
+  GFL_G3D_OBJECT_Delete(child->mdl);
+  child->draw_flag = FALSE;
 }
 
 //--------------------------------------------------------------
@@ -812,58 +958,60 @@ static STAMP_MOVE_PTR Stamp_Create(FOOTPRINT_SYS_PTR fps, STAMP_SYSTEM_WORK *ssw
  *	D3DOBJ_MdlLoadH関数の中身を抜き出して必要な部分をカスタマイズしたもの
  */
 //--------------------------------------------------------------
-static BOOL Stamp_MdlLoadH(STAMP_SYSTEM_WORK *ssw, GFL_G3D_OBJ *p_mdl, ARCHANDLE *hdl_main, ARCHANDLE *hdl_mark, const STAMP_PARAM *param, BOOL arceus_flg)
+static BOOL Stamp_MdlLoadH(STAMP_SYSTEM_WORK *ssw, STAMP_3D *s3d, ARCHANDLE *hdl_main, ARCHANDLE *hdl_mark, const STAMP_PARAM *param, BOOL arceus_flg)
 {
 	// モデルﾃﾞｰﾀ読み込み
+#if WB_FIX
 	p_mdl->pResMdl = GFL_ARCHDL_UTIL_Load(hdl_main, NARC_footprint_board_ashiato_nsbmd, 
 		FALSE, HEAPID_FOOTPRINT );
+#else
+  s3d->pResMdl = GFL_G3D_CreateResourceHandle( hdl_main, NARC_footprint_board_ashiato_nsbmd );
+#endif
 
 	// モデルデータ設定＆テクスチャ転送
 	{
 		BOOL vram_ret;
-
+    NNSG3dResFileHeader *nns3dhead;
+    NNSG3dResMdlSet *mdlset;
+    
 		// リソース読み込み済みである必要がある
-		GF_ASSERT( p_mdl->pResMdl );
+		nns3dhead = GFL_G3D_GetResourceFileHeader(s3d->pResMdl);
+		GF_ASSERT( nns3dhead );
 		
 		// モデルﾃﾞｰﾀ取得
-		p_mdl->pModelSet	= NNS_G3dGetMdlSet( p_mdl->pResMdl );
-		p_mdl->pModel		= NNS_G3dGetMdlByIdx( p_mdl->pModelSet, 0 );
-		p_mdl->pMdlTex		= NNS_G3dGetTex( p_mdl->pResMdl );
-		
-		if( p_mdl->pMdlTex ){
+		mdlset	= NNS_G3dGetMdlSet( nns3dhead );
+		s3d->pModel		= NNS_G3dGetMdlByIdx( mdlset, 0 );
+		s3d->pMdlTex		= NNS_G3dGetTex( nns3dhead );
+    
+		if( s3d->pMdlTex ){
 			//テクスチャ書き換え
-			Stamp_TexRewrite(p_mdl->pMdlTex, hdl_main, hdl_mark, param, arceus_flg);
+			Stamp_TexRewrite(s3d->pMdlTex, hdl_main, hdl_mark, param, arceus_flg);
 			
 			// テクスチャデータ転送
-			//LoadVRAMTexture( p_mdl->pMdlTex );
-			vram_ret = Stamp_MdlTexKeyAreaSecure(p_mdl->pMdlTex);
-			if(vram_ret == FALSE || Stamp_LoadTexDataSet(ssw, p_mdl->pMdlTex) == FALSE){
+			//LoadVRAMTexture( s3d->pMdlTex );
+      vram_ret = GFL_G3D_AllocVramTexture(s3d->pResMdl);
+			if(vram_ret == FALSE || Stamp_LoadTexDataSet(ssw, s3d->pResMdl) == FALSE){
 				//VRAM or TCBが確保出来ない場合は、全て解放する
-				NNSG3dTexKey texKey;
-				NNSG3dTexKey tex4x4Key;
-				NNSG3dPlttKey plttKey;
 
 				//VramKey破棄
 				if(vram_ret == TRUE){
-					NNS_G3dTexReleaseTexKey(p_mdl->pMdlTex, &texKey, &tex4x4Key );
-					NNS_GfdFreeTexVram( texKey );
-					NNS_GfdFreeTexVram( tex4x4Key );
-
-					plttKey = NNS_G3dPlttReleasePlttKey( p_mdl->pMdlTex );
-					NNS_GfdFreePlttVram( plttKey );
+          GFL_G3D_FreeVramTexture(s3d->pResMdl);
 				}
 				
 				// 全リソース破棄
-				if(p_mdl->pResMdl){
-					GFL_HEAP_FreeMemory( p_mdl->pResMdl );
+				if(nns3dhead){
+          GFL_G3D_DeleteResource(s3d->pResMdl);
+          s3d->pResMdl = NULL;
 				}
-				GFL_STD_MemFill( p_mdl, 0, sizeof(GFL_G3D_OBJ) );
+				GFL_STD_MemFill( s3d, 0, sizeof(STAMP_3D) );
 
 				OS_TPrintf("!!!!!VRAM or TCBの確保失敗!!!!!! vram_ret = %d\n", vram_ret);
 				return FALSE;
 			}
 			
-			BindTexture( p_mdl->pResMdl, p_mdl->pMdlTex );
+#if WB_FIX
+			BindTexture( nns3dhead, s3d->pMdlTex );
+#endif
 		}
 	}
 	
@@ -881,13 +1029,13 @@ static BOOL Stamp_MdlLoadH(STAMP_SYSTEM_WORK *ssw, GFL_G3D_OBJ *p_mdl, ARCHANDLE
  * @retval  TRUE:リクエスト受付失敗
  */
 //--------------------------------------------------------------
-static BOOL Stamp_LoadTexDataSet(STAMP_SYSTEM_WORK *ssw, NNSG3dResTex *tex)
+static BOOL Stamp_LoadTexDataSet(STAMP_SYSTEM_WORK *ssw, GFL_G3D_RES *p_resmdl)
 {
 	int i;
 	
 	for(i = 0; i < LOAD_TEX_BUFFER_MAX; i++){
 		if(ssw->load_tex[i] == NULL){
-			ssw->load_tex[i] = tex;
+			ssw->load_tex[i] = p_resmdl;
 			return TRUE;
 		}
 	}
@@ -906,69 +1054,16 @@ static BOOL Stamp_LoadTexDataSet(STAMP_SYSTEM_WORK *ssw, NNSG3dResTex *tex)
  * @retval  TRUE:リクエスト受付失敗
  */
 //--------------------------------------------------------------
-static void Stamp_LoadTexDataFree(STAMP_SYSTEM_WORK *ssw, NNSG3dResTex *tex)
+static void Stamp_LoadTexDataFree(STAMP_SYSTEM_WORK *ssw, GFL_G3D_RES *p_resmdl)
 {
 	int i;
 	
 	for(i = 0; i < LOAD_TEX_BUFFER_MAX; i++){
-		if(ssw->load_tex[i] == tex){
+		if(ssw->load_tex[i] == p_resmdl){
 			ssw->load_tex[i] = NULL;
 			return;
 		}
 	}
-}
-
-//--------------------------------------------------------------
-/**
- * @brief   テクスチャ領域確保＆リソースにキーをセットする
- *
- * @param   tex		テクスチャリソースへのポインタ
- *
- * @retval  TRUE:確保成功
- * @retval  FALSE:確保失敗
- */
-//--------------------------------------------------------------
-static BOOL Stamp_MdlTexKeyAreaSecure(NNSG3dResTex* tex)
-{
-    u32 szTex, szPltt;
-    NNSG3dTexKey keyTex;
-    NNSG3dPlttKey keyPltt;
-
-	tex->texInfo.vramKey = 0;
-
-	// 必要なサイズを取得
-    szTex    = NNS_G3dTexGetRequiredSize(tex);
-    szPltt   = NNS_G3dPlttGetRequiredSize(tex);
-
-	// テクスチャイメージスロットに確保
-	keyTex = NNS_GfdAllocTexVram(szTex, FALSE, 0);
-    if (keyTex == NNS_GFD_ALLOC_ERROR_TEXKEY){
-		return FALSE;
-	}
-
-	// 存在すればテクスチャパレットスロットに確保
-	keyPltt = 
-		NNS_GfdAllocPlttVram(szPltt,
-							tex->tex4x4Info.flag & NNS_G3D_RESPLTT_USEPLTT4,
-							0);
-	if (keyPltt == NNS_GFD_ALLOC_ERROR_PLTTKEY){
-		NNS_GfdFreeTexVram(keyTex);	//先に確保していたテクスチャVRAMを解放する
-		return FALSE;
-	}
-
-	// キーのアサイン
-	NNS_G3dTexSetTexKey(tex, keyTex, 0);
-	NNS_G3dPlttSetPlttKey(tex, keyPltt);
-
-#if 0
-	//DMA転送するのでフラッシュする
-	DC_FlushRange( tex, tex->header.size );
-	// VRAMへのロード
-	NNS_G3dTexLoad(tex, TRUE);
-	NNS_G3dPlttLoad(tex, TRUE);
-#endif
-
-	return TRUE;
 }
 
 //--------------------------------------------------------------
@@ -1178,7 +1273,16 @@ static void Stamp_TexDotFlip(NNSG3dResTex *pTex, int move_type)
 //--------------------------------------------------------------
 static void Stamp_Free(STAMP_MOVE_PTR move)
 {
-	D3DOBJ_MdlDelete( &move->mdl );
+#if WB_FIX
+	D3DOBJ_MdlDelete( &move->s3d.mdl );
+#else
+  if(StampMoveDataTbl[move->move_type].delete_func != NULL){
+    StampMoveDataTbl[move->move_type].delete_func(move);
+  }
+  GFL_G3D_OBJECT_Delete(move->s3d.mdl);
+  GFL_G3D_RENDER_Delete(move->s3d.rnder);
+  GFL_G3D_DeleteResource(move->s3d.pResMdl);
+#endif
 	GFL_HEAP_FreeMemory(move);
 }
 
@@ -1194,7 +1298,7 @@ static void Stamp_Free(STAMP_MOVE_PTR move)
 static void Stamp_DeletePack(STAMP_SYSTEM_WORK *ssw, STAMP_MOVE_PTR move, int stamp_no)
 {
 	if(move->initialize == 0 || move->tex_load_req == TRUE){
-		Stamp_LoadTexDataFree(ssw, move->mdl.pMdlTex);
+		Stamp_LoadTexDataFree(ssw, move->s3d.pResMdl);
 	}
 	Stamp_ChainSub(ssw, move->chain_work_no);
 	Stamp_Free(move);
@@ -1318,31 +1422,29 @@ static void Stamp_PolygonIDFree(STAMP_SYSTEM_WORK *ssw, int polygon_id)
 //--------------------------------------------------------------
 static void Stamp_HitRectCreate(GFL_G3D_OBJSTATUS *obj, const STAMP_PARAM *param, STAMP_HIT_RECT *rect, int affine_flag)
 {
-	fx32 fx_x, fx_y, fx_z;
-	fx32 scale_x, scale_y, scale_z;
+	VecFx32 pos;
 	int hit_size;
 	fx64 bairitu_x, bairitu_y, add_x, add_y;
 	
+	OS_TPrintf("param->monsno = %d, form_no = %d\n", param->monsno, param->form_no);
 	hit_size = FootprintTool_FootHitSizeGet(param->monsno, param->form_no);
 	GF_ASSERT(hit_size < NELEMS(StampDefaultHitRect));
 	
-	D3DOBJ_GetMatrix(obj, &fx_x, &fx_y, &fx_z);
+	pos = obj->trans;
 
-	rect->left = fx_x + StampDefaultHitRect[hit_size].left;
-	rect->right = fx_x + StampDefaultHitRect[hit_size].right;
-	rect->top = fx_y + StampDefaultHitRect[hit_size].top;
-	rect->bottom = fx_y + StampDefaultHitRect[hit_size].bottom;
+	rect->left = pos.x + StampDefaultHitRect[hit_size].left;
+	rect->right = pos.x + StampDefaultHitRect[hit_size].right;
+	rect->top = pos.y + StampDefaultHitRect[hit_size].top;
+	rect->bottom = pos.y + StampDefaultHitRect[hit_size].bottom;
 //	OS_TPrintf("hit_rect fx_x = %d, fx_y = %d\n", fx_x, fx_y);
 //	OS_TPrintf("hit_rect normal left=%d, right=%d, top=%d, bottom=%d\n", rect->left, rect->right, rect->top, rect->bottom);
 	if(affine_flag == TRUE){
-		D3DOBJ_GetScale(obj, &scale_x, &scale_y, &scale_z);
-		
-		bairitu_x = ((fx64)scale_x) * 100 / FX32_ONE;
+		bairitu_x = ((fx64)obj->scale.x) * 100 / FX32_ONE;
 		add_x = (rect->right - rect->left) * bairitu_x / 100 - (rect->right - rect->left);
 		rect->right += add_x / 2;
 		rect->left += -(add_x / 2);
 		
-		bairitu_y = ((fx64)scale_y) * 100 / FX32_ONE;
+		bairitu_y = ((fx64)obj->scale.y) * 100 / FX32_ONE;
 		add_y = (rect->top - rect->bottom) * bairitu_y / 100 - (rect->top - rect->bottom);
 		rect->top += add_y / 2;
 		rect->bottom += -(add_y / 2);
@@ -1354,17 +1456,21 @@ static void Stamp_HitRectCreate(GFL_G3D_OBJSTATUS *obj, const STAMP_PARAM *param
 		int i;
 		
 		if(GFL_UI_KEY_GetCont() & PAD_BUTTON_X){
-			D3DOBJ_SetMatrix( &DebugStamp.obj[0], rect->left, rect->top, STAMP_POS_Z);
-			D3DOBJ_SetMatrix( &DebugStamp.obj[1], rect->left, rect->bottom, STAMP_POS_Z);
-			D3DOBJ_SetMatrix( &DebugStamp.obj[2], rect->right, rect->top, STAMP_POS_Z);
-			D3DOBJ_SetMatrix( &DebugStamp.obj[3], rect->right, rect->bottom, STAMP_POS_Z);
+      DebugStamp.obj[0].trans.x = rect->left;
+      DebugStamp.obj[0].trans.y = rect->top;
+      DebugStamp.obj[1].trans.x = rect->left;
+      DebugStamp.obj[1].trans.y = rect->bottom;
+      DebugStamp.obj[2].trans.x = rect->right;
+      DebugStamp.obj[2].trans.y = rect->top;
+      DebugStamp.obj[3].trans.x = rect->right;
+      DebugStamp.obj[3].trans.y = rect->bottom;
 			for(i = 0; i < 4; i++){
-				D3DOBJ_SetDraw( &DebugStamp.obj[i], TRUE );
+        DebugStamp.draw_flag[i] = TRUE;
 			}
 		}
 		else{
 			for(i = 0; i < 4; i++){
-				D3DOBJ_SetDraw( &DebugStamp.obj[i], FALSE );
+        DebugStamp.draw_flag[i] = FALSE;
 			}
 		}
 	}
@@ -1525,7 +1631,7 @@ static u8 StampMoveTool_MoveTypeGet(const STAMP_PARAM *param)
 {
 	u8 seikaku;
 	
-	seikaku = PokeSeikakuGetRnd(param->personal_rnd);
+	seikaku = POKETOOL_GetSeikaku(param->personal_rnd);
 	return Seikaku_to_MoveType_Tbl[seikaku];
 }
 
@@ -1545,8 +1651,8 @@ static STAMP_RET StampMove_FirstWait(STAMP_SYSTEM_WORK *ssw, STAMP_MOVE_PTR move
 	
 	init_move->wait++;
 	if(init_move->wait == 2){
-		Stamp_HitRectCreate(&move->obj, &move->param, &init_move->rect, FALSE);
-		D3DOBJ_SetDraw( &move->obj, TRUE );	//テクスチャがVBlankで転送されてから描画ONする
+		Stamp_HitRectCreate(&move->s3d.obj, &move->param, &init_move->rect, FALSE);
+		move->s3d.draw_flag = TRUE;	//テクスチャがVBlankで転送されてから描画ONする
 		move->initialize = TRUE;
 	}
 
@@ -1598,19 +1704,21 @@ static STAMP_RET StampMove_Nijimi(STAMP_SYSTEM_WORK *ssw, STAMP_MOVE_PTR move)
 	case 1:
 		nijimi->affine_xyz += NIJIMI_ADD_AFFINE;
 		if(nijimi->alpha - NIJIMI_ADD_ALPHA < 0x100){
-			D3DOBJ_SetDraw( &move->obj, FALSE);
+			move->s3d.draw_flag = FALSE;
 			nijimi->seq++;
 			break;
 		}
 		nijimi->alpha -= NIJIMI_ADD_ALPHA;
-		D3DOBJ_SetScale(&move->obj, nijimi->affine_xyz, nijimi->affine_xyz, FX32_ONE);
+		move->s3d.obj.scale.x = nijimi->affine_xyz;
+		move->s3d.obj.scale.x = nijimi->affine_xyz;
+		move->s3d.obj.scale.x = FX32_ONE;
 		break;
 	default:
 		Stamp_PolygonIDFree(ssw, nijimi->polygon_id);
 		return RET_DELETE;
 	}
 
-	Stamp_HitRectCreate(&move->obj, &move->param, &nijimi->rect, TRUE);
+	Stamp_HitRectCreate(&move->s3d.obj, &move->param, &nijimi->rect, TRUE);
 	return RET_CONTINUE;
 }
 
@@ -1628,10 +1736,14 @@ static void StampDraw_Nijimi(STAMP_SYSTEM_WORK *ssw, STAMP_MOVE_PTR move)
 
 	if(nijimi->polygon_id != STAMP_POLYGON_ID_ERROR){
 		NNS_G3dGlbPolygonAttr(0, 0, 0, nijimi->polygon_id, nijimi->alpha >> 8, 0);
-		NNS_G3dMdlUseGlbPolygonID(move->mdl.pModel);
-		NNS_G3dMdlUseGlbAlpha(move->mdl.pModel);
+		NNS_G3dMdlUseGlbPolygonID(move->s3d.pModel);
+		NNS_G3dMdlUseGlbAlpha(move->s3d.pModel);
 	}
-	D3DOBJ_Draw(&move->obj);
+#if WB_FIX
+	D3DOBJ_Draw(&move->s3d.obj);
+#else
+  _StampMoveDraw(&move->s3d);
+#endif
 }
 
 //--------------------------------------------------------------
@@ -1672,30 +1784,32 @@ static STAMP_RET StampMove_Hajike(STAMP_SYSTEM_WORK *ssw, STAMP_MOVE_PTR move)
 {
 	ERASE_EFF_HAJIKE *hajike = &move->erase_eff.hajike;
 	int i;
-	fx32 fx_x, fx_y, fx_z;
 	
 	switch(hajike->seq){
 	case 0:
-		D3DOBJ_GetMatrix(&move->obj, &fx_x, &fx_y, &fx_z);
 		for(i = 0; i < HAJIKE_OBJ_CHILD_NUM; i++){
-			D3DOBJ_Init( &hajike->child_obj[i], &move->mdl );
-			D3DOBJ_SetMatrix(&hajike->child_obj[i], fx_x, fx_y, fx_z);
+	#if WB_FIX
+			D3DOBJ_Init( &hajike->child_obj[i], &move->s3d.mdl );
+	#else
+	    _StampChildAdd(&move->s3d, &hajike->child_obj[i]);
+	#endif
+			hajike->child_obj[i].obj.trans = move->s3d.obj.trans;
 		}
 		hajike->seq++;
 		//break;
 	case 1:
 		//本体は左上
-		D3DOBJ_GetMatrix(&move->obj, &fx_x, &fx_y, &fx_z);
-		D3DOBJ_SetMatrix(&move->obj, fx_x - HAJIKE_ADD_X, fx_y - HAJIKE_ADD_Y, fx_z);
+		move->s3d.obj.trans.x -= HAJIKE_ADD_X;
+		move->s3d.obj.trans.y -= HAJIKE_ADD_Y;
 		//右上
-		D3DOBJ_GetMatrix(&hajike->child_obj[0], &fx_x, &fx_y, &fx_z);
-		D3DOBJ_SetMatrix(&hajike->child_obj[0], fx_x + HAJIKE_ADD_X, fx_y - HAJIKE_ADD_Y, fx_z);
+		hajike->child_obj[0].obj.trans.x += HAJIKE_ADD_X;
+		hajike->child_obj[0].obj.trans.y -= HAJIKE_ADD_Y;
 		//左下
-		D3DOBJ_GetMatrix(&hajike->child_obj[1], &fx_x, &fx_y, &fx_z);
-		D3DOBJ_SetMatrix(&hajike->child_obj[1], fx_x - HAJIKE_ADD_X, fx_y + HAJIKE_ADD_Y, fx_z);
+		hajike->child_obj[1].obj.trans.x -= HAJIKE_ADD_X;
+		hajike->child_obj[1].obj.trans.y += HAJIKE_ADD_Y;
 		//右下
-		D3DOBJ_GetMatrix(&hajike->child_obj[2], &fx_x, &fx_y, &fx_z);
-		D3DOBJ_SetMatrix(&hajike->child_obj[2], fx_x + HAJIKE_ADD_X, fx_y + HAJIKE_ADD_Y, fx_z);
+		hajike->child_obj[2].obj.trans.x += HAJIKE_ADD_X;
+		hajike->child_obj[2].obj.trans.y += HAJIKE_ADD_Y;
 		
 		hajike->frame++;
 		if(hajike->frame > HAJIKE_DELETE_FRAME){
@@ -1703,9 +1817,9 @@ static STAMP_RET StampMove_Hajike(STAMP_SYSTEM_WORK *ssw, STAMP_MOVE_PTR move)
 		}
 	}
 
-	Stamp_HitRectCreate(&move->obj, &move->param, &hajike->rect[0], FALSE);
+	Stamp_HitRectCreate(&move->s3d.obj, &move->param, &hajike->rect[0], FALSE);
 	for(i = 0; i < HAJIKE_OBJ_CHILD_NUM; i++){
-		Stamp_HitRectCreate(&hajike->child_obj[i], &move->param, &hajike->rect[1 + i], FALSE);
+		Stamp_HitRectCreate(&hajike->child_obj[i].obj, &move->param, &hajike->rect[1 + i], FALSE);
 	}
 	return RET_CONTINUE;
 }
@@ -1725,9 +1839,9 @@ static void StampDraw_Hajike(STAMP_SYSTEM_WORK *ssw, STAMP_MOVE_PTR move)
 	int i;
 	
 	for(i = 0; i < HAJIKE_OBJ_CHILD_NUM; i++){
-		D3DOBJ_Draw(&hajike->child_obj[i]);
+    _StampMoveDrawChild(&hajike->child_obj[i]);
 	}
-	D3DOBJ_Draw(&move->obj);
+  _StampMoveDraw(&move->s3d);
 }
 
 //--------------------------------------------------------------
@@ -1759,6 +1873,28 @@ static BOOL StampHitcheck_Hajike(STAMP_SYSTEM_WORK *ssw,STAMP_MOVE_PTR move, STA
 
 //--------------------------------------------------------------
 /**
+ * @brief   スタンプ削除：足跡が4分割し、4つのオブジェクトになて四方に飛び散って消える
+ * 						オブジェクトの移動範囲は、押した点から32グリッド程度
+ *
+ * @param   move		スタンプへのポインタ
+ *
+ * @retval	システムへ返す返事(RET_???)
+ */
+//--------------------------------------------------------------
+static void StampDel_Hajike(STAMP_MOVE_PTR move)
+{
+	ERASE_EFF_HAJIKE *hajike = &move->erase_eff.hajike;
+	int i;
+	
+	for(i = 0; i < HAJIKE_OBJ_CHILD_NUM; i++){
+    if(hajike->child_obj[i].mdl != NULL){
+      _StampChildDel(&move->s3d, &hajike->child_obj[i]);
+    }
+  }
+}
+
+//--------------------------------------------------------------
+/**
  * @brief   スタンプ動作：タッチした点から水平-90度回転し、
  *						垂直右方向に蛇行移動し、フレームアウトする
  *
@@ -1772,32 +1908,49 @@ static STAMP_RET StampMove_Zigzag(STAMP_SYSTEM_WORK *ssw, STAMP_MOVE_PTR move)
 {
 	ERASE_EFF_ZIGZAG *zig = &move->erase_eff.zigzag;
 	u16 rot, before_rot;
-	fx32 fx_x, fx_y, fx_z;
 
 	switch(zig->seq){
 	case 0:
-		rot = D3DOBJ_GetRota(&move->obj, D3DOBJ_ROTA_WAY_Z);
+#if WB_FIX
+		rot = D3DOBJ_GetRota(&move->s3d.obj, D3DOBJ_ROTA_WAY_Z);
+#else
+    rot = move->s3d.obj_rotate.z;
+#endif
 		rot -= 65536/4/ZIGZAG_THETA_FRAME;
 		if(rot <= 65536/8*7){
-			//Stamp_TexDotErase(move->mdl.pMdlTex, move->move_type);
-			Stamp_TexDotFlip(move->mdl.pMdlTex, move->move_type);
-			Stamp_LoadTexDataSet(ssw, move->mdl.pMdlTex);
+			//Stamp_TexDotErase(move->s3d.pMdlTex, move->move_type);
+			Stamp_TexDotFlip(move->s3d.pMdlTex, move->move_type);
+			Stamp_LoadTexDataSet(ssw, move->s3d.pResMdl);
 			move->tex_load_req = TRUE;
 			rot += 65536/4;
 			zig->seq++;
 		}
-		D3DOBJ_SetRota(&move->obj, rot, D3DOBJ_ROTA_WAY_Z);
+#if WB_FIX
+		D3DOBJ_SetRota(&move->s3d.obj, rot, D3DOBJ_ROTA_WAY_Z);
+#else
+		move->s3d.obj_rotate.z = rot;
+		Foot_RotateMtx(&move->s3d.obj_rotate, &move->s3d.obj.rotate);
+#endif
 		break;
 	case 1:
 		move->tex_load_req = 0;
-		rot = D3DOBJ_GetRota(&move->obj, D3DOBJ_ROTA_WAY_Z);
+#if WB_FIX
+		rot = D3DOBJ_GetRota(&move->s3d.obj, D3DOBJ_ROTA_WAY_Z);
+#else
+    rot = move->s3d.obj_rotate.z;
+#endif
 		rot -= 65536/4/ZIGZAG_THETA_FRAME;
 		if(rot >= 65536/4*3){
 			rot = 0;
 			zig->seq++;
 		}
 		
-		D3DOBJ_SetRota(&move->obj, rot, D3DOBJ_ROTA_WAY_Z);
+#if WB_FIX
+		D3DOBJ_SetRota(&move->s3d.obj, rot, D3DOBJ_ROTA_WAY_Z);
+#else
+		move->s3d.obj_rotate.z = rot;
+		Foot_RotateMtx(&move->s3d.obj_rotate, &move->s3d.obj.rotate);
+#endif
 		break;
 	case 2:
 		zig->wait++;
@@ -1808,18 +1961,19 @@ static STAMP_RET StampMove_Zigzag(STAMP_SYSTEM_WORK *ssw, STAMP_MOVE_PTR move)
 		zig->seq++;
 		//break;
 	case 3:
-		D3DOBJ_GetMatrix(&move->obj, &fx_x, &fx_y, &fx_z);
-		if(fx_x < StampFrameOutRect.left || fx_x > StampFrameOutRect.right
-				|| fx_y > StampFrameOutRect.top || fx_y < StampFrameOutRect.bottom){
+		if(move->s3d.obj.trans.x < StampFrameOutRect.left || move->s3d.obj.trans.x > StampFrameOutRect.right
+				|| move->s3d.obj.trans.y > StampFrameOutRect.top || move->s3d.obj.trans.y < StampFrameOutRect.bottom){
 			//OS_TPrintf("ジグザグ：フレームアウト x=%d, y=%d\n", fx_x, fx_y);
 			return RET_DELETE;
 		}
 		
 		if(zig->turn_frame < ZIGZAG_TURN_FRAME){
-			D3DOBJ_SetMatrix(&move->obj, fx_x + ZIGZAG_ADD_X, fx_y - ZIGZAG_ADD_Y, fx_z);
+		  move->s3d.obj.trans.x += ZIGZAG_ADD_X;
+		  move->s3d.obj.trans.y -= ZIGZAG_ADD_Y;
 		}
 		else{
-			D3DOBJ_SetMatrix(&move->obj, fx_x + ZIGZAG_ADD_X, fx_y + ZIGZAG_ADD_Y, fx_z);
+		  move->s3d.obj.trans.x += ZIGZAG_ADD_X;
+		  move->s3d.obj.trans.y += ZIGZAG_ADD_Y;
 		}
 		zig->turn_frame++;
 		if(zig->turn_frame >= ZIGZAG_TURN_FRAME*2){
@@ -1828,7 +1982,7 @@ static STAMP_RET StampMove_Zigzag(STAMP_SYSTEM_WORK *ssw, STAMP_MOVE_PTR move)
 		break;
 	}
 
-	Stamp_HitRectCreate(&move->obj, &move->param, &zig->rect, FALSE);
+	Stamp_HitRectCreate(&move->s3d.obj, &move->param, &zig->rect, FALSE);
 	return RET_CONTINUE;
 }
 
@@ -1871,46 +2025,61 @@ static STAMP_RET StampMove_Dakou(STAMP_SYSTEM_WORK *ssw, STAMP_MOVE_PTR move)
 {
 	ERASE_EFF_DAKOU *dakou = &move->erase_eff.dakou;
 	u16 rot;
-	fx32 fx_x, fx_y, fx_z;
 	fx32 offset_y;
 	
 	switch(dakou->seq){
 	case 0:
-		rot = D3DOBJ_GetRota(&move->obj, D3DOBJ_ROTA_WAY_Z);
+#if WB_FIX
+		rot = D3DOBJ_GetRota(&move->s3d.obj, D3DOBJ_ROTA_WAY_Z);
+#else
+    rot = move->s3d.obj_rotate.z;
+#endif
 		rot += 65536/4/DAKOU_THETA_FRAME;
 		if(rot >= 65536/4/2){
-			Stamp_TexDotFlip(move->mdl.pMdlTex, move->move_type);
+			Stamp_TexDotFlip(move->s3d.pMdlTex, move->move_type);
 			rot -= 65536/4;
-			Stamp_LoadTexDataSet(ssw, move->mdl.pMdlTex);
+			Stamp_LoadTexDataSet(ssw, move->s3d.pResMdl);
 			move->tex_load_req = TRUE;
 			dakou->seq++;
 		}
-		D3DOBJ_SetRota(&move->obj, rot, D3DOBJ_ROTA_WAY_Z);
+#if WB_FIX
+		D3DOBJ_SetRota(&move->s3d.obj, rot, D3DOBJ_ROTA_WAY_Z);
+#else
+		move->s3d.obj_rotate.z = rot;
+		Foot_RotateMtx(&move->s3d.obj_rotate, &move->s3d.obj.rotate);
+#endif
 		break;
 	case 1:
 		move->tex_load_req = 0;
-		rot = D3DOBJ_GetRota(&move->obj, D3DOBJ_ROTA_WAY_Z);
+#if WB_FIX
+		rot = D3DOBJ_GetRota(&move->s3d.obj, D3DOBJ_ROTA_WAY_Z);
+#else
+    rot = move->s3d.obj_rotate.z;
+#endif
 		rot += 65536/4/DAKOU_THETA_FRAME;
 		if(rot >= 0 && rot < 65536/4*1){
 			rot = 0;
 			dakou->seq++;
 		}
-		D3DOBJ_SetRota(&move->obj, rot, D3DOBJ_ROTA_WAY_Z);
+#if WB_FIX
+		D3DOBJ_SetRota(&move->s3d.obj, rot, D3DOBJ_ROTA_WAY_Z);
+#else
+		move->s3d.obj_rotate.z = rot;
+		Foot_RotateMtx(&move->s3d.obj_rotate, &move->s3d.obj.rotate);
+#endif
 		break;
 	case 2:
 		dakou->wait++;
 		if(dakou->wait < DAKOU_THETA_AFTER_WAIT){
 			break;
 		}
-		D3DOBJ_GetMatrix(&move->obj, &fx_x, &fx_y, &fx_z);
-		dakou->center_y = fx_y;
+		dakou->center_y = move->s3d.obj.trans.y;
 		dakou->wait = 0;
 		dakou->seq++;
 		//break;
 	case 3:
-		D3DOBJ_GetMatrix(&move->obj, &fx_x, &fx_y, &fx_z);
-		if(fx_x < StampFrameOutRect.left || fx_x > StampFrameOutRect.right
-				|| fx_y > StampFrameOutRect.top || fx_y < StampFrameOutRect.bottom){
+		if(move->s3d.obj.trans.x < StampFrameOutRect.left || move->s3d.obj.trans.x > StampFrameOutRect.right
+				|| move->s3d.obj.trans.y > StampFrameOutRect.top || move->s3d.obj.trans.y < StampFrameOutRect.bottom){
 			//OS_TPrintf("蛇行：フレームアウト x=%d, y=%d\n", fx_x, fx_y);
 			return RET_DELETE;
 		}
@@ -1920,11 +2089,12 @@ static STAMP_RET StampMove_Dakou(STAMP_SYSTEM_WORK *ssw, STAMP_MOVE_PTR move)
 			dakou->theta -= 360 << FX32_SHIFT;
 		}
 		offset_y = FX_Mul(GFL_CALC_Sin360FX(dakou->theta), DAKOU_FURIHABA_Y);// - DAKOU_FURIHABA_Y/2;
-		D3DOBJ_SetMatrix(&move->obj, fx_x - DAKOU_ADD_X, dakou->center_y + offset_y, fx_z);
+		move->s3d.obj.trans.x -= DAKOU_ADD_X;
+		move->s3d.obj.trans.y = dakou->center_y + offset_y;
 		break;
 	}
 
-	Stamp_HitRectCreate(&move->obj, &move->param, &dakou->rect, FALSE);
+	Stamp_HitRectCreate(&move->s3d.obj, &move->param, &dakou->rect, FALSE);
 	return RET_CONTINUE;
 }
 
@@ -1966,40 +2136,47 @@ static BOOL StampHitcheck_Dakou(STAMP_SYSTEM_WORK *ssw,STAMP_MOVE_PTR move, STAM
 static STAMP_RET StampMove_Kiseki(STAMP_SYSTEM_WORK *ssw, STAMP_MOVE_PTR move)
 {
 	ERASE_EFF_KISEKI *kiseki = &move->erase_eff.kiseki;
-	fx32 fx_x, fx_y, fx_z;
 	int i;
+	VecFx32 pos;
 	
 	switch(kiseki->seq){
 	case 0:
 		kiseki->polygon_id = Stamp_PolygonIDGet(ssw);
 
-		D3DOBJ_GetMatrix(&move->obj, &fx_x, &fx_y, &fx_z);
 		for(i = 0; i < KISEKI_OBJ_CHILD_NUM; i++){
-			D3DOBJ_Init( &kiseki->child_obj[i], &move->mdl );
-			D3DOBJ_SetMatrix(&kiseki->child_obj[i], fx_x, fx_y, fx_z);
-			D3DOBJ_SetDraw( &kiseki->child_obj[i], FALSE );
+	#if WB_FIX
+			D3DOBJ_Init( &kiseki->child_obj[i], &move->s3d.mdl );
+	#else
+	    _StampChildAdd(&move->s3d, &kiseki->child_obj[i]);
+	#endif
+	    kiseki->child_obj[i].obj.trans = move->s3d.obj.trans;
+			kiseki->child_obj[i].draw_flag = FALSE;
 		}
 		kiseki->seq++;
 		//break;
 	case 1:
-		D3DOBJ_GetMatrix(&move->obj, &fx_x, &fx_y, &fx_z);
-		if(fx_x < StampFrameOutRect.left || fx_x > StampFrameOutRect.right
-				|| fx_y > StampFrameOutRect.top || fx_y < StampFrameOutRect.bottom
+	  pos = move->s3d.obj.trans;
+		if(move->s3d.obj.trans.x < StampFrameOutRect.left 
+		    || move->s3d.obj.trans.x > StampFrameOutRect.right
+				|| move->s3d.obj.trans.y > StampFrameOutRect.top 
+				|| move->s3d.obj.trans.y < StampFrameOutRect.bottom
 				|| kiseki->obj_hit == TRUE){
 			//OS_TPrintf("軌跡：フレームアウト x=%d, y=%d\n", fx_x, fx_y);
 			for(i = 0; i < KISEKI_OBJ_CHILD_NUM; i++){
-				D3DOBJ_SetDraw( &kiseki->child_obj[i], FALSE );
+        kiseki->child_obj[i].draw_flag = FALSE;
 			}
-			D3DOBJ_SetDraw( &move->obj, FALSE );
+			move->s3d.draw_flag = FALSE;
 			kiseki->seq++;
 			break;
 		}
 
-		D3DOBJ_SetMatrix(&move->obj, fx_x, fx_y + KISEKI_ADD_Y, fx_z);
+    move->s3d.obj.trans.y += KISEKI_ADD_Y;
 		
 		if(kiseki->frame % KISEKI_DROP_FRAME == 0){
-			D3DOBJ_SetMatrix(&kiseki->child_obj[kiseki->drop_no], fx_x, fx_y + KISEKI_ADD_Y, fx_z);
-			D3DOBJ_SetDraw( &kiseki->child_obj[kiseki->drop_no], TRUE );
+      kiseki->child_obj[kiseki->drop_no].obj.trans.x = pos.x;
+      kiseki->child_obj[kiseki->drop_no].obj.trans.y = pos.y + KISEKI_ADD_Y;
+      kiseki->child_obj[kiseki->drop_no].obj.trans.z = pos.z;
+			kiseki->child_obj[kiseki->drop_no].draw_flag = TRUE;
 			kiseki->drop_no++;
 			if(kiseki->drop_no >= KISEKI_OBJ_CHILD_NUM){
 				kiseki->drop_no = 0;
@@ -2012,7 +2189,7 @@ static STAMP_RET StampMove_Kiseki(STAMP_SYSTEM_WORK *ssw, STAMP_MOVE_PTR move)
 		return RET_DELETE;
 	}
 
-	Stamp_HitRectCreate(&move->obj, &move->param, &kiseki->rect, FALSE);
+	Stamp_HitRectCreate(&move->s3d.obj, &move->param, &kiseki->rect, FALSE);
 	return RET_CONTINUE;
 }
 
@@ -2034,20 +2211,20 @@ static void StampDraw_Kiseki(STAMP_SYSTEM_WORK *ssw, STAMP_MOVE_PTR move)
 	//子
 	if(kiseki->polygon_id != STAMP_POLYGON_ID_ERROR){
 		NNS_G3dGlbPolygonAttr(0, 0, 0, kiseki->polygon_id, KISEKI_ALPHA, 0);
-		NNS_G3dMdlUseGlbPolygonID(move->mdl.pModel);
-		NNS_G3dMdlUseGlbAlpha(move->mdl.pModel);
+		NNS_G3dMdlUseGlbPolygonID(move->s3d.pModel);
+		NNS_G3dMdlUseGlbAlpha(move->s3d.pModel);
 	}
 	for(i = 0; i < KISEKI_OBJ_CHILD_NUM; i++){
-		D3DOBJ_Draw(&kiseki->child_obj[i]);
+    _StampMoveDrawChild(&kiseki->child_obj[i]);
 	}
 	
 	//親	半透明の濃度を元に戻してから描画
 	if(kiseki->polygon_id != STAMP_POLYGON_ID_ERROR){
 		NNS_G3dGlbPolygonAttr(0, 0, 0, kiseki->polygon_id, 31, 0);
-		NNS_G3dMdlUseGlbPolygonID(move->mdl.pModel);
-		NNS_G3dMdlUseGlbAlpha(move->mdl.pModel);
+		NNS_G3dMdlUseGlbPolygonID(move->s3d.pModel);
+		NNS_G3dMdlUseGlbAlpha(move->s3d.pModel);
 	}
-	D3DOBJ_Draw(&move->obj);
+  _StampMoveDraw(&move->s3d);
 }
 
 //--------------------------------------------------------------
@@ -2077,6 +2254,26 @@ static BOOL StampHitcheck_Kiseki(STAMP_SYSTEM_WORK *ssw,STAMP_MOVE_PTR move, STA
 
 //--------------------------------------------------------------
 /**
+ * @brief   スタンプ削除：タッチした点から、垂直上方向に軌跡を残しながら移動、フレームアウトする
+ * 						移動中、他のオブジェクトと接触するとそこで足跡(+軌跡)は消える
+ *
+ * @param   move		スタンプへのポインタ
+ */
+//--------------------------------------------------------------
+static void StampDel_Kiseki(STAMP_MOVE_PTR move)
+{
+	ERASE_EFF_KISEKI *kiseki = &move->erase_eff.kiseki;
+	int i;
+	
+	for(i = 0; i < KISEKI_OBJ_CHILD_NUM; i++){
+    if(kiseki->child_obj[i].mdl != NULL){
+      _StampChildDel(&move->s3d, &kiseki->child_obj[i]);
+    }
+	}
+}
+
+//--------------------------------------------------------------
+/**
  * @brief   スタンプ動作：タッチした点から垂直下方向に足跡が、
  * 						左右に振れながら移動しフレームアウトする
  *
@@ -2090,19 +2287,16 @@ static STAMP_RET StampMove_Yure(STAMP_SYSTEM_WORK *ssw, STAMP_MOVE_PTR move)
 {
 	ERASE_EFF_YURE *yure = &move->erase_eff.yure;
 	u16 rot;
-	fx32 fx_x, fx_y, fx_z;
 	fx32 offset_x;
 	
 	switch(yure->seq){
 	case 0:
-		D3DOBJ_GetMatrix(&move->obj, &fx_x, &fx_y, &fx_z);
-		yure->center_x = fx_x;
+		yure->center_x = move->s3d.obj.trans.x;
 		yure->seq++;
 		//break;
 	case 1:
-		D3DOBJ_GetMatrix(&move->obj, &fx_x, &fx_y, &fx_z);
-		if(fx_x < StampFrameOutRect.left || fx_x > StampFrameOutRect.right
-				|| fx_y > StampFrameOutRect.top || fx_y < StampFrameOutRect.bottom){
+		if(move->s3d.obj.trans.x < StampFrameOutRect.left || move->s3d.obj.trans.x > StampFrameOutRect.right
+				|| move->s3d.obj.trans.y > StampFrameOutRect.top || move->s3d.obj.trans.y < StampFrameOutRect.bottom){
 			//OS_TPrintf("揺れ：フレームアウト x=%d, y=%d\n", fx_x, fx_y);
 			return RET_DELETE;
 		}
@@ -2112,11 +2306,12 @@ static STAMP_RET StampMove_Yure(STAMP_SYSTEM_WORK *ssw, STAMP_MOVE_PTR move)
 			yure->theta -= 360 << FX32_SHIFT;
 		}
 		offset_x = FX_Mul(GFL_CALC_Sin360FX(yure->theta), YURE_FURIHABA_X);
-		D3DOBJ_SetMatrix(&move->obj, yure->center_x + offset_x, fx_y - YURE_ADD_Y, fx_z);
+		move->s3d.obj.trans.x = yure->center_x + offset_x;
+		move->s3d.obj.trans.y -= YURE_ADD_Y;
 		break;
 	}
 
-	Stamp_HitRectCreate(&move->obj, &move->param, &yure->rect, FALSE);
+	Stamp_HitRectCreate(&move->s3d.obj, &move->param, &yure->rect, FALSE);
 	return RET_CONTINUE;
 }
 
@@ -2169,11 +2364,15 @@ static STAMP_RET StampMove_Kakudai(STAMP_SYSTEM_WORK *ssw, STAMP_MOVE_PTR move)
 			return RET_DELETE;
 		}
 		kakudai->affine_xyz += KAKUDAI_ADD_AFFINE;
-		D3DOBJ_SetScale(&move->obj, kakudai->affine_xyz, kakudai->affine_xyz, FX32_ONE);
+	#if WB_FIX
+		D3DOBJ_SetScale(&move->s3d.obj, kakudai->affine_xyz, kakudai->affine_xyz, FX32_ONE);
+	#else
+    VEC_Set(&move->s3d.obj.scale, kakudai->affine_xyz, kakudai->affine_xyz, FX32_ONE);
+	#endif
 		break;
 	}
 
-	Stamp_HitRectCreate(&move->obj, &move->param, &kakudai->rect, TRUE);
+	Stamp_HitRectCreate(&move->s3d.obj, &move->param, &kakudai->rect, TRUE);
 	return RET_CONTINUE;
 }
 
@@ -2213,7 +2412,6 @@ static BOOL StampHitcheck_Kakudai(STAMP_SYSTEM_WORK *ssw,STAMP_MOVE_PTR move,STA
 static STAMP_RET StampMove_BrarX(STAMP_SYSTEM_WORK *ssw, STAMP_MOVE_PTR move)
 {
 	ERASE_EFF_BRAR_X *brar_x = &move->erase_eff.brar_x;
-	fx32 fx_x, fx_y, fx_z;
 	fx32 offset;
 	int i;
 	
@@ -2221,11 +2419,14 @@ static STAMP_RET StampMove_BrarX(STAMP_SYSTEM_WORK *ssw, STAMP_MOVE_PTR move)
 	case 0:
 		brar_x->polygon_id = Stamp_PolygonIDGet(ssw);
 
-		D3DOBJ_GetMatrix(&move->obj, &fx_x, &fx_y, &fx_z);
 		for(i = 0; i < BRAR_X_OBJ_CHILD_NUM; i++){
-			D3DOBJ_Init( &brar_x->child_obj[i], &move->mdl );
-			D3DOBJ_SetMatrix(&brar_x->child_obj[i], fx_x, fx_y, fx_z);
-			D3DOBJ_SetDraw( &brar_x->child_obj[i], TRUE );
+	#if WB_FIX
+			D3DOBJ_Init( &brar_x->child_obj[i], &move->s3d.mdl );
+	#else
+	    _StampChildAdd(&move->s3d, &brar_x->child_obj[i]);
+	#endif
+	    brar_x->child_obj[i].obj.trans = move->s3d.obj.trans;
+			brar_x->child_obj[i].draw_flag = TRUE;
 		}
 		brar_x->alpha = 31 << 8;
 		brar_x->seq++;
@@ -2234,9 +2435,9 @@ static STAMP_RET StampMove_BrarX(STAMP_SYSTEM_WORK *ssw, STAMP_MOVE_PTR move)
 		//ALPHA
 		if(brar_x->alpha - BRAR_X_ADD_ALPHA < 0x100){
 			for(i = 0; i < BRAR_X_OBJ_CHILD_NUM; i++){
-				D3DOBJ_SetDraw( &brar_x->child_obj[i], FALSE );
+				brar_x->child_obj[i].draw_flag = FALSE;
 			}
-			D3DOBJ_SetDraw( &move->obj, FALSE );
+			move->s3d.draw_flag = FALSE;
 			brar_x->seq++;
 			break;
 		}
@@ -2250,13 +2451,16 @@ static STAMP_RET StampMove_BrarX(STAMP_SYSTEM_WORK *ssw, STAMP_MOVE_PTR move)
 		offset = FX_Mul(GFL_CALC_Sin360FX(brar_x->theta), BRAR_X_FURIHABA);
 
 		//POS SET
-		D3DOBJ_GetMatrix(&move->obj, &fx_x, &fx_y, &fx_z);
 		for(i = 0; i < BRAR_X_OBJ_CHILD_NUM; i++){
 			if(i & 1){
-				D3DOBJ_SetMatrix(&brar_x->child_obj[i], fx_x + offset, fx_y, fx_z);
+				brar_x->child_obj[i].obj.trans.x = move->s3d.obj.trans.x + offset;
+				brar_x->child_obj[i].obj.trans.y = move->s3d.obj.trans.y;
+				brar_x->child_obj[i].obj.trans.z = move->s3d.obj.trans.z;
 			}
 			else{
-				D3DOBJ_SetMatrix(&brar_x->child_obj[i], fx_x - offset, fx_y, fx_z);
+				brar_x->child_obj[i].obj.trans.x = move->s3d.obj.trans.x - offset;
+				brar_x->child_obj[i].obj.trans.y = move->s3d.obj.trans.y;
+				brar_x->child_obj[i].obj.trans.z = move->s3d.obj.trans.z;
 			}
 		}
 		break;
@@ -2265,9 +2469,9 @@ static STAMP_RET StampMove_BrarX(STAMP_SYSTEM_WORK *ssw, STAMP_MOVE_PTR move)
 		return RET_DELETE;
 	}
 
-	Stamp_HitRectCreate(&move->obj, &move->param, &brar_x->rect[0], FALSE);
+	Stamp_HitRectCreate(&move->s3d.obj, &move->param, &brar_x->rect[0], FALSE);
 	for(i = 0; i < BRAR_X_OBJ_CHILD_NUM; i++){
-		Stamp_HitRectCreate(&brar_x->child_obj[i], &move->param, &brar_x->rect[1 + i], FALSE);
+		Stamp_HitRectCreate(&brar_x->child_obj[i].obj, &move->param, &brar_x->rect[1 + i], FALSE);
 	}
 	return RET_CONTINUE;
 }
@@ -2287,14 +2491,14 @@ static void StampDraw_BrarX(STAMP_SYSTEM_WORK *ssw, STAMP_MOVE_PTR move)
 	
 	if(brar_x->polygon_id != STAMP_POLYGON_ID_ERROR){
 		NNS_G3dGlbPolygonAttr(0, 0, 0, brar_x->polygon_id, brar_x->alpha >> 8, 0);
-		NNS_G3dMdlUseGlbPolygonID(move->mdl.pModel);
-		NNS_G3dMdlUseGlbAlpha(move->mdl.pModel);
+		NNS_G3dMdlUseGlbPolygonID(move->s3d.pModel);
+		NNS_G3dMdlUseGlbAlpha(move->s3d.pModel);
 	}
 	
 	for(i = 0; i < BRAR_X_OBJ_CHILD_NUM; i++){
-		D3DOBJ_Draw(&brar_x->child_obj[i]);
+    _StampMoveDrawChild(&brar_x->child_obj[i]);
 	}
-	D3DOBJ_Draw(&move->obj);
+  _StampMoveDraw(&move->s3d);
 }
 
 //--------------------------------------------------------------
@@ -2326,6 +2530,25 @@ static BOOL StampHitcheck_BrarX(STAMP_SYSTEM_WORK *ssw,STAMP_MOVE_PTR move, STAM
 
 //--------------------------------------------------------------
 /**
+ * @brief   スタンプ削除：タッチした点を中心に横軸にブラーしながら徐々に消える。範囲は3倍程度
+ *
+ * @param   move		スタンプへのポインタ
+ */
+//--------------------------------------------------------------
+static void StampDel_BrarX(STAMP_MOVE_PTR move)
+{
+	ERASE_EFF_BRAR_X *brar_x = &move->erase_eff.brar_x;
+	int i;
+	
+	for(i = 0; i < BRAR_X_OBJ_CHILD_NUM; i++){
+    if(brar_x->child_obj[i].mdl != NULL){
+      _StampChildDel(&move->s3d, &brar_x->child_obj[i]);
+    }
+  }
+}
+
+//--------------------------------------------------------------
+/**
  * @brief   スタンプ動作：タッチした点を中心に縦軸にブラーしながら徐々に消える。範囲は3倍程度
  *
  * @param   ssw		スタンプシステムワークへのポインタ
@@ -2337,7 +2560,6 @@ static BOOL StampHitcheck_BrarX(STAMP_SYSTEM_WORK *ssw,STAMP_MOVE_PTR move, STAM
 static STAMP_RET StampMove_BrarY(STAMP_SYSTEM_WORK *ssw, STAMP_MOVE_PTR move)
 {
 	ERASE_EFF_BRAR_Y *brar_y = &move->erase_eff.brar_y;
-	fx32 fx_x, fx_y, fx_z;
 	fx32 offset;
 	int i;
 	
@@ -2345,11 +2567,14 @@ static STAMP_RET StampMove_BrarY(STAMP_SYSTEM_WORK *ssw, STAMP_MOVE_PTR move)
 	case 0:
 		brar_y->polygon_id = Stamp_PolygonIDGet(ssw);
 
-		D3DOBJ_GetMatrix(&move->obj, &fx_x, &fx_y, &fx_z);
 		for(i = 0; i < BRAR_Y_OBJ_CHILD_NUM; i++){
-			D3DOBJ_Init( &brar_y->child_obj[i], &move->mdl );
-			D3DOBJ_SetMatrix(&brar_y->child_obj[i], fx_x, fx_y, fx_z);
-			D3DOBJ_SetDraw( &brar_y->child_obj[i], TRUE );
+		#if WB_FIX
+			D3DOBJ_Init( &brar_y->child_obj[i], &move->s3d.mdl );
+		#else
+	    _StampChildAdd(&move->s3d, &brar_y->child_obj[i]);
+		#endif
+		  brar_y->child_obj[i].obj.trans = move->s3d.obj.trans;
+			brar_y->child_obj[i].draw_flag = TRUE;
 		}
 		brar_y->alpha = 31 << 8;
 		brar_y->seq++;
@@ -2358,9 +2583,9 @@ static STAMP_RET StampMove_BrarY(STAMP_SYSTEM_WORK *ssw, STAMP_MOVE_PTR move)
 		//ALPHA
 		if(brar_y->alpha - BRAR_Y_ADD_ALPHA < 0x100){
 			for(i = 0; i < BRAR_Y_OBJ_CHILD_NUM; i++){
-				D3DOBJ_SetDraw( &brar_y->child_obj[i], FALSE );
+				brar_y->child_obj[i].draw_flag = FALSE;
 			}
-			D3DOBJ_SetDraw( &move->obj, FALSE );
+			move->s3d.draw_flag = FALSE;
 			brar_y->seq++;
 			break;
 		}
@@ -2374,13 +2599,16 @@ static STAMP_RET StampMove_BrarY(STAMP_SYSTEM_WORK *ssw, STAMP_MOVE_PTR move)
 		offset = FX_Mul(GFL_CALC_Sin360FX(brar_y->theta), BRAR_Y_FURIHABA);
 
 		//POS SET
-		D3DOBJ_GetMatrix(&move->obj, &fx_x, &fx_y, &fx_z);
 		for(i = 0; i < BRAR_Y_OBJ_CHILD_NUM; i++){
 			if(i & 1){
-				D3DOBJ_SetMatrix(&brar_y->child_obj[i], fx_x, fx_y + offset, fx_z);
+        brar_y->child_obj[i].obj.trans.x = move->s3d.obj.trans.x;
+        brar_y->child_obj[i].obj.trans.y = move->s3d.obj.trans.y + offset;
+        brar_y->child_obj[i].obj.trans.z = move->s3d.obj.trans.z;
 			}
 			else{
-				D3DOBJ_SetMatrix(&brar_y->child_obj[i], fx_x, fx_y - offset, fx_z);
+        brar_y->child_obj[i].obj.trans.x = move->s3d.obj.trans.x;
+        brar_y->child_obj[i].obj.trans.y = move->s3d.obj.trans.y - offset;
+        brar_y->child_obj[i].obj.trans.z = move->s3d.obj.trans.z;
 			}
 		}
 		break;
@@ -2389,9 +2617,9 @@ static STAMP_RET StampMove_BrarY(STAMP_SYSTEM_WORK *ssw, STAMP_MOVE_PTR move)
 		return RET_DELETE;
 	}
 
-	Stamp_HitRectCreate(&move->obj, &move->param, &brar_y->rect[0], FALSE);
+	Stamp_HitRectCreate(&move->s3d.obj, &move->param, &brar_y->rect[0], FALSE);
 	for(i = 0; i < BRAR_Y_OBJ_CHILD_NUM; i++){
-		Stamp_HitRectCreate(&brar_y->child_obj[i], &move->param, &brar_y->rect[1 + i], FALSE);
+		Stamp_HitRectCreate(&brar_y->child_obj[i].obj, &move->param, &brar_y->rect[1 + i], FALSE);
 	}
 	return RET_CONTINUE;
 }
@@ -2411,14 +2639,14 @@ static void StampDraw_BrarY(STAMP_SYSTEM_WORK *ssw, STAMP_MOVE_PTR move)
 	
 	if(brar_y->polygon_id != STAMP_POLYGON_ID_ERROR){
 		NNS_G3dGlbPolygonAttr(0, 0, 0, brar_y->polygon_id, brar_y->alpha >> 8, 0);
-		NNS_G3dMdlUseGlbPolygonID(move->mdl.pModel);
-		NNS_G3dMdlUseGlbAlpha(move->mdl.pModel);
+		NNS_G3dMdlUseGlbPolygonID(move->s3d.pModel);
+		NNS_G3dMdlUseGlbAlpha(move->s3d.pModel);
 	}
 	
 	for(i = 0; i < BRAR_Y_OBJ_CHILD_NUM; i++){
-		D3DOBJ_Draw(&brar_y->child_obj[i]);
+    _StampMoveDrawChild(&brar_y->child_obj[i]);
 	}
-	D3DOBJ_Draw(&move->obj);
+  _StampMoveDraw(&move->s3d);
 }
 
 //--------------------------------------------------------------
@@ -2450,6 +2678,27 @@ static BOOL StampHitcheck_BrarY(STAMP_SYSTEM_WORK *ssw,STAMP_MOVE_PTR move, STAM
 
 //--------------------------------------------------------------
 /**
+ * @brief   スタンプ削除：タッチした点を中心に縦軸にブラーしながら徐々に消える。範囲は3倍程度
+ *
+ * @param   move		スタンプへのポインタ
+ *
+ * @retval	システムへ返す返事(RET_???)
+ */
+//--------------------------------------------------------------
+static void StampDel_BrarY(STAMP_MOVE_PTR move)
+{
+	ERASE_EFF_BRAR_Y *brar_y = &move->erase_eff.brar_y;
+	int i;
+	
+	for(i = 0; i < BRAR_Y_OBJ_CHILD_NUM; i++){
+    if(brar_y->child_obj[i].mdl != NULL){
+      _StampChildDel(&move->s3d, &brar_y->child_obj[i]);
+    }
+  }
+}
+
+//--------------------------------------------------------------
+/**
  * @brief   スタンプ動作：タッチした点から下方向に64dot程度拡大して消える。
  * 							ペンキがたれるようなイメージ
  *
@@ -2462,7 +2711,6 @@ static BOOL StampHitcheck_BrarY(STAMP_SYSTEM_WORK *ssw,STAMP_MOVE_PTR move, STAM
 static STAMP_RET StampMove_Tare(STAMP_SYSTEM_WORK *ssw, STAMP_MOVE_PTR move)
 {
 	ERASE_EFF_TARE *tare = &move->erase_eff.tare;
-	fx32 fx_x, fx_y, fx_z;
 	fx32 offset;
 	
 	switch(tare->seq){
@@ -2476,16 +2724,19 @@ static STAMP_RET StampMove_Tare(STAMP_SYSTEM_WORK *ssw, STAMP_MOVE_PTR move)
 			return RET_DELETE;
 		}
 		tare->affine_xyz += TARE_ADD_AFFINE;
-		D3DOBJ_SetScale(&move->obj, FX32_ONE, tare->affine_xyz, FX32_ONE);
-		
+	#if WB_FIX
+		D3DOBJ_SetScale(&move->s3d.obj, FX32_ONE, tare->affine_xyz, FX32_ONE);
+	#else
+    VEC_Set(&move->s3d.obj.scale, FX32_ONE, tare->affine_xyz, FX32_ONE);
+	#endif
+	
 	//	offset = 128 - (128 * scale_x / FX32_ONE);
 		offset = -(FX32_ONE*2/2 * (tare->affine_xyz - FX32_ONE) / FX32_ONE);
-		D3DOBJ_GetMatrix(&move->obj, &fx_x, &fx_y, &fx_z);
-		D3DOBJ_SetMatrix(&move->obj, fx_x, fx_y + offset, fx_z);
+		move->s3d.obj.trans.y += offset;
 		break;
 	}
 
-	Stamp_HitRectCreate(&move->obj, &move->param, &tare->rect, TRUE);
+	Stamp_HitRectCreate(&move->s3d.obj, &move->param, &tare->rect, TRUE);
 	return RET_CONTINUE;
 }
 
@@ -2597,12 +2848,16 @@ static BOOL SpecialMove_Nijimi(STAMP_SYSTEM_WORK *ssw, STAMP_SPECIAL_WORK *sp, G
 	
 	switch(sp_nijimi->seq){
 	case 0:
+#if WB_FIX
 		sp_nijimi->default_len = GFC_GetCameraDistance(camera_ptr);
+#else
+    sp_nijimi->default_len = *(ssw->camera_distance);
+#endif
 		sp_nijimi->seq++;
 		PMSND_PlaySE(FOOTPRINT_SE_SP_NIJIMI);
 		//break;
 	case 1:
-		GFC_AddCameraDistance(SP_NIJIMI_FORWARD_ADD_LEN, camera_ptr);
+		_AddCameraDistance(ssw, SP_NIJIMI_FORWARD_ADD_LEN, camera_ptr);
 		sp_nijimi->wait++;
 		if(sp_nijimi->wait >= SP_NIJIMI_FORWARD_SYNC){
 			sp_nijimi->wait = 0;
@@ -2617,11 +2872,12 @@ static BOOL SpecialMove_Nijimi(STAMP_SYSTEM_WORK *ssw, STAMP_SPECIAL_WORK *sp, G
 		}
 		break;
 	case 3:
-		GFC_AddCameraDistance(SP_NIJIMI_BACK_ADD_LEN, camera_ptr);
+		_AddCameraDistance(ssw, SP_NIJIMI_BACK_ADD_LEN, camera_ptr);
 		sp_nijimi->wait++;
 		if(sp_nijimi->wait >= SP_NIJIMI_BACK_SYNC 
-				|| GFC_GetCameraDistance(camera_ptr) >= sp_nijimi->default_len){
-			GFC_SetCameraDistance(sp_nijimi->default_len, camera_ptr);
+				|| (*(ssw->camera_distance)) >= sp_nijimi->default_len){
+			_SetCameraDistance(ssw, sp_nijimi->default_len, camera_ptr);
+			GFL_G3D_CAMERA_Switching(camera_ptr);
 			return TRUE;
 		}
 		break;
@@ -2684,7 +2940,8 @@ static BOOL SpecialMove_Hajike(STAMP_SYSTEM_WORK *ssw, STAMP_SPECIAL_WORK *sp, G
 				sp_hajike->seq++;
 			}
 		}
-		GFC_SetCamUp(&sp_hajike->up_vec, camera_ptr);
+		GFL_G3D_CAMERA_SetCamUp(camera_ptr, &sp_hajike->up_vec);
+  	GFL_G3D_CAMERA_Switching(camera_ptr);
 		break;
 	default:
 		return TRUE;
@@ -2705,11 +2962,11 @@ static BOOL SpecialMove_Hajike(STAMP_SYSTEM_WORK *ssw, STAMP_SPECIAL_WORK *sp, G
 static BOOL SpecialMove_Zigzag(STAMP_SYSTEM_WORK *ssw, STAMP_SPECIAL_WORK *sp, GFL_G3D_CAMERA * camera_ptr)
 {
 	SPECIAL_EFF_ZIGZAG *sp_zigzag = &sp->sp_zigzag;
-	CAMERA_ANGLE angle = {0,0,0,0};
+	FOOT_CAMERA_ANGLE angle = {0,0,0,0};
 	
 	switch(sp_zigzag->seq){
 	case 0:
-		sp_zigzag->default_angle = GFC_GetCameraAngle(camera_ptr);
+		sp_zigzag->default_angle = *(ssw->camera_angle);
 		sp_zigzag->calc_angle_y = sp_zigzag->default_angle.y;
 		sp_zigzag->seq++;
 		PMSND_PlaySE(FOOTPRINT_SE_SP_ZIGZAG);
@@ -2717,7 +2974,7 @@ static BOOL SpecialMove_Zigzag(STAMP_SYSTEM_WORK *ssw, STAMP_SPECIAL_WORK *sp, G
 	case 1:
 		angle.y += SP_ZIGZAG_ADD_ANGLE;
 		sp_zigzag->calc_angle_y += SP_ZIGZAG_ADD_ANGLE;
-		GFC_AddCameraAngleRev(&angle, camera_ptr);
+		_AddCameraAngleRev(ssw, &angle, camera_ptr);
 		
 		if(sp_zigzag->calc_angle_y <= sp_zigzag->default_angle.y - SP_ZIGZAG_ANGLE_MAX){
 			sp_zigzag->seq++;
@@ -2732,10 +2989,10 @@ static BOOL SpecialMove_Zigzag(STAMP_SYSTEM_WORK *ssw, STAMP_SPECIAL_WORK *sp, G
 	case 3:
 		angle.y += SP_ZIGZAG_SUB_ANGLE;
 		sp_zigzag->calc_angle_y += SP_ZIGZAG_SUB_ANGLE;
-		GFC_AddCameraAngleRev(&angle, camera_ptr);
+		_AddCameraAngleRev(ssw, &angle, camera_ptr);
 		
 		if(sp_zigzag->calc_angle_y >= sp_zigzag->default_angle.y){
-			GFC_SetCameraAngleRev(&sp_zigzag->default_angle, camera_ptr);
+			_SetCameraAngleRev(ssw, &sp_zigzag->default_angle, camera_ptr);
 			return TRUE;
 		}
 		break;
@@ -2756,11 +3013,11 @@ static BOOL SpecialMove_Zigzag(STAMP_SYSTEM_WORK *ssw, STAMP_SPECIAL_WORK *sp, G
 static BOOL SpecialMove_Dakou(STAMP_SYSTEM_WORK *ssw, STAMP_SPECIAL_WORK *sp, GFL_G3D_CAMERA * camera_ptr)
 {
 	SPECIAL_EFF_DAKOU *sp_dakou = &sp->sp_dakou;
-	CAMERA_ANGLE angle = {0,0,0,0};
+	FOOT_CAMERA_ANGLE angle = {0,0,0,0};
 	
 	switch(sp_dakou->seq){
 	case 0:
-		sp_dakou->default_angle = GFC_GetCameraAngle(camera_ptr);
+		sp_dakou->default_angle = *(ssw->camera_angle);
 		sp_dakou->calc_angle_y = sp_dakou->default_angle.y;
 		sp_dakou->seq++;
 		PMSND_PlaySE(FOOTPRINT_SE_SP_DAKOU);
@@ -2768,7 +3025,7 @@ static BOOL SpecialMove_Dakou(STAMP_SYSTEM_WORK *ssw, STAMP_SPECIAL_WORK *sp, GF
 	case 1:
 		angle.y += SP_DAKOU_ADD_ANGLE;
 		sp_dakou->calc_angle_y += SP_DAKOU_ADD_ANGLE;
-		GFC_AddCameraAngleRev(&angle, camera_ptr);
+		_AddCameraAngleRev(ssw, &angle, camera_ptr);
 		
 		if(sp_dakou->calc_angle_y >= sp_dakou->default_angle.y + SP_DAKOU_ANGLE_MAX){
 			sp_dakou->seq++;
@@ -2783,10 +3040,10 @@ static BOOL SpecialMove_Dakou(STAMP_SYSTEM_WORK *ssw, STAMP_SPECIAL_WORK *sp, GF
 	case 3:
 		angle.y += SP_DAKOU_SUB_ANGLE;
 		sp_dakou->calc_angle_y += SP_DAKOU_SUB_ANGLE;
-		GFC_AddCameraAngleRev(&angle, camera_ptr);
+		_AddCameraAngleRev(ssw, &angle, camera_ptr);
 		
 		if(sp_dakou->calc_angle_y <= sp_dakou->default_angle.y){
-			GFC_SetCameraAngleRev(&sp_dakou->default_angle, camera_ptr);
+			_SetCameraAngleRev(ssw, &sp_dakou->default_angle, camera_ptr);
 			return TRUE;
 		}
 		break;
@@ -2807,11 +3064,11 @@ static BOOL SpecialMove_Dakou(STAMP_SYSTEM_WORK *ssw, STAMP_SPECIAL_WORK *sp, GF
 static BOOL SpecialMove_Kiseki(STAMP_SYSTEM_WORK *ssw, STAMP_SPECIAL_WORK *sp, GFL_G3D_CAMERA * camera_ptr)
 {
 	SPECIAL_EFF_KISEKI *sp_kiseki = &sp->sp_kiseki;
-	CAMERA_ANGLE angle = {0,0,0,0};
+	FOOT_CAMERA_ANGLE angle = {0,0,0,0};
 	
 	switch(sp_kiseki->seq){
 	case 0:
-		sp_kiseki->default_angle = GFC_GetCameraAngle(camera_ptr);
+		sp_kiseki->default_angle = *(ssw->camera_angle);
 		sp_kiseki->calc_angle_x = sp_kiseki->default_angle.x;
 		PMSND_PlaySE(FOOTPRINT_SE_SP_KISEKI);
 		sp_kiseki->seq++;
@@ -2819,7 +3076,7 @@ static BOOL SpecialMove_Kiseki(STAMP_SYSTEM_WORK *ssw, STAMP_SPECIAL_WORK *sp, G
 	case 1:
 		angle.x += SP_KISEKI_ADD_ANGLE;
 		sp_kiseki->calc_angle_x += SP_KISEKI_ADD_ANGLE;
-		GFC_AddCameraAngleRev(&angle, camera_ptr);
+		_AddCameraAngleRev(ssw, &angle, camera_ptr);
 		
 		if(sp_kiseki->calc_angle_x >= sp_kiseki->default_angle.x + SP_KISEKI_ANGLE_MAX){
 			sp_kiseki->seq++;
@@ -2834,10 +3091,10 @@ static BOOL SpecialMove_Kiseki(STAMP_SYSTEM_WORK *ssw, STAMP_SPECIAL_WORK *sp, G
 	case 3:
 		angle.x += SP_KISEKI_SUB_ANGLE;
 		sp_kiseki->calc_angle_x += SP_KISEKI_SUB_ANGLE;
-		GFC_AddCameraAngleRev(&angle, camera_ptr);
+		_AddCameraAngleRev(ssw, &angle, camera_ptr);
 		
 		if(sp_kiseki->calc_angle_x <= sp_kiseki->default_angle.x){
-			GFC_SetCameraAngleRev(&sp_kiseki->default_angle, camera_ptr);
+			_SetCameraAngleRev(ssw, &sp_kiseki->default_angle, camera_ptr);
 			return TRUE;
 		}
 		break;
@@ -2859,11 +3116,11 @@ static BOOL SpecialMove_Yure(STAMP_SYSTEM_WORK *ssw, STAMP_SPECIAL_WORK *sp, GFL
 {
 	SPECIAL_EFF_YURE *sp_yure = &sp->sp_yure;
 	fx32 offset;
-	CAMERA_ANGLE angle = {0,0,0,0};
+	FOOT_CAMERA_ANGLE angle = {0,0,0,0};
 	
 	switch(sp_yure->seq){
 	case 0:
-		sp_yure->default_angle = GFC_GetCameraAngle(camera_ptr);
+		sp_yure->default_angle = *(ssw->camera_angle);
 		sp_yure->seq++;
 		PMSND_PlaySE(FOOTPRINT_SE_SP_YURE);
 		//break;
@@ -2881,7 +3138,7 @@ static BOOL SpecialMove_Yure(STAMP_SYSTEM_WORK *ssw, STAMP_SPECIAL_WORK *sp, GFL
 
 		angle = sp_yure->default_angle;
 		angle.y = offset;
-		GFC_SetCameraAngleRot(&angle, camera_ptr);
+		_SetCameraAngleRot(ssw, &angle, camera_ptr);
 		break;
 	default:
 		return TRUE;
@@ -2905,12 +3162,12 @@ static BOOL SpecialMove_Kakudai(STAMP_SYSTEM_WORK *ssw, STAMP_SPECIAL_WORK *sp, 
 	
 	switch(sp_kakudai->seq){
 	case 0:
-		sp_kakudai->default_len = GFC_GetCameraDistance(camera_ptr);
+		sp_kakudai->default_len = *(ssw->camera_distance);
 		sp_kakudai->seq++;
 		PMSND_PlaySE(FOOTPRINT_SE_SP_KAKUDAI);
 		//break;
 	case 1:
-		GFC_AddCameraDistance(SP_KAKUDAI_FORWARD_ADD_LEN, camera_ptr);
+		_AddCameraDistance(ssw, SP_KAKUDAI_FORWARD_ADD_LEN, camera_ptr);
 		sp_kakudai->wait++;
 		if(sp_kakudai->wait >= SP_KAKUDAI_FORWARD_SYNC){
 			sp_kakudai->wait = 0;
@@ -2925,11 +3182,12 @@ static BOOL SpecialMove_Kakudai(STAMP_SYSTEM_WORK *ssw, STAMP_SPECIAL_WORK *sp, 
 		}
 		break;
 	case 3:
-		GFC_AddCameraDistance(SP_KAKUDAI_BACK_ADD_LEN, camera_ptr);
+		_AddCameraDistance(ssw, SP_KAKUDAI_BACK_ADD_LEN, camera_ptr);
 		sp_kakudai->wait++;
 		if(sp_kakudai->wait >= SP_KAKUDAI_BACK_SYNC 
-				|| GFC_GetCameraDistance(camera_ptr) <= sp_kakudai->default_len){
-			GFC_SetCameraDistance(sp_kakudai->default_len, camera_ptr);
+				|| (*(ssw->camera_distance)) <= sp_kakudai->default_len){
+			_SetCameraDistance(ssw, sp_kakudai->default_len, camera_ptr);
+			GFL_G3D_CAMERA_Switching(camera_ptr);
 			return TRUE;
 		}
 		break;
@@ -2955,8 +3213,13 @@ static BOOL SpecialMove_BrarX(STAMP_SYSTEM_WORK *ssw, STAMP_SPECIAL_WORK *sp, GF
 	
 	switch(sp_brar_x->seq){
 	case 0:
+	#if WB_FIX
 		sp_brar_x->default_pos = GFC_GetCameraPos(camera_ptr);
 		sp_brar_x->default_target = GFC_GetLookTarget(camera_ptr);
+	#else
+	  GFL_G3D_CAMERA_GetPos(camera_ptr, &sp_brar_x->default_pos);
+	  GFL_G3D_CAMERA_GetTarget(camera_ptr, &sp_brar_x->default_target);
+	#endif
 		sp_brar_x->seq++;
 		PMSND_PlaySE(FOOTPRINT_SE_SP_BRAR_X);
 		//break;
@@ -2973,9 +3236,21 @@ static BOOL SpecialMove_BrarX(STAMP_SYSTEM_WORK *ssw, STAMP_SPECIAL_WORK *sp, GF
 		offset_x = FX_Mul(GFL_CALC_Sin360FX(sp_brar_x->theta), SP_BRAR_X_FURIHABA_X);
 
 		move.x = offset_x;
+#if WB_FIX
 		GFC_SetLookTarget(&sp_brar_x->default_target, camera_ptr);
 		GFC_SetCameraPos(&sp_brar_x->default_pos, camera_ptr);
 		GFC_ShiftCamera(&move, camera_ptr);
+#else
+    {
+      VecFx32 pos, target;
+      
+      VEC_Add(&sp_brar_x->default_pos, &move, &pos);
+      VEC_Add(&sp_brar_x->default_target, &move, &target);
+      GFL_G3D_CAMERA_SetTarget(camera_ptr, &target);
+      GFL_G3D_CAMERA_SetPos(camera_ptr, &pos);
+    	GFL_G3D_CAMERA_Switching(camera_ptr);
+    }
+#endif
 		break;
 	default:
 		return TRUE;
@@ -3001,8 +3276,13 @@ static BOOL SpecialMove_BrarY(STAMP_SYSTEM_WORK *ssw, STAMP_SPECIAL_WORK *sp, GF
 	
 	switch(sp_brar_y->seq){
 	case 0:
+#if WB_FIX
 		sp_brar_y->default_pos = GFC_GetCameraPos(camera_ptr);
 		sp_brar_y->default_target = GFC_GetLookTarget(camera_ptr);
+#else
+	  GFL_G3D_CAMERA_GetPos(camera_ptr, &sp_brar_y->default_pos);
+	  GFL_G3D_CAMERA_GetTarget(camera_ptr, &sp_brar_y->default_target);
+#endif
 		sp_brar_y->seq++;
 		PMSND_PlaySE(FOOTPRINT_SE_SP_BRAR_Y);
 		//break;
@@ -3019,9 +3299,21 @@ static BOOL SpecialMove_BrarY(STAMP_SYSTEM_WORK *ssw, STAMP_SPECIAL_WORK *sp, GF
 		offset_y = FX_Mul(GFL_CALC_Sin360FX(sp_brar_y->theta), SP_BRAR_Y_FURIHABA_Y);
 
 		move.y = offset_y;
+#if WB_FIX
 		GFC_SetLookTarget(&sp_brar_y->default_target, camera_ptr);
 		GFC_SetCameraPos(&sp_brar_y->default_pos, camera_ptr);
 		GFC_ShiftCamera(&move, camera_ptr);
+#else
+    {
+      VecFx32 pos, target;
+      
+      VEC_Add(&sp_brar_y->default_pos, &move, &pos);
+      VEC_Add(&sp_brar_y->default_target, &move, &target);
+      GFL_G3D_CAMERA_SetTarget(camera_ptr, &target);
+      GFL_G3D_CAMERA_SetPos(camera_ptr, &pos);
+      GFL_G3D_CAMERA_Switching(camera_ptr);
+    }
+#endif
 		break;
 	default:
 		return TRUE;
@@ -3042,11 +3334,11 @@ static BOOL SpecialMove_BrarY(STAMP_SYSTEM_WORK *ssw, STAMP_SPECIAL_WORK *sp, GF
 static BOOL SpecialMove_Tare(STAMP_SYSTEM_WORK *ssw, STAMP_SPECIAL_WORK *sp, GFL_G3D_CAMERA * camera_ptr)
 {
 	SPECIAL_EFF_TARE *sp_tare = &sp->sp_tare;
-	CAMERA_ANGLE angle = {0,0,0,0};
+	FOOT_CAMERA_ANGLE angle = {0,0,0,0};
 	
 	switch(sp_tare->seq){
 	case 0:
-		sp_tare->default_angle = GFC_GetCameraAngle(camera_ptr);
+		sp_tare->default_angle = *(ssw->camera_angle);
 		sp_tare->calc_angle_x = sp_tare->default_angle.x;
 		sp_tare->seq++;
 		PMSND_PlaySE(FOOTPRINT_SE_SP_TARE);
@@ -3054,7 +3346,7 @@ static BOOL SpecialMove_Tare(STAMP_SYSTEM_WORK *ssw, STAMP_SPECIAL_WORK *sp, GFL
 	case 1:
 		angle.x += SP_TARE_ADD_ANGLE;
 		sp_tare->calc_angle_x += SP_TARE_ADD_ANGLE;
-		GFC_AddCameraAngleRev(&angle, camera_ptr);
+		_AddCameraAngleRev(ssw, &angle, camera_ptr);
 		
 		if(sp_tare->calc_angle_x <= sp_tare->default_angle.x - SP_TARE_ANGLE_MAX){
 			sp_tare->seq++;
@@ -3069,10 +3361,10 @@ static BOOL SpecialMove_Tare(STAMP_SYSTEM_WORK *ssw, STAMP_SPECIAL_WORK *sp, GFL
 	case 3:
 		angle.x += SP_TARE_SUB_ANGLE;
 		sp_tare->calc_angle_x += SP_TARE_SUB_ANGLE;
-		GFC_AddCameraAngleRev(&angle, camera_ptr);
+		_AddCameraAngleRev(ssw, &angle, camera_ptr);
 		
 		if(sp_tare->calc_angle_x >= sp_tare->default_angle.x){
-			GFC_SetCameraAngleRev(&sp_tare->default_angle, camera_ptr);
+			_SetCameraAngleRev(ssw, &sp_tare->default_angle, camera_ptr);
 			return TRUE;
 		}
 		break;
@@ -3080,3 +3372,177 @@ static BOOL SpecialMove_Tare(STAMP_SYSTEM_WORK *ssw, STAMP_SPECIAL_WORK *sp, GFL
 	return FALSE;
 }
 
+//--------------------------------------------------------------
+/**
+ * @brief   回転行列の計算
+ *
+ * @param   status		
+ * @param   rotate		
+ */
+//--------------------------------------------------------------
+static void Foot_RotateMtx(VecFx32 *rotate, MtxFx33 *dst_mtx)
+{
+	MtxFx33 mtx, calc_mtx;
+	
+	MTX_Identity33( &mtx );
+	MTX_RotX33( &calc_mtx, FX_SinIdx( rotate->x ), FX_CosIdx( rotate->x ) );
+	MTX_Concat33( &calc_mtx, &mtx, &mtx );
+	MTX_RotZ33( &calc_mtx, FX_SinIdx( rotate->z ), FX_CosIdx( rotate->z ) );
+	MTX_Concat33( &calc_mtx, &mtx, &mtx );
+	MTX_RotY33( &calc_mtx, FX_SinIdx( rotate->y ), FX_CosIdx( rotate->y ) );
+	MTX_Concat33( &calc_mtx, &mtx, &mtx );
+	
+	*dst_mtx = mtx;
+}
+
+//---------------------------------------------------------------------------
+/**
+ * @brief	カメラ位置を注視点、距離、アングルから算出する
+ * 
+ * プラチナのcamera.cから移植
+ */
+//---------------------------------------------------------------------------
+void Foot_SetCamPosByTarget_Dist_Ang(VecFx32 *pos, FOOT_CAMERA_ANGLE *angle, fx32 distance, VecFx32 *target)
+{
+	u16 f_angle_x;
+	
+	//仰角⇒地面からの傾きに変換
+	f_angle_x = -angle->x;
+	/*== カメラ座標を求める ==*/
+	pos->x = FX_Mul( FX_Mul( FX_SinIdx(angle->y), distance ), FX_CosIdx( angle->x ) );
+	
+	pos->z = FX_Mul(FX_Mul(FX_CosIdx(angle->y), distance), FX_CosIdx(angle->x));
+	
+	pos->y = FX_Mul( FX_SinIdx( f_angle_x ), distance );
+
+	/*== 視点からの距離にする ==*/
+	VEC_Add(pos, target, pos);
+}
+
+//---------------------------------------------------------------------------
+/**
+ * @brief	注視点をカメラ位置、距離、アングルから算出する
+ * 
+ * @param	camera_ptr	カメラポインタ
+ * 
+ * @return	none
+ */
+//---------------------------------------------------------------------------
+static void Foot_SetTargetByCamPos_Dist_Ang(VecFx32 *target, FOOT_CAMERA_ANGLE *angle, fx32 distance, VecFx32 *camPos, GFL_G3D_CAMERA* camera_ptr)
+{
+	u16 angle_x;
+	//仰角⇒地面からの傾きに変換
+	angle_x = -angle->x;
+	target->x = -FX_Mul( FX_Mul( FX_SinIdx( angle->y ), distance ), FX_CosIdx( angle->x ) );
+	target->z = -FX_Mul( FX_Mul( FX_CosIdx( angle->y ), distance ), FX_CosIdx( angle->x ) );
+	target->y = -FX_Mul( FX_SinIdx( angle_x ), distance );
+	VEC_Add(target, camPos, target);
+}
+
+//---------------------------------------------------------------------------
+/**
+ * @brief	カメラ位置を注視点、距離、アングルから算出する
+ * 
+ * @param	camera_ptr	カメラポインタ
+ * 
+ * @return	none
+ */
+//---------------------------------------------------------------------------
+static void _SetCameraDistance(STAMP_SYSTEM_WORK *ssw, fx32 distance, GFL_G3D_CAMERA *camera)
+{
+  VecFx32 pos;
+  
+  *(ssw->camera_distance) = distance;
+ 	Foot_SetCamPosByTarget_Dist_Ang(&pos, ssw->camera_angle, *(ssw->camera_distance), ssw->camera_target);
+
+	GFL_G3D_CAMERA_SetPos( camera, &pos );
+	GFL_G3D_CAMERA_Switching(camera);
+}
+
+//--------------------------------------------------------------
+/**
+ * カメラ距離加算
+ *
+ * @param   ssw		
+ * @param   inDist		
+ * @param   camera_ptr		
+ */
+//--------------------------------------------------------------
+static void _AddCameraDistance(STAMP_SYSTEM_WORK *ssw, const fx32 inDist,GFL_G3D_CAMERA* camera_ptr)
+{
+  VecFx32 pos;
+  
+  *(ssw->camera_distance) += inDist;
+	Foot_SetCamPosByTarget_Dist_Ang(&pos, ssw->camera_angle, *(ssw->camera_distance), ssw->camera_target);
+
+	GFL_G3D_CAMERA_SetPos( camera_ptr, &pos );
+	GFL_G3D_CAMERA_Switching(camera_ptr);
+}
+
+//---------------------------------------------------------------------------
+/**
+ * @brief	カメラアングル加算	公転
+ * 
+ * @param	inAngle			加算アングル
+ * @param	camera_ptr		カメラポインタ
+ * 
+ * @return	none
+ */
+//---------------------------------------------------------------------------
+static void _AddCameraAngleRev(STAMP_SYSTEM_WORK *ssw, const FOOT_CAMERA_ANGLE *inAngle,GFL_G3D_CAMERA *camera_ptr)
+{
+  VecFx32 pos;
+
+	ssw->camera_angle->x += inAngle->x;
+	ssw->camera_angle->y += inAngle->y;
+	ssw->camera_angle->z += inAngle->z;
+	Foot_SetCamPosByTarget_Dist_Ang(&pos, ssw->camera_angle, *(ssw->camera_distance), ssw->camera_target);
+
+	GFL_G3D_CAMERA_SetPos( camera_ptr, &pos );
+	GFL_G3D_CAMERA_Switching(camera_ptr);
+}
+
+//---------------------------------------------------------------------------
+/**
+ * @brief	カメラアングルセット	公転
+ * 
+ * @param	inAngle			アングル
+ * @param	camera_ptr		カメラポインタ
+ * 
+ * @return	none
+ */
+//---------------------------------------------------------------------------
+static void _SetCameraAngleRev(STAMP_SYSTEM_WORK *ssw, const FOOT_CAMERA_ANGLE *inAngle,GFL_G3D_CAMERA *camera_ptr)
+{
+  VecFx32 pos;
+
+	*(ssw->camera_angle) = *inAngle;
+	Foot_SetCamPosByTarget_Dist_Ang(&pos, ssw->camera_angle, *(ssw->camera_distance), ssw->camera_target);
+
+	GFL_G3D_CAMERA_SetPos( camera_ptr, &pos );
+	GFL_G3D_CAMERA_Switching(camera_ptr);
+}
+
+//---------------------------------------------------------------------------
+/**
+ * @brief	カメラアングルセット	自転
+ * 
+ * @param	inAngle			アングル
+ * @param	camera_ptr		カメラポインタ
+ * 
+ * @return	none
+ */
+//---------------------------------------------------------------------------
+static void _SetCameraAngleRot(STAMP_SYSTEM_WORK *ssw, const FOOT_CAMERA_ANGLE *inAngle,GFL_G3D_CAMERA *camera_ptr)
+{
+  VecFx32 target, pos;
+  
+	GFL_G3D_CAMERA_GetPos(camera_ptr, &pos);
+
+	*(ssw->camera_angle) = *inAngle;
+  Foot_SetTargetByCamPos_Dist_Ang(
+    &target, ssw->camera_angle, *(ssw->camera_distance), &pos, camera_ptr);
+
+	GFL_G3D_CAMERA_SetTarget(camera_ptr, &target);
+	GFL_G3D_CAMERA_Switching(camera_ptr);
+}

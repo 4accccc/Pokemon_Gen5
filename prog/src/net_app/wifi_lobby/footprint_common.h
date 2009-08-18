@@ -9,6 +9,8 @@
 #ifndef __FOOTPRINT_COMMON_H__
 #define __FOOTPRINT_COMMON_H__
 
+#include "net_app/net_bugfix.h"
+
 
 //==============================================================================
 //	定数定義
@@ -153,6 +155,14 @@ typedef struct _STAMP_MOVE_WORK * STAMP_MOVE_PTR;
 //==============================================================================
 //	構造体定義
 //==============================================================================
+///カメラアングル
+typedef struct{
+	u16 x;
+	u16 y;
+	u16 z;
+	u16 padding;
+}FOOT_CAMERA_ANGLE;
+
 //--------------------------------------------------------------
 //	マイデータ
 //--------------------------------------------------------------
@@ -212,7 +222,7 @@ typedef struct{
 
 ///スペシャルエフェクト：ジグザグ
 typedef struct{
-	CAMERA_ANGLE default_angle;
+	FOOT_CAMERA_ANGLE default_angle;
 	s32 calc_angle_y;	///<現在地の計算に便利なようにマイナスも扱えるアングルを用意しておく
 	s16 wait;
 	u8 seq;
@@ -222,7 +232,7 @@ typedef struct{
 
 ///スペシャルエフェクト：蛇行
 typedef struct{
-	CAMERA_ANGLE default_angle;
+	FOOT_CAMERA_ANGLE default_angle;
 	s32 calc_angle_y;	///<現在地の計算に便利なようにマイナスも扱えるアングルを用意しておく
 	s16 wait;
 	u8 seq;
@@ -232,7 +242,7 @@ typedef struct{
 
 ///スペシャルエフェクト：軌跡
 typedef struct{
-	CAMERA_ANGLE default_angle;
+	FOOT_CAMERA_ANGLE default_angle;
 	s32 calc_angle_x;	///<現在地の計算に便利なようにマイナスも扱えるアングルを用意しておく
 	s16 wait;
 	u8 seq;
@@ -242,7 +252,7 @@ typedef struct{
 
 ///スペシャルエフェクト：揺れ
 typedef struct{
-	CAMERA_ANGLE default_angle;
+	FOOT_CAMERA_ANGLE default_angle;
 	fx32 theta;
 	u8 loop;
 	u8 seq;
@@ -283,7 +293,7 @@ typedef struct{
 
 ///スペシャルエフェクト：たれ
 typedef struct{
-	CAMERA_ANGLE default_angle;
+	FOOT_CAMERA_ANGLE default_angle;
 	s32 calc_angle_x;	///<現在地の計算に便利なようにマイナスも扱えるアングルを用意しておく
 	s16 wait;
 	u8 seq;
@@ -322,7 +332,7 @@ typedef struct{
 	SPECIAL_FLASH_WORK flash_work;				///<スペシャル発動前のフラッシュ動作ワーク
 	STAMP_MOVE_PTR move[STAMP_MAX];
 	STAMP_MOVE_PTR hitcheck_move[STAMP_MAX];	///ヒットチェック対象のスタンプへのポインタ
-	NNSG3dResTex *load_tex[LOAD_TEX_BUFFER_MAX];	///<テクスチャVwait転送バッファ
+	GFL_G3D_RES *load_tex[LOAD_TEX_BUFFER_MAX];	///<テクスチャVwait転送バッファ
 	u32 polygon_id_manage[2];		///<ポリゴンID管理ビット
 	STAMP_CHAIN_WORK chain_work[STAMP_MAX];		///<スタンプの連鎖管理ワーク
 	u8 special_effect_type;				///<発動中のスペシャルエフェクトタイプ
@@ -331,6 +341,10 @@ typedef struct{
 	u8 player_max;								///<現在の参加人数
 	u8 v_wipe_req;								///<VブランクでのWIPE転送リクエスト
 	s16 v_wipe_no;								///<VブランクでのWIPE転送時の値
+	fx32 *camera_distance;         ///<カメラ距離
+	FOOT_CAMERA_ANGLE *camera_angle; ///<カメラ角度
+	VecFx32 *camera_target;
+	VecFx32 *camera_up;
 }STAMP_SYSTEM_WORK;
 
 ///コンバータから出力されるデータ型
