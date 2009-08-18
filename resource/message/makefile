@@ -87,7 +87,7 @@ $(ARCHIVE_DATA_PATH) : $(wildcard $(DST_ROOT_DIR)/*.dat)
 	cp -u $(ARCHIVE_DATA_NAME) $(ARCHIVE_DATA_PATH)
 	perl naixcopy.pl $(ARCHIVE_HEADER_NAME) $(ARCHIVE_HEADER_PATH)
 
-$(SCRIPT_ARCHIVE_DATA_PATH) : $(wildcard $(DST_ROOT_DIR)/script/*.dat)
+$(SCRIPT_ARCHIVE_DATA_PATH) : $(wildcard $(DST_ROOT_DIR)/script_message/*.dat)
 	nnsarc -c -l -n -i $(SCRIPT_ARCHIVE_DATA_NAME) $(DST_SCRIPT_DIR)/*.dat
 	cp -u $(SCRIPT_ARCHIVE_DATA_NAME) $(SCRIPT_ARCHIVE_DATA_PATH)
 	perl naixcopy.pl $(SCRIPT_ARCHIVE_HEADER_NAME) $(SCRIPT_ARCHIVE_HEADER_PATH)
