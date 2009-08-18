@@ -117,7 +117,6 @@ static GMEVENT_RESULT ExitEvent_DoorOut(GMEVENT * event, int *seq, void * work)
     break;
 
   case SEQ_DOOROUT_OPENANIME_WAIT:
-    EVENT_CAMERA_ACT_ResetCameraParameter( fieldmap );  // カメラの設定をデフォルトに戻す
     {
       void * objHdl = FIELD_BMODEL_GetObjHandle( fdaw->entry );
       if ( FIELD_BMODEL_GetAnimeStatus( fdaw->entry, ANM_INDEX_DOOR_OPEN) == TRUE)
@@ -129,6 +128,7 @@ static GMEVENT_RESULT ExitEvent_DoorOut(GMEVENT * event, int *seq, void * work)
     }
     break;
   case SEQ_DOOROUT_PLAYER_STEP:
+    EVENT_CAMERA_ACT_ResetCameraParameter( fieldmap );  // カメラの設定をデフォルトに戻す
     //自機出現、一歩移動アニメ
     MAPCHANGE_setPlayerVanish( fieldmap, FALSE );
     GMEVENT_CallEvent( event, EVENT_PlayerOneStepAnime(gsys, fieldmap) );
