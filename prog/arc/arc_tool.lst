@@ -75,7 +75,7 @@
 	ARCID_ITEMICON		"item_icon.narc"		# アイテムアイコン
 	$VERSION_BLACK	ARCID_TITLE	"title.narc"	#ブラック版タイトル
 	$VERSION_WHITE	ARCID_TITLE	"title.narc"	#ホワイト版タイトル
-	ARCID_CONFIG_GRA	"test_graphic/config_gra.narc"		#設定画面用データ
+	ARCID_CONFIG_GRA	"config_gra.narc"		#設定画面用データ
 	ARCID_IRCBATTLE		"ircbattle.narc"           #赤外線マッチングバトル
 	ARCID_C_GEAR		"c_gear.narc"           #コミュニケーションギア
 	ARCID_WIFI2DCHAR		"wifi2dchar.narc"
