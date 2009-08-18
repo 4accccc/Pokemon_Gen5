@@ -426,23 +426,25 @@ static GMEVENT* EVENT_CameraRotateRightDoorOut( GAMESYS_WORK* p_gsys, FIELDMAP_W
 static void SetFarNear( FIELDMAP_WORK* p_fieldmap )
 {
   FIELD_CAMERA* p_camera = FIELDMAP_GetFieldCamera( p_fieldmap );
+  fx32          far      = FIELD_CAMERA_GetFar( p_camera ); 
+  fx32          near     = FIELD_CAMERA_GetNear( p_camera ); 
+
+  // DEBUG:
+  OBATA_Printf( "Set FarPlane and NearPlane\n" );
+  OBATA_Printf( "before far  = %x(%d)\n", far, far>>FX32_SHIFT );
+  OBATA_Printf( "before near = %x(%d)\n", near, near>>FX32_SHIFT );
 
   // Farプレーンを半分にする
-  {
-    fx32 far = FIELD_CAMERA_GetFar( p_camera );
-    OBATA_Printf( "far before = %x(%d)\n", far, far>>FX32_SHIFT );
-    far /= 2;
-    FIELD_CAMERA_SetFar( p_camera, far );
-    OBATA_Printf( "far after = %x(%d)\n", far, far>>FX32_SHIFT );
-  } 
+  far /= 2;
+  FIELD_CAMERA_SetFar( p_camera, far );
+
   // Nearプレーンを設定する
-  {
-    fx32 near = FIELD_CAMERA_GetNear( p_camera ); 
-    OBATA_Printf( "near before = %x(%d)\n", near, near>>FX32_SHIFT );
-    near = 50 << FX32_SHIFT;
-    FIELD_CAMERA_SetNear( p_camera, near );
-    OBATA_Printf( "near after = %x(%d)\n", near, near>>FX32_SHIFT );
-  }
+  near = 50 << FX32_SHIFT;
+  FIELD_CAMERA_SetNear( p_camera, near );
+
+  // DEBUG:
+  OBATA_Printf( "after far  = %x(%d)\n", far, far>>FX32_SHIFT );
+  OBATA_Printf( "after near = %x(%d)\n", near, near>>FX32_SHIFT );
 }
 
 //-----------------------------------------------------------------------------------------------
@@ -463,6 +465,10 @@ static void ResetFarNear( FIELDMAP_WORK* p_fieldmap )
   // デフォルト値に戻す
   FIELD_CAMERA_SetFar( p_camera, def_param.Far );
   FIELD_CAMERA_SetNear( p_camera, def_param.Near );
+
+  // DEBUG:
+  OBATA_Printf( "reset far  = %d\n", def_param.Far >> FX32_SHIFT );
+  OBATA_Printf( "reset near = %d\n", def_param.Near >> FX32_SHIFT );
 }
 
 //-----------------------------------------------------------------------------------------------
