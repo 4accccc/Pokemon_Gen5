@@ -86,7 +86,7 @@ static GMEVENT_RESULT RotateCameraInOneFrame( GMEVENT* p_event, int* p_seq, void
 
 //-----------------------------------------------------------------------------------------------
 /**
- * @brief カメラ回転イベントを呼び出す( 入った時 )
+ * @brief カメラ動作イベントを呼び出す( 入った時 )
  *
  * @param p_parent   親イベント
  * @param p_gsys     ゲームシステム
@@ -95,7 +95,7 @@ static GMEVENT_RESULT RotateCameraInOneFrame( GMEVENT* p_event, int* p_seq, void
  * @return 作成したイベント
  */
 //-----------------------------------------------------------------------------------------------
-void EVENT_CAMERA_ROTATE_CallDoorInEvent( GMEVENT* p_parent, GAMESYS_WORK* p_gsys, FIELDMAP_WORK* p_fieldmap )
+void EVENT_CAMERA_ACT_CallDoorInEvent( GMEVENT* p_parent, GAMESYS_WORK* p_gsys, FIELDMAP_WORK* p_fieldmap )
 {
   FIELD_PLAYER * player = FIELDMAP_GetFieldPlayer( p_fieldmap );
   MMDL *         fmmdl  = FIELD_PLAYER_GetMMdl( player );
@@ -125,7 +125,7 @@ void EVENT_CAMERA_ROTATE_CallDoorInEvent( GMEVENT* p_parent, GAMESYS_WORK* p_gsy
  * @param p_fieldmap フィールドマップ
  */
 //-----------------------------------------------------------------------------------------------
-void EVENT_CAMERA_ROTATE_PrepareDoorOut( FIELDMAP_WORK* p_fieldmap )
+void EVENT_CAMERA_ACT_PrepareForDoorOut( FIELDMAP_WORK* p_fieldmap )
 {
   FIELD_PLAYER * player = FIELDMAP_GetFieldPlayer( p_fieldmap );
   MMDL *         fmmdl  = FIELD_PLAYER_GetMMdl( player );
@@ -157,7 +157,7 @@ void EVENT_CAMERA_ROTATE_PrepareDoorOut( FIELDMAP_WORK* p_fieldmap )
 
 //-----------------------------------------------------------------------------------------------
 /**
- * @brief カメラ回転イベントを呼び出す( 出た時 )
+ * @brief カメラ動作イベントを呼び出す( 出た時 )
  *
  * @param p_parent   親イベント
  * @param p_gsys     ゲームシステム
@@ -166,7 +166,7 @@ void EVENT_CAMERA_ROTATE_PrepareDoorOut( FIELDMAP_WORK* p_fieldmap )
  * @return 作成したイベント
  */
 //-----------------------------------------------------------------------------------------------
-void EVENT_CAMERA_ROTATE_CallDoorOutEvent( GMEVENT* p_parent, GAMESYS_WORK* p_gsys, FIELDMAP_WORK* p_fieldmap )
+void EVENT_CAMERA_ACT_CallDoorOutEvent( GMEVENT* p_parent, GAMESYS_WORK* p_gsys, FIELDMAP_WORK* p_fieldmap )
 {
   FIELD_PLAYER * player = FIELDMAP_GetFieldPlayer( p_fieldmap );
   MMDL *         fmmdl  = FIELD_PLAYER_GetMMdl( player );

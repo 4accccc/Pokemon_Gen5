@@ -7,7 +7,7 @@
 
 //----------------------------------------------------------------------
 /**
- * @brief カメラ回転イベントを呼び出す( 入った時 )
+ * @brief カメラ動作イベントを呼び出す( 入った時 )
  *
  * @param p_parent   親イベント
  * @param p_gsys     ゲームシステム
@@ -16,21 +16,21 @@
  * @return 作成したイベント
  */
 //----------------------------------------------------------------------
-extern void EVENT_CAMERA_ROTATE_CallDoorInEvent( 
+extern void EVENT_CAMERA_ACT_CallDoorInEvent( 
     GMEVENT* p_parent, GAMESYS_WORK* p_gsys, FIELDMAP_WORK* p_fieldmap );
 
 //---------------------------------------------------------------------
 /**
- * @brief 左右にあるドアから出てきた際の, カメラの初期設定を行う
+ * @brief ドアから出てきた際の, カメラの初期設定を行う
  *
  * @param p_fieldmap フィールドマップ
  */
 //---------------------------------------------------------------------
-extern void EVENT_CAMERA_ROTATE_PrepareDoorOut( FIELDMAP_WORK* p_fieldmap );
+extern void EVENT_CAMERA_ACT_PrepareForDoorOut( FIELDMAP_WORK* p_fieldmap );
 
 //--------------------------------------------------------------------
 /**
- * @brief カメラ回転イベントを呼び出す( 出た時 )
+ * @brief カメラ動作イベントを呼び出す( 出た時 )
  *
  * @param p_parent   親イベント
  * @param p_gsys     ゲームシステム
@@ -39,5 +39,5 @@ extern void EVENT_CAMERA_ROTATE_PrepareDoorOut( FIELDMAP_WORK* p_fieldmap );
  * @return 作成したイベント
  */
 //--------------------------------------------------------------------
-extern void EVENT_CAMERA_ROTATE_CallDoorOutEvent( 
+extern void EVENT_CAMERA_ACT_CallDoorOutEvent( 
     GMEVENT* p_parent, GAMESYS_WORK* p_gsys, FIELDMAP_WORK* p_fieldmap ); 

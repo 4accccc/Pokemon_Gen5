@@ -65,7 +65,7 @@ static GMEVENT_RESULT ExitEvent_DoorOut(GMEVENT * event, int *seq, void * work)
 {
   enum {
     SEQ_DOOROUT_INIT = 0,
-    SEQ_DOOROUT_CAMERA_ROTATE,
+    SEQ_DOOROUT_CAMERA_ACT,
     SEQ_DOOROUT_OPENANIME_START,
     SEQ_DOOROUT_OPENANIME_WAIT,
     SEQ_DOOROUT_PLAYER_STEP,
@@ -85,15 +85,15 @@ static GMEVENT_RESULT ExitEvent_DoorOut(GMEVENT * event, int *seq, void * work)
   {
   case SEQ_DOOROUT_INIT:
     // フェードインする前に, カメラの初期設定を行う
-    EVENT_CAMERA_ROTATE_PrepareDoorOut( fieldmap );
+    EVENT_CAMERA_ACT_PrepareForDoorOut( fieldmap );
     //自機を消す
     MAPCHANGE_setPlayerVanish( fieldmap, TRUE );
 		GMEVENT_CallEvent(event, EVENT_FieldFadeIn(gsys, fieldmap, 0));
-    *seq = SEQ_DOOROUT_CAMERA_ROTATE;
+    *seq = SEQ_DOOROUT_CAMERA_ACT;
     break;
 
-  case SEQ_DOOROUT_CAMERA_ROTATE:
-    EVENT_CAMERA_ROTATE_CallDoorOutEvent( event, gsys, fieldmap );
+  case SEQ_DOOROUT_CAMERA_ACT:
+    EVENT_CAMERA_ACT_CallDoorOutEvent( event, gsys, fieldmap );
     *seq = SEQ_DOOROUT_OPENANIME_START;
     break;
 
@@ -205,7 +205,7 @@ static GMEVENT_RESULT ExitEvent_DoorIn(GMEVENT * event, int *seq, void * work)
   enum {
     SEQ_DOORIN_OPENANIME_START = 0,
     SEQ_DOORIN_OPENANIME_WAIT,
-    SEQ_DOORIN_CAMERA_ROTATE,
+    SEQ_DOORIN_CAMERA_ACT,
     SEQ_DOORIN_PLAYER_ONESTEP,
     SEQ_DOORIN_FADEOUT,
     SEQ_DOORIN_END,
@@ -225,7 +225,7 @@ static GMEVENT_RESULT ExitEvent_DoorIn(GMEVENT * event, int *seq, void * work)
     fdaw->obj = searchDoorObject(bmodel_man, &fdaw->pos);
     if (fdaw->obj == NULL)
     { /* エラーよけ、ドアがない場合 */
-      *seq = SEQ_DOORIN_CAMERA_ROTATE;
+      *seq = SEQ_DOORIN_CAMERA_ACT;
       break;
     }
 
@@ -240,13 +240,13 @@ static GMEVENT_RESULT ExitEvent_DoorIn(GMEVENT * event, int *seq, void * work)
     if ( FIELD_BMODEL_GetAnimeStatus( fdaw->entry, ANM_INDEX_DOOR_OPEN) == TRUE)
     {
       FIELD_BMODEL_SetAnime( fdaw->entry, ANM_INDEX_DOOR_OPEN, BMANM_REQ_STOP);
-      *seq = SEQ_DOORIN_CAMERA_ROTATE;
+      *seq = SEQ_DOORIN_CAMERA_ACT;
       break;
     }
     break;
 
-  case SEQ_DOORIN_CAMERA_ROTATE: 
-    EVENT_CAMERA_ROTATE_CallDoorInEvent( event, gsys, fieldmap ); 
+  case SEQ_DOORIN_CAMERA_ACT: 
+    EVENT_CAMERA_ACT_CallDoorInEvent( event, gsys, fieldmap ); 
     *seq = SEQ_DOORIN_PLAYER_ONESTEP;
     break;
 
