@@ -1,7 +1,7 @@
 /////////////////////////////////////////////////////////////////////////////////////////
 /**
  *
- * @brief  フェードアウトイベントの作成
+ * @brief  入口に入ったときのイベント
  * @author obata
  * @date   2009.08.18
  *
@@ -14,7 +14,7 @@
 #include "field/field_sound.h"      // FIELD_SOUND_GetFieldBGMNo
 #include "field/location.h"
 
-#include "event_entrance_out.h"
+#include "event_entrance_in.h"
 
 #include "event_fieldmap_control.h" // EVENT_FieldFadeOut
 #include "field_door_anime.h"       // EVENT_FieldDoorInAnime
