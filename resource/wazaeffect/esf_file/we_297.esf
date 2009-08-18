@@ -4,7 +4,14 @@ C:\home\pokemon_wb\resource\particle\wazaeffect\w_297.spa
 #001
 %00
 カメラ移動	追従	防御側	16	0	8
+SE再生	SEQ_SE_BC01	デフォルト	0	0	100	0	0
 エフェクト終了待ち	すべて
+SE再生	SEQ_SE_W017_01	SE1	0	0	115	0	0
+SE再生	SEQ_SE_DECIDE3	SE2	0	0	90	0	0
+SE再生	SEQ_SE_W017_01	SE1	40	0	115	0	0
+SE再生	SEQ_SE_DECIDE3	SE2	40	0	50	0	0
+SE再生	SEQ_SE_W017_01	SE1	80	0	115	0	0
+SE再生	SEQ_SE_DECIDE3	SE2	80	0	20	0	0
 パーティクルデータロード	w_297
 パーティクル再生	w_297	W_297_297_HANE_TURN	防御側	方向無し	2	0
 ポケモンパレットフェード	防御側	0	12	1	0:0:0
@@ -20,6 +27,7 @@ C:\home\pokemon_wb\resource\particle\wazaeffect\w_297.spa
 ポケモンパレットフェード	防御側	12	0	1	0:0:0
 エフェクト終了待ち	すべて
 カメラ移動	追従	初期位置	16	0	8
+SE再生	SEQ_SE_BC02	デフォルト	0	0	100	0	0
 エフェクト終了待ち	すべて
 エフェクト終了
 &
