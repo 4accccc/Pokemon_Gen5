@@ -222,8 +222,10 @@ void EVENT_CAMERA_ACT_ResetCameraParameter( FIELDMAP_WORK* p_fieldmap )
   FIELD_CAMERA_SetNear( p_camera, def_param.Near );
 
   // DEBUG:
+  /*
   OBATA_Printf( "reset far  = %d\n", def_param.Far >> FX32_SHIFT );
   OBATA_Printf( "reset near = %d\n", def_param.Near >> FX32_SHIFT );
+  */
 }
 
 
@@ -444,9 +446,11 @@ static void SetFarNear( FIELDMAP_WORK* p_fieldmap )
   fx32          near     = FIELD_CAMERA_GetNear( p_camera ); 
 
   // DEBUG:
+  /*
   OBATA_Printf( "Set FarPlane and NearPlane\n" );
   OBATA_Printf( "before far  = %x(%d)\n", far, far>>FX32_SHIFT );
   OBATA_Printf( "before near = %x(%d)\n", near, near>>FX32_SHIFT );
+  */
 
   // FarƒvƒŒ[ƒ“‚ð”¼•ª‚É‚·‚é
   far /= 2;
@@ -457,8 +461,10 @@ static void SetFarNear( FIELDMAP_WORK* p_fieldmap )
   FIELD_CAMERA_SetNear( p_camera, near );
 
   // DEBUG:
+  /*
   OBATA_Printf( "after far  = %x(%d)\n", far, far>>FX32_SHIFT );
   OBATA_Printf( "after near = %x(%d)\n", near, near>>FX32_SHIFT );
+  */
 }
 
 //-----------------------------------------------------------------------------------------------
