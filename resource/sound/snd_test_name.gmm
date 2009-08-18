@@ -1457,6 +1457,54 @@
 		<language name="JPN" width="256">W227-02</language>
 		<language name="JPN_KANJI" width="256">W227-02</language>
 	</row>
+	<row id="msg_seq_se_w235_01">
+		<language name="JPN" width="256">W235-01</language>
+		<language name="JPN_KANJI" width="256">W235-01</language>
+	</row>
+	<row id="msg_seq_se_w235_03">
+		<language name="JPN" width="256">W235-03</language>
+		<language name="JPN_KANJI" width="256">W235-03</language>
+	</row>
+	<row id="msg_seq_se_w239_01">
+		<language name="JPN" width="256">W239-01</language>
+		<language name="JPN_KANJI" width="256">W239-01</language>
+	</row>
+	<row id="msg_seq_se_w239_02">
+		<language name="JPN" width="256">W239-02</language>
+		<language name="JPN_KANJI" width="256">W239-02</language>
+	</row>
+	<row id="msg_seq_se_w240_01">
+		<language name="JPN" width="256">W240-01</language>
+		<language name="JPN_KANJI" width="256">W240-01</language>
+	</row>
+	<row id="msg_seq_se_w253_01">
+		<language name="JPN" width="256">W253-01</language>
+		<language name="JPN_KANJI" width="256">W253-01</language>
+	</row>
+	<row id="msg_seq_se_w253_02">
+		<language name="JPN" width="256">W253-02</language>
+		<language name="JPN_KANJI" width="256">W253-02</language>
+	</row>
+	<row id="msg_seq_se_w260_01">
+		<language name="JPN" width="256">W260-01</language>
+		<language name="JPN_KANJI" width="256">W260-01</language>
+	</row>
+	<row id="msg_seq_se_w281_01">
+		<language name="JPN" width="256">W281-01</language>
+		<language name="JPN_KANJI" width="256">W281-01</language>
+	</row>
+	<row id="msg_seq_se_w295_01">
+		<language name="JPN" width="256">W295-01</language>
+		<language name="JPN_KANJI" width="256">W295-01</language>
+	</row>
+	<row id="msg_seq_se_w295_02">
+		<language name="JPN" width="256">W295-02</language>
+		<language name="JPN_KANJI" width="256">W295-02</language>
+	</row>
+	<row id="msg_seq_se_w298_01">
+		<language name="JPN" width="256">W298-01</language>
+		<language name="JPN_KANJI" width="256">W298-01</language>
+	</row>
 	<row id="msg_seq_se_pasa1">
 		<language name="JPN" width="256">PASA1</language>
 		<language name="JPN_KANJI" width="256">PASA1</language>
