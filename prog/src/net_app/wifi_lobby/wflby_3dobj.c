@@ -21,7 +21,7 @@
 
 #include "field/fldmmdl_pl_code.h"
 
-#include "test_graphic/mmodel.naix"
+#include "debug/mmodel.naix"
 
 #include "wifi_lobby_other.naix"
 #include "test_graphic/fld_act.naix"
