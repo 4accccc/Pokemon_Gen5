@@ -36,7 +36,6 @@
 
 #include "field_sound.h"
 
-#include "event_entrance_effect.h"
 #include "event_entrance_in.h"
 #include "event_entrance_out.h"
 
