@@ -14,7 +14,7 @@
 #include "field/field_sound.h"      // FIELD_SOUND_GetFieldBGMNo
 #include "field/location.h"
 
-#include "event_fieldmap_fadeout.h"
+#include "event_entrance_out.h"
 
 #include "event_fieldmap_control.h" // EVENT_FieldFadeOut
 #include "field_door_anime.h"       // EVENT_FieldDoorInAnime

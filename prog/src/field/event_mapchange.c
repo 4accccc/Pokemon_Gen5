@@ -37,7 +37,7 @@
 #include "field_sound.h"
 
 #include "field_door_anime.h"
-#include "event_fieldmap_fadeout.h"
+#include "event_entrance_out.h"
 
 
 static void UpdateMapParams(GAMESYS_WORK * gsys, const LOCATION * loc_req);
