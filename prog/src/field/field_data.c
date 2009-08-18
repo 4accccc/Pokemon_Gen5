@@ -85,27 +85,6 @@ const DEPEND_FUNCTIONS * FIELDDATA_GetFieldFunctions(u16 mapid)
 
 //============================================================================================
 //============================================================================================
-//------------------------------------------------------------------
-//------------------------------------------------------------------
-#include "test_graphic/test3dp.naix"
-static const FLDMAPPER_MAPDATA sampleMap[] = {
-	{ NARC_test3dp_map_a1_3dppack },
-	{ NARC_test3dp_map_a2_3dppack },
-	{ NARC_test3dp_map_a3_3dppack },
-	{ NARC_test3dp_map_a4_3dppack },
-	{ NARC_test3dp_map_b1_3dppack },
-	{ NARC_test3dp_map_b2_3dppack },
-	{ NARC_test3dp_map_b3_3dppack },
-	{ NARC_test3dp_map_b4_3dppack },
-	{ NARC_test3dp_map_c1_3dppack },
-	{ NARC_test3dp_map_c2_3dppack },
-	{ NARC_test3dp_map_c3_3dppack },
-	{ NARC_test3dp_map_c4_3dppack },
-	{ NARC_test3dp_map_d1_3dppack },
-	{ NARC_test3dp_map_d2_3dppack },
-	{ NARC_test3dp_map_d3_3dppack },
-	{ NARC_test3dp_map_d4_3dppack },
-};
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
