@@ -5,7 +5,7 @@
  * @date   2009.08.17
  */
 ///////////////////////////////////////////////////////////////////////////////////////////////
-#include "event_camera_rotate.h"
+#include "event_camera_act.h"
 #include "gamesystem/game_event.h"
 #include "field/field_camera.h"
 #include "field/fieldmap.h"
@@ -18,7 +18,11 @@
 //=============================================================================================
 
 #define CAMERA_DIST_MIN (100 << FX32_SHIFT)
-#define ZOOM_DIST (15 << FX32_SHIFT)
+#define ZOOM_DIST       (15 << FX32_SHIFT)
+
+// 左ドアへの出入り
+#define L_DOOR_PITCH (0xffff / 360 * 20)
+#define L_DOOR_YAW   (0xffff / 360 * 90)
 
 
 //=============================================================================================
@@ -247,8 +251,8 @@ static GMEVENT* EVENT_LeftDoorIn( GAMESYS_WORK* p_gsys, FIELDMAP_WORK* p_fieldma
   // イベントワークを初期化
   p_work = GMEVENT_GetEventWork( p_event );
   InitWork( p_work, p_fieldmap );
-  SetPitchAction( p_work, 10, FIELD_CAMERA_GetAnglePitch( p_camera ), 0xffff / 360 * 20 );
-  SetYawAction  ( p_work, 10, FIELD_CAMERA_GetAngleYaw( p_camera ),   0xffff / 360 * 90 );
+  SetPitchAction( p_work, 10, FIELD_CAMERA_GetAnglePitch( p_camera ), L_DOOR_PITCH );
+  SetYawAction  ( p_work, 10, FIELD_CAMERA_GetAngleYaw( p_camera ),   L_DOOR_YAW );
   SetDistAction ( p_work, 10, FIELD_CAMERA_GetAngleLen( p_camera ),   CAMERA_DIST_MIN );
 
   // カメラの初期設定

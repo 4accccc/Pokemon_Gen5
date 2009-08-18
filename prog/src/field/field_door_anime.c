@@ -24,7 +24,7 @@
 #include "event_fldmmdl_control.h"  //EVENT_PlayerOneStepAnime
 #include "field_door_anime.h"
 
-#include "event_camera_rotate.h"  // TEMP: カメラ回転テスト
+#include "event_camera_act.h" 
 
 
 //============================================================================================
