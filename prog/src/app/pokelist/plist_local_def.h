@@ -151,6 +151,7 @@ typedef enum
   PSMS_YESNO_WAIT,    //はい・いいえ待ち
   PSMS_INIT_HPANIME,
   PSMS_HPANIME,     //HPバー処理中
+  PSMS_BATTLE_ANM_WAIT, //バトルメニュー時終了アニメ待ち
   PSMS_FADEOUT,
   PSMS_FADEOUT_WAIT,
 
@@ -204,8 +205,9 @@ struct _PLIST_WORK
   //バトルメニュー用
   u8  btlJoinNum;   //バトル参加人数
   GFL_BMPWIN *btlMenuWin[2];  //バトル用決定・戻る
-  u16 btlMenuAnm;       //↑のアニメ用
+  u16 btlMenuAnmCnt;       //↑のアニメ用
   u16 btlMenuTransBuf;
+  u8  btlTermAnmCnt;
 
   //HPアニメ処理
   u16 befHp;  //回復前のHP

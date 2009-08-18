@@ -12,6 +12,10 @@
 #pragma once
 #include "print/printsys.h"
 
+//決定時点滅アニメ
+#define APP_TASKMENU_ANM_CNT (16)
+#define APP_TASKMENU_ANM_INTERVAL (4)
+
 //タスクメニュー ワーク
 typedef struct _APP_TASKMENU_WORK APP_TASKMENU_WORK;
 
