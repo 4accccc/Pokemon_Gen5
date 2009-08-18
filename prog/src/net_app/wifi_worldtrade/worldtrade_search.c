@@ -98,7 +98,7 @@ static  int SubSeq_ReturnScreen2( WORLDTRADE_WORK *wk );
 static  int SubSeq_ExchangeMain( WORLDTRADE_WORK *wk );
 
 
-static void WantLabelPrint( GFL_BMPWIN *win[], GFL_BMPWIN *country_win[], GFL_MSGDATA *MsgManager );
+static void WantLabelPrint( GFL_BMPWIN *win[], GFL_BMPWIN *country_win[], GFL_MSGDATA *MsgManager, WT_PRINT *print );
 static  int LastTradeDateCheck( WORLDTRADE_WORK *wk, int trade_type );
 static  int DpwSerachCompare( const Dpw_Tr_PokemonSearchData *s1, const Dpw_Tr_PokemonSearchData *s2 , int country_code1, int country_code2);
 static  int SubSeq_MessageWait1Min( WORLDTRADE_WORK *wk );
@@ -106,7 +106,7 @@ static void SelectFrameBoxWrite( u16 *scr, int x, int y, int type );
 static void TouchCursorMove( WORLDTRADE_WORK *wk, int touch );
 static  u32 TouchPanelFunc( WORLDTRADE_WORK *wk );
 static void DecideFunc( WORLDTRADE_WORK *wk, int decide );
-static void FriendViewButtonPrint( GFL_BMPWIN *win, GFL_MSGDATA *MsgManager, int flag );
+static void FriendViewButtonPrint( GFL_BMPWIN *win, GFL_MSGDATA *MsgManager, int flag, WT_PRINT *print );
 
 static  u32 WordHead_SelectMain( WORLDTRADE_WORK *wk );
 static void SlideScreenVFunc( void *p );
@@ -281,28 +281,28 @@ int WorldTrade_Search_Init(WORLDTRADE_WORK *wk, int seq)
 	}
 
 	// 「ほしいポケモン」描画
-	WantLabelPrint( &wk->InfoWin[0], &wk->CountryWin[0], wk->MsgManager );
+	WantLabelPrint( &wk->InfoWin[0], &wk->CountryWin[0], wk->MsgManager, &wk->print );
 
 	// 「あいてをみる」描画
-	FriendViewButtonPrint(  wk->InfoWin[8], wk->MsgManager, wk->SubLcdTouchOK );
+	FriendViewButtonPrint(  wk->InfoWin[8], wk->MsgManager, wk->SubLcdTouchOK, &wk->print );
 
 
 	// 名前
 	WorldTrade_PokeNamePrint( wk->InfoWin[1], wk->MonsNameManager, 
-		wk->Search.characterNo, SEARCH_INFO_PRINT_FLAG, 0, PRINTSYS_LSB_Make(1,2,0)  );
+		wk->Search.characterNo, SEARCH_INFO_PRINT_FLAG, 0, PRINTSYS_LSB_Make(1,2,0), &wk->print  );
 
 	// 性別条件
 	WorldTrade_SexPrint( wk->InfoWin[3], wk->MsgManager, 
-		wk->Search.gender, 1, 0, SEARCH_INFO_PRINT_FLAG, PRINTSYS_LSB_Make(1,2,0)  );
+		wk->Search.gender, 1, 0, SEARCH_INFO_PRINT_FLAG, PRINTSYS_LSB_Make(1,2,0), &wk->print  );
 
 	// レベル指定
 	WorldTrade_WantLevelPrint( wk->InfoWin[5], wk->MsgManager, 
 		WorldTrade_LevelTermGet(wk->Search.level_min,wk->Search.level_max, LEVEL_PRINT_TBL_SEARCH),
-		SEARCH_INFO_PRINT_FLAG, 0, PRINTSYS_LSB_Make(1,2,0), LEVEL_PRINT_TBL_SEARCH );
+		SEARCH_INFO_PRINT_FLAG, 0, PRINTSYS_LSB_Make(1,2,0), LEVEL_PRINT_TBL_SEARCH, &wk->print );
 
 	// 国指定
 	WorldTrade_CountryPrint( wk->CountryWin[1], wk->CountryNameManager, wk->MsgManager,
-		wk->country_code, SEARCH_INFO_PRINT_FLAG, 0, PRINTSYS_LSB_Make(1,2,0) );
+		wk->country_code, SEARCH_INFO_PRINT_FLAG, 0, PRINTSYS_LSB_Make(1,2,0), &wk->print );
 
 	wk->vfunc2 = SlideScreenVFunc;
 	
@@ -678,7 +678,7 @@ static void BmpWinInit( WORLDTRADE_WORK *wk )
 {
 	// ---------- メイン画面 ------------------
 
-//	GFL_BMPWIN_Create( &wk->TitleWin, GFL_BG_FRAME0_M,
+//	GFL_BMPWIN_CreateFixPos( &wk->TitleWin, GFL_BG_FRAME0_M,
 //		TITLE_TEXT_X, TITLE_TEXT_Y, TITLE_TEXT_SX, TITLE_TEXT_SY, 
 //		WORLDTRADE_TALKFONT_PAL,  TITLE_MESSAGE_OFFSET );
 
@@ -688,7 +688,7 @@ static void BmpWinInit( WORLDTRADE_WORK *wk )
 //	WorldTrade_TalkPrint( &wk->TitleWin, wk->TitleString, 0, 1, 0, PRINTSYS_LSB_Make(15,13,0) );
 
 	// 会話ウインドウ
-	wk->MsgWin	= GFL_BMPWIN_Create( GFL_BG_FRAME0_M,
+	wk->MsgWin	= GFL_BMPWIN_CreateFixPos( GFL_BG_FRAME0_M,
 		LINE_TEXT_X, LINE_TEXT_Y, LINE_TEXT_SX, LINE_TEXT_SY, 
 		WORLDTRADE_TALKFONT_PAL,  LINE_MESSAGE_OFFSET );
 
@@ -701,7 +701,7 @@ static void BmpWinInit( WORLDTRADE_WORK *wk )
 
 		// ほしいポケモン情報x６文字列
 		for(i=0;i<6;i++){
-			wk->InfoWin[i]	= GFL_BMPWIN_Create( GFL_BG_FRAME3_M,
+			wk->InfoWin[i]	= GFL_BMPWIN_CreateFixPos( GFL_BG_FRAME3_M,
 					infomation_bmpwin_table[i][0], 
 					infomation_bmpwin_table[i][1], 
 					INFORMATION_STR_SX, INFORMATION_STR_SY,
@@ -712,7 +712,7 @@ static void BmpWinInit( WORLDTRADE_WORK *wk )
 
 		// 住んでいる所・国名
 		for(i=0;i<2;i++){
-			wk->CountryWin[i]	= GFL_BMPWIN_Create( GFL_BG_FRAME3_M,
+			wk->CountryWin[i]	= GFL_BMPWIN_CreateFixPos( GFL_BG_FRAME3_M,
 					country_bmpwin_table[i][0], 
 					country_bmpwin_table[i][1], 
 					COUNTRY_STR_SX,COUNTRY_STR_SY,
@@ -723,7 +723,7 @@ static void BmpWinInit( WORLDTRADE_WORK *wk )
 
 		// さがす・もどる・あいてをみる
 		for(i=0;i<3;i++){
-			wk->InfoWin[6+i]	= GFL_BMPWIN_Create( GFL_BG_FRAME3_M,
+			wk->InfoWin[6+i]	= GFL_BMPWIN_CreateFixPos( GFL_BG_FRAME3_M,
 					button_bmpwin_table[i][0], 
 					button_bmpwin_table[i][1], 
 					BUTTON_STR_SX,BUTTON_STR_SY,
@@ -1210,9 +1210,9 @@ static int SubSeq_ServerResult( WORLDTRADE_WORK *wk )
 			WorldTrade_SubLcdMatchObjAppear( wk, result, 1 );
 
 			if(result==0){
-				FriendViewButtonPrint(  wk->InfoWin[8], wk->MsgManager, FALSE );
+				FriendViewButtonPrint(  wk->InfoWin[8], wk->MsgManager, FALSE, &wk->print );
 			}else{
-				FriendViewButtonPrint(  wk->InfoWin[8], wk->MsgManager, TRUE );
+				FriendViewButtonPrint(  wk->InfoWin[8], wk->MsgManager, TRUE, &wk->print );
 			}
 
 			wk->subprocess_seq = SUBSEQ_SEARCH_RESULT_MESSAGE;
@@ -1623,7 +1623,7 @@ static int SUBSEQ_PokenameSelectWait( WORLDTRADE_WORK *wk)
 		// 名前決定
 		GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->InfoWin[1]), 0x0000 );
 		WorldTrade_PokeNamePrint( wk->InfoWin[1], wk->MonsNameManager, 
-			result, SEARCH_INFO_PRINT_FLAG, 0, PRINTSYS_LSB_Make(1,2,0)  );
+			result, SEARCH_INFO_PRINT_FLAG, 0, PRINTSYS_LSB_Make(1,2,0), &wk->print  );
 		
 		// 決定したポケモンの性別分布を取得
 		wk->dw->sex_selection = PokePersonalParaGet(result,ID_PER_sex);
@@ -1635,7 +1635,7 @@ static int SUBSEQ_PokenameSelectWait( WORLDTRADE_WORK *wk)
 
 		if(WorldTrade_SexSelectionCheck( &wk->Search, wk->dw->sex_selection )){
 			GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->InfoWin[3]), 0x0000 );
-			WorldTrade_SexPrint( wk->InfoWin[3], wk->MsgManager, wk->Search.gender, 1, 0, SEARCH_INFO_PRINT_FLAG,  PRINTSYS_LSB_Make(1,2,0)  );
+			WorldTrade_SexPrint( wk->InfoWin[3], wk->MsgManager, wk->Search.gender, 1, 0, SEARCH_INFO_PRINT_FLAG,  PRINTSYS_LSB_Make(1,2,0), &wk->print  );
 			
 		}
 
@@ -1661,7 +1661,7 @@ static int SUBSEQ_SexSelectMes( WORLDTRADE_WORK *wk)
 	WorldTrade_SetNextSeq( wk, SUBSEQ_MES_WAIT, SUBSEQ_SEX_SELECT_LIST );
 
 	// 性別選択ウインドウ確保
-//	GFL_BMPWIN_Create( &wk->MenuWin[0], GFL_BG_FRAME0_M,
+//	GFL_BMPWIN_CreateFixPos( &wk->MenuWin[0], GFL_BG_FRAME0_M,
 //		SELECT_MENU3_X,		SELECT_MENU3_Y,		SELECT_MENU3_SX, 		SELECT_MENU3_SY, 
 //		WORLDTRADE_TALKFONT_PAL,  SELECT_MENU3_OFFSET );
 //	GFL_BMP_Clear( &wk->MenuWin[0], 0x0000 );
@@ -1726,7 +1726,7 @@ static int SUBSEQ_SexSelectWait( WORLDTRADE_WORK *wk)
 		// 性別決定
 		GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->InfoWin[3]), 0x0000 );
 		WorldTrade_SexPrint( wk->InfoWin[3], wk->MsgManager, wk->Search.gender, 
-									1, 0, SEARCH_INFO_PRINT_FLAG, PRINTSYS_LSB_Make(1,2,0)  );
+									1, 0, SEARCH_INFO_PRINT_FLAG, PRINTSYS_LSB_Make(1,2,0), &wk->print  );
 		break;
 	}
 
@@ -1751,7 +1751,7 @@ static int SUBSEQ_LevelSelectMes( WORLDTRADE_WORK *wk)
 	WorldTrade_SetNextSeq( wk, SUBSEQ_MES_WAIT, SUBSEQ_LEVEL_SELECT_LIST );
 
 	// 性別選択ウインドウ確保
-//	GFL_BMPWIN_Create( &wk->MenuWin[0], GFL_BG_FRAME0_M,
+//	GFL_BMPWIN_CreateFixPos( &wk->MenuWin[0], GFL_BG_FRAME0_M,
 //		SELECT_MENU4_X,		SELECT_MENU4_Y,		SELECT_MENU4_SX, 		SELECT_MENU4_SY, 
 //		WORLDTRADE_TALKFONT_PAL,  SELECT_MENU4_OFFSET );
 //	GFL_BMP_Clear( &wk->MenuWin[0], 0x0000 );
@@ -1820,7 +1820,7 @@ static int SUBSEQ_LevelSelectWait( WORLDTRADE_WORK *wk)
 
 		GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->InfoWin[5]), 0x0000 );
 		// レベル指定決定
-		WorldTrade_WantLevelPrint( wk->InfoWin[5], wk->MsgManager, result, SEARCH_INFO_PRINT_FLAG, 0, PRINTSYS_LSB_Make(1,2,0), LEVEL_PRINT_TBL_SEARCH );
+		WorldTrade_WantLevelPrint( wk->InfoWin[5], wk->MsgManager, result, SEARCH_INFO_PRINT_FLAG, 0, PRINTSYS_LSB_Make(1,2,0), LEVEL_PRINT_TBL_SEARCH, &wk->print );
 
 		break;
 	}
@@ -1845,7 +1845,7 @@ static int SUBSEQ_CountrySelectMes( WORLDTRADE_WORK *wk)
 	WorldTrade_SetNextSeq( wk, SUBSEQ_MES_WAIT, SUBSEQ_COUNTRY_SELECT_LIST );
 
 	// 国選択ウインドウ確保
-//	GFL_BMPWIN_Create( &wk->MenuWin[0], GFL_BG_FRAME0_M,
+//	GFL_BMPWIN_CreateFixPos( &wk->MenuWin[0], GFL_BG_FRAME0_M,
 //		SELECT_MENU5_X,		SELECT_MENU5_Y,		SELECT_MENU5_SX, 		SELECT_MENU5_SY, 
 //		WORLDTRADE_TALKFONT_PAL,  SELECT_MENU5_OFFSET );
 //	GFL_BMP_Clear( &wk->MenuWin[0], 0x0000 );
@@ -1920,7 +1920,7 @@ static int SUBSEQ_CountrySelectWait( WORLDTRADE_WORK *wk)
 		GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->CountryWin[1]), 0x0000 );
 		// 国指定決定
 		WorldTrade_CountryPrint( wk->CountryWin[1], wk->CountryNameManager, wk->MsgManager,
-			wk->country_code, SEARCH_INFO_PRINT_FLAG, 0, PRINTSYS_LSB_Make(1,2,0) );
+			wk->country_code, SEARCH_INFO_PRINT_FLAG, 0, PRINTSYS_LSB_Make(1,2,0), &wk->print );
 	}
 
 	return SEQ_MAIN;
@@ -2059,7 +2059,7 @@ static int SubSeq_SearchErrorMessage(WORLDTRADE_WORK *wk)
 //------------------------------------------------------------------
 static int SubSeq_MessageWait( WORLDTRADE_WORK *wk )
 {
-	if( GF_MSG_PrintEndCheck( wk->MsgIndex )==0){
+	if( GF_MSG_PrintEndCheck( &wk->print )==0){
 		wk->subprocess_seq = wk->subprocess_nextseq;
 	}
 	return SEQ_MAIN;
@@ -2077,7 +2077,7 @@ static int SubSeq_MessageWait( WORLDTRADE_WORK *wk )
 //------------------------------------------------------------------
 static int SubSeq_MessageWait1Min( WORLDTRADE_WORK *wk )
 {
-	if( GF_MSG_PrintEndCheck( wk->MsgIndex )==0){
+	if( GF_MSG_PrintEndCheck( &wk->print )==0){
 		wk->wait++;
 		if(wk->wait>45){
 			wk->wait = 0;
@@ -2202,7 +2202,7 @@ static void SubSeq_MessagePrint( WORLDTRADE_WORK *wk, int msgno, int wait, int f
 	BmpWinFrame_Write( wk->MsgWin, WINDOW_TRANS_ON, WORLDTRADE_MESFRAME_CHR, WORLDTRADE_MESFRAME_PAL );
 
 	// 文字列描画開始
-	wk->MsgIndex = GF_STR_PrintSimple( wk->MsgWin, FONT_TALK, wk->TalkString, 0, 0, wait, NULL);
+	GF_STR_PrintSimple( wk->MsgWin, FONT_TALK, wk->TalkString, 0, 0, &wk->print );
 
 
 }
@@ -2217,38 +2217,38 @@ static void SubSeq_MessagePrint( WORLDTRADE_WORK *wk, int msgno, int wait, int f
  * @retval  none		
  */
 //------------------------------------------------------------------
-static void WantLabelPrint( GFL_BMPWIN *win[], GFL_BMPWIN *country_win[], GFL_MSGDATA *MsgManager )
+static void WantLabelPrint( GFL_BMPWIN *win[], GFL_BMPWIN *country_win[], GFL_MSGDATA *MsgManager, WT_PRINT *print )
 {
 	STRBUF *strbuf, *levelbuf, *sexbuf;
 
 	//「ほしいポケモン」描画
 	strbuf = GFL_MSG_CreateString( MsgManager, msg_gtc_03_002 );
-	WorldTrade_SysPrint( win[0], strbuf,    0, 0, 0, PRINTSYS_LSB_Make(15,2,0) );
+	WorldTrade_SysPrint( win[0], strbuf,    0, 0, 0, PRINTSYS_LSB_Make(15,2,0),print );
 	GFL_STR_DeleteBuffer(strbuf);
 
 	// せいべつ
 	sexbuf = GFL_MSG_CreateString( MsgManager, msg_gtc_03_004  );
-	WorldTrade_SysPrint( win[2], sexbuf,    0, 0, 0, PRINTSYS_LSB_Make(15,2,0) );
+	WorldTrade_SysPrint( win[2], sexbuf,    0, 0, 0, PRINTSYS_LSB_Make(15,2,0),print );
 	GFL_STR_DeleteBuffer(sexbuf);
 
 	// レベル
 	levelbuf = GFL_MSG_CreateString( MsgManager, msg_gtc_03_006 );
-	WorldTrade_SysPrint( win[4], levelbuf,  0, 0, 0, PRINTSYS_LSB_Make(15,2,0) );
+	WorldTrade_SysPrint( win[4], levelbuf,  0, 0, 0, PRINTSYS_LSB_Make(15,2,0),print );
 	GFL_STR_DeleteBuffer(levelbuf);
 
 	// 国
 	levelbuf = GFL_MSG_CreateString( MsgManager, msg_gtc_search_013 );
-	WorldTrade_SysPrint( country_win[0], levelbuf,  0, 0, 0, PRINTSYS_LSB_Make(15,2,0) );
+	WorldTrade_SysPrint( country_win[0], levelbuf,  0, 0, 0, PRINTSYS_LSB_Make(15,2,0),print );
 	GFL_STR_DeleteBuffer(levelbuf);
 
 	//「さがす」描画
 	strbuf = GFL_MSG_CreateString( MsgManager, msg_gtc_03_008 );
-	WorldTrade_TouchPrint( win[6], strbuf,    0, 0, 0, PRINTSYS_LSB_Make(15,2,0) );
+	WorldTrade_TouchPrint( win[6], strbuf,    0, 0, 0, PRINTSYS_LSB_Make(15,2,0),print );
 	GFL_STR_DeleteBuffer(strbuf);
 
 	//「もどる」描画
 	strbuf = GFL_MSG_CreateString( MsgManager, msg_gtc_03_011 );
-	WorldTrade_TouchPrint( win[7], strbuf,    0, 0, 0, PRINTSYS_LSB_Make(15,2,0) );
+	WorldTrade_TouchPrint( win[7], strbuf,    0, 0, 0, PRINTSYS_LSB_Make(15,2,0),print );
 	GFL_STR_DeleteBuffer(strbuf);
 
 }
@@ -2262,7 +2262,7 @@ static void WantLabelPrint( GFL_BMPWIN *win[], GFL_BMPWIN *country_win[], GFL_MS
  * @retval  none		
  */
 //------------------------------------------------------------------
-static void FriendViewButtonPrint( GFL_BMPWIN *win, GFL_MSGDATA *MsgManager, int flag )
+static void FriendViewButtonPrint( GFL_BMPWIN *win, GFL_MSGDATA *MsgManager, int flag, WT_PRINT *print )
 {
 	u8 pal;
 	STRBUF *strbuf;
@@ -2279,7 +2279,7 @@ static void FriendViewButtonPrint( GFL_BMPWIN *win, GFL_MSGDATA *MsgManager, int
 	GFL_BG_LoadScreenReq( GFL_BG_FRAME1_M );
 	//「あいてをみる」描画
 	strbuf = GFL_MSG_CreateString( MsgManager, msg_gtc_03_010 );
-	WorldTrade_TouchPrint( win, strbuf,    0, 0, 0, color );
+	WorldTrade_TouchPrint( win, strbuf,    0, 0, 0, color, print );
 	GFL_STR_DeleteBuffer(strbuf);
 
 }

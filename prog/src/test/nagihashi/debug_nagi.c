@@ -821,9 +821,10 @@ static void LISTDATA_CallProcRankingDebug( DEBUG_NAGI_MAIN_WORK *p_wk )
 //-----------------------------------------------------------------------------
 FS_EXTERN_OVERLAY(worldtrade);
 static void LISTDATA_CallProcGts( DEBUG_NAGI_MAIN_WORK *p_wk )
-{	
+{
+	GAMEDATA * p_gamedata	= GAMEDATA_Create(HEAPID_NAGI_DEBUG);
 
-	p_wk->gts_param.savedata				= SaveControl_GetPointer();
+	p_wk->gts_param.savedata				= GAMEDATA_GetSaveControlWork( p_gamedata );
 	p_wk->gts_param.worldtrade_data	= SaveData_GetWorldTradeData(p_wk->gts_param.savedata);
 	p_wk->gts_param.systemdata			= SaveData_GetSystemData(p_wk->gts_param.savedata);
 	p_wk->gts_param.myparty					= SaveData_GetTemotiPokemon(p_wk->gts_param.savedata);
@@ -842,7 +843,9 @@ static void LISTDATA_CallProcGts( DEBUG_NAGI_MAIN_WORK *p_wk )
 	p_wk->gts_param.connect					= 0;
 
 
-	DEBUG_NAGI_COMMAND_NextProc( p_wk, FS_OVERLAY_ID(worldtrade), &WorldTrade_ProcData, &p_wk->gts_param );
+	DEBUG_NAGI_COMMAND_CallProc( p_wk, FS_OVERLAY_ID(worldtrade), &WorldTrade_ProcData, &p_wk->gts_param );
+
+	GAMEDATA_Delete( p_gamedata );
 }
 //----------------------------------------------------------------------------
 /**

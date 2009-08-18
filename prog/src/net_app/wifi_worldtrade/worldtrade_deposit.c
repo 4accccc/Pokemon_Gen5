@@ -71,7 +71,13 @@ static int SubSeq_MessageWait( WORLDTRADE_WORK *wk );
 #if 0
 static void PokeWantPrint( GFL_MSGDATA *MsgManager, GFL_MSGDATA *MonsNameManager,WORDSET *WordSet, GFL_BMPWIN win[], int monsno, int sex, int level );
 #endif
-static void PokeDepositPrint( GFL_MSGDATA *MsgManager, WORDSET *WordSet, GFL_BMPWIN *win[], POKEMON_PASO_PARAM *ppp, Dpw_Tr_PokemonDataSimple *post );
+static void PokeDepositPrint( 
+	GFL_MSGDATA *MsgManager, 
+	WORDSET *WordSet, 
+	GFL_BMPWIN *win[], 
+	POKEMON_PASO_PARAM *ppp,
+	Dpw_Tr_PokemonDataSimple *post,
+	WT_PRINT *print );
 static int 	SubSeq_SexSelctWait( WORLDTRADE_WORK *wk );
 static int 	SubSeq_SexSelctList( WORLDTRADE_WORK *wk );
 static int 	SubSeq_SexSelctMessage( WORLDTRADE_WORK *wk );
@@ -443,8 +449,8 @@ int WorldTrade_Deposit_Init(WORLDTRADE_WORK *wk, int seq)
    
     // ほしいポケモン・あずけるポケモン描画
 	WodrldTrade_PokeWantPrint( wk->MsgManager, wk->MonsNameManager, 
-				wk->WordSet, wk->InfoWin, 0,DPW_TR_GENDER_NONE,-1);
-	PokeDepositPrint( wk->MsgManager, wk->WordSet, wk->InfoWin, wk->deposit_ppp, &wk->Post );
+				wk->WordSet, wk->InfoWin, 0,DPW_TR_GENDER_NONE,-1, &wk->print);
+	PokeDepositPrint( wk->MsgManager, wk->WordSet, wk->InfoWin, wk->deposit_ppp, &wk->Post, &wk->print );
 
 	// 条件入力システム初期化
 	{
@@ -567,7 +573,7 @@ static void SubSeq_MessagePrint( WORLDTRADE_WORK *wk, int msgno, int wait, int f
 	BmpWinFrame_Write( wk->MsgWin, WINDOW_TRANS_ON, WORLDTRADE_MESFRAME_CHR, WORLDTRADE_MESFRAME_PAL );
 
 	// 文字列描画開始
-	wk->MsgIndex = GF_STR_PrintSimple( wk->MsgWin, FONT_TALK, wk->TalkString, 0, 0, wait, NULL);
+	GF_STR_PrintSimple( wk->MsgWin, FONT_TALK, wk->TalkString, 0, 0, &wk->print);
 
 	GFL_STR_DeleteBuffer(tempbuf);
 }
@@ -737,7 +743,7 @@ static void BmpWinInit( WORLDTRADE_WORK *wk )
 #endif		//金銀で不要
 
 	// 一行ウインドウ
-	wk->MsgWin= GFL_BMPWIN_Create( GFL_BG_FRAME0_M,
+	wk->MsgWin= GFL_BMPWIN_CreateFixPos( GFL_BG_FRAME0_M,
 		LINE_TEXT_X, LINE_TEXT_Y, LINE_TEXT_SX, LINE_TEXT_SY, 
 		WORLDTRADE_TALKFONT_PAL,  LINE_MESSAGE_OFFSET );
 
@@ -747,7 +753,7 @@ static void BmpWinInit( WORLDTRADE_WORK *wk )
 
 	// あずけるポケモン・ほしいポケモン情報BMPWIN確保
 	for(i=0;i<6;i++){
-		wk->InfoWin[i] = GFL_BMPWIN_Create( GFL_BG_FRAME3_M,
+		wk->InfoWin[i] = GFL_BMPWIN_CreateFixPos( GFL_BG_FRAME3_M,
 			infomation_bmp_table[i][0], infomation_bmp_table[i][1], 
 			INFORMATION_STR_SX, INFORMATION_STR_SY, WORLDTRADE_TALKFONT_PAL,  
 			INFOMATION_STR_OFFSET+(INFORMATION_STR_SX*INFORMATION_STR_SY)*i  );
@@ -1152,7 +1158,7 @@ static int SubSeq_PokeNameSelectWait( WORLDTRADE_WORK *wk )
 
 		// 名前決定(性別がきまることもある）
 		WodrldTrade_PokeWantPrint( wk->MsgManager, wk->MonsNameManager, wk->WordSet, 
-							wk->InfoWin, wk->Want.characterNo,sex,-1);
+							wk->InfoWin, wk->Want.characterNo,sex,-1, &wk->print);
 
 		WorldTrade_SelectNameListBackup( &wk->selectListPos, wk->dw->headwordListPos+wk->dw->headwordPos, wk->dw->nameListPos, wk->dw->namePos );
 
@@ -1242,7 +1248,7 @@ static int 	SubSeq_SexSelctWait( WORLDTRADE_WORK *wk )
 
 		// 性別決定
 		WodrldTrade_PokeWantPrint( wk->MsgManager, wk->MonsNameManager, wk->WordSet, 
-							wk->InfoWin, wk->Want.characterNo,wk->Want.gender,-1);
+							wk->InfoWin, wk->Want.characterNo,wk->Want.gender,-1, &wk->print);
 
 		break;
 	}
@@ -1344,7 +1350,7 @@ static int SubSeq_LevelSelectWait( WORLDTRADE_WORK *wk )
 		WodrldTrade_PokeWantPrint( wk->MsgManager, wk->MonsNameManager, wk->WordSet, 
 						wk->InfoWin, wk->Want.characterNo,wk->Want.gender,
 						WorldTrade_LevelTermGet(wk->Want.level_min,wk->Want.level_max,
-							LEVEL_PRINT_TBL_DEPOSIT));
+							LEVEL_PRINT_TBL_DEPOSIT), &wk->print);
 
 		break;
 	}
@@ -1501,7 +1507,7 @@ static int SubSeq_End( WORLDTRADE_WORK *wk )
 //------------------------------------------------------------------
 static int SubSeq_MessageWait( WORLDTRADE_WORK *wk )
 {
-	if( GF_MSG_PrintEndCheck( wk->MsgIndex )==0){
+	if( GF_MSG_PrintEndCheck( &wk->print )==0){
 		wk->subprocess_seq = wk->subprocess_nextseq;
 	}
 	return SEQ_MAIN;
@@ -1546,14 +1552,14 @@ static u16 sex_mark_col( int idx )
  * @retval  none
  */
 //==============================================================================
-void WorldTrade_PokeNamePrint( GFL_BMPWIN *win, GFL_MSGDATA *nameman, int monsno, int flag, int y, PRINTSYS_LSB color )
+void WorldTrade_PokeNamePrint( GFL_BMPWIN *win, GFL_MSGDATA *nameman, int monsno, int flag, int y, PRINTSYS_LSB color, WT_PRINT *print )
 {
 	STRBUF *namebuf;
 
 	// 名前
 	if(monsno!=0){
 		namebuf = GFL_MSG_CreateString( nameman, monsno );
-		WorldTrade_SysPrint( win, namebuf, 0, y, flag, color );
+		WorldTrade_SysPrint( win, namebuf, 0, y, flag, color, print );
 		GFL_STR_DeleteBuffer(namebuf);
 	}
 
@@ -1573,14 +1579,14 @@ void WorldTrade_PokeNamePrint( GFL_BMPWIN *win, GFL_MSGDATA *nameman, int monsno
  * @retval  none
  */
 //==============================================================================
-void WorldTrade_PokeNamePrintNoPut( GFL_BMPWIN *win, GFL_MSGDATA *nameman, int monsno, int y, PRINTSYS_LSB color )
+void WorldTrade_PokeNamePrintNoPut( GFL_BMPWIN *win, GFL_MSGDATA *nameman, int monsno, int y, PRINTSYS_LSB color, WT_PRINT *print )
 {
 	STRBUF *namebuf;
 
 	// 名前
 	if(monsno!=0){
 		namebuf = GFL_MSG_CreateString( nameman, monsno );
-		GF_STR_PrintColor( win, FONT_SYSTEM, namebuf, 0, y, MSG_NO_PUT, color,NULL);
+		GF_STR_PrintColor( win, FONT_SYSTEM, namebuf, 0, y, MSG_NO_PUT, color, print);
 		GFL_STR_DeleteBuffer(namebuf);
 	}
 
@@ -1603,19 +1609,19 @@ void WorldTrade_PokeNamePrintNoPut( GFL_BMPWIN *win, GFL_MSGDATA *nameman, int m
  *
  */
 //--------------------------------------------------------------
-void WorldTrade_CountryPrint( GFL_BMPWIN *win, GFL_MSGDATA *nameman, GFL_MSGDATA *msgman, int country_code, int flag, int y, PRINTSYS_LSB color )
+void WorldTrade_CountryPrint( GFL_BMPWIN *win, GFL_MSGDATA *nameman, GFL_MSGDATA *msgman, int country_code, int flag, int y, PRINTSYS_LSB color, WT_PRINT *print )
 {
 	STRBUF *namebuf;
 
 	// 国名
 	if(country_code!=0){
 		namebuf = GFL_MSG_CreateString( nameman, country_code );
-		WorldTrade_SysPrint( win, namebuf, 0, y, flag, color );
+		WorldTrade_SysPrint( win, namebuf, 0, y, flag, color, print );
 		GFL_STR_DeleteBuffer(namebuf);
 	}
 	else{	//「きにしない」を表示
 		namebuf = GFL_MSG_CreateString( msgman, msg_gtc_search_015 );
-		WorldTrade_SysPrint( win, namebuf, 0, y, flag, color );
+		WorldTrade_SysPrint( win, namebuf, 0, y, flag, color, print );
 		GFL_STR_DeleteBuffer(namebuf);
 	}
 
@@ -1667,7 +1673,7 @@ const int WorldTrade_SexStringTable[]={
  * @retval  none
  */
 //==============================================================================
-void WorldTrade_SexPrint( GFL_BMPWIN *win, GFL_MSGDATA *msgman, int sex, int flag, int y, int printflag, PRINTSYS_LSB color )
+void WorldTrade_SexPrint( GFL_BMPWIN *win, GFL_MSGDATA *msgman, int sex, int flag, int y, int printflag, PRINTSYS_LSB color, WT_PRINT *print )
 {
 	STRBUF *sexbuf;
 
@@ -1681,9 +1687,9 @@ void WorldTrade_SexPrint( GFL_BMPWIN *win, GFL_MSGDATA *msgman, int sex, int fla
 	sexbuf = GFL_MSG_CreateString( msgman, WorldTrade_SexStringTable[sex]  );
 	// flagが3以内の場合はセンタリング指定・以上の場合はＸ座標指定
 	if(printflag > 3){
-		WorldTrade_SysPrint( win, sexbuf,   printflag, y, 0, GetSexColor( sex, color ) );
+		WorldTrade_SysPrint( win, sexbuf,   printflag, y, 0, GetSexColor( sex, color ), print );
 	}else{
-		WorldTrade_SysPrint( win, sexbuf,   0, y, printflag, GetSexColor( sex, color ) );
+		WorldTrade_SysPrint( win, sexbuf,   0, y, printflag, GetSexColor( sex, color ), print );
 	}
 	GFL_STR_DeleteBuffer(sexbuf);
 }
@@ -1704,7 +1710,7 @@ void WorldTrade_SexPrint( GFL_BMPWIN *win, GFL_MSGDATA *msgman, int sex, int fla
  * @retval  none
  */
 //==============================================================================
-void WorldTrade_SexPrintNoPut( GFL_BMPWIN *win, GFL_MSGDATA *msgman, int sex, int flag, int x, int y, PRINTSYS_LSB color )
+void WorldTrade_SexPrintNoPut( GFL_BMPWIN *win, GFL_MSGDATA *msgman, int sex, int flag, int x, int y, PRINTSYS_LSB color, WT_PRINT *print )
 {
 	STRBUF *sexbuf;
 
@@ -1717,7 +1723,7 @@ void WorldTrade_SexPrintNoPut( GFL_BMPWIN *win, GFL_MSGDATA *msgman, int sex, in
 	
 	sexbuf = GFL_MSG_CreateString( msgman, WorldTrade_SexStringTable[sex]  );
 	// flagが3以内の場合はセンタリング指定・以上の場合はＸ座標指定
-	GF_STR_PrintColor( win, FONT_SYSTEM, sexbuf, x, y, MSG_NO_PUT, GetSexColor( sex, color ),NULL);
+	GF_STR_PrintColor( win, FONT_SYSTEM, sexbuf, x, y, MSG_NO_PUT, GetSexColor( sex, color ),print);
 	GFL_STR_DeleteBuffer(sexbuf);
 }
 
@@ -1736,9 +1742,9 @@ void WorldTrade_SexPrintNoPut( GFL_BMPWIN *win, GFL_MSGDATA *msgman, int sex, in
  * @retval  none		
  */
 //==============================================================================
-void WorldTrade_WantLevelPrint( GFL_BMPWIN *win, GFL_MSGDATA *msgman, int level, int flag, int y, PRINTSYS_LSB color, int tbl_select )
+void WorldTrade_WantLevelPrint( GFL_BMPWIN *win, GFL_MSGDATA *msgman, int level, int flag, int y, PRINTSYS_LSB color, int tbl_select, WT_PRINT *print )
 {
-	WorldTrade_WantLevelPrint_XY( win, msgman, level, flag, 0, y, color, tbl_select );
+	WorldTrade_WantLevelPrint_XY( win, msgman, level, flag, 0, y, color, tbl_select, print );
 
 }
 
@@ -1759,7 +1765,7 @@ void WorldTrade_WantLevelPrint( GFL_BMPWIN *win, GFL_MSGDATA *msgman, int level,
  * @retval  none		
  */
 //==============================================================================
-void WorldTrade_WantLevelPrint_XY(GFL_BMPWIN *win, GFL_MSGDATA *msgman, int level, int flag, int x, int y, PRINTSYS_LSB color, int tbl_select )
+void WorldTrade_WantLevelPrint_XY(GFL_BMPWIN *win, GFL_MSGDATA *msgman, int level, int flag, int x, int y, PRINTSYS_LSB color, int tbl_select, WT_PRINT *print )
 {
 	STRBUF *levelbuf;
 	const WT_LEVEL_TERM * level_tbl;
@@ -1773,7 +1779,7 @@ void WorldTrade_WantLevelPrint_XY(GFL_BMPWIN *win, GFL_MSGDATA *msgman, int leve
 	
 	if(level!=-1){
 		levelbuf = GFL_MSG_CreateString( msgman, level_tbl[level].msg );
-		WorldTrade_SysPrint( win, levelbuf,  x, y, flag, color );
+		WorldTrade_SysPrint( win, levelbuf,  x, y, flag, color, print );
 		GFL_STR_DeleteBuffer(levelbuf);
 	}
 
@@ -1795,14 +1801,14 @@ void WorldTrade_WantLevelPrint_XY(GFL_BMPWIN *win, GFL_MSGDATA *msgman, int leve
  */
 //------------------------------------------------------------------
 void WodrldTrade_PokeWantPrint( GFL_MSGDATA *MsgManager, GFL_MSGDATA *MonsNameManager,
-	WORDSET *WordSet, GFL_BMPWIN *win[], int monsno, int sex, int level )
+	WORDSET *WordSet, GFL_BMPWIN *win[], int monsno, int sex, int level, WT_PRINT *print )
 {
 	STRBUF *strbuf;
 	int i;
 
 	//「ほしいポケモン」描画
 	strbuf = GFL_MSG_CreateString( MsgManager, msg_gtc_05_008 );
-	WorldTrade_SysPrint( win[0], strbuf,    0, 0, 0, PRINTSYS_LSB_Make(15,2,0) );
+	WorldTrade_SysPrint( win[0], strbuf,    0, 0, 0, PRINTSYS_LSB_Make(15,2,0), print );
 
 	// 名前・性別・レベルの欄はクリアする
 	for(i=1;i<3;i++){
@@ -1810,12 +1816,12 @@ void WodrldTrade_PokeWantPrint( GFL_MSGDATA *MsgManager, GFL_MSGDATA *MonsNameMa
 	}
 
 	// 名前
-	WorldTrade_PokeNamePrint(win[1], MonsNameManager, monsno, 0, 0,PRINTSYS_LSB_Make(1,2,0) );
+	WorldTrade_PokeNamePrint(win[1], MonsNameManager, monsno, 0, 0,PRINTSYS_LSB_Make(1,2,0), print );
 
 	// 性別
 	if( sex==DPW_TR_GENDER_MALE || sex==DPW_TR_GENDER_FEMALE ){
 		OS_Printf("性別描画した %d\n", sex);
-		WorldTrade_SexPrint( win[1], MsgManager, sex, 0, 0, 70, PRINTSYS_LSB_Make(1,2,0) );
+		WorldTrade_SexPrint( win[1], MsgManager, sex, 0, 0, 70, PRINTSYS_LSB_Make(1,2,0), print );
 	}else{
 		OS_Printf("性別描画してない %d\n");
 	
@@ -1823,7 +1829,7 @@ void WodrldTrade_PokeWantPrint( GFL_MSGDATA *MsgManager, GFL_MSGDATA *MonsNameMa
 
 	// レベル指定
 	WorldTrade_WantLevelPrint( win[2], MsgManager, level, 2, 0, PRINTSYS_LSB_Make(1,2,0),
-		LEVEL_PRINT_TBL_DEPOSIT );
+		LEVEL_PRINT_TBL_DEPOSIT, print );
 	
 	
 
@@ -1846,14 +1852,14 @@ void WodrldTrade_PokeWantPrint( GFL_MSGDATA *MsgManager, GFL_MSGDATA *MonsNameMa
  */
 //------------------------------------------------------------------
 void WodrldTrade_MyPokeWantPrint( GFL_MSGDATA *MsgManager, GFL_MSGDATA *MonsNameManager,
-	WORDSET *WordSet, GFL_BMPWIN *win[], int monsno, int sex, int level )
+	WORDSET *WordSet, GFL_BMPWIN *win[], int monsno, int sex, int level, WT_PRINT *print )
 {
 	STRBUF *strbuf;
 	int i;
 
 	//「ほしいポケモン」描画
 	strbuf = GFL_MSG_CreateString( MsgManager, msg_gtc_05_008 );
-	WorldTrade_SysPrint( win[0], strbuf,    0, 0, 0, PRINTSYS_LSB_Make(15,2,0) );
+	WorldTrade_SysPrint( win[0], strbuf,    0, 0, 0, PRINTSYS_LSB_Make(15,2,0), print );
 
 	// 名前・性別・レベルの欄はクリアする
 	for(i=1;i<3;i++){
@@ -1861,19 +1867,19 @@ void WodrldTrade_MyPokeWantPrint( GFL_MSGDATA *MsgManager, GFL_MSGDATA *MonsName
 	}
 
 	// 名前
-	WorldTrade_PokeNamePrint(win[1], MonsNameManager, monsno, 0, 0,PRINTSYS_LSB_Make(1,2,0) );
+	WorldTrade_PokeNamePrint(win[1], MonsNameManager, monsno, 0, 0,PRINTSYS_LSB_Make(1,2,0), print );
 
 	// 性別
 	if( sex==DPW_TR_GENDER_MALE || sex==DPW_TR_GENDER_FEMALE ){
 		OS_Printf("性別描画した %d\n", sex);
-		WorldTrade_SexPrint( win[1], MsgManager, sex, 0, 0, 70, PRINTSYS_LSB_Make(1,2,0) );
+		WorldTrade_SexPrint( win[1], MsgManager, sex, 0, 0, 70, PRINTSYS_LSB_Make(1,2,0),print );
 	}else{
 		OS_Printf("性別描画してない\n");
 	}
 
 	// レベル指定
 	WorldTrade_WantLevelPrint( win[2], MsgManager, level, 0, 0, PRINTSYS_LSB_Make(1,2,0),
-		LEVEL_PRINT_TBL_DEPOSIT );
+		LEVEL_PRINT_TBL_DEPOSIT,print );
 	
 	
 
@@ -1897,7 +1903,8 @@ static void PokeDepositPrint(
 	WORDSET *WordSet, 
 	GFL_BMPWIN *win[], 
 	POKEMON_PASO_PARAM *ppp,
-	Dpw_Tr_PokemonDataSimple *post )
+	Dpw_Tr_PokemonDataSimple *post,
+	WT_PRINT *print )
 {
 	STRBUF *strbuf,	*levelbuf;
 	STRBUF *namebuf = GFL_STR_CreateBuffer( MONS_NAME_SIZE+EOM_SIZE, HEAPID_WORLDTRADE );
@@ -1929,12 +1936,12 @@ static void PokeDepositPrint(
 	}
 
 	// 描画
-	WorldTrade_SysPrint( win[0], strbuf,    0, 0, 0, PRINTSYS_LSB_Make(15,2,0) );
-	WorldTrade_SysPrint( win[1], namebuf,   0, 0, 0, PRINTSYS_LSB_Make(1,2,0) );
+	WorldTrade_SysPrint( win[0], strbuf,    0, 0, 0, PRINTSYS_LSB_Make(15,2,0), print );
+	WorldTrade_SysPrint( win[1], namebuf,   0, 0, 0, PRINTSYS_LSB_Make(1,2,0), print );
 	//WorldTrade_SysPrint( win[2], levelbuf,  0, 0, 0, PRINTSYS_LSB_Make(15,2,0) );
-	WorldTrade_SysPrint( win[2], levelbuf,  0, 0, 2, PRINTSYS_LSB_Make(1,2,0) );
+	WorldTrade_SysPrint( win[2], levelbuf,  0, 0, 2, PRINTSYS_LSB_Make(1,2,0), print );
 	if(sex!=DPW_TR_GENDER_NONE){
-		WorldTrade_SysPrint( win[1], sexbuf,   70, 0, 0, sex_mark_col(sex-1) );
+		WorldTrade_SysPrint( win[1], sexbuf,   70, 0, 0, sex_mark_col(sex-1), print );
 	}
 
 	post->characterNo = PPP_Get(ppp, ID_PARA_monsno, NULL);

@@ -17,7 +17,7 @@
 #define GS_DP_GISOU
 
 #include "system/bmp_menulist.h"
-//#include "system/touch_subwindow.h"
+#include "system/touch_subwindow.h"
 //#include "system/numfont.h"
 //#include "system/selbox.h"
 //#include "communication/wm_icon.h"
@@ -93,10 +93,17 @@ enum{
 };
 
 ///< CLACTで定義しているセルが大きすぎてサブ画面に影響がでてしまうので離してみる
-#define NAMEIN_SUB_ACTOR_DISTANCE 	(256*FX32_ONE)
+#define NAMEIN_SUB_ACTOR_DISTANCE 	(512)
+//		256*FX32_ONE
 
 ///< CellActorに処理させるリソースマネージャの種類の数（＝マルチセル・マルチセルアニメは使用しない）
-#define CLACT_RESOURCE_NUM		(  4 )
+enum
+{	
+	CLACT_U_CHAR_RES,
+	CLACT_U_PLTT_RES,
+	CLACT_U_CELL_RES,
+	CLACT_RESOURCE_NUM,
+};
 #define NAMEIN_OAM_NUM			( 14 )
 
 #define WORLDTRADE_MESFRAME_PAL	 ( /*10*/14 )	//＜＜ボックスリストとかぶるから変更
@@ -424,6 +431,10 @@ typedef struct _WORLDTRADE_WORK{
 
 	// 描画周りのワーク（主にOAM)
 	GFL_CLUNIT*					clactSet;								///< セルアクターセット
+
+	u32 resObjTbl[RES_NUM][CLACT_RESOURCE_NUM]; ///< リソースオブジェテーブル
+
+
 	GFL_CLWK *			CursorActWork;							///< セルアクターワークポインタ配列
 	GFL_CLWK *			SubCursorActWork;						///< セルアクターワークポインタ配列
 	GFL_CLWK *			FingerActWork;							///< セルアクターワークポインタ配列
@@ -515,6 +526,8 @@ typedef struct _WORLDTRADE_WORK{
 	GFL_TCBSYS* tcbsys;										///< PMDS_taskがなくなったので自前で用意
 	void * task_wk;												///< タスク用ワーク
 	void * task_wk_area;									///< タスクワーク作成用エリア
+	BOOL	is_net_init;										///< NET_Initをしたかどうか
+	WT_PRINT	print;
 
 #ifdef PM_DEBUG
 	int 					frame;									//
@@ -551,12 +564,11 @@ extern u32 WorldTrade_TouchSwMain(WORLDTRADE_WORK *wk);
 
 extern void WorldTrade_SetNextSeq( WORLDTRADE_WORK *wk, int to_seq, int next_seq );
 extern void WorldTrade_SetNextProcess( WORLDTRADE_WORK *wk, int next_process );
-extern void WorldTrade_ActPos( GFL_CLWK * act, int x, int y );
 extern  int WorldTrade_WifiLinkLevel( void );
-extern void WorldTrade_BmpWinPrint( GFL_BMPWIN *win, GFL_MSGDATA *msgman, int font, int msgno, u16 dat );
-extern void WorldTrade_SysPrint( GFL_BMPWIN *win, STRBUF *strbuf, int x, int y, int flag, PRINTSYS_LSB color );
-extern void WorldTrade_TalkPrint( GFL_BMPWIN *win, STRBUF *strbuf, int x, int y, int flag, PRINTSYS_LSB color );
-extern void WorldTrade_TouchPrint( GFL_BMPWIN *win, STRBUF *strbuf, int x, int y, int flag, PRINTSYS_LSB color );
+extern void WorldTrade_BmpWinPrint( GFL_BMPWIN *win, GFL_MSGDATA *msgman, int font, int msgno, u16 dat, WT_PRINT *print );
+extern void WorldTrade_SysPrint( GFL_BMPWIN *win, STRBUF *strbuf, int x, int y, int flag, PRINTSYS_LSB color, WT_PRINT *print );
+extern void WorldTrade_TalkPrint( GFL_BMPWIN *win, STRBUF *strbuf, int x, int y, int flag, PRINTSYS_LSB color, WT_PRINT *print );
+extern void WorldTrade_TouchPrint( GFL_BMPWIN *win, STRBUF *strbuf, int x, int y, int flag, PRINTSYS_LSB color , WT_PRINT *print );
 
 extern void WorldTrade_WifiIconAdd( WORLDTRADE_WORK *wk );
 extern void Enter_MessagePrint( WORLDTRADE_WORK *wk, GFL_MSGDATA *msgman, int msgno, int wait, u16 dat );
@@ -569,6 +581,7 @@ extern void WorldTrade_SubProcessUpdate( WORLDTRADE_WORK *wk );
 extern void WorldTrade_TimeIconAdd( WORLDTRADE_WORK *wk );
 extern void WorldTrade_TimeIconDel( WORLDTRADE_WORK *wk );
 extern void WorldTrade_CLACT_PosChange( GFL_CLWK * ptr, int x, int y );
+extern void WorldTrade_CLACT_PosChangeSub( GFL_CLWK * act, int x, int y );
 extern SELBOX_WORK* WorldTrade_SelBoxInit( WORLDTRADE_WORK *wk, int count, int y );
 extern void WorldTrade_SelBoxEnd( WORLDTRADE_WORK *wk );
 
@@ -594,7 +607,7 @@ extern int  WorldTrade_Enter_End( WORLDTRADE_WORK *wk, int seq);
 extern int  WorldTrade_Enter_Main(WORLDTRADE_WORK *wk, int seq);
 extern int  WorldTrade_Enter_Init(WORLDTRADE_WORK *wk, int seq);
 
-extern void WorldTrade_ExplainPrint( GFL_BMPWIN *win,  GFL_MSGDATA *msgman, int no );
+extern void WorldTrade_ExplainPrint( GFL_BMPWIN *win,  GFL_MSGDATA *msgman, int no, WT_PRINT *print );
 
 // worldtrade_title.c
 extern int  WorldTrade_Title_End( WORLDTRADE_WORK *wk, int seq);
@@ -616,10 +629,11 @@ extern int  WorldTrade_MyPoke_End(WORLDTRADE_WORK *wk, int seq);
 extern void WorldTrade_PokeInfoPrint( 	GFL_MSGDATA *MsgManager,
 							GFL_MSGDATA *MonsNameManager, 	
 							WORDSET *WordSet, 
-							GFL_BMPWIN* win[], 	
+							GFL_BMPWIN *win[], 	
 							POKEMON_PASO_PARAM *ppp,
-							Dpw_Tr_PokemonDataSimple *post );
-extern void WorldTrade_PokeInfoPrint2( GFL_MSGDATA *MsgManager, GFL_BMPWIN* win[], STRCODE *name, POKEMON_PARAM *pp, GFL_BMPWIN* oya_win[] );
+							Dpw_Tr_PokemonDataSimple *post,
+							WT_PRINT *print );
+extern void WorldTrade_PokeInfoPrint2( GFL_MSGDATA *MsgManager, GFL_BMPWIN *win[], STRCODE *name, POKEMON_PARAM *pp, GFL_BMPWIN* oya_win[], WT_PRINT *print );
 extern void WorldTrade_TransPokeGraphic( POKEMON_PARAM *pp );
 
 
@@ -646,9 +660,9 @@ extern int WorldTrade_Deposit_Init(WORLDTRADE_WORK *wk, int seq);
 extern int WorldTrade_Deposit_Main(WORLDTRADE_WORK *wk, int seq);
 extern int WorldTrade_Deposit_End(WORLDTRADE_WORK *wk, int seq);
 extern void WodrldTrade_PokeWantPrint( GFL_MSGDATA *MsgManager, GFL_MSGDATA *MonsNameManager,
-		WORDSET *WordSet, GFL_BMPWIN* win[], int monsno, int sex, int level );
+	WORDSET *WordSet, GFL_BMPWIN *win[], int monsno, int sex, int level, WT_PRINT *print );
 extern void WodrldTrade_MyPokeWantPrint( GFL_MSGDATA *MsgManager, GFL_MSGDATA *MonsNameManager,
-	WORDSET *WordSet, GFL_BMPWIN* win[], int monsno, int sex, int level );
+	WORDSET *WordSet, GFL_BMPWIN *win[], int monsno, int sex, int level, WT_PRINT *print );
 
 extern BMPMENULIST_WORK *WorldTrade_WordheadBmpListMake( WORLDTRADE_WORK *wk, BMP_MENULIST_DATA **menulist, 
 													GFL_BMPWIN *win, GFL_MSGDATA *MsgManager );
@@ -662,11 +676,11 @@ extern u16* WorldTrade_ZukanSortDataGet2( int heap, int idx, int* p_arry_num );
 
 extern BMPMENULIST_WORK *WorldTrade_CountryListMake(BMP_MENULIST_DATA **menulist, GFL_BMPWIN *win, GFL_MSGDATA *CountryMsgManager, GFL_MSGDATA *NormalMsgManager);
 
-extern void WorldTrade_PokeNamePrint( GFL_BMPWIN *win, GFL_MSGDATA *nameman, int monsno, int flag, int y, PRINTSYS_LSB color );
-extern void WorldTrade_SexPrint( GFL_BMPWIN *win, GFL_MSGDATA *msgman, int sex, int flag, int y, int printflag, PRINTSYS_LSB color );
-extern void WorldTrade_WantLevelPrint( GFL_BMPWIN *win, GFL_MSGDATA *msgman, int level, int flag, int y, PRINTSYS_LSB color, int tbl_select );
-extern void WorldTrade_WantLevelPrint_XY(GFL_BMPWIN *win, GFL_MSGDATA *msgman, int level, int flag, int x, int y, PRINTSYS_LSB color, int tbl_select );
-extern void WorldTrade_CountryPrint( GFL_BMPWIN *win, GFL_MSGDATA *nameman, GFL_MSGDATA *msgman, int country_code, int flag, int y, PRINTSYS_LSB color );
+extern void WorldTrade_PokeNamePrint( GFL_BMPWIN *win, GFL_MSGDATA *nameman, int monsno, int flag, int y, PRINTSYS_LSB color, WT_PRINT *print );
+extern void WorldTrade_SexPrint( GFL_BMPWIN *win, GFL_MSGDATA *msgman, int sex, int flag, int y, int printflag, PRINTSYS_LSB color, WT_PRINT *print );
+extern void WorldTrade_WantLevelPrint( GFL_BMPWIN *win, GFL_MSGDATA *msgman, int level, int flag, int y, PRINTSYS_LSB color, int tbl_select, WT_PRINT *print );
+extern void WorldTrade_WantLevelPrint_XY(GFL_BMPWIN *win, GFL_MSGDATA *msgman, int level, int flag, int x, int y, PRINTSYS_LSB color, int tbl_select, WT_PRINT *print );
+extern void WorldTrade_CountryPrint( GFL_BMPWIN *win, GFL_MSGDATA *nameman, GFL_MSGDATA *msgman, int country_code, int flag, int y, PRINTSYS_LSB color, WT_PRINT *print );
 extern void WorldTrade_PostPokemonBaseDataMake( Dpw_Tr_Data *dtd, WORLDTRADE_WORK *wk );
 extern int  WorldTrade_SexSelectionCheck( Dpw_Tr_PokemonSearchData *dtp, int sex_selection );
 extern int  WorldTrade_LevelTermGet( int min, int max, int tbl_select );
@@ -679,8 +693,8 @@ extern void WorldTrade_SelectNameListBackup( SELECT_LIST_POS *slp, int head, int
 extern int  WorldTrade_LevelListAdd( BMP_MENULIST_DATA **menulist, GFL_MSGDATA *MsgManager, int tbl_select);
 extern int WorldTrade_NationSortListNumGet( int start, int *number );
 extern int WorldTrade_NationSortListMake( BMP_MENULIST_DATA **menulist, GFL_MSGDATA *CountryNameManager, int start );
-extern void WorldTrade_PokeNamePrintNoPut( GFL_BMPWIN *win, GFL_MSGDATA *nameman, int monsno, int y, PRINTSYS_LSB color );
-extern void WorldTrade_SexPrintNoPut( GFL_BMPWIN *win, GFL_MSGDATA *msgman, int sex, int flag, int x, int y, PRINTSYS_LSB color );
+extern void WorldTrade_PokeNamePrintNoPut( GFL_BMPWIN *win, GFL_MSGDATA *nameman, int monsno, int y, PRINTSYS_LSB color, WT_PRINT *print );
+extern void WorldTrade_SexPrintNoPut( GFL_BMPWIN *win, GFL_MSGDATA *msgman, int sex, int flag, int x, int y, PRINTSYS_LSB color, WT_PRINT *print );
 
 // workdtrade_uploade.c
 extern int WorldTrade_Upload_Init(WORLDTRADE_WORK *wk, int seq);

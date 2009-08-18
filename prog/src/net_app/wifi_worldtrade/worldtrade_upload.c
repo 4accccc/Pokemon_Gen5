@@ -544,7 +544,7 @@ static void BmpWinInit( WORLDTRADE_WORK *wk )
 	// ---------- メイン画面 ------------------
 
 	// BG0面BMP（会話ウインドウ）確保
-	wk->MsgWin	= GFL_BMPWIN_Create( GFL_BG_FRAME0_M,
+	wk->MsgWin	= GFL_BMPWIN_CreateFixPos( GFL_BG_FRAME0_M,
 		TALK_WIN_X, TALK_WIN_Y, TALK_WIN_SX, TALK_WIN_SY, WORLDTRADE_TALKFONT_PAL,  TALK_MESSAGE_OFFSET );
 	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->MsgWin), 0x0000 );
 
@@ -2382,7 +2382,7 @@ static int Subseq_End( WORLDTRADE_WORK *wk)
 //------------------------------------------------------------------
 static int Subseq_MessageWait( WORLDTRADE_WORK *wk )
 {
-	if( GF_MSG_PrintEndCheck( wk->MsgIndex )==0){
+	if( GF_MSG_PrintEndCheck( &wk->print )==0){
 		wk->subprocess_seq = wk->subprocess_nextseq;
 	}
 	return SEQ_MAIN;

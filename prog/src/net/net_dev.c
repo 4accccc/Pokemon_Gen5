@@ -33,6 +33,7 @@ FS_EXTERN_OVERLAY(dev_wifi);
 FS_EXTERN_OVERLAY(dev_wireless);
 FS_EXTERN_OVERLAY(dev_irc);
 FS_EXTERN_OVERLAY(wifilobby_common);
+FS_EXTERN_OVERLAY(dpw_common);
 
 
 //------------------------------------------------------------------------------
@@ -45,9 +46,13 @@ FS_EXTERN_OVERLAY(wifilobby_common);
 GFLNetDevTable* NET_DeviceLoad(int deviceNo)
 {
   switch(deviceNo){
-#if SUPPORT_WIFI_
-  case GFL_NET_TYPE_WIFI:
+#if SUPPORT_WIFI_	
 	case GFL_NET_TYPE_WIFI_GTS:
+    GFL_OVERLAY_Load( FS_OVERLAY_ID( dev_wifilib ) );
+    GFL_OVERLAY_Load( FS_OVERLAY_ID( dev_wifi ) );
+		GFL_OVERLAY_Load( FS_OVERLAY_ID(dpw_common) );
+    return NET_GetWifiDeviceTable();
+  case GFL_NET_TYPE_WIFI:
 #if SUPPORT_OVERLAY_
     GFL_OVERLAY_Load( FS_OVERLAY_ID( dev_wifilib ) );
     GFL_OVERLAY_Load( FS_OVERLAY_ID( dev_wifi ) );
@@ -97,14 +102,20 @@ void NET_DeviceUnload(int deviceNo)
 {
   switch(deviceNo){
 #if SUPPORT_WIFI_
-  case GFL_NET_TYPE_WIFI:
 	case GFL_NET_TYPE_WIFI_GTS:
+#if SUPPORT_OVERLAY_
+    GFL_OVERLAY_Unload( FS_OVERLAY_ID( dpw_common ) );
+    GFL_OVERLAY_Unload( FS_OVERLAY_ID( dev_wifilib ) );
+    GFL_OVERLAY_Unload( FS_OVERLAY_ID( dev_wifi ) );
+#endif
+		break;
+  case GFL_NET_TYPE_WIFI:
 #if SUPPORT_OVERLAY_
     GFL_OVERLAY_Unload( FS_OVERLAY_ID( dev_wifilib ) );
     GFL_OVERLAY_Unload( FS_OVERLAY_ID( dev_wifi ) );
 #endif
     break;
-#endif
+#endif	//SUPPORT_WIFI_
 #if SUPPORT_WIFI_
   case GFL_NET_TYPE_WIFI_LOBBY:
 #if SUPPORT_OVERLAY_

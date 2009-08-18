@@ -60,13 +60,13 @@ static int SubSeq_ReturnScreen1( WORLDTRADE_WORK *wk );
 static int SubSeq_ExchangeScreen2( WORLDTRADE_WORK *wk );
 
 static void ChangePage( WORLDTRADE_WORK *wk );
-static void PokeLabelPrint(GFL_MSGDATA *MsgManager, GFL_BMPWIN * win[], int msg );
-static void TouchPrint( GFL_MSGDATA *MsgManager, GFL_BMPWIN * win[], int msg );
+static void PokeLabelPrint( GFL_MSGDATA *MsgManager, GFL_BMPWIN * win[], int msg, WT_PRINT *print );
+static void TouchPrint( GFL_MSGDATA *MsgManager, GFL_BMPWIN * win[], int msg, WT_PRINT *print );
 
 
 static void SubSeq_MessagePrint( WORLDTRADE_WORK *wk, int msgno, int wait, int flag, u16 dat );
-static void WantPokeInfoPrint( GFL_BMPWIN * win[], GFL_MSGDATA *gtcmsg, GFL_MSGDATA *monsname, Dpw_Tr_PokemonSearchData *dtp);
-static void TrainerInfoPrint( GFL_BMPWIN * win[], STRBUF *strbuf1, STRBUF *strbuf2 );
+static void WantPokeInfoPrint( GFL_BMPWIN * win[], GFL_MSGDATA *gtcmsg, GFL_MSGDATA *monsname, Dpw_Tr_PokemonSearchData *dtsd, WT_PRINT *print );
+static void TrainerInfoPrint( GFL_BMPWIN *win[], STRBUF *strbuf1, STRBUF *strbuf2, WT_PRINT *print );
 static void SlideScreenVFunc( void *p );
 static void DecidePartner( WORLDTRADE_WORK *wk , int result );
 
@@ -170,22 +170,22 @@ int WorldTrade_Partner_Init(WORLDTRADE_WORK *wk, int seq)
 							  wk->WordSet, 
 							  &wk->InfoWin[P_INFOWIN_NICKNAME], 
 							  (POKEMON_PASO_PARAM*)PP_GetPPPPointerConst((POKEMON_PARAM*)wk->DownloadPokemonData[wk->TouchTrainerPos].postData.data),
-							  &wk->DownloadPokemonData[wk->TouchTrainerPos].postSimple );
+							  &wk->DownloadPokemonData[wk->TouchTrainerPos].postSimple, &wk->print );
 
 	// 持ち主情報の表示
 	pp = (POKEMON_PARAM*)wk->DownloadPokemonData[wk->TouchTrainerPos].postData.data;
 	WorldTrade_PokeInfoPrint2( wk->MsgManager, &wk->InfoWin[P_INFOWIN_MOTINUSI], 
 								wk->DownloadPokemonData[wk->TouchTrainerPos].name, 
-								pp, &wk->InfoWin[P_INFOWIN_OYA] );
+								pp, &wk->InfoWin[P_INFOWIN_OYA], &wk->print );
 
 	// ポケモン画像転送
 	WorldTrade_TransPokeGraphic( (POKEMON_PARAM*)wk->DownloadPokemonData[wk->TouchTrainerPos].postData.data );
 
-	PokeLabelPrint( wk->MsgManager, &wk->InfoWin[P_INFOWIN_HOSII_POKEMON], msg_gtc_04_008 );	// 欲しいポケモン
-	PokeLabelPrint( wk->MsgManager, &wk->InfoWin[P_INFOWIN_SUNDEIRUBASHO], msg_gtc_04_012 );	// 住んでいる場所
+	PokeLabelPrint( wk->MsgManager, &wk->InfoWin[P_INFOWIN_HOSII_POKEMON], msg_gtc_04_008, &wk->print );	// 欲しいポケモン
+	PokeLabelPrint( wk->MsgManager, &wk->InfoWin[P_INFOWIN_SUNDEIRUBASHO], msg_gtc_04_012, &wk->print );	// 住んでいる場所
 
-	TouchPrint( wk->MsgManager, &wk->MenuWin[MENU_EXCHANGE_WIN], msg_gtc_04_019 );	// 「こうかんする」
-	TouchPrint( wk->MsgManager, &wk->MenuWin[MENU_BACK_WIN],     msg_gtc_05_014 );	// 「もどる」
+	TouchPrint( wk->MsgManager, &wk->MenuWin[MENU_EXCHANGE_WIN], msg_gtc_04_019, &wk->print );	// 「こうかんする」
+	TouchPrint( wk->MsgManager, &wk->MenuWin[MENU_BACK_WIN],     msg_gtc_05_014 , &wk->print);	// 「もどる」
 
 	// 「ほしいポケモン」か「すんでいるばしょ」の描画
 	ChangePage( wk );
@@ -511,20 +511,20 @@ static void BmpWinInit( WORLDTRADE_WORK *wk )
 {
 	// ---------- メイン画面 ------------------
 
-	wk->MsgWin	= GFL_BMPWIN_Create( GFL_BG_FRAME0_S,
+	wk->MsgWin	= GFL_BMPWIN_CreateFixPos( GFL_BG_FRAME0_S,
 		TALK_WIN_X, TALK_WIN_Y, TALK_WIN_SX, TALK_WIN_SY, 
 		WORLDTRADE_TALKFONT_SUB_PAL,  BMPWIN_MESWINDOW_OFFSET );
 
 	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->MsgWin), 0x0000 );
 
 	// 「こうかんする」
-	wk->MenuWin[0]	= GFL_BMPWIN_Create( GFL_BG_FRAME0_S,
+	wk->MenuWin[0]	= GFL_BMPWIN_CreateFixPos( GFL_BG_FRAME0_S,
 		MENU_EXCHANGE1_X, MENU_EXCHANGE1_Y, MENU_EXCHANGE1_SX, MENU_EXCHANGE1_SY, 
 		WORLDTRADE_TALKFONT_SUB_PAL,  BMPWIN_MENU1_OFFSET );	
 	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->MenuWin[0]), 0x0000 );
 
 	// 「もどる」
-	wk->MenuWin[1]	= GFL_BMPWIN_Create( GFL_BG_FRAME0_S,
+	wk->MenuWin[1]	= GFL_BMPWIN_CreateFixPos( GFL_BG_FRAME0_S,
 		MENU_EXCHANGE2_X, MENU_EXCHANGE2_Y, MENU_EXCHANGE2_SX, MENU_EXCHANGE2_SY, 
 		WORLDTRADE_TALKFONT_SUB_PAL,  BMPWIN_MENU2_OFFSET );	
 	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->MenuWin[1]), 0x0000 );
@@ -540,7 +540,7 @@ static void BmpWinInit( WORLDTRADE_WORK *wk )
 		// BMPWIN確保
 		for(i=0;i<PARTNER_INFOWIN_MAX;i++){
 			if(info_bmpwin_table[i][4]==GFL_BG_FRAME0_M){
-				wk->InfoWin[i] = GFL_BMPWIN_Create(
+				wk->InfoWin[i] = GFL_BMPWIN_CreateFixPos(
 						info_bmpwin_table[i][4],	// 表示フレーム(GFL_BG_FRAME0_M)
 						info_bmpwin_table[i][0], 	// X
 						info_bmpwin_table[i][1], 	// Y
@@ -550,7 +550,7 @@ static void BmpWinInit( WORLDTRADE_WORK *wk )
 				m_offset += info_bmpwin_table[i][2]*info_bmpwin_table[i][3];
 
 			}else{
-				wk->InfoWin[i]	= GFL_BMPWIN_Create(
+				wk->InfoWin[i]	= GFL_BMPWIN_CreateFixPos(
 						info_bmpwin_table[i][4],	// 表示フレーム(GFL_BG_FRAME0_S)
 						info_bmpwin_table[i][0], 	// X
 						info_bmpwin_table[i][1], 	// Y
@@ -884,8 +884,8 @@ static int SubSeq_YesNoSelect( WORLDTRADE_WORK *wk)
 		TOUCH_SW_FreeWork( wk->tss );
 		wk->subprocess_seq  = SUBSEQ_END;
 		WorldTrade_SubProcessChange( wk, WORLDTRADE_MYBOX, MODE_EXCHANGE_SELECT );
-		PokeLabelPrint( wk->MsgManager, &wk->InfoWin[P_INFOWIN_HOSII_POKEMON], msg_gtc_04_008 );	// 欲しいポケモン
-		PokeLabelPrint( wk->MsgManager, &wk->InfoWin[P_INFOWIN_SUNDEIRUBASHO], msg_gtc_04_012 );	// 住んでいる場所
+		PokeLabelPrint( wk->MsgManager, &wk->InfoWin[P_INFOWIN_HOSII_POKEMON], msg_gtc_04_008, &wk->print );	// 欲しいポケモン
+		PokeLabelPrint( wk->MsgManager, &wk->InfoWin[P_INFOWIN_SUNDEIRUBASHO], msg_gtc_04_012, &wk->print );	// 住んでいる場所
 		ChangePage( wk );
 	}else if(ret==TOUCH_SW_RET_NO){
 		// 交換相手選択に戻る
@@ -894,8 +894,8 @@ static int SubSeq_YesNoSelect( WORLDTRADE_WORK *wk)
 		BmpWinFrame_Clear( wk->MsgWin, WINDOW_TRANS_ON );
 
 		wk->subprocess_seq  = SUBSEQ_MAIN;
-		TouchPrint( wk->MsgManager, &wk->MenuWin[MENU_EXCHANGE_WIN], msg_gtc_04_019 );	// 「こうかんする」
-		TouchPrint( wk->MsgManager, &wk->MenuWin[MENU_BACK_WIN],     msg_gtc_05_014 );	// 「もどる」
+		TouchPrint( wk->MsgManager, &wk->MenuWin[MENU_EXCHANGE_WIN], msg_gtc_04_019, &wk->print );	// 「こうかんする」
+		TouchPrint( wk->MsgManager, &wk->MenuWin[MENU_BACK_WIN],     msg_gtc_05_014, &wk->print );	// 「もどる」
 	}
 	
 	
@@ -940,11 +940,11 @@ static void ChangePage( WORLDTRADE_WORK *wk )
 
 	// 金銀はページ切り替えではなく全部表示する
 	// すんでいるばしょ
-	TrainerInfoPrint( &wk->InfoWin[P_INFOWIN_1], wk->InfoString[0], wk->InfoString[1] );
+	TrainerInfoPrint( &wk->InfoWin[P_INFOWIN_1], wk->InfoString[0], wk->InfoString[1],&wk->print );
 
 	// ほしいポケモンの情報
 	WantPokeInfoPrint( &wk->InfoWin[P_INFOWIN_WANT_POKE], wk->MsgManager, wk->MonsNameManager, 
-						&wk->DownloadPokemonData[wk->TouchTrainerPos].wantSimple);
+						&wk->DownloadPokemonData[wk->TouchTrainerPos].wantSimple,&wk->print);
 
 /*
 	if(wk->PartnerPageInfo==0){
@@ -1053,7 +1053,7 @@ static int SubSeq_ReturnScreen1( WORLDTRADE_WORK *wk )
 //------------------------------------------------------------------
 static int SubSeq_MessageWait( WORLDTRADE_WORK *wk )
 {
-	if( GF_MSG_PrintEndCheck( wk->MsgIndex )==0){
+	if( GF_MSG_PrintEndCheck( &wk->print )==0){
 		wk->subprocess_seq = wk->subprocess_nextseq;
 	}
 	return SEQ_MAIN;
@@ -1084,7 +1084,7 @@ static void SubSeq_MessagePrint( WORLDTRADE_WORK *wk, int msgno, int wait, int f
 	BmpWinFrame_Write( wk->MsgWin, WINDOW_TRANS_ON, WORLDTRADE_MESFRAME_CHR, WORLDTRADE_MESFRAME_SUB_PAL );
 
 	// 文字列描画開始
-	wk->MsgIndex = GF_STR_PrintSimple( wk->MsgWin, FONT_TALK, wk->TalkString, 0, 0, wait, NULL);
+	GF_STR_PrintSimple( wk->MsgWin, FONT_TALK, wk->TalkString, 0, 0, &wk->print);
 
 
 }
@@ -1100,13 +1100,13 @@ static void SubSeq_MessagePrint( WORLDTRADE_WORK *wk, int msgno, int wait, int f
  * @retval  none		
  */
 //------------------------------------------------------------------
-static void PokeLabelPrint( GFL_MSGDATA *MsgManager, GFL_BMPWIN * win[], int msg )
+static void PokeLabelPrint( GFL_MSGDATA *MsgManager, GFL_BMPWIN * win[], int msg, WT_PRINT *print )
 {
 	STRBUF *strbuf;
 	
 	strbuf = GFL_MSG_CreateString( MsgManager, msg  );
 
-	WorldTrade_SysPrint( win[0], strbuf, 0, 2, 0, PRINTSYS_LSB_Make(15,2,0) );
+	WorldTrade_SysPrint( win[0], strbuf, 0, 2, 0, PRINTSYS_LSB_Make(15,2,0), print );
 	
 	GFL_STR_DeleteBuffer( strbuf );
 	
@@ -1121,13 +1121,13 @@ static void PokeLabelPrint( GFL_MSGDATA *MsgManager, GFL_BMPWIN * win[], int msg
  * @retval  none		
  */
 //------------------------------------------------------------------
-static void TouchPrint( GFL_MSGDATA *MsgManager, GFL_BMPWIN * win[], int msg )
+static void TouchPrint( GFL_MSGDATA *MsgManager, GFL_BMPWIN * win[], int msg, WT_PRINT *print )
 {
 	STRBUF *strbuf;
 	
 	strbuf = GFL_MSG_CreateString( MsgManager, msg  );
 
-	WorldTrade_TouchPrint( win[0], strbuf, 0, 0, 1, PRINTSYS_LSB_Make(15,2,0) );
+	WorldTrade_TouchPrint( win[0], strbuf, 0, 0, 1, PRINTSYS_LSB_Make(15,2,0), print );
 	
 	GFL_STR_DeleteBuffer( strbuf );
 	
@@ -1145,21 +1145,21 @@ static void TouchPrint( GFL_MSGDATA *MsgManager, GFL_BMPWIN * win[], int msg )
  * @retval  none		
  */
 //------------------------------------------------------------------
-static void WantPokeInfoPrint( GFL_BMPWIN * win[], GFL_MSGDATA *gtcmsg, GFL_MSGDATA *monsname, Dpw_Tr_PokemonSearchData *dtsd)
+static void WantPokeInfoPrint( GFL_BMPWIN * win[], GFL_MSGDATA *gtcmsg, GFL_MSGDATA *monsname, Dpw_Tr_PokemonSearchData *dtsd, WT_PRINT *print )
 {
 	// ほしいポケモン描画
 	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(win[0]), 0x0000 );
-	WorldTrade_PokeNamePrintNoPut( win[0], monsname, dtsd->characterNo,  0, PRINTSYS_LSB_Make(1,2,0) );
+	WorldTrade_PokeNamePrintNoPut( win[0], monsname, dtsd->characterNo,  0, PRINTSYS_LSB_Make(1,2,0),print );
 
 	// 性別
-	WorldTrade_SexPrintNoPut( win[0], gtcmsg, dtsd->gender, 0, 3+13*5+5, 0, PRINTSYS_LSB_Make(1,2,0) );
+	WorldTrade_SexPrintNoPut( win[0], gtcmsg, dtsd->gender, 0, 3+13*5+5, 0, PRINTSYS_LSB_Make(1,2,0),print );
 
 
 	// レベル指定
 	// 欲しいレベル表示
 	WorldTrade_WantLevelPrint_XY( win[0], gtcmsg, 
 		WorldTrade_LevelTermGet(dtsd->level_min, dtsd->level_max, LEVEL_PRINT_TBL_DEPOSIT), 
-		0, 13*8, 0, PRINTSYS_LSB_Make(1,2,0), LEVEL_PRINT_TBL_DEPOSIT );
+		0, 13*8, 0, PRINTSYS_LSB_Make(1,2,0), LEVEL_PRINT_TBL_DEPOSIT, print );
 	
 }
 
@@ -1174,17 +1174,17 @@ static void WantPokeInfoPrint( GFL_BMPWIN * win[], GFL_MSGDATA *gtcmsg, GFL_MSGD
  * @retval  none		
  */
 //------------------------------------------------------------------
-static void TrainerInfoPrint( GFL_BMPWIN *win[], STRBUF *strbuf1, STRBUF *strbuf2 )
+static void TrainerInfoPrint( GFL_BMPWIN *win[], STRBUF *strbuf1, STRBUF *strbuf2, WT_PRINT *print )
 {
 	
 	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(win[0]), 0x0000 );
 	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(win[1]), 0x0000 );
 
 	if(strbuf1!=NULL){
-		WorldTrade_SysPrint( win[0], strbuf1, 0, 0, 0, PRINTSYS_LSB_Make(1,2,0) );
+		WorldTrade_SysPrint( win[0], strbuf1, 0, 0, 0, PRINTSYS_LSB_Make(1,2,0),print );
 	}
 	if(strbuf2!=NULL){
-		WorldTrade_SysPrint( win[1], strbuf2, 0, 0, 0, PRINTSYS_LSB_Make(1,2,0) );
+		WorldTrade_SysPrint( win[1], strbuf2, 0, 0, 0, PRINTSYS_LSB_Make(1,2,0),print );
 	}
 	
 }

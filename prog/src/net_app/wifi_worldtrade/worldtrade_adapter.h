@@ -41,27 +41,25 @@
 #define PARA_MALE							(1)
 #define PARA_FEMALE						(2)
 
-#define SE_CANCEL							(0)	
-#define SE_GTC_NG							(0)
-#define SE_GTC_SEARCH					(0)
-#define SE_GTC_PLAYER_IN			(0)
-#define SE_GTC_ON							(0)
-#define SE_GTC_OFF						(0)
-#define SE_GTC_PLAYER_OUT			(0)
-#define SE_GTC_APPEAR					(0)
+#define SE_CANCEL							(SEQ_SE_000)	
+#define SE_GTC_NG							(SEQ_SE_000)
+#define SE_GTC_SEARCH					(SEQ_SE_000)
+#define SE_GTC_PLAYER_IN			(SEQ_SE_000)
+#define SE_GTC_ON							(SEQ_SE_000)
+#define SE_GTC_OFF						(SEQ_SE_000)
+#define SE_GTC_PLAYER_OUT			(SEQ_SE_000)
+#define SE_GTC_APPEAR					(SEQ_SE_000)
 
 #define FONT_TOUCH						(0)
 #define FONT_SYSTEM						(0)
 #define FONT_TALK							(0)
+
 #define SND_SCENE_FIELD				(0)
 #define SND_SCENE_P2P					(0)
 #define SEQ_BLD_BLD_GTC				(0)
 #define SEQ_GS_WIFI_ACCESS		(0)
 #define MSG_TP_ON							(0)
 #define MSG_TP_OFF						(0)
-
-#define TOUCH_SW_RET_YES			(1)
-#define TOUCH_SW_RET_NO				(2)
 
 #define TEMOTI_POKEMAX				(6)
 
@@ -129,11 +127,6 @@ typedef struct
 typedef struct
 {	
 	int dummy;
-}TOUCH_SW_SYS;
-
-typedef struct
-{	
-	int dummy;
 }CLACT_ADD;
 
 typedef struct
@@ -169,18 +162,10 @@ typedef struct
 static inline void * TimeWaitIconAdd( GFL_BMPWIN *bmpwin, int a ) {	return NULL; }
 static inline void TimeWaitIconDel( void *wk ){}
 
-static inline int FontProc_GetPrintStrWidth( int font, STRBUF *buf, int a ){	return 0;}
-static inline void FontProc_LoadFont( int a, HEAPID heapID ){}
-static inline void FontProc_UnloadFont( int a ){}
+
 
 static inline void Snd_DataSetByScene( int a, int b, int c ){}
 static inline void MsgPrintTouchPanelFlagSet( int a ){}
-
-static inline void TOUCH_SW_FreeWork( TOUCH_SW_SYS *wk ){}
-
-static inline	BOOL GF_MSG_PrintEndCheck( int i ){	return 0; }
-static inline int GF_STR_PrintSimple( GFL_BMPWIN *bmpwin, int a, STRBUF *str, int b, int c, int d, void *e ){ return 0; }
-static inline void GF_STR_PrintColor( GFL_BMPWIN *bmpwin, int a, STRBUF *str, int b, int c, int d, PRINTSYS_LSB e, void *f ){	}
 
 static inline int PokeIconCgxArcIndexGetByMonsNumber( int pokeno, int tamago, int form ){ return 0; }
 static inline int PokeIconPalNumGet( int pokeno, int form, int tamago ){ return 0; }
@@ -242,11 +227,16 @@ static inline EVENTWORK* SaveData_GetEventWork( SAVE_CONTROL_WORK *sv ){ return 
 static inline int SysWork_AruseusuEventGet( EVENTWORK *ev ){	return 0;}
 static inline void SysWork_AruseusuEventSet( EVENTWORK *ev, int a ){}
 
-static inline u32 gf_p_rand( int a ){	return 0;}
+static inline u32 gf_p_rand( int a ){	return 0; }
 
 //=============================================================================
 /**
- *					WBにはないが実装できるので、作成した関数
+ *					以下、WBにはないが実装できるので、作成した関数
+*/
+//=============================================================================
+//=============================================================================
+/**
+ *					以下、WBにはないが実装できるので、作成した関数
 */
 //=============================================================================
 extern void WT_WORDSET_RegisterPokeNickNamePPP( WORDSET* wordset, u32 bufID, const POKEMON_PASO_PARAM * ppp );
@@ -261,3 +251,32 @@ extern POKEMON_PASO_PARAM* PPPPointerGet( POKEMON_PARAM *pp );
 
 //CommStateSetError->GFL_NET_ErrorFunc
 //PP_Put ID_PARA_sex 再計算でNULL指定しているが
+
+
+//=============================================================================
+/**
+ *					PRINT	及び FONT
+*/
+//=============================================================================
+#define WT_PRINT_UTIL_MAX	(8)
+typedef struct
+{	
+	GFL_FONT			*font;
+	GFL_TCBLSYS		*tcbsys;
+	const CONFIG	*cfg;
+	PRINT_STREAM	*stream;
+	PRINT_QUE			*que;
+	PRINT_UTIL		util;
+}WT_PRINT;
+
+
+extern int FontProc_GetPrintStrWidth( WT_PRINT *wk, u8 font_idx, STRBUF *buf, int magin );
+
+extern void WT_PRINT_Init( WT_PRINT *wk, const CONFIG *cfg );
+extern void WT_PRINT_Exit( WT_PRINT *wk );
+extern void WT_PRINT_Main( WT_PRINT *wk );
+
+extern BOOL GF_MSG_PrintEndCheck( WT_PRINT *setup );
+
+extern void GF_STR_PrintSimple( GFL_BMPWIN *bmpwin, u8 font_idx, STRBUF *str, int x, int y, WT_PRINT *setup );
+extern void GF_STR_PrintColor( GFL_BMPWIN *bmpwin, u8 font_idx, STRBUF *str, int x, int y, int put_type, PRINTSYS_LSB color, WT_PRINT *setup );

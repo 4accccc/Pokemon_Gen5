@@ -87,7 +87,7 @@ static int Enter_DwcErrorPrint( WORLDTRADE_WORK *wk );
 static int Enter_ErrorPadWait( WORLDTRADE_WORK *wk );
 
 
-static int printCommonFunc( GFL_BMPWIN *win, STRBUF *strbuf, int x, int flag, PRINTSYS_LSB color, int font );
+static int printCommonFunc( GFL_BMPWIN *win, STRBUF *strbuf, int x, int flag, PRINTSYS_LSB color, int font, WT_PRINT *print );
 
 enum{
 	ENTER_START=0,
@@ -373,6 +373,7 @@ static void BgInit( void )
 
 	GFL_BG_SetClearCharacter( GFL_BG_FRAME0_M, 32, 0, HEAPID_WORLDTRADE );
 	GFL_BG_SetClearCharacter( GFL_BG_FRAME0_S, 32, 0, HEAPID_WORLDTRADE );
+
 	GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_OBJ, VISIBLE_OFF );	//サブ画面OBJ面ＯＮ
 
 }
@@ -388,7 +389,6 @@ static void BgInit( void )
 //--------------------------------------------------------------------------------------------
 static void BgExit( void )
 {
-
 	GFL_BG_FreeBGControl( GFL_BG_FRAME1_S );
 	GFL_BG_FreeBGControl( GFL_BG_FRAME0_S );
 	GFL_BG_FreeBGControl( GFL_BG_FRAME1_M );
@@ -490,26 +490,29 @@ static void BmpWinInit( WORLDTRADE_WORK *wk )
 	// ---------- メイン画面 ------------------
 
 	// BG0面BMPWIN(エラー説明)ウインドウ確保・描画
-	wk->SubWin	= GFL_BMPWIN_Create( GFL_BG_FRAME0_M,
-	SUB_TEXT_X, SUB_TEXT_Y, SUB_TEXT_SX, SUB_TEXT_SY, WORLDTRADE_TALKFONT_PAL,  ERROR_MESSAGE_OFFSET );
+	wk->SubWin	= GFL_BMPWIN_CreateFixPos( GFL_BG_FRAME0_M,
+	SUB_TEXT_X, SUB_TEXT_Y, SUB_TEXT_SX, SUB_TEXT_SY, WORLDTRADE_TALKFONT_PAL, ERROR_MESSAGE_OFFSET );
 
 	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->SubWin), 0x0000 );
+	GFL_BMPWIN_MakeTransWindow_VBlank( wk->SubWin );
 
 	// BG0面BMPWIN(タイトル)ウインドウ確保・描画
-	wk->TitleWin	= GFL_BMPWIN_Create( GFL_BG_FRAME0_M,
+	wk->TitleWin	= GFL_BMPWIN_CreateFixPos( GFL_BG_FRAME0_M,
 	CONNECT_TEXT_X, CONNECT_TEXT_Y, CONNECT_TEXT_SX, CONNECT_TEXT_SY, WORLDTRADE_TALKFONT_PAL, TITLE_MESSAGE_OFFSET );
 
 	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->TitleWin), 0x0000 );
-	WorldTrade_TalkPrint( wk->TitleWin, wk->TitleString, 0, 1, 1, PRINTSYS_LSB_Make(15,14,0) );
+	WorldTrade_TalkPrint( wk->TitleWin, wk->TitleString, 0, 1, 1, PRINTSYS_LSB_Make(15,14,0), &wk->print );
+	GFL_BMPWIN_MakeTransWindow_VBlank( wk->TitleWin );
 
 	// ----------- サブ画面名前表示BMP確保 ------------------
 	// BG0面BMP（会話ウインドウ）確保
-	wk->MsgWin	= GFL_BMPWIN_Create( GFL_BG_FRAME0_M,
+	wk->MsgWin	= GFL_BMPWIN_CreateFixPos( GFL_BG_FRAME0_M,
 		TALK_WIN_X, 
 		TALK_WIN_Y, 
 		TALK_WIN_SX, 
 		TALK_WIN_SY, WORLDTRADE_TALKFONT_PAL,  TALK_MESSAGE_OFFSET );
 	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->MsgWin), 0x0000 );
+	GFL_BMPWIN_MakeTransWindow_VBlank( wk->MsgWin );
 
 }	
 
@@ -644,8 +647,11 @@ static int Enter_ConnectYesNoSelect( WORLDTRADE_WORK *wk )
 	}else if(ret==TOUCH_SW_RET_NO){
 			// 終了
 			TOUCH_SW_FreeWork( wk->tss );
+#if 0
 		  //  CommStateWifiDPWEnd();
-			//TODO
+#else
+			GFL_NET_Exit(NULL);
+#endif
 			WorldTrade_SubProcessChange( wk, WORLDTRADE_ENTER, 0 );
 			wk->subprocess_seq  = ENTER_END;
 	}
@@ -1502,7 +1508,7 @@ static int Enter_ServerServiceEnd( WORLDTRADE_WORK *wk )
 		wk->local_seq++;
 		break;
 	case 1:
-		if( GF_MSG_PrintEndCheck( wk->MsgIndex )==0){
+		if( GF_MSG_PrintEndCheck( &wk->print )==0){
 		    // 通信エラー管理のために通信ルーチンをOFF
 		    //CommStateWifiDPWEnd();
 				//TODO
@@ -1515,7 +1521,7 @@ static int Enter_ServerServiceEnd( WORLDTRADE_WORK *wk )
 		wk->local_seq++;
 		break;
 	case 3:
-		if(GF_MSG_PrintEndCheck( wk->MsgIndex )==0){
+		if(GF_MSG_PrintEndCheck( &wk->print )==0){
 			wk->local_seq++;
 		}
 		break;
@@ -1542,7 +1548,7 @@ static int Enter_ServerServiceEnd( WORLDTRADE_WORK *wk )
 //------------------------------------------------------------------
 static int Enter_MessageWait( WORLDTRADE_WORK *wk )
 {
-	if( GF_MSG_PrintEndCheck( wk->MsgIndex )==0){
+	if( GF_MSG_PrintEndCheck( &wk->print )==0){
 		wk->subprocess_seq = wk->subprocess_nextseq;
 	}
 	return SEQ_MAIN;
@@ -1560,7 +1566,7 @@ static int Enter_MessageWait( WORLDTRADE_WORK *wk )
 //------------------------------------------------------------------
 static int Enter_MessageWait1Second( WORLDTRADE_WORK *wk )
 {
-	if( GF_MSG_PrintEndCheck( wk->MsgIndex )==0){
+	if( GF_MSG_PrintEndCheck( &wk->print )==0){
 		if(wk->wait > WAIT_ONE_SECONDE_NUM){
 			wk->subprocess_seq = wk->subprocess_nextseq;
 		}
@@ -1581,7 +1587,7 @@ static int Enter_MessageWait1Second( WORLDTRADE_WORK *wk )
 //------------------------------------------------------------------
 static int Enter_MessageWaitYesNoStart(WORLDTRADE_WORK *wk)
 {
-	if( GF_MSG_PrintEndCheck( wk->MsgIndex )==0){
+	if( GF_MSG_PrintEndCheck( &wk->print )==0){
 		wk->tss = WorldTrade_TouchWinYesNoMake(WORLDTRADE_YESNO_PY2, YESNO_OFFSET, 8, 0 );
 		wk->subprocess_seq = wk->subprocess_nextseq;
 	}
@@ -1612,11 +1618,11 @@ void Enter_MessagePrint( WORLDTRADE_WORK *wk, GFL_MSGDATA *msgman, int msgno, in
 	GFL_STR_DeleteBuffer(tempbuf);
 
 	// 会話ウインドウ枠描画
-	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->MsgWin),  0x0f0f );
+	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->MsgWin),  0x0f );
 	BmpWinFrame_Write( wk->MsgWin, WINDOW_TRANS_ON, WORLDTRADE_MESFRAME_CHR, WORLDTRADE_MESFRAME_PAL );
 
 	// 文字列描画開始
-	wk->MsgIndex = GF_STR_PrintSimple( wk->MsgWin, FONT_TALK, wk->TalkString, 0, 0, wait, NULL);
+	GF_STR_PrintSimple( wk->MsgWin, FONT_TALK, wk->TalkString, 0, 0, &wk->print);
 
 	wk->wait = 0;
 }
@@ -1640,20 +1646,20 @@ void Enter_MessagePrint( WORLDTRADE_WORK *wk, GFL_MSGDATA *msgman, int msgno, in
  * @retval  int		文字列描画開始位置
  */
 //----------------------------------------------------------------------------------
-static int printCommonFunc( GFL_BMPWIN *win, STRBUF *strbuf, int x, int flag, PRINTSYS_LSB color, int font )
+static int printCommonFunc( GFL_BMPWIN *win, STRBUF *strbuf, int x, int flag, PRINTSYS_LSB color, int font, WT_PRINT *print )
 {
 	int length=0,ground;
 	switch(flag){
 	// センタリング
 	case 1:
-		length = FontProc_GetPrintStrWidth( font, strbuf, 0 );
+		length = FontProc_GetPrintStrWidth( print, font, strbuf, 0 );
 		
 		x          = ((GFL_BMPWIN_GetSizeX(win)*8)-length)/2;
 		break;
 
 	// 右寄せ
 	case 2:
-		length = FontProc_GetPrintStrWidth( font, strbuf, 0 );
+		length = FontProc_GetPrintStrWidth( print, font, strbuf, 0 );
 		x          = (GFL_BMPWIN_GetSizeX(win)*8)-length;
 		break;
 	}
@@ -1675,11 +1681,11 @@ static int printCommonFunc( GFL_BMPWIN *win, STRBUF *strbuf, int x, int flag, PR
  * @retval  none
  */
 //------------------------------------------------------------------
-void WorldTrade_TalkPrint( GFL_BMPWIN *win, STRBUF *strbuf, int x, int y, int flag, PRINTSYS_LSB color )
+void WorldTrade_TalkPrint( GFL_BMPWIN *win, STRBUF *strbuf, int x, int y, int flag, PRINTSYS_LSB color, WT_PRINT *print )
 {
-	x = printCommonFunc( win, strbuf, x, flag, color, FONT_TALK );
+	x = printCommonFunc( win, strbuf, x, flag, color, FONT_TALK, print );
 
-	GF_STR_PrintColor( win, FONT_TALK, strbuf, x, y, MSG_ALLPUT, color,NULL);
+	GF_STR_PrintColor( win, FONT_TALK, strbuf, x, y, MSG_ALLPUT, color, print);
 	
 }
 
@@ -1697,11 +1703,11 @@ void WorldTrade_TalkPrint( GFL_BMPWIN *win, STRBUF *strbuf, int x, int y, int fl
  * @retval  none
  */
 //==============================================================================
-void WorldTrade_SysPrint( GFL_BMPWIN *win, STRBUF *strbuf, int x, int y, int flag, PRINTSYS_LSB color )
+void WorldTrade_SysPrint( GFL_BMPWIN *win, STRBUF *strbuf, int x, int y, int flag, PRINTSYS_LSB color, WT_PRINT *print )
 {
-	x = printCommonFunc( win, strbuf, x, flag, color, FONT_SYSTEM );
+	x = printCommonFunc( win, strbuf, x, flag, color, FONT_SYSTEM, print );
 
-	GF_STR_PrintColor( win, FONT_SYSTEM, strbuf, x, y, MSG_ALLPUT, color,NULL);
+	GF_STR_PrintColor( win, FONT_SYSTEM, strbuf, x, y, MSG_ALLPUT, color, print);
 }
 
 //==============================================================================
@@ -1718,11 +1724,11 @@ void WorldTrade_SysPrint( GFL_BMPWIN *win, STRBUF *strbuf, int x, int y, int fla
  * @retval  none
  */
 //==============================================================================
-void WorldTrade_TouchPrint( GFL_BMPWIN *win, STRBUF *strbuf, int x, int y, int flag, PRINTSYS_LSB color )
+void WorldTrade_TouchPrint( GFL_BMPWIN *win, STRBUF *strbuf, int x, int y, int flag, PRINTSYS_LSB color , WT_PRINT *print )
 {
-	x = printCommonFunc( win, strbuf, x, flag, color, FONT_SYSTEM );
+	x = printCommonFunc( win, strbuf, x, flag, color, FONT_SYSTEM, print );
 
-	GF_STR_PrintColor( win, FONT_TOUCH, strbuf, x, y, MSG_ALLPUT, color,NULL);
+	GF_STR_PrintColor( win, FONT_TOUCH, strbuf, x, y, MSG_ALLPUT, color, print);
 }
 
 
@@ -1738,13 +1744,13 @@ void WorldTrade_TouchPrint( GFL_BMPWIN *win, STRBUF *strbuf, int x, int y, int f
  * @retval  none
  */
 //==============================================================================
-void WorldTrade_ExplainPrint( GFL_BMPWIN *win,  GFL_MSGDATA *msgman, int no )
+void WorldTrade_ExplainPrint( GFL_BMPWIN *win,  GFL_MSGDATA *msgman, int no, WT_PRINT *print )
 {
 	static const explain_tbl[]={
 		msg_gts_explain_001, msg_gts_explain_002,msg_gts_explain_003,msg_gts_explain_004,msg_gts_explain_005
 	};
 	STRBUF *strbuf = GFL_MSG_CreateString( msgman, explain_tbl[no] );
-	WorldTrade_SysPrint( win, strbuf, 0, 0, 0, PRINTSYS_LSB_Make(1,2,0) );
+	WorldTrade_SysPrint( win, strbuf, 0, 0, 0, PRINTSYS_LSB_Make(1,2,0), print );
 	GFL_STR_DeleteBuffer(strbuf);
 }
 //------------------------------------------------------------------
@@ -1782,8 +1788,8 @@ static void _systemMessagePrint( WORLDTRADE_WORK *wk, int msgno )
     GFL_BMP_Clear(GFL_BMPWIN_GetBmp(wk->SubWin), 15 );
     BmpWinFrame_Write(wk->SubWin, WINDOW_TRANS_OFF, WORLDTRADE_MENUFRAME_CHR, WORLDTRADE_MENUFRAME_PAL );
     // 文字列描画開始
-    wk->MsgIndex = GF_STR_PrintSimple( wk->SubWin, FONT_TALK,
-                                       wk->ErrorString, 0, 0, MSG_ALLPUT, NULL);
+    GF_STR_PrintSimple( wk->SubWin, FONT_TALK,
+                                       wk->ErrorString, 0, 0, &wk->print);
 
 	GFL_STR_DeleteBuffer(tmpString);
 }

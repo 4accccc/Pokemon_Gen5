@@ -121,21 +121,27 @@ static const u16 obj_postable[][2]={
 //==============================================================================
 void WorldTrade_SubLcdActorAdd( WORLDTRADE_WORK *wk, int sex )
 {
-#if 0
-	CLACT_ADD add;
 	int i;
+	GFL_CLWK_DATA	add;
 
 	
 	// ついでにフィールドＯＢＪグラフィック読み込み
 	LoadFieldObjData( wk );
 
+#if 0 //新CLACTではヘッダは要らない
 	WorldTrade_MakeCLACT( &add,  wk, &wk->clActHeader_sub, NNS_G2D_VRAM_TYPE_2DSUB );
-
+#endif
 	// 主人公アクター登録
-	add.DrawArea	= NNS_G2D_VRAM_TYPE_2DSUB;
-	add.mat.x = FX32_ONE *   HERO_START_POSX;
-	add.mat.y = FX32_ONE * ( 130 ) + NAMEIN_SUB_ACTOR_DISTANCE;
-	wk->SubActWork[0] = GFL_CLACT_WK_Create(&add);
+	add.pos_x = HERO_START_POSX;
+	add.pos_y = ( 130 );// + NAMEIN_SUB_ACTOR_DISTANCE;
+	add.anmseq	= 0;
+	add.softpri	= 0;
+	add.bgpri		= 2;
+	wk->SubActWork[0] = GFL_CLACT_WK_Create( wk->clactSet,
+			wk->resObjTbl[SUB_LCD][CLACT_U_CHAR_RES],
+			wk->resObjTbl[SUB_LCD][CLACT_U_PLTT_RES], 
+			wk->resObjTbl[SUB_LCD][CLACT_U_CELL_RES],	
+			&add,CLSYS_DRAW_SUB, HEAPID_WORLDTRADE);
 	GFL_CLACT_WK_SetAutoAnmFlag( wk->SubActWork[0],1);
 	GFL_CLACT_WK_SetBgPri( wk->SubActWork[0], 2 );
 	
@@ -145,7 +151,12 @@ void WorldTrade_SubLcdActorAdd( WORLDTRADE_WORK *wk, int sex )
 	
 	// 検索結果ＯＢＪ登録＆隠す
 	for(i=0;i<SEARCH_POKE_MAX;i++){
-		wk->SubActWork[i+1] = GFL_CLACT_WK_Create(&add);
+		wk->SubActWork[i+1] = GFL_CLACT_WK_Create( wk->clactSet,
+			wk->resObjTbl[SUB_LCD][CLACT_U_CHAR_RES],
+			wk->resObjTbl[SUB_LCD][CLACT_U_PLTT_RES], 
+			wk->resObjTbl[SUB_LCD][CLACT_U_CELL_RES],	
+			&add,CLSYS_DRAW_SUB, HEAPID_WORLDTRADE);
+
 		GFL_CLACT_WK_SetAutoAnmFlag(wk->SubActWork[i+1],1);
 		GFL_CLACT_WK_SetAnmSeq( wk->SubActWork[i+1], FIELD_OBJ_NO_START+i*4 );
 		GFL_CLACT_WK_SetDrawEnable( wk->SubActWork[i+1], 0 );
@@ -154,7 +165,11 @@ void WorldTrade_SubLcdActorAdd( WORLDTRADE_WORK *wk, int sex )
 	}
 
 	// 交換相手を指定するためのカーソル登録＆隠す
-	wk->PartnerCursorActWork = GFL_CLACT_WK_Create(&add);
+	wk->PartnerCursorActWork = GFL_CLACT_WK_Create( wk->clactSet,
+			wk->resObjTbl[SUB_LCD][CLACT_U_CHAR_RES],
+			wk->resObjTbl[SUB_LCD][CLACT_U_PLTT_RES], 
+			wk->resObjTbl[SUB_LCD][CLACT_U_CELL_RES],	
+			&add,CLSYS_DRAW_SUB, HEAPID_WORLDTRADE);
 	GFL_CLACT_WK_SetAutoAnmFlag(wk->PartnerCursorActWork,1);
 	GFL_CLACT_WK_SetAnmSeq( wk->PartnerCursorActWork, 43 );
 	GFL_CLACT_WK_SetDrawEnable( wk->PartnerCursorActWork, 0 );
@@ -162,24 +177,26 @@ void WorldTrade_SubLcdActorAdd( WORLDTRADE_WORK *wk, int sex )
 	GFL_CLACT_WK_SetBgPri( wk->PartnerCursorActWork, 1 );
 
 	// 「DSの下画面をみてね」アイコン
-	wk->PromptDsActWork = GFL_CLACT_WK_Create(&add);
+	wk->PromptDsActWork = GFL_CLACT_WK_Create( wk->clactSet,
+			wk->resObjTbl[SUB_LCD][CLACT_U_CHAR_RES],
+			wk->resObjTbl[SUB_LCD][CLACT_U_PLTT_RES], 
+			wk->resObjTbl[SUB_LCD][CLACT_U_CELL_RES],	
+			&add,CLSYS_DRAW_SUB, HEAPID_WORLDTRADE);
 	GFL_CLACT_WK_SetAutoAnmFlag(wk->PromptDsActWork,1);
 	GFL_CLACT_WK_SetAnmSeq( wk->PromptDsActWork, 42 );
-	WorldTrade_CLACT_PosChange( wk->PromptDsActWork, DS_ICON_X, DS_ICON_Y+256+wk->DrawOffset );
+	WorldTrade_CLACT_PosChangeSub( wk->PromptDsActWork, DS_ICON_X, DS_ICON_Y+wk->DrawOffset );
 	GFL_CLACT_WK_SetDrawEnable( wk->PromptDsActWork, 0 );
 
 	// 人物OBJのY座標を保存
 	{
-		const VecFx32 *mat;
+		GFL_CLACTPOS	pos;
 		int i;
 		for(i=0;i<SUB_OBJ_NUM;i++){
-			mat = GFL_CLACT_WK_GetWldPos( wk->SubActWork[i] );
-			wk->SubActY[i][0] = mat->x/FX32_ONE;
-			wk->SubActY[i][1] = mat->y/FX32_ONE;
+			GFL_CLACT_WK_GetPos( wk->SubActWork[i], &pos, CLSYS_DRAW_SUB );
+			wk->SubActY[i][0] = pos.x;
+			wk->SubActY[i][1] = pos.y;
 		}
 	}
-#endif 
-	//TODO
 }
 
 
@@ -204,12 +221,8 @@ void WorldTrade_HeroDemo( WORLDTRADE_WORK *wk, int sex )
 	{
 		HERO_DEMO_WORK *hdw;
 
-#if 0
-		wk->demotask = PMDS_taskAdd( HeroDemoTask, sizeof(HERO_DEMO_WORK), 5, HEAPID_WORLDTRADE);
-#else		
 		wk->task_wk	= GFL_HEAP_AllocMemory( HEAPID_WORLDTRADE, sizeof(HERO_DEMO_WORK) );
 		wk->demotask	= GFL_TCB_AddTask( wk->tcbsys,  HeroDemoTask, wk->task_wk, 5 );
-#endif
 		hdw          = GFL_TCB_GetWork(wk->demotask);
 		hdw->seq     = 0;
 		hdw->heroy   = HERO_START_POSY;
@@ -442,9 +455,9 @@ static void SetSubLcdObj_Pos( GFL_CLWK* act, int x, int y )
 #else
 	GFL_CLACTPOS	pos;
 	pos.x	= x;
-	pos.y	= y - 8;
+	pos.y	= y - 8;// + NAMEIN_SUB_ACTOR_DISTANCE;
 #endif
-	GFL_CLACT_WK_SetWldPos( act, &pos);
+	GFL_CLACT_WK_SetPos( act, &pos, CLSYS_DRAW_SUB );
 }
 
 // 検索結果ＯＢＪをタッチするための座標テーブル
@@ -579,7 +592,7 @@ static void LoadFieldObjData( WORLDTRADE_WORK *wk )
 	wk->FieldObjPalBuf = GFL_ARC_UTIL_LoadPalette( ARCID_RECORD_GRA, NARC_record_gra_union_chara_NCLR, &(wk->FieldObjPalData), HEAPID_WORLDTRADE );
 
 	// 画像読み込み
-	wk->FieldObjCharaBuf = GFL_ARC_UTIL_LoadOBJCharacter( ARCID_RECORD_GRA, NARC_record_gra_union_chara_NCGR,  1, &(wk->FieldObjCharaData), HEAPID_WORLDTRADE );
+	wk->FieldObjCharaBuf = GFL_ARC_UTIL_LoadOBJCharacter( ARCID_RECORD_GRA, NARC_record_gra_union_chara_NCGR,  0, &(wk->FieldObjCharaData), HEAPID_WORLDTRADE );
 	DC_FlushRange( wk->FieldObjCharaData, FIELDOBJ_NCG_SIZE );
 
 }
@@ -677,7 +690,7 @@ void WorldTrade_SetPartnerExchangePos( WORLDTRADE_WORK *wk )
     int i;
     
     for(i = 0; i < SUB_OBJ_NUM; i++){
-        WorldTrade_CLACT_PosChange( wk->SubActWork[i], wk->SubActY[i][0], wk->SubActY[i][1] );
+        WorldTrade_CLACT_PosChangeSub( wk->SubActWork[i], wk->SubActY[i][0], wk->SubActY[i][1] );
     }
 }
 
@@ -693,7 +706,7 @@ void WorldTrade_SetPartnerExchangePosIsReturns( WORLDTRADE_WORK *wk )
     int i;
     
 	for(i=0;i<SUB_OBJ_NUM;i++){
-		WorldTrade_CLACT_PosChange( wk->SubActWork[i], wk->SubActY[i][0], wk->SubActY[i][1]+32 );
+		WorldTrade_CLACT_PosChangeSub( wk->SubActWork[i], wk->SubActY[i][0], wk->SubActY[i][1]+32 );
     }
 }
 

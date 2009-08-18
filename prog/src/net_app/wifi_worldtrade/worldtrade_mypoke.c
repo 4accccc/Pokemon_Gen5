@@ -152,19 +152,19 @@ int WorldTrade_MyPoke_Init(WORLDTRADE_WORK *wk, int seq)
 	// 自分のポケモンの情報
 	WorldTrade_PokeInfoPrint( 	wk->MsgManager, wk->MonsNameManager, wk->WordSet, &wk->InfoWin[INFOWIN_NICKNAME], 
 					(POKEMON_PASO_PARAM*)PP_GetPPPPointerConst((POKEMON_PARAM*)wk->UploadPokemonData.postData.data),
-					&wk->UploadPokemonData.postSimple );
+					&wk->UploadPokemonData.postSimple, &wk->print );
 
 	// 持ち主情報の表示
 	pp = (POKEMON_PARAM *)wk->UploadPokemonData.postData.data;
 	WorldTrade_PokeInfoPrint2( wk->MsgManager, &wk->InfoWin[INFOWIN_AZUKETAHITO], 
-								wk->UploadPokemonData.name, pp, &wk->InfoWin[INFOWIN_OYA]);
+								wk->UploadPokemonData.name, pp, &wk->InfoWin[INFOWIN_OYA], &wk->print);
 
 	// ほしいポケモンの条件
 	WodrldTrade_MyPokeWantPrint( wk->MsgManager, wk->MonsNameManager, wk->WordSet, 
 				&wk->InfoWin[INFOWIN_HOSII_POKEMON], 
 				wk->UploadPokemonData.wantSimple.characterNo,
 				wk->UploadPokemonData.wantSimple.gender,
-				WorldTrade_LevelTermGet(wk->UploadPokemonData.wantSimple.level_min,wk->UploadPokemonData.wantSimple.level_max, LEVEL_PRINT_TBL_DEPOSIT));
+				WorldTrade_LevelTermGet(wk->UploadPokemonData.wantSimple.level_min,wk->UploadPokemonData.wantSimple.level_max, LEVEL_PRINT_TBL_DEPOSIT),&wk->print);
 
 	// ポケモン画像転送
 	WorldTrade_TransPokeGraphic( (POKEMON_PARAM*)wk->UploadPokemonData.postData.data );
@@ -460,14 +460,14 @@ static void BmpWinInit( WORLDTRADE_WORK *wk )
 {
 	// ---------- メイン画面 ------------------
 
-	wk->MsgWin	= GFL_BMPWIN_Create( GFL_BG_FRAME0_M,
+	wk->MsgWin	= GFL_BMPWIN_CreateFixPos( GFL_BG_FRAME0_M,
 		LINE_TEXT_X, LINE_TEXT_Y, LINE_TEXT_SX, LINE_TEXT_SY, 
 		WORLDTRADE_TALKFONT_PAL,  LINE_MESSAGE_OFFSET );
 
 	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->MsgWin), 0x0000 );
 
 	// BMPMENU用の領域がここにある
-	wk->MenuWin[0]	= GFL_BMPWIN_Create( GFL_BG_FRAME0_M,
+	wk->MenuWin[0]	= GFL_BMPWIN_CreateFixPos( GFL_BG_FRAME0_M,
 		SELECT_MENU_X, SELECT_MENU_Y, SELECT_MENU_SX, SELECT_MENU_SY, 
 		WORLDTRADE_TALKFONT_PAL,  SELECT_MENU_OFFSET );	
 
@@ -477,7 +477,7 @@ static void BmpWinInit( WORLDTRADE_WORK *wk )
 
 		offset = INFO_TEXT_OFFSET;
 		for(i=0;i<INFOW_BMPWIN_MAX;i++){
-			wk->InfoWin[i] = GFL_BMPWIN_Create( GFL_BG_FRAME3_M,
+			wk->InfoWin[i] = GFL_BMPWIN_CreateFixPos( GFL_BG_FRAME3_M,
 					info_bmpwin_table[i][0], 
 					info_bmpwin_table[i][1], 
 					info_bmpwin_table[i][2], 
@@ -880,7 +880,7 @@ static int SubSeq_SelectWait( WORLDTRADE_WORK *wk )
 //------------------------------------------------------------------
 static int SubSeq_MessageWait( WORLDTRADE_WORK *wk )
 {
-	if( GF_MSG_PrintEndCheck( wk->MsgIndex )==0){
+	if( GF_MSG_PrintEndCheck( &wk->print )==0){
 		wk->subprocess_seq = wk->subprocess_nextseq;
 	}
 	return SEQ_MAIN;
@@ -898,7 +898,7 @@ static int SubSeq_MessageWait( WORLDTRADE_WORK *wk )
 //------------------------------------------------------------------
 static int SubSeq_Message1MinWait( WORLDTRADE_WORK *wk )
 {
-	if( GF_MSG_PrintEndCheck( wk->MsgIndex )==0){
+	if( GF_MSG_PrintEndCheck( &wk->print )==0){
 		wk->wait++;
 		if(wk->wait > MESSAGE_WAIT_1MIN){
 			wk->wait = 0;
@@ -933,7 +933,7 @@ static void SubSeq_MessagePrint( WORLDTRADE_WORK *wk, int msgno, int wait, int f
 	BmpWinFrame_Write( wk->MsgWin, WINDOW_TRANS_ON, WORLDTRADE_MESFRAME_CHR, WORLDTRADE_MESFRAME_PAL );
 
 	// 文字列描画開始
-	wk->MsgIndex = GF_STR_PrintSimple( wk->MsgWin, FONT_TALK, wk->TalkString, 0, 0, wait, NULL);
+	GF_STR_PrintSimple( wk->MsgWin, FONT_TALK, wk->TalkString, 0, 0,&wk->print);
 	
 	GFL_STR_DeleteBuffer(tempbuf);
 
@@ -970,7 +970,8 @@ void WorldTrade_PokeInfoPrint( 	GFL_MSGDATA *MsgManager,
 							WORDSET *WordSet, 
 							GFL_BMPWIN *win[], 	
 							POKEMON_PASO_PARAM *ppp,
-							Dpw_Tr_PokemonDataSimple *post )
+							Dpw_Tr_PokemonDataSimple *post,
+							WT_PRINT *print )
 {
 	STRBUF *strbuf,	*sexbuf, *levellabel, *levelbuf, *itemlabel, *namelabel;
 	STRBUF *namebuf = GFL_STR_CreateBuffer( (MONS_NAME_SIZE+EOM_SIZE)*2, HEAPID_WORLDTRADE );
@@ -1002,16 +1003,16 @@ void WorldTrade_PokeInfoPrint( 	GFL_MSGDATA *MsgManager,
 	}
 
 	// 描画
-	WorldTrade_SysPrint( win[0], namebuf,   0, 0, 0, PRINTSYS_LSB_Make(1,2,0) );
+	WorldTrade_SysPrint( win[0], namebuf,   0, 0, 0, PRINTSYS_LSB_Make(1,2,0),print );
 	if(sex!=DPW_TR_GENDER_NONE){
-		WorldTrade_SysPrint( win[0], sexbuf,   64, 0, 0, sex_mark_col(sex) );
+		WorldTrade_SysPrint( win[0], sexbuf,   64, 0, 0, sex_mark_col(sex),print );
 	}
-	WorldTrade_SysPrint( win[1], strbuf,     0, 0, 0, PRINTSYS_LSB_Make(1,2,0) );
-	WorldTrade_SysPrint( win[2], levellabel, 0, 0, 0, PRINTSYS_LSB_Make(1,2,0) );
-	WorldTrade_SysPrint( win[3], levelbuf,   0, 0, 0, PRINTSYS_LSB_Make(1,2,0) );
-	WorldTrade_SysPrint( win[4], itemlabel,  0, 0, 0, PRINTSYS_LSB_Make(15,2,0) );
-	WorldTrade_SysPrint( win[5], itembuf,    0, 0, 0, PRINTSYS_LSB_Make(1,2,0) );
-	WorldTrade_SysPrint( win[6], namelabel,  0, 0, 0, PRINTSYS_LSB_Make(15,2,0) );
+	WorldTrade_SysPrint( win[1], strbuf,     0, 0, 0, PRINTSYS_LSB_Make(1,2,0),print );
+	WorldTrade_SysPrint( win[2], levellabel, 0, 0, 0, PRINTSYS_LSB_Make(1,2,0),print );
+	WorldTrade_SysPrint( win[3], levelbuf,   0, 0, 0, PRINTSYS_LSB_Make(1,2,0),print );
+	WorldTrade_SysPrint( win[4], itemlabel,  0, 0, 0, PRINTSYS_LSB_Make(15,2,0),print );
+	WorldTrade_SysPrint( win[5], itembuf,    0, 0, 0, PRINTSYS_LSB_Make(1,2,0),print );
+	WorldTrade_SysPrint( win[6], namelabel,  0, 0, 0, PRINTSYS_LSB_Make(15,2,0),print );
 
 	GFL_STR_DeleteBuffer( itemlabel  );
 	GFL_STR_DeleteBuffer( itembuf    );
@@ -1035,7 +1036,7 @@ void WorldTrade_PokeInfoPrint( 	GFL_MSGDATA *MsgManager,
  * @retval  none		
  */
 //------------------------------------------------------------------
-void WorldTrade_PokeInfoPrint2( GFL_MSGDATA *MsgManager, GFL_BMPWIN *win[], STRCODE *name, POKEMON_PARAM *pp, GFL_BMPWIN* oya_win[] )
+void WorldTrade_PokeInfoPrint2( GFL_MSGDATA *MsgManager, GFL_BMPWIN *win[], STRCODE *name, POKEMON_PARAM *pp, GFL_BMPWIN* oya_win[], WT_PRINT *print )
 {
 	STRBUF *ornerbuf, *ornerlabel;
 	STRBUF *oyalabel, *oyabuf;
@@ -1049,10 +1050,10 @@ void WorldTrade_PokeInfoPrint2( GFL_MSGDATA *MsgManager, GFL_BMPWIN *win[], STRC
 	oyalabel = GFL_MSG_CreateString(MsgManager, msg_gtc_pl_oya);
 	PP_Get(pp, ID_PARA_oyaname, oyabuf);
 
-	WorldTrade_SysPrint( win[0], ornerlabel, 0, 0, 0, PRINTSYS_LSB_Make(15,2,0) );
-	WorldTrade_SysPrint( win[1], ornerbuf,   0, 0, 0, PRINTSYS_LSB_Make(1,2,0) );
-	WorldTrade_SysPrint( oya_win[0], oyalabel,   0, 0, 0, PRINTSYS_LSB_Make(15,2,0) );
-	WorldTrade_SysPrint( oya_win[1], oyabuf,   0, 0, 0, PRINTSYS_LSB_Make(1,2,0) );
+	WorldTrade_SysPrint( win[0], ornerlabel, 0, 0, 0, PRINTSYS_LSB_Make(15,2,0), print );
+	WorldTrade_SysPrint( win[1], ornerbuf,   0, 0, 0, PRINTSYS_LSB_Make(1,2,0), print  );
+	WorldTrade_SysPrint( oya_win[0], oyalabel,   0, 0, 0, PRINTSYS_LSB_Make(15,2,0), print );
+	WorldTrade_SysPrint( oya_win[1], oyabuf,   0, 0, 0, PRINTSYS_LSB_Make(1,2,0), print );
 	
 	GFL_STR_DeleteBuffer( ornerlabel );
 	GFL_STR_DeleteBuffer( ornerbuf   );
@@ -1120,7 +1121,7 @@ static void WantPokePrintReWrite( WORLDTRADE_WORK *wk )
 				&wk->InfoWin[INFOWIN_HOSII_POKEMON], 
 				wk->UploadPokemonData.wantSimple.characterNo,
 				wk->UploadPokemonData.wantSimple.gender,
-				WorldTrade_LevelTermGet(wk->UploadPokemonData.wantSimple.level_min,wk->UploadPokemonData.wantSimple.level_max, LEVEL_PRINT_TBL_DEPOSIT));
+				WorldTrade_LevelTermGet(wk->UploadPokemonData.wantSimple.level_min,wk->UploadPokemonData.wantSimple.level_max, LEVEL_PRINT_TBL_DEPOSIT),&wk->print);
 
 
 }

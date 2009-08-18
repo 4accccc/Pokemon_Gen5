@@ -677,7 +677,7 @@ static void BmpWinInit( WORLDTRADE_WORK *wk )
 
 	// BG0面BMPWINタイトルウインドウ確保・描画
 	
-//	wk->TitleWin	= GFL_BMPWIN_Create( GFL_BG_FRAME0_M,
+//	wk->TitleWin	= GFL_BMPWIN_CreateFixPos( GFL_BG_FRAME0_M,
 //	TITLE_TEXT_X, TITLE_TEXT_Y, TITLE_TEXT_SX, TITLE_TEXT_SY, WORLDTRADE_TALKFONT_PAL,  TITLE_MESSAGE_OFFSET );
 
 //	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->TitleWin), 0x0000 );
@@ -688,28 +688,28 @@ static void BmpWinInit( WORLDTRADE_WORK *wk )
 
 	// ボックストレイ名BMPWIN確保
 	
-	wk->SubWin	= GFL_BMPWIN_Create( GFL_BG_FRAME3_M,
+	wk->SubWin	= GFL_BMPWIN_CreateFixPos( GFL_BG_FRAME3_M,
 	BOX_TRAY_NAME_X, BOX_TRAY_NAME_Y, BOX_TRAY_NAME_SX, BOX_TRAY_NAME_SY, WORLDTRADE_TALKFONT_PAL,  
 	BOX_TRAY_NAME_OFFSET );
 	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->SubWin), 0x0000 );
 	GFL_BMPWIN_MakeTransWindow(wk->SubWin);
 	
 	// 一行ウインドウ
-	wk->MsgWin	= GFL_BMPWIN_Create( GFL_BG_FRAME0_M,
+	wk->MsgWin	= GFL_BMPWIN_CreateFixPos( GFL_BG_FRAME0_M,
 		LINE_TEXT_X, LINE_TEXT_Y, LINE_TEXT_SX, LINE_TEXT_SY, 
 		WORLDTRADE_TALKFONT_PAL,  LINE_MESSAGE_OFFSET );
 
 	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->MsgWin), 0x0000 );
 
 	// 2行ウインドウ
-	wk->TalkWin	= GFL_BMPWIN_Create( GFL_BG_FRAME0_M,
+	wk->TalkWin	= GFL_BMPWIN_CreateFixPos( GFL_BG_FRAME0_M,
 		TALK_WIN_X, TALK_WIN_Y, TALK_WIN_SX, TALK_WIN_SY, 
 		WORLDTRADE_TALKFONT_PAL,  TALK_MESSAGE_OFFSET );
 
 	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->TalkWin), 0x0000 );
 
 	// 「もどる」
-	wk->MenuWin[1]	= GFL_BMPWIN_Create( GFL_BG_FRAME1_M,
+	wk->MenuWin[1]	= GFL_BMPWIN_CreateFixPos( GFL_BG_FRAME1_M,
 		END_TEXT_X, END_TEXT_Y, END_TEXT_SX, END_TEXT_SY, 
 		0,  END_MESSAGE_OFFSET );
 
@@ -719,7 +719,7 @@ static void BmpWinInit( WORLDTRADE_WORK *wk )
 	//TODO
 
 	// 選択メニュー領域
-//	wk->MenuWin[0]	= GFL_BMPWIN_Create( GFL_BG_FRAME0_M,
+//	wk->MenuWin[0]	= GFL_BMPWIN_CreateFixPos( GFL_BG_FRAME0_M,
 //		SELECT_MENU_X, SELECT_MENU_Y, SELECT_MENU_SX, SELECT_MENU_SY, 
 //		WORLDTRADE_TALKFONT_PAL,  SELECT_MENU_OFFSET );	
 
@@ -1163,7 +1163,7 @@ static void CursorControl( WORLDTRADE_WORK *wk )
 //------------------------------------------------------------------
 static void  CursorPosPrioritySet( GFL_CLWK* cursor, int pos )
 {
-	WorldTrade_ActPos(cursor, PokemonIconPosTbl[pos][0], PokemonIconPosTbl[pos][1] );
+	WorldTrade_CLACT_PosChange(cursor, PokemonIconPosTbl[pos][0], PokemonIconPosTbl[pos][1] );
 	// カーソルプライオリティ操作
 	if(pos==31 || (pos>=0 && pos<=5)){
 		// ボックストレイ名の上にあるときとボックス１列目にいるときは最上位に
@@ -1795,7 +1795,7 @@ static int SubSeq_CBallDepositYesNoSelect( WORLDTRADE_WORK *wk )
 //------------------------------------------------------------------
 static int SubSeq_MessageWait( WORLDTRADE_WORK *wk )
 {
-	if( GF_MSG_PrintEndCheck( wk->MsgIndex )==0){
+	if( GF_MSG_PrintEndCheck( &wk->print )==0){
 		wk->subprocess_seq = wk->subprocess_nextseq;
 	}
 	return SEQ_MAIN;
@@ -1813,7 +1813,7 @@ static int SubSeq_MessageWait( WORLDTRADE_WORK *wk )
 //------------------------------------------------------------------
 static int SubSeq_MessageClearWait( WORLDTRADE_WORK *wk )
 {
-	if( GF_MSG_PrintEndCheck( wk->MsgIndex )==0){
+	if( GF_MSG_PrintEndCheck( &wk->print )==0){
 		BmpWinFrame_Clear( wk->TalkWin, WINDOW_TRANS_ON );
 		wk->subprocess_seq = wk->subprocess_nextseq;
 	}
@@ -1891,7 +1891,7 @@ static void SubSeq_MessagePrint( WORLDTRADE_WORK *wk, int msgno, int wait, int f
 	BmpWinFrame_Write( win, WINDOW_TRANS_ON, WORLDTRADE_MESFRAME_CHR, WORLDTRADE_MESFRAME_PAL );
 
 	// 文字列描画開始
-	wk->MsgIndex = GF_STR_PrintSimple( win, FONT_TALK, wk->TalkString, 0, 0, wait, NULL);
+	GF_STR_PrintSimple( win, FONT_TALK, wk->TalkString, 0, 0, &wk->print );
 
 
 	GFL_STR_DeleteBuffer(tempbuf);
