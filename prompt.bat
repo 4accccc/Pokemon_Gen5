@@ -34,7 +34,7 @@ SET SVN_EDITOR=c:\tools\vim\gvim
 REM ##################################################
 REM		パスの追加
 REM ##################################################
-PATH=%PROJECT_ROOT%;%PROJECT_ROOT%\tools;c:\cygwin\bin;c:\tools\vim;C:\tools;%NITROSDK_ROOT%\tools\bin;%NITROSYSTEM_ROOT%\tools\win\bin;%PATH%;
+PATH=%PROJECT_ROOT%;%PROJECT_ROOT%\tools;c:\tools\subversion\bin;c:\cygwin\bin;c:\tools\vim;C:\tools;%NITROSDK_ROOT%\tools\bin;%NITROSYSTEM_ROOT%\tools\win\bin;%PATH%;
 
 REM ##################################################
 REM		マクロ定義
