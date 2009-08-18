@@ -76,7 +76,7 @@ static void ARCHDL_UTIL_TransVramScreenEx( ARCHANDLE *handle, ARCDATID datID, u3
 //=====================================
 static const u16 sc_anmseq_tbl[]	=
 {	
-	APP_COMMON_BARICON_CLOSE,
+	APP_COMMON_BARICON_EXIT,
 	APP_COMMON_BARICON_RETURN,
 	APP_COMMON_BARICON_CURSOR_DOWN,
 	APP_COMMON_BARICON_CURSOR_UP,

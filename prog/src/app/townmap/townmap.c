@@ -187,7 +187,7 @@ typedef enum
 //アクティブアニメ
 static const u16 sc_appbar_icon_active_anm[]	=
 {	
-  APP_COMMON_BARICON_CLOSE,
+  APP_COMMON_BARICON_EXIT,
   APP_COMMON_BARICON_RETURN,
   APP_COMMON_BARICON_CURSOR_DOWN,
   APP_COMMON_BARICON_CURSOR_UP,
@@ -201,7 +201,7 @@ static const u16 sc_appbar_icon_active_anm[]	=
 //押し中アニメ
 static const u16 sc_appbar_icon_push_anm[]	=
 {	
-  APP_COMMON_BARICON_CLOSE_ON,
+  APP_COMMON_BARICON_EXIT_ON,
   APP_COMMON_BARICON_RETURN_ON,
   APP_COMMON_BARICON_CURSOR_DOWN_ON,
   APP_COMMON_BARICON_CURSOR_UP_ON,
@@ -215,7 +215,7 @@ static const u16 sc_appbar_icon_push_anm[]	=
 //パッシブアニメ
 static const u16 sc_appbar_icon_passive_anm[]	=
 {	
-  APP_COMMON_BARICON_CLOSE_OFF,
+  APP_COMMON_BARICON_EXIT_OFF,
   APP_COMMON_BARICON_RETURN_OFF,
   APP_COMMON_BARICON_CURSOR_DOWN_OFF,
   APP_COMMON_BARICON_CURSOR_UP_OFF,
@@ -1707,7 +1707,7 @@ static void APPBAR_Init( APPBAR_WORK *p_wk, APPBAR_OPTION_MASK mask, GFL_CLUNIT*
  		{	
 			cldata.pos_x	= APPBAR_ICON_CLOSE_X;
 			cldata.pos_y	= APPBAR_ICON_Y;
-			cldata.anmseq	= APP_COMMON_BARICON_CLOSE;
+			cldata.anmseq	= APP_COMMON_BARICON_EXIT;
 			p_wk->p_clwk[APPBAR_BARICON_CLOSE]	= GFL_CLACT_WK_Create( p_unit, 
 					p_wk->res[APPBAR_RES_COMMON_CHR],
 					p_wk->res[APPBAR_RES_COMMON_PLT],

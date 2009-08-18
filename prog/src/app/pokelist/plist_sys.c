@@ -677,7 +677,7 @@ static void PLIST_InitCell( PLIST_WORK *work )
     GFL_CLACT_WK_SetAutoAnmFlag( work->clwkBarIcon[PBT_RETURN] , TRUE );
     
     cellInitData.pos_x = PLIST_BARICON_EXIT_X-4;
-    cellInitData.anmseq = APP_COMMON_BARICON_CLOSE;
+    cellInitData.anmseq = APP_COMMON_BARICON_EXIT;
     work->clwkBarIcon[PBT_EXIT] = GFL_CLACT_WK_Create( work->cellUnit ,
               work->cellRes[PCR_NCG_BAR_ICON],
               work->cellRes[PCR_PLT_BAR_ICON],
@@ -1428,7 +1428,7 @@ static void PLIST_SelectPokeTerm( PLIST_WORK *work )
     PMSND_PlaySystemSE( PLIST_SND_CANCEL );
 
     work->clwkExitButton = work->clwkBarIcon[PBT_EXIT];
-    GFL_CLACT_WK_SetAnmSeq( work->clwkBarIcon[PBT_EXIT] , APP_COMMON_BARICON_CLOSE_ON );
+    GFL_CLACT_WK_SetAnmSeq( work->clwkBarIcon[PBT_EXIT] , APP_COMMON_BARICON_EXIT_ON );
     break;
   }
 }
@@ -1595,7 +1595,7 @@ static void PLIST_SelectPokeUpdateKey( PLIST_WORK *work )
       {
         work->selectState = PSSEL_EXIT;
         work->clwkExitButton = work->clwkBarIcon[PBT_EXIT];
-        GFL_CLACT_WK_SetAnmSeq( work->clwkBarIcon[PBT_EXIT] , APP_COMMON_BARICON_CLOSE_ON );
+        GFL_CLACT_WK_SetAnmSeq( work->clwkBarIcon[PBT_EXIT] , APP_COMMON_BARICON_EXIT_ON );
       }
     }
     else 

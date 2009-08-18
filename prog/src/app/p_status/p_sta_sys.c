@@ -751,7 +751,7 @@ static void PSTATUS_InitCell( PSTATUS_WORK *work )
       APP_COMMON_BARICON_CHECK_OFF,
       APP_COMMON_BARICON_CURSOR_UP,
       APP_COMMON_BARICON_CURSOR_DOWN,
-      APP_COMMON_BARICON_CLOSE,
+      APP_COMMON_BARICON_EXIT,
       APP_COMMON_BARICON_RETURN,
     };
     const u8 posXArr[SBT_MAX] =
@@ -986,7 +986,7 @@ static const BOOL PSTATUS_UpdateKey( PSTATUS_WORK *work )
     work->retVal = SRT_EXIT;
     work->psData->ret_mode = PST_RET_EXIT;
     work->mainSeq = SMS_FADEOUT;
-    GFL_CLACT_WK_SetAnmSeq( work->clwkBarIcon[SBT_EXIT] , APP_COMMON_BARICON_CLOSE_ON );
+    GFL_CLACT_WK_SetAnmSeq( work->clwkBarIcon[SBT_EXIT] , APP_COMMON_BARICON_EXIT_ON );
     work->clwkExitButton = work->clwkBarIcon[SBT_EXIT];
     return TRUE;
   }
@@ -1044,7 +1044,7 @@ static void PSTATUS_UpdateTP( PSTATUS_WORK *work )
     work->retVal = SRT_EXIT;
     work->psData->ret_mode = PST_RET_EXIT;
     work->mainSeq = SMS_FADEOUT;
-    GFL_CLACT_WK_SetAnmSeq( work->clwkBarIcon[SBT_EXIT] , APP_COMMON_BARICON_CLOSE_ON );
+    GFL_CLACT_WK_SetAnmSeq( work->clwkBarIcon[SBT_EXIT] , APP_COMMON_BARICON_EXIT_ON );
     work->clwkExitButton = work->clwkBarIcon[SBT_EXIT];
     break;
   case SBT_RETURN:
@@ -1167,7 +1167,7 @@ void PSTATUS_SetActiveBarButton( PSTATUS_WORK *work , const BOOL isActive )
     }
     GFL_CLACT_WK_SetAnmSeq( work->clwkBarIcon[SBT_CURSOR_UP] , APP_COMMON_BARICON_CURSOR_UP_OFF );
     GFL_CLACT_WK_SetAnmSeq( work->clwkBarIcon[SBT_CURSOR_DOWN] , APP_COMMON_BARICON_CURSOR_DOWN_OFF );
-    GFL_CLACT_WK_SetAnmSeq( work->clwkBarIcon[SBT_EXIT] , APP_COMMON_BARICON_CLOSE_OFF );
+    GFL_CLACT_WK_SetAnmSeq( work->clwkBarIcon[SBT_EXIT] , APP_COMMON_BARICON_EXIT_OFF );
     //技モードではリターン暗くならない
     if( work->psData->mode != PST_MODE_WAZAADD )
     {
@@ -1190,7 +1190,7 @@ void PSTATUS_SetActiveBarButton( PSTATUS_WORK *work , const BOOL isActive )
     }
     GFL_CLACT_WK_SetAnmSeq( work->clwkBarIcon[SBT_CURSOR_UP] , APP_COMMON_BARICON_CURSOR_UP );
     GFL_CLACT_WK_SetAnmSeq( work->clwkBarIcon[SBT_CURSOR_DOWN] , APP_COMMON_BARICON_CURSOR_DOWN );
-    GFL_CLACT_WK_SetAnmSeq( work->clwkBarIcon[SBT_EXIT] , APP_COMMON_BARICON_CLOSE );
+    GFL_CLACT_WK_SetAnmSeq( work->clwkBarIcon[SBT_EXIT] , APP_COMMON_BARICON_EXIT );
     GFL_CLACT_WK_SetAnmSeq( work->clwkBarIcon[SBT_RETURN] , APP_COMMON_BARICON_RETURN );
   }
 }

@@ -51,7 +51,7 @@ ALIGN4 static const u8 WazaKindPlttOffset[] = {
 
 //バーボタン用パレットオフセット
 ALIGN4 static const u8 BarIconPlttOffset[]	= {	
-	0,//  APP_COMMON_BARICON_CLOSE,
+	0,//  APP_COMMON_BARICON_EXIT,
 	0,//  APP_COMMON_BARICON_RETURN,
 	1,//  APP_COMMON_BARICON_CURSOR_DOWN,
 	1,//  APP_COMMON_BARICON_CURSOR_UP,
