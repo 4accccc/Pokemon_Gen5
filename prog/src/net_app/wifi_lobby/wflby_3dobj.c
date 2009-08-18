@@ -24,7 +24,7 @@
 #include "debug/mmodel.naix"
 
 #include "wifi_lobby_other.naix"
-#include "test_graphic/fld_act.naix"
+#include "debug/fld_act.naix"
 
 #include "wflby_def.h"
 #include "wflby_3dmatrix.h"
