@@ -207,7 +207,10 @@ void APP_TASKMENU_UpdateMenu( APP_TASKMENU_WORK *work )
     work->anmCnt++;
   }
   
+  APP_TASKMENU_UpdatePalletAnime( &work->transAnmCnt , &work->transCol , work->initWork.palNo );
+  
   //プレートアニメ
+  /*
   if( work->transAnmCnt + APP_TASKMENU_ANIME_VALUE >= 0x10000 )
   {
     work->transAnmCnt = work->transAnmCnt+APP_TASKMENU_ANIME_VALUE-0x10000;
@@ -229,6 +232,7 @@ void APP_TASKMENU_UpdateMenu( APP_TASKMENU_WORK *work )
                                         work->initWork.palNo * 32 + APP_TASKMENU_ANIME_COL*2 ,
                                         &work->transCol , 2 );
   }
+  */
 }
 
 //--------------------------------------------------------------
@@ -317,6 +321,34 @@ static void APP_TASKMENU_SetActiveItem( APP_TASKMENU_WORK *work , const u8 idx ,
   GFL_BG_LoadScreenV_Req( GFL_BMPWIN_GetFrame(work->menuWin[idx]) );
 }
 
+//--------------------------------------------------------------
+//	パレットアニメーションの更新
+//--------------------------------------------------------------
+void APP_TASKMENU_UpdatePalletAnime( u16 *anmCnt , u16 *transBuf , u8 pltNo )
+{
+  //プレートアニメ
+  if( *anmCnt + APP_TASKMENU_ANIME_VALUE >= 0x10000 )
+  {
+    *anmCnt = *anmCnt+APP_TASKMENU_ANIME_VALUE-0x10000;
+  }
+  else
+  {
+    *anmCnt += APP_TASKMENU_ANIME_VALUE;
+  }
+  {
+    //1～0に変換
+    const fx16 cos = (FX_CosIdx(*anmCnt)+FX16_ONE)/2;
+    const u8 r = APP_TASKMENU_ANIME_S_R + (((APP_TASKMENU_ANIME_E_R-APP_TASKMENU_ANIME_S_R)*cos)>>FX16_SHIFT);
+    const u8 g = APP_TASKMENU_ANIME_S_G + (((APP_TASKMENU_ANIME_E_G-APP_TASKMENU_ANIME_S_G)*cos)>>FX16_SHIFT);
+    const u8 b = APP_TASKMENU_ANIME_S_B + (((APP_TASKMENU_ANIME_E_B-APP_TASKMENU_ANIME_S_B)*cos)>>FX16_SHIFT);
+    
+    *transBuf = GX_RGB(r, g, b);
+    
+    NNS_GfdRegisterNewVramTransferTask( NNS_GFD_DST_2D_BG_PLTT_MAIN ,
+                                        pltNo * 32 + APP_TASKMENU_ANIME_COL*2 ,
+                                        transBuf , 2 );
+  }
+}
 
 #pragma mark [>main func
 //--------------------------------------------------------------

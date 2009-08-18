@@ -204,6 +204,8 @@ struct _PLIST_WORK
   //バトルメニュー用
   u8  btlJoinNum;   //バトル参加人数
   GFL_BMPWIN *btlMenuWin[2];  //バトル用決定・戻る
+  u16 btlMenuAnm;       //↑のアニメ用
+  u16 btlMenuTransBuf;
 
   //HPアニメ処理
   u16 befHp;  //回復前のHP
@@ -236,6 +238,7 @@ struct _PLIST_WORK
   GFL_CLUNIT  *cellUnit;
   GFL_CLWK    *clwkCursor[2];
   GFL_CLWK    *clwkBarIcon[PBT_MAX];
+  GFL_CLWK    *clwkExitButton;    //終了時アニメ待ちをするときにポインタを入れておく
 
   PLIST_DATA *plData;
 #if USE_DEBUGWIN_SYSTEM

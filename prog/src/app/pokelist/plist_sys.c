@@ -34,6 +34,7 @@
 
 #include "app/p_status.h" //Proc切り替え用
 #include "app/app_menu_common.h"
+#include "app/app_taskmenu.h"
 
 #include "test/ariizumi/ari_debug.h"
 
@@ -231,7 +232,9 @@ const BOOL PLIST_InitPokeList( PLIST_WORK *work )
   work->isActiveWindowMask = FALSE;
   work->btlJoinNum = 0;
   work->platePalAnmCnt = 0;
+  work->btlMenuAnm = 0;
   work->hpAnimeCallBack = NULL;
+  work->clwkExitButton = NULL;
 
   if( work->plData->mode == PL_MODE_WAZASET )
   {
@@ -240,13 +243,11 @@ const BOOL PLIST_InitPokeList( PLIST_WORK *work )
       work->plData->waza = ITEM_GetWazaNo(work->plData->item);
     }
   }
-
   
   PLIST_InitGraphic( work );
   PLIST_LoadResource( work );
   PLIST_InitMessage( work );
   
-
   //プレートの作成
   for( i=0;i<PLIST_LIST_MAX;i++ )
   {
@@ -387,11 +388,15 @@ const BOOL PLIST_UpdatePokeList( PLIST_WORK *work )
     break;
 
   case PSMS_FADEOUT:
-//    WIPE_SYS_Start( WIPE_PATTERN_WMS , WIPE_TYPE_SPLITOUT_VSIDE , WIPE_TYPE_SPLITOUT_VSIDE , 
-//                    WIPE_FADE_BLACK , WIPE_DEF_DIV , WIPE_DEF_SYNC , work->heapId );
-    WIPE_SYS_Start( WIPE_PATTERN_WMS , WIPE_TYPE_FADEOUT , WIPE_TYPE_FADEOUT , 
-                    WIPE_FADE_BLACK , WIPE_DEF_DIV , WIPE_DEF_SYNC , work->heapId );
-    work->mainSeq = PSMS_FADEOUT_WAIT;
+    if( work->clwkExitButton == NULL ||
+        GFL_CLACT_WK_CheckAnmActive( work->clwkExitButton ) == FALSE )
+    {
+  //    WIPE_SYS_Start( WIPE_PATTERN_WMS , WIPE_TYPE_SPLITOUT_VSIDE , WIPE_TYPE_SPLITOUT_VSIDE , 
+  //                    WIPE_FADE_BLACK , WIPE_DEF_DIV , WIPE_DEF_SYNC , work->heapId );
+      WIPE_SYS_Start( WIPE_PATTERN_WMS , WIPE_TYPE_FADEOUT , WIPE_TYPE_FADEOUT , 
+                      WIPE_FADE_BLACK , WIPE_DEF_DIV , WIPE_DEF_SYNC , work->heapId );
+      work->mainSeq = PSMS_FADEOUT_WAIT;
+    }
     break;
   
   case PSMS_FADEOUT_WAIT:
@@ -664,22 +669,21 @@ static void PLIST_InitCell( PLIST_WORK *work )
     cellInitData.softpri = 0;
     cellInitData.bgpri = 0;
     
-    //こっちはメニューのときも上に出るのでbgpri0
     work->clwkBarIcon[PBT_RETURN] = GFL_CLACT_WK_Create( work->cellUnit ,
               work->cellRes[PCR_NCG_BAR_ICON],
               work->cellRes[PCR_PLT_BAR_ICON],
               work->cellRes[PCR_ANM_BAR_ICON],
               &cellInitData ,CLSYS_DEFREND_MAIN , work->heapId );
+    GFL_CLACT_WK_SetAutoAnmFlag( work->clwkBarIcon[PBT_RETURN] , TRUE );
     
-    //こっちはメニューのとき消えるのでbgpri1
     cellInitData.pos_x = PLIST_BARICON_EXIT_X-4;
     cellInitData.anmseq = APP_COMMON_BARICON_CLOSE;
-    cellInitData.bgpri = 1;
     work->clwkBarIcon[PBT_EXIT] = GFL_CLACT_WK_Create( work->cellUnit ,
               work->cellRes[PCR_NCG_BAR_ICON],
               work->cellRes[PCR_PLT_BAR_ICON],
               work->cellRes[PCR_ANM_BAR_ICON],
               &cellInitData ,CLSYS_DEFREND_MAIN , work->heapId );
+    GFL_CLACT_WK_SetAutoAnmFlag( work->clwkBarIcon[PBT_EXIT] , TRUE );
   }
 }
 
@@ -1412,6 +1416,9 @@ static void PLIST_SelectPokeTerm( PLIST_WORK *work )
     work->plData->ret_sel = PL_SEL_POS_EXIT;
     work->plData->ret_mode = PL_RET_NORMAL;
     PMSND_PlaySystemSE( PLIST_SND_CANCEL );
+
+    work->clwkExitButton = work->clwkBarIcon[PBT_RETURN];
+    GFL_CLACT_WK_SetAnmSeq( work->clwkBarIcon[PBT_RETURN] , APP_COMMON_BARICON_RETURN_ON );
     break;
 
   case PSSEL_EXIT:
@@ -1419,6 +1426,9 @@ static void PLIST_SelectPokeTerm( PLIST_WORK *work )
     work->plData->ret_sel = PL_SEL_POS_EXIT2;
     work->plData->ret_mode = PL_RET_NORMAL;
     PMSND_PlaySystemSE( PLIST_SND_CANCEL );
+
+    work->clwkExitButton = work->clwkBarIcon[PBT_EXIT];
+    GFL_CLACT_WK_SetAnmSeq( work->clwkBarIcon[PBT_EXIT] , APP_COMMON_BARICON_CLOSE_ON );
     break;
   }
 }
@@ -1501,6 +1511,9 @@ static void PLIST_SelectPokeMain( PLIST_WORK *work )
   {
     work->subSeq = PSSS_TERM;
   }
+  
+  APP_TASKMENU_UpdatePalletAnime( &work->btlMenuAnm , &work->btlMenuTransBuf , PLIST_BG_PLT_MENU_ACTIVE );
+
 }
 
 //--------------------------------------------------------------------------
@@ -1556,17 +1569,33 @@ static void PLIST_SelectPokeUpdateKey( PLIST_WORK *work )
     }
     else if( trg & PAD_BUTTON_A )
     {
-      work->selectState = PSSEL_SELECT;
+      if( work->pokeCursor == PL_SEL_POS_ENTER )
+      {
+        work->selectState = PSSEL_DECIDE;
+      }
+      else
+      if( work->pokeCursor == PL_SEL_POS_EXIT )
+      {
+        work->selectState = PSSEL_RETURN;
+      }
+      else
+      {
+        work->selectState = PSSEL_SELECT;
+      }
     }
     else if( trg & PAD_BUTTON_B )
     {
       work->selectState = PSSEL_RETURN;
+      work->clwkExitButton = work->clwkBarIcon[PBT_RETURN];
+      GFL_CLACT_WK_SetAnmSeq( work->clwkBarIcon[PBT_RETURN] , APP_COMMON_BARICON_RETURN_ON );
     }
     else if( trg & PAD_BUTTON_X )
     {
       if( work->canExit == TRUE )
       {
         work->selectState = PSSEL_EXIT;
+        work->clwkExitButton = work->clwkBarIcon[PBT_EXIT];
+        GFL_CLACT_WK_SetAnmSeq( work->clwkBarIcon[PBT_EXIT] , APP_COMMON_BARICON_CLOSE_ON );
       }
     }
     else 
@@ -1582,25 +1611,37 @@ static void PLIST_SelectPokeUpdateKey( PLIST_WORK *work )
     {
       const PL_SELECT_POS befPos = work->pokeCursor;
       BOOL isFinish = FALSE;
-      PMSND_PlaySystemSE( PLIST_SND_CURSOR );
+      PL_SELECT_POS maxValue;
+      
+      //バトルのときだけ決定・戻るにカーソルが行く
+      if( PLIST_UTIL_IsBattleMenu( work ) == TRUE )
+      {
+        maxValue = PL_SEL_POS_EXIT;
+      }
+      else
+      {
+        maxValue = PL_SEL_POS_POKE6;
+      }
+
       //プレートがある位置までループ
       while( isFinish == FALSE )
       {
-        if( work->pokeCursor + moveVal > PL_SEL_POS_POKE6 )
+        if( work->pokeCursor + moveVal > maxValue )
         {
-          work->pokeCursor = work->pokeCursor+moveVal-(PL_SEL_POS_POKE6+1);
+          work->pokeCursor = work->pokeCursor+moveVal-(maxValue+1);
         }
         else
         if( work->pokeCursor + moveVal < PL_SEL_POS_POKE1 )
         {
-          work->pokeCursor = work->pokeCursor+(PL_SEL_POS_POKE6+1)+moveVal;
+          work->pokeCursor = work->pokeCursor+(maxValue+1)+moveVal;
         }
         else
         {
           work->pokeCursor += moveVal;
         }
 
-        if( PLIST_PLATE_CanSelect( work , work->plateWork[work->pokeCursor] ) == TRUE )
+        if( work->pokeCursor > PL_SEL_POS_POKE6 ||
+            PLIST_PLATE_CanSelect( work , work->plateWork[work->pokeCursor] ) == TRUE )
         {
           isFinish = TRUE;
         }
@@ -1608,13 +1649,38 @@ static void PLIST_SelectPokeUpdateKey( PLIST_WORK *work )
       //表示周り更新
       if( befPos != work->pokeCursor )
       {
-        PLIST_SelectPokeSetCursor( work , work->pokeCursor );
-        PLIST_PLATE_SetActivePlate( work , work->plateWork[work->pokeCursor] , TRUE );
-        PLIST_PLATE_SetActivePlate( work , work->plateWork[befPos] , FALSE );
+        if( work->pokeCursor <= PL_SEL_POS_POKE6 )
+        {
+          PLIST_SelectPokeSetCursor( work , work->pokeCursor );
+          PLIST_PLATE_SetActivePlate( work , work->plateWork[work->pokeCursor] , TRUE );
+        }
+        else
+        {
+          const u8 idx = work->pokeCursor - PL_SEL_POS_ENTER;
+          GFL_BMPWIN_SetPalette( work->btlMenuWin[idx] , PLIST_BG_PLT_MENU_ACTIVE );
+          GFL_BMPWIN_MakeScreen( work->btlMenuWin[idx] );
+          GFL_BG_LoadScreenV_Req( GFL_BMPWIN_GetFrame(work->btlMenuWin[idx]) );
+          
+          GFL_CLACT_WK_SetDrawEnable( work->clwkCursor[0] , FALSE );
+        }
+        
+        if( befPos <= PL_SEL_POS_POKE6 )
+        {
+          PLIST_PLATE_SetActivePlate( work , work->plateWork[befPos] , FALSE );
+        }
+        else
+        {
+          const u8 idx = befPos - PL_SEL_POS_ENTER;
+          GFL_BMPWIN_SetPalette( work->btlMenuWin[idx] , PLIST_BG_PLT_MENU_NORMAL );
+          GFL_BMPWIN_MakeScreen( work->btlMenuWin[idx] );
+          GFL_BG_LoadScreenV_Req( GFL_BMPWIN_GetFrame(work->btlMenuWin[idx]) );
+        }
         work->platePalAnmCnt = PLIST_PLATE_ACTIVE_ANM_CNT;
 
         //PLIST_PLATE_SetActivePlatePos( work , work->pokeCursor );
       }
+
+      PMSND_PlaySystemSE( PLIST_SND_CURSOR );
     }
   }
 }
@@ -1708,6 +1774,7 @@ static void PLIST_SelectPokeUpdateTP( PLIST_WORK *work )
     {
       work->selectState = ret;
       work->ktst = GFL_APP_KTST_TOUCH;
+      
     }
   }
   

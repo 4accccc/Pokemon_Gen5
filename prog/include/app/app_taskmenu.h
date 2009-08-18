@@ -61,3 +61,5 @@ extern void APP_TASKMENU_UpdateMenu( APP_TASKMENU_WORK *work );
 extern const BOOL APP_TASKMENU_IsFinish( APP_TASKMENU_WORK *work );
 extern const u8 APP_TASKMENU_GetCursorPos( APP_TASKMENU_WORK *work );
 
+extern void APP_TASKMENU_UpdatePalletAnime( u16 *anmCnt , u16 *transBuf , u8 pltNo );
+

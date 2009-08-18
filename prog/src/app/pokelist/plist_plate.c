@@ -62,7 +62,7 @@
 #define PLIST_PLATE_STR_HPMAX_Y (PLIST_PLATE_NUM_BASAE_Y)
 
 #define PLIST_PLATE_STR_BTL_ORDER_X (48+PLIST_MSG_STR_OFS_X)
-#define PLIST_PLATE_STR_BTL_ORDER_Y (PLIST_PLATE_NUM_BASAE_Y-1)
+#define PLIST_PLATE_STR_BTL_ORDER_Y (PLIST_PLATE_NUM_BASAE_Y-4)
 
 //HPバー系
 #define PLIST_PLATE_HPBAR_LEN (48)
@@ -492,6 +492,8 @@ static void PLIST_PLATE_DrawParam( PLIST_WORK *work , PLIST_PLATE_WORK *plateWor
     PLIST_UTIL_DrawStrFunc( work , plateWork->bmpWin , strId ,
                     PLIST_PLATE_STR_BTL_ORDER_X , PLIST_PLATE_STR_BTL_ORDER_Y , fontCol );
     
+    //HPバー非表示
+    GFL_CLACT_WK_SetDrawEnable( plateWork->hpBase , FALSE );
   }
   else
   if( work->plData->mode == PL_MODE_WAZASET )
@@ -607,35 +609,38 @@ static void PLIST_PLATE_DrawParam( PLIST_WORK *work , PLIST_PLATE_WORK *plateWor
 //--------------------------------------------------------------
 static void PLIST_PLATE_DrawHPBar( PLIST_WORK *work , PLIST_PLATE_WORK *plateWork )
 {
-  const u8 rate = PLIST_PLATE_GetHPRate( plateWork );
-  u8 len = PLIST_PLATE_HPBAR_LEN*rate/100;
-  u8 inCol,outCol;
-  GFL_BMP_DATA *bmp = GFL_BMPWIN_GetBmp( plateWork->bmpWin );
-  
-  //色決定
-  if( rate <= 25 )
+  if( PLIST_UTIL_IsBattleMenu( work ) == FALSE )
   {
-    inCol  = PLIST_HPBAR_COL_RED_IN;
-    outCol = PLIST_HPBAR_COL_RED_OUT;
+    const u8 rate = PLIST_PLATE_GetHPRate( plateWork );
+    u8 len = PLIST_PLATE_HPBAR_LEN*rate/100;
+    u8 inCol,outCol;
+    GFL_BMP_DATA *bmp = GFL_BMPWIN_GetBmp( plateWork->bmpWin );
+    
+    //色決定
+    if( rate <= 25 )
+    {
+      inCol  = PLIST_HPBAR_COL_RED_IN;
+      outCol = PLIST_HPBAR_COL_RED_OUT;
+    }
+    else
+    if( rate <= 50 )
+    {
+      inCol  = PLIST_HPBAR_COL_YELLOW_IN;
+      outCol = PLIST_HPBAR_COL_YELLOW_OUT;
+    }
+    else
+    {
+      inCol  = PLIST_HPBAR_COL_GREEN_IN;
+      outCol = PLIST_HPBAR_COL_GREEN_OUT;
+    }
+    
+    GFL_BMP_Fill( bmp , PLIST_PLATE_HPBAR_LEFT , PLIST_PLATE_HPBAR_TOP ,
+                  len , 1 , outCol );
+    GFL_BMP_Fill( bmp , PLIST_PLATE_HPBAR_LEFT , PLIST_PLATE_HPBAR_TOP+1 ,
+                  len , 2 , inCol );
+    GFL_BMP_Fill( bmp , PLIST_PLATE_HPBAR_LEFT , PLIST_PLATE_HPBAR_TOP+3 ,
+                  len , 1 , outCol );
   }
-  else
-  if( rate <= 50 )
-  {
-    inCol  = PLIST_HPBAR_COL_YELLOW_IN;
-    outCol = PLIST_HPBAR_COL_YELLOW_OUT;
-  }
-  else
-  {
-    inCol  = PLIST_HPBAR_COL_GREEN_IN;
-    outCol = PLIST_HPBAR_COL_GREEN_OUT;
-  }
-  
-  GFL_BMP_Fill( bmp , PLIST_PLATE_HPBAR_LEFT , PLIST_PLATE_HPBAR_TOP ,
-                len , 1 , outCol );
-  GFL_BMP_Fill( bmp , PLIST_PLATE_HPBAR_LEFT , PLIST_PLATE_HPBAR_TOP+1 ,
-                len , 2 , inCol );
-  GFL_BMP_Fill( bmp , PLIST_PLATE_HPBAR_LEFT , PLIST_PLATE_HPBAR_TOP+3 ,
-                len , 1 , outCol );
 
 }
 
