@@ -250,6 +250,21 @@ extern void PRINTSYS_QUE_Delete( PRINT_QUE* que );
 //==============================================================================================
 extern void PRINTSYS_Print( GFL_BMP_DATA* dst, u16 xpos, u16 ypos, const STRBUF* str, GFL_FONT* font );
 
+//=============================================================================================
+/**
+ * Bitmap へ直接の文字列描画（カラー指定版）
+ *
+ * @param   dst   [out] 描画先Bitmap
+ * @param   xpos  [in]  描画開始Ｘ座標（ドット）
+ * @param   ypos  [in]  描画開始Ｙ座標（ドット）
+ * @param   str   [in]  文字列
+ * @param   font  [in]  フォント
+ * @param   color [in]  描画カラー
+ *
+ */
+//=============================================================================================
+extern void PRINTSYS_PrintColor( GFL_BMP_DATA* dst, u16 xpos, u16 ypos, const STRBUF* str, GFL_FONT* font, PRINTSYS_LSB color );
+
 //==============================================================================================
 /**
  * プリントストリームを利用した文字列描画（通常版 - コールバックなし）

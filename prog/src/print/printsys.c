@@ -588,6 +588,27 @@ void PRINTSYS_Print( GFL_BMP_DATA* dst, u16 xpos, u16 ypos, const STRBUF* str, G
   printJob_setup( job, font, dst, xpos, ypos );
   printJob_finish( job, str );
 }
+//=============================================================================================
+/**
+ * Bitmap へ直接の文字列描画（カラー指定版）
+ *
+ * @param   dst
+ * @param   xpos
+ * @param   ypos
+ * @param   str
+ * @param   font
+ * @param   color
+ */
+//=============================================================================================
+void PRINTSYS_PrintColor( GFL_BMP_DATA* dst, u16 xpos, u16 ypos, const STRBUF* str, GFL_FONT* font, PRINTSYS_LSB color )
+{
+  PRINT_JOB* job = &SystemWork.printJob;
+  const STRCODE* sp = GFL_STR_GetStringCodePointer( str );
+
+  printJob_setup( job, font, dst, xpos, ypos );
+  printJob_setColor( job, color );
+  printJob_finish( job, str );
+}
 
 
 //------------------------------------------------------------------
