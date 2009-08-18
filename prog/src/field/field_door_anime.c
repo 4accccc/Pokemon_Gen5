@@ -65,8 +65,8 @@ static GMEVENT_RESULT ExitEvent_DoorOut(GMEVENT * event, int *seq, void * work)
 {
   enum {
     SEQ_DOOROUT_INIT = 0,
-    SEQ_DOOROUT_CAMERA_ACT,
     SEQ_DOOROUT_OPENANIME_START,
+    SEQ_DOOROUT_CAMERA_ACT,
     SEQ_DOOROUT_OPENANIME_WAIT,
     SEQ_DOOROUT_PLAYER_STEP,
     SEQ_DOOROUT_CLOSEANIME_START,
@@ -89,31 +89,35 @@ static GMEVENT_RESULT ExitEvent_DoorOut(GMEVENT * event, int *seq, void * work)
     //自機を消す
     MAPCHANGE_setPlayerVanish( fieldmap, TRUE );
 		GMEVENT_CallEvent(event, EVENT_FieldFadeIn(gsys, fieldmap, 0));
+    *seq = SEQ_DOOROUT_OPENANIME_START;
+    break;
+
+  case SEQ_DOOROUT_OPENANIME_START:
+    fdaw->obj = searchDoorObject(bmodel_man, &fdaw->pos);
+    if (fdaw->obj == NULL)
+    { /* エラーよけ、ドアがない場合 */
+      *seq = SEQ_DOOROUT_CAMERA_ACT;
+      break;
+    } 
+    fdaw->entry = FIELD_BMODEL_Create( bmodel_man, fdaw->obj );
+    FIELD_BMODEL_MAN_EntryBuildModel( bmodel_man, fdaw->entry );
+    G3DMAPOBJST_changeViewFlag(fdaw->obj, FALSE);
+    FIELD_BMODEL_SetAnime( fdaw->entry, ANM_INDEX_DOOR_OPEN, BMANM_REQ_START);
     *seq = SEQ_DOOROUT_CAMERA_ACT;
     break;
 
   case SEQ_DOOROUT_CAMERA_ACT:
     EVENT_CAMERA_ACT_CallDoorOutEvent( event, gsys, fieldmap );
-    *seq = SEQ_DOOROUT_OPENANIME_START;
-    break;
-
-  case SEQ_DOOROUT_OPENANIME_START:
-    EVENT_CAMERA_ACT_ResetCameraParameter( fieldmap );  // カメラの設定をデフォルトに戻す
-    fdaw->obj = searchDoorObject(bmodel_man, &fdaw->pos);
     if (fdaw->obj == NULL)
     { /* エラーよけ、ドアがない場合 */
       *seq = SEQ_DOOROUT_PLAYER_STEP;
       break;
-    }
-
-    fdaw->entry = FIELD_BMODEL_Create( bmodel_man, fdaw->obj );
-    FIELD_BMODEL_MAN_EntryBuildModel( bmodel_man, fdaw->entry );
-    G3DMAPOBJST_changeViewFlag(fdaw->obj, FALSE);
-    FIELD_BMODEL_SetAnime( fdaw->entry, ANM_INDEX_DOOR_OPEN, BMANM_REQ_START);
+    } 
     *seq = SEQ_DOOROUT_OPENANIME_WAIT;
     break;
 
   case SEQ_DOOROUT_OPENANIME_WAIT:
+    EVENT_CAMERA_ACT_ResetCameraParameter( fieldmap );  // カメラの設定をデフォルトに戻す
     {
       void * objHdl = FIELD_BMODEL_GetObjHandle( fdaw->entry );
       if ( FIELD_BMODEL_GetAnimeStatus( fdaw->entry, ANM_INDEX_DOOR_OPEN) == TRUE)
@@ -205,8 +209,8 @@ static GMEVENT_RESULT ExitEvent_DoorIn(GMEVENT * event, int *seq, void * work)
 {
   enum {
     SEQ_DOORIN_OPENANIME_START = 0,
-    SEQ_DOORIN_OPENANIME_WAIT,
     SEQ_DOORIN_CAMERA_ACT,
+    SEQ_DOORIN_OPENANIME_WAIT,
     SEQ_DOORIN_PLAYER_ONESTEP,
     SEQ_DOORIN_FADEOUT,
     SEQ_DOORIN_END,
@@ -228,12 +232,21 @@ static GMEVENT_RESULT ExitEvent_DoorIn(GMEVENT * event, int *seq, void * work)
     { /* エラーよけ、ドアがない場合 */
       *seq = SEQ_DOORIN_CAMERA_ACT;
       break;
-    }
-
+    } 
     fdaw->entry = FIELD_BMODEL_Create( bmodel_man, fdaw->obj );
     FIELD_BMODEL_MAN_EntryBuildModel( bmodel_man, fdaw->entry );
     G3DMAPOBJST_changeViewFlag(fdaw->obj, FALSE);
     FIELD_BMODEL_SetAnime( fdaw->entry, ANM_INDEX_DOOR_OPEN, BMANM_REQ_START);
+    *seq = SEQ_DOORIN_CAMERA_ACT;
+    break;
+
+  case SEQ_DOORIN_CAMERA_ACT: 
+    EVENT_CAMERA_ACT_CallDoorInEvent( event, gsys, fieldmap ); 
+    if (fdaw->obj == NULL)
+    { /* エラーよけ、ドアがない場合 */
+      *seq = SEQ_DOORIN_PLAYER_ONESTEP;
+      break;
+    } 
     *seq = SEQ_DOORIN_OPENANIME_WAIT;
     break;
 
@@ -241,14 +254,9 @@ static GMEVENT_RESULT ExitEvent_DoorIn(GMEVENT * event, int *seq, void * work)
     if ( FIELD_BMODEL_GetAnimeStatus( fdaw->entry, ANM_INDEX_DOOR_OPEN) == TRUE)
     {
       FIELD_BMODEL_SetAnime( fdaw->entry, ANM_INDEX_DOOR_OPEN, BMANM_REQ_STOP);
-      *seq = SEQ_DOORIN_CAMERA_ACT;
+      *seq = SEQ_DOORIN_PLAYER_ONESTEP;
       break;
     }
-    break;
-
-  case SEQ_DOORIN_CAMERA_ACT: 
-    EVENT_CAMERA_ACT_CallDoorInEvent( event, gsys, fieldmap ); 
-    *seq = SEQ_DOORIN_PLAYER_ONESTEP;
     break;
 
   case SEQ_DOORIN_PLAYER_ONESTEP:
