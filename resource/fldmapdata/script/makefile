@@ -4,7 +4,7 @@
 # Copyright 2005 GameFreak.inc  All rights reserved.
 #----------------------------------------------------------------------------
 #対象ユーザー
-USERS = kagaya matsumiya tamada nakatsui
+USERS = kagaya matsumiya tamada nakatsui masafumi_saitou
 
 #共通マクロ
 include $(PROJECT_RSCDIR)/macro_define
