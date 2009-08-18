@@ -17,7 +17,7 @@
 #include "event_entrance_in.h"
 
 #include "event_fieldmap_control.h" // EVENT_FieldFadeOut
-#include "field_door_anime.h"       // EVENT_FieldDoorInAnime
+#include "event_entrance_effect.h"  // EVENT_FieldDoorInAnime
 #include "event_fldmmdl_control.h"  // EVENT_PlayerOneStepAnime
 
 

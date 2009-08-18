@@ -1,6 +1,6 @@
 //============================================================================================
 /**
- * @file field_door_anime.c
+ * @file event_entrance_effect.c
  * @brief
  * @date  2009.06.13
  * @author  tamada GAME FREAK inc.
@@ -22,7 +22,7 @@
 #include "event_fieldmap_control.h" //EVENT_FieldFadeOut
 #include "event_mapchange.h"        //MAPCHANGE_setNextBGM
 #include "event_fldmmdl_control.h"  //EVENT_PlayerOneStepAnime
-#include "field_door_anime.h"
+#include "event_entrance_effect.h"
 
 #include "event_camera_act.h" 
 

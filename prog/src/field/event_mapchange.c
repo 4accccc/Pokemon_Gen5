@@ -36,7 +36,7 @@
 
 #include "field_sound.h"
 
-#include "field_door_anime.h"
+#include "event_entrance_effect.h"
 #include "event_entrance_in.h"
 
 
