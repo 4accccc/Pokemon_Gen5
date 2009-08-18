@@ -288,9 +288,9 @@ static GMEVENT_RESULT EVENT_MapChange(GMEVENT * event, int *seq, void*work)
     (*seq) ++;
     break;
 	case 1:
-    // フェードアウトイベント
+    // 入口進入イベント
     GMEVENT_CallEvent( event, 
-        EVENT_SwitchFieldFadeOut( event, gsys, gamedata, fieldmap, mcw->loc_req, mcw->exit_type ) );
+        EVENT_EntranceIn( event, gsys, gamedata, fieldmap, mcw->loc_req, mcw->exit_type ) );
 		(*seq)++;
 		break;
 	case 2:

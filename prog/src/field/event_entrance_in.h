@@ -1,7 +1,7 @@
 /////////////////////////////////////////////////////////////////////////////////////////
 /**
  *
- * @brief  フェードアウトイベントの作成
+ * @breif  入口への進入時のイベント作成
  * @author obata
  * @date   2009.08.18
  *
@@ -12,7 +12,7 @@
 
 //---------------------------------------------------------------------------------------
 /**
- * @breif フェードアウト・イベントを作成する
+ * @brief 入口進入イベントを作成する
  *
  * @param parent    親イベント
  * @param gsys      ゲームシステム
@@ -24,9 +24,9 @@
  * @return 作成したイベント
  */
 //---------------------------------------------------------------------------------------
-GMEVENT* EVENT_SwitchFieldFadeOut( GMEVENT* parent, 
-                                   GAMESYS_WORK* gsys,
-                                   GAMEDATA* gdata, 
-                                   FIELD_MAIN_WORK* fieldmap, 
-                                   LOCATION location, 
-                                   EXIT_TYPE exit_type );
+GMEVENT* EVENT_EntranceIn( GMEVENT* parent, 
+                           GAMESYS_WORK* gsys,
+                           GAMEDATA* gdata, 
+                           FIELD_MAIN_WORK* fieldmap, 
+                           LOCATION location, 
+                           EXIT_TYPE exit_type );

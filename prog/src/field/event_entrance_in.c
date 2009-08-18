@@ -1,7 +1,7 @@
 /////////////////////////////////////////////////////////////////////////////////////////
 /**
  *
- * @brief  入口に入ったときのイベント
+ * @breif  入口への進入時のイベント作成
  * @author obata
  * @date   2009.08.18
  *
@@ -33,7 +33,7 @@ typedef struct
   FIELD_MAIN_WORK* fieldmap;
   LOCATION         location;  // 遷移先指定
 }
-FIELD_FADE_WORK;
+EVENT_WORK;
 
 
 //=======================================================================================
@@ -44,9 +44,9 @@ FIELD_FADE_WORK;
 static void setNextBGM(GAMEDATA * gamedata, u16 zone_id);
 
 // 各EXIT_TYPEごとのイベント
-static GMEVENT_RESULT EVENT_FadeOut_ExitTypeNone(GMEVENT * event, int *seq, void * work);
-static GMEVENT_RESULT EVENT_FadeOut_ExitTypeDoor(GMEVENT * event, int *seq, void * work);
-static GMEVENT_RESULT EVENT_FadeOut_ExitTypeStep(GMEVENT * event, int *seq, void * work);
+static GMEVENT_RESULT EVENT_FUNC_EntranceIn_ExitTypeNone(GMEVENT * event, int *seq, void * work);
+static GMEVENT_RESULT EVENT_FUNC_EntranceIn_ExitTypeDoor(GMEVENT * event, int *seq, void * work);
+static GMEVENT_RESULT EVENT_FUNC_EntranceIn_ExitTypeStep(GMEVENT * event, int *seq, void * work);
 
 
 //=======================================================================================
@@ -57,7 +57,7 @@ static GMEVENT_RESULT EVENT_FadeOut_ExitTypeStep(GMEVENT * event, int *seq, void
 
 //---------------------------------------------------------------------------------------
 /**
- * @breif フェードアウト・イベントを作成する
+ * @brief 入口進入イベントを作成する
  *
  * @param parent    親イベント
  * @param gsys      ゲームシステム
@@ -69,31 +69,31 @@ static GMEVENT_RESULT EVENT_FadeOut_ExitTypeStep(GMEVENT * event, int *seq, void
  * @return 作成したイベント
  */
 //---------------------------------------------------------------------------------------
-GMEVENT* EVENT_SwitchFieldFadeOut( GMEVENT* parent, 
-                                   GAMESYS_WORK* gsys,
-                                   GAMEDATA* gdata, 
-                                   FIELD_MAIN_WORK* fieldmap, 
-                                   LOCATION location, 
-                                   EXIT_TYPE exit_type )
+GMEVENT* EVENT_EntranceIn( GMEVENT* parent, 
+                           GAMESYS_WORK* gsys,
+                           GAMEDATA* gdata, 
+                           FIELD_MAIN_WORK* fieldmap, 
+                           LOCATION location, 
+                           EXIT_TYPE exit_type )
 {
   GMEVENT* event;
-  FIELD_FADE_WORK* work;
+  EVENT_WORK* work;
 
   // イベントテーブル
-  const GMEVENT_FUNC fadeoutEventTable[] = 
+  const GMEVENT_FUNC eventFuncTable[] = 
   {
-    EVENT_FadeOut_ExitTypeNone,   //EXIT_TYPE_NONE
-    EVENT_FadeOut_ExitTypeNone,   //EXIT_TYPE_MAT
-    EVENT_FadeOut_ExitTypeStep,   //EXIT_TYPE_STAIRS
-    EVENT_FadeOut_ExitTypeDoor,   //EXIT_TYPE_DOOR
-    EVENT_FadeOut_ExitTypeStep,   //EXIT_TYPE_WALL
+    EVENT_FUNC_EntranceIn_ExitTypeNone,   //EXIT_TYPE_NONE
+    EVENT_FUNC_EntranceIn_ExitTypeNone,   //EXIT_TYPE_MAT
+    EVENT_FUNC_EntranceIn_ExitTypeStep,   //EXIT_TYPE_STAIRS
+    EVENT_FUNC_EntranceIn_ExitTypeDoor,   //EXIT_TYPE_DOOR
+    EVENT_FUNC_EntranceIn_ExitTypeStep,   //EXIT_TYPE_WALL
   };
 
   // イベント作成
-  event = GMEVENT_Create( gsys, parent, fadeoutEventTable[ exit_type ], sizeof( FIELD_FADE_WORK ) );
+  event = GMEVENT_Create( gsys, parent, eventFuncTable[ exit_type ], sizeof( EVENT_WORK ) );
 
   // イベント・ワークを初期化
-  work           = (FIELD_FADE_WORK*)GMEVENT_GetEventWork( event );
+  work           = (EVENT_WORK*)GMEVENT_GetEventWork( event );
   work->gsys     = gsys;
   work->gdata    = gdata;
   work->fieldmap = fieldmap;
@@ -135,20 +135,20 @@ static void setNextBGM(GAMEDATA * gamedata, u16 zone_id)
 
 //---------------------------------------------------------------------------------------
 /**
- * @breif ドアなし時のフェードアウト・イベント
+ * @breif ドアなし時の進入イベント
  */
 //---------------------------------------------------------------------------------------
-static GMEVENT_RESULT EVENT_FadeOut_ExitTypeNone(GMEVENT * event, int *seq, void * work)
+static GMEVENT_RESULT EVENT_FUNC_EntranceIn_ExitTypeNone(GMEVENT * event, int *seq, void * work)
 {
-	FIELD_FADE_WORK* fade_work = work;
-	GAMESYS_WORK*    gsys      = fade_work->gsys;
-	FIELD_MAIN_WORK* fieldmap  = fade_work->fieldmap;
-	GAMEDATA*        gamedata  = fade_work->gdata;
+	EVENT_WORK*      event_work = work;
+	GAMESYS_WORK*    gsys       = event_work->gsys;
+	FIELD_MAIN_WORK* fieldmap   = event_work->fieldmap;
+	GAMEDATA*        gamedata   = event_work->gdata;
 
   switch ( *seq )
   {
   case 0:
-    setNextBGM( gamedata, fade_work->location.zone_id );
+    setNextBGM( gamedata, event_work->location.zone_id );
 		GMEVENT_CallEvent( event, EVENT_FieldFadeOut(gsys, fieldmap, 0) );
     ++ *seq;
     break;
@@ -160,19 +160,19 @@ static GMEVENT_RESULT EVENT_FadeOut_ExitTypeNone(GMEVENT * event, int *seq, void
 
 //---------------------------------------------------------------------------------------
 /**
- * @breif ドアあり時のフェードアウト・イベント
+ * @breif ドアあり時の進入イベント
  */
 //---------------------------------------------------------------------------------------
-static GMEVENT_RESULT EVENT_FadeOut_ExitTypeDoor(GMEVENT * event, int *seq, void * work)
+static GMEVENT_RESULT EVENT_FUNC_EntranceIn_ExitTypeDoor(GMEVENT * event, int *seq, void * work)
 {
-	FIELD_FADE_WORK* fade_work = work;
-	GAMESYS_WORK*    gsys      = fade_work->gsys;
-	FIELD_MAIN_WORK* fieldmap  = fade_work->fieldmap;
+	EVENT_WORK*      event_work = work;
+	GAMESYS_WORK*    gsys       = event_work->gsys;
+	FIELD_MAIN_WORK* fieldmap   = event_work->fieldmap;
 
   switch ( *seq )
   {
   case 0:
-    GMEVENT_CallEvent( event, EVENT_FieldDoorInAnime( gsys, fieldmap, &fade_work->location ) );
+    GMEVENT_CallEvent( event, EVENT_FieldDoorInAnime( gsys, fieldmap, &event_work->location ) );
     ++ *seq;
     break;
   case 1:
@@ -183,15 +183,15 @@ static GMEVENT_RESULT EVENT_FadeOut_ExitTypeDoor(GMEVENT * event, int *seq, void
 
 //---------------------------------------------------------------------------------------
 /**
- * @breif 階段のフェードアウト・イベント
+ * @breif 階段の進入イベント
  */
 //---------------------------------------------------------------------------------------
-static GMEVENT_RESULT EVENT_FadeOut_ExitTypeStep(GMEVENT * event, int *seq, void * work)
+static GMEVENT_RESULT EVENT_FUNC_EntranceIn_ExitTypeStep(GMEVENT * event, int *seq, void * work)
 {
-	FIELD_FADE_WORK* fade_work = work;
-	GAMESYS_WORK*    gsys      = fade_work->gsys;
-	FIELD_MAIN_WORK* fieldmap  = fade_work->fieldmap;
-	GAMEDATA*        gamedata  = fade_work->gdata;
+	EVENT_WORK*      event_work = work;
+	GAMESYS_WORK*    gsys       = event_work->gsys;
+	FIELD_MAIN_WORK* fieldmap   = event_work->fieldmap;
+	GAMEDATA*        gamedata   = event_work->gdata;
 
   switch ( *seq )
   {
@@ -200,7 +200,7 @@ static GMEVENT_RESULT EVENT_FadeOut_ExitTypeStep(GMEVENT * event, int *seq, void
     ++ *seq;
     break;
   case 1:
-    setNextBGM( gamedata, fade_work->location.zone_id );
+    setNextBGM( gamedata, event_work->location.zone_id );
 		GMEVENT_CallEvent(event, EVENT_FieldFadeOut(gsys, fieldmap, 0));
     ++ *seq;
     break;
