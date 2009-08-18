@@ -92,6 +92,7 @@ typedef struct
 //--------------------------------------------------------------
 typedef struct
 {
+  u32 vanish_flag;
   FLDEFF_SHADOW *eff_shadow;
   MMDL *fmmdl;
   MMDL_CHECKSAME_DATA samedata;
@@ -327,13 +328,25 @@ static void shadowTask_Update( FLDEFF_TASK *task, void *wk )
   if( MMDL_CheckSameData(work->fmmdl,&work->samedata) == FALSE ){
     FLDEFF_TASK_CallDelete( task );
     return;
+  }else{
+    const MMDLSYS *mmdlsys = MMDL_GetMMdlSys( work->fmmdl );
+    
+    if( MMDLSYS_CheckJoinShadow(mmdlsys) == FALSE ){
+      FLDEFF_TASK_CallDelete( task );
+      return;
+    }
   }
-  
-  MMDL_GetVectorPos( work->fmmdl, &pos );
-//  pos.x += NUM_FX32(1) / 8;
-  pos.y += NUM_FX32(-4);
-  pos.z += NUM_FX32(2)+0x800;
-  FLDEFF_TASK_SetPos( task, &pos );
+    
+  if( MMDL_CheckStatusBit(work->fmmdl,MMDL_STABIT_SHADOW_VANISH) ){
+    work->vanish_flag = TRUE;
+  }else{
+    work->vanish_flag = FALSE;
+    MMDL_GetVectorPos( work->fmmdl, &pos );
+//  pos.x += NUM_FX32(1) / 8;   
+    pos.y += NUM_FX32(-4);
+    pos.z += NUM_FX32(2)+0x800;
+    FLDEFF_TASK_SetPos( task, &pos );
+  }
 }
 
 //--------------------------------------------------------------
@@ -346,24 +359,27 @@ static void shadowTask_Update( FLDEFF_TASK *task, void *wk )
 //--------------------------------------------------------------
 static void shadowTask_Draw( FLDEFF_TASK *task, void *wk )
 {
-  VecFx32 pos;
   TASKWORK_SHADOW *work = wk;
-  GFL_G3D_OBJ *obj = work->eff_shadow->g3d_obj;
-  GFL_G3D_OBJSTATUS status = {{0},{FX32_ONE,FX32_ONE,0xc00},{0}};
+  
+  if( work->vanish_flag == FALSE ){
+    VecFx32 pos;
+    GFL_G3D_OBJ *obj = work->eff_shadow->g3d_obj;
+    GFL_G3D_OBJSTATUS status = {{0},{FX32_ONE,FX32_ONE,0xc00},{0}};
 
-#if 0
-  MTX_Identity33( &status.rotate );
-#else //‰ñ“]‰Â”\‚É
-  {
-    const VecFx32 *rot = &work->eff_shadow->rotate;
-    GFL_CALC3D_MTX_CreateRot(
-        (u16)rot->x, (u16)rot->y, (u16)rot->z, &status.rotate );
-    status.scale = work->eff_shadow->scale;
+    #if 0
+    MTX_Identity33( &status.rotate );
+    #else //‰ñ“]‰Â”\‚É
+    {
+      const VecFx32 *rot = &work->eff_shadow->rotate;
+      GFL_CALC3D_MTX_CreateRot(
+          (u16)rot->x, (u16)rot->y, (u16)rot->z, &status.rotate );
+      status.scale = work->eff_shadow->scale;
+    }
+    #endif
+    
+    FLDEFF_TASK_GetPos( task, &status.trans );
+    GFL_G3D_DRAW_DrawObjectCullingON( obj, &status );
   }
-#endif
-
-  FLDEFF_TASK_GetPos( task, &status.trans );
-  GFL_G3D_DRAW_DrawObjectCullingON( obj, &status );
 }
 
 //--------------------------------------------------------------

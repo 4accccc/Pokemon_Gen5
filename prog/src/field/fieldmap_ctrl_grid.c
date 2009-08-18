@@ -104,13 +104,15 @@ static void mapCtrlGrid_Create(
 		GFL_BBD_SetScale( GFL_BBDACT_GetBBDSystem(bbdActSys), &scale );
 #endif
 	}
-	
+
+#if 1
 	{	//マップ描画オフセット
 		VecFx32 offs = { -FX32_ONE*8, 0, FX32_ONE*8 };
 		FLDMAPPER *mapper = FIELDMAP_GetFieldG3Dmapper( fieldWork );
 		FLDMAPPER_SetDrawOffset( mapper, &offs );
 	}
-	
+#endif
+
 	{ //自機作成
 		FIELD_PLAYER *fld_player = FIELDMAP_GetFieldPlayer( fieldWork );
     MMDL *fmmdl = FIELD_PLAYER_GetMMdl( fld_player );
