@@ -1,6 +1,6 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////
 /**
- * @brief  横向きドアに出入りする際のカメラ回転イベント
+ * @brief  ドアに出入りする際のカメラ動作イベント
  * @author obata
  * @date   2009.08.17
  */
@@ -18,6 +18,7 @@
 //=============================================================================================
 
 #define CAMERA_DIST_MIN (100 << FX32_SHIFT)
+#define ZOOM_DIST (15 << FX32_SHIFT)
 
 
 //=============================================================================================
@@ -49,17 +50,28 @@ EVENT_WORK;
 //=============================================================================================
 static void SetFarNear( FIELDMAP_WORK* p_fieldmap );
 static void ResetFarNear( FIELDMAP_WORK* p_fieldmap );
+
+// イベントワーク設定関数
+static void InitWork( EVENT_WORK* p_work, FIELDMAP_WORK* p_fieldmap );
+static void SetPitchAction( EVENT_WORK* p_work, u16 time, u16 start, u16 end );
+static void SetYawAction( EVENT_WORK* p_work, u16 time, u32 start, u32 end );
+static void SetDistAction( EVENT_WORK* p_work, u16 time, fx32 start, fx32 end );
+
+// カメラ動作関数
 static void UpdateYaw( EVENT_WORK* p_work );
 static void UpdatePitch( EVENT_WORK* p_work );
 static void UpdateDist( EVENT_WORK* p_work );
 
 // イベント生成関数
-static GMEVENT* EVENT_CameraRotateLeftDoorIn( GAMESYS_WORK* p_gsys, FIELDMAP_WORK* p_fieldmap );
-static GMEVENT* EVENT_CameraRotateRightDoorIn( GAMESYS_WORK* p_gsys, FIELDMAP_WORK* p_fieldmap );
-static GMEVENT* EVENT_CameraRotateLeftDoorOut( GAMESYS_WORK* p_gsys, FIELDMAP_WORK* p_fieldmap );
-static GMEVENT* EVENT_CameraRotateRightDoorOut( GAMESYS_WORK* p_gsys, FIELDMAP_WORK* p_fieldmap );
+static GMEVENT* EVENT_UpDoorIn( GAMESYS_WORK* p_gsys, FIELDMAP_WORK* p_fieldmap );
+static GMEVENT* EVENT_LeftDoorIn( GAMESYS_WORK* p_gsys, FIELDMAP_WORK* p_fieldmap );
+static GMEVENT* EVENT_RightDoorIn( GAMESYS_WORK* p_gsys, FIELDMAP_WORK* p_fieldmap );
+static GMEVENT* EVENT_UpDoorOut( GAMESYS_WORK* p_gsys, FIELDMAP_WORK* p_fieldmap );
+static GMEVENT* EVENT_LeftDoorOut( GAMESYS_WORK* p_gsys, FIELDMAP_WORK* p_fieldmap );
+static GMEVENT* EVENT_RightDoorOut( GAMESYS_WORK* p_gsys, FIELDMAP_WORK* p_fieldmap );
 
 // イベント処理関数
+static GMEVENT_RESULT Zoom( GMEVENT* p_event, int* p_seq, void* p_work );
 static GMEVENT_RESULT RotateCamera( GMEVENT* p_event, int* p_seq, void* p_work );
 static GMEVENT_RESULT RotateCamera3Step( GMEVENT* p_event, int* p_seq, void* p_work );
 static GMEVENT_RESULT RotateCamera2Step( GMEVENT* p_event, int* p_seq, void* p_work );
@@ -89,20 +101,26 @@ void EVENT_CAMERA_ROTATE_CallDoorInEvent( GMEVENT* p_parent, GAMESYS_WORK* p_gsy
   MMDL *         fmmdl  = FIELD_PLAYER_GetMMdl( player );
   u16            dir    = MMDL_GetDirDisp( fmmdl );
 
-  // 向きに応じたイベントを呼び出す
-  if( ( dir == DIR_LEFT ) )
+  // 主人公の向きに応じたイベントを呼び出す
+  switch( dir )
   {
-    GMEVENT_CallEvent( p_parent, EVENT_CameraRotateLeftDoorIn(p_gsys, p_fieldmap) );
-  } 
-  else if( ( dir == DIR_RIGHT ) )
-  {
-    GMEVENT_CallEvent( p_parent, EVENT_CameraRotateRightDoorIn(p_gsys, p_fieldmap) );
-  } 
+  case DIR_UP:
+    GMEVENT_CallEvent( p_parent, EVENT_UpDoorIn(p_gsys, p_fieldmap) );
+    break;
+  case DIR_LEFT:
+    GMEVENT_CallEvent( p_parent, EVENT_LeftDoorIn(p_gsys, p_fieldmap) );
+    break;
+  case DIR_RIGHT:
+    GMEVENT_CallEvent( p_parent, EVENT_RightDoorIn(p_gsys, p_fieldmap) );
+    break;
+  default:
+    break;
+  }
 }
 
 //-----------------------------------------------------------------------------------------------
 /**
- * @brief 左右にあるドアから出てきた際の, カメラの初期設定を行う
+ * @brief ドアから出てきた際の, カメラの初期設定を行う
  *
  * @param p_fieldmap フィールドマップ
  */
@@ -115,19 +133,25 @@ void EVENT_CAMERA_ROTATE_PrepareDoorOut( FIELDMAP_WORK* p_fieldmap )
   FIELD_CAMERA*  cam    = FIELDMAP_GetFieldCamera( p_fieldmap );
 
   // 主人公の向きに応じたカメラ設定
-  if( dir == DIR_LEFT )
+  switch( dir )
   {
+  case DIR_DOWN:
+    FIELD_CAMERA_SetAngleLen( cam, FIELD_CAMERA_GetAngleLen( cam ) - ZOOM_DIST );
+    break;
+  case DIR_LEFT:
     FIELD_CAMERA_SetAngleYaw( cam, 0xffff/360*270 );
     FIELD_CAMERA_SetAnglePitch( cam, 0xffff/360*20 );
     FIELD_CAMERA_SetAngleLen( cam, 100<<FX32_SHIFT );
     SetFarNear( p_fieldmap );
-  }
-  else if( dir == DIR_RIGHT )
-  {
+    break;
+  case DIR_RIGHT:
     FIELD_CAMERA_SetAngleYaw( cam, 0xffff/360*90 );
     FIELD_CAMERA_SetAnglePitch( cam, 0xffff/360*20 );
     FIELD_CAMERA_SetAngleLen( cam, 100<<FX32_SHIFT );
     SetFarNear( p_fieldmap );
+    break;
+  default:
+    break;
   }
 }
 
@@ -148,15 +172,21 @@ void EVENT_CAMERA_ROTATE_CallDoorOutEvent( GMEVENT* p_parent, GAMESYS_WORK* p_gs
   MMDL *         fmmdl  = FIELD_PLAYER_GetMMdl( player );
   u16            dir    = MMDL_GetDirDisp( fmmdl );
 
-  // 向きに応じたイベントを呼び出す
-  if( ( dir == DIR_LEFT ) )
+  // 主人公の向きに応じたイベントを呼び出す
+  switch( dir )
   {
-    GMEVENT_CallEvent( p_parent, EVENT_CameraRotateRightDoorOut(p_gsys, p_fieldmap) );
-  } 
-  else if( ( dir == DIR_RIGHT ) )
-  {
-    GMEVENT_CallEvent( p_parent, EVENT_CameraRotateLeftDoorOut(p_gsys, p_fieldmap) );
-  } 
+  case DIR_DOWN:
+    GMEVENT_CallEvent( p_parent, EVENT_UpDoorOut(p_gsys, p_fieldmap) );
+    break;
+  case DIR_LEFT:
+    GMEVENT_CallEvent( p_parent, EVENT_RightDoorOut(p_gsys, p_fieldmap) );
+    break;
+  case DIR_RIGHT:
+    GMEVENT_CallEvent( p_parent, EVENT_LeftDoorOut(p_gsys, p_fieldmap) );
+    break;
+  default:
+    break;
+  }
 }
 
 
@@ -168,6 +198,35 @@ void EVENT_CAMERA_ROTATE_CallDoorOutEvent( GMEVENT* p_parent, GAMESYS_WORK* p_gs
 
 //-----------------------------------------------------------------------------------------------
 /**
+ * @brief カメラ動作イベント( 上にあるドアに入った時 )
+ *
+ * @param p_gsys     ゲームシステム
+ * @param p_fieldmap フィールドマップ
+ *
+ * @return 作成したイベント
+ */
+//-----------------------------------------------------------------------------------------------
+static GMEVENT* EVENT_UpDoorIn( GAMESYS_WORK* p_gsys, FIELDMAP_WORK* p_fieldmap )
+{
+  GMEVENT*      p_event;
+  EVENT_WORK*   p_work;
+  FIELD_CAMERA* p_camera = FIELDMAP_GetFieldCamera( p_fieldmap );
+
+  // イベント生成
+  p_event = GMEVENT_Create( p_gsys, NULL, Zoom, sizeof( EVENT_WORK ) );
+
+  // イベントワークを初期化
+  p_work = GMEVENT_GetEventWork( p_event );
+  InitWork( p_work, p_fieldmap );
+  SetDistAction( p_work, 6,
+      FIELD_CAMERA_GetAngleLen( p_camera ), FIELD_CAMERA_GetAngleLen( p_camera ) - ZOOM_DIST );
+
+  // 生成したイベントを返す
+  return p_event;
+}
+
+//-----------------------------------------------------------------------------------------------
+/**
  * @brief カメラ回転イベント( 左にあるドアに入った時 )
  *
  * @param p_gsys     ゲームシステム
@@ -176,48 +235,21 @@ void EVENT_CAMERA_ROTATE_CallDoorOutEvent( GMEVENT* p_parent, GAMESYS_WORK* p_gs
  * @return 作成したイベント
  */
 //-----------------------------------------------------------------------------------------------
-static GMEVENT* EVENT_CameraRotateLeftDoorIn( GAMESYS_WORK* p_gsys, FIELDMAP_WORK* p_fieldmap )
+static GMEVENT* EVENT_LeftDoorIn( GAMESYS_WORK* p_gsys, FIELDMAP_WORK* p_fieldmap )
 {
   GMEVENT*      p_event;
   EVENT_WORK*   p_work;
   FIELD_CAMERA* p_camera = FIELDMAP_GetFieldCamera( p_fieldmap );
 
   // イベント生成
-  //p_event = GMEVENT_Create( p_gsys, NULL, RotateCamera, sizeof( EVENT_WORK ) );
-  // p_event = GMEVENT_Create( p_gsys, NULL, RotateCamera3Step, sizeof( EVENT_WORK ) );
   p_event = GMEVENT_Create( p_gsys, NULL, RotateCamera2Step, sizeof( EVENT_WORK ) );
-  //p_event = GMEVENT_Create( p_gsys, NULL, RotateCameraInOneFrame, sizeof( EVENT_WORK ) );
 
   // イベントワークを初期化
   p_work = GMEVENT_GetEventWork( p_event );
-  p_work->pFieldmap     = p_fieldmap;
-  p_work->frame         = 0;
-  p_work->endFramePitch = 10;
-  p_work->endFrameYaw   = 10;
-  p_work->endFrameDist  = 10;
-  p_work->startPitch    = FIELD_CAMERA_GetAnglePitch( p_camera );
-  p_work->endPitch      = 0xffff / 360 * 20;
-  p_work->startYaw      = FIELD_CAMERA_GetAngleYaw( p_camera );
-  p_work->endYaw        = 0xffff / 360 * 90;
-  p_work->startDist     = FIELD_CAMERA_GetAngleLen( p_camera );
-  p_work->endDist       = CAMERA_DIST_MIN;
-
-  // 正の方向に回したとき, 180度以上の回転が必要になる場合, 負の方向に回転させる必要がある.
-  // 回転の方向を逆にするために, 小さい方のヨー値を360度分の下駄を履かせる.
-  if( p_work->startYaw < p_work->endYaw )
-  {
-    if( 0x7fff < (p_work->endYaw - p_work->startYaw) )
-    {
-      p_work->startYaw += 0xffff;
-    }
-  }
-  else if( p_work->endYaw < p_work->startYaw )
-  {
-    if( 0x7fff < (p_work->startYaw - p_work->endYaw) )
-    {
-      p_work->endYaw += 0xffff;
-    }
-  } 
+  InitWork( p_work, p_fieldmap );
+  SetPitchAction( p_work, 10, FIELD_CAMERA_GetAnglePitch( p_camera ), 0xffff / 360 * 20 );
+  SetYawAction  ( p_work, 10, FIELD_CAMERA_GetAngleYaw( p_camera ),   0xffff / 360 * 90 );
+  SetDistAction ( p_work, 10, FIELD_CAMERA_GetAngleLen( p_camera ),   CAMERA_DIST_MIN );
 
   // カメラの初期設定
   SetFarNear( p_work->pFieldmap );
@@ -236,51 +268,56 @@ static GMEVENT* EVENT_CameraRotateLeftDoorIn( GAMESYS_WORK* p_gsys, FIELDMAP_WOR
  * @return 作成したイベント
  */
 //-----------------------------------------------------------------------------------------------
-static GMEVENT* EVENT_CameraRotateRightDoorIn( GAMESYS_WORK* p_gsys, FIELDMAP_WORK* p_fieldmap )
+static GMEVENT* EVENT_RightDoorIn( GAMESYS_WORK* p_gsys, FIELDMAP_WORK* p_fieldmap )
 {
   GMEVENT*      p_event;
   EVENT_WORK*   p_work;
   FIELD_CAMERA* p_camera = FIELDMAP_GetFieldCamera( p_fieldmap );
 
   // イベント生成
-  //p_event = GMEVENT_Create( p_gsys, NULL, RotateCamera, sizeof( EVENT_WORK ) );
-  // p_event = GMEVENT_Create( p_gsys, NULL, RotateCamera3Step, sizeof( EVENT_WORK ) );
   p_event = GMEVENT_Create( p_gsys, NULL, RotateCamera2Step, sizeof( EVENT_WORK ) );
-  //p_event = GMEVENT_Create( p_gsys, NULL, RotateCameraInOneFrame, sizeof( EVENT_WORK ) );
 
   // イベントワークを初期化
   p_work = GMEVENT_GetEventWork( p_event );
-  p_work->pFieldmap = p_fieldmap;
-  p_work->frame = 0;
-  p_work->endFramePitch = 10;
-  p_work->endFrameYaw   = 10;
-  p_work->endFrameDist  = 10;
-  p_work->startPitch = FIELD_CAMERA_GetAnglePitch( p_camera );
-  p_work->endPitch = 0xffff / 360 * 20;
-  p_work->startYaw = FIELD_CAMERA_GetAngleYaw( p_camera );
-  p_work->endYaw = 0xffff / 360 * 270;
-  p_work->startDist = FIELD_CAMERA_GetAngleLen( p_camera );
-  p_work->endDist = CAMERA_DIST_MIN; 
-
-  // 正の方向に回したとき, 180度以上の回転が必要になる場合, 負の方向に回転させる必要がある.
-  // 回転の方向を逆にするために, 小さい方のヨー値を360度分の下駄を履かせる.
-  if( p_work->startYaw < p_work->endYaw )
-  {
-    if( 0x7fff < (p_work->endYaw - p_work->startYaw) )
-    {
-      p_work->startYaw += 0xffff;
-    }
-  }
-  else if( p_work->endYaw < p_work->startYaw )
-  {
-    if( 0x7fff < (p_work->startYaw - p_work->endYaw) )
-    {
-      p_work->endYaw += 0xffff;
-    }
-  } 
+  InitWork( p_work, p_fieldmap );
+  SetPitchAction( p_work, 10, FIELD_CAMERA_GetAnglePitch( p_camera ), 0xffff / 360 * 20 );
+  SetYawAction  ( p_work, 10, FIELD_CAMERA_GetAngleYaw( p_camera ),   0xffff / 360 * 270 );
+  SetDistAction ( p_work, 10, FIELD_CAMERA_GetAngleLen( p_camera ), CAMERA_DIST_MIN ); 
 
   // カメラの初期設定
   SetFarNear( p_work->pFieldmap );
+
+  // 生成したイベントを返す
+  return p_event;
+}
+
+//-----------------------------------------------------------------------------------------------
+/**
+ * @brief カメラ動作イベント( 上にあるドアから出てきたとき )
+ *
+ * @param p_gsys     ゲームシステム
+ * @param p_fieldmap フィールドマップ
+ *
+ * @return 作成したイベント
+ */
+//-----------------------------------------------------------------------------------------------
+static GMEVENT* EVENT_UpDoorOut( GAMESYS_WORK* p_gsys, FIELDMAP_WORK* p_fieldmap )
+{
+  GMEVENT*      p_event;
+  EVENT_WORK*   p_work;
+  FIELD_CAMERA* p_camera = FIELDMAP_GetFieldCamera( p_fieldmap );
+  FLD_CAMERA_PARAM def_param;
+
+  // カメラのデフォルト・パラメータを取得
+  FIELD_CAMERA_GetInitialParameter( p_camera, &def_param );
+
+  // イベント生成
+  p_event = GMEVENT_Create( p_gsys, NULL, Zoom, sizeof( EVENT_WORK ) );
+
+  // イベントワークを初期化
+  p_work = GMEVENT_GetEventWork( p_event );
+  InitWork( p_work, p_fieldmap );
+  SetDistAction( p_work, 6, FIELD_CAMERA_GetAngleLen( p_camera ), def_param.Distance * FX32_ONE );
 
   // 生成したイベントを返す
   return p_event;
@@ -296,7 +333,7 @@ static GMEVENT* EVENT_CameraRotateRightDoorIn( GAMESYS_WORK* p_gsys, FIELDMAP_WO
  * @return 作成したイベント
  */
 //-----------------------------------------------------------------------------------------------
-static GMEVENT* EVENT_CameraRotateLeftDoorOut( GAMESYS_WORK* p_gsys, FIELDMAP_WORK* p_fieldmap )
+static GMEVENT* EVENT_LeftDoorOut( GAMESYS_WORK* p_gsys, FIELDMAP_WORK* p_fieldmap )
 {
   GMEVENT*         p_event;
   EVENT_WORK*      p_work;
@@ -307,41 +344,14 @@ static GMEVENT* EVENT_CameraRotateLeftDoorOut( GAMESYS_WORK* p_gsys, FIELDMAP_WO
   FIELD_CAMERA_GetInitialParameter( p_camera, &def_param );
 
   // イベント生成
-  //p_event = GMEVENT_Create( p_gsys, NULL, RotateCamera, sizeof( EVENT_WORK ) );
-  // p_event = GMEVENT_Create( p_gsys, NULL, RotateCamera3Step, sizeof( EVENT_WORK ) );
   p_event = GMEVENT_Create( p_gsys, NULL, RotateCamera2Step, sizeof( EVENT_WORK ) );
-  //p_event = GMEVENT_Create( p_gsys, NULL, RotateCameraInOneFrame, sizeof( EVENT_WORK ) );
 
   // イベントワークを初期化
   p_work = GMEVENT_GetEventWork( p_event );
-  p_work->pFieldmap     = p_fieldmap;
-  p_work->frame         = 0;
-  p_work->endFramePitch = 10;
-  p_work->endFrameYaw   = 10;
-  p_work->endFrameDist  = 10;
-  p_work->startPitch    = FIELD_CAMERA_GetAnglePitch( p_camera );
-  p_work->endPitch      = def_param.Angle.x;
-  p_work->startYaw      = FIELD_CAMERA_GetAngleYaw( p_camera );
-  p_work->endYaw        = def_param.Angle.y;
-  p_work->startDist     = FIELD_CAMERA_GetAngleLen( p_camera );
-  p_work->endDist       = def_param.Distance * FX32_ONE;
-
-  // 正の方向に回したとき, 180度以上の回転が必要になる場合, 負の方向に回転させる必要がある.
-  // 回転の方向を逆にするために, 小さい方のヨー値を360度分の下駄を履かせる.
-  if( p_work->startYaw < p_work->endYaw )
-  {
-    if( 0x7fff < (p_work->endYaw - p_work->startYaw) )
-    {
-      p_work->startYaw += 0xffff;
-    }
-  }
-  else if( p_work->endYaw < p_work->startYaw )
-  {
-    if( 0x7fff < (p_work->startYaw - p_work->endYaw) )
-    {
-      p_work->endYaw += 0xffff;
-    }
-  } 
+  InitWork( p_work, p_fieldmap );
+  SetPitchAction( p_work, 10, FIELD_CAMERA_GetAnglePitch( p_camera ), def_param.Angle.x );
+  SetYawAction  ( p_work, 10, FIELD_CAMERA_GetAngleYaw( p_camera ),   def_param.Angle.y );
+  SetDistAction ( p_work, 10, FIELD_CAMERA_GetAngleLen( p_camera ),   def_param.Distance * FX32_ONE );
 
   // カメラの初期設定
   SetFarNear( p_work->pFieldmap );
@@ -361,7 +371,7 @@ static GMEVENT* EVENT_CameraRotateLeftDoorOut( GAMESYS_WORK* p_gsys, FIELDMAP_WO
  * @return 作成したイベント
  */
 //-----------------------------------------------------------------------------------------------
-static GMEVENT* EVENT_CameraRotateRightDoorOut( GAMESYS_WORK* p_gsys, FIELDMAP_WORK* p_fieldmap )
+static GMEVENT* EVENT_RightDoorOut( GAMESYS_WORK* p_gsys, FIELDMAP_WORK* p_fieldmap )
 {
   GMEVENT*      p_event;
   EVENT_WORK*   p_work;
@@ -372,41 +382,14 @@ static GMEVENT* EVENT_CameraRotateRightDoorOut( GAMESYS_WORK* p_gsys, FIELDMAP_W
   FIELD_CAMERA_GetInitialParameter( p_camera, &def_param );
 
   // イベント生成
-  //p_event = GMEVENT_Create( p_gsys, NULL, RotateCamera, sizeof( EVENT_WORK ) );
-  // p_event = GMEVENT_Create( p_gsys, NULL, RotateCamera3Step, sizeof( EVENT_WORK ) );
   p_event = GMEVENT_Create( p_gsys, NULL, RotateCamera2Step, sizeof( EVENT_WORK ) );
-  //p_event = GMEVENT_Create( p_gsys, NULL, RotateCameraInOneFrame, sizeof( EVENT_WORK ) );
 
   // イベントワークを初期化
   p_work = GMEVENT_GetEventWork( p_event );
-  p_work->pFieldmap     = p_fieldmap;
-  p_work->frame         = 0;
-  p_work->endFramePitch = 10;
-  p_work->endFrameYaw   = 10;
-  p_work->endFrameDist  = 10;
-  p_work->startPitch    = FIELD_CAMERA_GetAnglePitch( p_camera );
-  p_work->endPitch      = def_param.Angle.x;
-  p_work->startYaw      = FIELD_CAMERA_GetAngleYaw( p_camera );
-  p_work->endYaw        = def_param.Angle.y;
-  p_work->startDist     = FIELD_CAMERA_GetAngleLen( p_camera );
-  p_work->endDist       = def_param.Distance * FX32_ONE;
-
-  // 正の方向に回したとき, 180度以上の回転が必要になる場合, 負の方向に回転させる必要がある.
-  // 回転の方向を逆にするために, 小さい方のヨー値を360度分の下駄を履かせる.
-  if( p_work->startYaw < p_work->endYaw )
-  {
-    if( 0x7fff < (p_work->endYaw - p_work->startYaw) )
-    {
-      p_work->startYaw += 0xffff;
-    }
-  }
-  else if( p_work->endYaw < p_work->startYaw )
-  {
-    if( 0x7fff < (p_work->startYaw - p_work->endYaw) )
-    {
-      p_work->endYaw += 0xffff;
-    }
-  } 
+  InitWork( p_work, p_fieldmap );
+  SetPitchAction( p_work, 10, FIELD_CAMERA_GetAnglePitch( p_camera ), def_param.Angle.x );
+  SetYawAction  ( p_work, 10, FIELD_CAMERA_GetAngleYaw( p_camera ),   def_param.Angle.y );
+  SetDistAction ( p_work, 10, FIELD_CAMERA_GetAngleLen( p_camera ),   def_param.Distance * FX32_ONE );
 
   // カメラの初期設定
   SetFarNear( p_work->pFieldmap );
@@ -414,7 +397,6 @@ static GMEVENT* EVENT_CameraRotateRightDoorOut( GAMESYS_WORK* p_gsys, FIELDMAP_W
   // 生成したイベントを返す
   return p_event;
 }
-
 
 //-----------------------------------------------------------------------------------------------
 /**
@@ -469,6 +451,97 @@ static void ResetFarNear( FIELDMAP_WORK* p_fieldmap )
   // DEBUG:
   OBATA_Printf( "reset far  = %d\n", def_param.Far >> FX32_SHIFT );
   OBATA_Printf( "reset near = %d\n", def_param.Near >> FX32_SHIFT );
+}
+
+//-----------------------------------------------------------------------------------------------
+/**
+ * @brief イベントワークを初期化する
+ *
+ * @param p_work     初期化する変数
+ * @param p_fieldmap 設定するフィールドマップ
+ */
+//-----------------------------------------------------------------------------------------------
+static void InitWork( EVENT_WORK* p_work, FIELDMAP_WORK* p_fieldmap )
+{
+  p_work->pFieldmap     = p_fieldmap;
+  p_work->frame         = 0;
+  p_work->endFramePitch = 0;
+  p_work->endFrameYaw   = 0;
+  p_work->endFrameDist  = 0;
+  p_work->startPitch    = 0;
+  p_work->endPitch      = 0;
+  p_work->startYaw      = 0;
+  p_work->endYaw        = 0;
+  p_work->startDist     = 0;
+  p_work->endDist       = 0;
+}
+
+//-----------------------------------------------------------------------------------------------
+/**
+ * @breif ピッチの動作を設定する
+ *
+ * @param p_work  設定対象イベントワーク
+ * @param time    動作フレーム数
+ * @param start   初期値
+ * @param end     終了値
+ */
+//-----------------------------------------------------------------------------------------------
+static void SetPitchAction( EVENT_WORK* p_work, u16 time, u16 start, u16 end )
+{
+  p_work->startPitch    = start;
+  p_work->endPitch      = end;
+  p_work->endFramePitch = time;
+}
+
+//-----------------------------------------------------------------------------------------------
+/**
+ * @breif ヨーの動作を設定する
+ *
+ * @param p_work  設定対象イベントワーク
+ * @param time    動作フレーム数
+ * @param start   初期値
+ * @param end     終了値
+ */
+//-----------------------------------------------------------------------------------------------
+static void SetYawAction( EVENT_WORK* p_work, u16 time, u32 start, u32 end )
+{
+  p_work->startYaw    = start;
+  p_work->endYaw      = end;
+  p_work->endFrameYaw = time;
+
+  // 正の方向に回したとき, 180度以上の回転が必要になる場合, 負の方向に回転させる必要がある.
+  // 回転の方向を逆にするために, 小さい方のヨー値を360度分の下駄を履かせる.
+  if( p_work->startYaw < p_work->endYaw )
+  {
+    if( 0x7fff < (p_work->endYaw - p_work->startYaw) )
+    {
+      p_work->startYaw += 0xffff;
+    }
+  }
+  else if( p_work->endYaw < p_work->startYaw )
+  {
+    if( 0x7fff < (p_work->startYaw - p_work->endYaw) )
+    {
+      p_work->endYaw += 0xffff;
+    }
+  } 
+}
+
+//-----------------------------------------------------------------------------------------------
+/**
+ * @breif カメラ距離の動作を設定する
+ *
+ * @param p_work  設定対象イベントワーク
+ * @param time    動作フレーム数
+ * @param start   初期値
+ * @param end     終了値
+ */
+//-----------------------------------------------------------------------------------------------
+static void SetDistAction( EVENT_WORK* p_work, u16 time, fx32 start, fx32 end )
+{
+  p_work->startDist    = start;
+  p_work->endDist      = end;
+  p_work->endFrameDist = time;
 }
 
 //-----------------------------------------------------------------------------------------------
@@ -530,6 +603,33 @@ static void UpdateDist( EVENT_WORK* p_work )
     dist     = FX_F32_TO_FX32( ( (1-progress) * FX_FX32_TO_F32(p_work->startDist) ) + ( progress * FX_FX32_TO_F32(p_work->endDist) ) );
   FIELD_CAMERA_SetAngleLen( p_camera, dist ); 
   }
+}
+
+//-----------------------------------------------------------------------------------------------
+/**
+ * @brief イベント処理関数( ズームイン or ズームアウト )
+ *
+ * @param p_event イベント
+ * @param p_seq   シーケンス番号
+ * @param p_work  イベントワーク
+ *
+ * @return GMEVENT_RES_CONTINUE or GMEVENT_RES_FINISH
+ */
+//-----------------------------------------------------------------------------------------------
+static GMEVENT_RESULT Zoom( GMEVENT* p_event, int* p_seq, void* p_work )
+{
+  EVENT_WORK* p_event_work = (EVENT_WORK*)p_work;
+
+  // カメラパラメータを更新
+  UpdateDist( p_event_work );
+
+  // 指定回数動作したら終了
+  p_event_work->frame++;
+  if( p_event_work->endFrameDist < p_event_work->frame )
+  {
+    return GMEVENT_RES_FINISH;
+  } 
+  return GMEVENT_RES_CONTINUE;
 }
 
 //-----------------------------------------------------------------------------------------------
