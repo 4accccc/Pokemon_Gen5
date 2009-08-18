@@ -3897,7 +3897,13 @@ C:\home\pokemon_wb\resource\particle\wazaeffect\w_256.spa
 #001
 %00
 カメラ移動	追従	攻撃側	16	0	8
+SE再生	SEQ_SE_BC01	SE1	0	0	100	0	0
 エフェクト終了待ち	すべて
+SE再生	SEQ_SE_W051_01	SE2	0	0	115	0	0
+SE再生	SEQ_SE_W075_05	SE1	0	0	115	0	0
+SE再生	SEQ_SE_W307_03	SE1	80	0	110	0	0
+SE再生	SEQ_SE_W113_02	SE2	90	0	115	0	0
+SE再生	SEQ_SE_W113_02	SE1	107	0	60	0	0
 ポケモン拡縮	攻撃側	往復	-0.3	0.3	6	2	1
 パーティクルデータロード	w_256
 パーティクル再生	w_256	W_256_256_BALL_UP	攻撃側	方向無し	2	0
@@ -3909,6 +3915,7 @@ C:\home\pokemon_wb\resource\particle\wazaeffect\w_256.spa
 エフェクト終了待ち	すべて
 ポケモンパレットフェード	攻撃側	12	0	2	31:31:31
 カメラ移動	追従	初期位置	16	0	8
+SE再生	SEQ_SE_BC02	SE1	0	0	100	0	0
 エフェクト終了待ち	すべて
 エフェクト終了
 &
