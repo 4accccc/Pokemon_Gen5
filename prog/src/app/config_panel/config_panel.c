@@ -25,7 +25,7 @@
 #include "system/main.h"
 #define HEAPID_BASE_APP GFL_HEAPID_APP
 
-#include "arc/test_graphic/config_gra.naix"
+#include "arc/config_gra.naix"
 
 #include "message.naix"
 #include "msg/msg_config.h"
