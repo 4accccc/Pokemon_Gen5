@@ -7,11 +7,6 @@
  */
 //======================================================================
 #include "fldmmdl.h"
-#include "test_graphic/fld_act.naix"
-
-#ifdef MMDL_BLACT_HEAD3_TEST
-#include "test_graphic/fldmmdl_btx.naix"
-#endif
 
 //======================================================================
 //	define
