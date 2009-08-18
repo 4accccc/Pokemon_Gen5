@@ -1301,7 +1301,10 @@ C:\home\pokemon_wb\resource\particle\wazaeffect\w_235.spa
 #001
 %00
 カメラ移動	追従	攻撃側	16	0	8
+SE再生	SEQ_SE_BC01	デフォルト	0	0	100	0	0
 エフェクト終了待ち	すべて
+SE再生	SEQ_SE_W235_01	SE1	0	0	110	0	0
+SE再生	SEQ_SE_W235_03	SE2	10	0	120	0	0
 パーティクルデータロード	w_235
 パーティクル再生	w_235	W_235_235_CENTER_BALL	攻撃側	方向無し	2	0
 パーティクル再生	w_235	W_235_235_LIGHT_RADIATE	攻撃側	方向無し	2	0
@@ -1317,6 +1320,7 @@ C:\home\pokemon_wb\resource\particle\wazaeffect\w_235.spa
 ポケモンパレットフェード	攻撃側	12	0	1	31:31:31
 エフェクト終了待ち	すべて
 カメラ移動	追従	初期位置	16	0	8
+SE再生	SEQ_SE_BC02	デフォルト	0	0	100	0	0
 エフェクト終了待ち	すべて
 エフェクト終了
 &
