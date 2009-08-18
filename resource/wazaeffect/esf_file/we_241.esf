@@ -1301,7 +1301,12 @@ C:\home\pokemon_wb\resource\particle\wazaeffect\w_241.spa
 #001
 %00
 BGのパレットフェード	すべて	0	6	3	30:30:0
+SE再生	SEQ_SE_W235_01	SE1	0	0	115	0	0
 射影モード	透視射影
+SE再生	SEQ_SE_DECIDE3	SE2	30	0	120	0	0
+SE再生	SEQ_SE_DECIDE3	SE1	60	0	40	0	0
+SE再生	SEQ_SE_DECIDE3	SE1	90	0	30	0	0
+SE再生	SEQ_SE_DECIDE3	SE1	120	0	10	0	0
 パーティクルデータロード	w_241
 パーティクル再生	w_241	W_241_241_SUN_BALL	攻撃側	方向無し	0	0
 パーティクル再生	w_241	W_241_241_SUN_LINE_1	攻撃側	方向無し	0	0
