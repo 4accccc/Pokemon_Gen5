@@ -17,6 +17,10 @@
  */
 //=============================================================================================
 
+// カメラの設定
+#define NEAR_PLANE (50 << FX32_SHIFT)
+#define FAR_PLANE  (512 << FX32_SHIFT)
+
 // 上ドアへの出入り
 #define U_DOOR_FRAME     (6)
 #define U_DOOR_ZOOM_DIST (15 << FX32_SHIFT)   // ズームする距離
@@ -457,7 +461,7 @@ static void SetFarNear( FIELDMAP_WORK* p_fieldmap )
   FIELD_CAMERA_SetFar( p_camera, far );
 
   // Nearプレーンを設定する
-  near = 50 << FX32_SHIFT;
+  near = NEAR_PLANE;
   FIELD_CAMERA_SetNear( p_camera, near );
 
   // DEBUG:
