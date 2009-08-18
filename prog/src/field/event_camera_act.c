@@ -63,7 +63,7 @@ EVENT_WORK;
  */
 //=============================================================================================
 static void SetFarNear( FIELDMAP_WORK* p_fieldmap );
-static void ResetFarNear( FIELDMAP_WORK* p_fieldmap );
+
 // イベントワーク設定関数
 static void InitWork( EVENT_WORK* p_work, FIELDMAP_WORK* p_fieldmap );
 static void SetPitchAction( EVENT_WORK* p_work, u16 time, u16 start, u16 end );
@@ -158,7 +158,7 @@ void EVENT_CAMERA_ACT_PrepareForDoorOut( FIELDMAP_WORK* p_fieldmap )
     SetFarNear( p_fieldmap );
     break;
   case DIR_RIGHT:
-    FIELD_CAMERA_SetAnglePitch( cam, L_DOOR_DIST );
+    FIELD_CAMERA_SetAnglePitch( cam, L_DOOR_PITCH );
     FIELD_CAMERA_SetAngleYaw( cam, L_DOOR_YAW );
     FIELD_CAMERA_SetAngleLen( cam, L_DOOR_DIST );
     SetFarNear( p_fieldmap );
@@ -200,6 +200,30 @@ void EVENT_CAMERA_ACT_CallDoorOutEvent( GMEVENT* p_parent, GAMESYS_WORK* p_gsys,
   default:
     break;
   }
+}
+
+//--------------------------------------------------------------------
+/**
+ * @breif カメラのNearプレーンとFarプレーンをデフォルト設定に戻す
+ *
+ * @param p_fieldmap フィールドマップ
+ */
+//--------------------------------------------------------------------
+void EVENT_CAMERA_ACT_ResetCameraParameter( FIELDMAP_WORK* p_fieldmap )
+{
+  FIELD_CAMERA*    p_camera = FIELDMAP_GetFieldCamera( p_fieldmap );
+  FLD_CAMERA_PARAM def_param;
+
+  // デフォルト・パラメータを取得
+  FIELD_CAMERA_GetInitialParameter( p_camera, &def_param );
+
+  // デフォルト値に戻す
+  FIELD_CAMERA_SetFar( p_camera, def_param.Far );
+  FIELD_CAMERA_SetNear( p_camera, def_param.Near );
+
+  // DEBUG:
+  OBATA_Printf( "reset far  = %d\n", def_param.Far >> FX32_SHIFT );
+  OBATA_Printf( "reset near = %d\n", def_param.Near >> FX32_SHIFT );
 }
 
 
@@ -367,9 +391,6 @@ static GMEVENT* EVENT_LeftDoorOut( GAMESYS_WORK* p_gsys, FIELDMAP_WORK* p_fieldm
   SetYawAction  ( p_work, L_DOOR_FRAME, FIELD_CAMERA_GetAngleYaw( p_camera ),   def_param.Angle.y );
   SetDistAction ( p_work, L_DOOR_FRAME, FIELD_CAMERA_GetAngleLen( p_camera ),   def_param.Distance * FX32_ONE );
 
-  // カメラの初期設定
-  SetFarNear( p_work->pFieldmap );
-
   // 生成したイベントを返す
   return p_event;
 }
@@ -405,9 +426,6 @@ static GMEVENT* EVENT_RightDoorOut( GAMESYS_WORK* p_gsys, FIELDMAP_WORK* p_field
   SetYawAction  ( p_work, R_DOOR_FRAME, FIELD_CAMERA_GetAngleYaw( p_camera ),   def_param.Angle.y );
   SetDistAction ( p_work, R_DOOR_FRAME, FIELD_CAMERA_GetAngleLen( p_camera ),   def_param.Distance * FX32_ONE );
 
-  // カメラの初期設定
-  SetFarNear( p_work->pFieldmap );
-
   // 生成したイベントを返す
   return p_event;
 }
@@ -441,30 +459,6 @@ static void SetFarNear( FIELDMAP_WORK* p_fieldmap )
   // DEBUG:
   OBATA_Printf( "after far  = %x(%d)\n", far, far>>FX32_SHIFT );
   OBATA_Printf( "after near = %x(%d)\n", near, near>>FX32_SHIFT );
-}
-
-//-----------------------------------------------------------------------------------------------
-/**
- * @brief カメラのfarプレーン・nearプレーンをデフォルト値に戻す
- *
- * @param p_fieldmap フィールドマップ
- */
-//-----------------------------------------------------------------------------------------------
-static void ResetFarNear( FIELDMAP_WORK* p_fieldmap )
-{
-  FIELD_CAMERA*    p_camera = FIELDMAP_GetFieldCamera( p_fieldmap );
-  FLD_CAMERA_PARAM def_param;
-
-  // デフォルト・パラメータを取得
-  FIELD_CAMERA_GetInitialParameter( p_camera, &def_param );
-
-  // デフォルト値に戻す
-  FIELD_CAMERA_SetFar( p_camera, def_param.Far );
-  FIELD_CAMERA_SetNear( p_camera, def_param.Near );
-
-  // DEBUG:
-  OBATA_Printf( "reset far  = %d\n", def_param.Far >> FX32_SHIFT );
-  OBATA_Printf( "reset near = %d\n", def_param.Near >> FX32_SHIFT );
 }
 
 //-----------------------------------------------------------------------------------------------
@@ -672,7 +666,6 @@ static GMEVENT_RESULT RotateCamera( GMEVENT* p_event, int* p_seq, void* p_work )
       ( p_event_work->endFramePitch < p_event_work->frame ) &&
       ( p_event_work->endFrameDist < p_event_work->frame ) )
   {
-    ResetFarNear( p_event_work->pFieldmap );
     return GMEVENT_RES_FINISH;
   } 
   return GMEVENT_RES_CONTINUE;
@@ -716,7 +709,6 @@ static GMEVENT_RESULT RotateCamera3Step( GMEVENT* p_event, int* p_seq, void* p_w
     UpdateYaw( p_event_work );
     if( p_event_work->endFrameYaw < ++(p_event_work->frame) )
     {
-      ResetFarNear( p_event_work->pFieldmap );
       return GMEVENT_RES_FINISH;
     }
     break;
@@ -758,7 +750,6 @@ static GMEVENT_RESULT RotateCamera2Step( GMEVENT* p_event, int* p_seq, void* p_w
     p_event_work->frame++;
     if( p_event_work->endFrameYaw < p_event_work->frame )
     {
-      ResetFarNear( p_event_work->pFieldmap );
       return GMEVENT_RES_FINISH;
     }
     break;
@@ -802,7 +793,6 @@ static GMEVENT_RESULT RotateCameraInOneFrame( GMEVENT* p_event, int* p_seq, void
     if( 10 < ++(p_event_work->frame) )
     {
       ++ *p_seq;
-      ResetFarNear( p_event_work->pFieldmap );
       return GMEVENT_RES_FINISH;
     }
     break;

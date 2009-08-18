@@ -98,6 +98,7 @@ static GMEVENT_RESULT ExitEvent_DoorOut(GMEVENT * event, int *seq, void * work)
     break;
 
   case SEQ_DOOROUT_OPENANIME_START:
+    EVENT_CAMERA_ACT_ResetCameraParameter( fieldmap );  // カメラの設定をデフォルトに戻す
     fdaw->obj = searchDoorObject(bmodel_man, &fdaw->pos);
     if (fdaw->obj == NULL)
     { /* エラーよけ、ドアがない場合 */
@@ -262,6 +263,7 @@ static GMEVENT_RESULT ExitEvent_DoorIn(GMEVENT * event, int *seq, void * work)
     break;
 
   case SEQ_DOORIN_END:
+    EVENT_CAMERA_ACT_ResetCameraParameter( fieldmap );  // カメラの設定をデフォルトに戻す
     if (fdaw->entry)
     {
       FIELD_BMODEL_MAN_releaseBuildModel( bmodel_man, fdaw->entry );

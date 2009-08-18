@@ -41,3 +41,12 @@ extern void EVENT_CAMERA_ACT_PrepareForDoorOut( FIELDMAP_WORK* p_fieldmap );
 //--------------------------------------------------------------------
 extern void EVENT_CAMERA_ACT_CallDoorOutEvent( 
     GMEVENT* p_parent, GAMESYS_WORK* p_gsys, FIELDMAP_WORK* p_fieldmap ); 
+
+//--------------------------------------------------------------------
+/**
+ * @breif カメラのNearプレーンとFarプレーンをデフォルト設定に戻す
+ *
+ * @param p_fieldmap フィールドマップ
+ */
+//--------------------------------------------------------------------
+extern void EVENT_CAMERA_ACT_ResetCameraParameter( FIELDMAP_WORK* p_fieldmap );
