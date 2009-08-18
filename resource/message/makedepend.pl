@@ -46,7 +46,7 @@ sub make_target_path {
 	my $dst_dir = shift;
 	my $file = shift;
 
-	if( $file =~ /^src\/script\//){
+	if( $file =~ /^src\/script_message\//){
 		$dst_dir .= "/script";
 	}
 
