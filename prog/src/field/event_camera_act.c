@@ -17,12 +17,22 @@
  */
 //=============================================================================================
 
-#define CAMERA_DIST_MIN (100 << FX32_SHIFT)
-#define ZOOM_DIST       (15 << FX32_SHIFT)
+// 上ドアへの出入り
+#define U_DOOR_FRAME     (6)
+#define U_DOOR_ZOOM_DIST (15 << FX32_SHIFT)   // ズームする距離
 
 // 左ドアへの出入り
+#define L_DOOR_FRAME (10)
 #define L_DOOR_PITCH (0xffff / 360 * 20)
 #define L_DOOR_YAW   (0xffff / 360 * 90)
+#define L_DOOR_DIST  (100 << FX32_SHIFT)
+
+// 右ドアへの出入り
+#define R_DOOR_FRAME (10)
+#define R_DOOR_PITCH (0xffff / 360 * 20)
+#define R_DOOR_YAW   (0xffff / 360 * 270)
+#define R_DOOR_DIST  (100 << FX32_SHIFT)
+
 
 
 //=============================================================================================
@@ -54,7 +64,6 @@ EVENT_WORK;
 //=============================================================================================
 static void SetFarNear( FIELDMAP_WORK* p_fieldmap );
 static void ResetFarNear( FIELDMAP_WORK* p_fieldmap );
-
 // イベントワーク設定関数
 static void InitWork( EVENT_WORK* p_work, FIELDMAP_WORK* p_fieldmap );
 static void SetPitchAction( EVENT_WORK* p_work, u16 time, u16 start, u16 end );
@@ -140,18 +149,18 @@ void EVENT_CAMERA_ACT_PrepareForDoorOut( FIELDMAP_WORK* p_fieldmap )
   switch( dir )
   {
   case DIR_DOWN:
-    FIELD_CAMERA_SetAngleLen( cam, FIELD_CAMERA_GetAngleLen( cam ) - ZOOM_DIST );
+    FIELD_CAMERA_SetAngleLen( cam, FIELD_CAMERA_GetAngleLen( cam ) - U_DOOR_ZOOM_DIST );
     break;
   case DIR_LEFT:
-    FIELD_CAMERA_SetAngleYaw( cam, 0xffff/360*270 );
-    FIELD_CAMERA_SetAnglePitch( cam, 0xffff/360*20 );
-    FIELD_CAMERA_SetAngleLen( cam, 100<<FX32_SHIFT );
+    FIELD_CAMERA_SetAnglePitch( cam, R_DOOR_PITCH );
+    FIELD_CAMERA_SetAngleYaw( cam, R_DOOR_YAW );
+    FIELD_CAMERA_SetAngleLen( cam, R_DOOR_DIST );
     SetFarNear( p_fieldmap );
     break;
   case DIR_RIGHT:
-    FIELD_CAMERA_SetAngleYaw( cam, 0xffff/360*90 );
-    FIELD_CAMERA_SetAnglePitch( cam, 0xffff/360*20 );
-    FIELD_CAMERA_SetAngleLen( cam, 100<<FX32_SHIFT );
+    FIELD_CAMERA_SetAnglePitch( cam, L_DOOR_DIST );
+    FIELD_CAMERA_SetAngleYaw( cam, L_DOOR_YAW );
+    FIELD_CAMERA_SetAngleLen( cam, L_DOOR_DIST );
     SetFarNear( p_fieldmap );
     break;
   default:
@@ -222,8 +231,9 @@ static GMEVENT* EVENT_UpDoorIn( GAMESYS_WORK* p_gsys, FIELDMAP_WORK* p_fieldmap 
   // イベントワークを初期化
   p_work = GMEVENT_GetEventWork( p_event );
   InitWork( p_work, p_fieldmap );
-  SetDistAction( p_work, 6,
-      FIELD_CAMERA_GetAngleLen( p_camera ), FIELD_CAMERA_GetAngleLen( p_camera ) - ZOOM_DIST );
+  SetDistAction( p_work, U_DOOR_FRAME,
+      FIELD_CAMERA_GetAngleLen( p_camera ), 
+      FIELD_CAMERA_GetAngleLen( p_camera ) - U_DOOR_ZOOM_DIST );
 
   // 生成したイベントを返す
   return p_event;
@@ -251,9 +261,9 @@ static GMEVENT* EVENT_LeftDoorIn( GAMESYS_WORK* p_gsys, FIELDMAP_WORK* p_fieldma
   // イベントワークを初期化
   p_work = GMEVENT_GetEventWork( p_event );
   InitWork( p_work, p_fieldmap );
-  SetPitchAction( p_work, 10, FIELD_CAMERA_GetAnglePitch( p_camera ), L_DOOR_PITCH );
-  SetYawAction  ( p_work, 10, FIELD_CAMERA_GetAngleYaw( p_camera ),   L_DOOR_YAW );
-  SetDistAction ( p_work, 10, FIELD_CAMERA_GetAngleLen( p_camera ),   CAMERA_DIST_MIN );
+  SetPitchAction( p_work, L_DOOR_FRAME, FIELD_CAMERA_GetAnglePitch( p_camera ), L_DOOR_PITCH );
+  SetYawAction  ( p_work, L_DOOR_FRAME, FIELD_CAMERA_GetAngleYaw( p_camera ),   L_DOOR_YAW );
+  SetDistAction ( p_work, L_DOOR_FRAME, FIELD_CAMERA_GetAngleLen( p_camera ),   L_DOOR_DIST );
 
   // カメラの初期設定
   SetFarNear( p_work->pFieldmap );
@@ -284,9 +294,9 @@ static GMEVENT* EVENT_RightDoorIn( GAMESYS_WORK* p_gsys, FIELDMAP_WORK* p_fieldm
   // イベントワークを初期化
   p_work = GMEVENT_GetEventWork( p_event );
   InitWork( p_work, p_fieldmap );
-  SetPitchAction( p_work, 10, FIELD_CAMERA_GetAnglePitch( p_camera ), 0xffff / 360 * 20 );
-  SetYawAction  ( p_work, 10, FIELD_CAMERA_GetAngleYaw( p_camera ),   0xffff / 360 * 270 );
-  SetDistAction ( p_work, 10, FIELD_CAMERA_GetAngleLen( p_camera ), CAMERA_DIST_MIN ); 
+  SetPitchAction( p_work, R_DOOR_FRAME, FIELD_CAMERA_GetAnglePitch( p_camera ), R_DOOR_PITCH );
+  SetYawAction  ( p_work, R_DOOR_FRAME, FIELD_CAMERA_GetAngleYaw( p_camera ),   R_DOOR_YAW );
+  SetDistAction ( p_work, R_DOOR_FRAME, FIELD_CAMERA_GetAngleLen( p_camera ),   R_DOOR_DIST );
 
   // カメラの初期設定
   SetFarNear( p_work->pFieldmap );
@@ -321,7 +331,7 @@ static GMEVENT* EVENT_UpDoorOut( GAMESYS_WORK* p_gsys, FIELDMAP_WORK* p_fieldmap
   // イベントワークを初期化
   p_work = GMEVENT_GetEventWork( p_event );
   InitWork( p_work, p_fieldmap );
-  SetDistAction( p_work, 6, FIELD_CAMERA_GetAngleLen( p_camera ), def_param.Distance * FX32_ONE );
+  SetDistAction( p_work, U_DOOR_FRAME, FIELD_CAMERA_GetAngleLen( p_camera ), def_param.Distance * FX32_ONE );
 
   // 生成したイベントを返す
   return p_event;
@@ -353,9 +363,9 @@ static GMEVENT* EVENT_LeftDoorOut( GAMESYS_WORK* p_gsys, FIELDMAP_WORK* p_fieldm
   // イベントワークを初期化
   p_work = GMEVENT_GetEventWork( p_event );
   InitWork( p_work, p_fieldmap );
-  SetPitchAction( p_work, 10, FIELD_CAMERA_GetAnglePitch( p_camera ), def_param.Angle.x );
-  SetYawAction  ( p_work, 10, FIELD_CAMERA_GetAngleYaw( p_camera ),   def_param.Angle.y );
-  SetDistAction ( p_work, 10, FIELD_CAMERA_GetAngleLen( p_camera ),   def_param.Distance * FX32_ONE );
+  SetPitchAction( p_work, L_DOOR_FRAME, FIELD_CAMERA_GetAnglePitch( p_camera ), def_param.Angle.x );
+  SetYawAction  ( p_work, L_DOOR_FRAME, FIELD_CAMERA_GetAngleYaw( p_camera ),   def_param.Angle.y );
+  SetDistAction ( p_work, L_DOOR_FRAME, FIELD_CAMERA_GetAngleLen( p_camera ),   def_param.Distance * FX32_ONE );
 
   // カメラの初期設定
   SetFarNear( p_work->pFieldmap );
@@ -391,9 +401,9 @@ static GMEVENT* EVENT_RightDoorOut( GAMESYS_WORK* p_gsys, FIELDMAP_WORK* p_field
   // イベントワークを初期化
   p_work = GMEVENT_GetEventWork( p_event );
   InitWork( p_work, p_fieldmap );
-  SetPitchAction( p_work, 10, FIELD_CAMERA_GetAnglePitch( p_camera ), def_param.Angle.x );
-  SetYawAction  ( p_work, 10, FIELD_CAMERA_GetAngleYaw( p_camera ),   def_param.Angle.y );
-  SetDistAction ( p_work, 10, FIELD_CAMERA_GetAngleLen( p_camera ),   def_param.Distance * FX32_ONE );
+  SetPitchAction( p_work, R_DOOR_FRAME, FIELD_CAMERA_GetAnglePitch( p_camera ), def_param.Angle.x );
+  SetYawAction  ( p_work, R_DOOR_FRAME, FIELD_CAMERA_GetAngleYaw( p_camera ),   def_param.Angle.y );
+  SetDistAction ( p_work, R_DOOR_FRAME, FIELD_CAMERA_GetAngleLen( p_camera ),   def_param.Distance * FX32_ONE );
 
   // カメラの初期設定
   SetFarNear( p_work->pFieldmap );
