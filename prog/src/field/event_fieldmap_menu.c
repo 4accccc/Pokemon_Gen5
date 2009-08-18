@@ -895,7 +895,7 @@ static const BOOL FMenuReturnProc_PokeStatus(FMENU_EVENT_WORK* mwk)
         plData->waza = psData->waza;
         if( psData->ret_mode == PST_RET_DECIDE )
         {
-          plData->waza_pos = psData->pos;
+          plData->waza_pos = psData->ret_sel;
         }
         else
         {

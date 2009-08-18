@@ -103,6 +103,8 @@
 #define PSTATUS_SKILL_PLATE_WIN_LEFT (5)
 #define PSTATUS_SKILL_PLATE_WIN_HEIGHT (4)
 #define PSTATUS_SKILL_PLATE_WIN_WIDTH (11)
+#define PSTATUS_SKILL_PLATE_FORGET_WIN_LEFT (3) //「忘れる」用
+
 //タイプアイコン
 #define PSTATUS_SKILL_PLATE_TYPE_X (24)
 #define PSTATUS_SKILL_PLATE_TYPE_Y (8)
@@ -121,7 +123,7 @@
 #define PSTATUS_SKILL_PLATE_NONE_X (48+PSTATUS_STR_OFS_X)
 #define PSTATUS_SKILL_PLATE_NONE_Y (16 +PSTATUS_STR_OFS_Y)
 
-#define PSTATUS_SKILL_PLATE_FORGET_X ( 0+PSTATUS_STR_OFS_X)
+#define PSTATUS_SKILL_PLATE_FORGET_X ( 4 +PSTATUS_STR_OFS_X)
 #define PSTATUS_SKILL_PLATE_FORGET_Y ( 8 +PSTATUS_STR_OFS_Y)
 
 
@@ -1062,12 +1064,12 @@ void PSTATUS_SKILL_DispPage_WazaAdd( PSTATUS_WORK *work , PSTATUS_SKILL_WORK *sk
   }
   {
     PSTA_OAM_ACT_DATA oamData;
-    oamData.x = (platePos[4][0]+PSTATUS_SKILL_PLATE_WIN_LEFT)*8;
+    oamData.x = (platePos[4][0]+PSTATUS_SKILL_PLATE_FORGET_WIN_LEFT)*8;
     oamData.y = (platePos[4][1]+PSTATUS_SKILL_PLATE_WIN_TOP)*8;
     oamData.pltt_index = work->cellRes[SCR_PLT_RIBBON_BAR]; //文字はリボンと同じパレットで
     oamData.pal_offset = 0;
     oamData.soft_pri = 0;
-    oamData.bg_pri = 1;
+    oamData.bg_pri = 0;
     oamData.setSerface = CLSYS_DEFREND_MAIN;
     oamData.draw_type = CLSYS_DRAW_MAIN;
     oamData.bmp = skillWork->bmpDataForget;
