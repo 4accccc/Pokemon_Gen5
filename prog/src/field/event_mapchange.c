@@ -37,6 +37,8 @@
 #include "field_sound.h"
 
 #include "field_door_anime.h"
+#include "event_fieldmap_fadeout.h"
+
 
 static void UpdateMapParams(GAMESYS_WORK * gsys, const LOCATION * loc_req);
 static void SetMMdl( GAMESYS_WORK *gsys, const LOCATION *loc_req, GAMEINIT_MODE mode );
@@ -200,83 +202,6 @@ typedef struct {
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
-static GMEVENT_RESULT EVENT_FadeOut_ExitTypeNone(GMEVENT * event, int *seq, void * work)
-{
-	MAPCHANGE_WORK * mcw = work;
-	GAMESYS_WORK  * gsys = mcw->gsys;
-	FIELD_MAIN_WORK * fieldmap = mcw->fieldmap;
-	GAMEDATA * gamedata = mcw->gamedata;
-  switch (*seq)
-  {
-  case 0:
-	  OBATA_Printf( "mcw_loc_req.zone_id = %d\n", mcw->loc_req.zone_id );
-    setNextBGM(gamedata, mcw->loc_req.zone_id);
-		GMEVENT_CallEvent(event, EVENT_FieldFadeOut(gsys, fieldmap, 0));
-    ++ *seq;
-    break;
-  case 1:
-    return GMEVENT_RES_FINISH;
-  }
-  return GMEVENT_RES_CONTINUE;
-}
-
-//------------------------------------------------------------------
-//------------------------------------------------------------------
-static GMEVENT_RESULT EVENT_FadeOut_ExitTypeDoor(GMEVENT * event, int *seq, void * work)
-{
-	MAPCHANGE_WORK * mcw = work;
-	GAMESYS_WORK  * gsys = mcw->gsys;
-	FIELD_MAIN_WORK * fieldmap = mcw->fieldmap;
-
-  switch (*seq)
-  {
-  case 0:
-    GMEVENT_CallEvent( event, EVENT_FieldDoorInAnime(gsys, fieldmap, &mcw->loc_req) );
-    ++ *seq;
-    break;
-  case 1:
-    return GMEVENT_RES_FINISH;
-  }
-  return GMEVENT_RES_CONTINUE;
-}
-
-//------------------------------------------------------------------
-//------------------------------------------------------------------
-static GMEVENT_RESULT EVENT_FadeOut_ExitTypeStep(GMEVENT * event, int *seq, void * work)
-{
-	MAPCHANGE_WORK * mcw = work;
-	GAMESYS_WORK  * gsys = mcw->gsys;
-	FIELD_MAIN_WORK * fieldmap = mcw->fieldmap;
-	GAMEDATA * gamedata = mcw->gamedata;
-  switch (*seq)
-  {
-  case 0:
-    GMEVENT_CallEvent( event, EVENT_PlayerOneStepAnime(gsys, fieldmap) );
-    ++ *seq;
-    break;
-  case 1:
-    setNextBGM(gamedata, mcw->loc_req.zone_id);
-		GMEVENT_CallEvent(event, EVENT_FieldFadeOut(gsys, fieldmap, 0));
-    ++ *seq;
-    break;
-  case 2:
-    return GMEVENT_RES_FINISH;
-  }
-  return GMEVENT_RES_CONTINUE;
-}
-
-//------------------------------------------------------------------
-//------------------------------------------------------------------
-static const GMEVENT_FUNC fadeOutEventTable[] = {
-  EVENT_FadeOut_ExitTypeNone,   //EXIT_TYPE_NONE
-  EVENT_FadeOut_ExitTypeNone,   //EXIT_TYPE_MAT
-  EVENT_FadeOut_ExitTypeStep,   //EXIT_TYPE_STAIRS
-  EVENT_FadeOut_ExitTypeDoor,   //EXIT_TYPE_DOOR
-  EVENT_FadeOut_ExitTypeStep,   //EXIT_TYPE_WALL
-};
-
-//------------------------------------------------------------------
-//------------------------------------------------------------------
 static GMEVENT_RESULT EVENT_FadeIn_ExitTypeNone(GMEVENT * event, int *seq, void * work)
 {
 	MAPCHANGE_WORK * mcw = work;
@@ -363,16 +288,9 @@ static GMEVENT_RESULT EVENT_MapChange(GMEVENT * event, int *seq, void*work)
     (*seq) ++;
     break;
 	case 1:
-    {
-      GMEVENT * sub_event;
-      MAPCHANGE_WORK * sub_work;
-      TAMADA_Printf("FADE OUT EVENT TYPE: %d\n", mcw->exit_type);
-      sub_event = GMEVENT_Create(gsys, NULL,
-          fadeOutEventTable[mcw->exit_type], sizeof(MAPCHANGE_WORK));
-      sub_work = GMEVENT_GetEventWork(sub_event);
-      *sub_work = *mcw;
-      GMEVENT_CallEvent(event, sub_event);
-    }
+    // フェードアウトイベント
+    GMEVENT_CallEvent( event, 
+        EVENT_SwitchFieldFadeOut( event, gsys, gamedata, fieldmap, mcw->loc_req, mcw->exit_type ) );
 		(*seq)++;
 		break;
 	case 2:
