@@ -14,7 +14,6 @@
 #include "system/bmp_winframe.h"
 
 #include "arc/winframe.naix"	//test
-#include "arc/test_graphic/menu_gra.naix"	//test
 
 //======================================================================
 //	’è”’è‹`
