@@ -774,9 +774,9 @@ SRCS_OVERLAY_FOOTPRINT_BOARD =	net_app/wifi_lobby/footprint_main.c \
 								net_app/wifi_lobby/footprint_comm.c \
 								poke_tool/pokefoot.c
 
-### #WIFILOBBY
-### #===>SRCS_OVERLAY_WIFILOBBY_COMMON
-### SRCS_OVERLAY_WIFILOBBY_ANKETO   = net_app/wifi_lobby/wflby_anketo.c
+#WIFILOBBY
+#===>SRCS_OVERLAY_WIFILOBBY_COMMON
+SRCS_OVERLAY_WIFILOBBY_ANKETO   = net_app/wifi_lobby/wflby_anketo.c
 
 
 #WIFILOBBY

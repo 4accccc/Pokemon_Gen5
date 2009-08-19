@@ -1528,7 +1528,6 @@ static void WFLBY_APLDATA_ANKETO_Exit( WFLBY_APLDATA* p_data )
 //-----------------------------------------------------------------------------
 static void WFLBY_APLDATA_ANKETO_Start( WFLBY_APL* p_sys, WFLBY_APLDATA* p_data )
 {
-#if WB_TEMP_FIX
 	// オーバーレイID宣言
 	FS_EXTERN_OVERLAY(wifilobby_anketo);
 
@@ -1540,7 +1539,6 @@ static void WFLBY_APLDATA_ANKETO_Start( WFLBY_APL* p_sys, WFLBY_APLDATA* p_data 
 	};
 
 	WFLBY_APL_PROC_Start( p_sys, p_data, &Proc, FS_OVERLAY_ID(wifilobby_anketo) );
-#endif
 }
 
 //----------------------------------------------------------------------------

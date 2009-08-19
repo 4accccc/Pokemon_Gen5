@@ -3998,7 +3998,7 @@ static void WLDTIMER_EndMsgExit( WLDTIMER_END_MSG* p_wk )
 		GF_STR_PrintForceStop( p_wk->msg_no  );
 	}
 #else
-	if(p_wk->print_stream != NULL && PRINTSYS_PrintStreamGetState(p_wk->print_stream) != PRINTSTREAM_STATE_DONE){
+	if(p_wk->print_stream != NULL){
 		PRINTSYS_PrintStreamDelete(p_wk->print_stream);
 		p_wk->print_stream = NULL;
 	}

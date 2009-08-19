@@ -3073,7 +3073,7 @@ static void MNGM_TALKWIN_Exit( MNGM_TALKWIN* p_wk )
 //--------------------------------------------------------------
 static void _PrintStreamForceStop(MNGM_TALKWIN* p_wk, int idx)
 {
-	if(p_wk->print_stream[idx] != NULL && PRINTSYS_PrintStreamGetState(p_wk->print_stream[idx]) != PRINTSTREAM_STATE_DONE){
+	if(p_wk->print_stream[idx] != NULL){
 		PRINTSYS_PrintStreamDelete(p_wk->print_stream[idx]);
 		p_wk->print_stream[idx] = NULL;
 	}
