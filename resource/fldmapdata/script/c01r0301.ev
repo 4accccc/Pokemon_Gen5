@@ -41,38 +41,37 @@ _EVENT_DATA_END
 /*  C01R0301 MIDDLEWOMAN2の会話用イベントスクリプト*/
 /**************************************************************/
 ev_c01r0301_talkobj_middlewoman2:
-	_TALK_OBJ_PAUSE_ALL
+	_EVENT_START
+  _TALK_START_SE_PLAY
 	_TURN_HERO_SITE
-	_TALKWIN_OPEN
-	_TALKMSG_ALLPUT msg_c01r0301_middlewoman2_01
+	_BALLOONWIN_TALKOBJ_POPUP msg_c01r0301_middlewoman2_01
 	_AB_KEYWAIT
-  _TALKWIN_CLOSE
-  _OBJ_PAUSE_CLEAR_ALL
+  _BALLOONWIN_CLOSE
+  _EVENT_END
   _END
 
 /**************************************************************/
 /*  C01R0301 MAN1の会話用イベントスクリプト*/
 /**************************************************************/
 ev_c01r0301_talkobj_man1:
-	_TALK_OBJ_PAUSE_ALL
+	_EVENT_START
+  _TALK_START_SE_PLAY
 	_TURN_HERO_SITE
-	_TALKWIN_OPEN
-	_TALKMSG_ALLPUT msg_c01r0301_man1_01
+	_BALLOONWIN_TALKOBJ_POPUP msg_c01r0301_man1_01
 	_AB_KEYWAIT
-  _TALKWIN_CLOSE
-  _OBJ_PAUSE_CLEAR_ALL
+  _BALLOONWIN_CLOSE
+  _EVENT_END
   _END
 
 /**************************************************************/
 /*  C01R0301 BOY2の会話用イベントスクリプト*/
 /**************************************************************/
 ev_c01r0301_talkobj_boy2:
-	_TALK_OBJ_PAUSE_ALL
+	_EVENT_START
+  _TALK_START_SE_PLAY
 	_TURN_HERO_SITE
-	_TALKWIN_OPEN
-	_TALKMSG_ALLPUT msg_c01r0301_boy2_01
+	_BALLOONWIN_TALKOBJ_POPUP msg_c01r0301_boy2_01
 	_AB_KEYWAIT
-  _TALKWIN_CLOSE
-  _OBJ_PAUSE_CLEAR_ALL
+  _BALLOONWIN_CLOSE
+  _EVENT_END
   _END
-

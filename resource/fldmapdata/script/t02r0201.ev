@@ -40,25 +40,25 @@ _EVENT_DATA_END
 /*  T02R0201 MIDDLEWOMAN1の会話用イベントスクリプト*/
 /**************************************************************/
 ev_t02r0201_talkobj_middlewoman1:
-	_TALK_OBJ_PAUSE_ALL
+	_EVENT_START
+  _TALK_START_SE_PLAY
 	_TURN_HERO_SITE
-	_TALKWIN_OPEN
-	_TALKMSG_ALLPUT msg_t02r0201_middlewoman1_01
+	_BALLOONWIN_TALKOBJ_POPUP msg_t02r0201_middlewoman1_01
 	_AB_KEYWAIT
-  _TALKWIN_CLOSE
-  _OBJ_PAUSE_CLEAR_ALL
+  _BALLOONWIN_CLOSE
+  _EVENT_END
   _END
 
 /**************************************************************/
 /*  T02R0201 BABYGIRL1の会話用イベントスクリプト*/
 /**************************************************************/
 ev_t02r0201_talkobj_babygirl1:
-	_TALK_OBJ_PAUSE_ALL
+	_EVENT_START
+  _TALK_START_SE_PLAY
 	_TURN_HERO_SITE
-	_TALKWIN_OPEN
-	_TALKMSG_ALLPUT msg_t02r0201_babygirl1_01
+	_BALLOONWIN_TALKOBJ_POPUP msg_t02r0201_babygirl1_01
 	_AB_KEYWAIT
-  _TALKWIN_CLOSE
-  _OBJ_PAUSE_CLEAR_ALL
+  _BALLOONWIN_CLOSE
+  _EVENT_END
   _END
 

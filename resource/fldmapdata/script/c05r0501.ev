@@ -39,90 +39,90 @@ _EVENT_DATA_END
 /*  C05R0501 GENTLEMANの会話用イベントスクリプト*/
 /**************************************************************/
 ev_c05r0501_talkobj_gentleman:
-	_TALK_OBJ_PAUSE_ALL
+	_EVENT_START
+  _TALK_START_SE_PLAY
 	_TURN_HERO_SITE
-	_TALKWIN_OPEN
-	_TALKMSG_ALLPUT msg_c05r0501_gentleman_01
+	_BALLOONWIN_TALKOBJ_POPUP msg_c05r0501_gentleman_01
 	_AB_KEYWAIT
-  _TALKWIN_CLOSE
-  _OBJ_PAUSE_CLEAR_ALL
+  _BALLOONWIN_CLOSE
+  _EVENT_END
   _END
 
 /**************************************************************/
 /*  C05R0501 VETERANMの会話用イベントスクリプト*/
 /**************************************************************/
 ev_c05r0501_talkobj_veteranm:
-	_TALK_OBJ_PAUSE_ALL
+	_EVENT_START
+  _TALK_START_SE_PLAY
 	_TURN_HERO_SITE
-	_TALKWIN_OPEN
-	_TALKMSG_ALLPUT msg_c05r0501_veteranm_01
+	_BALLOONWIN_TALKOBJ_POPUP msg_c05r0501_veteranm_01
 	_AB_KEYWAIT
-  _TALKWIN_CLOSE
-  _OBJ_PAUSE_CLEAR_ALL
+  _BALLOONWIN_CLOSE
+  _EVENT_END
   _END
 
 /**************************************************************/
 /*  C05R0501 GIRL2の会話用イベントスクリプト*/
 /**************************************************************/
 ev_c05r0501_talkobj_girl2:
-	_TALK_OBJ_PAUSE_ALL
+	_EVENT_START
+  _TALK_START_SE_PLAY
 	_TURN_HERO_SITE
-	_TALKWIN_OPEN
-	_TALKMSG_ALLPUT msg_c05r0501_girl2_01
+	_BALLOONWIN_TALKOBJ_POPUP msg_c05r0501_girl2_01
 	_AB_KEYWAIT
-  _TALKWIN_CLOSE
-  _OBJ_PAUSE_CLEAR_ALL
+  _BALLOONWIN_CLOSE
+  _EVENT_END
   _END
 
 /**************************************************************/
 /*  C05R0501 OLDWOMANの会話用イベントスクリプト*/
 /**************************************************************/
 ev_c05r0501_talkobj_oldwoman:
-	_TALK_OBJ_PAUSE_ALL
+	_EVENT_START
+  _TALK_START_SE_PLAY
 	_TURN_HERO_SITE
-	_TALKWIN_OPEN
-	_TALKMSG_ALLPUT msg_c05r0501_oldwoman_01
+	_BALLOONWIN_TALKOBJ_POPUP msg_c05r0501_oldwoman_01
 	_AB_KEYWAIT
-  _TALKWIN_CLOSE
-  _OBJ_PAUSE_CLEAR_ALL
+  _BALLOONWIN_CLOSE
+  _EVENT_END
   _END
 
 /**************************************************************/
 /*  C05R0501 MOUNTAINの会話用イベントスクリプト*/
 /**************************************************************/
 ev_c05r0501_talkobj_mountain:
-	_TALK_OBJ_PAUSE_ALL
+	_EVENT_START
+  _TALK_START_SE_PLAY
 	_TURN_HERO_SITE
-	_TALKWIN_OPEN
-	_TALKMSG_ALLPUT msg_c05r0501_mountain_01
+	_BALLOONWIN_TALKOBJ_POPUP msg_c05r0501_mountain_01
 	_AB_KEYWAIT
-  _TALKWIN_CLOSE
-  _OBJ_PAUSE_CLEAR_ALL
+  _BALLOONWIN_CLOSE
+  _EVENT_END
   _END
 
 /**************************************************************/
 /*  C05R0501 MAN1の会話用イベントスクリプト*/
 /**************************************************************/
 ev_c05r0501_talkobj_man1:
-	_TALK_OBJ_PAUSE_ALL
+	_EVENT_START
+  _TALK_START_SE_PLAY
 	_TURN_HERO_SITE
-	_TALKWIN_OPEN
-	_TALKMSG_ALLPUT msg_c05r0501_man1_01
+	_BALLOONWIN_TALKOBJ_POPUP msg_c05r0501_man1_01
 	_AB_KEYWAIT
-  _TALKWIN_CLOSE
-  _OBJ_PAUSE_CLEAR_ALL
+  _BALLOONWIN_CLOSE
+  _EVENT_END
   _END
 
 /**************************************************************/
 /*  C05R0501 WOMAN2の会話用イベントスクリプト*/
 /**************************************************************/
 ev_c05r0501_talkobj_woman2:
-	_TALK_OBJ_PAUSE_ALL
+	_EVENT_START
+  _TALK_START_SE_PLAY
 	_TURN_HERO_SITE
-	_TALKWIN_OPEN
-	_TALKMSG_ALLPUT msg_c05r0501_woman2_01
+	_BALLOONWIN_TALKOBJ_POPUP msg_c05r0501_woman2_01
 	_AB_KEYWAIT
-  _TALKWIN_CLOSE
-  _OBJ_PAUSE_CLEAR_ALL
+  _BALLOONWIN_CLOSE
+  _EVENT_END
   _END
 

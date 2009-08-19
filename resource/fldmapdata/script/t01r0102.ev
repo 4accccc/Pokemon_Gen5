@@ -43,27 +43,29 @@ _EVENT_DATA_END
 /*  T01R0102 ライバル会話用イベントスクリプト（ポケモン入手前）*/
 /**************************************************************/
 ev_t01r0102_black_test01:
-	_TALK_OBJ_PAUSE_ALL
+	_EVENT_START
+  _TALK_START_SE_PLAY
 	_PLAYER_NAME 0 //プレイヤー名を反映
 	_TURN_HERO_SITE
 	_TALKWIN_OPEN
-	_TALKMSG_ALLPUT msg_t01r0102_black_test01
+	_BALLOONWIN_TALKOBJ_POPUP msg_t01r0102_black_test01
 	_AB_KEYWAIT
-  _TALKWIN_CLOSE
-  _OBJ_PAUSE_CLEAR_ALL
+  _BALLOONWIN_CLOSE
+  _EVENT_END
   _END
 
 /**************************************************************/
 /*  T01R0102 サポート会話用イベントスクリプト（ポケモン入手前）*/
 /**************************************************************/
 ev_t01r0102_white_test01:
-	_TALK_OBJ_PAUSE_ALL
+	_EVENT_START
+  _TALK_START_SE_PLAY
 	_TURN_HERO_SITE
 	_TALKWIN_OPEN
-	_TALKMSG_ALLPUT msg_t01r0102_white_test01
+	_BALLOONWIN_TALKOBJ_POPUP msg_t01r0102_white_test01
 	_AB_KEYWAIT
-  _TALKWIN_CLOSE
-  _OBJ_PAUSE_CLEAR_ALL
+  _BALLOONWIN_CLOSE
+  _EVENT_END
   _END
 
 /**************************************************************/
@@ -71,82 +73,80 @@ ev_t01r0102_white_test01:
 /**************************************************************/
 //炎タイプ（仮）
 ev_t01r0102_poke_get0:
-	_TALK_OBJ_PAUSE_ALL
-	_TALKWIN_OPEN
-	_TALKMSG_ALLPUT msg_t01r0102_ball1_fire_01
+	_EVENT_START
+  /* 一時的に無効にしています 090819 kaga
+	_BALLOONWIN_TALKOBJ_POPUP msg_t01r0102_ball1_fire_01
 	_AB_KEYWAIT
-
 	_YES_NO_WIN SCWK_ANSWER
-	_TALKWIN_CLOSE
-
+	_BALLOONWIN_CLOSE
+  */
 	_IFVAL_JUMP SCWK_ANSWER,EQ,0,t01r0102_poke_get_yes
 	_IFVAL_JUMP SCWK_ANSWER,EQ,1,t01r0102_poke_get_no
 
 //草タイプ（仮）
 ev_t01r0102_poke_get1:
-	_TALK_OBJ_PAUSE_ALL
-	_TALKWIN_OPEN
-	_TALKMSG_ALLPUT msg_t01r0102_ball1_grass_01
+	_EVENT_START
+  /* 一時的に無効にしています 090819 kaga
+	_BALLOONWIN_TALKOBJ_POPUP msg_t01r0102_ball1_grass_01
 	_AB_KEYWAIT
-
 	_YES_NO_WIN SCWK_ANSWER
-	_TALKWIN_CLOSE
-
+	_BALLOONWIN_CLOSE
+  */
 	_IFVAL_JUMP SCWK_ANSWER,EQ,0,t01r0102_poke_get_yes
 	_IFVAL_JUMP SCWK_ANSWER,EQ,1,t01r0102_poke_get_no
 
 //水タイプ（仮）
 ev_t01r0102_poke_get2:
-	_TALK_OBJ_PAUSE_ALL
-	_TALKWIN_OPEN
-	_TALKMSG_ALLPUT msg_t01r0102_ball1_water_01
+	_EVENT_START
+  /* 一時的に無効にしています 090819 kaga
+	_BALLOONWIN_TALKOBJ_POPUP msg_t01r0102_ball1_water_01
 	_AB_KEYWAIT
-
 	_YES_NO_WIN SCWK_ANSWER
-	_TALKWIN_CLOSE
-
+	_BALLOONWIN_CLOSE
+  */
 	_IFVAL_JUMP SCWK_ANSWER,EQ,0,t01r0102_poke_get_yes
 	_IFVAL_JUMP SCWK_ANSWER,EQ,1,t01r0102_poke_get_no
 
 t01r0102_poke_get_no:
-	_OBJ_PAUSE_CLEAR_ALL
+	_EVENT_END
   _END
 
-t01r0102_poke_get_yes:
 //共通、ポケモン入手メッセージ
-	_TALK_OBJ_PAUSE_ALL
+t01r0102_poke_get_yes:
+	_EVENT_START
+  /* 一時的に無効にしています 090819 kaga
 	_PLAYER_NAME 0 //プレイヤー名を反映
 	_TALKWIN_OPEN
-	_TALKMSG_ALLPUT msg_t01r0102_ball_get_01
+	_BALLOONWIN_TALKOBJ_POPUP msg_t01r0102_ball_get_01
 
 	//ME鳴らす
 	_ME_PLAY SEQ_ME_POKEGET
 	_ME_WAIT
 
 	_AB_KEYWAIT
-	_TALKWIN_CLOSE
+	_BALLOONWIN_CLOSE
+  */
 
 //ライバルアニメ、サポートに隣接
 	_OBJ_ANIME T01R0102_RIVAL,anime_t01r0102_poke_get
 	_OBJ_ANIME_WAIT
+
 //サポート、ライバルの台詞
-	_TALKWIN_OPEN
-	_TALKMSG_ALLPUT msg_t01r0102_white_test02 //サポート
+	_BALLOONWIN_OBJMSG_POPUP msg_t01r0102_white_test02,T01R0102_RIVAL //サポート
 	_AB_KEYWAIT
-	_TALKWIN_CLOSE
+	_BALLOONWIN_CLOSE
 
 	_OBJ_ANIME T01R0102_HEROINE,anime_t01r0102_turn
 	_OBJ_ANIME_WAIT
 
-	_TALKWIN_OPEN
-	_TALKMSG_ALLPUT msg_t01r0102_white_test02a //サポート
+	_BALLOONWIN_OBJMSG_POPUP msg_t01r0102_white_test02a,T01R0102_HEROINE //サポート
 	_AB_KEYWAIT
-	_TALKWIN_CLOSE
+	_BALLOONWIN_CLOSE
 
 	_TALKWIN_OPEN
-	_TALKMSG_ALLPUT msg_t01r0102_black_test02 //ライバル
+	_BALLOONWIN_OBJMSG_POPUP msg_t01r0102_black_test02,T01R0102_RIVAL //ライバル
 	_AB_KEYWAIT
-	_TALKWIN_CLOSE
+	_BALLOONWIN_CLOSE
 
 //ここで画面フェード
 	_BLACK_OUT 8
@@ -171,10 +171,10 @@ ev_t01r0102_poke_battle:
 	_OBJ_ANIME_WAIT
 
 	_PLAYER_NAME 0 //プレイヤー名を反映
-	_TALKWIN_OPEN
-	_TALKMSG_ALLPUT msg_t01r0102_white_test03
+	_BALLOONWIN_OBJMSG_POPUP msg_t01r0102_white_test03,T01R0102_HEROINE
 	_AB_KEYWAIT
-	_TALKWIN_CLOSE
+	_BALLOONWIN_CLOSE
+
 //ここで画面フェード
 	_BLACK_OUT 8
 	_DISP_FADE_END_CHECK
@@ -182,10 +182,9 @@ ev_t01r0102_poke_battle:
 	_BLACK_IN 8
 	_DISP_FADE_END_CHECK
 
-	_TALKWIN_OPEN
-	_TALKMSG_ALLPUT msg_t01r0102_white_test04
+	_BALLOONWIN_OBJMSG_POPUP msg_t01r0102_white_test04,T01R0102_HEROINE
 	_AB_KEYWAIT
-	_TALKWIN_CLOSE
+	_BALLOONWIN_CLOSE
 //ここでサポート専用曲終了
 	_BGM_STOP
 
@@ -193,10 +192,9 @@ ev_t01r0102_poke_battle:
 //ここでライバル専用曲
 	_BGM_PLAY SEQ_E_RIVAL1
 
-	_TALKWIN_OPEN
-	_TALKMSG_ALLPUT msg_t01r0102_black_test03
+	_BALLOONWIN_OBJMSG_POPUP msg_t01r0102_black_test03,T01R0102_RIVAL
 	_AB_KEYWAIT
-	_TALKWIN_CLOSE
+	_BALLOONWIN_CLOSE
 //ここで画面フェード
 	_BLACK_OUT 8
 	_DISP_FADE_END_CHECK
@@ -207,10 +205,9 @@ ev_t01r0102_poke_battle:
 	_BGM_STOP
 	_BGM_NOW_MAP_PLAY //マップ曲呼び出し
 
-	_TALKWIN_OPEN
-	_TALKMSG_ALLPUT msg_t01r0102_black_test04
+	_BALLOONWIN_OBJMSG_POPUP msg_t01r0102_black_test04,T01R0102_RIVAL
 	_AB_KEYWAIT
-	_TALKWIN_CLOSE
+	_BALLOONWIN_CLOSE
 //ライバル退場アニメ＋階段SE
 	_OBJ_ANIME T01R0102_RIVAL,anime_t01r0102_byebye1
 	_OBJ_ANIME_WAIT
@@ -218,10 +215,9 @@ ev_t01r0102_poke_battle:
 	_SE_WAIT
 	_OBJ_DEL T01R0102_RIVAL
 
-	_TALKWIN_OPEN
-	_TALKMSG_ALLPUT msg_t01r0102_white_test05
+	_BALLOONWIN_OBJMSG_POPUP msg_t01r0102_white_test05,T01R0102_HEROINE
 	_AB_KEYWAIT
-	_TALKWIN_CLOSE
+	_BALLOONWIN_CLOSE
 //サポート退場アニメ＋階段SE
 	_OBJ_ANIME T01R0102_HEROINE,anime_t01r0102_byebye2
 	_OBJ_ANIME_WAIT
@@ -237,56 +233,63 @@ ev_t01r0102_poke_battle:
 	_FLAG_SET FV_T01R0102_BALL00
 	_FLAG_SET FV_T01R0102_BALL01
 	_FLAG_SET FV_T01R0102_BALL02
-
+  _EVENT_END
   _END
 
 /**************************************************************/
 /*  T01R0102 GAME MACHINEのBG用イベントスクリプト*/
 /**************************************************************/
 ev_t01r0102_game:
-	_TALK_OBJ_PAUSE_ALL
-	_TALKWIN_OPEN
-	_TALKMSG_ALLPUT msg_t01r0102_game_01
+	_EVENT_START
+  /*
+	_BALLOONWIN_TALKOBJ_POPUP msg_t01r0102_game_01
 	_AB_KEYWAIT
-	_TALKWIN_CLOSE
-  _OBJ_PAUSE_CLEAR_ALL
+	_BALLOONWIN_CLOSE
+  */
+  _EVENT_END
   _END
 
 /**************************************************************/
 /*  T01R0102 TVのBG用イベントスクリプト*/
 /**************************************************************/
 ev_t01r0102_tv:
-  	_TALK_OBJ_PAUSE_ALL
+  	_EVENT_START
+  /*
   	_TALKWIN_OPEN
-  	_TALKMSG_ALLPUT msg_t01r0102_tv_01
+  	_BALLOONWIN_TALKOBJ_POPUP msg_t01r0102_tv_01
   	_AB_KEYWAIT
-  	_TALKWIN_CLOSE
-  _OBJ_PAUSE_CLEAR_ALL
+  	_BALLOONWIN_CLOSE
+  */
+  _EVENT_END
   _END
 
 /**************************************************************/
 /*  T01R0102 PCのBG用イベントスクリプト*/
 /**************************************************************/
 ev_t01r0102_pc:
-  	_TALK_OBJ_PAUSE_ALL
+  	_EVENT_START
+  /*
   	_PLAYER_NAME 0 //プレイヤー名を反映
   	_TALKWIN_OPEN
-  	_TALKMSG_ALLPUT msg_t01r0102_pc_01
+  	_BALLOONWIN_TALKOBJ_POPUP msg_t01r0102_pc_01
   	_AB_KEYWAIT
-  	_TALKWIN_CLOSE
-  _OBJ_PAUSE_CLEAR_ALL
+  	_BALLOONWIN_CLOSE
+  */
+  _EVENT_END
   _END
 
 /**************************************************************/
 /*  T01R0102 BEDのBG用イベントスクリプト*/
 /**************************************************************/
 ev_t01r0102_bed:
-  	_TALK_OBJ_PAUSE_ALL
+  	_EVENT_START
+  /*
   	_TALKWIN_OPEN
-  	_TALKMSG_ALLPUT msg_t01r0102_bed_01
+  	_BALLOONWIN_TALKOBJ_POPUP msg_t01r0102_bed_01
   	_AB_KEYWAIT
-  	_TALKWIN_CLOSE
-  _OBJ_PAUSE_CLEAR_ALL
+  	_BALLOONWIN_CLOSE
+  */
+  _EVENT_END
   _END
 
 

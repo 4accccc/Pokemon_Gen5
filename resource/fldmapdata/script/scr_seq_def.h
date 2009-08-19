@@ -99,6 +99,11 @@ DEF_CMD_COUNT  =  ( DEF_CMD_COUNT + 1 )
   DEF_CMD EV_SEQ_TALKWIN_OPEN
   DEF_CMD EV_SEQ_TALKWIN_CLOSE
   
+  //フィールド　吹き出しウィンドウ
+  DEF_CMD EV_SEQ_BALLOONWIN_OBJMSG_POPUP
+  DEF_CMD EV_SEQ_BALLOONWIN_TALKOBJ_POPUP
+  DEF_CMD EV_SEQ_BALLOONWIN_CLOSE
+  
   //動作モデル
   DEF_CMD EV_SEQ_OBJ_ANIME      
   DEF_CMD EV_SEQ_OBJ_ANIME_WAIT
@@ -929,6 +934,43 @@ DEF_CMD_COUNT  =  ( DEF_CMD_COUNT + 1 )
 //--------------------------------------------------------------
   .macro  _TALKWIN_CLOSE
   .short  EV_SEQ_TALKWIN_CLOSE
+  .endm
+
+//======================================================================
+//  フィールド　吹き出しウィンドウ
+//======================================================================
+//--------------------------------------------------------------
+/**
+ *  _BALLOONWIN_OBJMSG_POPUP 吹き出しウィンドウ描画
+ *  @param msg_id 表示するメッセージID
+ *  @param obj_id 吹き出しを出す対象OBJ ID
+ */
+//--------------------------------------------------------------
+  .macro  _BALLOONWIN_OBJMSG_POPUP msg_id,obj_id
+  .short  EV_SEQ_BALLOONWIN_OBJMSG_POPUP
+  .byte \msg_id
+  .byte \obj_id
+  .endm
+
+//--------------------------------------------------------------
+/**
+ *  _BALLOONWIN_TALKOBJ_POPUP 吹き出しウィンドウ描画　話し掛けOBJ専用
+ *  @param msg_id 表示するメッセージID
+ */
+//--------------------------------------------------------------
+  .macro  _BALLOONWIN_TALKOBJ_POPUP msg_id
+  .short  EV_SEQ_BALLOONWIN_TALKOBJ_POPUP
+  .byte \msg_id
+  .endm
+
+//--------------------------------------------------------------
+/**
+ *  _BALLOONWIN_CLOSE 吹き出しウィンドウ閉じる
+ *  @param none
+ */
+//--------------------------------------------------------------
+  .macro  _BALLOONWIN_CLOSE
+  .short  EV_SEQ_BALLOONWIN_CLOSE
   .endm
 
 //======================================================================
@@ -1878,6 +1920,19 @@ DEF_CMD_COUNT  =  ( DEF_CMD_COUNT + 1 )
 //--------------------------------------------------------------
   .macro _BLACK_IN speed
   _DISP_FADE_START DISP_FADE_BLACKOUT_MAIN,16,0,\speed
+  .endm
+
+//======================================================================
+//  会話イベント関連
+//======================================================================
+//--------------------------------------------------------------
+/**
+ *  会話イベント開始時のSE再生
+ *  @param none
+ */
+//--------------------------------------------------------------
+  .macro _TALK_START_SE_PLAY
+  _SE_PLAY SEQ_SE_DP_SELECT
   .endm
 
 //======================================================================

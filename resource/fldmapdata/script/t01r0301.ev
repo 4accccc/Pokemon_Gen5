@@ -40,25 +40,25 @@ _EVENT_DATA_END
 /*  T01R0301　ライバル父     　　　　　　　　　　　　　　　　 */
 /**************************************************************/
 ev_t01r0301_middleman2:
-	_TALK_OBJ_PAUSE_ALL
+	_EVENT_START
+  _TALK_START_SE_PLAY
 	_TURN_HERO_SITE
-	_TALKWIN_OPEN
-	_TALKMSG_ALLPUT msg_t01r0301_middleman2_01
+	_BALLOONWIN_TALKOBJ_POPUP msg_t01r0301_middleman2_01
 	_AB_KEYWAIT
-  _TALKWIN_CLOSE
-  _OBJ_PAUSE_CLEAR_ALL
+  _BALLOONWIN_CLOSE
+  _EVENT_END
   _END
 
 /**************************************************************/
 /*  T01R0301　ライバル母     　　　　　　　　　　　　　　　　 */
 /**************************************************************/
 ev_t01r0301_middlewoman2:
-	_TALK_OBJ_PAUSE_ALL
-	_TURN_HERO_SITE
+	_EVENT_START
 	_TALKWIN_OPEN
-	_TALKMSG_ALLPUT msg_t01r0301_middlewoman2_01
+	_TURN_HERO_SITE
+	_BALLOONWIN_TALKOBJ_POPUP msg_t01r0301_middlewoman2_01
 	_AB_KEYWAIT
-  _TALKWIN_CLOSE
-  _OBJ_PAUSE_CLEAR_ALL
+  _BALLOONWIN_CLOSE
+  _EVENT_END
   _END
 

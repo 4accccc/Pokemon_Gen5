@@ -50,7 +50,8 @@ ev_R02_TRAINER_06:
 //  SCWK_TEMP3  退避トレーナーID
 //******************************************************************
 ev_trainer_talk_battle:
-	_TALK_OBJ_PAUSE_ALL
+	_EVENT_START
+  _TALK_START_SE_PLAY
 	_TURN_HERO_SITE
   
   //トレーナーID取得
@@ -100,7 +101,7 @@ ev_trainer_common_11:
 #else //wb
   _AB_KEYWAIT
 #endif
-  _TALKWIN_CLOSE
+  _BALLOONWIN_CLOSE
   
   /*
   //通常、再戦トレーナーにかかわらず、
@@ -121,7 +122,7 @@ ev_trainer_common_11:
   //トレーナーフラグセット
   _TRAINER_FLAG_SET  SCWK_TEMP0
   
-  _TALK_OBJ_END
+  _EVENT_END
   _END
 
 //--------------------------------------------------------------------
@@ -137,15 +138,16 @@ ev_trainer_talk_after:
   _END
 
 ev_trainer_talk_after_normal:
-  _TALKWIN_OPEN
+  _EVENT_START
+  _TALK_START_SE_PLAY
   
   //メッセージを取得
   _TRAINER_TALK_TYPE_GET  SCWK_PARAM0,SCWK_PARAM1,SCWK_PARAM2
   _TRAINER_MSG_SET  SCWK_TEMP0,SCWK_PARAM1
   _AB_KEYWAIT
-
-  _TALKWIN_CLOSE
-  _TALK_OBJ_END
+  _BALLOONWIN_CLOSE
+  
+  _EVENT_END
   _END
 
 //--------------------------------------------------------------------
@@ -209,7 +211,7 @@ ev_trainer_talk_battle_poke_one:
   _TRAINER_MSG_SET  SCWK_TEMP0,SCWK_PARAM2
   _AB_KEYWAIT
 
-  _TALKWIN_CLOSE
+  _BALLOONWIN_CLOSE
   _TALK_OBJ_END
 */
   _END
@@ -287,14 +289,13 @@ ev_trainer_type_single:
   //移動終了後、会話へ
   _EYE_TRAINER_ID_GET  SCR_EYE_TR_0,SCWK_ANSWER
   _LDWK        SCWK_TEMP0,SCWK_ANSWER
-  _TALKWIN_OPEN
   _TRAINER_MSG_SET  SCWK_TEMP0,TRMSG_FIGHT_START
 #if 0
 //_AB_KEYWAIT
 #else
   _AB_KEYWAIT //wb kari
 #endif
-  _TALKWIN_CLOSE
+  _BALLOONWIN_CLOSE
   
   _TRAINER_BTL_SET  SCWK_TEMP0,0
   _TRAINER_LOSE_CHECK  SCWK_ANSWER
@@ -333,7 +334,7 @@ ev_trainer_type_double:
   _TALKWIN_OPEN
   _TRAINER_MSG_SET  SCWK_TEMP0,TRMSG_FIGHT_START_1
   //_AB_KEYWAIT
-  _TALKWIN_CLOSE
+  _BALLOONWIN_CLOSE
 
   //移動終了後、会話へ
   _EYE_TRAINER_ID_GET  SCR_EYE_TR_1,SCWK_ANSWER
@@ -341,7 +342,7 @@ ev_trainer_type_double:
   _TALKWIN_OPEN
   _TRAINER_MSG_SET  SCWK_TEMP1,TRMSG_FIGHT_START_2
   //_AB_KEYWAIT
-  _TALKWIN_CLOSE
+  _BALLOONWIN_CLOSE
 
   _TRAINER_BTL_SET  SCWK_TEMP0,SCWK_TEMP1
   _TRAINER_LOSE_CHECK SCWK_ANSWER
@@ -390,7 +391,7 @@ ev_trainer_type_tag:
   //_TRAINER_MSG_SET  SCWK_TEMP0,TRMSG_FIGHT_START_1
   _TRAINER_MSG_SET  SCWK_TEMP0,TRMSG_FIGHT_START
   //_AB_KEYWAIT
-  _TALKWIN_CLOSE
+  _BALLOONWIN_CLOSE
 
   //視線曲セット
   _EYE_TRAINER_ID_GET  SCR_EYE_TR_1,SCWK_ANSWER
@@ -407,7 +408,7 @@ ev_trainer_type_tag:
   //_TRAINER_MSG_SET  SCWK_TEMP1,TRMSG_FIGHT_START_2
   _TRAINER_MSG_SET  SCWK_TEMP1,TRMSG_FIGHT_START
   //_AB_KEYWAIT
-  _TALKWIN_CLOSE
+  _BALLOONWIN_CLOSE
 
   _TRAINER_BTL_SET  SCWK_TEMP0,SCWK_TEMP1
   _TRAINER_LOSE_CHECK SCWK_ANSWER

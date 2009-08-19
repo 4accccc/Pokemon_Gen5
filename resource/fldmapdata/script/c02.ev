@@ -38,78 +38,78 @@ _EVENT_DATA_END
 /*  C02 WOMAN2の会話用イベントスクリプト                      */
 /**************************************************************/
 ev_c02_talkobj_woman2:
-	_TALK_OBJ_PAUSE_ALL
+	_EVENT_START
+	_TALK_START_SE_PLAY
 	_TURN_HERO_SITE
-	_TALKWIN_OPEN
-	_TALKMSG_ALLPUT msg_c02_woman2_01
+	_BALLOONWIN_TALKOBJ_POPUP msg_c02_woman2_01
 	_AB_KEYWAIT
-  _TALKWIN_CLOSE
-  _OBJ_PAUSE_CLEAR_ALL
+  _BALLOONWIN_CLOSE
+  _EVENT_END
   _END
 
 /**************************************************************/
 /*  C02 MAN2の会話用イベントスクリプト                      */
 /**************************************************************/
 ev_c02_talkobj_man2:
-	_TALK_OBJ_PAUSE_ALL
+	_EVENT_START
+	_TALK_START_SE_PLAY
 	_TURN_HERO_SITE
-	_TALKWIN_OPEN
-	_TALKMSG_ALLPUT msg_c02_man2_01
+	_BALLOONWIN_TALKOBJ_POPUP msg_c02_man2_01
 	_AB_KEYWAIT
-  _TALKWIN_CLOSE
-  _OBJ_PAUSE_CLEAR_ALL
+  _BALLOONWIN_CLOSE
+  _EVENT_END
   _END
 
 /**************************************************************/
 /*  C02 MIDDLEWOMAN2の会話用イベントスクリプト                      */
 /**************************************************************/
 ev_c02_talkobj_middlewoman2:
-	_TALK_OBJ_PAUSE_ALL
+	_EVENT_START
+	_TALK_START_SE_PLAY
 	_TURN_HERO_SITE
-	_TALKWIN_OPEN
-	_TALKMSG_ALLPUT msg_c02_middlewoman2_01
+	_BALLOONWIN_TALKOBJ_POPUP msg_c02_middlewoman2_01
 	_AB_KEYWAIT
-  _TALKWIN_CLOSE
-  _OBJ_PAUSE_CLEAR_ALL
+  _BALLOONWIN_CLOSE
+  _EVENT_END
   _END
 
 /**************************************************************/
 /*  C02 BACKPAXKERWの会話用イベントスクリプト                      */
 /**************************************************************/
 ev_c02_talkobj_backpacker:
-	_TALK_OBJ_PAUSE_ALL
+	_EVENT_START
+	_TALK_START_SE_PLAY
 	_TURN_HERO_SITE
-	_TALKWIN_OPEN
-	_TALKMSG_ALLPUT msg_c02_backpackerw_01
+	_BALLOONWIN_TALKOBJ_POPUP msg_c02_backpackerw_01
 	_AB_KEYWAIT
-  _TALKWIN_CLOSE
-  _OBJ_PAUSE_CLEAR_ALL
+  _BALLOONWIN_CLOSE
+  _EVENT_END
   _END
 
 /**************************************************************/
 /*  C02 ISSの会話用イベントスクリプト                      */
 /**************************************************************/
 ev_c02_talkobj_accordion:
-	_TALK_OBJ_PAUSE_ALL
+	_EVENT_START
+	_TALK_START_SE_PLAY
 	_TURN_HERO_SITE
-	_TALKWIN_OPEN
-	_TALKMSG_ALLPUT msg_c02_accordion_01
+	_BALLOONWIN_TALKOBJ_POPUP msg_c02_accordion_01
 	_AB_KEYWAIT
-  _TALKWIN_CLOSE
-  _OBJ_PAUSE_CLEAR_ALL
+  _BALLOONWIN_CLOSE
+  _EVENT_END
   _END
 
 /**************************************************************/
 /*  C02 SIGNの会話用イベントスクリプト                      */
 /**************************************************************/
 ev_c02_talkobj_sign1:
-	_TALK_OBJ_PAUSE_ALL
+	_EVENT_START
+	_TALK_START_SE_PLAY
 	_TURN_HERO_SITE
-	_TALKWIN_OPEN
-	_TALKMSG_ALLPUT msg_c02_sign1_01
+	_BALLOONWIN_TALKOBJ_POPUP msg_c02_sign1_01
 	_AB_KEYWAIT
-  _TALKWIN_CLOSE
-  _OBJ_PAUSE_CLEAR_ALL
+  _BALLOONWIN_CLOSE
+  _EVENT_END
   _END
 
 

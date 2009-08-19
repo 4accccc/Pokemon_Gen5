@@ -33,13 +33,14 @@ _EVENT_DATA_END
 /*  T01R0202 PCのBG用イベントスクリプト*/
 /**************************************************************/
 ev_t01r0202_pc:
-  _TALK_OBJ_PAUSE_ALL
+  _EVENT_START
+  _TALK_START_SE_PLAY
   _PLAYER_NAME 0 //プレイヤー名を反映
+  /* 一時的に無効にしています 090819 kaga
   _TALKWIN_OPEN
-  _TALKMSG_ALLPUT msg_t01r0202_pc_01
+  _BALLOONWIN_TALKOBJ_POPUP msg_t01r0202_pc_01
   _AB_KEYWAIT
-  _TALKWIN_CLOSE
-  _OBJ_PAUSE_CLEAR_ALL
+  _BALLOONWIN_CLOSE
+  */
+  _EVENT_END
   _END
-
-

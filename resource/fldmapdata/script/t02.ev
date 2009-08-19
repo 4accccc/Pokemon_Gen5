@@ -45,75 +45,74 @@ _EVENT_DATA_END
 //  BABYGIRL1_1 話し掛け
 //--------------------------------------------------------------
 ev_t02_babygirl1_1:
-	_TALK_OBJ_PAUSE_ALL
+	_EVENT_START
+  _TALK_START_SE_PLAY
 	_TURN_HERO_SITE
-	_TALKWIN_OPEN
-	_TALKMSG_ALLPUT msg_t01_babygirl1_01
+	_BALLOONWIN_TALKOBJ_POPUP msg_t01_babygirl1_01
 	_AB_KEYWAIT
-	_TALKWIN_CLOSE
+	_BALLOONWIN_CLOSE
 /*
 	_OBJ_ANIME T02_BABYGIRL1_1,test01anime
 	_OBJ_ANIME_WAIT
 
 	_TURN_HERO_SITE
-	_TALKWIN_OPEN
-	_TALKMSG_ALLPUT msg_t01_babygirl1_02
+	_BALLOONWIN_TALKOBJ_POPUP msg_t01_babygirl1_02
 	_AB_KEYWAIT
-	_TALKWIN_CLOSE
+	_BALLOONWIN_CLOSE
 */
-	_OBJ_PAUSE_CLEAR_ALL
+	_EVENT_END
 	_END
 
 //--------------------------------------------------------------
 //  WOMAN1_1 話し掛け
 //--------------------------------------------------------------
 ev_t02_talkobj_woman1:
-	_TALK_OBJ_PAUSE_ALL
+	_EVENT_START
+  _TALK_START_SE_PLAY
 	_TURN_HERO_SITE
-	_TALKWIN_OPEN
-	_TALKMSG_ALLPUT msg_t01_woman1_01
+	_BALLOONWIN_TALKOBJ_POPUP msg_t01_woman1_01
 	_AB_KEYWAIT
-  _TALKWIN_CLOSE
-  _OBJ_PAUSE_CLEAR_ALL
+  _BALLOONWIN_CLOSE
+  _EVENT_END
   _END
 
 //--------------------------------------------------------------
 //  OLDMAN1_1 話し掛け
 //--------------------------------------------------------------
 ev_t02_oldman1_1:
-	_TALK_OBJ_PAUSE_ALL
+	_EVENT_START
+  _TALK_START_SE_PLAY
 	_TURN_HERO_SITE
-	_TALKWIN_OPEN
-	_TALKMSG_ALLPUT msg_t01_oldman1_01
+	_BALLOONWIN_TALKOBJ_POPUP msg_t01_oldman1_01
 	_AB_KEYWAIT
-  _TALKWIN_CLOSE
-  _OBJ_PAUSE_CLEAR_ALL
+  _BALLOONWIN_CLOSE
+  _EVENT_END
   _END
 
 //--------------------------------------------------------------
 //  OLDWOMAN1_1 話し掛け
 //--------------------------------------------------------------
 ev_t02_oldwoman1_1:
-	_TALK_OBJ_PAUSE_ALL
+	_EVENT_START
+  _TALK_START_SE_PLAY
 	_TURN_HERO_SITE
-	_TALKWIN_OPEN
-	_TALKMSG_ALLPUT msg_t01_oldwoman1_01
+	_BALLOONWIN_TALKOBJ_POPUP msg_t01_oldwoman1_01
 	_AB_KEYWAIT
-  _TALKWIN_CLOSE
-  _OBJ_PAUSE_CLEAR_ALL
+  _BALLOONWIN_CLOSE
+  _EVENT_END
   _END
 
 /**************************************************************/
 /*  T02 BIGMANの会話用イベントスクリプト*/
 /**************************************************************/
 ev_t02_talkobj_bigman:
-	_TALK_OBJ_PAUSE_ALL
+	_EVENT_START
+  _TALK_START_SE_PLAY
 	_TURN_HERO_SITE
-	_TALKWIN_OPEN
-	_TALKMSG_ALLPUT msg_t01_bigman_01
+	_BALLOONWIN_TALKOBJ_POPUP msg_t01_bigman_01
 	_AB_KEYWAIT
-  _TALKWIN_CLOSE
-  _OBJ_PAUSE_CLEAR_ALL
+  _BALLOONWIN_CLOSE
+  _EVENT_END
   _END
 
 //--------------------------------------------------------------

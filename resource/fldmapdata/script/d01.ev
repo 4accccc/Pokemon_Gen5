@@ -1,4 +1,3 @@
-
 //======================================================================
 //                d01.ev
 //
@@ -33,12 +32,11 @@ _EVENT_DATA_END
 /*  D01 BOY2の会話用イベントスクリプト                      */
 /**************************************************************/
  ev_d01_talkobj_boy2:
-	_TALK_OBJ_PAUSE_ALL
+	_EVENT_START
+  _TALK_START_SE_PLAY
 	_TURN_HERO_SITE
-	_TALKWIN_OPEN
-	_TALKMSG_ALLPUT mes_d01_boy2_01
+	_BALLOONWIN_TALKOBJ_POPUP mes_d01_boy2_01
 	_AB_KEYWAIT
-  _TALKWIN_CLOSE
-  _OBJ_PAUSE_CLEAR_ALL
+  _BALLOONWIN_CLOSE
+  _EVENT_END
   _END
-

@@ -33,29 +33,25 @@ _EVENT_DATA_END
 /**************************************************************/
 /*  C02R0201 MUSICIANの会話用イベントスクリプト*/
 /**************************************************************/
-
 ev_c02r0201_talkobj_musician:
-	_TALK_OBJ_PAUSE_ALL
+	_EVENT_START
+  _TALK_START_SE_PLAY
 	_TURN_HERO_SITE
-	_TALKWIN_OPEN
-	_TALKMSG_ALLPUT msg_c02r0201_musician_01
+	_BALLOONWIN_TALKOBJ_POPUP msg_c02r0201_musician_01
 	_AB_KEYWAIT
-  _TALKWIN_CLOSE
-  _OBJ_PAUSE_CLEAR_ALL
+  _BALLOONWIN_CLOSE
+  _EVENT_END
   _END
 
 /**************************************************************/
 /*  C02R0201 BABYBOY1の会話用イベントスクリプト*/
 /**************************************************************/
-
 ev_c02r0201_talkobj_babyboy1:
-	_TALK_OBJ_PAUSE_ALL
+	_EVENT_START
+  _TALK_START_SE_PLAY
 	_TURN_HERO_SITE
-	_TALKWIN_OPEN
-	_TALKMSG_ALLPUT msg_c02r0201_babyboy1_01
+	_BALLOONWIN_TALKOBJ_POPUP msg_c02r0201_babyboy1_01
 	_AB_KEYWAIT
-  _TALKWIN_CLOSE
-  _OBJ_PAUSE_CLEAR_ALL
+  _BALLOONWIN_CLOSE
+  _EVENT_END
   _END
-
-

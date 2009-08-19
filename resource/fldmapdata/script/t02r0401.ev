@@ -41,39 +41,39 @@ _EVENT_DATA_END
 /*  T02R0401 GIRL4の会話用イベントスクリプト*/
 /**************************************************************/
 ev_t02r0401_talkobj_girl4:
-	_TALK_OBJ_PAUSE_ALL
+	_EVENT_START
+  _TALK_START_SE_PLAY
 	_TURN_HERO_SITE
-	_TALKWIN_OPEN
-	_TALKMSG_ALLPUT msg_t02r0401_girl4_01
+	_BALLOONWIN_TALKOBJ_POPUP msg_t02r0401_girl4_01
 	_AB_KEYWAIT
-  _TALKWIN_CLOSE
-  _OBJ_PAUSE_CLEAR_ALL
+  _BALLOONWIN_CLOSE
+  _EVENT_END
   _END
 
 /**************************************************************/
 /*  T02R0401 MAN2の会話用イベントスクリプト*/
 /**************************************************************/
 ev_t02r0401_talkobj_man2:
-	_TALK_OBJ_PAUSE_ALL
+	_EVENT_START
+  _TALK_START_SE_PLAY
 	_TURN_HERO_SITE
-	_TALKWIN_OPEN
-	_TALKMSG_ALLPUT msg_t02r0401_man2_01
+	_BALLOONWIN_TALKOBJ_POPUP msg_t02r0401_man2_01
 	_AB_KEYWAIT
-  _TALKWIN_CLOSE
-  _OBJ_PAUSE_CLEAR_ALL
+  _BALLOONWIN_CLOSE
+  _EVENT_END
   _END
 
 /**************************************************************/
 /*  T02R0401 POKEの会話用イベントスクリプト*/
 /**************************************************************/
 ev_t02r0401_talkobj_poke:
-	_TALK_OBJ_PAUSE_ALL
+	_EVENT_START
+  _TALK_START_SE_PLAY
 	_TURN_HERO_SITE
-	_TALKWIN_OPEN
-	_TALKMSG_ALLPUT msg_t02r0401_poke_01
+	_BALLOONWIN_TALKOBJ_POPUP msg_t02r0401_poke_01
 	_AB_KEYWAIT
-  _TALKWIN_CLOSE
-  _OBJ_PAUSE_CLEAR_ALL
+  _BALLOONWIN_CLOSE
+  _EVENT_END
   _END
 
 

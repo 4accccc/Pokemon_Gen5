@@ -1,4 +1,3 @@
-
 //======================================================================
 //                c01.ev
 //
@@ -7,7 +6,6 @@
 //======================================================================
 
   .text
-
   .include  "scr_seq_def.h"
   .include  "../../message/dst/script/msg_c01.h"
   //.include  "../eventdata/zone_c01evc.h"
@@ -26,7 +24,6 @@ _EVENT_DATA    ev_c01_talkobj_cleaningm
 _EVENT_DATA    ev_c01_talkobj_breederw
 _EVENT_DATA    ev_c01_talkobj_woman2
 _EVENT_DATA    ev_c01_talkobj_babygirl
-
 _EVENT_DATA    ev_c01_sign1
 _EVENT_DATA    ev_c01_sign2
 _EVENT_DATA    ev_c01_sign3
@@ -43,172 +40,166 @@ _EVENT_DATA_END
 /*  C01 ミュージカル用イベントスクリプト                      */
 /**************************************************************/
 ev_c01_musical:
-	_TALK_OBJ_PAUSE_ALL
+  _EVENT_START
+  _TALK_START_SE_PLAY
 	_TURN_HERO_SITE
-	_TALKWIN_OPEN
-	_TALKMSG_ALLPUT msg_c01_musical_01
 
+	_BALLOONWIN_TALKOBJ_POPUP msg_c01_musical_01
 	_YES_NO_WIN SCWK_ANSWER
-	_TALKWIN_CLOSE
+	_BALLOONWIN_CLOSE
+
 	_IFVAL_JUMP SCWK_ANSWER,EQ,0,c01_musical_yes
 	_IFVAL_JUMP SCWK_ANSWER,EQ,1,c01_musical_no
 
 c01_musical_yes:
-	_TALKWIN_OPEN
-	_TALKMSG_ALLPUT msg_c01_musical_02
-
+	_BALLOONWIN_TALKOBJ_POPUP msg_c01_musical_02
 	_AB_KEYWAIT
-  	_TALKWIN_CLOSE
+  _BALLOONWIN_CLOSE
 
 	_MUSICAL_CALL //ミュージカル呼び出し
-
 	_JUMP c01_musical_end
 
 c01_musical_no:
-	_TALKWIN_OPEN
-	_TALKMSG_ALLPUT msg_c01_musical_03
+	_BALLOONWIN_TALKOBJ_POPUP msg_c01_musical_03
 
 	_AB_KEYWAIT
-  	_TALKWIN_CLOSE
+  _BALLOONWIN_CLOSE
 
 c01_musical_end:
-  	_OBJ_PAUSE_CLEAR_ALL
-  	_END
+  _EVENT_END
+  _END
 
 /**************************************************************/
 /*  C01 BADMANの会話用イベントスクリプト                      */
 /**************************************************************/
 ev_c01_talkobj_badman:
-	_TALK_OBJ_PAUSE_ALL
+  _EVENT_START
+  _TALK_START_SE_PLAY
 	_TURN_HERO_SITE
-	_TALKWIN_OPEN
-	_TALKMSG_ALLPUT msg_c01_badman_01
+	_BALLOONWIN_TALKOBJ_POPUP msg_c01_badman_01
 	_AB_KEYWAIT
-  _TALKWIN_CLOSE
-  _OBJ_PAUSE_CLEAR_ALL
+  _BALLOONWIN_CLOSE
+  _EVENT_END
   _END
 
 /**************************************************************/
 /*  C01 BOY2の会話用イベントスクリプト                      */
 /**************************************************************/
 ev_c01_talkobj_boy2:
-	_TALK_OBJ_PAUSE_ALL
+  _EVENT_START
+  _TALK_START_SE_PLAY
 	_TURN_HERO_SITE
-	_TALKWIN_OPEN
-	_TALKMSG_ALLPUT msg_c01_boy2_01
+	_BALLOONWIN_TALKOBJ_POPUP msg_c01_boy2_01
 	_AB_KEYWAIT
-  _TALKWIN_CLOSE
-  _OBJ_PAUSE_CLEAR_ALL
+  _BALLOONWIN_CLOSE
+  _EVENT_END
   _END
 
 /**************************************************************/
 /*  C01 CLEANINGMの会話用イベントスクリプト                      */
 /**************************************************************/
 ev_c01_talkobj_cleaningm:
-	_TALK_OBJ_PAUSE_ALL
+  _EVENT_START
+  _TALK_START_SE_PLAY
 	_TURN_HERO_SITE
-	_TALKWIN_OPEN
-	_TALKMSG_ALLPUT msg_c01_cleaningm_01
+	_BALLOONWIN_TALKOBJ_POPUP msg_c01_cleaningm_01
 	_AB_KEYWAIT
-  _TALKWIN_CLOSE
-  _OBJ_PAUSE_CLEAR_ALL
+  _BALLOONWIN_CLOSE
+  _EVENT_END
   _END
 
 /**************************************************************/
 /*  C01 BREEDERWの会話用イベントスクリプト                      */
 /**************************************************************/
 ev_c01_talkobj_breederw:
-	_TALK_OBJ_PAUSE_ALL
+  _EVENT_START
+  _TALK_START_SE_PLAY
 	_TURN_HERO_SITE
-	_TALKWIN_OPEN
-	_TALKMSG_ALLPUT msg_c01_breederw_01
+	_BALLOONWIN_TALKOBJ_POPUP msg_c01_breederw_01
 	_AB_KEYWAIT
-  _TALKWIN_CLOSE
-  _OBJ_PAUSE_CLEAR_ALL
+  _BALLOONWIN_CLOSE
+  _EVENT_END
   _END
 
 /**************************************************************/
 /*  C01 WOMAN2の会話用イベントスクリプト                      */
 /**************************************************************/
 ev_c01_talkobj_woman2:
-	_TALK_OBJ_PAUSE_ALL
+	_EVENT_START
+  _TALK_START_SE_PLAY
 	_TURN_HERO_SITE
-	_TALKWIN_OPEN
-	_TALKMSG_ALLPUT msg_c01_woman2_01
+	_BALLOONWIN_TALKOBJ_POPUP msg_c01_woman2_01
 	_AB_KEYWAIT
-  _TALKWIN_CLOSE
-  _OBJ_PAUSE_CLEAR_ALL
+  _BALLOONWIN_CLOSE
+  _EVENT_END
   _END
 
 /**************************************************************/
 /*  C01 BABYGIRLのランダム会話用イベントスクリプト            */
 /**************************************************************/
 ev_c01_talkobj_babygirl:
-  _TALK_OBJ_PAUSE_ALL
+  _EVENT_START
+  _TALK_START_SE_PLAY
   _TURN_HERO_SITE
-
+  
   _GET_RND SCWK_ANSWER,3
   _IFVAL_JUMP SCWK_ANSWER,EQ,0,babygirl1_01
   _IFVAL_JUMP SCWK_ANSWER,EQ,1,babygirl1_02
   _IFVAL_JUMP SCWK_ANSWER,EQ,2,babygirl1_03
 
 babygirl1_01:
-	_TALKWIN_OPEN
-	_TALKMSG_ALLPUT msg_c01_babygirl1_01
+	_BALLOONWIN_TALKOBJ_POPUP msg_c01_babygirl1_01
 	_JUMP babygirl_end
 
 babygirl1_02:
-	_TALKWIN_OPEN
-	_TALKMSG_ALLPUT msg_c01_babygirl1_02
+	_BALLOONWIN_TALKOBJ_POPUP msg_c01_babygirl1_02
 	_JUMP babygirl_end
 
 babygirl1_03:
-	_TALKWIN_OPEN
-	_TALKMSG_ALLPUT msg_c01_babygirl1_03
+	_BALLOONWIN_TALKOBJ_POPUP msg_c01_babygirl1_03
 	_JUMP babygirl_end
 
 babygirl_end:
 	_AB_KEYWAIT
-	_TALKWIN_CLOSE
-
-  _OBJ_PAUSE_CLEAR_ALL
+	_BALLOONWIN_CLOSE
+  _EVENT_END
   _END
-
+  
 /**************************************************************/
 /*  C01 SIGN1用イベントスクリプト                      */
 /**************************************************************/
 ev_c01_sign1:
-	_TALK_OBJ_PAUSE_ALL
+	_EVENT_START
+  _TALK_START_SE_PLAY
 	_TURN_HERO_SITE
-	_TALKWIN_OPEN
-	_TALKMSG_ALLPUT msg_c01_sign1_01
+	_BALLOONWIN_TALKOBJ_POPUP msg_c01_sign1_01
 	_AB_KEYWAIT
-  _TALKWIN_CLOSE
-  _OBJ_PAUSE_CLEAR_ALL
+  _BALLOONWIN_CLOSE
+  _EVENT_END
   _END
 
 /**************************************************************/
 /*  C01 SIGN2用イベントスクリプト                      */
 /**************************************************************/
 ev_c01_sign2:
-	_TALK_OBJ_PAUSE_ALL
+	_EVENT_START
+  _TALK_START_SE_PLAY
 	_TURN_HERO_SITE
-	_TALKWIN_OPEN
-	_TALKMSG_ALLPUT msg_c01_sign2_01
+	_BALLOONWIN_TALKOBJ_POPUP msg_c01_sign2_01
 	_AB_KEYWAIT
-  _TALKWIN_CLOSE
-  _OBJ_PAUSE_CLEAR_ALL
+  _BALLOONWIN_CLOSE
+  _EVENT_END
   _END
 
 /**************************************************************/
 /*  C01 SIGN3用イベントスクリプト                      */
 /**************************************************************/
 ev_c01_sign3:
-	_TALK_OBJ_PAUSE_ALL
+	_EVENT_START
+  _TALK_START_SE_PLAY
 	_TURN_HERO_SITE
-	_TALKWIN_OPEN
-	_TALKMSG_ALLPUT msg_c01_sign3_01
+	_BALLOONWIN_TALKOBJ_POPUP msg_c01_sign3_01
 	_AB_KEYWAIT
-  _TALKWIN_CLOSE
-  _OBJ_PAUSE_CLEAR_ALL
+  _BALLOONWIN_CLOSE
+  _EVENT_END
   _END

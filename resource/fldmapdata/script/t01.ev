@@ -49,127 +49,108 @@ _EVENT_DATA_END //データ終端を指定しています。
 /*  T01 BIGMANの会話用イベントスクリプト                      */
 /**************************************************************/
 ev_t01_talkobj_bigman:
-	_TALK_OBJ_PAUSE_ALL
-	_TURN_HERO_SITE
-	_TALKWIN_OPEN
-	_TALKMSG_ALLPUT msg_t01_bigman_01
+  _EVENT_START
+  _TALK_START_SE_PLAY
+  _TURN_HERO_SITE 
+  _BALLOONWIN_TALKOBJ_POPUP msg_t01_bigman_01
 	_AB_KEYWAIT
-  _TALKWIN_CLOSE
-  _OBJ_PAUSE_CLEAR_ALL
+  _BALLOONWIN_CLOSE
+  _EVENT_END
   _END
 
 /**************************************************************/
 /*  T01 WOMAN2の会話用イベントスクリプト                      */
 /**************************************************************/
 ev_t01_talkobj_woman02:
-	_TALK_OBJ_PAUSE_ALL
+  _EVENT_START
+  _TALK_START_SE_PLAY
 	_TURN_HERO_SITE
-	_TALKWIN_OPEN
-	_TALKMSG_ALLPUT msg_t01_woman2_01
-
+  
+  _BALLOONWIN_TALKOBJ_POPUP msg_t01_woman2_01
+   
 	_YES_NO_WIN SCWK_ANSWER
-	_TALKWIN_CLOSE
+  _BALLOONWIN_CLOSE
 	_IFVAL_JUMP SCWK_ANSWER,EQ,0,talkobj_woman02_yes
 	_IFVAL_JUMP SCWK_ANSWER,EQ,1,talkobj_woman02_no
 
 talkobj_woman02_yes:
-	_TALKWIN_OPEN
-	_TALKMSG_ALLPUT msg_t01_woman2_02
-
+  _BALLOONWIN_TALKOBJ_POPUP msg_t01_woman2_02
 	_AB_KEYWAIT
-  	_TALKWIN_CLOSE
-
+  _BALLOONWIN_CLOSE
 	_CHG_LANGID
-
 	_JUMP talkobj_woman02_end
 
 talkobj_woman02_no:
-	_TALKWIN_OPEN
-	_TALKMSG_ALLPUT msg_t01_woman2_03
-
+  _BALLOONWIN_TALKOBJ_POPUP msg_t01_woman2_03
 	_AB_KEYWAIT
-  	_TALKWIN_CLOSE
+  _BALLOONWIN_CLOSE
 
 talkobj_woman02_end:
-  	_OBJ_PAUSE_CLEAR_ALL
-  	_END
+  _EVENT_END
+  _END
 
 //-------------------------------------------------------------
 //  T01 WOMAN1の会話用イベントスクリプトです。
 //-------------------------------------------------------------
-
 ev_t01_talkobj_woman01:
-	_TALK_OBJ_PAUSE_ALL
+  _EVENT_START
+  _TALK_START_SE_PLAY
 	_TURN_HERO_SITE
-	_TALKWIN_OPEN
-	_TALKMSG_ALLPUT msg_t01_testmsg02
-
+  
+	_BALLOONWIN_TALKOBJ_POPUP msg_t01_testmsg02
 	_YES_NO_WIN SCWK_ANSWER
-	_TALKWIN_CLOSE
-
+	_BALLOONWIN_CLOSE
+  
 	IF $SCWK_ANSWER == 0 THEN
-		_TALKWIN_OPEN
-		_TALKMSG_ALLPUT msg_t01_testmsg02_01
+		_BALLOONWIN_TALKOBJ_POPUP msg_t01_testmsg02_01
 	ELSE
-		_TALKWIN_OPEN
-		_TALKMSG_ALLPUT msg_t01_testmsg02_02
+		_BALLOONWIN_TALKOBJ_POPUP msg_t01_testmsg02_02
 	ENDIF
-
-/*
-	_IFVAL_JUMP SCWK_ANSWER,EQ,0,talkobj_woman01_yes
-	_IFVAL_JUMP SCWK_ANSWER,EQ,1,talkobj_woman01_no
-
-talkobj_woman01_yes:
-	_TALKWIN_OPEN
-	_TALKMSG_ALLPUT msg_t01_testmsg02_01
-	_JUMP talkobj_woman01_end
-
-talkobj_woman01_no:
-	_TALKWIN_OPEN
-	_TALKMSG_ALLPUT msg_t01_testmsg02_02
-
-talkobj_woman01_end:
-*/
-	_AB_KEYWAIT
-  	_TALKWIN_CLOSE
-  	_OBJ_PAUSE_CLEAR_ALL
-  	_END
+  
+  _AB_KEYWAIT
+  _BALLOONWIN_CLOSE
+  _EVENT_END
+ _END
 
 /**************************************************************/
 /*  T01 BABYGIRL1の会話用イベントスクリプト                      */
 /**************************************************************/
 ev_t01_talkobj_babygirl1:
-	_TALK_OBJ_PAUSE_ALL
+  _EVENT_START
+  _TALK_START_SE_PLAY
 	_TURN_HERO_SITE
-	_TALKWIN_OPEN
-	_TALKMSG_ALLPUT msg_t01_babygirl1_01
+	_BALLOONWIN_TALKOBJ_POPUP msg_t01_babygirl1_01
 	_AB_KEYWAIT
-  _TALKWIN_CLOSE
-  _OBJ_PAUSE_CLEAR_ALL
+  _BALLOONWIN_CLOSE
+  _EVENT_END
   _END
 
 //-------------------------------------------------------------
 //  T01 テスト用座標イベントスクリプト
 //-------------------------------------------------------------
 ev_t01_posevent_test1:
-  _TALK_OBJ_PAUSE_ALL
+#if 0
+  _EVENT_START
   _TALKWIN_OPEN
-  _TALKMSG_ALLPUT msg_t01_babygirl1_01
+  _BALLOONWIN_TALKOBJ_POPUP msg_t01_babygirl1_01
   _AB_KEYWAIT
-  _TALKWIN_CLOSE
-  _OBJ_PAUSE_CLEAR_ALL
+  _BALLOONWIN_CLOSE
+  _EVENT_END
   _LDVAL WK_0907ROM00,1
   //_LDVAL SVSCRWK_START,1
+#endif
   _END
 
 //-------------------------------------------------------------
 //  T01 テスト用BG話し掛けイベントスクリプト
 //-------------------------------------------------------------
 ev_t01_bgevent_test1:
-  _TALK_OBJ_PAUSE_ALL
+#if 0
+  _EVENT_START
   _TALKWIN_OPEN
-  _TALKMSG_ALLPUT msg_t01_sign1_01
+  _BALLOONWIN_TALKOBJ_POPUP msg_t01_sign1_01
   _AB_KEYWAIT
-  _TALKWIN_CLOSE
-  _OBJ_PAUSE_CLEAR_ALL
+  _BALLOONWIN_CLOSE
+  _EVENT_END
+#endif
   _END

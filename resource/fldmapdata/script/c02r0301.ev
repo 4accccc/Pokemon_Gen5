@@ -5,9 +5,7 @@
 //    スクリプトファイル：c02r0301用
 //
 //======================================================================
-
   .text
-
   .include  "scr_seq_def.h"
   .include  "../../message/dst/script/msg_c02r0301.h"
   //.include  "../eventdata/zone_c02r0301evc.h"
@@ -23,7 +21,6 @@ _EVENT_DATA    ev_c02r0301_talkobj_woman2
 _EVENT_DATA    ev_c02r0301_talkobj_poke
 _EVENT_DATA_END
 
-
 /**************************************************************/
 /*            FLAG_CHANGE_LABEL                               */
 /**************************************************************/
@@ -33,28 +30,25 @@ _EVENT_DATA_END
 /**************************************************************/
 /*  C02R0301 WOMAN2の会話用イベントスクリプト*/
 /**************************************************************/
-
 ev_c02r0301_talkobj_woman2:
-	_TALK_OBJ_PAUSE_ALL
+	_EVENT_START
+  _TALK_START_SE_PLAY
 	_TURN_HERO_SITE
-	_TALKWIN_OPEN
-	_TALKMSG_ALLPUT msg_c02r0301_woman2_01
+	_BALLOONWIN_TALKOBJ_POPUP msg_c02r0301_woman2_01
 	_AB_KEYWAIT
-  _TALKWIN_CLOSE
-  _OBJ_PAUSE_CLEAR_ALL
+  _BALLOONWIN_CLOSE
+  _EVENT_END
   _END
 
 /**************************************************************/
 /*  C02R0301 POKEの会話用イベントスクリプト*/
 /**************************************************************/
-
 ev_c02r0301_talkobj_poke:
-	_TALK_OBJ_PAUSE_ALL
+	_EVENT_START
+  _TALK_START_SE_PLAY
 	_TURN_HERO_SITE
-	_TALKWIN_OPEN
-	_TALKMSG_ALLPUT msg_c02r0301_poke_01
+	_BALLOONWIN_TALKOBJ_POPUP msg_c02r0301_poke_01
 	_AB_KEYWAIT
-  _TALKWIN_CLOSE
-  _OBJ_PAUSE_CLEAR_ALL
+  _BALLOONWIN_CLOSE
+  _EVENT_END
   _END
-

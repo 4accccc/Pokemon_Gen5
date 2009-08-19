@@ -50,6 +50,7 @@ _EVENT_DATA_END
 /*     博士によるポケセン案内イベント                         */
 /**************************************************************/
 ev_t02pc0101_doctor_guide:
+  _EVENT_START
 	_PLAYER_POS_GET SCWK_TEMP0,SCWK_TEMP1 //自機座標取得
 	_IFVAL_JUMP SCWK_TEMP0,EQ,6,pos_6_18
 	_IFVAL_JUMP SCWK_TEMP0,EQ,7,pos_7_18
@@ -70,50 +71,44 @@ pos_8_18:
 	_OBJ_ANIME_WAIT
 
 doctor_guide_start:
-	_TALK_OBJ_PAUSE_ALL
 	_TURN_HERO_SITE
-	_TALKWIN_OPEN
-	_TALKMSG_ALLPUT msg_t02pc0101_hakase2_01 //入ってすぐ
+	_BALLOONWIN_OBJMSG_POPUP msg_t02pc0101_hakase2_01,T02PC0101_DOCTOR //入ってすぐ
 	_AB_KEYWAIT
-	_TALKWIN_CLOSE
+	_BALLOONWIN_CLOSE
 
 	_OBJ_ANIME T02PC0101_DOCTOR,anime_t02pc0101_guide01
 	_OBJ_ANIME MMDL_ID_PLAYER,anime_t02pc0101_guide01a
 	_OBJ_ANIME_WAIT
 
 	_TURN_HERO_SITE
-	_TALKWIN_OPEN
-	_TALKMSG_ALLPUT msg_t02pc0101_hakase2_02 //カウンター前で
+	_BALLOONWIN_OBJMSG_POPUP msg_t02pc0101_hakase2_02,T02PC0101_DOCTOR //カウンター前で
 	_AB_KEYWAIT
-	_TALKWIN_CLOSE
+	_BALLOONWIN_CLOSE
 
 	_OBJ_ANIME T02PC0101_DOCTOR,anime_t02pc0101_guide02
 	_OBJ_ANIME MMDL_ID_PLAYER,anime_t02pc0101_guide02a
 	_OBJ_ANIME_WAIT
 
 	_TURN_HERO_SITE
-	_TALKWIN_OPEN
-	_TALKMSG_ALLPUT msg_t02pc0101_hakase2_04 //パソコン前で
+	_BALLOONWIN_OBJMSG_POPUP msg_t02pc0101_hakase2_04,T02PC0101_DOCTOR  //パソコン前で
 	_AB_KEYWAIT
-  	_TALKWIN_CLOSE
+  	_BALLOONWIN_CLOSE
 
 	_OBJ_ANIME T02PC0101_DOCTOR,anime_t02pc0101_guide03
 	_OBJ_ANIME MMDL_ID_PLAYER,anime_t02pc0101_guide03a
 	_OBJ_ANIME_WAIT
 
 	_TURN_HERO_SITE
-	_TALKWIN_OPEN
-	_TALKMSG_ALLPUT msg_t02pc0101_hakase2_06 //ショップ前で
+	_BALLOONWIN_OBJMSG_POPUP msg_t02pc0101_hakase2_06,T02PC0101_DOCTOR  //ショップ前で
 	_AB_KEYWAIT
-  	_TALKWIN_CLOSE
+  	_BALLOONWIN_CLOSE
 
 	_OBJ_ANIME MMDL_ID_PLAYER,anime_t02pc0101_guide03b
 	_OBJ_ANIME_WAIT
 
-	_TALKWIN_OPEN
-	_TALKMSG_ALLPUT msg_t02pc0101_hakase2_07 //ショップ前で
+	_BALLOONWIN_OBJMSG_POPUP msg_t02pc0101_hakase2_07,T02PC0101_DOCTOR  //ショップ前で
 	_AB_KEYWAIT
-  	_TALKWIN_CLOSE
+  	_BALLOONWIN_CLOSE
 
 	_OBJ_ANIME T02PC0101_DOCTOR,anime_t02pc0101_guide04
 	_OBJ_ANIME_WAIT
@@ -121,7 +116,7 @@ doctor_guide_start:
 //博士の動作モデルを削除する処理
 	_OBJ_DEL T02PC0101_DOCTOR
 
-  _OBJ_PAUSE_CLEAR_ALL
+  _EVENT_END
 
 	_FLAG_SET FV_T02PC0101_HAKASE
 
@@ -135,26 +130,26 @@ doctor_guide_start:
 /*                                                            */
 /**************************************************************/
 ev_t02pc0101_woman1_1:
-	_TALK_OBJ_PAUSE_ALL
+	_EVENT_START
+  _TALK_START_SE_PLAY
 	_TURN_HERO_SITE
-	_TALKWIN_OPEN
-	_TALKMSG_ALLPUT msg_t02pc0101_woman1_01
+	_BALLOONWIN_TALKOBJ_POPUP msg_t02pc0101_woman1_01
 	_AB_KEYWAIT
-  _TALKWIN_CLOSE
-  _OBJ_PAUSE_CLEAR_ALL
+  _BALLOONWIN_CLOSE
+  _EVENT_END
   _END
 
 /**************************************************************/
 /*      T02 MIDDLEWOMAN1の会話用イベントスクリプト                                                      */
 /**************************************************************/
 ev_t02pc0101_middlewoman1_1:
-	_TALK_OBJ_PAUSE_ALL
+	_EVENT_START
+  _TALK_START_SE_PLAY
 	_TURN_HERO_SITE
-	_TALKWIN_OPEN
-	_TALKMSG_ALLPUT msg_t02pc0101_middlewoman1_01
+	_BALLOONWIN_TALKOBJ_POPUP msg_t02pc0101_middlewoman1_01
 	_AB_KEYWAIT
-  _TALKWIN_CLOSE
-  _OBJ_PAUSE_CLEAR_ALL
+  _BALLOONWIN_CLOSE
+  _EVENT_END
   _END
 
 
