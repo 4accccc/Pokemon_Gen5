@@ -27,7 +27,7 @@ ev_common_vm:
 ev_heal_p01:
 	_EVENT_START
   _TALK_START_SE_PLAY
-	_BALLOONWIN_TALKOBJ_POPUP msg_common_pc_heal_01
+	_BALLOONWIN_TALKOBJ_OPEN msg_common_pc_heal_01
 	_AB_KEYWAIT
  	_BALLOONWIN_CLOSE
 	_EVENT_END
@@ -39,7 +39,7 @@ ev_heal_p01:
 ev_shop_start_talk:
 	_EVENT_START
   _TALK_START_SE_PLAY
-	_BALLOONWIN_TALKOBJ_POPUP msg_shop_01
+	_BALLOONWIN_TALKOBJ_OPEN msg_shop_01
 	_AB_KEYWAIT
  	_BALLOONWIN_CLOSE
 /*

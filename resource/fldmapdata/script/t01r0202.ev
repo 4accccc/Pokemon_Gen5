@@ -38,7 +38,7 @@ ev_t01r0202_pc:
   _PLAYER_NAME 0 //プレイヤー名を反映
   /* 一時的に無効にしています 090819 kaga
   _TALKWIN_OPEN
-  _BALLOONWIN_TALKOBJ_POPUP msg_t01r0202_pc_01
+  _BALLOONWIN_TALKOBJ_OPEN msg_t01r0202_pc_01
   _AB_KEYWAIT
   _BALLOONWIN_CLOSE
   */

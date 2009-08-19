@@ -100,8 +100,8 @@ DEF_CMD_COUNT  =  ( DEF_CMD_COUNT + 1 )
   DEF_CMD EV_SEQ_TALKWIN_CLOSE
   
   //フィールド　吹き出しウィンドウ
-  DEF_CMD EV_SEQ_BALLOONWIN_OBJMSG_POPUP
-  DEF_CMD EV_SEQ_BALLOONWIN_TALKOBJ_POPUP
+  DEF_CMD EV_SEQ_BALLOONWIN_OBJMSG_OPEN
+  DEF_CMD EV_SEQ_BALLOONWIN_TALKOBJ_OPEN
   DEF_CMD EV_SEQ_BALLOONWIN_CLOSE
   
   //動作モデル
@@ -941,25 +941,25 @@ DEF_CMD_COUNT  =  ( DEF_CMD_COUNT + 1 )
 //======================================================================
 //--------------------------------------------------------------
 /**
- *  _BALLOONWIN_OBJMSG_POPUP 吹き出しウィンドウ描画
+ *  _BALLOONWIN_OBJMSG_OPEN 吹き出しウィンドウ描画
  *  @param msg_id 表示するメッセージID
  *  @param obj_id 吹き出しを出す対象OBJ ID
  */
 //--------------------------------------------------------------
-  .macro  _BALLOONWIN_OBJMSG_POPUP msg_id,obj_id
-  .short  EV_SEQ_BALLOONWIN_OBJMSG_POPUP
+  .macro  _BALLOONWIN_OBJMSG_OPEN msg_id,obj_id
+  .short  EV_SEQ_BALLOONWIN_OBJMSG_OPEN
   .byte \msg_id
   .byte \obj_id
   .endm
 
 //--------------------------------------------------------------
 /**
- *  _BALLOONWIN_TALKOBJ_POPUP 吹き出しウィンドウ描画　話し掛けOBJ専用
+ *  _BALLOONWIN_TALKOBJ_OPEN 吹き出しウィンドウ描画　話し掛けOBJ専用
  *  @param msg_id 表示するメッセージID
  */
 //--------------------------------------------------------------
-  .macro  _BALLOONWIN_TALKOBJ_POPUP msg_id
-  .short  EV_SEQ_BALLOONWIN_TALKOBJ_POPUP
+  .macro  _BALLOONWIN_TALKOBJ_OPEN msg_id
+  .short  EV_SEQ_BALLOONWIN_TALKOBJ_OPEN
   .byte \msg_id
   .endm
 
