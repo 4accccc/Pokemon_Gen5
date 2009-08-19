@@ -76,6 +76,5 @@ extern void DEBUG_EVENT_ChangeEventMapChange( GAMESYS_WORK *gsys, GMEVENT *event
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
-extern void MAPCHANGE_setNextBGM(GAMEDATA * gamedata, u16 zone_id);
 extern void MAPCHANGE_setPlayerVanish(FIELDMAP_WORK * fieldmap, BOOL vanish_flag);
 

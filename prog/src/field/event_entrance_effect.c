@@ -19,12 +19,13 @@
 #include "field_player.h"
 #include "field_buildmodel.h"
 
+#include "event_mapchange.h"        //MAPCHANGE_setPlayerVanish
 #include "event_fieldmap_control.h" //EVENT_FieldFadeOut
-#include "event_mapchange.h"        //MAPCHANGE_setNextBGM
 #include "event_fldmmdl_control.h"  //EVENT_PlayerOneStepAnime
 #include "event_entrance_effect.h"
 
 #include "event_camera_act.h" 
+#include "field_bgm_control.h"
 
 
 //============================================================================================
@@ -265,8 +266,8 @@ static GMEVENT_RESULT ExitEvent_DoorIn(GMEVENT * event, int *seq, void * work)
     break;
 
   case SEQ_DOORIN_FADEOUT:
-    MAPCHANGE_setNextBGM(gamedata, fdaw->loc_req.zone_id);
-		GMEVENT_CallEvent( event, EVENT_FieldFadeOut(gsys, fieldmap, 0) );
+    FIELD_BGM_CONTROL_FadeOut( gamedata, fdaw->loc_req.zone_id, 30 );
+    GMEVENT_CallEvent( event, EVENT_FieldFadeOut(gsys, fieldmap, 0) );
     *seq = SEQ_DOORIN_END;
     break;
 

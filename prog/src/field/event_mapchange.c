@@ -38,6 +38,7 @@
 
 #include "event_entrance_in.h"
 #include "event_entrance_out.h"
+#include "field_bgm_control.h"
 
 
 static void UpdateMapParams(GAMESYS_WORK * gsys, const LOCATION * loc_req);
@@ -244,21 +245,28 @@ static GMEVENT_RESULT EVENT_MapChange(GMEVENT * event, int *seq, void*work)
   	default:
   	  GAMEDATA_SetSubScreenMode(GAMESYSTEM_GetGameData(gsys), FIELD_SUBSCREEN_NORMAL);
   	  break;
-  	}
-
+  	} 
 		(*seq)++;
 		break;
-	case 4:
+  case 4:
+    // BGMフェードアウト終了待ち
+    if( FIELD_BGM_CONTROL_IsFade() != TRUE )
+    { 
+      FIELD_BGM_CONTROL_FadeIn( gamedata, mcw->loc_req.zone_id, 60 );
+      (*seq)++;
+    }
+    break;
+	case 5:
 		//フィールドマップを開始待ち
 		GMEVENT_CallEvent(event, EVENT_FieldOpen(gsys));
 		(*seq) ++;
 		break;
-	case 5:
+	case 6:
     // 入口退出イベント
     GMEVENT_CallEvent( event, EVENT_EntranceOut( event, gsys, gamedata, fieldmap, mcw->loc_req ) );
 		(*seq) ++;
 		break;
-	case 6:
+	case 7:
     if (ZONEDATA_GetPlaceNameID(mcw->before_zone_id) != ZONEDATA_GetPlaceNameID(mcw->loc_req.zone_id) )
     {
       fieldmap = GAMESYSTEM_GetFieldMapWork(gsys);
@@ -530,33 +538,6 @@ static void SetMMdl( GAMESYS_WORK *gsys, const LOCATION *loc_req, GAMEINIT_MODE 
 			MMDLSYS_SetMMdl( fmmdlsys, header, loc_req->zone_id, count, evwork );
 		}
 	}
-}
-//--------------------------------------------------------------
-//--------------------------------------------------------------
-static void setNextBGM(GAMEDATA * gamedata, u16 zone_id)
-{
-  //取り急ぎ。常にフェードインで始まる
-#if 0
-  u16 trackBit = 0xfcff;	// track 9,10 OFF
-  u16 nextBGM = ZONEDATA_GetBGMID(zone_id, GAMEDATA_GetSeasonID(gamedata));
-//  PMSND_PlayNextBGM_EX(nextBGM, trackBit, 30, 0);
-  PMSND_PlayBGM_EX(nextBGM, 0xfcff );
-#else
-  PLAYER_WORK *player = GAMEDATA_GetPlayerWork( gamedata, 0 );
-  PLAYER_MOVE_FORM form = PLAYERWORK_GetMoveForm( player );
-  u32 no = FIELD_SOUND_GetFieldBGMNo( gamedata, form, zone_id );
-  OS_Printf("NEXT BGM NO=%d\n",no);
-  OBATA_Printf( "zone_id = %d\n", zone_id );
-  //FIELD_SOUND_PlayBGM( no );		
-  FIELD_SOUND_PlayNextBGM( no );
-#endif
-}
-
-//--------------------------------------------------------------
-//--------------------------------------------------------------
-void MAPCHANGE_setNextBGM(GAMEDATA * gamedata, u16 zone_id)
-{
-  setNextBGM( gamedata, zone_id );
 }
 
 //--------------------------------------------------------------

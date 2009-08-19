@@ -12,7 +12,6 @@
 #include "gamesystem/game_event.h"
 #include "field/eventdata_type.h"
 #include "field/fieldmap_proc.h"
-#include "field/field_sound.h"      // FIELD_SOUND_GetFieldBGMNo
 #include "field/location.h"
 
 #include "event_entrance_in.h"
@@ -20,6 +19,7 @@
 #include "event_fieldmap_control.h" // EVENT_FieldFadeOut
 #include "event_entrance_effect.h"  // EVENT_FieldDoorInAnime
 #include "event_fldmmdl_control.h"  // EVENT_PlayerOneStepAnime
+#include "field_bgm_control.h"
 
 
 //=======================================================================================
@@ -42,7 +42,6 @@ EVENT_WORK;
  * @breif 非公開関数のプロトタイプ宣言
  */
 //======================================================================================= 
-static void setNextBGM(GAMEDATA * gamedata, u16 zone_id);
 
 // 各EXIT_TYPEごとのイベント
 static GMEVENT_RESULT EVENT_FUNC_EntranceIn_ExitTypeNone(GMEVENT * event, int *seq, void * work);
@@ -113,29 +112,6 @@ GMEVENT* EVENT_EntranceIn( GMEVENT* parent,
 
 //---------------------------------------------------------------------------------------
 /**
- * @brief BGM切り替え
- */
-//---------------------------------------------------------------------------------------
-static void setNextBGM(GAMEDATA * gamedata, u16 zone_id)
-{
-  //取り急ぎ。常にフェードインで始まる
-#if 0
-  u16 trackBit = 0xfcff;	// track 9,10 OFF
-  u16 nextBGM = ZONEDATA_GetBGMID(zone_id, GAMEDATA_GetSeasonID(gamedata));
-//  PMSND_PlayNextBGM_EX(nextBGM, trackBit, 30, 0);
-  PMSND_PlayBGM_EX(nextBGM, 0xfcff );
-#else
-  PLAYER_WORK *player = GAMEDATA_GetPlayerWork( gamedata, 0 );
-  PLAYER_MOVE_FORM form = PLAYERWORK_GetMoveForm( player );
-  u32 no = FIELD_SOUND_GetFieldBGMNo( gamedata, form, zone_id );
-  OS_Printf("NEXT BGM NO=%d\n",no);
-  //FIELD_SOUND_PlayBGM( no );		
-  FIELD_SOUND_PlayNextBGM( no );
-#endif
-}
-
-//---------------------------------------------------------------------------------------
-/**
  * @breif ドアなし時の進入イベント
  */
 //---------------------------------------------------------------------------------------
@@ -149,7 +125,7 @@ static GMEVENT_RESULT EVENT_FUNC_EntranceIn_ExitTypeNone(GMEVENT * event, int *s
   switch ( *seq )
   {
   case 0:
-    setNextBGM( gamedata, event_work->location.zone_id );
+    FIELD_BGM_CONTROL_FadeOut( gamedata, event_work->location.zone_id, 30 );
 		GMEVENT_CallEvent( event, EVENT_FieldFadeOut(gsys, fieldmap, 0) );
     ++ *seq;
     break;
@@ -201,7 +177,7 @@ static GMEVENT_RESULT EVENT_FUNC_EntranceIn_ExitTypeStep(GMEVENT * event, int *s
     ++ *seq;
     break;
   case 1:
-    setNextBGM( gamedata, event_work->location.zone_id );
+    FIELD_BGM_CONTROL_FadeOut( gamedata, event_work->location.zone_id, 30 );
 		GMEVENT_CallEvent(event, EVENT_FieldFadeOut(gsys, fieldmap, 0));
     ++ *seq;
     break;
