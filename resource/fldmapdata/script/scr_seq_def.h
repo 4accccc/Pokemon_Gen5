@@ -899,18 +899,33 @@ DEF_CMD_COUNT  =  ( DEF_CMD_COUNT + 1 )
 
 //--------------------------------------------------------------
 /**
- * 簡易メッセージ表示
- * @param msg_id
+ * 簡易メッセージ表示 BG用
+ * @param msg_id 表示するメッセージID
  */
 //--------------------------------------------------------------
   .macro  _EASY_MSG msg_id
   _EVENT_START
+  _TALK_START_SE_PLAY
   _TALKWIN_OPEN
   _TALKMSG_ALLPUT \msg_id
   _AB_KEYWAIT
   _TALKWIN_CLOSE
   _EVENT_END
-  _END
+  .endm
+
+//--------------------------------------------------------------
+/**
+ * 簡易吹き出しメッセージ表示 話し掛けOBJ用
+ * @param msg_id 表示するメッセージID
+ */
+//--------------------------------------------------------------
+  .macro  _EASY_BALLOONWIN_TALKOBJ_MSG msg_id
+  _EVENT_START
+  _TALK_START_SE_PLAY
+  _BALLOONWIN_TALKOBJ_OPEN \msg_id
+  _AB_KEYWAIT
+  _BALLOONWIN_CLOSE
+  _EVENT_END
   .endm
 
 //======================================================================
