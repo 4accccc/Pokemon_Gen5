@@ -518,6 +518,8 @@ static void PLIST_PLATE_DrawParam( PLIST_WORK *work , PLIST_PLATE_WORK *plateWor
     }
     PLIST_UTIL_DrawStrFunc( work , plateWork->bmpWin , strId ,
                     PLIST_PLATE_STR_BTL_ORDER_X , PLIST_PLATE_STR_BTL_ORDER_Y , fontCol );
+    //HPƒo[”ñ•\Ž¦
+    GFL_CLACT_WK_SetDrawEnable( plateWork->hpBase , FALSE );
   }
   else
   {
@@ -609,7 +611,8 @@ static void PLIST_PLATE_DrawParam( PLIST_WORK *work , PLIST_PLATE_WORK *plateWor
 //--------------------------------------------------------------
 static void PLIST_PLATE_DrawHPBar( PLIST_WORK *work , PLIST_PLATE_WORK *plateWork )
 {
-  if( PLIST_UTIL_IsBattleMenu( work ) == FALSE )
+  if( PLIST_UTIL_IsBattleMenu( work ) == FALSE && 
+      work->plData->mode != PL_MODE_WAZASET )
   {
     const u8 rate = PLIST_PLATE_GetHPRate( plateWork );
     u8 len = PLIST_PLATE_HPBAR_LEN*rate/100;

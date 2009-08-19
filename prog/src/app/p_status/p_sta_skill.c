@@ -509,7 +509,8 @@ void PSTATUS_SKILL_InitCell( PSTATUS_WORK *work , PSTATUS_SKILL_WORK *skillWork 
     GFL_CLACT_WK_SetDrawEnable( skillWork->clwkTargetCur , FALSE );
 
     cellInitData.anmseq = PSCC_ARROW_BOTH;
-    cellInitData.softpri = 6;
+    cellInitData.softpri = 4;
+    cellInitData.bgpri = 0;
     skillWork->clwkArrow = GFL_CLACT_WK_Create( work->cellUnit ,
               work->cellRes[SCR_NCG_SKILL_CUR],
               work->cellRes[SCR_PLT_CURSOR_COMMON],
@@ -1977,7 +1978,7 @@ static void PSTATUS_SKILL_DispPlate( PSTATUS_WORK *work , PSTATUS_SKILL_WORK *sk
     oamData.y = (platePos[plateWork->idx][1]+PSTATUS_SKILL_PLATE_WIN_TOP)*8;
     oamData.pltt_index = work->cellRes[SCR_PLT_RIBBON_BAR]; //文字はリボンと同じパレットで
     oamData.pal_offset = 0;
-    oamData.soft_pri = 0;
+    oamData.soft_pri = 6;
     oamData.bg_pri = 0;
     oamData.setSerface = CLSYS_DEFREND_MAIN;
     oamData.draw_type = CLSYS_DRAW_MAIN;

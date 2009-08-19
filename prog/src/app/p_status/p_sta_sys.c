@@ -85,6 +85,8 @@ static void PSTATUS_UpdateUI( PSTATUS_WORK *work );
 static const BOOL PSTATUS_UpdateKey( PSTATUS_WORK *work );
 static void PSTATUS_UpdateTP( PSTATUS_WORK *work );
 
+static const BOOL PSTATUS_ChangeData( PSTATUS_WORK *work , const BOOL isUpOder );
+static void PSTATUS_RefreshData( PSTATUS_WORK *work );
 static void PSTATUS_RefreshDisp( PSTATUS_WORK *work );
 static void PSTATUS_WaitDisp( PSTATUS_WORK *work );
 
@@ -145,6 +147,7 @@ const BOOL PSTATUS_InitPokeStatus( PSTATUS_WORK *work )
   }
   
   //最初の表示処理
+  PSTATUS_RefreshData( work );
   if( work->psData->mode == PST_MODE_WAZAADD )
   {
     work->page = PPT_SKILL_ADD;
@@ -931,9 +934,9 @@ static const BOOL PSTATUS_UpdateKey( PSTATUS_WORK *work )
 {
   if( GFL_UI_KEY_GetRepeat() & PAD_KEY_DOWN )
   {
-    if( work->dataPos < work->psData->max-1 )
+    const BOOL isChange = PSTATUS_ChangeData( work , TRUE );
+    if( isChange == TRUE )
     {
-      work->dataPos++;
       PSTATUS_RefreshDisp( work );
       GFL_CLACT_WK_SetAnmSeq( work->clwkBarIcon[SBT_CURSOR_DOWN] , APP_COMMON_BARICON_CURSOR_DOWN_ON );
       return TRUE;
@@ -942,9 +945,9 @@ static const BOOL PSTATUS_UpdateKey( PSTATUS_WORK *work )
   else
   if( GFL_UI_KEY_GetRepeat() & PAD_KEY_UP )
   {
-    if( work->dataPos != 0 )
+    const BOOL isChange = PSTATUS_ChangeData( work , FALSE );
+    if( isChange == TRUE )
     {
-      work->dataPos--;
       PSTATUS_RefreshDisp( work );
       GFL_CLACT_WK_SetAnmSeq( work->clwkBarIcon[SBT_CURSOR_UP] , APP_COMMON_BARICON_CURSOR_UP_ON );
       return TRUE;
@@ -953,7 +956,8 @@ static const BOOL PSTATUS_UpdateKey( PSTATUS_WORK *work )
   else
   if( GFL_UI_KEY_GetRepeat() & PAD_KEY_RIGHT )
   {
-    if( work->page < PPT_RIBBON )
+    if( work->page < PPT_RIBBON &&
+        work->isEgg == FALSE )
     {
       work->page++;
       PSTATUS_RefreshDisp( work );
@@ -963,7 +967,8 @@ static const BOOL PSTATUS_UpdateKey( PSTATUS_WORK *work )
   else
   if( GFL_UI_KEY_GetRepeat() & PAD_KEY_LEFT )
   {
-    if( work->page > PPT_INFO )
+    if( work->page > PPT_INFO &&
+        work->isEgg == FALSE )
     {
       work->page--;
       PSTATUS_RefreshDisp( work );
@@ -1009,14 +1014,16 @@ static void PSTATUS_UpdateTP( PSTATUS_WORK *work )
     }
     break;
   case SBT_PAGE2:
-    if( work->page != PPT_SKILL )
+    if( work->page != PPT_SKILL &&
+        work->isEgg == FALSE )
     {
       work->page = PPT_SKILL;
       PSTATUS_RefreshDisp( work );
     }
     break;
   case SBT_PAGE3:
-    if( work->page != PPT_RIBBON )
+    if( work->page != PPT_RIBBON &&
+        work->isEgg == FALSE )
     {
       work->page = PPT_RIBBON;
       PSTATUS_RefreshDisp( work );
@@ -1025,19 +1032,23 @@ static void PSTATUS_UpdateTP( PSTATUS_WORK *work )
   case SBT_CHECK:
     break;
   case SBT_CURSOR_UP:
-    if( work->dataPos != 0 )
     {
-      work->dataPos--;
-      PSTATUS_RefreshDisp( work );
-      GFL_CLACT_WK_SetAnmSeq( work->clwkBarIcon[SBT_CURSOR_UP] , APP_COMMON_BARICON_CURSOR_UP_ON );
+      const BOOL isChange = PSTATUS_ChangeData( work , TRUE );
+      if( isChange == TRUE )
+      {
+        PSTATUS_RefreshDisp( work );
+        GFL_CLACT_WK_SetAnmSeq( work->clwkBarIcon[SBT_CURSOR_DOWN] , APP_COMMON_BARICON_CURSOR_DOWN_ON );
+      }
     }
     break;
   case SBT_CURSOR_DOWN:
-    if( work->dataPos < work->psData->max-1 )
     {
-      work->dataPos++;
-      PSTATUS_RefreshDisp( work );
-      GFL_CLACT_WK_SetAnmSeq( work->clwkBarIcon[SBT_CURSOR_DOWN] , APP_COMMON_BARICON_CURSOR_DOWN_ON );
+      const BOOL isChange = PSTATUS_ChangeData( work , TRUE );
+      if( isChange == TRUE )
+      {
+        PSTATUS_RefreshDisp( work );
+        GFL_CLACT_WK_SetAnmSeq( work->clwkBarIcon[SBT_CURSOR_DOWN] , APP_COMMON_BARICON_CURSOR_DOWN_ON );
+      }
     }
     break;
   case SBT_EXIT:
@@ -1199,6 +1210,80 @@ void PSTATUS_SetActiveBarButton( PSTATUS_WORK *work , const BOOL isActive )
 
 //--------------------------------------------------------------
 //キャラが変わったので表示更新
+// @value isUpOder 昇順
+//--------------------------------------------------------------
+static const BOOL PSTATUS_ChangeData( PSTATUS_WORK *work , const BOOL isUpOder )
+{
+  BOOL isFinish = FALSE;
+  BOOL isChange = FALSE;
+  u8 befDataPos = work->dataPos;
+  while( isFinish == FALSE )
+  {
+    if( isUpOder == TRUE &&
+        work->dataPos >= work->psData->max-1 )
+    {
+      isFinish = TRUE;
+    }
+    else
+    if( isUpOder == FALSE &&
+        work->dataPos <= 0 )
+    {
+      isFinish = TRUE;
+    }
+    else
+    {
+      POKEMON_PARAM *pp;
+      if( isUpOder == TRUE )
+      {
+        work->dataPos++;
+      }
+      else
+      {
+        work->dataPos--;
+      }
+      pp = PSTATUS_UTIL_GetCurrentPP(work);
+      
+      if( PP_Get( pp , ID_PARA_tamago_flag , NULL ) == 1 &&
+          work->page != PPT_INFO )
+      {
+        //タマゴの時はInfo以外見れない
+      }
+      else
+      {
+        isFinish = TRUE;
+        isChange = TRUE;
+      }
+    }
+    
+  }
+  if( isChange == FALSE )
+  {
+    work->dataPos = befDataPos;
+  }
+  else
+  {
+    PSTATUS_RefreshData( work );
+  }
+  return isChange;
+}
+
+//--------------------------------------------------------------
+//キャラが変わったのでデータ更新
+//--------------------------------------------------------------
+static void PSTATUS_RefreshData( PSTATUS_WORK *work )
+{
+  POKEMON_PARAM *pp = PSTATUS_UTIL_GetCurrentPP(work);
+  //PPP暗号解除
+  PSTATUS_UTIL_SetCurrentPPPFast( work , TRUE );
+  
+  work->isEgg = PP_Get( pp , ID_PARA_tamago_flag , NULL );
+  
+  //PPP暗号化
+  PSTATUS_UTIL_SetCurrentPPPFast( work , FALSE );
+}
+
+//--------------------------------------------------------------
+//キャラが変わったので表示更新
 //--------------------------------------------------------------
 static void PSTATUS_RefreshDisp( PSTATUS_WORK *work )
 {
@@ -1266,11 +1351,13 @@ static void PSTATUS_RefreshDisp( PSTATUS_WORK *work )
 //  work->befPage = work->page;
 }
 
+
 //--------------------------------------------------------------
 //表示更新待ち
 //--------------------------------------------------------------
 static void PSTATUS_WaitDisp( PSTATUS_WORK *work )
 {
+  //モザイクエフェクトの処理
   if( work->mosaicEffSeq == SMES_FADEOUT )
   {
     work->mosaicCnt += 1;
@@ -1294,6 +1381,7 @@ static void PSTATUS_WaitDisp( PSTATUS_WORK *work )
     }
   }
   
+  //表示切替タイミング
   if( PRINTSYS_QUE_IsFinished( work->printQue ) == TRUE &&
       ( work->mosaicEffSeq == SMES_WAIT || work->mosaicEffSeq == SMES_NONE ) )
   {
@@ -1338,6 +1426,17 @@ static void PSTATUS_WaitDisp( PSTATUS_WORK *work )
     case PPT_SKILL_ADD:
       PSTATUS_SKILL_DispPage_Trans_WazaAdd( work , work->skillWork );
       break;
+    }
+    
+    if( work->isEgg == FALSE )
+    {
+      GFL_CLACT_WK_SetDrawEnable( work->clwkBarIcon[SBT_PAGE2] , TRUE );
+      GFL_CLACT_WK_SetDrawEnable( work->clwkBarIcon[SBT_PAGE3] , TRUE );
+    }
+    else
+    {
+      GFL_CLACT_WK_SetDrawEnable( work->clwkBarIcon[SBT_PAGE2] , FALSE );
+      GFL_CLACT_WK_SetDrawEnable( work->clwkBarIcon[SBT_PAGE3] , FALSE );
     }
     
     if( work->mosaicEffSeq == SMES_WAIT )
@@ -1587,6 +1686,11 @@ void PSTATUS_UTIL_DebugCreatePP( PSTATUS_WORK *work )
       const u32 calcExp = modLvExp/2;
       PP_Put( work->calcPP,ID_PARA_exp , nowLvExp+calcExp );
       
+    }
+    
+    if( GFL_UI_KEY_GetCont() & PAD_BUTTON_R )
+    {
+      PP_Put( work->calcPP , ID_PARA_tamago_flag , 1 );
     }
 
   }  

@@ -240,6 +240,9 @@ typedef struct
   u32      befTpx;
   u32      befTpy;
   
+  //QÆ‚ª‘½‚¢‚Ì‚Å•Û‚µ‚Ä‚¨‚­pp
+  BOOL isEgg;
+  
   BOOL isActiveBarButton;
   PSTATUS_MAIN_SEQ    mainSeq;
   PSTATUS_RETURN_TYPE retVal;

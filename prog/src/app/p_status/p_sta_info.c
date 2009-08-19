@@ -496,14 +496,16 @@ static void PSTATUS_INFO_DrawState( PSTATUS_WORK *work , PSTATUS_INFO_WORK *info
 static void PSTATUS_INFO_DrawStateUp( PSTATUS_WORK *work , PSTATUS_INFO_WORK *infoWork , const POKEMON_PASO_PARAM *ppp )
 {
   u32 height;
+  const u32 isEgg = PPP_Get( ppp , ID_PARA_tamago_flag , NULL );
   //ƒƒ‚
   {
+    //FIXME êŠ‘Î‰ž
     u16 placeName[7] = {L'‚È',L'‚¼',L'‚Ì',L'‚Î',L'‚µ',L'‚å',0xFFFF};
 
     STRBUF *srcStr;
     STRBUF *dstStr = GFL_STR_CreateBuffer( 256 , work->heapId );
     STRBUF *placeStr = GFL_STR_CreateBuffer( 8 , work->heapId );
-    WORDSET *wordSet = WORDSET_Create( work->heapId );
+    WORDSET *wordSet = WORDSET_CreateEx( 10 , WORDSET_DEFAULT_BUFLEN , work->heapId );
     const u32 year  = PPP_Get( ppp , ID_PARA_get_year , NULL );
     const u32 month = PPP_Get( ppp , ID_PARA_get_month , NULL )+1;
     const u32 day   = PPP_Get( ppp , ID_PARA_get_day , NULL )+1;
@@ -518,8 +520,20 @@ static void PSTATUS_INFO_DrawStateUp( PSTATUS_WORK *work , PSTATUS_INFO_WORK *in
     WORDSET_RegisterNumber( wordSet , 2 , day , 2 , STR_NUM_DISP_LEFT , STR_NUM_CODE_DEFAULT );
     WORDSET_RegisterNumber( wordSet , 3 , level , 3 , STR_NUM_DISP_LEFT , STR_NUM_CODE_DEFAULT );
     WORDSET_RegisterWord( wordSet , 4 , placeStr , 0,TRUE,PM_LANG );
+    WORDSET_RegisterNumber( wordSet , 5 , year , 2 , STR_NUM_DISP_ZERO , STR_NUM_CODE_DEFAULT );
+    WORDSET_RegisterNumber( wordSet , 6 , month , 2 , STR_NUM_DISP_LEFT , STR_NUM_CODE_DEFAULT );
+    WORDSET_RegisterNumber( wordSet , 7 , day , 2 , STR_NUM_DISP_LEFT , STR_NUM_CODE_DEFAULT );
+    WORDSET_RegisterWord( wordSet , 8 , placeStr , 0,TRUE,PM_LANG );
 
-    srcStr = GFL_MSG_CreateString( work->msgHandle , mes_status_03_03_01_01 ); 
+    if( isEgg == 0 )
+    {
+      srcStr = GFL_MSG_CreateString( work->msgHandle , mes_status_03_03_01_01 ); 
+    }
+    else
+    {
+      //ƒ^ƒ}ƒS
+      srcStr = GFL_MSG_CreateString( work->msgHandle , mes_status_03_T_01_02_01 ); 
+    }
     WORDSET_ExpandStr( wordSet , dstStr , srcStr );
     PRINTSYS_PrintQueColor( work->printQue , GFL_BMPWIN_GetBmp( infoWork->bmpWinUp ) , 
             PSTATUS_INFO_MEMO_STR_X , PSTATUS_INFO_MEMO_STR_Y , 
@@ -535,7 +549,9 @@ static void PSTATUS_INFO_DrawStateUp( PSTATUS_WORK *work , PSTATUS_INFO_WORK *in
     GFL_STR_DeleteBuffer( srcStr );
     GFL_STR_DeleteBuffer( dstStr );
   }
+
   //ƒƒ‚‚Q
+  if( isEgg == 0 )
   {
     u8 i;
     u8 maxIdx = 0;
@@ -566,5 +582,11 @@ static void PSTATUS_INFO_DrawStateUp( PSTATUS_WORK *work , PSTATUS_INFO_WORK *in
                           PSTATUS_INFO_MEMO_STR_X , PSTATUS_INFO_MEMO_STR_Y + height , 
                           PSTATUS_STR_COL_VALUE );
 
+  }
+  else
+  {
+    PSTATUS_UTIL_DrawStrFunc( work , infoWork->bmpWinUp , mes_status_03_T_02_02 ,
+                          PSTATUS_INFO_MEMO_STR_X , PSTATUS_INFO_MEMO_STR_Y + height , 
+                          PSTATUS_STR_COL_VALUE );
   }
 }
