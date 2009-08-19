@@ -574,12 +574,11 @@ static void UpdatePitch( EVENT_WORK* p_work )
 {
   FIELD_CAMERA* p_camera = FIELDMAP_GetFieldCamera( p_work->pFieldmap );
   u16           pitch;
-  float         progress;
 
   if(p_work->frame <= p_work->endFramePitch )
   { 
-    progress = p_work->frame / (float)p_work->endFramePitch;
-    pitch    = (u16)( ( (1-progress) * p_work->startPitch ) + ( progress * p_work->endPitch ) );
+    float t = p_work->frame / (float)p_work->endFramePitch;
+    pitch   = (u16)( ( (1-t) * p_work->startPitch ) + ( t * p_work->endPitch ) );
     FIELD_CAMERA_SetAnglePitch( p_camera, pitch );
   }
 }
@@ -595,11 +594,11 @@ static void UpdateYaw( EVENT_WORK* p_work )
 {
   FIELD_CAMERA* p_camera = FIELDMAP_GetFieldCamera( p_work->pFieldmap );
   u16           yaw;
-  float         progress;
+
   if(p_work->frame <= p_work->endFrameYaw )
   {
-    progress = p_work->frame / (float)p_work->endFrameYaw;
-    yaw      = (u16)( ( (1-progress) * p_work->startYaw ) + ( progress * p_work->endYaw ) );
+    float t = p_work->frame / (float)p_work->endFrameYaw;
+    yaw     = (u16)( ( (1-t) * p_work->startYaw ) + ( t * p_work->endYaw ) );
     FIELD_CAMERA_SetAngleYaw( p_camera, yaw );
   }
 }
@@ -615,11 +614,11 @@ static void UpdateDist( EVENT_WORK* p_work )
 {
   FIELD_CAMERA* p_camera = FIELDMAP_GetFieldCamera( p_work->pFieldmap );
   fx32          dist;
-  float         progress;
+
   if(p_work->frame <= p_work->endFrameDist )
   {
-    progress = p_work->frame / (float)p_work->endFrameDist;
-    dist     = FX_F32_TO_FX32( ( (1-progress) * FX_FX32_TO_F32(p_work->startDist) ) + ( progress * FX_FX32_TO_F32(p_work->endDist) ) );
+    float t = p_work->frame / (float)p_work->endFrameDist;
+    dist    = FX_F32_TO_FX32( ( (1-t) * FX_FX32_TO_F32(p_work->startDist) ) + ( t * FX_FX32_TO_F32(p_work->endDist) ) );
   FIELD_CAMERA_SetAngleLen( p_camera, dist ); 
   }
 }
