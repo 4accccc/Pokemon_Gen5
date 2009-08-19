@@ -34,6 +34,11 @@
 extern void FIELD_SOUND_PlayBGM( u32 bgmNo );
 extern void FIELD_SOUND_PlayNextBGM( u32 bgmNo );
 
+//フィールドBGM フェード
+extern void FIELD_SOUND_FadeInBGM( u16 frames );
+extern void FIELD_SOUND_FadeOutBGM( u16 frames );
+extern BOOL FIELD_SOUND_IsBGMFade();
+
 //フィールドBGM トラック関連
 extern void FIELD_SOUND_ChangeBGMTrackAction( void );
 extern void FIELD_SOUND_ChangeBGMTrackStill( void );
