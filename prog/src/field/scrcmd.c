@@ -1190,6 +1190,158 @@ static VMCMD_RESULT EvCmdTalkWinClose( VMHANDLE *core, void *wk )
 }
 
 //======================================================================
+//  吹き出しウィンドウ
+//======================================================================
+//--------------------------------------------------------------
+/**
+ * 吹き出しウィンドウ描画
+ * @param work  SCRCMD_WORK
+ * @param objID 吹き出しを出すOBJID
+ * @param msgID 表示するメッセージID
+ * @retval BOOL TRUE=表示 FALSE=エラー
+ */
+//--------------------------------------------------------------
+static BOOL balloonWin_Write( SCRCMD_WORK *work, u16 objID, u16 msgID )
+{
+  VecFx32 pos,jiki_pos;
+  const VecFx32 *p_pos;
+  STRBUF **msgbuf;
+  FLDTALKMSGWIN *tmsg;
+  SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
+  GFL_MSGDATA *msgData = SCRCMD_WORK_GetMsgData( work );
+  SCRIPT_FLDPARAM *fparam = SCRIPT_GetMemberWork( sc, ID_EVSCR_WK_FLDPARAM );
+  MMDLSYS *mmdlsys = SCRCMD_WORK_GetMMdlSys( work );
+  MMDL *jiki = MMDLSYS_SearchOBJID( mmdlsys, MMDL_ID_PLAYER );
+  MMDL *npc = MMDLSYS_SearchOBJID( mmdlsys, objID );
+  
+  if( npc == NULL ){
+    OS_Printf("スクリプトエラー 吹き出し対象のOBJが存在しません\n");
+    return( FALSE );
+  }
+  
+  MMDL_GetVectorPos( npc, &pos );
+  MMDL_GetVectorPos( jiki, &jiki_pos );
+
+  SCRCMD_WORK_SetTalkMsgWinTailPos( work, &pos );
+  p_pos = SCRCMD_WORK_GetTalkMsgWinTailPos( work );
+  
+  msgbuf = SCRIPT_GetMemberWork( sc, ID_EVSCR_MSGBUF );
+  
+  {
+    WORDSET **wordset = SCRIPT_GetMemberWork( sc, ID_EVSCR_WORDSET );
+    STRBUF **tmpbuf = SCRIPT_GetMemberWork( sc, ID_EVSCR_TMPBUF );
+    GFL_MSG_GetString( msgData, msgID, *tmpbuf );
+    WORDSET_ExpandStr( *wordset, *msgbuf, *tmpbuf );
+  }
+  
+  {
+    FLDTALKMSGWIN_IDX idx = FLDTALKMSGWIN_IDX_LOWER;
+    
+    if( pos.z < jiki_pos.z ){
+      idx = FLDTALKMSGWIN_IDX_UPPER;
+    }
+    
+    tmsg = FLDTALKMSGWIN_AddStrBuf( fparam->msgBG, idx, p_pos, *msgbuf );
+  }
+  
+  SCRCMD_WORK_SetFldMsgWinStream( work, (FLDMSGWIN_STREAM*)tmsg );
+  PMSND_PlaySystemSE( SEQ_SE_MESSAGE );
+  return( TRUE );
+}
+
+//--------------------------------------------------------------
+/**
+ * 吹き出しウィンドウ　表示待ち
+ * @param  core    仮想マシン制御構造体へのポインタ
+ * @retval BOOL TRUE=終了
+ */
+//--------------------------------------------------------------
+static BOOL BallonWinMsgWait( VMHANDLE *core, void *wk )
+{
+  SCRCMD_WORK *work = wk;
+  FLDTALKMSGWIN *tmsg;
+  tmsg = (FLDTALKMSGWIN*)SCRCMD_WORK_GetFldMsgWinStream( work );
+  
+  if( FLDTALKMSGWIN_Print(tmsg) == TRUE ){
+    return TRUE;
+  }
+  
+  return FALSE;
+}
+
+//--------------------------------------------------------------
+/**
+ * 吹き出しウィンドウ 描画 OBJID指定有り
+ * @param  core    仮想マシン制御構造体へのポインタ
+ * @return  VMCMD_RESULT
+ */
+//--------------------------------------------------------------
+static VMCMD_RESULT EvCmdBalloonWinWrite( VMHANDLE *core, void *wk )
+{
+  SCRCMD_WORK *work = wk;
+  u8 msg_id = VMGetU8( core );
+  u8 obj_id = VMGetU8( core );
+  
+  KAGAYA_Printf( "吹き出しウィンドウ OBJID =%d\n", obj_id );
+
+  if( balloonWin_Write(work,obj_id,msg_id) == TRUE ){
+    VMCMD_SetWait( core, BallonWinMsgWait );
+    return VMCMD_RESULT_SUSPEND;
+  }
+  
+  return VMCMD_RESULT_CONTINUE;
+}
+
+//--------------------------------------------------------------
+/**
+ * 吹き出しウィンドウ 描画 話し掛けOBJ対象
+ * @param  core    仮想マシン制御構造体へのポインタ
+ * @return  VMCMD_RESULT
+ */
+//--------------------------------------------------------------
+static VMCMD_RESULT EvCmdBalloonWinTalkWrite( VMHANDLE *core, void *wk )
+{
+  SCRCMD_WORK *work = wk;
+  SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
+  MMDL **mmdl = SCRIPT_GetMemberWork( sc, ID_EVSCR_TARGET_OBJ );
+  u8 msg_id = VMGetU8( core );
+  
+  if( *mmdl == NULL ){
+    OS_Printf( "スクリプトエラー 話し掛け対象のOBJが居ません\n" );
+    return VMCMD_RESULT_SUSPEND;
+  }
+
+  {
+    u8 obj_id = MMDL_GetOBJID( *mmdl );
+    
+    if( balloonWin_Write(work,obj_id,msg_id) == TRUE ){
+      VMCMD_SetWait( core, BallonWinMsgWait );
+      return VMCMD_RESULT_SUSPEND;
+    }
+  }
+  
+  return VMCMD_RESULT_CONTINUE;
+}
+
+//--------------------------------------------------------------
+/**
+ * 吹き出しウィンドウを閉じる
+ * @param  core    仮想マシン制御構造体へのポインタ
+ * @retval  VMCMD_RESULT
+ */
+//--------------------------------------------------------------
+static VMCMD_RESULT EvCmdBalloonWinClose( VMHANDLE *core, void *wk )
+{
+  SCRCMD_WORK *work = wk;
+  SCRIPT_WORK *sc;
+  FLDTALKMSGWIN *tmsg;
+  
+  tmsg = (FLDTALKMSGWIN*) SCRCMD_WORK_GetFldMsgWinStream( work );
+  FLDTALKMSGWIN_Delete( tmsg );
+  return VMCMD_RESULT_CONTINUE;
+}
+
+//======================================================================
 //  動作モデル  
 //======================================================================
 //--------------------------------------------------------------
@@ -2210,6 +2362,11 @@ const VMCMD_FUNC ScriptCmdTbl[] = {
   //フィールド　メッセージウィンドウ
   EvCmdTalkWinOpen,
   EvCmdTalkWinClose,
+  
+  //吹き出しウィンドウ
+  EvCmdBalloonWinWrite,
+  EvCmdBalloonWinTalkWrite,
+  EvCmdBalloonWinClose,
   
   //動作モデル
   EvCmdObjAnime,
