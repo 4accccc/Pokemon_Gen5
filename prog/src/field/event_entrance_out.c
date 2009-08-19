@@ -1,3 +1,13 @@
+/////////////////////////////////////////////////////////////////////////////////////////
+/**
+ *
+ * @file   event_entrance_out.c
+ * @breif  出入口からの退出時のイベント作成
+ * @author obata
+ * @date   2009.08.18
+ *
+ */
+/////////////////////////////////////////////////////////////////////////////////////////
 #include "gamesystem/game_event.h"
 #include "field/eventdata_type.h"
 #include "field/fieldmap_proc.h"
@@ -45,7 +55,7 @@ static GMEVENT_RESULT EVENT_FUNC_EntranceOut_ExitTypeStep(GMEVENT * event, int *
 
 //---------------------------------------------------------------------------------------
 /**
- * @brief 入口退出イベントを作成する
+ * @brief 出入口退出イベントを作成する
  *
  * @param parent    親イベント
  * @param gsys      ゲームシステム
@@ -76,7 +86,7 @@ GMEVENT* EVENT_EntranceOut( GMEVENT* parent,
   };
 
   // EXIT_TYPEを決定
-  if (location.type == LOCATION_TYPE_DIRECT)
+  if( location.type == LOCATION_TYPE_DIRECT )
   {
     exit_type = EXIT_TYPE_NONE;
   }

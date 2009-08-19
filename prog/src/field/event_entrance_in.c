@@ -1,7 +1,8 @@
 /////////////////////////////////////////////////////////////////////////////////////////
 /**
  *
- * @breif  入口への進入時のイベント作成
+ * @file   event_entrance_in.c
+ * @breif  出入口への進入時のイベント作成
  * @author obata
  * @date   2009.08.18
  *
@@ -57,7 +58,7 @@ static GMEVENT_RESULT EVENT_FUNC_EntranceIn_ExitTypeStep(GMEVENT * event, int *s
 
 //---------------------------------------------------------------------------------------
 /**
- * @brief 入口進入イベントを作成する
+ * @brief 出入口進入イベントを作成する
  *
  * @param parent    親イベント
  * @param gsys      ゲームシステム
