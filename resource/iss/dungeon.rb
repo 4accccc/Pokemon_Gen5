@@ -192,8 +192,8 @@ file.each do |line|
 
 		end
 
-    # キーの値は683倍する
-    array[ INDEX_KEY ] = array[ INDEX_KEY ] * 683
+    # キーの値は64倍する(64=1半音)
+    array[ INDEX_KEY ] = array[ INDEX_KEY ] * 64
 
     # テンポの値域[-512, 512] を [0, 512] に変換する
     array[ INDEX_TEMPO ] = ( array[ INDEX_TEMPO ] + 512 ) / 2 
