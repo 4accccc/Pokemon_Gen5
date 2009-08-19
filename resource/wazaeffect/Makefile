@@ -41,13 +41,29 @@ CNV_DIR = ./
 #コンバート対象のファイルツリーを生成
 WAZAEFFSRCS	:= $(wildcard $(RES_DIR)?e_???.esf)
 
-.PHONY:	do-build clean sub_dir
-
-ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
+.PHONY:	do-build clean sub_dir esf
 
 .SUFFIXES:	.s
 
-do-build: $(notdir $(WAZAEFFSRCS:.esf=.s)) $(notdir $(WAZAEFFSRCS:.esf=.bin))
+#------------------------------------------------------------------------------
+#	make do-build ルール
+#------------------------------------------------------------------------------
+ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
+do-build:	sub_dir esf $(NARCNAME) $(TARGETDIR)/$(NARCNAME)
+else
+do-build:	sub_dir $(TARGETDIR)/$(NARCNAME)
+endif
+
+sub_dir:
+	@$(MAKE_SUBDIR)
+
+$(TARGETDIR)/$(NARCNAME):	$(NARCNAME)
+	$(COPY)	$(NARCNAME) $(TARGETDIR)
+	$(COPY) $(NAIXNAME) $(TARGETDIR)
+
+ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
+
+esf: $(notdir $(WAZAEFFSRCS:.esf=.s)) $(notdir $(WAZAEFFSRCS:.esf=.bin))
 %.s: $(RES_DIR)%.esf ../../prog/src/battle/btlv/btlv_effvm_def.h ../../prog/include/sound/wb_sound_data.sadl
 	ruby eescmk.rb c:/home/pokemon_wb/prog/src/battle/btlv/btlv_effvm_def.h $(RES_DIR)$*.esf c:/home/pokemon_wb/
 
@@ -56,29 +72,12 @@ do-build: $(notdir $(WAZAEFFSRCS:.esf=.s)) $(notdir $(WAZAEFFSRCS:.esf=.bin))
 	$(MWLD) -dis -o $*.elf $*.o
 	../../tools/elf2bin $*.elf
 
-endif
-
-#------------------------------------------------------------------------------
-#	make do-build ルール
-#------------------------------------------------------------------------------
-ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
-do-build:	sub_dir $(NARCNAME) $(TARGETDIR)/$(NARCNAME)
-else
-do-build:	sub_dir $(TARGETDIR)/$(NARCNAME)
-endif
-
-$(TARGETDIR)/$(NARCNAME):	$(NARCNAME)
-	$(COPY)	$(NARCNAME) $(TARGETDIR)
-	$(COPY) $(NAIXNAME) $(TARGETDIR)
-
-ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
 $(NARCNAME): $(notdir $(WAZAEFFSRCS:.esf=.bin))
 	nnsarc -c -l -n -i $(NARCNAME) we_*.bin be_*.bin
 	$(NAIXCUT) $(NAIXNAME)
+
 endif
 
-sub_dir:
-	@$(MAKE_SUBDIR)
 
 #------------------------------------------------------------------------------
 #	make cleanルール
@@ -92,6 +91,7 @@ ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
 	-rm -f $(NARCNAME)
 	-rm -f $(NAIXNAME)
 endif
+	@$(MAKE_SUBDIR) clean
 	-rm -f $(TARGETDIR)/$(NARCNAME)
 	-rm -f $(TARGETDIR)/$(NAIXNAME)
 
