@@ -44,7 +44,6 @@
 static void UpdateMapParams(GAMESYS_WORK * gsys, const LOCATION * loc_req);
 static void SetMMdl( GAMESYS_WORK *gsys, const LOCATION *loc_req, GAMEINIT_MODE mode );
 static void setFirstBGM(GAMEDATA * gamedata, u16 zone_id);	
-static void setNextBGM(GAMEDATA * gamedata, u16 zone_id);
 
 //============================================================================================
 //
@@ -80,7 +79,6 @@ static GMEVENT_RESULT EVENT_FirstMapIn(GMEVENT * event, int *seq, void *work)
 		SetMMdl( gsys, &fmw->loc_req, game_init_work->mode );
 		
 		setFirstBGM(fmw->gamedata, fmw->loc_req.zone_id);
-    //setNextBGM(fmw->gamedata, fmw->loc_req.zone_id);	
 		
 		(*seq)++;
 		break;
