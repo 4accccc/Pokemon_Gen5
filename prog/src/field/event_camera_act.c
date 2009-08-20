@@ -578,6 +578,7 @@ static void UpdatePitch( EVENT_WORK* p_work )
   if(p_work->frame <= p_work->endFramePitch )
   { 
     float t = p_work->frame / (float)p_work->endFramePitch;
+    t       = t*t*( -2*t + 3 );
     pitch   = (u16)( ( (1-t) * p_work->startPitch ) + ( t * p_work->endPitch ) );
     FIELD_CAMERA_SetAnglePitch( p_camera, pitch );
   }
@@ -598,6 +599,7 @@ static void UpdateYaw( EVENT_WORK* p_work )
   if(p_work->frame <= p_work->endFrameYaw )
   {
     float t = p_work->frame / (float)p_work->endFrameYaw;
+    t       = t*t*( -2*t + 3 );
     yaw     = (u16)( ( (1-t) * p_work->startYaw ) + ( t * p_work->endYaw ) );
     FIELD_CAMERA_SetAngleYaw( p_camera, yaw );
   }
