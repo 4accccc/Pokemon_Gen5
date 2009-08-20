@@ -1226,6 +1226,7 @@ ex)
  * #param VALUE_INT   再生までのウエイト
  * #param VALUE_INT   再生ピッチ
  * #param VALUE_INT   再生ボリューム
+ * #param VALUE_INIT  127
  * #param VALUE_INT   再生モジュレーションデプス
  * #param VALUE_INT   再生モジュレーションスピード
  */
