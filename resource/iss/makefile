@@ -83,6 +83,8 @@ ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、中間ファイル削除
 	rm -f $(CONVERTDATA)
 	rm -f $(targetname).narc
 	rm -f $(targetname).naix
+	rm -f city.txt
+	rm -f dungeon.txt
 endif
 	rm -f $(TARGETDIR)/$(targetname).narc
 	rm -f $(TARGETDIR)/$(targetname).naix
