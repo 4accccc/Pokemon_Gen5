@@ -4,6 +4,12 @@ C:\home\pokemon_wb\resource\particle\wazaeffect\w_300.spa
 #001
 %00
 カメラ移動	追従	攻撃側	16	0	8
+SE再生	SEQ_SE_W123_02	SE1	0	500	90	0	0
+SE再生	SEQ_SE_W123_01	SE2	0	500	110	0	0
+SE再生	SEQ_SE_W123_02	SE1	30	500	90	0	0
+SE再生	SEQ_SE_W123_01	SE2	30	500	110	0	0
+SE再生	SEQ_SE_W123_02	SE1	50	500	90	0	0
+SE再生	SEQ_SE_W123_01	SE2	50	500	110	0	0
 ポケモン拡縮	攻撃側	往復	-0.3	0.3	4	2	3
 パーティクルデータロード	w_300
 パーティクル再生	w_300	W_300_300_MUD_DOWN	攻撃側	方向無し	0	0
@@ -11,6 +17,7 @@ C:\home\pokemon_wb\resource\particle\wazaeffect\w_300.spa
 パーティクル再生	w_300	W_300_300_MUD_UP2	攻撃側	方向無し	0	0
 エフェクト終了待ち	すべて
 カメラ移動	追従	初期位置	16	0	8
+SE再生	SEQ_SE_BC02	デフォルト	0	0	100	0	0
 ポケモンアニメ	防御側	アニメスタート
 エフェクト終了待ち	すべて
 エフェクト終了
