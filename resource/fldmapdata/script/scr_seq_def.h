@@ -1216,6 +1216,31 @@ DEF_CMD_COUNT  =  ( DEF_CMD_COUNT + 1 )
   .endm
 
 //--------------------------------------------------------------
+/*
+ *  _EVENT_START_TALKOBJ OBJ会話イベント開始。
+ *  会話開始用SEを再生し、OBJを自機に向かせます。
+ *  @param none
+ */  
+//--------------------------------------------------------------
+  .macro  _EVENT_TALK_START
+  _EVENT_START
+  _TALK_START_SE_PLAY
+  _TURN_HERO_SITE
+  .endm
+ 
+//--------------------------------------------------------------
+/*
+ *  _EVENT_START_TALKOBJ OBJ会話イベント開始。
+ *  会話開始用SEを再生します。振り向きはありません
+ *  @param none
+ */  
+//--------------------------------------------------------------
+  .macro  _EVENT_TALK_START_TURN_NOT
+  _EVENT_START
+  _TALK_START_SE_PLAY
+  .endm
+
+//--------------------------------------------------------------
 /**
  *  _EVENT_END POS,SCENE_CHANGE_LABELに対して終了
  *  @param none
