@@ -699,6 +699,9 @@ static void setup_view( DMP_MAINWORK* wk )
     GX_OBJVRAMMODE_CHAR_1D_32K, // サブOBJマッピングモード
   };
 
+  GX_SetMasterBrightness(0);
+  GXS_SetMasterBrightness(0);
+
   // BGsystem初期化
   GFL_BG_Init( wk->heapID );
   {

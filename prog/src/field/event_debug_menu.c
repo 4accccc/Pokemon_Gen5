@@ -156,6 +156,7 @@ static BOOL debugMenuCallProc_FieldPosData( DEBUG_MENU_EVENT_WORK *wk );
 static BOOL debugMenuCallProc_ControlRtcList( DEBUG_MENU_EVENT_WORK *wk );
 
 static BOOL debugMenuCallProc_Naminori( DEBUG_MENU_EVENT_WORK *wk );
+static BOOL debugMenuCallProc_DebugMakePoke( DEBUG_MENU_EVENT_WORK *p_wk );
 static BOOL debugMenuCallProc_DebugItem( DEBUG_MENU_EVENT_WORK *wk );
 static BOOL debugMenuCallProc_BoxMax( DEBUG_MENU_EVENT_WORK *wk );
 static BOOL debugMenuCallProc_MyItemMax( DEBUG_MENU_EVENT_WORK *wk );
@@ -192,6 +193,7 @@ static const FLDMENUFUNC_LIST DATA_DebugMenuList[] =
   { DEBUG_FIELD_STR_SUBSCRN, debugMenuCallProc_SubscreenSelect },
   { DEBUG_FIELD_STR21 , debugMenuCallProc_MusicalSelect },
   { DEBUG_FIELD_STR31, debugMenuCallProc_Naminori },
+  { DEBUG_FIELD_STR41, debugMenuCallProc_DebugMakePoke },
   { DEBUG_FIELD_STR32, debugMenuCallProc_DebugItem },
   { DEBUG_FIELD_STR37, debugMenuCallProc_BoxMax },
   { DEBUG_FIELD_STR39, debugMenuCallProc_MyItemMax },
@@ -2557,6 +2559,109 @@ static BOOL debugMenuCallProc_Naminori( DEBUG_MENU_EVENT_WORK *wk )
   FIELD_EVENT_ChangeNaminoriStart( wk->gmEvent, wk->gmSys, wk->fieldWork );
   return( TRUE );
 }
+
+//======================================================================
+//  デバッグメニュー ポケモン作成
+//======================================================================
+#include "debug/debug_makepoke.h"
+FS_EXTERN_OVERLAY(debug_makepoke);
+static GMEVENT_RESULT debugMenuMakePoke( GMEVENT *p_event, int *p_seq, void *p_wk_adrs );
+//-------------------------------------
+///	デバッグポケモン作成用ワーク	
+//=====================================
+typedef struct 
+{
+  HEAPID heapID;
+	GAMESYS_WORK		*p_gamesys;
+	GMEVENT					*p_event;
+	FIELD_MAIN_WORK *p_field;
+	PROCPARAM_DEBUG_MAKEPOKE p_mp_work;
+	POKEMON_PARAM *pp;
+} DEBUG_MAKEPOKE_EVENT_WORK;
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	ポケモン作成
+ *
+ *	@param	DEBUG_MENU_EVENT_WORK *wk		ワーク
+ *
+ *	@return	TRUEイベント継続	FALSE終了
+ */
+//-----------------------------------------------------------------------------
+static BOOL debugMenuCallProc_DebugMakePoke( DEBUG_MENU_EVENT_WORK *p_wk )
+{	
+	GAMESYS_WORK	*p_gamesys	= p_wk->gmSys;
+	GMEVENT				*p_event		= p_wk->gmEvent;
+	FIELD_MAIN_WORK *p_field	= p_wk->fieldWork;
+	HEAPID heapID = HEAPID_PROC;
+	DEBUG_MAKEPOKE_EVENT_WORK	*p_mp_work;
+
+	//イヴェント
+	GMEVENT_Change( p_event, debugMenuMakePoke, sizeof(DEBUG_MAKEPOKE_EVENT_WORK) );
+	p_mp_work = GMEVENT_GetEventWork( p_event );
+	GFL_STD_MemClear( p_mp_work, sizeof(DEBUG_MAKEPOKE_EVENT_WORK) );
+	
+	//ワーク設定
+	p_mp_work->p_gamesys	= p_gamesys;
+	p_mp_work->p_event		= p_event;
+	p_mp_work->p_field		= p_field;
+	p_mp_work->heapID		  = heapID;
+	p_mp_work->pp = PP_Create( 1,1,PTL_SETUP_ID_AUTO,p_mp_work->heapID );
+	p_mp_work->p_mp_work.dst = p_mp_work->pp;
+
+	return TRUE;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	デバッグポケモン作成イベント
+ *
+ *	@param	GMEVENT *event	GMEVENT
+ *	@param	*seq						シーケンス
+ *	@param	*work						ワーク
+ *
+ *	@return	終了コード
+ */
+//-----------------------------------------------------------------------------
+static GMEVENT_RESULT debugMenuMakePoke( GMEVENT *p_event, int *p_seq, void *p_wk_adrs )
+{	
+	enum
+	{	
+		SEQ_CALL_PROC,
+		SEQ_PROC_END,
+	};
+
+	DEBUG_MAKEPOKE_EVENT_WORK	*p_wk	= p_wk_adrs;
+
+	switch(*p_seq )
+	{	
+	case SEQ_CALL_PROC:
+		GMEVENT_CallEvent( p_wk->p_event, EVENT_FieldSubProc( p_wk->p_gamesys, p_wk->p_field,
+        FS_OVERLAY_ID(debug_makepoke), &ProcData_DebugMakePoke, &p_wk->p_mp_work ) );
+		*p_seq	= SEQ_PROC_END;
+		break;
+
+	case SEQ_PROC_END:
+	  if( p_wk->pp != NULL )
+	  {
+      GAMEDATA *gmData = GAMESYSTEM_GetGameData(p_wk->p_gamesys);
+      POKEPARTY *party = GAMEDATA_GetMyPokemon(gmData);
+      
+      //手持ちに空きがあれば入れる
+      if( PokeParty_GetPokeCount( party ) < 6 )
+      {
+        PokeParty_Add( party , p_wk->pp );
+      }
+      
+      GFL_HEAP_FreeMemory( p_wk->pp );
+    }
+		return GMEVENT_RES_FINISH;
+		break;
+	}
+
+	return GMEVENT_RES_CONTINUE ;
+}
+
 
 //======================================================================
 //  デバッグメニュー アイテム
