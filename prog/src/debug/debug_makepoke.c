@@ -18,6 +18,7 @@
 #include "msg/msg_debug_makepoke.h"
 
 #include "debug/debug_makepoke.h"
+#include "debug/debug_wordsearch.h"  //DEBUG_WORDSEARCH_sub_search
 
 //--------------------------------------------------------------
 /**
@@ -603,8 +604,6 @@ static u32 numinput_sub_calcnum( NUMINPUT_WORK* wk );
 static u16 calc_keta( u32 value );
 static void COMPSKB_Setup( COMP_SKB_WORK* wk, GFL_SKB* skb, STRBUF* buf, u32 msgDataID, HEAPID heapID );
 static void COMPSKB_Cleanup( COMP_SKB_WORK* wk );
-static BOOL sub_strncmp( const STRBUF* str1, const STRBUF* str2, u32 len );
-static u32 sub_search( COMP_SKB_WORK* wk, const STRBUF* word, int org_idx, int* first_idx );
 static BOOL COMPSKB_Main( COMP_SKB_WORK* wk );
 static u32 COMPSKB_GetWordIndex( const COMP_SKB_WORK* wk );
 static u32 personal_getparam( const POKEMON_PARAM* pp, PokePersonalParamID paramID );
@@ -1385,52 +1384,7 @@ static void COMPSKB_Cleanup( COMP_SKB_WORK* wk )
   GFL_STR_DeleteBuffer( wk->subword );
   GFL_MSG_Delete( wk->msg );
 }
-static BOOL sub_strncmp( const STRBUF* str1, const STRBUF* str2, u32 len )
-{
-  if( GFL_STR_GetBufferLength(str1) < len ){
-    return FALSE;
-  }
-  if( GFL_STR_GetBufferLength(str2) < len ){
-    return FALSE;
-  }
 
-  {
-    const STRCODE *p1 = GFL_STR_GetStringCodePointer( str1 );
-    const STRCODE *p2 = GFL_STR_GetStringCodePointer( str2 );
-    u32 i;
-    for(i=0; i<len; ++i){
-      if( *p1++ != *p2++ ){ return FALSE; }
-    }
-    return TRUE;
-  }
-  return FALSE;
-}
-static u32 sub_search( COMP_SKB_WORK* wk, const STRBUF* word, int org_idx, int* first_idx )
-{
-  u32 word_len = GFL_STR_GetBufferLength( word );
-  if( word_len )
-  {
-    u32 str_cnt, match_cnt, i;
-
-    *first_idx = -1;
-    match_cnt = 0;
-    str_cnt = GFL_MSG_GetStrCount( wk->msg );
-    i = (org_idx < 0)? 0 : org_idx+1;
-    while( i < str_cnt )
-    {
-      GFL_MSG_GetString( wk->msg, i, wk->fullword );
-      if( sub_strncmp( word, wk->fullword, GFL_STR_GetBufferLength(word) ) ){
-        if( *first_idx == -1 ){
-          *first_idx = i;
-        }
-        ++match_cnt;
-      }
-      ++i;
-    }
-    return match_cnt;
-  }
-  return 0;
-}
 static BOOL COMPSKB_Main( COMP_SKB_WORK* wk )
 {
   GflSkbReaction reaction = GFL_SKB_Main( wk->skb );
@@ -1447,7 +1401,7 @@ static BOOL COMPSKB_Main( COMP_SKB_WORK* wk )
     {
       int idx;
       GFL_SKB_PickStr( wk->skb );
-      if( sub_search(wk, wk->buf, -1, &idx) == 1 )
+      if( DEBUG_WORDSEARCH_sub_search(wk->msg, wk->fullword, wk->buf, -1, &idx) == 1 )
       {
         GFL_MSG_GetString( wk->msg, idx, wk->fullword );
         GFL_SKB_ReloadStr( wk->skb, wk->fullword );
@@ -1469,7 +1423,7 @@ static BOOL COMPSKB_Main( COMP_SKB_WORK* wk )
       }
       {
         int idx;
-        if( sub_search(wk, wk->subword, wk->index, &idx) )
+        if( DEBUG_WORDSEARCH_sub_search(wk->msg, wk->fullword, wk->subword, wk->index, &idx) )
         {
           wk->index = idx;
           if( wk->search_first_index == -1 ){

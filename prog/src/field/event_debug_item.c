@@ -30,6 +30,8 @@
 #include "font/font.naix" //NARC_font_large_nftr
 #include "sound/pm_sndsys.h"
 
+#include "debug/debug_wordsearch.h"  //DEBUG_WORDSEARCH_sub_search
+
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 #include "system/main.h"			//GFL_HEAPID_APPŽQÆ
@@ -233,7 +235,7 @@ static void _itemSoftKey(EVENT_DEBUGITEM_WORK* wk)
 			wk->index = 0;
 		}
 		idx = wk->index;
-		if( sub_search(wk, wk->pCompStr, dir, &idx) == 1 )
+		if( DEBUG_WORDSEARCH_sub_search(wk->CompMsgManager, wk->fullword, wk->pCompStr, dir, &idx) == 1 )
 		{
 			GFL_MSG_GetString( wk->CompMsgManager, idx, wk->fullword );
 			GFL_SKB_ReloadStr( wk->skb, wk->fullword );
