@@ -15,7 +15,7 @@
 #include "field/fieldmap.h"
 #include "net_app/union/union_msg.h"
 #include "message.naix"
-#include "msg/msg_union.h"
+#include "msg/msg_union_room.h"
 #include "union_comm_command.h"
 #include "system/main.h"
 #include "net_app/union/union_event_check.h"

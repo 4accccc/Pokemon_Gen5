@@ -14,7 +14,7 @@
 #include "field/fieldmap.h"
 #include "net_app/union/union_msg.h"
 #include "message.naix"
-#include "msg/msg_union.h"
+#include "msg/msg_union_room.h"
 #include "system/main.h"
 
 
@@ -230,7 +230,7 @@ void UnionMsg_TalkStream_WindowSetup(UNION_SYSTEM_PTR unisys, FIELD_MAIN_WORK *f
   if(unisys->fld_msgwin_stream == NULL){
     GF_ASSERT(unisys->msgdata == NULL);
     fldmsg_bg = FIELDMAP_GetFldMsgBG(fieldWork);
-    unisys->msgdata = FLDMSGBG_CreateMSGDATA( fldmsg_bg, NARC_message_union_dat );
+    unisys->msgdata = FLDMSGBG_CreateMSGDATA( fldmsg_bg, NARC_message_union_room_dat );
     unisys->fld_msgwin_stream = FLDMSGWIN_STREAM_AddTalkWin(fldmsg_bg, unisys->msgdata);
   }
   else{ //既にウィンドウが表示されている場合はメッセージエリアのクリアを行う
