@@ -29,6 +29,9 @@ struct _POKEPARTY {
 	int PokeCount;
 	///	ポケモンデータ
 	struct pokemon_param member[TEMOTI_POKEMAX];
+	
+	//ステータス画面で前向き後ろ向きを保存する(ビット管理
+	u8 statusView;
 };
 
 #endif	/* __POKEPARTY_LOCAL_H__ */

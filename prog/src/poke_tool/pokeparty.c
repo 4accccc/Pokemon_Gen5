@@ -87,6 +87,7 @@ void PokeParty_Init( POKEPARTY * party, int max )
 	MI_CpuClearFast( party, sizeof( POKEPARTY ) );
 	party->PokeCount = 0;
 	party->PokeCountMax = max;
+	party->statusView =0;
 	for (i = 0; i < TEMOTI_POKEMAX; i++) {
 		PP_Clear( &party->member[i] );
 	}
@@ -111,6 +112,7 @@ BOOL PokeParty_Add( POKEPARTY * party, const POKEMON_PARAM * poke )
 		return FALSE;
 	}
 	party->member[ party->PokeCount ] = *poke;
+	PokeParty_SetStatusViewIsFront( party , party->PokeCount , TRUE );
 	party->PokeCount ++;
 
 #if (CRC_LOADCHECK && CRCLOADCHECK_GMDATA_ID_TEMOTI_POKE)
@@ -232,6 +234,12 @@ BOOL PokeParty_ExchangePosition( POKEPARTY * party, int pos1, int pos2, HEAPID h
 	party->member[pos1] = party->member[pos2];
 	party->member[pos2] = *temp;
 	GFL_HEAP_FreeMemory( temp );
+	{
+    const BOOL isFront1 = PokeParty_GetStatusViewIsFront( party , pos1 );
+    const BOOL isFront2 = PokeParty_GetStatusViewIsFront( party , pos2 );
+    PokeParty_SetStatusViewIsFront( party , pos1 , isFront2 );
+    PokeParty_SetStatusViewIsFront( party , pos2 , isFront1 );
+  }
 
 #if (CRC_LOADCHECK && CRCLOADCHECK_GMDATA_ID_TEMOTI_POKE)
 	SVLD_SetCrc(GMDATA_ID_TEMOTI_POKE);
@@ -301,6 +309,45 @@ int PokeParty_GetBattlePokeNum(const POKEPARTY * ppt)
     return num;
 }
 
+//----------------------------------------------------------
+/**
+ * @brief	ステータス画面で前向きか後ろ向きか
+ * @param	party	POKEPARTY構造体へのポインタ
+ * @param	pos	位置
+ * @retval	TRUE	前向き
+ * @retval	FALSE	後ろ向き
+ */
+//----------------------------------------------------------
+BOOL PokeParty_GetStatusViewIsFront( POKEPARTY* party, int pos )
+{
+  if( (party->statusView & (1<<pos)) != 0 )
+  {
+    return TRUE;
+  }
+  return FALSE;
+
+}
+
+//----------------------------------------------------------
+/**
+ * @brief	ステータス画面で前向きか後ろ向きか
+ * @param	party	POKEPARTY構造体へのポインタ
+ * @param	pos	位置
+ * @param isFront	TRUE	前向き
+ * @param isFront	FALSE	後ろ向き
+ */
+//----------------------------------------------------------
+void PokeParty_SetStatusViewIsFront( POKEPARTY* party, int pos , const BOOL isFront)
+{
+  if( isFront == TRUE )
+  {
+    party->statusView = (party->statusView | (1<<pos));
+  }
+  else
+  {
+    party->statusView = (party->statusView&(0xFF-(1<<pos)));
+  }
+}
 
 
 //============================================================================================

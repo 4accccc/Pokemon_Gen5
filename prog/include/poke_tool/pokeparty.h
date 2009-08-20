@@ -51,6 +51,10 @@ extern int PokeParty_GetPokeCount(const POKEPARTY* party);
 extern void PokeParty_SetMemberData( POKEPARTY* party, int pos, POKEMON_PARAM* pp );
 extern int PokeParty_GetBattlePokeNum(const POKEPARTY * ppt);
 
+//ステータス画面でのポケモンの向き
+extern BOOL PokeParty_GetStatusViewIsFront( POKEPARTY* party, int pos );
+extern void PokeParty_SetStatusViewIsFront( POKEPARTY* party, int pos , const BOOL isFront);
+
 extern void Debug_PokeParty_MakeParty(POKEPARTY * party);
 //----------------------------------------------------------
 //	セーブデータ取得のための関数

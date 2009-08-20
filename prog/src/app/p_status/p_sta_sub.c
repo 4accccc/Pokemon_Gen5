@@ -390,6 +390,16 @@ void PSTATUS_SUB_DispPage( PSTATUS_WORK *work , PSTATUS_SUB_WORK *subWork )
 {
   //MCSS
   const POKEMON_PASO_PARAM *ppp = PSTATUS_UTIL_GetCurrentPPP( work );
+  
+  if( work->psData->ppt == PST_PP_TYPE_POKEPARTY )
+  {
+    subWork->isDispFront = PokeParty_GetStatusViewIsFront( work->psData->ppd , work->dataPos );
+  }
+  else
+  {
+    subWork->isDispFront = TRUE;
+  }
+
 //  PSTATUS_SUB_PokeCreateMcss( work , subWork , ppp );
 
   //BmpWin
@@ -448,6 +458,16 @@ void PSTATUS_SUB_DispPage_Trans( PSTATUS_WORK *work , PSTATUS_SUB_WORK *subWork 
     GFL_CLACT_WK_SetDrawEnable( subWork->clwkMark[SSMT_MARK_POKERUS] , FALSE );
     
   }
+  
+  if( subWork->isDispFront == TRUE )
+  {
+    subWork->state = PSS_DISP_FORNT;
+  }
+  else
+  {
+    subWork->state = PSS_DISP_BACK;
+  }
+
   /*
   //切り替え時前向き固定
   subWork->isDispFront = TRUE;
@@ -469,6 +489,10 @@ void PSTATUS_SUB_DispPage_Trans( PSTATUS_WORK *work , PSTATUS_SUB_WORK *subWork 
 //--------------------------------------------------------------
 void PSTATUS_SUB_ClearPage( PSTATUS_WORK *work , PSTATUS_SUB_WORK *subWork )
 {
+  if( work->psData->ppt == PST_PP_TYPE_POKEPARTY )
+  {
+    PokeParty_SetStatusViewIsFront( work->psData->ppd , work->befDataPos , subWork->isDispFront );
+  }
 
   //文字
   GFL_BMPWIN_Delete( subWork->bmpWinDown );
@@ -598,97 +622,103 @@ static void PSTATUS_SUB_UpdateTP( PSTATUS_WORK *work , PSTATUS_SUB_WORK *subWork
   };
   
   GFL_UI_TP_GetPointCont( &tpx,&tpy );
-  if( subWork->state == PSS_DISP_FORNT )
+  if( work->isEgg == FALSE )
   {
-    /*
-    //くすぐり判定
-    const int retCont = GFL_UI_TP_HitCont( hitTbl );
-    if( retCont == 0 )
+    if( subWork->state == PSS_DISP_FORNT )
     {
-      if( subWork->IsHoldTp == FALSE )
+      /*
+      //くすぐり判定
+      const int retCont = GFL_UI_TP_HitCont( hitTbl );
+      if( retCont == 0 )
       {
-        subWork->IsHoldTp = TRUE;
-        subWork->tickleDir = SSTD_NONE;
-        subWork->befTpx = tpx;
-        subWork->befTpy = tpy;
-        subWork->holdCnt = 0;
-        subWork->tickleNum = 0;
-      }
-      else
-      {
-        const int subX = subWork->befTpx - tpx;
-        if( ( subWork->tickleDir == SSTD_NONE || subWork->tickleDir == SSTD_LEFT ) &&
-            subX > PSTATUS_SUB_TICKLE_WIDHT )
+        if( subWork->IsHoldTp == FALSE )
         {
-          subWork->tickleNum++;
-          subWork->tickleDir = SSTD_RIGHT;
-          subWork->holdCnt = 0;
+          subWork->IsHoldTp = TRUE;
+          subWork->tickleDir = SSTD_NONE;
           subWork->befTpx = tpx;
           subWork->befTpy = tpy;
-        }
-        else
-        if( ( subWork->tickleDir == SSTD_NONE || subWork->tickleDir == SSTD_RIGHT ) &&
-            subX < -PSTATUS_SUB_TICKLE_WIDHT )
-        {
-          subWork->tickleNum++;
-          subWork->tickleDir = SSTD_LEFT;
           subWork->holdCnt = 0;
-          subWork->befTpx = tpx;
-          subWork->befTpy = tpy;
+          subWork->tickleNum = 0;
         }
         else
         {
-          subWork->holdCnt++;
-          if( subWork->holdCnt > PSTATUS_SUB_TICKLE_TIME )
+          const int subX = subWork->befTpx - tpx;
+          if( ( subWork->tickleDir == SSTD_NONE || subWork->tickleDir == SSTD_LEFT ) &&
+              subX > PSTATUS_SUB_TICKLE_WIDHT )
           {
-            //時間かかりすぎでリセット
-            subWork->tickleDir = SSTD_NONE;
+            subWork->tickleNum++;
+            subWork->tickleDir = SSTD_RIGHT;
             subWork->holdCnt = 0;
-            subWork->tickleNum = 0;
             subWork->befTpx = tpx;
             subWork->befTpy = tpy;
           }
-        }
-        if( subWork->tickleNum >= PSTATUS_SUB_TICKLE_NUM )
-        {
-          //ひっくり返る！
-          const VecFx32 cam_pos = {PSTATUS_SUB_CAMERA_BACK_X,FX32_CONST(0.0f),FX32_CONST(101.0f)};
-          MCSS_SetVanishFlag( subWork->pokeMcss );
-          MCSS_ResetVanishFlag( subWork->pokeMcssBack );
-          GFL_G3D_CAMERA_SetPos( work->camera , &cam_pos );
-          GFL_G3D_CAMERA_Switching( work->camera );
-          subWork->isDispFront = FALSE;
-          subWork->IsHoldTp = FALSE;
+          else
+          if( ( subWork->tickleDir == SSTD_NONE || subWork->tickleDir == SSTD_RIGHT ) &&
+              subX < -PSTATUS_SUB_TICKLE_WIDHT )
+          {
+            subWork->tickleNum++;
+            subWork->tickleDir = SSTD_LEFT;
+            subWork->holdCnt = 0;
+            subWork->befTpx = tpx;
+            subWork->befTpy = tpy;
+          }
+          else
+          {
+            subWork->holdCnt++;
+            if( subWork->holdCnt > PSTATUS_SUB_TICKLE_TIME )
+            {
+              //時間かかりすぎでリセット
+              subWork->tickleDir = SSTD_NONE;
+              subWork->holdCnt = 0;
+              subWork->tickleNum = 0;
+              subWork->befTpx = tpx;
+              subWork->befTpy = tpy;
+            }
+          }
+          if( subWork->tickleNum >= PSTATUS_SUB_TICKLE_NUM )
+          {
+            //ひっくり返る！
+            const VecFx32 cam_pos = {PSTATUS_SUB_CAMERA_BACK_X,FX32_CONST(0.0f),FX32_CONST(101.0f)};
+            MCSS_SetVanishFlag( subWork->pokeMcss );
+            MCSS_ResetVanishFlag( subWork->pokeMcssBack );
+            GFL_G3D_CAMERA_SetPos( work->camera , &cam_pos );
+            GFL_G3D_CAMERA_Switching( work->camera );
+            subWork->isDispFront = FALSE;
+            subWork->IsHoldTp = FALSE;
+          }
         }
       }
+      else
+      {
+        subWork->IsHoldTp = FALSE;
+      }
+      */
+
+      //タッチで向き反転処理
+      const int retCont = GFL_UI_TP_HitTrg( hitTbl );
+      if( retCont == 0 )
+      {
+        subWork->state = PSS_FRONT_TO_BACK;
+        subWork->flipAnimeCnt = 0;
+      }
+
     }
     else
+    if( subWork->state == PSS_DISP_BACK )
     {
-      subWork->IsHoldTp = FALSE;
+      //タッチでジャンプ
+      const int retCont = GFL_UI_TP_HitTrg( hitTbl );
+      if( retCont == 0 )
+      {
+        subWork->state = PSS_BACK_TO_FRONT;
+        subWork->flipAnimeCnt = 0;
+      }
     }
-    */
-
-    //タッチで向き反転処理
-    const int retCont = GFL_UI_TP_HitTrg( hitTbl );
-    if( retCont == 0 )
-    {
-      subWork->state = PSS_FRONT_TO_BACK;
-      subWork->flipAnimeCnt = 0;
-    }
-
   }
   else
-  if( subWork->state == PSS_DISP_BACK )
   {
-    //タッチでジャンプ
-    const int retCont = GFL_UI_TP_HitTrg( hitTbl );
-    if( retCont == 0 )
-    {
-      subWork->state = PSS_BACK_TO_FRONT;
-      subWork->flipAnimeCnt = 0;
-    }
+    //タマゴは別処理
   }
-  
 }
 
 #pragma mark [>Poke
