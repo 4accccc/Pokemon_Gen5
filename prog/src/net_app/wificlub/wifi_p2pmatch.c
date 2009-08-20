@@ -1038,8 +1038,6 @@ static void _deleteFriendList(int deletedIndex,int srcIndex, void* pWork)
   WIFIP2PMATCH_WORK *wk = (WIFIP2PMATCH_WORK*)pWork;
 
   WifiList_DataMarge(SaveData_GetWifiListData(wk->pSaveData), deletedIndex, srcIndex);
-  //フレンド毎に持つフロンティアデータもマージする 2008.05.24(土) matsuda
-  //	FrontierRecord_DataMarge(SaveData_GetFrontier(wk->pSaveData), deletedIndex, srcIndex);
 }
 
 

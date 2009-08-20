@@ -69,9 +69,15 @@ static GMEVENT_RESULT EVENT_WiFiClubMain(GMEVENT * event, int *  seq, void * wor
 
   switch (*seq) {
   case _FIELD_FADEOUT:
-    dbw->isEndProc = FALSE;
-    GMEVENT_CallEvent(event, EVENT_FieldClose(gsys, dbw->fieldmap));
-    (*seq)++;
+
+    if(GAME_COMM_NO_NULL == GameCommSys_BootCheck(GAMESYSTEM_GetGameCommSysPtr(gsys)))
+    {
+      dbw->isEndProc = FALSE;
+      GMEVENT_CallEvent(event, EVENT_FieldClose(gsys, dbw->fieldmap));
+      (*seq)++;
+    }
+
+
     break;
   case _CALL_WIFICLUB:
     GAMESYSTEM_CallProc(gsys, NO_OVERLAY_ID, &WifiClubProcData, dbw);
@@ -113,8 +119,9 @@ void EVENT_WiFiClub(GAMESYS_WORK * gsys, FIELD_MAIN_WORK * fieldmap,GMEVENT * ev
   BATTLE_SETUP_PARAM * para;
   EVENT_WIFICLUB_WORK * dbw;
 
-
-	GameCommSys_ExitReq(GAMESYSTEM_GetGameCommSysPtr(gsys));
+  if(GAME_COMM_NO_NULL!= GameCommSys_BootCheck(GAMESYSTEM_GetGameCommSysPtr(gsys))){
+    GameCommSys_ExitReq(GAMESYSTEM_GetGameCommSysPtr(gsys));
+  }
 	
   GMEVENT_Change( event, EVENT_WiFiClubMain, sizeof(EVENT_WIFICLUB_WORK) );
   dbw = GMEVENT_GetEventWork(event);

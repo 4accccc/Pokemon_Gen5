@@ -393,6 +393,12 @@ extern BOOL GFL_NET_DWC_CancelDisable(void);
 extern BOOL GFL_NET_DWC_IsLogin(void);
 
 
+extern void GFL_NET_DWC_FuncSaveBefore(void);
+extern void GFL_NET_DWC_FuncSaveAfter(void);
+
+
+
+
 #if GFL_NET_WIFI
 #include <ppwlobby/ppw_lobby.h>
 #endif

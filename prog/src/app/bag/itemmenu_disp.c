@@ -74,8 +74,8 @@
 
 
 
-#define _BAR_CELL_CURSOR_EXIT (200)    //EXIT xボタン
-#define _BAR_CELL_CURSOR_RETURN (232) //RETURN Enterボタン
+#define _BAR_CELL_CURSOR_EXIT (200-8)    //EXIT xボタン
+#define _BAR_CELL_CURSOR_RETURN (232-8) //RETURN Enterボタン
 
 
 typedef enum{
@@ -1135,6 +1135,9 @@ void ITEMDISP_MenuWinDisp(  FIELD_ITEMMENU_WORK *pWork , int *menustr,int num )
   for(i=0;i<num;i++){
     GFL_STR_DeleteBuffer(pWork->appitem[i].str);
   }
+  G2_SetBlendBrightness( GX_BLEND_PLANEMASK_BG0 | GX_BLEND_PLANEMASK_BG2 | GX_BLEND_PLANEMASK_BG1 | GX_BLEND_PLANEMASK_OBJ , -8 );
+
+
 #else
   int i;
   int winindex = elementof(pWork->menuWin) - num;
@@ -1507,4 +1510,5 @@ void ITEMDISP_YesNoStart(FIELD_ITEMMENU_WORK* pWork)
   pWork->pAppTask = APP_TASKMENU_OpenMenu(&appinit);
   GFL_STR_DeleteBuffer(pWork->appitem[0].str);
   GFL_STR_DeleteBuffer(pWork->appitem[1].str);
+  G2_SetBlendBrightness( GX_BLEND_PLANEMASK_BG0 | GX_BLEND_PLANEMASK_BG2 | GX_BLEND_PLANEMASK_BG1 | GX_BLEND_PLANEMASK_OBJ , -8 );
 }

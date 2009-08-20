@@ -586,6 +586,7 @@ static void _itemTecniqueUseYesNo(FIELD_ITEMMENU_WORK* pWork)
     }
     APP_TASKMENU_CloseMenu(pWork->pAppTask);
     pWork->pAppTask=NULL;
+    G2_SetBlendBrightness( GX_BLEND_PLANEMASK_BG0 | GX_BLEND_PLANEMASK_BG2 | GX_BLEND_PLANEMASK_BG1 | GX_BLEND_PLANEMASK_OBJ , 0 );
   }
 
 }
@@ -676,6 +677,7 @@ static void _itemTrashYesNoWait(FIELD_ITEMMENU_WORK* pWork)
     int selectno = APP_TASKMENU_GetCursorPos(pWork->pAppTask);
     APP_TASKMENU_CloseMenu(pWork->pAppTask);
     pWork->pAppTask=NULL;
+    G2_SetBlendBrightness( GX_BLEND_PLANEMASK_BG0 | GX_BLEND_PLANEMASK_BG2 | GX_BLEND_PLANEMASK_BG1 | GX_BLEND_PLANEMASK_OBJ , 0 );
     GFL_BG_ClearScreen(GFL_BG_FRAME3_M);
 
     if(selectno==0){
@@ -864,6 +866,7 @@ static void _itemSelectWait(FIELD_ITEMMENU_WORK* pWork)
     ITEMDISP_ListPlateClear( pWork );
     APP_TASKMENU_CloseMenu(pWork->pAppTask);
     pWork->pAppTask=NULL;
+    G2_SetBlendBrightness( GX_BLEND_PLANEMASK_BG0 | GX_BLEND_PLANEMASK_BG2 | GX_BLEND_PLANEMASK_BG1 | GX_BLEND_PLANEMASK_OBJ , 0 );
   }
 
 }
@@ -1513,6 +1516,10 @@ static GFL_PROC_RESULT FieldItemMenuProc_Init( GFL_PROC * proc, int * seq, void 
   ITEMDISP_ChangePocketCell( pWork, pWork->pocketno );
 
   pWork->count=2;
+
+  GFL_NET_ChangeIconPosition(256-16, 0);
+  GFL_NET_ReloadIcon();
+
   _CHANGE_STATE(pWork, _startState);
   return GFL_PROC_RES_FINISH;
 }
