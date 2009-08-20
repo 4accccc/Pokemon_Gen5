@@ -2423,6 +2423,8 @@
 #define DOOR_ID_R04_C03P04_EXIT02         5
 #define DOOR_ID_R04_R04R0101_EXIT01       6
 #define DOOR_ID_R04_R04R0201_EXIT01       7
+#define DOOR_ID_R04_C03P04_EXIT03         8
+#define DOOR_ID_R04_C03P04_EXIT04         9
 
 #endif //ZONE_R04_EVD_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕdata/r04.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
@@ -11104,52 +11106,64 @@ static const EVENTDATA_TABLE event_r03r0201 = {
 #include "../script/r04_def.h"
 const CONNECT_DATA DOOR_EVENT_R04[] = {
 	{//DOOR_ID_R04_C04_EXIT01 = 0
-		{6944, 0, 7744},
+		{6880, 0, 7824},
 		ZONE_ID_C04, DOOR_ID_C04_R04_EXIT01,
 		EXIT_DIR_DOWN,//direction
-		EXIT_TYPE_NONE //type
+		EXIT_TYPE_MAT //type
 	},
 	{//DOOR_ID_R04_C04_EXIT02 = 1
-		{6960, 0, 7744},
+		{6896, 0, 7824},
 		ZONE_ID_C04, DOOR_ID_C04_R04_EXIT02,
 		EXIT_DIR_DOWN,//direction
-		EXIT_TYPE_NONE //type
+		EXIT_TYPE_MAT //type
 	},
 	{//DOOR_ID_R04_C04_EXIT03 = 2
-		{6976, 0, 7744},
+		{6912, 0, 7824},
 		ZONE_ID_C04, DOOR_ID_C04_R04_EXIT03,
 		EXIT_DIR_DOWN,//direction
-		EXIT_TYPE_NONE //type
+		EXIT_TYPE_MAT //type
 	},
 	{//DOOR_ID_R04_C04_EXIT04 = 3
-		{6992, 0, 7744},
+		{6928, 0, 7824},
 		ZONE_ID_C04, DOOR_ID_C04_R04_EXIT04,
 		EXIT_DIR_DOWN,//direction
-		EXIT_TYPE_NONE //type
+		EXIT_TYPE_MAT //type
 	},
 	{//DOOR_ID_R04_C03P04_EXIT01 = 4
-		{6896, 0, 9584},
+		{6896, 0, 9552},
 		ZONE_ID_C03P04, DOOR_ID_C03P04_R04_EXIT01,
 		EXIT_DIR_UP,//direction
-		EXIT_TYPE_NONE //type
+		EXIT_TYPE_MAT //type
 	},
 	{//DOOR_ID_R04_C03P04_EXIT02 = 5
-		{6912, 0, 9584},
+		{6912, 0, 9552},
 		ZONE_ID_C03P04, DOOR_ID_C03P04_R04_EXIT01,
 		EXIT_DIR_UP,//direction
-		EXIT_TYPE_NONE //type
+		EXIT_TYPE_MAT //type
 	},
 	{//DOOR_ID_R04_R04R0101_EXIT01 = 6
-		{6384, 0, 8864},
+		{6528, 0, 8528},
 		ZONE_ID_R04R0101, DOOR_ID_R04R0101_R04_EXIT02,
 		EXIT_DIR_DOWN,//direction
 		EXIT_TYPE_DOOR //type
 	},
 	{//DOOR_ID_R04_R04R0201_EXIT01 = 7
-		{6912, 0, 8464},
+		{6928, 0, 8912},
 		ZONE_ID_R04R0201, DOOR_ID_R04R0201_R04_EXIT02,
 		EXIT_DIR_DOWN,//direction
 		EXIT_TYPE_DOOR //type
+	},
+	{//DOOR_ID_R04_C03P04_EXIT03 = 8
+		{6880, 0, 9552},
+		ZONE_ID_C03P04, DOOR_ID_C03P04_R04_EXIT01,
+		EXIT_DIR_UP,//direction
+		EXIT_TYPE_MAT //type
+	},
+	{//DOOR_ID_R04_C03P04_EXIT04 = 9
+		{6928, 0, 9552},
+		ZONE_ID_C03P04, DOOR_ID_C03P04_R04_EXIT01,
+		EXIT_DIR_UP,//direction
+		EXIT_TYPE_MAT //type
 	},
 };
 const int ConnectCount_R04 = NELEMS(DOOR_EVENT_R04);
@@ -11157,7 +11171,7 @@ const int ConnectCount_R04 = NELEMS(DOOR_EVENT_R04);
 static const EVENTDATA_TABLE event_r04 = {
 	0,
 	0,
-	8,
+	10,
 	0,
 	(void *)NULL,
 	(void *)NULL,
