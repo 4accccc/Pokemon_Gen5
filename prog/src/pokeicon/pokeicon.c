@@ -12,7 +12,7 @@
 #include "poke_tool/poke_tool.h"
 #include "poke_tool/monsno_def.h"
 
-#include "pokeicon.h"
+#include "pokeicon/pokeicon.h"
 #include "poke_icon.naix"
 
 
