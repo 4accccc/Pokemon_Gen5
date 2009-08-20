@@ -9,7 +9,7 @@ NAIXFILE		= $(wildcard *.naix)
 NARCTARGET 	= $(addprefix $(TARGETDIR)/,$(NARCFILE))
 NAIXTARGET 	= $(addprefix $(TARGETDIR)/,$(NAIXFILE))
 
-.PHONY:	do-build
+.PHONY:	do-build clean
 
 do-build:	$(NARCTARGET) $(NAIXTARGET)
 
@@ -20,3 +20,4 @@ $(TARGETDIR)/%.narc:	%.narc
 $(TARGETDIR)/%.naix:	%.naix
 	$(COPY) $^ $@
 
+clean:

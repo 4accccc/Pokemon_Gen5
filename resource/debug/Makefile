@@ -30,4 +30,4 @@ install: $(TARGETS)
 clean:
 	@$(MAKE_SUBDIR)
 
-	rm -f $(TARGETS)
+	-rm -f $(TARGETS)
