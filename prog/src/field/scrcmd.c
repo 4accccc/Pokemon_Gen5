@@ -987,18 +987,17 @@ static VMCMD_RESULT EvCmdABKeyWait( VMHANDLE * core, void *wk )
 }
 
 //======================================================================
-//  フィールド　メッセージ表示
+//  フィールド　会話ウィンドウ
 //======================================================================
 //--------------------------------------------------------------
 /**
- * メッセージ表示　ウェイト部分
+ * 会話ウィンドウメッセージ表示　ウェイト部分
  * @param  core    仮想マシン制御構造体へのポインタ
  * @retval BOOL TRUE=終了
  */
 //--------------------------------------------------------------
 static BOOL TalkMsgWait( VMHANDLE *core, void *wk )
 {
-#if 0
   SCRCMD_WORK *work = wk;
   FLDMSGWIN_STREAM *msgWin;
   msgWin = SCRCMD_WORK_GetFldMsgWinStream( work );
@@ -1006,40 +1005,44 @@ static BOOL TalkMsgWait( VMHANDLE *core, void *wk )
   if( FLDMSGWIN_STREAM_Print(msgWin) == TRUE ){
     return( 1 );
   }
-  
+   
   return( 0 );
-#else
-  SCRCMD_WORK *work = wk;
-  FLDTALKMSGWIN *tmsg;
-  tmsg = (FLDTALKMSGWIN*)SCRCMD_WORK_GetFldMsgWinStream( work );
-  
-  if( FLDTALKMSGWIN_Print(tmsg) == TRUE ){
-    return TRUE;
-  }
-  
-  return FALSE;
-#endif
 }
 
 //--------------------------------------------------------------
 /**
- * 登録された単語を使って文字列展開　メッセージ表示
+ * 登録された単語を使って文字列展開　会話ウィンドウメッセージ表示
  * @param  core    仮想マシン制御構造体へのポインタ
  * @return  VMCMD_RESULT
  */
 //--------------------------------------------------------------
 static VMCMD_RESULT EvCmdTalkMsg( VMHANDLE *core, void *wk )
 {
-#if 0
+  FLDMSGWIN_STREAM *msgWin;
   SCRCMD_WORK *work = wk;
   u8 msg_id = VMGetU8(core);
-  FLDMSGWIN_STREAM *msgWin;
+  SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
+  STRBUF **msgbuf = SCRIPT_GetMemberWork( sc, ID_EVSCR_MSGBUF );
+  
+  {
+    GFL_MSGDATA *msgData = SCRCMD_WORK_GetMsgData( work );
+    WORDSET **wordset = SCRIPT_GetMemberWork( sc, ID_EVSCR_WORDSET );
+    STRBUF **tmpbuf = SCRIPT_GetMemberWork( sc, ID_EVSCR_TMPBUF );
+    GFL_MSG_GetString( msgData, msg_id, *tmpbuf );
+    WORDSET_ExpandStr( *wordset, *msgbuf, *tmpbuf );
+  }
   
   msgWin = SCRCMD_WORK_GetFldMsgWinStream( work );
-  FLDMSGWIN_STREAM_PrintStart( msgWin, 0, 0, msg_id );
+  FLDMSGWIN_STREAM_PrintStrBufStart( msgWin, 0, 0, *msgbuf );
   VMCMD_SetWait( core, TalkMsgWait );
   return VMCMD_RESULT_SUSPEND;
-#else
+}
+
+//--------------------------------------------------------------
+//--------------------------------------------------------------
+#if 0
+static VMCMD_RESULT EvCmdTalkMsg( VMHANDLE *core, void *wk )
+{
   u16 dir;
   VecFx32 pos;
   const VecFx32 *pos_p;
@@ -1100,12 +1103,12 @@ static VMCMD_RESULT EvCmdTalkMsg( VMHANDLE *core, void *wk )
 
   VMCMD_SetWait( core, TalkMsgWait );
   return VMCMD_RESULT_SUSPEND;
-#endif
 }
+#endif
 
 //--------------------------------------------------------------
 /**
- * 登録された単語を使って文字列展開　メッセージ表示
+ * 登録された単語を使って文字列展開　会話ウィンドウメッセージ全表示
  * @param  core    仮想マシン制御構造体へのポインタ
  * @retval  VMCMD_RESULT
  */
@@ -1125,9 +1128,6 @@ static VMCMD_RESULT EvCmdTalkMsgAllPut( VMHANDLE *core, void *wk )
 #endif
 }
 
-//======================================================================
-//  フィールド　会話ウィンドウ
-//======================================================================
 //--------------------------------------------------------------
 /**
  * 会話ウィンドウ表示
@@ -1137,7 +1137,6 @@ static VMCMD_RESULT EvCmdTalkMsgAllPut( VMHANDLE *core, void *wk )
 //--------------------------------------------------------------
 static VMCMD_RESULT EvCmdTalkWinOpen( VMHANDLE *core, void *wk )
 {
-#if 0 //吹き出しウィンドウテスト
   SCRCMD_WORK *work = wk;
   SCRIPT_WORK *sc;
   SCRIPT_FLDPARAM *fparam;
@@ -1153,7 +1152,6 @@ static VMCMD_RESULT EvCmdTalkWinOpen( VMHANDLE *core, void *wk )
 
   win_open_flag = SCRIPT_GetMemberWork( sc, ID_EVSCR_WIN_OPEN_FLAG );
   *win_open_flag = TRUE;  //ON;
-#endif
   return VMCMD_RESULT_CONTINUE;
 }
 
@@ -1166,7 +1164,6 @@ static VMCMD_RESULT EvCmdTalkWinOpen( VMHANDLE *core, void *wk )
 //--------------------------------------------------------------
 static VMCMD_RESULT EvCmdTalkWinClose( VMHANDLE *core, void *wk )
 {
-#if 0 //吹き出しウィンドウテスト
   SCRCMD_WORK *work = wk;
   SCRIPT_WORK *sc;
   FLDMSGWIN_STREAM *msgWin;
@@ -1178,14 +1175,6 @@ static VMCMD_RESULT EvCmdTalkWinClose( VMHANDLE *core, void *wk )
   sc = SCRCMD_WORK_GetScriptWork( work );
   win_open_flag = SCRIPT_GetMemberWork( sc, ID_EVSCR_WIN_OPEN_FLAG );
   *win_open_flag = FALSE;  //OFF;
-#else
-  SCRCMD_WORK *work = wk;
-  SCRIPT_WORK *sc;
-  FLDTALKMSGWIN *tmsg;
-  
-  tmsg = (FLDTALKMSGWIN*) SCRCMD_WORK_GetFldMsgWinStream( work );
-  FLDTALKMSGWIN_Delete( tmsg );
-#endif
   return VMCMD_RESULT_CONTINUE;
 }
 
@@ -2356,10 +2345,9 @@ const VMCMD_FUNC ScriptCmdTbl[] = {
   //キー入力関連
   EvCmdABKeyWait,
   
-  //フィールド メッセージ表示
+  //会話ウィンドウ
+  EvCmdTalkMsg,
   EvCmdTalkMsgAllPut,
-  
-  //フィールド　メッセージウィンドウ
   EvCmdTalkWinOpen,
   EvCmdTalkWinClose,
   
