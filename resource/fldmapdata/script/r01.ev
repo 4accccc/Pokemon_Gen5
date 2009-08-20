@@ -119,15 +119,13 @@ poke_getdemo_start:
 	_AB_KEYWAIT
 	_BALLOONWIN_CLOSE
   
-  /* 一時的に無効にしています。090819 kaga
+  _TALKWIN_OPEN
 	_PLAYER_NAME 0 //プレイヤー名を反映
-	_BALLOONWIN_OBJMSG_OPEN msg_r01_test_01,R01_HAKASE2
-	//ME鳴らす
-	_ME_PLAY SEQ_ME_ITEM //通常アイテム入手時ME
+  _TALKMSG msg_r01_test_01,R01_HAKASE2
+	_ME_PLAY SEQ_ME_ITEM //ME鳴らす 通常アイテム入手時ME
 	_ME_WAIT
 	_AB_KEYWAIT
-	_BALLOONWIN_CLOSE
-  */
+  _TALKWIN_CLOSE
 
 	_BALLOONWIN_OBJMSG_OPEN msg_r01_hakase2_03,R01_HAKASE2
 	_AB_KEYWAIT

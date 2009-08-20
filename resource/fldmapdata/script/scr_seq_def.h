@@ -92,10 +92,9 @@ DEF_CMD_COUNT  =  ( DEF_CMD_COUNT + 1 )
   //キー入力関連
   DEF_CMD EV_SEQ_ABKEYWAIT
   
-  //フィールド　メッセージ表示
+  //会話ウィンドウ
+  DEF_CMD EV_SEQ_TALKMSG
   DEF_CMD EV_SEQ_TALKMSG_ALLPUT
-  
-  //フィールド　メッセージウィンドウ
   DEF_CMD EV_SEQ_TALKWIN_OPEN
   DEF_CMD EV_SEQ_TALKWIN_CLOSE
   
@@ -884,8 +883,19 @@ DEF_CMD_COUNT  =  ( DEF_CMD_COUNT + 1 )
   .endm
 
 //======================================================================
-//  フィールド　メッセージ表示
+//  フィールド　会話ウィンドウ
 //======================================================================
+//--------------------------------------------------------------
+/**
+ *  _TALKMSG 展開メッセージを表示(1byte)
+ *  @param  msg_id  表示するメッセージID
+ */
+//--------------------------------------------------------------
+  .macro  _TALKMSG msg_id
+  .short  EV_SEQ_TALKMSG
+  .byte  \msg_id
+  .endm
+
 //--------------------------------------------------------------
 /**
  *  _TALKMSG_ALLPUT 展開メッセージを表示(1byte)
@@ -913,24 +923,6 @@ DEF_CMD_COUNT  =  ( DEF_CMD_COUNT + 1 )
   _EVENT_END
   .endm
 
-//--------------------------------------------------------------
-/**
- * 簡易吹き出しメッセージ表示 話し掛けOBJ用
- * @param msg_id 表示するメッセージID
- */
-//--------------------------------------------------------------
-  .macro  _EASY_BALLOONWIN_TALKOBJ_MSG msg_id
-  _EVENT_START
-  _TALK_START_SE_PLAY
-  _BALLOONWIN_TALKOBJ_OPEN \msg_id
-  _AB_KEYWAIT
-  _BALLOONWIN_CLOSE
-  _EVENT_END
-  .endm
-
-//======================================================================
-//  フィールド　メッセージウィンドウ
-//======================================================================
 //--------------------------------------------------------------
 /**
  *  _TALKWIN_OPEN 会話ウィンドウ開く
@@ -986,6 +978,21 @@ DEF_CMD_COUNT  =  ( DEF_CMD_COUNT + 1 )
 //--------------------------------------------------------------
   .macro  _BALLOONWIN_CLOSE
   .short  EV_SEQ_BALLOONWIN_CLOSE
+  .endm
+
+//--------------------------------------------------------------
+/**
+ * 簡易吹き出しメッセージ表示 話し掛けOBJ用
+ * @param msg_id 表示するメッセージID
+ */
+//--------------------------------------------------------------
+  .macro  _EASY_BALLOONWIN_TALKOBJ_MSG msg_id
+  _EVENT_START
+  _TALK_START_SE_PLAY
+  _BALLOONWIN_TALKOBJ_OPEN \msg_id
+  _AB_KEYWAIT
+  _BALLOONWIN_CLOSE
+  _EVENT_END
   .endm
 
 //======================================================================
@@ -1155,9 +1162,11 @@ DEF_CMD_COUNT  =  ( DEF_CMD_COUNT + 1 )
  *  @param none
  */
 //--------------------------------------------------------------
+#if 0
   .macro  _TALK_OBJ_PAUSE_ALL
   .short  EV_SEQ_TALK_OBJ_PAUSE_ALL
   .endm
+#endif
 
 //--------------------------------------------------------------
 /**
@@ -1185,6 +1194,7 @@ DEF_CMD_COUNT  =  ( DEF_CMD_COUNT + 1 )
  *  @param none
  */
 //--------------------------------------------------------------
+#if 0
   .macro _TALK_OBJ_START
 //  _SE_PLAY SEQ_SE_DP_SELECT
 //  _SE_PLAY SEQ_SE_DP_SELECT11
@@ -1192,6 +1202,7 @@ DEF_CMD_COUNT  =  ( DEF_CMD_COUNT + 1 )
   _OBJ_PAUSE_ALL
   _TURN_HERO_SITE
   .endm
+#endif
 
 //--------------------------------------------------------------
 /**
@@ -1221,11 +1232,13 @@ DEF_CMD_COUNT  =  ( DEF_CMD_COUNT + 1 )
  *  @param none
  */
 //--------------------------------------------------------------
+#if 0
   .macro  _TALK_OBJ_START_TURN_NOT
 //  _SE_PLAY SEQ_SE_DP_SELECT
 //  _SE_PLAY SEQ_SE_DP_SELECT11
   _OBJ_PAUSE_ALL
   .endm
+#endif
 
 //--------------------------------------------------------------
 /**
@@ -1233,9 +1246,11 @@ DEF_CMD_COUNT  =  ( DEF_CMD_COUNT + 1 )
  *  @param none
  */
 //--------------------------------------------------------------
+#if 0
   .macro  _TALK_OBJ_END
   _OBJ_PAUSE_CLEAR_ALL
   .endm
+#endif
 
 //======================================================================
 // switch関連

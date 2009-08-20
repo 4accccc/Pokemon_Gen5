@@ -74,36 +74,39 @@ ev_t01r0102_white_test01:
 //炎タイプ（仮）
 ev_t01r0102_poke_get0:
 	_EVENT_START
-  /* 一時的に無効にしています 090819 kaga
-	_BALLOONWIN_TALKOBJ_OPEN msg_t01r0102_ball1_fire_01
+
+  _TALKWIN_OPEN
+  _TALKMSG msg_t01r0102_ball1_fire_01
 	_AB_KEYWAIT
 	_YES_NO_WIN SCWK_ANSWER
-	_BALLOONWIN_CLOSE
-  */
+  _TALKWIN_CLOSE
+
 	_IFVAL_JUMP SCWK_ANSWER,EQ,0,t01r0102_poke_get_yes
 	_IFVAL_JUMP SCWK_ANSWER,EQ,1,t01r0102_poke_get_no
 
 //草タイプ（仮）
 ev_t01r0102_poke_get1:
 	_EVENT_START
-  /* 一時的に無効にしています 090819 kaga
-	_BALLOONWIN_TALKOBJ_OPEN msg_t01r0102_ball1_grass_01
+
+  _TALKWIN_OPEN
+  _TALKMSG msg_t01r0102_ball1_grass_01
 	_AB_KEYWAIT
 	_YES_NO_WIN SCWK_ANSWER
-	_BALLOONWIN_CLOSE
-  */
+  _TALKWIN_CLOSE
+
 	_IFVAL_JUMP SCWK_ANSWER,EQ,0,t01r0102_poke_get_yes
 	_IFVAL_JUMP SCWK_ANSWER,EQ,1,t01r0102_poke_get_no
 
 //水タイプ（仮）
 ev_t01r0102_poke_get2:
 	_EVENT_START
-  /* 一時的に無効にしています 090819 kaga
-	_BALLOONWIN_TALKOBJ_OPEN msg_t01r0102_ball1_water_01
+  
+  _TALKWIN_OPEN
+  _TALKMSG msg_t01r0102_ball1_water_01
 	_AB_KEYWAIT
 	_YES_NO_WIN SCWK_ANSWER
-	_BALLOONWIN_CLOSE
-  */
+  _TALKWIN_CLOSE
+
 	_IFVAL_JUMP SCWK_ANSWER,EQ,0,t01r0102_poke_get_yes
 	_IFVAL_JUMP SCWK_ANSWER,EQ,1,t01r0102_poke_get_no
 
@@ -114,18 +117,17 @@ t01r0102_poke_get_no:
 //共通、ポケモン入手メッセージ
 t01r0102_poke_get_yes:
 	_EVENT_START
-  /* 一時的に無効にしています 090819 kaga
+
+  _TALKWIN_OPEN
 	_PLAYER_NAME 0 //プレイヤー名を反映
-	_TALKWIN_OPEN
-	_BALLOONWIN_TALKOBJ_OPEN msg_t01r0102_ball_get_01
+  _TALKMSG msg_t01r0102_ball_get_01
 
 	//ME鳴らす
 	_ME_PLAY SEQ_ME_POKEGET
 	_ME_WAIT
 
 	_AB_KEYWAIT
-	_BALLOONWIN_CLOSE
-  */
+  _TALKWIN_CLOSE 
 
 //ライバルアニメ、サポートに隣接
 	_OBJ_ANIME T01R0102_RIVAL,anime_t01r0102_poke_get
@@ -241,11 +243,12 @@ ev_t01r0102_poke_battle:
 /**************************************************************/
 ev_t01r0102_game:
 	_EVENT_START
-  /*
-	_BALLOONWIN_TALKOBJ_OPEN msg_t01r0102_game_01
+  
+  _TALKWIN_OPEN
+  _TALKMSG msg_t01r0102_game_01
 	_AB_KEYWAIT
-	_BALLOONWIN_CLOSE
-  */
+  _TALKWIN_CLOSE
+
   _EVENT_END
   _END
 
@@ -253,13 +256,13 @@ ev_t01r0102_game:
 /*  T01R0102 TVのBG用イベントスクリプト*/
 /**************************************************************/
 ev_t01r0102_tv:
-  	_EVENT_START
-  /*
-  	_TALKWIN_OPEN
-  	_BALLOONWIN_TALKOBJ_OPEN msg_t01r0102_tv_01
-  	_AB_KEYWAIT
-  	_BALLOONWIN_CLOSE
-  */
+  _EVENT_START
+  
+  _TALKWIN_OPEN
+  _TALKMSG msg_t01r0102_tv_01
+	_AB_KEYWAIT
+  _TALKWIN_CLOSE
+
   _EVENT_END
   _END
 
@@ -267,14 +270,14 @@ ev_t01r0102_tv:
 /*  T01R0102 PCのBG用イベントスクリプト*/
 /**************************************************************/
 ev_t01r0102_pc:
-  	_EVENT_START
-  /*
-  	_PLAYER_NAME 0 //プレイヤー名を反映
-  	_TALKWIN_OPEN
-  	_BALLOONWIN_TALKOBJ_OPEN msg_t01r0102_pc_01
-  	_AB_KEYWAIT
-  	_BALLOONWIN_CLOSE
-  */
+  _EVENT_START
+  
+  _TALKWIN_OPEN
+ 	_PLAYER_NAME 0 //プレイヤー名を反映
+  _TALKMSG msg_t01r0102_pc_01
+	_AB_KEYWAIT
+  _TALKWIN_CLOSE
+
   _EVENT_END
   _END
 
@@ -282,13 +285,13 @@ ev_t01r0102_pc:
 /*  T01R0102 BEDのBG用イベントスクリプト*/
 /**************************************************************/
 ev_t01r0102_bed:
-  	_EVENT_START
-  /*
-  	_TALKWIN_OPEN
-  	_BALLOONWIN_TALKOBJ_OPEN msg_t01r0102_bed_01
-  	_AB_KEYWAIT
-  	_BALLOONWIN_CLOSE
-  */
+  _EVENT_START
+
+  _TALKWIN_OPEN
+  _TALKMSG msg_t01r0102_bed_01
+	_AB_KEYWAIT
+  _TALKWIN_CLOSE
+
   _EVENT_END
   _END
 
