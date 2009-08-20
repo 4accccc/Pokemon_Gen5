@@ -182,6 +182,7 @@ static BOOL FMenuCallProc_Bag( FMENU_EVENT_WORK *mwk );
 static BOOL FMenuCallProc_MyTrainerCard( FMENU_EVENT_WORK *mwk );
 static BOOL FMenuCallProc_Report( FMENU_EVENT_WORK *mwk );
 static BOOL FMenuCallProc_Config( FMENU_EVENT_WORK *mwk );
+static BOOL FMenuCallProc_Chat( FMENU_EVENT_WORK *mwk );
 
 static void FMenu_SetNextSubProc( FMENU_EVENT_WORK* mwk,FMENU_APP_TYPE type , void *procWork );
 
@@ -212,6 +213,7 @@ static const FMENU_CALLPROC FldMapMenu_CallProcList[FMIT_MAX] =
   { FMenuCallProc_MyTrainerCard },
   { FMenuCallProc_Report },
   { FMenuCallProc_Config },
+  { FMenuCallProc_Chat },
 };
 
 //--------------------------------------------------------------
@@ -695,6 +697,27 @@ static BOOL FMenuCallProc_Config( FMENU_EVENT_WORK *mwk )
       FS_OVERLAY_ID(config_panel), &ConfigPanelProcData, config);
   GMEVENT_CallEvent(mwk->gmEvent, newEvent);
   mwk->state = FMENUSTATE_WAIT_RETURN;
+  return TRUE;
+}
+
+//--------------------------------------------------------------
+/**
+ * メニュー呼び出し チャット
+ * @param mwk FMENU_EVENT_WORK
+ * @retval  BOOL  TRUE=イベント切り替え
+ */
+//--------------------------------------------------------------
+static BOOL FMenuCallProc_Chat( FMENU_EVENT_WORK *mwk )
+{
+  GMEVENT * newEvent;
+  GAMEDATA *gameData = GAMESYSTEM_GetGameData( mwk->gmSys );
+  SAVE_CONTROL_WORK *saveControl = GAMEDATA_GetSaveControlWork( gameData );
+  CONFIG *config = SaveData_GetConfig( saveControl );
+  newEvent = EVENT_FieldSubProc(mwk->gmSys, mwk->fieldWork,
+      FS_OVERLAY_ID(config_panel), &ConfigPanelProcData, config);
+  GMEVENT_CallEvent(mwk->gmEvent, newEvent);
+  mwk->state = FMENUSTATE_WAIT_RETURN;
+  OS_TPrintf("チャット！");
   return TRUE;
 }
 

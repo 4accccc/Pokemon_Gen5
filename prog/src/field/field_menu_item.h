@@ -8,9 +8,7 @@
 //======================================================================
 
 //field_subscreen‚Æfield_menu‚Åinclude‚ª‚¤‚Ü‚­‚¢‚©‚È‚©‚Á‚½‚Ì‚Å•ª—£
-
-#ifndef FIELD_MENU_ITEM_H__
-#define FIELD_MENU_ITEM_H__
+#pragma once
 
 typedef enum
 {
@@ -21,9 +19,8 @@ typedef enum
   FMIT_TRAINERCARD,
   FMIT_REPORT,
   FMIT_CONFING,
+  FMIT_CHAT,
   
   FMIT_MAX,
   
 }FIELD_MENU_ITEM_TYPE;
-
-#endif //FIELD_MENU_ITEM_H__

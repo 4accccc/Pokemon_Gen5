@@ -11,9 +11,9 @@
 #include "system/gfl_use.h"
 
 #include "arc_def.h"
-#include "field_menu.naix"
 #include "font/font.naix"
 #include "message.naix"
+#include "field_menu.naix"
 #include "msg/msg_fldmapmenu.h"
 
 #include "savedata/save_control.h"
@@ -25,6 +25,7 @@
 #include "field/fieldmap.h"
 #include "field_subscreen.h"
 #include "field_menu.h"
+#include "field/zonedata.h" //ZONEDATA_IsUnionRoom
 
 
 //======================================================================
@@ -144,6 +145,7 @@ struct _FIELD_MENU_WORK
   FIELDMAP_WORK *fieldWork;
   FIELD_SUBSCREEN_WORK *subScrWork;
   FIELD_MENU_STATE state;
+  u16 zoneId;
 
   u8  cursorPosX; //0か1
   u8  cursorPosY; //0～3(3は戻る)
@@ -184,6 +186,47 @@ static void FIELD_MENU_Icon_CreateIcon( FIELD_MENU_WORK* work , FIELD_MENU_ICON 
 static void FIELD_MENU_Icon_DeleteIcon( FIELD_MENU_WORK* work , FIELD_MENU_ICON *icon ); 
 static void FIELD_MENU_Icon_TransBmp( FIELD_MENU_WORK* work , FIELD_MENU_ICON *icon );
 
+static const u16 FIELD_MENU_ITEM_MSG_ARR[FMIT_MAX] =
+{
+  FLDMAPMENU_STR_ITEM07,
+  FLDMAPMENU_STR_ITEM02,
+  FLDMAPMENU_STR_ITEM01,
+  FLDMAPMENU_STR_ITEM03,
+  FLDMAPMENU_STR_ITEM04,
+  FLDMAPMENU_STR_ITEM05,
+  FLDMAPMENU_STR_ITEM06,
+  FLDMAPMENU_STR_ITEM08,
+};
+static const u32 FIELD_MENU_ITEM_ICON_RES_ARR[FMIT_MAX][3] =
+{
+  //ダミー
+  { NARC_field_menu_menu_obj_common_NCGR, 
+    NARC_field_menu_menu_obj_common_NCER,
+    NARC_field_menu_menu_obj_common_NANR},
+
+  { NARC_field_menu_menu_icon_poke_NCGR,
+    NARC_field_menu_menu_icon_poke_NCER,
+    NARC_field_menu_menu_icon_poke_NANR},
+  { NARC_field_menu_menu_icon_zukan_NCGR,
+    NARC_field_menu_menu_icon_zukan_NCER,
+    NARC_field_menu_menu_icon_zukan_NANR},
+  { NARC_field_menu_menu_icon_itembag_NCGR,
+    NARC_field_menu_menu_icon_itembag_NCER,
+    NARC_field_menu_menu_icon_itembag_NANR},
+  { NARC_field_menu_menu_icon_tcard_NCGR,
+    NARC_field_menu_menu_icon_tcard_NCER,
+    NARC_field_menu_menu_icon_tcard_NANR},
+  { NARC_field_menu_menu_icon_report_NCGR,
+    NARC_field_menu_menu_icon_report_NCER,
+    NARC_field_menu_menu_icon_report_NANR},
+  { NARC_field_menu_menu_icon_confing_NCGR,
+    NARC_field_menu_menu_icon_confing_NCER,
+    NARC_field_menu_menu_icon_confing_NANR},
+  { NARC_field_menu_menu_icon_chat_NCGR,
+    NARC_field_menu_menu_icon_chat_NCER,
+    NARC_field_menu_menu_icon_chat_NANR},
+};
+
 //--------------------------------------------------------------
 //  初期化
 //--------------------------------------------------------------
@@ -191,10 +234,13 @@ FIELD_MENU_WORK* FIELD_MENU_InitMenu( const HEAPID heapId , FIELD_SUBSCREEN_WORK
 {
   FIELD_MENU_WORK *work = GFL_HEAP_AllocMemory( heapId , sizeof( FIELD_MENU_WORK ) );
   ARCHANDLE *arcHandle;
+  GAMESYS_WORK *gameSys = FIELDMAP_GetGameSysWork( fieldWork );
+  GAMEDATA *gameData = GAMESYSTEM_GetGameData( gameSys );
   work->heapId = heapId;
   work->fieldWork = fieldWork;
   work->subScrWork = subScreenWork;
   work->state = FMS_WAIT_INIT;
+  work->zoneId = PLAYERWORK_getZoneID( GAMESYSTEM_GetMyPlayerWork(gameSys) );
   
   work->cursorPosX = 0;
   work->cursorPosY = 0;
@@ -215,16 +261,19 @@ FIELD_MENU_WORK* FIELD_MENU_InitMenu( const HEAPID heapId , FIELD_SUBSCREEN_WORK
   G2_SetBlendBrightnessExt( GX_BLEND_PLANEMASK_BG0 , GX_BLEND_PLANEMASK_NONE , 
                             0 , 0 , -6 );
   
+  if( isScrollIn == TRUE )
   {
-    GAMESYS_WORK *gameSys = FIELDMAP_GetGameSysWork( fieldWork );
-    GAMEDATA *gameData = GAMESYSTEM_GetGameData( gameSys );
+    work->cursorPosX = 0;
+    work->cursorPosY = 0;
+    work->isUpdateCursor = TRUE;
+    FIELD_MENU_UpdateCursor( work );
+    FIELD_MENU_InitScrollIn( work );
+  }
+  else
+  {
     FIELD_MENU_SetMenuItemNo( work , GAMEDATA_GetSubScreenType( gameData ) );
   }
   
-  if( isScrollIn == TRUE )
-  {
-    FIELD_MENU_InitScrollIn( work );
-  }
   return work;
 }
 
@@ -502,6 +551,7 @@ static void FIELD_MENU_InitIcon(  FIELD_MENU_WORK* work , ARCHANDLE *arcHandle )
 {
   //TODO 場所により個数などが変動することを想定
   u8 i;
+  u8 menuType;
   //BmpWinの位置(下に半キャラずらして使う
   static const u8 bmpState[7][2] =
   {
@@ -513,53 +563,43 @@ static void FIELD_MENU_InitIcon(  FIELD_MENU_WORK* work , ARCHANDLE *arcHandle )
     { 22,16 },
     { 13,21 },
   };
-  static const FIELD_MENU_ITEM_TYPE typeArr[7] =
+
+  static const FIELD_MENU_ITEM_TYPE typeArr[2][7] =
   {
-    FMIT_POKEMON,
-    FMIT_ZUKAN,
-    FMIT_ITEMMENU,
-    FMIT_TRAINERCARD,
-    FMIT_REPORT,
-    FMIT_CONFING,
-    FMIT_EXIT,
+    { //通常
+      FMIT_POKEMON,
+      FMIT_ZUKAN,
+      FMIT_ITEMMENU,
+      FMIT_TRAINERCARD,
+      FMIT_REPORT,
+      FMIT_CONFING,
+      FMIT_EXIT,
+    },
+    { //ユニオン
+      FMIT_CHAT,
+      FMIT_POKEMON,
+      FMIT_ZUKAN,
+      FMIT_ITEMMENU,
+      FMIT_REPORT,
+      FMIT_CONFING,
+      FMIT_EXIT,
+    }
   };
-  static const u16 msgArr[7] =
-  {
-    FLDMAPMENU_STR02,
-    FLDMAPMENU_STR01,
-    FLDMAPMENU_STR03,
-    FLDMAPMENU_STR04,
-    FLDMAPMENU_STR05,
-    FLDMAPMENU_STR06,
-    FLDMAPMENU_STR07,
-  };
-  static const u32 iconArcIdxArr[7][3] =
-  {
-    { NARC_field_menu_menu_icon_poke_NCGR,
-      NARC_field_menu_menu_icon_poke_NCER,
-      NARC_field_menu_menu_icon_poke_NANR},
-    { NARC_field_menu_menu_icon_zukan_NCGR,
-      NARC_field_menu_menu_icon_zukan_NCER,
-      NARC_field_menu_menu_icon_zukan_NANR},
-    { NARC_field_menu_menu_icon_itembag_NCGR,
-      NARC_field_menu_menu_icon_itembag_NCER,
-      NARC_field_menu_menu_icon_itembag_NANR},
-    { NARC_field_menu_menu_icon_tcard_NCGR,
-      NARC_field_menu_menu_icon_tcard_NCER,
-      NARC_field_menu_menu_icon_tcard_NANR},
-    { NARC_field_menu_menu_icon_report_NCGR,
-      NARC_field_menu_menu_icon_report_NCER,
-      NARC_field_menu_menu_icon_report_NANR},
-    { NARC_field_menu_menu_icon_confing_NCGR,
-      NARC_field_menu_menu_icon_confing_NCER,
-      NARC_field_menu_menu_icon_confing_NANR},
-    //ダミー
-    { NARC_field_menu_menu_obj_common_NCGR, 
-      NARC_field_menu_menu_obj_common_NCER,
-      NARC_field_menu_menu_obj_common_NANR}
-  };
+
   GFL_MSGDATA *msgHandle = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL , ARCID_MESSAGE , 
                                            NARC_message_fldmapmenu_dat , work->heapId );
+  //メニューの種類のチェック
+  {
+    if (ZONEDATA_IsUnionRoom(work->zoneId) || 
+        ZONEDATA_IsColosseum(work->zoneId) )
+    {
+      menuType = 1;
+    }
+    else
+    {
+      menuType = 0;
+    }
+  }
   
   //文字列の作成
   for( i=0;i<FIELD_MENU_ITEM_NUM;i++ )
@@ -568,9 +608,10 @@ static void FIELD_MENU_InitIcon(  FIELD_MENU_WORK* work , ARCHANDLE *arcHandle )
   }
   for( i=0;i<FIELD_MENU_ITEM_NUM;i++ )
   {
+    const FIELD_MENU_ITEM_TYPE itemType = typeArr[menuType][i];
     FIELD_MENU_ICON_INIT initWork;
     //表示名
-    if( i == 3 )
+    if( itemType == FMIT_TRAINERCARD )
     {
       //トレーナーカード
       MYSTATUS  *mystatus = SaveData_GetMyStatus( SaveControl_GetPointer() );
@@ -589,10 +630,10 @@ static void FIELD_MENU_InitIcon(  FIELD_MENU_WORK* work , ARCHANDLE *arcHandle )
     }
     else
     {
-      initWork.str = GFL_MSG_CreateString( msgHandle , msgArr[i] );
+      initWork.str = GFL_MSG_CreateString( msgHandle , FIELD_MENU_ITEM_MSG_ARR[itemType] );
     }
     
-    initWork.type = typeArr[i];
+    initWork.type = itemType;
     if( i != 6 )
     {
       //通常
@@ -601,9 +642,9 @@ static void FIELD_MENU_InitIcon(  FIELD_MENU_WORK* work , ARCHANDLE *arcHandle )
       initWork.iconPosX = initWork.cursorPosX - 32;
       initWork.iconPosY = initWork.cursorPosY;
       initWork.arcHandle = arcHandle;
-      initWork.ncgArcIdx = iconArcIdxArr[i][0];
-      initWork.nceArcIdx = iconArcIdxArr[i][1];
-      initWork.anmArcIdx = iconArcIdxArr[i][2];
+      initWork.ncgArcIdx = FIELD_MENU_ITEM_ICON_RES_ARR[itemType][0];
+      initWork.nceArcIdx = FIELD_MENU_ITEM_ICON_RES_ARR[itemType][1];
+      initWork.anmArcIdx = FIELD_MENU_ITEM_ICON_RES_ARR[itemType][2];
     }
     else
     {
