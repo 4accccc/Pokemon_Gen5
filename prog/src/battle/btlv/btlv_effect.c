@@ -142,7 +142,7 @@ void  BTLV_EFFECT_Init( int index, HEAPID heapID )
   }
 
   //VBlankŠÖ”
-  bew->v_tcb = GFUser_VIntr_CreateTCB( BTLV_EFFECT_VBlank, NULL, 0 );
+  bew->v_tcb = GFUser_VIntr_CreateTCB( BTLV_EFFECT_VBlank, NULL, 1 );
 }
 
 //============================================================================================
