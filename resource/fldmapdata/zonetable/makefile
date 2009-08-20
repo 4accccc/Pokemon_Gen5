@@ -105,7 +105,7 @@ include	$(NITROSYSTEM_ROOT)/build/buildtools/modulerules
 #	ƒ‹[ƒ‹’è‹`
 #
 #----------------------------------------------------------------------------
-.PHONY:	subdir	do-build clean test dummyfiles
+.PHONY:	subdir	do-build clean test dummyfiles checkfiles
 
 do-build: subdir $(TARGETDIR)/$(NARCNAME)
 
@@ -165,6 +165,8 @@ test:	$(DATATABTXT)
 	ruby scripts/make_matrix_header.rb $(WORKDIR)/map_matrix.txt > $(WORKDIR)/map_matrix.h
 
 dummyfiles:	$(DATATABTXT)
-	ruby scripts/make_dummy.rb $(DATATABTXT)
+	ruby scripts/make_dummy.rb $(DATATABTXT) true
 
+checkfiles:	$(DATATABTXT)
+	ruby scripts/make_dummy.rb $(DATATABTXT) false
 

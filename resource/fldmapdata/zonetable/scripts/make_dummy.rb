@@ -45,6 +45,41 @@ def makeGMMs( zone_ids )
     end
   }
 end
+#--------------------------------------------------------------
+#--------------------------------------------------------------
+def checkGMMS( zone_ids )
+  filepath = SCRMSG_PATH
+  ext = ".gmm"
+  check_files( zone_ids, filepath, ext)
+end
+
+def check_files( ids, filepath, ext)
+
+  STDERR.puts "#{ext} checking ..."
+  real_files = Hash.new
+
+  files = Dir.glob( filepath + "*#{ext}" ).map{|file|
+    name = File.basename(file)
+    real_files[name] = nil
+    name
+  }
+
+  ids.each{|id|
+    idfile = id + "#{ext}"
+    if real_files.has_key?(idfile) then
+      real_files[idfile] = true
+    else
+      puts "#{idfile} not exist."
+    end
+  }
+  real_files.each{|key, value|
+    if value == nil then
+      puts "#{key} exists, but not defined."
+    end
+  }
+  
+  STDERR.puts "#{ext} checking finished."
+end
 
 #--------------------------------------------------------------
 #--------------------------------------------------------------
@@ -84,10 +119,26 @@ def makeScriptsIndex( zone_ids )
   }
 end
 
+def checkScripts( zone_ids )
+  check_files( zone_ids, SCRIPT_PATH, ".ev")
+  check_files( zone_ids, SCRIPT_PATH, "_def.h")
+  sp_ids = zone_ids.map{|id| "sp_" + id}
+  check_files( sp_ids, SCRIPT_PATH, ".ev")
+  check_files( sp_ids, SCRIPT_PATH, "_def.h")
+end
+
 ###############################################################
 ###############################################################
-ids = readIDs( ARGV[0] )
-makeGMMs( ids )
-makeScripts( ids )
-makeScriptsIndex( ids )
+
+if ARGV[1] == "true" then
+  ids = readIDs( ARGV[0] )
+  makeGMMs( ids )
+  makeScripts( ids )
+  makeScriptsIndex( ids )
+elsif ARGV[1] == "false" then
+  ids = readIDs( ARGV[0] )
+  checkGMMS( ids )
+  checkScripts( ids )
+else
+end
 

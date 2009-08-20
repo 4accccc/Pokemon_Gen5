@@ -24,7 +24,7 @@ enum {
 	MMLID_NOENTRY	=	0,
 	MMLID_SAMPLEOBJ	=	1,
 
-	MAPTYPE_NOWHERE	=	0xff,
+	//MAPTYPE_NOWHERE	=	0xff,
 	//MAPNAME_NOTHING	=	0x33,
 	WEATHER_SYS_SUNNY	=	0x11,
 	PLACE_WIN_SEE	=	0x80,
@@ -71,7 +71,7 @@ enum {
 #include "../script/script_seq.naix"      //script ID 定義ファイル
 #include "../../message/script_message.naix"     //message archive ID定義ファイル
 #include "..\..\message\dst\msg_place_name.h"   //地名表示用文字列ID定義ファイル
-//#include "..\..\place_name\area_win_gra.naix"   //地名表示ウィンドウリソースID定義ファイル
+#include "header/maptype.h"
 
 enum {
 	//sp_scr_dummy = NARC_scr_seq_sp_dummy_bin,
