@@ -38,6 +38,9 @@
 
 #define	MCSS_DEFAULT_SHADOW_OFFSET	( -0x1000 )	//影位置のZ方向のオフセット値
 
+#define MCSS_VCOUNT_BORDER          ( 213 )     //テクスチャ転送するときのVCOUNTの境界
+                                                //(192~213がレンダリングエンジンのブランク期間）
+
 //--------------------------------------------------------------------------
 /**
  * 構造体宣言
@@ -1281,6 +1284,13 @@ static	void	MCSS_LoadResource( MCSS_SYS_WORK *mcss_sys, int count, const MCSS_AD
 static	void	TCB_LoadResource( GFL_TCB *tcb, void *work )
 {
 	TCB_LOADRESOURCE_WORK *tlw = ( TCB_LOADRESOURCE_WORK *)work;
+  u16 *v_count = (u16 *)REG_VCOUNT_ADDR;
+
+  //VCountを確認してちらつきを防ぐ
+  if( *v_count > MCSS_VCOUNT_BORDER )
+  { 
+    return;
+  }
 
 	if( tlw->mcss ){
     tlw->mcss->is_load_resource = 1;
