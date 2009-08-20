@@ -2,11 +2,17 @@
 #	メッセージデータコンバート
 ##########################################################
 
+#共通ルールファイルのインクルード
+include	$(PROJECT_RSCDIR)\macro_define
+
 SOURCE_LIST	= source.list
 WORD_DAT_FILE = ..\..\prog\src\system\pms_word.res
 INPUT_DAT_FILE = ..\..\prog\src\app\pms_input\pms_input.res
 
 LANG_FLAG	= jp
+
+TARGETDIR = $(PROJECT_ARCDIR)
+targetname = pms_aikotoba
 
 -include $(SOURCE_LIST)
 
@@ -17,6 +23,7 @@ LANG_FLAG	= jp
 no-rule:
 	$(MAKE)	$(SOURCE_LIST)
 	$(MAKE)	$(WORD_DAT_FILE)
+	$(COPY) $(targetname).narc $(TARGETDIR)
 
 
 

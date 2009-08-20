@@ -1,7 +1,7 @@
 
 include $(PROJECT_RSCDIR)\macro_define
 
-SUBDIRS	=	others fielddata mb_test
+SUBDIRS	=	others fielddata mb_test trgra
 
 .PHONY:	do-build clean
 
