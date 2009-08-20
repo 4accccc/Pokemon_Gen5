@@ -38,25 +38,26 @@
 #define DEFAULT_THETA   ( 65536 / 4 )
 #define DEFAULT_SCALE   ( FX32_ONE * 16  )
 #define SCALE_SPEED     ( FX32_ONE )
-#define SCALE_MAX     ( FX32_ONE * 200 )
+#define SCALE_MAX       ( FX32_ONE * 200 )
 
-#define HEAD_SIZE     ( 4 )
+#define HEAD_SIZE       ( 4 )
 
 #define MCS_READ_CH     ( 0 )
 #define MCS_WRITE_CH    ( 0 )
 
 enum{
   BACK_COL = 0,
-  SHADOW_COL = 2,
+  SHADOW_COL = 4,
   LETTER_COL_NORMAL = 1,
   LETTER_COL_SELECT,
   LETTER_COL_CURSOR,
 };
 
 #define G2D_BACKGROUND_COL  ( GX_RGB( 31, 31, 31 ) )
-#define G2D_FONT_COL    ( GX_RGB(  0,  0,  0 ) )
+#define G2D_FONT_COL        ( GX_RGB(  0,  0,  0 ) )
 #define G2D_FONT_SELECT_COL ( GX_RGB(  0, 31,  0 ) )
 #define G2D_FONT_CURSOR_COL ( GX_RGB( 31,  0,  0 ) )
+#define G2D_SHADOW_COL      ( GX_RGB( 16, 16, 16 ) )
 
 enum{
   SEND_SEQUENCE = 1,
@@ -77,6 +78,7 @@ enum{
   SEQ_EFFECT_ENABLE,
   SEQ_EFFECT_WAIT,
   SEQ_RECEIVE_ACTION,
+  SEQ_EFFECT_VIEW,
 };
 
 enum{
@@ -85,38 +87,53 @@ enum{
   SUB_SEQ_PARTICLE_PLAY_PARAM_SEND,
 };
 
+enum{ 
+  EV_WAZANO_X = 44,
+  EV_WAZANO_Y = 90,
+  EV_WAZANAME_X = 80,
+};
+
+typedef enum
+{ 
+  DRAW_REQ_NONE = 0,
+  DRAW_REQ_MENU_LIST,
+  DRAW_REQ_WAZA_NO,
+}EV_DRAW_REQ;
+
 typedef struct
 {
   HEAPID        heapID;
 
-  int         seq_no;
-  int         sub_seq_no;
-  int         mcs_enable;
-  POKEMON_PARAM   *pp;
-  int         mons_no;
-  GFL_BMPWIN      *bmpwin;
-  int         key_repeat_speed;
-  int         key_repeat_wait;
+  int           seq_no;
+  int           ret_seq_no;
+  int           sub_seq_no;
+  int           mcs_enable;
+  POKEMON_PARAM *pp;
+  int           mons_no;
+  int           waza_no;
+  GFL_BMPWIN    *bmpwin;
+  int           key_repeat_speed;
+  int           key_repeat_wait;
 
-  GFL_MSGDATA     *msg;
+  GFL_MSGDATA   *msg;
   GFL_FONT      *font;
 
-  int         menu_list;
+  int           menu_list;
 
-  u32         *param_start;
-  u32         *param;
-  int         edit_param;
-  int         cursor_pos;
-  int         cursor_keta;
+  u32           *param_start;
+  u32           *param;
+  int           edit_param;
+  int           cursor_pos;
+  int           cursor_keta;
 
-  int         answer;
+  int           answer;
 
-  int         draw_req;
+  EV_DRAW_REQ   draw_req;
 
-  void        *sequence_data;
-  void        *resource_data;
+  void          *sequence_data;
+  void          *resource_data;
 
-  GFL_PTC_PTR     ptc;
+  GFL_PTC_PTR   ptc;
 
 }EFFECT_VIEWER_WORK;
 
@@ -125,6 +142,8 @@ static  void  EffectViewerRead( EFFECT_VIEWER_WORK *evw );
 static  void  EffectViewerSequenceLoad( EFFECT_VIEWER_WORK *evw );
 static  void  EffectViewerResourceLoad( EFFECT_VIEWER_WORK *evw );
 static  BOOL  EffectViewerRecieveAction( EFFECT_VIEWER_WORK *evw );
+static  BOOL  EffectViewerEffectView( EFFECT_VIEWER_WORK *evw );
+static  void  EffectViewerDrawWazaNo( EFFECT_VIEWER_WORK *evw );
 static  void  EffectViewerInitMenuList( EFFECT_VIEWER_WORK *evw, int menu_list );
 static  void  EffectViewerDrawMenuList( EFFECT_VIEWER_WORK *evw );
 static  void  EffectViewerDrawCursor( EFFECT_VIEWER_WORK *evw );
@@ -145,6 +164,7 @@ static  void  MoveCamera( EFFECT_VIEWER_WORK *evw );
 
 static  void  set_pokemon( EFFECT_VIEWER_WORK *evw );
 static  void  del_pokemon( EFFECT_VIEWER_WORK *evw );
+static  int   ev_pow( int x, int y );
 
 static  const int pokemon_pos_table[][2]={
   { BTLV_MCSS_POS_AA, BTLV_MCSS_POS_BB },
@@ -287,8 +307,8 @@ static GFL_PROC_RESULT EffectViewerProcInit( GFL_PROC * proc, int * seq, void * 
     {
       static  u16 plt[16] = {
         G2D_BACKGROUND_COL, G2D_FONT_COL, G2D_FONT_SELECT_COL, G2D_FONT_CURSOR_COL,
-        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
-      GFL_BG_LoadPalette( GFL_BG_FRAME0_S, &plt, 16*2, 0 );
+        G2D_SHADOW_COL, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+      PaletteWorkSet( BTLV_EFFECT_GetPfd(), &plt, FADE_SUB_BG, 0, 16 * 2 );
     }
 
     evw->bmpwin = GFL_BMPWIN_Create( GFL_BG_FRAME0_S, 0, 0, 32, 24, 0, GFL_BG_CHRAREA_GET_F );
@@ -361,6 +381,8 @@ static GFL_PROC_RESULT EffectViewerProcMain( GFL_PROC * proc, int * seq, void * 
     BTLV_EFFVM_Stop( BTLV_EFFECT_GetVMHandle() );
     BTLV_CAMERA_GetDefaultCameraPosition( &cam_pos, &cam_target );
     BTLV_CAMERA_MoveCameraPosition( BTLV_EFFECT_GetCameraWork(), &cam_pos, &cam_target );
+    del_pokemon( evw );
+    set_pokemon( evw );
   }
 
   EffectViewerSequence( evw );
@@ -443,14 +465,23 @@ const GFL_PROC_DATA   EffectViewerProcData = {
 static  void  EffectViewerSequence( EFFECT_VIEWER_WORK *evw )
 {
   int cont = GFL_UI_KEY_GetCont();
+  int tp = GFL_UI_TP_GetTrg();
 
   EffectViewerDrawMenuList( evw );
 
   switch( evw->seq_no ){
   default:
   case SEQ_IDLE:
-    if( cont ){
+    if( cont )
+    {
       evw->seq_no = SEQ_EFFECT_ENABLE;
+    }
+    else if( tp )
+    { 
+      evw->waza_no = WAZANO_HATAKU;
+      evw->cursor_keta = 0;
+      evw->draw_req = DRAW_REQ_WAZA_NO;
+      evw->seq_no = SEQ_EFFECT_VIEW;
     }
     EffectViewerRead( evw );
     break;
@@ -471,17 +502,36 @@ static  void  EffectViewerSequence( EFFECT_VIEWER_WORK *evw )
       }
     }
     evw->seq_no++;
+    evw->ret_seq_no = SEQ_IDLE;
     break;
   case SEQ_EFFECT_WAIT:
-    if( BTLV_EFFECT_CheckExecute() == FALSE ){
-      evw->seq_no = SEQ_IDLE;
+    if( BTLV_EFFECT_CheckExecute() == FALSE )
+    {
+      evw->seq_no = evw->ret_seq_no;
     }
     break;
   case SEQ_RECEIVE_ACTION:
-    if( EffectViewerRecieveAction( evw ) == TRUE ){
+    if( EffectViewerRecieveAction( evw ) == TRUE )
+    {
       evw->seq_no = SEQ_IDLE;
     }
     break;
+  case SEQ_EFFECT_VIEW:
+    if( cont == PAD_BUTTON_A ){
+      BTLV_EFFVM_Start( BTLV_EFFECT_GetVMHandle(), BTLV_MCSS_POS_BB, BTLV_MCSS_POS_AA, evw->waza_no );
+      evw->ret_seq_no = evw->seq_no;
+      evw->seq_no = SEQ_EFFECT_WAIT;
+    }
+    else if( cont == PAD_BUTTON_B ){
+      BTLV_EFFVM_Start( BTLV_EFFECT_GetVMHandle(), BTLV_MCSS_POS_AA, BTLV_MCSS_POS_BB, evw->waza_no );
+      evw->ret_seq_no = evw->seq_no;
+      evw->seq_no = SEQ_EFFECT_WAIT;
+    }
+    else if( EffectViewerEffectView( evw ) == TRUE )
+    { 
+      evw->draw_req = DRAW_REQ_MENU_LIST;
+      evw->seq_no = SEQ_IDLE;
+    }
   }
 }
 
@@ -645,6 +695,81 @@ static  BOOL  EffectViewerRecieveAction( EFFECT_VIEWER_WORK *evw )
   return ret;
 }
 
+static  BOOL  EffectViewerEffectView( EFFECT_VIEWER_WORK *evw )
+{ 
+  int trg = GFL_UI_KEY_GetTrg();
+
+  if( trg == PAD_KEY_UP )
+  { 
+    evw->waza_no += ev_pow( 10, evw->cursor_keta );
+    if( evw->waza_no > WAZANO_MAX )
+    { 
+      evw->waza_no = WAZANO_MAX;
+    }
+    evw->draw_req = DRAW_REQ_WAZA_NO;
+  }
+  else if( trg == PAD_KEY_DOWN )
+  { 
+    evw->waza_no -= ev_pow( 10, evw->cursor_keta );
+    if( evw->waza_no < WAZANO_HATAKU )
+    { 
+      evw->waza_no = WAZANO_HATAKU;
+    }
+    evw->draw_req = DRAW_REQ_WAZA_NO;
+  }
+  else if( ( trg == PAD_KEY_LEFT ) && ( evw->cursor_keta < 2 ) )
+  { 
+    evw->cursor_keta++;
+    evw->draw_req = DRAW_REQ_WAZA_NO;
+  }
+  else if( ( trg == PAD_KEY_RIGHT ) && ( evw->cursor_keta > 0 ) )
+  { 
+    evw->cursor_keta--;
+    evw->draw_req = DRAW_REQ_WAZA_NO;
+  }
+  return ( GFL_UI_TP_GetTrg() );
+}
+
+//======================================================================
+//  技No表示
+//======================================================================
+static  void  EffectViewerDrawWazaNo( EFFECT_VIEWER_WORK *evw )
+{ 
+  STRBUF  *strbuf;
+  int     keta, ofsx = 0;
+  u32     num;
+  int     div_num = 100;
+  int     waza_no = evw->waza_no;
+
+  { 
+  	GFL_MSGDATA *man = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_wazaname_dat, evw->heapID );
+		strbuf = GFL_MSG_CreateString( man, evw->waza_no );
+    GFL_FONTSYS_SetColor( LETTER_COL_NORMAL, SHADOW_COL, BACK_COL );
+    PRINTSYS_Print( GFL_BMPWIN_GetBmp( evw->bmpwin ), EV_WAZANAME_X, EV_WAZANO_Y, strbuf, evw->font );
+    GFL_STR_DeleteBuffer( strbuf );
+		GFL_MSG_Delete( man );
+	}
+
+  for( keta = 2 ; keta >= 0 ; keta-- )
+  {
+    if( keta == evw->cursor_keta )
+    {
+      GFL_FONTSYS_SetColor( LETTER_COL_CURSOR, SHADOW_COL, BACK_COL );
+    }
+    else
+    {
+      GFL_FONTSYS_SetColor( LETTER_COL_NORMAL, SHADOW_COL, BACK_COL );
+    }
+    num = waza_no / div_num;
+    strbuf = GFL_MSG_CreateString( evw->msg,  EVMSG_NUM0 + num );
+    PRINTSYS_Print( GFL_BMPWIN_GetBmp( evw->bmpwin ), EV_WAZANO_X + ofsx, EV_WAZANO_Y, strbuf, evw->font );
+    GFL_STR_DeleteBuffer( strbuf );
+    ofsx += 8;
+    waza_no %= div_num;
+    div_num /= 10;
+  }
+}
+
 //======================================================================
 //  メニューリスト初期化
 //======================================================================
@@ -663,7 +788,7 @@ static  void  EffectViewerInitMenuList( EFFECT_VIEWER_WORK *evw, int menu_list )
   if( msp_p->mlp ){
     evw->cursor_pos = 0;
   }
-  evw->draw_req = 1;
+  evw->draw_req = DRAW_REQ_MENU_LIST;
 }
 
 //======================================================================
@@ -672,16 +797,24 @@ static  void  EffectViewerInitMenuList( EFFECT_VIEWER_WORK *evw, int menu_list )
 static  void  EffectViewerDrawMenuList( EFFECT_VIEWER_WORK *evw )
 {
   if( evw->draw_req ){
-    evw->draw_req = 0;
     GFL_BMP_Clear( GFL_BMPWIN_GetBmp( evw->bmpwin ), 0 );
 
-    EffectViewerDrawCursor( evw );
-    EffectViewerDrawMenuLabel( evw );
-    EffectViewerDrawMenuData( evw );
+    switch( evw->draw_req ){
+    case DRAW_REQ_MENU_LIST:
+      EffectViewerDrawCursor( evw );
+      EffectViewerDrawMenuLabel( evw );
+      EffectViewerDrawMenuData( evw );
+      break;
+    case DRAW_REQ_WAZA_NO:
+      EffectViewerDrawWazaNo( evw );
+      break;
+    }
 
     GFL_BMPWIN_TransVramCharacter( evw->bmpwin );
     GFL_BMPWIN_MakeScreen( evw->bmpwin );
     GFL_BG_LoadScreenReq( GFL_BG_FRAME0_S );
+
+    evw->draw_req = DRAW_REQ_NONE;
   }
 }
 
@@ -836,23 +969,23 @@ static  void  EffectViewerMoveAction( EFFECT_VIEWER_WORK *evw )
 
   if( ( trg == PAD_KEY_UP ) && ( msp_p->mlp[ evw->cursor_pos ].move_up != NO_MOVE ) ){
     evw->cursor_pos = msp_p->mlp[ evw->cursor_pos ].move_up;
-    evw->draw_req = 1;
+    evw->draw_req = DRAW_REQ_MENU_LIST;
   }
   else if( ( trg == PAD_KEY_DOWN ) && ( msp_p->mlp[ evw->cursor_pos ].move_down != NO_MOVE ) ){
     evw->cursor_pos = msp_p->mlp[ evw->cursor_pos ].move_down;
-    evw->draw_req = 1;
+    evw->draw_req = DRAW_REQ_MENU_LIST;
   }
   else if( ( trg == PAD_KEY_LEFT ) && ( msp_p->mlp[ evw->cursor_pos ].move_left != NO_MOVE ) ){
     evw->cursor_pos = msp_p->mlp[ evw->cursor_pos ].move_left;
-    evw->draw_req = 1;
+    evw->draw_req = DRAW_REQ_MENU_LIST;
   }
   else if( ( trg == PAD_KEY_RIGHT ) && ( msp_p->mlp[ evw->cursor_pos ].move_right != NO_MOVE ) ){
     evw->cursor_pos = msp_p->mlp[ evw->cursor_pos ].move_right;
-    evw->draw_req = 1;
+    evw->draw_req = DRAW_REQ_MENU_LIST;
   }
   else if ( trg == PAD_BUTTON_A ){
     evw->edit_param = evw->cursor_pos;
-    evw->draw_req = 1;
+    evw->draw_req = DRAW_REQ_MENU_LIST;
     switch( msd_p->edit_type ){
     default:
     case EDIT_NONE:
@@ -889,35 +1022,35 @@ static  void  EffectViewerEditAction( EFFECT_VIEWER_WORK *evw )
   case EDIT_FX32:
     if( trg == PAD_KEY_UP ){
       evw->param[ evw->edit_param ] += 1 << ( 4 * evw->cursor_keta );
-      evw->draw_req = 1;
+      evw->draw_req = DRAW_REQ_MENU_LIST;
     }
     if( trg == PAD_KEY_DOWN ){
       evw->param[ evw->edit_param ] -= 1 << ( 4 * evw->cursor_keta );
-      evw->draw_req = 1;
+      evw->draw_req = DRAW_REQ_MENU_LIST;
     }
     if( ( trg == PAD_KEY_LEFT ) && ( evw->cursor_keta < 7 ) ){
       evw->cursor_keta++;
-      evw->draw_req = 1;
+      evw->draw_req = DRAW_REQ_MENU_LIST;
     }
     if( ( trg == PAD_KEY_RIGHT ) && ( evw->cursor_keta > 0 ) ){
       evw->cursor_keta--;
-      evw->draw_req = 1;
+      evw->draw_req = DRAW_REQ_MENU_LIST;
     }
     break;
   case EDIT_COMBOBOX:
     if( ( trg == PAD_KEY_UP ) && ( evw->param[ evw->edit_param ] < ( msd_p->edit_max - msd_p->edit_min ) ) ){
       evw->param[ evw->edit_param ]++;
-      evw->draw_req = 1;
+      evw->draw_req = DRAW_REQ_MENU_LIST;
     }
     if( ( trg == PAD_KEY_DOWN ) && ( evw->param[ evw->edit_param ] > 0 ) ){
       evw->param[ evw->edit_param ]--;
-      evw->draw_req = 1;
+      evw->draw_req = DRAW_REQ_MENU_LIST;
     }
     break;
   }
   if( trg == PAD_BUTTON_A ){
     evw->edit_param = NO_EDIT;
-    evw->draw_req = 1;
+    evw->draw_req = DRAW_REQ_MENU_LIST;
   }
 }
 
@@ -943,7 +1076,7 @@ static  void  EffectViewerParticleResourceLoad( EFFECT_VIEWER_WORK *evw )
 //======================================================================
 static  void  EffectViewerParticlePlay( EFFECT_VIEWER_WORK *evw )
 {
-  if( ( GFL_PTC_GetEmitterNum( evw->ptc ) ) && ( evw->draw_req ) ){
+  if( ( GFL_PTC_GetEmitterNum( evw->ptc ) ) && ( evw->draw_req == DRAW_REQ_MENU_LIST ) ){
     GFL_PTC_DeleteEmitterAll( evw->ptc );
   }
   if( GFL_PTC_GetEmitterNum( evw->ptc ) == 0 ){
@@ -1098,3 +1231,15 @@ static  void  del_pokemon( EFFECT_VIEWER_WORK *evw )
   BTLV_MCSS_Del( BTLV_EFFECT_GetMcssWork(), BTLV_MCSS_POS_BB );
 }
 
+static  int ev_pow( int x, int y )
+{ 
+  int i;
+  int ans = 1;
+
+  for( i = 0 ; i < y ; i++ )
+  { 
+    ans *= x;
+  }
+
+  return ans;
+}
