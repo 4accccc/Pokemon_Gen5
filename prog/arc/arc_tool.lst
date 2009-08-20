@@ -113,7 +113,7 @@
 	ARCID_WFLBY_MAP		"wflby_map.narc"	#WiFiロビーマップデータ
 	ARCID_SHOP_GRA		"shop_gra.narc"		#ショップ画面グラフィック
 	ARCID_WAZATYPE_ICON		"wazatype_icon.narc"		#技タイプアイコン
-	ARCID_LOBBY_TRGRA		"lobby_trfgra.narc"			#Wi-Fi広場用トレーナーグラフィック(PLのtrgra)
+	ARCID_LOBBY_TRGRA		"debug/lobby_trfgra.narc"			#Wi-Fi広場用トレーナーグラフィック(PLのtrgra)
 	ARCID_FIELD_WEATHER	"field_weather.narc"	#フィールド天気グラフィック
 	ARCID_SCRSEQ		"fieldmap/script_seq.narc"		#スクリプトシーケンス
 	ARCID_MMDL_LIST	"fieldmap/move_model_list.narc" #動作モデルリスト

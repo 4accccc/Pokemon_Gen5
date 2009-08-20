@@ -88,7 +88,8 @@ SUBDIRS	=	wmi \
 			pokefoot \
 			debug \
 			config \
-			narc_cpy
+			narc_cpy \
+			pokeicon
 
 include $(RESOURCE_MACRO)
 

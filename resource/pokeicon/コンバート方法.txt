@@ -1,0 +1,42 @@
+//--------------------------------------------------------------
+//	更新手順
+//--------------------------------------------------------------
+icon_conv.bat を実行
+
+
+
+
+
+//==============================================================================
+//	追加手順
+//==============================================================================
+１、nce_lnkでセルとキャラを関連付け（link.bat参照）
+	nce_lnk セル名 キャラ名
+	　→　キャラ名.nceが作成される
+
+２、g2dcvtrで１のセルをコンバート(cnv.batに追加)
+
+３、pokeicon_all.scrの並びでアーカイブ化
+	nnsarc -c -l -n -i poke_icon -S pokeicon_all.scr
+	 →　narcとnaixを src\poketool\icongra にコピー
+
+４、picon_attr_cnvでパレット番号テーブルを作成
+	picon_attr_cnv attr_list.txt
+	　→　pokeicon.datを src\poketool にコピー
+
+	・attr_list.txtの書き方
+		c:\home\pokemon_dp\g2d\pokeicon\\	←下記のファイルがあるディレクトリ
+		"poke_icon_000.NCGR"				←以下、パレットを参照するファイルを羅列
+		"poke_icon_001.NCGR"
+		"poke_icon_002.NCGR"
+		"poke_icon_003.NCGR"
+			:
+			:
+			:
+
+	※pokeicon.datの上のdefineは手動で追加してるっぽいので、pokeicon.cに移動したほうがいいかも。
+
+
+【中村 宏行】
+
+

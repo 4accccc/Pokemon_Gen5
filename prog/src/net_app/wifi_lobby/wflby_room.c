@@ -61,7 +61,7 @@
 #include "field/fldmmdl_pl_code.h"
 #include "system/main.h"
 #include "system/actor_tool.h"
-#include "lobby_trfgra.naix"
+#include "debug/lobby_trfgra.naix"
 #include "gamesystem/msgspeed.h"
 #include "sound/pm_sndsys.h"
 
