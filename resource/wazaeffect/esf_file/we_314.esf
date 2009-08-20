@@ -4,6 +4,11 @@ C:\home\pokemon_wb\resource\particle\wazaeffect\w_314.spa
 #001
 %00
 カメラ移動	追従	防御側	16	0	8
+SE再生	SEQ_SE_W239_01	SE1	20	0	80	0	0
+SE再生	SEQ_SE_DUMMY5	SE1	100	0	0	0	0
+SE再生	SEQ_SE_BC01	SE2	0	0	100	0	0
+SE再生	SEQ_SE_W075_01	SE2	30	0	125	0	0
+SE再生	SEQ_SE_W075_01	SE2	50	0	125	0	0
 パーティクルデータロード	w_314
 パーティクル再生	w_314	W_314_314_AIR_BEAM	防御側	方向無し	2	0
 パーティクル再生	w_314	W_314_314_AIR_SLASH	防御側	方向無し	2	0
@@ -12,6 +17,7 @@ C:\home\pokemon_wb\resource\particle\wazaeffect\w_314.spa
 ポケモン移動	防御側	往復	1	00	3	1	4
 エフェクト終了待ち	すべて
 カメラ移動	追従	初期位置	16	0	8
+SE再生	SEQ_SE_BC02	デフォルト	0	0	100	0	0
 ポケモンアニメ	防御側	アニメスタート
 エフェクト終了待ち	すべて
 エフェクト終了
