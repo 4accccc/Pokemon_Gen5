@@ -3,12 +3,17 @@ $0001
 C:\home\pokemon_wb\resource\particle\wazaeffect\w_346.spa
 #001
 %00
+SE再生	SEQ_SE_W051_01	SE1	0	0	110	0	0
+SE再生	SEQ_SE_W055_01	SE2	10	100	115	0	0
+SE再生	SEQ_SE_DUMMY5	SE2	90	100	0	0	0
 ポケモン拡縮	攻撃側	往復	0.3	-0.3	6	1	3
 パーティクルデータロード	w_346
 パーティクル再生	w_346	W_346_346_WATER_UP	攻撃側	方向無し	2	0
 パーティクル再生	w_346	W_346_346_WATER_UP_SIBUKI	攻撃側	方向無し	2	0
 エフェクト終了待ち	すべて
 カメラ移動	追従	防御側	16	0	8
+SE再生	SEQ_SE_W323_01	SE1	20	-60	120	0	0
+SE再生	SEQ_SE_W323_01	SE2	30	-60	90	0	0
 パーティクル再生	w_346	W_346_346_WATER_DOWN	防御側	方向無し	2	0
 ポケモンアニメ	防御側	アニメストップ
 タイマーによるウエイト	10
@@ -16,6 +21,7 @@ C:\home\pokemon_wb\resource\particle\wazaeffect\w_346.spa
 エフェクト終了待ち	すべて
 ポケモンアニメ	防御側	アニメスタート
 カメラ移動	追従	初期位置	16	0	8
+SE再生	SEQ_SE_BC02	デフォルト	0	0	100	0	0
 エフェクト終了待ち	すべて
 エフェクト終了
 &
