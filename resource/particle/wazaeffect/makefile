@@ -55,12 +55,12 @@ do-build:
 #------------------------------------------------------------------------------
 clean:
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
-	@$(MAKE_SUBDIR) clean
 	-rm -f *.spa
 	-rm -f *.h
 	-rm -f $(NARCNAME)
 	-rm -f $(NAIXNAME)
 endif
+	@$(MAKE_SUBDIR) clean
 	-rm -f $(TARGETDIR)/$(NARCNAME)
 	-rm -f $(TARGETDIR)/$(NAIXNAME)
 
