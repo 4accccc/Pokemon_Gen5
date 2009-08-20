@@ -585,7 +585,28 @@ static void PSTATUS_INFO_DrawStateUp( PSTATUS_WORK *work , PSTATUS_INFO_WORK *in
   }
   else
   {
-    PSTATUS_UTIL_DrawStrFunc( work , infoWork->bmpWinUp , mes_status_03_T_02_02 ,
+    //É^É}ÉS
+    u16 msgId;
+    const u32 natuki = PPP_Get( ppp , ID_PARA_friend , NULL );
+    if( natuki <= 5 )
+    {
+      msgId = mes_status_03_T_02_01;
+    }
+    else
+    if( natuki <= 10 )
+    {
+      msgId = mes_status_03_T_02_02;
+    }
+    else
+    if( natuki <= 40 )
+    {
+      msgId = mes_status_03_T_02_03;
+    }
+    else
+    {
+      msgId = mes_status_03_T_02_04;
+    }
+    PSTATUS_UTIL_DrawStrFunc( work , infoWork->bmpWinUp , msgId ,
                           PSTATUS_INFO_MEMO_STR_X , PSTATUS_INFO_MEMO_STR_Y + height , 
                           PSTATUS_STR_COL_VALUE );
   }

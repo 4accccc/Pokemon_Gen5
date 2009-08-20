@@ -15,7 +15,9 @@
 #include "arc_def.h"
 #include "msg/msg_pokelist.h"
 
+#include "poke_tool/monsno_def.h"
 #include "pokeicon/pokeicon.h"
+#include "print/global_msg.h"
 
 #include "plist_sys.h"
 #include "plist_plate.h"
@@ -98,6 +100,7 @@ struct _PLIST_PLATE_WORK
   u8 idx;
   u16 dispHp;  //HPだけアニメのため値を保存する
   u16 nowHp;   //実際のHp
+  BOOL isEgg;
   BOOL isActive;
   BOOL isBlank;
   BOOL isUpdateStr;
@@ -135,8 +138,10 @@ static const u8 PLATE_SCR_POS_ARR[2][2] ={{0,1},{16,2}};
 
 static void PLIST_PLATE_CreateCell( PLIST_WORK *work , PLIST_PLATE_WORK *plateWork );
 static void PLIST_PLATE_CreatePokeIcon( PLIST_WORK *work , PLIST_PLATE_WORK *plateWork );
+static void PLIST_PLATE_DrawParamMain( PLIST_WORK *work , PLIST_PLATE_WORK *plateWork );
 static void PLIST_PLATE_DrawParam( PLIST_WORK *work , PLIST_PLATE_WORK *plateWork );
 static void PLIST_PLATE_DrawHPBar( PLIST_WORK *work , PLIST_PLATE_WORK *plateWork );
+static void PLIST_PLATE_DrawParamEgg( PLIST_WORK *work , PLIST_PLATE_WORK *plateWork );
 static const u8 PLIST_PLATE_GetHPRate( PLIST_PLATE_WORK *plateWork );
 static void PLIST_PLATE_CalcCellPos( PLIST_PLATE_WORK *plateWork , const s16 x , const s16 y , GFL_CLACTPOS *pos );
 
@@ -168,6 +173,8 @@ PLIST_PLATE_WORK* PLIST_PLATE_CreatePlate( PLIST_WORK *work , const u8 idx , POK
                       32 , 32 );  //←グラフィックデータのサイズ
   PLIST_PLATE_ChangeColor( work , plateWork , PPC_NORMAL );
   
+  plateWork->isEgg =  PP_Get( plateWork->pp , ID_PARA_tamago_flag , NULL );
+
   //Obj系
   {
     //ユニットとレンダーをそれぞれ作る
@@ -198,8 +205,7 @@ PLIST_PLATE_WORK* PLIST_PLATE_CreatePlate( PLIST_WORK *work , const u8 idx , POK
   //バトルチェック
   PLIST_PLATE_CheckBattleOrder( work , plateWork );
   
-  PLIST_PLATE_DrawParam( work , plateWork );
-  PLIST_PLATE_DrawHPBar( work , plateWork );
+  PLIST_PLATE_DrawParamMain( work , plateWork );
   return plateWork;
 }
 
@@ -383,6 +389,22 @@ static void PLIST_PLATE_CreatePokeIcon( PLIST_WORK *work , PLIST_PLATE_WORK *pla
               &cellInitData ,PLIST_RENDER_MAIN , work->heapId );
     GFL_CLACT_WK_SetPlttOffs( plateWork->pokeIcon , pltNum , CLWK_PLTTOFFS_MODE_PLTT_TOP );
     GFL_CLACT_WK_SetAutoAnmFlag( plateWork->pokeIcon , TRUE );
+  }
+}
+
+//--------------------------------------------------------------
+//	パラメータ描画メイン
+//--------------------------------------------------------------
+static void PLIST_PLATE_DrawParamMain( PLIST_WORK *work , PLIST_PLATE_WORK *plateWork )
+{
+  if( plateWork->isEgg == FALSE )
+  {
+    PLIST_PLATE_DrawParam( work , plateWork );
+    PLIST_PLATE_DrawHPBar( work , plateWork );
+  }
+  else
+  {
+    PLIST_PLATE_DrawParamEgg( work , plateWork );
   }
 }
 
@@ -643,10 +665,45 @@ static void PLIST_PLATE_DrawHPBar( PLIST_WORK *work , PLIST_PLATE_WORK *plateWor
                   len , 2 , inCol );
     GFL_BMP_Fill( bmp , PLIST_PLATE_HPBAR_LEFT , PLIST_PLATE_HPBAR_TOP+3 ,
                   len , 1 , outCol );
+
+    //HPバー表示
+    GFL_CLACT_WK_SetDrawEnable( plateWork->hpBase , TRUE );
   }
 
 }
 
+//--------------------------------------------------------------
+//	タマゴ用描画
+//--------------------------------------------------------------
+static void PLIST_PLATE_DrawParamEgg( PLIST_WORK *work , PLIST_PLATE_WORK *plateWork )
+{
+  const PRINTSYS_LSB fontCol = PRINTSYS_LSB_Make( PLIST_FONT_PARAM_LETTER , PLIST_FONT_PARAM_SHADOW , 0 );
+  //名前
+  {
+    WORDSET *wordSet = WORDSET_Create( work->heapId );
+    
+    STRBUF *tmpStr = GFL_MSG_CreateString( GlobalMsg_PokeName, MONSNO_TAMAGO );
+    WORDSET_RegisterWord( wordSet, 0, tmpStr, 0,TRUE,PM_LANG );
+
+    PLIST_UTIL_DrawValueStrFunc( work , plateWork->bmpWin , 
+                      wordSet , mes_pokelist_01_09 ,
+                      PLIST_PLATE_STR_NAME_X , PLIST_PLATE_STR_NAME_Y , fontCol );
+
+    GFL_STR_DeleteBuffer( tmpStr );
+    WORDSET_Delete( wordSet );
+  }
+
+  //HPバー非表示
+  GFL_CLACT_WK_SetDrawEnable( plateWork->hpBase , FALSE );
+
+  //ポケアイコンアニメ
+  {
+    GFL_CLACT_WK_SetAnmSeq( plateWork->pokeIcon , POKEICON_ANM_HPMAX );
+  }
+
+  plateWork->isUpdateStr = TRUE;
+  
+}
 //--------------------------------------------------------------
 //	プレート選択状態のON・OFF
 //--------------------------------------------------------------
@@ -867,6 +924,7 @@ void PLIST_PLATE_ResetParam( PLIST_WORK *work , PLIST_PLATE_WORK *plateWork , PO
 
   plateWork->pp = pp;
   plateWork->isUpdateStr = FALSE;
+  plateWork->isEgg =  PP_Get( plateWork->pp , ID_PARA_tamago_flag , NULL );
 
   GFL_CLACT_WK_Remove( plateWork->pokeIcon );
   GFL_CLGRP_CGR_Release( plateWork->pokeIconNcgRes );
@@ -891,8 +949,7 @@ void PLIST_PLATE_ResetParam( PLIST_WORK *work , PLIST_PLATE_WORK *plateWork , PO
     GFL_CLACT_USERREND_SetSurfacePos( plateWork->cellRender , PLIST_RENDER_MAIN , &surfacePos );
   }
   
-  PLIST_PLATE_DrawParam( work , plateWork );
-  PLIST_PLATE_DrawHPBar( work , plateWork );
+  PLIST_PLATE_DrawParamMain( work , plateWork );
   
 }
 //--------------------------------------------------------------
@@ -901,8 +958,7 @@ void PLIST_PLATE_ResetParam( PLIST_WORK *work , PLIST_PLATE_WORK *plateWork , PO
 void PLIST_PLATE_ReDrawParam( PLIST_WORK *work , PLIST_PLATE_WORK *plateWork )
 {
   GFL_BMP_Clear( GFL_BMPWIN_GetBmp( plateWork->bmpWin ) , 0 );
-  PLIST_PLATE_DrawParam( work , plateWork );
-  PLIST_PLATE_DrawHPBar( work , plateWork );
+  PLIST_PLATE_DrawParamMain( work , plateWork );
 }
 
 #pragma mark [>HPbar anime

@@ -455,7 +455,13 @@ const BOOL PLIST_UpdatePokeList( PLIST_WORK *work )
   //OBJ‚ÌXV
   GFL_CLACT_SYS_Main();
 
-
+#if DEBUG_ONLY_FOR_ariizumi_nobuhiko
+  if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_R )
+  {
+    POKEMON_PARAM *pp = PokeParty_GetMemberPointer(work->plData->pp, 1);
+    PP_Put( pp , ID_PARA_tamago_flag , 1 );
+  }
+#endif
 
   return FALSE;
 }
