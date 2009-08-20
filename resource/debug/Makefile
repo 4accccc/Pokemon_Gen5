@@ -1,7 +1,7 @@
 
 include $(PROJECT_RSCDIR)\macro_define
 
-SUBDIRS	=	rail_editor
+SUBDIRS	=	rail_editor watanabe
 
 TARGET_NAMES = \
 	mmodel.naix \

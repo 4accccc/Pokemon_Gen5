@@ -87,7 +87,8 @@ SUBDIRS	=	wmi \
 			footprint_board \
 			pokefoot \
 			debug \
-			config
+			config \
+			narc_cpy
 
 include $(RESOURCE_MACRO)
 
