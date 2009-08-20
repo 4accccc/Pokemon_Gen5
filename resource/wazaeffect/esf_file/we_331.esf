@@ -3,6 +3,23 @@ $0001
 C:\home\pokemon_wb\resource\particle\wazaeffect\w_331.spa
 #001
 %00
+SE再生	SEQ_SE_W331_01	SE1	5	200	115	0	0
+SE再生	SEQ_SE_W331_01	SE1	10	200	115	0	0
+SE再生	SEQ_SE_W331_01	SE1	15	200	115	0	0
+SE再生	SEQ_SE_W331_01	SE1	20	200	115	0	0
+SE再生	SEQ_SE_W331_01	SE1	25	200	115	0	0
+SE再生	SEQ_SE_W331_01	SE1	30	200	115	0	0
+SE再生	SEQ_SE_W331_01	SE1	35	200	115	0	0
+SE再生	SEQ_SE_W331_01	SE1	40	200	115	0	0
+SE再生	SEQ_SE_W331_01	SE1	45	200	115	0	0
+SE再生	SEQ_SE_W331_01	SE1	50	200	115	0	0
+SE再生	SEQ_SE_W001_01	SE2	50	0	120	0	0
+SE再生	SEQ_SE_W001_01	SE2	55	0	120	0	0
+SE再生	SEQ_SE_W001_01	SE2	60	0	120	0	0
+SE再生	SEQ_SE_W001_01	SE2	65	0	120	0	0
+SE再生	SEQ_SE_W001_01	SE2	70	0	120	0	0
+SE再生	SEQ_SE_W001_01	SE2	75	0	120	0	0
+SE再生	SEQ_SE_W001_01	SE2	80	0	120	0	0
 パーティクルデータロード	w_331
 エミッタ移動	w_331	W_331_331_TANE_BEAM	直線	攻撃側	防御側	2:0:0
 タイマーによるウエイト	40
@@ -14,6 +31,7 @@ C:\home\pokemon_wb\resource\particle\wazaeffect\w_331.spa
 エフェクト終了待ち	すべて
 ポケモンアニメ	防御側	アニメスタート
 カメラ移動	追従	初期位置	16	0	8
+SE再生	SEQ_SE_BC02	デフォルト	0	0	100	0	0
 エフェクト終了待ち	すべて
 エフェクト終了
 &
