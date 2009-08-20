@@ -255,6 +255,7 @@ static const BGM_PARAM* GetBGMParam( const ISS_DATA* p_data, u16 zone_id )
 	}
 
 	// 発見できず
+  //OBATA_Printf( "指定ゾーンのBGMパラメータが設定されていません\n" );    // DEBUG:
 	return NULL;
 }
 
