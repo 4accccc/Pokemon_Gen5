@@ -276,6 +276,7 @@ end
 					com_list.get_com_num( com_num ).add_param( split_data[ PARAM_VALUE ] )
 					com_list.get_com_num( com_num ).add_fdc_ext( param_num, split_data[ PARAM_VALUE + 1 ] )
 					param_num = param_num + 1
+        when "VALUE_INIT"
 				else
 					combobox_text = 0
 					com_list.get_com_num( com_num ).add_param( split_data[ PARAM_VALUE ] )
