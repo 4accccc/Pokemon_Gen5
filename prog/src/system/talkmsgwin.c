@@ -1384,9 +1384,9 @@ static void clearWindow( TALKMSGWIN_SYS* tmsgwinSys, TMSGWIN* tmsgwin )
 	GFL_BMPWIN_ClearScreen(tmsgwin->bmpwin);
 
 	if(px == 0){ overL = TRUE; }
-	if((px + sx) == 32-1){ overR = TRUE; }
+	if((px + sx) == 32){ overR = TRUE; }
 	if(py == 0){ overU = TRUE; }
-	if((py + sy) == 24-1){ overD = TRUE; }
+	if((py + sy) == 24){ overD = TRUE; }
 
 	if(overU == FALSE){
 		if(overL == FALSE){
