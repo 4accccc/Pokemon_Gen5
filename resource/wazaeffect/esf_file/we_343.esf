@@ -1,12 +1,12 @@
 EFFSEQ
 $0001
-C:\home\pokemon_wb\resource\particle\wazaeffect\w_343.spa
+C:\home\pokemon_wb\resource\particle\wazaeffect\w_343_1.spa
 #001
 %00
 射影モード	透視射影
 ポケモン回転	攻撃側	往復ロング	15	4	1	2
-パーティクルデータロード	w_343
-パーティクル再生	w_343	W_343_343_HART_BURN	攻撃側	方向無し	2	0
+パーティクルデータロード	w_343_1
+パーティクル再生	w_343_1	W_343_1_343_HART_BURN	攻撃側	方向無し	2	0
 ポケモンアニメ	防御側	アニメストップ
 タイマーによるウエイト	40
 ポケモン移動	防御側	往復	0.2	0	1	1	7

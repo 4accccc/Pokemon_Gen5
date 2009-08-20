@@ -1,7 +1,8 @@
 EFFSEQ
-$0002
+$0003
 C:\home\pokemon_wb\resource\particle\wazaeffect\w_287.spa
-C:\home\pokemon_wb\resource\particle\wazaeffect\w_291.spa
+C:\home\pokemon_wb\resource\particle\wazaeffect\w_291_1.spa
+C:\home\pokemon_wb\resource\particle\wazaeffect\w_291_2.spa
 !3891
 カメラ移動	追従	攻撃側	10	0	8
 エフェクト終了待ち	すべて
@@ -3898,9 +3899,9 @@ C:\home\pokemon_wb\resource\particle\wazaeffect\w_291.spa
 #001
 %00
 射影モード	透視射影
-パーティクルデータロード	w_291
-パーティクル再生	w_291	W_291_291_WATER_UP	攻撃側	方向無し	0	0
-パーティクル再生	w_291	W_291_291_BURN	攻撃側	方向無し	2	0
+パーティクルデータロード	w_291_1
+パーティクル再生	w_291_1	W_291_1_291_WATER_UP	攻撃側	方向無し	0	0
+パーティクル再生	w_291_1	W_291_1_291_BURN	攻撃側	方向無し	2	0
 ポケモン移動	攻撃側	往復	0	-10	30	1	1
 エフェクト終了待ち	すべて
 射影モード	正射影
@@ -3911,9 +3912,9 @@ C:\home\pokemon_wb\resource\particle\wazaeffect\w_291.spa
 %00
 カメラ移動	追従	攻撃側	10	0	8
 エフェクト終了待ち	すべて
-パーティクルデータロード	w_291
-パーティクル再生	w_291	W_291_291_WATER_UP	攻撃側	方向無し	0	0
-パーティクル再生	w_291	W_291_291_BURN	攻撃側	方向無し	2	0
+パーティクルデータロード	w_291_2
+パーティクル再生	w_291_2	W_291_2_291_BURN	攻撃側	方向無し	0	0
+パーティクル再生	w_291_2	W_291_2_291_HIT_UP	攻撃側	方向無し	2	0
 ポケモン移動	攻撃側	追従	0	0	30	1	0
 エフェクト終了待ち	すべて
 タイマーによるウエイト	90
