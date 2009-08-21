@@ -28,7 +28,7 @@
 #include "sound/pm_sndsys.h"		//サウンドシステム参照
 
 #include "event_fldmmdl_control.h"
-#include "field_place_name.h"   //FIELD_PLACE_NAME_ZoneChange
+#include "field_place_name.h"   //FIELD_PLACE_NAME_Display
 
 #include "script.h"
 
@@ -93,7 +93,7 @@ static GMEVENT_RESULT EVENT_FirstMapIn(GMEVENT * event, int *seq, void *work)
 		break;
 	case 3:
 		fieldmap = GAMESYSTEM_GetFieldMapWork(gsys);
-    FIELD_PLACE_NAME_ZoneChange(FIELDMAP_GetPlaceNameSys(fieldmap), fmw->loc_req.zone_id);
+    FIELD_PLACE_NAME_Display(FIELDMAP_GetPlaceNameSys(fieldmap), fmw->loc_req.zone_id);
 		return GMEVENT_RES_FINISH;
 	}
 	return GMEVENT_RES_CONTINUE;
@@ -265,10 +265,19 @@ static GMEVENT_RESULT EVENT_MapChange(GMEVENT * event, int *seq, void*work)
 		(*seq) ++;
 		break;
 	case 7:
-    if (ZONEDATA_GetPlaceNameID(mcw->before_zone_id) != ZONEDATA_GetPlaceNameID(mcw->loc_req.zone_id) )
+    // 遷移先がダンジョンなら地名を表示する
+    if( ZONEDATA_IsDungeon( mcw->loc_req.zone_id ) )
     {
+      OBATA_Printf( "dungeon\n" );
       fieldmap = GAMESYSTEM_GetFieldMapWork(gsys);
-      FIELD_PLACE_NAME_ZoneChange(FIELDMAP_GetPlaceNameSys(fieldmap), mcw->loc_req.zone_id);
+      FIELD_PLACE_NAME_Display(FIELDMAP_GetPlaceNameSys(fieldmap), mcw->loc_req.zone_id);
+    }
+    // 地名が変わっていても表示する
+    else if( ZONEDATA_GetPlaceNameID(mcw->before_zone_id) != ZONEDATA_GetPlaceNameID(mcw->loc_req.zone_id) )
+    {
+      OBATA_Printf( "place name changed\n" );
+      fieldmap = GAMESYSTEM_GetFieldMapWork(gsys);
+      FIELD_PLACE_NAME_Display(FIELDMAP_GetPlaceNameSys(fieldmap), mcw->loc_req.zone_id);
     }
 		return GMEVENT_RES_FINISH;
 
