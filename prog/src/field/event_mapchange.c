@@ -28,7 +28,7 @@
 #include "sound/pm_sndsys.h"		//サウンドシステム参照
 
 #include "event_fldmmdl_control.h"
-#include "field_place_name.h"   //FIELD_PLACE_NAME_Display
+#include "field_place_name.h"   //FIELD_PLACE_NAME_DisplayForce
 
 #include "script.h"
 
@@ -93,7 +93,7 @@ static GMEVENT_RESULT EVENT_FirstMapIn(GMEVENT * event, int *seq, void *work)
 		break;
 	case 3:
 		fieldmap = GAMESYSTEM_GetFieldMapWork(gsys);
-    FIELD_PLACE_NAME_Display(FIELDMAP_GetPlaceNameSys(fieldmap), fmw->loc_req.zone_id);
+    FIELD_PLACE_NAME_DisplayForce(FIELDMAP_GetPlaceNameSys(fieldmap), fmw->loc_req.zone_id);
 		return GMEVENT_RES_FINISH;
 	}
 	return GMEVENT_RES_CONTINUE;

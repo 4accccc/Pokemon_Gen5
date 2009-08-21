@@ -1906,7 +1906,7 @@ static void fldmap_ZoneChange( FIELDMAP_WORK *fieldWork )
 	zoneChange_UpdatePlayerWork( gdata, new_zone_id );
 
 	// 地名表示システムに, ゾーンの切り替えを通達
-	FIELD_PLACE_NAME_ZoneChange( fieldWork->placeNameSys, new_zone_id );
+	FIELD_PLACE_NAME_Display( fieldWork->placeNameSys, new_zone_id );
 
 	//ゾーンID更新
 	lc->zone_id = new_zone_id;

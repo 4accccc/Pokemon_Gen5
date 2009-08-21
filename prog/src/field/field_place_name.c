@@ -678,7 +678,7 @@ void FIELD_PLACE_NAME_Delete( FIELD_PLACE_NAME* p_sys )
  * @param next_zone_id 新しいゾーンID
  */
 //------------------------------------------------------------------------------------
-void FIELD_PLACE_NAME_ZoneChange( FIELD_PLACE_NAME* p_sys, u32 next_zone_id )
+void FIELD_PLACE_NAME_Display( FIELD_PLACE_NAME* p_sys, u32 next_zone_id )
 { 
   // ゾーンの地名表示フラグが立っていない場合は表示しない
   if( ZONEDATA_GetPlaceNameFlag( next_zone_id ) != TRUE ) return;
@@ -698,7 +698,7 @@ void FIELD_PLACE_NAME_ZoneChange( FIELD_PLACE_NAME* p_sys, u32 next_zone_id )
  * @param zone_id 表示する場所のゾーンID
  */
 //------------------------------------------------------------------------------------
-extern void FIELD_PLACE_NAME_Display( FIELD_PLACE_NAME* p_sys, u32 zone_id )
+extern void FIELD_PLACE_NAME_DisplayForce( FIELD_PLACE_NAME* p_sys, u32 zone_id )
 {
   // 強制的に表示
   p_sys->currentZoneID = INVALID_ZONE_ID;

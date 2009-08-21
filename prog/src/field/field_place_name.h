@@ -80,7 +80,7 @@ extern void FIELD_PLACE_NAME_Delete( FIELD_PLACE_NAME* p_sys );
  * @param next_zone_id 新しいゾーンID
  */
 //------------------------------------------------------------------------------------
-extern void FIELD_PLACE_NAME_ZoneChange( FIELD_PLACE_NAME* p_sys, u32 next_zone_id );
+extern void FIELD_PLACE_NAME_Display( FIELD_PLACE_NAME* p_sys, u32 next_zone_id );
 
 //------------------------------------------------------------------------------------
 /**
@@ -90,7 +90,7 @@ extern void FIELD_PLACE_NAME_ZoneChange( FIELD_PLACE_NAME* p_sys, u32 next_zone_
  * @param zone_id 表示する場所のゾーンID
  */
 //------------------------------------------------------------------------------------
-extern void FIELD_PLACE_NAME_Display( FIELD_PLACE_NAME* p_sys, u32 zone_id );
+extern void FIELD_PLACE_NAME_DisplayForce( FIELD_PLACE_NAME* p_sys, u32 zone_id );
 
 //------------------------------------------------------------------------------------
 /**

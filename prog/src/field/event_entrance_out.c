@@ -20,7 +20,7 @@
 #include "event_entrance_effect.h"  // EVENT_FieldDoorOutAnime
 #include "event_fldmmdl_control.h"  // EVENT_PlayerOneStepAnime
 #include "field_bgm_control.h"
-#include "field_place_name.h" // FIELD_PLACE_NAME_ZoneChange
+#include "field_place_name.h" // FIELD_PLACE_NAME_Display
 #include "fieldmap.h"       // FIELDMAP_GetPlaceNameSys
 
 
@@ -142,7 +142,7 @@ static GMEVENT_RESULT EVENT_FUNC_EntranceOut_ExitTypeNone(GMEVENT * event, int *
   case 1:
     { 
       fieldmap = GAMESYSTEM_GetFieldMapWork(gsys);
-      FIELD_PLACE_NAME_ZoneChange(FIELDMAP_GetPlaceNameSys(fieldmap), event_work->location.zone_id);
+      FIELD_PLACE_NAME_Display(FIELDMAP_GetPlaceNameSys(fieldmap), event_work->location.zone_id);
     }
     ++ *seq;
     break;
@@ -168,7 +168,7 @@ static GMEVENT_RESULT EVENT_FUNC_EntranceOut_ExitTypeDoor(GMEVENT * event, int *
   case 0:
     { 
       fieldmap = GAMESYSTEM_GetFieldMapWork(gsys);
-      FIELD_PLACE_NAME_ZoneChange(FIELDMAP_GetPlaceNameSys(fieldmap), event_work->location.zone_id);
+      FIELD_PLACE_NAME_Display(FIELDMAP_GetPlaceNameSys(fieldmap), event_work->location.zone_id);
     }
     ++ *seq;
     break;
@@ -199,7 +199,7 @@ static GMEVENT_RESULT EVENT_FUNC_EntranceOut_ExitTypeStep(GMEVENT * event, int *
   case 0:
     { 
       fieldmap = GAMESYSTEM_GetFieldMapWork(gsys);
-      FIELD_PLACE_NAME_ZoneChange(FIELDMAP_GetPlaceNameSys(fieldmap), event_work->location.zone_id);
+      FIELD_PLACE_NAME_Display(FIELDMAP_GetPlaceNameSys(fieldmap), event_work->location.zone_id);
     }
     ++ *seq;
     break;
