@@ -62,6 +62,7 @@ struct _BAG_CURSOR {
 
 static u32 MyItemDataGet( MYITEM_PTR myitem, u16 id, ITEM_ST ** item, u32 * max, u32 heap );
 static u32 MyPocketDataGet( MYITEM_PTR myitem, s32 pocket, ITEM_ST ** item, u32 * max);
+static void bottomInsert( ITEM_ST * item, const u32 max );
 
 
 
@@ -326,10 +327,11 @@ BOOL MYITEM_AddCheck( MYITEM_PTR myitem, u16 item_no, u16 num, u32 heap )
 //------------------------------------------------------------------
 BOOL MYITEM_AddItem( MYITEM_PTR myitem, u16 item_no, u16 num, u32 heap )
 {
+  int before = 0;
 	ITEM_ST * add = AddItemPosGet( myitem, item_no, num, heap );
 
 	if( add == NULL ){ return FALSE; }
-
+  before = add->no;
 	add->id = item_no;
 	add->no += num;
 
@@ -340,11 +342,14 @@ BOOL MYITEM_AddItem( MYITEM_PTR myitem, u16 item_no, u16 num, u32 heap )
 		if( pocket == BAG_POKE_NUTS || pocket == BAG_POKE_WAZA ){
 			MYITEM_SortNumber( add, max );
 		}
+    else if(before == 0){  //加えたアイテムが一個目だった場合、リストの最初にもっていく
+      ITEM_ST * item;
+      u32	num;
+      MyPocketDataGet(myitem, pocket, &item, &num);
+      num = MYITEM_GetItemThisPocketNumber(item, num);
+      bottomInsert( item,  num );
+    }
 	}
-
-#if (CRC_LOADCHECK && CRCLOADCHECK_GMDATA_ID_TEMOTI_ITEM)
-	SVLD_SetCrc(GMDATA_ID_TEMOTI_ITEM);
-#endif //CRC_LOADCHECK
 	return TRUE;
 }
 
@@ -393,40 +398,6 @@ static ITEM_ST * SubItemPosGet( MYITEM_PTR myitem, u16 item_no, u16 num, u32 hea
 
 	MyItemDataGet( myitem, item_no, &sub, &max, heap );
 	return SubItemSearch( sub, max, item_no, num );
-
-/*
-	switch( ItemParamGet( item_no, ITEM_PRM_POCKET, heap ) ){
-	case BAG_POKE_EVENT:	// 大切な物
-		sub = SubItemSearch( myitem->MyEventItem, BAG_EVENT_ITEM_MAX, item_no, num );
-		break;
-	case BAG_POKE_NORMAL:	// 道具
-		sub = SubItemSearch( myitem->MyNormalItem, BAG_NORMAL_ITEM_MAX, item_no, num );
-		break;
-	case BAG_POKE_NUTS:		// 木の実
-		sub = SubItemSearch( myitem->MyNutsItem, BAG_NUTS_ITEM_MAX, item_no, num );
-		break;
-	case BAG_POKE_DRUG:		// 薬
-		sub = SubItemSearch( myitem->MyDrugItem, BAG_DRUG_ITEM_MAX, item_no, num );
-		break;
-	case BAG_POKE_BALL:		// ボール
-		sub = SubItemSearch( myitem->MyBallItem, BAG_BALL_ITEM_MAX, item_no, num );
-		break;
-	case BAG_POKE_BATTLE:	// 戦闘用
-		sub = SubItemSearch( myitem->MyBattleItem, BAG_BATTLE_ITEM_MAX, item_no, num );
-		break;
-	case BAG_POKE_SEAL:		// シール
-		sub = SubItemSearch( myitem->MySealItem, BAG_SEAL_ITEM_MAX, item_no, num );
-		break;
-	case BAG_POKE_WAZA:		// 技マシン
-		sub = SubItemSearch( myitem->MySkillItem, BAG_WAZA_ITEM_MAX, item_no, num );
-		break;
-	default:
-		return NULL;
-	}
-
-	return sub;
-*/
-
 }
 
 //------------------------------------------------------------------
@@ -458,9 +429,6 @@ BOOL MYITEM_SubItem( MYITEM_PTR myitem, u16 item_no, u16 num, u32 heap )
 		MYITEM_SortSpace( sub, max );
 	}
 
-#if (CRC_LOADCHECK && CRCLOADCHECK_GMDATA_ID_TEMOTI_ITEM)
-	SVLD_SetCrc(GMDATA_ID_TEMOTI_ITEM);
-#endif //CRC_LOADCHECK
 	return TRUE;
 }
 
@@ -489,9 +457,6 @@ BOOL MYITEM_SubItemDirect( ITEM_ST * myitem, u32 max, u16 item_no, u16 num, u32 
 
 	MYITEM_SortSpace( myitem, max );
 
-#if (CRC_LOADCHECK && CRCLOADCHECK_GMDATA_ID_TEMOTI_ITEM)
-	SVLD_SetCrc(GMDATA_ID_TEMOTI_ITEM);
-#endif //CRC_LOADCHECK
 	return TRUE;
 }
 
@@ -643,6 +608,36 @@ static void ChengeItem( ITEM_ST * p1, ITEM_ST * p2 )
 	copy = *p1;
 	*p1  = *p2;
 	*p2  = copy;
+}
+
+//------------------------------------------------------------------
+/**
+ * @brief	一番下のアイテムを上に置く
+ * @param	item	アイテムデータ
+ * @param	max		最大値
+ * @return	none
+ */
+//------------------------------------------------------------------
+static void bottomInsert( ITEM_ST * item, const u32 num )
+{
+	int	i, j;
+  ITEM_ST bottom;
+
+  bottom.id = ITEM_DUMMY_DATA;
+
+  if(num <= 1){
+    return;   //０や１はやる必要がない
+  }
+  
+	for(i = (num-1) ; i >= 0; i-- ){
+    if(bottom.id == ITEM_DUMMY_DATA){
+      GFL_STD_MemCopy(&item[i], &bottom, sizeof(ITEM_ST));
+    }
+    else{
+      GFL_STD_MemCopy(&item[i], &item[i+1], sizeof(ITEM_ST));
+    }
+  }
+  GFL_STD_MemCopy(&bottom, &item[0], sizeof(ITEM_ST));
 }
 
 //------------------------------------------------------------------

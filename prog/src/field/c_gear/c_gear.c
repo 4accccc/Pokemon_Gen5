@@ -144,31 +144,6 @@ static const GFL_UI_TP_HITTBL bttndata[] = {  //上下左右
 // 内部ワーク
 //--------------------------------------------
 
-enum _BATTLETYPE_SELECT {
-	_SELECTBT_SINGLE = 0,
-	_SELECTBT_DOUBLE,
-	_SELECTBT_TRI,
-	_SELECTBT_EXIT
-};
-
-
-enum _IBMODE_SELECT {
-	_SELECTMODE_BATTLE = 0,
-	_SELECTMODE_POKE_CHANGE,
-	_SELECTMODE_EXIT
-};
-
-enum _IBMODE_ENTRY {
-	_ENTRYNUM_DOUBLE = 0,
-	_ENTRYNUM_FOUR,
-	_ENTRYNUM_EXIT,
-};
-
-enum _IBMODE_CHANGE {
-	_CHANGE_FRIENDCHANGE = 0,
-	_CHANGE_EXIT,
-};
-
 
 #define GEAR_MAIN_FRAME   (GFL_BG_FRAME2_S)
 #define GEAR_BMPWIN_FRAME   (GFL_BG_FRAME1_S)
@@ -983,7 +958,8 @@ static void _BttnCallBack( u32 bttnid, u32 event, void* p_work )
 				FIELD_SUBSCREEN_SetAction(pWork->subscreen, FIELD_SUBSCREEN_ACTION_DEBUGIRC);
 				break;
 			case CGEAR_PANELTYPE_WIRELESS:
-				FIELD_SUBSCREEN_SetAction(pWork->subscreen, FIELD_SUBSCREEN_ACTION_DEBUG_PALACEJUMP);
+        //デバッグ機能はきりました
+//				FIELD_SUBSCREEN_SetAction(pWork->subscreen, FIELD_SUBSCREEN_ACTION_DEBUG_PALACEJUMP);
 				break;
 			case CGEAR_PANELTYPE_WIFI:
 				break;

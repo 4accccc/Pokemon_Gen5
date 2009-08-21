@@ -112,6 +112,7 @@ typedef enum
   FMENU_ITEMUSE_NONE,  //何もしない
   //フィールドに戻ってから呼ばれるもの
   FMENU_ITEMUSE_CYCLE,
+  FMENU_ITEMUSE_PALACEJUMP,
   
   FMENU_ITEMUSE_MAX,
 }FMENU_ITEMUSE_TYPE;
@@ -277,6 +278,11 @@ static const FMENU_ITEMUSE_EVENT_DATA FldMapMenu_ItemUseData[FMENU_ITEMUSE_MAX] 
     FS_OVERLAY_ID(itemuse), 
     &EVENT_CycleUse ,
   },
+  { //  FMENU_USE_
+    FS_OVERLAY_ID(itemuse), 
+    &EVENT_PalaceJumpUse ,
+  },
+
 };
 
 
@@ -381,6 +387,13 @@ static GMEVENT_RESULT FldMapMenuEvent( GMEVENT *event, int *seq, void *wk )
         mwk->state = FMENUSTATE_EXIT_MENU;
         FIELD_SUBSCREEN_ResetAction( FIELDMAP_GetFieldSubscreenWork(mwk->fieldWork) );
       }
+      else
+      if( action == FIELD_SUBSCREEN_ACTION_DEBUG_PALACEJUMP )
+      {
+        //キャンセル+パレスジャンプ
+        mwk->state = FMENUSTATE_EXIT_MENU;
+        FIELD_SUBSCREEN_ResetAction( FIELDMAP_GetFieldSubscreenWork(mwk->fieldWork) );
+      }
     }
     break;
   case FMENUSTATE_DECIDE_ITEM:
@@ -431,7 +444,7 @@ static GMEVENT_RESULT FldMapMenuEvent( GMEVENT *event, int *seq, void *wk )
     {
       if(mwk->itemuseEventType){  
         GFL_OVERLAY_Load( FldMapMenu_ItemUseData[mwk->itemuseEventType].ovId );
-        GMEVENT_CallEvent(event, FldMapMenu_ItemUseData[mwk->itemuseEventType].eventCreate(mwk->gmSys) );
+        GMEVENT_CallEvent(event, FldMapMenu_ItemUseData[mwk->itemuseEventType].eventCreate(mwk->fieldWork, mwk->gmSys) );
         mwk->state = FMENUSTATE_EXIT_SUB;
       }
       else{
@@ -525,6 +538,10 @@ static void FieldMap_SetExitSequence(FMENU_EVENT_WORK *mwk)
     if(mwk->return_subscreen_mode == FIELD_SUBSCREEN_UNION)
     {
        GAMEDATA_SetSubScreenMode(gmData,FIELD_SUBSCREEN_UNION);
+    }
+    else if(mwk->return_subscreen_mode == FIELD_SUBSCREEN_PALACE)
+    {
+      GAMEDATA_SetSubScreenMode(gmData,FIELD_SUBSCREEN_NORMAL);
     }
     else
     {
@@ -1006,6 +1023,10 @@ static const BOOL FMenuReturnProc_Bag(FMENU_EVENT_WORK* mwk)
       FMenu_SetNextSubProc( mwk ,FMENU_APP_WIFINOTE , pFriend );
     }
     return TRUE;
+  case BAG_NEXTPROC_PALACEJUMP:
+    mwk->itemuseEventType = FMENU_ITEMUSE_PALACEJUMP;
+    FieldMap_SetExitSequence(mwk);  //PALACEジャンプ
+    return FALSE;
   case BAG_NEXTPROC_EXITEM:
     break;
   default:

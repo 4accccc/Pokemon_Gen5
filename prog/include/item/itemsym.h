@@ -523,8 +523,9 @@
 #define ITEM_BENIIRONOTAMA		( 534 )		// べにいろのたま
 #define ITEM_AIIRONOTAMA		( 535 )		// あいいろのたま
 #define ITEM_NAZONOSUISYOU		( 536 )		// なぞのすいしょう
+#define ITEM_PARESUHEGOO		( 537 )		// パレスへゴー
 
-#define ITEM_DATA_MAX		( 536 )		// アイテム最大数
+#define ITEM_DATA_MAX		( 537 )		// アイテム最大数
 
 #define ITEM_MAIL_MAX	( 12 )	// メール数
 #define ITEM_NUTS_MAX	( 64 )	// きのみ数

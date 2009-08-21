@@ -558,6 +558,7 @@ static const ITEM_ST DebugItem[] = {
 	{ ITEM_KUIKKUBOORU,	15 },		// クイックボール
 	{ ITEM_PURESYASUBOORU,	16 },	// プレシアボール
 	{ ITEM_TOMODATITETYOU,  1},  // ともだち手帳
+  {ITEM_PARESUHEGOO, 1}, // パレスへゴー
 	{ ITEM_POFINKEESU,  1},  // ポルトケース
 	{ ITEM_MOKOSINOMI,	50},	//モコシのみ
 	{ ITEM_GOSUNOMI,	50},	//ゴスのみ

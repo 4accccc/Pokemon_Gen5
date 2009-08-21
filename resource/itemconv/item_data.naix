@@ -525,7 +525,8 @@ enum {
 	NARC_item_data_item533_dat = 511,
 	NARC_item_data_item534_dat = 512,
 	NARC_item_data_item535_dat = 513,
-	NARC_item_data_item536_dat = 514
+	NARC_item_data_item536_dat = 514,
+	NARC_item_data_item537_dat = 515
 };
 
 /* NARC_ITEM_DATA_NAIX_ */

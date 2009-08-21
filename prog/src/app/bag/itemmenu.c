@@ -845,6 +845,10 @@ static void _itemSelectWait(FIELD_ITEMMENU_WORK* pWork)
       pWork->ret_code = BAG_NEXTPROC_FRIENDNOTE;  //ともだち手帳
       _CHANGE_STATE(pWork,NULL);
     }
+    else if(pWork->ret_item == ITEM_PARESUHEGOO){
+      pWork->ret_code = BAG_NEXTPROC_PALACEJUMP;  //@@OO 仮 パレスへゴー
+      _CHANGE_STATE(pWork,NULL);
+    }
     else if(BAG_MENU_YAMERU==pWork->ret_code2){  //やめる
       _CHANGE_STATE(pWork,_itemKindSelectMenu);
     }
@@ -1160,7 +1164,7 @@ static void ItemMenuMake( FIELD_ITEMMENU_WORK * pWork, u8* tbl )
       // ひらく
       // うめる
       // とめる
-      if( ITEM_GetBufParam( itemdata,  ITEM_PRM_FIELD ) != 0 )  //@@OO アイテムコンバータがおかしいのか結果が違う
+      if( ITEM_GetBufParam( itemdata,  ITEM_PRM_FIELD ) != 0 )
       {
         if( item->id == ITEM_ZITENSYA && pWork->cycle_flg == 1 )
         {

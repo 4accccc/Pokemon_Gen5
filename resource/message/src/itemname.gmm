@@ -2815,6 +2815,11 @@
 		<language name="JPN_KANJI" width="256">なぞのすいしょう</language>
 	</row>
 
+	<row id="ITEMNAME_537">
+		<language name="JPN" width="256">パレスへゴー</language>
+		<language name="JPN_KANJI" width="256">パレスへゴー</language>
+	</row>
+
 
 	<flowchart-group-list>
 		<flowchart-group japanese="root" english="root" group-id="0" parent-id="-1"/>

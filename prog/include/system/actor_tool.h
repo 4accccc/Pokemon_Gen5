@@ -9,7 +9,7 @@
 #ifndef __ACTOR_TOOL_H__
 #define __ACTOR_TOOL_H__
 
-#include <obj_graphic_man.h>
+//#include <obj_graphic_man.h>
 
 //==============================================================================
 //	Œ^’è‹`

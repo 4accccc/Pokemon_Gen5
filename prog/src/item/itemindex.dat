@@ -544,4 +544,5 @@ const ITEMDATA_INDEX ItemDataIndex[] =
 	{ NARC_item_data_item534_dat, NARC_item_icon_item_626_NCGR, NARC_item_icon_item_626_NCLR, AGB_ITEM_BENIIRONOTAMA },
 	{ NARC_item_data_item535_dat, NARC_item_icon_item_627_NCGR, NARC_item_icon_item_627_NCLR, AGB_ITEM_AIIRONOTAMA },
 	{ NARC_item_data_item536_dat, NARC_item_icon_item_629_NCGR, NARC_item_icon_item_629_NCLR, 0 },
+	{ NARC_item_data_item537_dat, NARC_item_icon_item_629_NCGR, NARC_item_icon_item_629_NCLR, 0 },
 };
