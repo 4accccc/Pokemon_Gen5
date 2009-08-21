@@ -38,6 +38,7 @@ typedef struct{
   u32           position_reverse_flag :1;     //立ち位置反転フラグ
   u32           camera_ortho_on_flag  :1;     //カメラ移動後、正射影に戻すフラグ
   u32           se_play_wait_flag     :1;     //SE再生ウエイト中
+  u32           se_effect_enable_flag :1;     //SEEFFECTフラグ
   u32                                 :29;
   GFL_TCBSYS*   tcbsys;
   GFL_PTC_PTR   ptc[ PARTICLE_GLOBAL_MAX ];
@@ -101,6 +102,25 @@ typedef struct
   int               mod_speed;
 }BTLV_EFFVM_SEPLAY;
 
+//SEエフェクト用パラメータ構造体
+typedef struct
+{ 
+  BTLV_EFFVM_WORK*  bevw;
+  int               player;
+  int               type;
+  int               param;
+  int               start;
+  int               end;
+  fx32              value;
+  fx32              vec_value;
+  int               start_wait;
+  int               frame;
+  int               frame_tmp;
+  int               wait;
+  int               wait_tmp;
+  int               count;
+}BTLV_EFFVM_SEEFFECT;
+
 //============================================================================================
 /**
  *  プロトタイプ宣言
@@ -149,7 +169,8 @@ static VMCMD_RESULT VMEC_BG_PAL_FADE( VMHANDLE *vmh, void *context_work );
 static VMCMD_RESULT VMEC_BG_VANISH( VMHANDLE *vmh, void *context_work );
 static VMCMD_RESULT VMEC_SE_PLAY( VMHANDLE *vmh, void *context_work );
 static VMCMD_RESULT VMEC_SE_STOP( VMHANDLE *vmh, void *context_work );
-static VMCMD_RESULT VMEC_SE_PITCH( VMHANDLE *vmh, void *context_work );
+static VMCMD_RESULT VMEC_SE_PAN( VMHANDLE *vmh, void *context_work );
+static VMCMD_RESULT VMEC_SE_EFFECT( VMHANDLE *vmh, void *context_work );
 static VMCMD_RESULT VMEC_EFFECT_END_WAIT( VMHANDLE *vmh, void *context_work );
 static VMCMD_RESULT VMEC_WAIT( VMHANDLE *vmh, void *context_work );
 static VMCMD_RESULT VMEC_CONTROL_MODE( VMHANDLE *vmh, void *context_work );
@@ -173,6 +194,7 @@ static  void  EFFVM_SePlay( int se_no, int player, int pitch, int vol, int mod_d
 
 //TCB関数
 static  void  TCB_EFFVM_SEPLAY( GFL_TCB* tcb, void* work );
+static  void  TCB_EFFVM_SEEFFECT( GFL_TCB* tcb, void* work );
 
 #ifdef PM_DEBUG
 typedef enum
@@ -260,7 +282,8 @@ static const VMCMD_FUNC btlv_effect_command_table[]={
   VMEC_BG_VANISH,
   VMEC_SE_PLAY,
   VMEC_SE_STOP,
-  VMEC_SE_PITCH,
+  VMEC_SE_PAN,
+  VMEC_SE_EFFECT,
   VMEC_EFFECT_END_WAIT,
   VMEC_WAIT,
   VMEC_CONTROL_MODE,
@@ -1557,15 +1580,87 @@ static VMCMD_RESULT VMEC_SE_STOP( VMHANDLE *vmh, void *context_work )
 
 //============================================================================================
 /**
- * @brief SEピッチ変更
+ * @brief SEパン
  *
  * @param[in] vmh       仮想マシン制御構造体へのポインタ
  * @param[in] context_work  コンテキストワークへのポインタ
  */
 //============================================================================================
-static VMCMD_RESULT VMEC_SE_PITCH( VMHANDLE *vmh, void *context_work )
+static VMCMD_RESULT VMEC_SE_PAN( VMHANDLE *vmh, void *context_work )
 { 
   BTLV_EFFVM_WORK *bevw = ( BTLV_EFFVM_WORK* )context_work;
+  BTLV_EFFVM_SEEFFECT*  bes = GFL_HEAP_AllocMemory( bevw->heapID, sizeof( BTLV_EFFVM_SEEFFECT ) );
+  int start, end;
+
+  bes->bevw     = bevw;
+
+  bes->player     = ( int )VMGetU32( vmh );
+  bes->type       = ( int )VMGetU32( vmh );
+  bes->param      = BTLEFF_SEEFFECT_PAN;
+  start           = EFFVM_GetPosition( vmh, ( int )VMGetU32( vmh ) );
+  end             = EFFVM_GetPosition( vmh, ( int )VMGetU32( vmh ) );
+  bes->start      = ( start & 1 ) ? 127 : -128;
+  bes->end        = ( end & 1 ) ? 127 : -128;
+  bes->start_wait = ( int )VMGetU32( vmh );
+  bes->frame      = ( int )VMGetU32( vmh );
+  bes->frame_tmp  = bes->frame;
+  bes->wait       = 0;
+  bes->wait_tmp   = ( int )VMGetU32( vmh );
+  bes->count      = ( int )VMGetU32( vmh ) * 2;
+
+  if( ( bes->type == BTLEFF_SEPAN_ROUNDTRIP ) && ( bes->count == 0 ) )
+  { 
+    bes->count = 2;
+  }
+
+	bes->value = FX32_CONST( bes->start );
+	bes->vec_value = FX_Div( FX32_CONST( bes->end - bes->start ) , FX32_CONST( bes->frame ) );
+
+  GFL_TCB_AddTask( bevw->tcbsys, TCB_EFFVM_SEEFFECT, bes, 0 );
+
+  bevw->se_effect_enable_flag = 1;
+
+  return bevw->control_mode;
+}
+
+//============================================================================================
+/**
+ * @brief SE動的変化
+ *
+ * @param[in] vmh       仮想マシン制御構造体へのポインタ
+ * @param[in] context_work  コンテキストワークへのポインタ
+ */
+//============================================================================================
+static VMCMD_RESULT VMEC_SE_EFFECT( VMHANDLE *vmh, void *context_work )
+{ 
+  BTLV_EFFVM_WORK *bevw = ( BTLV_EFFVM_WORK* )context_work;
+  BTLV_EFFVM_SEEFFECT*  bes = GFL_HEAP_AllocMemory( bevw->heapID, sizeof( BTLV_EFFVM_SEEFFECT ) );
+
+  bes->bevw     = bevw;
+
+  bes->player     = ( int )VMGetU32( vmh );
+  bes->type       = ( int )VMGetU32( vmh );
+  bes->param      = ( int )VMGetU32( vmh );
+  bes->start      = ( int )VMGetU32( vmh );
+  bes->end        = ( int )VMGetU32( vmh );
+  bes->start_wait = ( int )VMGetU32( vmh );
+  bes->frame      = ( int )VMGetU32( vmh );
+  bes->frame_tmp  = bes->frame;
+  bes->wait       = 0;
+  bes->wait_tmp   = ( int )VMGetU32( vmh );
+  bes->count      = ( int )VMGetU32( vmh ) * 2;
+
+  if( ( bes->type == BTLEFF_SEEFFECT_ROUNDTRIP ) && ( bes->count == 0 ) )
+  { 
+    bes->count = 2;
+  }
+
+	bes->value = FX32_CONST( bes->start );
+	bes->vec_value = FX_Div( FX32_CONST( bes->end - bes->start ) , FX32_CONST( bes->frame ) );
+
+  GFL_TCB_AddTask( bevw->tcbsys, TCB_EFFVM_SEEFFECT, bes, 0 );
+
+  bevw->se_effect_enable_flag = 1;
 
   return bevw->control_mode;
 }
@@ -1785,21 +1880,35 @@ static  BOOL  VWF_EFFECT_END_CHECK( VMHANDLE *vmh, void *context_work )
   if( ( bevw->effect_end_wait_kind == BTLEFF_EFFENDWAIT_ALL ) ||
       ( bevw->effect_end_wait_kind == BTLEFF_EFFENDWAIT_SEALL ) )
   { 
-    if( ( PMSND_CheckPlaySE() ) || ( bevw->se_play_wait_flag ) )
+    if( ( PMSND_CheckPlaySE() ) || ( bevw->se_play_wait_flag ) || ( bevw->se_effect_enable_flag ) )
     { 
       return FALSE;
     }
   }
   if( bevw->effect_end_wait_kind == BTLEFF_EFFENDWAIT_SE1 )
   { 
-    if( ( PMSND_CheckPlaySE_byPlayerID( SEPLAYER_SE1 ) ) || ( bevw->se_play_wait_flag ) )
+    if( ( PMSND_CheckPlaySE_byPlayerID( SEPLAYER_SE1 ) ) || ( bevw->se_play_wait_flag ) || ( bevw->se_effect_enable_flag ) )
     { 
       return FALSE;
     }
   }
   if( bevw->effect_end_wait_kind == BTLEFF_EFFENDWAIT_SE2 )
   { 
-    if( ( PMSND_CheckPlaySE_byPlayerID( SEPLAYER_SE2 ) ) || ( bevw->se_play_wait_flag ) )
+    if( ( PMSND_CheckPlaySE_byPlayerID( SEPLAYER_SE2 ) ) || ( bevw->se_play_wait_flag ) || ( bevw->se_effect_enable_flag ) )
+    { 
+      return FALSE;
+    }
+  }
+  if( bevw->effect_end_wait_kind == BTLEFF_EFFENDWAIT_PSG )
+  { 
+    if( ( PMSND_CheckPlaySE_byPlayerID( SEPLAYER_SE_PSG ) ) || ( bevw->se_play_wait_flag ) || ( bevw->se_effect_enable_flag ) )
+    { 
+      return FALSE;
+    }
+  }
+  if( bevw->effect_end_wait_kind == BTLEFF_EFFENDWAIT_SYSTEM )
+  { 
+    if( ( PMSND_CheckPlaySE_byPlayerID( SEPLAYER_SYS ) ) || ( bevw->se_play_wait_flag ) || ( bevw->se_effect_enable_flag ) )
     { 
       return FALSE;
     }
@@ -2329,7 +2438,6 @@ static  void  EFFVM_SePlay( int se_no, int player, int pitch, int vol, int mod_d
   { 
     PMSND_PlaySE_byPlayerID( se_no, player );
   }
-  //現状ではPANには対応しない
 	NNS_SndPlayerSetVolume( PMSND_GetSE_SndHandle( player ), vol );
   PMSND_SetStatusSE_byPlayerID( player, PMSND_NOEFFECT, pitch, PMSND_NOEFFECT );
   NNS_SndPlayerSetTrackModDepth( PMSND_GetSE_SndHandle( player ), 0xffff, mod_depth );
@@ -2350,6 +2458,115 @@ static  void  TCB_EFFVM_SEPLAY( GFL_TCB* tcb, void* work )
   { 
     bes->bevw->se_play_wait_flag = 0;
     EFFVM_SePlay( bes->se_no, bes->player, bes->pitch, bes->vol, bes->mod_depth, bes->mod_speed );
+    GFL_HEAP_FreeMemory( bes );
+    GFL_TCB_DeleteTask( tcb );
+  }
+}
+
+//============================================================================================
+/**
+ * @brief SEエフェクト
+ */
+//============================================================================================
+static  void  TCB_EFFVM_SEEFFECT( GFL_TCB* tcb, void* work )
+{ 
+  BTLV_EFFVM_SEEFFECT*  bes = ( BTLV_EFFVM_SEEFFECT* )work;
+  BOOL  flag = FALSE;
+
+  if( bes->start_wait )
+  { 
+    bes->start_wait--;
+    return;
+  }
+
+  if( bes->wait == 0 )
+  { 
+    int value;
+
+    bes->wait = bes->wait_tmp;
+    bes->value += bes->vec_value;
+    value = bes->value >> FX32_SHIFT;
+
+    if( bes->count & 1 )
+    { 
+      if( bes->vec_value < 0 )
+      { 
+        if( value < bes->start )
+        { 
+          value = bes->start;
+        }
+      }
+      else
+      { 
+        if( value > bes->start )
+        { 
+          value = bes->start;
+        }
+      }
+    }
+    else
+    { 
+      if( bes->vec_value < 0 )
+      { 
+        if( value < bes->end )
+        { 
+          value = bes->end;
+        }
+      }
+      else
+      { 
+        if( value > bes->end )
+        { 
+          value = bes->end;
+        }
+      }
+    }
+    bes->value = FX32_CONST( value );
+
+    switch( bes->param )
+    { 
+    case BTLEFF_SEEFFECT_PITCH:
+      PMSND_SetStatusSE_byPlayerID( bes->player, PMSND_NOEFFECT, value, PMSND_NOEFFECT );
+      break;
+    case BTLEFF_SEEFFECT_VOLUME:
+      NNS_SndPlayerSetVolume( PMSND_GetSE_SndHandle( bes->player ), value );
+      break;
+    case BTLEFF_SEEFFECT_PAN:
+      PMSND_SetStatusSE_byPlayerID( bes->player, PMSND_NOEFFECT, PMSND_NOEFFECT, value );
+      break;
+    }
+    if( bes->frame == 0 )
+    { 
+      bes->frame = bes->frame_tmp;
+      switch( bes->type ) { 
+      case BTLEFF_SEEFFECT_INTERPOLATION:
+        flag = TRUE;
+        break;
+      case BTLEFF_SEEFFECT_ROUNDTRIP:
+        if( --bes->count )
+        { 
+          bes->vec_value *= -1;
+        }
+        else
+        { 
+          flag = TRUE;
+        }
+        break;
+      }
+    }
+    else
+    { 
+      bes->frame--;
+    }
+  }
+  else
+  { 
+    bes->wait--;
+  }
+
+  if( flag == TRUE )
+  { 
+    bes->bevw->se_effect_enable_flag = 0;
     GFL_HEAP_FreeMemory( bes );
     GFL_TCB_DeleteTask( tcb );
   }
@@ -2411,6 +2628,53 @@ void  BTLV_EFFVM_DebugParticlePlay( VMHANDLE *vmh, GFL_PTC_PTR ptc, int index, i
   beeiw->angle = angle;
 
   GFL_PTC_CreateEmitterCallback( ptc, index, &EFFVM_InitEmitterPos, beeiw );
+}
+
+//============================================================================================
+/**
+ * @brief SE動的変化（デバッグ用）
+ *
+ * @param[in] vmh         仮想マシン制御構造体へのポインタ
+ * @param[in] player      変化させるPlayerNo
+ * @param[in] type        変化タイプ
+ * @param[in] param       変化させるパラメータ
+ * @param[in] start       開始値
+ * @param[in] end         終了値
+ * @param[in] start_wait  開始ウエイト
+ * @param[in] frame       開始値から終了値に変化するまでのフレーム数
+ * @param[in] wait        1フレームごとのウエイト
+ * @param[in] count       変化タイプが往復だったときの往復回数
+ *
+ */
+//============================================================================================
+void  BTLV_EFFVM_DebugSeEffect( VMHANDLE *vmh, int player, int type, int param, int start, int end, int start_wait, int frame, int wait, int count )
+{ 
+  BTLV_EFFVM_WORK *bevw = (BTLV_EFFVM_WORK *)VM_GetContext( vmh );
+  BTLV_EFFVM_SEEFFECT*  bes = GFL_HEAP_AllocMemory( bevw->heapID, sizeof( BTLV_EFFVM_SEEFFECT ) );
+
+  bes->bevw     = bevw;
+
+  bes->player     = player;
+  bes->type       = type;
+  bes->param      = param;
+  bes->start      = start;
+  bes->end        = end;
+  bes->start_wait = start_wait;
+  bes->frame      = frame;
+  bes->frame_tmp  = bes->frame;
+  bes->wait       = 0;
+  bes->wait_tmp   = wait;
+  bes->count      = count * 2;
+
+  if( ( bes->type == BTLEFF_SEEFFECT_ROUNDTRIP ) && ( bes->count == 0 ) )
+  { 
+    bes->count = 2;
+  }
+
+	bes->value = FX32_CONST( bes->start );
+	bes->vec_value = FX_Div( FX32_CONST( bes->end - bes->start ) , FX32_CONST( bes->frame ) );
+
+  GFL_TCB_AddTask( bevw->tcbsys, TCB_EFFVM_SEEFFECT, bes, 0 );
 }
 
 //============================================================================================

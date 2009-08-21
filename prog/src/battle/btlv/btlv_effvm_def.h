@@ -140,16 +140,33 @@
 
 
 //SE再生プレーヤー定義
-#define BTLEFF_SEPLAY_DEFAULT                 ( 0 )
+#define BTLEFF_SEPLAY_SYSTEM                  ( 0 )
 #define BTLEFF_SEPLAY_SE1                     ( 1 )
 #define BTLEFF_SEPLAY_SE2                     ( 2 )
 #define BTLEFF_SEPLAY_PSG                     ( 3 )
+#define BTLEFF_SEPLAY_DEFAULT                 ( 4 )
 
 //SEストッププレーヤー定義
-#define BTLEFF_SESTOP_ALL                     ( 0 )
+#define BTLEFF_SESTOP_SYSTEM                  ( 0 )
 #define BTLEFF_SESTOP_SE1                     ( 1 )
 #define BTLEFF_SESTOP_SE2                     ( 2 )
 #define BTLEFF_SESTOP_PSG                     ( 3 )
+#define BTLEFF_SESTOP_ALL                     ( 4 )
+
+//SEパン
+#define BTLEFF_SEPAN_INTERPOLATION            ( 0 )
+#define BTLEFF_SEPAN_ROUNDTRIP                ( 1 )
+
+#define BTLEFF_SEPAN_ATTACK                   ( BTLEFF_POKEMON_SIDE_ATTACK )
+#define BTLEFF_SEPAN_DEFENCE                  ( BTLEFF_POKEMON_SIDE_DEFENCE )
+
+//SEエフェクト
+#define BTLEFF_SEEFFECT_INTERPOLATION         ( 0 )
+#define BTLEFF_SEEFFECT_ROUNDTRIP             ( 1 )
+
+#define BTLEFF_SEEFFECT_PITCH                 ( 0 )
+#define BTLEFF_SEEFFECT_VOLUME                ( 1 )
+#define BTLEFF_SEEFFECT_PAN                   ( 2 )
 
 //エフェクト終了待ち
 #define	BTLEFF_EFFENDWAIT_ALL									( 0 )
@@ -164,6 +181,8 @@
 #define BTLEFF_EFFENDWAIT_SEALL               ( 9 )
 #define BTLEFF_EFFENDWAIT_SE1                 ( 10 )
 #define BTLEFF_EFFENDWAIT_SE2                 ( 11 )
+#define BTLEFF_EFFENDWAIT_PSG                 ( 12 )
+#define BTLEFF_EFFENDWAIT_SYSTEM              ( 13 )
 
 //制御モード
 #define	BTLEFF_CONTROL_MODE_CONTINUE					( 0 )
@@ -313,8 +332,9 @@ ex)
 #define	EC_BG_VANISH								( EC_BG_PAL_FADE              + 1 )
 #define	EC_SE_PLAY									( EC_BG_VANISH                + 1 )
 #define	EC_SE_STOP									( EC_SE_PLAY                  + 1 )
-#define	EC_SE_PITCH									( EC_SE_STOP                  + 1 )
-#define	EC_EFFECT_END_WAIT					( EC_SE_PITCH                 + 1 )
+#define	EC_SE_PAN								    ( EC_SE_STOP                  + 1 )
+#define	EC_SE_EFFECT								( EC_SE_PAN                   + 1 )
+#define	EC_EFFECT_END_WAIT					( EC_SE_EFFECT                + 1 )
 #define	EC_WAIT											( EC_EFFECT_END_WAIT          + 1 )
 #define	EC_CONTROL_MODE							( EC_WAIT                     + 1 )
 
@@ -1221,8 +1241,8 @@ ex)
  * @param mod_speed   再生モジュレーションスピード
  *
  * #param	VALUE_INT   再生するSEナンバー
- * #param COMBOBOX_TEXT デフォルト  SE1 SE2 PSG
- * #param COMBOBOX_VALUE BTLEFF_SEPLAY_DEFAULT  BTLEFF_SEPLAY_SE1 BTLEFF_SEPLAY_SE2 BTLEFF_SEPLAY_PSG
+ * #param COMBOBOX_TEXT デフォルト  SE1 SE2 PSG SYSTEM
+ * #param COMBOBOX_VALUE BTLEFF_SEPLAY_DEFAULT  BTLEFF_SEPLAY_SE1 BTLEFF_SEPLAY_SE2 BTLEFF_SEPLAY_PSG BTLEFF_SEPLAY_SYSTEM
  * #param VALUE_INT   再生までのウエイト
  * #param VALUE_INT   再生ピッチ
  * #param VALUE_INT   再生ボリューム
@@ -1249,8 +1269,8 @@ ex)
  * #param_num	1
  * @param player  ストップするPlayerNo
  *
- * #param COMBOBOX_TEXT すべて  SE1 SE2 PSG
- * #param COMBOBOX_VALUE BTLEFF_SESTOP_ALL  BTLEFF_SESTOP_SE1 BTLEFF_SESTOP_SE2 BTLEFF_SESTOP_PSG
+ * #param COMBOBOX_TEXT すべて  SE1 SE2 PSG SYSTEM
+ * #param COMBOBOX_VALUE BTLEFF_SESTOP_ALL  BTLEFF_SESTOP_SE1 BTLEFF_SESTOP_SE2 BTLEFF_SESTOP_PSG BTLEFF_SESTOP_SYSTEM
  */
 //======================================================================
 	.macro	SE_STOP player
@@ -1260,23 +1280,79 @@ ex)
 
 //======================================================================
 /**
- * @brief	SEピッチ変更
+ * @brief	SEパン
  *
- * #param_num	1
- * @param player  変更するPlayerNo
- * @param start   開始ピッチ
- * @param end     終了ピッチ
+ * #param_num	6
+ * @param player      セットするPlayerNo
+ * @param type        変化タイプ
+ * @param start       開始値
+ * @param end         終了値
+ * @param start_wait  開始ウエイト
+ * @param para        startからendまでのフレーム数  フレーム間のウエイト  往復時の回数
  *
- * #param COMBOBOX_TEXT SE1 SE2
- * #param COMBOBOX_VALUE BTLEFF_SEPLAY_SE1 BTLEFF_SEPLAY_SE2
+ * #param COMBOBOX_TEXT SE1 SE2 PSG SYSTEM
+ * #param COMBOBOX_VALUE BTLEFF_SEPLAY_SE1 BTLEFF_SEPLAY_SE2 BTLEFF_SEPLAY_PSG  BTLEFF_SEPLAY_SYSTEM
+ * #param COMBOBOX_TEXT 追従  往復
+ * #param COMBOBOX_VALUE  BTLEFF_SEPAN_INTERPOLATION BTLEFF_SEPAN_ROUNDTRIP
+ * #param	COMBOBOX_TEXT	攻撃側	防御側
+ * #param	COMBOBOX_VALUE	BTLEFF_SEPAN_ATTACK BTLEFF_SEPAN_DEFENCE
+ * #param	COMBOBOX_TEXT	攻撃側	防御側
+ * #param	COMBOBOX_VALUE	BTLEFF_SEPAN_ATTACK BTLEFF_SEPAN_DEFENCE
+ * #param VALUE_INT 開始ウエイト
+ * #param VALUE_VECINT startからendまでのフレーム数  フレーム間のウエイト  往復回数
+ * #param VALUE_INIT  256:0:0
  */
 //======================================================================
-  .macro  SE_PITCH player, start, end
-  .short  EC_SE_PITCH	
+	.macro	SE_PAN player, type, start, end, start_wait, frame, wait, count
+	.short	EC_SE_PAN
   .long   \player
+  .long   \type
   .long   \start
   .long   \end
-  .endm
+  .long   \start_wait
+  .long   \frame
+  .long   \wait
+  .long   \count
+	.endm
+
+//======================================================================
+/**
+ * @brief	SE動的変化
+ *
+ * #param_num	7
+ * @param player      変更するPlayerNo
+ * @param type        変化タイプ
+ * @param param       変化させるパラメータ
+ * @param start       開始値
+ * @param end         終了値
+ * @param start_wait  開始ウエイト
+ * @param para        startからendまでのフレーム数  フレーム間のウエイト  往復時の回数
+ *
+ * #param COMBOBOX_TEXT SE1 SE2 PSG SYSTEM
+ * #param COMBOBOX_VALUE BTLEFF_SEPLAY_SE1 BTLEFF_SEPLAY_SE2 BTLEFF_SEPLAY_PSG  BTLEFF_SEPLAY_SYSTEM
+ * #param COMBOBOX_TEXT 追従  往復
+ * #param COMBOBOX_VALUE BTLEFF_SEEFFECT_INTERPOLATION BTLEFF_SEEFFECT_ROUNDTRIP
+ * #param COMBOBOX_TEXT ピッチ  ボリューム  パン
+ * #param COMBOBOX_VALUE BTLEFF_SEEFFECT_PITCH  BTLEFF_SEEFFECT_VOLUME  BTLEFF_SEEFFECT_PAN
+ * #param VALUE_INT 開始値
+ * #param VALUE_INT 終了値
+ * #param VALUE_INT 開始ウエイト
+ * #param VALUE_VECINT startからendまでのフレーム数  フレーム間のウエイト  往復回数
+ *
+ */
+//======================================================================
+	.macro	SE_EFFECT player, type, param, start, end, start_wait, frame, wait, count
+	.short	EC_SE_EFFECT
+  .long   \player
+  .long   \type
+  .long   \param
+  .long   \start
+  .long   \end
+  .long   \start_wait
+  .long   \frame
+  .long   \wait
+  .long   \count
+	.endm
 
 //======================================================================
 /**
@@ -1285,8 +1361,8 @@ ex)
  * #param_num	1
  * @param	kind	終了待ちする種類
  *
- * #param	COMBOBOX_TEXT	すべて	カメラ	パーティクル	ポケモン	トレーナー  PALFADEお盆  PALFADEフィールド PALFADEお盆＋フィールド  PALFADEエフェクト SEPLAYすべて  SEPLAY1 SEPLAY2  
- * #param COMBOBOX_VALUE	BTLEFF_EFFENDWAIT_ALL	BTLEFF_EFFENDWAIT_CAMERA	BTLEFF_EFFENDWAIT_PARTICLE	BTLEFF_EFFENDWAIT_POKEMON	BTLEFF_EFFENDWAIT_TRAINER BTLEFF_EFFENDWAIT_PALFADE_STAGE  BTLEFF_EFFENDWAIT_PALFADE_FIELD  BTLEFF_EFFENDWAIT_PALFADE_3D BTLEFF_EFFENDWAIT_PALFADE_EFFECT BTLEFF_EFFENDWAIT_SEALL  BTLEFF_EFFENDWAIT_SE1  BTLEFF_EFFENDWAIT_SE2  
+ * #param	COMBOBOX_TEXT	すべて	カメラ	パーティクル	ポケモン	トレーナー  PALFADEお盆  PALFADEフィールド PALFADEお盆＋フィールド  PALFADEエフェクト SEPLAYすべて  SEPLAY1 SEPLAY2 SEPLAY_PSG SEPLAY_SYSTEM
+ * #param COMBOBOX_VALUE	BTLEFF_EFFENDWAIT_ALL	BTLEFF_EFFENDWAIT_CAMERA	BTLEFF_EFFENDWAIT_PARTICLE	BTLEFF_EFFENDWAIT_POKEMON	BTLEFF_EFFENDWAIT_TRAINER BTLEFF_EFFENDWAIT_PALFADE_STAGE  BTLEFF_EFFENDWAIT_PALFADE_FIELD  BTLEFF_EFFENDWAIT_PALFADE_3D BTLEFF_EFFENDWAIT_PALFADE_EFFECT BTLEFF_EFFENDWAIT_SEALL  BTLEFF_EFFENDWAIT_SE1  BTLEFF_EFFENDWAIT_SE2 BTLEFF_EFFENDWAIT_PSG BTLEFF_EFFENDWAIT_SYSTEM
  */
 //======================================================================
 	.macro	EFFECT_END_WAIT	kind
