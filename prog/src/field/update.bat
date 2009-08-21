@@ -1,1 +1,1 @@
-copy ..\..\..\resource\fldmapdata\zonetable\zonetableformat.h .
+copy ..\..\..\resource\fldmapdata\zonetable\header\zonetableformat.h .

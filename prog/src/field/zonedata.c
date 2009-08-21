@@ -327,16 +327,16 @@ u16 ZONEDATA_GetPlaceNameID(u16 zone_id)
 
 //------------------------------------------------------------------
 /**
- * @brief  地名メッセージ用のウィンドウIDを取得
+ * @brief  地名表示制御用フラグ取得
  * @param  zoneid ゾーン指定ID
- * @return 地名メッセージ用ウィンドウのID
+ * @return  BOOL
  */
 //------------------------------------------------------------------
-u16 ZONEDATA_GetPlaceNameWinID(u16 zone_id)
+BOOL ZONEDATA_GetPlaceNameFlag(u16 zone_id)
 {
 	ZONEDATA zdbuf;
 	getZoneData( &zdbuf, zone_id );
-	return zdbuf.placename_win;
+	return zdbuf.placename_flag;
 }
 
 //------------------------------------------------------------------

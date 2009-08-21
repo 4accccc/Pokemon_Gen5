@@ -122,9 +122,9 @@ extern BOOL ZONEDATA_IsColosseum(u16 zone_id);
 extern u16 ZONEDATA_GetPlaceNameID(u16 zone_id);
 
 //------------------------------------------------------------------
-//  地名メッセージ用のウィンドウIDを取得
+//  地名表示制御用フラグ取得
 //------------------------------------------------------------------
-extern u16 ZONEDATA_GetPlaceNameWinID(u16 zone_id);
+extern BOOL ZONEDATA_GetPlaceNameFlag(u16 zone_id);
 
 //------------------------------------------------------------------
 // 指定ゾーンがダンジョンかどうかを判定

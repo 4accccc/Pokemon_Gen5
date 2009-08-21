@@ -28,8 +28,8 @@ typedef struct{
 	u16 bgm_winter_id;					///<BGM指定（冬）のID
 	u16 enc_data_id;					///<エンカウント指定
 	u16 event_data_id;					///<イベントデータファイルのアーカイブID
-	u16 placename_id:8;					///<地名メッセージのＩＤ
-	u16 placename_win:8;				///<地名メッセージ用のウィンドウ
+	u16 placename_id:10;					///<地名メッセージのＩＤ
+	u16 placename_flag:6;				///<地名メッセージ用のウィンドウ
 	u8 weather_id;						///<天候指定のID
 	u8 camera_id;						///<カメラ指定のID
 	u16 maptype:7;							///<マップタイプの指定(MAPTYPE定義参照）
