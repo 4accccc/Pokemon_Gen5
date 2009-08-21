@@ -79,6 +79,7 @@ enum{
   SEQ_EFFECT_WAIT,
   SEQ_RECEIVE_ACTION,
   SEQ_EFFECT_VIEW,
+  SEQ_BGM_SELECT,
 };
 
 enum{
@@ -91,6 +92,8 @@ enum{
   EV_WAZANO_X = 44,
   EV_WAZANO_Y = 90,
   EV_WAZANAME_X = 80,
+
+  EV_BGMNO_Y = 90,
 };
 
 typedef enum
@@ -98,6 +101,7 @@ typedef enum
   DRAW_REQ_NONE = 0,
   DRAW_REQ_MENU_LIST,
   DRAW_REQ_WAZA_NO,
+  DRAW_REQ_BGM_NO,
 }EV_DRAW_REQ;
 
 typedef struct
@@ -111,6 +115,8 @@ typedef struct
   POKEMON_PARAM *pp;
   int           mons_no;
   int           waza_no;
+  int           bgm_no;
+  int           se_no;
   GFL_BMPWIN    *bmpwin;
   int           key_repeat_speed;
   int           key_repeat_wait;
@@ -120,7 +126,7 @@ typedef struct
 
   int           menu_list;
 
-  u32           *param_start;
+  u8            *param_start;
   u32           *param;
   int           edit_param;
   int           cursor_pos;
@@ -144,6 +150,7 @@ static  void  EffectViewerResourceLoad( EFFECT_VIEWER_WORK *evw );
 static  BOOL  EffectViewerRecieveAction( EFFECT_VIEWER_WORK *evw );
 static  BOOL  EffectViewerEffectView( EFFECT_VIEWER_WORK *evw );
 static  void  EffectViewerDrawWazaNo( EFFECT_VIEWER_WORK *evw );
+static  void  EffectViewerDrawBgmNo( EFFECT_VIEWER_WORK *evw );
 static  void  EffectViewerInitMenuList( EFFECT_VIEWER_WORK *evw, int menu_list );
 static  void  EffectViewerDrawMenuList( EFFECT_VIEWER_WORK *evw );
 static  void  EffectViewerDrawCursor( EFFECT_VIEWER_WORK *evw );
@@ -165,11 +172,16 @@ static  void  MoveCamera( EFFECT_VIEWER_WORK *evw );
 static  void  set_pokemon( EFFECT_VIEWER_WORK *evw );
 static  void  del_pokemon( EFFECT_VIEWER_WORK *evw );
 static  int   ev_pow( int x, int y );
+static  int   ev_param_get( EFFECT_VIEWER_WORK* evw, int param );
 
 static  const int pokemon_pos_table[][2]={
   { BTLV_MCSS_POS_AA, BTLV_MCSS_POS_BB },
   { BTLV_MCSS_POS_A, BTLV_MCSS_POS_B },
   { BTLV_MCSS_POS_C, BTLV_MCSS_POS_D }
+};
+
+static  const int bgm_table[]={ 
+  SEQ_VS_NORAPOKE,
 };
 
 FS_EXTERN_OVERLAY(battle);
@@ -465,6 +477,7 @@ const GFL_PROC_DATA   EffectViewerProcData = {
 static  void  EffectViewerSequence( EFFECT_VIEWER_WORK *evw )
 {
   int cont = GFL_UI_KEY_GetCont();
+  int trg = GFL_UI_KEY_GetTrg();
   int tp = GFL_UI_TP_GetTrg();
 
   EffectViewerDrawMenuList( evw );
@@ -529,9 +542,25 @@ static  void  EffectViewerSequence( EFFECT_VIEWER_WORK *evw )
     }
     else if( EffectViewerEffectView( evw ) == TRUE )
     { 
+      evw->draw_req = DRAW_REQ_BGM_NO;
+      evw->seq_no = SEQ_BGM_SELECT;
+    }
+    break;
+  case SEQ_BGM_SELECT:
+    if( trg == PAD_BUTTON_A )
+    {
+      PMSND_PlayBGM( bgm_table[ evw->bgm_no ] );
+    }
+    else if( trg == PAD_BUTTON_B )
+    { 
+      PMSND_StopBGM();
+    }
+    else if( tp )
+    { 
       evw->draw_req = DRAW_REQ_MENU_LIST;
       evw->seq_no = SEQ_IDLE;
     }
+    break;
   }
 }
 
@@ -635,7 +664,7 @@ static  BOOL  EffectViewerRecieveAction( EFFECT_VIEWER_WORK *evw )
       int *start_ofs = (int *)evw->sequence_data ;
       u8 *start = (u8 *)evw->sequence_data;
       u16 *com_start = (u16 *)&start[ start_ofs[ 0 ] ];
-      evw->param_start = (u32 *)&start[ start_ofs[ 0 ] + 2 ];
+      evw->param_start = (u8 *)&start[ start_ofs[ 0 ] + 2 ];
 
       switch( com_start[ 0 ] ){
       case EC_PARTICLE_PLAY:
@@ -645,8 +674,8 @@ static  BOOL  EffectViewerRecieveAction( EFFECT_VIEWER_WORK *evw )
         evw->sub_seq_no = SUB_SEQ_PARTICLE_PLAY_PARAM;
         evw->param[ MLP_PPE_ATTACK ] = BTLV_MCSS_POS_AA;
         evw->param[ MLP_PPE_DEFENCE ] = BTLV_MCSS_POS_BB;
-        evw->param[ MLP_PPE_OFSY ] = evw->param_start[ PPEPARAM_OFS_Y ];
-        evw->param[ MLP_PPE_ANGLE ] = evw->param_start[ PPEPARAM_DIR_ANGLE ];
+        evw->param[ MLP_PPE_OFSY ] = ev_param_get( evw, PPEPARAM_OFS_Y );
+        evw->param[ MLP_PPE_ANGLE ] = ev_param_get( evw, PPEPARAM_DIR_ANGLE );
         break;
 #if 0
       case EC_CAMERA_MOVE:
@@ -656,20 +685,77 @@ static  BOOL  EffectViewerRecieveAction( EFFECT_VIEWER_WORK *evw )
       case EC_POKEMON_SET_MEPACHI_FLAG:
       case EC_POKEMON_SET_ANM_FLAG:
 #endif
+      case EC_SE_PLAY:
+        { 
+          int player = ev_param_get( evw, SPPARAM_PLAYER );
+          evw->se_no = ev_param_get( evw, SPPARAM_SE_NO );
+
+          if( player == BTLEFF_SEPLAY_DEFAULT )
+          { 
+            PMSND_PlaySE( evw->se_no );
+            player = PMSND_GetSE_DefaultPlayerID( evw->se_no );
+          }
+          else
+          { 
+            PMSND_PlaySE_byPlayerID( evw->se_no, player );
+          }
+        	NNS_SndPlayerSetVolume( PMSND_GetSE_SndHandle( player ), ev_param_get( evw, SPPARAM_VOLUME ) );
+          PMSND_SetStatusSE_byPlayerID( player, PMSND_NOEFFECT, ev_param_get( evw, SPPARAM_PITCH ), PMSND_NOEFFECT );
+          NNS_SndPlayerSetTrackModDepth( PMSND_GetSE_SndHandle( player ), 0xffff, ev_param_get( evw, SPPARAM_MODUDEPTH ) );
+          NNS_SndPlayerSetTrackModSpeed( PMSND_GetSE_SndHandle( player ), 0xffff, ev_param_get( evw, SPPARAM_MODUSPEED ) );
+        }
+        break;
+      case EC_SE_PAN:
+        { 
+          int player = ev_param_get( evw, SPANPARAM_PLAYER );
+
+          PMSND_PlaySE_byPlayerID( evw->se_no, player );
+
+          BTLV_EFFVM_DebugSeEffect( BTLV_EFFECT_GetVMHandle(),
+                                    player,
+                                    ev_param_get( evw, SPANPARAM_TYPE ),
+                                    BTLEFF_SEEFFECT_PAN,
+                                    ev_param_get( evw, SPANPARAM_START ),
+                                    ev_param_get( evw, SPANPARAM_END ),
+                                    ev_param_get( evw, SPANPARAM_START_WAIT ),
+                                    ev_param_get( evw, SPANPARAM_FRAME ),
+                                    ev_param_get( evw, SPANPARAM_WAIT ),
+                                    ev_param_get( evw, SPANPARAM_COUNT ) );
+        }
+        break;
+      case EC_SE_EFFECT:
+        { 
+          int player = ev_param_get( evw, SEFFPARAM_PLAYER );
+
+          PMSND_PlaySE_byPlayerID( evw->se_no, player );
+
+          BTLV_EFFVM_DebugSeEffect( BTLV_EFFECT_GetVMHandle(),
+                                    player,
+                                    ev_param_get( evw, SEFFPARAM_TYPE ),
+                                    ev_param_get( evw, SEFFPARAM_PARAM ),
+                                    ev_param_get( evw, SEFFPARAM_START ),
+                                    ev_param_get( evw, SEFFPARAM_END ),
+                                    ev_param_get( evw, SEFFPARAM_START_WAIT ),
+                                    ev_param_get( evw, SEFFPARAM_FRAME ),
+                                    ev_param_get( evw, SEFFPARAM_WAIT ),
+                                    ev_param_get( evw, SEFFPARAM_COUNT ) );
+        }
+        break;
       case EC_PARTICLE_LOAD:
       case EC_EFFECT_END_WAIT:
       case EC_SEQ_END:
       default:
-        {
-          u32 *buf;
-          evw->answer = EDIT_CANCEL;
-          buf = EffectViewerMakeSendData( evw, 0, 0 );
-          MCS_Write( MCS_WRITE_CH, buf, 4 );
-          GFL_HEAP_FreeMemory( buf );
-          EffectViewerInitMenuList( evw, MENULIST_TITLE );
-          ret = TRUE;
-        }
         break;
+      }
+      if( evw->sub_seq_no == SUB_SEQ_INIT )
+      {
+        u32 *buf;
+        evw->answer = EDIT_CANCEL;
+        buf = EffectViewerMakeSendData( evw, 0, 0 );
+        MCS_Write( MCS_WRITE_CH, buf, 4 );
+        GFL_HEAP_FreeMemory( buf );
+        EffectViewerInitMenuList( evw, MENULIST_TITLE );
+        ret = TRUE;
       }
     }
     break;
@@ -771,6 +857,22 @@ static  void  EffectViewerDrawWazaNo( EFFECT_VIEWER_WORK *evw )
 }
 
 //======================================================================
+//  BGMNo表示
+//======================================================================
+static  void  EffectViewerDrawBgmNo( EFFECT_VIEWER_WORK *evw )
+{ 
+  STRBUF  *strbuf;
+  int     pos_x;
+
+  strbuf = GFL_MSG_CreateString( evw->msg, EV_MUS_01 + evw->bgm_no );
+  GFL_FONTSYS_SetColor( LETTER_COL_NORMAL, SHADOW_COL, BACK_COL );
+  pos_x = 128 - ( PRINTSYS_GetStrWidth( strbuf, evw->font, 0 ) / 2 );
+  PRINTSYS_Print( GFL_BMPWIN_GetBmp( evw->bmpwin ), pos_x, EV_BGMNO_Y, strbuf, evw->font );
+
+  GFL_STR_DeleteBuffer( strbuf );
+}
+
+//======================================================================
 //  メニューリスト初期化
 //======================================================================
 static  void  EffectViewerInitMenuList( EFFECT_VIEWER_WORK *evw, int menu_list )
@@ -807,6 +909,9 @@ static  void  EffectViewerDrawMenuList( EFFECT_VIEWER_WORK *evw )
       break;
     case DRAW_REQ_WAZA_NO:
       EffectViewerDrawWazaNo( evw );
+      break;
+    case DRAW_REQ_BGM_NO:
+      EffectViewerDrawBgmNo( evw );
       break;
     }
 
@@ -1243,3 +1348,25 @@ static  int ev_pow( int x, int y )
 
   return ans;
 }
+
+static  int   ev_param_get( EFFECT_VIEWER_WORK* evw, int param )
+{ 
+  int result = 0;
+  u8 a,b,c,d;
+
+  a = evw->param_start[ param * 4 + 0 ];
+  b = evw->param_start[ param * 4 + 1 ];
+  c = evw->param_start[ param * 4 + 2 ];
+  d = evw->param_start[ param * 4 + 3 ];
+
+  result += (u32)d;
+  result <<= 8;
+  result += (u32)c;
+  result <<= 8;
+  result += (u32)b;
+  result <<= 8;
+  result += (u32)a;
+
+  return result;
+}
+
