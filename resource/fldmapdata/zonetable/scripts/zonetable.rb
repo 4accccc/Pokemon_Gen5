@@ -44,7 +44,7 @@ class ColumnID
 	attr :cCAMERA, true
 	attr :cBATTLEBG, true
 	attr :cNAME, true
-	attr :cWINDOW, true
+	attr :cPLACENAMEFLAG, true
 	attr :cCOMMENT, true
 
 	def initialize( column )
@@ -99,8 +99,8 @@ class ColumnID
 				@cBATTLEBG = c_count
 			when "PLACE_NAME"
 				@cNAME = c_count
-			when "WINDOW_TYPE"
-				@cWINDOW = c_count
+			when "PLACE_NAME_FLAG"
+				@cPLACENAMEFLAG = c_count
 			when "備考"
 				@cCOMMENT = c_count
 			end
@@ -270,9 +270,8 @@ class ZoneDataFile < OutputFile
 			else
 				"enc_dummy"
 			end
-		#window = column[@cl.cWINDOW].upcase
-		#window = column[@cl.cWINDOW]
-    window = 0
+    placename_flag = if column[@cl.cPLACENAMEFLAG] == "○" then 1 else 0 end
+    #placename_flag = 0
 		maptype = column[@cl.cMAPTYPE]
 		if !(maptype =~ /^MAPTYPE_/) then
 			STDERR.puts "マップタイプの指定がおかしい!:#{maptype}:\n"
@@ -300,7 +299,7 @@ class ZoneDataFile < OutputFile
 		#{encount_id},
 		#{event_id},
 		#{name},
-		#{window},
+		#{placename_flag},
 		#{weather},
 		#{camera},
 		#{maptype},
