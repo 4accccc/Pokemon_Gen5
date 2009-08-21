@@ -461,10 +461,31 @@ void PSTATUS_SUB_DispPage_Trans( PSTATUS_WORK *work , PSTATUS_SUB_WORK *subWork 
   
   if( subWork->isDispFront == TRUE )
   {
+    VecFx32 cam_pos = {PSTATUS_SUB_CAMERA_FRONT_X,FX32_CONST(0.0f),FX32_CONST(101.0f)};
+    VecFx32 shadowScale = {PSTATUS_SUB_SHADOW_SCALE_X , PSTATUS_SUB_SHADOW_SCALE_Y , PSTATUS_SUB_SHADOW_SCALE_Z};
+    VecFx32 ofs={0,0,0};
+    
+    MCSS_SetOfsPosition( subWork->pokeMcss , &ofs );
+    MCSS_SetShadowOffset( subWork->pokeMcss , &ofs );
+    MCSS_SetShadowScale( subWork->pokeMcss , &shadowScale );
+    
+    GFL_G3D_CAMERA_SetPos( work->camera , &cam_pos );
+    GFL_G3D_CAMERA_Switching( work->camera );
+
     subWork->state = PSS_DISP_FORNT;
   }
   else
   {
+    VecFx32 cam_pos = {PSTATUS_SUB_CAMERA_BACK_X,FX32_CONST(0.0f),FX32_CONST(101.0f)};
+    VecFx32 shadowScale = {PSTATUS_SUB_SHADOW_SCALE_BACK_X , PSTATUS_SUB_SHADOW_SCALE_BACK_Y , PSTATUS_SUB_SHADOW_SCALE_BACK_Z};
+    VecFx32 ofs={0,0,0};
+
+    MCSS_SetOfsPosition( subWork->pokeMcss , &ofs );
+    MCSS_SetShadowOffset( subWork->pokeMcssBack , &ofs );
+    MCSS_SetShadowScale( subWork->pokeMcssBack , &shadowScale );
+    GFL_G3D_CAMERA_SetPos( work->camera , &cam_pos );
+    GFL_G3D_CAMERA_Switching( work->camera );
+
     subWork->state = PSS_DISP_BACK;
   }
 
