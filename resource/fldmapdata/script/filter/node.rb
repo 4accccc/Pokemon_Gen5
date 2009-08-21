@@ -187,7 +187,11 @@ module PmScript
 		def initialize( result, name, param )
 			@result = result
 			@name = name
-			@param = param.select{|p| p != ','}
+      if param == nil
+        @param = nil
+      else
+			  @param = param.select{|p| p != ','}
+      end
 		end
 
 		def compile( intp )
