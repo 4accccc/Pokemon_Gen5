@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="sogabe" host="W00140" date="2009-05-12T17:37:26"/>
+	<create user="sogabe" host="W00140" date="2009-08-21T15:53:59"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -552,6 +552,10 @@
 
 	<row id="TargetPokemonMsg">
 		<language name="JPN">[1:02:ポケモンニックネーム:0]</language>
+	</row>
+
+	<row id="EV_MUS_01">
+		<language name="JPN">SEQ_VS_NORAPOKE</language>
 	</row>
 
 	<flowchart-group-list>
