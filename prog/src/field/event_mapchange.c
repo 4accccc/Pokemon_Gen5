@@ -265,17 +265,9 @@ static GMEVENT_RESULT EVENT_MapChange(GMEVENT * event, int *seq, void*work)
 		(*seq) ++;
 		break;
 	case 7:
-    // 遷移先がダンジョンなら地名を表示する
-    if( ZONEDATA_IsDungeon( mcw->loc_req.zone_id ) )
+    // 遷移先ゾーンの地名表示制御フラグが設定されていたら, 地名を表示する
+    if( ZONEDATA_GetPlaceNameFlag( mcw->loc_req.zone_id ) )
     {
-      OBATA_Printf( "dungeon\n" );
-      fieldmap = GAMESYSTEM_GetFieldMapWork(gsys);
-      FIELD_PLACE_NAME_Display(FIELDMAP_GetPlaceNameSys(fieldmap), mcw->loc_req.zone_id);
-    }
-    // 地名が変わっていても表示する
-    else if( ZONEDATA_GetPlaceNameID(mcw->before_zone_id) != ZONEDATA_GetPlaceNameID(mcw->loc_req.zone_id) )
-    {
-      OBATA_Printf( "place name changed\n" );
       fieldmap = GAMESYSTEM_GetFieldMapWork(gsys);
       FIELD_PLACE_NAME_Display(FIELDMAP_GetPlaceNameSys(fieldmap), mcw->loc_req.zone_id);
     }

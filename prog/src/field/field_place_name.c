@@ -680,12 +680,17 @@ void FIELD_PLACE_NAME_Delete( FIELD_PLACE_NAME* p_sys )
 //------------------------------------------------------------------------------------
 void FIELD_PLACE_NAME_ZoneChange( FIELD_PLACE_NAME* p_sys, u32 next_zone_id )
 { 
+  /*
   // 地名に変化がなければ, 地名表示も変化なし
   if( ( p_sys->currentZoneID != INVALID_ZONE_ID ) &&
       ( ZONEDATA_GetPlaceNameID( p_sys->currentZoneID ) == ZONEDATA_GetPlaceNameID( next_zone_id ) ) )
   {
     return;
   }
+  */
+
+  // ゾーンの地名表示フラグが立っていない場合は表示しない
+  if( ZONEDATA_GetPlaceNameFlag( next_zone_id ) != TRUE ) return;
 
 	// 指定されたゾーンIDを次に表示すべきものとして記憶
 	p_sys->nextZoneID = next_zone_id;
@@ -1037,7 +1042,11 @@ static void WritePlaceName( FIELD_PLACE_NAME* p_sys, u32 zone_id )
 	}
 
 	// TEMP: "なぞのばしょ" なら表示しない
-	if( str_id == 0 ) FIELD_PLACE_NAME_Hide( p_sys );
+	if( str_id == 0 ) 
+  {
+    OBATA_Printf( "「なぞのばしょ」を検出( zone id = %d )\n", zone_id );
+    FIELD_PLACE_NAME_Hide( p_sys );
+  }
 }
 
 //-----------------------------------------------------------------------------------
