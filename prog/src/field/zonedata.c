@@ -20,6 +20,8 @@
 #include "gamesystem/pm_season.h"
 
 #include "arc/fieldmap/field_rail_data.naix"  //NARC_field_rail_data_～
+#include "../../resource/fldmapdata/zonetable/header/maptype.h"
+
 
 //============================================================================================
 //============================================================================================
@@ -336,6 +338,36 @@ u16 ZONEDATA_GetPlaceNameWinID(u16 zone_id)
 	getZoneData( &zdbuf, zone_id );
 	return zdbuf.placename_win;
 }
+
+//------------------------------------------------------------------
+/**
+ * @brief 指定ゾーンのマップタイプ取得
+ */
+//------------------------------------------------------------------
+static u16 getMapType(u16 zone_id)
+{
+  ZONEDATA zdbuf;
+  getZoneData( &zdbuf, zone_id );
+  return zdbuf.maptype;
+}
+
+//------------------------------------------------------------------
+/**
+ * @brief  指定ゾーンがダンジョンかどうかを判定
+ * @param  zone_id 判定するゾーンのID
+ * @return ダンジョンならTRUE
+ */
+//------------------------------------------------------------------
+BOOL ZONEDATA_IsDungeon(u16 zone_id)
+{
+  u16 maptype = getMapType( zone_id );
+  if( maptype == MAPTYPE_DUNGEON )
+  {
+    return TRUE;
+  } 
+  return FALSE;
+}
+
 
 //============================================================================================
 //============================================================================================
