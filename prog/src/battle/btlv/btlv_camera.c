@@ -186,12 +186,12 @@ void	BTLV_CAMERA_MoveCameraAngle( BTLV_CAMERA_WORK *bcw, int phi, int theta )
  * @param[in]	bcw		BTLV_CAMERA管理ワークへのポインタ
  * @param[in]	pos		移動先カメラ位置
  * @param[in]	target	移動先カメラターゲット
- * @param[in]	flame	移動フレーム数
+ * @param[in]	frame	移動フレーム数
  * @param[in]	wait	移動ウエイト
  * @param[in]	brake	移動にブレーキをかけるフレーム数
  */
 //============================================================================================
-void	BTLV_CAMERA_MoveCameraInterpolation( BTLV_CAMERA_WORK *bcw, VecFx32 *pos, VecFx32 *target, int flame, int wait, int brake )
+void	BTLV_CAMERA_MoveCameraInterpolation( BTLV_CAMERA_WORK *bcw, VecFx32 *pos, VecFx32 *target, int frame, int wait, int brake )
 {
 	bcw->brake_frame = brake;
 	bcw->wait = wait;
@@ -201,14 +201,14 @@ void	BTLV_CAMERA_MoveCameraInterpolation( BTLV_CAMERA_WORK *bcw, VecFx32 *pos, V
 		bcw->move_pos.x = pos->x;
 		bcw->move_pos.y = pos->y;
 		bcw->move_pos.z = pos->z;
-		BTLV_EFFTOOL_CalcMoveVector( &bcw->now_pos, pos, &bcw->vec_pos, FX32_CONST( flame ) );
+		BTLV_EFFTOOL_CalcMoveVector( &bcw->now_pos, pos, &bcw->vec_pos, FX32_CONST( frame ) );
 		bcw->move_flag |= CAMERA_POS_MOVE_FLAG;
 	}
 	if( target != NULL ){
 		bcw->move_target.x = target->x;
 		bcw->move_target.y = target->y;
 		bcw->move_target.z = target->z;
-		BTLV_EFFTOOL_CalcMoveVector( &bcw->now_target, target, &bcw->vec_target, FX32_CONST( flame ) );
+		BTLV_EFFTOOL_CalcMoveVector( &bcw->now_target, target, &bcw->vec_target, FX32_CONST( frame ) );
 		bcw->move_flag |= CAMERA_TARGET_MOVE_FLAG;
 	}
 }
