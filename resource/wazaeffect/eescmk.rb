@@ -438,6 +438,14 @@ end
 							end
 							str += format("0x%08x",f)
 						end
+					when "VALUE_VECINT"
+						vecint = split_data[ param_num ].split(/:/)
+						for i in 0..(vecint.size-1)
+							if i != 0
+								str += ",\t"
+							end
+							str += vecint[ i ]
+						end
 					when "VALUE_ANGLE"
             angle = split_data[ param_num ].to_f;
             angle = 65535 * angle / 360
