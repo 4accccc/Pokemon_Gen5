@@ -264,15 +264,8 @@ static GMEVENT_RESULT EVENT_MapChange(GMEVENT * event, int *seq, void*work)
     GMEVENT_CallEvent( event, EVENT_EntranceOut( event, gsys, gamedata, fieldmap, mcw->loc_req ) );
 		(*seq) ++;
 		break;
-	case 7:
-    // 遷移先ゾーンの地名表示制御フラグが設定されていたら, 地名を表示する
-    if( ZONEDATA_GetPlaceNameFlag( mcw->loc_req.zone_id ) )
-    {
-      fieldmap = GAMESYSTEM_GetFieldMapWork(gsys);
-      FIELD_PLACE_NAME_Display(FIELDMAP_GetPlaceNameSys(fieldmap), mcw->loc_req.zone_id);
-    }
-		return GMEVENT_RES_FINISH;
-
+  case 7:
+		return GMEVENT_RES_FINISH; 
 	}
 	return GMEVENT_RES_CONTINUE;
 }

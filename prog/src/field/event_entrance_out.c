@@ -20,6 +20,8 @@
 #include "event_entrance_effect.h"  // EVENT_FieldDoorOutAnime
 #include "event_fldmmdl_control.h"  // EVENT_PlayerOneStepAnime
 #include "field_bgm_control.h"
+#include "field_place_name.h" // FIELD_PLACE_NAME_ZoneChange
+#include "fieldmap.h"       // FIELDMAP_GetPlaceNameSys
 
 
 //=======================================================================================
@@ -138,6 +140,13 @@ static GMEVENT_RESULT EVENT_FUNC_EntranceOut_ExitTypeNone(GMEVENT * event, int *
     ++ *seq;
     break;
   case 1:
+    { 
+      fieldmap = GAMESYSTEM_GetFieldMapWork(gsys);
+      FIELD_PLACE_NAME_ZoneChange(FIELDMAP_GetPlaceNameSys(fieldmap), event_work->location.zone_id);
+    }
+    ++ *seq;
+    break;
+  case 2:
     return GMEVENT_RES_FINISH;
   }
   return GMEVENT_RES_CONTINUE;
@@ -157,10 +166,17 @@ static GMEVENT_RESULT EVENT_FUNC_EntranceOut_ExitTypeDoor(GMEVENT * event, int *
   switch (*seq)
   {
   case 0:
-    GMEVENT_CallEvent( event, EVENT_FieldDoorOutAnime( gsys, fieldmap ) );
+    { 
+      fieldmap = GAMESYSTEM_GetFieldMapWork(gsys);
+      FIELD_PLACE_NAME_ZoneChange(FIELDMAP_GetPlaceNameSys(fieldmap), event_work->location.zone_id);
+    }
     ++ *seq;
     break;
   case 1:
+    GMEVENT_CallEvent( event, EVENT_FieldDoorOutAnime( gsys, fieldmap ) );
+    ++ *seq;
+    break;
+  case 2:
     return GMEVENT_RES_FINISH;
   }
   return GMEVENT_RES_CONTINUE;
@@ -181,14 +197,21 @@ static GMEVENT_RESULT EVENT_FUNC_EntranceOut_ExitTypeStep(GMEVENT * event, int *
   switch (*seq)
   {
   case 0:
-		GMEVENT_CallEvent(event, EVENT_FieldFadeIn(gsys, fieldmap, 0));
+    { 
+      fieldmap = GAMESYSTEM_GetFieldMapWork(gsys);
+      FIELD_PLACE_NAME_ZoneChange(FIELDMAP_GetPlaceNameSys(fieldmap), event_work->location.zone_id);
+    }
     ++ *seq;
     break;
   case 1:
-    GMEVENT_CallEvent( event, EVENT_PlayerOneStepAnime(gsys, fieldmap) );
+		GMEVENT_CallEvent(event, EVENT_FieldFadeIn(gsys, fieldmap, 0));
     ++ *seq;
     break;
   case 2:
+    GMEVENT_CallEvent( event, EVENT_PlayerOneStepAnime(gsys, fieldmap) );
+    ++ *seq;
+    break;
+  case 3:
     return GMEVENT_RES_FINISH;
   }
   return GMEVENT_RES_CONTINUE;
