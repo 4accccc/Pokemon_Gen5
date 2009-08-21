@@ -25,6 +25,7 @@
 //======================================================================
 
 typedef struct _STA_SCRIPT_SYS STA_SCRIPT_SYS;
+typedef struct _STA_SCRIPT_TCB_OBJECT STA_SCRIPT_TCB_OBJECT;
 
 //======================================================================
 //	proto

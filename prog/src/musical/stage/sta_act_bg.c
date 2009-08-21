@@ -164,10 +164,7 @@ void	STA_BG_DrawSystem( STA_BG_SYS *work )
 //		G3_MultTransMtx33( &mtxBillboard, &trans );
 	}
 	G3_Translate( ACT_POS_X(-work->scrollOffset), ACT_POS_Y(0.0f), 0);
-//	G3_Scale( ACT_POS_X_FX(ACT_BG_SIZE_X), ACT_POS_Y_FX(ACT_BG_SIZE_X), FX32_ONE );
 	G3_Scale( FX32_ONE*32, FX32_ONE*12, FX32_ONE );
-//	G3_Scale( FX32_ONE*8, FX32_ONE*4, FX32_ONE );
-//	G3_Translate( 0, 0, FX32_ONE);
 
 	//平面ポリゴンなので法線ベクトルは4頂点で共用
 //	if( obj->lightMask ){

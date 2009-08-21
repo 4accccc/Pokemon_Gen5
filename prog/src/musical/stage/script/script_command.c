@@ -64,6 +64,9 @@ typedef struct
 //  s32 stepVal;  //毎フレームの増加量
   u16 frame;
   u16 step;
+  
+  STA_SCRIPT_SYS *scriptSys;
+  STA_SCRIPT_TCB_OBJECT *tcbObj;
 }MOVE_WORK_S32;
 
 //ベクトル移動管理構造体(ポケ・ライト・OBJ・エフェクト等)
@@ -81,18 +84,27 @@ typedef struct
 {
   STA_POKE_WORK *pokeWork;
   MOVE_WORK_VEC moveWork;
+  
+  STA_SCRIPT_SYS *scriptSys;
+  STA_SCRIPT_TCB_OBJECT *tcbObj;
 }MOVE_POKE_VEC;
 
 typedef struct
 {
   STA_OBJ_WORK *objWork;
   MOVE_WORK_VEC moveWork;
+  
+  STA_SCRIPT_SYS *scriptSys;
+  STA_SCRIPT_TCB_OBJECT *tcbObj;
 }MOVE_OBJ_VEC;
 
 typedef struct
 {
   STA_LIGHT_WORK *lightWork;
   MOVE_WORK_VEC moveWork;
+  
+  STA_SCRIPT_SYS *scriptSys;
+  STA_SCRIPT_TCB_OBJECT *tcbObj;
 }MOVE_LIGHT_VEC;
 
 //ポケ追従移動管理構造体(ライト・OBJ・エフェクト等)
@@ -103,6 +115,9 @@ typedef struct
   VecFx32 ofs;      //オフセット
   u16 frame;
   u16 step;
+  
+  STA_SCRIPT_SYS *scriptSys;
+  STA_SCRIPT_TCB_OBJECT *tcbObj;
 }POKE_TRACE_WORK_VEC;
 
 
@@ -111,6 +126,9 @@ typedef struct
   u8 trgPokeNo;
   STA_LIGHT_WORK *lightWork;
   POKE_TRACE_WORK_VEC moveWork;
+  
+  STA_SCRIPT_SYS *scriptSys;
+  STA_SCRIPT_TCB_OBJECT *tcbObj;
 }MOVE_TRACE_LIGHT_VEC;
 
 
@@ -321,6 +339,7 @@ SCRIPT_FUNC_DEF( CurtainUp )
   SCRIPT_PRINT_LABEL(CurtainUp);
 
   moveWork = GFL_HEAP_AllocMemory( work->heapId , sizeof( MOVE_WORK_S32 ));
+  moveWork->scriptSys = work;
   moveWork->actWork = work->actWork;
   moveWork->step = 0;
   moveWork->start = STA_ACT_GetCurtainHeight( work->actWork );
@@ -328,7 +347,7 @@ SCRIPT_FUNC_DEF( CurtainUp )
   moveWork->frame = MATH_ABS(moveWork->end-moveWork->start)/ACT_CURTAIN_SCROLL_SPEED;
 //  moveWork->stepVal = (moveWork->end-moveWork->start)/moveWork->frame;
   
-  GFL_TCB_AddTask( work->tcbSys , SCRIPT_TCB_MoveCurtainTCB , (void*)moveWork , SCRIPT_TCB_PRI_NORMAL );
+  moveWork->tcbObj = STA_SCRIPT_CreateTcbTask( work , SCRIPT_TCB_MoveCurtainTCB , (void*)moveWork , SCRIPT_TCB_PRI_NORMAL );
   
   return SFT_CONTINUE;
   
@@ -341,6 +360,7 @@ SCRIPT_FUNC_DEF( CurtainDown )
   MOVE_WORK_S32 *moveWork;
   SCRIPT_PRINT_LABEL(CurtainDown);
   moveWork = GFL_HEAP_AllocMemory( work->heapId , sizeof( MOVE_WORK_S32 ));
+  moveWork->scriptSys = work;
   moveWork->actWork = work->actWork;
   moveWork->step = 0;
   moveWork->start = STA_ACT_GetCurtainHeight( work->actWork );
@@ -348,7 +368,7 @@ SCRIPT_FUNC_DEF( CurtainDown )
   moveWork->frame = MATH_ABS(moveWork->end-moveWork->start)/ACT_CURTAIN_SCROLL_SPEED;
 //  moveWork->stepVal = (moveWork->end-moveWork->start)/moveWork->frame;
   
-  GFL_TCB_AddTask( work->tcbSys , SCRIPT_TCB_MoveCurtainTCB , (void*)moveWork , SCRIPT_TCB_PRI_NORMAL );
+  moveWork->tcbObj = STA_SCRIPT_CreateTcbTask( work , SCRIPT_TCB_MoveCurtainTCB , (void*)moveWork , SCRIPT_TCB_PRI_NORMAL );
   
   return SFT_CONTINUE;
 }
@@ -369,6 +389,7 @@ SCRIPT_FUNC_DEF( CurtainMove )
   {
     MOVE_WORK_S32 *moveWork;
     moveWork = GFL_HEAP_AllocMemory( work->heapId , sizeof( MOVE_WORK_S32 ));
+    moveWork->scriptSys = work;
     moveWork->actWork = work->actWork;
     moveWork->step = 0;
     moveWork->start = STA_ACT_GetCurtainHeight( work->actWork );
@@ -376,7 +397,7 @@ SCRIPT_FUNC_DEF( CurtainMove )
     moveWork->frame = frame;
 //    moveWork->stepVal = (moveWork->end-moveWork->start)/moveWork->frame;
   
-    GFL_TCB_AddTask( work->tcbSys , SCRIPT_TCB_MoveCurtainTCB , (void*)moveWork , SCRIPT_TCB_PRI_NORMAL );
+    moveWork->tcbObj = STA_SCRIPT_CreateTcbTask( work , SCRIPT_TCB_MoveCurtainTCB , (void*)moveWork , SCRIPT_TCB_PRI_NORMAL );
   }
   
   return SFT_CONTINUE;
@@ -393,8 +414,7 @@ static void SCRIPT_TCB_MoveCurtainTCB(  GFL_TCB *tcb, void *work )
   STA_ACT_SetCurtainHeight( moveWork->actWork , newPos);
   if( isFinish == TRUE )
   {
-    GFL_HEAP_FreeMemory( work );
-    GFL_TCB_DeleteTask( tcb );
+    STA_SCRIPT_DeleteTcbTask( moveWork->scriptSys , moveWork->tcbObj );
   }
 }
 
@@ -420,6 +440,7 @@ SCRIPT_FUNC_DEF( StageMove )
   {
     MOVE_WORK_S32 *moveWork;
     moveWork = GFL_HEAP_AllocMemory( work->heapId , sizeof( MOVE_WORK_S32 ));
+    moveWork->scriptSys = work;
     moveWork->actWork = work->actWork;
     moveWork->step = 0;
     moveWork->start = STA_ACT_GetStageScroll( work->actWork );
@@ -427,7 +448,7 @@ SCRIPT_FUNC_DEF( StageMove )
     moveWork->frame = frame;
 //    moveWork->stepVal = (moveWork->end-moveWork->start)/moveWork->frame;
   
-    GFL_TCB_AddTask( work->tcbSys , SCRIPT_TCB_MoveStageTCB , (void*)moveWork , SCRIPT_TCB_PRI_NORMAL );
+    moveWork->tcbObj = STA_SCRIPT_CreateTcbTask( work , SCRIPT_TCB_MoveStageTCB , (void*)moveWork , SCRIPT_TCB_PRI_NORMAL );
   }
 
   return SFT_CONTINUE;
@@ -445,8 +466,7 @@ static void SCRIPT_TCB_MoveStageTCB(  GFL_TCB *tcb, void *work )
   STA_ACT_SetStageScroll( moveWork->actWork , newPos);
   if( isFinish == TRUE )
   {
-    GFL_HEAP_FreeMemory( work );
-    GFL_TCB_DeleteTask( tcb );
+    STA_SCRIPT_DeleteTcbTask( moveWork->scriptSys , moveWork->tcbObj );
   }
 }
 
@@ -569,6 +589,7 @@ SCRIPT_FUNC_DEF( PokeMove )
         VecFx32 subVec;
         MOVE_POKE_VEC *movePoke;
         movePoke = GFL_HEAP_AllocMemory( work->heapId , sizeof( MOVE_POKE_VEC ));
+        movePoke->scriptSys = work;
         movePoke->pokeWork = pokeWork;
         movePoke->moveWork.actWork = work->actWork;
         movePoke->moveWork.step = 0;
@@ -581,7 +602,7 @@ SCRIPT_FUNC_DEF( PokeMove )
         movePoke->moveWork.stepVal.y = subVec.y / frame;
         movePoke->moveWork.stepVal.z = subVec.z / frame;
 
-        GFL_TCB_AddTask( work->tcbSys , SCRIPT_TCB_MovePokeTCB , (void*)movePoke , SCRIPT_TCB_PRI_NORMAL );
+        movePoke->tcbObj = STA_SCRIPT_CreateTcbTask( work , SCRIPT_TCB_MovePokeTCB , (void*)movePoke , SCRIPT_TCB_PRI_NORMAL );
       }
     }
   }
@@ -624,6 +645,7 @@ SCRIPT_FUNC_DEF( PokeMoveOffset )
         VecFx32 subVec;
         MOVE_POKE_VEC *movePoke;
         movePoke = GFL_HEAP_AllocMemory( work->heapId , sizeof( MOVE_POKE_VEC ));
+        movePoke->scriptSys = work;
         movePoke->pokeWork = pokeWork;
         movePoke->moveWork.actWork = work->actWork;
         movePoke->moveWork.step = 0;
@@ -638,7 +660,7 @@ SCRIPT_FUNC_DEF( PokeMoveOffset )
         movePoke->moveWork.stepVal.y = ofsY / frame;
         movePoke->moveWork.stepVal.z = ofsZ / frame;
 
-        GFL_TCB_AddTask( work->tcbSys , SCRIPT_TCB_MovePokeTCB , (void*)movePoke , SCRIPT_TCB_PRI_NORMAL );
+        movePoke->tcbObj = STA_SCRIPT_CreateTcbTask( work , SCRIPT_TCB_MovePokeTCB , (void*)movePoke , SCRIPT_TCB_PRI_NORMAL );
       }
     }
   }
@@ -658,8 +680,7 @@ static void SCRIPT_TCB_MovePokeTCB(  GFL_TCB *tcb, void *work )
   
   if( isFinish == TRUE )
   {
-    GFL_HEAP_FreeMemory( work );
-    GFL_TCB_DeleteTask( tcb );
+    STA_SCRIPT_DeleteTcbTask( movePoke->scriptSys , movePoke->tcbObj );
   }
 }
 
@@ -819,6 +840,9 @@ typedef struct
   STA_POKE_WORK *pokeWork;
   
   fx32  height;
+
+  STA_SCRIPT_SYS *scriptSys;
+  STA_SCRIPT_TCB_OBJECT *tcbObj;
 }POKE_ACT_JUMP_WORK;
 
 SCRIPT_FUNC_DEF( PokeActionJump )
@@ -840,6 +864,7 @@ SCRIPT_FUNC_DEF( PokeActionJump )
     if( pokeNoBit & (1<<pokeNo) )
     {
       POKE_ACT_JUMP_WORK  *jumpWork = GFL_HEAP_AllocMemory( work->heapId , sizeof(POKE_ACT_JUMP_WORK));
+      jumpWork->scriptSys = work;
       jumpWork->pokeWork = STA_ACT_GetPokeWork( work->actWork , (u8)pokeNo );
       jumpWork->height = height;
       
@@ -848,7 +873,7 @@ SCRIPT_FUNC_DEF( PokeActionJump )
       jumpWork->repeatWork.interval = interval;
       jumpWork->repeatWork.num = num;
       
-      GFL_TCB_AddTask( work->tcbSys , SCRIPT_TCB_PokeAct_Jump , (void*)jumpWork , SCRIPT_TCB_PRI_NORMAL );
+      jumpWork->tcbObj = STA_SCRIPT_CreateTcbTask( work , SCRIPT_TCB_PokeAct_Jump , (void*)jumpWork , SCRIPT_TCB_PRI_NORMAL );
     }
   }
 
@@ -865,8 +890,7 @@ static void SCRIPT_TCB_PokeAct_Jump(  GFL_TCB *tcb, void *work )
   const REPEAT_MNG_RETURN ret = SCRIPT_TCB_UpdateRepeat( &jumpWork->repeatWork );
   if( ret == RMR_END )
   {
-    GFL_HEAP_FreeMemory( work );
-    GFL_TCB_DeleteTask( tcb );
+    STA_SCRIPT_DeleteTcbTask( jumpWork->scriptSys , jumpWork->tcbObj );
     return;
   }
   else
@@ -887,6 +911,9 @@ typedef struct
 {
   MOVE_WORK_S32 moveWork;
   STA_POKE_WORK *pokeWork;
+
+  STA_SCRIPT_SYS *scriptSys;
+  STA_SCRIPT_TCB_OBJECT *tcbObj;
 }POKE_ACT_ROTATE_WORK;
 
 SCRIPT_FUNC_DEF( PokeActionRotate )
@@ -908,6 +935,7 @@ SCRIPT_FUNC_DEF( PokeActionRotate )
     if( pokeNoBit & (1<<pokeNo) )
     {
       POKE_ACT_ROTATE_WORK  *rotWork = GFL_HEAP_AllocMemory( work->heapId , sizeof(POKE_ACT_ROTATE_WORK));
+      rotWork->scriptSys = work;
       rotWork->pokeWork = STA_ACT_GetPokeWork( work->actWork , (u8)pokeNo );
       
       rotWork->moveWork.actWork = work->actWork;
@@ -916,7 +944,7 @@ SCRIPT_FUNC_DEF( PokeActionRotate )
       rotWork->moveWork.frame = frame;
       rotWork->moveWork.step  = 0;
       
-      GFL_TCB_AddTask( work->tcbSys , SCRIPT_TCB_PokeAct_Rotate , (void*)rotWork , SCRIPT_TCB_PRI_NORMAL );
+      rotWork->tcbObj = STA_SCRIPT_CreateTcbTask( work , SCRIPT_TCB_PokeAct_Rotate , (void*)rotWork , SCRIPT_TCB_PRI_NORMAL );
     }
   }
 
@@ -940,8 +968,7 @@ static void SCRIPT_TCB_PokeAct_Rotate(  GFL_TCB *tcb, void *work )
     angle = rotWork->moveWork.end*0x10000/360;
     
     STA_POKE_SetRotate( pokeSys , rotWork->pokeWork , angle );
-    GFL_HEAP_FreeMemory( work );
-    GFL_TCB_DeleteTask( tcb );
+    STA_SCRIPT_DeleteTcbTask( rotWork->scriptSys , rotWork->tcbObj );
   }
   else
   {
@@ -1086,6 +1113,7 @@ SCRIPT_FUNC_DEF( ObjectMove )
     VecFx32 subVec;
     MOVE_OBJ_VEC *moveObj;
     moveObj = GFL_HEAP_AllocMemory( work->heapId , sizeof( MOVE_OBJ_VEC ));
+    moveObj->scriptSys = work;
     moveObj->objWork = objWork;
     moveObj->moveWork.actWork = work->actWork;
     moveObj->moveWork.step = 0;
@@ -1098,7 +1126,7 @@ SCRIPT_FUNC_DEF( ObjectMove )
     moveObj->moveWork.stepVal.y = subVec.y / frame;
     moveObj->moveWork.stepVal.z = subVec.z / frame;
 
-    GFL_TCB_AddTask( work->tcbSys , SCRIPT_TCB_MoveObjTCB , (void*)moveObj , SCRIPT_TCB_PRI_NORMAL );
+    moveObj->tcbObj = STA_SCRIPT_CreateTcbTask( work , SCRIPT_TCB_MoveObjTCB , (void*)moveObj , SCRIPT_TCB_PRI_NORMAL );
   }
 
   return SFT_CONTINUE;
@@ -1116,8 +1144,7 @@ static void SCRIPT_TCB_MoveObjTCB(  GFL_TCB *tcb, void *work )
   
   if( isFinish == TRUE )
   {
-    GFL_HEAP_FreeMemory( work );
-    GFL_TCB_DeleteTask( tcb );
+    STA_SCRIPT_DeleteTcbTask( moveObj->scriptSys , moveObj->tcbObj );
   }
 }
 
@@ -1206,6 +1233,9 @@ typedef struct
   VecFx32 pos;
   VecFx32 range;
   u16 emitNo;
+
+  STA_SCRIPT_SYS *scriptSys;
+  STA_SCRIPT_TCB_OBJECT *tcbObj;
 }EFFECT_REPEAT_WORK;
 
 SCRIPT_FUNC_DEF( EffectRepeatStart )
@@ -1233,6 +1263,7 @@ SCRIPT_FUNC_DEF( EffectRepeatStart )
   GF_ASSERT( posYStart <= posYEnd );
   GF_ASSERT( posZStart <= posZEnd );
 
+  effRepeat->scriptSys = work;
   effRepeat->effWork = effWork;
   effRepeat->emitNo = emiterNo;
   VEC_Set( &effRepeat->pos , posXStart,posYStart,posZStart );
@@ -1243,7 +1274,7 @@ SCRIPT_FUNC_DEF( EffectRepeatStart )
   effRepeat->repeatWork.interval = interval;
   effRepeat->repeatWork.num = num;
 
-  GFL_TCB_AddTask( work->tcbSys , SCRIPT_TCB_EffectRepeat , (void*)effRepeat , SCRIPT_TCB_PRI_NORMAL );
+  effRepeat->tcbObj = STA_SCRIPT_CreateTcbTask( work , SCRIPT_TCB_EffectRepeat , (void*)effRepeat , SCRIPT_TCB_PRI_NORMAL );
 
   return SFT_CONTINUE;
 }
@@ -1256,8 +1287,7 @@ static void SCRIPT_TCB_EffectRepeat(  GFL_TCB *tcb, void *work )
   const REPEAT_MNG_RETURN ret = SCRIPT_TCB_UpdateRepeat( &effRepeat->repeatWork );
   if( ret == RMR_END )
   {
-    GFL_HEAP_FreeMemory( work );
-    GFL_TCB_DeleteTask( tcb );
+    STA_SCRIPT_DeleteTcbTask( effRepeat->scriptSys , effRepeat->tcbObj );
     return;
   }
   else if( ret == RMR_ACTION )
@@ -1341,6 +1371,7 @@ SCRIPT_FUNC_DEF( LightMove )
     VecFx32 subVec;
     MOVE_LIGHT_VEC *moveLight;
     moveLight = GFL_HEAP_AllocMemory( work->heapId , sizeof( MOVE_LIGHT_VEC ));
+    moveLight->scriptSys = work;
     moveLight->lightWork = lightWork;
     moveLight->moveWork.actWork = work->actWork;
     moveLight->moveWork.step = 0;
@@ -1353,7 +1384,7 @@ SCRIPT_FUNC_DEF( LightMove )
     moveLight->moveWork.stepVal.y = subVec.y / frame;
     moveLight->moveWork.stepVal.z = subVec.z / frame;
 
-    GFL_TCB_AddTask( work->tcbSys , SCRIPT_TCB_MoveLightTCB , (void*)moveLight , SCRIPT_TCB_PRI_NORMAL );
+    moveLight->tcbObj = STA_SCRIPT_CreateTcbTask( work , SCRIPT_TCB_MoveLightTCB , (void*)moveLight , SCRIPT_TCB_PRI_NORMAL );
   }
   
   return SFT_CONTINUE;
@@ -1371,8 +1402,7 @@ static void SCRIPT_TCB_MoveLightTCB(  GFL_TCB *tcb, void *work )
   
   if( isFinish == TRUE )
   {
-    GFL_HEAP_FreeMemory( work );
-    GFL_TCB_DeleteTask( tcb );
+    STA_SCRIPT_DeleteTcbTask( moveLight->scriptSys , moveLight->tcbObj );
   }
 }
 
@@ -1408,6 +1438,7 @@ SCRIPT_FUNC_DEF( LightMoveTrace )
     STA_AUDI_SYS *audiSys = STA_ACT_GetAudienceSys( work->actWork );
     MOVE_TRACE_LIGHT_VEC *moveTraceLight;
     moveTraceLight = GFL_HEAP_AllocMemory( work->heapId , sizeof( MOVE_TRACE_LIGHT_VEC ));
+    moveTraceLight->scriptSys = work;
     moveTraceLight->trgPokeNo = pokeNo;
     moveTraceLight->lightWork = lightWork;
     moveTraceLight->moveWork.actWork = work->actWork;
@@ -1418,7 +1449,7 @@ SCRIPT_FUNC_DEF( LightMoveTrace )
 
     STA_AUDI_SetAttentionPoke( audiSys , pokeNo , TRUE );
     
-    GFL_TCB_AddTask( work->tcbSys , SCRIPT_TCB_MoveTraceLightTCB , (void*)moveTraceLight , SCRIPT_TCB_PRI_LOW );
+    moveTraceLight->tcbObj = STA_SCRIPT_CreateTcbTask( work , SCRIPT_TCB_MoveTraceLightTCB , (void*)moveTraceLight , SCRIPT_TCB_PRI_LOW );
   }
   
   return SFT_CONTINUE;
@@ -1438,8 +1469,7 @@ static void SCRIPT_TCB_MoveTraceLightTCB(  GFL_TCB *tcb, void *work )
   if( isFinish == TRUE )
   {
     STA_AUDI_SetAttentionPoke( audiSys , moveLight->trgPokeNo , FALSE );
-    GFL_HEAP_FreeMemory( work );
-    GFL_TCB_DeleteTask( tcb );
+    STA_SCRIPT_DeleteTcbTask( moveLight->scriptSys , moveLight->tcbObj );
   }
 }
 

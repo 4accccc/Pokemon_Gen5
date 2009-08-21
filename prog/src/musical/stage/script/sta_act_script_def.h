@@ -49,6 +49,14 @@ typedef enum
 //======================================================================
 #pragma mark [> proto
 
+//TCB管理
+struct _STA_SCRIPT_TCB_OBJECT
+{
+  NNSFndLink  linkObj;
+  void        *tcbWork;
+  GFL_TCB     *tcbTask;
+};
+
 //スクリプト１本のデータ
 typedef struct
 {
@@ -77,11 +85,19 @@ struct _STA_SCRIPT_SYS
 	void		*tcbWork;
 	STA_SCRIPT_WORK *scriptWork[SCRIPT_NUM];
 	ACTING_WORK *actWork;
+	
+	NNSFndList tcbList;
 };
 
 
 typedef SCRIPT_FINISH_TYPE(*STA_SCRIPT_FUNC)(STA_SCRIPT_SYS *work,STA_SCRIPT_WORK *scriptWork);
 
+
+//--------------------------------------------------------------
+//	スクリプトの関数
+//--------------------------------------------------------------
+STA_SCRIPT_TCB_OBJECT* STA_SCRIPT_CreateTcbTask( STA_SCRIPT_SYS *work , GFL_TCB_FUNC *func , void* tcbWork , u32 pri );
+void STA_SCRIPT_DeleteTcbTask( STA_SCRIPT_SYS *work , STA_SCRIPT_TCB_OBJECT *tcbObj );
 
 //--------------------------------------------------------------
 //	スクリプト用機能関数

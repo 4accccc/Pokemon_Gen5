@@ -181,7 +181,7 @@ static void STA_POKE_UpdatePokeFunc( STA_POKE_SYS *work , STA_POKE_WORK *pokeWor
     //ƒ|ƒPƒ‚ƒ“‚ÌÀ•W
     VEC_Add( &pokeWork->pokePos , &pokeWork->posOfs , &musPos );
     
-    musPos.x = ACT_POS_X_FX(musPos.x - FX32_CONST(work->scrollOffset));
+    musPos.x = ACT_POS_X_FX(musPos.x);
     musPos.y = ACT_POS_Y_FX(musPos.y);
 //    musPos.z = musPos.z;
     
@@ -235,7 +235,7 @@ static void STA_POKE_UpdateItemFunc( STA_POKE_SYS *work , STA_POKE_WORK *pokeWor
             VEC_Subtract( &equipData->rotOfs , &rotOfs , &rotOfs );
           }
 
-          pos.x = (equipData->pos.x+ofs.x+FX32_CONST(128.0f) + rotOfs.x);
+          pos.x = (equipData->pos.x+ofs.x+FX32_CONST(128.0f) + rotOfs.x) + FX32_CONST(work->scrollOffset);
           pos.y = (equipData->pos.y+ofs.y+FX32_CONST(96.0f) + rotOfs.y);
           if( MUS_ITEM_DRAW_IsBackItem( pokeWork->itemWork[ePos] ) == TRUE )
           {
@@ -279,7 +279,7 @@ static void STA_POKE_UpdateItemFunc( STA_POKE_SYS *work , STA_POKE_WORK *pokeWor
   {
     VecFx32 *shadowOfs; //‰e·•ª
     shadowOfs = MUS_POKE_DRAW_GetShadowOfs( pokeWork->drawWork );
-    pos.x = ACT_POS_X_FX(pokeWork->pokePos.x - FX32_CONST(work->scrollOffset) + shadowOfs->x );
+    pos.x = ACT_POS_X_FX(pokeWork->pokePos.x + shadowOfs->x );
     pos.y = ACT_POS_Y_FX(pokeWork->pokePos.y + shadowOfs->y );
     pos.z = 5.0f;
     GFL_BBD_SetObjectTrans( work->bbdSys , pokeWork->shadowBbdIdx , &pos );

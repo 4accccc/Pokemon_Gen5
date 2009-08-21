@@ -68,6 +68,8 @@ STA_SCRIPT_SYS* STA_SCRIPT_InitSystem( HEAPID heapId ,ACTING_WORK *actWork)
   work->tcbSys = GFL_TCB_Init( SCRIPT_TCB_TASK_NUM , work->tcbWork );
   work->befVCount = OS_GetVBlankCount();
   
+  NNS_FND_INIT_LIST( &work->tcbList , STA_SCRIPT_TCB_OBJECT , linkObj );
+  
   for( i=0;i<SCRIPT_NUM;i++ )
   {
     work->scriptWork[i] = NULL;
@@ -88,6 +90,20 @@ void STA_SCRIPT_ExitSystem( STA_SCRIPT_SYS *work )
       GFL_HEAP_FreeMemory( work->scriptWork[i] );
       work->scriptWork[i] = NULL;
     }
+  }
+  
+  //TCB‚ÉŽc‚Á‚Ä‚¢‚éˆ—‚ðÁ‚·
+  {
+    STA_SCRIPT_TCB_OBJECT *tcbObj = NNS_FndGetNextListObject( &work->tcbList , NULL );
+    while( tcbObj != NULL )
+    {
+      STA_SCRIPT_TCB_OBJECT *nextTcbObj = NNS_FndGetNextListObject( &work->tcbList , tcbObj );
+      STA_SCRIPT_DeleteTcbTask( work , tcbObj );
+      tcbObj = nextTcbObj;
+      
+      ARI_TPrintf("TCB Delete!!\n");
+    }
+    
   }
 
   GFL_TCB_Exit( work->tcbSys );
@@ -216,4 +232,30 @@ const u8 STA_SCRIPT_GetRunningScriptNum( STA_SCRIPT_SYS *work )
     }
   }
   return num; 
+}
+
+//--------------------------------------------------------------
+//  TCB‚É’Ç‰Á
+//--------------------------------------------------------------
+STA_SCRIPT_TCB_OBJECT* STA_SCRIPT_CreateTcbTask( STA_SCRIPT_SYS *work , GFL_TCB_FUNC *func , void* tcbWork , u32 pri )
+{
+  STA_SCRIPT_TCB_OBJECT *tcbObj = GFL_HEAP_AllocMemory( work->heapId , sizeof(STA_SCRIPT_TCB_OBJECT) );
+  tcbObj->tcbTask = GFL_TCB_AddTask( work->tcbSys , func , tcbWork , pri );
+  tcbObj->tcbWork = tcbWork;
+  
+  NNS_FndAppendListObject( &work->tcbList , tcbObj );
+  return tcbObj;
+}
+
+//--------------------------------------------------------------
+//  TCB‚©‚çíœ
+//--------------------------------------------------------------
+void STA_SCRIPT_DeleteTcbTask( STA_SCRIPT_SYS *work , STA_SCRIPT_TCB_OBJECT *tcbObj )
+{
+  GFL_HEAP_FreeMemory( tcbObj->tcbWork );
+  GFL_TCB_DeleteTask( tcbObj->tcbTask );
+
+  NNS_FndRemoveListObject( &work->tcbList , tcbObj );
+
+  GFL_HEAP_FreeMemory( tcbObj );
 }

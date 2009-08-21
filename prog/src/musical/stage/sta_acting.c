@@ -281,6 +281,11 @@ void  STA_ACT_TermActing( ACTING_WORK *work )
     GFL_HEAP_FreeMemory( work->scriptData );
   }
 
+  if( SND_STRM_CheckPlay() == TRUE )
+  {
+    STA_ACT_StopBgm( work );
+  }
+
   if( work->msgStr != NULL )
   {
     GFL_STR_DeleteBuffer( work->msgStr );
@@ -883,11 +888,25 @@ static void STA_ACT_UpdateScroll( ACTING_WORK *work )
   
   if( work->updateScroll == TRUE )
   {
-    //GFL_BG_SetScroll( ACT_FRAME_MAIN_BG , GFL_BG_SCROLL_X_SET , work->scrollOffset );
+    
+    VecFx32 cam_pos = MUSICAL_CAMERA_POS;
+    VecFx32 cam_target = MUSICAL_CAMERA_TRG;
+    
+    cam_pos.x = MUSICAL_POS_X( work->scrollOffset );
+    cam_target.x = MUSICAL_POS_X( work->scrollOffset );
+    
+    GFL_G3D_CAMERA_SetPos( work->camera , &cam_pos );
+    GFL_G3D_CAMERA_SetTarget( work->camera , &cam_target );
+    GFL_G3D_CAMERA_Switching( work->camera );
+    
     GFL_BG_SetScroll( ACT_FRAME_MAIN_CURTAIN , GFL_BG_SCROLL_X_SET , work->scrollOffset );
     STA_BG_SetScrollOffset( work->bgSys , work->scrollOffset );
     STA_POKE_System_SetScrollOffset( work->pokeSys , work->scrollOffset ); 
     STA_OBJ_System_SetScrollOffset( work->objSys , work->scrollOffset ); 
+    /*
+    //GFL_BG_SetScroll( ACT_FRAME_MAIN_BG , GFL_BG_SCROLL_X_SET , work->scrollOffset );
+    */
+
     work->updateScroll = FALSE;
   }
   
@@ -1069,7 +1088,7 @@ void STA_ACT_PlayTransEffect( ACTING_WORK *work , const u8 idx )
   VecFx32 pos;
   const VecFx32 *ofs = STA_POKE_GetRotOffset( work->pokeSys , work->pokeWork[idx] );
   STA_POKE_GetPosition( work->pokeSys , work->pokeWork[idx] , &pos );
-  pos.x = ACT_POS_X_FX(pos.x - FX32_CONST(work->scrollOffset) + ofs->x );
+  pos.x = ACT_POS_X_FX(pos.x + ofs->x );
   pos.y = ACT_POS_Y_FX(pos.y + ofs->y );
   pos.z = FX32_CONST(180.0f);
   for( i=0;i<1;i++ )
