@@ -25,28 +25,28 @@
  * @param[in]	start	移動元
  * @param[in]	endif	移動先
  * @param[out]	out		移動量を格納するワークへのポインタ
- * @param[in]	flame	移動フレーム数
+ * @param[in]	frame	移動フレーム数
  */
 //============================================================================================
-void	BTLV_EFFTOOL_CalcMoveVector( VecFx32 *start, VecFx32 *end, VecFx32 *out, fx32 flame )
+void	BTLV_EFFTOOL_CalcMoveVector( VecFx32 *start, VecFx32 *end, VecFx32 *out, fx32 frame )
 {
 	out->x = 0;
 	out->y = 0;
 	out->z = 0;
 	if( end->x - start->x ){
-		out->x = FX_Div( end->x - start->x, flame );
+		out->x = FX_Div( end->x - start->x, frame );
 		if( out->x == 0 ){
 			out->x = 1;
 		}
 	}
 	if( end->y - start->y ){
-		out->y = FX_Div( end->y - start->y, flame );
+		out->y = FX_Div( end->y - start->y, frame );
 		if( out->y == 0 ){
 			out->y = 1;
 		}
 	}
 	if( end->z - start->z ){
-		out->z = FX_Div( end->z - start->z, flame );
+		out->z = FX_Div( end->z - start->z, frame );
 		if( out->z == 0 ){
 			out->z = 1;
 		}
