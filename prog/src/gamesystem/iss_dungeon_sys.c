@@ -369,7 +369,7 @@ void ISS_DUNGEON_SYS_Update( ISS_DUNGEON_SYS* p_sys )
 	}
 
 	// DEBUG:
-	OBATA_Printf( "Dungeon ISS is ON\n" );
+	//OBATA_Printf( "Dungeon ISS is ON\n" );
 } 
 
 //---------------------------------------------------------------------------
