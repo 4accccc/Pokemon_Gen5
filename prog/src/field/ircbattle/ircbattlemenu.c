@@ -16,6 +16,7 @@
 #include "infowin/infowin.h"
 #include "system/main.h"
 #include "system/wipe.h"
+#include "gamesystem/msgspeed.h" // MSGSPEED_GetWait
 
 #include "message.naix"
 #include "print/printsys.h"
@@ -34,6 +35,8 @@
 #include "../event_fieldmap_control.h"	//EVENT_FieldSubProc
 #include "../event_ircbattle.h"
 #include "ircbattle.naix"
+#include "app/app_taskmenu.h"  //APP_TASKMENU_INITWORK
+
 
 #define _NET_DEBUG (1)  //デバッグ時は１
 #define _WORK_HEAPSIZE (0x1000)  // 調整が必要
@@ -159,7 +162,7 @@ enum _IBMODE_CHANGE {
 };
 
 
-
+#define _SUBMENU_LISTMAX (2)
 
 
 typedef void (StateFunc)(IRC_BATTLE_MENU* pState);
@@ -176,10 +179,21 @@ struct _IRC_BATTLE_MENU {
   GFL_MSGDATA *pMsgData;  //
   WORDSET *pWordSet;								// メッセージ展開用ワークマネージャー
   GFL_FONT* pFontHandle;
+	STRBUF*  pExpStrBuf;
   STRBUF* pStrBuf;
   u32 bgchar;  //GFL_ARCUTIL_TRANSINFO
 	u32 subchar;
   //    BMPWINFRAME_AREAMANAGER_POS aPos;
+
+
+
+  GFL_BMPWIN* infoDispWin;
+  PRINT_STREAM* pStream;
+	GFL_TCBLSYS *pMsgTcblSys;
+  PRINT_QUE*            SysMsgQue;
+  APP_TASKMENU_WORK* pAppTask;
+  APP_TASKMENU_ITEMWORK appitem[_SUBMENU_LISTMAX];
+  EVENT_IRCBATTLE_WORK * dbw;
   int windowNum;
   BOOL IsIrc;
   GAMESYS_WORK *gameSys_;
@@ -758,6 +772,111 @@ static void _modeSelectEntryNumWait(IRC_BATTLE_MENU* pWork)
 
 //------------------------------------------------------------------------------
 /**
+ * @brief   はいいいえウインドウ
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+
+#define _SUBLIST_NORMAL_PAL   (9)   //サブメニューの通常パレット
+
+
+static void _YesNoStart(IRC_BATTLE_MENU* pWork)
+{
+  int i;
+  APP_TASKMENU_INITWORK appinit;
+
+  appinit.heapId = pWork->heapID;
+  appinit.itemNum =  2;
+  appinit.itemWork =  &pWork->appitem[0];
+  appinit.bgFrame =  GFL_BG_FRAME1_S;
+  appinit.palNo = _SUBLIST_NORMAL_PAL;
+
+  appinit.posType = ATPT_RIGHT_DOWN;
+  appinit.charPosX = 32;
+  appinit.charPosY = 14;
+
+  appinit.msgHandle = pWork->pMsgData;
+  appinit.fontHandle = pWork->pFontHandle;
+  appinit.printQue = pWork->SysMsgQue;
+
+  pWork->appitem[0].str = GFL_STR_CreateBuffer(100, pWork->heapID);
+  GFL_MSG_GetString(pWork->pMsgData, IRCBTL_STR_27, pWork->appitem[0].str);
+  pWork->appitem[0].msgColor = PRINTSYS_LSB_Make( 0xe,0xf,0);
+  pWork->appitem[1].str = GFL_STR_CreateBuffer(100, pWork->heapID);
+  GFL_MSG_GetString(pWork->pMsgData, IRCBTL_STR_28, pWork->appitem[1].str);
+  pWork->appitem[1].msgColor = PRINTSYS_LSB_Make( 0xe,0xf,0);
+  pWork->pAppTask = APP_TASKMENU_OpenMenu(&appinit);
+  GFL_STR_DeleteBuffer(pWork->appitem[0].str);
+  GFL_STR_DeleteBuffer(pWork->appitem[1].str);
+  G2S_SetBlendBrightness( GX_BLEND_PLANEMASK_BG0 | GX_BLEND_PLANEMASK_OBJ , -8 );
+}
+
+//------------------------------------------------------------------------------
+/**
+ * @brief   メッセージの終了待ち
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+
+static BOOL _infoMessageEndCheck(IRC_BATTLE_MENU* pWork)
+{
+  if(pWork->pStream){
+    int state = PRINTSYS_PrintStreamGetState( pWork->pStream );
+    switch(state){
+    case PRINTSTREAM_STATE_DONE:
+      PRINTSYS_PrintStreamDelete( pWork->pStream );
+      pWork->pStream = NULL;
+      break;
+    case PRINTSTREAM_STATE_PAUSE:
+      if(GFL_UI_KEY_GetTrg() == PAD_BUTTON_DECIDE){
+        PRINTSYS_PrintStreamReleasePause( pWork->pStream );
+      }
+      break;
+    default:
+      break;
+    }
+    return FALSE;  //まだ終わってない
+  }
+  return TRUE;// 終わっている
+}
+
+//------------------------------------------------------------------------------
+/**
+ * @brief   説明ウインドウ表示
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+
+static void _infoMessageDisp(IRC_BATTLE_MENU* pWork)
+{
+  GFL_BMPWIN* pwin;
+
+  
+  if(pWork->infoDispWin==NULL){
+    pWork->infoDispWin = GFL_BMPWIN_Create(
+      GFL_BG_FRAME1_S ,
+      1 , 3, 30 ,4 ,
+      _BUTTON_MSG_PAL , GFL_BMP_CHRAREA_GET_B );
+  }
+  pwin = pWork->infoDispWin;
+
+  GFL_BMP_Clear(GFL_BMPWIN_GetBmp(pwin), 15);
+  GFL_FONTSYS_SetColor(1, 2, 15);
+
+  pWork->pStream = PRINTSYS_PrintStream(pwin ,0,0, pWork->pStrBuf, pWork->pFontHandle,
+                                        MSGSPEED_GetWait(), pWork->pMsgTcblSys, 2, pWork->heapID, 15);
+
+  BmpWinFrame_Write( pwin, WINDOW_TRANS_ON_V, GFL_ARCUTIL_TRANSINFO_GetPos(pWork->bgchar), _BUTTON_WIN_PAL );
+
+  GFL_BMPWIN_TransVramCharacter(pwin);
+  GFL_BMPWIN_MakeScreen(pwin);
+  GFL_BG_LoadScreenV_Req(GFL_BG_FRAME1_S);
+}
+
+
+
+//------------------------------------------------------------------------------
+/**
  * @brief   セーブ確認画面初期化
  * @retval  none
  */
@@ -767,8 +886,72 @@ static void _modeReportInit(IRC_BATTLE_MENU* pWork)
 
   //    GAMEDATA_Save(GAMESYSTEM_GetGameData(GMEVENT_GetGameSysWork(event)));
 
+  GFL_BG_ClearScreenCodeVReq(GFL_BG_FRAME1_S,0);
+  
+  GFL_MSG_GetString( pWork->pMsgData, IRCBTL_STR_26, pWork->pStrBuf );
+  
+  _infoMessageDisp(pWork);
+
+  
   _CHANGE_STATE(pWork,_modeReportWait);
 }
+
+//------------------------------------------------------------------------------
+/**
+ * @brief   セーブ中
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+static void _modeReporting(IRC_BATTLE_MENU* pWork)
+{
+
+  if(!_infoMessageEndCheck(pWork)){
+    return;
+  }
+  {
+    SAVE_RESULT svr = SaveControl_SaveAsyncMain(IrcBattle_GetSAVE_CONTROL_WORK(pWork->dbw));
+
+    if(svr == SAVE_RESULT_OK){
+      pWork->IsIrc = TRUE;  //赤外線接続開始
+      _CHANGE_STATE(pWork,NULL);
+    }
+  }
+}
+
+//------------------------------------------------------------------------------
+/**
+ * @brief   セーブ確認画面待機
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+static void _modeReportWait2(IRC_BATTLE_MENU* pWork)
+{
+
+  if(APP_TASKMENU_IsFinish(pWork->pAppTask)){
+    int selectno = APP_TASKMENU_GetCursorPos(pWork->pAppTask);
+
+    if(selectno==0){
+
+      GFL_MSG_GetString( pWork->pMsgData, IRCBTL_STR_29, pWork->pStrBuf );
+      _infoMessageDisp(pWork);
+
+      //セーブ開始
+      SaveControl_SaveAsyncInit( IrcBattle_GetSAVE_CONTROL_WORK(pWork->dbw) );
+
+      _CHANGE_STATE(pWork,_modeReporting);
+    }
+    else{
+      GFL_BG_ClearScreen(GFL_BG_FRAME3_M);
+      pWork->selectType = EVENTIRCBTL_ENTRYMODE_EXIT;
+      _CHANGE_STATE(pWork,NULL);
+    }
+    APP_TASKMENU_CloseMenu(pWork->pAppTask);
+    pWork->pAppTask=NULL;
+    G2S_SetBlendBrightness( GX_BLEND_PLANEMASK_BG0 | GX_BLEND_PLANEMASK_OBJ , 0 );
+  }
+}
+
+
 
 //------------------------------------------------------------------------------
 /**
@@ -778,8 +961,11 @@ static void _modeReportInit(IRC_BATTLE_MENU* pWork)
 //------------------------------------------------------------------------------
 static void _modeReportWait(IRC_BATTLE_MENU* pWork)
 {
-  pWork->IsIrc = TRUE;  //赤外線接続開始
-  _CHANGE_STATE(pWork,NULL);
+  if(!_infoMessageEndCheck(pWork)){
+    return;
+  }
+  _YesNoStart(pWork);
+  _CHANGE_STATE(pWork,_modeReportWait2);
 }
 
 static GFL_DISP_VRAM _defVBTbl = {
@@ -837,6 +1023,8 @@ static GFL_PROC_RESULT IrcBattleMenuProcInit( GFL_PROC * proc, int * seq, void *
 
 		_createSubBg(pWork);
 		_modeInit(pWork);
+    pWork->pMsgTcblSys = GFL_TCBL_Init( pWork->heapID , pWork->heapID , 1 , 0 );
+    pWork->SysMsgQue = PRINTSYS_QUE_Create( pWork->heapID );
 
 		{
 			GAME_COMM_SYS_PTR pGC = GAMESYSTEM_GetGameCommSysPtr(IrcBattle_GetGAMESYS_WORK(pwk));
@@ -845,7 +1033,9 @@ static GFL_PROC_RESULT IrcBattleMenuProcInit( GFL_PROC * proc, int * seq, void *
 		WIPE_SYS_Start( WIPE_PATTERN_S , WIPE_TYPE_FADEIN , WIPE_TYPE_FADEIN , 
 									WIPE_FADE_BLACK , WIPE_DEF_DIV , WIPE_DEF_SYNC , pWork->heapID );
 		_CHANGE_STATE(pWork,_modeSelectMenuInit);
+    pWork->dbw = pwk;
 	}
+  
   return GFL_PROC_RES_FINISH;
 }
 
@@ -865,8 +1055,15 @@ static GFL_PROC_RESULT IrcBattleMenuProcMain( GFL_PROC * proc, int * seq, void *
     state(pWork);
     retCode = GFL_PROC_RES_CONTINUE;
   }
+
+  if(pWork->pAppTask){
+    APP_TASKMENU_UpdateMenu(pWork->pAppTask);
+  }
+
   //	ConnectBGPalAnm_Main(&pWork->cbp);
 	INFOWIN_Update();
+  GFL_TCBL_Main( pWork->pMsgTcblSys );
+  PRINTSYS_QUE_Main(pWork->SysMsgQue);
 
   return retCode;
 }
@@ -888,8 +1085,13 @@ static GFL_PROC_RESULT IrcBattleMenuProcEnd( GFL_PROC * proc, int * seq, void * 
   //	ConnectBGPalAnm_End(&pWork->cbp);
   GFL_PROC_FreeWork(proc);
 
+  GFL_TCBL_Exit(pWork->pMsgTcblSys);
 	INFOWIN_Exit();
 	GFL_BG_FreeBGControl(_SUBSCREEN_BGPLANE);
+  PRINTSYS_QUE_Clear(pWork->SysMsgQue);
+  PRINTSYS_QUE_Delete(pWork->SysMsgQue);
+  GFL_BMPWIN_Delete(pWork->infoDispWin);
+
 
 
 	GFL_BMPWIN_Exit();
