@@ -132,8 +132,9 @@ typedef struct
 
   u8 closedflag;		// ConnectionClosedCallback でホスト数が1になったら切断処理に遷移するのか　TRUEで切断処理に遷移　080602 tomoya
   u8 saveing;  //セーブ中に1
+  u8 bFriendSave;  //ともだちコードセーブ中に更新がかからないようにするフラグ
   u8 bWiFiFriendGroup;  ///< 友達と行うサービスかどうか
-
+  u8 dummy;
 } MYDWC_WORK;
 
 // 親機のAID
@@ -261,6 +262,15 @@ int GFL_NET_DWC_startConnect(DWCUserData* pUserData, DWCFriendData* pFriendData)
   NET_PRINT("mydwc_start %d %d\n",sizeof(MYDWC_WORK) + 32, pNetInit->maxBeaconNum);
 
   _dWork = GFL_NET_Align32Alloc(pNetInit->netHeapID, sizeof(MYDWC_WORK));
+
+  {
+    int i;
+    for(i=0;i<FRIENDLIST_MAXSIZE;i++){
+      _dWork->deletedIndex[i] = -1;
+    }
+  }
+
+
 
   _dWork->state = MDSTATE_INIT;
 
@@ -597,7 +607,6 @@ int GFL_NET_DWC_stepmatch( int isCancel )
   case MDSTATE_CONNECTING:
   case MDSTATE_CONNECTED:
   case MDSTATE_TRYLOGIN:
-  case MDSTATE_LOGIN:
     return GFL_NET_DWC_connect();
   case MDSTATE_MATCHING:
     // 現在探索中
@@ -706,7 +715,15 @@ int GFL_NET_DWC_stepmatch( int isCancel )
       _dWork->state = MDSTATE_DISCONNECT;
       break;
     }
-
+  case MDSTATE_LOGIN:
+    {
+      int ret = mydwc_step();
+      if(0==ret){
+        return STEPMATCH_CONNECT;
+      }
+      return ret;
+    }
+    break;
   default:
     break;
     //			return handleError();
@@ -2588,19 +2605,6 @@ BOOL GFL_NET_DWC_IsLogin(void)
   return FALSE;
 }
 
-
-//----------------------------------------------------------------------------
-/**
- *	@brief	セーブ前処理
- *	@param	
- */
-//-----------------------------------------------------------------------------
-void GFL_NET_DWC_FuncSaveBefore(void)
-{
-  _dWork->saveing = 1;
-}
-
-
 //----------------------------------------------------------------------------
 /**
  *	@brief	セーブ中でない時の処理
@@ -2611,7 +2615,7 @@ static void _FuncNonSave(void)
 {
   int i;
   
-  if(_dWork->saveing==0){
+  if(_dWork->bFriendSave == FALSE){
 
     GFL_STD_MemCopy(&_dWork->myUserData, _dWork->pSaveDataUserData, sizeof(_dWork->myUserData));
     GFL_STD_MemCopy(_dWork->keyList, _dWork->pSaveDataFriendData, sizeof(_dWork->keyList));
@@ -2621,27 +2625,49 @@ static void _FuncNonSave(void)
         if(pNetInit->friendDeleteFunc){
           pNetInit->friendDeleteFunc( _dWork->deletedIndex[i], _dWork->srcIndex[i], GFL_NET_GetWork());
         }
-//        WifiList_DataMarge(SaveData_GetWifiListData(wk->pSaveData), _dWork->deletedIndex[i], _dWork->srcIndex[i]);
         //フロンティアのデータがあればここに入れる必要がある
+        // WifiList_DataMarge(SaveData_GetWifiListData(wk->pSaveData), _dWork->deletedIndex[i], _dWork->srcIndex[i]);
         // FrontierRecord_DataMarge(SaveData_GetFrontier(_dWork->pSaveData), deletedIndex, srcIndex);
-
         _dWork->deletedIndex[i] = -1;
-
       }
     }
   }
 }
 
-//----------------------------------------------------------------------------
+//--------------------------------------------------------------
 /**
- *	@brief	セーブ後処理
- *	@param	
+ * @brief   通常データの分割セーブ初期化
+ * @param   ctrl		セーブデータ管理ワークへのポインタ
+ * @retval  none
  */
-//-----------------------------------------------------------------------------
-void GFL_NET_DWC_FuncSaveAfter(void)
+//--------------------------------------------------------------
+void GFL_NET_DWC_SaveAsyncInit(SAVE_CONTROL_WORK *ctrl)
 {
-  _dWork->saveing = 0;
+  _dWork->bFriendSave = TRUE;
+  // もう一度移し変え
+  GFL_STD_MemCopy(&_dWork->myUserData, _dWork->pSaveDataUserData, sizeof(_dWork->myUserData));
+  GFL_STD_MemCopy(_dWork->keyList, _dWork->pSaveDataFriendData, sizeof(_dWork->keyList));
+  SaveControl_SaveAsyncInit(ctrl);
 }
+
+//--------------------------------------------------------------
+/**
+ * @brief   通常データの分割セーブメイン処理
+ * @param   ctrl		セーブデータ管理ワークへのポインタ
+ * @retval  セーブ結果
+ */
+//--------------------------------------------------------------
+SAVE_RESULT GFL_NET_DWC_SaveAsyncMain(SAVE_CONTROL_WORK *ctrl)
+{
+  SAVE_RESULT ret = SaveControl_SaveAsyncMain(ctrl);
+	if(ret == SAVE_RESULT_OK){
+    _dWork->bFriendSave = FALSE;
+  }
+  return ret;
+}
+
+
+
 
 
 #endif //GFL_NET_WIFI

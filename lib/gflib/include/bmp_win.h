@@ -268,6 +268,17 @@ extern	u16	GFL_BMPWIN_GetChrNum( const GFL_BMPWIN * bmpwin );
 //--------------------------------
 extern	GFL_BMP_DATA*	GFL_BMPWIN_GetBmp( GFL_BMPWIN * bmpwin );
 
+//--------------------------------
+/**
+ * パレットナンバーの取得
+ *
+ * @param[in]	bmpwin	ビットマップウインドウポインタ
+ *
+ * @retval	パレットナンバー
+ */
+//--------------------------------
+extern u8 GFL_BMPWIN_GetPalette( const GFL_BMPWIN * bmpwin );
+
 //--------------------------------------------------------------------------------------------
 /**
  * ビットマップウインドウステータス変更

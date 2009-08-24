@@ -11,7 +11,7 @@ extern "C" {
 //=============================================================================
 #pragma once
 
-#include "heap.h"
+#include "heapsys.h"
 
 
 #define GFL_NET_WIFI    (1)   ///< WIFIをゲームで使用する場合 ON
@@ -855,7 +855,25 @@ extern u32 GFLR_NET_GetGGID(void);
  * 返すアドレス-4の4byteに元のallocしたアドレスを保存しておいて、
  * freeする際にはその値を参照してフリーするようにしてある
  *-------------------------------------------------------------------------*/
-extern void* GFL_NET_Align32Alloc( HEAPID id, u32 size );
+
+
+#ifndef HEAPSYS_DEBUG
+ //この関数を直接呼び出すのは禁止
+extern void* GFI_NET_Align32Alloc( HEAPID id, u32 size );
+
+#define GFL_NET_Align32Alloc( heapID, size )  GFI_NET_Align32Alloc( heapID, size )
+
+#else
+
+ //この関数を直接呼び出すのは禁止
+extern void* GFI_NET_Align32Alloc( HEAPID heapID, u32 size, const char* filename, u16 linenum );
+
+#define GFL_NET_Align32Alloc( heapID, size )  GFI_NET_Align32Alloc( heapID, size, __FILE__, __LINE__)
+
+#endif  // #ifndef HEAPSYS_DEBUG
+
+
+
 /*-------------------------------------------------------------------------*
  * Name        : GFL_NET_Align32Free
  * Description : メモリ開放関数

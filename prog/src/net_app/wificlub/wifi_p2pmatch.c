@@ -1550,7 +1550,6 @@ static GFL_PROC_RESULT WifiP2PMatchProc_Init( GFL_PROC * proc, int * seq, void *
     //        wk->MsgIndex = _PRINTTASK_MAX;
     wk->pMatch = pParentWork->pMatch;
     wk->pSaveData = pParentWork->pSaveData;
-    NET_PRINT("--%x %x \n",(int)pParentWork,(int)wk->pSaveData);
 
     wk->pMyPoke = SaveData_GetTemotiPokemon(pParentWork->pSaveData);
     wk->pList = SaveData_GetWifiListData(pParentWork->pSaveData);
@@ -3835,7 +3834,8 @@ static int WifiP2PMatch_FirstSaving( WIFIP2PMATCH_WORK *wk, int seq )
     return seq;
   }
   if( GFL_NET_DWC_GetSaving()) {
-    SaveControl_SaveAsyncInit(wk->pSaveData); ///セーブ開始
+//    SaveControl_SaveAsyncInit(wk->pSaveData); ///セーブ開始
+    GFL_NET_DWC_SaveAsyncInit(wk->pSaveData);
     _CHANGESTATE(wk,WIFIP2PMATCH_FIRST_SAVING2);
     return seq;
   }
@@ -3869,7 +3869,8 @@ static int WifiP2PMatch_FirstSaving( WIFIP2PMATCH_WORK *wk, int seq )
 static int WifiP2PMatch_FirstSaving2( WIFIP2PMATCH_WORK *wk, int seq )
 {
   if(GFL_NET_DWC_GetSaving()){
-    SAVE_RESULT result = SaveControl_SaveAsyncMain(wk->pSaveData);
+//    SAVE_RESULT result = SaveControl_SaveAsyncMain(wk->pSaveData);
+    SAVE_RESULT result = GFL_NET_DWC_SaveAsyncMain(wk->pSaveData);
     if (result != SAVE_RESULT_CONTINUE && result != SAVE_RESULT_LAST) {
       GFL_NET_DWC_ResetSaving();
     }

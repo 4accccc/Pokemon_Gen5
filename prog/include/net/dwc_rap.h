@@ -1,8 +1,16 @@
-#ifndef __DWC_RAP_H__
-#define  __DWC_RAP_H__
+//==============================================================================
+/**
+ * dwc_rap.h
+ * WiFiP2Pに関するライブラリ
+ */
+//==============================================================================
+
+#pragma once
+
 
 #include <dwc.h>
 #include "net_wifi.h"
+#include "savedata/save_control.h"
 
 #define MYDWC_STATUS_DATA_SIZE_MAX (180)   /// WIFIフレンド情報サイズ DWCに189バイト可能とあるが、定義が無いので控えめサイズで決めうち
 
@@ -393,16 +401,25 @@ extern BOOL GFL_NET_DWC_CancelDisable(void);
 extern BOOL GFL_NET_DWC_IsLogin(void);
 
 
-extern void GFL_NET_DWC_FuncSaveBefore(void);
-extern void GFL_NET_DWC_FuncSaveAfter(void);
-
-
+//--------------------------------------------------------------
+/**
+ * @brief   通常データの分割セーブ初期化
+ * @param   ctrl		セーブデータ管理ワークへのポインタ
+ * @retval  none
+ */
+//--------------------------------------------------------------
+extern void GFL_NET_DWC_SaveAsyncInit(SAVE_CONTROL_WORK *ctrl);
+//--------------------------------------------------------------
+/**
+ * @brief   通常データの分割セーブメイン処理
+ * @param   ctrl		セーブデータ管理ワークへのポインタ
+ * @retval  セーブ結果
+ */
+//--------------------------------------------------------------
+extern SAVE_RESULT GFL_NET_DWC_SaveAsyncMain(SAVE_CONTROL_WORK *ctrl);
 
 
 #if GFL_NET_WIFI
 #include <ppwlobby/ppw_lobby.h>
 #endif
 
-//#include "dwc_overlay.h"
-
-#endif

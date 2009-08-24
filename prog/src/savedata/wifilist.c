@@ -673,7 +673,18 @@ void GFL_NET_DWC_GetMySendedFriendCode( const WIFI_LIST* pList, DWCFriendData* p
 WIFI_LIST* SaveData_GetWifiListData(SAVE_CONTROL_WORK * sv)
 {
 	WIFI_LIST* pData;
+  STRCODE* pCode;
+  
 	pData = SaveControl_DataPtrGet(sv, GMDATA_ID_WIFILIST);
+
+  pCode = WifiList_GetFriendNamePtr(pData,0);
+
+  OS_TPrintf("id = %x / %d %d %d\n",WifiList_GetFriendInfo(pData,0,WIFILIST_FRIEND_ID),
+             pCode[0],
+             pCode[1],
+             pCode[2]
+             );
+  
 	return pData;
 }
 

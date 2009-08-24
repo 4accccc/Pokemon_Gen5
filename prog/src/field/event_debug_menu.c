@@ -127,7 +127,6 @@ static BOOL debugMenuCallProc_OpenStartInvasion( DEBUG_MENU_EVENT_WORK *wk );
 
 static BOOL debugMenuCallProc_MapZoneSelect( DEBUG_MENU_EVENT_WORK *wk );
 static BOOL debugMenuCallProc_OpenCommDebugMenu( DEBUG_MENU_EVENT_WORK *wk );
-static BOOL debugMenuCallProc_OpenIRCBTLMenu( DEBUG_MENU_EVENT_WORK *wk );
 static BOOL debugMenuCallProc_OpenClubMenu( DEBUG_MENU_EVENT_WORK *wk );
 
 static debugMenuCallProc_MapSeasonSelect( DEBUG_MENU_EVENT_WORK *wk );
@@ -185,7 +184,6 @@ static const FLDMENUFUNC_LIST DATA_DebugMenuList[] =
 	{ DEBUG_FIELD_STR07, debugMenuCallProc_CameraList },
 	{ DEBUG_FIELD_STR13, debugMenuCallProc_MMdlList },
 	{ DEBUG_FIELD_C_CHOICE00, debugMenuCallProc_OpenCommDebugMenu },
-	{ DEBUG_FIELD_STR12, debugMenuCallProc_OpenIRCBTLMenu },
 	{ DEBUG_FIELD_STR19, debugMenuCallProc_OpenClubMenu },
 	{ DEBUG_FIELD_STR22, debugMenuCallProc_ControlRtcList },
 	{ DEBUG_FIELD_STR15, debugMenuCallProc_ControlLight },
@@ -220,7 +218,6 @@ static const FLDMENUFUNC_LIST DATA_DebugMenuListGrid[] =
 	{ DEBUG_FIELD_STR07, debugMenuCallProc_CameraList },
 	{ DEBUG_FIELD_STR13, debugMenuCallProc_MMdlList },
 	{ DEBUG_FIELD_C_CHOICE00, debugMenuCallProc_OpenCommDebugMenu },
-	{ DEBUG_FIELD_STR12, debugMenuCallProc_OpenIRCBTLMenu },
 	{ DEBUG_FIELD_STR19, debugMenuCallProc_OpenClubMenu },
 	{ DEBUG_FIELD_STR22, debugMenuCallProc_ControlRtcList },
 	{ DEBUG_FIELD_STR15, debugMenuCallProc_ControlLight },
@@ -504,25 +501,6 @@ static BOOL debugMenuCallProc_OpenCommDebugMenu( DEBUG_MENU_EVENT_WORK *wk )
 	FIELD_COMM_DEBUG_InitWork( heapID , gameSys , fieldWork , event , work );
 
 	return( TRUE );
-}
-
-//--------------------------------------------------------------
-/**
- * IRCBATTLEメニュー呼びだし
- * @param	wk	DEBUG_MENU_EVENT_WORK*
- * @retval	BOOL	TRUE=イベント継続
- */
-//--------------------------------------------------------------
-static BOOL debugMenuCallProc_OpenIRCBTLMenu( DEBUG_MENU_EVENT_WORK *wk )
-{
-	GMEVENT *event = wk->gmEvent;
-	FIELD_MAIN_WORK *fieldWork = wk->fieldWork;
-	GAMESYS_WORK	*gameSys	= wk->gmSys;
-
-	FIELD_SUBSCREEN_SetAction(FIELDMAP_GetFieldSubscreenWork(fieldWork), FIELD_SUBSCREEN_ACTION_DEBUGIRC);
-	
-//    EVENT_IrcBattle(gameSys, fieldWork, event,FALSE);
-	return( FALSE );
 }
 
 //--------------------------------------------------------------

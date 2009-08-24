@@ -932,13 +932,16 @@ static void _modeReportWait2(IRC_BATTLE_MENU* pWork)
 
     if(selectno==0){
 
+
+#if 1
       GFL_MSG_GetString( pWork->pMsgData, IRCBTL_STR_29, pWork->pStrBuf );
       _infoMessageDisp(pWork);
-
       //セーブ開始
       SaveControl_SaveAsyncInit( IrcBattle_GetSAVE_CONTROL_WORK(pWork->dbw) );
-
       _CHANGE_STATE(pWork,_modeReporting);
+#else
+      _CHANGE_STATE(pWork,NULL);
+#endif
     }
     else{
       GFL_BG_ClearScreen(GFL_BG_FRAME3_M);
@@ -1090,8 +1093,9 @@ static GFL_PROC_RESULT IrcBattleMenuProcEnd( GFL_PROC * proc, int * seq, void * 
 	GFL_BG_FreeBGControl(_SUBSCREEN_BGPLANE);
   PRINTSYS_QUE_Clear(pWork->SysMsgQue);
   PRINTSYS_QUE_Delete(pWork->SysMsgQue);
-  GFL_BMPWIN_Delete(pWork->infoDispWin);
-
+  if(pWork->infoDispWin){
+    GFL_BMPWIN_Delete(pWork->infoDispWin);
+  }
 
 
 	GFL_BMPWIN_Exit();
