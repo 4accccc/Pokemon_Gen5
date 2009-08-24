@@ -9,10 +9,12 @@ echo 　　%0 install  現在のパーサと置き換えます
 goto end
 
 :install
-ruby c:\cygwin\bin\racc -o parser.rb sp3.y
+REM ruby c:\cygwin\bin\racc -o parser.rb sp3.y
+"C:\Program Files\ruby-1.8\bin\racc.bat" -o parser.rb sp4.y
 goto end
 
 :diff
-ruby c:\cygwin\bin\racc -o sample.rb sp3.y
+REM ruby c:\cygwin\bin\racc -o sample.rb sp3.y
+"C:\Program Files\ruby-1.8\bin\racc.bat" -o sample.rb sp3.y
 diff sample.rb parser.rb
 :end
