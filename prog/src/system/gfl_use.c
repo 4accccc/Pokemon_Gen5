@@ -66,6 +66,11 @@ static int        GFL_USE_VintrCounter;
 static void GFUser_PublicRandInit(void);
 static void gfluse_AssertFinish( void );
 
+#ifdef PM_DEBUG
+BOOL  mcs_lib_loaded = FALSE;
+FS_EXTERN_OVERLAY(mcs_lib);
+#endif
+
 //=============================================================================================
 //
 //      関数
@@ -124,6 +129,14 @@ void GFLUser_Init(void)
 
   //OVERLAYシステム初期化
   GFL_OVERLAY_boot(GFL_HEAPID_SYSTEM, 8, 4, 4);
+
+  //MCSライブラリを拡張メモリにロード
+#ifdef PM_DEBUG
+  if( OS_GetConsoleType() & OS_CONSOLE_ISDEBUGGER ){
+    GFL_OVERLAY_Load( FS_OVERLAY_ID( mcs_lib ) );
+    mcs_lib_loaded = TRUE;
+  }
+#endif
 
   //PROCシステム初期化
   GFL_PROC_boot(GFL_HEAPID_SYSTEM);
