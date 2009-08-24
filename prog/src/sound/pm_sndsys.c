@@ -97,7 +97,7 @@ typedef struct {
  *
  */
 //============================================================================================
-#define	SOUND_HEAP_SIZE	(0x0a0000)   //640K
+#define	SOUND_HEAP_SIZE	(0x094000)   //640K
 #define CAPTURE_BUFSIZE (0x2000)
 
 static u8												PmSoundHeap[SOUND_HEAP_SIZE];
