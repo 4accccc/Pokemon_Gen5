@@ -281,7 +281,8 @@ void  STA_ACT_TermActing( ACTING_WORK *work )
     GFL_HEAP_FreeMemory( work->scriptData );
   }
 
-  if( SND_STRM_CheckPlay() == TRUE )
+  if( SND_STRM_CheckSetUp() == TRUE &&
+      SND_STRM_CheckPlay() == TRUE )
   {
     STA_ACT_StopBgm( work );
   }

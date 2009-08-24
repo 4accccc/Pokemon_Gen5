@@ -44,7 +44,6 @@ struct _MUS_POKE_DRAW_WORK
 	MUS_MCSS_WORK	*mcssFront;
 	MUS_MCSS_WORK	*mcssBack;
 	
-	MUS_POKE_DATA_WORK *pokeData;
 	MUS_POKE_EQUIP_DATA	equipData[MUS_POKE_EQUIP_MAX];
 	VecFx32 shadowOfs;
 	VecFx32 rotateOfs;
@@ -156,8 +155,6 @@ MUS_POKE_DRAW_WORK* MUS_POKE_DRAW_Add( MUS_POKE_DRAW_SYSTEM* work , MUSICAL_POKE
 	
 	MUS_POKE_DRAW_SetScale( &work->musMcss[idx], &scale );
 	MUS_MCSS_SetAnmStopFlag( work->musMcss[idx].mcss );
-	//‘•”õ‰ÓŠƒf[ƒ^‚È‚Ç“Ç‚Ýž‚Ý
-	work->musMcss[idx].pokeData = MUS_POKE_DATA_LoadMusPokeData( musPoke , work->heapId );
 	
 	return &work->musMcss[idx];
 }
@@ -169,7 +166,6 @@ void MUS_POKE_DRAW_Del( MUS_POKE_DRAW_SYSTEM* work , MUS_POKE_DRAW_WORK *drawWor
   	MUS_MCSS_Del( work->mcssSys , drawWork->mcssBack );
   }
 	MUS_MCSS_Del( work->mcssSys , drawWork->mcssFront );
-	GFL_HEAP_FreeMemory( drawWork->pokeData );
 	drawWork->enable = FALSE;
 }
 
@@ -294,10 +290,6 @@ VecFx32 *MUS_POKE_DRAW_GetRotateOfs( MUS_POKE_DRAW_WORK *drawWork )
 	return &drawWork->rotateOfs;
 }
 
-MUS_POKE_DATA_WORK*	MUS_POKE_DRAW_GetPokeData( MUS_POKE_DRAW_WORK *drawWork )
-{
-	return drawWork->pokeData;
-}
 
 static void MUS_POKE_MCSS_CallBack( const u8 pltNo , MUS_MCSS_CELL_DATA *cellData , void* work )
 {

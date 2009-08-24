@@ -83,6 +83,7 @@ MUS_ITEM_DRAW_SYSTEM*	MUS_ITEM_DRAW_InitSystem( GFL_BBD_SYS *bbdSys , u16 itemMa
 	MUS_ITEM_DRAW_SYSTEM *work = GFL_HEAP_AllocMemory( heapId , sizeof(MUS_ITEM_DRAW_SYSTEM) );
 	
 	work->musItem = GFL_HEAP_AllocMemory( heapId , sizeof(MUS_ITEM_DRAW_WORK)*itemMax );
+	work->heapId = heapId;
 	work->itemMax = itemMax;
 	work->bbdSys = bbdSys;
 	for( i=0;i<work->itemMax;i++ )
@@ -217,10 +218,14 @@ const BOOL MUS_ITEM_DRAW_CheckMainPosUserDataItemNo( MUS_ITEM_DRAW_SYSTEM* work 
 	return MUS_ITEM_DATA_CheckMainPosUserData( itemData , pos );
 }
 
-//Žw’è‰ÓŠ‚É‘•”õ‚Å‚«‚é‚©?
 const BOOL MUS_ITEM_DRAW_IsBackItem( MUS_ITEM_DRAW_WORK *itemWork )
 {
 	return MUS_ITEM_DATA_IsBackItem( itemWork->itemData );
+}
+
+const BOOL MUS_ITEM_DRAW_IsFrontItem( MUS_ITEM_DRAW_WORK *itemWork )
+{
+	return MUS_ITEM_DATA_IsFrontItem( itemWork->itemData );
 }
 
 

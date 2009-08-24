@@ -15,6 +15,7 @@
 
 #include "savedata/musical_save.h"
 #include "musical/musical_system.h"
+#include "musical/musical_program.h"
 #include "musical/musical_dressup_sys.h"
 #include "musical/musical_stage_sys.h"
 #include "musical/comm/mus_comm_lobby.h"
@@ -64,6 +65,7 @@ typedef struct
   DRESSUP_INIT_WORK *dupInitWork;
   STAGE_INIT_WORK *actInitWork;
   
+  MUSICAL_PROGRAM_WORK *progWork;
   MUSICAL_POKE_PARAM *musPoke;
 }MUSICAL_PROC_WORK;
 //======================================================================
@@ -140,6 +142,7 @@ MUSICAL_POKE_PARAM* MUSICAL_SYSTEM_InitMusPoke( POKEMON_PARAM *pokePara , HEAPID
   musPara = GFL_HEAP_AllocMemory( heapId , sizeof(MUSICAL_POKE_PARAM) );
   musPara->charaType = MUS_CHARA_INVALID;
   musPara->pokePara = pokePara;
+  musPara->point = 0;
   
   for( i=0;i<MUS_POKE_EQUIP_MAX;i++ )
   {
@@ -163,6 +166,7 @@ static GFL_PROC_RESULT MusicalProc_Init( GFL_PROC * proc, int * seq , void *pwk,
 
   work = GFL_PROC_AllocWork( proc, sizeof(MUSICAL_PROC_WORK), HEAPID_MUSICAL_PROC );
   work->musPoke = MUSICAL_SYSTEM_InitMusPoke( initWork->pokePara , HEAPID_MUSICAL_PROC );
+  work->progWork = MUSICAL_PROGRAM_GetProgramData( HEAPID_MUSICAL_PROC );
   work->dupInitWork = NULL;
   work->actInitWork = NULL;
 
@@ -208,6 +212,8 @@ static GFL_PROC_RESULT MusicalProc_Term( GFL_PROC * proc, int * seq , void *pwk,
   }
   GFL_PROC_LOCAL_Exit( work->procSys );
   GFL_HEAP_FreeMemory( work->musPoke );
+  
+  GFL_HEAP_FreeMemory( work->progWork );
   
   GFL_PROC_FreeWork( proc );
   GFL_HEAP_DeleteHeap( HEAPID_MUSICAL_PROC );
@@ -334,6 +340,8 @@ static GFL_PROC_RESULT MusicalProc_Main( GFL_PROC * proc, int * seq , void *pwk,
       MUSICAL_STAGE_SetEquip( work->actInitWork , 3 , MUS_POKE_EQU_FACE   , 21 , 0 );
       MUSICAL_STAGE_SetEquip( work->actInitWork , 3 , MUS_POKE_EQU_HAND_R , 30 , 0 );
     }
+    
+    MUSICAL_PROGRAM_CalcPokemonPoint( HEAPID_MUSICAL_PROC , work->progWork , work->actInitWork );
     GFL_PROC_LOCAL_CallProc( work->procSys , NO_OVERLAY_ID, &MusicalStage_ProcData, work->actInitWork );
     work->state = MPS_TERM_ACTING;
     break;

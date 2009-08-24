@@ -6,8 +6,8 @@
  * @data	09/02/10
  */
 //======================================================================
-#ifndef MUS_ITEM_DATA_H__
-#define MUS_ITEM_DATA_H__
+
+#pragma once
 
 #include "musical/musical_system.h"
 
@@ -31,6 +31,7 @@ typedef enum
 	MUS_POKE_EQU_TYPE_HAND,		//手(右手・左手)
 
 	MUS_POKE_EQU_IS_BACK,			//背面装備判定
+	MUS_POKE_EQU_IS_FRONT,		//前面装備判定
 
 	MUS_POKE_EQUIP_TYPE_MAX,
 	
@@ -64,8 +65,11 @@ const BOOL	MUS_ITEM_DATA_CheckMainPosUserData( MUS_ITEM_DATA_WORK*  dataWork , c
 
 //装備が背面に来るアイテムか？
 const BOOL	MUS_ITEM_DATA_IsBackItem( MUS_ITEM_DATA_WORK*  dataWork );
+//装備が前面面に来るアイテムか？
+const BOOL	MUS_ITEM_DATA_IsFrontItem( MUS_ITEM_DATA_WORK*  dataWork );
 
 //装備箇所からユーザータイプ装備箇所へ変換
 const MUS_POKE_EQUIP_USER MUS_ITEM_DATA_EquipPosToUserType( const MUS_POKE_EQUIP_USER pos );
 
-#endif //MUS_ITEM_DATA_H__
+//アイテムのコンディションタイプを取得
+const u8 MUS_ITEM_DATA_GetItemConditionType( MUS_ITEM_DATA_SYS* sysWork , const u16 itemNo );

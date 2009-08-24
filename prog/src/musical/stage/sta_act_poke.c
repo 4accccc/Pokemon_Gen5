@@ -50,12 +50,12 @@ struct _STA_POKE_WORK
 
   STA_POKE_DIR      dir;
   MUS_POKE_DRAW_WORK    *drawWork;
-  MUS_POKE_DATA_WORK    *pokeData;
 
   int           shadowBbdIdx;
 
   GFL_G3D_RES     *itemRes[MUS_POKE_EQUIP_MAX];
   MUS_ITEM_DRAW_WORK  *itemWork[MUS_POKE_EQUIP_MAX];
+  MUSICAL_POKE_EQUIP  *pokeEquip[MUS_POKE_EQUIP_MAX];
 };
 
 struct _STA_POKE_SYS
@@ -221,8 +221,8 @@ static void STA_POKE_UpdateItemFunc( STA_POKE_SYS *work , STA_POKE_WORK *pokeWor
         if( equipData->isEnable == TRUE )
         {
           const BOOL flipS = ( equipData->scale.x < 0 ? TRUE : FALSE);
-          const u16 itemRot = ( flipS==TRUE ? 0x10000-equipData->itemRot : equipData->itemRot);
           const u16 rotZ = 0x10000-equipData->rot;//( flipS==TRUE ? 0x10000-equipData->rot : equipData->rot);
+          u16 itemRot = (0x10000+equipData->itemRot+pokeWork->pokeEquip[ePos]->angle)%0x10000;          
 
           MtxFx33 rotWork;
           VecFx32 rotOfs;
@@ -230,6 +230,10 @@ static void STA_POKE_UpdateItemFunc( STA_POKE_SYS *work , STA_POKE_WORK *pokeWor
           MTX_RotZ33( &rotWork , -FX_SinIdx( rotZ ) , FX_CosIdx( rotZ ) );
           MTX_MultVec33( &equipData->ofs , &rotWork , &ofs );
           
+          if( flipS == TRUE )
+          {
+            itemRot = 0x10000-itemRot;
+          }
           {
             MTX_MultVec33( &equipData->rotOfs , &rotWork , &rotOfs );
             VEC_Subtract( &equipData->rotOfs , &rotOfs , &rotOfs );
@@ -243,9 +247,15 @@ static void STA_POKE_UpdateItemFunc( STA_POKE_SYS *work , STA_POKE_WORK *pokeWor
             pos.z = pokeWork->pokePos.z-FX32_CONST(20.0f);
           }
           else
+          if( MUS_ITEM_DRAW_IsFrontItem( pokeWork->itemWork[ePos] ) == TRUE )
           {
-            //とりあえずポケの前に出す
-            pos.z = pokeWork->pokePos.z+FX32_HALF;  
+            //前面用アイテム
+            pos.z = pokeWork->pokePos.z+FX32_CONST(0.7f) - (pokeWork->pokeEquip[ePos]->priority*FX32_CONST(0.05f));
+          }
+          else
+          {
+            //ポケの前に出す
+            pos.z = pokeWork->pokePos.z+FX32_CONST(0.3f) - (pokeWork->pokeEquip[ePos]->priority*FX32_CONST(0.05f));
           }
 
           //OS_Printf("[%.2f][%.2f]\n",F32_CONST(equipData->pos.z),F32_CONST(pokePos.z));
@@ -390,7 +400,6 @@ STA_POKE_WORK* STA_POKE_CreatePoke( STA_POKE_SYS *work , MUSICAL_POKE_PARAM *mus
   pokeWork->isFront = TRUE;
   pokeWork->isDrawItem = FALSE;
   pokeWork->drawWork = MUS_POKE_DRAW_Add( work->drawSys , musPoke , TRUE );
-  pokeWork->pokeData = MUS_POKE_DRAW_GetPokeData( pokeWork->drawWork );
   VEC_Set( &pokeWork->pokePos , 0,0,0 );
   VEC_Set( &pokeWork->posOfs , 0,0,0 );
   VEC_Set( &pokeWork->scale , FX32_ONE,FX32_ONE,FX32_ONE );
@@ -402,6 +411,7 @@ STA_POKE_WORK* STA_POKE_CreatePoke( STA_POKE_SYS *work , MUSICAL_POKE_PARAM *mus
   for( ePos=0;ePos<MUS_POKE_EQUIP_MAX;ePos++ )
   {
     const u16 itemNo = musPoke->equip[ePos].itemNo;
+    pokeWork->pokeEquip[ePos] = &musPoke->equip[ePos];
     if( itemNo != MUSICAL_ITEM_INVALID )
     {
       pokeWork->itemRes[ePos] = MUS_ITEM_DRAW_LoadResource( itemNo );

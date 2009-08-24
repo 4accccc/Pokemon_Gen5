@@ -30,6 +30,8 @@ DATA_IDX_EQUIP_BODY	= 9
 DATA_IDX_EQUIP_WAIST	= 10
 DATA_IDX_EQUIP_HAND	= 11
 DATA_IDX_IS_BACK	= 12
+DATA_IDX_IS_FRONT	= 13
+DATA_IDX_CONDITION	= 14
 
 MUS_POKE_EQU_TYPE_EAR	= 0
 MUS_POKE_EQU_TYPE_HEAD	= 1
@@ -47,6 +49,11 @@ TEX_HASH_DATA = {
 	"GFL_BBD_TEXSIZ_32x64"=>19 ,
 	"GFL_BBD_TEXSIZ_64x32"=>26 ,
 	"GFL_BBD_TEXSIZ_64x64"=>27 }
+CON_HASH_DATA = {
+	"クール"=>0 ,
+	"キュート"=>1 ,
+	"エレガント"=>2 ,
+	"ユニーク"=>3 }
 
 
 #============================
@@ -158,15 +165,24 @@ while line = dataFile.gets
 	if( str[DATA_IDX_IS_BACK].to_i != 0 )
 		equipBit += 128
 	end
+	if( str[DATA_IDX_IS_FRONT].to_i != 0 )
+		equipBit += 256
+	end
 	ary = Array( equipBit )
 	outFile.write( ary.pack("S") )
 
 	ary = Array( mainPos )
 	outFile.write( ary.pack("C") )
 
+	conIdx = CON_HASH_DATA[str[DATA_IDX_CONDITION]]
+	if( conIdx == HASH_ERROR )
+		printf("コンディションの形式が間違っています[No:%d]",no)
+	end
+	ary = Array( conIdx )
+	outFile.write( ary.pack("C") )
+
 	#Padding
 	ary = Array( 0 )
-	outFile.write( ary.pack("C") )
 	outFile.write( ary.pack("C") )
 	outFile.write( ary.pack("C") )
 

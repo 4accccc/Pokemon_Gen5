@@ -82,6 +82,7 @@ typedef struct
 {
 	u16	itemNo;	//アイテムの種類
 	s16	angle;	//アイテムの傾き
+	u8  priority; //表示優先度
 }MUSICAL_POKE_EQUIP;
 
 typedef struct
@@ -89,6 +90,7 @@ typedef struct
   MUSICAL_CHARA_TYPE charaType;
 	POKEMON_PARAM *pokePara;
 	MUSICAL_POKE_EQUIP equip[MUS_POKE_EQUIP_MAX];
+	u16                point; //評価点
 }MUSICAL_POKE_PARAM;
 
 #endif MUSICAL_DEFINE_H__

@@ -71,7 +71,8 @@ static GFL_PROC_RESULT MusicalStageProc_Init( GFL_PROC * proc, int * seq , void 
       GFL_HEAP_GetHeapFreeSize( GFL_HEAPID_APP ) ,
       GFI_HEAP_GetHeapAllocatableSize( GFL_HEAPID_APP ) );
 */
-  GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_MUSICAL_STAGE, 0x120000 );
+  //ストリーミング配信分削ってテスト
+  GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_MUSICAL_STAGE, 0x120000-0x80000 );
 
   //TODO データの渡し方整理！
   work = GFL_PROC_AllocWork( proc, sizeof(STAGE_LOCAL_WORK), HEAPID_MUSICAL_STAGE );
@@ -207,8 +208,9 @@ void MUSICAL_STAGE_SetData_Player( STAGE_INIT_WORK *initWork , const u8 idx , MU
   for( ePos=0;ePos<MUS_POKE_EQUIP_MAX;ePos++ )
   {
     OS_TPrintf("MUS[%d][%d][%d]\n",ePos,musPara->equip[ePos].itemNo,musPara->equip[ePos].angle);
-    initPara->equip[ePos].itemNo = musPara->equip[ePos].itemNo;
-    initPara->equip[ePos].angle  = musPara->equip[ePos].angle;
+    initPara->equip[ePos].itemNo    = musPara->equip[ePos].itemNo;
+    initPara->equip[ePos].angle     = musPara->equip[ePos].angle;
+    initPara->equip[ePos].priority  = musPara->equip[ePos].priority;
   }
 }
 
@@ -244,6 +246,7 @@ void MUSICAL_STAGE_SetData_Comm( STAGE_INIT_WORK *initWork , const u8 idx , MUSI
     OS_TPrintf("MUS[%d][%d][%d]\n",ePos,musPara->equip[ePos].itemNo,musPara->equip[ePos].angle);
     initPara->equip[ePos].itemNo = musPara->equip[ePos].itemNo;
     initPara->equip[ePos].angle  = musPara->equip[ePos].angle;
+    initPara->equip[ePos].priority  = musPara->equip[ePos].priority;
   }
 }
 

@@ -133,7 +133,8 @@ static const fx32 RETURN_LIST_ITEM_DEPTH = FX32_CONST(30.0f);
 //装備アイテム系
 static const u16 HOLD_ITEM_SNAP_LENGTH = 12;
 static const fx32 EQUIP_ITEM_DEPTH = FX32_CONST(50.5f);
-static const fx32 EQUIP_ITEM_DEPTH_BACK = FX32_CONST(20.5f);
+static const fx32 EQUIP_ITEM_DEPTH_BACK  = FX32_CONST(20.5f);
+static const fx32 EQUIP_ITEM_DEPTH_FRONT = FX32_CONST(55.5f);
 
 
 //リストに戻るアニメーション
@@ -248,7 +249,6 @@ struct _FITTING_WORK
 {
   HEAPID heapId;
   FITTING_INIT_WORK *initWork;
-  MUS_POKE_DATA_WORK  *pokeData;
   GFL_TCB *vBlankTcb;
   
   DUP_STATE state;
@@ -1101,7 +1101,6 @@ static void DUP_FIT_SetupPokemon( FITTING_WORK *work )
 //  VecFx32 pos = {FX32_ONE*10,FX32_ONE*10,FX32_ONE*-7};  //位置は適当
   work->drawSys = MUS_POKE_DRAW_InitSystem( work->heapId );
   work->drawWork = MUS_POKE_DRAW_Add( work->drawSys , work->initWork->musPoke , FALSE );
-  work->pokeData = MUS_POKE_DRAW_GetPokeData( work->drawWork);
   MUS_POKE_DRAW_SetPosition( work->drawWork , &pos);
   
 }
@@ -2043,6 +2042,11 @@ static void DUP_FIT_UpdateTpHoldingItem( FITTING_WORK *work )
     {
       pos.z = EQUIP_ITEM_DEPTH_BACK;
     }
+    else
+    if( MUS_ITEM_DRAW_IsFrontItem( itemDrawWork ) == TRUE )
+    {
+      pos.z = EQUIP_ITEM_DEPTH_FRONT;
+    }
     
     //一度くっついたらキャンセル時そこへ
     work->befItemType = IG_EQUIP;
@@ -2234,7 +2238,7 @@ static void DUP_FIT_UpdateTpDropItemToList( FITTING_WORK *work , const BOOL isMo
 static void DUP_FIT_UpdateTpDropItemToEquip(  FITTING_WORK *work )
 {
   VecFx32 pos;
-  fx32 depth = EQUIP_ITEM_DEPTH;
+  fx32 depthOfs = 0;
   FIT_ITEM_WORK *item;
   MUS_ITEM_DRAW_WORK *drawWork = DUP_FIT_ITEM_GetItemDrawWork( work->holdItem );
   MUS_ITEM_DRAW_WORK *holdDrawWork = DUP_FIT_ITEM_GetItemDrawWork( work->holdItem );
@@ -2255,15 +2259,20 @@ static void DUP_FIT_UpdateTpDropItemToEquip(  FITTING_WORK *work )
     MUS_ITEM_DRAW_GetPosition( work->itemDrawSys , drawWork , &pos );
     if( MUS_ITEM_DRAW_IsBackItem( drawWork ) == TRUE )
     {
-      pos.z = depth-EQUIP_ITEM_DEPTH+EQUIP_ITEM_DEPTH_BACK;
+      pos.z = depthOfs+EQUIP_ITEM_DEPTH_BACK;
+    }
+    else
+    if( MUS_ITEM_DRAW_IsFrontItem( drawWork ) == TRUE )
+    {
+      pos.z = depthOfs+EQUIP_ITEM_DEPTH_FRONT;
     }
     else
     {
-      pos.z = depth;
+      pos.z = depthOfs+EQUIP_ITEM_DEPTH;
     }
     MUS_ITEM_DRAW_SetPosition( work->itemDrawSys , drawWork , &pos );
     
-    depth -= FX32_CONST(0.1f);
+    depthOfs -= FX32_CONST(0.1f);
     item = DUP_FIT_ITEM_GetNextItem(item);
   }
   
@@ -2318,6 +2327,11 @@ static void DUP_FIT_UpdateTpCancelDropItem( FITTING_WORK *work )
     if( MUS_ITEM_DRAW_IsBackItem( itemDrawWork ) == TRUE )
     {
       pos.z = EQUIP_ITEM_DEPTH_BACK;
+    }
+    else
+    if( MUS_ITEM_DRAW_IsFrontItem( itemDrawWork ) == TRUE )
+    {
+      pos.z = EQUIP_ITEM_DEPTH_FRONT;
     }
     else
     {
@@ -2569,7 +2583,6 @@ static MUS_POKE_EQUIP_POS DUP_FIT_SearchEquipPosition(  FITTING_WORK *work , MUS
     MUS_POKE_EQUIP_DATA *equipData = MUS_POKE_DRAW_GetEquipData( work->drawWork , i );
     if( equipData->isEnable == TRUE && 
        canEquipPos == TRUE )
-//    if( pokeData->isEquip[i] == TRUE )
     {
       const int equipPosX = (int)F32_CONST(equipData->pos.x+equipData->ofs.x)+128-FIT_POKE_POS_X;
       const int equipPosY = (int)F32_CONST(equipData->pos.y+equipData->ofs.y)+96 -FIT_POKE_POS_Y;
@@ -3024,6 +3037,7 @@ static void DUP_CHECK_SaveNowEquip( FITTING_WORK *work )
     mus_bef_save->equipData[save_pos].data.itemNo = DUP_FIT_ITEM_GetItemState( item )->itemId;
     mus_bef_save->equipData[save_pos].data.angle = work->initWork->musPoke->equip[equip_pos].angle;
     work->initWork->musPoke->equip[equip_pos].itemNo = DUP_FIT_ITEM_GetItemState( item )->itemId;
+    work->initWork->musPoke->equip[equip_pos].priority = save_pos;
     
     item = DUP_FIT_ITEM_GetNextItem(item);
 

@@ -695,6 +695,7 @@ SRCS_OVERLAY_MUSICAL = musical/mus_poke_draw.c \
         musical/dressup/dup_fitting.c \
         musical/dressup/dup_fitting_item.c \
         musical/musical_mcss.c \
+        musical/musical_program.c \
         musical/stage/sta_acting.c \
         musical/stage/sta_act_effect.c \
         musical/stage/sta_act_poke.c \

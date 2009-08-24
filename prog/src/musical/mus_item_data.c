@@ -34,6 +34,7 @@ typedef enum
   EPB_WAIST   = 1<<MUS_POKE_EQU_TYPE_WAIST,
   EPB_HAND    = 1<<MUS_POKE_EQU_TYPE_HAND,
   EPB_IS_BACK = 1<<MUS_POKE_EQU_IS_BACK,
+  EPB_IS_FRONT= 1<<MUS_POKE_EQU_IS_FRONT,
 }EQIUP_POS_BIT;
 
 //======================================================================
@@ -47,7 +48,8 @@ struct _MUS_ITEM_DATA_WORK
   s8    ofsY;
   u16   equipPosBit;
   u8    mainPos;
-  u8    pad[3];
+  u8    conType;
+  u8    pad[2];
 };
 
 struct _MUS_ITEM_DATA_SYS
@@ -75,12 +77,13 @@ MUS_ITEM_DATA_SYS* MUS_ITEM_DATA_InitSystem( HEAPID heapId )
     u8 i;
     for( i=0;i<33;i++ )
     {
-      OS_TPrintf("[%2d][%2d][%3d][%3d][%3d][%1d]\n",i,
+      OS_TPrintf("[%2d][%2d][%3d][%3d][%3d][%1d][%1d]\n",i,
           sysWork->dataArr[i].texSize,
           sysWork->dataArr[i].ofsX,
           sysWork->dataArr[i].ofsY,
           sysWork->dataArr[i].equipPosBit,
-          sysWork->dataArr[i].mainPos);
+          sysWork->dataArr[i].mainPos,
+          sysWork->dataArr[i].conType);
     }
   }
   
@@ -284,6 +287,15 @@ const BOOL  MUS_ITEM_DATA_IsBackItem( MUS_ITEM_DATA_WORK*  dataWork )
   return FALSE;
 }
 
+const BOOL  MUS_ITEM_DATA_IsFrontItem( MUS_ITEM_DATA_WORK*  dataWork )
+{
+  if( dataWork->equipPosBit & EPB_IS_FRONT )
+  {
+    return TRUE;
+  }
+  return FALSE;
+}
+
 const MUS_POKE_EQUIP_USER MUS_ITEM_DATA_EquipPosToUserType( const MUS_POKE_EQUIP_USER pos )
 {
   switch( pos )
@@ -329,3 +341,10 @@ const MUS_POKE_EQUIP_USER MUS_ITEM_DATA_EquipPosToUserType( const MUS_POKE_EQUIP
   
 }
 
+
+//アイテムのコンディションタイプを取得
+const u8 MUS_ITEM_DATA_GetItemConditionType( MUS_ITEM_DATA_SYS* sysWork , const u16 itemNo )
+{
+  const MUS_ITEM_DATA_WORK *data = MUS_ITEM_DATA_GetMusItemData( sysWork , itemNo );
+  return data->conType;
+}
