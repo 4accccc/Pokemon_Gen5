@@ -1145,12 +1145,13 @@ static u32 setupWindowBG( TALKMSGWIN_SYS* tmsgwinSys, TALKMSGWIN_SYS_SETUP* setu
 																	setup->heapID);
 #endif
 		GFL_ARC_UTIL_TransVramPalette(ARCID_TALKWIN_TEST, 
-																	NARC_talkwin_test_talkwin2_NCLR,
+//															  NARC_talkwin_test_talkwin2_NCLR, //•’n
+																	NARC_talkwin_test_talkwin_NCLR,  //”’’n
 																	paltype,
 																	setup->ini.winPltID * PLTT_SIZ,
 																	PLTT_SIZ,
 																	setup->heapID);
-		setBGAlpha(tmsgwinSys, setup);
+//		setBGAlpha(tmsgwinSys, setup);
 #else
 #if 0
 		GFL_ARC_UTIL_TransVramPalette(ARCID_FONT, 
