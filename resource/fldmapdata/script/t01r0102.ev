@@ -44,14 +44,12 @@ _EVENT_DATA_END
 /**************************************************************/
 EVENT_START   ev_t01r0102_black_test01
   _TALK_START_SE_PLAY
-	_PLAYER_NAME 0 //プレイヤー名を反映
 	_TURN_HERO_SITE
-	_TALKWIN_OPEN
+	_PLAYER_NAME 0 //プレイヤー名を反映
 	_BALLOONWIN_TALKOBJ_OPEN msg_t01r0102_black_test01
 	_AB_KEYWAIT
   _BALLOONWIN_CLOSE
-  _EVENT_END
-  _END
+EVENT_END
 
 /**************************************************************/
 /*  T01R0102 サポート会話用イベントスクリプト（ポケモン入手前）*/
@@ -59,12 +57,10 @@ EVENT_START   ev_t01r0102_black_test01
 EVENT_START   ev_t01r0102_white_test01
   _TALK_START_SE_PLAY
 	_TURN_HERO_SITE
-	_TALKWIN_OPEN
 	_BALLOONWIN_TALKOBJ_OPEN msg_t01r0102_white_test01
 	_AB_KEYWAIT
   _BALLOONWIN_CLOSE
-  _EVENT_END
-  _END
+EVENT_END
 
 /**************************************************************/
 /*  T01R0102 ポケモン入手イベント用スクリプト　 */
@@ -106,8 +102,7 @@ EVENT_START   ev_t01r0102_poke_get2
 	_IFVAL_JUMP SCWK_ANSWER,EQ,1,t01r0102_poke_get_no
 
 t01r0102_poke_get_no:
-	_EVENT_END
-  _END
+EVENT_END
 
 //共通、ポケモン入手メッセージ
 EVENT_START   t01r0102_poke_get_yes
@@ -139,7 +134,6 @@ EVENT_START   t01r0102_poke_get_yes
 	_AB_KEYWAIT
 	_BALLOONWIN_CLOSE
 
-	_TALKWIN_OPEN
 	_BALLOONWIN_OBJMSG_OPEN msg_t01r0102_black_test02,T01R0102_RIVAL //ライバル
 	_AB_KEYWAIT
 	_BALLOONWIN_CLOSE
@@ -229,8 +223,7 @@ ev_t01r0102_poke_battle:
 	_FLAG_SET FV_T01R0102_BALL00
 	_FLAG_SET FV_T01R0102_BALL01
 	_FLAG_SET FV_T01R0102_BALL02
-  _EVENT_END
-  _END
+EVENT_END
 
 /**************************************************************/
 /*  T01R0102 GAME MACHINEのBG用イベントスクリプト*/
@@ -242,8 +235,7 @@ EVENT_START   ev_t01r0102_game
 	_AB_KEYWAIT
   _TALKWIN_CLOSE
 
-  _EVENT_END
-  _END
+EVENT_END
 
 /**************************************************************/
 /*  T01R0102 TVのBG用イベントスクリプト*/
@@ -255,8 +247,7 @@ EVENT_START   ev_t01r0102_tv
 	_AB_KEYWAIT
   _TALKWIN_CLOSE
 
-  _EVENT_END
-  _END
+EVENT_END
 
 /**************************************************************/
 /*  T01R0102 PCのBG用イベントスクリプト*/
@@ -269,8 +260,7 @@ EVENT_START   ev_t01r0102_pc
 	_AB_KEYWAIT
   _TALKWIN_CLOSE
 
-  _EVENT_END
-  _END
+EVENT_END
 
 /**************************************************************/
 /*  T01R0102 BEDのBG用イベントスクリプト*/
@@ -282,8 +272,7 @@ EVENT_START   ev_t01r0102_bed
 	_AB_KEYWAIT
   _TALKWIN_CLOSE
 
-  _EVENT_END
-  _END
+EVENT_END
 
 
 /**************************************************************/

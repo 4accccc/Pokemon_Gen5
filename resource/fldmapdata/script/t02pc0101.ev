@@ -123,7 +123,7 @@ doctor_guide_start:
   //_LDVAL SVSCRWK_START,1
   _LDVAL WK_0907ROM04,1
 
-  _END
+EVENT_END
 
 /**************************************************************/
 /*                                                            */
@@ -134,8 +134,7 @@ EVENT_START   ev_t02pc0101_woman1_1
 	_BALLOONWIN_TALKOBJ_OPEN msg_t02pc0101_woman1_01
 	_AB_KEYWAIT
   _BALLOONWIN_CLOSE
-  _EVENT_END
-  _END
+EVENT_END
 
 /**************************************************************/
 /*      T02 MIDDLEWOMAN1の会話用イベントスクリプト                                                      */
@@ -146,8 +145,7 @@ EVENT_START   ev_t02pc0101_middlewoman1_1
 	_BALLOONWIN_TALKOBJ_OPEN msg_t02pc0101_middlewoman1_01
 	_AB_KEYWAIT
   _BALLOONWIN_CLOSE
-  _EVENT_END
-  _END
+EVENT_END
 
 
 /**************************************************************/

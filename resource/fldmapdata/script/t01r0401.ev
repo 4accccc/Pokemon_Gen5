@@ -46,8 +46,7 @@ EVENT_START   ev_t01r0401_black_01
 	_BALLOONWIN_TALKOBJ_OPEN msg_t01r0401_black_01
 	_AB_KEYWAIT
   _BALLOONWIN_CLOSE
-  _EVENT_END
-  _END
+EVENT_END
 
 /**************************************************************/
 /*  T01R0401 サポート会話用イベントスクリプト（図鑑入手前）　 */
@@ -58,8 +57,7 @@ EVENT_START   ev_t01r0401_white_01
 	_BALLOONWIN_TALKOBJ_OPEN msg_t01r0401_white_01
 	_AB_KEYWAIT
   _BALLOONWIN_CLOSE
-  _EVENT_END
-  _END
+EVENT_END
 
 /**************************************************************/
 /*      ポケモン図鑑入手イベント                              */
@@ -205,8 +203,7 @@ t01r0401_hakase2_yes:
   //_LDVAL SVSCRWK_START,1
   _LDVAL WK_0907ROM01,1
 
-  _EVENT_END
-  _END
+EVENT_END
 
 
 /**************************************************************/
@@ -345,7 +342,6 @@ _ANIME_LABEL	anime_t01r0401_zukan04a
 /*
 EVENT_START   ev_t01r0401_kabi32_1
 	_TURN_HERO_SITE
-	_TALKWIN_OPEN
 	_BALLOONWIN_TALKOBJ_OPEN msg_t01r0401_doctor01_01
 	_AB_KEYWAIT
 	_BALLOONWIN_CLOSE
@@ -354,7 +350,6 @@ EVENT_START   ev_t01r0401_kabi32_1
 	_OBJ_ANIME_WAIT
 
 	_TURN_HERO_SITE
-	_TALKWIN_OPEN
 	_BALLOONWIN_TALKOBJ_OPEN msg_t01r0401_doctor01_02
 	_AB_KEYWAIT
 
@@ -365,20 +360,17 @@ EVENT_START   ev_t01r0401_kabi32_1
 	_IFVAL_JUMP SCWK_ANSWER,EQ,1,t01r0401_kabi32_no
 
 t01r0401_kabi32_yes:
-	_TALKWIN_OPEN
 	_BALLOONWIN_TALKOBJ_OPEN msg_t01r0401_doctor01_03
 	_AB_KEYWAIT
 	_BALLOONWIN_CLOSE
 	_JUMP t01r0401_kabi32_2
 
 t01r0401_kabi32_no:
-	_TALKWIN_OPEN
 	_BALLOONWIN_TALKOBJ_OPEN msg_t01r0401_doctor01_04
 	_AB_KEYWAIT
 	_BALLOONWIN_CLOSE
 
 t01r0401_kabi32_2:
-	_TALKWIN_OPEN
 	_BALLOONWIN_TALKOBJ_OPEN msg_t01r0401_doctor01_05
 	_AB_KEYWAIT
 	_BALLOONWIN_CLOSE
@@ -386,7 +378,6 @@ t01r0401_kabi32_2:
 	_OBJ_ANIME T01R0401_KABI32_1,test02anime //独り言アニメその１
 	_OBJ_ANIME_WAIT
 
-	_TALKWIN_OPEN
 	_BALLOONWIN_TALKOBJ_OPEN msg_t01r0401_doctor01_06
 	_AB_KEYWAIT
   	_BALLOONWIN_CLOSE
@@ -395,13 +386,11 @@ t01r0401_kabi32_2:
 	_OBJ_ANIME_WAIT
 
 	_TURN_HERO_SITE
-	_TALKWIN_OPEN
 	_BALLOONWIN_TALKOBJ_OPEN msg_t01r0401_doctor01_07
 	_AB_KEYWAIT
   	_BALLOONWIN_CLOSE
 
-	_EVENT_END
-	_END
+EVENT_END
 	*/
 
 //--------------------------------------------------------------

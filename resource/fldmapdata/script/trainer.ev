@@ -81,7 +81,7 @@ EVENT_START   ev_trainer_talk_battle
   _IFVAL_JUMP      SCWK_ANSWER,EQ,0,ev_trainer_talk_battle_poke_one
   */
   _JUMP    ev_trainer_common_10
-  _END
+EVENT_END
 
 ev_trainer_common_10:
   _TRAINER_BGM_SET SCWK_TEMP0                //視線曲セット
@@ -91,7 +91,7 @@ ev_trainer_common_10:
   _TRAINER_MSG_SET SCWK_TEMP0,SCWK_PARAM0
 
   _JUMP ev_trainer_common_11
-  _END
+EVENT_END
 
 ev_trainer_common_11:
 //  _TRAINER_MSG_SET  SCWK_TEMP0,SCWK_PARAM0
@@ -121,8 +121,7 @@ ev_trainer_common_11:
   //トレーナーフラグセット
   _TRAINER_FLAG_SET  SCWK_TEMP0
   
-  _EVENT_END
-  _END
+EVENT_END
 
 //--------------------------------------------------------------------
 //  戦闘勝利後の会話
@@ -134,7 +133,7 @@ ev_trainer_talk_after:
   _IFVAL_JUMP        SCWK_ANSWER,NE,0,ev_trainer_revenge
   */
   _JUMP        ev_trainer_talk_after_normal
-  _END
+EVENT_END
 
 EVENT_START   ev_trainer_talk_after_normal
   _TALK_START_SE_PLAY
@@ -145,8 +144,7 @@ EVENT_START   ev_trainer_talk_after_normal
   _AB_KEYWAIT
   _BALLOONWIN_CLOSE
   
-  _EVENT_END
-  _END
+EVENT_END
 
 //--------------------------------------------------------------------
 //  再戦
@@ -171,7 +169,7 @@ ev_trainer_revenge:
   //再戦トレーナーと戦闘
   _JUMP        ev_trainer_revenge_common
 */
-  _END
+EVENT_END
 
 ev_trainer_revenge_common:
 /*
@@ -182,7 +180,7 @@ ev_trainer_revenge_common:
   _LDWK        SCWK_TEMP0,SCWK_TEMP3    //退避していた再戦トレーナーIDをセットする
   _JUMP   ev_trainer_common_11
 */
-  _END
+EVENT_END
 
 //--------------------------------------------------------------------
 //  敗北
@@ -192,7 +190,7 @@ ev_trainer_battle_lose:
   _TRAINER_LOSE
   _TALK_OBJ_END
 */
-  _END
+EVENT_END
 
 //--------------------------------------------------------------------
 //  手持ちが1匹
@@ -212,7 +210,7 @@ ev_trainer_talk_battle_poke_one:
   _BALLOONWIN_CLOSE
   _TALK_OBJ_END
 */
-  _END
+EVENT_END
 
 //--------------------------------------------------------------------
 //かくれみのアニメ
@@ -269,7 +267,7 @@ EVENT_START   ev_trainer_move_battle
   _IFVAL_JUMP    SCWK_ANSWER,EQ,SCR_EYE_TR_TYPE_SINGLE,ev_trainer_type_single
   _IFVAL_JUMP    SCWK_ANSWER,EQ,SCR_EYE_TR_TYPE_DOUBLE,ev_trainer_type_double
   _IFVAL_JUMP    SCWK_ANSWER,EQ,SCR_EYE_TR_TYPE_TAG,ev_trainer_type_tag
-  _END
+EVENT_END
 
 //--------------------------------------------------------------------
 //シングル
@@ -303,8 +301,7 @@ ev_trainer_type_single:
   _LDWK   SCWK_TEMP0,SCWK_ANSWER
   _TRAINER_FLAG_SET  SCWK_TEMP0
 
-  _EVENT_END
-  _END
+EVENT_END
 
 //移動終了待ち
 ev_trainer_type_single_move_end_check:
@@ -356,7 +353,7 @@ ev_trainer_type_double:
 
   _EVENT_END
 */
-  _END
+EVENT_END
 
 //移動終了待ち
 ev_trainer_type_double_move_end_check:
@@ -422,7 +419,7 @@ ev_trainer_type_tag:
 
   _EVENT_END
 */
-  _END
+EVENT_END
 
 //移動終了待ち
 ev_trainer_type_tag_move_end_check_0:

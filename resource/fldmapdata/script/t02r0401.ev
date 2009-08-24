@@ -46,8 +46,7 @@ EVENT_START   ev_t02r0401_talkobj_girl4
 	_BALLOONWIN_TALKOBJ_OPEN msg_t02r0401_girl4_01
 	_AB_KEYWAIT
   _BALLOONWIN_CLOSE
-  _EVENT_END
-  _END
+EVENT_END
 
 /**************************************************************/
 /*  T02R0401 MAN2の会話用イベントスクリプト*/
@@ -58,8 +57,7 @@ EVENT_START   ev_t02r0401_talkobj_man2
 	_BALLOONWIN_TALKOBJ_OPEN msg_t02r0401_man2_01
 	_AB_KEYWAIT
   _BALLOONWIN_CLOSE
-  _EVENT_END
-  _END
+EVENT_END
 
 /**************************************************************/
 /*  T02R0401 POKEの会話用イベントスクリプト*/
@@ -70,7 +68,6 @@ EVENT_START   ev_t02r0401_talkobj_poke
 	_BALLOONWIN_TALKOBJ_OPEN msg_t02r0401_poke_01
 	_AB_KEYWAIT
   _BALLOONWIN_CLOSE
-  _EVENT_END
-  _END
+EVENT_END
 
 

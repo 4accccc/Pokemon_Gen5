@@ -59,8 +59,7 @@ EVENT_START   ev_t02_babygirl1_1
 	_AB_KEYWAIT
 	_BALLOONWIN_CLOSE
 */
-	_EVENT_END
-	_END
+EVENT_END
 
 //--------------------------------------------------------------
 //  WOMAN1_1 話し掛け
@@ -71,8 +70,7 @@ EVENT_START   ev_t02_talkobj_woman1
 	_BALLOONWIN_TALKOBJ_OPEN msg_t01_woman1_01
 	_AB_KEYWAIT
   _BALLOONWIN_CLOSE
-  _EVENT_END
-  _END
+EVENT_END
 
 //--------------------------------------------------------------
 //  OLDMAN1_1 話し掛け
@@ -83,8 +81,7 @@ EVENT_START   ev_t02_oldman1_1
 	_BALLOONWIN_TALKOBJ_OPEN msg_t01_oldman1_01
 	_AB_KEYWAIT
   _BALLOONWIN_CLOSE
-  _EVENT_END
-  _END
+EVENT_END
 
 //--------------------------------------------------------------
 //  OLDWOMAN1_1 話し掛け
@@ -95,8 +92,7 @@ EVENT_START   ev_t02_oldwoman1_1
 	_BALLOONWIN_TALKOBJ_OPEN msg_t01_oldwoman1_01
 	_AB_KEYWAIT
   _BALLOONWIN_CLOSE
-  _EVENT_END
-  _END
+EVENT_END
 
 /**************************************************************/
 /*  T02 BIGMANの会話用イベントスクリプト*/
@@ -107,8 +103,7 @@ EVENT_START   ev_t02_talkobj_bigman
 	_BALLOONWIN_TALKOBJ_OPEN msg_t01_bigman_01
 	_AB_KEYWAIT
   _BALLOONWIN_CLOSE
-  _EVENT_END
-  _END
+EVENT_END
 
 //--------------------------------------------------------------
 //	アニメーションデータ

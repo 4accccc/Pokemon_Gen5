@@ -45,8 +45,7 @@ EVENT_START   ev_t01r0201_middleman1
 	_BALLOONWIN_TALKOBJ_OPEN msg_t01r0201_middleman1_02
 	_AB_KEYWAIT
   _BALLOONWIN_CLOSE
-  _EVENT_END
-  _END
+EVENT_END
 
 /**************************************************************/
 /*   T01R0201 サポート母                                      */
@@ -57,6 +56,5 @@ EVENT_START   ev_t01r0201_middlewoman1
 	_BALLOONWIN_TALKOBJ_OPEN msg_t01r0201_middlewoman1_02
 	_AB_KEYWAIT
   _BALLOONWIN_CLOSE
-  _EVENT_END
-  _END
+EVENT_END
 

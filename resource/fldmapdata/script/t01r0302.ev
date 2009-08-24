@@ -34,7 +34,6 @@ _EVENT_DATA_END
 /**************************************************************/
 EVENT_START   ev_t01r0302_pc
   _PLAYER_NAME 0 //ÉvÉåÉCÉÑÅ[ñºÇîΩâf
-  _TALKWIN_OPEN
   _BALLOONWIN_TALKOBJ_OPEN msg_t01r0302_pc_01
   _AB_KEYWAIT
   _BALLOONWIN_CLOSE

@@ -195,8 +195,7 @@ poke_getdemo_start:
   _LDVAL WK_0907ROM00,1
   //_LDVAL SVSCRWK_START,1
   _LDVAL WK_0907ROM02,1
-  _EVENT_END
-  _END
+EVENT_END
 
 /**************************************************************/
 /*                                                            */
@@ -239,8 +238,7 @@ EVENT_START   ev_r01_talkobj_boy1
 			_BALLOONWIN_CLOSE
 
 	ENDIF
-	_EVENT_END //動作モデルポーズを解除します
-	_END //イベントを終了します
+EVENT_END
 
 
 /*
@@ -271,8 +269,7 @@ talkobj_boy1_no:
   	_BALLOONWIN_CLOSE
 
 talkobj_boy1_end:
-	_EVENT_END //動作モデルポーズを解除します
-	_END //イベントを終了します
+EVENT_END
 */
 
 /**************************************************************/
@@ -287,8 +284,7 @@ EVENT_START   ev_r01_talkobj_girl1
 /*	_OBJ_ANIME R01GIRL1,test02anime
 	_OBJ_ANIME_WAIT
 */
-	_EVENT_END
-	_END
+EVENT_END
 
 /**************************************************************/
 /*                                                            */
@@ -302,8 +298,7 @@ EVENT_START   ev_r01_talkobj_man1
 /*	_OBJ_ANIME R01MAN1,test03anime
 	_OBJ_ANIME_WAIT
 */
-	_EVENT_END
-	_END
+EVENT_END
 
 /**************************************************************/
 /*   R01　捕獲デモ用：POSで主人公移動                    */
