@@ -33,8 +33,7 @@ _EVENT_DATA_END
 /*  C02R0101 BADMANの会話用イベントスクリプト*/
 /**************************************************************/
 
-ev_c02r0101_talkobj_badman:
-	_EVENT_START
+EVENT_START   ev_c02r0101_talkobj_badman
 	_TALK_START_SE_PLAY
 	_TURN_HERO_SITE
 	_BALLOONWIN_TALKOBJ_OPEN msg_c02r0101_badman_01

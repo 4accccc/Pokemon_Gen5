@@ -33,8 +33,7 @@ _EVENT_DATA_END
 /**************************************************************/
 /*  C02PC0101 GIRL2の会話用イベントスクリプト*/
 /**************************************************************/
-ev_c02pc0101_talkobj_girl2:
-	_EVENT_START
+EVENT_START   ev_c02pc0101_talkobj_girl2
 	_TALK_START_SE_PLAY
 	_TURN_HERO_SITE
 	_BALLOONWIN_TALKOBJ_OPEN msg_c02pc0101_girl2_01
@@ -46,8 +45,7 @@ ev_c02pc0101_talkobj_girl2:
 /**************************************************************/
 /*  C02PC0101 BACKPACKERMの会話用イベントスクリプト*/
 /**************************************************************/
-ev_c02pc0101_talkobj_backpackerm:
-	_EVENT_START
+EVENT_START   ev_c02pc0101_talkobj_backpackerm
 	_TALK_START_SE_PLAY
 	_TURN_HERO_SITE
 	_BALLOONWIN_TALKOBJ_OPEN msg_c02pc0101_backpackerm_01

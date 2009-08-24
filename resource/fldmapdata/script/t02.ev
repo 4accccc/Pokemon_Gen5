@@ -44,8 +44,7 @@ _EVENT_DATA_END
 //--------------------------------------------------------------
 //  BABYGIRL1_1 話し掛け
 //--------------------------------------------------------------
-ev_t02_babygirl1_1:
-	_EVENT_START
+EVENT_START   ev_t02_babygirl1_1
   _TALK_START_SE_PLAY
 	_TURN_HERO_SITE
 	_BALLOONWIN_TALKOBJ_OPEN msg_t01_babygirl1_01
@@ -66,8 +65,7 @@ ev_t02_babygirl1_1:
 //--------------------------------------------------------------
 //  WOMAN1_1 話し掛け
 //--------------------------------------------------------------
-ev_t02_talkobj_woman1:
-	_EVENT_START
+EVENT_START   ev_t02_talkobj_woman1
   _TALK_START_SE_PLAY
 	_TURN_HERO_SITE
 	_BALLOONWIN_TALKOBJ_OPEN msg_t01_woman1_01
@@ -79,8 +77,7 @@ ev_t02_talkobj_woman1:
 //--------------------------------------------------------------
 //  OLDMAN1_1 話し掛け
 //--------------------------------------------------------------
-ev_t02_oldman1_1:
-	_EVENT_START
+EVENT_START   ev_t02_oldman1_1
   _TALK_START_SE_PLAY
 	_TURN_HERO_SITE
 	_BALLOONWIN_TALKOBJ_OPEN msg_t01_oldman1_01
@@ -92,8 +89,7 @@ ev_t02_oldman1_1:
 //--------------------------------------------------------------
 //  OLDWOMAN1_1 話し掛け
 //--------------------------------------------------------------
-ev_t02_oldwoman1_1:
-	_EVENT_START
+EVENT_START   ev_t02_oldwoman1_1
   _TALK_START_SE_PLAY
 	_TURN_HERO_SITE
 	_BALLOONWIN_TALKOBJ_OPEN msg_t01_oldwoman1_01
@@ -105,8 +101,7 @@ ev_t02_oldwoman1_1:
 /**************************************************************/
 /*  T02 BIGMANの会話用イベントスクリプト*/
 /**************************************************************/
-ev_t02_talkobj_bigman:
-	_EVENT_START
+EVENT_START   ev_t02_talkobj_bigman
   _TALK_START_SE_PLAY
 	_TURN_HERO_SITE
 	_BALLOONWIN_TALKOBJ_OPEN msg_t01_bigman_01

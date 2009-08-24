@@ -41,8 +41,7 @@ _EVENT_DATA_END
 /**************************************************************/
 /*  R02 友達♂のイベントスクリプト*/
 /**************************************************************/
-ev_r02_talkobj_black:
-	_EVENT_START
+EVENT_START   ev_r02_talkobj_black
   _TALK_START_SE_PLAY
 	_TURN_HERO_SITE
 	_BALLOONWIN_TALKOBJ_OPEN msg_r02_black_01
@@ -54,8 +53,7 @@ ev_r02_talkobj_black:
 /**************************************************************/
 /*  R02 ママのイベントスクリプト*/
 /**************************************************************/
-ev_r02_talkobj_mama:
-	_EVENT_START
+EVENT_START   ev_r02_talkobj_mama
   _TALK_START_SE_PLAY
 	_TURN_HERO_SITE
 	_BALLOONWIN_TALKOBJ_OPEN msg_r02_mama_01
@@ -67,8 +65,7 @@ ev_r02_talkobj_mama:
 /**************************************************************/
 /*  R02 BOY2の会話イベントスクリプト*/
 /**************************************************************/
-ev_r02_talkobj_boy2:
-	_EVENT_START
+EVENT_START   ev_r02_talkobj_boy2
   _TALK_START_SE_PLAY
 	_TURN_HERO_SITE
 	_BALLOONWIN_TALKOBJ_OPEN msg_r02_boy2_01
@@ -80,8 +77,7 @@ ev_r02_talkobj_boy2:
 /**************************************************************/
 /*  R02 GIRL2の会話のイベントスクリプト*/
 /**************************************************************/
-ev_r02_talkobj_girl2:
-	_EVENT_START
+EVENT_START   ev_r02_talkobj_girl2
   _TALK_START_SE_PLAY
 	_TURN_HERO_SITE
 	_BALLOONWIN_TALKOBJ_OPEN msg_r02_girl2_01

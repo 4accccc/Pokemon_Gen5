@@ -41,36 +41,36 @@ _EVENT_DATA_END
 /**************************************************************/
 /*                                                            */
 /**************************************************************/
-ev_bg_msg_book1_01:
+EVENT_START ev_bg_msg_book1_01
   _EASY_MSG bg_msg_book1_01
-  _END
+EVENT_END
 
-ev_bg_msg_book2_01:
+EVENT_START   ev_bg_msg_book2_01
   _EASY_MSG bg_msg_book2_01
-  _END
+EVENT_END
 
-ev_bg_msg_bookrack1_01:
+EVENT_START   ev_bg_msg_bookrack1_01
   _EASY_MSG bg_msg_bookrack1_01
-  _END
+EVENT_END
 
-ev_bg_msg_bookrack2_01:
+EVENT_START   ev_bg_msg_bookrack2_01
   _EASY_MSG bg_msg_bookrack2_01
-  _END
+EVENT_END
 
-ev_bg_msg_scrap_01:
+EVENT_START   ev_bg_msg_scrap_01
   _EASY_MSG bg_msg_scrap_01
-  _END
+EVENT_END
 
-ev_bg_msg_shoprack1_01:
+EVENT_START   ev_bg_msg_shoprack1_01
   _EASY_MSG bg_msg_shoprack1_01
-  _END
+EVENT_END
 
-ev_bg_msg_shoprack2_01:
+EVENT_START   ev_bg_msg_shoprack2_01
   _EASY_MSG bg_msg_shoprack2_01
-  _END
+EVENT_END
 
-ev_bg_msg_shoprack3_01:
+EVENT_START   ev_bg_msg_shoprack3_01
   _EASY_MSG bg_msg_shoprack3_01
-  _END
+EVENT_END
 
 

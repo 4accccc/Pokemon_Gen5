@@ -39,8 +39,7 @@ _EVENT_DATA_END
 /**************************************************************/
 /*  C01 ミュージカル用イベントスクリプト                      */
 /**************************************************************/
-ev_c01_musical:
-  _EVENT_START
+EVENT_START   ev_c01_musical
   _TALK_START_SE_PLAY
 	_TURN_HERO_SITE
 
@@ -72,8 +71,7 @@ c01_musical_end:
 /**************************************************************/
 /*  C01 BADMANの会話用イベントスクリプト                      */
 /**************************************************************/
-ev_c01_talkobj_badman:
-  _EVENT_START
+EVENT_START   ev_c01_talkobj_badman
   _TALK_START_SE_PLAY
 	_TURN_HERO_SITE
 	_BALLOONWIN_TALKOBJ_OPEN msg_c01_badman_01
@@ -85,8 +83,7 @@ ev_c01_talkobj_badman:
 /**************************************************************/
 /*  C01 BOY2の会話用イベントスクリプト                      */
 /**************************************************************/
-ev_c01_talkobj_boy2:
-  _EVENT_START
+EVENT_START   ev_c01_talkobj_boy2
   _TALK_START_SE_PLAY
 	_TURN_HERO_SITE
 	_BALLOONWIN_TALKOBJ_OPEN msg_c01_boy2_01
@@ -98,8 +95,7 @@ ev_c01_talkobj_boy2:
 /**************************************************************/
 /*  C01 CLEANINGMの会話用イベントスクリプト                      */
 /**************************************************************/
-ev_c01_talkobj_cleaningm:
-  _EVENT_START
+EVENT_START   ev_c01_talkobj_cleaningm
   _TALK_START_SE_PLAY
 	_TURN_HERO_SITE
 	_BALLOONWIN_TALKOBJ_OPEN msg_c01_cleaningm_01
@@ -111,8 +107,7 @@ ev_c01_talkobj_cleaningm:
 /**************************************************************/
 /*  C01 BREEDERWの会話用イベントスクリプト                      */
 /**************************************************************/
-ev_c01_talkobj_breederw:
-  _EVENT_START
+EVENT_START   ev_c01_talkobj_breederw
   _TALK_START_SE_PLAY
 	_TURN_HERO_SITE
 	_BALLOONWIN_TALKOBJ_OPEN msg_c01_breederw_01
@@ -124,8 +119,7 @@ ev_c01_talkobj_breederw:
 /**************************************************************/
 /*  C01 WOMAN2の会話用イベントスクリプト                      */
 /**************************************************************/
-ev_c01_talkobj_woman2:
-	_EVENT_START
+EVENT_START   ev_c01_talkobj_woman2
   _TALK_START_SE_PLAY
 	_TURN_HERO_SITE
 	_BALLOONWIN_TALKOBJ_OPEN msg_c01_woman2_01
@@ -137,8 +131,7 @@ ev_c01_talkobj_woman2:
 /**************************************************************/
 /*  C01 BABYGIRLのランダム会話用イベントスクリプト            */
 /**************************************************************/
-ev_c01_talkobj_babygirl:
-  _EVENT_START
+EVENT_START   ev_c01_talkobj_babygirl
   _TALK_START_SE_PLAY
   _TURN_HERO_SITE
   
@@ -168,8 +161,7 @@ babygirl_end:
 /**************************************************************/
 /*  C01 SIGN1用イベントスクリプト                      */
 /**************************************************************/
-ev_c01_sign1:
-	_EVENT_START
+EVENT_START   ev_c01_sign1
   _TALK_START_SE_PLAY
 	_TURN_HERO_SITE
 	_BALLOONWIN_TALKOBJ_OPEN msg_c01_sign1_01
@@ -181,8 +173,7 @@ ev_c01_sign1:
 /**************************************************************/
 /*  C01 SIGN2用イベントスクリプト                      */
 /**************************************************************/
-ev_c01_sign2:
-	_EVENT_START
+EVENT_START   ev_c01_sign2
   _TALK_START_SE_PLAY
 	_TURN_HERO_SITE
 	_BALLOONWIN_TALKOBJ_OPEN msg_c01_sign2_01
@@ -194,8 +185,7 @@ ev_c01_sign2:
 /**************************************************************/
 /*  C01 SIGN3用イベントスクリプト                      */
 /**************************************************************/
-ev_c01_sign3:
-	_EVENT_START
+EVENT_START   ev_c01_sign3
   _TALK_START_SE_PLAY
 	_TURN_HERO_SITE
 	_BALLOONWIN_TALKOBJ_OPEN msg_c01_sign3_01

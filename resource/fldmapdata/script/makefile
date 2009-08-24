@@ -85,9 +85,6 @@ ifeq ($(CONVERTUSER),true) #CONVERTUSER
 #*.ev
 #do-build: $(SCRSRCS_BIN)
 
-#common_scr.bin
-#common_scr.bin: ../../../include/msgdata/msg_common_scr.h
-
 #*.bin
 %.bin: %.ev $(DEPENDHEADERS)
 	@echo $<
@@ -108,18 +105,9 @@ $(TARGET_NARC): $(SCRSRCS_BIN)
 	@$(NAIXCUT) $(TARGET_NAIX)
 
 #----------------------------------------------------------------------------
-#	mklst
 #----------------------------------------------------------------------------
-mklst:
-	ls -1 *.ev > temp_$*
-	listmk temp_$* scrfile.lst SCRSRCS
-	rm temp_$*
-
-#----------------------------------------------------------------------------
-#	msglist
-#----------------------------------------------------------------------------
-#mkmsglist:
-#	cat $(MSGLIST) > msglist.h
+make-verinfo:
+	#do nothing!!
 
 #----------------------------------------------------------------------------
 #	diff
@@ -134,3 +122,4 @@ diff:
 #----------------------------------------------------------------------------
 test:
 	@echo $(SCRIPTFILES)
+

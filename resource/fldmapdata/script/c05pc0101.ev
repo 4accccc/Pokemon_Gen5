@@ -33,8 +33,7 @@ _EVENT_DATA_END
 /**************************************************************/
 /*  C05PC0101 MIDDLEWOMAN1の会話用イベントスクリプト*/
 /**************************************************************/
-ev_c05pc0101_talkobj_middlewoman1:
-	_EVENT_START
+EVENT_START   ev_c05pc0101_talkobj_middlewoman1
   _TALK_START_SE_PLAY
 	_TURN_HERO_SITE
 	_BALLOONWIN_TALKOBJ_OPEN msg_c05pc0101_middlewoman1_01
@@ -46,8 +45,7 @@ ev_c05pc0101_talkobj_middlewoman1:
 /**************************************************************/
 /*  C05PC0101 GIRL1の会話用イベントスクリプト*/
 /**************************************************************/
-ev_c05pc0101_talkobj_girl1:
-	_EVENT_START
+EVENT_START   ev_c05pc0101_talkobj_girl1
   _TALK_START_SE_PLAY
 	_TURN_HERO_SITE
 	_BALLOONWIN_TALKOBJ_OPEN msg_c05pc0101_girl1_01

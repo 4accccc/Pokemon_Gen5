@@ -40,8 +40,7 @@ _EVENT_DATA_END
 /**************************************************************/
 /*  C01R0301 MIDDLEWOMAN2の会話用イベントスクリプト*/
 /**************************************************************/
-ev_c01r0301_talkobj_middlewoman2:
-	_EVENT_START
+EVENT_START   ev_c01r0301_talkobj_middlewoman2
   _TALK_START_SE_PLAY
 	_TURN_HERO_SITE
 	_BALLOONWIN_TALKOBJ_OPEN msg_c01r0301_middlewoman2_01
@@ -53,8 +52,7 @@ ev_c01r0301_talkobj_middlewoman2:
 /**************************************************************/
 /*  C01R0301 MAN1の会話用イベントスクリプト*/
 /**************************************************************/
-ev_c01r0301_talkobj_man1:
-	_EVENT_START
+EVENT_START   ev_c01r0301_talkobj_man1
   _TALK_START_SE_PLAY
 	_TURN_HERO_SITE
 	_BALLOONWIN_TALKOBJ_OPEN msg_c01r0301_man1_01
@@ -66,8 +64,7 @@ ev_c01r0301_talkobj_man1:
 /**************************************************************/
 /*  C01R0301 BOY2の会話用イベントスクリプト*/
 /**************************************************************/
-ev_c01r0301_talkobj_boy2:
-	_EVENT_START
+EVENT_START   ev_c01r0301_talkobj_boy2
   _TALK_START_SE_PLAY
 	_TURN_HERO_SITE
 	_BALLOONWIN_TALKOBJ_OPEN msg_c01r0301_boy2_01

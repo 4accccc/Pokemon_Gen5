@@ -35,8 +35,7 @@ _EVENT_DATA_END
 /**************************************************************/
 /*  C06 BOY3の会話用イベントスクリプト                      */
 /**************************************************************/
-ev_c06_talkobj_boy3:
-	_EVENT_START
+EVENT_START   ev_c06_talkobj_boy3
   _TALK_START_SE_PLAY
 	_TURN_HERO_SITE
 	_BALLOONWIN_TALKOBJ_OPEN msg_c06_boy3_01
@@ -48,8 +47,7 @@ ev_c06_talkobj_boy3:
 /**************************************************************/
 /*  C06 PILOTの会話用イベントスクリプト                      */
 /**************************************************************/
-ev_c06_talkobj_pilot:
-	_EVENT_START
+EVENT_START   ev_c06_talkobj_pilot
   _TALK_START_SE_PLAY
 	_TURN_HERO_SITE
 	_BALLOONWIN_TALKOBJ_OPEN msg_c06_pilot_01
@@ -61,8 +59,7 @@ ev_c06_talkobj_pilot:
 /**************************************************************/
 /*  C06 GIRL2の会話用イベントスクリプト                      */
 /**************************************************************/
-ev_c06_talkobj_girl2:
-	_EVENT_START
+EVENT_START   ev_c06_talkobj_girl2
   _TALK_START_SE_PLAY
 	_TURN_HERO_SITE
 	_BALLOONWIN_TALKOBJ_OPEN msg_c06_girl2_01
@@ -74,8 +71,7 @@ ev_c06_talkobj_girl2:
 /**************************************************************/
 /*  C06 RANGERWの会話用イベントスクリプト                      */
 /**************************************************************/
-ev_c06_talkobj_rangerw:
-	_EVENT_START
+EVENT_START   ev_c06_talkobj_rangerw
   _TALK_START_SE_PLAY
 	_TURN_HERO_SITE
 	_BALLOONWIN_TALKOBJ_OPEN msg_c06_rangerw_01
@@ -87,8 +83,7 @@ ev_c06_talkobj_rangerw:
 /**************************************************************/
 /*  C06 WORKMANの会話用イベントスクリプト                      */
 /**************************************************************/
-ev_c06_talkobj_workman:
-	_EVENT_START
+EVENT_START   ev_c06_talkobj_workman
   _TALK_START_SE_PLAY
 	_TURN_HERO_SITE
 	_BALLOONWIN_TALKOBJ_OPEN msg_c06_workman_01
@@ -100,8 +95,7 @@ ev_c06_talkobj_workman:
 /**************************************************************/
 /*  C06 WOMAN1の会話用イベントスクリプト                      */
 /**************************************************************/
-ev_c06_talkobj_woman1:
-	_EVENT_START
+EVENT_START   ev_c06_talkobj_woman1
   _TALK_START_SE_PLAY
 	_TURN_HERO_SITE
 	_BALLOONWIN_TALKOBJ_OPEN msg_c06_woman1_01

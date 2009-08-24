@@ -34,8 +34,7 @@ _EVENT_DATA_END
 /**************************************************************/
 /*  C05R0101 WOMAN1の会話用イベントスクリプト*/
 /**************************************************************/
-ev_c05r0101_talkobj_woman1:
-	_EVENT_START
+EVENT_START   ev_c05r0101_talkobj_woman1
   _TALK_START_SE_PLAY
 	_TURN_HERO_SITE
 	_BALLOONWIN_TALKOBJ_OPEN msg_c05r0101_woman1_01
@@ -47,8 +46,7 @@ ev_c05r0101_talkobj_woman1:
 /**************************************************************/
 /*  C05R0101 BOY1の会話用イベントスクリプト*/
 /**************************************************************/
-ev_c05r0101_talkobj_boy1:
-	_EVENT_START
+EVENT_START   ev_c05r0101_talkobj_boy1
   _TALK_START_SE_PLAY
 	_TURN_HERO_SITE
 	_BALLOONWIN_TALKOBJ_OPEN msg_c05r0101_boy1_01
@@ -60,8 +58,7 @@ ev_c05r0101_talkobj_boy1:
 /**************************************************************/
 /*  C05R0101 POKEMONの会話用イベントスクリプト*/
 /**************************************************************/
-ev_c05r0101_pokemon:
-	_EVENT_START
+EVENT_START   ev_c05r0101_pokemon
   _TALK_START_SE_PLAY
 	_TURN_HERO_SITE
 	_BALLOONWIN_TALKOBJ_OPEN msg_c05r0101_pokemon_01//鳴き声処理追加

@@ -32,8 +32,7 @@ _EVENT_DATA_END
 /**************************************************************/
 /*  D02 GIRL1の会話用イベントスクリプト                      */
 /**************************************************************/
- ev_d02_talkobj_girl1:
-	_EVENT_START
+EVENT_START    ev_d02_talkobj_girl1
   _TALK_START_SE_PLAY
 	_TURN_HERO_SITE
 	_BALLOONWIN_TALKOBJ_OPEN msg_d02_girl1_01

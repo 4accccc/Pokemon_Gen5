@@ -52,8 +52,7 @@ _EVENT_DATA_END
 /**************************************************************/
 /*   R01　ポケモン捕獲デモ                                    */
 /**************************************************************/
-ev_r01_poke_getdemo:
-  _EVENT_START
+EVENT_START   ev_r01_poke_getdemo
 //POSイベント、POSごとに主人公移動アニメ
 	_PLAYER_POS_GET SCWK_TEMP0,SCWK_TEMP1 //自機座標取得
 	_IFVAL_JUMP SCWK_TEMP0,EQ,786,pos_786_729
@@ -202,8 +201,7 @@ poke_getdemo_start:
 /**************************************************************/
 /*                                                            */
 /**************************************************************/
-ev_r01_talkobj_boy1:
-	_EVENT_START //動作モデルをポーズします
+EVENT_START   ev_r01_talkobj_boy1
   _TALK_START_SE_PLAY
 	_TURN_HERO_SITE //自機の方向へ振り向きます
 
@@ -280,8 +278,7 @@ talkobj_boy1_end:
 /**************************************************************/
 /*                                                            */
 /**************************************************************/
-ev_r01_talkobj_girl1:
-	_EVENT_START
+EVENT_START   ev_r01_talkobj_girl1
   _TALK_START_SE_PLAY
 	_TURN_HERO_SITE
 	_BALLOONWIN_TALKOBJ_OPEN msg_r01_girl1_01
@@ -296,8 +293,7 @@ ev_r01_talkobj_girl1:
 /**************************************************************/
 /*                                                            */
 /**************************************************************/
-ev_r01_talkobj_man1:
-	_EVENT_START
+EVENT_START   ev_r01_talkobj_man1
   _TALK_START_SE_PLAY
 	_TURN_HERO_SITE
 	_BALLOONWIN_TALKOBJ_OPEN msg_r01_man1_01

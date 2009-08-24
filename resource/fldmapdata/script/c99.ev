@@ -28,8 +28,7 @@ _EVENT_DATA_END //終了
 //--------------------------------------------------------------------
 //	話し掛け サンプル
 //--------------------------------------------------------------------
-ev_c99_talkobj_sample_01:
-	_EVENT_START
+EVENT_START   ev_c99_talkobj_sample_01
   _TALK_START_SE_PLAY
 	_TURN_HERO_SITE
 	_BALLOONWIN_TALKOBJ_OPEN msg_c99_01
@@ -41,8 +40,7 @@ ev_c99_talkobj_sample_01:
 //--------------------------------------------------------------------
 //	話し掛け サンプル
 //--------------------------------------------------------------------
-ev_c99_talkobj_sample_02:
-	_EVENT_START
+EVENT_START   ev_c99_talkobj_sample_02
   _TALK_START_SE_PLAY
 	_TURN_HERO_SITE
 	_BALLOONWIN_TALKOBJ_OPEN msg_c99_02
@@ -54,8 +52,7 @@ ev_c99_talkobj_sample_02:
 //--------------------------------------------------------------------
 //	話し掛け サンプル
 //--------------------------------------------------------------------
-ev_c99_talkobj_sample_03:
-	_EVENT_START
+EVENT_START   ev_c99_talkobj_sample_03
   _TALK_START_SE_PLAY
 	_TURN_HERO_SITE
 	_BALLOONWIN_TALKOBJ_OPEN msg_c99_03
@@ -67,8 +64,7 @@ ev_c99_talkobj_sample_03:
 //--------------------------------------------------------------------
 //	話し掛け サンプル
 //--------------------------------------------------------------------
-ev_c99_talkobj_sample_04:
-	_EVENT_START
+EVENT_START   ev_c99_talkobj_sample_04
   _TALK_START_SE_PLAY
 	_TURN_HERO_SITE
 	_BALLOONWIN_TALKOBJ_OPEN msg_c99_04
@@ -80,8 +76,7 @@ ev_c99_talkobj_sample_04:
 //--------------------------------------------------------------------
 //	話し掛け サンプル
 //--------------------------------------------------------------------
-ev_c99_talkobj_sample_05:
-	_EVENT_START
+EVENT_START   ev_c99_talkobj_sample_05
   _TALK_START_SE_PLAY
 	_TURN_HERO_SITE
 	_BALLOONWIN_TALKOBJ_OPEN msg_c99_05
@@ -93,8 +88,7 @@ ev_c99_talkobj_sample_05:
 //--------------------------------------------------------------------
 //	話し掛け サンプル
 //--------------------------------------------------------------------
-ev_c99_talkobj_sample_06:
-	_EVENT_START
+EVENT_START   ev_c99_talkobj_sample_06
   _TALK_START_SE_PLAY
 	_TURN_HERO_SITE
 	_BALLOONWIN_TALKOBJ_OPEN msg_c99_06
@@ -106,8 +100,7 @@ ev_c99_talkobj_sample_06:
 //--------------------------------------------------------------------
 //	話し掛け KABI32 00
 //--------------------------------------------------------------------
-ev_c99_talkobj_kabi32_00:
-	_EVENT_START
+EVENT_START   ev_c99_talkobj_kabi32_00
   _TALK_START_SE_PLAY
 	_TURN_HERO_SITE
 	
@@ -124,8 +117,7 @@ ev_c99_talkobj_kabi32_00:
 //--------------------------------------------------------------------
 //	話し掛け サンプル KABI32 01
 //--------------------------------------------------------------------
-ev_c99_talkobj_kabi32_01:
-	_EVENT_START
+EVENT_START   ev_c99_talkobj_kabi32_01
   _TALK_START_SE_PLAY
 	_TURN_HERO_SITE
 	
@@ -141,8 +133,7 @@ ev_c99_talkobj_kabi32_01:
 //--------------------------------------------------------------------
 //	話し掛け サンプル KABI32 02
 //--------------------------------------------------------------------
-ev_c99_talkobj_kabi32_02:
-	_EVENT_START
+EVENT_START   ev_c99_talkobj_kabi32_02
   _TALK_START_SE_PLAY
 	_TURN_HERO_SITE
 	
@@ -158,8 +149,7 @@ ev_c99_talkobj_kabi32_02:
 //--------------------------------------------------------------------
 //	話し掛け サンプル KABI32 03
 //--------------------------------------------------------------------
-ev_c99_talkobj_kabi32_03:
-	_EVENT_START
+EVENT_START   ev_c99_talkobj_kabi32_03
   _TALK_START_SE_PLAY
 	_TURN_HERO_SITE
 	
@@ -175,8 +165,7 @@ ev_c99_talkobj_kabi32_03:
 //--------------------------------------------------------------------
 //	話し掛け サンプル KABI32 04
 //--------------------------------------------------------------------
-ev_c99_talkobj_kabi32_04:
-	_EVENT_START
+EVENT_START   ev_c99_talkobj_kabi32_04
   _TALK_START_SE_PLAY
 	_TURN_HERO_SITE
 	

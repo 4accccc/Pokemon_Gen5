@@ -914,13 +914,11 @@ DEF_CMD_COUNT  =  ( DEF_CMD_COUNT + 1 )
  */
 //--------------------------------------------------------------
   .macro  _EASY_MSG msg_id
-  _EVENT_START
   _TALK_START_SE_PLAY
   _TALKWIN_OPEN
   _TALKMSG_ALLPUT \msg_id
   _AB_KEYWAIT
   _TALKWIN_CLOSE
-  _EVENT_END
   .endm
 
 //--------------------------------------------------------------
@@ -1204,6 +1202,24 @@ DEF_CMD_COUNT  =  ( DEF_CMD_COUNT + 1 )
   .endm
 #endif
 
+  .macro  EVENT_START label
+\label:
+  _OBJ_PAUSE_ALL
+  .endm
+
+  .macro  EVENT_END
+  _OBJ_PAUSE_CLEAR_ALL
+  .short  EV_SEQ_END
+  .endm
+
+#define _TALK_START() \
+    _TALK_START_SE_PLAY ; \
+    _TURN_HERO_SITE
+
+#define _TALK_START_TURN_NOT() \
+    _TALK_START_SE_PLAY
+
+#if 0
 //--------------------------------------------------------------
 /**
  *  _EVENT_START POS,SCENE_CHANGE_LABEL‚É‘Î‚µ‚ÄŠJŽn
@@ -1239,6 +1255,8 @@ DEF_CMD_COUNT  =  ( DEF_CMD_COUNT + 1 )
   _EVENT_START
   _TALK_START_SE_PLAY
   .endm
+
+#endif
 
 //--------------------------------------------------------------
 /**

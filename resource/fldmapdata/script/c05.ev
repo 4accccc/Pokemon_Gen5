@@ -37,8 +37,7 @@ _EVENT_DATA_END
 /**************************************************************/
 /*  C05 WOMAN2の会話用イベントスクリプト                      */
 /**************************************************************/
-ev_c05_talkobj_woman2:
-	_EVENT_START
+EVENT_START   ev_c05_talkobj_woman2
   _TALK_START_SE_PLAY
 	_TURN_HERO_SITE
 	_BALLOONWIN_TALKOBJ_OPEN msg_c05_woman2_01
@@ -50,8 +49,7 @@ ev_c05_talkobj_woman2:
 /**************************************************************/
 /*  C05 BABYGIRL1の会話用イベントスクリプト                      */
 /**************************************************************/
-ev_c05_talkobj_babygirl1:
-	_EVENT_START
+EVENT_START   ev_c05_talkobj_babygirl1
   _TALK_START_SE_PLAY
 	_TURN_HERO_SITE
 	_BALLOONWIN_TALKOBJ_OPEN msg_c05_babygirl1_01
@@ -63,8 +61,7 @@ ev_c05_talkobj_babygirl1:
 /**************************************************************/
 /*  C05 BACKPACKERWの会話用イベントスクリプト                      */
 /**************************************************************/
-ev_c05_talkobj_backpackerw:
-	_EVENT_START
+EVENT_START   ev_c05_talkobj_backpackerw
   _TALK_START_SE_PLAY
 	_TURN_HERO_SITE
 	_BALLOONWIN_TALKOBJ_OPEN msg_c05_backpackerw_01
@@ -76,8 +73,7 @@ ev_c05_talkobj_backpackerw:
 /**************************************************************/
 /*  C05 TRAINERMの会話用イベントスクリプト                      */
 /**************************************************************/
-ev_c05_talkobj_trainerm:
-	_EVENT_START
+EVENT_START   ev_c05_talkobj_trainerm
   _TALK_START_SE_PLAY
 	_TURN_HERO_SITE
 	_BALLOONWIN_TALKOBJ_OPEN msg_c05_trainerm_01
@@ -89,8 +85,7 @@ ev_c05_talkobj_trainerm:
 /**************************************************************/
 /*  C05 DRIVERの会話用イベントスクリプト                      */
 /**************************************************************/
-ev_c05_talkobj_driver:
-	_EVENT_START
+EVENT_START   ev_c05_talkobj_driver
   _TALK_START_SE_PLAY
 	_TURN_HERO_SITE
 	_BALLOONWIN_TALKOBJ_OPEN msg_c05_driver_01
@@ -102,8 +97,7 @@ ev_c05_talkobj_driver:
 /**************************************************************/
 /*  C05 BADMANの会話用イベントスクリプト                      */
 /**************************************************************/
-ev_c05_talkobj_badman:
-	_EVENT_START
+EVENT_START   ev_c05_talkobj_badman
   _TALK_START_SE_PLAY
 	_TURN_HERO_SITE
 	_BALLOONWIN_TALKOBJ_OPEN msg_c05_badman_01
@@ -115,8 +109,7 @@ ev_c05_talkobj_badman:
 /**************************************************************/
 /*  C05 WORKMANの会話用イベントスクリプト                      */
 /**************************************************************/
-ev_c05_talkobj_workman:
-	_EVENT_START
+EVENT_START   ev_c05_talkobj_workman
   _TALK_START_SE_PLAY
 	_TURN_HERO_SITE
 	_BALLOONWIN_TALKOBJ_OPEN msg_c05_workman_01

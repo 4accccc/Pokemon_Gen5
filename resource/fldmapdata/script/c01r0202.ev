@@ -40,8 +40,7 @@ _EVENT_DATA_END
 /**************************************************************/
 /*  C01R0202 GENTLEMANの会話用イベントスクリプト*/
 /**************************************************************/
-ev_c01r0202_talkobj_gentleman:
-	_EVENT_START
+EVENT_START   ev_c01r0202_talkobj_gentleman
   _TALK_START_SE_PLAY
 	_TURN_HERO_SITE
 	_BALLOONWIN_TALKOBJ_OPEN msg_c01r0202_gentleman_01
@@ -53,8 +52,7 @@ ev_c01r0202_talkobj_gentleman:
 /**************************************************************/
 /*  C01R0202 DANCERの会話用イベントスクリプト*/
 /**************************************************************/
-ev_c01r0202_talkobj_dancer:
-	_EVENT_START
+EVENT_START   ev_c01r0202_talkobj_dancer
   _TALK_START_SE_PLAY
 	_TURN_HERO_SITE
 	_BALLOONWIN_TALKOBJ_OPEN msg_c01r0202_dancer_01
@@ -66,8 +64,7 @@ ev_c01r0202_talkobj_dancer:
 /**************************************************************/
 /*  C01R0202 WOMAN3の会話用イベントスクリプト*/
 /**************************************************************/
-ev_c01r0202_talkobj_woman3:
-	_EVENT_START
+EVENT_START   ev_c01r0202_talkobj_woman3
   _TALK_START_SE_PLAY
 	_TURN_HERO_SITE
 	_BALLOONWIN_TALKOBJ_OPEN msg_c01r0202_woman3_01

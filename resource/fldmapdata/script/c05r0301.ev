@@ -29,8 +29,7 @@ _EVENT_DATA_END
 /**************************************************************/
 /*  C05R0301 TRAINERMの会話用イベントスクリプト*/
 /**************************************************************/
-ev_c05r0301_talkobj_trainerm:
-	_EVENT_START
+EVENT_START   ev_c05r0301_talkobj_trainerm
   _TALK_START_SE_PLAY
 	_TURN_HERO_SITE
 	_BALLOONWIN_TALKOBJ_OPEN msg_c05r0301_trainerm_01
@@ -42,8 +41,7 @@ ev_c05r0301_talkobj_trainerm:
 /**************************************************************/
 /*  C05R0301 WOMAN2の会話用イベントスクリプト*/
 /**************************************************************/
-ev_c05r0301_talkobj_woman2:
-	_EVENT_START
+EVENT_START   ev_c05r0301_talkobj_woman2
   _TALK_START_SE_PLAY
 	_TURN_HERO_SITE
 	_BALLOONWIN_TALKOBJ_OPEN msg_c05r0301_woman2_01

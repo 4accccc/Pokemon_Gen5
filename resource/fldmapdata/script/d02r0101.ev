@@ -34,8 +34,7 @@ _EVENT_DATA_END
 /**************************************************************/
 /*  D02R0101 GIRL1の会話用イベントスクリプト                      */
 /**************************************************************/
- ev_d02r0101_talkobj_sportsm:
-	_EVENT_START
+EVENT_START    ev_d02r0101_talkobj_sportsm
   _TALK_START_SE_PLAY
 	_TURN_HERO_SITE
 	_BALLOONWIN_TALKOBJ_OPEN msg_d02r0101_sportsm_01
@@ -47,8 +46,7 @@ _EVENT_DATA_END
 /**************************************************************/
 /*  D02R0101 GIRL1の会話用イベントスクリプト                      */
 /**************************************************************/
- ev_d02r0101_talkobj_mountain:
-	_EVENT_START
+EVENT_START    ev_d02r0101_talkobj_mountain
   _TALK_START_SE_PLAY
 	_TURN_HERO_SITE
 	_BALLOONWIN_TALKOBJ_OPEN msg_d02r0101_mountain_01
@@ -60,8 +58,7 @@ _EVENT_DATA_END
 /**************************************************************/
 /*  D02R0101 GIRL1の会話用イベントスクリプト                      */
 /**************************************************************/
- ev_d02r0101_talkobj_assistantw:
-	_EVENT_START
+EVENT_START    ev_d02r0101_talkobj_assistantw
   _TALK_START_SE_PLAY
 	_TURN_HERO_SITE
 	_BALLOONWIN_TALKOBJ_OPEN msg_d02r0101_assistantw_01

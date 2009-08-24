@@ -38,8 +38,7 @@ _EVENT_DATA_END
 /**************************************************************/
 /*  C05R0501 GENTLEMANの会話用イベントスクリプト*/
 /**************************************************************/
-ev_c05r0501_talkobj_gentleman:
-	_EVENT_START
+EVENT_START   ev_c05r0501_talkobj_gentleman
   _TALK_START_SE_PLAY
 	_TURN_HERO_SITE
 	_BALLOONWIN_TALKOBJ_OPEN msg_c05r0501_gentleman_01
@@ -51,8 +50,7 @@ ev_c05r0501_talkobj_gentleman:
 /**************************************************************/
 /*  C05R0501 VETERANMの会話用イベントスクリプト*/
 /**************************************************************/
-ev_c05r0501_talkobj_veteranm:
-	_EVENT_START
+EVENT_START   ev_c05r0501_talkobj_veteranm
   _TALK_START_SE_PLAY
 	_TURN_HERO_SITE
 	_BALLOONWIN_TALKOBJ_OPEN msg_c05r0501_veteranm_01
@@ -64,8 +62,7 @@ ev_c05r0501_talkobj_veteranm:
 /**************************************************************/
 /*  C05R0501 GIRL2の会話用イベントスクリプト*/
 /**************************************************************/
-ev_c05r0501_talkobj_girl2:
-	_EVENT_START
+EVENT_START   ev_c05r0501_talkobj_girl2
   _TALK_START_SE_PLAY
 	_TURN_HERO_SITE
 	_BALLOONWIN_TALKOBJ_OPEN msg_c05r0501_girl2_01
@@ -77,8 +74,7 @@ ev_c05r0501_talkobj_girl2:
 /**************************************************************/
 /*  C05R0501 OLDWOMANの会話用イベントスクリプト*/
 /**************************************************************/
-ev_c05r0501_talkobj_oldwoman:
-	_EVENT_START
+EVENT_START   ev_c05r0501_talkobj_oldwoman
   _TALK_START_SE_PLAY
 	_TURN_HERO_SITE
 	_BALLOONWIN_TALKOBJ_OPEN msg_c05r0501_oldwoman_01
@@ -90,8 +86,7 @@ ev_c05r0501_talkobj_oldwoman:
 /**************************************************************/
 /*  C05R0501 MOUNTAINの会話用イベントスクリプト*/
 /**************************************************************/
-ev_c05r0501_talkobj_mountain:
-	_EVENT_START
+EVENT_START   ev_c05r0501_talkobj_mountain
   _TALK_START_SE_PLAY
 	_TURN_HERO_SITE
 	_BALLOONWIN_TALKOBJ_OPEN msg_c05r0501_mountain_01
@@ -103,8 +98,7 @@ ev_c05r0501_talkobj_mountain:
 /**************************************************************/
 /*  C05R0501 MAN1の会話用イベントスクリプト*/
 /**************************************************************/
-ev_c05r0501_talkobj_man1:
-	_EVENT_START
+EVENT_START   ev_c05r0501_talkobj_man1
   _TALK_START_SE_PLAY
 	_TURN_HERO_SITE
 	_BALLOONWIN_TALKOBJ_OPEN msg_c05r0501_man1_01
@@ -116,8 +110,7 @@ ev_c05r0501_talkobj_man1:
 /**************************************************************/
 /*  C05R0501 WOMAN2の会話用イベントスクリプト*/
 /**************************************************************/
-ev_c05r0501_talkobj_woman2:
-	_EVENT_START
+EVENT_START   ev_c05r0501_talkobj_woman2
   _TALK_START_SE_PLAY
 	_TURN_HERO_SITE
 	_BALLOONWIN_TALKOBJ_OPEN msg_c05r0501_woman2_01

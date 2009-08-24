@@ -34,8 +34,7 @@ _EVENT_DATA_END
 /**************************************************************/
 /*  C02R0601 WAITRESSの会話用イベントスクリプト*/
 /**************************************************************/
-ev_c02r0601_talkobj_waitress:
-	_EVENT_START
+EVENT_START   ev_c02r0601_talkobj_waitress
   _TALK_START_SE_PLAY
 	_TURN_HERO_SITE
 	_BALLOONWIN_TALKOBJ_OPEN msg_c02r0601_waitress_01
@@ -47,8 +46,7 @@ ev_c02r0601_talkobj_waitress:
 /**************************************************************/
 /*  C02R0601 WOMAN3の会話用イベントスクリプト*/
 /**************************************************************/
-ev_c02r0601_talkobj_woman3:
-	_EVENT_START
+EVENT_START   ev_c02r0601_talkobj_woman3
   _TALK_START_SE_PLAY
 	_TURN_HERO_SITE
 	_BALLOONWIN_TALKOBJ_OPEN msg_c02r0601_woman3_01
@@ -60,8 +58,7 @@ ev_c02r0601_talkobj_woman3:
 /**************************************************************/
 /*  C02R0601 MIDDLEMAN2の会話用イベントスクリプト*/
 /**************************************************************/
-ev_c02r0601_talkobj_middleman2:
-	_EVENT_START
+EVENT_START   ev_c02r0601_talkobj_middleman2
   _TALK_START_SE_PLAY
 	_TURN_HERO_SITE
 	_BALLOONWIN_TALKOBJ_OPEN msg_c02r0601_middleman2_01
@@ -73,8 +70,7 @@ ev_c02r0601_talkobj_middleman2:
 /**************************************************************/
 /*  C02R0601 BIGMANの会話用イベントスクリプト*/
 /**************************************************************/
-ev_c02r0601_talkobj_bigman:
-	_EVENT_START
+EVENT_START   ev_c02r0601_talkobj_bigman
   _TALK_START_SE_PLAY
 	_TURN_HERO_SITE
 	_BALLOONWIN_TALKOBJ_OPEN msg_c02r0601_bigman_01

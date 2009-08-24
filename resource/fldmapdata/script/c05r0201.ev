@@ -32,8 +32,7 @@ _EVENT_DATA_END
 /**************************************************************/
 /*  C05R0201 OLDMAN1の会話用イベントスクリプト*/
 /**************************************************************/
-ev_c05r0201_talkobj_oldman1:
-	_EVENT_START
+EVENT_START   ev_c05r0201_talkobj_oldman1
   _TALK_START_SE_PLAY
 	_TURN_HERO_SITE
 	_BALLOONWIN_TALKOBJ_OPEN msg_c05r0201_oldman1_01

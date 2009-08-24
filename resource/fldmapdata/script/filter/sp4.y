@@ -350,6 +350,14 @@ rule
           {
             result = [ val[0], nil ]
           }
+        | EVENT_START IDENT
+          {
+						result = [val[0],val[1]]
+          }
+        | EVENT_END
+          {
+            result = [ val[0], nil ]
+          }
 
 	#---------------------------------------------
 	#	u”Ž®v‚Í
@@ -447,7 +455,9 @@ RESERVED = {
 	'DEFVAR'	=> :DEFVAR,
 	'DEFFUNC'	=> :DEFFUNC,
 	'FLAG_ON'	=> :FLAG_ON,
-	'FLAG_OFF'	=> :FLAG_OFF
+	'FLAG_OFF'	=> :FLAG_OFF,
+  'EVENT_START' => :EVENT_START,
+  'EVENT_END' => :EVENT_END
 };
 
 #—\–ñŒ^’è‹`

@@ -39,8 +39,7 @@ _EVENT_DATA_END
 /**************************************************************/
 /*  T02R0202 MAN1の会話用イベントスクリプト*/
 /**************************************************************/
-ev_t02r0202_talkobj_man1:
-	_EVENT_START
+EVENT_START   ev_t02r0202_talkobj_man1
   _TALK_START_SE_PLAY
 	_TURN_HERO_SITE
 	_BALLOONWIN_TALKOBJ_OPEN msg_t02r0202_man1_01
@@ -52,8 +51,7 @@ ev_t02r0202_talkobj_man1:
 /**************************************************************/
 /*  T02R0202 WOMAN1の会話用イベントスクリプト*/
 /**************************************************************/
-ev_t02r0202_talkobj_woman1:
-	_EVENT_START
+EVENT_START   ev_t02r0202_talkobj_woman1
   _TALK_START_SE_PLAY
 	_TURN_HERO_SITE
 	_BALLOONWIN_TALKOBJ_OPEN msg_t02r0202_woman1_01

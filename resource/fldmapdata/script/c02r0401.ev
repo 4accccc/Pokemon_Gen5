@@ -32,8 +32,7 @@ _EVENT_DATA_END
 /**************************************************************/
 /*  C02R0401 FIGHTERM1の会話用イベントスクリプト*/
 /**************************************************************/
-ev_c02r0401_talkobj_fightrem1:
-	_EVENT_START
+EVENT_START   ev_c02r0401_talkobj_fightrem1
   _TALK_START_SE_PLAY
 	_TURN_HERO_SITE
 	_BALLOONWIN_TALKOBJ_OPEN msg_c02r0401_fighterm1_01
@@ -45,8 +44,7 @@ ev_c02r0401_talkobj_fightrem1:
 /**************************************************************/
 /*  C02R0401 FIGHTERM2の会話用イベントスクリプト*/
 /**************************************************************/
-ev_c02r0401_talkobj_fightrem2:
-	_EVENT_START
+EVENT_START   ev_c02r0401_talkobj_fightrem2
   _TALK_START_SE_PLAY
 	_TURN_HERO_SITE
 	_BALLOONWIN_TALKOBJ_OPEN msg_c02r0401_fighterm2_01
@@ -59,8 +57,7 @@ ev_c02r0401_talkobj_fightrem2:
 /**************************************************************/
 /*  C02R0401 FIGHTERM3の会話用イベントスクリプト*/
 /**************************************************************/
-ev_c02r0401_talkobj_fighterm3:
-	_EVENT_START
+EVENT_START   ev_c02r0401_talkobj_fighterm3
   _TALK_START_SE_PLAY
 	_TURN_HERO_SITE
 	_BALLOONWIN_TALKOBJ_OPEN msg_c02r0401_fighterm3_01

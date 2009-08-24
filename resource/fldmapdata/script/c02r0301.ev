@@ -30,8 +30,7 @@ _EVENT_DATA_END
 /**************************************************************/
 /*  C02R0301 WOMAN2の会話用イベントスクリプト*/
 /**************************************************************/
-ev_c02r0301_talkobj_woman2:
-	_EVENT_START
+EVENT_START   ev_c02r0301_talkobj_woman2
   _TALK_START_SE_PLAY
 	_TURN_HERO_SITE
 	_BALLOONWIN_TALKOBJ_OPEN msg_c02r0301_woman2_01
@@ -43,8 +42,7 @@ ev_c02r0301_talkobj_woman2:
 /**************************************************************/
 /*  C02R0301 POKEの会話用イベントスクリプト*/
 /**************************************************************/
-ev_c02r0301_talkobj_poke:
-	_EVENT_START
+EVENT_START   ev_c02r0301_talkobj_poke
   _TALK_START_SE_PLAY
 	_TURN_HERO_SITE
 	_BALLOONWIN_TALKOBJ_OPEN msg_c02r0301_poke_01

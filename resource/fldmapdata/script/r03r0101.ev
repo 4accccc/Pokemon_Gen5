@@ -36,8 +36,7 @@ _EVENT_DATA_END
 /**************************************************************/
 /*  R03R0101 MIDDLEWOMAN2の会話用イベントスクリプト*/
 /**************************************************************/
-ev_r03r0101_talkobj_middlewoman2:
-	_EVENT_START
+EVENT_START   ev_r03r0101_talkobj_middlewoman2
   _TALK_START_SE_PLAY
 	_TURN_HERO_SITE
 	_BALLOONWIN_TALKOBJ_OPEN msg_r03r0101_middlewoman2_01
@@ -49,8 +48,7 @@ ev_r03r0101_talkobj_middlewoman2:
 /**************************************************************/
 /*  R03R0101 WOMAN3の会話用イベントスクリプト*/
 /**************************************************************/
-ev_r03r0101_talkobj_woman3:
-	_EVENT_START
+EVENT_START   ev_r03r0101_talkobj_woman3
   _TALK_START_SE_PLAY
 	_TURN_HERO_SITE
 	_BALLOONWIN_TALKOBJ_OPEN msg_r03r0101_woman3_01
@@ -62,8 +60,7 @@ ev_r03r0101_talkobj_woman3:
 /**************************************************************/
 /*  R03R0101 BABYGIRL1の会話用イベントスクリプト*/
 /**************************************************************/
-ev_r03r0101_talkobj_babygirl1:
-	_EVENT_START
+EVENT_START   ev_r03r0101_talkobj_babygirl1
   _TALK_START_SE_PLAY
 	_TURN_HERO_SITE
 	_BALLOONWIN_TALKOBJ_OPEN msg_r03r0101_babygirl1_01
@@ -75,8 +72,7 @@ ev_r03r0101_talkobj_babygirl1:
 /**************************************************************/
 /*  R03R0101 BABYBOY1の会話用イベントスクリプト*/
 /**************************************************************/
-ev_r03r0101_talkobj_babyboy1a:
-	_EVENT_START
+EVENT_START   ev_r03r0101_talkobj_babyboy1a
   _TALK_START_SE_PLAY
 	_TURN_HERO_SITE
 	_BALLOONWIN_TALKOBJ_OPEN msg_r03r0101_babyboy1a_01
@@ -88,8 +84,7 @@ ev_r03r0101_talkobj_babyboy1a:
 /**************************************************************/
 /*  R03R0101 BABYBOY1の会話用イベントスクリプト*/
 /**************************************************************/
-ev_r03r0101_talkobj_babyboy1b:
-	_EVENT_START
+EVENT_START   ev_r03r0101_talkobj_babyboy1b
   _TALK_START_SE_PLAY
 	_TURN_HERO_SITE
 	_BALLOONWIN_TALKOBJ_OPEN msg_r03r0101_babyboy1b_01

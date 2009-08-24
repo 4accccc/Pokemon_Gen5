@@ -48,8 +48,7 @@ _EVENT_DATA_END //データ終端を指定しています。
 /**************************************************************/
 /*  T01 BIGMANの会話用イベントスクリプト                      */
 /**************************************************************/
-ev_t01_talkobj_bigman:
-  _EVENT_START
+EVENT_START   ev_t01_talkobj_bigman
   _TALK_START_SE_PLAY
   _TURN_HERO_SITE 
   _BALLOONWIN_TALKOBJ_OPEN msg_t01_bigman_01
@@ -61,8 +60,7 @@ ev_t01_talkobj_bigman:
 /**************************************************************/
 /*  T01 WOMAN2の会話用イベントスクリプト                      */
 /**************************************************************/
-ev_t01_talkobj_woman02:
-  _EVENT_START
+EVENT_START   ev_t01_talkobj_woman02
   _TALK_START_SE_PLAY
 	_TURN_HERO_SITE
   
@@ -92,8 +90,7 @@ talkobj_woman02_end:
 //-------------------------------------------------------------
 //  T01 WOMAN1の会話用イベントスクリプトです。
 //-------------------------------------------------------------
-ev_t01_talkobj_woman01:
-  _EVENT_START
+EVENT_START   ev_t01_talkobj_woman01
   _TALK_START_SE_PLAY
 	_TURN_HERO_SITE
   
@@ -115,8 +112,7 @@ ev_t01_talkobj_woman01:
 /**************************************************************/
 /*  T01 BABYGIRL1の会話用イベントスクリプト                      */
 /**************************************************************/
-ev_t01_talkobj_babygirl1:
-  _EVENT_START
+EVENT_START   ev_t01_talkobj_babygirl1
   _TALK_START_SE_PLAY
 	_TURN_HERO_SITE
 	_BALLOONWIN_TALKOBJ_OPEN msg_t01_babygirl1_01
@@ -128,9 +124,8 @@ ev_t01_talkobj_babygirl1:
 //-------------------------------------------------------------
 //  T01 テスト用座標イベントスクリプト
 //-------------------------------------------------------------
-ev_t01_posevent_test1:
+EVENT_START ev_t01_posevent_test1
 #if 0
-  _EVENT_START
   _TALKWIN_OPEN
   _BALLOONWIN_TALKOBJ_OPEN msg_t01_babygirl1_01
   _AB_KEYWAIT
@@ -144,9 +139,8 @@ ev_t01_posevent_test1:
 //-------------------------------------------------------------
 //  T01 テスト用BG話し掛けイベントスクリプト
 //-------------------------------------------------------------
-ev_t01_bgevent_test1:
+EVENT_START ev_t01_bgevent_test1
 #if 0
-  _EVENT_START
   _TALKWIN_OPEN
   _BALLOONWIN_TALKOBJ_OPEN msg_t01_sign1_01
   _AB_KEYWAIT

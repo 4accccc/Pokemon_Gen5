@@ -16,7 +16,7 @@ module PmScript
 
   class Parser < Racc::Parser
 
-module_eval <<'..end sp3.y modeval..idd3dc750391', 'sp3.y', 416
+module_eval <<'..end sp3.y modeval..id642ac03be1', 'sp3.y', 416
 
 def initialize
 end
@@ -131,7 +131,7 @@ def on_error( t, v, values )
   end
 
 
-..end sp3.y modeval..idd3dc750391
+..end sp3.y modeval..id642ac03be1
 
 ##### racc 1.4.5 generates ###
 

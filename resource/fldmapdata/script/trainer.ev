@@ -49,8 +49,7 @@ ev_R02_TRAINER_06:
 //  SCWK_TEMP0  トレーナーID
 //  SCWK_TEMP3  退避トレーナーID
 //******************************************************************
-ev_trainer_talk_battle:
-	_EVENT_START
+EVENT_START   ev_trainer_talk_battle
   _TALK_START_SE_PLAY
 	_TURN_HERO_SITE
   
@@ -137,8 +136,7 @@ ev_trainer_talk_after:
   _JUMP        ev_trainer_talk_after_normal
   _END
 
-ev_trainer_talk_after_normal:
-  _EVENT_START
+EVENT_START   ev_trainer_talk_after_normal
   _TALK_START_SE_PLAY
   
   //メッセージを取得
@@ -260,8 +258,7 @@ _ANIME_LABEL  anm_trainer_talk_battle_hide_pulloff
 //  SCWK_TEMP0  トレーナーID_0
 //  SCWK_TEMP1  トレーナーID_1
 //******************************************************************
-ev_trainer_move_battle:
-  _EVENT_START
+EVENT_START   ev_trainer_move_battle
   
   //視線移動スクリプトコマンドの中で
   //対象のOBJの動作ポーズを解除するようにしている！

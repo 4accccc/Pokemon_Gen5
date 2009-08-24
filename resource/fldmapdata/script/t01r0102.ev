@@ -42,8 +42,7 @@ _EVENT_DATA_END
 /**************************************************************/
 /*  T01R0102 ライバル会話用イベントスクリプト（ポケモン入手前）*/
 /**************************************************************/
-ev_t01r0102_black_test01:
-	_EVENT_START
+EVENT_START   ev_t01r0102_black_test01
   _TALK_START_SE_PLAY
 	_PLAYER_NAME 0 //プレイヤー名を反映
 	_TURN_HERO_SITE
@@ -57,8 +56,7 @@ ev_t01r0102_black_test01:
 /**************************************************************/
 /*  T01R0102 サポート会話用イベントスクリプト（ポケモン入手前）*/
 /**************************************************************/
-ev_t01r0102_white_test01:
-	_EVENT_START
+EVENT_START   ev_t01r0102_white_test01
   _TALK_START_SE_PLAY
 	_TURN_HERO_SITE
 	_TALKWIN_OPEN
@@ -72,8 +70,7 @@ ev_t01r0102_white_test01:
 /*  T01R0102 ポケモン入手イベント用スクリプト　 */
 /**************************************************************/
 //炎タイプ（仮）
-ev_t01r0102_poke_get0:
-	_EVENT_START
+EVENT_START   ev_t01r0102_poke_get0
 
   _TALKWIN_OPEN
   _TALKMSG msg_t01r0102_ball1_fire_01
@@ -85,8 +82,7 @@ ev_t01r0102_poke_get0:
 	_IFVAL_JUMP SCWK_ANSWER,EQ,1,t01r0102_poke_get_no
 
 //草タイプ（仮）
-ev_t01r0102_poke_get1:
-	_EVENT_START
+EVENT_START   ev_t01r0102_poke_get1
 
   _TALKWIN_OPEN
   _TALKMSG msg_t01r0102_ball1_grass_01
@@ -98,8 +94,7 @@ ev_t01r0102_poke_get1:
 	_IFVAL_JUMP SCWK_ANSWER,EQ,1,t01r0102_poke_get_no
 
 //水タイプ（仮）
-ev_t01r0102_poke_get2:
-	_EVENT_START
+EVENT_START   ev_t01r0102_poke_get2
   
   _TALKWIN_OPEN
   _TALKMSG msg_t01r0102_ball1_water_01
@@ -115,8 +110,7 @@ t01r0102_poke_get_no:
   _END
 
 //共通、ポケモン入手メッセージ
-t01r0102_poke_get_yes:
-	_EVENT_START
+EVENT_START   t01r0102_poke_get_yes
 
   _TALKWIN_OPEN
 	_PLAYER_NAME 0 //プレイヤー名を反映
@@ -241,8 +235,7 @@ ev_t01r0102_poke_battle:
 /**************************************************************/
 /*  T01R0102 GAME MACHINEのBG用イベントスクリプト*/
 /**************************************************************/
-ev_t01r0102_game:
-	_EVENT_START
+EVENT_START   ev_t01r0102_game
   
   _TALKWIN_OPEN
   _TALKMSG msg_t01r0102_game_01
@@ -255,8 +248,7 @@ ev_t01r0102_game:
 /**************************************************************/
 /*  T01R0102 TVのBG用イベントスクリプト*/
 /**************************************************************/
-ev_t01r0102_tv:
-  _EVENT_START
+EVENT_START   ev_t01r0102_tv
   
   _TALKWIN_OPEN
   _TALKMSG msg_t01r0102_tv_01
@@ -269,8 +261,7 @@ ev_t01r0102_tv:
 /**************************************************************/
 /*  T01R0102 PCのBG用イベントスクリプト*/
 /**************************************************************/
-ev_t01r0102_pc:
-  _EVENT_START
+EVENT_START   ev_t01r0102_pc
   
   _TALKWIN_OPEN
  	_PLAYER_NAME 0 //プレイヤー名を反映
@@ -284,8 +275,7 @@ ev_t01r0102_pc:
 /**************************************************************/
 /*  T01R0102 BEDのBG用イベントスクリプト*/
 /**************************************************************/
-ev_t01r0102_bed:
-  _EVENT_START
+EVENT_START   ev_t01r0102_bed
 
   _TALKWIN_OPEN
   _TALKMSG msg_t01r0102_bed_01
