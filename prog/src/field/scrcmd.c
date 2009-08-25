@@ -2033,7 +2033,7 @@ static VMCMD_RESULT EvCmdTrainerMessageSet( VMHANDLE *core, void *wk )
       SCRCMD_WORK_SetFldMsgWinStream( work, (FLDMSGWIN_STREAM*)tmsg );
       PMSND_PlaySystemSE( SEQ_SE_MESSAGE );
       
-      VMCMD_SetWait( core, TalkMsgWait );
+      VMCMD_SetWait( core, BallonWinMsgWait );
       return VMCMD_RESULT_SUSPEND;
     }
   }
