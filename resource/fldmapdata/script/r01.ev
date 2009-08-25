@@ -55,38 +55,23 @@ _EVENT_DATA_END
 EVENT_START   ev_r01_poke_getdemo
 //POSイベント、POSごとに主人公移動アニメ
 	_PLAYER_POS_GET( SCWK_TEMP0,SCWK_TEMP1 ) //自機座標取得
-	_IFVAL_JUMP SCWK_TEMP0,EQ,786,pos_786_729
-	_IFVAL_JUMP SCWK_TEMP0,EQ,787,pos_787_729
-/*	_IFVAL_JUMP SCWK_TEMP0,EQ,787,pos_787_729 */
-	_IFVAL_JUMP SCWK_TEMP0,EQ,789,pos_789_729
-	_IFVAL_JUMP SCWK_TEMP0,EQ,790,pos_790_729
-	_IFVAL_JUMP SCWK_TEMP0,EQ,791,pos_791_729
+  IF $SCWK_TEMP0 == 786 THEN
+      _OBJ_ANIME( MMDL_ID_PLAYER,anime_r01_guide00a )
+      _OBJ_ANIME_WAIT()
+  ELSIF $SCWK_TEMP0 == 787 THEN
+      _OBJ_ANIME( MMDL_ID_PLAYER,anime_r01_guide00b )
+      _OBJ_ANIME_WAIT()
+  ELSIF $SCWK_TEMP0 == 789 THEN
+      _OBJ_ANIME( MMDL_ID_PLAYER,anime_r01_guide00c )
+      _OBJ_ANIME_WAIT()
+  ELSIF $SCWK_TEMP0 == 790 THEN
+      _OBJ_ANIME( MMDL_ID_PLAYER,anime_r01_guide00d )
+      _OBJ_ANIME_WAIT()
+  ELSIF $SCWK_TEMP0 == 791 THEN
+      _OBJ_ANIME( MMDL_ID_PLAYER,anime_r01_guide00e )
+      _OBJ_ANIME_WAIT()
+  ENDIF
 
-pos_786_729:
-	_OBJ_ANIME( MMDL_ID_PLAYER,anime_r01_guide00a )
-	_OBJ_ANIME_WAIT()
-	_JUMP poke_getdemo_start
-
-pos_787_729:
-	_OBJ_ANIME( MMDL_ID_PLAYER,anime_r01_guide00b )
-	_OBJ_ANIME_WAIT()
-	_JUMP poke_getdemo_start
-
-pos_789_729:
-	_OBJ_ANIME( MMDL_ID_PLAYER,anime_r01_guide00c )
-	_OBJ_ANIME_WAIT()
-	_JUMP poke_getdemo_start
-
-pos_790_729:
-	_OBJ_ANIME( MMDL_ID_PLAYER,anime_r01_guide00d )
-	_OBJ_ANIME_WAIT()
-	_JUMP poke_getdemo_start
-
-pos_791_729:
-	_OBJ_ANIME( MMDL_ID_PLAYER,anime_r01_guide00e )
-	_OBJ_ANIME_WAIT()
-
-poke_getdemo_start:
 //ライバル、アニメ＋メッセージ
 	_OBJ_ANIME( R01_RIVAL,anime_R01_pokeget0 )
 	_OBJ_ANIME_WAIT()
@@ -201,7 +186,7 @@ EVENT_END
 EVENT_START   ev_r01_talkobj_boy1
   _TALK_OBJ_START()
 
-	IF $WK_0907ROM06 == 0 THEN
+	IF $WK_0907ROM06 == 0 THEN /* comment */
 		_BALLOONWIN_TALKOBJ_OPEN( msg_r01_boy1_01 )
 		_YES_NO_WIN( SCWK_ANSWER )
 		_BALLOONWIN_CLOSE() //会話ウィンドウを閉じます
@@ -238,36 +223,6 @@ EVENT_START   ev_r01_talkobj_boy1
 EVENT_END
 
 
-/*
-		_IFVAL_JUMP SCWK_ANSWER,EQ,0,talkobj_boy1_yes
-		_IFVAL_JUMP SCWK_ANSWER,EQ,1,talkobj_boy1_no
-
-talkobj_boy1_yes:
-	_BALLOONWIN_TALKOBJ_OPEN( msg_r01_boy1_02 )
-	_AB_KEYWAIT()
-  	_BALLOONWIN_CLOSE()
-	//段差を降りるアニメ+段差を降りるSE
-	_SE_PLAY( SEQ_SE_DANSA )
-	_OBJ_ANIME( R01_BOY1,test01anime )
-	_OBJ_ANIME_WAIT()
-	_SE_WAIT()
-
-	_TURN_HERO_SITE()
-	_BALLOONWIN_TALKOBJ_OPEN( msg_r01_boy1_03 )
-	_AB_KEYWAIT()
-  	_BALLOONWIN_CLOSE()
-	_JUMP talkobj_boy1_end
-
-talkobj_boy1_no:
-	_OBJ_ANIME( R01_BOY1,test02anime )
-	_OBJ_ANIME_WAIT()
-	_BALLOONWIN_TALKOBJ_OPEN( msg_r01_boy1_04 )
-	_AB_KEYWAIT()
-  	_BALLOONWIN_CLOSE()
-
-talkobj_boy1_end:
-EVENT_END
-*/
 
 /**************************************************************/
 /*                                                            */

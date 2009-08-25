@@ -122,23 +122,15 @@ EVENT_START   ev_c01_talkobj_babygirl
   _TALK_OBJ_START()
   
   _GET_RND( SCWK_ANSWER,3 )
-  _IFVAL_JUMP SCWK_ANSWER,EQ,0,babygirl1_01
-  _IFVAL_JUMP SCWK_ANSWER,EQ,1,babygirl1_02
-  _IFVAL_JUMP SCWK_ANSWER,EQ,2,babygirl1_03
 
-babygirl1_01:
-	_BALLOONWIN_TALKOBJ_OPEN( msg_c01_babygirl1_01 )
-	_JUMP babygirl_end
+  IF $SCWK_ANSWER == 0 THEN
+	  _BALLOONWIN_TALKOBJ_OPEN( msg_c01_babygirl1_01 )
+  ELSIF $SCWK_ANSWER == 1 THEN
+	  _BALLOONWIN_TALKOBJ_OPEN( msg_c01_babygirl1_02 )
+  ELSE
+	  _BALLOONWIN_TALKOBJ_OPEN( msg_c01_babygirl1_03 )
+  ENDIF
 
-babygirl1_02:
-	_BALLOONWIN_TALKOBJ_OPEN( msg_c01_babygirl1_02 )
-	_JUMP babygirl_end
-
-babygirl1_03:
-	_BALLOONWIN_TALKOBJ_OPEN( msg_c01_babygirl1_03 )
-	_JUMP babygirl_end
-
-babygirl_end:
 	_AB_KEYWAIT()
 	_BALLOONWIN_CLOSE()
 EVENT_END

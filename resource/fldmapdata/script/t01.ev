@@ -59,28 +59,24 @@ EVENT_END
 /*  T01 WOMAN2の会話用イベントスクリプト                      */
 /**************************************************************/
 EVENT_START   ev_t01_talkobj_woman02
+
   _TALK_OBJ_START()
   
   _BALLOONWIN_TALKOBJ_OPEN( msg_t01_woman2_01 )
-   
 	_YES_NO_WIN( SCWK_ANSWER )
   _BALLOONWIN_CLOSE()
-	_IFVAL_JUMP SCWK_ANSWER,EQ,0,talkobj_woman02_yes
-	_IFVAL_JUMP SCWK_ANSWER,EQ,1,talkobj_woman02_no
 
-talkobj_woman02_yes:
-  _BALLOONWIN_TALKOBJ_OPEN( msg_t01_woman2_02 )
-	_AB_KEYWAIT()
-  _BALLOONWIN_CLOSE()
-	_CHG_LANGID()
-	_JUMP talkobj_woman02_end
+  IF $SCWK_ANSWER == 0 THEN
+    _BALLOONWIN_TALKOBJ_OPEN( msg_t01_woman2_02 )
+    _AB_KEYWAIT()
+    _BALLOONWIN_CLOSE()
+    _CHG_LANGID()
+  ELSE
+    _BALLOONWIN_TALKOBJ_OPEN( msg_t01_woman2_03 )
+    _AB_KEYWAIT()
+    _BALLOONWIN_CLOSE()
+  ENDIF
 
-talkobj_woman02_no:
-  _BALLOONWIN_TALKOBJ_OPEN( msg_t01_woman2_03 )
-	_AB_KEYWAIT()
-  _BALLOONWIN_CLOSE()
-
-talkobj_woman02_end:
 EVENT_END
 
 //-------------------------------------------------------------

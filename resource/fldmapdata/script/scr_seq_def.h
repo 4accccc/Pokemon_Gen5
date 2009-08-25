@@ -162,7 +162,7 @@ DEF_CMD_COUNT  =  ( DEF_CMD_COUNT + 1 )
   DEF_CMD EV_SEQ_BGM_PLAY_CHECK
   DEF_CMD EV_SEQ_BGM_FADEOUT
   DEF_CMD EV_SEQ_BGM_FADEIN
-  DEF_CMD EV_SEQ_BGM_NOW_MAP_PLAY
+  DEF_CMD EV_SEQ_BGM_NOW_MAP_RECOVER
   
   //SE
   DEF_CMD EV_SEQ_SE_PLAY
@@ -1699,7 +1699,9 @@ DEF_CMD_COUNT  =  ( DEF_CMD_COUNT + 1 )
   * @param no BGM Number
   */
 //--------------------------------------------------------------
-   .macro  _BGM_PLAY no
+#define _BGM_PLAY(no) _ASM_BGM_PLAY no
+
+   .macro  _ASM_BGM_PLAY no
   .short  EV_SEQ_BGM_PLAY
   .short  \no
   .endm
@@ -1710,7 +1712,9 @@ DEF_CMD_COUNT  =  ( DEF_CMD_COUNT + 1 )
  *  @param none
  */
 //--------------------------------------------------------------
-  .macro  _BGM_STOP
+#define _BGM_STOP() _ASM_BGM_STOP
+
+  .macro  _ASM_BGM_STOP
   .short  EV_SEQ_BGM_STOP
   .endm
 
@@ -1720,7 +1724,9 @@ DEF_CMD_COUNT  =  ( DEF_CMD_COUNT + 1 )
  *  @param flag (1=停止、0=再開)
  */
 //--------------------------------------------------------------
-  .macro  _BGM_PLAYER_PAUSE flag
+#define _BGM_PLAYER_PAUSE(flag) _ASM_BGM_PLAYER_PAUSE
+
+  .macro  _ASM_BGM_PLAYER_PAUSE flag
   .short  EV_SEQ_BGM_PLAYER_PAUSE
   .byte  \flag
   .endm
@@ -1732,7 +1738,9 @@ DEF_CMD_COUNT  =  ( DEF_CMD_COUNT + 1 )
  *  @param frame  = 何フレームかけてフェードするか
  */
 //--------------------------------------------------------------
-  .macro  _BGM_FADEOUT vol,frame
+#define _BGM_FADEOUT(vol, frame)  _ASM_BGM_FADEOUT vol, frame
+
+  .macro  _ASM_BGM_FADEOUT vol,frame
   .short  EV_SEQ_BGM_FADEOUT
   .short  \vol
   .short  \frame
@@ -1744,19 +1752,23 @@ DEF_CMD_COUNT  =  ( DEF_CMD_COUNT + 1 )
  *  @param frame = 何フレームかけてフェードするか
  */
 //--------------------------------------------------------------
-  .macro  _BGM_FADEIN frame
+#define _BGM_FADEIN(frame)  _ASM_BGM_FADEIN frame
+
+  .macro  _ASM_BGM_FADEIN frame
   .short  EV_SEQ_BGM_FADEIN
   .short  \frame
   .endm
 
 //--------------------------------------------------------------
 /**
- *  _BGM_NOW_MAP_PLAY 現在のマップのBGMを鳴らす
+ *  _BGM_NOW_MAP_RECOVER 現在のマップのBGMを鳴らす
  *  @param none
  */
 //--------------------------------------------------------------
-  .macro  _BGM_NOW_MAP_PLAY
-  .short  EV_SEQ_BGM_NOW_MAP_PLAY
+#define _BGM_NOW_MAP_RECOVER()  _ASM_BGM_NOW_MAP_RECOVER
+
+  .macro  _ASM_BGM_NOW_MAP_RECOVER
+  .short  EV_SEQ_BGM_NOW_MAP_RECOVER
   .endm
 
 //======================================================================

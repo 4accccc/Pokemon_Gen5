@@ -61,6 +61,7 @@ EVENT_END
 
 
 mama_first:
+{
 	_PLAYER_POS_GET( SCWK_TEMP0,SCWK_TEMP1 ) //Ž©‹@À•WŽæ“¾
   IF $SCWK_TEMP0 == 3 THEN
     _OBJ_ANIME( T01R0101_MAMA,mama_first_3 ) //ŽålŒö‚É—×Ú
@@ -82,6 +83,7 @@ mama_first:
 	_BALLOONWIN_CLOSE()
 
   _RET
+}
 
 
 

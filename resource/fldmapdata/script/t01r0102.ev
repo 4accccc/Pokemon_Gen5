@@ -72,8 +72,10 @@ EVENT_START   ev_t01r0102_poke_get0
 	_YES_NO_WIN( SCWK_ANSWER )
   _TALKWIN_CLOSE()
 
-	_IFVAL_JUMP SCWK_ANSWER,EQ,0,t01r0102_poke_get_yes
-	_IFVAL_JUMP SCWK_ANSWER,EQ,1,t01r0102_poke_get_no
+  IF $SCWK_ANSWER == 0 THEN
+      _CALL t01r0102_poke_get_yes
+  ENDIF
+EVENT_END
 
 //草タイプ（仮）
 EVENT_START   ev_t01r0102_poke_get1
@@ -84,8 +86,11 @@ EVENT_START   ev_t01r0102_poke_get1
 	_YES_NO_WIN( SCWK_ANSWER )
   _TALKWIN_CLOSE()
 
-	_IFVAL_JUMP SCWK_ANSWER,EQ,0,t01r0102_poke_get_yes
-	_IFVAL_JUMP SCWK_ANSWER,EQ,1,t01r0102_poke_get_no
+  IF $SCWK_ANSWER == 0 THEN
+      _CALL t01r0102_poke_get_yes
+  ENDIF
+
+EVENT_END
 
 //水タイプ（仮）
 EVENT_START   ev_t01r0102_poke_get2
@@ -96,14 +101,14 @@ EVENT_START   ev_t01r0102_poke_get2
 	_YES_NO_WIN( SCWK_ANSWER )
   _TALKWIN_CLOSE()
 
-	_IFVAL_JUMP SCWK_ANSWER,EQ,0,t01r0102_poke_get_yes
-	_IFVAL_JUMP SCWK_ANSWER,EQ,1,t01r0102_poke_get_no
-
-t01r0102_poke_get_no:
+  IF $SCWK_ANSWER == 0 THEN
+      _CALL t01r0102_poke_get_yes
+  ENDIF
 EVENT_END
 
+
 //共通、ポケモン入手メッセージ
-EVENT_START   t01r0102_poke_get_yes
+t01r0102_poke_get_yes:
 
   _TALKWIN_OPEN()
 	_PLAYER_NAME( 0 ) //プレイヤー名を反映
@@ -152,7 +157,7 @@ EVENT_START   t01r0102_poke_get_yes
 //サポートとポケモン勝負
 ev_t01r0102_poke_battle:
 //ここでサポート専用曲
-	_BGM_PLAY SEQ_E_SUPPORT_M
+	_BGM_PLAY( SEQ_E_SUPPORT_M )
 
 	_OBJ_ANIME( MMDL_ID_PLAYER,anime_t01r0102_battle )
 	_OBJ_ANIME( T01R0102_HEROINE,anime_t01r0102_battle01 )
@@ -174,11 +179,11 @@ ev_t01r0102_poke_battle:
 	_AB_KEYWAIT()
 	_BALLOONWIN_CLOSE()
 //ここでサポート専用曲終了
-	_BGM_STOP
+	_BGM_STOP()
 
 //ライバルとポケモン勝負
 //ここでライバル専用曲
-	_BGM_PLAY SEQ_E_RIVAL1
+	_BGM_PLAY( SEQ_E_RIVAL1 )
 
 	_BALLOONWIN_OBJMSG_OPEN( msg_t01r0102_black_test03,T01R0102_RIVAL )
 	_AB_KEYWAIT()
@@ -190,8 +195,8 @@ ev_t01r0102_poke_battle:
 	_BLACK_IN( 8 )
 	_DISP_FADE_END_CHECK()
 //ここでライバル専用曲終了
-	_BGM_STOP
-	_BGM_NOW_MAP_PLAY //マップ曲呼び出し
+	_BGM_STOP()
+	_BGM_NOW_MAP_RECOVER() //マップ曲呼び出し
 
 	_BALLOONWIN_OBJMSG_OPEN( msg_t01r0102_black_test04,T01R0102_RIVAL )
 	_AB_KEYWAIT()
@@ -221,7 +226,8 @@ ev_t01r0102_poke_battle:
 	_FLAG_SET( FV_T01R0102_BALL00 )
 	_FLAG_SET( FV_T01R0102_BALL01 )
 	_FLAG_SET( FV_T01R0102_BALL02 )
-EVENT_END
+
+  _RET
 
 /**************************************************************/
 /*  T01R0102 GAME MACHINEのBG用イベントスクリプト*/
