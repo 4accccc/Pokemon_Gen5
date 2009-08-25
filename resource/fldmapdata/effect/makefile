@@ -9,7 +9,10 @@ HEADER_FE	=	$(TARGET_FE:.narc=.naix)
 
 COPYDIR = $(PROJECT_ROOT)/prog/arc/fieldmap
 
-RESDIR	:= ./res
+#リソースディレクトリ
+RESDIR	= ./res
+#テンポラリディレクトリ
+TMPDIR	= ./temp
 
 #コンバート対象リスト
 include	fldeff_list
@@ -23,67 +26,76 @@ G2DCVTR	= $(NITROSYSTEM_ROOT)/tools/win/bin/g2dcvtr.exe
 #--------------------------------------------------
 #	ファイルリスト置き換え
 #--------------------------------------------------
-#G3D_FE_MDLからディレクトリ名部分を削除、拡張子をimdからnsbmdに置き換え
+#imd,nsbmd
 FEDATA_MDL	= $(notdir $(G3D_FE_MDL:.imd=.nsbmd))
+FEDATA_MDL := $(addprefix $(TMPDIR)/,$(FEDATA_MDL))
 
-#G3D_FE_TEXからディレクトリ名部分を削除、拡張子をimdからnsbtxに置き換え
+#imd,nsbtx
 FEDATA_TEX	= $(notdir $(G3D_FE_TEX:.imd=.nsbtx))
+FEDATA_TEX := $(addprefix $(TMPDIR)/,$(FEDATA_TEX))
 
-#G3D_FE_ANMDATからディレクトリ名部分を削除、拡張子をitpからnsbtpに置き換え
+#itp,nsbtp
 FEDATA_ANMITP	= $(notdir $(G3D_FE_ANMITP:.itp=.nsbtp))
+FEDATA_ANMITP := $(addprefix $(TMPDIR)/,$(FEDATA_ANMITP))
 
-#G3D_FE_ANMICAからディレクトリ名部分を削除、拡張子をicaからnsbcaに置き換え
+#ica,nsbca
 FEDATA_ANMICA = $(notdir $(G3D_FE_ANMICA:.ica=.nsbca))
+FEDATA_ANMICA := $(addprefix $(TMPDIR)/,$(FEDATA_ANMICA))
 
-#G3D_FE_ANMIMAからディレクトリ名部分を削除、拡張子をimaからnsbmaに置き換え
+#ima,nsbma
 FEDATA_ANMIMA = $(notdir $(G3D_FE_ANMIMA:.ima=.nsbma))
+FEDATA_ANMIMA := $(addprefix $(TMPDIR)/,$(FEDATA_ANMIMA))
 
-#G3D_FE_ANMITAからディレクトリ名部分を削除、拡張子をitaからnsbtaに置き換え
+#ita,nsbta
 FEDATA_ANMITA = $(notdir $(G3D_FE_ANMITA:.ita=.nsbta))
+FEDATA_ANMITA := $(addprefix $(TMPDIR)/,$(FEDATA_ANMITA))
 
-#G3D_FE_ANMIVAからディレクトリ名部分を削除、拡張子をivaからnsbvaに置き換え
+#iva,nsbva
 FEDATA_ANMIVA = $(notdir $(G3D_FE_ANMIVA:.iva=.nsbva))
+FEDATA_ANMIVA := $(addprefix $(TMPDIR)/,$(FEDATA_ANMIVA))
 
 #G3D_FE_NONCV
 FEDATA_NONCV = $(notdir $(G3D_FE_NONCV))
 
 #--------------------------------------------------
-#	拡張子で生成ルールを指定する
+#	拡張子 生成ルール
 #--------------------------------------------------
-#imd --> nsbmdへの変換ルール定義
-%.nsbmd: $(RESDIR)/%.imd
+#.SUFFIXES:
+
+#imd --> nsbmd
+$(TMPDIR)/%.nsbmd: $(RESDIR)/%.imd
 	@echo Model Data Convert: $^ $@
-	@$(G3DCVTR) $(RESDIR)/$(@:.nsbmd=.imd) -o $@
-	
-#imd --> nsbtxへの変換ルール定義
-%.nsbtx: $(RESDIR)/%.imd
+	@$(G3DCVTR) $^ -o $@
+
+#imd --> nsbtx
+$(TMPDIR)/%.nsbtx: $(RESDIR)/%.imd
 	@echo Texture Data Convert: $^ $@
-	@$(G3DCVTR) $(RESDIR)/$(@:.nsbtx=.imd) -o $@ -etex
+	@$(G3DCVTR) $^ -o $@ -etex
 
-#itp --> nsbtpへの変換ルール定義
-%.nsbtp: $(RESDIR)/%.itp
+#itp --> nsbtp
+$(TMPDIR)/%.nsbtp: $(RESDIR)/%.itp
 	@echo Anime itp File Convert: $^ $@
-	@$(G3DCVTR) $(RESDIR)/$(@:.nsbtp=.itp) -o $@ 
+	@$(G3DCVTR) $^ -o $@ 
 
-#ica --> nsbcaへの変換ルール定義
-%.nsbca: $(RESDIR)/%.ica
+#ica --> nsbca
+$(TMPDIR)/%.nsbca: $(RESDIR)/%.ica
 	@echo Anime ica File Convert: $^ $@
-	@$(G3DCVTR) $(RESDIR)/$(@:.nsbca=.ica) -o $@ 
+	@$(G3DCVTR) $^ -o $@ 
 
-#ima --> nsbmaへの変換ルール定義
-%.nsbma: $(RESDIR)/%.ima
+#ima --> nsbma
+$(TMPDIR)/%.nsbma: $(RESDIR)/%.ima
 	@echo Anime ima File Convert: $^ $@
-	@$(G3DCVTR) $(RESDIR)/$(@:.nsbma=.ima) -o $@ 
+	@$(G3DCVTR) $^ -o $@ 
 
-#ita --> nsbtaへの変換ルール定義
-%.nsbta: $(RESDIR)/%.ita
+#ita --> nsbta
+$(TMPDIR)/%.nsbta: $(RESDIR)/%.ita
 	@echo Anime ita File Convert: $^ $@
-	@$(G3DCVTR) $(RESDIR)/$(@:.nsbta=.ita) -o $@ 
+	@$(G3DCVTR) $^ -o $@ 
 
-#iva --> nsbvaへの変換ルール定義
-%.nsbva: $(RESDIR)/%.vai
+#iva --> nsbva
+$(TMPDIR)/%.nsbva: $(RESDIR)/%.vai
 	@echo Anime iva File Convert: $^ $@
-	@$(G3DCVTR) $(RESDIR)/$(@:.nsbva=.iva) -o $@ 
+	@$(G3DCVTR) $^ -o $@ 
 
 #-------------------------------------------------
 #	生成ルール定義
@@ -95,8 +107,8 @@ $(COPYDIR)/$(TARGET_FE): $(TARGET_FE)
 	$(COPY) $(HEADER_FE) $(COPYDIR)
 
 ifeq	($(CONVERTUSER),true) #CONVERTUSER
-$(TARGET_FE): $(FEDATA_TEX) $(FEDATA_MDL) $(FEDATA_ANMITP) $(FEDATA_ANMICA) $(FEDATA_ANMIMA) $(FEDATA_ANMITA) $(FEDATA_ANMIVA) $(FEDATA_NONCV)
-	nnsarc -i -c -l -n $(TARGET_FE) $(FEDATA_TEX) $(FEDATA_MDL) $(FEDATA_ANMITP) $(FEDATA_ANMICA) $(FEDATA_ANMIMA) $(FEDATA_ANMITA) $(FEDATA_ANMIVA) $(FEDATA_NONCV) > arc_result.txt
+$(TARGET_FE): $(FEDATA_TEX) $(FEDATA_MDL) $(FEDATA_ANMITP) $(FEDATA_ANMICA) $(FEDATA_ANMIMA) $(FEDATA_ANMITA) $(FEDATA_ANMIVA) $(RESDIR)/$(FEDATA_NONCV)
+	nnsarc -i -c -l -n $(TARGET_FE) $(FEDATA_TEX) $(FEDATA_MDL) $(FEDATA_ANMITP) $(FEDATA_ANMICA) $(FEDATA_ANMIMA) $(FEDATA_ANMITA) $(FEDATA_ANMIVA) $(RESDIR)/$(FEDATA_NONCV) > arc_result.txt
 	$(NAIXCUT) $(HEADER_FE)
 
 all:
