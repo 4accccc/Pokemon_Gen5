@@ -2638,7 +2638,7 @@
 		billboard="off"
 		scale="1.000000 1.000000 1.000000"
 		rotate="0.000000 0.000000 0.000000"
-		translate="0.000000 0.000000 0.000000"
+		translate="-8.0 0.0 8.0"
 		visibility="on"
 		display_size="6"
 		vertex_size="1330" polygon_size="415"

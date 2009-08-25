@@ -127,7 +127,7 @@
 		billboard="off"
 		scale="1.000000 1.000000 1.000000"
 		rotate="0.000000 0.000000 0.000000"
-		translate="16.000000 0.000000 -32.000000"
+		translate="8.0 0.0 -24.0"
 		visibility="on"
 		display_size="1"
 		vertex_size="4" polygon_size="1"
