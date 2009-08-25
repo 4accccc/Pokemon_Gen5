@@ -235,6 +235,9 @@ struct _FIELDMAP_WORK
 
 
   int firstConnectEventID;
+
+  GFL_TCBSYS* fieldmapTCB;
+  void* fieldmapTCBSysWork;
 };
 
 fx32	fldWipeScale;
@@ -436,6 +439,14 @@ static MAINSEQ_RESULT mainSeqFunc_setup_system(GAMESYS_WORK *gsys, FIELDMAP_WORK
 	//VBlankTCB
 	fieldWork->g3dVintr =
 		GFUser_VIntr_CreateTCB( fldmap_G3D_VBlank, (void*)fieldWork, 0 );
+
+  // TCB
+  {
+    u32 task_max = 32;
+    u32     size = GFL_TCB_CalcSystemWorkSize( task_max );
+    fieldWork->fieldmapTCBSysWork = GFL_HEAP_AllocMemory( heapID, size );
+    fieldWork->fieldmapTCB = GFL_TCB_Init( task_max, fieldWork->fieldmapTCBSysWork );
+  }
 
 	GFL_UI_StartFrameRateMode( GFL_UI_FRAMERATE_30 );
 	
@@ -717,6 +728,8 @@ static MAINSEQ_RESULT mainSeqFunc_update_top(GAMESYS_WORK *gsys, FIELDMAP_WORK *
 
   FLDMSGBG_PrintMain( fieldWork->fldMsgBG );
 
+  // TCB
+  GFL_TCB_Main( fieldWork->fieldmapTCB );
 
   return MAINSEQ_RESULT_CONTINUE;
 }
@@ -847,6 +860,9 @@ static MAINSEQ_RESULT mainSeqFunc_free(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldW
 //--------------------------------------------------------------
 static MAINSEQ_RESULT mainSeqFunc_end(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork )
 { 
+  // TCB
+  GFL_TCB_Exit( fieldWork->fieldmapTCB );
+  GFL_HEAP_FreeMemory( fieldWork->fieldmapTCBSysWork );
 
 	GFL_TCB_DeleteTask( fieldWork->g3dVintr );
 
@@ -1395,6 +1411,16 @@ FIELD_PLACE_NAME * FIELDMAP_GetPlaceNameSys( FIELDMAP_WORK * fieldWork )
 FLDMAPFUNC_SYS * FIELDMAP_GetFldmapFuncSys( FIELDMAP_WORK * fieldWork )
 {
 	return fieldWork->fldmapFuncSys;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	TCBシステム　取得
+ */
+//-----------------------------------------------------------------------------
+extern GFL_TCBSYS* FIELDMAP_GetFieldmapTCBSys( FIELDMAP_WORK * fieldWork )
+{
+  return fieldWork->fieldmapTCB;
 }
 
 //======================================================================
