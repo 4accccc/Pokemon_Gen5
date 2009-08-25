@@ -254,7 +254,7 @@ static const GFL_UI_TP_HITTBL TP_HitTbl[] = {
 };
 
 FS_EXTERN_OVERLAY(battle);
-FS_EXTERN_OVERLAY(mcs_lib);
+//FS_EXTERN_OVERLAY(mcs_lib);
 
 //--------------------------------------------------------------------------
 /**
@@ -280,7 +280,7 @@ static GFL_PROC_RESULT PokemonViewerProcInit( GFL_PROC * proc, int * seq, void *
   };
 
   GFL_OVERLAY_Load(FS_OVERLAY_ID(battle));
-  GFL_OVERLAY_Load(FS_OVERLAY_ID(mcs_lib));
+//  GFL_OVERLAY_Load(FS_OVERLAY_ID(mcs_lib));
 
   GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_SOGABE_DEBUG, 0xc0000 );
   pvw = GFL_PROC_AllocWork( proc, sizeof( POKEMON_VIEWER_WORK ), HEAPID_SOGABE_DEBUG );
@@ -328,6 +328,7 @@ static GFL_PROC_RESULT PokemonViewerProcInit( GFL_PROC * proc, int * seq, void *
     GFL_G3D_Init( GFL_G3D_VMANLNK, GFL_G3D_TEX128K, GFL_G3D_VMANLNK, GFL_G3D_PLT16K, 0, pvw->heapID, NULL );
     GFL_G3D_SetSystemSwapBufferMode( GX_SORTMODE_AUTO, GX_BUFFERMODE_Z );
     G3X_AlphaBlend( TRUE );
+    G3X_AlphaTest( FALSE, 31 );
     G3X_EdgeMarking( TRUE );
     G3X_AntiAlias( TRUE );
     GFL_BG_SetBGControl3D( 1 );
@@ -607,7 +608,7 @@ static GFL_PROC_RESULT PokemonViewerProcExit( GFL_PROC * proc, int * seq, void *
   GFL_HEAP_DeleteHeap( HEAPID_SOGABE_DEBUG );
 
   GFL_OVERLAY_Unload( FS_OVERLAY_ID( battle ) );
-  GFL_OVERLAY_Unload( FS_OVERLAY_ID( mcs_lib ) );
+//  GFL_OVERLAY_Unload( FS_OVERLAY_ID( mcs_lib ) );
 
   return GFL_PROC_RES_FINISH;
 }
