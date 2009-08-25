@@ -1399,7 +1399,7 @@ static BOOL COMPSKB_Main( COMP_SKB_WORK* wk )
     return TRUE;
   case GFL_SKB_REACTION_INPUT:
     {
-      int idx;
+      int idx = 0;
       GFL_SKB_PickStr( wk->skb );
       if( DEBUG_WORDSEARCH_sub_search(wk->msg, wk->fullword, wk->buf, -1, &idx) == 1 )
       {
@@ -1422,7 +1422,7 @@ static BOOL COMPSKB_Main( COMP_SKB_WORK* wk )
         wk->searchingFlag = TRUE;
       }
       {
-        int idx;
+        int idx=0;
         if( DEBUG_WORDSEARCH_sub_search(wk->msg, wk->fullword, wk->subword, wk->index, &idx) )
         {
           wk->index = idx;
