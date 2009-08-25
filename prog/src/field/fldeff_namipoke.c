@@ -333,6 +333,7 @@ static void namipokeTask_Init( FLDEFF_TASK *task, void *wk )
           rip->obj_rnd, rip_res->g3d_res_anm[1], 0 );
     rip->obj = GFL_G3D_OBJECT_Create( rip->obj_rnd, rip->obj_anm, 2 );
 	  GFL_G3D_OBJECT_EnableAnime( rip->obj, 0 );
+	  GFL_G3D_OBJECT_EnableAnime( rip->obj, 1 );
     
     rip->vanish_flag = TRUE;
     rip->dir = DIR_NOT;
@@ -420,6 +421,7 @@ static void namipokeTask_Update( FLDEFF_TASK *task, void *wk )
     VecFx32 pos;
     RIPPLE_WORK *rip = &work->ripple_work;
 	  GFL_G3D_OBJECT_LoopAnimeFrame( rip->obj, 0, FX32_ONE );
+	  GFL_G3D_OBJECT_LoopAnimeFrame( rip->obj, 1, FX32_ONE );
     
     MMDL_GetVectorPos( work->head.mmdl, &pos );
     
