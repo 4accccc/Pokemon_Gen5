@@ -36,47 +36,39 @@ _EVENT_DATA_END
 /*  R03 OLDWOMAN1の会話のイベントスクリプト*/
 /**************************************************************/
 EVENT_START   ev_r03_talkobj_oldwoman1
-  _TALK_START_SE_PLAY
-	_TURN_HERO_SITE
-	_BALLOONWIN_TALKOBJ_OPEN msg_r03_oldwoman1_01
-	_AB_KEYWAIT
-  _BALLOONWIN_CLOSE
-  _EVENT_END
-  _END
+  _TALK_OBJ_START()
+	_BALLOONWIN_TALKOBJ_OPEN( msg_r03_oldwoman1_01 )
+	_AB_KEYWAIT()
+  _BALLOONWIN_CLOSE()
+EVENT_END
 
 /**************************************************************/
 /*  R03 WOMAN3の会話のイベントスクリプト*/
 /**************************************************************/
 EVENT_START   ev_r03_talkobj_woman3
-  _TALK_START_SE_PLAY
-	_TURN_HERO_SITE
-	_BALLOONWIN_TALKOBJ_OPEN msg_r03_woman3_01
-	_AB_KEYWAIT
-  _BALLOONWIN_CLOSE
-  _EVENT_END
-  _END
+  _TALK_OBJ_START()
+	_BALLOONWIN_TALKOBJ_OPEN( msg_r03_woman3_01 )
+	_AB_KEYWAIT()
+  _BALLOONWIN_CLOSE()
+EVENT_END
 
 /**************************************************************/
 /*  R03 BABYGIRL1aの会話のイベントスクリプト*/
 /**************************************************************/
 EVENT_START   ev_r03_talkobj_babygirl1a
-  _TALK_START_SE_PLAY
-	_TURN_HERO_SITE
-	_BALLOONWIN_TALKOBJ_OPEN msg_r03_babygirl1a_01
-	_AB_KEYWAIT
-  _BALLOONWIN_CLOSE
-  _EVENT_END
-  _END
+  _TALK_OBJ_START()
+	_BALLOONWIN_TALKOBJ_OPEN( msg_r03_babygirl1a_01 )
+	_AB_KEYWAIT()
+  _BALLOONWIN_CLOSE()
+EVENT_END
 
 /**************************************************************/
 /*  R03 BABYGIRL1bの会話のイベントスクリプト*/
 /**************************************************************/
 EVENT_START   ev_r03_talkobj_babygirl1b
-  _TALK_START_SE_PLAY
-	_TURN_HERO_SITE
-	_BALLOONWIN_TALKOBJ_OPEN msg_r03_babygirl1b_01
-	_AB_KEYWAIT
-  _BALLOONWIN_CLOSE
-  _EVENT_END
-  _END
+  _TALK_OBJ_START()
+	_BALLOONWIN_TALKOBJ_OPEN( msg_r03_babygirl1b_01 )
+	_AB_KEYWAIT()
+  _BALLOONWIN_CLOSE()
+EVENT_END
 

@@ -32,10 +32,8 @@ _EVENT_DATA_END
 /*  D01 BOY2の会話用イベントスクリプト                      */
 /**************************************************************/
 EVENT_START    ev_d01_talkobj_boy2
-  _TALK_START_SE_PLAY
-	_TURN_HERO_SITE
-	_BALLOONWIN_TALKOBJ_OPEN mes_d01_boy2_01
-	_AB_KEYWAIT
-  _BALLOONWIN_CLOSE
-  _EVENT_END
-  _END
+  _TALK_OBJ_START()
+	_BALLOONWIN_TALKOBJ_OPEN( mes_d01_boy2_01 )
+	_AB_KEYWAIT()
+  _BALLOONWIN_CLOSE()
+EVENT_END

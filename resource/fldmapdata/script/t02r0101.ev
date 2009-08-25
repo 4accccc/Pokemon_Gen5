@@ -41,38 +41,32 @@ _EVENT_DATA_END
 /*  T02R0101 MIDDLEWOMAN1の会話用イベントスクリプト*/
 /**************************************************************/
 EVENT_START   ev_t02r0101_talkobj_middlewoman1
-  _TALK_START_SE_PLAY
-	_TURN_HERO_SITE
-	_BALLOONWIN_TALKOBJ_OPEN msg_t02r0101_middlewoman1_01
-	_AB_KEYWAIT
-  _BALLOONWIN_CLOSE
-  _EVENT_END
-  _END
+  _TALK_OBJ_START()
+	_BALLOONWIN_TALKOBJ_OPEN( msg_t02r0101_middlewoman1_01 )
+	_AB_KEYWAIT()
+  _BALLOONWIN_CLOSE()
+EVENT_END
 
 /**************************************************************/
 /*  T02R0101 WOMAN1の会話用イベントスクリプト*/
 /**************************************************************/
 
 EVENT_START   ev_t02r0101_talkobj_woman1
-  _TALK_START_SE_PLAY
-	_TURN_HERO_SITE
-	_BALLOONWIN_TALKOBJ_OPEN msg_t02r0101_woman1_01
-	_AB_KEYWAIT
-  _BALLOONWIN_CLOSE
-  _EVENT_END
-  _END
+  _TALK_OBJ_START()
+	_BALLOONWIN_TALKOBJ_OPEN( msg_t02r0101_woman1_01 )
+	_AB_KEYWAIT()
+  _BALLOONWIN_CLOSE()
+EVENT_END
 
 /**************************************************************/
 /*  T02R0101 BABYBOY1の会話用イベントスクリプト*/
 /**************************************************************/
 
 EVENT_START   ev_t02r0101_talkobj_babyboy1
-  _TALK_START_SE_PLAY
-	_TURN_HERO_SITE
-	_BALLOONWIN_TALKOBJ_OPEN msg_t02r0101_babyboy1_01
-	_AB_KEYWAIT
-  _BALLOONWIN_CLOSE
-  _EVENT_END
-  _END
+  _TALK_OBJ_START()
+	_BALLOONWIN_TALKOBJ_OPEN( msg_t02r0101_babyboy1_01 )
+	_AB_KEYWAIT()
+  _BALLOONWIN_CLOSE()
+EVENT_END
 
 

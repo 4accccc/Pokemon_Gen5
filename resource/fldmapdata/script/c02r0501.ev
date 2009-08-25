@@ -32,13 +32,11 @@ _EVENT_DATA_END
 /*  C02R0501 WOMAN2の会話用イベントスクリプト*/
 /**************************************************************/
 EVENT_START   ev_c02r0501_talkobj_woman2
-  _TALK_START_SE_PLAY
-	_TURN_HERO_SITE
-	_BALLOONWIN_TALKOBJ_OPEN msg_c02r0501_woman2_01
-	_AB_KEYWAIT
-  _BALLOONWIN_CLOSE
-  _EVENT_END
-  _END
+  _TALK_OBJ_START()
+	_BALLOONWIN_TALKOBJ_OPEN( msg_c02r0501_woman2_01 )
+	_AB_KEYWAIT()
+  _BALLOONWIN_CLOSE()
+EVENT_END
 
 
 /**************************************************************/
@@ -46,11 +44,9 @@ EVENT_START   ev_c02r0501_talkobj_woman2
 /**************************************************************/
 
 EVENT_START   ev_c02r0501_talkobj_man2
-  _TALK_START_SE_PLAY
-	_TURN_HERO_SITE
-	_BALLOONWIN_TALKOBJ_OPEN msg_c02r0501_man2_01
-	_AB_KEYWAIT
-  _BALLOONWIN_CLOSE
-  _EVENT_END
-  _END
+  _TALK_OBJ_START()
+	_BALLOONWIN_TALKOBJ_OPEN( msg_c02r0501_man2_01 )
+	_AB_KEYWAIT()
+  _BALLOONWIN_CLOSE()
+EVENT_END
 

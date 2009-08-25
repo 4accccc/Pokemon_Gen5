@@ -35,34 +35,28 @@ _EVENT_DATA_END
 /*  D02R0101 GIRL1の会話用イベントスクリプト                      */
 /**************************************************************/
 EVENT_START    ev_d02r0101_talkobj_sportsm
-  _TALK_START_SE_PLAY
-	_TURN_HERO_SITE
-	_BALLOONWIN_TALKOBJ_OPEN msg_d02r0101_sportsm_01
-	_AB_KEYWAIT
-  _BALLOONWIN_CLOSE
-  _EVENT_END
-  _END
+  _TALK_OBJ_START()
+	_BALLOONWIN_TALKOBJ_OPEN( msg_d02r0101_sportsm_01 )
+	_AB_KEYWAIT()
+  _BALLOONWIN_CLOSE()
+EVENT_END
  
 /**************************************************************/
 /*  D02R0101 GIRL1の会話用イベントスクリプト                      */
 /**************************************************************/
 EVENT_START    ev_d02r0101_talkobj_mountain
-  _TALK_START_SE_PLAY
-	_TURN_HERO_SITE
-	_BALLOONWIN_TALKOBJ_OPEN msg_d02r0101_mountain_01
-	_AB_KEYWAIT
-  _BALLOONWIN_CLOSE
-  _EVENT_END
-  _END
+  _TALK_OBJ_START()
+	_BALLOONWIN_TALKOBJ_OPEN( msg_d02r0101_mountain_01 )
+	_AB_KEYWAIT()
+  _BALLOONWIN_CLOSE()
+EVENT_END
 
 /**************************************************************/
 /*  D02R0101 GIRL1の会話用イベントスクリプト                      */
 /**************************************************************/
 EVENT_START    ev_d02r0101_talkobj_assistantw
-  _TALK_START_SE_PLAY
-	_TURN_HERO_SITE
-	_BALLOONWIN_TALKOBJ_OPEN msg_d02r0101_assistantw_01
-	_AB_KEYWAIT
-  _BALLOONWIN_CLOSE
-  _EVENT_END
-  _END
+  _TALK_OBJ_START()
+	_BALLOONWIN_TALKOBJ_OPEN( msg_d02r0101_assistantw_01 )
+	_AB_KEYWAIT()
+  _BALLOONWIN_CLOSE()
+EVENT_END

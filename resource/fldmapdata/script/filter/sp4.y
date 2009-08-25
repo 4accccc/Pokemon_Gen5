@@ -344,11 +344,11 @@ rule
 					}
 	      |  COMMAND '(' args ')'
 					{
-						result = [val[0],val[2]]
+						result = [val[0], ['('] + val[2] + [')'] ]
 					}
         | COMMAND '(' ')'
           {
-            result = [ val[0], nil ]
+            result = [ val[0], "()" ]
           }
         | EVENT_START IDENT
           {
@@ -527,15 +527,22 @@ def parse( f )
 					else
 						pushq [ :IDENT, $& ]
 					end
+
 				when /\A\\[a-zA-Z_][a-zA-Z0-9_]*/
+          # \から始まる識別子はアセンブラマクロパラメータ
 					pushq [ :MACPARAM, $& ]
+
 				when /\A==/,/\A!=/,/\A\<=/,/\A\>=/,/\A>/,/\A</
+          # 比較演算子
 					pushq [ $&, $& ]
+
 				when /\A\/\*.*/
           #C形式コメント開始
 					pushq [ :COMMENT, $& ]
 					@incomment = true
+
 				when /\A[\+\-\*\/=(){},]/
+          #演算子、カッコなどの記号
 					pushq [ $&, $& ]
 				else
 					raise RuntimeError, "#{@fname}:#{@nowlineno}: fatal error! \{#{line_org}\}"

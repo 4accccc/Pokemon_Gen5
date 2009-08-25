@@ -46,47 +46,44 @@ _EVENT_DATA_END
 /*    MAMA                                            */
 /**************************************************************/
 EVENT_START ev_t01r0101_mama_first
-	_IFVAL_JUMP WK_0907ROM07,EQ,0,mama_first
-	_IFVAL_JUMP WK_0907ROM07,EQ,1,mama_end
+
+  IF $WK_0907ROM07 == 0 THEN
+    _CALL mama_first
+    $WK_0907ROM07 = 1
+  ENDIF
+
+	_TURN_HERO_SITE()
+	_BALLOONWIN_OBJMSG_OPEN( msg_t01r0101_mama_04, T01R0101_MAMA )
+	_AB_KEYWAIT()
+	_BALLOONWIN_CLOSE()
+
+EVENT_END
+
 
 mama_first:
-	_PLAYER_POS_GET SCWK_TEMP0,SCWK_TEMP1 //自機座標取得
-	_IFVAL_JUMP SCWK_TEMP0,EQ,3,pos_3_3
-	_IFVAL_JUMP SCWK_TEMP0,EQ,4,pos_4_3
+	_PLAYER_POS_GET( SCWK_TEMP0,SCWK_TEMP1 ) //自機座標取得
+  IF $SCWK_TEMP0 == 3 THEN
+    _OBJ_ANIME( T01R0101_MAMA,mama_first_3 ) //主人公に隣接
+    _OBJ_ANIME_WAIT()
+  ELSIF $SCWK_TEMP0 == 4 THEN
+    _OBJ_ANIME( T01R0101_MAMA,mama_first_4 )//主人公に隣接
+    _OBJ_ANIME_WAIT()
+  ENDIF
+	_OBJ_ANIME( MMDL_ID_PLAYER,anime_t01r0101_mama )
+	_OBJ_ANIME_WAIT()
 
-pos_3_3:
-	_OBJ_ANIME T01R0101_MAMA,mama_first_3 //主人公に隣接
-	_OBJ_ANIME_WAIT
-	_JUMP mama_first_01
+	_PLAYER_NAME( 0 ) //プレイヤー名を反映
+	_BALLOONWIN_OBJMSG_OPEN( msg_t01r0101_mama_01, T01R0101_MAMA )
+	_AB_KEYWAIT()
+	_BALLOONWIN_CLOSE()
 
-pos_4_3:
-	_OBJ_ANIME T01R0101_MAMA,mama_first_4 //主人公に隣接
-	_OBJ_ANIME_WAIT
+	_BALLOONWIN_OBJMSG_OPEN( msg_t01r0101_mama_02, T01R0101_MAMA )
+	_AB_KEYWAIT()
+	_BALLOONWIN_CLOSE()
 
-mama_first_01:
-	_OBJ_ANIME MMDL_ID_PLAYER,anime_t01r0101_mama
-	_OBJ_ANIME_WAIT
+  _RET
 
-	_PLAYER_NAME 0 //プレイヤー名を反映
-	_BALLOONWIN_TALKOBJ_OPEN msg_t01r0101_mama_01
-	_AB_KEYWAIT
-	_BALLOONWIN_CLOSE
 
-	_BALLOONWIN_TALKOBJ_OPEN msg_t01r0101_mama_02
-	_AB_KEYWAIT
-	_BALLOONWIN_CLOSE
-
-  _LDVAL WK_0907ROM00,1
- 	//_LDVAL SVSCRWK_START,1
- 	_LDVAL WK_0907ROM07,1
-	_JUMP mama_end
-
-mama_end:
-	_TURN_HERO_SITE
-	_BALLOONWIN_TALKOBJ_OPEN msg_t01r0101_mama_04
-	_AB_KEYWAIT
-	_BALLOONWIN_CLOSE
-EVENT_END
 
 /**************************************************************/
 /*  T01R0101 主人公、ママを見る */

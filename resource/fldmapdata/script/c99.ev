@@ -29,81 +29,74 @@ _EVENT_DATA_END //終了
 //	話し掛け サンプル
 //--------------------------------------------------------------------
 EVENT_START   ev_c99_talkobj_sample_01
-  _TALK_START_SE_PLAY
-	_TURN_HERO_SITE
-	_BALLOONWIN_TALKOBJ_OPEN msg_c99_01
-	_AB_KEYWAIT
-	_BALLOONWIN_CLOSE
+  _TALK_OBJ_START()
+	_BALLOONWIN_TALKOBJ_OPEN( msg_c99_01 )
+	_AB_KEYWAIT()
+	_BALLOONWIN_CLOSE()
 EVENT_END
 
 //--------------------------------------------------------------------
 //	話し掛け サンプル
 //--------------------------------------------------------------------
 EVENT_START   ev_c99_talkobj_sample_02
-  _TALK_START_SE_PLAY
-	_TURN_HERO_SITE
-	_BALLOONWIN_TALKOBJ_OPEN msg_c99_02
-	_AB_KEYWAIT
-	_BALLOONWIN_CLOSE
+  _TALK_OBJ_START()
+	_BALLOONWIN_TALKOBJ_OPEN( msg_c99_02 )
+	_AB_KEYWAIT()
+	_BALLOONWIN_CLOSE()
 EVENT_END
 
 //--------------------------------------------------------------------
 //	話し掛け サンプル
 //--------------------------------------------------------------------
 EVENT_START   ev_c99_talkobj_sample_03
-  _TALK_START_SE_PLAY
-	_TURN_HERO_SITE
-	_BALLOONWIN_TALKOBJ_OPEN msg_c99_03
-	_AB_KEYWAIT
-	_BALLOONWIN_CLOSE
+  _TALK_OBJ_START()
+	_BALLOONWIN_TALKOBJ_OPEN( msg_c99_03 )
+	_AB_KEYWAIT()
+	_BALLOONWIN_CLOSE()
 EVENT_END
 
 //--------------------------------------------------------------------
 //	話し掛け サンプル
 //--------------------------------------------------------------------
 EVENT_START   ev_c99_talkobj_sample_04
-  _TALK_START_SE_PLAY
-	_TURN_HERO_SITE
-	_BALLOONWIN_TALKOBJ_OPEN msg_c99_04
-	_AB_KEYWAIT
-	_BALLOONWIN_CLOSE
+  _TALK_OBJ_START()
+	_BALLOONWIN_TALKOBJ_OPEN( msg_c99_04 )
+	_AB_KEYWAIT()
+	_BALLOONWIN_CLOSE()
 EVENT_END
 
 //--------------------------------------------------------------------
 //	話し掛け サンプル
 //--------------------------------------------------------------------
 EVENT_START   ev_c99_talkobj_sample_05
-  _TALK_START_SE_PLAY
-	_TURN_HERO_SITE
-	_BALLOONWIN_TALKOBJ_OPEN msg_c99_05
-	_AB_KEYWAIT
-	_BALLOONWIN_CLOSE
+  _TALK_OBJ_START()
+	_BALLOONWIN_TALKOBJ_OPEN( msg_c99_05 )
+	_AB_KEYWAIT()
+	_BALLOONWIN_CLOSE()
 EVENT_END
 
 //--------------------------------------------------------------------
 //	話し掛け サンプル
 //--------------------------------------------------------------------
 EVENT_START   ev_c99_talkobj_sample_06
-  _TALK_START_SE_PLAY
-	_TURN_HERO_SITE
-	_BALLOONWIN_TALKOBJ_OPEN msg_c99_06
-	_AB_KEYWAIT
-	_BALLOONWIN_CLOSE
+  _TALK_OBJ_START()
+	_BALLOONWIN_TALKOBJ_OPEN( msg_c99_06 )
+	_AB_KEYWAIT()
+	_BALLOONWIN_CLOSE()
 EVENT_END
 
 //--------------------------------------------------------------------
 //	話し掛け KABI32 00
 //--------------------------------------------------------------------
 EVENT_START   ev_c99_talkobj_kabi32_00
-  _TALK_START_SE_PLAY
-	_TURN_HERO_SITE
+  _TALK_OBJ_START()
 	
-	_BALLOONWIN_TALKOBJ_OPEN msg_c99_07
-	_AB_KEYWAIT
-	_BALLOONWIN_CLOSE
+	_BALLOONWIN_TALKOBJ_OPEN( msg_c99_07 )
+	_AB_KEYWAIT()
+	_BALLOONWIN_CLOSE()
 	
-	_OBJ_ANIME 0, anm_kabi32_00
-	_OBJ_ANIME_WAIT
+	_OBJ_ANIME( 0, anm_kabi32_00 )
+	_OBJ_ANIME_WAIT()
 	
 EVENT_END
 	
@@ -111,60 +104,56 @@ EVENT_END
 //	話し掛け サンプル KABI32 01
 //--------------------------------------------------------------------
 EVENT_START   ev_c99_talkobj_kabi32_01
-  _TALK_START_SE_PLAY
-	_TURN_HERO_SITE
+  _TALK_OBJ_START()
 	
-	_BALLOONWIN_TALKOBJ_OPEN msg_c99_07
-	_AB_KEYWAIT
-	_BALLOONWIN_CLOSE
+	_BALLOONWIN_TALKOBJ_OPEN( msg_c99_07 )
+	_AB_KEYWAIT()
+	_BALLOONWIN_CLOSE()
 	
-	_OBJ_ANIME 6, anm_kabi32_01
-	_OBJ_ANIME_WAIT
+	_OBJ_ANIME( 6, anm_kabi32_01 )
+	_OBJ_ANIME_WAIT()
 EVENT_END
 
 //--------------------------------------------------------------------
 //	話し掛け サンプル KABI32 02
 //--------------------------------------------------------------------
 EVENT_START   ev_c99_talkobj_kabi32_02
-  _TALK_START_SE_PLAY
-	_TURN_HERO_SITE
+  _TALK_OBJ_START()
 	
-	_BALLOONWIN_TALKOBJ_OPEN msg_c99_07
-	_AB_KEYWAIT
-	_BALLOONWIN_CLOSE
+	_BALLOONWIN_TALKOBJ_OPEN( msg_c99_07 )
+	_AB_KEYWAIT()
+	_BALLOONWIN_CLOSE()
 
-	_OBJ_ANIME 13, anm_kabi32_02
-	_OBJ_ANIME_WAIT
+	_OBJ_ANIME( 13, anm_kabi32_02 )
+	_OBJ_ANIME_WAIT()
 EVENT_END
 
 //--------------------------------------------------------------------
 //	話し掛け サンプル KABI32 03
 //--------------------------------------------------------------------
 EVENT_START   ev_c99_talkobj_kabi32_03
-  _TALK_START_SE_PLAY
-	_TURN_HERO_SITE
+  _TALK_OBJ_START()
 	
-	_BALLOONWIN_TALKOBJ_OPEN msg_c99_07
-	_AB_KEYWAIT
-	_BALLOONWIN_CLOSE
+	_BALLOONWIN_TALKOBJ_OPEN( msg_c99_07 )
+	_AB_KEYWAIT()
+	_BALLOONWIN_CLOSE()
 	
-	_OBJ_ANIME 20, anm_kabi32_03
-	_OBJ_ANIME_WAIT
+	_OBJ_ANIME( 20, anm_kabi32_03 )
+	_OBJ_ANIME_WAIT()
 EVENT_END
 
 //--------------------------------------------------------------------
 //	話し掛け サンプル KABI32 04
 //--------------------------------------------------------------------
 EVENT_START   ev_c99_talkobj_kabi32_04
-  _TALK_START_SE_PLAY
-	_TURN_HERO_SITE
+  _TALK_OBJ_START()
 	
-	_BALLOONWIN_TALKOBJ_OPEN msg_c99_07
-	_AB_KEYWAIT
-	_BALLOONWIN_CLOSE
+	_BALLOONWIN_TALKOBJ_OPEN( msg_c99_07 )
+	_AB_KEYWAIT()
+	_BALLOONWIN_CLOSE()
 	
-	_OBJ_ANIME 27, anm_kabi32_04
-	_OBJ_ANIME_WAIT
+	_OBJ_ANIME( 27, anm_kabi32_04 )
+	_OBJ_ANIME_WAIT()
 EVENT_END
 
 //--------------------------------------------------------------------

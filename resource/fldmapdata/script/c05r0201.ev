@@ -33,11 +33,9 @@ _EVENT_DATA_END
 /*  C05R0201 OLDMAN1の会話用イベントスクリプト*/
 /**************************************************************/
 EVENT_START   ev_c05r0201_talkobj_oldman1
-  _TALK_START_SE_PLAY
-	_TURN_HERO_SITE
-	_BALLOONWIN_TALKOBJ_OPEN msg_c05r0201_oldman1_01
-	_AB_KEYWAIT
-  _BALLOONWIN_CLOSE
-  _EVENT_END
-  _END
+  _TALK_OBJ_START()
+	_BALLOONWIN_TALKOBJ_OPEN( msg_c05r0201_oldman1_01 )
+	_AB_KEYWAIT()
+  _BALLOONWIN_CLOSE()
+EVENT_END
 

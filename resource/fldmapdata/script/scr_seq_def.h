@@ -226,6 +226,52 @@ DEF_CMD_COUNT  =  ( DEF_CMD_COUNT + 1 )
   .endm
 
 //======================================================================
+//
+//
+//  イベント開始・終了
+//
+//
+//======================================================================
+//--------------------------------------------------------------
+/**
+ * 通常イベント開始宣言
+ */
+//--------------------------------------------------------------
+  .macro  EVENT_START label
+\label:
+  //_OBJ_PAUSE_ALL()
+  .short  EV_SEQ_OBJ_PAUSE_ALL
+  .endm
+
+//--------------------------------------------------------------
+/**
+ * 通常イベント終了宣言
+ */
+//--------------------------------------------------------------
+  .macro  EVENT_END
+  //_OBJ_PAUSE_CLEAR_ALL()
+  .short  EV_SEQ_OBJ_PAUSE_CLEAR_ALL
+  .short  EV_SEQ_END
+  .endm
+
+//--------------------------------------------------------------
+/**
+ */
+//--------------------------------------------------------------
+  .macro  SP_EVENT_START  label
+\label:
+  .endm
+
+//--------------------------------------------------------------
+/**
+ */
+//--------------------------------------------------------------
+  .macro  SP_EVENT_END
+  .short  EV_SEQ_END
+  .endm
+
+
+//======================================================================
 //  基本コマンド
 //======================================================================
 //--------------------------------------------------------------
@@ -265,11 +311,14 @@ DEF_CMD_COUNT  =  ( DEF_CMD_COUNT + 1 )
  *  @param ret_wk 待ち時間格納先ワークID
  */
 //--------------------------------------------------------------
-  .macro  _TIME_WAIT time,ret_wk
+#define _TIME_WAIT( time,ret_wk ) _ASM_TIME_WAIT time,ret_wk
+
+  .macro  _ASM_TIME_WAIT time, ret_wk
   .short  EV_SEQ_TIME_WAIT
   .short  \time
   .short  \ret_wk
   .endm
+
 
 //--------------------------------------------------------------
 /**
@@ -691,19 +740,11 @@ DEF_CMD_COUNT  =  ( DEF_CMD_COUNT + 1 )
  *  @param num セットするフラグナンバー
  */
 //--------------------------------------------------------------
-  .macro  _FLAG_SET num
+#define   _FLAG_SET( num ) _ASM_FLAG_SET num
+
+  .macro  _ASM_FLAG_SET num
   .short  EV_SEQ_FLAG_SET
   .short  \num
-  .endm
-
-//--------------------------------------------------------------
-/*
- *  _ARRIVE_FLAG_SET 到着フラグセット
- * @param num セットするフラグナンバー
- */
-//--------------------------------------------------------------
-  .macro  _ARRIVE_FLAG_SET num
-  _FLAG_SET  (\num + SYS_FLAG_ARRIVE_START)
   .endm
 
 //--------------------------------------------------------------
@@ -712,18 +753,21 @@ DEF_CMD_COUNT  =  ( DEF_CMD_COUNT + 1 )
  *  @param リセットするフラグナンバー
  */
 //--------------------------------------------------------------
-  .macro  _FLAG_RESET num
+#define _FLAG_RESET( num ) _ASM_FLAG_RESET
+
+  .macro  _ASM_FLAG_RESET
   .short  EV_SEQ_FLAG_RESET
   .short  \num
   .endm
 
+
 //--------------------------------------------------------------
 /**
- *  _FLAG_CHECK フラグチェック
+ *  _ASM_FLAG_CHECK フラグチェック
  *  @param チェックするフラグナンバー
  */
 //--------------------------------------------------------------
-  .macro  _FLAG_CHECK num
+  .macro  _ASM_FLAG_CHECK num
   .short  EV_SEQ_FLAG_CHECK
   .short  \num
   .endm
@@ -736,7 +780,7 @@ DEF_CMD_COUNT  =  ( DEF_CMD_COUNT + 1 )
  */
 //--------------------------------------------------------------
   .macro  _IF_FLAGON_JUMP num,adrs
-  _FLAG_CHECK \num
+  _ASM_FLAG_CHECK \num
   _IF_JUMP  FLGON,\adrs
   .endm
 
@@ -749,7 +793,7 @@ DEF_CMD_COUNT  =  ( DEF_CMD_COUNT + 1 )
 //--------------------------------------------------------------
 
   .macro  _IF_FLAGOFF_JUMP num,adrs
-  _FLAG_CHECK \num
+  _ASM_FLAG_CHECK \num
   _IF_JUMP  FLGOFF,\adrs
   .endm
 
@@ -761,7 +805,7 @@ DEF_CMD_COUNT  =  ( DEF_CMD_COUNT + 1 )
  */
 //--------------------------------------------------------------
   .macro  _IF_FLAGON_CALL num,adrs
-  _FLAG_CHECK \num
+  _ASM_FLAG_CHECK \num
   _IF_CALL  FLGON,\adrs
   .endm
 
@@ -773,7 +817,7 @@ DEF_CMD_COUNT  =  ( DEF_CMD_COUNT + 1 )
  */
 //--------------------------------------------------------------
   .macro  _IF_FLAGOFF_CALL num,adrs
-  _FLAG_CHECK \num
+  _ASM_FLAG_CHECK \num
   _IF_CALL  FLGOFF,\adrs
   .endm
 
@@ -878,7 +922,9 @@ DEF_CMD_COUNT  =  ( DEF_CMD_COUNT + 1 )
  *  @param none
  */
 //--------------------------------------------------------------
-  .macro  _AB_KEYWAIT
+#define _AB_KEYWAIT() _ASM_AB_KEYWAIT
+
+  .macro  _ASM_AB_KEYWAIT
   .short  EV_SEQ_ABKEYWAIT
   .endm
 
@@ -891,7 +937,9 @@ DEF_CMD_COUNT  =  ( DEF_CMD_COUNT + 1 )
  *  @param  msg_id  表示するメッセージID
  */
 //--------------------------------------------------------------
-  .macro  _TALKMSG msg_id
+#define _TALKMSG( msg_id ) _ASM_TALK_MSG msg_id
+
+  .macro  _ASM_TALK_MSG msg_id
   .short  EV_SEQ_TALKMSG
   .byte  \msg_id
   .endm
@@ -902,7 +950,9 @@ DEF_CMD_COUNT  =  ( DEF_CMD_COUNT + 1 )
  *  @param  msg_id  表示するメッセージID
  */
 //--------------------------------------------------------------
-  .macro  _TALKMSG_ALLPUT msg_id
+#define _TALKMSG_ALLPUT( msg_id ) _ASM_TALKMSG_ALLPUT msg_id
+
+  .macro  _ASM_TALKMSG_ALLPUT msg_id
   .short  EV_SEQ_TALKMSG_ALLPUT
   .byte  \msg_id
   .endm
@@ -913,13 +963,13 @@ DEF_CMD_COUNT  =  ( DEF_CMD_COUNT + 1 )
  * @param msg_id 表示するメッセージID
  */
 //--------------------------------------------------------------
-  .macro  _EASY_MSG msg_id
-  _TALK_START_SE_PLAY
-  _TALKWIN_OPEN
-  _TALKMSG_ALLPUT \msg_id
-  _AB_KEYWAIT
-  _TALKWIN_CLOSE
-  .endm
+#define _EASY_MSG( msg_id ) \
+  _TALK_START_SE_PLAY()   ; \
+  _TALKWIN_OPEN()         ; \
+  _TALKMSG_ALLPUT( msg_id ) ; \
+  _AB_KEYWAIT()             ; \
+  _TALKWIN_CLOSE()
+
 
 //--------------------------------------------------------------
 /**
@@ -927,7 +977,9 @@ DEF_CMD_COUNT  =  ( DEF_CMD_COUNT + 1 )
  *  @param none
  */
 //--------------------------------------------------------------
-  .macro  _TALKWIN_OPEN
+#define _TALKWIN_OPEN() _ASM_TALKWIN_OPEN
+
+  .macro  _ASM_TALKWIN_OPEN
   .short  EV_SEQ_TALKWIN_OPEN
   .endm
 
@@ -937,7 +989,9 @@ DEF_CMD_COUNT  =  ( DEF_CMD_COUNT + 1 )
  *  @param none
  */
 //--------------------------------------------------------------
-  .macro  _TALKWIN_CLOSE
+#define _TALKWIN_CLOSE()  _ASM_TALKWIN_CLOSE
+
+  .macro  _ASM_TALKWIN_CLOSE
   .short  EV_SEQ_TALKWIN_CLOSE
   .endm
 
@@ -951,7 +1005,9 @@ DEF_CMD_COUNT  =  ( DEF_CMD_COUNT + 1 )
  *  @param obj_id 吹き出しを出す対象OBJ ID
  */
 //--------------------------------------------------------------
-  .macro  _BALLOONWIN_OBJMSG_OPEN msg_id,obj_id
+#define _BALLOONWIN_OBJMSG_OPEN( msg_id , obj_id ) _ASM_BALLOONWIN_OBJMSG_OPEN msg_id, obj_id
+
+  .macro _ASM_BALLOONWIN_OBJMSG_OPEN msg_id, obj_id
   .short  EV_SEQ_BALLOONWIN_OBJMSG_OPEN
   .byte \msg_id
   .byte \obj_id
@@ -963,7 +1019,9 @@ DEF_CMD_COUNT  =  ( DEF_CMD_COUNT + 1 )
  *  @param msg_id 表示するメッセージID
  */
 //--------------------------------------------------------------
-  .macro  _BALLOONWIN_TALKOBJ_OPEN msg_id
+#define _BALLOONWIN_TALKOBJ_OPEN( msg_id ) _ASM_BALLOONWIN_TALKOBJ_OPEN msg_id
+
+  .macro _ASM_BALLOONWIN_TALKOBJ_OPEN msg_id
   .short  EV_SEQ_BALLOONWIN_TALKOBJ_OPEN
   .byte \msg_id
   .endm
@@ -974,7 +1032,9 @@ DEF_CMD_COUNT  =  ( DEF_CMD_COUNT + 1 )
  *  @param none
  */
 //--------------------------------------------------------------
-  .macro  _BALLOONWIN_CLOSE
+#define _BALLOONWIN_CLOSE() _ASM_BALLOONWIN_CLOSE
+
+  .macro  _ASM_BALLOONWIN_CLOSE
   .short  EV_SEQ_BALLOONWIN_CLOSE
   .endm
 
@@ -984,14 +1044,12 @@ DEF_CMD_COUNT  =  ( DEF_CMD_COUNT + 1 )
  * @param msg_id 表示するメッセージID
  */
 //--------------------------------------------------------------
-  .macro  _EASY_BALLOONWIN_TALKOBJ_MSG msg_id
-  _EVENT_START
-  _TALK_START_SE_PLAY
-  _BALLOONWIN_TALKOBJ_OPEN \msg_id
-  _AB_KEYWAIT
-  _BALLOONWIN_CLOSE
-  _EVENT_END
-  .endm
+#define _EASY_BALLOONWIN_TALKOBJ_MSG( msg_id )  \
+  _TALK_START_SE_PLAY()               ; \
+  _TURN_HERO_SITE()                   ; \
+  _BALLOONWIN_TALKOBJ_OPEN( msg_id )  ; \
+  _AB_KEYWAIT()                       ; \
+  _BALLOONWIN_CLOSE()
 
 //======================================================================
 //  動作モデル
@@ -1029,9 +1087,11 @@ DEF_CMD_COUNT  =  ( DEF_CMD_COUNT + 1 )
  *  _OBJ_PAUSE_ALLをもう一度呼ばないといけない！
  */
 //--------------------------------------------------------------
-  .macro  _OBJ_ANIME  obj_id,adrs
+#define _OBJ_ANIME( obj_id, adrs ) _ASM_OBJ_ANIME obj_id, adrs
+
+  .macro  _ASM_OBJ_ANIME obj_id, adrs
   .short  EV_SEQ_OBJ_ANIME
-  .short  \obj_id
+  .short  \obj_id 
   .long  ((\adrs-.)-4)
   .endm
 
@@ -1041,7 +1101,9 @@ DEF_CMD_COUNT  =  ( DEF_CMD_COUNT + 1 )
  *  @param none
  */
 //--------------------------------------------------------------
-  .macro  _OBJ_ANIME_WAIT
+#define _OBJ_ANIME_WAIT() _ASM_OBJ_ANIME_WAIT
+
+  .macro  _ASM_OBJ_ANIME_WAIT
   .short  EV_SEQ_OBJ_ANIME_WAIT
   .endm
   
@@ -1052,11 +1114,14 @@ DEF_CMD_COUNT  =  ( DEF_CMD_COUNT + 1 )
  *  @param obj_id 動作コードを取得するOBJ ID
  */
 //--------------------------------------------------------------
-  .macro  _MOVE_CODE_GET  ret_wk,obj_id
-  .short  EV_SEQ_MOVE_CODE_GET
+#define  _MOVE_CODE_GET(  ret_wk,obj_id ) _ASM_MOVE_CODE_GET ret_wk, obj_id
+
+  .macro  _ASM_MOVE_CODE_GET  ret_wk, obj_id
+  .short  EV_SEQ_MOVE_CODE_GET 
   .short  \ret_wk
   .short  \obj_id
   .endm
+
 
 //--------------------------------------------------------------
 /**
@@ -1066,12 +1131,14 @@ DEF_CMD_COUNT  =  ( DEF_CMD_COUNT + 1 )
  * @param z Z座標格納先
  */
 //--------------------------------------------------------------
-   .macro  _OBJ_POS_GET  obj_id,x,z
+#define _OBJ_POS_GET( obj_id,x,z ) _ASM_OBJ_POS_GET obj_id, x, z
+
+  .macro  _ASM_OBJ_POS_GET  obj_id, x, z
   .short  EV_SEQ_OBJ_POS_GET
-  .short  \obj_id
+  .short  \obj_id 
   .short  \x
   .short  \z
-  .endm 
+  .endm
 
 //--------------------------------------------------------------
 /**
@@ -1080,11 +1147,14 @@ DEF_CMD_COUNT  =  ( DEF_CMD_COUNT + 1 )
  * @param z Z座標格納先
  */
 //--------------------------------------------------------------
-  .macro  _PLAYER_POS_GET  x,z
+#define _PLAYER_POS_GET( x, z ) _ASM_PLAYER_POS_GET x, z
+
+  .macro  _ASM_PLAYER_POS_GET x, z
   .short  EV_SEQ_PLAYER_POS_GET
   .short  \x
   .short  \z
   .endm
+
  
 //--------------------------------------------------------------
 /**
@@ -1097,7 +1167,9 @@ DEF_CMD_COUNT  =  ( DEF_CMD_COUNT + 1 )
  * @param move 動作コードMV_RND等
  */
 //--------------------------------------------------------------
-  .macro _OBJ_ADD x,z,dir,id,code,move
+#define _OBJ_ADD( x,z,dir,id,code,move ) _ASM_OBJ_ADD x, z, dir, id, code, move
+
+.macro _ASM_OBJ_ADD x, z, dir, id, code, move
   .short EV_SEQ_OBJ_ADD
   .short \x
   .short \z
@@ -1105,7 +1177,8 @@ DEF_CMD_COUNT  =  ( DEF_CMD_COUNT + 1 )
   .short \id
   .short \code
   .short \move
-  .endm
+.endm
+
  
 //--------------------------------------------------------------
 /**
@@ -1113,10 +1186,12 @@ DEF_CMD_COUNT  =  ( DEF_CMD_COUNT + 1 )
  * @param id 削除するOBJ ID
  */
 //--------------------------------------------------------------
-  .macro _OBJ_DEL id
+#define _OBJ_DEL( id ) _ASM_OBJ_DEL id
+
+.macro  _ASM_OBJ_DEL id
   .short EV_SEQ_OBJ_DEL
   .short \id
-  .endm
+.endm
  
 //--------------------------------------------------------------
 /**
@@ -1150,21 +1225,12 @@ DEF_CMD_COUNT  =  ( DEF_CMD_COUNT + 1 )
  *  @param none
  */
 //--------------------------------------------------------------
-  .macro  _OBJ_PAUSE_ALL
+#define _OBJ_PAUSE_ALL()  _ASM_OBJ_PAUSE_ALL
+
+  .macro  _ASM_OBJ_PAUSE_ALL
   .short  EV_SEQ_OBJ_PAUSE_ALL
   .endm
 
-//--------------------------------------------------------------
-/**
- *  _TALK_OBJ_PAUSE_ALL OBJ会話イベント用　動作停止
- *  @param none
- */
-//--------------------------------------------------------------
-#if 0
-  .macro  _TALK_OBJ_PAUSE_ALL
-  .short  EV_SEQ_TALK_OBJ_PAUSE_ALL
-  .endm
-#endif
 
 //--------------------------------------------------------------
 /**
@@ -1172,9 +1238,12 @@ DEF_CMD_COUNT  =  ( DEF_CMD_COUNT + 1 )
  *  @param none
  */
 //--------------------------------------------------------------
-  .macro  _OBJ_PAUSE_CLEAR_ALL
+#define _OBJ_PAUSE_CLEAR_ALL()  _ASM_OBJ_PAUSE_CLEAR_ALL
+
+  .macro  _ASM_OBJ_PAUSE_CLEAR_ALL
   .short  EV_SEQ_OBJ_PAUSE_CLEAR_ALL
   .endm
+
 
 //--------------------------------------------------------------
 /**
@@ -1182,118 +1251,11 @@ DEF_CMD_COUNT  =  ( DEF_CMD_COUNT + 1 )
  *  @param none
  */
 //--------------------------------------------------------------
-  .macro  _TURN_HERO_SITE
-  .short  EV_SEQ_OBJ_TURN
-  .endm
+#define _TURN_HERO_SITE() _ASM_TURN_HERO_SITE
 
-//--------------------------------------------------------------
-/**
- *  _TALK_OBJ_START OBJに対して話し掛け開始(主人公に対して振り向き有り)
- *  @param none
- */
-//--------------------------------------------------------------
-#if 0
-  .macro _TALK_OBJ_START
-//  _SE_PLAY SEQ_SE_DP_SELECT
-//  _SE_PLAY SEQ_SE_DP_SELECT11
-//  _SE_PLAY SEQ_SE_DP_TALK2
-  _OBJ_PAUSE_ALL
-  _TURN_HERO_SITE
-  .endm
-#endif
-
-  .macro  EVENT_START label
-\label:
-  _OBJ_PAUSE_ALL
-  .endm
-
-  .macro  EVENT_END
-  _OBJ_PAUSE_CLEAR_ALL
-  .short  EV_SEQ_END
-  .endm
-
-#define _TALK_START() \
-    _TALK_START_SE_PLAY ; \
-    _TURN_HERO_SITE
-
-#define _TALK_START_TURN_NOT() \
-    _TALK_START_SE_PLAY
-
-#if 0
-//--------------------------------------------------------------
-/**
- *  _EVENT_START POS,SCENE_CHANGE_LABELに対して開始
- *  (TALK_STARTを使用すると、会話開始の音がなってしまうので分けた)
- *  @param none
- */
-//--------------------------------------------------------------
-  .macro  _EVENT_START
-  _OBJ_PAUSE_ALL
-  .endm
-
-//--------------------------------------------------------------
-/*
- *  _EVENT_START_TALKOBJ OBJ会話イベント開始。
- *  会話開始用SEを再生し、OBJを自機に向かせます。
- *  @param none
- */  
-//--------------------------------------------------------------
-  .macro  _EVENT_TALK_START
-  _EVENT_START
-  _TALK_START_SE_PLAY
-  _TURN_HERO_SITE
-  .endm
- 
-//--------------------------------------------------------------
-/*
- *  _EVENT_START_TALKOBJ OBJ会話イベント開始。
- *  会話開始用SEを再生します。振り向きはありません
- *  @param none
- */  
-//--------------------------------------------------------------
-  .macro  _EVENT_TALK_START_TURN_NOT
-  _EVENT_START
-  _TALK_START_SE_PLAY
-  .endm
-
-#endif
-
-//--------------------------------------------------------------
-/**
- *  _EVENT_END POS,SCENE_CHANGE_LABELに対して終了
- *  @param none
- */
-//--------------------------------------------------------------
-  .macro  _EVENT_END
-  _OBJ_PAUSE_CLEAR_ALL
-  .endm
-
-//--------------------------------------------------------------
-/**
- *  _TALK_OBJ_START_TURN_NOT OBJに対して話し掛け開始
- *  (主人公に対して振り向き無し)
- *  @param none
- */
-//--------------------------------------------------------------
-#if 0
-  .macro  _TALK_OBJ_START_TURN_NOT
-//  _SE_PLAY SEQ_SE_DP_SELECT
-//  _SE_PLAY SEQ_SE_DP_SELECT11
-  _OBJ_PAUSE_ALL
-  .endm
-#endif
-
-//--------------------------------------------------------------
-/**
- *  _TALK_OBJ_END OBJに対して話し掛け終了
- *  @param none
- */
-//--------------------------------------------------------------
-#if 0
-  .macro  _TALK_OBJ_END
-  _OBJ_PAUSE_CLEAR_ALL
-  .endm
-#endif
+.macro  _ASM_TURN_HERO_SITE
+.short  EV_SEQ_OBJ_TURN
+.endm
 
 //======================================================================
 // switch関連
@@ -1361,7 +1323,9 @@ DEF_CMD_COUNT  =  ( DEF_CMD_COUNT + 1 )
  *  @param ret_wk はい、いいえ選択結果格納先
  */
 //--------------------------------------------------------------
-  .macro  _YES_NO_WIN ret_wk
+#define _YES_NO_WIN( ret_wk ) _ASM_YES_NO_WIN ret_wk
+
+  .macro  _ASM_YES_NO_WIN ret_wk
   .short  EV_SEQ_YES_NO_WIN
   .short  \ret_wk
   .endm
@@ -1375,9 +1339,11 @@ DEF_CMD_COUNT  =  ( DEF_CMD_COUNT + 1 )
  *  @param idx セットするタグナンバー
  */
 //--------------------------------------------------------------
-  .macro  _PLAYER_NAME  idx
+#define _PLAYER_NAME( idx ) _ASM_PLAYER_NAME idx
+
+  .macro  _ASM_PLAYER_NAME idx
   .short  EV_SEQ_PLAYER_NAME
-  .byte  \idx
+  .byte   \idx
   .endm
 
 //======================================================================
@@ -1802,10 +1768,13 @@ DEF_CMD_COUNT  =  ( DEF_CMD_COUNT + 1 )
  *  @param no 再生するSEナンバー
  */
 //-------------------------------------------------------------
-  .macro  _SE_PLAY no
-  .short  EV_SEQ_SE_PLAY
-  .short  \no
-  .endm
+#define   _SE_PLAY( no )  \
+    _ASM_SE_PLAY no
+
+.macro  _ASM_SE_PLAY  no
+.short  EV_SEQ_SE_PLAY
+.short  \no
+.endm
 
 //--------------------------------------------------------------
 /**
@@ -1813,19 +1782,23 @@ DEF_CMD_COUNT  =  ( DEF_CMD_COUNT + 1 )
  *  @param none
  */
 //--------------------------------------------------------------
-  .macro  _SE_STOP
+#define   _SE_STOP() \
   .short  EV_SEQ_SE_STOP
-  .endm
 
+.macro  _ASM_SE_STOP
+.short  EV_SEQ_SE_STOP
+.endm
 //--------------------------------------------------------------
 /**
  *  _SE_WAIT SE終了待ち
  *  @param none
  */
 //--------------------------------------------------------------
-  .macro  _SE_WAIT
-  .short  EV_SEQ_SE_WAIT
-  .endm
+#define   _SE_WAIT()  _ASM_SE_WAIT
+
+.macro  _ASM_SE_WAIT
+.short  EV_SEQ_SE_WAIT
+.endm
 
 //======================================================================
 //  サウンド ME
@@ -1836,10 +1809,12 @@ DEF_CMD_COUNT  =  ( DEF_CMD_COUNT + 1 )
  *  @param no 再生するBGMナンバー
  */
 //--------------------------------------------------------------
-  .macro  _ME_PLAY no
+#define _ME_PLAY( no ) _ASM_ME_PLAY no
+
+.macro  _ASM_ME_PLAY  no
   .short  EV_SEQ_ME_PLAY
   .short  \no
-  .endm
+.endm
 
 //--------------------------------------------------------------
 /**
@@ -1847,9 +1822,11 @@ DEF_CMD_COUNT  =  ( DEF_CMD_COUNT + 1 )
  *  @param none
  */
 //--------------------------------------------------------------
-  .macro  _ME_WAIT
+#define _ME_WAIT() _ASM_ME_WAIT
+
+.macro  _ASM_ME_WAIT
   .short  EV_SEQ_ME_WAIT
-  .endm
+.endm
 
 //======================================================================
 //  メニュー
@@ -1937,7 +1914,9 @@ DEF_CMD_COUNT  =  ( DEF_CMD_COUNT + 1 )
  *  @param speed フェードスピード 0～
  */
 //--------------------------------------------------------------
-  .macro _DISP_FADE_START mode,start_evy,end_evy,speed
+#define _DISP_FADE_START( mode,start_evy,end_evy,speed ) _ASM_DISP_FADE_START mode,start_evy,end_evy,speed
+
+  .macro  _ASM_DISP_FADE_START mode,start_evy,end_evy,speed
   .short EV_SEQ_DISP_FADE_START
   .short \mode
   .short \start_evy
@@ -1945,15 +1924,19 @@ DEF_CMD_COUNT  =  ( DEF_CMD_COUNT + 1 )
   .short \speed
   .endm
 
+
 //--------------------------------------------------------------
 /**
  *  _DISP_FADE_START 画面フェード終了チェック
  *  @param none
  */
 //--------------------------------------------------------------
-  .macro _DISP_FADE_END_CHECK
+#define _DISP_FADE_END_CHECK()  _ASM_DISP_FADE_END_CHECK
+
+  .macro  _ASM_DISP_FADE_END_CHECK
   .short EV_SEQ_DISP_FADE_CHECK
   .endm
+
 
 //--------------------------------------------------------------
 /**
@@ -1961,9 +1944,7 @@ DEF_CMD_COUNT  =  ( DEF_CMD_COUNT + 1 )
  *  @param speed フェードスピード 0～
  */
 //--------------------------------------------------------------
-  .macro _WHITE_OUT speed
-  _DISP_FADE_START DISP_FADE_WHITEOUT_MAIN,0,16,\speed
-  .endm
+#define _WHITE_OUT( speed ) _DISP_FADE_START( DISP_FADE_WHITEOUT_MAIN,0,16,speed )
 
 //--------------------------------------------------------------
 /**
@@ -1971,9 +1952,7 @@ DEF_CMD_COUNT  =  ( DEF_CMD_COUNT + 1 )
  *  @param speed フェードスピード 0～
  */
 //--------------------------------------------------------------
-  .macro _WHITE_IN speed
-  _DISP_FADE_START DISP_FADE_WHITEOUT_MAIN,16,0,\speed
-  .endm
+#define _WHITE_IN( speed ) _DISP_FADE_START( DISP_FADE_WHITEOUT_MAIN,16,0,speed )
 
 //--------------------------------------------------------------
 /**
@@ -1981,9 +1960,7 @@ DEF_CMD_COUNT  =  ( DEF_CMD_COUNT + 1 )
  *  @param speed フェードスピード 0～
  */
 //--------------------------------------------------------------
-  .macro _BLACK_OUT speed
-  _DISP_FADE_START DISP_FADE_BLACKOUT_MAIN,0,16,\speed
-  .endm
+#define _BLACK_OUT( speed ) _DISP_FADE_START( DISP_FADE_BLACKOUT_MAIN,0,16,speed )
 
 //--------------------------------------------------------------
 /**
@@ -1991,9 +1968,7 @@ DEF_CMD_COUNT  =  ( DEF_CMD_COUNT + 1 )
  *  @param speed フェードスピード 0～
  */
 //--------------------------------------------------------------
-  .macro _BLACK_IN speed
-  _DISP_FADE_START DISP_FADE_BLACKOUT_MAIN,16,0,\speed
-  .endm
+#define _BLACK_IN( speed ) _DISP_FADE_START( DISP_FADE_BLACKOUT_MAIN,16,0,speed )
 
 //======================================================================
 //  会話イベント関連
@@ -2004,9 +1979,27 @@ DEF_CMD_COUNT  =  ( DEF_CMD_COUNT + 1 )
  *  @param none
  */
 //--------------------------------------------------------------
-  .macro _TALK_START_SE_PLAY
-  _SE_PLAY SEQ_SE_DP_SELECT
+#define _TALK_START_SE_PLAY() _ASM_TALK_START_SE_PLAY
+
+  .macro  _ASM_TALK_START_SE_PLAY
+  _ASM_SE_PLAY( SEQ_SE_DP_SELECT )
   .endm
+
+//--------------------------------------------------------------
+/**
+ *  _TALK_OBJ_START OBJに対して話し掛け開始(主人公に対して振り向き有り)
+ *  @param none
+ */
+//--------------------------------------------------------------
+#define _TALK_OBJ_START() _ASM_TALK_OBJ_START
+
+.macro  _ASM_TALK_OBJ_START
+    _ASM_TALK_START_SE_PLAY
+    _ASM_TURN_HERO_SITE
+.endm
+
+#define _TALK_START_TURN_NOT() _TALK_START_SE_PLAY()
+
 
 //======================================================================
 //  ミュージカル関連
@@ -2017,9 +2010,12 @@ DEF_CMD_COUNT  =  ( DEF_CMD_COUNT + 1 )
  *  @param none
  */
 //--------------------------------------------------------------
-  .macro _MUSICAL_CALL
+#define _MUSICAL_CALL() _ASM_MUSICAL_CALL
+
+  .macro  _ASM_MUSICAL_CALL
   .short EV_SEQ_MUSICAL_CALL
   .endm
+
 
 //======================================================================
 //  その他
@@ -2030,9 +2026,12 @@ DEF_CMD_COUNT  =  ( DEF_CMD_COUNT + 1 )
  *  @param none
  */
 //--------------------------------------------------------------
-  .macro  _CHG_LANGID
+#define   _CHG_LANGID() _ASM_CHG_LANGID
+
+  .macro  _ASM_CHG_LANGID
   .short  EV_SEQ_CHG_LANGID
   .endm
+
 
 //--------------------------------------------------------------
 /*
@@ -2041,9 +2040,15 @@ DEF_CMD_COUNT  =  ( DEF_CMD_COUNT + 1 )
  *  @param num 乱数上限値
  */
 //--------------------------------------------------------------
-   .macro  _GET_RND ret_wk,num
+#define _GET_RND( ret_wk, num ) _ASM_GET_RND ret_wk, num
+
+  .macro  _ASM_GET_RND ret_wk, num
   .short  EV_SEQ_GET_RND
   .short  \ret_wk
   .short  \num
   .endm
 
+//======================================================================
+//======================================================================
+#if 0
+#endif

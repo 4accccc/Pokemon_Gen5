@@ -24,20 +24,20 @@ EVENT_END
 //  ジョーイ
 /********************************************************************/
 EVENT_START   ev_heal_p01
-  _TALK_START_SE_PLAY
-	_BALLOONWIN_TALKOBJ_OPEN msg_common_pc_heal_01
-	_AB_KEYWAIT
- 	_BALLOONWIN_CLOSE
+  _TALK_START_SE_PLAY()
+	_BALLOONWIN_TALKOBJ_OPEN( msg_common_pc_heal_01 )
+	_AB_KEYWAIT()
+ 	_BALLOONWIN_CLOSE()
 EVENT_END
 
 /********************************************************************/
 //  ショップ「いらっしゃい」
 /********************************************************************/
 EVENT_START   ev_shop_start_talk
-  _TALK_START_SE_PLAY
-	_BALLOONWIN_TALKOBJ_OPEN msg_shop_01
-	_AB_KEYWAIT
- 	_BALLOONWIN_CLOSE
+  _TALK_START_SE_PLAY()
+	_BALLOONWIN_TALKOBJ_OPEN( msg_shop_01 )
+	_AB_KEYWAIT()
+ 	_BALLOONWIN_CLOSE()
 /*
 	_CHG_LOCAL_SCR	//ローカルスクリプトに切り替え
 */

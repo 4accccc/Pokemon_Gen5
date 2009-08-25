@@ -33,13 +33,12 @@ _EVENT_DATA_END
 /*  T01R0202 PCのBG用イベントスクリプト*/
 /**************************************************************/
 EVENT_START   ev_t01r0202_pc
-  _TALK_START_SE_PLAY
+  _TALK_START_SE_PLAY()
   
-  _PLAYER_NAME 0 //プレイヤー名を反映
-  _TALKWIN_OPEN
-  _TALKMSG msg_t01r0202_pc_01
-  _AB_KEYWAIT
-  _TALKWIN_CLOSE
+  _PLAYER_NAME( 0 ) //プレイヤー名を反映
+  _TALKWIN_OPEN()
+  _TALKMSG(msg_t01r0202_pc_01)
+  _AB_KEYWAIT()
+  _TALKWIN_CLOSE()
   
-  _EVENT_END
-  _END
+EVENT_END

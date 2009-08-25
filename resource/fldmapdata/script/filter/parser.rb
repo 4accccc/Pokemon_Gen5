@@ -16,7 +16,7 @@ module PmScript
 
   class Parser < Racc::Parser
 
-module_eval <<'..end sp4.y modeval..id843ad7301a', 'sp4.y', 444
+module_eval <<'..end sp4.y modeval..id612306f327', 'sp4.y', 444
 
 def initialize
 end
@@ -103,15 +103,22 @@ def parse( f )
 					else
 						pushq [ :IDENT, $& ]
 					end
+
 				when /\A\\[a-zA-Z_][a-zA-Z0-9_]*/
+          # \から始まる識別子はアセンブラマクロパラメータ
 					pushq [ :MACPARAM, $& ]
+
 				when /\A==/,/\A!=/,/\A\<=/,/\A\>=/,/\A>/,/\A</
+          # 比較演算子
 					pushq [ $&, $& ]
+
 				when /\A\/\*.*/
           #C形式コメント開始
 					pushq [ :COMMENT, $& ]
 					@incomment = true
+
 				when /\A[\+\-\*\/=(){},]/
+          #演算子、カッコなどの記号
 					pushq [ $&, $& ]
 				else
 					raise RuntimeError, "#{@fname}:#{@nowlineno}: fatal error! \{#{line_org}\}"
@@ -153,7 +160,7 @@ def on_error( t, v, values )
   end
 
 
-..end sp4.y modeval..id843ad7301a
+..end sp4.y modeval..id612306f327
 
 ##### racc 1.4.5 generates ###
 
@@ -817,14 +824,14 @@ module_eval <<'.,.,', 'sp4.y', 344
 
 module_eval <<'.,.,', 'sp4.y', 348
   def _reduce_54( val, _values, result )
-						result = [val[0],val[2]]
+						result = [val[0], ['('] + val[2] + [')'] ]
    result
   end
 .,.,
 
 module_eval <<'.,.,', 'sp4.y', 352
   def _reduce_55( val, _values, result )
-            result = [ val[0], nil ]
+            result = [ val[0], "()" ]
    result
   end
 .,.,

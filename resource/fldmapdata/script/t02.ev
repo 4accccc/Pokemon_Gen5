@@ -45,19 +45,18 @@ _EVENT_DATA_END
 //  BABYGIRL1_1 話し掛け
 //--------------------------------------------------------------
 EVENT_START   ev_t02_babygirl1_1
-  _TALK_START_SE_PLAY
-	_TURN_HERO_SITE
-	_BALLOONWIN_TALKOBJ_OPEN msg_t01_babygirl1_01
-	_AB_KEYWAIT
-	_BALLOONWIN_CLOSE
+  _TALK_OBJ_START()
+	_BALLOONWIN_TALKOBJ_OPEN( msg_t01_babygirl1_01 )
+	_AB_KEYWAIT()
+	_BALLOONWIN_CLOSE()
 /*
-	_OBJ_ANIME T02_BABYGIRL1_1,test01anime
+	_OBJ_ANIME( T02_BABYGIRL1_1,test01anime )
 	_OBJ_ANIME_WAIT
 
-	_TURN_HERO_SITE
-	_BALLOONWIN_TALKOBJ_OPEN msg_t01_babygirl1_02
-	_AB_KEYWAIT
-	_BALLOONWIN_CLOSE
+	_TURN_HERO_SITE()
+	_BALLOONWIN_TALKOBJ_OPEN( msg_t01_babygirl1_02 )
+	_AB_KEYWAIT()
+	_BALLOONWIN_CLOSE()
 */
 EVENT_END
 
@@ -65,44 +64,40 @@ EVENT_END
 //  WOMAN1_1 話し掛け
 //--------------------------------------------------------------
 EVENT_START   ev_t02_talkobj_woman1
-  _TALK_START_SE_PLAY
-	_TURN_HERO_SITE
-	_BALLOONWIN_TALKOBJ_OPEN msg_t01_woman1_01
-	_AB_KEYWAIT
-  _BALLOONWIN_CLOSE
+  _TALK_OBJ_START()
+	_BALLOONWIN_TALKOBJ_OPEN( msg_t01_woman1_01 )
+	_AB_KEYWAIT()
+  _BALLOONWIN_CLOSE()
 EVENT_END
 
 //--------------------------------------------------------------
 //  OLDMAN1_1 話し掛け
 //--------------------------------------------------------------
 EVENT_START   ev_t02_oldman1_1
-  _TALK_START_SE_PLAY
-	_TURN_HERO_SITE
-	_BALLOONWIN_TALKOBJ_OPEN msg_t01_oldman1_01
-	_AB_KEYWAIT
-  _BALLOONWIN_CLOSE
+  _TALK_OBJ_START()
+	_BALLOONWIN_TALKOBJ_OPEN( msg_t01_oldman1_01 )
+	_AB_KEYWAIT()
+  _BALLOONWIN_CLOSE()
 EVENT_END
 
 //--------------------------------------------------------------
 //  OLDWOMAN1_1 話し掛け
 //--------------------------------------------------------------
 EVENT_START   ev_t02_oldwoman1_1
-  _TALK_START_SE_PLAY
-	_TURN_HERO_SITE
-	_BALLOONWIN_TALKOBJ_OPEN msg_t01_oldwoman1_01
-	_AB_KEYWAIT
-  _BALLOONWIN_CLOSE
+  _TALK_OBJ_START()
+	_BALLOONWIN_TALKOBJ_OPEN( msg_t01_oldwoman1_01 )
+	_AB_KEYWAIT()
+  _BALLOONWIN_CLOSE()
 EVENT_END
 
 /**************************************************************/
 /*  T02 BIGMANの会話用イベントスクリプト*/
 /**************************************************************/
 EVENT_START   ev_t02_talkobj_bigman
-  _TALK_START_SE_PLAY
-	_TURN_HERO_SITE
-	_BALLOONWIN_TALKOBJ_OPEN msg_t01_bigman_01
-	_AB_KEYWAIT
-  _BALLOONWIN_CLOSE
+  _TALK_OBJ_START()
+	_BALLOONWIN_TALKOBJ_OPEN( msg_t01_bigman_01 )
+	_AB_KEYWAIT()
+  _BALLOONWIN_CLOSE()
 EVENT_END
 
 //--------------------------------------------------------------
