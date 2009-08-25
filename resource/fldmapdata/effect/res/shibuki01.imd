@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="Shift_JIS"?>
+
+<imd version="1.6.0">
+
+<head>
+	<create user="fuchino" host="W00152" date="2009-08-19T15:41:21" source="shibuki01.mb"/>
+	<title>Model Data for NINTENDO NITRO-System</title>
+	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
+</head>
+
+<body>
+
+<original_create user="fuchino" host="W00152" date="2009-08-19T15:41:21" source="shibuki01.mb"/>
+<original_generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
+
+<model_info
+	pos_scale="3"
+	scaling_rule="standard"
+	vertex_style="direct"
+	magnify="1.000000"
+	tool_start_frame="1"
+	tex_matrix_mode="maya"
+	compress_node="merge" node_size="2 1"
+	compress_material="on" material_size="1 1"
+	output_texture="used"
+	force_full_weight="off"
+	use_primitive_strip="on"
+/>
+
+<box_test pos_scale="3" xyz="-1.500000 0.000000 0.000000" whd="3.000000 1.500000 6.000000"/>
+
+<tex_image_array size="1">
+	<tex_image index="0" name="shibuki01"
+		width="32" height="32" original_width="32" original_height="32"
+		format="palette4"
+		color0_mode="transparency"
+		palette_name="shibuki01_pl"
+		path="C:/home/wb_data3d/build_model/outdoor/shibuki01/tex/shibuki01.tga"
+	>
+		<bitmap size="128">
+			0be0 2a80 3e00 00ff 03f0 aaa8 3c02 03ff
+			82f8 aaaa 382a 0fff a2fc 802a 38aa 2abf
+			bafc 0002 3ae8 0abf bff8 0000 3fe0 0aff
+			2ff0 1540 3f80 03ff 0bf0 5554 3e01 0fff
+			4fe0 4015 3f15 2eff 6fc0 0001 3f90 abff
+			1bc0 1a40 3e40 8fff 0b84 aaa4 3e01 00bf
+			4f00 a5aa 3f1a 00bf af10 0006 3fa9 03ff
+			af80 0000 3fa0 a3ff 2bc0 0000 3e80 a0ff
+			0be0 1540 3e00 03ff 03f0 5554 3c01 0fff
+			42f8 5055 3815 3fbf 52fe 0005 3855 3fff
+			5afe 0000 3a50 f0ff 1bf8 0000 3e40 c3ef
+			2bb0 2a80 3e80 0ebf 0eb0 aaa8 3b02 0abf
+			8ee0 802a 3b2a 00ff afc0 0002 3fa0 3caf
+			2bc0 2a80 3e80 3caf 0b94 aaa8 3e02 02ff
+			8f14 aaaa 3f2a 03ff af00 000a 3faa 0fef
+			bf80 0000 3fe0 2f2b 2fc0 0000 3f80 000f
+		</bitmap>
+	</tex_image>
+</tex_image_array>
+
+<tex_palette_array size="1">
+	<tex_palette index="0" name="shibuki01_pl" color_size="4">
+		5222 6f22 7790 7ffb
+	</tex_palette>
+</tex_palette_array>
+
+<material_array size="1">
+	<material index="0" name="shibuki01_lm1"
+		light0="on" light1="off" light2="off" light3="off"
+		face="both"
+		alpha="31"
+		wire_mode="off"
+		polygon_mode="modulate"
+		polygon_id="0"
+		fog_flag="on"
+		depth_test_decal="off"
+		translucent_update_depth="off"
+		render_1_pixel="off"
+		far_clipping="off"
+		diffuse="25 25 25"
+		ambient="31 31 31"
+		specular="0 0 0"
+		emission="0 0 0"
+		shininess_table_flag="off"
+		tex_image_idx="0" tex_palette_idx="0"
+		tex_tiling="clamp repeat"
+		tex_scale="1.000000 1.000000"
+		tex_rotate="0.000000"
+		tex_translate="0.000000 0.000000"
+		tex_gen_mode="none"
+	/>
+</material_array>
+
+<matrix_array size="1">
+	<matrix index="0" mtx_weight="1" node_idx="0"/>
+</matrix_array>
+
+<polygon_array size="1">
+	<polygon index="0" name="polygon0"
+		vertex_size="18" polygon_size="5"
+		triangle_size="0" quad_size="5"
+		volume_min="-1.500000 0.000000 0.000000"
+		volume_max="1.500000 1.500000 6.000000"
+		volume_r="6.189697"
+		mtx_prim_size="1"
+		nrm_flag="on" clr_flag="off" tex_flag="on"
+	>
+		<mtx_prim index="0">
+			<mtx_list size="1">0</mtx_list>
+			<primitive_array size="2">
+				<primitive index="0" type="quad_strip" vertex_size="6">
+					<mtx idx="0"/>
+					<tex st="22.000000 32.000000"/>
+					<nrm xyz="0.000000 0.998047 0.000000"/>
+					<pos_xyz xyz="0.712402 0.000000 4.000000"/>
+					<tex st="22.000000 0.000000"/>
+					<pos_xz xz="0.375000 0.000000"/>
+					<tex st="4.000000 32.000000"/>
+					<pos_xz xz="-0.712402 4.000000"/>
+					<tex st="4.000000 0.000000"/>
+					<pos_xz xz="-0.375000 0.000000"/>
+					<tex st="0.000000 32.000000"/>
+					<pos_xz xz="-1.500000 5.000000"/>
+					<tex st="0.000000 0.000000"/>
+					<pos_xz xz="-0.750000 1.000000"/>
+				</primitive>
+				<primitive index="1" type="quads" vertex_size="12">
+					<tex st="25.000000 32.000000"/>
+					<pos_xz xz="0.712402 4.000000"/>
+					<tex st="25.000000 0.000000"/>
+					<pos_xz xz="0.375000 0.000000"/>
+					<tex st="32.000000 0.000000"/>
+					<pos_s xyz="0.250000 0.500000 1.000000"/>
+					<tex st="32.000000 32.000000"/>
+					<pos_yz yz="1.500000 6.000000"/>
+					<tex st="25.000000 32.000000"/>
+					<pos_xyz xyz="-0.712402 0.000000 4.000000"/>
+					<tex st="32.000000 32.000000"/>
+					<pos_s xyz="-0.250000 1.500000 6.000000"/>
+					<tex st="32.000000 0.000000"/>
+					<pos_yz yz="0.500000 1.000000"/>
+					<tex st="25.000000 0.000000"/>
+					<pos_s xyz="-0.375000 0.000000 0.000000"/>
+					<tex st="4.000000 0.000000"/>
+					<pos_xy xy="0.375000 0.000000"/>
+					<tex st="4.000000 32.000000"/>
+					<pos_xz xz="0.712402 4.000000"/>
+					<tex st="0.000000 32.000000"/>
+					<pos_xz xz="1.500000 5.000000"/>
+					<tex st="0.000000 0.000000"/>
+					<pos_xz xz="0.750000 1.000000"/>
+				</primitive>
+			</primitive_array>
+		</mtx_prim>
+	</polygon>
+</polygon_array>
+
+<node_array size="1">
+	<node index="0" name="shibuki_s" kind="mesh"
+		parent="-1"
+		child="-1"
+		brother_next="-1"
+		brother_prev="-1"
+		draw_mtx="on"
+		billboard="off"
+		scale="1.000000 1.000000 1.000000"
+		rotate="0.000000 0.000000 0.000000"
+		translate="0.000000 0.000000 0.000000"
+		visibility="on"
+		display_size="1"
+		vertex_size="18" polygon_size="5"
+		triangle_size="0" quad_size="5"
+		volume_min="-1.500000 0.000000 0.000000"
+		volume_max="1.500000 1.500000 6.000000"
+		volume_r="6.189697"
+	>
+		<display index="0" material="0" polygon="0" priority="0"/>
+	</node>
+</node_array>
+
+<output_info vertex_size="18" polygon_size="5"
+	triangle_size="0" quad_size="5"/>
+
+</body>
+
+</imd>
