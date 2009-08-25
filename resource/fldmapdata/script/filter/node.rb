@@ -28,12 +28,18 @@ module PmScript
 			@ftable = Hash.new
 		end
 
+    #---------------------------------------------
+    # ローカルラベル取得
+    #---------------------------------------------
 		def get_label
 			label = sprintf("LABEL%05d", @label_count)
 			@label_count += 1
 			label
 		end
 
+    #---------------------------------------------
+    # 変数定義
+    #---------------------------------------------
 		def define_var( varname )
 			if @lvar_stack.has_key? varname then
 				raise CompileError, "#{@fname}:#{@lineno}: same var name define #{varname}"
@@ -42,6 +48,9 @@ module PmScript
 			@lvar_count += 1
 		end
 
+    #---------------------------------------------
+    # 変数参照
+    #---------------------------------------------
 		def ref_var( varname )
 			unless @lvar_stack.has_key? varname then
 				return nil
@@ -49,6 +58,9 @@ module PmScript
 			@lvar_stack[varname]
 		end
 
+    #---------------------------------------------
+    # 変数削除
+    #---------------------------------------------
 		def remove_var( value )
 			idx = @lvar_stack.index(value)
 			if idx == nil then
@@ -58,10 +70,14 @@ module PmScript
 			@lvar_count -= 1
 		end
 
+    #---------------------------------------------
+    #---------------------------------------------
 		def get_lvar_stack_count
 			@lvar_count
 		end
 
+    #---------------------------------------------
+    #---------------------------------------------
 		def define_func(funcname, argc)
 			if @ftable.has_key? funcname then
 				raise CompileError, "#{@fname}:#{@lineno}: func \"#{funcname}\" redfined"
@@ -69,6 +85,8 @@ module PmScript
 			@ftable[funcname] = argc
 		end
 
+    #---------------------------------------------
+    #---------------------------------------------
 		def get_arg_count( funcname )
 			unless @ftable.has_key? funcname then
 				raise CompileError, "#{@fname}:#{@lineno}: func \"#{funcname}\" undefined"
@@ -182,8 +200,8 @@ module PmScript
 		end
 	end
 
-#---------------------------------------------
-#---------------------------------------------
+  #---------------------------------------------
+  #---------------------------------------------
 	class DefFuncNode < Node
 		def initialize( type, name, param, block )
 			@type = type
@@ -213,8 +231,8 @@ module PmScript
 		end
 	end
 
-#---------------------------------------------
-#---------------------------------------------
+  #---------------------------------------------
+  #---------------------------------------------
 	class CallFuncNode < Node
 		def initialize( result, name, param )
 			@result = result
@@ -245,8 +263,8 @@ module PmScript
 	end
 
 
-#---------------------------------------------
-#---------------------------------------------
+  #---------------------------------------------
+  #---------------------------------------------
 	class DefVarNode < Node
 
 		def initialize( type, varname )
@@ -261,8 +279,8 @@ module PmScript
 	end
 
 
-#---------------------------------------------
-#---------------------------------------------
+  #---------------------------------------------
+  #---------------------------------------------
 	class AssignNode < Node
 
 		def initialize( vname, val, type )
@@ -291,6 +309,6 @@ module PmScript
 	end
 
 
-end
+end   # end of module PmScript
 
 

@@ -234,9 +234,9 @@ rule
 	#	「if文」は下記：
 	#	「IF」「比較式」「THEN」「終端」「文の並び」「else文」「ENDIF」
 	#---------------------------------------------
-	if_stmt		: IF cmp_expr THEN EOL stmt_list else_stmt ENDIF
+	if_stmt		: IF cmp_expr THEN stmt_list else_stmt ENDIF
 					{
-						result = IfNode.new(val[1],val[4],val[5])
+						result = IfNode.new(val[1],val[3],val[4])
 					}
 
 	#---------------------------------------------
@@ -254,9 +254,9 @@ rule
 					{
 						result = val[1]
 					}
-				| ELSIF cmp_expr THEN EOL stmt_list else_stmt
+				| ELSIF cmp_expr THEN stmt_list else_stmt
 					{
-						result = [IfNode.new(val[1], val[4], val[5])]
+						result = [IfNode.new(val[1], val[3], val[4])]
 					}
 
 	#---------------------------------------------
