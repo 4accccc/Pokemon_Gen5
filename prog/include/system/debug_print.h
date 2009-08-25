@@ -28,6 +28,7 @@ typedef enum {
   AUTHOR_NAKAHIRO,
   AUTHOR_IWASAWA,
   AUTHOR_NOZOMU,
+  AUTHOR_HOSAKA,
 
   AUTHOR_IGNORE,    ///< ‚±‚ê‚ðŽw’è‚·‚é‚Æo—Í‚³‚ê‚È‚¢
 }AUTHOR_ID;
