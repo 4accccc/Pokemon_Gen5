@@ -89,6 +89,23 @@ typedef struct{
   fx32    wait_tmp_plus;
 }BTLV_EFFVM_EMITTER_MOVE_WORK;
 
+//エミッタ円移動用パラメータ構造体
+typedef struct{
+  int       center;       //回転中心
+  VecFx32   center_pos;   //回転中心座標
+  fx32      radius_h;     //横方向半径
+  fx32      radius_v;     //縦方向半径
+  int       angle;        //現在角度
+  int       speed;        //スピード
+  int       frame;        //移動するフレーム数
+  int       frame_tmp;  
+  int       wait;         //1フレーム移動するごとのウエイト
+  int       wait_tmp;
+  int       count;        //カウント
+  int       after_wait;   //1回転ごとのウエイト
+  int       after_wait_tmp;
+}BTLV_EFFVM_EMITTER_CIRCLE_MOVE_WORK;
+
 //SE再生用パラメータ構造体
 typedef struct
 { 
@@ -145,6 +162,7 @@ static VMCMD_RESULT VMEC_PARTICLE_PLAY_COORDINATE( VMHANDLE *vmh, void *context_
 static VMCMD_RESULT VMEC_PARTICLE_DELETE( VMHANDLE *vmh, void *context_work );
 static VMCMD_RESULT VMEC_EMITTER_MOVE( VMHANDLE *vmh, void *context_work );
 static VMCMD_RESULT VMEC_EMITTER_MOVE_COORDINATE( VMHANDLE *vmh, void *context_work );
+static VMCMD_RESULT VMEC_EMITTER_CIRCLE_MOVE( VMHANDLE *vmh, void *context_work );
 static VMCMD_RESULT VMEC_POKEMON_MOVE( VMHANDLE *vmh, void *context_work );
 static VMCMD_RESULT VMEC_POKEMON_CIRCLE_MOVE( VMHANDLE *vmh, void *context_work );
 static VMCMD_RESULT VMEC_POKEMON_SCALE( VMHANDLE *vmh, void *context_work );
@@ -188,6 +206,8 @@ static  int   EFFVM_RegistPtcNo( BTLV_EFFVM_WORK *bevw, ARCDATID datID );
 static  int   EFFVM_GetPtcNo( BTLV_EFFVM_WORK *bevw, ARCDATID datID );
 static  void  EFFVM_InitEmitterPos( GFL_EMIT_PTR emit );
 static  void  EFFVM_MoveEmitter( GFL_EMIT_PTR emit, unsigned int flag );
+static  void  EFFVM_InitEmitterCircleMove( GFL_EMIT_PTR emit );
+static  void  EFFVM_CircleMoveEmitter( GFL_EMIT_PTR emit, unsigned int flag );
 static  void  EFFVM_DeleteEmitter( GFL_PTC_PTR ptc );
 static  void  EFFVM_ChangeCameraProjection( BTLV_EFFVM_WORK *bevw );
 static  void  EFFVM_SePlay( int se_no, int player, int pitch, int vol, int mod_depth, int mod_speed );
@@ -258,6 +278,7 @@ static const VMCMD_FUNC btlv_effect_command_table[]={
   VMEC_PARTICLE_DELETE,
   VMEC_EMITTER_MOVE,
   VMEC_EMITTER_MOVE_COORDINATE,
+  VMEC_EMITTER_CIRCLE_MOVE,
   VMEC_POKEMON_MOVE,
   VMEC_POKEMON_CIRCLE_MOVE,
   VMEC_POKEMON_SCALE,
@@ -726,9 +747,9 @@ static VMCMD_RESULT VMEC_PARTICLE_PLAY( VMHANDLE *vmh, void *context_work )
 {
   BTLV_EFFVM_WORK *bevw = ( BTLV_EFFVM_WORK* )context_work;
   BTLV_EFFVM_EMIT_INIT_WORK *beeiw = GFL_HEAP_AllocClearMemory( bevw->heapID, sizeof( BTLV_EFFVM_EMIT_INIT_WORK ) );
-  ARCDATID  datID = ( ARCDATID )VMGetU32( vmh );
-  int     ptc_no = EFFVM_GetPtcNo( bevw, datID );
-  int     index = ( int )VMGetU32( vmh );
+  ARCDATID  datID   = ( ARCDATID )VMGetU32( vmh );
+  int       ptc_no  = EFFVM_GetPtcNo( bevw, datID );
+  int       index   = ( int )VMGetU32( vmh );
 
   beeiw->vmh = vmh;
   beeiw->src = ( int )VMGetU32( vmh );
@@ -758,9 +779,9 @@ static VMCMD_RESULT VMEC_PARTICLE_PLAY_COORDINATE( VMHANDLE *vmh, void *context_
 {
   BTLV_EFFVM_WORK *bevw = ( BTLV_EFFVM_WORK* )context_work;
   BTLV_EFFVM_EMIT_INIT_WORK *beeiw = GFL_HEAP_AllocClearMemory( bevw->heapID, sizeof( BTLV_EFFVM_EMIT_INIT_WORK ) );
-  ARCDATID  datID = ( ARCDATID )VMGetU32( vmh );
-  int     ptc_no = EFFVM_GetPtcNo( bevw, datID );
-  int     index = ( int )VMGetU32( vmh );
+  ARCDATID  datID   = ( ARCDATID )VMGetU32( vmh );
+  int       ptc_no  = EFFVM_GetPtcNo( bevw, datID );
+  int       index   = ( int )VMGetU32( vmh );
 
   beeiw->vmh = vmh;
   beeiw->src = BTLEFF_CAMERA_POS_NONE;
@@ -790,8 +811,8 @@ static VMCMD_RESULT VMEC_PARTICLE_PLAY_COORDINATE( VMHANDLE *vmh, void *context_
 static VMCMD_RESULT VMEC_PARTICLE_DELETE( VMHANDLE *vmh, void *context_work )
 {
   BTLV_EFFVM_WORK *bevw = ( BTLV_EFFVM_WORK* )context_work;
-  ARCDATID  datID = ( ARCDATID )VMGetU32( vmh );
-  int     ptc_no = EFFVM_GetPtcNo( bevw, datID );
+  ARCDATID  datID   = ( ARCDATID )VMGetU32( vmh );
+  int       ptc_no  = EFFVM_GetPtcNo( bevw, datID );
 
   EFFVM_DeleteEmitter( bevw->ptc[ ptc_no ] );
   bevw->ptc[ ptc_no ] = NULL;
@@ -811,9 +832,9 @@ static VMCMD_RESULT VMEC_EMITTER_MOVE( VMHANDLE *vmh, void *context_work )
 {
   BTLV_EFFVM_WORK *bevw = ( BTLV_EFFVM_WORK* )context_work;
   BTLV_EFFVM_EMIT_INIT_WORK *beeiw = GFL_HEAP_AllocClearMemory( bevw->heapID, sizeof( BTLV_EFFVM_EMIT_INIT_WORK ) );
-  ARCDATID  datID = ( ARCDATID )VMGetU32( vmh );
-  int     ptc_no = EFFVM_GetPtcNo( bevw, datID );
-  int     index = ( int )VMGetU32( vmh );
+  ARCDATID  datID   = ( ARCDATID )VMGetU32( vmh );
+  int       ptc_no  = EFFVM_GetPtcNo( bevw, datID );
+  int       index   = ( int )VMGetU32( vmh );
 
   beeiw->vmh = vmh;
   beeiw->move_type = ( int )VMGetU32( vmh );
@@ -843,9 +864,9 @@ static VMCMD_RESULT VMEC_EMITTER_MOVE_COORDINATE( VMHANDLE *vmh, void *context_w
 {
   BTLV_EFFVM_WORK *bevw = ( BTLV_EFFVM_WORK* )context_work;
   BTLV_EFFVM_EMIT_INIT_WORK *beeiw = GFL_HEAP_AllocClearMemory( bevw->heapID, sizeof( BTLV_EFFVM_EMIT_INIT_WORK ) );
-  ARCDATID  datID = ( ARCDATID )VMGetU32( vmh );
-  int     ptc_no = EFFVM_GetPtcNo( bevw, datID );
-  int     index = ( int )VMGetU32( vmh );
+  ARCDATID  datID   = ( ARCDATID )VMGetU32( vmh );
+  int       ptc_no  = EFFVM_GetPtcNo( bevw, datID );
+  int       index   = ( int )VMGetU32( vmh );
 
   beeiw->vmh = vmh;
   beeiw->move_type = ( int )VMGetU32( vmh );
@@ -862,6 +883,69 @@ static VMCMD_RESULT VMEC_EMITTER_MOVE_COORDINATE( VMHANDLE *vmh, void *context_w
   GF_ASSERT( beeiw->dst != beeiw->src );
 
   GFL_PTC_CreateEmitterCallback( bevw->ptc[ ptc_no ], index, &EFFVM_InitEmitterPos, beeiw );
+
+  return bevw->control_mode;
+}
+
+//============================================================================================
+/**
+ * @brief エミッタ円移動
+ *
+ * @param[in] vmh       仮想マシン制御構造体へのポインタ
+ * @param[in] context_work  コンテキストワークへのポインタ
+ */
+//============================================================================================
+static VMCMD_RESULT VMEC_EMITTER_CIRCLE_MOVE( VMHANDLE *vmh, void *context_work )
+{ 
+  BTLV_EFFVM_WORK *bevw = ( BTLV_EFFVM_WORK* )context_work;
+  BTLV_EFFVM_EMITTER_CIRCLE_MOVE_WORK *beecmw;
+  ARCDATID  datID   = ( ARCDATID )VMGetU32( vmh );
+  int       ptc_no  = EFFVM_GetPtcNo( bevw, datID );
+  int       index   = ( int )VMGetU32( vmh );
+  fx32      offset_y;
+
+  bevw->temp_work[ bevw->temp_work_count ] = GFL_HEAP_AllocMemory( bevw->heapID, sizeof( BTLV_EFFVM_EMITTER_CIRCLE_MOVE_WORK ) );
+  beecmw = ( BTLV_EFFVM_EMITTER_CIRCLE_MOVE_WORK *)bevw->temp_work[ bevw->temp_work_count ];
+  bevw->temp_work_count++;
+
+  //サイズオーバーのアサート
+  GF_ASSERT( bevw->temp_work_count < TEMP_WORK_SIZE );
+
+  beecmw->center          = ( int )VMGetU32( vmh );
+  beecmw->radius_h        = ( fx32 )VMGetU32( vmh );
+  beecmw->radius_v        = ( fx32 )VMGetU32( vmh );
+  offset_y                = ( fx32 )VMGetU32( vmh );
+  beecmw->angle           = 0;
+  beecmw->frame           = ( int )VMGetU32( vmh );
+  beecmw->frame_tmp       = beecmw->frame;
+  beecmw->wait            = 0;
+  beecmw->wait_tmp        = ( int )VMGetU32( vmh );
+  beecmw->count           = ( int )VMGetU32( vmh );
+  beecmw->after_wait      = 0;
+  beecmw->after_wait_tmp  = ( int )VMGetU32( vmh );
+
+  beecmw->speed = 0x10000 / beecmw->frame;
+
+  switch( beecmw->center ){ 
+  case BTLEFF_EMITTER_CIRCLE_MOVE_ATTACK_L:
+  case BTLEFF_EMITTER_CIRCLE_MOVE_ATTACK_R:
+    BTLV_MCSS_GetPokeDefaultPos( &beecmw->center_pos, EFFVM_GetPosition( vmh, BTLEFF_POKEMON_SIDE_ATTACK ) );
+    break;
+  case BTLEFF_EMITTER_CIRCLE_MOVE_DEFENCE_L:
+  case BTLEFF_EMITTER_CIRCLE_MOVE_DEFENCE_R:
+    BTLV_MCSS_GetPokeDefaultPos( &beecmw->center_pos, EFFVM_GetPosition( vmh, BTLEFF_POKEMON_SIDE_DEFENCE ) );
+    break;
+  case BTLEFF_EMITTER_CIRCLE_MOVE_CENTER_L:
+  case BTLEFF_EMITTER_CIRCLE_MOVE_CENTER_R:
+    beecmw->center_pos.x = 0;
+    beecmw->center_pos.y = 0;
+    beecmw->center_pos.z = 0;
+    break;
+  }
+
+  beecmw->center_pos.y += offset_y;
+
+  GFL_PTC_CreateEmitterCallback( bevw->ptc[ ptc_no ], index, &EFFVM_InitEmitterCircleMove, beecmw );
 
   return bevw->control_mode;
 }
@@ -2378,6 +2462,94 @@ static  void  EFFVM_MoveEmitter( GFL_EMIT_PTR emit, unsigned int flag )
   MTX_MultVec43( &emit_pos, &beemw->mtx43, &emit_pos );
 
   GFL_PTC_SetEmitterPosition( emit, &emit_pos );
+}
+
+//============================================================================================
+/**
+ * @brief エミッタ生成時に呼ばれるエミッタ初期化用コールバック関数（エミッタ円移動）
+ *
+ * @param[in] emit  エミッタワーク構造体へのポインタ
+ */
+//============================================================================================
+static  void  EFFVM_InitEmitterCircleMove( GFL_EMIT_PTR emit )
+{ 
+  BTLV_EFFVM_EMITTER_CIRCLE_MOVE_WORK *beecmw = ( BTLV_EFFVM_EMITTER_CIRCLE_MOVE_WORK* )GFL_PTC_GetTempPtr();
+
+  //エミッタにテンポラリワークを設定
+  GFL_PTC_SetUserData( emit, beecmw );
+  //エミッタにコールバック関数を設定
+  GFL_PTC_SetCallbackFunc( emit, &EFFVM_CircleMoveEmitter );
+}
+
+//============================================================================================
+/**
+ * @brief エミッタ円移動用コールバック関数
+ *
+ * @param[in] emit  エミッタワーク構造体へのポインタ
+ * @param[in] flag  コールバックが呼ばれたタイミングを示すフラグ
+ *                  SPL_EMITTER_CALLBACK_FRONT:エミッタ計算を行う直前
+ *                  SPL_EMITTER_CALLBACK_BACK:エミッタ計算を行ったあと
+ */
+//============================================================================================
+static  void  EFFVM_CircleMoveEmitter( GFL_EMIT_PTR emit, unsigned int flag )
+{
+  BTLV_EFFVM_EMITTER_CIRCLE_MOVE_WORK *beecmw = ( BTLV_EFFVM_EMITTER_CIRCLE_MOVE_WORK *)GFL_PTC_GetUserData( emit );
+  VecFx32 emit_pos;
+
+  if( flag == SPL_EMITTER_CALLBACK_FRONT )
+  {
+    return;
+  }
+
+  if( beecmw->after_wait == 0 )
+  { 
+    if( beecmw->wait == 0 )
+    { 
+      beecmw->wait = beecmw->wait_tmp;
+      if( beecmw->center & 1 )
+      { 
+        beecmw->angle -= beecmw->speed;
+      }
+      else
+      { 
+        beecmw->angle += beecmw->speed;
+      }
+  
+      beecmw->angle &= 0xffff;
+  
+      emit_pos.x = FX_SinIdx( beecmw->angle );
+      emit_pos.x = FX_Mul( emit_pos.x, beecmw->radius_h );
+      emit_pos.x += beecmw->center_pos.x;
+  
+      emit_pos.y = beecmw->center_pos.y;
+  
+      emit_pos.z = FX_CosIdx( beecmw->angle );
+      emit_pos.z = FX_Mul( emit_pos.z, beecmw->radius_v );
+      emit_pos.z += beecmw->center_pos.z;
+
+      OS_TPrintf("x:%08x y:%08x z:%08x\n", emit_pos.x, emit_pos.y, emit_pos.z );
+  
+      GFL_PTC_SetEmitterPosition( emit, &emit_pos );
+  
+      if( beecmw->frame )
+      { 
+        beecmw->frame--;
+      }
+      else 
+      { 
+        beecmw->frame = beecmw->frame_tmp;
+        beecmw->after_wait = beecmw->after_wait_tmp;
+      }
+    }
+    else
+    { 
+      beecmw->wait--;
+    }
+  }
+  else
+  { 
+    beecmw->after_wait--;
+  }
 }
 
 //============================================================================================

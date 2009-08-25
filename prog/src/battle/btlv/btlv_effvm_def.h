@@ -77,6 +77,14 @@
 #define	BTLEFF_EMITTER_MOVE_CURVE							( 2 )
 #define	BTLEFF_EMITTER_MOVE_CURVE_HALF				( 3 )
 
+//エミッタ円移動
+#define BTLEFF_EMITTER_CIRCLE_MOVE_ATTACK_L   ( 0 )
+#define BTLEFF_EMITTER_CIRCLE_MOVE_ATTACK_R   ( 1 )
+#define BTLEFF_EMITTER_CIRCLE_MOVE_DEFENCE_L  ( 2 )
+#define BTLEFF_EMITTER_CIRCLE_MOVE_DEFENCE_R  ( 3 )
+#define BTLEFF_EMITTER_CIRCLE_MOVE_CENTER_L   ( 4 )
+#define BTLEFF_EMITTER_CIRCLE_MOVE_CENTER_R   ( 5 )
+
 //ポケモン操作
 #define	BTLEFF_POKEMON_SIDE_ATTACK				( 0 )		//攻撃側
 #define	BTLEFF_POKEMON_SIDE_ATTACK_PAIR		( 1 )		//攻撃側ペア
@@ -101,6 +109,7 @@
 #define	BTLEFF_POKEMON_MOVE_INTERPOLATION			( EFFTOOL_CALCTYPE_INTERPOLATION )
 #define	BTLEFF_POKEMON_MOVE_ROUNDTRIP					( EFFTOOL_CALCTYPE_ROUNDTRIP )
 #define	BTLEFF_POKEMON_MOVE_ROUNDTRIP_LONG		( EFFTOOL_CALCTYPE_ROUNDTRIP_LONG )
+#define	BTLEFF_POKEMON_MOVE_INIT		          ( BTLEFF_POKEMON_MOVE_ROUNDTRIP_LONG + 1 )
 #define	BTLEFF_POKEMON_SCALE_DIRECT						( EFFTOOL_CALCTYPE_DIRECT )
 #define	BTLEFF_POKEMON_SCALE_INTERPOLATION		( EFFTOOL_CALCTYPE_INTERPOLATION )
 #define	BTLEFF_POKEMON_SCALE_ROUNDTRIP				( EFFTOOL_CALCTYPE_ROUNDTRIP )
@@ -308,7 +317,8 @@ ex)
 #define	EC_PARTICLE_DELETE					( EC_PARTICLE_PLAY_COORDINATE + 1 )
 #define	EC_EMITTER_MOVE							( EC_PARTICLE_DELETE          + 1 )
 #define	EC_EMITTER_MOVE_COORDINATE	( EC_EMITTER_MOVE             + 1 )
-#define	EC_POKEMON_MOVE							( EC_EMITTER_MOVE_COORDINATE  + 1 )
+#define	EC_EMITTER_CIRCLE_MOVE      ( EC_EMITTER_MOVE_COORDINATE  + 1 )
+#define	EC_POKEMON_MOVE							( EC_EMITTER_CIRCLE_MOVE      + 1 )
 #define	EC_POKEMON_CIRCLE_MOVE			( EC_POKEMON_MOVE             + 1 )
 #define	EC_POKEMON_SCALE						( EC_POKEMON_CIRCLE_MOVE      + 1 )
 #define	EC_POKEMON_ROTATE						( EC_POKEMON_SCALE            + 1 )
@@ -658,6 +668,41 @@ ex)
 
 //======================================================================
 /**
+ * @brief	エミッタ円移動
+ *
+ * #param_num	6
+ * @param	num					      再生パーティクルナンバー
+ * @param	index				      spa内インデックスナンバー
+ * @param center_pos        円運動の中心
+ * @param param             横方向半径:縦方向半径:Y方向オフセット
+ * @param	rotate_param			回転フレーム数（1回転何フレームでするか）:移動ウエイト:回転カウント
+ * @param	rotate_after_wait 1回転したあとのウエイト（2回転以上で意味のある値です）
+ *
+ * #param	FILE_DIALOG_COMBOBOX .spa
+ * #param	COMBOBOX_HEADER
+ * #param COMBOBOX_TEXT 攻撃側左  攻撃側右  防御側左  防御側右  画面中央左  画面中央右
+ * #param COMBOBOX_VALUE  BTLEFF_EMITTER_CIRCLE_MOVE_ATTACK_L BTLEFF_EMITTER_CIRCLE_MOVE_ATTACK_R BTLEFF_EMITTER_CIRCLE_MOVE_DEFENCE_L BTLEFF_EMITTER_CIRCLE_MOVE_DEFENCE_R BTLEFF_EMITTER_CIRCLE_MOVE_CENTER_L BTLEFF_EMITTER_CIRCLE_MOVE_CENTER_R
+ * #param VALUE_VECFX32  横方向半径 縦方向半径 Y方向オフセット
+ * #param	VALUE_VECINT		回転フレーム数  移動ウエイト  回転カウント
+ * #param	VALUE_INT 1回転したあとのウエイト（2回転以上で意味のある値です）
+ */
+//======================================================================
+  .macro  EMITTER_CIRCLE_MOVE num, index, center_pos, radius_h, radius_v, offset_y, frame, wait, count, rotate_after_wait
+  .short  EC_EMITTER_CIRCLE_MOVE
+  .long   \num
+  .long   \index
+  .long   \center_pos
+  .long   \radius_h
+  .long   \radius_v
+  .long   \offset_y
+  .long   \frame
+  .long   \wait
+  .long   \count
+  .long   \rotate_after_wait
+  .endm
+
+//======================================================================
+/**
  * @brief	ポケモン移動
  *
  * #param_num	7
@@ -671,8 +716,8 @@ ex)
  *
  * #param	COMBOBOX_TEXT	攻撃側	攻撃側ペア	防御側	防御側ペア	POS_AA	POS_BB	POS_A POS_B POS_C POS_D POS_E POS_F POS_TR_AA POS_TR_BB POS_TR_A  POS_TR_B  POS_TR_C  POS_TR_D 
  * #param	COMBOBOX_VALUE	BTLEFF_POKEMON_SIDE_ATTACK  BTLEFF_POKEMON_SIDE_ATTACK_PAIR BTLEFF_POKEMON_SIDE_DEFENCE BTLEFF_POKEMON_SIDE_DEFENCE_PAIR  BTLEFF_POKEMON_POS_AA BTLEFF_POKEMON_POS_BB BTLEFF_POKEMON_POS_A  BTLEFF_POKEMON_POS_B  BTLEFF_POKEMON_POS_C  BTLEFF_POKEMON_POS_D  BTLEFF_POKEMON_POS_E  BTLEFF_POKEMON_POS_F  BTLEFF_TRAINER_POS_AA BTLEFF_TRAINER_POS_BB BTLEFF_TRAINER_POS_A  BTLEFF_TRAINER_POS_B  BTLEFF_TRAINER_POS_C  BTLEFF_TRAINER_POS_D
- * #param	COMBOBOX_TEXT	ダイレクト	追従	往復	往復ロング
- * #param	COMBOBOX_VALUE	BTLEFF_POKEMON_MOVE_DIRECT	BTLEFF_POKEMON_MOVE_INTERPOLATION	BTLEFF_POKEMON_MOVE_ROUNDTRIP	BTLEFF_POKEMON_MOVE_ROUNDTRIP_LONG
+ * #param	COMBOBOX_TEXT	ダイレクト	追従	往復	往復ロング  初期位置
+ * #param	COMBOBOX_VALUE	BTLEFF_POKEMON_MOVE_DIRECT	BTLEFF_POKEMON_MOVE_INTERPOLATION	BTLEFF_POKEMON_MOVE_ROUNDTRIP	BTLEFF_POKEMON_MOVE_ROUNDTRIP_LONG  BTLEFF_POKEMON_MOVE_INIT
  * #param	VALUE_FX32	移動先X座標
  * #param	VALUE_FX32	移動先Y座標
  * #param	VALUE_INT		移動フレーム数

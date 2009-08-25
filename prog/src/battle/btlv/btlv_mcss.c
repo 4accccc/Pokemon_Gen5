@@ -554,6 +554,12 @@ void  BTLV_MCSS_MovePosition( BTLV_MCSS_WORK *bmw, int position, int type, VecFx
     pos->z += start.z;
 
   }
+  //‰ŠúˆÊ’uˆÚ“®
+  if( type == BTLEFF_POKEMON_MOVE_INIT )
+  { 
+    BTLV_MCSS_GetPokeDefaultPos( pos, position );
+    type = EFFTOOL_CALCTYPE_INTERPOLATION;
+  }
   BTLV_MCSS_TCBInitialize( bmw, position, type, &start, pos, frame, wait, count, TCB_BTLV_MCSS_Move );
   bmw->poke_mcss_tcb_move_execute |= BTLV_EFFTOOL_Pos2Bit( position );
 }
