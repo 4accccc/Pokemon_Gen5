@@ -15,15 +15,9 @@
 #include "print/wordset.h"
 #include "message.naix"
 #include "system/wipe.h"
-//#include "system/fontproc.h"
-//#include "system/fontoam.h"
-//#include "system/window.h"
-//TODO
 #include "system/bmp_menu.h"
 #include "sound/pm_sndsys.h"
 #include "savedata/wifilist.h"
-//#include "savedata/zukanwork.h"
-//TODO
 
 #include "net_app/worldtrade.h"
 #include "worldtrade_local.h"
@@ -410,18 +404,25 @@ static void BgGraphicSet( WORLDTRADE_WORK * wk )
 //------------------------------------------------------------------
 static void SetCellActor(WORLDTRADE_WORK *wk)
 {
-#if 0
 	//“o˜^î•ñŠi”[
-	CLACT_ADD add;
-	WorldTrade_MakeCLACT( &add,  wk, &wk->clActHeader_main, NNS_G2D_VRAM_TYPE_2DMAIN );
+	GFL_CLWK_DATA add;
+
+	GFL_STD_MemClear( &add, sizeof(GFL_CLWK_DATA) );
+
+	//WorldTrade_MakeCLACT( &add,  wk, &wk->clActHeader_main, NNS_G2D_VRAM_TYPE_2DMAIN );
 
 	// ‘ŠŽè‚Ìƒ|ƒPƒ‚ƒ“•\Ž¦
-	add.mat.x = FX32_ONE *   PARTNER_POKEMON_X;
-	add.mat.y = FX32_ONE *   PARTNER_POKEMON_Y;
-	wk->PokemonActWork = GFL_CLACT_WK_Create(&add);
+	add.pos_x = PARTNER_POKEMON_X;
+	add.pos_y = PARTNER_POKEMON_Y;
+	wk->PokemonActWork = GFL_CLACT_WK_Create( wk->clactSet,
+			wk->resObjTbl[MAIN_LCD][CLACT_U_CHAR_RES],
+			wk->resObjTbl[MAIN_LCD][CLACT_U_PLTT_RES], 
+			wk->resObjTbl[MAIN_LCD][CLACT_U_CELL_RES],
+			&add, CLSYS_DRAW_MAIN, HEAPID_WORLDTRADE );
 	GFL_CLACT_WK_SetAutoAnmFlag(wk->PokemonActWork,1);
 	GFL_CLACT_WK_SetAnmSeq( wk->PokemonActWork, 37 );
-#endif //TODO
+
+
 	WirelessIconEasy();
 }
 

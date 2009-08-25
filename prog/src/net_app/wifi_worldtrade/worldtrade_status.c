@@ -15,16 +15,10 @@
 #include "print/wordset.h"
 #include "message.naix"
 #include "system/wipe.h"
-//#include "system/fontproc.h"
-//#include "system/fontoam.h"
-//#include "system/window.h"
-//TODO
 #include "system/bmp_menu.h"
 #include "sound/pm_sndsys.h"
 #include "savedata/wifilist.h"
 #include "savedata/worldtrade_data.h"
-//#include "savedata/zukanwork.h"
-//TODO
 #include "savedata/sp_ribbon_save.h"
 #include "poke_tool/pokeparty.h"
 #include "savedata/box_savedata.h"
@@ -35,7 +29,9 @@
 
 #include "libdpw/dpw_tr.h"
 
+#include "app/p_status.h"
 
+#include "savedata/mystatus.h"
 
 
 //============================================================================================
@@ -60,6 +56,7 @@ static const u8 StatusPageTable[]={
 //============================================================================================
 //	ƒvƒƒZƒXŠÖ”
 //============================================================================================
+FS_EXTERN_OVERLAY( poke_status );
 
 //==============================================================================
 /**
@@ -78,7 +75,15 @@ int WorldTrade_Status_Init(WORLDTRADE_WORK *wk, int seq)
 	
 	MORI_PRINT( "heap remain RAM = %d\n", GFL_HEAP_GetHeapFreeSize( GFL_HEAPID_APP ));
 	
+	GFL_STD_MemClear( &wk->statusParam, sizeof(PSTATUS_DATA) );
+
 	wk->statusParam.ppd  = WorldTrade_GetPokePtr(wk->param->myparty, wk->param->mybox, wk->BoxTrayNo, wk->BoxCursorPos);
+	wk->statusParam.cfg	 = wk->param->config;
+
+	wk->statusParam.player_name	= MyStatus_GetMyName( wk->param->mystatus );
+	wk->statusParam.player_id		= MyStatus_GetID( wk->param->mystatus );
+	wk->statusParam.player_sex	=  MyStatus_GetMySex( wk->param->mystatus );
+
 	wk->statusParam.ppt  = PST_PP_TYPE_POKEPASO;
 	wk->statusParam.max  = 1;
 	wk->statusParam.pos  = 0;
@@ -88,7 +93,6 @@ int WorldTrade_Status_Init(WORLDTRADE_WORK *wk, int seq)
 	wk->statusParam.ev_contest = FALSE;
 	//TODO
 	wk->statusParam.zukan_mode = wk->param->zukanmode;
-	wk->statusParam.cfg        = wk->param->config;
 	wk->statusParam.ribbon     = SP_RIBBON_SAVE_GetSaveData(wk->param->savedata);
 //	wk->statusParam.pokethlon  = PokeStatus_PerformanceFlagGet(wk->param->savedata);
 	wk->statusParam.pokethlon  = FALSE;
@@ -99,6 +103,8 @@ int WorldTrade_Status_Init(WORLDTRADE_WORK *wk, int seq)
 	
 //	wk->proc = GFL_PROC_Create( &PokeStatusProcData, &wk->statusParam, HEAPID_WORLDTRADE );
 //	TODO
+
+	GFL_PROC_SysCallProc( FS_OVERLAY_ID(poke_status), &PokeStatus_ProcData, &wk->statusParam );
 
 	wk->subprocflag = 1;
 

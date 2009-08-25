@@ -16,10 +16,6 @@
 #include "print/wordset.h"
 #include "message.naix"
 #include "system/wipe.h"
-//#include "system/fontproc.h"
-//#include "system/fontoam.h"
-//#include "system/window.h"
-//TODO
 #include "system/bmp_menu.h"
 #include "sound/pm_sndsys.h"
 #include "poke_tool/poke_tool.h"
@@ -28,8 +24,6 @@
 #include "item/item.h"
 
 #include "savedata/wifilist.h"
-//#include "savedata/zukanwork.h"
-//TODO
 
 #include "net_app/worldtrade.h"
 #include "worldtrade_local.h"
@@ -234,8 +228,7 @@ int WorldTrade_Box_Main(WORLDTRADE_WORK *wk, int seq)
 	int ret;
 
 	// 通信状態を確認してアイコンの表示を変える
-  //WirelessIconEasy_SetLevel(WorldTrade_WifiLinkLevel());
-	//TODO
+  WirelessIconEasy_SetLevel(WorldTrade_WifiLinkLevel());
 	
 	ret = (*Functable[wk->subprocess_seq])( wk );
 
@@ -255,8 +248,7 @@ int WorldTrade_Box_Main(WORLDTRADE_WORK *wk, int seq)
 //==============================================================================
 int WorldTrade_Box_End(WORLDTRADE_WORK *wk, int seq)
 {
-	//WirelessIconEasyEnd();
-	//TODO
+	WirelessIconEasyEnd();
 
     if(GXS_GetMasterBrightness() != 0){
         WorldTrade_SetPartnerExchangePosIsReturns( wk );
@@ -305,7 +297,7 @@ static void BgInit( void )
 	{	
 		GFL_BG_BGCNT_HEADER TextBgCntDat = {
 			0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
-			GX_BG_SCRBASE_0xf800, GX_BG_CHARBASE_0x00000, GX_BG_EXTPLTT_01,
+			GX_BG_SCRBASE_0xf800, GX_BG_CHARBASE_0x00000, GFL_BG_CHRSIZ_256x256, GX_BG_EXTPLTT_01,
 			0, 0, 0, FALSE
 		};
 		GFL_BG_SetBGControl( GFL_BG_FRAME0_M, &TextBgCntDat, GFL_BG_MODE_TEXT );
@@ -316,7 +308,7 @@ static void BgInit( void )
 	{	
 		GFL_BG_BGCNT_HEADER TextBgCntDat = {
 			0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
-			GX_BG_SCRBASE_0xf000, GX_BG_CHARBASE_0x08000, GX_BG_EXTPLTT_01,
+			GX_BG_SCRBASE_0xf000, GX_BG_CHARBASE_0x08000, GFL_BG_CHRSIZ_256x256, GX_BG_EXTPLTT_01,
 			1, 0, 0, FALSE
 		};
 		GFL_BG_SetBGControl( GFL_BG_FRAME1_M, &TextBgCntDat, GFL_BG_MODE_TEXT );
@@ -326,7 +318,7 @@ static void BgInit( void )
 	{	
 		GFL_BG_BGCNT_HEADER TextBgCntDat = {
 			0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
-			GX_BG_SCRBASE_0xe800, GX_BG_CHARBASE_0x08000, GX_BG_EXTPLTT_01,
+			GX_BG_SCRBASE_0xe800, GX_BG_CHARBASE_0x08000, GFL_BG_CHRSIZ_256x256, GX_BG_EXTPLTT_01,
 			2, 0, 0, FALSE
 		};
 		GFL_BG_SetBGControl( GFL_BG_FRAME2_M, &TextBgCntDat, GFL_BG_MODE_TEXT );
@@ -337,7 +329,7 @@ static void BgInit( void )
 	{	
 		GFL_BG_BGCNT_HEADER TextBgCntDat = {
 			0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
-			GX_BG_SCRBASE_0xe000, GX_BG_CHARBASE_0x00000, GX_BG_EXTPLTT_01,
+			GX_BG_SCRBASE_0xe000, GX_BG_CHARBASE_0x00000, GFL_BG_CHRSIZ_256x256, GX_BG_EXTPLTT_01,
 			0, 0, 0, FALSE
 		};
 		GFL_BG_SetBGControl( GFL_BG_FRAME3_M, &TextBgCntDat, GFL_BG_MODE_TEXT );
@@ -512,19 +504,21 @@ static const GFL_UI_TP_HITTBL BoxTouchTable[]={
 //------------------------------------------------------------------
 static void SetCellActor(WORLDTRADE_WORK *wk)
 {
-	//TODO
-#if 0
 	int i;
 	//登録情報格納
-	CLACT_ADD add;
-	WorldTrade_MakeCLACT( &add,  wk, &wk->clActHeader_main, NNS_G2D_VRAM_TYPE_2DMAIN );
+	GFL_CLWK_DATA	add;
+	GFL_STD_MemClear( &add, sizeof(GFL_CLWK_DATA) );
+	//WorldTrade_MakeCLACT( &add,  wk, &wk->clActHeader_main, NNS_G2D_VRAM_TYPE_2DMAIN );
 
 
 	// ポケモンをさす指
-	add.mat.x = FX32_ONE *   PokemonIconPosTbl[wk->BoxCursorPos][0];
-	add.mat.y = FX32_ONE *   PokemonIconPosTbl[wk->BoxCursorPos][1];
-//	wk->CursorActWork = GFL_CLACT_WK_Create(&add);
-//TODO
+	add.pos_x = PokemonIconPosTbl[wk->BoxCursorPos][0];
+	add.pos_y = PokemonIconPosTbl[wk->BoxCursorPos][1];
+	wk->CursorActWork = GFL_CLACT_WK_Create( wk->clactSet,
+			wk->resObjTbl[MAIN_LCD][CLACT_U_CHAR_RES],
+			wk->resObjTbl[MAIN_LCD][CLACT_U_PLTT_RES], 
+			wk->resObjTbl[MAIN_LCD][CLACT_U_CELL_RES],
+			&add, CLSYS_DRAW_MAIN, HEAPID_WORLDTRADE );
 	GFL_CLACT_WK_SetAutoAnmFlag(wk->CursorActWork,1);
 	GFL_CLACT_WK_SetAnmSeq( wk->CursorActWork, 4 );	
 	
@@ -551,22 +545,28 @@ static void SetCellActor(WORLDTRADE_WORK *wk)
 	
 	// ポケモンアイコン
 	for(i=0;i<BOX_POKE_NUM;i++){
-		add.mat.x = FX32_ONE *   PokemonIconPosTbl[i][0];
-		add.mat.y = FX32_ONE *   PokemonIconPosTbl[i][1];
-		add.pri   = 20;
-		//wk->PokeIconActWork[i] = GFL_CLACT_WK_Create(&add);
-		//TODO
+		add.pos_x = PokemonIconPosTbl[i][0];
+		add.pos_y = PokemonIconPosTbl[i][1];
+		add.softpri   = 20;
+		wk->PokeIconActWork[i] = GFL_CLACT_WK_Create(wk->clactSet,
+			wk->resObjTbl[MAIN_LCD][CLACT_U_CHAR_RES],
+			wk->resObjTbl[MAIN_LCD][CLACT_U_PLTT_RES], 
+			wk->resObjTbl[MAIN_LCD][CLACT_U_CELL_RES],
+			&add, CLSYS_DRAW_MAIN, HEAPID_WORLDTRADE );
 		GFL_CLACT_WK_SetAnmSeq( wk->PokeIconActWork[i], 6+i );	
 		GFL_CLACT_WK_SetBgPri( wk->PokeIconActWork[i], 1 );
 	}
 
 	// アイテムアイコン
 	for(i=0;i<BOX_POKE_NUM;i++){
-		add.mat.x = FX32_ONE *   ( PokemonIconPosTbl[i][0]+0);
-		add.mat.y = FX32_ONE *   ( PokemonIconPosTbl[i][1]+6);
-		add.pri   = 10;
-		//wk->ItemIconActWork[i] = GFL_CLACT_WK_Create(&add);
-		//TODO
+		add.pos_x = ( PokemonIconPosTbl[i][0]+0);
+		add.pos_y = ( PokemonIconPosTbl[i][1]+6);
+		add.softpri   = 10;
+		wk->ItemIconActWork[i] = GFL_CLACT_WK_Create(wk->clactSet,
+			wk->resObjTbl[MAIN_LCD][CLACT_U_CHAR_RES],
+			wk->resObjTbl[MAIN_LCD][CLACT_U_PLTT_RES], 
+			wk->resObjTbl[MAIN_LCD][CLACT_U_CELL_RES],
+			&add, CLSYS_DRAW_MAIN, HEAPID_WORLDTRADE );
 		GFL_CLACT_WK_SetAnmSeq( wk->ItemIconActWork[i], CELL_ITEMICON_NO );	
 		GFL_CLACT_WK_SetBgPri( wk->ItemIconActWork[i], 1 );
 
@@ -574,11 +574,14 @@ static void SetCellActor(WORLDTRADE_WORK *wk)
 
 	// ボールカプセルアイコン
 	for(i=0;i<TEMOTI_POKEMAX;i++){
-		add.mat.x = FX32_ONE *   ( PokemonIconPosTbl[i][0]+8);
-		add.mat.y = FX32_ONE *   ( PokemonIconPosTbl[i][1]+6);
-		add.pri   = 10;
-		//wk->CBallActWork[i] = GFL_CLACT_WK_Create(&add);
-		//TODO
+		add.pos_x = ( PokemonIconPosTbl[i][0]+8);
+		add.pos_y = ( PokemonIconPosTbl[i][1]+6);
+		add.softpri   = 10;
+		wk->CBallActWork[i] = GFL_CLACT_WK_Create(wk->clactSet,
+			wk->resObjTbl[MAIN_LCD][CLACT_U_CHAR_RES],
+			wk->resObjTbl[MAIN_LCD][CLACT_U_PLTT_RES], 
+			wk->resObjTbl[MAIN_LCD][CLACT_U_CELL_RES],
+			&add, CLSYS_DRAW_MAIN, HEAPID_WORLDTRADE );
 		GFL_CLACT_WK_SetAnmSeq( wk->CBallActWork[i], CELL_CBALLICON_NO );	
 		GFL_CLACT_WK_SetBgPri( wk->CBallActWork[i], 1 );
 
@@ -586,10 +589,13 @@ static void SetCellActor(WORLDTRADE_WORK *wk)
 
 	// ボックス切り替えの矢印
 	for(i=0;i<2;i++){
-		add.mat.x = FX32_ONE * BoxArrowPos[i][0];
-		add.mat.y = FX32_ONE * BoxArrowPos[i][1];
-		//wk->BoxArrowActWork[i] = GFL_CLACT_WK_Create(&add);
-		//TODO
+		add.pos_x = BoxArrowPos[i][0];
+		add.pos_y = BoxArrowPos[i][1];
+		wk->BoxArrowActWork[i] = GFL_CLACT_WK_Create(wk->clactSet,
+			wk->resObjTbl[MAIN_LCD][CLACT_U_CHAR_RES],
+			wk->resObjTbl[MAIN_LCD][CLACT_U_PLTT_RES], 
+			wk->resObjTbl[MAIN_LCD][CLACT_U_CELL_RES],
+			&add, CLSYS_DRAW_MAIN, HEAPID_WORLDTRADE );
 ///		GFL_CLACT_WK_SetAutoAnmFlag( wk->BoxArrowActWork[i], 1 );初期化時はアニメしないようにしとく
 		GFL_CLACT_WK_SetAnmSeq( wk->BoxArrowActWork[i], CELL_BOXARROW_NO+i );	
 		GFL_CLACT_WK_SetBgPri( wk->BoxArrowActWork[i], 1 );
@@ -598,8 +604,7 @@ static void SetCellActor(WORLDTRADE_WORK *wk)
 
 	// 「DSの下画面をみてねアイコン」の表示
 	GFL_CLACT_WK_SetDrawEnable( wk->PromptDsActWork, 1 );
-	WorldTrade_CLACT_PosChange( wk->PromptDsActWork, DS_ICON_X, DS_ICON_Y+256 );
-#endif
+	//WorldTrade_CLACT_PosChange( wk->PromptDsActWork, DS_ICON_X, DS_ICON_Y+256 );
 }
 
 
@@ -614,7 +619,6 @@ static void SetCellActor(WORLDTRADE_WORK *wk)
 //------------------------------------------------------------------
 static void DelCellActor( WORLDTRADE_WORK *wk )
 {
-#if 0
 	int i;
 
 	// ボックス横の矢印２こ
@@ -634,7 +638,6 @@ static void DelCellActor( WORLDTRADE_WORK *wk )
 	for(i=0;i<TEMOTI_POKEMAX;i++){
 		GFL_CLACT_WK_Remove(wk->CBallActWork[i]);
 	}
-#endif //TODO
 }
 
 #define SELECT_MENU_X	(  21 )
@@ -700,6 +703,7 @@ static void BmpWinInit( WORLDTRADE_WORK *wk )
 		WORLDTRADE_TALKFONT_PAL,  LINE_MESSAGE_OFFSET );
 
 	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->MsgWin), 0x0000 );
+	GFL_BMPWIN_MakeTransWindow(wk->MsgWin);
 
 	// 2行ウインドウ
 	wk->TalkWin	= GFL_BMPWIN_CreateFixPos( GFL_BG_FRAME0_M,
@@ -707,6 +711,7 @@ static void BmpWinInit( WORLDTRADE_WORK *wk )
 		WORLDTRADE_TALKFONT_PAL,  TALK_MESSAGE_OFFSET );
 
 	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->TalkWin), 0x0000 );
+	GFL_BMPWIN_MakeTransWindow(wk->MsgWin);
 
 	// 「もどる」
 	wk->MenuWin[1]	= GFL_BMPWIN_CreateFixPos( GFL_BG_FRAME1_M,
@@ -714,9 +719,9 @@ static void BmpWinInit( WORLDTRADE_WORK *wk )
 		0,  END_MESSAGE_OFFSET );
 
 	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->MenuWin[1]), 0x0606 );
+	GFL_BMPWIN_MakeTransWindow(wk->MenuWin[1]);
 	// 「もどる」描画
-	//WorldTrade_SysPrint( wk->MenuWin[1], wk->EndString, 0, 1, 1, PRINTSYS_LSB_Make(1,3,6) );
-	//TODO
+	WorldTrade_SysPrint( wk->MenuWin[1], wk->EndString, 0, 1, 1, PRINTSYS_LSB_Make(1,3,6), &wk->print );
 
 	// 選択メニュー領域
 //	wk->MenuWin[0]	= GFL_BMPWIN_CreateFixPos( GFL_BG_FRAME0_M,
@@ -1246,8 +1251,7 @@ static int SubSeq_SelectList( WORLDTRADE_WORK *wk )
 */
 
 	// 選択ボックス呼び出し
-	//wk->SelBoxWork = WorldTrade_SelBoxInit( wk, 3, 10 );
-	//TODO
+	wk->SelBoxWork = WorldTrade_SelBoxInit( wk, 3, 10 );
 
 
 	wk->subprocess_seq = SUBSEQ_SELECT_WAIT;
@@ -1269,9 +1273,7 @@ static int SubSeq_SelectList( WORLDTRADE_WORK *wk )
 static int SubSeq_SelectWait( WORLDTRADE_WORK *wk )
 {
 	POKEMON_PASO_PARAM *ppp;
-	//u32 ret = SelectBoxMain( wk->SelBoxWork );
-	u32 ret = 0;
-	//TODO
+	u32 ret = SelectBoxMain( wk->SelBoxWork );
 	int error=0;
 	
 //	switch(BmpMenuMain( wk->BmpMenuWork )){
@@ -1356,8 +1358,6 @@ static int SubSeq_ExchangeSelectList( WORLDTRADE_WORK *wk )
 {
 	BMPMENU_HEADER temp;
 
-	//temp.font  = FONT_SYSTEM;
-	//TODO
 	temp.x_max = 1;
 	temp.y_max = 3;
 	temp.line_spc = 0;
@@ -1386,8 +1386,7 @@ static int SubSeq_ExchangeSelectList( WORLDTRADE_WORK *wk )
 	wk->BmpMenuWork = BmpMenuAddEx( &temp, 9, 0, 0, HEAPID_WORLDTRADE, PAD_BUTTON_CANCEL );
 */
 	// 選択ボックス呼び出し
-	//wk->SelBoxWork = WorldTrade_SelBoxInit( wk, 3, 10 );
-	//TODO
+	wk->SelBoxWork = WorldTrade_SelBoxInit( wk, 3, 10 );
 
 	wk->subprocess_seq = SUBSEQ_EXCHANGE_SELECT_WAIT;
 
@@ -1410,10 +1409,7 @@ static int SubSeq_ExchangeSelectWait( WORLDTRADE_WORK *wk )
 	POKEMON_PASO_PARAM *ppp;
 	int error=0;
 //	switch(BmpMenuMain( wk->BmpMenuWork )){
-//	↑無関係
-	//u32 ret = SelectBoxMain( wk->SelBoxWork );
-	//TODO
-	u32 ret = 0;
+	u32 ret = SelectBoxMain( wk->SelBoxWork );
 	
 	switch(ret){
 	// 「ようすをみる」
@@ -1892,6 +1888,7 @@ static void SubSeq_MessagePrint( WORLDTRADE_WORK *wk, int msgno, int wait, int f
 
 	// 文字列描画開始
 	GF_STR_PrintSimple( win, FONT_TALK, wk->TalkString, 0, 0, &wk->print );
+	GFL_BMPWIN_MakeTransWindow(win);
 
 
 	GFL_STR_DeleteBuffer(tempbuf);
@@ -2151,8 +2148,7 @@ static void NowBoxPageInfoGet( WORLDTRADE_WORK *wk, int now)
 	GFL_ARC_CloseDataHandle( handle );
 	
 	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->SubWin), 0x0000 );
-	//WorldTrade_SysPrint( wk->SubWin, wk->BoxTrayNameString, 0, 5, 1, PRINTSYS_LSB_Make(1,2,0) );
-	//TODO
+	WorldTrade_SysPrint( wk->SubWin, wk->BoxTrayNameString, 0, 5, 1, PRINTSYS_LSB_Make(1,2,0), &wk->print );
 	
 	// 交換ポケモン選択モードの時は条件に合わないポケモンを暗くする
 	if(wk->sub_process_mode==MODE_EXCHANGE_SELECT){

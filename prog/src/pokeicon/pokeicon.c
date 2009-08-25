@@ -86,6 +86,7 @@ u32 POKEICON_GetCgxArcIndex( const POKEMON_PASO_PARAM* ppp )
 u32 POKEICON_GetCgxArcIndexByMonsNumber( u32 mons, u32 form_no, BOOL egg )
 {
 #ifdef PM_DEBUG
+#if 0
 	{
 		if(GX_GetOBJVRamModeChar() != GX_OBJVRAMMODE_CHAR_1D_128K){
 			GF_ASSERT(0 && "非対応のマッピングモードです");
@@ -101,6 +102,7 @@ u32 POKEICON_GetCgxArcIndexByMonsNumber( u32 mons, u32 form_no, BOOL egg )
 		}
 	}
 #endif
+#endif	//PM_DEBUG
 
 	if( egg == TRUE ){
 		if( mons == MONSNO_MANAFI ){

@@ -232,7 +232,8 @@ enum{
 #define POKEICON_NOTSELECT_PAL_OFFSET	(  6 )
 
 ///< ポケモンアイコンが始まるVRAM上でのオフセット
-#define POKEICON_VRAM_OFFSET ( 12 )
+#define POKEICON_VRAM_OFFSET	(12 + 16)
+
 
 ///< ５０音順のポケモンの頭文字の数（アカサタナハマヤラワ）
 #define HEADWORD_NUM		( 10 )

@@ -13,6 +13,7 @@
 #include "savedata/save_tbl.h"
 
 #define POKEMON_DATA_SIZE		(236)
+//POKETOOL_GetWorkSize()
 
 //============================================================================================
 //============================================================================================
@@ -63,7 +64,6 @@ void WorldTradeData_Init(WORLDTRADE_DATA * WorldTradeData )
 {
 	
 	MI_CpuClearFast(WorldTradeData, sizeof(WORLDTRADE_DATA));
-	
 }
 
 
@@ -107,7 +107,7 @@ void  WorldTradeData_SetFlag( WORLDTRADE_DATA* WorldTradeData, int flag )
 //==============================================================================
 void  WorldTradeData_GetPokemonData( WORLDTRADE_DATA* WorldTradeData, POKEMON_PARAM *poke )
 {
-	MI_CpuCopyFast( WorldTradeData->PokemonData, (void*)poke, POKEMON_DATA_SIZE );
+	GFL_STD_MemCopy( WorldTradeData->PokemonData, (void*)poke, POKEMON_DATA_SIZE );
 }
 
 //==============================================================================
@@ -122,7 +122,7 @@ void  WorldTradeData_GetPokemonData( WORLDTRADE_DATA* WorldTradeData, POKEMON_PA
 //==============================================================================
 void  WorldTradeData_SetPokemonData( WORLDTRADE_DATA* WorldTradeData, POKEMON_PARAM *poke, int boxno )
 {
-	MI_CpuCopyFast( (void*)poke, WorldTradeData->PokemonData, POKEMON_DATA_SIZE );
+	GFL_STD_MemCopy( (void*)poke, WorldTradeData->PokemonData, POKEMON_DATA_SIZE );
 }
 
 

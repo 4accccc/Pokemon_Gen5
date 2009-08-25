@@ -15,10 +15,6 @@
 #include "print/wordset.h"
 #include "message.naix"
 #include "system/wipe.h"
-//#include "system/fontproc.h"
-//#include "system/fontoam.h"
-//#include "system/window.h"
-//TODO
 #include "system/bmp_menu.h"
 #include "system/bmp_winframe.h"
 #include "sound/pm_sndsys.h"
@@ -27,8 +23,6 @@
 #include "poke_tool/monsno_def.h"
 
 #include "savedata/wifilist.h"
-//#include "savedata/zukanwork.h"
-//TODO
 #include "net_app/worldtrade.h"
 #include "worldtrade_local.h"
 #include "msg/msg_wifi_lobby.h"
@@ -36,12 +30,9 @@
 #include "print/printsys.h"
 
 #include "worldtrade.naix"			// グラフィックアーカイブ定義
-//#include "../zukanlist/zkn_data/zukan_data.naix"
-///#include "application/zukanlist/zkn_sort_akstnhmyrw_idx.h"
-//TODO
+#include "zukan_data.naix"
+#include "zkn_sort_akstnhmyrw_idx.h"
 
-//#include "battle/battle_server.h"
-//TODO
 
 #include "msg/msg_wifi_place_msg_world.h"
 
@@ -449,8 +440,8 @@ int WorldTrade_Deposit_Init(WORLDTRADE_WORK *wk, int seq)
    
     // ほしいポケモン・あずけるポケモン描画
 	WodrldTrade_PokeWantPrint( wk->MsgManager, wk->MonsNameManager, 
-				wk->WordSet, wk->InfoWin, 0,DPW_TR_GENDER_NONE,-1, &wk->print);
-	PokeDepositPrint( wk->MsgManager, wk->WordSet, wk->InfoWin, wk->deposit_ppp, &wk->Post, &wk->print );
+				wk->WordSet, &wk->InfoWin[0], 0,DPW_TR_GENDER_NONE,-1, &wk->print);
+	PokeDepositPrint( wk->MsgManager, wk->WordSet, &wk->InfoWin[3], wk->deposit_ppp, &wk->Post, &wk->print );
 
 	// 条件入力システム初期化
 	{
@@ -466,6 +457,7 @@ int WorldTrade_Deposit_Init(WORLDTRADE_WORK *wk, int seq)
 		wih.CountryNameManager = wk->CountryNameManager;
 		wih.Zukan			= wk->param->zukanwork;
 		wih.SinouTable      = wk->dw->sinouTable;
+		wih.config					= wk->param->config;
 		wk->WInputWork = WorldTrade_Input_Init( &wih,  GFL_BG_FRAME2_M, SITUATION_DEPOSIT );
 	}
 	
@@ -574,6 +566,7 @@ static void SubSeq_MessagePrint( WORLDTRADE_WORK *wk, int msgno, int wait, int f
 
 	// 文字列描画開始
 	GF_STR_PrintSimple( wk->MsgWin, FONT_TALK, wk->TalkString, 0, 0, &wk->print);
+	GFL_BMPWIN_MakeTransWindow(wk->MsgWin);
 
 	GFL_STR_DeleteBuffer(tempbuf);
 }
@@ -596,44 +589,48 @@ static void BgInit( void )
 	{	
 		GFL_BG_BGCNT_HEADER TextBgCntDat = {
 			0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
-			GX_BG_SCRBASE_0xf800, GX_BG_CHARBASE_0x00000, GX_BG_EXTPLTT_01,
+			GX_BG_SCRBASE_0xf800, GX_BG_CHARBASE_0x00000, GFL_BG_CHRSIZ_256x256,GX_BG_EXTPLTT_01,
 			0, 0, 0, FALSE
 		};
 		GFL_BG_SetBGControl( GFL_BG_FRAME0_M, &TextBgCntDat, GFL_BG_MODE_TEXT );
 		GFL_BG_ClearScreen( GFL_BG_FRAME0_M );
+		GFL_BG_SetVisible( GFL_BG_FRAME0_M, TRUE );
 	}
 
 	// メイン画面メニュー面
 	{	
 		GFL_BG_BGCNT_HEADER TextBgCntDat = {
 			0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
-			GX_BG_SCRBASE_0xf000, GX_BG_CHARBASE_0x08000, GX_BG_EXTPLTT_01,
+			GX_BG_SCRBASE_0xf000, GX_BG_CHARBASE_0x08000, GFL_BG_CHRSIZ_256x256,GX_BG_EXTPLTT_01,
 			2, 0, 0, FALSE
 		};
 		GFL_BG_SetBGControl( GFL_BG_FRAME1_M, &TextBgCntDat, GFL_BG_MODE_TEXT );
+		GFL_BG_SetVisible( GFL_BG_FRAME1_M, TRUE );
 	}
 
 	// メイン画面背景面
 	{	
 		GFL_BG_BGCNT_HEADER TextBgCntDat = {
 			0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
-			GX_BG_SCRBASE_0xe800, GX_BG_CHARBASE_0x04000, GX_BG_EXTPLTT_01,
+			GX_BG_SCRBASE_0xe800, GX_BG_CHARBASE_0x04000, GFL_BG_CHRSIZ_256x256,GX_BG_EXTPLTT_01,
 			1, 0, 0, FALSE
 		};
 		GFL_BG_SetBGControl( GFL_BG_FRAME2_M, &TextBgCntDat, GFL_BG_MODE_TEXT );
 		GFL_BG_FillScreen(	GFL_BG_FRAME2_M, 0x0000, 0, 0, 32, 24, 0 );
 		GFL_BG_LoadScreenReq( GFL_BG_FRAME2_M );
+		GFL_BG_SetVisible( GFL_BG_FRAME2_M, TRUE );
 	}
 
 	// 情報表示画面テキスト面
 	{	
 		GFL_BG_BGCNT_HEADER TextBgCntDat = {
 			0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
-			GX_BG_SCRBASE_0xe000, GX_BG_CHARBASE_0x00000, GX_BG_EXTPLTT_01,
+			GX_BG_SCRBASE_0xe000, GX_BG_CHARBASE_0x00000, GFL_BG_CHRSIZ_256x256,GX_BG_EXTPLTT_01,
 			0, 0, 0, FALSE
 		};
 		GFL_BG_SetBGControl( GFL_BG_FRAME3_M, &TextBgCntDat, GFL_BG_MODE_TEXT );
 		GFL_BG_ClearScreen( GFL_BG_FRAME3_M );
+		GFL_BG_SetVisible( GFL_BG_FRAME3_M, TRUE );
 	}
 
 	GFL_BG_SetClearCharacter( GFL_BG_FRAME0_M, 32, 0, HEAPID_WORLDTRADE );
@@ -748,6 +745,7 @@ static void BmpWinInit( WORLDTRADE_WORK *wk )
 		WORLDTRADE_TALKFONT_PAL,  LINE_MESSAGE_OFFSET );
 
 	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->MsgWin), 0x0000 );
+	GFL_BMPWIN_MakeTransWindow(wk->MsgWin);
 //	Enter_MessagePrint( wk, wk->MsgManager, msg_gtc_05_001, MSG_ALLPUT, 0 );
 
 
@@ -802,30 +800,42 @@ static void BmpWinDelete( WORLDTRADE_WORK *wk )
 static void SetCellActor(WORLDTRADE_WORK *wk)
 {
 	//登録情報格納
-#if 0
-	CLACT_ADD add;
-	WorldTrade_MakeCLACT( &add,  wk, &wk->clActHeader_main, NNS_G2D_VRAM_TYPE_2DMAIN );
+	GFL_CLWK_DATA	add;
+	//WorldTrade_MakeCLACT( &add,  wk, &wk->clActHeader_main, NNS_G2D_VRAM_TYPE_2DMAIN );
+
+	GFL_STD_MemClear(&add,sizeof(GFL_CLWK_DATA));
 
 	// 入力用カーソル登録
-	add.mat.x = FX32_ONE*160;
-	add.mat.y = FX32_ONE*32;
-	wk->SubCursorActWork = GFL_CLACT_WK_Create(&add);
+	add.pos_x = 160;
+	add.pos_y = 32;
+	wk->SubCursorActWork = GFL_CLACT_WK_Create(wk->clactSet,
+			wk->resObjTbl[MAIN_LCD][CLACT_U_CHAR_RES],
+			wk->resObjTbl[MAIN_LCD][CLACT_U_PLTT_RES], 
+			wk->resObjTbl[MAIN_LCD][CLACT_U_CELL_RES],
+			&add, CLSYS_DRAW_MAIN, HEAPID_WORLDTRADE );
 	GFL_CLACT_WK_SetAnmSeq( wk->SubCursorActWork, 47 );
 	GFL_CLACT_WK_SetDrawEnable( wk->SubCursorActWork, 0 );
 
 	// 入力用ページ移動カーソル登録（右向き）
-	add.mat.x = FX32_ONE*228;
-	add.mat.y = FX32_ONE*117;
-	wk->BoxArrowActWork[0] = GFL_CLACT_WK_Create(&add);
+	add.pos_x = 228;
+	add.pos_y = 117;
+	wk->BoxArrowActWork[0] = GFL_CLACT_WK_Create(wk->clactSet,
+			wk->resObjTbl[MAIN_LCD][CLACT_U_CHAR_RES],
+			wk->resObjTbl[MAIN_LCD][CLACT_U_PLTT_RES], 
+			wk->resObjTbl[MAIN_LCD][CLACT_U_CELL_RES],
+			&add, CLSYS_DRAW_MAIN, HEAPID_WORLDTRADE );
 	GFL_CLACT_WK_SetAnmSeq( wk->BoxArrowActWork[0], CELL_BOXARROW_NO );
 	GFL_CLACT_WK_SetDrawEnable( wk->BoxArrowActWork[0], 0 );
 	// 入力用ページ移動カーソル登録(左向き）
-	add.mat.x = FX32_ONE*140;
-	wk->BoxArrowActWork[1] = GFL_CLACT_WK_Create(&add);
+	add.pos_x = 140;
+	wk->BoxArrowActWork[1] = GFL_CLACT_WK_Create(wk->clactSet,
+			wk->resObjTbl[MAIN_LCD][CLACT_U_CHAR_RES],
+			wk->resObjTbl[MAIN_LCD][CLACT_U_PLTT_RES], 
+			wk->resObjTbl[MAIN_LCD][CLACT_U_CELL_RES],
+			&add, CLSYS_DRAW_MAIN, HEAPID_WORLDTRADE );
 	GFL_CLACT_WK_SetAnmSeq( wk->BoxArrowActWork[1], CELL_BOXARROW_NO+1 );
 	GFL_CLACT_WK_SetDrawEnable( wk->BoxArrowActWork[1], 0 );
 
-#endif //TODO
 }
 
 //------------------------------------------------------------------
@@ -1971,21 +1981,16 @@ u16* WorldTrade_ZukanSortDataGet( int heap, int idx, int* p_arry_num )
 {
 	u32 size;
 	u16* p_buf;
-#if 0
 	// 読み込み
-	p_buf = GFL_ARC_UTIL_LoadEx( ARCID_ZUKAN_DATA, NARC_zukan_data_zkn_sort_aiueo_dat, FALSE, heap, ALLOC_TOP, &size );
+	p_buf = GFL_ARC_UTIL_LoadEx( ARCID_ZUKAN_DATA, NARC_zukan_data_zkn_sort_aiueo_dat, FALSE, heap, &size );
 
 	*p_arry_num = size / ZKN_SORTDATA_ONESIZE;
 
 	return p_buf;
-#endif 
-	//TODO
-	return NULL;
 	// ポケモンの名前を取得する
 	//STRBUF* MSGDAT_UTIL_GetMonsName( u32 monsno, u32 heapID )
 }
 
-#if 0
 static const u32 ZukanSortHiraTable[]={
 	NARC_zukan_data_zkn_sort_only_a_dat,	// あ
 	NARC_zukan_data_zkn_sort_only_i_dat,
@@ -2032,7 +2037,6 @@ static const u32 ZukanSortHiraTable[]={
 	NARC_zukan_data_zkn_sort_only_ro_dat,
 	NARC_zukan_data_zkn_sort_only_wa_dat,	// わ
 };
-#endif //TODO
 
 //------------------------------------------------------------------
 /**
@@ -2047,18 +2051,15 @@ static const u32 ZukanSortHiraTable[]={
 //------------------------------------------------------------------
 u16* WorldTrade_ZukanSortDataGet2( int heap, int idx, int* p_arry_num )
 {
-#if 0
 	u32 size;
 	u16* p_buf;
 	
 	// 読み込み
-	p_buf = GFL_ARC_UTIL_LoadEx( ARC_ZUKAN_DATA, ZukanSortHiraTable[idx], FALSE, heap, ALLOC_BOTTOM, &size );
+	p_buf = GFL_ARC_UTIL_LoadEx( ARCID_ZUKAN_DATA, ZukanSortHiraTable[idx], FALSE, heap, &size );
 
 	*p_arry_num = size / ZKN_SORTDATA_ONESIZE;
 
 	return p_buf;
-#endif //TODO
-	return NULL;
 
 	// ポケモンの名前を取得する
 	//STRBUF* MSGDAT_UTIL_GetMonsName( u32 monsno, u32 heapID )
@@ -2078,7 +2079,6 @@ u16* WorldTrade_ZukanSortDataGet2( int heap, int idx, int* p_arry_num )
 //==============================================================================
 u8 *WorldTrade_SinouZukanDataGet( int heap  )
 {
-#if 0
 	u32 size,num,i;
 	u16* p_buf;
 
@@ -2087,7 +2087,7 @@ u8 *WorldTrade_SinouZukanDataGet( int heap  )
 	MI_CpuClearFast( sinouData, MONSNO_END+1 );
 
 	// シンオウ図鑑テーブル
-	p_buf = GFL_ARC_UTIL_LoadEx( ARC_ZUKAN_DATA, NARC_zukan_data_zkn_sort_shinoh_dat, FALSE, heap, ALLOC_TOP, &size );
+	p_buf = GFL_ARC_UTIL_LoadEx( ARCID_ZUKAN_DATA, NARC_zukan_data_zkn_sort_shinoh_dat, FALSE, heap, &size );
 	
 	num = size / ZKN_SORTDATA_ONESIZE;
 
@@ -2101,8 +2101,6 @@ u8 *WorldTrade_SinouZukanDataGet( int heap  )
 	GFL_HEAP_FreeMemory(p_buf);
 
 	return sinouData;
-#endif //TODO
-	return NULL;
 }
 
 
@@ -2223,7 +2221,6 @@ static const BMPMENULIST_HEADER MenuListHeader = {
     FONT_SYSTEM,			// 文字指定
     0,						// ＢＧカーソル(allow)表示フラグ(0:ON,1:OFF)
     NULL,                   // ワーク
-		//TODO
 };
 
 
@@ -2261,7 +2258,6 @@ BMPMENULIST_WORK *WorldTrade_WordheadBmpListMake( WORLDTRADE_WORK *wk, BMP_MENUL
 
 // 頭文字テーブル（ソートされたポケモンの何番目に「ア・カ・サ…」が登場するか？
 static u16 NameHeadTable[]={
-#if 0
 	ZKN_AKSTNHMYRW_IDX_A,
 	ZKN_AKSTNHMYRW_IDX_K,
 	ZKN_AKSTNHMYRW_IDX_S,
@@ -2273,7 +2269,6 @@ static u16 NameHeadTable[]={
 	ZKN_AKSTNHMYRW_IDX_R,
 	ZKN_AKSTNHMYRW_IDX_W,
 	ZKN_AKSTNHMYRW_IDX_END,
-#endif //TODO
 	0,
 };
 

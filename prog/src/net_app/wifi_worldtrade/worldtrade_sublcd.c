@@ -15,18 +15,10 @@
 #include "print/wordset.h"
 #include "message.naix"
 #include "system/wipe.h"
-//#include "system/fontproc.h
-//#include "system/fontoam.h"
-//#include "system/window.h"
-//TODO
 #include "system/bmp_menu.h"
 #include "sound/pm_sndsys.h"
-//#include "field/comm_union_beacon.h"
-//TODO
 
 #include "savedata/wifilist.h"
-//#include "savedata/zukanwork.h"
-//TODO
 
 #include "net_app/union/union_beacon_tool.h"
 #include "net_app/worldtrade.h"
@@ -136,7 +128,7 @@ void WorldTrade_SubLcdActorAdd( WORLDTRADE_WORK *wk, int sex )
 	add.pos_y = ( 130 );// + NAMEIN_SUB_ACTOR_DISTANCE;
 	add.anmseq	= 0;
 	add.softpri	= 0;
-	add.bgpri		= 2;
+	add.bgpri		= 0;
 	wk->SubActWork[0] = GFL_CLACT_WK_Create( wk->clactSet,
 			wk->resObjTbl[SUB_LCD][CLACT_U_CHAR_RES],
 			wk->resObjTbl[SUB_LCD][CLACT_U_PLTT_RES], 

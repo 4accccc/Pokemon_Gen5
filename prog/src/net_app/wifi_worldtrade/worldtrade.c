@@ -17,25 +17,15 @@
 #include "msg/msg_wifi_lobby.h"
 #include "system/wipe.h"
 
-//#include "system/fontoam.h"
-//#include "system/window.h"
-//TODO
-
 #include "print/printsys.h"
 
 
 #include "savedata/wifilist.h"
-//#include "savedata/zukanwork.h"
-//TODO
 
 #include "poke_tool/monsno_def.h"
 #include "system/bmp_menu.h"
 #include "net_app/worldtrade.h"
 #include "sound/pm_sndsys.h"
-//#include "field/fld_bmp.h"
-//#include "field/comm_union_beacon.h"
-//#include "field/comm_union_view_common.h"
-//TODO
 #include "savedata/save_control.h"
 
 #include "net/dwc_raputil.h"
@@ -508,7 +498,7 @@ static void VBlankFunc( GFL_TCB *, void *work )
 	//REND_OAMTrans();	
 
 	//ConnectBGPalAnm_VBlank(&wk->cbp);
-	//TODO InitでVTask読んでるのでなくなった？
+	//InitでVTask読んでるのでなくなった？
 	
 //	OS_SetIrqCheckFlag( OS_IE_V_BLANK );
 }
@@ -653,7 +643,6 @@ static void char_pltt_manager_init(void)
 	CharLoadStartAll();
 	PlttLoadStartAll();
 #endif
-	//TODO
 }
 
 
@@ -703,7 +692,7 @@ static void InitCellActor(WORLDTRADE_WORK *wk, const GFL_DISP_VRAM * vram )
 	wk->resObjTbl[MAIN_LCD][CLACT_U_CHAR_RES] = GFL_CLGRP_CGR_Register( p_handle, NARC_worldtrade_worldtrade_obj_lz_ncgr, 1, CLSYS_DRAW_MAIN, HEAPID_WORLDTRADE);
 
 	//pal読み込み
-	wk->resObjTbl[MAIN_LCD][CLACT_U_PLTT_RES] = GFL_CLGRP_PLTT_Register(p_handle, NARC_worldtrade_worldtrade_obj_nclr,CLSYS_DRAW_MAIN, 3*0x20, HEAPID_WORLDTRADE);
+	wk->resObjTbl[MAIN_LCD][CLACT_U_PLTT_RES] = GFL_CLGRP_PLTT_Register(p_handle, NARC_worldtrade_worldtrade_obj_nclr,CLSYS_DRAW_MAIN, /*3*0x20*/0, HEAPID_WORLDTRADE);
 
 	//cell読み込み
 	wk->resObjTbl[MAIN_LCD][CLACT_U_CELL_RES] = GFL_CLGRP_CELLANIM_Register( p_handle, NARC_worldtrade_worldtrade_obj_NCER, NARC_worldtrade_worldtrade_obj_NANR, HEAPID_WORLDTRADE);
@@ -716,7 +705,7 @@ static void InitCellActor(WORLDTRADE_WORK *wk, const GFL_DISP_VRAM * vram )
 	wk->resObjTbl[SUB_LCD][CLACT_U_CHAR_RES] = GFL_CLGRP_CGR_Register( p_handle, NARC_worldtrade_hero_lz_ncgr, 1, CLSYS_DRAW_SUB, HEAPID_WORLDTRADE);
 
 	//pal読み込み
-	wk->resObjTbl[SUB_LCD][CLACT_U_PLTT_RES] = GFL_CLGRP_PLTT_Register(p_handle, NARC_worldtrade_hero_nclr, CLSYS_DRAW_SUB, 10*0x20, HEAPID_WORLDTRADE);
+	wk->resObjTbl[SUB_LCD][CLACT_U_PLTT_RES] = GFL_CLGRP_PLTT_Register(p_handle, NARC_worldtrade_hero_nclr, CLSYS_DRAW_SUB, /*10*0x20*/0, HEAPID_WORLDTRADE);
 
 	//cell読み込み
 	wk->resObjTbl[SUB_LCD][CLACT_U_CELL_RES] = GFL_CLGRP_CELLANIM_Register(p_handle, NARC_worldtrade_worldtrade_obj_s_NCER, NARC_worldtrade_worldtrade_obj_s_NANR, HEAPID_WORLDTRADE);
@@ -849,7 +838,7 @@ static const BMPWIN_DAT YesNoBmpWin = {
 	BMP_YESNO_SX, BMP_YESNO_SY, BMP_YESNO_PAL, 
 	0, //後で指定する
 };
-#endif //TODO
+#endif //使っていないらしい
 
 
 BMPMENU_WORK *WorldTrade_BmpWinYesNoMake( int y, int yesno_bmp_cgx )
@@ -863,7 +852,7 @@ BMPMENU_WORK *WorldTrade_BmpWinYesNoMake( int y, int yesno_bmp_cgx )
 
 	return BmpYesNoSelectInit( &yesnowin, WORLDTRADE_MENUFRAME_CHR, WORLDTRADE_MENUFRAME_PAL, HEAPID_WORLDTRADE );
 #endif
-	//TODO
+	//使っていないらしい
 	return NULL;
 }
 //==============================================================================
@@ -952,7 +941,6 @@ u32 WorldTrade_TouchSwMain(WORLDTRADE_WORK* wk)
 #define WORLDTRADESELBOX_CGX_SIZE	( WORLDTRADE_SELBOX_W*2 )
 #define WORLDTRADESEL_MAX	(3)
 
-#if 0
 ///セレクトボックス　ヘッダデータ構造体
 static const SELBOX_HEAD_PRM sbox_sel = {
 	FALSE,SBOX_OFSTYPE_CENTER,				///<ループフラグ、左寄せorセンタリング
@@ -964,8 +952,6 @@ static const SELBOX_HEAD_PRM sbox_sel = {
 	0x3000/32+WORLDTRADESELBOX_CGX_SIZE*WORLDTRADESEL_MAX,	// フレームcgx
 	WORLDTRADESELBOX_CGX_SIZE*WORLDTRADESEL_MAX,///<BMPウィンドウ占有キャラクタ領域サイズ(char)
 };
-#endif 
-//TODO
 
 //==============================================================================
 /**
@@ -980,7 +966,6 @@ static const SELBOX_HEAD_PRM sbox_sel = {
 //==============================================================================
 SELBOX_WORK* WorldTrade_SelBoxInit( WORLDTRADE_WORK *wk, int count, int y )
 {
-#if 0
 	SELBOX_WORK* list_wk;
 
 	wk->SelBoxSys = SelectBoxSys_AllocWork( HEAPID_WORLDTRADE ,NULL );
@@ -993,6 +978,7 @@ SELBOX_WORK* WorldTrade_SelBoxInit( WORLDTRADE_WORK *wk, int count, int y )
 
 		head.prm  = sbox_sel;
 		head.list = (const BMPLIST_DATA*)wk->BmpMenuList;
+		head.fontHandle	= wk->print.font;
 
 		head.count = count;
 	
@@ -1003,8 +989,6 @@ SELBOX_WORK* WorldTrade_SelBoxInit( WORLDTRADE_WORK *wk, int count, int y )
 	WorldTrade_SetPassive(1);
 
 	return list_wk;
-#endif //TODO
-	return NULL;
 }
 
 //--------------------------------------------------------------
@@ -1019,7 +1003,6 @@ SELBOX_WORK* WorldTrade_SelBoxInit( WORLDTRADE_WORK *wk, int count, int y )
 //--------------------------------------------------------------
 static void WorldTrade_SelBoxCallback(SELBOX_WORK* sbox, u8 cur_pos, void* work, SBOX_CB_MODE mode)
 {
-#if 0
     switch(mode){
     case SBOX_CB_MODE_INI:	//初期化時
         break;
@@ -1029,8 +1012,6 @@ static void WorldTrade_SelBoxCallback(SELBOX_WORK* sbox, u8 cur_pos, void* work,
         PMSND_PlaySE(SEQ_SE_DP_SELECT);
         break;
     }
-#endif 
-//TODO
 }
 
 //==============================================================================

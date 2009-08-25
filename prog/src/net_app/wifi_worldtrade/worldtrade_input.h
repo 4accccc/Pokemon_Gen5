@@ -120,6 +120,8 @@ typedef struct{
 	GFL_MSGDATA *CountryNameManager;	// 名前入力メッセージデータマネージャー
 	ZUKAN_WORK		*Zukan;					// ずかん情報データ
 	u8				*SinouTable;			// シンオウポケモンかどうかがフラグで格納されているテーブル
+	const CONFIG	*config;				//	コンフィグデータ
+
 
 }WORLDTRADE_INPUT_HEADER;
 
@@ -160,9 +162,11 @@ typedef struct{
     u8     see_check[SEE_CHECK_MAX];   // 五十音のリストの中にポケモンが1匹以上含まれているか
     u8     listpos_backup_x;   // X位置記憶の為のバックアップ
     u8      padding;
+
+		WT_PRINT	print;
 }WORLDTRADE_INPUT_WORK;
 
-extern void WorldTrade_Input_SysPrint( BGWINFRM_WORK *wfwk, GFL_BMPWIN *win, STRBUF *strbuf, int x, PRINTSYS_LSB color );
+extern void WorldTrade_Input_SysPrint( BGWINFRM_WORK *wfwk, GFL_BMPWIN *win, STRBUF *strbuf, int x, PRINTSYS_LSB color, WT_PRINT *print );
 
 WORLDTRADE_INPUT_WORK * WorldTrade_Input_Init( WORLDTRADE_INPUT_HEADER *wih, int frame, int situation );
 extern u32 WorldTrade_Input_Main( WORLDTRADE_INPUT_WORK *wk );

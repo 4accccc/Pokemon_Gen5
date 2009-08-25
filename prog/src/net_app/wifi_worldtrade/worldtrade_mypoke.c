@@ -15,15 +15,9 @@
 #include "print/wordset.h"
 #include "message.naix"
 #include "system/wipe.h"
-//#include "system/fontproc.h"
-//#include "system/fontoam.h"
-//#include "system/window.h"
-//TODO
 #include "system/bmp_menu.h"
 #include "sound/pm_sndsys.h"
 #include "savedata/wifilist.h"
-//#include "savedata/zukanwork.h"
-//TODO
 #include "item/item.h"
 #include "poke_tool/pokeparty.h"
 
@@ -244,42 +238,46 @@ static void BgInit( void )
 	{	
 		GFL_BG_BGCNT_HEADER TextBgCntDat = {
 			0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
-			GX_BG_SCRBASE_0xf800, GX_BG_CHARBASE_0x00000, GX_BG_EXTPLTT_01,
+			GX_BG_SCRBASE_0xf800, GX_BG_CHARBASE_0x00000, GFL_BG_CHRSIZ_256x256,GX_BG_EXTPLTT_01,
 			0, 0, 0, FALSE
 		};
 		GFL_BG_SetBGControl( GFL_BG_FRAME0_M, &TextBgCntDat, GFL_BG_MODE_TEXT );
 		GFL_BG_ClearScreen( GFL_BG_FRAME0_M );
+		GFL_BG_SetVisible( GFL_BG_FRAME0_M, TRUE );
 	}
 
 	// メイン画面メニュー面
 	{	
 		GFL_BG_BGCNT_HEADER TextBgCntDat = {
 			0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
-			GX_BG_SCRBASE_0xf000, GX_BG_CHARBASE_0x08000, GX_BG_EXTPLTT_01,
+			GX_BG_SCRBASE_0xf000, GX_BG_CHARBASE_0x08000, GFL_BG_CHRSIZ_256x256,GX_BG_EXTPLTT_01,
 			1, 0, 0, FALSE
 		};
 		GFL_BG_SetBGControl( GFL_BG_FRAME1_M, &TextBgCntDat, GFL_BG_MODE_TEXT );
+		GFL_BG_SetVisible( GFL_BG_FRAME1_M, TRUE );
 	}
 
 	// メイン画面背景面
 	{	
 		GFL_BG_BGCNT_HEADER TextBgCntDat = {
 			0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
-			GX_BG_SCRBASE_0xe800, GX_BG_CHARBASE_0x08000, GX_BG_EXTPLTT_01,
+			GX_BG_SCRBASE_0xe800, GX_BG_CHARBASE_0x08000, GFL_BG_CHRSIZ_256x256,GX_BG_EXTPLTT_01,
 			1, 0, 0, FALSE
 		};
 		GFL_BG_SetBGControl( GFL_BG_FRAME2_M, &TextBgCntDat, GFL_BG_MODE_TEXT );
+		GFL_BG_SetVisible( GFL_BG_FRAME2_M, TRUE );
 	}
 
 	// 情報表示画面テキスト面
 	{	
 		GFL_BG_BGCNT_HEADER TextBgCntDat = {
 			0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
-			GX_BG_SCRBASE_0xe000, GX_BG_CHARBASE_0x00000, GX_BG_EXTPLTT_01,
+			GX_BG_SCRBASE_0xe000, GX_BG_CHARBASE_0x00000, GFL_BG_CHRSIZ_256x256,GX_BG_EXTPLTT_01,
 			0, 0, 0, FALSE
 		};
 		GFL_BG_SetBGControl( GFL_BG_FRAME3_M, &TextBgCntDat, GFL_BG_MODE_TEXT );
 		GFL_BG_ClearScreen( GFL_BG_FRAME3_M );
+		GFL_BG_SetVisible( GFL_BG_FRAME3_M, TRUE );
 	}
 
 	GFL_BG_SetClearCharacter( GFL_BG_FRAME0_M, 32, 0, HEAPID_WORLDTRADE );
@@ -379,18 +377,22 @@ static void BgGraphicSet( WORLDTRADE_WORK * wk )
 static void SetCellActor(WORLDTRADE_WORK *wk)
 {
 	//登録情報格納
-#if 0
-	CLACT_ADD add;
-	WorldTrade_MakeCLACT( &add,  wk, &wk->clActHeader_main, NNS_G2D_VRAM_TYPE_2DMAIN );
+	GFL_CLWK_DATA add;
+//WorldTrade_MakeCLACT( &add,  wk, &wk->clActHeader_main, NNS_G2D_VRAM_TYPE_2DMAIN );
+
+	GFL_STD_MemClear( &add, sizeof(GFL_CLWK_DATA) );
 
 	// 自分のポケモン表示
-	add.mat.x = FX32_ONE *   208;
-	add.mat.y = FX32_ONE *    58;
-	wk->PokemonActWork = GFL_CLACT_WK_Create(&add);
+	add.pos_x = 208;
+	add.pos_y = 58;
+	wk->PokemonActWork = GFL_CLACT_WK_Create( wk->clactSet,
+			wk->resObjTbl[MAIN_LCD][CLACT_U_CHAR_RES],
+			wk->resObjTbl[MAIN_LCD][CLACT_U_PLTT_RES], 
+			wk->resObjTbl[MAIN_LCD][CLACT_U_CELL_RES],
+			&add, CLSYS_DRAW_MAIN, HEAPID_WORLDTRADE );
 	GFL_CLACT_WK_SetAutoAnmFlag(wk->PokemonActWork,1);
 	GFL_CLACT_WK_SetAnmSeq( wk->PokemonActWork, 37 );
 	GFL_CLACT_WK_SetBgPri(wk->PokemonActWork, 1 );
-#endif //TODO
 	WirelessIconEasy();
 
 }
@@ -465,11 +467,13 @@ static void BmpWinInit( WORLDTRADE_WORK *wk )
 		WORLDTRADE_TALKFONT_PAL,  LINE_MESSAGE_OFFSET );
 
 	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->MsgWin), 0x0000 );
+	GFL_BMPWIN_MakeTransWindow( wk->MsgWin );
 
 	// BMPMENU用の領域がここにある
 	wk->MenuWin[0]	= GFL_BMPWIN_CreateFixPos( GFL_BG_FRAME0_M,
 		SELECT_MENU_X, SELECT_MENU_Y, SELECT_MENU_SX, SELECT_MENU_SY, 
 		WORLDTRADE_TALKFONT_PAL,  SELECT_MENU_OFFSET );	
+	GFL_BMPWIN_MakeTransWindow( wk->MenuWin[0] );
 
 	// BG0面BMPWIN情報ウインドウ確保
 	{
@@ -485,6 +489,7 @@ static void BmpWinInit( WORLDTRADE_WORK *wk )
 					WORLDTRADE_TALKFONT_PAL,  offset );
 			GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->InfoWin[i]), 0x0000 );
 			offset += info_bmpwin_table[i][2]*info_bmpwin_table[i][3];
+			GFL_BMPWIN_MakeTransWindow( wk->InfoWin[i] );
 		}
 	}
 	
@@ -974,7 +979,7 @@ void WorldTrade_PokeInfoPrint( 	GFL_MSGDATA *MsgManager,
 							WT_PRINT *print )
 {
 	STRBUF *strbuf,	*sexbuf, *levellabel, *levelbuf, *itemlabel, *namelabel;
-	STRBUF *namebuf = GFL_STR_CreateBuffer( (MONS_NAME_SIZE+EOM_SIZE)*2, HEAPID_WORLDTRADE );
+	STRBUF *namebuf = GFL_STR_CreateBuffer( (BUFLEN_POKEMON_NAME+EOM_SIZE)*2, HEAPID_WORLDTRADE );
 	STRBUF *itembuf = GFL_STR_CreateBuffer( (BUFLEN_ITEM_NAME+EOM_SIZE)*2, HEAPID_WORLDTRADE );
 	int sex, level,itemno,i,monsno;
 	
@@ -1041,8 +1046,8 @@ void WorldTrade_PokeInfoPrint2( GFL_MSGDATA *MsgManager, GFL_BMPWIN *win[], STRC
 	STRBUF *ornerbuf, *ornerlabel;
 	STRBUF *oyalabel, *oyabuf;
 	
-	ornerbuf = GFL_STR_CreateBuffer( (PERSON_NAME_SIZE+EOM_SIZE)*2, HEAPID_WORLDTRADE );
-	oyabuf = GFL_STR_CreateBuffer((PERSON_NAME_SIZE+EOM_SIZE)*2, HEAPID_WORLDTRADE);
+	ornerbuf = GFL_STR_CreateBuffer( (BUFLEN_PERSON_NAME+EOM_SIZE)*2, HEAPID_WORLDTRADE );
+	oyabuf = GFL_STR_CreateBuffer((BUFLEN_PERSON_NAME+EOM_SIZE)*2, HEAPID_WORLDTRADE);
 	
 	ornerlabel = GFL_MSG_CreateString( MsgManager, msg_gtc_02_010  );
 	GFL_STR_SetStringCode( ornerbuf, name );
@@ -1100,7 +1105,7 @@ void WorldTrade_TransPokeGraphic( POKEMON_PARAM *pp )
 	
 	// ワーク解放
 	GFL_HEAP_FreeMemory(char_work);
-#endif //TODO
+#endif // TODO
 }
 
 

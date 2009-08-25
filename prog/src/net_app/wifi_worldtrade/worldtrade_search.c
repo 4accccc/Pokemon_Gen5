@@ -15,15 +15,9 @@
 #include "print/wordset.h"
 #include "message.naix"
 #include "system/wipe.h"
-//#include "system/fontproc.h"
-//#include "system/fontoam.h"
-//#include "system/window.h"
-//TODO
 #include "system/bmp_menu.h"
 #include "sound/pm_sndsys.h"
 #include "savedata/wifilist.h"
-//#include "savedata/zukanwork.h"
-//TODO
 #include "net_app/worldtrade.h"
 #include "worldtrade_local.h"
 
@@ -33,8 +27,6 @@
 
 
 #include "worldtrade.naix"			// グラフィックアーカイブ定義
-//#include "../zukanlist/zkn_data/zukan_data.naix"
-//TODO
 
 #include "msg/msg_wifi_place_msg_world.h"
 
@@ -341,7 +333,7 @@ int WorldTrade_Search_Main(WORLDTRADE_WORK *wk, int seq)
 	// サブ画面のOBJ座標を移動させる処理
 	for(i=0;i<SUB_OBJ_NUM;i++){
 		WorldTrade_CLACT_PosChange( wk->SubActWork[i], wk->SubActY[i][0], wk->SubActY[i][1]+wk->DrawOffset );
-		WorldTrade_CLACT_PosChange( wk->PromptDsActWork, DS_ICON_X, DS_ICON_Y+256+wk->DrawOffset );
+		//WorldTrade_CLACT_PosChange( wk->PromptDsActWork, DS_ICON_X, DS_ICON_Y+256+wk->DrawOffset );
 	}
 
 	WorldTrade_CLACT_PosChange( wk->CursorActWork,  
@@ -404,44 +396,48 @@ static void BgInit( void )
 	{	
 		GFL_BG_BGCNT_HEADER TextBgCntDat = {
 			0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
-			GX_BG_SCRBASE_0x0000, GX_BG_CHARBASE_0x04000, GX_BG_EXTPLTT_01,
+			GX_BG_SCRBASE_0x0000, GX_BG_CHARBASE_0x04000,GFL_BG_CHRSIZ_256x256, GX_BG_EXTPLTT_01,
 			0, 0, 0, FALSE
 		};
 		GFL_BG_SetBGControl(  GFL_BG_FRAME0_M, &TextBgCntDat, GFL_BG_MODE_TEXT );
 		GFL_BG_ClearScreen(  GFL_BG_FRAME0_M );
+		GFL_BG_SetVisible( GFL_BG_FRAME0_M, TRUE );
 	}
 
 	// メイン画面背景面
 	{	
 		GFL_BG_BGCNT_HEADER TextBgCntDat = {
 			0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
-			GX_BG_SCRBASE_0x0800, GX_BG_CHARBASE_0x0c000, GX_BG_EXTPLTT_01,
+			GX_BG_SCRBASE_0x0800, GX_BG_CHARBASE_0x0c000,GFL_BG_CHRSIZ_256x256, GX_BG_EXTPLTT_01,
 			3, 0, 0, FALSE
 		};
 		GFL_BG_SetBGControl(  GFL_BG_FRAME1_M, &TextBgCntDat, GFL_BG_MODE_TEXT );
 		GFL_BG_ClearScreen(  GFL_BG_FRAME1_M );
+		GFL_BG_SetVisible( GFL_BG_FRAME1_M, TRUE );
 	}
 
 	// メイン画面割り込みウインドウ面
 	{	
 		GFL_BG_BGCNT_HEADER TextBgCntDat = {
 			0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
-			GX_BG_SCRBASE_0x1000, GX_BG_CHARBASE_0x08000, GX_BG_EXTPLTT_01,
+			GX_BG_SCRBASE_0x1000, GX_BG_CHARBASE_0x08000,GFL_BG_CHRSIZ_256x256, GX_BG_EXTPLTT_01,
 			1, 0, 0, FALSE
 		};
 		GFL_BG_SetBGControl(  GFL_BG_FRAME2_M, &TextBgCntDat, GFL_BG_MODE_TEXT );
 		GFL_BG_ClearScreen(  GFL_BG_FRAME2_M );
+		GFL_BG_SetVisible( GFL_BG_FRAME2_M, TRUE );
 	}
 
 	// メイン画面第３テキスト面
 	{	
 		GFL_BG_BGCNT_HEADER TextBgCntDat = {
 			0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
-			GX_BG_SCRBASE_0x1800, GX_BG_CHARBASE_0x1c000, GX_BG_EXTPLTT_01,
+			GX_BG_SCRBASE_0x1800, GX_BG_CHARBASE_0x1c000,GFL_BG_CHRSIZ_256x256, GX_BG_EXTPLTT_01,
 			2, 0, 0, FALSE
 		};
 		GFL_BG_SetBGControl(  GFL_BG_FRAME3_M, &TextBgCntDat, GFL_BG_MODE_TEXT );
 		GFL_BG_ClearScreen(  GFL_BG_FRAME3_M );
+		GFL_BG_SetVisible( GFL_BG_FRAME3_M, TRUE );
 	}
 
 	WorldTrade_SubLcdBgInit(  0, 0 );
@@ -545,39 +541,55 @@ static void BgGraphicSet( WORLDTRADE_WORK * wk )
 static void SetCellActor(WORLDTRADE_WORK *wk)
 {
 	//登録情報格納
-#if 0
-	CLACT_ADD add;
-	WorldTrade_MakeCLACT( &add,  wk, &wk->clActHeader_main, NNS_G2D_VRAM_TYPE_2DMAIN );
+	GFL_CLWK_DATA	add;
+	//WorldTrade_MakeCLACT( &add,  wk, &wk->clActHeader_main, NNS_G2D_VRAM_TYPE_2DMAIN );
+
+	GFL_STD_MemClear( &add, sizeof(GFL_CLWK_DATA) );
 
 	// カーソル表示
-	add.mat.x = CursorPos[0][0]*FX32_ONE;
-	add.mat.y = CursorPos[0][1]*FX32_ONE;
-	wk->CursorActWork = GFL_CLACT_WK_Create(&add);
+	add.pos_x = CursorPos[0][0];
+	add.pos_y = CursorPos[0][1];
+	wk->CursorActWork = GFL_CLACT_WK_Create( wk->clactSet,
+			wk->resObjTbl[MAIN_LCD][CLACT_U_CHAR_RES],
+			wk->resObjTbl[MAIN_LCD][CLACT_U_PLTT_RES], 
+			wk->resObjTbl[MAIN_LCD][CLACT_U_CELL_RES],
+			&add, CLSYS_DRAW_MAIN, HEAPID_WORLDTRADE );
 	GFL_CLACT_WK_SetAutoAnmFlag( wk->CursorActWork, 1 );
 	GFL_CLACT_WK_SetAnmSeq( wk->CursorActWork, 45 );
 	GFL_CLACT_WK_SetBgPri( wk->CursorActWork, 1 );	//国名選択ウィンドウの下に行かせる為下げる
 	GFL_CLACT_WK_SetObjMode( wk->CursorActWork, GX_OAM_MODE_XLU );
 	
 	// サブカーソル登録
-	add.mat.x = FX32_ONE*160;
-	add.mat.y = FX32_ONE*32;
-	wk->SubCursorActWork = GFL_CLACT_WK_Create(&add);
+	add.pos_x = 160;
+	add.pos_y = 32;
+	wk->SubCursorActWork = GFL_CLACT_WK_Create( wk->clactSet,
+			wk->resObjTbl[MAIN_LCD][CLACT_U_CHAR_RES],
+			wk->resObjTbl[MAIN_LCD][CLACT_U_PLTT_RES], 
+			wk->resObjTbl[MAIN_LCD][CLACT_U_CELL_RES],
+			&add, CLSYS_DRAW_MAIN, HEAPID_WORLDTRADE );
 	GFL_CLACT_WK_SetAnmSeq( wk->SubCursorActWork, 47 );
 	GFL_CLACT_WK_SetDrawEnable( wk->SubCursorActWork, 0 );
 
 	// （右向き）
-	add.mat.x = FX32_ONE*228;
-	add.mat.y = FX32_ONE*117;
-	wk->BoxArrowActWork[0] = GFL_CLACT_WK_Create(&add);
+	add.pos_x = 228;
+	add.pos_y = 117;
+	wk->BoxArrowActWork[0] = GFL_CLACT_WK_Create( wk->clactSet,
+			wk->resObjTbl[MAIN_LCD][CLACT_U_CHAR_RES],
+			wk->resObjTbl[MAIN_LCD][CLACT_U_PLTT_RES], 
+			wk->resObjTbl[MAIN_LCD][CLACT_U_CELL_RES],
+			&add, CLSYS_DRAW_MAIN, HEAPID_WORLDTRADE );
 	GFL_CLACT_WK_SetAnmSeq( wk->BoxArrowActWork[0], CELL_BOXARROW_NO );
 	GFL_CLACT_WK_SetDrawEnable( wk->BoxArrowActWork[0], 0 );
 	
 	// ページ移動カーソル登録(左向き）
-	add.mat.x = FX32_ONE*140;
-	wk->BoxArrowActWork[1] = GFL_CLACT_WK_Create(&add);
+	add.pos_x = 140;
+	wk->BoxArrowActWork[1] = GFL_CLACT_WK_Create( wk->clactSet,
+			wk->resObjTbl[MAIN_LCD][CLACT_U_CHAR_RES],
+			wk->resObjTbl[MAIN_LCD][CLACT_U_PLTT_RES], 
+			wk->resObjTbl[MAIN_LCD][CLACT_U_CELL_RES],
+			&add, CLSYS_DRAW_MAIN, HEAPID_WORLDTRADE );
 	GFL_CLACT_WK_SetAnmSeq( wk->BoxArrowActWork[1], CELL_BOXARROW_NO+1 );
 	GFL_CLACT_WK_SetDrawEnable( wk->BoxArrowActWork[1], 0 );
-#endif //TODO
 	WirelessIconEasy();
 }
 
@@ -693,6 +705,7 @@ static void BmpWinInit( WORLDTRADE_WORK *wk )
 		WORLDTRADE_TALKFONT_PAL,  LINE_MESSAGE_OFFSET );
 
 	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->MsgWin), 0x0000 );
+	GFL_BMPWIN_MakeTransWindow( wk->MsgWin );
 
 
 	// BG0面BMPWIN情報ウインドウ確保
@@ -708,6 +721,7 @@ static void BmpWinInit( WORLDTRADE_WORK *wk )
 					WORLDTRADE_TALKFONT_PAL,  
 					INFOMATION_STR_OFFSET + (INFORMATION_STR_SX*INFORMATION_STR_SY)*i );
 			GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->InfoWin[i]), 0x0000 );
+			GFL_BMPWIN_MakeTransWindow( wk->InfoWin[i] );
 		}
 
 		// 住んでいる所・国名
@@ -719,6 +733,7 @@ static void BmpWinInit( WORLDTRADE_WORK *wk )
 					WORLDTRADE_TALKFONT_PAL,  
 					COUNTRY_STR_OFFSET + (COUNTRY_STR_SX*COUNTRY_STR_SY)*i );
 			GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->CountryWin[i]), 0x0000 );
+			GFL_BMPWIN_MakeTransWindow( wk->CountryWin[i] );
 		}
 
 		// さがす・もどる・あいてをみる
@@ -729,6 +744,7 @@ static void BmpWinInit( WORLDTRADE_WORK *wk )
 					BUTTON_STR_SX,BUTTON_STR_SY,
 					WORLDTRADE_TALKFONT_PAL,  BUTTON_STR_OFFSET+(BUTTON_STR_SX*BUTTON_STR_SY*i));
 			GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->InfoWin[6+i]), 0x0000 );
+			GFL_BMPWIN_MakeTransWindow( wk->InfoWin[6+i] );
 		}
 
 	}
@@ -1711,6 +1727,7 @@ static int SUBSEQ_SexSelectWait( WORLDTRADE_WORK *wk)
 	case BMPMENU_CANCEL:
 		BgBlendSet( 0 );
 		BmpWinFrame_Clear( wk->MsgWin, WINDOW_TRANS_ON );
+		GFL_BMPWIN_MakeTransWindow( wk->MsgWin );
 //		PMSND_PlaySE(WORLDTRADE_DECIDE_SE);
 
 		wk->subprocess_seq = SUBSEQ_START;
@@ -1904,6 +1921,7 @@ static int SUBSEQ_CountrySelectWait( WORLDTRADE_WORK *wk)
 		// キャンセル
 		BgBlendSet( 0 );
 		BmpWinFrame_Clear( wk->MsgWin, WINDOW_TRANS_ON );
+		GFL_BMPWIN_MakeTransWindow( wk->MsgWin );
 //		PMSND_PlaySE(WORLDTRADE_DECIDE_SE);
 
 		wk->subprocess_seq = SUBSEQ_START;
@@ -2203,6 +2221,7 @@ static void SubSeq_MessagePrint( WORLDTRADE_WORK *wk, int msgno, int wait, int f
 
 	// 文字列描画開始
 	GF_STR_PrintSimple( wk->MsgWin, FONT_TALK, wk->TalkString, 0, 0, &wk->print );
+	GFL_BMPWIN_MakeTransWindow( wk->MsgWin );
 
 
 }

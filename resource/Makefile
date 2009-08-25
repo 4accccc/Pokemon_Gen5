@@ -89,7 +89,8 @@ SUBDIRS	=	wmi \
 			debug \
 			config \
 			narc_cpy \
-			pokeicon
+			pokeicon \
+			zukan_data
 
 include $(RESOURCE_MACRO)
 

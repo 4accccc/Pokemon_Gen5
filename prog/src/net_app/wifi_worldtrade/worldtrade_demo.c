@@ -15,24 +15,15 @@
 #include "print/wordset.h"
 #include "message.naix"
 #include "system/wipe.h"
-//#include "system/fontproc.h"
-//#include "system/fontoam.h"
-//#include "system/window.h"
-//TODO
 #include "system/bmp_menu.h"
 #include "sound/pm_sndsys.h"
 #include "savedata/wifilist.h"
 #include "savedata/worldtrade_data.h"
-//#include "savedata/zukanwork.h"
-//TODO
 #include "poke_tool/poke_tool.h"
 #include "poke_tool/pokeparty.h"
 #include "savedata/box_savedata.h"
 
 #include "item/itemsym.h"
-
-//#include "field/poketch_data.h"	//add by soga 2006.07.26
-//TODO
 
 #include "net_app/worldtrade.h"
 #include "worldtrade_local.h"
@@ -184,8 +175,8 @@ int WorldTrade_Demo_Main(WORLDTRADE_WORK *wk, int seq)
 	switch(wk->subprocess_seq){
 	case DEMO_MODE_DEMO:
 	//	if( ProcMain( wk->proc ) ){
-			if( 0 ){	
-			//TODO
+			if( 1 ){	
+			//TODO	今はDEMOなし
 			//GFL_PROC_Delete( wk->proc );
 			//TODO
 
@@ -304,7 +295,7 @@ int WorldTrade_Demo_End(WORLDTRADE_WORK *wk, int seq)
 {
 
 	GFL_HEAP_FreeMemory(wk->demoPokePara);
-	GFL_HEAP_FreeMemory(wk->partnerStatus);
+	//GFL_HEAP_FreeMemory(wk->partnerStatus);//TODO
 	// ボックス画面に戻る
 	WorldTrade_SubProcessUpdate( wk );
 

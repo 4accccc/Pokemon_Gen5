@@ -15,15 +15,9 @@
 #include "print/wordset.h"
 #include "message.naix"
 #include "system/wipe.h"
-//#include "system/fontproc.h"
-//#include "system/fontoam.h"
-//#include "system/window.h"
-//TODO
 #include "system/bmp_menu.h"
 #include "sound/pm_sndsys.h"
 #include "savedata/wifilist.h"
-//#include "savedata/zukanwork.h"
-//TODO
 
 #include "net_app/worldtrade.h"
 #include "worldtrade_local.h"
@@ -152,7 +146,6 @@ int WorldTrade_Title_Init(WORLDTRADE_WORK *wk, int seq)
 
 
 
-	//↑は無関係
 	//Snd_DataSetByScene( SND_SCENE_WIFI_WORLD_TRADE, SEQ_GS_BLD_GTC, 1 );
 	//TODO
 
@@ -619,6 +612,7 @@ static void BmpWinInit( WORLDTRADE_WORK *wk )
 	TITLE_TEXT_X, TITLE_TEXT_Y, TITLE_TEXT_SX, TITLE_TEXT_SY, WORLDTRADE_TALKFONT_PAL,  TITLE_MESSAGE_OFFSET );
 
 	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->TitleWin), 0x0000 );
+	GFL_BMPWIN_MakeTransWindow( wk->TitleWin );
 	
 	// POKMON GLOBAL TRADING SYSTEM
 	GF_STR_PrintColor(	wk->TitleWin, FONT_TALK, wk->TitleString, 
@@ -633,6 +627,7 @@ static void BmpWinInit( WORLDTRADE_WORK *wk )
 			MENU_TEXT_X, MENU_TEXT_Y+i*5, MENU_TEXT_SX, MENU_TEXT_SY, 1,  
 			MENU_MESSAGE_OFFSET + (MENU_TEXT_SX*MENU_TEXT_SY)*i );
 			GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->MenuWin[i]), 0x0000 );
+			GFL_BMPWIN_MakeTransWindow( wk->MenuWin[i] );
 		}
 	}
 	
@@ -1251,11 +1246,10 @@ static void TitleMenuPrint( WORLDTRADE_WORK *wk )
 
 	// ポケモンを預けているかどうかで、メニューの項目が変わる
 	for(i=0;i<3;i++){
-		GFL_BMP_Fill( GFL_BMPWIN_GetBmp(wk->MenuWin[i]), 15, 0, 0, MENU_TEXT_SX*8, 8 );
-		GFL_BMP_Fill( GFL_BMPWIN_GetBmp(wk->MenuWin[i]), 14, 0, 8, MENU_TEXT_SX*8, 2 );
-		GFL_BMP_Fill( GFL_BMPWIN_GetBmp(wk->MenuWin[i]), 13, 0, 10, MENU_TEXT_SX*8,  6 );
+		GFL_BMP_Fill( GFL_BMPWIN_GetBmp(wk->MenuWin[i]), 0, 0, MENU_TEXT_SX*8, 8, 15 );
+		GFL_BMP_Fill( GFL_BMPWIN_GetBmp(wk->MenuWin[i]), 0, 8, MENU_TEXT_SX*8, 2, 14 );
+		GFL_BMP_Fill( GFL_BMPWIN_GetBmp(wk->MenuWin[i]), 0, 10, MENU_TEXT_SX*8,  6, 13 );
 		WorldTrade_BmpWinPrint( wk->MenuWin[i], wk->MsgManager, FONT_TOUCH, menu_str_table[menu][i], 0x0000 ,&wk->print);
-		GFL_BMPWIN_MakeTransWindow( wk->MenuWin[i] );
 	}
 }
 
@@ -1285,7 +1279,7 @@ static void SubSeq_MessagePrint( WORLDTRADE_WORK *wk, int msgno, int wait, int f
 
 	// 文字列描画開始
 	GF_STR_PrintSimple( wk->MsgWin, FONT_TALK, wk->TalkString, 0, 0, &wk->print);
-
+	GFL_BMPWIN_MakeTransWindow( wk->MsgWin );
 
 }
 
@@ -1311,7 +1305,7 @@ static void SubSeq_TalkPrint( WORLDTRADE_WORK *wk, int msgno, int wait, int flag
 
 	// 文字列描画開始
 	GF_STR_PrintSimple( wk->TalkWin, FONT_TALK, wk->TalkString, 0, 0, &wk->print);
-
+	GFL_BMPWIN_MakeTransWindow( wk->TalkWin );
 
 }
 
@@ -1335,10 +1329,10 @@ void WorldTrade_BmpWinPrint( GFL_BMPWIN *win, GFL_MSGDATA *msgman, int font, int
 	tempbuf = GFL_MSG_CreateString(  msgman, msgno );
 
 	// 会話ウインドウ枠描画
-//	GFL_BMP_Clear( win,  dat );
+	//GFL_BMP_Clear( GFL_BMPWIN_GetBmp(win),  dat );
 
 	// 文字列描画開始
-	GF_STR_PrintColor( win, font, tempbuf, 0, 0, MSG_ALLPUT, PRINTSYS_LSB_Make( 10, 9, 0), print);
+	GF_STR_PrintColor( win, font, tempbuf, 0, 0, MSG_ALLPUT, PRINTSYS_LSB_Make( 10, 9, 0), print );
 
 	GFL_STR_DeleteBuffer(tempbuf);
 }
@@ -1418,6 +1412,7 @@ void WorldTrade_SubLcdExpainPut( WORLDTRADE_WORK *wk, int explain )
 		WORLDTRADE_TALKFONT_SUB_PAL, GTS_EXPLAIN_OFFSET  );
 
 	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->ExplainWin), 0x0000 );
+	GFL_BMPWIN_MakeTransWindow( wk->ExplainWin );
 
 	// 上画面メッセージ
 	WorldTrade_ExplainPrint( wk->ExplainWin,  wk->MsgManager, explain, &wk->print );

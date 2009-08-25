@@ -706,9 +706,37 @@ static int Enter_EndStart( WORLDTRADE_WORK *wk )
 //------------------------------------------------------------------
 static int Enter_EndYesNoSelect( WORLDTRADE_WORK *wk )
 {
-	//int ret = BmpYesNoSelectMain( wk->YesNoMenuWork, HEAPID_WORLDTRADE );
-	int ret = 0;
-	//TODO
+#if 1
+	u32 ret = WorldTrade_TouchSwMain(wk);
+	if(ret==TOUCH_SW_RET_YES){
+		if(!DWC_CheckInet()){		
+			// 接続を開始しますか？
+			wk->subprocess_seq  = ENTER_START;
+		}else{
+			//				 WorldTrade_SubProcessChange( wk, WORLDTRADE_TITLE, 0 );
+			//				wk->subprocess_seq  = ENTER_END;
+
+			// 既に接続済みなら
+			// サーバーチェックの後タイトルメニューへ
+			WorldTrade_SubProcessChange( wk, WORLDTRADE_UPLOAD, MODE_SERVER_CHECK );
+			wk->sub_returnprocess = WORLDTRADE_TITLE;
+			wk->subprocess_seq    = ENTER_END;
+
+		}
+	}else if(ret==TOUCH_SW_RET_NO ){
+		// WIFIせつぞくを終了
+		if(DWC_CheckInet()){		
+			DWC_CleanupInet();
+		}
+		// 通信エラー管理のために通信ルーチンをOFF
+		//CommStateWifiDPWEnd();
+		//TODO
+		WorldTrade_SubProcessChange( wk, WORLDTRADE_ENTER, 0 );
+		wk->subprocess_seq  = ENTER_END;
+	}
+	
+#else
+	int ret = BmpYesNoSelectMain( wk->YesNoMenuWork, HEAPID_WORLDTRADE );
 
 	if(ret!=BMPMENU_NULL){
 		if(ret==BMPMENU_CANCEL){
@@ -738,7 +766,7 @@ static int Enter_EndYesNoSelect( WORLDTRADE_WORK *wk )
 			wk->subprocess_seq  = ENTER_END;
 		}
 	}
-
+#endif
 	return SEQ_MAIN;
 	
 }

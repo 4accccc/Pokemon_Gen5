@@ -27,22 +27,15 @@
 #include "message.naix"
 #include "system/wipe.h"
 #include "pm_version.h"
-//#include "system/fontproc.h"
-//#include "system/fontoam.h"
-//#include "system/window.h"
 #include "system/bmp_menu.h"
 #include "sound/pm_sndsys.h"
 #include "savedata/wifilist.h"
 #include "savedata/worldtrade_data.h"
-//#include "savedata/zukanwork.h"
 #include "poke_tool/monsno_def.h"
-//TODO
 #include "savedata/perapvoice.h"
-//#include "savedata/phc_svdata.h"
 #include "poke_tool/pokeparty.h"
 #include "savedata/box_savedata.h"
 #include "item/itemsym.h"
-//#include "savedata/get_poke.h"
 
 #include "net_app/worldtrade.h"
 #include "worldtrade_local.h"
@@ -53,17 +46,10 @@
 
 #include "libdpw/dpw_tr.h"
 
-//#include "savedata/misc.h"
 
 #include "worldtrade.naix"			// グラフィックアーカイブ定義
 
-//#include "savedata/tv_work.h"
-//#include "../../field/tv_topic.h"	//テレビトピック生成用
-//#include "field/tvtopic_extern.h"
 #include "msg/msg_place_name.h"
-//#include "field/eventflag.h"
-//#include "field/syswork.h"
-//TODO
 #define FIRST_NATUKIDO  (70)		///交換されたポケモンに入れるなつき度
 
 
@@ -391,33 +377,36 @@ static void BgInit( void )
 	{	
 		GFL_BG_BGCNT_HEADER TextBgCntDat = {
 			0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
-			GX_BG_SCRBASE_0xf800, GX_BG_CHARBASE_0x00000, GX_BG_EXTPLTT_01,
+			GX_BG_SCRBASE_0xf800, GX_BG_CHARBASE_0x00000,GFL_BG_CHRSIZ_256x256, GX_BG_EXTPLTT_01,
 			0, 0, 0, FALSE
 		};
 		GFL_BG_SetBGControl( GFL_BG_FRAME0_M, &TextBgCntDat, GFL_BG_MODE_TEXT );
 		GFL_BG_ClearScreen( GFL_BG_FRAME0_M );
+		GFL_BG_SetVisible( GFL_BG_FRAME0_M, TRUE );
 	}
 
 	// メイン画面背景面
 	{	
 		GFL_BG_BGCNT_HEADER TextBgCntDat = {
 			0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
-			GX_BG_SCRBASE_0xf000, GX_BG_CHARBASE_0x08000, GX_BG_EXTPLTT_01,
+			GX_BG_SCRBASE_0xf000, GX_BG_CHARBASE_0x08000,GFL_BG_CHRSIZ_256x256, GX_BG_EXTPLTT_01,
 			1, 0, 0, FALSE
 		};
 		GFL_BG_SetBGControl( GFL_BG_FRAME1_M, &TextBgCntDat, GFL_BG_MODE_TEXT );
 		GFL_BG_ClearScreen( GFL_BG_FRAME1_M );
+		GFL_BG_SetVisible( GFL_BG_FRAME1_M, TRUE );
 	}
 
 	// メイン画面背景面2
 	{	
 		GFL_BG_BGCNT_HEADER TextBgCntDat = {
 			0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
-			GX_BG_SCRBASE_0xe800, GX_BG_CHARBASE_0x08000, GX_BG_EXTPLTT_01,
+			GX_BG_SCRBASE_0xe800, GX_BG_CHARBASE_0x08000,GFL_BG_CHRSIZ_256x256, GX_BG_EXTPLTT_01,
 			1, 0, 0, FALSE
 		};
 		GFL_BG_SetBGControl( GFL_BG_FRAME2_M, &TextBgCntDat, GFL_BG_MODE_TEXT );
 		GFL_BG_ClearScreen( GFL_BG_FRAME2_M );
+		GFL_BG_SetVisible( GFL_BG_FRAME2_M, TRUE );
 	}
 
 
@@ -426,11 +415,12 @@ static void BgInit( void )
 	{	
 		GFL_BG_BGCNT_HEADER TextBgCntDat = {
 			0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
-			GX_BG_SCRBASE_0xf000, GX_BG_CHARBASE_0x10000, GX_BG_EXTPLTT_01,
+			GX_BG_SCRBASE_0xf000, GX_BG_CHARBASE_0x10000,GFL_BG_CHRSIZ_256x256, GX_BG_EXTPLTT_01,
 			0, 0, 0, FALSE
 		};
 		GFL_BG_SetBGControl( GFL_BG_FRAME0_S, &TextBgCntDat, GFL_BG_MODE_TEXT );
 		GFL_BG_ClearScreen( GFL_BG_FRAME0_S );
+		GFL_BG_SetVisible( GFL_BG_FRAME0_S, TRUE );
 
 	}
 
@@ -439,10 +429,11 @@ static void BgInit( void )
 	{	
 		GFL_BG_BGCNT_HEADER TextBgCntDat = {
 			0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_256,
-			GX_BG_SCRBASE_0xe000, GX_BG_CHARBASE_0x00000, GX_BG_EXTPLTT_01,
+			GX_BG_SCRBASE_0xe000, GX_BG_CHARBASE_0x00000,GFL_BG_CHRSIZ_256x256, GX_BG_EXTPLTT_01,
 			2, 0, 0, FALSE
 		};
 		GFL_BG_SetBGControl( GFL_BG_FRAME1_S, &TextBgCntDat, GFL_BG_MODE_TEXT );
+		GFL_BG_SetVisible( GFL_BG_FRAME1_S, TRUE );
 	}
 
 
@@ -547,6 +538,7 @@ static void BmpWinInit( WORLDTRADE_WORK *wk )
 	wk->MsgWin	= GFL_BMPWIN_CreateFixPos( GFL_BG_FRAME0_M,
 		TALK_WIN_X, TALK_WIN_Y, TALK_WIN_SX, TALK_WIN_SY, WORLDTRADE_TALKFONT_PAL,  TALK_MESSAGE_OFFSET );
 	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->MsgWin), 0x0000 );
+	GFL_BMPWIN_MakeTransWindow( wk->MsgWin );
 
 }	
 
@@ -2440,7 +2432,10 @@ static void UploadPokemonDataDelete( WORLDTRADE_WORK *wk, int flag )
 		// てもちからペラップがいなくなったら声データを消去する
 		if(PokeParty_PokemonCheck( wk->param->myparty, MONSNO_PERAPPU )==0){
 			PERAPVOICE *pv = SaveData_GetPerapVoice( wk->param->savedata );
-			PERAPVOICE_ClearExistFlag( pv );
+			if( pv != NULL )
+			{
+				PERAPVOICE_ClearExistFlag( pv );
+			}
 		}
 		
 	}
