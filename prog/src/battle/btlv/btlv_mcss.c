@@ -549,10 +549,19 @@ void  BTLV_MCSS_MovePosition( BTLV_MCSS_WORK *bmw, int position, int type, VecFx
   //ˆÚ“®‚Ì•âŠÔ‚Í‘Š‘ÎŽw’è‚Æ‚·‚é
   if( type == EFFTOOL_CALCTYPE_INTERPOLATION )
   { 
-    pos->x += start.x;
-    pos->y += start.y;
-    pos->z += start.z;
-
+    //ƒ|ƒPƒ‚ƒ“‚ÌŽ‹ü‚Ì•ûŒü‚Å{|‚ðŒˆ’è‚·‚é
+    if( position & 1 )
+    { 
+      pos->x = start.x - pos->x;
+      pos->y += start.y;
+      pos->z += start.z;
+    }
+    else
+    {
+      pos->x += start.x;
+      pos->y += start.y;
+      pos->z += start.z;
+    }
   }
   //‰ŠúˆÊ’uˆÚ“®
   if( type == BTLEFF_POKEMON_MOVE_INIT )
@@ -702,6 +711,12 @@ void  BTLV_MCSS_MoveCircle( BTLV_MCSS_WORK *bmw, BTLV_MCSS_MOVE_CIRCLE_PARAM* bm
 	bmmcp_p->rotate_after_wait        = bmmcp->rotate_after_wait;
   bmmcp_p->rotate_wait_count        = 0;
   bmmcp_p->rotate_after_wait_count  = 0;
+
+  //ƒ|ƒPƒ‚ƒ“‚ÌŒü‚«‚É‚æ‚Á‚ÄA{|‚ðŒˆ’è
+  if( bmmcp_p->position & 1 )
+  { 
+    bmmcp_p->shift ^= 1;
+  }
   if( bmmcp_p->axis & 1 )
   { 
     bmmcp_p->angle  = 0x10000;
@@ -872,6 +887,11 @@ static  void  BTLV_MCSS_TCBInitialize( BTLV_MCSS_WORK *bmw, int position, int ty
     pmtw->emw.vector.x = FX_Div( end->x, FX32_CONST( frame ) );
     pmtw->emw.vector.y = FX_Div( end->y, FX32_CONST( frame ) );
     pmtw->emw.vector.z = FX_Div( end->z, FX32_CONST( frame ) );
+    if( position & 1 )
+    { 
+      pmtw->emw.vector.x *= -1;
+      pmtw->emw.vector.z *= -1;
+    }
     break;
   }
   GFL_TCB_AddTask( bmw->tcb_sys, func, pmtw, 0 );

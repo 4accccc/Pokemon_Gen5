@@ -902,6 +902,7 @@ static VMCMD_RESULT VMEC_EMITTER_CIRCLE_MOVE( VMHANDLE *vmh, void *context_work 
   ARCDATID  datID   = ( ARCDATID )VMGetU32( vmh );
   int       ptc_no  = EFFVM_GetPtcNo( bevw, datID );
   int       index   = ( int )VMGetU32( vmh );
+  int       position = 0;
   fx32      offset_y;
 
   bevw->temp_work[ bevw->temp_work_count ] = GFL_HEAP_AllocMemory( bevw->heapID, sizeof( BTLV_EFFVM_EMITTER_CIRCLE_MOVE_WORK ) );
@@ -929,11 +930,13 @@ static VMCMD_RESULT VMEC_EMITTER_CIRCLE_MOVE( VMHANDLE *vmh, void *context_work 
   switch( beecmw->center ){ 
   case BTLEFF_EMITTER_CIRCLE_MOVE_ATTACK_L:
   case BTLEFF_EMITTER_CIRCLE_MOVE_ATTACK_R:
-    BTLV_MCSS_GetPokeDefaultPos( &beecmw->center_pos, EFFVM_GetPosition( vmh, BTLEFF_POKEMON_SIDE_ATTACK ) );
+    position = EFFVM_GetPosition( vmh, BTLEFF_POKEMON_SIDE_ATTACK );
+    BTLV_MCSS_GetPokeDefaultPos( &beecmw->center_pos, position );
     break;
   case BTLEFF_EMITTER_CIRCLE_MOVE_DEFENCE_L:
   case BTLEFF_EMITTER_CIRCLE_MOVE_DEFENCE_R:
-    BTLV_MCSS_GetPokeDefaultPos( &beecmw->center_pos, EFFVM_GetPosition( vmh, BTLEFF_POKEMON_SIDE_DEFENCE ) );
+    position = EFFVM_GetPosition( vmh, BTLEFF_POKEMON_SIDE_DEFENCE );
+    BTLV_MCSS_GetPokeDefaultPos( &beecmw->center_pos, position );
     break;
   case BTLEFF_EMITTER_CIRCLE_MOVE_CENTER_L:
   case BTLEFF_EMITTER_CIRCLE_MOVE_CENTER_R:
@@ -941,6 +944,11 @@ static VMCMD_RESULT VMEC_EMITTER_CIRCLE_MOVE( VMHANDLE *vmh, void *context_work 
     beecmw->center_pos.y = 0;
     beecmw->center_pos.z = 0;
     break;
+  }
+
+  if( position & 1 )
+  { 
+    beecmw->angle = 0x8000;
   }
 
   beecmw->center_pos.y += offset_y;
@@ -2527,8 +2535,6 @@ static  void  EFFVM_CircleMoveEmitter( GFL_EMIT_PTR emit, unsigned int flag )
       emit_pos.z = FX_Mul( emit_pos.z, beecmw->radius_v );
       emit_pos.z += beecmw->center_pos.z;
 
-      OS_TPrintf("x:%08x y:%08x z:%08x\n", emit_pos.x, emit_pos.y, emit_pos.z );
-  
       GFL_PTC_SetEmitterPosition( emit, &emit_pos );
   
       if( beecmw->frame )
