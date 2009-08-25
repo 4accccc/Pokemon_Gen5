@@ -4,7 +4,7 @@
 
 	This file was created by NINTENDO NITRO-System Archiver.
 
-
+	Update:2009-08-25T11:33:31
  *****************************************************************************/
 
 #ifndef NARC_POKE_ICON_NAIX_
@@ -557,7 +557,11 @@ enum {
 	NARC_poke_icon_poke_icon_519_02_NCGR = 543,
 	NARC_poke_icon_poke_icon_519_03_NCGR = 544,
 	NARC_poke_icon_poke_icon_519_04_NCGR = 545,
-	NARC_poke_icon_poke_icon_519_05_NCGR = 546
+	NARC_poke_icon_poke_icon_519_05_NCGR = 546,
+	NARC_poke_icon_poke_icon_351_rain_NCGR = 547,
+	NARC_poke_icon_poke_icon_351_snow_NCGR = 548,
+	NARC_poke_icon_poke_icon_351_sun_NCGR = 549,
+	NARC_poke_icon_poke_icon_483_sun_NCGR = 550
 };
 
 /* NARC_POKE_ICON_NAIX_ */

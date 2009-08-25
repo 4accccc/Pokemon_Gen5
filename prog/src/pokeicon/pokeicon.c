@@ -34,6 +34,8 @@
 #define	POKEICON_GetGIRATHINA	( 533 )		// ギラティナ
 #define	POKEICON_GetSHEIMI		( 534 )		// シェイミ
 #define	POKEICON_GetROTOMU		( 535 )		// ロトム
+#define	POKEICON_GetPOWARUN		( 540 )		// ポワルン
+#define	POKEICON_GetTHERIMU		( 543 )		// チェリム
 
 
 //==============================================================================
@@ -142,6 +144,14 @@ u32 POKEICON_GetCgxArcIndexByMonsNumber( u32 mons, u32 form_no, BOOL egg )
 		if( mons == MONSNO_ROTOMU ){
 			return ( NARC_poke_icon_poke_icon_519_01_NCGR + form_no - 1 );
 		}
+		// ポワルン（HG/SSから追加）
+		if( mons == MONSNO_POWARUN ){
+			return ( NARC_poke_icon_poke_icon_351_rain_NCGR + form_no - 1 );
+		}
+		// チェリム（HG/SSから追加）
+		if( mons == MONSNO_THERIMU ){
+			return ( NARC_poke_icon_poke_icon_483_sun_NCGR + form_no - 1 );
+		}
 	}
 
 	if( mons > MONSNO_END ){ mons = 0; }
@@ -174,6 +184,8 @@ u16 POKEICON_GetCgxForm( const POKEMON_PASO_PARAM* ppp )
 	case MONSNO_GIRATHINA:
 	case MONSNO_SHEIMI:
 	case MONSNO_ROTOMU:
+	case MONSNO_POWARUN:	// ポワルン（HG/SSから追加）
+	case MONSNO_THERIMU:	// チェリム（HG/SSから追加）
 		return PPP_Get( (POKEMON_PASO_PARAM*)ppp, ID_PARA_form_no, NULL );
 
 	default:
@@ -222,6 +234,12 @@ const u8 POKEICON_GetPalNum( u32 mons, u32 form, BOOL egg )
 			mons = POKEICON_GetSHEIMI + form - 1;
 		}else if( mons == MONSNO_ROTOMU ){
 			mons = POKEICON_GetROTOMU + form - 1;
+		// ポワルン（HG/SSから追加）
+		}else if( mons == MONSNO_POWARUN ){
+			mons = POKEICON_GetPOWARUN + form - 1;
+		// チェリム（HG/SSから追加）
+		}else if( mons == MONSNO_THERIMU ){
+			mons = POKEICON_GetTHERIMU + form - 1;
 		}
 	}
 	return IconPalAtr[mons];

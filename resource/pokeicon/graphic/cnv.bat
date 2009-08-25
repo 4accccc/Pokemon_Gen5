@@ -548,6 +548,10 @@ g2dcvtr poke_icon_519_02.nce -br
 g2dcvtr poke_icon_519_03.nce -br
 g2dcvtr poke_icon_519_04.nce -br
 g2dcvtr poke_icon_519_05.nce -br
+g2dcvtr poke_icon_351_rain.nce -br
+g2dcvtr poke_icon_351_snow.nce -br
+g2dcvtr poke_icon_351_sun.nce -br
+g2dcvtr poke_icon_483_sun.nce -br
 
 g2dcvtr poke_icon.ncl -pcm
 

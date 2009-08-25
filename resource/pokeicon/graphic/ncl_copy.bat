@@ -577,3 +577,8 @@ copy /b poke_icon.ncl /b icon_uny.ncl
 copy /b poke_icon.ncl /b icon_unz.ncl
 copy /b poke_icon.ncl /b icon_exc.ncl
 copy /b poke_icon.ncl /b icon_que.ncl
+
+copy /b poke_icon.ncl /b icon_351_rain.ncl
+copy /b poke_icon.ncl /b icon_351_snow.ncl
+copy /b poke_icon.ncl /b icon_351_sun.ncl
+copy /b poke_icon.ncl /b icon_483_sun.ncl

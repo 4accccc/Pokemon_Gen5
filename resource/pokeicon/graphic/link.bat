@@ -540,3 +540,7 @@ nce_lnk poke_icon_128k.nce poke_icon_519_02.ncg
 nce_lnk poke_icon_128k.nce poke_icon_519_03.ncg
 nce_lnk poke_icon_128k.nce poke_icon_519_04.ncg
 nce_lnk poke_icon_128k.nce poke_icon_519_05.ncg
+nce_lnk poke_icon_128k.nce poke_icon_351_rain.ncg
+nce_lnk poke_icon_128k.nce poke_icon_351_snow.ncg
+nce_lnk poke_icon_128k.nce poke_icon_351_sun.ncg
+nce_lnk poke_icon_128k.nce poke_icon_483_sun.ncg

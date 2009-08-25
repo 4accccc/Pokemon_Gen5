@@ -29,5 +29,7 @@ del *.nce
 move *.narc ../
 move *.naix ../
 
+copy pokeicon.dat ..\..\..\prog\src\pokeicon\
+
 cd..
 

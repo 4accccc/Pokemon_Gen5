@@ -545,4 +545,8 @@ const u8 IconPalAtr[] = {
 	0,		// 537 : poke_icon_519_03.NCG
 	0,		// 538 : poke_icon_519_04.NCG
 	0,		// 539 : poke_icon_519_05.NCG
+	0,		// 540 : poke_icon_351_rain.NCG
+	0,		// 541 : poke_icon_351_snow.NCG
+	0,		// 542 : poke_icon_351_sun.NCG
+	1,		// 543 : poke_icon_483_sun.NCG
 };
