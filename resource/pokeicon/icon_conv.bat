@@ -1,5 +1,3 @@
-path=C:\NitroWB\NitroSystem\tools\win\bin
-
 rem コンバートに必要な消えてはいけないファイルをコンバート用フォルダにコピーする
 copy poke_icon_32k.nce graphic\poke_icon_32k.nce
 copy poke_icon_64k.nce graphic\poke_icon_64k.nce
