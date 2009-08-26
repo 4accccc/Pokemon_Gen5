@@ -18,7 +18,6 @@ extern "C"{
 
 
 #include "gflib.h"
-#include "field/fieldmap_proc.h"
 #include "field_camera.h"
 
 //-----------------------------------------------------------------------------

@@ -64,7 +64,6 @@ typedef enum {
 //------------------------------------------------------------------
 struct _FIELD_CAMERA {
 	HEAPID				heapID;			///<使用するヒープ指定ID
-	FIELD_MAIN_WORK * fieldWork;		///<フィールドマップへのポインタ
 	GFL_G3D_CAMERA * g3Dcamera;			///<カメラ構造体へのポインタ
 
 	FIELD_CAMERA_TYPE	type;			///<カメラのタイプ指定
@@ -132,7 +131,6 @@ static void ControlParameter_Direct( FIELD_CAMERA * camera, u16 key_cont );
  */
 //------------------------------------------------------------------
 FIELD_CAMERA* FIELD_CAMERA_Create(
-		FIELD_MAIN_WORK * fieldWork,
 		u8 type,
 		FIELD_CAMERA_MODE mode,
 		GFL_G3D_CAMERA * cam,
@@ -145,7 +143,6 @@ FIELD_CAMERA* FIELD_CAMERA_Create(
 
 	GF_ASSERT(cam != NULL);
 	TAMADA_Printf("FIELD CAMERA TYPE = %d\n", type);
-	camera->fieldWork = fieldWork;
 	camera->type = type;
 	camera->mode = mode;
 	camera->g3Dcamera = cam;

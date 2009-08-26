@@ -6,7 +6,6 @@
 //============================================================================================
 #pragma once
 
-#include "field/fieldmap_proc.h"
 #include "../../../../resource/fldmapdata/camera_data/fieldcameraformat.h"
 
 
@@ -46,7 +45,6 @@ typedef enum
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 extern FIELD_CAMERA* FIELD_CAMERA_Create(
-		FIELD_MAIN_WORK * fieldWork,
 		u8 type,
 		FIELD_CAMERA_MODE mode,
 		GFL_G3D_CAMERA * cam,

@@ -462,7 +462,6 @@ static MAINSEQ_RESULT mainSeqFunc_setup(GAMESYS_WORK *gsys, FIELDMAP_WORK *field
   fieldWork->placeNameSys = FIELD_PLACE_NAME_Create( fieldWork->heapID, fieldWork->fldMsgBG );
 
   fieldWork->camera_control = FIELD_CAMERA_Create(
-      fieldWork,
       ZONEDATA_GetCameraID(fieldWork->map_id),
 			FIELD_CAMERA_MODE_CALC_CAMERA_POS,
       fieldWork->g3Dcamera,
