@@ -959,20 +959,6 @@ DEF_CMD_COUNT  =  ( DEF_CMD_COUNT + 1 )
 
 //--------------------------------------------------------------
 /**
- * 簡易メッセージ表示 BG用
- * @param msg_id 表示するメッセージID
- */
-//--------------------------------------------------------------
-#define _EASY_MSG( msg_id ) \
-  _TALK_START_SE_PLAY()   ; \
-  _TALKWIN_OPEN()         ; \
-  _TALKMSG_ALLPUT( msg_id ) ; \
-  _AB_KEYWAIT()             ; \
-  _TALKWIN_CLOSE()
-
-
-//--------------------------------------------------------------
-/**
  *  _TALKWIN_OPEN 会話ウィンドウ開く
  *  @param none
  */
@@ -1037,19 +1023,6 @@ DEF_CMD_COUNT  =  ( DEF_CMD_COUNT + 1 )
   .macro  _ASM_BALLOONWIN_CLOSE
   .short  EV_SEQ_BALLOONWIN_CLOSE
   .endm
-
-//--------------------------------------------------------------
-/**
- * 簡易吹き出しメッセージ表示 話し掛けOBJ用
- * @param msg_id 表示するメッセージID
- */
-//--------------------------------------------------------------
-#define _EASY_BALLOONWIN_TALKOBJ_MSG( msg_id )  \
-  _TALK_START_SE_PLAY()               ; \
-  _TURN_HERO_SITE()                   ; \
-  _BALLOONWIN_TALKOBJ_OPEN( msg_id )  ; \
-  _AB_KEYWAIT()                       ; \
-  _BALLOONWIN_CLOSE()
 
 //======================================================================
 //  動作モデル
@@ -1968,16 +1941,18 @@ DEF_CMD_COUNT  =  ( DEF_CMD_COUNT + 1 )
 
 //--------------------------------------------------------------
 /**
- *  _BLACK_OUT ブラックアウト
- *  @param speed フェードスピード 0～
+ *  _BLACK_OUT
+ *  @brief  ブラックアウト
+ *  @param  speed フェードスピード 0～
  */
 //--------------------------------------------------------------
 #define _BLACK_OUT( speed ) _DISP_FADE_START( DISP_FADE_BLACKOUT_MAIN,0,16,speed )
 
 //--------------------------------------------------------------
 /**
- *  _WHITE_IN ブラックイン
- *  @param speed フェードスピード 0～
+ *  _WHITE_IN
+ *  @brief  ブラックイン
+ *  @param  speed フェードスピード 0～
  */
 //--------------------------------------------------------------
 #define _BLACK_IN( speed ) _DISP_FADE_START( DISP_FADE_BLACKOUT_MAIN,16,0,speed )
@@ -1987,6 +1962,7 @@ DEF_CMD_COUNT  =  ( DEF_CMD_COUNT + 1 )
 //======================================================================
 //--------------------------------------------------------------
 /**
+ *  _TALK_START_SE_PLAY
  *  会話イベント開始時のSE再生
  *  @param none
  */
@@ -1999,8 +1975,10 @@ DEF_CMD_COUNT  =  ( DEF_CMD_COUNT + 1 )
 
 //--------------------------------------------------------------
 /**
- *  _TALK_OBJ_START OBJに対して話し掛け開始(主人公に対して振り向き有り)
- *  @param none
+ *  _TALK_OBJ_START
+ *  @brief  OBJに対して話し掛け開始(主人公に対して振り向き有り)
+ *
+ *  内部的には　_TALK_START_SE_PLAY()と_TURN_HERO_SITE()を呼び出すのと同機能
  */
 //--------------------------------------------------------------
 #define _TALK_OBJ_START() _ASM_TALK_OBJ_START
@@ -2061,6 +2039,45 @@ DEF_CMD_COUNT  =  ( DEF_CMD_COUNT + 1 )
   .endm
 
 //======================================================================
+//
+//  簡易コマンド
+//  ※スクリプトコマンドを組み合わせたもの
+//
 //======================================================================
-#if 0
-#endif
+//--------------------------------------------------------------
+/**
+ * 簡易メッセージ表示 BG用
+ * @param msg_id 表示するメッセージID
+ */
+//--------------------------------------------------------------
+#define _EASY_MSG( msg_id )   _ASM_EASY_MSG msg_id
+
+  .macro  _ASM_EASY_MSG msg_id
+  _ASM_TALK_START_SE_PLAY
+  _ASM_TALKWIN_OPEN
+  _ASM_TALKMSG_ALLPUT \msg_id
+  _ASM_AB_KEYWAIT
+  _ASM_TALKWIN_CLOSE
+  .endm
+
+
+//--------------------------------------------------------------
+/**
+ * 簡易吹き出しメッセージ表示 話し掛けOBJ用
+ * @param msg_id 表示するメッセージID
+ */
+//--------------------------------------------------------------
+#define _EASY_BALLOONWIN_TALKOBJ_MSG( msg_id )  _ASM_EASY_BALLOONWIN_TALKOBJ_MSG msg_id
+
+  .macro _ASM_EASY_BALLOONWIN_TALKOBJ_MSG msg_id
+  _ASM_TALK_START_SE_PLAY
+  _ASM_TURN_HERO_SITE   
+  _ASM_BALLOONWIN_TALKOBJ_OPEN \msg_id 
+  _ASM_AB_KEYWAIT      
+  _ASM_BALLOONWIN_CLOSE
+  .endm
+
+
+
+
+

@@ -21,7 +21,7 @@ include zone_script.list
 #マップに依存しないスクリプトはここに追加してください
 include uniq_script.list
 
-#SCRSRCS_BIN = $(SCRSRCS:.ev=.bin)
+
 SCRSRCS_BIN = $(SCRIPTFILES:.ev=.bin)
 
 #MSGLIST
@@ -82,21 +82,19 @@ $(TARGET_DIR)/$(TARGET_NARC): $(TARGET_NARC)
 	$(COPY) $(TARGET_NAIX) $(TARGET_DIR)
 
 ifeq ($(CONVERTUSER),true) #CONVERTUSER
-#*.ev
-#do-build: $(SCRSRCS_BIN)
-
 #*.bin
 %.bin: %.ev $(DEPENDHEADERS)
 	@echo $<
 	@ruby filter/user.rb $< > temp_$*.s
-	@$(MWAS) $(ADD_MACRO) $(SUBDIRS) temp_$*.s -o $*.o
+	@#$(MWAS) -E $(ADD_MACRO)  temp_$*.s -o $*.dis
+	@$(MWAS) $(ADD_MACRO)  temp_$*.s -o $*.o
 	@$(MWLD) -dis -o $*.elf $*.o
 	@elf2bin $*.elf
 	@rm $*.o $*.elf temp_$*.s
 	@$(EV_DEF) $< $(SCR_OFFS_ID_H)
+	@unix2dos -D $*_def.h
 endif #CONVERTUSER
 
-#	gawk -f scr_tools/ev_def.awk $< 
 
 #script.narc
 $(TARGET_NARC): $(SCRSRCS_BIN)
