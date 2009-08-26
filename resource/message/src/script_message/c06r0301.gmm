@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-06-25T17:06:30"/>
+	<create user="masafumi_saitou" host="W00178" date="2009-08-26T15:53:26"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -297,6 +297,61 @@
 		<attribute name="キャラ指定">？？？</attribute>
 		<language name="JPN" width="256">テストメッセージ</language>
 		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+	</row>
+
+	<row id="msg_c06r0301_test1_02">
+		<language name="JPN" width="256">テストメッセージ</language>
+		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+	</row>
+
+	<row id="msg_c06r0301_boy_00">
+		<comment>スクリプト講習会用</comment>
+		<language name="JPN" width="256">ナシが　おいしい
+きせつ　です</language>
+		<language name="JPN_KANJI" width="256">ナシが　美味しい
+季節です</language>
+	</row>
+
+	<row id="msg_c06r0301_boy_02">
+		<comment>スクリプト講習会用</comment>
+		<language name="JPN" width="256">サンマが　おいしい
+きせつ　です</language>
+		<language name="JPN_KANJI" width="256">サンマが　美味しい
+季節です</language>
+	</row>
+
+	<row id="msg_c06r0301_boy_03">
+		<comment>スクリプト講習会用
+
+→はい・いいえ分岐</comment>
+		<language name="JPN" width="256">サンマには
+おろしポンズ　だよね？</language>
+		<language name="JPN_KANJI" width="256">サンマには
+おろしポン酢　だよね？</language>
+	</row>
+
+	<row id="msg_c06r0301_boy_04">
+		<comment>スクリプト講習会用
+
+→はいを選択</comment>
+		<language name="JPN" width="256">でしょ！▼
+サンマの　あぶらに
+ポンズの　さっぱりした　あじわい！▽
+たまらないよなー</language>
+		<language name="JPN_KANJI" width="256">でしょ！▼
+旬の　サンマ特有の　油味に
+ポン酢の　さわやかな　香り！▽
+たまらないよなー</language>
+	</row>
+
+	<row id="msg_c06r0301_boy_05">
+		<comment>スクリプト講習会用
+
+→いいえを選択</comment>
+		<language name="JPN" width="256">きみ　じんせい
+おもしろく　ないだろ？</language>
+		<language name="JPN_KANJI" width="256">君の　人生は
+全く　面白くないんだろうな</language>
 	</row>
 
 	<flowchart-group-list>
