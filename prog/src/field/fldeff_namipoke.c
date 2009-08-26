@@ -18,6 +18,8 @@
 //======================================================================
 //  define
 //======================================================================
+//#define DEBUG_PARAM_KEY_CHANGE
+
 #define NAMIPOKE_SHAKE_VALUE (0x0400) ///<初期揺れ幅
 #define NAMIPOKE_SHAKE_MAX (FX32_ONE*4) ///<揺れ幅最大
 
@@ -191,21 +193,6 @@ static void namipoke_InitResource( FLDEFF_NAMIPOKE *namipoke )
   }
 }
 
-#if 0
-void DEBUG_namipoke_vblank( FLDEFF_CTRL *fldeff_ctrl )
-{
-  BOOL ret;
-  FLDEFF_NAMIPOKE *namipoke;
-  namipoke = FLDEFF_CTRL_GetEffectWork( fldeff_ctrl, FLDEFF_PROCID_NAMIPOKE );
-  
-  ret = GFL_G3D_TransVramTexture( namipoke->g3d_res_mdl );
-  GF_ASSERT( ret );
-  
-  rip->obj_rnd = GFL_G3D_RENDER_Create(
-    rip_res->g3d_res_mdl, 0, rip_res->g3d_res_mdl );
-}
-#endif
-
 //--------------------------------------------------------------
 /**
  * 波乗りポケモンエフェクト　リソース削除
@@ -277,7 +264,7 @@ void FLDEFF_NAMIPOKE_SetJointFlag( FLDEFF_TASK *task, BOOL flag )
 #define RIP_SCALE_VECTOR_PER (RIP_SCALE_VECTOR_MAX/100)
 #define RIP_SCALE_MAX (FX32_ONE)
 #define RIP_SCALE_PER (RIP_SCALE_MAX/100)
-#define RIP_SCALE_VECTOR_LES (0x2000)
+#define RIP_SCALE_VECTOR_LES (0x4000)
 
 static fx32 ripple_scale_get( fx32 vec )
 {
@@ -355,15 +342,6 @@ static void namipokeTask_Init( FLDEFF_TASK *task, void *wk )
     rip->obj = GFL_G3D_OBJECT_Create( rip->obj_rnd, rip->obj_anm, 2 );
 	  GFL_G3D_OBJECT_EnableAnime( rip->obj, 0 );
 	  GFL_G3D_OBJECT_EnableAnime( rip->obj, 1 );
-    
-#if 0     
-    {
-      NNSG3dRenderObj *rnd = GFL_G3D_RENDER_GetRenderObj( rip->obj_rnd );
-      NNSG3dResMdl *resMdl = NNS_G3dRenderObjGetResMdl( rnd );
-      NNS_G3dMdlUseMdlAlpha( resMdl );
-		  NNS_G3dMdlSetMdlAlphaAll( resMdl, 31 );
-    }
-#endif
     
     rip->vanish_flag = TRUE;
     rip->dir = DIR_NOT;
@@ -457,10 +435,10 @@ static void namipokeTask_Update( FLDEFF_TASK *task, void *wk )
 #if 1    
     MMDL_GetVectorPos( work->head.mmdl, &pos );
     
-    if( work->dir != rip->dir ){
+    if( work->dir != rip->dir ){ //方向更新
       rip->dir = work->dir;
       rip->pos = pos;
-    }else if( pos.x == rip->save_pos.x &&
+    }else if( pos.x == rip->save_pos.x && //停止 減衰
         pos.y == rip->save_pos.y && pos.z == rip->save_pos.z ){
       
       switch( rip->dir ){
@@ -508,6 +486,8 @@ static void namipokeTask_Update( FLDEFF_TASK *task, void *wk )
       rip->vanish_flag = TRUE;
     }else{
       rip->vanish_flag = FALSE;
+      rip->scale.x = ret;
+      rip->scale.y = ret;
       rip->scale.z = ret;
     }
     
@@ -546,10 +526,10 @@ static void namipokeTask_Draw( FLDEFF_TASK *task, void *wk )
   if( work->ripple_work.vanish_flag == FALSE ){
     RIPPLE_WORK *rip = &work->ripple_work;
     VecFx32 rip_otbl[DIR_MAX4] = {
-      {0,RIPPLE_OFFS_Y,0xc000},
-      {0,RIPPLE_OFFS_Y,-0xc000},
-      {0xc000,RIPPLE_OFFS_Y,0},
-      {-0xc000,RIPPLE_OFFS_Y,0},
+      {0,RIPPLE_OFFS_Y,0xe000},
+      {0,RIPPLE_OFFS_Y,-0xe000},
+      {0xe000,RIPPLE_OFFS_Y,0},
+      {-0xe000,RIPPLE_OFFS_Y,0},
     };
     u16 rip_rtbl[DIR_MAX4][3] = {
       {0,0,0},{0,0x8000,0},{0,0x4000,0},{0,0xc000,0} };
@@ -557,6 +537,7 @@ static void namipokeTask_Draw( FLDEFF_TASK *task, void *wk )
     VecFx32 *rip_offs = &rip_otbl[work->dir];
     u16 *rip_rot = rip_rtbl[work->dir];
     
+#ifdef DEBUG_PARAM_KEY_CHANGE
     {
 		  int key_trg = GFL_UI_KEY_GetTrg( );
 		  int key_cont = GFL_UI_KEY_GetCont( );
@@ -600,7 +581,8 @@ static void namipokeTask_Draw( FLDEFF_TASK *task, void *wk )
         }
       }
     }
-    
+#endif
+
     {
       GFL_CALC3D_MTX_CreateRot(
           rip_rot[0], rip_rot[1], rip_rot[2], &status.rotate );
