@@ -202,12 +202,18 @@ static int _DevMainFunc(u16 bitmap)
 //------------------------------------------------------------------------------
 static BOOL _DevEndFunc(BOOL bForce, NetDevEndCallback callback)
 {
-  if(GFL_NET_DWC_disconnect( !bForce ) ){
-    if(GFL_NET_DWC_returnLobby()){
+  if(!GFL_NET_DWC_IsInit()){
+    return TRUE;
+  }
+  if(GFL_NET_DWC_disconnect( !bForce ) )
+  {
+    if(GFL_NET_DWC_returnLobby())
+    {
       return TRUE;
     }
   }
-  else{
+  else
+  {
     GFL_NET_DWC_stepmatch(bForce);
   }
   return FALSE;
