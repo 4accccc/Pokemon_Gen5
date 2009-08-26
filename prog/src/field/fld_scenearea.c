@@ -118,6 +118,9 @@ void FLD_SCENEAREA_Load( FLD_SCENEAREA* p_sys, const FLD_SCENEAREA_DATA* cp_data
 
   // アクティブ領域なし
   p_sys->active_area = FLD_SCENEAREA_ACTIVE_NONE;
+
+  // アクティブ
+  p_sys->active_flag = TRUE;
 }
 
 //----------------------------------------------------------------------------
@@ -203,6 +206,26 @@ u32 FLD_SCENEAREA_Update( FLD_SCENEAREA* p_sys, const VecFx32* cp_pos )
   }
 
   return p_sys->active_area;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  エリア　読み込み済みか？
+ *
+ *	@param	cp_sys  システム
+ *
+ *	@retval TRUE  読み込み済み* 
+ *	@retval FLASE 読み込んでない
+ */
+//-----------------------------------------------------------------------------
+BOOL FLD_SCENEAREA_IsLoad( const FLD_SCENEAREA* cp_sys )
+{
+  GF_ASSERT( cp_sys );
+  if( cp_sys->datanum == 0 )
+  {
+    return FALSE;
+  }
+  return TRUE;
 }
 
 //----------------------------------------------------------------------------

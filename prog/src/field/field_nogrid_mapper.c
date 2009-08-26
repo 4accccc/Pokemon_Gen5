@@ -81,7 +81,7 @@ FLDNOGRID_MAPPER* FLDNOGRID_MAPPER_Create( u32 heapID, FIELD_CAMERA* p_camera )
 void FLDNOGRID_MAPPER_Delete( FLDNOGRID_MAPPER* p_mapper )
 {
   GF_ASSERT( p_mapper );
-  
+
   RAIL_ATTR_Delete( p_mapper->p_attr );
   FLD_SCENEAREA_Delete( p_mapper->p_areaMan );
   FLD_SCENEAREA_LOADER_Delete( p_mapper->p_areaLoader );
@@ -108,17 +108,24 @@ void FLDNOGRID_MAPPER_ResistData( FLDNOGRID_MAPPER* p_mapper, const FLDNOGRID_RE
   // 破棄処理
   FLDNOGRID_MAPPER_Release( p_mapper );
 
-  // 情報ロード
-  FIELD_RAIL_LOADER_Load( p_mapper->p_railLoader, cp_data->railDataID, heapID );
-  FLD_SCENEAREA_LOADER_Load( p_mapper->p_areaLoader, cp_data->areaDataID, heapID );
-  RAIL_ATTR_Load( p_mapper->p_attr, cp_data->attrDataID, heapID );
-
-  // 構築
-  FIELD_RAIL_MAN_Load( p_mapper->p_railMan, FIELD_RAIL_LOADER_GetData( p_mapper->p_railLoader ) );
-  FLD_SCENEAREA_Load( p_mapper->p_areaMan, 
-      FLD_SCENEAREA_LOADER_GetData( p_mapper->p_areaLoader ),
-      FLD_SCENEAREA_LOADER_GetDataNum( p_mapper->p_areaLoader ),
-      FLD_SCENEAREA_LOADER_GetFunc( p_mapper->p_areaLoader ) );
+  // 情報ロード＆構築
+  if( cp_data->railDataID != FLDNOGRID_RESISTDATA_NONE )
+  {
+    FIELD_RAIL_LOADER_Load( p_mapper->p_railLoader, cp_data->railDataID, heapID );
+    FIELD_RAIL_MAN_Load( p_mapper->p_railMan, FIELD_RAIL_LOADER_GetData( p_mapper->p_railLoader ) );
+  }
+  if( cp_data->areaDataID != FLDNOGRID_RESISTDATA_NONE )
+  {
+    FLD_SCENEAREA_LOADER_Load( p_mapper->p_areaLoader, cp_data->areaDataID, heapID );
+    FLD_SCENEAREA_Load( p_mapper->p_areaMan, 
+        FLD_SCENEAREA_LOADER_GetData( p_mapper->p_areaLoader ),
+        FLD_SCENEAREA_LOADER_GetDataNum( p_mapper->p_areaLoader ),
+        FLD_SCENEAREA_LOADER_GetFunc( p_mapper->p_areaLoader ) );
+  }
+  if( cp_data->attrDataID != FLDNOGRID_RESISTDATA_NONE )
+  {
+    RAIL_ATTR_Load( p_mapper->p_attr, cp_data->attrDataID, heapID );
+  }
 }
 
 
@@ -188,6 +195,35 @@ void FLDNOGRID_MAPPER_DeleteRailWork( FLDNOGRID_MAPPER* p_mapper, FIELD_RAIL_WOR
   FIELD_RAIL_MAN_DeleteWork( p_mapper->p_railMan, p_railWork );
 }
 
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  カメラとバインドするレールワークを取得
+ *
+ *	@param	p_mapper      マッパー
+ *	@param	p_railWork    レールワーク
+ */
+//-----------------------------------------------------------------------------
+void FLDNOGRID_MAPPER_BindCameraWork( FLDNOGRID_MAPPER* p_mapper, const FIELD_RAIL_WORK* cp_railWork )
+{
+  GF_ASSERT( p_mapper );
+  GF_ASSERT( cp_railWork );
+  FIELD_RAIL_MAN_BindCamera( p_mapper->p_railMan, cp_railWork );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  カメラとのバインドを破棄
+ *
+ *	@param	p_mapper  マッパー
+ */
+//-----------------------------------------------------------------------------
+void FLDNOGRID_MAPPER_UnBindCameraWork( FLDNOGRID_MAPPER* p_mapper )
+{
+  GF_ASSERT( p_mapper );
+  FIELD_RAIL_MAN_UnBindCamera( p_mapper->p_railMan );
+}
 
 
 //----------------------------------------------------------------------------
@@ -268,7 +304,101 @@ const FLD_SCENEAREA_LOADER* FLDNOGRID_MAPPER_GetSceneAreaLoader( const FLDNOGRID
 }
 
 
+// デバック用
+#ifdef PM_DEBUG
+//----------------------------------------------------------------------------
+/**
+ *	@brief  レールbinaryの読み込み
+ *
+ *	@param	p_mapper    マッパー
+ *	@param	p_dat       データ
+ *	@param	size        データサイズ
+ */
+//-----------------------------------------------------------------------------
+void FLDNOGRID_MAPPER_DEBUG_LoadRailBynary( FLDNOGRID_MAPPER* p_mapper, void* p_dat, u32 size )
+{
+  GF_ASSERT( p_mapper );
+  GF_ASSERT( p_dat );
 
+  FIELD_RAIL_LOADER_Clear( p_mapper->p_railLoader );
+  FIELD_RAIL_LOADER_DEBUG_LoadBinary( p_mapper->p_railLoader, p_dat, size );
+
+	FIELD_RAIL_MAN_Load( p_mapper->p_railMan, FIELD_RAIL_LOADER_GetData( p_mapper->p_railLoader ) );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  エリアbinaryの読み込み
+ *
+ *	@param	p_mapper  マッパー
+ *	@param	p_dat     データ
+ *	@param	size      データサイズ
+ */
+//-----------------------------------------------------------------------------
+void FLDNOGRID_MAPPER_DEBUG_LoadAreaBynary( FLDNOGRID_MAPPER* p_mapper, void* p_dat, u32 size )
+{
+  GF_ASSERT( p_mapper );
+  GF_ASSERT( p_dat );
+
+  FLD_SCENEAREA_LOADER_Clear( p_mapper->p_areaLoader );
+  FLD_SCENEAREA_LOADER_LoadBinary( p_mapper->p_areaLoader, p_dat, size );
+
+
+	FLD_SCENEAREA_Release( p_mapper->p_areaMan );
+	FLD_SCENEAREA_Load( p_mapper->p_areaMan, 
+			FLD_SCENEAREA_LOADER_GetData( p_mapper->p_areaLoader ),
+			FLD_SCENEAREA_LOADER_GetDataNum( p_mapper->p_areaLoader ),
+			FLD_SCENEAREA_LOADER_GetFunc( p_mapper->p_areaLoader ) );
+}
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  アクティブ設定
+ *
+ *	@param	p_mapper    マッパー
+ *	@param	flag        フラグ
+ */
+//-----------------------------------------------------------------------------
+void FLDNOGRID_MAPPER_DEBUG_SetActive( FLDNOGRID_MAPPER* p_mapper, BOOL flag )
+{
+  GF_ASSERT( p_mapper );
+	FIELD_RAIL_MAN_SetActiveFlag(p_mapper->p_railMan, flag);
+	FLD_SCENEAREA_SetActiveFlag(p_mapper->p_areaMan, flag);
+}
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  アクティブ状態かチェック
+ *
+ *	@param	cp_mapper   マッパー
+ *
+ *	@retval TRUE    アクティブ
+ *	@retval FALSE   非アクティブ
+ */
+//-----------------------------------------------------------------------------
+BOOL FLDNOGRID_MAPPER_DEBUG_IsActive( const FLDNOGRID_MAPPER* cp_mapper )
+{
+  BOOL result;
+  BOOL result2;
+  
+  GF_ASSERT( cp_mapper );
+
+  result = FIELD_RAIL_MAN_GetActiveFlag( cp_mapper->p_railMan );
+
+  if( FLD_SCENEAREA_IsLoad( cp_mapper->p_areaMan ) )
+  {
+    result2 = FLD_SCENEAREA_GetActiveFlag( cp_mapper->p_areaMan );
+
+    GF_ASSERT( result2 == result );
+  }
+
+  return result;
+}
+
+
+#endif
 
 
 

@@ -92,33 +92,29 @@ static void mapCtrlC3P02_Create( FIELDMAP_WORK* p_fieldwork, VecFx32* p_pos, u16
   u32 heapID;
 	FIELD_PLAYER * p_fld_player = FIELDMAP_GetFieldPlayer( p_fieldwork );
   FIELD_CAMERA * p_camera = FIELDMAP_GetFieldCamera(p_fieldwork);
-  FIELD_RAIL_MAN* p_railman = FIELDMAP_GetFieldRailMan(p_fieldwork);
-	FIELD_RAIL_LOADER* p_rail_loader = FIELDMAP_GetFieldRailLoader(p_fieldwork);
-  FLD_SCENEAREA* p_scenearea = FIELDMAP_GetFldSceneArea( p_fieldwork );
-  FLD_SCENEAREA_LOADER* p_scenearea_loader = FIELDMAP_GetFldSceneAreaLoader( p_fieldwork );
+  FLDNOGRID_MAPPER* p_mapper = FIELDMAP_GetFldNoGridMapper( p_fieldwork );
   C3P02_MOVE_WORK* p_wk;
 
   heapID = FIELDMAP_GetHeapID( p_fieldwork );
   p_wk = GFL_HEAP_AllocClearMemory( heapID, sizeof(C3P02_MOVE_WORK) );
 	FIELDMAP_SetMapCtrlWork( p_fieldwork, p_wk );
 
-  
-  // レールの起動
-	FIELD_RAIL_LOADER_Load( p_rail_loader, ZONEDATA_GetRailDataID( FIELDMAP_GetZoneID(p_fieldwork) ), heapID );
-  FIELD_RAIL_MAN_Load(p_railman, FIELD_RAIL_LOADER_GetData(p_rail_loader));
+  // ノーグリッド情報設定
+  {
+    FLDNOGRID_RESISTDATA resist;
 
-  p_wk->player_work.railwork = FIELD_RAIL_MAN_CreateWork( p_railman );
-  FIELD_RAIL_MAN_BindCamera( p_railman, p_wk->player_work.railwork );
+    resist.railDataID = ZONEDATA_GetRailDataID( FIELDMAP_GetZoneID(p_fieldwork) );
+    resist.areaDataID = NARC_field_scenearea_data_c03p02_dat;
+    resist.attrDataID = FLDNOGRID_RESISTDATA_NONE;
+    
+    FLDNOGRID_MAPPER_ResistData( p_mapper, &resist, FIELDMAP_GetHeapID(p_fieldwork) );
+  }
+  
+
+  p_wk->player_work.railwork = FLDNOGRID_MAPPER_CreateRailWork( p_mapper );
+  FLDNOGRID_MAPPER_BindCameraWork( p_mapper, p_wk->player_work.railwork );
   
   FIELD_RAIL_WORK_GetPos(p_wk->player_work.railwork, p_pos );
-
-  // scenearea起動
-	FLD_SCENEAREA_LOADER_Load( p_scenearea_loader, NARC_field_scenearea_data_c03p02_dat, heapID );
-  FLD_SCENEAREA_Load( p_scenearea, 
-			FLD_SCENEAREA_LOADER_GetData(p_scenearea_loader),
-			FLD_SCENEAREA_LOADER_GetDataNum(p_scenearea_loader),
-			FLD_SCENEAREA_LOADER_GetFunc(p_scenearea_loader) );
-
 
   // ノーグリッドマップ用プレイヤーの初期化
   FIELD_PLAYER_NOGRID_Rail_SetUp( p_fld_player, &p_wk->player_work );
@@ -133,18 +129,11 @@ static void mapCtrlC3P02_Create( FIELDMAP_WORK* p_fieldwork, VecFx32* p_pos, u16
 static void mapCtrlC3P02_Delete( FIELDMAP_WORK* p_fieldwork )
 {
 	C3P02_MOVE_WORK* p_wk = FIELDMAP_GetMapCtrlWork( p_fieldwork );
-  FIELD_RAIL_MAN* p_railman = FIELDMAP_GetFieldRailMan( p_fieldwork );
-	FIELD_RAIL_LOADER* p_rail_loader = FIELDMAP_GetFieldRailLoader(p_fieldwork);
-  FLD_SCENEAREA* p_scenearea = FIELDMAP_GetFldSceneArea( p_fieldwork );
-  FLD_SCENEAREA_LOADER* p_scenearea_loader = FIELDMAP_GetFldSceneAreaLoader( p_fieldwork );
+  FLDNOGRID_MAPPER* p_mapper = FIELDMAP_GetFldNoGridMapper( p_fieldwork );
+  
+  FLDNOGRID_MAPPER_Release( p_mapper );
 
-  FLD_SCENEAREA_Release( p_scenearea );
-	FLD_SCENEAREA_LOADER_Clear( p_scenearea_loader );
-
-
-	FIELD_RAIL_LOADER_Clear( p_rail_loader );
-
-  FIELD_RAIL_MAN_DeleteWork( p_railman, p_wk->player_work.railwork );
+  FLDNOGRID_MAPPER_DeleteRailWork( p_mapper, p_wk->player_work.railwork );
 
 	GFL_HEAP_FreeMemory( p_wk );
 }
@@ -157,16 +146,16 @@ static void mapCtrlC3P02_Delete( FIELDMAP_WORK* p_fieldwork )
 static void mapCtrlC3P02_Main( FIELDMAP_WORK* p_fieldwork, VecFx32* p_pos )
 {
 	C3P02_MOVE_WORK* p_wk = FIELDMAP_GetMapCtrlWork( p_fieldwork );
-  FIELD_RAIL_MAN* p_railman = FIELDMAP_GetFieldRailMan( p_fieldwork );
+  FLDNOGRID_MAPPER* p_mapper = FIELDMAP_GetFldNoGridMapper( p_fieldwork ); 
 	FIELD_PLAYER *p_fld_player = FIELDMAP_GetFieldPlayer( p_fieldwork );
-  FLD_SCENEAREA* p_fldscenearea = FIELDMAP_GetFldSceneArea( p_fieldwork );
+  const FLD_SCENEAREA* cp_fldscenearea = FLDNOGRID_MAPPER_GetSceneAreaMan( p_mapper );
   PLAYER_WORK * p_player = GAMEDATA_GetMyPlayerWork(
       GAMESYSTEM_GetGameData(FIELDMAP_GetGameSysWork(p_fieldwork)) );
   BOOL auto_move = FALSE;
   u32 now_areaID;
 
   // エリアから、自動動作部分と、通常動作部分を判定
-  now_areaID = FLD_SCENEAREA_GetActiveArea(p_fldscenearea);
+  now_areaID = FLD_SCENEAREA_GetActiveArea(cp_fldscenearea);
   if( now_areaID != FLD_SCENEAREA_ACTIVE_NONE )
   {
     if( now_areaID < 5 )

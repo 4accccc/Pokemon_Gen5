@@ -154,8 +154,9 @@ void RAIL_ATTR_Release( RAIL_ATTR_DATA* p_work )
     GFL_HEAP_FreeMemory( p_work->pp_line );
     GFL_HEAP_FreeMemory( p_work->p_file );
 
-    p_work->pp_line = NULL;
-    p_work->p_file = NULL;
+    p_work->line_max  = 0;
+    p_work->pp_line   = NULL;
+    p_work->p_file    = NULL;
   }
 
 }
@@ -196,28 +197,35 @@ MAPATTR RAIL_ATTR_GetAttribute( const RAIL_ATTR_DATA* cp_work, const RAIL_LOCATI
   const RAIL_ATTR_LINE* cp_lineattr;
   s32 x, z;
   s32 index;
+  MAPATTR attr = MAPATTR_ERROR;
   
   GF_ASSERT( cp_work );
   GF_ASSERT( cp_location );
   GF_ASSERT( cp_location->type == FIELD_RAIL_TYPE_LINE );
-  GF_ASSERT( cp_work->line_max > cp_location->rail_index )
+
+
+  if( cp_work->line_max > cp_location->rail_index )
+  {
   
-  // ラインアトリビュートデータの取得
-  cp_lineattr = cp_work->pp_line[ cp_location->rail_index ];
+    // ラインアトリビュートデータの取得
+    cp_lineattr = cp_work->pp_line[ cp_location->rail_index ];
 
-  // width_gridは、-～+の数字なので、+のみの値にする。
-  // 奇数のことも考慮し、%2もたす。
-  // (奇数なら、+1)
-  x = cp_location->width_grid + (cp_lineattr->x / 2) + (cp_lineattr->x % 2);
-  z = cp_location->line_grid;
+    // width_gridは、-～+の数字なので、+のみの値にする。
+    // 奇数のことも考慮し、%2もたす。
+    // (奇数なら、+1)
+    x = cp_location->width_grid + (cp_lineattr->x / 2) + (cp_lineattr->x % 2);
+    z = cp_location->line_grid;
 
-  index = (cp_lineattr->x * z) + x;
-  
-  // アトリビュートインデックスチェック
-  GF_ASSERT( index < (cp_lineattr->x * cp_lineattr->z) );
+    index = (cp_lineattr->x * z) + x;
+    
+    // アトリビュートインデックスチェック
+    GF_ASSERT( index < (cp_lineattr->x * cp_lineattr->z) );
 
 
-  return cp_lineattr->attr[ index ];
+    attr = cp_lineattr->attr[ index ];
+  }
+
+  return attr;
 }
 
 

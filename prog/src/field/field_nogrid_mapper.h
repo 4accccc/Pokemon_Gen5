@@ -29,6 +29,11 @@ extern "C"{
 */
 //-----------------------------------------------------------------------------
 
+//-------------------------------------
+/// ノーグリッドマップ　情報	不定値
+//=====================================
+#define FLDNOGRID_RESISTDATA_NONE  ( 0xffff )
+
 //-----------------------------------------------------------------------------
 /**
  *					構造体宣言
@@ -43,6 +48,7 @@ typedef struct _FLDNOGRID_MAPPER FLDNOGRID_MAPPER;
 
 //-------------------------------------
 /// ノーグリッドマップ　情報	
+//  読みこまない場合  ：FLDNOGRID_RESISTDATA_NONE  
 //=====================================
 typedef struct 
 {
@@ -75,10 +81,13 @@ extern void FLDNOGRID_MAPPER_Release( FLDNOGRID_MAPPER* p_mapper );
 // メイン管理
 extern void FLDNOGRID_MAPPER_Main( FLDNOGRID_MAPPER* p_mapper );
 
-
 // レールワークの取得・返却
 extern FIELD_RAIL_WORK* FLDNOGRID_MAPPER_CreateRailWork( FLDNOGRID_MAPPER* p_mapper );
 extern void FLDNOGRID_MAPPER_DeleteRailWork( FLDNOGRID_MAPPER* p_mapper, FIELD_RAIL_WORK* p_railWork );
+
+// メインレールワークの設定
+extern void FLDNOGRID_MAPPER_BindCameraWork( FLDNOGRID_MAPPER* p_mapper, const FIELD_RAIL_WORK* cp_railWork );
+extern void FLDNOGRID_MAPPER_UnBindCameraWork( FLDNOGRID_MAPPER* p_mapper );
 
 
 // アトリビュート情報の取得
@@ -92,6 +101,15 @@ extern const FIELD_RAIL_LOADER* FLDNOGRID_MAPPER_GetRailLoader( const FLDNOGRID_
 extern const FLD_SCENEAREA_LOADER* FLDNOGRID_MAPPER_GetSceneAreaLoader( const FLDNOGRID_MAPPER* cp_mapper );
 
 
+// デバック用
+#ifdef PM_DEBUG
+extern void FLDNOGRID_MAPPER_DEBUG_LoadRailBynary( FLDNOGRID_MAPPER* p_mapper, void* p_dat, u32 size );
+extern void FLDNOGRID_MAPPER_DEBUG_LoadAreaBynary( FLDNOGRID_MAPPER* p_mapper, void* p_dat, u32 size );
+
+extern void FLDNOGRID_MAPPER_DEBUG_SetActive( FLDNOGRID_MAPPER* p_mapper, BOOL flag );
+extern BOOL FLDNOGRID_MAPPER_DEBUG_IsActive( const FLDNOGRID_MAPPER* cp_mapper );
+
+#endif
 
 #ifdef _cplusplus
 }	// extern "C"{

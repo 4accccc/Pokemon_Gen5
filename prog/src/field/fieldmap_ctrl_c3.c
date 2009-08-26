@@ -125,8 +125,7 @@ static void mapCtrlC3_Create(
 	C3_MOVE_WORK *work;
 	FIELD_PLAYER *fld_player;
   FIELD_CAMERA * camera = FIELDMAP_GetFieldCamera(fieldWork);
-  FIELD_RAIL_MAN* railMan = FIELDMAP_GetFieldRailMan(fieldWork);
-	FIELD_RAIL_LOADER* p_rail_loader = FIELDMAP_GetFieldRailLoader(fieldWork);
+  FLDNOGRID_MAPPER* p_mapper = FIELDMAP_GetFldNoGridMapper( fieldWork );
 	static const C3_MOVE_WORK init = {
 		 0x1f0,
 		 0,
@@ -142,23 +141,22 @@ static void mapCtrlC3_Create(
 	FIELDMAP_SetMapCtrlWork( fieldWork, work );
 
   // レール起動
-	FIELD_RAIL_LOADER_Load( p_rail_loader, NARC_field_rail_data_c3_dat, FIELDMAP_GetHeapID(fieldWork) );
-  FIELD_RAIL_MAN_Load(railMan, FIELD_RAIL_LOADER_GetData(p_rail_loader));
+  {
+    static const FLDNOGRID_RESISTDATA sc_RESIST = 
+    {
+      NARC_field_rail_data_c3_dat,
+      NARC_field_scenearea_data_c3_dat,
+      FLDNOGRID_RESISTDATA_NONE,
+    };
 
-  // シーンエリア
-  work->p_sceneArea = FIELDMAP_GetFldSceneArea( fieldWork );
-	work->p_scenearealoader = FIELDMAP_GetFldSceneAreaLoader( fieldWork );
-	FLD_SCENEAREA_LOADER_Load( work->p_scenearealoader, NARC_field_scenearea_data_c3_dat, FIELDMAP_GetHeapID(fieldWork) );
-  FLD_SCENEAREA_Load( work->p_sceneArea, 
-			FLD_SCENEAREA_LOADER_GetData(work->p_scenearealoader),
-			FLD_SCENEAREA_LOADER_GetDataNum(work->p_scenearealoader),
-			FLD_SCENEAREA_LOADER_GetFunc(work->p_scenearealoader) );
+    FLDNOGRID_MAPPER_ResistData( p_mapper, &sc_RESIST, FIELDMAP_GetHeapID(fieldWork) );
+  }
 	
 	fld_player = FIELDMAP_GetFieldPlayer( fieldWork );
   
 
-  work->player_work.railwork = FIELD_RAIL_MAN_CreateWork( railMan );
-  FIELD_RAIL_MAN_BindCamera( railMan, work->player_work.railwork );
+  work->player_work.railwork = FLDNOGRID_MAPPER_CreateRailWork( p_mapper );
+  FLDNOGRID_MAPPER_BindCameraWork( p_mapper, work->player_work.railwork );
   FIELD_RAIL_WORK_SetLocation( work->player_work.railwork, &sc_RAIL_START_LOCATION );
 
   FIELD_RAIL_WORK_GetPos(work->player_work.railwork, pos );
@@ -180,17 +178,12 @@ static void mapCtrlC3_Create(
 static void mapCtrlC3_Delete( FIELDMAP_WORK *fieldWork )
 {
 	C3_MOVE_WORK *work = FIELDMAP_GetMapCtrlWork( fieldWork );
-  FIELD_RAIL_MAN* railMan = FIELDMAP_GetFieldRailMan( fieldWork );
-	FIELD_RAIL_LOADER* p_rail_loader = FIELDMAP_GetFieldRailLoader(fieldWork);
+  FLDNOGRID_MAPPER* p_mapper = FIELDMAP_GetFldNoGridMapper( fieldWork );
 
-  FLD_SCENEAREA_Release( work->p_sceneArea );
+  FLDNOGRID_MAPPER_Release( p_mapper );
 
-	FLD_SCENEAREA_LOADER_Clear( work->p_scenearealoader );
-
-	FIELD_RAIL_LOADER_Clear( p_rail_loader );
-
-  FIELD_RAIL_MAN_DeleteWork( railMan, work->player_work.railwork );
-  FIELD_RAIL_MAN_UnBindCamera( railMan );
+  FLDNOGRID_MAPPER_DeleteRailWork( p_mapper, work->player_work.railwork );
+  FLDNOGRID_MAPPER_UnBindCameraWork( p_mapper );
 
 	GFL_HEAP_FreeMemory( work );
 
@@ -209,25 +202,28 @@ static void mapCtrlC3_Main( FIELDMAP_WORK *fieldWork, VecFx32 *pos )
 	int key_cont = GFL_UI_KEY_GetCont(  );
   int key_trg = GFL_UI_KEY_GetTrg();
 	C3_MOVE_WORK *mwk = FIELDMAP_GetMapCtrlWork( fieldWork );
-  FIELD_RAIL_MAN* railMan = FIELDMAP_GetFieldRailMan(fieldWork);
-  BOOL rail_flag = FIELD_RAIL_MAN_GetActiveFlag(railMan);
+  FLDNOGRID_MAPPER* p_mapper = FIELDMAP_GetFldNoGridMapper( fieldWork );
+  BOOL rail_flag = FLDNOGRID_MAPPER_DEBUG_IsActive(p_mapper);
 	FIELD_PLAYER *fld_player = FIELDMAP_GetFieldPlayer( fieldWork );
   PLAYER_WORK *player = GAMEDATA_GetMyPlayerWork(
       GAMESYSTEM_GetGameData(FIELDMAP_GetGameSysWork(fieldWork)) );
+  const FLD_SCENEAREA* cp_areaMan = FLDNOGRID_MAPPER_GetSceneAreaMan( p_mapper );
+  
 
   //デバッグのため、レール処理をON/OFF
+#ifdef PM_DEBUG
   if (key_trg & PAD_BUTTON_L)
   {
-    FIELD_RAIL_WORK_SetActiveFlag(mwk->player_work.railwork, !rail_flag);
-    FLD_SCENEAREA_SetActiveFlag(mwk->p_sceneArea, !rail_flag);
+    FLDNOGRID_MAPPER_DEBUG_SetActive( p_mapper, !rail_flag );
   }
+#endif
 
   if (rail_flag)
   {
     // レール動作
     
     // シーンエリア処理でカメラ上書き
-    if( FLD_SCENEAREA_GetUpdateFuncID( mwk->p_sceneArea ) == FLD_SCENEAREA_UPDATE_CIRCLE ){
+    if( FLD_SCENEAREA_GetUpdateFuncID( cp_areaMan ) == FLD_SCENEAREA_UPDATE_CIRCLE ){
       // カメラ動作限界管理
       cameraRailAreaControl( FIELDMAP_GetFieldCamera( fieldWork ) );
     }

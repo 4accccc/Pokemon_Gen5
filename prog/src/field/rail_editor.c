@@ -362,22 +362,26 @@ static GMEVENT_RESULT DEBUG_RailEditorEvent( GMEVENT * p_event, int *  p_seq, vo
 		FIELD_CAMERA_DEBUG_SetDefaultTarget( FIELDMAP_GetFieldCamera( p_wk->p_fieldmap ), &p_wk->camera_target );
 
     // レール動作ワークの取得
-    p_wk->railwork.railwork = FIELD_RAIL_MAN_CreateWork( FIELDMAP_GetFieldRailMan( p_wk->p_fieldmap ) );
-    p_wk->cp_default_railwork = FIELD_RAIL_MAN_DEBUG_GetBindWork( FIELDMAP_GetFieldRailMan( p_wk->p_fieldmap ) );
-    FIELD_RAIL_MAN_BindCamera( FIELDMAP_GetFieldRailMan( p_wk->p_fieldmap ), p_wk->railwork.railwork );
+    {
+      FLDNOGRID_MAPPER* p_mapper = FIELDMAP_GetFldNoGridMapper( p_wk->p_fieldmap );
+      
+      p_wk->railwork.railwork = FLDNOGRID_MAPPER_CreateRailWork( p_mapper );
+      p_wk->cp_default_railwork = FIELD_RAIL_MAN_DEBUG_GetBindWork( FLDNOGRID_MAPPER_GetRailMan( p_mapper ) );
+      FLDNOGRID_MAPPER_BindCameraWork( p_mapper, p_wk->railwork.railwork );
 
-		// 座標を設定
-		FIELD_PLAYER_GetPos( FIELDMAP_GetFieldPlayer( p_wk->p_fieldmap ), &p_wk->camera_target );
+      // 座標を設定
+      FIELD_PLAYER_GetPos( FIELDMAP_GetFieldPlayer( p_wk->p_fieldmap ), &p_wk->camera_target );
 
-		// 描画タスクを登録
-		p_wk->p_rail_draw = FLDMAPFUNC_Create( FIELDMAP_GetFldmapFuncSys(p_wk->p_fieldmap), &sc_RE_DRAW_FUNCDATA );
-		{
-			RE_RAIL_DRAW_WORK* p_drawwk = FLDMAPFUNC_GetFreeWork( p_wk->p_rail_draw );	
-			
-			p_drawwk->cp_parent = p_wk;
+      // 描画タスクを登録
+      p_wk->p_rail_draw = FLDMAPFUNC_Create( FIELDMAP_GetFldmapFuncSys(p_wk->p_fieldmap), &sc_RE_DRAW_FUNCDATA );
+      {
+        RE_RAIL_DRAW_WORK* p_drawwk = FLDMAPFUNC_GetFreeWork( p_wk->p_rail_draw );	
+        
+        p_drawwk->cp_parent = p_wk;
 
-			RE_DRAW_SetUpData( p_drawwk, FIELD_RAIL_LOADER_GetData( FIELDMAP_GetFieldRailLoader( p_wk->p_fieldmap ) ) );
-		}
+        RE_DRAW_SetUpData( p_drawwk, FIELD_RAIL_LOADER_GetData( FLDNOGRID_MAPPER_GetRailLoader( p_mapper ) ) );
+      }
+    }
 		
 		(*p_seq) = RAIL_EDITOR_SEQ_CONNECT;
 		break;
@@ -453,8 +457,14 @@ static GMEVENT_RESULT DEBUG_RailEditorEvent( GMEVENT * p_event, int *  p_seq, vo
 		// デフォルトターゲットをもとにもどす
 		FIELD_CAMERA_DEBUG_SetDefaultTarget( FIELDMAP_GetFieldCamera( p_wk->p_fieldmap ), p_wk->cp_field_default_target );
 
-    FIELD_RAIL_MAN_DeleteWork( FIELDMAP_GetFieldRailMan( p_wk->p_fieldmap ), p_wk->railwork.railwork );
-    FIELD_RAIL_MAN_BindCamera( FIELDMAP_GetFieldRailMan( p_wk->p_fieldmap ), p_wk->cp_default_railwork );
+    {
+      FLDNOGRID_MAPPER* p_mapper;
+     
+      p_mapper = FIELDMAP_GetFldNoGridMapper( p_wk->p_fieldmap );
+      
+      FLDNOGRID_MAPPER_DeleteRailWork( p_mapper, p_wk->railwork.railwork );
+      FLDNOGRID_MAPPER_BindCameraWork( p_mapper, p_wk->cp_default_railwork );
+    }
 		
 		return GMEVENT_RES_FINISH;
 
@@ -1103,8 +1113,8 @@ static void RE_Reflect( DEBUG_RAIL_EDITOR* p_wk )
 //-----------------------------------------------------------------------------
 static void RE_Reflect_Rail( DEBUG_RAIL_EDITOR* p_wk )
 {
-	FIELD_RAIL_MAN* p_rail = FIELDMAP_GetFieldRailMan( p_wk->p_fieldmap );
-	FIELD_RAIL_LOADER* p_railload = FIELDMAP_GetFieldRailLoader( p_wk->p_fieldmap );
+  FLDNOGRID_MAPPER* p_nogridMapper = FIELDMAP_GetFldNoGridMapper( p_wk->p_fieldmap );
+  const FIELD_RAIL_LOADER* cp_railload = FLDNOGRID_MAPPER_GetRailLoader( p_nogridMapper );
 	RAIL_LOCATION location;
 	RE_MCS_RAIL_DATA* p_data = (RE_MCS_RAIL_DATA*)p_wk->p_recv->rail;	
 	void* p_setdata;
@@ -1112,14 +1122,10 @@ static void RE_Reflect_Rail( DEBUG_RAIL_EDITOR* p_wk )
 	// ロケーション取得
 	FIELD_RAIL_WORK_GetLocation( p_wk->railwork.railwork, &location );
 
-	// レール情報ローダーに設定
-	FIELD_RAIL_LOADER_Clear( p_railload );
+	// ノーグリッドマップにデータ設定
 	p_setdata = GFL_HEAP_AllocClearMemory( FIELDMAP_GetHeapID( p_wk->p_fieldmap ), (p_wk->p_recv->rail_size  - 8) );
 	GFL_STD_MemCopy( p_data->rail, p_setdata, (p_wk->p_recv->rail_size  - 8) );
-	FIELD_RAIL_LOADER_DEBUG_LoadBinary( p_railload, p_setdata, (p_wk->p_recv->rail_size  - 8) );
-
-	// レールマネージャに登録
-	FIELD_RAIL_MAN_Load( p_rail,  FIELD_RAIL_LOADER_GetData( p_railload ) );
+  FLDNOGRID_MAPPER_DEBUG_LoadRailBynary( p_nogridMapper, p_setdata, (p_wk->p_recv->rail_size  - 8) );
 
 	// ロケーション設定
 	FIELD_RAIL_WORK_SetLocation( p_wk->railwork.railwork, &location );
@@ -1128,7 +1134,7 @@ static void RE_Reflect_Rail( DEBUG_RAIL_EDITOR* p_wk )
 	{
 		RE_RAIL_DRAW_WORK* p_drawwk = FLDMAPFUNC_GetFreeWork( p_wk->p_rail_draw );	
 		
-		RE_DRAW_SetUpData( p_drawwk, FIELD_RAIL_LOADER_GetData( p_railload ) );
+		RE_DRAW_SetUpData( p_drawwk, FIELD_RAIL_LOADER_GetData( cp_railload ) );
 	}
 }
 
@@ -1141,23 +1147,16 @@ static void RE_Reflect_Rail( DEBUG_RAIL_EDITOR* p_wk )
 //-----------------------------------------------------------------------------
 static void RE_Reflect_Area( DEBUG_RAIL_EDITOR* p_wk )
 {
-	FLD_SCENEAREA* p_area = FIELDMAP_GetFldSceneArea( p_wk->p_fieldmap );
-	FLD_SCENEAREA_LOADER* p_areaload = FIELDMAP_GetFldSceneAreaLoader( p_wk->p_fieldmap );
+  FLDNOGRID_MAPPER* p_mapper = FIELDMAP_GetFldNoGridMapper( p_wk->p_fieldmap );
 	RE_MCS_AREA_DATA* p_data = (RE_MCS_AREA_DATA*)p_wk->p_recv->area;	
 	void* p_setdata;
 
 	// areaローダーに設定
-	FLD_SCENEAREA_LOADER_Clear( p_areaload );
 	p_setdata = GFL_HEAP_AllocClearMemory( FIELDMAP_GetHeapID( p_wk->p_fieldmap ), (p_wk->p_recv->area_size - 8) );
 	GFL_STD_MemCopy( p_data->area, p_setdata, (p_wk->p_recv->area_size - 8) );
-	FLD_SCENEAREA_LOADER_LoadBinary( p_areaload, p_setdata, p_wk->p_recv->area_size - 8 );
 
-	// areaマネージャに登録
-	FLD_SCENEAREA_Release( p_area );
-	FLD_SCENEAREA_Load( p_area, 
-			FLD_SCENEAREA_LOADER_GetData( p_areaload ),
-			FLD_SCENEAREA_LOADER_GetDataNum( p_areaload ),
-			FLD_SCENEAREA_LOADER_GetFunc( p_areaload ) );
+  // 設定
+  FLDNOGRID_MAPPER_DEBUG_LoadAreaBynary( p_mapper, p_setdata, (p_wk->p_recv->area_size - 8) );
 }
 
 //----------------------------------------------------------------------------
@@ -1199,10 +1198,10 @@ static void RE_Reflect_Select( DEBUG_RAIL_EDITOR* p_wk )
 //-----------------------------------------------------------------------------
 static void RE_JumpPoint( DEBUG_RAIL_EDITOR* p_wk )
 {
-	FIELD_RAIL_MAN* p_rail = FIELDMAP_GetFieldRailMan( p_wk->p_fieldmap );
 	RAIL_LOCATION location;
 	VecFx32 pos;
-	const RAIL_SETTING* cp_setting = FIELD_RAIL_LOADER_GetData( FIELDMAP_GetFieldRailLoader( p_wk->p_fieldmap ) );
+  FLDNOGRID_MAPPER* p_mapper = FIELDMAP_GetFldNoGridMapper( p_wk->p_fieldmap ); 
+	const RAIL_SETTING* cp_setting = FIELD_RAIL_LOADER_GetData( FLDNOGRID_MAPPER_GetRailLoader( p_mapper ) );
 
 	if( cp_setting->point_count > p_wk->p_recv->select.select_index )
 	{
@@ -1215,7 +1214,7 @@ static void RE_JumpPoint( DEBUG_RAIL_EDITOR* p_wk )
 		FIELD_RAIL_WORK_SetLocation( p_wk->railwork.railwork, &location );
 
 		// 位置を人物に設定
-		FIELD_RAIL_MAN_GetBindWorkPos( p_rail, &pos );
+		FIELD_RAIL_WORK_GetPos( p_wk->railwork.railwork, &pos );
 		// 
 		FIELD_PLAYER_SetPos( FIELDMAP_GetFieldPlayer( p_wk->p_fieldmap ), &pos );
 	}
@@ -1228,10 +1227,10 @@ static void RE_JumpPoint( DEBUG_RAIL_EDITOR* p_wk )
 //-----------------------------------------------------------------------------
 static void RE_JumpLine( DEBUG_RAIL_EDITOR* p_wk )
 {
-	FIELD_RAIL_MAN* p_rail = FIELDMAP_GetFieldRailMan( p_wk->p_fieldmap );
 	RAIL_LOCATION location;
 	VecFx32 pos;
-	const RAIL_SETTING* cp_setting = FIELD_RAIL_LOADER_GetData( FIELDMAP_GetFieldRailLoader( p_wk->p_fieldmap ) );
+  FLDNOGRID_MAPPER* p_mapper = FIELDMAP_GetFldNoGridMapper( p_wk->p_fieldmap ); 
+	const RAIL_SETTING* cp_setting = FIELD_RAIL_LOADER_GetData( FLDNOGRID_MAPPER_GetRailLoader( p_mapper ) );
 
 	if( cp_setting->line_count > p_wk->p_recv->select.select_index )
 	{
@@ -1243,7 +1242,7 @@ static void RE_JumpLine( DEBUG_RAIL_EDITOR* p_wk )
 		FIELD_RAIL_WORK_SetLocation( p_wk->railwork.railwork, &location );
 
 		// 位置を人物に設定
-		FIELD_RAIL_MAN_GetBindWorkPos( p_rail, &pos );
+		FIELD_RAIL_WORK_GetPos( p_wk->railwork.railwork, &pos );
 		// 
 		FIELD_PLAYER_SetPos( FIELDMAP_GetFieldPlayer( p_wk->p_fieldmap ), &pos );
 	}
@@ -1259,12 +1258,12 @@ static void RE_JumpLine( DEBUG_RAIL_EDITOR* p_wk )
 static void RE_JumpArea( DEBUG_RAIL_EDITOR* p_wk )
 {
 	// ポイントデータをなめて、area位置に近い場所に飛ぶ
-	FIELD_RAIL_MAN* p_rail = FIELDMAP_GetFieldRailMan( p_wk->p_fieldmap );
 	FIELD_CAMERA* p_camera = FIELDMAP_GetFieldCamera( p_wk->p_fieldmap );
 	FIELD_PLAYER* p_player = FIELDMAP_GetFieldPlayer( p_wk->p_fieldmap );
-	FLD_SCENEAREA_LOADER* p_arealoader = FIELDMAP_GetFldSceneAreaLoader( p_wk->p_fieldmap );
-	const FLD_SCENEAREA_DATA* cp_data = FLD_SCENEAREA_LOADER_GetData( p_arealoader );
-	u32 data_num = FLD_SCENEAREA_LOADER_GetDataNum( p_arealoader );
+  FLDNOGRID_MAPPER* p_mapper = FIELDMAP_GetFldNoGridMapper( p_wk->p_fieldmap );
+	const FLD_SCENEAREA_LOADER* cp_arealoader = FLDNOGRID_MAPPER_GetSceneAreaLoader( p_mapper );
+	const FLD_SCENEAREA_DATA* cp_data = FLD_SCENEAREA_LOADER_GetData( cp_arealoader );
+	u32 data_num = FLD_SCENEAREA_LOADER_GetDataNum( cp_arealoader );
 
 	// 今のコントロールモードが、回転移動ならば、回転角度を始点の位置に持っていく。＆距離もコントロールする。
 	if( data_num > p_wk->p_recv->select.select_index )
@@ -1535,19 +1534,13 @@ static void RE_InputPoint_FreeCircle( DEBUG_RAIL_EDITOR* p_wk )
 //-----------------------------------------------------------------------------
 static void RE_InputPoint_Rail( DEBUG_RAIL_EDITOR* p_wk )
 {
+  FLDNOGRID_MAPPER* p_mapper = FIELDMAP_GetFldNoGridMapper( p_wk->p_fieldmap );
 	FIELD_CAMERA* p_camera = FIELDMAP_GetFieldCamera( p_wk->p_fieldmap );
 	FIELD_PLAYER* p_player = FIELDMAP_GetFieldPlayer( p_wk->p_fieldmap );
-	FIELD_RAIL_MAN* p_rail = FIELDMAP_GetFieldRailMan( p_wk->p_fieldmap );
-	FLD_SCENEAREA* p_scenearea = FIELDMAP_GetFldSceneArea( p_wk->p_fieldmap );
-	VecFx32 pos;
 
 
 	// レールシステムメイン
-	FIELD_RAIL_MAN_Update(p_rail );
-	FIELD_RAIL_MAN_UpdateCamera(p_rail);
-	FIELD_RAIL_MAN_GetBindWorkPos( p_rail, &pos );
-	FLD_SCENEAREA_Update( p_scenearea, &pos );
-
+  FLDNOGRID_MAPPER_Main( p_mapper );
 
   // プレイヤー動作メイン
   FIELD_PLAYER_NOGRID_Rail_Move( p_player, FIELDMAP_GetFldEffCtrl(p_wk->p_fieldmap), FIELDMAP_GetFieldCamera(p_wk->p_fieldmap), GFL_UI_KEY_GetCont(), &p_wk->railwork );
@@ -1607,16 +1600,14 @@ static void RE_InitInputPoint_FreeNormal( DEBUG_RAIL_EDITOR* p_wk )
 {
 	FIELD_CAMERA* p_camera = FIELDMAP_GetFieldCamera( p_wk->p_fieldmap );
 	FIELD_PLAYER* p_player = FIELDMAP_GetFieldPlayer( p_wk->p_fieldmap );
-	FIELD_RAIL_MAN* p_rail = FIELDMAP_GetFieldRailMan( p_wk->p_fieldmap );
-	FLD_SCENEAREA* p_scenearea = FIELDMAP_GetFldSceneArea( p_wk->p_fieldmap );
+  FLDNOGRID_MAPPER* p_mapper = FIELDMAP_GetFldNoGridMapper( p_wk->p_fieldmap );
 	VecFx32 pos;
 
 	FIELD_CAMERA_SetMode( p_camera, FIELD_CAMERA_MODE_CALC_CAMERA_POS );
 
 	FIELD_CAMERA_BindDefaultTarget( p_camera );
 
-	FIELD_RAIL_MAN_SetActiveFlag(p_rail, FALSE);
-	FLD_SCENEAREA_SetActiveFlag(p_scenearea, FALSE);
+	FLDNOGRID_MAPPER_DEBUG_SetActive(p_mapper, FALSE);
 
 	// プレイヤー座標をハーフグリッド単位にする
 	FIELD_PLAYER_GetPos( p_player, &pos );
@@ -1640,18 +1631,16 @@ static void RE_InitInputPoint_FreeCircle( DEBUG_RAIL_EDITOR* p_wk )
 {
 	FIELD_CAMERA* p_camera = FIELDMAP_GetFieldCamera( p_wk->p_fieldmap );
 	FIELD_PLAYER* p_player = FIELDMAP_GetFieldPlayer( p_wk->p_fieldmap );
-	FIELD_RAIL_MAN* p_rail = FIELDMAP_GetFieldRailMan( p_wk->p_fieldmap );
-	FIELD_RAIL_LOADER * p_rail_loader = FIELDMAP_GetFieldRailLoader( p_wk->p_fieldmap );
-	FLD_SCENEAREA* p_scenearea = FIELDMAP_GetFldSceneArea( p_wk->p_fieldmap );
-	const RAIL_SETTING* cp_rail_setting = FIELD_RAIL_LOADER_GetData( p_rail_loader );
+  FLDNOGRID_MAPPER* p_mapper = FIELDMAP_GetFldNoGridMapper( p_wk->p_fieldmap );
+	const FIELD_RAIL_LOADER * cp_rail_loader = FLDNOGRID_MAPPER_GetRailLoader( p_mapper );
+	const RAIL_SETTING* cp_rail_setting = FIELD_RAIL_LOADER_GetData( cp_rail_loader );
 	RAIL_LOCATION location;
 	VecFx32 target, pl_pos, sub;
 	u16 yaw;
 	fx32 len;
 	u32 linepos_set;
 
-	FIELD_RAIL_MAN_SetActiveFlag(p_rail, FALSE);
-	FLD_SCENEAREA_SetActiveFlag(p_scenearea, FALSE);
+	FLDNOGRID_MAPPER_DEBUG_SetActive(p_mapper, FALSE);
 
 	FIELD_CAMERA_FreeTarget( p_camera );
 	
@@ -1707,13 +1696,11 @@ static void RE_InitInputPoint_FreeCircle( DEBUG_RAIL_EDITOR* p_wk )
 static void RE_InitInputPoint_Rail( DEBUG_RAIL_EDITOR* p_wk )
 {
 	FIELD_CAMERA* p_camera = FIELDMAP_GetFieldCamera( p_wk->p_fieldmap );
-	FIELD_RAIL_MAN* p_rail = FIELDMAP_GetFieldRailMan( p_wk->p_fieldmap );
-	FLD_SCENEAREA* p_scenearea = FIELDMAP_GetFldSceneArea( p_wk->p_fieldmap );
+  FLDNOGRID_MAPPER* p_mapper = FIELDMAP_GetFldNoGridMapper( p_wk->p_fieldmap );
   FIELD_PLAYER* p_player = FIELDMAP_GetFieldPlayer( p_wk->p_fieldmap );
 
 	// レール移動
-	FIELD_RAIL_MAN_SetActiveFlag(p_rail, TRUE);
-	FLD_SCENEAREA_SetActiveFlag(p_scenearea, TRUE);
+  FLDNOGRID_MAPPER_DEBUG_SetActive( p_mapper, TRUE );
 
   // プレイヤー動作の初期化
   FIELD_PLAYER_NOGRID_Rail_SetUp( p_player, &p_wk->railwork );
@@ -1921,7 +1908,8 @@ static void RE_SendControl( DEBUG_RAIL_EDITOR* p_wk )
 //-----------------------------------------------------------------------------
 static void RE_Send_RailData( DEBUG_RAIL_EDITOR* p_wk )
 {
-	const FIELD_RAIL_LOADER* cp_loader = FIELDMAP_GetFieldRailLoader( p_wk->p_fieldmap );
+  FLDNOGRID_MAPPER* p_mapper = FIELDMAP_GetFldNoGridMapper( p_wk->p_fieldmap );
+	const FIELD_RAIL_LOADER* cp_loader = FLDNOGRID_MAPPER_GetRailLoader( p_mapper );
 	const void* cp_data = FIELD_RAIL_LOADER_DEBUG_GetData( cp_loader );	
 	u32 datasize = FIELD_RAIL_LOADER_DEBUG_GetDataSize( cp_loader );	
 	RE_MCS_RAIL_DATA* p_senddata = (RE_MCS_RAIL_DATA*)p_wk->p_tmp_buff;
@@ -1945,7 +1933,8 @@ static void RE_Send_RailData( DEBUG_RAIL_EDITOR* p_wk )
 //-----------------------------------------------------------------------------
 static void RE_Send_AreaData( DEBUG_RAIL_EDITOR* p_wk )
 {
-	const FLD_SCENEAREA_LOADER* cp_loader = FIELDMAP_GetFldSceneAreaLoader( p_wk->p_fieldmap );
+  FLDNOGRID_MAPPER* p_mapper = FIELDMAP_GetFldNoGridMapper( p_wk->p_fieldmap );
+	const FLD_SCENEAREA_LOADER* cp_loader = FLDNOGRID_MAPPER_GetSceneAreaLoader( p_mapper );
 	const void* cp_data = FLD_SCENEAREA_LOADER_DEBUG_GetData( cp_loader );
 	u32 datasize				= FLD_SCENEAREA_LOADER_DEBUG_GetDataSize( cp_loader );
 	RE_MCS_AREA_DATA* p_senddata = (RE_MCS_AREA_DATA*)p_wk->p_tmp_buff;
@@ -2056,7 +2045,6 @@ static void RE_Send_CameraData( DEBUG_RAIL_EDITOR* p_wk )
 //-----------------------------------------------------------------------------
 static void RE_Send_RailLocationData( DEBUG_RAIL_EDITOR* p_wk )
 {
-	FIELD_RAIL_MAN * p_rail = FIELDMAP_GetFieldRailMan( p_wk->p_fieldmap );
 	RE_MCS_RAILLOCATION_DATA* p_senddata = (RE_MCS_RAILLOCATION_DATA*)p_wk->p_tmp_buff;
 	RAIL_LOCATION location;
 	BOOL result;

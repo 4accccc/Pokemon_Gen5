@@ -32,8 +32,7 @@
 #include "field_fog.h"
 #include "field_light.h"
 #include "field_buildmodel.h"
-#include "field_rail.h"
-#include "field/field_rail_loader.h"
+#include "field/field_nogrid_mapper.h"
 
 #include "gamesystem/gamesystem.h"
 #include "gamesystem/playerwork.h"
@@ -200,10 +199,7 @@ struct _FIELDMAP_WORK
 	
 	MMDLSYS *fldMMdlSys;
 
-	FIELD_RAIL_MAN * railMan;
-
-	FLD_SCENEAREA * sceneArea;
-	FLD_SCENEAREA_LOADER * sceneAreaLoader;
+  FLDNOGRID_MAPPER* nogridMapper;
 	
 	FLDMAPPER *g3Dmapper;
 	FLD_WIPEOBJ *fldWipeObj;
@@ -473,14 +469,8 @@ static MAINSEQ_RESULT mainSeqFunc_setup(GAMESYS_WORK *gsys, FIELDMAP_WORK *field
       &fieldWork->now_pos,
       fieldWork->heapID );
 
-  // railシステム初期化
-  fieldWork->railMan = FIELD_RAIL_MAN_Create( fieldWork->heapID, FIELD_RAIL_WORK_MAX, fieldWork->camera_control );
-
-	// sceneareaデータ読み込みシステム
-	fieldWork->sceneAreaLoader = FLD_SCENEAREA_LOADER_Create( fieldWork->heapID );
-	
-	// sceneareaシステム
-	fieldWork->sceneArea = FLD_SCENEAREA_Create( fieldWork->heapID, fieldWork->camera_control );
+  // NOGRIDマッパー生成
+  fieldWork->nogridMapper = FLDNOGRID_MAPPER_Create( fieldWork->heapID, fieldWork->camera_control );
 
   {
     FIELD_BMODEL_MAN * bmodel_man = FLDMAPPER_GetBuildModelManager( fieldWork->g3Dmapper );
@@ -541,12 +531,12 @@ static MAINSEQ_RESULT mainSeqFunc_setup(GAMESYS_WORK *gsys, FIELDMAP_WORK *field
     //保存した位置を反映する
     if (ZONEDATA_DEBUG_IsRailMap(fieldWork->map_id) == TRUE)
     { 
-      // 09/08/05 現状は、レール移動時のプレイヤーに大してロケーションが設定できないため、仮の処理で、ロケーション設定を行う。 tomoya takahashi
+      // 09/08/05 現状は、レール移動時のプレイヤーに対してロケーションが設定できないため、仮の処理で、ロケーション設定を行う。 tomoya takahashi
 #ifdef PM_DEBUG
       const RAIL_LOCATION * railLoc = GAMEDATA_GetRailLocation( gdata );
-      FIELD_RAIL_WORK_SetLocation( FIELD_RAIL_MAN_DEBUG_GetBindWork( fieldWork->railMan ), railLoc );
+      FIELD_RAIL_WORK_SetLocation( FIELD_RAIL_MAN_DEBUG_GetBindWork( FLDNOGRID_MAPPER_GetRailMan( fieldWork->nogridMapper ) ), railLoc );
 #endif
-      FIELD_RAIL_MAN_GetBindWorkPos( fieldWork->railMan, &fieldWork->now_pos );
+      FIELD_RAIL_MAN_GetBindWorkPos( FLDNOGRID_MAPPER_GetRailMan( fieldWork->nogridMapper ), &fieldWork->now_pos );
     }
 
     FLDMAPPER_SetPos( fieldWork->g3Dmapper, &fieldWork->now_pos );
@@ -678,14 +668,6 @@ static MAINSEQ_RESULT mainSeqFunc_update_top(GAMESYS_WORK *gsys, FIELDMAP_WORK *
 
   if( GAMESYSTEM_GetEvent(gsys) == NULL) {
 
-		VecFx32 rail_pos;
-
-    // レールシステムメイン
-	  FIELD_RAIL_MAN_Update(fieldWork->railMan );
-    FIELD_RAIL_MAN_UpdateCamera(fieldWork->railMan);
-		FIELD_RAIL_MAN_GetBindWorkPos( fieldWork->railMan, &rail_pos );
-		FLD_SCENEAREA_Update( fieldWork->sceneArea, &rail_pos );
-    
     //登録テーブルごとに個別のメイン処理を呼び出し
     fieldWork->func_tbl->main_func( fieldWork, &fieldWork->now_pos );
     
@@ -719,7 +701,7 @@ static MAINSEQ_RESULT mainSeqFunc_update_top(GAMESYS_WORK *gsys, FIELDMAP_WORK *
       FIELD_PLAYER_GetPos( fieldWork->field_player, &fieldWork->now_pos );
     }
   }
-  
+
   FLDEFF_CTRL_Update( fieldWork->fldeff_ctrl );
 
 
@@ -772,7 +754,7 @@ static MAINSEQ_RESULT mainSeqFunc_free(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldW
     RAIL_LOCATION railLoc;
     // 09/08/05 現状は、レール移動時のプレイヤーからロケーションを取得できないため、仮の処理で、ロケーション取得を行う。 tomoya takahashi
 #ifdef PM_DEBUG
-    FIELD_RAIL_WORK_GetLocation(FIELD_RAIL_MAN_DEBUG_GetBindWork(fieldWork->railMan), &railLoc);
+    FIELD_RAIL_WORK_GetLocation(FIELD_RAIL_MAN_DEBUG_GetBindWork( FLDNOGRID_MAPPER_GetRailMan(fieldWork->nogridMapper) ), &railLoc);
 #endif
     GAMEDATA_SetRailLocation(gamedata, &railLoc);
   }
@@ -816,14 +798,9 @@ static MAINSEQ_RESULT mainSeqFunc_free(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldW
   // フォグシステム破棄
   FIELD_FOG_Delete( fieldWork->fog );
 
-	// sceneareaシステム
-	FLD_SCENEAREA_Delete( fieldWork->sceneArea );
+  // NOGRIDマッパー破棄
+  FLDNOGRID_MAPPER_Delete( fieldWork->nogridMapper );
 
-	// sceneareaデータ読み込みシステム
-	FLD_SCENEAREA_LOADER_Delete( fieldWork->sceneAreaLoader );
-
-  // レール制御破棄
-  FIELD_RAIL_MAN_Delete( fieldWork->railMan );
 
   FIELD_CAMERA_Delete( fieldWork->camera_control );
 
@@ -992,14 +969,6 @@ const BOOL FIELDMAP_IsReady( const FIELDMAP_WORK *fieldWork )
 //--------------------------------------------------------------
 void FIELDMAP_ForceUpdate( FIELDMAP_WORK *fieldWork )
 {
-	VecFx32 rail_pos;
-
-  // レールシステムメイン
-  FIELD_RAIL_MAN_Update(fieldWork->railMan );
-  FIELD_RAIL_MAN_UpdateCamera(fieldWork->railMan);
-	FIELD_RAIL_MAN_GetBindWorkPos( fieldWork->railMan, &rail_pos );
-	FLD_SCENEAREA_Update( fieldWork->sceneArea, &rail_pos );
-  
 	//登録テーブルごとに個別のメイン処理を呼び出し
 	fieldWork->func_tbl->main_func( fieldWork, &fieldWork->now_pos );
 	
@@ -1086,32 +1055,14 @@ FIELD_CAMERA * FIELDMAP_GetFieldCamera( FIELDMAP_WORK *fieldWork )
 	return fieldWork->camera_control;
 }
 
-//--------------------------------------------------------------
-/**
- *	@brief  レール制御システムの取得
- */
-//--------------------------------------------------------------
-FIELD_RAIL_MAN * FIELDMAP_GetFieldRailMan( FIELDMAP_WORK *fieldWork )
-{
-	return fieldWork->railMan;
-}
-FIELD_RAIL_LOADER * FIELDMAP_GetFieldRailLoader( FIELDMAP_WORK *fieldWork )
-{
-  return GAMEDATA_GetFieldRailLoader( GAMESYSTEM_GetGameData(fieldWork->gsys) );
-}
-
 //----------------------------------------------------------------------------
 /**
- *	@brief	シーンエリア制御システムの取得
+ *	@brief  ノーグリッド動作　マッパーの取得
  */
 //-----------------------------------------------------------------------------
-FLD_SCENEAREA * FIELDMAP_GetFldSceneArea( FIELDMAP_WORK *fieldWork )
+FLDNOGRID_MAPPER* FIELDMAP_GetFldNoGridMapper( FIELDMAP_WORK *fieldWork )
 {
-	return fieldWork->sceneArea;
-}
-FLD_SCENEAREA_LOADER * FIELDMAP_GetFldSceneAreaLoader( FIELDMAP_WORK *fieldWork )
-{
-	return fieldWork->sceneAreaLoader;
+  return fieldWork->nogridMapper;
 }
 
 //--------------------------------------------------------------
@@ -1548,6 +1499,9 @@ static void fldmap_G3D_Control( FIELDMAP_WORK * fieldWork )
 {
 	FLDMAPPER_Main( fieldWork->g3Dmapper );
 	GFL_BBDACT_Main( fieldWork->bbdActSys );
+
+  // NOGRID動作制御
+  FLDNOGRID_MAPPER_Main( fieldWork->nogridMapper );
 	
 	FIELD_WEATHER_Main( fieldWork->weather_sys, fieldWork->heapID );
 	FIELD_FOG_Main( fieldWork->fog );

@@ -77,23 +77,28 @@ static void mapCtrlNoGrid_Create(
 {
 	FIELD_PLAYER *fld_player;
   FIELD_CAMERA * camera = FIELDMAP_GetFieldCamera(fieldWork);
-  FIELD_RAIL_MAN * railMan = FIELDMAP_GetFieldRailMan(fieldWork);
-	FIELD_RAIL_LOADER* railLoader = FIELDMAP_GetFieldRailLoader(fieldWork);
+  FLDNOGRID_MAPPER* p_mapper = FIELDMAP_GetFldNoGridMapper( fieldWork );
 	NOGRID_MOVE_WORK *work;
 
 	work = GFL_HEAP_AllocClearMemory( FIELDMAP_GetHeapID( fieldWork ), sizeof(NOGRID_MOVE_WORK) );
 	FIELDMAP_SetMapCtrlWork( fieldWork, work );
 
-	FIELD_RAIL_LOADER_Load( railLoader, ZONEDATA_GetRailDataID( FIELDMAP_GetZoneID(fieldWork) ), FIELDMAP_GetHeapID(fieldWork) );
-  FIELD_RAIL_MAN_Load(railMan, FIELD_RAIL_LOADER_GetData(railLoader));
-  work->player_work.railwork = FIELD_RAIL_MAN_CreateWork(railMan);  // 移動管理１オブジェ生成
+  {
+    FLDNOGRID_RESISTDATA resist;
+
+    resist.railDataID = ZONEDATA_GetRailDataID( FIELDMAP_GetZoneID(fieldWork) );
+    resist.areaDataID = FLDNOGRID_RESISTDATA_NONE;
+    resist.attrDataID = FLDNOGRID_RESISTDATA_NONE;
+
+    FLDNOGRID_MAPPER_ResistData( p_mapper, &resist, FIELDMAP_GetHeapID(fieldWork) );  
+  }
+
+  work->player_work.railwork = FLDNOGRID_MAPPER_CreateRailWork(p_mapper);  // 移動管理１オブジェ生成
   
   // ロケーションの設定
   FIELD_RAIL_WORK_SetLocation( work->player_work.railwork, &locationStart );
-  //FIELD_RAIL_MAN_Load(railMan, &point_c03_start);
   FIELD_RAIL_WORK_GetPos(work->player_work.railwork, pos );
-  FIELD_RAIL_MAN_BindCamera( railMan, work->player_work.railwork );
-//  FIELD_CAMERA_BindNoCamera(camera, TRUE);
+  FLDNOGRID_MAPPER_BindCameraWork( p_mapper, work->player_work.railwork );
 //
 	
   fld_player = FIELDMAP_GetFieldPlayer( fieldWork );
@@ -115,13 +120,12 @@ static void mapCtrlNoGrid_Create(
 //--------------------------------------------------------------
 static void mapCtrlNoGrid_Delete( FIELDMAP_WORK *fieldWork )
 {
-  FIELD_RAIL_MAN* railMan = FIELDMAP_GetFieldRailMan( fieldWork );
-	FIELD_RAIL_LOADER* railLoader = FIELDMAP_GetFieldRailLoader(fieldWork);
+  FLDNOGRID_MAPPER* p_mapper = FIELDMAP_GetFldNoGridMapper( fieldWork );
 	NOGRID_MOVE_WORK *work = FIELDMAP_GetMapCtrlWork( fieldWork );
 
-	FIELD_RAIL_LOADER_Clear( railLoader );
-  FIELD_RAIL_MAN_DeleteWork( railMan, work->player_work.railwork );
-  FIELD_RAIL_MAN_UnBindCamera( railMan );
+	FLDNOGRID_MAPPER_Release( p_mapper );
+  FLDNOGRID_MAPPER_DeleteRailWork( p_mapper, work->player_work.railwork );
+  FLDNOGRID_MAPPER_UnBindCameraWork( p_mapper );
 	//DeletePlayerAct( fieldWork->field_player );
 	GFL_HEAP_FreeMemory( work );
 }
@@ -138,8 +142,8 @@ static void mapCtrlNoGrid_Main( FIELDMAP_WORK *fieldWork, VecFx32 *pos )
 {
 	int key_cont = GFL_UI_KEY_GetCont();
   int key_trg = GFL_UI_KEY_GetTrg();
-  FIELD_RAIL_MAN * railMan = FIELDMAP_GetFieldRailMan(fieldWork);
-  BOOL rail_flag = FIELD_RAIL_MAN_GetActiveFlag(railMan);
+  FLDNOGRID_MAPPER* p_mapper = FIELDMAP_GetFldNoGridMapper( fieldWork );
+  BOOL rail_flag = FLDNOGRID_MAPPER_DEBUG_IsActive(p_mapper);
 	FIELD_PLAYER *fld_player = FIELDMAP_GetFieldPlayer( fieldWork );
 	NOGRID_MOVE_WORK *work = FIELDMAP_GetMapCtrlWork( fieldWork );
 

@@ -866,11 +866,11 @@ static GMEVENT * checkRailExit(const EV_REQUEST * req, GAMESYS_WORK *gsys, FIELD
   int idx;
   VecFx32 pos;
   int * firstID = FIELDMAP_GetFirstConnectID(fieldWork);
-  FIELD_RAIL_MAN* railMan = FIELDMAP_GetFieldRailMan(fieldWork);
+  FLDNOGRID_MAPPER* nogridMapper = FIELDMAP_GetFldNoGridMapper( fieldWork );
 
     // 09/08/05 現状は、レール移動時のプレイヤーからロケーションを取得できないため、仮の処理で、ロケーション取得を行う。 tomoya takahashi
 #ifdef PM_DEBUG
-  FIELD_RAIL_WORK_GetPos( FIELD_RAIL_MAN_DEBUG_GetBindWork(railMan) , &pos );
+  FIELD_RAIL_WORK_GetPos( FIELD_RAIL_MAN_DEBUG_GetBindWork( FLDNOGRID_MAPPER_GetRailMan(nogridMapper) ) , &pos );
 #endif
   idx = EVENTDATA_SearchConnectIDBySphere(req->evdata, &pos);
   if (*firstID == idx) return NULL;

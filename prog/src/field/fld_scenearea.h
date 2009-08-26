@@ -96,6 +96,8 @@ extern void FLD_SCENEAREA_Load( FLD_SCENEAREA* p_sys, const FLD_SCENEAREA_DATA* 
 extern void FLD_SCENEAREA_Release( FLD_SCENEAREA* p_sys );
 extern u32 FLD_SCENEAREA_Update( FLD_SCENEAREA* p_sys, const VecFx32* cp_pos );
 
+extern BOOL FLD_SCENEAREA_IsLoad( const FLD_SCENEAREA* cp_sys );
+
 extern u32 FLD_SCENEAREA_GetActiveArea( const FLD_SCENEAREA* cp_sys );
 extern u32 FLD_SCENEAREA_GetUpdateFuncID( const FLD_SCENEAREA* cp_sys );
 
