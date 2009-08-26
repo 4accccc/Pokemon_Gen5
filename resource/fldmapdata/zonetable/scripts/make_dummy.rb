@@ -7,7 +7,7 @@
 
 require "fileutils"
 
-SCRMSG_PATH = "../../message/src/script/"
+SCRMSG_PATH = "../../message/src/script_message/"
 SCRIPT_PATH = "../script/"
 
 
@@ -88,6 +88,8 @@ def makeScripts( zone_ids )
     scrfile = SCRIPT_PATH + id + ".ev"
     sp_scrfile = SCRIPT_PATH + "sp_" + id + ".ev"
     command = "ruby ../script/scr_tools/make_dummy_script.rb ../script #{id}"
+    command2 = "unix2dos -D #{scrfile}"
+    command2 = "unix2dos -D #{sp_scrfile}"
       system (command)
     unless FileTest.exists?(scrfile) then
       puts "#{command}"

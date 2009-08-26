@@ -500,5 +500,39 @@ SCRIPTFILES = \
 	sp_t04r0102.ev \
 	c04r1001.ev \
 	sp_c04r1001.ev \
+	r06r0201.ev \
+	sp_r06r0201.ev \
+	r06r0202.ev \
+	sp_r06r0202.ev \
+	r06r0203.ev \
+	sp_r06r0203.ev \
+	r09r0301.ev \
+	sp_r09r0301.ev \
+	r09r0302.ev \
+	sp_r09r0302.ev \
+	r09r0303.ev \
+	sp_r09r0303.ev \
+	t05.ev \
+	sp_t05.ev \
+	c04p01.ev \
+	sp_c04p01.ev \
+	d09r0101.ev \
+	sp_d09r0101.ev \
+	d09r0201.ev \
+	sp_d09r0201.ev \
+	r10r0101.ev \
+	sp_r10r0101.ev \
+	c09p01.ev \
+	sp_c09p01.ev \
+	c09p02.ev \
+	sp_c09p02.ev \
+	c09r0101.ev \
+	sp_c09r0101.ev \
+	c09r0201.ev \
+	sp_c09r0201.ev \
+	n01r0101.ev \
+	sp_n01r0101.ev \
+	d08r0101.ev \
+	sp_d08r0101.ev \
 
 #©“®¶¬ƒtƒ@ƒCƒ‹ zone_script.list ––”ö
