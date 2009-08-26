@@ -39,6 +39,10 @@ typedef struct
 {
   GFL_G3D_RES *g3d_res_mdl;
   GFL_G3D_RES *g3d_res_anm[2];
+  
+  GFL_G3D_OBJ *obj;
+  GFL_G3D_ANM *obj_anm[2];
+  GFL_G3D_RND *obj_rnd;
 }RIPPLE_RES;
 
 //--------------------------------------------------------------
@@ -54,7 +58,7 @@ typedef struct
   u16 dir;
   VecFx32 pos;
   VecFx32 save_pos;
-
+  
   u16 rot_y;
   VecFx32 scale;
   VecFx32 offs;
@@ -177,7 +181,7 @@ static void namipoke_InitResource( FLDEFF_NAMIPOKE *namipoke )
     RIPPLE_RES *rip_res = &namipoke->ripple_res;
     rip_res->g3d_res_mdl =
       GFL_G3D_CreateResourceHandle( handle, NARC_fldeff_shibuki01_nsbmd );
-    ret = GFL_G3D_TransVramTexture( namipoke->g3d_res_mdl );
+    ret = GFL_G3D_TransVramTexture( rip_res->g3d_res_mdl );
     GF_ASSERT( ret );
     
     rip_res->g3d_res_anm[0]	=
@@ -186,6 +190,21 @@ static void namipoke_InitResource( FLDEFF_NAMIPOKE *namipoke )
       GFL_G3D_CreateResourceHandle( handle, NARC_fldeff_shibuki01_nsbta );
   }
 }
+
+#if 0
+void DEBUG_namipoke_vblank( FLDEFF_CTRL *fldeff_ctrl )
+{
+  BOOL ret;
+  FLDEFF_NAMIPOKE *namipoke;
+  namipoke = FLDEFF_CTRL_GetEffectWork( fldeff_ctrl, FLDEFF_PROCID_NAMIPOKE );
+  
+  ret = GFL_G3D_TransVramTexture( namipoke->g3d_res_mdl );
+  GF_ASSERT( ret );
+  
+  rip->obj_rnd = GFL_G3D_RENDER_Create(
+    rip_res->g3d_res_mdl, 0, rip_res->g3d_res_mdl );
+}
+#endif
 
 //--------------------------------------------------------------
 /**
@@ -326,18 +345,29 @@ static void namipokeTask_Init( FLDEFF_TASK *task, void *wk )
     RIPPLE_WORK *rip = &work->ripple_work;
     
     rip->obj_rnd = GFL_G3D_RENDER_Create(
-        rip_res->g3d_res_mdl, 0, rip_res->g3d_res_mdl );
+      rip_res->g3d_res_mdl, 0, rip_res->g3d_res_mdl );
+    
     rip->obj_anm[0] = GFL_G3D_ANIME_Create(
           rip->obj_rnd, rip_res->g3d_res_anm[0], 0 );
     rip->obj_anm[1] = GFL_G3D_ANIME_Create(
           rip->obj_rnd, rip_res->g3d_res_anm[1], 0 );
+    
     rip->obj = GFL_G3D_OBJECT_Create( rip->obj_rnd, rip->obj_anm, 2 );
 	  GFL_G3D_OBJECT_EnableAnime( rip->obj, 0 );
 	  GFL_G3D_OBJECT_EnableAnime( rip->obj, 1 );
     
+#if 0     
+    {
+      NNSG3dRenderObj *rnd = GFL_G3D_RENDER_GetRenderObj( rip->obj_rnd );
+      NNSG3dResMdl *resMdl = NNS_G3dRenderObjGetResMdl( rnd );
+      NNS_G3dMdlUseMdlAlpha( resMdl );
+		  NNS_G3dMdlSetMdlAlphaAll( resMdl, 31 );
+    }
+#endif
+    
     rip->vanish_flag = TRUE;
     rip->dir = DIR_NOT;
-
+    
     rip->scale.x = FX32_ONE;
     rip->scale.y = FX32_ONE;
     rip->scale.z = FX32_ONE;
@@ -415,14 +445,16 @@ static void namipokeTask_Update( FLDEFF_TASK *task, void *wk )
     pos.y += work->shake_offs - FX32_ONE;
     FLDEFF_TASK_SetPos( task, &pos );
   }
-  
+
   { //波紋エフェクト
     fx32 ret;
     VecFx32 pos;
     RIPPLE_WORK *rip = &work->ripple_work;
-	  GFL_G3D_OBJECT_LoopAnimeFrame( rip->obj, 0, FX32_ONE );
+	  
+    GFL_G3D_OBJECT_LoopAnimeFrame( rip->obj, 0, FX32_ONE );
 	  GFL_G3D_OBJECT_LoopAnimeFrame( rip->obj, 1, FX32_ONE );
-    
+
+#if 1    
     MMDL_GetVectorPos( work->head.mmdl, &pos );
     
     if( work->dir != rip->dir ){
@@ -480,6 +512,13 @@ static void namipokeTask_Update( FLDEFF_TASK *task, void *wk )
     }
     
     rip->save_pos = pos;
+#else
+    rip->vanish_flag = FALSE;
+    rip->dir = DIR_UP;
+    rip->scale.x = FX32_ONE*1;
+    rip->scale.y = FX32_ONE*1;
+    rip->scale.z = FX32_ONE*1;
+#endif
   }
 }
 
@@ -565,7 +604,7 @@ static void namipokeTask_Draw( FLDEFF_TASK *task, void *wk )
     {
       GFL_CALC3D_MTX_CreateRot(
           rip_rot[0], rip_rot[1], rip_rot[2], &status.rotate );
-
+      
       FLDEFF_TASK_GetPos( task, &status.trans );
       status.trans.x += rip->offs.x + rip_offs->x;
       status.trans.y += rip->offs.y + rip_offs->y;
