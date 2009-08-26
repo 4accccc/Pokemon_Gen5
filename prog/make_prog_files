@@ -337,6 +337,8 @@ SRCS_OVERLAY_FIELDMAP		=	field/field_proc.c \
 				field/rail_editor.c \
         field/field_rail.c \
         field/field_rail_func.c \
+				field/rail_attr.c \
+				field/field_nogrid_mapper.c \
         field/fldeff_gyoe.c \
         field/fieldmap_func.c \
         field/scrcmd_sound.c \

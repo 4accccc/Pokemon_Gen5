@@ -9,13 +9,16 @@
 
 //------------------------------------------------------------------
 /// レール位置情報
+//  8byte
 //------------------------------------------------------------------
 typedef struct {
-  u16 type;       // FIELD_RAIL_TYPE
   u16 rail_index; //index of point or line
-  s32 line_ofs;
-  s32 width_ofs;
-  u32 key;
+  u8 type;        // FIELD_RAIL_TYPE
+  u8 key;
+  s8 width_grid;   // RAILグリッド
+  s8 line_grid;    // RAILグリッド
+
+  u8 pad[2];
 } RAIL_LOCATION;
 
 //------------------------------------------------------------------

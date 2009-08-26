@@ -19,15 +19,13 @@
 
 //============================================================================================
 //============================================================================================
-// 歩きオフセット
-#define RAIL_WALK_OFS	(8)
 
 // 歩きカウント
 static u8 RAIL_COUNTUP[ RAIL_FRAME_MAX ] = 
 {
-  1,        //RAIL_FRAME_8,
-  2,        //RAIL_FRAME_4,
-  4,       //RAIL_FRAME_2,
+  2,        //RAIL_FRAME_8,
+  4,        //RAIL_FRAME_4,
+  8,       //RAIL_FRAME_2,
 };
 
 //============================================================================================
@@ -205,7 +203,7 @@ static void FIELD_RAIL_WORK_Update(FIELD_RAIL_WORK * work);
 static void RAIL_LOCATION_Dump(const RAIL_LOCATION * railLoc)
 {
   TAMADA_Printf("RAIL_LOC:type = %d, rail_index = %d\n",railLoc->type, railLoc->rail_index);
-  TAMADA_Printf("RAIL_LOC:line_ofs = %d, width_ofs = %d\n", railLoc->line_ofs, railLoc->width_ofs);
+  TAMADA_Printf("RAIL_LOC:line_grid = %d, width_grid = %d\n", railLoc->line_grid, railLoc->width_grid);
   TAMADA_Printf("RAIL_LOC:key = %s\n", debugGetRailKeyName(railLoc->key));
 }
 
@@ -475,8 +473,8 @@ void FIELD_RAIL_WORK_GetLocation(const FIELD_RAIL_WORK * work, RAIL_LOCATION * l
   }
 
   // 各種オフセット
-  location->line_ofs  = work->line_ofs;
-  location->width_ofs = work->width_ofs;
+  location->line_grid  = RAIL_OFS_TO_GRID(work->line_ofs);
+  location->width_grid = RAIL_OFS_TO_GRID(work->width_ofs);
   location->key       = work->key;
 
   RAIL_LOCATION_Dump(location);
@@ -558,8 +556,8 @@ void FIELD_RAIL_WORK_SetLocation(FIELD_RAIL_WORK * work, const RAIL_LOCATION * l
     
     // ライン初期化
     line        = &work->rail_dat->line_table[ location->rail_index ];
-    line_ofs    = location->line_ofs;
-    width_ofs   = location->width_ofs;
+    line_ofs    = RAIL_GRID_TO_OFS(location->line_grid);
+    width_ofs   = RAIL_GRID_TO_OFS(location->width_grid);
     key         = location->key;
   }
 
@@ -569,6 +567,42 @@ void FIELD_RAIL_WORK_SetLocation(FIELD_RAIL_WORK * work, const RAIL_LOCATION * l
 
   TOMOYA_Printf( "key %d\n", key );
 
+#ifdef PM_DEBUG
+  
+#if 0
+  // ラインのline_ofs_maxと幅の最大数を取得する
+  {
+    int i;
+    int attr_max;
+    int width_s, width_e;
+    attr_max = 0;
+    for( i=0; i<work->rail_dat->line_count; i++ )
+    {
+      line_ofs_max = getLineOfsMax( &work->rail_dat->line_table[i], work->ofs_unit, work->rail_dat );
+
+      width_s = getLineWidthOfsMax( &work->rail_dat->line_table[i], 0, line_ofs_max, work->rail_dat );
+      width_e = getLineWidthOfsMax( &work->rail_dat->line_table[i], line_ofs_max, line_ofs_max, work->rail_dat );
+
+      line_ofs_max /= RAIL_WALK_OFS;
+      width_s      /= RAIL_WALK_OFS;
+      width_e      /= RAIL_WALK_OFS;
+
+      OS_TPrintf( "lineNo[%d] ofs_max[%d] width_s[%d] width_e[%d]\n", i, line_ofs_max, width_s, width_e );
+      
+      if( width_e > width_s )
+      {
+        width_s = width_e;  // width_sのほうを最大にして求める
+      }
+
+      attr_max += ((width_s*2)+1) * line_ofs_max;
+    }
+    
+    OS_TPrintf( "attr_max = [%d]\n", attr_max );
+  }
+#endif 
+
+#endif
+  
   // 方向設定
   work->last_frame = RAIL_FRAME_8;
   work->last_key = key;

@@ -132,6 +132,13 @@ static const int ConnectCount_C03 = NELEMS(ConnectData_C03);
 //============================================================================================
 static void loadEventDataTable(EVENTDATA_SYSTEM * evdata, u16 zone_id);
 
+
+
+//============================================================================================
+//============================================================================================
+static BOOL PositonCheckSphere( const VecFx32* person, const VecFx32* check, fx32 r );
+static BOOL PositonCheckFrontSphere( const VecFx32* person, const VecFx32* person_way, const VecFx32* check, fx32 r );
+
 //============================================================================================
 //
 //	イベント起動データシステム関連
@@ -226,6 +233,101 @@ static void loadEventDataTable(EVENTDATA_SYSTEM * evdata, u16 zone_id)
         cnct->pos.z / FIELD_CONST_GRID_SIZE);
   }
 }
+
+
+
+//============================================================================================
+//============================================================================================
+//----------------------------------------------------------------------------
+/**
+ *	@brief  イベント座標チェック    人物はイベント範囲内にいるか？
+ *
+ *	@param	person      人物
+ *	@param	check       チェックイベント座標
+ *
+ *	@retval TRUE    領域に入っている
+ *	@retval FALSE   領域に入っていない
+ */
+//-----------------------------------------------------------------------------
+static BOOL PositonCheckSphere( const VecFx32* person, const VecFx32* check, fx32 r )
+{
+  enum 
+  { 
+    HIT_HEIGHT  = FX32_ONE * 4,
+  };
+  VecFx32 pos1, pos2;
+  // 平面の距離
+  fx32 len;
+  fx32 dist_y;
+
+  VEC_Set( &pos1, person->x, 0, person->z ); 
+  VEC_Set( &pos2, check->x, 0, check->z ); 
+
+
+  len = VEC_Distance( &pos1, &pos2 );
+  dist_y = MATH_ABS( person->y - check->y );
+
+
+  if( (dist_y <= HIT_HEIGHT) && (len <= r) )
+  {
+    return  TRUE;
+  }
+  return FALSE;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  座標チェック  人物の前にイベントがあるか？
+ *
+ *	@param	person        人物座標
+ *	@param	person_way    人物前の向き
+ *	@param	check         イベント座標
+ *	@param	r             イベント半径
+ *
+ *	@retval TRUE    領域に入っている
+ *	@retval FALSE   領域に入っていない
+ */
+//-----------------------------------------------------------------------------
+static BOOL PositonCheckFrontSphere( const VecFx32* person, const VecFx32* person_way, const VecFx32* check, fx32 r )
+{
+  enum 
+  { 
+    HIT_PERSON_RANGE = FX32_ONE * (FIELD_CONST_GRID_SIZE/2),
+    HIT_HEIGHT  = FX32_ONE * 4,
+  };
+  VecFx32 pos1, pos2, way, person_way_n;
+  // 平面の距離
+  fx32 len;
+  fx32 dist_y;
+  // 方向用
+  fx32 cos;
+
+  VEC_Set( &pos1, person->x, 0, person->z ); 
+  VEC_Set( &pos2, check->x, 0, check->z ); 
+
+
+  VEC_Subtract( &pos2, &pos1, &way );
+  len = VEC_Mag( &way );
+  dist_y = MATH_ABS( person->y - check->y );
+
+  if( (dist_y <= HIT_HEIGHT) && (len <= (r + HIT_PERSON_RANGE)) )
+  {
+
+    // 方向チェック
+    VEC_Normalize( &way, &way );
+    VEC_Normalize( person_way, &person_way_n );
+    cos = VEC_DotProduct( &way, &person_way_n );
+
+    
+    // 45度以下のチェック
+    if( cos >= FX32_COS45 )
+    {
+      return  TRUE;
+    }
+  }
+  return FALSE;
+}
+
 
 //============================================================================================
 //
@@ -345,6 +447,7 @@ int EVENTDATA_SearchConnectIDBySphere(const EVENTDATA_SYSTEM * evdata, const Vec
 	for (i = 0; i < evdata->connect_count; i++, cnct++ ) {
     VEC_Set(&check, cnct->pos.x * FX32_ONE, cnct->pos.y * FX32_ONE, cnct->pos.z * FX32_ONE);
     len = VEC_Distance(&check, sphere); 
+    
     if (GFL_UI_KEY_GetTrg() & PAD_BUTTON_R)
     {
       TAMADA_Printf("CNCT:ID%02d (%08x, %08x, %08x)", i, cnct->pos.x, cnct->pos.y, cnct->pos.z);

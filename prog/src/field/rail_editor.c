@@ -204,7 +204,7 @@ typedef struct {
 } RE_RAIL_DRAW_WORK;
 
 
-FS_EXTERN_OVERLAY(mcs_lib);
+//FS_EXTERN_OVERLAY(mcs_lib);
 
 //-----------------------------------------------------------------------------
 /**
@@ -343,7 +343,7 @@ static GMEVENT_RESULT DEBUG_RailEditorEvent( GMEVENT * p_event, int *  p_seq, vo
 	// 初期化
 	case RAIL_EDITOR_SEQ_INIT:
 
-		GFL_OVERLAY_Load(FS_OVERLAY_ID(mcs_lib));
+//		GFL_OVERLAY_Load(FS_OVERLAY_ID(mcs_lib));
 
 		// バッファのメモリ確保
 		p_wk->p_recv = GFL_HEAP_AllocClearMemory( FIELDMAP_GetHeapID(p_wk->p_fieldmap), sizeof(RE_RECV_BUFF) );
@@ -440,7 +440,7 @@ static GMEVENT_RESULT DEBUG_RailEditorEvent( GMEVENT * p_event, int *  p_seq, vo
 	case RAIL_EDITOR_SEQ_EXIT:				
 		MCS_Exit();
 
-		GFL_OVERLAY_Unload( FS_OVERLAY_ID( mcs_lib ) );
+//		GFL_OVERLAY_Unload( FS_OVERLAY_ID( mcs_lib ) );
 
 		// バッファのメモリ破棄
 		GFL_HEAP_FreeMemory( p_wk->p_recv );
@@ -1209,8 +1209,8 @@ static void RE_JumpPoint( DEBUG_RAIL_EDITOR* p_wk )
 
 		location.type					= FIELD_RAIL_TYPE_POINT;
 		location.rail_index		= p_wk->p_recv->select.select_index;
-		location.line_ofs			= 0;
-		location.width_ofs		= 0;
+		location.line_grid			= 0;
+		location.width_grid		= 0;
 		location.key					= 0;
 		FIELD_RAIL_WORK_SetLocation( p_wk->railwork.railwork, &location );
 
@@ -1237,8 +1237,8 @@ static void RE_JumpLine( DEBUG_RAIL_EDITOR* p_wk )
 	{
 		location.type					= FIELD_RAIL_TYPE_LINE;
 		location.rail_index		= p_wk->p_recv->select.select_index;
-		location.line_ofs			= 0;
-		location.width_ofs		= 0;
+		location.line_grid			= 0;
+		location.width_grid		= 0;
 		location.key					= 0;
 		FIELD_RAIL_WORK_SetLocation( p_wk->railwork.railwork, &location );
 

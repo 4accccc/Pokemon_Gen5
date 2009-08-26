@@ -33,7 +33,7 @@ void RAIL_LOCATION_Init(RAIL_LOCATION * railLoc)
 {
   railLoc->type = FIELD_RAIL_TYPE_POINT;
   railLoc->rail_index = 0;
-  railLoc->line_ofs = 0;
-  railLoc->width_ofs = 0;
+  railLoc->line_grid = 0;
+  railLoc->width_grid = 0;
   railLoc->key = RAIL_KEY_NULL;
 }

@@ -459,8 +459,8 @@ static void MakeNewRailLocation(GAMEDATA * gamedata, EVENTDATA_SYSTEM * evdata, 
     }
     railLoc.type = FIELD_RAIL_TYPE_POINT;
     railLoc.rail_index = exit_id;
-    railLoc.line_ofs = 0;
-    railLoc.width_ofs = 0;
+    railLoc.line_grid = 0;
+    railLoc.width_grid = 0;
     railLoc.key = RAIL_KEY_NULL;
     FIELD_RAIL_LOADER_Clear( railLoader );
   }
