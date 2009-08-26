@@ -761,7 +761,12 @@ NNSSndHandle* PMSND_GetSE_SndHandle( SEPLAYER_ID sePlayerID )
 //------------------------------------------------------------------
 SEPLAYER_ID	PMSND_GetSE_DefaultPlayerID( u32 soundIdx )
 {
-	const NNSSndSeqParam* seqParam = NNS_SndArcGetSeqParam( soundIdx );
+	const NNSSndSeqParam* seqParam;
+  if (soundIdx < PMSND_SE_START || soundIdx >= PMSND_SE_END) {
+    GF_ASSERT_MSG(0, "ID(%d) is not SE ID!!", soundIdx);
+    return SEPLAYER_SE1;
+  }
+  seqParam = NNS_SndArcGetSeqParam( soundIdx );
 
 	return (SEPLAYER_ID)(seqParam->playerNo - PLAYER_SE_SYS);
 }
