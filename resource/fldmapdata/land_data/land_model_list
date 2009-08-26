@@ -174,6 +174,37 @@ LAND_MODEL_LIST = \
 	$(DIR_RES)/bctest_00_01.imd \
 	$(DIR_RES)/bctest_01_01.imd \
 	$(DIR_RES)/pl_00_00.imd \
+	$(DIR_RES)/pl_b00_00.imd \
+	$(DIR_RES)/c04_a00_00.imd \
+	$(DIR_RES)/c04_a01_00.imd \
+	$(DIR_RES)/c04_a00_01.imd \
+	$(DIR_RES)/c04_a01_01.imd \
+	$(DIR_RES)/h02_a00_00.imd \
+	$(DIR_RES)/h02_a01_00.imd \
+	$(DIR_RES)/h02_a02_00.imd \
+	$(DIR_RES)/h02_a03_00.imd \
+	$(DIR_RES)/h02_a04_00.imd \
+	$(DIR_RES)/h02_a05_00.imd \
+	$(DIR_RES)/h02_a06_00.imd \
+	$(DIR_RES)/h02_a07_00.imd \
+	$(DIR_RES)/h02_a00_01.imd \
+	$(DIR_RES)/h02_a01_01.imd \
+	$(DIR_RES)/h02_a02_01.imd \
+	$(DIR_RES)/h02_a03_01.imd \
+	$(DIR_RES)/h02_a04_01.imd \
+	$(DIR_RES)/h02_a05_01.imd \
+	$(DIR_RES)/h02_a06_01.imd \
+	$(DIR_RES)/h02_a07_01.imd \
+	$(DIR_RES)/h02_a00_02.imd \
+	$(DIR_RES)/h02_a01_02.imd \
+	$(DIR_RES)/h02_a02_02.imd \
+	$(DIR_RES)/h02_a03_02.imd \
+	$(DIR_RES)/h02_a04_02.imd \
+	$(DIR_RES)/h02_a05_02.imd \
+	$(DIR_RES)/h02_a06_02.imd \
+	$(DIR_RES)/h02_a07_02.imd \
+	$(DIR_RES)/map02_01.imd \
+	$(DIR_RES)/map06_14.imd \
 	$(DIR_RES)/m_dun0101_00_00.imd \
 	$(DIR_RES)/m_dun0101_01_00.imd \
 	$(DIR_RES)/m_dun0101_00_01.imd \
@@ -266,6 +297,24 @@ LAND_MODEL_LIST = \
 	$(DIR_RES)/m_dun0301_02_00.imd \
 	$(DIR_RES)/m_dun0301_02_01.imd \
 	$(DIR_RES)/m_dun0301_02_02.imd \
+	$(DIR_RES)/m_dun1401_00_00.imd \
+	$(DIR_RES)/m_dun1402_00_00.imd \
+	$(DIR_RES)/m_dun1402_00_01.imd \
+	$(DIR_RES)/m_dun1501_00_00.imd \
+	$(DIR_RES)/m_dun1502_00_00.imd \
+	$(DIR_RES)/m_dun1503_00_00.imd \
+	$(DIR_RES)/m_dun1601_00_00.imd \
+	$(DIR_RES)/m_dun1601_00_01.imd \
+	$(DIR_RES)/m_dun1601_01_00.imd \
+	$(DIR_RES)/m_dun1601_01_01.imd \
+	$(DIR_RES)/m_dun1602_00_00.imd \
+	$(DIR_RES)/m_dun1602_00_01.imd \
+	$(DIR_RES)/m_dun1602_01_00.imd \
+	$(DIR_RES)/m_dun1602_01_01.imd \
+	$(DIR_RES)/m_dun1603_00_00.imd \
+	$(DIR_RES)/m_dun1603_00_01.imd \
+	$(DIR_RES)/m_dun1603_01_00.imd \
+	$(DIR_RES)/m_dun1603_01_01.imd \
 	$(DIR_RES)/m_ruin01_00_00.imd \
 	$(DIR_RES)/m_gate01_00_00.imd \
 	$(DIR_RES)/m_pc01_00_00.imd \
