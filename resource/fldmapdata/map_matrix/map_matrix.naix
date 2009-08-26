@@ -134,7 +134,18 @@ enum {
 	NARC_map_matrix_stadium03_mat_bin = 120,
 	NARC_map_matrix_villa01_mat_bin = 121,
 	NARC_map_matrix_villa02_mat_bin = 122,
-	NARC_map_matrix_football01_mat_bin = 123
+	NARC_map_matrix_football01_mat_bin = 123,
+	NARC_map_matrix_h02a_mat_bin = 124,
+	NARC_map_matrix_pl02_mat_bin = 125,
+	NARC_map_matrix_recreation01_mat_bin = 126,
+	NARC_map_matrix_dun1401_mat_bin = 127,
+	NARC_map_matrix_dun1402_mat_bin = 128,
+	NARC_map_matrix_dun1501_mat_bin = 129,
+	NARC_map_matrix_dun1502_mat_bin = 130,
+	NARC_map_matrix_dun1503_mat_bin = 131,
+	NARC_map_matrix_dun1601_mat_bin = 132,
+	NARC_map_matrix_dun1602_mat_bin = 133,
+	NARC_map_matrix_dun1603_mat_bin = 134
 };
 
 /* NARC_MAP_MATRIX_NAIX_ */
