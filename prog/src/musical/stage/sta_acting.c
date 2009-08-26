@@ -51,6 +51,8 @@
 
 #define ACT_BG_SCROLL_MAX (256)
 
+#define ACT_SCROLL_SPEED (4)
+
 //Msg系
 #define ACT_MSG_POS_X ( 4 )
 #define ACT_MSG_POS_Y ( 20 )
@@ -99,8 +101,8 @@ struct _ACTING_WORK
 {
   HEAPID heapId;
   
-  BOOL  updateScroll;
   u16   scrollOffset;
+  u16   scrollOffsetTrget;
   u16   makuOffset;
   u8    playerIdx;
   
@@ -144,6 +146,12 @@ struct _ACTING_WORK
   PRINT_STREAM    *printHandle;
   GFL_MSGDATA     *msgHandle;
   STRBUF          *msgStr;
+  
+  //注目ポケ用
+  BOOL    isUpdateAttention;
+  u8      lightUpPoke;
+  u8      upsetPoke;  //一発逆転中ポケ
+  u8      attentionPoke;  //カメラの対象
 };
 
 //======================================================================
@@ -167,6 +175,8 @@ static void STA_ACT_UpdateScroll( ACTING_WORK *work );
 static void STA_ACT_UpdateMessage( ACTING_WORK *work );
 
 static void STA_ACT_StartScript( ACTING_WORK *work );
+
+static void STA_ACT_UpdateAttention( ACTING_WORK *work );
 
 static void STA_ACT_InitTransEffect( ACTING_WORK *work );
 static void STA_ACT_TermTransEffect( ACTING_WORK *work );
@@ -206,12 +216,11 @@ ACTING_WORK*  STA_ACT_InitActing( STAGE_INIT_WORK *initWork , HEAPID heapId )
   
   work->heapId = heapId;
   work->initWork = initWork;
-  work->updateScroll = FALSE;
   work->scrollOffset = 0;
   work->makuOffset = 0;
   work->scriptData = NULL;
   work->mainSeq = AMS_FADEIN;
-
+  
   work->vblankFuncTcb = GFUser_VIntr_CreateTCB( STA_ACT_VBlankFunc , (void*)work , 64 );
   
   //自キャラの選択
@@ -235,6 +244,11 @@ ACTING_WORK*  STA_ACT_InitActing( STAGE_INIT_WORK *initWork , HEAPID heapId )
   {
     work->playerIdx = GFL_NET_GetNetID(GFL_NET_HANDLE_GetCurrentHandle());
   }
+  
+  //注目ポケ系初期化
+  work->isUpdateAttention = TRUE;
+  work->lightUpPoke = MUSICAL_POKE_MAX;
+  work->upsetPoke = MUSICAL_POKE_MAX;
 
   STA_ACT_SetupGraphic( work );
   STA_ACT_SetupBg( work );
@@ -466,6 +480,7 @@ ACTING_RETURN STA_ACT_LoopActing( ACTING_WORK *work )
   //ポケとかに追従する可能性もあるので最後
   STA_LIGHT_UpdateSystem( work->lightSys );
 
+  STA_ACT_UpdateAttention( work );
   STA_AUDI_UpdateSystem( work->audiSys );
 
   //3D描画  
@@ -839,28 +854,25 @@ static void STA_ACT_UpdateScroll( ACTING_WORK *work )
 #if DEB_ARI|1
   if( GFL_UI_KEY_GetCont() & PAD_KEY_RIGHT )
   {
-    if( work->scrollOffset + spd < ACT_BG_SCROLL_MAX )
+    if( work->scrollOffsetTrget + spd < ACT_BG_SCROLL_MAX )
     {
-      work->scrollOffset += spd;
+      work->scrollOffsetTrget += spd;
     }
     else
     {
-      work->scrollOffset = ACT_BG_SCROLL_MAX;
+      work->scrollOffsetTrget = ACT_BG_SCROLL_MAX;
     }
-    work->updateScroll = TRUE;
   }
   if( GFL_UI_KEY_GetCont() & PAD_KEY_LEFT )
   {
-    if( work->scrollOffset - spd > 0 )
+    if( work->scrollOffsetTrget - spd > 0 )
     {
-      work->scrollOffset -= spd;
+      work->scrollOffsetTrget -= spd;
     }
     else
     {
-      work->scrollOffset = 0;
+      work->scrollOffsetTrget = 0;
     }
-    
-    work->updateScroll = TRUE;
   }
   
   //プレイヤー追従処理
@@ -869,7 +881,18 @@ static void STA_ACT_UpdateScroll( ACTING_WORK *work )
   {
     s16 scroll;
     VecFx32 pos;
-    STA_POKE_GetPosition( work->pokeSys , work->pokeWork[work->playerIdx] , &pos );
+    u8 lookTarget;
+    
+    if( work->attentionPoke == MUSICAL_POKE_MAX )
+    {
+      lookTarget = work->playerIdx;
+    }
+    else
+    {
+      lookTarget = work->attentionPoke;
+    }
+    
+    STA_POKE_GetPosition( work->pokeSys , work->pokeWork[lookTarget] , &pos );
     scroll = FX_FX32_TO_F32( pos.x )-128;
     if( scroll > ACT_BG_SCROLL_MAX )
     {
@@ -881,17 +904,42 @@ static void STA_ACT_UpdateScroll( ACTING_WORK *work )
     }
     if( scroll != work->scrollOffset )
     {
-      work->scrollOffset = scroll;
-      work->updateScroll = TRUE;
+      work->scrollOffsetTrget = scroll;
     }
   }
   
   
-  if( work->updateScroll == TRUE )
+  if( work->scrollOffsetTrget != work->scrollOffset )
   {
     
     VecFx32 cam_pos = MUSICAL_CAMERA_POS;
     VecFx32 cam_target = MUSICAL_CAMERA_TRG;
+    
+    //追従処理
+    if( work->scrollOffset > work->scrollOffsetTrget )
+    {
+      if( work->scrollOffset > ACT_SCROLL_SPEED &&
+          work->scrollOffset-ACT_SCROLL_SPEED > work->scrollOffsetTrget )
+      {
+        work->scrollOffset -= ACT_SCROLL_SPEED;
+      }
+      else
+      {
+        work->scrollOffset = work->scrollOffsetTrget;
+      }
+    }
+    else
+    if( work->scrollOffset < work->scrollOffsetTrget )
+    {
+      if( work->scrollOffset + ACT_SCROLL_SPEED < work->scrollOffsetTrget )
+      {
+        work->scrollOffset += ACT_SCROLL_SPEED;
+      }
+      else
+      {
+        work->scrollOffset = work->scrollOffsetTrget;
+      }
+    }
     
     cam_pos.x = MUSICAL_POS_X( work->scrollOffset );
     cam_target.x = MUSICAL_POS_X( work->scrollOffset );
@@ -907,8 +955,6 @@ static void STA_ACT_UpdateScroll( ACTING_WORK *work )
     /*
     //GFL_BG_SetScroll( ACT_FRAME_MAIN_BG , GFL_BG_SCROLL_X_SET , work->scrollOffset );
     */
-
-    work->updateScroll = FALSE;
   }
   
 #if DEB_ARI
@@ -1045,23 +1091,86 @@ void STA_ACT_HideMessage( ACTING_WORK *work )
   GFL_BMPWIN_TransVramCharacter( work->msgWin );
 }
 
+#pragma mark [> attention func
+//--------------------------------------------------------------
+//  注目ポケモン更新
+//--------------------------------------------------------------
+static void STA_ACT_UpdateAttention( ACTING_WORK *work )
+{
+  if( work->isUpdateAttention == TRUE )
+  {
+    u8 i;
+    for( i=0;i<MUSICAL_POKE_MAX;i++ )
+    {
+      STA_AUDI_SetAttentionPoke( work->audiSys , i , FALSE );
+    }
+    
+    if( work->upsetPoke < MUSICAL_POKE_MAX )
+    {
+      //一発逆転中
+      work->attentionPoke = work->upsetPoke;
+      STA_AUDI_SetAttentionPoke( work->audiSys , work->upsetPoke , TRUE );
+    }
+    else
+    if( work->lightUpPoke < MUSICAL_POKE_MAX )
+    {
+      //個人演技中
+      work->attentionPoke = work->lightUpPoke;
+      STA_AUDI_SetAttentionPoke( work->audiSys , work->lightUpPoke , TRUE );
+    }
+    else
+    {
+      u8 maxPoint = 0;
+      //得点でチェック
+      for( i=0;i<MUSICAL_POKE_MAX;i++ )
+      {
+        if( maxPoint < work->initWork->musPoke[i].point )
+        {
+          maxPoint = work->initWork->musPoke[i].point;
+        }
+      }
+      for( i=0;i<MUSICAL_POKE_MAX;i++ )
+      {
+        if( maxPoint == work->initWork->musPoke[i].point )
+        {
+          STA_AUDI_SetAttentionPoke( work->audiSys , i , TRUE );
+        }
+      }
+      
+      work->attentionPoke = MUSICAL_POKE_MAX; //カメラはデフォルト
+    }
+    work->isUpdateAttention = FALSE;
+  }
+}
+
+void STA_ACT_SetLightUpFlg( ACTING_WORK *work , const u8 pokeIdx , const BOOL flg )
+{
+  if( flg == TRUE )
+  {
+    work->lightUpPoke = pokeIdx;
+  }
+  else
+  {
+    work->lightUpPoke = MUSICAL_POKE_MAX;
+  }
+  work->isUpdateAttention = TRUE;
+}
 #pragma mark [> BGM func
 //--------------------------------------------------------------
 //  BGM関係
 //--------------------------------------------------------------
-void  STA_ACT_StartBgm(  ACTING_WORK *work )
+void  STA_ACT_StartBgm( ACTING_WORK *work )
 {
   SND_STRM_SetUp( ARCID_SNDSTRM, NARC_snd_strm_poketari_swav, SND_STRM_PCM8, SND_STRM_8KHZ, work->heapId );
   SND_STRM_Play();
 }
 
-void  STA_ACT_StopBgm(  ACTING_WORK *work )
+void  STA_ACT_StopBgm( ACTING_WORK *work )
 {
   SND_STRM_Stop();
   SND_STRM_Release();
 }
 
-//
 #pragma mark [> trans effect func
 static void STA_ACT_InitTransEffect( ACTING_WORK *work )
 {
@@ -1182,7 +1291,6 @@ u16   STA_ACT_GetStageScroll( ACTING_WORK *work )
 void  STA_ACT_SetStageScroll( ACTING_WORK *work , const u16 scroll )
 {
   work->scrollOffset = scroll;
-  work->updateScroll = TRUE;
 }
 
 #pragma mark [> editor func

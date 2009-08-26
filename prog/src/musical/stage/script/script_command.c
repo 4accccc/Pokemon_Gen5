@@ -832,6 +832,34 @@ SCRIPT_FUNC_DEF( PokeTransEffect )
   return SFT_CONTINUE;
 }
 
+//注目ポケモン設定	ポケモン番号
+SCRIPT_FUNC_DEF( PokeAttentionOn )
+{
+  STA_SCRIPT_WORK *scriptWork = (STA_SCRIPT_WORK*)context_work;
+  STA_SCRIPT_SYS *work = scriptWork->sysWork;
+  const s32 pokeNo = ScriptFunc_GetValueS32();
+  SCRIPT_PRINT_LABEL(PokeAttentionOn);
+
+  STA_ACT_SetLightUpFlg( work->actWork , pokeNo , TRUE );
+
+  return SFT_CONTINUE;
+}
+
+//注目ポケモン解除
+SCRIPT_FUNC_DEF( PokeAttentionOff )
+{
+  STA_SCRIPT_WORK *scriptWork = (STA_SCRIPT_WORK*)context_work;
+  STA_SCRIPT_SYS *work = scriptWork->sysWork;
+  SCRIPT_PRINT_LABEL(PokeAttentionOff);
+
+  STA_ACT_SetLightUpFlg( work->actWork , 0 , FALSE );
+  STA_ACT_SetLightUpFlg( work->actWork , 1 , FALSE );
+  STA_ACT_SetLightUpFlg( work->actWork , 2 , FALSE );
+  STA_ACT_SetLightUpFlg( work->actWork , 3 , FALSE );
+
+  return SFT_CONTINUE;
+}
+
 #pragma mark [>PokemonAction
 //ポケモンアクション・跳ねる
 typedef struct
@@ -1446,8 +1474,6 @@ SCRIPT_FUNC_DEF( LightMoveTrace )
     moveTraceLight->moveWork.step = 0;
     VEC_Set( &moveTraceLight->moveWork.ofs , ofsX,ofsY,ofsZ );
     moveTraceLight->moveWork.frame = frame;
-
-    STA_AUDI_SetAttentionPoke( audiSys , pokeNo , TRUE );
     
     moveTraceLight->tcbObj = STA_SCRIPT_CreateTcbTask( work , SCRIPT_TCB_MoveTraceLightTCB , (void*)moveTraceLight , SCRIPT_TCB_PRI_LOW );
   }
@@ -1468,7 +1494,6 @@ static void SCRIPT_TCB_MoveTraceLightTCB(  GFL_TCB *tcb, void *work )
   
   if( isFinish == TRUE )
   {
-    STA_AUDI_SetAttentionPoke( audiSys , moveLight->trgPokeNo , FALSE );
     STA_SCRIPT_DeleteTcbTask( moveLight->scriptSys , moveLight->tcbObj );
   }
 }

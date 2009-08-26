@@ -58,7 +58,9 @@
 #define SCRIPT_ENUM_PokeSetFrontBack    (39)
 #define SCRIPT_ENUM_PokeDispItem    (40)
 #define SCRIPT_ENUM_PokeTransEffect    (41)
-#define SEQ_END             (42)
+#define SCRIPT_ENUM_PokeAttentionOn    (42)
+#define SCRIPT_ENUM_PokeAttentionOff   (43)
+#define SEQ_END             (44)
 
 #ifndef __C_NO_DEF_
 
@@ -385,6 +387,33 @@
   .macro  ComPokeTransEffect pokeNo
   .short  SCRIPT_ENUM_PokeTransEffect
   .long \pokeNo
+  .endm
+
+//======================================================================
+/**
+ * @brief ポケモン：注目ポケモン設定(解除前に連続して呼べます
+ *
+ * #param_num 1
+ * @param pokeNo  ポケモン番号(-1不可)
+ *
+ * #param VALUE_INT pokeNo
+ */
+//======================================================================
+  .macro  ComPokeAttentionOn pokeNo
+  .short  SCRIPT_ENUM_PokeAttentionOn
+  .long \pokeNo
+  .endm
+
+//======================================================================
+/**
+ * @brief ポケモン：注目ポケモン解除
+ *
+ * #param_num 0
+ *
+ */
+//======================================================================
+  .macro  ComPokeAttentionOff
+  .short  SCRIPT_ENUM_PokeAttentionOff
   .endm
 
 #pragma mark [>Pokemon Action Command

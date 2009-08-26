@@ -128,6 +128,7 @@ STA_AUDI_SYS* STA_ACT_GetAudienceSys( ACTING_WORK *work );
 u16		STA_ACT_GetCurtainHeight( ACTING_WORK *work );
 void	STA_ACT_SetCurtainHeight( ACTING_WORK *work , const u16 height );
 
+void STA_ACT_SetLightUpFlg( ACTING_WORK *work , const u8 pokeIdx , const BOOL flg );
 void STA_ACT_PlayTransEffect( ACTING_WORK *work , const u8 idx );
 
 #endif STA_ACT_SCRIPT_DEF_H__

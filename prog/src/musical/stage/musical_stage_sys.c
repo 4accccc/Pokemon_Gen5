@@ -189,6 +189,7 @@ void MUSICAL_STAGE_DeleteStageWork( STAGE_INIT_WORK *initWork )
     }
     initWork->musPoke[i].pokePara = NULL;
     initWork->musPoke[i].charaType = MUS_CHARA_INVALID;
+    initWork->musPoke[i].point = 0;
   }
   GFL_HEAP_FreeMemory( initWork );
 }

@@ -48,7 +48,7 @@ typedef enum
   SAP_LEFT_SMALL,
   SAP_RIGHT_SMALL,
   SAP_RIGHT_BIG,
-}STAGE_AUDIENCE_POS;
+}STAGE_AUDIENCE_DIR;
 
 //======================================================================
 //  typedef struct
@@ -61,7 +61,9 @@ typedef struct
   u8  trgPoke;
   u8  delay;
   u16 lookPos;
-  u16 selfPos;
+  
+  u8  posX;
+  u8  posY;
 }STA_AUDI_WORK;
 
 //ÉÅÉCÉìÉèÅ[ÉN
@@ -94,6 +96,8 @@ static void STA_AUDI_TermCell( STA_AUDI_SYS *work );
 
 static void STA_AUDI_UpdateAudience( STA_AUDI_SYS *work );
 static void STA_AUDI_UpdateAudienceFunc( STA_AUDI_SYS *work , STA_AUDI_WORK *audiWork );
+
+static void STA_AUDI_SetAudienceDir( STA_AUDI_SYS *work , STA_AUDI_WORK *audiWork , const STAGE_AUDIENCE_DIR dir );
 
 static void STA_AUDI_CheckAudienceState( STA_AUDI_SYS *work );
 static void STA_AUDI_SetAudienceState_Default( STA_AUDI_SYS *work );
@@ -145,7 +149,7 @@ void	STA_AUDI_UpdateSystem( STA_AUDI_SYS *work )
       {
         const u8 anm = GFL_STD_MtRand0( 4 );
         const u8 num = GFL_STD_MtRand0( STA_AUDI_NUM );
-//        GFL_CLACT_WK_SetAnmSeq( work->audience[num].cell, anm );
+        STA_AUDI_SetAudienceDir( work , &work->audience[num] , anm );
       }
     }
   }
@@ -210,92 +214,37 @@ static void STA_AUDI_TermGraphic( STA_AUDI_SYS *work )
 static void STA_AUDI_InitCell( STA_AUDI_SYS *work )
 {
   u8 x,y;
-  /*
-  GFL_CLWK_DATA initWork;
-  work->cellUnit = GFL_CLACT_UNIT_Create( STA_AUDI_NUM , 0 , work->heapId );
-  
   for( y=0;y<STA_AUDI_NUM_Y;y++ )
   {
-    const s8 ofs = (y%2==0 ? 4 : -4 ) + GFL_STD_MtRand0(3)-1;
-    for( x=0;x<STA_AUDI_NUM_X;x++ )
-    {
-      const u8 i = x + y*STA_AUDI_NUM_X;
-      initWork.pos_x = 16 + x*32 +ofs;
-      initWork.pos_y = 80 + y*28;
-      initWork.anmseq = ( initWork.pos_x < 128 ? SAP_RIGHT_SMALL : SAP_LEFT_SMALL );
-      initWork.softpri = STA_AUDI_NUM-i;
-      initWork.bgpri = 0;
-      work->audience[i].cell = GFL_CLACT_WK_CreateVT( work->cellUnit ,
-                             work->ncgIdx[i] ,
-                             work->pltIdx ,
-                             work->anmIdx[i] ,
-                             &initWork ,
-                             STA_AUDI_SURFACE , 
-                             work->heapId );
-      GFL_CLACT_WK_SetDrawEnable( work->audience[i].cell, TRUE );
-
-      work->audience[i].selfPos = initWork.pos_x;
-      work->audience[i].delay = STA_AUDI_LOOK_DELAY;
-      work->audience[i].trgPoke = STA_AUDI_NO_TARGET;
-    }
-  }
-  */
-  for( y=0;y<STA_AUDI_NUM_Y;y++ )
-  {
-    const s8 ofs = (y%2==0 ? 4 : -4 ) + GFL_STD_MtRand0(3)-1;
     for( x=0;x<STA_AUDI_NUM_X;x++ )
     {
       u8 ix,iy;
-      u16 topCharNo;
       BOOL isFlip = FALSE;
       const u8 i = x + y*STA_AUDI_NUM_X;
+
+      work->audience[i].posX = x;
+      work->audience[i].posY = y;
+      work->audience[i].delay = STA_AUDI_LOOK_DELAY;
+      work->audience[i].trgPoke = STA_AUDI_NO_TARGET;
       
       if( x<2 )
       {
-        isFlip = TRUE;
-        topCharNo = 0x08+1024;  //1024ÇÕêÖïΩîΩì]
+        STA_AUDI_SetAudienceDir( work , &work->audience[i] , SAP_RIGHT_BIG );
       }
       else if( x<4 )
       {
-        isFlip = TRUE;
-        topCharNo = 0x0c+1024;  //1024ÇÕêÖïΩîΩì]
+        STA_AUDI_SetAudienceDir( work , &work->audience[i] , SAP_RIGHT_SMALL );
       }
       else if( x<6 )
       {
-        topCharNo = 0x0c;
+        STA_AUDI_SetAudienceDir( work , &work->audience[i] , SAP_LEFT_SMALL );
       }
       else
       {
-        topCharNo = 0x08;
+        STA_AUDI_SetAudienceDir( work , &work->audience[i] , SAP_LEFT_BIG );
       }
-      
-      for( iy=0;iy<4;iy++ )
-      {
-        for( ix=0;ix<4;ix++ )
-        {
-          u8 scrX;
-          if( isFlip == TRUE )
-          {
-            scrX = x*4+(3-ix);
-          }
-          else
-          {
-            scrX = x*4+ix;
-          }
-          GFL_BG_FillScreen( ACT_FRAME_SUB_AUDI_FACE , 
-                             topCharNo+ix+(0x20*iy) , 
-                             scrX , y*4+STA_AUDI_TOP+iy ,
-                             1 , 1 , 0 );
-          
-        }
-      }
-
-      work->audience[i].selfPos = x*32 + 16;
-      work->audience[i].delay = STA_AUDI_LOOK_DELAY;
-      work->audience[i].trgPoke = STA_AUDI_NO_TARGET;
     }
   }
-  GFL_BG_LoadScreenReq( ACT_FRAME_SUB_AUDI_FACE );
   
 }
 
@@ -331,13 +280,22 @@ static void STA_AUDI_UpdateAudienceFunc( STA_AUDI_SYS *work , STA_AUDI_WORK *aud
     if( audiWork->trgPoke == STA_AUDI_NO_TARGET )
     {
       audiWork->lookPos = STA_AUDI_NO_LOOK;
-      if( audiWork->selfPos < 128 )
+      
+      if( audiWork->posX<2 )
       {
-        //GFL_CLACT_WK_SetAnmSeq( audiWork->cell , SAP_RIGHT_SMALL );
+        STA_AUDI_SetAudienceDir( work , audiWork , SAP_RIGHT_BIG );
+      }
+      else if( audiWork->posX<4 )
+      {
+        STA_AUDI_SetAudienceDir( work , audiWork , SAP_RIGHT_SMALL );
+      }
+      else if( audiWork->posX<6 )
+      {
+        STA_AUDI_SetAudienceDir( work , audiWork , SAP_LEFT_SMALL );
       }
       else
       {
-        //GFL_CLACT_WK_SetAnmSeq( audiWork->cell , SAP_LEFT_SMALL );
+        STA_AUDI_SetAudienceDir( work , audiWork , SAP_LEFT_BIG );
       }
     }
     else
@@ -348,29 +306,81 @@ static void STA_AUDI_UpdateAudienceFunc( STA_AUDI_SYS *work , STA_AUDI_WORK *aud
       VecFx32 pokePos;
       s16 posOffset;
       STA_POKE_GetPosition( pokeSys , pokeWork , &pokePos );
-      posOffset = (FX_FX32_TO_F32( pokePos.x )-stgOfs) - audiWork->selfPos;
+      posOffset = (FX_FX32_TO_F32( pokePos.x )-stgOfs) - (audiWork->posX*32+16);
       
       if( posOffset < -STA_AUDI_BIG_ANGLE_OFFSET )
       {
-        //GFL_CLACT_WK_SetAnmSeq( audiWork->cell , SAP_LEFT_BIG );
+        STA_AUDI_SetAudienceDir( work , audiWork , SAP_LEFT_BIG );
       }
       else
       if( posOffset > STA_AUDI_BIG_ANGLE_OFFSET )
       {
-        //GFL_CLACT_WK_SetAnmSeq( audiWork->cell , SAP_RIGHT_BIG );
+        STA_AUDI_SetAudienceDir( work , audiWork , SAP_RIGHT_BIG );
       }
       else
       if( posOffset < 0 )
       {
-        //GFL_CLACT_WK_SetAnmSeq( audiWork->cell , SAP_LEFT_SMALL );
+        STA_AUDI_SetAudienceDir( work , audiWork , SAP_LEFT_SMALL );
       }
       else
       {
-        //GFL_CLACT_WK_SetAnmSeq( audiWork->cell , SAP_RIGHT_SMALL );
+        STA_AUDI_SetAudienceDir( work , audiWork , SAP_RIGHT_SMALL );
       }
     }
     audiWork->delay = STA_AUDI_LOOK_DELAY;
   }
+}
+
+//äœãqÇÃï˚å¸éwíË
+static void STA_AUDI_SetAudienceDir( STA_AUDI_SYS *work , STA_AUDI_WORK *audiWork , const STAGE_AUDIENCE_DIR dir )
+{
+  BOOL isFlip = FALSE;
+  u16 topCharNo;
+  u8 ix,iy;
+  
+  switch( dir )
+  {
+  case SAP_RIGHT_BIG:
+    isFlip = TRUE;
+    topCharNo = 0x08+1024;  //1024ÇÕêÖïΩîΩì]
+    break;
+
+  case SAP_RIGHT_SMALL:
+    isFlip = TRUE;
+    topCharNo = 0x0c+1024;  //1024ÇÕêÖïΩîΩì]
+    break;
+    
+  case SAP_LEFT_SMALL:
+    topCharNo = 0x0c;
+    break;
+    
+  case SAP_LEFT_BIG:
+    topCharNo = 0x08;
+    break;
+  }
+
+  for( iy=0;iy<4;iy++ )
+  {
+    for( ix=0;ix<4;ix++ )
+    {
+      u8 scrX;
+      if( isFlip == TRUE )
+      {
+        scrX = audiWork->posX*4+(3-ix);
+      }
+      else
+      {
+        scrX = audiWork->posX*4+ix;
+      }
+      GFL_BG_FillScreen( ACT_FRAME_SUB_AUDI_FACE , 
+                         topCharNo+ix+(0x20*iy) , 
+                         scrX ,
+                         audiWork->posY*4+iy + STA_AUDI_TOP ,
+                         1 , 1 , 0 );
+      
+    }
+  }
+  GFL_BG_LoadScreenV_Req( ACT_FRAME_SUB_AUDI_FACE );
 }
 
 //äœãqèÛë‘ÇÉ`ÉFÉbÉN
@@ -389,7 +399,7 @@ static void STA_AUDI_CheckAudienceState( STA_AUDI_SYS *work )
     }
   }
   
-  if( trgNum != 1 )
+  if( trgNum == 0 )
   {
     STA_AUDI_SetAudienceState_Default( work );
   }

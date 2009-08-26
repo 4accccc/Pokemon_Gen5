@@ -62,4 +62,6 @@ SCRIPT_FUNC_DEF( PokeActionRotate )	//3	//ポケモンアクション・回転
 SCRIPT_FUNC_DEF( PokeSetFrontBack )	//2	//ポケモン 正面：背面切り替え
 SCRIPT_FUNC_DEF( PokeDispItem )		//2	//ポケモン アイテム表示切替
 SCRIPT_FUNC_DEF( PokeTransEffect )	//1	//ポケモン 変身エフェクト
+SCRIPT_FUNC_DEF( PokeAttentionOn )	//1 //注目ポケモン設定	ポケモン番号
+SCRIPT_FUNC_DEF( PokeAttentionOff )	//0 //注目ポケモン解除	
 
