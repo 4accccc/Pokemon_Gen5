@@ -92,6 +92,9 @@ extern void WIFI_STATUS_SetMyNation(WIFI_STATUS* pStatus,u8 no);
 extern void WIFI_STATUS_SetMyArea(WIFI_STATUS* pStatus,u8 no);
 
 extern u8 WIFI_STATUS_GetActive(const WIFI_STATUS* pStatus);
-extern BOOL WIFI_STATUS_IsVChatMac(const WIFI_STATUS* pStatus, const u8* SearchMacAddress);
+extern BOOL WIFI_STATUS_IsVChatMac(const WIFI_STATUS* pMyStatus, const WIFI_STATUS* pFriendStatus);
+extern void WIFI_STATUS_SetVChatMac(WIFI_STATUS* pStatus, const WIFI_STATUS* pFriendStatus);
+extern void WIFI_STATUS_ResetVChatMac(WIFI_STATUS* pStatus);
+extern void WIFI_STATUS_SetMyMac(WIFI_STATUS* pStatus);
 
 

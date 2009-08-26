@@ -419,6 +419,7 @@ static GFL_PROC_RESULT WifiClubProcInit( GFL_PROC * proc, int * seq, void * pwk,
   GFL_STD_MemClear(ep2p, sizeof(EV_P2PEVENT_WORK));
   ep2p->pMatchParam = GFL_HEAP_AllocClearMemory(GetHeapLowID(HEAPID_PROC), sizeof(WIFIP2PMATCH_PROC_PARAM));
   ep2p->pMatchParam->pMatch = GFL_HEAP_AllocClearMemory(GetHeapLowID(HEAPID_PROC), WIFI_STATUS_GetSize());
+  WIFI_STATUS_SetMyMac(ep2p->pMatchParam->pMatch);
   ep2p->pMatchParam->pSaveData = pClub->ctrl;
   NET_PRINT("%x %x\n",(int)ep2p->pMatchParam->pMatch,(int)pClub->ctrl);
   ep2p->pWifiList = SaveData_GetWifiListData(pClub->ctrl); //クラブに必要な物を移し変え

@@ -12,7 +12,7 @@
 #include "net_wifi.h"
 #include "savedata/save_control.h"
 
-#define MYDWC_STATUS_DATA_SIZE_MAX (180)   /// WIFIフレンド情報サイズ DWCに189バイト可能とあるが、定義が無いので控えめサイズで決めうち
+#define MYDWC_STATUS_DATA_SIZE_MAX (128)   /// WIFIフレンド情報サイズ DWCに189バイト可能とあるが、定義が無いので控えめサイズで決めうち
 
 
 //==============================================================================

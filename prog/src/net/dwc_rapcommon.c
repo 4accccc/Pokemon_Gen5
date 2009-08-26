@@ -58,25 +58,6 @@ void GFL_NET_WIFI_InitUserData( DWCUserData *userdata )
 
 //==============================================================================
 /**
- * @brief   ©•ª‚ÌGSID‚ğæ“¾‚·‚é
- * @param   GFL_WIFI_FRIENDLIST  
- * @retval  ‚O‚Æ|‚P‚Í¸”s   ³‚Ì’l‚Í¬Œ÷
- */
-//==============================================================================
-#if 0
-int mydwc_getMyGSID(void)
-{
-    DWCUserData *userdata = GFI_NET_GetMyDWCUserData();//WifiList_GetMyUserInfo(pWifiList);
-    DWCFriendData friendData;
-
-    GF_ASSERT(userdata);
-    DWC_CreateExchangeToken(userdata,&friendData);
-    return DWC_GetGsProfileId( userdata,&friendData);
-}
-#endif
-
-//==============================================================================
-/**
  * ©•ª‚ÌGSID‚ª³‚µ‚¢‚Ì‚©ŒŸ¸‚·‚é
  * @param   GFL_WIFI_FRIENDLIST  
  * @retval  TRUE‚ª¬Œ÷

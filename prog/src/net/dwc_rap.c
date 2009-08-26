@@ -600,8 +600,15 @@ static void finishcancel()
  */
 //==============================================================================
 
+static int dummyFlg = 0;
+
 int GFL_NET_DWC_stepmatch( int isCancel )
 {
+  if(dummyFlg != _dWork->state){
+    OS_TPrintf("dummyflg change = %d\n", _dWork->state);
+    dummyFlg = _dWork->state;
+  }
+
   switch ( _dWork->state ){
   case MDSTATE_INIT:
   case MDSTATE_CONNECTING:
@@ -1905,11 +1912,13 @@ void GFL_NET_DWC_setFetalErrorCallback( void (*func)(int) )
 
 void GFL_NET_DWC_Logout(void)
 {
-  MYDWC_DEBUGPRINT("----------------------ok LOGOUT  \n");
-  DWC_ShutdownFriendsMatch();
-  DWC_CleanupInet();
-  GFL_NET_DWC_StopVChat();
-  GFL_NET_DWC_free();
+  if(_dWork){
+    MYDWC_DEBUGPRINT("----------------------ok LOGOUT  \n");
+    DWC_ShutdownFriendsMatch();
+    DWC_CleanupInet();
+    GFL_NET_DWC_StopVChat();
+    GFL_NET_DWC_free();
+  }
 }
 
 //-------------------------------------------------------------------------------

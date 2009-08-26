@@ -13,19 +13,25 @@
 #include "mystatus_local.h"
 
 #define _POKEMON_NUM   (6)
-//トータル189バイト送信できるが多く送ると重くなる
+
+// dwc_rap.hにある定義分増やす事が可能
+// #define MYDWC_STATUS_DATA_SIZE_MAX (128)
+// WIFIフレンド情報サイズ DWCに189バイト可能とあるが、定義が無いので控えめサイズで決めうち
+// 増やしすぎると全体に重くなる
+
 
 struct _WIFI_STATUS{
   u16 pokemonType[_POKEMON_NUM];                    //12
   u16 hasItemType[_POKEMON_NUM];                   //24
 	MYSTATUS aMyStatus;   // MYSTATUS                          56
-	u8 VChatMac[6];       // VChatをしたい人のMacアドレス      62
-	u8 WifiMode;         // WIFIでのゲーム等の状態             63
-	u8 VChatStatus;       // VChatの状態                       64
-	u8 Active;          // VChatの状態                         65
-  u8 nation;           //  66
-  u8 area;             //  67
-	u8 dummy[128-67];  // 未来用 今は0   128
+	u8 VChatMac[6];       // ゲームを呼びかける人のMacアドレス 自分のMACだった場合開始      62
+	u8 MyMac[6];       // 自分のMacアドレス 68
+	u8 WifiMode;         // WIFIでのゲーム等の状態             69
+	u8 VChatStatus;       // VChatの状態                       70
+	u8 Active;          // VChatの状態                         71
+  u8 nation;           //  72
+  u8 area;             //  73
+	u8 dummy[124-73];  // 未来用 今は0   128
 };
 
 //----------------------------------------------------------
@@ -129,19 +135,60 @@ u8 WIFI_STATUS_GetActive(const WIFI_STATUS* pStatus)
 //----------------------------------------------------------
 /**
  * @brief	  この人とVCHATしたいというMACアドレスが一致してるかどうかを返す
- * @param   比較されるWIFI_STATUS
- * @param   比較するMACアドレス
+ * @param   自分のWIFI_STATUS
+ * @param   比較するWIFI_STATUS
  * @return	,,
  */
 //----------------------------------------------------------
 
-BOOL WIFI_STATUS_IsVChatMac(const WIFI_STATUS* pStatus, const u8* SearchMacAddress)
+BOOL WIFI_STATUS_IsVChatMac(const WIFI_STATUS* pMyStatus, const WIFI_STATUS* pFriendStatus)
 {
-	if(0==GFL_STD_MemComp(SearchMacAddress,pStatus->VChatMac, 6))
+	if(0==GFL_STD_MemComp(pMyStatus->MyMac,pFriendStatus->VChatMac, 6))
 	{
 		return TRUE;
 	}
 	return FALSE;
+}
+
+//----------------------------------------------------------
+/**
+ * @brief	  繋ぎたい人のMACADDRESS封入
+ * @param   自分のWIFI_STATUS
+ * @param   繋ぎたい人のWIFI_STATUS
+ * @return	なし
+ */
+//----------------------------------------------------------
+
+void WIFI_STATUS_SetVChatMac(WIFI_STATUS* pStatus, const WIFI_STATUS* pFriendStatus)
+{
+  GFL_STD_MemCopy(pFriendStatus->MyMac,pStatus->VChatMac, 6);
+}
+
+//----------------------------------------------------------
+/**
+ * @brief	  繋ぎたい人のMACADDRESS消去
+ * @param   自分のWIFI_STATUS
+ * @return	なし
+ */
+//----------------------------------------------------------
+
+void WIFI_STATUS_ResetVChatMac(WIFI_STATUS* pStatus)
+{
+  u8 macnull[]={0,0,0,0,0,0};
+  GFL_STD_MemCopy(macnull,pStatus->VChatMac, 6);
+}
+
+//----------------------------------------------------------
+/**
+ * @brief	  自分のMACADDRESS封入
+ * @param   自分のWIFI_STATUS
+ * @return	,,
+ */
+//----------------------------------------------------------
+
+void WIFI_STATUS_SetMyMac(WIFI_STATUS* pStatus)
+{
+  OS_GetMacAddress(pStatus->MyMac);  
 }
 
 
