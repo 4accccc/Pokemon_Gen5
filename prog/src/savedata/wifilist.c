@@ -651,7 +651,7 @@ void WifiList_DataMarge( WIFI_LIST *list, int delNo, int no)
 
 //---------------------------------------------------------------------------
 /**
- * @brief	相手に送信するふぃれんどコードを得る
+ * @brief	相手に送信するフレンドコードを得る
  * @param	pList  WIFIリストポインタ
  * @param	pFriend  フレンドデータ
  * @return	WIFI_LIST	WIFIリスト
@@ -661,6 +661,27 @@ void WifiList_DataMarge( WIFI_LIST *list, int delNo, int no)
 void GFL_NET_DWC_GetMySendedFriendCode( const WIFI_LIST* pList, DWCFriendData* pFriend )
 {
     DWC_CreateExchangeToken(&pList->my_dwcuser, pFriend);
+}
+
+
+//---------------------------------------------------------------------------
+/**
+ * @brief   自分のGSIDを取得する
+ * @param   WIFI_LIST構造体
+ * @retval  正の整数  	GSプロファイルID
+            0 	友達登録鍵が不正のため、取得できない
+            -1 	ログインIDが格納されているため、取得できない
+ */
+//---------------------------------------------------------------------------
+
+int WifiList_GetMyGSID( WIFI_LIST* pWifiList )
+{
+    DWCUserData *userdata = WifiList_GetMyUserInfo(pWifiList);
+    DWCFriendData friendData;
+
+    GF_ASSERT(userdata);
+    DWC_CreateExchangeToken(userdata,&friendData);
+    return DWC_GetGsProfileId( userdata,&friendData);
 }
 
 //---------------------------------------------------------------------------
