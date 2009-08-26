@@ -12,7 +12,6 @@ INPUT_DAT_FILE = ..\..\prog\src\app\pms_input\pms_input.res
 LANG_FLAG	= jp
 
 TARGETDIR = $(PROJECT_ARCDIR)
-targetname = pms_aikotoba
 
 -include $(SOURCE_LIST)
 
@@ -23,7 +22,6 @@ targetname = pms_aikotoba
 no-rule:
 	$(MAKE)	$(SOURCE_LIST)
 	$(MAKE)	$(WORD_DAT_FILE)
-	$(COPY) $(targetname).narc $(TARGETDIR)
 
 
 
