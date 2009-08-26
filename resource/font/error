@@ -1,7 +1,9 @@
 
 fileID:  byte(s) name
 ----------------------------------------
-     0:   122920 /large.nftr
-     1:    60796 /small.nftr
-     2:       90 /default.nclr
-     3:       90 /talkwin.nclr
+     0:   248036 /large.nftr
+     1:   250176 /large.gftr
+     2:   161524 /small.nftr
+     3:   163632 /small.gftr
+     4:       90 /default.nclr
+     5:       90 /talkwin.nclr

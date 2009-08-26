@@ -33,6 +33,7 @@ include $(PROJECT_RSCDIR)\macro_define
 
 IMGFILE	:= $(wildcard *.bmp)
 COLFILE	:= $(wildcard *.ncl)
+FONTFILE := $(wildcard *.nftr)
 
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
 
@@ -44,9 +45,15 @@ do-build: $(IMGFILE:.bmp=.nftr)
 	fontcvtrc -i bmp -if $< -io pokemon_wb.xlor -ib 2 -o nitro -of $@
 	xcopy /D /Y $@ w:\font
 
+do-build: $(FONTFILE:.nftr=.gftr)
+%.gftr: %.nftr
+	fontex $< $@
+
 do-build: $(COLFILE:.ncl=.nclr)
 %.nclr: %.ncl
 	g2dcvtr $< -pcm
+
+
 
 
 endif
@@ -63,7 +70,7 @@ $(TARGETDIR)/$(NARCNAME):	$(NARCNAME)
 	$(COPY)	$(NARCNAME) $(TARGETDIR)
 	$(COPY) $(NAIXNAME) $(TARGETDIR)
 
-$(NARCNAME):	$(IMGFILE:.bmp=.nftr) $(COLFILE:.ncl=.nclr)
+$(NARCNAME):	$(IMGFILE:.bmp=.nftr) $(COLFILE:.ncl=.nclr) $(FONTFILE:.nftr=.gftr)
 	nnsarc -c -l -n -i $(NARCNAME) -S arclist.txt > error
 	$(NAIXCUT) $(NAIXNAME)
 
