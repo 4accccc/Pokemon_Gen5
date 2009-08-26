@@ -41,10 +41,6 @@ typedef struct
 {
   GFL_G3D_RES *g3d_res_mdl;
   GFL_G3D_RES *g3d_res_anm[2];
-  
-  GFL_G3D_OBJ *obj;
-  GFL_G3D_ANM *obj_anm[2];
-  GFL_G3D_RND *obj_rnd;
 }RIPPLE_RES;
 
 //--------------------------------------------------------------
