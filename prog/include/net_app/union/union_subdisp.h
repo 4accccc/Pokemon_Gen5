@@ -36,3 +36,4 @@ extern UNION_SUBDISP_PTR UNION_SUBDISP_Init(GAMESYS_WORK *gsys);
 extern void UNION_SUBDISP_Exit(UNION_SUBDISP_PTR unisub);
 extern void UNION_SUBDISP_Update(UNION_SUBDISP_PTR unisub);
 extern void UNION_SUBDISP_Draw(UNION_SUBDISP_PTR unisub);
+

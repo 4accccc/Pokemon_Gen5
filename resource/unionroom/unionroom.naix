@@ -22,7 +22,15 @@ enum {
 	NARC_unionroom_appeal_icon_NCGR = 8,
 	NARC_unionroom_appeal_icon_NCER = 9,
 	NARC_unionroom_appeal_icon_NANR = 10,
-	NARC_unionroom_unionbg_test_NSCR = 11
+	NARC_unionroom_unionbg_test_NSCR = 11,
+	NARC_unionroom_wb_union_icon_NCER = 12,
+	NARC_unionroom_wb_union_icon_NANR = 13,
+	NARC_unionroom_wb_union_icon_NCGR = 14,
+	NARC_unionroom_wb_union_plate_NCGR = 15,
+	NARC_unionroom_wb_unionbg_NCLR = 16,
+	NARC_unionroom_wb_unionbg_NSCR = 17,
+	NARC_unionroom_wb_unionbg_plate_NSCR = 18,
+	NARC_unionroom_wb_unionobj_NCLR = 19
 };
 
 /* NARC_UNIONROOM_NAIX_ */

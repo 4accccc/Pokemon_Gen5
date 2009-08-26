@@ -10,6 +10,7 @@
 
 #include "buflen.h"
 #include "app/trainer_card.h"
+#include "system\pms_data.h"
 
 
 //==============================================================================
@@ -165,6 +166,10 @@ typedef enum{
 }UNION_SUBPROC_ID;
 
 
+///チャットログ保持数
+#define UNION_CHAT_LOG_MAX      (30)
+
+
 //==============================================================================
 //  構造体定義
 //==============================================================================
@@ -211,20 +216,6 @@ typedef struct{
 //--------------------------------------------------------------
 //  ビーコン
 //--------------------------------------------------------------
-///ビーコン：バトル
-typedef struct{
-  u8 battle_mode;           ///<戦闘モード(UNION_BATTLE_MODE_???)
-  u8 regulation;            ///<レギュレーション番号　※check 構造体丸ごとの方がいいかも
-  u8 padding[2];
-}UNION_BEACON_BATTLE;
-
-///ビーコン：チャット
-typedef struct{
-  u8 chat_no;
-  u8 padding[3];
-  u16 word[2];
-}UNION_BEACON_CHAT;
-
 ///ユニオンで送受信するビーコンデータ
 typedef struct{
   u8 connect_mac_address[6];  ///<接続したい人へのMacAddress
@@ -243,15 +234,13 @@ typedef struct{
   u8 trainer_view;            ///<トレーナータイプ(ユニオンルーム内での見た目)
   u8 sex;                     ///<性別
   
+  PMS_DATA pmsdata;          ///<チャット
+  u16 pms_rand;               ///<チャット用識別コード
+  u8 padding2[2];
+  
   UNION_PARTY party;          ///<接続相手の情報
   
-  //play_categoryの内容によってワークの中身が変化
-  union{
-    UNION_BEACON_CHAT chat;
-    UNION_BEACON_BATTLE battle;
-  };
-
-  u8 reserve[16];             ///<将来の為の予約
+  u8 reserve[8];             ///<将来の為の予約
 }UNION_BEACON;
 
 ///受信したビーコンデータから作成されたPCパラメータ
@@ -307,8 +296,13 @@ typedef struct{
   u8 appeal_no;               ///<アピール番号(UNION_APPEAL_???)
   u8 padding2;
   
+  PMS_DATA chat_pmsdata;      ///<自分の発言(チャット)
+  u16 chat_pms_rand;          ///<チャットの識別コード
+  u8 chat_upload;             ///<TRUE:自分の発言更新あり
+  u8 padding3[3];
+  
   //↓構造体内の一部のデータのみを送信データに含める
-  UNION_MY_COMM mycomm;         ///<送受信で変更するパラメータ類
+  UNION_MY_COMM mycomm;         ///<送受信で変更するパラメータ類(フリー動作で初期化される)
   
   //↓ここから下は通信では送らないデータ
   s16 wait;
@@ -330,4 +324,28 @@ typedef struct{
   u8 seq;
   u8 padding[3];
 }UNION_SUB_PROC;
+
+//--------------------------------------------------------------
+//  チャット
+//--------------------------------------------------------------
+///チャットデータ
+typedef struct{
+  STRCODE name[PERSON_NAME_SIZE + EOM_SIZE];    ///<名前 16
+  PMS_DATA pmsdata;                             ///<簡易会話データ 12
+  u16 rand;                                     ///<多重ログ表示防止用のランダムコード 2
+  u8 mac_address[6];                            ///<MacAddress 6
+  u8 sex;                                       ///<性別
+  u8 padding[3];
+}UNION_CHAT_DATA;
+
+///チャットログ管理
+typedef struct{
+  UNION_CHAT_DATA chat[UNION_CHAT_LOG_MAX];     ///<チャットデータ
+  u8 start_no;
+  u8 end_no;
+  u8 padding[2];
+  s32 chat_log_count;
+  s32 chat_view_no;
+  s32 old_chat_view_no;
+}UNION_CHAT_LOG;
 

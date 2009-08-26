@@ -15,6 +15,7 @@
 #include "union_receive.h"
 #include "union_chara.h"
 #include "union_oneself.h"
+#include "union_chat.h"
 
 
 //==============================================================================
@@ -67,6 +68,9 @@ static void UnionReceive_BeaconCheck(UNION_SYSTEM_PTR unisys, UNION_BEACON_PC *b
 {
   UNION_MY_SITUATION *situ = &unisys->my_situation;
   
+  //チャット
+  UnionChat_AddChat(unisys, bpc, NULL);
+
   if(situ->union_status == UNION_STATUS_NORMAL){
     //接続要求チェック
     if(bpc->beacon.union_status == UNION_STATUS_CONNECT_REQ)
@@ -90,3 +94,4 @@ static void UnionReceive_BeaconCheck(UNION_SYSTEM_PTR unisys, UNION_BEACON_PC *b
     }
   }
 }
+

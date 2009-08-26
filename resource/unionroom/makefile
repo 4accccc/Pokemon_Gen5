@@ -64,7 +64,7 @@ $(TARGETDIR)/$(targetname).narc: $(targetname).narc
 
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、元ファイルからコンバートするルールを有効にする
 # コピー先のnarcが古い場合実行する
-$(targetname).narc: $(lsources) $(gsources) $(ssources) $(imdsources) $(bmpsources) convert.bat makefile
+$(targetname).narc: $(lsources) $(gsources) $(ssources) $(imdsources) $(bmpsources) convert.bat makefile *.script
 	convert.bat
 	$(NAIXCUT) $(targetname).naix
 	rm -f *.NCGR

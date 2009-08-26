@@ -21,6 +21,7 @@
 #include "colosseum_comm_command.h"
 #include "colosseum_tool.h"
 #include "union_subproc.h"
+#include "union_chat.h"
 
 
 //==============================================================================
@@ -60,6 +61,7 @@ static int UnionComm_GetBeaconSize(void *pWork);
 static BOOL UnionComm_CheckConnectService(GameServiceID GameServiceID1 , GameServiceID GameServiceID2 );
 static void UnionComm_ErrorCallBack(GFL_NETHANDLE* pNet,int errNo, void* pWork);
 static void UnionComm_DisconnectCallBack(void* pWork);
+static void UnionChat_InitLog(UNION_CHAT_LOG *log);
 
 
 //==============================================================================
@@ -127,7 +129,9 @@ static UNION_SYSTEM_PTR Union_InitSystem(UNION_PARENT_WORK *uniparent)
   GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_UNION, HEAP_SIZE_UNION );
   unisys = GFL_HEAP_AllocClearMemory(HEAPID_UNION, sizeof(UNION_SYSTEM));
   unisys->uniparent = uniparent;
-  UnionMyComm_Init(unisys, &unisys->my_situation.mycomm);
+  UnionMySituation_Clear(unisys);
+  unisys->my_situation.chat_upload = TRUE;
+  UnionChat_InitLog(&unisys->chat_log);
   
   GFL_OVERLAY_Load( FS_OVERLAY_ID( union_room ) );
   
@@ -604,6 +608,9 @@ static void UnionComm_SetBeaconParam(UNION_SYSTEM_PTR unisys, UNION_BEACON *beac
   beacon->trainer_view = MyStatus_GetTrainerView( unisys->uniparent->mystatus );
   beacon->sex = MyStatus_GetMySex(unisys->uniparent->mystatus);
 
+  beacon->pmsdata = situ->chat_pmsdata;
+  beacon->pms_rand = situ->chat_pms_rand;
+  
   beacon->party = situ->mycomm.party;
   
   //送信データ完成
@@ -733,6 +740,8 @@ void UnionMySituation_Clear(UNION_SYSTEM_PTR unisys)
   UNION_MY_SITUATION *situ = &unisys->my_situation;
   
   GFL_STD_MemClear(situ, sizeof(UNION_MY_SITUATION));
+  PMSDAT_SetupDefaultUnionMessage(&situ->chat_pmsdata);
+  situ->chat_pms_rand = GFUser_GetPublicRand(0xffff);
   UnionMyComm_Init(unisys, &situ->mycomm);
 }
 
@@ -850,4 +859,24 @@ void UnionMyComm_PartyDel(UNION_MY_COMM *mycomm, const UNION_BEACON_PC *pc)
   }
   
   GF_ASSERT(0); //パーティに存在していないPC
+}
+
+//--------------------------------------------------------------
+/**
+ * チャットログ管理データを初期化
+ *
+ * @param   log		チャットログ管理データへのポインタ
+ */
+//--------------------------------------------------------------
+static void UnionChat_InitLog(UNION_CHAT_LOG *log)
+{
+  int i;
+  
+  GFL_STD_MemClear(log, sizeof(UNION_CHAT_LOG));
+  for(i = 0; i < UNION_CHAT_LOG_MAX; i++){
+    GFL_STD_MemFill(log->chat[i].mac_address, 0xff, 6);
+  }
+  log->chat_log_count = -1;
+  log->chat_view_no = -1;
+  log->old_chat_view_no = -1;
 }

@@ -51,6 +51,7 @@ typedef struct _UNION_SYSTEM{
   UNION_BEACON my_beacon;             ///<自分の送信ビーコン
   UNION_BEACON_PC receive_beacon[UNION_RECEIVE_BEACON_MAX];  ///<受信ビーコン
   UNION_CHARACTER character[UNION_CHARACTER_MAX];   ///<キャラクタ管理バッファ
+  UNION_CHAT_LOG chat_log;            ///<チャットログ管理データ
   
   UNION_SUB_PROC subproc;             ///<サブPROC呼び出し制御
   void *parent_work;                  ///<サブPROC用に使用する一時的なワーク管理用
