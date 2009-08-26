@@ -94,7 +94,7 @@ $(TMPDIR)/%.nsbta: $(RESDIR)/%.ita
 	@$(G3DCVTR) $^ -o $@ 
 
 #iva --> nsbva
-$(TMPDIR)/%.nsbva: $(RESDIR)/%.vai
+$(TMPDIR)/%.nsbva: $(RESDIR)/%.iva
 	@echo Anime iva File Convert: $^ $@
 	@$(G3DCVTR) $^ -o $@ 
 
