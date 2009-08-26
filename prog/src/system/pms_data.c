@@ -225,6 +225,7 @@ STRBUF* PMSDAT_ToString( const PMS_DATA* pms, u32 heapID )
 	WORDSET_ExpandStr( wordset , sentence , baseStr );
 	//sentence = MSGDAT_UTIL_AllocExpandString( wordset, msgman, pms->sentence_id, heapID );
 
+  GFL_STR_DeleteBuffer(baseStr);
 	GFL_MSG_Delete(msgman);
 	WORDSET_Delete(wordset);
 
