@@ -11,6 +11,7 @@
 #include "gamesystem/game_comm.h"
 #include "field/fieldmap_proc.h"
 #include "net_app/union/union_types.h"
+#include "system\pms_data.h"
 
 
 //==============================================================================
@@ -64,6 +65,8 @@ extern void UnionComm_Req_ShutdownRestarts(UNION_SYSTEM_PTR unisys);
 extern void UnionComm_Req_Shutdown(UNION_SYSTEM_PTR unisys);
 extern void UnionComm_Req_Restarts(UNION_SYSTEM_PTR unisys);
 extern BOOL UnionComm_Check_ShutdownRestarts(UNION_SYSTEM_PTR unisys);
+
+extern void UnionChat_SetMyPmsData(UNION_SYSTEM_PTR unisys, const PMS_DATA *pmsdata);
 
 //--------------------------------------------------------------
 //  union_main.c

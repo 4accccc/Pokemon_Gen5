@@ -880,3 +880,20 @@ static void UnionChat_InitLog(UNION_CHAT_LOG *log)
   log->chat_view_no = -1;
   log->old_chat_view_no = -1;
 }
+
+//==================================================================
+/**
+ * 自分のチャットデータをセットする
+ *
+ * @param   unisys		
+ * @param   pmsdata		
+ */
+//==================================================================
+void UnionChat_SetMyPmsData(UNION_SYSTEM_PTR unisys, const PMS_DATA *pmsdata)
+{
+  UNION_MY_SITUATION *situ = &unisys->my_situation;
+
+  situ->chat_pmsdata = *pmsdata;
+  situ->chat_pms_rand++;
+  situ->chat_upload = TRUE;
+}

@@ -39,6 +39,8 @@
 #include "app/p_status.h"   //PokeList_ProcData・PLIST_DATA
 #include "app/townmap.h" //TOWNMAP_PARAM
 #include "app/wifi_note.h" //
+#include "net_app/union/union_main.h"
+#include "app/pms_input.h"
 
 extern const GFL_PROC_DATA TownMap_ProcData;
 extern const GFL_PROC_DATA TrainerCardProcData;
@@ -97,6 +99,7 @@ typedef enum
   FMENU_APP_BAG,
   FMENU_APP_TRAINERCARD,
   FMENU_APP_CONFIG,
+  FMENU_APP_CHAT,
   
   //メニューから呼ばれるものから呼ばれるもの
   FMENU_APP_STATUS,
@@ -199,6 +202,7 @@ static const BOOL FMenuReturnProc_PokeList(FMENU_EVENT_WORK* mwk);
 static const BOOL FMenuReturnProc_PokeStatus(FMENU_EVENT_WORK* mwk);
 static const BOOL FMenuReturnProc_Bag(FMENU_EVENT_WORK* mwk);
 static const BOOL FMenuReturnProc_TownMap(FMENU_EVENT_WORK* mwk);
+static const BOOL FMenuReturnProc_Chat(FMENU_EVENT_WORK* mwk);
 
 static void FMenuTakeFieldInfo(FMENU_EVENT_WORK* mwk);
 
@@ -245,6 +249,11 @@ static const FMENU_SUBPROC_DATA FldMapMenu_SubProcData[FMENU_APP_MAX] =
     FS_OVERLAY_ID(config_panel) , 
     &ConfigPanelProcData ,
     NULL
+  },
+  { //  FMENU_APP_CHAT,
+    FS_OVERLAY_ID(pmsinput) , 
+    &ProcData_PMSInput ,
+    FMenuReturnProc_Chat
   },
   
   //孫呼びされるもの
@@ -726,6 +735,7 @@ static BOOL FMenuCallProc_Config( FMENU_EVENT_WORK *mwk )
 //--------------------------------------------------------------
 static BOOL FMenuCallProc_Chat( FMENU_EVENT_WORK *mwk )
 {
+#if 0
   GMEVENT * newEvent;
   GAMEDATA *gameData = GAMESYSTEM_GetGameData( mwk->gmSys );
   SAVE_CONTROL_WORK *saveControl = GAMEDATA_GetSaveControlWork( gameData );
@@ -735,6 +745,19 @@ static BOOL FMenuCallProc_Chat( FMENU_EVENT_WORK *mwk )
   GMEVENT_CallEvent(mwk->gmEvent, newEvent);
   mwk->state = FMENUSTATE_WAIT_RETURN;
   OS_TPrintf("チャット！");
+#endif
+  GAMEDATA *gameData = GAMESYSTEM_GetGameData( mwk->gmSys );
+	PMSI_PARAM	*initParam;
+	PMS_DATA  pmsDat;
+
+	initParam = PMSI_PARAM_Create( PMSI_MODE_SENTENCE, PMSI_GUIDANCE_DEFAULT, 
+	  GAMEDATA_GetSaveControlWork( gameData ), HEAPID_PROC );
+	PMSDAT_Init( &pmsDat, PMS_TYPE_UNION);
+	PMSI_PARAM_SetInitializeDataSentence( initParam, &pmsDat );
+
+  mwk->subProcWork = initParam;
+  mwk->subProcType = FMENU_APP_CHAT;
+  mwk->state = FMENUSTATE_FIELD_FADEOUT;
   return TRUE;
 }
 
@@ -958,6 +981,40 @@ static const BOOL FMenuReturnProc_PokeStatus(FMENU_EVENT_WORK* mwk)
     return FALSE;
     break;
   }
+  return FALSE;
+}
+
+//--------------------------------------------------------------
+/**
+ * 子Proc後処理 Chat
+ * @param mwk FMENU_EVENT_WORK
+ * @retval  BOOL  TRUE=別のProcを呼び出す(mwk->subProcTypeに次のprocを設定してください
+ *                FALSE=Fieldに戻る
+ */
+//--------------------------------------------------------------
+static const BOOL FMenuReturnProc_Chat(FMENU_EVENT_WORK* mwk)
+{
+	PMSI_PARAM	*initParam = mwk->subProcWork;
+	PMS_DATA pmsdata;
+  
+	// 簡易会話を更新したか？
+	if ( PMSI_PARAM_CheckCanceled( initParam ) == FALSE ){
+
+		// 簡易会話取得
+		PMSI_PARAM_GetInputDataSentence( initParam,  &pmsdata);
+
+		// 通信ワークが存在しているなら
+		{
+      GAME_COMM_SYS_PTR game_comm = GAMESYSTEM_GetGameCommSysPtr(mwk->gmSys);
+      UNION_SYSTEM_PTR unisys = GameCommSys_GetAppWork(game_comm);
+      if(unisys != NULL && GameCommSys_BootCheck(game_comm) == GAME_COMM_NO_UNION){
+  			// ビーコンデータの簡易会話を書き換える & 通信データに反映
+        UnionChat_SetMyPmsData(unisys, &pmsdata);
+  		}
+  	}
+	}
+
+  FieldMap_SetExitSequence(mwk);
   return FALSE;
 }
 

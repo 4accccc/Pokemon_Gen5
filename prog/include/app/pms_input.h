@@ -216,7 +216,8 @@ extern void PMSI_PARAM_GetInputDataSentence( const PMSI_PARAM* p, PMS_DATA* pms 
 extern GFL_PROC_RESULT PMSInput_Init( GFL_PROC * proc, int * seq , void *pwk, void *mywk );
 extern GFL_PROC_RESULT PMSInput_Main( GFL_PROC * proc, int * seq , void *pwk, void *mywk );
 extern GFL_PROC_RESULT PMSInput_Quit( GFL_PROC * proc, int * seq , void *pwk, void *mywk );
-
+extern const GFL_PROC_DATA ProcData_PMSInput;
+FS_EXTERN_OVERLAY(pmsinput);
 
 
 #endif
