@@ -231,7 +231,7 @@ int WorldTrade_Partner_Main(WORLDTRADE_WORK *wk, int seq)
 
 	// サブ画面のOBJ座標を移動させる処理
 	for(i=0;i<SUB_OBJ_NUM;i++){
-		WorldTrade_CLACT_PosChange( wk->SubActWork[i], wk->SubActY[i][0], 
+		WorldTrade_CLACT_PosChangeSub( wk->SubActWork[i], wk->SubActY[i][0], 
 									wk->SubActY[i][1]+wk->DrawOffset+32 );
 	}
 	// メイン画面のポケモン画像を移動させる処理
@@ -562,6 +562,7 @@ static void BmpWinInit( WORLDTRADE_WORK *wk )
 				
 			}
 			GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->InfoWin[i]), 0x0000 );
+			GFL_BMPWIN_MakeTransWindow( wk->InfoWin[i] );
 		}
 	}
 
@@ -1086,6 +1087,7 @@ static void SubSeq_MessagePrint( WORLDTRADE_WORK *wk, int msgno, int wait, int f
 
 	// 文字列描画開始
 	GF_STR_PrintSimple( wk->MsgWin, FONT_TALK, wk->TalkString, 0, 0, &wk->print);
+	GFL_BMPWIN_MakeTransWindow( wk->MsgWin );
 
 
 }
@@ -1110,7 +1112,7 @@ static void PokeLabelPrint( GFL_MSGDATA *MsgManager, GFL_BMPWIN * win[], int msg
 	WorldTrade_SysPrint( win[0], strbuf, 0, 2, 0, PRINTSYS_LSB_Make(15,2,0), print );
 	
 	GFL_STR_DeleteBuffer( strbuf );
-	
+
 }
 
 //------------------------------------------------------------------
@@ -1129,6 +1131,7 @@ static void TouchPrint( GFL_MSGDATA *MsgManager, GFL_BMPWIN * win[], int msg, WT
 	strbuf = GFL_MSG_CreateString( MsgManager, msg  );
 
 	WorldTrade_TouchPrint( win[0], strbuf, 0, 0, 1, PRINTSYS_LSB_Make(15,2,0), print );
+	GFL_BMPWIN_MakeTransWindow( win[0] );
 	
 	GFL_STR_DeleteBuffer( strbuf );
 	

@@ -332,7 +332,7 @@ int WorldTrade_Search_Main(WORLDTRADE_WORK *wk, int seq)
 
 	// サブ画面のOBJ座標を移動させる処理
 	for(i=0;i<SUB_OBJ_NUM;i++){
-		WorldTrade_CLACT_PosChange( wk->SubActWork[i], wk->SubActY[i][0], wk->SubActY[i][1]+wk->DrawOffset );
+		WorldTrade_CLACT_PosChangeSub( wk->SubActWork[i], wk->SubActY[i][0], wk->SubActY[i][1]+wk->DrawOffset );
 		//WorldTrade_CLACT_PosChange( wk->PromptDsActWork, DS_ICON_X, DS_ICON_Y+256+wk->DrawOffset );
 	}
 
@@ -1002,6 +1002,11 @@ static void DecideFunc( WORLDTRADE_WORK *wk, int decide )
 //------------------------------------------------------------------
 static int SubSeq_Main( WORLDTRADE_WORK *wk)
 {
+	//printstreamにしたので、
+	//printstream終了前に変更してはいけない
+	
+
+
 	// ------タッチ処理--------
 	u32 ret=TouchPanelFunc( wk );
 	if(ret!=GFL_UI_TP_HIT_NONE){

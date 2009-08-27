@@ -170,13 +170,15 @@ static inline BOOL ItemMailCheck( int a ){	return 0; }
 
 
 
-static inline void WirelessIconEasy( void ){}
+static inline void WirelessIconEasy( void )
+{
+	GFL_NET_ReloadIcon();  // 接続中なのでアイコン表示
+}
 static inline void WirelessIconEasy_SetLevel( int level ){}
 static inline void WirelessIconEasyEnd( void ){}
 
 
 
-static inline void EMAILSAVE_DCProfileCreate_Update( SAVE_CONTROL_WORK * savedata, Dpw_Common_Profile * profile ){	}
 
 static inline void CommFatalErrorFunc_NoNumber( void ){	}
 static inline void ComErrorWarningResetCall( int heapID, int type, int code ){	}
@@ -245,11 +247,11 @@ extern void WT_PokeCopyPPtoPP( const POKEMON_PARAM *pp_src, POKEMON_PARAM *pp_de
 extern void BmpMenuWinClear( GFL_BMPWIN * win, u8 trans_sw );
 extern STRBUF * MSGDAT_UTIL_AllocExpandString( const WORDSET *wordset, GFL_MSGDATA *MsgManager, u32 strID, HEAPID heapID );
 extern void PokeReplace( const POKEMON_PASO_PARAM *ppp, POKEMON_PARAM *pp );
-extern void WT_PM_strncpy( STRCODE *p_dst, const STRCODE *cp_src, int len );
 
 extern POKEMON_PASO_PARAM* PPPPointerGet( POKEMON_PARAM *pp );
 
 
+extern void EMAILSAVE_DCProfileCreate_Update( SAVE_CONTROL_WORK * savedata, Dpw_Common_Profile * profile );
 
 //CommStateSetError->GFL_NET_ErrorFunc
 //PP_Put ID_PARA_sex 再計算でNULL指定しているが

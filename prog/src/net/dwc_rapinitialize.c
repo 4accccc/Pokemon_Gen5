@@ -14,7 +14,7 @@
 #if GFL_NET_WIFI
 
 //#include "net_wireless.h"
-#include "dwc_rapcommon.h"
+#include "net/dwc_rapcommon.h"
 #include "dwc_rapinitialize.h"
 
 

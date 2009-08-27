@@ -309,19 +309,23 @@ static GFL_PROC_RESULT WorldTradeProc_Main( GFL_PROC * proc, int * seq, void * p
 {
 	WORLDTRADE_WORK * wk  = work;
 
-	// 受信強度リンクを反映させる
-	DWC_UpdateConnection();
+	//EXITして内部でオーバーレイが解放されるまで呼べる
+	if( *seq < SEQ_OUT )
+	{	
+		// 受信強度リンクを反映させる
+		DWC_UpdateConnection();
 
-	// Dpw_Tr_Main() だけは例外的にいつでも呼べる
-	Dpw_Tr_Main();
+		// Dpw_Tr_Main() だけは例外的にいつでも呼べる
+		Dpw_Tr_Main();
+	}
+
 	GFL_TCB_Main( wk->tcbsys );
-	GFL_NET_Main();
 	WT_PRINT_Main( &wk->print );
 
 	switch( *seq ){
 	// サブ処理初期化
 	case SEQ_INIT_DPW:
-//		InitDpw(wk->heapPtr, wk->heapHandle, AllocFunc, FreeFunc );
+		//InitDpw(wk->heapPtr, wk->heapHandle, AllocFunc, FreeFunc );
 		if(NET_IsInit(wk)){	
 			_wtHeapHandle = wk->heapHandle;
 	
@@ -373,7 +377,15 @@ static GFL_PROC_RESULT WorldTradeProc_Main( GFL_PROC * proc, int * seq, void * p
 
 	// 世界交換終了処理
 	case SEQ_OUT:
-		return GFL_PROC_RES_FINISH;
+		GFL_NET_Exit(NULL);
+		*seq	= SEQ_EXIT;
+		break;
+
+	case SEQ_EXIT:
+		if( GFL_NET_IsExit() )
+		{	
+			return GFL_PROC_RES_FINISH;
+		}
 		break;
 	}
 	ServerWaitTimeFunc( wk );
@@ -413,7 +425,7 @@ static GFL_PROC_RESULT WorldTradeProc_End( GFL_PROC * proc, int * seq, void * pa
 	DpwCommonOverlayEnd();
 	DwcOverlayEnd();
 #else
-	GFL_NET_Exit(NULL);
+	//GFL_NET_Exit(NULL);
 #endif
 
 	// セルアクターリソース解放
@@ -1027,10 +1039,8 @@ static void WorldTrade_SelBoxCallback(SELBOX_WORK* sbox, u8 cur_pos, void* work,
 //==============================================================================
 void WorldTrade_SelBoxEnd( WORLDTRADE_WORK *wk )
 {
-#if 0
 	SelectBoxExit( wk->SelBoxWork );
 	SelectBoxSys_Free( wk->SelBoxSys );
-#endif
 	//パッシブ解除
 	WorldTrade_ClearPassive();
 }
@@ -1116,6 +1126,7 @@ static void FreeFunc(DWCAllocType name, void* ptr,  u32 size)
     if ( !ptr ) return;
     old = OS_DisableInterrupts();
     NNS_FndFreeToExpHeap( _wtHeapHandle, ptr );
+		_wtHeapHandle	= NULL;
     OS_RestoreInterrupts( old );
 }
 

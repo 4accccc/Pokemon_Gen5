@@ -650,7 +650,7 @@ static int Enter_ConnectYesNoSelect( WORLDTRADE_WORK *wk )
 #if 0
 		  //  CommStateWifiDPWEnd();
 #else
-			GFL_NET_Exit(NULL);
+			//GFL_NET_Exit(NULL);
 #endif
 			WorldTrade_SubProcessChange( wk, WORLDTRADE_ENTER, 0 );
 			wk->subprocess_seq  = ENTER_END;

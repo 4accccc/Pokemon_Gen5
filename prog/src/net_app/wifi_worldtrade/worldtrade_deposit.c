@@ -2116,7 +2116,6 @@ u8 *WorldTrade_SinouZukanDataGet( int heap  )
 //==============================================================================
 void WorldTrade_PostPokemonBaseDataMake( Dpw_Tr_Data *dtd, WORLDTRADE_WORK *wk )
 {
-	STRCODE *name;
 	// ポケモン構造体を代入
 	
 	if(WorldTrade_GetPPorPPP( wk->BoxTrayNo )){
@@ -2132,8 +2131,7 @@ void WorldTrade_PostPokemonBaseDataMake( Dpw_Tr_Data *dtd, WORLDTRADE_WORK *wk )
 	}
 
 	// トレーナー名コピー
-	WT_PM_strncpy( dtd->name, MyStatus_GetMyName(wk->param->mystatus), DPW_TR_NAME_SIZE );
-;
+	STRTOOL_Copy( MyStatus_GetMyName(wk->param->mystatus), dtd->name, DPW_TR_NAME_SIZE );
 
 	
 	// ID

@@ -684,6 +684,27 @@ int WifiList_GetMyGSID( WIFI_LIST* pWifiList )
     return DWC_GetGsProfileId( userdata,&friendData);
 }
 
+//==============================================================================
+/**
+ * 自分のGSIDが正しいのか検査する
+ * @param   GFL_WIFI_FRIENDLIST  
+ * @retval  TRUEが成功
+ */
+//==============================================================================
+BOOL WifiList_CheckMyGSID( WIFI_LIST* pWifiList )
+{	
+    DWCUserData *userdata = WifiList_GetMyUserInfo(pWifiList);
+
+    GF_ASSERT(userdata);
+    if( DWC_CheckHasProfile( userdata )
+       && DWC_CheckValidConsole( userdata ) ){
+       return TRUE;
+   }
+   return FALSE;
+}
+
+
+
 //---------------------------------------------------------------------------
 /**
  * @brief	WIFIリストをセーブデータから引き出す

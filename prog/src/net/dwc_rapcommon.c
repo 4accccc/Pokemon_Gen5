@@ -13,7 +13,7 @@
 
 #if GFL_NET_WIFI
 
-#include "dwc_rapcommon.h"
+#include "net/dwc_rapcommon.h"
 
 //==============================================================================
 /**

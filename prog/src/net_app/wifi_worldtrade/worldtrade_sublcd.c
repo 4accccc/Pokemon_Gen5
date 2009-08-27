@@ -646,11 +646,13 @@ static void TransFieldObjData( NNSG2dCharacterData *CharaData, NNSG2dPaletteData
 //------------------------------------------------------------------
 void FreeFieldObjData( WORLDTRADE_WORK *wk )
 {
-	if(wk->demo_end){
+	if(wk->demo_end)
+	{
 		GFL_HEAP_FreeMemory( wk->FieldObjPalBuf  );
-                      
 		GFL_HEAP_FreeMemory( wk->FieldObjCharaBuf );
 	}
+	OS_TPrintf( "palbuff	%x\n", wk->FieldObjPalBuf );
+	OS_TPrintf( "charbuff	%x\n", wk->FieldObjCharaBuf );
 }
 
 

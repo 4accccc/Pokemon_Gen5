@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="toru_nagihashi" host="W00160" date="2009-08-20T15:43:08"/>
+	<create user="toru_nagihashi" host="W00160" date="2009-08-25T22:08:54"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -305,7 +305,7 @@
 		</language>
 	</columns>
 
-	<dialog left="-978" top="267" right="-273" bottom="887" maximized="no" rayout="Vertical2">
+	<dialog left="-1261" top="282" right="-556" bottom="910" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="0" style="0000" width="530"/>

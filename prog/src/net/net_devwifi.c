@@ -11,7 +11,7 @@
 #include "gflib.h"
 #include "net/dwc_rap.h"
 #include "dwc_rapinitialize.h"
-#include "dwc_rapcommon.h"
+#include "net/dwc_rapcommon.h"
 #include "dwc_rapfriend.h"
 #include "net/dwc_lobbylib.h"
 

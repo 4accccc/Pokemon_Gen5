@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ariizumi_nobuhiko" host="W00147" date="2009-08-20T11:34:57"/>
+	<create user="toru_nagihashi" host="W00160" date="2009-08-25T21:49:42"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -724,6 +724,11 @@
 	<row id="DEBUG_FIELD_STR41">
 		<language name="JPN" width="160">ポケモンさくせい</language>
 		<language name="JPN_KANJI" width="160">ポケモン作成</language>
+	</row>
+
+	<row id="DEBUG_FIELD_STR42">
+		<language name="JPN" width="160">GTS</language>
+		<language name="JPN_KANJI" width="160">GTS</language>
 	</row>
 
 	<flowchart-group-list>

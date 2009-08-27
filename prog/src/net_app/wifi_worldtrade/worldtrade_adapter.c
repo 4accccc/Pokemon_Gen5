@@ -13,6 +13,7 @@
 //system
 #include "system/main.h"
 #include "system/bmp_winframe.h"
+#include "libdpw/dpw_tr.h"
 
 //mine
 #include "worldtrade_adapter.h"
@@ -141,23 +142,6 @@ void PokeReplace( const POKEMON_PASO_PARAM *ppp, POKEMON_PARAM *pp )
 	GFL_HEAP_FreeMemory( src );
 }
 
-//----------------------------------------------------------------------------
-/**
- *	@brief	文字列コピー
- *
- *	@param	STRCODE *p_dst	コピー先
- *	@param	STRCODE *cp_src	コピー元
- *	@param	size						文字列長
- */
-//-----------------------------------------------------------------------------
-void WT_PM_strncpy( STRCODE *p_dst, const STRCODE *cp_src, int len )
-{	
-	u32	i;
-
-	for( i=0; i<len; i++ ){
-		p_dst[i] = cp_src[i];
-	}
-}
 
 //----------------------------------------------------------------------------
 /**
@@ -171,6 +155,48 @@ void WT_PM_strncpy( STRCODE *p_dst, const STRCODE *cp_src, int len )
 POKEMON_PASO_PARAM* PPPPointerGet( POKEMON_PARAM *pp )
 {	
 	return (POKEMON_PASO_PARAM*)PP_GetPPPPointerConst( pp );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	プロファイルを作成
+ *
+ *	@param	SAVE_CONTROL_WORK * savedata	セーブデータ
+ *	@param	* profile											プロファイル
+ *
+ */
+//-----------------------------------------------------------------------------
+static void EMAILSAVE_DCProfileCreateCommon( SAVE_CONTROL_WORK *sv, Dpw_Common_Profile *dc_profile )
+{
+	WIFI_HISTORY *wh = SaveData_GetWifiHistory(sv);
+	MYSTATUS *my = SaveData_GetMyStatus(sv);
+	//char *email_address = EMAILSAVE_AddressGet(sv);
+	
+	GFL_STD_MemClear(dc_profile, sizeof(Dpw_Common_Profile));
+	
+	dc_profile->version = PM_VERSION;
+	dc_profile->language = PM_LANG;
+	dc_profile->countryCode = WIFIHISTORY_GetMyNation(wh);
+	dc_profile->localCode = WIFIHISTORY_GetMyArea(wh);
+	dc_profile->playerId = MyStatus_GetID(my);
+	
+	STRTOOL_Copy( MyStatus_GetMyName(my), dc_profile->playerName, DPW_TR_NAME_SIZE );
+	
+	dc_profile->flag = 0;	//ハングル文字を表示できるか
+//	dc_profile->macAddr		ライブラリ内で格納するのでセットの必要なし
+	
+	//strcpy(dc_profile->mailAddr, email_address);
+
+#if 0
+	dc_profile->mailRecvFlag = FALSE;////EMAILSAVE_ParamGet(sv, EMAIL_PARAM_RECV_FLAG);
+#if (CRC_LOADCHECK && CRCLOADCHECK_GMDATA_ID_EMAIL)
+	SVLD_SetCrc(GMDATA_ID_EMAIL);
+#endif //CRC_LOADCHECK
+#endif
+}
+void EMAILSAVE_DCProfileCreate_Update( SAVE_CONTROL_WORK * savedata, Dpw_Common_Profile * profile )
+{
+	EMAILSAVE_DCProfileCreateCommon( savedata, profile );
 }
 
 //=============================================================================
@@ -206,7 +232,7 @@ void WT_PRINT_Init( WT_PRINT *wk, const CONFIG *cfg )
 {	
 	GFL_STD_MemClear( wk, sizeof(WT_PRINT) );
 
-	wk->tcbsys	= GFL_TCBL_Init( HEAPID_WORLDTRADE, HEAPID_WORLDTRADE, 8, 32 );
+	wk->tcbsys	= GFL_TCBL_Init( HEAPID_WORLDTRADE, HEAPID_WORLDTRADE, 32, 32 );
 	wk->cfg			= cfg;
 	wk->font		= GFL_FONT_Create( ARCID_FONT, NARC_font_large_nftr, GFL_FONT_LOADTYPE_FILE, FALSE, HEAPID_WORLDTRADE );
 
@@ -270,6 +296,15 @@ void WT_PRINT_Main( WT_PRINT *wk )
 					p_one->use	= FALSE;
 				}
 			}
+
+			if( wk->stream[i] != NULL )
+			{	
+				if( PRINTSYS_PrintStreamGetState(wk->stream[i]) == PRINTSTREAM_STATE_DONE )
+				{	
+					PRINTSYS_PrintStreamDelete( wk->stream[i] );
+					wk->stream[i]	= NULL;
+				}
+			}
 		}
 	}
 
@@ -296,8 +331,6 @@ BOOL GF_MSG_PrintEndCheck( WT_PRINT *setup )
 		{	
 			if( PRINTSYS_PrintStreamGetState(setup->stream[i]) == PRINTSTREAM_STATE_DONE )
 			{	
-				PRINTSYS_PrintStreamDelete( setup->stream[i] );
-				setup->stream[i]	= NULL;
 				return FALSE;
 			}
 			else

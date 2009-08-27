@@ -41,6 +41,7 @@ enum {
 	SEQ_MAIN,
 	SEQ_FADEOUT,
 	SEQ_OUT,
+	SEQ_EXIT,
 };
 
 // サブプロセス制御番号
@@ -594,7 +595,7 @@ extern void WorldTrade_ClearPassive(void);
 // worldtrade_sublcd.c
 extern void WorldTrade_HeroDemo( WORLDTRADE_WORK *wk, int sex );
 extern int  WorldTrade_SubLcdObjHitCheck( int max );
-void WorldTrade_SubLcdMatchObjAppear( WORLDTRADE_WORK *wk, int num, int flag );
+extern void WorldTrade_SubLcdMatchObjAppear( WORLDTRADE_WORK *wk, int num, int flag );
 extern void WorldTrade_SubLcdMatchObjHide( WORLDTRADE_WORK *wk );
 extern void WorldTrade_SubLcdActorAdd( WORLDTRADE_WORK *wk, int sex );
 extern void WorldTrade_ReturnHeroDemo( WORLDTRADE_WORK *wk, int sex );
