@@ -348,7 +348,6 @@ SRCS_OVERLAY_FIELDMAP		=	field/field_proc.c \
         field/fldeff_reflect.c \
         field/scrcmd_musical.c \
         field/field_place_name.c \
-        field/field_cars.c \
         field/calender_encount.c \
         field/calender_hatch.c \
         field/calender_weather.c \
@@ -360,9 +359,6 @@ SRCS_OVERLAY_FIELDMAP		=	field/field_proc.c \
         field/fld_exp_obj.c \
         field/test_gimmick.c \
         field/event_warp.c \
-        field/fieldmap_tcb_rot_player.c \
-        field/fieldmap_tcb_warp_player.c \
-        field/fieldmap_tcb_camera.c \
         field/field_gimmick_h01.c
 
 
