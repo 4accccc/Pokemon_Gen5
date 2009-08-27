@@ -70,11 +70,9 @@ $(TARGETDIR)/$(NARCNAME):	$(NARCNAME)
 	$(COPY)	$(NARCNAME) $(TARGETDIR)
 	$(COPY) $(NAIXNAME) $(TARGETDIR)
 
-ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効に
 $(NARCNAME):	$(IMGFILE:.bmp=.nftr) $(COLFILE:.ncl=.nclr) $(FONTFILE:.nftr=.gftr)
 	nnsarc -c -l -n -i $(NARCNAME) -S arclist.txt > error
 	$(NAIXCUT) $(NAIXNAME)
-endif
 
 #------------------------------------------------------------------------------
 #	make cleanルール
