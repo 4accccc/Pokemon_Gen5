@@ -8,7 +8,7 @@
 #------------------------------------------------------------------------------
 #※コンバート作業が必要なユーザーの名前を記述する
 #------------------------------------------------------------------------------
-USERS	=	taya
+USERS	=	hoge
 
 #------------------------------------------------------------------------------
 #※ここに作成するnarc名を書く
@@ -80,9 +80,10 @@ $(NARCNAME):	$(IMGFILE:.bmp=.nftr) $(COLFILE:.ncl=.nclr) $(FONTFILE:.nftr=.gftr)
 clean:
 	-rm -f $(TARGETDIR)/$(NARCNAME)
 	-rm -f $(TARGETDIR)/$(NAIXNAME)
-ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
 	-rm -f *.narc
+ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
 	-rm -f *.nftr
+	-rm -f *.gftr
 	-rm -f *.NCLR
 endif
 
