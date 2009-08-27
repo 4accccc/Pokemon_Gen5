@@ -78,7 +78,6 @@
 #endif //USE_DEBUGWIN_SYSTEM
 
 #include "field_place_name.h"
-#include "field_cars.h"
 
 #include "field_sound.h"
 
@@ -196,7 +195,6 @@ struct _FIELDMAP_WORK
 	FLDMSGBG *fldMsgBG;
 
 	FIELD_PLACE_NAME* placeNameSys;	// 地名表示ウィンドウ
-	FIELD_CARS* cars;
   FLD_EXP_OBJ_CNT_PTR ExpObjCntPtr;
 	
 	MMDLSYS *fldMMdlSys;
@@ -546,9 +544,6 @@ static MAINSEQ_RESULT mainSeqFunc_setup(GAMESYS_WORK *gsys, FIELDMAP_WORK *field
     TAMADA_Printf( "Start Dir = %04x\n", pw->direction );
   }
 
-  // H01の車・船表示システム
-  fieldWork->cars = FIELD_CARS_Create( fieldWork->field_player, fieldWork->map_id, fieldWork->heapID );
-
   //拡張3Ｄオブジェクトモジュール作成
   fieldWork->ExpObjCntPtr = FLD_EXP_OBJ_Create ( 10, 10, fieldWork->heapID );
   
@@ -686,8 +681,6 @@ static MAINSEQ_RESULT mainSeqFunc_update_top(GAMESYS_WORK *gsys, FIELDMAP_WORK *
   // 地名表示システム動作処理
   FIELD_PLACE_NAME_Process( fieldWork->placeNameSys );
 
-  FIELD_CARS_Process( fieldWork->cars );
-
   //自機更新
   FIELD_PLAYER_Update( fieldWork->field_player );
 
@@ -780,8 +773,6 @@ static MAINSEQ_RESULT mainSeqFunc_free(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldW
   
   // 地名表示システム破棄
   FIELD_PLACE_NAME_Delete( fieldWork->placeNameSys );
-
-  FIELD_CARS_Delete( fieldWork->cars );
 
   //ギミック終了
   FLDGMK_EndFieldGimmick(fieldWork);
@@ -1592,8 +1583,6 @@ static void fldmap_G3D_Draw( FIELDMAP_WORK * fieldWork )
 
 	
   FIELD_WEATHER_3DWrite( fieldWork->weather_sys );	// 天気描画処理
-
-  FIELD_CARS_Draw( fieldWork->cars );
 
   //フィールド拡張3ＤＯＢＪ描画
   FLD_EXP_OBJ_Draw( fieldWork->ExpObjCntPtr );

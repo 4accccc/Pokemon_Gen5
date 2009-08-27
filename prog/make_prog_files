@@ -358,7 +358,12 @@ SRCS_OVERLAY_FIELDMAP		=	field/field_proc.c \
         field/event_entrance_out.c \
         field/field_gimmick.c \
         field/fld_exp_obj.c \
-        field/test_gimmick.c
+        field/test_gimmick.c \
+        field/event_warp.c \
+        field/fieldmap_tcb_rot_player.c \
+        field/fieldmap_tcb_warp_player.c \
+        field/fieldmap_tcb_camera.c \
+        field/field_gimmick_h01.c
 
 
 # フィールド天気

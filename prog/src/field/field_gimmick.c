@@ -12,14 +12,18 @@
 #include "field_gimmick_def.h"
 #include "field_gimmick.h"
 #include "fieldmap.h"
+#include "field_gimmick_h01.h"
+
 
 extern void GYM_SetupTest(FIELDMAP_WORK *fieldWork);
 extern void GYM_EndTest(FIELDMAP_WORK *fieldWork);
 extern void GYM_MoveTest(FIELDMAP_WORK *fieldWork);
 
+
 const static FLD_GMK_SETUP_FUNC FldGimmickSetupFunc[FLD_GIMMICK_MAX] = {
 	NULL,					//0:無し
   GYM_SetupTest,
+  H01_GIMMICK_Setup,
 /* 
 	GYM_SetupGhostGym,		//1:ゴーストジム
 	GYM_SetupCombatGym,		//2:格闘ジム
@@ -36,6 +40,7 @@ const static FLD_GMK_SETUP_FUNC FldGimmickSetupFunc[FLD_GIMMICK_MAX] = {
 const static FLD_GMK_END_FUNC FldGimmickEndFunc[FLD_GIMMICK_MAX] = {
 	NULL,					//0:無し
   GYM_EndTest,
+  H01_GIMMICK_End,
 /*
 	GYM_EndGhostGym,		//1:ゴーストジム
 	GYM_EndCombatGym,		//2:格闘ジム
@@ -52,6 +57,7 @@ const static FLD_GMK_END_FUNC FldGimmickEndFunc[FLD_GIMMICK_MAX] = {
 const static FLD_GMK_END_FUNC FldGimmickMoveFunc[FLD_GIMMICK_MAX] = {
 	NULL,					//0:無し
   GYM_MoveTest,
+  H01_GIMMICK_Move,
 /*
 	GYM_EndGhostGym,		//1:ゴーストジム
 	GYM_EndCombatGym,		//2:格闘ジム
