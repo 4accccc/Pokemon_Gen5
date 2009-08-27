@@ -5,9 +5,8 @@ c:\home\pokemon_wb\resource\particle\wazaeffect\w_140.spa
 %00
 カメラ移動	追従	防御側	16	0	8
 パーティクルデータロード	w_140
-エミッタ移動	w_140	W_140_140_TAMANAGE_BALL_BEAM	放物線	攻撃側	防御側	0:30:5
+エミッタ移動	w_140	W_140_140_TAMANAGE_BALL_BEAM	放物線	攻撃側	防御側	0:36:5
 タイマーによるウエイト	10
-エフェクト終了待ち	すべて
 パーティクル再生	w_140	W_140_140_TAMANAGE_BALL	防御側	方向無し	2	0
 パーティクル再生	w_140	W_140_140_TAMANAGE_KEMURI1	防御側	方向無し	2	0
 パーティクル再生	w_140	W_140_140_TAMANAGE_KEMURI2	防御側	方向無し	2	0
