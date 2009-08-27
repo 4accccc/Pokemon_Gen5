@@ -176,6 +176,7 @@ void WIFI_STATUS_ResetVChatMac(WIFI_STATUS* pStatus)
 {
   u8 macnull[]={0,0,0,0,0,0};
   GFL_STD_MemCopy(macnull,pStatus->VChatMac, 6);
+  OS_TPrintf("WIFI_STATUS_ResetVChatMac\n");
 }
 
 //----------------------------------------------------------

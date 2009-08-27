@@ -2366,24 +2366,12 @@ static void WFP2PMF_ReConErrCheck( WFP2PMF_WK* p_wk )
 		switch( cp_param->type ){
 
 		case WFP2PMF_TYPE_BUCKET:
-			if( (pFriendSt->status == WIFI_STATUS_BUCKET) ||
-					(pFriendSt->status == WIFI_STATUS_BUCKET_WAIT) ){
-				return TRUE;
-			}
 			break;
 
 		case WFP2PMF_TYPE_BALANCE_BALL:
-			if( (pFriendSt->status == WIFI_STATUS_BALANCEBALL) ||
-					(pFriendSt->status == WIFI_STATUS_BALANCEBALL_WAIT) ){
-				return TRUE;
-			}
 			break;
 
 		case WFP2PMF_TYPE_BALLOON:
-			if( (pFriendSt->status == WIFI_STATUS_BALLOON) ||
-					(pFriendSt->status == WIFI_STATUS_BALLOON_WAIT) ){
-				return TRUE;
-			}
 			break;
 		}
 
@@ -2403,15 +2391,12 @@ static void WFP2PMF_ReConErrCheck( WFP2PMF_WK* p_wk )
 		switch( cp_init->type ){
 
 		case WFP2PMF_TYPE_BUCKET:
-			p_wk->data.p_match->myMatchStatus.status = WIFI_STATUS_BUCKET;
 			break;
 
 		case WFP2PMF_TYPE_BALANCE_BALL:
-			p_wk->data.p_match->myMatchStatus.status = WIFI_STATUS_BALANCEBALL;
 			break;
 
 		case WFP2PMF_TYPE_BALLOON:
-			p_wk->data.p_match->myMatchStatus.status = WIFI_STATUS_BALLOON;
 			break;
 		}
 		GFL_NET_DWC_SetMyInfo( &(p_wk->data.p_match->myMatchStatus), sizeof(_WIFI_MACH_STATUS) );

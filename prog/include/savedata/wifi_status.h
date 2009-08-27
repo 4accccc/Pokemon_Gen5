@@ -39,39 +39,9 @@ typedef enum{
   WIFI_STATUS_FRONTIER,          // フロンティア中
   WIFI_STATUS_FRONTIER_WAIT,    // フロンティア募集中
 
-  WIFI_STATUS_BUCKET,				// バケットゲーム
-  WIFI_STATUS_BUCKET_WAIT,			// バケットゲーム募集中
-  WIFI_STATUS_BALANCEBALL,		    // 玉乗りゲーム
-  WIFI_STATUS_BALANCEBALL_WAIT,		// 玉乗りゲーム募集中
-  WIFI_STATUS_BALLOON,				// ばるーんゲーム
-  WIFI_STATUS_BALLOON_WAIT,			// ばるーんーム募集中
-
-#ifdef WFP2P_DEBUG_EXON
-  WIFI_STATUS_BATTLEROOM,     // バトルルーム中
-  WIFI_STATUS_BATTLEROOM_WAIT,// バトルルーム募集中
-  WIFI_STATUS_MBATTLE_FREE,     // マルチバトル中
-  WIFI_STATUS_MBATTLE_FREE_WAIT,// マルチバトル募集中
-#endif
-
   WIFI_STATUS_PLAY_OTHER,	// WiFiクラブに以外で遊び中
   WIFI_STATUS_UNKNOWN,   // 新たに作ったらこの番号以上になる
 
-#if 0  //こうする予定
-	WIFI_STATUS_NONE,         // 何も無い	NONEのときは出現もしません
-  WIFI_STATUS_VCT,            // VCT中
-  WIFI_STATUS_SBATTLE50,      // シングル対戦中か募集中
-  WIFI_STATUS_SBATTLE100,      // シングル対戦中か募集中
-  WIFI_STATUS_SBATTLE_FREE,      // シングル対戦中か募集中
-  WIFI_STATUS_DBATTLE50,      // ダブル対戦中か募集中
-  WIFI_STATUS_DBATTLE100,      // ダブル対戦中か募集中
-  WIFI_STATUS_DBATTLE_FREE,      // ダブル対戦中か募集中
-  WIFI_STATUS_TRADE,          // 交換中か募集中
-  WIFI_STATUS_LOGIN,           // 待機中 ログイン直後はこれ
-  WIFI_STATUS_FRONTIER,        // フロンティア中か募集中
-  WIFI_STATUS_BATTLEROOM,      // バトルルーム中
-  WIFI_STATUS_MBATTLE_FREE,     // マルチバトル中
-  WIFI_STATUS_UNKNOWN,   // 新たに作ったらこの番号以上になる
-#endif
 } WIFI_STATUS_e;
 
 

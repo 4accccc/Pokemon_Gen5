@@ -1129,6 +1129,7 @@ static void setConnectionBuffer(int index)
 {
   int i,j;
 
+  OS_TPrintf("Ú‘±‚µ‚Ü‚µ‚½%s%d\n",__FILE__,__LINE__);
   _dWork->state = MDSTATE_MATCHED;
 
   setTimeoutTime();
