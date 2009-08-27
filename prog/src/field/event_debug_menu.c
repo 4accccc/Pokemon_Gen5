@@ -2680,6 +2680,7 @@ static BOOL debugMenuCallProc_BoxMax( DEBUG_MENU_EVENT_WORK *wk )
 	GAMESYS_WORK	*gameSys	= wk->gmSys;
   MYSTATUS *myStatus;
 	POKEMON_PARAM *pp;
+	POKEMON_PASO_PARAM	*ppp;
 	const STRCODE *name;
 	
   myStatus = GAMEDATA_GetMyStatus(GAMESYSTEM_GetGameData(gameSys));
@@ -2695,10 +2696,14 @@ static BOOL debugMenuCallProc_BoxMax( DEBUG_MENU_EVENT_WORK *wk )
 			for(j=0;j < 30;j++){
 				int monsno =GFUser_GetPublicRand(MONSNO_END-1)+1;
 				OS_TPrintf("%d  %d %dì¬\n",monsno, i, j);
-				PP_Setup(pp,  monsno , 30, 123456);
-				PP_Put( pp , ID_PARA_oyaname_raw , (u32)name );
-				PP_Put( pp , ID_PARA_oyasex , MyStatus_GetMySex( myStatus ) );
-				BOXDAT_PutPokemonBox(pBox, i, (POKEMON_PASO_PARAM*)PP_GetPPPPointerConst(pp));
+				PP_Setup(pp,  monsno , 30, PTL_SETUP_ID_AUTO);
+
+				//ˆÈ‰º‚Ìe–¼Ý’è‚ÍA090827Œ»ÝPP_Put‚ÅÝ’è‚Å‚«‚È‚¢‚Ì‚ÅA–³—‚â‚èPPP‚É‚·‚énagihashi
+				ppp	= (POKEMON_PASO_PARAM  *)PP_GetPPPPointerConst( pp );
+				PPP_Put( ppp , ID_PARA_oyaname_raw , (u32)name );
+				PPP_Put( ppp , ID_PARA_oyasex , MyStatus_GetMySex( myStatus ) );
+
+				BOXDAT_PutPokemonBox(pBox, i, ppp);
 			}
 		}
 	}

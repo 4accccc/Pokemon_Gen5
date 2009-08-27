@@ -780,7 +780,6 @@ static int SubSeq_Main( WORLDTRADE_WORK *wk)
 	}
 	else{
 
-
 		// タッチパネルチェック(人物）
 		u32 menuret;
 		int result = WorldTrade_SubLcdObjHitCheck( wk->SearchResult );

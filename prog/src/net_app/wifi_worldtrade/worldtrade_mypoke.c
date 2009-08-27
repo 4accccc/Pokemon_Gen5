@@ -153,6 +153,16 @@ int WorldTrade_MyPoke_Init(WORLDTRADE_WORK *wk, int seq)
 	WorldTrade_PokeInfoPrint2( wk->MsgManager, &wk->InfoWin[INFOWIN_AZUKETAHITO], 
 								wk->UploadPokemonData.name, pp, &wk->InfoWin[INFOWIN_OYA], &wk->print);
 
+#ifdef PM_DEBUG
+	{	
+		static char string[256]	= {0};
+		STD_ConvertStringUnicodeToSjis( string, NULL,
+                                         wk->UploadPokemonData.name, NULL,
+                                         NULL );
+		OS_Printf( "e–¼ %s\n", string );
+	}
+#endif //PM_DEBUG
+
 	// ‚Ù‚µ‚¢ƒ|ƒPƒ‚ƒ“‚ÌðŒ
 	WodrldTrade_MyPokeWantPrint( wk->MsgManager, wk->MonsNameManager, wk->WordSet, 
 				&wk->InfoWin[INFOWIN_HOSII_POKEMON], 

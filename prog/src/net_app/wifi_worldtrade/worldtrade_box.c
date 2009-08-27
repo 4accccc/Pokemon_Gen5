@@ -2360,6 +2360,7 @@ static int PokemonCheck( POKEPARTY *party, BOX_DATA *box,  int  tray, int pos  )
 {
 	POKEMON_PASO_PARAM *ppp = WorldTrade_GetPokePtr(party, box, tray, pos );
 	
+#ifndef CHANGE_POKE_RULE_IGNORE
 	
 	// NULLチェック
 	if(ppp==NULL){
@@ -2376,6 +2377,7 @@ static int PokemonCheck( POKEPARTY *party, BOX_DATA *box,  int  tray, int pos  )
 		return WANT_POKE_TAMAGO;
 	}
 
+#endif
 
 	return WANT_POKE_OK;
 }
@@ -2393,6 +2395,7 @@ static int PokemonCheck( POKEPARTY *party, BOX_DATA *box,  int  tray, int pos  )
 //------------------------------------------------------------------
 static int CompareSearchData( Dpw_Tr_PokemonDataSimple *poke,  Dpw_Tr_PokemonSearchData *search )
 {
+#ifndef CHANGE_POKE_RULE_IGNORE
 	// ポケモンが違う
 	if( poke->characterNo != search->characterNo){
 		return 0;
@@ -2422,6 +2425,7 @@ static int CompareSearchData( Dpw_Tr_PokemonDataSimple *poke,  Dpw_Tr_PokemonSea
 			return 0;
 		}
 	}
+#endif
 	
 	// 合致している
 	return 1;

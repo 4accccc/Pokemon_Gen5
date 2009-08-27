@@ -328,8 +328,6 @@ static GFL_PROC_RESULT WorldTradeProc_Main( GFL_PROC * proc, int * seq, void * p
 		//InitDpw(wk->heapPtr, wk->heapHandle, AllocFunc, FreeFunc );
 		if(NET_IsInit(wk)){	
 			_wtHeapHandle = wk->heapHandle;
-	
-
 			// wifiƒƒ‚ƒŠŠÇ—ŠÖ”ŒÄ‚Ño‚µ
 			DWC_SetMemFunc( AllocFunc, FreeFunc );
 
@@ -1126,7 +1124,6 @@ static void FreeFunc(DWCAllocType name, void* ptr,  u32 size)
     if ( !ptr ) return;
     old = OS_DisableInterrupts();
     NNS_FndFreeToExpHeap( _wtHeapHandle, ptr );
-		_wtHeapHandle	= NULL;
     OS_RestoreInterrupts( old );
 }
 

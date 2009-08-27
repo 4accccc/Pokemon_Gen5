@@ -946,7 +946,7 @@ static void DecideFunc( WORLDTRADE_WORK *wk, int decide )
 		// 既にポケモンを入力していて、そのポケモンの性別が決定しているときは
 		// 入力できないようにする
 		if(wk->Search.characterNo!=0){
-			wk->dw->sex_selection = PokePersonalParaGet(wk->Search.characterNo,ID_PER_sex);
+			wk->dw->sex_selection = PokePersonalParaGet(wk->Search.characterNo,POKEPER_ID_sex);
 			if(WorldTrade_SexSelectionCheck( &wk->Search, wk->dw->sex_selection )){
 				OS_Printf("性別決定？ = %d\n", wk->dw->sex_selection);
 				PMSND_PlaySE(WORLDTRADE_DECIDE_SE);
@@ -1647,7 +1647,7 @@ static int SUBSEQ_PokenameSelectWait( WORLDTRADE_WORK *wk)
 			result, SEARCH_INFO_PRINT_FLAG, 0, PRINTSYS_LSB_Make(1,2,0), &wk->print  );
 		
 		// 決定したポケモンの性別分布を取得
-		wk->dw->sex_selection = PokePersonalParaGet(result,ID_PER_sex);
+		wk->dw->sex_selection = PokePersonalParaGet(result,POKEPER_ID_sex);
 		OS_Printf("");
 
 		// カーソル位置保存

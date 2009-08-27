@@ -33,6 +33,17 @@
 
 #include "net_app/net_bugfix.h"
 
+//=============================================================================
+/**
+ *					デバッグマクロ
+*/
+//=============================================================================
+#ifdef PM_DEBUG
+
+#define CHANGE_POKE_RULE_IGNORE	//交換用ポケモンが結果と一致していなくてもえらべる
+#define RESERVE_POKE_GS_BINARY	//サーバーに預けるポケモンはGSから作成したバイナリを使う
+
+#endif //PM_DEBUG
 
 //=============================================================================
 /**
@@ -55,9 +66,9 @@
  *					置き換える予定だが、まだ定義されていないマクロ
 */
 //=============================================================================
-#define PARA_UNK							(0)
-#define PARA_MALE							(1)
-#define PARA_FEMALE						(2)
+#define PARA_UNK							(2)
+#define PARA_MALE							(0)
+#define PARA_FEMALE						(1)
 
 #define SE_CANCEL							(SEQ_SE_000)	
 #define SE_GTC_NG							(SEQ_SE_000)
@@ -85,7 +96,6 @@
 
 #define SHINKA_STATUS_FLAG_SIO_MODE	(0)
 
-#define ID_PER_sex						(0)
 
 #define NUMFONT_MODE_LEFT			(0)
 #define NUMFONT_MARK_SLASH		(0)
@@ -162,12 +172,9 @@ static inline void Snd_DataSetByScene( int a, int b, int c ){}
 static inline void MsgPrintTouchPanelFlagSet( int a ){}
 
 
-static inline int PokePasoLevelCalc( POKEMON_PASO_PARAM *paso ){ return 0; }
-static inline int PokePersonalParaGet(int a, int b){ return 0;}
 static inline int PokeShinkaCheck( void *a, POKEMON_PARAM *pp, int tuushin, int item, int *cond ) {return 0;}
 
 static inline BOOL ItemMailCheck( int a ){	return 0; }
-
 
 
 static inline void WirelessIconEasy( void )
@@ -176,7 +183,6 @@ static inline void WirelessIconEasy( void )
 }
 static inline void WirelessIconEasy_SetLevel( int level ){}
 static inline void WirelessIconEasyEnd( void ){}
-
 
 
 
@@ -235,6 +241,22 @@ static inline void SaveData_DivSave_Init( SAVE_CONTROL_WORK *sv, int a )
 static inline SAVE_RESULT SaveData_DivSave_Main( SAVE_CONTROL_WORK *sv )
 {
 	return SaveControl_SaveAsyncMain( sv );
+}
+static inline int PokePersonalParaGet(int mons_no, int param )
+{ 
+	u32 ret;
+
+	POKEMON_PERSONAL_DATA *ppd;
+		
+	ppd	= POKE_PERSONAL_OpenHandle( mons_no, 0, HEAPID_WORLDTRADE );
+	ret	= POKE_PERSONAL_GetParam( ppd, param );
+	POKE_PERSONAL_CloseHandle( ppd );
+	
+	return ret;
+}
+static inline int PokePasoLevelCalc( POKEMON_PASO_PARAM *paso )
+{
+	return PPP_CalcLevel( paso ); 
 }
 //=============================================================================
 /**
