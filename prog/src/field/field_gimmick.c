@@ -85,12 +85,12 @@ const static FLD_GMK_HIT_CHECK FldGimmickHitCheck[FLD_GIMMICK_MAX] = {
 /**
  * @brief	ギミックのセットアップ関数
  * 
- * @param	fsys	フィールドシステムポインタ
+ * @param	fieldWork	フィールドワークポインタ
  * 
  * @return	none
  */
 //---------------------------------------------------------------------------
-void FLDGMK_SetUpFieldGimmick(FIELDMAP_WORK *fieldWork/*GAMESYS_WORK *gsys*/)
+void FLDGMK_SetUpFieldGimmick(FIELDMAP_WORK *fieldWork)
 {
 	int id;
   GIMMICKWORK *work;
@@ -115,12 +115,12 @@ void FLDGMK_SetUpFieldGimmick(FIELDMAP_WORK *fieldWork/*GAMESYS_WORK *gsys*/)
 /**
  * @brief	ギミックの終了関数
  * 
- * @param	fsys	フィールマップワークポインタ
+ * @param	fieldWork	フィールドワークポインタ
  * 
  * @return	none
  */
 //---------------------------------------------------------------------------
-void FLDGMK_EndFieldGimmick(FIELDMAP_WORK *fieldWork/*GAMESYS_WORK *gsys*/)
+void FLDGMK_EndFieldGimmick(FIELDMAP_WORK *fieldWork)
 {
 	int id;
 	GIMMICKWORK *work;
@@ -147,12 +147,12 @@ void FLDGMK_EndFieldGimmick(FIELDMAP_WORK *fieldWork/*GAMESYS_WORK *gsys*/)
 /**
  * @brief	ギミックの動作関数
  * 
- * @param	fsys	フィールマップワークポインタ
+ * @param	fieldWork	フィールドワークポインタ
  * 
  * @return	none
  */
 //---------------------------------------------------------------------------
-void FLDGMK_MoveFieldGimmick(FIELDMAP_WORK *fieldWork/*GAMESYS_WORK *gsys*/)
+void FLDGMK_MoveFieldGimmick(FIELDMAP_WORK *fieldWork)
 {
   int id;
   GIMMICKWORK *work;

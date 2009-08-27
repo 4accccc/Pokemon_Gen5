@@ -34,7 +34,8 @@ SAVEDATASRC =   savedata/save_tbl.c \
         savedata/randommap_save.c \
 				savedata/irc_compatible_savedata.c \
         savedata/sp_ribbon_save.c \
-				savedata/worldtrade_data.c
+				savedata/worldtrade_data.c \
+        savedata/gimmickwork.c
 
 
 #通信の常駐
@@ -354,7 +355,10 @@ SRCS_OVERLAY_FIELDMAP		=	field/field_proc.c \
         field/calender.c \
         field/event_camera_act.c \
         field/event_entrance_in.c \
-        field/event_entrance_out.c 
+        field/event_entrance_out.c \
+        field/field_gimmick.c \
+        field/fld_exp_obj.c \
+        field/test_gimmick.c
 
 
 # フィールド天気

@@ -40,10 +40,12 @@
 #include "event_entrance_out.h"
 #include "field_bgm_control.h"
 
+#include "savedata/gimmickwork.h"   //for GIMMICKWORK
 
 static void UpdateMapParams(GAMESYS_WORK * gsys, const LOCATION * loc_req);
 static void SetMMdl( GAMESYS_WORK *gsys, const LOCATION *loc_req, GAMEINIT_MODE mode );
-static void setFirstBGM(GAMEDATA * gamedata, u16 zone_id);	
+static void setFirstBGM(GAMEDATA * gamedata, u16 zone_id);
+static void AssignGimmickID(GAMEDATA * gamedata, int inZoneID);
 
 //============================================================================================
 //
@@ -58,6 +60,14 @@ typedef struct {
 	GAME_INIT_WORK * game_init_work;
 	LOCATION loc_req;
 }FIRST_MAPIN_WORK;
+
+typedef struct GMK_ASSIGN_DATA_tag
+{
+  u32 ZoneID;
+  u16 ResNum;
+  u16 ObjNum;
+}GMK_ASSIGN_DATA;
+
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 static GMEVENT_RESULT EVENT_FirstMapIn(GMEVENT * event, int *seq, void *work)
@@ -511,6 +521,9 @@ static void UpdateMapParams(GAMESYS_WORK * gsys, const LOCATION * loc_req)
 	
 	//開始位置を記憶しておく
 	GAMEDATA_SetStartLocation(gamedata, &loc);
+
+  //ギミックアサイン
+  AssignGimmickID(gamedata, loc.zone_id);
 }
 
 //--------------------------------------------------------------
@@ -550,5 +563,49 @@ void MAPCHANGE_setPlayerVanish(FIELDMAP_WORK * fieldmap, BOOL vanish_flag)
   FIELD_PLAYER * player = FIELDMAP_GetFieldPlayer(fieldmap);
   MMDL *fmmdl = FIELD_PLAYER_GetMMdl( player );
   MMDL_SetStatusBitVanish( fmmdl, vanish_flag );
+}
+
+//---------------------------------------------------------------------------
+/**
+ * @brief	ギミックのアサイン
+ * 
+ * @param	  inZoneID    ゾーンＩＤ
+ * 
+ * @return	none
+ */
+//---------------------------------------------------------------------------
+static void AssignGimmickID(GAMEDATA * gamedata, int inZoneID)
+{
+  GIMMICKWORK *work;
+  SAVE_CONTROL_WORK* sv= GAMEDATA_GetSaveControlWork(gamedata);
+  //ギミックワーク取得
+	work = SaveData_GetGimmickWork(sv);
+
+  //マップジャンプのときのみ初期化する（歩いてゾーンが切り替わった場合は初期化しない）
+	GIMMICKWORK_Init(work);
+
+  //ギミックデータ検索
+  {
+    u32 num, i;
+    ARCHANDLE *handle;
+    GMK_ASSIGN_DATA *data;
+    handle = GFL_ARC_OpenDataHandle( ARCID_GIMMICK_ASSIGN, GFL_HEAP_LOWID(GFL_HEAPID_APP) );
+    data = (GMK_ASSIGN_DATA *)GFL_ARC_LoadDataAllocByHandle( handle, 0, GFL_HEAP_LOWID(GFL_HEAPID_APP) );
+
+    num = GFL_ARC_GetDataSizeByHandle( handle, 0 ) / sizeof(GMK_ASSIGN_DATA);
+
+//    OS_Printf("gimmick_num = %d\n",num);
+
+    for (i=0;i<num;i++){
+      if ( data[i].ZoneID == inZoneID){
+        //ギミック発見。アサインする
+        GIMMICKWORK_Assign(work, i+1);
+        break;
+      }
+    }
+
+    GFL_HEAP_FreeMemory( data );
+    GFL_ARC_CloseDataHandle( handle );
+  }
 }
 

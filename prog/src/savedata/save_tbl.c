@@ -34,6 +34,7 @@
 #include "savedata/sp_ribbon_save.h"
 #include "savedata/worldtrade_data.h"
 #include "field/eventwork.h"
+#include "savedata/gimmickwork.h"
 
 //==============================================================================
 //	定数定義
@@ -251,6 +252,11 @@ static const GFL_SAVEDATA_TABLE SaveDataTbl_Normal[] = {
     (FUNC_GET_SIZE)WorldTradeData_GetWorkSize,
     (FUNC_INIT_WORK)WorldTradeData_Init,
 	},
+  { //フィールドギミックワーク
+    GMDATA_ID_GIMMICK_WORK,
+    (FUNC_GET_SIZE)GIMMICKWORK_GetWorkSize,
+    (FUNC_INIT_WORK)GIMMICKWORK_Init,
+  }
 };
 
 

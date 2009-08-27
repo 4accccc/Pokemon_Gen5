@@ -84,6 +84,8 @@
 
 #include "fieldmap_ctrl_grid.h"
 
+#include "field_gimmick.h"
+
 //======================================================================
 //	define
 //======================================================================
@@ -195,7 +197,7 @@ struct _FIELDMAP_WORK
 
 	FIELD_PLACE_NAME* placeNameSys;	// 地名表示ウィンドウ
 	FIELD_CARS* cars;
-
+  FLD_EXP_OBJ_CNT_PTR ExpObjCntPtr;
 	
 	MMDLSYS *fldMMdlSys;
 
@@ -546,6 +548,12 @@ static MAINSEQ_RESULT mainSeqFunc_setup(GAMESYS_WORK *gsys, FIELDMAP_WORK *field
 
   // H01の車・船表示システム
   fieldWork->cars = FIELD_CARS_Create( fieldWork->field_player, fieldWork->map_id, fieldWork->heapID );
+
+  //拡張3Ｄオブジェクトモジュール作成
+  fieldWork->ExpObjCntPtr = FLD_EXP_OBJ_Create ( 10, 10, fieldWork->heapID );
+  
+  //フィールドギミックセットアップ
+  FLDGMK_SetUpFieldGimmick(fieldWork);
   
   //エッジマーキング設定セットアップ
   FIELD_EDGEMARK_Setup( fieldWork->areadata );
@@ -701,6 +709,9 @@ static MAINSEQ_RESULT mainSeqFunc_update_top(GAMESYS_WORK *gsys, FIELDMAP_WORK *
     }
   }
 
+  //ギミック動作
+  FLDGMK_MoveFieldGimmick(fieldWork);
+  
   FLDEFF_CTRL_Update( fieldWork->fldeff_ctrl );
 
 
@@ -771,6 +782,12 @@ static MAINSEQ_RESULT mainSeqFunc_free(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldW
   FIELD_PLACE_NAME_Delete( fieldWork->placeNameSys );
 
   FIELD_CARS_Delete( fieldWork->cars );
+
+  //ギミック終了
+  FLDGMK_EndFieldGimmick(fieldWork);
+
+  //拡張3Ｄオブジェクトモジュール破棄
+  FLD_EXP_OBJ_Delete(fieldWork->ExpObjCntPtr);
 
   //フィールドエンカウント破棄
   FIELD_ENCOUNT_Delete( fieldWork->encount );
@@ -1363,6 +1380,18 @@ FLDMAPFUNC_SYS * FIELDMAP_GetFldmapFuncSys( FIELDMAP_WORK * fieldWork )
 	return fieldWork->fldmapFuncSys;
 }
 
+//--------------------------------------------------------------
+/**
+ *  @brief	拡張3Ｄオブジェクトコントローラ取得
+ * @param	fieldWork	FIELDMAP_WORK
+ * @retval FLD_EXP_OBJ_CNT_PTR
+ */
+//--------------------------------------------------------------
+FLD_EXP_OBJ_CNT_PTR FIELDMAP_GetExpObjCntPtr( FIELDMAP_WORK *fieldWork )
+{
+	return fieldWork->ExpObjCntPtr;
+}
+
 //----------------------------------------------------------------------------
 /**
  *	@brief	TCBシステム　取得
@@ -1564,7 +1593,10 @@ static void fldmap_G3D_Draw( FIELDMAP_WORK * fieldWork )
 	
   FIELD_WEATHER_3DWrite( fieldWork->weather_sys );	// 天気描画処理
 
-  FIELD_CARS_Draw( fieldWork->cars );	
+  FIELD_CARS_Draw( fieldWork->cars );
+
+  //フィールド拡張3ＤＯＢＪ描画
+  FLD_EXP_OBJ_Draw( fieldWork->ExpObjCntPtr );
 	
   GFL_G3D_DRAW_End(); //描画終了（バッファスワップ）
 }
@@ -2158,4 +2190,3 @@ static const u32 fldmapdata_fogColorTable[8] = {
 static const u16 fldmapdata_bgColorTable[16] = { 
   FIELD_DEFAULT_BG_COLOR, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 };
-
