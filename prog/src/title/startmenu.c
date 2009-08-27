@@ -75,7 +75,7 @@ enum START_MENU_ITEM
   SMI_NEWGAME,    //ç≈èâÇ©ÇÁ
   SMI_MYSTERY_GIFT, //ïsévãcÇ»ë°ÇËï®
   SMI_WIFI_SETTING, //Wifiê›íË
-  SMI_EMAIL_SETTING,  //E-Mailê›íË
+  SMI_GBS_CONNECT,  //GlobalBattleStationê⁄ë±
   
   SMI_MAX,
   
@@ -264,10 +264,14 @@ static GFL_PROC_RESULT START_MENU_ProcEnd( GFL_PROC * proc, int * seq, void * pw
       GFL_PROC_SysSetNextProc(FS_OVERLAY_ID(mystery), &MysteryGiftProcData, NULL);
       break;
 
-        case SMI_WIFI_SETTING: //WIFIê›íË
-      GFL_PROC_SysSetNextProc(FS_OVERLAY_ID(wifi_util), &WifiUtilProcData, NULL);
-            break;
+    case SMI_WIFI_SETTING: //WIFIê›íË
+    GFL_PROC_SysSetNextProc(FS_OVERLAY_ID(wifi_util), &WifiUtilProcData, NULL);
+        break;
             
+    case SMI_GBS_CONNECT: //GlobalBattleStationê⁄ë±
+      GameStart_Beginning();
+      break;
+                
     case SMI_RETURN_TITLE:
       GFL_PROC_SysSetNextProc(FS_OVERLAY_ID(title), &TitleProcData, NULL);
       break;
