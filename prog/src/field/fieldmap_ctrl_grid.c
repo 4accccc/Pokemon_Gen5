@@ -105,7 +105,7 @@ static void mapCtrlGrid_Create(
 #endif
 	}
 
-#if 1
+#if 0
 	{	//マップ描画オフセット
 		VecFx32 offs = { -FX32_ONE*8, 0, FX32_ONE*8 };
 		FLDMAPPER *mapper = FIELDMAP_GetFieldG3Dmapper( fieldWork );
