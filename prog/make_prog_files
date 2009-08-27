@@ -695,10 +695,11 @@ SRCS_OVERLAY_MUSICAL = musical/mus_poke_draw.c \
         musical/stage/sta_act_obj.c \
         musical/stage/sta_act_light.c \
         musical/stage/sta_act_bg.c \
+		musical/stage/sta_act_audience.c \
+		musical/stage/sta_act_button.c \
         musical/stage/script/sta_act_script.c \
         musical/stage/script/script_command.c \
         musical/stage/script/script_table.c \
-		musical/stage/sta_act_audience.c \
 		musical/comm/mus_comm_lobby.c \
 		musical/comm/mus_comm_func.c \
         test/ariizumi/musical_editor.c

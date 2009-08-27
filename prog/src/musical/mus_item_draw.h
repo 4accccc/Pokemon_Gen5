@@ -10,6 +10,7 @@
 #define MUS_ITEM_DRAW_H__
 
 #include "musical/musical_system.h"
+#include "musical/mus_item_data.h"
 
 //======================================================================
 //	define
@@ -84,6 +85,9 @@ void MUS_ITEM_DRAW_GetOffsetPos( MUS_ITEM_DRAW_WORK *itemWork , GFL_POINT *pos )
 
 //座標チェック系
 void MUS_ITEM_DRAW_CheckHit( MUS_ITEM_DRAW_WORK *itemWork , fx16 posX , fx16 posY );
+
+//MUS_ITEM_DATA_SYSの取得
+MUS_ITEM_DATA_SYS* MUS_ITEM_DRAW_GetItemDataSys( MUS_ITEM_DRAW_SYSTEM* work );
 
 #if DEB_ARI
 void MUS_ITEM_DRAW_Debug_DumpResData( MUS_ITEM_DRAW_SYSTEM* work , MUS_ITEM_DRAW_WORK *itemWork );

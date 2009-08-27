@@ -32,6 +32,7 @@
 #include "sta_local_def.h"
 #include "script/sta_act_script_def.h"
 #include "sta_act_bg.h"
+#include "sta_act_button.h"
 #include "sta_act_audience.h"
 
 #include "eff_def/mus_eff.h"
@@ -129,6 +130,8 @@ struct _ACTING_WORK
   STA_LIGHT_SYS   *lightSys;
   STA_LIGHT_WORK    *lightWork[ACT_LIGHT_MAX];
 
+  STA_BUTTON_SYS   *buttonSys;
+
   GFL_G3D_CAMERA    *camera;
   GFL_BBD_SYS     *bbdSys;
   
@@ -194,7 +197,7 @@ static const GFL_DISP_VRAM vramBank = {
   GX_VRAM_TEX_012_ABC,        // テクスチャイメージスロット
   GX_VRAM_TEXPLTT_0123_E,     // テクスチャパレットスロット
   GX_OBJVRAMMODE_CHAR_1D_32K,
-  GX_OBJVRAMMODE_CHAR_1D_128K
+  GX_OBJVRAMMODE_CHAR_1D_32K
 };
 //  A テクスチャ
 //  B テクスチャ
@@ -259,6 +262,7 @@ ACTING_WORK*  STA_ACT_InitActing( STAGE_INIT_WORK *initWork , HEAPID heapId )
   
   work->lightSys = STA_LIGHT_InitSystem(work->heapId , work );
   work->audiSys = STA_AUDI_InitSystem( work->heapId , work );
+  work->buttonSys = STA_BUTTON_InitSystem( work->heapId , work , &work->initWork->musPoke[work->playerIdx] );
 
   work->scriptSys = STA_SCRIPT_InitSystem( work->heapId , work );
 
@@ -310,6 +314,7 @@ void  STA_ACT_TermActing( ACTING_WORK *work )
   GFL_FONT_Delete( work->fontHandle );
   GFL_TCBL_Exit( work->tcblSys );
   
+  STA_BUTTON_ExitSystem( work->buttonSys );
   STA_AUDI_ExitSystem( work->audiSys );
   STA_BG_ExitSystem( work->bgSys );
   STA_LIGHT_ExitSystem( work->lightSys );
@@ -680,13 +685,15 @@ static void STA_ACT_SetupGraphic( ACTING_WORK *work )
   
   //CELL初期化(ライト・観客用)
   {
+/*
     GFL_CLSYS_INIT cellSysInitData = GFL_CLSYSINIT_DEF_DIVSCREEN;
     cellSysInitData.oamst_main = 0x10;  //デバッグメータの分
     cellSysInitData.oamnum_main = 128-0x10;
     cellSysInitData.CGR_RegisterMax = 48;
     cellSysInitData.CELL_RegisterMax = 48;
     cellSysInitData.tr_cell = 48;
-    GFL_CLACT_SYS_Create( &cellSysInitData , &vramBank ,work->heapId );
+*/
+    GFL_CLACT_SYS_Create( &GFL_CLSYSINIT_DEF_DIVSCREEN , &vramBank ,work->heapId );
     
     GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_OBJ , TRUE );
     GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_OBJ , TRUE );
@@ -1292,6 +1299,12 @@ void  STA_ACT_SetStageScroll( ACTING_WORK *work , const u16 scroll )
 {
   work->scrollOffset = scroll;
 }
+
+MUS_ITEM_DATA_SYS* STA_ACT_GetItemDataSys( ACTING_WORK *work )
+{
+  return MUS_ITEM_DRAW_GetItemDataSys( work->itemDrawSys );
+}
+
 
 #pragma mark [> editor func
 //--------------------------------------------------------------

@@ -60,6 +60,7 @@ typedef struct
 //  GFL_CLWK* cell;
   u8  trgPoke;
   u8  delay;
+  u8  type;
   u16 lookPos;
   
   u8  posX;
@@ -101,6 +102,8 @@ static void STA_AUDI_SetAudienceDir( STA_AUDI_SYS *work , STA_AUDI_WORK *audiWor
 
 static void STA_AUDI_CheckAudienceState( STA_AUDI_SYS *work );
 static void STA_AUDI_SetAudienceState_Default( STA_AUDI_SYS *work );
+
+static const u16 audiCharNum[4] = {0x08,0x10,0x88,0x90};
 
 //--------------------------------------------------------------
 //  èâä˙âª
@@ -214,6 +217,13 @@ static void STA_AUDI_TermGraphic( STA_AUDI_SYS *work )
 static void STA_AUDI_InitCell( STA_AUDI_SYS *work )
 {
   u8 x,y;
+  u8 audiType[STA_AUDI_NUM_X*STA_AUDI_NUM_Y];
+  
+  for( x=0;x<STA_AUDI_NUM_X*STA_AUDI_NUM_Y;x++ )
+  {
+    audiType[x] = GFL_STD_MtRand0(4);
+  }
+  
   for( y=0;y<STA_AUDI_NUM_Y;y++ )
   {
     for( x=0;x<STA_AUDI_NUM_X;x++ )
@@ -224,6 +234,7 @@ static void STA_AUDI_InitCell( STA_AUDI_SYS *work )
 
       work->audience[i].posX = x;
       work->audience[i].posY = y;
+      work->audience[i].type = audiType[i];
       work->audience[i].delay = STA_AUDI_LOOK_DELAY;
       work->audience[i].trgPoke = STA_AUDI_NO_TARGET;
       
@@ -342,20 +353,20 @@ static void STA_AUDI_SetAudienceDir( STA_AUDI_SYS *work , STA_AUDI_WORK *audiWor
   {
   case SAP_RIGHT_BIG:
     isFlip = TRUE;
-    topCharNo = 0x08+1024;  //1024ÇÕêÖïΩîΩì]
+    topCharNo = audiCharNum[audiWork->type] + 1024; //1024ÇÕêÖïΩîΩì]
     break;
 
   case SAP_RIGHT_SMALL:
     isFlip = TRUE;
-    topCharNo = 0x0c+1024;  //1024ÇÕêÖïΩîΩì]
+    topCharNo = audiCharNum[audiWork->type] + 4 + 1024; //1024ÇÕêÖïΩîΩì]
     break;
     
   case SAP_LEFT_SMALL:
-    topCharNo = 0x0c;
+    topCharNo = audiCharNum[audiWork->type] + 4;
     break;
     
   case SAP_LEFT_BIG:
-    topCharNo = 0x08;
+    topCharNo = audiCharNum[audiWork->type];
     break;
   }
 

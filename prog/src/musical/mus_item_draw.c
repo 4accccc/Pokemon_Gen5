@@ -551,6 +551,12 @@ void MUS_ITEM_DRAW_GetOffsetPos( MUS_ITEM_DRAW_WORK *itemWork , GFL_POINT *ofsPo
 	MUS_ITEM_DATA_GetDispOffset( itemWork->itemData , ofsPos );
 }
 
+//MUS_ITEM_DATA_SYS�̎擾
+MUS_ITEM_DATA_SYS* MUS_ITEM_DRAW_GetItemDataSys( MUS_ITEM_DRAW_SYSTEM* work )
+{
+  return work->itemDataSys;
+}
+
 #if DEB_ARI
 void MUS_ITEM_DRAW_Debug_DumpResData( MUS_ITEM_DRAW_SYSTEM* work , MUS_ITEM_DRAW_WORK *itemWork )
 {

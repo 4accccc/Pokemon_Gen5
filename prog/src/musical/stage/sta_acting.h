@@ -11,6 +11,7 @@
 
 #include "musical/musical_system.h"
 #include "musical/musical_stage_sys.h"
+#include "musical/mus_item_data.h"
 
 //======================================================================
 //	define
@@ -43,6 +44,7 @@ ACTING_RETURN	STA_ACT_LoopActing( ACTING_WORK *work );
 u16		STA_ACT_GetStageScroll( ACTING_WORK *work );
 void	STA_ACT_SetStageScroll( ACTING_WORK *work , const u16 scroll );
 
+MUS_ITEM_DATA_SYS* STA_ACT_GetItemDataSys( ACTING_WORK *work );
 
 //エディタ用
 
