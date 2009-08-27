@@ -1,20 +1,49 @@
 #event data
-#save date:2009/07/15 12:13:08
+#save date:2009/08/26 22:15:29
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\c06r0401.wms
 #SECTION START:OBJ_EVENT
 #Map Event List data
-#save date:2009/07/15 12:13:08
+#save date:2009/08/26 22:15:29
 2
 #hold event type:
 1
 #hold event number:
+1
+#event number: 0
+#type
+1
+#ID name
+C06R0401_BABYGIRL1_01
+#OBJ CODE Number
+BABYGIRL1
+#MOVE CODE Number
+MV_DMY
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
 0
+#Event Script Name
+SCRID_C06R0401_BABYGIRL1_01
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#position
+-144 0 176
 #Map Event List Data End
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT
 #Map Event List data
-#save date:2009/07/15 12:13:08
+#save date:2009/08/26 22:15:29
 2
 #hold event type:
 1
@@ -24,7 +53,7 @@ C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\c06r0401.wms
 #SECTION End:BG_EVENT
 #SECTION START:POS_EVENT
 #Map Event List data
-#save date:2009/07/15 12:13:08
+#save date:2009/08/26 22:15:29
 2
 #hold event type:
 1
@@ -34,7 +63,7 @@ C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\c06r0401.wms
 #SECTION End:POS_EVENT
 #SECTION START:DOOR_EVENT
 #Map Event List data
-#save date:2009/07/15 12:13:08
+#save date:2009/08/26 22:15:29
 2
 #hold event type:
 1

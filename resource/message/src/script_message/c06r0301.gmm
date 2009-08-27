@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="masafumi_saitou" host="W00178" date="2009-08-26T20:24:35"/>
+	<create user="masafumi_saitou" host="W00178" date="2009-08-26T22:30:08"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -300,6 +300,14 @@
 季節です</language>
 	</row>
 
+	<row id="msg_c06r0301_boy_01_01">
+		<comment>スクリプト講習会用</comment>
+		<language name="JPN" width="256">いいえ　ナシが　おいしい
+きせつ　です！</language>
+		<language name="JPN_KANJI" width="256">いいえ　ナシが
+美味しい　季節です！</language>
+	</row>
+
 	<row id="msg_c06r0301_boy_02">
 		<comment>スクリプト講習会用</comment>
 		<language name="JPN" width="256">サンマが　おいしい
@@ -308,45 +316,46 @@
 季節です</language>
 	</row>
 
+	<row id="msg_c06r0301_boy_02_01">
+		<comment>スクリプト講習会用</comment>
+		<language name="JPN" width="256">サンマが　おいしい
+きせつ　です▼</language>
+		<language name="JPN_KANJI" width="256">サンマが　美味しい
+季節です▼</language>
+	</row>
+
 	<row id="msg_c06r0301_boy_03">
 		<comment>スクリプト講習会用
 
 →はい・いいえ分岐</comment>
-		<language name="JPN" width="256">サンマには
-おろしポンズ　だよね？</language>
-		<language name="JPN_KANJI" width="256">サンマには
-おろしポン酢　だよね？</language>
+		<language name="JPN" width="256">サンマ　たべたい？</language>
+		<language name="JPN_KANJI" width="256">サンマ　食べたい？</language>
 	</row>
 
 	<row id="msg_c06r0301_boy_04">
 		<comment>スクリプト講習会用
+はいを選択
 
-→はいを選択</comment>
-		<language name="JPN" width="256">でしょ！▼
-サンマの　あぶらに
-ポンズの　さっぱりした　あじわい！▽
-たまらないよなー</language>
-		<language name="JPN_KANJI" width="256">でしょ！▼
-旬の　サンマ特有の　油味に
-ポン酢の　さわやかな　香り！▽
-たまらないよなー</language>
+→サンマ持ってくるアニメへ</comment>
+		<language name="JPN" width="256">よしきた！▼</language>
+		<language name="JPN_KANJI" width="256">よしきた！▼</language>
 	</row>
 
 	<row id="msg_c06r0301_boy_05">
 		<comment>スクリプト講習会用
+いいえを選択
 
-→いいえを選択</comment>
-		<language name="JPN" width="256">きみ　じんせい
-おもしろく　ないだろ？</language>
-		<language name="JPN_KANJI" width="256">君の　人生は
-全く　面白くないんだろうな</language>
+→終了</comment>
+		<language name="JPN" width="256">なん　だと</language>
+		<language name="JPN_KANJI" width="256">なん　だと</language>
 	</row>
 
 	<row id="msg_c06r0301_boy_06">
-		<language name="JPN" width="256">きみ　じんせい
-おもしろく　ないだろ？</language>
-		<language name="JPN_KANJI" width="256">君の　人生は
-全く　面白くないんだろうな</language>
+		<comment>スクリプト講習会用
+
+サンマもってくるアニメ後</comment>
+		<language name="JPN" width="256">へい　おまち！</language>
+		<language name="JPN_KANJI" width="256">へい　お待ち！</language>
 	</row>
 
 	<flowchart-group-list>
