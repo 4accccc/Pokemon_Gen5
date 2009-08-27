@@ -733,6 +733,8 @@ static u16 SetScriptDataSub( SCRCMD_WORK *work, VMHANDLE* core, u32 zone_id, u16
     if (scr_id >= tbl[i].scr_id) {
       SetScriptData(work, core, tbl[i].scr_arc_id, tbl[i].msg_arc_id, heapID);
       scr_id -= tbl[i].scr_id;
+      OS_Printf( "共通スクリプト起動 scr_arc_idx = %d, msg_idx = %d, scr_id = %d\n",
+        tbl[i].scr_arc_id, tbl[i].msg_arc_id, scr_id );
       return scr_id;
     }
   }
