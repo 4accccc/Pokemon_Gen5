@@ -6,6 +6,7 @@
  *
  * @date  2005.09.14  作成
  * @date  2008.10.11  従来の独自フォーマットからNitroFont(2bit)フォーマットに変更
+ * @date  2009.08.26  NitroFontから再び独自フォーマットへ（常駐テーブル圧縮のため）
  */
 //=============================================================================================
 #include  <assert.h>
@@ -13,9 +14,21 @@
 #include  <heapsys.h>
 #include  <arc_tool.h>
 
+//#include  "font\font.naix"
 #include  "print/gf_font.h"
 
+enum {
+  NARC_font_large_nftr = 0,
+  NARC_font_large_gftr = 1,
+  NARC_font_small_nftr = 2,
+  NARC_font_small_gftr = 3,
+  NARC_font_default_nclr = 4,
+  NARC_font_talkwin_nclr = 5
+};
+
+
 typedef void (*pSizeGetFunc)( const GFL_FONT*, u32, GFL_FONT_SIZE* );
+typedef u8 (*pWidthGetFunc)( const GFL_FONT*, u32 );
 typedef void (*pGetBitmapFunc)(const GFL_FONT*, u32, void*, GFL_FONT_SIZE* );
 typedef void (*pDotExpandFunc)( const u8* glyphSrc, u16 glyph2ndCharBits, u8* dst );
 
@@ -95,6 +108,13 @@ typedef struct {
 }BIT_READER;
 
 
+typedef struct {
+  u8    lotsWidth[ 4 ];   ///< 多い幅ベスト３（4番目はパディング用で常にゼロ）
+  u32   bitTableOfs;      ///< ビットテーブル部までのオフセット
+  u32   hashTableOfs;     ///< ハッシュテーブル部までのオフセット
+  u32   hashChainOfs;     ///< 重複ハッシュチェイン部までのオフセット
+}GFL_FONT_WIDTH_HEADER;
+
 //------------------------------------------------------------------
 /**
  * マネージャワーク
@@ -114,6 +134,7 @@ struct  _GFL_FONT {
   BOOL                     fixedFontFlag;
 
   pSizeGetFunc            SizeGetFunc;
+  pWidthGetFunc           WidthGetFunc;
 
   NNSGlyphInfo      glyphInfo;
   u16           glyphRemBits;
@@ -121,7 +142,7 @@ struct  _GFL_FONT {
   u8            glyphCharH;
   u32           fontDataImgOfs;
 
-  NNSFontWidth*     widthTblTop;
+  GFL_FONT_WIDTH_HEADER*   widthTblTop;
   NNSCodeMap*       codeMapTop;
   u32           ofsGlyphTop;
   u8*           glyphBuf;
@@ -142,8 +163,8 @@ static u32 get_glyph_index( const GFL_FONT* wk, u32 code );
 static void GetBitmapOnMemory( const GFL_FONT* wk, u32 index, void* dst, GFL_FONT_SIZE* size );
 static void GetBitmapFileRead( const GFL_FONT* wk, u32 index, void* dst, GFL_FONT_SIZE* size );
 static inline void expand_ntr_glyph_block( const u8* srcData, u16 blockPos, u16 cellWidth, BOOL maskFlag, u8* dst );
-static void GetWidthProportionalFont( const GFL_FONT* wk, u32 index, GFL_FONT_SIZE* size );
-static void GetWidthFixedFont( const GFL_FONT* wk, u32 index, GFL_FONT_SIZE* size );
+static u8 GetWidthProportionalFont( const GFL_FONT* wk, u32 index );
+static u8 GetWidthFixedFont( const GFL_FONT* wk, u32 index );
 static inline void ExpandFontData( const void* src_p, void* dst_p );
 static inline void BitReader_Init( BIT_READER* br, const u8* src );
 static inline void BitReader_SetNextBit( BIT_READER* br );
@@ -171,6 +192,12 @@ GFL_FONT* GFL_FONT_Create( u32 arcID, u32 datID, GFL_FONT_LOADTYPE loadType, BOO
   GFL_FONT* wk = GFL_HEAP_AllocMemory( heapID, sizeof(GFL_FONT) );
   if( wk )
   {
+    if( datID == NARC_font_large_nftr ){
+      datID = NARC_font_large_gftr;
+    }
+    if( datID == NARC_font_small_nftr ){
+      datID = NARC_font_small_gftr;
+    }
     wk->fileHandle = GFL_ARC_OpenDataHandle( arcID, heapID );
     load_font_header( wk, datID, fixedFontFlag, heapID );
     setup_font_datas( wk, loadType, heapID );
@@ -217,14 +244,15 @@ static void load_font_header( GFL_FONT* wk, u32 datID, BOOL fixedFontFlag, HEAPI
     if( fixedFontFlag )
     {
       wk->widthTblTop = NULL;
-      wk->SizeGetFunc = GetWidthFixedFont;
+      wk->WidthGetFunc = GetWidthFixedFont;
     }
     else
     {
       u32 widthTblSize = wk->fontHeader.ofsMap - wk->fontHeader.ofsWidth;
 
       wk->widthTblTop = GFL_HEAP_AllocMemory( heapID, widthTblSize );
-      wk->SizeGetFunc = GetWidthProportionalFont;
+//      wk->SizeGetFunc = GetWidthProportionalFont;
+      wk->WidthGetFunc = GetWidthProportionalFont;
 
       GFL_ARC_LoadDataOfsByHandle( wk->fileHandle, datID, wk->fontHeader.ofsWidth,
             widthTblSize, (void*)(wk->widthTblTop) );
@@ -251,7 +279,9 @@ static void load_font_header( GFL_FONT* wk, u32 datID, BOOL fixedFontFlag, HEAPI
       GFL_ARC_LoadDataOfsByHandle( wk->fileHandle, datID, wk->fontHeader.ofsMap,
             mapTblSize, (void*)(wk->codeMapTop) );
 
-      TAYA_Printf("[GF_FONT] IndexTableSize=%08x bytes\n", mapTblSize);
+      TAYA_Printf("[GF_FONT] MapIdxTableSize=%08x bytes\n", mapTblSize);
+      TAYA_Printf("[GF_FONT] WidthTableOfs  = %08x\n", wk->fontHeader.ofsWidth);
+      TAYA_Printf("[GF_FONT] MapIdxTableOfs = %08x\n", wk->fontHeader.ofsMap);
     }
   }
 }
@@ -555,9 +585,14 @@ static void GetBitmapFileRead( const GFL_FONT* wk, u32 index, void* dst, GFL_FON
   GFL_ARC_SeekDataByHandle( wk->fileHandle, wk->fontDataImgOfs+ofsTop );
   GFL_ARC_LoadDataByHandleContinue( wk->fileHandle, wk->glyphInfo.cellSize, (void*)(wk->glyphBuf) );
 
-  wk->DotExpandFunc( wk->glyphBuf, wk->glyphRemBits, dst );
+  wk->DotExpandFunc( &wk->glyphBuf[3], wk->glyphRemBits, dst );
 
-  wk->SizeGetFunc( wk, index, size );
+  size->left_width  = wk->glyphBuf[0];
+  size->glyph_width = wk->glyphBuf[1];
+  size->width       = wk->glyphBuf[2];
+  size->height      = wk->fontHeader.linefeed;
+
+//  wk->SizeGetFunc( wk, index, size );
 }
 
 //--------------------------------------------------------------------------
@@ -637,9 +672,10 @@ u16 GFL_FONT_GetWidth( const GFL_FONT* wk, STRCODE code )
   GFL_FONT_SIZE  size;
   u32 index = get_glyph_index( wk, code );
 
-  wk->SizeGetFunc( wk, index, &size );
+//  wk->SizeGetFunc( wk, index, &size );
+//  return size.width;
 
-  return size.width;
+  return wk->WidthGetFunc( wk, index );
 }
 
 //==============================================================================================
@@ -658,20 +694,87 @@ u16 GFL_FONT_GetLineHeight( const GFL_FONT* wk )
 
 
 
-//------------------------------------------------------------------
+//----------------------------------------------------------------------------------
 /**
  * １文字幅取得関数（プロポーショナル）
  *
- * @param   wk
- * @param   bcode
- *
- * @retval  u8
+ * @param   wk      フォントデータハンドラ
+ * @param   index   文字インデックス
+ * @param   size    [out] 幅データ取得用構造体
  */
-//------------------------------------------------------------------
-static void GetWidthProportionalFont( const GFL_FONT* wk, u32 index, GFL_FONT_SIZE* size )
+//----------------------------------------------------------------------------------
+static u8 GetWidthProportionalFont( const GFL_FONT* wk, u32 glyphIndex )
 {
-  const NNSFontWidth*  wtbl = wk->widthTblTop;
+  const GFL_FONT_WIDTH_HEADER*  wtbl = wk->widthTblTop;
 
+  {
+    u32 bitIdx, byteIdx, shift;
+    u8  widthIdx;
+    const u8* bitTable;
+
+    bitTable = (const u8*)( (u32)wtbl + wtbl->bitTableOfs );
+
+    bitIdx = glyphIndex * 2;
+    byteIdx = bitIdx / 8;
+    bitIdx %= 8;
+    shift = 6 - bitIdx;
+
+    widthIdx = (bitTable[ byteIdx ] >> shift) & 0x03;
+
+    if( widthIdx < 3 ){
+      return wtbl->lotsWidth[ widthIdx ];
+    }
+  }
+
+  {
+    enum {
+      HASH_SIZE = 512,
+    };
+    const s8* hashTable;
+    u16 hashCode, keyBit, dupIdx;
+
+    hashTable = (const s8*)( (u32)wtbl + wtbl->hashTableOfs );
+
+    keyBit = ((glyphIndex>>12)&1) ^ ((glyphIndex>>11)&1) ^ ((glyphIndex>>10)&1) ^ ((glyphIndex>>9)&1);
+    hashCode = ((glyphIndex & 0x1ff) ^ (keyBit << 3)) % HASH_SIZE;
+
+    if( hashTable[hashCode] >= 0 ){
+      return hashTable[ hashCode ];
+    }else{
+      dupIdx = hashTable[ hashCode ] * -1;
+      --dupIdx;
+    }
+
+    {
+      const u8* chainTable = (const u8*)( (u32)wtbl + wtbl->hashChainOfs);
+      u16 index;
+      u8  max, i;
+      while( dupIdx ){
+        chainTable += (1 + ((*chainTable) * 3));
+        dupIdx--;
+      }
+
+      max = *chainTable++;
+      for(i=0; i<max; ++i)
+      {
+        index = (*chainTable << 8) | *(chainTable+1);
+        if( glyphIndex == index ){
+          u8 width = *(chainTable + 2);
+          TAYA_Printf(" * GlyphIndex=%04x, width=%d\n", glyphIndex, width);
+          return width;
+        }
+        else{
+          chainTable += 3;
+        }
+      }
+    }
+  }
+
+  // 正常ならここには来ない
+  GF_ASSERT_MSG(0, "GlyphIdx=%d", glyphIndex);
+  return wk->fontHeader.totalWidth;
+
+#if 0
   while( 1 )
   {
     if( wtbl->indexBegin <= index && index <= wtbl->indexEnd )
@@ -696,6 +799,7 @@ static void GetWidthProportionalFont( const GFL_FONT* wk, u32 index, GFL_FONT_SI
       break;
     }
   }
+#endif
 
 }
 //------------------------------------------------------------------
@@ -708,12 +812,9 @@ static void GetWidthProportionalFont( const GFL_FONT* wk, u32 index, GFL_FONT_SI
  * @retval  u8
  */
 //------------------------------------------------------------------
-static void GetWidthFixedFont( const GFL_FONT* wk, u32 index, GFL_FONT_SIZE* size )
+static u8 GetWidthFixedFont( const GFL_FONT* wk, u32 index )
 {
-  size->left_width  = wk->fontHeader.leftWidth;
-  size->glyph_width = wk->fontHeader.glyphWidth;
-  size->width     = wk->fontHeader.totalWidth;
-  size->height    = wk->fontHeader.linefeed;
+  return wk->fontHeader.totalWidth;
 }
 
 
