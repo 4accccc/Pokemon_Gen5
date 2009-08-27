@@ -10,6 +10,7 @@
 #include "gamesystem/game_event.h"
 #include "field/field_camera.h"
 #include "field/fieldmap.h"
+#include "fieldmap_tcb.h"
 
 
 //=============================================================================================
@@ -28,15 +29,15 @@
 
 // 左ドアへの出入り
 #define L_DOOR_FRAME (10)
-#define L_DOOR_PITCH (0xffff / 360 * 20)
-#define L_DOOR_YAW   (0xffff / 360 * 90)
-#define L_DOOR_DIST  (100 << FX32_SHIFT)
+#define L_DOOR_PITCH (0xffff * 20 / 360)
+#define L_DOOR_YAW   (0xffff * 90 / 360)
+#define L_DOOR_ZOOM_DIST  (120 << FX32_SHIFT)
 
 // 右ドアへの出入り
 #define R_DOOR_FRAME (10)
-#define R_DOOR_PITCH (0xffff / 360 * 20)
-#define R_DOOR_YAW   (0xffff / 360 * 270)
-#define R_DOOR_DIST  (100 << FX32_SHIFT)
+#define R_DOOR_PITCH (0xffff * 20 / 360)
+#define R_DOOR_YAW   (0xffff * 270 / 360)
+#define R_DOOR_ZOOM_DIST  (120 << FX32_SHIFT)
 
 
 
@@ -47,17 +48,8 @@
 //=============================================================================================
 typedef struct
 {
-  FIELDMAP_WORK* pFieldmap;
-  u16 frame;        // 経過フレーム数
-  u16 endFramePitch;// 終了フレーム
-  u16 endFrameYaw;  // 終了フレーム
-  u16 endFrameDist; // 終了フレーム
-  u16 startPitch;   // ピッチ初期値(2πラジアンを65536分割した値を単位とする数)
-  u16 endPitch;     // ピッチ最終値(2πラジアンを65536分割した値を単位とする数)
-  u32 startYaw;     // ヨー初期値(2πラジアンを65536分割した値を単位とする数)
-  u32 endYaw;       // ヨー最終値(2πラジアンを65536分割した値を単位とする数)
-  fx32 startDist;   // カメラ距離初期値
-  fx32 endDist;     // カメラ距離最終値
+  FIELDMAP_WORK* pFieldmap;   // 操作対象のフィールドマップ
+  u16            frame;       // 経過フレーム数
 }
 EVENT_WORK;
 
@@ -69,17 +61,6 @@ EVENT_WORK;
 //=============================================================================================
 static void SetFarNear( FIELDMAP_WORK* p_fieldmap );
 
-// イベントワーク設定関数
-static void InitWork( EVENT_WORK* p_work, FIELDMAP_WORK* p_fieldmap );
-static void SetPitchAction( EVENT_WORK* p_work, u16 time, u16 start, u16 end );
-static void SetYawAction( EVENT_WORK* p_work, u16 time, u32 start, u32 end );
-static void SetDistAction( EVENT_WORK* p_work, u16 time, fx32 start, fx32 end );
-
-// カメラ動作関数
-static void UpdateYaw( EVENT_WORK* p_work );
-static void UpdatePitch( EVENT_WORK* p_work );
-static void UpdateDist( EVENT_WORK* p_work );
-
 // イベント生成関数
 static GMEVENT* EVENT_UpDoorIn( GAMESYS_WORK* p_gsys, FIELDMAP_WORK* p_fieldmap );
 static GMEVENT* EVENT_LeftDoorIn( GAMESYS_WORK* p_gsys, FIELDMAP_WORK* p_fieldmap );
@@ -89,11 +70,16 @@ static GMEVENT* EVENT_LeftDoorOut( GAMESYS_WORK* p_gsys, FIELDMAP_WORK* p_fieldm
 static GMEVENT* EVENT_RightDoorOut( GAMESYS_WORK* p_gsys, FIELDMAP_WORK* p_fieldmap );
 
 // イベント処理関数
-static GMEVENT_RESULT Zoom( GMEVENT* p_event, int* p_seq, void* p_work );
-static GMEVENT_RESULT RotateCamera( GMEVENT* p_event, int* p_seq, void* p_work );
-static GMEVENT_RESULT RotateCamera3Step( GMEVENT* p_event, int* p_seq, void* p_work );
-static GMEVENT_RESULT RotateCamera2Step( GMEVENT* p_event, int* p_seq, void* p_work );
-static GMEVENT_RESULT RotateCameraInOneFrame( GMEVENT* p_event, int* p_seq, void* p_work );
+static GMEVENT_RESULT EVENT_FUNC_UpDoorIn( GMEVENT* p_event, int* p_seq, void* p_work );
+static GMEVENT_RESULT EVENT_FUNC_LeftDoorIn( GMEVENT* p_event, int* p_seq, void* p_work );
+static GMEVENT_RESULT EVENT_FUNC_RightDoorIn( GMEVENT* p_event, int* p_seq, void* p_work );
+static GMEVENT_RESULT EVENT_FUNC_RightDoorIn_2Step( GMEVENT* p_event, int* p_seq, void* p_work );
+static GMEVENT_RESULT EVENT_FUNC_RightDoorIn_1Frame( GMEVENT* p_event, int* p_seq, void* p_work );
+static GMEVENT_RESULT EVENT_FUNC_UpDoorOut( GMEVENT* p_event, int* p_seq, void* p_work );
+static GMEVENT_RESULT EVENT_FUNC_LeftDoorOut( GMEVENT* p_event, int* p_seq, void* p_work );
+static GMEVENT_RESULT EVENT_FUNC_RightDoorOut( GMEVENT* p_event, int* p_seq, void* p_work );
+static GMEVENT_RESULT EVENT_FUNC_RightDoorOut_2Step( GMEVENT* p_event, int* p_seq, void* p_work );
+static GMEVENT_RESULT EVENT_FUNC_RightDoorOut_1Frame( GMEVENT* p_event, int* p_seq, void* p_work );
 
 
 //=============================================================================================
@@ -145,27 +131,27 @@ void EVENT_CAMERA_ACT_CallDoorInEvent( GMEVENT* p_parent, GAMESYS_WORK* p_gsys, 
 //-----------------------------------------------------------------------------------------------
 void EVENT_CAMERA_ACT_PrepareForDoorOut( FIELDMAP_WORK* p_fieldmap )
 {
-  FIELD_PLAYER * player = FIELDMAP_GetFieldPlayer( p_fieldmap );
-  MMDL *         fmmdl  = FIELD_PLAYER_GetMMdl( player );
-  u16            dir    = MMDL_GetDirDisp( fmmdl );
-  FIELD_CAMERA*  cam    = FIELDMAP_GetFieldCamera( p_fieldmap );
+  FIELD_PLAYER*    player = FIELDMAP_GetFieldPlayer( p_fieldmap );
+  MMDL*            fmmdl  = FIELD_PLAYER_GetMMdl( player );
+  u16              dir    = MMDL_GetDirDisp( fmmdl );
+  FIELD_CAMERA*    cam    = FIELDMAP_GetFieldCamera( p_fieldmap );
 
   // 主人公の向きに応じたカメラ設定
   switch( dir )
   {
   case DIR_DOWN:
-    FIELD_CAMERA_SetAngleLen( cam, FIELD_CAMERA_GetAngleLen( cam ) - U_DOOR_ZOOM_DIST );
+    FIELD_CAMERA_SetAngleLen( cam, FIELD_CAMERA_GetAngleLen( cam ) - U_DOOR_ZOOM_DIST);
     break;
   case DIR_LEFT:
     FIELD_CAMERA_SetAnglePitch( cam, R_DOOR_PITCH );
     FIELD_CAMERA_SetAngleYaw( cam, R_DOOR_YAW );
-    FIELD_CAMERA_SetAngleLen( cam, R_DOOR_DIST );
+    FIELD_CAMERA_SetAngleLen( cam, FIELD_CAMERA_GetAngleLen( cam ) - R_DOOR_ZOOM_DIST );
     SetFarNear( p_fieldmap );
     break;
   case DIR_RIGHT:
     FIELD_CAMERA_SetAnglePitch( cam, L_DOOR_PITCH );
     FIELD_CAMERA_SetAngleYaw( cam, L_DOOR_YAW );
-    FIELD_CAMERA_SetAngleLen( cam, L_DOOR_DIST );
+    FIELD_CAMERA_SetAngleLen( cam, FIELD_CAMERA_GetAngleLen( cam ) - L_DOOR_ZOOM_DIST );
     SetFarNear( p_fieldmap );
     break;
   default:
@@ -254,17 +240,14 @@ static GMEVENT* EVENT_UpDoorIn( GAMESYS_WORK* p_gsys, FIELDMAP_WORK* p_fieldmap 
 {
   GMEVENT*      p_event;
   EVENT_WORK*   p_work;
-  FIELD_CAMERA* p_camera = FIELDMAP_GetFieldCamera( p_fieldmap );
 
   // イベント生成
-  p_event = GMEVENT_Create( p_gsys, NULL, Zoom, sizeof( EVENT_WORK ) );
+  p_event = GMEVENT_Create( p_gsys, NULL, EVENT_FUNC_UpDoorIn, sizeof( EVENT_WORK ) );
 
   // イベントワークを初期化
-  p_work = GMEVENT_GetEventWork( p_event );
-  InitWork( p_work, p_fieldmap );
-  SetDistAction( p_work, U_DOOR_FRAME,
-      FIELD_CAMERA_GetAngleLen( p_camera ), 
-      FIELD_CAMERA_GetAngleLen( p_camera ) - U_DOOR_ZOOM_DIST );
+  p_work            = GMEVENT_GetEventWork( p_event );
+  p_work->pFieldmap = p_fieldmap;
+  p_work->frame     = 0;
 
   // 生成したイベントを返す
   return p_event;
@@ -284,20 +267,14 @@ static GMEVENT* EVENT_LeftDoorIn( GAMESYS_WORK* p_gsys, FIELDMAP_WORK* p_fieldma
 {
   GMEVENT*      p_event;
   EVENT_WORK*   p_work;
-  FIELD_CAMERA* p_camera = FIELDMAP_GetFieldCamera( p_fieldmap );
 
   // イベント生成
-  p_event = GMEVENT_Create( p_gsys, NULL, RotateCamera2Step, sizeof( EVENT_WORK ) );
+  p_event = GMEVENT_Create( p_gsys, NULL, EVENT_FUNC_LeftDoorIn, sizeof( EVENT_WORK ) );
 
   // イベントワークを初期化
-  p_work = GMEVENT_GetEventWork( p_event );
-  InitWork( p_work, p_fieldmap );
-  SetPitchAction( p_work, L_DOOR_FRAME, FIELD_CAMERA_GetAnglePitch( p_camera ), L_DOOR_PITCH );
-  SetYawAction  ( p_work, L_DOOR_FRAME, FIELD_CAMERA_GetAngleYaw( p_camera ),   L_DOOR_YAW );
-  SetDistAction ( p_work, L_DOOR_FRAME, FIELD_CAMERA_GetAngleLen( p_camera ),   L_DOOR_DIST );
-
-  // カメラの初期設定
-  SetFarNear( p_work->pFieldmap );
+  p_work            = GMEVENT_GetEventWork( p_event );
+  p_work->pFieldmap = p_fieldmap;
+  p_work->frame     = 0;
 
   // 生成したイベントを返す
   return p_event;
@@ -317,20 +294,16 @@ static GMEVENT* EVENT_RightDoorIn( GAMESYS_WORK* p_gsys, FIELDMAP_WORK* p_fieldm
 {
   GMEVENT*      p_event;
   EVENT_WORK*   p_work;
-  FIELD_CAMERA* p_camera = FIELDMAP_GetFieldCamera( p_fieldmap );
 
   // イベント生成
-  p_event = GMEVENT_Create( p_gsys, NULL, RotateCamera2Step, sizeof( EVENT_WORK ) );
+  //p_event = GMEVENT_Create( p_gsys, NULL, EVENT_FUNC_RightDoorIn, sizeof( EVENT_WORK ) );
+  p_event = GMEVENT_Create( p_gsys, NULL, EVENT_FUNC_RightDoorIn_2Step, sizeof( EVENT_WORK ) );
+  //p_event = GMEVENT_Create( p_gsys, NULL, EVENT_FUNC_RightDoorIn_1Frame, sizeof( EVENT_WORK ) );
 
   // イベントワークを初期化
-  p_work = GMEVENT_GetEventWork( p_event );
-  InitWork( p_work, p_fieldmap );
-  SetPitchAction( p_work, R_DOOR_FRAME, FIELD_CAMERA_GetAnglePitch( p_camera ), R_DOOR_PITCH );
-  SetYawAction  ( p_work, R_DOOR_FRAME, FIELD_CAMERA_GetAngleYaw( p_camera ),   R_DOOR_YAW );
-  SetDistAction ( p_work, R_DOOR_FRAME, FIELD_CAMERA_GetAngleLen( p_camera ),   R_DOOR_DIST );
-
-  // カメラの初期設定
-  SetFarNear( p_work->pFieldmap );
+  p_work            = GMEVENT_GetEventWork( p_event );
+  p_work->pFieldmap = p_fieldmap;
+  p_work->frame     = 0;
 
   // 生成したイベントを返す
   return p_event;
@@ -350,19 +323,14 @@ static GMEVENT* EVENT_UpDoorOut( GAMESYS_WORK* p_gsys, FIELDMAP_WORK* p_fieldmap
 {
   GMEVENT*      p_event;
   EVENT_WORK*   p_work;
-  FIELD_CAMERA* p_camera = FIELDMAP_GetFieldCamera( p_fieldmap );
-  FLD_CAMERA_PARAM def_param;
-
-  // カメラのデフォルト・パラメータを取得
-  FIELD_CAMERA_GetInitialParameter( p_camera, &def_param );
 
   // イベント生成
-  p_event = GMEVENT_Create( p_gsys, NULL, Zoom, sizeof( EVENT_WORK ) );
+  p_event = GMEVENT_Create( p_gsys, NULL, EVENT_FUNC_UpDoorOut, sizeof( EVENT_WORK ) );
 
   // イベントワークを初期化
-  p_work = GMEVENT_GetEventWork( p_event );
-  InitWork( p_work, p_fieldmap );
-  SetDistAction( p_work, U_DOOR_FRAME, FIELD_CAMERA_GetAngleLen( p_camera ), def_param.Distance * FX32_ONE );
+  p_work            = GMEVENT_GetEventWork( p_event );
+  p_work->pFieldmap = p_fieldmap;
+  p_work->frame     = 0;
 
   // 生成したイベントを返す
   return p_event;
@@ -382,21 +350,14 @@ static GMEVENT* EVENT_LeftDoorOut( GAMESYS_WORK* p_gsys, FIELDMAP_WORK* p_fieldm
 {
   GMEVENT*         p_event;
   EVENT_WORK*      p_work;
-  FIELD_CAMERA*    p_camera = FIELDMAP_GetFieldCamera( p_fieldmap );
-  FLD_CAMERA_PARAM def_param;
-
-  // カメラのデフォルト・パラメータを取得
-  FIELD_CAMERA_GetInitialParameter( p_camera, &def_param );
 
   // イベント生成
-  p_event = GMEVENT_Create( p_gsys, NULL, RotateCamera2Step, sizeof( EVENT_WORK ) );
+  p_event = GMEVENT_Create( p_gsys, NULL, EVENT_FUNC_LeftDoorOut, sizeof( EVENT_WORK ) );
 
   // イベントワークを初期化
-  p_work = GMEVENT_GetEventWork( p_event );
-  InitWork( p_work, p_fieldmap );
-  SetPitchAction( p_work, L_DOOR_FRAME, FIELD_CAMERA_GetAnglePitch( p_camera ), def_param.Angle.x );
-  SetYawAction  ( p_work, L_DOOR_FRAME, FIELD_CAMERA_GetAngleYaw( p_camera ),   def_param.Angle.y );
-  SetDistAction ( p_work, L_DOOR_FRAME, FIELD_CAMERA_GetAngleLen( p_camera ),   def_param.Distance * FX32_ONE );
+  p_work            = GMEVENT_GetEventWork( p_event );
+  p_work->pFieldmap = p_fieldmap;
+  p_work->frame     = 0;
 
   // 生成したイベントを返す
   return p_event;
@@ -417,21 +378,16 @@ static GMEVENT* EVENT_RightDoorOut( GAMESYS_WORK* p_gsys, FIELDMAP_WORK* p_field
 {
   GMEVENT*      p_event;
   EVENT_WORK*   p_work;
-  FIELD_CAMERA* p_camera = FIELDMAP_GetFieldCamera( p_fieldmap );
-  FLD_CAMERA_PARAM def_param;
-
-  // カメラのデフォルト・パラメータを取得
-  FIELD_CAMERA_GetInitialParameter( p_camera, &def_param );
 
   // イベント生成
-  p_event = GMEVENT_Create( p_gsys, NULL, RotateCamera2Step, sizeof( EVENT_WORK ) );
+  //p_event = GMEVENT_Create( p_gsys, NULL, EVENT_FUNC_RightDoorOut, sizeof( EVENT_WORK ) );
+  p_event = GMEVENT_Create( p_gsys, NULL, EVENT_FUNC_RightDoorOut_2Step, sizeof( EVENT_WORK ) );
 
   // イベントワークを初期化
+  p_work            = GMEVENT_GetEventWork( p_event );
+  p_work->pFieldmap = p_fieldmap;
+  p_work->frame     = 0;
   p_work = GMEVENT_GetEventWork( p_event );
-  InitWork( p_work, p_fieldmap );
-  SetPitchAction( p_work, R_DOOR_FRAME, FIELD_CAMERA_GetAnglePitch( p_camera ), def_param.Angle.x );
-  SetYawAction  ( p_work, R_DOOR_FRAME, FIELD_CAMERA_GetAngleYaw( p_camera ),   def_param.Angle.y );
-  SetDistAction ( p_work, R_DOOR_FRAME, FIELD_CAMERA_GetAngleLen( p_camera ),   def_param.Distance * FX32_ONE );
 
   // 生成したイベントを返す
   return p_event;
@@ -458,7 +414,7 @@ static void SetFarNear( FIELDMAP_WORK* p_fieldmap )
   */
 
   // Farプレーンを半分にする
-  far /= 2;
+  far = far * 2 / 3;
   FIELD_CAMERA_SetFar( p_camera, far );
 
   // Nearプレーンを設定する
@@ -474,160 +430,7 @@ static void SetFarNear( FIELDMAP_WORK* p_fieldmap )
 
 //-----------------------------------------------------------------------------------------------
 /**
- * @brief イベントワークを初期化する
- *
- * @param p_work     初期化する変数
- * @param p_fieldmap 設定するフィールドマップ
- */
-//-----------------------------------------------------------------------------------------------
-static void InitWork( EVENT_WORK* p_work, FIELDMAP_WORK* p_fieldmap )
-{
-  p_work->pFieldmap     = p_fieldmap;
-  p_work->frame         = 0;
-  p_work->endFramePitch = 0;
-  p_work->endFrameYaw   = 0;
-  p_work->endFrameDist  = 0;
-  p_work->startPitch    = 0;
-  p_work->endPitch      = 0;
-  p_work->startYaw      = 0;
-  p_work->endYaw        = 0;
-  p_work->startDist     = 0;
-  p_work->endDist       = 0;
-}
-
-//-----------------------------------------------------------------------------------------------
-/**
- * @breif ピッチの動作を設定する
- *
- * @param p_work  設定対象イベントワーク
- * @param time    動作フレーム数
- * @param start   初期値
- * @param end     終了値
- */
-//-----------------------------------------------------------------------------------------------
-static void SetPitchAction( EVENT_WORK* p_work, u16 time, u16 start, u16 end )
-{
-  p_work->startPitch    = start;
-  p_work->endPitch      = end;
-  p_work->endFramePitch = time;
-}
-
-//-----------------------------------------------------------------------------------------------
-/**
- * @breif ヨーの動作を設定する
- *
- * @param p_work  設定対象イベントワーク
- * @param time    動作フレーム数
- * @param start   初期値
- * @param end     終了値
- */
-//-----------------------------------------------------------------------------------------------
-static void SetYawAction( EVENT_WORK* p_work, u16 time, u32 start, u32 end )
-{
-  p_work->startYaw    = start;
-  p_work->endYaw      = end;
-  p_work->endFrameYaw = time;
-
-  // 正の方向に回したとき, 180度以上の回転が必要になる場合, 負の方向に回転させる必要がある.
-  // 回転の方向を逆にするために, 小さい方のヨー値を360度分の下駄を履かせる.
-  if( p_work->startYaw < p_work->endYaw )
-  {
-    if( 0x7fff < (p_work->endYaw - p_work->startYaw) )
-    {
-      p_work->startYaw += 0xffff;
-    }
-  }
-  else if( p_work->endYaw < p_work->startYaw )
-  {
-    if( 0x7fff < (p_work->startYaw - p_work->endYaw) )
-    {
-      p_work->endYaw += 0xffff;
-    }
-  } 
-}
-
-//-----------------------------------------------------------------------------------------------
-/**
- * @breif カメラ距離の動作を設定する
- *
- * @param p_work  設定対象イベントワーク
- * @param time    動作フレーム数
- * @param start   初期値
- * @param end     終了値
- */
-//-----------------------------------------------------------------------------------------------
-static void SetDistAction( EVENT_WORK* p_work, u16 time, fx32 start, fx32 end )
-{
-  p_work->startDist    = start;
-  p_work->endDist      = end;
-  p_work->endFrameDist = time;
-}
-
-//-----------------------------------------------------------------------------------------------
-/**
- * @brief ピッチを更新する
- *
- * @param p_work イベントワーク
- */
-//-----------------------------------------------------------------------------------------------
-static void UpdatePitch( EVENT_WORK* p_work )
-{
-  FIELD_CAMERA* p_camera = FIELDMAP_GetFieldCamera( p_work->pFieldmap );
-  u16           pitch;
-
-  if(p_work->frame <= p_work->endFramePitch )
-  { 
-    float t = p_work->frame / (float)p_work->endFramePitch;
-    t       = t*t*( -2*t + 3 );
-    pitch   = (u16)( ( (1-t) * p_work->startPitch ) + ( t * p_work->endPitch ) );
-    FIELD_CAMERA_SetAnglePitch( p_camera, pitch );
-  }
-}
-
-//-----------------------------------------------------------------------------------------------
-/**
- * @brief ヨーを更新する
- *
- * @param p_work イベントワーク
- */
-//-----------------------------------------------------------------------------------------------
-static void UpdateYaw( EVENT_WORK* p_work )
-{
-  FIELD_CAMERA* p_camera = FIELDMAP_GetFieldCamera( p_work->pFieldmap );
-  u16           yaw;
-
-  if(p_work->frame <= p_work->endFrameYaw )
-  {
-    float t = p_work->frame / (float)p_work->endFrameYaw;
-    t       = t*t*( -2*t + 3 );
-    yaw     = (u16)( ( (1-t) * p_work->startYaw ) + ( t * p_work->endYaw ) );
-    FIELD_CAMERA_SetAngleYaw( p_camera, yaw );
-  }
-}
-
-//-----------------------------------------------------------------------------------------------
-/**
- * @brief カメラ距離を更新する
- *
- * @param p_work イベントワーク
- */
-//-----------------------------------------------------------------------------------------------
-static void UpdateDist( EVENT_WORK* p_work )
-{
-  FIELD_CAMERA* p_camera = FIELDMAP_GetFieldCamera( p_work->pFieldmap );
-  fx32          dist;
-
-  if(p_work->frame <= p_work->endFrameDist )
-  {
-    float t = p_work->frame / (float)p_work->endFrameDist;
-    dist    = FX_F32_TO_FX32( ( (1-t) * FX_FX32_TO_F32(p_work->startDist) ) + ( t * FX_FX32_TO_F32(p_work->endDist) ) );
-  FIELD_CAMERA_SetAngleLen( p_camera, dist ); 
-  }
-}
-
-//-----------------------------------------------------------------------------------------------
-/**
- * @brief イベント処理関数( ズームイン or ズームアウト )
+ * @brief イベント処理関数( 上出入口への進入 )
  *
  * @param p_event イベント
  * @param p_seq   シーケンス番号
@@ -636,25 +439,25 @@ static void UpdateDist( EVENT_WORK* p_work )
  * @return GMEVENT_RES_CONTINUE or GMEVENT_RES_FINISH
  */
 //-----------------------------------------------------------------------------------------------
-static GMEVENT_RESULT Zoom( GMEVENT* p_event, int* p_seq, void* p_work )
+static GMEVENT_RESULT EVENT_FUNC_UpDoorIn( GMEVENT* p_event, int* p_seq, void* p_work )
 {
   EVENT_WORK* p_event_work = (EVENT_WORK*)p_work;
 
-  // カメラパラメータを更新
-  UpdateDist( p_event_work );
-
-  // 指定回数動作したら終了
-  p_event_work->frame++;
-  if( p_event_work->endFrameDist < p_event_work->frame )
+  switch( *p_seq )
   {
+  case 0:
+    FIELDMAP_TCB_CAMERA_AddTask_Zoom( p_event_work->pFieldmap, U_DOOR_FRAME, -U_DOOR_ZOOM_DIST );
+    ++( *p_seq );
+    break;
+  case 1:
     return GMEVENT_RES_FINISH;
-  } 
+  }
   return GMEVENT_RES_CONTINUE;
 }
 
 //-----------------------------------------------------------------------------------------------
 /**
- * @brief イベント処理関数( ヨー・ピッチ・距離を同時に変更 )
+ * @brief イベント処理関数( 左出入口への進入 )
  *
  * @param p_event イベント
  * @param p_seq   シーケンス番号
@@ -663,29 +466,28 @@ static GMEVENT_RESULT Zoom( GMEVENT* p_event, int* p_seq, void* p_work )
  * @return GMEVENT_RES_CONTINUE or GMEVENT_RES_FINISH
  */
 //-----------------------------------------------------------------------------------------------
-static GMEVENT_RESULT RotateCamera( GMEVENT* p_event, int* p_seq, void* p_work )
+static GMEVENT_RESULT EVENT_FUNC_LeftDoorIn( GMEVENT* p_event, int* p_seq, void* p_work )
 {
   EVENT_WORK* p_event_work = (EVENT_WORK*)p_work;
 
-  // カメラパラメータを更新
-  UpdatePitch( p_event_work );
-  UpdateYaw( p_event_work );
-  UpdateDist( p_event_work );
-
-  // 指定回数動作したら終了
-  p_event_work->frame++;
-  if( ( p_event_work->endFrameYaw < p_event_work->frame ) &&
-      ( p_event_work->endFramePitch < p_event_work->frame ) &&
-      ( p_event_work->endFrameDist < p_event_work->frame ) )
+  switch( *p_seq )
   {
+  case 0:
+    SetFarNear( p_event_work->pFieldmap );
+    FIELDMAP_TCB_CAMERA_AddTask_Zoom( p_event_work->pFieldmap, L_DOOR_FRAME, -L_DOOR_ZOOM_DIST );
+    FIELDMAP_TCB_CAMERA_AddTask_Yaw( p_event_work->pFieldmap, L_DOOR_FRAME, L_DOOR_YAW );
+    FIELDMAP_TCB_CAMERA_AddTask_Pitch( p_event_work->pFieldmap, L_DOOR_FRAME, L_DOOR_PITCH );
+    ++( *p_seq );
+    break;
+  case 1:
     return GMEVENT_RES_FINISH;
-  } 
+  }
   return GMEVENT_RES_CONTINUE;
 }
 
 //-----------------------------------------------------------------------------------------------
 /**
- * @brief イベント処理関数( ヨー・ピッチ・距離を段階的に変更 )
+ * @brief イベント処理関数( 右出入口への進入 )
  *
  * @param p_event イベント
  * @param p_seq   シーケンス番号
@@ -694,44 +496,75 @@ static GMEVENT_RESULT RotateCamera( GMEVENT* p_event, int* p_seq, void* p_work )
  * @return GMEVENT_RES_CONTINUE or GMEVENT_RES_FINISH
  */
 //-----------------------------------------------------------------------------------------------
-static GMEVENT_RESULT RotateCamera3Step( GMEVENT* p_event, int* p_seq, void* p_work )
+static GMEVENT_RESULT EVENT_FUNC_RightDoorIn( GMEVENT* p_event, int* p_seq, void* p_work )
 {
-  EVENT_WORK*   p_event_work = (EVENT_WORK*)p_work;
-  FIELD_CAMERA* p_camera     = FIELDMAP_GetFieldCamera( p_event_work->pFieldmap );
-  
+  EVENT_WORK* p_event_work = (EVENT_WORK*)p_work;
+
   switch( *p_seq )
   {
   case 0:
-    UpdateDist( p_event_work );
-    if( p_event_work->endFrameDist < ++(p_event_work->frame) )
-    {
-      ++ *p_seq;
-      p_event_work->frame = 0;
-    }
+    SetFarNear( p_event_work->pFieldmap );
+    FIELDMAP_TCB_CAMERA_AddTask_Zoom( p_event_work->pFieldmap, R_DOOR_FRAME, -R_DOOR_ZOOM_DIST );
+    FIELDMAP_TCB_CAMERA_AddTask_Yaw( p_event_work->pFieldmap, R_DOOR_FRAME, R_DOOR_YAW );
+    FIELDMAP_TCB_CAMERA_AddTask_Pitch( p_event_work->pFieldmap, R_DOOR_FRAME, R_DOOR_PITCH );
+    ++( *p_seq );
     break;
   case 1:
-    UpdatePitch( p_event_work );
-    if( p_event_work->endFramePitch < ++(p_event_work->frame) )
+    return GMEVENT_RES_FINISH;
+  }
+  return GMEVENT_RES_CONTINUE;
+}
+
+//-----------------------------------------------------------------------------------------------
+/**
+ * @brief イベント処理関数( 右出入口への進入 )
+ *
+ * @param p_event イベント
+ * @param p_seq   シーケンス番号
+ * @param p_work  イベントワーク
+ *
+ * @return GMEVENT_RES_CONTINUE or GMEVENT_RES_FINISH
+ */
+//-----------------------------------------------------------------------------------------------
+static GMEVENT_RESULT EVENT_FUNC_RightDoorIn_2Step( GMEVENT* p_event, int* p_seq, void* p_work )
+{
+  EVENT_WORK* p_event_work = (EVENT_WORK*)p_work;
+
+  switch( *p_seq )
+  {
+  case 0:
+    SetFarNear( p_event_work->pFieldmap );
+    FIELDMAP_TCB_CAMERA_AddTask_Yaw( p_event_work->pFieldmap, 20, R_DOOR_YAW );
+    FIELDMAP_TCB_CAMERA_AddTask_Pitch( p_event_work->pFieldmap, 20, R_DOOR_PITCH );
+    p_event_work->frame = 0;
+    ++( *p_seq );
+    break;
+  case 1:
+    if( 10 < p_event_work->frame++ )
     {
-      ++ *p_seq;
-      p_event_work->frame = 0;
+      ++( *p_seq );
     }
     break;
   case 2:
-    UpdateYaw( p_event_work );
-    if( p_event_work->endFrameYaw < ++(p_event_work->frame) )
+    FIELDMAP_TCB_CAMERA_AddTask_Zoom( p_event_work->pFieldmap, R_DOOR_FRAME, -R_DOOR_ZOOM_DIST );
+    ++( *p_seq );
+    p_event_work->frame = 0;
+    break;
+  case 3:
+    if( 20 < p_event_work->frame++ )
     {
-      return GMEVENT_RES_FINISH;
+      ++( *p_seq );
     }
     break;
+  case 4:
+    return GMEVENT_RES_FINISH;
   }
-
   return GMEVENT_RES_CONTINUE;
 }
 
 //-----------------------------------------------------------------------------------------------
 /**
- * @brief イベント処理関数( ヨー・ピッチ・距離を段階的に変更 )
+ * @brief イベント処理関数( 右出入口への進入 )
  *
  * @param p_event イベント
  * @param p_seq   シーケンス番号
@@ -740,39 +573,22 @@ static GMEVENT_RESULT RotateCamera3Step( GMEVENT* p_event, int* p_seq, void* p_w
  * @return GMEVENT_RES_CONTINUE or GMEVENT_RES_FINISH
  */
 //-----------------------------------------------------------------------------------------------
-static GMEVENT_RESULT RotateCamera2Step( GMEVENT* p_event, int* p_seq, void* p_work )
+static GMEVENT_RESULT EVENT_FUNC_RightDoorIn_1Frame( GMEVENT* p_event, int* p_seq, void* p_work )
 {
   EVENT_WORK*   p_event_work = (EVENT_WORK*)p_work;
-  
-  switch( *p_seq )
-  {
-  case 0:
-    UpdateDist( p_event_work );
-    UpdatePitch( p_event_work );
-    p_event_work->frame++;
-    if( ( p_event_work->endFramePitch < (p_event_work->frame) ) &&
-        ( p_event_work->endFrameDist  < (p_event_work->frame) ) )
-    {
-      ++ *p_seq;
-      p_event_work->frame = 0;
-    }
-    break;
-  case 1:
-    UpdateYaw( p_event_work );
-    p_event_work->frame++;
-    if( p_event_work->endFrameYaw < p_event_work->frame )
-    {
-      return GMEVENT_RES_FINISH;
-    }
-    break;
-  }
+  FIELD_CAMERA* cam          = FIELDMAP_GetFieldCamera( p_event_work->pFieldmap );
 
-  return GMEVENT_RES_CONTINUE;
+  SetFarNear( p_event_work->pFieldmap );
+  FIELD_CAMERA_SetAnglePitch( cam, R_DOOR_PITCH );
+  FIELD_CAMERA_SetAngleYaw( cam, R_DOOR_YAW );
+  FIELD_CAMERA_SetAngleLen( cam, FIELD_CAMERA_GetAngleLen( cam ) - R_DOOR_ZOOM_DIST );
+
+  return GMEVENT_RES_FINISH;
 }
 
 //-----------------------------------------------------------------------------------------------
 /**
- * @brief イベント処理関数( ヨー・ピッチ・距離を瞬時に変更 )
+ * @brief イベント処理関数( 上出入口からの進入 )
  *
  * @param p_event イベント
  * @param p_seq   シーケンス番号
@@ -781,34 +597,168 @@ static GMEVENT_RESULT RotateCamera2Step( GMEVENT* p_event, int* p_seq, void* p_w
  * @return GMEVENT_RES_CONTINUE or GMEVENT_RES_FINISH
  */
 //-----------------------------------------------------------------------------------------------
-static GMEVENT_RESULT RotateCameraInOneFrame( GMEVENT* p_event, int* p_seq, void* p_work )
+static GMEVENT_RESULT EVENT_FUNC_UpDoorOut( GMEVENT* p_event, int* p_seq, void* p_work )
 {
-  EVENT_WORK*   p_event_work = (EVENT_WORK*)p_work;
-  FIELD_CAMERA* p_camera     = FIELDMAP_GetFieldCamera( p_event_work->pFieldmap );
+  EVENT_WORK* p_event_work = (EVENT_WORK*)p_work;
 
   switch( *p_seq )
   {
   case 0:
-    if( 0 < ++(p_event_work->frame) )
-    {
-      ++ *p_seq;
-      p_event_work->frame = 0;
-    }
+    FIELDMAP_TCB_CAMERA_AddTask_Zoom( p_event_work->pFieldmap, U_DOOR_FRAME, U_DOOR_ZOOM_DIST );
+    ++( *p_seq );
     break;
   case 1:
-      FIELD_CAMERA_SetAngleLen( p_camera, p_event_work->endDist );
-      FIELD_CAMERA_SetAngleYaw( p_camera, p_event_work->endYaw );
-      FIELD_CAMERA_SetAnglePitch( p_camera, p_event_work->endPitch );
-      ++ *p_seq;
+    return GMEVENT_RES_FINISH;
+  }
+  return GMEVENT_RES_CONTINUE;
+}
+
+//-----------------------------------------------------------------------------------------------
+/**
+ * @brief イベント処理関数( 左出入口からの進入 )
+ *
+ * @param p_event イベント
+ * @param p_seq   シーケンス番号
+ * @param p_work  イベントワーク
+ *
+ * @return GMEVENT_RES_CONTINUE or GMEVENT_RES_FINISH
+ */
+//-----------------------------------------------------------------------------------------------
+static GMEVENT_RESULT EVENT_FUNC_LeftDoorOut( GMEVENT* p_event, int* p_seq, void* p_work )
+{
+  EVENT_WORK* p_event_work = (EVENT_WORK*)p_work;
+  FIELD_CAMERA*   p_camera = FIELDMAP_GetFieldCamera( p_event_work->pFieldmap );
+
+  switch( *p_seq )
+  {
+  case 0:
+    {
+      FLD_CAMERA_PARAM def_param; 
+      FIELD_CAMERA_GetInitialParameter( p_camera, &def_param );
+      SetFarNear( p_event_work->pFieldmap );
+      FIELDMAP_TCB_CAMERA_AddTask_Zoom( p_event_work->pFieldmap, L_DOOR_FRAME, L_DOOR_ZOOM_DIST );
+      FIELDMAP_TCB_CAMERA_AddTask_Yaw( p_event_work->pFieldmap, L_DOOR_FRAME, def_param.Angle.y );
+      FIELDMAP_TCB_CAMERA_AddTask_Pitch( p_event_work->pFieldmap, L_DOOR_FRAME, def_param.Angle.x );
+    }
+    ++( *p_seq );
+    break;
+  case 1:
+    return GMEVENT_RES_FINISH;
+  }
+  return GMEVENT_RES_CONTINUE;
+}
+
+//-----------------------------------------------------------------------------------------------
+/**
+ * @brief イベント処理関数( 右出入口からの進入 )
+ *
+ * @param p_event イベント
+ * @param p_seq   シーケンス番号
+ * @param p_work  イベントワーク
+ *
+ * @return GMEVENT_RES_CONTINUE or GMEVENT_RES_FINISH
+ */
+//-----------------------------------------------------------------------------------------------
+static GMEVENT_RESULT EVENT_FUNC_RightDoorOut( GMEVENT* p_event, int* p_seq, void* p_work )
+{
+  EVENT_WORK* p_event_work = (EVENT_WORK*)p_work;
+  FIELD_CAMERA*   p_camera = FIELDMAP_GetFieldCamera( p_event_work->pFieldmap );
+
+  switch( *p_seq )
+  {
+  case 0:
+    {
+      FLD_CAMERA_PARAM def_param; 
+      FIELD_CAMERA_GetInitialParameter( p_camera, &def_param );
+      SetFarNear( p_event_work->pFieldmap );
+      FIELDMAP_TCB_CAMERA_AddTask_Zoom( p_event_work->pFieldmap, R_DOOR_FRAME, R_DOOR_ZOOM_DIST );
+      FIELDMAP_TCB_CAMERA_AddTask_Yaw( p_event_work->pFieldmap, R_DOOR_FRAME, def_param.Angle.y );
+      FIELDMAP_TCB_CAMERA_AddTask_Pitch( p_event_work->pFieldmap, R_DOOR_FRAME, def_param.Angle.x );
+    }
+    ++( *p_seq );
+    break;
+  case 1:
+    return GMEVENT_RES_FINISH;
+  }
+  return GMEVENT_RES_CONTINUE;
+}
+
+//-----------------------------------------------------------------------------------------------
+/**
+ * @brief イベント処理関数( 右出入口からの進入 )
+ *
+ * @param p_event イベント
+ * @param p_seq   シーケンス番号
+ * @param p_work  イベントワーク
+ *
+ * @return GMEVENT_RES_CONTINUE or GMEVENT_RES_FINISH
+ */
+//-----------------------------------------------------------------------------------------------
+static GMEVENT_RESULT EVENT_FUNC_RightDoorOut_2Step( GMEVENT* p_event, int* p_seq, void* p_work )
+{
+  EVENT_WORK* p_event_work = (EVENT_WORK*)p_work;
+  FIELD_CAMERA*        cam = FIELDMAP_GetFieldCamera( p_event_work->pFieldmap ); 
+  FLD_CAMERA_PARAM def_param; 
+
+  // デフォルトパラメータを取得
+  FIELD_CAMERA_GetInitialParameter( cam, &def_param );
+
+  switch( *p_seq )
+  {
+  case 0:
+    SetFarNear( p_event_work->pFieldmap );
+    FIELDMAP_TCB_CAMERA_AddTask_Zoom( p_event_work->pFieldmap, 20, R_DOOR_ZOOM_DIST );
+    p_event_work->frame = 0;
+    ++( *p_seq );
+    break;
+  case 1:
+    if( 10 < p_event_work->frame++ )
+    {
+      ++( *p_seq );
+    }
     break;
   case 2:
-    if( 10 < ++(p_event_work->frame) )
+    FIELDMAP_TCB_CAMERA_AddTask_Yaw( p_event_work->pFieldmap, 15, def_param.Angle.y );
+    FIELDMAP_TCB_CAMERA_AddTask_Pitch( p_event_work->pFieldmap, 15, def_param.Angle.x );
+    ++( *p_seq );
+    p_event_work->frame = 0;
+    break;
+  case 3:
+    if( 20 < p_event_work->frame++ )
     {
-      ++ *p_seq;
-      return GMEVENT_RES_FINISH;
+      ++( *p_seq );
     }
     break;
+  case 4:
+    return GMEVENT_RES_FINISH;
   }
+  return GMEVENT_RES_CONTINUE;
+}
+
+//-----------------------------------------------------------------------------------------------
+/**
+ * @brief イベント処理関数( 右出入口からの進入 )
+ *
+ * @param p_event イベント
+ * @param p_seq   シーケンス番号
+ * @param p_work  イベントワーク
+ *
+ * @return GMEVENT_RES_CONTINUE or GMEVENT_RES_FINISH
+ */
+//-----------------------------------------------------------------------------------------------
+static GMEVENT_RESULT EVENT_FUNC_RightDoorOut_1Frame( GMEVENT* p_event, int* p_seq, void* p_work )
+{
+  EVENT_WORK* p_event_work = (EVENT_WORK*)p_work;
+  FIELD_CAMERA*   cam = FIELDMAP_GetFieldCamera( p_event_work->pFieldmap ); 
+  FLD_CAMERA_PARAM def_param; 
+
+  // デフォルトパラメータを取得
+  FIELD_CAMERA_GetInitialParameter( cam, &def_param );
+
+  SetFarNear( p_event_work->pFieldmap );
+  FIELD_CAMERA_SetAnglePitch( cam, def_param.Angle.x );
+  FIELD_CAMERA_SetAngleYaw( cam, def_param.Angle.y );
+  FIELD_CAMERA_SetAngleLen( cam, def_param.Distance );
 
   return GMEVENT_RES_CONTINUE;
 }
