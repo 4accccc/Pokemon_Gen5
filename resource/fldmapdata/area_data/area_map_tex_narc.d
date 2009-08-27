@@ -142,6 +142,10 @@ NNSARC_DEPEND_FILES	= \
 	nsbtx_files/tex_set_out35_summer.nsbtx \
 	nsbtx_files/tex_set_out35_autumn.nsbtx \
 	nsbtx_files/tex_set_out35_winter.nsbtx \
+	nsbtx_files/tex_set_out35_spring.nsbtx \
+	nsbtx_files/tex_set_out35_summer.nsbtx \
+	nsbtx_files/tex_set_out35_autumn.nsbtx \
+	nsbtx_files/tex_set_out35_winter.nsbtx \
 	nsbtx_files/tex_set_in01.nsbtx \
 	nsbtx_files/tex_set_in02.nsbtx \
 	nsbtx_files/tex_set_in03.nsbtx \
@@ -192,6 +196,7 @@ NNSARC_DEPEND_FILES	= \
 	nsbtx_files/tex_set_in48.nsbtx \
 	nsbtx_files/tex_set_in49.nsbtx \
 	nsbtx_files/tex_set_in50.nsbtx \
+	nsbtx_files/tex_set_in51.nsbtx \
 	nsbtx_files/tex_set_in_pc.nsbtx \
 	nsbtx_files/tex_set_dun01.nsbtx \
 	nsbtx_files/tex_set_dun02.nsbtx \
