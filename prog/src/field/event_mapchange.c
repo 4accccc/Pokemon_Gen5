@@ -210,6 +210,79 @@ typedef struct {
   EXIT_TYPE exit_type;
 }MAPCHANGE_WORK;
 
+typedef MAPCHANGE_WORK* MAPCHANGE_WORK_PTR;
+
+
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+static GMEVENT_RESULT EVENT_FUNC_MapChangeCore( GMEVENT* event, int* seq, void* work )
+{
+	MAPCHANGE_WORK*       mcw = *( (MAPCHANGE_WORK_PTR*)work );
+	GAMESYS_WORK*        gsys = mcw->gsys;
+	FIELD_MAIN_WORK* fieldmap = mcw->fieldmap;
+	GAMEDATA*        gamedata = mcw->gamedata;
+
+	switch( *seq )
+  {
+	case 0:
+		//フィールドマップを終了待ち
+		GMEVENT_CallEvent(event, EVENT_FieldClose(gsys, fieldmap));
+		//配置していた動作モデルを削除
+		MMDLSYS_DeleteMMdl( GAMEDATA_GetMMdlSys(gamedata) );
+		(*seq)++;
+		break;
+	case 1:
+		//新しいマップID、初期位置をセット
+		UpdateMapParams(gsys, &mcw->loc_req);
+		//新規ゾーンに配置する動作モデルを追加
+		SetMMdl( gsys, &mcw->loc_req, GAMEINIT_MODE_FIRST );
+
+	  //※check　ユニオンルームへの移動を受付スクリプトで制御するようになったらサブスクリーンモードの
+	  //         変更もそのスクリプト内で行うようにする
+	  switch(mcw->loc_req.zone_id){
+  	case ZONE_ID_UNION:
+  	case ZONE_ID_CLOSSEUM:
+  	case ZONE_ID_CLOSSEUM02:
+  	  GAMEDATA_SetSubScreenMode(GAMESYSTEM_GetGameData(gsys), FIELD_SUBSCREEN_UNION);
+  	  break;
+  	default:
+  	  GAMEDATA_SetSubScreenMode(GAMESYSTEM_GetGameData(gsys), FIELD_SUBSCREEN_NORMAL);
+  	  break;
+  	} 
+		(*seq)++;
+		break;
+  case 2:
+    // BGMフェードアウト終了待ち
+    if( FIELD_BGM_CONTROL_IsFade() != TRUE )
+    { 
+      FIELD_BGM_CONTROL_FadeIn( gamedata, mcw->loc_req.zone_id, 60 );
+      (*seq)++;
+    }
+    break;
+	case 3:
+		//フィールドマップを開始待ち
+		GMEVENT_CallEvent(event, EVENT_FieldOpen(gsys));
+		(*seq) ++;
+		break;
+  case 4:
+		return GMEVENT_RES_FINISH; 
+	}
+	return GMEVENT_RES_CONTINUE;
+}
+
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+static GMEVENT* EVENT_MapChangeCore( MAPCHANGE_WORK* mcw )
+{
+  GMEVENT* event;
+  MAPCHANGE_WORK_PTR* work;
+
+  event = GMEVENT_Create( mcw->gsys, NULL, EVENT_FUNC_MapChangeCore, sizeof( MAPCHANGE_WORK_PTR ) );
+  work  = GMEVENT_GetEventWork( event );
+  *work = mcw;
+
+  return event;
+}
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
@@ -230,52 +303,17 @@ static GMEVENT_RESULT EVENT_MapChange(GMEVENT * event, int *seq, void*work)
         EVENT_EntranceIn( event, gsys, gamedata, fieldmap, mcw->loc_req, mcw->exit_type ) );
 		(*seq)++;
 		break;
-	case 2:
-		//フィールドマップを終了待ち
-		GMEVENT_CallEvent(event, EVENT_FieldClose(gsys, fieldmap));
-		//配置していた動作モデルを削除
-		MMDLSYS_DeleteMMdl( GAMEDATA_GetMMdlSys(gamedata) );
+  case 2:
+    // マップチェンジ・コア・イベント
+    GMEVENT_CallEvent( event, EVENT_MapChangeCore( mcw ) );
 		(*seq)++;
-		break;
-	case 3:
-		//新しいマップID、初期位置をセット
-		UpdateMapParams(gsys, &mcw->loc_req);
-		//新規ゾーンに配置する動作モデルを追加
-		SetMMdl( gsys, &mcw->loc_req, GAMEINIT_MODE_FIRST );
-
-	  //※check　ユニオンルームへの移動を受付スクリプトで制御するようになったらサブスクリーンモードの
-	  //         変更もそのスクリプト内で行うようにする
-	  switch(mcw->loc_req.zone_id){
-  	case ZONE_ID_UNION:
-  	case ZONE_ID_CLOSSEUM:
-  	case ZONE_ID_CLOSSEUM02:
-  	  GAMEDATA_SetSubScreenMode(GAMESYSTEM_GetGameData(gsys), FIELD_SUBSCREEN_UNION);
-  	  break;
-  	default:
-  	  GAMEDATA_SetSubScreenMode(GAMESYSTEM_GetGameData(gsys), FIELD_SUBSCREEN_NORMAL);
-  	  break;
-  	} 
-		(*seq)++;
-		break;
-  case 4:
-    // BGMフェードアウト終了待ち
-    if( FIELD_BGM_CONTROL_IsFade() != TRUE )
-    { 
-      FIELD_BGM_CONTROL_FadeIn( gamedata, mcw->loc_req.zone_id, 60 );
-      (*seq)++;
-    }
     break;
-	case 5:
-		//フィールドマップを開始待ち
-		GMEVENT_CallEvent(event, EVENT_FieldOpen(gsys));
-		(*seq) ++;
-		break;
-	case 6:
+	case 3:
     // 入口退出イベント
     GMEVENT_CallEvent( event, EVENT_EntranceOut( event, gsys, gamedata, fieldmap, mcw->loc_req ) );
 		(*seq) ++;
 		break;
-  case 7:
+  case 4:
 		return GMEVENT_RES_FINISH; 
 	}
 	return GMEVENT_RES_CONTINUE;
@@ -300,52 +338,17 @@ static GMEVENT_RESULT EVENT_MapChangeByWarp(GMEVENT * event, int *seq, void*work
     GMEVENT_CallEvent( event, EVENT_WarpOut( event, gsys, fieldmap ) );
 		(*seq)++;
 		break;
-	case 2:
-		//フィールドマップを終了待ち
-		GMEVENT_CallEvent(event, EVENT_FieldClose(gsys, fieldmap));
-		//配置していた動作モデルを削除
-		MMDLSYS_DeleteMMdl( GAMEDATA_GetMMdlSys(gamedata) );
+  case 2:
+    // マップチェンジ・コア・イベント
+    GMEVENT_CallEvent( event, EVENT_MapChangeCore( mcw ) );
 		(*seq)++;
-		break;
-	case 3:
-		//新しいマップID、初期位置をセット
-		UpdateMapParams(gsys, &mcw->loc_req);
-		//新規ゾーンに配置する動作モデルを追加
-		SetMMdl( gsys, &mcw->loc_req, GAMEINIT_MODE_FIRST );
-
-	  //※check　ユニオンルームへの移動を受付スクリプトで制御するようになったらサブスクリーンモードの
-	  //         変更もそのスクリプト内で行うようにする
-	  switch(mcw->loc_req.zone_id){
-  	case ZONE_ID_UNION:
-  	case ZONE_ID_CLOSSEUM:
-  	case ZONE_ID_CLOSSEUM02:
-  	  GAMEDATA_SetSubScreenMode(GAMESYSTEM_GetGameData(gsys), FIELD_SUBSCREEN_UNION);
-  	  break;
-  	default:
-  	  GAMEDATA_SetSubScreenMode(GAMESYSTEM_GetGameData(gsys), FIELD_SUBSCREEN_NORMAL);
-  	  break;
-  	} 
-		(*seq)++;
-		break;
-  case 4:
-    // BGMフェードアウト終了待ち
-    if( FIELD_BGM_CONTROL_IsFade() != TRUE )
-    { 
-      FIELD_BGM_CONTROL_FadeIn( gamedata, mcw->loc_req.zone_id, 60 );
-      (*seq)++;
-    }
     break;
-	case 5:
-		//フィールドマップを開始待ち
-		GMEVENT_CallEvent(event, EVENT_FieldOpen(gsys));
-		(*seq) ++;
-		break;
-	case 6:
+	case 3:
     // ワープ登場イベント
     GMEVENT_CallEvent( event, EVENT_WarpIn( event, gsys, fieldmap ) );
 		(*seq) ++;
 		break;
-  case 7:
+  case 4:
 		return GMEVENT_RES_FINISH; 
 	}
 	return GMEVENT_RES_CONTINUE;
