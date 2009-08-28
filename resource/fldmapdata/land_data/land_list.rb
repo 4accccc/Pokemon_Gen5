@@ -14,6 +14,8 @@ FNAME_OUTPUT_LIST = "land_output_list"
 FNAME_TEMP_LIST = "land_model_list"
 FNAME_DEPEND_LIST = "land_depend_list"
 FNAME_MAKE_DEPEND = "land_make_depend"
+FNAME_HEIGHT_LIST = "heightlist.lst"
+FNAME_HEIGHT_RESULT = "convresult"
 
 #land_outputディレクトリ名
 DIR_OUTPUT = "land_output"
@@ -31,6 +33,8 @@ LNAME_DEPEND_LIST = "LAND_DEPEND_LIST"
 #makefileで定義されている文字列
 STR_BINLINKER = "$(BINLINKER)"
 STR_G3DCVTR = "$(G3DCVTR)"
+STR_HEIGHTCNV = "$(HEIGHTCNV)"
+STR_HEIGHTRETFILE = "$(HEIGHTRETFILE)"
 
 #ダミーファイル
 FNAME_DMYFILE_GRID_3DMD = "dmygmap.3dmd"
@@ -44,10 +48,32 @@ FNAME_DMYFILE_NOGRID_H_IMD = "dummy_h_ng.imd"
 MAPTYPESTR_GRID = "MAPTYPE_GRID"
 MAPTYPESTR_NOGRID = "MAPTYPE_NOGRID"
 
+#4byte補正rubyファイル名
+RUBYNAME_PAD4BYTE = "pad4byte.rb"
+
+#=======================================================================
+#	エラー
+#=======================================================================
+def error_end(
+  file_output_list, fpath_output_list,
+  file_temp_list, fpath_temp_list,
+  file_depend_list, fpath_depend_list,
+  file_make_depend, fpath_make_depend )
+  file_make_depend.close
+  file_depend_list.close
+  file_temp_list.close
+  file_output_list.close
+  File.delete( fpath_output_list )
+  File.delete( fpath_temp_list )
+  File.delete( fpath_depend_list )
+  File.delete( fpath_make_depend )
+end
+
 #=======================================================================
 #	ファイルコピー
 #=======================================================================
 def file_copy( srcpath, copypath )
+#  FileUtils.copy( srcpath, copypath )
 	open( srcpath, "rb" ){ |input|
 		open( copypath, "wb" ){ |output|
 			output.write( input.read )
@@ -56,7 +82,7 @@ def file_copy( srcpath, copypath )
 end
 
 #=======================================================================
-# マップタイプ　グリッド用一覧書き込み
+# マップタイプ　グリッド用一覧、出力ルール書き込み
 #=======================================================================
 def file_write_grid( name,
   file_output_list, file_temp_list, file_depend_list, file_make_depend )
@@ -120,7 +146,7 @@ def file_write_grid( name,
 end
 
 #=======================================================================
-# マップタイプ　非グリッド用一覧書き込み
+# マップタイプ　非グリッド用一覧、出力ルール書き込み
 #=======================================================================
 def file_write_nogrid( name,
   file_output_list, file_temp_list, file_depend_list, file_make_depend )
@@ -170,14 +196,16 @@ def file_write_nogrid( name,
   
   file_make_depend.printf( "\t@echo create_bhc %s\n", name )
   file_make_depend.printf(
-    "\t@echo ./%s/%sh > heightlist.lst\n", DIRSTR_RES, name )
-  file_make_depend.printf( "\t@echo \\#END >> heightlist.lst\n" )
+    "\t@echo ./%s/%sh > %s\n", DIRSTR_RES, name, FNAME_HEIGHT_LIST )
+  file_make_depend.printf( "\t@echo \\#END >> %s\n", FNAME_HEIGHT_LIST )
   
   file_make_depend.printf(
-   "\t@$(HEIGHTCNV) heightlist.lst < $(HEIGHTRETFILE) > convresult\n" )
+   "\t@%s %s < %s > %s\n", STR_HEIGHTCNV, FNAME_HEIGHT_LIST,
+     STR_HEIGHTRETFILE, FNAME_HEIGHT_RESULT )
+  
   file_make_depend.printf(
-    "\t@ruby pad4byte.rb %s/%sh.bhc %s/%s.bhc\n",
-    DIRSTR_RES, name, DIRSTR_TEMP, name )
+    "\t@ruby %s %s/%sh.bhc %s/%s.bhc\n",
+    RUBYNAME_PAD4BYTE, DIRSTR_RES, name, DIRSTR_TEMP, name )
   file_make_depend.printf( "\t@rm %s/%sh.bhc\n\n", DIRSTR_RES, name )
   
   #land_make_depend exist file check
@@ -239,10 +267,17 @@ while file_name = ARGV.shift
       file_write_grid( name,
         file_output_list, file_temp_list,
         file_depend_list, file_make_depend )
-    else
+    elsif( type == MAPTYPESTR_NOGRID )
       file_write_nogrid( name,
         file_output_list, file_temp_list,
         file_depend_list, file_make_depend )
+    else
+      printf( "land_list.rb ERROR UNKNOW MAPTYPE\n" )
+      error_end( file_output_list, FNAME_OUTPUT_LIST,
+          file_temp_list, FNAME_TEMP_LIST,
+          file_depend_list, FNAME_DEPEND_LIST,
+          file_make_depend, FNAME_MAKE_DEPEND )
+      exit 1
     end
 	end
 	file_csv.close
