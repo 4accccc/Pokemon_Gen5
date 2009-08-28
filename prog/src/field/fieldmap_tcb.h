@@ -32,13 +32,16 @@ void FIELDMAP_TCB_WARP_PLAYER_AddTask_AppearDown(       // ~‰º“oê
 void FIELDMAP_TCB_WARP_PLAYER_AddTask_FallIn(           // —‰º“oê
     FIELDMAP_WORK* fieldmap, int frame, int dist );
 
-//=======================
-// fieldmap_tcb_camera.c
-//=======================
+//============================
+// fieldmap_tcb_camera_zoom.c
+//============================
 // ƒJƒƒ‰‚ÌƒY[ƒ€
 void FIELDMAP_TCB_AddTask_CameraZoom(
     FIELDMAP_WORK* fieldmap, int frame, fx32 dist );  
 
+//============================
+// fieldmap_tcb_camera_rot.c
+//============================
 // ƒJƒƒ‰‚Ì‰ñ“]
 void FIELDMAP_TCB_AddTask_CameraRotate_Yaw(             // ƒˆ[‰ñ“]
     FIELDMAP_WORK* fieldmap, int frame, u16 angle );   
