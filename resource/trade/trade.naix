@@ -1,0 +1,31 @@
+/*****************************************************************************
+	Archive file index definition.
+	File: trade.naix
+
+	This file was created by NINTENDO NITRO-System Archiver.
+
+
+ *****************************************************************************/
+
+#ifndef NARC_TRADE_NAIX_
+#define NARC_TRADE_NAIX_
+
+enum {
+	NARC_trade_wb_trade_bg_NCLR = 0,
+	NARC_trade_wb_trade_obj_NCLR = 1,
+	NARC_trade_wb_trade_bg01_NCGR = 2,
+	NARC_trade_wb_trade_bg02_NCGR = 3,
+	NARC_trade_wb_trade_obj01_NCGR = 4,
+	NARC_trade_wb_trade_obj01_NCER = 5,
+	NARC_trade_wb_trade_bg01_NSCR = 6,
+	NARC_trade_wb_trade_bg02_NSCR = 7,
+	NARC_trade_wb_trade_bg03_NSCR = 8,
+	NARC_trade_wb_trade_stbg01_NSCR = 9,
+	NARC_trade_wb_trade_stbg02_NSCR = 10,
+	NARC_trade_wb_trade_stbg03_NSCR = 11,
+	NARC_trade_wb_trade_obj01_NANR = 12,
+	NARC_trade_Makefile = 13
+};
+
+/* NARC_TRADE_NAIX_ */
+#endif

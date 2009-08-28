@@ -10,6 +10,7 @@ RESOURCE_MACRO	= $(PROJECT_RSCDIR)\macro_define
 SUBDIRS	=	wmi \
 			sound \
 			bag \
+		  trade \
 			test_layout \
 			test_graphic\
 			message\
