@@ -25,14 +25,16 @@ module PmScript
 			@lvar_count = 0
 			@lvar_stack = Hash.new
 
+      @switch_stack = Array.new
+
 			@ftable = Hash.new
 		end
 
     #---------------------------------------------
     # ローカルラベル取得
     #---------------------------------------------
-		def get_label
-			label = sprintf("LABEL%05d", @label_count)
+		def get_label()
+			label = sprintf("local_label%05d", @label_count)
 			@label_count += 1
 			label
 		end
@@ -93,6 +95,19 @@ module PmScript
 			end
 			@ftable[funcname]
 		end
+    #---------------------------------------------
+    #---------------------------------------------
+    def get_switch_params()
+      @switch_stack.last
+    end
+
+    def push_switch_params( params )
+      @switch_stack.push params
+    end
+
+    def pop_switch_params()
+      @switch_stack.pop
+    end
 	end
 
 
@@ -130,8 +145,12 @@ module PmScript
 		end
 
 		def compile( intp )
+      puts "//CmdNode"
+      if @cmd =~ /EVENT_START/ then
+        puts "#{@args[0]}_START:"
+      end
 			if @args then
-				puts "\t#{@cmd}\t#{@args}"
+        puts "\t#{@cmd}\t#{@args}"
 			else
 				puts "\t#{@cmd}"
 			end
@@ -165,11 +184,11 @@ module PmScript
 			puts "\t#{@cond_node[0]}"
 
 			#put if_stmt condition EOL
-			label1 = intp.get_label
+			label1 = intp.get_label()
 			puts "\t_IF_JUMP\t#{@cond_node[1]},#{label1}"
 			put_list( intp, @then_stmt )
 			if @else_stmt then
-				label2 = intp.get_label
+				label2 = intp.get_label()
 				puts "\t_JUMP\t#{label2}"
 				puts "#{label1}:"
 				put_list( intp, @else_stmt )
@@ -180,6 +199,58 @@ module PmScript
 
 		end
 	end
+
+
+#---------------------------------------------
+# ノード：switch構文
+#---------------------------------------------
+  class SwitchNode < Node
+    def initialize( workname, case_stmts)
+      @workname = workname
+      @case_stmts=case_stmts
+    end
+
+    def compile( intp )
+      end_label = intp.get_label()
+      intp.push_switch_params( [@workname, end_label] )
+      put_list( intp, @case_stmts )
+      puts "#{end_label}:"
+      intp.pop_switch_params()
+    end
+
+  end
+
+#---------------------------------------------
+# ノード：CASE文
+#---------------------------------------------
+  class CaseNode < Node
+    def initialize( args, stmts )
+      @args = args
+      @stmts = stmts
+    end
+
+    def compile( intp )
+      hit_label = intp.get_label()
+      workname, end_label = intp.get_switch_params()
+      @args.each{|cond|
+        if cond == ',' then next end
+				if cond =~ /\A\$[a-zA-Z][a-zA-Z0-9_]*/
+          puts "\t _CMPWK #{workname}, #{cond.sub(/\A\$/,"")}"
+        else
+          puts "\t _CMPVAL #{workname}, #{cond}"
+        end
+
+        puts "\t_IF_JUMP  EQ, #{hit_label}"
+      }
+      pass_label = intp.get_label()
+      puts "\t_JUMP #{pass_label}"
+      puts "#{hit_label}:"
+      put_list( intp, @stmts )
+      puts "\t_JUMP #{end_label}"
+      puts "#{pass_label}:"
+    end
+
+  end
 
 #---------------------------------------------
 #---------------------------------------------

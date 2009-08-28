@@ -15,6 +15,6 @@ goto end
 
 :diff
 REM ruby c:\cygwin\bin\racc -o sample.rb sp3.y
-"C:\Program Files\ruby-1.8\bin\racc.bat" -o sample.rb sp3.y
+"C:\Program Files\ruby-1.8\bin\racc.bat" -o sample.rb sp4.y
 diff sample.rb parser.rb
 :end

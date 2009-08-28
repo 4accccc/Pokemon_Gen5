@@ -191,6 +191,7 @@ rule
 					{
 					}
 				| callfunc
+        | switch_stmt
 
 	#---------------------------------------------
 	#	「関数呼び出し」は下記のいずれか：
@@ -314,6 +315,45 @@ rule
 					{
 						result = 'GT'	#result = 'LE'
 					}
+
+	#---------------------------------------------
+  # 「switch」は
+  # 「SWITCH」「変数参照」「終端」「case文のならび」「ENDSWITCH」
+	#---------------------------------------------
+
+  switch_stmt : SWITCH VARREF EOL case_stmt_list ENDSWITCH
+          {
+            result = SwitchNode.new(val[1].sub(/\A\$/,""), val[3])
+          }
+
+	#---------------------------------------------
+  # 「case文のならび」は下記のいずれか：
+  # 「case文」
+  # 「case文のならび」「case文」
+  #
+	#---------------------------------------------
+  case_stmt_list  :
+          {
+            result = []
+          }
+        | case_stmt
+          {
+            result = [ val[0] ]
+          }
+        | case_stmt_list case_stmt
+          {
+            result.push val[1]
+          }
+
+	#---------------------------------------------
+  # 「case文」は
+  # 「CASE」「引数」「THEN」「文の並び」
+	#---------------------------------------------
+  case_stmt : CASE args THEN stmt_list
+          {
+            result = CaseNode.new(val[1], val[3])
+          }
+
 
 	#---------------------------------------------
 	#	「代入」は
@@ -457,7 +497,10 @@ RESERVED = {
 	'FLAG_ON'	=> :FLAG_ON,
 	'FLAG_OFF'	=> :FLAG_OFF,
   'EVENT_START' => :EVENT_START,
-  'EVENT_END' => :EVENT_END
+  'EVENT_END' => :EVENT_END,
+  'SWITCH' => :SWITCH,
+  'CASE' => :CASE,
+  'ENDSWITCH' => :ENDSWITCH
 };
 
 #予約型定義

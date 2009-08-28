@@ -52,9 +52,29 @@ _EVENT_DATA_END
 /**************************************************************/
 /*   R01　ポケモン捕獲デモ                                    */
 /**************************************************************/
+ev_dummy:
 EVENT_START   ev_r01_poke_getdemo
 //POSイベント、POSごとに主人公移動アニメ
 	_PLAYER_POS_GET( SCWK_TEMP0,SCWK_TEMP1 ) //自機座標取得
+  SWITCH $SCWK_TEMP0
+  CASE 786 THEN
+      _OBJ_ANIME( MMDL_ID_PLAYER,anime_r01_guide00a )
+      _OBJ_ANIME_WAIT()
+  CASE 787, 788, 100 THEN
+      _OBJ_ANIME( MMDL_ID_PLAYER,anime_r01_guide00b )
+      _OBJ_ANIME_WAIT()
+  CASE 789 THEN
+      _OBJ_ANIME( MMDL_ID_PLAYER,anime_r01_guide00c )
+      _OBJ_ANIME_WAIT()
+  CASE 790 THEN
+      _OBJ_ANIME( MMDL_ID_PLAYER,anime_r01_guide00d )
+      _OBJ_ANIME_WAIT()
+  CASE 791 THEN
+      _OBJ_ANIME( MMDL_ID_PLAYER,anime_r01_guide00e )
+      _OBJ_ANIME_WAIT()
+  ENDSWITCH
+ev_dummy_end:
+/*
   IF $SCWK_TEMP0 == 786 THEN
       _OBJ_ANIME( MMDL_ID_PLAYER,anime_r01_guide00a )
       _OBJ_ANIME_WAIT()
@@ -71,6 +91,7 @@ EVENT_START   ev_r01_poke_getdemo
       _OBJ_ANIME( MMDL_ID_PLAYER,anime_r01_guide00e )
       _OBJ_ANIME_WAIT()
   ENDIF
+*/
 
 //ライバル、アニメ＋メッセージ
 	_OBJ_ANIME( R01_RIVAL,anime_R01_pokeget0 )
