@@ -229,7 +229,7 @@ static void mapCtrlC3_Main( FIELDMAP_WORK *fieldWork, VecFx32 *pos )
     }
 
 		// ˆÚ“®•ûŒü‚ÌÝ’è
-		FIELD_PLAYER_NOGRID_Rail_Move( fld_player, FIELDMAP_GetFldEffCtrl(fieldWork), FIELDMAP_GetFieldCamera(fieldWork), GFL_UI_KEY_GetCont(), &mwk->player_work );
+		FIELD_PLAYER_NOGRID_Rail_Move( fld_player, FIELDMAP_GetFldEffCtrl(fieldWork), FIELDMAP_GetFieldCamera(fieldWork), GFL_UI_KEY_GetCont(), &mwk->player_work, FIELDMAP_GetFldNoGridMapper( fieldWork ) );
 
 
     FIELD_PLAYER_GetPos( fld_player, pos );

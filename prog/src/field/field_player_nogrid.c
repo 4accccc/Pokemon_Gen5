@@ -83,7 +83,7 @@ void FIELD_PLAYER_NOGRID_Rail_SetUp( FIELD_PLAYER *fld_player, FIELD_PLAYER_NOGR
  *	@param  p_wk          補助ワーク
  */
 //-----------------------------------------------------------------------------
-void FIELD_PLAYER_NOGRID_Rail_Move( FIELD_PLAYER *fld_player, FLDEFF_CTRL *fectrl, const FIELD_CAMERA* cp_camera, int key, FIELD_PLAYER_NOGRID_WORK* p_wk )
+void FIELD_PLAYER_NOGRID_Rail_Move( FIELD_PLAYER *fld_player, FLDEFF_CTRL *fectrl, const FIELD_CAMERA* cp_camera, int key, FIELD_PLAYER_NOGRID_WORK* p_wk, const FLDNOGRID_MAPPER* cp_nogridMapper )
 {
 	VecFx32 target;
 	VecFx32 camerapos;
@@ -110,6 +110,17 @@ void FIELD_PLAYER_NOGRID_Rail_Move( FIELD_PLAYER *fld_player, FLDEFF_CTRL *fectr
 	rotate_y = FX_Atan2Idx( -camera_way.x, -camera_way.z );
 	FLDEFF_SHADOW_SetGlobalRotate( fectrl, 0,rotate_y,0 );
 
+
+  // アトリビュートの取得
+  {
+    MAPATTR attr;
+    RAIL_LOCATION location;
+
+    FIELD_RAIL_WORK_GetLocation( p_wk->railwork, &location );
+    attr = FLDNOGRID_MAPPER_GetAttr( cp_nogridMapper, &location );
+
+    TOMOYA_Printf( "attr = %x\n", attr );
+  }
 
 
   // 方向更新＋走りチェック

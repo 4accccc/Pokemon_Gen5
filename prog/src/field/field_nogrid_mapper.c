@@ -141,10 +141,33 @@ void FLDNOGRID_MAPPER_Release( FLDNOGRID_MAPPER* p_mapper )
   GF_ASSERT( p_mapper );
 
   FLD_SCENEAREA_Release( p_mapper->p_areaMan );
+  FIELD_RAIL_MAN_Clear( p_mapper->p_railMan );
   FIELD_RAIL_LOADER_Clear( p_mapper->p_railLoader );
   FLD_SCENEAREA_LOADER_Clear( p_mapper->p_areaLoader );
   RAIL_ATTR_Release( p_mapper->p_attr );
 }
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ノーグリッド動作  設定データの有無
+ *
+ *	@param	cp_mapper   マッパー
+ *
+ *	@retval TRUE  ある
+ *	@retval FALSE ない
+ */
+//-----------------------------------------------------------------------------
+BOOL FLDNOGRID_MAPPER_IsResistData( const FLDNOGRID_MAPPER* cp_mapper )
+{
+  GF_ASSERT( cp_mapper );
+
+  if( FIELD_RAIL_MAN_IsLoad( cp_mapper->p_railMan ) )
+  {
+    return TRUE;
+  }
+  return FALSE;
+}
+
 
 
 //----------------------------------------------------------------------------
@@ -323,6 +346,7 @@ void FLDNOGRID_MAPPER_DEBUG_LoadRailBynary( FLDNOGRID_MAPPER* p_mapper, void* p_
   FIELD_RAIL_LOADER_Clear( p_mapper->p_railLoader );
   FIELD_RAIL_LOADER_DEBUG_LoadBinary( p_mapper->p_railLoader, p_dat, size );
 
+  FIELD_RAIL_MAN_Clear( p_mapper->p_railMan );
 	FIELD_RAIL_MAN_Load( p_mapper->p_railMan, FIELD_RAIL_LOADER_GetData( p_mapper->p_railLoader ) );
 }
 

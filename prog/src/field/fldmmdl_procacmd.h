@@ -246,4 +246,38 @@ extern int (* const DATA_AC_JumpGUL1G_8F_Tbl[])( MMDL * );
 extern int (* const DATA_AC_JumpGUR1G_8F_Tbl[])( MMDL * );
 extern int (* const DATA_AC_MarkGyoeTWait_Tbl[])( MMDL * );
 
+
+//--------------------------------------------------------------
+///	AC_RAILŒn
+//--------------------------------------------------------------
+// DIRŒn
+extern int (* const DATA_AC_RailDirU_Tbl[])( MMDL * );
+extern int (* const DATA_AC_RailDirD_Tbl[])( MMDL * );
+extern int (* const DATA_AC_RailDirL_Tbl[])( MMDL * );
+extern int (* const DATA_AC_RailDirR_Tbl[])( MMDL * );
+
+// WALKŒn
+extern int (* const DATA_AC_RailWalkU_16F_Tbl[])( MMDL * );
+extern int (* const DATA_AC_RailWalkD_16F_Tbl[])( MMDL * );
+extern int (* const DATA_AC_RailWalkL_16F_Tbl[])( MMDL * );
+extern int (* const DATA_AC_RailWalkR_16F_Tbl[])( MMDL * );
+extern int (* const DATA_AC_RailWalkU_8F_Tbl[])( MMDL * );
+extern int (* const DATA_AC_RailWalkD_8F_Tbl[])( MMDL * );
+extern int (* const DATA_AC_RailWalkL_8F_Tbl[])( MMDL * );
+extern int (* const DATA_AC_RailWalkR_8F_Tbl[])( MMDL * );
+extern int (* const DATA_AC_RailWalkU_4F_Tbl[])( MMDL * );
+extern int (* const DATA_AC_RailWalkD_4F_Tbl[])( MMDL * );
+extern int (* const DATA_AC_RailWalkL_4F_Tbl[])( MMDL * );
+extern int (* const DATA_AC_RailWalkR_4F_Tbl[])( MMDL * );
+extern int (* const DATA_AC_RailWalkU_2F_Tbl[])( MMDL * );
+extern int (* const DATA_AC_RailWalkD_2F_Tbl[])( MMDL * );
+extern int (* const DATA_AC_RailWalkL_2F_Tbl[])( MMDL * );
+extern int (* const DATA_AC_RailWalkR_2F_Tbl[])( MMDL * );
+
+// DASHŒn
+extern int (* const DATA_AC_RailDashU_4F_Tbl[])( MMDL * );
+extern int (* const DATA_AC_RailDashD_4F_Tbl[])( MMDL * );
+extern int (* const DATA_AC_RailDashL_4F_Tbl[])( MMDL * );
+extern int (* const DATA_AC_RailDashR_4F_Tbl[])( MMDL * );
+
 #endif //MMDL_PROCACMD_H_FILE

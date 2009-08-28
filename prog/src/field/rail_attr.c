@@ -13,6 +13,8 @@
 
 #include <gflib.h>
 
+#include "arc_def.h"
+
 #include "field_rail.h"
 
 #include "rail_attr.h"
@@ -23,7 +25,7 @@
 */
 //-----------------------------------------------------------------------------
 
-#define RAIL_ATTR_ARCID ( 0 )
+#define RAIL_ATTR_ARCID ( ARCID_RAIL_DATA )
 
 //-----------------------------------------------------------------------------
 /**
@@ -129,11 +131,14 @@ void RAIL_ATTR_Load( RAIL_ATTR_DATA* p_work, u32 datano, u32 heapID )
   p_work->line_max  = p_work->p_file->line_num;
   p_work->pp_line   = GFL_HEAP_AllocClearMemory( heapID, sizeof(RAIL_ATTR_LINE*)*p_work->line_max );
 
+  TOMOYA_Printf( "rail attr linemax = %d\n", p_work->line_max );
+
   // ポインタを設定
   size = sizeof( RAIL_ATTR_RESOURCE );
   for( i=0; i<p_work->line_max; i++ )
   {
     p_work->pp_line[i] = (RAIL_ATTR_LINE*)( ((u8*)p_work->p_file) + size );
+    TOMOYA_Printf( "index %d x=[%d] z=[%d]\n", i, p_work->pp_line[i]->x, p_work->pp_line[i]->z );
     size += 4 + ( sizeof(MAPATTR) * (p_work->pp_line[i]->x * p_work->pp_line[i]->z) );
   }
 }
@@ -201,28 +206,29 @@ MAPATTR RAIL_ATTR_GetAttribute( const RAIL_ATTR_DATA* cp_work, const RAIL_LOCATI
   
   GF_ASSERT( cp_work );
   GF_ASSERT( cp_location );
-  GF_ASSERT( cp_location->type == FIELD_RAIL_TYPE_LINE );
-
-
-  if( cp_work->line_max > cp_location->rail_index )
-  {
   
-    // ラインアトリビュートデータの取得
-    cp_lineattr = cp_work->pp_line[ cp_location->rail_index ];
-
-    // width_gridは、-～+の数字なので、+のみの値にする。
-    // 奇数のことも考慮し、%2もたす。
-    // (奇数なら、+1)
-    x = cp_location->width_grid + (cp_lineattr->x / 2) + (cp_lineattr->x % 2);
-    z = cp_location->line_grid;
-
-    index = (cp_lineattr->x * z) + x;
+  if( cp_location->type == FIELD_RAIL_TYPE_LINE )
+  {
+    if( cp_work->line_max > cp_location->rail_index )
+    {
     
-    // アトリビュートインデックスチェック
-    GF_ASSERT( index < (cp_lineattr->x * cp_lineattr->z) );
+      // ラインアトリビュートデータの取得
+      cp_lineattr = cp_work->pp_line[ cp_location->rail_index ];
+
+      // width_gridは、-～+の数字なので、+のみの値にする。
+      x = ( cp_location->width_grid + (cp_lineattr->x / 2) );
+      z = cp_location->line_grid;
+
+//      TOMOYA_Printf( "x = %d, z= %d\n", x,z );
+
+      index = (cp_lineattr->x * z) + x;
+      
+      // アトリビュートインデックスチェック
+      GF_ASSERT( index < (cp_lineattr->x * cp_lineattr->z) );
 
 
-    attr = cp_lineattr->attr[ index ];
+      attr = cp_lineattr->attr[ index ];
+    }
   }
 
   return attr;

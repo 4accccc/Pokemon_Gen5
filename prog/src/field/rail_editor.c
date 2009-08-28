@@ -1543,7 +1543,7 @@ static void RE_InputPoint_Rail( DEBUG_RAIL_EDITOR* p_wk )
   FLDNOGRID_MAPPER_Main( p_mapper );
 
   // プレイヤー動作メイン
-  FIELD_PLAYER_NOGRID_Rail_Move( p_player, FIELDMAP_GetFldEffCtrl(p_wk->p_fieldmap), FIELDMAP_GetFieldCamera(p_wk->p_fieldmap), GFL_UI_KEY_GetCont(), &p_wk->railwork );
+  FIELD_PLAYER_NOGRID_Rail_Move( p_player, FIELDMAP_GetFldEffCtrl(p_wk->p_fieldmap), FIELDMAP_GetFieldCamera(p_wk->p_fieldmap), GFL_UI_KEY_GetCont(), &p_wk->railwork, FIELDMAP_GetFldNoGridMapper( p_wk->p_fieldmap ) );
 
 	FIELD_PLAYER_GetPos( p_player, &p_wk->camera_target );
 //	FIELD_CAMERA_BindTarget( p_camera, &p_wk->camera_target );

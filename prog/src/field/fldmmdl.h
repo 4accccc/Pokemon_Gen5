@@ -14,6 +14,7 @@
 #include "arc_def.h"
 
 #include "field_g3d_mapper.h"
+#include "field_nogrid_mapper.h"
 #include "eventwork.h"
 
 #include "arc/fieldmap/fldmmdl_objcode.h"
@@ -191,6 +192,7 @@ typedef enum
 	MMDL_STABIT_ATTR_OFFS_OFF=(1<<27),///<アトリビュートオフセット設定OFF
 	MMDL_STABIT_BRIDGE=(1<<28),///<橋移動中である
 	MMDL_STABIT_HEIGHT_EXPAND=(1<<29),///<拡張高さに反応する
+	MMDL_STABIT_RAIL_MOVE = (1<<30),///<レール動作
 }MMDL_STABIT;
 
 //--------------------------------------------------------------
@@ -548,7 +550,7 @@ extern MMDLSYS * MMDLSYS_CreateSystem( HEAPID heapID, u32 max );
 extern void MMDLSYS_FreeSystem( MMDLSYS *fos );
 
 extern void MMDLSYS_SetupProc(
-	MMDLSYS *fos, HEAPID heapID, const FLDMAPPER *pG3DMapper );
+	MMDLSYS *fos, HEAPID heapID, const FLDMAPPER *pG3DMapper, FLDNOGRID_MAPPER* pNOGRIDMapper );
 extern void MMDLSYS_DeleteProc( MMDLSYS *fos );
 extern void MMDLSYS_UpdateProc( MMDLSYS *fos );
 extern void MMDLSYS_VBlankProc( MMDLSYS *fos );
@@ -608,6 +610,7 @@ extern void MMDLSYS_SetBlActCont(
 extern MMDL_BLACTCONT * MMDLSYS_GetBlActCont( MMDLSYS *mmdlsys );
 
 extern const FLDMAPPER * MMDLSYS_GetG3DMapper( const MMDLSYS *fos );
+extern FLDNOGRID_MAPPER * MMDLSYS_GetNOGRIDMapper( const MMDLSYS *fos );
 extern void MMDLSYS_SetFieldMapWork(
     MMDLSYS *fos, void *fieldMapWork );
 extern void * MMDLSYS_GetFieldMapWork( MMDLSYS *fos );
@@ -821,6 +824,7 @@ extern void MMDL_ChangeOBJCode( MMDL *mmdl, u16 code );
 extern u8 * DEBUG_MMDL_GetOBJCodeString( u16 code, HEAPID heapID );
 #endif
 
+
 //--------------------------------------------------------------
 //	fldmmdl_movedata.c
 //--------------------------------------------------------------
@@ -981,5 +985,23 @@ extern BOOL MMDL_BLACTCONT_CheckOBJCodeRes(
 extern BOOL MMDL_BLACTCONT_AddOBJCodeRes(
     MMDLSYS *mmdlsys, u16 code, BOOL trans, BOOL guest );
 extern void MMDL_BLACTCONT_DeleteOBJCodeRes( MMDLSYS *mmdlsys, u16 code );
+
+
+//--------------------------------------------------------------
+//	fldmmdl_railmove.c
+//--------------------------------------------------------------
+extern void MMDL_InitRailMoveProc( MMDL * mmdl );
+extern void MMDL_UpdateRailMove( MMDL * mmdl );
+
+
+//--------------------------------------------------------------
+//	fldmmdl_railmove_0.c
+//--------------------------------------------------------------
+extern void MMDL_SetRailLocation( MMDL * fmmdl, const RAIL_LOCATION* location );
+extern void MMDL_GetRailLocation( const MMDL * fmmdl, RAIL_LOCATION* location );
+extern void MMDL_GetOldRailLocation( const MMDL * fmmdl, RAIL_LOCATION* location );
+extern FIELD_RAIL_WORK* MMDL_GetRailWork( const MMDL * fmmdl );
+extern BOOL MMDL_ReqRailMove( MMDL * fmmdl, u16 dir, s16 wait );
+
 
 #endif //MMDL_H_FILE

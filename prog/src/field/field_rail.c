@@ -23,6 +23,7 @@
 // 歩きカウント
 static u8 RAIL_COUNTUP[ RAIL_FRAME_MAX ] = 
 {
+  1,        //RAIL_FRAME_16,
   2,        //RAIL_FRAME_8,
   4,        //RAIL_FRAME_4,
   8,       //RAIL_FRAME_2,
@@ -111,6 +112,9 @@ struct _FIELD_RAIL_WORK{
   u8 last_move;         // 最新の動作で、移動したのかチェック
   u8 last_pad;          // 予備
   
+  VecFx32 pos;  // 現在座標
+  RAIL_LOCATION now_location;
+  RAIL_LOCATION last_location;
 
 };
 
@@ -156,6 +160,7 @@ static BOOL isValidRail(const FIELD_RAIL_WORK * work);
 static const RAIL_CAMERA_SET * getCameraSet(const FIELD_RAIL_WORK * work);
 static const char * getRailName(const FIELD_RAIL_WORK * work);
 static void getRailPosition(const FIELD_RAIL_WORK * work, VecFx32 * pos);
+static void getRailLocation( const FIELD_RAIL_WORK * work, RAIL_LOCATION * location );
 static s32 getLineOfsMax( const RAIL_LINE * line, fx32 unit, const RAIL_SETTING* rail_dat );
 static s32 getLineWidthOfsMax( const RAIL_LINE * line, u32 line_ofs, u32 line_ofs_max, const RAIL_SETTING* rail_dat );
 static RAIL_KEY updateLine( FIELD_RAIL_WORK * work, const RAIL_LINE * line, u32 line_ofs_max, u32 key );
@@ -166,6 +171,7 @@ static BOOL isLinePoint_E( const RAIL_SETTING * rail_dat, const RAIL_LINE * line
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
+static void clearRailDat( RAIL_SETTING * raildat );
 static void initRailDat( RAIL_SETTING * raildat, const RAIL_SETTING * setting );
 static const RAIL_POINT* getRailDatPoint( const RAIL_SETTING * raildat, u32 index );
 static const RAIL_LINE* getRailDatLine( const RAIL_SETTING * raildat, u32 index );
@@ -261,6 +267,40 @@ void FIELD_RAIL_MAN_Load(FIELD_RAIL_MAN * man, const RAIL_SETTING * setting)
   // ポイント、ラインテーブル設定
 	initRailDat( &man->rail_dat, setting );
 }
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  クリア
+ *
+ *	@param	man マネージャ
+ */
+//-----------------------------------------------------------------------------
+void FIELD_RAIL_MAN_Clear(FIELD_RAIL_MAN * man)
+{
+  man->active_flag = FALSE;
+  // ポイント、ラインテーブル設定
+	clearRailDat( &man->rail_dat );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  レール情報の有無を確認
+ *
+ *	@param	man   マネージャ
+ *
+ *	@retval TRUE  ある
+ *	@retval FALSE なし
+ */
+//-----------------------------------------------------------------------------
+BOOL FIELD_RAIL_MAN_IsLoad( const FIELD_RAIL_MAN * man )
+{
+  if( man->rail_dat.point_count == 0 )
+  {
+    return FALSE;
+  }
+  return TRUE;
+}
+
 
 //----------------------------------------------------------------------------
 /**
@@ -463,21 +503,29 @@ void FIELD_RAIL_MAN_UpdateCamera(const FIELD_RAIL_MAN * man)
 //-----------------------------------------------------------------------------
 void FIELD_RAIL_WORK_GetLocation(const FIELD_RAIL_WORK * work, RAIL_LOCATION * location)
 {
-  location->type        = work->type;
+  GF_ASSERT( work );
+  GF_ASSERT( location );
 
-  // インデックス取得
-  if( work->type==FIELD_RAIL_TYPE_POINT ){
-    location->rail_index  = getPointIndex( work->rail_dat, work->point );
-  }else{
-    location->rail_index  = getLineIndex( work->rail_dat, work->line );
-  }
-
-  // 各種オフセット
-  location->line_grid  = RAIL_OFS_TO_GRID(work->line_ofs);
-  location->width_grid = RAIL_OFS_TO_GRID(work->width_ofs);
-  location->key       = work->key;
-
+  // ロケーションの取得
+  *location = work->now_location;
   RAIL_LOCATION_Dump(location);
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  １つ前のロケーションの取得
+ *
+ *	@param	work        ワーク
+ *	@param	location    ロケーション
+ */
+//-----------------------------------------------------------------------------
+void FIELD_RAIL_WORK_GetLastLocation(const FIELD_RAIL_WORK * work, RAIL_LOCATION * location)
+{
+  GF_ASSERT( work );
+  GF_ASSERT( location );
+
+  // ロケーションの取得
+  *location = work->last_location;
 }
 
 //----------------------------------------------------------------------------
@@ -607,6 +655,13 @@ void FIELD_RAIL_WORK_SetLocation(FIELD_RAIL_WORK * work, const RAIL_LOCATION * l
   work->last_frame = RAIL_FRAME_8;
   work->last_key = key;
   work->active = TRUE;
+
+
+  // 座標の初期化
+  getRailPosition(work, &work->pos);
+  // ロケーションの初期化
+  work->now_location = *location;
+  work->last_location = *location;
 }
 
 //------------------------------------------------------------------
@@ -617,7 +672,7 @@ void FIELD_RAIL_WORK_SetLocation(FIELD_RAIL_WORK * work, const RAIL_LOCATION * l
 void FIELD_RAIL_WORK_GetPos(const FIELD_RAIL_WORK * work, VecFx32 * pos)
 {
   GF_ASSERT( work );
-  getRailPosition(work, pos);
+  *pos = work->pos;
 }
 
 
@@ -783,7 +838,15 @@ static void FIELD_RAIL_WORK_Update(FIELD_RAIL_WORK * work)
 		if( work->ofs_move >= RAIL_WALK_OFS )
 		{
 			work->req_move = FALSE;
+
+
+      // ロケーションの更新
+      work->last_location = work->now_location;
+      getRailLocation( work, &work->now_location );
 		}
+
+    // 座標を設定
+    getRailPosition(work, &work->pos);
 	}
 
 }
@@ -982,7 +1045,8 @@ static RAIL_KEY setLine(FIELD_RAIL_WORK * work, const RAIL_LINE * line, RAIL_KEY
   GF_ASSERT(line->name);
   if (work->type == FIELD_RAIL_TYPE_LINE)
   {
-    TAMADA_Printf("RAIL: LINE \"%s\" to %s \"%s\"\n",
+//    TAMADA_Printf("RAIL: LINE \"%s\" to %s \"%s\"\n",
+    OS_TPrintf("RAIL: LINE \"%s\" to %s \"%s\"\n",
         work->line->name, debugGetRailKeyName(key), line->name);
   }
   else
@@ -1043,6 +1107,10 @@ static BOOL isLinePoint_E( const RAIL_SETTING * rail_dat, const RAIL_LINE * line
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
+static void clearRailDat( RAIL_SETTING * raildat )
+{
+  GFL_STD_MemClear( raildat, sizeof(RAIL_SETTING) );
+}
 // レールデータ
 static void initRailDat( RAIL_SETTING * raildat, const RAIL_SETTING * setting )
 {
@@ -1699,6 +1767,32 @@ static void getRailPosition(const FIELD_RAIL_WORK * work, VecFx32 * pos)
     }
   }
 }
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  レールロケーションの取得
+ *
+ *	@param	work      ワーク
+ *	@param	location  ロケーション格納先
+ */
+//-----------------------------------------------------------------------------
+static void getRailLocation( const FIELD_RAIL_WORK * work, RAIL_LOCATION * location )
+{
+  location->type        = work->type;
+
+  // インデックス取得
+  if( work->type==FIELD_RAIL_TYPE_POINT ){
+    location->rail_index  = getPointIndex( work->rail_dat, work->point );
+  }else{
+    location->rail_index  = getLineIndex( work->rail_dat, work->line );
+  }
+
+  // 各種オフセット
+  location->line_grid  = RAIL_OFS_TO_GRID(work->line_ofs);
+  location->width_grid = RAIL_OFS_TO_GRID(work->width_ofs);
+  location->key       = work->key;
+}
+
 
 //----------------------------------------------------------------------------
 /**

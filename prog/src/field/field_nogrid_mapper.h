@@ -76,6 +76,7 @@ extern void FLDNOGRID_MAPPER_Delete( FLDNOGRID_MAPPER* p_mapper );
 // î•ñ‚Ìİ’èA”jŠü
 extern void FLDNOGRID_MAPPER_ResistData( FLDNOGRID_MAPPER* p_mapper, const FLDNOGRID_RESISTDATA* cp_data, u32 heapID );
 extern void FLDNOGRID_MAPPER_Release( FLDNOGRID_MAPPER* p_mapper );
+extern BOOL FLDNOGRID_MAPPER_IsResistData( const FLDNOGRID_MAPPER* cp_mapper );
 
 
 // ƒƒCƒ“ŠÇ—

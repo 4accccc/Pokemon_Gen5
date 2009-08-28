@@ -539,7 +539,7 @@ static void MakeNewRailLocation(GAMEDATA * gamedata, EVENTDATA_SYSTEM * evdata, 
   RAIL_LOCATION railLoc;
   RAIL_LOCATION_Init(&railLoc);
 
-  if (ZONEDATA_DEBUG_IsRailMap(loc_req->zone_id) == TRUE
+  if (ZONEDATA_IsRailMap(loc_req->zone_id) == TRUE
       && loc_req->type != LOCATION_TYPE_DIRECT)
   {
     LOCATION loc_tmp;

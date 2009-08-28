@@ -153,6 +153,7 @@ typedef enum {
  */
 //------------------------------------------------------------------
 typedef enum {  
+  RAIL_FRAME_16,
   RAIL_FRAME_8,
   RAIL_FRAME_4,
   RAIL_FRAME_2,
@@ -268,6 +269,11 @@ extern void FIELD_RAIL_MAN_Delete(FIELD_RAIL_MAN * man);
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 extern void FIELD_RAIL_MAN_Load(FIELD_RAIL_MAN * man, const RAIL_SETTING * setting);
+extern void FIELD_RAIL_MAN_Clear(FIELD_RAIL_MAN * man);
+
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+extern BOOL FIELD_RAIL_MAN_IsLoad( const FIELD_RAIL_MAN * man );
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
@@ -315,8 +321,9 @@ extern BOOL FIELD_RAIL_MAN_GetActiveFlag(const FIELD_RAIL_MAN *man);
 //------------------------------------------------------------------
 extern BOOL FIELD_RAIL_WORK_ForwardReq( FIELD_RAIL_WORK * work, RAIL_FRAME frame, RAIL_KEY key );
 
-extern void FIELD_RAIL_WORK_GetLocation(const FIELD_RAIL_WORK * work, RAIL_LOCATION * location);
 extern void FIELD_RAIL_WORK_SetLocation(FIELD_RAIL_WORK * work, const RAIL_LOCATION * location);
+extern void FIELD_RAIL_WORK_GetLocation(const FIELD_RAIL_WORK * work, RAIL_LOCATION * location);
+extern void FIELD_RAIL_WORK_GetLastLocation(const FIELD_RAIL_WORK * work, RAIL_LOCATION * location);
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------

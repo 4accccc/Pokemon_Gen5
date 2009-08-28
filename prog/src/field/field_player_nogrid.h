@@ -39,7 +39,7 @@ extern void FIELD_PLAYER_NOGRID_Rail_SetUp( FIELD_PLAYER *fld_player, FIELD_PLAY
 
 // 動作
 // p_playerway	の値は、関数内部で、キーの方向に書き換わります。
-extern void FIELD_PLAYER_NOGRID_Rail_Move( FIELD_PLAYER *fld_player, FLDEFF_CTRL *fectrl, const FIELD_CAMERA* cp_camera, int key, FIELD_PLAYER_NOGRID_WORK* p_wk );
+extern void FIELD_PLAYER_NOGRID_Rail_Move( FIELD_PLAYER *fld_player, FLDEFF_CTRL *fectrl, const FIELD_CAMERA* cp_camera, int key, FIELD_PLAYER_NOGRID_WORK* p_wk, const FLDNOGRID_MAPPER* cp_nogridMapper );
 
 extern void FIELD_PLAYER_NOGRID_Free_Move( FIELD_PLAYER *fld_player, int key, fx32 onedist );
 

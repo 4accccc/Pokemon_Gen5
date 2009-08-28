@@ -372,6 +372,9 @@ fx32 FIELD_RAIL_LINE_DIST_FUNC_CircleLine( const RAIL_POINT * point_s, const RAI
 	// 中心からの距離に変更
 	VEC_Subtract( &p0, &center, &p0 );
 	VEC_Subtract( &p1, &center, &p1 );
+  // 平面で考える
+  p0.y = 0;
+  p1.y = 0;
 
 	// 中心からの距離は、平均を使う
 	// 直径を求めたいので、２でわらない
@@ -391,7 +394,7 @@ fx32 FIELD_RAIL_LINE_DIST_FUNC_CircleLine( const RAIL_POINT * point_s, const RAI
 	OS_TPrintf( "r=0x%x\n", r );//*/
 
 	// 円周から、距離を求める
-	dist = FX_Mul(r, FX32_CONST(3.140f));
+	dist = FX_Mul( r, FX32_CONST(3.140f) );
 	dist = FX_Mul( dist, circle_par );
 
 	return dist;

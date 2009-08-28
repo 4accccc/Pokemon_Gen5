@@ -58,6 +58,7 @@ struct _TAG_MMDLSYS
 	u16 tcb_pri;					///<TCBプライオリティ
 	u16 dummy;						///<余り
 	const FLDMAPPER *pG3DMapper;	///<FLDMAPPER
+	FLDNOGRID_MAPPER *pNOGRIDMapper;	///<FLDNOGRID_MAPPER
 
 	void *pTCBSysWork;				///<TCBワーク
 	GFL_TCBSYS *pTCBSys;			///<TCBSYS*
@@ -196,6 +197,8 @@ static void MMdl_SetHeaderPos(MMDL *mmdl,const MMDL_HEADER *head);
 static void MMdl_InitWork( MMDL * mmdl, const MMDLSYS *sys );
 static void MMdl_InitCallMoveProcWork( MMDL * mmdl );
 static void MMdl_InitMoveWork( const MMDLSYS *fos, MMDL * mmdl );
+static void MMdl_InitMoveProc( const MMDLSYS *fos, MMDL * mmdl );
+static void MMdl_UpdateMove( MMDL * mmdl );
 #if 0
 static void MMdlSys_CheckSetInitMoveWork( MMDLSYS *fos );
 static void MMdlSys_CheckSetInitDrawWork( MMDLSYS *fos );
@@ -299,11 +302,12 @@ void MMDLSYS_FreeSystem( MMDLSYS *fos )
  * @param	fos	MMDLSYS*
  * @param	heapID	プロセス用HEAPID
  * @param	pG3DMapper FLDMAPPER
+ * @param	pNOGRIDMapper FLDNOGRID_MAPPER
  * @retval	nothing
  */
 //--------------------------------------------------------------
 void MMDLSYS_SetupProc(
-	MMDLSYS *fos, HEAPID heapID, const FLDMAPPER *pG3DMapper )
+	MMDLSYS *fos, HEAPID heapID, const FLDMAPPER *pG3DMapper, FLDNOGRID_MAPPER* pNOGRIDMapper )
 {
 	fos->heapID = heapID;
 	fos->pG3DMapper = pG3DMapper;
@@ -313,8 +317,12 @@ void MMDLSYS_SetupProc(
 	fos->pTCBSysWork = GFL_HEAP_AllocMemory(
 		heapID, GFL_TCB_CalcSystemWorkSize(fos->mmdl_max) );
 	fos->pTCBSys = GFL_TCB_Init( fos->mmdl_max, fos->pTCBSysWork );
-	
+
+
+  // ノーグリッド移動設定
+	fos->pNOGRIDMapper = pNOGRIDMapper;
 	MMdlSys_OnStatusBit( fos, MMDLSYS_STABIT_MOVE_INIT_COMP );
+
 }
 
 //--------------------------------------------------------------
@@ -425,7 +433,7 @@ MMDL * MMDLSYS_AddMMdl(
 	
 	if( MMDLSYS_CheckStatusBit(fos,MMDLSYS_STABIT_MOVE_INIT_COMP) ){
 		MMdl_InitMoveWork( fos, mmdl );
-		MMDL_InitMoveProc( mmdl );
+		MMdl_InitMoveProc( fos, mmdl );
 	}
 	
 	if( MMDLSYS_CheckStatusBit(fos,MMDLSYS_STABIT_DRAW_INIT_COMP) ){
@@ -720,6 +728,45 @@ static void MMdl_InitMoveWork( const MMDLSYS *fos, MMDL *mmdl )
 	MMDL_OnStatusBit( mmdl, MMDL_STABIT_MOVE_START );
 }
 
+//----------------------------------------------------------------------------
+/**
+ * フィールド動作モデル 動作初期化
+ *	@param	fos
+ *	@param	mmdl 
+ */
+//-----------------------------------------------------------------------------
+static void MMdl_InitMoveProc( const MMDLSYS *fos, MMDL * mmdl )
+{
+  if( !MMDL_CheckStatusBit( mmdl, MMDL_STABIT_RAIL_MOVE ) )
+  {
+    MMDL_InitMoveProc( mmdl );
+  }
+  else
+  {
+    MMDL_InitRailMoveProc( mmdl );
+  }
+}
+
+//----------------------------------------------------------------------------
+/**
+ * フィールド動作モデル動作
+ *
+ *	@param	mmdl 
+ */
+//-----------------------------------------------------------------------------
+static void MMdl_UpdateMove( MMDL * mmdl )
+{
+  GF_ASSERT( mmdl );
+  if( !MMDL_CheckStatusBit( mmdl, MMDL_STABIT_RAIL_MOVE ) )
+  {
+	  MMDL_UpdateMove( mmdl );
+  }
+  else
+  {
+	  MMDL_UpdateRailMove( mmdl );
+  }
+}
+
 //--------------------------------------------------------------
 /**
  * MMDLSYS 動作初期化を行っていない動作モデルに対して初期化処理をセット
@@ -736,7 +783,7 @@ static void MMdlSys_CheckSetInitMoveWork( MMDLSYS *fos )
 	while( MMDLSYS_SearchUseMMdl(fos,&mmdl,&i) == TRUE ){
 		if( MMDL_CheckMoveBit(mmdl,	//初期化関数呼び出しまだ
 			MMDL_MOVEBIT_MOVEPROC_INIT) == 0 ){
-			MMDL_InitMoveProc( mmdl );
+			MMdl_InitMoveProc( mmdl );
 		}
 	}
 }
@@ -816,7 +863,7 @@ void MMDLSYS_Pop( MMDLSYS *mmdlsys )
 			
 			if( MMDL_CheckMoveBit(mmdl,	//初期化関数呼び出しまだ
 				MMDL_MOVEBIT_MOVEPROC_INIT) == 0 ){
-				MMDL_InitMoveProc( mmdl );
+				MMdl_InitMoveProc( mmdlsys, mmdl );
 			}
 			
 			if( MMDL_CheckMoveBit(mmdl, //復元関数呼び出しが必要
@@ -1068,7 +1115,7 @@ static void MMdl_SaveData_LoadMMdl(
 //--------------------------------------------------------------
 void MMDL_UpdateMoveProc( MMDL *mmdl )
 {
-	MMDL_UpdateMove( mmdl );
+	MMdl_UpdateMove( mmdl );
 	
 	if( MMDL_CheckStatusBitUse(mmdl) == TRUE ){
 		MMdl_TCB_DrawProc( mmdl );
@@ -3876,10 +3923,12 @@ void MMDL_InitPosition( MMDL * mmdl, const VecFx32 *vec, u16 dir )
 //--------------------------------------------------------------
 void MMDL_ChangeMoveCode( MMDL *mmdl, u16 code )
 {
+	const MMDLSYS *fos = MMDL_GetMMdlSys( mmdl );
+
 	MMDL_CallMoveDeleteProc( mmdl );
 	MMDL_SetMoveCode( mmdl, code );
 	MMdl_InitCallMoveProcWork( mmdl );
-	MMDL_InitMoveProc( mmdl );
+	MMdl_InitMoveProc( fos, mmdl );
 }
 
 //--------------------------------------------------------------
@@ -4497,6 +4546,24 @@ void MMDL_ChangeOBJCode( MMDL *mmdl, u16 code )
   MMdl_InitDrawStatus( mmdl );
   MMdl_InitDrawWork( mmdl );
 }
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ノーグリッド動作マッパーの取得
+ *
+ *	@param	fos   動作モデルシステム
+ *
+ *	@return　マッパー
+ */
+//-----------------------------------------------------------------------------
+FLDNOGRID_MAPPER * MMDLSYS_GetNOGRIDMapper( const MMDLSYS *fos )
+{
+  GF_ASSERT( fos );
+  return fos->pNOGRIDMapper;
+}
+
+
 
 //======================================================================
 //

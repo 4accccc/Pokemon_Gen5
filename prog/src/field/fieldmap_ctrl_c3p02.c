@@ -184,7 +184,7 @@ static void mapCtrlC3P02_Main( FIELDMAP_WORK* p_fieldwork, VecFx32* p_pos )
   // ’Êí“®ì•”•ª
   if( auto_move == FALSE )
   {
-    FIELD_PLAYER_NOGRID_Rail_Move( p_fld_player, FIELDMAP_GetFldEffCtrl(p_fieldwork), FIELDMAP_GetFieldCamera(p_fieldwork), GFL_UI_KEY_GetCont(), &p_wk->player_work );
+    FIELD_PLAYER_NOGRID_Rail_Move( p_fld_player, FIELDMAP_GetFldEffCtrl(p_fieldwork), FIELDMAP_GetFieldCamera(p_fieldwork), GFL_UI_KEY_GetCont(), &p_wk->player_work, FIELDMAP_GetFldNoGridMapper( p_fieldwork ) );
   }
   else
   {

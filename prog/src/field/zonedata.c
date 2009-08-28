@@ -260,7 +260,7 @@ BOOL ZONEDATA_DEBUG_IsSampleObjUse(u16 zone_id)
  *
  */
 //------------------------------------------------------------------
-BOOL ZONEDATA_DEBUG_IsRailMap(u16 zone_id)
+BOOL ZONEDATA_IsRailMap(u16 zone_id)
 {
   return (ZONEDATA_GetRailDataID(zone_id) != ZONEDATA_NO_RAILDATA_ID);
 }

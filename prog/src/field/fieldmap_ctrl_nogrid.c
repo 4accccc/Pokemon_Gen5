@@ -88,7 +88,7 @@ static void mapCtrlNoGrid_Create(
 
     resist.railDataID = ZONEDATA_GetRailDataID( FIELDMAP_GetZoneID(fieldWork) );
     resist.areaDataID = FLDNOGRID_RESISTDATA_NONE;
-    resist.attrDataID = FLDNOGRID_RESISTDATA_NONE;
+    resist.attrDataID = NARC_field_rail_data_h01_atdat; // ‹´ˆÓŠO‚¾‚Æ‰ó‚ê‚é
 
     FLDNOGRID_MAPPER_ResistData( p_mapper, &resist, FIELDMAP_GetHeapID(fieldWork) );  
   }
@@ -171,7 +171,7 @@ static void mapCtrlNoGrid_Main( FIELDMAP_WORK *fieldWork, VecFx32 *pos )
     PLAYER_WORK *player = GAMEDATA_GetMyPlayerWork(
         GAMESYSTEM_GetGameData(FIELDMAP_GetGameSysWork(fieldWork)) );
 
-		FIELD_PLAYER_NOGRID_Rail_Move( fld_player, FIELDMAP_GetFldEffCtrl(fieldWork), FIELDMAP_GetFieldCamera(fieldWork), GFL_UI_KEY_GetCont(), &work->player_work );
+		FIELD_PLAYER_NOGRID_Rail_Move( fld_player, FIELDMAP_GetFldEffCtrl(fieldWork), FIELDMAP_GetFieldCamera(fieldWork), GFL_UI_KEY_GetCont(), &work->player_work, FIELDMAP_GetFldNoGridMapper( fieldWork ) );
 
     FIELD_PLAYER_GetPos( fld_player, pos );
     PLAYERWORK_setPosition( player, pos );

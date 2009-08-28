@@ -32,11 +32,13 @@ include	$(PROJECT_RSCDIR)\macro_define
 #データ
 #------------------------------------------------------------------------------
 RAILFILE = $(wildcard *.rail)
-OBJ_FILE = $(RAILFILE:.rail=.dat)
+ATTRFILE = $(wildcard *.attr)
+OBJ_FILE = $(RAILFILE:.rail=.dat) $(ATTRFILE:.attr=.atdat)
 
 LIST_FILE 	= list.txt
 
 script = $(PROJECT_ROOT)\tools\rail_editor\rail_conv.pl
+attrscript = $(PROJECT_ROOT)\tools\rail_editor\rail_attr_conv.pl
 
 #------------------------------------------------------------------------------
 #ヘッダ参照先
@@ -52,12 +54,15 @@ HEADERDUMMY_TARGET = headerdummy.txt
 ifeq	($(CONVERTUSER),true)	
 
 
-.SUFFIXES: .rail .dat
+.SUFFIXES: .rail .dat .attr .atdat
 
 #コンバート環境
 .rail.dat:
 	perl $(script) $< $(HEADERDIR)field_rail_loader_func.h $(HEADERDIR)field_rail.h
 	ruby $(PROJECT_ROOT)\tools\binlinker.rb $*.ofs $*.point $*.line $*.camera $*.linepos $@ RL
+
+.attr.atdat:
+	perl $(attrscript) $<
 	
 
 endif
@@ -85,6 +90,7 @@ ifeq	($(CONVERTUSER),true)
 # コピー先のnarcが古い場合実行する
 $(targetname).narc: $(OBJ_FILE)
 	-ls *.dat > $(LIST_FILE)
+	-ls *.atdat >> $(LIST_FILE)
 	$(ARCLIST_MAKE) $(LIST_FILE)
 	nnsarc -c -l -n -i $(targetname) -S $(LIST_FILE)
 	$(NAIXCUT) $(targetname).naix
@@ -112,6 +118,7 @@ clean:
 #コンバート対象者のみ、中間ファイル削除
 ifeq	($(CONVERTUSER),true)	
 	rm -f *.dat
+	rm -f *.atdat
 	rm -f $(targetname).narc
 	rm -f $(targetname).naix
 endif

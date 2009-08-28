@@ -528,7 +528,7 @@ static MAINSEQ_RESULT mainSeqFunc_setup(GAMESYS_WORK *gsys, FIELDMAP_WORK *field
 
     //レールマップの場合は、↑上記でレールに関する初期化が終わった後に
     //保存した位置を反映する
-    if (ZONEDATA_DEBUG_IsRailMap(fieldWork->map_id) == TRUE)
+    if (ZONEDATA_IsRailMap(fieldWork->map_id) == TRUE)
     { 
       // 09/08/05 現状は、レール移動時のプレイヤーに対してロケーションが設定できないため、仮の処理で、ロケーション設定を行う。 tomoya takahashi
 #ifdef PM_DEBUG
@@ -635,7 +635,7 @@ static MAINSEQ_RESULT mainSeqFunc_ready(GAMESYS_WORK *gsys, FIELDMAP_WORK *field
 	// フィールドマップ用制御タスクシステム
 	FLDMAPFUNC_Sys_Main( fieldWork->fldmapFuncSys );
 
-  if (ZONEDATA_DEBUG_IsRailMap(fieldWork->map_id) == TRUE)
+  if (ZONEDATA_IsRailMap(fieldWork->map_id) == TRUE)
   {
     GAMEDATA * gamedata = GAMESYSTEM_GetGameData(gsys);
     EVENTDATA_SYSTEM *evdata = GAMEDATA_GetEventData(gamedata);
@@ -751,7 +751,7 @@ static MAINSEQ_RESULT mainSeqFunc_free(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldW
     FIELD_PLAYER_GetPos(fieldWork->field_player, &player_pos);
     PLAYERWORK_setPosition(pw, &player_pos);
   }
-  if (ZONEDATA_DEBUG_IsRailMap(fieldWork->map_id) == TRUE)
+  if (ZONEDATA_IsRailMap(fieldWork->map_id) == TRUE)
   {
 		GAMEDATA *gamedata = GAMESYSTEM_GetGameData( gsys );
     RAIL_LOCATION railLoc;
@@ -1393,6 +1393,21 @@ extern GFL_TCBSYS* FIELDMAP_GetFieldmapTCBSys( FIELDMAP_WORK * fieldWork )
   return fieldWork->fieldmapTCB;
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  レールマップか　取得
+ *
+ *	@param	fieldWork 
+ *
+ *	@retval TRUE  レールマップ
+ *	@retval FALSE  グリッドマップ
+ */
+//-----------------------------------------------------------------------------
+BOOL FIELDMAP_IsRailMap( const FIELDMAP_WORK * fieldWork )
+{
+  return ZONEDATA_IsRailMap( fieldWork->map_id );
+}
+
 //======================================================================
 //	フィールドマップ　サブ　BG関連
 //======================================================================
@@ -1687,7 +1702,7 @@ static void fldmapMain_MMDL_Init( FIELDMAP_WORK *fieldWork )
 	MMDLSYS_SetFieldMapWork( fmmdlsys, fieldWork );
 
 	MMDLSYS_SetupProc( fmmdlsys,	//動作モデルシステム　セットアップ
-		fieldWork->heapID, fieldWork->g3Dmapper );
+		fieldWork->heapID, fieldWork->g3Dmapper, fieldWork->nogridMapper );
 		
 	MMDL_BLACTCONT_Setup(		//動作モデルビルボード　セットアップ
 		fieldWork->fldMMdlSys, fieldWork->bbdActSys, 32 );

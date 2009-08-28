@@ -202,7 +202,7 @@ static GMEVENT * FIELD_EVENT_CheckNormal( GAMESYS_WORK *gsys, void *work )
 
 	
   //レールの場合のマップ遷移チェック
-  if (ZONEDATA_DEBUG_IsRailMap(req.map_id) == TRUE)
+  if (ZONEDATA_IsRailMap(req.map_id) == TRUE)
   {
     event = checkRailExit(&req, gsys, fieldWork);
     if( event != NULL ){

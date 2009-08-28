@@ -854,6 +854,18 @@ static const MMDL_MOVE_PROC_LIST DATA_FieldOBJMove_CommActor =
 	MMDL_MoveReturnProcDummy,					///<復帰関数
 };
 
+//--------------------------------------------------------------
+/// MV_RAIL_PLAYER
+//--------------------------------------------------------------
+static const MMDL_MOVE_PROC_LIST DATA_FieldOBJMove_RailPlayer =
+{
+	MV_RAIL_PLAYER,									///<動作コード
+	MMDL_RailPlayer_Init,						///<初期化関数
+	MMDL_RailPlayer_Move,						///<動作関数
+  MMDL_RailPlayer_Delete,					///<削除関数
+	MMDL_RailPlayer_Return,					///<復帰関数
+};
+
 //==============================================================================
 //	フィールド動作モデル 動作関数まとめ
 //==============================================================================
@@ -936,6 +948,7 @@ const MMDL_MOVE_PROC_LIST * const DATA_FieldOBJMoveProcListTbl[MV_CODE_MAX] =
 	&DATA_FieldOBJMove_AlongWallLRR,						//MV_ALONGW_LRR
 	&DATA_FieldOBJMove_RndHLim,								//MV_RND_H_LIM
   &DATA_FieldOBJMove_CommActor,           //MV_COMM_ACTOR
+  &DATA_FieldOBJMove_RailPlayer,          //MV_RAIL_PLAYER
 };
 
 //==============================================================================
@@ -1113,6 +1126,31 @@ int (* const * const DATA_AcmdActionTbl[ACMD_MAX])( MMDL * ) =
 	DATA_AC_WalkGUR2F_Tbl,									//AC_WALKGU_R_2F
 	
 	DATA_AC_MarkGyoeTWait_Tbl,							//AC_MARK_GYOE_TWAIT
+
+  DATA_AC_RailDirU_Tbl,                   // AC_RAIL_DIR_U
+  DATA_AC_RailDirD_Tbl,                   // AC_RAIL_DIR_D
+  DATA_AC_RailDirL_Tbl,                   // AC_RAIL_DIR_L
+  DATA_AC_RailDirR_Tbl,                   // AC_RAIL_DIR_R
+  DATA_AC_RailWalkU_16F_Tbl,              // AC_RAIL_WALK_U_16F
+  DATA_AC_RailWalkD_16F_Tbl,              // AC_RAIL_WALK_D_16F
+  DATA_AC_RailWalkL_16F_Tbl,              // AC_RAIL_WALK_L_16F
+  DATA_AC_RailWalkR_16F_Tbl,              // AC_RAIL_WALK_R_16F
+  DATA_AC_RailWalkU_8F_Tbl,               // AC_RAIL_WALK_U_8F
+  DATA_AC_RailWalkD_8F_Tbl,               // AC_RAIL_WALK_D_8F
+  DATA_AC_RailWalkL_8F_Tbl,               // AC_RAIL_WALK_L_8F
+  DATA_AC_RailWalkR_8F_Tbl,               // AC_RAIL_WALK_R_8F
+  DATA_AC_RailWalkU_4F_Tbl,               // AC_RAIL_WALK_U_4F
+  DATA_AC_RailWalkD_4F_Tbl,               // AC_RAIL_WALK_D_4F
+  DATA_AC_RailWalkL_4F_Tbl,               // AC_RAIL_WALK_L_4F
+  DATA_AC_RailWalkR_4F_Tbl,               // AC_RAIL_WALK_R_4F
+  DATA_AC_RailWalkU_2F_Tbl,               // AC_RAIL_WALK_U_2F
+  DATA_AC_RailWalkD_2F_Tbl,               // AC_RAIL_WALK_D_2F
+  DATA_AC_RailWalkL_2F_Tbl,               // AC_RAIL_WALK_L_2F
+  DATA_AC_RailWalkR_2F_Tbl,               // AC_RAIL_WALK_R_2F
+  DATA_AC_RailDashU_4F_Tbl,               // AC_RAIL_DASH_U_4F
+  DATA_AC_RailDashD_4F_Tbl,               // AC_RAIL_DASH_D_4F
+  DATA_AC_RailDashL_4F_Tbl,               // AC_RAIL_DASH_L_4F
+  DATA_AC_RailDashR_4F_Tbl,               // AC_RAIL_DASH_R_4F
 };
 
 //==============================================================================
