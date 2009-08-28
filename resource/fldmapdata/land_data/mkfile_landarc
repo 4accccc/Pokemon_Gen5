@@ -50,7 +50,7 @@ do-build: $(TARGET_DIR)/$(TARGET_ARC)
 #SUFFIXESƒ‹[ƒ‹
 ifeq ($(CONVERTUSER),true) #CONVERTUSER
 #Šg’£q
-.SUFFIXES: .3dppack .nsbmd
+.SUFFIXES: .3dppack .ngpack .nsbmd .bhc .imd .3dmd
 #dependƒ‹[ƒ‹
 include land_make_depend
 endif #CONVERTUSER
