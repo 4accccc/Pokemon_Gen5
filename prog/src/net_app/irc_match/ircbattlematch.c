@@ -29,7 +29,7 @@
 #include "msg/msg_ircbattle.h"
 #include "ircbattle.naix"
 #include "net_app/connect_anm.h"
-#include "../event_ircbattle.h"
+#include "../../field/event_ircbattle.h"
 
 
 #define _NET_DEBUG (1)  //デバッグ時は１

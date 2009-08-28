@@ -3837,6 +3837,9 @@ static int WifiP2PMatch_ReConnectingWait( WIFIP2PMATCH_WORK *wk, int seq )
 
   if(GFL_NET_StateIsWifiLoginMatchState()){
     NET_PRINT("WIFI接続完了\n");
+    if( WIFI_MCR_GetInitFlag( &wk->matchroom ) == TRUE ){
+      WIFI_MCR_Dest( &wk->matchroom );
+    }
     _CHANGESTATE(wk,WifiP2PMatchFriendListStart());
   }
   else if(GFL_NET_StateIsWifiError() || (GFL_NET_StateGetWifiStatus() == GFL_NET_STATE_TIMEOUT)){
@@ -3844,7 +3847,9 @@ static int WifiP2PMatch_ReConnectingWait( WIFIP2PMATCH_WORK *wk, int seq )
   }
   else if((GFL_NET_StateGetWifiStatus() >= GFL_NET_STATE_DISCONNECTING) || GFL_NET_StateIsWifiDisconnect() || !GFL_NET_IsConnectMember(GFL_NET_NETID_SERVER)){
     GFL_NET_StateWifiMatchEnd(TRUE);
-
+    if( WIFI_MCR_GetInitFlag( &wk->matchroom ) == TRUE ){
+      WIFI_MCR_Dest( &wk->matchroom );
+    }
     _CHANGESTATE(wk,WifiP2PMatchFriendListStart());
   }
   return seq;
@@ -4462,7 +4467,7 @@ static int WifiP2PMatch_FriendListInit( WIFIP2PMATCH_WORK *wk, int seq )
   //    _timeWaitIconDel(wk);		timeWait内でMsgWinを破棄しているということはメッセージ終了でもOK↓
   EndMessageWindowOff(wk);
 
-  //GFL_CLACT_SYS_Delete();//  ???
+  GFL_CLACT_SYS_Delete();//
 
 
   GFL_BG_ClearFrame(  GFL_BG_FRAME3_M);

@@ -25,7 +25,7 @@
 #include "field/event_colosseum_battle.h"
 #include "savedata/sp_ribbon_save.h"
 
-#include "field\ircbattle\ircpokemontrade.h"
+#include "net_app\poke_trade\ircpokemontrade.h"
 
 
 //==============================================================================

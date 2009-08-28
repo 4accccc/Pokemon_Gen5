@@ -24,10 +24,10 @@
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
-#include "ircbattle/ircbattlematch.h"
-#include "ircbattle/ircbattlemenu.h"
-#include "ircbattle/ircbattlefriend.h"
-#include "ircbattle/ircpokemontrade.h"
+#include "net_app/irc_match/ircbattlematch.h"
+#include "net_app/irc_match/ircbattlemenu.h"
+#include "net_app/friend_trade/ircbattlefriend.h"
+#include "net_app/poke_trade/ircpokemontrade.h"
 #include "net_app/irc_compatible.h"
 #include "sound/pm_sndsys.h"
 #include "battle/battle.h"

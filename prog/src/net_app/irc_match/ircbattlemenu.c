@@ -32,8 +32,7 @@
 #include "sound/pm_sndsys.h"
 
 #include "msg/msg_ircbattle.h"
-#include "../event_fieldmap_control.h"	//EVENT_FieldSubProc
-#include "../event_ircbattle.h"
+#include "../../field/event_ircbattle.h"
 #include "ircbattle.naix"
 #include "app/app_taskmenu.h"  //APP_TASKMENU_INITWORK
 

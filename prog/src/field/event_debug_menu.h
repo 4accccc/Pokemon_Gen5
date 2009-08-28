@@ -6,8 +6,7 @@
  * @date	2008.11.13
  */
 //======================================================================
-#ifndef __FIELD_DEBUG_H__
-#define __FIELD_DEBUG_H__
+#pragma once
 
 #include "gamesystem/gamesystem.h"
 #include "gamesystem/game_event.h"
@@ -27,4 +26,3 @@
 extern GMEVENT * DEBUG_EVENT_DebugMenu( GAMESYS_WORK * gsys,
 		FIELD_MAIN_WORK * fieldWork, HEAPID heapID, u16 page_id );
 
-#endif //__FIELD_DEBUG_H__

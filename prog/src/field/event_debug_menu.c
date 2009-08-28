@@ -28,7 +28,7 @@
 
 #include "field_comm/field_comm_main.h"
 #include "field_comm/field_comm_debug.h"
-#include "ircbattle/ircbattlemenu.h"
+#include "net_app/irc_match/ircbattlemenu.h"
 #include "event_ircbattle.h"
 #include "event_wificlub.h"
 #include "field_subscreen.h"
