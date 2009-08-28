@@ -254,9 +254,6 @@ int WorldTrade_Enter_Main(WORLDTRADE_WORK *wk, int seq)
 {
 	int ret, temp_subprocess_seq;
 
-	// 通信状態を確認してアイコンの表示を変える
-    WirelessIconEasy_SetLevel( WorldTrade_WifiLinkLevel());
-
 	// シーケンス遷移で実行
 	temp_subprocess_seq = wk->subprocess_seq;
 	ret = (*Functable[wk->subprocess_seq])( wk );
@@ -1376,7 +1373,7 @@ static int Enter_ErrorPadWait( WORLDTRADE_WORK *wk )
 //------------------------------------------------------------------
 static int Enter_End( WORLDTRADE_WORK *wk)
 {
-    WirelessIconEasyEnd();
+    //WirelessIconEasyEnd();
 
 	// 時間アイコン消去２重解放にならないようにNULLチェックしつつ
 	WorldTrade_TimeIconDel( wk );

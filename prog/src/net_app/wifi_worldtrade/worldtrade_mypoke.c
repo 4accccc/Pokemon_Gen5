@@ -687,7 +687,7 @@ static int SubSeq_End( WORLDTRADE_WORK *wk)
 static int SubSeq_YesNo( WORLDTRADE_WORK *wk)
 {
 //	wk->YesNoMenuWork = WorldTrade_BmpWinYesNoMake( WORLDTRADE_YESNO_PY1, YESNO_OFFSET );
-	wk->tss = WorldTrade_TouchWinYesNoMake(  WORLDTRADE_YESNO_PY1, YESNO_OFFSET, 8, 1 );
+ 	wk->tss	= WorldTrade_TouchWinYesNoMakeEx( WORLDTRADE_YESNO_PY1, YESNO_OFFSET, 8, GFL_BG_FRAME2_M, 1 );
 	wk->subprocess_seq = SUBSEQ_YESNO_SELECT;
 
 	return SEQ_MAIN;
@@ -773,10 +773,10 @@ static int SubSeq_SelectList( WORLDTRADE_WORK *wk )
 	BmpMenuWork_ListAddArchiveString( wk->BmpMenuList, wk->MsgManager, msg_gtc_02_017, 2, HEAPID_WORLDTRADE );
 
 	// 選択ボックス呼び出し
-	wk->SelBoxWork = WorldTrade_SelBoxInit( wk, 2, 13 );
+	wk->SelBoxWork = WorldTrade_SelBoxInit( wk, GFL_BG_FRAME2_M, 2, 13 );
 
 	//パッシブ
-	WorldTrade_SetPassive(1);
+	WorldTrade_SetPassiveMyPoke(1);
 
 /*
 	BMPMENU_HEADER temp;

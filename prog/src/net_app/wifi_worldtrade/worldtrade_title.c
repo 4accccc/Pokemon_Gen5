@@ -203,9 +203,6 @@ int WorldTrade_Title_Init(WORLDTRADE_WORK *wk, int seq)
 int WorldTrade_Title_Main(WORLDTRADE_WORK *wk, int seq)
 {
 	int ret;
-	
-	// 通信状態を確認してアイコンの表示を変える
-    WirelessIconEasy_SetLevel(WorldTrade_WifiLinkLevel());
 
 	ret = (*Functable[wk->subprocess_seq])( wk );
 
@@ -225,7 +222,7 @@ int WorldTrade_Title_Main(WORLDTRADE_WORK *wk, int seq)
 //==============================================================================
 int WorldTrade_Title_End(WORLDTRADE_WORK *wk, int seq)
 {
-	WirelessIconEasyEnd();
+	//WirelessIconEasyEnd();
 
 	DelCellActor(wk);
 

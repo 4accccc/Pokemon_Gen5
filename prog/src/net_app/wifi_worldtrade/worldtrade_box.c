@@ -228,8 +228,6 @@ int WorldTrade_Box_Main(WORLDTRADE_WORK *wk, int seq)
 {
 	int ret;
 
-	// 通信状態を確認してアイコンの表示を変える
-  WirelessIconEasy_SetLevel(WorldTrade_WifiLinkLevel());
 	
 	ret = (*Functable[wk->subprocess_seq])( wk );
 
@@ -249,7 +247,7 @@ int WorldTrade_Box_Main(WORLDTRADE_WORK *wk, int seq)
 //==============================================================================
 int WorldTrade_Box_End(WORLDTRADE_WORK *wk, int seq)
 {
-	WirelessIconEasyEnd();
+	//WirelessIconEasyEnd();
 
     if(GXS_GetMasterBrightness() != 0){
         WorldTrade_SetPartnerExchangePosIsReturns( wk );
@@ -1252,7 +1250,7 @@ static int SubSeq_SelectList( WORLDTRADE_WORK *wk )
 */
 
 	// 選択ボックス呼び出し
-	wk->SelBoxWork = WorldTrade_SelBoxInit( wk, 3, 10 );
+	wk->SelBoxWork = WorldTrade_SelBoxInit( wk, GFL_BG_FRAME0_M, 3, 10 );
 
 
 	wk->subprocess_seq = SUBSEQ_SELECT_WAIT;
@@ -1393,7 +1391,7 @@ static int SubSeq_ExchangeSelectList( WORLDTRADE_WORK *wk )
 	wk->BmpMenuWork = BmpMenuAddEx( &temp, 9, 0, 0, HEAPID_WORLDTRADE, PAD_BUTTON_CANCEL );
 */
 	// 選択ボックス呼び出し
-	wk->SelBoxWork = WorldTrade_SelBoxInit( wk, 3, 10 );
+	wk->SelBoxWork = WorldTrade_SelBoxInit( wk, GFL_BG_FRAME0_M, 3, 10 );
 
 	wk->subprocess_seq = SUBSEQ_EXCHANGE_SELECT_WAIT;
 

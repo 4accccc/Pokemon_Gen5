@@ -211,6 +211,7 @@ static GFL_PROC_RESULT WorldTradeProc_Init( GFL_PROC * proc, int * seq, void * p
 		InitWork( wk, param );
 
 		InitCLACT( wk );
+		WirelessIconEasy();
 
 		// サウンドデータロード(フィールド)
 		Snd_DataSetByScene( SND_SCENE_FIELD, SEQ_BLD_BLD_GTC, 1 );
@@ -314,6 +315,8 @@ static GFL_PROC_RESULT WorldTradeProc_Main( GFL_PROC * proc, int * seq, void * p
 	{	
 		// 受信強度リンクを反映させる
 		DWC_UpdateConnection();
+		// 通信状態を確認してアイコンの表示を変える
+		WirelessIconEasy_SetLevel(WorldTrade_WifiLinkLevel());
 
 		// Dpw_Tr_Main() だけは例外的にいつでも呼べる
 		Dpw_Tr_Main();
@@ -427,6 +430,7 @@ static GFL_PROC_RESULT WorldTradeProc_End( GFL_PROC * proc, int * seq, void * pa
 #endif
 
 	// セルアクターリソース解放
+	WirelessIconEasyEnd();
 	FreeCLACT( wk );
 
 
@@ -974,7 +978,7 @@ static const SELBOX_HEAD_PRM sbox_sel = {
  * @retval  SELBOX_WORK*		選択ボックスワークのポインタ
  */
 //==============================================================================
-SELBOX_WORK* WorldTrade_SelBoxInit( WORLDTRADE_WORK *wk, int count, int y )
+SELBOX_WORK* WorldTrade_SelBoxInit( WORLDTRADE_WORK *wk, u8 frm, int count, int y )
 {
 	SELBOX_WORK* list_wk;
 
@@ -986,7 +990,8 @@ SELBOX_WORK* WorldTrade_SelBoxInit( WORLDTRADE_WORK *wk, int count, int y )
 
 		MI_CpuClear8(&head,sizeof(SELBOX_HEADER));
 
-		head.prm  = sbox_sel;
+		head.prm			= sbox_sel;
+		head.prm.frm	= frm;
 		head.list = (const BMPLIST_DATA*)wk->BmpMenuList;
 		head.fontHandle	= wk->print.font;
 
@@ -1461,6 +1466,28 @@ void WorldTrade_SetPassive(u8 inIsMain)
 	}else{
 		G2S_SetBlendBrightness( 
 			GX_BLEND_PLANEMASK_BG1 | GX_BLEND_PLANEMASK_BG2 | GX_BLEND_PLANEMASK_BG3 | GX_BLEND_PLANEMASK_OBJ,
+			BRIGHT_VAL
+		);
+	}
+}
+
+//------------------------------------------------------------------
+/**
+ * @brief	パッシブ状態セット	mypoke用
+ * @param	inIsMain		対象がメイン画面か？	YES:1 NO:0
+ * @return	none
+ */
+//------------------------------------------------------------------
+void WorldTrade_SetPassiveMyPoke(u8 inIsMain)
+{
+	if (inIsMain){
+		G2_SetBlendBrightness( 
+			GX_BLEND_PLANEMASK_BG1 | GX_BLEND_PLANEMASK_BG0 | GX_BLEND_PLANEMASK_BG3 | GX_BLEND_PLANEMASK_OBJ,
+			BRIGHT_VAL
+		);
+	}else{
+		G2S_SetBlendBrightness( 
+			GX_BLEND_PLANEMASK_BG1 | GX_BLEND_PLANEMASK_BG0 | GX_BLEND_PLANEMASK_BG3 | GX_BLEND_PLANEMASK_OBJ,
 			BRIGHT_VAL
 		);
 	}

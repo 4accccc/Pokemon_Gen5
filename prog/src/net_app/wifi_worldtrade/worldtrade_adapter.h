@@ -259,11 +259,18 @@ static inline int PokePasoLevelCalc( POKEMON_PASO_PARAM *paso )
 //通信アイコン
 static inline void WirelessIconEasy( void )
 {
-	GFL_NET_ReloadIcon();  // 接続中なのでアイコン表示
+	//GFL_NET_ReloadIcon();  // 接続中なのでアイコン表示
+	GFL_NET_WirelessIconEasyXY(GFL_WICON_POSX, GFL_WICON_POSY, TRUE, HEAPID_WORLDTRADE);
+	GFL_NET_WirelessIconEasy_HoldLCD( TRUE, HEAPID_WORLDTRADE );
 }
-//以下２つ、やらなくてよくなりました
-static inline void WirelessIconEasy_SetLevel( int level ){}
-static inline void WirelessIconEasyEnd( void ){}
+static inline void WirelessIconEasy_SetLevel( int level )
+{
+	GFL_NET_WirelessIconEasy_SetLevel(level);
+}
+static inline void WirelessIconEasyEnd( void )
+{
+	GFL_NET_WirelessIconEasyEnd();
+}
 
 
 //通信エラー

@@ -313,9 +313,6 @@ int WorldTrade_Upload_Main(WORLDTRADE_WORK *wk, int seq)
 {
 	int ret;
 
-	// 通信状態を確認してアイコンの表示を変える
-    WirelessIconEasy_SetLevel(WorldTrade_WifiLinkLevel());
-
 	// シーケンス遷移で実行
 	ret = (*Functable[wk->subprocess_seq])( wk );
 
@@ -2369,7 +2366,7 @@ static int Subseq_End( WORLDTRADE_WORK *wk)
 	// 必ず時間アイコンを消去(２重解放対策はしておく）
 	WorldTrade_TimeIconDel(wk);
 	
-	WirelessIconEasyEnd();
+	//WirelessIconEasyEnd();
 
 	if( wk->sub_out_flg == 1 ){
 		WIPE_SYS_Start( WIPE_PATTERN_WMS, WIPE_TYPE_FADEOUT, WIPE_TYPE_FADEOUT, WIPE_FADE_BLACK, WORLDTRADE_WIPE_SPPED, 1, HEAPID_WORLDTRADE );

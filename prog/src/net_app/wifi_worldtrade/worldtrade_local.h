@@ -589,10 +589,11 @@ extern void WorldTrade_TimeIconAdd( WORLDTRADE_WORK *wk );
 extern void WorldTrade_TimeIconDel( WORLDTRADE_WORK *wk );
 extern void WorldTrade_CLACT_PosChange( GFL_CLWK * ptr, int x, int y );
 extern void WorldTrade_CLACT_PosChangeSub( GFL_CLWK * act, int x, int y );
-extern SELBOX_WORK* WorldTrade_SelBoxInit( WORLDTRADE_WORK *wk, int count, int y );
+extern SELBOX_WORK* WorldTrade_SelBoxInit( WORLDTRADE_WORK *wk, u8 frm, int count, int y );
 extern void WorldTrade_SelBoxEnd( WORLDTRADE_WORK *wk );
 
 extern void WorldTrade_SetPassive(u8 inTarget);
+extern void WorldTrade_SetPassiveMyPoke(u8 inIsMain);
 extern void WorldTrade_ClearPassive(void);
 
 
