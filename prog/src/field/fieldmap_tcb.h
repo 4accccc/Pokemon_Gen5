@@ -36,7 +36,9 @@ void FIELDMAP_TCB_AddTask_AppearPlayer_Fall(             // 落下登場
 // fieldmap_tcb_camera_zoom.c
 //============================
 // カメラのズーム
-void FIELDMAP_TCB_AddTask_CameraZoom(
+void FIELDMAP_TCB_AddTask_CameraZoom(                   // 等速ズーム
+    FIELDMAP_WORK* fieldmap, int frame, fx32 dist );  
+void FIELDMAP_TCB_AddTask_CameraZoom_Sharp(             // 急発進ズーム
     FIELDMAP_WORK* fieldmap, int frame, fx32 dist );  
 
 //============================

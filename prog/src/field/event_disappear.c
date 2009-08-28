@@ -175,14 +175,17 @@ static GMEVENT_RESULT EVENT_FUNC_DISAPPEAR_RollingJump( GMEVENT* event, int* seq
   {
   // タスクの追加
   case 0:
-    FIELDMAP_TCB_AddTask_DisappearPlayer_LinearUp( ew->pFieldmap, 60, 300 );   // 自機移動
-    FIELDMAP_TCB_AddTask_RotatePlayer_SpeedUp( ew->pFieldmap, 30, 10 );         // 自機回転
+    FIELDMAP_TCB_AddTask_DisappearPlayer_LinearUp( ew->pFieldmap, 40, 10 );    // 自機移動
+    FIELDMAP_TCB_AddTask_RotatePlayer_SpeedUp( ew->pFieldmap, 60, 20 );        // 自機回転
+    FIELDMAP_TCB_AddTask_CameraZoom( ew->pFieldmap, 40, 50<<FX32_SHIFT );      // ズームアウト
     ++( *seq );
     break;
   // フェードアウト開始
   case 1:
-    if( 30 < ew->frame++ )
+    if( 40 < ew->frame++ )
     {
+      FIELDMAP_TCB_AddTask_DisappearPlayer_LinearUp( ew->pFieldmap, 40, 800 );   // 自機移動
+      FIELDMAP_TCB_AddTask_CameraZoom_Sharp( ew->pFieldmap, 30, 400<<FX32_SHIFT ); // 急発進ズームアウト
       GFL_FADE_SetMasterBrightReq(
           GFL_FADE_MASTER_BRIGHT_BLACKOUT_MAIN | GFL_FADE_MASTER_BRIGHT_BLACKOUT_SUB, 0, 16, 0 );
       ++( *seq );
@@ -190,7 +193,7 @@ static GMEVENT_RESULT EVENT_FUNC_DISAPPEAR_RollingJump( GMEVENT* event, int* seq
     break;
   // タスクの終了待ち
   case 2:
-    if( 60 < ew->frame++ )
+    if( 80 < ew->frame++ )
     {
       ++( *seq );
     }
@@ -215,8 +218,9 @@ static GMEVENT_RESULT EVENT_FUNC_DISAPPEAR_FallInSand( GMEVENT* event, int* seq,
   {
   // タスクの追加
   case 0:
-    FIELDMAP_TCB_AddTask_DisappearPlayer_LinearUp( ew->pFieldmap, 80, -50 );   // 自機移動
-    FIELDMAP_TCB_AddTask_RotatePlayer( ew->pFieldmap, 80, 10 );   // 回転
+    FIELDMAP_TCB_AddTask_DisappearPlayer_LinearUp( ew->pFieldmap, 80, -50 );  // 自機移動
+    FIELDMAP_TCB_AddTask_RotatePlayer( ew->pFieldmap, 80, 10 );               // 回転
+    FIELDMAP_TCB_AddTask_CameraZoom( ew->pFieldmap, 30, -50<<FX32_SHIFT );    // ズームイン
     ++( *seq );
     break;
   // フェードアウト開始

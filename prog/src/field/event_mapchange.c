@@ -337,6 +337,7 @@ static GMEVENT_RESULT EVENT_MapChangeByWarp(GMEVENT * event, int *seq, void*work
 	case 1:
     // ワープ退場イベント
     GMEVENT_CallEvent( event, EVENT_DISAPPEAR_Warp( event, gsys, fieldmap ) );
+    //GMEVENT_CallEvent( event, EVENT_DISAPPEAR_FallInSand( event, gsys, fieldmap ) );  // TEST:
 		(*seq)++;
 		break;
   case 2:
@@ -347,6 +348,7 @@ static GMEVENT_RESULT EVENT_MapChangeByWarp(GMEVENT * event, int *seq, void*work
 	case 3:
     // ワープ登場イベント
     GMEVENT_CallEvent( event, EVENT_APPEAR_Warp( event, gsys, fieldmap ) );
+    //GMEVENT_CallEvent( event, EVENT_APPEAR_Fall( event, gsys, fieldmap ) );   // TEST:
 		(*seq) ++;
 		break;
   case 4:
