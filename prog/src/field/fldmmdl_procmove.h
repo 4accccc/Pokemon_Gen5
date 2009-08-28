@@ -124,9 +124,9 @@ extern void MMDL_AlongWall_Move( MMDL * fmmdl );
 //--------------------------------------------------------------
 //	fieldobj_railmove_0.c
 //--------------------------------------------------------------
-extern void MMDL_RailPlayer_Init( MMDL * fmmdl );
-extern void MMDL_RailPlayer_Move( MMDL * fmmdl );
-extern void MMDL_RailPlayer_Delete( MMDL * fmmdl );
-extern void MMDL_RailPlayer_Return( MMDL * fmmdl );
+extern void MMDL_RailDmy_Init( MMDL * fmmdl );
+extern void MMDL_RailDmy_Move( MMDL * fmmdl );
+extern void MMDL_RailDmy_Delete( MMDL * fmmdl );
+extern void MMDL_RailDmy_Return( MMDL * fmmdl );
 
 #endif //MMDL_PROCMOVE_H_FILE

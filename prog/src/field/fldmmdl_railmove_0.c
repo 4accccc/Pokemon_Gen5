@@ -48,13 +48,13 @@ typedef struct
 
 
 //-------------------------------------
-///	MV_RAIL_PLAYER_WORK構造体
+///	MV_RAIL_DMY_WORK構造体
 //=====================================
 typedef struct 
 {
   MV_RAIL_COMMON_WORK rail_wk;
-} MV_RAIL_PLAYER_WORK;
-#define MV_RAIL_PLAYER_WORK_SIZE (sizeof(MV_RAIL_PLAYER_WORK))		///<MV_RAIL_PLAYERサイズ
+} MV_RAIL_DMY_WORK;
+#define MV_RAIL_DMY_WORK_SIZE (sizeof(MV_RAIL_DMY_WORK))		///<MV_RAIL_DMYサイズ
 
 //-----------------------------------------------------------------------------
 /**
@@ -190,56 +190,56 @@ BOOL MMDL_ReqRailMove( MMDL * fmmdl, u16 dir, s16 wait )
 
 //----------------------------------------------------------------------------
 /**
- *	@brief  レール主人公　初期化
+ *	@brief  レール動作なし　初期化
  *
  *	@param	fmmdl   モデルワーク
  */
 //-----------------------------------------------------------------------------
-void MMDL_RailPlayer_Init( MMDL * fmmdl )
+void MMDL_RailDmy_Init( MMDL * fmmdl )
 {
-  MV_RAIL_PLAYER_WORK* p_work;
-	p_work = MMDL_InitMoveProcWork( fmmdl, MV_RAIL_PLAYER_WORK_SIZE );
+  MV_RAIL_DMY_WORK* p_work;
+	p_work = MMDL_InitMoveProcWork( fmmdl, MV_RAIL_DMY_WORK_SIZE );
   MMdl_RailCommon_Init( &p_work->rail_wk, fmmdl );
 }
 
 //----------------------------------------------------------------------------
 /**
- *	@brief  レール主人公　動作
+ *	@brief  レール動作なし　動作
  *
  *	@param	fmmdl 
  */
 //-----------------------------------------------------------------------------
-void MMDL_RailPlayer_Move( MMDL * fmmdl )
+void MMDL_RailDmy_Move( MMDL * fmmdl )
 {
-  MV_RAIL_PLAYER_WORK* p_work;
+  MV_RAIL_DMY_WORK* p_work;
 	p_work = MMDL_GetMoveProcWork( fmmdl );
   MMdl_RailCommon_Move( &p_work->rail_wk, fmmdl );
 }
 
 //----------------------------------------------------------------------------
 /**
- *	@brief  レール主人公　破棄
+ *	@brief  レール動作なし　破棄
  *
  *	@param	fmmdl 
  */
 //-----------------------------------------------------------------------------
-void MMDL_RailPlayer_Delete( MMDL * fmmdl )
+void MMDL_RailDmy_Delete( MMDL * fmmdl )
 {
-  MV_RAIL_PLAYER_WORK* p_work;
+  MV_RAIL_DMY_WORK* p_work;
 	p_work = MMDL_GetMoveProcWork( fmmdl );
   MMdl_RailCommon_Delete( &p_work->rail_wk, fmmdl );
 }
 
 //----------------------------------------------------------------------------
 /**
- *	@brief  レール主人公　復帰
+ *	@brief  レール動作なし　復帰
  *
  *	@param	fmmdl 
  */
 //-----------------------------------------------------------------------------
-void MMDL_RailPlayer_Return( MMDL * fmmdl )
+void MMDL_RailDmy_Return( MMDL * fmmdl )
 {
-  MV_RAIL_PLAYER_WORK* p_work;
+  MV_RAIL_DMY_WORK* p_work;
 	p_work = MMDL_GetMoveProcWork( fmmdl );
   MMdl_RailCommon_Return( &p_work->rail_wk, fmmdl );
 }

@@ -855,15 +855,15 @@ static const MMDL_MOVE_PROC_LIST DATA_FieldOBJMove_CommActor =
 };
 
 //--------------------------------------------------------------
-/// MV_RAIL_PLAYER
+/// MV_RAIL_DMY
 //--------------------------------------------------------------
-static const MMDL_MOVE_PROC_LIST DATA_FieldOBJMove_RailPlayer =
+static const MMDL_MOVE_PROC_LIST DATA_FieldOBJMove_RailDmy =
 {
-	MV_RAIL_PLAYER,									///<動作コード
-	MMDL_RailPlayer_Init,						///<初期化関数
-	MMDL_RailPlayer_Move,						///<動作関数
-  MMDL_RailPlayer_Delete,					///<削除関数
-	MMDL_RailPlayer_Return,					///<復帰関数
+	MV_RAIL_DMY,									///<動作コード
+	MMDL_RailDmy_Init,						///<初期化関数
+	MMDL_RailDmy_Move,						///<動作関数
+  MMDL_RailDmy_Delete,					///<削除関数
+	MMDL_RailDmy_Return,					///<復帰関数
 };
 
 //==============================================================================
@@ -948,7 +948,7 @@ const MMDL_MOVE_PROC_LIST * const DATA_FieldOBJMoveProcListTbl[MV_CODE_MAX] =
 	&DATA_FieldOBJMove_AlongWallLRR,						//MV_ALONGW_LRR
 	&DATA_FieldOBJMove_RndHLim,								//MV_RND_H_LIM
   &DATA_FieldOBJMove_CommActor,           //MV_COMM_ACTOR
-  &DATA_FieldOBJMove_RailPlayer,          //MV_RAIL_PLAYER
+  &DATA_FieldOBJMove_RailDmy,             //MV_RAIL_DMY
 };
 
 //==============================================================================
