@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsuda" host="W00142" date="2009-08-19T19:59:57"/>
+	<create user="tetsuji_ohta" host="W00176" date="2009-08-28T12:52:13"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -274,7 +274,7 @@
 	</tag-table>
 
 	<columns>
-		<id position="0" width="139"/>
+		<id position="0" width="158"/>
 		<group default=" 0:デフォルト" position="-1" width="100">
 			<list entry="0" japanese="デフォルト" english="Default" colorID="0"/>
 		</group>
@@ -283,29 +283,29 @@
 		<erase position="-1" width="100"/>
 		<language japanese="JPN" english="JPN">
 			<message position="2" width="274"/>
-			<font default=" 0:large" position="4" width="59">
+			<font default=" 0:large" position="4" width="50">
 				<list entry="0" file="W:\font\large.nftr"/>
 				<list entry="1" file="W:\font\small.nftr"/>
 			</font>
 			<size position="-1" width="100"/>
 			<space position="-1" width="100"/>
-			<width position="6" width="37"/>
+			<width position="6" width="30"/>
 			<line position="-1" width="100"/>
 		</language>
 		<language japanese="JPN_KANJI" english="JPN_KANJI">
 			<message position="3" width="246"/>
-			<font default=" 0:large" position="5" width="54">
+			<font default=" 0:large" position="5" width="49">
 				<list entry="0" file="W:\font\large.nftr"/>
 				<list entry="1" file="W:\font\small.nftr"/>
 			</font>
 			<size position="-1" width="100"/>
 			<space position="-1" width="100"/>
-			<width position="7" width="41"/>
+			<width position="7" width="33"/>
 			<line position="-1" width="100"/>
 		</language>
 	</columns>
 
-	<dialog left="1308" top="141" right="2013" bottom="769" maximized="no" rayout="Vertical2">
+	<dialog left="6" top="112" right="711" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="787" top="36" right="1260" bottom="434" visible="yes"/>
 		<band id="0" index="0" style="0000" width="530"/>
@@ -3195,6 +3195,24 @@ msg_connect_union_08からの分岐メッセージ
 ３ひき　いじょう　ひつようです</language>
 		<language name="JPN_KANJI" width="216" line="2">たいせんするには　ポケモンが
 ３ひき　いじょう　ひつようです</language>
+	</row>
+
+	<row id="msg_union_battle_01_19" text-color="#000000,,,,,,#000000,#000000,,#000000,#000000,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,#80ffff,,#80ffff,#80ffff,#80ffff,#80ffff,,,#80ffff,,">
+		<comment>サポートシューターを使うかの確認メッセージ</comment>
+		<language name="JPN" width="216" line="2">サポートシューターを　つかいますか？</language>
+		<language name="JPN_KANJI" width="216" line="2">サポートシューターを　つかいますか？</language>
+	</row>
+
+	<row id="msg_union_battle_01_20" text-color="#000000,,,,,,#000000,#000000,,#000000,#000000,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,#80ffff,,#80ffff,#80ffff,#80ffff,#80ffff,,,#80ffff,,">
+		<comment>サポートシューターを使う場合、参加決定時に表示</comment>
+		<language name="JPN" width="216" line="2">サポートシューター　あり</language>
+		<language name="JPN_KANJI" width="216" line="2">サポートシューター　あり</language>
+	</row>
+
+	<row id="msg_union_battle_01_21" text-color="#000000,,,,,,#000000,#000000,,#000000,#000000,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,#80ffff,,#80ffff,#80ffff,#80ffff,#80ffff,,,#80ffff,,">
+		<comment>サポートシューターを使わない場合、参加決定時に表示</comment>
+		<language name="JPN" width="216" line="2">サポートシューター　なし</language>
+		<language name="JPN_KANJI" width="216" line="2">サポートシューター　なし</language>
 	</row>
 
 	<row id="msg_union_test_000" text-color="#000000,,,,,,#000000,#000000,,#000000,#000000,,,,,,," back-color="#80ffff,,,,,,#80ffff,#80ffff,,#80ffff,#80ffff,,#80ffff,,,#80ffff,,">
