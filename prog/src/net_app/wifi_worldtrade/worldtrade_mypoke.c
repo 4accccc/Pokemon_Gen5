@@ -688,6 +688,13 @@ static int SubSeq_YesNo( WORLDTRADE_WORK *wk)
 {
 //	wk->YesNoMenuWork = WorldTrade_BmpWinYesNoMake( WORLDTRADE_YESNO_PY1, YESNO_OFFSET );
  	wk->tss	= WorldTrade_TouchWinYesNoMakeEx( WORLDTRADE_YESNO_PY1, YESNO_OFFSET, 8, GFL_BG_FRAME2_M, 1 );
+
+	//↑の関数は通常BG0以外をパッシブ化するが、
+	//このソースのみ、BG2がメッセージ面なので、
+	//一端解放して改めてBG2以外をパッシブかする
+	WorldTrade_ClearPassive();
+	WorldTrade_SetPassiveMyPoke(1);
+
 	wk->subprocess_seq = SUBSEQ_YESNO_SELECT;
 
 	return SEQ_MAIN;
