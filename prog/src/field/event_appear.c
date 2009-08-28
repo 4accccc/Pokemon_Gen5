@@ -10,7 +10,7 @@
 //////////////////////////////////////////////////////////////////////////////////////////// 
 #include "include/field/fieldmap_proc.h"
 #include "include/gamesystem/game_event.h"
-#include "event_warp.h"
+#include "event_appear.h"
 #include "fieldmap.h"
 #include "field_player.h"
 #include "fieldmap_tcb.h"
@@ -45,13 +45,10 @@ WARP_WORK;
  * @brief プロトタイプ宣言
  */
 //========================================================================================== 
-// イベント処理関数
-static GMEVENT_RESULT EVENT_FUNC_APPEAR_Rotate( GMEVENT* event, int* seq, void* work );
-static GMEVENT_RESULT EVENT_FUNC_DISAPPEAR_Rotate( GMEVENT* event, int* seq, void* work ); 
-static GMEVENT_RESULT EVENT_FUNC_APPEAR_RollingJump( GMEVENT* event, int* seq, void* work ); 
-static GMEVENT_RESULT EVENT_FUNC_DISAPPEAR_RollingJump( GMEVENT* event, int* seq, void* work );
-static GMEVENT_RESULT EVENT_FUNC_APPEAR_Fall( GMEVENT* event, int* seq, void* work ); 
-static GMEVENT_RESULT EVENT_FUNC_DISAPPEAR_FallInSand( GMEVENT* event, int* seq, void* work );
+// 登場イベント処理関数
+static GMEVENT_RESULT EVENT_FUNC_APPEAR_Rotate( GMEVENT* event, int* seq, void* work );      // 回転
+static GMEVENT_RESULT EVENT_FUNC_APPEAR_RollingFall( GMEVENT* event, int* seq, void* work ); // 回転落下
+static GMEVENT_RESULT EVENT_FUNC_APPEAR_Fall( GMEVENT* event, int* seq, void* work );        // 落下
 
 
 //========================================================================================== 
@@ -78,64 +75,7 @@ GMEVENT* EVENT_APPEAR_Warp( GMEVENT* parent, GAMESYS_WORK* gsys, FIELDMAP_WORK* 
 
   // イベントを作成
   //event = GMEVENT_Create( gsys, parent, EVENT_FUNC_APPEAR_Rotate, sizeof( WARP_WORK ) );
-  event = GMEVENT_Create( gsys, parent, EVENT_FUNC_APPEAR_RollingJump, sizeof( WARP_WORK ) );
-
-  // イベントワークを初期化
-  work            = (WARP_WORK*)GMEVENT_GetEventWork( event );
-  work->pFieldmap = fieldmap;
-  work->frame     = 0;
-
-  // 作成したイベントを返す
-  return event;
-}
-
-//------------------------------------------------------------------------------------------
-/**
- * @brief 退場イベントを作成する( 流砂 )
- *
- * @param parent   親イベント
- * @param gsys     ゲームシステム
- * @param fieldmap フィールドマップ
- *
- * @return 作成したイベント
- */
-//------------------------------------------------------------------------------------------
-GMEVENT* EVENT_DISAPPEAR_FallInSand( GMEVENT* parent, GAMESYS_WORK* gsys, FIELDMAP_WORK* fieldmap )
-{
-  GMEVENT*   event;
-  WARP_WORK* work;
-
-  // イベントを作成
-  event = GMEVENT_Create( gsys, parent, EVENT_FUNC_DISAPPEAR_FallInSand, sizeof( WARP_WORK ) );
-
-  // イベントワークを初期化
-  work            = (WARP_WORK*)GMEVENT_GetEventWork( event );
-  work->pFieldmap = fieldmap;
-  work->frame     = 0;
-
-  // 作成したイベントを返す
-  return event;
-}
-
-//------------------------------------------------------------------------------------------
-/**
- * @brief 退場イベントを作成する( ワープ )
- *
- * @param parent   親イベント
- * @param gsys     ゲームシステム
- * @param fieldmap フィールドマップ
- *
- * @return 作成したイベント
- */
-//------------------------------------------------------------------------------------------
-GMEVENT* EVENT_DISAPPEAR_Warp( GMEVENT* parent, GAMESYS_WORK* gsys, FIELDMAP_WORK* fieldmap )
-{
-  GMEVENT*   event;
-  WARP_WORK* work;
-
-  // イベントを作成
-  //event = GMEVENT_Create( gsys, parent, EVENT_FUNC_DISAPPEAR_Rotate, sizeof( WARP_WORK ) );
-  event = GMEVENT_Create( gsys, parent, EVENT_FUNC_DISAPPEAR_RollingJump, sizeof( WARP_WORK ) );
+  event = GMEVENT_Create( gsys, parent, EVENT_FUNC_APPEAR_RollingFall, sizeof( WARP_WORK ) );
 
   // イベントワークを初期化
   work            = (WARP_WORK*)GMEVENT_GetEventWork( event );
@@ -183,46 +123,6 @@ GMEVENT* EVENT_APPEAR_Fall( GMEVENT* parent, GAMESYS_WORK* gsys, FIELDMAP_WORK* 
 
 //------------------------------------------------------------------------------------------
 /**
- * @brief 退場イベント処理関数( 回転 )
- */
-//------------------------------------------------------------------------------------------
-static GMEVENT_RESULT EVENT_FUNC_DISAPPEAR_Rotate( GMEVENT* event, int* seq, void* work )
-{
-  WARP_WORK*    ww     = (WARP_WORK*)work;
-  FIELD_PLAYER* player = FIELDMAP_GetFieldPlayer( ww->pFieldmap );
-
-  switch( *seq )
-  {
-  // 自機回転タスクの追加
-  case 0:
-    FIELDMAP_TCB_ROT_PLAYER_AddTask_SpeedUp( ww->pFieldmap, 120, 10 );    // 自機回転
-    FIELDMAP_TCB_CAMERA_AddTask_Zoom( ww->pFieldmap, ZOOM_IN_FRAME, -ZOOM_IN_DIST ); // ズームイン
-    ++( *seq );
-    break;
-  // フェードアウト開始
-  case 1:
-    if( 100 < ww->frame++ )
-    {
-      GFL_FADE_SetMasterBrightReq(
-          GFL_FADE_MASTER_BRIGHT_BLACKOUT_MAIN | GFL_FADE_MASTER_BRIGHT_BLACKOUT_SUB, 0, 16, 1 );
-      ++( *seq );
-    }
-    break;
-  // タスクの終了待ち
-  case 2:
-    if( 120 < ww->frame++ )
-    {
-      ++( *seq );
-    }
-    break;
-  case 3:
-    return GMEVENT_RES_FINISH;
-  } 
-  return GMEVENT_RES_CONTINUE;
-}
-
-//------------------------------------------------------------------------------------------
-/**
  * @brief 登場イベント処理関数( 回転 )
  */
 //------------------------------------------------------------------------------------------
@@ -262,50 +162,10 @@ static GMEVENT_RESULT EVENT_FUNC_APPEAR_Rotate( GMEVENT* event, int* seq, void* 
 
 //------------------------------------------------------------------------------------------
 /**
- * @brief 退場イベント処理関数( ジャンプ )
+ * @brief 登場イベント処理関数( 回転落下 )
  */
 //------------------------------------------------------------------------------------------
-static GMEVENT_RESULT EVENT_FUNC_DISAPPEAR_RollingJump( GMEVENT* event, int* seq, void* work )
-{
-  WARP_WORK*    ww     = (WARP_WORK*)work;
-  FIELD_PLAYER* player = FIELDMAP_GetFieldPlayer( ww->pFieldmap );
-
-  switch( *seq )
-  {
-  // タスクの追加
-  case 0:
-    FIELDMAP_TCB_WARP_PLAYER_AddTask_DisappearUp( ww->pFieldmap, 60, 300 );   // 自機移動
-    FIELDMAP_TCB_ROT_PLAYER_AddTask_SpeedUp( ww->pFieldmap, 30, 10 );         // 自機回転
-    ++( *seq );
-    break;
-  // フェードアウト開始
-  case 1:
-    if( 30 < ww->frame++ )
-    {
-      GFL_FADE_SetMasterBrightReq(
-          GFL_FADE_MASTER_BRIGHT_BLACKOUT_MAIN | GFL_FADE_MASTER_BRIGHT_BLACKOUT_SUB, 0, 16, 0 );
-      ++( *seq );
-    }
-    break;
-  // タスクの終了待ち
-  case 2:
-    if( 60 < ww->frame++ )
-    {
-      ++( *seq );
-    }
-    break;
-  case 3:
-    return GMEVENT_RES_FINISH;
-  }
-  return GMEVENT_RES_CONTINUE;
-}
-
-//------------------------------------------------------------------------------------------
-/**
- * @brief 登場イベント処理関数( ジャンプ )
- */
-//------------------------------------------------------------------------------------------
-static GMEVENT_RESULT EVENT_FUNC_APPEAR_RollingJump( GMEVENT* event, int* seq, void* work )
+static GMEVENT_RESULT EVENT_FUNC_APPEAR_RollingFall( GMEVENT* event, int* seq, void* work )
 {
   WARP_WORK*    ww     = (WARP_WORK*)work;
   FIELD_PLAYER* player = FIELDMAP_GetFieldPlayer( ww->pFieldmap );
@@ -336,7 +196,6 @@ static GMEVENT_RESULT EVENT_FUNC_APPEAR_RollingJump( GMEVENT* event, int* seq, v
   } 
   return GMEVENT_RES_CONTINUE;
 }
-
 
 //------------------------------------------------------------------------------------------
 /**
@@ -372,44 +231,4 @@ static GMEVENT_RESULT EVENT_FUNC_APPEAR_Fall( GMEVENT* event, int* seq, void* wo
     return GMEVENT_RES_FINISH;
   } 
   return GMEVENT_RES_CONTINUE;
-}
-
-//------------------------------------------------------------------------------------------
-/**
- * @brief 退場イベント処理関数( 流砂 )
- */
-//------------------------------------------------------------------------------------------
-static GMEVENT_RESULT EVENT_FUNC_DISAPPEAR_FallInSand( GMEVENT* event, int* seq, void* work )
-{
-  WARP_WORK*    ww     = (WARP_WORK*)work;
-  FIELD_PLAYER* player = FIELDMAP_GetFieldPlayer( ww->pFieldmap );
-
-  switch( *seq )
-  {
-  // タスクの追加
-  case 0:
-    FIELDMAP_TCB_WARP_PLAYER_AddTask_DisappearUp( ww->pFieldmap, 80, -50 );   // 自機移動
-    FIELDMAP_TCB_ROT_PLAYER_AddTask( ww->pFieldmap, 80, 10 );   // 回転
-    ++( *seq );
-    break;
-  // フェードアウト開始
-  case 1:
-    if( 30 < ww->frame++ )
-    {
-      GFL_FADE_SetMasterBrightReq(
-          GFL_FADE_MASTER_BRIGHT_BLACKOUT_MAIN | GFL_FADE_MASTER_BRIGHT_BLACKOUT_SUB, 0, 16, 0 );
-      ++( *seq );
-    }
-    break;
-  // タスクの終了待ち
-  case 2:
-    if( 80 < ww->frame++ )
-    {
-      ++( *seq );
-    }
-    break;
-  case 3:
-    return GMEVENT_RES_FINISH;
-  }
-  return GMEVENT_RES_CONTINUE;
-}
+} 
