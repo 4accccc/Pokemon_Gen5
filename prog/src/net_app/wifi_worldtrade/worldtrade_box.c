@@ -6,6 +6,7 @@
  * @date	06.04.16
  */
 //============================================================================================
+
 #include <gflib.h>
 #include <dwc.h>
 #include "system/main.h"
@@ -1297,7 +1298,13 @@ static int SubSeq_SelectWait( WORLDTRADE_WORK *wk )
 			SubSeq_MessagePrint( wk, msg_gtc_01_038, 1, 0, 0x0f0f, 1 );
 			WorldTrade_SetNextSeq( wk, SUBSEQ_MES_CLEAR_WAIT,  SUBSEQ_MAIN);
 		}
+#if 0//origin
 		else if((error=PokeNewFormCheck(ppp))){
+#else 
+			//warningになっていたので修正
+		else if((PokeNewFormCheck(ppp))){
+			error=PokeNewFormCheck(ppp);
+#endif
 			if(error==1){
 				SubSeq_MessagePrint( wk, msg_gtc_new_form, 1, 0, 0x0f0f, 1 );
 			}else{
@@ -1431,7 +1438,13 @@ static int SubSeq_ExchangeSelectWait( WORLDTRADE_WORK *wk )
 			SubSeq_MessagePrint( wk, msg_gtc_01_038, 1, 0, 0x0f0f, 1 );
 			WorldTrade_SetNextSeq( wk, SUBSEQ_MES_CLEAR_WAIT,  SUBSEQ_MAIN);
 		}
+#if 0//origin
 		else if((error=PokeNewFormCheck(ppp))){
+#else
+			//warningになっていたので修正
+		else if((PokeNewFormCheck(ppp))){
+			error=PokeNewFormCheck(ppp);
+#endif
 			if(error==1){
 				SubSeq_MessagePrint( wk, msg_gtc_new_form, 1, 0, 0x0f0f, 1 );
 			}else{
@@ -2056,7 +2069,7 @@ static void PokemonIconSet( POKEMON_PASO_PARAM *paso, GFL_CLWK* icon,
 			GFL_CLACT_WK_SetDrawEnable( itemact, 1 );
 
 			// アイテムはメールか？
-			if(ItemMailCheck( itemno )){	
+			if(ITEM_CheckMail( itemno )){	
 				GFL_CLACT_WK_SetAnmSeq( itemact, CELL_MAILICON_NO );	// メール
 			}else{
 				GFL_CLACT_WK_SetAnmSeq( itemact, CELL_ITEMICON_NO );	// アイテム
@@ -2541,7 +2554,7 @@ BOOL WorldTrade_PokemonMailCheck( POKEMON_PARAM *pp )
 {
 	int itemno = PP_Get( pp, ID_PARA_item,       NULL);
 	// アイテムはメールか？
-	if(ItemMailCheck( itemno )){
+	if(ITEM_CheckMail( itemno )){
 		return TRUE;
 	}
 	

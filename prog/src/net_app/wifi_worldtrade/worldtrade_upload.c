@@ -714,7 +714,13 @@ static int Subseq_UploadStart( WORLDTRADE_WORK *wk )
 static int Subseq_UploadResult( WORLDTRADE_WORK *wk )
 {
 	int result;
+#if 0 //origin
 	if ((result=Dpw_Tr_IsAsyncEnd())){
+#else
+		//ワーニングがでるので
+	result=Dpw_Tr_IsAsyncEnd();
+	if (result){
+#endif
 		s32 result = Dpw_Tr_GetAsyncResult();
 		wk->timeout_count = 0;
 		switch (result){
@@ -849,7 +855,7 @@ static int Subseq_UploadFinishResult( WORLDTRADE_WORK *wk )
 //			wk->ConnectErrorNo = result;
 //			wk->subprocess_seq = SUBSEQ_ERROR_MESSAGE;
 			// ここはうけつけに戻ってはいけない。無理矢理通信エラー
-			GFL_NET_ErrorFunc(COMM_ERROR_RESET_OTHER);
+			CommStateSetError(COMM_ERROR_RESET_OTHER);
 			break;
 
 		case DPW_TR_ERROR_FATAL:			//!< 通信致命的エラー。電源の再投入が必要です
@@ -1035,7 +1041,7 @@ static int Subseq_DownloadFinishResult( WORLDTRADE_WORK *wk )
 		// 最後のつめを行おうとしたら交換が成立してしまった。
 		// エラーが起きた事にして外にだしてしまう→もどってくれば交換が成立してます。
 		case DPW_TR_ERROR_ILLIGAL_REQUEST:
-			GFL_NET_ErrorFunc(COMM_ERROR_RESET_GTS);
+			CommStateSetError(COMM_ERROR_RESET_GTS);
 			break;
 	// -----------------------------------------
 	// 共通エラー処理
@@ -1051,7 +1057,7 @@ static int Subseq_DownloadFinishResult( WORLDTRADE_WORK *wk )
 
 			// セーブがほとんど書き込まれている状況ではデータを元に戻せない
 			// 無理矢理通信エラーへ
-			GFL_NET_ErrorFunc(COMM_ERROR_RESET_OTHER);
+			CommStateSetError(COMM_ERROR_RESET_OTHER);
 			break;
 		case DPW_TR_ERROR_FATAL:			//!< 通信致命的エラー。電源の再投入が必要です
 			// 即ふっとばし
@@ -1124,7 +1130,13 @@ static int Subseq_ExchangeStart( WORLDTRADE_WORK *wk )
 static int Subseq_ExchangeResult( WORLDTRADE_WORK *wk )
 {
 	int result;
+#if 0 //origin
 	if ((result=Dpw_Tr_IsAsyncEnd())){
+#else
+		//ワーニングがでるので
+		result=Dpw_Tr_IsAsyncEnd();
+	if (result){
+#endif 
 		s32 result = Dpw_Tr_GetAsyncResult();
 		wk->timeout_count = 0;
 		switch (result){
@@ -1241,7 +1253,7 @@ static int Subseq_ExchangeFinishResult( WORLDTRADE_WORK *wk )
 
 		// 引き取られてしまった
 		case DPW_TR_ERROR_ILLIGAL_REQUEST:
-			GFL_NET_ErrorFunc(COMM_ERROR_RESET_GTS);
+			CommStateSetError(COMM_ERROR_RESET_GTS);
 			break;
 	// -----------------------------------------
 	// 共通エラー処理
@@ -1257,7 +1269,7 @@ static int Subseq_ExchangeFinishResult( WORLDTRADE_WORK *wk )
 	
 			// ９９％までセーブが書き込まれた状況では元に戻せないので
 			// 無理矢理通信エラーへ
-			GFL_NET_ErrorFunc(COMM_ERROR_RESET_OTHER);
+			CommStateSetError(COMM_ERROR_RESET_OTHER);
 			break;
 
 			break;
@@ -1659,15 +1671,18 @@ static void MakeTradeExchangeInfomation( WORLDTRADE_WORK *wk, POKEMON_PARAM *pp 
 
 	// 外国の人と交換が成立した場合はPHCでコースが一つ解放される
 	// TODO CasetteLanguageの実体がないためコメントアウト
+	//TODO DEMOとPROC
+#ifdef DEBUG_AUTHER_ONLY
+#warning TODO:CasetteLanguage
+#endif
+#ifdef PHC_EVENT_CHECK
 	if( PP_Get(pp,ID_PARA_country_code, NULL) != 0 ){	//CasetteLanguage ){
 		PHC_SVDATA *phc_svdata = SaveData_GetPhcSaveData( wk->param->savedata );
 		PhcSvData_SetCourseOpenFlag( phc_svdata, PHC_WIFI_OPEN_COURSE_NO );
 	}else{
 		OS_Printf("うみのむこうフラグはたたない\n");
 	}
-
-
-
+#endif //PHC_EVENT_CHECK
 }
 
 //------------------------------------------------------------------
@@ -1759,7 +1774,7 @@ static int Subseq_DownloadExFinishResult( WORLDTRADE_WORK *wk)
 		// データが無い（かなりおかしい状況、さっきは落とせたのに）
 		case DPW_TR_ERROR_NO_DATA :	
 			OS_TPrintf(" download server stop service.\n");
-			GFL_NET_ErrorFunc(COMM_ERROR_RESET_GTS);
+			CommStateSetError(COMM_ERROR_RESET_GTS);
 			break;
 
 		// 1ヶ月過ぎてしまった
@@ -1782,7 +1797,7 @@ static int Subseq_DownloadExFinishResult( WORLDTRADE_WORK *wk)
 
 			// ９９％までセーブが書き込まれた状況では元に戻せないので
 			// 無理矢理通信エラーへ
-			GFL_NET_ErrorFunc(COMM_ERROR_RESET_OTHER);
+			CommStateSetError(COMM_ERROR_RESET_OTHER);
 
 			break;
 		case DPW_TR_ERROR_FATAL:			//!< 通信致命的エラー。電源の再投入が必要です
@@ -1986,7 +2001,7 @@ static int Subseq_ServerPokeDeleteWait( WORLDTRADE_WORK *wk)
 		// 最後のつめを行おうとしたら交換が成立してしまった。
 		// エラーが起きた事にして外にだしてしまう→もどってくれば交換が成立してます。
 		case DPW_TR_ERROR_ILLIGAL_REQUEST:
-			GFL_NET_ErrorFunc(COMM_ERROR_RESET_GTS);
+			CommStateSetError(COMM_ERROR_RESET_GTS);
 			break;
 	// -----------------------------------------
 	// 共通エラー処理
@@ -2002,7 +2017,7 @@ static int Subseq_ServerPokeDeleteWait( WORLDTRADE_WORK *wk)
 
 			// セーブがほとんど書き込まれている状況ではデータを元に戻せない
 			// 無理矢理通信エラーへ
-			GFL_NET_ErrorFunc(COMM_ERROR_RESET_OTHER);
+			CommStateSetError(COMM_ERROR_RESET_OTHER);
 			break;
 		case DPW_TR_ERROR_FATAL:			//!< 通信致命的エラー。電源の再投入が必要です
 			// 即ふっとばし
@@ -2190,10 +2205,10 @@ static int SubSeq_Save( WORLDTRADE_WORK *wk )
 	SaveData_RequestTotalSave();
 	
 	// セーブ初期化
-	SaveData_DivSave_Init( wk->param->savedata,SVBLK_ID_MAX);
+	SaveData_DivSave_Init( wk->param->savedata,0);
 
 	wk->subprocess_seq = SUBSEQ_SAVE_RANDOM_WAIT;
-	wk->wait           = gf_p_rand(60)+2;
+	wk->wait           = GFUser_GetPublicRand(60)+2;
 
 	OS_TPrintf("セーブ開始 wait=%d\n", wk->wait);
 
@@ -2233,15 +2248,18 @@ static int SubSeq_SaveRandomWait( WORLDTRADE_WORK *wk )
 //------------------------------------------------------------------
 static int SubSeq_SaveWait( WORLDTRADE_WORK *wk )
 {
+#ifdef DEBUG_SAVE_NONE
+	if(1){	
+#else
 	if(SaveData_DivSave_Main(wk->param->savedata)==SAVE_RESULT_LAST){
+#endif
 
 		// セーブシーケンスにくるまでに次の設定は終えているので、SUBSEQ_ENDだけでよい
 		wk->subprocess_seq = wk->saveNextSeq1st;
 		OS_TPrintf("セーブ９９％終了\n");
 
 	}
-	
-	
+
 	return SEQ_MAIN;
 	
 }
@@ -2258,7 +2276,11 @@ static int SubSeq_SaveWait( WORLDTRADE_WORK *wk )
 //------------------------------------------------------------------
 static int SubSeq_SaveLast( WORLDTRADE_WORK *wk )
 {
+#ifdef DEBUG_SAVE_NONE
+	if(1){	
+#else
 	if(SaveData_DivSave_Main(wk->param->savedata)==SAVE_RESULT_OK){
+#endif
 		wk->subprocess_seq = wk->saveNextSeq2nd;
 
 		OS_TPrintf("セーブ100％終了\n");
@@ -2288,7 +2310,7 @@ static int SubSeq_TimeoutSave( WORLDTRADE_WORK *wk )
 
 	
 	// セーブ初期化
-	SaveData_DivSave_Init( wk->param->savedata,SVBLK_ID_MAX);
+	SaveData_DivSave_Init( wk->param->savedata,0);
 	wk->subprocess_seq = SUBSEQ_TIMEOUT_SAVE_WAIT;
 
 	return SEQ_MAIN;
@@ -2308,7 +2330,11 @@ static int SubSeq_TimeoutSave( WORLDTRADE_WORK *wk )
 //------------------------------------------------------------------
 static int SubSeq_TimeoutSaveWait( WORLDTRADE_WORK *wk )
 {
+#ifdef DEBUG_SAVE_NONE
+	if(1){	
+#else
 	if(SaveData_DivSave_Main(wk->param->savedata)==SAVE_RESULT_OK){
+#endif
 
 		// タイトル画面に戻る設定
 		WorldTrade_SubProcessChange( wk, WORLDTRADE_TITLE, 0 );
@@ -2477,6 +2503,7 @@ static void DownloadPokemonDataAdd( WORLDTRADE_WORK *wk, POKEMON_PARAM *pp, int 
 	if(flag){
 		u8 friend = FIRST_NATUKIDO;
 
+#ifdef ARUCEUSU_EVENT_CHECK
 		//受け取るポケモンがアルセウスイベント起動条件を満たしているならフラグセット
 		if(PP_Get(pp, ID_PARA_monsno, NULL) == MONSNO_ARUSEUSU){
 			if(PP_Get(pp, ID_PARA_event_get_flag, NULL) || 
@@ -2488,6 +2515,7 @@ static void DownloadPokemonDataAdd( WORLDTRADE_WORK *wk, POKEMON_PARAM *pp, int 
 				}
 			}
 		}
+#endif //ARUCEUSU_EVENT_CHECK
 
 		// なつき度を初期値７０にする
 		PP_Put( pp, ID_PARA_friend, friend );
@@ -2563,6 +2591,7 @@ static void ExchangePokemonDataAdd( WORLDTRADE_WORK *wk, POKEMON_PARAM *pp, int 
 		boxno = 0;
 	}
 
+#ifdef ARUCEUSU_EVENT_CHECK
 	//受け取るポケモンがアルセウスイベント起動条件を満たしているならフラグセット
 	if(PP_Get(pp, ID_PARA_monsno, NULL) == MONSNO_ARUSEUSU){
 		if(PP_Get(pp, ID_PARA_event_get_flag, NULL) || 
@@ -2574,6 +2603,7 @@ static void ExchangePokemonDataAdd( WORLDTRADE_WORK *wk, POKEMON_PARAM *pp, int 
 			}
 		}
 	}
+#endif //ARUCEUSU_EVENT_CHECK
 
 	{
 		// 交換されたポケモンに入れるなつき度

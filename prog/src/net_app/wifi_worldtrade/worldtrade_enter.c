@@ -225,20 +225,17 @@ int WorldTrade_Enter_Init(WORLDTRADE_WORK *wk, int seq)
 		if(wk->param->connect){
 		    // 通信エラー管理のために通信ルーチンをON
 		    //CommStateWifiDPWStart( wk->param->savedata );
-				//TODO
 			// WIFIせつぞくを開始
 			Enter_MessagePrint( wk, wk->LobbyMsgManager, msg_wifilobby_002, 1, 0x0f0f );
 			WorldTrade_SetNextSeq( wk, ENTER_MES_WAIT, ENTER_INTERNET_CONNECT );
 			WorldTrade_TimeIconAdd(wk);
 		}else{
 			//sys_SleepOK(SLEEPTYPE_COMM);// スリープ禁止を解除。実際に通信する時にこちら側でNGにする
-			//TODO
 			wk->subprocess_seq = ENTER_START;
 		}
 	}else{
 	    // 通信エラー管理のために通信ルーチンをON
 	    //CommStateWifiDPWStart( wk->param->savedata );
-			//TODO
 		wk->subprocess_seq = ENTER_FORCE_END_START;
 	}
 	return SEQ_FADEIN;
@@ -730,7 +727,6 @@ static int Enter_EndYesNoSelect( WORLDTRADE_WORK *wk )
 		}
 		// 通信エラー管理のために通信ルーチンをOFF
 		//CommStateWifiDPWEnd();
-		//TODO
 		WorldTrade_SubProcessChange( wk, WORLDTRADE_ENTER, 0 );
 		wk->subprocess_seq  = ENTER_END;
 	}
@@ -846,9 +842,7 @@ static int Enter_InternetConnect( WORLDTRADE_WORK *wk )
 {
     // 通信エラー管理のために通信ルーチンをON
     //CommStateWifiDPWStart( wk->param->savedata );
-		//TODO
 	//sys_SleepNG(SLEEPTYPE_COMM);
-	//TODO
 
 	WorldTrade_WifiIconAdd( wk );  //2768
 	DWC_InitInetEx(&wk->stConnCtrl,COMM_DMA_NO,COMM_POWERMODE,COMM_SSL_PRIORITY);
@@ -1539,7 +1533,6 @@ static int Enter_ServerServiceEnd( WORLDTRADE_WORK *wk )
 		if( GF_MSG_PrintEndCheck( &wk->print )==0){
 		    // 通信エラー管理のために通信ルーチンをOFF
 		    //CommStateWifiDPWEnd();
-				//TODO
 		    DWC_CleanupInet();
 			wk->local_seq++;
 		}

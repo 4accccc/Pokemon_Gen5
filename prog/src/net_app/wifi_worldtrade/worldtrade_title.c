@@ -146,8 +146,7 @@ int WorldTrade_Title_Init(WORLDTRADE_WORK *wk, int seq)
 
 
 
-	//Snd_DataSetByScene( SND_SCENE_WIFI_WORLD_TRADE, SEQ_GS_BLD_GTC, 1 );
-	//TODO
+	Snd_DataSetByScene( SND_SCENE_WIFI_WORLD_TRADE, SEQ_GS_BLD_GTC, 1 );
 
 
 	// プラチナで、マップの曲と、画面の曲が変更になったので、

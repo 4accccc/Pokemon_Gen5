@@ -9,7 +9,7 @@
 #ifndef	__PERAPVOICE_H__
 #define	__PERAPVOICE_H__
 
-
+#include "savedata/save_control.h"
 
 //============================================================================================
 //============================================================================================
@@ -38,6 +38,8 @@ extern PERAPVOICE * PERAPVOICE_AllocWork(HEAPID heapID);
 
 //---------------------------------------------------------------------------
 //---------------------------------------------------------------------------
+
+extern PERAPVOICE * SaveData_GetPerapVoice(SAVE_CONTROL_WORK * sv);
 extern BOOL PERAPVOICE_GetExistFlag(const PERAPVOICE * pv);
 extern void PERAPVOICE_ClearExistFlag( PERAPVOICE * pv );
 extern void PERAPVOICE_SetVoiceData(PERAPVOICE * pv, const s8 * src);

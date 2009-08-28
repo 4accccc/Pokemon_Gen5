@@ -127,7 +127,6 @@ int WorldTrade_Status_Main(WORLDTRADE_WORK *wk, int seq)
 //		if( ProcMain( wk->proc ) ){
 		if(1){	
 			//GFL_PROC_Delete( wk->proc );
-			//TODO
 
 			WorldTrade_SubProcessChange( wk, WORLDTRADE_MYBOX, wk->sub_process_mode );
 			

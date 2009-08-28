@@ -156,6 +156,9 @@ int WorldTrade_Demo_Init(WORLDTRADE_WORK *wk, int seq)
 	wk->subprocflag = 1;
 #endif 
 	//TODO DEMO‚ÆPROC
+#ifdef DEBUG_AUTHER_ONLY
+#warning( TODO:DEMO )
+#endif
 	return SEQ_FADEIN;
 }
 //==============================================================================
