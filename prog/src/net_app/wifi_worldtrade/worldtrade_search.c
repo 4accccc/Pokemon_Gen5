@@ -392,6 +392,16 @@ int WorldTrade_Search_End(WORLDTRADE_WORK *wk, int seq)
 //--------------------------------------------------------------------------------------------
 static void BgInit( void )
 {
+	// BG SYSTEM
+	{	
+		GFL_BG_SYS_HEADER BGsys_data = {
+			GX_DISPMODE_GRAPHICS, GX_BGMODE_0, GX_BGMODE_0, GX_BG0_AS_2D,
+		};
+		GFL_BG_SetBGMode( &BGsys_data );
+
+	}
+
+
 	// メイン画面テキスト面
 	{	
 		GFL_BG_BGCNT_HEADER TextBgCntDat = {

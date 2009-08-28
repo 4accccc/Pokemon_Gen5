@@ -46,7 +46,6 @@ static void SetCellActor(WORLDTRADE_WORK *wk);
 static void DelCellActor(WORLDTRADE_WORK *wk);
 static void WantPokePrintReWrite( WORLDTRADE_WORK *wk );
 
-
 static int SubSeq_Start( WORLDTRADE_WORK *wk);
 static int SubSeq_Main( WORLDTRADE_WORK *wk);
 static int SubSeq_End( WORLDTRADE_WORK *wk);
@@ -135,6 +134,16 @@ int WorldTrade_MyPoke_Init(WORLDTRADE_WORK *wk, int seq)
 	// BG設定
 	BgInit(  );
 
+	// 3D設定
+	WorldTrade_MyPoke_G3D_Init( wk );
+	{	
+		VecFx32	pos;
+		pos.x	= 13<<FX32_SHIFT;
+		pos.y	= 7<<FX32_SHIFT;
+		pos.z	= 0;
+		wk->pokeMcss	= WorldTrade_MyPoke_MCSS_Create( wk, (POKEMON_PASO_PARAM*)PP_GetPPPPointerConst((POKEMON_PARAM*)wk->UploadPokemonData.postData.data), &pos );
+	}
+
 	// BGグラフィック転送
 	BgGraphicSet( wk );
 
@@ -199,6 +208,8 @@ int WorldTrade_MyPoke_Main(WORLDTRADE_WORK *wk, int seq)
 	
 	ret = (*Functable[wk->subprocess_seq])( wk );
 
+	WorldTrade_MyPoke_G3D_Draw( wk );
+
 	return ret;
 }
 
@@ -221,6 +232,9 @@ int WorldTrade_MyPoke_End(WORLDTRADE_WORK *wk, int seq)
 	
 	BmpWinDelete( wk );
 	
+	WorldTrade_MyPoke_MCSS_Delete( wk, wk->pokeMcss );
+	WorldTrade_MyPoke_G3D_Exit( wk );
+
 	BgExit(  );
 
 	// 「DSの下画面をみてねアイコン」非表示
@@ -244,6 +258,16 @@ int WorldTrade_MyPoke_End(WORLDTRADE_WORK *wk, int seq)
 static void BgInit( void )
 {
 
+	// BG SYSTEM
+	{	
+		GFL_BG_SYS_HEADER BGsys_data = {
+			GX_DISPMODE_GRAPHICS, GX_BGMODE_0, GX_BGMODE_0, GX_BG0_AS_3D,
+		};
+		GFL_BG_SetBGMode( &BGsys_data );
+		GFL_DISP_GXS_SetVisibleControl(
+		    GX_PLANEMASK_BG1 | GX_PLANEMASK_BG2 | GX_PLANEMASK_OBJ, VISIBLE_ON);
+	}
+
 	// メイン画面テキスト面
 	{	
 		GFL_BG_BGCNT_HEADER TextBgCntDat = {
@@ -251,9 +275,9 @@ static void BgInit( void )
 			GX_BG_SCRBASE_0xf800, GX_BG_CHARBASE_0x00000, GFL_BG_CHRSIZ_256x256,GX_BG_EXTPLTT_01,
 			0, 0, 0, FALSE
 		};
-		GFL_BG_SetBGControl( GFL_BG_FRAME0_M, &TextBgCntDat, GFL_BG_MODE_TEXT );
-		GFL_BG_ClearScreen( GFL_BG_FRAME0_M );
-		GFL_BG_SetVisible( GFL_BG_FRAME0_M, TRUE );
+		GFL_BG_SetBGControl( GFL_BG_FRAME2_M, &TextBgCntDat, GFL_BG_MODE_TEXT );
+		GFL_BG_ClearScreen( GFL_BG_FRAME2_M );
+		GFL_BG_SetVisible( GFL_BG_FRAME2_M, TRUE );
 	}
 
 	// メイン画面メニュー面
@@ -267,16 +291,6 @@ static void BgInit( void )
 		GFL_BG_SetVisible( GFL_BG_FRAME1_M, TRUE );
 	}
 
-	// メイン画面背景面
-	{	
-		GFL_BG_BGCNT_HEADER TextBgCntDat = {
-			0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
-			GX_BG_SCRBASE_0xe800, GX_BG_CHARBASE_0x08000, GFL_BG_CHRSIZ_256x256,GX_BG_EXTPLTT_01,
-			1, 0, 0, FALSE
-		};
-		GFL_BG_SetBGControl( GFL_BG_FRAME2_M, &TextBgCntDat, GFL_BG_MODE_TEXT );
-		GFL_BG_SetVisible( GFL_BG_FRAME2_M, TRUE );
-	}
 
 	// 情報表示画面テキスト面
 	{	
@@ -290,7 +304,7 @@ static void BgInit( void )
 		GFL_BG_SetVisible( GFL_BG_FRAME3_M, TRUE );
 	}
 
-	GFL_BG_SetClearCharacter( GFL_BG_FRAME0_M, 32, 0, HEAPID_WORLDTRADE );
+	GFL_BG_SetClearCharacter( GFL_BG_FRAME2_M, 32, 0, HEAPID_WORLDTRADE );
 	GFL_BG_SetClearCharacter( GFL_BG_FRAME3_M, 32, 0, HEAPID_WORLDTRADE );
 
 
@@ -315,9 +329,9 @@ static void BgExit( void )
 	WorldTrade_SubLcdBgExit( );
 
 	// メイン画面ＢＧ情報解放
-	GFL_BG_FreeBGControl( GFL_BG_FRAME2_M );
-	GFL_BG_FreeBGControl( GFL_BG_FRAME1_M );
 	GFL_BG_FreeBGControl( GFL_BG_FRAME0_M );
+	GFL_BG_FreeBGControl( GFL_BG_FRAME1_M );
+	GFL_BG_FreeBGControl( GFL_BG_FRAME2_M );
 	GFL_BG_FreeBGControl( GFL_BG_FRAME3_M );
 }
 
@@ -344,10 +358,10 @@ static void BgGraphicSet( WORLDTRADE_WORK * wk )
   //	TalkFontPaletteLoad( PALTYPE_SUB_BG,  WORLDTRADE_TALKFONT_PAL*0x20, HEAPID_WORLDTRADE );
 
 	// 会話ウインドウグラフィック転送
-	BmpWinFrame_GraphicSet(	 GFL_BG_FRAME0_M, WORLDTRADE_MESFRAME_CHR, 
+	BmpWinFrame_GraphicSet(	 GFL_BG_FRAME2_M, WORLDTRADE_MESFRAME_CHR, 
 						WORLDTRADE_MESFRAME_PAL,  CONFIG_GetWindowType(wk->param->config), HEAPID_WORLDTRADE );
 
-	BmpWinFrame_GraphicSet(	 GFL_BG_FRAME0_M, WORLDTRADE_MENUFRAME_CHR,
+	BmpWinFrame_GraphicSet(	 GFL_BG_FRAME2_M, WORLDTRADE_MENUFRAME_CHR,
 						WORLDTRADE_MENUFRAME_PAL, 0, HEAPID_WORLDTRADE );
 
 
@@ -403,6 +417,7 @@ static void SetCellActor(WORLDTRADE_WORK *wk)
 	GFL_CLACT_WK_SetAutoAnmFlag(wk->PokemonActWork,1);
 	GFL_CLACT_WK_SetAnmSeq( wk->PokemonActWork, 37 );
 	GFL_CLACT_WK_SetBgPri(wk->PokemonActWork, 1 );
+	GFL_CLACT_WK_SetDrawEnable(wk->PokemonActWork, 0 );
 	WirelessIconEasy();
 
 }
@@ -472,7 +487,7 @@ static void BmpWinInit( WORLDTRADE_WORK *wk )
 {
 	// ---------- メイン画面 ------------------
 
-	wk->MsgWin	= GFL_BMPWIN_CreateFixPos( GFL_BG_FRAME0_M,
+	wk->MsgWin	= GFL_BMPWIN_CreateFixPos( GFL_BG_FRAME2_M,
 		LINE_TEXT_X, LINE_TEXT_Y, LINE_TEXT_SX, LINE_TEXT_SY, 
 		WORLDTRADE_TALKFONT_PAL,  LINE_MESSAGE_OFFSET );
 
@@ -480,7 +495,7 @@ static void BmpWinInit( WORLDTRADE_WORK *wk )
 	GFL_BMPWIN_MakeTransWindow( wk->MsgWin );
 
 	// BMPMENU用の領域がここにある
-	wk->MenuWin[0]	= GFL_BMPWIN_CreateFixPos( GFL_BG_FRAME0_M,
+	wk->MenuWin[0]	= GFL_BMPWIN_CreateFixPos( GFL_BG_FRAME2_M,
 		SELECT_MENU_X, SELECT_MENU_Y, SELECT_MENU_SX, SELECT_MENU_SY, 
 		WORLDTRADE_TALKFONT_PAL,  SELECT_MENU_OFFSET );	
 	GFL_BMPWIN_MakeTransWindow( wk->MenuWin[0] );
@@ -1090,6 +1105,8 @@ void WorldTrade_PokeInfoPrint2( GFL_MSGDATA *MsgManager, GFL_BMPWIN *win[], STRC
 //------------------------------------------------------------------
 void WorldTrade_TransPokeGraphic( POKEMON_PARAM *pp )
 {
+
+//MCSSで描画するようになったので使用しなくなりました
 #if 0
 	SOFT_SPRITE_ARC ssa;
 	u8  *char_work = GFL_HEAP_AllocMemory( HEAPID_WORLDTRADE, POKEGRA_VRAM_SIZE );
@@ -1115,7 +1132,7 @@ void WorldTrade_TransPokeGraphic( POKEMON_PARAM *pp )
 	
 	// ワーク解放
 	GFL_HEAP_FreeMemory(char_work);
-#endif // TODO
+#endif 
 }
 
 
@@ -1139,4 +1156,127 @@ static void WantPokePrintReWrite( WORLDTRADE_WORK *wk )
 				WorldTrade_LevelTermGet(wk->UploadPokemonData.wantSimple.level_min,wk->UploadPokemonData.wantSimple.level_max, LEVEL_PRINT_TBL_DEPOSIT),&wk->print);
 
 
+}
+
+//=============================================================================
+/**
+ *	WBでポケモンがMCSSになったため3D処理追加
+ */
+//=============================================================================
+//----------------------------------------------------------------------------
+/**
+ *	@brief	G3D関係とMCSSの初期化
+ *
+ *	@param	WORLDTRADE_WORK *wk ワーク
+ */
+//-----------------------------------------------------------------------------
+void WorldTrade_MyPoke_G3D_Init( WORLDTRADE_WORK *wk )
+{	
+		const VecFx32 cam_pos = {FX32_CONST(0.0f),FX32_CONST(0.0f),FX32_CONST(101.0f)};
+		const VecFx32 cam_target = {FX32_CONST(0.0f),FX32_CONST(0.0f),FX32_CONST(-100.0f)};
+		const VecFx32 cam_up = {0,FX32_ONE,0};
+		//エッジマーキングカラー
+		 const GXRgb edge_color_table[8]=
+		{ GX_RGB( 0, 0, 0 ), GX_RGB( 0, 0, 0 ), 0, 0, 0, 0, 0, 0 };
+
+		//G3Dの初期化--------
+		GFL_G3D_Init( GFL_G3D_VMANLNK, GFL_G3D_TEX256K, GFL_G3D_VMANLNK, GFL_G3D_PLT16K,
+									0, HEAPID_WORLDTRADE, NULL );
+
+		//正射影カメラ
+		wk->camera =  GFL_G3D_CAMERA_Create( GFL_G3D_PRJORTH,
+																						FX32_ONE*12.0f,
+																						0,
+																						0,
+																						FX32_ONE*16.0f,
+																						(FX32_ONE),
+																						(FX32_ONE*200),
+																						NULL,
+																						&cam_pos,
+																						&cam_up,
+																						&cam_target,
+																						HEAPID_WORLDTRADE );
+
+		GFL_G3D_CAMERA_Switching( wk->camera );
+		//エッジマーキングカラーセット
+		G3X_SetEdgeColorTable( edge_color_table );
+		G3X_EdgeMarking( TRUE );
+
+		GFL_G3D_SetSystemSwapBufferMode( GX_SORTMODE_AUTO , GX_BUFFERMODE_Z );	
+
+		GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_BG0, TRUE );
+
+
+		//MCSSの初期化--------
+		wk->mcssSys = MCSS_Init( 2 , HEAPID_WORLDTRADE );
+		MCSS_SetTextureTransAdrs( wk->mcssSys , 0 );
+		MCSS_SetOrthoMode( wk->mcssSys );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	G3D関係とMCSSの破棄
+ *
+ *	@param	WORLDTRADE_WORK *wk ワーク
+ */
+//-----------------------------------------------------------------------------
+void WorldTrade_MyPoke_G3D_Exit( WORLDTRADE_WORK *wk )
+{	
+	MCSS_Exit(wk->mcssSys);
+
+	GFL_G3D_CAMERA_Delete(wk->camera);
+	GFL_G3D_Exit();
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	G3D関係とMCSSの描画
+ *
+ *	@param	WORLDTRADE_WORK *wk ワーク
+ */
+//-----------------------------------------------------------------------------
+void WorldTrade_MyPoke_G3D_Draw( WORLDTRADE_WORK *wk )
+{	
+	GFL_G3D_DRAW_Start();
+	GFL_G3D_DRAW_SetLookAt();
+	MCSS_Main( wk->mcssSys );
+	MCSS_Draw( wk->mcssSys );
+	GFL_G3D_DRAW_End();
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	ポケモン１体分のMCSS作成
+ *
+ *	@param	WORLDTRADE_WORK *wk		ワーク
+ *	@param	VecFx32 *pos					位置
+ *
+ *	@return	ポケモン1体分おMCSS
+ */
+//-----------------------------------------------------------------------------
+MCSS_WORK * WorldTrade_MyPoke_MCSS_Create( WORLDTRADE_WORK *wk, POKEMON_PASO_PARAM *ppp, const VecFx32 *pos )
+{	
+	MCSS_WORK *poke;
+	MCSS_ADD_WORK addWork;
+
+	VecFx32 scale = {FX32_ONE*16,FX32_ONE*16,FX32_ONE};
+
+	MCSS_TOOL_MakeMAWPPP( ppp , &addWork , MCSS_DIR_FRONT );
+	poke = MCSS_Add( wk->mcssSys , pos->x, pos->y , pos->z, &addWork );
+	MCSS_SetScale( poke , &scale );
+	return poke;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	ポケモン１体分のMCSS破棄
+ *
+ *	@param	WORLDTRADE_WORK *wk		ワーク
+ *	@param	*poke									破棄するポケモン
+ */
+//-----------------------------------------------------------------------------
+void WorldTrade_MyPoke_MCSS_Delete( WORLDTRADE_WORK *wk, MCSS_WORK *poke )
+{
+	MCSS_SetVanishFlag( poke );
+	MCSS_Del(wk->mcssSys,poke);
 }

@@ -1506,10 +1506,3 @@ static BOOL NET_IsInit( const WORLDTRADE_WORK *wk )
 	return wk->is_net_init;
 }
 
-
-
-
-
-
-
-

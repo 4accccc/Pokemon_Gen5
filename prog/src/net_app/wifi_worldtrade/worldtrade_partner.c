@@ -149,6 +149,17 @@ int WorldTrade_Partner_Init(WORLDTRADE_WORK *wk, int seq)
 	// BG設定
    	BgInit(  -wk->DrawOffset-32 );
 
+	// 3D設定
+	WorldTrade_MyPoke_G3D_Init( wk );
+	{	
+		VecFx32	pos;
+		pos.x	= 13<<FX32_SHIFT;
+		pos.y	= 7<<FX32_SHIFT;
+		pos.z	= 0;
+		wk->pokeMcss	= WorldTrade_MyPoke_MCSS_Create( wk, (POKEMON_PASO_PARAM*)PP_GetPPPPointerConst((POKEMON_PARAM*)wk->DownloadPokemonData[wk->TouchTrainerPos].postData.data), &pos );
+	}
+
+
 	// BGグラフィック転送
 	BgGraphicSet( wk );
 
@@ -235,9 +246,17 @@ int WorldTrade_Partner_Main(WORLDTRADE_WORK *wk, int seq)
 									wk->SubActY[i][1]+wk->DrawOffset+32 );
 	}
 	// メイン画面のポケモン画像を移動させる処理
-	WorldTrade_CLACT_PosChange( wk->PokemonActWork, PARTNER_POKEMON_X, 
-													PARTNER_POKEMON_Y-wk->DrawOffset );
+	//WorldTrade_CLACT_PosChange( wk->PokemonActWork, PARTNER_POKEMON_X, 
+		//											PARTNER_POKEMON_Y-wk->DrawOffset );
+	{
+		VecFx32	pos;
+		pos.x	= 13<< FX32_SHIFT;
+		pos.y	= 7<< FX32_SHIFT - wk->DrawOffset;
+		pos.z	= 0;
+		MCSS_SetPosition( wk->pokeMcss, &pos );
+	}
 	WorldTrade_SetPartnerCursorPos( wk, wk->TouchTrainerPos, wk->DrawOffset );
+	WorldTrade_MyPoke_G3D_Draw( wk );
 
 	return ret;
 }
@@ -264,6 +283,9 @@ int WorldTrade_Partner_End(WORLDTRADE_WORK *wk, int seq)
 	
 	BmpWinDelete( wk );
 	
+	WorldTrade_MyPoke_MCSS_Delete( wk, wk->pokeMcss );
+	WorldTrade_MyPoke_G3D_Exit( wk );
+
 	BgExit();
 
 	// 「DSの下画面をみてねアイコン」非表示
@@ -286,29 +308,39 @@ int WorldTrade_Partner_End(WORLDTRADE_WORK *wk, int seq)
 //--------------------------------------------------------------------------------------------
 static void BgInit( int sub_bg1_offset )
 {
+	// BG SYSTEM
+	{	
+		GFL_BG_SYS_HEADER BGsys_data = {
+			GX_DISPMODE_GRAPHICS, GX_BGMODE_0, GX_BGMODE_0, GX_BG0_AS_3D,
+		};
+		GFL_BG_SetBGMode( &BGsys_data );
+
+	}
 
 	// メイン画面テキスト面
 	{	
 		GFL_BG_BGCNT_HEADER TextBgCntDat = {
 			0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
-			GX_BG_SCRBASE_0xf800, GX_BG_CHARBASE_0x00000, GX_BG_EXTPLTT_01,
+			GX_BG_SCRBASE_0xf800, GX_BG_CHARBASE_0x00000,GFL_BG_CHRSIZ_256x256, GX_BG_EXTPLTT_01,
 			0, 0, 0, FALSE
 		};
-		GFL_BG_SetBGControl( GFL_BG_FRAME0_M, &TextBgCntDat, GFL_BG_MODE_TEXT );
-		GFL_BG_ClearScreen( GFL_BG_FRAME0_M );
+		GFL_BG_SetBGControl( GFL_BG_FRAME2_M, &TextBgCntDat, GFL_BG_MODE_TEXT );
+		GFL_BG_ClearScreen( GFL_BG_FRAME2_M );
+		GFL_BG_SetVisible( GFL_BG_FRAME2_M, TRUE );
 	}
 
 	// メイン画面メニュー面
 	{	
 		GFL_BG_BGCNT_HEADER TextBgCntDat = {
 			0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
-			GX_BG_SCRBASE_0xf000, GX_BG_CHARBASE_0x08000, GX_BG_EXTPLTT_01,
+			GX_BG_SCRBASE_0xf000, GX_BG_CHARBASE_0x08000,GFL_BG_CHRSIZ_256x256, GX_BG_EXTPLTT_01,
 			1, 0, 0, FALSE
 		};
 		GFL_BG_SetBGControl( GFL_BG_FRAME1_M, &TextBgCntDat, GFL_BG_MODE_TEXT );
+		GFL_BG_SetVisible( GFL_BG_FRAME1_M, TRUE );
 	}
 
-	GFL_BG_SetClearCharacter( GFL_BG_FRAME0_M, 32, 0, HEAPID_WORLDTRADE );
+	GFL_BG_SetClearCharacter( GFL_BG_FRAME2_M, 32, 0, HEAPID_WORLDTRADE );
 
 	// サブ画面初期化
 	if(GXS_GetMasterBrightness() == 0){
@@ -319,7 +351,6 @@ static void BgInit( int sub_bg1_offset )
     }
 
 	//未使用BGオフ
-	GFL_DISP_GX_SetVisibleControl(  GX_PLANEMASK_BG2, VISIBLE_OFF );	//メイン画面BG2面OFF
 	GFL_DISP_GX_SetVisibleControl(  GX_PLANEMASK_BG3, VISIBLE_OFF );	//メイン画面BG3面OFF
 }
 
@@ -340,7 +371,7 @@ static void BgExit( void )
 
 	// メイン画面ＢＧ情報解放
 	GFL_BG_FreeBGControl( GFL_BG_FRAME1_M );
-	GFL_BG_FreeBGControl( GFL_BG_FRAME0_M );
+	GFL_BG_FreeBGControl( GFL_BG_FRAME2_M );
 
 }
 
@@ -421,6 +452,7 @@ static void SetCellActor(WORLDTRADE_WORK *wk)
 			&add, CLSYS_DRAW_MAIN, HEAPID_WORLDTRADE );
 	GFL_CLACT_WK_SetAutoAnmFlag(wk->PokemonActWork,1);
 	GFL_CLACT_WK_SetAnmSeq( wk->PokemonActWork, 37 );
+	GFL_CLACT_WK_SetDrawEnable( wk->PokemonActWork, 0 );
 
 
 	WirelessIconEasy();
@@ -474,20 +506,20 @@ static void DelCellActor( WORLDTRADE_WORK *wk )
 
 // 相手のポケモン情報画面のBMPWIN情報
 static const info_bmpwin_table[][5]={
-	{   1,  1,  9,  2, GFL_BG_FRAME0_M, },	// ポケモンのニックネーム
-	{   8,  4,  8,  2, GFL_BG_FRAME0_M, },	// ポケモンの種族名
-	{  11,  1,  7,  2, GFL_BG_FRAME0_M, },	// 「レベル」
-	{  14,  1,  7,  2, GFL_BG_FRAME0_M, },	// レベル
-	{   1, 10,  5,  2, GFL_BG_FRAME0_M, },	// 「もちもの」
-	{   8, 10, 11,  2, GFL_BG_FRAME0_M, },	// 所持アイテム名
-	{   1,  4,  6,  2, GFL_BG_FRAME0_M, },	// 「なまえ」
-	{   1, 13,  9,  2, GFL_BG_FRAME0_M, },	// 「あずけたひと」
-	{  11, 13,  8,  2, GFL_BG_FRAME0_M, },	// トレーナー名
-	{   1, 16, 13,  2, GFL_BG_FRAME0_M, },	// 「すんでいるばしょ」//154
-	{   2, 18, 27,  2, GFL_BG_FRAME0_M, },	// 住んでいる国
-	{   3, 20, 27,  2, GFL_BG_FRAME0_M, },	// 住んでいる場所（県・州）
-	{   1,  7,  4,  2, GFL_BG_FRAME0_M, },	// 「おや」
-	{   8,  7,  8,  2, GFL_BG_FRAME0_M, },	// 親名
+	{   1,  1,  9,  2, GFL_BG_FRAME2_M, },	// ポケモンのニックネーム
+	{   8,  4,  8,  2, GFL_BG_FRAME2_M, },	// ポケモンの種族名
+	{  11,  1,  7,  2, GFL_BG_FRAME2_M, },	// 「レベル」
+	{  14,  1,  7,  2, GFL_BG_FRAME2_M, },	// レベル
+	{   1, 10,  5,  2, GFL_BG_FRAME2_M, },	// 「もちもの」
+	{   8, 10, 11,  2, GFL_BG_FRAME2_M, },	// 所持アイテム名
+	{   1,  4,  6,  2, GFL_BG_FRAME2_M, },	// 「なまえ」
+	{   1, 13,  9,  2, GFL_BG_FRAME2_M, },	// 「あずけたひと」
+	{  11, 13,  8,  2, GFL_BG_FRAME2_M, },	// トレーナー名
+	{   1, 16, 13,  2, GFL_BG_FRAME2_M, },	// 「すんでいるばしょ」//154
+	{   2, 18, 27,  2, GFL_BG_FRAME2_M, },	// 住んでいる国
+	{   3, 20, 27,  2, GFL_BG_FRAME2_M, },	// 住んでいる場所（県・州）
+	{   1,  7,  4,  2, GFL_BG_FRAME2_M, },	// 「おや」
+	{   8,  7,  8,  2, GFL_BG_FRAME2_M, },	// 親名
 	{   1,  1, 24,  2, GFL_BG_FRAME3_S, },	// 「ほしいポケモン」
 	{   2,  3, 27,  2, GFL_BG_FRAME3_S, },	// ほしいポケモン情報1
 };
@@ -540,9 +572,9 @@ static void BmpWinInit( WORLDTRADE_WORK *wk )
 		
 		// BMPWIN確保
 		for(i=0;i<PARTNER_INFOWIN_MAX;i++){
-			if(info_bmpwin_table[i][4]==GFL_BG_FRAME0_M){
+			if(info_bmpwin_table[i][4]==GFL_BG_FRAME2_M){
 				wk->InfoWin[i] = GFL_BMPWIN_CreateFixPos(
-						info_bmpwin_table[i][4],	// 表示フレーム(GFL_BG_FRAME0_M)
+						info_bmpwin_table[i][4],	// 表示フレーム(GFL_BG_FRAME2_M)
 						info_bmpwin_table[i][0], 	// X
 						info_bmpwin_table[i][1], 	// Y
 						info_bmpwin_table[i][2], 	// W
