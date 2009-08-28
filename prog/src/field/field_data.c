@@ -86,7 +86,9 @@ const DEPEND_FUNCTIONS * FIELDDATA_GetFieldFunctions(u16 mapid)
 //============================================================================================
 //============================================================================================
 
+#if 0
 //------------------------------------------------------------------
+/// land_data_ex
 //------------------------------------------------------------------
 #define	NARC_nogrid_mapblock_h01a_dummy	NARC_nogrid_mapblock_h01a_00_01_ngpack
 #include "fieldmap/nogrid_mapblock.naix"
@@ -145,6 +147,68 @@ static const FLDMAPPER_MAPDATA samplebridge[] = {
 	{ NARC_nogrid_mapblock_m_test_01_06_ngpack },
 	{ NARC_nogrid_mapblock_m_test_02_06_ngpack },
 };
+#else
+//------------------------------------------------------------------
+/// land_data
+//------------------------------------------------------------------
+#define	NARC_nogrid_mapblock_h01a_dummy	NARC_nogrid_mapblock_h01a_00_01_ngpack
+#include "fieldmap/map_land_data.naix"
+static const FLDMAPPER_MAPDATA newbridgemap[] = {
+	{ NARC_map_land_data_h01a_00_00_ngpack }, //{ NARC_nogrid_mapblock_h01a_dummy },
+	{ NARC_map_land_data_h01a_01_00_ngpack },
+
+	{ NARC_map_land_data_h01a_00_01_ngpack },
+	{ NARC_map_land_data_h01a_01_01_ngpack },
+
+	{ NARC_map_land_data_h01a_00_02_ngpack },
+	{ NARC_map_land_data_h01a_01_02_ngpack },
+};
+
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+static const FLDMAPPER_MAPDATA test_c3map[] = {
+	{ NARC_map_land_data_C3_00_01_ngpack },
+	{ NARC_map_land_data_C3_00_02_ngpack },
+	{ NARC_map_land_data_C3_01_01_ngpack },
+	{ NARC_map_land_data_C3_01_02_ngpack },
+};
+
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+static const FLDMAPPER_MAPDATA loopbridgemap[] = {
+	{ NARC_map_land_data_m_test2_01_01_ngpack },
+	{ NARC_map_land_data_m_test2_02_01_ngpack },
+	{ NARC_map_land_data_m_test2_03_01_ngpack },
+	{ NARC_map_land_data_m_test2_04_01_ngpack },
+	{ NARC_map_land_data_m_test2_01_02_ngpack },
+	{ NARC_map_land_data_m_test2_02_02_ngpack },
+	{ NARC_map_land_data_m_test2_03_02_ngpack },
+	{ NARC_map_land_data_m_test2_04_02_ngpack },
+	{ NARC_map_land_data_m_test2_01_03_ngpack },
+	{ NARC_map_land_data_m_test2_02_03_ngpack },
+	{ NARC_map_land_data_m_test2_03_03_ngpack },
+	{ NARC_map_land_data_m_test2_04_03_ngpack },
+	{ NARC_map_land_data_m_test2_01_04_ngpack },
+	{ NARC_map_land_data_m_test2_02_04_ngpack },
+	{ NARC_map_land_data_m_test2_03_04_ngpack },
+	{ NARC_map_land_data_m_test2_04_04_ngpack },
+};
+
+static const FLDMAPPER_MAPDATA samplebridge[] = {
+	{ NARC_map_land_data_m_test_01_01_ngpack },
+	{ NARC_map_land_data_m_test_02_01_ngpack },
+	{ NARC_map_land_data_m_test_01_02_ngpack },
+	{ NARC_map_land_data_m_test_02_02_ngpack },
+	{ NARC_map_land_data_m_test_01_03_ngpack },
+	{ NARC_map_land_data_m_test_02_03_ngpack },
+	{ NARC_map_land_data_m_test_01_04_ngpack },
+	{ NARC_map_land_data_m_test_02_04_ngpack },
+	{ NARC_map_land_data_m_test_01_05_ngpack },
+	{ NARC_map_land_data_m_test_02_05_ngpack },
+	{ NARC_map_land_data_m_test_01_06_ngpack },
+	{ NARC_map_land_data_m_test_02_06_ngpack },
+};
+#endif
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
@@ -201,7 +265,7 @@ const SCENE_DATA resistMapTbl[] = {
 			2048*FX32_ONE, 2048*FX32_ONE, 
       2,3,
       FLDMAPPER_MODE_SCROLL_NONE, 
-			ARCID_FLDMAP_LAND_EX,
+			ARCID_FLDMAP_LANDDATA,
 
 			2,	3, NELEMS(newbridgemap),
 			newbridgemap,
@@ -224,7 +288,7 @@ const SCENE_DATA resistMapTbl[] = {
 			MAP_XZ_SIZE, 1024*FX32_ONE, 
       2,2,
       FLDMAPPER_MODE_SCROLL_NONE, 
-			ARCID_FLDMAP_LAND_EX,
+			ARCID_FLDMAP_LANDDATA,
 
 			2,  2, NELEMS(test_c3map),
 			test_c3map, 
