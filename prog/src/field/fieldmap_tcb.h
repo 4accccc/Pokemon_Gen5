@@ -1,7 +1,7 @@
 ////////////////////////////////////////////////////////////////////////
 /**
  *
- * @brief  フィールドマップTCB
+ * @brief  フィールドマップTCB タスク生成関数群
  * @file   fieldmap_tcb.h
  * @author obata
  * @date   2009.08.25
@@ -14,6 +14,8 @@
 // fieldmap_tcb_rot_player.c
 //============================ 
 // プレイヤーの回転
+void FIELDMAP_TCB_ROT_PLAYER_AddTask(                // 等速
+    FIELDMAP_WORK* fieldmap, int frame, int rot_num );    
 void FIELDMAP_TCB_ROT_PLAYER_AddTask_SpeedUp(        // 加速
     FIELDMAP_WORK* fieldmap, int frame, int rot_num );    
 void FIELDMAP_TCB_ROT_PLAYER_AddTask_SlowDown(       // 減速
@@ -26,6 +28,8 @@ void FIELDMAP_TCB_ROT_PLAYER_AddTask_SlowDown(       // 減速
 void FIELDMAP_TCB_WARP_PLAYER_AddTask_DisappearUp(      // 上昇退場
     FIELDMAP_WORK* fieldmap, int frame, int dist );
 void FIELDMAP_TCB_WARP_PLAYER_AddTask_AppearDown(       // 降下登場
+    FIELDMAP_WORK* fieldmap, int frame, int dist );
+void FIELDMAP_TCB_WARP_PLAYER_AddTask_FallIn(           // 落下登場
     FIELDMAP_WORK* fieldmap, int frame, int dist );
 
 //=======================
