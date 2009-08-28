@@ -65,7 +65,7 @@ static void UpdateDist( TCB_WORK_ZOOM* p_work );
 void FIELDMAP_TCB_CAMERA_AddTask_Zoom( FIELDMAP_WORK* fieldmap, int frame, fx32 dist )
 {
   HEAPID      heap_id = FIELDMAP_GetHeapID( fieldmap );
-  FIELD_CAMERA*  cam  = FIELDMAP_GetFieldCamera( fieldmap );
+  FIELD_CAMERA*   cam = FIELDMAP_GetFieldCamera( fieldmap );
   GFL_TCBSYS*  tcbsys = FIELDMAP_GetFieldmapTCBSys( fieldmap );
   TCB_WORK_ZOOM* work = GFL_HEAP_AllocMemoryLo( heap_id, sizeof( TCB_WORK_ZOOM ) ); 
   GFL_TCB*        tcb;
@@ -144,6 +144,9 @@ static void UpdateDist( TCB_WORK_ZOOM* p_work )
  * @brief ’è”
  */
 //==========================================================================================
+// ƒÎ[rad]
+#define PI (0x8000)   
+
 // ‰ñ“]ƒ^ƒCƒv
 typedef enum 
 {
@@ -213,16 +216,16 @@ void FIELDMAP_TCB_CAMERA_AddTask_Yaw( FIELDMAP_WORK* fieldmap, int frame, u16 an
   // ‰ñ“]‚Ì•ûŒü‚ð‹t‚É‚·‚é‚½‚ß‚É, ¬‚³‚¢•û‚ÌŠp“x‚ð360“x•ª‚Ì‰º‘Ê‚ð—š‚©‚¹‚é.
   if( work->startAngle < work->endAngle )
   {
-    if( 0x7fff < (work->endAngle - work->startAngle) )
+    if( PI < (work->endAngle - work->startAngle) )
     {
-      work->startAngle += 0xffff;
+      work->startAngle += 2*PI;
     }
   }
   else if( work->endAngle < work->startAngle )
   {
-    if( 0x7fff < (work->startAngle - work->endAngle) )
+    if( PI < (work->startAngle - work->endAngle) )
     {
-      work->endAngle += 0xffff;
+      work->endAngle += 2*PI;
     }
   } 
 
@@ -259,16 +262,16 @@ void FIELDMAP_TCB_CAMERA_AddTask_Pitch( FIELDMAP_WORK* fieldmap, int frame, u16 
   // ‰ñ“]‚Ì•ûŒü‚ð‹t‚É‚·‚é‚½‚ß‚É, ¬‚³‚¢•û‚ÌŠp“x‚ð360“x•ª‚Ì‰º‘Ê‚ð—š‚©‚¹‚é.
   if( work->startAngle < work->endAngle )
   {
-    if( 0x7fff < (work->endAngle - work->startAngle) )
+    if( PI < (work->endAngle - work->startAngle) )
     {
-      work->startAngle += 0xffff;
+      work->startAngle += 2*PI;
     }
   }
   else if( work->endAngle < work->startAngle )
   {
-    if( 0x7fff < (work->startAngle - work->endAngle) )
+    if( PI < (work->startAngle - work->endAngle) )
     {
-      work->endAngle += 0xffff;
+      work->endAngle += 2*PI;
     }
   } 
 
@@ -320,6 +323,7 @@ static void UpdateAngle( TCB_WORK_ROT* p_work )
   if(p_work->frame <= p_work->endFrame )
   {
     // Šp“x‚ðŽZo
+    //  ŒvŽZŽ®f(t)=-2t^3+3t^2 
     float t = p_work->frame / (float)p_work->endFrame;
     t       = t*t*( -2*t + 3 );
     angle     = (u16)( ( (1-t) * p_work->startAngle ) + ( t * p_work->endAngle ) );
