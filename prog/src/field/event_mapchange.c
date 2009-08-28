@@ -38,7 +38,8 @@
 
 #include "event_entrance_in.h"
 #include "event_entrance_out.h"
-#include "event_warp.h"
+#include "event_appear.h"
+#include "event_disappear.h"
 #include "field_bgm_control.h"
 
 #include "savedata/gimmickwork.h"   //for GIMMICKWORK
