@@ -1,11 +1,20 @@
 EFFSEQ
-$0001
-C:\home\pokemon_wb\resource\particle\wazaeffect\w_001.spa
+$0002
+C:\home\pokemon_wb\resource\particle\wazaeffect\w_425.spa
+C:\home\pokemon_wb\resource\particle\wazaeffect\w_195.spa
 #001
 %00
-パーティクルデータロード	w_001
-パーティクル再生	w_001	W_001_001_BALL_BURN	攻撃側	方向無し	0	0
-パーティクル再生	w_001	W_001_001_HIT_MARK	攻撃側	方向無し	0	0
+ポケモンアニメ	攻撃側	アニメストップ
+パーティクルデータロード	w_195
+パーティクル再生（座標指定）	w_195	W_195_195_HOROBIUTA_LINE	0:4:0	0:0:0	0	0
+パーティクル再生（座標指定）	w_195	W_195_195_HOROBIUTA_BALL	0:4:0	0:0:0	0	0
+パーティクル再生（座標指定）	w_195	W_195_195_HOROBIUTA_ONPU1	0:4:0	0:0:0	0	0
+パーティクル再生（座標指定）	w_195	W_195_195_HOROBIUTA_ONPU2	0:4:0	0:0:0	0	0
+BGのパレットフェード	すべて	0	16	1	0:0:0
+タイマーによるウエイト	90
+BGのパレットフェード	すべて	16	0	1	0:0:0
+エフェクト終了待ち	すべて
+ポケモンアニメ	攻撃側	アニメスタート
 エフェクト終了待ち	すべて
 エフェクト終了
 &
