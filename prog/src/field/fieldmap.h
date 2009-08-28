@@ -103,5 +103,4 @@ extern FLDMAPFUNC_SYS * FIELDMAP_GetFldmapFuncSys( FIELDMAP_WORK * fieldWork );
 extern FLD_EXP_OBJ_CNT_PTR FIELDMAP_GetExpObjCntPtr( FIELDMAP_WORK *fieldWork );
 extern GFL_TCBSYS* FIELDMAP_GetFieldmapTCBSys( FIELDMAP_WORK * fieldWork );
 
-extern BOOL FIELDMAP_IsRailMap( const FIELDMAP_WORK * fieldWork );
 

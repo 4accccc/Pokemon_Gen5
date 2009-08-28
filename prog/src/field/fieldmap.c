@@ -528,7 +528,7 @@ static MAINSEQ_RESULT mainSeqFunc_setup(GAMESYS_WORK *gsys, FIELDMAP_WORK *field
 
     //レールマップの場合は、↑上記でレールに関する初期化が終わった後に
     //保存した位置を反映する
-    if (ZONEDATA_IsRailMap(fieldWork->map_id) == TRUE)
+    if (FIELDMAP_GetMapControlType(fieldWork) == FLDMAP_CTRLTYPE_NOGRID)
     { 
       // 09/08/05 現状は、レール移動時のプレイヤーに対してロケーションが設定できないため、仮の処理で、ロケーション設定を行う。 tomoya takahashi
 #ifdef PM_DEBUG
@@ -635,7 +635,7 @@ static MAINSEQ_RESULT mainSeqFunc_ready(GAMESYS_WORK *gsys, FIELDMAP_WORK *field
 	// フィールドマップ用制御タスクシステム
 	FLDMAPFUNC_Sys_Main( fieldWork->fldmapFuncSys );
 
-  if (ZONEDATA_IsRailMap(fieldWork->map_id) == TRUE)
+  if (FIELDMAP_GetMapControlType(fieldWork) == FLDMAP_CTRLTYPE_NOGRID)
   {
     GAMEDATA * gamedata = GAMESYSTEM_GetGameData(gsys);
     EVENTDATA_SYSTEM *evdata = GAMEDATA_GetEventData(gamedata);
@@ -697,7 +697,7 @@ static MAINSEQ_RESULT mainSeqFunc_update_top(GAMESYS_WORK *gsys, FIELDMAP_WORK *
   if( fieldWork->fldMMdlSys != NULL ){
     MMDLSYS_UpdateProc( fieldWork->fldMMdlSys );
     
-    if( fieldWork->func_tbl->type == FLDMAP_CTRLTYPE_GRID ){ //仮対処
+    if( FIELDMAP_GetMapControlType( fieldWork ) == FLDMAP_CTRLTYPE_GRID ){ //仮対処
       FIELD_PLAYER_GetPos( fieldWork->field_player, &fieldWork->now_pos );
     }
   }
@@ -751,7 +751,7 @@ static MAINSEQ_RESULT mainSeqFunc_free(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldW
     FIELD_PLAYER_GetPos(fieldWork->field_player, &player_pos);
     PLAYERWORK_setPosition(pw, &player_pos);
   }
-  if (ZONEDATA_IsRailMap(fieldWork->map_id) == TRUE)
+  if (FIELDMAP_GetMapControlType(fieldWork) == FLDMAP_CTRLTYPE_NOGRID)
   {
 		GAMEDATA *gamedata = GAMESYSTEM_GetGameData( gsys );
     RAIL_LOCATION railLoc;
@@ -1348,8 +1348,12 @@ FIELD_ENCOUNT * FIELDMAP_GetEncount( FIELDMAP_WORK * fieldWork )
 //--------------------------------------------------------------
 FLDMAP_CTRLTYPE FIELDMAP_GetMapControlType( FIELDMAP_WORK *fieldWork )
 {
-  GF_ASSERT( fieldWork->func_tbl != NULL );
-  return fieldWork->func_tbl->type;
+  GF_ASSERT( fieldWork );
+  if( ZONEDATA_IsRailMap( fieldWork->map_id ) )
+  {
+    return FLDMAP_CTRLTYPE_NOGRID;
+  }
+  return FLDMAP_CTRLTYPE_GRID;
 }
 
 //--------------------------------------------------------------
@@ -1391,21 +1395,6 @@ FLD_EXP_OBJ_CNT_PTR FIELDMAP_GetExpObjCntPtr( FIELDMAP_WORK *fieldWork )
 extern GFL_TCBSYS* FIELDMAP_GetFieldmapTCBSys( FIELDMAP_WORK * fieldWork )
 {
   return fieldWork->fieldmapTCB;
-}
-
-//----------------------------------------------------------------------------
-/**
- *	@brief  レールマップか　取得
- *
- *	@param	fieldWork 
- *
- *	@retval TRUE  レールマップ
- *	@retval FALSE  グリッドマップ
- */
-//-----------------------------------------------------------------------------
-BOOL FIELDMAP_IsRailMap( const FIELDMAP_WORK * fieldWork )
-{
-  return ZONEDATA_IsRailMap( fieldWork->map_id );
 }
 
 //======================================================================
