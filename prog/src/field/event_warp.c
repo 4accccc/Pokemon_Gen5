@@ -1,8 +1,8 @@
 ////////////////////////////////////////////////////////////////////////////////////////////
 /**
  *
- * @brief  ワープイベント
- * @file   event_warp.c
+ * @brief  退場＆登場イベント
+ * @file   event_appear.c
  * @author obata
  * @date   2009.08.28
  *
@@ -34,8 +34,8 @@
 //==========================================================================================
 typedef struct
 {
-  FIELDMAP_WORK* pFieldmap;
-  int frame;
+  int                frame;   // フレーム数カウンタ
+  FIELDMAP_WORK* pFieldmap;   // 動作フィールドマップ
 }
 WARP_WORK;
 
@@ -46,12 +46,12 @@ WARP_WORK;
  */
 //========================================================================================== 
 // イベント処理関数
-static GMEVENT_RESULT EVENT_FUNC_WarpIn_Rotate( GMEVENT* event, int* seq, void* work );
-static GMEVENT_RESULT EVENT_FUNC_WarpOut_Rotate( GMEVENT* event, int* seq, void* work ); 
-static GMEVENT_RESULT EVENT_FUNC_WarpIn_Jump( GMEVENT* event, int* seq, void* work ); 
-static GMEVENT_RESULT EVENT_FUNC_WarpOut_Jump( GMEVENT* event, int* seq, void* work );
-static GMEVENT_RESULT EVENT_FUNC_FallIn( GMEVENT* event, int* seq, void* work ); 
-static GMEVENT_RESULT EVENT_FUNC_FallOut( GMEVENT* event, int* seq, void* work );
+static GMEVENT_RESULT EVENT_FUNC_APPEAR_Rotate( GMEVENT* event, int* seq, void* work );
+static GMEVENT_RESULT EVENT_FUNC_DISAPPEAR_Rotate( GMEVENT* event, int* seq, void* work ); 
+static GMEVENT_RESULT EVENT_FUNC_APPEAR_RollingJump( GMEVENT* event, int* seq, void* work ); 
+static GMEVENT_RESULT EVENT_FUNC_DISAPPEAR_RollingJump( GMEVENT* event, int* seq, void* work );
+static GMEVENT_RESULT EVENT_FUNC_APPEAR_Fall( GMEVENT* event, int* seq, void* work ); 
+static GMEVENT_RESULT EVENT_FUNC_DISAPPEAR_FallInSand( GMEVENT* event, int* seq, void* work );
 
 
 //========================================================================================== 
@@ -62,7 +62,7 @@ static GMEVENT_RESULT EVENT_FUNC_FallOut( GMEVENT* event, int* seq, void* work )
 
 //------------------------------------------------------------------------------------------
 /**
- * @brief ワープ登場イベントを作成する
+ * @brief 登場イベントを作成する( ワープ )
  *
  * @param parent   親イベント
  * @param gsys     ゲームシステム
@@ -71,14 +71,14 @@ static GMEVENT_RESULT EVENT_FUNC_FallOut( GMEVENT* event, int* seq, void* work )
  * @return 作成したイベント
  */
 //------------------------------------------------------------------------------------------
-GMEVENT* EVENT_WarpIn( GMEVENT* parent, GAMESYS_WORK* gsys, FIELDMAP_WORK* fieldmap )
+GMEVENT* EVENT_APPEAR_Warp( GMEVENT* parent, GAMESYS_WORK* gsys, FIELDMAP_WORK* fieldmap )
 {
   GMEVENT*   event;
   WARP_WORK* work;
 
   // イベントを作成
-  //event = GMEVENT_Create( gsys, parent, EVENT_FUNC_WarpIn_Rotate, sizeof( WARP_WORK ) );
-  event = GMEVENT_Create( gsys, parent, EVENT_FUNC_WarpIn_Jump, sizeof( WARP_WORK ) );
+  //event = GMEVENT_Create( gsys, parent, EVENT_FUNC_APPEAR_Rotate, sizeof( WARP_WORK ) );
+  event = GMEVENT_Create( gsys, parent, EVENT_FUNC_APPEAR_RollingJump, sizeof( WARP_WORK ) );
 
   // イベントワークを初期化
   work            = (WARP_WORK*)GMEVENT_GetEventWork( event );
@@ -91,7 +91,7 @@ GMEVENT* EVENT_WarpIn( GMEVENT* parent, GAMESYS_WORK* gsys, FIELDMAP_WORK* field
 
 //------------------------------------------------------------------------------------------
 /**
- * @brief ワープ退場イベントを作成する
+ * @brief 退場イベントを作成する( 流砂 )
  *
  * @param parent   親イベント
  * @param gsys     ゲームシステム
@@ -100,14 +100,42 @@ GMEVENT* EVENT_WarpIn( GMEVENT* parent, GAMESYS_WORK* gsys, FIELDMAP_WORK* field
  * @return 作成したイベント
  */
 //------------------------------------------------------------------------------------------
-GMEVENT* EVENT_WarpOut( GMEVENT* parent, GAMESYS_WORK* gsys, FIELDMAP_WORK* fieldmap )
+GMEVENT* EVENT_DISAPPEAR_FallInSand( GMEVENT* parent, GAMESYS_WORK* gsys, FIELDMAP_WORK* fieldmap )
 {
   GMEVENT*   event;
   WARP_WORK* work;
 
   // イベントを作成
-  //event = GMEVENT_Create( gsys, parent, EVENT_FUNC_WarpOut_Rotate, sizeof( WARP_WORK ) );
-  event = GMEVENT_Create( gsys, parent, EVENT_FUNC_WarpOut_Jump, sizeof( WARP_WORK ) );
+  event = GMEVENT_Create( gsys, parent, EVENT_FUNC_DISAPPEAR_FallInSand, sizeof( WARP_WORK ) );
+
+  // イベントワークを初期化
+  work            = (WARP_WORK*)GMEVENT_GetEventWork( event );
+  work->pFieldmap = fieldmap;
+  work->frame     = 0;
+
+  // 作成したイベントを返す
+  return event;
+}
+
+//------------------------------------------------------------------------------------------
+/**
+ * @brief 退場イベントを作成する( ワープ )
+ *
+ * @param parent   親イベント
+ * @param gsys     ゲームシステム
+ * @param fieldmap フィールドマップ
+ *
+ * @return 作成したイベント
+ */
+//------------------------------------------------------------------------------------------
+GMEVENT* EVENT_DISAPPEAR_Warp( GMEVENT* parent, GAMESYS_WORK* gsys, FIELDMAP_WORK* fieldmap )
+{
+  GMEVENT*   event;
+  WARP_WORK* work;
+
+  // イベントを作成
+  //event = GMEVENT_Create( gsys, parent, EVENT_FUNC_DISAPPEAR_Rotate, sizeof( WARP_WORK ) );
+  event = GMEVENT_Create( gsys, parent, EVENT_FUNC_DISAPPEAR_RollingJump, sizeof( WARP_WORK ) );
 
   // イベントワークを初期化
   work            = (WARP_WORK*)GMEVENT_GetEventWork( event );
@@ -120,7 +148,7 @@ GMEVENT* EVENT_WarpOut( GMEVENT* parent, GAMESYS_WORK* gsys, FIELDMAP_WORK* fiel
 
 //------------------------------------------------------------------------------------------
 /**
- * @brief 落下登場イベントを作成する
+ * @brief 登場イベントを作成する( 落下 )
  *
  * @param parent   親イベント
  * @param gsys     ゲームシステム
@@ -129,41 +157,13 @@ GMEVENT* EVENT_WarpOut( GMEVENT* parent, GAMESYS_WORK* gsys, FIELDMAP_WORK* fiel
  * @return 作成したイベント
  */
 //------------------------------------------------------------------------------------------
-GMEVENT* EVENT_FallIn( GMEVENT* parent, GAMESYS_WORK* gsys, FIELDMAP_WORK* fieldmap )
+GMEVENT* EVENT_APPEAR_Fall( GMEVENT* parent, GAMESYS_WORK* gsys, FIELDMAP_WORK* fieldmap )
 {
   GMEVENT*   event;
   WARP_WORK* work;
 
   // イベントを作成
-  event = GMEVENT_Create( gsys, parent, EVENT_FUNC_FallIn, sizeof( WARP_WORK ) );
-
-  // イベントワークを初期化
-  work            = (WARP_WORK*)GMEVENT_GetEventWork( event );
-  work->pFieldmap = fieldmap;
-  work->frame     = 0;
-
-  // 作成したイベントを返す
-  return event;
-}
-
-//------------------------------------------------------------------------------------------
-/**
- * @brief 落下退場イベントを作成する
- *
- * @param parent   親イベント
- * @param gsys     ゲームシステム
- * @param fieldmap フィールドマップ
- *
- * @return 作成したイベント
- */
-//------------------------------------------------------------------------------------------
-GMEVENT* EVENT_FallOut( GMEVENT* parent, GAMESYS_WORK* gsys, FIELDMAP_WORK* fieldmap )
-{
-  GMEVENT*   event;
-  WARP_WORK* work;
-
-  // イベントを作成
-  event = GMEVENT_Create( gsys, parent, EVENT_FUNC_FallOut, sizeof( WARP_WORK ) );
+  event = GMEVENT_Create( gsys, parent, EVENT_FUNC_APPEAR_Fall, sizeof( WARP_WORK ) );
 
   // イベントワークを初期化
   work            = (WARP_WORK*)GMEVENT_GetEventWork( event );
@@ -186,7 +186,7 @@ GMEVENT* EVENT_FallOut( GMEVENT* parent, GAMESYS_WORK* gsys, FIELDMAP_WORK* fiel
  * @brief 退場イベント処理関数( 回転 )
  */
 //------------------------------------------------------------------------------------------
-static GMEVENT_RESULT EVENT_FUNC_WarpOut_Rotate( GMEVENT* event, int* seq, void* work )
+static GMEVENT_RESULT EVENT_FUNC_DISAPPEAR_Rotate( GMEVENT* event, int* seq, void* work )
 {
   WARP_WORK*    ww     = (WARP_WORK*)work;
   FIELD_PLAYER* player = FIELDMAP_GetFieldPlayer( ww->pFieldmap );
@@ -226,7 +226,7 @@ static GMEVENT_RESULT EVENT_FUNC_WarpOut_Rotate( GMEVENT* event, int* seq, void*
  * @brief 登場イベント処理関数( 回転 )
  */
 //------------------------------------------------------------------------------------------
-static GMEVENT_RESULT EVENT_FUNC_WarpIn_Rotate( GMEVENT* event, int* seq, void* work )
+static GMEVENT_RESULT EVENT_FUNC_APPEAR_Rotate( GMEVENT* event, int* seq, void* work )
 {
   WARP_WORK*        ww = (WARP_WORK*)work;
   GFL_TCBSYS*   tcbsys = FIELDMAP_GetFieldmapTCBSys( ww->pFieldmap );
@@ -265,7 +265,7 @@ static GMEVENT_RESULT EVENT_FUNC_WarpIn_Rotate( GMEVENT* event, int* seq, void* 
  * @brief 退場イベント処理関数( ジャンプ )
  */
 //------------------------------------------------------------------------------------------
-static GMEVENT_RESULT EVENT_FUNC_WarpOut_Jump( GMEVENT* event, int* seq, void* work )
+static GMEVENT_RESULT EVENT_FUNC_DISAPPEAR_RollingJump( GMEVENT* event, int* seq, void* work )
 {
   WARP_WORK*    ww     = (WARP_WORK*)work;
   FIELD_PLAYER* player = FIELDMAP_GetFieldPlayer( ww->pFieldmap );
@@ -305,7 +305,7 @@ static GMEVENT_RESULT EVENT_FUNC_WarpOut_Jump( GMEVENT* event, int* seq, void* w
  * @brief 登場イベント処理関数( ジャンプ )
  */
 //------------------------------------------------------------------------------------------
-static GMEVENT_RESULT EVENT_FUNC_WarpIn_Jump( GMEVENT* event, int* seq, void* work )
+static GMEVENT_RESULT EVENT_FUNC_APPEAR_RollingJump( GMEVENT* event, int* seq, void* work )
 {
   WARP_WORK*    ww     = (WARP_WORK*)work;
   FIELD_PLAYER* player = FIELDMAP_GetFieldPlayer( ww->pFieldmap );
@@ -343,7 +343,7 @@ static GMEVENT_RESULT EVENT_FUNC_WarpIn_Jump( GMEVENT* event, int* seq, void* wo
  * @brief 登場イベント処理関数( 落下 )
  */
 //------------------------------------------------------------------------------------------
-static GMEVENT_RESULT EVENT_FUNC_FallIn( GMEVENT* event, int* seq, void* work )
+static GMEVENT_RESULT EVENT_FUNC_APPEAR_Fall( GMEVENT* event, int* seq, void* work )
 {
   WARP_WORK*    ww     = (WARP_WORK*)work;
   FIELD_PLAYER* player = FIELDMAP_GetFieldPlayer( ww->pFieldmap );
@@ -376,10 +376,10 @@ static GMEVENT_RESULT EVENT_FUNC_FallIn( GMEVENT* event, int* seq, void* work )
 
 //------------------------------------------------------------------------------------------
 /**
- * @brief 退場イベント処理関数( 落下 )
+ * @brief 退場イベント処理関数( 流砂 )
  */
 //------------------------------------------------------------------------------------------
-static GMEVENT_RESULT EVENT_FUNC_FallOut( GMEVENT* event, int* seq, void* work )
+static GMEVENT_RESULT EVENT_FUNC_DISAPPEAR_FallInSand( GMEVENT* event, int* seq, void* work )
 {
   WARP_WORK*    ww     = (WARP_WORK*)work;
   FIELD_PLAYER* player = FIELDMAP_GetFieldPlayer( ww->pFieldmap );
