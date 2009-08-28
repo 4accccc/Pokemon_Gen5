@@ -143,7 +143,7 @@ static GMEVENT_RESULT EVENT_FUNC_APPEAR_Rotate( GMEVENT* event, int* seq, void* 
     break;
   // タスクの追加
   case 1:
-    FIELDMAP_TCB_ROT_PLAYER_AddTask_SlowDown( ew->pFieldmap, 120, 10 );   // 自機回転
+    FIELDMAP_TCB_AddTask_RotatePlayer_SpeedDown( ew->pFieldmap, 120, 10 );   // 自機回転
     FIELDMAP_TCB_CAMERA_AddTask_Zoom( ew->pFieldmap, ZOOM_OUT_FRAME, ZOOM_IN_DIST );  // ズームアウト
     ++( *seq );
     break;
@@ -175,7 +175,7 @@ static GMEVENT_RESULT EVENT_FUNC_APPEAR_RollingFall( GMEVENT* event, int* seq, v
   // タスクの追加
   case 0:
     FIELDMAP_TCB_WARP_PLAYER_AddTask_AppearDown( ew->pFieldmap, 40, 300 );  // 自機移動
-    FIELDMAP_TCB_ROT_PLAYER_AddTask_SlowDown( ew->pFieldmap, 60, 10 );      // 自機回転
+    FIELDMAP_TCB_AddTask_RotatePlayer_SpeedDown( ew->pFieldmap, 60, 10 );      // 自機回転
     ++( *seq );
     break;
   // フェードイン開始

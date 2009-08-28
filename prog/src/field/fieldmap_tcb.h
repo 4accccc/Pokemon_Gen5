@@ -14,11 +14,11 @@
 // fieldmap_tcb_rot_player.c
 //============================ 
 // ÉvÉåÉCÉÑÅ[ÇÃâÒì]
-void FIELDMAP_TCB_ROT_PLAYER_AddTask(                // ìôë¨
+void FIELDMAP_TCB_AddTask_RotatePlayer(                // ìôë¨
     FIELDMAP_WORK* fieldmap, int frame, int rot_num );    
-void FIELDMAP_TCB_ROT_PLAYER_AddTask_SpeedUp(        // â¡ë¨
+void FIELDMAP_TCB_AddTask_RotatePlayer_SpeedUp(        // â¡ë¨
     FIELDMAP_WORK* fieldmap, int frame, int rot_num );    
-void FIELDMAP_TCB_ROT_PLAYER_AddTask_SlowDown(       // å∏ë¨
+void FIELDMAP_TCB_AddTask_RotatePlayer_SpeedDown(      // å∏ë¨
     FIELDMAP_WORK* fieldmap, int frame, int rot_num );   
 
 //============================
