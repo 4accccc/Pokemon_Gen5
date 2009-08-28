@@ -174,8 +174,8 @@ static GMEVENT_RESULT EVENT_FUNC_APPEAR_RollingFall( GMEVENT* event, int* seq, v
   {
   // タスクの追加
   case 0:
-    FIELDMAP_TCB_WARP_PLAYER_AddTask_AppearDown( ew->pFieldmap, 40, 300 );  // 自機移動
-    FIELDMAP_TCB_AddTask_RotatePlayer_SpeedDown( ew->pFieldmap, 60, 10 );      // 自機回転
+    FIELDMAP_TCB_AddTask_AppearPlayer_LinearDown( ew->pFieldmap, 40, 300 );  // 自機移動
+    FIELDMAP_TCB_AddTask_RotatePlayer_SpeedDown( ew->pFieldmap, 60, 10 );    // 自機回転
     ++( *seq );
     break;
   // フェードイン開始
@@ -211,7 +211,7 @@ static GMEVENT_RESULT EVENT_FUNC_APPEAR_Fall( GMEVENT* event, int* seq, void* wo
   {
   // タスクの追加
   case 0:
-    FIELDMAP_TCB_WARP_PLAYER_AddTask_FallIn( ew->pFieldmap, 40, 250 );  // 自機移動
+    FIELDMAP_TCB_AddTask_AppearPlayer_Fall( ew->pFieldmap, 40, 250 );  // 自機移動
     ++( *seq );
     break;
   // フェードイン開始

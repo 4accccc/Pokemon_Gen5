@@ -175,7 +175,7 @@ static GMEVENT_RESULT EVENT_FUNC_DISAPPEAR_RollingJump( GMEVENT* event, int* seq
   {
   // タスクの追加
   case 0:
-    FIELDMAP_TCB_WARP_PLAYER_AddTask_DisappearUp( ew->pFieldmap, 60, 300 );   // 自機移動
+    FIELDMAP_TCB_AddTask_DisappearPlayer_LinearUp( ew->pFieldmap, 60, 300 );   // 自機移動
     FIELDMAP_TCB_AddTask_RotatePlayer_SpeedUp( ew->pFieldmap, 30, 10 );         // 自機回転
     ++( *seq );
     break;
@@ -215,7 +215,7 @@ static GMEVENT_RESULT EVENT_FUNC_DISAPPEAR_FallInSand( GMEVENT* event, int* seq,
   {
   // タスクの追加
   case 0:
-    FIELDMAP_TCB_WARP_PLAYER_AddTask_DisappearUp( ew->pFieldmap, 80, -50 );   // 自機移動
+    FIELDMAP_TCB_AddTask_DisappearPlayer_LinearUp( ew->pFieldmap, 80, -50 );   // 自機移動
     FIELDMAP_TCB_AddTask_RotatePlayer( ew->pFieldmap, 80, 10 );   // 回転
     ++( *seq );
     break;

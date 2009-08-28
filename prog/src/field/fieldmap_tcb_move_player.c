@@ -1,8 +1,8 @@
 ////////////////////////////////////////////////////////////////////////
 /**
  *
- * @brief  フィールドマップTCB( 自機のワープ移動 )
- * @file   fieldmap_tcb_wap_player.c
+ * @brief  フィールドマップTCB( 自機の移動 )
+ * @file   fieldmap_tcb_move_player.c
  * @author obata
  * @date   2009.08.25
  *
@@ -22,12 +22,12 @@
 //==========================================================================================
 typedef struct
 {
-  u16   frame;    // 動作フレーム数
-  u16   maxFrame; // 最大フレーム数
-  float maxDist;  // 最大移動距離
   FIELDMAP_WORK* pFieldmap; // 動作対象のフィールドマップ
+  u16            frame;     // 動作フレーム数
+  u16            endFrame;  // 最大フレーム数
+  float          moveDist;  // 移動距離
 }
-TCB_WORK_WARP;
+MOVE_WORK;
 
 
 //==========================================================================================
@@ -35,15 +35,16 @@ TCB_WORK_WARP;
  * @brief プロトタイプ宣言
  */
 //========================================================================================== 
+void InitWork( MOVE_WORK* work, FIELDMAP_WORK* fieldmap, u16 end_frame, float move_dist );
 void DeleteTask( GFL_TCB* tcb );
 
-void TCB_FUNC_WarpPlayer_DisappearUp( GFL_TCB* tcb, void* work );
-void TCB_FUNC_WarpPlayer_AppearDown( GFL_TCB* tcb, void* work );
-void TCB_FUNC_WarpPlayer_FallIn( GFL_TCB* tcb, void* work );
+void TCB_FUNC_DisappearPlayer_LinearUp( GFL_TCB* tcb, void* work );
+void TCB_FUNC_AppearPlayer_LinearDown( GFL_TCB* tcb, void* work );
+void TCB_FUNC_AppearPlayer_Fall( GFL_TCB* tcb, void* work );
 
 void CalcDrawOffset_LinearUp( VecFx32* p_vec, float frame, float max_frame, float max_y );
 void CalcDrawOffset_LinearDown( VecFx32* p_vec, float frame, float max_frame, float max_y );
-void CalcDrawOffset_FallIn( VecFx32* p_vec, float frame, float max_frame, float max_y );
+void CalcDrawOffset_Fall( VecFx32* p_vec, float frame, float max_frame, float max_y );
 
 
 //========================================================================================== 
@@ -51,6 +52,111 @@ void CalcDrawOffset_FallIn( VecFx32* p_vec, float frame, float max_frame, float 
  * @brief 公開関数の定義
  */
 //========================================================================================== 
+
+//------------------------------------------------------------------------------------------
+/**
+ * @brief タスクを追加する( 上昇退場 )
+ *
+ * @param fieldmap タスク動作対象のフィールドマップ
+ * @param frame    タスク動作フレーム数
+ * @param dist     移動距離
+ */
+//------------------------------------------------------------------------------------------
+void FIELDMAP_TCB_AddTask_DisappearPlayer_LinearUp( FIELDMAP_WORK* fieldmap, int frame, int dist )
+{
+  HEAPID      heap_id = FIELDMAP_GetHeapID( fieldmap );
+  GFL_TCBSYS*  tcbsys = FIELDMAP_GetFieldmapTCBSys( fieldmap );
+  MOVE_WORK*     work = GFL_HEAP_AllocMemoryLo( heap_id, sizeof( MOVE_WORK ) );
+
+  // TCBワーク初期化
+  InitWork( work, fieldmap, frame, dist );
+
+  // TCBを追加
+  GFL_TCB_AddTask( tcbsys, TCB_FUNC_DisappearPlayer_LinearUp, work, 0 );
+}
+
+//------------------------------------------------------------------------------------------
+/**
+ * @brief タスクを追加する( 降下登場 )
+ *
+ * @param fieldmap タスク動作対象のフィールドマップ
+ * @param frame    タスク動作フレーム数
+ * @param dist     移動距離
+ */
+//------------------------------------------------------------------------------------------
+void FIELDMAP_TCB_AddTask_AppearPlayer_LinearDown( FIELDMAP_WORK* fieldmap, int frame, int dist )
+{
+  HEAPID      heap_id = FIELDMAP_GetHeapID( fieldmap );
+  GFL_TCBSYS*  tcbsys = FIELDMAP_GetFieldmapTCBSys( fieldmap );
+  MOVE_WORK*     work = GFL_HEAP_AllocMemoryLo( heap_id, sizeof( MOVE_WORK ) );
+
+  // TCBワーク初期化
+  InitWork( work, fieldmap, frame, dist );
+
+  // TCBを追加
+  GFL_TCB_AddTask( tcbsys, TCB_FUNC_AppearPlayer_LinearDown, work, 0 );
+
+  // 主人公の向きを設定
+  {
+    FIELD_PLAYER* player = FIELDMAP_GetFieldPlayer( fieldmap );
+    MMDL*           mmdl = FIELD_PLAYER_GetMMdl( player ); 
+    MMDL_SetAcmd( mmdl, AC_DIR_D );
+  }
+} 
+
+//------------------------------------------------------------------------------------------
+/**
+ * @brief タスクを追加する( 落下登場 )
+ *
+ * @param fieldmap タスク動作対象のフィールドマップ
+ * @param frame    タスク動作フレーム数
+ * @param dist     移動距離
+ */
+//------------------------------------------------------------------------------------------
+void FIELDMAP_TCB_AddTask_AppearPlayer_Fall( FIELDMAP_WORK* fieldmap, int frame, int dist )
+{
+  HEAPID      heap_id = FIELDMAP_GetHeapID( fieldmap );
+  GFL_TCBSYS*  tcbsys = FIELDMAP_GetFieldmapTCBSys( fieldmap );
+  MOVE_WORK*     work = GFL_HEAP_AllocMemoryLo( heap_id, sizeof( MOVE_WORK ) );
+
+  // TCBワーク初期化
+  InitWork( work, fieldmap, frame, dist );
+
+  // TCBを追加
+  GFL_TCB_AddTask( tcbsys, TCB_FUNC_AppearPlayer_Fall, work, 0 );
+
+  // 主人公の向きを設定
+  {
+    FIELD_PLAYER* player = FIELDMAP_GetFieldPlayer( fieldmap );
+    MMDL*           mmdl = FIELD_PLAYER_GetMMdl( player ); 
+    MMDL_SetAcmd( mmdl, AC_DIR_D );
+  }
+} 
+
+
+//========================================================================================== 
+/**
+ * @brief 非公開関数の定義
+ */
+//========================================================================================== 
+
+//------------------------------------------------------------------------------------------
+/**
+ * @brief タスク・ワークを初期化する
+ *
+ * @param work      初期化するワーク
+ * @param fieldmap  動作対象のフィールドマップ
+ * @param end_frame 最終フレーム数
+ * @param move_dist 移動距離
+ */
+//------------------------------------------------------------------------------------------
+void InitWork( MOVE_WORK* work, FIELDMAP_WORK* fieldmap, u16 end_frame, float move_dist )
+{
+  work->pFieldmap = fieldmap;
+  work->frame     = 0;
+  work->endFrame  = end_frame;
+  work->moveDist  = move_dist;
+}
 
 //------------------------------------------------------------------------------------------
 /**
@@ -70,114 +176,23 @@ void DeleteTask( GFL_TCB* tcb )
 
 //------------------------------------------------------------------------------------------
 /**
- * @brief 自機ワープタスクを追加する( 上昇による退場 )
- *
- * @param fieldmap タスク動作対象のフィールドマップ
- * @param frame    タスク動作フレーム数
- * @param dist     移動距離
- */
-//------------------------------------------------------------------------------------------
-void FIELDMAP_TCB_WARP_PLAYER_AddTask_DisappearUp( FIELDMAP_WORK* fieldmap, int frame, int dist )
-{
-  HEAPID      heap_id = FIELDMAP_GetHeapID( fieldmap );
-  GFL_TCBSYS*  tcbsys = FIELDMAP_GetFieldmapTCBSys( fieldmap );
-  TCB_WORK_WARP* work = GFL_HEAP_AllocMemoryLo( heap_id, sizeof( TCB_WORK_WARP ) );
-  GFL_TCB*        tcb;
-
-  // TCBワーク初期化
-  work->frame     = 0;
-  work->maxFrame  = frame;
-  work->maxDist   = dist;
-  work->pFieldmap = fieldmap;
-
-  // TCBを追加
-  tcb = GFL_TCB_AddTask( tcbsys, TCB_FUNC_WarpPlayer_DisappearUp, work, 0 );
-}
-
-//------------------------------------------------------------------------------------------
-/**
- * @brief 自機ワープタスクを追加する( 降下による登場 )
- *
- * @param fieldmap タスク動作対象のフィールドマップ
- * @param frame    タスク動作フレーム数
- * @param dist     移動距離
- */
-//------------------------------------------------------------------------------------------
-void FIELDMAP_TCB_WARP_PLAYER_AddTask_AppearDown( FIELDMAP_WORK* fieldmap, int frame, int dist )
-{
-  HEAPID      heap_id = FIELDMAP_GetHeapID( fieldmap );
-  GFL_TCBSYS*  tcbsys = FIELDMAP_GetFieldmapTCBSys( fieldmap );
-  TCB_WORK_WARP* work = GFL_HEAP_AllocMemoryLo( heap_id, sizeof( TCB_WORK_WARP ) );
-  GFL_TCB*        tcb;
-
-  // TCBワーク初期化
-  work->frame     = 0;
-  work->maxFrame  = frame;
-  work->maxDist   = dist;
-  work->pFieldmap = fieldmap;
-
-  // TCBを追加
-  tcb = GFL_TCB_AddTask( tcbsys, TCB_FUNC_WarpPlayer_AppearDown, work, 0 );
-} 
-
-//------------------------------------------------------------------------------------------
-/**
- * @brief 自機ワープタスクを追加する( 落下による登場 )
- *
- * @param fieldmap タスク動作対象のフィールドマップ
- * @param frame    タスク動作フレーム数
- * @param dist     移動距離
- */
-//------------------------------------------------------------------------------------------
-void FIELDMAP_TCB_WARP_PLAYER_AddTask_FallIn( FIELDMAP_WORK* fieldmap, int frame, int dist )
-{
-  HEAPID      heap_id = FIELDMAP_GetHeapID( fieldmap );
-  GFL_TCBSYS*  tcbsys = FIELDMAP_GetFieldmapTCBSys( fieldmap );
-  TCB_WORK_WARP* work = GFL_HEAP_AllocMemoryLo( heap_id, sizeof( TCB_WORK_WARP ) );
-
-  // TCBワーク初期化
-  work->frame     = 0;
-  work->maxFrame  = frame;
-  work->maxDist   = dist;
-  work->pFieldmap = fieldmap;
-
-  // TCBを追加
-  GFL_TCB_AddTask( tcbsys, TCB_FUNC_WarpPlayer_FallIn, work, 0 );
-
-  // 主人公の向きを設定
-  {
-    FIELD_PLAYER* player = FIELDMAP_GetFieldPlayer( fieldmap );
-    MMDL*           mmdl = FIELD_PLAYER_GetMMdl( player ); 
-    MMDL_SetAcmd( mmdl, AC_DIR_D );
-  }
-} 
-
-
-//========================================================================================== 
-/**
- * @brief 非公開関数の定義
- */
-//========================================================================================== 
-
-//------------------------------------------------------------------------------------------
-/**
  * @breif TCB実行関数( 自機の上昇 )
  */
 //------------------------------------------------------------------------------------------
-void TCB_FUNC_WarpPlayer_DisappearUp( GFL_TCB* tcb, void* work )
+void TCB_FUNC_DisappearPlayer_LinearUp( GFL_TCB* tcb, void* work )
 {
-  TCB_WORK_WARP* tcbwork = work;
-  FIELD_PLAYER*   player = FIELDMAP_GetFieldPlayer( tcbwork->pFieldmap );
-  MMDL*             mmdl = FIELD_PLAYER_GetMMdl( player ); 
-  VecFx32         offset;
+  MOVE_WORK*   tcbwork = work;
+  FIELD_PLAYER* player = FIELDMAP_GetFieldPlayer( tcbwork->pFieldmap );
+  MMDL*           mmdl = FIELD_PLAYER_GetMMdl( player ); 
+  VecFx32       offset;
 
   // 自機の描画オフセットを更新
-  CalcDrawOffset_LinearUp( &offset, tcbwork->frame, tcbwork->maxFrame, tcbwork->maxDist );
+  CalcDrawOffset_LinearUp( &offset, tcbwork->frame, tcbwork->endFrame, tcbwork->moveDist );
   MMDL_SetVectorDrawOffsetPos( mmdl, &offset );
 
   // 指定フレームが経過したら, タスク終了
   tcbwork->frame++;
-  if( tcbwork->maxFrame < tcbwork->frame )
+  if( tcbwork->endFrame < tcbwork->frame )
   {
     DeleteTask( tcb );
   }
@@ -188,20 +203,20 @@ void TCB_FUNC_WarpPlayer_DisappearUp( GFL_TCB* tcb, void* work )
  * @breif TCB実行関数( 自機の降下 )
  */
 //------------------------------------------------------------------------------------------
-void TCB_FUNC_WarpPlayer_AppearDown( GFL_TCB* tcb, void* work )
+void TCB_FUNC_AppearPlayer_LinearDown( GFL_TCB* tcb, void* work )
 {
-  TCB_WORK_WARP* tcbwork = work;
-  FIELD_PLAYER*   player = FIELDMAP_GetFieldPlayer( tcbwork->pFieldmap );
-  MMDL*             mmdl = FIELD_PLAYER_GetMMdl( player ); 
-  VecFx32         offset;
+  MOVE_WORK*   tcbwork = work;
+  FIELD_PLAYER* player = FIELDMAP_GetFieldPlayer( tcbwork->pFieldmap );
+  MMDL*           mmdl = FIELD_PLAYER_GetMMdl( player ); 
+  VecFx32       offset;
 
   // 自機の描画オフセットを更新
-  CalcDrawOffset_LinearDown( &offset, tcbwork->frame, tcbwork->maxFrame, tcbwork->maxDist );
+  CalcDrawOffset_LinearDown( &offset, tcbwork->frame, tcbwork->endFrame, tcbwork->moveDist );
   MMDL_SetVectorDrawOffsetPos( mmdl, &offset );
 
   // 指定フレームが経過したら, タスク終了
   tcbwork->frame++;
-  if( tcbwork->maxFrame < tcbwork->frame )
+  if( tcbwork->endFrame < tcbwork->frame )
   {
     DeleteTask( tcb );
   }
@@ -212,20 +227,20 @@ void TCB_FUNC_WarpPlayer_AppearDown( GFL_TCB* tcb, void* work )
  * @breif TCB実行関数( 落下登場 )
  */
 //------------------------------------------------------------------------------------------
-void TCB_FUNC_WarpPlayer_FallIn( GFL_TCB* tcb, void* work )
+void TCB_FUNC_AppearPlayer_Fall( GFL_TCB* tcb, void* work )
 {
-  TCB_WORK_WARP* tcbwork = work;
-  FIELD_PLAYER*   player = FIELDMAP_GetFieldPlayer( tcbwork->pFieldmap );
-  MMDL*             mmdl = FIELD_PLAYER_GetMMdl( player ); 
-  VecFx32         offset;
+  MOVE_WORK*   tcbwork = work;
+  FIELD_PLAYER* player = FIELDMAP_GetFieldPlayer( tcbwork->pFieldmap );
+  MMDL*           mmdl = FIELD_PLAYER_GetMMdl( player ); 
+  VecFx32       offset;
 
   // 自機の描画オフセットを更新
-  CalcDrawOffset_FallIn( &offset, tcbwork->frame, tcbwork->maxFrame, tcbwork->maxDist );
+  CalcDrawOffset_Fall( &offset, tcbwork->frame, tcbwork->endFrame, tcbwork->moveDist );
   MMDL_SetVectorDrawOffsetPos( mmdl, &offset );
 
   // 指定フレームが経過したら, タスク終了
   tcbwork->frame++;
-  if( tcbwork->maxFrame < tcbwork->frame )
+  if( tcbwork->endFrame < tcbwork->frame )
   {
     DeleteTask( tcb );
   }
@@ -243,6 +258,7 @@ void TCB_FUNC_WarpPlayer_FallIn( GFL_TCB* tcb, void* work )
 //------------------------------------------------------------------------------------------
 void CalcDrawOffset_LinearUp( VecFx32* p_vec, float frame, float max_frame, float max_y )
 {
+  // 線形補完
   float x = frame;
   float a = max_y / max_frame;
   float y = a * x;
@@ -264,6 +280,7 @@ void CalcDrawOffset_LinearUp( VecFx32* p_vec, float frame, float max_frame, floa
 //------------------------------------------------------------------------------------------
 void CalcDrawOffset_LinearDown( VecFx32* p_vec, float frame, float max_frame, float max_y )
 {
+  // 線形補完
   float x = frame;
   float a = max_y / max_frame;
   float y = max_y - (a * x);
@@ -283,8 +300,9 @@ void CalcDrawOffset_LinearDown( VecFx32* p_vec, float frame, float max_frame, fl
  * @param max_y     最大オフセット
  */
 //------------------------------------------------------------------------------------------
-void CalcDrawOffset_FallIn( VecFx32* p_vec, float frame, float max_frame, float max_y )
+void CalcDrawOffset_Fall( VecFx32* p_vec, float frame, float max_frame, float max_y )
 {
+  // y = ax^2
   float x = frame;
   float a = max_y / (max_frame * max_frame);
   float y = max_y - (a * x * x);

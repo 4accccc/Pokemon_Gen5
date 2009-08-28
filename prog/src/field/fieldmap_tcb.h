@@ -24,12 +24,12 @@ void FIELDMAP_TCB_AddTask_RotatePlayer_SpeedDown(      // 減速
 //============================
 // fieldmap_tcb_warp_player.c
 //============================
-// プレイヤーのワープ移動
-void FIELDMAP_TCB_WARP_PLAYER_AddTask_DisappearUp(      // 上昇退場
+// プレイヤーの移動
+void FIELDMAP_TCB_AddTask_DisappearPlayer_LinearUp(      // 上昇退場
     FIELDMAP_WORK* fieldmap, int frame, int dist );
-void FIELDMAP_TCB_WARP_PLAYER_AddTask_AppearDown(       // 降下登場
+void FIELDMAP_TCB_AddTask_AppearPlayer_LinearDown(       // 降下登場
     FIELDMAP_WORK* fieldmap, int frame, int dist );
-void FIELDMAP_TCB_WARP_PLAYER_AddTask_FallIn(           // 落下登場
+void FIELDMAP_TCB_AddTask_AppearPlayer_Fall(             // 落下登場
     FIELDMAP_WORK* fieldmap, int frame, int dist );
 
 //============================
