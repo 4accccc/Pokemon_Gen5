@@ -10,7 +10,7 @@
 //////////////////////////////////////////////////////////////////////////////////////////// 
 #include "include/field/fieldmap_proc.h"
 #include "include/gamesystem/game_event.h"
-#include "event_warp.h"
+#include "event_disappear.h"
 #include "fieldmap.h"
 #include "field_player.h"
 #include "fieldmap_tcb.h"

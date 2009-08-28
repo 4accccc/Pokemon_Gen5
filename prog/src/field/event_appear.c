@@ -37,7 +37,7 @@ typedef struct
   int                frame;   // フレーム数カウンタ
   FIELDMAP_WORK* pFieldmap;   // 動作フィールドマップ
 }
-WARP_WORK;
+EVENT_WORK;
 
 
 //==========================================================================================
@@ -71,14 +71,14 @@ static GMEVENT_RESULT EVENT_FUNC_APPEAR_Fall( GMEVENT* event, int* seq, void* wo
 GMEVENT* EVENT_APPEAR_Warp( GMEVENT* parent, GAMESYS_WORK* gsys, FIELDMAP_WORK* fieldmap )
 {
   GMEVENT*   event;
-  WARP_WORK* work;
+  EVENT_WORK* work;
 
   // イベントを作成
-  //event = GMEVENT_Create( gsys, parent, EVENT_FUNC_APPEAR_Rotate, sizeof( WARP_WORK ) );
-  event = GMEVENT_Create( gsys, parent, EVENT_FUNC_APPEAR_RollingFall, sizeof( WARP_WORK ) );
+  //event = GMEVENT_Create( gsys, parent, EVENT_FUNC_APPEAR_Rotate, sizeof( EVENT_WORK ) );
+  event = GMEVENT_Create( gsys, parent, EVENT_FUNC_APPEAR_RollingFall, sizeof( EVENT_WORK ) );
 
   // イベントワークを初期化
-  work            = (WARP_WORK*)GMEVENT_GetEventWork( event );
+  work            = (EVENT_WORK*)GMEVENT_GetEventWork( event );
   work->pFieldmap = fieldmap;
   work->frame     = 0;
 
@@ -100,13 +100,13 @@ GMEVENT* EVENT_APPEAR_Warp( GMEVENT* parent, GAMESYS_WORK* gsys, FIELDMAP_WORK* 
 GMEVENT* EVENT_APPEAR_Fall( GMEVENT* parent, GAMESYS_WORK* gsys, FIELDMAP_WORK* fieldmap )
 {
   GMEVENT*   event;
-  WARP_WORK* work;
+  EVENT_WORK* work;
 
   // イベントを作成
-  event = GMEVENT_Create( gsys, parent, EVENT_FUNC_APPEAR_Fall, sizeof( WARP_WORK ) );
+  event = GMEVENT_Create( gsys, parent, EVENT_FUNC_APPEAR_Fall, sizeof( EVENT_WORK ) );
 
   // イベントワークを初期化
-  work            = (WARP_WORK*)GMEVENT_GetEventWork( event );
+  work            = (EVENT_WORK*)GMEVENT_GetEventWork( event );
   work->pFieldmap = fieldmap;
   work->frame     = 0;
 
@@ -128,9 +128,9 @@ GMEVENT* EVENT_APPEAR_Fall( GMEVENT* parent, GAMESYS_WORK* gsys, FIELDMAP_WORK* 
 //------------------------------------------------------------------------------------------
 static GMEVENT_RESULT EVENT_FUNC_APPEAR_Rotate( GMEVENT* event, int* seq, void* work )
 {
-  WARP_WORK*        ww = (WARP_WORK*)work;
-  GFL_TCBSYS*   tcbsys = FIELDMAP_GetFieldmapTCBSys( ww->pFieldmap );
-  FIELD_CAMERA* camera = FIELDMAP_GetFieldCamera( ww->pFieldmap );
+  EVENT_WORK*       ew = (EVENT_WORK*)work;
+  GFL_TCBSYS*   tcbsys = FIELDMAP_GetFieldmapTCBSys( ew->pFieldmap );
+  FIELD_CAMERA* camera = FIELDMAP_GetFieldCamera( ew->pFieldmap );
 
   switch( *seq )
   {
@@ -143,13 +143,13 @@ static GMEVENT_RESULT EVENT_FUNC_APPEAR_Rotate( GMEVENT* event, int* seq, void* 
     break;
   // タスクの追加
   case 1:
-    FIELDMAP_TCB_ROT_PLAYER_AddTask_SlowDown( ww->pFieldmap, 120, 10 );   // 自機回転
-    FIELDMAP_TCB_CAMERA_AddTask_Zoom( ww->pFieldmap, ZOOM_OUT_FRAME, ZOOM_IN_DIST );  // ズームアウト
+    FIELDMAP_TCB_ROT_PLAYER_AddTask_SlowDown( ew->pFieldmap, 120, 10 );   // 自機回転
+    FIELDMAP_TCB_CAMERA_AddTask_Zoom( ew->pFieldmap, ZOOM_OUT_FRAME, ZOOM_IN_DIST );  // ズームアウト
     ++( *seq );
     break;
   // タスクの終了待ち
   case 2:
-    if( 120 < ww->frame++ )
+    if( 120 < ew->frame++ )
     {
       ++( *seq );
     }
@@ -167,15 +167,15 @@ static GMEVENT_RESULT EVENT_FUNC_APPEAR_Rotate( GMEVENT* event, int* seq, void* 
 //------------------------------------------------------------------------------------------
 static GMEVENT_RESULT EVENT_FUNC_APPEAR_RollingFall( GMEVENT* event, int* seq, void* work )
 {
-  WARP_WORK*    ww     = (WARP_WORK*)work;
-  FIELD_PLAYER* player = FIELDMAP_GetFieldPlayer( ww->pFieldmap );
+  EVENT_WORK*       ew = (EVENT_WORK*)work;
+  FIELD_PLAYER* player = FIELDMAP_GetFieldPlayer( ew->pFieldmap );
 
   switch( *seq )
   {
   // タスクの追加
   case 0:
-    FIELDMAP_TCB_WARP_PLAYER_AddTask_AppearDown( ww->pFieldmap, 40, 300 );  // 自機移動
-    FIELDMAP_TCB_ROT_PLAYER_AddTask_SlowDown( ww->pFieldmap, 60, 10 );      // 自機回転
+    FIELDMAP_TCB_WARP_PLAYER_AddTask_AppearDown( ew->pFieldmap, 40, 300 );  // 自機移動
+    FIELDMAP_TCB_ROT_PLAYER_AddTask_SlowDown( ew->pFieldmap, 60, 10 );      // 自機回転
     ++( *seq );
     break;
   // フェードイン開始
@@ -186,7 +186,7 @@ static GMEVENT_RESULT EVENT_FUNC_APPEAR_RollingFall( GMEVENT* event, int* seq, v
     break;
   // タスクの終了待ち
   case 2:
-    if( 60 < ww->frame++ )
+    if( 60 < ew->frame++ )
     {
       ++( *seq );
     }
@@ -204,14 +204,14 @@ static GMEVENT_RESULT EVENT_FUNC_APPEAR_RollingFall( GMEVENT* event, int* seq, v
 //------------------------------------------------------------------------------------------
 static GMEVENT_RESULT EVENT_FUNC_APPEAR_Fall( GMEVENT* event, int* seq, void* work )
 {
-  WARP_WORK*    ww     = (WARP_WORK*)work;
-  FIELD_PLAYER* player = FIELDMAP_GetFieldPlayer( ww->pFieldmap );
+  EVENT_WORK*       ew = (EVENT_WORK*)work;
+  FIELD_PLAYER* player = FIELDMAP_GetFieldPlayer( ew->pFieldmap );
 
   switch( *seq )
   {
   // タスクの追加
   case 0:
-    FIELDMAP_TCB_WARP_PLAYER_AddTask_FallIn( ww->pFieldmap, 40, 250 );  // 自機移動
+    FIELDMAP_TCB_WARP_PLAYER_AddTask_FallIn( ew->pFieldmap, 40, 250 );  // 自機移動
     ++( *seq );
     break;
   // フェードイン開始
@@ -222,7 +222,7 @@ static GMEVENT_RESULT EVENT_FUNC_APPEAR_Fall( GMEVENT* event, int* seq, void* wo
     break;
   // タスクの終了待ち
   case 2:
-    if( 60 < ww->frame++ )
+    if( 60 < ew->frame++ )
     {
       ++( *seq );
     }
