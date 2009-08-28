@@ -38,6 +38,7 @@
 
 #include "event_entrance_in.h"
 #include "event_entrance_out.h"
+#include "event_warp.h"
 #include "field_bgm_control.h"
 
 #include "savedata/gimmickwork.h"   //for GIMMICKWORK
@@ -280,6 +281,76 @@ static GMEVENT_RESULT EVENT_MapChange(GMEVENT * event, int *seq, void*work)
 	return GMEVENT_RES_CONTINUE;
 }
 
+
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+static GMEVENT_RESULT EVENT_MapChangeByWarp(GMEVENT * event, int *seq, void*work)
+{
+	MAPCHANGE_WORK * mcw = work;
+	GAMESYS_WORK  * gsys = mcw->gsys;
+	FIELD_MAIN_WORK * fieldmap = mcw->fieldmap;
+	GAMEDATA * gamedata = mcw->gamedata;
+	switch (*seq) {
+  case 0:
+    GMEVENT_CallEvent( event, EVENT_ObjPauseAll(gsys, fieldmap) );
+    (*seq) ++;
+    break;
+	case 1:
+    // ワープ退場イベント
+    GMEVENT_CallEvent( event, EVENT_WarpOut( event, gsys, fieldmap ) );
+		(*seq)++;
+		break;
+	case 2:
+		//フィールドマップを終了待ち
+		GMEVENT_CallEvent(event, EVENT_FieldClose(gsys, fieldmap));
+		//配置していた動作モデルを削除
+		MMDLSYS_DeleteMMdl( GAMEDATA_GetMMdlSys(gamedata) );
+		(*seq)++;
+		break;
+	case 3:
+		//新しいマップID、初期位置をセット
+		UpdateMapParams(gsys, &mcw->loc_req);
+		//新規ゾーンに配置する動作モデルを追加
+		SetMMdl( gsys, &mcw->loc_req, GAMEINIT_MODE_FIRST );
+
+	  //※check　ユニオンルームへの移動を受付スクリプトで制御するようになったらサブスクリーンモードの
+	  //         変更もそのスクリプト内で行うようにする
+	  switch(mcw->loc_req.zone_id){
+  	case ZONE_ID_UNION:
+  	case ZONE_ID_CLOSSEUM:
+  	case ZONE_ID_CLOSSEUM02:
+  	  GAMEDATA_SetSubScreenMode(GAMESYSTEM_GetGameData(gsys), FIELD_SUBSCREEN_UNION);
+  	  break;
+  	default:
+  	  GAMEDATA_SetSubScreenMode(GAMESYSTEM_GetGameData(gsys), FIELD_SUBSCREEN_NORMAL);
+  	  break;
+  	} 
+		(*seq)++;
+		break;
+  case 4:
+    // BGMフェードアウト終了待ち
+    if( FIELD_BGM_CONTROL_IsFade() != TRUE )
+    { 
+      FIELD_BGM_CONTROL_FadeIn( gamedata, mcw->loc_req.zone_id, 60 );
+      (*seq)++;
+    }
+    break;
+	case 5:
+		//フィールドマップを開始待ち
+		GMEVENT_CallEvent(event, EVENT_FieldOpen(gsys));
+		(*seq) ++;
+		break;
+	case 6:
+    // ワープ登場イベント
+    GMEVENT_CallEvent( event, EVENT_WarpIn( event, gsys, fieldmap ) );
+		(*seq) ++;
+		break;
+  case 7:
+		return GMEVENT_RES_FINISH; 
+	}
+	return GMEVENT_RES_CONTINUE;
+}
+
 //============================================================================================
 //============================================================================================
 //------------------------------------------------------------------
@@ -328,6 +399,22 @@ GMEVENT * DEBUG_EVENT_ChangeMapDefaultPos(GAMESYS_WORK * gsys,
 	return event;
 }
 
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+GMEVENT * DEBUG_EVENT_ChangeMapDefaultPosByWarp(GAMESYS_WORK * gsys,
+		FIELD_MAIN_WORK * fieldmap, u16 zone_id)
+{
+	MAPCHANGE_WORK * mcw;
+	GMEVENT * event;
+
+	event = GMEVENT_Create(gsys, NULL, EVENT_MapChangeByWarp, sizeof(MAPCHANGE_WORK));
+	mcw = GMEVENT_GetEventWork(event);
+  MAPCHANGE_WORK_init( mcw, gsys );
+
+	LOCATION_DEBUG_SetDefaultPos(&mcw->loc_req, zone_id);
+  mcw->exit_type = EXIT_TYPE_NONE;
+	return event;
+}
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
