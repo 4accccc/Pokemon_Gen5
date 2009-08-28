@@ -12,7 +12,6 @@ SUBDIRS	=	zonetable/zoneindex \
 					camera_data \
 					map_matrix \
 					build_model \
-					land_data_ex \
 					mm_list \
 					eventdata \
 					script \

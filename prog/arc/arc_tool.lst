@@ -63,7 +63,6 @@
   ARCID_BMODEL_INFO   "fieldmap/buildmodel_info.narc"   #配置モデル情報
 	ARCID_AREADATA		"fieldmap/area_data.bin"		#エリア毎設定データ
 	ARCID_AREA_MAPTEX	"fieldmap/area_map_tex.narc"	#エリア毎地形テクスチャデータ
-	ARCID_FLDMAP_LAND_EX "fieldmap/nogrid_mapblock.narc" #非グリッド地形データ
   ARCID_FIELD_EDGEMARK  "fieldmap/edgemarking.narc"   #エッジマーキング指定データ
 	ARCID_PERSONAL		"personal/personal.narc"		#パーソナルデータ
 	ARCID_GROW_TBL		"personal/growtbl.narc"			#成長曲線テーブル
