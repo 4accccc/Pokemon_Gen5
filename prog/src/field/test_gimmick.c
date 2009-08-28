@@ -45,14 +45,7 @@ void GYM_SetupTest(FIELDMAP_WORK *fieldWork)
   FLD_EXP_OBJ_CNT_PTR ptr;
   ptr = FIELDMAP_GetExpObjCntPtr(fieldWork);
 
-  {
-    GFL_G3D_OBJSTATUS status;
-    VEC_Set( &status.scale, FX32_ONE, FX32_ONE, FX32_ONE );
-	  MTX_Identity33( &status.rotate );
-    VEC_Set( &status.trans, FX32_ONE, FX32_ONE, FX32_ONE );
-
-    FLD_EXP_OBJ_AddUnit(ptr, &Setup, &status, TEST_UNIT_IDX );
-  }
+  FLD_EXP_OBJ_AddUnit(ptr, &Setup, TEST_UNIT_IDX );
 }
 
 void GYM_EndTest(FIELDMAP_WORK *fieldWork)
@@ -73,7 +66,7 @@ void GYM_MoveTest(FIELDMAP_WORK *fieldWork)
 	FIELD_PLAYER_GetPos( FIELDMAP_GetFieldPlayer( fieldWork ), &pos );
   //座標セット
   {
-    GFL_G3D_OBJSTATUS *status = FLD_EXP_OBJ_GetUnitObjStatus(ptr, TEST_UNIT_IDX);
+    GFL_G3D_OBJSTATUS *status = FLD_EXP_OBJ_GetUnitObjStatus(ptr, TEST_UNIT_IDX, 0);
     status->trans = pos;
   }
 

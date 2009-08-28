@@ -63,6 +63,8 @@ static const GFL_G3D_UTIL_RES res_table[] =
   { ARCID_BMODEL_OUTDOOR, NARC_output_buildmodel_outdoor_h01_ship_nsbmd, GFL_G3D_UTIL_RESARC },
 };
 
+#if 0
+
 // 3Dオブジェクト設定テーブル
 static const GFL_G3D_UTIL_OBJ obj_table[] = 
 {
@@ -105,7 +107,48 @@ GFL_G3D_UTIL_SETUP setup1 = {
 GFL_G3D_UTIL_SETUP setup2 = {
   &res_table[ UNIT_IDX_SHIP ], 1,
   &obj_table[ UNIT_IDX_SHIP ], 1, 
-}; 
+};
+#else
+
+// 3Dオブジェクト設定テーブル
+static const GFL_G3D_UTIL_OBJ obj_table[] = 
+{
+  // トレーラー01
+  {
+    0,    // モデルリソースID
+    0,    // モデルデータID(リソース内部INDEX)
+    0,    // テクスチャリソースID
+    NULL, // アニメテーブル(複数指定のため)
+    0,    // アニメリソース数
+  },
+  // トレーラー02
+  {
+    1,    // モデルリソースID
+    0,    // モデルデータID(リソース内部INDEX)
+    1,    // テクスチャリソースID
+    NULL, // アニメテーブル(複数指定のため)
+    0,    // アニメリソース数
+  },
+  // 船
+  {
+    2,    // モデルリソースID
+    0,    // モデルデータID(リソース内部INDEX)
+    2,    // テクスチャリソースID
+    NULL, // アニメテーブル(複数指定のため)
+    0,    // アニメリソース数
+  },
+};
+
+
+GFL_G3D_UTIL_SETUP setup = {
+  res_table,
+  NELEMS(res_table),
+  obj_table,
+  NELEMS(obj_table),
+};
+
+#endif
+
 
 //======================================================================
 /**
@@ -136,6 +179,8 @@ void H01_GIMMICK_Setup( FIELDMAP_WORK* fieldmap )
     pos[2] = *( (fx32*)( work_adrs + 8 ) );
   }
 
+#if 0  
+
   // トレーラー01
   {
     GFL_G3D_OBJSTATUS status;
@@ -160,6 +205,30 @@ void H01_GIMMICK_Setup( FIELDMAP_WORK* fieldmap )
     MTX_Identity33( &status.rotate );
     FLD_EXP_OBJ_AddUnit( ptr, &setup2, &status, UNIT_IDX_SHIP );
   }
+#else 
+  FLD_EXP_OBJ_AddUnit( ptr, &setup, UNIT_IDX_MAX );
+  // トレーラー01
+  {
+    GFL_G3D_OBJSTATUS * status = FLD_EXP_OBJ_GetUnitObjStatus(ptr, UNIT_IDX_MAX, 0);
+    VEC_Set( &status->trans, TRAILER_RAIL_X_01, TRAILER_RAIL_Y, pos[0] );
+    VEC_Set( &status->scale, FX32_ONE, FX32_ONE, FX32_ONE );
+    MTX_RotY33( &status->rotate, FX_SinIdx( 32768 ), FX_CosIdx( 32768 ) );	  // y軸180度回転
+  }
+  // トレーラー02
+  {
+    GFL_G3D_OBJSTATUS * status = FLD_EXP_OBJ_GetUnitObjStatus(ptr, UNIT_IDX_MAX, 1);
+    VEC_Set( &status->trans, TRAILER_RAIL_X_02, TRAILER_RAIL_Y, pos[1] );
+    VEC_Set( &status->scale, FX32_ONE, FX32_ONE, FX32_ONE );
+    MTX_Identity33( &status->rotate );
+  }
+  // 船
+  {
+    GFL_G3D_OBJSTATUS * status = FLD_EXP_OBJ_GetUnitObjStatus(ptr, UNIT_IDX_MAX, 2);
+    VEC_Set( &status->trans, pos[2], SHIP_RAIL_Y, SHIP_RAIL_Z );
+    VEC_Set( &status->scale, FX32_ONE, FX32_ONE, FX32_ONE );
+    MTX_Identity33( &status->rotate );
+  }
+#endif
 }
 
 //--------------------------------------------------------------------
@@ -182,6 +251,7 @@ void H01_GIMMICK_End( FIELDMAP_WORK* fieldmap )
   work_adrs = (int)GIMMICKWORK_Assign( gmkwork, FLD_GIMMICK_H01 );
 
   // データを保存
+#if 0 
   {
     GFL_G3D_OBJSTATUS* status            = FLD_EXP_OBJ_GetUnitObjStatus( ptr, UNIT_IDX_TRAILER_01 );
     *( (fx32*)(work_adrs + data_size) )  = status->trans.z;
@@ -196,7 +266,24 @@ void H01_GIMMICK_End( FIELDMAP_WORK* fieldmap )
     GFL_G3D_OBJSTATUS* status            = FLD_EXP_OBJ_GetUnitObjStatus( ptr, UNIT_IDX_SHIP );
     *( (fx32*)(work_adrs + data_size) )  = status->trans.x;
     data_size                           += sizeof( fx32 );
-  } 
+  }
+#else
+  {
+    GFL_G3D_OBJSTATUS* status            = FLD_EXP_OBJ_GetUnitObjStatus( ptr, UNIT_IDX_MAX, 0 );
+    *( (fx32*)(work_adrs + data_size) )  = status->trans.z;
+    data_size                           += sizeof( fx32 );
+  }
+  {
+    GFL_G3D_OBJSTATUS* status            = FLD_EXP_OBJ_GetUnitObjStatus( ptr, UNIT_IDX_MAX, 1 );
+    *( (fx32*)(work_adrs + data_size) )  = status->trans.z;
+    data_size                           += sizeof( fx32 );
+  }
+  {
+    GFL_G3D_OBJSTATUS* status            = FLD_EXP_OBJ_GetUnitObjStatus( ptr, UNIT_IDX_MAX, 2 );
+    *( (fx32*)(work_adrs + data_size) )  = status->trans.x;
+    data_size                           += sizeof( fx32 );
+  }
+#endif
 } 
 
 //--------------------------------------------------------------------
@@ -210,7 +297,7 @@ void H01_GIMMICK_Move( FIELDMAP_WORK* fieldmap )
 
   // トレーラー01の動作
   { 
-    GFL_G3D_OBJSTATUS* p_status = FLD_EXP_OBJ_GetUnitObjStatus( ptr, UNIT_IDX_TRAILER_01 );
+    GFL_G3D_OBJSTATUS* p_status = FLD_EXP_OBJ_GetUnitObjStatus( ptr, UNIT_IDX_MAX, 0 );
     p_status->trans.z += TRAILER_SPEED_MAX;
     if( TRAILER_RAIL_Z_MAX < p_status->trans.z )
     {
@@ -219,7 +306,7 @@ void H01_GIMMICK_Move( FIELDMAP_WORK* fieldmap )
   }
   // トレーラー02の動作
   { 
-    GFL_G3D_OBJSTATUS* p_status = FLD_EXP_OBJ_GetUnitObjStatus( ptr, UNIT_IDX_TRAILER_02 );
+    GFL_G3D_OBJSTATUS* p_status = FLD_EXP_OBJ_GetUnitObjStatus( ptr, UNIT_IDX_MAX, 1 );
     p_status->trans.z -= TRAILER_SPEED_MAX;
     if( p_status->trans.z < TRAILER_RAIL_Z_MIN )
     {
@@ -228,7 +315,7 @@ void H01_GIMMICK_Move( FIELDMAP_WORK* fieldmap )
   }
   // 船の動作
   { 
-    GFL_G3D_OBJSTATUS* p_status = FLD_EXP_OBJ_GetUnitObjStatus( ptr, UNIT_IDX_SHIP );
+    GFL_G3D_OBJSTATUS* p_status = FLD_EXP_OBJ_GetUnitObjStatus( ptr, UNIT_IDX_MAX, 2 );
     p_status->trans.x += SHIP_SPEED_MAX;
     if( SHIP_RAIL_X_MAX < p_status->trans.x )
     {

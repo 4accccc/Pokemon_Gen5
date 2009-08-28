@@ -10,20 +10,20 @@
 
 #include "fld_exp_obj.h"
 
-#define FLD_EXP_OBJ_UNIT_MAX  (8)
+#define FLD_EXP_OBJ_UNIT_MAX  (4)
 
 typedef struct EXP_UNIT_tag
 {
   BOOL Valid;
-  GFL_G3D_OBJSTATUS ObjStatus;
+  GFL_G3D_OBJSTATUS *ObjStatus;
   u16 UtilUnitIdx;
   u16 pading;
 }EXP_UNIT;
 
 typedef struct FLD_EXP_OBJ_CNT_tag
 {
+  int HeapID;
   GFL_G3D_UTIL* ObjUtil;
-  
 ///  GFL_G3D_OBJSTATUS ObjStatus[FLD_EXP_OBJ_UNIT_MAX];
 ///  BOOL Valid[FLD_EXP_OBJ_UNIT_MAX];
   EXP_UNIT  Unit[FLD_EXP_OBJ_UNIT_MAX];
@@ -81,7 +81,6 @@ void FLD_EXP_OBJ_Delete(FLD_EXP_OBJ_CNT_PTR ptr)
  *
  * @param	ptr     モジュールポインタ
  * @param	inSetup		設定データ
- * @param inStatus  表示ステータス
  * @param inIndex   登録するインデックス
  *
  * @return	none
@@ -89,17 +88,30 @@ void FLD_EXP_OBJ_Delete(FLD_EXP_OBJ_CNT_PTR ptr)
 //--------------------------------------------------------------------------------------------
 void FLD_EXP_OBJ_AddUnit(  FLD_EXP_OBJ_CNT_PTR ptr,
                           const GFL_G3D_UTIL_SETUP *inSetup,
-                          const GFL_G3D_OBJSTATUS *inStatus,
                           const u16 inIndex)
 {
+  u16 i;
   u16 unitIdx;
+  GFL_G3D_OBJSTATUS *status;
+  u16 obj_num;
 
   if ( ptr->Unit[inIndex].Valid == TRUE ){
     GF_ASSERT_MSG(0,"CAN NOT ADD UNIT\n");
   }
 
   unitIdx = GFL_G3D_UTIL_AddUnit( ptr->ObjUtil, inSetup );
-  ptr->Unit[inIndex].ObjStatus = *inStatus;
+  obj_num = inSetup->objCount;
+  if (obj_num == 0){
+    GF_ASSERT_MSG(0,"OBJ NOTHING\n");
+  }
+
+  status = GFL_HEAP_AllocClearMemory(ptr->HeapID, sizeof(GFL_G3D_OBJSTATUS)*obj_num);
+  ptr->Unit[inIndex].ObjStatus = status;
+  for(i=0;i<obj_num;i++){
+    VEC_Set( &status[i].scale, FX32_ONE, FX32_ONE, FX32_ONE );
+	  MTX_Identity33( &status[i].rotate );
+    VEC_Set( &status[i].trans, 0, 0, 0 );
+  }
   ptr->Unit[inIndex].Valid = TRUE;
   ptr->Unit[inIndex].UtilUnitIdx = unitIdx;
 }
@@ -125,7 +137,9 @@ void FLD_EXP_OBJ_DelUnit( FLD_EXP_OBJ_CNT_PTR ptr, const u16 inUnitIdx )
     return;
   }
 
+  GFL_HEAP_FreeMemory( ptr->Unit[inUnitIdx].ObjStatus );
   GFL_G3D_UTIL_DelUnit( ptr->ObjUtil, ptr->Unit[inUnitIdx].UtilUnitIdx );
+
   ptr->Unit[inUnitIdx].Valid = FALSE;
 }
 
@@ -166,11 +180,14 @@ u16 FLD_EXP_OBJ_GetUtilUnitIdx(FLD_EXP_OBJ_CNT_PTR ptr, const u16 inUnitIdx)
  *
  * @param   ptr               モジュールポインタ
  * @param   inUnitIdx         ユニットインデックス
+ * @param   inObjIdx          ユニット内ＯＢＪインデックス
  *
  * @return	GFL_G3D_OBJSTATUS*    ステータスポインタ
  */
 //--------------------------------------------------------------------------------------------
-GFL_G3D_OBJSTATUS *FLD_EXP_OBJ_GetUnitObjStatus(FLD_EXP_OBJ_CNT_PTR ptr, const u16 inUnitIdx)
+GFL_G3D_OBJSTATUS *FLD_EXP_OBJ_GetUnitObjStatus(FLD_EXP_OBJ_CNT_PTR ptr,
+                                                const u16 inUnitIdx,
+                                                const u16 inObjIdx)
 {
   GF_ASSERT(ptr != NULL);
   if (ptr->Unit[inUnitIdx].Valid == FALSE){
@@ -181,7 +198,7 @@ GFL_G3D_OBJSTATUS *FLD_EXP_OBJ_GetUnitObjStatus(FLD_EXP_OBJ_CNT_PTR ptr, const u
     GF_ASSERT_MSG(0,"%d UNIT IDX OVER\n",inUnitIdx);
     return NULL;
   }
-  return &ptr->Unit[inUnitIdx].ObjStatus;
+  return &ptr->Unit[inUnitIdx].ObjStatus[inObjIdx];
 }
 
 //--------------------------------------------------------------------------------------------
@@ -204,7 +221,7 @@ void FLD_EXP_OBJ_Draw( FLD_EXP_OBJ_CNT_PTR ptr )
       for (j=0;j<obj_count;j++){
         GFL_G3D_OBJ* pObj;
         pObj = GFL_G3D_UTIL_GetObjHandle(ptr->ObjUtil, obj_idx+j);
-        GFL_G3D_DRAW_DrawObject( pObj, &ptr->Unit[i].ObjStatus );
+        GFL_G3D_DRAW_DrawObject( pObj, &ptr->Unit[i].ObjStatus[j] );
       }
     }
   }
