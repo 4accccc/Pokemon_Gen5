@@ -233,6 +233,12 @@ void UNION_SUBDISP_Update(UNION_SUBDISP_PTR unisub)
       UnionChat_AddChat(unisys, NULL, &situ->chat_pmsdata);
       situ->chat_upload = FALSE;
     }
+  #if PM_DEBUG
+    else if(GFL_UI_KEY_GetTrg() & PAD_BUTTON_R){
+      PMSDAT_SetDebugRandom(&situ->chat_pmsdata);
+      UnionChat_AddChat(unisys, NULL, &situ->chat_pmsdata);
+    }
+  #endif
     _UniSub_PrintChatUpdate(unisub, &unisys->chat_log);
   }
   
@@ -642,6 +648,7 @@ void _UniSub_Chat_DispWrite(UNION_SUBDISP_PTR unisub, UNION_CHAT_DATA *chat, u8 
   {
     STRBUF *buf_name, *buf_pms;
     
+    GFL_BMP_Clear(GFL_BMPWIN_GetBmp(unisub->bmpwin_chat[write_pos]), 0);
     GFL_BMPWIN_MakeScreen(unisub->bmpwin_chat[write_pos]);
     GFL_BG_LoadScreenV_Req(UNION_FRAME_S_MESSAGE);
     
@@ -735,7 +742,7 @@ void _UniSub_Chat_DispScroll(UNION_SUBDISP_PTR unisub, UNION_CHAT_LOG *log, s32 
     
     for(write_pos = UNION_CHAT_VIEW_LOG_NUM - offset; write_pos < UNION_CHAT_VIEW_LOG_NUM; write_pos++)
     {
-      chat = UnionChat_GetReadBuffer(log, log->chat_view_no - offset + write_pos);
+      chat = UnionChat_GetReadBuffer(log, log->chat_view_no - (UNION_CHAT_VIEW_LOG_NUM-1) + write_pos);
       GF_ASSERT(chat != NULL);
       _UniSub_Chat_DispWrite(unisub, chat, write_pos);
     }
