@@ -290,7 +290,7 @@ SRCS_OVERLAY_FIELDMAP		=	field/field_proc.c \
 				field/field_comm/field_comm_menu.c \
 				field/field_comm/field_comm_debug.c \
 				field/field_comm/palace_sys.c \
-				field/ircbattle/ircbattlemenu.c \
+				net_app/irc_match/ircbattlemenu.c \
 				field/c_gear/c_gear.c \
 				field/fldmmdl_draw.c \
 				field/fldmmdl_acmd.c \
@@ -568,9 +568,9 @@ SRCS_OVERLAY_WIFICLUB =   net_app/wificlub/wifi_p2pmatchroom.c \
 
 # IRCBATTLEマッチング
 #===> SRCS_OVERLAY_DEV_IRC
-SRCS_OVERLAY_IRCBATTLEMATCH = field/ircbattle/ircbattlematch.c \
-                field/ircbattle/ircbattlefriend.c \
-								field/ircbattle/ircpokemontrade.c
+SRCS_OVERLAY_IRCBATTLEMATCH = net_app/irc_match/ircbattlematch.c \
+                net_app/friend_trade/ircbattlefriend.c \
+								net_app/poke_trade/ircpokemontrade.c
 
 # 不思議な贈り物
 #===> SRCS_OVERLAY_DEV_WIFI
