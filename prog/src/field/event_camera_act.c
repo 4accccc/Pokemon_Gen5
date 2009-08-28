@@ -446,7 +446,7 @@ static GMEVENT_RESULT EVENT_FUNC_UpDoorIn( GMEVENT* p_event, int* p_seq, void* p
   switch( *p_seq )
   {
   case 0:
-    FIELDMAP_TCB_CAMERA_AddTask_Zoom( p_event_work->pFieldmap, U_DOOR_FRAME, -U_DOOR_ZOOM_DIST );
+    FIELDMAP_TCB_AddTask_CameraZoom( p_event_work->pFieldmap, U_DOOR_FRAME, -U_DOOR_ZOOM_DIST );
     ++( *p_seq );
     break;
   case 1:
@@ -474,9 +474,9 @@ static GMEVENT_RESULT EVENT_FUNC_LeftDoorIn( GMEVENT* p_event, int* p_seq, void*
   {
   case 0:
     SetFarNear( p_event_work->pFieldmap );
-    FIELDMAP_TCB_CAMERA_AddTask_Zoom( p_event_work->pFieldmap, L_DOOR_FRAME, -L_DOOR_ZOOM_DIST );
-    FIELDMAP_TCB_CAMERA_AddTask_Yaw( p_event_work->pFieldmap, L_DOOR_FRAME, L_DOOR_YAW );
-    FIELDMAP_TCB_CAMERA_AddTask_Pitch( p_event_work->pFieldmap, L_DOOR_FRAME, L_DOOR_PITCH );
+    FIELDMAP_TCB_AddTask_CameraZoom( p_event_work->pFieldmap, L_DOOR_FRAME, -L_DOOR_ZOOM_DIST );
+    FIELDMAP_TCB_AddTask_CameraRotate_Yaw( p_event_work->pFieldmap, L_DOOR_FRAME, L_DOOR_YAW );
+    FIELDMAP_TCB_AddTask_CameraRotate_Pitch( p_event_work->pFieldmap, L_DOOR_FRAME, L_DOOR_PITCH );
     ++( *p_seq );
     break;
   case 1:
@@ -504,9 +504,9 @@ static GMEVENT_RESULT EVENT_FUNC_RightDoorIn( GMEVENT* p_event, int* p_seq, void
   {
   case 0:
     SetFarNear( p_event_work->pFieldmap );
-    FIELDMAP_TCB_CAMERA_AddTask_Zoom( p_event_work->pFieldmap, R_DOOR_FRAME, -R_DOOR_ZOOM_DIST );
-    FIELDMAP_TCB_CAMERA_AddTask_Yaw( p_event_work->pFieldmap, R_DOOR_FRAME, R_DOOR_YAW );
-    FIELDMAP_TCB_CAMERA_AddTask_Pitch( p_event_work->pFieldmap, R_DOOR_FRAME, R_DOOR_PITCH );
+    FIELDMAP_TCB_AddTask_CameraZoom( p_event_work->pFieldmap, R_DOOR_FRAME, -R_DOOR_ZOOM_DIST );
+    FIELDMAP_TCB_AddTask_CameraRotate_Yaw( p_event_work->pFieldmap, R_DOOR_FRAME, R_DOOR_YAW );
+    FIELDMAP_TCB_AddTask_CameraRotate_Pitch( p_event_work->pFieldmap, R_DOOR_FRAME, R_DOOR_PITCH );
     ++( *p_seq );
     break;
   case 1:
@@ -534,8 +534,8 @@ static GMEVENT_RESULT EVENT_FUNC_RightDoorIn_2Step( GMEVENT* p_event, int* p_seq
   {
   case 0:
     SetFarNear( p_event_work->pFieldmap );
-    FIELDMAP_TCB_CAMERA_AddTask_Yaw( p_event_work->pFieldmap, 20, R_DOOR_YAW );
-    FIELDMAP_TCB_CAMERA_AddTask_Pitch( p_event_work->pFieldmap, 20, R_DOOR_PITCH );
+    FIELDMAP_TCB_AddTask_CameraRotate_Yaw( p_event_work->pFieldmap, 20, R_DOOR_YAW );
+    FIELDMAP_TCB_AddTask_CameraRotate_Pitch( p_event_work->pFieldmap, 20, R_DOOR_PITCH );
     p_event_work->frame = 0;
     ++( *p_seq );
     break;
@@ -546,7 +546,7 @@ static GMEVENT_RESULT EVENT_FUNC_RightDoorIn_2Step( GMEVENT* p_event, int* p_seq
     }
     break;
   case 2:
-    FIELDMAP_TCB_CAMERA_AddTask_Zoom( p_event_work->pFieldmap, R_DOOR_FRAME, -R_DOOR_ZOOM_DIST );
+    FIELDMAP_TCB_AddTask_CameraZoom( p_event_work->pFieldmap, R_DOOR_FRAME, -R_DOOR_ZOOM_DIST );
     ++( *p_seq );
     p_event_work->frame = 0;
     break;
@@ -604,7 +604,7 @@ static GMEVENT_RESULT EVENT_FUNC_UpDoorOut( GMEVENT* p_event, int* p_seq, void* 
   switch( *p_seq )
   {
   case 0:
-    FIELDMAP_TCB_CAMERA_AddTask_Zoom( p_event_work->pFieldmap, U_DOOR_FRAME, U_DOOR_ZOOM_DIST );
+    FIELDMAP_TCB_AddTask_CameraZoom( p_event_work->pFieldmap, U_DOOR_FRAME, U_DOOR_ZOOM_DIST );
     ++( *p_seq );
     break;
   case 1:
@@ -636,9 +636,9 @@ static GMEVENT_RESULT EVENT_FUNC_LeftDoorOut( GMEVENT* p_event, int* p_seq, void
       FLD_CAMERA_PARAM def_param; 
       FIELD_CAMERA_GetInitialParameter( p_camera, &def_param );
       SetFarNear( p_event_work->pFieldmap );
-      FIELDMAP_TCB_CAMERA_AddTask_Zoom( p_event_work->pFieldmap, L_DOOR_FRAME, L_DOOR_ZOOM_DIST );
-      FIELDMAP_TCB_CAMERA_AddTask_Yaw( p_event_work->pFieldmap, L_DOOR_FRAME, def_param.Angle.y );
-      FIELDMAP_TCB_CAMERA_AddTask_Pitch( p_event_work->pFieldmap, L_DOOR_FRAME, def_param.Angle.x );
+      FIELDMAP_TCB_AddTask_CameraZoom( p_event_work->pFieldmap, L_DOOR_FRAME, L_DOOR_ZOOM_DIST );
+      FIELDMAP_TCB_AddTask_CameraRotate_Yaw( p_event_work->pFieldmap, L_DOOR_FRAME, def_param.Angle.y );
+      FIELDMAP_TCB_AddTask_CameraRotate_Pitch( p_event_work->pFieldmap, L_DOOR_FRAME, def_param.Angle.x );
     }
     ++( *p_seq );
     break;
@@ -671,9 +671,9 @@ static GMEVENT_RESULT EVENT_FUNC_RightDoorOut( GMEVENT* p_event, int* p_seq, voi
       FLD_CAMERA_PARAM def_param; 
       FIELD_CAMERA_GetInitialParameter( p_camera, &def_param );
       SetFarNear( p_event_work->pFieldmap );
-      FIELDMAP_TCB_CAMERA_AddTask_Zoom( p_event_work->pFieldmap, R_DOOR_FRAME, R_DOOR_ZOOM_DIST );
-      FIELDMAP_TCB_CAMERA_AddTask_Yaw( p_event_work->pFieldmap, R_DOOR_FRAME, def_param.Angle.y );
-      FIELDMAP_TCB_CAMERA_AddTask_Pitch( p_event_work->pFieldmap, R_DOOR_FRAME, def_param.Angle.x );
+      FIELDMAP_TCB_AddTask_CameraZoom( p_event_work->pFieldmap, R_DOOR_FRAME, R_DOOR_ZOOM_DIST );
+      FIELDMAP_TCB_AddTask_CameraRotate_Yaw( p_event_work->pFieldmap, R_DOOR_FRAME, def_param.Angle.y );
+      FIELDMAP_TCB_AddTask_CameraRotate_Pitch( p_event_work->pFieldmap, R_DOOR_FRAME, def_param.Angle.x );
     }
     ++( *p_seq );
     break;
@@ -707,7 +707,7 @@ static GMEVENT_RESULT EVENT_FUNC_RightDoorOut_2Step( GMEVENT* p_event, int* p_se
   {
   case 0:
     SetFarNear( p_event_work->pFieldmap );
-    FIELDMAP_TCB_CAMERA_AddTask_Zoom( p_event_work->pFieldmap, 20, R_DOOR_ZOOM_DIST );
+    FIELDMAP_TCB_AddTask_CameraZoom( p_event_work->pFieldmap, 20, R_DOOR_ZOOM_DIST );
     p_event_work->frame = 0;
     ++( *p_seq );
     break;
@@ -718,8 +718,8 @@ static GMEVENT_RESULT EVENT_FUNC_RightDoorOut_2Step( GMEVENT* p_event, int* p_se
     }
     break;
   case 2:
-    FIELDMAP_TCB_CAMERA_AddTask_Yaw( p_event_work->pFieldmap, 15, def_param.Angle.y );
-    FIELDMAP_TCB_CAMERA_AddTask_Pitch( p_event_work->pFieldmap, 15, def_param.Angle.x );
+    FIELDMAP_TCB_AddTask_CameraRotate_Yaw( p_event_work->pFieldmap, 15, def_param.Angle.y );
+    FIELDMAP_TCB_AddTask_CameraRotate_Pitch( p_event_work->pFieldmap, 15, def_param.Angle.x );
     ++( *p_seq );
     p_event_work->frame = 0;
     break;

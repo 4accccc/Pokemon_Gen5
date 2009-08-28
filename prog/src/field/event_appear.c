@@ -144,7 +144,7 @@ static GMEVENT_RESULT EVENT_FUNC_APPEAR_Rotate( GMEVENT* event, int* seq, void* 
   // タスクの追加
   case 1:
     FIELDMAP_TCB_AddTask_RotatePlayer_SpeedDown( ew->pFieldmap, 120, 10 );   // 自機回転
-    FIELDMAP_TCB_CAMERA_AddTask_Zoom( ew->pFieldmap, ZOOM_OUT_FRAME, ZOOM_IN_DIST );  // ズームアウト
+    FIELDMAP_TCB_AddTask_CameraZoom( ew->pFieldmap, ZOOM_OUT_FRAME, ZOOM_IN_DIST );  // ズームアウト
     ++( *seq );
     break;
   // タスクの終了待ち

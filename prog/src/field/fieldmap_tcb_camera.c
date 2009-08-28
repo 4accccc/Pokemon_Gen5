@@ -29,13 +29,13 @@
 //==========================================================================================
 typedef struct
 {
+  FIELDMAP_WORK* pFieldmap; // 処理対象のフィールドマップ
   u16            frame;     // 経過フレーム数
   u16            endFrame;  // 終了フレーム
   fx32           startDist; // カメラ距離初期値
   fx32           endDist;   // カメラ距離最終値
-  FIELDMAP_WORK* pFieldmap; // 処理対象のフィールドマップ
 }
-TCB_WORK_ZOOM;
+ZOOM_WORK;
 
 
 //==========================================================================================
@@ -44,7 +44,7 @@ TCB_WORK_ZOOM;
  */
 //========================================================================================== 
 static void TCB_FUNC_Zoom( GFL_TCB* tcb, void* work ); 
-static void UpdateDist( TCB_WORK_ZOOM* p_work );
+static void UpdateDist( ZOOM_WORK* p_work );
 
 
 //========================================================================================== 
@@ -62,13 +62,12 @@ static void UpdateDist( TCB_WORK_ZOOM* p_work );
  * @param dist     移動距離
  */
 //------------------------------------------------------------------------------------------
-void FIELDMAP_TCB_CAMERA_AddTask_Zoom( FIELDMAP_WORK* fieldmap, int frame, fx32 dist )
+void FIELDMAP_TCB_AddTask_CameraZoom( FIELDMAP_WORK* fieldmap, int frame, fx32 dist )
 {
   HEAPID      heap_id = FIELDMAP_GetHeapID( fieldmap );
   FIELD_CAMERA*   cam = FIELDMAP_GetFieldCamera( fieldmap );
   GFL_TCBSYS*  tcbsys = FIELDMAP_GetFieldmapTCBSys( fieldmap );
-  TCB_WORK_ZOOM* work = GFL_HEAP_AllocMemoryLo( heap_id, sizeof( TCB_WORK_ZOOM ) ); 
-  GFL_TCB*        tcb;
+  ZOOM_WORK* work     = GFL_HEAP_AllocMemoryLo( heap_id, sizeof( ZOOM_WORK ) ); 
 
   // TCBワーク初期化
   work->frame     = 0;
@@ -78,7 +77,7 @@ void FIELDMAP_TCB_CAMERA_AddTask_Zoom( FIELDMAP_WORK* fieldmap, int frame, fx32 
   work->pFieldmap = fieldmap;
 
   // TCBを追加
-  tcb = GFL_TCB_AddTask( tcbsys, TCB_FUNC_Zoom, work, 0 );
+  GFL_TCB_AddTask( tcbsys, TCB_FUNC_Zoom, work, 0 );
 }
 
 
@@ -95,7 +94,7 @@ void FIELDMAP_TCB_CAMERA_AddTask_Zoom( FIELDMAP_WORK* fieldmap, int frame, fx32 
 //------------------------------------------------------------------------------------------
 static void TCB_FUNC_Zoom( GFL_TCB* tcb, void* work )
 {
-  TCB_WORK_ZOOM* tcbwork = work;
+  ZOOM_WORK* tcbwork = work;
 
   // カメラ距離を更新
   UpdateDist( tcbwork );
@@ -104,8 +103,8 @@ static void TCB_FUNC_Zoom( GFL_TCB* tcb, void* work )
   ++(tcbwork->frame);
   if( tcbwork->endFrame < tcbwork->frame )
   {
-    GFL_HEAP_FreeMemory( work );
-    GFL_TCB_DeleteTask( tcb );
+    GFL_HEAP_FreeMemory( work );  // ワークを破棄
+    GFL_TCB_DeleteTask( tcb );    // タスクを破棄(自殺)
   }
 }
 
@@ -116,21 +115,21 @@ static void TCB_FUNC_Zoom( GFL_TCB* tcb, void* work )
  * @param p_work ズームTCBイベントワーク
  */
 //-----------------------------------------------------------------------------------------------
-static void UpdateDist( TCB_WORK_ZOOM* p_work )
+static void UpdateDist( ZOOM_WORK* p_work )
 {
   FIELD_CAMERA* p_camera = FIELDMAP_GetFieldCamera( p_work->pFieldmap );
-  fx32          dist;
 
   // 動作期間中なら, 更新する
   if( p_work->frame <= p_work->endFrame)
   {
-    float t = p_work->frame / (float)p_work->endFrame;
-    dist    = FX_F32_TO_FX32( ( (1-t) * FX_FX32_TO_F32(p_work->startDist) ) + ( t * FX_FX32_TO_F32(p_work->endDist) ) );
-    FIELD_CAMERA_SetAngleLen( p_camera, dist ); 
+    // 線形補完
+    float    t = p_work->frame / (float)p_work->endFrame;
+    float   d1 = FX_FX32_TO_F32( p_work->startDist );
+    float   d2 = FX_FX32_TO_F32( p_work->endDist );
+    float dist = (1-t) * d1 + ( t * d2);
+    FIELD_CAMERA_SetAngleLen( p_camera, FX_F32_TO_FX32( dist ) ); 
   }
 }
-
-
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////
@@ -162,14 +161,14 @@ CAMERA_ROT_TYPE;
 //==========================================================================================
 typedef struct
 {
+  FIELDMAP_WORK*  pFieldmap;   // 処理対象のフィールドマップ
   CAMERA_ROT_TYPE type;        // 回転タイプ
   u16             frame;       // 経過フレーム数
   u16             endFrame;    // 終了フレーム
   u32             startAngle;  // 回転角初期値(2πラジアンを65536分割した値を単位とする数)
   u32             endAngle;    // 回転角最終値(2πラジアンを65536分割した値を単位とする数)
-  FIELDMAP_WORK*  pFieldmap;   // 処理対象のフィールドマップ
 }
-TCB_WORK_ROT;
+ROT_WORK;
 
 
 //==========================================================================================
@@ -177,8 +176,11 @@ TCB_WORK_ROT;
  * @brief プロトタイプ宣言
  */
 //========================================================================================== 
+static void InitWork( 
+    ROT_WORK* work, FIELDMAP_WORK* fieldmap, 
+    CAMERA_ROT_TYPE type, u16 end_frame, u32 start_angle, u32 end_angle );
 static void TCB_FUNC_RotCamera( GFL_TCB* tcb, void* work ); 
-static void UpdateAngle( TCB_WORK_ROT* p_work );
+static void UpdateAngle( ROT_WORK* p_work );
 
 
 //========================================================================================== 
@@ -196,41 +198,18 @@ static void UpdateAngle( TCB_WORK_ROT* p_work );
  * @param angle    最終的な角度( 2πラジアンを65536分割した値を単位とする数 )
  */
 //------------------------------------------------------------------------------------------
-void FIELDMAP_TCB_CAMERA_AddTask_Yaw( FIELDMAP_WORK* fieldmap, int frame, u16 angle )
+void FIELDMAP_TCB_AddTask_CameraRotate_Yaw( FIELDMAP_WORK* fieldmap, int frame, u16 angle )
 {
   HEAPID      heap_id = FIELDMAP_GetHeapID( fieldmap );
   FIELD_CAMERA*  cam  = FIELDMAP_GetFieldCamera( fieldmap );
   GFL_TCBSYS*  tcbsys = FIELDMAP_GetFieldmapTCBSys( fieldmap );
-  TCB_WORK_ROT*  work = GFL_HEAP_AllocMemoryLo( heap_id, sizeof( TCB_WORK_ROT ) ); 
-  GFL_TCB*        tcb;
+  ROT_WORK*      work = GFL_HEAP_AllocMemoryLo( heap_id, sizeof( ROT_WORK ) ); 
 
   // TCBワーク初期化
-  work->type      = CAMERA_ROT_TYPE_YAW;
-  work->frame     = 0;
-  work->endFrame  = frame;
-  work->startAngle = FIELD_CAMERA_GetAngleYaw( cam );
-  work->endAngle   = angle;
-  work->pFieldmap = fieldmap;
-
-  // 正の方向に回したとき, 180度以上の回転が必要になる場合, 負の方向に回転させる必要がある.
-  // 回転の方向を逆にするために, 小さい方の角度を360度分の下駄を履かせる.
-  if( work->startAngle < work->endAngle )
-  {
-    if( PI < (work->endAngle - work->startAngle) )
-    {
-      work->startAngle += 2*PI;
-    }
-  }
-  else if( work->endAngle < work->startAngle )
-  {
-    if( PI < (work->startAngle - work->endAngle) )
-    {
-      work->endAngle += 2*PI;
-    }
-  } 
+  InitWork( work, fieldmap, CAMERA_ROT_TYPE_YAW, frame, FIELD_CAMERA_GetAngleYaw( cam ), angle );
 
   // TCBを追加
-  tcb = GFL_TCB_AddTask( tcbsys, TCB_FUNC_RotCamera, work, 0 );
+  GFL_TCB_AddTask( tcbsys, TCB_FUNC_RotCamera, work, 0 );
 }
 
 //------------------------------------------------------------------------------------------
@@ -242,41 +221,18 @@ void FIELDMAP_TCB_CAMERA_AddTask_Yaw( FIELDMAP_WORK* fieldmap, int frame, u16 an
  * @param angle    最終的な角度( 2πラジアンを65536分割した値を単位とする数 )
  */
 //------------------------------------------------------------------------------------------
-void FIELDMAP_TCB_CAMERA_AddTask_Pitch( FIELDMAP_WORK* fieldmap, int frame, u16 angle )
+void FIELDMAP_TCB_AddTask_CameraRotate_Pitch( FIELDMAP_WORK* fieldmap, int frame, u16 angle )
 {
   HEAPID      heap_id = FIELDMAP_GetHeapID( fieldmap );
   FIELD_CAMERA*  cam  = FIELDMAP_GetFieldCamera( fieldmap );
   GFL_TCBSYS*  tcbsys = FIELDMAP_GetFieldmapTCBSys( fieldmap );
-  TCB_WORK_ROT*  work = GFL_HEAP_AllocMemoryLo( heap_id, sizeof( TCB_WORK_ROT ) ); 
-  GFL_TCB*        tcb;
+  ROT_WORK*      work = GFL_HEAP_AllocMemoryLo( heap_id, sizeof( ROT_WORK ) ); 
 
   // TCBワーク初期化
-  work->type      = CAMERA_ROT_TYPE_PITCH;
-  work->frame     = 0;
-  work->endFrame  = frame;
-  work->startAngle = FIELD_CAMERA_GetAnglePitch( cam );
-  work->endAngle   = angle;
-  work->pFieldmap = fieldmap;
+  InitWork( work, fieldmap, CAMERA_ROT_TYPE_PITCH, frame, FIELD_CAMERA_GetAnglePitch( cam ), angle );
 
-  // 正の方向に回したとき, 180度以上の回転が必要になる場合, 負の方向に回転させる必要がある.
-  // 回転の方向を逆にするために, 小さい方の角度を360度分の下駄を履かせる.
-  if( work->startAngle < work->endAngle )
-  {
-    if( PI < (work->endAngle - work->startAngle) )
-    {
-      work->startAngle += 2*PI;
-    }
-  }
-  else if( work->endAngle < work->startAngle )
-  {
-    if( PI < (work->startAngle - work->endAngle) )
-    {
-      work->endAngle += 2*PI;
-    }
-  } 
-
-  // TCBを追加
-  tcb = GFL_TCB_AddTask( tcbsys, TCB_FUNC_RotCamera, work, 0 );
+  // タスクを追加
+  GFL_TCB_AddTask( tcbsys, TCB_FUNC_RotCamera, work, 0 );
 }
 
 
@@ -288,12 +244,53 @@ void FIELDMAP_TCB_CAMERA_AddTask_Pitch( FIELDMAP_WORK* fieldmap, int frame, u16 
 
 //------------------------------------------------------------------------------------------
 /**
+ * @brief ワークを初期化する
+ * 
+ * @param work         初期化するワーク
+ * @param fieldmap     動作対象のフィールドマップ
+ * @param type         回転タイプ
+ * @param end_frame    最終フレーム数
+ * @param start_angle  初期角度( 2πラジアンを65536分割した値を単位とする数 )
+ * @param end_angle    最終角度( 2πラジアンを65536分割した値を単位とする数 )
+ */
+//------------------------------------------------------------------------------------------
+static void InitWork( 
+    ROT_WORK* work, FIELDMAP_WORK* fieldmap, 
+    CAMERA_ROT_TYPE type, u16 end_frame, u32 start_angle, u32 end_angle )
+{
+  work->pFieldmap  = fieldmap;
+  work->type       = type;
+  work->frame      = 0;
+  work->endFrame   = end_frame;
+  work->startAngle = start_angle;
+  work->endAngle   = end_angle;
+
+  // 正の方向に回したとき, 180度以上の回転が必要になる場合, 負の方向に回転させる必要がある.
+  // 回転の方向を逆にするために, 小さい方の角度を360度分の下駄を履かせる.
+  if( start_angle < end_angle )
+  {
+    if( PI < (end_angle - start_angle) )
+    {
+      work->startAngle += 2*PI;
+    }
+  }
+  else if( end_angle < start_angle )
+  {
+    if( PI < (start_angle - end_angle) )
+    {
+      work->endAngle += 2*PI;
+    }
+  } 
+}
+
+//------------------------------------------------------------------------------------------
+/**
  * @brief TCB実行関数( カメラ回転 )
  */
 //------------------------------------------------------------------------------------------
 static void TCB_FUNC_RotCamera( GFL_TCB* tcb, void* work )
 {
-  TCB_WORK_ROT* tcbwork = work;
+  ROT_WORK* tcbwork = work;
 
   // カメラ位置を更新
   UpdateAngle( tcbwork );
@@ -314,7 +311,7 @@ static void TCB_FUNC_RotCamera( GFL_TCB* tcb, void* work )
  * @param p_work イベントワーク
  */
 //-----------------------------------------------------------------------------------------------
-static void UpdateAngle( TCB_WORK_ROT* p_work )
+static void UpdateAngle( ROT_WORK* p_work )
 {
   FIELD_CAMERA* p_camera = FIELDMAP_GetFieldCamera( p_work->pFieldmap );
   u16           angle;

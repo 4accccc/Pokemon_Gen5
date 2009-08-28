@@ -36,11 +36,11 @@ void FIELDMAP_TCB_WARP_PLAYER_AddTask_FallIn(           // 落下登場
 // fieldmap_tcb_camera.c
 //=======================
 // カメラのズーム
-void FIELDMAP_TCB_CAMERA_AddTask_Zoom(
+void FIELDMAP_TCB_AddTask_CameraZoom(
     FIELDMAP_WORK* fieldmap, int frame, fx32 dist );  
 
 // カメラの回転
-void FIELDMAP_TCB_CAMERA_AddTask_Yaw(                   // ヨー回転
+void FIELDMAP_TCB_AddTask_CameraRotate_Yaw(             // ヨー回転
     FIELDMAP_WORK* fieldmap, int frame, u16 angle );   
-void FIELDMAP_TCB_CAMERA_AddTask_Pitch(                 // ピッチ回転
+void FIELDMAP_TCB_AddTask_CameraRotate_Pitch(           // ピッチ回転
     FIELDMAP_WORK* fieldmap, int frame, u16 angle );   

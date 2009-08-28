@@ -136,7 +136,7 @@ static GMEVENT_RESULT EVENT_FUNC_DISAPPEAR_Rotate( GMEVENT* event, int* seq, voi
   // 自機回転タスクの追加
   case 0:
     FIELDMAP_TCB_AddTask_RotatePlayer_SpeedUp( ew->pFieldmap, 120, 10 );    // 自機回転
-    FIELDMAP_TCB_CAMERA_AddTask_Zoom( ew->pFieldmap, ZOOM_IN_FRAME, -ZOOM_IN_DIST ); // ズームイン
+    FIELDMAP_TCB_AddTask_CameraZoom( ew->pFieldmap, ZOOM_IN_FRAME, -ZOOM_IN_DIST ); // ズームイン
     ++( *seq );
     break;
   // フェードアウト開始
