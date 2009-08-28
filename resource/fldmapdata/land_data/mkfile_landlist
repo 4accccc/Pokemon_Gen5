@@ -17,11 +17,12 @@ XLS_DATA = map_list.xls
 FLDCSV = field_list.csv
 DUNCSV = dungeon_list.csv
 ROOMCSV = room_list.csv
+NONGRIDCSV = nongrid_list.csv
 
 CSVCVTR	= $(PROJECT_ROOT)/tools/exceltool/ExcelSeetConv.exe
 
 #clean対象
-TARGET_CLEAN = $(LAND_LIST) $(FLDCSV) $(DUNCSV) $(ROOMCSV)
+TARGET_CLEAN = $(LAND_LIST) $(FLDCSV) $(DUNCSV) $(ROOMCSV) $(NONGRIDCSV)
 
 #---------------------------------------------------------------
 #	ターゲット
@@ -40,7 +41,8 @@ $(LAND_LIST): $(XLS_DATA)
 	$(CSVCVTR) -o $(FLDCSV) -p 1 -s csv $(XLS_DATA)	#フィールド
 	$(CSVCVTR) -o $(DUNCSV) -p 2 -s csv $(XLS_DATA) #ダンジョン
 	$(CSVCVTR) -o $(ROOMCSV) -p 3 -s csv $(XLS_DATA) #ルーム
-	ruby land_list.rb $(FLDCSV) $(DUNCSV) $(ROOMCSV)
+	$(CSVCVTR) -o $(NONGRIDCSV) -p 4 -s csv $(XLS_DATA) #ノングリッド
+	ruby land_list.rb $(FLDCSV) $(DUNCSV) $(ROOMCSV) $(NONGRIDCSV)
 else #非USERS
 do-build:
 endif

@@ -383,4 +383,42 @@ LAND_DEPEND_LIST = \
 	$(DIR_OUTPUT)/m_stadium03_00_00.3dppack \
 	$(DIR_OUTPUT)/m_villa01_00_00.3dppack \
 	$(DIR_OUTPUT)/m_villa02_00_00.3dppack \
-	$(DIR_OUTPUT)/m_football01_00_00.3dppack
+	$(DIR_OUTPUT)/m_football01_00_00.3dppack \
+	$(DIR_OUTPUT)/C3_00_01.ngpack \
+	$(DIR_OUTPUT)/C3_00_02.ngpack \
+	$(DIR_OUTPUT)/C3_01_01.ngpack \
+	$(DIR_OUTPUT)/C3_01_02.ngpack \
+	$(DIR_OUTPUT)/h01a_00_00.ngpack \
+	$(DIR_OUTPUT)/h01a_00_01.ngpack \
+	$(DIR_OUTPUT)/h01a_00_02.ngpack \
+	$(DIR_OUTPUT)/h01a_01_00.ngpack \
+	$(DIR_OUTPUT)/h01a_01_01.ngpack \
+	$(DIR_OUTPUT)/h01a_01_02.ngpack \
+	$(DIR_OUTPUT)/m_test2_01_01.ngpack \
+	$(DIR_OUTPUT)/m_test2_01_02.ngpack \
+	$(DIR_OUTPUT)/m_test2_01_03.ngpack \
+	$(DIR_OUTPUT)/m_test2_01_04.ngpack \
+	$(DIR_OUTPUT)/m_test2_02_01.ngpack \
+	$(DIR_OUTPUT)/m_test2_02_02.ngpack \
+	$(DIR_OUTPUT)/m_test2_02_03.ngpack \
+	$(DIR_OUTPUT)/m_test2_02_04.ngpack \
+	$(DIR_OUTPUT)/m_test2_03_01.ngpack \
+	$(DIR_OUTPUT)/m_test2_03_02.ngpack \
+	$(DIR_OUTPUT)/m_test2_03_03.ngpack \
+	$(DIR_OUTPUT)/m_test2_03_04.ngpack \
+	$(DIR_OUTPUT)/m_test2_04_01.ngpack \
+	$(DIR_OUTPUT)/m_test2_04_02.ngpack \
+	$(DIR_OUTPUT)/m_test2_04_03.ngpack \
+	$(DIR_OUTPUT)/m_test2_04_04.ngpack \
+	$(DIR_OUTPUT)/m_test_01_01.ngpack \
+	$(DIR_OUTPUT)/m_test_01_02.ngpack \
+	$(DIR_OUTPUT)/m_test_01_03.ngpack \
+	$(DIR_OUTPUT)/m_test_01_04.ngpack \
+	$(DIR_OUTPUT)/m_test_01_05.ngpack \
+	$(DIR_OUTPUT)/m_test_01_06.ngpack \
+	$(DIR_OUTPUT)/m_test_02_01.ngpack \
+	$(DIR_OUTPUT)/m_test_02_02.ngpack \
+	$(DIR_OUTPUT)/m_test_02_03.ngpack \
+	$(DIR_OUTPUT)/m_test_02_04.ngpack \
+	$(DIR_OUTPUT)/m_test_02_05.ngpack \
+	$(DIR_OUTPUT)/m_test_02_06.ngpack

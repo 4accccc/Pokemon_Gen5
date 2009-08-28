@@ -25,12 +25,16 @@ DIR_RES = land_res/
 
 G3DCVTR	= $(NITROSYSTEM_ROOT)/tools/win/bin/g3dcvtr.exe
 
+HEIGHTCNV =	$(PROJECT_ROOT)tools/heightcnv/imdcnv01
+HEIGHTRETFILE = $(PROJECT_ROOT)tools/heightcnv/return.txt
+
 include land_depend_list #LAND_DEPEND_LIST
 
 ifeq	($(CONVERTUSER),true) #CONVERTUSER
-include land_model_list #LAND_MODEL_LIST
-LAND_NSBMD_LIST = $(LAND_MODEL_LIST:.imd=.nsbmd)
-LAND_NSBMD_LIST := $(subst $(DIR_RES)/,$(DIR_TEMP),$(LAND_NSBMD_LIST))
+#include land_model_list #LAND_MODEL_LIST
+#LAND_NSBMD_LIST = $(LAND_MODEL_LIST:.imd=.nsbmd)
+#LAND_NSBMD_LIST := $(subst $(DIR_RES)/,$(DIR_TEMP),$(LAND_NSBMD_LIST))
+include land_model_list #LAND_TEMP_LIST
 endif
 
 #---------------------------------------------------------------
@@ -70,6 +74,6 @@ clean:
 	-rm -f $(TARGET_ARC)
 	-rm -f $(TARGET_ARCIDX)
 ifeq	($(CONVERTUSER),true) #CONVERTUSER
-	-rm -f $(LAND_NSBMD_LIST)
+	-rm -f $(LAND_TEMP_LIST)
 	-rm -f $(LAND_DEPEND_LIST)
 endif #CONVERTUSER
