@@ -18,6 +18,8 @@
 #include "print\str_tool.h"
 #include "union_local.h"
 #include "union_chat.h"
+#include "infowin/infowin.h"
+#include "app_menu_common.naix"
 
 
 //==============================================================================
@@ -29,6 +31,7 @@ enum{
   UNISUB_ACTOR_APPEAL_RECORD,
   UNISUB_ACTOR_APPEAL_PICTURE,
   UNISUB_ACTOR_APPEAL_GURUGURU,
+  UNISUB_ACTOR_APPEAL_SCROLL,
   
   UNISUB_ACTOR_MAX,
 };
@@ -53,6 +56,11 @@ enum{
 
 ///インフォバーの分のスクリーンオフセット(2byte * 32char * 2列)
 #define INFOBAR_SCRN_OFFSET     (2*32*2)
+
+///メニューバーへのスクリーンオフセット(2byte * 32char * )
+#define MENUBAR_SCRN_START      (2*32*(192/8-3))
+///メニューバーへのスクリーンサイズ
+#define MENUBAR_SCRN_SIZE       (3*32*2)
 
 ///チャットログ用のBMPWINサイズ
 enum{
@@ -79,20 +87,51 @@ enum{
   UNION_SUBBG_PAL_FEMALE_TOUCH,     ///<女プレート(タッチ中)
   UNION_SUBBG_PAL_BACKGROUND,       ///<背景
   
+  UNION_SUBBG_PAL_MENU_BAR = 0xd,
+  UNION_SUBBG_PAL_INFOWIN = 0xe,
   UNION_SUBBG_PAL_FONT = 0xf,       ///<フォント
 };
 
 ///一度に画面に表示できるログ件数
 #define UNION_CHAT_VIEW_LOG_NUM   (3)
 
+///wb_union_icon.nceのアニメーションシーケンス
+enum{
+  UNION_ACT_ANMSEQ_BATTLE,
+  UNION_ACT_ANMSEQ_TRADE,
+  UNION_ACT_ANMSEQ_RECORD,
+  UNION_ACT_ANMSEQ_PICTURE,
+  UNION_ACT_ANMSEQ_GURUGURU,
+  UNION_ACT_ANMSEQ_SCROLL,
+};
+
+///スクロールバーの座標
+enum{
+  ACT_SCROLL_BAR_X = 256-12,
+  ACT_SCROLL_BAR_Y_TOP = 4*8-4,
+  ACT_SCROLL_BAR_Y_BOTTOM = 192-5*8+4,
+  ACT_SCROLL_BAR_Y_OFFSET = ACT_SCROLL_BAR_Y_BOTTOM - ACT_SCROLL_BAR_Y_TOP,
+  ACT_SCROLL_BAR_WIDTH = 12,
+  ACT_SCROLL_BAR_HEIGHT = 22,
+};
+
+///メニューバーのCGXサイズ
+#define MENUBAR_CGX_SIZE    (4*0x20)
 
 //==============================================================================
 //  構造体定義
 //==============================================================================
+///スクロールバー制御ワーク
+typedef struct{
+  u8 touch;       ///<TRUE:タッチ中
+}SCROLL_BAR;
+
 ///ユニオン下画面制御ワーク
 typedef struct _UNION_SUBDISP{
   GAMESYS_WORK *gsys;
-
+  
+  u32 alloc_menubar_pos;
+  
   u32 index_cgr;
   u32 index_pltt;
   u32 index_cell;
@@ -101,7 +140,8 @@ typedef struct _UNION_SUBDISP{
   GFL_CLWK *act[UNISUB_ACTOR_MAX];
   
   u8 appeal_no;    ///<選択中のアピール番号
-  u8 padding[3];
+  u8 scrollbar_touch;   ///<TRUE:スクロールバータッチ中
+  u8 padding[2];
   
   PRINT_QUE *printQue;
   GFL_FONT *font_handle;
@@ -123,6 +163,8 @@ static void _UniSub_ActorCreate(UNION_SUBDISP_PTR unisub, ARCHANDLE *handle);
 static void _UniSub_ActorDelete(UNION_SUBDISP_PTR unisub);
 static void _UniSub_TouchUpdate(UNION_SUBDISP_PTR unisub);
 static void _UniSub_IconPalChange(UNION_SUBDISP_PTR unisub, int act_index);
+static void _UniSub_MenuBarLoad(UNION_SUBDISP_PTR unisub);
+static void _UniSub_MenuBarFree(UNION_SUBDISP_PTR unisub);
 static void _UniSub_BmpWinCreate(UNION_SUBDISP_PTR unisub);
 static void _UniSub_BmpWinDelete(UNION_SUBDISP_PTR unisub);
 static void _UniSub_TouchUpdate(UNION_SUBDISP_PTR unisub);
@@ -132,6 +174,12 @@ static void _UniSub_Chat_DispWrite(UNION_SUBDISP_PTR unisub, UNION_CHAT_DATA *ch
 static void _UniSub_Chat_DispAllWrite(UNION_SUBDISP_PTR unisub, UNION_CHAT_LOG *log);
 static void _UniSub_Chat_DispCopy(UNION_SUBDISP_PTR unisub, u8 src_pos, u8 dest_pos);
 static void _UniSub_Chat_DispScroll(UNION_SUBDISP_PTR unisub, UNION_CHAT_LOG *log, s32 offset);
+static BOOL _UniSub_ScrollBar_TouchCheck(UNION_SUBDISP_PTR unisub);
+static void _UniSub_ScrollBar_Update(UNION_SYSTEM_PTR unisys, UNION_SUBDISP_PTR unisub);
+static void _UniSub_ScrollBar_PosUpdate(UNION_SUBDISP_PTR unisub, UNION_CHAT_LOG *log);
+static void _UniSub_ScrollBar_ViewPosUpdate(UNION_SUBDISP_PTR unisub, UNION_CHAT_LOG *log);
+static u32 _UniSub_ScrollBar_GetPageMax(UNION_CHAT_LOG *log);
+static u32 _UniSub_ScrollBar_GetPageY(UNION_CHAT_LOG *log, u32 page_max);
 
 
 //==============================================================================
@@ -165,6 +213,7 @@ UNION_SUBDISP_PTR UNION_SUBDISP_Init(GAMESYS_WORK *gsys)
 {
   UNION_SUBDISP_PTR unisub;
   ARCHANDLE *handle;
+  GAME_COMM_SYS_PTR game_comm = GAMESYSTEM_GetGameCommSysPtr(gsys);
   
   unisub = GFL_HEAP_AllocClearMemory(HEAPID_FIELDMAP, sizeof(UNION_SUBDISP));
   unisub->gsys = gsys;
@@ -176,11 +225,11 @@ UNION_SUBDISP_PTR UNION_SUBDISP_Init(GAMESYS_WORK *gsys)
   _UniSub_BmpWinCreate(unisub);
   _UniSub_ActorResouceLoad(unisub, handle);
   _UniSub_ActorCreate(unisub, handle);
-  
+  INFOWIN_Init(UNION_FRAME_S_MESSAGE, UNION_SUBBG_PAL_INFOWIN, game_comm, HEAPID_FIELDMAP);
+  _UniSub_MenuBarLoad(unisub);
   GFL_ARC_CloseDataHandle(handle);
 
   {//メニューから画面復帰の場合用に全体描画
-    GAME_COMM_SYS_PTR game_comm = GAMESYSTEM_GetGameCommSysPtr(gsys);
     UNION_SYSTEM_PTR unisys = GameCommSys_GetAppWork(game_comm);
     if(unisys != NULL){
       _UniSub_Chat_DispAllWrite(unisub, &unisys->chat_log);
@@ -199,6 +248,8 @@ UNION_SUBDISP_PTR UNION_SUBDISP_Init(GAMESYS_WORK *gsys)
 //==================================================================
 void UNION_SUBDISP_Exit(UNION_SUBDISP_PTR unisub)
 {
+  _UniSub_MenuBarFree(unisub);
+  INFOWIN_Exit();
   _UniSub_ActorDelete(unisub);
   _UniSub_ActorResourceUnload(unisub);
   _UniSub_BmpWinDelete(unisub);
@@ -221,6 +272,7 @@ void UNION_SUBDISP_Update(UNION_SUBDISP_PTR unisub)
   UNION_SYSTEM_PTR unisys = GameCommSys_GetAppWork(game_comm);
   int i;
   
+  INFOWIN_Update();
 	PRINTSYS_QUE_Main(unisub->printQue);
 	for(i = 0; i < UNION_CHAT_VIEW_LOG_NUM; i++){
 		PRINT_UTIL_Trans(&unisub->print_util[i], unisub->printQue);
@@ -243,6 +295,11 @@ void UNION_SUBDISP_Update(UNION_SUBDISP_PTR unisub)
   }
   
   _UniSub_TouchUpdate(unisub);
+
+  unisub->scrollbar_touch = _UniSub_ScrollBar_TouchCheck(unisub);
+  if(unisys != NULL){
+    _UniSub_ScrollBar_Update(unisys, unisub);
+  }
   
   if(GameCommSys_BootCheck(game_comm) == GAME_COMM_NO_UNION){
     if(unisys != NULL){
@@ -384,6 +441,65 @@ static void _UniSub_BGUnload(UNION_SUBDISP_PTR unisub)
 
 //--------------------------------------------------------------
 /**
+ * メニューバーのロード
+ *
+ * @param   unisub		
+ */
+//--------------------------------------------------------------
+static void _UniSub_MenuBarLoad(UNION_SUBDISP_PTR unisub)
+{
+  ARCHANDLE *app_handle;
+  u32 menu_charno;
+
+	app_handle = GFL_ARC_OpenDataHandle(ARCID_APP_MENU_COMMON, HEAPID_FIELDMAP);
+
+  menu_charno = GFL_BG_AllocCharacterArea(
+    UNION_FRAME_S_MESSAGE, MENUBAR_CGX_SIZE, GFL_BG_CHRAREA_GET_B );
+  OS_TPrintf("zzz menu_charno = %d\n", menu_charno);
+  unisub->alloc_menubar_pos = menu_charno;
+
+  GFL_ARCHDL_UTIL_TransVramBgCharacter(
+    app_handle, NARC_app_menu_common_menu_bar_NCGR, UNION_FRAME_S_MESSAGE, menu_charno, 
+    MENUBAR_CGX_SIZE, FALSE, HEAPID_FIELDMAP);
+
+  //メニューバーのスクリーン
+  {
+    u16 *scrn_buf, *load_buf, *read_buf;
+    NNSG2dScreenData *scrnData;
+    int i;
+    
+    scrn_buf = GFL_BG_GetScreenBufferAdrs(UNION_FRAME_S_MESSAGE);
+    load_buf = GFL_ARCHDL_UTIL_LoadScreen(
+      app_handle, NARC_app_menu_common_menu_bar_NSCR, FALSE, &scrnData, HEAPID_FIELDMAP);
+    read_buf = (u16*)scrnData->rawData;
+    GFL_STD_MemCopy(&read_buf[MENUBAR_SCRN_START/2], 
+      &scrn_buf[MENUBAR_SCRN_START/2], MENUBAR_SCRN_SIZE);
+    GFL_HEAP_FreeMemory(load_buf);
+    for(i = 0; i < MENUBAR_SCRN_SIZE/2; i++){
+      scrn_buf[MENUBAR_SCRN_START/2 + i] = (scrn_buf[MENUBAR_SCRN_START/2 + i] & 0x0fff) + menu_charno + (UNION_SUBBG_PAL_MENU_BAR << 12);
+    }
+  }
+
+  GFL_ARCHDL_UTIL_TransVramPalette(app_handle, NARC_app_menu_common_menu_bar_NCLR, 
+    PALTYPE_SUB_BG, UNION_SUBBG_PAL_MENU_BAR*0x20, 0x20*1, HEAPID_FIELDMAP);
+
+	GFL_ARC_CloseDataHandle(app_handle);
+}
+
+//--------------------------------------------------------------
+/**
+ * メニューバーの解放
+ *
+ * @param   unisub		
+ */
+//--------------------------------------------------------------
+static void _UniSub_MenuBarFree(UNION_SUBDISP_PTR unisub)
+{
+  GFL_BG_FreeCharacterArea(UNION_FRAME_S_MESSAGE, unisub->alloc_menubar_pos, MENUBAR_CGX_SIZE);
+}
+
+//--------------------------------------------------------------
+/**
  * BMPWIN作成
  *
  * @param   unisub		
@@ -467,12 +583,13 @@ static void _UniSub_ActorCreate(UNION_SUBDISP_PTR unisub, ARCHANDLE *handle)
 {
   int i;
   GFL_CLWK_DATA head = {
-  	0, 192 - 16,                   //X, Y座標
+  	0, 192 - 12,                   //X, Y座標
   	0,
   	SOFTPRI_APPEAL_ICON,    //ソフトプライオリティ
   	BGPRI_APPEAL_ICON,      //BGプライオリティ
   };
   
+  //アピールアイコン
   for(i = UNISUB_ACTOR_APPEAL_BATTLE; i <= UNISUB_ACTOR_APPEAL_GURUGURU; i++){
     head.pos_x = 32 + i * 48;
     head.anmseq = i;
@@ -480,6 +597,14 @@ static void _UniSub_ActorCreate(UNION_SUBDISP_PTR unisub, ARCHANDLE *handle)
       unisub->index_cgr, unisub->index_pltt, unisub->index_cell, 
       &head, CLSYS_DEFREND_SUB, HEAPID_FIELDMAP);
   }
+  
+  //スクロールバー
+  head.anmseq = UNION_ACT_ANMSEQ_SCROLL;
+  head.pos_x = ACT_SCROLL_BAR_X;
+  head.pos_y = ACT_SCROLL_BAR_Y_BOTTOM;
+  unisub->act[UNISUB_ACTOR_APPEAL_SCROLL] = GFL_CLACT_WK_Create(unisub->clunit, 
+      unisub->index_cgr, unisub->index_pltt, unisub->index_cell, 
+      &head, CLSYS_DEFREND_SUB, HEAPID_FIELDMAP);
 }
 
 //--------------------------------------------------------------
@@ -527,10 +652,10 @@ static void _UniSub_TouchUpdate(UNION_SUBDISP_PTR unisub)
   
   for(i = UNISUB_ACTOR_APPEAL_BATTLE; i <= UNISUB_ACTOR_APPEAL_GURUGURU; i++){
     GFL_CLACT_WK_GetPos(unisub->act[i], &clpos, CLSYS_DEFREND_SUB);
-    crect.top = clpos.y - 16;
-    crect.bottom = clpos.y + 16;
-    crect.left = clpos.x - 16;
-    crect.right = clpos.x + 16;
+    crect.top = clpos.y - 10;
+    crect.bottom = clpos.y + 10;
+    crect.left = clpos.x - 10;
+    crect.right = clpos.x + 10;
     if(crect.left < x && crect.right > x && crect.top < y && crect.bottom > y){
       _UniSub_IconPalChange(unisub, i);
       return;
@@ -709,6 +834,18 @@ void _UniSub_Chat_DispAllWrite(UNION_SUBDISP_PTR unisub, UNION_CHAT_LOG *log)
 //--------------------------------------------------------------
 void _UniSub_Chat_DispCopy(UNION_SUBDISP_PTR unisub, u8 src_pos, u8 dest_pos)
 {
+  u16 *src_plate_screen, *dest_plate_screen;
+
+  //プレートのコピー
+  src_plate_screen = GFL_BG_GetScreenBufferAdrs(UNION_FRAME_S_PLATE);
+  src_plate_screen += INFOBAR_SCRN_OFFSET/2; //インフォバーの分アドレスを進める
+  dest_plate_screen = src_plate_screen;
+  dest_plate_screen += UNION_PLATE_SCREEN_SIZE/2 * dest_pos;
+  src_plate_screen += UNION_PLATE_SCREEN_SIZE/2 * src_pos;
+  GFL_STD_MemCopy(src_plate_screen, dest_plate_screen, UNION_PLATE_SCREEN_SIZE);
+  GFL_BG_LoadScreenV_Req(UNION_FRAME_S_PLATE);
+  
+  //BMPのコピー
   GFL_BMP_Copy(GFL_BMPWIN_GetBmp(unisub->bmpwin_chat[src_pos]), 
     GFL_BMPWIN_GetBmp(unisub->bmpwin_chat[dest_pos]));
   GFL_BMPWIN_MakeTransWindow_VBlank(unisub->bmpwin_chat[dest_pos]);
@@ -759,10 +896,203 @@ void _UniSub_Chat_DispScroll(UNION_SUBDISP_PTR unisub, UNION_CHAT_LOG *log, s32 
     for(write_pos = (-offset)-1; write_pos > -1; write_pos--)
     {
       chat = UnionChat_GetReadBuffer(log, log->chat_view_no - (UNION_CHAT_VIEW_LOG_NUM - 1) - write_pos);
-      GF_ASSERT(chat != NULL);
+      GF_ASSERT_MSG(chat != NULL, "view_no=%d, write_pos=%d\n", log->chat_view_no, write_pos);
       _UniSub_Chat_DispWrite(unisub, chat, write_pos);
     }
   }
 }
 
+//--------------------------------------------------------------
+/**
+ * スクロールバータッチ判定
+ *
+ * @param   unisub		
+ *
+ * @retval  BOOL		TRUE：タッチしている　FALSE：していない
+ */
+//--------------------------------------------------------------
+static BOOL _UniSub_ScrollBar_TouchCheck(UNION_SUBDISP_PTR unisub)
+{
+  GFL_CLACTPOS bar;
+  u32 tp_x, tp_y;
+  
+  if(GFL_UI_TP_GetPointCont(&tp_x, &tp_y) == FALSE){
+    return FALSE;
+  }
+  
+  GFL_CLACT_WK_GetPos(unisub->act[UNISUB_ACTOR_APPEAL_SCROLL], &bar, CLSYS_DEFREND_SUB);
 
+  if(unisub->scrollbar_touch == FALSE){
+    if(GFL_UI_TP_GetTrg() == FALSE){
+      return FALSE;
+    }
+    if(bar.x - ACT_SCROLL_BAR_WIDTH/2 <= tp_x && bar.x + ACT_SCROLL_BAR_WIDTH/2 >= tp_x
+        && bar.y - ACT_SCROLL_BAR_HEIGHT/2 <= tp_y && bar.y + ACT_SCROLL_BAR_HEIGHT/2 >= tp_y){
+      return TRUE;
+    }
+  }
+  else{
+    if(tp_y < ACT_SCROLL_BAR_Y_TOP){
+      tp_y = ACT_SCROLL_BAR_Y_TOP;
+    }
+    else if(tp_y > ACT_SCROLL_BAR_Y_BOTTOM){
+      tp_y = ACT_SCROLL_BAR_Y_BOTTOM;
+    }
+    bar.y = tp_y;
+    GFL_CLACT_WK_SetPos(unisub->act[UNISUB_ACTOR_APPEAL_SCROLL], &bar, CLSYS_DEFREND_SUB);
+    return TRUE;
+  }
+  
+  return FALSE;
+}
+
+//--------------------------------------------------------------
+/**
+ * スクロールバー更新処理
+ *
+ * @param   unisys		
+ * @param   unisub		
+ */
+//--------------------------------------------------------------
+static void _UniSub_ScrollBar_Update(UNION_SYSTEM_PTR unisys, UNION_SUBDISP_PTR unisub)
+{
+  
+  if(unisub->scrollbar_touch == TRUE){
+    _UniSub_ScrollBar_PosUpdate(unisub, &unisys->chat_log);
+  }
+  else{
+    _UniSub_ScrollBar_ViewPosUpdate(unisub, &unisys->chat_log);
+  }
+}
+
+//--------------------------------------------------------------
+/**
+ * スクロールバーの座標位置に従ってチャットログ画面のViewポジションを変更する
+ *
+ * @param   unisub		
+ * @param   log		
+ */
+//--------------------------------------------------------------
+static void _UniSub_ScrollBar_PosUpdate(UNION_SUBDISP_PTR unisub, UNION_CHAT_LOG *log)
+{
+  s32 page_y, page_max, half_page_y, view_page;
+  GFL_CLACTPOS bar;
+  s32 check_y, view_no;
+  int i;
+  
+  GFL_CLACT_WK_GetPos(unisub->act[UNISUB_ACTOR_APPEAL_SCROLL], &bar, CLSYS_DEFREND_SUB);
+  check_y = (bar.y - ACT_SCROLL_BAR_Y_TOP) << 8;
+  
+  page_max = _UniSub_ScrollBar_GetPageMax(log);
+  page_y = _UniSub_ScrollBar_GetPageY(log, page_max);
+  
+  view_page = 0;
+  half_page_y = page_y >> 1;
+  check_y += half_page_y;
+  for(i = 0; i < page_max; i++){
+//    if(check_y >= page_y * (view_page+1) - half_page_y
+//        && check_y <= page_y * (view_page+1) + half_page_y){
+    if(check_y <= page_y * (view_page + 1)){
+      break;
+    }
+    view_page++;
+  }
+  if(view_page >= page_max){
+    //小数で端数が出ていると最後までfor文を回しても最後尾だけ判定から漏れる為フォロー
+    view_page = page_max;
+  }
+  
+  log->chat_view_no = log->chat_log_count - page_max + view_page;
+  if(log->chat_view_no < UNION_CHAT_VIEW_LOG_NUM){
+    if(log->chat_log_count < UNION_CHAT_VIEW_LOG_NUM){
+      log->chat_view_no = log->chat_log_count;
+    }
+    else{
+      log->chat_view_no = UNION_CHAT_VIEW_LOG_NUM - 1;
+    }
+  }
+  
+//  OS_TPrintf("ccc page_y = %d, bar.y = %d, page_y8 = %d, log_count = %d, view_no = %d, view_page = %d, page_max = %d, check_y = %d\n", page_y, bar.y, page_y >> 8, log->chat_log_count, log->chat_view_no, view_page, page_max, check_y);
+  if(log->chat_view_no < 0 || log->chat_view_no > log->chat_log_count){
+    OS_TPrintf("OVER!!! chat_view_no = %d, log_count = %d, view_page = %d\n", 
+      log->chat_view_no, log->chat_log_count, view_page);
+    log->chat_view_no = log->chat_log_count;
+    GF_ASSERT(0);
+  }
+
+#if 0
+  bar.x = ACT_SCROLL_BAR_X;
+  bar.y = page_y;
+  GFL_CLACT_WK_SetPos(unisub->act[UNISUB_ACTOR_APPEAL_SCROLL], &bar, CLSYS_DEFREND_SUB);
+#endif
+}
+
+//--------------------------------------------------------------
+/**
+ * チャットログ画面のViewポジションに合わせてスクロールバーの座標を変更する
+ *
+ * @param   unisub		
+ * @param   log		
+ */
+//--------------------------------------------------------------
+static void _UniSub_ScrollBar_ViewPosUpdate(UNION_SUBDISP_PTR unisub, UNION_CHAT_LOG *log)
+{
+  GFL_CLACTPOS bar;
+  int log_offset;
+  u32 page_y;
+  
+  page_y = _UniSub_ScrollBar_GetPageY(log, _UniSub_ScrollBar_GetPageMax(log));
+
+  log_offset = log->chat_log_count - log->chat_view_no;
+  bar.y = ACT_SCROLL_BAR_Y_BOTTOM - ((page_y * log_offset) >> 8);
+  
+  bar.x = ACT_SCROLL_BAR_X;
+  GFL_CLACT_WK_SetPos(unisub->act[UNISUB_ACTOR_APPEAL_SCROLL], &bar, CLSYS_DEFREND_SUB);
+  
+//  OS_TPrintf("aaa page_y = %d, bar.y = %d, log_offset = %d, page_y8 = %d, log_count = %d, view_no = %d\n", page_y, bar.y, log_offset, page_y >> 8, log->chat_log_count, log->chat_view_no);
+}
+
+//--------------------------------------------------------------
+/**
+ * チャットログ画面の表示できるページ数取得(最大値はUNION_CHAT_LOG_MAXまで)
+ *
+ * @param   log		
+ *
+ * @retval  u32		表示可能ページ数
+ */
+//--------------------------------------------------------------
+static u32 _UniSub_ScrollBar_GetPageMax(UNION_CHAT_LOG *log)
+{
+  s32 page_max;
+  
+  if(log->chat_log_count < UNION_CHAT_LOG_MAX){
+    page_max = log->chat_log_count;
+  }
+  else{
+    page_max = UNION_CHAT_LOG_MAX - 1;
+  }
+  
+  page_max -= UNION_CHAT_VIEW_LOG_NUM - 1;
+  if(page_max < 0){
+    page_max = 0;
+  }
+  return page_max;
+}
+
+//--------------------------------------------------------------
+/**
+ * チャットログの1ページが持つスクロールバーのドット数(Y)を取得する
+ *
+ * @param   log		
+ *
+ * @retval  u32		ドット数(固定小数：下位8ビット小数)
+ */
+//--------------------------------------------------------------
+static u32 _UniSub_ScrollBar_GetPageY(UNION_CHAT_LOG *log, u32 page_max)
+{
+  u32 page_y;
+
+  page_y = ACT_SCROLL_BAR_Y_OFFSET << 8;
+  page_y /= page_max;
+  return page_y;
+}
