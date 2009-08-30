@@ -43,6 +43,18 @@ DEF_CMD_COUNT  =  ( DEF_CMD_COUNT + 1 )
   DEF_CMD EV_SEQ_CALL
   DEF_CMD EV_SEQ_RET
   
+  //判定演算用命令
+  DEF_CMD EV_SEQ_PUSH_VALUE
+  DEF_CMD EV_SEQ_PUSH_WORK
+  DEF_CMD EV_SEQ_POP_WORK
+  DEF_CMD EV_SEQ_POP
+  DEF_CMD EV_SEQ_CALC_ADD
+  DEF_CMD EV_SEQ_CALC_SUB
+  DEF_CMD EV_SEQ_CALC_MUL
+  DEF_CMD EV_SEQ_CALC_DIV
+  DEF_CMD EV_SEQ_PUSH_FLAG
+  DEF_CMD EV_SEQ_CMP_STACK
+
   //データロード・ストア関連
   DEF_CMD EV_SEQ_LD_REG_VAL
   DEF_CMD EV_SEQ_LD_REG_WDATA
@@ -308,15 +320,13 @@ DEF_CMD_COUNT  =  ( DEF_CMD_COUNT + 1 )
 /**
  *  _TIME_WAIT ウェイト
  *  @param time 待ちフレーム数
- *  @param ret_wk 待ち時間格納先ワークID
  */
 //--------------------------------------------------------------
-#define _TIME_WAIT( time,ret_wk ) _ASM_TIME_WAIT time,ret_wk
+#define _TIME_WAIT( time ) _ASM_TIME_WAIT time
 
   .macro  _ASM_TIME_WAIT time, ret_wk
   .short  EV_SEQ_TIME_WAIT
   .short  \time
-  .short  \ret_wk
   .endm
 
 
@@ -340,6 +350,55 @@ DEF_CMD_COUNT  =  ( DEF_CMD_COUNT + 1 )
   .macro  _RET
   .short  EV_SEQ_RET
   .endm
+
+//======================================================================
+//
+//
+//    判定演算用命令
+//
+//  ※スクリプトコンパイラが使用しています。
+//  　スクリプト担当者は使用しないで下さい。
+//======================================================================
+//--------------------------------------------------------------
+/**
+ */
+//--------------------------------------------------------------
+  .macro  _CMP_STACK  cond
+  .short  EV_SEQ_CMP_STACK
+  .short   \cond
+  .endm
+//--------------------------------------------------------------
+//--------------------------------------------------------------
+  .macro  _PUSH_WORK  wk
+  .short  EV_SEQ_PUSH_WORK
+  .short  \wk
+  .endm
+
+//--------------------------------------------------------------
+//--------------------------------------------------------------
+  .macro  _PUSH_VALUE  value
+  .short  EV_SEQ_PUSH_VALUE
+  .short  \value
+  .endm
+//--------------------------------------------------------------
+//--------------------------------------------------------------
+  .macro  _PUSH_FLAG  flag
+  .short  EV_SEQ_PUSH_FLAG
+  .short  flag
+  .endm
+//--------------------------------------------------------------
+//--------------------------------------------------------------
+  .macro  _POP_WORK  wk
+  .short  EV_SEQ_POP_WORK
+  .short  \wk
+  .endm
+
+//--------------------------------------------------------------
+//--------------------------------------------------------------
+  .macro  _POP
+  .short  EV_SEQ_POP
+  .endm
+
 
 //======================================================================
 //  データロード・ストア関連
@@ -881,7 +940,7 @@ DEF_CMD_COUNT  =  ( DEF_CMD_COUNT + 1 )
  *  @param val 格納する値
  */
 //--------------------------------------------------------------
-  .macro  _LDVAL  wk,val
+  .macro  _ASM_LDVAL  wk,val
   .short  EV_SEQ_LD_WK_VAL
   .short  \wk
   .short  \val
@@ -894,7 +953,7 @@ DEF_CMD_COUNT  =  ( DEF_CMD_COUNT + 1 )
  *  @param wk2 代入する値が格納されたワーク
  */
 //--------------------------------------------------------------
-  .macro  _LDWK  wk1,wk2
+  .macro  _ASM_LDWK  wk1,wk2
   .short  EV_SEQ_LD_WK_WK
   .short  \wk1
   .short  \wk2
@@ -907,7 +966,7 @@ DEF_CMD_COUNT  =  ( DEF_CMD_COUNT + 1 )
  *  @param wk2 代入する値もしくはワーク
  */
 //--------------------------------------------------------------
-  .macro  _LDWKVAL  wk1,wk2
+  .macro  _ASM_LDWKVAL  wk1,wk2
   .short  EV_SEQ_LD_WK_WKVAL
   .short  \wk1
   .short  \wk2
@@ -1229,63 +1288,6 @@ DEF_CMD_COUNT  =  ( DEF_CMD_COUNT + 1 )
 .macro  _ASM_TURN_HERO_SITE
 .short  EV_SEQ_OBJ_TURN
 .endm
-
-//======================================================================
-// switch関連
-//======================================================================
-//--------------------------------------------------------------
-/**
- *  _SWITCH switch ～ case 構文
- *  スクリプト制御ワークで確保されるワーク(SCWK_REG0)を使用しているので、
- *  FLAG_CHANGE,INIT_CHANGEなどでは使用できません！
- *  SCENE_CHANGEは使用できます。
- *
- *  @param wk 参照するワーク
- *
- *  _SWITCH SCWK_ANSWER
- *  _CASE_JUMP 0,jump0
- *  _CASE_JUMP 1,jump1
- *  _CASE_JUMP 2,jump2
- *  :
- */
-//--------------------------------------------------------------
-  .macro  _SWITCH wk
-  _LDWK  SCWK_REG0,\wk
-  .endm
-
-//--------------------------------------------------------------
-/**
- *  _CASE_JUMP switch ～ case 構文
- *  スクリプト制御ワークで確保されるワーク(SCWK_REG0)を使用しているので、
- *  FLAG_CHANGE,INIT_CHANGEなどでは使用できません！
- *  SCENE_CHANGEは使用できます。
- *
- *  @param val _SWITCHで参照した引数wkと比較する値
- *  @param adr valと一致していた際のジャンプ先アドレス
- */
-//--------------------------------------------------------------
-  .macro  _CASE_JUMP  val,adr
-  _CMPVAL  SCWK_REG0,\val
-  _IF_JUMP  EQ,\adr
-  .endm
-
-#if 0 //wb null
-//スクリプトウィンドウ表示中にBキャンセル
-  .macro  _CASE_CANCEL  adr
-  _CMPVAL  SCWK_REG0,EV_WIN_B_CANCEL
-  _IF_JUMP  EQ,\adr
-  .endm
-
-//待機アイコン表示
-  .macro  _ADD_WAITICON
-  .short  EV_SEQ_WAITICON_ADD
-  .endm
-
-//待機アイコン消去
-  .macro  _DEL_WAITICON
-  .short  EV_SEQ_WAITICON_DEL
-  .endm
-#endif
 
 //======================================================================
 //  はい、いいえ　処理

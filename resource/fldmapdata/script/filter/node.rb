@@ -170,6 +170,38 @@ module PmScript
 	end
 
 #---------------------------------------------
+# ノード：条件判定（値参照）
+#---------------------------------------------
+  class CompareNode < Node
+    def initialize( cond, left, right )
+      @cond = cond
+      @left = left
+      @right = right
+    end
+
+    def compile( intp )
+      puts "\t#{@left}"
+      puts "\t#{@right}"
+      puts "\t_CMP_STACK #{@cond}"
+    end
+  end
+#---------------------------------------------
+# ノード：条件判定（論理演算）
+#---------------------------------------------
+  class LogicalCompareNode < Node
+    def initialize( cond, left, right )
+      @cond = cond
+      @left = left
+      @right = right
+    end
+
+    def compile( intp )
+      @left.compile( intp )
+      @right.compile( intp )
+      puts "\t_CMP_STACK #{@cond}"
+    end
+  end
+#---------------------------------------------
 # ノード：条件分岐
 #---------------------------------------------
 	class IfNode < Node
@@ -180,12 +212,9 @@ module PmScript
 		end
 
 		def compile( intp )
-			#put compare command
-			puts "\t#{@cond_node[0]}"
-
-			#put if_stmt condition EOL
 			label1 = intp.get_label()
-			puts "\t_IF_JUMP\t#{@cond_node[1]},#{label1}"
+      @cond_node.compile( intp )
+      puts "\t_IF_JUMP\tCMPID_GET, #{label1}"
 			put_list( intp, @then_stmt )
 			if @else_stmt then
 				label2 = intp.get_label()
@@ -200,6 +229,26 @@ module PmScript
 		end
 	end
 
+#---------------------------------------------
+# ノード：while構文
+#---------------------------------------------
+  class WhileNode < Node
+    def initialize( cond_node, stmt )
+      @cond_node = cond_node
+      @stmt = stmt
+    end
+
+    def compile( intp )
+      start_label = intp.get_label()
+      end_label = intp.get_label()
+      puts "#{start_label}:"
+      @cond_node.compile( intp )
+      puts "\t_IF_JUMP\tCMPID_GET, #{end_label}"
+      put_list( intp, @stmt )
+      puts "\t_JUMP\t#{start_label}"
+      puts "#{end_label}:"
+    end
+  end
 
 #---------------------------------------------
 # ノード：switch構文
@@ -368,12 +417,12 @@ module PmScript
 				varname1 = "STACKWORK + #{idx}" if idx != nil
 				idx = intp.ref_var(varname2) 
 				varname2 = "STACKWORK + #{idx}" if idx != nil
-				puts "\t_LDWK\t#{varname1}, #{varname2}"
+				puts "\t_ASM_LDWK\t#{varname1}, #{varname2}"
 			else
 				varname1 = @vname.sub(/\A\$/,"")
 				idx = intp.ref_var(varname1) 
 				varname1 = "STACKWORK + #{idx}" if idx != nil
-				puts "\t_LDVAL\t#{varname1}, #{@val}"
+				puts "\t_ASM_LDVAL\t#{varname1}, #{@val}"
 			end
 
 		end

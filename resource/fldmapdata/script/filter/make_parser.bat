@@ -10,7 +10,7 @@ goto end
 
 :install
 REM ruby c:\cygwin\bin\racc -o parser.rb sp3.y
-"C:\Program Files\ruby-1.8\bin\racc.bat" -o parser.rb sp4.y
+"C:\Program Files\ruby-1.8\bin\racc.bat" -v -o parser.rb sp4.y
 goto end
 
 :diff

@@ -26,6 +26,9 @@ class PmScript::Parser
 prechigh
 	left	'/'	'*'
 	left	'-'	'+'
+
+  left '==' '!=' '<' '>' '<=' '>='
+  left '&&' '||'
 preclow
 
 #---------------------------------------------
@@ -67,15 +70,15 @@ rule
 				| stmt_list stmt comments EOL
 					{
 						result.push val[1]
-						result.push RawNode.new(val[2])
+						#result.push RawNode.new(val[2])
 					}
 				| stmt_list comments EOL
 					{
-						result.push RawNode.new(val[1])
+						#result.push RawNode.new(val[1])
 					}
 				| stmt_list EOL comments EOL
 					{
-						result.push RawNode.new(val[2])
+						#result.push RawNode.new(val[2])
 					}
 
 
@@ -192,6 +195,7 @@ rule
 					}
 				| callfunc
         | switch_stmt
+        | while_stmt
 
 	#---------------------------------------------
 	#	「関数呼び出し」は下記のいずれか：
@@ -266,56 +270,89 @@ rule
 	#		「変数参照」「比較演算子」「変数参照」
 	#		「FLAG_ON」「(」「識別子」「)」
 	#		「FLAG_OFF」「(」「識別子」「)」
+	#		「(」「比較式」「)」
+	#		「比較式」「比較演算子」「比較式」
+  #
 	#---------------------------------------------
 	cmp_expr	:	VARREF cmp_ident expr
 					{
-						result = ["_CMPVAL #{val[0].sub(/\A\$/,"")}, #{val[2].sub(/\A\$/,"")}"]
-						result.push val[1]
+            left = "_PUSH_WORK #{val[0].sub(/\A\$/,"")}"
+            right = "_PUSH_VALUE #{val[2]}"
+            result = CompareNode.new(val[1], left, right)
 					}
 				|	VARREF cmp_ident VARREF
 					{
-						result = ["_CMPWK #{val[0].sub(/\A\$/,"")}, #{val[2].sub(/\A\$/,"")}"]
-						result.push val[1]
+            left = "_PUSH_WORK #{val[0].sub(/\A\$/,"")}"
+            right = "_PUSH_WORK #{val[2].sub(/\A\$/,"")}"
+            result = CompareNode.new(val[1], left, right)
 					}
 				|	FLAG_ON '(' IDENT ')'
 					{
-						result = ["_FLAG_CHECK #{val[2]}"]
-						result.push "FLGOFF"
+            left = "_FLAG_PUSH #{val[2]}"
+            right = "_PUSH_VALUE TRUE"
+            result = CompareNode.new('CMPID_EQ', left, right)
 					}
 				|	FLAG_OFF '(' IDENT ')'
 					{
-						result = ["_FLAG_CHECK #{val[2]}"]
-						result.push "FLGON"
+            left = "_FLAG_PUSH #{val[2]}"
+            right = "_PUSH_VALUE FALSE"
+            result = CompareNode.new('CMPID_EQ', left, right)
 					}
+        | '(' cmp_expr ')'
+          {
+            result = val[1]
+          }
+        | cmp_expr cmp_ident cmp_expr
+          {
+            result = LogicalCompareNode.new(val[1], val[0], val[2])
+          }
+
 
 	#---------------------------------------------
 	#	「比較演算子」の定義
 	#---------------------------------------------
 	cmp_ident	:	'=='
 					{
-						result = 'NE'	#result = 'EQ'
+						result = 'CMPID_EQ'	#result = 'EQ'
 					}
 				|	'!='
 					{
-						result = 'EQ'	#result = 'NE'
+						result = 'CMPID_NE'	#result = 'NE'
 					}
 				|	'>'
 					{
-						result = 'LE'	#result = 'GT'
+						result = 'CMPID_GT'	#result = 'GT'
 					}
 				|	'<'
 					{
-						result = 'GE'	#result = 'LT'
+						result = 'CMPID_LT'	#result = 'LT'
 					}
 				|	'>='
 					{
-						result = 'LT'	#result = 'GE'
+						result = 'CMPID_GT_EQ'	#result = 'GE'
 					}
 				|	'<='
 					{
-						result = 'GT'	#result = 'LE'
+						result = 'CMPID_LT_EQ'	#result = 'LE'
 					}
+        | '&&'
+          {
+            result = 'CMPID_AND'
+          }
+        | '||'
+          {
+            result = 'CMPID_OR'
+          }
 
+
+	#---------------------------------------------
+  # 「WHILE」は
+  # 「WHILE」「比較式」「終端」「文の並び」「ENDWHILE」
+	#---------------------------------------------
+  while_stmt  : WHILE cmp_expr EOL stmt_list ENDWHILE
+          {
+            result = WhileNode.new(val[1], val[3])
+          }
 	#---------------------------------------------
   # 「switch」は
   # 「SWITCH」「変数参照」「終端」「case文のならび」「ENDSWITCH」
@@ -500,7 +537,9 @@ RESERVED = {
   'EVENT_END' => :EVENT_END,
   'SWITCH' => :SWITCH,
   'CASE' => :CASE,
-  'ENDSWITCH' => :ENDSWITCH
+  'ENDSWITCH' => :ENDSWITCH,
+  'WHILE' => :WHILE,
+  'ENDWHILE' => :ENDWHILE
 };
 
 #予約型定義
@@ -575,7 +614,7 @@ def parse( f )
           # \から始まる識別子はアセンブラマクロパラメータ
 					pushq [ :MACPARAM, $& ]
 
-				when /\A==/,/\A!=/,/\A\<=/,/\A\>=/,/\A>/,/\A</
+				when /\A==/,/\A!=/,/\A\<=/,/\A\>=/,/\A>/,/\A</,/\A\&\&/,/\A\|\|/
           # 比較演算子
 					pushq [ $&, $& ]
 
