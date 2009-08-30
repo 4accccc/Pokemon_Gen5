@@ -37,6 +37,8 @@
 #include "scrcmd_sound.h"
 #include "scrcmd_musical.h"
 
+#include "../../../resource/fldmapdata/script/usescript.h"
+
 //======================================================================
 //  define
 //======================================================================
@@ -146,13 +148,10 @@ static VMCMD_RESULT EvCmdEnd( VMHANDLE *core, void *wk )
 static BOOL EvWaitTime(VMHANDLE * core, void *wk )
 {
   SCRCMD_WORK *work = wk;
-  GAMEDATA *gdata = SCRCMD_WORK_GetGameData( work );
-  SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
-  u16 *ret_wk = SCRIPT_GetEventWork(
-      sc, gdata, core->vm_register[0] ); //注意！
+  u32 * counter = &core->vm_register[0];
 
-  (*ret_wk)--;
-  if( *ret_wk == 0 ){ 
+  (*counter)--;
+  if( *counter == 0 ){ 
     return TRUE;
   }
   return FALSE;
@@ -168,16 +167,10 @@ static BOOL EvWaitTime(VMHANDLE * core, void *wk )
 static VMCMD_RESULT EvCmdTimeWait( VMHANDLE *core, void *wk )
 {
   SCRCMD_WORK *work = wk;
-  GAMEDATA *gdata = SCRCMD_WORK_GetGameData( work );
-  SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
   u16 num        = VMGetU16( core );
-  u16 wk_id      = VMGetU16( core );
-  u16 *ret_wk      = SCRIPT_GetEventWork( sc, gdata, wk_id );
   
-  *ret_wk = num;
-  
-  //仮想マシンの汎用レジスタにワークのIDを格納
-  core->vm_register[0] = wk_id;
+  //仮想マシンの汎用レジスタにウェイトを格納
+  core->vm_register[0] = num;
   VMCMD_SetWait( core, EvWaitTime );
   return VMCMD_RESULT_SUSPEND;
 }
@@ -357,7 +350,7 @@ static VMCMD_RESULT EvCmdLoadAdrsAdrs( VMHANDLE *core, void *wk )
  * @retval  "r1 > r2 : PLUS_RESULT"
  */
 //--------------------------------------------------------------
-static u8 EvCmdCmpMain( u16 r1, u16 r2 )
+static u8 EvCmdCmpMain( u32 r1, u32 r2 )
 {
   if( r1 < r2 ){
     return MINUS_RESULT;
@@ -509,6 +502,159 @@ static VMCMD_RESULT EvCmdCmpWkWk( VMHANDLE *core, void *wk )
 }
 
 //======================================================================
+//======================================================================
+//--------------------------------------------------------------
+//--------------------------------------------------------------
+static VMCMD_RESULT EvCmdPushValue( VMHANDLE *core, void *wk )
+{
+  u32 value;
+  value = VMGetU16(core);
+  VMCMD_Push( core, value );
+  TAMADA_Printf("SCRCMD:PUSH_VALUE:%d\n", value);
+  return VMCMD_RESULT_CONTINUE;
+}
+
+//--------------------------------------------------------------
+//--------------------------------------------------------------
+static VMCMD_RESULT EvCmdPushWork( VMHANDLE *core, void *wk )
+{
+  u32 work_value;
+  work_value = SCRCMD_GetVMWorkValue( core, wk );
+  VMCMD_Push( core, work_value );
+  TAMADA_Printf("SCRCMD:PUSH_WORK:%d\n", work_value);
+  return VMCMD_RESULT_CONTINUE;
+}
+//--------------------------------------------------------------
+//--------------------------------------------------------------
+static VMCMD_RESULT EvCmdPopWork( VMHANDLE *core, void *wk )
+{
+  u32 value;
+  u16 * work;
+  value = VMCMD_Pop( core );
+  work = SCRCMD_GetVMWork( core, wk );
+  *work = value;
+  TAMADA_Printf("SCRCMD:POP_WORK:%d\n", value);
+
+  return VMCMD_RESULT_CONTINUE;
+}
+
+//--------------------------------------------------------------
+//--------------------------------------------------------------
+static VMCMD_RESULT EvCmdPop( VMHANDLE *core, void *wk )
+{
+  VMCMD_Pop( core );
+  TAMADA_Printf("SCRCMD:POP\n");
+
+  return VMCMD_RESULT_CONTINUE;
+}
+
+//--------------------------------------------------------------
+//--------------------------------------------------------------
+static VMCMD_RESULT EvCmdCalcAdd( VMHANDLE * core, void *wk )
+{
+  u32 val1,val2;
+  val2 = VMCMD_Pop( core );
+  val1 = VMCMD_Pop( core );
+  VMCMD_Push( core, val1 + val2 );
+  return VMCMD_RESULT_CONTINUE;
+}
+//--------------------------------------------------------------
+//--------------------------------------------------------------
+static VMCMD_RESULT EvCmdCalcSub( VMHANDLE * core, void *wk )
+{
+  u32 val1,val2;
+  val2 = VMCMD_Pop( core );
+  val1 = VMCMD_Pop( core );
+  VMCMD_Push( core, val1 - val2 );
+  return VMCMD_RESULT_CONTINUE;
+}
+
+//--------------------------------------------------------------
+//--------------------------------------------------------------
+static VMCMD_RESULT EvCmdCalcMul( VMHANDLE * core, void *wk )
+{
+  u32 val1,val2;
+  val2 = VMCMD_Pop( core );
+  val1 = VMCMD_Pop( core );
+  VMCMD_Push( core, val1 * val2 );
+  return VMCMD_RESULT_CONTINUE;
+}
+//--------------------------------------------------------------
+//--------------------------------------------------------------
+static VMCMD_RESULT EvCmdCalcDiv( VMHANDLE * core, void *wk )
+{
+  u32 val1,val2;
+  val2 = VMCMD_Pop( core );
+  val1 = VMCMD_Pop( core );
+  VMCMD_Push( core, val1 / val2 );
+  return VMCMD_RESULT_CONTINUE;
+}
+
+//--------------------------------------------------------------
+//--------------------------------------------------------------
+static VMCMD_RESULT EvCmdPushFlagValue( VMHANDLE * core, void *wk )
+{
+  SCRCMD_WORK *work = wk;
+  GAMEDATA *gdata = SCRCMD_WORK_GetGameData( work );
+  EVENTWORK *evwork = GAMEDATA_GetEventWork( gdata );
+  u16  flag = VMGetU16( core );
+  BOOL value  = EVENTWORK_CheckEventFlag( evwork, flag );
+  VMCMD_Push( core, value );
+  return VMCMD_RESULT_CONTINUE;
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief 判定処理
+ *
+ * スタック上の二つの値をPOPして、指定条件での比較を行う
+ */
+//--------------------------------------------------------------
+static VMCMD_RESULT EvCmdCmpStack( VMHANDLE * core, void *wk )
+{
+  u16  cond;
+  u32 val1, val2, result;
+  val2 = VMCMD_Pop( core );
+  val1 = VMCMD_Pop( core );
+  //core->cmp_flag = EvCmdCmpMain(val1 , val2);
+  cond   = VMGetU16(core);
+
+  switch (cond)
+  {
+  case CMPID_LT:
+    result = (val1 < val2);
+    break;
+  case CMPID_EQ:
+    result = (val1 == val2);
+    break;
+  case CMPID_GT:
+    result = (val1 > val2);
+    break;
+  case CMPID_LT_EQ:
+    result = (val1 <= val2);
+    break;
+  case CMPID_GT_EQ:
+    result = (val1 >= val2);
+    break;
+  case CMPID_NE:   
+    result = (val1 != val2);
+    break;
+  case CMPID_OR:
+    result = ( (val1 == TRUE) || (val2 == TRUE) );
+    break;
+  case CMPID_AND:
+    result = ((val1 == TRUE) && (val2 == TRUE));
+    break;
+  default:
+    result = 0;
+  }
+  VMCMD_Push( core, result );
+  TAMADA_Printf("SCRCMD:CMP_STACK:v1(%08x),v2(%08x),cond(%d),result(%d)\n",
+      val1, val2, cond, result);
+  return VMCMD_RESULT_CONTINUE;
+}
+
+//======================================================================
 //  仮想マシン関連
 //======================================================================
 //--------------------------------------------------------------
@@ -648,7 +794,14 @@ static VMCMD_RESULT EvCmdIfJump( VMHANDLE *core, void *wk )
   r   = VMGetU8(core);
   pos = (s32)VMGetU32(core);
 
-  if( ConditionTable[r][core->cmp_flag] == TRUE ){
+  if ( r == CMPID_GET)
+  {
+    if (VMCMD_Pop( core ) != TRUE)
+    {
+      VMCMD_Jump( core, (VM_CODE *)(core->adrs+pos) );
+    }
+  }
+  else if( ConditionTable[r][core->cmp_flag] == TRUE ){
     VMCMD_Jump( core, (VM_CODE *)(core->adrs+pos) );
   }
   return VMCMD_RESULT_CONTINUE;
@@ -2248,7 +2401,9 @@ u16 * SCRCMD_GetVMWork( VMHANDLE *core, SCRCMD_WORK *work )
 {
   GAMEDATA *gdata = SCRCMD_WORK_GetGameData( work );
   SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
-  return SCRIPT_GetEventWork( sc, gdata, VMGetU16(core) );
+  u16 work_id = VMGetU16(core);
+  TAMADA_Printf("WORKID:%04x\n", work_id);
+  return SCRIPT_GetEventWork( sc, gdata, work_id );
 }
 
 //--------------------------------------------------------------
@@ -2264,7 +2419,9 @@ u16 SCRCMD_GetVMWorkValue( VMHANDLE * core, SCRCMD_WORK *work )
 {
   GAMEDATA *gdata = SCRCMD_WORK_GetGameData( work );
   SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
-  return SCRIPT_GetEventWorkValue( sc, gdata, VMGetU16(core) );
+  u16 work_id = VMGetU16(core);
+  TAMADA_Printf("WORKID:%04x\n", work_id);
+  return SCRIPT_GetEventWorkValue( sc, gdata, work_id );
 }
 
 //--------------------------------------------------------------
@@ -2296,6 +2453,17 @@ const VMCMD_FUNC ScriptCmdTbl[] = {
   EvCmdGlobalCall,
   EvCmdRet,
   
+  EvCmdPushValue,
+  EvCmdPushWork,
+  EvCmdPopWork,
+  EvCmdPop,
+  EvCmdCalcAdd,
+  EvCmdCalcSub,
+  EvCmdCalcMul,
+  EvCmdCalcDiv,
+  EvCmdPushFlagValue,
+  EvCmdCmpStack,
+
   //データロード・ストア関連
   EvCmdLoadRegValue,
   EvCmdLoadRegWData,
@@ -2443,6 +2611,7 @@ const VMCMD_FUNC ScriptCmdTbl[] = {
   EvCmdChangeLangID,
   EvCmdGetRand,
 };
+
 
 //--------------------------------------------------------------
 ///  スクリプトコマンドの最大数
