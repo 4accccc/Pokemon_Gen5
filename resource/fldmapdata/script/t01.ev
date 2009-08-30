@@ -57,6 +57,21 @@ EVENT_END
 /**************************************************************/
 EVENT_START   ev_t01_talkobj_woman02
 
+/*
+  _TALK_OBJ_START()
+  $SCWK_ANSWER = 100  //“K“–
+  WHILE $SCWK_ANSWER == 0
+    _BALLOONWIN_TALKOBJ_OPEN( msg_t01_woman2_01 )
+    _YES_NO_WIN( SCWK_ANSWER )
+    _BALLOONWIN_CLOSE()
+  ENDWHILE
+
+  _BALLOONWIN_TALKOBJ_OPEN( msg_t01_woman2_02 )
+  _AB_KEYWAIT()
+  _BALLOONWIN_CLOSE()
+  _CHG_LANGID()
+*/
+
   _TALK_OBJ_START()
   
   _BALLOONWIN_TALKOBJ_OPEN( msg_t01_woman2_01 )
@@ -114,8 +129,8 @@ EVENT_START ev_t01_posevent_test1
   _BALLOONWIN_TALKOBJ_OPEN( msg_t01_babygirl1_01 )
   _AB_KEYWAIT()
   _BALLOONWIN_CLOSE()
-  _LDVAL WK_0907ROM00,1
-  //_LDVAL SVSCRWK_START,1
+  $WK_0907ROM00 = 1
+  //$SVSCRWK_START = 1
 #endif
 EVENT_END
 
