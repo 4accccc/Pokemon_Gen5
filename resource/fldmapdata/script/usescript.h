@@ -38,6 +38,18 @@
 #define	FLGON			1
 #define	FLGOFF			0
 
+#define CMPID_LT    0
+#define CMPID_EQ    1
+#define CMPID_GT    2
+#define CMPID_LT_EQ 3
+#define CMPID_GT_EQ 4
+#define CMPID_NE    5
+#define CMPID_OR    6
+#define CMPID_AND   7
+#define CMPID_TRUE  8
+#define CMPID_FALSE 9
+#define CMPID_GET   0xff
+
 //nitro/type.hで定義されているがインクルードできないので自力で定義
 #define	TRUE			1
 #define	FALSE			0
