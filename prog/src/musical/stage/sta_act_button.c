@@ -134,14 +134,20 @@ void STA_BUTTON_UpdateSystem( STA_BUTTON_SYS *work )
         if( ret == 0 )
         {
           STA_ACT_UseItemRequest( work->actWork , MUS_POKE_EQU_HAND_R );
-          GFL_CLACT_WK_SetDrawEnable( work->clwkButton[1], FALSE );
-          GFL_CLACT_WK_SetDrawEnable( work->clwkButtonBase[1], FALSE );
+          if( work->equipItem[1] != MUSICAL_ITEM_INVALID )
+          {
+            GFL_CLACT_WK_SetDrawEnable( work->clwkButton[1], FALSE );
+            GFL_CLACT_WK_SetDrawEnable( work->clwkButtonBase[1], FALSE );
+          }
         }
         else
         {
           STA_ACT_UseItemRequest( work->actWork , MUS_POKE_EQU_HAND_L );
-          GFL_CLACT_WK_SetDrawEnable( work->clwkButton[0], FALSE );
-          GFL_CLACT_WK_SetDrawEnable( work->clwkButtonBase[0], FALSE );
+          if( work->equipItem[0] != MUSICAL_ITEM_INVALID )
+          {
+            GFL_CLACT_WK_SetDrawEnable( work->clwkButton[0], FALSE );
+            GFL_CLACT_WK_SetDrawEnable( work->clwkButtonBase[0], FALSE );
+          }
         }
         G2S_SetBlendBrightness( GX_BLEND_PLANEMASK_OBJ , -8 );
         work->canUseButton = FALSE;
