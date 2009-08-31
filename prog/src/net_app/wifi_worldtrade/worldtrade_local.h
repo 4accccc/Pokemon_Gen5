@@ -596,6 +596,9 @@ extern void WorldTrade_SetPassive(u8 inTarget);
 extern void WorldTrade_SetPassiveMyPoke(u8 inIsMain);
 extern void WorldTrade_ClearPassive(void);
 
+extern void WorldTrade_InitSystem( WORLDTRADE_WORK *wk );
+extern void WorldTrade_ExitSystem( WORLDTRADE_WORK *wk );
+
 
 
 // worldtrade_sublcd.c

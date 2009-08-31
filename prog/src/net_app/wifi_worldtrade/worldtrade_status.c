@@ -72,7 +72,10 @@ int WorldTrade_Status_Init(WORLDTRADE_WORK *wk, int seq)
 {
 	// ワーク初期化
 //	InitWork( wk );
-	
+
+	WorldTrade_ExitSystem( wk );
+
+
 	MORI_PRINT( "heap remain RAM = %d\n", GFL_HEAP_GetHeapFreeSize( GFL_HEAPID_APP ));
 	
 	GFL_STD_MemClear( &wk->statusParam, sizeof(PSTATUS_DATA) );
@@ -84,7 +87,9 @@ int WorldTrade_Status_Init(WORLDTRADE_WORK *wk, int seq)
 	wk->statusParam.player_id		= MyStatus_GetID( wk->param->mystatus );
 	wk->statusParam.player_sex	=  MyStatus_GetMySex( wk->param->mystatus );
 
-	wk->statusParam.ppt  = PST_PP_TYPE_POKEPASO;
+	//wk->statusParam.ppt  = PST_PP_TYPE_POKEPASO;
+	wk->statusParam.ppt  =PST_PP_TYPE_POKEPARAM;
+	//TODO
 	wk->statusParam.max  = 1;
 	wk->statusParam.pos  = 0;
 	wk->statusParam.mode = PST_MODE_NO_WAZACHG;	// 技入れ替え禁止にする
@@ -104,7 +109,10 @@ int WorldTrade_Status_Init(WORLDTRADE_WORK *wk, int seq)
 //	wk->proc = GFL_PROC_Create( &PokeStatusProcData, &wk->statusParam, HEAPID_WORLDTRADE );
 //	TODO
 
-	GFL_PROC_SysCallProc( FS_OVERLAY_ID(poke_status), &PokeStatus_ProcData, &wk->statusParam );
+//	GFL_PROC_SysCallProc( FS_OVERLAY_ID(poke_status), &PokeStatus_ProcData, &wk->statusParam );
+	
+	GAMESYSTEM_CallProc( wk->param->gamesys,
+		FS_OVERLAY_ID(poke_status), &PokeStatus_ProcData, &wk->statusParam );
 
 	wk->subprocflag = 1;
 
@@ -150,6 +158,9 @@ int WorldTrade_Status_Main(WORLDTRADE_WORK *wk, int seq)
 int WorldTrade_Status_End(WORLDTRADE_WORK *wk, int seq)
 {
 //	FreeWork( wk );
+
+	WorldTrade_InitSystem( wk );
+
 
 	// ボックス画面に戻る
 	WorldTrade_SubProcessUpdate( wk );

@@ -287,8 +287,7 @@ static void BgInit( void )
 			GX_DISPMODE_GRAPHICS, GX_BGMODE_0, GX_BGMODE_0, GX_BG0_AS_2D,
 		};
 		GFL_BG_SetBGMode( &BGsys_data );
-		GFL_DISP_GXS_SetVisibleControl(
-		    GX_PLANEMASK_BG1 | GX_PLANEMASK_BG2 | GX_PLANEMASK_OBJ, VISIBLE_ON);
+
 	}
 	
 
@@ -301,6 +300,7 @@ static void BgInit( void )
 		};
 		GFL_BG_SetBGControl( GFL_BG_FRAME0_M, &TextBgCntDat, GFL_BG_MODE_TEXT );
 		GFL_BG_ClearScreen( GFL_BG_FRAME0_M );
+		GFL_BG_SetVisible( GFL_BG_FRAME0_M, TRUE );
 	}
 
 	// メイン画面メニュー面
@@ -311,6 +311,7 @@ static void BgInit( void )
 			1, 0, 0, FALSE
 		};
 		GFL_BG_SetBGControl( GFL_BG_FRAME1_M, &TextBgCntDat, GFL_BG_MODE_TEXT );
+		GFL_BG_SetVisible( GFL_BG_FRAME1_M, TRUE );
 	}
 
 	// メイン画面背景面
@@ -322,6 +323,7 @@ static void BgInit( void )
 		};
 		GFL_BG_SetBGControl( GFL_BG_FRAME2_M, &TextBgCntDat, GFL_BG_MODE_TEXT );
 		GFL_BG_ClearScreen( GFL_BG_FRAME2_M );
+		GFL_BG_SetVisible( GFL_BG_FRAME2_M, TRUE );
 	}
 
 	// ボックス名表示画面テキスト面
@@ -333,6 +335,7 @@ static void BgInit( void )
 		};
 		GFL_BG_SetBGControl( GFL_BG_FRAME3_M, &TextBgCntDat, GFL_BG_MODE_TEXT );
 		GFL_BG_ClearScreen( GFL_BG_FRAME3_M );
+		GFL_BG_SetVisible( GFL_BG_FRAME3_M, TRUE );
 	}
 
 
@@ -342,9 +345,6 @@ static void BgInit( void )
 
 	GFL_BG_SetClearCharacter( GFL_BG_FRAME0_M, 32, 0, HEAPID_WORLDTRADE );
 	GFL_BG_SetClearCharacter( GFL_BG_FRAME3_M, 32, 0, HEAPID_WORLDTRADE );
-
-	GFL_DISP_GX_SetVisibleControl(  GX_PLANEMASK_OBJ, VISIBLE_ON );	//メイン画面OBJ面ＯＮ
-	GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_OBJ, VISIBLE_ON );	//サブ画面OBJ面ＯＮ
 
 }
 

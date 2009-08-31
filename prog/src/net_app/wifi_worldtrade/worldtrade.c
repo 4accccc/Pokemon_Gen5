@@ -141,12 +141,6 @@ static GFL_PROC_RESULT WorldTradeProc_Init( GFL_PROC * proc, int * seq, void * p
 		GFL_HEAP_GetHeapFreeSize( GFL_HEAPID_APP );
 #endif
 
-		GFL_DISP_GX_InitVisibleControl();
-		GFL_DISP_GXS_InitVisibleControl();
-		GX_SetVisiblePlane( 0 );
-		GXS_SetVisiblePlane( 0 );
-		
-        WorldTrade_WndSetting();
         
 		// レコードコーナー用ヒープ作成
 		GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_WORLDTRADE, 0x70000 );
@@ -158,18 +152,10 @@ static GFL_PROC_RESULT WorldTradeProc_Init( GFL_PROC * proc, int * seq, void * p
 
 		wk = GFL_PROC_AllocWork( proc, sizeof(WORLDTRADE_WORK), HEAPID_WORLDTRADE );
 		GFL_STD_MemFill( wk, 0, sizeof(WORLDTRADE_WORK) );
-		GFL_BG_Init( HEAPID_WORLDTRADE );
-		GFL_BMPWIN_Init( HEAPID_WORLDTRADE );
 
 		debug_worldtrade = wk;
 		
-		// BG SYSTEM
-		{	
-			GFL_BG_SYS_HEADER BGsys_data = {
-				GX_DISPMODE_GRAPHICS, GX_BGMODE_0, GX_BGMODE_0, GX_BG0_AS_2D,
-			};
-			GFL_BG_SetBGMode( &BGsys_data );
-		}
+
 
 		//task
 		wk->task_wk_area	= GFL_HEAP_AllocMemory( HEAPID_WORLDTRADE, GFL_TCB_CalcSystemWorkSize( 8 ) );
@@ -210,7 +196,8 @@ static GFL_PROC_RESULT WorldTradeProc_Init( GFL_PROC * proc, int * seq, void * p
 		// ワーク初期化
 		InitWork( wk, param );
 
-		InitCLACT( wk );
+		WorldTrade_InitSystem( wk );
+
 		WirelessIconEasy();
 
 		// サウンドデータロード(フィールド)
@@ -341,7 +328,7 @@ static GFL_PROC_RESULT WorldTradeProc_Main( GFL_PROC * proc, int * seq, void * p
 		*seq = (*SubProcessTable[wk->sub_process][0])(wk, *seq);
 		WorldTrade_WndSetting();
 		if(wk->subprocflag){
-			FreeCLACT( wk );
+			//FreeCLACT( wk );
 			OS_Printf("OAMシステム臨時解放");
 		}
 		break;
@@ -363,16 +350,16 @@ static GFL_PROC_RESULT WorldTradeProc_Main( GFL_PROC * proc, int * seq, void * p
 	case SEQ_FADEOUT:
 		if( WIPE_SYS_EndCheck() ){
 			// サブ処理解放(SEQ_INITに行くか、SEQ_OUTにいくかはおまかせ）
+			*seq = (*SubProcessTable[wk->sub_process][2])(wk, *seq);
 			if(wk->subprocflag){
-				InitCLACT( wk );
+				//InitCLACT( wk );
 				WorldTrade_SubLcdActorAdd( wk, MyStatus_GetMySex(wk->param->mystatus) );
 				WorldTrade_SubLcdMatchObjAppear( wk, wk->SearchResult, 0 );
-				WorldTrade_SubLcdBgGraphicSet( wk );		// トレードルーム転送
-				WorldTrade_SubLcdWinGraphicSet( wk );		// トレードルームウインドウ転送
+//				WorldTrade_SubLcdBgGraphicSet( wk );		// トレードルーム転送
+//				WorldTrade_SubLcdWinGraphicSet( wk );		// トレードルームウインドウ転送
 				wk->subprocflag = 0;
 				OS_Printf("OAMシステム臨時復帰");
 			}
-			*seq = (*SubProcessTable[wk->sub_process][2])(wk, *seq);
 		}
 		break;
 
@@ -431,7 +418,7 @@ static GFL_PROC_RESULT WorldTradeProc_End( GFL_PROC * proc, int * seq, void * pa
 
 	// セルアクターリソース解放
 	WirelessIconEasyEnd();
-	FreeCLACT( wk );
+
 
 
 	// タッチパネルシステム終了
@@ -447,6 +434,8 @@ static GFL_PROC_RESULT WorldTradeProc_End( GFL_PROC * proc, int * seq, void * pa
 	GFL_MSG_Delete( wk->CountryNameManager );
 	WORDSET_Delete( wk->WordSet );
 
+	WorldTrade_ExitSystem( wk );
+
 	// ワーク解放
 	FreeWork( wk );
 
@@ -459,8 +448,6 @@ static GFL_PROC_RESULT WorldTradeProc_End( GFL_PROC * proc, int * seq, void * pa
 	// 世界交換パラメータ解放
 	GFL_HEAP_FreeMemory( wk->param );
 
-	GFL_BMPWIN_Exit();
-	GFL_BG_Exit();
 
 	GFL_PROC_FreeWork( proc );				// GFL_PROCワーク開放
 
@@ -471,8 +458,6 @@ static GFL_PROC_RESULT WorldTradeProc_End( GFL_PROC * proc, int * seq, void * pa
 //	FontProc_UnloadFont( FONT_TOUCH );
 	WT_PRINT_Exit( &wk->print );
 
-	GX_SetVisibleWnd(GX_WNDMASK_NONE);
-	GXS_SetVisibleWnd(GX_WNDMASK_NONE);
 
 	GFL_TCB_DeleteTask( wk->vblank_task );
 
@@ -1504,6 +1489,60 @@ void WorldTrade_ClearPassive(void)
 {
 	G2_BlendNone();
 	G2S_BlendNone();
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	システム系を初期化
+ *
+ *	@param	WORLDTRADE_WORK *wk ワーク
+ *
+ */
+//-----------------------------------------------------------------------------
+void WorldTrade_InitSystem( WORLDTRADE_WORK *wk )
+{	
+	GFL_DISP_GX_InitVisibleControl();
+	GFL_DISP_GXS_InitVisibleControl();
+	GX_SetVisiblePlane( 0 );
+	GXS_SetVisiblePlane( 0 );
+
+
+	InitCLACT( wk );
+
+	GFL_BG_Init( HEAPID_WORLDTRADE );
+	GFL_BMPWIN_Init( HEAPID_WORLDTRADE );
+
+		
+	// BG SYSTEM
+	{	
+		GFL_BG_SYS_HEADER BGsys_data = {
+			GX_DISPMODE_GRAPHICS, GX_BGMODE_0, GX_BGMODE_0, GX_BG0_AS_2D,
+		};
+		GFL_BG_SetBGMode( &BGsys_data );
+	}
+
+	WorldTrade_WndSetting();
+
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	システム系を破棄
+ *
+ *	@param	WORLDTRADE_WORK *wk ワーク
+ */
+//-----------------------------------------------------------------------------
+void WorldTrade_ExitSystem( WORLDTRADE_WORK *wk )
+{	
+	FreeCLACT( wk );
+
+	GFL_BMPWIN_Exit();
+	GFL_BG_Exit();
+
+	GX_SetVisibleWnd(GX_WNDMASK_NONE);
+	GXS_SetVisibleWnd(GX_WNDMASK_NONE);
+
+
 }
 
 //----------------------------------------------------------------------------
