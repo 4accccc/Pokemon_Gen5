@@ -344,7 +344,9 @@ static void shadowTask_Update( FLDEFF_TASK *task, void *wk )
     MMDL_GetVectorPos( work->fmmdl, &pos );
 //  pos.x += NUM_FX32(1) / 8;   
     pos.y += NUM_FX32(-4);
+#ifdef MMDL_BBD_DRAW_OFFS_Z_USE 
     pos.z += NUM_FX32(2)+0x800;
+#endif
     FLDEFF_TASK_SetPos( task, &pos );
   }
 }

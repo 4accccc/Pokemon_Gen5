@@ -57,7 +57,9 @@ typedef struct
 static void blact_SetCommonOffsPos( VecFx32 *pos )
 {
   pos->y += MMDL_BBD_OFFS_POS_Y;
+#ifdef MMDL_BBD_DRAW_OFFS_Z_USE
   pos->z += MMDL_BBD_OFFS_POS_Z;
+#endif
 }
 
 static u16 blact_GetDrawDir( MMDL *mmdl )
