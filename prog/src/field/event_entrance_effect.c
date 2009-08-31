@@ -119,7 +119,6 @@ static GMEVENT_RESULT ExitEvent_DoorOut(GMEVENT * event, int *seq, void * work)
 
   case SEQ_DOOROUT_OPENANIME_WAIT:
     {
-      void * objHdl = FIELD_BMODEL_GetObjHandle( fdaw->entry );
       if ( FIELD_BMODEL_GetAnimeStatus( fdaw->entry, ANM_INDEX_DOOR_OPEN) == TRUE)
       {
         FIELD_BMODEL_SetAnime( fdaw->entry, ANM_INDEX_DOOR_OPEN, BMANM_REQ_STOP);
@@ -144,7 +143,6 @@ static GMEVENT_RESULT ExitEvent_DoorOut(GMEVENT * event, int *seq, void * work)
     }
     //ドアを閉じるアニメ適用
     {
-      void * objHdl = FIELD_BMODEL_GetObjHandle( fdaw->entry );
       FIELD_BMODEL_SetAnime( fdaw->entry, ANM_INDEX_DOOR_OPEN, BMANM_REQ_END);
       FIELD_BMODEL_SetAnime( fdaw->entry, ANM_INDEX_DOOR_CLOSE, BMANM_REQ_START);
     }
@@ -153,8 +151,7 @@ static GMEVENT_RESULT ExitEvent_DoorOut(GMEVENT * event, int *seq, void * work)
 
   case SEQ_DOOROUT_CLOSEANIME_WAIT:
     {
-      void * objHdl = FIELD_BMODEL_GetObjHandle( fdaw->entry );
-      if (FIELD_BMODEL_GetAnimeStatus( objHdl, ANM_INDEX_DOOR_OPEN) == TRUE)
+      if (FIELD_BMODEL_GetAnimeStatus( fdaw->entry, ANM_INDEX_DOOR_OPEN) == TRUE)
       {
         FIELD_BMODEL_SetAnime( fdaw->entry, ANM_INDEX_DOOR_CLOSE, BMANM_REQ_END);
         *seq = SEQ_DOOROUT_END;

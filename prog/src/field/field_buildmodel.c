@@ -93,12 +93,6 @@ typedef struct _FIELD_BMANIME_DATA
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 typedef struct {
-  u16 anime_id;
-  u16 prog_id;
-  u16 submodel_id;
-}BM_INFO_BIN;
-
-typedef struct {
   BMODEL_ID bm_id;
   FIELD_BMANIME_DATA animeData;
   u16 prog_id;
@@ -108,13 +102,14 @@ typedef struct {
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 typedef struct {
-  BMODEL_ID     bm_id;
+  const BMINFO * bmInfo;
   GFL_G3D_RES*  g3DresMdl;            //モデルリソース(High Q)
   GFL_G3D_RES*  g3DresTex;            //テクスチャリソース
   GFL_G3D_RES*  g3DresAnm[GLOBAL_OBJ_ANMCOUNT];  //アニメリソース
-  const FIELD_BMANIME_DATA * anmData;
 }OBJ_RES;
 
+//------------------------------------------------------------------
+//------------------------------------------------------------------
 typedef struct {
   GFL_G3D_OBJ*  g3Dobj;              //オブジェクトハンドル
   const OBJ_RES * res;
@@ -130,7 +125,8 @@ struct _FIELD_BMODEL {
 
 //------------------------------------------------------------------
 /**
- * GFL_G3D_MAPが保持する表示オブジェクト情報へのリンク
+ * GFL_G3D_MAPの保持するGFL_G3D_MAP_GLOBALOBJ_STを
+ * 参照、コントロールするためのラッパーオブジェクト
  */
 //------------------------------------------------------------------
 struct _G3DMAPOBJST{
@@ -168,7 +164,7 @@ struct _FIELD_BMODEL_MAN
   u32 objHdl_Count;
   OBJ_HND * objHdl;
 
-  FIELD_BMODEL * entryObj[BMODEL_USE_MAX];
+  FIELD_BMODEL * bmodels[BMODEL_USE_MAX];
 
   G3DMAPOBJST g3DmapObjSt[GFL_G3D_MAP_OBJST_MAX * 9];
 };
@@ -207,6 +203,21 @@ static inline u8 EntryNoAssert(const FIELD_BMODEL_MAN * man, u8 entryNo)
 
 #define ENTRYNO_ASSERT(man, entryNo) {entryNo = EntryNoAssert(man, entryNo);}
 
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+static inline u8 AnimeNoAssert(u8 anmNo)
+{
+  if (anmNo >= GLOBAL_OBJ_ANMCOUNT)
+  {
+    OS_TPrintf("anmNo Index Over!!(%d)\n", anmNo);
+    GF_ASSERT(0);
+    anmNo = 0;
+  }
+  return anmNo;
+}
+
+#define ANIMENO_ASSERT(anmNo) {anmNo = AnimeNoAssert(anmNo);}
+
 //============================================================================================
 //============================================================================================
 //------------------------------------------------------------------
@@ -215,12 +226,22 @@ static void makeBMIDToEntryTable(FIELD_BMODEL_MAN * man);
 static u16 calcArcIndex(u16 area_id);
 
 static void loadEntryToBMIDTable(FIELD_BMODEL_MAN * man, u16 arc_id, u16 file_id);
+static u8 BMIDtoEntryNo(const FIELD_BMODEL_MAN * man, BMODEL_ID id);
+
+
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+static const BMINFO * FIELD_BMODEL_MAN_GetBMInfo(const FIELD_BMODEL_MAN * man, BMODEL_ID bm_id);
 
 static void BMINFO_Load(FIELD_BMODEL_MAN * man, u16 file_id);
 static void BMINFO_init(BMINFO * bmInfo);
+//アニメデータの取得処理
+static const FIELD_BMANIME_DATA * BMINFO_getAnimeData(const BMINFO * bmInfo);
 static BOOL BMINFO_isDoor(const BMINFO * bmInfo);
 
-static BMIDtoEntryNo(const FIELD_BMODEL_MAN * man, BMODEL_ID id);
+static u32 BMANIME_getCount(const FIELD_BMANIME_DATA * data);
+static void BMANIME_init(FIELD_BMANIME_DATA * data);
+static void DEBUG_BMANIME_dump(const FIELD_BMANIME_DATA * data);
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
@@ -231,32 +252,39 @@ static void deleteAllResource(FIELD_BMODEL_MAN * man);
 static void createFullTimeObjHandle(FIELD_BMODEL_MAN * man, GFL_G3D_MAP_GLOBALOBJ * g3dMapObj);
 static void deleteFullTimeObjHandle(FIELD_BMODEL_MAN * man, GFL_G3D_MAP_GLOBALOBJ * g3dMapObj);
 
+static void OBJRES_initialize( FIELD_BMODEL_MAN * man, OBJ_RES * objRes, BMODEL_ID bm_id);
+static void OBJRES_finalize( OBJ_RES * objRes );
+static GFL_G3D_RES* OBJRES_getResTex(const OBJ_RES * resTex);
+
 static void OBJHND_initialize( OBJ_HND * objHdl, const OBJ_RES* objRes);
 static void OBJHND_finalize( OBJ_HND * objHdl );
 static void OBJHND_animate( OBJ_HND * objHdl );
 static void OBJHND_setAnime( OBJ_HND * objHdl, u32 anmNo, BMANM_REQUEST req);
 static BOOL OBJHND_getAnimeStatus(OBJ_HND * objHdl, u32 anmNo);
 
-static void DEBUG_dumpBMAnimeData(const FIELD_BMANIME_DATA * data);
-static u32 BMANIME_getCount(const FIELD_BMANIME_DATA * data);
-static void BMANIME_init(FIELD_BMANIME_DATA * data);
-//------------------------------------------------------------------
-//アニメデータの取得処理
-//------------------------------------------------------------------
-static const FIELD_BMANIME_DATA * getLoadedAnimeData(FIELD_BMODEL_MAN * man, u16 bm_id);
 //------------------------------------------------------------------
 //  テクスチャ情報の登録処理
 //------------------------------------------------------------------
-extern void FIELD_BMANIME_DATA_entryTexData(FIELD_BMODEL_MAN* man, const FIELD_BMANIME_DATA * data,
+static void entryELBoardTex(FIELD_BMODEL_MAN* man, const FIELD_BMANIME_DATA * data,
     const GFL_G3D_RES * g3DresTex);
 
+//------------------------------------------------------------------
+//------------------------------------------------------------------
 static G3DMAPOBJST * G3DMAPOBJST_create(
     FIELD_BMODEL_MAN * man, GFL_G3D_MAP * g3Dmap, GFL_G3D_MAP_GLOBALOBJ_ST * status, int idx);
 static void G3DMAPOBJST_init(FIELD_BMODEL_MAN * man, G3DMAPOBJST * obj);
 static void G3DMAPOBJST_deleteByObject(FIELD_BMODEL_MAN * man, G3DMAPOBJST * obj);
 static void G3DMAPOBJST_deleteByG3Dmap(FIELD_BMODEL_MAN * man, GFL_G3D_MAP * g3Dmap);
 
+static void FIELD_BMODEL_Draw( const FIELD_BMODEL * bmodel );
+
 //============================================================================================
+//
+//
+//    外部公開関数：
+//    マネジャー生成･削除・ロード・メイン
+//
+//
 //============================================================================================
 //------------------------------------------------------------------
 /**
@@ -279,7 +307,7 @@ FIELD_BMODEL_MAN * FIELD_BMODEL_MAN_Create(HEAPID heapID, FLDMAPPER * fldmapper)
 
   for (i = 0; i < BMODEL_USE_MAX; i++)
   {
-    man->entryObj[i] = NULL;
+    man->bmodels[i] = NULL;
   }
   for (i = 0; i < NELEMS(man->g3DmapObjSt); i++)
   {
@@ -344,9 +372,9 @@ void FIELD_BMODEL_MAN_Main(FIELD_BMODEL_MAN * man)
 
   for (i = 0; i < BMODEL_USE_MAX; i++)
   {
-    if (man->entryObj[i])
+    if (man->bmodels[i])
     {
-      OBJ_HND * objHdl = &man->entryObj[i]->objHdl;
+      OBJ_HND * objHdl = &man->bmodels[i]->objHdl;
       OBJHND_animate( objHdl );
     }
   }
@@ -370,9 +398,9 @@ void FIELD_BMODEL_MAN_Draw(FIELD_BMODEL_MAN * man)
   int i;
   for (i = 0; i < BMODEL_USE_MAX; i++)
   {
-    if (man->entryObj[i])
+    if (man->bmodels[i])
     {
-      FIELD_BMODEL_Draw(man->entryObj[i]);
+      FIELD_BMODEL_Draw(man->bmodels[i]);
     }
   }
 }
@@ -424,6 +452,11 @@ void FIELD_BMODEL_MAN_Load(FIELD_BMODEL_MAN * man, u16 zoneid, const AREADATA * 
   createFullTimeObjHandle( man, &man->g3dMapObj );
 }
 
+//============================================================================================
+//
+//    外部公開関数：
+//
+//============================================================================================
 //------------------------------------------------------------------
 /**
  * @brief 配置モデルIDを登録済み配置モデルのインデックスに変換する
@@ -435,37 +468,12 @@ u8 FIELD_BMODEL_MAN_GetEntryIndex(const FIELD_BMODEL_MAN * man, BMODEL_ID id)
   return BMIDtoEntryNo( man, id );
 }
 
-static BMIDtoEntryNo(const FIELD_BMODEL_MAN * man, BMODEL_ID id)
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+static const BMINFO * FIELD_BMODEL_MAN_GetBMInfo(const FIELD_BMODEL_MAN * man, BMODEL_ID bm_id)
 {
-	u8 entryNo;
-  BMID_ASSERT( id );
-	entryNo = man->BMIDToEntryTable[id];
-	return entryNo;
-}
-
-//------------------------------------------------------------------
-/**
- * @brief 配置モデルIDから対応するアニメデータを取得する
- * @param bm_id   配置モデルID
- */
-//------------------------------------------------------------------
-static const FIELD_BMANIME_DATA * getLoadedAnimeData(FIELD_BMODEL_MAN * man, u16 bm_id)
-{ 
-  u16 entryNo = man->BMIDToEntryTable[bm_id];
-  BMID_ASSERT( bm_id );
-  ENTRYNO_ASSERT( man, entryNo );
-  return &man->bmInfo[entryNo].animeData;
-}
-
-
-//------------------------------------------------------------------
-//------------------------------------------------------------------
-static BOOL hasSubModel(const FIELD_BMODEL_MAN * man, u16 bm_id)
-{
-  u16 entryNo = BMIDtoEntryNo(man, bm_id);
-  BMODEL_ID submodel_id = man->bmInfo[entryNo].sub_bm_id;
-  BMID_ASSERT( submodel_id );
-  return (submodel_id != BM_SUBMODEL_NULL_ID);
+  u16 entryNo = BMIDtoEntryNo( man, bm_id );
+  return &man->bmInfo[entryNo];
 }
 
 //------------------------------------------------------------------
@@ -475,11 +483,12 @@ BOOL FIELD_BMODEL_MAN_GetSubModel(const FIELD_BMODEL_MAN * man,
 {
   u16 submodel_id;
   const BMINFO * bmInfo;
+  //現状、屋外にしかサブモデルを持つ配置モデルは存在しない
   if (man->mdl_arc_id != ARCID_BMODEL_OUTDOOR)
   {
     return FALSE;
   }
-  bmInfo = &man->bmInfo[ BMIDtoEntryNo(man, bm_id) ];
+  bmInfo = FIELD_BMODEL_MAN_GetBMInfo( man, bm_id );
   submodel_id = bmInfo->sub_bm_id;
   if (submodel_id == BM_SUBMODEL_NULL_ID)
   {
@@ -498,6 +507,67 @@ BOOL FIELD_BMODEL_MAN_GetSubModel(const FIELD_BMODEL_MAN * man,
   return TRUE;
 }
 
+//============================================================================================
+//
+//    外部公開関数：
+//      配置モデル登録・削除処理
+//
+//============================================================================================
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+void FIELD_BMODEL_MAN_ResistAllMapObjects
+(FIELD_BMODEL_MAN * man, GFL_G3D_MAP * g3Dmap, const PositionSt* objStatus, u32 objCount)
+{
+  GFL_G3D_MAP_GLOBALOBJ_ST status;
+  int dataCount, resistCount, count;
+
+  for( dataCount=0, resistCount = 0, count = objCount; dataCount<count ; resistCount++, dataCount++ )
+  {
+    if (resistCount >= GFL_G3D_MAP_OBJST_MAX)
+    {
+      OS_Printf("マップブロック内の配置モデル数が%dを超えているため表示できません\n",
+          GFL_G3D_MAP_OBJST_MAX);
+      GF_ASSERT(0);
+    }
+
+    FIELD_BMODEL_MAN_ResistMapObject(man, g3Dmap, &objStatus[dataCount], resistCount);
+
+    if (TRUE == FIELD_BMODEL_MAN_GetSubModel(man,
+          objStatus[dataCount].resourceID, &status.trans, &status.id) )
+    {
+      TAMADA_Printf("Resist Sub Model:index(%d) model id(%d)\n", dataCount, status.id);
+      resistCount++;
+      status.rotate = objStatus[dataCount].rotate;
+      status.trans.x += objStatus[dataCount].xpos;
+      status.trans.y += objStatus[dataCount].ypos;
+      status.trans.z -= objStatus[dataCount].zpos;
+      G3DMAPOBJST_create(man, g3Dmap, &status, resistCount);
+    }
+
+  }
+}
+
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+void FIELD_BMODEL_MAN_ReleaseAllMapObjects
+(FIELD_BMODEL_MAN * man, GFL_G3D_MAP * g3Dmap)
+{
+  G3DMAPOBJST_deleteByG3Dmap( man, g3Dmap );
+}
+
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+void FIELD_BMODEL_MAN_ResistMapObject
+(FIELD_BMODEL_MAN * man, GFL_G3D_MAP * g3Dmap, const PositionSt* objStatus, u32 objCount)
+{
+  GFL_G3D_MAP_GLOBALOBJ_ST status;
+  status.id = BMIDtoEntryNo(man, objStatus->resourceID);
+  VEC_Set(&status.trans, objStatus->xpos, objStatus->ypos, -objStatus->zpos);
+  status.rotate = (u16)(objStatus->rotate);
+  G3DMAPOBJST_create(man, g3Dmap, &status, objCount);
+}
+
+
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 void FIELD_BMODEL_MAN_releaseBuildModel(FIELD_BMODEL_MAN * man, FIELD_BMODEL * bmodel)
@@ -505,9 +575,9 @@ void FIELD_BMODEL_MAN_releaseBuildModel(FIELD_BMODEL_MAN * man, FIELD_BMODEL * b
   int i;
   for (i = 0; i < BMODEL_USE_MAX; i++)
   {
-    if (man->entryObj[i] == bmodel)
+    if (man->bmodels[i] == bmodel)
     {
-      man->entryObj[i] = NULL;
+      man->bmodels[i] = NULL;
       return;
     }
   }
@@ -520,9 +590,9 @@ void FIELD_BMODEL_MAN_EntryBuildModel(FIELD_BMODEL_MAN * man, FIELD_BMODEL * bmo
   int i;
   for (i = 0; i < BMODEL_USE_MAX; i++)
   {
-    if (man->entryObj[i] == NULL)
+    if (man->bmodels[i] == NULL)
     {
-      man->entryObj[i] = bmodel;
+      man->bmodels[i] = bmodel;
       return;
     }
   }
@@ -535,6 +605,9 @@ GFL_G3D_MAP_GLOBALOBJ * FIELD_BMODEL_MAN_GetGlobalObjects(FIELD_BMODEL_MAN * man
 {
   return &man->g3dMapObj;
 }
+
+
+
 
 //============================================================================================
 //============================================================================================
@@ -554,7 +627,7 @@ static void loadEntryToBMIDTable(FIELD_BMODEL_MAN * man, u16 arc_id, u16 file_id
 
   {
     u16 data_max = GFL_ARC_GetDataFileCntByHandle(handle);
-    if (data_max < file_id)
+    if (data_max <= file_id)
     {	
       GF_ASSERT_MSG(0, "配置モデルリストデータがありません(%d<%d)\n", data_max, file_id);
       file_id = 0;		//とりあえずハングアップ回避
@@ -592,6 +665,20 @@ static void makeBMIDToEntryTable(FIELD_BMODEL_MAN * man)
 
 //------------------------------------------------------------------
 /**
+ * BMODEL_ID --> EntryNoへの変換
+ */
+//------------------------------------------------------------------
+static u8 BMIDtoEntryNo(const FIELD_BMODEL_MAN * man, BMODEL_ID bm_id)
+{
+	u8 entryNo;
+  BMID_ASSERT( bm_id );
+	entryNo = man->BMIDToEntryTable[bm_id];
+  ENTRYNO_ASSERT( man, entryNo );
+	return entryNo;
+}
+
+//------------------------------------------------------------------
+/**
  * @brief エリアIDから配置モデル情報へのインデックス取得
  * @param area_id 
  * @return  u16 情報アーカイブの指定ID
@@ -616,9 +703,7 @@ static u16 calcArcIndex(u16 area_id)
 //============================================================================================
 //
 //
-//
 //    配置モデルアニメデータ
-//
 //
 //
 //============================================================================================
@@ -631,10 +716,10 @@ static u16 calcArcIndex(u16 area_id)
 //------------------------------------------------------------------
 static u32 BMANIME_getCount(const FIELD_BMANIME_DATA * data)
 { 
-  u32 i,count;
-  for (i = 0, count = 0; i < GLOBAL_OBJ_ANMCOUNT; i++)
+  u32 anmNo,count;
+  for (anmNo = 0, count = 0; anmNo < GLOBAL_OBJ_ANMCOUNT; anmNo++)
   { 
-    if (data->IDs[i] != BMANIME_NULL_ID)
+    if (data->IDs[anmNo] != BMANIME_NULL_ID)
     { 
       count ++;
     }
@@ -662,7 +747,7 @@ static void BMANIME_init(FIELD_BMANIME_DATA * data)
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 #ifdef  PM_DEBUG
-static void DEBUG_dumpBMAnimeData(const FIELD_BMANIME_DATA * data)
+static void DEBUG_BMANIME_dump(const FIELD_BMANIME_DATA * data)
 { 
   static const char * animetype[] ={  
     "BMANIME_TYPE_NONE",
@@ -670,15 +755,15 @@ static void DEBUG_dumpBMAnimeData(const FIELD_BMANIME_DATA * data)
     "BMANIME_TYPE_EVENT",
     "BMANIME_TYPE_ERROR",
   };
-  int i;
+  int anmNo;
   int type = data->anm_type;
-  if (type >= BMANIME_TYPE_MAX) type = 3;
+  if (type >= BMANIME_TYPE_MAX) type = BMANIME_TYPE_MAX - 1;
   TAMADA_Printf("FIELD_BMANIME_DATA:");
   TAMADA_Printf("%s, %d\n", animetype[data->anm_type], type);
   TAMADA_Printf("%d %d %d\n",data->prg_type, data->anm_count, data->set_count);
-  for (i = 0; i < GLOBAL_OBJ_ANMCOUNT; i++)
+  for (anmNo = 0; anmNo < GLOBAL_OBJ_ANMCOUNT; anmNo++)
   {
-    TAMADA_Printf("%04x ", data->IDs[i]);
+    TAMADA_Printf("%04x ", data->IDs[anmNo]);
   }
   TAMADA_Printf("\n");
 }
@@ -688,13 +773,20 @@ static void DEBUG_dumpBMAnimeData(const FIELD_BMANIME_DATA * data)
 //------------------------------------------------------------------
 static void BMINFO_Load(FIELD_BMODEL_MAN * man, u16 file_id)
 {
-  ARCHANDLE * handle = GFL_ARC_OpenDataHandle(ARCID_BMODEL_INFO, man->heapID);
-  BM_INFO_BIN * infobin = GFL_HEAP_AllocMemory(man->heapID, sizeof(BM_INFO_BIN));
-  u8 entryNo;
+  typedef struct {
+    u16 anime_id;     ///<アニメ指定
+    u16 prog_id;      ///<プログラム指定
+    u16 submodel_id;  ///<サブモデル指定
+  }BM_INFO_BIN;
+
   enum {
     BM_INFO_SIZE = sizeof(BM_INFO_BIN),
     BM_ANMDATA_SIZE = sizeof(FIELD_BMANIME_DATA),
   };
+
+  ARCHANDLE * handle = GFL_ARC_OpenDataHandle(ARCID_BMODEL_INFO, man->heapID);
+  BM_INFO_BIN * infobin = GFL_HEAP_AllocMemory(man->heapID, BM_INFO_SIZE);
+  u8 entryNo;
 
   for (entryNo = 0; entryNo < man->entryCount; entryNo++)
   { 
@@ -709,7 +801,7 @@ static void BMINFO_Load(FIELD_BMODEL_MAN * man, u16 file_id)
     GFL_ARC_LoadDataOfsByHandle(handle, FILEID_BMODEL_ANIMEDATA,
         anm_id * BM_ANMDATA_SIZE, BM_ANMDATA_SIZE,
         &bmInfo->animeData);
-    //DEBUG_dumpBMAnimeData(&man->animeData[entryNo]);
+    //DEBUG_BMANIME_dump(&man->animeData[entryNo]);
   }
   GFL_HEAP_FreeMemory(infobin);
   GFL_ARC_CloseDataHandle(handle);
@@ -723,6 +815,12 @@ static void BMINFO_init(BMINFO * bmInfo)
   BMANIME_init(&bmInfo->animeData);
   bmInfo->prog_id = 0;
   bmInfo->sub_bm_id = BM_SUBMODEL_NULL_ID;
+}
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+static const FIELD_BMANIME_DATA * BMINFO_getAnimeData(const BMINFO * bmInfo)
+{
+  return &bmInfo->animeData;
 }
 //------------------------------------------------------------------
 //------------------------------------------------------------------
@@ -787,7 +885,7 @@ void FIELD_BMODEL_MAN_EntryELStringID(const FIELD_BMODEL_MAN * man,
  * 電光掲示板以外の配置モデルではなにもせずに帰る
  */
 //------------------------------------------------------------------
-void FIELD_BMANIME_DATA_entryTexData(FIELD_BMODEL_MAN* man, const FIELD_BMANIME_DATA * data,
+void entryELBoardTex(FIELD_BMODEL_MAN* man, const FIELD_BMANIME_DATA * data,
     const GFL_G3D_RES * g3DresTex)
 { 
   switch ((BMANIME_PROG_TYPE)data->prg_type)
@@ -807,70 +905,14 @@ void FIELD_BMANIME_DATA_entryTexData(FIELD_BMODEL_MAN* man, const FIELD_BMANIME_
   }
 }
 
+
 //============================================================================================
-/**
- *
- *
- *
- * @brief	３Ｄグローバルオブジェクト読み込み
- *
- *
- *
- */
+//
+//
+//  リソース生成
+//
+//
 //============================================================================================
-//------------------------------------------------------------------
-//------------------------------------------------------------------
-typedef struct {
-	u32 arcID;
-	u32	datID;
-	u32	inDatNum;
-}MAKE_RES_PARAM;
-
-typedef struct {
-	MAKE_RES_PARAM	mdl;
-	MAKE_RES_PARAM	tex;
-	MAKE_RES_PARAM	anm[GLOBAL_OBJ_ANMCOUNT];
-}MAKE_OBJ_PARAM;
-
-enum {  MAKE_RES_NONPARAM = (0xffffffff) };
-
-//------------------------------------------------------------------
-//------------------------------------------------------------------
-static void MAKE_RES_PARAM_init(MAKE_RES_PARAM * resParam)
-{
-  resParam->arcID = MAKE_RES_NONPARAM;
-  resParam->datID = MAKE_RES_NONPARAM;
-  resParam->inDatNum = 0;
-}
-
-//------------------------------------------------------------------
-//------------------------------------------------------------------
-static void MAKE_RES_PARAM_set(MAKE_RES_PARAM * resParam, u32 arcID, u32 datID, u32 inDatNum)
-{
-  resParam->arcID = arcID;
-  resParam->datID = datID;
-  resParam->inDatNum = inDatNum;
-}
-
-//------------------------------------------------------------------
-//------------------------------------------------------------------
-static void MAKE_OBJ_PARAM_init(MAKE_OBJ_PARAM * objParam)
-{ 
-  int i;
-  MAKE_RES_PARAM_init( &objParam->mdl );
-  MAKE_RES_PARAM_init( &objParam->tex );
-
-  for( i=0; i<GLOBAL_OBJ_ANMCOUNT; i++ ){
-    MAKE_RES_PARAM_init( &objParam->anm[i] );
-  }
-
-}
-
-
-
-
-static void createResource( OBJ_RES * objRes, const MAKE_OBJ_PARAM * param);
-static void deleteResource( OBJ_RES * objRes );
 //------------------------------------------------------------------
 //配置モデルマネジャーからの内容で生成
 //------------------------------------------------------------------
@@ -888,52 +930,40 @@ static void createAllResource(FIELD_BMODEL_MAN * man)
   /** 配置モデルリソース登録 */
   {
     u8 entryNo;
-    MAKE_OBJ_PARAM objParam;
-    MAKE_OBJ_PARAM_init(&objParam);
 
     for ( entryNo = 0; entryNo < man->objRes_Count; entryNo++ )
     {
-      int j, count;
-      const u16 * anmIDs;
-      const FIELD_BMANIME_DATA * anmData;
       OBJ_RES * objRes = &man->objRes[entryNo];
       BMODEL_ID bm_id = man->entryToBMIDTable[entryNo];
-
-      MAKE_RES_PARAM_set(&objParam.mdl, man->mdl_arc_id, bm_id, 0);
-      
-      //配置モデルに対応したアニメデータを取得 
-      anmData = getLoadedAnimeData(man, bm_id);
-      count = BMANIME_getCount(anmData);
-      anmIDs = anmData->IDs;
-
-      for( j=0; j<GLOBAL_OBJ_ANMCOUNT; j++ )
-      {
-        if( j<count ) 
-        { 
-          MAKE_RES_PARAM_set(&objParam.anm[j], ARCID_BMODEL_ANIME, anmIDs[j], 0);
-        } else {
-          MAKE_RES_PARAM_init( &objParam.anm[j] );
-        }
-      }
-
       //TAMADA_Printf("BM:Create Rsc %d (%d)\n", entryNo, bm_id);
-      createResource( objRes, &objParam );
-      objRes->anmData = anmData;
-      {
-        GFL_G3D_RES* resTex = objRes->g3DresTex ? objRes->g3DresTex : objRes->g3DresMdl;
-        FIELD_BMANIME_DATA_entryTexData( man, anmData, resTex );
-      }
+      OBJRES_initialize( man, objRes, bm_id );
     }
   }
 }
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
-  /** 配置モデルG3D_OBJECT登録 */
+static void deleteAllResource(FIELD_BMODEL_MAN * man)
+{
+  int i;
+	if( man->objRes == NULL ){
+    return;
+  }
+  for( i=0; i<man->objRes_Count; i++ ){
+    OBJRES_finalize( &man->objRes[i] );
+  }
+  GFL_HEAP_FreeMemory( man->objRes );
+  man->objRes_Count = 0;
+  man->objRes = NULL;
+}
+
+
+//------------------------------------------------------------------
+/** 配置モデルG3D_OBJECT登録 */
+//------------------------------------------------------------------
 static void createFullTimeObjHandle(FIELD_BMODEL_MAN * man, GFL_G3D_MAP_GLOBALOBJ * g3dMapObj)
 {
   int i;
-
   u32 entryCount = man->entryCount;
 
   if( entryCount == 0 ){
@@ -948,13 +978,11 @@ static void createFullTimeObjHandle(FIELD_BMODEL_MAN * man, GFL_G3D_MAP_GLOBALOB
 
   for ( i = 0; i < man->objHdl_Count; i++ )
   {
-    //const FIELD_BMANIME_DATA * anmData;
     OBJ_HND * objHdl = &man->objHdl[i];
     OBJ_RES * objRes = &man->objRes[i];
-    //BMODEL_ID bm_id = man->entryToBMIDTable[i];
+
     OBJHND_initialize( objHdl, objRes );
 
-    //anmData = getLoadedAnimeData(man, bm_id);
     g3dMapObj->gobj[i].g3DobjHQ = objHdl->g3Dobj;
     g3dMapObj->gobj[i].g3DobjLQ = NULL;
   }
@@ -985,74 +1013,76 @@ static void deleteFullTimeObjHandle(FIELD_BMODEL_MAN * man, GFL_G3D_MAP_GLOBALOB
   }
 }
 
+//============================================================================================
+//
+//  GFL_G3D 用リソース管理オブジェクト
+//
+//============================================================================================
 //------------------------------------------------------------------
 //------------------------------------------------------------------
-static void deleteAllResource(FIELD_BMODEL_MAN * man)
+static GFL_G3D_RES* OBJRES_getResTex(const OBJ_RES * objRes)
 {
-	if( man->objRes != NULL ){
-		int i;
-
-		for( i=0; i<man->objRes_Count; i++ ){
-      deleteResource( &man->objRes[i] );
-		}
-		GFL_HEAP_FreeMemory( man->objRes );
-		man->objRes_Count = 0;
-		man->objRes = NULL;
-	}
+  if ( objRes->g3DresTex != NULL ) {
+    return objRes->g3DresTex;
+  } else {
+    return objRes->g3DresMdl;
+  }
 }
 
 //------------------------------------------------------------------
 // オブジェクトリソースを作成
 //------------------------------------------------------------------
-static void createResource( OBJ_RES * objRes, const MAKE_OBJ_PARAM * param)
+static void OBJRES_initialize( FIELD_BMODEL_MAN * man, OBJ_RES * objRes, BMODEL_ID bm_id)
 {
 	GFL_G3D_RES* resTex;
-	int i;
+
+  //配置モデルに対応した情報へのポインタをセット
+  objRes->bmInfo = FIELD_BMODEL_MAN_GetBMInfo(man, bm_id);
 
   //モデルデータ生成
-	objRes->g3DresMdl = GFL_G3D_CreateResourceArc( param->mdl.arcID, param->mdl.datID );
+	objRes->g3DresMdl = GFL_G3D_CreateResourceArc( man->mdl_arc_id, bm_id );
 
   //テクスチャ登録
-	if( param->tex.arcID != MAKE_RES_NONPARAM ){
-		objRes->g3DresTex = GFL_G3D_CreateResourceArc( param->tex.arcID, param->tex.datID );
-		resTex = objRes->g3DresTex;
-	} else {
-		objRes->g3DresTex = NULL;
-		resTex = objRes->g3DresMdl;
-	}
+  //現状、テクスチャはモデリングimdに含まれるものを使用している
+  objRes->g3DresTex = NULL;
+  resTex = objRes->g3DresMdl;
   if (GFL_G3D_CheckResourceType( resTex, GFL_G3D_RES_CHKTYPE_TEX ) == TRUE)
   {
-	  DEBUG_Field_Grayscale(resTex);
+	  DEBUG_Field_Grayscale( resTex );
 	  GFL_G3D_TransVramTexture( resTex );
   } else {
-    const MAKE_RES_PARAM * prm;
-    if (param->tex.arcID != MAKE_RES_NONPARAM)
-    {
-      prm = &param->tex;
-    } else {
-      prm = &param->mdl;
-    }
-    OS_Printf("配置モデルにテクスチャが含まれていません！(arcID=%d, mdlID=%d)\n",prm->arcID,prm->datID);
+    OS_Printf("配置モデルにテクスチャが含まれていません！(mdlID=%d)\n", bm_id);
     GF_ASSERT(0);
   }
-	for( i=0; i<GLOBAL_OBJ_ANMCOUNT; i++ ){
-		if( param->anm[i].arcID != MAKE_RES_NONPARAM ){
-			objRes->g3DresAnm[i] = GFL_G3D_CreateResourceArc( param->anm[i].arcID, param->anm[i].datID );
+
+  {
+    const FIELD_BMANIME_DATA * anmData = BMINFO_getAnimeData(objRes->bmInfo);
+    int anmNo;
+    int count = BMANIME_getCount(anmData);
+    for( anmNo=0; anmNo<GLOBAL_OBJ_ANMCOUNT; anmNo++ ){
+      if ( anmNo < count ) {
+        objRes->g3DresAnm[anmNo] = GFL_G3D_CreateResourceArc( ARCID_BMODEL_ANIME, anmData->IDs[anmNo] );
+      } else {
+        objRes->g3DresAnm[anmNo] = NULL;
+      }
     }
   }
+
+  entryELBoardTex( man, BMINFO_getAnimeData(objRes->bmInfo), resTex );
+
 }
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
-static void deleteResource( OBJ_RES * objRes )
+static void OBJRES_finalize( OBJ_RES * objRes )
 {
-  int i;
+  int anmNo;
 	GFL_G3D_RES*	resTex;
 
-  for( i=0; i<GLOBAL_OBJ_ANMCOUNT; i++ ){
-    if( objRes->g3DresAnm[i] != NULL ){
-      GFL_G3D_DeleteResource( objRes->g3DresAnm[i] );
-      objRes->g3DresAnm[i] = NULL;
+  for( anmNo=0; anmNo<GLOBAL_OBJ_ANMCOUNT; anmNo++ ){
+    if( objRes->g3DresAnm[anmNo] != NULL ){
+      GFL_G3D_DeleteResource( objRes->g3DresAnm[anmNo] );
+      objRes->g3DresAnm[anmNo] = NULL;
     }
   }
   if( objRes->g3DresTex == NULL ){
@@ -1071,6 +1101,11 @@ static void deleteResource( OBJ_RES * objRes )
 }
 
 
+//============================================================================================
+//
+//  GFL_G3D_OBJECT管理用オブジェクト
+//
+//============================================================================================
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 static void OBJHND_initialize( OBJ_HND * objHdl, const OBJ_RES* objRes)
@@ -1078,27 +1113,28 @@ static void OBJHND_initialize( OBJ_HND * objHdl, const OBJ_RES* objRes)
   GFL_G3D_RND* g3Drnd;
   GFL_G3D_RES* resTex;
   GFL_G3D_ANM* anmTbl[GLOBAL_OBJ_ANMCOUNT];
-  int i;
+  int anmNo;
+  const FIELD_BMANIME_DATA * anmData = BMINFO_getAnimeData(objRes->bmInfo);
 
-  resTex = objRes->g3DresTex != NULL ? objRes->g3DresTex : objRes->g3DresMdl;
+  resTex = OBJRES_getResTex( objRes );
 
   //レンダー生成
   g3Drnd = GFL_G3D_RENDER_Create( objRes->g3DresMdl, 0, resTex );
 
   //アニメオブジェクト生成
-  for( i=0; i<GLOBAL_OBJ_ANMCOUNT; i++ ){
-    objHdl->anmMode[i] = BM_ANMMODE_NOTHING;
-    if( objRes->g3DresAnm[i] != NULL ){
-      anmTbl[i] = GFL_G3D_ANIME_Create( g3Drnd, objRes->g3DresAnm[i], 0 );  
+  for( anmNo=0; anmNo<GLOBAL_OBJ_ANMCOUNT; anmNo++ ){
+    objHdl->anmMode[anmNo] = BM_ANMMODE_NOTHING;
+    if( objRes->g3DresAnm[anmNo] != NULL ){
+      anmTbl[anmNo] = GFL_G3D_ANIME_Create( g3Drnd, objRes->g3DresAnm[anmNo], 0 );  
     } else {
-      anmTbl[i] = NULL;
+      anmTbl[anmNo] = NULL;
     }
   }
   //GFL_G3D_OBJECT生成
   objHdl->g3Dobj = GFL_G3D_OBJECT_Create( g3Drnd, anmTbl, GLOBAL_OBJ_ANMCOUNT );
   objHdl->res = objRes;
 
-  if (objRes->anmData->anm_type == BMANIME_TYPE_ETERNAL)
+  if (anmData->anm_type == BMANIME_TYPE_ETERNAL)
   {
     int anmNo;
     for( anmNo=0; anmNo<GLOBAL_OBJ_ANMCOUNT; anmNo++ ){
@@ -1114,17 +1150,15 @@ static void OBJHND_initialize( OBJ_HND * objHdl, const OBJ_RES* objRes)
 static void OBJHND_finalize( OBJ_HND * objHdl )
 {
   GFL_G3D_RND*  g3Drnd;
-  GFL_G3D_ANM*  g3Danm[GLOBAL_OBJ_ANMCOUNT] = { NULL, NULL, NULL, NULL };
-  u16        g3DanmCount;
-  int i;
 
   if( objHdl->g3Dobj != NULL ){
+    int anmNo;
     //各種ハンドル取得
-    g3DanmCount = GFL_G3D_OBJECT_GetAnimeCount( objHdl->g3Dobj );
-    for( i=0; i<g3DanmCount; i++ ){
-      g3Danm[i] = GFL_G3D_OBJECT_GetG3Danm( objHdl->g3Dobj, i ); 
-      if (g3Danm[i] != NULL) {
-        GFL_G3D_ANIME_Delete( g3Danm[i] ); 
+    u16 g3DanmCount = GFL_G3D_OBJECT_GetAnimeCount( objHdl->g3Dobj );
+    for( anmNo=0; anmNo<g3DanmCount; anmNo++ ){
+      GFL_G3D_ANM*  g3Danm = GFL_G3D_OBJECT_GetG3Danm( objHdl->g3Dobj, anmNo ); 
+      if (g3Danm != NULL) {
+        GFL_G3D_ANIME_Delete( g3Danm ); 
       }
     }
     g3Drnd = GFL_G3D_OBJECT_GetG3Drnd( objHdl->g3Dobj );
@@ -1137,6 +1171,7 @@ static void OBJHND_finalize( OBJ_HND * objHdl )
     GFL_G3D_RENDER_Delete( g3Drnd );
   }
 }
+
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 static void OBJHND_animate( OBJ_HND * objHdl )
@@ -1166,16 +1201,17 @@ static void OBJHND_animate( OBJ_HND * objHdl )
     }
   }
 }
+
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 static void disableAllAnime(OBJ_HND * objHdl)
 {
-  int idx;
-  for (idx = 0; idx < GLOBAL_OBJ_ANMCOUNT; idx++)
+  int anmNo;
+  for (anmNo = 0; anmNo < GLOBAL_OBJ_ANMCOUNT; anmNo++)
   {
-    if (objHdl->anmMode[idx] != BM_ANMMODE_NOTHING) {
-      GFL_G3D_OBJECT_DisableAnime( objHdl->g3Dobj, idx );
-      objHdl->anmMode[idx] = BM_ANMMODE_NOTHING;
+    if (objHdl->anmMode[anmNo] != BM_ANMMODE_NOTHING) {
+      GFL_G3D_OBJECT_DisableAnime( objHdl->g3Dobj, anmNo );
+      objHdl->anmMode[anmNo] = BM_ANMMODE_NOTHING;
     }
   }
 }
@@ -1183,11 +1219,8 @@ static void disableAllAnime(OBJ_HND * objHdl)
 //------------------------------------------------------------------
 static void OBJHND_setAnime( OBJ_HND * objHdl, u32 anmNo, BMANM_REQUEST req)
 {
-  if (anmNo >= GLOBAL_OBJ_ANMCOUNT)
-  {
-    GF_ASSERT(0);
-    anmNo = 0;
-  }
+  ANIMENO_ASSERT(anmNo);
+
   switch ((BMANM_REQUEST)req) {
   case BMANM_REQ_START:
     disableAllAnime( objHdl );
@@ -1212,7 +1245,8 @@ static void OBJHND_setAnime( OBJ_HND * objHdl, u32 anmNo, BMANM_REQUEST req)
 //------------------------------------------------------------------
 static BOOL OBJHND_getAnimeStatus(OBJ_HND * objHdl, u32 anmNo)
 {
-  GF_ASSERT(anmNo < GLOBAL_OBJ_ANMCOUNT);
+  ANIMENO_ASSERT(anmNo);
+
   switch (objHdl->anmMode[anmNo]) {
   case BM_ANMMODE_NOTHING:
     return TRUE;
@@ -1227,62 +1261,10 @@ static BOOL OBJHND_getAnimeStatus(OBJ_HND * objHdl, u32 anmNo)
 }
 
 //============================================================================================
-//============================================================================================
-//------------------------------------------------------------------
-//------------------------------------------------------------------
-void FIELD_BMODEL_MAN_ResistAllMapObjects
-(FIELD_BMODEL_MAN * man, GFL_G3D_MAP * g3Dmap, const PositionSt* objStatus, u32 objCount)
-{
-  GFL_G3D_MAP_GLOBALOBJ_ST status;
-  int i, j, count;
-
-  for( i=0, j = 0, count = objCount; i<count ; j++, i++ )
-  {
-    if (j >= GFL_G3D_MAP_OBJST_MAX)
-    {
-      OS_Printf("マップブロック内の配置モデル数が%dを超えているため表示できません\n",
-          GFL_G3D_MAP_OBJST_MAX);
-      GF_ASSERT(0);
-    }
-
-    FIELD_BMODEL_MAN_ResistMapObject(man, g3Dmap, &objStatus[i], j);
-
-    if (TRUE == FIELD_BMODEL_MAN_GetSubModel(man,
-          objStatus[i].resourceID, &status.trans, &status.id) )
-    {
-      TAMADA_Printf("Resist Sub Model:index(%d) model id(%d)\n", i, status.id);
-      j++;
-      status.rotate = objStatus[i].rotate;
-      status.trans.x += objStatus[i].xpos;
-      status.trans.y += objStatus[i].ypos;
-      status.trans.z -= objStatus[i].zpos;
-      G3DMAPOBJST_create(man, g3Dmap, &status, j);
-    }
-
-  }
-}
-
-//------------------------------------------------------------------
-//------------------------------------------------------------------
-void FIELD_BMODEL_MAN_ReleaseAllMapObjects
-(FIELD_BMODEL_MAN * man, GFL_G3D_MAP * g3Dmap)
-{
-  G3DMAPOBJST_deleteByG3Dmap( man, g3Dmap );
-}
-
-//------------------------------------------------------------------
-//------------------------------------------------------------------
-void FIELD_BMODEL_MAN_ResistMapObject
-(FIELD_BMODEL_MAN * man, GFL_G3D_MAP * g3Dmap, const PositionSt* objStatus, u32 objCount)
-{
-  GFL_G3D_MAP_GLOBALOBJ_ST status;
-  status.id = BMIDtoEntryNo(man, objStatus->resourceID);
-  VEC_Set(&status.trans, objStatus->xpos, objStatus->ypos, -objStatus->zpos);
-  status.rotate = (u16)(objStatus->rotate);
-  G3DMAPOBJST_create(man, g3Dmap, &status, objCount);
-}
-
-//============================================================================================
+//
+//  GFL_G3D_MAPの保持するGFL_G3D_MAP_GLOBALOBJ_STを参照、コントロールするための
+//  ラッパーオブジェクト
+//
 //============================================================================================
 //------------------------------------------------------------------
 //------------------------------------------------------------------
@@ -1351,6 +1333,13 @@ static void G3DMAPOBJST_deleteByObject(FIELD_BMODEL_MAN * man, G3DMAPOBJST * obj
   G3DMAPOBJST_init( man, obj );
 }
 
+//============================================================================================
+//
+//
+//  外部公開関数：
+//    G3DMAPOBJST経由での操作関数群
+//
+//============================================================================================
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 G3DMAPOBJST ** FIELD_BMODEL_MAN_CreateObjStatusList
@@ -1411,59 +1400,14 @@ void G3DMAPOBJST_changeViewFlag(G3DMAPOBJST * obj, BOOL flag)
 }
 
 //============================================================================================
+//
+//
+//  外部公開関数：
+//  配置モデルの生成
+//    マップ情報からでなく、意識的にイベントなどで生成する場合の関数群
+//
+//
 //============================================================================================
-//------------------------------------------------------------------
-//------------------------------------------------------------------
-BOOL FIELD_BMODEL_MAN_IsDoor(const FIELD_BMODEL_MAN * man, const GFL_G3D_MAP_GLOBALOBJ_ST * status)
-{
-  u8 entryNo = status->id;
-  ENTRYNO_ASSERT( man, entryNo );
-  return BMINFO_isDoor(&man->bmInfo[entryNo]);
-}
-
-//------------------------------------------------------------------
-//------------------------------------------------------------------
-void * FIELD_BMODEL_MAN_GetObjHandle(FIELD_BMODEL_MAN * man, const GFL_G3D_MAP_GLOBALOBJ_ST * status)
-{
-  u8 entryNo = status->id;
-  ENTRYNO_ASSERT( man, entryNo );
-  return &man->objHdl[entryNo];
-}
-
-//------------------------------------------------------------------
-//------------------------------------------------------------------
-void FIELD_BMODEL_MAN_SetAnime(FIELD_BMODEL_MAN * man, void * handle, u32 idx, BMANM_REQUEST req)
-{
-  OBJ_HND * objHdl = (OBJ_HND *)handle;
-  OBJHND_setAnime( objHdl, idx, req );
-}
-
-//------------------------------------------------------------------
-//------------------------------------------------------------------
-BOOL FIELD_BMODEL_MAN_GetAnimeStatus(FIELD_BMODEL_MAN *man, void * handle, u32 idx)
-{
-  OBJ_HND * objHdl = (OBJ_HND *)handle;
-  return OBJHND_getAnimeStatus( objHdl, idx );
-}
-
-
-
-
-//============================================================================================
-//============================================================================================
-//------------------------------------------------------------------
-//------------------------------------------------------------------
-void * FIELD_BMODEL_GetObjHandle( FIELD_BMODEL * bmodel )
-{
-  return &bmodel->objHdl;
-}
-//------------------------------------------------------------------
-//------------------------------------------------------------------
-void FIELD_BMODEL_Draw( const FIELD_BMODEL * bmodel )
-{
-  GFL_G3D_DRAW_DrawObject( bmodel->objHdl.g3Dobj, &bmodel->g3dObjStatus );
-}
-
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 FIELD_BMODEL * FIELD_BMODEL_Create(FIELD_BMODEL_MAN * man, const G3DMAPOBJST * obj)
@@ -1514,5 +1458,13 @@ void FIELD_BMODEL_SetAnime(FIELD_BMODEL * bmodel, u32 idx, BMANM_REQUEST req)
 BOOL FIELD_BMODEL_GetAnimeStatus(FIELD_BMODEL * bmodel, u32 idx)
 {
   return OBJHND_getAnimeStatus( &bmodel->objHdl, idx );
+}
+
+
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+static void FIELD_BMODEL_Draw( const FIELD_BMODEL * bmodel )
+{
+  GFL_G3D_DRAW_DrawObject( bmodel->objHdl.g3Dobj, &bmodel->g3dObjStatus );
 }
 

@@ -89,21 +89,6 @@ typedef enum {
   BMANM_REQ_STOP,
   BMANM_REQ_END,
 }BMANM_REQUEST;
-//------------------------------------------------------------------
-//------------------------------------------------------------------
-extern BOOL FIELD_BMODEL_MAN_IsDoor(const FIELD_BMODEL_MAN * man, const GFL_G3D_MAP_GLOBALOBJ_ST * status);
-
-//------------------------------------------------------------------
-//------------------------------------------------------------------
-extern void * FIELD_BMODEL_MAN_GetObjHandle(FIELD_BMODEL_MAN * man, const GFL_G3D_MAP_GLOBALOBJ_ST * status);
-
-//------------------------------------------------------------------
-//------------------------------------------------------------------
-extern void FIELD_BMODEL_MAN_SetAnime(FIELD_BMODEL_MAN * man, void * handle, u32 idx, BMANM_REQUEST req);
-
-//------------------------------------------------------------------
-//------------------------------------------------------------------
-extern BOOL FIELD_BMODEL_MAN_GetAnimeStatus(FIELD_BMODEL_MAN *man, void * handle, u32 idx);
 
 
 //============================================================================================
@@ -143,8 +128,6 @@ typedef struct _FIELD_BMODEL FIELD_BMODEL;
 //------------------------------------------------------------------
 extern FIELD_BMODEL * FIELD_BMODEL_Create(FIELD_BMODEL_MAN * man, const G3DMAPOBJST * obj);
 extern void FIELD_BMODEL_Delete(FIELD_BMODEL * bmodel);
-extern void FIELD_BMODEL_Draw( const FIELD_BMODEL * bmodel );
-extern void * FIELD_BMODEL_GetObjHandle( FIELD_BMODEL * bmodel );
 extern void FIELD_BMODEL_SetAnime(FIELD_BMODEL * bmodel, u32 idx, BMANM_REQUEST req);
 extern BOOL FIELD_BMODEL_GetAnimeStatus(FIELD_BMODEL * bmodel, u32 idx);
 
