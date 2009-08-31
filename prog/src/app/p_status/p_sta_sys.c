@@ -1460,6 +1460,10 @@ const POKEMON_PASO_PARAM* PSTATUS_UTIL_GetCurrentPPP( PSTATUS_WORK *work )
   switch( work->psData->ppt )
   {
   case PST_PP_TYPE_POKEPARAM:
+    {
+      const POKEMON_PARAM *pp = work->psData->ppd;
+      return PP_GetPPPPointerConst( pp );
+    }
 
     break;
 
@@ -1492,7 +1496,7 @@ POKEMON_PARAM* PSTATUS_UTIL_GetCurrentPP( PSTATUS_WORK *work )
   switch( work->psData->ppt )
   {
   case PST_PP_TYPE_POKEPARAM:
-
+    return work->psData->ppd;
     break;
 
   case PST_PP_TYPE_POKEPARTY:
@@ -1523,7 +1527,17 @@ void PSTATUS_UTIL_SetCurrentPPPFast( PSTATUS_WORK *work , const BOOL isFast )
   switch( work->psData->ppt )
   {
   case PST_PP_TYPE_POKEPARAM:
-
+    {
+      POKEMON_PARAM *pp = work->psData->ppd;
+      if( isFast == TRUE )
+      {
+        PP_FastModeOn( pp );
+      }
+      else
+      {
+        PP_FastModeOff( pp , TRUE );
+      }
+    }
     break;
 
   case PST_PP_TYPE_POKEPARTY:
