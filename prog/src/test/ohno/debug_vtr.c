@@ -372,7 +372,7 @@ static void _micKeyWait(VOICETR_WORK* pWork)
 		break;
 	case PAD_BUTTON_Y:
 //		Snd_PerapVoicePlaySub( pWork->buffer, 127, 0 );
-		SND_STRM_SetUppStraightData( SND_STRM_PCM8, pWork->hz,
+		SND_STRM_SetUpStraightData( SND_STRM_PCM8, pWork->hz,
 																 GFL_HEAPID_APP, pWork->buffer,pWork->bufferSize);
 		SND_STRM_Play();
 		OS_TPrintf("Ä¶ŠJn\n");

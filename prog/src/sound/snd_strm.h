@@ -66,7 +66,7 @@ extern void SND_STRM_Main( void );
 
 // âπäyèÓïÒÇÃì«Ç›çûÇ›ÅEîjä¸
 extern void SND_STRM_SetUp( u32 arcid, u32 dataid, SND_STRM_TYPE type, SND_STRM_HZ hz, u32 heapID );
-extern void SND_STRM_SetUppStraightData( SND_STRM_TYPE type, SND_STRM_HZ hz, u32 heapID, u8* data,u32 size);
+extern void SND_STRM_SetUpStraightData( SND_STRM_TYPE type, SND_STRM_HZ hz, u32 heapID, u8* data,u32 size);
 extern void SND_STRM_Release( void );
 extern BOOL SND_STRM_CheckSetUp( void );
 

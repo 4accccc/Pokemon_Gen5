@@ -214,11 +214,12 @@ void SND_STRM_SetUp( u32 arcid, u32 dataid, SND_STRM_TYPE type, SND_STRM_HZ hz, 
  *	@param	size		ƒTƒCƒY
  */
 //-----------------------------------------------------------------------------
-void SND_STRM_SetUppStraightData( SND_STRM_TYPE type, SND_STRM_HZ hz, u32 heapID, u8* data,u32 size)
+void SND_STRM_SetUpStraightData( SND_STRM_TYPE type, SND_STRM_HZ hz, u32 heapID, u8* data,u32 size)
 {
 	GF_ASSERT( sp_STRM_WORK );
 
 	sp_STRM_WORK->snddata_in = TRUE;
+	sp_STRM_WORK->p_handle = NULL;
 	sp_STRM_WORK->pStraightData = data;
 	sp_STRM_WORK->data_siz = size;
 	sp_STRM_WORK->type = type;
@@ -240,7 +241,10 @@ void SND_STRM_Release( void )
 	sp_STRM_WORK->playing = FALSE;
 
 	// ”jŠü
-	GFL_ARC_CloseDataHandle( sp_STRM_WORK->p_handle );
+	if( sp_STRM_WORK->p_handle != NULL )
+	{
+  	GFL_ARC_CloseDataHandle( sp_STRM_WORK->p_handle );
+  }
 
 	sp_STRM_WORK->snddata_in = FALSE;
 }
