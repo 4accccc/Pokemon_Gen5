@@ -15,7 +15,9 @@
 
 
 #include "sta_local_def.h"
+#include "sta_acting.h"
 #include "sta_act_poke.h"
+#include "script/sta_act_script_def.h"
 
 #include "test/ariizumi/ari_debug.h"
 
@@ -25,6 +27,16 @@
 //======================================================================
 #pragma mark [> define
 
+//アイテム使用関係
+#define STA_POKE_ITEMUSE_TIME (60*3)
+#define STA_POKE_ITEMUSE_TIME_SPIN (64*3) //回転角度計算上キリのいい数字に
+#define STA_POKE_ITEMUSE_FLYING_SPD (FX32_CONST(0.75f)) //上昇速度
+
+#define STA_POKE_ITEMUSE_THROW_START_ACC (FX32_CONST(-3.0f)) //初期加速度(上方向
+#define STA_POKE_ITEMUSE_THROW_ADD_ACC (FX32_CONST(0.04f)) //加速度
+#define STA_POKE_ITEMUSE_THROW_SPD (FX32_CONST(0.7f)) //横移動速度
+#define STA_POKE_ITEMUSE_THROW_SIZE_ADD (FX32_CONST(0.003f)) 
+
 
 //======================================================================
 //  enum
@@ -32,10 +44,25 @@
 #pragma mark [> enum
 
 
+typedef void (*STA_POKE_InitItemUseFunc)( STA_POKE_SYS *work , STA_POKE_WORK *pokeWork );
+typedef void (*STA_POKE_UpdateItemUseFunc)( STA_POKE_SYS *work , STA_POKE_WORK *pokeWork );
+
 //======================================================================
 //  typedef struct
 //======================================================================
 #pragma mark [> struct
+typedef struct
+{
+  u16 cnt;
+  MUS_POKE_EQUIP_POS equipPos;
+
+  STA_EFF_WORK   *effWork;
+
+  //投擲用重力加速度
+  fx32        graAcc;
+}STA_POKE_ITEMUSE_WORK;
+
+
 struct _STA_POKE_WORK
 {
   BOOL    isEnable;
@@ -56,11 +83,19 @@ struct _STA_POKE_WORK
   GFL_G3D_RES     *itemRes[MUS_POKE_EQUIP_MAX];
   MUS_ITEM_DRAW_WORK  *itemWork[MUS_POKE_EQUIP_MAX];
   MUSICAL_POKE_EQUIP  *pokeEquip[MUS_POKE_EQUIP_MAX];
+  MUS_POKE_EQUIP_POS  releaseItem;
+  
+  //アイテム使用系
+  STA_POKE_ITEMUSE_WORK itemUseWork;
+  
+  MUSICAL_ITEM_USETYPE   itemUseType;
+  STA_POKE_UpdateItemUseFunc updateItemUseFunc;
 };
 
 struct _STA_POKE_SYS
 {
   HEAPID heapId;
+  ACTING_WORK *actWork;
 
   GFL_BBD_SYS       *bbdSys;
   MUS_POKE_DRAW_SYSTEM  *drawSys;
@@ -81,20 +116,31 @@ static void STA_POKE_UpdatePokeFunc( STA_POKE_SYS *work , STA_POKE_WORK *pokeWor
 static void STA_POKE_UpdateItemFunc( STA_POKE_SYS *work , STA_POKE_WORK *pokeWork );
 static void STA_POKE_DrawShadow( STA_POKE_SYS *work ,  STA_POKE_WORK *pokeWork );
 
+void STA_POKE_InitItemUse_Spin( STA_POKE_SYS *work , STA_POKE_WORK *pokeWork );
+void STA_POKE_UpdateItemUse_Spin( STA_POKE_SYS *work , STA_POKE_WORK *pokeWork );
+void STA_POKE_InitItemUse_Flash( STA_POKE_SYS *work , STA_POKE_WORK *pokeWork );
+void STA_POKE_UpdateItemUse_Flash( STA_POKE_SYS *work , STA_POKE_WORK *pokeWork );
+void STA_POKE_InitItemUse_Flying( STA_POKE_SYS *work , STA_POKE_WORK *pokeWork );
+void STA_POKE_UpdateItemUse_Flying( STA_POKE_SYS *work , STA_POKE_WORK *pokeWork );
+void STA_POKE_InitItemUse_Throw( STA_POKE_SYS *work , STA_POKE_WORK *pokeWork );
+void STA_POKE_UpdateItemUse_Throw( STA_POKE_SYS *work , STA_POKE_WORK *pokeWork );
+void STA_POKE_InitItemUse_Use( STA_POKE_SYS *work , STA_POKE_WORK *pokeWork );
+void STA_POKE_UpdateItemUse_Use( STA_POKE_SYS *work , STA_POKE_WORK *pokeWork );
 //--------------------------------------------------------------
 //  
 //--------------------------------------------------------------
-STA_POKE_SYS* STA_POKE_InitSystem( HEAPID heapId , MUS_POKE_DRAW_SYSTEM* drawSys , MUS_ITEM_DRAW_SYSTEM *itemDrawSys , GFL_BBD_SYS* bbdSys )
+STA_POKE_SYS* STA_POKE_InitSystem( HEAPID heapId , ACTING_WORK *actWork , MUS_POKE_DRAW_SYSTEM* drawSys , MUS_ITEM_DRAW_SYSTEM *itemDrawSys , GFL_BBD_SYS* bbdSys )
 {
   u8 i;
   STA_POKE_SYS *work = GFL_HEAP_AllocMemory( heapId , sizeof(STA_POKE_SYS) );
   
   work->heapId = heapId;
+  work->actWork = actWork;
   work->drawSys = drawSys;
   work->itemDrawSys = itemDrawSys;
   work->scrollOffset = 0;
   work->bbdSys = bbdSys;
-  
+
   for( i=0 ; i<MUSICAL_POKE_MAX ; i++ )
   {
     work->pokeWork[i].isEnable = FALSE;
@@ -146,32 +192,17 @@ void  STA_POKE_UpdateSystem_Item( STA_POKE_SYS *work )
     {
       STA_POKE_UpdateItemFunc( work , &work->pokeWork[idx] );
     }
+
+    if( work->pokeWork[idx].updateItemUseFunc != NULL )
+    {
+      work->pokeWork[idx].updateItemUseFunc( work , &work->pokeWork[idx] );
+    }
   }
   MUS_ITEM_DRAW_UpdateSystem( work->itemDrawSys ); 
 }
 
 static void STA_POKE_UpdatePokeFunc( STA_POKE_SYS *work , STA_POKE_WORK *pokeWork )
 {
-  /*
-  if( GFL_UI_KEY_GetCont() & PAD_BUTTON_X )
-  {
-    u16 rot;
-    MUS_POKE_DRAW_GetRotation( pokeWork->drawWork , &rot);
-    rot += 0x800;
-    MUS_POKE_DRAW_SetRotation( pokeWork->drawWork , rot);
-    
-  }
-  */
-#if DEB_ARI|1
-    if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_X )
-    {
-      STA_POKE_SetFrontBack( work , pokeWork , !pokeWork->isFront );
-    }
-    if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_Y )
-    {
-      STA_POKE_SetDrawItem( work , pokeWork , !pokeWork->isDrawItem );
-    }
-#endif
 
   if( pokeWork->isUpdate == TRUE )
   {
@@ -211,7 +242,8 @@ static void STA_POKE_UpdateItemFunc( STA_POKE_SYS *work , STA_POKE_WORK *pokeWor
   VecFx32 pos;
   for( ePos=0;ePos<MUS_POKE_EQUIP_MAX;ePos++ )
   {
-    if( pokeWork->itemWork[ePos] != NULL )
+    if( pokeWork->itemWork[ePos] != NULL &&
+        pokeWork->releaseItem != ePos )
     {
       if( pokeWork->isDrawItem == TRUE &&
           pokeWork->isFront == TRUE )
@@ -399,7 +431,10 @@ STA_POKE_WORK* STA_POKE_CreatePoke( STA_POKE_SYS *work , MUSICAL_POKE_PARAM *mus
   pokeWork->isUpdate = TRUE;
   pokeWork->isFront = TRUE;
   pokeWork->isDrawItem = FALSE;
+  pokeWork->updateItemUseFunc = NULL;
   pokeWork->drawWork = MUS_POKE_DRAW_Add( work->drawSys , musPoke , TRUE );
+  pokeWork->releaseItem = MUS_POKE_EQUIP_MAX;
+
   VEC_Set( &pokeWork->pokePos , 0,0,0 );
   VEC_Set( &pokeWork->posOfs , 0,0,0 );
   VEC_Set( &pokeWork->scale , FX32_ONE,FX32_ONE,FX32_ONE );
@@ -452,6 +487,247 @@ void STA_POKE_DeletePoke( STA_POKE_SYS *work , STA_POKE_WORK *pokeWork )
   MUS_POKE_DRAW_Del( work->drawSys , pokeWork->drawWork );
   pokeWork->isEnable = FALSE;
 }
+
+#pragma mark [>use item func
+void STA_POKE_UseItemFunc( STA_POKE_SYS *work , STA_POKE_WORK *pokeWork , MUS_POKE_EQUIP_POS ePos )
+{
+  if( pokeWork->itemWork[ePos] != NULL &&
+      pokeWork->updateItemUseFunc == NULL )
+  {
+    MUS_ITEM_DATA_SYS *itemDataSys = MUS_ITEM_DRAW_GetItemDataSys ( work->itemDrawSys );
+    const u16 itemNo = pokeWork->pokeEquip[ePos]->itemNo;
+    const MUSICAL_ITEM_USETYPE useType = MUS_ITEM_DATA_GetItemUseType( itemDataSys , itemNo );
+//    const MUSICAL_ITEM_USETYPE useType = GFL_STD_MtRand0(5);
+//    const MUSICAL_ITEM_USETYPE useType = MUT_USE;
+    
+    //共通初期化
+    pokeWork->itemUseWork.cnt = 0;
+    pokeWork->itemUseWork.equipPos = ePos;
+    pokeWork->itemUseWork.effWork = NULL;
+    pokeWork->releaseItem = MUS_POKE_EQUIP_MAX;
+    
+    //個別初期化
+    switch(useType)
+    {
+    case MUT_SPIN:
+      STA_POKE_InitItemUse_Spin( work , pokeWork );
+      pokeWork->updateItemUseFunc = STA_POKE_UpdateItemUse_Spin;
+      break;
+    case MUT_FLASH:
+      STA_POKE_InitItemUse_Flash( work , pokeWork );
+      pokeWork->updateItemUseFunc = STA_POKE_UpdateItemUse_Flash;
+      break;
+    case MUT_FLYING:
+      STA_POKE_InitItemUse_Flying( work , pokeWork );
+      pokeWork->updateItemUseFunc = STA_POKE_UpdateItemUse_Flying;
+      break;
+    case MUT_THROW:
+      STA_POKE_InitItemUse_Throw( work , pokeWork );
+      pokeWork->updateItemUseFunc = STA_POKE_UpdateItemUse_Throw;
+      break;
+    case MUT_USE:
+      STA_POKE_InitItemUse_Use( work , pokeWork );
+      pokeWork->updateItemUseFunc = STA_POKE_UpdateItemUse_Use;
+      break;
+    }
+    
+  }
+}
+
+void STA_POKE_InitItemUse_Spin( STA_POKE_SYS *work , STA_POKE_WORK *pokeWork )
+{
+  STA_POKE_ITEMUSE_WORK *itemUseWork = &pokeWork->itemUseWork;
+}
+
+void STA_POKE_UpdateItemUse_Spin( STA_POKE_SYS *work , STA_POKE_WORK *pokeWork )
+{
+  STA_POKE_ITEMUSE_WORK *itemUseWork = &pokeWork->itemUseWork;
+  pokeWork->pokeEquip[itemUseWork->equipPos]->angle += 0x1000;
+  
+  itemUseWork->cnt++;
+  if( itemUseWork->cnt >= STA_POKE_ITEMUSE_TIME_SPIN )
+  {
+    pokeWork->updateItemUseFunc = NULL;
+  }
+}
+
+void STA_POKE_InitItemUse_Flash( STA_POKE_SYS *work , STA_POKE_WORK *pokeWork )
+{
+  STA_POKE_ITEMUSE_WORK *itemUseWork = &pokeWork->itemUseWork;
+  VecFx32 pos;
+  STA_EFF_SYS  *effSys = STA_ACT_GetEffectSys( work->actWork );
+
+  itemUseWork->effWork = STA_EFF_CreateEffect( effSys , NARC_stage_gra_mus_eff_itemuse_spa );
+
+  MUS_ITEM_DRAW_GetPosition( work->itemDrawSys , 
+                pokeWork->itemWork[itemUseWork->equipPos] ,
+                &pos );
+  pos.x = ACT_POS_X_FX(pos.x);
+  pos.y = ACT_POS_Y_FX(pos.y);
+  pos.z += FX32_ONE;
+  STA_EFF_CreateEmitter( itemUseWork->effWork , 0 , &pos );
+  
+}
+
+void STA_POKE_UpdateItemUse_Flash( STA_POKE_SYS *work , STA_POKE_WORK *pokeWork )
+{
+  STA_POKE_ITEMUSE_WORK *itemUseWork = &pokeWork->itemUseWork;
+  VecFx32 pos;
+  
+  MUS_ITEM_DRAW_GetPosition( work->itemDrawSys , 
+                pokeWork->itemWork[itemUseWork->equipPos] ,
+                &pos );
+  pos.x = ACT_POS_X_FX(pos.x);
+  pos.y = ACT_POS_Y_FX(pos.y);
+  pos.z += FX32_ONE;
+  
+  STA_EFF_SetPosition( itemUseWork->effWork , 0 , &pos );
+
+  itemUseWork->cnt++;
+  if( itemUseWork->cnt >= STA_POKE_ITEMUSE_TIME )
+  {
+    STA_EFF_SYS  *effSys = STA_ACT_GetEffectSys( work->actWork );
+
+    STA_EFF_DeleteEmitter( itemUseWork->effWork , 0 );
+    STA_EFF_DeleteEffect( effSys , itemUseWork->effWork );
+    pokeWork->updateItemUseFunc = NULL;
+  }
+  
+}
+
+void STA_POKE_InitItemUse_Flying( STA_POKE_SYS *work , STA_POKE_WORK *pokeWork )
+{
+  STA_POKE_ITEMUSE_WORK *itemUseWork = &pokeWork->itemUseWork;
+
+  pokeWork->releaseItem = itemUseWork->equipPos;
+  MUS_ITEM_DRAW_SetDrawEnable( work->itemDrawSys , 
+                  pokeWork->itemWork[itemUseWork->equipPos] , TRUE );
+  MUS_ITEM_DRAW_SetRotation(  work->itemDrawSys , 
+                pokeWork->itemWork[itemUseWork->equipPos] ,
+                0 );
+  MUS_ITEM_DRAW_SetSize(    work->itemDrawSys , 
+                pokeWork->itemWork[itemUseWork->equipPos] ,
+                FX32_ONE/4 , FX32_ONE/4);
+  
+}
+
+void STA_POKE_UpdateItemUse_Flying( STA_POKE_SYS *work , STA_POKE_WORK *pokeWork )
+{
+  STA_POKE_ITEMUSE_WORK *itemUseWork = &pokeWork->itemUseWork;
+  VecFx32 pos;
+  const fx32 curveRate = /*FX32_CONST(0.2f)+*/(itemUseWork->cnt/3)*FX32_CONST(0.05f);
+  const fx32 curveSin = FX_SinIdx( (itemUseWork->cnt * 0x200)%0x10000 );
+  
+  MUS_ITEM_DRAW_GetPosition( work->itemDrawSys , 
+                pokeWork->itemWork[itemUseWork->equipPos] ,
+                &pos );
+
+  pos.x += FX_Mul(curveRate,curveSin);
+  pos.y -= STA_POKE_ITEMUSE_FLYING_SPD;
+
+  MUS_ITEM_DRAW_SetPosition( work->itemDrawSys , 
+                pokeWork->itemWork[itemUseWork->equipPos] ,
+                &pos );
+  MUS_ITEM_DRAW_SetRotation(  work->itemDrawSys , 
+                pokeWork->itemWork[itemUseWork->equipPos] ,
+                (0x800*curveSin)>>FX32_SHIFT );
+
+  itemUseWork->cnt++;
+  if( itemUseWork->cnt >= STA_POKE_ITEMUSE_TIME )
+  {
+    MUS_ITEM_DRAW_SetDrawEnable( work->itemDrawSys , 
+                    pokeWork->itemWork[itemUseWork->equipPos] , FALSE );
+    pokeWork->updateItemUseFunc = NULL;
+  }
+}
+
+void STA_POKE_InitItemUse_Throw( STA_POKE_SYS *work , STA_POKE_WORK *pokeWork )
+{
+  STA_POKE_ITEMUSE_WORK *itemUseWork = &pokeWork->itemUseWork;
+
+  pokeWork->releaseItem = itemUseWork->equipPos;
+  
+  itemUseWork->graAcc = STA_POKE_ITEMUSE_THROW_START_ACC;
+  MUS_ITEM_DRAW_SetDrawEnable( work->itemDrawSys , 
+                  pokeWork->itemWork[itemUseWork->equipPos] , TRUE );
+  MUS_ITEM_DRAW_SetRotation(  work->itemDrawSys , 
+                pokeWork->itemWork[itemUseWork->equipPos] ,
+                0 );
+  MUS_ITEM_DRAW_SetSize(    work->itemDrawSys , 
+                pokeWork->itemWork[itemUseWork->equipPos] ,
+                FX32_ONE/4 , FX32_ONE/4);
+}
+
+void STA_POKE_UpdateItemUse_Throw( STA_POKE_SYS *work , STA_POKE_WORK *pokeWork )
+{
+  STA_POKE_ITEMUSE_WORK *itemUseWork = &pokeWork->itemUseWork;
+
+  VecFx32 pos;
+  fx16 sizeX,sizeY;
+  
+  MUS_ITEM_DRAW_GetPosition( work->itemDrawSys , 
+                pokeWork->itemWork[itemUseWork->equipPos] ,
+                &pos );
+  
+  itemUseWork->graAcc += STA_POKE_ITEMUSE_THROW_ADD_ACC;
+  pos.x -= STA_POKE_ITEMUSE_THROW_SPD;
+  pos.y += itemUseWork->graAcc;
+
+  MUS_ITEM_DRAW_SetPosition( work->itemDrawSys , 
+                pokeWork->itemWork[itemUseWork->equipPos] ,
+                &pos );
+
+  MUS_ITEM_DRAW_GetSize( work->itemDrawSys , 
+                pokeWork->itemWork[itemUseWork->equipPos] ,
+                &sizeX , &sizeY );
+  sizeX += STA_POKE_ITEMUSE_THROW_SIZE_ADD;
+  sizeY += STA_POKE_ITEMUSE_THROW_SIZE_ADD;
+  MUS_ITEM_DRAW_SetSize( work->itemDrawSys , 
+                pokeWork->itemWork[itemUseWork->equipPos] ,
+                sizeX , sizeY );
+
+  itemUseWork->cnt++;
+  if( itemUseWork->cnt >= STA_POKE_ITEMUSE_TIME )
+  {
+    MUS_ITEM_DRAW_SetDrawEnable( work->itemDrawSys , 
+                    pokeWork->itemWork[itemUseWork->equipPos] , FALSE );
+    pokeWork->updateItemUseFunc = NULL;
+  }
+}
+
+void STA_POKE_InitItemUse_Use( STA_POKE_SYS *work , STA_POKE_WORK *pokeWork )
+{
+  STA_POKE_ITEMUSE_WORK *itemUseWork = &pokeWork->itemUseWork;
+}
+
+void STA_POKE_UpdateItemUse_Use( STA_POKE_SYS *work , STA_POKE_WORK *pokeWork )
+{
+  STA_POKE_ITEMUSE_WORK *itemUseWork = &pokeWork->itemUseWork;
+  const u16 rad = (0x800*itemUseWork->cnt)%0x10000;
+  fx16 sizeX,sizeY;
+
+  MUS_ITEM_DRAW_GetSize( work->itemDrawSys , 
+                pokeWork->itemWork[itemUseWork->equipPos] ,
+                &sizeX , &sizeY );
+  sizeX += FX_SinIdx(rad)/8;
+  sizeY += FX_CosIdx(rad)/8;
+  OS_Printf("[%.3f][%.3f]\n",FX_FX32_TO_F32(sizeX),FX_FX32_TO_F32(sizeY));
+  MUS_ITEM_DRAW_SetSize( work->itemDrawSys , 
+                pokeWork->itemWork[itemUseWork->equipPos] ,
+                sizeX , sizeY );
+
+
+  itemUseWork->cnt++;
+  if( itemUseWork->cnt >= STA_POKE_ITEMUSE_TIME )
+  {
+    pokeWork->updateItemUseFunc = NULL;
+  }
+}
+
+
+
+
+#pragma mark [>outer func
 void STA_POKE_GetPosition( STA_POKE_SYS *work , STA_POKE_WORK *pokeWork , VecFx32 *pos )
 {
   pos->x = pokeWork->pokePos.x;
@@ -532,7 +808,8 @@ void STA_POKE_SetShowFlg( STA_POKE_SYS *work , STA_POKE_WORK *pokeWork , const B
   MUS_POKE_DRAW_SetShowFlg( pokeWork->drawWork , flg );
   for( ePos=0;ePos<MUS_POKE_EQUIP_MAX;ePos++ )
   {
-    if( pokeWork->itemWork[ePos] != NULL )
+    if( pokeWork->itemWork[ePos] != NULL &&
+        pokeWork->releaseItem != ePos )
     {
       MUS_ITEM_DRAW_SetDrawEnable( work->itemDrawSys , pokeWork->itemWork[ePos] , flg );
     }

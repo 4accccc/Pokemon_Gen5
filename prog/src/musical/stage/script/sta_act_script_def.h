@@ -102,6 +102,8 @@ void STA_SCRIPT_DeleteTcbTask( STA_SCRIPT_SYS *work , STA_SCRIPT_TCB_OBJECT *tcb
 //--------------------------------------------------------------
 //	スクリプト用機能関数
 //--------------------------------------------------------------
+void STA_ACT_StartMainPart( ACTING_WORK *work );
+void STA_ACT_FinishMainPart( ACTING_WORK *work );
 void	STA_ACT_LoadBg( ACTING_WORK *work , const u8 bgNo );
 void STA_ACT_ShowMessage( ACTING_WORK *work , const u16 msgNo , const u8 msgSpd );
 void STA_ACT_HideMessage( ACTING_WORK *work );

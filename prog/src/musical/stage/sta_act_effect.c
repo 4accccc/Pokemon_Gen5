@@ -173,3 +173,15 @@ void	STA_EFF_DeleteEmitter( STA_EFF_WORK *effWork , const u16 emitNo )
 		OS_TPrintf("Stage effect emitter[%d] is NULL!!\n",emitNo);
 	}
 }
+
+void	STA_EFF_SetPosition( STA_EFF_WORK *effWork , const u16 emitNo , VecFx32 *pos )
+{
+	if( effWork->emitWork[emitNo].emitPtr != NULL )
+	{
+    GFL_PTC_SetEmitterPosition( effWork->emitWork[emitNo].emitPtr , pos );
+	}
+	else
+	{
+		OS_TPrintf("Stage effect emitter[%d] is NULL!!\n",emitNo);
+	}
+}

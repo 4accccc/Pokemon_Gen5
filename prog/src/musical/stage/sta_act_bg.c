@@ -10,6 +10,8 @@
 #include "system/main.h"
 #include "system/gfl_use.h"
 
+#include "arc_def.h"
+#include "stage_gra.naix"
 
 #include "sta_acting.h"
 #include "sta_local_def.h"
@@ -53,6 +55,9 @@ struct _STA_BG_SYS
 	NNSGfdTexKey	texDataKey;
 	NNSGfdPlttKey	texPlttKey;
 
+	GFL_G3D_RES	*mdlRes;
+  GFL_G3D_RND *render;
+  GFL_G3D_OBJ *g3dobj;
 };
 
 //======================================================================
@@ -90,6 +95,99 @@ void	STA_BG_UpdateSystem( STA_BG_SYS *work )
 {
 }
 
+void	STA_BG_DrawSystem( STA_BG_SYS *work )
+{
+  if( work->texRes != NULL )
+  {
+    static GFL_G3D_OBJSTATUS objState = {
+                      {FX32_CONST(16.0f),FX32_CONST(3.0f),FX32_CONST(-6.0f)},
+                      {FX32_CONST(0.05f),FX32_CONST(0.05f),FX32_CONST(0.05f)},
+                      {0}};
+    
+  	MTX_Identity33(&objState.rotate);
+    GFL_G3D_DRAW_DrawObject( work->g3dobj , &objState );
+    
+    if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_SELECT )
+    {
+      OS_Printf("[%.0f][%.0f][%.0f]:[%.2f]\n",FX_FX32_TO_F32(objState.trans.x),FX_FX32_TO_F32(objState.trans.y),FX_FX32_TO_F32(objState.trans.z),FX_FX32_TO_F32(objState.scale.x));
+    }
+
+    if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_X )
+    {
+      if( GFL_UI_KEY_GetCont() & PAD_KEY_UP )
+      {
+        objState.trans.z += FX32_CONST(0.25f);
+      }
+      else
+      if( GFL_UI_KEY_GetTrg() & PAD_KEY_DOWN )
+      {
+        objState.trans.z -= FX32_CONST(0.25f);
+      }
+      else
+      if( GFL_UI_KEY_GetTrg() & PAD_KEY_RIGHT )
+      {
+        objState.scale.x += FX32_CONST(0.01);
+        objState.scale.y += FX32_CONST(0.01);
+        objState.scale.z += FX32_CONST(0.01);
+      }
+      else
+      if( GFL_UI_KEY_GetTrg() & PAD_KEY_LEFT )
+      {
+        objState.scale.x -= FX32_CONST(0.01);
+        objState.scale.y -= FX32_CONST(0.01);
+        objState.scale.z -= FX32_CONST(0.01);
+      }
+    }
+    else
+    if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_Y )
+    {
+      if( GFL_UI_KEY_GetCont() & PAD_KEY_UP )
+      {
+        objState.trans.y -= FX32_CONST(0.25f);
+      }
+      else
+      if( GFL_UI_KEY_GetTrg() & PAD_KEY_DOWN )
+      {
+        objState.trans.y += FX32_CONST(0.25f);
+      }
+      else
+      if( GFL_UI_KEY_GetTrg() & PAD_KEY_RIGHT )
+      {
+        objState.trans.x += FX32_CONST(0.25f);
+      }
+      else
+      if( GFL_UI_KEY_GetTrg() & PAD_KEY_LEFT )
+      {
+        objState.trans.x -= FX32_CONST(0.25f);
+      }
+    }
+  }
+}
+
+void	STA_BG_CreateBg( STA_BG_SYS* work , const int arcId , const int datId )
+{
+	work->texRes = GFL_G3D_CreateResourceArc( ARCID_STAGE_GRA, NARC_stage_gra_musical_test_nsbtx ); 
+	work->mdlRes = GFL_G3D_CreateResourceArc( ARCID_STAGE_GRA, NARC_stage_gra_musical_test_nsbmd ); 
+	if( GFL_G3D_TransVramTexture( work->mdlRes ) == FALSE )
+	{
+		GF_ASSERT_MSG( NULL , "Stage Bg System Can't Create Bg!\n" );
+		return;
+	}
+  
+  work->render = GFL_G3D_RENDER_Create( work->mdlRes , 0 , work->mdlRes );
+//  GFL_G3D_RENDER_SetTexture( work->render , 0 , work->texRes );
+  work->g3dobj = GFL_G3D_OBJECT_Create( work->render , NULL , 0 );
+}
+
+void	STA_BG_DeleteBg( STA_BG_SYS* work )
+{
+  GFL_G3D_OBJECT_Delete( work->g3dobj );
+  GFL_G3D_RENDER_Delete( work->render );
+  GFL_G3D_DeleteResource( work->mdlRes );
+  GFL_G3D_DeleteResource( work->texRes );
+}
+
+#if 0
 void	STA_BG_DrawSystem( STA_BG_SYS *work )
 {
 	MtxFx33				mtxBillboard;
@@ -224,6 +322,7 @@ void	STA_BG_DeleteBg( STA_BG_SYS* work )
 	GFL_G3D_DeleteResource( work->texRes );
 	work->texRes = NULL;
 }
+#endif //0
 
 
 void	STA_BG_SetScrollOffset( STA_BG_SYS* work , const u16 bgOfs )

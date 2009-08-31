@@ -41,11 +41,12 @@ sobjects = $(subst .nsc,.NSCR,$(ssources))
 eobjects = $(subst .nce,.NCER,$(esources))
 aobjects = $(subst .nce,.NANR,$(esources))
 imdobj = $(subst .imd,.nsbtx,$(imdres))
+imdobj2 = $(subst .imd,.nsbmd,$(imdres))
 
 
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
 # サフィックスルールを定義することで 依存関係を自動で判断してくれる
-.SUFFIXES: .NCLR .ncl .NCGR .ncg .NSCR .nsc .NCER .nce .nsbtx .imd
+.SUFFIXES: .NCLR .ncl .NCGR .ncg .NSCR .nsc .NCER .nce .nsbtx .nsbmd .imd
 
 .ncl.NCLR:
 	g2dcvtr $< -pcm
@@ -61,6 +62,7 @@ ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
 
 .imd.nsbtx:
 	g3dcvtr $< -etex
+	g3dcvtr $<
 
 endif
 
@@ -81,7 +83,7 @@ $(TARGETDIR)/$(targetname).narc: $(targetname).narc
 
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、元ファイルからコンバートするルールを有効にする
 # コピー先のnarcが古い場合実行する
-$(targetname).narc: $(lobjects) $(gobjects) $(sobjects) $(eobjects) $(aobjects) $(imdobj) $(spares)
+$(targetname).narc: $(lobjects) $(gobjects) $(sobjects) $(eobjects) $(aobjects) $(imdobj) $(imdobj2) $(spares)
 	nnsarc -r -l -n -i $(targetname) $^
 	$(NAIXCUT) $(targetname).naix
 endif

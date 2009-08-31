@@ -45,6 +45,7 @@ struct _STA_BUTTON_SYS
   ACTING_WORK* actWork;
 
   MUSICAL_POKE_PARAM *musPoke;
+  BOOL canUseButton;
 
   GFL_CLUNIT  *cellUnit;
   u32 pltIdx[2];
@@ -75,6 +76,7 @@ STA_BUTTON_SYS* STA_BUTTON_InitSystem( HEAPID heapId , ACTING_WORK* actWork , MU
   work->heapId = heapId;
   work->actWork = actWork;
   work->musPoke = musPoke;
+  work->canUseButton = FALSE;
   
   work->equipItem[0] = work->musPoke->equip[MUS_POKE_EQU_HAND_R].itemNo;
   work->equipItem[1] = work->musPoke->equip[MUS_POKE_EQU_HAND_L].itemNo;
@@ -114,7 +116,38 @@ void STA_BUTTON_ExitSystem( STA_BUTTON_SYS *work )
 //--------------------------------------------------------------
 void STA_BUTTON_UpdateSystem( STA_BUTTON_SYS *work )
 {
-  
+  //ボタンのタッチ判定
+  if( work->canUseButton == TRUE )
+  {
+    GFL_UI_TP_HITTBL hitTbl[3] =
+    {
+      {160-16,160+16, 32-16, 32+16},
+      {160-16,160+16,224-16,224+16},
+      {GFL_UI_TP_HIT_END,0,0,0},
+    };
+    const int ret = GFL_UI_TP_HitTrg( hitTbl );
+
+    if( ret != GFL_UI_TP_HIT_NONE )
+    {
+      if( work->equipItem[ret] != MUSICAL_ITEM_INVALID )
+      {
+        if( ret == 0 )
+        {
+          STA_ACT_UseItemRequest( work->actWork , MUS_POKE_EQU_HAND_R );
+          GFL_CLACT_WK_SetDrawEnable( work->clwkButton[1], FALSE );
+          GFL_CLACT_WK_SetDrawEnable( work->clwkButtonBase[1], FALSE );
+        }
+        else
+        {
+          STA_ACT_UseItemRequest( work->actWork , MUS_POKE_EQU_HAND_L );
+          GFL_CLACT_WK_SetDrawEnable( work->clwkButton[0], FALSE );
+          GFL_CLACT_WK_SetDrawEnable( work->clwkButtonBase[0], FALSE );
+        }
+        G2S_SetBlendBrightness( GX_BLEND_PLANEMASK_OBJ , -8 );
+        work->canUseButton = FALSE;
+      }
+    }
+  }
 }
 
 
@@ -142,12 +175,6 @@ static void STA_BUTTON_InitCell( STA_BUTTON_SYS *work )
     GFL_ARC_CloseDataHandle(arcHandle);
   }
   //セル作成
-  {
-    GFL_CLACT_WK_SetDrawEnable( work->clwkButton[1], TRUE );
-    GFL_CLACT_WK_SetAutoAnmFlag( work->clwkButton[0], TRUE );
-    GFL_CLACT_WK_SetAutoAnmFlag( work->clwkButton[1], TRUE );
-  }
-  
   for( i=0;i<2;i++ )
   {
     if( work->equipItem[i] != MUSICAL_ITEM_INVALID )
@@ -232,8 +259,8 @@ static void STA_BUTTON_InitCell( STA_BUTTON_SYS *work )
       work->clwkButtonBase[i] = GFL_CLACT_WK_Create( work->cellUnit ,work->ncgIdx[1],work->pltIdx[1],work->anmIdx[1],
                     &cellInitData ,CLSYS_DEFREND_SUB , work->heapId );
 
-      GFL_CLACT_WK_SetDrawEnable( work->clwkButton[i], TRUE );
-      GFL_CLACT_WK_SetDrawEnable( work->clwkButtonBase[i], TRUE );
+      GFL_CLACT_WK_SetDrawEnable( work->clwkButton[i], FALSE );
+      GFL_CLACT_WK_SetDrawEnable( work->clwkButtonBase[i], FALSE );
 
       STA_BUTTON_TransTexToCell( work , i , work->equipItem[i] , texType );
     }
@@ -320,4 +347,22 @@ static void STA_BUTTON_TransTexToCell( STA_BUTTON_SYS *work , const u8 idx , con
     }
   }
   GFL_HEAP_FreeMemory( texRes );  
+}
+
+//--------------------------------------------------------------
+//  ボタン使用可能へ
+//--------------------------------------------------------------
+void STA_BUTTON_SetCanUseButton( STA_BUTTON_SYS *work , const BOOL flg )
+{
+  if( work->equipItem[0] != MUSICAL_ITEM_INVALID )
+  {
+    GFL_CLACT_WK_SetDrawEnable( work->clwkButton[0], flg );
+    GFL_CLACT_WK_SetDrawEnable( work->clwkButtonBase[0], flg );
+  }
+  if( work->equipItem[1] != MUSICAL_ITEM_INVALID )
+  {
+    GFL_CLACT_WK_SetDrawEnable( work->clwkButton[1], flg );
+    GFL_CLACT_WK_SetDrawEnable( work->clwkButtonBase[1], flg );
+  }
+  work->canUseButton = flg;
 }

@@ -25,7 +25,7 @@
 #define MUSICAL_CAMERA_UP  {0,FX32_ONE,0}
 
 #define MUSICAL_CAMERA_NEAR (FX32_ONE)
-#define MUSICAL_CAMERA_FAR  (FX32_ONE*300)
+#define MUSICAL_CAMERA_FAR  (FX32_ONE*3000)
 
 //BBD用座標変換(カメラの幅から計算
 #define MUSICAL_POS_X(val)		FX32_CONST((val)/16.0f)

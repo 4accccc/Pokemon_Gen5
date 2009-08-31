@@ -38,7 +38,7 @@ typedef struct _STA_POKE_WORK STA_POKE_WORK;
 //	proto
 //======================================================================
 
-STA_POKE_SYS* STA_POKE_InitSystem( HEAPID heapId , MUS_POKE_DRAW_SYSTEM* drawSys , MUS_ITEM_DRAW_SYSTEM *itemDrawSys , GFL_BBD_SYS* bbdSys );
+STA_POKE_SYS* STA_POKE_InitSystem( HEAPID heapId , ACTING_WORK *actWork , MUS_POKE_DRAW_SYSTEM* drawSys , MUS_ITEM_DRAW_SYSTEM *itemDrawSys , GFL_BBD_SYS* bbdSys );
 //ポケモンの描画の後にアイテムの更新をする必要があるので別関数化
 void	STA_POKE_UpdateSystem( STA_POKE_SYS *work );
 void	STA_POKE_UpdateSystem_Item( STA_POKE_SYS *work );
@@ -70,6 +70,10 @@ void STA_POKE_SetPokeDir( STA_POKE_SYS *work , STA_POKE_WORK *pokeWork , const S
 void STA_POKE_SetFrontBack( STA_POKE_SYS *work , STA_POKE_WORK *pokeWork , const BOOL isFront );
 void STA_POKE_SetDrawItem( STA_POKE_SYS *work , STA_POKE_WORK *pokeWork , const BOOL isDrawItem );
 const VecFx32* STA_POKE_GetRotOffset( STA_POKE_SYS *work , STA_POKE_WORK *pokeWork );
+
+//アイテム使用
+void STA_POKE_UseItemFunc( STA_POKE_SYS *work , STA_POKE_WORK *pokeWork , MUS_POKE_EQUIP_POS ePos );
+
 
 #endif STA_ACT_POKE_H__
 

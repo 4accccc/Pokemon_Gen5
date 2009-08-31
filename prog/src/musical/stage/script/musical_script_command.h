@@ -60,7 +60,9 @@
 #define SCRIPT_ENUM_PokeTransEffect    (41)
 #define SCRIPT_ENUM_PokeAttentionOn    (42)
 #define SCRIPT_ENUM_PokeAttentionOff   (43)
-#define SEQ_END             (44)
+#define SCRIPT_ENUM_StageStartMainPart   (44)
+#define SCRIPT_ENUM_StageFinishMainPart   (45)
+#define SEQ_END             (46)
 
 #ifndef __C_NO_DEF_
 
@@ -201,6 +203,30 @@
   .macro  ComStageChangeBg  bgNo
   .short  SCRIPT_ENUM_StageChangeBg
   .long \bgNo
+  .endm
+
+//======================================================================
+/**
+ * @brief ステージ：メインパートの開始
+ *
+ * #param_num 0
+ *
+ */
+//======================================================================
+  .macro  ComStageStartMainPart
+  .short  SCRIPT_ENUM_StageStartMainPart
+  .endm
+
+//======================================================================
+/**
+ * @brief ステージ：メインパートの終了
+ *
+ * #param_num 0
+ *
+ */
+//======================================================================
+  .macro  ComStageFinishMainPart
+  .short  SCRIPT_ENUM_StageFinishMainPart
   .endm
 
 #pragma mark [>Pokemon Command

@@ -49,7 +49,8 @@ struct _MUS_ITEM_DATA_WORK
   u16   equipPosBit;
   u8    mainPos;
   u8    conType;
-  u8    pad[2];
+  u8    useType;
+  u8    pad[1];
 };
 
 struct _MUS_ITEM_DATA_SYS
@@ -77,13 +78,14 @@ MUS_ITEM_DATA_SYS* MUS_ITEM_DATA_InitSystem( HEAPID heapId )
     u8 i;
     for( i=0;i<33;i++ )
     {
-      OS_TPrintf("[%2d][%2d][%3d][%3d][%3d][%1d][%1d]\n",i,
+      OS_TPrintf("[%2d][%2d][%3d][%3d][%3d][%1d][%1d][%1d]\n",i,
           sysWork->dataArr[i].texSize,
           sysWork->dataArr[i].ofsX,
           sysWork->dataArr[i].ofsY,
           sysWork->dataArr[i].equipPosBit,
           sysWork->dataArr[i].mainPos,
-          sysWork->dataArr[i].conType);
+          sysWork->dataArr[i].conType,
+          sysWork->dataArr[i].useType);
     }
   }
   
@@ -338,13 +340,19 @@ const MUS_POKE_EQUIP_USER MUS_ITEM_DATA_EquipPosToUserType( const MUS_POKE_EQUIP
     return MUS_POKE_EQU_USER_INVALID;
     break;
   }
-  
 }
 
 
 //アイテムのコンディションタイプを取得
-const u8 MUS_ITEM_DATA_GetItemConditionType( MUS_ITEM_DATA_SYS* sysWork , const u16 itemNo )
+const MUSICAL_CONDITION_TYPE MUS_ITEM_DATA_GetItemConditionType( MUS_ITEM_DATA_SYS* sysWork , const u16 itemNo )
 {
   const MUS_ITEM_DATA_WORK *data = MUS_ITEM_DATA_GetMusItemData( sysWork , itemNo );
   return data->conType;
+}
+
+//アイテムの使用タイプを取得
+const MUSICAL_ITEM_USETYPE MUS_ITEM_DATA_GetItemUseType( MUS_ITEM_DATA_SYS* sysWork , const u16 itemNo )
+{
+  const MUS_ITEM_DATA_WORK *data = MUS_ITEM_DATA_GetMusItemData( sysWork , itemNo );
+  return data->useType;
 }

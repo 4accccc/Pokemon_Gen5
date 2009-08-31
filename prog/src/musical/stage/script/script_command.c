@@ -477,10 +477,31 @@ SCRIPT_FUNC_DEF( StageChangeBg )
   STA_SCRIPT_SYS *work = scriptWork->sysWork;
   const s32 bgNo = ScriptFunc_GetValueS32();
   SCRIPT_PRINT_LABEL(StageChangeBg);
-  SCRIPT_TPrintf( "  bgNo[%d]\n",bgNo);
   
   STA_ACT_LoadBg( work->actWork , bgNo );
 
+  return SFT_CONTINUE;
+}
+
+//メインパート開始
+SCRIPT_FUNC_DEF( StageStartMainPart )
+{
+  STA_SCRIPT_WORK *scriptWork = (STA_SCRIPT_WORK*)context_work;
+  STA_SCRIPT_SYS *work = scriptWork->sysWork;
+  SCRIPT_PRINT_LABEL(StageStartMainPart);
+  
+  STA_ACT_StartMainPart( work->actWork );
+  return SFT_CONTINUE;
+}
+
+//メインパート終了
+SCRIPT_FUNC_DEF( StageFinishMainPart )
+{
+  STA_SCRIPT_WORK *scriptWork = (STA_SCRIPT_WORK*)context_work;
+  STA_SCRIPT_SYS *work = scriptWork->sysWork;
+  SCRIPT_PRINT_LABEL(StageFinishMainPart);
+  
+  STA_ACT_FinishMainPart( work->actWork );
   return SFT_CONTINUE;
 }
 
@@ -517,7 +538,6 @@ SCRIPT_FUNC_DEF( PokeShow )
   u8  pokeNo;
   
   SCRIPT_PRINT_LABEL(PokeShow);
-  SCRIPT_TPrintf( "  pokeNo[%d][%s]\n",pokeNoTemp,(flg==0?"OFF":"ON"));
   
   for( pokeNo=0;pokeNo<MUSICAL_POKE_MAX;pokeNo++ )
   {

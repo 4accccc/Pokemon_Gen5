@@ -15,6 +15,7 @@
 
 #include "sta_local_def.h"
 #include "sta_act_audience.h"
+#include "musical/musical_program.h"
 #include "script/sta_act_script_def.h"
 
 #include "test/ariizumi/ari_debug.h"
@@ -92,7 +93,7 @@ struct _STA_AUDI_SYS
 static void STA_AUDI_InitGraphic( STA_AUDI_SYS *work );
 static void STA_AUDI_TermGraphic( STA_AUDI_SYS *work );
 
-static void STA_AUDI_InitCell( STA_AUDI_SYS *work );
+static void STA_AUDI_InitCell( STA_AUDI_SYS *work , STAGE_INIT_WORK *initWork );
 static void STA_AUDI_TermCell( STA_AUDI_SYS *work );
 
 static void STA_AUDI_UpdateAudience( STA_AUDI_SYS *work );
@@ -108,14 +109,14 @@ static const u16 audiCharNum[4] = {0x08,0x10,0x88,0x90};
 //--------------------------------------------------------------
 //  初期化
 //--------------------------------------------------------------
-STA_AUDI_SYS* STA_AUDI_InitSystem( HEAPID heapId , ACTING_WORK *actWork )
+STA_AUDI_SYS* STA_AUDI_InitSystem( HEAPID heapId , ACTING_WORK *actWork , STAGE_INIT_WORK *initWork )
 {
   u8 i;
   STA_AUDI_SYS *work = GFL_HEAP_AllocMemory( heapId , sizeof(STA_AUDI_SYS) );
   
   work->heapId = heapId;
   STA_AUDI_InitGraphic( work );
-  STA_AUDI_InitCell( work );
+  STA_AUDI_InitCell( work , initWork );
   
   work->actWork = actWork;
   work->isUpdateAttention = FALSE;
@@ -214,14 +215,56 @@ static void STA_AUDI_TermGraphic( STA_AUDI_SYS *work )
 //--------------------------------------------------------------
 //  セルの初期化
 //--------------------------------------------------------------
-static void STA_AUDI_InitCell( STA_AUDI_SYS *work )
+static void STA_AUDI_InitCell( STA_AUDI_SYS *work , STAGE_INIT_WORK *initWork )
 {
-  u8 x,y;
-  u8 audiType[STA_AUDI_NUM_X*STA_AUDI_NUM_Y];
+  u8 x,y,i,j;
+  u8 audiType[STA_AUDI_NUM];
+  u8 conPoint[MCT_MAX];
+  u16 conPointMax = 0;
+  u8 audiTypeNum[MCT_MAX] = {0,0,0,0};
+  u8 audiTypeNumSum = 0;
+  u8 idx;
   
-  for( x=0;x<STA_AUDI_NUM_X*STA_AUDI_NUM_Y;x++ )
+  //観客の種類を計算
+  for( i=0;i<MCT_MAX;i++ )
   {
-    audiType[x] = GFL_STD_MtRand0(4);
+    conPoint[i] = MUSICAL_PROGRAM_GetConditionPoint( initWork->progWork , i );
+    conPointMax += conPoint[i];
+  }
+  //割合から人数算出
+  for( i=0;i<MCT_MAX;i++ )
+  {
+    audiTypeNum[i] = STA_AUDI_NUM*conPoint[i] / conPointMax;
+    audiTypeNumSum += audiTypeNum[i];
+  }
+  //計算誤差補正
+  while( audiTypeNumSum < STA_AUDI_NUM )
+  {
+    audiTypeNum[GFL_STD_MtRand0(4)]++;
+    audiTypeNumSum++;
+  }
+  
+  //配列にセット
+  idx = 0;
+  for( i=0;i<MCT_MAX;i++ )
+  {
+    for( j=0;j<audiTypeNum[i];j++ )
+    {
+      audiType[idx] = i;
+      idx++;
+    }
+  }
+  
+  //ランダムで並び替え
+  for( j=0;j<3;j++ )
+  {
+    for( i=0;i<STA_AUDI_NUM;i++ )
+    {
+      const u8 swapIdx = GFL_STD_MtRand0(STA_AUDI_NUM);
+      const u8 temp = audiType[i];
+      audiType[i] = audiType[swapIdx];
+      audiType[swapIdx] = temp;
+    }
   }
   
   for( y=0;y<STA_AUDI_NUM_Y;y++ )
@@ -256,7 +299,6 @@ static void STA_AUDI_InitCell( STA_AUDI_SYS *work )
       }
     }
   }
-  
 }
 
 static void STA_AUDI_TermCell( STA_AUDI_SYS *work )

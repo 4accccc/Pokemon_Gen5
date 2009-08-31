@@ -54,6 +54,9 @@
 
 #define ACT_SCROLL_SPEED (4)
 
+//一発逆転ボタン視線強奪時間(演出時間とは等しくない)
+#define ACT_USEITEM_EFF_TIME (5*60)
+
 //Msg系
 #define ACT_MSG_POS_X ( 4 )
 #define ACT_MSG_POS_Y ( 20 )
@@ -153,8 +156,13 @@ struct _ACTING_WORK
   //注目ポケ用
   BOOL    isUpdateAttention;
   u8      lightUpPoke;
-  u8      upsetPoke;  //一発逆転中ポケ
   u8      attentionPoke;  //カメラの対象
+  
+  //アイテム使用形
+  BOOL    useItemFlg[MUSICAL_POKE_MAX];
+  MUS_POKE_EQUIP_POS useItemPos[MUSICAL_POKE_MAX];
+  u8      useItemPoke;  //一発逆転中ポケ
+  u16     useItemCnt;
 };
 
 //======================================================================
@@ -181,8 +189,12 @@ static void STA_ACT_StartScript( ACTING_WORK *work );
 
 static void STA_ACT_UpdateAttention( ACTING_WORK *work );
 
+static void STA_ACT_UpdateUseItem( ACTING_WORK *work );
+
 static void STA_ACT_InitTransEffect( ACTING_WORK *work );
 static void STA_ACT_TermTransEffect( ACTING_WORK *work );
+static void STA_ACT_InitItemUseEffect( ACTING_WORK *work );
+static void STA_ACT_TermItemUseEffect( ACTING_WORK *work );
 
 
 static const GFL_DISP_VRAM vramBank = {
@@ -251,7 +263,13 @@ ACTING_WORK*  STA_ACT_InitActing( STAGE_INIT_WORK *initWork , HEAPID heapId )
   //注目ポケ系初期化
   work->isUpdateAttention = TRUE;
   work->lightUpPoke = MUSICAL_POKE_MAX;
-  work->upsetPoke = MUSICAL_POKE_MAX;
+  //アイテム使用系初期化
+  work->useItemPoke = MUSICAL_POKE_MAX;
+  work->useItemCnt = 0;
+  for( i=0;i<MUSICAL_POKE_MAX;i++ )
+  {
+    work->useItemFlg[i] = FALSE;
+  }
 
   STA_ACT_SetupGraphic( work );
   STA_ACT_SetupBg( work );
@@ -261,7 +279,7 @@ ACTING_WORK*  STA_ACT_InitActing( STAGE_INIT_WORK *initWork , HEAPID heapId )
   STA_ACT_SetupEffect( work );
   
   work->lightSys = STA_LIGHT_InitSystem(work->heapId , work );
-  work->audiSys = STA_AUDI_InitSystem( work->heapId , work );
+  work->audiSys = STA_AUDI_InitSystem( work->heapId , work , work->initWork );
   work->buttonSys = STA_BUTTON_InitSystem( work->heapId , work , &work->initWork->musPoke[work->playerIdx] );
 
   work->scriptSys = STA_SCRIPT_InitSystem( work->heapId , work );
@@ -348,6 +366,7 @@ void  STA_ACT_TermActing( ACTING_WORK *work )
 
 ACTING_RETURN STA_ACT_LoopActing( ACTING_WORK *work )
 {
+  static BOOL stopScript = FALSE;
 #if DEB_ARI|0
   if( STA_SCRIPT_GetRunningScriptNum( work->scriptSys ) == 0 )
   {
@@ -362,6 +381,13 @@ ACTING_RETURN STA_ACT_LoopActing( ACTING_WORK *work )
       }
       work->scriptData = GFL_ARC_UTIL_Load( ARCID_MUSICAL_SCRIPT , NARC_musical_script_mus_002_001_bin , FALSE , work->heapId );
       STA_ACT_StartScript( work );
+    }
+  }
+  else
+  {
+    if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A )
+    {
+      stopScript = TRUE;
     }
   }
 /*
@@ -472,7 +498,13 @@ ACTING_RETURN STA_ACT_LoopActing( ACTING_WORK *work )
   INFOWIN_Update();
   STA_ACT_UpdateScroll(work);
 
-  STA_SCRIPT_UpdateSystem( work->scriptSys );
+  STA_BUTTON_UpdateSystem( work->buttonSys );
+  STA_ACT_UpdateUseItem( work );
+
+  if( stopScript == FALSE )
+  {
+    STA_SCRIPT_UpdateSystem( work->scriptSys );
+  }
 
   STA_BG_UpdateSystem( work->bgSys );
   STA_POKE_UpdateSystem( work->pokeSys );
@@ -513,6 +545,13 @@ ACTING_RETURN STA_ACT_LoopActing( ACTING_WORK *work )
     return ACT_RET_GO_END;
   }
 #endif //DEB_ARI
+#if DEB_ARI|1
+  if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_B )
+  {
+    G2S_SetBlendBrightness( GX_BLEND_PLANEMASK_OBJ , -8 );
+    STA_BUTTON_SetCanUseButton( work->buttonSys , TRUE );
+  }
+#endif
 
   return ACT_RET_CONTINUE;
 }
@@ -783,7 +822,7 @@ static void STA_ACT_SetupPokemon( ACTING_WORK *work )
   MUS_POKE_DRAW_SetTexAddres( work->drawSys , 0x40000 );
   work->itemDrawSys = MUS_ITEM_DRAW_InitSystem( work->bbdSys , MUSICAL_POKE_MAX*MUS_POKE_EQUIP_MAX, work->heapId );
   
-  work->pokeSys = STA_POKE_InitSystem( work->heapId , work->drawSys , work->itemDrawSys , work->bbdSys );
+  work->pokeSys = STA_POKE_InitSystem( work->heapId , work , work->drawSys , work->itemDrawSys , work->bbdSys );
 
   for( i=0;i<MUSICAL_POKE_MAX;i++ )
   {
@@ -1112,11 +1151,11 @@ static void STA_ACT_UpdateAttention( ACTING_WORK *work )
       STA_AUDI_SetAttentionPoke( work->audiSys , i , FALSE );
     }
     
-    if( work->upsetPoke < MUSICAL_POKE_MAX )
+    if( work->useItemPoke < MUSICAL_POKE_MAX )
     {
       //一発逆転中
-      work->attentionPoke = work->upsetPoke;
-      STA_AUDI_SetAttentionPoke( work->audiSys , work->upsetPoke , TRUE );
+      work->attentionPoke = work->useItemPoke;
+      STA_AUDI_SetAttentionPoke( work->audiSys , work->useItemPoke , TRUE );
     }
     else
     if( work->lightUpPoke < MUSICAL_POKE_MAX )
@@ -1178,6 +1217,62 @@ void  STA_ACT_StopBgm( ACTING_WORK *work )
   SND_STRM_Release();
 }
 
+#pragma mark [> itemUse func
+//--------------------------------------------------------------
+//アイテムの使用リクエスト
+//--------------------------------------------------------------
+void STA_ACT_UseItemRequest( ACTING_WORK *work , MUS_POKE_EQUIP_POS ePos )
+{
+  //FIXME 通信処理
+  STA_ACT_UseItem( work , work->playerIdx , ePos );
+}
+//--------------------------------------------------------------
+//アイテムの使用
+//--------------------------------------------------------------
+void STA_ACT_UseItem( ACTING_WORK *work , u8 pokeIdx , MUS_POKE_EQUIP_POS ePos )
+{
+  work->useItemFlg[pokeIdx] = TRUE;
+  work->useItemPos[pokeIdx] = ePos;
+}
+//--------------------------------------------------------------
+//アイテムの使用の更新
+//--------------------------------------------------------------
+static void STA_ACT_UpdateUseItem( ACTING_WORK *work )
+{
+  u8 i;
+  u8 usePokeArr[MUSICAL_POKE_MAX];
+  u8 usePokeNum = 0;
+
+  //使用判定
+  for( i=0;i<MUSICAL_POKE_MAX;i++ )
+  {
+    if( work->useItemFlg[i] == TRUE )
+    {
+      STA_POKE_UseItemFunc( work->pokeSys , work->pokeWork[i] , work->useItemPos[i] );
+      usePokeArr[usePokeNum] = i;
+      usePokeNum++;
+      work->useItemFlg[i] = FALSE;
+    }
+  }
+  if( usePokeNum > 0 )
+  {
+    work->useItemCnt = ACT_USEITEM_EFF_TIME;
+    work->useItemPoke = usePokeArr[ GFL_STD_MtRand0(usePokeNum)];
+    work->isUpdateAttention = TRUE;
+  }
+  
+  //時間判定
+  if( work->useItemCnt > 0 )
+  {
+    work->useItemCnt--;
+    if( work->useItemCnt == 0 )
+    {
+      work->useItemPoke = MUSICAL_POKE_MAX;
+      work->isUpdateAttention = TRUE;
+    }
+  }
+}
+
 #pragma mark [> trans effect func
 static void STA_ACT_InitTransEffect( ACTING_WORK *work )
 {
@@ -1218,6 +1313,17 @@ void STA_ACT_PlayTransEffect( ACTING_WORK *work , const u8 idx )
 //--------------------------------------------------------------
 //  スクリプト用に外部提供関数
 //--------------------------------------------------------------
+void STA_ACT_StartMainPart( ACTING_WORK *work )
+{
+  //メインパートの開始
+  STA_BUTTON_SetCanUseButton( work->buttonSys , TRUE );
+}
+void STA_ACT_FinishMainPart( ACTING_WORK *work )
+{
+  //メインパートの終了
+  STA_BUTTON_SetCanUseButton( work->buttonSys , FALSE );
+}
+
 STA_POKE_SYS* STA_ACT_GetPokeSys( ACTING_WORK *work )
 {
   return work->pokeSys;

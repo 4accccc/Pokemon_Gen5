@@ -32,6 +32,7 @@ DATA_IDX_EQUIP_HAND	= 11
 DATA_IDX_IS_BACK	= 12
 DATA_IDX_IS_FRONT	= 13
 DATA_IDX_CONDITION	= 14
+DATA_IDX_USETYPE	= 15
 
 MUS_POKE_EQU_TYPE_EAR	= 0
 MUS_POKE_EQU_TYPE_HEAD	= 1
@@ -54,6 +55,13 @@ CON_HASH_DATA = {
 	"キュート"=>1 ,
 	"エレガント"=>2 ,
 	"ユニーク"=>3 }
+
+USETYPE_HASH_DATA = {
+	"回転"=>0 ,
+	"発光"=>1 ,
+	"浮遊"=>2 ,
+	"投擲"=>3 ,
+	"使用"=>4 }
 
 
 #============================
@@ -181,9 +189,15 @@ while line = dataFile.gets
 	ary = Array( conIdx )
 	outFile.write( ary.pack("C") )
 
+	useIdx = USETYPE_HASH_DATA[str[DATA_IDX_USETYPE]]
+	if( useIdx == HASH_ERROR )
+		printf("使用タイプの形式が間違っています[No:%d]",no)
+	end
+	ary = Array( useIdx )
+	outFile.write( ary.pack("C") )
+
 	#Padding
 	ary = Array( 0 )
-	outFile.write( ary.pack("C") )
 	outFile.write( ary.pack("C") )
 
 	no = no+1

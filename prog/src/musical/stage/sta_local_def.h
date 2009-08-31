@@ -10,6 +10,7 @@
 #define STA_LOCAL_DEF_H__
 
 #include "musical/musical_define.h"
+#include "musical/musical_program.h"
 #include "musical/comm/mus_comm_func.h"
 
 //BG’è‹`
@@ -57,6 +58,7 @@ struct _STAGE_INIT_WORK
 {
   MUS_COMM_WORK *commWork;
 	MUSICAL_POKE_PARAM musPoke[MUSICAL_POKE_MAX];
+	MUSICAL_PROGRAM_WORK *progWork;
 	u16		repertorie;	//‰‰–Ú
 };
 

@@ -85,16 +85,23 @@ static GFL_PROC_RESULT MusicalStageProc_Init( GFL_PROC * proc, int * seq , void 
     MUSICAL_STAGE_SetData_NPC( work->actInitWork , 3 , MONSNO_REIBAAN , HEAPID_MUSICAL_STAGE );
     
     MUSICAL_STAGE_SetEquip( work->actInitWork , 0 , MUS_POKE_EQU_HAND_R , 13 , 0 );
+    MUSICAL_STAGE_SetEquip( work->actInitWork , 0 , MUS_POKE_EQU_HAND_L  , 30 , 0 );
     MUSICAL_STAGE_SetEquip( work->actInitWork , 0 , MUS_POKE_EQU_HEAD  , 16 , 0 );
 
     MUSICAL_STAGE_SetEquip( work->actInitWork , 1 , MUS_POKE_EQU_EAR_L , 7 , 0 );
     MUSICAL_STAGE_SetEquip( work->actInitWork , 1 , MUS_POKE_EQU_BODY  , 9 , 0 );
+    MUSICAL_STAGE_SetEquip( work->actInitWork , 1 , MUS_POKE_EQU_HAND_R , 13 , 0 );
+    MUSICAL_STAGE_SetEquip( work->actInitWork , 1 , MUS_POKE_EQU_HAND_L  , 30 , 0 );
 
     MUSICAL_STAGE_SetEquip( work->actInitWork , 2 , MUS_POKE_EQU_HAND_R , 31 , 0 );
+    MUSICAL_STAGE_SetEquip( work->actInitWork , 2 , MUS_POKE_EQU_HAND_L  , 30 , 0 );
     MUSICAL_STAGE_SetEquip( work->actInitWork , 2 , MUS_POKE_EQU_HEAD   , 15 , 0 );
 
     MUSICAL_STAGE_SetEquip( work->actInitWork , 3 , MUS_POKE_EQU_HAND_R , 30 , 0 );
+    MUSICAL_STAGE_SetEquip( work->actInitWork , 3 , MUS_POKE_EQU_HAND_L  , 30 , 0 );
     MUSICAL_STAGE_SetEquip( work->actInitWork , 3 , MUS_POKE_EQU_HEAD   , 21 , 0 );
+    work->actInitWork->progWork = MUSICAL_PROGRAM_GetProgramData( HEAPID_MUSICAL_STAGE );
+    MUSICAL_PROGRAM_CalcPokemonPoint( HEAPID_MUSICAL_STAGE , work->actInitWork->progWork , work->actInitWork );
   }
   else
   {
@@ -112,6 +119,7 @@ static GFL_PROC_RESULT MusicalStageProc_Term( GFL_PROC * proc, int * seq , void 
   
   if( pwk == NULL )
   {
+    GFL_HEAP_FreeMemory( work->actInitWork->progWork );
     MUSICAL_STAGE_DeleteStageWork( work->actInitWork );
   }
   GFL_PROC_FreeWork( proc );

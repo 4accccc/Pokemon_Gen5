@@ -11,6 +11,7 @@
 
 #pragma once
 #include "musical/musical_stage_sys.h"
+#include "musical/mus_item_data.h"
 
 //======================================================================
 //	define
@@ -24,19 +25,7 @@
 //	enum
 //======================================================================
 #pragma mark [> enum
-//ミュ－ジカルの配点種類
-typedef enum
-{
-  MPC_COOL,
-  MPC_CUTE,
-  MPC_ELEGANT,
-  MPC_UNIQUE,
-  MPC_MAX,
 
-  MPC_RANDOM = MPC_MAX,   //ランダム配点分(データのみ存在
-  
-  MPC_DATA_MAX,
-}MUSICAL_PROGRAM_CONDITION;
 
 //======================================================================
 //	typedef struct
@@ -52,3 +41,4 @@ typedef struct _MUSICAL_PROGRAM_WORK MUSICAL_PROGRAM_WORK;
 #pragma mark [> proto
 MUSICAL_PROGRAM_WORK* MUSICAL_PROGRAM_GetProgramData( HEAPID heapId );
 void MUSICAL_PROGRAM_CalcPokemonPoint( HEAPID heapId , MUSICAL_PROGRAM_WORK* progWork , STAGE_INIT_WORK *actInitWork );
+const u8 MUSICAL_PROGRAM_GetConditionPoint( MUSICAL_PROGRAM_WORK* progWork , MUSICAL_CONDITION_TYPE conType );

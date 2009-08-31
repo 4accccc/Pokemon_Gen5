@@ -38,6 +38,32 @@ typedef enum
 	MUS_POKE_EQU_TYPE_INVALID,	//無効値
 }MUS_POKE_EQUIP_TYPE;
 
+//ミュ－ジカルの配点種類
+typedef enum
+{
+  MCT_COOL,
+  MCT_CUTE,
+  MCT_ELEGANT,
+  MCT_UNIQUE,
+  MCT_MAX,
+
+  MCT_RANDOM = MCT_MAX,   //ランダム配点分(データのみ存在
+  
+  MCT_DATA_MAX,
+}MUSICAL_CONDITION_TYPE;
+
+//ミュ－ジカルのアイテム使用タイプ
+typedef enum
+{
+  MUT_SPIN,
+  MUT_FLASH,
+  MUT_FLYING,
+  MUT_THROW,
+  MUT_USE,
+  
+  MUT_MAX,
+}MUSICAL_ITEM_USETYPE;
+
 //======================================================================
 //	typedef struct
 //======================================================================
@@ -72,4 +98,7 @@ const BOOL	MUS_ITEM_DATA_IsFrontItem( MUS_ITEM_DATA_WORK*  dataWork );
 const MUS_POKE_EQUIP_USER MUS_ITEM_DATA_EquipPosToUserType( const MUS_POKE_EQUIP_USER pos );
 
 //アイテムのコンディションタイプを取得
-const u8 MUS_ITEM_DATA_GetItemConditionType( MUS_ITEM_DATA_SYS* sysWork , const u16 itemNo );
+const MUSICAL_CONDITION_TYPE MUS_ITEM_DATA_GetItemConditionType( MUS_ITEM_DATA_SYS* sysWork , const u16 itemNo );
+
+//アイテムの使用タイプを取得
+const MUSICAL_ITEM_USETYPE MUS_ITEM_DATA_GetItemUseType( MUS_ITEM_DATA_SYS* sysWork , const u16 itemNo );

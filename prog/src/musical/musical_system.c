@@ -21,6 +21,7 @@
 #include "musical/comm/mus_comm_lobby.h"
 #include "musical/comm/mus_comm_func.h"
 #include "musical/stage/sta_acting.h"
+#include "musical/stage/sta_local_def.h"
 #include "musical/dressup/dup_local_def.h"
 #include "poke_tool/monsno_def.h"
 
@@ -340,7 +341,7 @@ static GFL_PROC_RESULT MusicalProc_Main( GFL_PROC * proc, int * seq , void *pwk,
       MUSICAL_STAGE_SetEquip( work->actInitWork , 3 , MUS_POKE_EQU_FACE   , 21 , 0 );
       MUSICAL_STAGE_SetEquip( work->actInitWork , 3 , MUS_POKE_EQU_HAND_R , 30 , 0 );
     }
-    
+    work->actInitWork->progWork = work->progWork;
     MUSICAL_PROGRAM_CalcPokemonPoint( HEAPID_MUSICAL_PROC , work->progWork , work->actInitWork );
     GFL_PROC_LOCAL_CallProc( work->procSys , NO_OVERLAY_ID, &MusicalStage_ProcData, work->actInitWork );
     work->state = MPS_TERM_ACTING;

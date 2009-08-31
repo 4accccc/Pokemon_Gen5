@@ -22,14 +22,20 @@
 //mus_eff_trans_1.spa内のリソース個数
 #define MUS_EFF_TRANS_1_SPAMAX	(1)
 
+//mus_eff_itemuse.hのsprリソース定義
+#define MUS_EFF_ITEMUSE_MUS_ITEMUSE_FLASH		0
+//mus_eff_itemuse.spa内のリソース個数
+#define MUS_EFF_ITEMUSE_SPAMAX	(1)
+
 
 
 //---- mus_eff_tblテーブルのdefine定義 ----
 #define SPA_MUS_EFF_00		(0)
 #define SPA_MUS_EFF_01		(1)
 #define SPA_MUS_EFF_TRANS_1		(2)
+#define SPA_MUS_EFF_ITEMUSE		(3)
 
-#define SPA_MUS_EFF_MAX		(3)
+#define SPA_MUS_EFF_MAX		(4)
 
 
 #endif

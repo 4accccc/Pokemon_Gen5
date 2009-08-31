@@ -31,7 +31,7 @@ typedef struct _STA_AUDI_SYS STA_AUDI_SYS;
 //	proto
 //======================================================================
 
-extern STA_AUDI_SYS* STA_AUDI_InitSystem( HEAPID heapId , ACTING_WORK *actWork);
+extern STA_AUDI_SYS* STA_AUDI_InitSystem( HEAPID heapId , ACTING_WORK *actWork , STAGE_INIT_WORK *initWork );
 extern void	STA_AUDI_UpdateSystem( STA_AUDI_SYS *work );
 extern void	STA_AUDI_ExitSystem( STA_AUDI_SYS *work );
 

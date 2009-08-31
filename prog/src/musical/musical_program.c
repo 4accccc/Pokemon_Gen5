@@ -36,14 +36,14 @@
 //演目のデータ
 struct _MUSICAL_PROGRAM_DATA
 {
-  u8 condition[MPC_DATA_MAX];
+  u8 condition[MCT_DATA_MAX];
   //デフォルトの参加ポケとか
 };
 
 //演目のワーク
 struct _MUSICAL_PROGRAM_WORK
 {
-  u8 condition[MPC_MAX];
+  u8 condition[MCT_MAX];
 };
 
 //======================================================================
@@ -59,11 +59,11 @@ MUSICAL_PROGRAM_WORK* MUSICAL_PROGRAM_GetProgramData( HEAPID heapId )
   u8 i;
   MUSICAL_PROGRAM_WORK *progWork = GFL_HEAP_AllocMemory( heapId , sizeof( MUSICAL_PROGRAM_WORK ) );
   MUSICAL_PROGRAM_DATA *progData = GFL_HEAP_AllocMemory( heapId , sizeof( MUSICAL_PROGRAM_DATA ) );
-  for( i=0;i<MPC_DATA_MAX;i++ )
+  for( i=0;i<MCT_DATA_MAX;i++ )
   {
     progData->condition[i] = 0;
   }
-  for( i=0;i<MPC_MAX;i++ )
+  for( i=0;i<MCT_MAX;i++ )
   {
     progWork->condition[i] = 0;
   }
@@ -79,7 +79,7 @@ MUSICAL_PROGRAM_WORK* MUSICAL_PROGRAM_GetProgramData( HEAPID heapId )
         val = point;
       }
       
-      progData->condition[GFL_STD_MtRand(MPC_DATA_MAX)] += val*5;
+      progData->condition[GFL_STD_MtRand(MCT_DATA_MAX)] += val*5;
       point -= val;
     }
   }
@@ -94,13 +94,13 @@ MUSICAL_PROGRAM_WORK* MUSICAL_PROGRAM_GetProgramData( HEAPID heapId )
   
 
   //データからワークへコピー
-  for( i=0;i<MPC_MAX;i++ )
+  for( i=0;i<MCT_MAX;i++ )
   {
     progWork->condition[i] = progData->condition[i];
   }
   //ランダム分の分配
   {
-    u8 point = progData->condition[MPC_RANDOM]/5;
+    u8 point = progData->condition[MCT_RANDOM]/5;
     while( point > 0 )
     {
       u8 val = GFL_STD_MtRand( 3 )+1;
@@ -109,7 +109,7 @@ MUSICAL_PROGRAM_WORK* MUSICAL_PROGRAM_GetProgramData( HEAPID heapId )
         val = point;
       }
       
-      progWork->condition[GFL_STD_MtRand(MPC_MAX)] += val*5;
+      progWork->condition[GFL_STD_MtRand(MCT_MAX)] += val*5;
       point -= val;
     }
   }
@@ -133,11 +133,11 @@ void MUSICAL_PROGRAM_CalcPokemonPoint( HEAPID heapId , MUSICAL_PROGRAM_WORK* pro
 {
   u8 conIdx;
   u8 pokeIdx;
-  u8 pokeCondition[MUSICAL_POKE_MAX][MPC_MAX];
-  u8 conditionMax[MPC_MAX];
+  u8 pokeCondition[MUSICAL_POKE_MAX][MCT_MAX];
+  u8 conditionMax[MCT_MAX];
   MUS_ITEM_DATA_SYS *itemDataSys = MUS_ITEM_DATA_InitSystem( heapId );
   
-  for( conIdx=0;conIdx<MPC_MAX;conIdx++ )
+  for( conIdx=0;conIdx<MCT_MAX;conIdx++ )
   {
     for( pokeIdx = 0 ; pokeIdx < MUSICAL_POKE_MAX ; pokeIdx++ )
     {
@@ -166,7 +166,7 @@ void MUSICAL_PROGRAM_CalcPokemonPoint( HEAPID heapId , MUSICAL_PROGRAM_WORK* pro
   {
     MUSICAL_POKE_PARAM *musPoke = &actInitWork->musPoke[pokeIdx];
     OS_TPrintf("Poke[%d]:",pokeIdx);
-    for( conIdx=0;conIdx<MPC_MAX;conIdx++ )
+    for( conIdx=0;conIdx<MCT_MAX;conIdx++ )
     {
       const u8 addPoint = progWork->condition[conIdx] * pokeCondition[pokeIdx][conIdx] / conditionMax[conIdx];
       musPoke->point += addPoint;
@@ -177,4 +177,12 @@ void MUSICAL_PROGRAM_CalcPokemonPoint( HEAPID heapId , MUSICAL_PROGRAM_WORK* pro
   
   
   MUS_ITEM_DATA_ExitSystem( itemDataSys );
+}
+
+//--------------------------------------------------------------
+//	コンディション配分の取得
+//--------------------------------------------------------------
+const u8 MUSICAL_PROGRAM_GetConditionPoint( MUSICAL_PROGRAM_WORK* progWork , MUSICAL_CONDITION_TYPE conType )
+{
+  return progWork->condition[conType];
 }
