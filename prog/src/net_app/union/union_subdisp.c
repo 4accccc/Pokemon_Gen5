@@ -79,6 +79,24 @@ enum{
   UNION_PLATE_SCREEN_SIZE = UNION_PLATE_SIZE_X * UNION_PLATE_SIZE_Y * 2,  ///プレート一人分のスクリーンサイズ
 };
 
+///プレートのタッチ範囲
+enum{
+  PLATE_LEFT = 0,
+  PLATE_RIGHT = 0x1d*8,
+  PLATE_TOP = 2*8,
+  PLATE_BOTTOM = PLATE_TOP + 6*8,
+  
+  PLATE_HEIGHT = PLATE_BOTTOM - PLATE_TOP,
+};
+
+///タッチ後、プレートの色が変わっている時間
+#define UNION_PLATE_TOUCH_LIFE      (60)
+
+typedef enum{
+  PLATE_COLOR_NORMAL,    ///<ノーマル色(タッチしていない状態)
+  PLATE_COLOR_TOUCH,     ///<タッチ色
+}PLATE_COLOR;
+
 ///サブBG画面のパレット構成
 enum{
   UNION_SUBBG_PAL_MALE,             ///<男プレート
@@ -111,8 +129,14 @@ enum{
   ACT_SCROLL_BAR_Y_TOP = 4*8-4,
   ACT_SCROLL_BAR_Y_BOTTOM = 192-5*8+4,
   ACT_SCROLL_BAR_Y_OFFSET = ACT_SCROLL_BAR_Y_BOTTOM - ACT_SCROLL_BAR_Y_TOP,
-  ACT_SCROLL_BAR_WIDTH = 12,
+  ACT_SCROLL_BAR_WIDTH = 22,
   ACT_SCROLL_BAR_HEIGHT = 22,
+
+  ///スクロールバーエリアの範囲
+  SCROLL_AREA_LEFT = ACT_SCROLL_BAR_X - ACT_SCROLL_BAR_WIDTH/2,
+  SCROLL_AREA_RIGHT = ACT_SCROLL_BAR_X + ACT_SCROLL_BAR_WIDTH/2,
+  SCROLL_AREA_TOP = ACT_SCROLL_BAR_Y_TOP,
+  SCROLL_AREA_BOTTOM = ACT_SCROLL_BAR_Y_BOTTOM,
 };
 
 ///メニューバーのCGXサイズ
@@ -121,11 +145,6 @@ enum{
 //==============================================================================
 //  構造体定義
 //==============================================================================
-///スクロールバー制御ワーク
-typedef struct{
-  u8 touch;       ///<TRUE:タッチ中
-}SCROLL_BAR;
-
 ///ユニオン下画面制御ワーク
 typedef struct _UNION_SUBDISP{
   GAMESYS_WORK *gsys;
@@ -141,7 +160,7 @@ typedef struct _UNION_SUBDISP{
   
   u8 appeal_no;    ///<選択中のアピール番号
   u8 scrollbar_touch;   ///<TRUE:スクロールバータッチ中
-  u8 padding[2];
+  u16 plate_touch_life[UNION_CHAT_VIEW_LOG_NUM];   ///<プレートのタッチ後の色変更時間
   
   PRINT_QUE *printQue;
   GFL_FONT *font_handle;
@@ -180,6 +199,10 @@ static void _UniSub_ScrollBar_PosUpdate(UNION_SUBDISP_PTR unisub, UNION_CHAT_LOG
 static void _UniSub_ScrollBar_ViewPosUpdate(UNION_SUBDISP_PTR unisub, UNION_CHAT_LOG *log);
 static u32 _UniSub_ScrollBar_GetPageMax(UNION_CHAT_LOG *log);
 static u32 _UniSub_ScrollBar_GetPageY(UNION_CHAT_LOG *log, u32 page_max);
+static BOOL _UniSub_ScrollArea_TouchCheck(UNION_SUBDISP_PTR unisub);
+static BOOL _UniSub_ChatPlate_TouchCheck(UNION_SUBDISP_PTR unisub);
+static void _UniSub_ChatPlate_Update(UNION_SUBDISP_PTR unisub);
+static void _UniSub_ChatPlate_ChangeColor(UNION_SUBDISP_PTR unisub, int plate_no, PLATE_COLOR color);
 
 
 //==============================================================================
@@ -297,9 +320,14 @@ void UNION_SUBDISP_Update(UNION_SUBDISP_PTR unisub)
   _UniSub_TouchUpdate(unisub);
 
   unisub->scrollbar_touch = _UniSub_ScrollBar_TouchCheck(unisub);
+  if(unisub->scrollbar_touch == FALSE){
+    unisub->scrollbar_touch = _UniSub_ScrollArea_TouchCheck(unisub);
+  }
   if(unisys != NULL){
     _UniSub_ScrollBar_Update(unisys, unisub);
   }
+  _UniSub_ChatPlate_TouchCheck(unisub);
+  _UniSub_ChatPlate_Update(unisub);
   
   if(GameCommSys_BootCheck(game_comm) == GAME_COMM_NO_UNION){
     if(unisys != NULL){
@@ -455,7 +483,6 @@ static void _UniSub_MenuBarLoad(UNION_SUBDISP_PTR unisub)
 
   menu_charno = GFL_BG_AllocCharacterArea(
     UNION_FRAME_S_MESSAGE, MENUBAR_CGX_SIZE, GFL_BG_CHRAREA_GET_B );
-  OS_TPrintf("zzz menu_charno = %d\n", menu_charno);
   unisub->alloc_menubar_pos = menu_charno;
 
   GFL_ARCHDL_UTIL_TransVramBgCharacter(
@@ -895,8 +922,8 @@ void _UniSub_Chat_DispScroll(UNION_SUBDISP_PTR unisub, UNION_CHAT_LOG *log, s32 
 
     for(write_pos = (-offset)-1; write_pos > -1; write_pos--)
     {
-      chat = UnionChat_GetReadBuffer(log, log->chat_view_no - (UNION_CHAT_VIEW_LOG_NUM - 1) - write_pos);
-      GF_ASSERT_MSG(chat != NULL, "view_no=%d, write_pos=%d\n", log->chat_view_no, write_pos);
+      chat = UnionChat_GetReadBuffer(log, log->chat_view_no - (UNION_CHAT_VIEW_LOG_NUM - 1) + write_pos);
+      GF_ASSERT_MSG(chat != NULL, "view_no=%d, write_pos=%d, offset=%d\n", log->chat_view_no, write_pos, offset);
       _UniSub_Chat_DispWrite(unisub, chat, write_pos);
     }
   }
@@ -1095,4 +1122,135 @@ static u32 _UniSub_ScrollBar_GetPageY(UNION_CHAT_LOG *log, u32 page_max)
   page_y = ACT_SCROLL_BAR_Y_OFFSET << 8;
   page_y /= page_max;
   return page_y;
+}
+
+//--------------------------------------------------------------
+/**
+ * スクロールエリアタッチ判定
+ *
+ * @param   unisub		
+ *
+ * @retval  BOOL		TRUE：タッチした　FALSE：していない
+ */
+//--------------------------------------------------------------
+static BOOL _UniSub_ScrollArea_TouchCheck(UNION_SUBDISP_PTR unisub)
+{
+  GFL_CLACTPOS bar;
+  u32 tp_x, tp_y;
+  
+  if(GFL_UI_TP_GetPointTrg(&tp_x, &tp_y) == FALSE){
+    return FALSE;
+  }
+  if(tp_x >= SCROLL_AREA_LEFT && tp_x <= SCROLL_AREA_RIGHT
+      && tp_y >= SCROLL_AREA_TOP && tp_y <= SCROLL_AREA_BOTTOM){
+    bar.x = ACT_SCROLL_BAR_X;
+    bar.y = tp_y;
+    GFL_CLACT_WK_SetPos(unisub->act[UNISUB_ACTOR_APPEAL_SCROLL], &bar, CLSYS_DEFREND_SUB);
+    return TRUE;
+  }
+  
+  return FALSE;
+}
+
+//--------------------------------------------------------------
+/**
+ * プレートのタッチチェック
+ *
+ * @param   unisub		
+ *
+ * @retval  BOOL		TRUE:タッチ発生
+ */
+//--------------------------------------------------------------
+static BOOL _UniSub_ChatPlate_TouchCheck(UNION_SUBDISP_PTR unisub)
+{
+  u32 tp_x, tp_y;
+  int y;
+  
+  if(GFL_UI_TP_GetPointTrg(&tp_x, &tp_y) == FALSE){
+    return FALSE;
+  }
+  
+  if(tp_x >= PLATE_LEFT && tp_x <= PLATE_RIGHT){
+    for(y = 0; y < UNION_CHAT_VIEW_LOG_NUM; y++){
+      if(tp_y >= (PLATE_TOP + PLATE_HEIGHT * y) && tp_y <= (PLATE_BOTTOM + PLATE_HEIGHT * y)){
+        break;
+      }
+    }
+  }
+  
+  if(y >= UNION_CHAT_VIEW_LOG_NUM){
+    return FALSE;
+  }
+  
+  _UniSub_ChatPlate_ChangeColor(unisub, y, PLATE_COLOR_TOUCH);
+  unisub->plate_touch_life[y] = UNION_PLATE_TOUCH_LIFE;
+  return TRUE;
+}
+
+//--------------------------------------------------------------
+/**
+ * プレートの色更新処理
+ *
+ * @param   unisub		
+ */
+//--------------------------------------------------------------
+static void _UniSub_ChatPlate_Update(UNION_SUBDISP_PTR unisub)
+{
+  int y;
+  
+  for(y = 0; y < UNION_CHAT_VIEW_LOG_NUM; y++){
+    if(unisub->plate_touch_life[y] > 0){
+      unisub->plate_touch_life[y]--;
+      if(unisub->plate_touch_life[y] == 0){
+        _UniSub_ChatPlate_ChangeColor(unisub, y, PLATE_COLOR_NORMAL);
+      }
+    }
+  }
+}
+
+//--------------------------------------------------------------
+/**
+ * プレートの色をタッチ色か、ノーマル色か変更する
+ *
+ * @param   unisub		
+ * @param   plate_no		プレート番号
+ * @param   color		    変更後の色指定
+ */
+//--------------------------------------------------------------
+static void _UniSub_ChatPlate_ChangeColor(UNION_SUBDISP_PTR unisub, int plate_no, PLATE_COLOR color)
+{
+  u16 *scrn_buf;
+  u16 change_palno, now_palno;
+  
+  scrn_buf = GFL_BG_GetScreenBufferAdrs(UNION_FRAME_S_PLATE);
+  scrn_buf += (UNION_PLATE_START_X + UNION_PLATE_SIZE_X * UNION_PLATE_SIZE_Y) 
+    + (UNION_PLATE_SIZE_X * UNION_PLATE_SIZE_Y) * plate_no;
+  now_palno = (*scrn_buf) >> 12;
+  switch(now_palno){
+  case UNION_SUBBG_PAL_MALE:
+  case UNION_SUBBG_PAL_MALE_TOUCH:
+    if(color == PLATE_COLOR_NORMAL){
+      change_palno = UNION_SUBBG_PAL_MALE;
+    }
+    else{
+      change_palno = UNION_SUBBG_PAL_MALE_TOUCH;
+    }
+    break;
+  case UNION_SUBBG_PAL_FEMALE:
+  case UNION_SUBBG_PAL_FEMALE_TOUCH:
+    if(color == PLATE_COLOR_NORMAL){
+      change_palno = UNION_SUBBG_PAL_FEMALE;
+    }
+    else{
+      change_palno = UNION_SUBBG_PAL_FEMALE_TOUCH;
+    }
+    break;
+  default:
+    return;
+  }
+  
+  GFL_BG_ChangeScreenPalette(UNION_FRAME_S_PLATE, 
+    UNION_PLATE_START_X, UNION_PLATE_START_Y + UNION_PLATE_SIZE_Y * plate_no, 
+    UNION_PLATE_SIZE_X, UNION_PLATE_SIZE_Y, change_palno);
+  GFL_BG_LoadScreenV_Req(UNION_FRAME_S_PLATE);
 }
