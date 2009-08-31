@@ -14,6 +14,12 @@
  *								　**4.5.は、VBlank期間での処理をまとめるための変更*
  *
  *	@data		2009.01.07		obj_graphic_man.hの内容を統合
+ *	@data		2009.08.31		・GFL_CLACT_WK_SetAnmFrameの意味を名前通り、
+ *	                      　アニメーションフレーム数を設定する関数に変更
+ *	                        ＊SetAnmFrameはマルチセル使用不可能です。
+ *	                      ・アニメーションのインデックスを設定する関数
+ *	                        GFL_CLACT_WK_SetAnmIndexを追加
+ *	                      
  *
  */
 //]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]
@@ -1324,14 +1330,15 @@ extern void GFL_CLACT_WK_SetAnmSeqDiff( GFL_CLWK* p_wk, u16 anmseq );
 extern void GFL_CLACT_WK_SetAnmSeqNoReset( GFL_CLWK* p_wk, u16 anmseq );
 //----------------------------------------------------------------------------
 /**
- *	@brief	アニメーションフレームを設定
+ *	@brief	アニメーションフレームを設定    MultiCell非対応
  *
  *	@param	p_wk		セルアクターワーク
- *	@param	idx			フレーム数
- *	NitroCharacterのアニメーションシーケンス内のコマ番号を指定してください
+ *	@param	frame		フレーム数
+ *
+ *	マルチセルでは、使用不可能です。
  */
 //-----------------------------------------------------------------------------
-extern void GFL_CLACT_WK_SetAnmFrame( GFL_CLWK* p_wk, u16 idx );
+extern void GFL_CLACT_WK_SetAnmFrame( GFL_CLWK* p_wk, fx32 frame );
 //----------------------------------------------------------------------------
 /**
  *	@brief	アニメーションフレームを進める
@@ -1352,7 +1359,27 @@ extern void GFL_CLACT_WK_AddAnmFrame( GFL_CLWK* p_wk, fx32 speed );
  *	@return	アニメーションフレーム数
  */
 //-----------------------------------------------------------------------------
-extern u16 GFL_CLACT_WK_GetAnmFrame( const GFL_CLWK* cp_wk );
+extern fx32 GFL_CLACT_WK_GetAnmFrame( const GFL_CLWK* cp_wk );
+//----------------------------------------------------------------------------
+/**
+ *	@brief	アニメーションインデックスを設定
+ *
+ *	@param	p_wk		セルアクターワーク
+ *	@param	idx		  インデックス数
+ *	NitroCharacterのアニメーションシーケンス内のコマ番号を指定してください
+ */
+//-----------------------------------------------------------------------------
+extern void GFL_CLACT_WK_SetAnmIndex( GFL_CLWK* p_wk, u16 idx );
+//----------------------------------------------------------------------------
+/**
+ *	@brief	アニメーションインデックス数を取得
+ *
+ *	@param	cp_wk		セルアクターワーク
+ *
+ *	@return	アニメーションインデックス数
+ */
+//-----------------------------------------------------------------------------
+extern u16 GFL_CLACT_WK_GetAnmIndex( const GFL_CLWK* cp_wk );
 //----------------------------------------------------------------------------
 /**
  *	@brief	オートアニメーションフラグ設定

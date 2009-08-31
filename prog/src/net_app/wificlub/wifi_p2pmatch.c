@@ -10192,7 +10192,7 @@ static void MCVSys_OamBttnObjAnmStart( WIFIP2PMATCH_VIEW*  p_view, u32 bttn_no )
 #if _OAMBUTTON //@@OO
   // アニメ初期化	RELEASEアニメ最終フレームに設定
   GFL_CLACT_WK_SetAnmSeq( p_view->button_act[ bttn_no ], c_MCV_USER_BTTN_ANM_RELEASE[bttn_no] );
-  GFL_CLACT_WK_SetAnmFrame( p_view->button_act[ bttn_no ], MCV_USERD_BTTN_ANMMAX_0ORG );
+  GFL_CLACT_WK_SetAnmIndex( p_view->button_act[ bttn_no ], MCV_USERD_BTTN_ANMMAX_0ORG );
 
   // 文字列の座標初期化 @@OO
   //	if( bttn_no == MCV_USERD_BTTN_BACK ){
@@ -10229,7 +10229,7 @@ static BOOL MCVSys_OamBttnObjAnmMain( WIFIP2PMATCH_VIEW*  p_view, u32 bttn_no, u
   // 自分がおされているかチェック
   if( (push_bttn == bttn_no)  ){
 
-    anm_frame = GFL_CLACT_WK_GetAnmFrame( p_view->button_act[bttn_no] );
+    anm_frame = GFL_CLACT_WK_GetAnmIndex( p_view->button_act[bttn_no] );
 
     // 押されているとき
     if( (event == GFL_BMN_EVENT_TOUCH)  || (event == GFL_BMN_EVENT_HOLD) ){
@@ -10243,7 +10243,7 @@ static BOOL MCVSys_OamBttnObjAnmMain( WIFIP2PMATCH_VIEW*  p_view, u32 bttn_no, u
       if( anm_frame < MCV_USERD_BTTN_ANMPUSHOK ){
 
         GFL_CLACT_WK_AddAnmFrame( p_view->button_act[bttn_no], FX32_CONST(2) );
-        anm_frame = GFL_CLACT_WK_GetAnmFrame( p_view->button_act[bttn_no] );
+        anm_frame = GFL_CLACT_WK_GetAnmIndex( p_view->button_act[bttn_no] );
 
         // 「もどる」ならフォントも動かす
         if( bttn_no == MCV_USERD_BTTN_BACK ){
@@ -10273,12 +10273,12 @@ static BOOL MCVSys_OamBttnObjAnmMain( WIFIP2PMATCH_VIEW*  p_view, u32 bttn_no, u
   }else{
 
     anm_seq = GFL_CLACT_WK_GetAnmSeq( p_view->button_act[bttn_no] );//GFL_CLACT_WK_GetAnmSeq
-    anm_frame = GFL_CLACT_WK_GetAnmFrame( p_view->button_act[bttn_no] );
+    anm_frame = GFL_CLACT_WK_GetAnmIndex( p_view->button_act[bttn_no] );
 
     // アニメがPUSHアニメだったらRELEASEアニメに切り替える
     if( anm_seq == c_MCV_USER_BTTN_ANM_PUSH[bttn_no] ){
       GFL_CLACT_WK_SetAnmSeq( p_view->button_act[bttn_no], c_MCV_USER_BTTN_ANM_RELEASE[bttn_no] );
-      GFL_CLACT_WK_SetAnmFrame( p_view->button_act[bttn_no], MCV_USERD_BTTN_ANMMAX_0ORG - anm_frame );
+      GFL_CLACT_WK_SetAnmIndex( p_view->button_act[bttn_no], MCV_USERD_BTTN_ANMMAX_0ORG - anm_frame );
     }
 
     // アニメが終わるまでアニメさせる

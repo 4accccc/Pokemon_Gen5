@@ -1098,11 +1098,11 @@ WF_2DCWK* WF_2DC_WkAdd( WF_2DCSYS* p_sys, const WF_2DC_WKDATA* cp_data, u32 view
 	if( p_sys->chrres[ char_no ].movetype == WF_2DC_MOVENORMAL ){
 		// した歩き
 //		CLACT_AnmChg( p_wk->p_clwk, WF_2DC_ANM_WALK+WF_COMMON_BOTTOM );
-        GFL_CLACT_WK_SetAnmFrame(p_wk->p_clwk, WF_2DC_ANM_WALK+WF_COMMON_BOTTOM);
+        GFL_CLACT_WK_SetAnmIndex(p_wk->p_clwk, WF_2DC_ANM_WALK+WF_COMMON_BOTTOM);
     }else{
 		// 下向き
 //		CLACT_AnmChg( p_wk->p_clwk, WF_COMMON_BOTTOM );
-        GFL_CLACT_WK_SetAnmFrame( p_wk->p_clwk, WF_COMMON_BOTTOM );
+        GFL_CLACT_WK_SetAnmIndex( p_wk->p_clwk, WF_COMMON_BOTTOM );
 	}
 
 	// アニメデータ初期化
@@ -1386,7 +1386,7 @@ WF_2DC_ANMTYPE WF_2DC_WkAnmTypeGet( const WF_2DCWK* cp_wk )
 //-----------------------------------------------------------------------------
 void WF_2DC_WkAnmFrameSet( WF_2DCWK* p_wk, u16 frame )
 {
-	GFL_CLACT_WK_SetAnmFrame( p_wk->p_clwk, frame );
+	GFL_CLACT_WK_SetAnmIndex( p_wk->p_clwk, frame );
 }
 
 //----------------------------------------------------------------------------
@@ -1400,7 +1400,7 @@ void WF_2DC_WkAnmFrameSet( WF_2DCWK* p_wk, u16 frame )
 //-----------------------------------------------------------------------------
 u16 WF_2DC_WkAnmFrameGet( const WF_2DCWK* cp_wk )
 {
-	return GFL_CLACT_WK_GetAnmFrame( cp_wk->p_clwk );
+	return GFL_CLACT_WK_GetAnmIndex( cp_wk->p_clwk );
 }
 
 //----------------------------------------------------------------------------

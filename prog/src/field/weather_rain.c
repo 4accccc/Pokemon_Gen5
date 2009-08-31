@@ -671,7 +671,7 @@ static void WEATHER_RAIN_OBJ_Move( WEATHER_OBJ_WORK* p_wk )
 				// 破棄アニメ
 				obj_w[3] = 1;		
 				obj_w[0] = 4;			// 破棄アニメカウンタ
-				GFL_CLACT_WK_SetAnmFrame( p_clwk, 3 );
+				GFL_CLACT_WK_SetAnmIndex( p_clwk, 3 );
 			}
 		}
 		// 座標設定
@@ -726,7 +726,7 @@ static void WEATHER_RAIN_OBJ_Add( WEATHER_TASK* p_wk, int num, u32 heapID )
 		// 領域を初期化
 		obj_w[0] = 0;			// カウンタ
 		frame = rand%3;	// 雨の種類
-		GFL_CLACT_WK_SetAnmFrame( p_clwk, frame );
+		GFL_CLACT_WK_SetAnmIndex( p_clwk, frame );
 
 		err = (rand % WEATHER_RAIN_SPEED_ERR);
 		obj_w[2] = WEATHER_RAIN_SPEED_Y * (frame+1) + err;
@@ -1055,7 +1055,7 @@ static void WEATHER_SPARKRAIN_OBJ_Move( WEATHER_OBJ_WORK* p_wk )
 				// 破棄アニメ
 				obj_w[3] = 1;		
 				obj_w[0] = 4;			// 破棄アニメカウンタ
-				GFL_CLACT_WK_SetAnmFrame( p_clwk, 3 );
+				GFL_CLACT_WK_SetAnmIndex( p_clwk, 3 );
 			}
 		}
 		// 座標設定
@@ -1112,7 +1112,7 @@ static void WEATHER_SPARKRAIN_OBJ_Add( WEATHER_TASK* p_wk, int num, u32 heapID )
 		// 領域を初期化
 		obj_w[0] = 0;			// カウンタ
 		frame = rand%3;	// 雨の種類
-		GFL_CLACT_WK_SetAnmFrame( p_clwk, frame );
+		GFL_CLACT_WK_SetAnmIndex( p_clwk, frame );
 
 		obj_w[4] = WEATHER_STRAIN_SPEED_X * (frame+1);
 		obj_w[2] = WEATHER_STRAIN_SPEED_Y * (frame+1);

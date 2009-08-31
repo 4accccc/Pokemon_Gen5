@@ -2743,7 +2743,7 @@ static void BCT_CLIENT_ScoreEffectWkInit( BCT_CLIENT_SCORE_EFFECT_WK* p_wk, GFL_
 
 		// オートアニメ設定
 		GFL_CLACT_WK_SetAutoAnmFlag( p_wk->p_clwk[i], TRUE );
-		CLACT_SetAnmFrame( p_wk->p_clwk[i], FX32_CONST(1.5) );
+		CLACT_SetAnmIndex( p_wk->p_clwk[i], FX32_CONST(1.5) );
 #else
 		p_ad->pos_x = x;
 		p_ad->pos_y = y;
@@ -5717,7 +5717,7 @@ static BOOL BCT_CLIENT_TOUCHPEN_Main( BCT_CLIENT_TOUCHPEN_MOVE* p_wk, BCT_CLIENT
 	#if WB_FIX
 		CLACT_AnmFrameSet( p_wk->p_clwk, BCT_TOUCHPEN_ANM_FRAME_START );
   #else
-    GFL_CLACT_WK_SetAnmFrame( p_wk->p_clwk, BCT_TOUCHPEN_ANM_FRAME_START );
+    GFL_CLACT_WK_SetAnmIndex( p_wk->p_clwk, BCT_TOUCHPEN_ANM_FRAME_START );
   #endif
   
 		// アニメフレームにあわせて持っている木の実を出す
@@ -5746,7 +5746,7 @@ static BOOL BCT_CLIENT_TOUCHPEN_Main( BCT_CLIENT_TOUCHPEN_MOVE* p_wk, BCT_CLIENT
     #if WB_FIX
 			frame = CLACT_AnmFrameGet( p_wk->p_clwk );
     #else
-      frame = GFL_CLACT_WK_GetAnmFrame(p_wk->p_clwk);
+      frame = GFL_CLACT_WK_GetAnmIndex(p_wk->p_clwk);
     #endif
     
 			// 動作チェック

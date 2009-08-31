@@ -1210,24 +1210,24 @@ static void _timeAnimation(C_GEAR_WORK* pWork)
 	{  //AMPM
 		GFL_CLWK* cp_wk = pWork->cellCursor[NANR_c_gear_obj_CellAnime_ampm];
 		int num = time.hour / 12;
-		if(GFL_CLACT_WK_GetAnmFrame(cp_wk) !=  num){
-			GFL_CLACT_WK_SetAnmFrame(cp_wk,num);
+		if(GFL_CLACT_WK_GetAnmIndex(cp_wk) !=  num){
+			GFL_CLACT_WK_SetAnmIndex(cp_wk,num);
 		}
 	}
 	{  //Žž10
 		GFL_CLWK* cp_wk = pWork->cellCursor[NANR_c_gear_obj_CellAnime_NO2];
 		int num = (time.hour % 12) / 10;
 
-		if(GFL_CLACT_WK_GetAnmFrame(cp_wk) !=  num){
-			GFL_CLACT_WK_SetAnmFrame(cp_wk,num);
+		if(GFL_CLACT_WK_GetAnmIndex(cp_wk) !=  num){
+			GFL_CLACT_WK_SetAnmIndex(cp_wk,num);
 		}
 	}
 	{  //Žž1
 		GFL_CLWK* cp_wk = pWork->cellCursor[NANR_c_gear_obj_CellAnime_NO10a];
 		int num = (time.hour % 12) % 10;
 
-		if(GFL_CLACT_WK_GetAnmFrame(cp_wk) !=  num){
-			GFL_CLACT_WK_SetAnmFrame(cp_wk,num);
+		if(GFL_CLACT_WK_GetAnmIndex(cp_wk) !=  num){
+			GFL_CLACT_WK_SetAnmIndex(cp_wk,num);
 		}
 	}
 
@@ -1235,8 +1235,8 @@ static void _timeAnimation(C_GEAR_WORK* pWork)
 		GFL_CLWK* cp_wk = pWork->cellCursor[NANR_c_gear_obj_CellAnime_colon];
 		int num = time.second % 2;
 
-		if(GFL_CLACT_WK_GetAnmFrame(cp_wk) !=  num){
-			GFL_CLACT_WK_SetAnmFrame(cp_wk,num);
+		if(GFL_CLACT_WK_GetAnmIndex(cp_wk) !=  num){
+			GFL_CLACT_WK_SetAnmIndex(cp_wk,num);
 		}
 	}
 
@@ -1245,8 +1245,8 @@ static void _timeAnimation(C_GEAR_WORK* pWork)
 		GFL_CLWK* cp_wk = pWork->cellCursor[NANR_c_gear_obj_CellAnime_NO6];
 		int num = time.minute / 10;
 
-		if(GFL_CLACT_WK_GetAnmFrame(cp_wk) !=  num){
-			GFL_CLACT_WK_SetAnmFrame(cp_wk,num);
+		if(GFL_CLACT_WK_GetAnmIndex(cp_wk) !=  num){
+			GFL_CLACT_WK_SetAnmIndex(cp_wk,num);
 			battflg = TRUE;
 		}
 	}
@@ -1254,8 +1254,8 @@ static void _timeAnimation(C_GEAR_WORK* pWork)
 		GFL_CLWK* cp_wk = pWork->cellCursor[NANR_c_gear_obj_CellAnime_NO10b];
 		int num = time.minute % 10;
 
-		if(GFL_CLACT_WK_GetAnmFrame(cp_wk) !=  num){
-			GFL_CLACT_WK_SetAnmFrame(cp_wk,num);
+		if(GFL_CLACT_WK_GetAnmIndex(cp_wk) !=  num){
+			GFL_CLACT_WK_SetAnmIndex(cp_wk,num);
 		}
 	}
 	if(battflg){//BATT
@@ -1264,8 +1264,8 @@ static void _timeAnimation(C_GEAR_WORK* pWork)
 		if( PM_GetBattery(&buf) == PM_RESULT_SUCCESS )
 		{
 			int num = (buf==PM_BATTERY_HIGH ? 1:0);
-			if(GFL_CLACT_WK_GetAnmFrame(cp_wk) !=  num){
-				GFL_CLACT_WK_SetAnmFrame(cp_wk,num);
+			if(GFL_CLACT_WK_GetAnmIndex(cp_wk) !=  num){
+				GFL_CLACT_WK_SetAnmIndex(cp_wk,num);
 			}
 		}
 	}

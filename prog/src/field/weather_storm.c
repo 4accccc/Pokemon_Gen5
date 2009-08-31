@@ -533,7 +533,7 @@ static void WEATHER_STORM_OBJ_Add( WEATHER_TASK* p_wk, int num, u32 heapID )
 			obj_w[2] += obj_w[2] / 2;
 		}
 		
-		GFL_CLACT_WK_SetAnmFrame( p_clwk, frame );
+		GFL_CLACT_WK_SetAnmIndex( p_clwk, frame );
 		
 		mat.x = WEATHER_STORM_START_X1 + GFUser_GetPublicRand(WEATHER_STORM_START_X1_RAN);
 		mat.y = WEATHER_STORM_START_Y1_MIN + GFUser_GetPublicRand(WEATHER_STORM_START_Y1_MAX);

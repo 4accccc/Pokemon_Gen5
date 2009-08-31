@@ -2607,7 +2607,7 @@ static int BoosterMove_Normal(BALLOON_GAME_PTR game, BOOSTER_WORK *booster, BOOS
 	}
 	else{
 	//	OS_TPrintf("0 booster anime frame = %d, lap = %d, frame = %d\n", (BOOSTER_ANIME_FRAME_JUMP_TOTAL << FX32_SHIFT) / BoosterMoveDataTbl[booster->lap].move_frame, booster->lap, booster->frame);
-		GFL_CLACT_WK_SetAnmFrame(move->cap, 0);
+		GFL_CLACT_WK_SetAnmIndex(move->cap, 0);
 	}
 	
 	jump_theta = ((180 * booster->frame) << FX32_SHIFT) / BoosterMoveDataTbl[booster->lap].move_frame;
@@ -2760,7 +2760,7 @@ static int BoosterMove_Hit(BALLOON_GAME_PTR game, BOOSTER_WORK *booster, BOOSTER
 		if(move->local_frame <= 0){
 			GFL_CLACT_WK_SetAnmSeq(move->cap, 
 				BoosterType_StartSeqAnimeNo[move->booster_type] + OFFSET_ANMID_BOOSTER_JUMP);
-			GFL_CLACT_WK_SetAnmFrame(move->cap, 0);
+			GFL_CLACT_WK_SetAnmIndex(move->cap, 0);
 			BoosterMoveModeChange(move, BOOSTER_MODE_NORMAL);
 			return TRUE;
 		}

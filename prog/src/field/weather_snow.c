@@ -852,7 +852,7 @@ static void WEATHER_SNOW_OBJ_Add( WEATHER_TASK* p_wk, int num, u32 heapID )
 		p_clwk		= WEATHER_OBJ_WORK_GetClWk( p_addobj );
 		
 		frame = GFUser_GetPublicRand( WEATHER_SNOW_OBJ_NUM );
-		GFL_CLACT_WK_SetAnmFrame( p_clwk, frame );
+		GFL_CLACT_WK_SetAnmIndex( p_clwk, frame );
 		
 		p_obj_wk[4] = 10;	// 横の動く方向変更カウンタ	
 		p_obj_wk[5] = 0;
@@ -1252,7 +1252,7 @@ static void WEATHER_SSNOW_OBJ_Add( WEATHER_TASK* p_wk, int num, u32 heapID )
 		obj_w[0] = 0;			// カウンタ
 		obj_w[1] = WEATHER_SSNOW_END_MIN + GFUser_GetPublicRand((WEATHER_SSNOW_END_MAX - WEATHER_SSNOW_END_MIN));	// 終了カウンタ
 		frame = (obj_w[1] - WEATHER_SSNOW_END_MIN) / WEATHER_SSNOW_END_DIV;	// 吹雪の種類
-		GFL_CLACT_WK_SetAnmFrame( p_clwk, frame );
+		GFL_CLACT_WK_SetAnmIndex( p_clwk, frame );
 		
 		obj_w[4] = WEATHER_SSNOW_SPEED_X * (frame+1);
 		obj_w[2] = WEATHER_SSNOW_SPEED_Y[tbl_num] * (frame+1);	// たてスピード
@@ -1666,7 +1666,7 @@ static void WEATHER_SNOW_S_OBJ_Add( WEATHER_TASK* p_wk, int num, u32 heapID )
 		obj_w[0] = 0;			// カウンタ
 		obj_w[1] = WEATHER_SNOW_S_END_MIN + GFUser_GetPublicRand((WEATHER_SNOW_S_END_MAX - WEATHER_SNOW_S_END_MIN) );	// 終了カウンタ
 		frame = GFUser_GetPublicRand(4);	// 吹雪の種類
-		GFL_CLACT_WK_SetAnmFrame( p_clwk, frame );
+		GFL_CLACT_WK_SetAnmIndex( p_clwk, frame );
 		
 		obj_w[4] = WEATHER_SSNOW_SPEED_X_SML[tbl_num] * ((frame)+1);
 		obj_w[2] = WEATHER_SSNOW_SPEED_Y_SML[tbl_num] * ((frame)+1);	// たてスピード
@@ -1997,7 +1997,7 @@ static void WEATHER_ARARE_OBJ_Move( WEATHER_OBJ_WORK* p_wk )
 			obj_w[4] = WEATHER_ARARE_GROUND_SPEED_X;
 			obj_w[2] = WEATHER_ARARE_GROUND_SPEED_Y;
 
-			GFL_CLACT_WK_SetAnmFrame( p_clwk, GFL_CLACT_WK_GetAnmFrame( p_clwk ) + 3 );
+			GFL_CLACT_WK_SetAnmIndex( p_clwk, GFL_CLACT_WK_GetAnmIndex( p_clwk ) + 3 );
 		}else{
 
 			// 動かす
@@ -2082,7 +2082,7 @@ static void WEATHER_ARARE_OBJ_Add( WEATHER_TASK* p_wk, int num, u32 heapID )
 		}else if( (rand % WEATHER_ARARE_RAND_MAX) < WEATHER_ARARE_RAND_BIG ){
 			frame = 2;
 		}
-		GFL_CLACT_WK_SetAnmFrame( p_clwk, 2-frame );
+		GFL_CLACT_WK_SetAnmIndex( p_clwk, 2-frame );
 
 		err = (rand % WEATHER_ARARE_SPEED_ERR);
 		obj_w[2] = WEATHER_ARARE_SPEED_Y * (frame+1) + err;
