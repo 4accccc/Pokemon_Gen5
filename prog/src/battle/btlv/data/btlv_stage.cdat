@@ -14,8 +14,10 @@
  */
 //============================================================================================
 static	const	VecFx32	stage_pos_table[]={
-  { 0, 0, FX_F32_TO_FX32( 6.845f ) },
-  { 0, 0, FX_F32_TO_FX32( -12.0f ) },
+//  { 0, 0, FX_F32_TO_FX32( 6.845f ) },
+//  { 0, 0, FX_F32_TO_FX32( -12.0f ) },
+  { 0, 0, FX_F32_TO_FX32( 5.449f ) },
+  { 0, 0, FX_F32_TO_FX32( -13.718f ) },
 };
 
 //============================================================================================
@@ -35,14 +37,10 @@ typedef struct
 
 //地形ごとのデータ
 //草地
-static  const ARCDATID  stage01_anm[]={ 
-  NARC_battgra_wb_batt_stage01_nsbca
-};
-
 static  const BTLV_STAGE_RESOURCE stage01_resource={ 
   NARC_battgra_wb_batt_stage01_nsbmd,
-  NELEMS( stage01_anm ),
-  stage01_anm,
+  0,
+  NULL,
 	{ GX_RGB( 0, 0, 0 ), GX_RGB( 6, 6, 6 ), 0, 0, 0, 0, 0, 0 },
 };
 
@@ -80,8 +78,8 @@ static  const BTLV_STAGE_RESOURCE stage04_resource={
 
 //リソーステーブル
 static  const BTLV_STAGE_RESOURCE*  stage_resource_table[]={  
-//  &stage01_resource,
-  &stage02_resource,
+  &stage01_resource,
+//  &stage02_resource,
 //  &stage03_resource,
 //  &stage04_resource,
 };

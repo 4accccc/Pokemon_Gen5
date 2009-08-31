@@ -107,6 +107,10 @@ BTLV_STAGE_WORK	*BTLV_STAGE_Init( int index, HEAPID heapID )
 		  GFL_G3D_OBJECT_EnableAnime( bsw->stage_obj, i );
     }
   }
+  else
+  { 
+		bsw->stage_obj = GFL_G3D_OBJECT_Create( bsw->stage_render, NULL, 0 );
+  }
   //パレットフェード用ワーク生成
   { 
   	NNSG3dResFileHeader*	header = GFL_G3D_GetResourceFileHeader( bsw->stage_resource );
