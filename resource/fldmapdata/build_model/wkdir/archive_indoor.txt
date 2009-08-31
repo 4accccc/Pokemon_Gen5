@@ -82,3 +82,5 @@
 "nsbmdfiles/machine01.nsbmd"
 "nsbmdfiles/machine02.nsbmd"
 "nsbmdfiles/drumset01.nsbmd"
+"nsbmdfiles/d0stair_u01.nsbmd"
+"nsbmdfiles/d0stair_d01.nsbmd"

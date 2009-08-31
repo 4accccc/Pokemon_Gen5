@@ -125,4 +125,27 @@ DEP_OUTDOOR	=	\
 	$(RESDIR)/trailer_01test.nsbmd \
 	$(RESDIR)/trailer_01.nsbmd \
 	$(RESDIR)/h01_ship.nsbmd \
+	$(RESDIR)/tg_house04.nsbmd \
+	$(RESDIR)/c04_football_01.nsbmd \
+	$(RESDIR)/c04_carousel_01.nsbmd \
+	$(RESDIR)/c04_fwheel_01.nsbmd \
+	$(RESDIR)/c04_gym_01.nsbmd \
+	$(RESDIR)/c04_plant_01.nsbmd \
+	$(RESDIR)/tt_table01.nsbmd \
+	$(RESDIR)/tt_train03.nsbmd \
+	$(RESDIR)/cart_01.nsbmd \
+	$(RESDIR)/c8_buildb_01.nsbmd \
+	$(RESDIR)/c8_buildw_01.nsbmd \
+	$(RESDIR)/c8_buildb_02.nsbmd \
+	$(RESDIR)/c8_buildw_02.nsbmd \
+	$(RESDIR)/c8_buildb_03.nsbmd \
+	$(RESDIR)/c8_buildw_03.nsbmd \
+	$(RESDIR)/c8_buildb_04.nsbmd \
+	$(RESDIR)/c8_buildw_04.nsbmd \
+	$(RESDIR)/c8_gym_01.nsbmd \
+	$(RESDIR)/h3_gate_01.nsbmd \
+	$(RESDIR)/c4_gate_01.nsbmd \
+	$(RESDIR)/h5_gate_01.nsbmd \
+	$(RESDIR)/c04_poke01.nsbmd \
+	$(RESDIR)/c04_sign01.nsbmd \
 

@@ -83,4 +83,6 @@ DEP_INDOOR	=	\
 	$(RESDIR)/machine01.nsbmd \
 	$(RESDIR)/machine02.nsbmd \
 	$(RESDIR)/drumset01.nsbmd \
+	$(RESDIR)/d0stair_u01.nsbmd \
+	$(RESDIR)/d0stair_d01.nsbmd \
 
