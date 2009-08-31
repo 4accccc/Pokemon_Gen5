@@ -144,8 +144,13 @@ def SortTexImageArrayByTexName( src_filename, dst_filename )
   # <tex_image> 要素を抽出
   tex_image = ExtractTexImage( src_filename )
 
-  # <tex_image>要素数が1以下なら終了
+  # <tex_image>要素数が1以下ならそのまま出力する
   if tex_image.length <= 1 then
+    src_file = File.open( src_filename, "r" )
+    dst_file = File.open( dst_filename, "w" )
+    dst_file.write( src_file.read )
+    dst_file.close
+    src_file.close
     return
   end
 
