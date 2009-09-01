@@ -193,7 +193,6 @@ void FLDNOGRID_MAPPER_Main( FLDNOGRID_MAPPER* p_mapper )
   {
     FIELD_RAIL_MAN_UpdateCamera( p_mapper->p_railMan );
   }
-  FIELD_RAIL_MAN_UpdateCamera( p_mapper->p_railMan );
   FIELD_RAIL_MAN_GetBindWorkPos( p_mapper->p_railMan, &rail_pos );
   FLD_SCENEAREA_Update( p_mapper->p_areaMan, &rail_pos );
 }
