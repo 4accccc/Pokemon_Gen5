@@ -197,12 +197,12 @@ static BOOL DebugMatsuda_SaveSystemTest(D_MATSU_WORK *wk)
 	case 0:
 		//ノーマルセーブ領域作成
 		OS_TPrintf("ノーマルセーブ領域作成\n");
-		wk->sv_normal = GFL_SAVEDATA_Create(&SaveParam_Normal);
+		wk->sv_normal = GFL_SAVEDATA_Create(&SaveParam_Normal, GFL_HEAPID_APP);
 		wk->seq++;
 		break;
 	case 1:
 		//コンテストデータを引っ張ってきて中身を表示
-		load_ret = GFL_BACKUP_Load(wk->sv_normal);
+		load_ret = GFL_BACKUP_Load(wk->sv_normal, GFL_HEAPID_APP);
 		switch(load_ret){
 		case LOAD_RESULT_NULL:		///<データなし
 			OS_TPrintf("LOAD:データが存在しない\n");

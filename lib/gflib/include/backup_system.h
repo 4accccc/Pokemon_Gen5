@@ -28,14 +28,6 @@ extern "C" {
 //============================================================================================
 ///---------------------------------------------------------------------------
 //---------------------------------------------------------------------------
-typedef enum {
-	GFL_BACKUP_NORMAL_FLASH,
-
-	GFL_BACKUP_MAX
-}GFL_BACKUP_TYPE;
-
-///---------------------------------------------------------------------------
-//---------------------------------------------------------------------------
 typedef u32 (*FUNC_GET_SIZE)(void);
 
 //---------------------------------------------------------------------------
@@ -62,12 +54,12 @@ typedef struct {
 //---------------------------------------------------------------------------
 typedef struct {
 	const GFL_SAVEDATA_TABLE * table;	///<セーブデータ定義テーブルのアドレス
-	u32 table_max;						///<セーブデータ定義テーブルの要素数
-	u32 savearea_top_address;			///<使用するバックアップ領域の先頭アドレス
+	u32 table_max;						      ///<セーブデータ定義テーブルの要素数
+	u32 savearea_top_address;		  	///<使用するバックアップ領域の先頭アドレス
 	u32 savearea_mirror_address;		///<使用するミラーリング領域の先頭アドレス
+	                                ///<ミラーリング無しの場合はsavearea_top_addressと[同じ値]を指定
 	u32 savearea_size;					///<使用するバックアップ領域の大きさ
 	u32 magic_number;					///<使用するマジックナンバー
-	GFL_BACKUP_TYPE backup_type;		///<バックアップの種類を指定するID
 }GFL_SVLD_PARAM;
 
 
@@ -81,11 +73,10 @@ typedef struct {
 /**
  * @brief	バックアップシステム起動
  * @param	heap_save_id
- * @param	heap_temp_id
  *
  */
 //---------------------------------------------------------------------------
-extern void GFL_BACKUP_Init(u32 heap_save_id, u32 heap_temp_id);
+extern void GFL_BACKUP_Init(u32 heap_save_id);
 
 //---------------------------------------------------------------------------
 /**
@@ -106,10 +97,11 @@ extern BOOL GFL_BACKUP_IsEnableFlash(void);
 /**
  * @brief	セーブデータ：ロード処理
  * @param	sv
+ * @param heap_temp_id    この関数内でのみテンポラリとして使用するヒープID
  * @return	LOAD_RESULT
  */
 //---------------------------------------------------------------------------
-extern LOAD_RESULT GFL_BACKUP_Load(GFL_SAVEDATA * sv);
+extern LOAD_RESULT GFL_BACKUP_Load(GFL_SAVEDATA * sv, u32 heap_temp_id);
 
 //---------------------------------------------------------------------------
 /**
@@ -123,9 +115,11 @@ extern SAVE_RESULT GFL_BACKUP_Save(GFL_SAVEDATA * sv);
 //---------------------------------------------------------------------------
 /**
  * @brief	セーブデータ：消去処理
+ * @param	sv			        セーブデータ構造へのポインタ
+ * @param heap_temp_id    この関数内でのみテンポラリとして使用するヒープID
  */
 //---------------------------------------------------------------------------
-extern BOOL GFL_BACKUP_Erase(GFL_SAVEDATA * sv);
+extern BOOL GFL_BACKUP_Erase(GFL_SAVEDATA * sv, u32 heap_temp_id);
 
 //---------------------------------------------------------------------------
 /**
@@ -158,10 +152,11 @@ extern void GFL_BACKUP_SAVEASYNC_Cancel(GFL_SAVEDATA * sv);
 /**
  * @brief	セーブデータ生成
  * @param	sv_param
+ * @param	heap_save_id      セーブデータ展開先ヒープID
  * @return	GFL_SAVEDATA		生成したセーブデータへのポインタ
  */
 //---------------------------------------------------------------------------
-extern GFL_SAVEDATA * GFL_SAVEDATA_Create(const GFL_SVLD_PARAM * sv_param);
+extern GFL_SAVEDATA * GFL_SAVEDATA_Create(const GFL_SVLD_PARAM * sv_param, u32 heap_save_id);
 
 //---------------------------------------------------------------------------
 /**

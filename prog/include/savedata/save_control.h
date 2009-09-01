@@ -25,6 +25,20 @@
 #define FST_VIDEO_NG_BIT			(1<<4)		//外部ビデオセーブ：ミラーリングNG
 #define FST_VIDEO_BREAK_BIT			(1<<5)		//外部ビデオセーブ：破壊
 
+//--------------------------------------------------------------
+//  外部セーブ番号
+//--------------------------------------------------------------
+//※SaveParamExtraTblと並びを同じにしておくこと！！
+typedef enum{
+  SAVE_EXTRA_ID_REC_MINE,
+  SAVE_EXTRA_ID_REC_DL_0,
+  SAVE_EXTRA_ID_REC_DL_1,
+  SAVE_EXTRA_ID_REC_DL_2,
+  SAVE_EXTRA_ID_STREAMING,
+  
+  SAVE_EXTRA_ID_MAX,
+}SAVE_EXTRA_ID;
+
 //==============================================================================
 //	型定義
 //==============================================================================
@@ -47,6 +61,22 @@ extern u32 SaveControl_GetLoadResult(const SAVE_CONTROL_WORK * sv);
 extern BOOL SaveData_GetExistFlag(const SAVE_CONTROL_WORK * sv);
 extern void SaveControl_ClearData(SAVE_CONTROL_WORK * ctrl);
 extern void SaveControl_Erase(SAVE_CONTROL_WORK *ctrl);
+
+//--------------------------------------------------------------
+//  外部セーブ関連
+//--------------------------------------------------------------
+extern LOAD_RESULT SaveControl_Extra_Load(
+  SAVE_CONTROL_WORK *ctrl, SAVE_EXTRA_ID extra_id, int heap_id);
+extern void SaveControl_Extra_Unload(SAVE_CONTROL_WORK *ctrl, SAVE_EXTRA_ID extra_id);
+extern void SaveControl_Extra_SaveAsyncInit(SAVE_CONTROL_WORK *ctrl, SAVE_EXTRA_ID extra_id);
+extern SAVE_RESULT SaveControl_Extra_SaveAsyncMain(
+  SAVE_CONTROL_WORK *ctrl, SAVE_EXTRA_ID extra_id);
+extern void * SaveControl_Extra_DataPtrGet(
+  SAVE_CONTROL_WORK *ctrl, SAVE_EXTRA_ID extra_id, GFL_SVDT_ID gmdata_id);
+extern void SaveControl_Extra_ClearData(SAVE_CONTROL_WORK * ctrl, SAVE_EXTRA_ID extra_id);
+extern void SaveControl_Extra_Erase(
+  SAVE_CONTROL_WORK *ctrl, SAVE_EXTRA_ID extra_id, u32 heap_temp_id);
+
 
 #ifdef PM_DEBUG
 extern GFL_SAVEDATA * DEBUG_SaveData_PtrGet(void);

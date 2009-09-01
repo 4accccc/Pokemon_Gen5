@@ -158,7 +158,7 @@ void GFLUser_Init(void)
     //GFL_SOUND_Init(&sndHeap[0],SOUND_HEAP_SIZE);
 
   //バックアップシステム初期化
-  GFL_BACKUP_Init(GFL_HEAPID_APP, GFL_HEAPID_APP);
+  GFL_BACKUP_Init(GFL_HEAPID_APP);
 
   //システムフォント初期化
   GFL_TEXT_CreateSystem( NULL );

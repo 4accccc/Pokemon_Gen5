@@ -8,6 +8,7 @@
 //==============================================================================
 #include <gflib.h>
 #include <backup_system.h>
+#include "system/main.h"
 #include "savedata/save_control.h"
 #include "savedata/save_tbl.h"
 
@@ -22,7 +23,7 @@ struct _SAVE_CONTROL_WORK{
 	BOOL total_save_flag;		///<TRUE:全体セーブ
 	u32 first_status;			///<一番最初のセーブデータチェック結果(bit指定)
 	GFL_SAVEDATA *sv_normal;	///<ノーマル用セーブデータへのポインタ
-	GFL_SAVEDATA *sv_box;		///<ボックス用セーブデータへのポインタ
+	GFL_SAVEDATA *sv_extra[SAVE_EXTRA_ID_MAX];
 };
 
 //==============================================================================
@@ -40,7 +41,6 @@ static SAVE_CONTROL_WORK *SaveControlWork = NULL;
 SAVE_CONTROL_WORK * SaveControl_SystemInit(int heap_id)
 {
 	SAVE_CONTROL_WORK *ctrl;
-	GFL_SAVEDATA * sv;
 	LOAD_RESULT load_ret;
 
 	ctrl = GFL_HEAP_AllocClearMemory(heap_id, sizeof(SAVE_CONTROL_WORK));
@@ -48,11 +48,11 @@ SAVE_CONTROL_WORK * SaveControl_SystemInit(int heap_id)
 	ctrl->new_data_flag = TRUE;			//新規データ
 	ctrl->total_save_flag = TRUE;		//全体セーブ
 	ctrl->data_exists = FALSE;			//データは存在しない
-	ctrl->sv_normal = GFL_SAVEDATA_Create(&SaveParam_Normal);
+	ctrl->sv_normal = GFL_SAVEDATA_Create(&SaveParam_Normal, GFL_HEAPID_APP);
 
 
 	//データ存在チェックを行っている
-	load_ret = GFL_BACKUP_Load(ctrl->sv_normal);
+	load_ret = GFL_BACKUP_Load(ctrl->sv_normal, GFL_HEAPID_APP);
 	ctrl->first_status = 0;
 	switch(load_ret){
 	case LOAD_RESULT_OK:				///<データ正常読み込み
@@ -156,7 +156,7 @@ SAVE_CONTROL_WORK * SaveControl_GetPointer(void)
 //--------------------------------------------------------------
 LOAD_RESULT SaveControl_Load(SAVE_CONTROL_WORK *ctrl)
 {
-	LOAD_RESULT result = GFL_BACKUP_Load(ctrl->sv_normal);
+	LOAD_RESULT result = GFL_BACKUP_Load(ctrl->sv_normal, GFL_HEAPID_APP);
 	
 	switch(result){
 	case LOAD_RESULT_OK:
@@ -294,7 +294,125 @@ void SaveControl_ClearData(SAVE_CONTROL_WORK * ctrl)
 //--------------------------------------------------------------
 void SaveControl_Erase(SAVE_CONTROL_WORK *ctrl)
 {
-	GFL_BACKUP_Erase(ctrl->sv_normal);
+	GFL_BACKUP_Erase(ctrl->sv_normal, GFL_HEAPID_APP);
+}
+
+//==================================================================
+/**
+ * 外部セーブデータのロード
+ *
+ * @param   ctrl		    セーブデータ管理ワークへのポインタ
+ * @param   extra_id		外部セーブデータ番号
+ * @param   heap_id		  読み込んだデータをこのヒープに展開
+ *
+ * @retval  LOAD_RESULT		ロード結果
+ * 
+ * 使用が終わったら必ずSaveControl_Extra_Unloadで解放してください
+ */
+//==================================================================
+LOAD_RESULT SaveControl_Extra_Load(SAVE_CONTROL_WORK *ctrl, SAVE_EXTRA_ID extra_id, int heap_id)
+{
+	LOAD_RESULT load_ret;
+
+  GF_ASSERT(ctrl->sv_extra[extra_id] == NULL);
+	ctrl->sv_extra[extra_id] = GFL_SAVEDATA_Create(&SaveParam_ExtraTbl[extra_id], heap_id);
+	load_ret = GFL_BACKUP_Load(ctrl->sv_extra[extra_id], heap_id);
+	
+	OS_TPrintf("外部セーブロード結果 extra_id = %d, load_ret = %d\n", extra_id, load_ret);
+	return load_ret;
+}
+
+//==================================================================
+/**
+ * 外部セーブデータの解放
+ *
+ * @param   ctrl		
+ * @param   extra_id		外部セーブデータ番号
+ */
+//==================================================================
+void SaveControl_Extra_Unload(SAVE_CONTROL_WORK *ctrl, SAVE_EXTRA_ID extra_id)
+{
+  GF_ASSERT(ctrl->sv_extra[extra_id] != NULL);
+  GFL_SAVEDATA_Delete(ctrl->sv_extra[extra_id]);
+  ctrl->sv_extra[extra_id] = NULL;
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief   外部データの分割セーブ初期化
+ * @param   ctrl		セーブデータ管理ワークへのポインタ
+ * @param   extra_id		外部セーブデータ番号
+ * @retval  セーブ結果
+ */
+//--------------------------------------------------------------
+void SaveControl_Extra_SaveAsyncInit(SAVE_CONTROL_WORK *ctrl, SAVE_EXTRA_ID extra_id)
+{
+  GF_ASSERT(ctrl->sv_extra[extra_id] != NULL);
+	GFL_BACKUP_SAVEASYNC_Init(ctrl->sv_extra[extra_id]);
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief   外部データの分割セーブメイン処理
+ * @param   ctrl		セーブデータ管理ワークへのポインタ
+ * @param   extra_id		外部セーブデータ番号
+ * @retval  セーブ結果
+ */
+//--------------------------------------------------------------
+SAVE_RESULT SaveControl_Extra_SaveAsyncMain(SAVE_CONTROL_WORK *ctrl, SAVE_EXTRA_ID extra_id)
+{
+	SAVE_RESULT result;
+	
+  GF_ASSERT(ctrl->sv_extra[extra_id] != NULL);
+	result = GFL_BACKUP_SAVEASYNC_Main(ctrl->sv_extra[extra_id]);
+	return result;
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief   外部セーブデータの各セーブワークのポインタを取得する
+ *
+ * @param   ctrl		セーブデータ管理ワークへのポインタ
+ * @param   extra_id		外部セーブデータ番号
+ * @param   gmdata_id	取得したいセーブデータのID
+ *
+ * @retval  セーブ領域へのポインタ
+ */
+//--------------------------------------------------------------
+void * SaveControl_Extra_DataPtrGet(SAVE_CONTROL_WORK *ctrl, SAVE_EXTRA_ID extra_id, GFL_SVDT_ID gmdata_id)
+{
+  GF_ASSERT(ctrl->sv_extra[extra_id] != NULL);
+	return GFL_SAVEDATA_Get(ctrl->sv_extra[extra_id], gmdata_id);
+}
+
+//---------------------------------------------------------------------------
+/**
+ * @brief	  外部セーブデータの初期化
+ * @param	sv			セーブデータ構造へのポインタ
+ * @param   extra_id		外部セーブデータ番号
+ *
+ * SaveControl_Eraseと違い、フラッシュに書き込まない。
+ * セーブデータがある状態で「さいしょから」遊ぶ場合などの初期化処理
+ */
+//---------------------------------------------------------------------------
+void SaveControl_Extra_ClearData(SAVE_CONTROL_WORK * ctrl, SAVE_EXTRA_ID extra_id)
+{
+  GF_ASSERT(ctrl->sv_extra[extra_id] != NULL);
+	GFL_SAVEDATA_Clear(ctrl->sv_extra[extra_id]);
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief   外部セーブデータの消去
+ * @param   ctrl		セーブデータ管理ワークへのポインタ
+ * @param   extra_id		外部セーブデータ番号
+ * @param   heap_temp_id    この関数内でのみテンポラリとして使用するヒープID
+ */
+//--------------------------------------------------------------
+void SaveControl_Extra_Erase(SAVE_CONTROL_WORK *ctrl, SAVE_EXTRA_ID extra_id, u32 heap_temp_id)
+{
+  GF_ASSERT(ctrl->sv_extra[extra_id] != NULL);
+	GFL_BACKUP_Erase(ctrl->sv_extra[extra_id], heap_temp_id);
 }
 
 

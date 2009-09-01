@@ -107,7 +107,7 @@ DLPLAY_DATA_DATA* DLPlayData_InitSystem( int heapID , DLPLAY_MSG_SYS *msgSys )
 
 
 		//一応カードの種類が確定してから初期化
-		GFL_BACKUP_Init(GFL_HEAPID_APP, GFL_HEAPID_APP);
+		GFL_BACKUP_Init(GFL_HEAPID_APP);
 	}
 	
 	return d_data;

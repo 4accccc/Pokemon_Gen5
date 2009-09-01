@@ -11,7 +11,6 @@
 #include "savedata/save_control.h"
 #include "savedata/save_tbl.h"
 #include "savedata/contest_savedata.h"
-#include "savedata/test_savedata.h"
 #include "savedata/box_savedata.h"
 #include "savedata/myitem_savedata.h"
 #include "poke_tool/pokeparty.h"
@@ -36,6 +35,7 @@
 #include "savedata/regulation.h"
 #include "field/eventwork.h"
 #include "savedata/gimmickwork.h"
+#include "savedata/battle_rec.h"
 
 //==============================================================================
 //	定数定義
@@ -46,103 +46,43 @@
 
 ///ノーマル領域で使用するセーブサイズ
 #define SAVESIZE_NORMAL		(SECTOR_SIZE * SECTOR_MAX)
-///EXTRA1領域で使用するセーブサイズ
-#define SAVESIZE_EXTRA1		(SECTOR_SIZE)
-///EXTRA2領域で使用するセーブサイズ
-#define SAVESIZE_EXTRA2		(SECTOR_SIZE)
+///EXTRA領域で戦闘録画が使用するセーブサイズ
+#define SAVESIZE_EXTRA_BATTLE_REC		(SECTOR_SIZE * 2)
+///EXTRA領域でストリーミングが使用するセーブサイズ
+#define SAVESIZE_EXTRA_STREAMING		(SECTOR_SIZE * 32)  //128Kbyte
 
 ///ミラーリング領域で使用するセーブ開始アドレス
 #define MIRROR_SAVE_ADDRESS		(0x20000)
+///外部セーブが使用するセーブ開始アドレス
+#define EXTRA_SAVE_START_ADDRESS		(0x40000)
+
+///外部セーブ：メモリマッピング
+enum{
+  EXTRA_MM_REC_MINE = EXTRA_SAVE_START_ADDRESS,
+  EXTRA_MM_REC_MINE_MIRROR = EXTRA_MM_REC_MINE + SAVESIZE_EXTRA_BATTLE_REC,
+  
+  EXTRA_MM_REC_DL_0 = EXTRA_MM_REC_MINE_MIRROR + SAVESIZE_EXTRA_BATTLE_REC,
+  EXTRA_MM_REC_DL_0_MIRROR = EXTRA_MM_REC_DL_0 + SAVESIZE_EXTRA_BATTLE_REC,
+  
+  EXTRA_MM_REC_DL_1 = EXTRA_MM_REC_DL_0_MIRROR + SAVESIZE_EXTRA_BATTLE_REC,
+  EXTRA_MM_REC_DL_1_MIRROR = EXTRA_MM_REC_DL_1 + SAVESIZE_EXTRA_BATTLE_REC,
+  
+  EXTRA_MM_REC_DL_2 = EXTRA_MM_REC_DL_1_MIRROR + SAVESIZE_EXTRA_BATTLE_REC,
+  EXTRA_MM_REC_DL_2_MIRROR = EXTRA_MM_REC_DL_2 + SAVESIZE_EXTRA_BATTLE_REC,
+  
+  EXTRA_MM_STREAMING,
+};
 
 
+//--------------------------------------------------------------
+//  通常セーブデータのテーブル
+//--------------------------------------------------------------
 static const GFL_SAVEDATA_TABLE SaveDataTbl_Normal[] = {
 	{	//コンテスト
 		GMDATA_ID_CONTEST,
-//		SVBLK_ID_NORMAL,
 		(FUNC_GET_SIZE)CONDATA_GetWorkSize,
 		(FUNC_INIT_WORK)CONDATA_Init,
 	},
-	{	//松田デバッグ機能用セーブ
-		GMDATA_ID_MATSU_DEBUG,
-		(FUNC_GET_SIZE)DebugMatsuSave_GetWorkSize,
-		(FUNC_INIT_WORK)DebugMatsuSave_Init,
-	},
-	{	//テスト
-		GMDATA_ID_MATSU_DEBUG_0,
-		(FUNC_GET_SIZE)DebugMatsuSave_GetWorkSize_0,
-		(FUNC_INIT_WORK)DebugMatsuSave_Init,
-	},
-	{	//テスト
-		GMDATA_ID_MATSU_DEBUG_1,
-		(FUNC_GET_SIZE)DebugMatsuSave_GetWorkSize_1,
-		(FUNC_INIT_WORK)DebugMatsuSave_Init,
-	},
-	{	//テスト
-		GMDATA_ID_MATSU_DEBUG_2,
-		(FUNC_GET_SIZE)DebugMatsuSave_GetWorkSize_2,
-		(FUNC_INIT_WORK)DebugMatsuSave_Init,
-	},
-	{	//テスト
-		GMDATA_ID_MATSU_DEBUG_3,
-		(FUNC_GET_SIZE)DebugMatsuSave_GetWorkSize_3,
-		(FUNC_INIT_WORK)DebugMatsuSave_Init,
-	},
-	{	//テスト
-		GMDATA_ID_MATSU_DEBUG_4,
-		(FUNC_GET_SIZE)DebugMatsuSave_GetWorkSize_4,
-		(FUNC_INIT_WORK)DebugMatsuSave_Init,
-	},
-	{	//テスト
-		GMDATA_ID_MATSU_DEBUG_5,
-		(FUNC_GET_SIZE)DebugMatsuSave_GetWorkSize_5,
-		(FUNC_INIT_WORK)DebugMatsuSave_Init,
-	},
-	{	//テスト
-		GMDATA_ID_MATSU_DEBUG_6,
-		(FUNC_GET_SIZE)DebugMatsuSave_GetWorkSize_6,
-		(FUNC_INIT_WORK)DebugMatsuSave_Init,
-	},
-	{	//テスト
-		GMDATA_ID_MATSU_DEBUG_7,
-		(FUNC_GET_SIZE)DebugMatsuSave_GetWorkSize_7,
-		(FUNC_INIT_WORK)DebugMatsuSave_Init,
-	},
-	{	//テスト
-		GMDATA_ID_MATSU_DEBUG_8,
-		(FUNC_GET_SIZE)DebugMatsuSave_GetWorkSize_8,
-		(FUNC_INIT_WORK)DebugMatsuSave_Init,
-	},
-	{	//テスト
-		GMDATA_ID_MATSU_DEBUG_9,
-		(FUNC_GET_SIZE)DebugMatsuSave_GetWorkSize_9,
-		(FUNC_INIT_WORK)DebugMatsuSave_Init,
-	},
-	{	//テスト
-		GMDATA_ID_MATSU_DEBUG_a,
-		(FUNC_GET_SIZE)DebugMatsuSave_GetWorkSize_a,
-		(FUNC_INIT_WORK)DebugMatsuSave_Init,
-	},
-	{	//テスト
-		GMDATA_ID_MATSU_DEBUG_b,
-		(FUNC_GET_SIZE)DebugMatsuSave_GetWorkSize_b,
-		(FUNC_INIT_WORK)DebugMatsuSave_Init,
-	},
-	{	//テスト
-		GMDATA_ID_MATSU_DEBUG_c,
-		(FUNC_GET_SIZE)DebugMatsuSave_GetWorkSize_c,
-		(FUNC_INIT_WORK)DebugMatsuSave_Init,
-	},
-	{	//テスト
-		GMDATA_ID_MATSU_DEBUG_d,
-		(FUNC_GET_SIZE)DebugMatsuSave_GetWorkSize_d,
-		(FUNC_INIT_WORK)DebugMatsuSave_Init,
-	},
-	{	//テスト
-		GMDATA_ID_MATSU_DEBUG_e,
-		(FUNC_GET_SIZE)DebugMatsuSave_GetWorkSize_e,
-		(FUNC_INIT_WORK)DebugMatsuSave_Init,
-	},
-
 	{	//BOXデータ(中身は仮です Ari081107
 		GMDATA_ID_BOXDATA,
 		(FUNC_GET_SIZE)BOXDAT_GetTotalSize,
@@ -265,7 +205,63 @@ static const GFL_SAVEDATA_TABLE SaveDataTbl_Normal[] = {
   }
 };
 
+//--------------------------------------------------------------
+//  外部セーブデータのテーブル(ミラーリング有)
+//--------------------------------------------------------------
+///戦闘録画：自分 
+///  ※GFL_SAVEDATA_TABLE全体でメモリは確保されます。
+///    その為サイズが大きい録画データは一つ一つ別テーブルにしています)
+static const GFL_SAVEDATA_TABLE SaveDataTbl_Extra_RecMine[] = {
+	{
+		EXGMDATA_ID_BATTLE_REC_MINE,
+		(FUNC_GET_SIZE)BattleRec_GetWorkSize,
+		(FUNC_INIT_WORK)BattleRec_WorkInit,
+	},
+};
 
+///戦闘録画：ダウンロード0番
+static const GFL_SAVEDATA_TABLE SaveDataTbl_Extra_RecDl_0[] = {
+	{
+		EXGMDATA_ID_BATTLE_REC_DL_0,
+		(FUNC_GET_SIZE)BattleRec_GetWorkSize,
+		(FUNC_INIT_WORK)BattleRec_WorkInit,
+	},
+};
+
+///戦闘録画：ダウンロード1番
+static const GFL_SAVEDATA_TABLE SaveDataTbl_Extra_RecDl_1[] = {
+	{
+		EXGMDATA_ID_BATTLE_REC_DL_1,
+		(FUNC_GET_SIZE)BattleRec_GetWorkSize,
+		(FUNC_INIT_WORK)BattleRec_WorkInit,
+	},
+};
+
+///戦闘録画：ダウンロード2番
+static const GFL_SAVEDATA_TABLE SaveDataTbl_Extra_RecDl_2[] = {
+	{
+		EXGMDATA_ID_BATTLE_REC_DL_2,
+		(FUNC_GET_SIZE)BattleRec_GetWorkSize,
+		(FUNC_INIT_WORK)BattleRec_WorkInit,
+	},
+};
+
+//--------------------------------------------------------------
+//  外部セーブデータのテーブル(ミラーリング無)
+//--------------------------------------------------------------
+///ストリーミング
+static const GFL_SAVEDATA_TABLE SaveDataTbl_Extra_Streaming[] = {
+	{
+		EXGMDATA_ID_STREAMING,
+		(FUNC_GET_SIZE)BattleRec_GetWorkSize,
+		(FUNC_INIT_WORK)BattleRec_WorkInit,
+	},
+};
+
+
+//==============================================================================
+//  
+//==============================================================================
 //--------------------------------------------------------------
 /**
  * @brief   セーブパラメータテーブル
@@ -278,6 +274,55 @@ const GFL_SVLD_PARAM SaveParam_Normal = {
 	MIRROR_SAVE_ADDRESS,			//ミラーリング領域先頭アドレス
 	SAVESIZE_NORMAL,				//使用するバックアップ領域の大きさ
 	MAGIC_NUMBER,
-	GFL_BACKUP_NORMAL_FLASH,
 };
+
+//--------------------------------------------------------------
+/**
+ * @brief   外部セーブパラメータテーブル
+ *          ※SAVE_EXTRA_IDと並びを同じにしておくこと！！
+ */
+//--------------------------------------------------------------
+const GFL_SVLD_PARAM SaveParam_ExtraTbl[] = {
+  {//戦闘録画：自分
+  	SaveDataTbl_Extra_RecMine,
+  	NELEMS(SaveDataTbl_Extra_RecMine),
+  	EXTRA_MM_REC_MINE,              //バックアップ領域先頭アドレス
+  	EXTRA_MM_REC_MINE_MIRROR,       //ミラーリング領域先頭アドレス
+  	SAVESIZE_EXTRA_BATTLE_REC,      //使用するバックアップ領域の大きさ
+  	MAGIC_NUMBER,
+  },
+  {//戦闘録画：ダウンロード0番
+  	SaveDataTbl_Extra_RecDl_0,
+  	NELEMS(SaveDataTbl_Extra_RecDl_0),
+  	EXTRA_MM_REC_DL_0,              //バックアップ領域先頭アドレス
+  	EXTRA_MM_REC_DL_0_MIRROR,       //ミラーリング領域先頭アドレス
+  	SAVESIZE_EXTRA_BATTLE_REC,      //使用するバックアップ領域の大きさ
+  	MAGIC_NUMBER,
+  },
+  {//戦闘録画：ダウンロード1番
+  	SaveDataTbl_Extra_RecDl_1,
+  	NELEMS(SaveDataTbl_Extra_RecDl_1),
+  	EXTRA_MM_REC_DL_1,              //バックアップ領域先頭アドレス
+  	EXTRA_MM_REC_DL_1_MIRROR,       //ミラーリング領域先頭アドレス
+  	SAVESIZE_EXTRA_BATTLE_REC,      //使用するバックアップ領域の大きさ
+  	MAGIC_NUMBER,
+  },
+  {//戦闘録画：ダウンロード2番
+  	SaveDataTbl_Extra_RecDl_2,
+  	NELEMS(SaveDataTbl_Extra_RecDl_2),
+  	EXTRA_MM_REC_DL_2,              //バックアップ領域先頭アドレス
+  	EXTRA_MM_REC_DL_2_MIRROR,       //ミラーリング領域先頭アドレス
+  	SAVESIZE_EXTRA_BATTLE_REC,      //使用するバックアップ領域の大きさ
+  	MAGIC_NUMBER,
+  },
+  {//外部セーブパラメータテーブル：ストリーミング(ミラーリング無)
+  	SaveDataTbl_Extra_Streaming,
+  	NELEMS(SaveDataTbl_Extra_Streaming),
+  	EXTRA_MM_STREAMING,             //バックアップ領域先頭アドレス
+  	EXTRA_MM_STREAMING,             //ミラーリング領域先頭アドレス ※ミラー無し指定
+  	SAVESIZE_EXTRA_STREAMING,       //使用するバックアップ領域の大きさ
+  	MAGIC_NUMBER,
+  },
+};
+SDK_COMPILER_ASSERT(NELEMS(SaveParam_ExtraTbl) == SAVE_EXTRA_ID_MAX);
 
