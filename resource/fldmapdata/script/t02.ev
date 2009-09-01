@@ -6,7 +6,7 @@
 
   .include  "scr_seq_def.h"
   .include  "../../../prog/include/msg/script/msg_t02.h"
-  .include  "../eventdata/zone_t02evc.h"
+  .include  "t02.h"
 
 //--------------------------------------------------------------
 //               スクリプト本体

@@ -10,7 +10,7 @@
 
   .include  "scr_seq_def.h"
   .include  "../../message/dst/script/msg_r15r0201.h"
-  //.include  "../eventdata/zone_r15r0201evc.h"
+  //.include  "r15r0201.h"
 
 //--------------------------------------------------------------
 //               スクリプト本体

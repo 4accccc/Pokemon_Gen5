@@ -10,7 +10,7 @@
 
   .include  "scr_seq_def.h"
   .include  "../../message/dst/script/msg_bcwftest.h"
-  //.include  "../eventdata/zone_bcwftestevc.h"
+  //.include  "bcwftest.h"
 
 //--------------------------------------------------------------
 //               スクリプト本体

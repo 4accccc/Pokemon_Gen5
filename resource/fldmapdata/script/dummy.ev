@@ -6,7 +6,7 @@
 
 	.include	"scr_seq_def.h"
 	//.include	"../../../include/msgdata/msg_dummy.h"
-	//.include	"../eventdata/zone_dummyevc.h"
+	//.include	"dummy.h"
 
 //--------------------------------------------------------------------
 //					     スクリプト本体

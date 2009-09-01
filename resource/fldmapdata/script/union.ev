@@ -10,7 +10,7 @@
 
   .include  "scr_seq_def.h"
   .include  "../../message/dst/script/msg_union.h"
-  //.include  "../eventdata/zone_unionevc.h"
+  //.include  "union.h"
 
 //--------------------------------------------------------------
 //               スクリプト本体

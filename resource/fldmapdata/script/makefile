@@ -90,7 +90,8 @@ ifeq ($(CONVERTUSER),true) #CONVERTUSER
 	@$(MWAS) $(ADD_MACRO)  temp_$*.s -o $*.o
 	@$(MWLD) -dis -o $*.elf $*.o
 	@elf2bin $*.elf
-	@rm $*.o $*.elf temp_$*.s
+	@rm $*.o $*.elf
+	@rm temp_$*.s
 	@$(EV_DEF) $< $(SCR_OFFS_ID_H)
 	@unix2dos -D $*_def.h
 endif #CONVERTUSER

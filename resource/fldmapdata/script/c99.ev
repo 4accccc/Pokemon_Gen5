@@ -6,7 +6,7 @@
 	.text
 	.include	"scr_seq_def.h"
 	.include	"../../../prog/include/msg/script/msg_c99.h"
-	.include	"../eventdata/zone_test00evc.h"
+	//.include	"test00.h"
 	
 //--------------------------------------------------------------------
 //					     スクリプト本体

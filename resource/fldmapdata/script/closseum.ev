@@ -10,7 +10,7 @@
 
   .include  "scr_seq_def.h"
   .include  "../../message/dst/script/msg_closseum.h"
-  //.include  "../eventdata/zone_closseumevc.h"
+  //.include  "closseum.h"
 
 //--------------------------------------------------------------
 //               スクリプト本体

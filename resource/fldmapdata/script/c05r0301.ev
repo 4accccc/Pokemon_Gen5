@@ -7,7 +7,7 @@
   .text
   .include  "scr_seq_def.h"
   .include  "../../message/dst/script/msg_c05r0301.h"
-  //.include  "../eventdata/zone_c05r0301evc.h"
+  //.include  "c05r0301.h"
 
 //--------------------------------------------------------------
 //               スクリプト本体

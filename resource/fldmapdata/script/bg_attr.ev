@@ -10,7 +10,7 @@
 
   .include  "scr_seq_def.h"
   .include  "../../message/dst/script/msg_bg_attr.h"
-  //.include  "../eventdata/zone_bg_attrevc.h"
+  //.include  "bg_attr.h"
 
 //--------------------------------------------------------------
 //               スクリプト本体

@@ -10,7 +10,7 @@
 
   .include  "scr_seq_def.h"
   .include  "../../message/dst/script/msg_c03p12.h"
-  //.include  "../eventdata/zone_c03p12evc.h"
+  //.include  "c03p12.h"
 
 //--------------------------------------------------------------
 //               スクリプト本体
