@@ -453,10 +453,10 @@ static BOOL selectActionRoot_loop( int* seq, void* wk_adrs )
 
     case BTL_ACTION_ESCAPE:
       BTL_ACTION_SetEscapeParam( wk->destActionParam );
+      BTLV_INPUT_CreateScreen( wk->biw, BTLV_INPUT_SCRTYPE_STANDBY, NULL );
       break;
     }
 
-    BTLV_INPUT_CreateScreen( wk->biw, BTLV_INPUT_SCRTYPE_STANDBY, NULL );
     SePlayDecide();
     return TRUE;
   }
