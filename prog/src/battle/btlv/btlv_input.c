@@ -400,31 +400,12 @@ BTLV_INPUT_WORK*  BTLV_INPUT_Init( BTLV_INPUT_TYPE type, GFL_FONT* font, HEAPID 
 
   biw->heapID = heapID;
 
-  biw->handle   = GFL_ARC_OpenDataHandle( ARCID_BATTGRA, biw->heapID );
   biw->tcbwork  = GFL_HEAP_AllocClearMemory( biw->heapID, GFL_TCB_CalcSystemWorkSize( BTLV_INPUT_TCB_MAX ) );
   biw->tcbsys   = GFL_TCB_Init( BTLV_INPUT_TCB_MAX, biw->tcbwork );
 
   biw->font = font;
 
-  biw->wazatype_clunit = GFL_CLACT_UNIT_Create( PTL_WAZA_MAX, 0, biw->heapID );
-  biw->ballgauge_clunit = GFL_CLACT_UNIT_Create( TEMOTI_POKEMAX * 2, 0, biw->heapID );
-
-  BTLV_INPUT_SetFrame();
-  BTLV_INPUT_LoadResource( biw );
-
-  //ビットマップ初期化
-  biw->bmp_win = GFL_BMPWIN_Create( GFL_BG_FRAME0_S, 32, 4, 32, 12, 0, GFL_BMP_CHRAREA_GET_B );
-  biw->bmp_data = GFL_BMPWIN_GetBmp( biw->bmp_win );
-  GFL_BMP_Clear( biw->bmp_data, 0x00 );
-  GFL_BMPWIN_MakeScreen( biw->bmp_win );
-  GFL_BMPWIN_TransVramCharacter( biw->bmp_win );
-  GFL_BG_LoadScreenReq( GFL_BG_FRAME0_S );
-
-  //情報ステータスバー初期化
-  INFOWIN_Init( GFL_BG_FRAME2_S, INFOWIN_PAL_NO, NULL, biw->heapID );
-
-  //メインループはTCBで行う
-  biw->main_loop = GFL_TCB_AddTask( BTLV_EFFECT_GetTCBSYS(), BTLV_INPUT_MainTCB, biw, 0 );
+  BTLV_INPUT_InitBG( biw );
 
   BTLV_INPUT_CreateScreen( biw, BTLV_INPUT_SCRTYPE_STANDBY, NULL );
 
@@ -440,35 +421,10 @@ BTLV_INPUT_WORK*  BTLV_INPUT_Init( BTLV_INPUT_TYPE type, GFL_FONT* font, HEAPID 
 //============================================================================================
 void  BTLV_INPUT_Exit( BTLV_INPUT_WORK* biw )
 {
-  GFL_CLGRP_CGR_Release( biw->objcharID );
-  GFL_CLGRP_CELLANIM_Release( biw->objcellID );
-  GFL_CLGRP_PLTT_Release( biw->objplttID );
-
-  {
-    int i;
-
-    for( i = 0 ; i < PTL_WAZA_MAX ; i++ )
-    {
-      GFL_CLGRP_CGR_Release( biw->wazatype_charID[ i ] );
-    }
-  }
-  GFL_CLGRP_CELLANIM_Release( biw->wazatype_cellID );
-  GFL_CLGRP_PLTT_Release( biw->wazatype_plttID );
-
-  GFL_CLACT_UNIT_Delete( biw->wazatype_clunit );
-  GFL_CLACT_UNIT_Delete( biw->ballgauge_clunit );
-
-  GFL_BMPWIN_Delete( biw->bmp_win );
-
-  INFOWIN_Exit();
+  BTLV_INPUT_ExitBG( biw );
 
   GFL_TCB_Exit( biw->tcbsys );
-  GFL_TCB_DeleteTask( biw->main_loop );
-
   GFL_HEAP_FreeMemory( biw->tcbwork );
-
-  GFL_ARC_CloseDataHandle( biw->handle );
-
   GFL_HEAP_FreeMemory( biw );
 }
 
@@ -497,6 +453,73 @@ static  void  BTLV_INPUT_MainTCB( GFL_TCB* tcb, void* work )
   BTLV_INPUT_WORK* biw = (BTLV_INPUT_WORK *)work;
   GFL_TCB_Main( biw->tcbsys );
   INFOWIN_Update();
+}
+
+//============================================================================================
+/**
+ *  @brief  BG画面初期化
+ *
+ *  @param[in]  biw システム管理構造体のポインタ
+ */
+//============================================================================================
+void  BTLV_INPUT_InitBG( BTLV_INPUT_WORK *biw )
+{ 
+  biw->handle   = GFL_ARC_OpenDataHandle( ARCID_BATTGRA, biw->heapID );
+  biw->wazatype_clunit = GFL_CLACT_UNIT_Create( PTL_WAZA_MAX, 0, biw->heapID );
+  biw->ballgauge_clunit = GFL_CLACT_UNIT_Create( TEMOTI_POKEMAX * 2, 0, biw->heapID );
+
+  BTLV_INPUT_SetFrame();
+  BTLV_INPUT_LoadResource( biw );
+
+  //ビットマップ初期化
+  biw->bmp_win = GFL_BMPWIN_Create( GFL_BG_FRAME0_S, 32, 4, 32, 12, 0, GFL_BMP_CHRAREA_GET_B );
+  biw->bmp_data = GFL_BMPWIN_GetBmp( biw->bmp_win );
+  GFL_BMP_Clear( biw->bmp_data, 0x00 );
+  GFL_BMPWIN_MakeScreen( biw->bmp_win );
+  GFL_BMPWIN_TransVramCharacter( biw->bmp_win );
+  GFL_BG_LoadScreenReq( GFL_BG_FRAME0_S );
+
+  //情報ステータスバー初期化
+  INFOWIN_Init( GFL_BG_FRAME2_S, INFOWIN_PAL_NO, NULL, biw->heapID );
+
+  //メインループはTCBで行う
+  biw->main_loop = GFL_TCB_AddTask( BTLV_EFFECT_GetTCBSYS(), BTLV_INPUT_MainTCB, biw, 0 );
+}
+
+//============================================================================================
+/**
+ *  @brief  BG画面終了
+ *
+ *  @param[in]  biw システム管理構造体のポインタ
+ */
+//============================================================================================
+void  BTLV_INPUT_ExitBG( BTLV_INPUT_WORK *biw )
+{ 
+  GFL_CLGRP_CGR_Release( biw->objcharID );
+  GFL_CLGRP_CELLANIM_Release( biw->objcellID );
+  GFL_CLGRP_PLTT_Release( biw->objplttID );
+
+  {
+    int i;
+
+    for( i = 0 ; i < PTL_WAZA_MAX ; i++ )
+    {
+      GFL_CLGRP_CGR_Release( biw->wazatype_charID[ i ] );
+    }
+  }
+  GFL_CLGRP_CELLANIM_Release( biw->wazatype_cellID );
+  GFL_CLGRP_PLTT_Release( biw->wazatype_plttID );
+
+  GFL_CLACT_UNIT_Delete( biw->wazatype_clunit );
+  GFL_CLACT_UNIT_Delete( biw->ballgauge_clunit );
+
+  GFL_BMPWIN_Delete( biw->bmp_win );
+
+  INFOWIN_Exit();
+
+  GFL_TCB_DeleteTask( biw->main_loop );
+
+  GFL_ARC_CloseDataHandle( biw->handle );
 }
 
 //============================================================================================
