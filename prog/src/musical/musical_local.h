@@ -1,4 +1,3 @@
-
 //============================================================================================
 /**
  * @file	musical_local.h
@@ -41,5 +40,16 @@ typedef enum
 //グループ番号から回転へ変換(32等分)
 //#define MUS_POKE_GRP_TO_ROT(val) (val*(360/32)*65536/360);
 #define MUS_POKE_GRP_TO_ROT(val) (val*(65536/32))	//360を通分
+
+//配信されてくるデータ
+typedef struct
+{
+  void *strmData;
+  u32  strmDataSize;
+}MUSICAL_DISTRIBUTE_DATA;
+
+MUSICAL_DISTRIBUTE_DATA* MUSICAL_SYSTEM_InitDistributeData( HEAPID workHeapId );
+void MUSICAL_SYSTEM_TermDistributeData( MUSICAL_DISTRIBUTE_DATA *distData );
+void MUSICAL_SYSTEM_LoadStrmData( MUSICAL_DISTRIBUTE_DATA *distData , HEAPID strmHeapId );
 
 #endif	//MUSICAL_LOCAL_H_

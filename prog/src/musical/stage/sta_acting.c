@@ -20,7 +20,6 @@
 #include "print/printsys.h"
 
 #include "sound/snd_strm.h"
-#include "snd_strm.naix"
 
 #include "infowin/infowin.h"
 #include "test/ariizumi/ari_debug.h"
@@ -1207,7 +1206,13 @@ void STA_ACT_SetLightUpFlg( ACTING_WORK *work , const u8 pokeIdx , const BOOL fl
 //--------------------------------------------------------------
 void  STA_ACT_StartBgm( ACTING_WORK *work )
 {
-  SND_STRM_SetUp( ARCID_SNDSTRM, NARC_snd_strm_poketari_swav, SND_STRM_PCM8, SND_STRM_8KHZ, work->heapId );
+  //SND_STRM_SetUp( ARCID_SNDSTRM, NARC_snd_strm_poketari_swav, SND_STRM_PCM8, SND_STRM_8KHZ, work->heapId );
+  SND_STRM_SetUpStraightData( SND_STRM_PCM8, 
+                               SND_STRM_8KHZ, 
+                               work->heapId , 
+                               work->initWork->distData->strmData , 
+                               work->initWork->distData->strmDataSize );
+  OS_TPrintf("[%d]\n",work->initWork->distData->strmDataSize);
   SND_STRM_Play();
 }
 

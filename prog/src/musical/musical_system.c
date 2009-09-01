@@ -13,8 +13,11 @@
 #include "poke_tool/poke_tool.h"
 #include "poke_tool/monsno_def.h"
 
+#include "snd_strm.naix"
+
 #include "savedata/musical_save.h"
 #include "musical/musical_system.h"
+#include "musical/musical_local.h"
 #include "musical/musical_program.h"
 #include "musical/musical_dressup_sys.h"
 #include "musical/musical_stage_sys.h"
@@ -39,6 +42,7 @@ typedef enum
 {
   MPS_INIT_LOBBY,
   MPS_TERM_LOBBY,
+  MPS_INIT_DRESSUP_SEND_STRM,
   MPS_INIT_DRESSUP,
   MPS_TERM_DRESSUP,
   MPS_INIT_ACTING,
@@ -60,6 +64,8 @@ typedef enum
 typedef struct
 {
   GFL_PROCSYS *procSys;
+  
+  MUSICAL_DISTRIBUTE_DATA *distData;
   
   MUSICAL_PROC_STATE state;
   MUS_COMM_WORK     *commWork;
@@ -154,7 +160,29 @@ MUSICAL_POKE_PARAM* MUSICAL_SYSTEM_InitMusPoke( POKEMON_PARAM *pokePara , HEAPID
   return musPara;
 }
 
+#pragma mark [>distribute data
+MUSICAL_DISTRIBUTE_DATA* MUSICAL_SYSTEM_InitDistributeData( HEAPID workHeapId )
+{
+  MUSICAL_DISTRIBUTE_DATA *distData = GFL_HEAP_AllocMemory( workHeapId , sizeof( MUSICAL_DISTRIBUTE_DATA ) );
 
+  distData->strmData = NULL;
+  return distData;
+}
+
+void MUSICAL_SYSTEM_TermDistributeData( MUSICAL_DISTRIBUTE_DATA *distData )
+{
+  if( distData->strmData != NULL )
+  {
+    GFL_HEAP_FreeMemory( distData->strmData );
+  }
+  GFL_HEAP_FreeMemory( distData );
+}
+
+void MUSICAL_SYSTEM_LoadStrmData( MUSICAL_DISTRIBUTE_DATA *distData , HEAPID strmHeapId )
+{
+  //FIXME:セーブデータからの取得
+  distData->strmData = GFL_ARC_UTIL_LoadEx( ARCID_SNDSTRM , NARC_snd_strm_poketari_swav , FALSE , HEAPID_MUSICAL_STRM , &distData->strmDataSize );
+}
 
 #pragma mark [>proc 
 static GFL_PROC_RESULT MusicalProc_Init( GFL_PROC * proc, int * seq , void *pwk, void *mywk )
@@ -163,6 +191,7 @@ static GFL_PROC_RESULT MusicalProc_Init( GFL_PROC * proc, int * seq , void *pwk,
   MUSICAL_PROC_WORK *work;
   
   GFL_OVERLAY_Load(FS_OVERLAY_ID(musical));
+  GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_MUSICAL_STRM|HEAPDIR_MASK, 0x80000 );
   GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_MUSICAL_PROC|HEAPDIR_MASK, 0x8000 );
 
   work = GFL_PROC_AllocWork( proc, sizeof(MUSICAL_PROC_WORK), HEAPID_MUSICAL_PROC );
@@ -170,16 +199,19 @@ static GFL_PROC_RESULT MusicalProc_Init( GFL_PROC * proc, int * seq , void *pwk,
   work->progWork = MUSICAL_PROGRAM_GetProgramData( HEAPID_MUSICAL_PROC );
   work->dupInitWork = NULL;
   work->actInitWork = NULL;
+  work->distData = MUSICAL_SYSTEM_InitDistributeData( HEAPID_MUSICAL_PROC );
 
   work->procSys = GFL_PROC_LOCAL_boot( HEAPID_MUSICAL_PROC );
   
   if( initWork->isComm == TRUE )
   {
+    //distDataは親子確定後に初期化する
     work->state = MPS_INIT_LOBBY;
-    work->commWork = MUS_COMM_CreateWork( HEAPID_MUSICAL_PROC , initWork->gameComm , initWork->saveCtrl);
+    work->commWork = MUS_COMM_CreateWork( HEAPID_MUSICAL_PROC , initWork->gameComm , initWork->saveCtrl , work->distData );
   }
   else
   {
+    MUSICAL_SYSTEM_LoadStrmData( work->distData , HEAPID_MUSICAL_STRM );
     work->state = MPS_INIT_DRESSUP;
     work->commWork = NULL;
   }
@@ -212,11 +244,14 @@ static GFL_PROC_RESULT MusicalProc_Term( GFL_PROC * proc, int * seq , void *pwk,
     MUSICAL_STAGE_DeleteStageWork( work->actInitWork );
   }
   GFL_PROC_LOCAL_Exit( work->procSys );
+
+  MUSICAL_SYSTEM_TermDistributeData( work->distData );
   GFL_HEAP_FreeMemory( work->musPoke );
   
   GFL_HEAP_FreeMemory( work->progWork );
   
   GFL_PROC_FreeWork( proc );
+  GFL_HEAP_DeleteHeap( HEAPID_MUSICAL_STRM );
   GFL_HEAP_DeleteHeap( HEAPID_MUSICAL_PROC );
   
   if( initWork->isDebug == TRUE )
@@ -254,13 +289,25 @@ static GFL_PROC_RESULT MusicalProc_Main( GFL_PROC * proc, int * seq , void *pwk,
         work->state = MPS_FINISH;
         break;
       
-      default:  //仮
+      case MCM_PARENT:  //仮
+        MUSICAL_SYSTEM_LoadStrmData( work->distData , HEAPID_MUSICAL_STRM );
+        work->state = MPS_INIT_DRESSUP_SEND_STRM;
+        break;
+
+      case MCM_CHILD:  //仮
         work->state = MPS_INIT_DRESSUP;
         break;
       }
     }
     break;
     
+  case MPS_INIT_DRESSUP_SEND_STRM:
+    //if( MUS_COMM_Send_StrmData( work->commWork , 0 ) == TRUE )
+    {
+      work->state = MPS_INIT_DRESSUP;
+    }
+    break;
+
   case MPS_INIT_DRESSUP:
     work->dupInitWork = MUSICAL_DRESSUP_CreateInitWork( HEAPID_MUSICAL_PROC , work->musPoke , initWork->saveCtrl );
     GFL_PROC_LOCAL_CallProc( work->procSys , NO_OVERLAY_ID, &DressUp_ProcData, work->dupInitWork );
@@ -341,6 +388,7 @@ static GFL_PROC_RESULT MusicalProc_Main( GFL_PROC * proc, int * seq , void *pwk,
       MUSICAL_STAGE_SetEquip( work->actInitWork , 3 , MUS_POKE_EQU_FACE   , 21 , 0 );
       MUSICAL_STAGE_SetEquip( work->actInitWork , 3 , MUS_POKE_EQU_HAND_R , 30 , 0 );
     }
+    work->actInitWork->distData = work->distData;
     work->actInitWork->progWork = work->progWork;
     MUSICAL_PROGRAM_CalcPokemonPoint( HEAPID_MUSICAL_PROC , work->progWork , work->actInitWork );
     GFL_PROC_LOCAL_CallProc( work->procSys , NO_OVERLAY_ID, &MusicalStage_ProcData, work->actInitWork );
@@ -363,6 +411,9 @@ static GFL_PROC_RESULT MusicalProc_Main( GFL_PROC * proc, int * seq , void *pwk,
           MUSICAL_STAGE_SetData_NPC( work->actInitWork , i , MONSNO_PIKATYUU  , HEAPID_MUSICAL_PROC );
         }
       }
+      work->actInitWork->distData = work->distData;
+      work->actInitWork->progWork = work->progWork;
+      MUSICAL_PROGRAM_CalcPokemonPoint( HEAPID_MUSICAL_PROC , work->progWork , work->actInitWork );
       GFL_PROC_LOCAL_CallProc( work->procSys , NO_OVERLAY_ID, &MusicalStage_ProcData, work->actInitWork );
       work->state = MPS_TERM_ACTING;
     }

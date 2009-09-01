@@ -182,7 +182,7 @@ void MUS_ITEM_DRAW_UpdateSystem_VBlank( MUS_ITEM_DRAW_SYSTEM* work )
 //アイテム番号からARCの番号を調べる
 u16 MUS_ITEM_DRAW_GetArcIdx( const u16 itemIdx )
 {
-	return (NARC_musical_item_item_000_nsbtx + itemIdx);
+	return (NARC_musical_item_mg_item000_nsbtx + itemIdx);
 }
 //ファイルIdxからサイズを調べる
 void MUS_ITEM_DRAW_GetPicSize( MUS_ITEM_DRAW_WORK *itemWork , u8 *sizeXRate , u8 *sizeYRate )

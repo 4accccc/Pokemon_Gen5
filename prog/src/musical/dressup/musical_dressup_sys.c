@@ -68,7 +68,7 @@ static GFL_PROC_RESULT DressUpProc_Init( GFL_PROC * proc, int * seq , void *pwk,
 	DRESSUP_INIT_WORK *initWork = pwk;
 	*seq = DUP_SEQ_INIT_FITTING;
 
-	GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_MUSICAL_DRESSUP, 0x40000 );
+	GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_MUSICAL_DRESSUP, 0x60000 );
 
 	work = GFL_PROC_AllocWork( proc, sizeof(DRESSUP_LOCAL_WORK), HEAPID_MUSICAL_DRESSUP );
 	work->fitInitWork = GFL_HEAP_AllocMemory( HEAPID_MUSICAL_DRESSUP , sizeof(FITTING_INIT_WORK) );
@@ -115,6 +115,7 @@ static GFL_PROC_RESULT DressUpProc_Main( GFL_PROC * proc, int * seq , void *pwk,
 	case DUP_SEQ_INIT_FITTING:
 		work->fitWork = DUP_FIT_InitFitting(work->fitInitWork,HEAPID_MUSICAL_DRESSUP);
 		*seq = DUP_SEQ_LOOP_FITTING;
+		OS_TPrintf("HEAP[%x]\n",GFL_HEAP_GetHeapFreeSize( GFL_HEAPID_APP ));
 		break;
 		
 	case DUP_SEQ_LOOP_FITTING:

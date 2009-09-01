@@ -102,6 +102,10 @@ static GFL_PROC_RESULT MusicalStageProc_Init( GFL_PROC * proc, int * seq , void 
     MUSICAL_STAGE_SetEquip( work->actInitWork , 3 , MUS_POKE_EQU_HEAD   , 21 , 0 );
     work->actInitWork->progWork = MUSICAL_PROGRAM_GetProgramData( HEAPID_MUSICAL_STAGE );
     MUSICAL_PROGRAM_CalcPokemonPoint( HEAPID_MUSICAL_STAGE , work->actInitWork->progWork , work->actInitWork );
+
+    GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_MUSICAL_STRM|HEAPDIR_MASK, 0x80000 );
+    work->actInitWork->distData = MUSICAL_SYSTEM_InitDistributeData( GFL_HEAPID_APP );
+    MUSICAL_SYSTEM_LoadStrmData( work->actInitWork->distData , HEAPID_MUSICAL_STRM );
   }
   else
   {
@@ -120,6 +124,8 @@ static GFL_PROC_RESULT MusicalStageProc_Term( GFL_PROC * proc, int * seq , void 
   if( pwk == NULL )
   {
     GFL_HEAP_FreeMemory( work->actInitWork->progWork );
+    MUSICAL_SYSTEM_TermDistributeData( work->actInitWork->distData );
+    GFL_HEAP_DeleteHeap( HEAPID_MUSICAL_STRM );
     MUSICAL_STAGE_DeleteStageWork( work->actInitWork );
   }
   GFL_PROC_FreeWork( proc );
@@ -139,6 +145,7 @@ static GFL_PROC_RESULT MusicalStageProc_Main( GFL_PROC * proc, int * seq , void 
   case STA_SEQ_INIT_ACTING:
     work->actWork = STA_ACT_InitActing( work->actInitWork , HEAPID_MUSICAL_STAGE );
     *seq = STA_SEQ_LOOP_ACTING;
+	OS_TPrintf("HEAP[%x]\n",GFL_HEAP_GetHeapFreeSize( GFL_HEAPID_APP ));
     break;
     
   case STA_SEQ_LOOP_ACTING:
