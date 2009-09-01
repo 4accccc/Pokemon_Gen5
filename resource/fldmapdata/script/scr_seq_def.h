@@ -137,7 +137,10 @@ DEF_CMD_COUNT  =  ( DEF_CMD_COUNT + 1 )
   
   //WORDSET関連
   DEF_CMD EV_SEQ_PLAYER_NAME
-  
+  DEF_CMD EV_SEQ_ITEM_NAME
+  DEF_CMD EV_SEQ_ITEM_WAZA_NAME
+  DEF_CMD EV_SEQ_WAZA_NAME
+
   //視線トレーナー関連
   DEF_CMD EV_SEQ_EYE_TRAINER_MOVE_SET
   DEF_CMD EV_SEQ_EYE_TRAINER_MOVE_SINGLE
@@ -195,6 +198,14 @@ DEF_CMD_COUNT  =  ( DEF_CMD_COUNT + 1 )
   DEF_CMD EV_SEQ_DISP_FADE_START
   DEF_CMD EV_SEQ_DISP_FADE_CHECK
   
+  //アイテム関連
+  DEF_CMD	EV_SEQ_ADD_ITEM
+	DEF_CMD	EV_SEQ_SUB_ITEM
+	DEF_CMD	EV_SEQ_ADD_ITEM_CHK
+	DEF_CMD	EV_SEQ_ITEM_CHK
+  DEF_CMD	EV_SEQ_GET_ITEM_NUM
+	DEF_CMD	EV_SEQ_WAZA_ITEM_CHK
+
   //ミュージカル関連
   DEF_CMD EV_SEQ_MUSICAL_CALL
 
@@ -352,10 +363,7 @@ DEF_CMD_COUNT  =  ( DEF_CMD_COUNT + 1 )
   .endm
 
 //======================================================================
-//
-//
 //    判定演算用命令
-//
 //  ※スクリプトコンパイラが使用しています。
 //  　スクリプト担当者は使用しないで下さい。
 //======================================================================
@@ -1321,6 +1329,51 @@ DEF_CMD_COUNT  =  ( DEF_CMD_COUNT + 1 )
   .byte   \idx
   .endm
 
+//--------------------------------------------------------------
+/**
+ *  _ITEM_NAME アイテム名を指定タグにセット
+ *  @param idx セットするタグナンバー
+ *  @param itemno 名前を取得するアイテムナンバー
+ */
+//--------------------------------------------------------------
+#define _ITEM_NAME( idx, itemno ) _ASM_ITEM_NAME idx, itemno
+  
+  .macro _ASM_ITEM_NAME idx, itemno
+  .short EV_SEQ_ITEM_NAME
+  .byte \idx
+  .short \itemno
+  .endm
+
+//--------------------------------------------------------------
+/**
+ *	技マシンの技名を指定タグにセット
+ *  @param idx セットするタグナンバー
+ *  @param itemno 名前を取得するアイテムナンバー
+ */
+//--------------------------------------------------------------
+#define _ITEM_NAME( idx, itemno ) _ASM_ITEM_NAME idx, itemno
+
+	.macro	_ASM_ITEM_WAZA_NAME	idx,itemno
+	.short	EV_SEQ_ITEM_WAZA_NAME
+	.byte	\idx
+	.short	\itemno
+	.endm
+
+//--------------------------------------------------------------
+/**
+ *	技名を指定タグにセット
+ *  @param idx セットするタグナンバー
+ *  @param wazano 名前を取得する技番号
+ */
+//--------------------------------------------------------------
+#define _WAZA_NAME( idx, waza ) _ASM_WAZA_NAME idx,waza
+
+	.macro	_ASM_WAZA_NAME	idx,waza
+	.short	EV_SEQ_WAZA_NAME
+	.byte	\idx
+	.short	\waza
+	.endm
+
 //======================================================================
 //  視線トレーナー関連
 //======================================================================
@@ -1958,6 +2011,107 @@ DEF_CMD_COUNT  =  ( DEF_CMD_COUNT + 1 )
  */
 //--------------------------------------------------------------
 #define _BLACK_IN( speed ) _DISP_FADE_START( DISP_FADE_BLACKOUT_MAIN,16,0,speed )
+
+//======================================================================
+//  アイテム関連
+//======================================================================
+//--------------------------------------------------------------
+/**
+ *	アイテムを加える
+ *	@param item_no 加えるアイテムナンバー
+ *	@param num 加える個数
+ *	@param ret_wk 結果代入先 TRUE=成功 FALSE=失敗
+ */
+//--------------------------------------------------------------
+#define _ADD_ITEM( item_no, num, ret_wk )  _ASM_ADD_ITEM item_no,num,ret_wk
+
+	.macro	_ASM_ADD_ITEM	item_no,num,ret_wk
+	.short	EV_SEQ_ADD_ITEM
+	.short	\item_no
+	.short	\num
+	.short	\ret_wk
+	.endm
+
+//--------------------------------------------------------------
+/**
+ *	アイテムを減らす
+ *	@param item_no 減らすアイテムナンバー
+ *	@param num 減らす個数
+ *	@param ret_wk 結果代入先 TRUE=成功 FALSE=失敗
+ */
+//--------------------------------------------------------------
+#define _SUB_ITEM( item_no,num,ret_wk ) _ASM_SUB_ITEM item_no,num_ret_wk
+
+	.macro	_ASM_SUB_ITEM item_no, num, ret_wk
+	.short	EV_SEQ_SUB_ITEM
+	.short	\item_no
+	.short	\num
+	.short	\ret_wk
+	.endm
+
+//--------------------------------------------------------------
+/**
+ *	アイテムを加えられるかチェック
+ *	@param item_no 加えるアイテムナンバー
+ *	@param num 加える個数
+ *	@param ret_wk 結果代入先 TRUE=可能 FALSE=不可能
+ */
+//--------------------------------------------------------------
+#define _ADD_ITEM_CHK( item_no, num, ret_wk ) _ASM_ADD_ITEM_CHK item_no,num,ret_wk
+
+	.macro	_ASM_ADD_ITEM_CHK	item_no,num,ret_wk
+	.short	EV_SEQ_ADD_ITEM_CHK
+	.short	\item_no
+	.short	\num
+	.short	\ret_wk
+	.endm
+
+//--------------------------------------------------------------
+/**
+ *	バッグのアイテムチェック
+ *	@param item_no チェックするアイテムナンバー
+ *	@param num チェックする個数
+ *	@param ret_wk 結果代入先 TRUE=存在 FALSE=存在しない
+ */
+//--------------------------------------------------------------
+#define _ITEM_CHK( item_no, num, ret_wk ) _ASM_ITEM_CHK item_no,num,ret_wk
+
+	.macro	_ASM_ITEM_CHK		item_no,num,ret_wk
+	.short	EV_SEQ_ITEM_CHK
+	.short	\item_no
+	.short	\num
+	.short	\ret_wk
+	.endm
+
+//--------------------------------------------------------------
+/**
+ *	バッグのアイテム個数取得
+ *	@param item_no 取得するアイテムナンバー
+ *	@param ret_wk 結果代入先 TRUE=存在 FALSE=存在しない
+ */
+//--------------------------------------------------------------
+#define _GET_ITEM_NUM( item_no, ret_wk ) _ASM_GET_ITEM_NUM		item_no,ret_wk
+
+	.macro	_ASM_GET_ITEM_NUM		item_no,ret_wk
+	.short	EV_SEQ_GET_ITEM_NUM
+	.short	\item_no
+	.short	\ret_wk
+	.endm
+
+//--------------------------------------------------------------
+/**
+ *	技マシンのアイテムナンバーかチェック
+ *	@param item_no チェックするアイテムナンバー
+ *	@param ret_wk 結果代入先 TRUE=技マシンである FALSE=技マシンではない
+ */
+//--------------------------------------------------------------
+#define _WAZA_ITEM_CHK( item_no,ret_wk ) _ASM_WAZA_ITEM_CHK item_no,ret_wk
+
+	.macro	_ASM_WAZA_ITEM_CHK		item_no,ret_wk
+	.short	EV_SEQ_WAZA_ITEM_CHK
+	.short	\item_no
+	.short	\ret_wk
+	.endm
 
 //======================================================================
 //  会話イベント関連
