@@ -160,6 +160,12 @@ static BOOL TESTMODE_ITEM_SelectFuncKagaya( TESTMODE_WORK *work , const int idx 
 static BOOL TESTMODE_ITEM_SelectFuncAri( TESTMODE_WORK *work , const int idx );
 static BOOL TESTMODE_ITEM_SelectFuncDlPlay( TESTMODE_WORK *work , const int idx );
 static BOOL TESTMODE_ITEM_SelectFuncNagi( TESTMODE_WORK *work , const int idx );
+static BOOL TESTMODE_ITEM_SelectFuncObata( TESTMODE_WORK *work , const int idx );
+static BOOL TESTMODE_ITEM_SelectFuncIwasawa( TESTMODE_WORK *work , const int idx );
+static BOOL TESTMODE_ITEM_SelectFuncSaito( TESTMODE_WORK *work , const int idx );
+static BOOL TESTMODE_ITEM_SelectFuncMori( TESTMODE_WORK *work , const int idx );
+static BOOL TESTMODE_ITEM_SelectFuncNakamura( TESTMODE_WORK *work , const int idx );
+static BOOL TESTMODE_ITEM_SelectFuncHosaka( TESTMODE_WORK *work , const int idx );
 static BOOL TESTMODE_ITEM_BackTopMenu( TESTMODE_WORK *work , const int idx );
 
 static BOOL TESTMODE_ITEM_SelectFuncRTCEdit( TESTMODE_WORK *work , const int idx );
@@ -228,7 +234,13 @@ static TESTMODE_MENU_LIST topMenu[] =
 	{L"かがや　けいた"		,TESTMODE_ITEM_SelectFuncKagaya  },
 	{L"ありいずみ　のぶひこ",TESTMODE_ITEM_SelectFuncAri },
 	{L"DlPlay Sample"		,TESTMODE_ITEM_SelectFuncDlPlay },
-	{L"なぎはし　とおる"	, TESTMODE_ITEM_SelectFuncNagi	}
+	{L"なぎはし　とおる"	, TESTMODE_ITEM_SelectFuncNagi	},
+  {L"おばた　としひろ", TESTMODE_ITEM_SelectFuncObata},
+  {L"いわさわ　みゆき", TESTMODE_ITEM_SelectFuncIwasawa},
+  {L"さいとう　のぞむ", TESTMODE_ITEM_SelectFuncSaito},
+  {L"もり　あきと", TESTMODE_ITEM_SelectFuncMori},
+  {L"なかむら　ゆきひろ", TESTMODE_ITEM_SelectFuncNakamura},
+  {L"ほさか　げんや", TESTMODE_ITEM_SelectFuncHosaka},
 };
 
 static TESTMODE_MENU_LIST menuRTCEdit[] = 
@@ -956,6 +968,31 @@ static BOOL TESTMODE_ITEM_SelectFuncNagi( TESTMODE_WORK *work , const int idx )
 	return TRUE;
 }
 
+static BOOL TESTMODE_ITEM_SelectFuncObata( TESTMODE_WORK *work , const int idx )
+{
+	return TRUE;
+}
+
+static BOOL TESTMODE_ITEM_SelectFuncIwasawa( TESTMODE_WORK *work , const int idx )
+{
+	return TRUE;
+}
+static BOOL TESTMODE_ITEM_SelectFuncSaito( TESTMODE_WORK *work , const int idx )
+{
+	return TRUE;
+}
+static BOOL TESTMODE_ITEM_SelectFuncMori( TESTMODE_WORK *work , const int idx )
+{
+	return TRUE;
+}
+static BOOL TESTMODE_ITEM_SelectFuncNakamura( TESTMODE_WORK *work , const int idx )
+{
+	return TRUE;
+}
+static BOOL TESTMODE_ITEM_SelectFuncHosaka( TESTMODE_WORK *work , const int idx )
+{
+	return TRUE;
+}
 static BOOL TESTMODE_ITEM_BackTopMenu( TESTMODE_WORK *work , const int idx )
 {
 	TESTMODE_COMMAND_ChangeMenu( work , topMenu , NELEMS(topMenu) );
