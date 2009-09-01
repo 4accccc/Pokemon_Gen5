@@ -19,6 +19,7 @@
 #include "savedata/box_savedata.h"
 #include "savedata/wifilist.h"
 #include "../../src/net_app/wifi_worldtrade/worldtrade_adapter.h"
+#include "gamesystem/gamesystem.h"
 
 //============================================================================================
 //	定義
@@ -44,7 +45,7 @@ typedef struct{
 	int				contestflag;		// コンテスト見えてるかフラグ
 	int				connect;			// 初回ＧＳＩＤを取得した（1:取得してきた 0:もう持ってる)
 	SAVE_CONTROL_WORK * savedata;
-
+  GAMESYS_WORK *gamesys;
 }WORLDTRADE_PARAM;
 
 #endif
