@@ -37,6 +37,10 @@ struct _FLDNOGRID_MAPPER
   RAIL_ATTR_DATA*       p_attr;
   FLD_SCENEAREA*        p_areaMan;
   FLD_SCENEAREA_LOADER* p_areaLoader;
+
+#ifdef PM_DEBUG
+  BOOL debug_rail_camera_stop;
+#endif
 };
 
 //-----------------------------------------------------------------------------
@@ -183,6 +187,12 @@ void FLDNOGRID_MAPPER_Main( FLDNOGRID_MAPPER* p_mapper )
 
   // レールシステムメイン
   FIELD_RAIL_MAN_Update( p_mapper->p_railMan );
+#ifdef PM_DEBUG
+  if( p_mapper->debug_rail_camera_stop == FALSE )
+#endif
+  {
+    FIELD_RAIL_MAN_UpdateCamera( p_mapper->p_railMan );
+  }
   FIELD_RAIL_MAN_UpdateCamera( p_mapper->p_railMan );
   FIELD_RAIL_MAN_GetBindWorkPos( p_mapper->p_railMan, &rail_pos );
   FLD_SCENEAREA_Update( p_mapper->p_areaMan, &rail_pos );
@@ -419,6 +429,27 @@ BOOL FLDNOGRID_MAPPER_DEBUG_IsActive( const FLDNOGRID_MAPPER* cp_mapper )
   }
 
   return result;
+}
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  レールカメラを実行するか設定
+ *
+ *	@param	p_mapper  マッパー
+ *	@param	flag      フラグ
+ */
+//-----------------------------------------------------------------------------
+void FLDNOGRID_MAPPER_DEBUG_SetRailCameraActive( FLDNOGRID_MAPPER* p_mapper, BOOL flag )
+{
+  if( flag )
+  {
+    p_mapper->debug_rail_camera_stop = FALSE;
+  }
+  else
+  {
+    p_mapper->debug_rail_camera_stop = TRUE;
+  }
 }
 
 

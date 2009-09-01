@@ -28,6 +28,15 @@
 #include "fld_scenearea.h"
 #include "fld_scenearea_loader.h"
 
+
+#ifdef PM_DEBUG
+
+#ifdef DEBUG_ONLY_FOR_lee_hyunjung
+#define C3P02_DEBUG_CAMERA_NOT_MOVE // カメラを動かさない
+#endif //DEBUG_ONLY_FOR_lee_hyunjung
+
+#endif  // 
+
 //-----------------------------------------------------------------------------
 /**
  *					定数宣言
@@ -197,6 +206,19 @@ static void mapCtrlC3P02_Main( FIELDMAP_WORK* p_fieldwork, VecFx32* p_pos )
   FIELD_PLAYER_GetPos( p_fld_player, p_pos );
   PLAYERWORK_setPosition( p_player, p_pos );
 
+
+
+#ifdef C3P02_DEBUG_CAMERA_NOT_MOVE
+  {
+    FIELD_CAMERA* p_camera = FIELDMAP_GetFieldCamera( p_fieldwork );
+    
+    // カメラを動かさないで、主人公に向ける
+    FLDNOGRID_MAPPER_DEBUG_SetRailCameraActive( p_mapper, FALSE );
+
+    // アングルモードで、主人公を追うようにする。
+    FIELD_CAMERA_SetMode( p_camera, FIELD_CAMERA_MODE_CALC_CAMERA_POS );
+  }
+#endif
 
 }
 
