@@ -8,7 +8,8 @@
 //============================================================================================
 #pragma once
 
-#include "poketool/poke_tool.h"
+#include "poke_tool/poke_tool.h"
+#include "poke_tool/pokeparty.h"
 #include "savedata/regulation.h"
 
 #include "regulation_def.h"
@@ -25,19 +26,15 @@ enum{
     POKE_REG_ILLEGAL_POKE,     // 条件に合わないポケモンがいた
     POKE_REG_NUM_FAILED2,       // 必要なポケモンの人数が満たされていない2
     POKE_REG_NO_MASTPOKE,
-};
+} POKE_REG_RETURN_ENUM;
 
-extern ZKN_HEIGHT_GRAM_PTR PokeRegulationInit(int heap_id );
-// ポケモンがレギュレーションに適合しているかどうか調べたら、図鑑を破棄
-extern void PokeRegulationEnd(ZKN_HEIGHT_GRAM_PTR pZKN);
 // ポケモンがレギュレーションに適合しているかどうか調べる  
-extern BOOL PokeRegulationCheckPokePara(const REGULATION* pReg, POKEMON_PARAM* pp, ZKN_HEIGHT_GRAM_PTR pZKN);
+extern BOOL PokeRegulationCheckPokePara(const REGULATION* pReg, POKEMON_PARAM* pp);
 // ポケパーティがレギュレーションに完全適合しているかどうか調べる バトル最終チェック用
-extern int PokeRegulationMatchFullPokeParty(const REGULATION* pReg, POKEPARTY * party,
-                                            const ZKN_HEIGHT_GRAM_PTR pZKN, u8* sel);
+extern int PokeRegulationMatchFullPokeParty(const REGULATION* pReg, POKEPARTY * party, u8* sel);
 // ポケパーティ中にレギュレーションに適合している
 //  パーティーが組めるかどうか調べる 適応外のポケモンがいても大丈夫  受け付け用
-extern int PokeRegulationMatchPartialPokeParty(const REGULATION* pReg, POKEPARTY * party,ZKN_HEIGHT_GRAM_PTR pZKN);
+extern int PokeRegulationMatchPartialPokeParty(const REGULATION* pReg, POKEPARTY * party);
 
 // regulation.narcにあるデータを読み込む
-const REGULATION* PokeRegulation_LoadDataAlloc(int regulation_data_no, HEAPID heapid);
+extern const REGULATION* PokeRegulation_LoadDataAlloc(int regulation_data_no, HEAPID heapid);

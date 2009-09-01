@@ -28,7 +28,7 @@ SUBDIRS	=
 include	$(PROJECT_RSCDIR)\macro_define
 
 
-CONVERTDATA = regulation.bin
+CONVERTDATA = *.bin
 
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
 # サフィックスルールを定義することで 依存関係を自動で判断してくれる
@@ -62,7 +62,7 @@ $(targetname).narc: $(CONVERTDATA)
 regulation.txt: regulation.xls
 	ruby $(PROJECT_ROOT)tools/exceltool/xls2xml/tab_out.rb regulation.xls > regulation.txt
 
-regulation.bin: regulation.txt regulation.rb makefile
+$(CONVERTDATA): regulation.txt regulation.rb makefile
 	ruby regulation.rb regulation.txt regulation.bin regulation_def.h ../message/src/monsname.gmm ../message/src/itemname.gmm
 	$(COPY) regulation_def.h ../../prog/include/poke_tool
 

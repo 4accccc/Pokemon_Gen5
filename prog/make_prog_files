@@ -93,6 +93,7 @@ SRCS  +=    $(SOUNDSRC) \
         system/mcss.c \
         system/mcss_tool.c \
         poke_tool/poke_tool.c \
+        poke_tool/poke_regulation.c \
         poke_tool/pokeparty.c \
         poke_tool/poke_personal.c \
         pokeicon/pokeicon.c \

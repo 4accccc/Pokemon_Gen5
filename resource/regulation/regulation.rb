@@ -175,7 +175,7 @@ class RegulationBin
         p keyno
         outFH.write([keyno].pack("s"))
       end
-    when COL_MUST_POKE    #必須ポケモンフォルム
+    when COL_MUST_POKE_FORM    #必須ポケモンフォルム
       num = value.to_i
       outFH.write([num].pack("c")) 
     when COL_SHOOTER    #シューター
@@ -214,7 +214,7 @@ class RegulationBin
       
     when COL_PROGRAM_LAVEL    # Program
       num = value.to_i
-      outFH.puts( "REG_" + value + " = " +  @TempNum)
+      outFH.puts( "#define REG_" + value + " " +  @TempNum)
     else
     end
   end
@@ -228,12 +228,12 @@ class RegulationBin
   
   def convline( tabfile, outfile,outheader )
     
-    outFH = File.new(outfile,"wb")
     outHeader = File.new(outheader,"w")
     
     headerplus(outHeader)
     
     fpr = File.new(tabfile,"r")
+    lineindex=0
     fpr.each{ |line|
       index = 0
       if line =~ /^\d+/
@@ -242,16 +242,17 @@ class RegulationBin
       else
         break
       end
+      outFH = File.new("reguration" + sprintf("%03d",lineindex) + ".bin","wb")
       tabarray = line.split(/\t+/)
       tabarray.each{ |value|
         valuefunc(index, value, outFH)
         programfunc(index, value, outHeader)
         index = index + 1
-        
       }
+      outFH.close
+      lineindex = lineindex + 1
     }
     outHeader.close
-    outFH.close
     fpr.close
     
   end

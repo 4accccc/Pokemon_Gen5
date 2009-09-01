@@ -7,14 +7,16 @@
  */
 //============================================================================================
 
-#include "common.h"
-#include "poketool/poke_regulation.h"
-#include "poketool/pokeparty.h"
-#include "itemtool/itemsym.h"
+#include <gflib.h>
+#include "buflen.h"
+#include "savedata/save_control.h"
+#include "poke_tool/poke_regulation.h"
+#include "poke_tool/pokeparty.h"
+#include "item/itemsym.h"
 
-#include "poketool/monsno.h"
-#include "savedata/regulation_data.h"
+#include "poke_tool/monsno_def.h"
 
+#include "arc_def.h"
 #include "regulation.naix"
 
 #define _POKENO_NONE  (0)          // ポケモン番号でない番号
@@ -22,18 +24,18 @@
 
 //------------------------------------------------------------------
 /**
- * ポケモンがレギュレーションに適合しているかどうか調べる
- * @param   POKEMON_PARAM
- * @param   REGULATION
+ * @brief  ポケモンがレギュレーションに適合しているかどうか調べる
+ * @param   REGULATION     レギュレーション構造体ポインタ
+ * @param   POKEMON_PARAM  ポケパラ
  * @return  合致したらTRUE
  */
 //------------------------------------------------------------------
 
 BOOL PokeRegulationCheckPokePara(const REGULATION* pReg, POKEMON_PARAM* pp)
 {
-  u16 mons = (u16)PokeParaGet( pp, ID_PARA_monsno, NULL );
-  u16 item = (u16)PokeParaGet( pp, ID_PARA_item, NULL );
-  int ans,level,weight;
+  u16 mons = (u16)PP_Get( pp, ID_PARA_monsno, NULL );
+  u16 item = (u16)PP_Get( pp, ID_PARA_item, NULL );
+  int ans,level,weight,range;
 
   if(pReg==NULL){
     return TRUE;
@@ -41,7 +43,7 @@ BOOL PokeRegulationCheckPokePara(const REGULATION* pReg, POKEMON_PARAM* pp)
   //LV
   ans = Regulation_GetParam(pReg, REGULATION_LEVEL);
   range = Regulation_GetParam(pReg, REGULATION_LEVEL_RANGE);
-  level = PokeParaGet(pp, ID_PARA_level, NULL);
+  level = PP_Get(pp, ID_PARA_level, NULL);
   // レベル制限がある場合検査
   switch(range){
   case REGULATION_LEVEL_RANGE_OVER:
@@ -56,7 +58,7 @@ BOOL PokeRegulationCheckPokePara(const REGULATION* pReg, POKEMON_PARAM* pp)
     break;
   }
   //たまご参戦不可
-  if( PokeParaGet(pp, ID_PARA_tamago_flag, NULL ) != 0 ){
+  if( PP_Get(pp, ID_PARA_tamago_flag, NULL ) != 0 ){
     return FALSE;
   }
   // 参加禁止ポケかどうか
@@ -72,11 +74,11 @@ BOOL PokeRegulationCheckPokePara(const REGULATION* pReg, POKEMON_PARAM* pp)
 
 //------------------------------------------------------------------
 /**
- * ポケパーティがレギュレーションに適合しているかどうか調べる
+ * @brief  ポケパーティがレギュレーションに適合しているかどうか調べる
+ * @param   REGULATION     レギュレーション構造体ポインタ
  * @param   POKEMON_PARAM
- * @param   REGULATION
  * @param   partyを選択した配列  0以外が選択している
- * @return
+ * @return  POKE_REG_RETURN_ENUM
  */
 //------------------------------------------------------------------
 
@@ -114,10 +116,10 @@ int PokeRegulationMatchFullPokeParty(const REGULATION* pReg, POKEPARTY * party, 
       if(PokeRegulationCheckPokePara(pReg, pp) == FALSE){
         return POKE_REG_ILLEGAL_POKE; // 個体が引っかかった
       }
-      monsTbl[i] = (u16)PokeParaGet( pp, ID_PARA_monsno, NULL );
-      itemTbl[i] = (u16)PokeParaGet( pp, ID_PARA_item, NULL );
-      formTbl[i] = (u16)PokeParaGet( pp, ID_PARA_form_no, NULL );
-      level += PokeParaGet(pp,ID_PARA_level,NULL);
+      monsTbl[i] = (u16)PP_Get( pp, ID_PARA_monsno, NULL );
+      itemTbl[i] = (u16)PP_Get( pp, ID_PARA_item, NULL );
+      formTbl[i] = (u16)PP_Get( pp, ID_PARA_form_no, NULL );
+      level += PP_Get(pp,ID_PARA_level,NULL);
     }
   }
   //合計LV
@@ -167,7 +169,7 @@ int PokeRegulationMatchFullPokeParty(const REGULATION* pReg, POKEPARTY * party, 
 
 //------------------------------------------------------------------
 /**
- * 再帰的にLVを引き算して目的に達したらTRUE
+ * @brief  再帰的にLVを引き算して目的に達したらTRUE
  * @param   モンスター番号のテーブル
  * @param   レベルが入ってるのテーブル
  * @param   このポケモン検査した場合のMARK
@@ -208,12 +210,11 @@ static BOOL _totalLevelCheck(u16* pMonsTbl,u16* pLevelTbl,u16* pMarkTbl,
 
 //------------------------------------------------------------------
 /**
- * ポケパーティ中にレギュレーションに適合している
+ * @brief ポケパーティ中にレギュレーションに適合している
  *   パーティーが組めるかどうか調べる 適応外のポケモンがいても大丈夫
  *   手持ちアイテムは検査していない
  * @param   POKEMON_PARAM
  * @param   REGULATION
- * @param   ZKN_HEIGHT_GRAM_PTR
  * @return  _POKE_REG_NUM_FAILED か _POKE_REG_TOTAL_FAILED か _POKE_REG_OK
  */
 //------------------------------------------------------------------
@@ -232,8 +233,8 @@ int PokeRegulationMatchPartialPokeParty(const REGULATION* pReg, POKEPARTY * part
 
   for(i = 0; i < cnt ;i++){
     pp = PokeParty_GetMemberPointer(party, i);
-    monsTbl[i] = (u16)PokeParaGet( pp, ID_PARA_monsno, NULL );
-    levelTbl[i] = PokeParaGet(pp,ID_PARA_level,NULL);
+    monsTbl[i] = (u16)PP_Get( pp, ID_PARA_monsno, NULL );
+    levelTbl[i] = PP_Get(pp,ID_PARA_level,NULL);
     if(PokeRegulationCheckPokePara(pReg, pp ) == FALSE){
       monsTbl[i] = _POKENO_NONE; // 固体が引っかかったので消す
       partyNum--;
@@ -257,15 +258,20 @@ int PokeRegulationMatchPartialPokeParty(const REGULATION* pReg, POKEPARTY * part
     }
   }
 
+
   //全体数
-  ans = Regulation_GetParam(pReg, REGULATION_POKE_NUM);
+  ans = Regulation_GetParam(pReg, REGULATION_NUM_LO);
   if(partyNum < ans){
-    return POKE_REG_NUM_FAILED;  // 全体数が足りない
+    return POKE_REG_NUM_FAILED;  // 数があってない
   }
-  partyNum = ans;
+  ans = Regulation_GetParam(pReg, REGULATION_NUM_HI);
+  if(partyNum > ans){
+    return POKE_REG_NUM_FAILED;  // 数があってない
+  }
+  //partyNum = ans;
 
   //残ったポケモンの合計LV組み合わせ検査
-  ans = Regulation_GetParam(pReg, REGULATION_TOTAL_LEVEL);
+  ans = Regulation_GetParam(pReg, REGULATION_LEVEL_TOTAL);
   if(ans == 0){
     return POKE_REG_OK;  // LV制限なし
   }
@@ -288,10 +294,7 @@ int PokeRegulationMatchPartialPokeParty(const REGULATION* pReg, POKEPARTY * part
 //------------------------------------------------------------------
 const REGULATION* PokeRegulation_LoadDataAlloc(int regulation_data_no, HEAPID heapid)
 {
-  REGULATION* pRegData = GFL_ARC_LoadDataAlloc(ARCID_REGULATION, NARC_regulation_regulation_bin, heapid);
-  REGULATION* pRet = Regulation_AllocWork(heapid);
-  GFL_STD_MemCopy( &pRegData[regulation_data_no], pRet, Regulation_GetWorkSize());
-  GFL_HEAP_FreeMemory(pRegData);
-  return pReg;
+  REGULATION* pRegData = GFL_ARC_LoadDataAlloc(ARCID_REGULATION, regulation_data_no, heapid);
+  return pRegData;
 }
 
