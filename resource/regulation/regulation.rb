@@ -219,13 +219,19 @@ class RegulationBin
     end
   end
 
-
+  def headerplus(outHeader)
+    outHeader.puts("//レギュレーションのデータ引き出しラベルです")
+    outHeader.puts("//reguration.rb reguration.xls からの自動生成です")
+    outHeader.puts("#pragma once")
+  end
   
   
   def convline( tabfile, outfile,outheader )
     
     outFH = File.new(outfile,"wb")
     outHeader = File.new(outheader,"w")
+    
+    headerplus(outHeader)
     
     fpr = File.new(tabfile,"r")
     fpr.each{ |line|

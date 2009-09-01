@@ -11,9 +11,8 @@
 #include "poketool/poke_tool.h"
 #include "savedata/regulation.h"
 
+#include "regulation_def.h"
 
-
-//#include "application/zukanlist/zkn_height_gram.h"
 
 // PokeRegulationMatchPartialPokePartyとPokeRegulationMatchFullPokeParty の戻り値
 enum{
@@ -40,3 +39,5 @@ extern int PokeRegulationMatchFullPokeParty(const REGULATION* pReg, POKEPARTY * 
 //  パーティーが組めるかどうか調べる 適応外のポケモンがいても大丈夫  受け付け用
 extern int PokeRegulationMatchPartialPokeParty(const REGULATION* pReg, POKEPARTY * party,ZKN_HEIGHT_GRAM_PTR pZKN);
 
+// regulation.narcにあるデータを読み込む
+const REGULATION* PokeRegulation_LoadDataAlloc(int regulation_data_no, HEAPID heapid);

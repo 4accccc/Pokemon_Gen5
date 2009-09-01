@@ -15,6 +15,8 @@
 #include "poketool/monsno.h"
 #include "savedata/regulation_data.h"
 
+#include "regulation.naix"
+
 #define _POKENO_NONE  (0)          // ポケモン番号でない番号
 
 
@@ -275,4 +277,21 @@ int PokeRegulationMatchPartialPokeParty(const REGULATION* pReg, POKEPARTY * part
   return POKE_REG_TOTAL_LV_FAILED;
 }
 
+
+//------------------------------------------------------------------
+/**
+ * @brief   ROMからレギュレーションデータを得る
+ * @param   regulation_data_no   regulation_def.hの定義で呼び出してください
+ * @param   heap  読み込み用領域
+ * @return  レギュレーションデータポインタ  GFL_HEAP_FreeMemoryでメモリ開放をしてください
+ */
+//------------------------------------------------------------------
+const REGULATION* PokeRegulation_LoadDataAlloc(int regulation_data_no, HEAPID heapid)
+{
+  REGULATION* pRegData = GFL_ARC_LoadDataAlloc(ARCID_REGULATION, NARC_regulation_regulation_bin, heapid);
+  REGULATION* pRet = Regulation_AllocWork(heapid);
+  GFL_STD_MemCopy( &pRegData[regulation_data_no], pRet, Regulation_GetWorkSize());
+  GFL_HEAP_FreeMemory(pRegData);
+  return pReg;
+}
 

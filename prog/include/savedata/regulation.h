@@ -103,7 +103,7 @@ typedef struct{
 //----------------------------------------------------------
 extern int Regulation_GetWorkSize(void);
 extern int RegulationData_GetWorkSize(void);
-extern REGULATION * Regulation_AllocWork(u32 heapID);
+extern REGULATION * Regulation_AllocWork(HEAPID heapID);
 extern void Regulation_Copy(const REGULATION * from, REGULATION * to);
 extern int Regulation_Cmp(const REGULATION* pCmp1,const REGULATION* pCmp2);
 
@@ -116,12 +116,12 @@ extern void RegulationData_Init(REGULATION_DATA * my);
 //カップ名
 extern void Regulation_SetCupName(REGULATION * pReg, const STRBUF* pCupName);
 extern void Regulation_GetCupName(const REGULATION* pReg,STRBUF* pReturnCupName);
-extern STRBUF* Regulation_CreateCupName(const REGULATION* pReg, int heapID);
+extern STRBUF* Regulation_CreateCupName(const REGULATION* pReg, HEAPID heapID);
 
 //ルール名
 extern void Regulation_SetRuleName(REGULATION * pReg, const STRBUF* pRuleName);
 extern void Regulation_GetRuleName(const REGULATION* pReg,STRBUF* pReturnRuleName);
-extern STRBUF* Regulation_CreateRuleName(const REGULATION* pReg, int heapID);
+extern STRBUF* Regulation_CreateRuleName(const REGULATION* pReg, HEAPID heapID);
 
 extern int Regulation_GetParam(const REGULATION* pReg, REGULATION_PARAM_TYPE type);
 extern void Regulation_SetParam(REGULATION * pReg, REGULATION_PARAM_TYPE type, int param);

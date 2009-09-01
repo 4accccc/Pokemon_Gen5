@@ -59,7 +59,7 @@ int RegulationData_GetWorkSize(void)
  * @return	REGULATION*	取得したワークへのポインタ
  */
 //----------------------------------------------------------
-REGULATION* Regulation_AllocWork(u32 heapID)
+REGULATION* Regulation_AllocWork(HEAPID heapID)
 {
   REGULATION* reg;
   reg = GFL_HEAP_AllocClearMemory(heapID, sizeof(REGULATION));
@@ -155,7 +155,7 @@ void Regulation_GetCupName(const REGULATION* pReg,STRBUF* pReturnCupName)
  * @return	STRBUF	名前を格納したSTRBUFへのポインタ
  */
 //----------------------------------------------------------
-STRBUF* Regulation_CreateCupName(const REGULATION* pReg, int heapID)
+STRBUF* Regulation_CreateCupName(const REGULATION* pReg, HEAPID heapID)
 {
   STRBUF* tmpBuf = GFL_STR_CreateBuffer((REGULATION_CUPNAME_SIZE + EOM_SIZE)*GLOBAL_MSGLEN, heapID);
   GFL_STR_SetStringCode( tmpBuf, pReg->cupName );
@@ -195,7 +195,7 @@ void Regulation_GetRuleName(const REGULATION* pReg,STRBUF* pReturnRuleName)
  * @return	STRBUF	名前を格納したSTRBUFへのポインタ
  */
 //----------------------------------------------------------
-STRBUF* Regulation_CreateRuleName(const REGULATION* pReg, int heapID)
+STRBUF* Regulation_CreateRuleName(const REGULATION* pReg, HEAPID heapID)
 {
   STRBUF* tmpBuf = GFL_STR_CreateBuffer((REGULATION_RULENAME_SIZE + EOM_SIZE)*GLOBAL_MSGLEN, heapID);
   GFL_STR_SetStringCode( tmpBuf, pReg->ruleName );

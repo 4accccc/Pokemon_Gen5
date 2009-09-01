@@ -1,3 +1,6 @@
+//レギュレーションのデータ引き出しラベルです
+//reguration.rb reguration.xls からの自動生成です
+#pragma once
 REG_LV50_SINGLE = 0
 REG_LV50_DOUBLE = 1
 REG_LV50_TRIPLE = 2
