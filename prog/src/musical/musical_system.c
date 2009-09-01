@@ -302,10 +302,8 @@ static GFL_PROC_RESULT MusicalProc_Main( GFL_PROC * proc, int * seq , void *pwk,
     break;
     
   case MPS_INIT_DRESSUP_SEND_STRM:
-    //if( MUS_COMM_Send_StrmData( work->commWork , 0 ) == TRUE )
-    {
-      work->state = MPS_INIT_DRESSUP;
-    }
+    MUS_COMM_Start_SendStrmData( work->commWork );
+    work->state = MPS_INIT_DRESSUP;
     break;
 
   case MPS_INIT_DRESSUP:

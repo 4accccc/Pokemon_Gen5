@@ -49,6 +49,7 @@ typedef enum
 {
   MCFT_START_GAME,
   MCFT_GAME_STATE,
+  MCFT_STRM_SIZE,
   
 }MUS_COMM_FLAG_TYPE;
 
@@ -68,6 +69,15 @@ typedef enum
   
 }MUS_COMM_STATE;
 
+typedef enum
+{
+  MCDS_NONE,
+  MCDS_START,
+  MCDS_WAIT_SIZEDATA,
+  MCDS_SEND,
+  MCDS_WAIT_POST,
+  
+}MUS_COMM_DIVSEND_STATE;
 //======================================================================
 //	typedef struct
 //======================================================================
@@ -102,6 +112,9 @@ struct _MUS_COMM_WORK
   
   MUSICAL_DISTRIBUTE_DATA *distData;
   u8  strmDivIdx;
+  BOOL isSendStrmMode;
+  BOOL isSendingStrmData;
+  MUS_COMM_DIVSEND_STATE divSendState;
 };
 
 //======================================================================
@@ -112,10 +125,12 @@ struct _MUS_COMM_WORK
 static void MUS_COMM_FinishNetInitCallback( void* pWork );
 static void MUS_COMM_FinishNetTermCallback( void* pWork );
 
-static const BOOL MUS_COMM_Send_Flag( MUS_COMM_WORK* work , const u8 flag , u8 value , NetID target );
+static const BOOL MUS_COMM_Send_Flag( MUS_COMM_WORK* work , const u8 flag , u32 value , NetID target );
 static void MUS_COMM_Post_Flag( const int netID, const int size , const void* pData , void* pWork , GFL_NETHANDLE *pNetHandle );
 static void MUS_COMM_Post_MusPokeData( const int netID, const int size , const void* pData , void* pWork , GFL_NETHANDLE *pNetHandle );
 static u8*    MUS_COMM_Post_MusPokeDataBuff( int netID, void* pWork , int size );
+
+static void MUS_COMM_Update_SendStrmData( MUS_COMM_WORK *work );
 static void MUS_COMM_Post_StrmData( const int netID, const int size , const void* pData , void* pWork , GFL_NETHANDLE *pNetHandle );
 static u8*    MUS_COMM_Post_StrmDataBuff( int netID, void* pWork , int size );
 
@@ -151,6 +166,9 @@ MUS_COMM_WORK* MUS_COMM_CreateWork( HEAPID heapId , GAME_COMM_SYS_PTR gameComm ,
   work->myStatus = SaveData_GetMyStatus(saveCtrl);
   work->distData = distData;
   work->strmDivIdx = 0;
+  work->isSendStrmMode = FALSE;
+  work->divSendState = MCDS_NONE;
+  
   for( i=0;i<MUSICAL_COMM_MEMBER_NUM;i++ )
   {
     work->userData[i].pokeData = NULL;
@@ -357,8 +375,8 @@ void MUS_COMM_UpdateComm( MUS_COMM_WORK* work )
   case MCS_CHILD_CONNECT:
     MUS_COMM_CheckUserData( work );
     break;
-
   }
+  MUS_COMM_Update_SendStrmData( work );
 }
 
 //--------------------------------------------------------------
@@ -533,10 +551,10 @@ static BOOL MUS_COMM_BeacomCompare(GameServiceID GameServiceID1, GameServiceID G
 typedef struct
 {
   u8 flg;
-  u8 value;
+  u32 value;
 }MUS_COMM_FLG_PACKET;
 
-static const BOOL MUS_COMM_Send_Flag( MUS_COMM_WORK* work , const u8 flag , u8 value , NetID target )
+static const BOOL MUS_COMM_Send_Flag( MUS_COMM_WORK* work , const u8 flag , u32 value , NetID target )
 {
   BOOL ret;
   GFL_NETHANDLE *selfHandle = GFL_NET_HANDLE_GetCurrentHandle();
@@ -568,8 +586,20 @@ static void MUS_COMM_Post_Flag( const int netID, const int size , const void* pD
     break;
 
   case MCFT_GAME_STATE:
-    
     work->userData[netID].gameState = pkt->value;
+    break;
+
+  case MCFT_STRM_SIZE:
+    if( work->mode == MCM_PARENT )
+    {
+      work->divSendState = MCDS_SEND;
+    }
+    else
+    {
+      work->distData->strmData = GFL_HEAP_AllocMemory( HEAPID_MUSICAL_STRM , pkt->value );
+      work->distData->strmDataSize = pkt->value;
+    }
+    
     break;
   }
   
@@ -659,10 +689,71 @@ const BOOL MUS_COMM_CheckAllPostPokeData( MUS_COMM_WORK *work )
   return TRUE;
 }
 
+#pragma mark [> strm func
 //--------------------------------------------------------------
 // ストリーミングデータ送信
 //--------------------------------------------------------------
-#define MUS_COMM_DIV_SIZE (0xFFF0)
+#define MUS_COMM_DIV_SIZE (0x3800)
+void MUS_COMM_Start_SendStrmData( MUS_COMM_WORK *work )
+{
+  if( work->isSendStrmMode == FALSE )
+  {
+    work->isSendStrmMode = TRUE;
+    work->strmDivIdx = 0;
+    work->divSendState = MCDS_START;
+    work->isSendingStrmData = FALSE;
+  }
+}
+
+static void MUS_COMM_Update_SendStrmData( MUS_COMM_WORK *work )
+{
+  if( work->isSendStrmMode == TRUE )
+  {
+    switch(work->divSendState)
+    {
+    case MCDS_START:
+      {
+        const BOOL ret = MUS_COMM_Send_Flag( work , MCFT_STRM_SIZE , 
+                                      work->distData->strmDataSize , 
+                                      GFL_NET_SENDID_ALLUSER );
+        if( ret == TRUE )
+        {
+          work->divSendState = MCDS_WAIT_SIZEDATA;
+        }
+      }
+      break;
+    
+    case MCDS_WAIT_SIZEDATA:
+      
+      break;
+
+    case MCDS_SEND:
+      if( MUS_COMM_Send_StrmData( work , work->strmDivIdx ) == TRUE )
+      {
+        work->isSendingStrmData = TRUE;
+        work->divSendState = MCDS_WAIT_POST;
+      }
+      break;
+
+    case MCDS_WAIT_POST:
+      {
+        if( work->isSendingStrmData == FALSE )
+        {
+          if( (work->strmDivIdx)*MUS_COMM_DIV_SIZE >= work->distData->strmDataSize )
+          {
+            work->isSendStrmMode = FALSE;
+          }
+          else
+          {
+            //work->strmDivIdx++;
+            work->divSendState = MCDS_SEND;
+          }
+        }
+      }
+      break;
+    }
+  }
+}
 
 const BOOL MUS_COMM_Send_StrmData( MUS_COMM_WORK *work , const u8 idx )
 {
@@ -678,13 +769,13 @@ const BOOL MUS_COMM_Send_StrmData( MUS_COMM_WORK *work , const u8 idx )
     dataSize = MUS_COMM_DIV_SIZE;
   }
   
-  ARI_TPrintf("Send StrmData \n");
+  ARI_TPrintf("Send StrmData[%d] \n",idx);
   {
     
     GFL_NETHANDLE *selfHandle = GFL_NET_HANDLE_GetCurrentHandle();
-    BOOL ret = GFL_NET_SendDataEx( selfHandle , 1 , 
+    BOOL ret = GFL_NET_SendDataEx( selfHandle , GFL_NET_SENDID_ALLUSER , 
                               MCST_STRMDATA , dataSize , 
-                              work->distData->strmData , FALSE , TRUE , TRUE );
+                              startAdr , FALSE , TRUE , TRUE );
     if( ret == FALSE )
     {
       ARI_TPrintf("Send PokeData is failued!!\n");
@@ -695,16 +786,18 @@ const BOOL MUS_COMM_Send_StrmData( MUS_COMM_WORK *work , const u8 idx )
 static void MUS_COMM_Post_StrmData( const int netID, const int size , const void* pData , void* pWork , GFL_NETHANDLE *pNetHandle )
 {
   MUS_COMM_WORK *work = (MUS_COMM_WORK*)pWork;
-  work->distData->strmDataSize += size;
-  ARI_TPrintf("MusComm Finish Post StrmData[%d][%d].\n",netID,work->distData->strmDataSize);
+  work->strmDivIdx++;
+  work->isSendingStrmData = FALSE;
+  ARI_TPrintf("MusComm Finish Post StrmData[%d][%d][%d].\n",netID,work->strmDivIdx,work->distData->strmDataSize);
 
 }
 static u8*    MUS_COMM_Post_StrmDataBuff( int netID, void* pWork , int size )
 {
   MUS_COMM_WORK *work = (MUS_COMM_WORK*)pWork;
-  ARI_TPrintf("MusComm Start Post StrmData[%d][%d].\n",netID,size);
-  work->distData->strmData = GFL_HEAP_AllocMemory( HEAPID_MUSICAL_STRM , size );
-  return work->distData->strmData ;
+  void *startAdd = (void*)(((u32)work->distData->strmData)+(work->strmDivIdx*MUS_COMM_DIV_SIZE));
+  
+  ARI_TPrintf("MusComm Start Post StrmData[%d][%d][%d].\n",netID,work->strmDivIdx,size);
+  return startAdd;
 }
 
 #pragma mark [> outer func

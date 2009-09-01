@@ -84,9 +84,13 @@ const BOOL MUS_COMM_IsStartGame( MUS_COMM_WORK* work );
 
 //ゲーム状態の設定
 const BOOL MUS_COMM_SetCommGameState( MUS_COMM_WORK *work , MUS_COMM_GAME_STATE state );
+
 const BOOL MUS_COMM_Send_MusPokeData( MUS_COMM_WORK *work , MUSICAL_POKE_PARAM *musPoke );
-const BOOL MUS_COMM_Send_StrmData( MUS_COMM_WORK *work , const u8 idx );
 const BOOL MUS_COMM_CheckAllPostPokeData( MUS_COMM_WORK *work );
+
+void MUS_COMM_Start_SendStrmData( MUS_COMM_WORK *work );
+const BOOL MUS_COMM_Send_StrmData( MUS_COMM_WORK *work , const u8 idx );
+
 //ミュージカルの役者IDXでデータを取得
 MUSICAL_POKE_PARAM* MUS_COMM_GetMusPokeParam( MUS_COMM_WORK *work , const u8 musicalIdx );
 
