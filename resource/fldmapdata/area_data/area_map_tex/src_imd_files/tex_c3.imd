@@ -3,7 +3,7 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="lee_hyunjung" host="W00154A" date="2009-08-06T19:57:42"/>
+	<create user="lee_hyunjung" host="W00154A" date="2009-09-01T20:08:16"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="NNS_3DMaterialEditor" version="2.8.0.20050620"/>
 </head>
@@ -4996,7 +4996,7 @@
 		width="16" height="16" original_width="16" original_height="16"
 		format="palette4"
 		color0_mode="color"
-		palette_name="yuka2"
+		palette_name="yuka2_pl"
 		path="C:/home/wb_data3d/field/out05/map/tex/yuka2.tga"
 	>
 		<bitmap size="32">
@@ -5008,7 +5008,7 @@
 	</tex_image>
 </tex_image_array>
 
-<tex_palette_array size="132">
+<tex_palette_array size="133">
 	<tex_palette index="0" name=" c37" color_size="8">
 		14a5 1ce7 2108 2529 318c 35ad 4631 7fff
 	</tex_palette>
@@ -5488,7 +5488,10 @@
 	<tex_palette index="130" name="yuka2" color_size="4">
 		4e94 52b6 56d7 7fff
 	</tex_palette>
-	<tex_palette index="131" name="yukablock" color_size="8">
+	<tex_palette index="131" name="yuka2_pl" color_size="4">
+		4e94 52b6 56d7 7fff
+	</tex_palette>
+	<tex_palette index="132" name="yukablock" color_size="8">
 		6318 5ad6 56b5 5294 4e73 7fff 7fff 7fff
 	</tex_palette>
 </tex_palette_array>
@@ -6020,7 +6023,7 @@
 		specular="0 0 0"
 		emission="0 0 0"
 		shininess_table_flag="off"
-		tex_image_idx="116" tex_palette_idx="114"
+		tex_image_idx="60" tex_palette_idx="64"
 		tex_tiling="repeat repeat"
 		tex_scale="1.000000 1.000000"
 		tex_rotate="0.000000"
@@ -9650,7 +9653,7 @@
 		<ex_tex_image index="118" disp_pos="0.000000 0.000000"/>
 		<ex_tex_image index="119" disp_pos="0.000000 0.000000"/>
 	</ex_tex_image_array>
-	<ex_tex_palette_array size="132">
+	<ex_tex_palette_array size="133">
 		<ex_tex_palette index="0" disp_pos="0.000000 0.000000"/>
 		<ex_tex_palette index="1" disp_pos="0.000000 0.000000"/>
 		<ex_tex_palette index="2" disp_pos="0.000000 0.000000"/>
@@ -9783,6 +9786,7 @@
 		<ex_tex_palette index="129" disp_pos="0.000000 0.000000"/>
 		<ex_tex_palette index="130" disp_pos="0.000000 0.000000"/>
 		<ex_tex_palette index="131" disp_pos="0.000000 0.000000"/>
+		<ex_tex_palette index="132" disp_pos="0.000000 0.000000"/>
 	</ex_tex_palette_array>
 	<ex_material_array size="28">
 		<ex_material index="0" disp_pos="-1620.000000 240.000000"/>
