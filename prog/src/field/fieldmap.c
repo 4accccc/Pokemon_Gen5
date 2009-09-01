@@ -234,6 +234,7 @@ struct _FIELDMAP_WORK
 
   GFL_TCBSYS* fieldmapTCB;
   void* fieldmapTCBSysWork;
+
 };
 
 fx32	fldWipeScale;

@@ -26,6 +26,10 @@
 
 #include "field_hit_check.h"
 
+#include "height_ex.h"
+
+#include "field/field_const.h"  //for FIELD_CONST_GRID_FX32_SIZE
+
 //============================================================================================
 /**
  *
@@ -44,6 +48,10 @@
 //------------------------------------------------------------------
 #define MAPID_NULL			(0xffffffff)
 #define MAPARC_NULL			(0xffffffff)
+
+//拡張高さの個数
+#define EX_HEIGHT_NUM	(8)
+
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 
@@ -114,6 +122,8 @@ struct _FLD_G3D_MAPPER {
 
   FIELD_BMODEL_MAN* bmodel_man; //配置モデルマネジャー
 	FIELD_GRANM*	granime;	// 地面アニメーションシステム
+
+  EHL_PTR	ExHeightList;   //拡張高さデータ領域
 };
 
 
@@ -148,6 +158,7 @@ static u32 BLOCKINFO_GetBlockIdx(const BLOCKINFO * info);
 static void BLOCKINFO_SetBlockTrans(BLOCKINFO * info, fx32 x, fx32 y, fx32 z );
 static void BLOCKINFO_SetBlockTransVec(BLOCKINFO * info, const VecFx32* trans);
 static void BLOCKINFO_GetBlockTrans(const BLOCKINFO * info, VecFx32* trans);
+static void GetExHight( const FLDMAPPER* g3Dmapper, const VecFx32 *pos, FLDMAPPER_GRIDINFO* gridInfo );
 
 //------------------------------------------------------------------
 /**
@@ -192,6 +203,9 @@ FLDMAPPER*	FLDMAPPER_Create( HEAPID heapID )
   g3Dmapper->granime = NULL;
   //  配置モデルマネジャー生成
   g3Dmapper->bmodel_man = FIELD_BMODEL_MAN_Create(g3Dmapper->heapID, g3Dmapper);
+
+  //拡張高さデータ領域確保
+  g3Dmapper->ExHeightList = EXH_AllocHeightList(EX_HEIGHT_NUM, heapID);
 	return g3Dmapper;
 }
 
@@ -203,6 +217,9 @@ FLDMAPPER*	FLDMAPPER_Create( HEAPID heapID )
 void	FLDMAPPER_Delete( FLDMAPPER* g3Dmapper )
 {
 	GF_ASSERT( g3Dmapper );
+
+  //拡張高さデータ領域解放
+	EXH_FreeHeightList(g3Dmapper->ExHeightList);
 
 	FLDMAPPER_ReleaseData( g3Dmapper );	//登録されたままの場合を想定して削除
 
@@ -946,7 +963,11 @@ BOOL FLDMAPPER_GetGridInfo
 		}
 	}
 	gridInfo->count = p;
-	if( gridInfo->count ){
+
+  //拡張部の登録
+  GetExHight( g3Dmapper, pos, gridInfo );
+	
+  if( gridInfo->count ){
 		return TRUE;
 	}
 //	OS_Printf("データが存在していない\n");
@@ -1304,7 +1325,47 @@ static void BLOCKINFO_GetBlockTrans(const BLOCKINFO * info, VecFx32* trans)
    *trans = info->trans;
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  高さ取得関数
+ *
+ *	@param	g3Dmapper     フィールドマッパーポインタ
+ *	@param  pos           指定位置座標
+ *	@param  gridInfo      グリッド情報格納バッファ
+ */
+//-----------------------------------------------------------------------------
+static void GetExHight( const FLDMAPPER* g3Dmapper, const VecFx32 *pos, FLDMAPPER_GRIDINFO* gridInfo )
+{
+  int i,n;
+  int count;
+  int num;
+  int gridX,gridZ;
+  VecFx16 normVec = {0,FX32_ONE,0};
 
+  n = 0;
+  count = gridInfo->count;
+  num = EXH_GetDatNum(g3Dmapper->ExHeightList);
+
+  gridX = pos->x / FIELD_CONST_GRID_FX32_SIZE;
+  gridZ = pos->z / FIELD_CONST_GRID_FX32_SIZE;
+
+  for (i=0;i<num;i++){
+    BOOL rc;
+    rc = EXH_HitCheckHeight(gridX, gridZ, g3Dmapper->ExHeightList, i);
+    if ( rc ){
+      int idx;
+      n++;
+      idx = count+n;
+      gridInfo->gridData[idx].vecN = normVec;
+			gridInfo->gridData[idx].attr = 0;
+			gridInfo->gridData[idx].height = EXH_GetHeight(i, g3Dmapper->ExHeightList);
+    }
+  }
+  gridInfo->count += n;
+
+  GF_ASSERT((gridInfo->count < FLDMAPPER_GRIDINFO_MAX)&&"グリッドデータの階層オーバー\n");
+
+}
 
 
 
