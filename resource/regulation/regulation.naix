@@ -1,0 +1,18 @@
+/*****************************************************************************
+	Archive file index definition.
+	File: regulation.naix
+
+	This file was created by NINTENDO NITRO-System Archiver.
+
+
+ *****************************************************************************/
+
+#ifndef NARC_REGULATION_NAIX_
+#define NARC_REGULATION_NAIX_
+
+enum {
+	NARC_regulation_regulation_bin = 0
+};
+
+/* NARC_REGULATION_NAIX_ */
+#endif
