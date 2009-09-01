@@ -36,6 +36,8 @@
 #include "scrcmd_trainer.h"
 #include "scrcmd_sound.h"
 #include "scrcmd_musical.h"
+#include "scrcmd_word.h"
+#include "scrcmd_item.h"
 
 #include "../../../resource/fldmapdata/script/usescript.h"
 
@@ -2033,31 +2035,6 @@ static VMCMD_RESULT EvCmdYesNoWin( VMHANDLE *core, void *wk )
 }
 
 //======================================================================
-//  WORDSET関連
-//======================================================================
-//--------------------------------------------------------------
-/**
- * プレイヤー名を指定バッファに登録
- * @param  core    仮想マシン制御構造体へのポインタ
- * @return  VMCMD_RESULT
- */
-//--------------------------------------------------------------
-static VMCMD_RESULT EvCmdPlayerName( VMHANDLE * core, void *wk ) 
-{
-  SCRCMD_WORK *work = wk;
-  SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
-  SCRIPT_FLDPARAM *fparam = SCRIPT_GetMemberWork( sc, ID_EVSCR_WK_FLDPARAM );
-//  FIELDSYS_WORK * fsys  = core->fsys;
-  GAMEDATA *gdata = SCRCMD_WORK_GetGameData( work );
-  MYSTATUS *mystatus = GAMEDATA_GetMyStatus( gdata );
-  WORDSET **wordset    = SCRIPT_GetMemberWork( sc, ID_EVSCR_WORDSET );
-  u8 idx = VMGetU8(core);
-  
-  WORDSET_RegisterPlayerName( *wordset, idx, mystatus );
-  return VMCMD_RESULT_CONTINUE;
-}
-
-//======================================================================
 // トレーナーフラグ関連
 //======================================================================
 //--------------------------------------------------------------
@@ -2546,6 +2523,9 @@ const VMCMD_FUNC ScriptCmdTbl[] = {
   
   //WORDSET関連
   EvCmdPlayerName,
+  EvCmdItemName,
+  EvCmdItemWazaName,
+  EvCmdWazaName,
   
   //scrcmd_trainer.c 視線トレーナー関連
   EvCmdEyeTrainerMoveSet,
@@ -2603,6 +2583,14 @@ const VMCMD_FUNC ScriptCmdTbl[] = {
   //画面フェード
   EvCmdDispFadeStart,
   EvCmdDispFadeCheck,
+  
+  //アイテム関連
+  EvCmdAddItem,
+  EvCmdSubItem,
+  EvCmdAddItemChk,
+  EvCmdCheckItem,
+  EvCmdGetItemNum,
+  EvCmdWazaMachineItemNoCheck,
   
   //ミュージカル関連
   EvCmdMusicalCall,
