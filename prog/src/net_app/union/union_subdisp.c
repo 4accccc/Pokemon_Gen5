@@ -145,6 +145,13 @@ enum{
 //==============================================================================
 //  構造体定義
 //==============================================================================
+///プレートタッチ管理ワーク
+typedef struct{
+  u16 life;      ///<プレートのタッチ後の色変更時間
+  u8 view_no;
+  u8 padding;
+}PLATE_TOUCH_WORK;
+
 ///ユニオン下画面制御ワーク
 typedef struct _UNION_SUBDISP{
   GAMESYS_WORK *gsys;
@@ -160,7 +167,9 @@ typedef struct _UNION_SUBDISP{
   
   u8 appeal_no;    ///<選択中のアピール番号
   u8 scrollbar_touch;   ///<TRUE:スクロールバータッチ中
-  u16 plate_touch_life[UNION_CHAT_VIEW_LOG_NUM];   ///<プレートのタッチ後の色変更時間
+  u8 padding[2];
+  
+  PLATE_TOUCH_WORK plate_touch[UNION_CHAT_VIEW_LOG_NUM];
   
   PRINT_QUE *printQue;
   GFL_FONT *font_handle;
@@ -200,9 +209,11 @@ static void _UniSub_ScrollBar_ViewPosUpdate(UNION_SUBDISP_PTR unisub, UNION_CHAT
 static u32 _UniSub_ScrollBar_GetPageMax(UNION_CHAT_LOG *log);
 static u32 _UniSub_ScrollBar_GetPageY(UNION_CHAT_LOG *log, u32 page_max);
 static BOOL _UniSub_ScrollArea_TouchCheck(UNION_SUBDISP_PTR unisub);
-static BOOL _UniSub_ChatPlate_TouchCheck(UNION_SUBDISP_PTR unisub);
-static void _UniSub_ChatPlate_Update(UNION_SUBDISP_PTR unisub);
-static void _UniSub_ChatPlate_ChangeColor(UNION_SUBDISP_PTR unisub, int plate_no, PLATE_COLOR color);
+static BOOL _UniSub_ChatPlate_TouchCheck(UNION_SUBDISP_PTR unisub, UNION_CHAT_LOG *log);
+static PLATE_TOUCH_WORK * _UniSub_GetPlateTouchPtr(UNION_SUBDISP_PTR unisub, UNION_CHAT_LOG *log, int view_no);
+static void _UniSub_EntryPlateTouchWork(UNION_SUBDISP_PTR unisub, UNION_CHAT_LOG *log, int view_no);
+static void _UniSub_ChatPlate_Update(UNION_SUBDISP_PTR unisub, UNION_CHAT_LOG *log);
+static BOOL _UniSub_ChatPlate_ChangeColor(UNION_SUBDISP_PTR unisub, int plate_no, PLATE_COLOR color);
 
 
 //==============================================================================
@@ -325,9 +336,9 @@ void UNION_SUBDISP_Update(UNION_SUBDISP_PTR unisub)
   }
   if(unisys != NULL){
     _UniSub_ScrollBar_Update(unisys, unisub);
+    _UniSub_ChatPlate_TouchCheck(unisub, &unisys->chat_log);
+    _UniSub_ChatPlate_Update(unisub, &unisys->chat_log);
   }
-  _UniSub_ChatPlate_TouchCheck(unisub);
-  _UniSub_ChatPlate_Update(unisub);
   
   if(GameCommSys_BootCheck(game_comm) == GAME_COMM_NO_UNION){
     if(unisys != NULL){
@@ -1161,7 +1172,7 @@ static BOOL _UniSub_ScrollArea_TouchCheck(UNION_SUBDISP_PTR unisub)
  * @retval  BOOL		TRUE:タッチ発生
  */
 //--------------------------------------------------------------
-static BOOL _UniSub_ChatPlate_TouchCheck(UNION_SUBDISP_PTR unisub)
+static BOOL _UniSub_ChatPlate_TouchCheck(UNION_SUBDISP_PTR unisub, UNION_CHAT_LOG *log)
 {
   u32 tp_x, tp_y;
   int y;
@@ -1182,9 +1193,71 @@ static BOOL _UniSub_ChatPlate_TouchCheck(UNION_SUBDISP_PTR unisub)
     return FALSE;
   }
   
-  _UniSub_ChatPlate_ChangeColor(unisub, y, PLATE_COLOR_TOUCH);
-  unisub->plate_touch_life[y] = UNION_PLATE_TOUCH_LIFE;
-  return TRUE;
+  if(_UniSub_ChatPlate_ChangeColor(unisub, y, PLATE_COLOR_TOUCH) == TRUE){
+    _UniSub_EntryPlateTouchWork(unisub, log, log->chat_view_no - (UNION_CHAT_VIEW_LOG_NUM-1) + y);
+    return TRUE;
+  }
+  return FALSE;
+}
+
+//--------------------------------------------------------------
+/**
+ * プレートタッチワークから空きを探す
+ *
+ * @param   unisub		
+ * @param   view_no		
+ *
+ * @retval  PLATE_TOUCH_WORK *		
+ */
+//--------------------------------------------------------------
+static PLATE_TOUCH_WORK * _UniSub_GetPlateTouchPtr(UNION_SUBDISP_PTR unisub, UNION_CHAT_LOG *log, int view_no)
+{
+  int i;
+  
+  //既にエントリー済みなら同ワークの値を更新
+  for(i = 0; i < UNION_CHAT_VIEW_LOG_NUM; i++){
+    if(unisub->plate_touch[i].life > 0 && view_no == unisub->plate_touch[i].view_no){
+      return &unisub->plate_touch[i];
+    }
+  }
+
+  //空きを探す
+  for(i = 0; i < UNION_CHAT_VIEW_LOG_NUM; i++){
+    if(unisub->plate_touch[i].life == 0){
+      return &unisub->plate_touch[i];
+    }
+  }
+  
+  //画面外に出ているview_noの領域を潰して使用する
+  for(i = 0; i < UNION_CHAT_VIEW_LOG_NUM; i++){
+    if(unisub->plate_touch[i].view_no > log->chat_view_no
+        || unisub->plate_touch[i].view_no <= log->chat_view_no - UNION_CHAT_VIEW_LOG_NUM){
+      return &unisub->plate_touch[i];
+    }
+  }
+  
+  GF_ASSERT(0);
+  return NULL;
+}
+
+//--------------------------------------------------------------
+/**
+ * プレートタッチワークにエントリーする
+ *
+ * @param   unisub		
+ * @param   view_no		
+ */
+//--------------------------------------------------------------
+static void _UniSub_EntryPlateTouchWork(UNION_SUBDISP_PTR unisub, UNION_CHAT_LOG *log, int view_no)
+{
+  PLATE_TOUCH_WORK *pt;
+  
+  pt = _UniSub_GetPlateTouchPtr(unisub, log, view_no);
+  if(pt == NULL){
+    return;
+  }
+  pt->life = UNION_PLATE_TOUCH_LIFE;
+  pt->view_no = view_no;
 }
 
 //--------------------------------------------------------------
@@ -1194,15 +1267,18 @@ static BOOL _UniSub_ChatPlate_TouchCheck(UNION_SUBDISP_PTR unisub)
  * @param   unisub		
  */
 //--------------------------------------------------------------
-static void _UniSub_ChatPlate_Update(UNION_SUBDISP_PTR unisub)
+static void _UniSub_ChatPlate_Update(UNION_SUBDISP_PTR unisub, UNION_CHAT_LOG *log)
 {
-  int y;
+  int y, write_pos;
   
   for(y = 0; y < UNION_CHAT_VIEW_LOG_NUM; y++){
-    if(unisub->plate_touch_life[y] > 0){
-      unisub->plate_touch_life[y]--;
-      if(unisub->plate_touch_life[y] == 0){
-        _UniSub_ChatPlate_ChangeColor(unisub, y, PLATE_COLOR_NORMAL);
+    if(unisub->plate_touch[y].life > 0){
+      unisub->plate_touch[y].life--;
+      if(unisub->plate_touch[y].life == 0){
+        write_pos = (UNION_CHAT_VIEW_LOG_NUM-1) + unisub->plate_touch[y].view_no - log->chat_view_no;
+        if(write_pos >= 0 && write_pos < UNION_CHAT_VIEW_LOG_NUM){
+          _UniSub_ChatPlate_ChangeColor(unisub, write_pos, PLATE_COLOR_NORMAL);
+        }
       }
     }
   }
@@ -1215,9 +1291,11 @@ static void _UniSub_ChatPlate_Update(UNION_SUBDISP_PTR unisub)
  * @param   unisub		
  * @param   plate_no		プレート番号
  * @param   color		    変更後の色指定
+ * 
+ * @retval  TRUE:色変え成功
  */
 //--------------------------------------------------------------
-static void _UniSub_ChatPlate_ChangeColor(UNION_SUBDISP_PTR unisub, int plate_no, PLATE_COLOR color)
+static BOOL _UniSub_ChatPlate_ChangeColor(UNION_SUBDISP_PTR unisub, int plate_no, PLATE_COLOR color)
 {
   u16 *scrn_buf;
   u16 change_palno, now_palno;
@@ -1246,11 +1324,12 @@ static void _UniSub_ChatPlate_ChangeColor(UNION_SUBDISP_PTR unisub, int plate_no
     }
     break;
   default:
-    return;
+    return FALSE;
   }
   
   GFL_BG_ChangeScreenPalette(UNION_FRAME_S_PLATE, 
     UNION_PLATE_START_X, UNION_PLATE_START_Y + UNION_PLATE_SIZE_Y * plate_no, 
     UNION_PLATE_SIZE_X, UNION_PLATE_SIZE_Y, change_palno);
   GFL_BG_LoadScreenV_Req(UNION_FRAME_S_PLATE);
+  return TRUE;
 }
