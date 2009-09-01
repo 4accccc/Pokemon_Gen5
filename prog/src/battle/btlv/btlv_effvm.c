@@ -39,7 +39,9 @@ typedef struct{
   u32           camera_ortho_on_flag  :1;     //カメラ移動後、正射影に戻すフラグ
   u32           se_play_wait_flag     :1;     //SE再生ウエイト中
   u32           se_effect_enable_flag :1;     //SEEFFECTフラグ
-  u32                                 :29;
+  u32           set_priority_flag     :1;     //PRIORITY操作されたか？
+  u32           set_alpha_flag        :1;     //ALPHA操作されたか？
+  u32                                 :26;
   GFL_TCBSYS*   tcbsys;
   GFL_PTC_PTR   ptc[ PARTICLE_GLOBAL_MAX ];
   u16           ptc_no[ PARTICLE_GLOBAL_MAX ];
@@ -1519,6 +1521,8 @@ static VMCMD_RESULT VMEC_BG_PRIORITY( VMHANDLE *vmh, void *context_work )
 
   GFL_BG_SetPriority( GFL_BG_FRAME3_M, pri );
 
+  bevw->set_priority_flag = 1;
+
   return bevw->control_mode;
 }
 
@@ -1554,6 +1558,8 @@ static VMCMD_RESULT VMEC_BG_ALPHA( VMHANDLE *vmh, void *context_work )
                       GX_BLEND_PLANEMASK_OBJ | GX_BLEND_PLANEMASK_BD,
                       31, alpha );
   }
+
+  bevw->set_alpha_flag = 1;
 
   return bevw->control_mode;
 }
@@ -1858,11 +1864,19 @@ static VMCMD_RESULT VMEC_SEQ_END( VMHANDLE *vmh, void *context_work )
 #endif
 
   //BG周りの設定をデフォルトに戻しておく
-  GFL_BG_SetPriority( GFL_BG_FRAME3_M, 1 );
-  G2_SetBlendAlpha( GX_BLEND_PLANEMASK_BG1,
-                    GX_BLEND_PLANEMASK_BG0 | GX_BLEND_PLANEMASK_BG2 | GX_BLEND_PLANEMASK_BG3 |
-                    GX_BLEND_PLANEMASK_OBJ | GX_BLEND_PLANEMASK_BD,
-                    31, 3 );
+  if( bevw->set_priority_flag )
+  { 
+    GFL_BG_SetPriority( GFL_BG_FRAME3_M, 1 );
+    bevw->set_priority_flag = 0;
+  }
+  if( bevw->set_alpha_flag )
+  { 
+    G2_SetBlendAlpha( GX_BLEND_PLANEMASK_BG1,
+                      GX_BLEND_PLANEMASK_BG0 | GX_BLEND_PLANEMASK_BG2 | GX_BLEND_PLANEMASK_BG3 |
+                      GX_BLEND_PLANEMASK_OBJ | GX_BLEND_PLANEMASK_BD,
+                      31, 3 );
+    bevw->set_alpha_flag = 0;
+  }
 
   //SUSPENDモードに切り替えておく
   bevw->control_mode = VMCMD_RESULT_SUSPEND;
