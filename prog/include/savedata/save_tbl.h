@@ -68,6 +68,7 @@ enum{
   GMDATA_ID_SP_RIBBON,	//配布リボン
   GMDATA_ID_EVENT_WORK, //イベントワーク
 	GMDATA_ID_WORLDTRADEDATA,	//GTS
+  GMDATA_ID_REGULATION_DATA, //レギュレーション
   GMDATA_ID_GIMMICK_WORK,    //ギミック
 
 #if 0

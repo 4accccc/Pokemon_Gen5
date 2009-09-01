@@ -35,6 +35,7 @@ SAVEDATASRC =   savedata/save_tbl.c \
 				savedata/irc_compatible_savedata.c \
         savedata/sp_ribbon_save.c \
 				savedata/worldtrade_data.c \
+				savedata/regulation.c \
         savedata/gimmickwork.c
 
 
@@ -572,11 +573,12 @@ SRCS_OVERLAY_WIFICLUB =   net_app/wificlub/wifi_p2pmatchroom.c \
               net_app/wificlub/wifi_p2pmatchfour.c
 
 
-# IRCBATTLEマッチング
+# IRCマッチングアプリケーション
 #===> SRCS_OVERLAY_DEV_IRC
 SRCS_OVERLAY_IRCBATTLEMATCH = net_app/irc_match/ircbattlematch.c \
                 net_app/friend_trade/ircbattlefriend.c \
-								net_app/poke_trade/ircpokemontrade.c
+								net_app/poke_trade/ircpokemontrade.c \
+								net_app/poke_trade/ircpoketrade_gra.c
 
 # 不思議な贈り物
 #===> SRCS_OVERLAY_DEV_WIFI

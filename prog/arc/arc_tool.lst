@@ -174,3 +174,4 @@
 	ARCID_ZUKAN_DATA "zukan_data.narc"	#図鑑データ（金銀のを持ってきただけ）
   ARCID_GIMMICK_ASSIGN "fieldmap/gimmick_assign.narc"	#ギミックアサインデータ
 	ARCID_POKETRADE			"trade.narc"	# ポケモン交換
+	ARCID_REGULATION			"regulation.narc"	# ポケモンバトルレギュレーションデータ

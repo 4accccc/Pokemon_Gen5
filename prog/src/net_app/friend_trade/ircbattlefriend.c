@@ -37,36 +37,36 @@
 #define _TIMING_ENDNO (12)
 
 typedef enum {
-    _NETCMD_MYSTATUS = GFL_NET_CMD_IRCFRIEND,
-    _NETCMD_FRIENDCODE,
+  _NETCMD_MYSTATUS = GFL_NET_CMD_IRCFRIEND,
+  _NETCMD_FRIENDCODE,
 } _BATTLEIRC_SENDCMD;
 
 typedef void (StateFunc)(IRC_BATTLE_FRIEND* pState);
 
 struct _IRC_BATTLE_FRIEND {
-    EVENT_IRCBATTLE_WORK* pParentWork;
-    StateFunc* state;      ///< ハンドルのプログラム状態
-    int selectType;   // 接続タイプ
-    HEAPID heapID;
-//    GFL_BMPWIN* buttonWin[_WINDOW_MAXNUM]; /// ウインドウ管理
-//    GFL_MSGDATA *pMsgData;  //
-//    WORDSET *pWordSet;								// メッセージ展開用ワークマネージャー
-//    GFL_FONT* pFontHandle;
-//    STRBUF* pStrBuf;
-//    BMPWINFRAME_AREAMANAGER_POS aPos;
-    int windowNum;
-    BOOL IsIrc;
-    u32 connect_bit;
-    BOOL connect_ok;
-    BOOL receive_ok;
-    u32 receive_result_param;
-    u32 receive_first_param;
-    DWCFriendData friendData;
-//    GFL_ARCUTIL_TRANSINFO bgchar;
-//    GFL_ARCUTIL_TRANSINFO bgchar2;
-//    GFL_ARCUTIL_TRANSINFO subchar;
-//	CONNECT_BG_PALANM cbp;		// Wifi接続画面のBGパレットアニメ制御構造体
-    BOOL bParent;
+  EVENT_IRCBATTLE_WORK* pParentWork;
+  StateFunc* state;      ///< ハンドルのプログラム状態
+  int selectType;   // 接続タイプ
+  HEAPID heapID;
+  //    GFL_BMPWIN* buttonWin[_WINDOW_MAXNUM]; /// ウインドウ管理
+  //    GFL_MSGDATA *pMsgData;  //
+  //    WORDSET *pWordSet;								// メッセージ展開用ワークマネージャー
+  //    GFL_FONT* pFontHandle;
+  //    STRBUF* pStrBuf;
+  //    BMPWINFRAME_AREAMANAGER_POS aPos;
+  int windowNum;
+  BOOL IsIrc;
+  u32 connect_bit;
+  BOOL connect_ok;
+  BOOL receive_ok;
+  u32 receive_result_param;
+  u32 receive_first_param;
+  DWCFriendData friendData;
+  //    GFL_ARCUTIL_TRANSINFO bgchar;
+  //    GFL_ARCUTIL_TRANSINFO bgchar2;
+  //    GFL_ARCUTIL_TRANSINFO subchar;
+  //	CONNECT_BG_PALANM cbp;		// Wifi接続画面のBGパレットアニメ制御構造体
+  BOOL bParent;
 };
 
 
@@ -86,8 +86,8 @@ static void _recvMystatus(const int netID, const int size, const void* pData, vo
 
 ///通信コマンドテーブル
 static const NetRecvFuncTable _PacketTbl[] = {
-    {_recvMystatus,          NULL},  ///_NETCMD_MYSTATUS
-    {_recvFriendCode,         NULL},    ///_NETCMD_FRIENDCODE
+  {_recvMystatus,          NULL},  ///_NETCMD_MYSTATUS
+  {_recvFriendCode,         NULL},    ///_NETCMD_FRIENDCODE
 };
 
 
@@ -103,7 +103,7 @@ static const NetRecvFuncTable _PacketTbl[] = {
 
 static void _changeState(IRC_BATTLE_FRIEND* pWork,StateFunc state)
 {
-    pWork->state = state;
+  pWork->state = state;
 }
 
 //------------------------------------------------------------------------------
@@ -115,8 +115,8 @@ static void _changeState(IRC_BATTLE_FRIEND* pWork,StateFunc state)
 #ifdef GFL_NET_DEBUG
 static void _changeStateDebug(IRC_BATTLE_FRIEND* pWork,StateFunc state, int line)
 {
-    NET_PRINT("ircmatch: %d\n",line);
-    _changeState(pWork, state);
+  NET_PRINT("ircmatch: %d\n",line);
+  _changeState(pWork, state);
 }
 #endif
 
@@ -124,31 +124,31 @@ static void _changeStateDebug(IRC_BATTLE_FRIEND* pWork,StateFunc state, int line
 
 static void _recvFriendCode(const int netID, const int size, const void* pData, void* pWk, GFL_NETHANDLE* pNetHandle)
 {
-	IRC_BATTLE_FRIEND *pWork = pWk;
+  IRC_BATTLE_FRIEND *pWork = pWk;
 
-    if(pNetHandle != GFL_NET_HANDLE_GetCurrentHandle()){
-		return;	//自分のハンドルと一致しない場合、親としてのデータ受信なので無視する
-	}
-	if(netID == GFL_NET_SystemGetCurrentID()){
-		return;	//自分のデータは無視
-	}
+  if(pNetHandle != GFL_NET_HANDLE_GetCurrentHandle()){
+    return;	//自分のハンドルと一致しない場合、親としてのデータ受信なので無視する
+  }
+  if(netID == GFL_NET_SystemGetCurrentID()){
+    return;	//自分のデータは無視
+  }
 
-    GFL_STD_MemCopy(pData,&pWork->friendData, sizeof(DWCFriendData));
+  GFL_STD_MemCopy(pData,&pWork->friendData, sizeof(DWCFriendData));
 }
 
 static void _recvMystatus(const int netID, const int size, const void* pData, void* pWk, GFL_NETHANDLE* pNetHandle)
 {
-	IRC_BATTLE_FRIEND *pWork = pWk;
+  IRC_BATTLE_FRIEND *pWork = pWk;
 
-    if(pNetHandle != GFL_NET_HANDLE_GetCurrentHandle()){
-		return;	//自分のハンドルと一致しない場合、親としてのデータ受信なので無視する
-	}
-	if(netID == GFL_NET_SystemGetCurrentID()){
-		return;	//自分のデータは無視
-	}
+  if(pNetHandle != GFL_NET_HANDLE_GetCurrentHandle()){
+    return;	//自分のハンドルと一致しない場合、親としてのデータ受信なので無視する
+  }
+  if(netID == GFL_NET_SystemGetCurrentID()){
+    return;	//自分のデータは無視
+  }
 
-    GFL_NET_DWC_FriendDataAdd(IrcBattle_GetSAVE_CONTROL_WORK(pWork->pParentWork),
-                              (MYSTATUS*)pData, &pWork->friendData, HEAPID_IRCBATTLE);
+  GFL_NET_DWC_FriendDataAdd(IrcBattle_GetSAVE_CONTROL_WORK(pWork->pParentWork),
+                            (MYSTATUS*)pData, &pWork->friendData, HEAPID_IRCBATTLE);
 }
 
 
@@ -161,9 +161,9 @@ static void _recvMystatus(const int netID, const int size, const void* pData, vo
 
 static void _sendTimingCheck(IRC_BATTLE_FRIEND* pWork)
 {
-    if(GFL_NET_HANDLE_IsTimingSync(GFL_NET_HANDLE_GetCurrentHandle(),_TIMING_ENDNO)){
-        _CHANGE_STATE(pWork,NULL);
-    }
+  if(GFL_NET_HANDLE_IsTimingSync(GFL_NET_HANDLE_GetCurrentHandle(),_TIMING_ENDNO)){
+    _CHANGE_STATE(pWork,NULL);
+  }
 }
 
 //----------------------------------------------------------------------------
@@ -175,8 +175,8 @@ static void _sendTimingCheck(IRC_BATTLE_FRIEND* pWork)
 
 static void _sendTiming(IRC_BATTLE_FRIEND* pWork)
 {
-    GFL_NET_HANDLE_TimingSyncStart(GFL_NET_HANDLE_GetCurrentHandle(),_TIMING_ENDNO);
-    _CHANGE_STATE(pWork,_sendTimingCheck);
+  GFL_NET_HANDLE_TimingSyncStart(GFL_NET_HANDLE_GetCurrentHandle(),_TIMING_ENDNO);
+  _CHANGE_STATE(pWork,_sendTimingCheck);
 }
 
 //----------------------------------------------------------------------------
@@ -188,13 +188,13 @@ static void _sendTiming(IRC_BATTLE_FRIEND* pWork)
 
 static void _sendMystatus(IRC_BATTLE_FRIEND* pWork)
 {
-    DWCFriendData friendData;
+  DWCFriendData friendData;
 
-    GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(),_NETCMD_MYSTATUS,
-                     MyStatus_GetWorkSize(),
-                     GAMEDATA_GetMyStatus(GAMESYSTEM_GetGameData(IrcBattle_GetGAMESYS_WORK(pWork->pParentWork))));
+  GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(),_NETCMD_MYSTATUS,
+                   MyStatus_GetWorkSize(),
+                   GAMEDATA_GetMyStatus(GAMESYSTEM_GetGameData(IrcBattle_GetGAMESYS_WORK(pWork->pParentWork))));
 
-    _CHANGE_STATE(pWork,_sendTiming);
+  _CHANGE_STATE(pWork,_sendTiming);
 }
 
 //----------------------------------------------------------------------------
@@ -206,15 +206,15 @@ static void _sendMystatus(IRC_BATTLE_FRIEND* pWork)
 
 static void _sendFriendCode(IRC_BATTLE_FRIEND* pWork)
 {
-    DWCFriendData friendData;
+  DWCFriendData friendData;
 
-    GFL_NET_DWC_GetMySendedFriendCode(
-        SaveData_GetWifiListData(IrcBattle_GetSAVE_CONTROL_WORK(pWork->pParentWork)) ,&friendData);
-    GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(),_NETCMD_FRIENDCODE,
-                     sizeof(DWCFriendData),&friendData);
+  GFL_NET_DWC_GetMySendedFriendCode(
+    SaveData_GetWifiListData(IrcBattle_GetSAVE_CONTROL_WORK(pWork->pParentWork)) ,&friendData);
+  GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(),_NETCMD_FRIENDCODE,
+                   sizeof(DWCFriendData),&friendData);
 
 
-    _CHANGE_STATE(pWork,_sendMystatus);
+  _CHANGE_STATE(pWork,_sendMystatus);
 
 }
 
@@ -226,19 +226,19 @@ static void _sendFriendCode(IRC_BATTLE_FRIEND* pWork)
 //------------------------------------------------------------------------------
 static GFL_PROC_RESULT IrcBattleFriendProcInit( GFL_PROC * proc, int * seq, void * pwk, void * mywk )
 {
-	GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_IRCBATTLE, 0x10000 );
+  GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_IRCBATTLE, 0x10000 );
 
-    {
-        IRC_BATTLE_FRIEND *pWork = GFL_PROC_AllocWork( proc, sizeof( IRC_BATTLE_FRIEND ), HEAPID_IRCBATTLE );
-        GFL_STD_MemClear(pWork, sizeof(IRC_BATTLE_FRIEND));
-        pWork->heapID = HEAPID_IRCBATTLE;
-        pWork->selectType =  EVENT_IrcBattleGetType((EVENT_IRCBATTLE_WORK*) pwk);
-        pWork->pParentWork = pwk;
-        // 通信テーブル追加
-        GFL_NET_AddCommandTable(GFL_NET_CMD_IRCFRIEND,_PacketTbl,NELEMS(_PacketTbl), pWork);
-        _CHANGE_STATE( pWork, _sendFriendCode);
-    }
-    return GFL_PROC_RES_FINISH;
+  {
+    IRC_BATTLE_FRIEND *pWork = GFL_PROC_AllocWork( proc, sizeof( IRC_BATTLE_FRIEND ), HEAPID_IRCBATTLE );
+    GFL_STD_MemClear(pWork, sizeof(IRC_BATTLE_FRIEND));
+    pWork->heapID = HEAPID_IRCBATTLE;
+    pWork->selectType =  EVENT_IrcBattleGetType((EVENT_IRCBATTLE_WORK*) pwk);
+    pWork->pParentWork = pwk;
+    // 通信テーブル追加
+    GFL_NET_AddCommandTable(GFL_NET_CMD_IRCFRIEND,_PacketTbl,NELEMS(_PacketTbl), pWork);
+    _CHANGE_STATE( pWork, _sendFriendCode);
+  }
+  return GFL_PROC_RES_FINISH;
 }
 
 //------------------------------------------------------------------------------
@@ -249,17 +249,17 @@ static GFL_PROC_RESULT IrcBattleFriendProcInit( GFL_PROC * proc, int * seq, void
 //------------------------------------------------------------------------------
 static GFL_PROC_RESULT IrcBattleFriendProcMain( GFL_PROC * proc, int * seq, void * pwk, void * mywk )
 {
-    IRC_BATTLE_FRIEND* pWork = mywk;
-    GFL_PROC_RESULT retCode = GFL_PROC_RES_FINISH;
+  IRC_BATTLE_FRIEND* pWork = mywk;
+  GFL_PROC_RESULT retCode = GFL_PROC_RES_FINISH;
 
-    StateFunc* state = pWork->state;
-    if(state != NULL){
-        state(pWork);
-        retCode = GFL_PROC_RES_CONTINUE;
-    }
-//	ConnectBGPalAnm_Main(&pWork->cbp);
+  StateFunc* state = pWork->state;
+  if(state != NULL){
+    state(pWork);
+    retCode = GFL_PROC_RES_CONTINUE;
+  }
+  //	ConnectBGPalAnm_Main(&pWork->cbp);
 
-    return retCode;
+  return retCode;
 }
 
 //------------------------------------------------------------------------------
@@ -270,19 +270,19 @@ static GFL_PROC_RESULT IrcBattleFriendProcMain( GFL_PROC * proc, int * seq, void
 //------------------------------------------------------------------------------
 static GFL_PROC_RESULT IrcBattleFriendProcEnd( GFL_PROC * proc, int * seq, void * pwk, void * mywk )
 {
-    IRC_BATTLE_FRIEND* pWork = mywk;
-    EVENT_IRCBATTLE_WORK* pParentWork = pwk;
+  IRC_BATTLE_FRIEND* pWork = mywk;
+  EVENT_IRCBATTLE_WORK* pParentWork = pwk;
 
-   // _workEnd(pWork);
+  // _workEnd(pWork);
 
-//	ConnectBGPalAnm_End(&pWork->cbp);
-	GFL_PROC_FreeWork(proc);
-	GFL_HEAP_DeleteHeap(HEAPID_IRCBATTLE);
+  //	ConnectBGPalAnm_End(&pWork->cbp);
+  GFL_PROC_FreeWork(proc);
+  GFL_HEAP_DeleteHeap(HEAPID_IRCBATTLE);
 
-    EVENT_IrcBattle_SetEnd(pParentWork);
+  EVENT_IrcBattle_SetEnd(pParentWork);
 
 
-    return GFL_PROC_RES_FINISH;
+  return GFL_PROC_RES_FINISH;
 }
 
 //----------------------------------------------------------
@@ -291,9 +291,9 @@ static GFL_PROC_RESULT IrcBattleFriendProcEnd( GFL_PROC * proc, int * seq, void 
  */
 //----------------------------------------------------------
 const GFL_PROC_DATA IrcBattleFriendProcData = {
-	IrcBattleFriendProcInit,
-	IrcBattleFriendProcMain,
-	IrcBattleFriendProcEnd,
+  IrcBattleFriendProcInit,
+  IrcBattleFriendProcMain,
+  IrcBattleFriendProcEnd,
 };
 
 

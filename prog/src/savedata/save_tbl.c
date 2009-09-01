@@ -33,6 +33,7 @@
 #include "savedata/irc_compatible_savedata.h"
 #include "savedata/sp_ribbon_save.h"
 #include "savedata/worldtrade_data.h"
+#include "savedata/regulation.h"
 #include "field/eventwork.h"
 #include "savedata/gimmickwork.h"
 
@@ -251,6 +252,11 @@ static const GFL_SAVEDATA_TABLE SaveDataTbl_Normal[] = {
     GMDATA_ID_WORLDTRADEDATA,
     (FUNC_GET_SIZE)WorldTradeData_GetWorkSize,
     (FUNC_INIT_WORK)WorldTradeData_Init,
+	},
+	{	//REGULATION
+    GMDATA_ID_REGULATION_DATA,
+    (FUNC_GET_SIZE)RegulationData_GetWorkSize,
+    (FUNC_INIT_WORK)RegulationData_Init,
 	},
   { //フィールドギミックワーク
     GMDATA_ID_GIMMICK_WORK,

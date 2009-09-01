@@ -11,6 +11,7 @@ SUBDIRS	=	wmi \
 			sound \
 			bag \
 		  trade \
+		  regulation \
 			test_layout \
 			test_graphic\
 			message\
