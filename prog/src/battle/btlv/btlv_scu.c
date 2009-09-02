@@ -172,7 +172,8 @@ static void statwin_cleanup( STATUS_WIN* stwin );
 static void statwin_reset_data( STATUS_WIN* stwin );
 static void statwin_disp_start( STATUS_WIN* stwin );
 static void statwin_disp( STATUS_WIN* stwin );
-static void statwin_hide( STATUS_WIN* stwin );
+//static void statwin_hide( STATUS_WIN* stwin );
+static void statwin_hide( u8 pos );
 static BOOL statwin_erase( STATUS_WIN* stwin, u8 line );
 static void statwin_update( STATUS_WIN* stwin, u16 hp, u8 col );
 static void tokwin_setup( TOK_WIN* tokwin, BTLV_SCU* wk, BtlPokePos pos );
@@ -1204,7 +1205,8 @@ typedef struct {
   u16     timer;
   u16     line;
   u8*     endFlag;
-
+  u8      pos;
+  
 }DEAD_EFF_WORK;
 
 
@@ -1227,6 +1229,7 @@ void BTLV_SCU_StartDeadAct( BTLV_SCU* wk, BtlPokePos pos )
   twk->endFlag = &wk->taskCounter[TASKTYPE_DEFAULT];
   twk->timer = 0;
   twk->line = 0;
+  twk->pos = BTL_MAIN_BtlPosToViewPos(wk->mainModule, pos);
 
   *(twk->endFlag) = FALSE;
 
@@ -1256,7 +1259,8 @@ static void taskDeadEffect( GFL_TCBL* tcbl, void* wk_adrs )
   {
     wk->timer = 0;
     wk->line++;
-    if( statwin_erase(wk->statWin, wk->line) )
+    //if( statwin_erase(wk->statWin, wk->line) )
+    if( statwin_erase(wk->statWin, wk->pos) )
     {
       *(wk->endFlag) = TRUE;
       GFL_TCBL_Delete( tcbl );
@@ -1300,7 +1304,8 @@ static void taskPokeOutAct( GFL_TCBL* tcbl, void* wk_adrs )
 
   switch( wk->seq ){
   case 0:
-    statwin_hide( wk->statWin );
+    //statwin_hide( wk->statWin );
+    statwin_hide( wk->viewpos );
     BTLV_EFFECT_DelPokemon( wk->viewpos );
     wk->seq++;
     break;
@@ -1760,14 +1765,14 @@ static void statwin_disp( STATUS_WIN* stwin )
   GFL_BG_LoadScreenReq( GFL_BMPWIN_GetFrame(stwin->win) );
 }
 
-static void statwin_hide( STATUS_WIN* stwin )
+//static void statwin_hide( STATUS_WIN* stwin )
+static void statwin_hide( u8 pos )
 {
 #ifdef BMP_GAUGE
   GFL_BMPWIN_ClearScreen( stwin->win );
   GFL_BG_LoadScreenReq( GFL_BMPWIN_GetFrame(stwin->win) );
 #else
-  u8 viewPos = BTL_MAIN_BtlPosToViewPos( stwin->parentWk->mainModule, stwin->pokePos );
-  BTLV_EFFECT_DelGauge( viewPos );
+  BTLV_EFFECT_DelGauge( pos );
 #endif
 }
 
@@ -1793,8 +1798,8 @@ static BOOL statwin_erase( STATUS_WIN* stwin, u8 line )
 
   return line == height;
 #else
-  u8 viewPos = BTL_MAIN_BtlPosToViewPos( stwin->parentWk->mainModule, stwin->pokePos );
-  BTLV_EFFECT_DelGauge( viewPos );
+//  u8 viewPos = BTL_MAIN_BtlPosToViewPos( stwin->parentWk->mainModule, stwin->pokePos );
+  BTLV_EFFECT_DelGauge( line );
 
   return TRUE;
 #endif
