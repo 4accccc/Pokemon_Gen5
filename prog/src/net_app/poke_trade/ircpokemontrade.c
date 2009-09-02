@@ -930,7 +930,7 @@ static void _touchState(IRC_POKEMON_TRADE* pWork)
 
 static void _subBgMake(IRC_POKEMON_TRADE* pWork)
 {
-	ARCHANDLE* p_handle = GFL_ARC_OpenDataHandle( ARCID_IRCBATTLE, pWork->heapID );
+	//ARCHANDLE* p_handle = GFL_ARC_OpenDataHandle( ARCID_IRCBATTLE, pWork->heapID );
 	MYSTATUS* pMy = GAMEDATA_GetMyStatus( GAMESYSTEM_GetGameData(pWork->pGameSys) );
 	u32 sex = MyStatus_GetMySex(pMy);
 
