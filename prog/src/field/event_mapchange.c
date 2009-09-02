@@ -336,7 +336,10 @@ static GMEVENT_RESULT EVENT_MapChangeByWarp(GMEVENT * event, int *seq, void*work
     break;
 	case 1:
     // ワープ退場イベント
-    GMEVENT_CallEvent( event, EVENT_DISAPPEAR_Warp( event, gsys, fieldmap ) );
+    if( FIELDMAP_GetMapControlType( fieldmap ) != FLDMAP_CTRLTYPE_NOGRID )
+    {
+      GMEVENT_CallEvent( event, EVENT_DISAPPEAR_Warp( event, gsys, fieldmap ) );
+    }
     //GMEVENT_CallEvent( event, EVENT_DISAPPEAR_FallInSand( event, gsys, fieldmap ) );  // TEST:
 		(*seq)++;
 		break;
