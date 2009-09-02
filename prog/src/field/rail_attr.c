@@ -224,10 +224,10 @@ MAPATTR RAIL_ATTR_GetAttribute( const RAIL_ATTR_DATA* cp_work, const RAIL_LOCATI
       index = (cp_lineattr->x * z) + x;
       
       // アトリビュートインデックスチェック
-      GF_ASSERT( index < (cp_lineattr->x * cp_lineattr->z) );
-
-
-      attr = cp_lineattr->attr[ index ];
+      if( index < (cp_lineattr->x * cp_lineattr->z) )
+      {
+        attr = cp_lineattr->attr[ index ];
+      }
     }
   }
 
