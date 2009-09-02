@@ -39,6 +39,7 @@ typedef enum
 {
   MCST_FLG = GFL_NET_CMD_MUSICAL,
   MCST_POKEDATA ,
+  MCST_ALL_POKEDATA ,
   MCST_STRMDATA ,
   
   MCST_MAX,
@@ -49,6 +50,7 @@ typedef enum
 {
   MCFT_START_GAME,
   MCFT_GAME_STATE,
+  MCFT_GAME_STATE_ALL,
   MCFT_STRM_SIZE,
   
 }MUS_COMM_FLAG_TYPE;
@@ -88,7 +90,7 @@ typedef struct
   BOOL                isValidData;  //pokeData受信完了フラグ
   u8                  musicalIdx;
   MUS_COMM_GAME_STATE gameState;
-  void *pokeData;
+  void *pokeData;     //MUSICAL_POKE_PARAMとPOKEMON_PARAMのセット。
 }MUS_COMM_USER_DATA;
 
 struct _MUS_COMM_WORK
@@ -108,13 +110,17 @@ struct _MUS_COMM_WORK
   MYSTATUS *myStatus;
   
   MUS_COMM_USER_DATA userData[MUSICAL_COMM_MEMBER_NUM];
-  void *selfPokeData;
+  void *selfPokeData; //送信用バッファ
+  void *allPokeData;  //送受信用バッファ
   
   MUSICAL_DISTRIBUTE_DATA *distData;
   u8  strmDivIdx;
   BOOL isSendStrmMode;
   BOOL isSendingStrmData;
   MUS_COMM_DIVSEND_STATE divSendState;
+  
+  //親機専用
+  BOOL isReqSendState;
 };
 
 //======================================================================
@@ -126,9 +132,12 @@ static void MUS_COMM_FinishNetInitCallback( void* pWork );
 static void MUS_COMM_FinishNetTermCallback( void* pWork );
 
 static const BOOL MUS_COMM_Send_Flag( MUS_COMM_WORK* work , const u8 flag , u32 value , NetID target );
+static const BOOL MUS_COMM_Send_FlagServer( MUS_COMM_WORK* work , const u8 flag , u32 value , NetID target );
 static void MUS_COMM_Post_Flag( const int netID, const int size , const void* pData , void* pWork , GFL_NETHANDLE *pNetHandle );
 static void MUS_COMM_Post_MusPokeData( const int netID, const int size , const void* pData , void* pWork , GFL_NETHANDLE *pNetHandle );
 static u8*    MUS_COMM_Post_MusPokeDataBuff( int netID, void* pWork , int size );
+static void MUS_COMM_Post_AllMusPokeData( const int netID, const int size , const void* pData , void* pWork , GFL_NETHANDLE *pNetHandle );
+static u8*    MUS_COMM_Post_AllMusPokeDataBuff( int netID, void* pWork , int size );
 
 static void MUS_COMM_Update_SendStrmData( MUS_COMM_WORK *work );
 static void MUS_COMM_Post_StrmData( const int netID, const int size , const void* pData , void* pWork , GFL_NETHANDLE *pNetHandle );
@@ -148,6 +157,7 @@ static const NetRecvFuncTable MusCommRecvTable[MCST_MAX] =
 {
   { MUS_COMM_Post_Flag   ,NULL  },
   { MUS_COMM_Post_MusPokeData , MUS_COMM_Post_MusPokeDataBuff },
+  { MUS_COMM_Post_AllMusPokeData , MUS_COMM_Post_AllMusPokeDataBuff },
   { MUS_COMM_Post_StrmData , MUS_COMM_Post_StrmDataBuff },
 };
 
@@ -163,11 +173,9 @@ MUS_COMM_WORK* MUS_COMM_CreateWork( HEAPID heapId , GAME_COMM_SYS_PTR gameComm ,
   work->mode = MCM_NONE;
   work->isInitComm = FALSE;
   work->selfPokeData = NULL;
+  work->allPokeData = NULL;
   work->myStatus = SaveData_GetMyStatus(saveCtrl);
   work->distData = distData;
-  work->strmDivIdx = 0;
-  work->isSendStrmMode = FALSE;
-  work->divSendState = MCDS_NONE;
   
   for( i=0;i<MUSICAL_COMM_MEMBER_NUM;i++ )
   {
@@ -196,6 +204,10 @@ void MUS_COMM_DeleteWork( MUS_COMM_WORK* work )
   if( work->selfPokeData != NULL )
   {
     GFL_HEAP_FreeMemory( work->selfPokeData );
+  }
+  if( work->allPokeData != NULL )
+  {
+    GFL_HEAP_FreeMemory( work->allPokeData );
   }
 
   if( work->isInitComm == TRUE )
@@ -242,10 +254,10 @@ void MUS_COMM_InitComm( MUS_COMM_WORK* work )
     HEAPID_NETWORK,         //
     GFL_WICON_POSX,GFL_WICON_POSY,  // 通信アイコンXY位置
     MUSICAL_COMM_MEMBER_NUM,        //_MAXNUM,  //最大接続人数
-    48,                     //_MAXSIZE, //最大送信バイト数
+    60,                     //_MAXSIZE, //最大送信バイト数
     MUS_COMM_BEACON_MAX,    //_BCON_GET_NUM,  // 最大ビーコン収集数
     TRUE,                   // CRC計算
-    FALSE,                  // MP通信＝親子型通信モードかどうか
+    TRUE,                  // MP通信＝親子型通信モードかどうか
     GFL_NET_TYPE_WIRELESS,  //通信タイプの指定
     TRUE,                   // 親が再度初期化した場合、つながらないようにする場合TRUE
     WB_NET_MUSICAL,     //GameServiceID
@@ -272,9 +284,19 @@ void MUS_COMM_InitComm( MUS_COMM_WORK* work )
     GFL_HEAP_FreeMemory( work->selfPokeData );
   }
   work->selfPokeData = NULL;
+
+  if( work->allPokeData != NULL )
+  {
+    GFL_HEAP_FreeMemory( work->allPokeData );
+  }
+  work->allPokeData = GFL_HEAP_AllocMemory( work->heapId , MUS_COMM_POKEDATA_SIZE*MUSICAL_COMM_MEMBER_NUM );
   work->befMemberNum = 0;
   work->isRefreshUserData = FALSE;
   work->isStartGame = FALSE;
+  work->strmDivIdx = 0;
+  work->isSendStrmMode = FALSE;
+  work->divSendState = MCDS_NONE;
+  work->isReqSendState = FALSE;
   
   GFL_NET_Init( &aGFLNetInit , MUS_COMM_FinishNetInitCallback , (void*)work );
 
@@ -376,6 +398,22 @@ void MUS_COMM_UpdateComm( MUS_COMM_WORK* work )
     MUS_COMM_CheckUserData( work );
     break;
   }
+  if( work->isReqSendState == TRUE )
+  {
+    BOOL ret;
+    //親が子機に全員のステートを送る
+    u32 value = 0;
+    value += work->userData[0].gameState;
+    value += work->userData[1].gameState<<4;
+    value += work->userData[2].gameState<<8;
+    value += work->userData[3].gameState<<12;
+    
+    ret = MUS_COMM_Send_FlagServer( work , MCFT_GAME_STATE_ALL , value , GFL_NET_SENDID_ALLUSER );    
+    if( ret == TRUE )
+    {
+      work->isReqSendState = FALSE;
+    }
+  }
   MUS_COMM_Update_SendStrmData( work );
 }
 
@@ -413,7 +451,7 @@ const BOOL MUS_COMM_StartGame( MUS_COMM_WORK* work )
     GFL_NETHANDLE *handle = GFL_NET_HANDLE_GetCurrentHandle();
     GFL_NET_SetClientConnect( handle , FALSE );
    
-    return MUS_COMM_Send_Flag( work , MCFT_START_GAME , 0 , GFL_NET_SENDID_ALLUSER );
+    return MUS_COMM_Send_FlagServer( work , MCFT_START_GAME , 0 , GFL_NET_SENDID_ALLUSER );
   }
 }
 const BOOL MUS_COMM_IsStartGame( MUS_COMM_WORK* work )
@@ -572,6 +610,27 @@ static const BOOL MUS_COMM_Send_Flag( MUS_COMM_WORK* work , const u8 flag , u32 
   }
   return ret;
 }
+static const BOOL MUS_COMM_Send_FlagServer( MUS_COMM_WORK* work , const u8 flag , u32 value , NetID target )
+{
+  BOOL ret;
+  //GFL_NETHANDLE *parentHandle = GFL_NET_HANDLE_GetCurrentHandle();
+  GFL_NETHANDLE *parentHandle = GFL_NET_GetNetHandle(GFL_NET_NETID_SERVER);
+  MUS_COMM_FLG_PACKET pkt;
+  pkt.flg = flag;
+  pkt.value = value;
+  ARI_TPrintf("Send Flg[%d:%d].\n",pkt.flg,pkt.value);
+
+  ret = GFL_NET_SendDataEx( parentHandle , target , 
+                            MCST_FLG , sizeof( MUS_COMM_FLG_PACKET ) , 
+                            (void*)&pkt , TRUE , FALSE , FALSE );
+  if( ret == FALSE )
+  {
+    ARI_TPrintf("Send Flg is failued!!\n");
+  }
+  return ret;
+}
+
+
 
 static void MUS_COMM_Post_Flag( const int netID, const int size , const void* pData , void* pWork , GFL_NETHANDLE *pNetHandle )
 {
@@ -587,6 +646,20 @@ static void MUS_COMM_Post_Flag( const int netID, const int size , const void* pD
 
   case MCFT_GAME_STATE:
     work->userData[netID].gameState = pkt->value;
+    if( work->mode == MCM_PARENT )
+    {
+      work->isReqSendState = TRUE;
+    }
+    break;
+  
+  case MCFT_GAME_STATE_ALL:
+    if( work->mode != MCM_PARENT )
+    {
+      work->userData[0].gameState = (pkt->value&0x000F);
+      work->userData[1].gameState = (pkt->value&0x00F0)>>4;
+      work->userData[2].gameState = (pkt->value&0x0F00)>>8;
+      work->userData[3].gameState = (pkt->value&0xF000)>>12;
+    }
     break;
 
   case MCFT_STRM_SIZE:
@@ -655,6 +728,61 @@ static u8*    MUS_COMM_Post_MusPokeDataBuff( int netID, void* pWork , int size )
   return work->userData[netID].pokeData;
 }
 
+//--------------------------------------------------------------
+// 全員分のポケモンデータ送受信
+//--------------------------------------------------------------
+const BOOL MUS_COMM_Send_AllMusPokeData( MUS_COMM_WORK *work  )
+{
+  u8 i;
+  for( i=0;i<MUSICAL_COMM_MEMBER_NUM;i++ )
+  {
+    u32 startAdr = (u32)work->allPokeData+MUS_COMM_POKEDATA_SIZE*i;
+    GFL_STD_MemCopy( work->userData[i].pokeData , (void*)startAdr , MUS_COMM_POKEDATA_SIZE );
+  }
+  
+  ARI_TPrintf("Send AllPokeData \n");
+  {
+    GFL_NETHANDLE *parentHandle = GFL_NET_GetNetHandle(GFL_NET_NETID_SERVER);
+    BOOL ret = GFL_NET_SendDataEx( parentHandle , GFL_NET_SENDID_ALLUSER , 
+                              MCST_ALL_POKEDATA , MUS_COMM_POKEDATA_SIZE*MUSICAL_COMM_MEMBER_NUM , 
+                              work->allPokeData , TRUE , FALSE , TRUE );
+    if( ret == FALSE )
+    {
+      ARI_TPrintf("Send AllPokeData is failued!!\n");
+    }
+    return ret;
+  }
+}
+static void MUS_COMM_Post_AllMusPokeData( const int netID, const int size , const void* pData , void* pWork , GFL_NETHANDLE *pNetHandle )
+{
+  u8 i;
+  MUS_COMM_WORK *work = (MUS_COMM_WORK*)pWork;
+  ARI_TPrintf("MusComm Finish Post AllPokeData.\n");
+  for( i=0;i<MUSICAL_COMM_MEMBER_NUM;i++ )
+  {
+    u32 pokeParaAdr;
+    MUSICAL_POKE_PARAM *musPoke;
+    u32 startAdr = (u32)work->allPokeData+MUS_COMM_POKEDATA_SIZE*i;
+    GFL_STD_MemCopy( (void*)startAdr , work->userData[i].pokeData , MUS_COMM_POKEDATA_SIZE );
+    pokeParaAdr = (u32)work->userData[i].pokeData+sizeof(MUSICAL_POKE_PARAM);
+    musPoke = work->userData[i].pokeData;
+    musPoke->pokePara = (void*)pokeParaAdr;
+    work->userData[i].isValidData = TRUE;
+  }
+
+}
+static u8*    MUS_COMM_Post_AllMusPokeDataBuff( int netID, void* pWork , int size )
+{
+  MUS_COMM_WORK *work = (MUS_COMM_WORK*)pWork;
+  u8 i;
+  for( i=0;i<MUSICAL_COMM_MEMBER_NUM;i++ )
+  {
+    work->userData[i].isValidData = FALSE;
+  }
+  ARI_TPrintf("MusComm Start Post AllPokeData.\n");
+  return work->allPokeData;
+}
+
 MUSICAL_POKE_PARAM* MUS_COMM_GetMusPokeParam( MUS_COMM_WORK *work , const u8 musicalIdx )
 {
   u8 i;
@@ -662,7 +790,8 @@ MUSICAL_POKE_PARAM* MUS_COMM_GetMusPokeParam( MUS_COMM_WORK *work , const u8 mus
   {
     if( work->userData[i].musicalIdx == musicalIdx )
     {
-      if( work->userData[i].isValidData == TRUE )
+      if( work->userData[i].gameState != MCGS_NONE &&
+          work->userData[i].isValidData == TRUE )
       {
         return work->userData[i].pokeData;
       }
@@ -713,7 +842,7 @@ static void MUS_COMM_Update_SendStrmData( MUS_COMM_WORK *work )
     {
     case MCDS_START:
       {
-        const BOOL ret = MUS_COMM_Send_Flag( work , MCFT_STRM_SIZE , 
+        const BOOL ret = MUS_COMM_Send_FlagServer( work , MCFT_STRM_SIZE , 
                                       work->distData->strmDataSize , 
                                       GFL_NET_SENDID_ALLUSER );
         if( ret == TRUE )
@@ -772,8 +901,9 @@ const BOOL MUS_COMM_Send_StrmData( MUS_COMM_WORK *work , const u8 idx )
   ARI_TPrintf("Send StrmData[%d] \n",idx);
   {
     
-    GFL_NETHANDLE *selfHandle = GFL_NET_HANDLE_GetCurrentHandle();
-    BOOL ret = GFL_NET_SendDataEx( selfHandle , GFL_NET_SENDID_ALLUSER , 
+    GFL_NETHANDLE *parentHandle = GFL_NET_GetNetHandle(GFL_NET_NETID_SERVER);
+    //GFL_NETHANDLE *selfHandle = GFL_NET_HANDLE_GetCurrentHandle();
+    BOOL ret = GFL_NET_SendDataEx( parentHandle , GFL_NET_SENDID_ALLUSER , 
                               MCST_STRMDATA , dataSize , 
                               startAdr , FALSE , TRUE , TRUE );
     if( ret == FALSE )

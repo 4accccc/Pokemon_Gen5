@@ -52,6 +52,7 @@ typedef enum
   MPS_WAIT_MEMBER_DRESSUP,
   MPS_SEND_MUS_POKE,
   MPS_POST_WAIT_MUS_POKE,
+  MPS_POST_WAIT_ALL_MUS_POKE,
   MPS_POST_WAIT_START_ACTING,
   
   MPS_FINISH,
@@ -342,12 +343,31 @@ static GFL_PROC_RESULT MusicalProc_Main( GFL_PROC * proc, int * seq , void *pwk,
   case MPS_SEND_MUS_POKE:
     if( MUS_COMM_Send_MusPokeData( work->commWork , work->musPoke ) == TRUE )
     {
-      work->state = MPS_POST_WAIT_MUS_POKE;
+      if( MUS_COMM_GetMode( work->commWork ) == MCM_PARENT )
+      {
+        work->state = MPS_POST_WAIT_MUS_POKE;
+      }
+      else
+      {
+        work->state = MPS_POST_WAIT_ALL_MUS_POKE;
+      }
     }
     break;
 
     //‘Sˆõ•ª‚à‚ç‚¤‚Ì‚ð‘Ò‚Â
   case MPS_POST_WAIT_MUS_POKE:
+    if( MUS_COMM_CheckAllPostPokeData( work->commWork ) == TRUE )
+    {
+      const BOOL ret = MUS_COMM_Send_AllMusPokeData( work->commWork );
+      if( ret == TRUE )
+      {
+        work->state = MPS_POST_WAIT_ALL_MUS_POKE;
+      }
+    }
+    break;
+  
+    //e‚ª‘Sˆõ‚Ö‘—‚é‚Ì‚ð‘Ò‚Â
+  case MPS_POST_WAIT_ALL_MUS_POKE:
     if( MUS_COMM_CheckAllPostPokeData( work->commWork ) == TRUE )
     {
       MUS_COMM_SendTimingCommand( work->commWork , MUS_COMM_TIMMING_START_ACTING );

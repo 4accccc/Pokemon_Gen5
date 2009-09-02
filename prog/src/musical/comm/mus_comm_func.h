@@ -44,11 +44,11 @@ typedef enum
 //ÉQÅ[ÉÄèÛë‘
 typedef enum
 {
-  MCGS_NONE,
+  MCGS_NONE = 0,
 //  MCGS_LOBBY,
-  MCGS_DRESSUP,
-  MCGS_WAIT_DRESSUP,
-  MCGS_ACTING,
+  MCGS_DRESSUP = 1,
+  MCGS_WAIT_DRESSUP = 2,
+  MCGS_ACTING = 3,
   
 }MUS_COMM_GAME_STATE;
 
@@ -86,6 +86,7 @@ const BOOL MUS_COMM_IsStartGame( MUS_COMM_WORK* work );
 const BOOL MUS_COMM_SetCommGameState( MUS_COMM_WORK *work , MUS_COMM_GAME_STATE state );
 
 const BOOL MUS_COMM_Send_MusPokeData( MUS_COMM_WORK *work , MUSICAL_POKE_PARAM *musPoke );
+const BOOL MUS_COMM_Send_AllMusPokeData( MUS_COMM_WORK *work  );
 const BOOL MUS_COMM_CheckAllPostPokeData( MUS_COMM_WORK *work );
 
 void MUS_COMM_Start_SendStrmData( MUS_COMM_WORK *work );
