@@ -20,6 +20,7 @@
 
 #include "system/mcss.h"
 #include "system/mcss_tool.h"
+#include "app/app_taskmenu.h"
 
 
 #define _TIMING_ENDNO (12)
@@ -62,6 +63,7 @@
 #define NOBUTTON_X (200)
 #define NOBUTTON_Y (180)
 
+#define _SUBMENU_LISTMAX (8)
 
 
 typedef void (StateFunc)(IRC_POKEMON_TRADE* pState);
@@ -86,6 +88,7 @@ struct _IRC_POKEMON_TRADE {
 	int selectType;   // 接続タイプ
 	HEAPID heapID;
 
+	//メッセージ系
 	GFL_BMPWIN* MessageWin;
 
   GFL_ARCUTIL_TRANSINFO bgchar;
@@ -93,14 +96,16 @@ struct _IRC_POKEMON_TRADE {
 	GFL_BMPWIN* StatusWin[2*4];
 
 	TOUCH_SW_SYS			*TouchSubWindowSys;
-	
-	
+
+  APP_TASKMENU_WORK* pAppTask;
+  APP_TASKMENU_ITEMWORK appitem[_SUBMENU_LISTMAX];
 	GFL_BMPWIN* MyInfoWin;
 	GFL_MSGDATA *pMsgData;  //
 	WORDSET *pWordSet;								// メッセージ展開用ワークマネージャー
 	GFL_FONT* pFontHandle;
 	STRBUF* pStrBuf;
 	STRBUF* pExStrBuf;
+  PRINT_QUE*            SysMsgQue;
 	//    BMPWINFRAME_AREAMANAGER_POS aPos;
 	//3D
 	BOX_DATA* pBox;
@@ -110,6 +115,7 @@ struct _IRC_POKEMON_TRADE {
 	MCSS_WORK     *pokeMcss[2];
 
 	GFL_ARCUTIL_TRANSINFO subchar;
+	GFL_ARCUTIL_TRANSINFO subchar1;
 	u32 cellRes[CEL_RESOURCE_MAX];
 
 	GAMESYS_WORK* pGameSys;
@@ -148,4 +154,6 @@ struct _IRC_POKEMON_TRADE {
 
 
 extern void IRC_POKETRADE_GraphicInit(IRC_POKEMON_TRADE* pWork);
+extern void IRC_POKETRADE_SubStatusInit(IRC_POKEMON_TRADE* pWork);
+extern void IRC_POKETRADE_AppMenuOpen(IRC_POKEMON_TRADE* pWork, int *menustr,int num);
 

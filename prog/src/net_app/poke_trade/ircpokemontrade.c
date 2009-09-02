@@ -26,7 +26,7 @@
 #include "system/bmp_menulist.h"
 #include "system/bmp_menu.h"
 
-#include "msg/msg_ircbattle.h"
+#include "msg/msg_poke_trade.h"
 #include "ircbattle.naix"
 #include "trade.naix"
 #include "net_app/connect_anm.h"
@@ -198,7 +198,7 @@ static void _setPokemonStatusMessage(IRC_POKEMON_TRADE *pWork, int side,const PO
 
 	lv=	PPP_Get(ppp, ID_PARA_level, NULL);
 
-	GFL_MSG_GetString(  pWork->pMsgData, IRCBTL_STR_21, pWork->pExStrBuf );
+	GFL_MSG_GetString(  pWork->pMsgData, POKETRADE_STR_21, pWork->pExStrBuf );
 	WORDSET_RegisterNumber(pWork->pWordSet, 0, lv,
 												 3, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT);
 
@@ -384,7 +384,7 @@ static void _InitBoxIcon( BOX_DATA* boxData , u8 trayNo ,IRC_POKEMON_TRADE* pWor
 
 	{//ボックス名表示
 		if(trayNo == BOX_MAX_TRAY){
-			GFL_MSG_GetString(  pWork->pMsgData, IRCBTL_STR_19, pWork->pStrBuf );
+			GFL_MSG_GetString(  pWork->pMsgData, POKETRADE_STR_19, pWork->pStrBuf );
 		}
 		else{
 			BOXDAT_GetBoxName(boxData, trayNo, pWork->pStrBuf);
@@ -479,7 +479,7 @@ static void _recvChangeYesNo(const int netID, const int size, const void* pData,
 	}
 	//はいいいえウインドウ
 
-	_msgWindowCreate(pWork, IRCBTL_STR_20);
+	_msgWindowCreate(pWork, POKETRADE_STR_20);
 
 	TouchYesNoStart(pWork->TouchSubWindowSys);
 	pWork->bTouchReset=TRUE;
@@ -518,7 +518,7 @@ static void _recvEndReq(const int netID, const int size, const void* pData, void
 		return;	//自分のハンドルと一致しない場合、親としてのデータ受信なので無視する
 	}
 
-	_msgWindowCreate(pWork, IRCBTL_STR_22);
+	_msgWindowCreate(pWork, POKETRADE_STR_22);
 	TouchYesNoStart(pWork->TouchSubWindowSys);
 	pWork->bTouchReset=TRUE;
 
@@ -590,6 +590,76 @@ static void _noneState(IRC_POKEMON_TRADE* pWork)
 	//なにもしない
 }
 
+
+//こうかんにだす、メニュー待ち
+static void _changeMenuWait(IRC_POKEMON_TRADE* pWork)
+{
+  if(APP_TASKMENU_IsFinish(pWork->pAppTask)){
+    int selectno = APP_TASKMENU_GetCursorPos(pWork->pAppTask);
+
+    if(selectno==0){
+      // あいても選ぶまで待つ
+      _CHANGE_STATE(pWork, _touchState);
+    }
+    else{
+      _CHANGE_STATE(pWork, _touchState);
+    }
+    APP_TASKMENU_CloseMenu(pWork->pAppTask);
+    pWork->pAppTask=NULL;
+  }
+}
+
+
+//こうかんにだす、メニュー表示
+static void _changeMenuOpen(IRC_POKEMON_TRADE* pWork)
+{
+  {
+    int msg[]={POKETRADE_STR_01,POKETRADE_STR_02};
+    IRC_POKETRADE_AppMenuOpen(pWork,msg,2);
+  }
+
+  _CHANGE_STATE(pWork, _changeMenuWait);
+
+}
+
+
+
+//自分画面にステータス表示 相手に見せるかどうか待ち
+static void _dispSubStateWait(IRC_POKEMON_TRADE* pWork)
+{
+  if(APP_TASKMENU_IsFinish(pWork->pAppTask)){
+    int selectno = APP_TASKMENU_GetCursorPos(pWork->pAppTask);
+
+    if(selectno==0){
+      //相手に見せる
+      _CHANGE_STATE(pWork, _changeMenuOpen);
+    }
+    else{
+      _CHANGE_STATE(pWork, _touchState);
+    }
+    G2S_BlendNone();
+    GFL_BG_ClearScreen(GFL_BG_FRAME1_S);  //自分ステータス
+    APP_TASKMENU_CloseMenu(pWork->pAppTask);
+    pWork->pAppTask=NULL;
+  }
+
+
+}
+
+
+// 自分の画面にステータスを表示
+
+static void _dispSubState(IRC_POKEMON_TRADE* pWork)
+{
+  {
+    int msg[]={POKETRADE_STR_03,POKETRADE_STR_02};
+    IRC_POKETRADE_AppMenuOpen(pWork,msg,2);
+  }
+  IRC_POKETRADE_SubStatusInit(pWork);
+	_CHANGE_STATE(pWork,_dispSubStateWait);
+}
+
+
 static void _messageWaitState(IRC_POKEMON_TRADE* pWork)
 {
 	if(GFL_UI_TP_GetTrg()){
@@ -651,7 +721,7 @@ static void _changeWaitState(IRC_POKEMON_TRADE* pWork)
 
 	_InitBoxIcon(pWork->pBox,pWork->nowBoxno,pWork);  //再描画
 
-	_msgWindowCreate(pWork, IRCBTL_STR_23);
+	_msgWindowCreate(pWork, POKETRADE_STR_23);
 
 	pWork->bPokemonSet[0]=FALSE;
 	pWork->bPokemonSet[1]=FALSE;
@@ -787,8 +857,9 @@ static void _touchState(IRC_POKEMON_TRADE* pWork)
 			}
 		}
 	}
-	if(GFL_UI_TP_GetCont()==FALSE){  //ポケモンをつかむ
+	if(GFL_UI_TP_GetCont()==FALSE){ //タッチパネルを離した
 
+    //ポケモンをつかむ
 		if(pWork->nowBoxno == pWork->selectBoxno){
 			if(pWork->selectIndex == pWork->catchIndex){
 				pWork->catchIndex = -1;  //さっきと同じ物をつかんでいた場合は何もしない
@@ -829,8 +900,10 @@ static void _touchState(IRC_POKEMON_TRADE* pWork)
 				GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(),_NETCMD_SELECT_POKEMON, sizeof( POKEMON_PASO_PARAM ),ppp);
 
 			}
-
 		}
+    else if(pWork->catchIndex != -1){  //キャッチしてるが上ベクトルは働かなかった場合 自分の画面にステータスを表示する
+      _CHANGE_STATE(pWork,_dispSubState);
+    }
 		pWork->catchIndex = -1;
 	}
 
@@ -861,7 +934,7 @@ static void _subBgMake(IRC_POKEMON_TRADE* pWork)
 	MYSTATUS* pMy = GAMEDATA_GetMyStatus( GAMESYSTEM_GetGameData(pWork->pGameSys) );
 	u32 sex = MyStatus_GetMySex(pMy);
 
-
+#if 0
 
 	GFL_ARCHDL_UTIL_TransVramPalette( p_handle, NARC_ircbattle_DsTradeList_NCLR,
 																		PALTYPE_MAIN_BG, 0, 0,  pWork->heapID);
@@ -889,15 +962,6 @@ static void _subBgMake(IRC_POKEMON_TRADE* pWork)
 																		PALTYPE_SUB_BG, 0, 0,  pWork->heapID);
 
 
-	// サブ画面BGキャラ転送
-	pWork->subchar = GFL_ARCHDL_UTIL_TransVramBgCharacterAreaMan( p_handle, NARC_ircbattle_box_wp01_NCGR,
-																																GFL_BG_FRAME2_S, 0, 0, pWork->heapID);
-
-	GFL_ARCHDL_UTIL_TransVramScreenCharOfs(p_handle,
-																				 NARC_ircbattle_box_wp01_NSCR,
-																				 GFL_BG_FRAME2_S, 0,
-																				 GFL_ARCUTIL_TRANSINFO_GetPos(pWork->subchar), 0, 0,
-																				 pWork->heapID);
 
 
 
@@ -905,7 +969,7 @@ static void _subBgMake(IRC_POKEMON_TRADE* pWork)
 
 
 	GFL_ARC_CloseDataHandle( p_handle );
-
+#endif
 
   pWork->bgchar = BmpWinFrame_GraphicSetAreaMan(GFL_BG_FRAME1_S, _BUTTON_WIN_PAL, MENU_TYPE_SYSTEM, pWork->heapID);
 
@@ -1038,7 +1102,7 @@ static void _createBg(IRC_POKEMON_TRADE* pWork)
 		GFL_BG_BGCNT_HEADER TextBgCntDat = {
 			0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
 			GX_BG_SCRBASE_0xe800, GX_BG_CHARBASE_0x00000, 0x8000,GX_BG_EXTPLTT_01,
-			0, 0, 0, FALSE
+			1, 0, 0, FALSE
 			};
 
 		GFL_BG_SetBGControl(
@@ -1061,6 +1125,20 @@ static void _createBg(IRC_POKEMON_TRADE* pWork)
 			frame, &TextBgCntDat, GFL_BG_MODE_TEXT );
 
 		GFL_BG_FillScreen( frame,	0x0000, 0, 0, 32, 32, GFL_BG_SCRWRT_PALIN );
+		GFL_BG_LoadScreenReq( frame );
+	}
+	{
+		int frame = GFL_BG_FRAME3_S;
+		GFL_BG_BGCNT_HEADER TextBgCntDat = {
+			0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
+			GX_BG_SCRBASE_0xf800, GX_BG_CHARBASE_0x10000, 0x8000,GX_BG_EXTPLTT_01,
+			0, 0, 0, FALSE
+			};
+
+		GFL_BG_SetBGControl(
+			frame, &TextBgCntDat, GFL_BG_MODE_TEXT );
+    GFL_BG_FillCharacter( frame, 0x00, 1, 0 );
+		GFL_BG_FillScreen( frame,	0x0000, 0, 0, 32, 24, GFL_BG_SCRWRT_PALIN );
 		GFL_BG_LoadScreenReq( frame );
 	}
 
@@ -1229,7 +1307,7 @@ static void _dispInit(IRC_POKEMON_TRADE* pWork)
 
 	//文字系初期化
 	pWork->pWordSet    = WORDSET_Create( pWork->heapID );
-	pWork->pMsgData = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_ircbattle_dat, pWork->heapID );
+	pWork->pMsgData = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_poke_trade_dat, pWork->heapID );
 	pWork->pFontHandle = GFL_FONT_Create( ARCID_FONT , NARC_font_large_nftr , GFL_FONT_LOADTYPE_FILE , FALSE , pWork->heapID );
 	pWork->MyInfoWin = GFL_BMPWIN_Create(GFL_BG_FRAME1_S, 0x07, 0x03, 10, 2, _BUTTON_MSG_PAL,  GFL_BMP_CHRAREA_GET_B );
 	pWork->pStrBuf = GFL_STR_CreateBuffer( 128, pWork->heapID );
@@ -1261,6 +1339,10 @@ static void _dispInit(IRC_POKEMON_TRADE* pWork)
 
 	_InitBoxIcon(pWork->pBox, 0, pWork);
 
+
+  IRC_POKETRADE_GraphicInit(pWork);
+
+  
 #if 1
 	pWork->mcssSys = MCSS_Init( 2 , pWork->heapID );
 	MCSS_SetTextureTransAdrs( pWork->mcssSys , 0 );
@@ -1274,6 +1356,7 @@ static void _dispInit(IRC_POKEMON_TRADE* pWork)
 	GFL_BG_SetVisible( GFL_BG_FRAME0_S, VISIBLE_OFF );
 	GFL_BG_SetVisible( GFL_BG_FRAME1_S, VISIBLE_ON );
 	GFL_BG_SetVisible( GFL_BG_FRAME2_S, VISIBLE_ON );
+	GFL_BG_SetVisible( GFL_BG_FRAME3_S, VISIBLE_ON );
 
 	GFL_FADE_SetMasterBrightReq(GFL_FADE_MASTER_BRIGHT_BLACKOUT, 16, 0, _BRIGHTNESS_SYNC);
 
@@ -1338,6 +1421,7 @@ static GFL_PROC_RESULT IrcBattleFriendProcInit( GFL_PROC * proc, int * seq, void
 			pWork->bChangeOK[i]=FALSE;
 		}
 		
+    pWork->SysMsgQue = PRINTSYS_QUE_Create( pWork->heapID );
 
 	}
 
@@ -1363,6 +1447,10 @@ static GFL_PROC_RESULT IrcBattleFriendProcMain( GFL_PROC * proc, int * seq, void
 		retCode = GFL_PROC_RES_CONTINUE;
 	}
 	GFL_CLACT_SYS_Main(); // CLSYSメイン
+  if(pWork->pAppTask){
+    APP_TASKMENU_UpdateMenu(pWork->pAppTask);
+  }
+  PRINTSYS_QUE_Main(pWork->SysMsgQue);
 
 	GFL_G3D_DRAW_Start();
 	GFL_G3D_DRAW_SetLookAt();
@@ -1451,6 +1539,8 @@ static GFL_PROC_RESULT IrcBattleFriendProcEnd( GFL_PROC * proc, int * seq, void 
 	GFL_CLACT_UNIT_Delete(pWork->cellUnit);
 
 	//GFL_NET_Exit(NULL);  //@@OO 本来はここで呼ばない
+  PRINTSYS_QUE_Clear(pWork->SysMsgQue);
+  PRINTSYS_QUE_Delete(pWork->SysMsgQue);
 
 
 	GFL_CLACT_SYS_Delete();
