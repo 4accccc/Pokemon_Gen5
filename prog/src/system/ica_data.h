@@ -63,12 +63,14 @@ void ICA_DATA_GetPos( ICA_DATA* p_anime, VecFx32* p_vec, fx32 now_frame );
 /**
  * @brief 指定フレームにおける向きデータを取得する
  *
- * @param p_anime   アニメーションデータ
- * @param p_vec     取得したベクトルの格納先
- * @param now_frame 現在のフレーム数
+ * @param p_anime        アニメーションデータ
+ * @param p_vec_forward  取得した前方ベクトルの格納先
+ * @param p_vec_upward   取得した上方ベクトルの格納先
+ * @param now_frame      現在のフレーム数
  */
 //---------------------------------------------------------------------------
-void ICA_DATA_GetDir( ICA_DATA* p_anime, VecFx32* p_vec, fx32 now_frame );
+void ICA_DATA_GetDir( 
+    ICA_DATA* p_anime, VecFx32* p_vec_forward, VecFx32* p_vec_upward, fx32 now_frame );
 
 //---------------------------------------------------------------------------
 /**

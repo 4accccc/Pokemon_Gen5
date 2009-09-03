@@ -18,18 +18,14 @@ VecFx32 pos = { 0, FX32_ONE * 300, -500 * FX32_ONE };
 // ホウオウ
 static const GFL_G3D_UTIL_RES res_table_houou[] = 
 {
-  { ARCID_OBATA_DEBUG, NARC_debug_obata_td_houou_nsbmd, GFL_G3D_UTIL_RESARC },
-  { ARCID_OBATA_DEBUG, NARC_debug_obata_td_houou_nsbca, GFL_G3D_UTIL_RESARC },
-  { ARCID_OBATA_DEBUG, NARC_debug_obata_td_houou_nsbma, GFL_G3D_UTIL_RESARC },
-  { ARCID_OBATA_DEBUG, NARC_debug_obata_td_houou_nsbta, GFL_G3D_UTIL_RESARC },
-  { ARCID_OBATA_DEBUG, NARC_debug_obata_td_houou_nsbtp, GFL_G3D_UTIL_RESARC },
+  { ARCID_OBATA_DEBUG, NARC_debug_obata_houou_test_nsbmd, GFL_G3D_UTIL_RESARC },
+  { ARCID_OBATA_DEBUG, NARC_debug_obata_houou_test_nsbca, GFL_G3D_UTIL_RESARC },
+  { ARCID_OBATA_DEBUG, NARC_debug_obata_houou_test_nsbta, GFL_G3D_UTIL_RESARC },
 };
 static const GFL_G3D_UTIL_ANM anm_table_houou[] = 
 {
   { 1, 0 },
   { 2, 0 },
-  { 3, 0 },
-  { 4, 0 },
 };
 static const GFL_G3D_UTIL_OBJ obj_table_houou[] = 
 {
@@ -42,34 +38,10 @@ static const GFL_G3D_UTIL_OBJ obj_table_houou[] =
   },
 }; 
 
-// エフェクト
-static const GFL_G3D_UTIL_RES res_table_effect[] = 
-{
-  { ARCID_OBATA_DEBUG, NARC_debug_obata_houou_efct_nsbmd, GFL_G3D_UTIL_RESARC },
-  { ARCID_OBATA_DEBUG, NARC_debug_obata_houou_efct_nsbca, GFL_G3D_UTIL_RESARC },
-  { ARCID_OBATA_DEBUG, NARC_debug_obata_houou_efct_nsbtp, GFL_G3D_UTIL_RESARC },
-}; 
-static const GFL_G3D_UTIL_ANM anm_table_effect[] = 
-{
-  { 1, 0 },
-  { 2, 0 },
-}; 
-static const GFL_G3D_UTIL_OBJ obj_table_effect[] = 
-{
-  {
-    0,                          // モデルリソースID
-    0,                          // モデルデータID(リソース内部INDEX)
-    0,                          // テクスチャリソースID
-    anm_table_effect,           // アニメテーブル(複数指定のため)
-    NELEMS(anm_table_effect),   // アニメリソース数
-  },
-}; 
-
 // セットアップ番号
 enum
 {
   SETUP_INDEX_HOUOU,
-  SETUP_INDEX_EFFECT,
   SETUP_INDEX_MAX
 };
 
@@ -77,7 +49,6 @@ enum
 static const GFL_G3D_UTIL_SETUP setup[] =
 {
   { res_table_houou, NELEMS(res_table_houou), obj_table_houou, NELEMS(obj_table_houou) },
-  { res_table_effect, NELEMS(res_table_effect), obj_table_effect, NELEMS(obj_table_effect) },
 };
 
 
@@ -239,7 +210,7 @@ static void Initialize( PROC_WORK* work )
 
   // icaデータをロード
   work->icaData = ICA_DATA_Create( 
-      HEAPID_OBATA_DEBUG, ARCID_OBATA_DEBUG, NARC_debug_obata_ica_test_data_bin );
+      HEAPID_OBATA_DEBUG, ARCID_OBATA_DEBUG, NARC_debug_obata_ica_test_data2_bin );
 
   // カメラ作成
   {
@@ -299,6 +270,7 @@ static BOOL Main( PROC_WORK* work )
 static void Draw( PROC_WORK* work )
 {
   static fx32 frame = 0;
+  static fx32 anime_speed = FX32_ONE >> 1;
   GFL_G3D_OBJSTATUS status;
 
   VEC_Set( &status.trans, 0, 0, 0 );
@@ -306,16 +278,15 @@ static void Draw( PROC_WORK* work )
   MTX_Identity33( &status.rotate );
 
   // カメラ更新
-  /*
   ICA_DATA_SetCameraStatus( work->icaData, work->camera, frame );
   GFL_G3D_CAMERA_Switching( work->camera );
-  */
 
   // TEMP: カメラ設定
   {
     fx32 far = FX32_ONE * 4096;
     GFL_G3D_CAMERA_SetFar( work->camera, &far );
   }
+  /*
   {
     VecFx32 target;
     VEC_Set( &target, 0, 0, 0 );
@@ -323,6 +294,7 @@ static void Draw( PROC_WORK* work )
     GFL_G3D_CAMERA_SetTarget( work->camera, &target );
     GFL_G3D_CAMERA_Switching( work->camera );
   }
+  */
 
   // アニメーション更新
   {
@@ -334,7 +306,7 @@ static void Draw( PROC_WORK* work )
       int anime_count = GFL_G3D_OBJECT_GetAnimeCount( obj );
       for( j=0; j<anime_count; j++ )
       {
-        GFL_G3D_OBJECT_LoopAnimeFrame( obj, j, FX32_ONE );
+        GFL_G3D_OBJECT_LoopAnimeFrame( obj, j, anime_speed );
       }
     }
   }
@@ -352,5 +324,5 @@ static void Draw( PROC_WORK* work )
   }
   GFL_G3D_DRAW_End();
 
-  frame += FX32_ONE; 
+  frame += anime_speed;
 }

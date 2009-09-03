@@ -146,21 +146,24 @@ void ICA_DATA_GetPos( ICA_DATA* p_anime, VecFx32* p_vec, fx32 now_frame )
   VEC_Set( p_vec, FX_F32_TO_FX32(x), FX_F32_TO_FX32(y), FX_F32_TO_FX32(z) );
 }
 
-//-----------------------------------------------------------------------------------
+//---------------------------------------------------------------------------
 /**
  * @brief 指定フレームにおける向きデータを取得する
  *
- * @param p_anime   アニメーションデータ
- * @param p_vec     取得したベクトルの格納先
- * @param now_frame 現在のフレーム数
+ * @param p_anime        アニメーションデータ
+ * @param p_vec_forward  取得した前方ベクトルの格納先
+ * @param p_vec_upward   取得した上方ベクトルの格納先
+ * @param now_frame      現在のフレーム数
  */
-//-----------------------------------------------------------------------------------
-void ICA_DATA_GetDir( ICA_DATA* p_anime, VecFx32* p_vec, fx32 now_frame )
+//---------------------------------------------------------------------------
+void ICA_DATA_GetDir( 
+    ICA_DATA* p_anime, VecFx32* p_vec_forward, VecFx32* p_vec_upward, fx32 now_frame )
 {
   float x, y, z;
   u16 rx, ry, rz;
   MtxFx33 matrix;
-  VecFx32 vec_norm;
+  VecFx32 def_forward = { 0, 0, -FX32_ONE };
+  VecFx32 def_upward  = { 0, FX32_ONE, 0 };
 
   // 指定フレームの値を取得
   x = GetValue( p_anime, VALUE_TYPE_ROTATE_X, now_frame );
@@ -179,8 +182,8 @@ void ICA_DATA_GetDir( ICA_DATA* p_anime, VecFx32* p_vec, fx32 now_frame )
 
   // 向きを表すベクトルを作成
   GFL_CALC3D_MTX_CreateRot( rx, ry, rz, &matrix );
-  VEC_Set( &vec_norm, 0, 0, -FX32_ONE );
-  MTX_MultVec33( &vec_norm, &matrix, p_vec );
+  MTX_MultVec33( &def_forward, &matrix, p_vec_forward );
+  MTX_MultVec33( &def_upward, &matrix, p_vec_upward );
 }
 
 //---------------------------------------------------------------------------
@@ -195,16 +198,17 @@ void ICA_DATA_GetDir( ICA_DATA* p_anime, VecFx32* p_vec, fx32 now_frame )
 void ICA_DATA_SetCameraStatus( 
     ICA_DATA* p_anime, GFL_G3D_CAMERA* p_camera, fx32 now_frame )
 {
-  VecFx32 pos, target;
+  VecFx32 pos, target, forward, upward;
 
   // 座標・向きベクトルを取得
   ICA_DATA_GetPos( p_anime, &pos, now_frame );
-  ICA_DATA_GetDir( p_anime, &target, now_frame );
-  VEC_Add( &pos, &target, &target );
+  ICA_DATA_GetDir( p_anime, &forward, &upward, now_frame );
+  VEC_Add( &pos, &forward, &target );
 
   // カメラの設定
   GFL_G3D_CAMERA_SetPos( p_camera, &pos );
   GFL_G3D_CAMERA_SetTarget( p_camera, &target );
+  GFL_G3D_CAMERA_SetCamUp( p_camera, &upward );
 }
 
 
