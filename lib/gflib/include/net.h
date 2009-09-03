@@ -95,7 +95,8 @@ typedef struct _GFL_NETSYS GFL_NETSYS;
 
 // define 
 #define GFL_NET_NETID_SERVER (0xff)    ///< NetID:サーバーの場合これ 後は0からClientID
-#define GFL_NET_SENDID_ALLUSER (0x10)  ///< NetID:全員へ送信する場合
+#define GFL_NET_NETID_SERVERBIT (0x80)    ///< サーバーBIT
+#define GFL_NET_SENDID_ALLUSER (0xff)  ///< NetID:全員へ送信する場合
 #define GFL_NET_NETID_INVALID  (0xfe)  ///< ありえないID
 //#define GFL_NET_PARENT_NETID    (0)    ///< 親のID
 #define GFL_NET_NO_PARENTMACHINE (0)  ///< 親機の番号
@@ -572,6 +573,23 @@ extern BOOL GFL_NET_SendData(GFL_NETHANDLE* pNet,const u16 sendCommand,const u16
  */
 //==============================================================================
 extern BOOL GFL_NET_SendDataEx(GFL_NETHANDLE* pNet,const NetID sendID,const u16 sendCommand, const u32 size,const void* data, const BOOL bFast, const BOOL bRepeat, const BOOL bSendBuffLock);
+
+//==============================================================================
+/**
+ * @brief 送信開始 相手をBIT単位で指定可能
+ * @param[in,out]  pNet  通信ハンドル
+ * @param[in]   sendBit                    BIT指定 子機 1=0x01 ...  親機 = 0x80
+ * @param[in]   sendCommand                送信するコマンド
+ * @param[in]   size                       送信データサイズ
+ * @param[in]   data                       送信データポインタ
+ * @param[in]   bFast                      優先順位を高くして送信する場合TRUE
+ * @param[in]   bRepeat                    このコマンドがキューにないときだけ送信
+ * @param[in]   bSendBuffLock              送信バッファを呼ぶ側が保持する場合（通信側のメモリを消費しないので大きいデータを送信できます）
+ * @retval  TRUE   成功した
+ * @retval  FALSE  失敗の場合
+ */
+//==============================================================================
+extern BOOL GFL_NET_SendDataExBit(GFL_NETHANDLE* pNet,const u8 sendBit,const u16 sendCommand, const u32 size,const void* data, const BOOL bFast, const BOOL bRepeat, const BOOL bSendBuffLock);
 
 
 //==============================================================================

@@ -1330,7 +1330,7 @@ extern void GFL_CLACT_WK_SetAnmSeqDiff( GFL_CLWK* p_wk, u16 anmseq );
 extern void GFL_CLACT_WK_SetAnmSeqNoReset( GFL_CLWK* p_wk, u16 anmseq );
 //----------------------------------------------------------------------------
 /**
- *	@brief	アニメーションフレームを設定    MultiCell非対応
+ *	@brief	アニメーションフレームを設定
  *
  *	@param	p_wk		セルアクターワーク
  *	@param	frame		フレーム数

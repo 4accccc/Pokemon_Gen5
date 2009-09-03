@@ -154,6 +154,6 @@ struct _IRC_POKEMON_TRADE {
 
 
 extern void IRC_POKETRADE_GraphicInit(IRC_POKEMON_TRADE* pWork);
-extern void IRC_POKETRADE_SubStatusInit(IRC_POKEMON_TRADE* pWork);
+extern void IRC_POKETRADE_SubStatusInit(IRC_POKEMON_TRADE* pWork,int pokeposx);
 extern void IRC_POKETRADE_AppMenuOpen(IRC_POKEMON_TRADE* pWork, int *menustr,int num);
 

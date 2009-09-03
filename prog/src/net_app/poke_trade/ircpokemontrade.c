@@ -598,6 +598,8 @@ static void _changeMenuWait(IRC_POKEMON_TRADE* pWork)
     int selectno = APP_TASKMENU_GetCursorPos(pWork->pAppTask);
 
     if(selectno==0){
+
+
       // ‚ ‚¢‚Ä‚à‘I‚Ô‚Ü‚Å‘Ò‚Â
       _CHANGE_STATE(pWork, _touchState);
     }
@@ -655,7 +657,7 @@ static void _dispSubState(IRC_POKEMON_TRADE* pWork)
     int msg[]={POKETRADE_STR_03,POKETRADE_STR_02};
     IRC_POKETRADE_AppMenuOpen(pWork,msg,2);
   }
-  IRC_POKETRADE_SubStatusInit(pWork);
+  IRC_POKETRADE_SubStatusInit(pWork,pWork->x);
 	_CHANGE_STATE(pWork,_dispSubStateWait);
 }
 

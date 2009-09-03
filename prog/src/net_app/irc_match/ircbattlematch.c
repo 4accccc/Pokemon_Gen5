@@ -160,7 +160,6 @@ static GFLNetInitializeStruct aGFLNetInit = {
   FatalError_Disp,  // 通信不能なエラーが起こった場合呼ばれる 切断するしかない
   NULL, //_endCallBack,  // 通信切断時に呼ばれる関数
   NULL,  // オート接続で親になった場合
-#if GFL_NET_WIFI
   NULL,     ///< wifi接続時に自分のデータをセーブする必要がある場合に呼ばれる関数
   NULL, ///< wifi接続時にフレンドコードの入れ替えを行う必要がある場合呼ばれる関数
   NULL,  ///< wifiフレンドリスト削除コールバック
@@ -168,7 +167,6 @@ static GFLNetInitializeStruct aGFLNetInit = {
   NULL,  ///< DWCのユーザデータ（自分のデータ）
   0,   ///< DWCへのHEAPサイズ
   TRUE,        ///< デバック用サーバにつなぐかどうか
-#endif  //GFL_NET_WIFI
   0x532,//0x444,  //ggid  DP=0x333,RANGER=0x178,WII=0x346
   GFL_HEAPID_APP,  //元になるheapid
   HEAPID_NETWORK,  //通信用にcreateされるHEAPID
@@ -183,9 +181,7 @@ static GFLNetInitializeStruct aGFLNetInit = {
   GFL_NET_TYPE_IRC,  //wifi通信を行うかどうか
   TRUE,     // 親が再度初期化した場合、つながらないようにする場合TRUE
   WB_NET_COMPATI_CHECK,  //GameServiceID
-#if GFL_NET_IRC
-  60,	// 赤外線タイムアウト時間
-#endif
+  0xfffe,	// 赤外線タイムアウト時間
 };
 
 

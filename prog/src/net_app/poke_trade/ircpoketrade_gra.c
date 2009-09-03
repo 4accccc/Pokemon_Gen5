@@ -97,7 +97,7 @@ void IRC_POKETRADE_GraphicInit(IRC_POKEMON_TRADE* pWork)
 
 
 
-void IRC_POKETRADE_SubStatusInit(IRC_POKEMON_TRADE* pWork)
+void IRC_POKETRADE_SubStatusInit(IRC_POKEMON_TRADE* pWork,int pokeposx)
 {
 
 	ARCHANDLE* p_handle = GFL_ARC_OpenDataHandle( ARCID_POKETRADE, pWork->heapID );
@@ -107,16 +107,21 @@ void IRC_POKETRADE_SubStatusInit(IRC_POKEMON_TRADE* pWork)
 																				 GFL_ARCUTIL_TRANSINFO_GetPos(pWork->subchar1), 0, 0,
 																				 pWork->heapID);
 
-	GFL_BG_SetScroll( GFL_BG_FRAME1_S, GFL_BG_SCROLL_X_SET, 128 );
-  
+  if(pokeposx < 128){
+    GFL_BG_SetScroll( GFL_BG_FRAME1_S, GFL_BG_SCROLL_X_SET, 128 );
+  }
 	G2S_SetBlendAlpha( GFL_BG_FRAME2_S, GFL_BG_FRAME1_S , 3, 16 );
   //G2S_SetBlendBrightness( GX_BLEND_PLANEMASK_BG2|GX_BLEND_PLANEMASK_OBJ , -8 );
   
 	GFL_ARC_CloseDataHandle( p_handle );
 
+}
 
 
-  
+void IRC_POKETRADE_SubStatusEnd(IRC_POKEMON_TRADE* pWork)
+{
+
+	GFL_BG_SetScroll( GFL_BG_FRAME1_S, GFL_BG_SCROLL_X_SET, 0 );
 
 }
 
