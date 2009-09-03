@@ -6,11 +6,11 @@
  * @brief èâä˙âªä÷êî
  */
 //-------------------------------------------------------------------------------------------
-extern void DEBUG_OBATA_COMMON_Init( HEAPID heap_id );
+extern void DEBUG_OBATA_DEMO_TEST_Init( HEAPID heap_id );
 
 //-------------------------------------------------------------------------------------------
 /**
  * @brief èIóπèàóù
  */
 //-------------------------------------------------------------------------------------------
-extern void DEBUG_OBATA_COMMON_Exit();
+extern void DEBUG_OBATA_DEMO_TEST_Exit();

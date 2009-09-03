@@ -1,5 +1,5 @@
 #include <gflib.h>
-#include "debug_obata_common.h"
+#include "debug_obata_demo_test_setup.h"
 
 
 #define cameraPerspway  ( 0x0b60 )
@@ -99,7 +99,7 @@ GFL_G3D_LIGHTSET* g_lightSet;
  * @brief 初期化関数
  */
 //-------------------------------------------------------------------------------------------
-void DEBUG_OBATA_COMMON_Init( HEAPID heap_id )
+void DEBUG_OBATA_DEMO_TEST_Init( HEAPID heap_id )
 {
 	//VRAM設定
 	GFL_DISP_SetBank(&sc_VRAM_param );
@@ -136,7 +136,7 @@ void DEBUG_OBATA_COMMON_Init( HEAPID heap_id )
  * @brief 終了処理
  */
 //-------------------------------------------------------------------------------------------
-void DEBUG_OBATA_COMMON_Exit()
+void DEBUG_OBATA_DEMO_TEST_Exit()
 {
   // ライトセット破棄
   GFL_G3D_LIGHT_Delete( g_lightSet );

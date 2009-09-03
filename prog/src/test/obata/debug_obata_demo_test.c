@@ -1,5 +1,5 @@
 #include <gflib.h>
-#include "debug_obata_common.h"
+#include "debug_obata_demo_test_setup.h"
 #include "system/ica_data.h"
 #include "system/main.h"
 #include "arc/arc_def.h"
@@ -124,7 +124,7 @@ static GFL_PROC_RESULT DEBUG_OBATA_MainProcFunc_Init( GFL_PROC* proc, int* seq, 
 	work = GFL_PROC_AllocWork( proc, sizeof( PROC_WORK ), HEAPID_OBATA_DEBUG );
 
   // èâä˙âªèàóù
-  DEBUG_OBATA_COMMON_Init( HEAPID_OBATA_DEBUG );
+  DEBUG_OBATA_DEMO_TEST_Init( HEAPID_OBATA_DEBUG );
   Initialize( work );
 
 	return GFL_PROC_RES_FINISH;
@@ -175,7 +175,7 @@ static GFL_PROC_RESULT DEBUG_OBATA_MainProcFunc_End( GFL_PROC* proc, int* seq, v
   ICA_DATA_Delete( work->icaData );
 	GFL_PROC_FreeWork( proc );
 
-  DEBUG_OBATA_COMMON_Exit();
+  DEBUG_OBATA_DEMO_TEST_Exit();
 
   // ÉqÅ[ÉvÇîjä¸
   GFL_HEAP_DeleteHeap( HEAPID_OBATA_DEBUG );

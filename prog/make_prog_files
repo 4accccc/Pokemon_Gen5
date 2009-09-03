@@ -907,10 +907,10 @@ SRCS_OVERLAY_NAGIHASHI_DEBUG	= test/nagihashi/debug_nagi.c \
 
 # 小幡デバッグ
 #===> main
-SRCS_OVERLAY_OBATA_DEBUG = test/obata/debug_obata_common.c \
-                           test/obata/debug_obata.c \
-                           test/obata/debug_obata_menu.c \
-                           test/obata/debug_obata_menu_setup.c
+SRCS_OVERLAY_OBATA_DEBUG = test/obata/debug_obata_menu.c \
+                           test/obata/debug_obata_menu_setup.c \
+                           test/obata/debug_obata_demo_test.c \
+                           test/obata/debug_obata_demo_test_setup.c
 
 #MCSライブラリ
 #===> MCS_EX
