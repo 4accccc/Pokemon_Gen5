@@ -68,7 +68,7 @@ do-build:	$(TARGETDIR)/$(NARCNAME)
 
 $(TARGETDIR)/$(NARCNAME):	$(NARCNAME)
 	$(COPY)	$(NARCNAME) $(TARGETDIR)
-#	$(COPY) $(NAIXNAME) $(TARGETDIR)
+	$(COPY) $(NAIXNAME) $(TARGETDIR)
 
 $(NARCNAME):	$(IMGFILE:.bmp=.nftr) $(COLFILE:.ncl=.nclr) $(FONTFILE:.nftr=.gftr)
 	nnsarc -c -l -n -i $(NARCNAME) -S arclist.txt > error
