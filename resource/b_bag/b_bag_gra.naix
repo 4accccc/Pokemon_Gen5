@@ -12,9 +12,19 @@
 
 enum {
 	NARC_b_bag_gra_b_bag_bg_NCLR = 0,
-	NARC_b_bag_gra_b_bag_bg_NCGR = 1,
-	NARC_b_bag_gra_b_bag_anm_NSCR = 2,
-	NARC_b_bag_gra_b_bag_bg00_NSCR = 3
+	NARC_b_bag_gra_test_cost_NCLR = 1,
+	NARC_b_bag_gra_b_bag_bg_NCGR = 2,
+	NARC_b_bag_gra_test_cost_NCGR = 3,
+	NARC_b_bag_gra_b_bag_anm_NSCR = 4,
+	NARC_b_bag_gra_b_bag_base_NSCR = 5,
+	NARC_b_bag_gra_b_bag_bg00_NSCR = 6,
+	NARC_b_bag_gra_b_bag_btn1_NSCR = 7,
+	NARC_b_bag_gra_b_bag_btn2_NSCR = 8,
+	NARC_b_bag_gra_b_bag_button_NSCR = 9,
+	NARC_b_bag_gra_b_bag_item1_NSCR = 10,
+	NARC_b_bag_gra_b_bag_item2_NSCR = 11,
+	NARC_b_bag_gra_test_cost_NCER = 12,
+	NARC_b_bag_gra_test_cost_NANR = 13
 };
 
 /* NARC_B_BAG_GRA_NAIX_ */
