@@ -968,8 +968,13 @@ static BOOL TESTMODE_ITEM_SelectFuncNagi( TESTMODE_WORK *work , const int idx )
 	return TRUE;
 }
 
+FS_EXTERN_OVERLAY(obata_debug);
+extern const GFL_PROC_DATA DebugObataMainProcData;
+extern const GFL_PROC_DATA DebugObataMenuMainProcData;
 static BOOL TESTMODE_ITEM_SelectFuncObata( TESTMODE_WORK *work , const int idx )
 {
+	//TESTMODE_COMMAND_ChangeProc(work,FS_OVERLAY_ID(obata_debug), &DebugObataMainProcData, NULL);
+	TESTMODE_COMMAND_ChangeProc(work,FS_OVERLAY_ID(obata_debug), &DebugObataMenuMainProcData, NULL);
 	return TRUE;
 }
 
