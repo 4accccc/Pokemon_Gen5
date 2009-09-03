@@ -165,12 +165,15 @@ static int AC_RailWalk_1( MMDL * mmdl )
 
   // RAIL_WORK
   p_rail = MMDL_GetRailWork( mmdl );
+  FIELD_RAIL_WORK_Update( p_rail );
 
   // 新ポジションの設定
   FIELD_RAIL_WORK_GetPos( p_rail, &pos );
   MMDL_SetVectorPos( mmdl, &pos );
   
-	if( FIELD_RAIL_WORK_GetLastAction( p_rail ) ){
+  TOMOYA_Printf( "walk pos.x[0x%x] pos.y[0x%x] pos.z[0x%x]\n", pos.x, pos.y, pos.z );
+  
+	if( FIELD_RAIL_WORK_IsAction( p_rail ) ){
 		return( FALSE );
 	}
 	

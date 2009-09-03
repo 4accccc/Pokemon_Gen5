@@ -54,9 +54,6 @@ typedef struct
 {
   u16 railDataID;
   u16 areaDataID;
-  u16 attrDataID;
-
-  u16 pad;
 } FLDNOGRID_RESISTDATA;
 
 

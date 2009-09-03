@@ -24,25 +24,36 @@
 //-------------------------------------
 ///	レール動作用補助ワーク
 //=====================================
-typedef struct 
-{
-  FIELD_RAIL_WORK* railwork;
-  VecFx32          way;
-} FIELD_PLAYER_NOGRID_WORK;
+typedef struct _FIELD_PLAYER_NOGRID FIELD_PLAYER_NOGRID;
+
 
 //======================================================================
-//	extern
+//	新動作
 //======================================================================
 
-// 初期化
-extern void FIELD_PLAYER_NOGRID_Rail_SetUp( FIELD_PLAYER *fld_player, FIELD_PLAYER_NOGRID_WORK* p_wk );
+// 生成・破棄
+extern FIELD_PLAYER_NOGRID* FIELD_PLAYER_NOGRID_Create( FIELD_PLAYER* p_player, HEAPID heapID );
+extern void FIELD_PLAYER_NOGRID_Delete( FIELD_PLAYER_NOGRID* p_player );
 
 // 動作
-// p_playerway	の値は、関数内部で、キーの方向に書き換わります。
-extern void FIELD_PLAYER_NOGRID_Rail_Move( FIELD_PLAYER *fld_player, FLDEFF_CTRL *fectrl, const FIELD_CAMERA* cp_camera, int key, FIELD_PLAYER_NOGRID_WORK* p_wk, const FLDNOGRID_MAPPER* cp_nogridMapper );
+extern void FIELD_PLAYER_NOGRID_Move( FIELD_PLAYER_NOGRID* p_player, int key_trg, int key_cont );
 
+
+// 各種パラメータの設定・取得
+extern void FIELD_PLAYER_NOGRID_SetLocation( FIELD_PLAYER_NOGRID* p_player, const RAIL_LOCATION* cp_location );
+extern void FIELD_PLAYER_NOGRID_GetLocation( const FIELD_PLAYER_NOGRID* cp_player, RAIL_LOCATION* p_location );
+extern void FIELD_PLAYER_NOGRID_GetPos( const FIELD_PLAYER_NOGRID* cp_player, VecFx32* p_pos );
+extern FIELD_RAIL_WORK* FIELD_PLAYER_NOGRID_GetRailWork( const FIELD_PLAYER_NOGRID* cp_player );
+
+
+
+
+
+
+//======================================================================
+//	旧動作
+//======================================================================
 extern void FIELD_PLAYER_NOGRID_Free_Move( FIELD_PLAYER *fld_player, int key, fx32 onedist );
-
 extern void FIELD_PLAYER_C3_Move(
 		FIELD_PLAYER *fld_player, int key, u16 angle );
 

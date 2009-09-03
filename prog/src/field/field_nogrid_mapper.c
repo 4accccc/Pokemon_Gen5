@@ -13,6 +13,8 @@
 
 #include "gflib.h"
 
+#include "arc/fieldmap/field_rail_data.naix"
+
 #include "field_nogrid_mapper.h"
 
 //-----------------------------------------------------------------------------
@@ -20,6 +22,12 @@
  *					定数宣言
 */
 //-----------------------------------------------------------------------------
+
+//-------------------------------------
+///	アトリビュート情報開始インデックス
+//=====================================
+#define FIELD_NOGRID_MAPPER_ARC_ATTR_INDEX_START  ( NARC_field_rail_data_c3_atdat )
+
 
 //-----------------------------------------------------------------------------
 /**
@@ -117,6 +125,8 @@ void FLDNOGRID_MAPPER_ResistData( FLDNOGRID_MAPPER* p_mapper, const FLDNOGRID_RE
   {
     FIELD_RAIL_LOADER_Load( p_mapper->p_railLoader, cp_data->railDataID, heapID );
     FIELD_RAIL_MAN_Load( p_mapper->p_railMan, FIELD_RAIL_LOADER_GetData( p_mapper->p_railLoader ) );
+
+    RAIL_ATTR_Load( p_mapper->p_attr, cp_data->railDataID + FIELD_NOGRID_MAPPER_ARC_ATTR_INDEX_START, heapID );
   }
   if( cp_data->areaDataID != FLDNOGRID_RESISTDATA_NONE )
   {
@@ -125,10 +135,6 @@ void FLDNOGRID_MAPPER_ResistData( FLDNOGRID_MAPPER* p_mapper, const FLDNOGRID_RE
         FLD_SCENEAREA_LOADER_GetData( p_mapper->p_areaLoader ),
         FLD_SCENEAREA_LOADER_GetDataNum( p_mapper->p_areaLoader ),
         FLD_SCENEAREA_LOADER_GetFunc( p_mapper->p_areaLoader ) );
-  }
-  if( cp_data->attrDataID != FLDNOGRID_RESISTDATA_NONE )
-  {
-    RAIL_ATTR_Load( p_mapper->p_attr, cp_data->attrDataID, heapID );
   }
 }
 

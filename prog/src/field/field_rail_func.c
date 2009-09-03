@@ -342,7 +342,12 @@ void FIELD_RAIL_POSFUNC_CurveLine(const FIELD_RAIL_WORK * work, VecFx32 * pos)
 //-----------------------------------------------------------------------------
 fx32 FIELD_RAIL_LINE_DIST_FUNC_StraitLine( const RAIL_POINT * point_s, const RAIL_POINT * point_e, const RAIL_LINEPOS_SET * line_pos_set )
 {
-	return VEC_Distance( &point_s->pos, &point_e->pos );
+  VecFx32 pos_s, pos_e;
+
+  VEC_Set( &pos_s, FX_Floor(point_s->pos.x), FX_Floor(point_s->pos.y), FX_Floor(point_s->pos.z) );
+  VEC_Set( &pos_e, FX_Floor(point_e->pos.x), FX_Floor(point_e->pos.y), FX_Floor(point_e->pos.z) );
+  
+	return VEC_Distance( &pos_s, &pos_e );
 }
 
 //----------------------------------------------------------------------------
@@ -375,6 +380,11 @@ fx32 FIELD_RAIL_LINE_DIST_FUNC_CircleLine( const RAIL_POINT * point_s, const RAI
   // 平面で考える
   p0.y = 0;
   p1.y = 0;
+
+  // 小数点以下切捨て
+  VEC_Set( &p0, FX_Floor(p0.x), FX_Floor(p0.y), FX_Floor(p0.z) );
+  VEC_Set( &p1, FX_Floor(p1.x), FX_Floor(p1.y), FX_Floor(p1.z) );
+
 
 	// 中心からの距離は、平均を使う
 	// 直径を求めたいので、２でわらない

@@ -1254,6 +1254,20 @@ static const int DATA_CodeTbl_AC_JUMPGR_U_1G_8F[] =
 static const int DATA_CodeTbl_AC_JUMPGU_U_1G_8F[] =
 {AC_JUMPGU_U_1G_8F,AC_JUMPGU_D_1G_8F,AC_JUMPGU_L_1G_8F,AC_JUMPGU_R_1G_8F};
 
+// RAIL
+static const int DATA_CodeTbl_RAIL_DIR_U[] =
+{AC_RAIL_DIR_U,AC_RAIL_DIR_D,AC_RAIL_DIR_L,AC_RAIL_DIR_R};
+static const int DATA_CodeTbl_RAIL_WALK_U_16F[] =
+{AC_RAIL_WALK_U_16F,AC_RAIL_WALK_D_16F,AC_RAIL_WALK_L_16F,AC_RAIL_WALK_R_16F};
+static const int DATA_CodeTbl_RAIL_WALK_U_8F[] =
+{AC_RAIL_WALK_U_8F,AC_RAIL_WALK_D_8F,AC_RAIL_WALK_L_8F,AC_RAIL_WALK_R_8F};
+static const int DATA_CodeTbl_RAIL_WALK_U_4F[] =
+{AC_RAIL_WALK_U_4F,AC_RAIL_WALK_D_4F,AC_RAIL_WALK_L_4F,AC_RAIL_WALK_R_4F};
+static const int DATA_CodeTbl_RAIL_WALK_U_2F[] =
+{AC_RAIL_WALK_U_2F,AC_RAIL_WALK_D_2F,AC_RAIL_WALK_L_2F,AC_RAIL_WALK_R_2F};
+static const int DATA_CodeTbl_RAIL_DASH_U_4F[] =
+{AC_RAIL_DASH_U_4F,AC_RAIL_DASH_D_4F,AC_RAIL_DASH_L_4F,AC_RAIL_DASH_R_4F};
+
 //--------------------------------------------------------------
 ///	MMDL_ChangeDirAcmdCode()で対応するコード。
 /// 並びは不順。
@@ -1294,6 +1308,12 @@ const int * const DATA_AcmdCodeDirChangeTbl[] =
 	DATA_CodeTbl_AC_JUMPGU_U_1G_8F,
 	DATA_CodeTbl_AC_WALKGU_U_4F,
 	DATA_CodeTbl_AC_WALKGU_U_2F,
+  DATA_CodeTbl_RAIL_DIR_U,
+  DATA_CodeTbl_RAIL_WALK_U_16F,
+  DATA_CodeTbl_RAIL_WALK_U_8F,
+  DATA_CodeTbl_RAIL_WALK_U_4F,
+  DATA_CodeTbl_RAIL_WALK_U_2F,
+  DATA_CodeTbl_RAIL_DASH_U_4F,
 	NULL,	//終端識別
 };
 

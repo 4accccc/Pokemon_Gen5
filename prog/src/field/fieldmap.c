@@ -82,6 +82,7 @@
 #include "field_sound.h"
 
 #include "fieldmap_ctrl_grid.h"
+#include "fieldmap_ctrl_nogrid_work.h"
 
 #include "field_gimmick.h"
 
@@ -531,12 +532,13 @@ static MAINSEQ_RESULT mainSeqFunc_setup(GAMESYS_WORK *gsys, FIELDMAP_WORK *field
     //保存した位置を反映する
     if (FIELDMAP_GetMapControlType(fieldWork) == FLDMAP_CTRLTYPE_NOGRID)
     { 
-      // 09/08/05 現状は、レール移動時のプレイヤーに対してロケーションが設定できないため、仮の処理で、ロケーション設定を行う。 tomoya takahashi
-#ifdef PM_DEBUG
+      FIELDMAP_CTRL_NOGRID_WORK* p_mapctrl_work = FIELDMAP_GetMapCtrlWork( fieldWork );
+      FIELD_PLAYER_NOGRID* p_nogrid_player = FIELDMAP_CTRL_NOGRID_WORK_GetNogridPlayerWork( p_mapctrl_work );
       const RAIL_LOCATION * railLoc = GAMEDATA_GetRailLocation( gdata );
-      FIELD_RAIL_WORK_SetLocation( FIELD_RAIL_MAN_DEBUG_GetBindWork( FLDNOGRID_MAPPER_GetRailMan( fieldWork->nogridMapper ) ), railLoc );
-#endif
-      FIELD_RAIL_MAN_GetBindWorkPos( FLDNOGRID_MAPPER_GetRailMan( fieldWork->nogridMapper ), &fieldWork->now_pos );
+
+      FIELD_PLAYER_NOGRID_SetLocation( p_nogrid_player, railLoc );
+      FIELD_PLAYER_NOGRID_GetPos( p_nogrid_player, &fieldWork->now_pos );
+      FIELD_PLAYER_SetPos( fieldWork->field_player, &fieldWork->now_pos );
     }
 
     FLDMAPPER_SetPos( fieldWork->g3Dmapper, &fieldWork->now_pos );
@@ -755,11 +757,12 @@ static MAINSEQ_RESULT mainSeqFunc_free(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldW
   if (FIELDMAP_GetMapControlType(fieldWork) == FLDMAP_CTRLTYPE_NOGRID)
   {
 		GAMEDATA *gamedata = GAMESYSTEM_GetGameData( gsys );
+    FIELDMAP_CTRL_NOGRID_WORK* p_mapctrl_work = FIELDMAP_GetMapCtrlWork( fieldWork );
+    FIELD_PLAYER_NOGRID* p_nogrid_player = FIELDMAP_CTRL_NOGRID_WORK_GetNogridPlayerWork( p_mapctrl_work );
     RAIL_LOCATION railLoc;
-    // 09/08/05 現状は、レール移動時のプレイヤーからロケーションを取得できないため、仮の処理で、ロケーション取得を行う。 tomoya takahashi
-#ifdef PM_DEBUG
-    FIELD_RAIL_WORK_GetLocation(FIELD_RAIL_MAN_DEBUG_GetBindWork( FLDNOGRID_MAPPER_GetRailMan(fieldWork->nogridMapper) ), &railLoc);
-#endif
+
+
+    FIELD_PLAYER_NOGRID_GetLocation( p_nogrid_player, &railLoc );
     GAMEDATA_SetRailLocation(gamedata, &railLoc);
   }
 

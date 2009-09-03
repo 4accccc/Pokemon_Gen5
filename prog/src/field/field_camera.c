@@ -384,7 +384,7 @@ static void updateG3Dcamera(FIELD_CAMERA * camera)
 
 		if( camera->debug_subscreen_type == FIELD_CAMERA_DEBUG_BIND_NONE )
 		{
-//			traceUpdate( camera );
+			traceUpdate( camera );
 		}
   }
   else

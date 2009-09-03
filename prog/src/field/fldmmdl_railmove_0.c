@@ -182,7 +182,7 @@ BOOL MMDL_ReqRailMove( MMDL * fmmdl, u16 dir, s16 wait )
   railkey = MMdl_ConvertDir_RailKey( dir );
   frame = MMdl_ConvertWait_RailFrame( wait );
   
-  return FIELD_RAIL_WORK_ForwardReq( p_work->rail_wk, railkey, frame );
+  return FIELD_RAIL_WORK_ForwardReq( p_work->rail_wk, frame, railkey );
 }
 
 

@@ -116,6 +116,7 @@ struct _FIELD_RAIL_WORK{
   RAIL_LOCATION now_location;
   RAIL_LOCATION last_location;
 
+  const FIELD_RAIL_MAN* cp_man;
 };
 
 //------------------------------------------------------------------
@@ -155,7 +156,8 @@ static RAIL_KEY getAntiClockwiseKey(RAIL_KEY key);
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
-static void initRail(FIELD_RAIL_WORK * work, const RAIL_SETTING* rail_dat );
+static void initRail(FIELD_RAIL_WORK * work, const RAIL_SETTING* rail_dat, const FIELD_RAIL_MAN* cp_man );
+static void clearRail( FIELD_RAIL_WORK * work, const RAIL_SETTING* rail_dat );
 static BOOL isValidRail(const FIELD_RAIL_WORK * work);
 static const RAIL_CAMERA_SET * getCameraSet(const FIELD_RAIL_WORK * work);
 static const char * getRailName(const FIELD_RAIL_WORK * work);
@@ -200,10 +202,6 @@ static u32 getLineIndex( const RAIL_SETTING * raildat, const RAIL_LINE* line );
 
 
 
-// １ワーク単位のアップデート
-static void FIELD_RAIL_WORK_Update(FIELD_RAIL_WORK * work);
-
-
 //============================================================================================
 //============================================================================================
 static void RAIL_LOCATION_Dump(const RAIL_LOCATION * railLoc)
@@ -235,7 +233,7 @@ FIELD_RAIL_MAN * FIELD_RAIL_MAN_Create(HEAPID heapID, u32 work_num, FIELD_CAMERA
   man->work_num = work_num;
   for( i=0; i<work_num; i++ )
   {
-    initRail(&man->rail_work[i], &man->rail_dat);
+    initRail(&man->rail_work[i], &man->rail_dat, man);
   }
   
   return man;
@@ -342,7 +340,7 @@ FIELD_RAIL_WORK* FIELD_RAIL_MAN_CreateWork( FIELD_RAIL_MAN * man )
 //-----------------------------------------------------------------------------
 void FIELD_RAIL_MAN_DeleteWork( FIELD_RAIL_MAN * man, FIELD_RAIL_WORK* work )
 {
-  initRail( work, &man->rail_dat );
+  initRail( work, &man->rail_dat, man );
 }
 
 //----------------------------------------------------------------------------
@@ -424,10 +422,12 @@ void FIELD_RAIL_MAN_Update(FIELD_RAIL_MAN * man)
     return ;
   }
 
+#if 0 // 各ワークごとにアップデートするように変更
   for( i=0; i<man->work_num; i++ )
   {
     FIELD_RAIL_WORK_Update( &man->rail_work[i] );
   }
+#endif
 }
 
 
@@ -548,7 +548,7 @@ void FIELD_RAIL_WORK_SetLocation(FIELD_RAIL_WORK * work, const RAIL_LOCATION * l
 
   RAIL_LOCATION_Dump(location);
   // 初期化
-  initRail( work, work->rail_dat );
+  clearRail( work, work->rail_dat );
 
   if( location->type==FIELD_RAIL_TYPE_POINT )
   {
@@ -708,6 +708,23 @@ RAIL_KEY FIELD_RAIL_WORK_GetActionKey( const FIELD_RAIL_WORK * work )
 
 //----------------------------------------------------------------------------
 /**
+ *	@brief  今動作状態かチェック
+ *
+ *	@param	work  ワーク
+ *
+ *	@retval TRUE  動作状態
+ *	@retval FALSE 停止状態
+ */
+//-----------------------------------------------------------------------------
+BOOL FIELD_RAIL_WORK_IsAction( const FIELD_RAIL_WORK * work )
+{
+  GF_ASSERT( work );
+
+  return work->req_move;
+}
+
+//----------------------------------------------------------------------------
+/**
  *	@brief  レールシステム  最新のUPDATEでいどうしたのか
  *
  *	@param	work 
@@ -784,8 +801,13 @@ BOOL FIELD_RAIL_WORK_ForwardReq( FIELD_RAIL_WORK * work, RAIL_FRAME frame, RAIL_
  * @brief 現在位置のアップデート
  */
 //------------------------------------------------------------------
-static void FIELD_RAIL_WORK_Update(FIELD_RAIL_WORK * work)
+void FIELD_RAIL_WORK_Update(FIELD_RAIL_WORK * work)
 { 
+  if( !work->cp_man->active_flag )
+  {
+    return ;
+  }
+  
   if (!work->active)
   {
     return;
@@ -1695,8 +1717,10 @@ static RAIL_KEY updatePointMove(FIELD_RAIL_WORK * work, RAIL_KEY key, u32 count_
 //============================================================================================
 //------------------------------------------------------------------
 //------------------------------------------------------------------
-static void initRail(FIELD_RAIL_WORK * work, const RAIL_SETTING* rail_dat )
+static void initRail(FIELD_RAIL_WORK * work, const RAIL_SETTING* rail_dat, const FIELD_RAIL_MAN* cp_man )
 {
+  work->cp_man = cp_man;
+  
   work->type = FIELD_RAIL_TYPE_MAX;
   work->dummy = NULL;
   work->line_ofs = 0;
@@ -1712,6 +1736,19 @@ static void initRail(FIELD_RAIL_WORK * work, const RAIL_SETTING* rail_dat )
   work->req_move = FALSE;
 
   work->active = FALSE;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  レール状態のクリア
+ *
+ *	@param	work
+ *	@param	rail_dat 
+ */
+//-----------------------------------------------------------------------------
+static void clearRail( FIELD_RAIL_WORK * work, const RAIL_SETTING* rail_dat )
+{
+  initRail( work, rail_dat, work->cp_man );
 }
 
 //------------------------------------------------------------------
@@ -1832,6 +1869,7 @@ static s32 getLineOfsMax( const RAIL_LINE * line, fx32 unit, const RAIL_SETTING*
 		div = 0;
 	}
 
+#if 0
   // RAIL_WALK_OFSで割り切れる値にする
   amari = div % RAIL_WALK_OFS;
   if( amari >=  (RAIL_WALK_OFS/2) )
@@ -1844,6 +1882,16 @@ static s32 getLineOfsMax( const RAIL_LINE * line, fx32 unit, const RAIL_SETTING*
     div -= amari;
     TOMOYA_Printf( "ラインオフセット　あまり　があります。 amari=%d\n", amari );
   }
+#else
+
+  amari = div % RAIL_WALK_OFS;
+  if(amari)
+  {
+    div -= amari;
+    TOMOYA_Printf( "ラインオフセット　あまり　があります。 amari=%d\n", amari );
+  }
+
+#endif
 
 //  OS_TPrintf( "div = %d dist = 0x%x unit = 0x%x\n", div, dist, unit );
 

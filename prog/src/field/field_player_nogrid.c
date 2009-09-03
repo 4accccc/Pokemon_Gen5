@@ -6,12 +6,20 @@
 //======================================================================
 #include <gflib.h>
 
+#include "sound/pm_sndsys.h"
+#include "sound/wb_sound_data.sadl"
+
+#include "field_sound.h"
+
+
 #include "fieldmap.h"
 #include "field_g3d_mapper.h"
 #include "fldmmdl.h"
 #include "field_player.h"
 #include "field_camera.h"
 #include "fldeff_shadow.h"
+#include "field_rail.h"
+#include "rail_attr.h"
 
 #include "field_player_nogrid.h"
 
@@ -20,9 +28,48 @@
 //======================================================================
 #define MV_SPEED (2*FX32_ONE) ///<移動速度
 
+
+
+//--------------------------------------------------------------
+///	PLAYER_MOVE
+//--------------------------------------------------------------
+typedef enum
+{
+	PLAYER_MOVE_STOP = 0,
+	PLAYER_MOVE_WALK,
+	PLAYER_MOVE_TURN,
+	PLAYER_MOVE_HITCH,
+} PLAYER_MOVE;
+
+//--------------------------------------------------------------
+///	PLAYER_SET
+//--------------------------------------------------------------
+typedef enum
+{
+	PLAYER_SET_NON = 0,
+	PLAYER_SET_STOP,
+	PLAYER_SET_WALK,
+	PLAYER_SET_TURN,
+	PLAYER_SET_HITCH,
+//  PLAYER_SET_JUMP,
+} PLAYER_SET;
+
+
 //======================================================================
 //	struct
 //======================================================================
+//-------------------------------------
+///	レール動作用補助ワーク
+//=====================================
+struct _FIELD_PLAYER_NOGRID
+{
+  int move_state;
+  
+  FIELD_PLAYER* p_player;
+	FIELDMAP_WORK* p_fieldwork;
+  
+  FIELD_RAIL_WORK* p_railwork;
+} ;
 
 //======================================================================
 //	proto
@@ -36,215 +83,276 @@ static BOOL nogridPC_Move_CalcSetGroundMove(
 
 
 
+
+//======================================================================
+//	proto　for nogrid_player
+//======================================================================
+//通常移動
+static void jikiMove_Normal(
+		FIELD_PLAYER_NOGRID *p_player, int key_trg, int key_cont,
+    u16 dir, BOOL debug_flag );
+
+static PLAYER_SET player_CheckMoveStart_Stop(
+	FIELD_PLAYER_NOGRID *p_player, MMDL *mmdl,
+	u32 key_trg, u32 key_cont, u16 dir, BOOL debug_flag );
+static PLAYER_SET player_CheckMoveStart_Walk(
+	FIELD_PLAYER_NOGRID *p_player, MMDL *mmdl,
+	u32 key_trg, u32 key_cont, u16 dir, BOOL debug_flag );
+static PLAYER_SET player_CheckMoveStart_Turn(
+	FIELD_PLAYER_NOGRID *p_player, MMDL *mmdl,
+	u32 key_trg, u32 key_cont, u16 dir, BOOL debug_flag );
+static PLAYER_SET player_CheckMoveStart_Hitch(
+	FIELD_PLAYER_NOGRID *p_player, MMDL *mmdl,
+	u32 key_trg, u32 key_cont, u16 dir, BOOL debug_flag );
+
+static void player_SetMove_Non(
+	FIELD_PLAYER_NOGRID *p_player, MMDL *mmdl,
+	u32 key_trg, u32 key_cont, u16 dir, BOOL debug_flag );
+static void player_SetMove_Stop(
+	FIELD_PLAYER_NOGRID *p_player, MMDL *mmdl,
+	u32 key_trg, u32 key_cont, u16 dir, BOOL debug_flag );
+static void player_SetMove_Walk(
+	FIELD_PLAYER_NOGRID *p_player, MMDL *mmdl,
+	u32 key_trg, u32 key_cont, u16 dir, BOOL debug_flag );
+static void player_SetMove_Turn(
+	FIELD_PLAYER_NOGRID *p_player, MMDL *mmdl,
+	u32 key_trg, u32 key_cont, u16 dir, BOOL debug_flag );
+static void player_SetMove_Hitch(
+	FIELD_PLAYER_NOGRID *p_player, MMDL *mmdl,
+	u32 key_trg, u32 key_cont, u16 dir, BOOL debug_flag );
+/*static void player_SetMove_Jump(
+	FIELD_PLAYER_NOGRID *p_player, MMDL *mmdl,
+	u32 key_trg, u32 key_cont, u16 dir, BOOL debug_flag );//*/
+
+//自転車移動
+static void jikiMove_Cycle(
+		FIELD_PLAYER_NOGRID *p_player, int key_trg, int key_cont,
+    u16 dir, BOOL debug_flag );
+
+static PLAYER_SET playerCycle_CheckMoveStart_Stop(
+	FIELD_PLAYER_NOGRID *p_player, MMDL *mmdl,
+	u32 key_trg, u32 key_cont, u16 dir, BOOL debug_flag );
+static PLAYER_SET playerCycle_CheckMoveStart_Walk(
+	FIELD_PLAYER_NOGRID *p_player, MMDL *mmdl,
+	u32 key_trg, u32 key_cont, u16 dir, BOOL debug_flag );
+static PLAYER_SET playerCycle_CheckMoveStart_Turn(
+	FIELD_PLAYER_NOGRID *p_player, MMDL *mmdl,
+	u32 key_trg, u32 key_cont, u16 dir, BOOL debug_flag );
+static PLAYER_SET playerCycle_CheckMoveStart_Hitch(
+	FIELD_PLAYER_NOGRID *p_player, MMDL *mmdl,
+	u32 key_trg, u32 key_cont, u16 dir, BOOL debug_flag );
+
+static void playerCycle_SetMove_Non(
+	FIELD_PLAYER_NOGRID *p_player, MMDL *mmdl,
+	u32 key_trg, u32 key_cont, u16 dir, BOOL debug_flag );
+static void playerCycle_SetMove_Stop(
+	FIELD_PLAYER_NOGRID *p_player, MMDL *mmdl,
+	u32 key_trg, u32 key_cont, u16 dir, BOOL debug_flag );
+static void playerCycle_SetMove_Walk(
+	FIELD_PLAYER_NOGRID *p_player, MMDL *mmdl,
+	u32 key_trg, u32 key_cont, u16 dir, BOOL debug_flag );
+static void playerCycle_SetMove_Turn(
+	FIELD_PLAYER_NOGRID *p_player, MMDL *mmdl,
+	u32 key_trg, u32 key_cont, u16 dir, BOOL debug_flag );
+static void playerCycle_SetMove_Hitch(
+	FIELD_PLAYER_NOGRID *p_player, MMDL *mmdl,
+	u32 key_trg, u32 key_cont, u16 dir, BOOL debug_flag );
+/*static void playerCycle_SetMove_Jump(
+	FIELD_PLAYER_NOGRID *p_player, MMDL *mmdl,
+	u32 key_trg, u32 key_cont, u16 dir, BOOL debug_flag );//*/
+
 //----------------------------------------------------------------------------
 /**
- *	@brief  プレイヤー動作　レールシステム版　初期化
+ *	@brief  フィールドノーグリッドプレイヤーワークの生成
  *
- *	@param	fld_player      ワーク
- *	@param  railWork        レール動作ワーク
- *	@param	p_playerway     プレイヤー方向ワーク（内部で初期化）
+ *	@param	p_player    フィールドプレイヤー
+ *	@param	heapID      ヒープID
+ *
+ *	@return ノーグリッド用ワーク
  */
 //-----------------------------------------------------------------------------
-void FIELD_PLAYER_NOGRID_Rail_SetUp( FIELD_PLAYER *fld_player, FIELD_PLAYER_NOGRID_WORK* p_wk )
+FIELD_PLAYER_NOGRID* FIELD_PLAYER_NOGRID_Create( FIELD_PLAYER* p_player, HEAPID heapID )
 {
-	MMDL *fmmdl;
-  u32 way = FIELD_RAIL_WORK_GetActionKey( p_wk->railwork );
+  FIELD_PLAYER_NOGRID* p_wk;
+  MMDL* p_mmdl = FIELD_PLAYER_GetMMdl( p_player );
 
-	fmmdl = FIELD_PLAYER_GetMMdl( fld_player );
+  p_wk = GFL_HEAP_AllocClearMemory( heapID, sizeof(FIELD_PLAYER_NOGRID) );
 
-  if( way == RAIL_KEY_UP )
+  // ワークに保存
+  p_wk->p_player      = p_player;
+  p_wk->p_fieldwork   = FIELD_PLAYER_GetFieldMapWork( p_player );
+
+  // 動作コードをレール動作に変更
+  MMDL_OnStatusBit( p_mmdl, MMDL_STABIT_RAIL_MOVE );
+  MMDL_ChangeMoveCode( p_mmdl, MV_RAIL_DMY );
+
+  // レールワークの取得
+  p_wk->p_railwork = MMDL_GetRailWork( p_mmdl );
+
+  // 位置を初期か
   {
-		MMDL_SetDirDisp(fmmdl,DIR_UP);
-  }
-  else if( way == RAIL_KEY_DOWN )
-  {
-		MMDL_SetDirDisp(fmmdl,DIR_DOWN);
-  }
-  else if( way == RAIL_KEY_LEFT )
-  {
-		MMDL_SetDirDisp(fmmdl,DIR_LEFT);
-  }
-  else if( way == RAIL_KEY_RIGHT )
-  {
-		MMDL_SetDirDisp(fmmdl,DIR_RIGHT);
-  }
-
-  VEC_Set( &p_wk->way, 0,0,0 );
-}
-
-//----------------------------------------------------------------------------
-/**
- *	@brief	フィールド　ノーグリッド　レール動作
- *
- *	@param	fld_player		フィールドプレイヤー
- *  @param  fectrl        影操作用;
- *	@param	cp_camera			カメラ情報
- *	@param  key           キーコント
- *	@param  p_wk          補助ワーク
- */
-//-----------------------------------------------------------------------------
-void FIELD_PLAYER_NOGRID_Rail_Move( FIELD_PLAYER *fld_player, FLDEFF_CTRL *fectrl, const FIELD_CAMERA* cp_camera, int key, FIELD_PLAYER_NOGRID_WORK* p_wk, const FLDNOGRID_MAPPER* cp_nogridMapper )
-{
-	VecFx32 target;
-	VecFx32 camerapos;
-	VecFx32 pl_way;
-	VecFx32 camera_way;
-	u16 rotate_y;
-	fx32 cos;
-	VecFx32 cross;
-	MMDL *fmmdl;
-  u32 rail_key;
-  u32 rail_frame;
-  u32 way;
-
-	fmmdl = FIELD_PLAYER_GetMMdl( fld_player );
-
-	FIELD_CAMERA_GetTargetPos( cp_camera, &target );
-	FIELD_CAMERA_GetCameraPos( cp_camera, &camerapos );
-	VEC_Subtract( &target, &camerapos, &camera_way );	// カメラ方向の計算
-	camera_way.y = 0;	// 平面で考える
-	VEC_Normalize( &camera_way, &camera_way );
-
-
-	// カメラ方向から、陰の方向を設定
-	rotate_y = FX_Atan2Idx( -camera_way.x, -camera_way.z );
-	FLDEFF_SHADOW_SetGlobalRotate( fectrl, 0,rotate_y,0 );
-
-
-  // アトリビュートの取得
-  {
-    MAPATTR attr;
-    RAIL_LOCATION location;
-
-    FIELD_RAIL_WORK_GetLocation( p_wk->railwork, &location );
-    attr = FLDNOGRID_MAPPER_GetAttr( cp_nogridMapper, &location );
-
-    TOMOYA_Printf( "attr = %x\n", attr );
+    RAIL_LOCATION location = {0};
+    FIELD_RAIL_WORK_SetLocation( p_wk->p_railwork, &location );
   }
 
 
-  // 方向更新＋走りチェック
-	if( key & (PAD_KEY_UP | PAD_KEY_DOWN | PAD_KEY_LEFT | PAD_KEY_RIGHT) )
-	{
-    if( key & PAD_KEY_UP )
-    {
-      rail_key = RAIL_KEY_UP;
-      VEC_Set( &p_wk->way, camera_way.x, 0, camera_way.z );
-    }
-    else if( key & PAD_KEY_DOWN )
-    {
-      rail_key = RAIL_KEY_DOWN;
-      VEC_Set( &p_wk->way, -camera_way.x, 0, -camera_way.z );
-    }
-    else if( key & PAD_KEY_LEFT )
-    {
-      rail_key = RAIL_KEY_LEFT;
-      VEC_Set( &p_wk->way, camera_way.z, 0, -camera_way.x );
-    }
-    else if( key & PAD_KEY_RIGHT )
-    {
-      rail_key = RAIL_KEY_RIGHT;
-      VEC_Set( &p_wk->way, -camera_way.z, 0, camera_way.x );
-    }
+  // 状態の復帰
+  {
+    /*
+    PLAYER_MOVE_FORM form;
+    form = FIELD_PLAYER_GetMoveForm( gjiki->fld_player );
     
-#ifdef PM_DEBUG
-    if( key & PAD_BUTTON_R )
-    {
-      rail_frame = RAIL_FRAME_2;
-			MMDL_SetDrawStatus(fmmdl,DRAW_STA_WALK_8F);
+    switch( form ){
+    case PLAYER_MOVE_FORM_SWIM:
+      FIELD_PLAYER_NOGRID_SetRequest(
+          gjiki, FIELD_PLAYER_NOGRID_REQBIT_SWIM );
+      FIELD_PLAYER_NOGRID_UpdateRequest( gjiki );
+      break;
     }
-    else if( key & PAD_BUTTON_B )
-#else
-    if( key & PAD_BUTTON_B )
-#endif
-		{	
-      rail_frame = RAIL_FRAME_4;
-			MMDL_SetDrawStatus(fmmdl,DRAW_STA_DASH_4F);
-		}
-		else
-		{
-      rail_frame = RAIL_FRAME_8;
-			MMDL_SetDrawStatus(fmmdl,DRAW_STA_WALK_8F);
-		}
-
-    FIELD_RAIL_WORK_ForwardReq( p_wk->railwork, rail_frame, rail_key );
-	}
-	else if( FIELD_RAIL_WORK_GetLastAction( p_wk->railwork ) == FALSE )
-	{
-		MMDL_SetDrawStatus(fmmdl,DRAW_STA_STOP);
-	}
-
-	// 主人公方向
-	pl_way = p_wk->way;
-	pl_way.y = 0;	// 平面で考える
-	VEC_Normalize( &pl_way, &pl_way );
-
-	
-	// カメラの方向と主人公の方向から、向きを決定
-	if( (p_wk->way.x == p_wk->way.z) && (p_wk->way.x == p_wk->way.y) && (p_wk->way.x == 0) )
-	{
-    way = FIELD_RAIL_WORK_GetActionKey( p_wk->railwork );
-    if( way == RAIL_KEY_UP )
-    {
-      MMDL_SetDirDisp(fmmdl,DIR_UP);
-    }
-    else if( way == RAIL_KEY_DOWN )
-    {
-      MMDL_SetDirDisp(fmmdl,DIR_DOWN);
-    }
-    else if( way == RAIL_KEY_LEFT )
-    {
-      MMDL_SetDirDisp(fmmdl,DIR_LEFT);
-    }
-    else if( way == RAIL_KEY_RIGHT )
-    {
-      MMDL_SetDirDisp(fmmdl,DIR_RIGHT);
-    }
+    //*/
   }
-  else
-  {
-		cos =  VEC_DotProduct( &pl_way, &camera_way );
-		VEC_CrossProduct( &pl_way, &camera_way, &cross );
 
-			
+  return p_wk;
+}
 
-		if( (MATH_ABS(cos) < FX32_HALF) )
-		{
-			if( cross.y < 0 )
-			{
-				// left
-				MMDL_SetDirDisp(fmmdl,DIR_LEFT);
-			}
-			else
-			{
-				// right
-				MMDL_SetDirDisp(fmmdl,DIR_RIGHT);
-			}
-		}
-		else if( cos > 0 )
-		{
-			// up
-			MMDL_SetDirDisp(fmmdl,DIR_UP);
-		}
-		else
-		{
-			// down
-			MMDL_SetDirDisp(fmmdl,DIR_DOWN);
-		}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  フィールドノーグリッドプレイヤーワーク　破棄
+ *
+ *	@param	p_player  フィールドプレイヤー
+ */
+//-----------------------------------------------------------------------------
+void FIELD_PLAYER_NOGRID_Delete( FIELD_PLAYER_NOGRID* p_player )
+{
+  MMDL* p_mmdl = FIELD_PLAYER_GetMMdl( p_player->p_player );
+
+  GFL_HEAP_FreeMemory( p_player );
+}
 
 
-		// プレイヤー方向の設定
-		FIELD_PLAYER_SetDir( fld_player, FX_Atan2Idx( pl_way.x, pl_way.z ) );
+//----------------------------------------------------------------------------
+/**
+ *	@brief  フィールドノーグリッドプレイヤーワーク  動作
+ *
+ *	@param	p_player      プレイヤー
+ *	@param	key_trg       キートリガ
+ *	@param	key_cont      キーコント
+ */
+//-----------------------------------------------------------------------------
+void FIELD_PLAYER_NOGRID_Move( FIELD_PLAYER_NOGRID* p_player, int key_trg, int key_cont )
+{
+	u16 dir;
+	BOOL debug_flag;
+  PLAYER_MOVE_FORM form;
+  
+	dir = DIR_NOT;
+	if( (key_cont&PAD_KEY_UP) ){
+		dir = DIR_UP;
+	}else if( (key_cont&PAD_KEY_DOWN) ){
+		dir = DIR_DOWN;
+	}else if( (key_cont&PAD_KEY_LEFT) ){
+		dir = DIR_LEFT;
+	}else if( (key_cont&PAD_KEY_RIGHT) ){
+		dir = DIR_RIGHT;
 	}
+	
+	debug_flag = FALSE;
+#ifdef PM_DEBUG
+	if( key_cont & PAD_BUTTON_R ){
+		debug_flag = TRUE;
+	}
+#endif
 
-  // プレイヤー位置制御
-//  if( FIELD_RAIL_WORK_GetLastAction( p_wk->railwork ) )
-  {
+#if 0
+  if( key_trg & PAD_BUTTON_SELECT ){
     VecFx32 pos;
-    FIELD_RAIL_WORK_GetPos( p_wk->railwork, &pos );
-    FIELD_PLAYER_SetPos( fld_player, &pos );
+    FLDEFF_CTRL *fectrl = FIELDMAP_GetFldEffCtrl( gjiki->fieldWork );
+    MMDL *mmdl = FIELD_PLAYER_GetMMdl( gjiki->fld_player );
+    u16 dir = MMDL_GetDirDisp( mmdl );
+    MMDL_GetVectorPos( mmdl, &pos );
+    MMDL_TOOL_AddDirVector( dir, &pos, GRID_FX32 );
+    
+    gjiki->fldeff_joint = FLDEFF_NAMIPOKE_SetMMdl(
+        fectrl, dir, &pos, mmdl, FALSE );
+  }
+#endif
+  
+//  FIELD_PLAYER_NOGRID_UpdateRequest( gjiki );
+  
+  form = FIELD_PLAYER_GetMoveForm( p_player->p_player );
+  switch( form ){
+  case PLAYER_MOVE_FORM_NORMAL:
+    jikiMove_Normal( p_player, key_trg, key_cont, dir, debug_flag );
+	  break;
+  case PLAYER_MOVE_FORM_CYCLE:
+    jikiMove_Cycle( p_player, key_trg, key_cont, dir, debug_flag );
+	  break;
+  case PLAYER_MOVE_FORM_SWIM:
+    GF_ASSERT( form == PLAYER_MOVE_FORM_SWIM );
+    break;
+  default:
+    GF_ASSERT( 0 );
   }
 }
+
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ロケーションの設定
+ *
+ *	@param	p_player      プレイヤー
+ *	@param	cp_location   ロケーション
+ */
+//-----------------------------------------------------------------------------
+void FIELD_PLAYER_NOGRID_SetLocation( FIELD_PLAYER_NOGRID* p_player, const RAIL_LOCATION* cp_location )
+{
+  FIELD_RAIL_WORK_SetLocation( p_player->p_railwork, cp_location );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ロケーションの取得
+ *
+ *	@param	cp_player     プレイヤー
+ *	@param	p_location    ロケーション格納先
+ */
+//-----------------------------------------------------------------------------
+void FIELD_PLAYER_NOGRID_GetLocation( const FIELD_PLAYER_NOGRID* cp_player, RAIL_LOCATION* p_location )
+{
+  FIELD_RAIL_WORK_GetLocation( cp_player->p_railwork, p_location );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ノーグリッドマッププレイヤー　position取得
+ *
+ *	@param	cp_player     プレイヤーワーク
+ *	@param	p_pos         position
+ */
+//-----------------------------------------------------------------------------
+void FIELD_PLAYER_NOGRID_GetPos( const FIELD_PLAYER_NOGRID* cp_player, VecFx32* p_pos )
+{
+  FIELD_RAIL_WORK_GetPos( cp_player->p_railwork, p_pos );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  レールワークの取得
+ *
+ *	@param	cp_player   プレイヤー
+ *
+ *	@return レールワーク
+ */
+//-----------------------------------------------------------------------------
+FIELD_RAIL_WORK* FIELD_PLAYER_NOGRID_GetRailWork( const FIELD_PLAYER_NOGRID* cp_player )
+{
+  return cp_player->p_railwork;
+}
+
+
+
+
 
 
 //======================================================================
@@ -478,3 +586,860 @@ static BOOL nogridPC_Move_CalcSetGroundMove(
 	}
 	return TRUE;
 }
+
+
+
+
+
+
+
+
+
+
+//======================================================================
+//  グリッド移動　フィールドプレイヤー制御　通常移動
+//======================================================================
+//--------------------------------------------------------------
+/**
+ * グリッド移動　フィールドプレイヤー制御　通常移動
+ * @param	p_player FIELD_PLAYER_NOGRID
+ * @param key_trg キートリガ
+ * @param key_cont キーコンティニュー
+ * @retval nothing
+ */
+//--------------------------------------------------------------
+static void jikiMove_Normal(
+		FIELD_PLAYER_NOGRID *p_player, int key_trg, int key_cont,
+    u16 dir, BOOL debug_flag )
+{
+	PLAYER_SET set;
+	MMDL *mmdl = FIELD_PLAYER_GetMMdl( p_player->p_player );
+   
+	set = PLAYER_SET_NON;
+	switch( p_player->move_state ){
+	case PLAYER_MOVE_STOP:
+		set = player_CheckMoveStart_Stop(
+			p_player, mmdl, key_trg, key_cont, dir, debug_flag );
+		break;
+	case PLAYER_MOVE_WALK:
+		set = player_CheckMoveStart_Walk(
+			p_player, mmdl, key_trg, key_cont, dir, debug_flag );
+		break;
+	case PLAYER_MOVE_TURN:
+		set = player_CheckMoveStart_Turn(
+			p_player, mmdl, key_trg, key_cont, dir, debug_flag );
+		break;
+	case PLAYER_MOVE_HITCH:
+		set = player_CheckMoveStart_Hitch(
+			p_player, mmdl, key_trg, key_cont, dir, debug_flag );
+		break;
+	default:
+		GF_ASSERT( 0 );
+	}
+	
+	switch( set ){
+	case PLAYER_SET_NON:
+		player_SetMove_Non(
+			p_player, mmdl, key_trg, key_cont, dir, debug_flag );
+		break;
+	case PLAYER_SET_STOP:
+		player_SetMove_Stop(
+			p_player, mmdl, key_trg, key_cont, dir, debug_flag );
+		break;
+	case PLAYER_SET_WALK:
+		player_SetMove_Walk(
+			p_player, mmdl, key_trg, key_cont, dir, debug_flag );
+		break;
+	case PLAYER_SET_TURN:
+		player_SetMove_Turn(
+			p_player, mmdl, key_trg, key_cont, dir, debug_flag );
+		break;
+	case PLAYER_SET_HITCH:
+		player_SetMove_Hitch(
+			p_player, mmdl, key_trg, key_cont, dir, debug_flag );
+		break;
+/*  case PLAYER_SET_JUMP:
+		player_SetMove_Jump(
+			p_player, mmdl, key_trg, key_cont, dir, debug_flag );
+    break;//*/
+	}
+}
+
+//======================================================================
+//	移動開始チェック　通常移動
+//======================================================================
+//--------------------------------------------------------------
+/**
+ * 移動開始チェック　停止中
+ * @param	p_player FIELD_PLAYER_NOGRID
+ * @param mmdl MMDL*
+ * @param key_trg キートリガ
+ * @param key_cont キーコンティニュー
+ * @param dir 移動方向
+ * @param debug_flag デバッグ移動可能フラグ TRUE=可能
+ * @retval PLAYER_SET
+ */
+//--------------------------------------------------------------
+static PLAYER_SET player_CheckMoveStart_Stop(
+	FIELD_PLAYER_NOGRID *p_player, MMDL *mmdl,
+	u32 key_trg, u32 key_cont, u16 dir, BOOL debug_flag )
+{
+	if( MMDL_CheckPossibleAcmd(mmdl) == TRUE ){
+		if( dir != DIR_NOT ){
+			u16 old_dir;
+			old_dir = MMDL_GetDirDisp( mmdl );
+			
+			if( dir != old_dir && debug_flag == FALSE ){
+				return( PLAYER_SET_TURN );
+			}
+			
+			return( player_CheckMoveStart_Walk(
+				p_player,mmdl,key_trg,key_cont,dir,debug_flag) );
+		}
+		
+		return( PLAYER_SET_STOP );
+	}
+	
+	return( PLAYER_SET_NON );
+}
+
+//--------------------------------------------------------------
+/**
+ * 移動開始チェック　移動中
+ * @param	p_player FIELD_PLAYER_NOGRID
+ * @param mmdl MMDL*
+ * @param key_trg キートリガ
+ * @param key_cont キーコンティニュー
+ * @param dir 移動方向
+ * @param debug_flag デバッグ移動可能フラグ TRUE=可能
+ * @retval PLAYER_SET
+ */
+//--------------------------------------------------------------
+static PLAYER_SET player_CheckMoveStart_Walk(
+	FIELD_PLAYER_NOGRID *p_player, MMDL *mmdl,
+	u32 key_trg, u32 key_cont, u16 dir, BOOL debug_flag )
+{
+	if( MMDL_CheckPossibleAcmd(mmdl) == FALSE ){
+		return( PLAYER_SET_NON );
+	}
+	
+	if( dir == DIR_NOT )
+  {
+		return( player_CheckMoveStart_Stop(
+			p_player,mmdl,key_trg,key_cont,dir,debug_flag) );
+	}
+	
+	{
+//		u32 hit = MMDL_HitCheckMoveDir( mmdl, dir );  // レール用のものを作成
+		u32 hit = MMDL_MOVEHITBIT_NON;
+		
+		if( debug_flag == TRUE )
+    {
+			if( hit != MMDL_MOVEHITBIT_NON &&
+          !(hit&MMDL_MOVEHITBIT_OUTRANGE) )
+      {
+				hit = MMDL_MOVEHITBIT_NON;
+			}
+		}
+		
+		if( hit == MMDL_MOVEHITBIT_NON )
+    {
+			return( PLAYER_SET_WALK );
+		}
+    
+/*
+    if( (hit & MMDL_MOVEHITBIT_ATTR) )
+    {
+      BOOL ret;
+      u32 attr;
+      VecFx32 pos;
+      
+      MMDL_GetVectorPos( mmdl, &pos );
+      MMDL_TOOL_AddDirVector( dir, &pos, GRID_FX32 );
+      ret = MMDL_GetMapPosAttr( mmdl, &pos, &attr );
+      
+      if( ret == TRUE )
+      {
+        u16 attr_dir = DIR_NOT;
+        MAPATTR_VALUE val = MAPATTR_GetAttrValue( attr );
+        MAPATTR_FLAG flag = MAPATTR_GetAttrFlag( attr );
+        
+        if( MAPATTR_VALUE_CheckJumpUp(val) ){
+          attr_dir = DIR_UP;
+        }else if( MAPATTR_VALUE_CheckJumpDown(val) ){
+          attr_dir = DIR_DOWN;
+        }else if( MAPATTR_VALUE_CheckumpLeft(val) ){
+          attr_dir = DIR_LEFT;
+        }else if( MAPATTR_VALUE_CheckJumpRight(val) ){
+          attr_dir = DIR_RIGHT;
+        }
+        
+        if( attr_dir != DIR_NOT && attr_dir == dir ) //ジャンプ方向一致
+        {
+          return( PLAYER_SET_JUMP );
+        }
+      }
+    }
+//*/
+	}
+	
+	return( PLAYER_SET_HITCH );
+}
+
+//--------------------------------------------------------------
+/**
+ * 移動開始チェック　振り向き中
+ * @param	p_player FIELD_PLAYER_NOGRID
+ * @param mmdl MMDL*
+ * @param key_trg キートリガ
+ * @param key_cont キーコンティニュー
+ * @param dir 移動方向
+ * @param debug_flag デバッグ移動可能フラグ TRUE=可能
+ * @retval PLAYER_SET
+ */
+//--------------------------------------------------------------
+static PLAYER_SET player_CheckMoveStart_Turn(
+	FIELD_PLAYER_NOGRID *p_player, MMDL *mmdl,
+	u32 key_trg, u32 key_cont, u16 dir, BOOL debug_flag )
+{
+	if( MMDL_CheckPossibleAcmd(mmdl) == FALSE ){
+		return( PLAYER_SET_NON );
+	}
+	
+	if( dir == DIR_NOT ){
+		return( player_CheckMoveStart_Stop(
+			p_player,mmdl,key_trg,key_cont,dir,debug_flag) );
+	}
+	
+	return( player_CheckMoveStart_Walk(
+		p_player,mmdl,key_trg,key_cont,dir,debug_flag) );
+}
+
+//--------------------------------------------------------------
+/**
+ * 移動開始チェック　障害物ヒット中
+ * @param	p_player FIELD_PLAYER_NOGRID
+ * @param mmdl MMDL*
+ * @param key_trg キートリガ
+ * @param key_cont キーコンティニュー
+ * @param dir 移動方向
+ * @param debug_flag デバッグ移動可能フラグ TRUE=可能
+ * @retval PLAYER_SET
+ */
+//--------------------------------------------------------------
+static PLAYER_SET player_CheckMoveStart_Hitch(
+	FIELD_PLAYER_NOGRID *p_player, MMDL *mmdl,
+	u32 key_trg, u32 key_cont, u16 dir, BOOL debug_flag )
+{
+  u16 dir_now = MMDL_GetDirDisp( mmdl );
+   
+  if( dir != DIR_NOT && dir != dir_now ){
+    MMDL_FreeAcmd( mmdl );
+	  return( player_CheckMoveStart_Walk(
+		  p_player,mmdl,key_trg,key_cont,dir,debug_flag) );
+  }
+  
+	if( MMDL_CheckPossibleAcmd(mmdl) == FALSE ){
+		return( PLAYER_SET_NON );
+	}
+	
+	if( dir == DIR_NOT ){
+		return( player_CheckMoveStart_Stop(
+			p_player,mmdl,key_trg,key_cont,dir,debug_flag) );
+	}
+	
+	return( player_CheckMoveStart_Walk(
+		p_player,mmdl,key_trg,key_cont,dir,debug_flag) );
+}
+
+//======================================================================
+//	移動セット　通常移動
+//======================================================================
+//--------------------------------------------------------------
+/**
+ * 移動開始セット 特に無し
+ * @param	p_player FIELD_PLAYER_NOGRID
+ * @param mmdl MMDL*
+ * @param key_trg キートリガ
+ * @param key_cont キーコンティニュー
+ * @param debug_flag デバッグ移動可能フラグ TRUE=可能
+ * @retval nothing
+ */
+//--------------------------------------------------------------
+static void player_SetMove_Non(
+	FIELD_PLAYER_NOGRID *p_player, MMDL *mmdl,
+	u32 key_trg, u32 key_cont, u16 dir, BOOL debug_flag )
+{
+}
+
+//--------------------------------------------------------------
+/**
+ * 移動セット 停止
+ * @param	p_player FIELD_PLAYER_NOGRID
+ * @param mmdl MMDL*
+ * @param key_trg キートリガ
+ * @param key_cont キーコンティニュー
+ * @param debug_flag デバッグ移動可能フラグ TRUE=可能
+ * @retval nothing
+ */
+//--------------------------------------------------------------
+static void player_SetMove_Stop(
+	FIELD_PLAYER_NOGRID *p_player, MMDL *mmdl,
+	u32 key_trg, u32 key_cont, u16 dir, BOOL debug_flag )
+{
+	u16 code;
+	
+	if( dir == DIR_NOT ){
+		dir = MMDL_GetDirDisp( mmdl );
+	}
+	
+	code = MMDL_ChangeDirAcmdCode( dir, AC_RAIL_DIR_U );
+	MMDL_SetAcmd( mmdl, code );
+	p_player->move_state = PLAYER_MOVE_STOP;
+	
+  FIELD_PLAYER_SetMoveValue( p_player->p_player, PLAYER_MOVE_VALUE_STOP );
+}
+
+//--------------------------------------------------------------
+/**
+ * 移動セット 移動
+ * @param	p_player FIELD_PLAYER_NOGRID
+ * @param mmdl MMDL*
+ * @param key_trg キートリガ
+ * @param key_cont キーコンティニュー
+ * @param debug_flag デバッグ移動可能フラグ TRUE=可能
+ * @retval nothing
+ */
+//--------------------------------------------------------------
+static void player_SetMove_Walk(
+	FIELD_PLAYER_NOGRID *p_player, MMDL *mmdl,
+	u32 key_trg, u32 key_cont, u16 dir, BOOL debug_flag )
+{
+	u16 code;
+	
+	GF_ASSERT( dir != DIR_NOT );
+	
+	if( debug_flag == TRUE ){
+		code = AC_RAIL_WALK_U_2F;
+	}else if( key_cont & PAD_BUTTON_B ){
+		code = AC_RAIL_DASH_U_4F;
+	}else{
+		code = AC_RAIL_WALK_U_8F;
+	}
+  
+	code = MMDL_ChangeDirAcmdCode( dir, code );
+	
+	MMDL_SetAcmd( mmdl, code );
+	p_player->move_state = PLAYER_MOVE_WALK;
+
+  FIELD_PLAYER_SetMoveValue( p_player->p_player, PLAYER_MOVE_VALUE_WALK );
+}
+
+//--------------------------------------------------------------
+/**
+ * 移動セット 振り向き
+ * @param	p_player FIELD_PLAYER_NOGRID
+ * @param mmdl MMDL*
+ * @param key_trg キートリガ
+ * @param key_cont キーコンティニュー
+ * @param debug_flag デバッグ移動可能フラグ TRUE=可能
+ * @retval nothing
+ */
+//--------------------------------------------------------------
+static void player_SetMove_Turn(
+	FIELD_PLAYER_NOGRID *p_player, MMDL *mmdl,
+	u32 key_trg, u32 key_cont, u16 dir, BOOL debug_flag )
+{
+	u16 code;
+	
+	GF_ASSERT( dir != DIR_NOT );
+	code = MMDL_ChangeDirAcmdCode( dir, AC_STAY_WALK_U_2F );
+	
+	MMDL_SetAcmd( mmdl, code );
+	p_player->move_state = PLAYER_MOVE_TURN;
+	
+  FIELD_PLAYER_SetMoveValue( p_player->p_player, PLAYER_MOVE_VALUE_TURN );
+}
+
+//--------------------------------------------------------------
+/**
+ * 移動セット 障害物ヒット
+ * @param	p_player FIELD_PLAYER_NOGRID
+ * @param mmdl MMDL*
+ * @param key_trg キートリガ
+ * @param key_cont キーコンティニュー
+ * @param debug_flag デバッグ移動可能フラグ TRUE=可能
+ * @retval nothing
+ */
+//--------------------------------------------------------------
+static void player_SetMove_Hitch(
+	FIELD_PLAYER_NOGRID *p_player, MMDL *mmdl,
+	u32 key_trg, u32 key_cont, u16 dir, BOOL debug_flag )
+{
+	u16 code;
+	
+	GF_ASSERT( dir != DIR_NOT );
+	code = MMDL_ChangeDirAcmdCode( dir, AC_STAY_WALK_U_16F );
+	
+	MMDL_SetAcmd( mmdl, code );
+	p_player->move_state = PLAYER_MOVE_HITCH;
+	
+  FIELD_PLAYER_SetMoveValue( p_player->p_player, PLAYER_MOVE_VALUE_STOP );
+  PMSND_PlaySE( SEQ_SE_WALL_HIT );
+}
+
+#if 0
+//--------------------------------------------------------------
+/**
+ * 移動セット ジャンプ
+ * @param	p_player FIELD_PLAYER_NOGRID
+ * @param mmdl MMDL*
+ * @param key_trg キートリガ
+ * @param key_cont キーコンティニュー
+ * @param debug_flag デバッグ移動可能フラグ TRUE=可能
+ * @retval nothing
+ */
+//--------------------------------------------------------------
+static void player_SetMove_Jump(
+	FIELD_PLAYER_NOGRID *p_player, MMDL *mmdl,
+	u32 key_trg, u32 key_cont, u16 dir, BOOL debug_flag )
+{
+	u16 code;
+	
+	GF_ASSERT( dir != DIR_NOT );
+	
+	code = MMDL_ChangeDirAcmdCode( dir, AC_JUMP_U_2G_16F );
+	
+	MMDL_SetAcmd( mmdl, code );
+	p_player->move_state = PLAYER_MOVE_WALK;
+  
+  FIELD_PLAYER_SetMoveValue( p_player->p_player, PLAYER_MOVE_VALUE_WALK );
+  PMSND_PlaySE( SEQ_SE_DANSA );
+
+}
+#endif
+
+
+
+
+//======================================================================
+//  グリッド移動　フィールドプレイヤー制御　自転車移動
+//======================================================================
+//--------------------------------------------------------------
+/**
+ * グリッド移動　フィールドプレイヤー制御　自転車移動
+ * @param	p_player FIELD_PLAYER_NOGRID
+ * @param key_trg キートリガ
+ * @param key_cont キーコンティニュー
+ * @retval nothing
+ */
+//--------------------------------------------------------------
+static void jikiMove_Cycle(
+		FIELD_PLAYER_NOGRID *p_player, int key_trg, int key_cont,
+    u16 dir, BOOL debug_flag )
+{
+	PLAYER_SET set;
+	MMDL *mmdl = FIELD_PLAYER_GetMMdl( p_player->p_player );
+   
+	set = PLAYER_SET_NON;
+	switch( p_player->move_state ){
+	case PLAYER_MOVE_STOP:
+		set = playerCycle_CheckMoveStart_Stop(
+			p_player, mmdl, key_trg, key_cont, dir, debug_flag );
+		break;
+	case PLAYER_MOVE_WALK:
+		set = playerCycle_CheckMoveStart_Walk(
+			p_player, mmdl, key_trg, key_cont, dir, debug_flag );
+		break;
+	case PLAYER_MOVE_TURN:
+		set = playerCycle_CheckMoveStart_Turn(
+			p_player, mmdl, key_trg, key_cont, dir, debug_flag );
+		break;
+	case PLAYER_MOVE_HITCH:
+		set = playerCycle_CheckMoveStart_Hitch(
+			p_player, mmdl, key_trg, key_cont, dir, debug_flag );
+		break;
+	default:
+		GF_ASSERT( 0 );
+	}
+	
+	switch( set ){
+	case PLAYER_SET_NON:
+		playerCycle_SetMove_Non(
+			p_player, mmdl, key_trg, key_cont, dir, debug_flag );
+		break;
+	case PLAYER_SET_STOP:
+		playerCycle_SetMove_Stop(
+			p_player, mmdl, key_trg, key_cont, dir, debug_flag );
+		break;
+	case PLAYER_SET_WALK:
+		playerCycle_SetMove_Walk(
+			p_player, mmdl, key_trg, key_cont, dir, debug_flag );
+		break;
+	case PLAYER_SET_TURN:
+		playerCycle_SetMove_Turn(
+			p_player, mmdl, key_trg, key_cont, dir, debug_flag );
+		break;
+	case PLAYER_SET_HITCH:
+		playerCycle_SetMove_Hitch(
+			p_player, mmdl, key_trg, key_cont, dir, debug_flag );
+		break;
+/*  case PLAYER_SET_JUMP:
+		playerCycle_SetMove_Jump(
+			p_player, mmdl, key_trg, key_cont, dir, debug_flag );
+    break;
+//*/
+	}
+}
+
+//======================================================================
+//	移動開始チェック　自転車移動
+//======================================================================
+//--------------------------------------------------------------
+/**
+ * 移動開始チェック　停止中
+ * @param	p_player FIELD_PLAYER_NOGRID
+ * @param mmdl MMDL*
+ * @param key_trg キートリガ
+ * @param key_cont キーコンティニュー
+ * @param dir 移動方向
+ * @param debug_flag デバッグ移動可能フラグ TRUE=可能
+ * @retval PLAYER_SET
+ */
+//--------------------------------------------------------------
+static PLAYER_SET playerCycle_CheckMoveStart_Stop(
+	FIELD_PLAYER_NOGRID *p_player, MMDL *mmdl,
+	u32 key_trg, u32 key_cont, u16 dir, BOOL debug_flag )
+{
+	if( MMDL_CheckPossibleAcmd(mmdl) == TRUE ){
+		if( dir != DIR_NOT ){
+			u16 old_dir;
+			old_dir = MMDL_GetDirDisp( mmdl );
+			
+			if( dir != old_dir && debug_flag == FALSE ){
+				return( PLAYER_SET_TURN );
+			}
+			
+			return( playerCycle_CheckMoveStart_Walk(
+				p_player,mmdl,key_trg,key_cont,dir,debug_flag) );
+		}
+		
+		return( PLAYER_SET_STOP );
+	}
+	
+	return( PLAYER_SET_NON );
+}
+
+//--------------------------------------------------------------
+/**
+ * 移動開始チェック　移動中
+ * @param	p_player FIELD_PLAYER_NOGRID
+ * @param mmdl MMDL*
+ * @param key_trg キートリガ
+ * @param key_cont キーコンティニュー
+ * @param dir 移動方向
+ * @param debug_flag デバッグ移動可能フラグ TRUE=可能
+ * @retval PLAYER_SET
+ */
+//--------------------------------------------------------------
+static PLAYER_SET playerCycle_CheckMoveStart_Walk(
+	FIELD_PLAYER_NOGRID *p_player, MMDL *mmdl,
+	u32 key_trg, u32 key_cont, u16 dir, BOOL debug_flag )
+{
+	if( MMDL_CheckPossibleAcmd(mmdl) == FALSE ){
+		return( PLAYER_SET_NON );
+	}
+	
+	if( dir == DIR_NOT )
+  {
+		return( playerCycle_CheckMoveStart_Stop(
+			p_player,mmdl,key_trg,key_cont,dir,debug_flag) );
+	}
+	
+	{
+//		u32 hit = MMDL_HitCheckMoveDir( mmdl, dir );
+		u32 hit = MMDL_MOVEHITBIT_NON;  // レール用あたり判定を作成する
+		
+		if( debug_flag == TRUE )
+    {
+			if( hit != MMDL_MOVEHITBIT_NON &&
+          !(hit&MMDL_MOVEHITBIT_OUTRANGE) )
+      {
+				hit = MMDL_MOVEHITBIT_NON;
+			}
+		}
+		
+		if( hit == MMDL_MOVEHITBIT_NON )
+    {
+			return( PLAYER_SET_WALK );
+		}
+    
+/*
+    if( (hit & MMDL_MOVEHITBIT_ATTR) )
+    {
+      BOOL ret;
+      u32 attr;
+      VecFx32 pos;
+      
+      MMDL_GetVectorPos( mmdl, &pos );
+      MMDL_TOOL_AddDirVector( dir, &pos, GRID_FX32 );
+      ret = MMDL_GetMapPosAttr( mmdl, &pos, &attr );
+      
+      if( ret == TRUE )
+      {
+        u16 attr_dir = DIR_NOT;
+        MAPATTR_VALUE val = MAPATTR_GetAttrValue( attr );
+        MAPATTR_FLAG flag = MAPATTR_GetAttrFlag( attr );
+        
+        if( MAPATTR_VALUE_CheckJumpUp(val) ){
+          attr_dir = DIR_UP;
+        }else if( MAPATTR_VALUE_CheckJumpDown(val) ){
+          attr_dir = DIR_DOWN;
+        }else if( MAPATTR_VALUE_CheckumpLeft(val) ){
+          attr_dir = DIR_LEFT;
+        }else if( MAPATTR_VALUE_CheckJumpRight(val) ){
+          attr_dir = DIR_RIGHT;
+        }
+        
+        if( attr_dir != DIR_NOT && attr_dir == dir ) //ジャンプ方向一致
+        {
+          return( PLAYER_SET_JUMP );
+        }
+      }
+    }
+//*/
+	}
+	
+	return( PLAYER_SET_HITCH );
+}
+
+//--------------------------------------------------------------
+/**
+ * 移動開始チェック　振り向き中
+ * @param	p_player FIELD_PLAYER_NOGRID
+ * @param mmdl MMDL*
+ * @param key_trg キートリガ
+ * @param key_cont キーコンティニュー
+ * @param dir 移動方向
+ * @param debug_flag デバッグ移動可能フラグ TRUE=可能
+ * @retval PLAYER_SET
+ */
+//--------------------------------------------------------------
+static PLAYER_SET playerCycle_CheckMoveStart_Turn(
+	FIELD_PLAYER_NOGRID *p_player, MMDL *mmdl,
+	u32 key_trg, u32 key_cont, u16 dir, BOOL debug_flag )
+{
+	if( MMDL_CheckPossibleAcmd(mmdl) == FALSE ){
+		return( PLAYER_SET_NON );
+	}
+	
+	if( dir == DIR_NOT ){
+		return( playerCycle_CheckMoveStart_Stop(
+			p_player,mmdl,key_trg,key_cont,dir,debug_flag) );
+	}
+	
+	return( playerCycle_CheckMoveStart_Walk(
+		p_player,mmdl,key_trg,key_cont,dir,debug_flag) );
+}
+
+//--------------------------------------------------------------
+/**
+ * 移動開始チェック　障害物ヒット中
+ * @param	p_player FIELD_PLAYER_NOGRID
+ * @param mmdl MMDL*
+ * @param key_trg キートリガ
+ * @param key_cont キーコンティニュー
+ * @param dir 移動方向
+ * @param debug_flag デバッグ移動可能フラグ TRUE=可能
+ * @retval PLAYER_SET
+ */
+//--------------------------------------------------------------
+static PLAYER_SET playerCycle_CheckMoveStart_Hitch(
+	FIELD_PLAYER_NOGRID *p_player, MMDL *mmdl,
+	u32 key_trg, u32 key_cont, u16 dir, BOOL debug_flag )
+{
+  u16 dir_now = MMDL_GetDirDisp( mmdl );
+   
+  if( dir != DIR_NOT && dir != dir_now ){
+    MMDL_FreeAcmd( mmdl );
+	  return( playerCycle_CheckMoveStart_Walk(
+		  p_player,mmdl,key_trg,key_cont,dir,debug_flag) );
+  }
+  
+	if( MMDL_CheckPossibleAcmd(mmdl) == FALSE ){
+		return( PLAYER_SET_NON );
+	}
+	
+	if( dir == DIR_NOT ){
+		return( playerCycle_CheckMoveStart_Stop(
+			p_player,mmdl,key_trg,key_cont,dir,debug_flag) );
+	}
+	
+	return( playerCycle_CheckMoveStart_Walk(
+		p_player,mmdl,key_trg,key_cont,dir,debug_flag) );
+}
+
+//======================================================================
+//	移動セット　自転車移動
+//======================================================================
+//--------------------------------------------------------------
+/**
+ * 移動開始セット 特に無し
+ * @param	p_player FIELD_PLAYER_NOGRID
+ * @param mmdl MMDL*
+ * @param key_trg キートリガ
+ * @param key_cont キーコンティニュー
+ * @param debug_flag デバッグ移動可能フラグ TRUE=可能
+ * @retval nothing
+ */
+//--------------------------------------------------------------
+static void playerCycle_SetMove_Non(
+	FIELD_PLAYER_NOGRID *p_player, MMDL *mmdl,
+	u32 key_trg, u32 key_cont, u16 dir, BOOL debug_flag )
+{
+}
+
+//--------------------------------------------------------------
+/**
+ * 移動セット 停止
+ * @param	p_player FIELD_PLAYER_NOGRID
+ * @param mmdl MMDL*
+ * @param key_trg キートリガ
+ * @param key_cont キーコンティニュー
+ * @param debug_flag デバッグ移動可能フラグ TRUE=可能
+ * @retval nothing
+ */
+//--------------------------------------------------------------
+static void playerCycle_SetMove_Stop(
+	FIELD_PLAYER_NOGRID *p_player, MMDL *mmdl,
+	u32 key_trg, u32 key_cont, u16 dir, BOOL debug_flag )
+{
+	u16 code;
+	
+	if( dir == DIR_NOT ){
+		dir = MMDL_GetDirDisp( mmdl );
+	}
+	
+	code = MMDL_ChangeDirAcmdCode( dir, AC_RAIL_DIR_U );
+	MMDL_SetAcmd( mmdl, code );
+	p_player->move_state = PLAYER_MOVE_STOP;
+	
+  FIELD_PLAYER_SetMoveValue( p_player->p_player, PLAYER_MOVE_VALUE_STOP );
+}
+
+//--------------------------------------------------------------
+/**
+ * 移動セット 移動
+ * @param	p_player FIELD_PLAYER_NOGRID
+ * @param mmdl MMDL*
+ * @param key_trg キートリガ
+ * @param key_cont キーコンティニュー
+ * @param debug_flag デバッグ移動可能フラグ TRUE=可能
+ * @retval nothing
+ */
+//--------------------------------------------------------------
+static void playerCycle_SetMove_Walk(
+	FIELD_PLAYER_NOGRID *p_player, MMDL *mmdl,
+	u32 key_trg, u32 key_cont, u16 dir, BOOL debug_flag )
+{
+	u16 code;
+	
+	GF_ASSERT( dir != DIR_NOT );
+	
+	if( debug_flag == TRUE ){
+		code = AC_RAIL_WALK_U_2F;
+	}else{
+		code = AC_RAIL_WALK_U_4F;
+	}
+  
+	code = MMDL_ChangeDirAcmdCode( dir, code );
+	
+	MMDL_SetAcmd( mmdl, code );
+	p_player->move_state = PLAYER_MOVE_WALK;
+
+  FIELD_PLAYER_SetMoveValue( p_player->p_player, PLAYER_MOVE_VALUE_WALK );
+}
+
+//--------------------------------------------------------------
+/**
+ * 移動セット 振り向き
+ * @param	p_player FIELD_PLAYER_NOGRID
+ * @param mmdl MMDL*
+ * @param key_trg キートリガ
+ * @param key_cont キーコンティニュー
+ * @param debug_flag デバッグ移動可能フラグ TRUE=可能
+ * @retval nothing
+ */
+//--------------------------------------------------------------
+static void playerCycle_SetMove_Turn(
+	FIELD_PLAYER_NOGRID *p_player, MMDL *mmdl,
+	u32 key_trg, u32 key_cont, u16 dir, BOOL debug_flag )
+{
+	u16 code;
+	
+	GF_ASSERT( dir != DIR_NOT );
+	code = MMDL_ChangeDirAcmdCode( dir, AC_STAY_WALK_U_2F );
+	
+	MMDL_SetAcmd( mmdl, code );
+	p_player->move_state = PLAYER_MOVE_TURN;
+	
+  FIELD_PLAYER_SetMoveValue( p_player->p_player, PLAYER_MOVE_VALUE_TURN );
+}
+
+//--------------------------------------------------------------
+/**
+ * 移動セット 障害物ヒット
+ * @param	p_player FIELD_PLAYER_NOGRID
+ * @param mmdl MMDL*
+ * @param key_trg キートリガ
+ * @param key_cont キーコンティニュー
+ * @param debug_flag デバッグ移動可能フラグ TRUE=可能
+ * @retval nothing
+ */
+//--------------------------------------------------------------
+static void playerCycle_SetMove_Hitch(
+	FIELD_PLAYER_NOGRID *p_player, MMDL *mmdl,
+	u32 key_trg, u32 key_cont, u16 dir, BOOL debug_flag )
+{
+	u16 code;
+	
+	GF_ASSERT( dir != DIR_NOT );
+	code = MMDL_ChangeDirAcmdCode( dir, AC_STAY_WALK_U_16F );
+	
+	MMDL_SetAcmd( mmdl, code );
+	p_player->move_state = PLAYER_MOVE_HITCH;
+	
+  FIELD_PLAYER_SetMoveValue( p_player->p_player, PLAYER_MOVE_VALUE_STOP );
+  PMSND_PlaySE( SEQ_SE_WALL_HIT );
+}
+
+#if 0
+//--------------------------------------------------------------
+/**
+ * 移動セット ジャンプ
+ * @param	p_player FIELD_PLAYER_NOGRID
+ * @param mmdl MMDL*
+ * @param key_trg キートリガ
+ * @param key_cont キーコンティニュー
+ * @param debug_flag デバッグ移動可能フラグ TRUE=可能
+ * @retval nothing
+ */
+//--------------------------------------------------------------
+static void playerCycle_SetMove_Jump(
+	FIELD_PLAYER_NOGRID *p_player, MMDL *mmdl,
+	u32 key_trg, u32 key_cont, u16 dir, BOOL debug_flag )
+{
+	u16 code;
+	
+	GF_ASSERT( dir != DIR_NOT );
+	
+	code = MMDL_ChangeDirAcmdCode( dir, AC_JUMP_U_2G_16F );
+	
+	MMDL_SetAcmd( mmdl, code );
+	p_player->move_state = PLAYER_MOVE_WALK;
+  
+  FIELD_PLAYER_SetMoveValue( p_player->p_player, PLAYER_MOVE_VALUE_WALK );
+  PMSND_PlaySE( SEQ_SE_DANSA );
+}
+#endif
+

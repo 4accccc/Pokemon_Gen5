@@ -21,7 +21,7 @@ extern "C"{
 #endif
 
 #include "field_player_nogrid.h"
-
+#include "fieldmap.h"
 
 //-----------------------------------------------------------------------------
 /**
@@ -46,8 +46,11 @@ typedef struct _FIELDMAP_CTRL_NOGRID_WORK FIELDMAP_CTRL_NOGRID_WORK;
 //-----------------------------------------------------------------------------
 
 // メモリ確保・破棄
-extern FIELDMAP_CTRL_NOGRID_WORK* FIELDMAP_CTRL_NOGRID_WORK_Create( u32 heapID );
+extern FIELDMAP_CTRL_NOGRID_WORK* FIELDMAP_CTRL_NOGRID_WORK_Create( FIELDMAP_WORK* p_fieldwork, u32 heapID );
 extern void FIELDMAP_CTRL_NOGRID_WORK_Delete( FIELDMAP_CTRL_NOGRID_WORK* p_wk );
+
+// 動作
+extern void FIELDMAP_CTRL_NOGRID_WORK_Main( FIELDMAP_CTRL_NOGRID_WORK* p_wk );
 
 // ローカルワークの確保・破棄・確保メモリの取得
 extern void* FIELDMAP_CTRL_NOGRID_WORK_AllocLocalWork( FIELDMAP_CTRL_NOGRID_WORK* p_wk, u32 heapID, u32 size );
@@ -55,7 +58,7 @@ extern void FIELDMAP_CTRL_NOGRID_WORK_FreeLocalWork( FIELDMAP_CTRL_NOGRID_WORK* 
 extern void* FIELDMAP_CTRL_NOGRID_WORK_GetLocalWork( const FIELDMAP_CTRL_NOGRID_WORK* cp_wk );
 
 // 情報取得
-extern FIELD_PLAYER_NOGRID_WORK* FIELDMAP_CTRL_NOGRID_WORK_GetNogridPlayerWork( const FIELDMAP_CTRL_NOGRID_WORK* cp_wk );
+extern FIELD_PLAYER_NOGRID* FIELDMAP_CTRL_NOGRID_WORK_GetNogridPlayerWork( const FIELDMAP_CTRL_NOGRID_WORK* cp_wk );
 
 #ifdef _cplusplus
 }	// extern "C"{
