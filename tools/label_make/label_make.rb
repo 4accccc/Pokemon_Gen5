@@ -107,4 +107,5 @@ end
 #
 # label = LabelMake.new
 # p label.make_label( "MONSNO_", "コラッタ" )
-
+#
+# MONSNO_KORATTAと表示されます
