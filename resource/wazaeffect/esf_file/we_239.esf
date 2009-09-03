@@ -1303,11 +1303,16 @@ C:\home\pokemon_wb\resource\particle\wazaeffect\w_239.spa
 カメラ移動	追従	防御側	16	0	8
 SE再生	SEQ_SE_BC01	デフォルト	0	0	100	0	0
 エフェクト終了待ち	すべて
+制御モード変更	継続
 SE再生	SEQ_SE_W239_01	SE1	0	0	110	0	0
 SE再生	SEQ_SE_DUMMY5	SE1	100	0	0	0	0
 SE再生	SEQ_SE_W239_02	SE2	80	0	120	0	0
 SE再生	SEQ_SE_W157_03	PSG	10	0	100	0	0
 SE再生	SEQ_SE_DUMMY5	PSG	100	0	0	0	0
+SEパン	SE1	追従	防御側	防御側	0	100:0:0
+SEパン	SE2	追従	防御側	防御側	0	100:0:0
+SEパン	PSG	追従	防御側	防御側	0	100:0:0
+制御モード変更	逐次
 パーティクルデータロード	w_239
 パーティクル再生	w_239	W_239_239_TORNADO_ROLL1	防御側	方向無し	2	0
 パーティクル再生	w_239	W_239_239_TORNADO_ROLL2	防御側	方向無し	2	0
