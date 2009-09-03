@@ -9,6 +9,7 @@
 #include "system/gfl_use.h"
 
 #include "arc/fieldmap/field_rail_data.naix"
+#include "arc/fieldmap/zone_id.h"
 
 #include "fieldmap.h"
 #include "field_player_nogrid.h"
@@ -36,6 +37,54 @@ static const RAIL_LOCATION locationStart = {
   FIELD_RAIL_TYPE_POINT,
   0,
 };
+
+
+//======================================================================
+//	ダミーNPC
+//======================================================================
+#ifdef DEBUG_ONLY_FOR_tomoya_takahashi
+#define DEBUG_TEST_NPC
+#endif //DEBUG_ONLY_FOR_tomoya_takahashi
+
+#ifdef DEBUG_TEST_NPC
+static const MMDL_HEADER dummyNpc = 
+{
+  128,
+  BOY1,
+  MV_RAIL_DMY,
+  EV_TYPE_TRAINER, 0, 0,
+  DIR_DOWN,
+  0,0,0,
+  0,0,
+  0,0,
+  0
+};
+static const RAIL_LOCATION sc_initLocation[] = 
+{
+  {
+    13,
+    FIELD_RAIL_TYPE_LINE,
+    RAIL_KEY_DOWN,
+    4,
+    3,
+  },
+  {
+    6,
+    FIELD_RAIL_TYPE_LINE,
+    RAIL_KEY_DOWN,
+    2,
+    15,
+  },
+  {
+    6,
+    FIELD_RAIL_TYPE_LINE,
+    RAIL_KEY_DOWN,
+    -2,
+    15,
+  },
+};
+static MMDL* s_DUMMY_MDL[NELEMS(sc_initLocation)] = {NULL};
+#endif // DEBUG_TEST_NPC
 
 //======================================================================
 //	proto
@@ -101,6 +150,22 @@ static void mapCtrlNoGrid_Create(
 
 	FIELD_PLAYER_SetPos( fld_player, pos );
 	FIELD_PLAYER_SetDir( fld_player, dir );
+
+
+#ifdef DEBUG_TEST_NPC
+  {
+    MMDLSYS* fos = FIELDMAP_GetMMdlSys( fieldWork );
+    int i;
+    
+    for( i=0; i<NELEMS(sc_initLocation); i++ )
+    {
+      s_DUMMY_MDL[i] = MMDLSYS_AddMMdl(
+      	fos, &dummyNpc, ZONE_ID_H01 );
+      MMDL_OnStatusBit( s_DUMMY_MDL[i], MMDL_STABIT_RAIL_MOVE );
+      MMDL_SetRailLocation( s_DUMMY_MDL[i], &sc_initLocation[i] );
+    }
+  }
+#endif
 }
 
 //--------------------------------------------------------------
@@ -114,6 +179,18 @@ static void mapCtrlNoGrid_Delete( FIELDMAP_WORK *fieldWork )
 {
   FLDNOGRID_MAPPER* p_mapper = FIELDMAP_GetFldNoGridMapper( fieldWork );
 	FIELDMAP_CTRL_NOGRID_WORK* work = FIELDMAP_GetMapCtrlWork( fieldWork );
+
+#ifdef DEBUG_TEST_NPC
+  {
+    int i;
+
+    for( i=0; i<NELEMS(sc_initLocation); i++ )
+    {
+      MMDL_Delete( s_DUMMY_MDL[i] );
+      s_DUMMY_MDL[i] = NULL;
+    }
+  }
+#endif
 
   FIELDMAP_CTRL_NOGRID_WORK_Delete( work );
   
@@ -133,57 +210,20 @@ static void mapCtrlNoGrid_Delete( FIELDMAP_WORK *fieldWork )
 //--------------------------------------------------------------
 static void mapCtrlNoGrid_Main( FIELDMAP_WORK *fieldWork, VecFx32 *pos )
 {
-	int key_cont = GFL_UI_KEY_GetCont();
-  int key_trg = GFL_UI_KEY_GetTrg();
   FLDNOGRID_MAPPER* p_mapper = FIELDMAP_GetFldNoGridMapper( fieldWork );
-  BOOL rail_flag = FLDNOGRID_MAPPER_DEBUG_IsActive(p_mapper);
 	FIELD_PLAYER *fld_player = FIELDMAP_GetFieldPlayer( fieldWork );
 	FIELDMAP_CTRL_NOGRID_WORK *work = FIELDMAP_GetMapCtrlWork( fieldWork );
   FIELD_PLAYER_NOGRID* p_ngrid_player = FIELDMAP_CTRL_NOGRID_WORK_GetNogridPlayerWork( work );
 
-  //デバッグのため、レール処理をON/OFF
-  if (key_trg & PAD_BUTTON_L)
-  {
-    FIELD_RAIL_WORK_SetActiveFlag( FIELD_PLAYER_NOGRID_GetRailWork( p_ngrid_player ), !rail_flag );
-    if (!rail_flag)
-    {
-			FIELD_CAMERA_SetMode( FIELDMAP_GetFieldCamera(fieldWork), FIELD_CAMERA_MODE_DIRECT_POS );
-//      FIELD_CAMERA_BindNoCamera(FIELDMAP_GetFieldCamera(fieldWork), TRUE);
-  //    FIELD_CAMERA_SetCameraType(FIELDMAP_GetFieldCamera(fieldWork), FIELD_CAMERA_TYPE_H01);
-    }
-    else
-    {
-			FIELD_CAMERA_SetMode( FIELDMAP_GetFieldCamera(fieldWork), FIELD_CAMERA_MODE_CALC_CAMERA_POS );
-//      FIELD_CAMERA_BindNoCamera(FIELDMAP_GetFieldCamera(fieldWork), FALSE);
-   //   FIELD_CAMERA_SetCameraType(FIELDMAP_GetFieldCamera(fieldWork), FIELD_CAMERA_TYPE_NOUSE);
-    }
-  }
+  PLAYER_WORK *player = GAMEDATA_GetMyPlayerWork(
+      GAMESYSTEM_GetGameData(FIELDMAP_GetGameSysWork(fieldWork)) );
+  MMDL* mmdl = FIELD_PLAYER_GetMMdl( fld_player );
 
+  FIELDMAP_CTRL_NOGRID_WORK_Main( work );
 
-  if (rail_flag)
-  {
-    PLAYER_WORK *player = GAMEDATA_GetMyPlayerWork(
-        GAMESYSTEM_GetGameData(FIELDMAP_GetGameSysWork(fieldWork)) );
-    MMDL* mmdl = FIELD_PLAYER_GetMMdl( fld_player );
-
-		FIELDMAP_CTRL_NOGRID_WORK_Main( work );
-
-    MMDL_GetVectorPos( mmdl, pos );
-    FIELD_PLAYER_SetPos( fld_player, pos );
-    PLAYERWORK_setPosition( player, pos );
-
-  }
-	else
-  {
-    GAMESYS_WORK *gsys = FIELDMAP_GetGameSysWork( fieldWork );
-    GAMEDATA *gdata = GAMESYSTEM_GetGameData( gsys );
-    PLAYER_WORK *player = GAMEDATA_GetMyPlayerWork( gdata );
-
-		FIELD_PLAYER_NOGRID_Free_Move( fld_player, key_cont, FX32_ONE );
-		
-		FIELD_PLAYER_GetPos( fld_player, pos );
-    PLAYERWORK_setPosition( player, pos );
-	}
+  MMDL_GetVectorPos( mmdl, pos );
+  FIELD_PLAYER_SetPos( fld_player, pos );
+  PLAYERWORK_setPosition( player, pos );
 }
 
 

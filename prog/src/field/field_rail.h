@@ -157,6 +157,7 @@ typedef enum {
   RAIL_FRAME_8,
   RAIL_FRAME_4,
   RAIL_FRAME_2,
+  RAIL_FRAME_1,
 
   RAIL_FRAME_MAX,
 }RAIL_FRAME;
@@ -285,6 +286,16 @@ extern void FIELD_RAIL_MAN_UpdateCamera(const FIELD_RAIL_MAN * man);
 
 
 //------------------------------------------------------------------
+// 基準となるレールグリッドサイズの取得
+// *ないりんさなどがあるため、必ずこの値ではない
+//------------------------------------------------------------------
+extern fx32 FIELD_RAIL_MAN_GetRailGridSize( const FIELD_RAIL_MAN * man );
+
+// ロケーションでの計算
+extern BOOL FIELD_RAIL_MAN_CalcRailKeyLocation(const FIELD_RAIL_MAN * man, const RAIL_LOCATION * now_location, RAIL_KEY key, RAIL_LOCATION * next_location);
+extern void FIELD_RAIL_MAN_GetLocationPosition(const FIELD_RAIL_MAN * man, const RAIL_LOCATION * location, VecFx32* pos );
+
+//------------------------------------------------------------------
 // 移動管理1物体の生成・破棄
 //------------------------------------------------------------------
 extern FIELD_RAIL_WORK* FIELD_RAIL_MAN_CreateWork( FIELD_RAIL_MAN * man );
@@ -324,6 +335,8 @@ extern BOOL FIELD_RAIL_WORK_ForwardReq( FIELD_RAIL_WORK * work, RAIL_FRAME frame
 extern void FIELD_RAIL_WORK_SetLocation(FIELD_RAIL_WORK * work, const RAIL_LOCATION * location);
 extern void FIELD_RAIL_WORK_GetLocation(const FIELD_RAIL_WORK * work, RAIL_LOCATION * location);
 extern void FIELD_RAIL_WORK_GetLastLocation(const FIELD_RAIL_WORK * work, RAIL_LOCATION * location);
+extern BOOL FIELD_RAIL_WORK_CheckLocation( const FIELD_RAIL_WORK * work, const RAIL_LOCATION * location );
+
 
 //------------------------------------------------------------------
 //  動作アップデート
@@ -347,3 +360,11 @@ extern BOOL FIELD_RAIL_WORK_GetLastAction( const FIELD_RAIL_WORK * work );
 //------------------------------------------------------------------
 extern void FIELD_RAIL_WORK_SetActiveFlag( FIELD_RAIL_WORK * work, BOOL flag );
 extern BOOL FIELD_RAIL_WORK_IsActive( const FIELD_RAIL_WORK * work );
+
+
+
+//------------------------------------------------------------------
+// 判定系ツール
+//------------------------------------------------------------------
+extern BOOL FIELD_RAIL_TOOL_HitCheckSphere( const VecFx32* person, const VecFx32* check, fx32 r );
+

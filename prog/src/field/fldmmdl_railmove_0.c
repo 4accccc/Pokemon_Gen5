@@ -31,6 +31,12 @@ static const u8 sc_DIR_TO_RAILKEY[DIR_MAX4] =
   RAIL_KEY_RIGHT,
 };
 
+
+//-------------------------------------
+///	GRID Rをもとめる式
+//=====================================
+#define MMDL_GET_RAILGRID_R(grid_size)    ( FX_Div( (grid_size), 4<<FX32_SHIFT ) )
+
 //-----------------------------------------------------------------------------
 /**
  *					構造体宣言
@@ -85,6 +91,7 @@ static void MMdl_RailCommon_Return( MV_RAIL_COMMON_WORK* p_work, MMDL * fmmdl );
 void MMDL_SetRailLocation( MMDL * fmmdl, const RAIL_LOCATION* location )
 {
   MV_RAIL_COMMON_WORK* p_work;
+  VecFx32 pos;
 
   // レール動作チェック
   GF_ASSERT( MMDL_CheckStatusBit( fmmdl, MMDL_STABIT_RAIL_MOVE ) );
@@ -93,6 +100,10 @@ void MMDL_SetRailLocation( MMDL * fmmdl, const RAIL_LOCATION* location )
 
   FIELD_RAIL_WORK_SetLocation( p_work->rail_wk, location );
   p_work->rail_location = *location;
+
+  // 座標の更新
+  FIELD_RAIL_WORK_GetPos( p_work->rail_wk, &pos );
+	MMDL_SetVectorPos( fmmdl, &pos );
 }
 
 //----------------------------------------------------------------------------
@@ -185,7 +196,224 @@ BOOL MMDL_ReqRailMove( MMDL * fmmdl, u16 dir, s16 wait )
   return FIELD_RAIL_WORK_ForwardReq( p_work->rail_wk, frame, railkey );
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  フィールドレール動作モデル　移動チェック
+ *
+ *	@param	mmdl              モデル
+ *	@param	now_location      現在のロケーション
+ *	@param  next_location     次のロケーション
+ *
+ * @retval	u32		ヒットビット。MMDL_MOVEHITBIT_LIM等
+ */
+//-----------------------------------------------------------------------------
+u32 MMDL_HitCheckRailMove( const MMDL *mmdl, const RAIL_LOCATION* now_location, const RAIL_LOCATION* next_location )
+{
+  const MV_RAIL_COMMON_WORK* cp_work;
+  u32 ret = MMDL_MOVEHITBIT_NON;
+  FLDNOGRID_MAPPER* p_mapper;
 
+  // レール動作チェック
+  GF_ASSERT( MMDL_CheckStatusBit( mmdl, MMDL_STABIT_RAIL_MOVE ) );
+
+  // レール動作ワーク取得
+	cp_work = MMDL_GetMoveProcWork( (MMDL*)mmdl );
+
+  // マッパー取得
+  p_mapper = MMDLSYS_GetNOGRIDMapper( MMDL_GetMMdlSys( mmdl ) );
+
+  // next_locationのレールがあるか？
+  if( FIELD_RAIL_WORK_CheckLocation( cp_work->rail_wk, next_location ) == FALSE )
+  {
+    TOMOYA_Printf( "CHECK LOCATION MOVE LIMIT\n" );
+    ret |= MMDL_MOVEHITBIT_LIM;
+  }
+
+  // アトリビュートチェック
+	if( MMDL_CheckMoveBitAttrGetOFF(mmdl) == FALSE )
+  {
+    MAPATTR attr;
+    MAPATTR_FLAG attr_flag;
+
+    attr = FLDNOGRID_MAPPER_GetAttr( p_mapper, next_location );
+    attr_flag = MAPATTR_GetAttrFlag( attr );
+
+    if( attr_flag & MAPATTR_FLAGBIT_HITCH )
+    {
+		  ret |= MMDL_MOVEHITBIT_ATTR;
+    }
+  }
+
+  // モデルあたり判定
+  if( MMDL_HitCheckRailMoveFellow(mmdl, next_location) )
+  {
+    TOMOYA_Printf( "HIT OBJ\n" );
+		ret |= MMDL_MOVEHITBIT_OBJ;
+  }
+
+  return ret;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  フィールドレール動作モデル  移動チェック  今の場所から
+ *
+ *	@param	mmdl              モデル
+ *	@param  next_location     次のロケーション
+ *
+ * @retval	u32		ヒットビット。MMDL_MOVEHITBIT_LIM等
+ */
+//-----------------------------------------------------------------------------
+u32 MMDL_HitCheckRailMoveCurrent( const MMDL *mmdl, const RAIL_LOCATION* next_location )
+{
+  const MV_RAIL_COMMON_WORK* cp_work;
+  RAIL_LOCATION location;
+
+  // レール動作チェック
+  GF_ASSERT( MMDL_CheckStatusBit( mmdl, MMDL_STABIT_RAIL_MOVE ) );
+
+  // レール動作ワーク取得
+	cp_work = MMDL_GetMoveProcWork( (MMDL*)mmdl );
+
+  // 今のロケーション取得
+  FIELD_RAIL_WORK_GetLocation( cp_work->rail_wk, &location );
+
+  return MMDL_HitCheckRailMove(mmdl, &location, next_location);
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  フィールドレール動作モデル  移動チェック  今の場所からdirの方向に
+ *
+ *	@param	mmdl              モデル
+ *	@param  dir               移動方向 
+ *
+ * @retval	u32		ヒットビット。MMDL_MOVEHITBIT_LIM等
+ */
+//-----------------------------------------------------------------------------
+u32 MMDL_HitCheckRailMoveDir( const MMDL *mmdl, u16 dir )
+{
+  const MV_RAIL_COMMON_WORK* cp_work;
+  RAIL_LOCATION now_location;
+  RAIL_LOCATION next_location;
+  BOOL check_next_location;
+  const FLDNOGRID_MAPPER* cp_mapper = MMDLSYS_GetNOGRIDMapper( MMDL_GetMMdlSys( mmdl ) );
+  const FIELD_RAIL_MAN* cp_railman = FLDNOGRID_MAPPER_GetRailMan( cp_mapper );
+
+  // レール動作チェック
+  GF_ASSERT( MMDL_CheckStatusBit( mmdl, MMDL_STABIT_RAIL_MOVE ) );
+
+  // レール動作ワーク取得
+	cp_work = MMDL_GetMoveProcWork( (MMDL*)mmdl );
+
+  // DIRに対応した、ロケーションを取得
+  FIELD_RAIL_WORK_GetLocation( cp_work->rail_wk, &now_location );
+  check_next_location = FIELD_RAIL_MAN_CalcRailKeyLocation( cp_railman, &now_location, MMdl_ConvertDir_RailKey( dir ), &next_location );
+
+  
+  if( check_next_location )
+  {
+    return MMDL_HitCheckRailMove(mmdl, &now_location, &next_location);
+  }
+
+  TOMOYA_Printf( "MOVE LIMIT\n" );
+  return MMDL_MOVEHITBIT_LIM;
+}
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  レール動作中の物体あたり判定
+ *
+ *	@param	mmdl      モデル
+ *	@param  location  位置
+ *
+ *	@retval TRUE  衝突
+ *	@retval FALSE なし
+ */
+//-----------------------------------------------------------------------------
+BOOL MMDL_HitCheckRailMoveFellow( const MMDL * mmdl, const RAIL_LOCATION* next_location )
+{
+  const MMDLSYS* cp_sys = MMDL_GetMMdlSys( mmdl );
+  const FLDNOGRID_MAPPER* cp_mapper = MMDLSYS_GetNOGRIDMapper( cp_sys );
+  const FIELD_RAIL_MAN* cp_railman = FLDNOGRID_MAPPER_GetRailMan( cp_mapper );
+  VecFx32 my_pos;
+  VecFx32 mdl_pos;
+  fx32 dist;
+  MMDL* cmdl;
+  u32 no = 0;
+  fx32 grid_r;
+  
+  FIELD_RAIL_MAN_GetLocationPosition( cp_railman, next_location, &my_pos );
+
+  grid_r = FIELD_RAIL_MAN_GetRailGridSize( cp_railman );
+  grid_r = MMDL_GET_RAILGRID_R( grid_r );
+
+	while( MMDLSYS_SearchUseMMdl(cp_sys,&cmdl,&no) == TRUE )
+  {
+		if( cmdl != mmdl )
+    {
+			if( MMDL_CheckStatusBit( cmdl,MMDL_STABIT_FELLOW_HIT_NON) == 0 )
+      {
+        MMDL_GetVectorPos( cmdl, &mdl_pos );
+
+//        TOMOYA_Printf( "grid_r 0x%x my_pos x[0x%x]y[0x%x]z[0x%x] mdl_pos x[0x%x]y[0x%x]z[0x%x] \n", grid_r, my_pos.x, my_pos.y, my_pos.z, mdl_pos.x, mdl_pos.y, mdl_pos.z );
+        if( FIELD_RAIL_TOOL_HitCheckSphere( &my_pos, &mdl_pos, grid_r ) )
+        {
+          return TRUE;
+        }
+      }
+    }
+  }
+    
+  return FALSE;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ロケーションのあたりにいるOBJを取得する
+ *
+ *	@param	sys         MMDLSYS
+ *	@param	location    ロケーション
+ *	@param	old_hit     前のロケーションもちぇっくするか
+ *
+ *	@return ヒットしたOBJ
+ */
+//-----------------------------------------------------------------------------
+MMDL * MMDLSYS_SearchRailLocation( const MMDLSYS *sys, const RAIL_LOCATION* location, BOOL old_hit )
+{
+	u32 no = 0;
+	MMDL *mmdl;
+  const FLDNOGRID_MAPPER* cp_mapper = MMDLSYS_GetNOGRIDMapper( sys );
+  const FIELD_RAIL_MAN* cp_railman = FLDNOGRID_MAPPER_GetRailMan( cp_mapper );
+  VecFx32 check_pos;
+  VecFx32 mdl_pos;
+  RAIL_LOCATION old_location;
+  fx32 grid_r;
+  
+
+  FIELD_RAIL_MAN_GetLocationPosition( cp_railman, location, &check_pos );
+  grid_r = FIELD_RAIL_MAN_GetRailGridSize( cp_railman );
+  grid_r = MMDL_GET_RAILGRID_R( grid_r );
+
+	while( MMDLSYS_SearchUseMMdl(sys,&mmdl,&no) == TRUE ){
+		if( old_hit ){
+      MMDL_GetOldRailLocation( mmdl, &old_location );
+      FIELD_RAIL_MAN_GetLocationPosition( cp_railman, &old_location, &mdl_pos );
+
+			if( FIELD_RAIL_TOOL_HitCheckSphere( &check_pos, &mdl_pos, grid_r ) ){
+				return( mmdl );
+			}
+		}
+		
+    MMDL_GetVectorPos( mmdl, &mdl_pos );
+    if( FIELD_RAIL_TOOL_HitCheckSphere( &check_pos, &mdl_pos, grid_r ) ){
+      return( mmdl );
+		}
+	}
+	
+	return( NULL );
+}
 
 
 //----------------------------------------------------------------------------

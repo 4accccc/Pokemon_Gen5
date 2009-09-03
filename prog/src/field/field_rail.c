@@ -27,6 +27,7 @@ static u8 RAIL_COUNTUP[ RAIL_FRAME_MAX ] =
   2,        //RAIL_FRAME_8,
   4,        //RAIL_FRAME_4,
   8,       //RAIL_FRAME_2,
+  16,       //RAIL_FRAME_2,
 };
 
 //============================================================================================
@@ -136,6 +137,9 @@ struct _FIELD_RAIL_MAN{
   FIELD_CAMERA * field_camera;
   const FIELD_RAIL_WORK * camera_bind_work;
 
+  // ロケーションのみでの計算用
+  FIELD_RAIL_WORK* calc_work;
+
 
   /// ライン、ポイントテーブル
 	RAIL_SETTING rail_dat;
@@ -235,6 +239,10 @@ FIELD_RAIL_MAN * FIELD_RAIL_MAN_Create(HEAPID heapID, u32 work_num, FIELD_CAMERA
   {
     initRail(&man->rail_work[i], &man->rail_dat, man);
   }
+
+  // 計算用ワークも初期か
+  man->calc_work = GFL_HEAP_AllocClearMemory( heapID, sizeof(FIELD_RAIL_WORK) );
+  initRail(man->calc_work, &man->rail_dat, man);
   
   return man;
 }
@@ -246,6 +254,7 @@ FIELD_RAIL_MAN * FIELD_RAIL_MAN_Create(HEAPID heapID, u32 work_num, FIELD_CAMERA
 //------------------------------------------------------------------
 void FIELD_RAIL_MAN_Delete(FIELD_RAIL_MAN * man)
 { 
+  GFL_HEAP_FreeMemory( man->calc_work );
   GFL_HEAP_FreeMemory( man->rail_work );
   GFL_HEAP_FreeMemory(man);
 }
@@ -482,6 +491,68 @@ void FIELD_RAIL_MAN_UpdateCamera(const FIELD_RAIL_MAN * man)
   }
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  レールグリッドのサイズを取得
+ *
+ *	@param	man   マネージャ
+ *
+ *	@return
+ */
+//-----------------------------------------------------------------------------
+fx32 FIELD_RAIL_MAN_GetRailGridSize( const FIELD_RAIL_MAN * man )
+{
+  GF_ASSERT( man );
+
+  return FX_Mul( man->rail_dat.ofs_unit, RAIL_WALK_OFS<<FX32_SHIFT );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ロケーションをキーの方向に１グリッド分進めたロケーションを取得
+ *
+ *	@param	man             マネージャ
+ *	@param	now_location    今のロケーション
+ *	@param	key             キー
+ *	@param	next_location   次のロケーション格納先
+ *
+ *	@retval TRUE  １グリッド進める
+ *	@retval FALSE １グリッドすすめない
+ */
+//-----------------------------------------------------------------------------
+BOOL FIELD_RAIL_MAN_CalcRailKeyLocation(const FIELD_RAIL_MAN * man, const RAIL_LOCATION * now_location, RAIL_KEY key, RAIL_LOCATION * next_location)
+{
+  GF_ASSERT( man );
+  GF_ASSERT( now_location );
+  GF_ASSERT( next_location );
+
+  FIELD_RAIL_WORK_SetLocation( man->calc_work, now_location );
+  FIELD_RAIL_WORK_ForwardReq( man->calc_work, RAIL_FRAME_1, key );
+  FIELD_RAIL_WORK_Update( man->calc_work );
+  FIELD_RAIL_WORK_GetLocation( man->calc_work, next_location );
+
+  return FIELD_RAIL_WORK_GetLastAction( man->calc_work );
+}
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ロケーションの３D座標を取得する
+ *
+ *	@param	man           マネージャ
+ *	@param	cp_location   ロケーション
+ *	@param	pos           位置
+ */
+//-----------------------------------------------------------------------------
+void FIELD_RAIL_MAN_GetLocationPosition(const FIELD_RAIL_MAN * man, const RAIL_LOCATION * location, VecFx32* pos )
+{
+  GF_ASSERT( man );
+  GF_ASSERT( location );
+
+  FIELD_RAIL_WORK_SetLocation( man->calc_work, location );
+  FIELD_RAIL_WORK_GetPos( man->calc_work, pos );
+}
+
 
 //============================================================================================
 //
@@ -526,6 +597,67 @@ void FIELD_RAIL_WORK_GetLastLocation(const FIELD_RAIL_WORK * work, RAIL_LOCATION
 
   // ロケーションの取得
   *location = work->last_location;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ロケーションの有効せいチェック
+ *
+ *	@param	work        ワーク
+ *	@param	location    ロケーション
+ *
+ *	@retval TRUE    有効
+ *	@retval FALSE   無効
+ */
+//-----------------------------------------------------------------------------
+BOOL FIELD_RAIL_WORK_CheckLocation( const FIELD_RAIL_WORK * work, const RAIL_LOCATION * location )
+{
+  GF_ASSERT( work );
+  GF_ASSERT( location );
+
+
+  if( location->type==FIELD_RAIL_TYPE_POINT )
+  {
+    // ポイントインデックス
+    if( location->rail_index >= work->rail_dat->point_count )
+    {
+      return FALSE;
+    }
+  }
+  else
+  {
+    const RAIL_LINE* line = NULL;
+    s32 line_ofs;
+    s32 width_ofs;
+    s32 line_max;
+    s32 width_max;
+    
+    // ラインインデックス
+    if( location->rail_index >= work->rail_dat->line_count )
+    {
+      return FALSE;
+    }
+
+    line        = &work->rail_dat->line_table[ location->rail_index ];
+    line_ofs    = RAIL_GRID_TO_OFS(location->line_grid);
+    width_ofs   = RAIL_GRID_TO_OFS(location->width_grid);
+    line_max    = getLineOfsMax( line, work->ofs_unit, work->rail_dat );
+    width_max   = getLineWidthOfsMax( line, line_ofs, line_max, work->rail_dat );
+
+    // 幅
+    if( !((-width_max <= width_ofs) && (width_ofs <= width_max)) )
+    {
+      return FALSE;
+    }
+
+    // ライン
+    if( !((line_ofs <= line_max)) )
+    {
+      return FALSE;
+    }
+  }
+
+  return TRUE;
 }
 
 //----------------------------------------------------------------------------
@@ -769,6 +901,9 @@ BOOL FIELD_RAIL_WORK_IsActive( const FIELD_RAIL_WORK * work )
   return work->active;
 }
 
+
+
+
 //----------------------------------------------------------------------------
 /**
  *	@brief  1歩移動のリクエスト
@@ -790,6 +925,8 @@ BOOL FIELD_RAIL_WORK_ForwardReq( FIELD_RAIL_WORK * work, RAIL_FRAME frame, RAIL_
     work->ofs_move = 0;
     work->save_move_key = key;
     work->save_move_frame = frame;
+
+    return TRUE;
   }
 
   return FALSE;
@@ -857,7 +994,7 @@ void FIELD_RAIL_WORK_Update(FIELD_RAIL_WORK * work)
 		}
 
     // リクエスト移動完了
-		if( work->ofs_move >= RAIL_WALK_OFS )
+		if( (work->ofs_move >= RAIL_WALK_OFS) || (set_key == RAIL_KEY_NULL) )
 		{
 			work->req_move = FALSE;
 
@@ -1037,6 +1174,35 @@ const RAIL_CAMERA_SET* FIELD_RAIL_POINT_GetCameraSet( const FIELD_RAIL_WORK* wor
 	GF_ASSERT( work );
 	GF_ASSERT( point );
 	return getRailDatCamera( work->rail_dat, point->camera_set);
+}
+
+//------------------------------------------------------------------
+// 判定系ツール
+//------------------------------------------------------------------
+BOOL FIELD_RAIL_TOOL_HitCheckSphere( const VecFx32* person, const VecFx32* check, fx32 r )
+{
+  enum 
+  { 
+    HIT_HEIGHT  = FX32_ONE * 8,   // 縦の判定誤差
+  };
+  VecFx32 pos1, pos2;
+  // 平面の距離
+  fx32 len;
+  fx32 dist_y;
+
+  VEC_Set( &pos1, person->x, 0, person->z ); 
+  VEC_Set( &pos2, check->x, 0, check->z ); 
+
+
+  len = VEC_Distance( &pos1, &pos2 );
+  dist_y = MATH_ABS( person->y - check->y );
+
+
+  if( (dist_y < HIT_HEIGHT) && (len < FX_Mul( r, 2<<FX32_SHIFT ) ) )
+  {
+    return TRUE;
+  }
+  return FALSE;
 }
 
 
@@ -1332,7 +1498,7 @@ static RAIL_KEY updateLineMove_new(FIELD_RAIL_WORK * work, RAIL_KEY key, u32 cou
 
     //行くあてがない…LINEそのまま、加算をとりけし
     work->line_ofs = nLine_ofs_max;
-    return key;
+    return RAIL_KEY_NULL;
   }
   else if (key == getReverseKey(nLine->key))
   {//逆方向キーの場合
@@ -1446,7 +1612,7 @@ static RAIL_KEY updateLineMove_new(FIELD_RAIL_WORK * work, RAIL_KEY key, u32 cou
     }
     //行くあてがない…LINEそのまま、減算を取り消し
     work->line_ofs = 0;
-    return key;
+    return RAIL_KEY_NULL;
   }
   else if (key == getClockwiseKey(nLine->key))
   {//時計回り隣方向キーの場合
@@ -1532,7 +1698,7 @@ static RAIL_KEY updateLineMove_new(FIELD_RAIL_WORK * work, RAIL_KEY key, u32 cou
     }
     //中間地点の場合、行くあてがない場合…LINEそのまま、加算を取り消し
     work->width_ofs = work->width_ofs_max;
-    return key;
+    return RAIL_KEY_NULL;
   }
   else if (key == getAntiClockwiseKey(nLine->key))
   {//反時計回り隣方向キーの場合
@@ -1618,7 +1784,7 @@ static RAIL_KEY updateLineMove_new(FIELD_RAIL_WORK * work, RAIL_KEY key, u32 cou
 		}
     //中間地点の場合、行くあてがない場合…LINEそのまま、減算を取り消し
     work->width_ofs += count_up;
-    return key;
+    return RAIL_KEY_NULL;
   }
   return RAIL_KEY_NULL;
 }

@@ -1004,10 +1004,12 @@ extern void MMDL_GetRailLocation( const MMDL * fmmdl, RAIL_LOCATION* location );
 extern void MMDL_GetOldRailLocation( const MMDL * fmmdl, RAIL_LOCATION* location );
 extern FIELD_RAIL_WORK* MMDL_GetRailWork( const MMDL * fmmdl );
 extern BOOL MMDL_ReqRailMove( MMDL * fmmdl, u16 dir, s16 wait );
-extern BOOL MMDL_HitCheckRailMove( const MMDL *mmdl,
-	const RAIL_LOCATION* location, u16 dir );
-extern BOOL MMDL_HitCheckRailMoveCurrent( const MMDL *mmdl );
-extern BOOL MMDL_HitCheckRailMoveDir( const MMDL *mmdl, u16 dir );
-
+extern u32 MMDL_HitCheckRailMove( const MMDL *mmdl,
+	const RAIL_LOCATION* now_location, const RAIL_LOCATION* next_location );
+extern u32 MMDL_HitCheckRailMoveCurrent( const MMDL *mmdl, const RAIL_LOCATION* next_location );
+extern u32 MMDL_HitCheckRailMoveDir( const MMDL *mmdl, u16 dir );
+extern BOOL MMDL_HitCheckRailMoveFellow(
+	const MMDL * mmdl, const RAIL_LOCATION* location );
+extern MMDL * MMDLSYS_SearchRailLocation( const MMDLSYS *sys, const RAIL_LOCATION* location, BOOL old_hit );
 
 #endif //MMDL_H_FILE

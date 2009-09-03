@@ -730,8 +730,7 @@ static PLAYER_SET player_CheckMoveStart_Walk(
 	}
 	
 	{
-//		u32 hit = MMDL_HitCheckMoveDir( mmdl, dir );  // レール用のものを作成
-		u32 hit = MMDL_MOVEHITBIT_NON;
+		u32 hit = MMDL_HitCheckRailMoveDir( mmdl, dir );
 		
 		if( debug_flag == TRUE )
     {
@@ -1157,8 +1156,7 @@ static PLAYER_SET playerCycle_CheckMoveStart_Walk(
 	}
 	
 	{
-//		u32 hit = MMDL_HitCheckMoveDir( mmdl, dir );
-		u32 hit = MMDL_MOVEHITBIT_NON;  // レール用あたり判定を作成する
+		u32 hit = MMDL_HitCheckRailMoveDir( mmdl, dir );
 		
 		if( debug_flag == TRUE )
     {
