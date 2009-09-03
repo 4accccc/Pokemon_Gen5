@@ -731,10 +731,12 @@ void BattleBag_ButtonAnmMain( BBAG_WORK * wk )
 
 	switch( wk->btn_seq ){
 	case 0:
+/*
 		BBAG_ButtonScreenWrite( wk, wk->btn_id, 1, wk->page );
 //		BBAG_ButtonBmpWinShift( wk, wk->btn_id, 1 );
 //		BBAG_ButtonObjMove( wk, wk->btn_id, 1 );
 		wk->btn_cnt = 0;
+*/
 		wk->btn_seq = 1;
 		break;
 
@@ -745,10 +747,12 @@ void BattleBag_ButtonAnmMain( BBAG_WORK * wk )
 			return;
 		}
 */
+/*
 		BBAG_ButtonScreenWrite( wk, wk->btn_id, 2, wk->page );
 //		BBAG_ButtonBmpWinShift( wk, wk->btn_id, 2 );
 //		BBAG_ButtonObjMove( wk, wk->btn_id, 2 );
 		wk->btn_cnt = 0;
+*/
 		wk->btn_seq = 2;
 		break;
 
@@ -759,11 +763,13 @@ void BattleBag_ButtonAnmMain( BBAG_WORK * wk )
 			return;
 		}
 */
+/*
 		BBAG_ButtonScreenWrite( wk, wk->btn_id, 0, wk->page );
 //		BBAG_ButtonBmpWinShift( wk, wk->btn_id, 0 );
 //		BBAG_ButtonObjMove( wk, wk->btn_id, 0 );
 		wk->btn_cnt = 0;
 //		wk->btn_seq = 3;
+*/
 		wk->btn_seq = 0;
 		wk->btn_flg = 0;
 		break;

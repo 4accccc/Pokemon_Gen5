@@ -20,12 +20,14 @@
 #include "battle/fight_tool.h"
 #include "itemtool/item.h"
 */
+#include "arc_def.h"
 #include "b_app_tool.h"
 
 #include "b_bag.h"
 #include "b_bag_main.h"
 #include "b_bag_obj.h"
 #include "b_bag_item.h"
+#include "b_bag_gra.naix"
 
 
 //============================================================================================
@@ -99,6 +101,7 @@ static void BBAG_ClactCursorAdd( BBAG_WORK * wk );
 static void BBAG_CursorDel( BBAG_WORK * wk );
 static void BBAG_ClactGetDemoCursorAdd( BBAG_WORK * wk );
 static void BBAG_GetDemoCursorDel( BBAG_WORK * wk );
+static void CostResLoad( BBAG_WORK * wk );
 
 
 //============================================================================================
@@ -112,9 +115,17 @@ static const GFL_CLACTPOS P1_ItemIconPos = { 24, 178 };
 //static const int P2_ItemIconPos[][2] =
 static const GFL_CLACTPOS P2_ItemIconPos[] =
 {
-	{  44,  45 }, { 172,  45 },
-	{  44,  93 }, { 172,  93 },
-	{  44, 141 }, { 172, 141 },
+	// アイテムアイコン
+	{  36,  45 }, { 164,  45 },
+	{  36,  93 }, { 164,  93 },
+	{  36, 141 }, { 164, 141 },
+
+	// コスト
+	{  84,  41 }, { 212,  41 },
+	{  84,  89 }, { 212,  89 },
+	{  84, 137 }, { 212, 137 },
+	// エネルギー
+	{ 124, 172 },
 };
 
 // ページ３のポケモンアイコンの座標
@@ -129,6 +140,14 @@ static const u32 ClactDat[][3] =
 	{ BBAG_CHRRES_ITEM4, BBAG_PALRES_ITEM4, BBAG_CELRES_ITEM },
 	{ BBAG_CHRRES_ITEM5, BBAG_PALRES_ITEM5, BBAG_CELRES_ITEM },
 	{ BBAG_CHRRES_ITEM6, BBAG_PALRES_ITEM6, BBAG_CELRES_ITEM },
+
+	{ BBAG_CHRRES_COST, BBAG_PALRES_COST, BBAG_CELRES_COST },
+	{ BBAG_CHRRES_COST, BBAG_PALRES_COST, BBAG_CELRES_COST },
+	{ BBAG_CHRRES_COST, BBAG_PALRES_COST, BBAG_CELRES_COST },
+	{ BBAG_CHRRES_COST, BBAG_PALRES_COST, BBAG_CELRES_COST },
+	{ BBAG_CHRRES_COST, BBAG_PALRES_COST, BBAG_CELRES_COST },
+	{ BBAG_CHRRES_COST, BBAG_PALRES_COST, BBAG_CELRES_COST },
+	{ BBAG_CHRRES_COST, BBAG_PALRES_COST, BBAG_CELRES_COST },
 //	{ CHR_ID_GETDEMO, PAL_ID_GETDEMO, CEL_ID_GETDEMO, ANM_ID_GETDEMO, 0 }
 };
 
@@ -148,6 +167,8 @@ void BattleBag_ObjInit( BBAG_WORK * wk )
 	BBAG_ClactResManInit( wk );
 	BBAG_ClactItemLoad( wk );
 //	BBAG_ClactGetDemoLoad( wk );
+	CostResLoad( wk );
+
 	BBAG_ClactAddAll( wk );
 	BBAG_ClactCursorAdd( wk );
 	BBAG_ClactGetDemoCursorAdd( wk );
@@ -308,6 +329,30 @@ static void BBAG_ItemIconPlttChg( BBAG_WORK * wk, u16 item, u16 pos, u32 res_id 
 */
 }
 
+static void CostResLoad( BBAG_WORK * wk )
+{
+  ARCHANDLE * ah;
+	u32	i;
+	
+	ah = GFL_ARC_OpenDataHandle( ARCID_B_BAG_GRA, wk->dat->heap );
+
+  wk->chrRes[BBAG_CHRRES_COST] = GFL_CLGRP_CGR_Register(
+																		ah, NARC_b_bag_gra_test_cost_NCGR,
+																		FALSE, CLSYS_DRAW_SUB, wk->dat->heap );
+  wk->palRes[BBAG_PALRES_COST] = GFL_CLGRP_PLTT_Register(
+																		ah, NARC_b_bag_gra_test_cost_NCLR,
+																		CLSYS_DRAW_SUB, BBAG_PALRES_COST*32, wk->dat->heap );
+  wk->celRes[BBAG_CELRES_COST] = GFL_CLGRP_CELLANIM_Register(
+																	ah, NARC_b_bag_gra_test_cost_NCER,
+																	NARC_b_bag_gra_test_cost_NANR, wk->dat->heap );
+
+	// パレット
+	PaletteWorkSet_ArcHandle(
+					wk->pfd, ah, NARC_b_bag_gra_test_cost_NCLR,
+					wk->dat->heap, FADE_SUB_OBJ, 0x20, BBAG_PALRES_COST * 16 );
+
+  GFL_ARC_CloseDataHandle( ah );
+}
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -439,7 +484,7 @@ static void BBAG_ClactAddAll( BBAG_WORK * wk )
 	wk->clunit = GFL_CLACT_UNIT_Create( BBAG_CA_MAX, 0, wk->dat->heap );
 
 	for( i=0; i<BBAG_CA_MAX; i++ ){
-		wk->clwk[i] = BBAG_ClactAdd( wk, ClactDat[i]  );
+		wk->clwk[i] = BBAG_ClactAdd( wk, ClactDat[i] );
 	}
 }
 
@@ -589,6 +634,16 @@ static void BBAG_Page2ObjSet( BBAG_WORK * wk )
 		BBAG_ItemIconCharChg( wk, item, BBAG_CHRRES_ITEM1+i, BBAG_PALRES_ITEM1+i );
 //		BBAG_ItemIconPlttChg( wk, item, (u16)i, PAL_ID_ITEM1+i );
 		BBAG_ClactOn( wk->clwk[BBAG_CA_ITEM1+i], &P2_ItemIconPos[i] );
+
+		if( wk->dat->mode == BBAG_MODE_SHOOTER ){
+			BBAG_ClactOn( wk->clwk[BBAG_CA_COST1+i], &P2_ItemIconPos[6+i] );
+			GFL_CLACT_WK_SetAnmSeq( wk->clwk[BBAG_CA_COST1+i], BBAGITEM_GetCost(item)-1 );
+		}
+	}
+
+	if( wk->dat->mode == BBAG_MODE_SHOOTER ){
+		BBAG_ClactOn( wk->clwk[BBAG_CA_ENERGIE], &P2_ItemIconPos[6+i] );
+		GFL_CLACT_WK_SetAnmSeq( wk->clwk[BBAG_CA_ENERGIE], 13 );
 	}
 
 /*

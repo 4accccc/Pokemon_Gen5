@@ -224,3 +224,29 @@ u8 BattleBag_ItemUseCheck( BBAG_WORK * wk )
 //	return (u8)ItemParamGet( wk->dat->ret_item, ITEM_PRM_BATTLE, wk->dat->heap );
 	return 0;
 }
+
+
+//--------------------------------------------------------------------------------------------
+/**
+ * シューター時のコスト取得
+ *
+ * @param		item		アイテム番号
+ *
+ * @return	アイテムのコスト
+ */
+//--------------------------------------------------------------------------------------------
+u16 BBAGITEM_GetCost( u16 item )
+{
+	u32	i = 0;
+
+	while(1){
+		if( ShooterItemTable[i].item == 0 || ShooterItemTable[i].cost == 0 ){
+			break;
+		}
+		if( ShooterItemTable[i].item == item ){
+			break;
+		}
+		i++;
+	}
+	return ShooterItemTable[i].cost;
+}

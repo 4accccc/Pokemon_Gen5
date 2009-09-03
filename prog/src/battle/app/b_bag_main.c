@@ -385,7 +385,7 @@ static int BBAG_SeqInit( BBAG_WORK * wk )
 	BattleBag_BmpInit( wk );
 	BattleBag_BmpWrite( wk, wk->page );
 
-	BattleBag_ButtonPageScreenInit( wk, wk->page );
+//	BattleBag_ButtonPageScreenInit( wk, wk->page );
 
 	BattleBag_ObjInit( wk );
 	BattleBag_PageObjSet( wk, wk->page );
@@ -428,7 +428,7 @@ static int BBAG_SeqShooterInit( BBAG_WORK * wk )
 	BattleBag_BmpInit( wk );
 	BattleBag_BmpWrite( wk, wk->page );
 
-	BattleBag_ButtonPageScreenInit( wk, wk->page );
+//	BattleBag_ButtonPageScreenInit( wk, wk->page );
 
 	BattleBag_ObjInit( wk );
 	BattleBag_PageObjSet( wk, wk->page );
@@ -618,7 +618,7 @@ static int BBAG_SeqItemSelNext( BBAG_WORK * wk )
 	BattleBag_Page2_StrItemPut( wk );
 	BattleBag_Page2_StrPageNumPut( wk );
 	BattleBag_PageObjSet( wk, wk->page );
-	BattleBag_ButtonPageScreenInit( wk, wk->page );
+//	BattleBag_ButtonPageScreenInit( wk, wk->page );
 //	BBAG_P2CursorMvTblMake( wk );
 	return SEQ_BBAG_ITEM;
 }
@@ -1121,10 +1121,20 @@ static void BBAG_BgInit( BBAG_WORK * wk )
 
 	{	// BG (CHAR)
 		GFL_BG_BGCNT_HEADER TextBgCntDat = {
+			0, 0, 0x800, 0,
+			GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16, GX_BG_SCRBASE_0xc800, GX_BG_CHARBASE_0x00000,
+			0x8000,
+			GX_BG_EXTPLTT_23, 3, 0, 0, FALSE
+		};
+		GFL_BG_SetBGControl( GFL_BG_FRAME3_S, &TextBgCntDat, GFL_BG_MODE_TEXT );
+	}
+
+	{	// BG (CHAR)
+		GFL_BG_BGCNT_HEADER TextBgCntDat = {
 			0, 0, 0x2000, 0,
 			GFL_BG_SCRSIZ_512x512, GX_BG_COLORMODE_16, GX_BG_SCRBASE_0xd000, GX_BG_CHARBASE_0x00000,
 			0x8000,
-			GX_BG_EXTPLTT_23, 3, 0, 0, FALSE
+			GX_BG_EXTPLTT_23, 2, 0, 0, FALSE
 		};
 		GFL_BG_SetBGControl( GFL_BG_FRAME2_S, &TextBgCntDat, GFL_BG_MODE_TEXT );
 	}
@@ -1156,7 +1166,9 @@ static void BBAG_BgInit( BBAG_WORK * wk )
 	GFL_BG_LoadScreenV_Req( GFL_BG_FRAME0_S );
 
 	GFL_DISP_GXS_SetVisibleControl(
-		GX_PLANEMASK_BG0|GX_PLANEMASK_BG1|GX_PLANEMASK_BG2, VISIBLE_ON );
+		GX_PLANEMASK_BG0 | GX_PLANEMASK_BG1 |
+		GX_PLANEMASK_BG2 | GX_PLANEMASK_BG3,
+		VISIBLE_ON );
 }
 
 //--------------------------------------------------------------------------------------------
@@ -1171,11 +1183,14 @@ static void BBAG_BgInit( BBAG_WORK * wk )
 static void BBAG_BgExit(void)
 {
 	GFL_DISP_GXS_SetVisibleControl(
-		GX_PLANEMASK_BG0 | GX_PLANEMASK_BG1 | GX_PLANEMASK_BG2 | GX_PLANEMASK_OBJ, VISIBLE_OFF );
+		GX_PLANEMASK_BG0 | GX_PLANEMASK_BG1 |
+		GX_PLANEMASK_BG2 | GX_PLANEMASK_BG3 | GX_PLANEMASK_OBJ,
+		VISIBLE_OFF );
 
 	GFL_BG_FreeBGControl( GFL_BG_FRAME0_S );
 	GFL_BG_FreeBGControl( GFL_BG_FRAME1_S );
 	GFL_BG_FreeBGControl( GFL_BG_FRAME2_S );
+	GFL_BG_FreeBGControl( GFL_BG_FRAME3_S );
 }
 
 //--------------------------------------------------------------------------------------------
@@ -1198,9 +1213,14 @@ static void BBAG_BgGraphicSet( BBAG_WORK * wk )
 		GFL_BG_FRAME2_S, 0, 0, 0, wk->dat->heap );
 
 	GFL_ARCHDL_UTIL_TransVramScreen(
-		hdl, NARC_b_bag_gra_b_bag_bg00_NSCR,
+		hdl, NARC_b_bag_gra_b_bag_button_NSCR,
 		GFL_BG_FRAME2_S, 0, 0, 0, wk->dat->heap );
 
+	GFL_ARCHDL_UTIL_TransVramScreen(
+		hdl, NARC_b_bag_gra_b_bag_base_NSCR,
+		GFL_BG_FRAME3_S, 0, 0, 0, wk->dat->heap );
+
+/*
 	{
 		NNSG2dScreenData * dat;
 		void * buf;
@@ -1213,6 +1233,7 @@ static void BBAG_BgGraphicSet( BBAG_WORK * wk )
 		BattleBag_ButtonScreenMake( wk, scrn );
 		GFL_HEAP_FreeMemory( buf );
 	}
+*/
 
 	PaletteWorkSet_ArcHandle(
 			wk->pfd, hdl, NARC_b_bag_gra_b_bag_bg_NCLR,
@@ -1366,7 +1387,7 @@ static void BBAG_PageChange( BBAG_WORK * wk, u8 next_page )
 //	BattleBag_BmpAdd( wk, next_page );
 	BattleBag_BmpWrite( wk, next_page );
 
-	BattleBag_ButtonPageScreenInit( wk, next_page );
+//	BattleBag_ButtonPageScreenInit( wk, next_page );
 
 	BattleBag_CursorMoveSet( wk, next_page );
 	BBAG_GetDemoCursorSet( wk, next_page );

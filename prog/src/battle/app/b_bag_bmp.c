@@ -41,16 +41,16 @@
 //============================================================================================
 //	定数定義
 //============================================================================================
+/*
 #define	PCOL_N_BLACK	( PRINTSYS_LSB_MAKE( 1, 2, 0 ) )		// フォントカラー：黒
-/*↑[GS_CONVERT_TAG]*/
 #define	PCOL_N_WHITE	( PCOL_N_BLACK )						// フォントカラー：白
 #define	PCOL_N_BLUE		( PRINTSYS_LSB_MAKE( 7, 8, 0 ) )		// フォントカラー：青
-/*↑[GS_CONVERT_TAG]*/
 #define	PCOL_N_RED		( PRINTSYS_LSB_MAKE( 3, 4, 0 ) )		// フォントカラー：赤
-/*↑[GS_CONVERT_TAG]*/
-
 #define	PCOL_BTN		( PRINTSYS_LSB_MAKE( 3, 2, 1 ) )		// ボタンフォント
-/*↑[GS_CONVERT_TAG]*/
+*/
+
+#define	FCOL_S12W		( PRINTSYS_LSB_Make(15,2,0) )	// フォントカラー：白
+//#define	FCOL_T12B		( PRINTSYS_LSB_Make(1,2,15) )	// フォントカラー：黒
 
 
 //============================================================================================
@@ -347,7 +347,7 @@ void BattleBag_BmpWrite( BBAG_WORK * wk, u32 page )
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-static void BBAG_StrPut( BBAG_WORK * wk, u32 widx, u32 midx, u32 py, u32 col )
+static void BBAG_StrPut( BBAG_WORK * wk, u32 widx, u32 midx, u32 py, u16 col )
 {
 	GFL_BMPWIN * win;
 	STRBUF * str;
@@ -358,7 +358,7 @@ static void BBAG_StrPut( BBAG_WORK * wk, u32 widx, u32 midx, u32 py, u32 col )
 	str = GFL_MSG_CreateString( wk->mman, midx );
 	siz = PRINTSYS_GetStrWidth( str, wk->dat->font, 0 );
 	px = ( GFL_BMPWIN_GetSizeX(win) * 8 - siz ) / 2;
-	PRINTSYS_PrintQue( wk->que, GFL_BMPWIN_GetBmp(win), px, py, str, wk->dat->font );
+	PRINTSYS_PrintQueColor( wk->que, GFL_BMPWIN_GetBmp(win), px, py, str, wk->dat->font, col );
 	GFL_STR_DeleteBuffer( str );
 
   GFL_BMPWIN_MakeTransWindow_VBlank( win );
@@ -393,12 +393,12 @@ static void BBAG_Page1BmpWrite( BBAG_WORK * wk )
 		GFL_BMP_Clear( bmp, 0 );
 	}
 
-	BBAG_StrPut( wk, WIN_P1_HP, mes_b_bag_01_000, P1_HP_PY, 0 );//PCOL_BTN );
-	BBAG_StrPut( wk, WIN_P1_HP, mes_b_bag_01_001, P1_KAIFUKU3_PY, 0 );//PCOL_BTN );
-	BBAG_StrPut( wk, WIN_P1_ZYOUTAI, mes_b_bag_01_100, P1_ZYOUTAI_PY, 0 );//PCOL_BTN );
-	BBAG_StrPut( wk, WIN_P1_ZYOUTAI, mes_b_bag_01_101, P1_KAIFUKU2_PY, 0 );//PCOL_BTN );
-	BBAG_StrPut( wk, WIN_P1_BALL, mes_b_bag_01_500, P1_BALL_PY, 0 );//PCOL_BTN );
-	BBAG_StrPut( wk, WIN_P1_BATTLE, mes_b_bag_01_400, P1_BATTLE_PY, 0 );//PCOL_BTN );
+	BBAG_StrPut( wk, WIN_P1_HP, mes_b_bag_01_000, P1_HP_PY, FCOL_S12W );
+	BBAG_StrPut( wk, WIN_P1_HP, mes_b_bag_01_001, P1_KAIFUKU3_PY, FCOL_S12W );
+	BBAG_StrPut( wk, WIN_P1_ZYOUTAI, mes_b_bag_01_100, P1_ZYOUTAI_PY, FCOL_S12W );
+	BBAG_StrPut( wk, WIN_P1_ZYOUTAI, mes_b_bag_01_101, P1_KAIFUKU2_PY, FCOL_S12W );
+	BBAG_StrPut( wk, WIN_P1_BALL, mes_b_bag_01_500, P1_BALL_PY, FCOL_S12W );
+	BBAG_StrPut( wk, WIN_P1_BATTLE, mes_b_bag_01_400, P1_BATTLE_PY, FCOL_S12W );
 	if( wk->dat->used_item != ITEM_DUMMY_DATA ){
 		STRBUF * str = GFL_MSG_CreateString( wk->mman, mes_b_bag_01_600 );
 /*
@@ -406,9 +406,9 @@ static void BBAG_Page1BmpWrite( BBAG_WORK * wk )
 			&wk->add_win[WIN_P1_LASTITEM], FONT_TOUCH,
 			str, 0, P1_LASTITEM_PY, MSG_NO_PUT, PCOL_BTN, NULL );
 */
-		PRINTSYS_PrintQue(
+		PRINTSYS_PrintQueColor(
 			wk->que, GFL_BMPWIN_GetBmp( wk->add_win[WIN_P1_LASTITEM] ),
-			0, P1_LASTITEM_PY, str, wk->dat->font );
+			0, P1_LASTITEM_PY, str, wk->dat->font, FCOL_S12W );
 
 		GFL_STR_DeleteBuffer( str );
 	  GFL_BMPWIN_MakeTransWindow_VBlank( wk->add_win[WIN_P1_LASTITEM] );
@@ -463,8 +463,8 @@ static void BBAG_ItemNamePut(
 		siz = PRINTSYS_GetStrWidth( wk->msg_buf, wk->dat->font, 0 );
 		px  = ( GFL_BMPWIN_GetSizeX(win) * 8 - siz ) / 2;
 //		GF_STR_PrintColor( win, fidx, wk->msg_buf, px, P2_ITEMNAME_PY, MSG_NO_PUT, col, NULL );
-		PRINTSYS_PrintQue(
-			wk->que, bmp, px, P2_ITEMNAME_PY, wk->msg_buf, wk->dat->font );
+		PRINTSYS_PrintQueColor(
+			wk->que, bmp, px, P2_ITEMNAME_PY, wk->msg_buf, wk->dat->font, FCOL_S12W );
 		GFL_STR_DeleteBuffer( str );
 	}
 
@@ -506,8 +506,8 @@ static void BBAG_ItemNumPut(
 		WORDSET_ExpandStr( wk->wset, wk->msg_buf, str );
 
 //		GF_STR_PrintColor( win, fidx, wk->msg_buf, 0, py, MSG_NO_PUT, col, NULL );
-		PRINTSYS_PrintQue(
-			wk->que, bmp, 0, py, wk->msg_buf, wk->dat->font );
+		PRINTSYS_PrintQueColor(
+			wk->que, bmp, 0, py, wk->msg_buf, wk->dat->font, FCOL_S12W );
 
 		GFL_STR_DeleteBuffer( str );
 	}
@@ -541,8 +541,10 @@ static void BBAG_P2_ItemPut( BBAG_WORK * wk, u32 pos )
 	}
 
 	BBAG_ItemNamePut( wk, dat_pos, pos, win_pos+pos*2, 0, 0 );
-	BBAG_ItemNumPut(
-		wk, dat_pos, pos, win_pos+1+pos*2, 0, P2_ITEMNUM_PY, 0 );
+	if( wk->dat->mode != BBAG_MODE_SHOOTER ){
+		BBAG_ItemNumPut(
+			wk, dat_pos, pos, win_pos+1+pos*2, 0, P2_ITEMNUM_PY, 0 );
+	}
 }
 
 //--------------------------------------------------------------------------------------------
@@ -598,8 +600,8 @@ void BattleBag_Page2_StrPageNumPut( BBAG_WORK * wk )
 	GF_STR_PrintColor(
 		win, FONT_SYSTEM, str, px, P2_PAGE_NUM_PY, MSG_NO_PUT, PCOL_N_WHITE, NULL );
 */
-	PRINTSYS_PrintQue(
-			wk->que, bmp, px, P2_PAGE_NUM_PY, str, wk->dat->font );
+	PRINTSYS_PrintQueColor(
+			wk->que, bmp, px, P2_PAGE_NUM_PY, str, wk->dat->font, FCOL_S12W );
 	GFL_STR_DeleteBuffer( str );
 
 	str = GFL_MSG_CreateString( wk->mman, mes_b_bag_02_801 );
@@ -609,8 +611,8 @@ void BattleBag_Page2_StrPageNumPut( BBAG_WORK * wk )
 	WORDSET_ExpandStr( wk->wset, wk->msg_buf, str );
 //	GF_STR_PrintColor(
 //		win, FONT_SYSTEM, wk->msg_buf, px+siz, P2_PAGE_NUM_PY, MSG_NO_PUT, PCOL_N_WHITE, NULL );
-	PRINTSYS_PrintQue(
-			wk->que, bmp, px+siz, P2_PAGE_NUM_PY, wk->msg_buf, wk->dat->font );
+	PRINTSYS_PrintQueColor(
+			wk->que, bmp, px+siz, P2_PAGE_NUM_PY, wk->msg_buf, wk->dat->font, FCOL_S12W );
 	GFL_STR_DeleteBuffer( str );
 
 	str = GFL_MSG_CreateString( wk->mman, mes_b_bag_02_802 );
@@ -622,8 +624,8 @@ void BattleBag_Page2_StrPageNumPut( BBAG_WORK * wk )
 	siz = PRINTSYS_GetStrWidth( wk->msg_buf, wk->dat->font, 0 );
 //	GF_STR_PrintColor(
 //		win, FONT_SYSTEM, wk->msg_buf, px-siz, P2_PAGE_NUM_PY, MSG_NO_PUT, PCOL_N_WHITE, NULL );
-	PRINTSYS_PrintQue(
-			wk->que, bmp, px-siz, P2_PAGE_NUM_PY, wk->msg_buf, wk->dat->font );
+	PRINTSYS_PrintQueColor(
+			wk->que, bmp, px-siz, P2_PAGE_NUM_PY, wk->msg_buf, wk->dat->font, FCOL_S12W );
 	GFL_STR_DeleteBuffer( str );
 
 	GFL_BMPWIN_MakeTransWindow_VBlank( win );
@@ -657,23 +659,23 @@ static void BBAG_Page2PocketNamePut( BBAG_WORK * wk )
 	switch( wk->poke_id ){
 	case BBAG_POKE_HPRCV:	// HP回復ポケット
 		BBAG_StrPut(
-			wk, WIN_P2_POCKET, mes_b_bag_02_700, P2_POCKET_HP1_PY, 0 );//, PCOL_N_WHITE );
+			wk, WIN_P2_POCKET, mes_b_bag_02_700, P2_POCKET_HP1_PY, FCOL_S12W );
 		BBAG_StrPut(
-			wk, WIN_P2_POCKET, mes_b_bag_02_701, P2_POCKET_HP2_PY, 0 );//, PCOL_N_WHITE );
+			wk, WIN_P2_POCKET, mes_b_bag_02_701, P2_POCKET_HP2_PY, FCOL_S12W );
 		break;
 	case BBAG_POKE_STRCV:	// 状態回復ポケット
 		BBAG_StrPut(
-			wk, WIN_P2_POCKET, mes_b_bag_02_702, P2_POCKET_ST1_PY, 0 );//, PCOL_N_WHITE );
+			wk, WIN_P2_POCKET, mes_b_bag_02_702, P2_POCKET_ST1_PY, FCOL_S12W );
 		BBAG_StrPut(
-			wk, WIN_P2_POCKET, mes_b_bag_02_703, P2_POCKET_ST2_PY, 0 );//, PCOL_N_WHITE );
+			wk, WIN_P2_POCKET, mes_b_bag_02_703, P2_POCKET_ST2_PY, FCOL_S12W );
 		break;
 	case BBAG_POKE_BALL:	// ボールポケット
 		BBAG_StrPut(
-			wk, WIN_P2_POCKET, mes_b_bag_02_704, P2_POCKET_BALL_PY, 0 );//, PCOL_N_WHITE );
+			wk, WIN_P2_POCKET, mes_b_bag_02_704, P2_POCKET_BALL_PY, FCOL_S12W );
 		break;
 	case BBAG_POKE_BATTLE:	// 戦闘用ポケット
 		BBAG_StrPut(
-			wk, WIN_P2_POCKET, mes_b_bag_02_705, P2_POCKET_BATL_PY, 0 );//, PCOL_N_WHITE );
+			wk, WIN_P2_POCKET, mes_b_bag_02_705, P2_POCKET_BATL_PY, FCOL_S12W );
 		break;
 	}
 }
@@ -690,7 +692,9 @@ static void BBAG_Page2PocketNamePut( BBAG_WORK * wk )
 static void BBAG_Page2BmpWrite( BBAG_WORK * wk )
 {
 	BattleBag_Page2_StrItemPut( wk );
-	BBAG_Page2PocketNamePut( wk );
+	if( wk->dat->mode != BBAG_MODE_SHOOTER ){
+		BBAG_Page2PocketNamePut( wk );
+	}
 	BattleBag_Page2_StrPageNumPut( wk );
 }
 
@@ -724,8 +728,8 @@ static void BBAG_P3_ItemNamePut( BBAG_WORK * wk, u32 dat_pos )
 	GFL_BMP_Clear( bmp, 0 );
 //	GF_STR_PrintColor(
 //		win, FONT_SYSTEM, wk->msg_buf, 0, P3_ITEMNAME_PY, MSG_NO_PUT, PCOL_N_WHITE, NULL );
-	PRINTSYS_PrintQue(
-			wk->que, bmp, 0, P3_ITEMNAME_PY, wk->msg_buf, wk->dat->font );
+	PRINTSYS_PrintQueColor(
+			wk->que, bmp, 0, P3_ITEMNAME_PY, wk->msg_buf, wk->dat->font, FCOL_S12W );
 	GFL_STR_DeleteBuffer( str );
 
 	GFL_BMPWIN_MakeTransWindow_VBlank( win );
@@ -751,8 +755,8 @@ static void BBAG_P3_ItemInfoPut( BBAG_WORK * wk, u32 dat_pos )
 	ITEM_GetInfo( buf, wk->pocket[wk->poke_id][dat_pos].id, wk->dat->heap );
 //	GF_STR_PrintColor(
 //		win, FONT_SYSTEM, buf, P3_ITEMINFO_PX, P3_ITEMINFO_PY, MSG_NO_PUT, PCOL_N_BLACK, NULL );
-	PRINTSYS_PrintQue(
-			wk->que, GFL_BMPWIN_GetBmp(win), P3_ITEMINFO_PX, P3_ITEMINFO_PY, buf, wk->dat->font );
+	PRINTSYS_PrintQueColor(
+			wk->que, GFL_BMPWIN_GetBmp(win), P3_ITEMINFO_PX, P3_ITEMINFO_PY, buf, wk->dat->font, FCOL_S12W );
 	GFL_STR_DeleteBuffer( buf );
 
 	GFL_BMPWIN_MakeTransWindow_VBlank( win );
@@ -785,7 +789,7 @@ static void BBAG_Page3BmpWrite( BBAG_WORK * wk )
 	BBAG_P3_ItemNamePut( wk, dat_pos );
 	BBAG_ItemNumPut( wk, dat_pos, 0, WIN_P3_NUM, 0, P3_ITEMNUM_PY, 0 );
 	BBAG_P3_ItemInfoPut( wk, dat_pos );
-	BBAG_StrPut( wk, WIN_P3_USE, mes_b_bag_03_000, P3_USE_PY, 0 );//PCOL_BTN );
+	BBAG_StrPut( wk, WIN_P3_USE, mes_b_bag_03_000, P3_USE_PY, FCOL_S12W );
 }
 
 //--------------------------------------------------------------------------------------------
