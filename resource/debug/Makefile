@@ -1,7 +1,7 @@
 
 include $(PROJECT_RSCDIR)\macro_define
 
-SUBDIRS	=	rail_editor watanabe lobby_trfgra
+SUBDIRS	=	rail_editor watanabe lobby_trfgra obata
 
 TARGET_NAMES = \
 	mmodel.naix \

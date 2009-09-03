@@ -1,0 +1,19 @@
+/*****************************************************************************
+	Archive file index definition.
+	File: debug_obata.naix
+
+	This file was created by NINTENDO NITRO-System Archiver.
+
+
+ *****************************************************************************/
+
+#ifndef NARC_DEBUG_OBATA_NAIX_
+#define NARC_DEBUG_OBATA_NAIX_
+
+enum {
+	NARC_debug_obata_camera_test1_nsbmd = 0,
+	NARC_debug_obata_ica_test_data_bin = 1
+};
+
+/* NARC_DEBUG_OBATA_NAIX_ */
+#endif

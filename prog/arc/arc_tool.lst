@@ -175,3 +175,4 @@
   ARCID_GIMMICK_ASSIGN "fieldmap/gimmick_assign.narc"	#ギミックアサインデータ
 	ARCID_POKETRADE			"trade.narc"	# ポケモン交換
 	ARCID_REGULATION			"regulation.narc"	# ポケモンバトルレギュレーションデータ
+  ARCID_OBATA_DEBUG "debug_obata.narc" # 小幡デバッグメニュー用データ
