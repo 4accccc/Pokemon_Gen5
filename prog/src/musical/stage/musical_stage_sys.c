@@ -100,6 +100,8 @@ static GFL_PROC_RESULT MusicalStageProc_Init( GFL_PROC * proc, int * seq , void 
     MUSICAL_STAGE_SetEquip( work->actInitWork , 3 , MUS_POKE_EQU_HAND_R , 30 , 0 );
     MUSICAL_STAGE_SetEquip( work->actInitWork , 3 , MUS_POKE_EQU_HAND_L  , 30 , 0 );
     MUSICAL_STAGE_SetEquip( work->actInitWork , 3 , MUS_POKE_EQU_HEAD   , 21 , 0 );
+    //無理やりプレーヤーに
+    work->actInitWork->musPoke[1].charaType = MUS_CHARA_PLAYER;
     work->actInitWork->progWork = MUSICAL_PROGRAM_GetProgramData( HEAPID_MUSICAL_STAGE );
     MUSICAL_PROGRAM_CalcPokemonPoint( HEAPID_MUSICAL_STAGE , work->actInitWork->progWork , work->actInitWork );
 
@@ -126,6 +128,8 @@ static GFL_PROC_RESULT MusicalStageProc_Term( GFL_PROC * proc, int * seq , void 
     GFL_HEAP_FreeMemory( work->actInitWork->progWork );
     MUSICAL_SYSTEM_TermDistributeData( work->actInitWork->distData );
     GFL_HEAP_DeleteHeap( HEAPID_MUSICAL_STRM );
+    //無理やりプレーヤーに下したので戻す
+    work->actInitWork->musPoke[1].charaType = MUS_CHARA_NPC;
     MUSICAL_STAGE_DeleteStageWork( work->actInitWork );
   }
   GFL_PROC_FreeWork( proc );

@@ -7,6 +7,7 @@
  */
 //======================================================================
 #include <gflib.h>
+#include <calctool.h>
 #include "system/main.h"
 #include "system/gfl_use.h"
 #include "system/wipe.h"
@@ -101,6 +102,8 @@ static const int LIST_CENTER_Y_FX = FX32_CONST(LIST_CENTER_Y);
 static const u16 LIST_SIZE_X = 72;
 static const u16 LIST_SIZE_Y = 48;
 static const float LIST_SIZE_RATIO = ((float)LIST_SIZE_Y/(float)LIST_SIZE_X);
+
+#define DUP_FIT_CALC_OVAL_RATIO(val) (val*LIST_SIZE_X/LIST_SIZE_Y)
 
 //サイズ
 static const int LIST_TPHIT_MAX_X = LIST_SIZE_X+20;
@@ -201,6 +204,8 @@ typedef enum
   DUS_FITTING_MAIN,
   DUS_GO_CHECK,
   DUS_CHECK_MAIN,
+  DUS_WAIT_COMM_PLAYER,
+  DUS_WAIT_COMM_STRM,
   DUS_RETURN_FITTING,
   
   DUS_FADEIN_WAIT,
@@ -356,8 +361,6 @@ static void DUP_FIT_SetupStartItem( FITTING_WORK *work , const u16 itemId );
 static void DUP_FIT_TermItem( FITTING_WORK *work );
 static void DUP_FIT_CalcItemListAngle( FITTING_WORK *work , u16 angle , s16 moveAngle , u16 sizeX , u16 sizeY );
 static void DUP_FIT_CheckItemListPallet( FITTING_WORK *work );
-static void DUP_FIT_InitMessage( FITTING_WORK *work );
-static void DUP_FIT_TermMessage( FITTING_WORK *work );
 
 static void DUP_FIT_UpdateTpMain( FITTING_WORK *work );
 static void DUP_FIT_UpdateTpList( FITTING_WORK *work , s16 subX , s16 subY );
@@ -398,6 +401,11 @@ static void DUP_DEMO_DemoEnd( FITTING_WORK *work );
 static void DUP_DEMO_DemoPhaseListRot( FITTING_WORK *work , const u16 start , const s32 value , const u16 cnt);
 static void DUP_DEMO_DemoPhaseWait( FITTING_WORK *work , const u16 cnt );
 static void DUP_DEMO_DemoPhaseDragPen( FITTING_WORK *work , const GFL_POINT *start , const GFL_POINT *end , const u16 cnt );
+
+#pragma mark [> proto Message
+static void DUP_FIT_InitMessage( FITTING_WORK *work );
+static void DUP_FIT_TermMessage( FITTING_WORK *work );
+static void DUP_FIT_DrawMessage( FITTING_WORK *work , u16 msgId , WORDSET *wordSet );
 
 #pragma mark [> proto Effect
 static void DUP_EFFECT_InitCell( FITTING_WORK *work );
@@ -600,6 +608,8 @@ FITTING_RETURN  DUP_FIT_LoopFitting( FITTING_WORK *work )
     work->animeCnt += FIT_ANIME_SPD;
     if( work->animeCnt >= FIT_ANIME_MAX )
     {
+      DUP_FIT_DrawMessage( work , DUP_MSG_02 , NULL );
+
       work->animeCnt = FIT_ANIME_MAX;
       work->state = DUS_CHECK_MAIN;
       work->listSwingAngle = 0;
@@ -628,6 +638,7 @@ FITTING_RETURN  DUP_FIT_LoopFitting( FITTING_WORK *work )
       GFL_CLACT_WK_SetDrawEnable( work->clwkEffectDown, TRUE );
     }
     break;
+
   case DUS_WAIT_END_EFFECT:
     work->endEffCnt++;
     {
@@ -643,11 +654,35 @@ FITTING_RETURN  DUP_FIT_LoopFitting( FITTING_WORK *work )
 
     if( work->endEffCnt > EFFECT_END_EFFECT_CNT )
     {
-      WIPE_SYS_Start( WIPE_PATTERN_WMS , WIPE_TYPE_FADEOUT , WIPE_TYPE_FADEOUT , 
-                      WIPE_FADE_WHITE , 18 , WIPE_DEF_SYNC , work->heapId );
-      work->state = DUS_FADEOUT_WAIT;
-      work->isOpenCurtain = TRUE;
+      if( work->initWork->commWork == NULL )
+      {
+        WIPE_SYS_Start( WIPE_PATTERN_WMS , WIPE_TYPE_FADEOUT , WIPE_TYPE_FADEOUT , 
+                        WIPE_FADE_WHITE , 18 , WIPE_DEF_SYNC , work->heapId );
+        work->state = DUS_FADEOUT_WAIT;
+        work->isOpenCurtain = TRUE;
+      }
+      else
+      {
+        DUP_FIT_DrawMessage( work , DUP_MSG_03 , NULL );
+        MUS_COMM_SendTimingCommand( work->initWork->commWork , MUS_COMM_TIMMING_WAIT_FITTING );
+        work->state = DUS_WAIT_COMM_PLAYER;
+      }
       
+    }
+    break;
+  case DUS_WAIT_COMM_PLAYER:
+    if( MUS_COMM_CheckTimingCommand( work->initWork->commWork , MUS_COMM_TIMMING_WAIT_FITTING ) == TRUE )
+    {
+        work->state = DUS_WAIT_COMM_STRM;
+    }
+    break;
+  case DUS_WAIT_COMM_STRM:
+    if( MUS_COMM_CheckFinishSendStrm( work->initWork->commWork ) == TRUE )
+    {
+        WIPE_SYS_Start( WIPE_PATTERN_WMS , WIPE_TYPE_FADEOUT , WIPE_TYPE_FADEOUT , 
+                        WIPE_FADE_WHITE , 18 , WIPE_DEF_SYNC , work->heapId );
+        work->state = DUS_FADEOUT_WAIT;
+        work->isOpenCurtain = TRUE;
     }
     break;
   }
@@ -681,6 +716,7 @@ FITTING_RETURN  DUP_FIT_LoopFitting( FITTING_WORK *work )
     GFL_BG_SetScrollReq( FIT_FRAME_MAIN_BG , GFL_BG_SCROLL_Y_DEC , 1 );
   }
   
+  //カーテン開閉処理
   if( work->isOpenCurtain == FALSE )
   {
     if( work->curtainScrollCnt < DUP_CURTAIN_SCROLL_MAX )
@@ -692,28 +728,16 @@ FITTING_RETURN  DUP_FIT_LoopFitting( FITTING_WORK *work )
     else if( work->isDispMsg == FALSE )
     {
       work->isDispMsg = TRUE;
-      work->isUpdateMsg = TRUE;
       GFL_BG_ClearScreenCode( FIT_FRAME_SUB_MSG , 0 );
       work->msgWin = GFL_BMPWIN_Create( FIT_FRAME_SUB_MSG , 
                         DUP_MSGWIN_LEFT , DUP_MSGWIN_TOP ,
                         DUP_MSGWIN_WIDTH , DUP_MSGWIN_HEIGHT ,
                         FIT_PLT_BG_SUB_FONT , GFL_BMP_CHRAREA_GET_B );
-      GFL_BMP_Clear( GFL_BMPWIN_GetBmp(work->msgWin) , 0xf );
-      
       {
         WORDSET *wordSet = WORDSET_Create( work->heapId );
-        STRBUF *workStr = GFL_MSG_CreateString( work->msgHandle , DUP_MSG_01 ); 
-        STRBUF *srcStr  = GFL_STR_CreateBuffer( 128 , work->heapId );
-
         WORDSET_RegisterPokeNickName( wordSet , 0 , work->initWork->musPoke->pokePara );
-
-        WORDSET_ExpandStr( wordSet , srcStr , workStr );
-        PRINTSYS_PrintQueColor( work->printQue , GFL_BMPWIN_GetBmp( work->msgWin ) , 
-                2 , 2 , srcStr , work->fontHandle , PRINTSYS_LSB_Make(1,2,0) );
-        GFL_STR_DeleteBuffer( workStr );
-        GFL_STR_DeleteBuffer( srcStr );
+        DUP_FIT_DrawMessage( work , DUP_MSG_01 , wordSet );
         WORDSET_Delete( wordSet );
-
       }
 
       TalkWinFrame_Write( work->msgWin , WINDOW_TRANS_ON_V , 
@@ -1336,28 +1360,6 @@ static void DUP_FIT_TermItem( FITTING_WORK *work )
   MUS_ITEM_DRAW_TermSystem( work->itemDrawSys );
 }
 
-static void DUP_FIT_InitMessage( FITTING_WORK *work )
-{
-  work->fontHandle = GFL_FONT_Create( ARCID_FONT , NARC_font_large_nftr , GFL_FONT_LOADTYPE_FILE , FALSE , work->heapId );
-  
-  //メッセージ
-  work->msgHandle = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL , ARCID_MESSAGE , NARC_message_dress_up_dat , work->heapId );
-
-  GFL_ARC_UTIL_TransVramPalette( ARCID_FONT , NARC_font_default_nclr , PALTYPE_SUB_BG , FIT_PLT_BG_SUB_FONT*16*2, 16*2, work->heapId );
-  
-  work->printQue = PRINTSYS_QUE_Create( work->heapId );
-
-  BmpWinFrame_GraphicSet( FIT_FRAME_SUB_BG , FIT_MSGWIN_CHAR_TOP , FIT_PLT_BG_SUB_MSGWIN ,
-                          0 , work->heapId );
-}
-
-static void DUP_FIT_TermMessage( FITTING_WORK *work )
-{
-  PRINTSYS_QUE_Delete( work->printQue );
-  GFL_MSG_Delete( work->msgHandle );
-  GFL_FONT_Delete( work->fontHandle );
-}
-
 #pragma mark [> FittingFunc
 
 static void DUP_FIT_FittingMain(  FITTING_WORK *work )
@@ -1695,13 +1697,12 @@ static void DUP_FIT_UpdateTpMain( FITTING_WORK *work )
         }
       }
       if( isTouchEquip == FALSE && isTouchSort == FALSE && 
-          (work->holdItem == NULL || work->holdItemType == IG_LIST ) )
+          ( (work->holdItem == NULL && work->tpIsTrg == TRUE ) || work->holdItemType == IG_LIST ) )
       {
         //アイテムリストの中か？
         //X座標には比をかけてYのサイズで計算する
         const s16 subX = work->tpx - LIST_CENTER_X;
         const s16 subY = work->tpy - LIST_CENTER_Y;
-        const u32 centerLen = F32_CONST(FX_Sqrt(FX32_CONST(subX*subX+subY*subY)));
         //内側の円に居るか？
         hitMinOval = DUP_FIT_CheckPointInOval( subX,subY,LIST_TPHIT_MIN_Y,LIST_TPHIT_RATIO_MIN );
         hitMaxOval = DUP_FIT_CheckPointInOval( subX,subY,LIST_TPHIT_MAX_Y,LIST_TPHIT_RATIO_MAX );
@@ -1740,7 +1741,6 @@ static void DUP_FIT_UpdateTpMain( FITTING_WORK *work )
     //X座標には比をかけてYのサイズで計算する
     const s16 subX = work->befTpx - LIST_CENTER_X;
     const s16 subY = work->befTpy - LIST_CENTER_Y;
-    const u32 centerLen = F32_CONST(FX_Sqrt(FX32_CONST(subX*subX+subY*subY)));
     //内側の円に居るか？
     BOOL hitMinOval,hitMaxOval;
     hitMinOval = DUP_FIT_CheckPointInOval( subX,subY,LIST_TPHIT_MIN_Y,LIST_TPHIT_RATIO_MIN );
@@ -1803,8 +1803,14 @@ static void DUP_FIT_UpdateTpList( FITTING_WORK *work , s16 subX , s16 subY )
 {
   //回転は楕円なので角度で見ないほうが良いかも
   //でも角度じゃないと回せない・・・
+/*
   const u16 angle = FX_Atan2Idx(FX32_CONST(subX),FX32_CONST(subY));
   const s32 subAngle = work->befAngle - angle;
+*/
+  const s32 subAngle = GFL_CALC_GetCircleTouchRotate( work->befTpx , DUP_FIT_CALC_OVAL_RATIO(work->befTpy) ,
+                                                      work->tpx , DUP_FIT_CALC_OVAL_RATIO(work->tpy) ,
+                                                      LIST_CENTER_X , LIST_CENTER_Y ,
+                                                      LIST_SIZE_X );
 
   work->listHoldMove += MATH_ABS(subAngle);
   
@@ -1909,7 +1915,7 @@ static void DUP_FIT_UpdateTpList( FITTING_WORK *work , s16 subX , s16 subY )
       work->listSpeed = 0;
     }
   }
-  work->befAngle = angle;
+//  work->befAngle = angle;
   work->befAngleEnable = TRUE;
 }
 
@@ -2912,6 +2918,12 @@ static FITTING_RETURN DUP_CHECK_CheckMain(  FITTING_WORK *work )
     {
       DUP_CHECK_ResetItemAngle( work );
     }
+    {
+      WORDSET *wordSet = WORDSET_Create( work->heapId );
+      WORDSET_RegisterPokeNickName( wordSet , 0 , work->initWork->musPoke->pokePara );
+      DUP_FIT_DrawMessage( work , DUP_MSG_01 , wordSet );
+      WORDSET_Delete( wordSet );
+    }
     break;
   case GFL_UI_TP_HIT_NONE:
     DUP_CHECK_UpdateTpMain( work );
@@ -3246,6 +3258,55 @@ static void DUP_DEMO_DemoPhaseDragPen( FITTING_WORK *work , const GFL_POINT *sta
   }
   
 }
+
+#pragma mark [> MessageFunc
+//--------------------------------------------------------------
+//メッセージ系
+//--------------------------------------------------------------
+
+static void DUP_FIT_InitMessage( FITTING_WORK *work )
+{
+  work->fontHandle = GFL_FONT_Create( ARCID_FONT , NARC_font_large_nftr , GFL_FONT_LOADTYPE_FILE , FALSE , work->heapId );
+  
+  //メッセージ
+  work->msgHandle = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL , ARCID_MESSAGE , NARC_message_dress_up_dat , work->heapId );
+
+  GFL_ARC_UTIL_TransVramPalette( ARCID_FONT , NARC_font_default_nclr , PALTYPE_SUB_BG , FIT_PLT_BG_SUB_FONT*16*2, 16*2, work->heapId );
+  
+  work->printQue = PRINTSYS_QUE_Create( work->heapId );
+
+  BmpWinFrame_GraphicSet( FIT_FRAME_SUB_BG , FIT_MSGWIN_CHAR_TOP , FIT_PLT_BG_SUB_MSGWIN ,
+                          0 , work->heapId );
+}
+
+static void DUP_FIT_TermMessage( FITTING_WORK *work )
+{
+  PRINTSYS_QUE_Delete( work->printQue );
+  GFL_MSG_Delete( work->msgHandle );
+  GFL_FONT_Delete( work->fontHandle );
+}
+
+static void DUP_FIT_DrawMessage( FITTING_WORK *work , u16 msgId , WORDSET *wordSet )
+{
+  STRBUF *srcStr = GFL_MSG_CreateString( work->msgHandle , msgId ); 
+
+  GFL_BMP_Clear( GFL_BMPWIN_GetBmp(work->msgWin) , 0xf );
+  
+  if( wordSet != NULL )
+  {
+    STRBUF *workStr  = GFL_STR_CreateBuffer( 128 , work->heapId );
+    WORDSET_ExpandStr( wordSet , workStr , srcStr );
+    
+    GFL_STR_DeleteBuffer( srcStr );
+    srcStr = workStr;
+  }
+
+  PRINTSYS_PrintQueColor( work->printQue , GFL_BMPWIN_GetBmp( work->msgWin ) , 
+          2 , 2 , srcStr , work->fontHandle , PRINTSYS_LSB_Make(1,2,0) );
+  GFL_STR_DeleteBuffer( srcStr );
+  work->isUpdateMsg = TRUE;
+}
+
 
 #pragma mark [> EffectFunc
 //演出エフェクト系

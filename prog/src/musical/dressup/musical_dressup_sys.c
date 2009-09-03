@@ -82,6 +82,7 @@ static GFL_PROC_RESULT DressUpProc_Init( GFL_PROC * proc, int * seq , void *pwk,
 	
 	work->initWork = initWork;
 	
+	work->fitInitWork->commWork = initWork->commWork;
 	work->fitInitWork->musPoke = initWork->musPoke;
   work->fitInitWork->mus_save = initWork->mus_save;
 	return GFL_PROC_RES_FINISH;
@@ -144,6 +145,7 @@ DRESSUP_INIT_WORK* MUSICAL_DRESSUP_CreateInitWork( HEAPID heapId , MUSICAL_POKE_
 {
   DRESSUP_INIT_WORK* initWork;
   initWork = GFL_HEAP_AllocMemory( heapId , sizeof(DRESSUP_INIT_WORK));
+  initWork->commWork = NULL;
   initWork->mus_save = MUSICAL_SAVE_GetMusicalSave(saveCtrl);
   initWork->musPoke = musPoke;
 

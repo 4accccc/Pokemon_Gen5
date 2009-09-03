@@ -1015,6 +1015,15 @@ static u8*    MUS_COMM_Post_StrmDataBuff( int netID, void* pWork , int size )
   return startAdd;
 }
 
+const BOOL MUS_COMM_CheckFinishSendStrm( MUS_COMM_WORK *work )
+{
+  if( (work->distData->strmDataSize/MUS_COMM_DIV_SIZE) < work->strmDivIdx )
+  {
+    return TRUE;
+  }
+  return FALSE;
+}
+
 #pragma mark [> outer func
 
 const BOOL MUS_COMM_Send_MusicalIndex( MUS_COMM_WORK* work )

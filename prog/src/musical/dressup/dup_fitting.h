@@ -10,6 +10,7 @@
 #define DUP_FITTING_H__
 
 #include "musical/musical_system.h"
+#include "musical/comm/mus_comm_func.h"
 
 //======================================================================
 //	define
@@ -33,6 +34,7 @@ typedef struct _FITTING_WORK FITTING_WORK;
 
 typedef struct
 {
+  MUS_COMM_WORK *commWork;
 	MUSICAL_POKE_PARAM *musPoke;
 	MUSICAL_SAVE *mus_save;
 }FITTING_INIT_WORK;

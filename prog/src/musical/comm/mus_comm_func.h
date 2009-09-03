@@ -24,6 +24,7 @@
 //タイミングコマンド
 #define MUS_COMM_TIMMING_DRESSUP_WAIT (10)
 #define MUS_COMM_TIMMING_START_ACTING (20)
+#define MUS_COMM_TIMMING_WAIT_FITTING (30)
 //デバッグ
 #define MUS_COMM_TIMMING_START_SCRIPT (200)
 
@@ -91,7 +92,7 @@ const BOOL MUS_COMM_CheckAllPostPokeData( MUS_COMM_WORK *work );
 
 void MUS_COMM_Start_SendStrmData( MUS_COMM_WORK *work );
 const BOOL MUS_COMM_Send_StrmData( MUS_COMM_WORK *work , const u8 idx );
-
+const BOOL MUS_COMM_CheckFinishSendStrm( MUS_COMM_WORK *work );
 //ミュージカルの役者IDXでデータを取得
 MUSICAL_POKE_PARAM* MUS_COMM_GetMusPokeParam( MUS_COMM_WORK *work , const u8 musicalIdx );
 

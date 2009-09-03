@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="iwao_kazumasa" host="W00203" date="2009-07-31T15:02:06"/>
+	<create user="ariizumi_nobuhiko" host="W00147" date="2009-09-03T17:38:44"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -305,9 +305,9 @@
 		</language>
 	</columns>
 
-	<dialog left="116" top="176" right="821" bottom="796" maximized="no" rayout="Vertical2">
+	<dialog left="106" top="283" right="811" bottom="903" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
-		<tag-palette left="846" top="161" right="1319" bottom="559" visible="yes"/>
+		<tag-palette left="807" top="161" right="1280" bottom="559" visible="yes"/>
 		<band id="0" index="0" style="0000" width="530"/>
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="697"/>
@@ -341,17 +341,15 @@
 	</row>
 
 	<row id="DUP_MSG_02">
-		<language name="JPN" width="256">オーダー：[1:22:コンテスト名称:0]に
-あわせて　コーディネートしましょう！</language>
-		<language name="JPN_KANJI" width="256">オーダー：[1:22:コンテスト名称:0]に
-あわせて　コーディネートしましょう！</language>
-	</row>
-
-	<row id="DUP_MSG_03">
 		<language name="JPN" width="256">この　コーディネートで
 さんかしますか？</language>
 		<language name="JPN_KANJI" width="256">この　コーディネートで
 参加しますか？</language>
+	</row>
+
+	<row id="DUP_MSG_03">
+		<language name="JPN" width="256">ほかの　さんかしゃを まっています</language>
+		<language name="JPN_KANJI" width="256">他の　参加者を　待っています</language>
 	</row>
 
 	<flowchart-group-list>

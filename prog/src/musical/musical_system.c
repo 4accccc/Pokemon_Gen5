@@ -317,6 +317,7 @@ static GFL_PROC_RESULT MusicalProc_Main( GFL_PROC * proc, int * seq , void *pwk,
 
   case MPS_INIT_DRESSUP:
     work->dupInitWork = MUSICAL_DRESSUP_CreateInitWork( HEAPID_MUSICAL_PROC , work->musPoke , initWork->saveCtrl );
+    work->dupInitWork->commWork = work->commWork;
     GFL_PROC_LOCAL_CallProc( work->procSys , NO_OVERLAY_ID, &DressUp_ProcData, work->dupInitWork );
     work->state = MPS_TERM_DRESSUP;
     break;
