@@ -1,0 +1,226 @@
+//============================================================================================
+/**
+ * @file	b_bag_item.c
+ * @brief	戦闘用バッグ画面 アイテム制御関連
+ * @author	Hiroyuki Nakamura
+ * @date	09.08.26
+ */
+//============================================================================================
+#include <gflib.h>
+/*↑[GS_CONVERT_TAG]*/
+/*
+#include "system/msgdata.h"
+#include "system/numfont.h"
+#include "system/wordset.h"
+*/
+//#include "system/clact_tool.h"
+/*↑[GS_CONVERT_TAG]*/
+/*
+#include "battle/battle_common.h"
+#include "itemtool/myitem.h"
+*/
+#include "b_app_tool.h"
+
+#include "b_bag.h"
+#include "b_bag_main.h"
+#include "b_bag_item.h"
+
+
+typedef struct {
+	u16	item;
+	u16	cost;
+}SHOOTER_ITEM;
+
+// ポケットIDテーブル
+static const u8 PocketNum[] = {
+	2, 3, 0, 1, 0
+};
+
+// シューター用アイテムテーブル
+static const SHOOTER_ITEM ShooterItemTable[] =
+{
+	{ ITEM_KURITHIKATTAA, 1 },		// 56: クリティカッター
+	{ ITEM_SUPIIDAA, 1 },					// 59: スピーダー
+	{ ITEM_SUPESYARUAPPU, 1 },		// 61: スペシャルアップ
+	{ ITEM_SUPESYARUGAADO, 1 },		// 62: スペシャルガード
+	{ ITEM_DHIFENDAA, 1 },				// 58: ディフェンダー
+	{ ITEM_PURASUPAWAA, 1 },			// 57: プラスパワー
+	{ ITEM_YOKUATAARU, 1 },				// 60: ヨクアタール
+	{ ITEM_EFEKUTOGAADO, 1 },			// 55: エフェクトガード
+
+	{ ITEM_KIZUGUSURI, 2 },				// 17: キズぐすり
+
+	{ ITEM_PIIPIIEIDO, 3 },				// 38: ピーピーエイド
+
+	{ ITEM_IIKIZUGUSURI, 4 },			// 26: いいキズぐすり
+	{ ITEM_KOORINAOSI, 4 },				// 20: こおりなおし
+	{ ITEM_DOKUKESI, 4 },					// 18: どくけし
+	{ ITEM_NEMUKEZAMASI, 4 },			// 21: ねむけざまし
+	{ ITEM_MAHINAOSI, 4 },				// 22: まひなおし
+	{ ITEM_YAKEDONAOSI, 4 },			// 19: やけどなおし
+
+	{ ITEM_SUGOIKIZUGUSURI, 6 },	// 25: すごいキズぐすり
+	{ ITEM_NANDEMONAOSI, 6 },			// 27: なんでもなおし
+	{ ITEM_PIIPIIEIDAA, 6 },			// 40: ピーピーエイダー
+
+	{ ITEM_PIIPIIRIKABAA, 7 },		// 39: ピーピーリカバー
+
+	{ ITEM_MANTANNOKUSURI, 8 },		// 24: まんたんのくすり
+
+	{ ITEM_PIIPIIMAKKUSU, 10 },		// 41: ピーピーマックス
+
+	{ ITEM_GENKINOKAKERA, 11 },		// 28: げんきのかけら
+
+	{ ITEM_KAIHUKUNOKUSURI, 13 },	// 23: かいふくのくすり
+	{ ITEM_GENKINOKATAMARI, 14 },	// 29: げんきのかたまり
+
+	{ ITEM_DUMMY_DATA, 0 },				// 終了
+};
+
+
+
+//--------------------------------------------------------------------------------------------
+/**
+ * 前回使用したアイテムをチェック
+ *
+ * @param	wk		ワーク
+ *
+ * @retval	"TRUE = あり"
+ * @retval	"FALSE = なし"
+ */
+//--------------------------------------------------------------------------------------------
+BOOL BattleBag_UsedItemChack( BBAG_WORK * wk )
+{
+	if( wk->dat->used_item == ITEM_DUMMY_DATA ){ return FALSE; }
+
+	if( MYITEM_CheckItem( wk->dat->myitem, wk->dat->used_item, 1, wk->dat->heap ) == FALSE ){
+		wk->dat->used_item = ITEM_DUMMY_DATA;
+		wk->dat->used_poke = 0;
+		return FALSE;
+	}
+
+	return TRUE;
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * 最後に使った道具のカーソル位置再設定
+ *
+ * @param	wk		ワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
+void BattleBag_CorsorReset( BBAG_WORK * wk )
+{
+	u32	i;
+
+	for( i=0; i<BBAG_POCKET_IN_MAX; i++ ){
+		if( wk->dat->used_item == wk->pocket[wk->poke_id][i].id ){
+			wk->dat->item_pos[wk->poke_id] = i%6;
+			wk->dat->item_scr[wk->poke_id] = i/6;
+			break;
+		}
+	}
+}
+
+
+//--------------------------------------------------------------------------------------------
+/**
+ * アイテムを戦闘ポケットに振り分ける
+ *
+ * @param	wk		ワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
+void BattleBag_PocketInit( BBAG_WORK * wk )
+{
+	ITEM_ST * item;
+	u32	i, j, k;
+	s32	prm;
+
+	for( i=0; i<BAG_POKE_MAX; i++ ){
+		j = 0;
+		while(1){
+//			item = MyItem_PosItemGet( wk->dat->myitem, i, j );
+			item = MYITEM_PosItemGet( wk->dat->myitem, i, j );
+			if( item == NULL ){ break; }
+			if( !( item->id == 0 || item->no == 0 ) ){
+				prm = ITEM_GetParam( item->id, ITEM_PRM_BTL_POCKET, wk->dat->heap );
+				for( k=0; k<5; k++ ){
+					if( ( prm & (1<<k) ) == 0 ){ continue; }
+					wk->pocket[ PocketNum[k] ][wk->item_max[ PocketNum[k] ]] = *item;
+					wk->item_max[ PocketNum[k] ]++;
+				}
+			}
+			j++;
+		}
+	}
+
+	for( i=0; i<5; i++ ){
+		if( wk->item_max[i] == 0 ){
+			wk->scr_max[i] = 0;
+		}else{
+			wk->scr_max[i] = (wk->item_max[i]-1) / 6;
+		}
+		if( wk->scr_max[i] < wk->dat->item_scr[i] ){
+			wk->dat->item_scr[i] = wk->scr_max[i];
+		}
+	}
+}
+
+void BattleBag_ShooterPocketInit( BBAG_WORK * wk )
+{
+	ITEM_ST	item;
+	u32	i, j, k;
+	s32	prm;
+
+	i = 0;
+	while(1){
+		if( ShooterItemTable[i].item == ITEM_DUMMY_DATA || ShooterItemTable[i].cost == 0 ){
+			break;
+		}
+		wk->pocket[0][wk->item_max[0]].id = ShooterItemTable[i].item;
+		wk->pocket[0][wk->item_max[0]].no = 1;
+		wk->item_max[0]++;
+		i++;
+	}
+
+	wk->scr_max[0] = (wk->item_max[0]-1) / 6;
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * 指定位置にアイテムがあるか
+ *
+ * @param	wk		ワーク
+ * @param	pos		位置（０～５）
+ *
+ * @retval	"あり = アイテム番号"
+ * @retval	"なし = 0"
+ */
+//--------------------------------------------------------------------------------------------
+u16 BattleBag_PosItemCheck( BBAG_WORK * wk, u32 pos )
+{
+	if( wk->pocket[wk->poke_id][wk->dat->item_scr[wk->poke_id]*6+pos].id != 0 &&
+		wk->pocket[wk->poke_id][wk->dat->item_scr[wk->poke_id]*6+pos].no != 0 ){
+		return wk->pocket[wk->poke_id][wk->dat->item_scr[wk->poke_id]*6+pos].id;
+	}
+	return 0;
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * アイテム機能を取得
+ *
+ * @param	wk		ワーク
+ *
+ * @return	アイテム機能
+ */
+//--------------------------------------------------------------------------------------------
+u8 BattleBag_ItemUseCheck( BBAG_WORK * wk )
+{
+//	return (u8)ItemParamGet( wk->dat->ret_item, ITEM_PRM_BATTLE, wk->dat->heap );
+	return 0;
+}
