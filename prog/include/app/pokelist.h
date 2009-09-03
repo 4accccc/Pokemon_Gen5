@@ -113,6 +113,23 @@ typedef enum
   PL_RET_TAMAGOUMI,   // メニュー 技：タマゴうみ
 }PL_RETURN_TYPE;
 
+//comm_battleの添え字
+typedef enum{
+  PL_COMM_PLAYER_TYPE_ALLY,       ///<味方
+  PL_COMM_PLAYER_TYPE_ENEMY_A,    ///<敵A
+  PL_COMM_PLAYER_TYPE_ENEMY_B,    ///<敵B
+  
+  PL_COMM_PLAYER_TYPE_MAX,
+}PL_COMM_PLAYER_TYPE;
+
+//通信対戦時の相手情報
+typedef struct{
+  POKEPARTY *pp;              // 対戦相手のポケモンデータ
+  STRBUF *name;               // 対戦相手の名前
+  u8 sex;                     // 対戦相手の性別
+  u8 padding[3];
+}PL_COMM_BATTLE_PARAM;
+
 //-----------------------------------------------
 // ポケモンリスト外部作成データ
 //-----------------------------------------------
@@ -154,7 +171,10 @@ typedef struct
 
   u16 after_mons;   // 進化後のポケモン
   int shinka_cond;  // 進化条件ワーク
-
+  
+  PL_COMM_BATTLE_PARAM comm_battle[PL_COMM_PLAYER_TYPE_MAX];  //通信相手のパラメータ
+  u8 comm_selected_num;                 // 通信時：既に選択が終わった人数(外側から操作)
+  u8 padding[3];
 }PLIST_DATA;
 
 //-----------------------------------------------
