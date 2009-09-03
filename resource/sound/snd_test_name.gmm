@@ -1581,6 +1581,10 @@
 		<language name="JPN" width="256">W050-01</language>
 		<language name="JPN_KANJI" width="256">W050-01</language>
 	</row>
+	<row id="msg_seq_se_w187_01">
+		<language name="JPN" width="256">W187-01</language>
+		<language name="JPN_KANJI" width="256">W187-01</language>
+	</row>
 	<row id="msg_seq_se_pasa1">
 		<language name="JPN" width="256">PASA1</language>
 		<language name="JPN_KANJI" width="256">PASA1</language>
