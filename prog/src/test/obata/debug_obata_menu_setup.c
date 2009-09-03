@@ -59,6 +59,15 @@ static const GFL_BG_BGCNT_HEADER sc_BGCNT1_M =
 	FALSE,					          // モザイク設定
 };
 
+// パレットデータ
+static const u16 palette[] = 
+{
+  0x0000,
+  0xffff,
+  0x7c00,
+  0x001f,
+};
+
 //-------------------------------------------------------------------------------------------
 /**
  * @brief 初期化関数
@@ -74,6 +83,12 @@ void DEBUG_OBATA_MENU_SETUP_Init( HEAPID heap_id )
 	GFL_BG_SetBGMode( &sc_BG_mode );	  // BGモード設定
 	GFL_BG_SetBGControl( GFL_BG_FRAME1_M, &sc_BGCNT1_M, GFL_BG_MODE_TEXT );	// MAIN_BG1の設定 
 	GFL_BG_SetVisible( GFL_BG_FRAME1_M, VISIBLE_ON );						// MAIN_BG1を表示ON
+
+  // パレット転送
+  GFL_BG_LoadPalette( GFL_BG_FRAME1_M, (void*)palette, NELEMS(palette)*sizeof(u16), 0 );
+
+  // ビットマップ管理システムの初期化
+  GFL_BMPWIN_Init( heap_id );
 }
 
 //-------------------------------------------------------------------------------------------
@@ -85,4 +100,7 @@ void DEBUG_OBATA_MENU_SETUP_Exit()
 { 
   // BGL破棄
   GFL_BG_Exit();
+
+  // ビットマップ管理システムの終了
+  GFL_BMPWIN_Exit();
 }

@@ -6,39 +6,79 @@
 #include "arc/debug_obata.naix"
 
 
+
+VecFx32 pos = { 0, FX32_ONE * 300, -500 * FX32_ONE };
+
 //============================================================================================
 /**
  * @brief 3Dデータ
  */
 //============================================================================================
 
-// リソース
-static const GFL_G3D_UTIL_RES res_table[] = 
+// ホウオウ
+static const GFL_G3D_UTIL_RES res_table_houou[] = 
 {
-  { ARCID_OBATA_DEBUG, NARC_debug_obata_camera_test1_nsbmd, GFL_G3D_UTIL_RESARC },
+  { ARCID_OBATA_DEBUG, NARC_debug_obata_td_houou_nsbmd, GFL_G3D_UTIL_RESARC },
+  { ARCID_OBATA_DEBUG, NARC_debug_obata_td_houou_nsbca, GFL_G3D_UTIL_RESARC },
+  { ARCID_OBATA_DEBUG, NARC_debug_obata_td_houou_nsbma, GFL_G3D_UTIL_RESARC },
+  { ARCID_OBATA_DEBUG, NARC_debug_obata_td_houou_nsbta, GFL_G3D_UTIL_RESARC },
+  { ARCID_OBATA_DEBUG, NARC_debug_obata_td_houou_nsbtp, GFL_G3D_UTIL_RESARC },
 };
-
-// オブジェクト
-static const GFL_G3D_UTIL_OBJ obj_table[] = 
+static const GFL_G3D_UTIL_ANM anm_table_houou[] = 
+{
+  { 1, 0 },
+  { 2, 0 },
+  { 3, 0 },
+  { 4, 0 },
+};
+static const GFL_G3D_UTIL_OBJ obj_table_houou[] = 
 {
   {
-    0,    // モデルリソースID
-    0,    // モデルデータID(リソース内部INDEX)
-    0,    // テクスチャリソースID
-    NULL, // アニメテーブル(複数指定のため)
-    0,    // アニメリソース数
+    0,                         // モデルリソースID
+    0,                         // モデルデータID(リソース内部INDEX)
+    0,                         // テクスチャリソースID
+    anm_table_houou,           // アニメテーブル(複数指定のため)
+    NELEMS(anm_table_houou),   // アニメリソース数
   },
 }; 
 
-// セットアップデータ
-static const GFL_G3D_UTIL_SETUP setup =
+// エフェクト
+static const GFL_G3D_UTIL_RES res_table_effect[] = 
 {
-  res_table,
-  NELEMS(res_table),
-  obj_table,
-  NELEMS(obj_table),
+  { ARCID_OBATA_DEBUG, NARC_debug_obata_houou_efct_nsbmd, GFL_G3D_UTIL_RESARC },
+  { ARCID_OBATA_DEBUG, NARC_debug_obata_houou_efct_nsbca, GFL_G3D_UTIL_RESARC },
+  { ARCID_OBATA_DEBUG, NARC_debug_obata_houou_efct_nsbtp, GFL_G3D_UTIL_RESARC },
+}; 
+static const GFL_G3D_UTIL_ANM anm_table_effect[] = 
+{
+  { 1, 0 },
+  { 2, 0 },
+}; 
+static const GFL_G3D_UTIL_OBJ obj_table_effect[] = 
+{
+  {
+    0,                          // モデルリソースID
+    0,                          // モデルデータID(リソース内部INDEX)
+    0,                          // テクスチャリソースID
+    anm_table_effect,           // アニメテーブル(複数指定のため)
+    NELEMS(anm_table_effect),   // アニメリソース数
+  },
+}; 
+
+// セットアップ番号
+enum
+{
+  SETUP_INDEX_HOUOU,
+  SETUP_INDEX_EFFECT,
+  SETUP_INDEX_MAX
 };
 
+// セットアップデータ
+static const GFL_G3D_UTIL_SETUP setup[] =
+{
+  { res_table_houou, NELEMS(res_table_houou), obj_table_houou, NELEMS(obj_table_houou) },
+  { res_table_effect, NELEMS(res_table_effect), obj_table_effect, NELEMS(obj_table_effect) },
+};
 
 
 //============================================================================================
@@ -49,7 +89,7 @@ static const GFL_G3D_UTIL_SETUP setup =
 typedef struct
 {
   GFL_G3D_UTIL* g3dUtil;
-  u16 unitIndex;
+  u16 unitIndex[ SETUP_INDEX_MAX ];
 
   ICA_DATA* icaData;
   GFL_G3D_CAMERA* camera;
@@ -174,7 +214,28 @@ static void Initialize( PROC_WORK* work )
   work->g3dUtil = GFL_G3D_UTIL_Create( 10, 10, HEAPID_OBATA_DEBUG );
 
   // ユニット追加
-  work->unitIndex = GFL_G3D_UTIL_AddUnit( work->g3dUtil, &setup );
+  {
+    int i;
+    for( i=0; i<SETUP_INDEX_MAX; i++ )
+    {
+      work->unitIndex[i] = GFL_G3D_UTIL_AddUnit( work->g3dUtil, &setup[i] );
+    }
+  }
+
+  // アニメーション有効化
+  {
+    int i;
+    for( i=0; i<SETUP_INDEX_MAX; i++ )
+    {
+      int j;
+      GFL_G3D_OBJ* obj = GFL_G3D_UTIL_GetObjHandle( work->g3dUtil, work->unitIndex[i] );
+      int anime_count = GFL_G3D_OBJECT_GetAnimeCount( obj );
+      for( j=0; j<anime_count; j++ )
+      {
+        GFL_G3D_OBJECT_EnableAnime( obj, j );
+      }
+    }
+  }
 
   // icaデータをロード
   work->icaData = ICA_DATA_Create( 
@@ -199,7 +260,13 @@ static void Finalize( PROC_WORK* work )
   GFL_G3D_CAMERA_Delete( work->camera );
 
   // ユニット破棄
-  GFL_G3D_UTIL_DelUnit( work->g3dUtil, work->unitIndex );
+  {
+    int i;
+    for( i=0; i<SETUP_INDEX_MAX; i++ )
+    {
+      GFL_G3D_UTIL_DelUnit( work->g3dUtil, work->unitIndex[i] );
+    }
+  }
 
   // 3D管理ユーティリティーの破棄
   GFL_G3D_UTIL_Delete( work->g3dUtil );
@@ -213,6 +280,11 @@ static void Finalize( PROC_WORK* work )
 static BOOL Main( PROC_WORK* work )
 {
   int trg = GFL_UI_KEY_GetTrg();
+  int key = GFL_UI_KEY_GetCont();
+
+  if( key & PAD_KEY_UP ) pos.z += FX32_ONE * 10;
+  if( key & PAD_KEY_DOWN ) pos.z -= FX32_ONE * 10;
+
 
   // セレクトで終了
   if( trg & PAD_BUTTON_SELECT ) return TRUE;
@@ -228,20 +300,56 @@ static void Draw( PROC_WORK* work )
 {
   static fx32 frame = 0;
   GFL_G3D_OBJSTATUS status;
-  GFL_G3D_OBJ* obj = GFL_G3D_UTIL_GetObjHandle( work->g3dUtil, work->unitIndex );
 
   VEC_Set( &status.trans, 0, 0, 0 );
   VEC_Set( &status.scale, FX32_ONE, FX32_ONE, FX32_ONE );
   MTX_Identity33( &status.rotate );
 
   // カメラ更新
+  /*
   ICA_DATA_SetCameraStatus( work->icaData, work->camera, frame );
   GFL_G3D_CAMERA_Switching( work->camera );
+  */
+
+  // TEMP: カメラ設定
+  {
+    fx32 far = FX32_ONE * 4096;
+    GFL_G3D_CAMERA_SetFar( work->camera, &far );
+  }
+  {
+    VecFx32 target;
+    VEC_Set( &target, 0, 0, 0 );
+    GFL_G3D_CAMERA_SetPos( work->camera, &pos );
+    GFL_G3D_CAMERA_SetTarget( work->camera, &target );
+    GFL_G3D_CAMERA_Switching( work->camera );
+  }
+
+  // アニメーション更新
+  {
+    int i;
+    for( i=0; i<SETUP_INDEX_MAX; i++ )
+    {
+      int j;
+      GFL_G3D_OBJ* obj = GFL_G3D_UTIL_GetObjHandle( work->g3dUtil, work->unitIndex[i] );
+      int anime_count = GFL_G3D_OBJECT_GetAnimeCount( obj );
+      for( j=0; j<anime_count; j++ )
+      {
+        GFL_G3D_OBJECT_LoopAnimeFrame( obj, j, FX32_ONE );
+      }
+    }
+  }
 
   // 描画
   GFL_G3D_DRAW_Start();
   GFL_G3D_DRAW_SetLookAt();
-  GFL_G3D_DRAW_DrawObject( obj, &status );
+  {
+    int i;
+    for( i=0; i<SETUP_INDEX_MAX; i++ )
+    {
+      GFL_G3D_OBJ* obj = GFL_G3D_UTIL_GetObjHandle( work->g3dUtil, work->unitIndex[i] );
+      GFL_G3D_DRAW_DrawObject( obj, &status );
+    }
+  }
   GFL_G3D_DRAW_End();
 
   frame += FX32_ONE; 

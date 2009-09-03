@@ -29,7 +29,9 @@ SUBDIRS	=
 include	$(PROJECT_RSCDIR)\macro_define
 
 
-CONVERTDATA = camera_test1.nsbmd ica_test_data.bin
+CONVERTDATA = camera_test1.nsbmd ica_test_data.bin \
+							td_houou.nsbmd td_houou.nsbca td_houou.nsbma td_houou.nsbta td_houou.nsbtp \
+							houou_efct.nsbmd houou_efct.nsbca houou_efct.nsbtp
 
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
 # サフィックスルールを定義することで 依存関係を自動で判断してくれる
@@ -51,6 +53,14 @@ subdir:
 # コンバート
 	ruby ica_conv.rb camera_null.ica ica_test_data.bin
 	g3dcvtr camera_test1.imd
+	g3dcvtr td_houou.imd
+	g3dcvtr td_houou.ica
+	g3dcvtr td_houou.ima
+	g3dcvtr td_houou.ita
+	g3dcvtr td_houou.itp
+	g3dcvtr houou_efct.imd
+	g3dcvtr houou_efct.ica
+	g3dcvtr houou_efct.itp
 
 # narc のコピーだけ実行する
 $(TARGETDIR)/$(targetname).narc: $(targetname).narc

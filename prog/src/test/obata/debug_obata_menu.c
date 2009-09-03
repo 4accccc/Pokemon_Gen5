@@ -1,6 +1,43 @@
+#include <wchar.h>    // wcslen
 #include <gflib.h>
 #include "debug_obata_menu_setup.h"
-#include "system/main.h"
+#include "system/main.h" 
+#include "arc/arc_def.h"
+#include "font/font.naix"
+#include "print/printsys.h"
+
+
+FS_EXTERN_OVERLAY(obata_debug);
+extern const GFL_PROC_DATA DebugObataMainProcData;
+
+
+//============================================================================================
+/**
+ * @breif 定数
+ */
+//============================================================================================
+// 選択状態
+typedef enum
+{
+  SELECT_STATE_NONE,    // 未選択
+  SELECT_STATE_DECIDE,  // 決定
+  SELECT_STATE_EXIT,    // 終了
+} SELECT_STATE;
+
+// メニュー項目インデックス
+typedef enum
+{
+  MENU_ITEM_DEMO_TEST,
+  MENU_ITEM_DAMMY,
+  MENU_ITEM_NUM
+} MENU_ITEM;
+
+// メニュー項目文字列
+static const STRCODE* str_menu[] = 
+{
+  L"デモテスト",
+  L"ダミー",
+};
 
 
 //============================================================================================
@@ -10,7 +47,10 @@
 //============================================================================================
 typedef struct
 {
-  int temp;
+  GFL_FONT* font;
+  GFL_BMPWIN* bmpWin;
+  int curPos; // 選択項目
+  SELECT_STATE state; // 選択状態
 }
 PROC_WORK;
 
@@ -22,8 +62,10 @@ PROC_WORK;
 //============================================================================================
 static void Initialize( PROC_WORK* work );
 static void Finalize( PROC_WORK* work );
-static BOOL Main( PROC_WORK* work );
+static void Main( PROC_WORK* work );
 static void Draw( PROC_WORK* work );
+static void UpdateMenuList( PROC_WORK* work );
+static void SetNextProc( PROC_WORK* work );
 
 
 //============================================================================================
@@ -57,14 +99,13 @@ static GFL_PROC_RESULT DEBUG_OBATA_MENU_MainProcFunc_Init( GFL_PROC* proc, int* 
 static GFL_PROC_RESULT DEBUG_OBATA_MENU_MainProcFunc_Main( GFL_PROC* proc, int* seq, void* pwk, void* mywk )
 {
 	PROC_WORK* work = mywk;
-  BOOL end = FALSE;
 
   switch( *seq )
   {
   case 0:
-    end = Main( work );
-    Draw( work );
-    if( end )
+    Main( work );
+    Draw( work ); 
+    if( work->state != SELECT_STATE_NONE )
     {
       ++( *seq );
     }
@@ -86,13 +127,15 @@ static GFL_PROC_RESULT DEBUG_OBATA_MENU_MainProcFunc_End( GFL_PROC* proc, int* s
 {
 	PROC_WORK* work = mywk;
 
+  // 次のプロセスを設定
+  SetNextProc( work );
+
   // 終了処理
   Finalize( work );
+  DEBUG_OBATA_MENU_SETUP_Exit();
 
 	// ワークを破棄
 	GFL_PROC_FreeWork( proc );
-
-  DEBUG_OBATA_MENU_SETUP_Exit();
 
   // ヒープを破棄
   GFL_HEAP_DeleteHeap( HEAPID_OBATA_DEBUG );
@@ -127,7 +170,19 @@ const GFL_PROC_DATA DebugObataMenuMainProcData =
 //-------------------------------------------------------------------------------------------- 
 static void Initialize( PROC_WORK* work )
 {
-  GFL_BG_ReserveCharacterArea( GFL_BG_FRAME1_M, 0, 32*24 );
+  // 初期化
+  work->curPos = 0;
+  work->state = SELECT_STATE_NONE;
+
+  // フォントデータハンドラ作成
+  work->font = GFL_FONT_Create( 
+      ARCID_FONT, NARC_font_large_nftr, GFL_FONT_LOADTYPE_FILE, FALSE, HEAPID_OBATA_DEBUG );
+
+  // ビットマップウィンドウを作成
+  work->bmpWin = GFL_BMPWIN_Create( GFL_BG_FRAME1_M, 0, 0, 32, 24, 0, GFL_BMP_CHRAREA_GET_F );
+
+  // メニューリストの更新
+  UpdateMenuList( work );
 }
 
 //--------------------------------------------------------------------------------------------
@@ -137,6 +192,11 @@ static void Initialize( PROC_WORK* work )
 //-------------------------------------------------------------------------------------------- 
 static void Finalize( PROC_WORK* work )
 { 
+  // ビットマップウィンドウの破棄
+  GFL_BMPWIN_Delete( work->bmpWin );
+
+  // フォントデータハンドラ破棄
+  GFL_FONT_Delete( work->font );
 }
 
 //--------------------------------------------------------------------------------------------
@@ -144,13 +204,27 @@ static void Finalize( PROC_WORK* work )
  * @breif メイン処理 
  */
 //-------------------------------------------------------------------------------------------- 
-static BOOL Main( PROC_WORK* work )
+static void Main( PROC_WORK* work )
 {
-  int trg = GFL_UI_KEY_GetTrg();
+  int      trg = GFL_UI_KEY_GetTrg();
+  int move_dir = 0;
 
-  // セレクトで終了
-  if( trg & PAD_BUTTON_SELECT ) return TRUE;
-  return FALSE;
+  if( trg & PAD_KEY_UP ) move_dir = -1;
+  if( trg & PAD_KEY_DOWN ) move_dir = 1;
+  if( trg & PAD_BUTTON_A ) work->state = SELECT_STATE_DECIDE;
+  if( trg & PAD_BUTTON_SELECT ) work->state = SELECT_STATE_EXIT;
+
+  // カーソルが移動した場合
+  if( move_dir != 0 )
+  {
+    // カーソル位置を補正
+    work->curPos = work->curPos + move_dir;
+    if( work->curPos < 0 ) work->curPos = 0;
+    work->curPos = work->curPos % MENU_ITEM_NUM;
+
+    // メニュー項目更新
+    UpdateMenuList( work );
+  }
 }
 
 //--------------------------------------------------------------------------------------------
@@ -160,5 +234,77 @@ static BOOL Main( PROC_WORK* work )
 //-------------------------------------------------------------------------------------------- 
 static void Draw( PROC_WORK* work )
 {
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @breif メニューリストを更新する
+ */
+//-------------------------------------------------------------------------------------------- 
+static void UpdateMenuList( PROC_WORK* work )
+{
+  // ビットマップウィンドウに文字を書き込む
+  {
+    int i, len;
+    STRBUF* strbuf;
+    STRCODE strcode[256];
+    GFL_BMP_DATA* bmp;
+    PRINTSYS_LSB lsb;
+
+
+    // 書き込み
+    for( i=0; i<MENU_ITEM_NUM; i++ )
+    {
+      // バッファ作成
+      strbuf = GFL_STR_CreateBuffer( 256, HEAPID_OBATA_DEBUG );
+
+      // 文字色決定
+      if( i == work->curPos )
+      {
+        lsb = PRINTSYS_LSB_Make(1, 3, 0);
+      }
+      else
+      {
+        lsb = PRINTSYS_LSB_Make(1, 2, 0);
+      }
+
+      // 文字列作成
+      len = wcslen( str_menu[i] );
+      GFL_STD_MemCopy( str_menu[i], strcode, sizeof( STRCODE )*len );
+      strcode[len] = GFL_STR_GetEOMCode();
+      GFL_STR_SetStringCode( strbuf, strcode );
+
+      // ビットマップに書き込み
+      bmp = GFL_BMPWIN_GetBmp( work->bmpWin );
+      PRINTSYS_PrintColor( bmp, 0, i*16, strbuf, work->font, lsb );
+
+      // バッファ破棄
+      GFL_STR_DeleteBuffer( strbuf );
+    }
+  }
+
+  // ビットマップウィンドウ内部バッファをVRAMへ転送
+  GFL_BMPWIN_TransVramCharacter( work->bmpWin );
+
+  // ビットマップ用スクリーンをBGスクリーンバッファに作成
+  GFL_BMPWIN_MakeScreen( work->bmpWin );
+
+  // BGスクリーンデータを反映させる
   GFL_BG_LoadScreenReq( GFL_BG_FRAME1_M );
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief 次のプロセスを設定する
+ */
+//--------------------------------------------------------------------------------------------
+static void SetNextProc( PROC_WORK* work )
+{
+  // カーソルの位置で決定
+  switch( work->curPos )
+  {
+  case MENU_ITEM_DEMO_TEST:
+      GFL_PROC_SysSetNextProc( FS_OVERLAY_ID(obata_debug), &DebugObataMainProcData, NULL );
+      break;
+  }
 }
