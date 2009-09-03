@@ -162,6 +162,10 @@ struct _ACTING_WORK
   MUS_POKE_EQUIP_POS useItemPos[MUSICAL_POKE_MAX];
   u8      useItemPoke;  //一発逆転中ポケ
   u16     useItemCnt;
+  
+  //通信時に送るリクエスト
+  BOOL    useItemReq;
+  MUS_POKE_EQUIP_POS useItemReqPos;
 };
 
 //======================================================================
@@ -256,7 +260,7 @@ ACTING_WORK*  STA_ACT_InitActing( STAGE_INIT_WORK *initWork , HEAPID heapId )
   }
   else
   {
-    work->playerIdx = GFL_NET_GetNetID(GFL_NET_HANDLE_GetCurrentHandle());
+    work->playerIdx = MUS_COMM_GetSelfMusicalIndex(work->initWork->commWork);
   }
   
   //注目ポケ系初期化
@@ -265,6 +269,7 @@ ACTING_WORK*  STA_ACT_InitActing( STAGE_INIT_WORK *initWork , HEAPID heapId )
   //アイテム使用系初期化
   work->useItemPoke = MUSICAL_POKE_MAX;
   work->useItemCnt = 0;
+  work->useItemReq = FALSE;
   for( i=0;i<MUSICAL_POKE_MAX;i++ )
   {
     work->useItemFlg[i] = FALSE;
@@ -1228,8 +1233,17 @@ void  STA_ACT_StopBgm( ACTING_WORK *work )
 //--------------------------------------------------------------
 void STA_ACT_UseItemRequest( ACTING_WORK *work , MUS_POKE_EQUIP_POS ePos )
 {
-  //FIXME 通信処理
-  STA_ACT_UseItem( work , work->playerIdx , ePos );
+  if( work->initWork->commWork == NULL )
+  {
+    //非通信時
+    STA_ACT_UseItem( work , work->playerIdx , ePos );
+  }
+  else
+  {
+    //通信時
+    work->useItemReq = TRUE;
+    work->useItemReqPos = ePos;
+  }
 }
 //--------------------------------------------------------------
 //アイテムの使用
@@ -1248,22 +1262,63 @@ static void STA_ACT_UpdateUseItem( ACTING_WORK *work )
   u8 usePokeArr[MUSICAL_POKE_MAX];
   u8 usePokeNum = 0;
 
-  //使用判定
-  for( i=0;i<MUSICAL_POKE_MAX;i++ )
+  //通信時送信判定
+  if( work->initWork->commWork != NULL )
   {
-    if( work->useItemFlg[i] == TRUE )
+    if( work->useItemReq == TRUE )
     {
-      STA_POKE_UseItemFunc( work->pokeSys , work->pokeWork[i] , work->useItemPos[i] );
-      usePokeArr[usePokeNum] = i;
-      usePokeNum++;
-      work->useItemFlg[i] = FALSE;
+      const BOOL ret = MUS_COMM_Send_UseButtonFlg( work->initWork->commWork , work->useItemReqPos );
+      if( ret == TRUE )
+      {
+        work->useItemReq = FALSE;
+      }
     }
   }
-  if( usePokeNum > 0 )
+
+  //使用判定
+  if( work->initWork->commWork == NULL )
   {
-    work->useItemCnt = ACT_USEITEM_EFF_TIME;
-    work->useItemPoke = usePokeArr[ GFL_STD_MtRand0(usePokeNum)];
-    work->isUpdateAttention = TRUE;
+    //非通信時
+    for( i=0;i<MUSICAL_POKE_MAX;i++ )
+    {
+      if( work->useItemFlg[i] == TRUE )
+      {
+        STA_POKE_UseItemFunc( work->pokeSys , work->pokeWork[i] , work->useItemPos[i] );
+        usePokeArr[usePokeNum] = i;
+        usePokeNum++;
+        work->useItemFlg[i] = FALSE;
+      }
+    }
+    if( usePokeNum > 0 )
+    {
+      work->useItemCnt = ACT_USEITEM_EFF_TIME;
+      work->useItemPoke = usePokeArr[ GFL_STD_MtRand0(usePokeNum)];
+      work->isUpdateAttention = TRUE;
+    }
+  }
+  else
+  {
+    //通信時
+    for( i=0;i<MUSICAL_POKE_MAX;i++ )
+    {
+      const u8 usePos = MUS_COMM_GetUseButtonPos( work->initWork->commWork , i );
+      if( usePos != MUS_POKE_EQU_INVALID )
+      {
+        OS_TPrintf("Use item!![%d][%d]\n",i,usePos);
+        STA_POKE_UseItemFunc( work->pokeSys , work->pokeWork[i] , usePos );
+        MUS_COMM_ResetUseButtonPos( work->initWork->commWork , i );
+      }
+    }
+    {
+      const u8 AttentionIdx = MUS_COMM_GetUseButtonAttention( work->initWork->commWork );
+      if( AttentionIdx < MUSICAL_POKE_MAX )
+      {
+        work->useItemCnt = ACT_USEITEM_EFF_TIME;
+        work->useItemPoke = AttentionIdx;
+        work->isUpdateAttention = TRUE;
+        MUS_COMM_ResetUseButtonAttention( work->initWork->commWork );
+      }
+    }
   }
   
   //時間判定

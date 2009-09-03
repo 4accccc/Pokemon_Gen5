@@ -711,7 +711,7 @@ void STA_POKE_UpdateItemUse_Use( STA_POKE_SYS *work , STA_POKE_WORK *pokeWork )
                 &sizeX , &sizeY );
   sizeX += FX_SinIdx(rad)/8;
   sizeY += FX_CosIdx(rad)/8;
-  OS_Printf("[%.3f][%.3f]\n",FX_FX32_TO_F32(sizeX),FX_FX32_TO_F32(sizeY));
+  //OS_Printf("[%.3f][%.3f]\n",FX_FX32_TO_F32(sizeX),FX_FX32_TO_F32(sizeY));
   MUS_ITEM_DRAW_SetSize( work->itemDrawSys , 
                 pokeWork->itemWork[itemUseWork->equipPos] ,
                 sizeX , sizeY );

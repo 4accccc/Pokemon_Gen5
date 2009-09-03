@@ -102,6 +102,13 @@ MYSTATUS *MUS_COMM_GetPlayerMyStatus( MUS_COMM_WORK* work , u8 idx );
 const BOOL MUS_COMM_IsRefreshUserData( MUS_COMM_WORK *work );
 void MUS_COMM_ResetRefreshUserData( MUS_COMM_WORK *work );
 
-GAME_COMM_SYS_PTR MUS_COMM_GetGameComm( MUS_COMM_WORK* work );
+const BOOL MUS_COMM_Send_MusicalIndex( MUS_COMM_WORK* work );
+const BOOL MUS_COMM_Send_UseButtonFlg( MUS_COMM_WORK* work , u8 pos );
 
+u8 MUS_COMM_GetSelfMusicalIndex( MUS_COMM_WORK* work );
+GAME_COMM_SYS_PTR MUS_COMM_GetGameComm( MUS_COMM_WORK* work );
 MUS_COMM_MODE MUS_COMM_GetMode( MUS_COMM_WORK* work );
+u8 MUS_COMM_GetUseButtonPos( MUS_COMM_WORK* work , const u8 musIdx );
+void MUS_COMM_ResetUseButtonPos( MUS_COMM_WORK* work , const u8 musIdx );
+u8 MUS_COMM_GetUseButtonAttention( MUS_COMM_WORK* work );
+void MUS_COMM_ResetUseButtonAttention( MUS_COMM_WORK* work );

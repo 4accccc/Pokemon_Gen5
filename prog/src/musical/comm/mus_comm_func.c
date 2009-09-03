@@ -49,9 +49,12 @@ typedef enum
 typedef enum
 {
   MCFT_START_GAME,
+  MCFT_MUSICAL_IDX,
   MCFT_GAME_STATE,
   MCFT_GAME_STATE_ALL,
   MCFT_STRM_SIZE,
+  MCFT_USE_BUTTON_REQ,    //子機が親機へ使用リクエスト
+  MCFT_USE_BUTTON,        //親機が子機へ使用通知
   
 }MUS_COMM_FLAG_TYPE;
 
@@ -88,6 +91,9 @@ typedef enum
 typedef struct
 {
   BOOL                isValidData;  //pokeData受信完了フラグ
+  BOOL                isReqUseButton;
+  u8                  useReqButtonPos;
+  u8                  useButtonPos;
   u8                  musicalIdx;
   MUS_COMM_GAME_STATE gameState;
   void *pokeData;     //MUSICAL_POKE_PARAMとPOKEMON_PARAMのセット。
@@ -119,6 +125,7 @@ struct _MUS_COMM_WORK
   BOOL isSendingStrmData;
   MUS_COMM_DIVSEND_STATE divSendState;
   
+  u8 useButtonAttentionPoke;
   //親機専用
   BOOL isReqSendState;
 };
@@ -273,6 +280,9 @@ void MUS_COMM_InitComm( MUS_COMM_WORK* work )
     work->userData[i].musicalIdx = i;
     work->userData[i].gameState = MCGS_NONE;
     work->userData[i].isValidData = FALSE;
+    work->userData[i].isReqUseButton = FALSE;
+    work->userData[i].useReqButtonPos = MUS_POKE_EQU_INVALID;
+    work->userData[i].useButtonPos = MUS_POKE_EQU_INVALID;
     if( work->userData[i].pokeData != NULL )
     {
       GFL_HEAP_FreeMemory( work->userData[i].pokeData );
@@ -297,6 +307,7 @@ void MUS_COMM_InitComm( MUS_COMM_WORK* work )
   work->isSendStrmMode = FALSE;
   work->divSendState = MCDS_NONE;
   work->isReqSendState = FALSE;
+  work->useButtonAttentionPoke = MUSICAL_COMM_MEMBER_NUM;
   
   GFL_NET_Init( &aGFLNetInit , MUS_COMM_FinishNetInitCallback , (void*)work );
 
@@ -412,6 +423,37 @@ void MUS_COMM_UpdateComm( MUS_COMM_WORK* work )
     if( ret == TRUE )
     {
       work->isReqSendState = FALSE;
+    }
+  }
+  //ボタン使用リクエスト送信
+  {
+    u32 sendBit = 0;
+    u8 i;
+    u8 useNum = 0;
+    u8 useArr[MUSICAL_COMM_MEMBER_NUM];
+    for( i=0;i<MUSICAL_COMM_MEMBER_NUM;i++ )
+    {
+      if( work->userData[i].isReqUseButton == TRUE )
+      {
+        useArr[useNum] = i;
+        useNum++;
+      }
+      sendBit += (work->userData[i].useReqButtonPos<<(i*4));
+    }
+    if( useNum > 0 )
+    {
+      BOOL ret;
+      u8 target = useArr[ GFL_STD_MtRand0(useNum)];
+      sendBit += (target<<MUSICAL_COMM_MEMBER_NUM*4);
+      ret = MUS_COMM_Send_FlagServer( work , MCFT_USE_BUTTON , sendBit , GFL_NET_SENDID_ALLUSER );    
+      if( ret == TRUE )
+      {
+        for( i=0;i<useNum;i++ )
+        {
+          work->userData[useArr[i]].isReqUseButton = FALSE;
+          work->userData[useArr[i]].useReqButtonPos = MUS_POKE_EQU_INVALID;
+        }
+      }
     }
   }
   MUS_COMM_Update_SendStrmData( work );
@@ -589,7 +631,7 @@ static BOOL MUS_COMM_BeacomCompare(GameServiceID GameServiceID1, GameServiceID G
 typedef struct
 {
   u8 flg;
-  u32 value;
+  u32 value;  //ストリームのサイズがあるのでu32
 }MUS_COMM_FLG_PACKET;
 
 static const BOOL MUS_COMM_Send_Flag( MUS_COMM_WORK* work , const u8 flag , u32 value , NetID target )
@@ -618,7 +660,7 @@ static const BOOL MUS_COMM_Send_FlagServer( MUS_COMM_WORK* work , const u8 flag 
   MUS_COMM_FLG_PACKET pkt;
   pkt.flg = flag;
   pkt.value = value;
-  ARI_TPrintf("Send Flg[%d:%d].\n",pkt.flg,pkt.value);
+  ARI_TPrintf("Send Flg Server[%d:%d].\n",pkt.flg,pkt.value);
 
   ret = GFL_NET_SendDataEx( parentHandle , target , 
                             MCST_FLG , sizeof( MUS_COMM_FLG_PACKET ) , 
@@ -637,11 +679,26 @@ static void MUS_COMM_Post_Flag( const int netID, const int size , const void* pD
   MUS_COMM_WORK *work = (MUS_COMM_WORK*)pWork;
   MUS_COMM_FLG_PACKET *pkt = (MUS_COMM_FLG_PACKET*)pData;
 
-  ARI_TPrintf("Post Flg[%d:%d] To [%d].\n",pkt->flg,pkt->value,netID);
+  ARI_TPrintf("Post Flg[%d:%d(0x%x)] To [%d].\n",pkt->flg,pkt->value,pkt->value,netID);
   switch( pkt->flg )
   {
   case MCFT_START_GAME:
     work->isStartGame = TRUE;
+    break;
+  
+  case MCFT_MUSICAL_IDX:
+    {
+      u8 i;
+      u32 bitMask = 0xF;
+      ARI_TPrintf("MusicalIndex:");
+      for( i=0;i<MUSICAL_COMM_MEMBER_NUM;i++ )
+      {
+        work->userData[i].musicalIdx = (pkt->value&bitMask)>>(i*4);
+        ARI_TPrintf("[%d]",work->userData[i].musicalIdx);
+        bitMask = bitMask<<4;
+      }
+      ARI_TPrintf("\n");
+    }
     break;
 
   case MCFT_GAME_STATE:
@@ -673,6 +730,34 @@ static void MUS_COMM_Post_Flag( const int netID, const int size , const void* pD
       work->distData->strmDataSize = pkt->value;
     }
     
+    break;
+    
+  case MCFT_USE_BUTTON_REQ:
+    if( work->mode == MCM_PARENT )
+    {
+      work->userData[netID].isReqUseButton = TRUE;
+      work->userData[netID].useReqButtonPos = pkt->value;
+    }
+    break;
+  
+  case MCFT_USE_BUTTON:
+    {
+      u8 i;
+      u32 bitMask = 0xF;
+      ARI_TPrintf("PostUseButton:");
+      for( i=0;i<MUSICAL_COMM_MEMBER_NUM;i++ )
+      {
+        const u8 bit = (pkt->value & bitMask)>>(i*4);
+        ARI_TPrintf("[%d]",bit);
+        if( bit != MUS_POKE_EQU_INVALID )
+        {
+          work->userData[i].useButtonPos = bit;
+        }
+        bitMask = bitMask<<4;
+      }
+      work->useButtonAttentionPoke = (pkt->value & 0xF0000)>>16;
+      ARI_TPrintf(":[%d]\n",work->useButtonAttentionPoke);
+    }
     break;
   }
   
@@ -932,6 +1017,47 @@ static u8*    MUS_COMM_Post_StrmDataBuff( int netID, void* pWork , int size )
 
 #pragma mark [> outer func
 
+const BOOL MUS_COMM_Send_MusicalIndex( MUS_COMM_WORK* work )
+{
+  u8 idxArr[MUSICAL_COMM_MEMBER_NUM];
+  u8 i,j;
+  u32 sendBit = 0;
+  for( i=0;i<MUSICAL_COMM_MEMBER_NUM;i++ )
+  {
+    idxArr[i] = i;
+  }
+  for( j=0;j<10;j++ )
+  {
+    for( i=0;i<MUSICAL_COMM_MEMBER_NUM;i++ )
+    {
+      u8 swapIdx = GFL_STD_MtRand0(MUSICAL_COMM_MEMBER_NUM);
+      u8 temp = idxArr[i];
+      idxArr[i] = idxArr[swapIdx];
+      idxArr[swapIdx] = temp;
+    }
+  }
+  
+  for( i=0;i<MUSICAL_COMM_MEMBER_NUM;i++ )
+  {
+    sendBit += idxArr[i]<<(4*i);
+  }
+  
+  return MUS_COMM_Send_FlagServer( work , MCFT_MUSICAL_IDX , sendBit , GFL_NET_SENDID_ALLUSER );
+  
+}
+
+const BOOL MUS_COMM_Send_UseButtonFlg( MUS_COMM_WORK* work , u8 pos )
+{
+  return MUS_COMM_Send_Flag( work , MCFT_USE_BUTTON_REQ , pos , GFL_NET_SENDID_ALLUSER );
+}
+
+u8 MUS_COMM_GetSelfMusicalIndex( MUS_COMM_WORK* work )
+{
+  const u8 selfNetId = GFL_NET_GetNetID(GFL_NET_HANDLE_GetCurrentHandle());
+  return work->userData[selfNetId].musicalIdx;
+}
+
+
 GAME_COMM_SYS_PTR MUS_COMM_GetGameComm( MUS_COMM_WORK* work )
 {
   return work->gameComm;
@@ -945,6 +1071,47 @@ const BOOL MUS_COMM_IsInitComm( MUS_COMM_WORK* work )
 MUS_COMM_MODE MUS_COMM_GetMode( MUS_COMM_WORK* work )
 {
   return work->mode;
+}
+
+u8 MUS_COMM_GetUseButtonPos( MUS_COMM_WORK* work , const u8 musIdx )
+{
+  u8 i;
+  for( i=0;i<MUSICAL_COMM_MEMBER_NUM;i++ )
+  {
+    if( work->userData[i].musicalIdx == musIdx )
+    {
+      return work->userData[i].useButtonPos;
+    }
+  }
+  return MUS_POKE_EQU_INVALID;
+}
+
+void MUS_COMM_ResetUseButtonPos( MUS_COMM_WORK* work , const u8 musIdx )
+{
+  u8 i;
+  for( i=0;i<MUSICAL_COMM_MEMBER_NUM;i++ )
+  {
+    if( work->userData[i].musicalIdx == musIdx )
+    {
+      work->userData[i].useButtonPos = MUS_POKE_EQU_INVALID;
+    }
+  }
+}
+u8 MUS_COMM_GetUseButtonAttention( MUS_COMM_WORK* work )
+{
+  if( work->useButtonAttentionPoke < MUSICAL_COMM_MEMBER_NUM )
+  {
+    return work->userData[work->useButtonAttentionPoke].musicalIdx;
+  }
+  else
+  {
+    return MUSICAL_COMM_MEMBER_NUM;
+  }
+}
+
+void MUS_COMM_ResetUseButtonAttention( MUS_COMM_WORK* work )
+{
+  work->useButtonAttentionPoke = MUSICAL_COMM_MEMBER_NUM;
 }
 
 #pragma mark [> other func

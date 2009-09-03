@@ -42,6 +42,7 @@ typedef enum
 {
   MPS_INIT_LOBBY,
   MPS_TERM_LOBBY,
+  MPS_INIT_DRESSUP_SEND_MUSICAL_IDX,
   MPS_INIT_DRESSUP_SEND_STRM,
   MPS_INIT_DRESSUP,
   MPS_TERM_DRESSUP,
@@ -292,13 +293,20 @@ static GFL_PROC_RESULT MusicalProc_Main( GFL_PROC * proc, int * seq , void *pwk,
       
       case MCM_PARENT:  //‰¼
         MUSICAL_SYSTEM_LoadStrmData( work->distData , HEAPID_MUSICAL_STRM );
-        work->state = MPS_INIT_DRESSUP_SEND_STRM;
+        work->state = MPS_INIT_DRESSUP_SEND_MUSICAL_IDX;
         break;
 
       case MCM_CHILD:  //‰¼
         work->state = MPS_INIT_DRESSUP;
         break;
       }
+    }
+    break;
+    
+  case MPS_INIT_DRESSUP_SEND_MUSICAL_IDX:
+    if( MUS_COMM_Send_MusicalIndex( work->commWork ) == TRUE )
+    {
+      work->state = MPS_INIT_DRESSUP_SEND_STRM;
     }
     break;
     
