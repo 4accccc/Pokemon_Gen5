@@ -91,6 +91,7 @@ static void mapCtrlNoGrid_Create(
 		FIELDMAP_WORK *fieldWork, VecFx32 *pos, u16 dir );
 static void mapCtrlNoGrid_Delete( FIELDMAP_WORK *fieldWork );
 static void mapCtrlNoGrid_Main( FIELDMAP_WORK *fieldWork, VecFx32 *pos );
+static const VecFx32 * mapCtrlNoGrid_GetCameraTarget( FIELDMAP_WORK *fieldWork );
 
 //======================================================================
 //	フィールドマップ　ノングリッド処理
@@ -104,6 +105,7 @@ const DEPEND_FUNCTIONS FieldMapCtrl_NoGridFunctions =
 	mapCtrlNoGrid_Create,
 	mapCtrlNoGrid_Main,
 	mapCtrlNoGrid_Delete,
+  mapCtrlNoGrid_GetCameraTarget,
 };
 
 //--------------------------------------------------------------
@@ -224,6 +226,17 @@ static void mapCtrlNoGrid_Main( FIELDMAP_WORK *fieldWork, VecFx32 *pos )
   PLAYERWORK_setPosition( player, pos );
 }
 
+//--------------------------------------------------------------
+/**
+ * フィールドマップ　ノングリッド処理　カメラターゲット取得
+ * @param fieldWork FIELDMAP_WORK
+ * @retval VecFx32* カメラターゲット
+ */
+//--------------------------------------------------------------
+static const VecFx32 * mapCtrlNoGrid_GetCameraTarget( FIELDMAP_WORK *fieldWork )
+{
+  return NULL;
+}
 
 //======================================================================
 //======================================================================

@@ -60,6 +60,7 @@ typedef struct
 	void (*create_func)(FIELDMAP_WORK*, VecFx32*, u16);
 	void (*main_func)(FIELDMAP_WORK*, VecFx32*);
 	void (*delete_func)(FIELDMAP_WORK*);
+  const VecFx32 * (*get_camera_target_func)(FIELDMAP_WORK*);
 }DEPEND_FUNCTIONS;
 
 //======================================================================

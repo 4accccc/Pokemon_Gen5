@@ -60,6 +60,7 @@
 static void mapCtrlC3P02_Create( FIELDMAP_WORK* p_fieldwork, VecFx32* p_p_pos, u16 dir );
 static void mapCtrlC3P02_Delete( FIELDMAP_WORK* p_fieldwork );
 static void mapCtrlC3P02_Main( FIELDMAP_WORK* p_fieldwork, VecFx32* p_p_pos );
+static const VecFx32 * mapCtrlC3P2_GetCameraTarget( FIELDMAP_WORK *fieldWork );
 
 
 //--------------------------------------------------------------
@@ -71,6 +72,7 @@ const DEPEND_FUNCTIONS FieldMapCtrl_C3P02Functions =
 	mapCtrlC3P02_Create,
 	mapCtrlC3P02_Main,
 	mapCtrlC3P02_Delete,
+  mapCtrlC3P2_GetCameraTarget,
 };
 
 
@@ -220,6 +222,18 @@ static void mapCtrlC3P02_Main( FIELDMAP_WORK* p_fieldwork, VecFx32* p_pos )
   }
 #endif
 
+}
+
+//--------------------------------------------------------------
+/**
+ * フィールドマップ　C3処理　カメラターゲット取得
+ * @param fieldWork FIELDMAP_WORK
+ * @retval VecFx32* カメラターゲット
+ */
+//--------------------------------------------------------------
+static const VecFx32 * mapCtrlC3P2_GetCameraTarget( FIELDMAP_WORK *fieldWork )
+{
+  return NULL;
 }
 
 

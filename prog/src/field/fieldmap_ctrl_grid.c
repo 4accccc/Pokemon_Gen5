@@ -55,6 +55,7 @@ static void mapCtrlGrid_Create(
 	FIELDMAP_WORK *fieldWork, VecFx32 *pos, u16 dir );
 static void mapCtrlGrid_Delete( FIELDMAP_WORK *fieldWork );
 static void mapCtrlGrid_Main( FIELDMAP_WORK *fieldWork, VecFx32 *pos );
+static const VecFx32 * mapCtrlGrid_GetCameraTarget( FIELDMAP_WORK *fieldWork );
 
 static u16 grid_ChangeFourDir( u16 dir );
 
@@ -70,6 +71,7 @@ const DEPEND_FUNCTIONS FieldMapCtrl_GridFunctions =
 	mapCtrlGrid_Create,
 	mapCtrlGrid_Main,
 	mapCtrlGrid_Delete,
+  mapCtrlGrid_GetCameraTarget,
 };
 
 //--------------------------------------------------------------
@@ -121,7 +123,7 @@ static void mapCtrlGrid_Create(
 //    KAGAYA_Printf( "わたされた方向 %xH, %d\n", dir, dir4 );
 		gridWork->gridPlayer = FIELD_PLAYER_GRID_Init( fld_player, heapID );
     
-    { //座標セット
+    { //カメラ座標セット
       const VecFx32 *pos = MMDL_GetVectorPosAddress( fmmdl );
       FIELDMAP_SetNowPosTarget( fieldWork, pos );
     }
@@ -180,6 +182,21 @@ static void mapCtrlGrid_Main( FIELDMAP_WORK *fieldWork, VecFx32 *pos )
 #endif
 		}
 	}
+}
+
+//--------------------------------------------------------------
+/**
+ * フィールドマップ　グリッド処理　カメラターゲット取得
+ * @param fieldWork FIELDMAP_WORK
+ * @retval VecFx32* カメラターゲット
+ */
+//--------------------------------------------------------------
+static const VecFx32 * mapCtrlGrid_GetCameraTarget( FIELDMAP_WORK *fieldWork )
+{
+  FIELD_PLAYER *fld_player = FIELDMAP_GetFieldPlayer( fieldWork );
+  MMDL *mmdl = FIELD_PLAYER_GetMMdl( fld_player );
+  const VecFx32 *pos = MMDL_GetVectorPosAddress( mmdl ); 
+  return( pos );
 }
 
 //======================================================================
