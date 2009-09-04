@@ -127,6 +127,8 @@ static GMEVENT * checkEvent_PlayerNaminoriEnd( const EV_REQUEST *req,
 
 static MMDL * getFrontTalkOBJ( EV_REQUEST *req, FIELDMAP_WORK *fieldMap );
 
+static MMDL * getRailFrontTalkOBJ( EV_REQUEST *req, FIELDMAP_WORK *fieldMap );
+
 static u16 checkTalkAttrEvent( EV_REQUEST *req, FIELDMAP_WORK *fieldMap);
 
 //======================================================================
@@ -555,6 +557,284 @@ GMEVENT * FIELD_EVENT_CheckUnion( GAMESYS_WORK *gsys, void *work )
 		}
 	}
 
+	return NULL;
+}
+
+
+//----------------------------------------------------------------------------
+/**
+ * イベント起動チェック：ノーグリッドマップ
+ *
+ *	@param	gsys
+ *	@param	work 
+ *
+ *	@return
+ */
+//-----------------------------------------------------------------------------
+GMEVENT * FIELD_EVENT_CheckNoGrid( GAMESYS_WORK *gsys, void *work )
+{
+  EV_REQUEST req;
+	GMEVENT *event;
+	FIELDMAP_WORK *fieldWork = work;
+  
+  setupRequest( &req, gsys, fieldWork );
+
+  
+  //デバッグ用チェック
+#ifdef  PM_DEBUG
+  event = DEBUG_checkKeyEvent( &req, gsys, fieldWork );
+  if (event != NULL) {
+    return event;
+  }
+#endif //debug
+	
+//☆☆☆特殊スクリプト起動チェックがここに入る
+    /* 今はない */
+
+//☆☆☆トレーナー視線チェックがここに入る
+  if( !(req.debugRequest) ){
+/*
+    event = EVENT_CheckTrainerEye( fieldWork, FALSE );
+    if( event != NULL ){
+      return event;
+    }
+//*/
+  }
+
+//☆☆☆一歩移動チェックがここから
+  //座標イベントチェック
+  if( req.moveRequest )
+  {
+    /*
+    VecFx32 pos;
+    u16 id;
+    EVENTWORK *evwork = GAMEDATA_GetEventWork( req.gamedata );
+    FIELD_PLAYER_GetPos( req.field_player, &pos );
+    
+    id = EVENTDATA_CheckPosEvent( req.evdata, evwork, &pos );
+    
+    if( id != EVENTDATA_ID_NONE ){ //座標イベント起動
+      SCRIPT_FLDPARAM fparam;
+      fparam.fieldMap = fieldWork;
+      fparam.msgBG = FIELDMAP_GetFldMsgBG(fieldWork);
+      event = SCRIPT_SetEventScript( gsys, id, NULL, req.heapID, &fparam );
+      return event;
+    }
+    //*/
+
+    //座標接続チェック
+    event = checkRailExit(&req, gsys, fieldWork);
+    if( event != NULL ){
+      return event;
+    }
+  }
+
+
+	
+//☆☆☆ステップチェック（一歩移動or振り向き）がここから
+  //戦闘移行チェック
+  {
+    FIELD_ENCOUNT * encount = FIELDMAP_GetEncount(fieldWork);
+    #ifdef PM_DEBUG
+    if( !(req.debugRequest) ){
+      if( req.stepRequest ){
+        if( FIELD_ENCOUNT_CheckEncount(encount) == TRUE ){
+          return EVENT_Battle( gsys, fieldWork );
+        }
+      }
+    }
+    #else
+    if( req.stepRequest ){
+			if(!GFL_NET_IsInit())
+			{
+				if( FIELD_ENCOUNT_CheckEncount(encount) == TRUE ){
+					return EVENT_Battle( gsys, fieldWork );
+				}
+			}
+    }
+    #endif
+  }
+  
+
+  //看板イベントチェック
+  if( req.stepRequest ){
+    /*
+    u16 id;
+    VecFx32 pos;
+    EVENTWORK *evwork = GAMEDATA_GetEventWork( req.gamedata );
+    MMDL *fmmdl = FIELD_PLAYER_GetMMdl( req.field_player );
+    u16 dir = MMDL_GetDirDisp( fmmdl );
+  
+    FIELD_PLAYER_GetPos( req.field_player, &pos );
+    MMDL_TOOL_AddDirVector( dir, &pos, GRID_FX32 );
+  
+    {
+      //OBJ看板チェック
+    }
+    
+    id = EVENTDATA_CheckTalkBoardEvent( req.evdata, evwork, &pos, dir );
+    
+    if( id != EVENTDATA_ID_NONE ){
+      SCRIPT_FLDPARAM fparam;
+      fparam.fieldMap = fieldWork;
+      fparam.msgBG = FIELDMAP_GetFldMsgBG(fieldWork);
+      event = SCRIPT_SetEventScript( gsys, id, NULL, req.heapID, &fparam );
+    }
+    //*/
+  }
+  
+//☆☆☆自機状態イベントチェックがここから
+    /* 今はない */
+
+//☆☆☆会話チェック
+
+	///通信用会話処理(仮
+  {
+    FIELD_COMM_MAIN * commSys = FIELDMAP_GetCommSys(fieldWork);
+    
+    if(commSys != NULL){
+      //話しかける側
+      if( req.talkRequest ){
+        if( FIELD_COMM_MAIN_CanTalk( commSys ) == TRUE ){
+          return FIELD_COMM_EVENT_StartTalk( gsys , fieldWork , commSys );
+        }
+      }
+
+      //話しかけられる側(中で一緒に話せる状態かのチェックもしてしまう
+      if( FIELD_COMM_MAIN_CheckReserveTalk( commSys ) == TRUE ){
+        return FIELD_COMM_EVENT_StartTalkPartner( gsys , fieldWork , commSys );
+      }
+    }
+  }
+
+	//フィールド話し掛けチェック
+  if( req.talkRequest )
+  {
+    { //OBJ話し掛け
+      MMDL *fmmdl_talk = getRailFrontTalkOBJ( &req, fieldWork );
+      if( fmmdl_talk != NULL )
+      {
+//        u32 scr_id = MMDL_GetEventID( fmmdl_talk );
+//        MMDL *fmmdl_player = FIELD_PLAYER_GetMMdl( req.field_player );
+//        FIELD_PLAYER_GRID_ForceStop( req.field_player );
+//        return EVENT_FieldTalk( gsys, fieldWork,
+//          scr_id, fmmdl_player, fmmdl_talk, req.heapID );
+
+        if(WIPE_SYS_EndCheck()){
+            return EVENT_FieldMapMenu( gsys, fieldWork, req.heapID );
+        }
+      }
+    }
+    
+    /*
+    { //BG話し掛け
+      u16 id;
+      VecFx32 pos;
+      EVENTWORK *evwork = GAMEDATA_GetEventWork( req.gamedata );
+      MMDL *fmmdl = FIELD_PLAYER_GetMMdl( req.field_player );
+      u16 dir = MMDL_GetDirDisp( fmmdl );
+      
+      FIELD_PLAYER_GetPos( req.field_player, &pos );
+      MMDL_TOOL_AddDirVector( dir, &pos, GRID_FX32 );
+      id = EVENTDATA_CheckTalkBGEvent( req.evdata, evwork, &pos, dir );
+      
+      if( id != EVENTDATA_ID_NONE ){ //座標イベント起動
+        SCRIPT_FLDPARAM fparam;
+        fparam.fieldMap = fieldWork;
+        fparam.msgBG = FIELDMAP_GetFldMsgBG(fieldWork);
+        event = SCRIPT_SetEventScript( gsys, id, NULL, req.heapID, &fparam );
+        return event;
+      }
+    }
+
+    { //BG Attribute 話しかけ
+      u16 id = checkTalkAttrEvent( &req, fieldWork );
+      if( id != EVENTDATA_ID_NONE ){ //座標イベント起動
+        SCRIPT_FLDPARAM fparam;
+        fparam.fieldMap = fieldWork;
+        fparam.msgBG = FIELDMAP_GetFldMsgBG(fieldWork);
+        event = SCRIPT_SetEventScript( gsys, id, NULL, req.heapID, &fparam );
+        return event;
+      }
+
+    }
+    //*/
+  }
+
+
+#if 0
+  { //波乗りテスト
+
+    if( req.player_state == PLAYER_MOVE_STATE_END ||
+        req.player_state == PLAYER_MOVE_STATE_OFF )
+    {
+#if 0
+      if( req.key_trg & PAD_BUTTON_SELECT ){
+        event = checkEvent_PlayerNaminoriStart( &req, gsys, fieldWork );
+        if( event != NULL ){
+          return event;
+       }
+      }
+#endif         
+      #ifdef PM_DEBUG
+      if( !(req.debugRequest) ){
+        event = checkEvent_PlayerNaminoriEnd( &req, gsys, fieldWork );
+        if( event != NULL ){
+         return event;
+       }
+      }
+      #else
+      event = checkEvent_PlayerNaminoriEnd( &req, gsys, fieldWork );
+      if( event != NULL ){
+        return event;
+      }
+      #endif
+    }
+  }
+#endif
+  
+//☆☆☆押し込み操作チェック（マットでのマップ遷移など）
+	//キー入力接続チェック
+  if (req.pushRequest) {
+    event = checkRailExit(&req, gsys, fieldWork);
+    if( event != NULL ){
+      return event;
+    }
+  }
+  
+//☆☆☆自機位置に関係ないキー入力イベントチェック
+  //便利ボタンチェック
+  if( req.convRequest ){
+    event = checkEvent_ConvenienceButton( &req, gsys, fieldWork );
+    if( event != NULL ){
+      return event;
+    }
+  }
+  
+	//メニュー起動チェック
+	if( req.menuRequest ){
+		if(WIPE_SYS_EndCheck()){
+  			return EVENT_FieldMapMenu( gsys, fieldWork, req.heapID );
+		}
+	}
+
+	//サブスクリーンからのイベント起動チェック
+	event = checkSubScreenEvent(gsys, fieldWork);
+	if( event != NULL )
+  {
+		return event;
+	}
+  
+	
+	//デバッグ：パレスで木に触れたらワープ
+  {
+    GMEVENT *ev;
+    FIELD_COMM_MAIN * commSys = FIELDMAP_GetCommSys(fieldWork);
+    ev =  DEBUG_PalaceTreeMapWarp(fieldWork, gsys, req.field_player, commSys);
+    if(ev != NULL){
+      return ev;
+    }
+	}
 	return NULL;
 }
 
@@ -1353,6 +1633,37 @@ static MMDL * getFrontTalkOBJ( EV_REQUEST *req, FIELDMAP_WORK *fieldMap )
   
   mmdl = MMDLSYS_SearchGridPos(
       FIELDMAP_GetMMdlSys(fieldMap), gx, gz, FALSE );
+  
+  return( mmdl );
+}
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  レールマップでの、目の前のモデルを取得
+ *
+ *	@param	req
+ *	@param	*fieldMap 
+ *
+ *	@return
+ */
+//-----------------------------------------------------------------------------
+static MMDL * getRailFrontTalkOBJ( EV_REQUEST *req, FIELDMAP_WORK *fieldMap )
+{
+  MMDL *mmdl;
+  MMDL* player_mmdl;
+  RAIL_LOCATION location;
+
+  player_mmdl = FIELD_PLAYER_GetMMdl( req->field_player );
+  if( MMDL_GetRailFrontLocation( player_mmdl, &location ) )
+  {
+    mmdl = MMDLSYS_SearchRailLocation(
+        FIELDMAP_GetMMdlSys(fieldMap), &location, FALSE );
+  }
+  else
+  {
+    mmdl = NULL;
+  }
   
   return( mmdl );
 }

@@ -48,7 +48,6 @@ static const u8 sc_DIR_TO_RAILKEY[DIR_MAX4] =
 typedef struct 
 {
   FIELD_RAIL_WORK* rail_wk;           ///<レール移動ワーク 4byte
-  RAIL_LOCATION rail_location;        ///<レール移動用位置情報 8byte
 } MV_RAIL_COMMON_WORK;
 #define MV_RAIL_COMMON_WORK_SIZE (sizeof(MV_RAIL_COMMON_WORK))		///<MV_RAIL_COMMONサイズ
 
@@ -99,7 +98,6 @@ void MMDL_SetRailLocation( MMDL * fmmdl, const RAIL_LOCATION* location )
 	p_work = MMDL_GetMoveProcWork( fmmdl );
 
   FIELD_RAIL_WORK_SetLocation( p_work->rail_wk, location );
-  p_work->rail_location = *location;
 
   // 座標の更新
   FIELD_RAIL_WORK_GetPos( p_work->rail_wk, &pos );
@@ -123,7 +121,7 @@ void MMDL_GetRailLocation( const MMDL * fmmdl, RAIL_LOCATION* location )
 
 	cp_work = MMDL_GetMoveProcWork( (MMDL*)fmmdl );
 
-  *location = cp_work->rail_location;
+  FIELD_RAIL_WORK_GetLocation( cp_work->rail_wk, location );
 }
 
 //----------------------------------------------------------------------------
@@ -337,6 +335,7 @@ BOOL MMDL_HitCheckRailMoveFellow( const MMDL * mmdl, const RAIL_LOCATION* next_l
   const MMDLSYS* cp_sys = MMDL_GetMMdlSys( mmdl );
   const FLDNOGRID_MAPPER* cp_mapper = MMDLSYS_GetNOGRIDMapper( cp_sys );
   const FIELD_RAIL_MAN* cp_railman = FLDNOGRID_MAPPER_GetRailMan( cp_mapper );
+  RAIL_LOCATION mdl_location;
   VecFx32 my_pos;
   VecFx32 mdl_pos;
   fx32 dist;
@@ -355,7 +354,8 @@ BOOL MMDL_HitCheckRailMoveFellow( const MMDL * mmdl, const RAIL_LOCATION* next_l
     {
 			if( MMDL_CheckStatusBit( cmdl,MMDL_STABIT_FELLOW_HIT_NON) == 0 )
       {
-        MMDL_GetVectorPos( cmdl, &mdl_pos );
+        MMDL_GetRailLocation( cmdl, &mdl_location );
+        FIELD_RAIL_MAN_GetLocationPosition( cp_railman, &mdl_location, &mdl_pos );
 
 //        TOMOYA_Printf( "grid_r 0x%x my_pos x[0x%x]y[0x%x]z[0x%x] mdl_pos x[0x%x]y[0x%x]z[0x%x] \n", grid_r, my_pos.x, my_pos.y, my_pos.z, mdl_pos.x, mdl_pos.y, mdl_pos.z );
         if( FIELD_RAIL_TOOL_HitCheckSphere( &my_pos, &mdl_pos, grid_r ) )
@@ -389,6 +389,7 @@ MMDL * MMDLSYS_SearchRailLocation( const MMDLSYS *sys, const RAIL_LOCATION* loca
   VecFx32 check_pos;
   VecFx32 mdl_pos;
   RAIL_LOCATION old_location;
+  RAIL_LOCATION mdl_location;
   fx32 grid_r;
   
 
@@ -406,13 +407,40 @@ MMDL * MMDLSYS_SearchRailLocation( const MMDLSYS *sys, const RAIL_LOCATION* loca
 			}
 		}
 		
-    MMDL_GetVectorPos( mmdl, &mdl_pos );
+    MMDL_GetRailLocation( mmdl, &mdl_location );
+    FIELD_RAIL_MAN_GetLocationPosition( cp_railman, &mdl_location, &mdl_pos );
     if( FIELD_RAIL_TOOL_HitCheckSphere( &check_pos, &mdl_pos, grid_r ) ){
       return( mmdl );
 		}
 	}
 	
 	return( NULL );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  目の前のロケーションを取得
+ *
+ *	@param	mmdl
+ *	@param	location 
+ *
+ *	@retval TRUE  目の前がある
+ *	@retval FALSE 目にはいけない
+ */
+//-----------------------------------------------------------------------------
+BOOL MMDL_GetRailFrontLocation( const MMDL *mmdl, RAIL_LOCATION* location )
+{
+  const MMDLSYS* cp_sys = MMDL_GetMMdlSys( mmdl );
+  const FLDNOGRID_MAPPER* cp_mapper = MMDLSYS_GetNOGRIDMapper( cp_sys );
+  const FIELD_RAIL_MAN* cp_railman = FLDNOGRID_MAPPER_GetRailMan( cp_mapper );
+  u16 dir;
+
+  dir = MMDL_GetDirDisp( mmdl );
+
+
+  MMDL_GetRailLocation( mmdl, location );
+  TOMOYA_Printf( "dir %d  line_grid %d\n", dir, location->line_grid );
+  return FIELD_RAIL_MAN_CalcRailKeyLocation( cp_railman, location, sc_DIR_TO_RAILKEY[dir], location ); 
 }
 
 
@@ -561,8 +589,6 @@ static void MMdl_RailCommon_Init( MV_RAIL_COMMON_WORK* p_work, MMDL * fmmdl )
 //-----------------------------------------------------------------------------
 static void MMdl_RailCommon_Move( MV_RAIL_COMMON_WORK* p_work, MMDL * fmmdl )
 {
-  // ロケーションの保存
-  FIELD_RAIL_WORK_GetLocation( p_work->rail_wk, &p_work->rail_location );  
 }
 
 //----------------------------------------------------------------------------

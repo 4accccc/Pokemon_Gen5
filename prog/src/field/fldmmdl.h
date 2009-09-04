@@ -1011,5 +1011,6 @@ extern u32 MMDL_HitCheckRailMoveDir( const MMDL *mmdl, u16 dir );
 extern BOOL MMDL_HitCheckRailMoveFellow(
 	const MMDL * mmdl, const RAIL_LOCATION* location );
 extern MMDL * MMDLSYS_SearchRailLocation( const MMDLSYS *sys, const RAIL_LOCATION* location, BOOL old_hit );
+extern BOOL MMDL_GetRailFrontLocation( const MMDL *mmdl, RAIL_LOCATION* location );
 
 #endif //MMDL_H_FILE

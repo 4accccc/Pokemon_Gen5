@@ -42,9 +42,7 @@ static const RAIL_LOCATION locationStart = {
 //======================================================================
 //	É_É~Å[NPC
 //======================================================================
-#ifdef DEBUG_ONLY_FOR_tomoya_takahashi
 #define DEBUG_TEST_NPC
-#endif //DEBUG_ONLY_FOR_tomoya_takahashi
 
 #ifdef DEBUG_TEST_NPC
 static const MMDL_HEADER dummyNpc = 
@@ -186,8 +184,8 @@ static void mapCtrlNoGrid_Delete( FIELDMAP_WORK *fieldWork )
 
     for( i=0; i<NELEMS(sc_initLocation); i++ )
     {
-      MMDL_Delete( s_DUMMY_MDL[i] );
-      s_DUMMY_MDL[i] = NULL;
+//      MMDL_Delete( s_DUMMY_MDL[i] );
+//      s_DUMMY_MDL[i] = NULL;
     }
   }
 #endif
