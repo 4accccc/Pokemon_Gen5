@@ -1,11 +1,23 @@
 EFFSEQ
-$0001
-C:\home\pokemon_wb\resource\particle\wazaeffect\w_001.spa
+$0002
+C:\home\pokemon_wb\resource\particle\wazaeffect\w_425.spa
+C:\home\pokemon_wb\resource\particle\wazaeffect\w_232.spa
 #001
 %00
-パーティクルデータロード	w_001
-パーティクル再生	w_001	W_001_001_BALL_BURN	攻撃側	方向無し	0	0
-パーティクル再生	w_001	W_001_001_HIT_MARK	攻撃側	方向無し	0	0
+カメラ移動	追従	防御側	16	0	12
+ポケモンアニメ	攻撃側	アニメストップ
+パーティクルデータロード	w_232
+パーティクル再生	w_232	W_232_232_CLAWL1_METAL	防御側	方向無し	2	0
+パーティクル再生	w_232	W_232_232_CLAWL2_METAL	防御側	方向無し	2	0
+パーティクル再生	w_232	W_232_232_CLAWR1_METAL	防御側	方向無し	2	0
+パーティクル再生	w_232	W_232_232_CLAWR2_METAL	防御側	方向無し	2	0
+タイマーによるウエイト	10
+ポケモン移動	防御側	往復	0.3	0	1	2	3
+タイマーによるウエイト	26
+ポケモン移動	防御側	往復	0.3	0	1	2	3
+エフェクト終了待ち	すべて
+ポケモンアニメ	攻撃側	アニメスタート
+カメラ移動	追従	初期位置	16	0	12
 エフェクト終了待ち	すべて
 エフェクト終了
 &

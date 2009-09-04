@@ -1,11 +1,15 @@
 EFFSEQ
-$0001
-C:\home\pokemon_wb\resource\particle\wazaeffect\w_001.spa
+$0002
+C:\home\pokemon_wb\resource\particle\wazaeffect\w_425.spa
+C:\home\pokemon_wb\resource\particle\wazaeffect\w_424.spa
 #001
 %00
-パーティクルデータロード	w_001
-パーティクル再生	w_001	W_001_001_BALL_BURN	攻撃側	方向無し	0	0
-パーティクル再生	w_001	W_001_001_HIT_MARK	攻撃側	方向無し	0	0
+ポケモンアニメ	攻撃側	アニメストップ
+ポケモン移動	防御側	往復ロング	3	0	1	0	16
+タイマーによるウエイト	40
+ポケモン移動	攻撃側	往復ロング	0.5	0	2	1	1
+エフェクト終了待ち	すべて
+ポケモンアニメ	攻撃側	アニメスタート
 エフェクト終了待ち	すべて
 エフェクト終了
 &
