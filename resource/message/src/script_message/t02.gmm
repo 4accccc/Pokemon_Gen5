@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-07-30T15:27:18"/>
+	<create user="matsumiya" host="W00207" date="2009-09-04T19:33:19"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="537"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="691"/>
-		<edit entry="0" language="JPN_KANJI" mode="Source" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -378,7 +378,7 @@
 		<language name="JPN" width="256">カラクサタウンの　みなさん
 よくぞ　おあつまり　いただきました[BE:01:ページ切り替え（クリア）]
 わたくし　？？？だんの
-ＧーＣｉｓ（ジーシィス）と　いいます[BE:01:ページ切り替え（クリア）]
+ゲーチスと　いいます[BE:01:ページ切り替え（クリア）]
 おっと！　かめんを　つけたままで
 おはなしすることを　おゆるしください[BE:00:ページ切り替え（行送り）]
 はだが　よわいものですから……[BE:01:ページ切り替え（クリア）]
@@ -388,7 +388,7 @@
 		<language name="JPN_KANJI" width="256">おとこ『カラクサタウンの　みなさん
 よくぞ　お集まり　いただきました[BE:01:ページ切り替え（クリア）]
 わたくし　？？？団の
-ＧーＣｉｓ（ジーシィス）と　申します[BE:01:ページ切り替え（クリア）]
+ゲーチスと　申します[BE:01:ページ切り替え（クリア）]
 おっと！　仮面を　つけたままで
 お話することを　お許しください[BE:00:ページ切り替え（行送り）]
 肌が　弱いものですから……[BE:01:ページ切り替え（クリア）]
@@ -397,7 +397,7 @@
 それは……！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_t02_hakaiw_01">
+	<row id="msg_t02_hakaiw_01" back-color="#808080,,,#808080,,#808080,#808080,,,,,,#808080,,,,,,">
 		<comment>♀
 ・続けて表示</comment>
 		<attribute name="キャラ指定">？？？団員♀</attribute>
@@ -409,7 +409,7 @@
 		<comment>♂
 ・続けて表示</comment>
 		<attribute name="キャラ指定">？？？団員♂</attribute>
-		<language name="JPN" width="256">ＧーＣｉｓ『わたしの　いいたいこと
+		<language name="JPN" width="256">ゲーチス『わたしの　いいたいこと
 それは……[BE:01:ページ切り替え（クリア）]
 この　せかいを　かえましょう！
 ということです[BE:01:ページ切り替え（クリア）]
@@ -427,7 +427,7 @@
 それゆえ　確固たる　幸せもない[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_t02_hakaiw_02">
+	<row id="msg_t02_hakaiw_02" back-color="#808080,,,#808080,,#808080,#808080,,,,,,#808080,,,,,,">
 		<comment>♀
 ・続けて表示</comment>
 		<attribute name="キャラ指定">？？？団員♀</attribute>
@@ -439,7 +439,7 @@
 		<comment>♂
 ・続けて表示</comment>
 		<attribute name="キャラ指定">？？？団員♂</attribute>
-		<language name="JPN" width="256">ＧーＣｉｓ『それは　なぜか
+		<language name="JPN" width="256">ゲーチス『それは　なぜか
 どうして　みたされないのか？[BE:01:ページ切り替え（クリア）]
 なぜなら　わたしたち　にんげんは
 かこに　しばられている　からです[BE:00:ページ切り替え（行送り）]
@@ -451,7 +451,7 @@
 未来を　信じられない　からです[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_t02_hakaiw_03">
+	<row id="msg_t02_hakaiw_03" back-color="#808080,,,#808080,,#808080,#808080,,,,,,#808080,,,,,,">
 		<comment>♀
 ・続けて表示</comment>
 		<attribute name="キャラ指定">？？？団員♀</attribute>
@@ -463,7 +463,7 @@
 		<comment>♂
 ・続けて表示</comment>
 		<attribute name="キャラ指定">？？？団員♂</attribute>
-		<language name="JPN" width="256">ＧーＣｉｓ『かんたんです[BE:01:ページ切り替え（クリア）]
+		<language name="JPN" width="256">ゲーチス『かんたんです[BE:01:ページ切り替え（クリア）]
 わたしたちと　いっしょに
 かこの　しがらみを　はかい　しましょう[BE:01:ページ切り替え（クリア）]
 ふあんていな　みらいに
@@ -491,7 +491,7 @@
 必ず　世界を　変えられます！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_t02_hakaiw_04">
+	<row id="msg_t02_hakaiw_04" back-color="#808080,,,#808080,,#808080,#808080,,,,,,#808080,,,,,,">
 		<comment>♀
 ・
 ・続けて表示</comment>

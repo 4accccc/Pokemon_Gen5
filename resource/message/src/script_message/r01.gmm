@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-07-31T14:36:57"/>
+	<create user="matsumiya" host="W00207" date="2009-09-04T19:26:31"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -541,11 +541,11 @@
 ・いいえ選択時→msg_r01_white_11</comment>
 		<attribute name="キャラ指定">友達♀</attribute>
 		<language name="JPN" width="256">ホワイティ『どう？　[1:00:トレーナー名:0]
-どちらが　おおくの　しゅるいの[BE:00:ページ切り替え（行送り）]
-ポケモンを　つかまえたか　くらべる？</language>
-		<language name="JPN_KANJI" width="256">ホワイティ『どう？　[1:00:トレーナー名:0]
-どちらが　多い　種類の[BE:00:ページ切り替え（行送り）]
-ポケモンを　捕まえたか　比べてみる？</language>
+どちらが　ポケモンを[BE:00:ページ切り替え（行送り）]
+たくさん　つかまえたか　くらべる？</language>
+		<language name="JPN_KANJI" width="256">ホワイティ『どう？　[1:00:トレーナー名:0][BE:01:ページ切り替え（クリア）]
+どちらが　多くの　ポケモンを
+捕まえたか　比べてみる？</language>
 	</row>
 
 	<row id="msg_r01_white_11">
@@ -560,7 +560,8 @@
 
 	<row id="msg_r01_white_12">
 		<comment>♀
-・はい選択＆3匹以上</comment>
+・はい選択＆3匹以上
+・0＝捕獲数</comment>
 		<attribute name="キャラ指定">友達♀</attribute>
 		<language name="JPN" width="256">ホワイティ『[2:00:１桁:0]ひき！？[BE:01:ページ切り替え（クリア）]
 すごーい！

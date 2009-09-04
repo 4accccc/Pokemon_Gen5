@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-07-31T14:43:21"/>
+	<create user="matsumiya" host="W00207" date="2009-09-04T20:09:46"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -378,13 +378,13 @@
 わたしが　図鑑評価を　するからね[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_t02pc0101_white_01">
+	<row id="msg_t02pc0101_white_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,,">
 		<comment>♀</comment>
 		<attribute name="キャラ指定">友達♀</attribute>
-		<language name="JPN" width="256">ともだち♀『はかせ……[BE:01:ページ切り替え（クリア）]
+		<language name="JPN" width="256">ホワイティ『はかせ……[BE:01:ページ切り替え（クリア）]
 がめんの　「だれかのパソコン」って
 だれの　パソコンの　こと……？[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">ともだち♀『博士……[BE:01:ページ切り替え（クリア）]
+		<language name="JPN_KANJI" width="256">ホワイティ『博士……[BE:01:ページ切り替え（クリア）]
 画面の　「だれかのパソコン」って
 だれの　パソコンの　こと……？[BE:01:ページ切り替え（クリア）]</language>
 	</row>
@@ -472,7 +472,7 @@ msg_t02pc0101_docotr_jr_03表示後
 きみたちの　旅に　幸あらんことを！</language>
 	</row>
 
-	<row id="msg_t02pc0101_black_01">
+	<row id="msg_t02pc0101_black_01" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・メッセージ表示後、ポケセン外へ
 　画面外に消えると操作可能に
@@ -489,10 +489,14 @@ msg_t02pc0101_docotr_jr_03表示後
 ・t02での演説イベント終了まで
 　ここでこのメッセージ繰り返し</comment>
 		<attribute name="キャラ指定">友達♀</attribute>
-		<language name="JPN" width="256">ともだち♀『あたし
-ちょっと　のんびり　していくね</language>
-		<language name="JPN_KANJI" width="256">ともだち♀『あたし
-ちょっと　のんびり　していくね</language>
+		<language name="JPN" width="256">ホワイティ『あたし
+ちょっと　のんびり　していくね[BE:01:ページ切り替え（クリア）]
+かっておきたい　ものも
+いろいろ　あるから</language>
+		<language name="JPN_KANJI" width="256">ホワイティ『あたし
+ちょっと　のんびり　していくね[BE:01:ページ切り替え（クリア）]
+買っておきたい　ものも
+いろいろ　あるから</language>
 	</row>
 
 	<row id="msg_t02pc0101_woman1_01">
@@ -506,7 +510,7 @@ msg_t02pc0101_docotr_jr_03表示後
 これで　一休み　できるわね</language>
 	</row>
 
-	<row id="msg_t02pc0101_middlewoman1_01" back-color="#404040,,,,,#404040,#404040,,,,,,#404040,,,,,,">
+	<row id="msg_t02pc0101_middlewoman1_01" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>削除予定</comment>
 		<attribute name="キャラ指定">おばさん！</attribute>
 		<language name="JPN" width="256">トレーナーの　いこいの　ばしょ
