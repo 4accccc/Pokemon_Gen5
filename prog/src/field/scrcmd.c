@@ -2564,6 +2564,7 @@ const VMCMD_FUNC ScriptCmdTbl[] = {
   EvCmdBgmFadeOut,
   EvCmdBgmFadeIn,
   EvCmdBgmNowMapPlay,
+  EvCmdBgmForcePop,
   
   //SE
   EvCmdSePlay,

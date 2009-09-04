@@ -32,67 +32,24 @@ const MMDL_DRAW_PROC_LIST * const
 //======================================================================
 ///	ビルボード汎用アニメ
 //======================================================================
-/*
-index0  上向き　歩き1＆停止用
-index1  左向き　歩き2
-index2  左向き　歩き3＆停止用
-index3  左向き　歩き4
-index4  右向き　歩き1＆停止用
-index5  右向き　歩き2
-index6  右向き　歩き3＆停止用
-index7  右向き　歩き4
-index8  上向き　走り1
-index9  上向き　走り2＆停止用
-index10 上向き　走り3
-index11 上向き　歩き2
-index12 上向き　走り4＆停止用
-index13 下向き　走り1＆停止用
-index14 下向き　走り2
-index15 下向き　走り3＆停止用
-index16 下向き　走り4
-index17 左向き　走り1＆停止用
-index18 左向き　走り2
-index19 左向き　走り3＆停止用
-index20 左向き　走り4
-index21 右向き　走り1＆停止用
-index22 上向き　歩き3＆停止
-index23 右向き　走り2
-index24 右向き　走り3＆停止用
-index25 右向き　走り4
-index26 上向き　歩き4
-index27 下向き　歩き1＆停止
-index28 下向き  歩き2
-index29 下向き  歩き3＆停止
-index30 下向き  歩き4
-index31 左向き　歩き1＆停止用
-*/
-
-#if 0
 enum
 {
   TEXIDX_OLD_U_STOP,
-  TEXIDX_OLD_D_STOP,
-  TEXIDX_OLD_L_STOP,
   TEXIDX_OLD_U_WALK_0,
+//  TEXIDX_OLD_U_STOP1,
   TEXIDX_OLD_U_WALK_1,
-  TEXIDX_OLD_D_WALK_0,
-  TEXIDX_OLD_D_WALK_1,
-  TEXIDX_OLD_L_WALK_0,
-  TEXIDX_OLD_L_WALK_1,
-};
-#endif
-
-enum
-{
-  TEXIDX_OLD_U_STOP,
   TEXIDX_OLD_D_STOP,
-  TEXIDX_OLD_L_STOP,
-  TEXIDX_OLD_U_WALK_0,
-  TEXIDX_OLD_U_WALK_1,
   TEXIDX_OLD_D_WALK_0,
+//  TEXIDX_OLD_D_STOP1,
   TEXIDX_OLD_D_WALK_1,
+  TEXIDX_OLD_L_STOP,
   TEXIDX_OLD_L_WALK_0,
+//  TEXIDX_OLD_L_STOP1,
   TEXIDX_OLD_L_WALK_1,
+  TEXIDX_OLD_R_STOP,
+  TEXIDX_OLD_R_WALK_0,
+//  TEXIDX_OLD_R_STOP1,
+  TEXIDX_OLD_R_WALK_1,
 };
 
 #if 0

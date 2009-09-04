@@ -51,7 +51,8 @@ enum
 //--------------------------------------------------------------
 struct _TAG_FIELD_SOUND
 {
-  int push_count; //BGM Pushカウント
+  u16 play_event_bgm; //イベントBGM再生中
+  s16 push_count; //BGM Pushカウント
 };
 
 //======================================================================
@@ -170,7 +171,9 @@ void FIELD_SOUND_ChangePlayZoneBGM(
 //--------------------------------------------------------------
 void FIELD_SOUND_PushPlayEventBGM( FIELD_SOUND *fsnd, u32 bgmno )
 {
-  fsnd_PushBGM( fsnd, FSND_PUSHCOUNT_BASEBGM );
+  if( fsnd->push_count <= FSND_PUSHCOUNT_BASEBGM ){ //EVENT BGMに移行済みか
+    fsnd_PushBGM( fsnd, FSND_PUSHCOUNT_BASEBGM );
+  }
   FIELD_SOUND_PlayBGM( bgmno );
 }
 
@@ -213,6 +216,26 @@ void FIELD_SOUND_PushBGM( FIELD_SOUND *fsnd )
 void FIELD_SOUND_PopBGM( FIELD_SOUND *fsnd )
 {
   fsnd_PopBGM( fsnd );
+}
+
+//--------------------------------------------------------------
+/**
+ * フィールドBGM 退避されていれば強制開放。
+ * @param fsnd FIELD_SOUND
+ * @retval nothing
+ * @note エラー回避用なので基本は使用禁止。
+ */
+//--------------------------------------------------------------
+void FIELD_SOUND_ForcePopBGM( FIELD_SOUND *fsnd )
+{
+  if( fsnd->push_count ){
+    GF_ASSERT( 0 && "ERROR: FSOUND FORGET POP\n" );
+    
+    while( fsnd->push_count ){
+      fsnd_PopBGM( fsnd );
+      fsnd->push_count--;
+    }
+  }
 }
 
 //event_debug_menu.c

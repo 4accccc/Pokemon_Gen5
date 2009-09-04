@@ -55,3 +55,4 @@ extern u32 FIELD_SOUND_GetFieldBGMNo(
 //フィールドBGM BGM退避、復帰
 extern void FIELD_SOUND_PushBGM( FIELD_SOUND *fsnd );
 extern void FIELD_SOUND_PopBGM( FIELD_SOUND *fsnd );
+extern void FIELD_SOUND_ForcePopBGM( FIELD_SOUND *fsnd );

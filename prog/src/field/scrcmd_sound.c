@@ -184,6 +184,22 @@ VMCMD_RESULT EvCmdBgmNowMapPlay( VMHANDLE *core, void *wk )
   return VMCMD_RESULT_CONTINUE;
 }
 
+//--------------------------------------------------------------
+/**
+ * BGMの復帰忘れがあれば強制復帰。エラー回避用。
+ * @param  core    仮想マシン制御構造体へのポインタ
+ * @retval VMCMD_RESULT
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdBgmForcePop( VMHANDLE *core, void *wk )
+{
+  SCRCMD_WORK *work = wk;
+  GAMEDATA *gdata = SCRCMD_WORK_GetGameData( work );
+  FIELD_SOUND *fsnd = GAMEDATA_GetFieldSound( gdata );
+  FIELD_SOUND_ForcePopBGM( fsnd );
+  return VMCMD_RESULT_CONTINUE;
+}
+
 #if 0
 VMCMD_RESULT EvCmdBgmNowMapPlay( VMHANDLE *core, void *wk )
 {
