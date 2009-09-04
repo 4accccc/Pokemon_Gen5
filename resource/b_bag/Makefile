@@ -75,8 +75,8 @@ $(TARGETDIR)/$(targetname).narc: $(targetname).narc
 
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、元ファイルからコンバートするルールを有効にする
 # コピー先のnarcが古い場合実行する
-$(targetname).narc: $(lobjects) $(gobjects) $(sobjects) $(eobjects) $(aobjects)
-	nnsarc -r -l -n -i $(targetname) $^
+$(targetname).narc: $(lobjects) $(gobjects) $(sobjects) $(eobjects) $(aobjects) arclist.txt
+	nnsarc -c -l -n -i $(targetname) -S arclist.txt
 	$(NAIXCUT) $(targetname).naix
 endif
 

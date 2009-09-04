@@ -1,0 +1,9 @@
+"b_bag_bg.NCGR"
+"b_bag_bg.NCLR"
+"b_bag_base.NSCR"
+"b_bag_button.NSCR"
+
+"test_cost.NCGR"
+"test_cost.NCLR"
+"test_cost.NCER"
+"test_cost.NANR"
