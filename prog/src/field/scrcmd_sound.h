@@ -21,7 +21,6 @@ extern VMCMD_RESULT EvCmdBgmPlayCheck( VMHANDLE *core, void *wk );
 extern VMCMD_RESULT EvCmdBgmFadeOut( VMHANDLE *core, void *wk );
 extern VMCMD_RESULT EvCmdBgmFadeIn( VMHANDLE *core, void *wk );
 extern VMCMD_RESULT EvCmdBgmNowMapPlay( VMHANDLE *core, void *wk );
-extern VMCMD_RESULT EvCmdBgmForcePop( VMHANDLE *core, void *wk );
 
 //SE
 extern VMCMD_RESULT EvCmdSePlay( VMHANDLE *core, void *wk );

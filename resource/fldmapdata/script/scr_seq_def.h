@@ -101,6 +101,10 @@ DEF_CMD_COUNT  =  ( DEF_CMD_COUNT + 1 )
   DEF_CMD EV_SEQ_LD_WK_WK
   DEF_CMD EV_SEQ_LD_WK_WKVAL
   
+  //フィールドイベント共通処理
+  DEF_CMD EV_SEQ_COMMON_PROC_FIELD_EVENT_START
+  DEF_CMD EV_SEQ_COMMON_PROC_FIELD_EVENT_END
+
   //キー入力関連
   DEF_CMD EV_SEQ_ABKEYWAIT
   
@@ -127,9 +131,6 @@ DEF_CMD_COUNT  =  ( DEF_CMD_COUNT + 1 )
   DEF_CMD EV_SEQ_OBJ_DEL_EV
 
   //動作モデル　イベント関連
-  DEF_CMD EV_SEQ_OBJ_PAUSE_ALL
-  DEF_CMD EV_SEQ_TALK_OBJ_PAUSE_ALL
-  DEF_CMD EV_SEQ_OBJ_PAUSE_CLEAR_ALL
   DEF_CMD EV_SEQ_OBJ_TURN
   
   //はい、いいえ　処理
@@ -178,8 +179,7 @@ DEF_CMD_COUNT  =  ( DEF_CMD_COUNT + 1 )
   DEF_CMD EV_SEQ_BGM_FADEOUT
   DEF_CMD EV_SEQ_BGM_FADEIN
   DEF_CMD EV_SEQ_BGM_NOW_MAP_RECOVER
-  DEF_CMD EV_SEQ_BGM_FORCE_POP
-
+  
   //SE
   DEF_CMD EV_SEQ_SE_PLAY
   DEF_CMD EV_SEQ_SE_STOP
@@ -263,8 +263,7 @@ DEF_CMD_COUNT  =  ( DEF_CMD_COUNT + 1 )
 //--------------------------------------------------------------
   .macro  EVENT_START label
 \label:
-  //_OBJ_PAUSE_ALL()
-  .short  EV_SEQ_OBJ_PAUSE_ALL
+  .short  EV_SEQ_COMMON_PROC_FIELD_EVENT_START
   .endm
 
 //--------------------------------------------------------------
@@ -273,9 +272,7 @@ DEF_CMD_COUNT  =  ( DEF_CMD_COUNT + 1 )
  */
 //--------------------------------------------------------------
   .macro  EVENT_END
-  //_OBJ_PAUSE_CLEAR_ALL()
-  .short  EV_SEQ_OBJ_PAUSE_CLEAR_ALL
-  .short  EV_SEQ_BGM_FORCE_POP
+  .short  EV_SEQ_COMMON_PROC_FIELD_EVENT_END
   .short  EV_SEQ_END
   .endm
 
@@ -1261,6 +1258,7 @@ DEF_CMD_COUNT  =  ( DEF_CMD_COUNT + 1 )
 //======================================================================
 //  動作モデル　イベント関連
 //======================================================================
+#if 0
 //--------------------------------------------------------------
 /**
  *  _OBJ_PAUSE_ALL フィールドOBJ動作停止
@@ -1285,7 +1283,7 @@ DEF_CMD_COUNT  =  ( DEF_CMD_COUNT + 1 )
   .macro  _ASM_OBJ_PAUSE_CLEAR_ALL
   .short  EV_SEQ_OBJ_PAUSE_CLEAR_ALL
   .endm
-
+#endif
 
 //--------------------------------------------------------------
 /**

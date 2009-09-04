@@ -26,6 +26,7 @@
 #include "sound/wb_sound_data.sadl"
 
 #include "fieldmap.h"
+#include "field_sound.h"
 #include "field_player.h"
 
 #include "eventdata_local.h"
@@ -62,6 +63,8 @@ typedef u16 (* pMultiFunc)();
 //  proto
 //======================================================================
 //parts
+static VMCMD_RESULT evcmd_ObjPauseAll( VMHANDLE *core, SCRCMD_WORK *work );
+static void evcmd_PauseClearAll( SCRCMD_WORK *work );
 static MMDL * scmd_GetMMdlPlayer( SCRCMD_WORK *work );
 
 //data
@@ -1108,6 +1111,48 @@ static VMCMD_RESULT EvCmdLoadWkWkValue( VMHANDLE *core, void *wk )
 }
 
 //======================================================================
+/// フィールドイベント共通処理
+//======================================================================
+//--------------------------------------------------------------
+/**
+ * フィールドイベント開始時の共通処理まとめ
+ * @param  core    仮想マシン制御構造体へのポインタ
+ * @return  VMCMD_RESULT
+ */
+//--------------------------------------------------------------
+static VMCMD_RESULT EvCmdCommonProcFieldEventStart( VMHANDLE * core, void *wk )
+{
+  SCRCMD_WORK *work = wk;
+  
+  //全動作モデルポーズ
+  return( evcmd_ObjPauseAll(core,work) );
+}
+
+//--------------------------------------------------------------
+/**
+ * フィールドイベント終了時の共通処理まとめ
+ * @param  core    仮想マシン制御構造体へのポインタ
+ * @return  VMCMD_RESULT
+ */
+//--------------------------------------------------------------
+static VMCMD_RESULT EvCmdCommonProcFieldEventEnd( VMHANDLE * core, void *wk )
+{
+  SCRCMD_WORK *work = wk;
+  
+  //サウンド開放忘れ回避
+  {
+    GAMEDATA *gdata = SCRCMD_WORK_GetGameData( work );
+    FIELD_SOUND *fsnd = GAMEDATA_GetFieldSound( gdata );
+    FIELD_SOUND_ForcePopBGM( fsnd );
+  }
+  
+  //動作モデルポーズ解除
+  evcmd_PauseClearAll( work );
+
+  return VMCMD_RESULT_CONTINUE;
+}
+
+//======================================================================
 //  キー入力関連
 //======================================================================
 //--------------------------------------------------------------
@@ -1884,6 +1929,7 @@ static VMCMD_RESULT EvCmdTalkObjPauseAll( VMHANDLE *core, void *wk )
  * @return  VMCMD_RESULT
  */
 //--------------------------------------------------------------
+#if 0
 static VMCMD_RESULT EvCmdObjPauseAll( VMHANDLE *core, void *wk )
 {
   SCRCMD_WORK *work = wk;
@@ -1933,6 +1979,56 @@ static VMCMD_RESULT EvCmdObjPauseAll( VMHANDLE *core, void *wk )
   
   return VMCMD_RESULT_SUSPEND;
 }
+#endif
+
+static VMCMD_RESULT evcmd_ObjPauseAll( VMHANDLE *core, SCRCMD_WORK *work )
+{
+  SCRIPT_WORK *sc;
+  MMDL **fmmdl;
+  
+  sc = SCRCMD_WORK_GetScriptWork( work );
+  fmmdl = SCRIPT_GetMemberWork( sc, ID_EVSCR_TARGET_OBJ );
+  
+  if( (*fmmdl) == NULL ){
+    MMDLSYS *fmmdlsys;
+    fmmdlsys = SCRCMD_WORK_GetMMdlSys( work );
+    MMDLSYS_PauseMoveProc( fmmdlsys );
+    
+    #ifndef SCRCMD_PL_NULL
+    //08.06.18
+    //話しかけの対象がいないBGやPOSの時
+    //連れ歩きOBJの移動動作中かのチェックをしていない
+    //
+    //ふれあい広場などで、連れ歩きOBJに対して、
+    //スクリプトでアニメを発行すると、
+    //アニメが行われず終了待ちにいかないでループしてしまう
+    
+    {
+      FIELD_OBJ_PTR player_pair =
+        FieldOBJSys_MoveCodeSearch( fsys->fldobjsys, MV_PAIR );
+      //ペアが存在している
+      if (player_pair) {
+        //連れ歩きフラグが立っていて、移動動作中なら
+        if( SysFlag_PairCheck(
+          SaveData_GetEventWork(fsys->savedata)) == 1
+          && FieldOBJ_StatusBitCheck_Move(player_pair) != 0) {
+          
+          //ペアの動作ポーズ解除
+          FieldOBJ_MovePauseClear( player_pair );
+          
+          //移動動作の終了待ちをセット
+          VM_SetWait( core, EvWaitPairObj );
+          return VMCMD_RESULT_SUSPEND;
+        }
+      }
+    }
+    #endif
+  }else{
+    return( EvCmdTalkObjPauseAll(core,work) );
+  }
+  
+  return VMCMD_RESULT_CONTINUE;
+}
 
 //--------------------------------------------------------------
 /**
@@ -1941,12 +2037,19 @@ static VMCMD_RESULT EvCmdObjPauseAll( VMHANDLE *core, void *wk )
  * @retval  VMCMD_RESULT
  */
 //--------------------------------------------------------------
+#if 0
 static VMCMD_RESULT EvCmdObjPauseClearAll( VMHANDLE *core, void *wk )
 {
   SCRCMD_WORK *work = wk;
   MMDLSYS *fmmdlsys = SCRCMD_WORK_GetMMdlSys( work );
   MMDLSYS_ClearPauseMoveProc( fmmdlsys );
   return VMCMD_RESULT_SUSPEND;
+}
+#endif
+static void evcmd_PauseClearAll( SCRCMD_WORK *work )
+{
+  MMDLSYS *fmmdlsys = SCRCMD_WORK_GetMMdlSys( work );
+  MMDLSYS_ClearPauseMoveProc( fmmdlsys );
 }
 
 //--------------------------------------------------------------
@@ -2487,6 +2590,10 @@ const VMCMD_FUNC ScriptCmdTbl[] = {
   EvCmdLoadWkWk,
   EvCmdLoadWkWkValue,
   
+  //フィールドイベント共通処理
+  EvCmdCommonProcFieldEventStart,
+  EvCmdCommonProcFieldEventEnd,
+
   //キー入力関連
   EvCmdABKeyWait,
   
@@ -2513,9 +2620,6 @@ const VMCMD_FUNC ScriptCmdTbl[] = {
   EvCmdObjDelEvent,
   
   //動作モデル　イベント関連
-  EvCmdObjPauseAll,
-  EvCmdTalkObjPauseAll,
-  EvCmdObjPauseClearAll,
   EvCmdObjTurn,
   
   //はい、いいえ　処理
@@ -2564,7 +2668,6 @@ const VMCMD_FUNC ScriptCmdTbl[] = {
   EvCmdBgmFadeOut,
   EvCmdBgmFadeIn,
   EvCmdBgmNowMapPlay,
-  EvCmdBgmForcePop,
   
   //SE
   EvCmdSePlay,
@@ -2595,7 +2698,7 @@ const VMCMD_FUNC ScriptCmdTbl[] = {
   
   //ミュージカル関連
   EvCmdMusicalCall,
-
+  
   //その他
   EvCmdChangeLangID,
   EvCmdGetRand,
