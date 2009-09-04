@@ -3,18 +3,18 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="lee_hyunjung" host="W00154A" date="2009-07-30T23:48:36" source="monsterball.mb"/>
+	<create user="kanako_eo" host="W00107" date="2006-03-11T16:37:56" source="new_rockobj.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
-	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
+	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20051121"/>
 </head>
 
 <body>
 
-<original_create user="lee_hyunjung" host="W00154A" date="2009-07-30T23:48:36" source="monsterball.mb"/>
-<original_generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
+<original_create user="kanako_eo" host="W00107" date="2006-03-11T16:37:56" source="new_rockobj.mb"/>
+<original_generator name="Maya 6.5 NNS_Export" version="1.6.0.20051121"/>
 
 <model_info
-	pos_scale="3"
+	pos_scale="2"
 	scaling_rule="standard"
 	vertex_style="direct"
 	magnify="1.000000"
@@ -27,57 +27,32 @@
 	use_primitive_strip="on"
 />
 
-<box_test pos_scale="3" xyz="-2.000000 0.000000 0.000000" whd="4.000000 4.000000 0.000000"/>
+<box_test pos_scale="2" xyz="-2.000000 0.000000 0.000000" whd="4.000000 4.000000 0.000000"/>
 
 <tex_image_array size="1">
-	<tex_image index="0" name="monsterball"
-		width="32" height="32" original_width="32" original_height="32"
+	<tex_image index="0" name="monstarball"
+		width="16" height="16" original_width="16" original_height="16"
 		format="palette16"
 		color0_mode="transparency"
-		palette_name="monsterball"
-		path="C:/home/pokemon_wb/resource/fldmmdl/mmdl_pict/monsterball/monsterball.tga"
+		palette_name="monstarball"
+		path="C:/mayadata/obj/tex/monstarball.tga"
 	>
-		<bitmap size="256">
+		<bitmap size="64">
 			0000 0000 0000 0000 0000 0000 0000 0000
 			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 1110 0111 0000 0000 0000
-			0000 0000 1000 2211 1122 0001 0000 0000
-			0000 0000 1100 2222 2222 0011 0000 0000
-			0000 0000 2110 2222 2222 0112 0000 0000
-			0000 0000 2210 2222 2222 0122 0000 0000
-			0000 0000 2211 2222 2222 1122 0000 0000
-			0000 0000 2221 2222 2222 1222 0000 0000
-			0000 0000 2221 2222 2222 1222 0000 0000
-			0000 0000 1111 1122 2211 1111 0000 0000
-			0000 0000 3331 3111 1113 1333 0000 0000
-			0000 0000 3311 1133 3311 1133 0000 0000
-			0000 0000 3310 3333 3333 0133 0000 0000
-			0000 0000 3110 3333 3333 0113 0000 0000
-			0000 0000 1100 3333 3333 0011 0000 0000
-			0000 0000 1000 3311 1133 0001 0000 0000
-			0000 0000 1110 1111 1111 0111 0000 0000
-			0000 0000 1110 1111 1111 0111 0000 0000
-			0000 0000 1000 1111 1111 0001 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 5500 0055 0000
+			0000 3350 0543 0000 0000 3635 5433 0000
+			5000 3344 4443 0005 7000 2444 4442 0007
+			7000 6242 2471 0007 7000 1726 1271 0007
+			0000 7667 7117 0000 0000 1170 0711 0000
+			0000 7700 0077 0000 0000 0000 0000 0000
 		</bitmap>
 	</tex_image>
 </tex_image_array>
 
 <tex_palette_array size="1">
-	<tex_palette index="0" name="monsterball" color_size="16">
-		4631 0000 0877 7fff 0000 0000 0000 0000
-		0000 0000 0000 0000 0000 0000 0000 0000
+	<tex_palette index="0" name="monstarball" color_size="8">
+		530e 4a31 1d08 299a 18f3 18ca 7fff 0000
 	</tex_palette>
 </tex_palette_array>
 
@@ -100,7 +75,7 @@
 		emission="0 0 0"
 		shininess_table_flag="off"
 		tex_image_idx="0" tex_palette_idx="0"
-		tex_tiling="clamp clamp"
+		tex_tiling="repeat repeat"
 		tex_scale="1.000000 1.000000"
 		tex_rotate="0.000000"
 		tex_translate="0.000000 0.000000"
@@ -127,12 +102,12 @@
 			<primitive_array size="1">
 				<primitive index="0" type="quads" vertex_size="4">
 					<mtx idx="0"/>
-					<tex st="0.000000 32.000000"/>
+					<tex st="0.000000 16.000000"/>
 					<nrm xyz="0.000000 0.000000 0.998047"/>
 					<pos_s xyz="-2.000000 0.000000 0.000000"/>
-					<tex st="32.000000 32.000000"/>
+					<tex st="16.000000 16.000000"/>
 					<pos_xy xy="2.000000 0.000000"/>
-					<tex st="32.000000 0.000000"/>
+					<tex st="16.000000 0.000000"/>
 					<pos_xy xy="2.000000 4.000000"/>
 					<tex st="0.000000 0.000000"/>
 					<pos_xy xy="-2.000000 4.000000"/>
