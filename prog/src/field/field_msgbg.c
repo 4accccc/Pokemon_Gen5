@@ -205,7 +205,7 @@ FLDMSGBG * FLDMSGBG_Setup( HEAPID heapID, GFL_G3D_CAMERA *g3Dcamera )
 			ARCID_FONT, NARC_font_default_nclr, //•
 			PALTYPE_MAIN_BG, FLDMSGBG_PANO_FONT_TALKMSGWIN*32, 32, fmb->heapID );
 		GFL_ARC_UTIL_TransVramPalette(
-			ARCID_FONT, NARC_font_talkwin_nclr, //”’
+			ARCID_FONT, NARC_font_systemwin_nclr, //”’
 			PALTYPE_MAIN_BG, FLDMSGBG_PANO_FONT*32, 32, fmb->heapID );
 	}
 	
