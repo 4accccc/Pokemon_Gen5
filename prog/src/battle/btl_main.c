@@ -110,13 +110,16 @@ static BOOL cleanup_common( int* seq, void* work );
 static BOOL setup_comm_single( int* seq, void* work );
 static BOOL setup_alone_double( int* seq, void* work );
 static BOOL cleanup_alone_double( int* seq, void* work );
+static BOOL setup_alone_triple( int* seq, void* work );
 static BOOL setup_comm_double( int* seq, void* work );
 static BOOL MainLoop_StandAlone( BTL_MAIN_MODULE* wk );
 static BOOL MainLoop_Comm_Server( BTL_MAIN_MODULE* wk );
 static BOOL MainLoop_Comm_NotServer( BTL_MAIN_MODULE* wk );
 static u8 expandPokePos_single( const BTL_MAIN_MODULE* wk, BtlExPos exType, u8 basePos, u8* dst );
 static u8 expandPokePos_double( const BTL_MAIN_MODULE* wk, BtlExPos exType, u8 basePos, u8* dst );
+static u8 expandPokePos_triple( const BTL_MAIN_MODULE* wk, BtlExPos exType, u8 basePos, u8* dst );
 static inline clientID_to_side( u8 clientID );
+static inline BtlPokePos getTripleFrontPos( BtlPokePos pos );
 static inline u8 btlPos_to_clientID( const BTL_MAIN_MODULE* wk, BtlPokePos btlPos );
 static inline void btlPos_to_cliendID_and_posIdx( const BTL_MAIN_MODULE* wk, BtlPokePos btlPos, u8* clientID, u8* posIdx );
 static inline u8 btlPos_to_sidePosIdx( BtlPokePos pos );
@@ -279,6 +282,9 @@ static void setSubProcForSetup( BTL_PROC* bp, BTL_MAIN_MODULE* wk, const BATTLE_
     case BTL_RULE_DOUBLE:
       BTL_UTIL_SetupProc( bp, wk, setup_alone_double, NULL );
       break;
+    case BTL_RULE_TRIPLE:
+      BTL_UTIL_SetupProc( bp, wk, setup_alone_triple, NULL );
+      break;
     default:
       GF_ASSERT(0);
       BTL_UTIL_SetupProc( bp, wk, setup_alone_single, NULL );
@@ -313,6 +319,9 @@ static void setSubProcForClanup( BTL_PROC* bp, BTL_MAIN_MODULE* wk, const BATTLE
       BTL_UTIL_SetupProc( bp, wk, cleanup_common, NULL );
       break;
     case BTL_RULE_DOUBLE:
+      BTL_UTIL_SetupProc( bp, wk, cleanup_alone_double, NULL );
+      break;
+    case BTL_RULE_TRIPLE:
       BTL_UTIL_SetupProc( bp, wk, cleanup_alone_double, NULL );
       break;
     default:
@@ -634,6 +643,58 @@ static BOOL cleanup_alone_double( int* seq, void* work )
 }
 //--------------------------------------------------------------------------
 /**
+ * スタンドアローン／トリプルバトル：セットアップ
+ */
+//--------------------------------------------------------------------------
+static BOOL setup_alone_triple( int* seq, void* work )
+{
+  // server*1, client*2
+  BTL_MAIN_MODULE* wk = work;
+  const BATTLE_SETUP_PARAM* sp = wk->setupParam;
+
+  // バトル用ポケモンパラメータ＆パーティデータを生成
+  PokeCon_Init( &wk->pokeconForClient, wk );
+  PokeCon_AddParty( &wk->pokeconForClient, sp->partyPlayer, 0 );
+  PokeCon_AddParty( &wk->pokeconForClient, sp->partyEnemy1, 1 );
+
+  PokeCon_Init( &wk->pokeconForServer, wk );
+  PokeCon_AddParty( &wk->pokeconForServer, sp->partyPlayer, 0 );
+  PokeCon_AddParty( &wk->pokeconForServer, sp->partyEnemy1, 1 );
+
+  // Server 作成
+  wk->server = BTL_SERVER_Create( wk, &wk->pokeconForServer, wk->heapID );
+
+  // Client 作成
+  wk->client[0] = BTL_CLIENT_Create( wk, &wk->pokeconForClient, BTL_COMM_NONE, sp->netHandle, 0, 2, BTL_THINKER_UI, wk->heapID );
+  wk->client[1] = BTL_CLIENT_Create( wk, &wk->pokeconForClient, BTL_COMM_NONE, sp->netHandle, 1, 2, BTL_THINKER_AI, wk->heapID );
+  wk->numClients = 2;
+  wk->posCoverClientID[BTL_POS_1ST_0] = 0;
+  wk->posCoverClientID[BTL_POS_2ND_0] = 1;
+  wk->posCoverClientID[BTL_POS_1ST_1] = 0;
+  wk->posCoverClientID[BTL_POS_2ND_1] = 1;
+  wk->posCoverClientID[BTL_POS_1ST_2] = 0;
+  wk->posCoverClientID[BTL_POS_2ND_2] = 1;
+
+  // 描画エンジン生成
+  wk->viewCore = BTLV_Create( wk, wk->client[0], &wk->pokeconForClient, HEAPID_BTL_VIEW );
+
+  // プレイヤークライアントに描画エンジンを関連付ける
+  BTL_CLIENT_AttachViewCore( wk->client[0], wk->viewCore );
+
+  // Server に Client を接続
+  BTL_SERVER_AttachLocalClient( wk->server, BTL_CLIENT_GetAdapter(wk->client[0]), 0, 2 );
+  BTL_SERVER_AttachLocalClient( wk->server, BTL_CLIENT_GetAdapter(wk->client[1]), 1, 2 );
+
+  // Server 始動
+  BTL_SERVER_Startup( wk->server );
+
+  wk->mainLoop = MainLoop_StandAlone;
+
+  return TRUE;
+}
+
+//--------------------------------------------------------------------------
+/**
  * 通信／ダブルバトル：セットアップ
  */
 //--------------------------------------------------------------------------
@@ -905,6 +966,31 @@ BtlRule BTL_MAIN_GetRule( const BTL_MAIN_MODULE* wk )
 {
   return wk->setupParam->rule;
 }
+
+//=============================================================================================
+/**
+ * 現在のルールに応じて、有効になる位置指定子の最大値を返す
+ *
+ * @param   wk
+ *
+ * @retval  BtlPokePos
+ */
+//=============================================================================================
+BtlPokePos BTL_MAIN_GetEnablePosEnd( const BTL_MAIN_MODULE* wk )
+{
+  switch( wk->setupParam->rule ){
+  case BTL_RULE_SINGLE:
+  default:
+    return BTL_POS_2ND_0;
+
+  case BTL_RULE_DOUBLE:
+    return BTL_POS_2ND_1;
+
+  case BTL_RULE_TRIPLE:
+    return BTL_POS_2ND_2;
+  }
+}
+
 //=============================================================================================
 /**
  * 対戦相手タイプを返す
@@ -1010,10 +1096,12 @@ u8 BTL_MAIN_ExpandBtlPos( const BTL_MAIN_MODULE* wk, BtlExPos exPos, u8* dst )
 
   switch( wk->setupParam->rule ){
   case BTL_RULE_SINGLE:
+  default:
     return expandPokePos_single( wk, exType, basePos, dst );
   case BTL_RULE_DOUBLE:
-  default:
     return expandPokePos_double( wk, exType, basePos, dst );
+  case BTL_RULE_TRIPLE:
+    return expandPokePos_triple( wk, exType, basePos, dst );
   }
 }
 // シングル用
@@ -1071,12 +1159,105 @@ static u8 expandPokePos_double( const BTL_MAIN_MODULE* wk, BtlExPos exType, u8 b
     return 4;
   }
 }
+// トリプル用
+static u8 expandPokePos_triple( const BTL_MAIN_MODULE* wk, BtlExPos exType, u8 basePos, u8* dst )
+{
+  u8 fCenter = BTL_MAINUTIL_IsTripleCenterPos( basePos );
+  u8 posIdx = btlPos_to_sidePosIdx( basePos );
+
+
+  switch( exType ){
+  default:
+    GF_ASSERT(0);
+    /* fallthru */
+  case BTL_EXPOS_ENEMY_ALL:
+    if( fCenter )
+    {
+      dst[0] = BTL_MAIN_GetOpponentPokePos( wk, basePos, 0 );
+      dst[1] = BTL_MAIN_GetOpponentPokePos( wk, basePos, 1 );
+      dst[2] = BTL_MAIN_GetOpponentPokePos( wk, basePos, 2 );
+      return 3;
+    }
+    else
+    {
+      dst[0] = BTL_MAIN_GetOpponentPokePos( wk, basePos, 1 );
+      dst[1] = getTripleFrontPos( basePos );
+      return 2;
+    }
+
+  case BTL_EXPOS_WITHOUT_ME:
+    if( fCenter )
+    {
+      dst[0] = BTL_MAIN_GetOpponentPokePos( wk, basePos, 0 );
+      dst[1] = BTL_MAIN_GetOpponentPokePos( wk, basePos, 1 );
+      dst[2] = BTL_MAIN_GetOpponentPokePos( wk, basePos, 2 );
+      dst[3] = BTL_MAINUTIL_GetFriendPokePos( basePos, 0 );
+      dst[4] = BTL_MAINUTIL_GetFriendPokePos( basePos, 2 );
+      return 5;
+    }
+    else
+    {
+      dst[0] = BTL_MAIN_GetOpponentPokePos( wk, basePos, 1 );
+      dst[1] = getTripleFrontPos( basePos );
+      dst[2] = BTL_MAINUTIL_GetFriendPokePos( basePos, 1 );
+      return 3;
+    }
+
+  case BTL_EXPOS_MYSIDE_ALL:
+    if( fCenter )
+    {
+      dst[0] = basePos;
+      dst[1] = BTL_MAINUTIL_GetFriendPokePos( basePos, 0 );
+      dst[2] = BTL_MAINUTIL_GetFriendPokePos( basePos, 2 );
+      return 3;
+    }
+    else
+    {
+      dst[0] = basePos;
+      dst[1] = BTL_MAINUTIL_GetFriendPokePos( basePos, 1 );
+      return 2;
+    }
+
+  case BTL_EXPOS_ALL:
+    if( fCenter )
+    {
+      dst[0] = BTL_MAIN_GetOpponentPokePos( wk, basePos, 0 );
+      dst[1] = BTL_MAIN_GetOpponentPokePos( wk, basePos, 1 );
+      dst[2] = BTL_MAIN_GetOpponentPokePos( wk, basePos, 2 );
+      dst[3] = BTL_MAINUTIL_GetFriendPokePos( basePos, 0 );
+      dst[4] = BTL_MAINUTIL_GetFriendPokePos( basePos, 2 );
+      dst[5] = basePos;
+      return 6;
+    }
+    else
+    {
+      dst[0] = BTL_MAIN_GetOpponentPokePos( wk, basePos, 1 );
+      dst[1] = getTripleFrontPos( basePos );
+      dst[2] = BTL_MAINUTIL_GetFriendPokePos( basePos, 1 );
+      dst[3] = basePos;
+      return 4;
+    }
+  }
+}
 //
-//  クライアントID -> サイドIDに変換
+// クライアントID -> サイドIDに変換
 //
 static inline clientID_to_side( u8 clientID )
 {
   return clientID & 1;
+}
+//
+// トリプルバトル時、目の前の相手位置を返す
+//
+static inline BtlPokePos getTripleFrontPos( BtlPokePos pos )
+{
+  u8 idx = btlPos_to_sidePosIdx( pos );
+  if( idx == 0 ){
+    idx = 2;
+  }else if(idx == 2){
+    idx = 0;
+  }
+  return BTL_MAINUTIL_GetOpponentPokePos( BTL_RULE_TRIPLE, pos, idx );
 }
 
 //=============================================================================================
@@ -1157,6 +1338,27 @@ BtlPokePos BTL_MAINUTIL_GetOpponentPokePos( BtlRule rule, BtlPokePos basePos, u8
   else
   {
     return BTL_POS_1ST_0 + (idx * 2);
+  }
+}
+//=============================================================================================
+/**
+ * 味方側のポケモン位置IDを返す
+ *
+ * @param   basePos
+ * @param   idx
+ *
+ * @retval  BtlPokePos
+ */
+//=============================================================================================
+BtlPokePos BTL_MAINUTIL_GetFriendPokePos( BtlPokePos basePos, u8 idx )
+{
+  if( (basePos&1) == BTL_POS_1ST_0 )
+  {
+    return BTL_POS_1ST_0 + (idx * 2);
+  }
+  else
+  {
+    return BTL_POS_2ND_0 + (idx * 2);
   }
 }
 //=============================================================================================
@@ -1381,14 +1583,22 @@ u8 BTL_MAIN_BtlPosToViewPos( const BTL_MAIN_MODULE* wk, BtlPokePos pos )
   {
     return (isPlayerSide)? BTLV_MCSS_POS_AA : BTLV_MCSS_POS_BB;
   }
+  else if( wk->setupParam->rule == BTL_RULE_DOUBLE )
+  {
+    static const u8 vpos[2][BTL_POSIDX_MAX] = {
+      { BTLV_MCSS_POS_B, BTLV_MCSS_POS_D  },
+      { BTLV_MCSS_POS_A, BTLV_MCSS_POS_C  },
+    };
+    u8 posIdx = btlPos_to_sidePosIdx( pos );
+    return vpos[ isPlayerSide ][ posIdx ];
+  }
   else
   {
     static const u8 vpos[2][BTL_POSIDX_MAX] = {
-      { BTLV_MCSS_POS_B, BTLV_MCSS_POS_D, BTLV_MCSS_POS_F },
-      { BTLV_MCSS_POS_A, BTLV_MCSS_POS_C, BTLV_MCSS_POS_E },
+      { BTLV_MCSS_POS_B, BTLV_MCSS_POS_F, BTLV_MCSS_POS_D  },
+      { BTLV_MCSS_POS_A, BTLV_MCSS_POS_E, BTLV_MCSS_POS_C  },
     };
     u8 posIdx = btlPos_to_sidePosIdx( pos );
-    BTL_Printf("pos=%d -> isPlayerSide=%d, posIdx=%d\n", pos, isPlayerSide, posIdx);
     return vpos[ isPlayerSide ][ posIdx ];
   }
 }
@@ -1609,6 +1819,29 @@ const BTL_POKEPARAM* BTL_POKECON_GetPokeParamConst( const BTL_POKE_CONTAINER* wk
   GF_ASSERT_MSG(wk->pokeParam[pokeID], "pokeID=%d", pokeID);
 
   return wk->pokeParam[ pokeID ];
+}
+
+//=============================================================================================
+/**
+ * トリプルバトル時の攻撃有効範囲テーブルを取得
+ *
+ * @param   pos   基準位置
+ *
+ * @retval  const BTL_TRIPLE_ATTACK_AREA*
+ */
+//=============================================================================================
+const BTL_TRIPLE_ATTACK_AREA* BTL_MAINUTIL_GetTripleAttackArea( BtlPokePos pos )
+{
+  static const BTL_TRIPLE_ATTACK_AREA  tbl[] = {
+    { 2, 2, { BTL_POS_2ND_2, BTL_POS_2ND_1, BTL_POS_NULL  }, { BTL_POS_1ST_0, BTL_POS_1ST_1, BTL_POS_NULL  } },
+    { 2, 2, { BTL_POS_1ST_2, BTL_POS_1ST_1, BTL_POS_NULL  }, { BTL_POS_2ND_0, BTL_POS_2ND_1, BTL_POS_NULL  } },
+    { 3, 3, { BTL_POS_2ND_0, BTL_POS_2ND_1, BTL_POS_2ND_2 }, { BTL_POS_1ST_0, BTL_POS_1ST_1, BTL_POS_1ST_2 } },
+    { 3, 3, { BTL_POS_1ST_0, BTL_POS_1ST_1, BTL_POS_1ST_2 }, { BTL_POS_2ND_0, BTL_POS_2ND_1, BTL_POS_2ND_2 } },
+    { 2, 2, { BTL_POS_2ND_0, BTL_POS_2ND_1, BTL_POS_NULL  }, { BTL_POS_1ST_2, BTL_POS_1ST_1, BTL_POS_NULL  } },
+    { 2, 2, { BTL_POS_1ST_0, BTL_POS_1ST_1, BTL_POS_NULL  }, { BTL_POS_2ND_2, BTL_POS_2ND_1, BTL_POS_NULL  } },
+  };
+
+  return &tbl[pos];
 }
 
 //------------------------------------------------------------------------------

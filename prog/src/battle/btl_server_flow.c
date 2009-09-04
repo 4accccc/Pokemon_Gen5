@@ -20,6 +20,7 @@
 #include "btl_server.h"
 #include "btl_sick.h"
 #include "btl_pospoke_state.h"
+#include "btl_shooter.h"
 
 #include "handler\hand_tokusei.h"
 #include "handler\hand_item.h"
@@ -275,6 +276,12 @@ static void scPut_ReqWazaEffect( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, WazaID
 static void scproc_Fight_WazaExe( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, WazaID waza, TARGET_POKE_REC* targetRec );
 static u8 flowsub_registerWazaTargets( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, BtlPokePos targetPos,
   const SVFL_WAZAPARAM* wazaParam, TARGET_POKE_REC* rec );
+static u8 registerTarget_single( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, BtlPokePos targetPos,
+  const SVFL_WAZAPARAM* wazaParam, u8 intrPokeID, TARGET_POKE_REC* rec );
+static u8 registerTarget_double( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, BtlPokePos targetPos,
+  const SVFL_WAZAPARAM* wazaParam, u8 intrPokeID, TARGET_POKE_REC* rec );
+static u8 registerTarget_triple( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, BtlPokePos targetPos,
+  const SVFL_WAZAPARAM* wazaParam, u8 intrPokeID, TARGET_POKE_REC* rec );
 static BOOL IsMustHit( const BTL_POKEPARAM* attacker, const BTL_POKEPARAM* target );
 static void flowsub_checkNotEffect( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM* wazaParam, const BTL_POKEPARAM* attacker, TARGET_POKE_REC* targets );
 static void flowsub_checkWazaAvoid( BTL_SVFLOW_WORK* wk, WazaID waza, const BTL_POKEPARAM* attacker, TARGET_POKE_REC* targets );
@@ -440,7 +447,7 @@ static void scEvent_GetWazaParam( BTL_SVFLOW_WORK* wk, WazaID waza, const BTL_PO
 static void scEvent_CheckWazaExeFail( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp,
   WazaID waza, SV_WazaFailCause cause );
 static BOOL scEvent_WazaExecuteFix( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, WazaID waza, TARGET_POKE_REC* rec );
-static u8 scEvent_GetWazaTarget( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, const SVFL_WAZAPARAM* wazaParam );
+static u8 scEvent_GetWazaTargetIntr( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, const SVFL_WAZAPARAM* wazaParam );
 static BOOL scEvent_CheckMamoruBreak( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, const BTL_POKEPARAM* defender, WazaID waza );
 static void scEvent_WazaAvoid( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, WazaID waza, u8 targetCount, const u8* targetPokeID );
 static void scEvent_WazaExe_NoEffect( BTL_SVFLOW_WORK* wk, u8 pokeID, WazaID waza );
@@ -2252,126 +2259,236 @@ static void scproc_Fight_WazaExe( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, 
 static u8 flowsub_registerWazaTargets( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, BtlPokePos targetPos,
   const SVFL_WAZAPARAM* wazaParam, TARGET_POKE_REC* rec )
 {
-  WazaTarget  targetType = WAZADATA_GetTarget( wazaParam->wazaID );
-  BtlPokePos  atPos = BTL_MAIN_PokeIDtoPokePos( wk->mainModule, wk->pokeCon, BPP_GetID(attacker) );
+  BtlRule rule = BTL_MAIN_GetRule( wk->mainModule );
 
-  u8 intrPokeID = scEvent_GetWazaTarget( wk, attacker, wazaParam );
+  u8 intrPokeID = scEvent_GetWazaTargetIntr( wk, attacker, wazaParam );
 
   TargetPokeRec_Clear( rec );
 
-  // シングル
-  if( BTL_MAIN_GetRule(wk->mainModule) == BTL_RULE_SINGLE )
-  {
-    switch( targetType ){
-    case WAZA_TARGET_OTHER_SELECT:  ///< 自分以外の１体（選択）
-    case WAZA_TARGET_ENEMY_SELECT:  ///< 敵１体（選択）
-    case WAZA_TARGET_ENEMY_RANDOM:  ///< 敵ランダム
-    case WAZA_TARGET_ENEMY_ALL:     ///< 敵側２体
-    case WAZA_TARGET_OTHER_ALL:     ///< 自分以外全部
-      if( intrPokeID == BTL_POKEID_NULL ){
-        TargetPokeRec_Add( rec, get_opponent_pokeparam(wk, atPos, 0) );
-      }else{
-        TargetPokeRec_Add( rec, BTL_POKECON_GetPokeParam(wk->pokeCon, intrPokeID) );
-      }
-      return 1;
+  switch( rule ){
+  case BTL_RULE_SINGLE:
+  default:
+    return registerTarget_single( wk, attacker, targetPos, wazaParam, intrPokeID, rec );
 
-    case WAZA_TARGET_USER:                ///< 自分１体のみ
-    case WAZA_TARGET_FRIEND_USER_SELECT:  ///< 自分を含む味方１体
-      if( intrPokeID == BTL_POKEID_NULL ){
-        TargetPokeRec_Add( rec, attacker );
-      }else{
-        TargetPokeRec_Add( rec, BTL_POKECON_GetPokeParam(wk->pokeCon, intrPokeID) );
-      }
-      return 1;
+  case BTL_RULE_DOUBLE:
+    return registerTarget_double( wk, attacker, targetPos, wazaParam, intrPokeID, rec );
 
-    case WAZA_TARGET_ALL:
-      TargetPokeRec_Add( rec, attacker );
-      TargetPokeRec_Add( rec, get_opponent_pokeparam(wk, atPos, 0) );
-      return 2;
-
-    case WAZA_TARGET_UNKNOWN:
-      if( intrPokeID != BTL_POKEID_NULL ){
-        TargetPokeRec_Add( rec, BTL_POKECON_GetPokeParam(wk->pokeCon, intrPokeID) );
-        return 1;
-      }else{
-        return 0;
-      }
-      break;
-
-    default:
-      return 0;
-    }
-  }
-  // ダブル
-  else
-  {
-    BTL_POKEPARAM* bpp = NULL;
-
-    switch( targetType ){
-    case WAZA_TARGET_OTHER_SELECT:        ///< 自分以外の１体（選択）
-      bpp = BTL_POKECON_GetFrontPokeData( wk->pokeCon, targetPos );
-      break;
-    case WAZA_TARGET_ENEMY_SELECT:        ///< 敵１体（選択）
-      bpp = BTL_POKECON_GetFrontPokeData( wk->pokeCon, targetPos );
-      break;
-    case WAZA_TARGET_ENEMY_RANDOM:        ///< 敵ランダムに１体
-      bpp = get_opponent_pokeparam( wk, atPos, GFL_STD_MtRand(1) );
-      break;
-
-    case WAZA_TARGET_ENEMY_ALL:           ///< 敵側全体
-      TargetPokeRec_Add( rec, get_opponent_pokeparam(wk, atPos, 0) );
-      TargetPokeRec_Add( rec, get_opponent_pokeparam(wk, atPos, 1) );
-      return 2;
-    case WAZA_TARGET_OTHER_ALL:           ///< 自分以外全部
-      TargetPokeRec_Add( rec, get_next_pokeparam( wk, atPos ) );
-      TargetPokeRec_Add( rec, get_opponent_pokeparam( wk, atPos, 0 ) );
-      TargetPokeRec_Add( rec, get_opponent_pokeparam( wk, atPos, 1 ) );
-      return 3;
-    case WAZA_TARGET_ALL:                ///< 全部
-      TargetPokeRec_Add( rec, attacker );
-      TargetPokeRec_Add( rec, get_next_pokeparam( wk, atPos ) );
-      TargetPokeRec_Add( rec, get_opponent_pokeparam( wk, atPos, 0 ) );
-      TargetPokeRec_Add( rec, get_opponent_pokeparam( wk, atPos, 1 ) );
-      return 3;
-
-    case WAZA_TARGET_USER:      ///< 自分１体のみ
-      TargetPokeRec_Add( rec, BTL_POKECON_GetFrontPokeData(wk->pokeCon, atPos) );
-      return 1;
-    case WAZA_TARGET_FRIEND_USER_SELECT:  ///< 自分を含む味方１体（選択）
-      TargetPokeRec_Add( rec, BTL_POKECON_GetFrontPokeData(wk->pokeCon, targetPos) );
-      return 1;
-    case WAZA_TARGET_FRIEND_SELECT:       ///< 自分以外の味方１体
-      TargetPokeRec_Add( rec, get_next_pokeparam(wk, atPos) );
-      return 1;
-
-    case WAZA_TARGET_UNKNOWN:
-      {
-        // @@@ ココは割り込みのターゲットとは処理を別ける必要があると思う。いずれやる。
-        u8 pokeID = scEvent_GetWazaTarget( wk, attacker, wazaParam );
-        if( pokeID != BTL_POKEID_NULL ){
-          bpp = BTL_POKECON_GetPokeParam( wk->pokeCon, pokeID );
-        }
-      }
-      break;
-
-    default:
-      return 0;
-    }
-
-    if( bpp )
-    {
-      if( intrPokeID != BTL_POKEID_NULL ){
-        bpp = BTL_POKECON_GetPokeParam( wk->pokeCon, intrPokeID );
-      }
-      TargetPokeRec_Add( rec, bpp );
-      return 1;
-    }
-    else
-    {
-      return 0;
-    }
+  case BTL_RULE_TRIPLE:
+    return registerTarget_triple( wk, attacker, targetPos, wazaParam, intrPokeID, rec );
   }
 }
+static u8 registerTarget_single( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, BtlPokePos targetPos,
+  const SVFL_WAZAPARAM* wazaParam, u8 intrPokeID, TARGET_POKE_REC* rec )
+{
+  WazaTarget  targetType = WAZADATA_GetTarget( wazaParam->wazaID );
+  BtlPokePos  atPos = BTL_MAIN_PokeIDtoPokePos( wk->mainModule, wk->pokeCon, BPP_GetID(attacker) );
+
+  switch( targetType ){
+  case WAZA_TARGET_OTHER_SELECT:  ///< 自分以外の１体（選択）
+  case WAZA_TARGET_ENEMY_SELECT:  ///< 敵１体（選択）
+  case WAZA_TARGET_ENEMY_RANDOM:  ///< 敵ランダム
+  case WAZA_TARGET_ENEMY_ALL:     ///< 敵側２体
+  case WAZA_TARGET_OTHER_ALL:     ///< 自分以外全部
+    if( intrPokeID == BTL_POKEID_NULL ){
+      TargetPokeRec_Add( rec, get_opponent_pokeparam(wk, atPos, 0) );
+    }else{
+      TargetPokeRec_Add( rec, BTL_POKECON_GetPokeParam(wk->pokeCon, intrPokeID) );
+    }
+    return 1;
+
+  case WAZA_TARGET_USER:                ///< 自分１体のみ
+  case WAZA_TARGET_FRIEND_USER_SELECT:  ///< 自分を含む味方１体
+    if( intrPokeID == BTL_POKEID_NULL ){
+      TargetPokeRec_Add( rec, attacker );
+    }else{
+      TargetPokeRec_Add( rec, BTL_POKECON_GetPokeParam(wk->pokeCon, intrPokeID) );
+    }
+    return 1;
+
+  case WAZA_TARGET_ALL:
+    TargetPokeRec_Add( rec, attacker );
+    TargetPokeRec_Add( rec, get_opponent_pokeparam(wk, atPos, 0) );
+    return 2;
+
+  case WAZA_TARGET_UNKNOWN:
+    if( intrPokeID != BTL_POKEID_NULL ){
+      TargetPokeRec_Add( rec, BTL_POKECON_GetPokeParam(wk->pokeCon, intrPokeID) );
+      return 1;
+    }else{
+      return 0;
+    }
+    break;
+
+  default:
+    return 0;
+  }
+}
+static u8 registerTarget_double( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, BtlPokePos targetPos,
+  const SVFL_WAZAPARAM* wazaParam, u8 intrPokeID, TARGET_POKE_REC* rec )
+{
+  WazaTarget  targetType = WAZADATA_GetTarget( wazaParam->wazaID );
+  BtlPokePos  atPos = BTL_MAIN_PokeIDtoPokePos( wk->mainModule, wk->pokeCon, BPP_GetID(attacker) );
+
+  BTL_POKEPARAM* bpp = NULL;
+
+  switch( targetType ){
+  case WAZA_TARGET_OTHER_SELECT:        ///< 自分以外の１体（選択）
+    bpp = BTL_POKECON_GetFrontPokeData( wk->pokeCon, targetPos );
+    break;
+  case WAZA_TARGET_ENEMY_SELECT:        ///< 敵１体（選択）
+    bpp = BTL_POKECON_GetFrontPokeData( wk->pokeCon, targetPos );
+    break;
+  case WAZA_TARGET_ENEMY_RANDOM:        ///< 敵ランダムに１体
+    bpp = get_opponent_pokeparam( wk, atPos, GFL_STD_MtRand(1) );
+    break;
+
+  case WAZA_TARGET_ENEMY_ALL:           ///< 敵側全体
+    TargetPokeRec_Add( rec, get_opponent_pokeparam(wk, atPos, 0) );
+    TargetPokeRec_Add( rec, get_opponent_pokeparam(wk, atPos, 1) );
+    return 2;
+  case WAZA_TARGET_OTHER_ALL:           ///< 自分以外全部
+    TargetPokeRec_Add( rec, get_next_pokeparam( wk, atPos ) );
+    TargetPokeRec_Add( rec, get_opponent_pokeparam( wk, atPos, 0 ) );
+    TargetPokeRec_Add( rec, get_opponent_pokeparam( wk, atPos, 1 ) );
+    return 3;
+  case WAZA_TARGET_ALL:                ///< 全部
+    TargetPokeRec_Add( rec, attacker );
+    TargetPokeRec_Add( rec, get_next_pokeparam( wk, atPos ) );
+    TargetPokeRec_Add( rec, get_opponent_pokeparam( wk, atPos, 0 ) );
+    TargetPokeRec_Add( rec, get_opponent_pokeparam( wk, atPos, 1 ) );
+    return 3;
+
+  case WAZA_TARGET_USER:      ///< 自分１体のみ
+    TargetPokeRec_Add( rec, BTL_POKECON_GetFrontPokeData(wk->pokeCon, atPos) );
+    return 1;
+  case WAZA_TARGET_FRIEND_USER_SELECT:  ///< 自分を含む味方１体（選択）
+    TargetPokeRec_Add( rec, BTL_POKECON_GetFrontPokeData(wk->pokeCon, targetPos) );
+    return 1;
+  case WAZA_TARGET_FRIEND_SELECT:       ///< 自分以外の味方１体
+    TargetPokeRec_Add( rec, get_next_pokeparam(wk, atPos) );
+    return 1;
+
+  case WAZA_TARGET_UNKNOWN:
+    {
+      // @@@ ココは割り込みのターゲットとは処理を別ける必要があると思う。いずれやる。
+      u8 pokeID = scEvent_GetWazaTargetIntr( wk, attacker, wazaParam );
+      if( pokeID != BTL_POKEID_NULL ){
+        bpp = BTL_POKECON_GetPokeParam( wk->pokeCon, pokeID );
+      }
+    }
+    break;
+
+  default:
+    return 0;
+  }
+
+  if( bpp )
+  {
+    if( intrPokeID != BTL_POKEID_NULL ){
+      bpp = BTL_POKECON_GetPokeParam( wk->pokeCon, intrPokeID );
+    }
+    TargetPokeRec_Add( rec, bpp );
+    return 1;
+  }
+  else
+  {
+    return 0;
+  }
+}
+static u8 registerTarget_triple( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, BtlPokePos targetPos,
+  const SVFL_WAZAPARAM* wazaParam, u8 intrPokeID, TARGET_POKE_REC* rec )
+{
+  WazaTarget  targetType = WAZADATA_GetTarget( wazaParam->wazaID );
+  BtlPokePos  atPos = BTL_MAIN_PokeIDtoPokePos( wk->mainModule, wk->pokeCon, BPP_GetID(attacker) );
+  const BTL_TRIPLE_ATTACK_AREA* area = BTL_MAINUTIL_GetTripleAttackArea( atPos );
+  u32 i, cnt;
+
+  BTL_POKEPARAM* bpp = NULL;
+
+  switch( targetType ){
+  case WAZA_TARGET_OTHER_SELECT:        ///< 自分以外の１体（選択）
+    bpp = BTL_POKECON_GetFrontPokeData( wk->pokeCon, targetPos );
+    break;
+  case WAZA_TARGET_ENEMY_SELECT:        ///< 敵１体（選択）
+    bpp = BTL_POKECON_GetFrontPokeData( wk->pokeCon, targetPos );
+    break;
+  case WAZA_TARGET_ENEMY_RANDOM:        ///< 敵ランダムに１体
+    {
+      u8 r = GFL_STD_MtRand( area->numEnemys );
+      bpp = BTL_POKECON_GetFrontPokeData( wk->pokeCon, area->enemyPos[r] );
+    }
+    break;
+
+  case WAZA_TARGET_ENEMY_ALL:           ///< 敵側全体
+    for(i=0; i<area->numEnemys; ++i){
+      TargetPokeRec_Add( rec, BTL_POKECON_GetFrontPokeData( wk->pokeCon, area->enemyPos[i]) );
+    }
+    return area->numEnemys;
+
+  case WAZA_TARGET_OTHER_ALL:           ///< 自分以外全部
+    cnt = 0;
+    for(i=0; i<area->numEnemys; ++i){
+      TargetPokeRec_Add( rec, BTL_POKECON_GetFrontPokeData(wk->pokeCon, area->enemyPos[i]) );
+      ++cnt;
+    }
+    for(i=0; i<area->numFriends; ++i){
+      if( area->friendPos[i] == atPos ){ continue; }
+      TargetPokeRec_Add( rec, BTL_POKECON_GetFrontPokeData(wk->pokeCon, area->friendPos[i]) );
+      ++cnt;
+    }
+    return cnt;
+
+  case WAZA_TARGET_ALL:                ///< 全部
+    cnt = 0;
+    for(i=0; i<area->numEnemys; ++i){
+      TargetPokeRec_Add( rec, BTL_POKECON_GetFrontPokeData(wk->pokeCon, area->enemyPos[i]) );
+      ++cnt;
+    }
+    for(i=0; i<area->numFriends; ++i){
+      TargetPokeRec_Add( rec, BTL_POKECON_GetFrontPokeData(wk->pokeCon, area->friendPos[i]) );
+      ++cnt;
+    }
+    return cnt;
+
+  case WAZA_TARGET_USER:      ///< 自分１体のみ
+    TargetPokeRec_Add( rec, BTL_POKECON_GetFrontPokeData(wk->pokeCon, atPos) );
+    return 1;
+  case WAZA_TARGET_FRIEND_USER_SELECT:  ///< 自分を含む味方１体（選択）
+    TargetPokeRec_Add( rec, BTL_POKECON_GetFrontPokeData(wk->pokeCon, targetPos) );
+    return 1;
+  case WAZA_TARGET_FRIEND_SELECT:       ///< 自分以外の味方１体
+    TargetPokeRec_Add( rec, BTL_POKECON_GetFrontPokeData(wk->pokeCon, targetPos) );
+    return 1;
+
+  case WAZA_TARGET_UNKNOWN:
+    {
+      // @@@ ココは割り込みのターゲットとは処理を別ける必要があると思う。いずれやる。
+      u8 pokeID = scEvent_GetWazaTargetIntr( wk, attacker, wazaParam );
+      if( pokeID != BTL_POKEID_NULL ){
+        bpp = BTL_POKECON_GetPokeParam( wk->pokeCon, pokeID );
+      }
+    }
+    break;
+
+  default:
+    return 0;
+  }
+
+  if( bpp )
+  {
+    if( intrPokeID != BTL_POKEID_NULL ){
+      bpp = BTL_POKECON_GetPokeParam( wk->pokeCon, intrPokeID );
+    }
+    TargetPokeRec_Add( rec, bpp );
+    return 1;
+  }
+  else
+  {
+    return 0;
+  }
+}
+
+
 //----------------------------------------------------------------------------------
 /**
  * 必中状態かどうかチェック
@@ -5736,7 +5853,7 @@ static BOOL scEvent_WazaExecuteFix( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* at
 }
 //----------------------------------------------------------------------------------
 /**
- * [Event] ワザターゲット決定
+ * [Event] ワザターゲット割り込み
  *
  * @param   wk
  * @param   attacker
@@ -5745,7 +5862,7 @@ static BOOL scEvent_WazaExecuteFix( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* at
  * @retval  u8
  */
 //----------------------------------------------------------------------------------
-static u8 scEvent_GetWazaTarget( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, const SVFL_WAZAPARAM* wazaParam )
+static u8 scEvent_GetWazaTargetIntr( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, const SVFL_WAZAPARAM* wazaParam )
 {
   u8 pokeID = BTL_POKEID_NULL;
   BTL_EVENTVAR_Push();

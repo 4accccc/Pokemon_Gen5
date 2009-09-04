@@ -29,6 +29,7 @@ extern u8 BTL_MAINUTIL_PokeIDtoClientID( u8 pokeID );
 extern const MYSTATUS* BTL_MAIN_GetPlayerStatus( const BTL_MAIN_MODULE* wk );
 extern BOOL BTL_MAIN_IsServerMachine( BTL_MAIN_MODULE * wk );
 extern BOOL BTL_MAIN_IsMultiMode( const BTL_MAIN_MODULE * wk );
+extern BtlPokePos BTL_MAIN_GetEnablePosEnd( const BTL_MAIN_MODULE* wk );
 
 //-------------------------
 extern void BTL_MAIN_AddBonusMoney( BTL_MAIN_MODULE* wk, u32 volume );
@@ -84,6 +85,7 @@ extern BtlPokePos BTL_MAIN_ViewPosToBtlPos( const BTL_MAIN_MODULE* wk, u8 vpos )
 
 extern BOOL BTL_MAINUTIL_IsFriendPokeID( u8 pokeID1, u8 pokeID2 );
 extern BtlSide BTL_MAINUTIL_PokeIDtoSide( u8 pokeID );
+extern BtlPokePos BTL_MAINUTIL_GetFriendPokePos( BtlPokePos basePos, u8 idx );
 extern BtlPokePos BTL_MAINUTIL_GetOpponentPokePos( BtlRule rule, BtlPokePos basePos, u8 idx );
 
 
@@ -120,6 +122,8 @@ typedef enum {
   BTL_EXPOS_MYSIDE_ALL,     ///< 味方全部
   BTL_EXPOS_ALL,            ///< 敵・味方全部
 
+//  BTL_EXPOS_ENEMY_ALL
+
 }BtlExPosType;
 
 typedef u16 BtlExPos;
@@ -139,6 +143,30 @@ static inline u8 EXPOS_GET_BASEPOS( BtlExPos exPos )
   return exPos & 0xff;
 }
 
+//-------------------------------------------------------------------------------
+/**
+ *  トリプルバトル専用
+ */
+//-------------------------------------------------------------------------------
+/**
+ *  トリプルバトル時の通常攻撃有効範囲
+ */
+typedef struct {
+  u16  numEnemys;   ///< 範囲内にある敵の位置数
+  u16  numFriends;  ///< 範囲内にある味方の位置数
+  BtlPokePos  enemyPos[ BTL_POSIDX_MAX ];   ///< 敵位置ID（ numEnemys 分有効）
+  BtlPokePos  friendPos[ BTL_POSIDX_MAX ];  ///< 味方位置ID（ numFriends 分有効／先頭は常に基準位置）
+}BTL_TRIPLE_ATTACK_AREA;
+
+extern const BTL_TRIPLE_ATTACK_AREA* BTL_MAINUTIL_GetTripleAttackArea( BtlPokePos pos );
+
+/**
+ *  トリプルバトル時にセンター位置かどうかを判定
+ */
+static inline BOOL BTL_MAINUTIL_IsTripleCenterPos( BtlPokePos pos )
+{
+  return (pos == BTL_POS_1ST_1) || (pos == BTL_POS_2ND_1);
+}
 
 
 //=============================================================================================
