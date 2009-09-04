@@ -109,7 +109,7 @@ static void CostResLoad( BBAG_WORK * wk );
 //============================================================================================
 // ページ１のポケモンアイコンの座標
 //static const int P1_ItemIconPos[2] = { 24, 178 };
-static const GFL_CLACTPOS P1_ItemIconPos = { 24, 178 };
+static const GFL_CLACTPOS P1_ItemIconPos = { 36, 180 };
 
 // ページ２のアイテムアイコンの座標
 //static const int P2_ItemIconPos[][2] =
@@ -129,7 +129,11 @@ static const GFL_CLACTPOS P2_ItemIconPos[] =
 };
 
 // ページ３のポケモンアイコンの座標
-static const GFL_CLACTPOS P3_ItemIconPos = { 40, 44 };
+static const GFL_CLACTPOS P3_ItemIconPos[] =
+{
+	{  40, 44 },
+	{ 200, 40 },
+};
 
 // セルアクターのデータ
 static const u32 ClactDat[][3] =
@@ -669,7 +673,12 @@ static void BBAG_Page3ObjSet( BBAG_WORK * wk )
 	item = BattleBag_PosItemCheck( wk, wk->dat->item_pos[wk->poke_id] );
 	BBAG_ItemIconCharChg( wk, item, BBAG_CHRRES_ITEM1, BBAG_PALRES_ITEM1 );
 //	BBAG_ItemIconPlttChg( wk, item, 0, PAL_ID_ITEM1 );
-	BBAG_ClactOn( wk->clwk[BBAG_CA_ITEM1], &P3_ItemIconPos );
+	BBAG_ClactOn( wk->clwk[BBAG_CA_ITEM1], &P3_ItemIconPos[0] );
+
+	if( wk->dat->mode == BBAG_MODE_SHOOTER ){
+		BBAG_ClactOn( wk->clwk[BBAG_CA_COST1], &P3_ItemIconPos[1] );
+		GFL_CLACT_WK_SetAnmSeq( wk->clwk[BBAG_CA_COST1], BBAGITEM_GetCost(item)-1 );
+	}
 
 /*
 	if( wk->dat->mode == BBAG_MODE_GETDEMO ){

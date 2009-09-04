@@ -365,14 +365,21 @@ static void BBAG_StrPut( BBAG_WORK * wk, u32 widx, u32 midx, u32 py, u16 col )
 }
 
 // ポケット名表示座標
-#define	P1_KAIFUKU1_PY	( 24 )
-#define	P1_ZYOUTAI_PY	( 8-1 )
-#define	P1_KAIFUKU2_PY	( 24-1 )
-#define	P1_HP_PY		( 8-1 )
-#define	P1_KAIFUKU3_PY	( 24-1 )
-#define	P1_BATTLE_PY	( 8-1 )
-#define	P1_BALL_PY		( 8-1 )
-#define	P1_LASTITEM_PY	( 6-1 )
+#define	P1_ZYOUTAI_PY	( 0 )
+#define	P1_KAIFUKU2_PY	( 16 )
+#define	P1_HP_PY		( 0 )
+#define	P1_KAIFUKU3_PY	( 16 )
+#define	P1_BATTLE_PY	( 0 )
+#define	P1_BALL_PY		( 0 )
+#define	P1_LASTITEM_PY	( 0 )
+/*
+	BBAG_StrPut( wk, WIN_P1_HP, mes_b_bag_01_000, P1_HP_PY, FCOL_S12W );
+	BBAG_StrPut( wk, WIN_P1_HP, mes_b_bag_01_001, P1_KAIFUKU3_PY, FCOL_S12W );
+	BBAG_StrPut( wk, WIN_P1_ZYOUTAI, mes_b_bag_01_100, P1_ZYOUTAI_PY, FCOL_S12W );
+	BBAG_StrPut( wk, WIN_P1_ZYOUTAI, mes_b_bag_01_101, P1_KAIFUKU2_PY, FCOL_S12W );
+	BBAG_StrPut( wk, WIN_P1_BALL, mes_b_bag_01_500, P1_BALL_PY, FCOL_S12W );
+	BBAG_StrPut( wk, WIN_P1_BATTLE, mes_b_bag_01_400, P1_BATTLE_PY, FCOL_S12W );
+*/
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -787,7 +794,9 @@ static void BBAG_Page3BmpWrite( BBAG_WORK * wk )
 	dat_pos = wk->dat->item_scr[wk->poke_id]*6+wk->dat->item_pos[wk->poke_id];
 
 	BBAG_P3_ItemNamePut( wk, dat_pos );
-	BBAG_ItemNumPut( wk, dat_pos, 0, WIN_P3_NUM, 0, P3_ITEMNUM_PY, 0 );
+	if( wk->dat->mode != BBAG_MODE_SHOOTER ){
+		BBAG_ItemNumPut( wk, dat_pos, 0, WIN_P3_NUM, 0, P3_ITEMNUM_PY, 0 );
+	}
 	BBAG_P3_ItemInfoPut( wk, dat_pos );
 	BBAG_StrPut( wk, WIN_P3_USE, mes_b_bag_03_000, P3_USE_PY, FCOL_S12W );
 }

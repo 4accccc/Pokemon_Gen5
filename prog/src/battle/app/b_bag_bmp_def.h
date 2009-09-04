@@ -26,7 +26,7 @@
 #define	WIN_P1_ZYOUTAI_PX	( 2 )
 #define	WIN_P1_ZYOUTAI_PY	( 13 )
 #define	WIN_P1_ZYOUTAI_SX	( 12 )
-#define	WIN_P1_ZYOUTAI_SY	( 5 )
+#define	WIN_P1_ZYOUTAI_SY	( 4 )
 #define	WIN_P1_ZYOUTAI_PAL	( BBAG_PAL_TALK_FONT )
 #define	WIN_P1_ZYOUTAI_CGX	( WIN_TALK_CGX - WIN_TALK_SX * WIN_TALK_SY )
 // 「HP/PPかいふく」
@@ -34,7 +34,7 @@
 #define	WIN_P1_HP_PX		( 2 )
 #define	WIN_P1_HP_PY		( 4 )
 #define	WIN_P1_HP_SX		( 12 )
-#define	WIN_P1_HP_SY		( 5 )
+#define	WIN_P1_HP_SY		( 4 )
 #define	WIN_P1_HP_PAL		( BBAG_PAL_TALK_FONT )
 #define	WIN_P1_HP_CGX		( WIN_P1_ZYOUTAI_CGX - WIN_P1_HP_SX * WIN_P1_HP_SY )
 // 「せんとうよう」
@@ -42,7 +42,7 @@
 #define	WIN_P1_BATTLE_PX	( 18 )
 #define	WIN_P1_BATTLE_PY	( 14 )
 #define	WIN_P1_BATTLE_SX	( 12 )
-#define	WIN_P1_BATTLE_SY	( 3 )
+#define	WIN_P1_BATTLE_SY	( 2 )
 #define	WIN_P1_BATTLE_PAL	( BBAG_PAL_TALK_FONT )
 #define	WIN_P1_BATTLE_CGX	( WIN_P1_HP_CGX - WIN_P1_BATTLE_SX * WIN_P1_BATTLE_SY )
 // 「ボール」
@@ -50,15 +50,15 @@
 #define	WIN_P1_BALL_PX		( 18 )
 #define	WIN_P1_BALL_PY		( 5 )
 #define	WIN_P1_BALL_SX		( 12 )
-#define	WIN_P1_BALL_SY		( 3 )
+#define	WIN_P1_BALL_SY		( 2 )
 #define	WIN_P1_BALL_PAL		( BBAG_PAL_TALK_FONT )
 #define	WIN_P1_BALL_CGX		( WIN_P1_BATTLE_CGX - WIN_P1_BALL_SX * WIN_P1_BALL_SY )
 // 「さいごにつかったどうぐ」
 #define	WIN_P1_LASTITEM_FRM	( GFL_BG_FRAME0_S )
-#define	WIN_P1_LASTITEM_PX	( 5 )
-#define	WIN_P1_LASTITEM_PY	( 20 )
-#define	WIN_P1_LASTITEM_SX	( 20 )
-#define	WIN_P1_LASTITEM_SY	( 3 )
+#define	WIN_P1_LASTITEM_PX	( 6 )
+#define	WIN_P1_LASTITEM_PY	( 21 )
+#define	WIN_P1_LASTITEM_SX	( 18 )
+#define	WIN_P1_LASTITEM_SY	( 2 )
 #define	WIN_P1_LASTITEM_PAL	( BBAG_PAL_TALK_FONT )
 #define	WIN_P1_LASTITEM_CGX	( WIN_P1_BALL_CGX - WIN_P1_LASTITEM_SX * WIN_P1_LASTITEM_SY )
 
