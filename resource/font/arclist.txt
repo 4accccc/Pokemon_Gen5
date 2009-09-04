@@ -4,3 +4,4 @@
 "small.gftr"
 "default.nclr"
 "talkwin.nclr"
+"systemwin.nclr"
