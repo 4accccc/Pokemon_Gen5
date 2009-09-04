@@ -10,6 +10,7 @@
 #include "fieldmap.h"
 #include "field_g3d_mapper.h"
 #include "fldmmdl.h"
+#include "field_sound.h"
 #include "field_player.h"
 
 //======================================================================
@@ -477,6 +478,7 @@ u16 FIELD_PLAYER_GetMoveFormToOBJCode( int sex, PLAYER_MOVE_FORM form )
   int i = 0;
   const OBJCODE_FORM *tbl = dataOBJCodeForm[sex];
   GF_ASSERT( sex < 2 ); //PM_FEMALE
+  GF_ASSERT( form < PLAYER_MOVE_FORM_MAX );
   for( ; i < PLAYER_DRAW_FORM_MAX; i++,tbl++ ){
     if( tbl->move_form == form ){
       return(tbl->code);
@@ -592,6 +594,36 @@ BOOL FIELD_PLAYER_CheckLiveMMdl( FIELD_PLAYER *fld_player )
   }
   
   return( TRUE );
+}
+
+//--------------------------------------------------------------
+/**
+ * é©ã@ÇÃìÆçÏå`ë‘ÇïœçX
+ * @param fld_player FIELD_PLAYER
+ * @param form PLAYER_MOVE_FORM
+ * @retval nothing
+ */
+//--------------------------------------------------------------
+void FIELD_PLAYER_ChangeMoveForm(
+    FIELD_PLAYER *fld_player, PLAYER_MOVE_FORM form )
+{
+  int sex = FIELD_PLAYER_GetSex( fld_player );
+  MMDL *mmdl = FIELD_PLAYER_GetMMdl( fld_player );
+  u16 code = FIELD_PLAYER_GetMoveFormToOBJCode( sex, form );
+  
+  if( MMDL_GetOBJCode(mmdl) != code ){
+    MMDL_ChangeOBJCode( mmdl, code );
+  }
+  
+  FIELD_PLAYER_SetMoveForm( fld_player, form );
+  
+  {
+    FIELDMAP_WORK *fieldWork = FIELD_PLAYER_GetFieldMapWork( fld_player );
+    GAMESYS_WORK *gsys = FIELDMAP_GetGameSysWork( fieldWork );
+    GAMEDATA *gdata = GAMESYSTEM_GetGameData( gsys );
+    u32 zone_id = FIELDMAP_GetZoneID( fieldWork );
+    FIELD_SOUND_ChangePlayZoneBGM( gdata, form, zone_id );
+  }
 }
 
 //======================================================================

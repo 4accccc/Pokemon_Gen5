@@ -701,18 +701,12 @@ static MAINSEQ_RESULT mainSeqFunc_update_top(GAMESYS_WORK *gsys, FIELDMAP_WORK *
   
   if( fieldWork->fldMMdlSys != NULL ){
     MMDLSYS_UpdateProc( fieldWork->fldMMdlSys );
-#if 0
-    if( FIELDMAP_GetMapControlType( fieldWork ) == FLDMAP_CTRLTYPE_GRID ){ //仮対処
-      FIELD_PLAYER_GetPos( fieldWork->field_player, &fieldWork->now_pos );
-    }
-#endif
   }
 
   //ギミック動作
   FLDGMK_MoveFieldGimmick(fieldWork);
   
   FLDEFF_CTRL_Update( fieldWork->fldeff_ctrl );
-
 
 	// フィールドマップ用制御タスクシステム
 	FLDMAPFUNC_Sys_Main( fieldWork->fldmapFuncSys );

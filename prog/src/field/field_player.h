@@ -121,3 +121,5 @@ extern void FIELD_PLAYER_GetDirPos(
 extern void FIELD_PLAYER_GetFrontGridPos(
 		FIELD_PLAYER *fld_player, s16 *gx, s16 *gy, s16 *gz );
 extern BOOL FIELD_PLAYER_CheckLiveMMdl( FIELD_PLAYER *fld_player );
+extern void FIELD_PLAYER_ChangeMoveForm(
+    FIELD_PLAYER *fld_player, PLAYER_MOVE_FORM form );
