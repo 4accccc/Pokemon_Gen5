@@ -120,8 +120,13 @@ static void mapCtrlGrid_Create(
     MMDL_SetDirDisp( fmmdl, dir4 );
 //    KAGAYA_Printf( "わたされた方向 %xH, %d\n", dir, dir4 );
 		gridWork->gridPlayer = FIELD_PLAYER_GRID_Init( fld_player, heapID );
+    
+    { //座標セット
+      const VecFx32 *pos = MMDL_GetVectorPosAddress( fmmdl );
+      FIELDMAP_SetNowPosTarget( fieldWork, pos );
+    }
 	}
-	
+  
 	FIELDMAP_SetMapCtrlWork( fieldWork, gridWork );
 }
 
@@ -166,12 +171,13 @@ static void mapCtrlGrid_Main( FIELDMAP_WORK *fieldWork, VecFx32 *pos )
 			MMDL *fmmdl = FIELD_PLAYER_GetMMdl( fld_player );
 			u16 tbl[DIR_MAX4] = { 0x0000, 0x8000, 0x4000, 0xc000 };
 			int dir = MMDL_GetDirDisp( fmmdl );
-		
+#if 0
 			MMDL_GetVectorPos( fmmdl, pos );
 			PLAYERWORK_setDirection( player, tbl[dir] );
 			PLAYERWORK_setPosition( player, pos );
 			FIELD_PLAYER_SetDir( fld_player, tbl[dir] );
 			FIELD_PLAYER_SetPos( fld_player, pos );
+#endif
 		}
 	}
 }

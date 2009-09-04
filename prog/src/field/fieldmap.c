@@ -224,7 +224,7 @@ struct _FIELDMAP_WORK
 	u16 map_id;
 	LOCATION location;
 	
-  const VecFx32 *target_nowpos_p;
+  const VecFx32 *target_now_pos_p;
 	VecFx32 now_pos;
   
 	const DEPEND_FUNCTIONS *func_tbl;
@@ -237,7 +237,6 @@ struct _FIELDMAP_WORK
 
   GFL_TCBSYS* fieldmapTCB;
   void* fieldmapTCBSysWork;
-
 };
 
 fx32	fldWipeScale;
@@ -668,7 +667,6 @@ static MAINSEQ_RESULT mainSeqFunc_ready(GAMESYS_WORK *gsys, FIELDMAP_WORK *field
 //--------------------------------------------------------------
 static MAINSEQ_RESULT mainSeqFunc_update_top(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork )
 {
-  
 	//キーの分割取得カウンタをリセット
 	GFL_UI_ResetFrameRate();
 	//ゾーン更新処理
@@ -677,7 +675,6 @@ static MAINSEQ_RESULT mainSeqFunc_update_top(GAMESYS_WORK *gsys, FIELDMAP_WORK *
   //マップ別 登録処理
 
   if( GAMESYSTEM_GetEvent(gsys) == NULL) {
-
     //登録テーブルごとに個別のメイン処理を呼び出し
     fieldWork->func_tbl->main_func( fieldWork, &fieldWork->now_pos );
     
@@ -704,10 +701,11 @@ static MAINSEQ_RESULT mainSeqFunc_update_top(GAMESYS_WORK *gsys, FIELDMAP_WORK *
   
   if( fieldWork->fldMMdlSys != NULL ){
     MMDLSYS_UpdateProc( fieldWork->fldMMdlSys );
-    
+#if 0
     if( FIELDMAP_GetMapControlType( fieldWork ) == FLDMAP_CTRLTYPE_GRID ){ //仮対処
       FIELD_PLAYER_GetPos( fieldWork->field_player, &fieldWork->now_pos );
     }
+#endif
   }
 
   //ギミック動作
@@ -723,6 +721,11 @@ static MAINSEQ_RESULT mainSeqFunc_update_top(GAMESYS_WORK *gsys, FIELDMAP_WORK *
 
   // TCB
   GFL_TCB_Main( fieldWork->fieldmapTCB );
+
+  //now_pos更新
+  if( fieldWork->target_now_pos_p != NULL ){
+    fieldWork->now_pos = *fieldWork->target_now_pos_p;
+  }
 
   return MAINSEQ_RESULT_CONTINUE;
 }
@@ -1071,11 +1074,11 @@ FIELD_CAMERA * FIELDMAP_GetFieldCamera( FIELDMAP_WORK *fieldWork )
 	return fieldWork->camera_control;
 }
 
-//----------------------------------------------------------------------------
+//--------------------------------------------------------------
 /**
  *	@brief  ノーグリッド動作　マッパーの取得
  */
-//-----------------------------------------------------------------------------
+//--------------------------------------------------------------
 FLDNOGRID_MAPPER* FIELDMAP_GetFldNoGridMapper( FIELDMAP_WORK *fieldWork )
 {
   return fieldWork->nogridMapper;
@@ -1247,7 +1250,7 @@ u16 FIELDMAP_GetZoneID( const FIELDMAP_WORK * fieldWork )
 #endif
 }
 
-
+#if 0
 //--------------------------------------------------------------
 /**
  * @param
@@ -1258,6 +1261,7 @@ const VecFx32 * FIELDMAP_GetNowPos( const FIELDMAP_WORK * fieldWork )
 {
   return &fieldWork->now_pos;
 }
+#endif
 
 //--------------------------------------------------------------
 /**
@@ -1374,11 +1378,11 @@ FIELD_PLACE_NAME * FIELDMAP_GetPlaceNameSys( FIELDMAP_WORK * fieldWork )
   return fieldWork->placeNameSys;
 }
 
-//----------------------------------------------------------------------------
+//--------------------------------------------------------------
 /**
  *	@brief	フィールドマップ上で動作する制御タスクシステム	取得
  */
-//-----------------------------------------------------------------------------
+//--------------------------------------------------------------
 FLDMAPFUNC_SYS * FIELDMAP_GetFldmapFuncSys( FIELDMAP_WORK * fieldWork )
 {
 	return fieldWork->fldmapFuncSys;
@@ -1396,14 +1400,26 @@ FLD_EXP_OBJ_CNT_PTR FIELDMAP_GetExpObjCntPtr( FIELDMAP_WORK *fieldWork )
 	return fieldWork->ExpObjCntPtr;
 }
 
-//----------------------------------------------------------------------------
+//--------------------------------------------------------------
 /**
  *	@brief	TCBシステム　取得
  */
-//-----------------------------------------------------------------------------
+//--------------------------------------------------------------
 extern GFL_TCBSYS* FIELDMAP_GetFieldmapTCBSys( FIELDMAP_WORK * fieldWork )
 {
   return fieldWork->fieldmapTCB;
+}
+
+//--------------------------------------------------------------
+/**
+ * フィールドカメラの目標座標となるポインタをセット
+ * @param fieldWork FIELDMAP_WORK
+ * @retval  nothing
+ */
+//--------------------------------------------------------------
+void FIELDMAP_SetNowPosTarget( FIELDMAP_WORK *fieldWork, const VecFx32 *pos )
+{
+  fieldWork->target_now_pos_p = pos;
 }
 
 //======================================================================

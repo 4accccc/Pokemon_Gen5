@@ -874,8 +874,15 @@ static void setupRequest(EV_REQUEST * req, GAMESYS_WORK * gsys, FIELDMAP_WORK * 
     req->player_dir = MMDL_GetDirDisp( fmmdl );
   }
 
+#if 0
   req->now_pos = FIELDMAP_GetNowPos( fieldWork );
-
+#else
+  {
+    MMDL *mmdl = FIELD_PLAYER_GetMMdl( req->field_player );
+    req->now_pos = MMDL_GetVectorPosAddress( mmdl );
+  }
+#endif
+  
   {
 		FLDMAPPER *g3Dmapper = FIELDMAP_GetFieldG3Dmapper(fieldWork);
     req->mapattr = MAPATTR_GetAttribute(g3Dmapper, req->now_pos);
