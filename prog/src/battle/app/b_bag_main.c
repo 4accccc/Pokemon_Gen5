@@ -266,7 +266,7 @@ void BattleBag_TaskAdd( BBAG_DATA * dat )
 //	GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_BATTLE_APP_TEST, 0x70000 );
 //	dat->heap = HEAPID_BATTLE_APP_TEST;
 	// シューターモードテスト
-	dat->mode = BBAG_MODE_SHOOTER;
+//	dat->mode = BBAG_MODE_SHOOTER;
 
 	wk = GFL_HEAP_AllocClearMemory( dat->heap, sizeof(BBAG_WORK) );
 
@@ -284,6 +284,7 @@ void BattleBag_TaskAdd( BBAG_DATA * dat )
 	}
 
 //	テスト処理
+/*
 	{
 		u32	i = 0;
 		while(1){
@@ -294,6 +295,7 @@ void BattleBag_TaskAdd( BBAG_DATA * dat )
 			i++;
 		}
 	}
+*/
 
 	wk->cur = MYITEM_BagCursorAlloc( dat->heap );		// 仮でカーソルデータを作成
 	{
