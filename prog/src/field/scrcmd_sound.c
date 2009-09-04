@@ -20,6 +20,8 @@
 #include "field/zonedata.h"
 #include "field_sound.h"
 
+#include "field_sound.h"
+
 #include "script.h"
 #include "script_def.h"
 #include "scrcmd.h"
@@ -47,17 +49,16 @@
  * BGM変更
  * @param  core    仮想マシン制御構造体へのポインタ
  * @retval VMCMD_RESULT
+ * @note 現在再生中のBGMを退避し、指定BGMを再生している。
  */
 //--------------------------------------------------------------
 VMCMD_RESULT EvCmdBgmPlay( VMHANDLE *core, void *wk )
 {
   SCRCMD_WORK *work = wk;
   u16 music = VMGetU16( core );
-#if 0
-  Snd_BgmPlay( music );
-#else //wb
-	PMSND_PlayBGM( music );
-#endif
+  GAMEDATA *gdata = SCRCMD_WORK_GetGameData( work );
+  FIELD_SOUND *fsnd = GAMEDATA_GetFieldSound( gdata );
+  FIELD_SOUND_PushPlayEventBGM( fsnd, music );
   return VMCMD_RESULT_CONTINUE;
 }
 
@@ -70,13 +71,7 @@ VMCMD_RESULT EvCmdBgmPlay( VMHANDLE *core, void *wk )
 //--------------------------------------------------------------
 VMCMD_RESULT EvCmdBgmStop( VMHANDLE *core, void *wk )
 {
-#if 0
-  u16 music = VMGetU16(core);  //"未使用"
-  //Snd_BgmStop( music, 0 );
-  Snd_BgmStop( Snd_NowBgmNoGet(), 0 );
-#else //wb
   PMSND_StopBGM();
-#endif
   return VMCMD_RESULT_CONTINUE;
 }
 
@@ -89,15 +84,8 @@ VMCMD_RESULT EvCmdBgmStop( VMHANDLE *core, void *wk )
 //--------------------------------------------------------------
 VMCMD_RESULT EvCmdBgmPlayerPause( VMHANDLE *core, void *wk )
 {
-#if 0
-  u8 player = VMGetU8(core);
-  BOOL flag = VMGetU8(core);
-  
-  Snd_PlayerPause( player, flag );
-#else //wb
   BOOL flag = VMGetU8(core);
   PMSND_PauseBGM( flag );
-#endif
   return VMCMD_RESULT_CONTINUE;
 }
 
@@ -113,11 +101,7 @@ VMCMD_RESULT EvCmdBgmPlayCheck( VMHANDLE *core, void *wk )
   SCRCMD_WORK *work = wk;
   u16 music  = VMGetU16( core );
   u16 *ret_wk  = SCRCMD_GetVMWork( core, work );
-#if 0
-  *ret_wk = Snd_BgmPlayCheck( music );
-#else //wb
   *ret_wk = PMSND_CheckPlayBGM();
-#endif
   return VMCMD_RESULT_CONTINUE;
 }
 
@@ -146,15 +130,9 @@ VMCMD_RESULT EvCmdBgmSpecialSet( VMHANDLE *core, void *wk )
 //--------------------------------------------------------------
 static BOOL EvWaitBgmFade( VMHANDLE *core, void *wk )
 {
-#if 0
-  if( Snd_FadeCheck() == 0 ){
-    return TRUE;
-  }
-#else //wb
   if( PMSND_CheckFadeOnBGM() ){
     return( TRUE );
   }
-#endif
   return FALSE;
 }
 
@@ -169,11 +147,7 @@ VMCMD_RESULT EvCmdBgmFadeOut( VMHANDLE *core, void *wk )
 {
   u16 vol    = VMGetU16(core);
   u16 frame  = VMGetU16(core);
-#if 0
-  Snd_BgmFadeOut( vol, frame );
-#else //wb
   PMSND_FadeOutBGM( frame );
-#endif
   VMCMD_SetWait( core, EvWaitBgmFade );
   return VMCMD_RESULT_SUSPEND;
 }
@@ -188,11 +162,7 @@ VMCMD_RESULT EvCmdBgmFadeOut( VMHANDLE *core, void *wk )
 VMCMD_RESULT EvCmdBgmFadeIn( VMHANDLE *core, void *wk )
 {
   u16 frame = VMGetU16(core);
-#if 0
-  Snd_BgmFadeIn( BGM_VOL_MAX, frame, BGM_FADEIN_START_VOL_MIN );
-#else //wb
   PMSND_FadeInBGM( frame );
-#endif
   VMCMD_SetWait( core, EvWaitBgmFade );
   return VMCMD_RESULT_SUSPEND;
 }
@@ -202,8 +172,19 @@ VMCMD_RESULT EvCmdBgmFadeIn( VMHANDLE *core, void *wk )
  * 現在のマップのBGMを再生
  * @param  core    仮想マシン制御構造体へのポインタ
  * @retval VMCMD_RESULT
+ * @note 再生とあるが、実際には退避したBGMの復帰を行っている。
  */
 //--------------------------------------------------------------
+VMCMD_RESULT EvCmdBgmNowMapPlay( VMHANDLE *core, void *wk )
+{
+  SCRCMD_WORK *work = wk;
+  GAMEDATA *gdata = SCRCMD_WORK_GetGameData( work );
+  FIELD_SOUND *fsnd = GAMEDATA_GetFieldSound( gdata );
+  FIELD_SOUND_PopBGM( fsnd );
+  return VMCMD_RESULT_CONTINUE;
+}
+
+#if 0
 VMCMD_RESULT EvCmdBgmNowMapPlay( VMHANDLE *core, void *wk )
 {
 #if 0
@@ -221,7 +202,7 @@ VMCMD_RESULT EvCmdBgmNowMapPlay( VMHANDLE *core, void *wk )
         sc, ID_EVSCR_WK_FLDPARAM );
     u16 zone_id = FIELDMAP_GetZoneID( fparam->fieldMap );
     u16 bgm = ZONEDATA_GetBGMID( zone_id, GAMEDATA_GetSeasonID(gdata) );
-
+    
     if( bgm != 0 ){
       PMSND_PlayNextBGM_EX( bgm, trackBit, 60, 0 );
     }
@@ -229,6 +210,7 @@ VMCMD_RESULT EvCmdBgmNowMapPlay( VMHANDLE *core, void *wk )
 #endif
   return VMCMD_RESULT_CONTINUE;
 }
+#endif
 
 #if 0 //wb
 //--------------------------------------------------------------
@@ -357,10 +339,9 @@ VMCMD_RESULT EvCmdMePlay(VMHANDLE *core, void *wk )
     SCRCMD_WORK *work = wk;
     GAMEDATA *gdata = SCRCMD_WORK_GetGameData( work );
     FIELD_SOUND *fsnd = GAMEDATA_GetFieldSound( gdata );
-    FIELD_SOUND_PushBGM( fsnd );
+    FIELD_SOUND_PushPlayJingleBGM( fsnd, no );
   }
   
-  PMSND_PlayBGM( no );
   return VMCMD_RESULT_CONTINUE;
 }
 

@@ -161,17 +161,17 @@ static GMEVENT_RESULT fieldBattleEvent(
 {
   BATTLE_EVENT_WORK * dbw = work;
   GAMESYS_WORK * gsys = dbw->gsys;
-
+  
   switch (*seq) {
   case 0:
-    if( dbw->bgmpush_off == FALSE ){
+    // 戦闘用ＢＧＭセット
+    if( dbw->bgmpush_off == FALSE ){ //既に退避済み
       GAMEDATA *gdata = GAMESYSTEM_GetGameData( gsys );
       FIELD_SOUND *fsnd = GAMEDATA_GetFieldSound( gdata );
-      FIELD_SOUND_PushBGM( fsnd );
+      FIELD_SOUND_PushPlayEventBGM( fsnd, dbw->para.musicDefault );
+    }else{
+      PMSND_PlayBGM( dbw->para.musicDefault );
     }
-    
-    // 戦闘用ＢＧＭセット
-    PMSND_PlayBGM( dbw->para.musicDefault );
     
     //エンカウントエフェクト
     GMEVENT_CallEvent( event,
@@ -319,26 +319,21 @@ static GMEVENT_RESULT DebugBattleEvent(
   switch (*seq) {
   case 0:
     GMEVENT_CallEvent(event, EVENT_FieldClose(gsys, dbw->fieldmap));
-    // サウンドテスト
-    // ＢＧＭ一時停止→退避
+    // 戦闘用ＢＧＭセット
     {
       GAMEDATA *gdata = GAMESYSTEM_GetGameData( gsys );
       FIELD_SOUND *fsnd = GAMEDATA_GetFieldSound( gdata );
-      FIELD_SOUND_PushBGM( fsnd );
+      FIELD_SOUND_PushPlayEventBGM( fsnd, dbw->para.musicDefault );
     }
     (*seq)++;
     break;
   case 1:
     GAMESYSTEM_CallProc(
         gsys, FS_OVERLAY_ID(battle), &BtlProcData, &dbw->para);
-    // サウンドテスト
-    // 戦闘用ＢＧＭセット
-    PMSND_PlayBGM(dbw->para.musicDefault);
     (*seq)++;
     break;
   case 2:
     if (GAMESYSTEM_IsProcExists(gsys)) break;
-    // サウンドテスト
     // 戦闘ＢＧＭフェードアウト
     dbw->timeWait = 60;
     PMSND_FadeOutBGM(60);

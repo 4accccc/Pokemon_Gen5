@@ -222,9 +222,11 @@ struct _FIELDMAP_WORK
   u32 seq_switch;
 	int timer;
 	u16 map_id;
-	VecFx32 now_pos;
 	LOCATION location;
 	
+  const VecFx32 *target_nowpos_p;
+	VecFx32 now_pos;
+  
 	const DEPEND_FUNCTIONS *func_tbl;
 	void *mapCtrlWork;
 	
@@ -1956,23 +1958,9 @@ static void zoneChange_SetMMdl( GAMEDATA *gdata,
 //--------------------------------------------------------------
 static void zoneChange_SetBGM( GAMEDATA *gdata, u32 zone_id )
 {
-#if 0
-	u16 trackBit = 0xfcff;	// track 9,10 OFF
-
-	u16 nextBGM = ZONEDATA_GetBGMID(
-			zone_id, GAMEDATA_GetSeasonID(gdata) );
-	
-	if( nextBGM != 0 ){
-		if( PMSND_GetNextBGMsoundNo() != nextBGM ){
-			PMSND_PlayNextBGM_EX( nextBGM, trackBit, 60, 0 );
-		}
-	}
-#else
   PLAYER_WORK *player = GAMEDATA_GetPlayerWork( gdata, 0 );
   PLAYER_MOVE_FORM form = PLAYERWORK_GetMoveForm( player );
-  u32 no = FIELD_SOUND_GetFieldBGMNo( gdata, form, zone_id );
-  FIELD_SOUND_PlayNextBGM( no );
-#endif
+  FIELD_SOUND_ChangePlayZoneBGM( gdata, form, zone_id );
 }
 
 //--------------------------------------------------------------
