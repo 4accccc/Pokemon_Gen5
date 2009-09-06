@@ -159,6 +159,7 @@ POKEMON_PARAM* PP_CreateByPPP( const POKEMON_PASO_PARAM* ppp, HEAPID heapID )
 {
   POKEMON_PARAM* pp;
   BOOL fast_flag;
+  u32 i=0;
 
   fast_flag = PPP_FastModeOn( (POKEMON_PASO_PARAM*)ppp );
   {
@@ -168,8 +169,22 @@ POKEMON_PARAM* PP_CreateByPPP( const POKEMON_PASO_PARAM* ppp, HEAPID heapID )
 
     pp = PP_Create( mons_no, level, ID, heapID );
   }
-
   PPP_FastModeOff( (POKEMON_PASO_PARAM*)ppp, fast_flag );
+
+	pp->ppp=*ppp;
+
+//コンディションセット
+	PP_Put(pp,ID_PARA_condition,i);
+//HP初期化
+	PP_Put(pp,ID_PARA_hp,i);
+	PP_Put(pp,ID_PARA_hpmax,i);
+//メールデータ  @@OO不明なので
+//	mail_data=MailData_CreateWork(HEAPID_BASE_SYSTEM);
+//	PP_Put(pp,ID_PARA_mail_data, mail_data);
+//	sys_FreeMemoryEz(mail_data);
+
+	PP_Renew(pp);
+  
   return pp;
 }
 

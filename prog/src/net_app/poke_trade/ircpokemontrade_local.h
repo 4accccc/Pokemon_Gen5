@@ -27,8 +27,8 @@
 #define BOX_MONS_NUM (30)
 #define _BRIGHTNESS_SYNC (2)  // フェードのＳＹＮＣは要調整
 #define CUR_NUM (5)
-#define _BUTTON_WIN_PAL   (14)  // ウインドウ
-#define _BUTTON_MSG_PAL   (13)  // メッセージフォント
+#define _BUTTON_WIN_PAL   (15)  // ウインドウ
+#define _BUTTON_MSG_PAL   (14)  // メッセージフォント
 #define	FBMP_COL_WHITE		(15)
 
 #define _OBJPLT_BOX  (0)  //3本
@@ -100,12 +100,17 @@ struct _IRC_POKEMON_TRADE {
   APP_TASKMENU_WORK* pAppTask;
   APP_TASKMENU_ITEMWORK appitem[_SUBMENU_LISTMAX];
 	GFL_BMPWIN* MyInfoWin;
+	GFL_BMPWIN* mesWin;
 	GFL_MSGDATA *pMsgData;  //
 	WORDSET *pWordSet;								// メッセージ展開用ワークマネージャー
 	GFL_FONT* pFontHandle;
+  PRINT_STREAM* pStream;
 	STRBUF* pStrBuf;
 	STRBUF* pExStrBuf;
+  STRBUF* pMessageStrBuf;
+  STRBUF* pMessageStrBufEx;
   PRINT_QUE*            SysMsgQue;
+	GFL_TCBLSYS *pMsgTcblSys;
 	//    BMPWINFRAME_AREAMANAGER_POS aPos;
 	//3D
 	BOX_DATA* pBox;
@@ -144,6 +149,11 @@ struct _IRC_POKEMON_TRADE {
 	int selectIndex;  //候補のポケモンIndex
 	int selectBoxno;  //候補のポケモンBox
 
+  int underSelectIndex;  //まだ相手に見せてないポケモンIndex
+  int underSelectBoxno;  //まだ相手に見せてないポケモンBox
+  int pokemonsetCall;
+
+  
 	BOOL bChangeOK[2];
 
 	BOOL bParent;
@@ -155,5 +165,11 @@ struct _IRC_POKEMON_TRADE {
 
 extern void IRC_POKETRADE_GraphicInit(IRC_POKEMON_TRADE* pWork);
 extern void IRC_POKETRADE_SubStatusInit(IRC_POKEMON_TRADE* pWork,int pokeposx);
+extern void IRC_POKETRADE_SubStatusEnd(IRC_POKEMON_TRADE* pWork);
 extern void IRC_POKETRADE_AppMenuOpen(IRC_POKEMON_TRADE* pWork, int *menustr,int num);
+extern void IRC_POKETRADE_MessageOpen(IRC_POKEMON_TRADE* pWork, int msgno);
+extern void IRC_POKETRADE_MessageWindowOpen(IRC_POKEMON_TRADE* pWork, int msgno);
+extern void IRC_POKETRADE_MessageWindowClose(IRC_POKEMON_TRADE* pWork);
+extern void IRC_POKETRADE_MessageWindowClear(IRC_POKEMON_TRADE* pWork);
+extern BOOL IRC_POKETRADE_MessageEndCheck(IRC_POKEMON_TRADE* pWork);
 

@@ -23,7 +23,7 @@
 #include "gamesystem/game_data.h"
 #include "system/bmp_winframe.h"
 
-#include "gamesystem/msgspeed.h"
+#include "gamesystem/msgspeed.h"  //MSGSPEED_GetWait
 
 #include "message.naix"
 #include "bag.naix"

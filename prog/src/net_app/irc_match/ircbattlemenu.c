@@ -551,11 +551,17 @@ static BOOL _modeSelectMenuButtonCallback(int bttnid,IRC_BATTLE_MENU* pWork)
   switch( bttnid ){
   case _SELECTMODE_BATTLE:
 		PMSND_PlaySystemSE(SEQ_SE_DECIDE1);
-		_CHANGE_STATE(pWork,_modeSelectEntryNumInit);
+    _CHANGE_STATE(pWork,_modeReportInit);
+    pWork->selectType = EVENTIRCBTL_ENTRYMODE_SINGLE;
+
+    //		_CHANGE_STATE(pWork,_modeSelectEntryNumInit);
     return TRUE;
   case _SELECTMODE_POKE_CHANGE:
 		PMSND_PlaySystemSE(SEQ_SE_DECIDE1);
-    _CHANGE_STATE(pWork,_modeSelectChangeInit);
+    pWork->selectType = EVENTIRCBTL_ENTRYMODE_TRADE;
+    _CHANGE_STATE(pWork,_modeReportInit);
+
+//    _CHANGE_STATE(pWork,_modeSelectChangeInit);
     return TRUE;
 	case _SELECTMODE_COMPATIBLE:
 		PMSND_PlaySystemSE(SEQ_SE_DECIDE1);
@@ -620,12 +626,14 @@ static BOOL _modeSelectChangeButtonCallback(int bttnid,IRC_BATTLE_MENU* pWork)
 	case _CHANGE_TRADE:
 		PMSND_PlaySystemSE(SEQ_SE_DECIDE1);
     pWork->selectType = EVENTIRCBTL_ENTRYMODE_TRADE;
-    _CHANGE_STATE(pWork,_modeReportInit);
+//    _CHANGE_STATE(pWork,_modeReportInit);
+    _CHANGE_STATE(pWork,NULL);
     return TRUE;
 	case _CHANGE_FRIENDCHANGE:
 		PMSND_PlaySystemSE(SEQ_SE_DECIDE1);
     pWork->selectType = EVENTIRCBTL_ENTRYMODE_FRIEND;
-    _CHANGE_STATE(pWork,_modeReportInit);
+//    _CHANGE_STATE(pWork,_modeReportInit);
+    _CHANGE_STATE(pWork,NULL);
     return TRUE;
   case _ENTRYNUM_EXIT:
 		PMSND_PlaySystemSE(SEQ_SE_CANCEL1);
@@ -688,7 +696,8 @@ static BOOL _modeSelectEntryNumButtonCallback(int bttnid,IRC_BATTLE_MENU* pWork)
   case _ENTRYNUM_FOUR:
 		PMSND_PlaySystemSE(SEQ_SE_DECIDE1);
     pWork->selectType = EVENTIRCBTL_ENTRYMODE_MULTH;
-    _CHANGE_STATE(pWork,_modeReportInit);
+    _CHANGE_STATE(pWork,NULL);
+//    _CHANGE_STATE(pWork,_modeReportInit);
     return TRUE;
   case _ENTRYNUM_EXIT:
 		PMSND_PlaySystemSE(SEQ_SE_CANCEL1);
@@ -734,19 +743,23 @@ static BOOL _modeSelectBattleTypeButtonCallback(int bttnid,IRC_BATTLE_MENU* pWor
 		PMSND_PlaySystemSE(SEQ_SE_DECIDE1);
     pWork->selectType = EVENTIRCBTL_ENTRYMODE_SINGLE;
   //  _buttonWindowDelete(pWork);
-    _CHANGE_STATE(pWork,_modeReportInit);
+//    _CHANGE_STATE(pWork,_modeReportInit);
+        _CHANGE_STATE(pWork,NULL);
+
     break;
   case _SELECTBT_DOUBLE:
 		PMSND_PlaySystemSE(SEQ_SE_DECIDE1);
     pWork->selectType = EVENTIRCBTL_ENTRYMODE_DOUBLE;
     //_buttonWindowDelete(pWork);
-    _CHANGE_STATE(pWork,_modeReportInit);
+//    _CHANGE_STATE(pWork,_modeReportInit);
+    _CHANGE_STATE(pWork,NULL);
     break;
   case _SELECTBT_TRI:
 		PMSND_PlaySystemSE(SEQ_SE_DECIDE1);
     pWork->selectType = EVENTIRCBTL_ENTRYMODE_TRI;
     //_buttonWindowDelete(pWork);
-    _CHANGE_STATE(pWork,_modeReportInit);
+//    _CHANGE_STATE(pWork,_modeReportInit);
+    _CHANGE_STATE(pWork,NULL);
     break;
   default:
 		PMSND_PlaySystemSE(SEQ_SE_CANCEL1);
@@ -911,8 +924,20 @@ static void _modeReporting(IRC_BATTLE_MENU* pWork)
     SAVE_RESULT svr = SaveControl_SaveAsyncMain(IrcBattle_GetSAVE_CONTROL_WORK(pWork->dbw));
 
     if(svr == SAVE_RESULT_OK){
+
+			BmpWinFrame_Clear(pWork->infoDispWin, WINDOW_TRANS_OFF);
+      GFL_BMPWIN_ClearScreen(pWork->infoDispWin);
+      GFL_BG_LoadScreenV_Req(GFL_BG_FRAME1_S);
+
+      
+      if( pWork->selectType == EVENTIRCBTL_ENTRYMODE_SINGLE){
+        _CHANGE_STATE(pWork,_modeSelectEntryNumInit);
+      }
+      else if( pWork->selectType == EVENTIRCBTL_ENTRYMODE_TRADE){
+        _CHANGE_STATE(pWork,_modeSelectChangeInit);
+      }
       pWork->IsIrc = TRUE;  //ÔŠOüÚ‘±ŠJŽn
-      _CHANGE_STATE(pWork,NULL);
+//      _CHANGE_STATE(pWork,NULL);
     }
   }
 }
