@@ -209,8 +209,8 @@ static void Initialize( PROC_WORK* work )
   }
 
   // icaデータをロード
-  work->icaAnime = ICA_ANIME_Create( 
-      HEAPID_OBATA_DEBUG, ARCID_OBATA_DEBUG, NARC_debug_obata_ica_test_data2_bin );
+  work->icaAnime = ICA_ANIME_CreateStreaming( 
+      HEAPID_OBATA_DEBUG, ARCID_OBATA_DEBUG, NARC_debug_obata_ica_test_data2_bin, 10 );
 
   // カメラ作成
   {

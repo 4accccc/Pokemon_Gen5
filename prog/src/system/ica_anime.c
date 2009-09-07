@@ -1,7 +1,7 @@
 /////////////////////////////////////////////////////////////////////////////////////
 /**
  *
- * @brief  オリジナルicaアニメーション管理
+ * @brief  icaアニメーション ストリーミング再生
  * @file   ica_anime.c
  * @author obata
  * @date   2009.09.04
@@ -10,14 +10,6 @@
 /////////////////////////////////////////////////////////////////////////////////////
 #include <gflib.h>
 #include "ica_anime.h"
-
-
-//===================================================================================
-/**
- * @brief 定数
- */
-//===================================================================================
-#define DEF_BUFSIZE (10)
 
 
 //===================================================================================
@@ -55,7 +47,7 @@ void UpdateBuf( ICA_ANIME* anime, fx32 start_frame );
 
 //-----------------------------------------------------------------------------------
 /**
- * @brief アニメーションを作成する
+ * @brief アニメーションを作成する (データ一括読み込み)
  *
  * @param heap_id 使用するヒープID
  * @param arc_id  アニメーションデータのアーカイブファイル指定
@@ -75,14 +67,49 @@ ICA_ANIME* ICA_ANIME_Create( HEAPID heap_id, ARCID arc_id, ARCDATID dat_id )
   anime->heapID        = heap_id;
   anime->arcHandle     = GFL_ARC_OpenDataHandle( arc_id, heap_id );
   anime->datID         = dat_id;
+  GFL_ARC_LoadDataOfsByHandle( anime->arcHandle, anime->datID, 0, sizeof(u32), &anime->frameSize );
   anime->nowFrame      = 0;
   anime->bufStartFrame = 0;
-  anime->bufSize       = DEF_BUFSIZE;
+  anime->bufSize       = anime->frameSize;    // MEMO:ストリーミングとの違いはココだけ
   anime->transBuf      = GFL_HEAP_AllocMemory( heap_id, sizeof(VecFx32) * anime->bufSize );
   anime->rotateBuf     = GFL_HEAP_AllocMemory( heap_id, sizeof(VecFx32) * anime->bufSize );
-  GFL_ARC_LoadDataOfsByHandle( anime->arcHandle, anime->datID, 0, sizeof(u32), &anime->frameSize );
   UpdateBuf( anime, 0 );
-  OBATA_Printf( "ICA_ANIME_Create\n" );
+
+  return anime;
+}
+
+//-----------------------------------------------------------------------------------
+/**
+ * @brief アニメーションを作成する( ストリーミング再生 )
+ *
+ * @param heap_id      使用するヒープID
+ * @param arc_id       アニメーションデータのアーカイブファイル指定
+ * @param dat_id       アーカイブファイル上のインデックスナンバー
+ * @param buf_interval データ読み込みの間隔 (指定フレーム数に一度, 読み込みを行う)
+ *
+ * @return 作成したアニメーション管理オブジェクト
+ */
+//-----------------------------------------------------------------------------------
+ICA_ANIME* ICA_ANIME_CreateStreaming( 
+    HEAPID heap_id, ARCID arc_id, ARCDATID dat_id, int buf_interval )
+{
+  ICA_ANIME* anime;
+
+  // ワークを確保
+  anime = (ICA_ANIME*)GFL_HEAP_AllocMemory( heap_id, sizeof(ICA_ANIME) );
+
+  // 初期化
+  anime->heapID        = heap_id;
+  anime->arcHandle     = GFL_ARC_OpenDataHandle( arc_id, heap_id );
+  anime->datID         = dat_id;
+  GFL_ARC_LoadDataOfsByHandle( anime->arcHandle, anime->datID, 0, sizeof(u32), &anime->frameSize );
+  anime->nowFrame      = 0;
+  anime->bufStartFrame = 0;
+  anime->bufSize       = buf_interval;    // MEMO:一括読み込みとの違いはココだけ
+  anime->transBuf      = GFL_HEAP_AllocMemory( heap_id, sizeof(VecFx32) * anime->bufSize );
+  anime->rotateBuf     = GFL_HEAP_AllocMemory( heap_id, sizeof(VecFx32) * anime->bufSize );
+  UpdateBuf( anime, 0 );
+
   return anime;
 }
 
@@ -111,22 +138,25 @@ void ICA_ANIME_Delete( ICA_ANIME* anime )
 //-----------------------------------------------------------------------------------
 void ICA_ANIME_IncAnimeFrame( ICA_ANIME* anime, fx32 frame )
 {
+  int now;
+
   // 現在フレームを更新
   anime->nowFrame += frame;
+  now = anime->nowFrame >> FX32_SHIFT;
 
-  if( anime->frameSize <= (anime->nowFrame>>FX32_SHIFT) )
+  // 最終フレームを超えたら, ゼロフレーム目に戻る
+  if( anime->frameSize <= now )
   {
     anime->nowFrame = 0;
-    UpdateBuf( anime, anime->nowFrame );
-    return;
+    now = 0;
   }
 
-  // 現在フレームがバッファリング範囲を超えたら, バッファを更新する
-  if( (anime->bufStartFrame + anime->bufSize) <= (anime->nowFrame >> FX32_SHIFT) )
+  // 現在フレームがバッファリング範囲をはずれたら, バッファを更新する
+  if( ( now < anime->bufStartFrame ) ||
+      ( (anime->bufStartFrame + anime->bufSize) <= now ) )
   {
     UpdateBuf( anime, anime->nowFrame );
   }
-  OBATA_Printf( "ICA_ANIME_IncAnimeFrame : %d\n", (anime->nowFrame>>FX32_SHIFT) );
 }
 
 //-----------------------------------------------------------------------------------
@@ -165,7 +195,7 @@ void ICA_ANIME_GetRotate( ICA_ANIME* anime, VecFx32* vec_dst )
 
 //---------------------------------------------------------------------------
 /**
- * @brief カメラ座標・ターゲット座標を指定フレームの状態に設定する
+ * @brief カメラ座標・ターゲット座標を現在フレームの状態に設定する
  *
  * @param anime   設定アニメーション
  * @param camera  設定対象のカメラ
@@ -181,6 +211,7 @@ void ICA_ANIME_SetCameraStatus( ICA_ANIME* anime, GFL_G3D_CAMERA* camera )
   VecFx32 def_upward  = { 0, FX32_ONE, 0 }; 
   VecFx32 pos, target, forward, upward;
 
+  // 回転行列を作成
   ICA_ANIME_GetRotate( anime, &rotate );
   x = FX_FX32_TO_F32( rotate.x );
   y = FX_FX32_TO_F32( rotate.y );
@@ -192,9 +223,12 @@ void ICA_ANIME_SetCameraStatus( ICA_ANIME* anime, GFL_G3D_CAMERA* camera )
   ry = y / 360.0f * 0xffff;
   rz = z / 360.0f * 0xffff; 
   GFL_CALC3D_MTX_CreateRot( rx, ry, rz, &matrix );
+
+  // ベクトル回転でカメラの向きを算出
   MTX_MultVec33( &def_forward, &matrix, &forward );
   MTX_MultVec33( &def_upward, &matrix, &upward );
 
+  // カメラ・注視点位置を求める
   ICA_ANIME_GetTranslate( anime, &pos );
   VEC_Add( &pos, &forward, &target );
 
@@ -227,34 +261,19 @@ void UpdateBuf( ICA_ANIME* anime, fx32 start_frame )
   int    data_size = sizeof(float) * 6 * anime->bufSize;
   void* data       = GFL_HEAP_AllocMemoryLo( anime->heapID, data_size );
 
-  // 指定フレーム位置から, 一定フレーム数分のデータを取得
+  // 指定フレーム位置から 一定フレーム数分のデータを取得し, バッファ更新
   GFL_ARC_LoadDataOfsByHandle( anime->arcHandle, anime->datID, ofs, data_size, data );
   for( i=0, j=0; i<anime->bufSize; i++ )
   {
-    //OBATA_Printf( "rotate = %d, %d, %d\n", (int)data[j+0], (int)data[j+1], (int)data[j+2] );
-    //OBATA_Printf( "trans  = %d, %d, %d\n", (int)data[j+3], (int)data[j+4], (int)data[j+5] );
     anime->rotateBuf[i].x = FX_F32_TO_FX32( *( (float*)( (int)data + j*sizeof(float) ) ) );   j++;
     anime->rotateBuf[i].y = FX_F32_TO_FX32( *( (float*)( (int)data + j*sizeof(float) ) ) );   j++;
     anime->rotateBuf[i].z = FX_F32_TO_FX32( *( (float*)( (int)data + j*sizeof(float) ) ) );   j++;
     anime->transBuf[i].x = FX_F32_TO_FX32( *( (float*)( (int)data + j*sizeof(float) ) ) );   j++;
     anime->transBuf[i].y = FX_F32_TO_FX32( *( (float*)( (int)data + j*sizeof(float) ) ) );   j++;
     anime->transBuf[i].z = FX_F32_TO_FX32( *( (float*)( (int)data + j*sizeof(float) ) ) );   j++;
-    /*
-    VEC_Set( &anime->rotateBuf[i], 
-        FX_F32_TO_FX32(data[j++]),
-        FX_F32_TO_FX32(data[j++]),
-        FX_F32_TO_FX32(data[j++]) );
-
-    VEC_Set( &anime->transBuf[i], 
-        FX_F32_TO_FX32(data[j++]),
-        FX_F32_TO_FX32(data[j++]),
-        FX_F32_TO_FX32(data[j++]) );
-        */
   }
   GFL_HEAP_FreeMemory( data );
 
   // バッファ開始フレーム位置を記憶
   anime->bufStartFrame = start_frame >> FX32_SHIFT;
-
-  OBATA_Printf( "UpdateBuf\n" );
 }
