@@ -19,6 +19,9 @@
 
 #include "test/ariizumi/ari_debug.h"
 
+//注目ポケ用
+#include "sta_act_poke.h"
+#include "script/sta_act_script_def.h"
 
 //======================================================================
 //	define
@@ -59,6 +62,7 @@ struct _STA_LIGHT_SYS
 	ACTING_WORK* actWork;
 
 	STA_LIGHT_WORK	lightWork[ACT_LIGHT_MAX];
+	STA_LIGHT_WORK	attentinLightWork;
 	
 	GFL_CLUNIT	*cellUnit;
 	u32	pltIdx;
@@ -72,6 +76,7 @@ struct _STA_LIGHT_SYS
 #pragma mark [> proto
 
 static void STA_LIGHT_UpdateObjFunc( STA_LIGHT_SYS *work , STA_LIGHT_WORK *lightWork );
+static void STA_LIGHT_UpdateAttentionLight( STA_LIGHT_SYS *work );
 
 //--------------------------------------------------------------
 //	
@@ -88,9 +93,10 @@ STA_LIGHT_SYS* STA_LIGHT_InitSystem( HEAPID heapId , ACTING_WORK* actWork )
 	{
 		work->lightWork[i].type = ALT_NONE;
 	}
+	work->attentinLightWork.type = ALT_NONE;
 	
 	//OBJ用
-	work->cellUnit  = GFL_CLACT_UNIT_Create( ACT_LIGHT_MAX , 0, work->heapId );
+	work->cellUnit  = GFL_CLACT_UNIT_Create( ACT_LIGHT_MAX+1 , 0, work->heapId );
 	GFL_CLACT_UNIT_SetDefaultRend( work->cellUnit );
 
 	//各種素材の読み込み
@@ -128,18 +134,75 @@ void	STA_LIGHT_UpdateSystem( STA_LIGHT_SYS *work )
 			STA_LIGHT_UpdateObjFunc( work,&work->lightWork[idx] );
 		}
 	}
+	STA_LIGHT_UpdateAttentionLight( work );
 }
 
 static void STA_LIGHT_UpdateObjFunc( STA_LIGHT_SYS *work , STA_LIGHT_WORK *lightWork )
 {
-	const u16 scrOfs = STA_ACT_GetStageScroll( work->actWork );
-	if( lightWork->type == ALT_CIRCLE )
-	{
-		GFL_CLACTPOS cellPos;
-		cellPos.x = F32_CONST( lightWork->pos.x ) - scrOfs;
-		cellPos.y = F32_CONST( lightWork->pos.y );
-		GFL_CLACT_WK_SetPos( lightWork->lightCell , &cellPos , CLSYS_DEFREND_MAIN );
-	}
+  const u16 scrOfs = STA_ACT_GetStageScroll( work->actWork );
+  if( lightWork->type == ALT_CIRCLE )
+  {
+    GFL_CLACTPOS cellPos;
+    cellPos.x = F32_CONST( lightWork->pos.x ) - scrOfs;
+    cellPos.y = F32_CONST( lightWork->pos.y );
+    GFL_CLACT_WK_SetPos( lightWork->lightCell , &cellPos , CLSYS_DEFREND_MAIN );
+    if( STA_ACT_GetUseItemPoke( work->actWork ) != MUSICAL_POKE_MAX )
+    {
+    	GFL_CLACT_WK_SetDrawEnable( lightWork->lightCell, FALSE );
+    }
+    else
+    {
+    	GFL_CLACT_WK_SetDrawEnable( lightWork->lightCell, TRUE );
+    }
+  }
+}
+
+static void STA_LIGHT_UpdateAttentionLight( STA_LIGHT_SYS *work )
+{
+  if( work->attentinLightWork.type == ALT_NONE )
+  {
+    if( STA_ACT_GetUseItemPoke( work->actWork ) != MUSICAL_POKE_MAX )
+    {
+      //目立ってるやつがいる！
+      GFL_CLWK_DATA	cellInitData;
+    	work->attentinLightWork.type = ALT_CIRCLE;
+    	cellInitData.pos_x = 128;
+    	cellInitData.pos_y =  96;
+    	cellInitData.anmseq = 0;
+    	cellInitData.softpri = 0;
+    	cellInitData.bgpri = 2;
+    	work->attentinLightWork.lightCell = GFL_CLACT_WK_Create( work->cellUnit ,work->ncgIdx,work->pltIdx,work->anmIdx,
+    						 		&cellInitData ,CLSYS_DEFREND_MAIN , work->heapId );
+    	GFL_CLACT_WK_SetDrawEnable( work->attentinLightWork.lightCell, TRUE );
+    }
+  }
+  //elseが無いのは生成後に即動かすため
+  if( work->attentinLightWork.type == ALT_CIRCLE )
+  {
+    if( STA_ACT_GetUseItemPoke( work->actWork ) == MUSICAL_POKE_MAX )
+    {
+      //目立ちタイム終了
+    	GFL_CLACT_WK_Remove( work->attentinLightWork.lightCell );
+    	work->attentinLightWork.type = ALT_NONE;
+    }
+    else
+    {
+      VecFx32 pokePos;
+      GFL_CLACTPOS cellPos;
+      STA_POKE_SYS  *pokeSys = STA_ACT_GetPokeSys( work->actWork );
+      STA_POKE_WORK *pokeWork = STA_ACT_GetPokeWork( work->actWork , STA_ACT_GetUseItemPoke( work->actWork ) );
+      const u16 scrOfs = STA_ACT_GetStageScroll( work->actWork );
+      
+      STA_POKE_GetPosition( pokeSys , pokeWork , &pokePos );
+
+      cellPos.x = F32_CONST( pokePos.x ) - scrOfs;
+      cellPos.y = F32_CONST( pokePos.y ) - 32;
+      
+      GFL_CLACT_WK_SetPos( work->attentinLightWork.lightCell , &cellPos , CLSYS_DEFREND_MAIN );
+      
+    }
+    
+  }
 }
 
 void	STA_LIGHT_DrawSystem( STA_LIGHT_SYS *work )

@@ -49,6 +49,8 @@ MUS_ITEM_DATA_SYS* STA_ACT_GetItemDataSys( ACTING_WORK *work );
 void STA_ACT_UseItemRequest( ACTING_WORK *work , MUS_POKE_EQUIP_POS ePos );
 void STA_ACT_UseItem( ACTING_WORK *work , u8 pokeIdx , MUS_POKE_EQUIP_POS ePos );
 
+const u8 STA_ACT_GetUseItemPoke( ACTING_WORK *work );
+
 //エディタ用
 
 void	STA_ACT_EDITOR_SetScript( ACTING_WORK *work , void* data );

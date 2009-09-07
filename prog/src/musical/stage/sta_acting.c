@@ -54,7 +54,7 @@
 #define ACT_SCROLL_SPEED (4)
 
 //一発逆転ボタン視線強奪時間(演出時間とは等しくない)
-#define ACT_USEITEM_EFF_TIME (5*60)
+#define ACT_USEITEM_EFF_TIME (3*60)
 
 //Msg系
 #define ACT_MSG_POS_X ( 4 )
@@ -1471,7 +1471,11 @@ MUS_ITEM_DATA_SYS* STA_ACT_GetItemDataSys( ACTING_WORK *work )
   return MUS_ITEM_DRAW_GetItemDataSys( work->itemDrawSys );
 }
 
-
+//アイテム使用で目立っているポケモンの取得
+const u8 STA_ACT_GetUseItemPoke( ACTING_WORK *work )
+{
+  return work->useItemPoke;
+}
 #pragma mark [> editor func
 //--------------------------------------------------------------
 //エディタ用
