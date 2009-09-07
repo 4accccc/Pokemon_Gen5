@@ -21,6 +21,7 @@
 #include "battle/btl_action.h"
 #include "battle/btl_calc.h"
 #include "battle/btl_util.h"
+#include "../app/b_bag.h"
 
 #include "btlv_scu.h"
 #include "btlv_scd.h"
@@ -64,6 +65,7 @@ struct _BTLV_CORE {
   const BTL_POKEPARAM*  procPokeParam;
   u32                   procPokeID;
   BtlAction             playerAction;
+  BBAG_DATA             bagData;
 
   GFL_TCBLSYS*  tcbl;
   BTLV_SCU*     scrnU;
@@ -494,6 +496,67 @@ BOOL BTLV_WaitPokeSelect( BTLV_CORE* core )
   return BTLV_SCD_PokeSelect_Wait( core->scrnD );
 }
 
+//=============================================================================================
+/**
+ * アイテム選択開始
+ *
+ * @param   wk
+ * @param   bagMode
+ */
+//=============================================================================================
+void BTLV_ITEMSELECT_Start( BTLV_CORE* wk, u8 bagMode )
+{
+  wk->bagData.myitem = BTL_MAIN_GetItemDataPtr( wk->mainModule );
+  wk->bagData.mode = bagMode;
+  wk->bagData.font = wk->fontHandle;
+  wk->bagData.heap = wk->heapID;
+  wk->bagData.end_flg = FALSE;
+  wk->bagData.ret_item = ITEM_DUMMY_DATA;
+
+  BattleBag_TaskAdd( &wk->bagData );
+}
+//=============================================================================================
+/**
+ * アイテム選択終了待ち
+ *
+ * @param   wk
+ *
+ * @retval  BOOL    終了したらTRUE
+ */
+//=============================================================================================
+BOOL BTLV_ITEMSELECT_Wait( BTLV_CORE* wk )
+{
+  return wk->bagData.end_flg;
+}
+//=============================================================================================
+/**
+ * アイテム選択結果取得（使用アイテムID）
+ *
+ * @param   wk
+ *
+ * @retval  u8
+ */
+//=============================================================================================
+u16 BTLV_ITEMSELECT_GetItemID( BTLV_CORE* wk )
+{
+  if( wk->bagData.end_flg ){
+    return wk->bagData.ret_item;
+  }
+  return ITEM_DUMMY_DATA;
+}
+//=============================================================================================
+/**
+ * アイテム選択結果取得（対象インデックス）
+ *
+ * @param   wk
+ *
+ * @retval  u8
+ */
+//=============================================================================================
+u8 BTLV_ITEMSELECT_GetTargetIdx( BTLV_CORE* wk )
+{
+  return 0;
+}
 
 //--------------------------------------
 

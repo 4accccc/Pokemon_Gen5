@@ -703,6 +703,16 @@ static inline u8 stwdraw_vpos_to_tblidx( u8 vpos )
   return 0;
 }
 
+//----------------------------------------------------------------------------------
+/**
+ *
+ *
+ * @param   pos
+ * @param   count
+ * @param   format
+ * @param   wk
+ */
+//----------------------------------------------------------------------------------
 static void stwdraw_button( const u8* pos, u8 count, u8 format, BTLV_SCD* wk )
 {
   const BTL_POKEPARAM*    bpp;
@@ -800,6 +810,21 @@ static BOOL selectTarget_init( int* seq, void* wk_adrs )
   BTLV_SCD* wk = wk_adrs;
 
   seltgt_init_setup_work( &wk->selTargetWork, wk );
+
+  // @@@ トリプルはターゲット選択画面を新たに作る必要あるので、仮処理。
+  if( BTL_MAIN_GetRule(wk->mainModule) == BTL_RULE_TRIPLE )
+  {
+    BtlPokePos  targetPos = BTL_POS_NULL;
+    if( wk->selTargetWork.selectablePokeCount )
+    {
+      BtlPokePos  basePos = BTL_MAIN_PokeIDtoPokePos( wk->mainModule, wk->pokeCon, BPP_GetID(wk->bpp) );
+      const BTL_TRIPLE_ATTACK_AREA* area = BTL_MAINUTIL_GetTripleAttackArea( basePos );
+      targetPos = area->enemyPos[ 0 ];
+    }
+    BTL_ACTION_SetFightParam( wk->destActionParam, wk->destActionParam->fight.waza, targetPos );
+    wk->selTargetDone = TRUE;
+  }
+
   stw_draw( &wk->selTargetWork, wk );
   wk->selTargetDone = FALSE;
   return TRUE;

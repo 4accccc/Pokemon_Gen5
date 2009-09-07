@@ -18,7 +18,9 @@
 #include "btl_field.h"
 #include "btl_pokeselect.h"
 #include "btl_server_cmd.h"
+#include "app\b_bag.h"
 #include "btlv\btlv_core.h"
+
 
 #include "btl_client.h"
 
@@ -96,7 +98,7 @@ struct _BTL_CLIENT {
   BTL_POKESELECT_PARAM    pokeSelParam;
   BTL_POKESELECT_RESULT   pokeSelResult;
   CANT_ESC_CONTROL        cantEscCtrl;
-
+  BBAG_DATA               bagData;
 
 
   u8  myID;
@@ -375,6 +377,7 @@ static BOOL SubProc_UI_SelectAction( BTL_CLIENT* wk, int* seq )
     SEQ_CHECK_ESCAPE,
     SEQ_CHECK_FIGHT,
     SEQ_CHECK_ITEM,
+    SEQ_WAIT_ITEM,
     SEQ_SELECT_WAZA_START,
     SEQ_SELECT_WAZA_WAIT,
     SEQ_CHECK_WAZA_TARGET,
@@ -573,11 +576,15 @@ static BOOL SubProc_UI_SelectAction( BTL_CLIENT* wk, int* seq )
     break;
 
   case SEQ_CHECK_ITEM:
-    // @@@ 仮作成でーす。ホントは下画面操作が入る。
-    {
-      u16 itemID, targetIdx;
-      _get_use_item( wk, wk->procPoke, wk->procPokeIdx, &itemID, &targetIdx );
-      BTL_Printf("itemID=%d\n", itemID);
+    BTLV_ITEMSELECT_Start( wk->viewCore, BBAG_MODE_NORMAL );
+    (*seq) = SEQ_WAIT_ITEM;
+    break;
+
+  case SEQ_WAIT_ITEM:
+    if( BTLV_ITEMSELECT_Wait(wk->viewCore) ){
+      u8 itemID, targetIdx;
+      itemID = BTLV_ITEMSELECT_GetItemID( wk->viewCore );
+      targetIdx = BTLV_ITEMSELECT_GetTargetIdx( wk->viewCore );
       if( itemID != ITEM_DUMMY_DATA ){
         BTL_ACTION_SetItemParam( wk->procAction, itemID, targetIdx );
         (*seq)=SEQ_CHECK_DONE;
