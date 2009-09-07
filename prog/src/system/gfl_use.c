@@ -31,8 +31,9 @@
 #ifdef PM_DEBUG
 #include "test/debug_pause.h"
 #include "debug/debugwin_sys.h"
+#include "debug/gf_mcs.h"
+#include "sound/snd_viewer_mcs.h"
 #endif //PM_DEBUG
-
 
 //=============================================================================================
 //=============================================================================================
@@ -67,8 +68,10 @@ static void GFUser_PublicRandInit(void);
 static void gfluse_AssertFinish( void );
 
 #ifdef PM_DEBUG
-BOOL  mcs_lib_loaded = FALSE;
 FS_EXTERN_OVERLAY(mcs_lib);
+BOOL  mcs_recv_auto;
+
+static void mcsRecv( void );
 #endif
 
 //=============================================================================================
@@ -130,14 +133,6 @@ void GFLUser_Init(void)
   //OVERLAYシステム初期化
   GFL_OVERLAY_boot(GFL_HEAPID_SYSTEM, 8, 4, 4);
 
-  //MCSライブラリを拡張メモリにロード
-#ifdef PM_DEBUG
-  if( OS_GetConsoleType() & OS_CONSOLE_ISDEBUGGER ){
-    GFL_OVERLAY_Load( FS_OVERLAY_ID( mcs_lib ) );
-    mcs_lib_loaded = TRUE;
-  }
-#endif
-
   //PROCシステム初期化
   GFL_PROC_boot(GFL_HEAPID_SYSTEM);
   gfl_work = GFL_HEAP_AllocMemory(GFL_HEAPID_SYSTEM, sizeof(GFL_USE_WORK));
@@ -148,14 +143,14 @@ void GFLUser_Init(void)
       GFL_HEAPID_SYSTEM, GFL_TCB_CalcSystemWorkSize(TCB_VINTR_MAX));
   gfl_work->TCBSysVintr = GFL_TCB_Init(TCB_VINTR_MAX, gfl_work->TCBMemVintr);
 
-   // 汎用乱数初期化
-    GFUser_PublicRandInit();
+  // 汎用乱数初期化
+  GFUser_PublicRandInit();
 
-    //FADEシステム初期化
-    GFL_FADE_Init(GFL_HEAPID_SYSTEM);
+  //FADEシステム初期化
+  GFL_FADE_Init(GFL_HEAPID_SYSTEM);
 
-    //サウンドシステム初期化
-    //GFL_SOUND_Init(&sndHeap[0],SOUND_HEAP_SIZE);
+  //サウンドシステム初期化
+  //GFL_SOUND_Init(&sndHeap[0],SOUND_HEAP_SIZE);
 
   //バックアップシステム初期化
   GFL_BACKUP_Init(GFL_HEAPID_APP);
@@ -167,6 +162,15 @@ void GFLUser_Init(void)
   GFL_RTC_Init();
 
   GFL_USE_VintrCounter = 0;
+
+  //MCSライブラリを拡張メモリにロード
+#ifdef PM_DEBUG
+  if( OS_GetConsoleType() & OS_CONSOLE_ISDEBUGGER ){
+    GFL_OVERLAY_Load( FS_OVERLAY_ID( mcs_lib ) );
+		GFL_MCS_Init();
+  }
+#endif
+
 }
 
 
@@ -196,6 +200,12 @@ void GFLUser_Main(void)
   }
   GFL_RTC_Main();
   //GFL_SOUND_Main();
+	//
+#ifdef PM_DEBUG
+  //MCS受信
+	GFL_MCS_Main();
+	GFL_MCS_SNDVIEWER_Main();
+#endif
 }
 
 //------------------------------------------------------------------
@@ -218,6 +228,9 @@ void GFLUser_Display(void)
 //------------------------------------------------------------------
 void GFLUser_Exit(void)
 {
+#ifdef PM_DEBUG
+	GFL_MCS_Exit();
+#endif
   GFL_TEXT_DeleteSystem();
   GFL_BACKUP_Exit();
   //GFL_SOUND_Exit();
@@ -269,7 +282,10 @@ void GFLUser_VIntr(void)
   //GFL_CLACT_VBlankFunc();
     // 通信アイコンの描画のためにあります。通信自体は行っていません
     //GFL_NET_VBlankFunc();
-
+#ifdef PM_DEBUG
+  //MCS受信
+	GFL_MCS_VIntrFunc();
+#endif
   GFL_DMA_Main();
   GFL_USE_VintrCounter++;
 }
@@ -301,7 +317,7 @@ GFL_TCBSYS * GFUser_VIntr_GetTCBSYS( void )
 //------------------------------------------------------------------
 static void GFUser_PublicRandInit(void)
 {
-    GFL_STD_RandGeneralInit( &gfl_work->publicRandContext );
+	GFL_STD_RandGeneralInit( &gfl_work->publicRandContext );
 }
 
 //------------------------------------------------------------------
@@ -311,7 +327,7 @@ static void GFUser_PublicRandInit(void)
 //------------------------------------------------------------------
 u32 GFUser_GetPublicRand(u32 range)
 {
-    return GFL_STD_Rand( &gfl_work->publicRandContext, range );
+	return GFL_STD_Rand( &gfl_work->publicRandContext, range );
 }
 
 //------------------------------------------------------------------

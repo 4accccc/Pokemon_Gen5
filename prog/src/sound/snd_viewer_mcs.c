@@ -6,6 +6,8 @@
  * @date	
  */
 //============================================================================================
+#ifdef PM_DEBUG
+
 #include "gflib.h"
 #include "arc_def.h"
 
@@ -17,12 +19,16 @@
 #define DS_MCS_SRC
 #include "sound/snd_viewer_mcs_comm.h"
 
-FS_EXTERN_OVERLAY(mcs_lib);
+static void MCS_Sound_Send(u32 comm, u32* param);
+static void MCS_Sound_Recv(u32 comm, u32* param);
 
-static BOOL mcsExist = FALSE;
-static HEAPID heapID;
-
-static u32 MCS_Sound(u32 comm, u32* param);
+#define TRACK_NUM	(16)
+static GFL_MCS_LINKIDX mcsLinkIdx = GFL_MCS_LINKIDX_INVALID; 
+static SNDTrackInfo		trackInfo[TRACK_NUM];
+static u16						trackActiveBit = 0;	
+static u8							writeBuf[0x80];
+static u8							readBuf[0x80];
+static u32						soundNo = 0xffffffff;
 //============================================================================================
 /**
  *
@@ -30,56 +36,55 @@ static u32 MCS_Sound(u32 comm, u32* param);
  *
  */
 //============================================================================================
-void	GFL_MCS_SNDVIEWER_Init(HEAPID heapID)
+void	GFL_MCS_SNDVIEWER_Main(void)
 {
-	if(mcsExist == FALSE){
-		GFL_OVERLAY_Load(FS_OVERLAY_ID(mcs_lib));
-		mcsExist = TRUE;
+	// リンク判定
+	if(mcsLinkIdx == GFL_MCS_LINKIDX_INVALID){
+		// リンクされるまでここでHold
+		GFL_MCS_Link(GFL_MCS_SNDVIEWER_ID, &mcsLinkIdx);
+		return;
 	}
-	if(MCS_CheckEnable() == FALSE){
-		MCS_Init(heapID);
-	}
-}
+	{
+		NNSSndHandle*	sndHandle = PMSND_GetNowSndHandlePointer();
+		u32 nowSoundNo = PMSND_GetBGMsoundNo();
+		u16	nowTrackBit = 0;
+		int i;
 
-void	GFL_MCS_SNDVIEWER_Exit(void)
-{
-	if(mcsExist == TRUE){
-		if(MCS_CheckEnable() == TRUE){
-			MCS_Exit();
+		// 現在のトラック状態を取得
+		for( i=0; i<TRACK_NUM; i++ ){
+			if(NNS_SndPlayerReadDriverTrackInfo(sndHandle, i, &trackInfo[i]) == TRUE){
+				nowTrackBit |= (0x0001 << i);	// 有効/無効をBitFieldに変換
+			}
 		}
-		GFL_OVERLAY_Unload(FS_OVERLAY_ID(mcs_lib));
-		mcsExist = FALSE;
-	}
-}
-
-u32	GFL_MCS_SNDVIEWER_Main(HEAPID heapID)
-{
-	u32 dataSize = 0;
-	u32 result = 0;
-
-	if(mcsExist == FALSE){ return 0; }
-	if(MCS_CheckEnable() == FALSE){ return 0; }
-
-	MCS_Main();
-	// データ受信チェック
-	dataSize = MCS_CheckRead();
-
-	if(dataSize != 0){
-		GFL_MCS_SNDVIEWER_HEADER* dataHeader;
-
-		//受信処理
-		dataHeader = GFL_HEAP_AllocMemory(GetHeapLowID(heapID), dataSize);
-		MCS_Read(dataHeader, dataSize);
-
-		//受信コマンド処理
-		switch(dataHeader->ID){
-		case GFL_MCS_SNDVIEWER_ID:
-			result = MCS_Sound(dataHeader->command, &dataHeader->param);
-			break;
+		// 送信判定
+		if(nowSoundNo != soundNo){
+			// 曲が変化した場合リセットコマンド転送
+			u32 param[PNUM_COMM_PANEL_RESET] = {0};
+			MCS_Sound_Send(COMM_PANEL_RESET, param);
+			soundNo = nowSoundNo;
 		}
-		GFL_HEAP_FreeMemory(dataHeader);
+		// 現在のトラック状態を取得
+		if(nowTrackBit != trackActiveBit){
+			// 差があった場合、現在のトラック状態を送信
+			u32 param[PNUM_COMM_SET_TRACKST];
+			param[0] = nowTrackBit;
+			MCS_Sound_Send(COMM_SET_TRACKST, param);
+			trackActiveBit = nowTrackBit;
+		}
+		// 受信判定
+		if(GFL_MCS_Read(mcsLinkIdx, readBuf, 0x80) == TRUE){
+			GFL_MCS_SNDVIEWER_HEADER* dataHeader = (GFL_MCS_SNDVIEWER_HEADER*)readBuf;
+			OS_Printf("ID(%x), comm(%x), param(%x)\n",
+									dataHeader->ID, dataHeader->command, dataHeader->param);
+			//受信コマンド処理
+			switch(dataHeader->ID){
+			case GFL_MCS_SNDVIEWER_ID:
+				MCS_Sound_Recv(dataHeader->command, &dataHeader->param);
+				break;
+			}
+			GFL_STD_MemClear(readBuf, 0x80);
+		}
 	}
-	return result;
 }
 
 //============================================================================================
@@ -89,42 +94,34 @@ u32	GFL_MCS_SNDVIEWER_Main(HEAPID heapID)
  *
  */
 //============================================================================================
-void MCS_Sound_Send(u32 comm, u32* param, HEAPID heapID)
+static void MCS_Sound_Send(u32 comm, u32* param)
 {
-	if(mcsExist == FALSE){ return; }
-	if(MCS_CheckEnable() == FALSE){ return; }
-	{
-		GFL_MCS_SNDVIEWER_HEADER* dataHeader;
-		u32 paramNum;
-		u32	size;
-		int i;
+	GFL_MCS_SNDVIEWER_HEADER* dataHeader = (GFL_MCS_SNDVIEWER_HEADER*)writeBuf;
+	u32 paramNum;
+	u32	size;
+	int i;
 
-		switch(comm){
-		default:
-			return;
+	switch(comm){
+	default:
+		return;
 
-		case COMM_PANEL_RESET:
-			paramNum = PNUM_COMM_PANEL_RESET;
-			break;
-		case COMM_SET_TRACKST:
-			paramNum = PNUM_COMM_SET_TRACKST;
-			break;
-		}
-
-		size = sizeof(GFL_MCS_SNDVIEWER_HEADER) + sizeof(DWORD)*(paramNum-1);
-		dataHeader = GFL_HEAP_AllocMemory(GetHeapLowID(heapID), size);
-
-		dataHeader->ID = GFL_MCS_SNDVIEWER_ID;
-		dataHeader->command = comm;
-		for(i=0; i<paramNum; i++){ (&dataHeader->param)[i] = param[i]; }
-
-		MCS_Write(0, dataHeader, size);
-
-		GFL_HEAP_FreeMemory(dataHeader);
+	case COMM_PANEL_RESET:
+		paramNum = PNUM_COMM_PANEL_RESET;
+		break;
+	case COMM_SET_TRACKST:
+		paramNum = PNUM_COMM_SET_TRACKST;
+		break;
 	}
+	size = sizeof(GFL_MCS_SNDVIEWER_HEADER) + sizeof(DWORD)*(paramNum-1);
+
+	dataHeader->ID = GFL_MCS_SNDVIEWER_ID;
+	dataHeader->command = comm;
+	for(i=0; i<paramNum; i++){ (&dataHeader->param)[i] = param[i]; }
+
+	GFL_MCS_Write(mcsLinkIdx, writeBuf, size);
 }
 
-static u32 MCS_Sound(u32 comm, u32* param)
+static void MCS_Sound_Recv(u32 comm, u32* param)
 {
 	int val;
 	u16 trackBit;
@@ -188,8 +185,16 @@ static u32 MCS_Sound(u32 comm, u32* param)
 		break;
 
 	case COMM_CONNECT:
-		return 1;	// 特殊外部処理
+		break;
+
+	case COMM_DISCONNECT:
+		if(mcsLinkIdx != GFL_MCS_LINKIDX_INVALID){
+			// 切断されたのでリンク情報リセット 
+			GFL_MCS_Annul( mcsLinkIdx );
+			mcsLinkIdx = GFL_MCS_LINKIDX_INVALID;
+		}
+		break;
 	}
-	return 0;
 }
 
+#endif

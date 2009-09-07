@@ -27,12 +27,9 @@
 #include "sound/pm_wb_voice.h"
 
 #include "sound/snd_viewer.h"
-#include "sound/snd_viewer_mcs.h"
 
 #include "arc/soundtest.naix"
 
-#define DS_MCS_SRC
-#include "sound/snd_viewer_mcs_comm.h"
 //============================================================================================
 /**
  *
@@ -550,10 +547,12 @@ static void numberDec(SOUNDTEST_WORK* sw, int idx, int min );
 static void setSelectName(SOUNDTEST_WORK* sw);
 static void writeButton(SOUNDTEST_WORK* sw, u8 x, u8 y, BOOL flag );
 
+#if 0//#ifdef PM_DEBUG
 static u32	mcsControl(HEAPID heapID);
 static void mcsControlEnd(void);
 static void mcsControlReset(HEAPID heapID);
 static void mcsControlSetTrackSt(HEAPID heapID, u32 trackSt);
+#endif
 //------------------------------------------------------------------
 /**
  *
@@ -590,6 +589,7 @@ static BOOL	SoundTest(SOUNDTEST_WORK* sw)
 		break;
 
 	case 1:
+#if 0//#ifdef PM_DEBUG
 		{
 			u32 result = mcsControl(sw->heapID);
 			switch(result){
@@ -600,6 +600,7 @@ static BOOL	SoundTest(SOUNDTEST_WORK* sw)
 				break;
 			}
 		}
+#endif
 		{
 			//soundStatusƒRƒ“ƒgƒ[ƒ‹Ý’è
 			u16 flag;
@@ -614,7 +615,9 @@ static BOOL	SoundTest(SOUNDTEST_WORK* sw)
 			u16 trackBit = GFL_SNDVIEWER_GetTrackSt(sw->gflSndViewer);
 			if(sw->trackBit != trackBit){
 				sw->trackBit = trackBit;
+#if 0//#ifdef PM_DEBUG
 				mcsControlSetTrackSt(sw->heapID, sw->trackBit);
+#endif
 			}
 		}
 
@@ -627,7 +630,9 @@ static BOOL	SoundTest(SOUNDTEST_WORK* sw)
 		break;
 
 	case 2:
+#if 0//#ifdef PM_DEBUG
 		mcsControlEnd();
+#endif
 		RemoveSoundTestSys(sw);
 		return FALSE;
 	}
@@ -870,7 +875,9 @@ static BOOL checkTouchPanelEventTrg(SOUNDTEST_WORK* sw)
 			PMSND_PauseBGM(FALSE);
 			sw->bgmPauseSw = FALSE;
 		}
+#if 0//#ifdef PM_DEBUG
 		mcsControlReset(sw->heapID);
+#endif
 		break;
 
 	case SNDTEST_TPEV_BGM_STOP:
@@ -1169,6 +1176,7 @@ static void printNo(SOUNDTEST_WORK* sw, int idx, u32 numberSize )
  *
  */
 //============================================================================================
+#if 0//#ifdef PM_DEBUG
 static u32 mcsControl(HEAPID heapID)
 {
 	if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_Y ){
@@ -1198,4 +1206,4 @@ static void mcsControlSetTrackSt(HEAPID heapID, u32 trackSt)
 
 	MCS_Sound_Send(COMM_SET_TRACKST, param, heapID);
 }
-
+#endif

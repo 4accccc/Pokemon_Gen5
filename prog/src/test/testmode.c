@@ -26,6 +26,7 @@
 #include "infowin/infowin.h"
 #include "net_app/union/union_beacon_tool.h"
 
+#include "debug/gf_mcs.h"
 //======================================================================
 //	define
 //======================================================================
@@ -175,6 +176,7 @@ static BOOL TESTMODE_ITEM_ChangeMusicalMenu( TESTMODE_WORK *work , const int idx
 
 static BOOL TESTMODE_ITEM_SelectFuncSelectName( TESTMODE_WORK *work , const int idx );
 
+static BOOL TESTMODE_ITEM_ConnectMCS( TESTMODE_WORK *work , const int idx );
 //------------------------------------------------------------------------
 /*
  *	QUICKSTART -> STARTボタン一発で任意のメニューを起動するための関数設定
@@ -222,6 +224,7 @@ static TESTMODE_MENU_LIST topMenu[] =
 	{L"セーブ破かい"		,TESTMODE_ITEM_SelectFuncSave },
 	{L"SOUND"               ,TESTMODE_ITEM_SelectFuncSound },
 	{L"ミュージカル"		,TESTMODE_ITEM_ChangeMusicalMenu },
+	{L"MCS常駐接続"		,TESTMODE_ITEM_ConnectMCS },
 
 	//個人
 	{L"わたなべ　てつや"	,TESTMODE_ITEM_SelectFuncWatanabe },
@@ -929,6 +932,15 @@ static BOOL TESTMODE_ITEM_SelectFuncSound( TESTMODE_WORK *work , const int idx )
 	TESTMODE_COMMAND_ChangeProc(work,FS_OVERLAY_ID(sound_debug), &SoundTest2ProcData, NULL);
 	return TRUE;
 }
+
+//MCS接続
+extern void	PM_MCS_EnableMcsRecv( void );
+static BOOL TESTMODE_ITEM_ConnectMCS( TESTMODE_WORK *work , const int idx )
+{
+	GFL_MCS_Open();
+	return TRUE;
+}
+
 
 static BOOL TESTMODE_ITEM_SelectFuncKagaya( TESTMODE_WORK *work , const int idx )
 {

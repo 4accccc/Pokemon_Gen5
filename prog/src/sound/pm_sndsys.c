@@ -187,20 +187,9 @@ void	PMSND_Main( void )
 	PMSND_SystemFadeBGM();
 
 	NNS_SndMain();
-
-#if 0	// 現状、常に呼び出す必要もなさそうなので削除
 	// サウンドドライバ情報更新
 	NNS_SndUpdateDriverInfo();
-	{
-		NNSSndHandle* pBgmHandle = SOUNDMAN_GetHierarchyPlayerSndHandle();
-		int i;
 
-		NNS_SndPlayerReadDriverPlayerInfo(pBgmHandle, &bgmPlayerInfo.playerInfo);
-		for( i=0; i<16; i++ ){
-			NNS_SndPlayerReadDriverTrackInfo( pBgmHandle, i, &bgmPlayerInfo.trackInfo[i]);
-		}
-	}
-#endif
 	if( bgmFadeCounter ){ bgmFadeCounter--; }
 }
 

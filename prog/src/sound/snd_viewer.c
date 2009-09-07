@@ -10,6 +10,7 @@
 #include "arc_def.h"
 
 #include "sound/snd_viewer.h"
+
 //============================================================================================
 /**
  *
@@ -124,6 +125,8 @@ struct _GFL_SNDVIEWER {
 	SWITCH_CONTROL				swControl;
 	GFL_UI_TP_HITTBL			eventSwitchTable[SWITCH_MAX+1];
 
+	u16										trackActiveBit;
+
 	void*									volumeSwScrnPattern;
 	u16										scrnBuf[32*32];
 };
@@ -165,7 +168,6 @@ GFL_SNDVIEWER*	GFL_SNDVIEWER_Create( const GFL_SNDVIEWER_SETUP* setup, HEAPID he
 
 	gflSndViewer->heapID = heapID;
 	gflSndViewer->setup = *setup;
-	gflSndViewer->reverb = FALSE;
 
 	gflSndViewer->seq = 0;
 	{
@@ -181,6 +183,7 @@ GFL_SNDVIEWER*	GFL_SNDVIEWER_Create( const GFL_SNDVIEWER_SETUP* setup, HEAPID he
 	gflSndViewer->soundNo = 0;
 	gflSndViewer->playerNoIdx = 0;
 	gflSndViewer->reverb = FALSE;
+	gflSndViewer->trackActiveBit = 0;
 
 	for( i=0; i<PLAYER_STACK_NUM; i++ ){ initPlayerStatus( gflSndViewer, i ); }
 	initSwitchControl( gflSndViewer );
@@ -603,7 +606,7 @@ static BOOL SNDVIEWER_SetInfo( GFL_SNDVIEWER* gflSndViewer )
 	int i;
 
 	// サウンドドライバ情報更新
-	NNS_SndUpdateDriverInfo();	//pm_sndsys内に常駐された場合は削除すること（1_call/1_frame）
+	//NNS_SndUpdateDriverInfo();	//pm_sndsys内に常駐された場合は削除すること（1_call/1_frame）
 
 	// 更新されたチャンネル情報取得
 	for( i=0; i<CHANNEL_NUM; i++ ){
@@ -784,10 +787,10 @@ static BOOL checkTouchPanelEvent( GFL_SNDVIEWER* gflSndViewer )
 	if( tblPos != GFL_UI_TP_HIT_NONE ){
 		if( tblPos == TOUCH_EXIT ){
 			if( gflSndViewer->setup.controlFlag & GFL_SNDVIEWER_CONTROL_EXIT ){
-				return FALSE;	// 終了
+				// 終了
+				return FALSE;
 			}
-		}
-		if((tblPos >= TOUCH_BUTTON_TR1)&&(tblPos <= TOUCH_BUTTON_TR16)){
+		} else if((tblPos >= TOUCH_BUTTON_TR1)&&(tblPos <= TOUCH_BUTTON_TR16)){
 			SNDVIEWER_SetTrackStatus( gflSndViewer, tblPos - TOUCH_BUTTON_TR1 );
 		}
 		return TRUE;
