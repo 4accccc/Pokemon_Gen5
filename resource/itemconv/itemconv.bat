@@ -5,6 +5,7 @@ del itemname.gmm
 del iteminfo.gmm
 del itemdata /q
 del itemtype.dat
+del itempocket_def.h
 del item_data.naix
 del item_data.narc
 
@@ -24,4 +25,4 @@ move itemname.gmm %2resource/message/src
 move iteminfo.gmm %2resource/message/src
 move itemtype.dat %1src/item
 move itemuse_def.h %1include/item
-move itempocket_def.h %1include/item
+cp itempocket_def.h %1include/item
