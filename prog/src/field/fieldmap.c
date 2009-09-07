@@ -697,7 +697,6 @@ static MAINSEQ_RESULT mainSeqFunc_update_top(GAMESYS_WORK *gsys, FIELDMAP_WORK *
   FIELD_SUBSCREEN_Main(fieldWork->fieldSubscreenWork);
   FIELD_DEBUG_UpdateProc( fieldWork->debugWork );
 
-	fldmap_G3D_Control( fieldWork );
   
   if( fieldWork->fldMMdlSys != NULL ){
     MMDLSYS_UpdateProc( fieldWork->fldMMdlSys );
@@ -720,6 +719,9 @@ static MAINSEQ_RESULT mainSeqFunc_update_top(GAMESYS_WORK *gsys, FIELDMAP_WORK *
   if( fieldWork->target_now_pos_p != NULL ){
     fieldWork->now_pos = *fieldWork->target_now_pos_p;
   }
+
+  // Visual‚É‚©‚©‚í‚éˆ—
+	fldmap_G3D_Control( fieldWork );
 
   return MAINSEQ_RESULT_CONTINUE;
 }
