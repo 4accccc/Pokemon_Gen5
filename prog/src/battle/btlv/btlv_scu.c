@@ -156,7 +156,6 @@ static BOOL btlin_trainer_single( int* seq, void* wk_adrs );
 static BOOL btlin_trainer_triple( int* seq, void* wk_adrs );
 static void tokwinRenewTask( GFL_TCBL* tcbl, void* wk_adrs );
 static void taskDamageEffect( GFL_TCBL* tcbl, void* wk_adrs );
-static void taskDeadEffect( GFL_TCBL* tcbl, void* wk_adrs );
 static void taskPokeOutAct( GFL_TCBL* tcbl, void* wk_adrs );
 static void taskPokeInEffect( GFL_TCBL* tcbl, void* wk_adrs );
 static void taskHPGauge( GFL_TCBL* tcbl, void* wk_adrs );
@@ -173,9 +172,6 @@ static void statwin_cleanup( STATUS_WIN* stwin );
 static void statwin_reset_data( STATUS_WIN* stwin );
 static void statwin_disp_start( STATUS_WIN* stwin );
 static void statwin_disp( STATUS_WIN* stwin );
-//static void statwin_hide( STATUS_WIN* stwin );
-static void statwin_hide( u8 pos );
-static BOOL statwin_erase( STATUS_WIN* stwin, u8 line );
 static void statwin_update( STATUS_WIN* stwin, u16 hp, u8 col );
 static void tokwin_setup( TOK_WIN* tokwin, BTLV_SCU* wk, BtlPokePos pos );
 static void tokwin_update_cgx( TOK_WIN* tokwin );
@@ -1333,19 +1329,6 @@ static void taskDamageEffect( GFL_TCBL* tcbl, void* wk_adrs )
   }
 }
 
-//------------------------------------
-typedef struct {
-
-  STATUS_WIN*  statWin;
-  u16     timer;
-  u16     line;
-  u8*     endFlag;
-  u8      pos;
-
-}DEAD_EFF_WORK;
-
-
-
 //=============================================================================================
 /**
  * ポケモンひんしアクション開始
@@ -1357,18 +1340,7 @@ typedef struct {
 //=============================================================================================
 void BTLV_SCU_StartDeadAct( BTLV_SCU* wk, BtlPokePos pos )
 {
-  GFL_TCBL* tcbl = GFL_TCBL_Create( wk->tcbl, taskDeadEffect, sizeof(DEAD_EFF_WORK), BTLV_TASKPRI_DAMAGE_EFFECT );
-  DEAD_EFF_WORK* twk = GFL_TCBL_GetWork( tcbl );
-
-  twk->statWin = &wk->statusWin[pos];
-  twk->endFlag = &wk->taskCounter[TASKTYPE_DEFAULT];
-  twk->timer = 0;
-  twk->line = 0;
-  twk->pos = BTL_MAIN_BtlPosToViewPos(wk->mainModule, pos);
-
-  *(twk->endFlag) = FALSE;
-
-  //soga
+  BTLV_EFFECT_DelGauge( BTL_MAIN_BtlPosToViewPos(wk->mainModule, pos) );
   BTLV_EFFECT_DelPokemon( BTL_MAIN_BtlPosToViewPos(wk->mainModule, pos) );
 
 }
@@ -1383,25 +1355,10 @@ void BTLV_SCU_StartDeadAct( BTLV_SCU* wk, BtlPokePos pos )
 //=============================================================================================
 BOOL BTLV_SCU_WaitDeadAct( BTLV_SCU* wk )
 {
-  return (wk->taskCounter[TASKTYPE_DEFAULT]);
+  //瀕死エフェクトが入ったらそれ待ちをいれる
+  return TRUE;
 }
 
-static void taskDeadEffect( GFL_TCBL* tcbl, void* wk_adrs )
-{
-  DEAD_EFF_WORK* wk = wk_adrs;
-
-  if( ++(wk->timer) > 4 )
-  {
-    wk->timer = 0;
-    wk->line++;
-    //if( statwin_erase(wk->statWin, wk->line) )
-    if( statwin_erase(wk->statWin, wk->pos) )
-    {
-      *(wk->endFlag) = TRUE;
-      GFL_TCBL_Delete( tcbl );
-    }
-  }
-}
 //--------------------------------------------------------
 // ポケモン退場アクション
 //--------------------------------------------------------
@@ -1439,8 +1396,7 @@ static void taskPokeOutAct( GFL_TCBL* tcbl, void* wk_adrs )
 
   switch( wk->seq ){
   case 0:
-    //statwin_hide( wk->statWin );
-    statwin_hide( wk->viewpos );
+    BTLV_EFFECT_DelGauge( wk->viewpos );
     BTLV_EFFECT_DelPokemon( wk->viewpos );
     wk->seq++;
     break;
@@ -1891,17 +1847,6 @@ static void statwin_disp( STATUS_WIN* stwin )
   GFL_BG_LoadScreenReq( GFL_BMPWIN_GetFrame(stwin->win) );
 }
 
-//static void statwin_hide( STATUS_WIN* stwin )
-static void statwin_hide( u8 pos )
-{
-#ifdef BMP_GAUGE
-  GFL_BMPWIN_ClearScreen( stwin->win );
-  GFL_BG_LoadScreenReq( GFL_BMPWIN_GetFrame(stwin->win) );
-#else
-  BTLV_EFFECT_DelGauge( pos );
-#endif
-}
-
 // １行ずつ消す。全部消えたらTRUE
 static BOOL statwin_erase( STATUS_WIN* stwin, u8 line )
 {
@@ -1925,7 +1870,6 @@ static BOOL statwin_erase( STATUS_WIN* stwin, u8 line )
   return line == height;
 #else
 //  u8 viewPos = BTL_MAIN_BtlPosToViewPos( stwin->parentWk->mainModule, stwin->pokePos );
-  BTLV_EFFECT_DelGauge( line );
 
   return TRUE;
 #endif
