@@ -27,6 +27,7 @@
 #include "item\itemsym.h"
 #include "net\network_define.h"
 #include "battle\battle.h"
+#include "gamesystem\game_data.h"
 
 // local includes ---------------------
 #include "msg\msg_d_taya.h"
@@ -94,6 +95,7 @@ typedef struct {
   u8          tmpModuleExistFlag;
 
   V_MENU_CTRL   menuCtrl;
+  GAMEDATA*     gameData;
 
   void*     arignDmy;
   u8        genericWork[ GENERIC_WORK_SIZE ];
@@ -205,6 +207,8 @@ static GFL_PROC_RESULT DebugTayaMainProcInit( GFL_PROC * proc, int * seq, void *
   wk->subProc = NULL;
   wk->testPoke = PP_Create( MONSNO_POTTYAMA, 20, 3594, HEAPID_CORE );
   wk->testPokeEditFlag = FALSE;
+
+  wk->gameData = GAMEDATA_Create( HEAPID_CORE );
 
   return GFL_PROC_RES_FINISH;
 }
@@ -336,7 +340,7 @@ static void createTemporaryModules( MAIN_WORK* wk )
 
   GFL_HEAP_CheckHeapSafe( wk->heapID );
   wk->fontHandle = GFL_FONT_Create( ARCID_FONT,
-    NARC_font_small_nftr,
+    NARC_font_small_gftr,
     GFL_FONT_LOADTYPE_FILE, FALSE, wk->heapID );
 
   wk->printQue = PRINTSYS_QUE_Create( wk->heapID );
@@ -880,7 +884,7 @@ static BOOL SUBPROC_GoBattle( GFL_PROC* proc, int* seq, void* pwk, void* mywk )
       BATTLE_SETUP_PARAM* para = getGenericWork( wk, sizeof(BATTLE_SETUP_PARAM) );
 
       para->engine = BTL_ENGINE_ALONE;
-      para->rule = BTL_RULE_SINGLE;
+      para->rule = BTL_RULE_TRIPLE;
       if( GFL_UI_KEY_GetCont() & PAD_BUTTON_L )
       {
         para->rule = BTL_RULE_DOUBLE;
@@ -896,17 +900,14 @@ static BOOL SUBPROC_GoBattle( GFL_PROC* proc, int* seq, void* pwk, void* mywk )
       para->partyEnemy1 = PokeParty_AllocPartyWork( HEAPID_CORE );  ///< 1vs1Žž‚Ì“GAI, 2vs2Žž‚Ì‚P”Ô–Ú“GAI—p
       para->partyPartner = NULL;  ///< 2vs2Žž‚Ì–¡•ûAIi•s—v‚È‚çnullj
       para->partyEnemy2 = NULL;   ///< 2vs2Žž‚Ì‚Q”Ô–Ú“GAI—pi•s—v‚È‚çnullj
-      para->statusPlayer = SaveData_GetMyStatus( SaveControl_GetPointer() );
+      para->statusPlayer = GAMEDATA_GetMyStatus( wk->gameData );
+      para->itemData = GAMEDATA_GetMyItem( wk->gameData );
 
     #ifdef DEBUG_ONLY_FOR_taya
       setup_party( HEAPID_CORE, para->partyPlayer, MONSNO_NOZUPASU,   MONSNO_PIKATYUU, MONSNO_GURAADON, MONSNO_KAIOOGA, 0 );
       setup_party( HEAPID_CORE, para->partyEnemy1, MONSNO_MANYUURA,  MONSNO_AABOKKU, MONSNO_YADOKINGU, MONSNO_REKKUUZA, 0 );
       {
         POKEMON_PARAM* pp = PokeParty_GetMemberPointer( para->partyEnemy1, 0 );
-        PP_SetWazaPos( pp, WAZANO_HANERU, 0 );
-        PP_SetWazaPos( pp, WAZANO_NULL, 1 );
-        PP_SetWazaPos( pp, WAZANO_NULL, 2 );
-        PP_SetWazaPos( pp, WAZANO_NULL, 3 );
         PP_Put( pp, ID_PARA_item, ITEM_OUZYANOSIRUSI );
 
         pp = PokeParty_GetMemberPointer( para->partyPlayer, 0 );
