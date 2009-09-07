@@ -88,6 +88,9 @@ class NCG_STRUCT
 	def GetWidth
 		@CharData.CharWidth
 	end
+	def GetHeight
+		@CharData.CharHeight
+	end
 	def GetPalFileName
 		@LinkData.PalFileName
 	end
