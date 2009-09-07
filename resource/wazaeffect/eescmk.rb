@@ -462,7 +462,7 @@ end
             end
 						file_list.size.times {|num|
 							file_name = File::basename( file_list[ num ] )
-							if file_name[ 0..5 ] == file_dialog[ 0..5 ]
+							if file_name[ 0..file_dialog.length ] == file_dialog
 								bin_list_tmp << file_list[ num ]
 							end
 						}
@@ -476,7 +476,7 @@ end
             end
 						file_list.size.times {|num|
 							file_name = File::basename( file_list[ num ] )
-							if file_name[ 0..5 ] == file_dialog[ 0..5 ]
+							if file_name[ 0..file_dialog.length ] == file_dialog
 								bin_list_tmp << file_list[ num ]
 							end
 						}
@@ -490,7 +490,7 @@ end
             end
 						file_list.size.times {|num|
 							file_name = File::basename( file_list[ num ] )
-							if file_name[ 0..5 ] == file_dialog[ 0..5 ]
+							if file_name[ 0..file_dialog.length ] == file_dialog
 								bin_list_tmp << file_list[ num ]
 							end
 						}
@@ -541,6 +541,7 @@ end
 		}
 		#ファイルデータ書き出し
 		bin_list.size.times {|num|
+      p bin_list[ num ]
 			fp_r = open( bin_list[ num ], "rb" )
 			file.write fp_r.read
 			padding[ num ].times do
