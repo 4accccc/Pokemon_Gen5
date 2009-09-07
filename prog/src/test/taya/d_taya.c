@@ -208,8 +208,6 @@ static GFL_PROC_RESULT DebugTayaMainProcInit( GFL_PROC * proc, int * seq, void *
   wk->testPoke = PP_Create( MONSNO_POTTYAMA, 20, 3594, HEAPID_CORE );
   wk->testPokeEditFlag = FALSE;
 
-  wk->gameData = GAMEDATA_Create( HEAPID_CORE );
-
   return GFL_PROC_RES_FINISH;
 }
 
@@ -347,6 +345,7 @@ static void createTemporaryModules( MAIN_WORK* wk )
   PRINT_UTIL_Setup( wk->printUtil, wk->win );
 
   wk->tmpModuleExistFlag = TRUE;
+  wk->gameData = GAMEDATA_Create( HEAPID_CORE );
 
 }
 
@@ -362,6 +361,8 @@ static void deleteTemporaryModules( MAIN_WORK* wk )
   GFL_BMPWIN_Delete( wk->win );
 
   wk->tmpModuleExistFlag = FALSE;
+
+  GAMEDATA_Delete( wk->gameData );
 
 }
 
@@ -887,7 +888,7 @@ static BOOL SUBPROC_GoBattle( GFL_PROC* proc, int* seq, void* pwk, void* mywk )
       para->rule = BTL_RULE_TRIPLE;
       if( GFL_UI_KEY_GetCont() & PAD_BUTTON_L )
       {
-        para->rule = BTL_RULE_DOUBLE;
+        para->rule = BTL_RULE_SINGLE;
       }
       para->competitor = BTL_COMPETITOR_TRAINER;
       para->trID = 2;
