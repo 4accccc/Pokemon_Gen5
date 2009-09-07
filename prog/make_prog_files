@@ -163,7 +163,7 @@ SRCS  +=    $(SOUNDSRC) \
         gamesystem/iss_dungeon_sys.c \
         gamesystem/iss_sys.c \
         field/field_bgm_control.c \
-        system/ica_data.c
+        system/ica_anime.c
 
 
 #================================================

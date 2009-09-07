@@ -1,6 +1,6 @@
 #include <gflib.h>
 #include "debug_obata_demo_test_setup.h"
-#include "system/ica_data.h"
+#include "system/ica_anime.h"
 #include "system/main.h"
 #include "arc/arc_def.h"
 #include "arc/debug_obata.naix"
@@ -62,7 +62,7 @@ typedef struct
   GFL_G3D_UTIL* g3dUtil;
   u16 unitIndex[ SETUP_INDEX_MAX ];
 
-  ICA_DATA* icaData;
+  ICA_ANIME* icaAnime;
   GFL_G3D_CAMERA* camera;
 }
 PROC_WORK;
@@ -143,7 +143,7 @@ static GFL_PROC_RESULT DEBUG_OBATA_MainProcFunc_End( GFL_PROC* proc, int* seq, v
   Finalize( work );
 
 	// ワークを破棄
-  ICA_DATA_Delete( work->icaData );
+  ICA_ANIME_Delete( work->icaAnime );
 	GFL_PROC_FreeWork( proc );
 
   DEBUG_OBATA_DEMO_TEST_Exit();
@@ -209,7 +209,7 @@ static void Initialize( PROC_WORK* work )
   }
 
   // icaデータをロード
-  work->icaData = ICA_DATA_Create( 
+  work->icaAnime = ICA_ANIME_Create( 
       HEAPID_OBATA_DEBUG, ARCID_OBATA_DEBUG, NARC_debug_obata_ica_test_data2_bin );
 
   // カメラ作成
@@ -270,7 +270,7 @@ static BOOL Main( PROC_WORK* work )
 static void Draw( PROC_WORK* work )
 {
   static fx32 frame = 0;
-  static fx32 anime_speed = FX32_ONE >> 1;
+  static fx32 anime_speed = FX32_ONE;
   GFL_G3D_OBJSTATUS status;
 
   VEC_Set( &status.trans, 0, 0, 0 );
@@ -278,7 +278,7 @@ static void Draw( PROC_WORK* work )
   MTX_Identity33( &status.rotate );
 
   // カメラ更新
-  ICA_DATA_SetCameraStatus( work->icaData, work->camera, frame );
+  ICA_ANIME_SetCameraStatus( work->icaAnime, work->camera );
   GFL_G3D_CAMERA_Switching( work->camera );
 
   // TEMP: カメラ設定
@@ -325,4 +325,5 @@ static void Draw( PROC_WORK* work )
   GFL_G3D_DRAW_End();
 
   frame += anime_speed;
+  ICA_ANIME_IncAnimeFrame( work->icaAnime, anime_speed );
 }

@@ -50,36 +50,47 @@ void ICA_DATA_Delete( ICA_DATA* p_data );
 
 //---------------------------------------------------------------------------
 /**
- * @brief 指定フレームにおける位置データを取得する
+ * @brief 指定フレームにおける平行移動データを取得する
  *
- * @param p_anime   アニメーションデータ
+ * @param p_data    アニメーションデータ
  * @param p_vec     取得した座標の格納先
  * @param now_frame 現在のフレーム数
  */
 //---------------------------------------------------------------------------
-void ICA_DATA_GetPos( ICA_DATA* p_anime, VecFx32* p_vec, fx32 now_frame );
+void ICA_DATA_GetTranslate( ICA_DATA* p_data, VecFx32* p_vec, fx32 now_frame );
+
+//---------------------------------------------------------------------------
+/**
+ * @brief 指定フレームにおける回転データを取得する
+ *
+ * @param p_data     アニメーションデータ
+ * @param p_vec      取得した回転の格納先
+ * @param now_frame  現在のフレーム数
+ */
+//---------------------------------------------------------------------------
+void ICA_DATA_GetRotate( ICA_DATA* p_data, VecFx32* p_vec, fx32 now_frame );
 
 //---------------------------------------------------------------------------
 /**
  * @brief 指定フレームにおける向きデータを取得する
  *
- * @param p_anime        アニメーションデータ
+ * @param p_data         アニメーションデータ
  * @param p_vec_forward  取得した前方ベクトルの格納先
  * @param p_vec_upward   取得した上方ベクトルの格納先
  * @param now_frame      現在のフレーム数
  */
 //---------------------------------------------------------------------------
 void ICA_DATA_GetDir( 
-    ICA_DATA* p_anime, VecFx32* p_vec_forward, VecFx32* p_vec_upward, fx32 now_frame );
+    ICA_DATA* p_data, VecFx32* p_vec_forward, VecFx32* p_vec_upward, fx32 now_frame );
 
 //---------------------------------------------------------------------------
 /**
  * @brief カメラ座標・ターゲット座標を指定フレームの状態に設定する
  *
- * @param p_anime   アニメーションデータ
+ * @param p_data    アニメーションデータ
  * @param p_camera  設定対象のカメラ
  * @param now_frame 現在のフレーム数
  */
 //---------------------------------------------------------------------------
 void ICA_DATA_SetCameraStatus( 
-    ICA_DATA* p_anime, GFL_G3D_CAMERA* p_camera, fx32 now_frame );
+    ICA_DATA* p_data, GFL_G3D_CAMERA* p_camera, fx32 now_frame );
