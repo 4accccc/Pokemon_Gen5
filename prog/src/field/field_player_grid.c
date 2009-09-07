@@ -51,6 +51,24 @@ typedef enum
   PLAYER_SET_JUMP,
 }PLAYER_SET;
 
+//--------------------------------------------------------------
+/// PLAYER_MOVEHITBIT
+//--------------------------------------------------------------
+typedef enum
+{
+  PLAYER_MOVEHITBIT_NONE   =        0, ///<障害物無し
+  PLAYER_MOVEHITBIT_ATTR   =   (1<<0), ///<アトリビュートヒット
+  PLAYER_MOVEHITBIT_OBJ    =   (1<<1), ///<OBJ同士の衝突
+  PLAYER_MOVEHITBIT_JUMP   =   (1<<2), ///<ジャンプアトリビュートヒット
+  PLAYER_MOVEHITBIT_EXIT   =   (1<<3), ///<出入り口ヒット
+  PLAYER_MOVEHITBIT_WATER  =   (1<<4), ///<水アトリビュートヒット
+#if 0
+  JIKI_MOVE_HIT_BIT_TAKE_OFF	(1<<4)					///<ジャンプ台ヒット
+  JIKI_MOVE_HIT_BIT_BRIDGEHV	(1<<6)					///<一本橋ヒット
+  JIKI_MOVE_HIT_BIT_JUMP_3G	(1<<7)					///<3Gジャンプ
+#endif
+}PLAYER_MOVEHITBIT;
+
 //======================================================================
 //	struct
 //======================================================================
@@ -179,6 +197,9 @@ static void gjikiSwim_SetMove_Turn(
 static void gjikiSwim_SetMove_Hitch(
 	FIELD_PLAYER_GRID *gjiki, MMDL *mmdl,
 	u32 key_trg, u32 key_cont, u16 dir, BOOL debug_flag );
+
+static u32 gjiki_HitCheckMove(
+    FIELD_PLAYER_GRID *gjiki, MMDL *mmdl, u16 dir, MAPATTR *attr );
 
 //サウンド
 #if 0
@@ -440,6 +461,74 @@ static PLAYER_SET gjiki_CheckMoveStart_Walk(
 	}
 	
 	{
+    MAPATTR attr;
+		u32 hit = gjiki_HitCheckMove( gjiki, mmdl, dir, &attr );
+		
+		if( debug_flag == TRUE )
+    {
+			if( hit != MMDL_MOVEHITBIT_NON &&
+          !(hit&MMDL_MOVEHITBIT_OUTRANGE) )
+      {
+				hit = MMDL_MOVEHITBIT_NON;
+			}
+		}
+		
+    if( attr != MAPATTR_ERROR )
+    {
+      MAPATTR_VALUE val = MAPATTR_GetAttrValue( attr );
+      MAPATTR_FLAG flag = MAPATTR_GetAttrFlag( attr );
+      
+      if( (hit & MMDL_MOVEHITBIT_ATTR) )
+      {
+        u16 attr_dir = DIR_NOT;
+        
+        if( MAPATTR_VALUE_CheckJumpUp(val) ){
+          attr_dir = DIR_UP;
+        }else if( MAPATTR_VALUE_CheckJumpDown(val) ){
+          attr_dir = DIR_DOWN;
+        }else if( MAPATTR_VALUE_CheckumpLeft(val) ){
+          attr_dir = DIR_LEFT;
+        }else if( MAPATTR_VALUE_CheckJumpRight(val) ){
+          attr_dir = DIR_RIGHT;
+        }
+        
+        if( attr_dir != DIR_NOT && attr_dir == dir ){ //ジャンプ方向一致
+          return( PLAYER_SET_JUMP );
+        }
+      }
+      
+      if( hit == MMDL_MOVEHITBIT_NON )
+      {
+        if( (flag & MAPATTR_FLAGBIT_WATER) == 0 ){ //水地形
+          return( PLAYER_SET_WALK );
+        }
+        
+        if( debug_flag == TRUE ){ //デバッグ移動
+          return( PLAYER_SET_WALK );
+        }
+      }
+    }
+	}
+	
+	return( PLAYER_SET_HITCH );
+}
+
+#if 0
+static PLAYER_SET gjiki_CheckMoveStart_Walk(
+	FIELD_PLAYER_GRID *gjiki, MMDL *mmdl,
+	u32 key_trg, u32 key_cont, u16 dir, BOOL debug_flag )
+{
+	if( MMDL_CheckPossibleAcmd(mmdl) == FALSE ){
+		return( PLAYER_SET_NON );
+	}
+	
+	if( dir == DIR_NOT )
+  {
+		return( gjiki_CheckMoveStart_Stop(
+			gjiki,mmdl,key_trg,key_cont,dir,debug_flag) );
+	}
+	
+	{
 		u32 hit = MMDL_HitCheckMoveDir( mmdl, dir );
 		
 		if( debug_flag == TRUE )
@@ -492,6 +581,7 @@ static PLAYER_SET gjiki_CheckMoveStart_Walk(
 	
 	return( PLAYER_SET_HITCH );
 }
+#endif
 
 //--------------------------------------------------------------
 /**
@@ -872,6 +962,54 @@ static PLAYER_SET gjikiSwim_CheckMoveStart_Walk(
 	}
 	
 	{
+    MAPATTR attr;
+		u32 hit = gjiki_HitCheckMove( gjiki, mmdl, dir, &attr );
+		
+		if( debug_flag == TRUE )
+    {
+			if( hit != MMDL_MOVEHITBIT_NON &&
+          !(hit&MMDL_MOVEHITBIT_OUTRANGE) )
+      {
+				hit = MMDL_MOVEHITBIT_NON;
+			}
+		}
+		
+    if( attr != MAPATTR_ERROR )
+    {
+      MAPATTR_VALUE val = MAPATTR_GetAttrValue( attr );
+      MAPATTR_FLAG flag = MAPATTR_GetAttrFlag( attr );
+      
+      if( hit == MMDL_MOVEHITBIT_NON ){
+        if( (flag & MAPATTR_FLAGBIT_WATER) ){
+          return( PLAYER_SET_WALK );
+        }
+        
+        if( debug_flag == TRUE ){
+          return( PLAYER_SET_WALK );
+        }
+      }
+    }
+	}
+	
+	return( PLAYER_SET_HITCH );
+}
+
+#if 0
+static PLAYER_SET gjikiSwim_CheckMoveStart_Walk(
+	FIELD_PLAYER_GRID *gjiki, MMDL *mmdl,
+	u32 key_trg, u32 key_cont, u16 dir, BOOL debug_flag )
+{
+	if( MMDL_CheckPossibleAcmd(mmdl) == FALSE ){
+		return( PLAYER_SET_NON );
+	}
+	
+	if( dir == DIR_NOT )
+  {
+		return( gjikiSwim_CheckMoveStart_Stop(
+			gjiki,mmdl,key_trg,key_cont,dir,debug_flag) );
+	}
+	
+	{
 		u32 hit = MMDL_HitCheckMoveDir( mmdl, dir );
 		
 		if( debug_flag == TRUE )
@@ -913,6 +1051,7 @@ static PLAYER_SET gjikiSwim_CheckMoveStart_Walk(
 	
 	return( PLAYER_SET_HITCH );
 }
+#endif
 
 //--------------------------------------------------------------
 /**
@@ -1706,6 +1845,41 @@ static void (* const data_gjikiRequestProcTbl[FIELD_PLAYER_GRID_REQBIT_MAX])( FI
   gjikiReq_SetCycle, //FIELD_PLAYER_GRID_REQBIT_CYCLE
   gjikiReq_SetSwim, //FIELD_PLAYER_GRID_REQBIT_SWIM
 };
+
+//======================================================================
+//  移動チェック
+//======================================================================
+//--------------------------------------------------------------
+/**
+ * 自機移動チェック
+ * @param
+ * @retval
+ */
+//--------------------------------------------------------------
+static u32 gjiki_HitCheckMove(
+    FIELD_PLAYER_GRID *gjiki, MMDL *mmdl, u16 dir, MAPATTR *attr )
+{
+  u32 hit;
+  VecFx32 pos;
+  s16 gx = MMDL_GetGridPosX( mmdl );
+  s16 gy = MMDL_GetHeightGrid( mmdl );
+  s16 gz = MMDL_GetGridPosZ( mmdl );
+  PLAYER_MOVEHITBIT ret = PLAYER_MOVEHITBIT_NONE;
+  
+  gx += MMDL_TOOL_GetDirAddValueGridX( dir );
+  gz += MMDL_TOOL_GetDirAddValueGridZ( dir );
+  
+  hit = MMDL_HitCheckMoveCurrent( mmdl, gx, gy, gz, dir );
+  
+  MMDL_GetVectorPos( mmdl, &pos );
+  MMDL_TOOL_AddDirVector( dir, &pos, GRID_FX32 );
+  
+  if( MMDL_GetMapPosAttr(mmdl,&pos,attr) == FALSE ){
+    *attr = MAPATTR_ERROR;
+  }
+  
+  return( hit );
+}
 
 //======================================================================
 //	サウンド
