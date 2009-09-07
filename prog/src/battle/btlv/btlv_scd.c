@@ -182,7 +182,14 @@ BTLV_SCD*  BTLV_SCD_Create( const BTLV_CORE* vcore, const BTL_MAIN_MODULE* mainM
 
 void BTLV_SCD_Setup( BTLV_SCD* wk )
 {
-  wk->biw = BTLV_INPUT_Init( BTLV_INPUT_TYPE_SINGLE, wk->font, wk->heapID );
+  if( BTL_MAIN_GetRule( wk->mainModule ) == BTL_RULE_TRIPLE )
+  { 
+    wk->biw = BTLV_INPUT_Init( BTLV_INPUT_TYPE_TRIPLE, wk->font, wk->heapID );
+  }
+  else
+  { 
+    wk->biw = BTLV_INPUT_Init( BTLV_INPUT_TYPE_SINGLE, wk->font, wk->heapID );
+  }
 
   ///<obj
   GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_OBJ, VISIBLE_ON );
@@ -262,7 +269,6 @@ static BOOL spstack_call( BTLV_SCD* wk )
 //=============================================================================================
 void BTLV_SCD_CleanupUI( BTLV_SCD* wk )
 {
-//  Sub_TouchEndDelete( wk->bip, TRUE, TRUE );
   BTLV_INPUT_CreateScreen( wk->biw, BTLV_INPUT_SCRTYPE_STANDBY, NULL );
 }
 
@@ -578,13 +584,24 @@ enum {
   STW_BTNPOS_C_Y = STW_BTNPOS_A_Y,
 
 };
-static const GFL_UI_TP_HITTBL PokeSeleMenuTouchData[] = {
+static const GFL_UI_TP_HITTBL PokeSeleMenuTouch4Data[] = {
   //UP DOWN LEFT RIGHT
-  {0xb*8, 0x12*8, 0*8, 0xf*8},      //ターゲットA
-  {1*8, 0xa*8, 0x11*8, 255},    //ターゲットB
-  {0xb*8, 0x12*8, 0x11*8, 255},   //ターゲットC
-  {1*8, 0xa*8, 0*8, 0xf*8},     //ターゲットD
-  {0x12*8, 0x18*8, 0x16*8, 255},  //キャンセル
+  { 12 * 8, 15 * 8,  1 * 8, 15 * 8 }, //ターゲットA
+  {  4 * 8, 11 * 8, 17 * 8, 31 * 8 }, //ターゲットB
+  { 12 * 8, 15 * 8, 17 * 8, 31 * 8 }, //ターゲットC
+  {  4 * 8, 11 * 8,  1 * 8, 15 * 8 }, //ターゲットD
+  { 16 * 8, 24 * 8, 22 * 8, 32 * 8 }, //キャンセル
+  { GFL_UI_TP_HIT_END, 0, 0, 0 }
+};
+static const GFL_UI_TP_HITTBL PokeSeleMenuTouch6Data[] = {
+  //UP DOWN LEFT RIGHT
+  { 12 * 8, 15 * 8,  2 * 8, 10 * 8 }, //ターゲットA
+  {  5 * 8, 10 * 8, 22 * 8, 30 * 8 }, //ターゲットB
+  { 12 * 8, 15 * 8, 12 * 8, 20 * 8 }, //ターゲットC
+  {  5 * 8, 10 * 8, 12 * 8, 20 * 8 }, //ターゲットD
+  { 12 * 8, 15 * 8, 22 * 8, 30 * 8 }, //ターゲットE
+  {  5 * 8, 10 * 8,  2 * 8, 10 * 8 }, //ターゲットF
+  { 16 * 8, 24 * 8, 22 * 8, 32 * 8 }, //キャンセル
   { GFL_UI_TP_HIT_END, 0, 0, 0 }
 };
 // ↑描画位置から上記テーブルインデックスを引くためのテーブル
@@ -593,6 +610,8 @@ static const u8 STW_HitTblIndex[] = {
   BTLV_MCSS_POS_B,
   BTLV_MCSS_POS_C,
   BTLV_MCSS_POS_D,
+  BTLV_MCSS_POS_E,
+  BTLV_MCSS_POS_F,
 };
 
 /*
@@ -780,8 +799,6 @@ static BOOL selectTarget_init( int* seq, void* wk_adrs )
 {
   BTLV_SCD* wk = wk_adrs;
 
-//  Sub_TouchEndDelete( wk->bip, TRUE, TRUE );
-
   seltgt_init_setup_work( &wk->selTargetWork, wk );
   stw_draw( &wk->selTargetWork, wk );
   wk->selTargetDone = FALSE;
@@ -790,15 +807,16 @@ static BOOL selectTarget_init( int* seq, void* wk_adrs )
 static BOOL selectTarget_loop( int* seq, void* wk_adrs )
 {
   BTLV_SCD* wk = wk_adrs;
+  const GFL_UI_TP_HITTBL *touch_data = ( BTL_MAIN_GetRule( wk->mainModule ) == BTL_RULE_TRIPLE ) ? PokeSeleMenuTouch6Data :
+                                                                                                   PokeSeleMenuTouch4Data;
 
   switch( *seq ){
   case 0:
     {
-      int hit = BTLV_INPUT_CheckInput( wk->biw, PokeSeleMenuTouchData );
+      int hit = BTLV_INPUT_CheckInput( wk->biw, touch_data );
 //      int hit = GFL_UI_TP_HitTrg( PokeSeleMenuTouchData );
       if( hit != GFL_UI_TP_HIT_NONE )
       {
-//        Sub_TouchEndDelete( wk->bip, TRUE, TRUE );
         if( hit < BTL_CLIENT_MAX )
         {
           BtlPokePos targetPos;
