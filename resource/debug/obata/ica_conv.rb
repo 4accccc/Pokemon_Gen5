@@ -11,6 +11,81 @@
 ################################################################################# 
 
 #================================================================================
+# @brief コンバート後のデータを扱うクラス
+#================================================================================
+class ConvData
+  # コンストラクタ
+  def initialize
+    @frame_size = 0
+    @node_anm
+    @scale_x = Array.new
+    @scale_y = Array.new
+    @scale_z = Array.new
+    @rotate_x = Array.new
+    @rotate_y = Array.new
+    @rotate_z = Array.new
+    @translate_x = Array.new
+    @translate_y = Array.new
+    @translate_z = Array.new
+  end
+
+  # セッターメソッド
+  def frame_size=(value)
+    @frame_size = value
+  end
+  def node_anm=(value)
+    @node_anm = value
+  end
+
+  # データ追加メソッド
+  def AddScaleData( x, y, z )
+    @scale_x << x
+    @scale_y << y
+    @scale_z << z
+  end
+  def AddRotateData( x, y, z )
+    @rotate_x << x
+    @rotate_y << y
+    @rotate_z << z
+  end
+  def AddTranslateData( x, y, z )
+    @translate_x << x
+    @translate_y << y
+    @translate_z << z
+  end
+
+  # 文字列変換メソッド
+  def to_s
+    str = ""
+    str += "frame_size = #{@frame_size}\n"
+    0.upto( @frame_size - 1 ) do |i|
+      str += "scale[#{i}]     = #{@scale_x[i]}, #{@scale_y[i]}, #{@scale_z[i]}\n"
+      str += "rotate[#{i}]    = #{@rotate_x[i]}, #{@rotate_y[i]}, #{@rotate_z[i]}\n"
+      str += "translate[#{i}] = #{@translate_x[i]}, #{@translate_y[i]}, #{@translate_z[i]}\n"
+    end
+    return str
+  end
+
+  # バイナリデータを出力する
+  def OutputBinaryData( filename )
+    file = File.open( filename, "wb" )
+    file.print( [@frame_size].pack( "I" ) )
+    @node_anm.OutputBinaryData( file )
+    0.upto( @frame_size - 1 ) do |i|
+      file.print( [ @rotate_x[i] ].pack( "f" ) )
+      file.print( [ @rotate_y[i] ].pack( "f" ) )
+      file.print( [ @rotate_z[i] ].pack( "f" ) )
+      file.print( [ @translate_x[i] ].pack( "f" ) )
+      file.print( [ @translate_y[i] ].pack( "f" ) )
+      file.print( [ @translate_z[i] ].pack( "f" ) )
+      puts @translate_x[i].to_s + ", " + @translate_y[i].to_s + ", " + @translate_z[i].to_s
+    end
+    file.close
+  end
+end
+
+
+#================================================================================
 # @brief <node_anm>要素を扱うクラス
 #================================================================================
 class NodeAnm
@@ -26,6 +101,35 @@ class NodeAnm
     @translate_y = Array.new
     @translate_z = Array.new
   end
+
+  # アクセッサ
+  def frameStep_of_scaleX; @scale_x[0]; end
+  def dataSize_of_scaleX;  @scale_x[1]; end
+  def dataHead_of_scaleX;  @scale_x[2]; end
+  def frameStep_of_scaleY; @scale_y[0]; end
+  def dataSize_of_scaleY;  @scale_y[1]; end
+  def dataHead_of_scaleY;  @scale_y[2]; end
+  def frameStep_of_scaleZ; @scale_z[0]; end
+  def dataSize_of_scaleZ;  @scale_z[1]; end
+  def dataHead_of_scaleZ;  @scale_z[2]; end
+  def frameStep_of_rotateX; @rotate_x[0]; end
+  def dataSize_of_rotateX;  @rotate_x[1]; end
+  def dataHead_of_rotateX;  @rotate_x[2]; end
+  def frameStep_of_rotateY; @rotate_y[0]; end
+  def dataSize_of_rotateY;  @rotate_y[1]; end
+  def dataHead_of_rotateY;  @rotate_y[2]; end
+  def frameStep_of_rotateZ; @rotate_z[0]; end
+  def dataSize_of_rotateZ;  @rotate_z[1]; end
+  def dataHead_of_rotateZ;  @rotate_z[2]; end
+  def frameStep_of_translateX; @translate_x[0]; end
+  def dataSize_of_translateX;  @translate_x[1]; end
+  def dataHead_of_translateX;  @translate_x[2]; end
+  def frameStep_of_translateY; @translate_y[0]; end
+  def dataSize_of_translateY;  @translate_y[1]; end
+  def dataHead_of_translateY;  @translate_y[2]; end
+  def frameStep_of_translateZ; @translate_z[0]; end
+  def dataSize_of_translateZ;  @translate_z[1]; end
+  def dataHead_of_translateZ;  @translate_z[2]; end
 
   # 指定したインデックスの<node_anm>要素を読み込む
   def read( filename, index )
@@ -105,15 +209,15 @@ class NodeAnm
 
   # バイナリデータを出力する
   def OutputBinaryData( file )
-    file.print( @scale_x.pack( "CSS" ) )
-    file.print( @scale_y.pack( "CSS" ) )
-    file.print( @scale_z.pack( "CSS" ) )
-    file.print( @rotate_x.pack( "CSS" ) )
-    file.print( @rotate_y.pack( "CSS" ) )
-    file.print( @rotate_z.pack( "CSS" ) )
-    file.print( @translate_x.pack( "CSS" ) )
-    file.print( @translate_y.pack( "CSS" ) )
-    file.print( @translate_z.pack( "CSS" ) )
+    file.print( @scale_x.pack( "III" ) )
+    file.print( @scale_y.pack( "III" ) )
+    file.print( @scale_z.pack( "III" ) )
+    file.print( @rotate_x.pack( "III" ) )
+    file.print( @rotate_y.pack( "III" ) )
+    file.print( @rotate_z.pack( "III" ) )
+    file.print( @translate_x.pack( "III" ) )
+    file.print( @translate_y.pack( "III" ) )
+    file.print( @translate_z.pack( "III" ) )
   end
 end
 
@@ -268,24 +372,100 @@ class Ica
     return str
   end
 
-  # バイナリデータを出力する
-  def OutputBinaryData( filename )
-    file = File.open( filename, "wb" )
-    file.print( [ @frame_size ].pack( "S" ) )
-    file.print( [ @scale.length ].pack( "S" ) )
-    @scale.each do |val|
-      file.print( [ val ].pack( "f" ) )
+  # コンバートデータを作成する
+  def GetConvData
+    conv_data = ConvData.new
+
+    # フレーム数
+    conv_data.frame_size = @frame_size
+    
+    # アニメーション属性
+    conv_data.node_anm = @node_anm[0]
+
+    # 各フレームの値
+    0.upto( @frame_size - 1 ) do |i|
+      sx = CalcLinearValue( @node_anm[0].frameStep_of_scaleX, 
+                           @node_anm[0].dataSize_of_scaleX, 
+                           @node_anm[0].dataHead_of_scaleX, 
+                           @scale, i )
+      sy = CalcLinearValue( @node_anm[0].frameStep_of_scaleY, 
+                           @node_anm[0].dataSize_of_scaleY, 
+                           @node_anm[0].dataHead_of_scaleY, 
+                           @scale, i )
+      sz = CalcLinearValue( @node_anm[0].frameStep_of_scaleZ, 
+                           @node_anm[0].dataSize_of_scaleZ, 
+                           @node_anm[0].dataHead_of_scaleZ, 
+                           @scale, i )
+      rx = CalcLinearValue( @node_anm[0].frameStep_of_rotateX, 
+                           @node_anm[0].dataSize_of_rotateX, 
+                           @node_anm[0].dataHead_of_rotateX, 
+                           @rotate, i )
+      ry = CalcLinearValue( @node_anm[0].frameStep_of_rotateY, 
+                           @node_anm[0].dataSize_of_rotateY, 
+                           @node_anm[0].dataHead_of_rotateY, 
+                           @rotate, i )
+      rz = CalcLinearValue( @node_anm[0].frameStep_of_rotateZ, 
+                           @node_anm[0].dataSize_of_rotateZ, 
+                           @node_anm[0].dataHead_of_rotateZ, 
+                           @rotate, i )
+      tx = CalcLinearValue( @node_anm[0].frameStep_of_translateX, 
+                           @node_anm[0].dataSize_of_translateX, 
+                           @node_anm[0].dataHead_of_translateX, 
+                           @translate, i )
+      ty = CalcLinearValue( @node_anm[0].frameStep_of_translateY, 
+                           @node_anm[0].dataSize_of_translateY, 
+                           @node_anm[0].dataHead_of_translateY, 
+                           @translate, i )
+      tz = CalcLinearValue( @node_anm[0].frameStep_of_translateZ, 
+                           @node_anm[0].dataSize_of_translateZ, 
+                           @node_anm[0].dataHead_of_translateZ, 
+                           @translate, i )
+      conv_data.AddScaleData( sx, sy, sz )
+      conv_data.AddRotateData( rx, ry, rz )
+      conv_data.AddTranslateData( tx, ty, tz )
     end
-    file.print( [ @rotate.length ].pack( "S" ) )
-    @rotate.each do |val|
-      file.print( [ val ].pack( "f" ) )
+
+    return conv_data
+  end
+
+  # 指定フレームの値を計算する
+  def CalcLinearValue( frame_step, data_size, data_head, data_array, frame ) 
+    # ループさせる
+    frame = frame % @frame_size
+
+    if data_size==1 then  # データが1つの場合
+      return data_array[ data_head ]
     end
-    file.print( [ @translate.length ].pack( "S" ) )
-    @translate.each do |val|
-      file.print( [ val ].pack( "f" ) )
+
+    if frame_step==1 then   # frame_stepが1の場合
+      return data_array[ data_head + frame ]
     end
-    @node_anm[0].OutputBinaryData( file )
-    file.close
+
+    shift = ( frame_step==2 ) ? 1 : 2
+    ival  = frame >> shift
+    ival += data_head
+
+    # 間聞き部分と全フレーム部分のしきいとなるフレーム
+    iframe_last_interp = ((@frame_size - 1) >> shift) << shift
+
+    # しきいとなるフレーム以降の場合, 実データ配列から直接返す
+    if iframe_last_interp <= frame then
+      return data_array[ ival + frame - iframe_last_interp ]
+    end
+
+    # しきいとなるフレームより前の場合は補間計算で求める
+    val0 = data_array[ ival ]
+    val1 = data_array[ ival + 1 ]
+    w1   = frame - (ival << shift ) 
+    w0   = frame_step - w1
+
+    # ちょうどフレーム上にある場合
+    if w1==0 then
+      return val0
+    # 通常の補間処理
+    else
+      return ( (val0 * w0 + val1 * w1) / (w0 + w1) )
+    end 
   end
 end
 
@@ -301,4 +481,5 @@ end
 #================================================================================
 ica = Ica.new
 ica.read( ARGV[0] )
-ica.OutputBinaryData( ARGV[1] )
+conv_data = ica.GetConvData
+conv_data.OutputBinaryData( ARGV[1] )
