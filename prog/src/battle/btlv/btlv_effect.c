@@ -56,13 +56,10 @@ struct _BTLV_EFFECT_WORK
   BTLV_BALL_GAUGE_WORK *bbgw[ BTLV_BALL_GAUGE_TYPE_MAX ];
   GFL_TCB           *v_tcb;
   int               execute_flag;
+  int               tcb_execute_flag;
   HEAPID            heapID;
 
   int               trainer_index[ BTLV_MCSS_POS_MAX ];
-
-  //暫定で戻し
-  GFL_PTC_PTR       ptc;
-  u8                spa_work[ PARTICLE_LIB_HEAP_SIZE ];
 };
 
 typedef struct
@@ -83,8 +80,6 @@ static  BTLV_EFFECT_WORK  *bew = NULL;
 //============================================================================================
 
 static  void  BTLV_EFFECT_VBlank( GFL_TCB *tcb, void *work );
-
-//暫定で作ったエフェクトシーケンス
 static  void  BTLV_EFFECT_TCB_Damage( GFL_TCB *tcb, void *work );
 
 #ifdef PM_DEBUG
@@ -285,7 +280,7 @@ void BTLV_EFFECT_Damage( BtlvMcssPos target )
   bet->work = BTLV_EFFECT_BLINK_TIME;
   bet->wait = 0;
 
-  bew->execute_flag = 1;
+  bew->tcb_execute_flag = 1;
 
   GFL_TCB_AddTask( bew->tcb_sys, BTLV_EFFECT_TCB_Damage, bet, 0 );
 }
@@ -299,7 +294,7 @@ void BTLV_EFFECT_Damage( BtlvMcssPos target )
 //============================================================================================
 BOOL  BTLV_EFFECT_CheckExecute( void )
 {
-  return ( bew->execute_flag != 0 );
+  return ( ( bew->execute_flag | bew->tcb_execute_flag ) != 0 );
 }
 
 //============================================================================================
@@ -689,7 +684,7 @@ static  void  BTLV_EFFECT_VBlank( GFL_TCB *tcb, void *work )
 
 //============================================================================================
 /**
- *  @brief  ダメージエフェクトシーケンス（仮でTCBで作成）
+ *  @brief  ダメージエフェクトシーケンス（多重起動があるのでTCBで作成）
  */
 //============================================================================================
 static  void  BTLV_EFFECT_TCB_Damage( GFL_TCB *tcb, void *work )
@@ -711,7 +706,7 @@ static  void  BTLV_EFFECT_TCB_Damage( GFL_TCB *tcb, void *work )
     BTLV_MCSS_SetVanishFlag( bew->bmw, bet->target, BTLV_MCSS_VANISH_OFF );
     bet->wait = BTLV_EFFECT_BLINK_WAIT;
     if( --bet->work == 0 ){
-      bew->execute_flag = 0;
+      bew->tcb_execute_flag = 0;
       GFL_HEAP_FreeMemory( bet );
       GFL_TCB_DeleteTask( tcb );
     }
