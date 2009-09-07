@@ -10,7 +10,7 @@ del item_data.narc
 
 md itemdata
 
-itemconv_dp.exe wb_item.csv >itemconv_dp.err
+itemconv_wb.exe wb_item.csv >itemconv_wb.err
 itemcnv_gmm.exe wb_item.csv >itemcnv_gmm.err
 rem notepad itemconv_dp.err
 rem notepad itemcnv_gmm.err
@@ -24,3 +24,4 @@ move itemname.gmm %2resource/message/src
 move iteminfo.gmm %2resource/message/src
 move itemtype.dat %1src/item
 move itemuse_def.h %1include/item
+move itempocket_def.h %1include/item
