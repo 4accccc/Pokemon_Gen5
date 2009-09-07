@@ -12,6 +12,8 @@
 
 #include "battle/btl_common.h"
 
+#define BTLV_INPUT_DIR_MAX  ( 6 )   //対象選択MAX
+
 typedef struct _BTLV_INPUT_WORK BTLV_INPUT_WORK;
 
 ///技選択画面構成用のデータ
@@ -36,7 +38,7 @@ typedef struct{
 
 ///ポケモン選択画面構成用のSceneワーク
 typedef struct{
-  BTLV_INPUT_DIR_PARAM  bidp[ BTL_CLIENT_MAX ];
+  BTLV_INPUT_DIR_PARAM  bidp[ BTLV_INPUT_DIR_MAX ];
   u8                    client_type;
   u8                    pokesele_type;  ///<対象選択タイプ
 }BTLV_INPUT_SCENE_PARAM;
