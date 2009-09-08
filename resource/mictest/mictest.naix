@@ -1,0 +1,39 @@
+/*****************************************************************************
+	Archive file index definition.
+	File: mictest.naix
+
+	This file was created by NINTENDO NITRO-System Archiver.
+
+
+ *****************************************************************************/
+
+#ifndef NARC_MICTEST_NAIX_
+#define NARC_MICTEST_NAIX_
+
+enum {
+	NARC_mictest_back_bg_down_NCLR = 0,
+	NARC_mictest_back_bg_up_NCLR = 1,
+	NARC_mictest_back_bg_up_NCGR = 2,
+	NARC_mictest_back_bg_up_NSCR = 3,
+	NARC_mictest_back_bg_down_NCGR = 4,
+	NARC_mictest_back_bg_down_NSCR = 5,
+	NARC_mictest_obj_gage_NCLR = 6,
+	NARC_mictest_obj_gage_NCGR = 7,
+	NARC_mictest_obj_gage_NCER = 8,
+	NARC_mictest_obj_gage_NANR = 9,
+	NARC_mictest_obj_pokemon_NCLR = 10,
+	NARC_mictest_obj_pokemon_NCGR = 11,
+	NARC_mictest_obj_pokemon_NCER = 12,
+	NARC_mictest_obj_pokemon_NANR = 13,
+	NARC_mictest_obj_note_NCLR = 14,
+	NARC_mictest_obj_note_NCGR = 15,
+	NARC_mictest_obj_note_NCER = 16,
+	NARC_mictest_obj_note_NANR = 17,
+	NARC_mictest_obj_button_NCLR = 18,
+	NARC_mictest_obj_button_NCGR = 19,
+	NARC_mictest_obj_button_NCER = 20,
+	NARC_mictest_obj_button_NANR = 21
+};
+
+/* NARC_MICTEST_NAIX_ */
+#endif

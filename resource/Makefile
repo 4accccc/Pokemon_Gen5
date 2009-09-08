@@ -93,7 +93,8 @@ SUBDIRS	=	wmi \
 			narc_cpy \
 			pokeicon \
 			zukan_data \
-            b_bag
+      b_bag \
+			mictest
 
 include $(RESOURCE_MACRO)
 
