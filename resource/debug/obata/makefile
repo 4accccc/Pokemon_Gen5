@@ -29,11 +29,9 @@ SUBDIRS	=
 include	$(PROJECT_RSCDIR)\macro_define
 
 
-CONVERTDATA = camera_test1.nsbmd ica_test_data.bin \
-							td_houou.nsbmd td_houou.nsbca td_houou.nsbma td_houou.nsbta td_houou.nsbtp \
-							houou_efct.nsbmd houou_efct.nsbca houou_efct.nsbtp \
-							ica_test_data2.bin \
-							houou_test.nsbmd houou_test.nsbca houou_test.nsbta
+CONVERTDATA = ica_test_data2.bin \
+							houou_test.nsbmd houou_test.nsbca houou_test.nsbta \
+							trailer.nsbmd t1_house_01.nsbmd
 
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
 # サフィックスルールを定義することで 依存関係を自動で判断してくれる
@@ -52,21 +50,14 @@ subdir:
 
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
 # コンバート
-	ruby ica_conv.rb camera_null.ica ica_test_data.bin
 	ruby ica_conv.rb camera_null2.ica ica_test_data2.bin
-	g3dcvtr camera_test1.imd
-	g3dcvtr td_houou.imd
-	g3dcvtr td_houou.ica
-	g3dcvtr td_houou.ima
-	g3dcvtr td_houou.ita
-	g3dcvtr td_houou.itp
-	g3dcvtr houou_efct.imd
-	g3dcvtr houou_efct.ica
-	g3dcvtr houou_efct.itp
 	g3dcvtr houou_test.imd
 	g3dcvtr houou_test.ica
 	g3dcvtr houou_test.ita
+	g3dcvtr trailer.imd
+	g3dcvtr t1_house_01.imd
 endif
+
 
 # narc のコピーだけ実行する
 $(TARGETDIR)/$(targetname).narc: $(targetname).narc

@@ -11,20 +11,12 @@
 #define NARC_DEBUG_OBATA_NAIX_
 
 enum {
-	NARC_debug_obata_camera_test1_nsbmd = 0,
-	NARC_debug_obata_ica_test_data_bin = 1,
-	NARC_debug_obata_td_houou_nsbmd = 2,
-	NARC_debug_obata_td_houou_nsbca = 3,
-	NARC_debug_obata_td_houou_nsbma = 4,
-	NARC_debug_obata_td_houou_nsbta = 5,
-	NARC_debug_obata_td_houou_nsbtp = 6,
-	NARC_debug_obata_houou_efct_nsbmd = 7,
-	NARC_debug_obata_houou_efct_nsbca = 8,
-	NARC_debug_obata_houou_efct_nsbtp = 9,
-	NARC_debug_obata_ica_test_data2_bin = 10,
-	NARC_debug_obata_houou_test_nsbmd = 11,
-	NARC_debug_obata_houou_test_nsbca = 12,
-	NARC_debug_obata_houou_test_nsbta = 13
+	NARC_debug_obata_ica_test_data2_bin = 0,
+	NARC_debug_obata_houou_test_nsbmd = 1,
+	NARC_debug_obata_houou_test_nsbca = 2,
+	NARC_debug_obata_houou_test_nsbta = 3,
+	NARC_debug_obata_trailer_nsbmd = 4,
+	NARC_debug_obata_t1_house_01_nsbmd = 5
 };
 
 /* NARC_DEBUG_OBATA_NAIX_ */
