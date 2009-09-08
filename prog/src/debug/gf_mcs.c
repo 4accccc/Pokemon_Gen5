@@ -792,14 +792,13 @@ void	GFL_MCS_Close( void )
 	gflMCS->deviceOpen = FALSE;
 }
 
-#if 0
 //============================================================================================
 /**
  *	PCとのリンクを確立する
  *	 指定したカテゴリIDを発信してきたPCアプリを特定し、使用チャンネルを決定する
  */
 //============================================================================================
-BOOL	GFL_MCS_Link( u32 categoryID, GFL_MCS_LINKIDX* pIdx )
+BOOL	GFL_MCS_Link( u32 categoryID )
 {
 	int i;
 
@@ -807,23 +806,13 @@ BOOL	GFL_MCS_Link( u32 categoryID, GFL_MCS_LINKIDX* pIdx )
 		GFL_MCS_LINKSTATUS* linkStatus = &gflMCS->linkStatus[i];
 
 		if(linkStatus->key.categoryID == categoryID){
-			OS_Printf("リンク情報検出\n");
-			// 通信用キーインデックス格納
-			*pIdx = i;
-			// 受信完了信号として、PCへ送り返す
-			{
-				GFL_MCS_HEADER header;
-				header.projectID = POKEMON_MCS_ID;
-				header.commID = GFL_MCSCOMM_LINK;
-				header.categoryID = linkStatus->key.categoryID;
-				NNS_McsWriteStream(MCS_CHANNEL15, &header, sizeof(GFL_MCS_HEADER));
-			}
 			return TRUE;
 		}
 	}
 	return FALSE;
 }
 
+#if 1
 //============================================================================================
 /**
  *	PCとのリンクを解消する
@@ -1010,11 +999,11 @@ BOOL	GFL_MCS_Write( u32 categoryID, const void* pWriteBuf, u32 writeSize )
 
 			if(checkIdle(&linkStatus->key) == TRUE){
 				if(writeSize > MCS_SPLIT_SIZE){
-					NNS_McsWriteStream(linkStatus->key.channelID2, &pWriteBuf, MCS_SPLIT_SIZE);
+					NNS_McsWriteStream(linkStatus->key.channelID2, pWriteBuf, MCS_SPLIT_SIZE);
 					writeSize -= MCS_SPLIT_SIZE;
 					(u8*)pWriteBuf += MCS_SPLIT_SIZE;
 				} else {
-					NNS_McsWriteStream(linkStatus->key.channelID2, &pWriteBuf, writeSize);
+					NNS_McsWriteStream(linkStatus->key.channelID2, pWriteBuf, writeSize);
 					writeSize = 0;
 				}
 			}
