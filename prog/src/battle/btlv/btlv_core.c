@@ -533,7 +533,7 @@ BOOL BTLV_ITEMSELECT_Wait( BTLV_CORE* wk )
   if( wk->selectItemSeq == 1 ){
     if( result ){
       BTLV_SCD_Setup( wk->scrnD );
-      wk->selectItemSeq = 2;
+      wk->selectItemSeq = 0;
     }
   }
   return result;

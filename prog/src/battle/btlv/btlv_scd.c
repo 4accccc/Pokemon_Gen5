@@ -296,6 +296,7 @@ void BTLV_SCD_RestartActionSelect( BTLV_SCD* wk )
 BtlAction BTLV_SCD_WaitActionSelect( BTLV_SCD* wk )
 {
   if( spstack_call( wk ) ){
+    BTL_Printf("選択されたアクション=%d\n", wk->selActionResult);
     return wk->selActionResult;
   }else{
     return BTL_ACTION_NULL;

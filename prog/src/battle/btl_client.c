@@ -516,7 +516,7 @@ static BOOL SubProc_UI_SelectAction( BTL_CLIENT* wk, int* seq )
         (*seq) =  SEQ_CHECK_DONE;
       }
       else{
-        (*seq) = SEQ_SELECT_ACTION;
+        (*seq) = SEQ_CHECK_ACTION;
       }
     }
     break;
