@@ -495,6 +495,10 @@ void  BTLV_INPUT_InitBG( BTLV_INPUT_WORK *biw )
 
   //情報ステータスバー初期化
   INFOWIN_Init( GFL_BG_FRAME2_S, INFOWIN_PAL_NO, NULL, biw->heapID );
+  //情報ステータスバー表示
+  GFL_BG_SetVisible( GFL_BG_FRAME2_S, VISIBLE_ON );
+
+  GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_OBJ, VISIBLE_ON );
 
   //メインループはTCBで行う
   biw->main_loop = GFL_TCB_AddTask( BTLV_EFFECT_GetTCBSYS(), BTLV_INPUT_MainTCB, biw, 0 );
@@ -598,7 +602,6 @@ void BTLV_INPUT_CreateScreen( BTLV_INPUT_WORK* biw, BTLV_INPUT_SCRTYPE type, voi
 
       GFL_BG_SetVisible( GFL_BG_FRAME0_S, VISIBLE_OFF );
       GFL_BG_SetVisible( GFL_BG_FRAME1_S, VISIBLE_OFF );
-      GFL_BG_SetVisible( GFL_BG_FRAME2_S, VISIBLE_ON );
       GFL_BG_SetVisible( GFL_BG_FRAME3_S, VISIBLE_ON );
     }
     else
