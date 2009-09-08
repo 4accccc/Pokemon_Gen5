@@ -141,6 +141,11 @@ static void mapCtrlNoGrid_Create(
 
   p_ngrid_player = FIELDMAP_CTRL_NOGRID_WORK_GetNogridPlayerWork( work );
 
+  //カメラ座標セット
+  {
+    MMDL* mmdl = FIELD_PLAYER_GetMMdl( fld_player );
+    FIELDMAP_SetNowPosTarget( fieldWork, MMDL_GetVectorPosAddress( mmdl ) );
+  }
 
   // ロケーションの設定
   FIELD_PLAYER_NOGRID_SetLocation( p_ngrid_player, &locationStart );
@@ -235,7 +240,9 @@ static void mapCtrlNoGrid_Main( FIELDMAP_WORK *fieldWork, VecFx32 *pos )
 //--------------------------------------------------------------
 static const VecFx32 * mapCtrlNoGrid_GetCameraTarget( FIELDMAP_WORK *fieldWork )
 {
-  return NULL;
+	FIELD_PLAYER *fld_player = FIELDMAP_GetFieldPlayer( fieldWork );
+  MMDL* mmdl = FIELD_PLAYER_GetMMdl( fld_player );
+  return MMDL_GetVectorPosAddress( mmdl );
 }
 
 //======================================================================

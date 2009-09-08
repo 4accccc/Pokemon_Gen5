@@ -158,6 +158,7 @@ static void mapCtrlC3_Create(
 	*work = init;
 
 	fld_player = FIELDMAP_GetFieldPlayer( fieldWork );
+  FIELDMAP_SetNowPosTarget( fieldWork, NULL );
   
   // ˆÊ’uî•ñ‚ğİ’è
   p_ngridplayer = FIELDMAP_CTRL_NOGRID_WORK_GetNogridPlayerWork( p_ngridwork );

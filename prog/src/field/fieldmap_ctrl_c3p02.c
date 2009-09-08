@@ -116,6 +116,7 @@ static void mapCtrlC3P02_Create( FIELDMAP_WORK* p_fieldwork, VecFx32* p_pos, u16
 	FIELDMAP_SetMapCtrlWork( p_fieldwork, p_wk );
 
   p_player = FIELDMAP_CTRL_NOGRID_WORK_GetNogridPlayerWork( p_wk );
+  FIELDMAP_SetNowPosTarget( p_fieldwork, NULL );
   FIELD_PLAYER_NOGRID_GetPos( p_player, p_pos );
   FIELD_PLAYER_SetPos( p_fld_player, p_pos );
 }
