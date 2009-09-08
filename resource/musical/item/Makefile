@@ -23,30 +23,41 @@ TARGETDIR = $(PROJECT_ARCDIR)
 XLS2TAB		= ruby $(PROJECT_ROOT)tools/exceltool/xls2xml/tab_out.rb
 ITEMDATA_XLS = item_data.xls
 
-
 #------------------------------------------------------------------------------
 #※サブディレクトリでもMakeしたい場合、ここにディレクトリ名を書く
 #------------------------------------------------------------------------------
 SUBDIRS	= 
 
+
+NITRO_DIR = nitro_data
+IMD_DIR = imd_out
+
+VPATH = $(IMD_DIR):$(NITRO_DIR)
+
 #共通ルールファイルのインクルード
 include	$(PROJECT_RSCDIR)\macro_define
 
 # 自動でリソースを集める
-imdres:=$(wildcard *.imd)
+nclres:=$(wildcard $(NITRO_DIR)/*.ncl)
+ncgres:=$(wildcard $(NITRO_DIR)/*.ncg)
+#imdres:=$(wildcard $(IMD_DIR)/*.imd)
 
 # リソースが吐き出すファイルを自動でつくる
-imdobj = $(subst .imd,.nsbtx,$(imdres))
-
+imdres = $(subst $(NITRO_DIR)/,$(IMD_DIR)/,$(subst .ncg,.imd,$(ncgres)) )
+imdobj = $(subst $(NITRO_DIR)/,,$(subst .ncg,.nsbtx,$(ncgres)) )
 
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
 # サフィックスルールを定義することで 依存関係を自動で判断してくれる
-.SUFFIXES: .nsbtx .imd
+.SUFFIXES: .nsbtx .imd .ncg .ncl
+
+.ncg.imd:
+	ruby ncg2imd.rb $< $(IMD_DIR)/
 
 .imd.nsbtx:
-	g3dcvtr $< -etex
+	g3dcvtr $(IMD_DIR)/$< -etex
 
 endif
+
 
 .PHONY:	do-build clean subdir
 
@@ -64,6 +75,12 @@ $(TARGETDIR)/$(targetname).narc: $(targetname).narc
 	$(COPY) $(targetname).naix $(TARGETDIR)
 
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、元ファイルからコンバートするルールを有効にする
+
+#$(imdres): $(ncgres)
+#	ruby ncg2imd.rb $< $(IMD_DIR)/
+
+#$(imdobj): $(imdres)
+#	g3dcvtr $< -etex
 
 $(ITEMDATA_XLS:.xls=.bin): $(ITEMDATA_XLS)
 	$(XLS2TAB) $(ITEMDATA_XLS) > $(ITEMDATA_XLS:.xls=.txt)
@@ -87,6 +104,7 @@ ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、中間ファイル削除
 	rm -f *.narc
 	rm -f *.naix
 	rm -f *.bin
+	rm -f $(IMD_DIR)/*.imd
 	rm -f $(targetname).narc
 	rm -f $(targetname).naix
 endif

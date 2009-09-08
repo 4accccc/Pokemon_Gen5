@@ -182,7 +182,14 @@ void MUS_ITEM_DRAW_UpdateSystem_VBlank( MUS_ITEM_DRAW_SYSTEM* work )
 //アイテム番号からARCの番号を調べる
 u16 MUS_ITEM_DRAW_GetArcIdx( const u16 itemIdx )
 {
-	return (NARC_musical_item_mg_item000_nsbtx + itemIdx);
+  //仮データ対応
+  const u16 fileNum = GFL_ARC_GetDataFileCnt( ARCID_MUSICAL_ITEM , 0 );
+  if( itemIdx >= fileNum - 2 )
+  {
+  	return (NARC_musical_item_mus_item999_nsbtx);
+  }
+  
+	return (NARC_musical_item_mus_item000_nsbtx + itemIdx);
 }
 //ファイルIdxからサイズを調べる
 void MUS_ITEM_DRAW_GetPicSize( MUS_ITEM_DRAW_WORK *itemWork , u8 *sizeXRate , u8 *sizeYRate )
