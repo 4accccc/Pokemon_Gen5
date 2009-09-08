@@ -1157,7 +1157,7 @@ static void setup_core( BTLV_CORE* wk, HEAPID heapID )
   GFL_BMPWIN_Init( heapID );
   GFL_FONTSYS_Init();
 
-  GFL_BG_DebugPrintCtrl( GFL_BG_SUB_DISP, TRUE );
+//  GFL_BG_DebugPrintCtrl( GFL_BG_SUB_DISP, TRUE );
 
   // VRAMÉoÉìÉNê›íË
   GFL_DISP_SetBank( &vramBank );
