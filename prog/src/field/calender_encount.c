@@ -96,7 +96,7 @@ u8 CALENDER_ENCOUNT_INFO_GetEncountNo( CALENDER_ENCOUNT_INFO* p_info, const RTCD
   }
 
   // DEBUG:
-  OBATA_Printf( "%2d/%2d : encountNo = %d\n", p_date->month, p_date->day, encount_no );
+  OBATA_Printf( "%d/%d : encountNo = %d\n", p_date->month, p_date->day, encount_no );
 
   // 指定日のデータが存在しない ==> デフォルト値0番を返す
   return encount_no;
@@ -189,6 +189,6 @@ static void LoadData( CALENDER_ENCOUNT_INFO* p_info, HEAPID heap_id )
   OBATA_Printf( "dataNum = %d\n", p_info->dataNum );
   for( i=0; i<p_info->dataNum; i++ )
   {
-    OBATA_Printf( "%2d/%2d = %d\%\n", p_info->month[i], p_info->day[i], p_info->encountNo[i] );
+    OBATA_Printf( "%d/%d = %d\%\n", p_info->month[i], p_info->day[i], p_info->encountNo[i] );
   } 
 }

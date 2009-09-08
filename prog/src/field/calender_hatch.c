@@ -106,7 +106,7 @@ u8 CALENDER_HATCH_INFO_GetHatchNo( CALENDER_HATCH_INFO* p_info, const RTCDate* p
   }
 
   // DEBUG:
-  OBATA_Printf( "%2d/%2d : hatch no = %d\n", p_date->month, p_date->day, hatch_no );
+  OBATA_Printf( "%d/%d : hatch no = %d\n", p_date->month, p_date->day, hatch_no );
 
   // 指定日のデータが存在しない ==> デフォルト値0番を返す
   return hatch_no;
@@ -199,6 +199,6 @@ void LoadData( CALENDER_HATCH_INFO* p_info, HEAPID heap_id )
   OBATA_Printf( "dataNum = %d\n", p_info->dataNum );
   for( i=0; i<p_info->dataNum; i++ )
   {
-    OBATA_Printf( "%2d/%2d = %d\%\n", p_info->month[i], p_info->day[i], p_info->hatchNo[i] );
+    OBATA_Printf( "%d/%d = %d\%\n", p_info->month[i], p_info->day[i], p_info->hatchNo[i] );
   } 
 }

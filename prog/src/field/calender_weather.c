@@ -156,7 +156,7 @@ u16 CALENDER_WEATHER_INFO_GetWeather( CALENDER_WEATHER_INFO* p_info, const RTCDa
   }
 
   // DEBUG:
-  OBATA_Printf( "%2d/%2d : zone_id = %d : weather no = %d\n", p_date->month, p_date->day, zone_id, weather_no );
+  OBATA_Printf( "%d/%d : zone_id = %d : weather no = %d\n", p_date->month, p_date->day, zone_id, weather_no );
 
   // w’èƒ][ƒ“‚ª“o˜^‚³‚ê‚Ä‚¢‚È‚¯‚ê‚Î, –³Œø’l‚ğ•Ô‚·
   return weather_no;
@@ -278,7 +278,7 @@ static void LoadData( CALENDER_WEATHER_INFO* p_info, HEAPID heap_id )
     OBATA_Printf( "---------------------------\n" );
     for( j=0; j<p_info->data[i].dateNum; j++ )
     {
-      OBATA_Printf( "%2d/%2d = %d\n", p_info->data[i].month[j], p_info->data[i].day[j], p_info->data[i].weather[j] );
+      OBATA_Printf( "%d/%d = %d\n", p_info->data[i].month[j], p_info->data[i].day[j], p_info->data[i].weather[j] );
     }
   }
 }
