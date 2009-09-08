@@ -531,6 +531,8 @@ void  BTLV_INPUT_ExitBG( BTLV_INPUT_WORK *biw )
 
   INFOWIN_Exit();
 
+  BTLV_INPUT_FreeFrame();
+
   GFL_TCB_DeleteTask( biw->main_loop );
 
   GFL_ARC_CloseDataHandle( biw->handle );
