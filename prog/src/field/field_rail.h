@@ -130,6 +130,7 @@ typedef enum {
   RAIL_KEY_MAX
 }RAIL_KEY;
 
+
 //------------------------------------------------------------------
 /**
  * @brief レールタイプ
@@ -294,6 +295,8 @@ extern fx32 FIELD_RAIL_MAN_GetRailGridSize( const FIELD_RAIL_MAN * man );
 // ロケーションでの計算
 extern BOOL FIELD_RAIL_MAN_CalcRailKeyLocation(const FIELD_RAIL_MAN * man, const RAIL_LOCATION * now_location, RAIL_KEY key, RAIL_LOCATION * next_location);
 extern void FIELD_RAIL_MAN_GetLocationPosition(const FIELD_RAIL_MAN * man, const RAIL_LOCATION * location, VecFx32* pos );
+extern u32 FIELD_RAIL_MAN_GetLocationLineOfsMaxGrid(const FIELD_RAIL_MAN * man, const RAIL_LOCATION * location );
+extern u32 FIELD_RAIL_MAN_GetLocationWidthGrid(const FIELD_RAIL_MAN * man, const RAIL_LOCATION * location );
 
 //------------------------------------------------------------------
 // 移動管理1物体の生成・破棄

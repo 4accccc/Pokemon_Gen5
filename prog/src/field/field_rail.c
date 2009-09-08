@@ -553,6 +553,44 @@ void FIELD_RAIL_MAN_GetLocationPosition(const FIELD_RAIL_MAN * man, const RAIL_L
   FIELD_RAIL_WORK_GetPos( man->calc_work, pos );
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  locationのラインの全長グリッドサイズを取得
+ *
+ *	@param	man         まねーじゃ
+ *	@param	location    ロケーション
+ *
+ *	@return グリッドサイズ
+ */
+//-----------------------------------------------------------------------------
+u32 FIELD_RAIL_MAN_GetLocationLineOfsMaxGrid(const FIELD_RAIL_MAN * man, const RAIL_LOCATION * location )
+{
+  GF_ASSERT( man );
+  GF_ASSERT( location );
+
+  FIELD_RAIL_WORK_SetLocation( man->calc_work, location );
+  return RAIL_OFS_TO_GRID( man->calc_work->line_ofs_max  );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  locationのラインの幅グリッドサイズを取得
+ *
+ *	@param	man       マネージャ
+ *	@param	location  ロケーション
+ *
+ *	@return 幅サイズ
+ */
+//-----------------------------------------------------------------------------
+u32 FIELD_RAIL_MAN_GetLocationWidthGrid(const FIELD_RAIL_MAN * man, const RAIL_LOCATION * location )
+{
+  GF_ASSERT( man );
+  GF_ASSERT( location );
+
+  FIELD_RAIL_WORK_SetLocation( man->calc_work, location );
+  return RAIL_OFS_TO_GRID( man->calc_work->width_ofs_max );
+}
+
 
 //============================================================================================
 //

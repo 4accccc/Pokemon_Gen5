@@ -45,11 +45,18 @@
 */
 //-----------------------------------------------------------------------------
 //-------------------------------------
+///	レールエディタカテゴリID
+//=====================================
+#define GFL_MCS_RAIL_EDITOR_CATEGORY_ID ( 20625 )
+
+
+//-------------------------------------
 ///	シーケンス
 //=====================================
 enum {
 	RAIL_EDITOR_SEQ_INIT,				// 初期化
 	RAIL_EDITOR_SEQ_CONNECT,		// 接続
+	RAIL_EDITOR_SEQ_LINK,		    // リンク
 	RAIL_EDITOR_SEQ_RESET,			// リセット起動
 	RAIL_EDITOR_SEQ_MAIN,				// リクエスト対応
 	RAIL_EDITOR_SEQ_CLOSE,			// 切断
@@ -58,13 +65,13 @@ enum {
 } ;
 
 // 汎用受信バッファ
-#define RE_TMP_BUFF_SIZE	( 8198 )
+#define RE_TMP_BUFF_SIZE	( 0x3000 )
 
 //-------------------------------------
 ///	レール、エリア受信バッファサイズ
 //=====================================
-#define RE_MCS_BUFF_RAIL_SIZE	( 8198 )
-#define RE_MCS_BUFF_AREA_SIZE	( 1024 )
+#define RE_MCS_BUFF_RAIL_SIZE	( 0x3000 )
+#define RE_MCS_BUFF_AREA_SIZE	( 0x400 )
 
 
 //-------------------------------------
@@ -80,7 +87,7 @@ enum {
 ///	レール描画リソース
 //=====================================
 #define RM_DRAW_OBJ_RES_MAX	( FIELD_RAIL_TYPE_MAX )
-#define RM_DRAW_OBJ_MAX	( 128 )
+#define RM_DRAW_OBJ_MAX	( 256 )
 
 // positionリソース
 enum
@@ -170,10 +177,10 @@ typedef struct {
 ///	リソース
 //=====================================
 typedef struct {
-	BOOL use;
+	u8  use;
+	u8  rail_type;		// ポイントか、ラインか
+	u16 rail_index;		// テーブルインデックス
 	GFL_G3D_OBJSTATUS trans;
-	u32 rail_type;		// ポイントか、ラインか
-	u32 rail_index;		// テーブルインデックス
 } RE_RAIL_DRAW_OBJ;
 
 //-------------------------------------
@@ -223,10 +230,11 @@ static void RE_DRAW_Delete(FLDMAPFUNC_WORK * p_funcwk, FIELDMAP_WORK * p_fieldma
 
 static void RE_DRAW_SetDrawTarget( RE_RAIL_DRAW_WORK* p_wk, BOOL flag );
 static RE_RAIL_DRAW_OBJ* RE_DRAW_GetClearWork( RE_RAIL_DRAW_WORK* p_wk );
-static void RE_DRAW_SetUpData( RE_RAIL_DRAW_WORK* p_wk, const RAIL_SETTING* cp_setting );
+static void RE_DRAW_SetUpData( RE_RAIL_DRAW_WORK* p_wk, const FLDNOGRID_MAPPER* cp_nogridMapper );
+
 static void RE_DRAW_DRAWOBJ_Clear( RE_RAIL_DRAW_OBJ* p_drawobj );
 static BOOL RE_DRAW_DRAWOBJ_IsUse( const RE_RAIL_DRAW_OBJ* cp_drawobj );
-static void RE_DRAW_DRAWOBJ_Set( RE_RAIL_DRAW_OBJ* p_drawobj, u32 rail_type, u32 rail_index, const VecFx32* cp_trans, const VecFx32* cp_distance );
+static void RE_DRAW_DRAWOBJ_Set( RE_RAIL_DRAW_OBJ* p_drawobj, u32 rail_type, u32 rail_index, const VecFx32* cp_trans, const VecFx32* cp_distance, u32 width );
 static void RE_DRAW_DRAWOBJ_Draw( RE_RAIL_DRAW_WORK* p_wk, RE_RAIL_DRAW_OBJ* p_drawobj );
 static const FLDMAPFUNC_DATA sc_RE_DRAW_FUNCDATA = 
 {
@@ -380,7 +388,7 @@ static GMEVENT_RESULT DEBUG_RailEditorEvent( GMEVENT * p_event, int *  p_seq, vo
         
         p_drawwk->cp_parent = p_wk;
 
-        RE_DRAW_SetUpData( p_drawwk, FIELD_RAIL_LOADER_GetData( FLDNOGRID_MAPPER_GetRailLoader( p_mapper ) ) );
+        RE_DRAW_SetUpData( p_drawwk, p_mapper );
       }
     }
 		
@@ -389,11 +397,20 @@ static GMEVENT_RESULT DEBUG_RailEditorEvent( GMEVENT * p_event, int *  p_seq, vo
 
 	// 接続
 	case RAIL_EDITOR_SEQ_CONNECT:	
-		if( !MCS_Init( FIELDMAP_GetHeapID(p_wk->p_fieldmap) ) )
+		if( GFL_MCS_Open() )
 		{
-			(*p_seq) = RAIL_EDITOR_SEQ_MAIN;
+
+			(*p_seq) = RAIL_EDITOR_SEQ_LINK;
 		}
 		break;
+
+  // リンク
+  case RAIL_EDITOR_SEQ_LINK:
+		if( GFL_MCS_Link( GFL_MCS_RAIL_EDITOR_CATEGORY_ID ) )
+		{
+			(*p_seq) = RAIL_EDITOR_SEQ_MAIN;
+    }
+    break;
 
 	// リセット起動
 	case RAIL_EDITOR_SEQ_RESET:
@@ -403,9 +420,6 @@ static GMEVENT_RESULT DEBUG_RailEditorEvent( GMEVENT * p_event, int *  p_seq, vo
 
 	// リクエスト対応
 	case RAIL_EDITOR_SEQ_MAIN:
-
-		// MCSメイン
-		MCS_Main();
 
 		// 受信情報フラグ部破棄
 		RE_Recv_ClearFlag( p_wk->p_recv );
@@ -443,7 +457,9 @@ static GMEVENT_RESULT DEBUG_RailEditorEvent( GMEVENT * p_event, int *  p_seq, vo
 
 	// 破棄
 	case RAIL_EDITOR_SEQ_EXIT:				
-		MCS_Exit();
+
+
+		GFL_MCS_Close();
 
 //		GFL_OVERLAY_Unload( FS_OVERLAY_ID( mcs_lib ) );
 
@@ -715,17 +731,23 @@ static RE_RAIL_DRAW_OBJ* RE_DRAW_GetClearWork( RE_RAIL_DRAW_WORK* p_wk )
 /**
  *	@brief	データセットアップ
  *
- *	@param	p_wk				ワーク
- *	@param	cp_setting	セッティング
+ *	@param	p_wk				      ワーク
+ *	@param	cp_nogridMapper	  レール情報
  */
 //-----------------------------------------------------------------------------
-static void RE_DRAW_SetUpData( RE_RAIL_DRAW_WORK* p_wk, const RAIL_SETTING* cp_setting )
+static void RE_DRAW_SetUpData( RE_RAIL_DRAW_WORK* p_wk, const FLDNOGRID_MAPPER* cp_nogridMapper )
 {
-	int  i;
+	int  i, j;
 	RE_RAIL_DRAW_OBJ* p_drawobj;
-	const RAIL_POINT* cp_point;
+	const RAIL_POINT* cp_point_s;
+	const RAIL_POINT* cp_point_e;
+  const RAIL_LINEPOS_SET* cp_linepos;
 	VecFx32 point_s, point_e;
 	VecFx32 distance = {0,0,0};
+  u32 width;
+  const FIELD_RAIL_LOADER* cp_loader = FLDNOGRID_MAPPER_GetRailLoader( cp_nogridMapper );
+  const FIELD_RAIL_MAN* cp_railman = FLDNOGRID_MAPPER_GetRailMan( cp_nogridMapper );
+  const RAIL_SETTING* cp_setting = FIELD_RAIL_LOADER_GetData( cp_loader );
 
 	// 全情報クリーン
 	for( i=0; i<RM_DRAW_OBJ_MAX; i++ )
@@ -738,21 +760,74 @@ static void RE_DRAW_SetUpData( RE_RAIL_DRAW_WORK* p_wk, const RAIL_SETTING* cp_s
 	{
 		p_drawobj = RE_DRAW_GetClearWork( p_wk );
 		
-		RE_DRAW_DRAWOBJ_Set( p_drawobj, FIELD_RAIL_TYPE_POINT, i, &cp_setting->point_table[i].pos, &distance );
+		RE_DRAW_DRAWOBJ_Set( p_drawobj, FIELD_RAIL_TYPE_POINT, i, &cp_setting->point_table[i].pos, &distance, 0 );
 	}
 
 	// ライン
 	for( i=0; i<cp_setting->line_count; i++ )
 	{
-		p_drawobj = RE_DRAW_GetClearWork( p_wk );
+    cp_linepos =  &cp_setting->linepos_table[ cp_setting->line_table[i].line_pos_set ];
+    
+    // 直線
+    if( cp_linepos->func_index == FIELD_RAIL_LOADER_LINEPOS_FUNC_STRAIT )
+    {
+      p_drawobj = RE_DRAW_GetClearWork( p_wk );
 
-		cp_point = &cp_setting->point_table[ cp_setting->line_table[i].point_s ];
-		point_s = cp_point->pos;
-		cp_point = &cp_setting->point_table[ cp_setting->line_table[i].point_e ];
-		point_e = cp_point->pos;
-		
-		VEC_Subtract( &point_e, &point_s, &distance );
-		RE_DRAW_DRAWOBJ_Set( p_drawobj, FIELD_RAIL_TYPE_LINE, i, &point_s, &distance );
+      cp_point_s = &cp_setting->point_table[ cp_setting->line_table[i].point_s ];
+      point_s = cp_point_s->pos;
+      cp_point_e = &cp_setting->point_table[ cp_setting->line_table[i].point_e ];
+      point_e = cp_point_e->pos;
+      
+      VEC_Subtract( &point_e, &point_s, &distance );
+
+      // ラインSEARCH
+      width = 0;
+      for( j=0; j<RAIL_CONNECT_LINE_MAX; j++ )
+      {
+        if( cp_point_s->lines[j] == i )
+        {
+          width = cp_point_s->width_ofs_max[j];
+          break;
+        }
+      }
+      
+      RE_DRAW_DRAWOBJ_Set( p_drawobj, FIELD_RAIL_TYPE_LINE, i, &point_s, &distance, width );
+    }
+    else
+    {
+      u32 line_ofs_max;
+      VecFx32 pos1, pos2;
+      RAIL_LOCATION location;
+
+
+      //  カーブ
+      // グリッドサイズ分ループ
+      location.rail_index   = i;
+      location.type         = FIELD_RAIL_TYPE_LINE;
+      location.key          = RAIL_KEY_UP;
+      location.width_grid   = 0;
+      location.line_grid    = 0;
+      line_ofs_max          = FIELD_RAIL_MAN_GetLocationLineOfsMaxGrid( cp_railman, &location );
+      line_ofs_max += 1;
+      FIELD_RAIL_MAN_GetLocationPosition( cp_railman, &location, &pos1 );
+      VEC_Set( &pos2, pos1.x, pos1.y, pos1.z );
+
+      for( j=1; j<line_ofs_max; j++ )
+      {
+        location.line_grid = j;
+        FIELD_RAIL_MAN_GetLocationPosition( cp_railman, &location, &pos2 );
+        width = FIELD_RAIL_MAN_GetLocationWidthGrid( cp_railman, &location );
+
+        p_drawobj = RE_DRAW_GetClearWork( p_wk );
+
+        VEC_Subtract( &pos2, &pos1, &distance );
+
+        RE_DRAW_DRAWOBJ_Set( p_drawobj, FIELD_RAIL_TYPE_LINE, i, &pos1, &distance, RAIL_GRID_TO_OFS(width) );
+
+        VEC_Set( &pos1, pos2.x, pos2.y, pos2.z );
+      }
+
+    }
 	}
 }
 
@@ -795,7 +870,7 @@ static BOOL RE_DRAW_DRAWOBJ_IsUse( const RE_RAIL_DRAW_OBJ* cp_drawobj )
  *	@param	cp_way				方向と距離
  */
 //-----------------------------------------------------------------------------
-static void RE_DRAW_DRAWOBJ_Set( RE_RAIL_DRAW_OBJ* p_drawobj, u32 rail_type, u32 rail_index, const VecFx32* cp_trans, const VecFx32* cp_distance )
+static void RE_DRAW_DRAWOBJ_Set( RE_RAIL_DRAW_OBJ* p_drawobj, u32 rail_type, u32 rail_index, const VecFx32* cp_trans, const VecFx32* cp_distance, u32 width )
 {
 	VecFx32 vec_n;
 	
@@ -810,7 +885,7 @@ static void RE_DRAW_DRAWOBJ_Set( RE_RAIL_DRAW_OBJ* p_drawobj, u32 rail_type, u32
 	if( rail_type == FIELD_RAIL_TYPE_LINE )
 	{
 		GF_ASSERT( cp_distance );
-		VEC_Set( &p_drawobj->trans.scale, FX32_ONE, FX32_ONE, VEC_Mag(cp_distance) );
+		VEC_Set( &p_drawobj->trans.scale, FX32_CONST(width), FX32_ONE, VEC_Mag(cp_distance) );
 		VEC_Normalize( cp_distance, &vec_n );
 		GFL_CALC3D_MTX_GetVecToRotMtxXZ( &vec_n, &p_drawobj->trans.rotate );
 	}
@@ -895,7 +970,8 @@ static BOOL RE_Recv_IsReset( const RE_RECV_BUFF* cp_buff )
 static void RE_RecvControl( DEBUG_RAIL_EDITOR* p_wk )
 {
 	const RE_MCS_HEADER* cp_header;
-	u32 size;
+	BOOL result;
+  int size;
 	static void (* const cpRecv[RE_MCS_DATA_TYPE_MAX])( DEBUG_RAIL_EDITOR* p_wk, const void* cp_data, u32 size ) = 
 	{
 		NULL,
@@ -916,22 +992,20 @@ static void RE_RecvControl( DEBUG_RAIL_EDITOR* p_wk )
 	};
 
 	// 受信データがあるかチェック
-	if( MCS_CheckRead() != 0 )
-	{
-		size = MCS_Read( p_wk->p_tmp_buff, RE_TMP_BUFF_SIZE );
-		if( size != 0 )
-		{
-			cp_header = (const RE_MCS_HEADER*)p_wk->p_tmp_buff;
-				
-			// 未知のデータが来た
-			GF_ASSERT( cp_header->data_type < RE_MCS_DATA_TYPE_MAX );
+  size = GFL_MCS_CheckReadable( GFL_MCS_RAIL_EDITOR_CATEGORY_ID );
+  result = GFL_MCS_Read( GFL_MCS_RAIL_EDITOR_CATEGORY_ID, p_wk->p_tmp_buff, RE_TMP_BUFF_SIZE );
+  if( result )
+  {
+    cp_header = (const RE_MCS_HEADER*)p_wk->p_tmp_buff;
+      
+    // 未知のデータが来た
+    GF_ASSERT( cp_header->data_type < RE_MCS_DATA_TYPE_MAX );
 
-			if( cpRecv[ cp_header->data_type ] )
-			{
-				cpRecv[ cp_header->data_type ]( p_wk, p_wk->p_tmp_buff, size );
-			}
-		}
-	}
+    if( cpRecv[ cp_header->data_type ] )
+    {
+      cpRecv[ cp_header->data_type ]( p_wk, p_wk->p_tmp_buff, size );
+    }
+  }
 }
 
 //----------------------------------------------------------------------------
@@ -1115,7 +1189,6 @@ static void RE_Reflect( DEBUG_RAIL_EDITOR* p_wk )
 static void RE_Reflect_Rail( DEBUG_RAIL_EDITOR* p_wk )
 {
   FLDNOGRID_MAPPER* p_nogridMapper = FIELDMAP_GetFldNoGridMapper( p_wk->p_fieldmap );
-  const FIELD_RAIL_LOADER* cp_railload = FLDNOGRID_MAPPER_GetRailLoader( p_nogridMapper );
 	RAIL_LOCATION location;
 	RE_MCS_RAIL_DATA* p_data = (RE_MCS_RAIL_DATA*)p_wk->p_recv->rail;	
 	void* p_setdata;
@@ -1135,7 +1208,7 @@ static void RE_Reflect_Rail( DEBUG_RAIL_EDITOR* p_wk )
 	{
 		RE_RAIL_DRAW_WORK* p_drawwk = FLDMAPFUNC_GetFreeWork( p_wk->p_rail_draw );	
 		
-		RE_DRAW_SetUpData( p_drawwk, FIELD_RAIL_LOADER_GetData( cp_railload ) );
+		RE_DRAW_SetUpData( p_drawwk, p_nogridMapper );
 	}
 }
 
@@ -1917,8 +1990,9 @@ static void RE_Send_RailData( DEBUG_RAIL_EDITOR* p_wk )
 	p_senddata->reset						 = FALSE;
 	GFL_STD_MemCopy( cp_data, p_senddata->rail, datasize );
 	
+  TOMOYA_Printf( "send raildata data size = 0x%x\n", datasize+4+sizeof(RE_MCS_HEADER) );
 	// 送信
-	result = MCS_Write( MCS_CHANNEL0, p_senddata, datasize+4+sizeof(RE_MCS_HEADER) );
+	result = GFL_MCS_Write( GFL_MCS_RAIL_EDITOR_CATEGORY_ID, p_senddata, datasize+4+sizeof(RE_MCS_HEADER) );
 	GF_ASSERT( result );	
 }
 
@@ -1942,9 +2016,10 @@ static void RE_Send_AreaData( DEBUG_RAIL_EDITOR* p_wk )
 	p_senddata->reset						 = FALSE;
 	GFL_STD_MemCopy( cp_data, p_senddata->area, datasize );
 	
+  TOMOYA_Printf( "send areadata data size = 0x%x\n", datasize+4+sizeof(RE_MCS_HEADER) );
 	
 	// 送信
-	result = MCS_Write( MCS_CHANNEL0, p_senddata, datasize+4+sizeof(RE_MCS_HEADER) );
+	result = GFL_MCS_Write( GFL_MCS_RAIL_EDITOR_CATEGORY_ID, p_senddata, datasize+4+sizeof(RE_MCS_HEADER) );
 	GF_ASSERT( result );	
 }
 
@@ -1974,7 +2049,7 @@ static void RE_Send_PlayerData( DEBUG_RAIL_EDITOR* p_wk )
 	p_senddata->target_length = VEC_Distance( &target, &pos );
 
 	// 送信
-	result = MCS_Write( MCS_CHANNEL0, p_senddata, sizeof(RE_MCS_PLAYER_DATA) );
+	result = GFL_MCS_Write( GFL_MCS_RAIL_EDITOR_CATEGORY_ID, p_senddata, sizeof(RE_MCS_PLAYER_DATA) );
 	GF_ASSERT( result );	
 }
 
@@ -2030,7 +2105,7 @@ static void RE_Send_CameraData( DEBUG_RAIL_EDITOR* p_wk )
 	}
 
 	// 送信
-	result = MCS_Write( MCS_CHANNEL0, p_senddata, sizeof(RE_MCS_CAMERA_DATA) );
+	result = GFL_MCS_Write( GFL_MCS_RAIL_EDITOR_CATEGORY_ID, p_senddata, sizeof(RE_MCS_CAMERA_DATA) );
 	GF_ASSERT( result );	
 }
 
@@ -2055,7 +2130,7 @@ static void RE_Send_RailLocationData( DEBUG_RAIL_EDITOR* p_wk )
 
 
 	// 送信
-	result = MCS_Write( MCS_CHANNEL0, p_senddata, sizeof(RE_MCS_RAILLOCATION_DATA) );
+	result = GFL_MCS_Write( GFL_MCS_RAIL_EDITOR_CATEGORY_ID, p_senddata, sizeof(RE_MCS_RAILLOCATION_DATA) );
 	GF_ASSERT( result );	
 }
 

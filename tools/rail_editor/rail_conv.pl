@@ -272,7 +272,7 @@ sub loadRailSysData
 	#“Ç‚İ‚İ‰ñ”‚ğ’²‚×‚é
 	if( $input_count != 9 )
 	{
-		print( "#loadRailSysData load data not 9\n" );
+		print( "#loadRailSysData load data not 9 --- $input_count\n" );
 		exit(1);
 	}
 }
