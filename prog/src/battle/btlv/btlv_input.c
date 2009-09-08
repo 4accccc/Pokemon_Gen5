@@ -509,6 +509,8 @@ void  BTLV_INPUT_InitBG( BTLV_INPUT_WORK *biw )
 //============================================================================================
 void  BTLV_INPUT_ExitBG( BTLV_INPUT_WORK *biw )
 { 
+  BTLV_INPUT_DeleteBallGauge( biw );
+
   GFL_CLGRP_CGR_Release( biw->objcharID );
   GFL_CLGRP_CELLANIM_Release( biw->objcellID );
   GFL_CLGRP_PLTT_Release( biw->objplttID );
