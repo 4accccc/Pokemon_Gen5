@@ -409,11 +409,32 @@ static void MCS_CartIntrFunc( void )
  */
 //============================================================================================
 #define MCS_LINK_MAX	(7)	// 1リンクにつき2チャンネル使う
+
+enum{
+	GFL_MCSCOMM_NULL = 0,
+	GFL_MCSCOMM_LINK,
+	GFL_MCSCOMM_ANNUL,
+};
+
+#define MCS_COMMBUF_SIZE	(0x80)	// コマンドリクエスト格納バッファサイズ
 //============================================================================================
 /**
  *	構造体定義
  */
 //============================================================================================
+// コマンドヘッダ構造体
+typedef struct {
+	u32 projectID;		// プロジェクト識別ID
+	u32 commID;		    // コマンドID
+  u32 categoryID;		// カテゴリー識別ID
+}GFL_MCS_HEADER;
+
+// PC → DS への接続リクエスト内容構造体
+typedef struct {
+	u32 channelID1;		// PC側で確保されたチャンネル1(通信バッファより小さいデータ通信用)
+	u32 channelID2;		// PC側で確保されたチャンネル2(通信バッファより大きいデータ通信用)
+}GFL_MCS_LINKPARAM;
+
 // PC → DS へのリンクリクエスト内容構造体
 typedef struct {
 	u32 projectID;		// プロジェクト識別ID
@@ -470,17 +491,10 @@ typedef struct {
 //============================================================================================
 static	GFL_MCS_WORK*		gflMCS = NULL;
 static	GFL_MCS_WORK		gflMCSdata;
-//static	u8							tmpBuf[MCS_RECVBUF_SIZE];
+static	u8							commBuf[MCS_COMMBUF_SIZE];
 static	u32							readResult;	// 読み取り関数引数用
 
 static int count;
-
-//============================================================================================
-/**
- *	プロトタイプ宣言
- */
-//============================================================================================
-static BOOL	GFL_MCS_GetLinkReq( void );
 
 //============================================================================================
 /**
@@ -527,6 +541,124 @@ void	GFL_MCS_Init( void )
  *	システムメイン
  */
 //============================================================================================
+//--------------------------------------------------------------------------------------------
+/**
+ *	PCとのリンクを確立するための受信データ取得
+ *	 (識別チャンネルはMCS_CHANNEL15固定)
+ */
+//--------------------------------------------------------------------------------------------
+static void	GFL_MCS_GetComm( void )
+{
+	u32 channelID = MCS_CHANNEL15;
+	int i;
+
+	// 受信可能なデータサイズの取得
+	u32	recvSize = NNS_McsGetStreamReadableSize(channelID);
+
+	if((recvSize > 0)&&(recvSize <= MCS_COMMBUF_SIZE)){ 
+		GFL_MCS_HEADER* header;
+		NNS_McsReadStream(channelID, &commBuf, recvSize, &readResult);
+		header = (GFL_MCS_HEADER*)commBuf;
+		OS_Printf("コマンド受信... projectID(%x), commID(%x), categoryID(%x)\n", 
+							header->projectID, header->commID, header->categoryID);
+
+		if(header->projectID == POKEMON_MCS_ID){
+			switch(header->commID){
+			case GFL_MCSCOMM_LINK:
+				{
+					// リンクリクエスト格納
+					int pLinkSt = GFL_MCS_LINKIDX_INVALID;
+					int appActive = 0;
+
+					for(i=0; i<MCS_LINK_MAX; i++){
+						if(gflMCS->linkStatus[i].key.categoryID == 0){
+							// リンク情報格納場所保存
+							if(pLinkSt == GFL_MCS_LINKIDX_INVALID){ pLinkSt = i; }
+						} else if(gflMCS->linkStatus[i].key.categoryID == header->categoryID){
+							// 同一アプリ二重起動チェック
+							appActive++;
+						}
+					}
+					if(appActive){
+						OS_Printf("リンク要求を受信しましたが、既に同一アプリのリンクをしているか\n");
+						OS_Printf("二重起動接続をしようとしています。要求を無視します\n");
+					} else if(pLinkSt == GFL_MCS_LINKIDX_INVALID){
+						OS_Printf("最大接続量を超えるリンク情報を受信しました。要求を無視します\n");
+					} else {
+						GFL_MCS_LINKSTATUS* linkStatus = &gflMCS->linkStatus[pLinkSt];
+						GFL_MCS_LINKPARAM* param = (GFL_MCS_LINKPARAM*)(commBuf + sizeof(GFL_MCS_HEADER));
+
+						OS_Printf("リンク情報受信... categoryID(%x), channelID(%d, %d)\n",
+											header->categoryID, param->channelID1, param->channelID2);
+						linkStatus->key.categoryID = header->categoryID;
+						linkStatus->key.channelID1 = param->channelID1;
+						linkStatus->key.channelID2 = param->channelID2;
+						// 受信完了信号として、PCへ送り返す
+						{
+							GFL_MCS_HEADER header;
+							header.projectID = POKEMON_MCS_ID;
+							header.commID = GFL_MCSCOMM_LINK;
+							header.categoryID = linkStatus->key.categoryID;
+							NNS_McsWriteStream(MCS_CHANNEL15, &header, sizeof(GFL_MCS_HEADER));
+						}
+					}
+				}
+				break;
+			case GFL_MCSCOMM_ANNUL:
+				// 切断リクエスト（ = リンク情報破棄）
+				for(i=0; i<MCS_LINK_MAX; i++){
+					GFL_MCS_LINKSTATUS* linkStatus = &gflMCS->linkStatus[i];
+
+					if(linkStatus->key.categoryID == header->categoryID){
+						linkStatus->key.categoryID = 0;
+						linkStatus->key.channelID1 = MCS_CHANNEL15;
+						linkStatus->key.channelID2 = MCS_CHANNEL15;
+
+						linkStatus->rParam.size = 0;
+						linkStatus->rParam.split = FALSE;
+						linkStatus->rParam.getInfo = FALSE;
+						OS_Printf("リンク切断要求を受信しました。categoryID(%x)\n", header->categoryID);
+					}
+				}
+				break;
+			}
+		}
+	} else {
+		// コマンド受信バッファより大きい場合は読み捨てる
+		while(recvSize){
+			u32 tmp;
+			if(recvSize <= 4){
+				NNS_McsReadStream(channelID, &tmp, recvSize, &readResult);
+				break;
+			}
+			NNS_McsReadStream(channelID, &tmp, 4, &readResult);
+			recvSize -= 4;
+		}
+	}
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ *	PCとのリンク情報INDEXを取得
+ */
+//--------------------------------------------------------------------------------------------
+static u16	GFL_MCS_GetLinkIdx( u32 categoryID )
+{
+	int i;
+
+	for(i=0; i<MCS_LINK_MAX; i++){
+		if(gflMCS->linkStatus[i].key.categoryID == categoryID){
+			return i;
+		}
+	}
+	return GFL_MCS_LINKIDX_INVALID;
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ *	メイン関数
+ */
+//--------------------------------------------------------------------------------------------
 void GFL_MCS_Main( void )
 {
 	if( !gflMCS ){ return; }
@@ -540,67 +672,10 @@ void GFL_MCS_Main( void )
 		GFL_MCS_Close();
 		return;
 	}
-	GFL_MCS_GetLinkReq();
+	GFL_MCS_GetComm();
 
 	//OS_Printf("MCS通信中(%d)\n",count);
 	count++;
-}
-
-//--------------------------------------------------------------------------------------------
-/**
- *	PCとのリンクを確立するための受信データ取得
- *	 (識別チャンネルはMCS_CHANNEL15固定)
- */
-//--------------------------------------------------------------------------------------------
-static BOOL	GFL_MCS_GetLinkReq( void )
-{
-	u32 channelID = MCS_CHANNEL15;
-
-	// 受信可能なデータサイズの取得
-	u32	recvSize = NNS_McsGetStreamReadableSize(channelID);
-
-	if(recvSize == sizeof(GFL_MCS_LINKREQ)){ 
-		GFL_MCS_LINKREQ linkReq;
-		u16 p;
-
-		for(p=0; p<MCS_LINK_MAX; p++){
-			if(gflMCS->linkStatus[p].key.categoryID == 0){ break; }
-		}
-		if(p == MCS_LINK_MAX){
-			OS_Printf("最大接続量をを超えるリンク情報を受信しました");
-			return FALSE;
-		}
-		// 仮にリンクリクエストだと判断し、データヘッダの読み取り
-		NNS_McsReadStream(channelID, &linkReq, sizeof(GFL_MCS_LINKREQ), &readResult);
-
-		if(linkReq.projectID == POKEMON_MCS_ID){
-			GFL_MCS_LINKSTATUS* linkStatus = &gflMCS->linkStatus[p];
-
-			OS_Printf("リンク情報受信... projectID(%x), categoryID(%x), channelID(%d, %d)\n",
-					linkReq.projectID, linkReq.categoryID, linkReq.channelID1, linkReq.channelID2);
-			linkStatus->key.categoryID = linkReq.categoryID;
-			linkStatus->key.channelID1 = linkReq.channelID1;
-			linkStatus->key.channelID2 = linkReq.channelID2;
-			return TRUE;
-		}
-		return FALSE;
-	}
-	// リンク情報じゃない or ターゲットプロジェクトが一致しないので読み捨てる
-	while(recvSize){
-#if 0
-		//NNS_McsReadStream(channelID, &tmpBuf, MCS_RECVBUF_SIZE, &readResult);
-		//recvSize = NNS_McsGetStreamReadableSize(channelID);
-#else
-		u32 tmp;
-		if(recvSize <= 4){
-			NNS_McsReadStream(channelID, &tmp, recvSize, &readResult);
-			break;
-		}
-		NNS_McsReadStream(channelID, &tmp, 4, &readResult);
-		recvSize -= 4;
-#endif
-	}
-	return FALSE;
 }
 
 //============================================================================================
@@ -717,6 +792,7 @@ void	GFL_MCS_Close( void )
 	gflMCS->deviceOpen = FALSE;
 }
 
+#if 0
 //============================================================================================
 /**
  *	PCとのリンクを確立する
@@ -736,12 +812,11 @@ BOOL	GFL_MCS_Link( u32 categoryID, GFL_MCS_LINKIDX* pIdx )
 			*pIdx = i;
 			// 受信完了信号として、PCへ送り返す
 			{
-				GFL_MCS_LINKREQ linkReq;
-				linkReq.projectID = POKEMON_MCS_ID;
-				linkReq.categoryID = linkStatus->key.categoryID;
-				linkReq.channelID1 = linkStatus->key.channelID1;
-				linkReq.channelID2 = linkStatus->key.channelID2;
-				NNS_McsWriteStream(MCS_CHANNEL15, &linkReq, sizeof(GFL_MCS_LINKREQ));
+				GFL_MCS_HEADER header;
+				header.projectID = POKEMON_MCS_ID;
+				header.commID = GFL_MCSCOMM_LINK;
+				header.categoryID = linkStatus->key.categoryID;
+				NNS_McsWriteStream(MCS_CHANNEL15, &header, sizeof(GFL_MCS_HEADER));
 			}
 			return TRUE;
 		}
@@ -770,6 +845,7 @@ void	GFL_MCS_Annul( GFL_MCS_LINKIDX idx )
 	linkStatus->rParam.split = FALSE;
 	linkStatus->rParam.getInfo = FALSE;
 }
+#endif
 
 //============================================================================================
 /**
@@ -799,16 +875,10 @@ static BOOL checkIdle( GFL_MCS_LINKKEY* pKey )
  *	データ読み込みチェック
  */
 //============================================================================================
-int		GFL_MCS_CheckReadable( GFL_MCS_LINKIDX idx )
+static int GFL_MCS_CheckReadable_Core( u16 idx )
 {
-	GFL_MCS_LINKSTATUS* linkStatus;
+	GFL_MCS_LINKSTATUS* linkStatus = &gflMCS->linkStatus[idx];
 	u32 size;
-
-	if( !gflMCS ){ return 0; }
-	if( gflMCS->deviceOpen == FALSE ){ return 0; }
-	if( idx >= MCS_LINK_MAX){ return 0; }
-	linkStatus = &gflMCS->linkStatus[idx];
-	if( linkStatus->key.categoryID == 0 ){ return 0; }
 
 	// リセット
 	linkStatus->rParam.size = 0;
@@ -837,26 +907,41 @@ int		GFL_MCS_CheckReadable( GFL_MCS_LINKIDX idx )
 	return 0;
 }
 
+int		GFL_MCS_CheckReadable( u32 categoryID )
+{
+	u16 linkIdx;
+
+	if( !gflMCS ){ return 0; }
+	if( gflMCS->deviceOpen == FALSE ){ return 0; }
+
+	linkIdx = GFL_MCS_GetLinkIdx(categoryID);
+	if(linkIdx == GFL_MCS_LINKIDX_INVALID){ return  0; }
+
+	return GFL_MCS_CheckReadable_Core(linkIdx);
+}
+
 //============================================================================================
 /**
  *	データ読み込み
  */
 //============================================================================================
-BOOL	GFL_MCS_Read( GFL_MCS_LINKIDX idx, void* pReadBuf, u32 readBufSize )
+BOOL	GFL_MCS_Read( u32 categoryID, void* pReadBuf, u32 readBufSize )
 {
 	GFL_MCS_LINKSTATUS* linkStatus;
+	u16		linkIdx;
 	u32		readSize;
 	BOOL	result = FALSE;
 
 	if( !gflMCS ){ return FALSE; }
 	if( gflMCS->deviceOpen == FALSE ){ return FALSE; }
-	if( idx >= MCS_LINK_MAX){ return FALSE; }
-	linkStatus = &gflMCS->linkStatus[idx];
-	if( linkStatus->key.categoryID == 0 ){ return  FALSE; }
+
+	linkIdx = GFL_MCS_GetLinkIdx(categoryID);
+	if(linkIdx == GFL_MCS_LINKIDX_INVALID){ return  FALSE; }
+	linkStatus = &gflMCS->linkStatus[linkIdx];
 
 	if(linkStatus->rParam.getInfo == FALSE){ 
 		// 読み取り情報が取得されていないのでここで取得
-		GFL_MCS_CheckReadable( idx );
+		GFL_MCS_CheckReadable_Core(linkIdx);
 	}
 	readSize = linkStatus->rParam.size;
 	if(readSize){
@@ -901,15 +986,17 @@ BOOL	GFL_MCS_Read( GFL_MCS_LINKIDX idx, void* pReadBuf, u32 readBufSize )
  *	データ書き込み
  */
 //============================================================================================
-BOOL	GFL_MCS_Write( GFL_MCS_LINKIDX idx, const void* pWriteBuf, u32 writeSize )
+BOOL	GFL_MCS_Write( u32 categoryID, const void* pWriteBuf, u32 writeSize )
 {
 	GFL_MCS_LINKSTATUS* linkStatus;
+	u16		linkIdx;
 
 	if( !gflMCS ){ return FALSE; }
 	if( gflMCS->deviceOpen == FALSE ){ return FALSE; }
-	if( idx >= MCS_LINK_MAX){ return FALSE; }
-	linkStatus = &gflMCS->linkStatus[idx];
-	if( linkStatus->key.categoryID == 0 ){ return  FALSE; }
+
+	linkIdx = GFL_MCS_GetLinkIdx(categoryID);
+	if(linkIdx == GFL_MCS_LINKIDX_INVALID){ return  FALSE; }
+	linkStatus = &gflMCS->linkStatus[linkIdx];
 
 	if( writeSize <= MCS_SPLIT_SIZE ){
 		// 一括送信

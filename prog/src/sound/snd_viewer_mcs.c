@@ -23,7 +23,6 @@ static void MCS_Sound_Send(u32 comm, u32* param);
 static void MCS_Sound_Recv(u32 comm, u32* param);
 
 #define TRACK_NUM	(16)
-static GFL_MCS_LINKIDX mcsLinkIdx = GFL_MCS_LINKIDX_INVALID; 
 static SNDTrackInfo		trackInfo[TRACK_NUM];
 static u16						trackActiveBit = 0;	
 static u8							writeBuf[0x80];
@@ -38,52 +37,44 @@ static u32						soundNo = 0xffffffff;
 //============================================================================================
 void	GFL_MCS_SNDVIEWER_Main(void)
 {
-	// リンク判定
-	if(mcsLinkIdx == GFL_MCS_LINKIDX_INVALID){
-		// リンクされるまでここでHold
-		GFL_MCS_Link(GFL_MCS_SNDVIEWER_ID, &mcsLinkIdx);
-		return;
-	}
-	{
-		NNSSndHandle*	sndHandle = PMSND_GetNowSndHandlePointer();
-		u32 nowSoundNo = PMSND_GetBGMsoundNo();
-		u16	nowTrackBit = 0;
-		int i;
+	NNSSndHandle*	sndHandle = PMSND_GetNowSndHandlePointer();
+	u32 nowSoundNo = PMSND_GetBGMsoundNo();
+	u16	nowTrackBit = 0;
+	int i;
 
-		// 現在のトラック状態を取得
-		for( i=0; i<TRACK_NUM; i++ ){
-			if(NNS_SndPlayerReadDriverTrackInfo(sndHandle, i, &trackInfo[i]) == TRUE){
-				nowTrackBit |= (0x0001 << i);	// 有効/無効をBitFieldに変換
-			}
+	// 現在のトラック状態を取得
+	for( i=0; i<TRACK_NUM; i++ ){
+		if(NNS_SndPlayerReadDriverTrackInfo(sndHandle, i, &trackInfo[i]) == TRUE){
+			nowTrackBit |= (0x0001 << i);	// 有効/無効をBitFieldに変換
 		}
-		// 送信判定
-		if(nowSoundNo != soundNo){
-			// 曲が変化した場合リセットコマンド転送
-			u32 param[PNUM_COMM_PANEL_RESET] = {0};
-			MCS_Sound_Send(COMM_PANEL_RESET, param);
-			soundNo = nowSoundNo;
+	}
+	// 送信判定
+	if(nowSoundNo != soundNo){
+		// 曲が変化した場合リセットコマンド転送
+		u32 param[PNUM_COMM_PANEL_RESET] = {0};
+		MCS_Sound_Send(COMM_PANEL_RESET, param);
+		soundNo = nowSoundNo;
+	}
+	// 現在のトラック状態を取得
+	if(nowTrackBit != trackActiveBit){
+		// 差があった場合、現在のトラック状態を送信
+		u32 param[PNUM_COMM_SET_TRACKST];
+		param[0] = nowTrackBit;
+		MCS_Sound_Send(COMM_SET_TRACKST, param);
+		trackActiveBit = nowTrackBit;
+	}
+	// 受信判定
+	if(GFL_MCS_Read(GFL_MCS_SNDVIEWER_ID, readBuf, 0x80) == TRUE){
+		GFL_MCS_SNDVIEWER_HEADER* dataHeader = (GFL_MCS_SNDVIEWER_HEADER*)readBuf;
+		OS_Printf("ID(%x), comm(%x), param(%x)\n",
+								dataHeader->ID, dataHeader->command, dataHeader->param);
+		//受信コマンド処理
+		switch(dataHeader->ID){
+		case GFL_MCS_SNDVIEWER_ID:
+			MCS_Sound_Recv(dataHeader->command, &dataHeader->param);
+			break;
 		}
-		// 現在のトラック状態を取得
-		if(nowTrackBit != trackActiveBit){
-			// 差があった場合、現在のトラック状態を送信
-			u32 param[PNUM_COMM_SET_TRACKST];
-			param[0] = nowTrackBit;
-			MCS_Sound_Send(COMM_SET_TRACKST, param);
-			trackActiveBit = nowTrackBit;
-		}
-		// 受信判定
-		if(GFL_MCS_Read(mcsLinkIdx, readBuf, 0x80) == TRUE){
-			GFL_MCS_SNDVIEWER_HEADER* dataHeader = (GFL_MCS_SNDVIEWER_HEADER*)readBuf;
-			OS_Printf("ID(%x), comm(%x), param(%x)\n",
-									dataHeader->ID, dataHeader->command, dataHeader->param);
-			//受信コマンド処理
-			switch(dataHeader->ID){
-			case GFL_MCS_SNDVIEWER_ID:
-				MCS_Sound_Recv(dataHeader->command, &dataHeader->param);
-				break;
-			}
-			GFL_STD_MemClear(readBuf, 0x80);
-		}
+		GFL_STD_MemClear(readBuf, 0x80);
 	}
 }
 
@@ -118,7 +109,7 @@ static void MCS_Sound_Send(u32 comm, u32* param)
 	dataHeader->command = comm;
 	for(i=0; i<paramNum; i++){ (&dataHeader->param)[i] = param[i]; }
 
-	GFL_MCS_Write(mcsLinkIdx, writeBuf, size);
+	GFL_MCS_Write(GFL_MCS_SNDVIEWER_ID, writeBuf, size);
 }
 
 static void MCS_Sound_Recv(u32 comm, u32* param)
@@ -188,11 +179,6 @@ static void MCS_Sound_Recv(u32 comm, u32* param)
 		break;
 
 	case COMM_DISCONNECT:
-		if(mcsLinkIdx != GFL_MCS_LINKIDX_INVALID){
-			// 切断されたのでリンク情報リセット 
-			GFL_MCS_Annul( mcsLinkIdx );
-			mcsLinkIdx = GFL_MCS_LINKIDX_INVALID;
-		}
 		break;
 	}
 }
