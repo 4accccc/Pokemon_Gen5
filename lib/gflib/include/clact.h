@@ -19,6 +19,7 @@
  *	                        ＊SetAnmFrameはマルチセル使用不可能です。
  *	                      ・アニメーションのインデックスを設定する関数
  *	                        GFL_CLACT_WK_SetAnmIndexを追加
+ *	@data   2009.09.08    Element(アニメーション結果情報)を取得するインターフェースを追加
  *	                      
  *
  */
@@ -268,6 +269,19 @@ typedef struct {
 	fx32 x;
 	fx32 y;
 } GFL_CLSCALE;
+
+
+//-------------------------------------
+///	アニメーション要素構造体
+//=====================================
+typedef struct {
+  u16   cell_index;       // セルインデックス
+  u16   rotZ;             // 回転Z
+  fx32  scale_x;          // スケールX
+  fx32  scale_y;          // スケールY
+  s16   trans_x;          // 移動X
+  s16   trans_y;          // 移動Y
+} GFL_CLWK_ANMELEMENT;
 
 
 
@@ -1548,6 +1562,17 @@ extern u32 GFL_CLACT_WK_GetUserAttrAnmFrameNow( const GFL_CLWK* cp_wk );
 //-----------------------------------------------------------------------------
 extern u32 GFL_CLACT_WK_GetUserAttrCell( const GFL_CLWK* cp_wk, u32 cellidx );
 
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  アニメーションの、構成要素を取得する。
+ *	  ＊Multi Cell　非対応
+ *
+ *	@param	cp_wk         ワーク
+ *	@param	p_element     エレメント
+ */
+//-----------------------------------------------------------------------------
+extern void GFL_CLACT_WK_GetAnmElementNow( const GFL_CLWK* cp_wk, GFL_CLWK_ANMELEMENT* p_element );
 
 
 
