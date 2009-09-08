@@ -78,7 +78,7 @@ class ConvData
       file.print( [ @translate_x[i] ].pack( "f" ) )
       file.print( [ @translate_y[i] ].pack( "f" ) )
       file.print( [ @translate_z[i] ].pack( "f" ) )
-      puts @translate_x[i].to_s + ", " + @translate_y[i].to_s + ", " + @translate_z[i].to_s
+      #puts @translate_x[i].to_s + ", " + @translate_y[i].to_s + ", " + @translate_z[i].to_s
     end
     file.close
   end
