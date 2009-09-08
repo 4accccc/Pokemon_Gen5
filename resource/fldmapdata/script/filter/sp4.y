@@ -1,6 +1,6 @@
 #====================================================================================
 #
-#	ポケモン金銀DS用スクリプトフィルタ定義
+#	シャチプロジェクト用スクリプトフィルタ定義
 #
 #	2007.04　tamada GAME FREAK inc.
 #
@@ -288,13 +288,13 @@ rule
 					}
 				|	FLAG_ON '(' IDENT ')'
 					{
-            left = "_FLAG_PUSH #{val[2]}"
+            left = "_PUSH_FLAG #{val[2]}"
             right = "_PUSH_VALUE TRUE"
             result = CompareNode.new('CMPID_EQ', left, right)
 					}
 				|	FLAG_OFF '(' IDENT ')'
 					{
-            left = "_FLAG_PUSH #{val[2]}"
+            left = "_PUSH_FLAG #{val[2]}"
             right = "_PUSH_VALUE FALSE"
             result = CompareNode.new('CMPID_EQ', left, right)
 					}

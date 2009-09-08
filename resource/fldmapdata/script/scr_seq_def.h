@@ -141,6 +141,7 @@ DEF_CMD_COUNT  =  ( DEF_CMD_COUNT + 1 )
   DEF_CMD EV_SEQ_ITEM_NAME
   DEF_CMD EV_SEQ_ITEM_WAZA_NAME
   DEF_CMD EV_SEQ_WAZA_NAME
+  DEF_CMD EV_SEQ_POCKET_NAME
 
   //視線トレーナー関連
   DEF_CMD EV_SEQ_EYE_TRAINER_MOVE_SET
@@ -206,6 +207,7 @@ DEF_CMD_COUNT  =  ( DEF_CMD_COUNT + 1 )
 	DEF_CMD	EV_SEQ_ITEM_CHK
   DEF_CMD	EV_SEQ_GET_ITEM_NUM
 	DEF_CMD	EV_SEQ_WAZA_ITEM_CHK
+  DEF_CMD EV_SEQ_GET_POCKET_ID
 
   //ミュージカル関連
   DEF_CMD EV_SEQ_MUSICAL_CALL
@@ -391,7 +393,7 @@ DEF_CMD_COUNT  =  ( DEF_CMD_COUNT + 1 )
 //--------------------------------------------------------------
   .macro  _PUSH_FLAG  flag
   .short  EV_SEQ_PUSH_FLAG
-  .short  flag
+  .short  \flag
   .endm
 //--------------------------------------------------------------
 //--------------------------------------------------------------
@@ -1007,7 +1009,7 @@ DEF_CMD_COUNT  =  ( DEF_CMD_COUNT + 1 )
 
   .macro  _ASM_TALK_MSG msg_id
   .short  EV_SEQ_TALKMSG
-  .byte  \msg_id
+  .short  \msg_id
   .endm
 
 //--------------------------------------------------------------
@@ -1020,7 +1022,7 @@ DEF_CMD_COUNT  =  ( DEF_CMD_COUNT + 1 )
 
   .macro  _ASM_TALKMSG_ALLPUT msg_id
   .short  EV_SEQ_TALKMSG_ALLPUT
-  .byte  \msg_id
+  .short  \msg_id
   .endm
 
 //--------------------------------------------------------------
@@ -1061,7 +1063,7 @@ DEF_CMD_COUNT  =  ( DEF_CMD_COUNT + 1 )
 
   .macro _ASM_BALLOONWIN_OBJMSG_OPEN msg_id, obj_id
   .short  EV_SEQ_BALLOONWIN_OBJMSG_OPEN
-  .byte \msg_id
+  .short \msg_id
   .byte \obj_id
   .endm
 
@@ -1075,7 +1077,7 @@ DEF_CMD_COUNT  =  ( DEF_CMD_COUNT + 1 )
 
   .macro _ASM_BALLOONWIN_TALKOBJ_OPEN msg_id
   .short  EV_SEQ_BALLOONWIN_TALKOBJ_OPEN
-  .byte \msg_id
+  .short \msg_id
   .endm
 
 //--------------------------------------------------------------
@@ -1373,6 +1375,16 @@ DEF_CMD_COUNT  =  ( DEF_CMD_COUNT + 1 )
 	.byte	\idx
 	.short	\waza
 	.endm
+
+//--------------------------------------------------------------
+//--------------------------------------------------------------
+#define _POCKET_NAME( idx, pocket_id )  _ASM_POCKET_NAME idx, pocket_id
+
+  .macro  _ASM_POCKET_NAME idx, pocket_id
+  .short  EV_SEQ_POCKET_NAME
+  .byte   \idx
+  .short  \pocket_id
+  .endm
 
 //======================================================================
 //  視線トレーナー関連
@@ -2112,6 +2124,18 @@ DEF_CMD_COUNT  =  ( DEF_CMD_COUNT + 1 )
 	.short	\item_no
 	.short	\ret_wk
 	.endm
+
+//--------------------------------------------------------------
+//--------------------------------------------------------------
+#define _GET_POCKET_ID( item_no, ret_wk )   \
+    _ASM_GET_POCKET_ID item_no, ret_wk
+
+
+    .macro  _ASM_GET_POCKET_ID item_no, ret_wk
+    .short  EV_SEQ_GET_POCKET_ID
+    .short  \item_no
+    .short  \ret_wk
+    .endm
 
 //======================================================================
 //  会話イベント関連

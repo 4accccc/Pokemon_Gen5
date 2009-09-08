@@ -16,7 +16,7 @@ module PmScript
 
   class Parser < Racc::Parser
 
-module_eval <<'..end sp4.y modeval..id94ed6b2fb1', 'sp4.y', 521
+module_eval <<'..end sp4.y modeval..id9255308bd3', 'sp4.y', 521
 
 def initialize
 end
@@ -165,7 +165,7 @@ def on_error( t, v, values )
   end
 
 
-..end sp4.y modeval..id94ed6b2fb1
+..end sp4.y modeval..id9255308bd3
 
 ##### racc 1.4.5 generates ###
 
@@ -813,7 +813,7 @@ module_eval <<'.,.,', 'sp4.y', 288
 
 module_eval <<'.,.,', 'sp4.y', 294
   def _reduce_44( val, _values, result )
-            left = "_FLAG_PUSH #{val[2]}"
+            left = "_PUSH_FLAG #{val[2]}"
             right = "_PUSH_VALUE TRUE"
             result = CompareNode.new('CMPID_EQ', left, right)
    result
@@ -822,7 +822,7 @@ module_eval <<'.,.,', 'sp4.y', 294
 
 module_eval <<'.,.,', 'sp4.y', 300
   def _reduce_45( val, _values, result )
-            left = "_FLAG_PUSH #{val[2]}"
+            left = "_PUSH_FLAG #{val[2]}"
             right = "_PUSH_VALUE FALSE"
             result = CompareNode.new('CMPID_EQ', left, right)
    result

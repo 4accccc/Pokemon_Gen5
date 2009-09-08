@@ -1220,7 +1220,7 @@ static VMCMD_RESULT EvCmdTalkMsg( VMHANDLE *core, void *wk )
 {
   FLDMSGWIN_STREAM *msgWin;
   SCRCMD_WORK *work = wk;
-  u8 msg_id = VMGetU8(core);
+  u16 msg_id = VMGetU16(core);
   SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
   STRBUF **msgbuf = SCRIPT_GetMemberWork( sc, ID_EVSCR_MSGBUF );
   
@@ -1468,7 +1468,7 @@ static BOOL BallonWinMsgWait( VMHANDLE *core, void *wk )
 static VMCMD_RESULT EvCmdBalloonWinWrite( VMHANDLE *core, void *wk )
 {
   SCRCMD_WORK *work = wk;
-  u8 msg_id = VMGetU8( core );
+  u16 msg_id = VMGetU16( core );
   u8 obj_id = VMGetU8( core );
   
   KAGAYA_Printf( "吹き出しウィンドウ OBJID =%d\n", obj_id );
@@ -1493,7 +1493,7 @@ static VMCMD_RESULT EvCmdBalloonWinTalkWrite( VMHANDLE *core, void *wk )
   SCRCMD_WORK *work = wk;
   SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
   MMDL **mmdl = SCRIPT_GetMemberWork( sc, ID_EVSCR_TARGET_OBJ );
-  u8 msg_id = VMGetU8( core );
+  u16 msg_id = VMGetU16( core );
   
   if( *mmdl == NULL ){
     OS_Printf( "スクリプトエラー 話し掛け対象のOBJが居ません\n" );
@@ -2630,6 +2630,7 @@ const VMCMD_FUNC ScriptCmdTbl[] = {
   EvCmdItemName,
   EvCmdItemWazaName,
   EvCmdWazaName,
+  EvCmdPocketName,
   
   //scrcmd_trainer.c 視線トレーナー関連
   EvCmdEyeTrainerMoveSet,
@@ -2695,6 +2696,7 @@ const VMCMD_FUNC ScriptCmdTbl[] = {
   EvCmdCheckItem,
   EvCmdGetItemNum,
   EvCmdWazaMachineItemNoCheck,
+  EvCmdGetPocketID,
   
   //ミュージカル関連
   EvCmdMusicalCall,

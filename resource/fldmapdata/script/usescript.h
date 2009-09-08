@@ -71,24 +71,28 @@
 #define SCWK_PARAM1		( 0x8001 )
 #define SCWK_PARAM2		( 0x8002 )
 #define SCWK_PARAM3		( 0x8003 )
+#define SCWK_PARAM4		( 0x8004 )
+#define SCWK_PARAM5		( 0x8005 )
+#define SCWK_PARAM6		( 0x8006 )
+#define SCWK_PARAM7		( 0x8007 )
 
 //スクリプトでのテンポラリ
-#define SCWK_TEMP0		( 0x8004 )
-#define SCWK_TEMP1		( 0x8005 )
-#define SCWK_TEMP2		( 0x8006 )
-#define SCWK_TEMP3		( 0x8007 )
+#define SCWK_TEMP0		( 0x8008 )
+#define SCWK_TEMP1		( 0x8009 )
+#define SCWK_TEMP2		( 0x800a )
+#define SCWK_TEMP3		( 0x800b )
 
 //スクリプト内部での処理用
-#define SCWK_REG0		( 0x8008 )
-#define SCWK_REG1		( 0x8009 )
-#define SCWK_REG2		( 0x800a )
-#define SCWK_REG3		( 0x800b )
+#define SCWK_REG0		( 0x800c )
+#define SCWK_REG1		( 0x800d )
+#define SCWK_REG2		( 0x800e )
+#define SCWK_REG3		( 0x800f )
 
 //スクリプトに答えを返す汎用ワーク
-#define SCWK_ANSWER		( 0x800c )
+#define SCWK_ANSWER		( 0x8010 )
 
 //話しかけ対象OBJIDワーク(変更不可。話し掛けイベント時に自動でOBJIDがセットされている）
-#define SCWK_TARGET_OBJID	( 0x800d )
+#define SCWK_TARGET_OBJID	( 0x8011 )
 
 /*
 	// 話かけた方向を保持するワーク
@@ -112,6 +116,13 @@
 //フェード共通速度
 #define DISP_FADE_SPEED (8)
 
+
+#define BAG_POCKET_NORMAL   0
+#define BAG_POCKET_DRUG     1
+#define BAG_POCKET_WAZA     2
+#define BAG_POCKET_NUTS     3
+#define BAG_POCKET_EVENT    4
+
 //======================================================================
 //	
 //======================================================================
@@ -131,6 +142,8 @@
 //サウンドラベル
 #include "../../sound/wb_sound_data.sadl"
 
+#include "../../itemconv/itempocket_def.h"
+#include "../../../prog/include/item/itemsym.h"
 #if 0 //wb null
 
 #include "../../../include/pm_version.h"

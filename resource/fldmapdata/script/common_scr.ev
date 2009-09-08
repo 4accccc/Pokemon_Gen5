@@ -5,6 +5,8 @@
 
 	.text
 	.include	"scr_seq_def.h"
+
+  .include  "../../message/dst/script/msg_common_scr.h"
 	
 //--------------------------------------------------------------------
 //					     スクリプト本体
@@ -12,6 +14,9 @@
 _EVENT_DATA		ev_heal_p01
 _EVENT_DATA		ev_shop_start_talk
 _EVENT_DATA		ev_common_vm
+_EVENT_DATA   ev_item_event_success
+_EVENT_DATA   ev_item_event_fail
+_EVENT_DATA   ev_easy_item_event
 _EVENT_DATA_END //終了
 
 //--------------------------------------------------------------------
@@ -42,3 +47,178 @@ EVENT_START   ev_shop_start_talk
 	_CHG_LOCAL_SCR	//ローカルスクリプトに切り替え
 */
 EVENT_END
+
+//--------------------------------------------------------------
+//  SCWK_PARAM0 itemno
+//  SCWK_PARAM1 num
+//  SCWK_PARAM2 flag
+//  SCWK_PARAM3 before_msg
+//  SCWK_PARAM4 finish_msg
+//  SCWK_PARAM5 after_msg
+//--------------------------------------------------------------
+//_ASM_EASY_ITEM_EVENT itemno, num, flag, before_msg, finish_msg, after_msg
+ev_easy_item_event:
+    _ASM_TALK_START_SE_PLAY
+
+    //_IF_FLAGON_JUMP \flag, item_already_get
+    IF FLAG_ON(SCWK_PARAM2) THEN
+      _JUMP item_already_get
+    ENDIF
+  
+    _ASM_LDWKVAL  SCWK_TEMP0, SCWK_PARAM0
+    _ASM_LDWKVAL  SCWK_TEMP1, SCWK_PARAM1
+
+    _ASM_BALLOONWIN_TALKOBJ_OPEN  SCWK_PARAM3
+    _ASM_AB_KEYWAIT
+    _ASM_BALLOONWIN_CLOSE
+
+    _ASM_ADD_ITEM_CHK SCWK_PARAM0, SCWK_PARAM1, SCWK_ANSWER
+    _IFVAL_JUMP  SCWK_ANSWER,EQ,FALSE, item_full
+
+    _CALL   ev_item_event_sub_keywait
+    //_CHG_COMMON_SCR SCRID_ITEM_EVENT_SUCCESS
+
+    _ASM_BALLOONWIN_TALKOBJ_OPEN  SCWK_PARAM4
+    _ASM_AB_KEYWAIT
+    _ASM_BALLOONWIN_CLOSE
+
+    _JUMP   item_event_end
+
+item_full:
+    _CALL   ev_item_event_fail_sub
+    //_CHG_COMMON_SCR SCRID_ITEM_EVENT_FAIL
+    _JUMP   item_event_end
+
+item_already_get:
+    _ASM_TALKWIN_OPEN
+    _ASM_TALKMSG_ALLPUT SCWK_PARAM5
+    _ASM_AB_KEYWAIT
+    _ASM_TALKWIN_CLOSE
+
+item_event_end:
+  _RET
+
+//********************************************************************
+//				アイテム取得イベント(失敗)(LAST_KEYWAIT)
+//********************************************************************
+ev_item_event_fail:
+	_CALL			ev_item_event_fail_sub
+	_CHG_LOCAL_SCR													//ローカルスクリプトに切り替え
+	_END
+
+ev_item_event_fail_sub:
+	//「ざんねん！バッグがいっぱいだ！」
+  _TALKWIN_OPEN()
+	_TALKMSG(		msg_event_item_get_03 )
+	_AB_KEYWAIT() //_LAST_KEYWAIT
+  _TALKWIN_CLOSE()
+	_RET
+//********************************************************************
+/*				アイテム取得イベント(成功)(送りカーソル待ちなし)	*/
+//
+//	SCWK_TEMP0	アイテムナンバー
+//	SCWK_TEMP1	個数
+//********************************************************************
+ev_item_event:
+	_CALL			ev_item_event_sub
+	_CHG_LOCAL_SCR													//ローカルスクリプトに切り替え
+	_END
+
+//--------------------------------------------------------------------
+/*	送りカーソルなし(必ず最後のメッセージになる！)					*/
+/*	msg_event_item_get_06											*/
+//--------------------------------------------------------------------
+ev_item_event_sub:
+	//アイテム追加
+	_ADD_ITEM( SCWK_TEMP0,SCWK_TEMP1,SCWK_ANSWER )
+
+  _TALKWIN_OPEN()
+
+	_CALL			pocket_me_set									//MEセット
+
+  _CALL   ev_item_event_get_msg
+
+	_TALKMSG(	msg_event_item_get_06 )
+	_AB_KEYWAIT() //_LAST_KEYWAIT
+
+  _TALKWIN_CLOSE()
+	_RET
+
+
+//********************************************************************
+/*				アイテム取得イベント(成功)(送りカーソル待ちあり)	*/
+//
+//	SCWK_TEMP0	アイテムナンバー
+//	SCWK_TEMP1	個数
+//********************************************************************
+ev_item_event_success:
+	_CALL			ev_item_event_sub_keywait
+	_CHG_LOCAL_SCR													//ローカルスクリプトに切り替え
+	_END
+
+//--------------------------------------------------------------------
+/*	送りカーソルあり												*/
+/*	msg_event_item_get_07											*/
+//--------------------------------------------------------------------
+ev_item_event_sub_keywait:
+  _TALKWIN_OPEN()
+	//アイテム追加
+	_ADD_ITEM( SCWK_TEMP0,SCWK_TEMP1,SCWK_ANSWER )
+
+	_CALL			pocket_me_set									//MEセット
+
+  _CALL   ev_item_event_get_msg
+	_ME_WAIT()
+
+	_PLAYER_NAME(	0 )
+
+	_ITEM_NAME(	1,SCWK_TEMP0 )
+
+	//ポケットナンバーをSCWK_ANSWERに代入
+	_GET_POCKET_ID(	SCWK_TEMP0,SCWK_ANSWER )
+	_POCKET_NAME(	2,SCWK_ANSWER )
+
+	_TALKMSG(	msg_event_item_get_07 )
+  _TALKWIN_CLOSE()
+	_RET
+
+//--------------------------------------------------------------------
+//--------------------------------------------------------------------
+ev_item_event_get_msg:
+	//ポケットナンバーをSCWK_ANSWERに代入
+	_GET_POCKET_ID(	SCWK_TEMP0,SCWK_ANSWER )
+
+  IF  $SCWK_ANSWER  == BAG_POCKET_EVENT THEN
+      _PLAYER_NAME(	0 )
+      _ITEM_NAME(	1,SCWK_TEMP0 )
+      _TALKMSG(	msg_event_item_get_04 )		//たいせつなもの
+  ELSE
+      _ITEM_NAME(	0,SCWK_TEMP0 )
+      _TALKMSG(	msg_event_item_get_01 )
+  ENDIF
+
+  _RET
+
+
+//--------------------------------------------------------------------
+//	MEセット
+//--------------------------------------------------------------------
+pocket_me_set:
+	//ポケットナンバーをSCWK_ANSWERに代入
+	_GET_POCKET_ID(	SCWK_TEMP0,SCWK_ANSWER )
+
+  SWITCH    $SCWK_ANSWER
+  CASE    BAG_POCKET_EVENT THEN
+	    _ME_PLAY(	SEQ_ME_KEYITEM )
+
+  //CASE    BAG_POKE_NORMAL, BAG_POKE_NUTS, BAG_POKE_DRUG, BAG_POKE_BALL, BAG_POKE_BATTLE THEN
+  CASE    BAG_POCKET_NORMAL, BAG_POCKET_NUTS, BAG_POCKET_DRUG THEN
+	    _ME_PLAY(	SEQ_ME_ITEM )
+
+  CASE    BAG_POCKET_WAZA THEN
+	    _ME_PLAY(	SEQ_ME_WAZA )
+
+  ENDSWITCH
+
+  _RET
+
