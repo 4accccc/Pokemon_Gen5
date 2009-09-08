@@ -38,8 +38,6 @@ CONVERTDATA = camera_test1.nsbmd ica_test_data.bin \
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
 # サフィックスルールを定義することで 依存関係を自動で判断してくれる
 .SUFFIXES: 
-
-
 endif
 
 .PHONY:	do-build clean subdir
@@ -52,6 +50,7 @@ do-build:	subdir $(TARGETDIR)/$(targetname).narc
 subdir:
 	@$(MAKE_SUBDIR)
 
+ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
 # コンバート
 	ruby ica_conv.rb camera_null.ica ica_test_data.bin
 	ruby ica_conv.rb camera_null2.ica ica_test_data2.bin
@@ -67,6 +66,7 @@ subdir:
 	g3dcvtr houou_test.imd
 	g3dcvtr houou_test.ica
 	g3dcvtr houou_test.ita
+endif
 
 # narc のコピーだけ実行する
 $(TARGETDIR)/$(targetname).narc: $(targetname).narc
