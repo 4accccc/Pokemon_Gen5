@@ -120,4 +120,26 @@ VMCMD_RESULT EvCmdWazaName( VMHANDLE *core, void *wk )
   WORDSET_RegisterWazaName( *wordset, idx, wazano );
   return VMCMD_RESULT_CONTINUE;
 }
+//--------------------------------------------------------------------------------------------
+/**
+ * ポケット名を指定バッファに登録
+ *
+ * @param	core		仮想マシン制御構造体へのポインタ
+ *
+ * @return	VMCMD_RESULT_CONTINUE
+ */
+//--------------------------------------------------------------------------------------------
+VMCMD_RESULT EvCmdPocketName(VMHANDLE * core, void *wk ) 
+{
+  SCRCMD_WORK *work = wk;
+  SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
+	WORDSET** wordset		= SCRIPT_GetMemberWork( sc, ID_EVSCR_WORDSET );
+	u8 idx					= VMGetU8(core);
+	u16 pocket				= SCRCMD_GetVMWorkValue( core, work );
+
+	WORDSET_RegisterItemPocketName( *wordset, idx, pocket );		//アイコンなし
+	//WORDSET_RegisterItemPocketWithIcon( *wordset, idx, pocket );	//アイコンあり
+
+	return VMCMD_RESULT_CONTINUE;
+}
 

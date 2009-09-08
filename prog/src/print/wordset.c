@@ -738,6 +738,28 @@ void WORDSET_RegisterPokeStatusName( WORDSET* wordset, u32 bufID, u8 statusID )
 	}
 }
 
+//------------------------------------------------------------------
+/**
+ * 指定バッファにアイテムを入れるポケット名を登録
+ *
+ * @param   bufID			バッファID
+ * @param   wazaID			ポケットID
+ *
+ */
+//------------------------------------------------------------------
+void WORDSET_RegisterItemPocketName( WORDSET* wordset, u32 bufID, u32 pocketID )
+{
+	GFL_MSGDATA *man = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_itempocket_dat, wordset->heapID);
+	if( man )
+	{
+		GFL_MSG_GetString( man, pocketID, wordset->tmpBuf );
+		RegisterWord( wordset, bufID, wordset->tmpBuf, NULL );
+		GFL_MSG_Delete(man);
+	}
+}
+
+
+
 
 
 //======================================================================================================
