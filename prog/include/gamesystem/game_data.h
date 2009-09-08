@@ -36,6 +36,12 @@ enum {
 	PLAYER_ID_MINE = PLAYER_MAX - 1,    ///<自分自身のプレイヤーID
 };
 
+///マップモード
+typedef enum{
+  MAPMODE_NORMAL,     ///<通常状態
+  MAPMODE_INTRUDE,    ///<侵入中
+}MAPMODE;
+
 //============================================================================================
 //============================================================================================
 //------------------------------------------------------------------
@@ -366,7 +372,40 @@ extern void GAMEDATA_SetFieldMapWalkCount(GAMEDATA *gamedata,int count);
  * @return  FIELD_SOUND*
  */
 //--------------------------------------------------------------
-FIELD_SOUND * GAMEDATA_GetFieldSound( GAMEDATA *gamedata );
+extern FIELD_SOUND * GAMEDATA_GetFieldSound( GAMEDATA *gamedata );
+
+//==================================================================
+/**
+ * マップモード取得
+ *
+ * @param   gamedata		GAMEDATAへのポインタ
+ *
+ * @retval  MAPMODE		マップモード
+ */
+//==================================================================
+extern MAPMODE GAMEDATA_GetMapMode(const GAMEDATA *gamedata);
+
+//==================================================================
+/**
+ * 侵入接続人数取得
+ *
+ * @param   gamedata		GAMEDATAへのポインタ
+ *
+ * @retval  int		接続人数
+ */
+//==================================================================
+extern int GAMEDATA_GetIntrudeNum(const GAMEDATA *gamedata);
+
+//==================================================================
+/**
+ * 侵入時の自分のNetIDを取得
+ *
+ * @param   gamedata		GAMEDATAへのポインタ
+ *
+ * @retval  int		自分のNetID
+ */
+//==================================================================
+extern int GAMEDATA_GetIntrudeMyID(const GAMEDATA *gamedata);
 
 //============================================================================================
 //	SAVE_CONTROL_WORKへのアクセス

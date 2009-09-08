@@ -68,7 +68,9 @@ struct _GAMEDATA{
   u8 subscreen_type;
   u8 frameSpritcount;    ///< フレーム分割動作で動作する場合のカウント
   u8 frameSpritEnable;   ///< フレーム分割動作で動作する場合の許可
-  u8 dummy[3];
+  u8 map_mode;            ///<マップモード(MAPMODE)
+  u8 intrude_num;         ///<侵入している時の接続人数
+  u8 intrude_my_id;       ///<侵入している自分のNetID
 };
 
 //==============================================================================
@@ -623,6 +625,48 @@ PLAYER_MOVE_FORM PLAYERWORK_GetMoveForm( const PLAYER_WORK *player )
 void PLAYERWORK_SetMoveForm( PLAYER_WORK *player, PLAYER_MOVE_FORM form )
 {
   player->move_form = form;
+}
+
+//==================================================================
+/**
+ * マップモード取得
+ *
+ * @param   gamedata		GAMEDATAへのポインタ
+ *
+ * @retval  MAPMODE		マップモード
+ */
+//==================================================================
+MAPMODE GAMEDATA_GetMapMode(const GAMEDATA *gamedata)
+{
+  return gamedata->map_mode;
+}
+
+//==================================================================
+/**
+ * 侵入接続人数取得
+ *
+ * @param   gamedata		GAMEDATAへのポインタ
+ *
+ * @retval  int		接続人数
+ */
+//==================================================================
+int GAMEDATA_GetIntrudeNum(const GAMEDATA *gamedata)
+{
+  return gamedata->intrude_num;
+}
+
+//==================================================================
+/**
+ * 侵入時の自分のNetIDを取得
+ *
+ * @param   gamedata		GAMEDATAへのポインタ
+ *
+ * @retval  int		自分のNetID
+ */
+//==================================================================
+int GAMEDATA_GetIntrudeMyID(const GAMEDATA *gamedata)
+{
+  return gamedata->intrude_my_id;
 }
 
 //==============================================================================
