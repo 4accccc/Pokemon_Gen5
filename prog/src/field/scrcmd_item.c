@@ -177,7 +177,7 @@ VMCMD_RESULT EvCmdWazaMachineItemNoCheck( VMHANDLE * core, void *wk )
   return VMCMD_RESULT_CONTINUE;
 }
 
-#if 0
+
 //--------------------------------------------------------------
 /**
  * ポケットナンバー取得
@@ -185,7 +185,7 @@ VMCMD_RESULT EvCmdWazaMachineItemNoCheck( VMHANDLE * core, void *wk )
  * @return	"0"
  */
 //--------------------------------------------------------------
-VMCMD_RESULT EvCmdGetPocketNo(VMHANDLE * core, void *wk )
+VMCMD_RESULT EvCmdGetPocketID(VMHANDLE * core, void *wk )
 {
   SCRCMD_WORK *work = wk;
   HEAPID heapID = SCRCMD_WORK_GetHeapID( work );
@@ -195,24 +195,7 @@ VMCMD_RESULT EvCmdGetPocketNo(VMHANDLE * core, void *wk )
   *ret_wk = (u16)ITEM_GetParam( item_no, ITEM_PRM_POCKET, heapID );
 	return VMCMD_RESULT_CONTINUE;
 }
-#endif
 
-//--------------------------------------------------------------
-//未使用
-//--------------------------------------------------------------
-#if 0
-BOOL EvCmdAddPCBoxItem( VMHANDLE * core )
-{
-
-	return 0;
-}
-
-BOOL EvCmdCheckPCBoxItem( VMHANDLE * core )
-{
-
-	return 0;
-}
-#endif
 
 //======================================================================
 //  パーツ
@@ -232,3 +215,4 @@ static u16 WazaMachineItemNoCheck( u16 itemno )
 	}
 	return FALSE;
 }
+
