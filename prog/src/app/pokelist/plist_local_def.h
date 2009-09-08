@@ -48,8 +48,12 @@
 #define PLIST_FONT_COLOR_BLACK (PRINTSYS_LSB_Make(1,2,0))
 
 //プレートの文字はHPバーと同じパレット
-#define PLIST_FONT_PARAM_LETTER (0xF)
-#define PLIST_FONT_PARAM_SHADOW (0x1)
+#define PLIST_FONT_PARAM_LETTER (0x1)
+#define PLIST_FONT_PARAM_SHADOW (0x2)
+#define PLIST_FONT_PARAM_LETTER_BLUE (0x5)
+#define PLIST_FONT_PARAM_SHADOW_BLUE (0x6)
+#define PLIST_FONT_PARAM_LETTER_RED (0x3)
+#define PLIST_FONT_PARAM_SHADOW_RED (0x4)
 
 //メニューの文字はフォントパレットではなくメニュープレートのパレットを使う
 #define PLIST_FONT_MENU_BACK (0x0)
@@ -62,12 +66,12 @@
 #define PLIST_MSG_STR_OFS_Y (1)
 
 //HP色
-#define PLIST_HPBAR_COL_GREEN_IN  (0x5)
-#define PLIST_HPBAR_COL_GREEN_OUT (0x6)
-#define PLIST_HPBAR_COL_YELLOW_IN  (0x7)
-#define PLIST_HPBAR_COL_YELLOW_OUT (0x8)
-#define PLIST_HPBAR_COL_RED_IN  (0x9)
-#define PLIST_HPBAR_COL_RED_OUT (0xa)
+#define PLIST_HPBAR_COL_GREEN_IN  (0xa)
+#define PLIST_HPBAR_COL_GREEN_OUT (0xb)
+#define PLIST_HPBAR_COL_YELLOW_IN  (0xc)
+#define PLIST_HPBAR_COL_YELLOW_OUT (0xd)
+#define PLIST_HPBAR_COL_RED_IN  (0xe)
+#define PLIST_HPBAR_COL_RED_OUT (0xf)
 
 
 //プレートのアニメする色

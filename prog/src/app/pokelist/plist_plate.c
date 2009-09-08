@@ -431,13 +431,15 @@ static void PLIST_PLATE_DrawParam( PLIST_WORK *work , PLIST_PLATE_WORK *plateWor
     u32 sex = PP_Get( plateWork->pp , ID_PARA_sex , NULL );
     if( sex == PTL_SEX_MALE )
     {
+      const PRINTSYS_LSB fontColBlue = PRINTSYS_LSB_Make( PLIST_FONT_PARAM_LETTER_BLUE , PLIST_FONT_PARAM_SHADOW_BLUE , 0 );
       PLIST_UTIL_DrawStrFunc( work , plateWork->bmpWin , mes_pokelist_01_28 ,
-                      PLIST_PLATE_STR_SEX_X , PLIST_PLATE_STR_SEX_Y , fontCol );
+                      PLIST_PLATE_STR_SEX_X , PLIST_PLATE_STR_SEX_Y , fontColBlue );
     }
     else if( sex == PTL_SEX_FEMALE )
     {
+      const PRINTSYS_LSB fontColRed = PRINTSYS_LSB_Make( PLIST_FONT_PARAM_LETTER_RED , PLIST_FONT_PARAM_SHADOW_RED , 0 );
       PLIST_UTIL_DrawStrFunc( work , plateWork->bmpWin , mes_pokelist_01_29 ,
-                      PLIST_PLATE_STR_SEX_X , PLIST_PLATE_STR_SEX_Y , fontCol );
+                      PLIST_PLATE_STR_SEX_X , PLIST_PLATE_STR_SEX_Y , fontColRed );
     }
   }
 
