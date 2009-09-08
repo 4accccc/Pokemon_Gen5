@@ -190,7 +190,7 @@ static GFL_PROC_RESULT DebugTayaMainProcInit( GFL_PROC * proc, int * seq, void *
 {
   MAIN_WORK* wk;
 
-  GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_CORE,    0x4000 );
+  GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_CORE,    0x6000 );
   GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_TEMP,   0xb0000 );
 
   wk = GFL_PROC_AllocWork( proc, sizeof(MAIN_WORK), HEAPID_CORE );
@@ -199,6 +199,7 @@ static GFL_PROC_RESULT DebugTayaMainProcInit( GFL_PROC * proc, int * seq, void *
 
   initGraphicSystems( wk );
   createTemporaryModules( wk );
+
   startView( wk );
 
   VMENU_Init( &wk->menuCtrl, MAINMENU_DISP_MAX, NELEMS(MainMenuTbl) );
@@ -207,6 +208,7 @@ static GFL_PROC_RESULT DebugTayaMainProcInit( GFL_PROC * proc, int * seq, void *
   wk->subProc = NULL;
   wk->testPoke = PP_Create( MONSNO_POTTYAMA, 20, 3594, HEAPID_CORE );
   wk->testPokeEditFlag = FALSE;
+  wk->gameData = GAMEDATA_Create( HEAPID_CORE );
 
   return GFL_PROC_RES_FINISH;
 }
@@ -345,8 +347,6 @@ static void createTemporaryModules( MAIN_WORK* wk )
   PRINT_UTIL_Setup( wk->printUtil, wk->win );
 
   wk->tmpModuleExistFlag = TRUE;
-  wk->gameData = GAMEDATA_Create( HEAPID_CORE );
-
 }
 
 static void deleteTemporaryModules( MAIN_WORK* wk )
@@ -361,9 +361,6 @@ static void deleteTemporaryModules( MAIN_WORK* wk )
   GFL_BMPWIN_Delete( wk->win );
 
   wk->tmpModuleExistFlag = FALSE;
-
-  GAMEDATA_Delete( wk->gameData );
-
 }
 
 
@@ -886,9 +883,11 @@ static BOOL SUBPROC_GoBattle( GFL_PROC* proc, int* seq, void* pwk, void* mywk )
 
       para->engine = BTL_ENGINE_ALONE;
       para->rule = BTL_RULE_TRIPLE;
-      if( GFL_UI_KEY_GetCont() & PAD_BUTTON_L )
-      {
+      if( GFL_UI_KEY_GetCont() & PAD_BUTTON_L ){
         para->rule = BTL_RULE_SINGLE;
+      }
+      else if( GFL_UI_KEY_GetCont() & PAD_BUTTON_R ){
+        para->rule = BTL_RULE_DOUBLE;
       }
       para->competitor = BTL_COMPETITOR_TRAINER;
       para->trID = 2;
@@ -903,6 +902,7 @@ static BOOL SUBPROC_GoBattle( GFL_PROC* proc, int* seq, void* pwk, void* mywk )
       para->partyEnemy2 = NULL;   ///< 2vs2時の２番目敵AI用（不要ならnull）
       para->statusPlayer = GAMEDATA_GetMyStatus( wk->gameData );
       para->itemData = GAMEDATA_GetMyItem( wk->gameData );
+      TAYA_Printf(" **** ITEM PTR= %p\n", para->itemData );
 
     #ifdef DEBUG_ONLY_FOR_taya
       setup_party( HEAPID_CORE, para->partyPlayer, MONSNO_NOZUPASU,   MONSNO_PIKATYUU, MONSNO_GURAADON, MONSNO_KAIOOGA, 0 );
