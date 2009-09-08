@@ -66,6 +66,7 @@ struct _BTLV_CORE {
   u32                   procPokeID;
   BtlAction             playerAction;
   BBAG_DATA             bagData;
+  u8                    selectItemSeq;
 
   GFL_TCBLSYS*  tcbl;
   BTLV_SCU*     scrnU;
@@ -123,6 +124,7 @@ BTLV_CORE*  BTLV_Create( BTL_MAIN_MODULE* mainModule, const BTL_CLIENT* client, 
 
   core->mainProc = NULL;
   core->mainSeq = 0;
+  core->selectItemSeq = 0;
 
   BTL_STR_InitSystem( mainModule, client, pokeCon, heapID );
 
@@ -500,16 +502,20 @@ BOOL BTLV_WaitPokeSelect( BTLV_CORE* core )
 //=============================================================================================
 void BTLV_ITEMSELECT_Start( BTLV_CORE* wk, u8 bagMode )
 {
-  BTLV_SCD_Cleanup( wk->scrnD );
+  if( wk->selectItemSeq == 0 )
+  {
+    BTLV_SCD_Cleanup( wk->scrnD );
 
-  wk->bagData.myitem = BTL_MAIN_GetItemDataPtr( wk->mainModule );
-  wk->bagData.mode = bagMode;
-  wk->bagData.font = wk->fontHandle;
-  wk->bagData.heap = wk->heapID;
-  wk->bagData.end_flg = FALSE;
-  wk->bagData.ret_item = ITEM_DUMMY_DATA;
+    wk->bagData.myitem = BTL_MAIN_GetItemDataPtr( wk->mainModule );
+    wk->bagData.mode = bagMode;
+    wk->bagData.font = wk->fontHandle;
+    wk->bagData.heap = wk->heapID;
+    wk->bagData.end_flg = FALSE;
+    wk->bagData.ret_item = ITEM_DUMMY_DATA;
 
-  BattleBag_TaskAdd( &wk->bagData );
+    BattleBag_TaskAdd( &wk->bagData );
+    wk->selectItemSeq = 1;
+  }
 }
 //=============================================================================================
 /**
@@ -522,7 +528,14 @@ void BTLV_ITEMSELECT_Start( BTLV_CORE* wk, u8 bagMode )
 //=============================================================================================
 BOOL BTLV_ITEMSELECT_Wait( BTLV_CORE* wk )
 {
-  return wk->bagData.end_flg;
+  BOOL result = wk->bagData.end_flg;
+  if( wk->selectItemSeq == 1 ){
+    if( result ){
+      BTLV_SCD_Setup( wk->scrnD );
+      wk->selectItemSeq = 2;
+    }
+  }
+  return result;
 }
 //=============================================================================================
 /**
