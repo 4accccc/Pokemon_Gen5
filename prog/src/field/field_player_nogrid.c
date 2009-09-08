@@ -952,7 +952,7 @@ static void player_SetMove_Turn(
 	u16 code;
 	
 	GF_ASSERT( dir != DIR_NOT );
-	code = MMDL_ChangeDirAcmdCode( dir, AC_STAY_WALK_U_2F );
+	code = MMDL_ChangeDirAcmdCode( dir, AC_RAIL_STAY_WALK_U_2F );
 	
 	MMDL_SetAcmd( mmdl, code );
 	p_player->move_state = PLAYER_MOVE_TURN;
@@ -978,7 +978,7 @@ static void player_SetMove_Hitch(
 	u16 code;
 	
 	GF_ASSERT( dir != DIR_NOT );
-	code = MMDL_ChangeDirAcmdCode( dir, AC_STAY_WALK_U_16F );
+	code = MMDL_ChangeDirAcmdCode( dir, AC_RAIL_STAY_WALK_U_16F );
 	
 	MMDL_SetAcmd( mmdl, code );
 	p_player->move_state = PLAYER_MOVE_HITCH;
@@ -1376,7 +1376,7 @@ static void playerCycle_SetMove_Turn(
 	u16 code;
 	
 	GF_ASSERT( dir != DIR_NOT );
-	code = MMDL_ChangeDirAcmdCode( dir, AC_STAY_WALK_U_2F );
+	code = MMDL_ChangeDirAcmdCode( dir, AC_RAIL_STAY_WALK_U_2F );
 	
 	MMDL_SetAcmd( mmdl, code );
 	p_player->move_state = PLAYER_MOVE_TURN;
@@ -1402,7 +1402,7 @@ static void playerCycle_SetMove_Hitch(
 	u16 code;
 	
 	GF_ASSERT( dir != DIR_NOT );
-	code = MMDL_ChangeDirAcmdCode( dir, AC_STAY_WALK_U_16F );
+	code = MMDL_ChangeDirAcmdCode( dir, AC_RAIL_STAY_WALK_U_16F );
 	
 	MMDL_SetAcmd( mmdl, code );
 	p_player->move_state = PLAYER_MOVE_HITCH;

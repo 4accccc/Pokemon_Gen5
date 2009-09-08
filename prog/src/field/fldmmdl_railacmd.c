@@ -25,12 +25,28 @@
  *					構造体宣言
 */
 //-----------------------------------------------------------------------------
+//--------------------------------------------------------------
+///	AC_RAIL_STAY_WALK_WORK構造体。その場歩きで共通使用する
+//--------------------------------------------------------------
+typedef struct
+{
+	u16 draw_state;			///<描画ステータス
+	s16 wait;				///<ウェイト
+}AC_RAIL_STAY_WALK_WORK;
+
+#define AC_RAIL_STAY_WALK_WORK_SIZE (sizeof(AC_RAIL_STAY_WALK_WORK))///<AC_STAY_WALKサイズ
+
+
+
+
 
 //-----------------------------------------------------------------------------
 /**
  *					プロトタイプ宣言
 */
 //-----------------------------------------------------------------------------
+
+
 //======================================================================
 //	アニメーションコマンド　共通パーツ
 //======================================================================
@@ -465,6 +481,189 @@ static int AC_RailDashR4F_0( MMDL* mmdl )
 
 
 //======================================================================
+//	StayWalk系
+//======================================================================
+//--------------------------------------------------------------
+/**
+ * AC_RAIL_STAY_WALK_WORK初期化
+ * @param	mmdl	MMDL * 
+ * @param	dir		移動方向
+ * @param	wait	表示フレーム
+ * @param	draw	描画ステータス
+ * @retval	nothing
+ */
+//--------------------------------------------------------------
+static void AcRailStayWalkWorkInit( MMDL * mmdl, int dir, s16 wait, u16 draw )
+{
+	AC_RAIL_STAY_WALK_WORK *work;
+	
+	work = MMDL_InitMoveCmdWork( mmdl, AC_RAIL_STAY_WALK_WORK_SIZE );
+	
+	work->draw_state = draw;
+	work->wait = wait + FRAME_1;	//FRAME_1=動作->アニメへの1フレーム
+	
+	MMDL_SetDirDisp( mmdl, dir );
+	MMDL_SetDrawStatus( mmdl, draw );
+//	MMDL_UpdateGridPosCurrent( mmdl );
+	MMDL_IncAcmdSeq( mmdl );
+}
+
+//--------------------------------------------------------------
+/**
+ * AC_STAY_WALK系　動作
+ * @param	mmdl	MMDL * 
+ * @retval	nothing
+ */
+//--------------------------------------------------------------
+static int AC_RailStayWalk_1( MMDL * mmdl )
+{
+	AC_RAIL_STAY_WALK_WORK *work;
+	
+	work = MMDL_GetMoveCmdWork( mmdl );
+	
+	work->wait--;
+	
+	if( work->wait > 0 ){
+		return( FALSE );
+	}
+	
+	MMDL_OnStatusBit( mmdl, MMDL_STABIT_ACMD_END );
+	MMDL_SetDrawStatus( mmdl, DRAW_STA_STOP );
+	MMDL_IncAcmdSeq( mmdl );
+	return( TRUE );
+}
+
+
+//--------------------------------------------------------------
+/**
+ * AC_STAY_WALK_U_16F 0
+ * @param	mmdl	MMDL * 
+ * @retval	int		TRUE=再帰
+ */
+//--------------------------------------------------------------
+static int AC_RailStayWalkU16F_0( MMDL * mmdl )
+{
+	AcRailStayWalkWorkInit( mmdl, DIR_UP, GRID_FRAME_16, DRAW_STA_WALK_16F ); 
+	
+	return( TRUE );
+}
+
+//--------------------------------------------------------------
+/**
+ * AC_STAY_WALK_D_16F 0
+ * @param	mmdl	MMDL * 
+ * @retval	int		TRUE=再帰
+ */
+//--------------------------------------------------------------
+static int AC_RailStayWalkD16F_0( MMDL * mmdl )
+{
+	AcRailStayWalkWorkInit( mmdl, DIR_DOWN, GRID_FRAME_16, DRAW_STA_WALK_16F ); 
+	
+	return( TRUE );
+}
+
+//--------------------------------------------------------------
+/**
+ * AC_STAY_WALK_L_16F 0
+ * @param	mmdl	MMDL * 
+ * @retval	int		TRUE=再帰
+ */
+//--------------------------------------------------------------
+static int AC_RailStayWalkL16F_0( MMDL * mmdl )
+{
+	AcRailStayWalkWorkInit( mmdl, DIR_LEFT, GRID_FRAME_16, DRAW_STA_WALK_16F ); 
+	
+	return( TRUE );
+}
+
+//--------------------------------------------------------------
+/**
+ * AC_STAY_WALK_R_16F 0
+ * @param	mmdl	MMDL * 
+ * @retval	int		TRUE=再帰
+ */
+//--------------------------------------------------------------
+static int AC_RailStayWalkR16F_0( MMDL * mmdl )
+{
+	AcRailStayWalkWorkInit( mmdl, DIR_RIGHT, GRID_FRAME_16, DRAW_STA_WALK_16F ); 
+	
+	return( TRUE );
+}
+
+//--------------------------------------------------------------
+/**
+ * AC_STAY_WALK_U_8F 0
+ * @param	mmdl	MMDL * 
+ * @retval	int		TRUE=再帰
+ */
+//--------------------------------------------------------------
+static int AC_RailStayWalkU8F_0( MMDL * mmdl )
+{
+	AcRailStayWalkWorkInit( mmdl, DIR_UP, GRID_FRAME_8, DRAW_STA_WALK_8F ); 
+	
+	return( TRUE );
+}
+
+
+//--------------------------------------------------------------
+/**
+ * AC_STAY_WALK_U_2F 0
+ * @param	mmdl	MMDL * 
+ * @retval	int		TRUE=再帰
+ */
+//--------------------------------------------------------------
+static int AC_RailStayWalkU2F_0( MMDL * mmdl )
+{
+  AcRailStayWalkWorkInit( mmdl, DIR_UP, GRID_FRAME_2, DRAW_STA_WALK_2F ); 
+	
+	return( TRUE );
+}
+
+//--------------------------------------------------------------
+/**
+ * AC_STAY_WALK_D_2F 0
+ * @param	mmdl	MMDL * 
+ * @retval	int		TRUE=再帰
+ */
+//--------------------------------------------------------------
+static int AC_RailStayWalkD2F_0( MMDL * mmdl )
+{
+	AcRailStayWalkWorkInit( mmdl, DIR_DOWN, GRID_FRAME_2, DRAW_STA_WALK_2F ); 
+	
+	return( TRUE );
+}
+
+//--------------------------------------------------------------
+/**
+ * AC_STAY_WALK_L_2F 0
+ * @param	mmdl	MMDL * 
+ * @retval	int		TRUE=再帰
+ */
+//--------------------------------------------------------------
+static int AC_RailStayWalkL2F_0( MMDL * mmdl )
+{
+	AcRailStayWalkWorkInit( mmdl, DIR_LEFT, GRID_FRAME_2, DRAW_STA_WALK_2F ); 
+	
+	return( TRUE );
+}
+
+//--------------------------------------------------------------
+/**
+ * AC_STAY_WALK_R_2F 0
+ * @param	mmdl	MMDL * 
+ * @retval	int		TRUE=再帰
+ */
+//--------------------------------------------------------------
+static int AC_RailStayWalkR2F_0( MMDL * mmdl )
+{
+	AcRailStayWalkWorkInit( mmdl, DIR_RIGHT, GRID_FRAME_2, DRAW_STA_WALK_2F ); 
+	
+	return( TRUE );
+}
+
+
+
+//======================================================================
 //	data	アニメーションコマンドテーブル
 //======================================================================
 //--------------------------------------------------------------
@@ -705,3 +904,82 @@ int (* const DATA_AC_RailDashR_4F_Tbl[])( MMDL * ) =
 };
 
 
+//--------------------------------------------------------------
+///	AC_RAIL_STAY_WALK_U_16F
+//--------------------------------------------------------------
+int (* const DATA_AC_RailStayWalkU_16F_Tbl[])( MMDL * ) =
+{
+	AC_RailStayWalkU16F_0,
+	AC_RailStayWalk_1,
+  AC_RailEnd,
+};
+
+//--------------------------------------------------------------
+///	AC_RAIL_STAY_WALK_D_16F
+//--------------------------------------------------------------
+int (* const DATA_AC_RailStayWalkD_16F_Tbl[])( MMDL * ) =
+{
+	AC_RailStayWalkD16F_0,
+	AC_RailStayWalk_1,
+  AC_RailEnd,
+};
+
+//--------------------------------------------------------------
+///	AC_RAIL_STAY_WALK_L_16F
+//--------------------------------------------------------------
+int (* const DATA_AC_RailStayWalkL_16F_Tbl[])( MMDL * ) =
+{
+	AC_RailStayWalkL16F_0,
+	AC_RailStayWalk_1,
+  AC_RailEnd,
+};
+
+//--------------------------------------------------------------
+///	AC_RAIL_STAY_WALK_R_16F
+//--------------------------------------------------------------
+int (* const DATA_AC_RailStayWalkR_16F_Tbl[])( MMDL * ) =
+{
+	AC_RailStayWalkR16F_0,
+	AC_RailStayWalk_1,
+  AC_RailEnd,
+};
+
+//--------------------------------------------------------------
+///	AC_RAIL_STAY_WALK_U_2F
+//--------------------------------------------------------------
+int (* const DATA_AC_RailStayWalkU_2F_Tbl[])( MMDL * ) =
+{
+	AC_RailStayWalkU2F_0,
+	AC_RailStayWalk_1,
+  AC_RailEnd,
+};
+
+//--------------------------------------------------------------
+///	AC_RAIL_STAY_WALK_D_2F
+//--------------------------------------------------------------
+int (* const DATA_AC_RailStayWalkD_2F_Tbl[])( MMDL * ) =
+{
+	AC_RailStayWalkD2F_0,
+	AC_RailStayWalk_1,
+  AC_RailEnd,
+};
+
+//--------------------------------------------------------------
+///	AC_RAIL_STAY_WALK_L_2F
+//--------------------------------------------------------------
+int (* const DATA_AC_RailStayWalkL_2F_Tbl[])( MMDL * ) =
+{
+	AC_RailStayWalkL2F_0,
+	AC_RailStayWalk_1,
+  AC_RailEnd,
+};
+
+//--------------------------------------------------------------
+///	AC_RAIL_STAY_WALK_R_2F
+//--------------------------------------------------------------
+int (* const DATA_AC_RailStayWalkR_2F_Tbl[])( MMDL * ) =
+{
+	AC_RailStayWalkR2F_0,
+	AC_RailStayWalk_1,
+  AC_RailEnd,
+};

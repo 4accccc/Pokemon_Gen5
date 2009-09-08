@@ -428,8 +428,16 @@
 #define AC_RAIL_DASH_D_4F			0xaf ///<下方向に移動　4フレーム(自機専用 レール専用
 #define AC_RAIL_DASH_L_4F			0xb0 ///<左方向に移動　4フレーム(自機専用 レール専用
 #define AC_RAIL_DASH_R_4F			0xb1 ///<右方向に移動　4フレーム(自機専用 レール専用
+#define AC_RAIL_STAY_WALK_U_16F		0xb2 ///<上向きにその場歩き　16フレーム レール専用
+#define AC_RAIL_STAY_WALK_D_16F		0xb3 ///<下向きにその場歩き　16フレーム レール専用
+#define AC_RAIL_STAY_WALK_L_16F		0xb4 ///<左向きにその場歩き　16フレーム レール専用
+#define AC_RAIL_STAY_WALK_R_16F		0xb5 ///<右向きにその場歩き　16フレーム レール専用
+#define AC_RAIL_STAY_WALK_U_2F		0xb6 ///<上向きにその場歩き　2フレーム レール専用
+#define AC_RAIL_STAY_WALK_D_2F		0xb7 ///<下向きにその場歩き　2フレーム レール専用
+#define AC_RAIL_STAY_WALK_L_2F		0xb8 ///<左向きにその場歩き　2フレーム レール専用
+#define AC_RAIL_STAY_WALK_R_2F		0xb9 ///<右向きにその場歩き　2フレーム レール専用
 
-#define ACMD_MAX				0xb2 ///<アニメーションコマンド最大数
+#define ACMD_MAX				0xba ///<アニメーションコマンド最大数
 #define ACMD_END				0xfe ///<アニメーションコマンド終了
 #define ACMD_NOT				0xff ///<非アニメーションコマンド
 

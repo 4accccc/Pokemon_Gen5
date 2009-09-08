@@ -280,4 +280,14 @@ extern int (* const DATA_AC_RailDashD_4F_Tbl[])( MMDL * );
 extern int (* const DATA_AC_RailDashL_4F_Tbl[])( MMDL * );
 extern int (* const DATA_AC_RailDashR_4F_Tbl[])( MMDL * );
 
+// STAY WALKŒn
+extern int (* const DATA_AC_RailStayWalkU_16F_Tbl[])( MMDL * );
+extern int (* const DATA_AC_RailStayWalkD_16F_Tbl[])( MMDL * );
+extern int (* const DATA_AC_RailStayWalkL_16F_Tbl[])( MMDL * );
+extern int (* const DATA_AC_RailStayWalkR_16F_Tbl[])( MMDL * );
+extern int (* const DATA_AC_RailStayWalkU_2F_Tbl[])( MMDL * );
+extern int (* const DATA_AC_RailStayWalkD_2F_Tbl[])( MMDL * );
+extern int (* const DATA_AC_RailStayWalkL_2F_Tbl[])( MMDL * );
+extern int (* const DATA_AC_RailStayWalkR_2F_Tbl[])( MMDL * );
+
 #endif //MMDL_PROCACMD_H_FILE

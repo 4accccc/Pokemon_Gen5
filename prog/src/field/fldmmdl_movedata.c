@@ -1151,6 +1151,14 @@ int (* const * const DATA_AcmdActionTbl[ACMD_MAX])( MMDL * ) =
   DATA_AC_RailDashD_4F_Tbl,               // AC_RAIL_DASH_D_4F
   DATA_AC_RailDashL_4F_Tbl,               // AC_RAIL_DASH_L_4F
   DATA_AC_RailDashR_4F_Tbl,               // AC_RAIL_DASH_R_4F
+  DATA_AC_RailStayWalkU_16F_Tbl,          // AC_RAIL_STAY_WALK_U_16F	
+  DATA_AC_RailStayWalkD_16F_Tbl,          // AC_RAIL_STAY_WALK_D_16F	
+  DATA_AC_RailStayWalkL_16F_Tbl,          // AC_RAIL_STAY_WALK_L_16F	
+  DATA_AC_RailStayWalkR_16F_Tbl,          // AC_RAIL_STAY_WALK_R_16F	
+  DATA_AC_RailStayWalkU_2F_Tbl,           // AC_RAIL_STAY_WALK_U_2F	
+  DATA_AC_RailStayWalkD_2F_Tbl,           // AC_RAIL_STAY_WALK_D_2F	
+  DATA_AC_RailStayWalkL_2F_Tbl,           // AC_RAIL_STAY_WALK_L_2F	
+  DATA_AC_RailStayWalkR_2F_Tbl,           // AC_RAIL_STAY_WALK_R_2F	
 };
 
 //==============================================================================
@@ -1267,6 +1275,10 @@ static const int DATA_CodeTbl_RAIL_WALK_U_2F[] =
 {AC_RAIL_WALK_U_2F,AC_RAIL_WALK_D_2F,AC_RAIL_WALK_L_2F,AC_RAIL_WALK_R_2F};
 static const int DATA_CodeTbl_RAIL_DASH_U_4F[] =
 {AC_RAIL_DASH_U_4F,AC_RAIL_DASH_D_4F,AC_RAIL_DASH_L_4F,AC_RAIL_DASH_R_4F};
+static const int DATA_CodeTbl_RAIL_STAY_WALK_U_16F[] =
+{AC_RAIL_STAY_WALK_U_16F,AC_RAIL_STAY_WALK_D_16F,AC_RAIL_STAY_WALK_L_16F,AC_RAIL_STAY_WALK_R_16F};
+static const int DATA_CodeTbl_RAIL_STAY_WALK_U_2F[] =
+{AC_RAIL_STAY_WALK_U_2F,AC_RAIL_STAY_WALK_D_2F,AC_RAIL_STAY_WALK_L_2F,AC_RAIL_STAY_WALK_R_2F};
 
 //--------------------------------------------------------------
 ///	MMDL_ChangeDirAcmdCode()で対応するコード。
@@ -1314,6 +1326,8 @@ const int * const DATA_AcmdCodeDirChangeTbl[] =
   DATA_CodeTbl_RAIL_WALK_U_4F,
   DATA_CodeTbl_RAIL_WALK_U_2F,
   DATA_CodeTbl_RAIL_DASH_U_4F,
+  DATA_CodeTbl_RAIL_STAY_WALK_U_16F,
+  DATA_CodeTbl_RAIL_STAY_WALK_U_2F,
 	NULL,	//終端識別
 };
 
