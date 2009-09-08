@@ -231,11 +231,17 @@ static void RE_DRAW_Delete(FLDMAPFUNC_WORK * p_funcwk, FIELDMAP_WORK * p_fieldma
 static void RE_DRAW_SetDrawTarget( RE_RAIL_DRAW_WORK* p_wk, BOOL flag );
 static RE_RAIL_DRAW_OBJ* RE_DRAW_GetClearWork( RE_RAIL_DRAW_WORK* p_wk );
 static void RE_DRAW_SetUpData( RE_RAIL_DRAW_WORK* p_wk, const FLDNOGRID_MAPPER* cp_nogridMapper );
+static void RE_DRAW_ClearAllDrawObj( RE_RAIL_DRAW_WORK* p_wk );
+static void RE_DRAW_ClearLineDrawObj( RE_RAIL_DRAW_WORK* p_wk, u32 line_idx );
+static void RE_DRAW_SetUpLine( RE_RAIL_DRAW_WORK* p_wk, const FLDNOGRID_MAPPER* cp_nogridMapper, u32 line_idx );
+
 
 static void RE_DRAW_DRAWOBJ_Clear( RE_RAIL_DRAW_OBJ* p_drawobj );
 static BOOL RE_DRAW_DRAWOBJ_IsUse( const RE_RAIL_DRAW_OBJ* cp_drawobj );
 static void RE_DRAW_DRAWOBJ_Set( RE_RAIL_DRAW_OBJ* p_drawobj, u32 rail_type, u32 rail_index, const VecFx32* cp_trans, const VecFx32* cp_distance, u32 width );
 static void RE_DRAW_DRAWOBJ_Draw( RE_RAIL_DRAW_WORK* p_wk, RE_RAIL_DRAW_OBJ* p_drawobj );
+static BOOL RE_DRAW_DRAWOBJ_IsLineIdx( const RE_RAIL_DRAW_OBJ* cp_drawobj, u32 index );
+
 static const FLDMAPFUNC_DATA sc_RE_DRAW_FUNCDATA = 
 {
 	0, sizeof(RE_RAIL_DRAW_WORK),
@@ -553,10 +559,7 @@ static void RE_DRAW_Create(FLDMAPFUNC_WORK * p_funcwk, FIELDMAP_WORK * p_fieldma
 
 
 	// ワークのクリア
-	for( i=0; i<RM_DRAW_OBJ_MAX; i++ )
-	{
-		RE_DRAW_DRAWOBJ_Clear( &p_wk->draw_obj[i] );
-	}
+  RE_DRAW_ClearAllDrawObj( p_wk );
 }
 
 //----------------------------------------------------------------------------
@@ -737,23 +740,15 @@ static RE_RAIL_DRAW_OBJ* RE_DRAW_GetClearWork( RE_RAIL_DRAW_WORK* p_wk )
 //-----------------------------------------------------------------------------
 static void RE_DRAW_SetUpData( RE_RAIL_DRAW_WORK* p_wk, const FLDNOGRID_MAPPER* cp_nogridMapper )
 {
-	int  i, j;
-	RE_RAIL_DRAW_OBJ* p_drawobj;
-	const RAIL_POINT* cp_point_s;
-	const RAIL_POINT* cp_point_e;
-  const RAIL_LINEPOS_SET* cp_linepos;
-	VecFx32 point_s, point_e;
-	VecFx32 distance = {0,0,0};
-  u32 width;
+	int  i;
   const FIELD_RAIL_LOADER* cp_loader = FLDNOGRID_MAPPER_GetRailLoader( cp_nogridMapper );
   const FIELD_RAIL_MAN* cp_railman = FLDNOGRID_MAPPER_GetRailMan( cp_nogridMapper );
   const RAIL_SETTING* cp_setting = FIELD_RAIL_LOADER_GetData( cp_loader );
+	RE_RAIL_DRAW_OBJ* p_drawobj;
+	VecFx32 distance = {0,0,0};
 
 	// 全情報クリーン
-	for( i=0; i<RM_DRAW_OBJ_MAX; i++ )
-	{
-		RE_DRAW_DRAWOBJ_Clear( &p_wk->draw_obj[i] );
-	}
+  RE_DRAW_ClearAllDrawObj( p_wk );
 
 	// ポイント
 	for( i=0; i<cp_setting->point_count; i++ )
@@ -766,70 +761,144 @@ static void RE_DRAW_SetUpData( RE_RAIL_DRAW_WORK* p_wk, const FLDNOGRID_MAPPER* 
 	// ライン
 	for( i=0; i<cp_setting->line_count; i++ )
 	{
-    cp_linepos =  &cp_setting->linepos_table[ cp_setting->line_table[i].line_pos_set ];
-    
-    // 直線
-    if( cp_linepos->func_index == FIELD_RAIL_LOADER_LINEPOS_FUNC_STRAIT )
+    RE_DRAW_SetUpLine( p_wk, cp_nogridMapper, i );
+	}
+}
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  全描画おぶじぇの破棄
+ *
+ *	@param	p_wk 
+ */
+//-----------------------------------------------------------------------------
+static void RE_DRAW_ClearAllDrawObj( RE_RAIL_DRAW_WORK* p_wk )
+{
+  int i;
+
+	for( i=0; i<RM_DRAW_OBJ_MAX; i++ )
+	{
+		RE_DRAW_DRAWOBJ_Clear( &p_wk->draw_obj[i] );
+	}
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  特定のラインの情報をクリア
+ *  
+ *	@param	p_wk        ワーク
+ *	@param	line_idx    ラインインデックス
+ */
+//-----------------------------------------------------------------------------
+static void RE_DRAW_ClearLineDrawObj( RE_RAIL_DRAW_WORK* p_wk, u32 line_idx )
+{
+  int i;
+
+	for( i=0; i<RM_DRAW_OBJ_MAX; i++ )
+	{
+    if( RE_DRAW_DRAWOBJ_IsLineIdx( &p_wk->draw_obj[i], line_idx ) )
     {
-      p_drawobj = RE_DRAW_GetClearWork( p_wk );
-
-      cp_point_s = &cp_setting->point_table[ cp_setting->line_table[i].point_s ];
-      point_s = cp_point_s->pos;
-      cp_point_e = &cp_setting->point_table[ cp_setting->line_table[i].point_e ];
-      point_e = cp_point_e->pos;
-      
-      VEC_Subtract( &point_e, &point_s, &distance );
-
-      // ラインSEARCH
-      width = 0;
-      for( j=0; j<RAIL_CONNECT_LINE_MAX; j++ )
-      {
-        if( cp_point_s->lines[j] == i )
-        {
-          width = cp_point_s->width_ofs_max[j];
-          break;
-        }
-      }
-      
-      RE_DRAW_DRAWOBJ_Set( p_drawobj, FIELD_RAIL_TYPE_LINE, i, &point_s, &distance, width );
-    }
-    else
-    {
-      u32 line_ofs_max;
-      VecFx32 pos1, pos2;
-      RAIL_LOCATION location;
-
-
-      //  カーブ
-      // グリッドサイズ分ループ
-      location.rail_index   = i;
-      location.type         = FIELD_RAIL_TYPE_LINE;
-      location.key          = RAIL_KEY_UP;
-      location.width_grid   = 0;
-      location.line_grid    = 0;
-      line_ofs_max          = FIELD_RAIL_MAN_GetLocationLineOfsMaxGrid( cp_railman, &location );
-      line_ofs_max += 1;
-      FIELD_RAIL_MAN_GetLocationPosition( cp_railman, &location, &pos1 );
-      VEC_Set( &pos2, pos1.x, pos1.y, pos1.z );
-
-      for( j=1; j<line_ofs_max; j++ )
-      {
-        location.line_grid = j;
-        FIELD_RAIL_MAN_GetLocationPosition( cp_railman, &location, &pos2 );
-        width = FIELD_RAIL_MAN_GetLocationWidthGrid( cp_railman, &location );
-
-        p_drawobj = RE_DRAW_GetClearWork( p_wk );
-
-        VEC_Subtract( &pos2, &pos1, &distance );
-
-        RE_DRAW_DRAWOBJ_Set( p_drawobj, FIELD_RAIL_TYPE_LINE, i, &pos1, &distance, RAIL_GRID_TO_OFS(width) );
-
-        VEC_Set( &pos1, pos2.x, pos2.y, pos2.z );
-      }
-
+  		RE_DRAW_DRAWOBJ_Clear( &p_wk->draw_obj[i] );
     }
 	}
 }
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  特定のラインのセットアップ
+ *  
+ *	@param	p_wk              ワーク
+ *	@param	cp_nogridMapper   マッパー
+ *	@param	line_idx          ラインインデックス
+ */
+//-----------------------------------------------------------------------------
+static void RE_DRAW_SetUpLine( RE_RAIL_DRAW_WORK* p_wk, const FLDNOGRID_MAPPER* cp_nogridMapper, u32 line_idx )
+{
+	int  i;
+  const FIELD_RAIL_LOADER* cp_loader = FLDNOGRID_MAPPER_GetRailLoader( cp_nogridMapper );
+  const FIELD_RAIL_MAN* cp_railman = FLDNOGRID_MAPPER_GetRailMan( cp_nogridMapper );
+  const RAIL_SETTING* cp_setting = FIELD_RAIL_LOADER_GetData( cp_loader );
+	RE_RAIL_DRAW_OBJ* p_drawobj;
+	const RAIL_POINT* cp_point_s;
+	const RAIL_POINT* cp_point_e;
+  const RAIL_LINEPOS_SET* cp_linepos;
+	VecFx32 point_s, point_e;
+	VecFx32 distance = {0,0,0};
+  u32 width;
+
+  // line_idxのワークがあったらすべて消す
+  RE_DRAW_ClearLineDrawObj( p_wk, line_idx );
+
+
+  cp_linepos =  &cp_setting->linepos_table[ cp_setting->line_table[line_idx].line_pos_set ];
+  
+  // 直線
+  if( cp_linepos->func_index == FIELD_RAIL_LOADER_LINEPOS_FUNC_STRAIT )
+  {
+    p_drawobj = RE_DRAW_GetClearWork( p_wk );
+
+    cp_point_s = &cp_setting->point_table[ cp_setting->line_table[line_idx].point_s ];
+    point_s = cp_point_s->pos;
+    cp_point_e = &cp_setting->point_table[ cp_setting->line_table[line_idx].point_e ];
+    point_e = cp_point_e->pos;
+    
+    VEC_Subtract( &point_e, &point_s, &distance );
+
+    // ラインSEARCH
+    width = 0;
+    for( i=0; i<RAIL_CONNECT_LINE_MAX; i++ )
+    {
+      if( cp_point_s->lines[i] == line_idx )
+      {
+        width = cp_point_s->width_ofs_max[i];
+        break;
+      }
+    }
+    
+    RE_DRAW_DRAWOBJ_Set( p_drawobj, FIELD_RAIL_TYPE_LINE, line_idx, &point_s, &distance, width );
+  }
+  else
+  {
+    u32 line_ofs_max;
+    VecFx32 pos1, pos2;
+    RAIL_LOCATION location;
+
+
+    //  カーブ
+    // グリッドサイズ分ループ
+    location.rail_index   = line_idx;
+    location.type         = FIELD_RAIL_TYPE_LINE;
+    location.key          = RAIL_KEY_UP;
+    location.width_grid   = 0;
+    location.line_grid    = 0;
+    line_ofs_max          = FIELD_RAIL_MAN_GetLocationLineOfsMaxGrid( cp_railman, &location );
+    line_ofs_max += 1;
+    FIELD_RAIL_MAN_GetLocationPosition( cp_railman, &location, &pos1 );
+    VEC_Set( &pos2, pos1.x, pos1.y, pos1.z );
+
+    for( i=1; i<line_ofs_max; i++ )
+    {
+      location.line_grid = i;
+      FIELD_RAIL_MAN_GetLocationPosition( cp_railman, &location, &pos2 );
+      width = FIELD_RAIL_MAN_GetLocationWidthGrid( cp_railman, &location );
+
+      p_drawobj = RE_DRAW_GetClearWork( p_wk );
+
+      VEC_Subtract( &pos2, &pos1, &distance );
+
+      RE_DRAW_DRAWOBJ_Set( p_drawobj, FIELD_RAIL_TYPE_LINE, line_idx, &pos1, &distance, RAIL_GRID_TO_OFS(width) );
+
+      VEC_Set( &pos1, pos2.x, pos2.y, pos2.z );
+    }
+  }
+}
+
+
+
+
+
+
 
 
 //----------------------------------------------------------------------------
@@ -908,6 +977,34 @@ static void RE_DRAW_DRAWOBJ_Draw( RE_RAIL_DRAW_WORK* p_wk, RE_RAIL_DRAW_OBJ* p_d
 		GFL_G3D_DRAW_DrawObject( p_wk->p_obj[p_drawobj->rail_type], &p_drawobj->trans );
 	}
 }
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ラインインデックスチェック
+ *
+ *	@param	cp_wk     ワーク
+ *	@param	index     インデックス
+ *
+ *	@retval TRUE  はい
+ *	@retval FALSE いいえ
+ */
+//-----------------------------------------------------------------------------
+static BOOL RE_DRAW_DRAWOBJ_IsLineIdx( const RE_RAIL_DRAW_OBJ* cp_drawobj, u32 index )
+{
+  if( cp_drawobj->use )
+  {
+    if( cp_drawobj->rail_type == FIELD_RAIL_TYPE_LINE )
+    {
+      if( cp_drawobj->rail_index == index )
+      {
+        return TRUE;
+      }
+    }
+  }
+
+  return FALSE;
+}
+
 
 
 
@@ -1544,26 +1641,30 @@ static void RE_InputPoint_FreeCircle( DEBUG_RAIL_EDITOR* p_wk )
 	}
 	else
 	{
-		// ターゲット操作
+		// yaw をつかった　方向　で　ターゲット操作
 		if( key_repeat & PAD_KEY_UP )
 		{
 			change = TRUE;
-			target.z -= 4*FX32_ONE;
+			target.z += FX_Mul( FX_CosIdx( yaw ), -4*FX32_ONE );
+      target.x += FX_Mul( FX_SinIdx( yaw ), -4*FX32_ONE );
 		}
 		else if( key_repeat & PAD_KEY_DOWN )
 		{ 
 			change = TRUE;
-			target.z += 4*FX32_ONE;
+			target.z += FX_Mul( FX_CosIdx( yaw ), 4*FX32_ONE );
+      target.x += FX_Mul( FX_SinIdx( yaw ), 4*FX32_ONE );
 		}
 		else if( key_repeat & PAD_KEY_LEFT )
 		{ 
 			change = TRUE;
-			target.x -= 4*FX32_ONE;
+			target.z += FX_Mul( FX_CosIdx( yaw + 0x4000 ), -4*FX32_ONE );
+      target.x += FX_Mul( FX_SinIdx( yaw + 0x4000 ), -4*FX32_ONE );
 		}
 		else if( key_repeat & PAD_KEY_RIGHT )
 		{ 
 			change = TRUE;
-			target.x += 4*FX32_ONE;
+			target.z += FX_Mul( FX_CosIdx( yaw + 0x4000 ), 4*FX32_ONE );
+      target.x += FX_Mul( FX_SinIdx( yaw + 0x4000 ), 4*FX32_ONE );
 		}
 		if( change )
 		{
@@ -1592,6 +1693,36 @@ static void RE_InputPoint_FreeCircle( DEBUG_RAIL_EDITOR* p_wk )
 
 		FIELD_CAMERA_SetAngleYaw( p_camera, yaw );
 		FIELD_CAMERA_SetAngleLen( p_camera, camera_len );
+
+    // レール情報を更新
+    {
+      FLDNOGRID_MAPPER* p_mapper = FIELDMAP_GetFldNoGridMapper( p_wk->p_fieldmap );
+      const FIELD_RAIL_LOADER * cp_rail_loader = FLDNOGRID_MAPPER_GetRailLoader( p_mapper );
+      const RAIL_SETTING* cp_rail_setting = FIELD_RAIL_LOADER_GetData( cp_rail_loader );
+      FIELD_RAIL_MAN * p_railman = FLDNOGRID_MAPPER_DEBUG_GetRailMan( p_mapper );
+      RAIL_LOCATION location;
+      u32 linepos_set;
+
+      
+      FIELD_PLAYER_NOGRID_GetLocation( p_wk->p_railplayer, &location	);
+      if( location.type == FIELD_RAIL_TYPE_LINE )
+      {
+        linepos_set = cp_rail_setting->line_table[ location.rail_index ].line_pos_set;
+        if( cp_rail_setting->linepos_table[ linepos_set ].func_index == FIELD_RAIL_LOADER_LINEPOS_FUNC_CURVE )
+        {
+          RAIL_POSFUNC_CURVE_WORK* p_curve_wk = (RAIL_POSFUNC_CURVE_WORK*)cp_rail_setting->linepos_table[ linepos_set ].work;
+          p_curve_wk->x = target.x;
+          p_curve_wk->y = target.y;
+          p_curve_wk->z = target.z;
+
+          OS_TPrintf( "Curve Center x[%d] y[%d] z[%d]\n", p_curve_wk->x, p_curve_wk->y, p_curve_wk->z );
+          
+          FIELD_RAIL_MAN_DEBUG_ChangeData( p_railman, cp_rail_setting );	//レール情報変更
+          // ライン描画情報変更
+          RE_DRAW_SetUpLine( FLDMAPFUNC_GetFreeWork( p_wk->p_rail_draw ), p_mapper, location.rail_index );
+        }
+      }
+    }
 	}
 
 	

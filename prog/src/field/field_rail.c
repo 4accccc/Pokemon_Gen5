@@ -398,6 +398,13 @@ FIELD_RAIL_WORK* FIELD_RAIL_MAN_DEBUG_GetBindWork( const FIELD_RAIL_MAN * man )
 {
   return (FIELD_RAIL_WORK*)man->camera_bind_work;
 }
+
+
+// ƒf[ƒ^‚ğü‚è‚©‚¦‚é
+void FIELD_RAIL_MAN_DEBUG_ChangeData(FIELD_RAIL_MAN * man, const RAIL_SETTING * setting)
+{
+  initRailDat( &man->rail_dat, setting );
+}
 #endif
 
 //------------------------------------------------------------------

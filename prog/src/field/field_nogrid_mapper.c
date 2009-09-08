@@ -458,6 +458,21 @@ void FLDNOGRID_MAPPER_DEBUG_SetRailCameraActive( FLDNOGRID_MAPPER* p_mapper, BOO
 }
 
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  自由にアクセスできるレールマネージャを取得
+ *
+ *	@param	cp_mapper 
+ *
+ *	@return
+ */
+//-----------------------------------------------------------------------------
+FIELD_RAIL_MAN* FLDNOGRID_MAPPER_DEBUG_GetRailMan( const FLDNOGRID_MAPPER* cp_mapper )
+{
+  return cp_mapper->p_railMan;
+}
+
+
 #endif
 
 

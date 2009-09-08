@@ -314,6 +314,9 @@ extern void FIELD_RAIL_MAN_GetBindWorkPos( const FIELD_RAIL_MAN * man, VecFx32* 
 // 仮処理 色々な部分で、RAILMANからLocationなどを取得しているため、作成
 // これを使用している部分は後々は、PLAYERの情報から取得できるようになるはず
 extern FIELD_RAIL_WORK* FIELD_RAIL_MAN_DEBUG_GetBindWork( const FIELD_RAIL_MAN * man );
+
+// データ構成が変わっていないbinaryの、ちょっとしたデータ変更
+extern void FIELD_RAIL_MAN_DEBUG_ChangeData(FIELD_RAIL_MAN * man, const RAIL_SETTING * setting);
 #endif
 
 //------------------------------------------------------------------
