@@ -513,6 +513,7 @@ void BTLV_ITEMSELECT_Start( BTLV_CORE* wk, u8 bagMode )
     wk->bagData.end_flg = FALSE;
     wk->bagData.ret_item = ITEM_DUMMY_DATA;
 
+    BTL_Printf(" Start Item Select!!!\n" );
     BattleBag_TaskAdd( &wk->bagData );
     wk->selectItemSeq = 1;
   }
@@ -1155,6 +1156,8 @@ static void setup_core( BTLV_CORE* wk, HEAPID heapID )
   GFL_BG_Init( heapID );
   GFL_BMPWIN_Init( heapID );
   GFL_FONTSYS_Init();
+
+  GFL_BG_DebugPrintCtrl( GFL_BG_SUB_DISP, TRUE );
 
   // VRAMÉoÉìÉNê›íË
   GFL_DISP_SetBank( &vramBank );

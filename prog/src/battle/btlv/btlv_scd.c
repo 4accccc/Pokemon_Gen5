@@ -126,6 +126,7 @@ struct _BTLV_SCD {
 /*--------------------------------------------------------------------------*/
 /* Prototypes                                                               */
 /*--------------------------------------------------------------------------*/
+static void setupMainWin( BTLV_SCD* wk );
 static void spstack_init( BTLV_SCD* wk );
 static void spstack_push( BTLV_SCD* wk, BPFunc initFunc, BPFunc loopFunc );
 static BOOL spstack_call( BTLV_SCD* wk );
@@ -194,21 +195,21 @@ void BTLV_SCD_Init( BTLV_SCD* wk )
   //GFL_ARC_UTIL_TransVramPalette( ARCID_FONT, NARC_font_default_nclr, PALTYPE_SUB_BG, 0, 0, wk->heapID );
 //  PaletteWorkSet_Arc( BTLV_EFFECT_GetPfd(), ARCID_FONT, NARC_font_default_nclr, wk->heapID, FADE_SUB_BG, 0x10, 0xe0 );
 
-  wk->win = GFL_BMPWIN_Create( GFL_BG_FRAME2_S, 0, 2, 32, 22, 0x0e, GFL_BMP_CHRAREA_GET_F );
-  wk->bmp = GFL_BMPWIN_GetBmp( wk->win );
-  GFL_BMP_Clear( wk->bmp, 0x00 );
-  PRINT_UTIL_Setup( &wk->printUtil, wk->win );
-  GFL_BMPWIN_MakeScreen( wk->win );
-  GFL_BMPWIN_TransVramCharacter( wk->win );
-  GFL_BG_LoadScreenReq( GFL_BG_FRAME2_S );
+  setupMainWin( wk );
 }
 
 void BTLV_SCD_Cleanup( BTLV_SCD* wk )
 {
-  BTLV_INPUT_ExitBG( wk->biw );
   GFL_BMPWIN_Delete( wk->win );
+  BTLV_INPUT_ExitBG( wk->biw );
 }
 void BTLV_SCD_Setup( BTLV_SCD* wk )
+{
+  BTLV_INPUT_InitBG( wk->biw );
+  setupMainWin( wk );
+}
+
+static void setupMainWin( BTLV_SCD* wk )
 {
   wk->win = GFL_BMPWIN_Create( GFL_BG_FRAME2_S, 0, 2, 32, 22, 0x0e, GFL_BMP_CHRAREA_GET_F );
   wk->bmp = GFL_BMPWIN_GetBmp( wk->win );
@@ -217,8 +218,6 @@ void BTLV_SCD_Setup( BTLV_SCD* wk )
   GFL_BMPWIN_MakeScreen( wk->win );
   GFL_BMPWIN_TransVramCharacter( wk->win );
   GFL_BG_LoadScreenReq( GFL_BG_FRAME2_S );
-
-  BTLV_INPUT_InitBG( wk->biw );
 }
 
 void BTLV_SCD_RestartUI( BTLV_SCD* wk )

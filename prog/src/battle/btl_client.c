@@ -587,7 +587,7 @@ static BOOL SubProc_UI_SelectAction( BTL_CLIENT* wk, int* seq )
         BTL_ACTION_SetItemParam( wk->procAction, itemID, targetIdx );
         (*seq)=SEQ_CHECK_DONE;
       }else{
-        (*seq)=SEQ_CHECK_ACTION;
+        (*seq)=SEQ_SELECT_ACTION;
       }
     }
     break;
