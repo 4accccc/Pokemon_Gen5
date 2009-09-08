@@ -425,6 +425,10 @@ static void _UniSub_BGLoad(UNION_SUBDISP_PTR unisub, ARCHANDLE *handle)
 
 	//BG VRAMクリア
 	GFL_STD_MemClear32((void*)HW_DB_BG_VRAM, HW_DB_BG_VRAM_SIZE);
+
+	//レジスタOFF
+	GXS_SetVisibleWnd(GX_WNDMASK_NONE);
+	G2S_BlendNone();
 	
   //キャラ転送
   GFL_ARCHDL_UTIL_TransVramBgCharacter(

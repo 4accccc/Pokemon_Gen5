@@ -2203,9 +2203,14 @@ static BOOL OneselfSeq_ColosseumPokelist(UNION_SYSTEM_PTR unisys, UNION_MY_SITUA
     else{
       plist->in_min = 1;
     }
-    plist->in_max = 6;
+    if(situ->mycomm.mainmenu_select == UNION_PLAY_CATEGORY_COLOSSEUM_MULTI){
+      plist->in_max = 3;
+    }
+    else{
+      plist->in_max = 6;
+    }
     plist->in_lv = 100;
-    OS_TPrintf("in_min = %d\n", plist->in_min);
+    OS_TPrintf("in_min = %d, in_max = %d\n", plist->in_min, plist->in_max);
     
     unisys->parent_work = parent_list;
     UnionSubProc_EventSet(unisys, UNION_SUBPROC_ID_POKELIST, parent_list);
