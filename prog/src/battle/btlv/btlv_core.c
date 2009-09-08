@@ -246,7 +246,7 @@ static BOOL CmdProc_Setup( BTLV_CORE* core, int* seq, void* workBuffer )
     BTLV_EFFECT_Init( 0, core->heapID );
 
     BTLV_SCU_Setup( core->scrnU );
-    BTLV_SCD_Setup( core->scrnD );
+    BTLV_SCD_Init( core->scrnD );
     (*seq)++;
     break;
 
@@ -377,18 +377,6 @@ static BOOL mainproc_call( BTLV_CORE* core )
 
 //=============================================================================================
 /**
- * 下画面初期化
- *
- * @param   core
- */
-//=============================================================================================
-void BTLV_UI_Cleanup( BTLV_CORE* core )
-{
-  BTLV_SCD_CleanupUI( core->scrnD );
-}
-
-//=============================================================================================
-/**
  * アクション選択開始
  *
  * @param   core
@@ -486,6 +474,12 @@ BtlvResult BTLV_UI_SelectTarget_Wait( BTLV_CORE* core )
 }
 
 
+void BTLV_UI_Restart( BTLV_CORE* core )
+{
+  BTLV_SCD_RestartUI( core->scrnD );
+}
+
+
 void BTLV_StartPokeSelect( BTLV_CORE* core, const BTL_POKESELECT_PARAM* param, BTL_POKESELECT_RESULT* result )
 {
   BTLV_SCD_PokeSelect_Start( core->scrnD, param, result );
@@ -506,6 +500,8 @@ BOOL BTLV_WaitPokeSelect( BTLV_CORE* core )
 //=============================================================================================
 void BTLV_ITEMSELECT_Start( BTLV_CORE* wk, u8 bagMode )
 {
+  BTLV_SCD_Cleanup( wk->scrnD );
+
   wk->bagData.myitem = BTL_MAIN_GetItemDataPtr( wk->mainModule );
   wk->bagData.mode = bagMode;
   wk->bagData.font = wk->fontHandle;
@@ -1220,3 +1216,5 @@ u8 BTLV_CORE_GetPlayerClientID( const BTLV_CORE* core )
 {
   return core->myClientID;
 }
+
+

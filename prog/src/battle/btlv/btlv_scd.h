@@ -55,9 +55,12 @@ extern BTLV_SCD*  BTLV_SCD_Create( const BTLV_CORE* vcore,
     const BTL_MAIN_MODULE* mainModule, const BTL_POKE_CONTAINER* pokeCon, GFL_TCBLSYS* tcbl, GFL_FONT* font, u8 playerClientID, HEAPID heapID );
 extern void BTLV_SCD_Delete( BTLV_SCD* wk );
 
+extern void BTLV_SCD_Init( BTLV_SCD* wk );
+
+extern void BTLV_SCD_Cleanup( BTLV_SCD* wk );
 extern void BTLV_SCD_Setup( BTLV_SCD* wk );
 
-extern void BTLV_SCD_CleanupUI( BTLV_SCD* wk );
+extern void BTLV_SCD_RestartUI( BTLV_SCD* wk );
 
 extern void BTLV_SCD_StartActionSelect( BTLV_SCD* wk, const BTL_POKEPARAM* bpp, BTL_ACTION_PARAM* dest );
 extern BtlAction BTLV_SCD_WaitActionSelect( BTLV_SCD* wk );

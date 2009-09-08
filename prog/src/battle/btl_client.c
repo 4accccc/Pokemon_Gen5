@@ -460,10 +460,8 @@ static BOOL SubProc_UI_SelectAction( BTL_CLIENT* wk, int* seq )
         if( is_unselectable_waza(wk, wk->procPoke, wk->actionParam[wk->procPokeIdx].fight.waza, &wk->strParam) )
         {
           if( wk->strParam.stdFlag ){
-            BTL_Printf(" STR_STD, ID=%d\n", wk->strParam.strID);
             BTLV_StartMsgStd( wk->viewCore, wk->strParam.strID, wk->strParam.args );
           }else{
-            BTL_Printf(" STR_SET, ID=%d\n", wk->strParam.strID);
             BTLV_StartMsgSet( wk->viewCore, wk->strParam.strID, wk->strParam.args );
           }
           (*seq) = SEQ_WAIT_MSG;
@@ -501,7 +499,7 @@ static BOOL SubProc_UI_SelectAction( BTL_CLIENT* wk, int* seq )
 
   case SEQ_WAIT_MSG:
     if( BTLV_WaitMsg(wk->viewCore) ){
-      BTLV_UI_Cleanup( wk->viewCore );
+      BTLV_UI_Restart( wk->viewCore );
       (*seq) = SEQ_SELECT_ACTION;
     }
     break;
@@ -524,7 +522,7 @@ static BOOL SubProc_UI_SelectAction( BTL_CLIENT* wk, int* seq )
     break;
 
   case SEQ_CHECK_DONE:
-    BTLV_UI_Cleanup( wk->viewCore );
+    BTLV_UI_Restart( wk->viewCore );
     wk->procPokeIdx++;
     if( wk->procPokeIdx >= wk->numCoverPos )
     {

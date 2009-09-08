@@ -180,14 +180,11 @@ BTLV_SCD*  BTLV_SCD_Create( const BTLV_CORE* vcore, const BTL_MAIN_MODULE* mainM
   return wk;
 }
 
-void BTLV_SCD_Setup( BTLV_SCD* wk )
+void BTLV_SCD_Init( BTLV_SCD* wk )
 {
-  if( BTL_MAIN_GetRule( wk->mainModule ) == BTL_RULE_TRIPLE )
-  { 
+  if( BTL_MAIN_GetRule( wk->mainModule ) == BTL_RULE_TRIPLE ){
     wk->biw = BTLV_INPUT_Init( BTLV_INPUT_TYPE_TRIPLE, wk->font, wk->heapID );
-  }
-  else
-  { 
+  }else{
     wk->biw = BTLV_INPUT_Init( BTLV_INPUT_TYPE_SINGLE, wk->font, wk->heapID );
   }
 
@@ -204,7 +201,29 @@ void BTLV_SCD_Setup( BTLV_SCD* wk )
   GFL_BMPWIN_MakeScreen( wk->win );
   GFL_BMPWIN_TransVramCharacter( wk->win );
   GFL_BG_LoadScreenReq( GFL_BG_FRAME2_S );
+}
 
+void BTLV_SCD_Cleanup( BTLV_SCD* wk )
+{
+  BTLV_INPUT_ExitBG( wk->biw );
+  GFL_BMPWIN_Delete( wk->win );
+}
+void BTLV_SCD_Setup( BTLV_SCD* wk )
+{
+  wk->win = GFL_BMPWIN_Create( GFL_BG_FRAME2_S, 0, 2, 32, 22, 0x0e, GFL_BMP_CHRAREA_GET_F );
+  wk->bmp = GFL_BMPWIN_GetBmp( wk->win );
+  GFL_BMP_Clear( wk->bmp, 0x00 );
+  PRINT_UTIL_Setup( &wk->printUtil, wk->win );
+  GFL_BMPWIN_MakeScreen( wk->win );
+  GFL_BMPWIN_TransVramCharacter( wk->win );
+  GFL_BG_LoadScreenReq( GFL_BG_FRAME2_S );
+
+  BTLV_INPUT_InitBG( wk->biw );
+}
+
+void BTLV_SCD_RestartUI( BTLV_SCD* wk )
+{
+  BTLV_INPUT_CreateScreen( wk->biw, BTLV_INPUT_SCRTYPE_STANDBY, NULL );
 }
 
 void BTLV_SCD_Delete( BTLV_SCD* wk )
@@ -259,18 +278,6 @@ static BOOL spstack_call( BTLV_SCD* wk )
 }
 //=============================================================================================
 //=============================================================================================
-
-//=============================================================================================
-/**
- *
- *
- * @param   wk
- */
-//=============================================================================================
-void BTLV_SCD_CleanupUI( BTLV_SCD* wk )
-{
-  BTLV_INPUT_CreateScreen( wk->biw, BTLV_INPUT_SCRTYPE_STANDBY, NULL );
-}
 
 //=============================================================================================
 //  アクション選択処理
@@ -1190,6 +1197,8 @@ static void printCommWait( BTLV_SCD* wk )
   drawY = (192 - 16) / 2;
   PRINT_UTIL_Print( &wk->printUtil, wk->printQue, drawX, drawY, wk->strbuf, wk->font );
 }
+
+
 
 //=============================================================================================
 //  決定音再生
