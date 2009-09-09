@@ -39,6 +39,7 @@ typedef enum
 //======================================================================
 ///GameCommSys_Bootする時に引き渡すparent_work
 typedef struct{
+  GAMESYS_WORK *gsys;
   GAME_COMM_SYS_PTR game_comm;
   u8 parent_macAddress[6];
   u8 my_invasion;             ///<TRUE:侵入開始するユーザーである
