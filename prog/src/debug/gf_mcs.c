@@ -794,11 +794,10 @@ void	GFL_MCS_Close( void )
 
 //============================================================================================
 /**
- *	PCとのリンクを確立する
- *	 指定したカテゴリIDを発信してきたPCアプリを特定し、使用チャンネルを決定する
+ *	PCとのリンクが確立しているかチェックする
  */
 //============================================================================================
-BOOL	GFL_MCS_Link( u32 categoryID )
+BOOL	GFL_MCS_CheckLink( u32 categoryID )
 {
 	int i;
 
@@ -811,30 +810,6 @@ BOOL	GFL_MCS_Link( u32 categoryID )
 	}
 	return FALSE;
 }
-
-#if 1
-//============================================================================================
-/**
- *	PCとのリンクを解消する
- */
-//============================================================================================
-void	GFL_MCS_Annul( GFL_MCS_LINKIDX idx )
-{
-	GFL_MCS_LINKSTATUS* linkStatus;
-
-	if( !gflMCS ){ return; }
-	if( idx >= MCS_LINK_MAX){ return; }
-
-	linkStatus = &gflMCS->linkStatus[idx];
-	linkStatus->key.categoryID = 0;
-	linkStatus->key.channelID1 = MCS_CHANNEL15;
-	linkStatus->key.channelID2 = MCS_CHANNEL15;
-
-	linkStatus->rParam.size = 0;
-	linkStatus->rParam.split = FALSE;
-	linkStatus->rParam.getInfo = FALSE;
-}
-#endif
 
 //============================================================================================
 /**
