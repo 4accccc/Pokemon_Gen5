@@ -1006,8 +1006,12 @@ static BOOL TESTMODE_ITEM_SelectFuncNakamura( TESTMODE_WORK *work , const int id
 {
 	return TRUE;
 }
+
+FS_EXTERN_OVERLAY(mictest);
+extern const GFL_PROC_DATA TitleMicTestProcData;
 static BOOL TESTMODE_ITEM_SelectFuncHosaka( TESTMODE_WORK *work , const int idx )
 {
+	TESTMODE_COMMAND_ChangeProc( work, FS_OVERLAY_ID(mictest), &TitleMicTestProcData, NULL );
 	return TRUE;
 }
 static BOOL TESTMODE_ITEM_BackTopMenu( TESTMODE_WORK *work , const int idx )

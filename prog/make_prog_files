@@ -923,3 +923,8 @@ SRCS_OVERLAY_MCS_LIB = debug/gf_mcs.c
 #===> SRCS_OVERLAY_FIELD_WEATHER_STORM
 SRCS_OVERLAY_ITEMUSE = field/itemuse_event.c
 
+#マイクテスト
+#===> main
+SRCS_OVERLAY_MICTEST	= app/mictest/mictest.c
+
+
