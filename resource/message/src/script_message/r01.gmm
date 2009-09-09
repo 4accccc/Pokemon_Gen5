@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-09-04T19:26:31"/>
+	<create user="matsumiya" host="W00207" date="2009-09-09T11:42:01"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -235,7 +235,7 @@
 			<list entry="1" japanese="グループ 1" english="グループ 1" colorID="0"/>
 		</group>
 		<number position="-1" width="100"/>
-		<comment position="4" width="211"/>
+		<comment position="4" width="236"/>
 		<erase position="-1" width="100"/>
 		<attribute japanese="キャラ指定" english="キャラ指定" type="string" default="" position="1" width="100">
 		</attribute>
@@ -263,14 +263,14 @@
 		</language>
 	</columns>
 
-	<dialog left="57" top="195" right="757" bottom="811" maximized="no" rayout="Vertical2">
+	<dialog left="57" top="200" right="750" bottom="811" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="790" top="142" right="1263" bottom="540" visible="yes"/>
-		<band id="0" index="1" style="0000" width="525"/>
+		<band id="0" index="1" style="0000" width="518"/>
 		<band id="1" index="2" style="0000" width="165"/>
-		<band id="2" index="3" style="0000" width="538"/>
+		<band id="2" index="3" style="0000" width="531"/>
 		<band id="3" index="4" style="0000" width="152"/>
-		<band id="4" index="0" style="0000" width="692"/>
+		<band id="4" index="0" style="0000" width="685"/>
 		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
@@ -326,12 +326,12 @@
 ポケモンを　捕まえてみよう！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_r01_hakase2_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_r01_hakase2_02" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・捕獲デモ後、フィールドに復帰すると
 　このメッセージ表示
 ・アイテムNo004「モンスターボール」
-　１０こ入手（個数は仮）</comment>
+　５個入手（個数は仮）</comment>
 		<attribute name="キャラ指定">DOCTOR_JR
 博士</attribute>
 		<language name="JPN" width="256">アララギ『いまのを　みてくれたかい[BE:01:ページ切り替え（クリア）]
@@ -362,7 +362,8 @@
 	<row id="msg_r01_test_01">
 		<comment>アイテム入手
 ・0＝プレイヤー名
-・1＝道具名</comment>
+・1＝道具名
+※本来はシステムメッセージ</comment>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]は
 [FF:00:色:2]モンスターボール[FF:00:色:0]を　てにいれた！</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]は
@@ -373,7 +374,7 @@
 		<comment>♂
 ・T02方面に移動、画面外に消えると
 　msg_r01_black_01
-・博士はT02に出現</comment>
+・博士はt02に出現</comment>
 		<attribute name="キャラ指定">DOCTOR_JR
 博士</attribute>
 		<language name="JPN" width="256">アララギ『その　モンスターボールは
@@ -499,6 +500,7 @@
 ・メッセージ表示後、友達♂と♀
 　画面上に移動する
 　※できればばらばらに
+・友達♂と友達♀、T02側に出現
 ・2人の動作モデルが画面外に消えると
 　操作可能に</comment>
 		<attribute name="キャラ指定">友達♀</attribute>
@@ -526,7 +528,7 @@
 僕は　２匹　つかまえて
 ホワイティと　引き分け　だったんだ[BE:01:ページ切り替え（クリア）]
 あっ……　ホワイティが
-どれだけ　捕まえたか　いってしまった……</language>
+どれだけ　捕まえたか　教えてしまった……</language>
 	</row>
 
 	<row id="msg_r01_white_10">
@@ -565,10 +567,10 @@
 		<attribute name="キャラ指定">友達♀</attribute>
 		<language name="JPN" width="256">ホワイティ『[2:00:１桁:0]ひき！？[BE:01:ページ切り替え（クリア）]
 すごーい！
-えー　そんなに　ポケモン　いるんだ[BE:01:ページ切り替え（クリア）]</language>
+そんなに　ポケモン　つかまえたんだ[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">ホワイティ『[2:00:１桁:0]匹！？[BE:01:ページ切り替え（クリア）]
 すごーい！
-えー　そんなに　ポケモン　いるんだ[BE:01:ページ切り替え（クリア）]</language>
+そんなに　ポケモン　捕まえたんだ[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_r01_white_13">
@@ -602,9 +604,9 @@
 博士も　待っているだろうし[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_r01_boy1_01">
+	<row id="msg_r01_boy1_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
-はい／いいえ</comment>
+・はい／いいえ</comment>
 		<attribute name="キャラ指定">少年</attribute>
 		<language name="JPN" width="256">ねーねー[BE:01:ページ切り替え（クリア）]
 いまから　すごいことするから
@@ -614,9 +616,9 @@
 みててくれない？</language>
 	</row>
 
-	<row id="msg_r01_boy1_02">
+	<row id="msg_r01_boy1_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
-はい選択時アニメ前</comment>
+・はい選択時アニメ前</comment>
 		<attribute name="キャラ指定">少年</attribute>
 		<language name="JPN" width="256">よし！　まってて！！[BE:01:ページ切り替え（クリア）]
 よぉっ！！</language>
@@ -624,9 +626,10 @@
 よぉっ！！</language>
 	</row>
 
-	<row id="msg_r01_boy1_03">
+	<row id="msg_r01_boy1_03" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
-はい選択時アニメ後</comment>
+・はい選択時アニメ後
+・以降、このメッセージ繰り返し</comment>
 		<attribute name="キャラ指定">少年</attribute>
 		<language name="JPN" width="256">ねっ！　みてくれた！？[BE:01:ページ切り替え（クリア）]
 だんさを　とびおりると
@@ -636,23 +639,44 @@
 ちかみち　できて　すごいでしょ！</language>
 	</row>
 
-	<row id="msg_r01_boy1_04">
+	<row id="msg_r01_boy1_04" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
-いいえ選択時</comment>
+・いいえ選択時</comment>
 		<attribute name="キャラ指定">少年</attribute>
 		<language name="JPN" width="256">えんりょ　しなくて　いいのにさ！</language>
 		<language name="JPN_KANJI" width="256">えんりょ　しなくて　いいのにさ！</language>
 	</row>
 
-	<row id="msg_r01_girl1_01">
-		<comment>♀</comment>
+	<row id="msg_r01_girl1_01" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+		<comment>♀
+・一度も会話していないとき
+　No017「キズぐすり」入手処理（１回）</comment>
 		<attribute name="キャラ指定">少女</attribute>
 		<language name="JPN" width="256">あなたの　ポケモンさん
 たいりょくは　ばっちり　かしら？[BE:01:ページ切り替え（クリア）]
-ムリせず　こまめに
-ポケモンさんを　やすませてね</language>
+どうろの　まんなかで　ポケモンさんの
+たいりょくが　へると[BE:00:ページ切り替え（行送り）]
+たいへんだから　これを　あげる[BE:01:ページ切り替え（クリア）]
+あなたの　バッグの
+かいふくポケットに　いれておいてね！</language>
 		<language name="JPN_KANJI" width="256">あなたの　ポケモンさん
 体力は　ばっちり　かしら？[BE:01:ページ切り替え（クリア）]
+道路の　真ん中で
+ポケモンさんの　体力が　減ると[BE:00:ページ切り替え（行送り）]
+大変だから　これを　あげる[BE:01:ページ切り替え（クリア）]
+あなたの　バッグの
+かいふくポケットに　いれておいてね！</language>
+	</row>
+
+	<row id="msg_r01_girl1_02" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+		<comment>♀
+・会話後「キズぐすり」入手後</comment>
+		<language name="JPN" width="256">ポケモンさんの　たいりょくが　へると
+たたかう　げんきが　なくなっちゃうから[BE:01:ページ切り替え（クリア）]
+ムリせず　こまめに
+ポケモンさんを　やすませてね</language>
+		<language name="JPN_KANJI" width="256">ポケモンさんの　体力が　減ると
+たたかう　元気が　なくなっちゃうから[BE:01:ページ切り替え（クリア）]
 ムリせず　こまめに
 ポケモンさんを　休ませてね</language>
 	</row>
