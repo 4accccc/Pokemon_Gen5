@@ -8,11 +8,8 @@
 //==============================================================================
 #pragma once
 
-//==============================================================================
-//  型定義
-//==============================================================================
-///パレスシステムワーク構造体への不定形ポインタ
-typedef struct _PALACE_SYS_WORK * PALACE_SYS_PTR;
+#include "field/field_player.h"
+#include "intrude_types.h"
 
 
 //==============================================================================
@@ -21,7 +18,7 @@ typedef struct _PALACE_SYS_WORK * PALACE_SYS_PTR;
 extern PALACE_SYS_PTR PALACE_SYS_Alloc(HEAPID heap_id, GAME_COMM_SYS_PTR game_comm);
 extern void PALACE_SYS_InitWork(PALACE_SYS_PTR palace);
 extern void PALACE_SYS_Free(PALACE_SYS_PTR palace);
-extern void PALACE_SYS_Update(PALACE_SYS_PTR palace, PLAYER_WORK *plwork, FIELD_PLAYER *fldply, COMM_FIELD_SYS_PTR comm_field, FIELD_MAIN_WORK *fieldWork, GAME_COMM_SYS_PTR game_comm);
+extern void PALACE_SYS_Update(PALACE_SYS_PTR palace, PLAYER_WORK *plwork, FIELD_PLAYER *fldply, INTRUDE_COMM_SYS_PTR intcomm, FIELD_MAIN_WORK *fieldWork, GAME_COMM_SYS_PTR game_comm);
 extern void PALACE_SYS_SetArea(PALACE_SYS_PTR palace, u8 palace_area);
 extern u8 PALACE_SYS_GetArea(PALACE_SYS_PTR palace);
 extern void PALACE_SYS_FriendPosConvert(PALACE_SYS_PTR palace, int friend_area, 

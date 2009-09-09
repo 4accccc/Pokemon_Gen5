@@ -45,7 +45,7 @@ typedef struct{
 
 ///通信プレイヤー制御システムワーク
 typedef struct _COMM_PLAYER_SYS{
-  FIELD_MAIN_WORK *fieldWork;
+  GAMESYS_WORK *gsys;
   FIELD_COMM_ACTOR_CTRL *act_ctrl;
   COMM_PLAYER act[COMM_PLAYER_MAX];
   MINE_PLAYER mine;     ///<自分自身の座標データなど
@@ -71,10 +71,20 @@ typedef struct _COMM_PLAYER_SYS{
  * @retval  COMM_PLAYER_SYS_PTR		
  */
 //==================================================================
-COMM_PLAYER_SYS_PTR CommPlayer_Init(int max, FIELD_MAIN_WORK *fieldWork, HEAPID heap_id)
+COMM_PLAYER_SYS_PTR CommPlayer_Init(int max, GAMESYS_WORK *gsys, HEAPID heap_id)
 {
   COMM_PLAYER_SYS_PTR cps;
-  MMDLSYS *fldMdlSys = FIELDMAP_GetMMdlSys(fieldWork);
+  FIELD_MAIN_WORK *fieldWork;
+  FIELD_PLAYER * player;
+  MMDLSYS *fldMdlSys;
+
+  if(GAMESYSTEM_CheckFieldMapWork(gsys) == FALSE){
+    GF_ASSERT(0);
+    return NULL;
+  }
+  
+  fieldWork = GAMESYSTEM_GetFieldMapWork(gsys);
+  fldMdlSys = FIELDMAP_GetMMdlSys(fieldWork);
 
   OS_TPrintf("通信プレイヤー制御システムの生成\n");
   
@@ -83,7 +93,7 @@ COMM_PLAYER_SYS_PTR CommPlayer_Init(int max, FIELD_MAIN_WORK *fieldWork, HEAPID 
   GF_ASSERT(max <= COMM_PLAYER_MAX);
   
   cps->max = max;
-  cps->fieldWork = fieldWork;
+  cps->gsys = gsys;
   cps->act_ctrl = FIELD_COMM_ACTOR_CTRL_Create(max, fldMdlSys, heap_id);
   
   return cps;
@@ -286,14 +296,18 @@ void CommPlayer_SetParam(COMM_PLAYER_SYS_PTR cps, int index, const COMM_PLAYER_P
 BOOL CommPlayer_Mine_DataUpdate(COMM_PLAYER_SYS_PTR cps, COMM_PLAYER_PACKAGE *pack)
 {
   MINE_PLAYER *mine = &cps->mine;
-  FIELD_PLAYER * player = FIELDMAP_GetFieldPlayer(cps->fieldWork);
+  FIELD_MAIN_WORK *fieldWork;
+  FIELD_PLAYER * player;
   VecFx32 pos;
   u16 dir;
   
-  if(cps->update_stop == TRUE){
+  if(cps->update_stop == TRUE || GAMESYSTEM_CheckFieldMapWork(cps->gsys) == FALSE){
     return FALSE;
   }
-  
+
+  fieldWork = GAMESYSTEM_GetFieldMapWork(cps->gsys);
+  player = FIELDMAP_GetFieldPlayer(fieldWork);
+
   FIELD_PLAYER_GetPos(player, &pos);
   dir = FIELD_PLAYER_GetDir(player);
 

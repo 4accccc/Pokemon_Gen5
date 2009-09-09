@@ -80,9 +80,9 @@ typedef struct _PALACE_SYS_WORK{
 //==============================================================================
 //  プロトタイプ宣言
 //==============================================================================
-static void PALACE_SYS_PosUpdate(PALACE_SYS_PTR palace, PLAYER_WORK *plwork, FIELD_PLAYER *fldply, COMM_FIELD_SYS_PTR comm_field);
-static void PALACE_DEBUG_UpdateNumber(PALACE_SYS_PTR palace, FIELD_MAIN_WORK *fieldWork, COMM_FIELD_SYS_PTR comm_field);
-static void _DEBUG_NameDraw(PALACE_SYS_PTR palace, FIELD_MAIN_WORK *fieldWork, int area_no);
+static void PALACE_SYS_PosUpdate(PALACE_SYS_PTR palace, PLAYER_WORK *plwork, FIELD_PLAYER *fldply, INTRUDE_COMM_SYS_PTR intcomm);
+static void PALACE_DEBUG_UpdateNumber(PALACE_SYS_PTR palace, FIELD_MAIN_WORK *fieldWork, INTRUDE_COMM_SYS_PTR intcomm);
+static void _DEBUG_NameDraw(PALACE_SYS_PTR palace, FIELD_MAIN_WORK *fieldWork, INTRUDE_COMM_SYS_PTR intcomm, int area_no);
 static void _WindowSetup(PALACE_SYS_PTR palace, FIELD_MAIN_WORK *fieldWork);
 static void _WindowDelete(PALACE_SYS_PTR palace);
 static void _WindowPrint(PALACE_SYS_PTR palace, u32 msg_id, MYSTATUS *myst);
@@ -147,7 +147,7 @@ void PALACE_SYS_Free(PALACE_SYS_PTR palace)
  * @param   palace		
  */
 //==================================================================
-void PALACE_SYS_Update(PALACE_SYS_PTR palace, PLAYER_WORK *plwork, FIELD_PLAYER *fldply, COMM_FIELD_SYS_PTR comm_field, FIELD_MAIN_WORK *fieldWork, GAME_COMM_SYS_PTR game_comm)
+void PALACE_SYS_Update(PALACE_SYS_PTR palace, PLAYER_WORK *plwork, FIELD_PLAYER *fldply, INTRUDE_COMM_SYS_PTR intcomm, FIELD_MAIN_WORK *fieldWork, GAME_COMM_SYS_PTR game_comm)
 {
   int net_num;
   int first_create;
@@ -158,6 +158,7 @@ void PALACE_SYS_Update(PALACE_SYS_PTR palace, PLAYER_WORK *plwork, FIELD_PLAYER 
   
   if(GFL_NET_IsParentMachine() == FALSE){ //子は親のミッション番号を取得する
     palace->mission_no = GameCommStatus_GetPlayerStatus_MissionNo(game_comm, 0);
+    palace->mission_no %= 3;
   }
   else{
     if(GFL_UI_KEY_GetTrg() & PAD_BUTTON_SELECT){
@@ -174,7 +175,7 @@ void PALACE_SYS_Update(PALACE_SYS_PTR palace, PLAYER_WORK *plwork, FIELD_PLAYER 
     if(GFL_NET_GetConnectNum() > 1){
       if(palace->area == PALACE_AREA_NO_NULL){
         palace->area = GFL_NET_GetNetID(GFL_NET_HANDLE_GetCurrentHandle());
-        FIELD_COMM_SYS_SetInvalidNetID(comm_field, palace->area);
+        intcomm->invalid_netid = palace->area;
       }
       GFL_CLACT_WK_SetDrawEnable(palace->number.clact, TRUE);
     }
@@ -192,22 +193,22 @@ void PALACE_SYS_Update(PALACE_SYS_PTR palace, PLAYER_WORK *plwork, FIELD_PLAYER 
     //         親が管理し、送信する必要がある
       ;
   }
-  else if(FIELD_COMM_SYS_GetExitReq(comm_field) == FALSE 
+#if 0 //ソース整理につきFix ユーザーが減ったときの処理は正規の仕様に変更していく　2009.09.03(木)
+  else if(FIELD_COMM_SYS_GetExitReq(intcomm) == FALSE 
       && net_num < palace->entry_count && palace->entry_count_max > 1 ){
     OS_TPrintf("palace:ユーザーが減ったので強制エラー発動\n");
     GFL_NET_FatalErrorFunc(1);
     palace->entry_count_max = net_num;
     palace->entry_count = net_num;
   }
-  
-  //自機の位置確認し、ワープ処理
-  PALACE_SYS_PosUpdate(palace, plwork, fldply, comm_field);
+#endif
 
-  PALACE_DEBUG_UpdateNumber(palace, fieldWork, comm_field);
+  //自機の位置確認し、ワープ処理
+  PALACE_SYS_PosUpdate(palace, plwork, fldply, intcomm);
+
+  PALACE_DEBUG_UpdateNumber(palace, fieldWork, intcomm);
   
-#if 1
-  if(palace->print_mission_no != palace->mission_no
-      && FIELD_COMM_SYS_GetRecvProfile(comm_field, 0) == TRUE)
+  if(palace->print_mission_no != palace->mission_no && (intcomm->recv_profile & 1))//親プロフィール受信確認
   {
     GAMESYS_WORK *gsys = FIELDMAP_GetGameSysWork( fieldWork );
     GAMEDATA *gdata = GAMESYSTEM_GetGameData(gsys);
@@ -216,7 +217,6 @@ void PALACE_SYS_Update(PALACE_SYS_PTR palace, PLAYER_WORK *plwork, FIELD_PLAYER 
     _WindowPrint(palace, DM_MSG_PALACE000 + palace->mission_no, myst);
     palace->print_mission_no = palace->mission_no;
   }
-#endif
 }
 
 //--------------------------------------------------------------
@@ -228,7 +228,7 @@ void PALACE_SYS_Update(PALACE_SYS_PTR palace, PLAYER_WORK *plwork, FIELD_PLAYER 
  * @param   fldply		
  */
 //--------------------------------------------------------------
-static void PALACE_SYS_PosUpdate(PALACE_SYS_PTR palace, PLAYER_WORK *plwork, FIELD_PLAYER *fldply, COMM_FIELD_SYS_PTR comm_field)
+static void PALACE_SYS_PosUpdate(PALACE_SYS_PTR palace, PLAYER_WORK *plwork, FIELD_PLAYER *fldply, INTRUDE_COMM_SYS_PTR intcomm)
 {
   ZONEID zone_id;
   VecFx32 pos, new_pos;
@@ -271,7 +271,7 @@ static void PALACE_SYS_PosUpdate(PALACE_SYS_PTR palace, PLAYER_WORK *plwork, FIE
   FIELD_PLAYER_SetPos( fldply, &new_pos );
   if(palace->area != PALACE_AREA_NO_NULL){
     palace->area = new_area;
-    FIELD_COMM_SYS_SetInvalidNetID(comm_field, palace->area);
+    intcomm->invalid_netid = palace->area;
   }
 }
 
@@ -495,16 +495,17 @@ void PALACE_DEBUG_EnableNumberAct(PALACE_SYS_PTR palace, BOOL enable)
  * @param   palace		
  */
 //--------------------------------------------------------------
-static void PALACE_DEBUG_UpdateNumber(PALACE_SYS_PTR palace, FIELD_MAIN_WORK *fieldWork, COMM_FIELD_SYS_PTR comm_field)
+static void PALACE_DEBUG_UpdateNumber(PALACE_SYS_PTR palace, FIELD_MAIN_WORK *fieldWork, INTRUDE_COMM_SYS_PTR intcomm)
 {
   PALACE_DEBUG_NUMBER *number = &palace->number;
   int before_anmseq;
   
-  if(FIELD_COMM_SYS_GetRecvProfile(comm_field, number->anmseq) == FALSE){
+  if((intcomm->recv_profile & (1 << number->anmseq)) == 0){
     return;
   }
+  
   if(palace->init_name_draw){
-    _DEBUG_NameDraw(palace, fieldWork, number->anmseq);
+    _DEBUG_NameDraw(palace, fieldWork, intcomm, number->anmseq);
     palace->init_name_draw = 0;
     return;
   }
@@ -515,7 +516,7 @@ static void PALACE_DEBUG_UpdateNumber(PALACE_SYS_PTR palace, FIELD_MAIN_WORK *fi
   number->anmseq = palace->area % 4;  //数字アニメは4パターンしか用意していない
   GFL_CLACT_WK_SetAnmSeq( number->clact, number->anmseq );
 
-  _DEBUG_NameDraw(palace, fieldWork, number->anmseq);
+  _DEBUG_NameDraw(palace, fieldWork, intcomm, number->anmseq);
 }
 
 //--------------------------------------------------------------
@@ -527,19 +528,21 @@ static void PALACE_DEBUG_UpdateNumber(PALACE_SYS_PTR palace, FIELD_MAIN_WORK *fi
  * @param   area_no		
  */
 //--------------------------------------------------------------
-static void _DEBUG_NameDraw(PALACE_SYS_PTR palace, FIELD_MAIN_WORK *fieldWork, int area_no)
+static void _DEBUG_NameDraw(PALACE_SYS_PTR palace, FIELD_MAIN_WORK *fieldWork, INTRUDE_COMM_SYS_PTR intcomm, int area_no)
 {
   FLDMSGBG *msgBG = FIELDMAP_GetFldMsgBG( fieldWork );
   GFL_FONT *fontHandle = FLDMSGBG_GetFontHandle( msgBG );
-  GAMESYS_WORK *gsys = FIELDMAP_GetGameSysWork( fieldWork );
-  GAMEDATA *gdata = GAMESYSTEM_GetGameData(gsys);
-  MYSTATUS *myst = GAMEDATA_GetMyStatusPlayer(gdata, area_no);
   STRBUF *namebuf;
+  GAMEDATA *gamedata = GameCommSys_GetGameData(intcomm->game_comm);
+  MYSTATUS *myst;
   
-  namebuf = MyStatus_CreateNameString(myst, HEAPID_FIELDMAP);
+  myst = GAMEDATA_GetMyStatusPlayer(gamedata, area_no);
+  namebuf = MyStatus_CreateNameString(myst, HEAPID_APP_CONTROL);
+
   GFL_BMP_Clear(palace->bmp, 0);
   PRINTSYS_Print(palace->bmp, 0, 0, namebuf, fontHandle);
   BmpOam_ActorBmpTrans(palace->bmpact);
+
   GFL_STR_DeleteBuffer(namebuf);
 }
 

@@ -498,11 +498,14 @@ static BOOL debugMenuCallProc_OpenCommDebugMenu( DEBUG_MENU_EVENT_WORK *wk )
 	GAMESYS_WORK	*gameSys	= wk->gmSys;
 	FIELD_COMM_DEBUG_WORK *work;
 	
+#if 0 //通信システム変更の為、Fix 2009.09.03(木)
 	GMEVENT_Change( event,
 		FIELD_COMM_DEBUG_CommDebugMenu, FIELD_COMM_DEBUG_GetWorkSize() );
-	
 	work = GMEVENT_GetEventWork( event );
 	FIELD_COMM_DEBUG_InitWork( heapID , gameSys , fieldWork , event , work );
+#else
+  GF_ASSERT(0);
+#endif
 
 	return( TRUE );
 }

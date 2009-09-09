@@ -10,6 +10,7 @@
 
 #include "savedata/mystatus.h"
 #include "field\fieldmap_proc.h"
+#include "gamesystem/gamesystem.h"
 #include "gamesystem/game_data.h"
 #include "net_app/union/comm_player.h"
 
@@ -24,7 +25,7 @@ typedef struct _COLOSSEUM_SYSTEM * COLOSSEUM_SYSTEM_PTR;
 //==============================================================================
 //  äOïîä÷êîêÈåæ
 //==============================================================================
-extern COLOSSEUM_SYSTEM_PTR Colosseum_InitSystem(GAMEDATA *game_data, FIELD_MAIN_WORK *fieldWork, MYSTATUS *myst, BOOL intrude);
+extern COLOSSEUM_SYSTEM_PTR Colosseum_InitSystem(GAMEDATA *game_data, GAMESYS_WORK *gsys, MYSTATUS *myst, BOOL intrude);
 extern void Colosseum_ExitSystem(COLOSSEUM_SYSTEM_PTR clsys);
 extern void Colosseum_CommReadySet(COLOSSEUM_SYSTEM_PTR clsys, BOOL flag);
 extern void Colosseum_Mine_SetStandingPostion(COLOSSEUM_SYSTEM_PTR clsys, int stand_position);

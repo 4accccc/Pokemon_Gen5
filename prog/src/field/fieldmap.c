@@ -43,6 +43,7 @@
 #include "field_comm_actor.h"
 #include "field_comm/field_comm_main.h"
 #include "field_comm/field_comm_event.h"
+#include "field_comm/intrude_field.h"
 
 #include "fldmmdl.h"
 
@@ -690,8 +691,7 @@ static MAINSEQ_RESULT mainSeqFunc_update_top(GAMESYS_WORK *gsys, FIELDMAP_WORK *
   FIELD_PLAYER_Update( fieldWork->field_player );
 
   //通信用処理(プレイヤーの座標の設定とか
-  FIELD_COMM_MAIN_UpdateCommSystem( fieldWork,
-      fieldWork->gsys, fieldWork->field_player, fieldWork->commSys );
+  IntrudeField_UpdateCommSystem( fieldWork, fieldWork->gsys, fieldWork->field_player );
   Union_Main(GAMESYSTEM_GetGameCommSysPtr(gsys), fieldWork);
   
   FIELD_SUBSCREEN_Main(fieldWork->fieldSubscreenWork);
@@ -819,9 +819,6 @@ static MAINSEQ_RESULT mainSeqFunc_free(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldW
 
   FIELD_CAMERA_Delete( fieldWork->camera_control );
 
-	//フィールド通信削除
-	FIELD_COMM_MAIN_TermSystem( fieldWork, fieldWork->commSys );
-  
   //登録テーブルごとに個別の終了処理を呼び出し
   fieldWork->func_tbl->delete_func(fieldWork);
   fldmap_ClearMapCtrlWork( fieldWork );
@@ -2079,15 +2076,6 @@ static void FIELDMAP_CommBoot(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork, HEAP
         }
       }
   	}
-    break;
-  default:  //パレス
-  fieldWork->commSys = FIELD_COMM_MAIN_InitSystem( heapID, HEAPID_APP_CONTROL, GAMESYSTEM_GetGameCommSysPtr(gsys) );
-  FIELD_COMM_MAIN_CommFieldMapInit(FIELD_COMM_MAIN_GetCommFieldSysPtr(fieldWork->commSys));
-	FIELD_COMM_MAIN_SetCommActor(fieldWork->commSys,
-      GAMEDATA_GetMMdlSys(GAMESYSTEM_GetGameData(gsys)));
-//    fieldWork->commSys = FIELD_COMM_MAIN_InitSystem( heapID, GFL_HEAPID_APP, game_comm );
-  //  FIELD_COMM_MAIN_CommFieldMapInit(FIELD_COMM_MAIN_GetCommFieldSysPtr(fieldWork->commSys));
-  	//FIELD_COMM_MAIN_SetCommActor(fieldWork->commSys, GAMEDATA_GetMMdlSys(gdata));
     break;
   }
 }

@@ -79,7 +79,7 @@ static GFL_PROC_RESULT FieldMapProcInit
       GAME_COMM_SYS_PTR gcsp = GAMESYSTEM_GetGameCommSysPtr(gsys);
       if(GAMESYSTEM_GetAlwaysNetFlag(gsys) == TRUE 
           && GameCommSys_BootCheck(gcsp) == GAME_COMM_NO_NULL){
-        GameCommSys_Boot(gcsp, GAME_COMM_NO_FIELD_BEACON_SEARCH, gcsp);
+        GameCommSys_Boot(gcsp, GAME_COMM_NO_FIELD_BEACON_SEARCH, gsys);
       }
     }
     break;

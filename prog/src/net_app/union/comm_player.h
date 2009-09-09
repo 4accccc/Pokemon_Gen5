@@ -8,7 +8,7 @@
 //==============================================================================
 #pragma once
 
-#include "field\fieldmap_proc.h"
+#include "gamesystem/gamesystem.h"
 
 //==============================================================================
 //  å^íËã`
@@ -32,7 +32,7 @@ typedef struct{
 //==============================================================================
 //  äOïîä÷êîêÈåæ
 //==============================================================================
-extern COMM_PLAYER_SYS_PTR CommPlayer_Init(int max, FIELD_MAIN_WORK *fieldWork, HEAPID heap_id);
+extern COMM_PLAYER_SYS_PTR CommPlayer_Init(int max, GAMESYS_WORK *gsys, HEAPID heap_id);
 extern void CommPlayer_Exit(COMM_PLAYER_SYS_PTR cps);
 void CommPlayer_Add(COMM_PLAYER_SYS_PTR cps, int index, int sex, const COMM_PLAYER_PACKAGE *pack);
 extern void CommPlayer_Del(COMM_PLAYER_SYS_PTR cps, int index);

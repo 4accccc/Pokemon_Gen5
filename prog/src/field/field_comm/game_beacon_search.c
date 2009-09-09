@@ -10,6 +10,7 @@
 #include "system/main.h"
 #include "net/network_define.h"
 #include "system/net_err.h"
+#include "gamesystem/gamesystem.h"
 
 #include "field/game_beacon_search.h"
 #include "gamesystem/game_comm.h"
@@ -220,7 +221,8 @@ static void	GameBeacon_ExitCallback(void* pWork)
 //==================================================================
 void GameBeacon_Update(int *seq, void *pwk, void *pWork)
 {
-  GAME_COMM_SYS_PTR gcsp = pwk;
+  GAMESYS_WORK *gsys = pwk;
+  GAME_COMM_SYS_PTR gcsp = GAMESYSTEM_GetGameCommSysPtr(gsys);
   GAME_BEACON_SYS_PTR gbs = pWork;
   GBS_TARGET_INFO *target;
   
@@ -234,6 +236,7 @@ void GameBeacon_Update(int *seq, void *pwk, void *pWork)
         
         invalid_parent = GFL_HEAP_AllocClearMemory(
             GFL_HEAP_LOWID(GFL_HEAPID_APP), sizeof(FIELD_INVALID_PARENT_WORK));
+        invalid_parent->gsys = gsys;
         invalid_parent->game_comm = gcsp;
         for(i = 0; i < 6; i++){
           invalid_parent->parent_macAddress[i] = target->macAddress[i];

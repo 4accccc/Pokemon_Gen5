@@ -27,8 +27,8 @@
 #include "system/wipe.h"      //WIPE_SYS_EndCheck
 #include "event_mapchange.h"
 #include "event_ircbattle.h"      //EVENT_IrcBattle
-#include "field_comm/field_comm_main.h"   //DEBUG_PalaceJamp
 #include "field_comm/field_comm_event.h"   //FIELD_COMM_EVENT_～
+#include "field_comm/intrude_field.h"
 #include "event_debug_menu.h"     //DEBUG_EVENT_DebugMenu
 #include "event_battle.h"         //EVENT_Battle
 #include "event_fieldtalk.h"      //EVENT_FieldTalk
@@ -270,6 +270,7 @@ static GMEVENT * FIELD_EVENT_CheckNormal( GAMESYS_WORK *gsys, void *work )
 //☆☆☆会話チェック
 
 	///通信用会話処理(仮
+#if 0 //※check　侵入通信変更の為、暫定Fix
   {
     FIELD_COMM_MAIN * commSys = FIELDMAP_GetCommSys(fieldWork);
     
@@ -287,6 +288,7 @@ static GMEVENT * FIELD_EVENT_CheckNormal( GAMESYS_WORK *gsys, void *work )
       }
     }
   }
+#endif
 
 	//フィールド話し掛けチェック
 	if(	req.isGridMap )
@@ -416,8 +418,8 @@ static GMEVENT * FIELD_EVENT_CheckNormal( GAMESYS_WORK *gsys, void *work )
 	//デバッグ：パレスで木に触れたらワープ
   {
     GMEVENT *ev;
-    FIELD_COMM_MAIN * commSys = FIELDMAP_GetCommSys(fieldWork);
-    ev =  DEBUG_PalaceTreeMapWarp(fieldWork, gsys, req.field_player, commSys);
+    INTRUDE_COMM_SYS_PTR intcomm = GameCommSys_GetAppWork(GAMESYSTEM_GetGameCommSysPtr(gsys));
+    ev =  DEBUG_IntrudeTreeMapWarp(fieldWork, gsys, req.field_player, intcomm);
     if(ev != NULL){
       return ev;
     }
@@ -689,6 +691,7 @@ GMEVENT * FIELD_EVENT_CheckNoGrid( GAMESYS_WORK *gsys, void *work )
 //☆☆☆会話チェック
 
 	///通信用会話処理(仮
+#if 0 //※check　侵入通信変更の為、暫定Fix
   {
     FIELD_COMM_MAIN * commSys = FIELDMAP_GetCommSys(fieldWork);
     
@@ -706,6 +709,7 @@ GMEVENT * FIELD_EVENT_CheckNoGrid( GAMESYS_WORK *gsys, void *work )
       }
     }
   }
+#endif
 
 	//フィールド話し掛けチェック
   if( req.talkRequest )
@@ -829,8 +833,8 @@ GMEVENT * FIELD_EVENT_CheckNoGrid( GAMESYS_WORK *gsys, void *work )
 	//デバッグ：パレスで木に触れたらワープ
   {
     GMEVENT *ev;
-    FIELD_COMM_MAIN * commSys = FIELDMAP_GetCommSys(fieldWork);
-    ev =  DEBUG_PalaceTreeMapWarp(fieldWork, gsys, req.field_player, commSys);
+    INTRUDE_COMM_SYS_PTR intcomm = GameCommSys_GetAppWork(GAMESYSTEM_GetGameCommSysPtr(gsys));
+    ev =  DEBUG_IntrudeTreeMapWarp(fieldWork, gsys, req.field_player, intcomm);
     if(ev != NULL){
       return ev;
     }

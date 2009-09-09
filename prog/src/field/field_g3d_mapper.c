@@ -500,16 +500,18 @@ BOOL DEBUG_Field_Grayscale(GFL_G3D_RES *g3Dres)
 	NNSG3dResTex*			texture;
   u32 sz;
   void* pData;
-  GAME_COMM_SYS_PTR game_comm;
   int invasion_netid, white_mode = 0;
+  GAME_COMM_SYS_PTR game_comm;
+  GAMEDATA *gamedata;
   
-  game_comm = GAMESYSTEM_GetGameCommSysPtr( DEBUG_GameSysWorkPtrGet() );
-  if(GameCommSys_BootCheck( game_comm ) != GAME_COMM_NO_INVASION){
+  gamedata = GAMESYSTEM_GetGameData(DEBUG_GameSysWorkPtrGet());
+  if(GAMEDATA_GetMapMode( gamedata ) != MAPMODE_INTRUDE){
     return FALSE;
   }
+  game_comm = GAMESYSTEM_GetGameCommSysPtr( DEBUG_GameSysWorkPtrGet() );
   
-  invasion_netid = GameCommStatus_GetPlayerStatus_InvasionNetID(game_comm, GFL_NET_GetNetID( GFL_NET_HANDLE_GetCurrentHandle()));
-  if(invasion_netid == GFL_NET_GetNetID(GFL_NET_HANDLE_GetCurrentHandle())){
+  invasion_netid = GameCommStatus_GetPlayerStatus_InvasionNetID(game_comm, GAMEDATA_GetIntrudeMyID(gamedata));
+  if(invasion_netid == GAMEDATA_GetIntrudeMyID(gamedata)){
     return FALSE;
   }
   white_mode = invasion_netid & 1;

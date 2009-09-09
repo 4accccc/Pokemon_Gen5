@@ -11,12 +11,12 @@
 #include "buflen.h"
 
 #include "field/game_beacon_search.h"
-#include "field/field_comm/field_comm_func.h"
 #include "fieldmap/zone_id.h"
 #include "message.naix"
 #include "msg/msg_invasion.h"
 #include "net_app/union/union_main.h"
 #include "field/fieldmap_proc.h"
+#include "field/intrude_comm.h"
 
 
 //==============================================================================
@@ -138,13 +138,13 @@ static const GAME_FUNC_TBL GameFuncTbl[] = {
   },
   //GAME_COMM_NO_INVASION
   {
-    FIELD_COMM_FUNC_InitCommSystem,       //init
-    FIELD_COMM_FUNC_InitCommSystemWait,   //init_wait
-    FIELD_COMM_FUNC_UpdateSystem,         //update
-    FIELD_COMM_FUNC_TermCommSystem,       //exit
-    FIELD_COMM_FUNC_TermCommSystemWait,   //exit_wait
-    NULL,       //field_create
-    NULL,       //field_delete
+    IntrudeComm_InitCommSystem,       //init
+    IntrudeComm_InitCommSystemWait,   //init_wait
+    IntrudeComm_UpdateSystem,         //update
+    IntrudeComm_TermCommSystem,       //exit
+    IntrudeComm_TermCommSystemWait,   //exit_wait
+    IntrudeComm_FieldCreate,          //field_create
+    IntrudeComm_FieldDelete,          //field_delete
   },
   //GAME_COMM_NO_UNION
   {

@@ -1640,8 +1640,8 @@ static BOOL OneselfSeq_ColosseumUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATI
 
       //通信プレイヤー制御システムの生成
       GF_ASSERT(unisys->colosseum_sys == NULL);
-      unisys->colosseum_sys = Colosseum_InitSystem(unisys->uniparent->game_data, fieldWork, 
-        unisys->uniparent->mystatus, situ->mycomm.intrude);
+      unisys->colosseum_sys = Colosseum_InitSystem(unisys->uniparent->game_data, 
+        unisys->uniparent->gsys, unisys->uniparent->mystatus, situ->mycomm.intrude);
 
       _PlayerMinePause(unisys, fieldWork, TRUE);
       UnionOneself_ReqStatus(unisys, UNION_STATUS_COLOSSEUM_MEMBER_WAIT);
@@ -1734,8 +1734,8 @@ static BOOL OneselfSeq_MultiColosseumUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SI
 
       //通信プレイヤー制御システムの生成
       GF_ASSERT(unisys->colosseum_sys == NULL);
-      unisys->colosseum_sys = Colosseum_InitSystem(unisys->uniparent->game_data, fieldWork, 
-        unisys->uniparent->mystatus, situ->mycomm.intrude);
+      unisys->colosseum_sys = Colosseum_InitSystem(unisys->uniparent->game_data, 
+        unisys->uniparent->gsys, unisys->uniparent->mystatus, situ->mycomm.intrude);
 
       _PlayerMinePause(unisys, fieldWork, TRUE);
       UnionOneself_ReqStatus(unisys, UNION_STATUS_COLOSSEUM_MEMBER_WAIT);

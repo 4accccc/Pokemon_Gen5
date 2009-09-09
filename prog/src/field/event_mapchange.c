@@ -233,6 +233,11 @@ static GMEVENT_RESULT EVENT_FUNC_MapChangeCore( GMEVENT* event, int* seq, void* 
 		(*seq)++;
 		break;
 	case 1:
+	  //※check　スクリプトでマップ作成前に実行できるタイミングが出来れば、そこ行うようにしたい
+	  if(mcw->loc_req.zone_id == ZONE_ID_PALACETEST){
+      GAMEDATA_SetMapMode(gamedata, MAPMODE_INTRUDE);
+    }
+    
 		//新しいマップID、初期位置をセット
 		UpdateMapParams(gsys, &mcw->loc_req);
 		//新規ゾーンに配置する動作モデルを追加

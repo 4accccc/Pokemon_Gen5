@@ -34,7 +34,7 @@
  * @retval  COLOSSEUM_SYSTEM_PTR		
  */
 //==================================================================
-COLOSSEUM_SYSTEM_PTR Colosseum_InitSystem(GAMEDATA *game_data, FIELD_MAIN_WORK *fieldWork, MYSTATUS *myst, BOOL intrude)
+COLOSSEUM_SYSTEM_PTR Colosseum_InitSystem(GAMEDATA *game_data, GAMESYS_WORK *gsys, MYSTATUS *myst, BOOL intrude)
 {
   COLOSSEUM_SYSTEM_PTR clsys;
   int i, my_net_id;
@@ -44,7 +44,7 @@ COLOSSEUM_SYSTEM_PTR Colosseum_InitSystem(GAMEDATA *game_data, FIELD_MAIN_WORK *
   
   //メモリ確保とシステム生成
   clsys = GFL_HEAP_AllocClearMemory(HEAPID_UNION, sizeof(COLOSSEUM_SYSTEM));
-  clsys->cps = CommPlayer_Init(COLOSSEUM_MEMBER_MAX, fieldWork, HEAPID_UNION);
+  clsys->cps = CommPlayer_Init(COLOSSEUM_MEMBER_MAX, gsys, HEAPID_UNION);
   for(i = 0; i < COLOSSEUM_MEMBER_MAX; i++){
     clsys->recvbuf.tr_card[i] = GFL_HEAP_AllocClearMemory(HEAPID_UNION, sizeof(TR_CARD_DATA));
     clsys->recvbuf.pokeparty[i] = PokeParty_AllocPartyWork(HEAPID_UNION);
