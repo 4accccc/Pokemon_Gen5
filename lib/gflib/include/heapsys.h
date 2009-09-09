@@ -227,7 +227,7 @@ extern u32
  * @param   heapID  ヒープID（最上位ビットは取得方向フラグ）
  */
 //------------------------------------------------------------------
-extern void
+extern BOOL
   GFL_HEAP_CheckHeapSafe
     ( HEAPID heapID );
 
