@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00179" date="2009-05-20T15:09:11"/>
+	<create user="matsumiya" host="W00207" date="2009-09-08T20:20:01"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -292,7 +292,7 @@
 	</lock>
 
 
-	<row id="msg_r02r0101_woman1_01">
+	<row id="msg_r02r0101_woman1_01" back-color="#808080,,,#808080,,#808080,#808080,,,,,,#808080,,,,,,">
 		<comment>♀
 ・仮</comment>
 		<attribute name="キャラ指定">女性１</attribute>
