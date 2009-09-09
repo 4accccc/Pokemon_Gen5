@@ -35,16 +35,16 @@ MOVE_WORK;
  * @brief プロトタイプ宣言
  */
 //========================================================================================== 
-void InitWork( MOVE_WORK* work, FIELDMAP_WORK* fieldmap, u16 end_frame, float move_dist );
-void DeleteTask( GFL_TCB* tcb );
+static void InitWork( MOVE_WORK* work, FIELDMAP_WORK* fieldmap, u16 end_frame, float move_dist );
+static void DeleteTask( GFL_TCB* tcb );
 
-void TCB_FUNC_DisappearPlayer_LinearUp( GFL_TCB* tcb, void* work );
-void TCB_FUNC_AppearPlayer_LinearDown( GFL_TCB* tcb, void* work );
-void TCB_FUNC_AppearPlayer_Fall( GFL_TCB* tcb, void* work );
+static void TCB_FUNC_DisappearPlayer_LinearUp( GFL_TCB* tcb, void* work );
+static void TCB_FUNC_AppearPlayer_LinearDown( GFL_TCB* tcb, void* work );
+static void TCB_FUNC_AppearPlayer_Fall( GFL_TCB* tcb, void* work );
 
-void CalcDrawOffset_LinearUp( VecFx32* p_vec, float frame, float max_frame, float max_y );
-void CalcDrawOffset_LinearDown( VecFx32* p_vec, float frame, float max_frame, float max_y );
-void CalcDrawOffset_Fall( VecFx32* p_vec, float frame, float max_frame, float max_y );
+static void CalcDrawOffset_LinearUp( VecFx32* p_vec, float frame, float max_frame, float max_y );
+static void CalcDrawOffset_LinearDown( VecFx32* p_vec, float frame, float max_frame, float max_y );
+static void CalcDrawOffset_Fall( VecFx32* p_vec, float frame, float max_frame, float max_y );
 
 
 //========================================================================================== 
@@ -150,23 +150,24 @@ void FIELDMAP_TCB_AddTask_AppearPlayer_Fall( FIELDMAP_WORK* fieldmap, int frame,
  * @param move_dist 移動距離
  */
 //------------------------------------------------------------------------------------------
-void InitWork( MOVE_WORK* work, FIELDMAP_WORK* fieldmap, u16 end_frame, float move_dist )
+static void InitWork(
+    MOVE_WORK* work, FIELDMAP_WORK* fieldmap, u16 end_frame, float move_dist )
 {
-  work->pFieldmap = fieldmap;
-  work->frame     = 0;
-  work->endFrame  = end_frame;
-  work->moveDist  = move_dist;
+  work->pFieldmap  = fieldmap;
+  work->frame      = 0;
+  work->endFrame   = end_frame;
+  work->moveDist   = move_dist;
 }
 
 //------------------------------------------------------------------------------------------
 /**
  * @brief タスクを破棄する
  *
- * @param tcb 破棄するタスク
+ * @param tcb  破棄するタスク
  */
 //------------------------------------------------------------------------------------------
-void DeleteTask( GFL_TCB* tcb )
-{
+static void DeleteTask( GFL_TCB* tcb )
+{ 
   // TCBワークを破棄
   GFL_HEAP_FreeMemory( GFL_TCB_GetWork( tcb ) );
 
@@ -179,7 +180,7 @@ void DeleteTask( GFL_TCB* tcb )
  * @breif TCB実行関数( 自機の上昇 )
  */
 //------------------------------------------------------------------------------------------
-void TCB_FUNC_DisappearPlayer_LinearUp( GFL_TCB* tcb, void* work )
+static void TCB_FUNC_DisappearPlayer_LinearUp( GFL_TCB* tcb, void* work )
 {
   MOVE_WORK*   tcbwork = work;
   FIELD_PLAYER* player = FIELDMAP_GetFieldPlayer( tcbwork->pFieldmap );
@@ -203,7 +204,7 @@ void TCB_FUNC_DisappearPlayer_LinearUp( GFL_TCB* tcb, void* work )
  * @breif TCB実行関数( 自機の降下 )
  */
 //------------------------------------------------------------------------------------------
-void TCB_FUNC_AppearPlayer_LinearDown( GFL_TCB* tcb, void* work )
+static void TCB_FUNC_AppearPlayer_LinearDown( GFL_TCB* tcb, void* work )
 {
   MOVE_WORK*   tcbwork = work;
   FIELD_PLAYER* player = FIELDMAP_GetFieldPlayer( tcbwork->pFieldmap );
@@ -227,7 +228,7 @@ void TCB_FUNC_AppearPlayer_LinearDown( GFL_TCB* tcb, void* work )
  * @breif TCB実行関数( 落下登場 )
  */
 //------------------------------------------------------------------------------------------
-void TCB_FUNC_AppearPlayer_Fall( GFL_TCB* tcb, void* work )
+static void TCB_FUNC_AppearPlayer_Fall( GFL_TCB* tcb, void* work )
 {
   MOVE_WORK*   tcbwork = work;
   FIELD_PLAYER* player = FIELDMAP_GetFieldPlayer( tcbwork->pFieldmap );
@@ -256,7 +257,7 @@ void TCB_FUNC_AppearPlayer_Fall( GFL_TCB* tcb, void* work )
  * @param max_y     最大オフセット
  */
 //------------------------------------------------------------------------------------------
-void CalcDrawOffset_LinearUp( VecFx32* p_vec, float frame, float max_frame, float max_y )
+static void CalcDrawOffset_LinearUp( VecFx32* p_vec, float frame, float max_frame, float max_y )
 {
   // 線形補完
   float x = frame;
@@ -278,7 +279,7 @@ void CalcDrawOffset_LinearUp( VecFx32* p_vec, float frame, float max_frame, floa
  * @param max_y     最大オフセット
  */
 //------------------------------------------------------------------------------------------
-void CalcDrawOffset_LinearDown( VecFx32* p_vec, float frame, float max_frame, float max_y )
+static void CalcDrawOffset_LinearDown( VecFx32* p_vec, float frame, float max_frame, float max_y )
 {
   // 線形補完
   float x = frame;
@@ -300,7 +301,7 @@ void CalcDrawOffset_LinearDown( VecFx32* p_vec, float frame, float max_frame, fl
  * @param max_y     最大オフセット
  */
 //------------------------------------------------------------------------------------------
-void CalcDrawOffset_Fall( VecFx32* p_vec, float frame, float max_frame, float max_y )
+static void CalcDrawOffset_Fall( VecFx32* p_vec, float frame, float max_frame, float max_y )
 {
   // y = ax^2
   float x = frame;

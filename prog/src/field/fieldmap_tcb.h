@@ -22,6 +22,13 @@ void FIELDMAP_TCB_AddTask_RotatePlayer_SpeedDown(      // 減速
     FIELDMAP_WORK* fieldmap, int frame, int rot_num );   
 
 //============================
+// fieldmap_tcb_move_player.c
+//============================
+// プレイヤーの移動
+void FIELDMAP_TCB_AddTask_MovePlayer(
+    FIELDMAP_WORK* fieldmap, int frame, VecFx32* pos );
+
+//============================
 // fieldmap_tcb_warp_player.c
 //============================
 // プレイヤーの移動
