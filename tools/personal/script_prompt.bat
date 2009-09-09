@@ -8,7 +8,7 @@ REM ##################################################
 REM ツールパス系
 doskey mks=make -j 3
 doskey sa=c:\progra~1\sakura\sakura.exe $*
-doskey maketag=mktags_wb_script
+doskey tagsmake=mktags_wb_script
 
 REM ##################################################
 REM ディレクトリ移動ショートカット系
