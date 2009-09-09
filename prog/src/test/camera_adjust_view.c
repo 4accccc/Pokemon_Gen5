@@ -552,7 +552,7 @@ static void CAMADJUST_NumPrint( GFL_CAMADJUST* gflCamAdjust, int bmpIdx, u16 num
 							0, 0, 
 							gflCamAdjust->strBufTmp,
 							gflCamAdjust->fontHandle,
-							PRINTSYS_LSB_Make(1,1,15));
+							PRINTSYS_LSB_Make(1,15,15));
 
 	GFL_DISPUT_LoadCgx(		gflCamAdjust->setup.bgID, 
 							GFL_BMP_GetCharacterAdrs( gflCamAdjust->bmp[bmpIdx] ), 
