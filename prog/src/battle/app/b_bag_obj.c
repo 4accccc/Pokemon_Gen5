@@ -33,6 +33,7 @@
 //============================================================================================
 //	定数定義
 //============================================================================================
+/*
 #define	CLACT_ID_COMMON		( 46263 )	// この画面で使用するセルアクターのID
 
 // キャラリソースID
@@ -80,6 +81,7 @@ enum {
 
 	ANM_ID_MAX = ANM_ID_CURSOR - CLACT_ID_COMMON + 1
 };
+*/
 
 #define	CURSOR_CLA_MAX		( 5 )		// カーソルのOBJ数
 #define	FINGER_CLA_MAX		( 1 )		// 指カーソルのOBJ数
@@ -91,7 +93,7 @@ enum {
 static void BBAG_ClactResManInit( BBAG_WORK * wk );
 static void BBAG_ClactItemLoad( BBAG_WORK * wk );
 static void BBAG_ItemIconCharChg( BBAG_WORK * wk, u16 item, u32 chrResID, u32 palResID );
-static void BBAG_ItemIconPlttChg( BBAG_WORK * wk, u16 item, u16 pos, u32 res_id );
+static void BBAG_ItemIconPlttChg( BBAG_WORK * wk, u16 item, u32 palResID );
 static void BBAG_ClactGetDemoLoad( BBAG_WORK * wk );
 static void BBAG_ClactAddAll( BBAG_WORK * wk );
 static void BBAG_Page1ObjSet( BBAG_WORK * wk );
@@ -144,6 +146,7 @@ static const u32 ClactDat[][3] =
 	{ BBAG_CHRRES_ITEM4, BBAG_PALRES_ITEM4, BBAG_CELRES_ITEM },
 	{ BBAG_CHRRES_ITEM5, BBAG_PALRES_ITEM5, BBAG_CELRES_ITEM },
 	{ BBAG_CHRRES_ITEM6, BBAG_PALRES_ITEM6, BBAG_CELRES_ITEM },
+	{ BBAG_CHRRES_ITEM7, BBAG_PALRES_ITEM7, BBAG_CELRES_ITEM },
 
 	{ BBAG_CHRRES_COST, BBAG_PALRES_COST, BBAG_CELRES_COST },
 	{ BBAG_CHRRES_COST, BBAG_PALRES_COST, BBAG_CELRES_COST },
@@ -230,7 +233,7 @@ static void BBAG_ClactItemLoad( BBAG_WORK * wk )
 	
 	ah = GFL_ARC_OpenDataHandle( ITEM_GetIconArcID(), wk->dat->heap );
 
-	for( i=0; i<6; i++ ){
+	for( i=0; i<7; i++ ){
 	  wk->chrRes[BBAG_CHRRES_ITEM1+i] = GFL_CLGRP_CGR_Register(
 																				ah, ITEM_GetIndex(1,ITEM_GET_ICON_CGX),
 																				FALSE, CLSYS_DRAW_SUB, wk->dat->heap );
@@ -324,8 +327,12 @@ static void BBAG_ItemIconCharChg( BBAG_WORK * wk, u16 item, u32 chrResID, u32 pa
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-static void BBAG_ItemIconPlttChg( BBAG_WORK * wk, u16 item, u16 pos, u32 res_id )
+static void BBAG_ItemIconPlttChg( BBAG_WORK * wk, u16 item, u32 palResID )
 {
+	GFL_ARC_UTIL_TransVramPalette(
+		ITEM_GetIconArcID(),
+		ITEM_GetIndex(item,ITEM_GET_ICON_PAL),
+		PALTYPE_SUB_OBJ, palResID * 0x20, 0x20, wk->dat->heap );
 /*
 	PaletteWorkSet_Arc(
 		wk->pfd, ARC_ITEMICON,
@@ -606,9 +613,9 @@ static void BBAG_Page1ObjSet( BBAG_WORK * wk )
 	u16	item;
 
 	if( wk->dat->used_item != ITEM_DUMMY_DATA ){
-		BBAG_ItemIconCharChg( wk, wk->dat->used_item, BBAG_CHRRES_ITEM1, BBAG_PALRES_ITEM1 );
+		BBAG_ItemIconCharChg( wk, wk->dat->used_item, BBAG_CHRRES_ITEM7, BBAG_PALRES_ITEM7 );
 //		BBAG_ItemIconPlttChg( wk, wk->dat->used_item, 0, PAL_ID_ITEM1 );
-		BBAG_ClactOn( wk->clwk[BBAG_CA_ITEM1], &P1_ItemIconPos );
+		BBAG_ClactOn( wk->clwk[BBAG_CA_ITEM7], &P1_ItemIconPos );
 	}
 
 /*
@@ -636,7 +643,7 @@ static void BBAG_Page2ObjSet( BBAG_WORK * wk )
 		item = BattleBag_PosItemCheck( wk, i );
 		if( item == 0 ){ continue; }
 		BBAG_ItemIconCharChg( wk, item, BBAG_CHRRES_ITEM1+i, BBAG_PALRES_ITEM1+i );
-//		BBAG_ItemIconPlttChg( wk, item, (u16)i, PAL_ID_ITEM1+i );
+		BBAG_ItemIconPlttChg( wk, item, BBAG_PALRES_ITEM1+i );
 		BBAG_ClactOn( wk->clwk[BBAG_CA_ITEM1+i], &P2_ItemIconPos[i] );
 
 		if( wk->dat->mode == BBAG_MODE_SHOOTER ){
@@ -671,9 +678,9 @@ static void BBAG_Page3ObjSet( BBAG_WORK * wk )
 	u16	item;
 
 	item = BattleBag_PosItemCheck( wk, wk->dat->item_pos[wk->poke_id] );
-	BBAG_ItemIconCharChg( wk, item, BBAG_CHRRES_ITEM1, BBAG_PALRES_ITEM1 );
+	BBAG_ItemIconCharChg( wk, item, BBAG_CHRRES_ITEM7, BBAG_PALRES_ITEM7 );
 //	BBAG_ItemIconPlttChg( wk, item, 0, PAL_ID_ITEM1 );
-	BBAG_ClactOn( wk->clwk[BBAG_CA_ITEM1], &P3_ItemIconPos[0] );
+	BBAG_ClactOn( wk->clwk[BBAG_CA_ITEM7], &P3_ItemIconPos[0] );
 
 	if( wk->dat->mode == BBAG_MODE_SHOOTER ){
 		BBAG_ClactOn( wk->clwk[BBAG_CA_COST1], &P3_ItemIconPos[1] );

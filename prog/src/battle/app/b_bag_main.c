@@ -182,11 +182,11 @@ static const pBBagFunc MainSeqFunc[] = {
 // ポケット選択画面のタッチパネル座標
 static const GFL_UI_TP_HITTBL Page1_HitRect[] =
 {
-	{  1*8, 10*8-1,  0*8, 16*8-1 },	// HP回復ポケット
-	{ 10*8, 19*8-1,  0*8, 16*8-1 },	// 状態回復ポケット
-	{  1*8, 10*8-1, 16*8, 32*8-1 },	// ボールポケット
-	{ 10*8, 19*8-1, 16*8, 32*8-1 },	// 戦闘用ポケット
-	{ 19*8, 24*8-1,  0*8, 26*8-1 },	// 最後に使用した道具
+	{  1*8,  9*8-1,  0*8, 16*8-1 },	// HP回復ポケット
+	{ 10*8, 18*8-1,  0*8, 16*8-1 },	// 状態回復ポケット
+	{  1*8,  9*8-1, 16*8, 32*8-1 },	// ボールポケット
+	{ 10*8, 18*8-1, 16*8, 32*8-1 },	// 戦闘用ポケット
+	{ 19*8, 24*8-1,  1*8, 26*8-1 },	// 最後に使用した道具
 	{ 19*8, 24*8-1, 27*8, 32*8-1 },	// 戻る
 	{ GFL_UI_TP_HIT_END, 0, 0, 0 }
 };
@@ -209,7 +209,7 @@ static const GFL_UI_TP_HITTBL Page2_HitRect[] =
 // アイテム選択画面のタッチパネル座標
 static const GFL_UI_TP_HITTBL Page3_HitRect[] =
 {
-	{ 19*8, 24*8-1,  0*8, 26*8-1 },	// 使う
+	{ 19*8, 24*8-1,  1*8, 26*8-1 },	// 使う
 	{ 19*8, 24*8-1, 27*8, 32*8-1 },	// 戻る
 	{ GFL_UI_TP_HIT_END, 0, 0, 0 }
 };
@@ -312,7 +312,9 @@ void BattleBag_TaskAdd( BBAG_DATA * dat )
 	}
 
 	BattleBag_UsedItemChack( wk );
-	wk->dat->used_item = 2;
+//	wk->dat->used_item = 2;
+//	wk->dat->used_poke = 1;
+
 
 /*
 	if( BattleWorkFightTypeGet(wk->dat->bw) & FIGHT_TYPE_GET_DEMO ){
@@ -653,6 +655,11 @@ static int BBAG_SeqUseSelect( BBAG_WORK * wk )
 //		Snd_SePlay( SEQ_SE_DP_DECIDE );
 		wk->dat->ret_item = BattleBag_PosItemCheck( wk, wk->dat->item_pos[wk->poke_id] );
 		wk->dat->ret_page = wk->poke_id;
+		if( wk->dat->mode == BBAG_MODE_SHOOTER ){
+			wk->dat->ret_cost = (u8)BBAGITEM_GetCost( wk->dat->ret_item );
+		}else{
+			wk->dat->ret_cost = 0;
+		}
 		BattleBag_ButtonAnmInit( wk, BBAG_BTNANM_USE, BBAG_BTNANM_MODE_END );
 		return BBAG_ItemUse( wk );
 

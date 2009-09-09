@@ -769,7 +769,7 @@ static void BBAG_P3_ItemInfoPut( BBAG_WORK * wk, u32 dat_pos )
 	GFL_BMPWIN_MakeTransWindow_VBlank( win );
 }
 
-#define	P3_USE_PY	( 6-1 )		// 「つかう」表示Y座標
+#define	P3_USE_PY	( 0 )		// 「つかう」表示Y座標
 
 //--------------------------------------------------------------------------------------------
 /**

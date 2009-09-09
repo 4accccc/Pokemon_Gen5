@@ -234,8 +234,8 @@
 // ÅuÇ¬Ç©Ç§Åv
 #define	WIN_P3_USE_FRM		( GFL_BG_FRAME1_S )
 #define	WIN_P3_USE_PX		( 8 )
-#define	WIN_P3_USE_PY		( 20 )
+#define	WIN_P3_USE_PY		( 21 )
 #define	WIN_P3_USE_SX		( 10 )
-#define	WIN_P3_USE_SY		( 3 )
+#define	WIN_P3_USE_SY		( 2 )
 #define	WIN_P3_USE_PAL		( BBAG_PAL_TALK_FONT )
 #define	WIN_P3_USE_CGX		( WIN_P3_INFO_CGX + WIN_P3_INFO_SX * WIN_P3_INFO_SY )
