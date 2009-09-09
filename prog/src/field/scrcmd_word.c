@@ -137,7 +137,7 @@ VMCMD_RESULT EvCmdPocketName(VMHANDLE * core, void *wk )
 	u8 idx					= VMGetU8(core);
 	u16 pocket				= SCRCMD_GetVMWorkValue( core, work );
 
-//	WORDSET_RegisterItemPocketName( *wordset, idx, pocket );		//アイコンなし
+  WORDSET_RegisterItemPocketName( *wordset, idx, pocket );		//アイコンなし
 	//WORDSET_RegisterItemPocketWithIcon( *wordset, idx, pocket );	//アイコンあり
 
 	return VMCMD_RESULT_CONTINUE;
