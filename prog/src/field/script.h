@@ -51,29 +51,29 @@ enum{
 
 	ID_EVSCR_MSGINDEX,				//会話ウィンドウメッセージインデックス
 	ID_EVSCR_ANMCOUNT,				//アニメーションの数
-	ID_EVSCR_COMMON_SCR_FLAG,		//共通スクリプト切り替えフラグ
+	//ID_EVSCR_COMMON_SCR_FLAG,		//共通スクリプト切り替えフラグ
 	ID_EVSCR_WIN_OPEN_FLAG,			//会話ウィンドウを開いたかフラグ
-	ID_EVSCR_VMHANDLE_COUNT,		//追加した仮想マシンの数
+	//ID_EVSCR_VMHANDLE_COUNT,		//追加した仮想マシンの数
 
 	ID_EVSCR_SCRIPT_ID,				//メインのスクリプトID
 
-	ID_EVSCR_PLAYER_DIR,			//イベント起動時の主人公の向き
+	//ID_EVSCR_PLAYER_DIR,			//イベント起動時の主人公の向き
 	ID_EVSCR_TARGET_OBJ,			//話しかけ対象のOBJのポインタ
 	ID_EVSCR_DUMMY_OBJ,				//透明ダミーのOBJのポインタ
 	ID_EVSCR_RETURN_SCRIPT_WK,		//イベント結果を代入するワークのポインタ
 
-	ID_EVSCR_VM_MAIN,				//VMのポインタ
-	ID_EVSCR_VM_SUB1,				//VMのポインタ
+	//ID_EVSCR_VM_MAIN,				//VMのポインタ
+	//ID_EVSCR_VM_SUB1,				//VMのポインタ
 
 	ID_EVSCR_WORDSET,				//単語セット
 	ID_EVSCR_MSGBUF,				//メッセージバッファのポインタ
 	ID_EVSCR_TMPBUF,				//テンポラリバッファのポインタ
-	ID_EVSCR_WAITICON,				///<待機アイコンのポインタ
+	//ID_EVSCR_WAITICON,				///<待機アイコンのポインタ
 
 	ID_EVSCR_SUBPROC_WORK,			//サブプロセスのパラメータ
 	ID_EVSCR_PWORK,					//ワークへの汎用ポインタ
-	ID_EVSCR_EOA,					//フィールドエフェクトへのポインタ
-	ID_EVSCR_PLAYER_TCB,			//自機形態TCBのポインタ
+	//ID_EVSCR_EOA,					//フィールドエフェクトへのポインタ
+	//ID_EVSCR_PLAYER_TCB,			//自機形態TCBのポインタ
 
 	ID_EVSCR_WIN_FLAG,
 
@@ -94,12 +94,12 @@ enum{
 	ID_EVSCR_TR1_TCB,
 
 	//コインウインドウ
-	ID_EVSCR_COINWINDAT,
+	//ID_EVSCR_COINWINDAT,
 
 	//お金ウインドウ
-	ID_EVSCR_GOLDWINDAT,
+	//ID_EVSCR_GOLDWINDAT,
 
-	ID_EVSCR_REPORTWIN,		///<レポート情報ウィンドウ
+	//ID_EVSCR_REPORTWIN,		///<レポート情報ウィンドウ
 
 	//スクリプトとプログラムのデータ交換用
 	ID_EVSCR_WK_START,				//ワークの開始ID
@@ -159,11 +159,11 @@ enum{
 #define EVSCR_WORK_MAX	(ID_EVSCR_WK_END-ID_EVSCR_WK_START)	//ワークの数
 
 //仮想マシンのナンバー
-enum{
+typedef enum{
 	VMHANDLE_MAIN = 0,		//メイン
 	VMHANDLE_SUB1,			//サブ
 	VMHANDLE_MAX,			//最大数
-};
+}VMHANDLE_ID;
 
 #define HIDE_LIST_SX				(7)		//検索範囲
 #define HIDE_LIST_SZ				(7)		//検索範囲(未使用)
@@ -241,19 +241,8 @@ extern void SCRIPT_CallScript( GMEVENT *event,
 extern void SCRIPT_ChangeScript( GMEVENT *event,
 		u16 scr_id, MMDL *obj, HEAPID heapID );
 
-//--------------------------------------------------------------
-/**
- * @brief	仮想マシン追加
- * @param	fsys		FLDCOMMON_WORK型のポインタ
- * @param	scr_id		スクリプトID
- * @param	start		命令テーブル開始アドレス
- * @param	end			命令テーブル終了アドレス
- * @retval	none
- */
-//--------------------------------------------------------------
-extern VMHANDLE * SCRIPT_AddVMachine(
-	GAMESYS_WORK *gsys, SCRIPT_WORK *sc, HEAPID heapID, HEAPID temp_heapID, u16 scr_id );
-
+extern void SCRIPT_AddVMachine( SCRIPT_WORK *sc, u16 zone_id, u16 scr_id, VMHANDLE_ID vm_id );
+extern BOOL SCRIPT_GetVMExists( SCRIPT_WORK *sc, VMHANDLE_ID vm_id );
 //======================================================================
 //	スクリプト制御ワークのメンバーアクセス
 //======================================================================

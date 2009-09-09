@@ -35,6 +35,8 @@ typedef struct _TAG_SCRCMD_WORK SCRCMD_WORK;
 //--------------------------------------------------------------
 typedef struct
 {
+  u16 zone_id;
+  u16 script_id;
 	SCRIPT_WORK *script;
 	GAMESYS_WORK *gsys;
 	GAMEDATA *gdata;

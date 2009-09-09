@@ -68,6 +68,7 @@ typedef u16 (* pMultiFunc)();
 static VMCMD_RESULT evcmd_ObjPauseAll( VMHANDLE *core, SCRCMD_WORK *work );
 static void evcmd_PauseClearAll( SCRCMD_WORK *work );
 static MMDL * scmd_GetMMdlPlayer( SCRCMD_WORK *work );
+static u16 getZoneID( SCRCMD_WORK *work );
 
 //data
 const u32 ScriptCmdMax;
@@ -676,23 +677,16 @@ static VMCMD_RESULT EvCmdCmpStack( VMHANDLE * core, void *wk )
 //--------------------------------------------------------------
 static VMCMD_RESULT EvCmdVMMachineAdd( VMHANDLE *core, void *wk )
 {
-  u16 id;
+  u16 scr_id;
   SCRCMD_WORK *work = wk;
   GAMESYS_WORK *gsys = SCRCMD_WORK_GetGameSysWork( work );
   SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
   
-  u8 *vm_machine_count = SCRIPT_GetMemberWork( sc, ID_EVSCR_VMHANDLE_COUNT );
-  VMHANDLE **vm = SCRIPT_GetMemberWork( sc, ID_EVSCR_VM_SUB1 );
-
-  id = VMGetU16(core);
+  scr_id = VMGetU16(core);
 
   //仮想マシン追加
-  *vm = SCRIPT_AddVMachine( gsys, sc,
-      SCRCMD_WORK_GetHeapID(work), SCRCMD_WORK_GetHeapID(work), id );
-  (*vm_machine_count)++;
+  SCRIPT_AddVMachine( sc, getZoneID(work), scr_id, VMHANDLE_SUB1 );
   
-  //イベントと切り離したTCB動作にするかも？
-  //*vm=VMMachineAddTCB(fsys,id,&ScriptCmdTbl[0],&ScriptCmdTbl[EVCMD_MAX]);
   return VMCMD_RESULT_SUSPEND;
 }
 
@@ -707,9 +701,8 @@ static BOOL EvChangeCommonScrWait(VMHANDLE *core, void *wk )
 {
   SCRCMD_WORK *work = wk;
   SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
-  u8* common_scr_flag = SCRIPT_GetMemberWork(sc,ID_EVSCR_COMMON_SCR_FLAG);
 
-  if( *common_scr_flag == 0 ){
+  if ( SCRIPT_GetVMExists( sc, VMHANDLE_SUB1 ) != TRUE) {
     return TRUE;
   }
   return FALSE;
@@ -728,22 +721,12 @@ static VMCMD_RESULT EvCmdChangeCommonScr( VMHANDLE *core, void *wk )
   SCRCMD_WORK *work = wk;
   GAMESYS_WORK *gsys = SCRCMD_WORK_GetGameSysWork( work );
   SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
-  u8 *common_scr_flag = SCRIPT_GetMemberWork(sc, ID_EVSCR_COMMON_SCR_FLAG);
-  u8 *vm_machine_count = SCRIPT_GetMemberWork( sc, ID_EVSCR_VMHANDLE_COUNT );
-  VMHANDLE **vm = SCRIPT_GetMemberWork( sc, ID_EVSCR_VM_SUB1 );
 
   scr_id = VMGetU16(core);
 
   //共通スクリプト以外にも切り替え可能になっている！
-
-  //共通スクリプト切り替えフラグON
-  *common_scr_flag = 1;
-  
   //仮想マシン追加
-  //*vm = VMMachineAdd(fsys,scr_id,&ScriptCmdTbl[0],&ScriptCmdTbl[EVCMD_MAX]);
-  *vm = SCRIPT_AddVMachine( gsys, sc,
-      SCRCMD_WORK_GetHeapID(work), SCRCMD_WORK_GetHeapID(work), scr_id );
-  (*vm_machine_count)++;
+  SCRIPT_AddVMachine( sc, getZoneID(work), scr_id, VMHANDLE_SUB1 );
 
   VMCMD_SetWait( core, EvChangeCommonScrWait );
   return VMCMD_RESULT_SUSPEND;
@@ -760,10 +743,6 @@ static VMCMD_RESULT EvCmdChangeLocalScr( VMHANDLE *core, void *wk )
 {
   SCRCMD_WORK *work = wk;
   SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
-  u8* common_scr_flag = SCRIPT_GetMemberWork(sc, ID_EVSCR_COMMON_SCR_FLAG);
-
-  //共通スクリプト切り替えフラグOFF
-  *common_scr_flag = 0;
 
   VM_End( core );
   return VMCMD_RESULT_SUSPEND;
@@ -2550,6 +2529,16 @@ static MMDL * scmd_GetMMdlPlayer( SCRCMD_WORK *work )
   MMDLSYS *fmmdlsys = SCRCMD_WORK_GetMMdlSys( work );
   MMDL *fmmdl = MMDLSYS_SearchOBJID( fmmdlsys, MMDL_ID_PLAYER );
   return( fmmdl );
+}
+
+//--------------------------------------------------------------
+//--------------------------------------------------------------
+static u16 getZoneID( SCRCMD_WORK *work )
+{
+  GAMEDATA *gdata = SCRCMD_WORK_GetGameData( work );
+  PLAYER_WORK *player = GAMEDATA_GetMyPlayerWork( gdata );
+  u16 zone_id = PLAYERWORK_getZoneID( player );
+  return zone_id;
 }
 
 //======================================================================

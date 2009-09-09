@@ -130,6 +130,19 @@ HEAPID SCRCMD_WORK_GetTempHeapID( SCRCMD_WORK *work )
 }
 
 //--------------------------------------------------------------
+//--------------------------------------------------------------
+u16 SCRCMD_WORK_GetZoneID( SCRCMD_WORK *work )
+{
+  return( work->head.zone_id );
+}
+
+//--------------------------------------------------------------
+//--------------------------------------------------------------
+u16 SCRCMD_WORK_GetScriptID( SCRCMD_WORK *work )
+{
+  return( work->head.script_id );
+}
+//--------------------------------------------------------------
 /**
  * SCRCMD_WORK GAMESYS_WORKŽæ“¾
  * @param	work	SCRCMD_WORK
