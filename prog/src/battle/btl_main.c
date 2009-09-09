@@ -355,7 +355,7 @@ static void setSubProcForClanup( BTL_PROC* bp, BTL_MAIN_MODULE* wk, const BATTLE
 static BOOL setup_alone_single( int* seq, void* work )
 {
   enum {
-    BAG_MODE = BBAG_MODE_NORMAL,
+    BAG_MODE = BBAG_MODE_SHOOTER,
   };
 
   // server*1, client*2
@@ -455,7 +455,7 @@ static BOOL setup_comm_single( int* seq, void* work )
   case 0:
     if( BTL_NET_IsServerDetermained() )
     {
-      BTL_Printf("サーバ決定しましたよ\n");
+      BTL_Printf("サーバ決定しました\n");
       if( BTL_NET_IsServer() )
       {
         // サーバーマシンが、各参加者にクライアントIDを割り振る
@@ -482,7 +482,7 @@ static BOOL setup_comm_single( int* seq, void* work )
     #ifdef PM_DEBUG
     if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_B )
     {
-      BTL_Printf("クライアントIDの確定待ちでーす\n");
+      BTL_Printf("クライアントIDの確定待ちです\n");
     }
     #endif
     // 自分のクライアントIDが確定

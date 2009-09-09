@@ -39,10 +39,12 @@ typedef struct {
   GFL_FONT*   font;   ///< 使用フォントハンドル
   BtlBagMode  mode;   ///< 制御モード
   HEAPID      heap;   ///< ヒープID
-  u8  energy;         ///< シューターモード時のエネルギー値
+  u8  energy;         ///< エネルギー値（シューター用）
+  u8  reserved_energy;///< 現ターン中に既に選択したアイテムの総コスト値（シューター用）
 
+  u16 ret_item;   ///< 選択したアイテム
+  u8  ret_cost;   ///< 選択したアイテムの消費コスト（シューター用）
   u8  end_flg;    ///< 終了フラグ
-  u16 ret_item;   ///< 使用したアイテム
 
 
 
