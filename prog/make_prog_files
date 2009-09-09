@@ -369,6 +369,7 @@ SRCS_OVERLAY_FIELDMAP		=	field/field_proc.c \
         field/fieldmap_tcb_camera_rot.c \
         field/fieldmap_tcb_rot_player.c \
         field/fieldmap_tcb_move_player.c \
+        field/fieldmap_tcb_warp_player.c \
         field/event_appear.c \
         field/event_disappear.c \
         field/scrcmd_item.c \
