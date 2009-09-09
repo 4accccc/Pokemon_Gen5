@@ -11,7 +11,6 @@
 //--------------------------------------------------------------
 //               スクリプト本体
 //--------------------------------------------------------------
-  .include  "easy_event_def.h"
 
 
 //--------------------------------------------------------------
@@ -117,11 +116,11 @@ EVENT_END
 /*  T01 BABYGIRL1の会話用イベントスクリプト                      */
 /**************************************************************/
 EVENT_START   ev_t01_talkobj_babygirl1
-  //_EASY_ITEM_EVENT(ITEM_MASUTAABOORU, 2, FH_01, msg_t01_bigman_01, msg_t01_woman2_01, msg_t01_babygirl1_01 )
-  _TALK_OBJ_START()
-	_BALLOONWIN_TALKOBJ_OPEN( msg_t01_babygirl1_01 )
-	_AB_KEYWAIT()
-  _BALLOONWIN_CLOSE()
+  _EASY_TALK_ITEM_EVENT(ITEM_MASUTAABOORU, 2, FH_01, msg_t01_bigman_01, msg_t01_woman2_01, msg_t01_babygirl1_01 )
+  //_TALK_OBJ_START()
+	//_BALLOONWIN_TALKOBJ_OPEN( msg_t01_babygirl1_01 )
+	//_AB_KEYWAIT()
+  //_BALLOONWIN_CLOSE()
 EVENT_END
 
 //-------------------------------------------------------------

@@ -8,6 +8,7 @@
   .include  "../../../prog/include/msg/script/msg_r01.h"
   .include  "r01.h"
 
+
 /**************************************************************/	
 /*    R01Ç≈égÇ§íËêî                                     */
 /**************************************************************/
@@ -249,10 +250,13 @@ EVENT_END
 /*                                                            */
 /**************************************************************/
 EVENT_START   ev_r01_talkobj_girl1
+  _EASY_TALK_ITEM_EVENT(ITEM_MASUTAABOORU, 2, FH_01, msg_r01_girl1_01, msg_r01_girl1_02, msg_r01_girl1_02 )
+/*
   _TALK_OBJ_START()
 	_BALLOONWIN_TALKOBJ_OPEN( msg_r01_girl1_01 )
 	_AB_KEYWAIT()
 	_BALLOONWIN_CLOSE()
+*/
 /*	_OBJ_ANIME( R01GIRL1,test02anime )
 	_OBJ_ANIME_WAIT()
 */

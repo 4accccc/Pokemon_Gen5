@@ -292,9 +292,21 @@ rule
             right = "_PUSH_VALUE TRUE"
             result = CompareNode.new('CMPID_EQ', left, right)
 					}
+				|	FLAG_ON '(' VARREF ')'
+					{
+            left = "_PUSH_FLAG #{val[2].sub(/\A\$/,"")}"
+            right = "_PUSH_VALUE TRUE"
+            result = CompareNode.new('CMPID_EQ', left, right)
+					}
 				|	FLAG_OFF '(' IDENT ')'
 					{
             left = "_PUSH_FLAG #{val[2]}"
+            right = "_PUSH_VALUE FALSE"
+            result = CompareNode.new('CMPID_EQ', left, right)
+					}
+				|	FLAG_OFF '(' VARREF ')'
+					{
+            left = "_PUSH_FLAG #{val[2].sub(/\A\$/,"")}"
             right = "_PUSH_VALUE FALSE"
             result = CompareNode.new('CMPID_EQ', left, right)
 					}

@@ -215,6 +215,7 @@ DEF_CMD_COUNT  =  ( DEF_CMD_COUNT + 1 )
   //その他
   DEF_CMD EV_SEQ_CHG_LANGID
   DEF_CMD EV_SEQ_GET_RND
+  DEF_CMD EV_SEQ_GET_NOW_MSG_ARCID
 
 //======================================================================
 // イベントデータ関連
@@ -1063,6 +1064,7 @@ DEF_CMD_COUNT  =  ( DEF_CMD_COUNT + 1 )
 
   .macro _ASM_BALLOONWIN_OBJMSG_OPEN msg_id, obj_id
   .short  EV_SEQ_BALLOONWIN_OBJMSG_OPEN
+  .short 0x0400
   .short \msg_id
   .byte \obj_id
   .endm
@@ -1077,6 +1079,18 @@ DEF_CMD_COUNT  =  ( DEF_CMD_COUNT + 1 )
 
   .macro _ASM_BALLOONWIN_TALKOBJ_OPEN msg_id
   .short  EV_SEQ_BALLOONWIN_TALKOBJ_OPEN
+  .short 0x0400
+  .short \msg_id
+  .endm
+
+//--------------------------------------------------------------
+//--------------------------------------------------------------
+#define _BALLOONWIN_TALKOBJ_OPEN_ARC( arc_id, msg_id ) \
+    _ASM_BALLOONWIN_TALKOBJ_OPEN_ARC arc_id, msg_id
+
+  .macro  _ASM_BALLOONWIN_TALKOBJ_OPEN_ARC arc_id, msg_id
+  .short  EV_SEQ_BALLOONWIN_TALKOBJ_OPEN
+  .short \arc_id
   .short \msg_id
   .endm
 
@@ -2218,6 +2232,13 @@ DEF_CMD_COUNT  =  ( DEF_CMD_COUNT + 1 )
   .short  \num
   .endm
 
+//--------------------------------------------------------------
+//--------------------------------------------------------------
+  .macro  _ASM_GET_NOW_MSG_ARCID  work
+  .short  EV_SEQ_GET_NOW_MSG_ARCID
+  .short  \work
+  .endm
+
 //======================================================================
 //
 //  簡易コマンド
@@ -2257,7 +2278,39 @@ DEF_CMD_COUNT  =  ( DEF_CMD_COUNT + 1 )
   _ASM_BALLOONWIN_CLOSE
   .endm
 
+//--------------------------------------------------------------
+/**
+ * 簡易イベント入手イベント
+ *
+ * @param itemno        取得するアイテムナンバー
+ * @param num           取得するアイテムの数
+ * @param flag          アイテム取得したかどうかの判定用フラグ
+ * @param before_msg    入手前のメッセージ
+ * @param finish_msg    入手後のメッセージ
+ * @param after_msg     入手後、再び話かけたときのメッセージ
+ *
+ */
+//--------------------------------------------------------------
+#define _EASY_TALK_ITEM_EVENT( itemno, num, flag, before_msg, finish_msg, after_msg) \
+    _ASM_EASY_TALK_ITEM_EVENT itemno, num, flag, before_msg, finish_msg, after_msg
 
+  .include  "easy_event_def.h"
+
+//--------------------------------------------------------------
+/**
+ * イベント入手イベント「▼」待ちあり
+ */
+//--------------------------------------------------------------
+#define _ITEM_EVENT_KEYWAIT(itemno, num)   \
+    _ASM_ITEM_EVENT_KEYWAIT itemno, num
+
+//--------------------------------------------------------------
+/**
+ * イベント入手イベント「▼」待ちなし
+ */
+//--------------------------------------------------------------
+#define _ITEM_EVENT_NOWAIT(itemno, num)   \
+    _ASM_ITEM_EVENT_KEYWAIT itemno, num
 
 
 
