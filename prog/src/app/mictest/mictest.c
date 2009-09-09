@@ -197,28 +197,26 @@ typedef u8 MIC_BUF_SIZE;
 ///		BMPWINの位置
 //=====================================
 #define BMPWIN_TITLE_FRAME		(GFL_BG_FRAME0_M)
-/*↑[GS_CONVERT_TAG]*/
-#define BMPWIN_TITLE_X			(1)
+#define BMPWIN_TITLE_X			(0)
+#define BMPWIN_TITLE_X_DOT	(5)
 #define BMPWIN_TITLE_Y			(1)
-#define BMPWIN_TITLE_W			(9)
+#define BMPWIN_TITLE_W			(10)
 #define BMPWIN_TITLE_H			(3)
-#define BMPWIN_TITLE_PLT		(0)
+#define BMPWIN_TITLE_PLT		(13)
 #define BMPWIN_TITLE_CHR_OFS	(1)
 #define BMPWIN_INFO_FRAME		(GFL_BG_FRAME0_S)
-/*↑[GS_CONVERT_TAG]*/
 #define BMPWIN_INFO_X			(5)
 #define BMPWIN_INFO_Y			(8)
 #define BMPWIN_INFO_W			(22)
 #define BMPWIN_INFO_H			(5)
-#define BMPWIN_INFO_PLT			(0)
+#define BMPWIN_INFO_PLT			(13)
 #define BMPWIN_INFO_CHR_OFS		(1)
 #define BMPWIN_RETBTN_FRAME		(GFL_BG_FRAME0_S)
-/*↑[GS_CONVERT_TAG]*/
 #define BMPWIN_RETBTN_X			(24)
 #define BMPWIN_RETBTN_Y			(21)
 #define BMPWIN_RETBTN_W			(6)
 #define BMPWIN_RETBTN_H			(2)
-#define BMPWIN_RETBTN_PLT		(0)
+#define BMPWIN_RETBTN_PLT		(13)
 #define BMPWIN_RETBTN_CHR_OFS	(1+BMPWIN_INFO_W*BMPWIN_INFO_H)
 
 //-------------------------------------
@@ -383,7 +381,6 @@ static u8 GetMicLevelToAnmSeqNum( u8 volume );
 static BOOL MoveStartNoteCtrl( MICTEST_OBJ_WORK *p_wk, u32 heap_id, s16 x, s16 y, GFL_TCBSYS* tcbSys );
 static void MoveStartNoteTask( GFL_TCBSYS* tcbSys, GFL_CLWK*	p_act, NOTE_TASK_CTRL *p_task_wk, /*u32 heap_id,*/ s16 x, s16 y, fx32 speed, u32 angle, u32 width, u32 wait );
 static void MoveNoteTask( GFL_TCB* p_tcb, void *p_wk_adrs );
-/*↑[GS_CONVERT_TAG]*/
 static void CleanNoteTask( MICTEST_OBJ_WORK *p_obj );
 static BOOL IsEmptyNoteTask( const MICTEST_OBJ_WORK *cp_obj );
 
@@ -429,53 +426,38 @@ static const struct {
 } sc_bg_cnt_data[] = {
 	{
 		{	0,0,0x800,0,GFL_BG_SCRSIZ_256x256,GX_BG_COLORMODE_16,
-/*↑[GS_CONVERT_TAG]*/
 			GX_BG_SCRBASE_0xf800,GX_BG_CHARBASE_0x00000,GX_BG_EXTPLTT_01,
 			0,0,0,FALSE },
 		GFL_BG_FRAME0_M,
-/*↑[GS_CONVERT_TAG]*/
 		GFL_BG_MODE_TEXT,
-/*↑[GS_CONVERT_TAG]*/
 	},
 	{
 		{	0,0,0x800,0,GFL_BG_SCRSIZ_256x256,GX_BG_COLORMODE_16,
-/*↑[GS_CONVERT_TAG]*/
 			GX_BG_SCRBASE_0xf000,GX_BG_CHARBASE_0x04000,GX_BG_EXTPLTT_01,
 			1,0,0,FALSE },
 		GFL_BG_FRAME1_M,
-/*↑[GS_CONVERT_TAG]*/
 		GFL_BG_MODE_TEXT,
-/*↑[GS_CONVERT_TAG]*/
 	},
 	{
 		{	0,0,0x800,0,GFL_BG_SCRSIZ_256x256,GX_BG_COLORMODE_16,
-/*↑[GS_CONVERT_TAG]*/
 			GX_BG_SCRBASE_0xe800,GX_BG_CHARBASE_0x08000,GX_BG_EXTPLTT_01,
 			2,0,0,FALSE },
 		GFL_BG_FRAME2_M,
-/*↑[GS_CONVERT_TAG]*/
 		GFL_BG_MODE_TEXT,
-/*↑[GS_CONVERT_TAG]*/
 	},
 	{
 		{ 0,0,0x800,0,GFL_BG_SCRSIZ_256x256,GX_BG_COLORMODE_16,
-/*↑[GS_CONVERT_TAG]*/
 			GX_BG_SCRBASE_0xf800,GX_BG_CHARBASE_0x00000,GX_BG_EXTPLTT_01,
 			0,0,0,FALSE },
 		GFL_BG_FRAME0_S,
-/*↑[GS_CONVERT_TAG]*/
 		GFL_BG_MODE_TEXT,
-/*↑[GS_CONVERT_TAG]*/
 	},
 	{
 		{ 0,0,0x800,0,GFL_BG_SCRSIZ_256x256,GX_BG_COLORMODE_16,
-/*↑[GS_CONVERT_TAG]*/
 			GX_BG_SCRBASE_0xf000,GX_BG_CHARBASE_0x04000,GX_BG_EXTPLTT_01,
 			1,0,0,FALSE },
 		GFL_BG_FRAME1_S,
-/*↑[GS_CONVERT_TAG]*/
 		GFL_BG_MODE_TEXT,
-/*↑[GS_CONVERT_TAG]*/
 	},
 };
 
@@ -635,7 +617,6 @@ GFL_PROC_RESULT MicTestProc_Main( GFL_PROC *proc,int *seq, void *pwk, void *mywk
 	GFL_TCB_Main( p_wk->tcbSys );
 
 	return GFL_PROC_RES_CONTINUE;
-/*↑[GS_CONVERT_TAG]*/
 }
 //=============================================================================
 /**
@@ -853,13 +834,11 @@ static void SEQFUNC_RetBtn( MICTEST_SEQ_WORK *p_seq_wk, u32 *p_seq )
 	switch( *p_seq ) {
 	case SEQ_INIT :
 		GFL_CLACT_WK_SetAnmSeq( p_wk->obj.p_act[MICTEST_OBJ_BUTTON], 1 );
-/*↑[GS_CONVERT_TAG]*/
 		*p_seq = SEQ_MAIN;
 		break;
 
 	case SEQ_MAIN :
 		if( GFL_CLACT_WK_CheckAnmActiveCap( p_wk->obj.p_act[MICTEST_OBJ_BUTTON] ) == FALSE ) {
-/*↑[GS_CONVERT_TAG]*/
 			*p_seq = SEQ_END;
 		}
 		break;
@@ -961,9 +940,7 @@ static void MicTest_InitApplication( u32 heap_id )
 
 	//	表示設定解除
 	GFL_DISP_GX_InitVisibleControl();
-/*↑[GS_CONVERT_TAG]*/
 	GFL_DISP_GXS_InitVisibleControl();
-/*↑[GS_CONVERT_TAG]*/
 	GX_SetVisiblePlane( 0 );
 	GXS_SetVisiblePlane( 0 );
 
@@ -995,9 +972,7 @@ static void MicTest_ExitApplication( void )
 
 	//	非表示
 	GFL_DISP_GX_InitVisibleControl();
-/*↑[GS_CONVERT_TAG]*/
 	GFL_DISP_GXS_InitVisibleControl();	
-/*↑[GS_CONVERT_TAG]*/
 	GX_SetVisiblePlane( 0 );
 	GXS_SetVisiblePlane( 0 );	
 }
@@ -1015,7 +990,6 @@ static void MicTest_ExitApplication( void )
 static void MicTest_SetVramBank( void )
 {
 	static const GFL_DISP_VRAM vram_set_table = {
-/*↑[GS_CONVERT_TAG]*/
 		GX_VRAM_BG_128_A,				// メイン2DエンジンのBG
 		GX_VRAM_BGEXTPLTT_NONE,			// メイン2DエンジンのBG拡張パレット
 		GX_VRAM_SUB_BG_128_C,			// サブ2DエンジンのBG
@@ -1029,7 +1003,6 @@ static void MicTest_SetVramBank( void )
 	};
 
 	GFL_DISP_SetBank( &vram_set_table );
-/*↑[GS_CONVERT_TAG]*/
 }
 
 //----------------------------------------------------------------------------
@@ -1268,20 +1241,16 @@ static void MicTest_OBJ_SetClact( MICTEST_OBJ_WORK *p_obj )
 		p_obj->p_act[i] = CATS_ObjectAdd_S( p_obj->p_catsys, p_obj->p_catres, &sc_obj_add_param[ sc_act_res_tbl[i] ] );
 		// オートアニメフラグセット
 		GFL_CLACT_WK_SetAutoAnmFlagCap( p_obj->p_act[i], CATS_ANM_AUTO_ON );
-/*↑[GS_CONVERT_TAG]*/
 	}
 
 	//	音符は非表示
 	for( i = 0; i < OBJ_NOTE_MAX; i++ ) {
 		GFL_CLACT_UNIT_SetDrawEnableCap( p_obj->p_act[ MICTEST_OBJ_NOTE + i ], CATS_ENABLE_FALSE );
-/*↑[GS_CONVERT_TAG]*/
 	}
 
 	//	個別設定
 	GFL_CLACT_WK_SetFlipCap(p_obj->p_act[MICTEST_OBJ_GAGE_L], CLACT_FLIP_H);
-/*↑[GS_CONVERT_TAG]*/
 	GFL_CLACT_WK_SetBgPriCap( p_obj->p_act[MICTEST_OBJ_BUTTON], 1 );
-/*↑[GS_CONVERT_TAG]*/
 
 	p_obj->note_cnt	= NOTE_ENTER_CNT_MAX;
 }
@@ -1430,17 +1399,20 @@ static void MicTest_BG_Main( MICTEST_BG_WORK *p_bg )
 //-----------------------------------------------------------------------------
 static void MicTestBG_LoadBg( MICTEST_BG_WORK *p_bg, u32 heap_id )
 {
+	// 上下画面ＢＧパレット転送
+	GFL_ARC_UTIL_TransVramPalette( ARCID_MICTEST_GRA, NARC_mictest_back_bg_down_NCLR, PALTYPE_MAIN_BG, 0, 0x20, heap_id );
+	GFL_ARC_UTIL_TransVramPalette( ARCID_MICTEST_GRA, NARC_mictest_back_bg_up_NCLR, PALTYPE_SUB_BG, 0, 0x20, heap_id );
+	// 会話フォントパレット転送
+	GFL_ARC_UTIL_TransVramPalette( ARCID_FONT, NARC_font_default_nclr, PALTYPE_MAIN_BG, 13*0x20, 16*2, heap_id );
+	GFL_ARC_UTIL_TransVramPalette( ARCID_FONT, NARC_font_default_nclr, PALTYPE_SUB_BG, 13*0x20, 16*2, heap_id );
+
 	//	----- 下画面 -----
-	GFL_ARC_UTIL_TransVramPalette( ARCID_MICTEST_GRA, NARC_mictest_back_bg_down_NCLR, PALTYPE_MAIN_BG, 0, 
-						0x20, heap_id );
 	GFL_ARC_UTIL_TransVramBgCharacter(	ARCID_MICTEST_GRA, NARC_mictest_back_bg_down_NCGR,
 						GFL_BG_FRAME1_S, 0, 0, 0, heap_id );
 	GFL_ARC_UTIL_TransVramScreen(	ARCID_MICTEST_GRA, NARC_mictest_back_bg_down_NSCR,
 						GFL_BG_FRAME1_S, 0, 0, 0, heap_id );	
 
 	//	----- 上画面 -----
-	GFL_ARC_UTIL_TransVramPalette( ARCID_MICTEST_GRA, NARC_mictest_back_bg_up_NCLR, PALTYPE_SUB_BG, 0, 
-						0x20, heap_id );
 	GFL_ARC_UTIL_TransVramBgCharacter(	ARCID_MICTEST_GRA, NARC_mictest_back_bg_up_NCGR,
 						GFL_BG_FRAME1_M, 0, 0, 0, heap_id );
 	GFL_ARC_UTIL_TransVramScreen(	ARCID_MICTEST_GRA, NARC_mictest_back_bg_up_NSCR,
@@ -1494,24 +1466,26 @@ static void MicTest_BG_CreateMsg( MICTEST_BG_WORK *p_bg, u32 heap_id )
 		u8 h;
 		u8 plt_num;
 		u16 chr_ofs;
+    u8 x_dot;
+    u8 padding[3];
 //		PRINTSYS_LSB font_col;
 	} sc_bmp_setup_data[] = {
 		//	TITLE
 		{
 			BMPWIN_TITLE_FRAME, BMPWIN_TITLE_X, BMPWIN_TITLE_Y, BMPWIN_TITLE_W, BMPWIN_TITLE_H,
-			BMPWIN_TITLE_PLT, BMPWIN_TITLE_CHR_OFS,
+			BMPWIN_TITLE_PLT, BMPWIN_TITLE_CHR_OFS, BMPWIN_TITLE_X_DOT,
 //			PRINTSYS_LSB_Make(FBMP_COL_WHITE,FBMP_COL_BLK_SDW,FBMP_COL_NULL)
 		},
 		//	INFO
 		{
 			BMPWIN_INFO_FRAME, BMPWIN_INFO_X, BMPWIN_INFO_Y, BMPWIN_INFO_W, BMPWIN_INFO_H,
-			BMPWIN_INFO_PLT, BMPWIN_INFO_CHR_OFS,
+			BMPWIN_INFO_PLT, BMPWIN_INFO_CHR_OFS, 0,
 //			PRINTSYS_LSB_Make(FBMP_COL_WHITE,FBMP_COL_BLK_SDW,FBMP_COL_NULL)
 		},
 		//	RETBTN
 		{
 			BMPWIN_RETBTN_FRAME, BMPWIN_RETBTN_X, BMPWIN_RETBTN_Y, BMPWIN_RETBTN_W, BMPWIN_RETBTN_H,
-			BMPWIN_RETBTN_PLT, BMPWIN_RETBTN_CHR_OFS,
+			BMPWIN_RETBTN_PLT, BMPWIN_RETBTN_CHR_OFS, 0,
 //			PRINTSYS_LSB_Make(14,15,FBMP_COL_NULL)
 		},
 	};
@@ -1533,7 +1507,7 @@ static void MicTest_BG_CreateMsg( MICTEST_BG_WORK *p_bg, u32 heap_id )
 		GFL_BMPWIN_ClearScreen( p_bg->bmpwin[i] );
 
 		p_buf	= GFL_MSG_CreateString( p_bg->p_msg_mng, i );
-    PRINTSYS_Print( bmp, 0, 0, p_buf, p_bg->fontHandle );
+    PRINTSYS_Print( bmp, sc_bmp_setup_data[i].x_dot, 0, p_buf, p_bg->fontHandle );
 //	GF_STR_PrintColor(	&p_bg->bmpwin[i], sc_bmp_setup_data[i].font, p_buf, 0, 0, 
 //					MSG_NO_PUT, sc_bmp_setup_data[i].font_col, NULL );
 		GFL_STR_DeleteBuffer( p_buf );
@@ -1595,7 +1569,6 @@ static void MicTest_MIC_Init( MICTEST_MIC_WORK *p_mic, u32 heap_id, MICCallback 
 	{	
 		u32 size		= sizeof(MIC_BUF_SIZE)*MIC_SAMPLING_LENGTH + 32;	//	後にバッファアドレスを32バイトアラインするため+32
 		MIC_BUF_SIZE	*p_buf	= GFL_HEAP_AllocMemory( heap_id, size );
-/*↑[GS_CONVERT_TAG]*/
 		MI_CpuClear8( p_buf, size );
 		p_mic->p_buf_adrs		= p_buf;
 
@@ -1625,7 +1598,6 @@ static void MicTest_MIC_Exit( MICTEST_MIC_WORK *p_mic )
 {
 #ifdef MIC_FUNC_DEF
 	GFL_HEAP_FreeMemory( p_mic->p_buf_adrs );
-/*↑[GS_CONVERT_TAG]*/
 
 	//マイク時スリープを許可
 	sys_SleepOK( SLEEPTYPE_MIC );
@@ -1797,7 +1769,6 @@ static void ChangeObjAnmMicCallback( MICResult result, void *p_arg )
 			//	ポケモンアニメ開始
 			if( p_mic->anm_set_flg ) {
 				GFL_CLACT_WK_SetAnmSeq( p_obj->p_act[MICTEST_OBJ_POKEMON], 1 );
-/*↑[GS_CONVERT_TAG]*/
 				p_mic->anm_set_flg	= FALSE;
 			}
 
@@ -1815,17 +1786,12 @@ static void ChangeObjAnmMicCallback( MICResult result, void *p_arg )
 			}
 
 			GFL_CLACT_WK_SetAnmSeq( p_obj->p_act[MICTEST_OBJ_GAGE_L], anm_seq );
-/*↑[GS_CONVERT_TAG]*/
 			GFL_CLACT_WK_SetAnmSeq( p_obj->p_act[MICTEST_OBJ_GAGE_R], anm_seq );
-/*↑[GS_CONVERT_TAG]*/
 		}else if( anm_seq == 0 ) {
 			//	アニメ停止
 			GFL_CLACT_WK_SetAnmSeq( p_obj->p_act[MICTEST_OBJ_POKEMON], 0 );
-/*↑[GS_CONVERT_TAG]*/
 			GFL_CLACT_WK_SetAnmSeq( p_obj->p_act[MICTEST_OBJ_GAGE_L], 0 );
-/*↑[GS_CONVERT_TAG]*/
 			GFL_CLACT_WK_SetAnmSeq( p_obj->p_act[MICTEST_OBJ_GAGE_R], 0 );
-/*↑[GS_CONVERT_TAG]*/
 		}
 
 		cnt++;
@@ -2051,15 +2017,12 @@ static void CleanNoteTask( MICTEST_OBJ_WORK *p_obj )
 static int GetHitTrg()
 {
 	static const GFL_UI_TP_HITTBL sc_hit_tbl[]	= {
-/*↑[GS_CONVERT_TAG]*/
 		{ OBJ_BUTTON_POS_Y - 16, OBJ_BUTTON_POS_Y + 16,
 		  OBJ_BUTTON_POS_X - 32, OBJ_BUTTON_POS_X + 32},
 		{ GFL_UI_TP_HIT_END,0,0,0 },		// 終了データ	
-/*↑[GS_CONVERT_TAG]*/
 	};
 
 	return GFL_UI_TP_HitTrg( sc_hit_tbl );
-/*↑[GS_CONVERT_TAG]*/
 }
 
 //----------------------------------------------------------------------------
@@ -2074,5 +2037,4 @@ static int GetHitTrg()
 static BOOL IsProcEndTrg()
 {
 	return  GetHitTrg() == 0 || GFL_UI_KEY_GetTrg() & PAD_BUTTON_CANCEL;
-/*↑[GS_CONVERT_TAG]*/
 }
