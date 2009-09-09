@@ -46,4 +46,4 @@ del *.NSCR
    @goto end
 :end
 
-Pause
+REM Pause
