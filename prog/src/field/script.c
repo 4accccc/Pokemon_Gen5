@@ -858,6 +858,10 @@ void * SCRIPT_GetSubMemberWork( SCRIPT_WORK *sc, u32 id )
 	case ID_EVSCR_WK_PARAM1:
 	case ID_EVSCR_WK_PARAM2:
 	case ID_EVSCR_WK_PARAM3:
+	case ID_EVSCR_WK_PARAM4:				
+	case ID_EVSCR_WK_PARAM5:
+	case ID_EVSCR_WK_PARAM6:
+	case ID_EVSCR_WK_PARAM7:
 	//スクリプトでのテンポラリ
 	case ID_EVSCR_WK_TEMP0:					
 	case ID_EVSCR_WK_TEMP1:

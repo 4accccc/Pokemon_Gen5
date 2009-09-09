@@ -34,6 +34,8 @@
 
 #include "tr_tool/tr_tool.h"
 
+#include "field/zonedata.h"
+
 #include "scrcmd_trainer.h"
 #include "scrcmd_sound.h"
 #include "scrcmd_musical.h"
@@ -602,9 +604,12 @@ static VMCMD_RESULT EvCmdPushFlagValue( VMHANDLE * core, void *wk )
   SCRCMD_WORK *work = wk;
   GAMEDATA *gdata = SCRCMD_WORK_GetGameData( work );
   EVENTWORK *evwork = GAMEDATA_GetEventWork( gdata );
-  u16  flag = VMGetU16( core );
+  //u16  flag = VMGetU16( core );
+  //フラグIDはワークIDより明らかに小さいので、両対応
+  u16 flag = SCRCMD_GetVMWorkValue( core, work );
   BOOL value  = EVENTWORK_CheckEventFlag( evwork, flag );
   VMCMD_Push( core, value );
+  TAMADA_Printf("SCRCMD:Push Flag Value(id=%d, value=%d)\n", flag, value );
   return VMCMD_RESULT_CONTINUE;
 }
 
@@ -760,8 +765,9 @@ static VMCMD_RESULT EvCmdChangeLocalScr( VMHANDLE *core, void *wk )
   //共通スクリプト切り替えフラグOFF
   *common_scr_flag = 0;
 
-  //VM_End( core );
-  return VMCMD_RESULT_CONTINUE;  //注意！　この後に"END"に行くようにする
+  VM_End( core );
+  return VMCMD_RESULT_SUSPEND;
+  //return VMCMD_RESULT_CONTINUE;  //注意！　この後に"END"に行くようにする
 }
 
 //======================================================================
@@ -1220,7 +1226,7 @@ static VMCMD_RESULT EvCmdTalkMsg( VMHANDLE *core, void *wk )
 {
   FLDMSGWIN_STREAM *msgWin;
   SCRCMD_WORK *work = wk;
-  u16 msg_id = VMGetU16(core);
+  u16 msg_id = SCRCMD_GetVMWorkValue( core, work );
   SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
   STRBUF **msgbuf = SCRIPT_GetMemberWork( sc, ID_EVSCR_MSGBUF );
   
@@ -1386,11 +1392,14 @@ static VMCMD_RESULT EvCmdTalkWinClose( VMHANDLE *core, void *wk )
  * 吹き出しウィンドウ描画
  * @param work  SCRCMD_WORK
  * @param objID 吹き出しを出すOBJID
+ * @param arcID 表示するメッセージのアーカイブ指定ID
  * @param msgID 表示するメッセージID
  * @retval BOOL TRUE=表示 FALSE=エラー
+ *
+ * arcID=0x400の場合、デフォルトのメッセージアーカイブを使用する
  */
 //--------------------------------------------------------------
-static BOOL balloonWin_Write( SCRCMD_WORK *work, u16 objID, u16 msgID )
+static BOOL balloonWin_Write( SCRCMD_WORK *work, u16 objID, u16 arcID, u16 msgID )
 {
   VecFx32 pos,jiki_pos;
   const VecFx32 *p_pos;
@@ -1419,7 +1428,15 @@ static BOOL balloonWin_Write( SCRCMD_WORK *work, u16 objID, u16 msgID )
   {
     WORDSET **wordset = SCRIPT_GetMemberWork( sc, ID_EVSCR_WORDSET );
     STRBUF **tmpbuf = SCRIPT_GetMemberWork( sc, ID_EVSCR_TMPBUF );
-    GFL_MSG_GetString( msgData, msgID, *tmpbuf );
+    if (arcID == 0x400)
+    {
+      GFL_MSG_GetString( msgData, msgID, *tmpbuf );
+    } else {
+      msgData = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_SCRIPT_MESSAGE,
+          arcID, SCRCMD_WORK_GetHeapID( work ) );
+      GFL_MSG_GetString( msgData, msgID, *tmpbuf );
+      GFL_MSG_Delete( msgData );
+    }
     WORDSET_ExpandStr( *wordset, *msgbuf, *tmpbuf );
   }
   
@@ -1468,12 +1485,13 @@ static BOOL BallonWinMsgWait( VMHANDLE *core, void *wk )
 static VMCMD_RESULT EvCmdBalloonWinWrite( VMHANDLE *core, void *wk )
 {
   SCRCMD_WORK *work = wk;
-  u16 msg_id = VMGetU16( core );
+  u16 arc_id = SCRCMD_GetVMWorkValue( core, work );
+  u16 msg_id = SCRCMD_GetVMWorkValue( core, work );
   u8 obj_id = VMGetU8( core );
   
   KAGAYA_Printf( "吹き出しウィンドウ OBJID =%d\n", obj_id );
 
-  if( balloonWin_Write(work,obj_id,msg_id) == TRUE ){
+  if( balloonWin_Write(work,obj_id,arc_id,msg_id) == TRUE ){
     VMCMD_SetWait( core, BallonWinMsgWait );
     return VMCMD_RESULT_SUSPEND;
   }
@@ -1493,7 +1511,8 @@ static VMCMD_RESULT EvCmdBalloonWinTalkWrite( VMHANDLE *core, void *wk )
   SCRCMD_WORK *work = wk;
   SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
   MMDL **mmdl = SCRIPT_GetMemberWork( sc, ID_EVSCR_TARGET_OBJ );
-  u16 msg_id = VMGetU16( core );
+  u16 arc_id = SCRCMD_GetVMWorkValue( core, work );
+  u16 msg_id = SCRCMD_GetVMWorkValue( core, work );
   
   if( *mmdl == NULL ){
     OS_Printf( "スクリプトエラー 話し掛け対象のOBJが居ません\n" );
@@ -1503,7 +1522,7 @@ static VMCMD_RESULT EvCmdBalloonWinTalkWrite( VMHANDLE *core, void *wk )
   {
     u8 obj_id = MMDL_GetOBJID( *mmdl );
     
-    if( balloonWin_Write(work,obj_id,msg_id) == TRUE ){
+    if( balloonWin_Write(work,obj_id,arc_id,msg_id) == TRUE ){
       VMCMD_SetWait( core, BallonWinMsgWait );
       return VMCMD_RESULT_SUSPEND;
     }
@@ -1522,7 +1541,6 @@ static VMCMD_RESULT EvCmdBalloonWinTalkWrite( VMHANDLE *core, void *wk )
 static VMCMD_RESULT EvCmdBalloonWinClose( VMHANDLE *core, void *wk )
 {
   SCRCMD_WORK *work = wk;
-  SCRIPT_WORK *sc;
   FLDTALKMSGWIN *tmsg;
   
   tmsg = (FLDTALKMSGWIN*) SCRCMD_WORK_GetFldMsgWinStream( work );
@@ -2417,7 +2435,23 @@ static VMCMD_RESULT EvCmdGetRand( VMHANDLE *core, void *wk )
 // return VMCMD_RESULT_SUSPEND;
   return VMCMD_RESULT_CONTINUE;
 }
-
+//--------------------------------------------------------------
+/**
+ */
+//--------------------------------------------------------------
+static VMCMD_RESULT EvCmdGetNowMsgArcID( VMHANDLE * core, void *wk )
+{
+  u16 *ret_wk = SCRCMD_GetVMWork( core, wk );
+  { //とりあえず。
+    //本来はスクリプト起動時に使用するメッセージアーカイブIDを保存しておき、
+    //そこからわたすような仕組みとするべき
+    GAMEDATA *gdata = SCRCMD_WORK_GetGameData( wk );
+    PLAYER_WORK *player = GAMEDATA_GetMyPlayerWork( gdata );
+    u16 zone_id = PLAYERWORK_getZoneID( player );
+    *ret_wk = ZONEDATA_GetMessageArcID( zone_id );
+  }
+  return VMCMD_RESULT_CONTINUE;
+}
 //======================================================================
 //  画面フェード
 //======================================================================
@@ -2704,6 +2738,7 @@ const VMCMD_FUNC ScriptCmdTbl[] = {
   //その他
   EvCmdChangeLangID,
   EvCmdGetRand,
+  EvCmdGetNowMsgArcID,
 };
 
 
