@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-09-04T20:09:46"/>
+	<create user="matsumiya" host="W00207" date="2009-09-09T16:37:23"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -292,11 +292,12 @@
 	</lock>
 
 
-	<row id="msg_t02pc0101_hakase2_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_t02pc0101_hakase2_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・マップ切り替え直後からイベント
-　カウンター（）まで進むと
-　主人公と向き合ってこのメッセージ表示</comment>
+　カウンター前まで進むと
+　主人公と向き合ってこのメッセージ表示
+・同時に友達♀も移動</comment>
 		<attribute name="キャラ指定">DOCTOR_JR
 博士</attribute>
 		<language name="JPN" width="256">アララギ『ここが　ポケモンセンター！
@@ -378,8 +379,9 @@
 わたしが　図鑑評価を　するからね[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_t02pc0101_white_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,,">
-		<comment>♀</comment>
+	<row id="msg_t02pc0101_white_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♀
+・続けてmsg_t02pc0101_hakase2_05表示</comment>
 		<attribute name="キャラ指定">友達♀</attribute>
 		<language name="JPN" width="256">ホワイティ『はかせ……[BE:01:ページ切り替え（クリア）]
 がめんの　「だれかのパソコン」って
@@ -438,12 +440,14 @@ msg_t02pc0101_docotr_jr_03表示後
 対応してくれる　はずだ！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_t02pc0101_hakase2_07" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_t02pc0101_hakase2_07" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・メッセージ表示後退場
 　画面外に消えると
 　続けてmsg_t02pc0101_black_01
-・t01r0401に博士OBJ復帰</comment>
+・t01r0401に博士OBJ復帰
+
+※仮テキスト</comment>
 		<attribute name="キャラ指定">DOCTOR_JR
 博士</attribute>
 		<language name="JPN" width="256">アララギ『よーしよしよし！[BE:01:ページ切り替え（クリア）]
@@ -453,9 +457,9 @@ msg_t02pc0101_docotr_jr_03表示後
 じぶんは　カノコタウンに　もどるよ！[BE:01:ページ切り替え（クリア）]
 さいごに　ひとつ！[BE:01:ページ切り替え（クリア）]
 サンヨウシティに　いったなら
-はつめいかに　あいたまえ！[BE:01:ページ切り替え（クリア）]
+はつめいかの　？？？に　あいたまえ！[BE:01:ページ切り替え（クリア）]
 ぼくの　ふるくからの　ともだちで
-きみの　ぼうけんを　てだすけしてくれるよ[BE:01:ページ切り替え（クリア）]
+きみの　ぼうけんを　てだすけしてくれる[BE:01:ページ切り替え（クリア）]
 ではな！
 きみの　たびに　さちあらんことを！</language>
 		<language name="JPN_KANJI" width="256">アララギ『よーしよしよし！[BE:01:ページ切り替え（クリア）]
@@ -465,23 +469,32 @@ msg_t02pc0101_docotr_jr_03表示後
 自分は　カノコタウンに　戻る！[BE:01:ページ切り替え（クリア）]
 最後に　ひとつ！[BE:01:ページ切り替え（クリア）]
 サンヨウシティに　行ったなら
-発明家に　会いたまえ！[BE:01:ページ切り替え（クリア）]
+発明家の　？？？に　会いたまえ！[BE:01:ページ切り替え（クリア）]
 わたしの　古くからの　友達で
 きみたちの　冒険を　手助けしてくれる[BE:01:ページ切り替え（クリア）]
 ではな！
 きみたちの　旅に　幸あらんことを！</language>
 	</row>
 
-	<row id="msg_t02pc0101_black_01" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+	<row id="msg_t02pc0101_black_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
-・メッセージ表示後、ポケセン外へ
-　画面外に消えると操作可能に
-・t02フィールドに出現</comment>
+・r02でのイベント後ここに出現
+・主人公がc01に到達すると削除</comment>
 		<attribute name="キャラ指定">友達♂</attribute>
-		<language name="JPN" width="256">ともだち♂『おれは　さきにいくよ
-ポケモンたち　そだてたいしさ[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">ともだち♂『オレ　先に行くよ
-ポケモンたち　育てたいしさ[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">ともだち♂『ながい　くさむら……
+つよい　ポケモン……[BE:00:ページ切り替え（行送り）]
+ああいうのって　ワクワクするよな[BE:01:ページ切り替え（クリア）]
+だって　そうだろ[BE:01:ページ切り替え（クリア）]
+タイプの　あいしょうを　いかせば
+よわい　ポケモンでも　つよいヤツに[BE:00:ページ切り替え（行送り）]
+かてる　かのうせいが　あるもんな！</language>
+		<language name="JPN_KANJI" width="256">ともだち♂『長い　草むら……
+強い　ポケモン……[BE:00:ページ切り替え（行送り）]
+ああいうのって　ワクワクするよな[BE:01:ページ切り替え（クリア）]
+だって　そうだろ[BE:01:ページ切り替え（クリア）]
+タイプの　相性を　いかせば
+弱いポケモンでも　強いやつに[BE:00:ページ切り替え（行送り）]
+勝てる　可能性が　あるもんな！</language>
 	</row>
 
 	<row id="msg_t02pc0101_white_02">

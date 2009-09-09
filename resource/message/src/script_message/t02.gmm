@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-09-04T19:33:19"/>
+	<create user="matsumiya" host="W00207" date="2009-09-09T18:05:42"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,14 +263,14 @@
 		</language>
 	</columns>
 
-	<dialog left="13" top="210" right="712" bottom="830" maximized="no" rayout="Vertical2">
+	<dialog left="13" top="209" right="708" bottom="830" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
-		<band id="0" index="1" style="0000" width="524"/>
+		<band id="0" index="1" style="0000" width="520"/>
 		<band id="1" index="2" style="0000" width="165"/>
-		<band id="2" index="3" style="0000" width="537"/>
+		<band id="2" index="3" style="0000" width="533"/>
 		<band id="3" index="4" style="0000" width="152"/>
-		<band id="4" index="0" style="0000" width="691"/>
+		<band id="4" index="0" style="0000" width="687"/>
 		<edit entry="0" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
@@ -294,6 +294,7 @@
 
 	<row id="msg_t02_doctor_jr_01" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♂
+・ポケセンの前に配置
 ・このメッセージ表示後
 　ポケセン（t02pc0101）内へ画面切り替え
 
@@ -341,11 +342,12 @@
 もうしばらく　お待ちください</language>
 	</row>
 
-	<row id="msg_t02_hakaiw_stop_02">
+	<row id="msg_t02_hakaiw_stop_02" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>♀
 ・t02pc0101イベント終了までのストッパー
 ・POSを踏んだとき
-・メッセージ後、主人公の位置をもどす</comment>
+・メッセージ後、主人公の位置をもどす
+※マップによっては不要</comment>
 		<attribute name="キャラ指定">？？？団員♀</attribute>
 		<language name="JPN" width="256">ちょっと……
 いま　じゅんびちゅう　なんです[BE:01:ページ切り替え（クリア）]
@@ -355,12 +357,27 @@
 もうしばらく　お待ちください[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_t02_black_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_t02_black_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
-・t02pc0101イベント終了後に配置
+・r01イベント終了後に配置
 　POSを踏むとこのメッセージ
-・メッセージ後、連れ歩き
-・続けて演説イベント＝msg_t02_hakaim_01開始
+0＝プレイヤー名</comment>
+		<attribute name="キャラ指定">友達♂</attribute>
+		<language name="JPN" width="256">ともだち♂『おい　[1:00:トレーナー名:0][BE:01:ページ切り替え（クリア）]
+ポケモンセンターの　まえで
+はかせが　まっていなかったか？[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">ともだち♂『おい　[1:00:トレーナー名:0][BE:01:ページ切り替え（クリア）]
+ポケモンセンターの　前で
+博士が　待っていなかったか？[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_t02_black_02" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂
+・t02pc0101イベント後に配置
+　POSを踏むとこのメッセージ
+・メッセージ後、連れ歩きで所定の位置へ
+・続けてゲーチス登場し
+　演説イベント＝msg_t02_sage1_01開始
 0＝プレイヤー名</comment>
 		<attribute name="キャラ指定">友達♂</attribute>
 		<language name="JPN" width="256">ともだち♂『おい　[1:00:トレーナー名:0][BE:01:ページ切り替え（クリア）]
@@ -371,327 +388,437 @@
 始まるんだってさ[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_t02_hakaim_01">
+	<row id="msg_t02_sage1_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
-・続けてmsg_t02_hakaiw_01表示</comment>
-		<attribute name="キャラ指定">？？？団員♂</attribute>
-		<language name="JPN" width="256">カラクサタウンの　みなさん
-よくぞ　おあつまり　いただきました[BE:01:ページ切り替え（クリア）]
-わたくし　？？？だんの
-ゲーチスと　いいます[BE:01:ページ切り替え（クリア）]
-おっと！　かめんを　つけたままで
-おはなしすることを　おゆるしください[BE:00:ページ切り替え（行送り）]
-はだが　よわいものですから……[BE:01:ページ切り替え（クリア）]
-では！　わたしたちが　これから
-みなさまがたに　うったえたいこと[BE:01:ページ切り替え（クリア）]
-それは……！[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">おとこ『カラクサタウンの　みなさん
-よくぞ　お集まり　いただきました[BE:01:ページ切り替え（クリア）]
-わたくし　？？？団の
-ゲーチスと　申します[BE:01:ページ切り替え（クリア）]
-おっと！　仮面を　つけたままで
-お話することを　お許しください[BE:00:ページ切り替え（行送り）]
-肌が　弱いものですから……[BE:01:ページ切り替え（クリア）]
-では！　わたしたちが　これから
-みなさまがたに　訴えたいこと[BE:01:ページ切り替え（クリア）]
-それは……！[BE:01:ページ切り替え（クリア）]</language>
+・続けてmsg_t02_boodle_01表示</comment>
+		<attribute name="キャラ指定">七賢者ゲーチス</attribute>
+		<language name="JPN" width="256">わたくしの　なまえは
+ゲーチス[BE:01:ページ切り替え（クリア）]
+エターニティという　そしきで
+しどうしゃを　している　ものです[BE:01:ページ切り替え（クリア）]
+きょう　みなさんに
+おはなしするのは　ポケモンを[BE:00:ページ切り替え（行送り）]
+じゆうに　しましょう　ということです</language>
+		<language name="JPN_KANJI" width="256">わたくしの　名前は
+ゲーチス[BE:01:ページ切り替え（クリア）]
+エターニティという　組織で
+指導者を　している　ものです[BE:01:ページ切り替え（クリア）]
+今日　みなさんに　お話しするのは
+ポケモン解放について　です</language>
 	</row>
 
-	<row id="msg_t02_hakaiw_01" back-color="#808080,,,#808080,,#808080,#808080,,,,,,#808080,,,,,,">
-		<comment>♀
-・続けて表示</comment>
-		<attribute name="キャラ指定">？？？団員♀</attribute>
-		<language name="JPN" width="256">？？？だん『それは　それは？[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">？？？団『それは　それは？[BE:01:ページ切り替え（クリア）]</language>
+	<row id="msg_t02_boodle_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+		<comment>♂･♀
+・小さな会話ウインドウを複数同時に出す
+・続けてmsg_t02_sage2_02表示</comment>
+		<attribute name="キャラ指定">群集</attribute>
+		<language name="JPN" width="256">えっ？</language>
+		<language name="JPN_KANJI" width="256">えっ？</language>
 	</row>
 
-	<row id="msg_t02_hakaim_02">
+	<row id="msg_t02_sage2_02" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
-・続けて表示</comment>
-		<attribute name="キャラ指定">？？？団員♂</attribute>
-		<language name="JPN" width="256">ゲーチス『わたしの　いいたいこと
-それは……[BE:01:ページ切り替え（クリア）]
-この　せかいを　かえましょう！
-ということです[BE:01:ページ切り替え（クリア）]
-いまの　せかいは　ゆらゆら
-ゆらめく　かげろうのようなもの[BE:01:ページ切り替え（クリア）]
-じったいなぞ　あろうはずもなく
-それゆえ　かっこたる　しあわせもない[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">ＧーＣｉｓ『わたしの　いいたいこと
-それは……[BE:01:ページ切り替え（クリア）]
-この　世界を　変えましょう！
-ということです[BE:01:ページ切り替え（クリア）]
-いまの　世界は　ゆらゆら
-揺らめく　陽炎のようなもの[BE:01:ページ切り替え（クリア）]
-実体なぞ　あろうはずもなく
-それゆえ　確固たる　幸せもない[BE:01:ページ切り替え（クリア）]</language>
+・ゲーチス、左右に動くアニメ
+・続けてmsg_t02_sage2_03表示</comment>
+		<attribute name="キャラ指定">七賢者ゲーチス</attribute>
+		<language name="JPN" width="256">ゲーチス『われわれ　にんげんは　
+ポケモンと　いっしょに[BE:00:ページ切り替え（行送り）]
+くらして　きました[BE:01:ページ切り替え（クリア）]
+おたがいを　もとめあい
+ひつようとしあう　パートナー[BE:00:ページ切り替え（行送り）]
+そうおもって　おられる
+ひと　ばかりでしょう[BE:01:ページ切り替え（クリア）]
+ですが
+ほんとうに　そうなのでしょうか？[BE:01:ページ切り替え（クリア）]
+われわれ　にんげんが
+そう　おもいこんでいるだけ……[BE:01:ページ切り替え（クリア）]
+そんな　ふうに
+かんがえたことは　ありませんか？</language>
+		<language name="JPN_KANJI" width="256">ゲーチス『われわれ　人間は　
+ポケモンと　ともに[BE:00:ページ切り替え（行送り）]
+暮らしてきました[BE:01:ページ切り替え（クリア）]
+お互いを　求め合い
+必要としあう　パートナー[BE:00:ページ切り替え（行送り）]
+そう思っておられる方が　多いでしょう[BE:01:ページ切り替え（クリア）]
+ですが
+本当に　そうなのでしょうか？[BE:01:ページ切り替え（クリア）]
+われわれ　人間が
+そう　思い込んでいるだけ……[BE:01:ページ切り替え（クリア）]
+そんな　ふうに
+考えたことは　ありませんか？</language>
 	</row>
 
-	<row id="msg_t02_hakaiw_02" back-color="#808080,,,#808080,,#808080,#808080,,,,,,#808080,,,,,,">
-		<comment>♀
-・続けて表示</comment>
-		<attribute name="キャラ指定">？？？団員♀</attribute>
-		<language name="JPN" width="256">？？？だん『それから　それから？[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">？？？団『それから　それから？[BE:01:ページ切り替え（クリア）]</language>
-	</row>
-
-	<row id="msg_t02_hakaim_03">
+	<row id="msg_t02_sage3_03" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
-・続けて表示</comment>
-		<attribute name="キャラ指定">？？？団員♂</attribute>
-		<language name="JPN" width="256">ゲーチス『それは　なぜか
-どうして　みたされないのか？[BE:01:ページ切り替え（クリア）]
-なぜなら　わたしたち　にんげんは
-かこに　しばられている　からです[BE:00:ページ切り替え（行送り）]
-みらいを　しんじられないからです[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">ＧーＣｉｓ『それは　なぜか
-どうして　満たされないのか？[BE:01:ページ切り替え（クリア）]
-なぜなら　わたしたち　人間は
-過去に　縛られている　からです[BE:00:ページ切り替え（行送り）]
-未来を　信じられない　からです[BE:01:ページ切り替え（クリア）]</language>
+・続けてmsg_t02_sage2_04表示</comment>
+		<attribute name="キャラ指定">七賢者ゲーチス</attribute>
+		<language name="JPN" width="256">トレーナーは
+ポケモンに　すきかって[BE:00:ページ切り替え（行送り）]
+めいれい　している……[BE:01:ページ切り替え（クリア）]
+しごとの　パートナーとしても
+こきつかっている……[BE:01:ページ切り替え（クリア）]
+そんなことはないと　だれが
+はっきりと　いいきれるのでしょうか</language>
+		<language name="JPN_KANJI" width="256">トレーナーは
+ポケモンに　好き勝手[BE:00:ページ切り替え（行送り）]
+命令している……[BE:01:ページ切り替え（クリア）]
+仕事の　パートナーとしても
+こきつかっている……[BE:01:ページ切り替え（クリア）]
+そんなことはないと　だれが
+はっきりと　言い切れるのでしょうか</language>
 	</row>
 
-	<row id="msg_t02_hakaiw_03" back-color="#808080,,,#808080,,#808080,#808080,,,,,,#808080,,,,,,">
-		<comment>♀
-・続けて表示</comment>
-		<attribute name="キャラ指定">？？？団員♀</attribute>
-		<language name="JPN" width="256">？？？だん『それから　それから？[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">？？？団『それから　それから？[BE:01:ページ切り替え（クリア）]</language>
+	<row id="msg_t02_boodle_02" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+		<comment>♂･♀
+・小さな会話ウインドウを複数同時に出す
+・続けてmsg_t02_sage4_04表示</comment>
+		<attribute name="キャラ指定">群集</attribute>
+		<language name="JPN" width="256">ざわざわ……</language>
+		<language name="JPN_KANJI" width="256">ざわざわ……</language>
 	</row>
 
-	<row id="msg_t02_hakaim_04">
+	<row id="msg_t02_sage4_04" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
-・続けて表示</comment>
-		<attribute name="キャラ指定">？？？団員♂</attribute>
-		<language name="JPN" width="256">ゲーチス『かんたんです[BE:01:ページ切り替え（クリア）]
-わたしたちと　いっしょに
-かこの　しがらみを　はかい　しましょう[BE:01:ページ切り替え（クリア）]
-ふあんていな　みらいに
-つながるものを　はかい　しましょう[BE:01:ページ切り替え（クリア）]
-いっさいがっさいを　こわしてしまい
-あらたな　せかいを　つくりあげるのです[BE:01:ページ切り替え（クリア）]
-……だいじょうぶ　ですとも
-みなさん　しんじてください[BE:01:ページ切り替え（クリア）]
-わたしたちは　
-きゅうせいしゅを　みつけました[BE:01:ページ切り替え（クリア）]
-かれと　いっしょならば
-かならず　せかいを　かえられます！[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">ＧーＣｉｓ『簡単です[BE:01:ページ切り替え（クリア）]
-わたしたちと　いっしょに
-過去の　しがらみを　破壊しましょう[BE:01:ページ切り替え（クリア）]
-不安定な　未来に
-つながるものを　破壊しましょう[BE:01:ページ切り替え（クリア）]
-一切合財を　壊してしまい
-新たな　世界を　つくりあげるのです[BE:01:ページ切り替え（クリア）]
-……大丈夫　ですとも
-みなさん　信じてください[BE:01:ページ切り替え（クリア）]
-わたしたちは　
-救世主を　みつけました[BE:01:ページ切り替え（クリア）]
-彼と　一緒ならば
-必ず　世界を　変えられます！[BE:01:ページ切り替え（クリア）]</language>
+・続けてmsg_t02_sage2_05表示</comment>
+		<attribute name="キャラ指定">七賢者ゲーチス</attribute>
+		<language name="JPN" width="256">ゲーチス『いいですか
+みなさん[BE:01:ページ切り替え（クリア）]
+ポケモンは　にんげんとは　ことなり
+みちの　かのうせいを　ひめた[BE:00:ページ切り替え（行送り）]
+いきもの　なのです[BE:01:ページ切り替え（クリア）]
+われわれが　まなぶべき　ところを
+かずおおく　もつ　そんざいなのです
+そんな　ポケモンたちに　たいし
+わたしたちの　すべきことは　なんでしょうか</language>
+		<language name="JPN_KANJI" width="256">ゲーチス『いいですか
+みなさん[BE:01:ページ切り替え（クリア）]
+ポケモンは　人間とは　異なり
+未知の可能性を　秘めた[BE:00:ページ切り替え（行送り）]
+生き物　なのです[BE:01:ページ切り替え（クリア）]
+われわれが　学ぶべき　ところを
+数多く　持つ　存在なのです
+そんな　ポケモンたちに対し
+私たちの　すべきことは　何でしょうか</language>
 	</row>
 
-	<row id="msg_t02_hakaiw_04" back-color="#808080,,,#808080,,#808080,#808080,,,,,,#808080,,,,,,">
-		<comment>♀
-・
-・続けて表示</comment>
-		<attribute name="キャラ指定">？？？団員♀</attribute>
-		<language name="JPN" width="256">？？？だん『はかい　しましょう！！
-せかいを　かえましょう！[BE:01:ページ切り替え（クリア）]
-ということで　みなさま
-はなしを　きいてくださり[BE:00:ページ切り替え（行送り）]
-ほんとうに　ありがとうございました！[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">？？？団『破壊しましょう！！
-世界を　変えましょう！[BE:01:ページ切り替え（クリア）]
-ということで　みなさま
-話を　きいてくださり[BE:00:ページ切り替え（行送り）]
-本当に　ありがとうございました！[BE:01:ページ切り替え（クリア）]</language>
+	<row id="msg_t02_boodle_03" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+		<comment>♂･♀
+・小さな会話ウインドウを複数同時に出す
+・続けてmsg_t02_sage4_05表示</comment>
+		<attribute name="キャラ指定">群集</attribute>
+		<language name="JPN" width="256">？</language>
+		<language name="JPN_KANJI" width="256">？</language>
 	</row>
 
-	<row id="msg_t02_hakaiw_06">
+	<row id="msg_t02_sage4_05" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
-・できれば動作モデルも移動しながら</comment>
+・メッセージ表示後
+　ゲーチスと下っ端たち退場
+・続けてmsg_t02_boodle_04</comment>
+		<attribute name="キャラ指定">七賢者ゲーチス</attribute>
+		<language name="JPN" width="256">ゲーチス『そうです！
+ポケモンを　じゆうに　することです！！[BE:01:ページ切り替え（クリア）]
+そうしてこそ
+にんげんと　ポケモンは[BE:00:ページ切り替え（行送り）]
+はじめて　たいとうに　なれるのです[BE:01:ページ切り替え（クリア）]
+みなさん
+ポケモンと　ただしく　つきあうために[BE:00:ページ切り替え（行送り）]
+どうすべきか　よく　かんがえてください[BE:01:ページ切り替え（クリア）]
+というところで
+わたくし　ゲーチスの　はなしを[BE:00:ページ切り替え（行送り）]
+おわらせて　いただきます[BE:01:ページ切り替え（クリア）]
+ごせいちょう　かんしゃ　いたします</language>
+		<language name="JPN_KANJI" width="256">ゲーチス『そうです！
+ポケモンを　解放することです！！[BE:01:ページ切り替え（クリア）]
+そうしてこそ
+人間と　ポケモンは[BE:00:ページ切り替え（行送り）]
+はじめて　対等になれるのです[BE:01:ページ切り替え（クリア）]
+みなさん
+ポケモンと　正しく　付き合うために[BE:00:ページ切り替え（行送り）]
+どうすべきか　よく考えてください[BE:01:ページ切り替え（クリア）]
+というところで
+わたくし　ゲーチスの　話を[BE:00:ページ切り替え（行送り）]
+終わらせて　いただきます[BE:01:ページ切り替え（クリア）]
+ご清聴　感謝いたします</language>
+	</row>
+
+	<row id="msg_t02_boodle_04" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+		<comment>♂
+・続けてmsg_t02_boodle_05
+（できれば動作モデルも移動しながら）</comment>
 		<attribute name="キャラ指定">群集</attribute>
 		<language name="JPN" width="256">おじいさん『いまの　はなし……
-どう　とらえれば　いいんだ？[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">おじいさん『いまの　はなし……
-どう　とらえれば　いいんだ？[BE:01:ページ切り替え（クリア）]</language>
+わしたちは　どうすれば　いいんだ？</language>
+		<language name="JPN_KANJI" width="256">おじいさん『今の　演説……
+わしたちは　どうすれば　いいんだ？</language>
 	</row>
 
-	<row id="msg_t02_hakaiw_07">
+	<row id="msg_t02_boodle_05" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♂
-・できれば動作モデルも移動しながら</comment>
+・続けてmsg_t02_boss_01
+（できれば動作モデルも移動しながら）</comment>
 		<attribute name="キャラ指定">群集</attribute>
-		<language name="JPN" width="256">おにいさん『あいつらの　いうとおり
-ぜんぶ　こわせば　いいんじゃないの？[BE:01:ページ切り替え（クリア）]
-よのなかって　いがいと
-ふこうへい　だったりするもんな[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">おにいさん『あいつらの　いうとおり
-全部　壊せば　いいんじゃないの？[BE:01:ページ切り替え（クリア）]
-世の中って　思っている以上に
-不公平　だったりするもんな[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">おにいさん『ポケモンを　かいほうって
+そんな　はなし　ありえないでしょ！</language>
+		<language name="JPN_KANJI" width="256">おにいさん『ポケモンを　解放って
+そんな話　ありえないでしょ！</language>
 	</row>
 
-	<row id="msg_t02_hakaiw_08">
+	<row id="msg_t02_boss_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>♂
-・できれば動作モデルも移動しながら</comment>
-		<attribute name="キャラ指定">群集</attribute>
-		<language name="JPN" width="256">おじさん『そりゃ　そうだよ
-みんな　ちがうんだから[BE:01:ページ切り替え（クリア）]
-それを　ふこうへい　とかいって
-なにか　いみあるのかなあ……[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">おじさん『そりゃ　そうだよ
-みんな　違うんだから[BE:01:ページ切り替え（クリア）]
-それを　不公平　とかいって
-なにか　意味あるのかなあ……[BE:01:ページ切り替え（クリア）]</language>
-	</row>
-
-	<row id="msg_t02_boss_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
-		<comment>♂：仮メッセージ
 ・演説イベント後、NPCが移動した後
 　主人公に隣接してこのメッセージ表示
-・アニメをはさんで
-　msg_t02_boss_02表示</comment>
+・続けてmsg_t02_black_03</comment>
 		<attribute name="キャラ指定">Ｎ</attribute>
-		<language name="JPN" width="256">きみたちが　もっているのは……[BE:01:ページ切り替え（クリア）]
-ポケモンずかん　だね[BE:01:ページ切り替え（クリア）]
-ポケモンを　にんげんの　かんがえで
-ぶんるい　するとは　おろかなことだ[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">キミが　持っているのは……[BE:01:ページ切り替え（クリア）]
-ポケモン図鑑　だね[BE:01:ページ切り替え（クリア）]
-ポケモンを　人間の考えで
-分類するとは　愚かなことだ[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">？？？『キミのポケモンかな？[BE:01:ページ切り替え（クリア）]
+いま　トレーナーへの
+かんしゃの　ことばが　きこえたけれど……</language>
+		<language name="JPN_KANJI" width="256">？？？『キミのポケモンかな？[BE:01:ページ切り替え（クリア）]
+今　トレーナーへの
+感謝の　言葉が　聞こえたけれど……</language>
 	</row>
 
-	<row id="msg_t02_boss_02" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
-		<comment>♂：仮メッセージ
-・メッセージ表示後、戦闘に
-　今回は「なし」</comment>
-		<attribute name="キャラ指定">Ｎ</attribute>
-		<language name="JPN" width="256">しつれい……[BE:01:ページ切り替え（クリア）]
-ボクの　なまえは　Ｎ（エヌ）
-ポケモンと　ともに　いきるものさ[BE:01:ページ切り替え（クリア）]
-そちらの　きみ……[BE:00:ページ切り替え（行送り）]
-きみの　ポケモンから
-たたかいたい　という　こえがきこえた[BE:01:ページ切り替え（クリア）]
-きみも　トレーナーの　はしくれなら
-ポケモンの　こえに　したがえ[BE:01:ページ切り替え（クリア）]
-つまり　ボクの　ともだちと
-しょうぶしろと　いっているのだ[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">失礼……[BE:01:ページ切り替え（クリア）]
-ボクの　名前は　Ｎ（エヌ）
-ポケモンと　共に　生きる者[BE:01:ページ切り替え（クリア）]
-そちらの　キミ……[BE:00:ページ切り替え（行送り）]
-キミの　ポケモンから
-戦いたい　という　声が聞こえた[BE:01:ページ切り替え（クリア）]
-キミも　トレーナーの　はしくれなら
-ポケモンの　声に　従え[BE:01:ページ切り替え（クリア）]
-つまり　ボクの　友達と
-勝負しろ　ということだ[BE:01:ページ切り替え（クリア）]</language>
-	</row>
-
-	<row id="msg_t02_boss_03" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
-		<comment>♂：仮メッセージ
-・戦闘後メッセージ
-・続けてmsg_t02_boss_04</comment>
-		<attribute name="キャラ指定">Ｎ</attribute>
-		<language name="JPN" width="256">Ｎ『おお……
-なんということだ……[BE:01:ページ切り替え（クリア）]
-かなしいが　しかたないか[BE:01:ページ切り替え（クリア）]
-いまの　ともだちは
-であったばかり　だからね[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">Ｎ『おお……
-なんということだ……[BE:01:ページ切り替え（クリア）]
-哀しいが　しかたないか[BE:01:ページ切り替え（クリア）]
-出会ったばかりの　友達では
-勝つのは　難しいこと　だから[BE:01:ページ切り替え（クリア）]</language>
-	</row>
-
-	<row id="msg_t02_boss_04" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
-		<comment>♂：仮メッセージ
-・続けてmsg_t02_black_02</comment>
-		<attribute name="キャラ指定">Ｎ</attribute>
-		<language name="JPN" width="256">Ｎ『で　きみたちは　トレーナーは
-どうして　ポケモンに　めいれいする？[BE:00:ページ切り替え（行送り）]
-にんげんって　ポケモンに　くらべ
-なにが　すぐれていると　いうのだ？[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">Ｎ『で　キミたちは　トレーナーは
-なぜ　ポケモンに　命令する？[BE:00:ページ切り替え（行送り）]
-人間は　ポケモンに比べて
-なにが　優れている？[BE:01:ページ切り替え（クリア）]</language>
-	</row>
-
-	<row id="msg_t02_black_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_t02_black_03" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
-・続けてmsg_t02_boss_05</comment>
+・続けてmsg_t02_boss_02</comment>
 		<attribute name="キャラ指定">友達♂</attribute>
-		<language name="JPN" width="256">ともだち♂『なにいってるのか
-ぜんぜん　わからないんですけど？[BE:01:ページ切り替え（クリア）]
-おれたち　トレーナーが
-ポケモンに　わざを　しじするのは[BE:00:ページ切り替え（行送り）]
-あたりまえの　こと　じゃん[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">ともだち♂『なにを　いってるのか
-全然　わからないんですけど？[BE:01:ページ切り替え（クリア）]
-僕たち　トレーナーが
-ポケモンに　技を　指示するのは[BE:00:ページ切り替え（行送り）]
-当然のこと　ですよね[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">クロック『えっ！？
+ポケモンが　はなしているんですか？</language>
+		<language name="JPN_KANJI" width="256">クロック『えっ！？
+ポケモンが　話しているんですか？</language>
 	</row>
 
-	<row id="msg_t02_boss_05" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
-		<comment>♂：仮メッセージ
-・メッセージ表示後、R02方面に移動
-　画面外に消えると、msg_t02_black_03表示</comment>
-		<attribute name="キャラ指定">Ｎ</attribute>
-		<language name="JPN" width="256">Ｎ『たとえば……[BE:01:ページ切り替え（クリア）]
-すうがくで　クォータニオンを　つかい
-ベクトルを　かえることが　できるように[BE:01:ページ切り替え（クリア）]
-ポケモンと　トレーナーの
-かんけいせいを　かえられるならば[BE:00:ページ切り替え（行送り）]
-ボクは　そのために　いきよう[BE:01:ページ切り替え（クリア）]
-これいじょう　かわいそうな
-ポケモンが　うまれないように……[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">Ｎ『たとえば……[BE:01:ページ切り替え（クリア）]
-数学で　クォータニオンを　使い
-ベクトルを　変えるとが　できるように[BE:01:ページ切り替え（クリア）]
-ポケモンと　トレーナーの
-関係性を　変えられるならば[BE:00:ページ切り替え（行送り）]
-ボクは　そのために　生きよう[BE:01:ページ切り替え（クリア）]
-これいじょう　可哀想な
-ポケモンが　生まれないように……[BE:01:ページ切り替え（クリア）]</language>
-	</row>
-
-	<row id="msg_t02_black_03" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_t02_boss_02" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>♂
-・メッセージ表示後、R02方面に移動
-　画面外に消えると、操作可能に</comment>
-		<attribute name="キャラ指定">友達♂</attribute>
-		<language name="JPN" width="256">ともだち♂『なんだ？
-いまの　ヤツ……[BE:01:ページ切り替え（クリア）]
-じぶんが　にんげん　だということ
-わすれてるような　はなしを　してさ[BE:01:ページ切り替え（クリア）]
-まあ　いっか
-さきに　いくよ[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">ともだち♂『なんだ？
-いまの　ヤツ……[BE:01:ページ切り替え（クリア）]
-自分が　人間だということ
-忘れてるような　話をしてさ[BE:01:ページ切り替え（クリア）]
-まあ　いっか
-さきに　行くよ[BE:01:ページ切り替え（クリア）]</language>
+・続けてmsg_t02_black_04</comment>
+		<language name="JPN" width="256">？？？『ああ　はなしているよ[BE:01:ページ切り替え（クリア）]
+そうか
+キミたちにも　きこえないのか……[BE:01:ページ切り替え（クリア）]
+失礼
+ボクの　なまえは　Ｎ（エヌ）</language>
+		<language name="JPN_KANJI" width="256">？？？『ああ　話しているよ[BE:01:ページ切り替え（クリア）]
+そうか
+キミたちにも　聞こえないのか……[BE:01:ページ切り替え（クリア）]
+失礼
+ボクの　名前は　Ｎ（エヌ）</language>
 	</row>
 
-	<row id="msg_t01_babygirl1_01">
-		<comment>♀
-・仮メッセージ</comment>
+	<row id="msg_t02_black_04" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂
+・続けてmsg_t02_boss_03</comment>
+		<attribute name="キャラ指定">Ｎ</attribute>
+		<language name="JPN" width="256">クロック『オレは　クロックで
+こちらは　[1:00:トレーナー名:0]です[BE:01:ページ切り替え（クリア）]
+ポケモンずかんを　かんせい　させるため
+たびを　はじめたばかり　なんです</language>
+		<language name="JPN_KANJI" width="256">クロック『オレは　クロックで
+こちらは　[1:00:トレーナー名:0]です[BE:01:ページ切り替え（クリア）]
+ポケモン図鑑を　完成させるため
+旅を　始めたばかり　なんです</language>
+	</row>
+
+	<row id="msg_t02_boss_03" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+		<comment>♂
+・メッセージ表示後
+　ポケモン勝負へ</comment>
+		<attribute name="キャラ指定">Ｎ</attribute>
+		<language name="JPN" width="256">Ｎ『ポケモンずかん……！？[BE:01:ページ切り替え（クリア）]
+がっかりだな[BE:01:ページ切り替え（クリア）]
+にんげんが　かってな　ルールで
+ポケモンを　ぶんるいし[BE:00:ページ切り替え（行送り）]
+じこまんぞくに　ひたる　おろかさ……[BE:01:ページ切り替え（クリア）]
+やはり　ポケモンは
+にんげんから　じゆうになるべき　なんだ[BE:01:ページ切り替え（クリア）]
+キミたちの　ような
+トレーナーに　ポケモンが[BE:00:ページ切り替え（行送り）]
+かんしゃの　きもちを　のべるわけない[BE:01:ページ切り替え（クリア）]
+そうだな　[1:00:トレーナー名:0]だったか[BE:01:ページ切り替え（クリア）]
+キミの　ポケモンの　こえを
+ポケモンしょうぶで[BE:00:ページ切り替え（行送り）]
+きかせて　もらおうか[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">Ｎ『ポケモン図鑑……！？[BE:01:ページ切り替え（クリア）]
+がっかりだな[BE:01:ページ切り替え（クリア）]
+人間が　勝手な　ルールで
+ポケモンを　分類し[BE:00:ページ切り替え（行送り）]
+自己満足に　浸る　愚かさ……[BE:01:ページ切り替え（クリア）]
+やはりポケモンは
+人間から　解放されるべき　なんだ[BE:01:ページ切り替え（クリア）]
+キミたちの　ような
+トレーナーに　ポケモンが[BE:00:ページ切り替え（行送り）]
+感謝の　気持ちを　述べるわけない[BE:01:ページ切り替え（クリア）]
+そうだな　[1:00:トレーナー名:0]だったか[BE:01:ページ切り替え（クリア）]
+キミの　ポケモンの声を
+ポケモン勝負で　聞かせてもらおうか[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_t02_boss_04" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+		<comment>♂
+・戦闘後、フィールドに復帰したとき
+　このメッセージを表示
+・メッセージ表示後
+　N、2番道路へ
+・画面外に消えると
+　msg_t02_black_05表示</comment>
+		<attribute name="キャラ指定">Ｎ</attribute>
+		<language name="JPN" width="256">Ｎ『……まけたか
+ボクの　ともだちよ　ありがとう[BE:01:ページ切り替え（クリア）]
+キミの　ポケモンは　どうしてだか
+キミを　しんじている　らしい[BE:01:ページ切り替え（クリア）]
+だけどね　さきほどの
+えんぜつを　きいていただろ？[BE:00:ページ切り替え（行送り）]
+にんげんは　ふかんぜん　なんだ
+ポケモンに　めいれい　できるような
+そんざい　では　ないんだよ[BE:01:ページ切り替え（クリア）]
+まあいいさ
+キミとは　またあう[BE:01:ページ切り替え（クリア）]
+そのとき　キミが
+どう　かんがえているか[BE:01:ページ切り替え（クリア）]
+キミの　ポケモンが
+なにを　おもっているか　しりたいね</language>
+		<language name="JPN_KANJI" width="256">Ｎ『……負けたか
+ボクの　友達たち　ありがとう[BE:01:ページ切り替え（クリア）]
+キミの　ポケモンは　どうしてだか
+キミを　信じているらしい[BE:01:ページ切り替え（クリア）]
+だけどね
+先ほどの　演説を　聞いていただろ？[BE:00:ページ切り替え（行送り）]
+人間は　不完全なんだ
+ポケモンに　命令できるような
+存在では　ないんだよ[BE:01:ページ切り替え（クリア）]
+まあいいさ
+キミとは　また会う[BE:01:ページ切り替え（クリア）]
+そのとき　キミが　どう考えているか[BE:01:ページ切り替え（クリア）]
+キミの　ポケモンが
+何を　思っているか　知りたいね</language>
+	</row>
+
+	<row id="msg_t02_black_05" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂
+・メッセージ表示後
+　動作モデル、2番道路のほうへ移動
+・画面外に消えると
+　主人公、操作可能に</comment>
+		<attribute name="キャラ指定">友達♂</attribute>
+		<language name="JPN" width="256">クロック『なんか　オレのせいで
+へんな　はなしに　なっちゃった[BE:01:ページ切り替え（クリア）]
+まあ　きにするなよ
+トレーナーと　ポケモンは[BE:00:ページ切り替え（行送り）]
+おたがい　たすけあっているし[BE:01:ページ切り替え（クリア）]
+ポケモンずかんを　かんせい　させるのは
+ポケモンと　トレーナーが[BE:00:ページ切り替え（行送り）]
+もっと　なかよくなるため　だしさ！[BE:01:ページ切り替え（クリア）]
+じゃあ　オレ
+さきに　いくからな</language>
+		<language name="JPN_KANJI" width="256">クロック『なんか　オレのせいで
+変な話に　なっちゃった[BE:01:ページ切り替え（クリア）]
+まあ　気にするなよ
+トレーナーと　ポケモンは[BE:00:ページ切り替え（行送り）]
+お互い　助け合っているし[BE:01:ページ切り替え（クリア）]
+ポケモン図鑑を　完成させるのは
+ポケモンと　トレーナーが[BE:00:ページ切り替え（行送り）]
+もっと　仲良くなるためだしさ！[BE:01:ページ切り替え（クリア）]
+じゃあ　オレ
+先に　行くからな</language>
+	</row>
+
+	<row id="msg_t01_babygirl1_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+		<comment>♀：3すくみの説明
+・はい/いいえの選択肢表示</comment>
 		<attribute name="キャラ指定">女の子</attribute>
-		<language name="JPN" width="256">せかい　には　どれだけ
-たくさんの　ポケモンが　いるのかな</language>
-		<language name="JPN_KANJI" width="256">せかい　には　どれだけ
-たくさんの　ポケモンが　いるのかな</language>
+		<language name="JPN" width="256">ねえねえ
+ポケモンじゃんけん　しようよ！</language>
+		<language name="JPN_KANJI" width="256">ねえねえ
+ポケモンじゃんけん　しようよ！</language>
 	</row>
 
-	<row id="msg_t01_babygirl1_02">
+	<row id="msg_t01_babygirl1_02" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♀
-・仮メッセージ</comment>
+・いいえ選択時
+・再度話しかけるとmsg_t01_babygirl1_01</comment>
+		<language name="JPN" width="256">なんだ　がっかり……
+つまんないの</language>
+		<language name="JPN_KANJI" width="256">なんだ　がっかり……
+つまんないの</language>
+	</row>
+
+	<row id="msg_t01_babygirl1_03" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+		<comment>♀
+・はい選択時
+・メッセージ表示後
+　ほのお/みず/くさ　の三択</comment>
+		<language name="JPN" width="256">じゃあ　いくよ！
+ポケモン　じゃんけん　いっせーの……</language>
+		<language name="JPN_KANJI" width="256">じゃあ　いくよ！
+ポケモン　じゃんけん　いっせーの……</language>
+	</row>
+
+	<row id="msg_t01_babygirl1_04" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+		<comment>♀
+・ほのお選択で勝ち</comment>
+		<language name="JPN" width="256">ほのおタイプは
+みずタイプに　よわい……[BE:00:ページ切り替え（行送り）]
+ということで　あたしの　まけね</language>
+		<language name="JPN_KANJI" width="256">ほのおタイプは
+みずタイプに　よわい……[BE:00:ページ切り替え（行送り）]
+ということで　あたしの　まけね</language>
+	</row>
+
+	<row id="msg_t01_babygirl1_05" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+		<comment>♀
+・ほのお選択で負け</comment>
+		<language name="JPN" width="256">ほのおタイプは
+みずタイプに　よわい！[BE:00:ページ切り替え（行送り）]
+ということで　あたしの　かち！</language>
+		<language name="JPN_KANJI" width="256">ほのおタイプは
+みずタイプに　よわい！[BE:00:ページ切り替え（行送り）]
+ということで　あたしの　かち！</language>
+	</row>
+
+	<row id="msg_t01_babygirl1_06" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+		<comment>♀
+・みず選択で勝ち</comment>
+		<language name="JPN" width="256">みずタイプは
+くさタイプに　よわい……[BE:00:ページ切り替え（行送り）]
+ということで　あたしの　まけね</language>
+		<language name="JPN_KANJI" width="256">みずタイプは
+くさタイプに　よわい……[BE:00:ページ切り替え（行送り）]
+ということで　あたしの　まけね</language>
+	</row>
+
+	<row id="msg_t01_babygirl1_07" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+		<comment>♀
+・みず選択で負け</comment>
+		<language name="JPN" width="256">みずタイプは
+くさタイプに　よわい！[BE:00:ページ切り替え（行送り）]
+ということで　あたしの　かち！</language>
+		<language name="JPN_KANJI" width="256">みずタイプは
+くさタイプに　よわい！[BE:00:ページ切り替え（行送り）]
+ということで　あたしの　かち！</language>
+	</row>
+
+	<row id="msg_t01_babygirl1_08" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+		<comment>♀
+・くさ選択で勝ち</comment>
+		<language name="JPN" width="256">くさタイプは
+ほのおタイプに　よわい……[BE:00:ページ切り替え（行送り）]
+ということで　あたしの　まけね</language>
+		<language name="JPN_KANJI" width="256">くさタイプは
+ほのおタイプに　よわい……[BE:00:ページ切り替え（行送り）]
+ということで　あたしの　まけね</language>
+	</row>
+
+	<row id="msg_t01_babygirl1_09" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+		<comment>♀
+・くさ選択で負け</comment>
+		<language name="JPN" width="256">くさタイプは
+ほのおタイプに　よわい！[BE:00:ページ切り替え（行送り）]
+ということで　あたしの　かち！</language>
+		<language name="JPN_KANJI" width="256">くさタイプは
+ほのおタイプに　よわい！[BE:00:ページ切り替え（行送り）]
+ということで　あたしの　かち！</language>
+	</row>
+
+	<row id="msg_t01_babygirl1_12" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+		<comment>仮</comment>
 		<language name="JPN" width="256">せかい　には　どれだけ
 たくさんの　ポケモンが　いるのかな</language>
 		<language name="JPN_KANJI" width="256">せかい　には　どれだけ
