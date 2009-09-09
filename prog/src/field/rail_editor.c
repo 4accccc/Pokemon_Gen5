@@ -412,7 +412,7 @@ static GMEVENT_RESULT DEBUG_RailEditorEvent( GMEVENT * p_event, int *  p_seq, vo
 
   // ƒŠƒ“ƒN
   case RAIL_EDITOR_SEQ_LINK:
-		if( GFL_MCS_Link( GFL_MCS_RAIL_EDITOR_CATEGORY_ID ) )
+		if( GFL_MCS_CheckLink( GFL_MCS_RAIL_EDITOR_CATEGORY_ID ) )
 		{
 			(*p_seq) = RAIL_EDITOR_SEQ_MAIN;
     }
