@@ -64,7 +64,7 @@ EVENT_END
 //--------------------------------------------------------------
 //_ASM_EASY_ITEM_EVENT itemno, num, flag, before_msg, finish_msg, after_msg
 ev_easy_item_event:
-    _ASM_TALK_START_SE_PLAY
+    _ASM_TALK_OBJ_START
 
     IF FLAG_ON($SCWK_PARAM2) THEN
       //再会話メッセージ
