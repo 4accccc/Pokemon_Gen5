@@ -57,6 +57,8 @@ extern void SCRCMD_WORK_Delete( SCRCMD_WORK *work );
 //éQè∆ÅAéÊìæ
 extern HEAPID SCRCMD_WORK_GetHeapID( SCRCMD_WORK *work );
 extern HEAPID SCRCMD_WORK_GetTempHeapID( SCRCMD_WORK *work );
+extern u16 SCRCMD_WORK_GetZoneID( SCRCMD_WORK *work );
+extern u16 SCRCMD_WORK_GetScriptID( SCRCMD_WORK *work );
 extern GAMESYS_WORK * SCRCMD_WORK_GetGameSysWork( SCRCMD_WORK *work );
 extern GAMEDATA *SCRCMD_WORK_GetGameData( SCRCMD_WORK *work );
 extern MMDLSYS * SCRCMD_WORK_GetMMdlSys( SCRCMD_WORK *work );
