@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-07-15T15:03:58"/>
+	<create user="matsumiya" host="W00207" date="2009-09-09T11:54:16"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -292,10 +292,10 @@
 	</lock>
 
 
-	<row id="msg_t02r0302_middleman1_01">
+	<row id="msg_t02r0302_middleman1_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・アイテム入手処理
-・No004「モンスターボール」</comment>
+・No003「スーパーボール」</comment>
 		<attribute name="キャラ指定">おじさん１</attribute>
 		<language name="JPN" width="256">おっ　わかき　トレーナーよ[BE:01:ページ切り替え（クリア）]
 これは　むかし　つかっていた
@@ -303,14 +303,29 @@
 きみに　あげようではないか[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">おっ　若き　トレーナーよ[BE:01:ページ切り替え（クリア）]
 これは　昔　使っていた
-モンスターボールの　余りだが[BE:00:ページ切り替え（行送り）]
+スーパーボールの　余りだが[BE:00:ページ切り替え（行送り）]
 君に　進呈しようではないか[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_t02r0302_middleman1_02">
+	<row id="msg_t02r0302_middleman1_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・アイテム入手後</comment>
 		<attribute name="キャラ指定">おじさん１</attribute>
+		<language name="JPN" width="256">スーパーボールは
+モンスターボールよりも[BE:00:ページ切り替え（行送り）]
+ポケモンを　つかまえやすい！[BE:01:ページ切り替え（クリア）]
+モンスターボールには　ほかにも
+いろんな　しゅるいが　あるから[BE:00:ページ切り替え（行送り）]
+つかいわけると　いいよ！</language>
+		<language name="JPN_KANJI" width="256">スーパーボールは
+モンスターボールよりも[BE:00:ページ切り替え（行送り）]
+ポケモンを　捕まえやすい　ボール！[BE:01:ページ切り替え（クリア）]
+モンスターボールには　他にも
+いろんな　種類が　あるから[BE:00:ページ切り替え（行送り）]
+使い分けるのも　ありかもね！</language>
+	</row>
+
+	<row id="msg_t02r0302_middleman1_03" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<language name="JPN" width="256">きみの　これからの　じんせいで
 いちばんの　パートナーとなれる[BE:00:ページ切り替え（行送り）]
 ポケモンに　であえることを[BE:00:ページ切り替え（行送り）]
