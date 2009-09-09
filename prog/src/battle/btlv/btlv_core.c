@@ -491,16 +491,16 @@ BOOL BTLV_WaitPokeSelect( BTLV_CORE* core )
 {
   return BTLV_SCD_PokeSelect_Wait( core->scrnD );
 }
-
 //=============================================================================================
 /**
  * アイテム選択開始
  *
  * @param   wk
- * @param   bagMode
+ * @param   bagMode   バッグモード（通常／シューター）
+ * @param   energy
  */
 //=============================================================================================
-void BTLV_ITEMSELECT_Start( BTLV_CORE* wk, u8 bagMode )
+void BTLV_ITEMSELECT_Start( BTLV_CORE* wk, u8 bagMode, u8 energy )
 {
   if( wk->selectItemSeq == 0 )
   {
@@ -512,6 +512,7 @@ void BTLV_ITEMSELECT_Start( BTLV_CORE* wk, u8 bagMode )
     wk->bagData.heap = wk->heapID;
     wk->bagData.end_flg = FALSE;
     wk->bagData.ret_item = ITEM_DUMMY_DATA;
+    wk->bagData.energy = energy;
 
     BTL_Printf(" Start Item Select!!!\n" );
     BattleBag_TaskAdd( &wk->bagData );

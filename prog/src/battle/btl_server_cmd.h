@@ -65,6 +65,7 @@ typedef enum {
   SC_OP_BATONTOUCH,         ///< バトンタッチ
   SC_OP_MIGAWARI_CREATE,    ///< みがわり作成
   SC_OP_MIGAWARI_DELETE,    ///< みがわり削除
+  SC_OP_SHOOTER_CHARGE,     ///< シューターエネルギーチャージ
   SC_ACT_WAZA_EFFECT,
   SC_ACT_WAZA_EFFECT_EX,    ///< 【アクション】ワザエフェクト拡張（溜めターンエフェクトなどに使用）
   SC_ACT_WAZA_DMG,          ///< 【アクション】[ AtClient, DefClient, wazaIdx, Affinity ]
@@ -364,6 +365,10 @@ static inline void SCQUE_PUT_OP_MigawariCreate( BTL_SERVER_CMD_QUE* que, u8 poke
 static inline void SCQUE_PUT_OP_MigawariDelete( BTL_SERVER_CMD_QUE* que, u8 pokeID )
 {
   SCQUE_PUT_Common( que, SC_OP_MIGAWARI_DELETE, pokeID );
+}
+static inline void SCQUE_PUT_OP_ShooterCharge( BTL_SERVER_CMD_QUE* que, u8 clientID, u8 increment )
+{
+  SCQUE_PUT_Common( que, SC_OP_SHOOTER_CHARGE, clientID, increment );
 }
 
 

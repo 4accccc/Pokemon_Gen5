@@ -171,6 +171,7 @@ struct _BTL_SVFLOW_WORK {
   BTL_SERVER_CMD_QUE*     que;
   u32                     turnCount;
   SvflowResult            flowResult;
+  BtlBagMode              bagMode;
   HEAPID  heapID;
 
   u8      numClient;
@@ -375,6 +376,7 @@ static BOOL scEvent_UnCategoryWaza( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM* w
 static void scproc_TurnCheck( BTL_SVFLOW_WORK* wk );
 static void scproc_turncheck_sub( BTL_SVFLOW_WORK* wk, BtlEventType event_type );
 static void scEvent_TurnCheck( BTL_SVFLOW_WORK* wk, BtlEventType event_type );
+static void scproc_countup_shooter_energy( BTL_SVFLOW_WORK* wk );
 static void scproc_turncheck_sick( BTL_SVFLOW_WORK* wk );
 static void scproc_turncheck_side( BTL_SVFLOW_WORK* wk );
 static void scproc_turncheck_side_callback( BtlSide side, BtlSideEffect sideEffect, void* arg );
@@ -569,7 +571,7 @@ static u8 scproc_HandEx_relive( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEAD
 
 BTL_SVFLOW_WORK* BTL_SVFLOW_InitSystem(
   BTL_SERVER* server, BTL_MAIN_MODULE* mainModule, BTL_POKE_CONTAINER* pokeCon,
-  BTL_SERVER_CMD_QUE* que, u32 numClient, HEAPID heapID )
+  BTL_SERVER_CMD_QUE* que, u32 numClient, BtlBagMode bagMode, HEAPID heapID )
 {
   BTL_SVFLOW_WORK* wk = GFL_HEAP_AllocClearMemory( heapID, sizeof(BTL_SVFLOW_WORK) );
 
@@ -583,6 +585,7 @@ BTL_SVFLOW_WORK* BTL_SVFLOW_InitSystem(
   wk->que = que;
   wk->heapID = heapID;
   wk->prevExeWaza = WAZANO_NULL;
+  wk->bagMode = bagMode;
   {
     BtlRule rule = BTL_MAIN_GetRule( mainModule );
     BTL_POSPOKE_InitWork( &wk->pospokeWork, wk->mainModule, wk->pokeCon, rule );
@@ -4451,6 +4454,9 @@ static void scproc_TurnCheck( BTL_SVFLOW_WORK* wk )
     }
   }
 
+  // シューターのエネルギーチャージ
+  scproc_countup_shooter_energy( wk );
+
   if( wk->turnCount < BTL_TURNCOUNT_MAX ){
     wk->turnCount++;
   }
@@ -4467,6 +4473,25 @@ static void scEvent_TurnCheck( BTL_SVFLOW_WORK* wk, BtlEventType event_type )
   BTL_EVENT_CallHandlers( wk, event_type );
 }
 
+//----------------------------------------------------------------------------------
+/**
+ * シューターのエネルギーチャージ計算＆各クライアントに通知
+ *
+ * @param   wk
+ */
+//----------------------------------------------------------------------------------
+static void scproc_countup_shooter_energy( BTL_SVFLOW_WORK* wk )
+{
+  if( wk->bagMode == BBAG_MODE_SHOOTER )
+  {
+    u32 i;
+    for(i=0; i<wk->numClient; ++i)
+    {
+       // @@@ 今は全クライアントに同じだけ増加させているがトリプルはルールが違う
+       SCQUE_PUT_OP_ShooterCharge( wk->que, i, 1 );
+    }
+  }
+}
 
 //------------------------------------------------------------------
 // サーバーフロー下請け： ターンチェック > 状態異常

@@ -20,6 +20,7 @@
 #include "btl_sideeff.h"
 #include "btl_poseff.h"
 #include "btl_field.h"
+#include "app/b_bag.h"
 
 /*--------------------------------------------------------------------------*/
 /* Consts                                                                   */
@@ -73,7 +74,7 @@ typedef struct _SVCL_WORK         SVCL_WORK;
 // server -> server_flow
 extern BTL_SVFLOW_WORK* BTL_SVFLOW_InitSystem(
   BTL_SERVER* server, BTL_MAIN_MODULE* mainModule, BTL_POKE_CONTAINER* pokeCon,
-  BTL_SERVER_CMD_QUE* que, u32 numClient, HEAPID heapID );
+  BTL_SERVER_CMD_QUE* que, u32 numClient, BtlBagMode bagMode, HEAPID heapID );
 
 extern void BTL_SVFLOW_QuitSystem( BTL_SVFLOW_WORK* wk );
 

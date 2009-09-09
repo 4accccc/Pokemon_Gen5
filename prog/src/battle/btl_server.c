@@ -65,9 +65,10 @@ struct _BTL_SERVER {
 
   BTL_MAIN_MODULE*      mainModule;
   BTL_POKE_CONTAINER*   pokeCon;
-  SVCL_WORK         client[ BTL_CLIENT_MAX ];
-  BTL_SVFLOW_WORK*  flowWork;
-  SvflowResult      flowResult;
+  SVCL_WORK             client[ BTL_CLIENT_MAX ];
+  BTL_SVFLOW_WORK*      flowWork;
+  SvflowResult          flowResult;
+  BtlBagMode            bagMode;
   u8          numClient;
   u8          quitStep;
 
@@ -101,17 +102,19 @@ static void ResetAdapterCmd( BTL_SERVER* server );
 
 
 
-//--------------------------------------------------------------------------------------
+//=============================================================================================
 /**
  * サーバ生成
  *
- * @param   mainModule    バトルメインモジュールハンドラ
- * @param   heapID      生成用ヒープID
+ * @param   mainModule  メインモジュールのハンドラ
+ * @param   pokeCon     ポケモンデータコンテナハンドラ
+ * @param   bagMode     バッグモード
+ * @param   heapID      ヒープID
  *
- * @retval  BTL_SERVER*   生成されたサーバハンドラ
+ * @retval  BTL_SERVER*
  */
-//--------------------------------------------------------------------------------------
-BTL_SERVER* BTL_SERVER_Create( BTL_MAIN_MODULE* mainModule, BTL_POKE_CONTAINER* pokeCon, HEAPID heapID )
+//=============================================================================================
+BTL_SERVER* BTL_SERVER_Create( BTL_MAIN_MODULE* mainModule, BTL_POKE_CONTAINER* pokeCon, BtlBagMode bagMode, HEAPID heapID )
 {
   BTL_SERVER* sv = GFL_HEAP_AllocClearMemory( heapID, sizeof(BTL_SERVER) );
 
@@ -124,6 +127,7 @@ BTL_SERVER* BTL_SERVER_Create( BTL_MAIN_MODULE* mainModule, BTL_POKE_CONTAINER* 
   sv->flowWork = NULL;
   sv->changePokeCnt = 0;
   sv->giveupClientCnt = 0;
+  sv->bagMode = bagMode;
 
   {
     int i;
@@ -252,7 +256,7 @@ void BTL_SERVER_Startup( BTL_SERVER* server )
 {
   GF_ASSERT(server->flowWork==NULL);
   server->flowWork = BTL_SVFLOW_InitSystem( server, server->mainModule, server->pokeCon,
-        &server->queBody, server->numClient, server->heapID );
+        &server->queBody, server->numClient, server->bagMode, server->heapID );
 }
 //--------------------------------------------------------------------------------------
 /**

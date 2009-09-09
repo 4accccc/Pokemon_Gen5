@@ -46,11 +46,13 @@ typedef enum {
 #include "btl_adapter.h"
 #include "btl_pokeparam.h"
 #include "btlv/btlv_core.h"
-
+#include "app/b_bag.h"
 
 extern BTL_CLIENT* BTL_CLIENT_Create(
-  BTL_MAIN_MODULE* mainModule, BTL_POKE_CONTAINER* pokecon, BtlCommMode commMode,
-  GFL_NETHANDLE* netHandle, u16 clientID, u16 numCoverPos, BtlThinkerType clientType, HEAPID heapID );
+  BTL_MAIN_MODULE* mainModule, BTL_POKE_CONTAINER* pokecon,
+  BtlCommMode commMode, GFL_NETHANDLE* netHandle, u16 clientID, u16 numCoverPos,
+  BtlThinkerType clientType, BtlBagMode bagMode,
+  HEAPID heapID );
 
 extern void BTL_CLIENT_Delete( BTL_CLIENT* wk );
 

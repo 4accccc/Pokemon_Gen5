@@ -354,6 +354,10 @@ static void setSubProcForClanup( BTL_PROC* bp, BTL_MAIN_MODULE* wk, const BATTLE
 //--------------------------------------------------------------------------
 static BOOL setup_alone_single( int* seq, void* work )
 {
+  enum {
+    BAG_MODE = BBAG_MODE_NORMAL,
+  };
+
   // server*1, client*2
   BTL_MAIN_MODULE* wk = work;
   const BATTLE_SETUP_PARAM* sp = wk->setupParam;
@@ -368,14 +372,15 @@ static BOOL setup_alone_single( int* seq, void* work )
   PokeCon_AddParty( &wk->pokeconForServer, sp->partyEnemy1, 1 );
 
   // Server 作成
-  wk->server = BTL_SERVER_Create( wk, &wk->pokeconForServer, wk->heapID );
+  wk->server = BTL_SERVER_Create( wk, &wk->pokeconForServer, BAG_MODE, wk->heapID );
   wk->ImServer = TRUE;
 
   // Client 作成
   wk->client[ BTL_STANDALONE_PLAYER_CLIENT_ID ] = BTL_CLIENT_Create(
-       wk, &wk->pokeconForClient, BTL_COMM_NONE, sp->netHandle, 0, 1, BTL_THINKER_UI, wk->heapID );
+       wk, &wk->pokeconForClient, BTL_COMM_NONE, sp->netHandle, 0, 1, BTL_THINKER_UI, BAG_MODE, wk->heapID );
 
-  wk->client[1] = BTL_CLIENT_Create( wk, &wk->pokeconForClient, BTL_COMM_NONE, sp->netHandle, 1, 1, BTL_THINKER_AI, wk->heapID );
+  wk->client[1] = BTL_CLIENT_Create( wk, &wk->pokeconForClient, BTL_COMM_NONE, sp->netHandle,
+    1, 1, BTL_THINKER_AI, BAG_MODE, wk->heapID );
   wk->numClients = 2;
   wk->myClientID = 0;
   wk->myOrgPos = BTL_POS_1ST_0;
@@ -439,6 +444,10 @@ static BOOL cleanup_common( int* seq, void* work )
 //--------------------------------------------------------------------------
 static BOOL setup_comm_single( int* seq, void* work )
 {
+  enum {
+    BAG_MODE = BBAG_MODE_SHOOTER,
+  };
+
   BTL_MAIN_MODULE* wk = work;
   const BATTLE_SETUP_PARAM* sp = wk->setupParam;
 
@@ -531,10 +540,10 @@ static BOOL setup_comm_single( int* seq, void* work )
 
       BTL_Printf("サーバ用のパーティデータセット\n");
 
-      wk->server = BTL_SERVER_Create( wk, &wk->pokeconForServer, wk->heapID );
+      wk->server = BTL_SERVER_Create( wk, &wk->pokeconForServer, BAG_MODE, wk->heapID );
       wk->ImServer = TRUE;
       wk->client[netID] = BTL_CLIENT_Create( wk, &wk->pokeconForClient, sp->commMode, sp->netHandle,
-          netID, 1, BTL_THINKER_UI, wk->heapID );
+          netID, 1, BTL_THINKER_UI, BAG_MODE, wk->heapID );
       BTL_SERVER_AttachLocalClient( wk->server, BTL_CLIENT_GetAdapter(wk->client[netID]), netID, 1 );
       BTL_SERVER_ReceptionNetClient( wk->server, sp->commMode, sp->netHandle, !netID, 1 );
 
@@ -555,7 +564,8 @@ static BOOL setup_comm_single( int* seq, void* work )
       BTL_Printf("サーバではない用のパーティデータセット\n");
       wk->ImServer = FALSE;
 
-      wk->client[ netID ] = BTL_CLIENT_Create( wk, &wk->pokeconForClient, sp->commMode, sp->netHandle, netID, 1, BTL_THINKER_UI, wk->heapID  );
+      wk->client[ netID ] = BTL_CLIENT_Create( wk, &wk->pokeconForClient, sp->commMode, sp->netHandle, netID, 1,
+      BTL_THINKER_UI, BAG_MODE, wk->heapID  );
 
       // 描画エンジン生成
       wk->viewCore = BTLV_Create( wk, wk->client[netID], &wk->pokeconForClient, HEAPID_BTL_VIEW );
@@ -578,6 +588,10 @@ static BOOL setup_comm_single( int* seq, void* work )
 //--------------------------------------------------------------------------
 static BOOL setup_alone_double( int* seq, void* work )
 {
+  enum {
+    BAG_MODE = BBAG_MODE_NORMAL,
+  };
+
   // server*1, client*2
   BTL_MAIN_MODULE* wk = work;
   const BATTLE_SETUP_PARAM* sp = wk->setupParam;
@@ -592,11 +606,13 @@ static BOOL setup_alone_double( int* seq, void* work )
   PokeCon_AddParty( &wk->pokeconForServer, sp->partyEnemy1, 1 );
 
   // Server 作成
-  wk->server = BTL_SERVER_Create( wk, &wk->pokeconForServer, wk->heapID );
+  wk->server = BTL_SERVER_Create( wk, &wk->pokeconForServer, BAG_MODE, wk->heapID );
 
   // Client 作成
-  wk->client[0] = BTL_CLIENT_Create( wk, &wk->pokeconForClient, BTL_COMM_NONE, sp->netHandle, 0, 2, BTL_THINKER_UI, wk->heapID );
-  wk->client[1] = BTL_CLIENT_Create( wk, &wk->pokeconForClient, BTL_COMM_NONE, sp->netHandle, 1, 2, BTL_THINKER_AI, wk->heapID );
+  wk->client[0] = BTL_CLIENT_Create( wk, &wk->pokeconForClient, BTL_COMM_NONE, sp->netHandle, 0, 2,
+    BTL_THINKER_UI, BAG_MODE, wk->heapID );
+  wk->client[1] = BTL_CLIENT_Create( wk, &wk->pokeconForClient, BTL_COMM_NONE, sp->netHandle, 1, 2,
+    BTL_THINKER_AI, BAG_MODE, wk->heapID );
   wk->numClients = 2;
   wk->posCoverClientID[BTL_POS_1ST_0] = 0;
   wk->posCoverClientID[BTL_POS_2ND_0] = 1;
@@ -648,6 +664,9 @@ static BOOL cleanup_alone_double( int* seq, void* work )
 //--------------------------------------------------------------------------
 static BOOL setup_alone_triple( int* seq, void* work )
 {
+  enum {
+    BAG_MODE = BBAG_MODE_NORMAL,
+  };
   // server*1, client*2
   BTL_MAIN_MODULE* wk = work;
   const BATTLE_SETUP_PARAM* sp = wk->setupParam;
@@ -662,11 +681,13 @@ static BOOL setup_alone_triple( int* seq, void* work )
   PokeCon_AddParty( &wk->pokeconForServer, sp->partyEnemy1, 1 );
 
   // Server 作成
-  wk->server = BTL_SERVER_Create( wk, &wk->pokeconForServer, wk->heapID );
+  wk->server = BTL_SERVER_Create( wk, &wk->pokeconForServer, BAG_MODE, wk->heapID );
 
   // Client 作成
-  wk->client[0] = BTL_CLIENT_Create( wk, &wk->pokeconForClient, BTL_COMM_NONE, sp->netHandle, 0, 2, BTL_THINKER_UI, wk->heapID );
-  wk->client[1] = BTL_CLIENT_Create( wk, &wk->pokeconForClient, BTL_COMM_NONE, sp->netHandle, 1, 2, BTL_THINKER_AI, wk->heapID );
+  wk->client[0] = BTL_CLIENT_Create( wk, &wk->pokeconForClient, BTL_COMM_NONE, sp->netHandle, 0, 2,
+    BTL_THINKER_UI, BAG_MODE, wk->heapID );
+  wk->client[1] = BTL_CLIENT_Create( wk, &wk->pokeconForClient, BTL_COMM_NONE, sp->netHandle, 1, 2,
+    BTL_THINKER_AI, BAG_MODE, wk->heapID );
   wk->numClients = 2;
   wk->posCoverClientID[BTL_POS_1ST_0] = 0;
   wk->posCoverClientID[BTL_POS_2ND_0] = 1;
@@ -700,6 +721,10 @@ static BOOL setup_alone_triple( int* seq, void* work )
 //--------------------------------------------------------------------------
 static BOOL setup_comm_double( int* seq, void* work )
 {
+  enum {
+    BAG_MODE = BBAG_MODE_SHOOTER,
+  };
+
   BTL_MAIN_MODULE* wk = work;
   const BATTLE_SETUP_PARAM* sp = wk->setupParam;
 
@@ -829,9 +854,9 @@ static BOOL setup_comm_double( int* seq, void* work )
 
       BTL_Printf("サーバ用のパーティデータセット\n");
 
-      wk->server = BTL_SERVER_Create( wk, &wk->pokeconForServer, wk->heapID );
+      wk->server = BTL_SERVER_Create( wk, &wk->pokeconForServer, BAG_MODE, wk->heapID );
       wk->client[netID] = BTL_CLIENT_Create( wk, &wk->pokeconForClient, sp->commMode, sp->netHandle,
-          netID, numCoverPos, BTL_THINKER_UI, wk->heapID );
+          netID, numCoverPos, BTL_THINKER_UI, BAG_MODE, wk->heapID );
       BTL_SERVER_AttachLocalClient( wk->server, BTL_CLIENT_GetAdapter(wk->client[netID]), netID, numCoverPos );
 
       for(i=0; i<wk->numClients; ++i)
@@ -859,7 +884,7 @@ static BOOL setup_comm_double( int* seq, void* work )
       BTL_Printf("サーバではない用のパーティデータセット\n");
 
       wk->client[ netID ] = BTL_CLIENT_Create( wk, &wk->pokeconForClient, sp->commMode, sp->netHandle,
-          netID, numCoverPos, BTL_THINKER_UI, wk->heapID  );
+          netID, numCoverPos, BTL_THINKER_UI, BAG_MODE, wk->heapID  );
 
       // 描画エンジン生成
       wk->viewCore = BTLV_Create( wk, wk->client[netID], &wk->pokeconForClient, HEAPID_BTL_VIEW );

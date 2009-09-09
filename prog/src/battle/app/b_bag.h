@@ -1,9 +1,9 @@
 //============================================================================================
 /**
- * @file	b_bag.h
- * @brief	戦闘用バッグ画面 外部公開ファイル
- * @author	Hiroyuki Nakamura
- * @date	05.02.10
+ * @file  b_bag.h
+ * @brief 戦闘用バッグ画面 外部公開ファイル
+ * @author  Hiroyuki Nakamura
+ * @date  05.02.10
  */
 //============================================================================================
 #ifndef B_BAG_H
@@ -14,73 +14,69 @@
 
 
 //============================================================================================
-//	定数定義
+//  定数定義
 //============================================================================================
 // 処理モード
-enum {
-	BBAG_MODE_NORMAL = 0,	// 通常モード
-	BBAG_MODE_SHOOTER,		// サポートシューター
-	BBAG_MODE_GETDEMO,		// 捕獲デモモード
-};
+typedef enum {
+  BBAG_MODE_NORMAL = 0, // 通常モード
+  BBAG_MODE_SHOOTER,    // サポートシューター
+  BBAG_MODE_GETDEMO,    // 捕獲デモモード
+}BtlBagMode;
 
 // ポケットID
 enum {
-	BBAG_POKE_HPRCV = 0,	// HP回復ポケット
-	BBAG_POKE_STRCV,		// 状態回復ポケット
-	BBAG_POKE_BALL,			// ボールポケット
-	BBAG_POKE_BATTLE,		// 戦闘用ポケット
-	BBAG_POKE_MAX
+  BBAG_POKE_HPRCV = 0,  // HP回復ポケット
+  BBAG_POKE_STRCV,    // 状態回復ポケット
+  BBAG_POKE_BALL,     // ボールポケット
+  BBAG_POKE_BATTLE,   // 戦闘用ポケット
+  BBAG_POKE_MAX
 };
 
 // 外部設定データ
 typedef struct {
-//	BATTLE_WORK * bw;	// 戦闘用ワーク
 
-//	MYSTATUS * myst;	// プレーヤーデータ
-	MYITEM_PTR	myitem;	// アイテムデータ
+  MYITEM_PTR  myitem; ///< アイテムセーブデータ
+  GFL_FONT*   font;   ///< 使用フォントハンドル
+  BtlBagMode  mode;   ///< 制御モード
+  HEAPID      heap;   ///< ヒープID
+  u8  energy;         ///< シューターモード時のエネルギー値
 
-	GFL_FONT * font;
+  u8  end_flg;    ///< 終了フラグ
+  u16 ret_item;   ///< 使用したアイテム
 
-	HEAPID	heap;			// ヒープID
-	s32 client_no;		// クライアントNo
 
-	u32	mode;			// 制御モード
 
-	u32	skill_item_use;	// 技で使用不可
+  u32 skill_item_use; // 技で使用不可
+  s32 client_no;    // クライアントNo
+  u16 used_item;    // 前回使用したアイテム
 
-	u16	ret_item;		// 使用したアイテム
-	u8	ret_page;		// 使用したアイテムのポケット
+  u8  used_poke;    // 前回使用したアイテムのポケット
+  u8  enc_double;   // 野生2vs2でボールが投げられない場合は１
+  u8  waza_vanish;  // 相手が「そらをとぶ」などで見えない場合は１
+  u8  waza_migawari;// 相手が「みがわり」を使用している場合は１
+  u8  cursor_flg;   // カーソル表示フラグ
+  u8  ret_page;     // 使用したアイテムのポケット
 
-	u8	used_poke;		// 前回使用したアイテムのポケット
-	u16	used_item;		// 前回使用したアイテム
+  s16 item_pos[5];  // アイテム位置
+  s16 item_scr[5];  // アイテムスクロールカウンタ
 
-	u8	enc_double;		// 野生2vs2でボールが投げられない場合は１
-	u8	waza_vanish;	// 相手が「そらをとぶ」などで見えない場合は１
-	u8	waza_migawari;	// 相手が「みがわり」を使用している場合は１
-
-	u8	cursor_flg;		// カーソル表示フラグ
-
-	u8	end_flg;		// 終了フラグ
-
-	s16	item_pos[5];	// アイテム位置
-	s16	item_scr[5];	// アイテムスクロールカウンタ
 }BBAG_DATA;
 
 
 //============================================================================================
-//	プロトタイプ宣言
+//  プロトタイプ宣言
 //============================================================================================
 
 //--------------------------------------------------------------------------------------------
 /**
  * 戦闘用バッグタスク追加
  *
- * @param	dat		バッグデータ
+ * @param dat   バッグデータ
  *
- * @return	none
+ * @return  none
  */
 //--------------------------------------------------------------------------------------------
 extern void BattleBag_TaskAdd( BBAG_DATA * dat );
 
 
-#endif	// B_BAG_H
+#endif  // B_BAG_H

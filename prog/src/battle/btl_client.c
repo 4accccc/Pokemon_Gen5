@@ -105,6 +105,8 @@ struct _BTL_CLIENT {
   u8  myType;
   u8  myState;
   u8  commWaitInfoOn;
+  u8  bagMode;
+  u8  shooterEnergy;
 
   u8          myChangePokeCnt;
   BtlPokePos  myChangePokePos[ BTL_POSIDX_MAX ];
@@ -202,6 +204,7 @@ static BOOL scProc_OP_SetPokeCounter( BTL_CLIENT* wk, int* seq, const int* args 
 static BOOL scProc_OP_BatonTouch( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_OP_MigawariCreate( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_OP_MigawariDelete( BTL_CLIENT* wk, int* seq, const int* args );
+static BOOL scProc_OP_ShooterCharge( BTL_CLIENT* wk, int* seq, const int* args );
 static void cec_addCode( CANT_ESC_CONTROL* ctrl, u8 pokeID, BtlCantEscapeCode code );
 static void cec_subCode( CANT_ESC_CONTROL* ctrl, u8 pokeID, BtlCantEscapeCode code );
 static u8 cec_isEnable( CANT_ESC_CONTROL* ctrl, BtlCantEscapeCode code, BTL_CLIENT* wk );
@@ -215,7 +218,8 @@ static u8 countFrontPokeType( BTL_CLIENT* wk, PokeType type );
 
 BTL_CLIENT* BTL_CLIENT_Create(
   BTL_MAIN_MODULE* mainModule, BTL_POKE_CONTAINER* pokecon, BtlCommMode commMode,
-  GFL_NETHANDLE* netHandle, u16 clientID, u16 numCoverPos, BtlThinkerType clientType, HEAPID heapID )
+  GFL_NETHANDLE* netHandle, u16 clientID, u16 numCoverPos, BtlThinkerType clientType, BtlBagMode bagMode,
+  HEAPID heapID )
 {
   BTL_CLIENT* wk = GFL_HEAP_AllocClearMemory( heapID, sizeof(BTL_CLIENT) );
   int i;
@@ -236,6 +240,8 @@ BTL_CLIENT* BTL_CLIENT_Create(
 
   wk->myState = 0;
   wk->commWaitInfoOn = FALSE;
+  wk->shooterEnergy = 0;
+  wk->bagMode = bagMode;
 
   return wk;
 }
@@ -574,7 +580,7 @@ static BOOL SubProc_UI_SelectAction( BTL_CLIENT* wk, int* seq )
     break;
 
   case SEQ_CHECK_ITEM:
-    BTLV_ITEMSELECT_Start( wk->viewCore, BBAG_MODE_NORMAL );
+    BTLV_ITEMSELECT_Start( wk->viewCore, wk->bagMode, wk->shooterEnergy );
     (*seq) = SEQ_WAIT_ITEM;
     break;
 
@@ -1383,6 +1389,7 @@ static BOOL SubProc_UI_ServerCmd( BTL_CLIENT* wk, int* seq )
     { SC_OP_BATONTOUCH,         scProc_OP_BatonTouch      },
     { SC_OP_MIGAWARI_CREATE,    scProc_OP_MigawariCreate  },
     { SC_OP_MIGAWARI_DELETE,    scProc_OP_MigawariDelete  },
+    { SC_OP_SHOOTER_CHARGE,     scProc_OP_ShooterCharge   },
     { SC_ACT_KILL,              scProc_ACT_Kill           },
   };
 
@@ -2406,6 +2413,20 @@ static BOOL scProc_OP_MigawariDelete( BTL_CLIENT* wk, int* seq, const int* args 
 {
   BTL_POKEPARAM* bpp = BTL_POKECON_GetPokeParam( wk->pokeCon, args[0] );
   BPP_MIGAWARI_Delete( bpp );
+  return TRUE;
+}
+static BOOL scProc_OP_ShooterCharge( BTL_CLIENT* wk, int* seq, const int* args )
+{
+  u8 clientID = args[0];
+  u8 increment = args[1];
+
+  if( clientID == wk->myID )
+  {
+    wk->shooterEnergy += increment;
+    if( wk->shooterEnergy > BTL_SHOOTER_ENERGY_MAX ){
+      wk->shooterEnergy = BTL_SHOOTER_ENERGY_MAX;
+    }
+  }
   return TRUE;
 }
 

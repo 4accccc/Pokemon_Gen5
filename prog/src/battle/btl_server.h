@@ -13,6 +13,7 @@
 #include "btl_common.h"
 #include "btl_main.h"
 #include "btl_adapter.h"
+#include "app/b_bag.h"
 
 typedef struct _BTL_SERVER    BTL_SERVER;
 
@@ -27,7 +28,7 @@ typedef enum {
 }ServerCmdResult;
 
 
-extern BTL_SERVER* BTL_SERVER_Create( BTL_MAIN_MODULE* mainWork, BTL_POKE_CONTAINER* pokeCon, HEAPID heapID );
+extern BTL_SERVER* BTL_SERVER_Create( BTL_MAIN_MODULE* mainWork, BTL_POKE_CONTAINER* pokeCon, BtlBagMode bagMode, HEAPID heapID );
 extern void BTL_SERVER_AttachLocalClient( BTL_SERVER* server, BTL_ADAPTER* adapter, u8 clientID, u8 numCoverPos );
 extern void BTL_SERVER_ReceptionNetClient( BTL_SERVER* server, BtlCommMode commMode, GFL_NETHANDLE* netHandle, u8 clientID, u8 numCoverPos );
 extern void BTL_SERVER_Startup( BTL_SERVER* server );
