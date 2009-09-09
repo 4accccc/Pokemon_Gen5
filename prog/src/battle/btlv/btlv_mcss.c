@@ -28,6 +28,11 @@
 #define BTLV_MCSS_DEFAULT_SHIFT ( FX32_SHIFT - 4 )          //ポリゴン１辺の基準の長さにするシフト値
 #define BTLV_MCSS_DEFAULT_LINE  ( 1 << BTLV_MCSS_DEFAULT_SHIFT )  //ポリゴン１辺の基準の長さ
 
+enum{ 
+  REVERSE_FLAG_OFF = 0,
+  REVERSE_FLAG_ON,
+};
+
 //============================================================================================
 /**
  *  構造体宣言
@@ -81,7 +86,7 @@ static  void  BTLV_MCSS_MakeMAWTrainer( int tr_type, MCSS_ADD_WORK* maw, int pos
 static  void  BTLV_MCSS_SetDefaultScale( BTLV_MCSS_WORK *bmw, int position );
 
 static  void  BTLV_MCSS_TCBInitialize( BTLV_MCSS_WORK *bmw, int position, int type, VecFx32 *start, VecFx32 *end,
-                                       int frame, int wait, int count, GFL_TCB_FUNC *func );
+                                       int frame, int wait, int count, GFL_TCB_FUNC *func, int reverse_flag );
 static  void  TCB_BTLV_MCSS_Move( GFL_TCB *tcb, void *work );
 static  void  TCB_BTLV_MCSS_Scale( GFL_TCB *tcb, void *work );
 static  void  TCB_BTLV_MCSS_Rotate( GFL_TCB *tcb, void *work );
@@ -116,13 +121,13 @@ static  const VecFx32 poke_pos_table[]={
 #define OFS_Y ( 0.3f )
 
 static  const VecFx32 poke_pos_table[]={
-  { FX_F32_TO_FX32( -2.5f + 3.000f ), FX_F32_TO_FX32( 0.7f - OFS_Y ), FX_F32_TO_FX32(   7.5f - 0.5f ) },    //POS_AA
+  { FX_F32_TO_FX32( -2.5f + 3.000f ), FX_F32_TO_FX32( 0.7f - OFS_Y ), FX_F32_TO_FX32(   7.0f ) },    //POS_AA
   { FX_F32_TO_FX32(  4.5f - 4.200f ), FX_F32_TO_FX32( 0.7f - OFS_Y ), FX_F32_TO_FX32( -10.0f ) },   //POS_BB
-  { FX_F32_TO_FX32( -3.5f + 3.500f ), FX_F32_TO_FX32( 0.7f - OFS_Y ), FX_F32_TO_FX32(   8.5f ) },   //POS_A
-  { FX_F32_TO_FX32(  6.0f - 4.200f ), FX_F32_TO_FX32( 0.7f - OFS_Y ), FX_F32_TO_FX32(  -9.0f ) },   //POS_B
-  { FX_F32_TO_FX32( -0.5f + 3.845f ), FX_F32_TO_FX32( 0.7f - OFS_Y ), FX_F32_TO_FX32(   9.0f ) },   //POS_C
-  { FX_F32_TO_FX32(  2.0f - 4.964f ), FX_F32_TO_FX32( 0.7f - OFS_Y ), FX_F32_TO_FX32( -11.0f ) },   //POS_D
-  { FX_F32_TO_FX32( -2.5f + 3.845f ), FX_F32_TO_FX32( 0.7f - OFS_Y ), FX_F32_TO_FX32(  10.0f ) },   //POS_E
+  { FX_F32_TO_FX32( -3.5f + 3.500f ), FX_F32_TO_FX32( 0.7f - OFS_Y ), FX_F32_TO_FX32(   7.0f ) },   //POS_A
+  { FX_F32_TO_FX32(  6.0f - 4.200f ), FX_F32_TO_FX32( 0.7f - OFS_Y ), FX_F32_TO_FX32( -10.0f ) },   //POS_B
+  { FX_F32_TO_FX32( -0.5f + 3.845f ), FX_F32_TO_FX32( 0.7f - OFS_Y ), FX_F32_TO_FX32(   7.0f ) },   //POS_C
+  { FX_F32_TO_FX32(  2.0f - 4.964f ), FX_F32_TO_FX32( 0.7f - OFS_Y ), FX_F32_TO_FX32( -10.0f ) },   //POS_D
+  { FX_F32_TO_FX32( -2.5f + 3.845f ), FX_F32_TO_FX32( 0.7f - OFS_Y ), FX_F32_TO_FX32(   7.0f ) },   //POS_E
   { FX_F32_TO_FX32(  4.5f - 4.964f ), FX_F32_TO_FX32( 0.7f - OFS_Y ), FX_F32_TO_FX32( -10.0f ) },   //POS_F
   { FX_F32_TO_FX32( -2.5f + 3.000f ), FX_F32_TO_FX32( 0.0f ), FX_F32_TO_FX32(   7.5f - 0.5f ) },    //POS_TR_AA
   { FX_F32_TO_FX32(  4.5f - 4.200f ), FX_F32_TO_FX32( 0.0f ), FX_F32_TO_FX32( -25.0f ) },   //POS_TR_BB
@@ -145,7 +150,7 @@ static  const fx32  poke_scale_table[ 2 ][ BTLV_MCSS_POS_TOTAL ]={
     0x10e0,   //POS_B
     0x0d00,   //POS_C
     0x1320,   //POS_D
-    0x1000 * 2, //POS_E
+    0x1000,   //POS_E
     0x1000,   //POS_F
     0x1030,   //POS_TR_AA
     0x119b,   //POS_TR_BB
@@ -570,7 +575,7 @@ void  BTLV_MCSS_MovePosition( BTLV_MCSS_WORK *bmw, int position, int type, VecFx
     BTLV_MCSS_GetPokeDefaultPos( pos, position );
     type = EFFTOOL_CALCTYPE_INTERPOLATION;
   }
-  BTLV_MCSS_TCBInitialize( bmw, position, type, &start, pos, frame, wait, count, TCB_BTLV_MCSS_Move );
+  BTLV_MCSS_TCBInitialize( bmw, position, type, &start, pos, frame, wait, count, TCB_BTLV_MCSS_Move, REVERSE_FLAG_ON );
   bmw->poke_mcss_tcb_move_execute |= BTLV_EFFTOOL_Pos2Bit( position );
 }
 
@@ -594,7 +599,7 @@ void  BTLV_MCSS_MoveScale( BTLV_MCSS_WORK *bmw, int position, int type, VecFx32 
   VecFx32 start;
 
   MCSS_GetOfsScale( bmw->mcss[ position ], &start );
-  BTLV_MCSS_TCBInitialize( bmw, position, type, &start, scale, frame, wait, count, TCB_BTLV_MCSS_Scale );
+  BTLV_MCSS_TCBInitialize( bmw, position, type, &start, scale, frame, wait, count, TCB_BTLV_MCSS_Scale, REVERSE_FLAG_OFF );
   bmw->poke_mcss_tcb_scale_execute |= BTLV_EFFTOOL_Pos2Bit( position );
 }
 
@@ -618,7 +623,7 @@ void  BTLV_MCSS_MoveRotate( BTLV_MCSS_WORK *bmw, int position, int type, VecFx32
   VecFx32 start;
 
   MCSS_GetRotate( bmw->mcss[ position ], &start );
-  BTLV_MCSS_TCBInitialize( bmw, position, type, &start, rotate, frame, wait, count, TCB_BTLV_MCSS_Rotate );
+  BTLV_MCSS_TCBInitialize( bmw, position, type, &start, rotate, frame, wait, count, TCB_BTLV_MCSS_Rotate, REVERSE_FLAG_ON );
   bmw->poke_mcss_tcb_rotate_execute |= BTLV_EFFTOOL_Pos2Bit( position );
 }
 
@@ -684,7 +689,7 @@ void  BTLV_MCSS_MoveAlpha( BTLV_MCSS_WORK *bmw, int position, int type, int alph
   end.x = alpha;
   end.y = 0;
   end.z = 0;
-  BTLV_MCSS_TCBInitialize( bmw, position, type, &start, &end, frame, wait, count, TCB_BTLV_MCSS_Alpha );
+  BTLV_MCSS_TCBInitialize( bmw, position, type, &start, &end, frame, wait, count, TCB_BTLV_MCSS_Alpha, REVERSE_FLAG_OFF );
   bmw->poke_mcss_tcb_alpha_execute |= BTLV_EFFTOOL_Pos2Bit( position );
 }
 
@@ -856,7 +861,7 @@ static  void  BTLV_MCSS_SetDefaultScale( BTLV_MCSS_WORK *bmw, int position )
  * @brief ポケモン操作系タスク初期化処理
  */
 //============================================================================================
-static  void  BTLV_MCSS_TCBInitialize( BTLV_MCSS_WORK *bmw, int position, int type, VecFx32 *start, VecFx32 *end, int frame, int wait, int count, GFL_TCB_FUNC *func )
+static  void  BTLV_MCSS_TCBInitialize( BTLV_MCSS_WORK *bmw, int position, int type, VecFx32 *start, VecFx32 *end, int frame, int wait, int count, GFL_TCB_FUNC *func, int reverse_flag )
 {
   BTLV_MCSS_TCB_WORK  *pmtw = GFL_HEAP_AllocMemory( bmw->heapID, sizeof( BTLV_MCSS_TCB_WORK ) );
 
@@ -888,7 +893,7 @@ static  void  BTLV_MCSS_TCBInitialize( BTLV_MCSS_WORK *bmw, int position, int ty
     pmtw->emw.vector.x = FX_Div( end->x, FX32_CONST( frame ) );
     pmtw->emw.vector.y = FX_Div( end->y, FX32_CONST( frame ) );
     pmtw->emw.vector.z = FX_Div( end->z, FX32_CONST( frame ) );
-    if( position & 1 )
+    if( ( position & 1 ) && ( reverse_flag ) )
     { 
       pmtw->emw.vector.x *= -1;
       pmtw->emw.vector.z *= -1;
