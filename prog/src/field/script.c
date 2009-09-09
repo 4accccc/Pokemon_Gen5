@@ -29,6 +29,7 @@
 #include "scrcmd.h"
 #include "scrcmd_work.h"
 #include "eventwork_def.h"
+#include "trainer_eye_data.h"   //EV_TRAINER_EYE_HITDATA
 
 #include "arc/fieldmap/script_seq.naix"
 #include "system/main.h"  //HEAPID_PROC
@@ -60,20 +61,9 @@ enum
 typedef void (*SCRIPT_EVENTFUNC)(GMEVENT *fsys);
 
 //--------------------------------------------------------------
-//  トレーナー視線データ構造体
-//--------------------------------------------------------------
-typedef struct {
-	int range;				//視線距離
-	int dir;					//移動方向
-	int scr_id;				//スクリプトID
-	int tr_id;				//トレーナーID
-	int tr_type;			//トレーナータイプ
-	MMDL *mmdl;
-  GMEVENT *ev_eye_move;
-}EV_TRAINER_EYE_HITDATA;
-
-//--------------------------------------------------------------
-//	スクリプト制御ワーク構造体
+/**
+ * スクリプト制御ワーク構造体
+ */
 //--------------------------------------------------------------
 struct _TAG_SCRIPT_WORK
 {
@@ -193,18 +183,17 @@ typedef struct{
 //======================================================================
 static SCRIPT_WORK * SCRIPTWORK_Create( HEAPID heapID, HEAPID temp_heapID,
     GAMESYS_WORK * gsys, u16 scr_id, MMDL *obj, void* ret_wk);
+static void SCRIPTWORK_Delete( SCRIPT_WORK * sc );
+static void SCRIPTWORK_AddVM(SCRIPT_WORK * sc, VMHANDLE * vm, VMHANDLE_ID vm_id);
+static void SCRIPTWORK_RemoveVM( SCRIPT_WORK *sc, VMHANDLE_ID vm_id );
 
+static VMHANDLE * SCRVM_Create( SCRIPT_WORK *sc, u16 zone_id, u16 scr_id );
+static void SCRVM_Delete( VMHANDLE* core );
 static u16 loadScriptData( SCRCMD_WORK *work, VMHANDLE* core, u32 zone_id, u16 id, HEAPID heapID );
 static void loadScriptDataDirect(
 	SCRCMD_WORK *work, VMHANDLE* core, u32 scr_id, u32 msg_id, HEAPID heapID );
 
 static void EventDataIDJump( VMHANDLE * core, u16 ev_id );
-
-static VMHANDLE * SCRVM_Create( SCRIPT_WORK *sc, u16 zone_id, u16 scr_id );
-static void SCRVM_Delete( VMHANDLE* core );
-
-static void SCRIPTWORK_AddVM(SCRIPT_WORK * sc, VMHANDLE * vm, VMHANDLE_ID vm_id);
-static void SCRIPTWORK_RemoveVM( SCRIPT_WORK *sc, VMHANDLE_ID vm_id );
 
 
 
@@ -315,6 +304,8 @@ void SCRIPT_SetTrainerEyeData( GMEVENT *event, MMDL *mmdl,
   SCRIPT_WORK *sc = ev_sc->sc;
 	EV_TRAINER_EYE_HITDATA *eye = &sc->eye_hitdata[tr_no];
   
+  TRAINER_EYE_HITDATA_Set(eye, mmdl, range, dir, scr_id, tr_id, tr_type, tr_no );
+#if 0
   eye->range = range;
 	eye->dir = dir;
 	eye->scr_id = scr_id;
@@ -322,6 +313,7 @@ void SCRIPT_SetTrainerEyeData( GMEVENT *event, MMDL *mmdl,
 	eye->tr_type = tr_type;
 	eye->mmdl = mmdl;
   eye->ev_eye_move = NULL;
+#endif
 }
 
 //--------------------------------------------------------------
@@ -792,6 +784,52 @@ void * SCRIPT_GetSubMemberWork( SCRIPT_WORK *sc, u32 id )
 		return &sc->tmp_buf;
 
 
+  case ID_EVSCR_TRAINER0:
+		return &sc->eye_hitdata[0];
+  case ID_EVSCR_TRAINER1:
+		return &sc->eye_hitdata[1];
+
+/*
+#ifndef SCRIPT_PL_NULL
+	//共通スクリプト切り替えフラグのポインタ
+	case ID_EVSCR_COMMON_SCR_FLAG:
+		return &sc->common_scr_flag;
+	//追加した仮想マシンの数のポインタ
+	case ID_EVSCR_VMHANDLE_COUNT:
+		return &sc->vm_machine_count;
+	case ID_EVSCR_VM_MAIN:
+		return &sc->vm[VMHANDLE_MAIN];
+	//仮想マシン(サブ)のポインタ
+	case ID_EVSCR_VM_SUB1:
+		return &sc->vm[VMHANDLE_SUB1];
+	//イベント起動時の主人公の向き
+	case ID_EVSCR_PLAYER_DIR:
+		return &sc->player_dir;
+	//イベントウィンドウワークのポインタ
+	case ID_EVSCR_EVWIN:
+		return &sc->ev_win;
+	//会話ウィンドウビットマップデータのポインタ
+	case ID_EVSCR_MSGWINDAT:
+		return &sc->MsgWinDat;
+	//待機アイコンのポインタ
+	case ID_EVSCR_WAITICON:
+		return &sc->waiticon;
+	//フィールドエフェクトへのポインタ
+	case ID_EVSCR_EOA:
+		return &sc->eoa;
+	//自機形態レポートTCBのポインタ
+	case ID_EVSCR_PLAYER_TCB:
+		return &sc->player_tcb;
+	//コインウィンドウビットマップデータのポインタ
+	case ID_EVSCR_COINWINDAT:
+		return &sc->CoinWinDat;
+	//お金ウィンドウビットマップデータのポインタ
+	case ID_EVSCR_GOLDWINDAT:
+		return &sc->GoldWinDat;
+	//レポート情報表示ウィンドウ制御ワークへのポインタ
+	case ID_EVSCR_REPORTWIN:
+		return &sc->riw;
+
 	//視線(0)：視線距離
 	case ID_EVSCR_TR0_RANGE:
 		eye = &sc->eye_hitdata[0];
@@ -851,46 +889,6 @@ void * SCRIPT_GetSubMemberWork( SCRIPT_WORK *sc, u32 id )
 		eye = &sc->eye_hitdata[1];
 		return &eye->ev_eye_move;
 
-/*
-#ifndef SCRIPT_PL_NULL
-	//共通スクリプト切り替えフラグのポインタ
-	case ID_EVSCR_COMMON_SCR_FLAG:
-		return &sc->common_scr_flag;
-	//追加した仮想マシンの数のポインタ
-	case ID_EVSCR_VMHANDLE_COUNT:
-		return &sc->vm_machine_count;
-	case ID_EVSCR_VM_MAIN:
-		return &sc->vm[VMHANDLE_MAIN];
-	//仮想マシン(サブ)のポインタ
-	case ID_EVSCR_VM_SUB1:
-		return &sc->vm[VMHANDLE_SUB1];
-	//イベント起動時の主人公の向き
-	case ID_EVSCR_PLAYER_DIR:
-		return &sc->player_dir;
-	//イベントウィンドウワークのポインタ
-	case ID_EVSCR_EVWIN:
-		return &sc->ev_win;
-	//会話ウィンドウビットマップデータのポインタ
-	case ID_EVSCR_MSGWINDAT:
-		return &sc->MsgWinDat;
-	//待機アイコンのポインタ
-	case ID_EVSCR_WAITICON:
-		return &sc->waiticon;
-	//フィールドエフェクトへのポインタ
-	case ID_EVSCR_EOA:
-		return &sc->eoa;
-	//自機形態レポートTCBのポインタ
-	case ID_EVSCR_PLAYER_TCB:
-		return &sc->player_tcb;
-	//コインウィンドウビットマップデータのポインタ
-	case ID_EVSCR_COINWINDAT:
-		return &sc->CoinWinDat;
-	//お金ウィンドウビットマップデータのポインタ
-	case ID_EVSCR_GOLDWINDAT:
-		return &sc->GoldWinDat;
-	//レポート情報表示ウィンドウ制御ワークへのポインタ
-	case ID_EVSCR_REPORTWIN:
-		return &sc->riw;
 #endif
 */
 	};

@@ -30,6 +30,8 @@
 
 #include "field_sound.h"
 
+#include "trainer_eye_data.h"
+
 #if 0
 #include "battle/battle_common.h"	//↓インクルードに必要
 #include "ev_trainer.h"				//EvTrainer
@@ -54,6 +56,7 @@
 //--------------------------------------------------------------
 VMCMD_RESULT EvCmdEyeTrainerMoveSet( VMHANDLE *core, void *wk )
 {
+#if 0
 	int *range;
 	int *scr_id;
 	int *tr_id;
@@ -83,10 +86,27 @@ VMCMD_RESULT EvCmdEyeTrainerMoveSet( VMHANDLE *core, void *wk )
 		mmdl = SCRIPT_GetMemberWork( sc, ID_EVSCR_TR1_FLDOBJ );
 		ev_eye_move = SCRIPT_GetMemberWork( sc, ID_EVSCR_TR1_TCB );
 	}
-  
   *ev_eye_move = EVENT_SetTrainerEyeMove( fparam->fieldMap,
       *mmdl, FIELDMAP_GetFieldPlayer(fparam->fieldMap),
       *dir, *range, 0, *tr_type, pos );
+#endif
+
+  SCRCMD_WORK *work = wk;
+  SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
+  SCRIPT_FLDPARAM *fparam = SCRIPT_GetMemberWork( sc, ID_EVSCR_WK_FLDPARAM );
+	u16 pos = SCRCMD_GetVMWorkValue( core, work ); //視線データの0,1か？
+  //GMEVENT **ev_eye_move;
+  EV_TRAINER_EYE_HITDATA * eye;
+
+  if ( pos == 0 ) {//視線0
+    eye = SCRIPT_GetMemberWork( sc, ID_EVSCR_TRAINER0 );
+  } else {
+    eye = SCRIPT_GetMemberWork( sc, ID_EVSCR_TRAINER1 );
+  }
+  eye->ev_eye_move = EVENT_SetTrainerEyeMove( fparam->fieldMap,
+      eye->mmdl, FIELDMAP_GetFieldPlayer(fparam->fieldMap),
+      eye->dir, eye->range, 0, eye->tr_type, pos );
+  
 	return 0;
 }
 
@@ -103,8 +123,10 @@ static BOOL EvWaitTrainer0Move( VMHANDLE *core, void *wk )
   GMEVENT **ev_eye_move;
   SCRCMD_WORK *work = wk;
   SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
+  EV_TRAINER_EYE_HITDATA * eye = SCRIPT_GetMemberWork( sc, ID_EVSCR_TRAINER0 );
 
-  ev_eye_move = SCRIPT_GetMemberWork( sc, ID_EVSCR_TR0_TCB );
+  ev_eye_move = &eye->ev_eye_move;
+  //ev_eye_move = SCRIPT_GetMemberWork( sc, ID_EVSCR_TR0_TCB );
   res = GMEVENT_Run( *ev_eye_move );
   
   if( res == GMEVENT_RES_FINISH ){
@@ -129,8 +151,10 @@ static BOOL EvWaitTrainer1Move( VMHANDLE *core, void *wk )
   GMEVENT **ev_eye_move;
   SCRCMD_WORK *work = wk;
   SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
-  
-  ev_eye_move = SCRIPT_GetMemberWork( sc, ID_EVSCR_TR1_TCB );
+  EV_TRAINER_EYE_HITDATA * eye = SCRIPT_GetMemberWork( sc, ID_EVSCR_TRAINER1 );
+
+  ev_eye_move = &eye->ev_eye_move;
+  //ev_eye_move = SCRIPT_GetMemberWork( sc, ID_EVSCR_TR1_TCB );
   res = GMEVENT_Run( *ev_eye_move );
   
   if( res == GMEVENT_RES_FINISH ){
@@ -156,8 +180,11 @@ static BOOL EvWaitTrainer01Move( VMHANDLE *core, void *wk )
   SCRCMD_WORK *work = wk;
   SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
   GMEVENT_RESULT res0,res1;
+  EV_TRAINER_EYE_HITDATA * eye0 = SCRIPT_GetMemberWork( sc, ID_EVSCR_TRAINER0 );
+  EV_TRAINER_EYE_HITDATA * eye1 = SCRIPT_GetMemberWork( sc, ID_EVSCR_TRAINER0 );
 
-  ev_eye_move0 = SCRIPT_GetMemberWork( sc, ID_EVSCR_TR0_TCB );
+  ev_eye_move0 = &eye0->ev_eye_move;
+  //ev_eye_move0 = SCRIPT_GetMemberWork( sc, ID_EVSCR_TR0_TCB );
   
   if( *ev_eye_move0 != NULL ){
     res0 = GMEVENT_Run( *ev_eye_move0 );
@@ -165,7 +192,8 @@ static BOOL EvWaitTrainer01Move( VMHANDLE *core, void *wk )
     res0 = GMEVENT_RES_FINISH;
   }
   
-  ev_eye_move1 = SCRIPT_GetMemberWork( sc, ID_EVSCR_TR1_TCB );
+  ev_eye_move1 = &eye1->ev_eye_move;
+  //ev_eye_move1 = SCRIPT_GetMemberWork( sc, ID_EVSCR_TR1_TCB );
   
   if( *ev_eye_move1 != NULL ){
     res1 = GMEVENT_Run( *ev_eye_move1 );
@@ -203,9 +231,13 @@ VMCMD_RESULT EvCmdEyeTrainerMoveSingle( VMHANDLE *core, void *wk )
 	u16 pos = SCRCMD_GetVMWorkValue( core, work ); //視線データの0,1か？
   
 	if( pos == SCR_EYE_TR_0 ){
-		ev_eye_move = SCRIPT_GetMemberWork( sc, ID_EVSCR_TR0_TCB );
+    EV_TRAINER_EYE_HITDATA * eye0 = SCRIPT_GetMemberWork( sc, ID_EVSCR_TRAINER0 );
+    ev_eye_move = &eye0->ev_eye_move;
+		//ev_eye_move = SCRIPT_GetMemberWork( sc, ID_EVSCR_TR0_TCB );
 	}else{
-		ev_eye_move = SCRIPT_GetMemberWork( sc, ID_EVSCR_TR1_TCB );
+    EV_TRAINER_EYE_HITDATA * eye1 = SCRIPT_GetMemberWork( sc, ID_EVSCR_TRAINER0 );
+    ev_eye_move = &eye1->ev_eye_move;
+		//ev_eye_move = SCRIPT_GetMemberWork( sc, ID_EVSCR_TR1_TCB );
 	}
   
 	//登録されていない時
@@ -219,7 +251,7 @@ VMCMD_RESULT EvCmdEyeTrainerMoveSingle( VMHANDLE *core, void *wk )
     VMCMD_SetWait( core, EvWaitTrainer1Move );
   }
    
-  return 1;
+  return VMCMD_RESULT_SUSPEND;
 }
 
 //--------------------------------------------------------------
@@ -235,9 +267,13 @@ VMCMD_RESULT EvCmdEyeTrainerMoveDouble( VMHANDLE *core, void *wk )
   GMEVENT **ev_eye_move1;
   SCRCMD_WORK *work = wk;
   SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
+  EV_TRAINER_EYE_HITDATA * eye0 = SCRIPT_GetMemberWork( sc, ID_EVSCR_TRAINER0 );
+  EV_TRAINER_EYE_HITDATA * eye1 = SCRIPT_GetMemberWork( sc, ID_EVSCR_TRAINER0 );
   
-  ev_eye_move0 = SCRIPT_GetMemberWork( sc, ID_EVSCR_TR0_TCB );
-	ev_eye_move1 = SCRIPT_GetMemberWork( sc, ID_EVSCR_TR1_TCB );
+  ev_eye_move0 = &eye0->ev_eye_move;
+  ev_eye_move1 = &eye1->ev_eye_move;
+  //ev_eye_move0 = SCRIPT_GetMemberWork( sc, ID_EVSCR_TR0_TCB );
+	//ev_eye_move1 = SCRIPT_GetMemberWork( sc, ID_EVSCR_TR1_TCB );
   
 	//登録されていない時
   if( *ev_eye_move0 == NULL && *ev_eye_move1 == NULL ){
@@ -245,7 +281,7 @@ VMCMD_RESULT EvCmdEyeTrainerMoveDouble( VMHANDLE *core, void *wk )
   }
   
   VMCMD_SetWait( core, EvWaitTrainer01Move );
-  return 1;
+  return VMCMD_RESULT_SUSPEND;
 }
 
 //--------------------------------------------------------------
@@ -260,9 +296,11 @@ VMCMD_RESULT EvCmdEyeTrainerTypeGet( VMHANDLE *core, void *wk )
 {
   SCRCMD_WORK *work = wk;
   SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
-	u16 *type	= SCRIPT_GetMemberWork( sc, ID_EVSCR_TR0_TYPE ); //WB kari TR0_TYPE固定
+	//u16 *type	= SCRIPT_GetMemberWork( sc, ID_EVSCR_TR0_TYPE ); //WB kari TR0_TYPE固定
+  EV_TRAINER_EYE_HITDATA * eye0 = SCRIPT_GetMemberWork( sc, ID_EVSCR_TRAINER0 );
 	u16 *ret_wk	= SCRCMD_GetVMWork( core, work );
-	*ret_wk = *type;
+	//*ret_wk = *type;
+  *ret_wk = eye0->tr_type;
 	return 0;
 }
 
@@ -277,11 +315,14 @@ VMCMD_RESULT EvCmdEyeTrainerIdGet( VMHANDLE *core, void *wk )
 {
   SCRCMD_WORK *work = wk;
   SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
-	u16 *tr_id_0	= SCRIPT_GetMemberWork( sc, ID_EVSCR_TR0_ID );
-	u16 *tr_id_1	= SCRIPT_GetMemberWork( sc, ID_EVSCR_TR1_ID );
+	//u16 *tr_id_0	= SCRIPT_GetMemberWork( sc, ID_EVSCR_TR0_ID );
+	//u16 *tr_id_1	= SCRIPT_GetMemberWork( sc, ID_EVSCR_TR1_ID );
+  EV_TRAINER_EYE_HITDATA * eye0 = SCRIPT_GetMemberWork( sc, ID_EVSCR_TRAINER0 );
+  EV_TRAINER_EYE_HITDATA * eye1 = SCRIPT_GetMemberWork( sc, ID_EVSCR_TRAINER0 );
 	u16 pos = SCRCMD_GetVMWorkValue( core, work ); //視線データの0,1か？
 	u16 *ret_wk		= SCRCMD_GetVMWork( core, work );
-	*ret_wk = (pos == SCR_EYE_TR_0) ? (*tr_id_0) : (*tr_id_1);
+  *ret_wk = (pos == SCR_EYE_TR_0) ? (eye0->tr_id) : (eye1->tr_id);
+	//*ret_wk = (pos == SCR_EYE_TR_0) ? (*tr_id_0) : (*tr_id_1);
   KAGAYA_Printf( "視線トレーナーID取得 %d\n", *ret_wk );
 	return 0;
 }
@@ -358,7 +399,7 @@ VMCMD_RESULT EvCmdTrainerBattleSet( VMHANDLE *core, void *wk )
       EVENT_TrainerBattle( *gsys, fparam->fieldMap, tr_id_0 );
     GMEVENT_CallEvent( *event, ev_battle );
   }
-	return 0;
+	return VMCMD_RESULT_SUSPEND;
 #endif
 }
 
@@ -380,7 +421,7 @@ VMCMD_RESULT EvCmdTrainerMultiBattleSet( VMHANDLE *core, void *wk )
 	EventCmd_TrainerBattle(core->event_work, tr_id_0, tr_id_1, partner_id, HEAPID_WORLD, win_flag);
 	return 1;
 #else
-  return 0;
+  return VMCMD_RESULT_SUSPEND;
 #endif
 }
 
@@ -662,7 +703,7 @@ VMCMD_RESULT EvCmdDebugBattleSet( VMHANDLE *core, void *wk )
 
 	return 1;
 #else //wb kari
-  return 0;
+  return VMCMD_RESULT_SUSPEND;
 #endif
 }
 
