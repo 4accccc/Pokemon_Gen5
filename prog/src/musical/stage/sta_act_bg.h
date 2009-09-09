@@ -35,7 +35,7 @@ void	STA_BG_ExitSystem( STA_BG_SYS *work );
 //ƒVƒXƒeƒ€Œn
 
 void	STA_BG_SetScrollOffset( STA_BG_SYS* work , const u16 bgOfs );
-void	STA_BG_CreateBg( STA_BG_SYS* work , const int arcId , const int datId );
+void	STA_BG_CreateBg( STA_BG_SYS* work , const u8 bgNo );
 void	STA_BG_DeleteBg( STA_BG_SYS* work );
 
 

@@ -32,6 +32,8 @@ gsources:=$(wildcard *.ncg)
 ssources:=$(wildcard *.nsc)
 esources:=$(wildcard *.nce)
 imdres:=$(wildcard *.imd)
+icares:=$(wildcard *.ica)
+itares:=$(wildcard *.ita)
 spares:=$(wildcard *.spa)
 
 # リソースが吐き出すファイルを自動でつくる
@@ -42,11 +44,13 @@ eobjects = $(subst .nce,.NCER,$(esources))
 aobjects = $(subst .nce,.NANR,$(esources))
 imdobj = $(subst .imd,.nsbtx,$(imdres))
 imdobj2 = $(subst .imd,.nsbmd,$(imdres))
+icaobj = $(subst .ica,.nsbca,$(icares))
+itaobj = $(subst .ita,.nsbta,$(itares))
 
 
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
 # サフィックスルールを定義することで 依存関係を自動で判断してくれる
-.SUFFIXES: .NCLR .ncl .NCGR .ncg .NSCR .nsc .NCER .nce .nsbtx .nsbmd .imd
+.SUFFIXES: .NCLR .ncl .NCGR .ncg .NSCR .nsc .NCER .nce .nsbtx .nsbmd .imd .nsbca .ica .nsbta .ita
 
 .ncl.NCLR:
 	g2dcvtr $< -pcm
@@ -59,6 +63,12 @@ ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
 
 .nce.NCER:
 	g2dcvtr $<
+
+.ica.nsbca:
+	g3dcvtr $<
+
+.ita.nsbta:
+	g3dcvtr $<
 
 .imd.nsbtx:
 	g3dcvtr $< -etex
@@ -83,7 +93,7 @@ $(TARGETDIR)/$(targetname).narc: $(targetname).narc
 
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、元ファイルからコンバートするルールを有効にする
 # コピー先のnarcが古い場合実行する
-$(targetname).narc: $(lobjects) $(gobjects) $(sobjects) $(eobjects) $(aobjects) $(imdobj) $(imdobj2) $(spares)
+$(targetname).narc: $(lobjects) $(gobjects) $(sobjects) $(eobjects) $(aobjects) $(imdobj) $(imdobj2) $(itaobj) $(icaobj) $(spares)
 	nnsarc -r -l -n -i $(targetname) $^
 	$(NAIXCUT) $(targetname).naix
 endif
@@ -100,7 +110,10 @@ ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、中間ファイル削除
 	rm -f *.NCER
 	rm -f *.NANR
 	rm -f *.NSCR
+	rm -f *.nsbmd
 	rm -f *.nsbtx
+	rm -f *.nsbta
+	rm -f *.nsbca
 	rm -f *.narc
 	rm -f *.naix
 	rm -f $(targetname).narc

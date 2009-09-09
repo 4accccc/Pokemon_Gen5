@@ -798,7 +798,7 @@ void  STA_ACT_LoadBg( ACTING_WORK *work , const u8 bgNo )
   GFL_BG_LoadScreenReq(ACT_FRAME_MAIN_BG);
 */
 
-  STA_BG_CreateBg( work->bgSys , ARCID_STAGE_GRA , NARC_stage_gra_back_00_nsbtx + bgNo );
+  STA_BG_CreateBg( work->bgSys , bgNo );
 
 }
 
