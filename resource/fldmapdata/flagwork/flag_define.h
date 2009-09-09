@@ -122,293 +122,293 @@
 #define FE_FIRST_POKE_GET                  106 /* 0x006a ポケモン入手済み */
 #define FE_ZUKAN_GET                       107 /* 0x006b 図鑑ゲット(イベント用) */
 #define FE_R30R0201_GAKUSYUUSOUTI_GET      108 /* 0x006c 学習装置を入手 */
-#define FE_R30R0101_BONGURIKEESU           109 /* 0x006d ぼんぐりケース入手 */
-#define FE_R32_ITEM_GET                    110 /* 0x006e わざマシン０５を入手している */
-#define FE_T22FS0101_NO_CHOOSE             111 /* 0x006f キキョウショップでいいえを選択した */
-#define FE_T22FS0101_EGG_GET               112 /* 0x0070 キキョウショップでタマゴを受け取った */
-#define FE_T22R0601_POKE_CHG               113 /* 0x0071 キキョウ民家でイワークと交換した */
-#define FE_T20R0101_KAWARAZUNOISI_GET      114 /* 0x0072 かわらずのいし入手 */
-#define FE_T22_GYM_ITEM_GET                115 /* 0x0073 キキョウジム */
-#define FE_R32_KISEKINOTANE_GET            116 /* 0x0074 きせきのタネ入手 */
-#define FE_R32PC0101_ITEM_GET              117 /* 0x0075 ボロのつりざお入手 */
-#define FE_D15R0103_FLASH_GET              118 /* 0x0076 フラッシュ入手 */
-#define FE_T23R0501_GAN_OUT                119 /* 0x0077 ガンテツ家を出て行く */
-#define FE_D15R0103_RIVAL_OUT              120 /* 0x0078 長老の前のライバル消える */
-#define FE_RIVAL_NAME_INPUT                121 /* 0x0079 ライバル名入力終了 */
-#define FE_D26R0103_ITEM_GET               122 /* 0x007a おうじゃのしるし入手 */
-#define FE_D26R0102_YADON_CLEAR            123 /* 0x007b ヤドンの井戸クリア */
-#define FE_T23R0501_ITEM_GET               124 /* 0x007c ガンテツにボールもらう */
-#define FE_D36R0101_KAMONEGI1_GET          125 /* 0x007d カモネギ１捕獲 */
-#define FE_D36R0101_KAMONEGI2_GET          126 /* 0x007e カモネギ２捕獲 */
-#define FE_T23_GYM_ITEM_GET                127 /* 0x007f ヒワダジム */
-#define FE_D36R0101_ITEM_GET               128 /* 0x0080 いあいぎり入手 */
-#define FE_T23R0201_ITEM_GET               129 /* 0x0081 見習いからもくたん入手 */
-#define FE_D36R0101_ZUTSUKI_GET            130 /* 0x0082 ウバメの森で頭突き入手 */
-#define FE_R34R0201_AMAIKAORI_GET          131 /* 0x0083 あまいかおり入手 */
-#define FE_T25GYM0101_AKANE_CRY            132 /* 0x0084 アカネを泣かせた */
-#define FE_T25_GYM_ITEM_GET                133 /* 0x0085 アカネの技マシンゲット */
-#define FE_T25R0501_LINEAR_CHK             134 /* 0x0086 リニアに乗ったことがある */
-#define FE_TEIKI_GET                       135 /* 0x0087 ていきけん入手（リニア） */
-#define FE_ZENIGAMEJOURO_GET               136 /* 0x0088 ゼニガメじょうろ入手 */
-#define FE_CYCLE_GET                       137 /* 0x0089 自転車入手 */
-#define FE_RADIOCARD_GET                   138 /* 0x008a ラジオカード入手 */
-#define FE_D37R0102_PICTURE_TALK           139 /* 0x008b 写真屋と話した */
-#define FE_DRESSUP_CLIP                    140 /* 0x008c ドレスアップ写真を撮った */
-#define FE_T25R1005_POKE_CHG               141 /* 0x008d コガネ百貨店でポケモン交換をした */
-#define FE_T25R1005_WAZAMACHINE            142 /* 0x008e 百貨店で技マシンレディから技マシンを貰った */
-#define FE_D23R0103_WOMAN_ITEM_GET         143 /* 0x008f ラジオ塔３F */
-#define FE_D23R0103_DOOR_OPEN              144 /* 0x0090 ラジオ塔３Ｆドア開けたフラグ */
-#define FE_D23R0104_KURUMI_ITEM_GET        145 /* 0x0091 ラジオ塔４F */
-#define FE_ARCEUS_PLATE_CHECK              146 /* 0x0092 船長プレート監視用（090529再利用） */
-#define FE_NIJIIRONOHANE_GET               147 /* 0x0093 にじいろのはね入手 */
-#define FE_GINIRONOHANE_GET                148 /* 0x0094 ぎんいろのはね入手 */
-#define FE_T25R0401_IIBUI_GET              149 /* 0x0095 イーブイ入手 */
-#define FE_BOX1_MOVE                       150 /* 0x0096 右の木箱移動 */
-#define FE_BOX2_MOVE                       151 /* 0x0097 左上の木箱移動 */
-#define FE_BOX3_MOVE                       152 /* 0x0098 左下の木箱移動 */
-#define FE_T21_RIVAL                       153 /* 0x0099 ヨシノ */
-#define FE_R29_CAPTURE_DEMO                154 /* 0x009a 捕獲デモ終了 */
-#define FE_D37R0104_DOOR_OPEN              155 /* 0x009b 搬入口の最後の扉を開いた */
-#define FE_POKEGEAR_GET                    156 /* 0x009c ポケギア入手 */
-#define FE_D51R0301_MOUNT                  157 /* 0x009d シント遺跡 */
-#define FE_D51R0301_SHIRONA                158 /* 0x009e シント遺跡 */
-#define FE_TAMAGO_GET                      159 /* 0x009f キキョウでトゲピータマゴを受け取る */
-#define FE_T11R0701_ROTOM                  160 /* 0x00a0 シルフ・ロトムイベント用（FE_MAIKO_05_WIN再利用） */
-#define FE_MAIKO_06_WIN                    161 /* 0x00a1 （未使用） */
-#define FE_NAMINORI_GET                    162 /* 0x00a2 波乗り入手 */
-#define FE_DOWSING_GET                     163 /* 0x00a3 ダウジングマシン入手 */
-#define FE_INIT_CHANGE_OBJ_DEL             164 /* 0x00a4 INIT_CHANGEでOBJを消す */
-#define FE_R37_ZISYAKU_GET                 165 /* 0x00a5 磁石入手 */
-#define FE_T27_GYM_ITEM_GET                166 /* 0x00a6 シャドーボール入手 */
-#define FE_MAMA_DEPOSIT_MSG                167 /* 0x00a7 ママ */
-#define FE_R39R0101_MIDDLEM_TALK           168 /* 0x00a8 モーモー牧場母屋の親父と話した */
-#define FE_R39R0201_KINOMI_GIVE_01         169 /* 0x00a9 ミルタンクにきのみを１個あげた */
-#define FE_R39R0201_MIRUTANKU_GENKI        170 /* 0x00aa ミルタンク完全復活！ */
-#define FE_R39r0101_ITEM_GET               171 /* 0x00ab 技マシン１３入手 */
-#define FE_R39R0201_KINOMI_GIVE_02         172 /* 0x00ac ミルタンクにきのみを２個あげた */
-#define FE_R39R0201_KINOMI_GIVE_03         173 /* 0x00ad ミルタンクにきのみを３個あげた */
-#define FE_R39R0201_KINOMI_GIVE_04         174 /* 0x00ae ミルタンクにきのみを４個あげた */
-#define FE_R39R0201_KINOMI_GIVE_05         175 /* 0x00af ミルタンクにきのみを５個あげた */
-#define FE_R39R0201_KINOMI_GIVE_06         176 /* 0x00b0 ミルタンクにきのみを６個あげた */
-#define FE_R36_KATAIISI_GET                177 /* 0x00b1 かたいいし入手 */
-#define FE_R36_SAKI_TALK                   178 /* 0x00b2 R36のサキ去っていった */
-#define FE_T25R0601_SAKI_TALK              179 /* 0x00b3 花屋のサキと話した */
-#define FE_R36_TREE_BATTLE                 180 /* 0x00b4 ウソッキーと戦闘 */
-#define FE_R36_TREE_BATTLE_WIN             181 /* 0x00b5 ウソッキー消える */
-#define FE_R36_IWAKUDAKI_GET               182 /* 0x00b6 いわくだき入手 */
-#define FE_T25GYM0101_MISITOP_TALK         183 /* 0x00b7 コガネジムでストッパーに押し戻された */
+#define FE_T02R0302_BALLGET                109 /* 0x006d カノコタウン民家２F：親父からスーパーボール入手した */
+		/* not used   110(0x006e) */
+		/* not used   111(0x006f) */
+		/* not used   112(0x0070) */
+		/* not used   113(0x0071) */
+		/* not used   114(0x0072) */
+		/* not used   115(0x0073) */
+		/* not used   116(0x0074) */
+		/* not used   117(0x0075) */
+		/* not used   118(0x0076) */
+		/* not used   119(0x0077) */
+		/* not used   120(0x0078) */
+		/* not used   121(0x0079) */
+		/* not used   122(0x007a) */
+		/* not used   123(0x007b) */
+		/* not used   124(0x007c) */
+		/* not used   125(0x007d) */
+		/* not used   126(0x007e) */
+		/* not used   127(0x007f) */
+		/* not used   128(0x0080) */
+		/* not used   129(0x0081) */
+		/* not used   130(0x0082) */
+		/* not used   131(0x0083) */
+		/* not used   132(0x0084) */
+		/* not used   133(0x0085) */
+		/* not used   134(0x0086) */
+		/* not used   135(0x0087) */
+		/* not used   136(0x0088) */
+		/* not used   137(0x0089) */
+		/* not used   138(0x008a) */
+		/* not used   139(0x008b) */
+		/* not used   140(0x008c) */
+		/* not used   141(0x008d) */
+		/* not used   142(0x008e) */
+		/* not used   143(0x008f) */
+		/* not used   144(0x0090) */
+		/* not used   145(0x0091) */
+		/* not used   146(0x0092) */
+		/* not used   147(0x0093) */
+		/* not used   148(0x0094) */
+		/* not used   149(0x0095) */
+		/* not used   150(0x0096) */
+		/* not used   151(0x0097) */
+		/* not used   152(0x0098) */
+		/* not used   153(0x0099) */
+		/* not used   154(0x009a) */
+		/* not used   155(0x009b) */
+		/* not used   156(0x009c) */
+		/* not used   157(0x009d) */
+		/* not used   158(0x009e) */
+		/* not used   159(0x009f) */
+		/* not used   160(0x00a0) */
+		/* not used   161(0x00a1) */
+		/* not used   162(0x00a2) */
+		/* not used   163(0x00a3) */
+		/* not used   164(0x00a4) */
+		/* not used   165(0x00a5) */
+		/* not used   166(0x00a6) */
+		/* not used   167(0x00a7) */
+		/* not used   168(0x00a8) */
+		/* not used   169(0x00a9) */
+		/* not used   170(0x00aa) */
+		/* not used   171(0x00ab) */
+		/* not used   172(0x00ac) */
+		/* not used   173(0x00ad) */
+		/* not used   174(0x00ae) */
+		/* not used   175(0x00af) */
+		/* not used   176(0x00b0) */
+		/* not used   177(0x00b1) */
+		/* not used   178(0x00b2) */
+		/* not used   179(0x00b3) */
+		/* not used   180(0x00b4) */
+		/* not used   181(0x00b5) */
+		/* not used   182(0x00b6) */
+		/* not used   183(0x00b7) */
 		/* not used   184(0x00b8) */
-#define FE_T24_KUSURI_GET                  185 /* 0x00b9 タンバひでんのくすり入手 */
-#define FE_T24_GYM_ITEM_GET                186 /* 0x00ba わざマシン０１（ばくれつパンチ）入手 */
-#define FE_T24_SORAWOTOBU_GET              187 /* 0x00bb そらをとぶ入手 */
-#define FE_T01R0301_OOKIDO_TALK            188 /* 0x00bc ＧＫＲイベントのオーキド台詞（090522 */
-#define FE_T26R0601_TSURIZAO_GET           189 /* 0x00bd いいつりざお入手 */
-#define FE_T26R0301_POKE_CHG               190 /* 0x00be アサギ民家でビリリダマと交換 */
-#define FE_T24R0201_TUBOTUBO_KEEP          191 /* 0x00bf ツボツボ預かり中フラグ */
-#define FE_T24R0201_TUBOTUBO_RETURN        192 /* 0x00c0 ツボツボ返してフラグ */
-#define FE_T24R0201_TUBOTUBO_CLEAR         193 /* 0x00c1 ツボツボイベント解決済み */
-#define FE_T26_GYM_ITEM_GET                194 /* 0x00c2 アサギジム */
-#define FE_T29_WATARU_NO                   195 /* 0x00c3 わたるの頼みを断った */
-#define FE_T25_RADIOSENKYO_PRE             196 /* 0x00c4 ラジオ塔占拠準備開始（Ｒ団２名潜入） */
-#define FE_T25_RADIOSENKYO_START           197 /* 0x00c5 ラジオ塔占拠開始 */
-#define FE_T25_RADIOSENKYO_END             198 /* 0x00c6 ラジオ塔占拠終了 */
-#define FE_T29R0101_ITEM_GET               199 /* 0x00c7 めざめるパワー入手 */
-#define FE_T29R0201_TALK                   200 /* 0x00c8 釣り名人の話を聞いた */
-#define FE_T29_GYARADOS_END                201 /* 0x00c9 赤いギャラドスのイベントが終了 */
-#define FE_D35_RAJITO_END                  202 /* 0x00ca Ｒ団アジト崩壊（電波発信機破壊後） */
-#define FE_D35R0103_MARUMAIN_U             203 /* 0x00cb Ｒ団アジトＢ２のマルマイン上段を倒した */
-#define FE_D35R0103_MARUMAIN_M             204 /* 0x00cc Ｒ団アジトＢ２のマルマイン中段を倒した */
-#define FE_D35R0103_MARUMAIN_D             205 /* 0x00cd Ｒ団アジトＢ２のマルマイン下段を倒した */
-#define FE_R43R0201_ITEM_GET               206 /* 0x00ce ヘドロばくだん入手 */
-#define FE_FH                              207 /* 0x00cf わすれおやじと１度話した */
-#define FE_T30R0301_POKE_CHG               208 /* 0x00d0 フスベでポケモン交換した */
-#define FE_T30_GYM_BATTLE_AFTER            209 /* 0x00d1 イブキに勝った */
-#define FE_T28_GYM_ITEM_GET                210 /* 0x00d2 チョウジジム */
-#define FE_D35R0104_PASS_GET               211 /* 0x00d3 R団アジトB3：パスワード聞いた */
-#define FE_T30_ITEM_GET                    212 /* 0x00d4 曜日兄弟ツチオにアイテムもらった */
-#define FE_T29_ITEM_GET                    213 /* 0x00d5 曜日兄弟ミズオにアイテムもらった */
-#define FE_D35R0102_PCSWITCH               214 /* 0x00d6 ロケット団アジトのパソコンスイッチ（０：起動中） */
-#define FE_W40_ITEM_GET                    215 /* 0x00d7 曜日兄弟ツキコにアイテムもらった */
-#define FE_R29_ITEM_GET                    216 /* 0x00d8 曜日兄弟ヒコにアイテムもらった */
-#define FE_R32_ITEM_GET_2                  217 /* 0x00d9 曜日兄弟カネコにアイテムもらった */
-#define FE_D44R0102_ITEM_GET               218 /* 0x00da りゅうのいぶき入手 */
-#define FE_D44R0103_QUESTION_NG            219 /* 0x00db 長老の問題を間違えた */
-#define FE_D44R0103_MINIRYUU_GET           220 /* 0x00dc りゅうのほこらでミニリュウゲット */
-#define FE_D44R0103_GG01_19                221 /* 0x00dd ミニリュウをゲットして再度祠に入った */
-#define FE_T30GYM0101_LEADER08_SET         222 /* 0x00de りゅうのいぶき未入手でりゅうのあなの外に出た */
-#define FE_D42R0101_KUROIMEGANE            223 /* 0x00df くらやみのほらあな：くろいメガネ入手 */
-#define FE_D39R0101_MIDDLEM01              224 /* 0x00e0 こおりのぬけみちで落し物おやじと話した */
-#define FE_D39R0101_TAKINOBORI_GET         225 /* 0x00e1 こおりのぬけみちでたきのぼり入手 */
-#define FE_D44R0102_RIVAL_TALK             226 /* 0x00e2 りゅうのあなのライバルと話した */
-#define FE_D02_RIVAL_BATTLE                227 /* 0x00e3 お月見山でライバルと戦闘した */
-#define FE_ITSUKI_WIN                      228 /* 0x00e4 四天王イツキに勝利 */
-#define FE_KYO_WIN                         229 /* 0x00e5 四天王キョウに勝利 */
-#define FE_SHIBA_WIN                       230 /* 0x00e6 四天王シバに勝利 */
-#define FE_KARIN_WIN                       231 /* 0x00e7 四天王カリンに勝利 */
-#define FE_T20R0101_MASTERBALL_GET         232 /* 0x00e8 研究所：マスターボール入手 */
-#define FE_R27R0101_SUNAARASI_GET          233 /* 0x00e9 Ｒ27民家：技マシンすなあらし入手 */
-#define FE_D44R0103_EVENT_END              234 /* 0x00ea りゅうのほこら長老イベント終了 */
-#define FE_SHIP_ARRIVAL                    235 /* 0x00eb アクア号が港に到着 */
-#define FE_MASAKI_TELNUMBER_GET            236 /* 0x00ec マサキの電話番号登録済み */
-#define FE_SHIP_SEAMAN_STOP                237 /* 0x00ed 船乗りストッパー */
-#define FE_R30_UTSUGI_TEL                  238 /* 0x00ee ウツギ電話の話題切り替え用 */
-#define FE_PKTH_MUSEUM02_OPEN              239 /* 0x00ef ポケスロン：個性の部屋開放 */
-#define FE_PKTH_MUSEUM03_OPEN              240 /* 0x00f0 ポケスロン：可能性の部屋開放 */
-#define FE_PKTH_MUSEUM04_OPEN              241 /* 0x00f1 ポケスロン：友情の部屋開放 */
-#define FE_SHIP_TICKET                     242 /* 0x00f2 船のチケット入手 */
-#define FE_T21_ITEM_GET                    243 /* 0x00f3 ヨシノシティでしんぴのしずく入手 */
-#define FE_T22GYM0101_HAYATO_WIN           244 /* 0x00f4 キキョウジム */
-#define FE_SAFARI_OPEN                     245 /* 0x00f5 サファリ：オープン！ */
-#define FE_SAFARI_CUSTOMON                 246 /* 0x00f6 サファリ：カスタム使用可！ */
-#define FE_T06_ITEM_GET                    247 /* 0x00f7 クチバ：バッジ８個でアイテム入手 */
-#define FE_T06R0301_ITEM_GET               248 /* 0x00f8 大好きクラブ：会長アイテム入手 */
-#define FE_R11_KABI_GET                    249 /* 0x00f9 11番道路：カビゴン捕獲 */
-#define FE_D49R0102_HAJIME                 250 /* 0x00fa ポケスロン客席：ハジメ初回会話フラグ */
-#define FE_W40R0101_GATE                   251 /* 0x00fb フロンティア前ゲート：ストッパー解除 */
-#define FE_D32R0102_MIDDLEM                252 /* 0x00fc フロンティア前広場：ストッパーイベント見た */
-#define FE_MEMORY_PRINT_SCORE_GET          253 /* 0x00fd フロンティア制覇のスコア取得した */
-#define FE_D32R0401_BONUS_TALK             254 /* 0x00fe ステージボーナス初回会話 */
-#define FE_SCRATCH_TALK                    255 /* 0x00ff スクラッチ初回会話 */
-#define FE_R39R0201_SEALCASE_GET           256 /* 0x0100 牧場：シールいれ入手 */
-#define FE_R39R0201_SEAL_GET               257 /* 0x0101 牧場：シール入手 */
-#define FE_PASSWORD_ANSWER                 258 /* 0x0102 アオイの合言葉に答えた（１２時にoff） */
-#define FE_TOUMEINOSUZU_GET                259 /* 0x0103 とうめいのスズ入手 */
-#define FE_UMINARINOSUZU_GET               260 /* 0x0104 うみなりのスズ入手 */
-#define FE_LEG_ARRIVAL                     261 /* 0x0105 スズを持たずに塔を上ったor滝つぼへ下りた（金銀共通） */
-#define FE_D40R0104_STOPPER                262 /* 0x0106 うずまき島Ｂ２ストッパー解除 */
-#define FE_T27D0501_MAIKO                  263 /* 0x0107 舞妓はんの話を聞いた */
-#define FE_HOUOU_BTL                       264 /* 0x0108 ホウオウ戦闘済み */
-#define FE_RUGIA_BTL                       265 /* 0x0109 ルギア戦闘済み */
-#define FE_HOUOU_DEMO                      266 /* 0x010a ホウオウデモ見た */
-#define FE_RUGIA_DEMO                      267 /* 0x010b ルギアデモ見た */
-#define FE_D48R0104_BARUKII_GET            268 /* 0x010c 空手大王からバルキーゲット */
-#define FE_D48R0104_BATTLE_WIN             269 /* 0x010d 空手大王に勝利 */
-#define FE_D22R0101_ITEM_GET               270 /* 0x010e 自然公園でせんせいのツメ入手 */
-#define FE_D24R0102_SYOCHO_TALK            271 /* 0x010f 遺跡研究所所長と話した */
-#define FE_AN_NOTE_GET                     272 /* 0x0110 アンノーンノート入手 */
-#define FE_DOWN_FROM_MOJI                  273 /* 0x0111 文字の間から落ちた */
-#define FE_GTC_GUIDE_TALK                  274 /* 0x0112 ＧＴＳ：初回説明聞いた */
-#define FE_BACKGROUND_ACCE_GET             275 /* 0x0113 BGアクセサリー全部取得 */
-#define FE_POKETHLON_SHOP_FIRST            276 /* 0x0114 スロンショップ：初回会話 */
-#define FE_POKETHLON_CARD_SHOP_FIRST       277 /* 0x0115 データカードショップ：初回会話 */
-#define FE_HOUOU_GET                       278 /* 0x0116 ホウオウ入手フラグ */
-#define FE_RUGIA_GET                       279 /* 0x0117 ルギア入手フラグ */
-#define FE_HATSUDENSYO_CLEAR               280 /* 0x0118 発電所クリアフラグ */
-#define FE_MONOMANE_TALK                   281 /* 0x0119 モノマネ娘と会話 */
-#define FE_IS_UTSUGI_TOGEPII_SHOW          282 /* 0x011a ウツギにトゲピーを見せたかどうか？ */
-#define FE_BAGICON_APPEAR                  283 /* 0x011b バッグアイコン表示 */
-#define FE_CARDICON_APPEAR                 284 /* 0x011c カードアイコン表示 */
-#define FE_REPORTICON_APPEAR               285 /* 0x011d レポートアイコン表示 */
-#define FE_CONFIGICON_APPEAR               286 /* 0x011e せっていアイコン表示 */
-#define FE_RADIO_POWER_UP                  287 /* 0x011f ラジオ拡張した */
-#define FE_R10R0202_BIGMAN_TALK            288 /* 0x0120 発電所所長の話を聞いた */
-#define FE_R10R0202_POKE_CHG               289 /* 0x0121 発電所でポケモン交換した */
-#define FE_R25_ITEM_GET                    290 /* 0x0122 ２５番道路できんのたま入手 */
-#define FE_STATION_MAN_TALK                291 /* 0x0123 ヤマブキ駅員と話した */
-#define FE_T07_GYM_ITEM_GET                292 /* 0x0124 タマムシジムでギガドレイン入手 */
-#define FE_KAMONEGI_GYOE                   293 /* 0x0125 カモネギがこっちを向いたメッセージ出た */
-#define FE_KAMONEGI_RUN_AWAY               294 /* 0x0126 カモネギが逃げたメッセージ出た */
-#define FE_GANTETSU_REGULAR_CUSTOMER       295 /* 0x0127 ガンテツの常客になった */
-#define FE_T09_GREEN_FIRST                 296 /* 0x0128 グリーン初回会話 */
-#define FE_T02_GYM_START                   297 /* 0x0129 グリーンジム再開（節約できる） */
-#define FE_T01R0301_OOKIDO_FIRST           298 /* 0x012a オーキド初回会話 */
-#define FE_T01R0301_OOKIDO_SIROGANE        299 /* 0x012b オーキドシロガネ山開放 */
-#define FE_T02_ARRIVAL                     300 /* 0x012c トキワ到着 */
-#define FE_T08_GYM_ITEM_GET                301 /* 0x012d セキチクジム */
-#define FE_T02_BIGMAN_ITEM_GET             302 /* 0x012e トキワ太った男アイテム入手 */
-#define FE_T11R0501_ESP_GET                303 /* 0x012f ヤマブキエスパー親父アイテム入手 */
-#define FE_T11R0701_SILPH_ITEM_GET         304 /* 0x0130 シルフ本社でアップグレード入手 */
-#define FE_R05R0401_ITEM_GET               305 /* 0x0131 ５番道路民家できよめのおふだ入手 */
-#define FE_D11R0106_DANPEI_TALK            306 /* 0x0132 グレンジムのダンペイの話を聞いた */
-#define FE_T03PC0101_POKE_CHG              307 /* 0x0133 ニビPCでポケモン交換済み */
-#define FE_R02R0201_ITEM_GET               308 /* 0x0134 ２番道路民家できんのたま入手 */
-#define FE_R02R0301_ITEM_GET               309 /* 0x0135 ２番道路ゲートでせいなるはい入手 */
-#define FE_P_PARK_ADMIN                    310 /* 0x0136 パルパーク：園長初回会話 */
-#define FE_R28R0101_ITEM_GET               311 /* 0x0137 隠居アイドルからアイテム入手 */
-#define FE_T30GYM0101_DANPEI_TALK          312 /* 0x0138 フスベジムのダンペイと話した */
-#define FE_KOIKING_RECORD                  313 /* 0x0139 大きさ比べで記録を出した */
-#define FE_T02GYM0101_DANPEI_TALK          314 /* 0x013a トキワジムダンペイと話した */
-#define FE_TR_SCIENTIST_15_WIN             315 /* 0x013b グレンジムトレーナー理科系１５倒した */
-#define FE_TR_SCIENTIST_16_WIN             316 /* 0x013c グレンジムトレーナー理科系１６倒した */
-#define FE_TR_SCIENTIST_17_WIN             317 /* 0x013d グレンジムトレーナー理科系１７倒した */
-#define FE_TR_HAGURE_06_WIN                318 /* 0x013e グレンジムトレーナーはぐれ０６倒した */
-#define FE_TR_HAGURE_07_WIN                319 /* 0x013f グレンジムトレーナーはぐれ０７倒した */
-#define FE_TR_HAGURE_08_WIN                320 /* 0x0140 グレンジムトレーナーはぐれ０８倒した */
-#define FE_MUSHITORI_WIN                   321 /* 0x0141 虫取り大会直近の結果(優勝したか？) */
-#define FE_T06_ARRIVAL                     322 /* 0x0142 クチバ到着フラグ(未使用 */
-#define FE_RECONGNIZE_JOHTO                323 /* 0x0143 ジョウト図鑑”ひょうしょう”済み */
-#define FE_RECONGNIZE_NATIONAL             324 /* 0x0144 全国図鑑”ひょうしょう”済み */
-#define FE_ALBUM_GET                       325 /* 0x0145 フォトアルバム入手 */
-#define FE_T29_ITEM_01_GET                 326 /* 0x0146 いかりのみずうみのアイテム１ゲット */
-#define FE_T29_ITEM_02_GET                 327 /* 0x0147 いかりのみずうみのアイテム１ゲット */
-#define FE_T29_ITEM_03_GET                 328 /* 0x0148 いかりのみずうみのアイテム１ゲット */
-#define FE_R18_BYSYCLE_RIDE                329 /* 0x0149 サイクリングロードを通っているフラグ */
-#define FE_R10_THUNDER_GET                 330 /* 0x014a １０番道路 */
-#define FE_D36R0101_GIZA_GET               331 /* 0x014b ウバメの森 */
-#define FE_AKUSESARIIIRE_GET               332 /* 0x014c アクセサリー入れ入手イベント終了（連れ歩きのリアクションで使用） */
-#define FE_R14_SUIKUN_EVENT_COMP           333 /* 0x014d １４番道路スイクンイベント終了 */
-#define FE_MASAKI_JIJI_TALK                334 /* 0x014e マサキのじいちゃんと話した */
-#define FE_D31R0201_JUDGE_TALK             335 /* 0x014f バトルタワー受付 */
-#define FE_D32R0102_GSMAN1_TALK            336 /* 0x0150 フロンティアフロントの迷う男と話した */
-#define FE_R47_MOUNT_TALK                  337 /* 0x0151 ４７番道路の山男と話した（ＧＫＲイベント） */
-#define FE_PKTH_REC_EVENT01_CLEAR          338 /* 0x0152 ポケスロン：小ネタイベント01クリア */
-#define FE_PKTH_REC_EVENT02_CLEAR          339 /* 0x0153 ポケスロン：小ネタイベント02クリア */
-#define FE_PKTH_REC_EVENT03_CLEAR          340 /* 0x0154 ポケスロン：小ネタイベント03クリア */
-#define FE_PKTH_REC_EVENT04_CLEAR          341 /* 0x0155 ポケスロン：小ネタイベント04クリア */
-#define FE_PKTH_REC_EVENT05_CLEAR          342 /* 0x0156 ポケスロン：小ネタイベント05クリア */
-#define FE_MAXI_TALK_AFTER                 343 /* 0x0157 R47のマキシと話した */
-#define FE_OHUDA_GET                       344 /* 0x0158 タマムシマンション屋上でおふだゲット */
-#define FE_DAISUKI_EGG01_GET               345 /* 0x0159 大好きお兄さん：入手タマゴフラグ（メリープ） */
-#define FE_DAISUKI_EGG02_GET               346 /* 0x015a 大好きお兄さん：入手タマゴフラグ（ウパー） */
-#define FE_DAISUKI_EGG03_GET               347 /* 0x015b 大好きお兄さん：入手タマゴフラグ（マグマッグ） */
-#define FE_R14_ITEM_GET                    348 /* 0x015c ｒ１４でラッキーパンチゲット */
-#define FE_T25R0601_ITEM_GET               349 /* 0x015d グラシデアの花ゲット */
-#define FE_T30_RECALL_TALK                 350 /* 0x015e 技教え兄さんと話した */
-#define FE_MUSHITORI_POKE_KEEP             351 /* 0x015f 虫取り大会でポケモンをあずけた */
-#define FE_T20R0101_FIRST_TALK             352 /* 0x0160 ウツギと初回会話終了 */
-#define FE_SETSUMEI_ON                     353 /* 0x0161 連れ歩き評価の説明フラグ */
-#define FE_TRADE_MACHISU                   354 /* 0x0162 ヤマブキ駅：マチス交換イベント */
-#define FE_IKARI_EVENT_END                 355 /* 0x0163 いかりまんじゅう購入済み */
-#define FE_IKARI_EVENT2_END                356 /* 0x0164 いかりまんじゅう渡した */
-#define FE_TRADE_TAKESHI                   357 /* 0x0165 ディグダの穴：タケシ交換イベント */
-#define FE_TRADE_MIKAN                     358 /* 0x0166 アサギジム：ミカン交換イベント */
-#define FE_TRADE_DAIGO                     359 /* 0x0167 シルフカンパニー：ダイゴ交換イベント */
-#define FE_MAP_FULL_OPEN                   360 /* 0x0168 マップフルオープンチェック用 */
-#define FE_USOKKY_GET                      361 /* 0x0169 ウソッキー捕獲 */
-#define FE_GYARADOS_GET                    362 /* 0x016a ギャラドス捕獲 */
-#define FE_MYUUTUU_GET                     363 /* 0x016b ミュウツー捕獲 */
-#define FE_FREEZER_GET                     364 /* 0x016c フリーザー捕獲 */
-#define FE_FIRE_GET                        365 /* 0x016d ファイヤー捕獲 */
-#define FE_T03R0101_DAIGO_TALK             366 /* 0x016e ニビ博物館：ダイゴと会話した */
-#define FE_T24R0501_HIDEN                  367 /* 0x016f アサギ */
-#define FE_D37R0102_KANPO                  368 /* 0x0170 コガネ地下道 */
-#define FE_D35R0101_MIYAGE                 369 /* 0x0171 チョウジ */
-#define FE_T07R0501_MAN2_TALK              370 /* 0x0172 めざめるパワー兄ちゃんと初回会話 */
-#define FE_KABIGON_GET                     371 /* 0x0173 カビゴン捕獲 */
-#define FE_R32PC_BALL_GET                  372 /* 0x0174 31番道路ポケセン */
-#define FE_SUIKUN_GET                      373 /* 0x0175 スイクン捕獲 */
-#define FE_BTLREC_VERUP                    374 /* 0x0176 バトルレコーダー改良説明聞いた */
-#define FE_HOUEN_POKEGET                   375 /* 0x0177 ダイゴからホウエン初期ポケモンを入手 */
-#define FE_CELEBI_TIMESLIP                 376 /* 0x0178 サカキ戦敗北（セレビィイベント） */
-#define FE_GRAADON_GET                     377 /* 0x0179 グラードン捕獲 */
-#define FE_KYOGRE_GET                      378 /* 0x017a カイオーガ捕獲 */
-#define FE_REKKUUZA_GET                    379 /* 0x017b レックウザ捕獲 */
+		/* not used   185(0x00b9) */
+		/* not used   186(0x00ba) */
+		/* not used   187(0x00bb) */
+		/* not used   188(0x00bc) */
+		/* not used   189(0x00bd) */
+		/* not used   190(0x00be) */
+		/* not used   191(0x00bf) */
+		/* not used   192(0x00c0) */
+		/* not used   193(0x00c1) */
+		/* not used   194(0x00c2) */
+		/* not used   195(0x00c3) */
+		/* not used   196(0x00c4) */
+		/* not used   197(0x00c5) */
+		/* not used   198(0x00c6) */
+		/* not used   199(0x00c7) */
+		/* not used   200(0x00c8) */
+		/* not used   201(0x00c9) */
+		/* not used   202(0x00ca) */
+		/* not used   203(0x00cb) */
+		/* not used   204(0x00cc) */
+		/* not used   205(0x00cd) */
+		/* not used   206(0x00ce) */
+		/* not used   207(0x00cf) */
+		/* not used   208(0x00d0) */
+		/* not used   209(0x00d1) */
+		/* not used   210(0x00d2) */
+		/* not used   211(0x00d3) */
+		/* not used   212(0x00d4) */
+		/* not used   213(0x00d5) */
+		/* not used   214(0x00d6) */
+		/* not used   215(0x00d7) */
+		/* not used   216(0x00d8) */
+		/* not used   217(0x00d9) */
+		/* not used   218(0x00da) */
+		/* not used   219(0x00db) */
+		/* not used   220(0x00dc) */
+		/* not used   221(0x00dd) */
+		/* not used   222(0x00de) */
+		/* not used   223(0x00df) */
+		/* not used   224(0x00e0) */
+		/* not used   225(0x00e1) */
+		/* not used   226(0x00e2) */
+		/* not used   227(0x00e3) */
+		/* not used   228(0x00e4) */
+		/* not used   229(0x00e5) */
+		/* not used   230(0x00e6) */
+		/* not used   231(0x00e7) */
+		/* not used   232(0x00e8) */
+		/* not used   233(0x00e9) */
+		/* not used   234(0x00ea) */
+		/* not used   235(0x00eb) */
+		/* not used   236(0x00ec) */
+		/* not used   237(0x00ed) */
+		/* not used   238(0x00ee) */
+		/* not used   239(0x00ef) */
+		/* not used   240(0x00f0) */
+		/* not used   241(0x00f1) */
+		/* not used   242(0x00f2) */
+		/* not used   243(0x00f3) */
+		/* not used   244(0x00f4) */
+		/* not used   245(0x00f5) */
+		/* not used   246(0x00f6) */
+		/* not used   247(0x00f7) */
+		/* not used   248(0x00f8) */
+		/* not used   249(0x00f9) */
+		/* not used   250(0x00fa) */
+		/* not used   251(0x00fb) */
+		/* not used   252(0x00fc) */
+		/* not used   253(0x00fd) */
+		/* not used   254(0x00fe) */
+		/* not used   255(0x00ff) */
+		/* not used   256(0x0100) */
+		/* not used   257(0x0101) */
+		/* not used   258(0x0102) */
+		/* not used   259(0x0103) */
+		/* not used   260(0x0104) */
+		/* not used   261(0x0105) */
+		/* not used   262(0x0106) */
+		/* not used   263(0x0107) */
+		/* not used   264(0x0108) */
+		/* not used   265(0x0109) */
+		/* not used   266(0x010a) */
+		/* not used   267(0x010b) */
+		/* not used   268(0x010c) */
+		/* not used   269(0x010d) */
+		/* not used   270(0x010e) */
+		/* not used   271(0x010f) */
+		/* not used   272(0x0110) */
+		/* not used   273(0x0111) */
+		/* not used   274(0x0112) */
+		/* not used   275(0x0113) */
+		/* not used   276(0x0114) */
+		/* not used   277(0x0115) */
+		/* not used   278(0x0116) */
+		/* not used   279(0x0117) */
+		/* not used   280(0x0118) */
+		/* not used   281(0x0119) */
+		/* not used   282(0x011a) */
+		/* not used   283(0x011b) */
+		/* not used   284(0x011c) */
+		/* not used   285(0x011d) */
+		/* not used   286(0x011e) */
+		/* not used   287(0x011f) */
+		/* not used   288(0x0120) */
+		/* not used   289(0x0121) */
+		/* not used   290(0x0122) */
+		/* not used   291(0x0123) */
+		/* not used   292(0x0124) */
+		/* not used   293(0x0125) */
+		/* not used   294(0x0126) */
+		/* not used   295(0x0127) */
+		/* not used   296(0x0128) */
+		/* not used   297(0x0129) */
+		/* not used   298(0x012a) */
+		/* not used   299(0x012b) */
+		/* not used   300(0x012c) */
+		/* not used   301(0x012d) */
+		/* not used   302(0x012e) */
+		/* not used   303(0x012f) */
+		/* not used   304(0x0130) */
+		/* not used   305(0x0131) */
+		/* not used   306(0x0132) */
+		/* not used   307(0x0133) */
+		/* not used   308(0x0134) */
+		/* not used   309(0x0135) */
+		/* not used   310(0x0136) */
+		/* not used   311(0x0137) */
+		/* not used   312(0x0138) */
+		/* not used   313(0x0139) */
+		/* not used   314(0x013a) */
+		/* not used   315(0x013b) */
+		/* not used   316(0x013c) */
+		/* not used   317(0x013d) */
+		/* not used   318(0x013e) */
+		/* not used   319(0x013f) */
+		/* not used   320(0x0140) */
+		/* not used   321(0x0141) */
+		/* not used   322(0x0142) */
+		/* not used   323(0x0143) */
+		/* not used   324(0x0144) */
+		/* not used   325(0x0145) */
+		/* not used   326(0x0146) */
+		/* not used   327(0x0147) */
+		/* not used   328(0x0148) */
+		/* not used   329(0x0149) */
+		/* not used   330(0x014a) */
+		/* not used   331(0x014b) */
+		/* not used   332(0x014c) */
+		/* not used   333(0x014d) */
+		/* not used   334(0x014e) */
+		/* not used   335(0x014f) */
+		/* not used   336(0x0150) */
+		/* not used   337(0x0151) */
+		/* not used   338(0x0152) */
+		/* not used   339(0x0153) */
+		/* not used   340(0x0154) */
+		/* not used   341(0x0155) */
+		/* not used   342(0x0156) */
+		/* not used   343(0x0157) */
+		/* not used   344(0x0158) */
+		/* not used   345(0x0159) */
+		/* not used   346(0x015a) */
+		/* not used   347(0x015b) */
+		/* not used   348(0x015c) */
+		/* not used   349(0x015d) */
+		/* not used   350(0x015e) */
+		/* not used   351(0x015f) */
+		/* not used   352(0x0160) */
+		/* not used   353(0x0161) */
+		/* not used   354(0x0162) */
+		/* not used   355(0x0163) */
+		/* not used   356(0x0164) */
+		/* not used   357(0x0165) */
+		/* not used   358(0x0166) */
+		/* not used   359(0x0167) */
+		/* not used   360(0x0168) */
+		/* not used   361(0x0169) */
+		/* not used   362(0x016a) */
+		/* not used   363(0x016b) */
+		/* not used   364(0x016c) */
+		/* not used   365(0x016d) */
+		/* not used   366(0x016e) */
+		/* not used   367(0x016f) */
+		/* not used   368(0x0170) */
+		/* not used   369(0x0171) */
+		/* not used   370(0x0172) */
+		/* not used   371(0x0173) */
+		/* not used   372(0x0174) */
+		/* not used   373(0x0175) */
+		/* not used   374(0x0176) */
+		/* not used   375(0x0177) */
+		/* not used   376(0x0178) */
+		/* not used   377(0x0179) */
+		/* not used   378(0x017a) */
+		/* not used   379(0x017b) */
 		/* not used   380(0x017c) */
-#define FE_D11R0106_GYM_ITEM_GET           381 /* 0x017d グレンジム */
-#define FE_T02_GYM_ITEM_GET                382 /* 0x017e トキワジム */
-#define FE_T03_GYM_ITEM_GET                383 /* 0x017f ニビジム */
-#define FE_T04_GYM_ITEM_GET                384 /* 0x0180 ハナダジム */
-#define FE_T06_GYM_ITEM_GET                385 /* 0x0181 クチバジム */
-#define FE_T11_GYM_ITEM_GET                386 /* 0x0182 ヤマブキジム */
-#define FE_OBJ_SETSUMEI_GET                387 /* 0x0183 サファリでOBJ１回目追加イベント終了 */
-#define FE_CROWN_GET                       388 /* 0x0184 王冠獲得フラグ */
-#define FE_ROCKCLIMB_GET                   389 /* 0x0185 ロッククライムもらって部屋を出るまで立てるフラグ */
-#define FE_T30R0601_DRAGON_TALK            390 /* 0x0186 フ#define */
-#define FE_T30R0601_OLDMAN1_TALK           391 /* 0x0187 フスベ民家：究極技教えの老人と初回会話 */
-#define FE_KABUTO_CLEAR                    392 /* 0x0188 カブトの石版パズルクリア */
-#define FE_FLAG_CHANGE_CHANCEL             393 /* 0x0189 フラグチェンジキャンセルフラグ */
-#define FE_D35R0101_OTUKIMI                394 /* 0x018a お月見山 */
-#define FE_GKR_BATTLE                      395 /* 0x018b グラードン戦闘して倒した、逃げた */
+		/* not used   381(0x017d) */
+		/* not used   382(0x017e) */
+		/* not used   383(0x017f) */
+		/* not used   384(0x0180) */
+		/* not used   385(0x0181) */
+		/* not used   386(0x0182) */
+		/* not used   387(0x0183) */
+		/* not used   388(0x0184) */
+		/* not used   389(0x0185) */
+		/* not used   390(0x0186) */
+		/* not used   391(0x0187) */
+		/* not used   392(0x0188) */
+		/* not used   393(0x0189) */
+		/* not used   394(0x018a) */
+		/* not used   395(0x018b) */
 		/* not used   396(0x018c) */
 		/* not used   397(0x018d) */
 		/* not used   398(0x018e) */
