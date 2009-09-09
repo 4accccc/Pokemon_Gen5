@@ -513,6 +513,7 @@ void BTLV_ITEMSELECT_Start( BTLV_CORE* wk, u8 bagMode, u8 energy )
     wk->bagData.end_flg = FALSE;
     wk->bagData.ret_item = ITEM_DUMMY_DATA;
     wk->bagData.energy = energy;
+    wk->bagData.reserved_energy = 0;
 
     BTL_Printf(" Start Item Select!!! mode=%d!!\n", bagMode );
     BattleBag_TaskAdd( &wk->bagData );
