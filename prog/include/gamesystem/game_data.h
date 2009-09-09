@@ -376,6 +376,16 @@ extern FIELD_SOUND * GAMEDATA_GetFieldSound( GAMEDATA *gamedata );
 
 //==================================================================
 /**
+ * マップモード設定
+ *
+ * @param   gamedata		GAMEDATAへのポインタ
+ * @param   map_mode		マップモード
+ */
+//==================================================================
+extern void GAMEDATA_SetMapMode(GAMEDATA *gamedata, MAPMODE map_mode);
+
+//==================================================================
+/**
  * マップモード取得
  *
  * @param   gamedata		GAMEDATAへのポインタ

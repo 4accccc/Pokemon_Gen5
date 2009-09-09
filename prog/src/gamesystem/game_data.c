@@ -629,6 +629,19 @@ void PLAYERWORK_SetMoveForm( PLAYER_WORK *player, PLAYER_MOVE_FORM form )
 
 //==================================================================
 /**
+ * マップモード設定
+ *
+ * @param   gamedata		GAMEDATAへのポインタ
+ * @param   map_mode		マップモード
+ */
+//==================================================================
+void GAMEDATA_SetMapMode(GAMEDATA *gamedata, MAPMODE map_mode)
+{
+  gamedata->map_mode = map_mode;
+}
+
+//==================================================================
+/**
  * マップモード取得
  *
  * @param   gamedata		GAMEDATAへのポインタ
