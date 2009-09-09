@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-09-04T19:12:26"/>
+	<create user="matsumiya" host="W00207" date="2009-09-08T16:03:43"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -292,7 +292,7 @@
 	</lock>
 
 
-	<row id="msg_t01r0101_black_01" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_t01r0101_black_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・続けてmsg_t01r0101_white_01</comment>
 		<attribute name="キャラ指定">友達♂</attribute>
@@ -302,7 +302,7 @@
 それでは　しつれいします[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_t01r0101_white_01" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_t01r0101_white_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♀
 ・メッセージ表示後、友達♂、友達♀退場
 ・続けて主人公ママ、主人公に隣接して
@@ -329,7 +329,7 @@
 ……　……　……[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_t01r0101_mama_02">
+	<row id="msg_t01r0101_mama_02" back-color=",,,#ffff80,,,,,,,,,,,,,,,">
 		<comment>♀
 ・ハートマーク表示とか
 　感情表現の演出（仮案）</comment>
@@ -365,10 +365,10 @@
 お礼を　いわないとね</language>
 	</row>
 
-	<row id="msg_t01r0101_mama_05">
+	<row id="msg_t01r0101_mama_05" back-color=",,,#ffff80,,,,,,,,,,,,,,,">
 		<comment>♀
 ・ポケモン図鑑入手後から
-　ランニングシューズ入手するまで仮）
+　ランニングシューズ入手するまで仮
 ・メッセージ表示後、
 　画面暗転して回復処理</comment>
 		<attribute name="キャラ指定">主人公ママ</attribute>

@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-09-04T19:08:08"/>
+	<create user="matsumiya" host="W00207" date="2009-09-08T16:06:33"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -307,14 +307,14 @@
 		</language>
 	</columns>
 
-	<dialog left="26" top="191" right="725" bottom="800" maximized="no" rayout="Vertical2">
+	<dialog left="26" top="194" right="722" bottom="800" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="807" top="119" right="1280" bottom="517" visible="yes"/>
-		<band id="0" index="1" style="0000" width="524"/>
+		<band id="0" index="1" style="0000" width="521"/>
 		<band id="1" index="2" style="0000" width="165"/>
-		<band id="2" index="3" style="0000" width="537"/>
+		<band id="2" index="3" style="0000" width="534"/>
 		<band id="3" index="4" style="0000" width="152"/>
-		<band id="4" index="0" style="0000" width="691"/>
+		<band id="4" index="0" style="0000" width="688"/>
 		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
@@ -336,7 +336,7 @@
 	</lock>
 
 
-	<row id="msg_t01r0102_black_test01" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,,,,#c0c0c0,,,,,,">
+	<row id="msg_t01r0102_black_test01" back-color="#808080,,,#808080,,#808080,#808080,,,,,,#808080,,,,,,">
 		<comment>♂
 ・７月末ROM用</comment>
 		<attribute name="キャラ指定">友達♂</attribute>
@@ -349,7 +349,7 @@
 ポケモンを　くれるのだろう？[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_t01r0102_white_test01" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,,,,#c0c0c0,,,,,,">
+	<row id="msg_t01r0102_white_test01" back-color="#808080,,,#808080,,#808080,#808080,,,,,,#808080,,,,,,">
 		<comment>♀
 ・７月末ROM用</comment>
 		<attribute name="キャラ指定">友達♀</attribute>
@@ -361,7 +361,7 @@
 だって　みんな　可愛いもん！</language>
 	</row>
 
-	<row id="msg_t01r0102_white_test02" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,,,,#c0c0c0,,,,,,">
+	<row id="msg_t01r0102_white_test02" back-color="#808080,,,#808080,,#808080,#808080,,,,,,#808080,,,,,,">
 		<comment>♀
 ・７月末ROM用</comment>
 		<attribute name="キャラ指定">友達♀</attribute>
@@ -371,7 +371,7 @@
 あたし　この　ポケモン！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_t01r0102_white_test02a" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,,,,#c0c0c0,,,,,,">
+	<row id="msg_t01r0102_white_test02a" back-color="#808080,,,#808080,,#808080,#808080,,,,,,#808080,,,,,,">
 		<comment>♀
 ・７月末ROM用</comment>
 		<attribute name="キャラ指定">友達♀</attribute>
@@ -379,7 +379,7 @@
 		<language name="JPN_KANJI" width="256">クロックは　この子ね！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_t01r0102_black_test02" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,,,,#c0c0c0,,,,,,">
+	<row id="msg_t01r0102_black_test02" back-color="#808080,,,#808080,,#808080,#808080,,,,,,#808080,,,,,,">
 		<comment>♂
 ・７月末ROM用</comment>
 		<attribute name="キャラ指定">友達♂</attribute>
@@ -391,7 +391,7 @@
 この　ポケモンが　ほしかったけれど[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_t01r0102_white_test03" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,,,,#c0c0c0,,,,,,">
+	<row id="msg_t01r0102_white_test03" back-color="#808080,,,#808080,,#808080,#808080,,,,,,#808080,,,,,,">
 		<comment>♀
 ・７月末ROM用</comment>
 		<attribute name="キャラ指定">友達♀</attribute>
@@ -403,7 +403,7 @@
 ねえねえ　ポケモン勝負　しようよ！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_t01r0102_white_test04" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,,,,#c0c0c0,,,,,,">
+	<row id="msg_t01r0102_white_test04" back-color="#808080,,,#808080,,#808080,#808080,,,,,,#808080,,,,,,">
 		<comment>♀
 ・７月末ROM用</comment>
 		<attribute name="キャラ指定">友達♀</attribute>
@@ -417,7 +417,7 @@
 ポケモン　強いんだね！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_t01r0102_black_test03" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,,,,#c0c0c0,,,,,,">
+	<row id="msg_t01r0102_black_test03" back-color="#808080,,,#808080,,#808080,#808080,,,,,,#808080,,,,,,">
 		<comment>♂
 ・７月末ROM用</comment>
 		<attribute name="キャラ指定">友達♂</attribute>
@@ -433,7 +433,7 @@
 使わなくても　大丈夫だね[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_t01r0102_black_test04" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,,,,#c0c0c0,,,,,,">
+	<row id="msg_t01r0102_black_test04" back-color="#808080,,,#808080,,#808080,#808080,,,,,,#808080,,,,,,">
 		<comment>♂
 ・７月末ROM用</comment>
 		<attribute name="キャラ指定">友達♂</attribute>
@@ -455,7 +455,7 @@
 待っているから！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_t01r0102_white_test05" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,,,,#c0c0c0,,,,,,">
+	<row id="msg_t01r0102_white_test05" back-color="#808080,,,#808080,,#808080,#808080,,,,,,#808080,,,,,,">
 		<comment>♀
 ・７月末ROM用</comment>
 		<attribute name="キャラ指定">友達♀</attribute>
@@ -522,14 +522,10 @@
 		<attribute name="キャラ指定">友達♂</attribute>
 		<language name="JPN" width="256">クロック『なあ　ホワイティ
 いいかげんにさ[BE:00:ページ切り替え（行送り）]
-やくそくの　じかんは　まもろうよ[BE:01:ページ切り替え（クリア）]
-３ねんまえの　あのときも
-こないだの　あのときも……[BE:01:ページ切り替え（クリア）]</language>
+やくそくの　じかんは　まもろうよ[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">クロック『なあ　ホワイティ
 いいかげんにさ[BE:00:ページ切り替え（行送り）]
-約束の　時間は　守ろうよ[BE:01:ページ切り替え（クリア）]
-３年前の　あのときも
-こないだの　あのときも……[BE:01:ページ切り替え（クリア）]</language>
+約束の　時間は　守ろうよ[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_t01r0102_white_02">
@@ -834,7 +830,7 @@
 あたし　一度　家にもどるね[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_t01r0102_ball1_fire_01">
+	<row id="msg_t01r0102_ball1_fire_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>7月ROM用
 続けて「はい/いいえ」の選択肢表示
 ・はい→msg_t01r0102_ball_get_01
@@ -848,7 +844,7 @@
 この　ポケモンを　選びますか？</language>
 	</row>
 
-	<row id="msg_t01r0102_ball1_grass_01">
+	<row id="msg_t01r0102_ball1_grass_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>7月ROM用
 続けて「はい/いいえ」の選択肢表示
 ・はい→msg_t01r0102_ball_get_01
@@ -862,7 +858,7 @@
 この　ポケモンを　選びますか？</language>
 	</row>
 
-	<row id="msg_t01r0102_ball1_water_01">
+	<row id="msg_t01r0102_ball1_water_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>7月ROM用
 続けて「はい/いいえ」の選択肢表示
 ・はい→msg_t01r0102_ball_get_01
@@ -876,7 +872,7 @@
 この　ポケモンを　選びますか？</language>
 	</row>
 
-	<row id="msg_t01r0102_ball_get_01">
+	<row id="msg_t01r0102_ball_get_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>7月ROM用
 ・本来であればシステムメッセージ</comment>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]は
