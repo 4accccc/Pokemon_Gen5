@@ -95,16 +95,19 @@ VMCMD_RESULT EvCmdMusicalCall( VMHANDLE *core, void *wk )
    
   {
     GMEVENT **sc_event = SCRIPT_GetMemberWork( sc, ID_EVSCR_WK_GMEVENT );
-    GMEVENT_CallEvent( *sc_event, call_event );
+    //GMEVENT_CallEvent( *sc_event, call_event );
+    GMEVENT_ChangeEvent( *sc_event, call_event );
   }
   
   {
     FIELD_SOUND *fsnd = GAMEDATA_GetFieldSound( gdata );
-    FIELD_SOUND_PushBGM( fsnd );
-    PMSND_FadeOutBGM( 30 );
+    PMSND_StopBGM();
+  //  FIELD_SOUND_PushBGM( fsnd );
+  //  PMSND_FadeOutBGM( 30 );
   }
   
-  return VMCMD_RESULT_SUSPEND;;
+  return VMCMD_RESULT_CONTINUE;;
+  //return VMCMD_RESULT_SUSPEND;;
 }
 
 //======================================================================
@@ -136,7 +139,7 @@ static GMEVENT_RESULT event_Musical(
       GAMESYS_WORK *gsys =  GMEVENT_GetGameSysWork( event );
       GAMEDATA *gdata = GAMESYSTEM_GetGameData( gsys );
       FIELD_SOUND *fsnd = GAMEDATA_GetFieldSound( gdata );
-      FIELD_SOUND_PopBGM( fsnd );
+      //FIELD_SOUND_PopBGM( fsnd );
       PMSND_FadeInBGM( 30 );
     }
     (*seq)++;
