@@ -23,6 +23,7 @@
 #include "scrcmd_work.h"
 
 #include "musical/musical_system.h"
+#include "musical/musical_event.h"
 
 #include "poke_tool/poke_tool.h"  //ドレスアップ仮データ用
 #include "poke_tool/monsno_def.h" //ドレスアップ仮データ用
@@ -88,8 +89,9 @@ VMCMD_RESULT EvCmdMusicalCall( VMHANDLE *core, void *wk )
   init->isDebug = FALSE;
   init->gameComm = GAMESYSTEM_GetGameCommSysPtr( gsys );
   
-  ev_musical_work->event = EVENT_FieldSubProc( gsys, fparam->fieldMap,
-    NO_OVERLAY_ID, &Musical_ProcData, init );
+//  ev_musical_work->event = EVENT_FieldSubProc( gsys, fparam->fieldMap,
+//    NO_OVERLAY_ID, &Musical_ProcData, init );
+  ev_musical_work->event = MUSICAL_CreateEvent( gsys, gdata , fparam->fieldMap, FALSE );
    
   {
     GMEVENT **sc_event = SCRIPT_GetMemberWork( sc, ID_EVSCR_WK_GMEVENT );
@@ -102,7 +104,7 @@ VMCMD_RESULT EvCmdMusicalCall( VMHANDLE *core, void *wk )
     PMSND_FadeOutBGM( 30 );
   }
   
-  return VMCMD_RESULT_CONTINUE;
+  return VMCMD_RESULT_SUSPEND;;
 }
 
 //======================================================================

@@ -128,6 +128,7 @@ SRCS  +=    $(SOUNDSRC) \
         system/pms_data.c \
         system/pms_word.c \
         musical/musical_system.c \
+        musical/musical_event.c \
         musical/dressup/musical_dressup_sys.c \
         musical/stage/musical_stage_sys.c \
         infowin/infowin.c \
