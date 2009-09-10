@@ -372,3 +372,21 @@ u32 BAPP_CursorMove( BAPP_CURSOR_MVWK * wk )
 */
 	return BAPP_CMV_NONE;
 }
+
+
+void BAPPTOOL_PrintQueOn( BAPP_BMPWIN_QUE * dat )
+{
+	dat->flg = TRUE;
+}
+
+void BAPPTOOL_PrintQueTrans( BAPP_BMPWIN_QUE * dat, u32 max )
+{
+	u32	i;
+
+	for( i=0; i<max; i++ ){
+		if( dat[i].flg == TRUE ){
+		  GFL_BMPWIN_MakeTransWindow_VBlank( dat[i].win );
+			dat[i].flg = FALSE;
+		}
+	}
+}

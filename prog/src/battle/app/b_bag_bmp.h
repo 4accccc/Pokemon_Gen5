@@ -127,4 +127,7 @@ extern void BattleBag_TalkMsgStart( BBAG_WORK * wk );
 extern void BattleBag_ItemUseMsgSet( BBAG_WORK * wk );
 
 
+extern void BBAGBMP_PrintMain( BBAG_WORK * wk );
+
+
 #endif	// B_BAG_BMP_H

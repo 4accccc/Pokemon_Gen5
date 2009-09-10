@@ -231,12 +231,12 @@ void BattleBag_BmpAdd( BBAG_WORK * wk, u32 page )
 	// ポケット選択ページ
 	dat = Page1_BmpData[0];
 	for( i=0; i<WIN_MAX; i++ ){
-		wk->add_win[i] = GFL_BMPWIN_Create(
-												dat[0],
-												dat[1], dat[2],
-												dat[3], dat[4],
-												dat[5],
-												GFL_BMP_CHRAREA_GET_B );
+		wk->add_win[i].win = GFL_BMPWIN_Create(
+													dat[0],
+													dat[1], dat[2],
+													dat[3], dat[4],
+													dat[5],
+													GFL_BMP_CHRAREA_GET_B );
 		dat += 6;
 	}
 
@@ -288,7 +288,7 @@ void BattleBag_BmpFree( BBAG_WORK * wk )
 	u32	i;
 
 	for( i=0; i<WIN_MAX; i++ ){
-		GFL_BMPWIN_Delete( wk->add_win[i] );
+		GFL_BMPWIN_Delete( wk->add_win[i].win );
 	}
 }
 
@@ -354,14 +354,14 @@ static void BBAG_StrPut( BBAG_WORK * wk, u32 widx, u32 midx, u32 py, u16 col )
 	u32	siz;
 	u32	px;
 
-	win = wk->add_win[widx];
+	win = wk->add_win[widx].win;
 	str = GFL_MSG_CreateString( wk->mman, midx );
 	siz = PRINTSYS_GetStrWidth( str, wk->dat->font, 0 );
 	px = ( GFL_BMPWIN_GetSizeX(win) * 8 - siz ) / 2;
 	PRINTSYS_PrintQueColor( wk->que, GFL_BMPWIN_GetBmp(win), px, py, str, wk->dat->font, col );
+	BAPPTOOL_PrintQueOn( &wk->add_win[widx] );
 	GFL_STR_DeleteBuffer( str );
-
-  GFL_BMPWIN_MakeTransWindow_VBlank( win );
+//  GFL_BMPWIN_MakeTransWindow_VBlank( win );
 }
 
 // ポケット名表示座標
@@ -396,7 +396,7 @@ static void BBAG_Page1BmpWrite( BBAG_WORK * wk )
 	u32	i;
 
 	for( i=WIN_P1_HP; i<=WIN_P1_LASTITEM; i++ ){
-		bmp = GFL_BMPWIN_GetBmp( wk->add_win[i] );
+		bmp = GFL_BMPWIN_GetBmp( wk->add_win[i].win );
 		GFL_BMP_Clear( bmp, 0 );
 	}
 
@@ -408,17 +408,12 @@ static void BBAG_Page1BmpWrite( BBAG_WORK * wk )
 	BBAG_StrPut( wk, WIN_P1_BATTLE, mes_b_bag_01_400, P1_BATTLE_PY, FCOL_S12W );
 	if( wk->dat->used_item != ITEM_DUMMY_DATA ){
 		STRBUF * str = GFL_MSG_CreateString( wk->mman, mes_b_bag_01_600 );
-/*
-		GF_STR_PrintColor(
-			&wk->add_win[WIN_P1_LASTITEM], FONT_TOUCH,
-			str, 0, P1_LASTITEM_PY, MSG_NO_PUT, PCOL_BTN, NULL );
-*/
 		PRINTSYS_PrintQueColor(
-			wk->que, GFL_BMPWIN_GetBmp( wk->add_win[WIN_P1_LASTITEM] ),
+			wk->que, GFL_BMPWIN_GetBmp( wk->add_win[WIN_P1_LASTITEM].win ),
 			0, P1_LASTITEM_PY, str, wk->dat->font, FCOL_S12W );
-
+		BAPPTOOL_PrintQueOn( &wk->add_win[WIN_P1_LASTITEM] );
 		GFL_STR_DeleteBuffer( str );
-	  GFL_BMPWIN_MakeTransWindow_VBlank( wk->add_win[WIN_P1_LASTITEM] );
+//	  GFL_BMPWIN_MakeTransWindow_VBlank( wk->add_win[WIN_P1_LASTITEM].win );
 	}
 }
 
@@ -459,7 +454,7 @@ static void BBAG_ItemNamePut(
 	u32	siz;
 	u32	px;
 
-	win = wk->add_win[widx];
+	win = wk->add_win[widx].win;
 	bmp = GFL_BMPWIN_GetBmp( win );
 	GFL_BMP_Clear( bmp, 0 );
 
@@ -472,10 +467,11 @@ static void BBAG_ItemNamePut(
 //		GF_STR_PrintColor( win, fidx, wk->msg_buf, px, P2_ITEMNAME_PY, MSG_NO_PUT, col, NULL );
 		PRINTSYS_PrintQueColor(
 			wk->que, bmp, px, P2_ITEMNAME_PY, wk->msg_buf, wk->dat->font, FCOL_S12W );
+		BAPPTOOL_PrintQueOn( &wk->add_win[widx] );
 		GFL_STR_DeleteBuffer( str );
+	}else{
+		GFL_BMPWIN_MakeTransWindow_VBlank( win );
 	}
-
-	GFL_BMPWIN_MakeTransWindow_VBlank( win );
 }
 
 //--------------------------------------------------------------------------------------------
@@ -500,7 +496,7 @@ static void BBAG_ItemNumPut(
 	GFL_BMPWIN * win;
 	GFL_BMP_DATA * bmp;
 
-	win = wk->add_win[widx];
+	win = wk->add_win[widx].win;
 	bmp = GFL_BMPWIN_GetBmp( win );
 	GFL_BMP_Clear( bmp, 0 );
 
@@ -515,11 +511,12 @@ static void BBAG_ItemNumPut(
 //		GF_STR_PrintColor( win, fidx, wk->msg_buf, 0, py, MSG_NO_PUT, col, NULL );
 		PRINTSYS_PrintQueColor(
 			wk->que, bmp, 0, py, wk->msg_buf, wk->dat->font, FCOL_S12W );
+		BAPPTOOL_PrintQueOn( &wk->add_win[widx] );
 
 		GFL_STR_DeleteBuffer( str );
+	}else{
+		GFL_BMPWIN_MakeTransWindow_VBlank( win );
 	}
-
-	GFL_BMPWIN_MakeTransWindow_VBlank( win );
 }
 
 #define	P2_ITEMNUM_PY	( 4 )	// アイテム選択ページの個数表示Y座標
@@ -596,7 +593,7 @@ void BattleBag_Page2_StrPageNumPut( BBAG_WORK * wk )
 	u32	siz;
 	u32	px;
 
-	win = wk->add_win[WIN_P2_PAGENUM];
+	win = wk->add_win[WIN_P2_PAGENUM].win;
 	bmp = GFL_BMPWIN_GetBmp( win );
 	GFL_BMP_Clear( bmp, 0 );
 
@@ -633,9 +630,10 @@ void BattleBag_Page2_StrPageNumPut( BBAG_WORK * wk )
 //		win, FONT_SYSTEM, wk->msg_buf, px-siz, P2_PAGE_NUM_PY, MSG_NO_PUT, PCOL_N_WHITE, NULL );
 	PRINTSYS_PrintQueColor(
 			wk->que, bmp, px-siz, P2_PAGE_NUM_PY, wk->msg_buf, wk->dat->font, FCOL_S12W );
+	BAPPTOOL_PrintQueOn( &wk->add_win[WIN_P2_PAGENUM] );
 	GFL_STR_DeleteBuffer( str );
 
-	GFL_BMPWIN_MakeTransWindow_VBlank( win );
+//	GFL_BMPWIN_MakeTransWindow_VBlank( win );
 }
 
 // アイテム選択ページのポケット名表示座標
@@ -660,7 +658,7 @@ static void BBAG_Page2PocketNamePut( BBAG_WORK * wk )
 {
 	GFL_BMP_DATA * bmp;
 
-	bmp = GFL_BMPWIN_GetBmp( wk->add_win[WIN_P2_POCKET] );
+	bmp = GFL_BMPWIN_GetBmp( wk->add_win[WIN_P2_POCKET].win );
 	GFL_BMP_Clear( bmp, 0 );
 
 	switch( wk->poke_id ){
@@ -726,7 +724,7 @@ static void BBAG_P3_ItemNamePut( BBAG_WORK * wk, u32 dat_pos )
 	GFL_BMP_DATA * bmp;
 	STRBUF * str;
 
-	win = wk->add_win[WIN_P3_NAME];
+	win = wk->add_win[WIN_P3_NAME].win;
 	str = GFL_MSG_CreateString( wk->mman, ItemStrGmm[0][0] );
 	WORDSET_RegisterItemName( wk->wset, 0, wk->pocket[wk->poke_id][dat_pos].id );
 	WORDSET_ExpandStr( wk->wset, wk->msg_buf, str );
@@ -737,9 +735,10 @@ static void BBAG_P3_ItemNamePut( BBAG_WORK * wk, u32 dat_pos )
 //		win, FONT_SYSTEM, wk->msg_buf, 0, P3_ITEMNAME_PY, MSG_NO_PUT, PCOL_N_WHITE, NULL );
 	PRINTSYS_PrintQueColor(
 			wk->que, bmp, 0, P3_ITEMNAME_PY, wk->msg_buf, wk->dat->font, FCOL_S12W );
+	BAPPTOOL_PrintQueOn( &wk->add_win[WIN_P3_NAME] );
 	GFL_STR_DeleteBuffer( str );
 
-	GFL_BMPWIN_MakeTransWindow_VBlank( win );
+//	GFL_BMPWIN_MakeTransWindow_VBlank( win );
 }
 
 //--------------------------------------------------------------------------------------------
@@ -757,16 +756,17 @@ static void BBAG_P3_ItemInfoPut( BBAG_WORK * wk, u32 dat_pos )
 	GFL_BMPWIN * win;
 	STRBUF * buf;
 	
-	win = wk->add_win[WIN_P3_INFO];
+	win = wk->add_win[WIN_P3_INFO].win;
 	buf = GFL_STR_CreateBuffer( BUFLEN_ITEM_INFO, wk->dat->heap );
 	ITEM_GetInfo( buf, wk->pocket[wk->poke_id][dat_pos].id, wk->dat->heap );
 //	GF_STR_PrintColor(
 //		win, FONT_SYSTEM, buf, P3_ITEMINFO_PX, P3_ITEMINFO_PY, MSG_NO_PUT, PCOL_N_BLACK, NULL );
 	PRINTSYS_PrintQueColor(
 			wk->que, GFL_BMPWIN_GetBmp(win), P3_ITEMINFO_PX, P3_ITEMINFO_PY, buf, wk->dat->font, FCOL_S12W );
+	BAPPTOOL_PrintQueOn( &wk->add_win[WIN_P3_INFO] );
 	GFL_STR_DeleteBuffer( buf );
 
-	GFL_BMPWIN_MakeTransWindow_VBlank( win );
+//	GFL_BMPWIN_MakeTransWindow_VBlank( win );
 }
 
 #define	P3_USE_PY	( 0 )		// 「つかう」表示Y座標
@@ -787,7 +787,7 @@ static void BBAG_Page3BmpWrite( BBAG_WORK * wk )
 	u32	dat_pos;
 
 	for( i=WIN_P3_NAME; i<=WIN_P3_USE; i++ ){
-		bmp = GFL_BMPWIN_GetBmp( wk->add_win[i] );
+		bmp = GFL_BMPWIN_GetBmp( wk->add_win[i].win );
 		GFL_BMP_Clear( bmp, 0 );
 	}
 
@@ -932,4 +932,13 @@ void BattleBag_ItemUseMsgSet( BBAG_WORK * wk )
 	GFL_HEAP_FreeMemory( item );
 */
 /*↑[GS_CONVERT_TAG]*/
+}
+
+
+
+void BBAGBMP_PrintMain( BBAG_WORK * wk )
+{
+	if( PRINTSYS_QUE_Main( wk->que ) == TRUE ){
+		BAPPTOOL_PrintQueTrans( wk->add_win, WIN_MAX );
+	}
 }

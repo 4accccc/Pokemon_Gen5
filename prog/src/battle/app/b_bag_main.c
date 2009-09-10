@@ -131,7 +131,7 @@ static int BBAG_SeqButtonWait( BBAG_WORK * wk );
 static int BBAG_SeqGetDemoMain( BBAG_WORK * wk );
 static int BBAG_SeqEndSet( BBAG_WORK * wk );
 static int BBAG_SeqEndWait( BBAG_WORK * wk );
-static u8 BBAG_SeqEnd( GFL_TCB* tcb, BBAG_WORK * wk );
+static BOOL BBAG_SeqEnd( GFL_TCB* tcb, BBAG_WORK * wk );
 /*↑[GS_CONVERT_TAG]*/
 
 //static void BBAG_VramInit(void);
@@ -342,11 +342,14 @@ static void BattleBag_Main( GFL_TCB * tcb, void * work )
 {
 	BBAG_WORK * wk = (BBAG_WORK *)work;
 
-	wk->seq = MainSeqFunc[wk->seq]( wk );
+	if( wk->seq != SEQ_BBAG_END ){
+		wk->seq = MainSeqFunc[wk->seq]( wk );
+	}
 
 	if( wk->seq == SEQ_BBAG_END ){
-		BBAG_SeqEnd( tcb, wk );
-		return;
+		if( BBAG_SeqEnd( tcb, wk ) == TRUE ){
+			return;
+		}
 	}
 
 	GFL_TCBL_Main( wk->tcbl );
@@ -354,7 +357,7 @@ static void BattleBag_Main( GFL_TCB * tcb, void * work )
 //	BattleBag_GetDemoCursorAnm( wk );
 //	GFL_CLACT_SYS_Main( wk->crp );
 
-//	PRINTSYS_QUE_Main( wk->que );
+	BBAGBMP_PrintMain( wk );
 }
 
 //--------------------------------------------------------------------------------------------
@@ -938,8 +941,12 @@ static int BBAG_SeqEndWait( BBAG_WORK * wk )
  * @retval	"FALSE = フェード中"
  */
 //--------------------------------------------------------------------------------------------
-static u8 BBAG_SeqEnd( GFL_TCB * tcb, BBAG_WORK * wk )
+static BOOL BBAG_SeqEnd( GFL_TCB * tcb, BBAG_WORK * wk )
 {
+	if( PRINTSYS_QUE_IsFinished( wk->que ) == FALSE ){
+		return FALSE;
+	}
+
 	wk->dat->end_flg = 1;
 
 	BattleBag_ObjFree( wk );
@@ -956,7 +963,7 @@ static u8 BBAG_SeqEnd( GFL_TCB * tcb, BBAG_WORK * wk )
 
 //	GFL_HEAP_DeleteHeap( HEAPID_BATTLE_APP_TEST );
 
-	return 0;
+	return TRUE;
 
 #if 0
 	if( PaletteFadeCheck( wk->pfd ) != 0 ){ return FALSE; }
@@ -1276,6 +1283,7 @@ static void BBAG_MsgManSet( BBAG_WORK * wk )
 //	wk->nfnt = NUMFONT_Create( 15, 14, FBMP_COL_NULL, wk->dat->heap );
 	wk->wset = WORDSET_Create( wk->dat->heap );
 	wk->que  = PRINTSYS_QUE_Create( wk->dat->heap );
+//	PRINTSYS_QUE_ForceCommMode( wk->que, TRUE );			// テスト
 
 	wk->msg_buf = GFL_STR_CreateBuffer( TMP_MSG_BUF_SIZ, wk->dat->heap );
 }
