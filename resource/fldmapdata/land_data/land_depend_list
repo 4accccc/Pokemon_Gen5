@@ -384,6 +384,10 @@ LAND_DEPEND_LIST = \
 	$(DIR_OUTPUT)/m_villa01_00_00.3dppack \
 	$(DIR_OUTPUT)/m_villa02_00_00.3dppack \
 	$(DIR_OUTPUT)/m_football01_00_00.3dppack \
+	$(DIR_OUTPUT)/m_gym0401_00_01.3dppack \
+	$(DIR_OUTPUT)/m_gym0401_01_00.3dppack \
+	$(DIR_OUTPUT)/m_gym0401_01_01.3dppack \
+	$(DIR_OUTPUT)/m_theater02_00_00.3dppack \
 	$(DIR_OUTPUT)/C3_00_01.ngpack \
 	$(DIR_OUTPUT)/C3_00_02.ngpack \
 	$(DIR_OUTPUT)/C3_01_01.ngpack \

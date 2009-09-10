@@ -145,7 +145,8 @@ enum {
 	NARC_map_matrix_dun1503_mat_bin = 131,
 	NARC_map_matrix_dun1601_mat_bin = 132,
 	NARC_map_matrix_dun1602_mat_bin = 133,
-	NARC_map_matrix_dun1603_mat_bin = 134
+	NARC_map_matrix_dun1603_mat_bin = 134,
+	NARC_map_matrix_theater02_mat_bin = 135
 };
 
 /* NARC_MAP_MATRIX_NAIX_ */

@@ -384,6 +384,10 @@ LAND_TEMP_LIST = \
 	$(DIR_TEMP)/m_villa01_00_00.nsbmd \
 	$(DIR_TEMP)/m_villa02_00_00.nsbmd \
 	$(DIR_TEMP)/m_football01_00_00.nsbmd \
+	$(DIR_TEMP)/m_gym0401_00_01.nsbmd \
+	$(DIR_TEMP)/m_gym0401_01_00.nsbmd \
+	$(DIR_TEMP)/m_gym0401_01_01.nsbmd \
+	$(DIR_TEMP)/m_theater02_00_00.nsbmd \
 	$(DIR_TEMP)/C3_00_01.nsbmd	$(DIR_TEMP)/C3_00_01.bhc \
 	$(DIR_TEMP)/C3_00_02.nsbmd	$(DIR_TEMP)/C3_00_02.bhc \
 	$(DIR_TEMP)/C3_01_01.nsbmd	$(DIR_TEMP)/C3_01_01.bhc \
