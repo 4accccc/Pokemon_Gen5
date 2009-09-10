@@ -32,6 +32,8 @@
 #include "trainer_eye_data.h"   //EV_TRAINER_EYE_HITDATA
 #include "field/eventdata_system.h"
 
+#include "fieldmap.h"
+
 #include "arc/fieldmap/script_seq.naix"
 #include "system/main.h"  //HEAPID_PROC
 
@@ -1662,6 +1664,7 @@ BOOL SCRIPT_SearchMapInitScript( GAMESYS_WORK * gsys, HEAPID heapID, u8 key)
 GMEVENT * SCRIPT_SearchSceneScript( GAMESYS_WORK * gsys, HEAPID heapID, u8 key )
 {
   u16 scr_id;
+  GMEVENT * event;
 
   GAMEDATA * gamedata = GAMESYSTEM_GetGameData( gsys );
   EVENTDATA_SYSTEM * evdata = GAMEDATA_GetEventData( gamedata );
@@ -1670,8 +1673,15 @@ GMEVENT * SCRIPT_SearchSceneScript( GAMESYS_WORK * gsys, HEAPID heapID, u8 key )
   scr_id = searchSceneScript( gsys, p, key );
 	if( scr_id == SCRIPT_NOT_EXIST_ID ){
 		return NULL;
-	}
-  return SCRIPT_SetEventScript( gsys, scr_id, NULL, heapID, NULL );
+  }
+  {
+    SCRIPT_FLDPARAM fparam;
+    FIELDMAP_WORK * fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
+    fparam.fieldMap = fieldmap;
+    fparam.msgBG = FIELDMAP_GetFldMsgBG(fieldmap);
+    event = SCRIPT_SetEventScript( gsys, scr_id, NULL, heapID, &fparam );
+  }
+  return event;
 }
 
 
@@ -1707,12 +1717,6 @@ static u16 searchSpecialScript( const u8 * p, u8 key )
  * @brief	ヘッダーデータから指定タイプのものを条件検索(シーンイベント)
  * @param	key			特殊スクリプトID
  * @return	"スクリプトID"
- * 08/04/30
- * LOCALWORK0をシーンチェンジで指定しても特殊スクリプトが動かない。
- * 原因を調べてみたら、SP_SCRIPT_END(=0)をチェックしている処理が、
- * ワークをu8で処理しているので、
- * LOCALWORK0(=0x4000)なので1byteを見ると、
- * 0のため、SP_SCRIPT_ENDとして処理されてしまっていた。
  */
 //------------------------------------------------------------------
 static u16 searchSceneScript( GAMESYS_WORK * gsys, const u8 * p, u8 key )
@@ -1761,15 +1765,16 @@ static u16 searchSceneScript( GAMESYS_WORK * gsys, const u8 * p, u8 key )
 			return SCRIPT_NOT_EXIST_ID;
 		};
 		p += 2;									//ワーク分足す
-		//OS_Printf( "work1 = %d\n", work1 );
+		OS_Printf( "work1 = %d\n", work1 );
 
 		//比較する値(ワーク可)取得
 		work2 = ( *p + ( *(p+1)<<8 ) );
 		p += 2;									//比較する値分足す(ワーク可)
-		//OS_Printf( "work2 = %d\n", work2 );
+		OS_Printf( "work2 = %d\n", work2 );
 
 		//条件チェック
-		if( EVENTWORK_GetEventWorkAdrs(ev,work1) == EVENTWORK_GetEventWorkAdrs(ev,work2) ){
+		//if( EVENTWORK_GetEventWorkAdrs(ev,work1) == EVENTWORK_GetEventWorkAdrs(ev,work2) ){
+		if( *(EVENTWORK_GetEventWorkAdrs(ev,work1)) == work2 ){
 			return ( *p + ( *(p+1)<<8 ) );
 		}
 

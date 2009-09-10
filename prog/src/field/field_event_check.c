@@ -38,6 +38,7 @@
 #include "net_app/union/union_event_check.h"
 
 #include "system/main.h"    //HEAPID_FIELDMAP
+#include "isdbglib.h"
 
 #include "field_encount.h"      //FIELD_ENCOUNT_CheckEncount
 
@@ -166,7 +167,9 @@ static GMEVENT * FIELD_EVENT_CheckNormal( GAMESYS_WORK *gsys, void *work )
 #endif //debug
 	
 //☆☆☆特殊スクリプト起動チェックがここに入る
-    /* 今はない */
+  event = SCRIPT_SearchSceneScript( gsys, req.heapID, SP_SCRID_SCENE_CHANGE );
+  if (event) return event;
+
 
 //☆☆☆トレーナー視線チェックがここに入る
   if( !(req.debugRequest) ){
@@ -961,8 +964,12 @@ static GMEVENT * DEBUG_checkKeyEvent(EV_REQUEST * req, GAMESYS_WORK * gsys, FIEL
 	
 	//マップ変更チェック
 	if( (req->key_cont & chgCont) == chgCont ){
-    //GFL_HEAP_DEBUG_PrintExistMemoryBlocks( HEAPID_FIELDMAP );
-		return DEBUG_EVENT_ChangeToNextMap(gsys, fieldWork);
+    ISDPrintSetBlockingMode(1);
+    GFL_HEAP_DEBUG_PrintSystemInfo();
+    GFL_HEAP_DEBUG_PrintExistMemoryBlocks( HEAPID_PROC );
+    GFL_HEAP_DEBUG_PrintExistMemoryBlocks( HEAPID_FIELDMAP );
+    ISDPrintSetBlockingMode(0);
+		//return DEBUG_EVENT_ChangeToNextMap(gsys, fieldWork);
 	}
 	
 	//デバッグメニュー起動チェック

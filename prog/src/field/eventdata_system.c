@@ -132,6 +132,7 @@ static const int ConnectCount_C03 = NELEMS(ConnectData_C03);
 //============================================================================================
 //============================================================================================
 static void loadEventDataTable(EVENTDATA_SYSTEM * evdata, u16 zone_id);
+static void loadSpecialScriptData( EVENTDATA_SYSTEM * evdata, u16 zone_id );
 
 
 
@@ -183,6 +184,7 @@ void EVENTDATA_SYS_Load(EVENTDATA_SYSTEM * evdata, u16 zone_id)
 	EVENTDATA_SYS_Clear(evdata);
 	evdata->now_zone_id = zone_id;
 
+  loadSpecialScriptData( evdata, zone_id );
   loadEventDataTable(evdata, zone_id);
 	/* テスト的に接続データを設定 */
 	switch (zone_id) {
