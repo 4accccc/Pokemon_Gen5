@@ -203,8 +203,10 @@ void GFLUser_Main(void)
 	//
 #ifdef PM_DEBUG
   //MCSéÛêM
-	GFL_MCS_Main();
-	GFL_MCS_SNDVIEWER_Main();
+  if( OS_GetConsoleType() & OS_CONSOLE_ISDEBUGGER ){
+	  GFL_MCS_Main();
+	  GFL_MCS_SNDVIEWER_Main();
+  }
 #endif
 }
 
@@ -229,7 +231,9 @@ void GFLUser_Display(void)
 void GFLUser_Exit(void)
 {
 #ifdef PM_DEBUG
-	GFL_MCS_Exit();
+  if( OS_GetConsoleType() & OS_CONSOLE_ISDEBUGGER ){
+	  GFL_MCS_Exit();
+  }
 #endif
   GFL_TEXT_DeleteSystem();
   GFL_BACKUP_Exit();
@@ -284,7 +288,9 @@ void GFLUser_VIntr(void)
     //GFL_NET_VBlankFunc();
 #ifdef PM_DEBUG
   //MCSéÛêM
-	GFL_MCS_VIntrFunc();
+  if( OS_GetConsoleType() & OS_CONSOLE_ISDEBUGGER ){
+	  GFL_MCS_VIntrFunc();
+  }
 #endif
   GFL_DMA_Main();
   GFL_USE_VintrCounter++;
