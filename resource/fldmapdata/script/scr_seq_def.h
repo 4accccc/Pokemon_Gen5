@@ -283,11 +283,11 @@ DEF_CMD_COUNT  =  ( DEF_CMD_COUNT + 1 )
 
 //--------------------------------------------------------------
 /**
- *	フラグ操作：マップ遷移で一度のみ呼ばれる特殊スクリプト
+ *	フラグ操作：ゾーン遷移で一度のみ呼ばれる特殊スクリプト
  */
 //--------------------------------------------------------------
-	.macro	_FLAG_CHANGE_LABEL	scr_id
-	.short	SP_SCRID_FLAG_CHANGE
+	.macro	_ZONE_CHANGE_LABEL	scr_id
+	.short	SP_SCRID_ZONE_CHANGE
 	.short	\scr_id
 	.short	0		//4byteに合わせるためにダミー
 	.endm
@@ -297,7 +297,7 @@ DEF_CMD_COUNT  =  ( DEF_CMD_COUNT + 1 )
  *	OBJ操作：マップができて、ＯＢＪが配置されたあと呼ばれる。初期化のたびに呼ばれます。
  */
 //--------------------------------------------------------------
-	.macro	_OBJ_CHANGE_LABEL	scr_id
+	.macro	_FIELD_RECOVER_LABEL	scr_id
 	.short	SP_SCRID_OBJ_CHANGE
 	.short	\scr_id
 	.short	0		//4byteに合わせるためにダミー
