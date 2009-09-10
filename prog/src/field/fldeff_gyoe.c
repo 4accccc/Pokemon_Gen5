@@ -76,6 +76,7 @@ static void gyoe_InitResource( FLDEFF_GYOE *gyoe );
 static void gyoe_DeleteResource( FLDEFF_GYOE *gyoe );
 
 static const FLDEFF_TASK_HEADER DATA_gyoeTaskHeader;
+static const FLDEFF_TASK_HEADER DATA_gyoeTaskHeader_only;
 
 //======================================================================
 //	びっくりマークエフェクト　システム
@@ -184,6 +185,32 @@ FLDEFF_TASK * FLDEFF_GYOE_SetMMdl( FLDEFF_CTRL *fectrl,
 
 //--------------------------------------------------------------
 /**
+ * 動作モデル用びっくりマークエフェクト　追加　動作モデル依存無し版
+ * @param mmdl MMDL
+ * @param FLDEFF_CTRL*
+ * @retval FLDEFF_TASK*
+ * @note 演出終了or動作モデル死亡時に終了します。
+ */
+//--------------------------------------------------------------
+FLDEFF_TASK * FLDEFF_GYOE_SetMMdlNonDepend( FLDEFF_CTRL *fectrl,
+    const MMDL *mmdl, FLDEFF_GYOETYPE type, BOOL se_play )
+{
+  FLDEFF_GYOE *gyoe;
+  TASKHEADER_GYOE head;
+  
+  head.type = type;
+  head.se_play = se_play;
+  
+  head.eff_gyoe = FLDEFF_CTRL_GetEffectWork( fectrl, FLDEFF_PROCID_GYOE );
+  head.mmdl = mmdl;
+  MMDL_InitCheckSameData( mmdl, &head.samedata );
+  
+  return( FLDEFF_CTRL_AddTask(fectrl,&DATA_gyoeTaskHeader_only,NULL,0,&head,0) );
+}
+
+
+//--------------------------------------------------------------
+/**
  * 動作モデル用びっくりマークエフェクト　終了チェック
  * @param task FLDEFF_TASK
  * @retval
@@ -273,6 +300,50 @@ static void gyoeTask_Update( FLDEFF_TASK *task, void *wk )
 
 //--------------------------------------------------------------
 /**
+ * びっくりマークエフェクトタスク　更新　動作モデル依存無し版
+ * @param task FLDEFF_TASK
+ * @param wk task work
+ * @retval nothing
+ */
+//--------------------------------------------------------------
+static void gyoeTask_Update_only( FLDEFF_TASK *task, void *wk )
+{
+  VecFx32 pos;
+  TASKWORK_GYOE *work = wk;
+  
+  if( work->end_flag == TRUE ||
+      MMDL_CheckSameData(work->head.mmdl,&work->head.samedata) == FALSE ){
+    FLDEFF_TASK_CallDelete( task ); //アニメ終了 or 動作モデル死亡　削除
+    return;
+  }
+  
+  switch( work->seq_no ){
+  case 0:
+    work->offs_y += work->move_y;
+    if( work->offs_y ){
+      work->move_y += -0x2000;
+    }else{
+      work->move_y = 0;
+      work->seq_no++;
+    }
+    break;
+  case 1:
+    work->frame++;
+    
+    if( work->frame >= GYOE_END_FRAME ){
+      work->seq_no++;
+      work->end_flag = TRUE;
+    }
+  }
+  
+  MMDL_GetVectorPos( work->head.mmdl, &pos );
+  pos.y += GYOE_FLDOBJ_Y_OFFSET + work->offs_y;
+  pos.z += GYOE_FLDOBJ_Z_OFFSET;
+  FLDEFF_TASK_SetPos( task, &pos );
+}
+
+//--------------------------------------------------------------
+/**
  * びっくりマークエフェクトタスク　描画
  * @param task FLDEFF_TASK
  * @param wk task work
@@ -297,5 +368,14 @@ static const FLDEFF_TASK_HEADER DATA_gyoeTaskHeader =
   gyoeTask_Init,
   gyoeTask_Delete,
   gyoeTask_Update,
+  gyoeTask_Draw,
+};
+
+static const FLDEFF_TASK_HEADER DATA_gyoeTaskHeader_only =
+{
+  sizeof(TASKWORK_GYOE),
+  gyoeTask_Init,
+  gyoeTask_Delete,
+  gyoeTask_Update_only,
   gyoeTask_Draw,
 };
