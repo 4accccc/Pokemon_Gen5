@@ -752,7 +752,7 @@ static void DecidePartner( WORLDTRADE_WORK *wk, int result )
 		wk->TouchTrainerPos = result;
 		WorldTrade_SetPartnerCursorPos( wk, result, 0 );
 		PMSND_PlaySE(WORLDTRADE_DECIDE_SE);
-		OS_Printf("人物タッチ%d\N", result);
+		OS_Printf("人物タッチ%d\n", result);
 	}
 
 }
@@ -825,14 +825,14 @@ static int SubSeq_Main( WORLDTRADE_WORK *wk)
 			SubSeq_MessagePrint( wk, msg_gtc_01_017, 1, 0, 0x0f0f );
 			WorldTrade_SetNextSeq( wk, SUBSEQ_MES_WAIT, SUBSEQ_YESNO );
 			PMSND_PlaySE(WORLDTRADE_DECIDE_SE);
-			OS_Printf("交換タッチ%d\N", result);
+			OS_Printf("交換タッチ%d\n", result);
 		}else if(menuret==1){
 			// 画面ずらし＆フェード開始(→検索画面に戻る）
 			WIPE_SYS_Start( WIPE_PATTERN_WMS, WIPE_TYPE_FADEOUT, WIPE_TYPE_FADEOUT, 
 						WIPE_FADE_BLACK, EXCHANGE_SCREEN_SYNC, 1, HEAPID_WORLDTRADE );
 			wk->subprocess_seq  = SUBSEQ_RETURN_SCREEN1;
 			PMSND_PlaySE(WORLDTRADE_DECIDE_SE);
-			OS_Printf("キャンセルタッチ%d\N", result);
+			OS_Printf("キャンセルタッチ%d\n", result);
 		}
 
 	}
