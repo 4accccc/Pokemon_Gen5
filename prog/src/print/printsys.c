@@ -113,8 +113,9 @@ struct _PRINT_QUE {
   u16   bufTopPos;
   u16   bufEndPos;
   u16   bufSize;
-  u8    colorChanged;
   u8    debugCounter;
+  u8    fColorChanged  : 4;
+  u8    fForceCommMode : 4;   ///< 非通信時にも通信中と同じ挙動をする（デバッグ用）
 
   PRINTSYS_LSB  defColor;
 
@@ -268,7 +269,8 @@ PRINT_QUE* PRINTSYS_QUE_CreateEx( u16 buf_size, HEAPID heapID )
   que->limitPerFrame = QUE_DEFAULT_TICK;
   que->runningJob = NULL;
   que->sp = NULL;
-  que->colorChanged = FALSE;
+  que->fColorChanged = FALSE;
+  que->fForceCommMode = FALSE;
 
 
   que->debugCounter=0;
@@ -293,6 +295,19 @@ void PRINTSYS_QUE_Delete( PRINT_QUE* que )
 {
   GF_ASSERT(que->runningJob==NULL);
   GFL_HEAP_FreeMemory( que );
+}
+
+//=============================================================================================
+/**
+ * [デバッグ用] 強制的に通信時と同じ動作をするモードに変更
+ *
+ * @param   que
+ * @param   flag  TRUEで有効／FALSEで無効化
+ */
+//=============================================================================================
+void PRINTSYS_QUE_ForceCommMode( PRINT_QUE* que, BOOL flag )
+{
+  que->fForceCommMode = flag;
 }
 
 //=============================================================================================
@@ -340,12 +355,12 @@ BOOL PRINTSYS_QUE_Main( PRINT_QUE* que )
         if( GFL_FONTSYS_IsDifferentColor(colL, colS, colB) )
         {
           // 最初の色変更時、デフォルトの色情報を覚えておく
-          if( que->colorChanged == FALSE )
+          if( que->fColorChanged == FALSE )
           {
             u8 defL, defS, defB;
             GFL_FONTSYS_GetColor( &defL, &defS, &defB );
             que->defColor = PRINTSYS_LSB_Make( defL, defS, defB );
-            que->colorChanged = TRUE;
+            que->fColorChanged = TRUE;
           }
           GFL_FONTSYS_SetColor( colL, colS, colB );
           que->runningJob->colorState = JOB_COLORSTATE_CHANGE_DONE;
@@ -400,7 +415,7 @@ BOOL PRINTSYS_QUE_Main( PRINT_QUE* que )
     que->bufEndPos = que->bufSize;
   }
 
-  if( que->colorChanged )
+  if( que->fColorChanged )
   {
     u8 defL, defS, defB;
     PRINTSYS_LSB_GetLSB( que->defColor, &defL, &defS, &defB );
@@ -550,7 +565,7 @@ void PRINTSYS_PrintQueColor( PRINT_QUE* que, GFL_BMP_DATA* dst, u16 xpos, u16 yp
 //--------------------------------------------------------------------------
 static void PrintQue_Core( PRINT_QUE* que, PRINT_JOB* job, const STRBUF* str )
 {
-  if( !IsNetConnecting() )
+  if( !IsNetConnecting() && !que->fForceCommMode )
   {
     printJob_finish( job, str );
   }
