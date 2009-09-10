@@ -32,6 +32,7 @@ const MMDL_DRAW_PROC_LIST * const
 //======================================================================
 ///	ビルボード汎用アニメ
 //======================================================================
+#if 0
 enum
 {
   TEXIDX_OLD_U_STOP,
@@ -51,6 +52,20 @@ enum
 //  TEXIDX_OLD_R_STOP1,
   TEXIDX_OLD_R_WALK_1,
 };
+#else
+enum //ncg変換版
+{
+  TEXIDX_OLD_U_STOP,
+  TEXIDX_OLD_D_STOP,
+  TEXIDX_OLD_L_STOP,
+  TEXIDX_OLD_U_WALK_0,
+  TEXIDX_OLD_U_WALK_1,
+  TEXIDX_OLD_D_WALK_0,
+  TEXIDX_OLD_D_WALK_1,
+  TEXIDX_OLD_L_WALK_0,
+  TEXIDX_OLD_L_WALK_1,
+};
+#endif
 
 #if 0
 static const GFL_BBDACT_ANM DATA_BlActAnm00_StopU[] =
