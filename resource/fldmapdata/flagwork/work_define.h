@@ -195,9 +195,35 @@
 #define WK_AREA_END                      16702 /* 0x413e  */
 
 
+/* flags "temp_work.xls" 32768 ～ 32799 */
+
+#define SCWK_AREA_START                  32768 /* 0x8000  */
+
+#define SCWK_PARAM0                      32768 /* 0x8000 共通スクリプト呼び出し処理用ワーク（使用禁止） */
+#define SCWK_PARAM1                      32769 /* 0x8001 共通スクリプト呼び出し処理用ワーク（使用禁止） */
+#define SCWK_PARAM2                      32770 /* 0x8002 共通スクリプト呼び出し処理用ワーク（使用禁止） */
+#define SCWK_PARAM3                      32771 /* 0x8003 共通スクリプト呼び出し処理用ワーク（使用禁止） */
+#define SCWK_PARAM4                      32772 /* 0x8004 共通スクリプト呼び出し処理用ワーク（使用禁止） */
+#define SCWK_PARAM5                      32773 /* 0x8005 共通スクリプト呼び出し処理用ワーク（使用禁止） */
+#define SCWK_PARAM6                      32774 /* 0x8006 共通スクリプト呼び出し処理用ワーク（使用禁止） */
+#define SCWK_PARAM7                      32775 /* 0x8007 共通スクリプト呼び出し処理用ワーク（使用禁止） */
+#define SCWK_TEMP0                       32776 /* 0x8008 汎用ワーク */
+#define SCWK_TEMP1                       32777 /* 0x8009 汎用ワーク */
+#define SCWK_TEMP2                       32778 /* 0x800a 汎用ワーク */
+#define SCWK_TEMP3                       32779 /* 0x800b 汎用ワーク */
+#define SCWK_REG0                        32780 /* 0x800c スクリプト内部処理用ワーク（使用禁止） */
+#define SCWK_REG1                        32781 /* 0x800d スクリプト内部処理用ワーク（使用禁止） */
+#define SCWK_REG2                        32782 /* 0x800e スクリプト内部処理用ワーク（使用禁止） */
+#define SCWK_REG3                        32783 /* 0x800f スクリプト内部処理用ワーク（使用禁止） */
+#define SCWK_ANSWER                      32784 /* 0x8010 結果受け取り汎用ワーク */
+#define SCWK_TARGET_OBJID                32785 /* 0x8011  */
+
+#define SCWK_AREA_END                    32799 /* 0x801f  */
 
 
-#define WORKS_TOTAL_MAX  16703 /* 0x413f */
+
+
+#define WORKS_TOTAL_MAX  32800 /* 0x8020 */
 
 
 /* 自動生成フラグ定義ファイル 終了*/

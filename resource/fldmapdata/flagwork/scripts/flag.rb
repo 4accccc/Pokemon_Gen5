@@ -7,7 +7,7 @@
 #   2009.07.14  tamada GAMEFREAK inc.
 #
 #----------------------------------------------------------------------------
-KCODE= "SJIS"
+$KCODE= "SJIS"
 
 lists = [
   ["sys_flag.xls", "SYS_FLAG_",  "SYSFLAG_START", 320],
