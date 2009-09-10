@@ -346,7 +346,7 @@ GMEVENT* EVENT_IrcBattle(GAMESYS_WORK * gsys, FIELD_MAIN_WORK * fieldmap,GMEVENT
     para->commMode = BTL_COMM_DS;
     para->multiMode = 0;
 
-    para->partyPlayer = PokeParty_AllocPartyWork( HEAPID_CORE );	///< プレイヤーのパーティ
+    para->partyPlayer = PokeParty_AllocPartyWork( HEAPID_PROC );	///< プレイヤーのパーティ
     para->partyEnemy1 = NULL;		///< 1vs1時の敵AI, 2vs2時の１番目敵AI用
     para->partyPartner = NULL;	///< 2vs2時の味方AI（不要ならnull）
     para->partyEnemy2 = NULL;		///< 2vs2時の２番目敵AI用（不要ならnull）
