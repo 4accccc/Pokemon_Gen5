@@ -84,7 +84,7 @@ static GMEVENT_RESULT EVENT_WiFiClubMain(GMEVENT * event, int *  seq, void * wor
     (*seq)++;
     break;
   case _WAIT_WIFICLUB:
-    if (!GAMESYSTEM_IsProcExists(gsys)){
+    if (GAMESYSTEM_IsProcExists(gsys) == GFL_PROC_MAIN_NULL){
       (*seq) ++;
     }
     break;

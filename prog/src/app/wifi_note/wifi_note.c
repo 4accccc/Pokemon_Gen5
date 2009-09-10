@@ -5715,7 +5715,7 @@ static WFNOTE_STRET CodeIn_Main( WFNOTE_CODEIN* p_wk, WFNOTE_WK* p_sys, WFNOTE_D
 		
 	case SEQ_CODEIN_NAMEIN_WAIT:
 		// 終了待ち
-		if( GFL_PROC_LOCAL_Main( p_wk->p_subproc ) == TRUE ){
+		if( GFL_PROC_LOCAL_Main( p_wk->p_subproc ) != GFL_PROC_MAIN_NULL ){
 			break;
 		}
 //		GFL_PROC_LOCAL_Exit( p_wk->p_subproc );
@@ -5736,7 +5736,7 @@ static WFNOTE_STRET CodeIn_Main( WFNOTE_CODEIN* p_wk, WFNOTE_WK* p_sys, WFNOTE_D
 		
 	case SEQ_CODEIN_CODEIN_WAIT:
 		// 終了待ち
-		if( GFL_PROC_LOCAL_Main( p_wk->p_subproc ) == TRUE ){
+		if( GFL_PROC_LOCAL_Main( p_wk->p_subproc ) != GFL_PROC_MAIN_NULL ){
 			break;
 		}
 		GFL_PROC_LOCAL_Exit( p_wk->p_subproc );
@@ -5769,7 +5769,7 @@ static WFNOTE_STRET CodeIn_Main( WFNOTE_CODEIN* p_wk, WFNOTE_WK* p_sys, WFNOTE_D
 		
 	case SEQ_CODEIN_NAMEINONLY_WAIT:	// 名前入力のみ
 		// 終了待ち
-		if( GFL_PROC_LOCAL_Main( p_wk->p_subproc ) == TRUE ){
+		if( GFL_PROC_LOCAL_Main( p_wk->p_subproc ) != GFL_PROC_MAIN_NULL ){
 			break;
 		}
 		GFL_PROC_LOCAL_Exit( p_wk->p_subproc );

@@ -273,7 +273,7 @@ static GFL_PROC_RESULT MusicalProc_Main( GFL_PROC * proc, int * seq , void *pwk,
   MUSICAL_INIT_WORK *initWork = pwk;
   MUSICAL_PROC_WORK *work = mywk;
   
-  const BOOL isActiveProc = GFL_PROC_LOCAL_Main( work->procSys );
+  const GFL_PROC_MAIN_STATUS isActiveProc = GFL_PROC_LOCAL_Main( work->procSys );
   
   switch( work->state )
   {
@@ -283,7 +283,7 @@ static GFL_PROC_RESULT MusicalProc_Main( GFL_PROC * proc, int * seq , void *pwk,
     break;
     
   case MPS_TERM_LOBBY:
-    if( isActiveProc == FALSE )
+    if( isActiveProc == GFL_PROC_MAIN_NULL )
     {
       switch( MUS_COMM_GetMode( work->commWork ) )
       {
@@ -323,7 +323,7 @@ static GFL_PROC_RESULT MusicalProc_Main( GFL_PROC * proc, int * seq , void *pwk,
     break;
 
   case MPS_TERM_DRESSUP:
-    if( isActiveProc == FALSE )
+    if( isActiveProc == GFL_PROC_MAIN_NULL )
     {
       if( initWork->isComm == TRUE )
       {
@@ -448,7 +448,7 @@ static GFL_PROC_RESULT MusicalProc_Main( GFL_PROC * proc, int * seq , void *pwk,
     break;
 
   case MPS_TERM_ACTING:
-    if( isActiveProc == FALSE )
+    if( isActiveProc == GFL_PROC_MAIN_NULL )
     {
       work->state = MPS_FINISH;
     }

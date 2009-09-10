@@ -486,7 +486,7 @@ static BOOL SubEvent_Pokelist(GAMESYS_WORK *gsys, UNION_SYSTEM_PTR unisys, FIELD
 		(*seq) ++;
 		break;
 	case SEQ_POKELIST_WAIT:
-		if(GAMESYSTEM_IsProcExists(gsys)){
+		if(GAMESYSTEM_IsProcExists(gsys) != GFL_PROC_MAIN_NULL){
       break;
     }
     if(plist->ret_mode == PL_RET_STATUS){
@@ -511,7 +511,7 @@ static BOOL SubEvent_Pokelist(GAMESYS_WORK *gsys, UNION_SYSTEM_PTR unisys, FIELD
 		(*seq) ++;
 		break;
 	case SEQ_STATUS_WAIT:
-		if(GAMESYSTEM_IsProcExists(gsys)){
+		if(GAMESYSTEM_IsProcExists(gsys) != GFL_PROC_MAIN_NULL){
       break;
     }
     plist->ret_sel = pstatus->pos;

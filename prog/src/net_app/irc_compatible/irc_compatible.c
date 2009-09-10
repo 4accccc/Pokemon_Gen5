@@ -117,7 +117,7 @@ static void SEQFUNC_RankingProc( IRC_COMPATIBLE_MAIN_WORK *p_wk, u16 *p_seq );
 static void SEQFUNC_DebugCompatibleProc( IRC_COMPATIBLE_MAIN_WORK *p_wk, u16 *p_seq );
 //PROCMODE
 static void SUBPROC_Init( SUBPROC_WORK *p_wk, HEAPID heapID );
-static BOOL SUBPROC_Main( SUBPROC_WORK *p_wk );
+static GFL_PROC_MAIN_STATUS SUBPROC_Main( SUBPROC_WORK *p_wk );
 static void SUBPROC_Exit( SUBPROC_WORK *p_wk );
 static BOOL SUBPROC_CallProcReq( SUBPROC_WORK *p_wk, u32 proc_id, HEAPID heapID, void *p_wk_adrs );
 //PROCCHANE
@@ -321,13 +321,13 @@ static GFL_PROC_RESULT IRC_COMPATIBLE_PROC_Exit( GFL_PROC *p_proc, int *p_seq, v
 //-----------------------------------------------------------------------------
 static GFL_PROC_RESULT IRC_COMPATIBLE_PROC_Main( GFL_PROC *p_proc, int *p_seq, void *p_param, void *p_work )
 {	
-	BOOL ret;
+	GFL_PROC_MAIN_STATUS ret;
 	IRC_COMPATIBLE_MAIN_WORK	*p_wk;
 	p_wk	= p_work;
 
 	ret	= SUBPROC_Main( &p_wk->subproc );
 
-	if( !ret )
+	if( ret == GFL_PROC_MAIN_NULL )
 	{	
 		p_wk->seq_function( p_wk, &p_wk->seq );
 	}
@@ -705,11 +705,10 @@ static void SUBPROC_Init( SUBPROC_WORK *p_wk, HEAPID heapID )
  *
  *	@param	SUBPROC_WORK *p_wk	ワーク
  *
- *	@retval	TRUE	プロセスが存在する
- *	@retval	FALSE	プロセスが存在しない
+ *	@retval	GFL_PROC_MAIN_STATUS
  */
 //-----------------------------------------------------------------------------
-static BOOL SUBPROC_Main( SUBPROC_WORK *p_wk )
+static GFL_PROC_MAIN_STATUS SUBPROC_Main( SUBPROC_WORK *p_wk )
 {	
 	return GFL_PROC_LOCAL_Main( p_wk->p_procsys );
 }

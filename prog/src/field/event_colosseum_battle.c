@@ -106,7 +106,7 @@ static GMEVENT_RESULT EVENT_ColosseumBattleMain(GMEVENT * event, int *  seq, voi
     (*seq)++;
     break;
   case 6:
-    if (GAMESYSTEM_IsProcExists(gsys)){
+    if (GAMESYSTEM_IsProcExists(gsys) != GFL_PROC_MAIN_NULL){
       break;
     }
     OS_TPrintf("ƒoƒgƒ‹Š®—¹\n");

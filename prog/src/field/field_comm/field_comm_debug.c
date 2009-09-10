@@ -404,7 +404,7 @@ static  const BOOL  FIELD_COMM_DEBUG_SubProc_ChangePartTest(FIELD_COMM_DEBUG_WOR
     break;
 
   case 2:
-    if( GAMESYSTEM_IsProcExists(work->gameSys_) == FALSE )
+    if( GAMESYSTEM_IsProcExists(work->gameSys_) == GFL_PROC_MAIN_NULL )
     {
       work->subSeq_++;
     }
@@ -423,7 +423,7 @@ static  const BOOL  FIELD_COMM_DEBUG_SubProc_ChangePartTest(FIELD_COMM_DEBUG_WOR
     break;
   case 5:
     //フィールドマップを開始待ち
-    if(GAMESYSTEM_IsProcExists(work->gameSys_) == TRUE )
+    if(GAMESYSTEM_IsProcExists(work->gameSys_) != GFL_PROC_MAIN_NULL )
     {
       //この時点ではまだフィールドの初期化は完全ではない
       if( FIELDMAP_IsReady( work->fieldWork_ ) == TRUE )

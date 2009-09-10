@@ -511,7 +511,7 @@ static GMEVENT_RESULT FldMapMenuEvent( GMEVENT *event, int *seq, void *wk )
     break;
     
   case FMENUSTATE_CALL_WAIT_SUB:
-    if( GAMESYSTEM_IsProcExists(mwk->gmSys)) break;
+    if( GAMESYSTEM_IsProcExists(mwk->gmSys) != GFL_PROC_MAIN_NULL) break;
 
 
     

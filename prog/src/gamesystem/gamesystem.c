@@ -189,7 +189,7 @@ struct _GAMESYS_WORK {
 
 	GFL_PROCSYS * procsys;	///<使用しているPROCシステムへのポインタ
 
-	BOOL proc_result;
+	GFL_PROC_MAIN_STATUS proc_result;
 
 	EVCHECK_FUNC evcheck_func;
 	void * evcheck_context;
@@ -219,7 +219,7 @@ static void GAMESYS_WORK_Init(GAMESYS_WORK * gsys, HEAPID heapID, GAME_INIT_WORK
 	gsys->heapID = heapID;
 	gsys->init_param = init_param;
 	gsys->procsys = GFL_PROC_LOCAL_boot(gsys->heapID);
-	gsys->proc_result = FALSE;
+	gsys->proc_result = GFL_PROC_MAIN_NULL;
 	gsys->evcheck_func = NULL;
 	gsys->evcheck_context = NULL;
 	gsys->event = NULL;
@@ -290,7 +290,7 @@ static BOOL GameSystem_Main(GAMESYS_WORK * gsys)
 		GFL_UI_ChangeFrameRate(GFL_UI_FRAMERATE_60);
 	}
 
-	if (gsys->proc_result == FALSE && gsys->event == NULL)
+	if (gsys->proc_result == GFL_PROC_MAIN_NULL && gsys->event == NULL)
 	{
 		//プロセスもイベントも存在しないとき、ゲーム終了
 		return TRUE;
@@ -348,7 +348,7 @@ void GAMESYSTEM_CallFieldProc(GAMESYS_WORK * gsys)
 //------------------------------------------------------------------
 //	プロセス存在チェック
 //------------------------------------------------------------------
-BOOL GAMESYSTEM_IsProcExists(const GAMESYS_WORK * gsys)
+GFL_PROC_MAIN_STATUS GAMESYSTEM_IsProcExists(const GAMESYS_WORK * gsys)
 {
 	return gsys->proc_result;
 }

@@ -100,10 +100,10 @@ extern void GAMESYSTEM_SetEvent(GAMESYS_WORK * gsys, GMEVENT * event);
 /**
  * @brief	プロセス起動中かどうかを返す
  * @param	gsys	ゲーム制御ワークへのポインタ
- * @return	BOOL	TRUEのとき、プロセスが存在する
+ * @return	GFL_PROC_MAIN_STATUS
  */
 //------------------------------------------------------------------
-extern BOOL GAMESYSTEM_IsProcExists(const GAMESYS_WORK * gsys);
+extern GFL_PROC_MAIN_STATUS GAMESYSTEM_IsProcExists(const GAMESYS_WORK * gsys);
 
 //------------------------------------------------------------------
 /**

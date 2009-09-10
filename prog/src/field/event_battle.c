@@ -188,7 +188,7 @@ static GMEVENT_RESULT fieldBattleEvent(
     (*seq)++;
     break;
   case 3:
-    if (GAMESYSTEM_IsProcExists(gsys)) break;
+    if (GAMESYSTEM_IsProcExists(gsys) != GFL_PROC_MAIN_NULL) break;
     dbw->timeWait = 60; // 戦闘ＢＧＭフェードアウト
     PMSND_FadeOutBGM( 60 );
     (*seq) ++;
@@ -333,7 +333,7 @@ static GMEVENT_RESULT DebugBattleEvent(
     (*seq)++;
     break;
   case 2:
-    if (GAMESYSTEM_IsProcExists(gsys)) break;
+    if (GAMESYSTEM_IsProcExists(gsys) != GFL_PROC_MAIN_NULL) break;
     // 戦闘ＢＧＭフェードアウト
     dbw->timeWait = 60;
     PMSND_FadeOutBGM(60);

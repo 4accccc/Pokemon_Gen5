@@ -610,6 +610,7 @@ static void DEBUG_PalaceMapInCheck(FIELD_MAIN_WORK *fieldWork, GAMESYS_WORK *gam
       invalid_parent = GFL_HEAP_AllocClearMemory(
           GFL_HEAP_LOWID(GFL_HEAPID_APP), sizeof(FIELD_INVALID_PARENT_WORK));
       invalid_parent->my_invasion = TRUE;
+      invalid_parent->gsys = gameSys;
       invalid_parent->game_comm = GAMESYSTEM_GetGameCommSysPtr(gameSys);
       GameCommSys_Boot(commSys->game_comm, GAME_COMM_NO_INVASION, invalid_parent);
 
@@ -670,7 +671,7 @@ void  FIELD_COMM_MAIN_UpdateCommSystem( FIELD_MAIN_WORK *fieldWork ,
     u8 i;
 ////    FIELD_COMM_FUNC_UpdateSystem( commSys->commField_ );
     PALACE_SYS_Update(commSys->palace, GAMESYSTEM_GetMyPlayerWork( gameSys ), pcActor, commSys->commField_, fieldWork, commSys->game_comm);
-    if( FIELD_COMM_FUNC_GetMemberNum() > 1 && FIELD_COMM_SYS_GetExitReq(commSys->commField_) == FALSE )
+    if( GFL_NET_GetConnectNum() > 1 && FIELD_COMM_SYS_GetExitReq(commSys->commField_) == FALSE )
     //if( FIELD_COMM_FUNC_GetCommMode( commFunc ) == FIELD_COMM_MODE_CONNECT )
     {
       FIELD_COMM_MAIN_UpdateSelfData( fieldWork , gameSys , pcActor , commSys );
@@ -826,7 +827,7 @@ static  const u8 FIELD_COMM_MAIN_CheckTalkTarget( FIELD_COMM_MAIN *commSys )
   FIELD_COMM_DATA_GetGridPos_AfterMove( commData, FCD_SELF_INDEX,&selfX,&selfZ );
   selfX += FCM_dirOfsArr[selfDir][0];
   selfZ += FCM_dirOfsArr[selfDir][1];
-  member_num = FIELD_COMM_FUNC_GetMemberNum();
+  member_num = GFL_NET_GetConnectNum();
   my_palace_area = PALACE_SYS_GetArea(commSys->palace);
   my_zone_id = PLAYERWORK_getZoneID( plWork );
   for( i=0;i<member_num;i++ )
@@ -993,6 +994,7 @@ const BOOL  FIELD_COMM_MAIN_LoopStartCommMenu( FIELD_COMM_MAIN *commSys, GAMESYS
       invalid_parent = GFL_HEAP_AllocClearMemory(
           GFL_HEAP_LOWID(GFL_HEAPID_APP), sizeof(FIELD_INVALID_PARENT_WORK));
       invalid_parent->my_invasion = TRUE;
+      invalid_parent->gsys = gsys;
       invalid_parent->game_comm = GAMESYSTEM_GetGameCommSysPtr(gsys);
       GameCommSys_Boot(commSys->game_comm, GAME_COMM_NO_INVASION, invalid_parent);
     #if 0
@@ -1079,6 +1081,7 @@ const BOOL  FIELD_COMM_MAIN_LoopStartInvasionMenu( GAMESYS_WORK *gsys, FIELD_COM
       
       invalid_parent = GFL_HEAP_AllocClearMemory(
           GFL_HEAP_LOWID(GFL_HEAPID_APP), sizeof(FIELD_INVALID_PARENT_WORK));
+      invalid_parent->gsys = gsys;
       invalid_parent->game_comm = GAMESYSTEM_GetGameCommSysPtr(gsys);
       GameCommSys_Boot(commSys->game_comm, GAME_COMM_NO_INVASION, invalid_parent);
     #if 0

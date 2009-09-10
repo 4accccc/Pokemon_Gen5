@@ -115,7 +115,7 @@ static GMEVENT_RESULT FieldCloseEvent(GMEVENT * event, int * seq, void *work)
 		(*seq) ++;
 		break;
 	case 1:
-		if (GAMESYSTEM_IsProcExists(gsys)) break;
+		if (GAMESYSTEM_IsProcExists(gsys) != GFL_PROC_MAIN_NULL) break;
 		return GMEVENT_RES_FINISH;
 	}
 	return GMEVENT_RES_CONTINUE;
@@ -142,7 +142,7 @@ static GMEVENT_RESULT FieldOpenEvent(GMEVENT * event, int *seq, void*work)
 	FIELD_MAIN_WORK * fieldmap;	// = focw->fieldmap;
 	switch(*seq) {
 	case 0:
-		if (GAMESYSTEM_IsProcExists(gsys)) break;
+		if (GAMESYSTEM_IsProcExists(gsys) != GFL_PROC_MAIN_NULL) break;
 		GFL_FADE_SetMasterBrightReq(
 				GFL_FADE_MASTER_BRIGHT_BLACKOUT_MAIN | GFL_FADE_MASTER_BRIGHT_BLACKOUT_SUB,
         16, 16, 0);
@@ -208,7 +208,7 @@ static GMEVENT_RESULT GameChangeEvent(GMEVENT * event, int * seq, void * work)
 		(*seq) ++;
 		break;
 	case 3:
-		if (GAMESYSTEM_IsProcExists(gsys)) break;
+		if (GAMESYSTEM_IsProcExists(gsys) != GFL_PROC_MAIN_NULL) break;
 		(*seq) ++;
 		break;
 	case 4:

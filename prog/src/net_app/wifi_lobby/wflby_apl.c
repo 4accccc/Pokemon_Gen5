@@ -279,12 +279,12 @@ void WFLBY_APL_Start( WFLBY_APL* p_wk )
 //-----------------------------------------------------------------------------
 WFLBY_APL_RET WFLBY_APL_Main( WFLBY_APL* p_wk )
 {
-	BOOL result;
+	GFL_PROC_MAIN_STATUS result;
 	u32 ret = WFLBY_APL_RET_NONE;
 	
 	if( p_wk->p_proc ){
 		result = GFL_PROC_LOCAL_Main( p_wk->p_proc );
-		if( result == FALSE ){
+		if( result == GFL_PROC_MAIN_NULL ){
 			GFL_PROC_LOCAL_Exit( p_wk->p_proc );
 			p_wk->p_proc = NULL;
 			

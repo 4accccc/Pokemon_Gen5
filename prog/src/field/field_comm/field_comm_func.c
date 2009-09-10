@@ -463,7 +463,7 @@ void  FIELD_COMM_FUNC_UpdateSystem( int *seq, void *pwk, void *pWork )
     }
   //  else
     {
-      if( FIELD_COMM_FUNC_GetMemberNum() > 1 )
+      if( GFL_NET_GetConnectNum() > 1 )
       {
         //親機の場合は子機が来たら接続状態に
         ARI_TPrintf("Connect!(Parent)\n");
@@ -1324,14 +1324,14 @@ static void* FIELD_COMM_FUNC_GetBeaconData_CommFunc(FIELD_COMM_FUNC *commFunc)
     beacon.mode_ = 0;
   else
     beacon.mode_ = 1;
-  beacon.memberNum_ = FIELD_COMM_FUNC_GetMemberNum(commFunc);
+  beacon.memberNum_ = GFL_NET_GetConnectNum(commFunc);
 
   return (void*)&beacon;
 #else
   GBS_BEACON *beacon = &commFunc->send_beacon;
   
   beacon->gsid = WB_NET_FIELDMOVE_SERVICEID;
-  beacon->member_num = FIELD_COMM_FUNC_GetMemberNum();
+  beacon->member_num = GFL_NET_GetConnectNum();
   beacon->member_max = FIELD_COMM_MEMBER_MAX;
   beacon->error = GFL_NET_SystemGetErrorCode();
   return beacon;

@@ -175,7 +175,7 @@ static GMEVENT_RESULT MUSICAL_MainEvent( GMEVENT *event, int *seq, void *work )
     break;
   
   case MES_TERM_DRESSUP:
-    if( GAMESYSTEM_IsProcExists(evWork->gsys) == FALSE )
+    if( GAMESYSTEM_IsProcExists(evWork->gsys) == GFL_PROC_MAIN_NULL )
     {
       MUSICAL_EVENT_TermDressUp( evWork );
       //ñ{ìñÇÕë“çáé∫Ç÷
@@ -190,7 +190,7 @@ static GMEVENT_RESULT MUSICAL_MainEvent( GMEVENT *event, int *seq, void *work )
     break;
   
   case MES_TERM_ACTING:
-    if( GAMESYSTEM_IsProcExists(evWork->gsys) == FALSE )
+    if( GAMESYSTEM_IsProcExists(evWork->gsys) == GFL_PROC_MAIN_NULL )
     {
       MUSICAL_EVENT_TermActing( evWork );
       //ñ{ìñÇÕë“çáé∫Ç÷

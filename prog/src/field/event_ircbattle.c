@@ -132,7 +132,7 @@ static GMEVENT_RESULT EVENT_IrcBattleMain(GMEVENT * event, int *  seq, void * wo
     (*seq)++;
     break;
   case _WAIT_IRCBATTLE_MENU:
-    if (GAMESYSTEM_IsProcExists(gsys)){
+    if (GAMESYSTEM_IsProcExists(gsys) != GFL_PROC_MAIN_NULL){
       break;
     }
 		if(dbw->selectType == EVENTIRCBTL_ENTRYMODE_COMPATIBLE )
@@ -156,7 +156,7 @@ static GMEVENT_RESULT EVENT_IrcBattleMain(GMEVENT * event, int *  seq, void * wo
     (*seq)++;
     break;
   case _WAIT_IRCBATTLE_MATCH:
-    if (!GAMESYSTEM_IsProcExists(gsys)){
+    if (GAMESYSTEM_IsProcExists(gsys) == GFL_PROC_MAIN_NULL){
 			// マッチング内容によりゲーム分岐
 			switch(dbw->selectType){
 			case EVENTIRCBTL_ENTRYMODE_EXIT:
@@ -225,7 +225,7 @@ static GMEVENT_RESULT EVENT_IrcBattleMain(GMEVENT * event, int *  seq, void * wo
     (*seq)++;
     break;
   case _WAIT_BATTLE:
-    if (GAMESYSTEM_IsProcExists(gsys)){
+    if (GAMESYSTEM_IsProcExists(gsys) != GFL_PROC_MAIN_NULL){
       break;
     }
     NET_PRINT("バトル完了 event_ircbattle\n");
@@ -237,7 +237,7 @@ static GMEVENT_RESULT EVENT_IrcBattleMain(GMEVENT * event, int *  seq, void * wo
     (*seq)++;
     break;
   case _WAIT_IRCBATTLE_FRIEND:
-    if (!GAMESYSTEM_IsProcExists(gsys)){
+    if (GAMESYSTEM_IsProcExists(gsys) == GFL_PROC_MAIN_NULL){
       NET_PRINT("ともだちコード交換おわり\n");
       (*seq) = _CALL_NET_END;
     }
@@ -248,7 +248,7 @@ static GMEVENT_RESULT EVENT_IrcBattleMain(GMEVENT * event, int *  seq, void * wo
     (*seq)++;
     break;
   case _WAIT_TRADE:
-    if (!GAMESYSTEM_IsProcExists(gsys)){
+    if (GAMESYSTEM_IsProcExists(gsys) == GFL_PROC_MAIN_NULL){
       NET_PRINT("ポケモン交換おわり\n");
       (*seq) = _CALL_NET_END;
     }
@@ -305,7 +305,7 @@ static GMEVENT_RESULT EVENT_IrcBattleMain(GMEVENT * event, int *  seq, void * wo
     (*seq)++;
 		break;
 	case _WAIT_IRCCOMMPATIBLE:
-		if (!GAMESYSTEM_IsProcExists(gsys))
+		if (GAMESYSTEM_IsProcExists(gsys) == GFL_PROC_MAIN_NULL)
 		{
 			GX_SetDispSelect(GX_DISP_SELECT_MAIN_SUB);
       NET_PRINT("相性チェック画面おわり\n");

@@ -38,6 +38,19 @@ typedef enum {
 
 //------------------------------------------------------------------
 /**
+ * @brief	プロセスメイン関数の結果
+ *
+ * プロセスの初期化・メイン・終了関数を登録したデータ
+ */
+//------------------------------------------------------------------
+typedef enum {
+  GFL_PROC_MAIN_NULL,         ///<PROCが存在しない
+  GFL_PROC_MAIN_VALID,        ///<有効なPROCがある
+  GFL_PROC_MAIN_CHANGE,       ///<PROCが切り替わった
+}GFL_PROC_MAIN_STATUS;
+
+//------------------------------------------------------------------
+/**
  * @brief	プロセス構造体への不完全型
  *
  * 構造体の実際の定義はprocsys.cに封じられている
@@ -103,10 +116,10 @@ extern void GFL_PROC_boot(HEAPID heap_id);
 //------------------------------------------------------------------
 /**
  * @brief	PROCシステムのメイン処理
- * @return	BOOL	動作PROCが存在するとき、TRUE
+ * @return	GFL_PROC_MAIN_STATUS
  */
 //------------------------------------------------------------------
-extern BOOL GFL_PROC_Main(void);
+extern GFL_PROC_MAIN_STATUS GFL_PROC_Main(void);
 
 //------------------------------------------------------------------
 /**
@@ -164,10 +177,10 @@ extern GFL_PROCSYS * GFL_PROC_LOCAL_boot(HEAPID heap_id);
 /**
  * @brief	PROCシステムのメイン処理
  * @param	procsys	PROCシステムのポインタ
- * @return	BOOL	動作PROCが存在するとき、TRUE
+ * @return	GFL_PROC_MAIN_STATUS	
  */
 //------------------------------------------------------------------
-extern BOOL GFL_PROC_LOCAL_Main(GFL_PROCSYS * procsys);
+extern GFL_PROC_MAIN_STATUS GFL_PROC_LOCAL_Main(GFL_PROCSYS * procsys);
 
 //------------------------------------------------------------------
 /**

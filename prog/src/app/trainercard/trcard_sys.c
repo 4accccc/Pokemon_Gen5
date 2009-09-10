@@ -79,7 +79,7 @@ static int sub_SignWait(TR_CARD_SYS* wk);
 static BOOL TrCardSysProcCall(GFL_PROCSYS ** procSys)
 {
   if (*procSys) {
-    if (GFL_PROC_LOCAL_Main(*procSys) == FALSE ) {
+    if (GFL_PROC_LOCAL_Main(*procSys) == GFL_PROC_MAIN_NULL ) {
       GFL_PROC_LOCAL_Exit(*procSys);
       *procSys = NULL;
       return TRUE;
