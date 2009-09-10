@@ -63,22 +63,22 @@ class NCG_STRUCT
 			
 			@LinkData.PalFileName = array.pop
 			
-			p @Header.FormatID
-			p @Header.ByteOrderMark
-			p @Header.FormatVersion
-			p @Header.FileSize
-			p @Header.HeaderSize
-			p @Header.DataBlocks
-			p "--------------------"
-			p @CharData.BlockType
-			p @CharData.BlockSize
-			p @CharData.CharWidth
-			p @CharData.CharHeight
-			p @CharData.BitMode
-			p "--------------------"
-			p @LinkData.BlockType
-			p @LinkData.BlockSize
-			p @LinkData.PalFileName
+#			p @Header.FormatID
+#			p @Header.ByteOrderMark
+#			p @Header.FormatVersion
+#			p @Header.FileSize
+#			p @Header.HeaderSize
+#			p @Header.DataBlocks
+#			p "--------------------"
+#			p @CharData.BlockType
+#			p @CharData.BlockSize
+#			p @CharData.CharWidth
+#			p @CharData.CharHeight
+#			p @CharData.BitMode
+#			p "--------------------"
+#			p @LinkData.BlockType
+#			p @LinkData.BlockSize
+#			p @LinkData.PalFileName
 		}
 	end
 

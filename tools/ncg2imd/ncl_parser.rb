@@ -45,17 +45,17 @@ class NCL_STRUCT
 			@PalData.PalColorNum = palColorNum.unpack("I").shift
 			@PalData.PaletteNumber = paletteNumber.unpack("I").shift
 
-			p @Header.FormatID
-			p @Header.ByteOrderMark
-			p @Header.FormatVersion
-			p @Header.FileSize
-			p @Header.HeaderSize
-			p @Header.DataBlocks
-			p "--------------------"
-			p @PalData.BlockType
-			p @PalData.BlockSize
-			p @PalData.PalColorNum
-			p @PalData.PaletteNumber
+#			p @Header.FormatID
+#			p @Header.ByteOrderMark
+#			p @Header.FormatVersion
+#			p @Header.FileSize
+#			p @Header.HeaderSize
+#			p @Header.DataBlocks
+#			p "--------------------"
+#			p @PalData.BlockType
+#			p @PalData.BlockSize
+#			p @PalData.PalColorNum
+#			p @PalData.PaletteNumber
 
 		}
 	end
