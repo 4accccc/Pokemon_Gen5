@@ -3,11 +3,12 @@
 #	動作モデル　リソースファイル　リスト作成
 #======================================================================
 include mkdefine
-include selectres.txt
+include selectres.txt #SELECT_LINE_RES_MDL
 include $(PROJECT_RSCDIR)/macro_define
 
 RUBY_LIST_RES = fmmdl_restbl.rb
 EXCELCONV = $(PROJECT_ROOT)/tools/exceltool/ExcelSeetConv.exe
+NCGIMDCONV = $(PROJECT_ROOT)/tools/fld_char2imd/ncg2imd.rb
 
 #---------------------------------------------------------------
 #	ターゲット
@@ -22,14 +23,17 @@ do-build: $(FMMDLLIST_RES)
 #リソースリスト作成
 $(FMMDLLIST_RES): $(FMMDLLIST_XLS) selectres.txt
 	$(EXCELCONV) -o $(FMMDLLIST_CSV) -p 1 -s csv $(FMMDLLIST_XLS)
-	ruby $(RUBY_LIST_RES) $(FMMDLLIST_CSV) $(FMMDLLIST_RES) $(DIR_RES) $(SELECT_LINE_RES_MDL)
+	$(EXCELCONV) -o $(FMMDLNCGLIST_CSV) -p 3 -s csv $(FMMDLLIST_XLS)
+	@ruby $(RUBY_LIST_RES) $(FMMDLLIST_CSV) $(FMMDLLIST_RES) $(DIR_RES) $(SELECT_LINE_RES_MDL) $(FMMDLNCGLIST_CSV) $(FMMDLLIST_NCGIMD) $(FMMDLMKOBJ_NCGIMD) $(DIR_NCG) $(NCGIMDCONV)
 
 #dmyres
 dmyres:
 	$(EXCELCONV) -o $(FMMDLLIST_CSV) -p 1 -s csv $(FMMDLLIST_XLS)
-	ruby $(RUBY_LIST_RES) $(FMMDLLIST_CSV) $(FMMDLLIST_RES) $(DIR_RES) $(SELECT_LINE_RES_MDL) $(FMMDL_DMYFILE)
+	$(EXCELCONV) -o $(FMMDLNCGLIST_CSV) -p 3 -s csv $(FMMDLLIST_XLS)
+	@ruby $(RUBY_LIST_RES) $(FMMDLLIST_CSV) $(FMMDLLIST_RES) $(DIR_RES) $(SELECT_LINE_RES_MDL) $(FMMDLNCGLIST_CSV) $(FMMDLLIST_NCGIMD) $(FMMDLMKOBJ_NCGIMD) $(DIR_NCG) $(NCGIMDCONV) $(FMMDL_DMYFILE)
 
 #clean
 clean:
 	rm -f $(FMMDLLIST_CSV)
+	rm -f $(FMMDLNCGLIST_CSV)
 	rm -f $(FMMDLLIST_RES)

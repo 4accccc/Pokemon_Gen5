@@ -26,7 +26,7 @@ RESLIST_NSBTX = $(notdir $(FMMDL_RESLIST:.imd=.nsbtx))
 #リソースディレクトリ　リソースファイル一覧
 RESDATA_IMD = $(addprefix $(DIR_RES)/,$(FMMDL_RESLIST))
 #テンポラリディレクトリ　リソースファイル一覧
-RESDATA_TMPIMD = $(addprefix $(DIR_TMP)/,$(FMMDL_RESLIST))
+#RESDATA_TMPIMD = $(addprefix $(DIR_TMP)/,$(FMMDL_RESLIST))
 RESDATA_NSBTX = $(addprefix $(DIR_TMP)/,$(RESLIST_NSBTX))
 
 #---------------------------------------------------------------
@@ -35,8 +35,12 @@ RESDATA_NSBTX = $(addprefix $(DIR_TMP)/,$(RESLIST_NSBTX))
 #imd --> nsbtxへの変換ルール定義
 $(DIR_TMP)/%.nsbtx: $(DIR_RES)/%.imd
 	@echo Texture Data Convert: $^ → $@
-	@ruby $(IMDSORTCVTR) $^ $(DIR_TMP)/$(notdir $^)
-	@$(G3DCVTR) $(DIR_TMP)/$(notdir $^) -o $@ -etex
+	@$(G3DCVTR) $^ -o $@ -etex
+
+#$(DIR_TMP)/%.nsbtx: $(DIR_RES)/%.imd
+#	@echo Texture Data Convert: $^ → $@
+#	@ruby $(IMDSORTCVTR) $^ $(DIR_TMP)/$(notdir $^)
+#	@$(G3DCVTR) $(DIR_TMP)/$(notdir $^) -o $@ -etex
 
 #$(DIR_TMP)/%.nsbtx: $(DIR_RES)/%.imd
 #	@echo Texture Data Convert: $^ → $@
@@ -69,5 +73,5 @@ ifeq	($(CONVERTUSER),true) #CONVERTUSER
 	rm -f $(TARGET_RES_ARC)
 	rm -f $(TARGET_RES_ARCIDX)
 	rm -f $(RESDATA_NSBTX)
-	rm -f $(RESDATA_TMPIMD)
+#	rm -f $(RESDATA_TMPIMD)
 endif

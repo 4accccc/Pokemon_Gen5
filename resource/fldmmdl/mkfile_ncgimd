@@ -1,0 +1,38 @@
+#======================================================================
+#	mkfile_ncgimd
+#	動作モデルリソースファイル　ncgファイル->imd変換
+#======================================================================
+include mkdefine
+include $(PROJECT_RSCDIR)/macro_define
+
+#FMMDL_RESLIST_NCGIMD
+-include $(FMMDLLIST_NCGIMD)
+
+#---------------------------------------------------------------
+#	リスト置き換え
+#---------------------------------------------------------------
+#リソースディレクトリ　リソースファイル一覧
+RESDATA_IMD = $(addprefix $(DIR_RES)/,$(FMMDL_RESLIST_NCGIMD))
+
+#---------------------------------------------------------------
+#	ターゲット
+#---------------------------------------------------------------
+.PHONY: do-build clean
+
+#---------------------------------------------------------------
+#	build
+#---------------------------------------------------------------
+do-build: $(RESDATA_IMD)
+
+#SUFFIXESルール
+ifeq ($(CONVERTUSER),true) #CONVERTUSER
+#拡張子
+.SUFFIXES: .imd .ncg .ncl
+#dependルール
+include $(FMMDLMKOBJ_NCGIMD)
+endif #CONVERTUSER
+
+clean:
+ifeq	($(CONVERTUSER),true) #CONVERTUSER
+	-rm -f $(RESDATA_IMD)
+endif

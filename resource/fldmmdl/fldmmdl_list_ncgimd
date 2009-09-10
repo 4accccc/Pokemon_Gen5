@@ -1,0 +1,12 @@
+FMMDL_RESLIST_NCGIMD = \
+	hero.imd \
+	cyclehero.imd \
+	swimhero.imd \
+	heroine.imd \
+	cycleheroine.imd \
+	swimheroine.imd \
+	boy1.imd \
+	girl1.imd \
+	icpo.imd \
+	obj_kabi32.imd \
+	accordion.imd

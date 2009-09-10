@@ -1,0 +1,55 @@
+#hero.imd
+./mmdl_res/hero.imd: ./mmdl_nchara/hero.ncg ./mmdl_nchara/hero.ncl
+	@echo convert ncg_imd hero
+	@ruby C:/home/pokemon_wb//tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/hero.ncg ./mmdl_res ./mmdl_res/ncg4x4hero.imd 4 4 32
+
+#cyclehero.imd
+./mmdl_res/cyclehero.imd: ./mmdl_nchara/cyclehero.ncg ./mmdl_nchara/cyclehero.ncl
+	@echo convert ncg_imd cyclehero
+	@ruby C:/home/pokemon_wb//tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/cyclehero.ncg ./mmdl_res ./mmdl_res/ncg4x4cycle.imd 4 4 16
+
+#swimhero.imd
+./mmdl_res/swimhero.imd: ./mmdl_nchara/swimhero.ncg ./mmdl_nchara/swimhero.ncl
+	@echo convert ncg_imd swimhero
+	@ruby C:/home/pokemon_wb//tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/swimhero.ncg ./mmdl_res ./mmdl_res/ncg4x4swim.imd 4 4 4
+
+#heroine.imd
+./mmdl_res/heroine.imd: ./mmdl_nchara/heroine.ncg ./mmdl_nchara/heroine.ncl
+	@echo convert ncg_imd heroine
+	@ruby C:/home/pokemon_wb//tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/heroine.ncg ./mmdl_res ./mmdl_res/ncg4x4hero.imd 4 4 32
+
+#cycleheroine.imd
+./mmdl_res/cycleheroine.imd: ./mmdl_nchara/cycleheroine.ncg ./mmdl_nchara/cycleheroine.ncl
+	@echo convert ncg_imd cycleheroine
+	@ruby C:/home/pokemon_wb//tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/cycleheroine.ncg ./mmdl_res ./mmdl_res/ncg4x4cycle.imd 4 4 16
+
+#swimheroine.imd
+./mmdl_res/swimheroine.imd: ./mmdl_nchara/swimheroine.ncg ./mmdl_nchara/swimheroine.ncl
+	@echo convert ncg_imd swimheroine
+	@ruby C:/home/pokemon_wb//tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/swimheroine.ncg ./mmdl_res ./mmdl_res/ncg4x4swim.imd 4 4 4
+
+#boy1.imd
+./mmdl_res/boy1.imd: ./mmdl_nchara/boy1.ncg ./mmdl_nchara/boy1.ncl
+	@echo convert ncg_imd boy1
+	@ruby C:/home/pokemon_wb//tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/boy1.ncg ./mmdl_res ./mmdl_res/ncg4x4flip.imd 4 4 7
+
+#girl1.imd
+./mmdl_res/girl1.imd: ./mmdl_nchara/girl1.ncg ./mmdl_nchara/girl1.ncl
+	@echo convert ncg_imd girl1
+	@ruby C:/home/pokemon_wb//tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/girl1.ncg ./mmdl_res ./mmdl_res/ncg4x4flip.imd 4 4 7
+
+#icpo.imd
+./mmdl_res/icpo.imd: ./mmdl_nchara/icpo.ncg ./mmdl_nchara/icpo.ncl
+	@echo convert ncg_imd icpo
+	@ruby C:/home/pokemon_wb//tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/icpo.ncg ./mmdl_res ./mmdl_res/ncg4x4nflip.imd 4 4 12
+
+#obj_kabi32.imd
+./mmdl_res/obj_kabi32.imd: ./mmdl_nchara/obj_kabi32.ncg ./mmdl_nchara/obj_kabi32.ncl
+	@echo convert ncg_imd obj_kabi32
+	@ruby C:/home/pokemon_wb//tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/obj_kabi32.ncg ./mmdl_res ./mmdl_res/ncg4x4dpobj.imd 4 4 9
+
+#accordion.imd
+./mmdl_res/accordion.imd: ./mmdl_nchara/accordion.ncg ./mmdl_nchara/accordion.ncl
+	@echo convert ncg_imd accordion
+	@ruby C:/home/pokemon_wb//tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/accordion.ncg ./mmdl_res ./mmdl_res/ncg4x4nflip.imd 4 4 12
+

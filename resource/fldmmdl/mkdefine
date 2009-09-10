@@ -18,6 +18,10 @@ DIR_TARGET_COPY_SRC = $(PROJECT_ROOT)/prog/include/field
 #
 DIR_RES = ./mmdl_res
 
+#ncg格納ディレクトリ
+#
+DIR_NCG = ./mmdl_nchara
+
 #テンポラリディレクトリ
 #
 DIR_TMP = ./mmdl_tmp
@@ -30,9 +34,21 @@ FMMDLLIST_XLS = fldmmdl_list.xls
 #
 FMMDLLIST_CSV = fldmmdl_list.csv
 
+#管理表ncg対応ファイル
+#
+FMMDLNCGLIST_CSV = fldmmdl_ncglist.csv
+
 #管理表から生成されるリソース一覧
 #
 FMMDLLIST_RES = fldmmdl_list_res
+
+#管理表から生成されるncg->imd変換ファイル一覧
+#
+FMMDLLIST_NCGIMD = fldmmdl_list_ncgimd
+
+#ncg->imd変換対象makeファイル
+#
+FMMDLMKOBJ_NCGIMD = fldmmdl_mkobj_ncgimd
 
 #ダミーモデルリソースファイル
 #
