@@ -24,6 +24,7 @@
 
 #include "fieldmap/zone_id.h"
 
+#include "field/zonedata.h"
 //============================================================================================
 //============================================================================================
 //------------------------------------------------------------------
@@ -196,6 +197,20 @@ void EVENTDATA_SYS_Load(EVENTDATA_SYSTEM * evdata, u16 zone_id)
     break;
 #endif
 	}
+}
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+void * EVENTDATA_GetSpecialScriptData( EVENTDATA_SYSTEM * evdata )
+{
+  return &evdata->spscr_buffer;
+}
+
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+static void loadSpecialScriptData( EVENTDATA_SYSTEM * evdata, u16 zone_id )
+{
+  u16 sp_scr_id = ZONEDATA_GetSpScriptArcID( zone_id );
+  GFL_ARC_LoadData(evdata->spscr_buffer, ARCID_SCRSEQ,  sp_scr_id );
 }
 
 //------------------------------------------------------------------
