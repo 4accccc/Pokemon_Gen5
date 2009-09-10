@@ -382,11 +382,12 @@ static BOOL mainproc_call( BTLV_CORE* core )
  * アクション選択開始
  *
  * @param   core
- * @param   dest    [out]
- *
+ * @param   bpp           対象ポケモンデータ
+ * @param   fReturnable   TRUEなら「にげる」表示／FALSEなら「もどる」表示
+ * @param   dest          [out] 行動結果パラメータ
  */
 //=============================================================================================
-void BTLV_UI_SelectAction_Start( BTLV_CORE* core, const BTL_POKEPARAM* bpp, BTL_ACTION_PARAM* dest )
+void BTLV_UI_SelectAction_Start( BTLV_CORE* core, const BTL_POKEPARAM* bpp, BOOL fReturnable, BTL_ACTION_PARAM* dest )
 {
   core->procPokeParam = bpp;
   core->procPokeID = BPP_GetID( bpp );
@@ -555,6 +556,22 @@ u16 BTLV_ITEMSELECT_GetItemID( BTLV_CORE* wk )
     return wk->bagData.ret_item;
   }
   return ITEM_DUMMY_DATA;
+}
+//=============================================================================================
+/**
+ * アイテム選択結果取得（使用アイテムのコスト：シューター時）
+ *
+ * @param   wk
+ *
+ * @retval  u8
+ */
+//=============================================================================================
+u8 BTLV_ITEMSELECT_GetCost( BTLV_CORE* wk )
+{
+  if( wk->bagData.end_flg ){
+    return wk->bagData.ret_cost;
+  }
+  return 0;
 }
 //=============================================================================================
 /**

@@ -115,7 +115,7 @@ extern BOOL BTLV_WaitCommand( BTLV_CORE* btlv );
 
 
 
-extern void BTLV_UI_SelectAction_Start( BTLV_CORE* core, const BTL_POKEPARAM* bpp, BTL_ACTION_PARAM* dest );
+extern void BTLV_UI_SelectAction_Start( BTLV_CORE* core, const BTL_POKEPARAM* bpp, BOOL fReturnable, BTL_ACTION_PARAM* dest );
 extern BtlAction  BTLV_UI_SelectAction_Wait( BTLV_CORE* core );
 
 extern void BTLV_UI_SelectWaza_Start( BTLV_CORE* core, const BTL_POKEPARAM* bpp, BTL_ACTION_PARAM* dest );
@@ -224,6 +224,7 @@ extern BOOL BTLV_KinomiAct_Wait( BTLV_CORE* wk, BtlPokePos pos );
 extern void BTLV_ITEMSELECT_Start( BTLV_CORE* wk, u8 bagMode, u8 energy );
 extern BOOL BTLV_ITEMSELECT_Wait( BTLV_CORE* wk );
 extern u16 BTLV_ITEMSELECT_GetItemID( BTLV_CORE* wk );
+extern u8  BTLV_ITEMSELECT_GetCost( BTLV_CORE* wk );
 extern u8  BTLV_ITEMSELECT_GetTargetIdx( BTLV_CORE* wk );
 
 //-----------------------------------------------------------
