@@ -5,7 +5,14 @@ C:\home\pokemon_wb\resource\particle\wazaeffect\w_423.spa
 #001
 %00
 カメラ移動	追従	防御側	16	0	12
+SE再生	SEQ_SE_BC01	SYSTEM	0	0	100	0	0
 ポケモンアニメ	攻撃側	アニメストップ
+制御モード変更	継続
+SE再生	SEQ_SE_W011_01	SE1	20	0	120	0	0
+SE再生	SEQ_SE_W181_01	SE2	25	0	120	0	0
+SEパン	SE1	追従	防御側	防御側	0	60:0:0
+SEパン	SE2	追従	防御側	防御側	0	60:0:0
+制御モード変更	逐次
 パーティクルデータロード	w_423
 パーティクル再生	w_423	W_423_423_ICE_KIBA	防御側	方向無し	2	0
 パーティクル再生	w_423	W_423_423_KIBA_DOWN1	防御側	方向無し	2	0
@@ -17,6 +24,7 @@ C:\home\pokemon_wb\resource\particle\wazaeffect\w_423.spa
 エフェクト終了待ち	すべて
 ポケモンアニメ	攻撃側	アニメスタート
 カメラ移動	追従	初期位置	16	0	12
+SE再生	SEQ_SE_BC02	SYSTEM	0	0	100	0	0
 エフェクト終了待ち	すべて
 エフェクト終了
 &
