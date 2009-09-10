@@ -10,11 +10,10 @@
 //]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]
 
 
+//#define MICTEST_USE_SND
 //#define MIC_FUNC_DEF 
 // ↑マイク関連関数の移植方式が定まっていないので一時的関連機能をコメントアウトしています
 // 2009.08.31 by hosaka genya
-//#define MICTEST_USE_SND
-//#define MICTEST_USE_OBJ
 
 //	システム
 #include <gflib.h>
@@ -44,11 +43,6 @@ static void Snd_BgmFadeIn( int a, int b, int c){}
 #define BGM_VOL_MIN (0)
 #define BGM_VOL_MAX (127)
 #define BGM_FADEIN_START_VOL_NOW (0)
-
-//	@@@ TODO 
-//	@@@ OBJ
-//	@@@ 読み込み
-//	@@@ オートアニメ
 
 /*
  *	マイクテスト任天堂規約
@@ -88,25 +82,33 @@ static void Snd_BgmFadeIn( int a, int b, int c){}
 #define MICTEST_RAND_MAX( m )	( GFUser_GetPublicRand(m) )
 //#define MICTEST_RAND_MAX( m )	(gf_rand() * (m+1) / (GF_RAND_MAX + 1))
 
+//--------------------------------------------------------------
+///	セルアクターのリソースID
+//==============================================================
+//※ GFL_CLACT_WK_Create で連番参照しているため、変更不可
 enum
 { 
   // ゲージ
+  MICTEST_RES_M_GAGE_CHAR = 0,
   MICTEST_RES_M_GAGE_PLTT,
-  MICTEST_RES_M_GAGE_CHAR,
   MICTEST_RES_M_GAGE_ANIM,
   // ポケモン
-  MICTEST_RES_M_POKE_PLTT,
   MICTEST_RES_M_POKE_CHAR,
+  MICTEST_RES_M_POKE_PLTT,
   MICTEST_RES_M_POKE_ANIM,
   // 音符
-  MICTEST_RES_M_NOTE_PLTT,
   MICTEST_RES_M_NOTE_CHAR,
+  MICTEST_RES_M_NOTE_PLTT,
   MICTEST_RES_M_NOTE_ANIM,
   // ボタン
-  MICTEST_RES_S_BTN_PLTT,
   MICTEST_RES_S_BTN_CHAR,
+  MICTEST_RES_S_BTN_PLTT,
   MICTEST_RES_S_BTN_ANIM,
+  // 総数
+  MICTEST_RES_MAX,
 };
+
+#define OBJ_WKNUM   (32)  ///< CLACT_UNITで管理するOBJ数
 
 //-------------------------------------
 ///		OBJの個別個数
@@ -212,7 +214,7 @@ typedef u8 MIC_BUF_SIZE;
 #define BMPWIN_INFO_PLT			(13)
 #define BMPWIN_INFO_CHR_OFS		(1)
 #define BMPWIN_RETBTN_FRAME		(GFL_BG_FRAME0_S)
-#define BMPWIN_RETBTN_X			(24)
+#define BMPWIN_RETBTN_X			(23)
 #define BMPWIN_RETBTN_Y			(21)
 #define BMPWIN_RETBTN_W			(6)
 #define BMPWIN_RETBTN_H			(2)
@@ -277,14 +279,13 @@ typedef struct {
 //	マイクテストOBJ用ワーク
 //=====================================
 typedef struct {
-//	CATS_SYS_PTR		p_catsys;
-//	CATS_RES_PTR		p_catres;
-	GFL_CLWK*		p_act[MICTEST_OBJ_MAX];
-  GFL_CLUNIT* p_cell_unit;
+	GFL_CLWK    *p_act[MICTEST_OBJ_MAX];
+  GFL_CLUNIT  *p_cell_unit;
+  u32 resObjTbl[ MICTEST_RES_MAX ];
 
 	//	音符用
-	NOTE_TASK_CTRL		note_task_ctrl[OBJ_NOTE_MAX];
-	u32					note_cnt;
+	NOTE_TASK_CTRL	note_task_ctrl[OBJ_NOTE_MAX];
+	u32					    note_cnt;
 }MICTEST_OBJ_WORK;
 
 //-------------------------------------
@@ -345,7 +346,7 @@ static void MicTest_VBlankFunction( GFL_TCB * tcb, void * p_wk_adrs );
 static void MicTest_OBJ_Init( MICTEST_OBJ_WORK *p_obj, u32 heap_id );
 static void MicTest_OBJ_Exit( MICTEST_OBJ_WORK *p_obj );
 static void MicTest_OBJ_Main( MICTEST_OBJ_WORK *p_obj );
-static void MicTest_OBJ_SetClact( MICTEST_OBJ_WORK *p_obj );
+static void MicTest_OBJ_SetClact( MICTEST_OBJ_WORK *p_obj, HEAPID heap_id );
 static void MicTest_OBJ_DeleteClact( MICTEST_OBJ_WORK *p_obj );
 static void MicTest_OBJ_VBlancFunction( MICTEST_OBJ_WORK *p_obj );
 
@@ -426,39 +427,58 @@ static const struct {
 } sc_bg_cnt_data[] = {
 	{
 		{	0,0,0x800,0,GFL_BG_SCRSIZ_256x256,GX_BG_COLORMODE_16,
-			GX_BG_SCRBASE_0xf800,GX_BG_CHARBASE_0x00000,GX_BG_EXTPLTT_01,
+			GX_BG_SCRBASE_0xf800,GX_BG_CHARBASE_0x00000, 0x4000, GX_BG_EXTPLTT_01,
 			0,0,0,FALSE },
 		GFL_BG_FRAME0_M,
 		GFL_BG_MODE_TEXT,
 	},
 	{
 		{	0,0,0x800,0,GFL_BG_SCRSIZ_256x256,GX_BG_COLORMODE_16,
-			GX_BG_SCRBASE_0xf000,GX_BG_CHARBASE_0x04000,GX_BG_EXTPLTT_01,
+			GX_BG_SCRBASE_0xf000,GX_BG_CHARBASE_0x04000, 0x4000, GX_BG_EXTPLTT_01,
 			1,0,0,FALSE },
 		GFL_BG_FRAME1_M,
 		GFL_BG_MODE_TEXT,
 	},
 	{
 		{	0,0,0x800,0,GFL_BG_SCRSIZ_256x256,GX_BG_COLORMODE_16,
-			GX_BG_SCRBASE_0xe800,GX_BG_CHARBASE_0x08000,GX_BG_EXTPLTT_01,
+			GX_BG_SCRBASE_0xe800,GX_BG_CHARBASE_0x08000, 0x4000, GX_BG_EXTPLTT_01,
 			2,0,0,FALSE },
 		GFL_BG_FRAME2_M,
 		GFL_BG_MODE_TEXT,
 	},
 	{
 		{ 0,0,0x800,0,GFL_BG_SCRSIZ_256x256,GX_BG_COLORMODE_16,
-			GX_BG_SCRBASE_0xf800,GX_BG_CHARBASE_0x00000,GX_BG_EXTPLTT_01,
+			GX_BG_SCRBASE_0xf800,GX_BG_CHARBASE_0x00000, 0x4000, GX_BG_EXTPLTT_01,
 			0,0,0,FALSE },
 		GFL_BG_FRAME0_S,
 		GFL_BG_MODE_TEXT,
 	},
 	{
 		{ 0,0,0x800,0,GFL_BG_SCRSIZ_256x256,GX_BG_COLORMODE_16,
-			GX_BG_SCRBASE_0xf000,GX_BG_CHARBASE_0x04000,GX_BG_EXTPLTT_01,
+			GX_BG_SCRBASE_0xf000,GX_BG_CHARBASE_0x04000, 0x4000, GX_BG_EXTPLTT_01,
 			1,0,0,FALSE },
 		GFL_BG_FRAME1_S,
 		GFL_BG_MODE_TEXT,
 	},
+};
+	
+//--------------------------------------------------------------
+///	VRAM BANK
+//==============================================================
+static const GFL_DISP_VRAM c_vram_bank = {
+  GX_VRAM_BG_128_A,				// メイン2DエンジンのBG
+  GX_VRAM_BGEXTPLTT_NONE,			// メイン2DエンジンのBG拡張パレット
+  GX_VRAM_SUB_BG_128_C,			// サブ2DエンジンのBG
+  GX_VRAM_SUB_BGEXTPLTT_NONE,		// サブ2DエンジンのBG拡張パレット
+  GX_VRAM_OBJ_128_B,				// メイン2DエンジンのOBJ
+  GX_VRAM_OBJEXTPLTT_NONE,		// メイン2DエンジンのOBJ拡張パレット
+  GX_VRAM_SUB_OBJ_16_I,			// サブ2DエンジンのOBJ
+  GX_VRAM_SUB_OBJEXTPLTT_NONE,	// サブ2DエンジンのOBJ拡張パレット
+  GX_VRAM_TEX_NONE,				// テクスチャイメージスロット
+  GX_VRAM_TEXPLTT_NONE,			// テクスチャパレットスロット
+
+  GX_OBJVRAMMODE_CHAR_1D_32K, // Main Mapping Mode
+  GX_OBJVRAMMODE_CHAR_1D_32K, // Sub Mapping Mode
 };
 
 //=============================================================================
@@ -506,10 +526,8 @@ GFL_PROC_RESULT MicTestProc_Init( GFL_PROC *proc,int *seq, void *pwk, void *mywk
 	MicTest_BG_CreateMsg( &p_wk->bg, p_wk->heap_id );
 
 	//	OBJ
-#ifdef MICTEST_USE_OBJ
 	MicTest_OBJ_Init( &p_wk->obj, p_wk->heap_id );
-	MicTest_OBJ_SetClact( &p_wk->obj );
-#endif
+	MicTest_OBJ_SetClact( &p_wk->obj, p_wk->heap_id );
 
 	//	MIC
 	MicTest_MIC_Init( &p_wk->mic, p_wk->heap_id, ChangeObjAnmMicCallback, p_wk );
@@ -525,7 +543,6 @@ GFL_PROC_RESULT MicTestProc_Init( GFL_PROC *proc,int *seq, void *pwk, void *mywk
 
 
 // タイトルへ飛ぶ
-//extern void		Main_SetNextProc(FSOverlayID ov_id, const GFL_PROC_DATA * proc_data);
 extern const GFL_PROC_DATA TitleProcData;
 FS_EXTERN_OVERLAY( title );
 
@@ -554,10 +571,8 @@ GFL_PROC_RESULT MicTestProc_Exit( GFL_PROC *proc,int *seq, void *pwk, void *mywk
 	MicTest_MIC_Exit( &p_wk->mic );
 
 	//	OBJ
-#ifdef MICTEST_USE_OBJ
 	MicTest_OBJ_DeleteClact( &p_wk->obj );
 	MicTest_OBJ_Exit( &p_wk->obj );
-#endif
 
 	//	BG
 	MicTest_BG_DeleteMsg( &p_wk->bg );
@@ -608,9 +623,7 @@ GFL_PROC_RESULT MicTestProc_Main( GFL_PROC *proc,int *seq, void *pwk, void *mywk
 	}
 	MicTest_SEQ_Main( &p_wk->seq );
 
-#ifdef MICTEST_USE_OBJ
 	MicTest_OBJ_Main( &p_wk->obj );
-#endif
 	MicTest_BG_Main( &p_wk->bg );
 	MicTest_MIC_Main( &p_wk->mic );
 
@@ -830,7 +843,6 @@ static void SEQFUNC_RetBtn( MICTEST_SEQ_WORK *p_seq_wk, u32 *p_seq )
 	};
 	MICTEST_MAIN_WORK *p_wk	= MicTest_SEQ_GetWk( p_seq_wk );
 
-#ifdef MICTEST_USE_OBJ
 	switch( *p_seq ) {
 	case SEQ_INIT :
 		GFL_CLACT_WK_SetAnmSeq( p_wk->obj.p_act[MICTEST_OBJ_BUTTON], 1 );
@@ -838,7 +850,7 @@ static void SEQFUNC_RetBtn( MICTEST_SEQ_WORK *p_seq_wk, u32 *p_seq )
 		break;
 
 	case SEQ_MAIN :
-		if( GFL_CLACT_WK_CheckAnmActiveCap( p_wk->obj.p_act[MICTEST_OBJ_BUTTON] ) == FALSE ) {
+		if( GFL_CLACT_WK_CheckAnmActive( p_wk->obj.p_act[MICTEST_OBJ_BUTTON] ) == FALSE ) {
 			*p_seq = SEQ_END;
 		}
 		break;
@@ -850,12 +862,6 @@ static void SEQFUNC_RetBtn( MICTEST_SEQ_WORK *p_seq_wk, u32 *p_seq )
 	default :
 		GF_ASSERT( 0 );
 	};
-#else
-  // @@@
-  *p_seq = SEQ_END;
-#endif
-
-
 }
 
 //----------------------------------------------------------------------------
@@ -989,20 +995,7 @@ static void MicTest_ExitApplication( void )
 //-----------------------------------------------------------------------------
 static void MicTest_SetVramBank( void )
 {
-	static const GFL_DISP_VRAM vram_set_table = {
-		GX_VRAM_BG_128_A,				// メイン2DエンジンのBG
-		GX_VRAM_BGEXTPLTT_NONE,			// メイン2DエンジンのBG拡張パレット
-		GX_VRAM_SUB_BG_128_C,			// サブ2DエンジンのBG
-		GX_VRAM_SUB_BGEXTPLTT_NONE,		// サブ2DエンジンのBG拡張パレット
-		GX_VRAM_OBJ_128_B,				// メイン2DエンジンのOBJ
-		GX_VRAM_OBJEXTPLTT_NONE,		// メイン2DエンジンのOBJ拡張パレット
-		GX_VRAM_SUB_OBJ_16_I,			// サブ2DエンジンのOBJ
-		GX_VRAM_SUB_OBJEXTPLTT_NONE,	// サブ2DエンジンのOBJ拡張パレット
-		GX_VRAM_TEX_NONE,				// テクスチャイメージスロット
-		GX_VRAM_TEXPLTT_NONE			// テクスチャパレットスロット
-	};
-
-	GFL_DISP_SetBank( &vram_set_table );
+	GFL_DISP_SetBank( &c_vram_bank );
 }
 
 //----------------------------------------------------------------------------
@@ -1020,9 +1013,7 @@ static void MicTest_VBlankFunction( GFL_TCB * tcb, void * p_wk_adrs )
 	MICTEST_MAIN_WORK	*p_wk	= p_wk_adrs;
 
 	NNS_GfdDoVramTransfer();	//VRam転送マネージャ実行
-#ifdef MICTEST_USE_OBJ
 	MicTest_OBJ_VBlancFunction( &p_wk->obj );
-#endif
 	MicTest_BG_VBlancFunction( &p_wk->bg );
 
 	OS_SetIrqCheckFlag( OS_IE_V_BLANK);
@@ -1034,8 +1025,6 @@ static void MicTest_VBlankFunction( GFL_TCB * tcb, void * p_wk_adrs )
  *		OBJ管理
  */
 //=============================================================================
-
-#ifdef MICTEST_USE_OBJ
 //----------------------------------------------------------------------------
 /**
  *	@brief	OBJシステム初期化
@@ -1049,46 +1038,7 @@ static void MicTest_VBlankFunction( GFL_TCB * tcb, void * p_wk_adrs )
 static void MicTest_OBJ_Init( MICTEST_OBJ_WORK *p_obj, u32 heap_id )
 {
 	//	システム作成
-	p_obj->p_catsys	= CATS_AllocMemory( heap_id );
-
-	//	システム設定
-	{
-		static const TCATS_OAM_INIT	oam_init = {
-			0, 128,	//	メインOAM管理領域
-			0, 32,	//	メインアフィン管理領域
-			0, 128,
-			0, 32,
-		};
-		static const TCATS_CHAR_MANAGER_MAKE chr_man = {
-			MICTEST_OBJ_MAX,
-			1024*128,	//	メイン画面サイズ（byte）
-			1024*16,
-			GX_OBJVRAMMODE_CHAR_1D_32K,
-			GX_OBJVRAMMODE_CHAR_1D_32K
-		};
-		CATS_SystemInit( p_obj->p_catsys, &oam_init, &chr_man, 32 );
-	}
-	REND_OAM_UtilOamRamClear_Main( heap_id );
-	REND_OAM_UtilOamRamClear_Sub( heap_id );
-
-
-	p_obj->p_catres	= CATS_ResourceCreate( p_obj->p_catsys );
-	CATS_ClactSetInit( p_obj->p_catsys, p_obj->p_catres, MICTEST_OBJ_MAX );
-
-	//	リソース読み込み
-	{
-		static const TCATS_RESOURCE_NUM_LIST num_list = {
-			32,		//	キャラ数
-			32,		//	パレット数
-			32,		//	セル数
-			32,		//	セルアニメ数
-			0,		//	マルチセル数
-			0,		//	マルチセルアニメ数
-		};
-		
-		CATS_ResourceManagerInit( p_obj->p_catsys, p_obj->p_catres, &num_list );
-
-	}
+  GFL_CLACT_SYS_Create( &GFL_CLSYSINIT_DEF_DIVSCREEN, &c_vram_bank, heap_id );
 
 	//	表示
 	GFL_DISP_GX_SetVisibleControl(  GX_PLANEMASK_OBJ, VISIBLE_ON );
@@ -1106,8 +1056,7 @@ static void MicTest_OBJ_Init( MICTEST_OBJ_WORK *p_obj, u32 heap_id )
 //-----------------------------------------------------------------------------
 static void MicTest_OBJ_Exit( MICTEST_OBJ_WORK *p_obj )
 {
-	CATS_FreeMemory( p_obj->p_catsys );
-	p_obj->p_catsys	= NULL;	
+  GFL_CLACT_SYS_Delete();
 }
 
 //----------------------------------------------------------------------------
@@ -1123,7 +1072,7 @@ static void MicTest_OBJ_Main( MICTEST_OBJ_WORK *p_obj )
 {
 	u16	i;
 	for( i = 0; i < MICTEST_OBJ_MAX; i++ ){
-		GFL_CLACT_WK_AddAnmFrameCap( p_obj->p_act[i] );
+		GFL_CLACT_WK_AddAnmFrame( p_obj->p_act[i], FX32_ONE );
 	}
 
 	GFL_CLACT_SYS_Main();
@@ -1138,150 +1087,157 @@ static void MicTest_OBJ_Main( MICTEST_OBJ_WORK *p_obj )
  *	@return	none
  */
 //-----------------------------------------------------------------------------
-static void MicTest_OBJ_SetClact( MICTEST_OBJ_WORK *p_obj )
+static void MicTest_OBJ_SetClact( MICTEST_OBJ_WORK *p_obj, HEAPID heap_id )
 {
+
+  ARCHANDLE* arcHandle;
 	u16	i, param_no;
-	//	セルアクターのリソース番号
-	enum {
-		//	ゲージ
-		MICTEST_CLRES_CHR_ID_GAGE	= 0xA01,
-		MICTEST_CLRES_CEL_ID_GAGE	= 0xA02,
-		MICTEST_CLRES_PLT_ID_GAGE	= 0xA03,
-		MICTEST_CLRES_ANM_ID_GAGE	= 0xA04,
-		//	ポケモン
-		MICTEST_CLRES_CHR_ID_POKEMON	= 0xB01,
-		MICTEST_CLRES_CEL_ID_POKEMON	= 0xB02,
-		MICTEST_CLRES_PLT_ID_POKEMON	= 0xB03,
-		MICTEST_CLRES_ANM_ID_POKEMON	= 0xB04,
-		//	ボタン
-		MICTEST_CLRES_CHR_ID_BUTTON	= 0xD01,
-		MICTEST_CLRES_CEL_ID_BUTTON	= 0xD02,
-		MICTEST_CLRES_PLT_ID_BUTTON	= 0xD03,
-		MICTEST_CLRES_ANM_ID_BUTTON	= 0xD04,
-		//	音符
-		MICTEST_CLRES_CHR_ID_NOTE	= 0xC01,
-		MICTEST_CLRES_CEL_ID_NOTE	= 0xC02,
-		MICTEST_CLRES_PLT_ID_NOTE	= 0xC03,
-		MICTEST_CLRES_ANM_ID_NOTE	= 0xC04,
-	};
 
-	static const TCATS_OBJECT_ADD_PARAM_S sc_obj_add_param[] =
-	{
-		//	s16 x;				///< [ X ] 座標
-		//	s16 y;				///< [ Y ] 座標
-		//	s16 z;				///< [ Z ] 座標
-		//	
-		//	u16	anm;			///< アニメ番号
-		//	int pri;			///< 優先順位
-		//	int	pal;			///< パレット番号
-		//	int d_area;			///< 描画エリア
-		//
-		//	id[]				///< 仕様リソースIDテーブル
-		//	bg_pri				///< BG面への優先度
-		//	vram_trans			///< VRAM転送フラグ
+  // セルアクターセット生成
+  p_obj->p_cell_unit = GFL_CLACT_UNIT_Create( OBJ_WKNUM, 0, heap_id );
 
-		//	gage_l
-		{
-			OBJ_GAGE_L_POS_X, OBJ_GAGE_L_POS_Y, 0, 0, 0, 0, CATS_D_AREA_MAIN,
-			{	MICTEST_CLRES_CHR_ID_GAGE, MICTEST_CLRES_PLT_ID_GAGE,
-				MICTEST_CLRES_CEL_ID_GAGE, MICTEST_CLRES_ANM_ID_GAGE, 0, 0, }
-		},
-		//	gage_r
-		{
-			OBJ_GAGE_R_POS_X, OBJ_GAGE_R_POS_Y, 0, 0, 0, 0, CATS_D_AREA_MAIN,
-			{	MICTEST_CLRES_CHR_ID_GAGE, MICTEST_CLRES_PLT_ID_GAGE,
-				MICTEST_CLRES_CEL_ID_GAGE, MICTEST_CLRES_ANM_ID_GAGE, 0, 0, }
-		},
-		//	pokemon
-		{
-			OBJ_POKEMON_POS_X, OBJ_POKEMON_POS_Y, 0, 0, 0, 0, CATS_D_AREA_MAIN,
-			{	MICTEST_CLRES_CHR_ID_POKEMON, MICTEST_CLRES_PLT_ID_POKEMON,
-				MICTEST_CLRES_CEL_ID_POKEMON, MICTEST_CLRES_ANM_ID_POKEMON, 0, 0, }
-		},
-		//	button
-		{
-			OBJ_BUTTON_POS_X, OBJ_BUTTON_POS_Y, 0, 0, 0, 0, CATS_D_AREA_SUB,
-			{	MICTEST_CLRES_CHR_ID_BUTTON, MICTEST_CLRES_PLT_ID_BUTTON,
-				MICTEST_CLRES_CEL_ID_BUTTON, MICTEST_CLRES_ANM_ID_BUTTON, 1, 0, }
-		},
-		//	note
-		{
-			0, 0, 0, 0, 0, 0, CATS_D_AREA_MAIN,
-			{	MICTEST_CLRES_CHR_ID_NOTE, MICTEST_CLRES_PLT_ID_NOTE,
-				MICTEST_CLRES_CEL_ID_NOTE, MICTEST_CLRES_ANM_ID_NOTE, 0, 0, }
-		},
+  //==========================================================================
+  // ■リソース展開
+  //==========================================================================
+  
+  //　ハンドル生成
+  arcHandle = GFL_ARC_OpenDataHandle( ARCID_MICTEST_GRA, heap_id );
 
-	};
-	static const u32 sc_act_res_tbl[MICTEST_OBJ_MAX]	=
-		{ 0, 1, 2, 3, 4, 4, 4 };
+  // ----- LCD MAIN -----
+  
+  // ゲージ
+  p_obj->resObjTbl[MICTEST_RES_M_GAGE_PLTT] =
+    GFL_CLGRP_PLTT_Register( arcHandle, NARC_mictest_obj_gage_NCLR, CLSYS_DRAW_MAIN, 0, heap_id );
 
-	//	ゲージ
-	CATS_LoadResourcePlttArc( p_obj->p_catsys, p_obj->p_catres, ARCID_MICTEST_GRA, NARC_mictest_obj_gage_NCLR, 0, 1, NNS_G2D_VRAM_TYPE_2DMAIN, MICTEST_CLRES_PLT_ID_GAGE );
-	CATS_LoadResourceCellArc( p_obj->p_catsys, p_obj->p_catres, ARCID_MICTEST_GRA, NARC_mictest_obj_gage_NCER, 0, MICTEST_CLRES_CEL_ID_GAGE );
-	CATS_LoadResourceCellAnmArc( p_obj->p_catsys, p_obj->p_catres, ARCID_MICTEST_GRA, NARC_mictest_obj_gage_NANR, 0, MICTEST_CLRES_ANM_ID_GAGE );
-	CATS_LoadResourceCharArc( p_obj->p_catsys, p_obj->p_catres, ARCID_MICTEST_GRA, NARC_mictest_obj_gage_NCGR, 0, NNS_G2D_VRAM_TYPE_2DMAIN,  MICTEST_CLRES_CHR_ID_GAGE );
-	//	ポケモン
-	CATS_LoadResourcePlttArc( p_obj->p_catsys, p_obj->p_catres, ARCID_MICTEST_GRA, NARC_mictest_obj_pokemon_NCLR, 0, 1, NNS_G2D_VRAM_TYPE_2DMAIN, MICTEST_CLRES_PLT_ID_POKEMON );
-	CATS_LoadResourceCellArc( p_obj->p_catsys, p_obj->p_catres, ARCID_MICTEST_GRA, NARC_mictest_obj_pokemon_NCER, 0, MICTEST_CLRES_CEL_ID_POKEMON );
-	CATS_LoadResourceCellAnmArc( p_obj->p_catsys, p_obj->p_catres, ARCID_MICTEST_GRA, NARC_mictest_obj_pokemon_NANR, 0, MICTEST_CLRES_ANM_ID_POKEMON );
-	CATS_LoadResourceCharArc( p_obj->p_catsys, p_obj->p_catres, ARCID_MICTEST_GRA, NARC_mictest_obj_pokemon_NCGR, 0, NNS_G2D_VRAM_TYPE_2DMAIN,  MICTEST_CLRES_CHR_ID_POKEMON );
-	//	ボタン
-	CATS_LoadResourcePlttArc( p_obj->p_catsys, p_obj->p_catres, ARCID_MICTEST_GRA, NARC_mictest_obj_button_NCLR, 0, 1, NNS_G2D_VRAM_TYPE_2DSUB, MICTEST_CLRES_PLT_ID_BUTTON );
-	CATS_LoadResourceCellArc( p_obj->p_catsys, p_obj->p_catres, ARCID_MICTEST_GRA, NARC_mictest_obj_button_NCER, 0, MICTEST_CLRES_CEL_ID_BUTTON );
-	CATS_LoadResourceCellAnmArc( p_obj->p_catsys, p_obj->p_catres, ARCID_MICTEST_GRA, NARC_mictest_obj_button_NANR, 0, MICTEST_CLRES_ANM_ID_BUTTON );
-	CATS_LoadResourceCharArc( p_obj->p_catsys, p_obj->p_catres, ARCID_MICTEST_GRA, NARC_mictest_obj_button_NCGR, 0, NNS_G2D_VRAM_TYPE_2DSUB,  MICTEST_CLRES_CHR_ID_BUTTON );	
+  p_obj->resObjTbl[MICTEST_RES_M_GAGE_CHAR] = 
+    GFL_CLGRP_CGR_Register( arcHandle, NARC_mictest_obj_gage_NCGR, 0, CLSYS_DRAW_MAIN, heap_id );
+
+  p_obj->resObjTbl[MICTEST_RES_M_GAGE_ANIM] =
+    GFL_CLGRP_CELLANIM_Register( arcHandle, NARC_mictest_obj_gage_NCER, NARC_mictest_obj_gage_NANR, heap_id );
+  
+  // ポケモン
+  p_obj->resObjTbl[MICTEST_RES_M_POKE_PLTT] =
+    GFL_CLGRP_PLTT_Register( arcHandle, NARC_mictest_obj_pokemon_NCLR, CLSYS_DRAW_MAIN, 0, heap_id );
+  
+  p_obj->resObjTbl[MICTEST_RES_M_POKE_CHAR] = 
+    GFL_CLGRP_CGR_Register( arcHandle, NARC_mictest_obj_pokemon_NCGR, 0, CLSYS_DRAW_MAIN, heap_id );
+
+  p_obj->resObjTbl[MICTEST_RES_M_POKE_ANIM] =
+    GFL_CLGRP_CELLANIM_Register( arcHandle, NARC_mictest_obj_pokemon_NCER, NARC_mictest_obj_pokemon_NANR, heap_id );
+  
 	//	音符
-	CATS_LoadResourcePlttArc( p_obj->p_catsys, p_obj->p_catres, ARCID_MICTEST_GRA, NARC_mictest_obj_note_NCLR, 0, 1, NNS_G2D_VRAM_TYPE_2DMAIN, MICTEST_CLRES_PLT_ID_NOTE );
-	CATS_LoadResourceCellArc( p_obj->p_catsys, p_obj->p_catres, ARCID_MICTEST_GRA, NARC_mictest_obj_note_NCER, 0, MICTEST_CLRES_CEL_ID_NOTE );
-	CATS_LoadResourceCellAnmArc( p_obj->p_catsys, p_obj->p_catres, ARCID_MICTEST_GRA, NARC_mictest_obj_note_NANR, 0, MICTEST_CLRES_ANM_ID_NOTE );
-	CATS_LoadResourceCharArc( p_obj->p_catsys, p_obj->p_catres, ARCID_MICTEST_GRA, NARC_mictest_obj_note_NCGR, 0, NNS_G2D_VRAM_TYPE_2DMAIN,  MICTEST_CLRES_CHR_ID_NOTE );
+  p_obj->resObjTbl[MICTEST_RES_M_NOTE_PLTT] =
+    GFL_CLGRP_PLTT_Register( arcHandle, NARC_mictest_obj_note_NCLR, CLSYS_DRAW_SUB, 0, heap_id );
 
-	//	アクター生成
-	for( i = 0; i < MICTEST_OBJ_MAX; i++ ){
-		p_obj->p_act[i] = CATS_ObjectAdd_S( p_obj->p_catsys, p_obj->p_catres, &sc_obj_add_param[ sc_act_res_tbl[i] ] );
-		// オートアニメフラグセット
-		GFL_CLACT_WK_SetAutoAnmFlagCap( p_obj->p_act[i], CATS_ANM_AUTO_ON );
-	}
+  p_obj->resObjTbl[MICTEST_RES_M_NOTE_CHAR] = 
+    GFL_CLGRP_CGR_Register( arcHandle, NARC_mictest_obj_note_NCGR, 0, CLSYS_DRAW_SUB, heap_id );
 
-	//	音符は非表示
-	for( i = 0; i < OBJ_NOTE_MAX; i++ ) {
-		GFL_CLACT_UNIT_SetDrawEnableCap( p_obj->p_act[ MICTEST_OBJ_NOTE + i ], CATS_ENABLE_FALSE );
-	}
+  p_obj->resObjTbl[MICTEST_RES_M_NOTE_ANIM] =
+    GFL_CLGRP_CELLANIM_Register( arcHandle, NARC_mictest_obj_note_NCER, NARC_mictest_obj_note_NANR, heap_id );
 
+  // ----- LCD SUB -----
+  
+	//	ボタン
+  p_obj->resObjTbl[MICTEST_RES_S_BTN_PLTT] =
+    GFL_CLGRP_PLTT_Register( arcHandle, NARC_mictest_obj_button_NCLR, CLSYS_DRAW_SUB, 0, heap_id );
+
+  p_obj->resObjTbl[MICTEST_RES_S_BTN_CHAR] = 
+    GFL_CLGRP_CGR_Register( arcHandle, NARC_mictest_obj_button_NCGR, 0, CLSYS_DRAW_SUB, heap_id );
+
+  p_obj->resObjTbl[MICTEST_RES_S_BTN_ANIM] =
+    GFL_CLGRP_CELLANIM_Register( arcHandle, NARC_mictest_obj_button_NCER, NARC_mictest_obj_button_NANR, heap_id );
+  
+  //　ハンドルを閉じる
+  GFL_ARC_CloseDataHandle( arcHandle );
+  
+  //==========================================================================
+  // ■アクター生成
+  //==========================================================================
+  { 
+    static const GFL_CLWK_DATA sc_obj_add_param[] = 
+    {
+      //	s16	pos_x;				// ｘ座標
+      //	s16 pos_y;				// ｙ座標
+      //	u16 anmseq;				// アニメーションシーケンス
+      //	u8	softpri;			// ソフト優先順位	0>0xff
+      //	u8	bgpri;				// bg優先順位
+
+      //	GAGE_L
+      {
+        OBJ_GAGE_L_POS_X, OBJ_GAGE_L_POS_Y, 0, 0, 0, 
+      },
+      //	GAGE_R
+      {
+        OBJ_GAGE_R_POS_X, OBJ_GAGE_R_POS_Y, 0, 0, 0,
+      },
+      //	POKEMON
+      {
+        OBJ_POKEMON_POS_X, OBJ_POKEMON_POS_Y, 0, 0, 0,
+      },
+      //	BUTTON
+      {
+        OBJ_BUTTON_POS_X, OBJ_BUTTON_POS_Y, 0, 0, 1,
+      },
+      //	NOTE
+      {
+        0, 0, 0, 0, 0,
+      },
+    };
+
+    // 0=リソースIDの先頭テーブル, 1=サーフェース指定, 2=参照するGFL_CLWK_DATAのIDX
+    static const u32 sc_res_data_tbl[MICTEST_OBJ_MAX][3]	= { 
+        MICTEST_RES_M_GAGE_CHAR,  CLSYS_DEFREND_MAIN, 0,
+        MICTEST_RES_M_GAGE_CHAR,  CLSYS_DEFREND_MAIN, 1,
+        MICTEST_RES_M_POKE_CHAR,  CLSYS_DEFREND_MAIN, 2,
+        MICTEST_RES_S_BTN_CHAR,   CLSYS_DEFREND_SUB,  3,
+        MICTEST_RES_M_NOTE_CHAR,  CLSYS_DEFREND_MAIN, 4,
+        MICTEST_RES_M_NOTE_CHAR,  CLSYS_DEFREND_MAIN, 4,
+        MICTEST_RES_M_NOTE_CHAR,  CLSYS_DEFREND_MAIN, 4,
+    };
+    
+    //	アクター生成
+    for( i = 0; i < MICTEST_OBJ_MAX; i++ ) {
+
+      HOSAKA_Printf("[%d]res=%d\n", i, sc_res_data_tbl[i][0] );
+          
+      GF_ASSERT( sc_res_data_tbl[i][0]+2 < MICTEST_RES_MAX );
+
+      p_obj->p_act[i] = GFL_CLACT_WK_Create( p_obj->p_cell_unit,
+          p_obj->resObjTbl[ sc_res_data_tbl[i][0] ],
+          p_obj->resObjTbl[ sc_res_data_tbl[i][0]+1 ],
+          p_obj->resObjTbl[ sc_res_data_tbl[i][0]+2 ],
+          &sc_obj_add_param[ sc_res_data_tbl[i][2] ], sc_res_data_tbl[i][1], heap_id );
+
+      //　オートアニメフラグセット
+      GFL_CLACT_WK_SetAutoAnmFlag( p_obj->p_act[i], TRUE );
+    }
+  }
+    
+  //	音符は非表示
+  for( i = 0; i < OBJ_NOTE_MAX; i++ ) {
+    GFL_CLACT_WK_SetDrawEnable( p_obj->p_act[ MICTEST_OBJ_NOTE + i ], FALSE );
+  }
+	
 	//	個別設定
-	GFL_CLACT_WK_SetFlipCap(p_obj->p_act[MICTEST_OBJ_GAGE_L], CLACT_FLIP_H);
-	GFL_CLACT_WK_SetBgPriCap( p_obj->p_act[MICTEST_OBJ_BUTTON], 1 );
+	GFL_CLACT_WK_SetFlip( p_obj->p_act[MICTEST_OBJ_GAGE_L], CLWK_FLIP_H, TRUE );
 
+  // 音符の数を保持
 	p_obj->note_cnt	= NOTE_ENTER_CNT_MAX;
 }
 
 //----------------------------------------------------------------------------
 /**
- *	@brief	CLACT終了
+ *	@brief	clact終了
  *
- *	@param	MICTEST_OBJ_WORK *p_obj 
+ *	@param	mictest_obj_work *p_obj 
  *
  *	@return
  */
 //-----------------------------------------------------------------------------
 static void MicTest_OBJ_DeleteClact( MICTEST_OBJ_WORK *p_obj )
 {
-	int i;
-	
   // セルアクターセット破棄
 	GFL_CLACT_UNIT_Delete( p_obj->p_cell_unit );
-
-	//OAMレンダラー破棄
-  GFL_CLACT_SYS_Delete();
-
-  // @@@ アクター、リソース開放
-	for( i = 0;i < MICTEST_OBJ_MAX;i++ ){
-		if( p_obj->p_act[i] != NULL ){
-			CATS_ActorPointerDelete_S( p_obj->p_act[i] );
-		}
-	}
-
-	CATS_ResourceDestructor_S( p_obj->p_catsys, p_obj->p_catres );
 }
 
 //----------------------------------------------------------------------------
@@ -1295,12 +1251,9 @@ static void MicTest_OBJ_DeleteClact( MICTEST_OBJ_WORK *p_obj )
 //-----------------------------------------------------------------------------
 static void MicTest_OBJ_VBlancFunction( MICTEST_OBJ_WORK *p_obj )
 {
-	if( p_obj->p_catsys != NULL ) {
-		CATS_RenderOamTrans();
-	}
+  GFL_CLACT_SYS_VBlankFunc();
 }
 
-#endif
 
 //=============================================================================
 /**
@@ -1335,7 +1288,6 @@ static void MicTest_BG_Init( MICTEST_BG_WORK *p_bg, u32 heap_id )
 	
 	// タッチフォントロード
   p_bg->fontHandle = GFL_FONT_Create( ARCID_FONT, NARC_font_large_nftr, GFL_FONT_LOADTYPE_FILE, FALSE, heap_id );
-//	FontProc_LoadFont( FONT_TOUCH, HEAPID_MICTEST );
 
 	//	BG面設定
 	{
@@ -1402,6 +1354,7 @@ static void MicTestBG_LoadBg( MICTEST_BG_WORK *p_bg, u32 heap_id )
 	// 上下画面ＢＧパレット転送
 	GFL_ARC_UTIL_TransVramPalette( ARCID_MICTEST_GRA, NARC_mictest_back_bg_down_NCLR, PALTYPE_MAIN_BG, 0, 0x20, heap_id );
 	GFL_ARC_UTIL_TransVramPalette( ARCID_MICTEST_GRA, NARC_mictest_back_bg_up_NCLR, PALTYPE_SUB_BG, 0, 0x20, heap_id );
+
 	// 会話フォントパレット転送
 	GFL_ARC_UTIL_TransVramPalette( ARCID_FONT, NARC_font_default_nclr, PALTYPE_MAIN_BG, 13*0x20, 16*2, heap_id );
 	GFL_ARC_UTIL_TransVramPalette( ARCID_FONT, NARC_font_default_nclr, PALTYPE_SUB_BG, 13*0x20, 16*2, heap_id );
@@ -1564,8 +1517,8 @@ static void MicTest_MIC_Init( MICTEST_MIC_WORK *p_mic, u32 heap_id, MICCallback 
 #ifdef MIC_FUNC_DEF
 	//マイク時スリープを禁止に
 	sys_SleepNG( SLEEPTYPE_MIC );
-
-	//	バッファ作成
+	
+  //	バッファ作成
 	{	
 		u32 size		= sizeof(MIC_BUF_SIZE)*MIC_SAMPLING_LENGTH + 32;	//	後にバッファアドレスを32バイトアラインするため+32
 		MIC_BUF_SIZE	*p_buf	= GFL_HEAP_AllocMemory( heap_id, size );
@@ -1581,6 +1534,7 @@ static void MicTest_MIC_Init( MICTEST_MIC_WORK *p_mic, u32 heap_id, MICCallback 
 		p_mic->param.full_callback	= MicCallback;
 		p_mic->param.full_arg		= p_mic_arg;
 	}
+
 	p_mic->pre_mic_use	= Snd_MicIsAmpOnWaitFlag();
 #endif
 }
@@ -1598,7 +1552,6 @@ static void MicTest_MIC_Exit( MICTEST_MIC_WORK *p_mic )
 {
 #ifdef MIC_FUNC_DEF
 	GFL_HEAP_FreeMemory( p_mic->p_buf_adrs );
-
 	//マイク時スリープを許可
 	sys_SleepOK( SLEEPTYPE_MIC );
 #endif
@@ -1668,17 +1621,17 @@ static void MicTest_MIC_Main( MICTEST_MIC_WORK *p_mic )
 //-----------------------------------------------------------------------------
 static void MicTest_MIC_StartSampling( MICTEST_MIC_WORK *p_mic )
 {
-#ifdef MIC_FUNC_DEF
 	if( p_mic->mic_use_flag == FALSE )
 	{	
+#ifdef MIC_FUNC_DEF
 		Snd_MicStartAutoSampling( &p_mic->param );
+#endif
 		p_mic->is_start	= TRUE;
 	}
 	else
 	{	
 		p_mic->pre_start_sampling	= TRUE;
 	}
-#endif
 }
 
 //----------------------------------------------------------------------------
@@ -1694,8 +1647,8 @@ static void MicTest_MIC_StopSampling( MICTEST_MIC_WORK *p_mic )
 {
 #ifdef MIC_FUNC_DEF
 	Snd_MicStopAutoSampling();
-	p_mic->is_start	= FALSE;
 #endif
+	p_mic->is_start	= FALSE;
 }
 
 //----------------------------------------------------------------------------
@@ -1741,7 +1694,6 @@ static int CalcAverageVolumeMicBuffer( MICAutoParam * p_mic_param )
 //-----------------------------------------------------------------------------
 static void ChangeObjAnmMicCallback( MICResult result, void *p_arg )
 {		
-#ifdef MICTEST_USE_OBJ
 	if( result == MIC_RESULT_SUCCESS ) {
 		MICTEST_MAIN_WORK	*p_wk	= p_arg;
 		MICTEST_MIC_WORK	*p_mic	= &p_wk->mic;
@@ -1796,7 +1748,6 @@ static void ChangeObjAnmMicCallback( MICResult result, void *p_arg )
 
 		cnt++;
 	}
-#endif
 }
 
 
@@ -1915,7 +1866,6 @@ static BOOL MoveStartNoteCtrl( MICTEST_OBJ_WORK *p_wk, u32 heap_id, s16 x, s16 y
 static void MoveStartNoteTask( GFL_TCBSYS* tcbSys, GFL_CLWK*	p_act, NOTE_TASK_CTRL *p_task_wk, /*u32 heap_id,*/ s16 x, s16 y, fx32 speed, u32 angle, u32 width, u32 wait )
 {
 	NOTE_MOVE_WORK	*p_wk;
-  GFL_CLACTPOS pos;
 
 	/* 割り込み中にアロケートするとアサートのためアロケートできないので、実体をもらってくる */
 //	p_tcb	= PMDS_taskAdd( MoveNoteTask, sizeof(NOTE_MOVE_WORK), 0, heap_id );	//	(バスを占有するから　マイクのバッファ終了コールバックは割り込みらしい)
@@ -1934,9 +1884,9 @@ static void MoveStartNoteTask( GFL_TCBSYS* tcbSys, GFL_CLWK*	p_act, NOTE_TASK_CT
 	p_wk->shake_speed	= FX32_CONST(6.0f);
 	p_wk->shake_width	= width;
 
-  pos.x = x;
-  pos.y = y;
-	GFL_CLACT_WK_SetWldPos( p_wk->p_act, &pos );
+	GFL_CLACT_WK_SetWldTypePos( p_wk->p_act, x, CLSYS_MAT_X );
+	GFL_CLACT_WK_SetWldTypePos( p_wk->p_act, y, CLSYS_MAT_Y );
+
 }
 
 //----------------------------------------------------------------------------
@@ -1951,14 +1901,13 @@ static void MoveStartNoteTask( GFL_TCBSYS* tcbSys, GFL_CLWK*	p_act, NOTE_TASK_CT
 //-----------------------------------------------------------------------------
 static void MoveNoteTask( GFL_TCB* p_tcb, void *p_wk_adrs )
 {
-#ifdef MICTEST_USE_OBJ
 	NOTE_TASK_CTRL  *p_ctrl	= p_wk_adrs;
 	NOTE_MOVE_WORK	*p_wk	= &p_ctrl->note_wk;
 
 	if( p_wk->wait ) {
 		p_wk->wait--;
 		if( p_wk->wait == 0 ) {
-			GFL_CLACT_UNIT_SetDrawEnableCap( p_wk->p_act, CATS_ENABLE_TRUE );
+			GFL_CLACT_WK_SetDrawEnable( p_wk->p_act, TRUE );
 		}
 	}else{	
 		int shake;
@@ -1974,15 +1923,15 @@ static void MoveNoteTask( GFL_TCB* p_tcb, void *p_wk_adrs )
 		shake	= p_wk->shake_pt >> FX32_SHIFT;
 		x		+= (p_wk->shake_width * GFL_CALC_Sin360( shake )) >> FX32_SHIFT;
 
-		GFL_CLACT_WK_SetWldPosCap( p_wk->p_act, x, y );
+    GFL_CLACT_WK_SetWldTypePos( p_wk->p_act, x, CLSYS_MAT_X );
+    GFL_CLACT_WK_SetWldTypePos( p_wk->p_act, y, CLSYS_MAT_Y );
 
 		if( y < - 16 ) {
-			GFL_CLACT_UNIT_SetDrawEnableCap( p_wk->p_act, CATS_ENABLE_FALSE );
+			GFL_CLACT_WK_SetDrawEnable( p_wk->p_act, FALSE );
 			GFL_TCB_DeleteTask( p_tcb );
 			p_ctrl->tcb_ptr = NULL;
 		}
 	}
-#endif
 }
 
 //----------------------------------------------------------------------------
