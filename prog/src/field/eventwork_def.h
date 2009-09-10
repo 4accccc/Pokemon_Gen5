@@ -57,7 +57,8 @@ enum {
 //  ワーク関連定義
 //======================================================================
 enum {
-  EVENT_WORK_AREA_MAX = WORKS_TOTAL_MAX - WORKS_TOTAL_MIN,
+  //EVENT_WORK_AREA_MAX = WORKS_TOTAL_MAX - WORKS_TOTAL_MIN,
+  EVENT_WORK_AREA_MAX = WK_AREA_END - WORKS_TOTAL_MIN,
 
   //セーブワーク定義スタート　オフセット
   SVWK_START			    = 0x4000,
