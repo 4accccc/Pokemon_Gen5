@@ -1,11 +1,33 @@
 EFFSEQ
-$0001
+$0003
 C:\home\pokemon_wb\resource\particle\wazaeffect\w_001.spa
+C:\home\pokemon_wb\resource\particle\wazaeffect\w_073.spa
+C:\home\pokemon_wb\resource\particle\wazaeffect\w_073.spa
 #001
 %00
-パーティクルデータロード	w_001
-パーティクル再生	w_001	W_001_001_BALL_BURN	攻撃側	方向無し	0	0
-パーティクル再生	w_001	W_001_001_HIT_MARK	攻撃側	方向無し	0	0
+パーティクルデータロード	w_073
+エミッタ移動	w_073	W_073_073_YADORIGI_TANE	放物線	攻撃側	防御側	2:45:4
+タイマーによるウエイト	10
+エミッタ移動	w_073	W_073_073_YADORIGI_TANE	放物線	攻撃側	防御側	2:45:4
+タイマーによるウエイト	2
+エミッタ移動	w_073	W_073_073_YADORIGI_TANE	放物線	攻撃側	防御側	2:45:4
+タイマーによるウエイト	10
+エミッタ移動	w_073	W_073_073_YADORIGI_TANE	放物線	攻撃側	防御側	2:45:4
+タイマーによるウエイト	30
+カメラ移動	追従	防御側	16	0	8
+タイマーによるウエイト	10
+パーティクル再生	w_073	W_073_073_YADORIGI_BURN_L	防御側	方向無し	2	0
+パーティクル再生	w_073	W_073_073_YADORIGI_BURN_R	防御側	方向無し	2	0
+パーティクル再生	w_073	W_073_073_YADORIGI_ANI	防御側	方向無し	0.5	0
+パーティクル再生	w_073	W_073_073_YADORIGI_FIX	防御側	方向無し	0.5	0
+タイマーによるウエイト	5
+パーティクル再生	w_073	W_073_073_YADORIGI_ANI_L	防御側	方向無し	0.5	0
+パーティクル再生	w_073	W_073_073_YADORIGI_FIX_L	防御側	方向無し	0.5	0
+タイマーによるウエイト	5
+パーティクル再生	w_073	W_073_073_YADORIGI_ANI_R	防御側	方向無し	0.5	0
+パーティクル再生	w_073	W_073_073_YADORIGI_FIX_R	防御側	方向無し	0.5	0
+エフェクト終了待ち	すべて
+カメラ移動	追従	初期位置	16	0	8
 エフェクト終了待ち	すべて
 エフェクト終了
 &
