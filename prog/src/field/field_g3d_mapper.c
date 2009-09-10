@@ -646,7 +646,7 @@ static void GetMapperBlockIdxXZ( const FLDMAPPER* g3Dmapper, const VecFx32* pos,
     // Šï”‚Ìê‡
     start_x = GetMapperBlockStartIdxUnEven( g3Dmapper->blockXNum, blockWidth, pos->x );
   }
-  if( (g3Dmapper->blockXNum % 2) == 0 ){
+  if( (g3Dmapper->blockZNum % 2) == 0 ){
     // ‹ô”‚Ìê‡
     start_z = GetMapperBlockStartIdxEven( g3Dmapper->blockZNum, blockWidth, pos->z );
   }else{
