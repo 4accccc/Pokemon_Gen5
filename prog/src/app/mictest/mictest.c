@@ -11,9 +11,6 @@
 
 
 //#define MICTEST_USE_SND
-//#define MIC_FUNC_DEF 
-// ↑マイク関連関数の移植方式が定まっていないので一時的関連機能をコメントアウトしています
-// 2009.08.31 by hosaka genya
 
 //	システム
 #include <gflib.h>
@@ -26,6 +23,7 @@
 #include "print/wordset.h"
 #include "print/global_font.h"
 #include "font/font.naix"
+#include "sound/snd_mic.h"
 
 #include "arc_def.h"
 
@@ -37,12 +35,28 @@
 #include "message.naix"//	GMM
 #include "msg/msg_mictest.h"//	GMM
 
-// @@@ TODO 未実装関数
+// ===== TODO 未実装処理の仮定義 =====
+
+// BGM関連
 static void Snd_BgmFadeOut( int a, int b ){}
 static void Snd_BgmFadeIn( int a, int b, int c){}
 #define BGM_VOL_MIN (0)
 #define BGM_VOL_MAX (127)
 #define BGM_FADEIN_START_VOL_NOW (0)
+
+// マイク関連
+//static BOOL Snd_MicIsAmpOnWaitFlag( void ){ return 0; }
+//static void Snd_MicStartAutoSampling( void* a ){}
+//static void Snd_MicStopAutoSampling( void ){}
+
+// スリープ制御関連
+enum { 
+  SLEEPTYPE_MIC = 0x08,     // マイクサンプリング時のスリープNGフラグ
+};
+static void sys_SleepNG( int a ){}
+static void sys_SleepOK( int a ){}
+
+// ===== ↑未実装処理の仮定義↑ =====
 
 /*
  *	マイクテスト任天堂規約
@@ -312,7 +326,7 @@ typedef struct {
 	MICTEST_SEQ_WORK	seq;
   void* tcbWork;
   GFL_TCBSYS* tcbSys;
-  GFL_TCB  *tcbVBlank;
+  GFL_TCB*    tcbVBlank;
 
 	int	heap_id;
 }MICTEST_MAIN_WORK;
@@ -356,8 +370,8 @@ static void MicTest_OBJ_VBlancFunction( MICTEST_OBJ_WORK *p_obj );
 static void MicTest_BG_Init( MICTEST_BG_WORK *p_bg, u32 heap_id );
 static void MicTest_BG_Exit( MICTEST_BG_WORK *p_bg );
 static void MicTest_BG_Main( MICTEST_BG_WORK *p_bg );
-static void MicTestBG_LoadBg( MICTEST_BG_WORK *p_bg, u32 heap_id );
-static void MicTestBG_UnLoadBg( MICTEST_BG_WORK *p_bg );
+static void MicTest_BG_LoadBg( MICTEST_BG_WORK *p_bg, u32 heap_id );
+static void MicTest_BG_UnLoadBg( MICTEST_BG_WORK *p_bg );
 static void MicTest_BG_VBlancFunction( MICTEST_BG_WORK *p_bg );
 static void MicTest_BG_CreateMsg( MICTEST_BG_WORK *p_bg, u32 heap_id );
 static void MicTest_BG_DeleteMsg( MICTEST_BG_WORK *p_bg );
@@ -522,7 +536,7 @@ GFL_PROC_RESULT MicTestProc_Init( GFL_PROC *proc,int *seq, void *pwk, void *mywk
 
 	//	BG
 	MicTest_BG_Init( &p_wk->bg, p_wk->heap_id );
-	MicTestBG_LoadBg( &p_wk->bg, p_wk->heap_id );
+	MicTest_BG_LoadBg( &p_wk->bg, p_wk->heap_id );
 	MicTest_BG_CreateMsg( &p_wk->bg, p_wk->heap_id );
 
 	//	OBJ
@@ -611,14 +625,7 @@ GFL_PROC_RESULT MicTestProc_Main( GFL_PROC *proc,int *seq, void *pwk, void *mywk
 {
 	MICTEST_MAIN_WORK* p_wk = mywk;
 
-#ifdef PM_DEBUG
-  // @@@ TODO とりあえずデバッグボタンで抜ける
-  if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_DEBUG ) {
-    return GFL_PROC_RES_FINISH;
-  }
-#endif
-
-	if( MicTest_SEQ_IsEnd( &p_wk->seq ) ) {
+  if( MicTest_SEQ_IsEnd( &p_wk->seq ) ) {
 		return GFL_PROC_RES_FINISH;
 	}
 	MicTest_SEQ_Main( &p_wk->seq );
@@ -940,10 +947,6 @@ static void SEQFUNC_End( MICTEST_SEQ_WORK *p_seq_wk, u32 *p_seq )
 //-----------------------------------------------------------------------------
 static void MicTest_InitApplication( u32 heap_id )
 {
-	//	割り込み終了
-//  sys_VBlankFuncChange(NULL,NULL);	
-//	sys_HBlankIntrStop();
-
 	//	表示設定解除
 	GFL_DISP_GX_InitVisibleControl();
 	GFL_DISP_GXS_InitVisibleControl();
@@ -953,9 +956,6 @@ static void MicTest_InitApplication( u32 heap_id )
 	//	Wnd設定解除
 	WIPE_ResetWndMask( WIPE_DISP_MAIN );
 	WIPE_ResetWndMask( WIPE_DISP_SUB );	
-
-	//	VRAMマネージャ初期化
-//	initVramTransferManagerHeap( 32, heap_id );
 }
 
 //----------------------------------------------------------------------------
@@ -969,13 +969,6 @@ static void MicTest_InitApplication( u32 heap_id )
 //-----------------------------------------------------------------------------
 static void MicTest_ExitApplication( void )
 {
-	//	VRAMマネージャ終了
-//	DellVramTransferManager();
-
-	//	割り込み終了
-//	sys_VBlankFuncChange(NULL,NULL);	
-//	sys_HBlankIntrStop();
-
 	//	非表示
 	GFL_DISP_GX_InitVisibleControl();
 	GFL_DISP_GXS_InitVisibleControl();	
@@ -1117,7 +1110,7 @@ static void MicTest_OBJ_SetClact( MICTEST_OBJ_WORK *p_obj, HEAPID heap_id )
   
   // ポケモン
   p_obj->resObjTbl[MICTEST_RES_M_POKE_PLTT] =
-    GFL_CLGRP_PLTT_Register( arcHandle, NARC_mictest_obj_pokemon_NCLR, CLSYS_DRAW_MAIN, 0, heap_id );
+    GFL_CLGRP_PLTT_Register( arcHandle, NARC_mictest_obj_pokemon_NCLR, CLSYS_DRAW_MAIN, 0x20, heap_id );
   
   p_obj->resObjTbl[MICTEST_RES_M_POKE_CHAR] = 
     GFL_CLGRP_CGR_Register( arcHandle, NARC_mictest_obj_pokemon_NCGR, 0, CLSYS_DRAW_MAIN, heap_id );
@@ -1127,10 +1120,10 @@ static void MicTest_OBJ_SetClact( MICTEST_OBJ_WORK *p_obj, HEAPID heap_id )
   
 	//	音符
   p_obj->resObjTbl[MICTEST_RES_M_NOTE_PLTT] =
-    GFL_CLGRP_PLTT_Register( arcHandle, NARC_mictest_obj_note_NCLR, CLSYS_DRAW_SUB, 0, heap_id );
+    GFL_CLGRP_PLTT_Register( arcHandle, NARC_mictest_obj_note_NCLR, CLSYS_DRAW_MAIN, 0x40, heap_id );
 
   p_obj->resObjTbl[MICTEST_RES_M_NOTE_CHAR] = 
-    GFL_CLGRP_CGR_Register( arcHandle, NARC_mictest_obj_note_NCGR, 0, CLSYS_DRAW_SUB, heap_id );
+    GFL_CLGRP_CGR_Register( arcHandle, NARC_mictest_obj_note_NCGR, 0, CLSYS_DRAW_MAIN, heap_id );
 
   p_obj->resObjTbl[MICTEST_RES_M_NOTE_ANIM] =
     GFL_CLGRP_CELLANIM_Register( arcHandle, NARC_mictest_obj_note_NCER, NARC_mictest_obj_note_NANR, heap_id );
@@ -1197,8 +1190,6 @@ static void MicTest_OBJ_SetClact( MICTEST_OBJ_WORK *p_obj, HEAPID heap_id )
     
     //	アクター生成
     for( i = 0; i < MICTEST_OBJ_MAX; i++ ) {
-
-      HOSAKA_Printf("[%d]res=%d\n", i, sc_res_data_tbl[i][0] );
           
       GF_ASSERT( sc_res_data_tbl[i][0]+2 < MICTEST_RES_MAX );
 
@@ -1219,6 +1210,7 @@ static void MicTest_OBJ_SetClact( MICTEST_OBJ_WORK *p_obj, HEAPID heap_id )
   }
 	
 	//	個別設定
+  GFL_CLACT_WK_SetAffineParam( p_obj->p_act[MICTEST_OBJ_GAGE_L], CLSYS_AFFINETYPE_NONE );
 	GFL_CLACT_WK_SetFlip( p_obj->p_act[MICTEST_OBJ_GAGE_L], CLWK_FLIP_H, TRUE );
 
   // 音符の数を保持
@@ -1349,7 +1341,7 @@ static void MicTest_BG_Main( MICTEST_BG_WORK *p_bg )
  *	@return	none
  */
 //-----------------------------------------------------------------------------
-static void MicTestBG_LoadBg( MICTEST_BG_WORK *p_bg, u32 heap_id )
+static void MicTest_BG_LoadBg( MICTEST_BG_WORK *p_bg, u32 heap_id )
 {
 	// 上下画面ＢＧパレット転送
 	GFL_ARC_UTIL_TransVramPalette( ARCID_MICTEST_GRA, NARC_mictest_back_bg_down_NCLR, PALTYPE_MAIN_BG, 0, 0x20, heap_id );
@@ -1381,7 +1373,7 @@ static void MicTestBG_LoadBg( MICTEST_BG_WORK *p_bg, u32 heap_id )
  *	@return	none
  */
 //-----------------------------------------------------------------------------
-static void MicTestBG_UnLoadBg( MICTEST_BG_WORK *p_bg )
+static void MicTest_BG_UnLoadBg( MICTEST_BG_WORK *p_bg )
 {
 }
 
@@ -1421,25 +1413,21 @@ static void MicTest_BG_CreateMsg( MICTEST_BG_WORK *p_bg, u32 heap_id )
 		u16 chr_ofs;
     u8 x_dot;
     u8 padding[3];
-//		PRINTSYS_LSB font_col;
 	} sc_bmp_setup_data[] = {
 		//	TITLE
 		{
 			BMPWIN_TITLE_FRAME, BMPWIN_TITLE_X, BMPWIN_TITLE_Y, BMPWIN_TITLE_W, BMPWIN_TITLE_H,
 			BMPWIN_TITLE_PLT, BMPWIN_TITLE_CHR_OFS, BMPWIN_TITLE_X_DOT,
-//			PRINTSYS_LSB_Make(FBMP_COL_WHITE,FBMP_COL_BLK_SDW,FBMP_COL_NULL)
 		},
 		//	INFO
 		{
 			BMPWIN_INFO_FRAME, BMPWIN_INFO_X, BMPWIN_INFO_Y, BMPWIN_INFO_W, BMPWIN_INFO_H,
 			BMPWIN_INFO_PLT, BMPWIN_INFO_CHR_OFS, 0,
-//			PRINTSYS_LSB_Make(FBMP_COL_WHITE,FBMP_COL_BLK_SDW,FBMP_COL_NULL)
 		},
 		//	RETBTN
 		{
 			BMPWIN_RETBTN_FRAME, BMPWIN_RETBTN_X, BMPWIN_RETBTN_Y, BMPWIN_RETBTN_W, BMPWIN_RETBTN_H,
 			BMPWIN_RETBTN_PLT, BMPWIN_RETBTN_CHR_OFS, 0,
-//			PRINTSYS_LSB_Make(14,15,FBMP_COL_NULL)
 		},
 	};
 	int i;
@@ -1461,8 +1449,6 @@ static void MicTest_BG_CreateMsg( MICTEST_BG_WORK *p_bg, u32 heap_id )
 
 		p_buf	= GFL_MSG_CreateString( p_bg->p_msg_mng, i );
     PRINTSYS_Print( bmp, sc_bmp_setup_data[i].x_dot, 0, p_buf, p_bg->fontHandle );
-//	GF_STR_PrintColor(	&p_bg->bmpwin[i], sc_bmp_setup_data[i].font, p_buf, 0, 0, 
-//					MSG_NO_PUT, sc_bmp_setup_data[i].font_col, NULL );
 		GFL_STR_DeleteBuffer( p_buf );
 		GFL_BMPWIN_MakeTransWindow( p_bg->bmpwin[i] );
 	}
@@ -1514,7 +1500,8 @@ static void MicTest_BG_DeleteMsg( MICTEST_BG_WORK *p_bg )
 //-----------------------------------------------------------------------------
 static void MicTest_MIC_Init( MICTEST_MIC_WORK *p_mic, u32 heap_id, MICCallback MicCallback, void*p_mic_arg )
 {
-#ifdef MIC_FUNC_DEF
+  SND_MIC_Init( heap_id );
+
 	//マイク時スリープを禁止に
 	sys_SleepNG( SLEEPTYPE_MIC );
 	
@@ -1535,8 +1522,7 @@ static void MicTest_MIC_Init( MICTEST_MIC_WORK *p_mic, u32 heap_id, MICCallback 
 		p_mic->param.full_arg		= p_mic_arg;
 	}
 
-	p_mic->pre_mic_use	= Snd_MicIsAmpOnWaitFlag();
-#endif
+	p_mic->pre_mic_use	= SND_MIC_IsAmpOnWaitFlag();
 }
 
 //----------------------------------------------------------------------------
@@ -1550,11 +1536,10 @@ static void MicTest_MIC_Init( MICTEST_MIC_WORK *p_mic, u32 heap_id, MICCallback 
 //-----------------------------------------------------------------------------
 static void MicTest_MIC_Exit( MICTEST_MIC_WORK *p_mic )
 {
-#ifdef MIC_FUNC_DEF
 	GFL_HEAP_FreeMemory( p_mic->p_buf_adrs );
+  SND_MIC_Exit();
 	//マイク時スリープを許可
 	sys_SleepOK( SLEEPTYPE_MIC );
-#endif
 }
 
 //----------------------------------------------------------------------------
@@ -1567,8 +1552,11 @@ static void MicTest_MIC_Exit( MICTEST_MIC_WORK *p_mic )
 //-----------------------------------------------------------------------------
 static void MicTest_MIC_Main( MICTEST_MIC_WORK *p_mic )
 {	
-#ifdef MIC_FUNC_DEF
-	BOOL now_mic_use	= Snd_MicIsAmpOnWaitFlag();
+	BOOL now_mic_use;
+
+  SND_MIC_Main();
+  
+  now_mic_use = SND_MIC_IsAmpOnWaitFlag();
 
 	//もしマイク使用不可状態だったら、
 	//現在のバッファをクリアする
@@ -1607,7 +1595,6 @@ static void MicTest_MIC_Main( MICTEST_MIC_WORK *p_mic )
 	}
 
 	p_mic->pre_mic_use	= now_mic_use;
-#endif
 }
 
 //----------------------------------------------------------------------------
@@ -1623,9 +1610,7 @@ static void MicTest_MIC_StartSampling( MICTEST_MIC_WORK *p_mic )
 {
 	if( p_mic->mic_use_flag == FALSE )
 	{	
-#ifdef MIC_FUNC_DEF
-		Snd_MicStartAutoSampling( &p_mic->param );
-#endif
+		SND_MIC_StartAutoSampling( &p_mic->param );
 		p_mic->is_start	= TRUE;
 	}
 	else
@@ -1645,9 +1630,7 @@ static void MicTest_MIC_StartSampling( MICTEST_MIC_WORK *p_mic )
 //-----------------------------------------------------------------------------
 static void MicTest_MIC_StopSampling( MICTEST_MIC_WORK *p_mic )
 {
-#ifdef MIC_FUNC_DEF
-	Snd_MicStopAutoSampling();
-#endif
+	SND_MIC_StopAutoSampling();
 	p_mic->is_start	= FALSE;
 }
 

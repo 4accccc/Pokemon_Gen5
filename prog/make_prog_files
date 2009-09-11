@@ -6,6 +6,7 @@ SOUNDSRC =    sound/snd_strm.c \
         sound/pm_sndsys.c \
         sound/pm_voice.c \
         sound/pm_wb_voice.c \
+        sound/snd_mic.c \
 		sound/bgm_info.c
 
 #セーブデータ関連
