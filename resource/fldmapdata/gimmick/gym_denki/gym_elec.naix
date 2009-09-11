@@ -1,0 +1,42 @@
+/*****************************************************************************
+	Archive file index definition.
+	File: gym_elec.naix
+
+	This file was created by NINTENDO NITRO-System Archiver.
+
+	Update:2009-09-11T19:32:27
+ *****************************************************************************/
+
+#ifndef NARC_GYM_ELEC_NAIX_
+#define NARC_GYM_ELEC_NAIX_
+
+enum {
+	NARC_gym_elec_gym04_cart_nsbmd = 0,
+	NARC_gym_elec_gym04_cart_nsbta = 1,
+	NARC_gym_elec_gym04_switch_nsbmd = 2,
+	NARC_gym_elec_gym04_s_ao_nsbta = 3,
+	NARC_gym_elec_gym04_s_mizu_nsbta = 4,
+	NARC_gym_elec_gym04_s_kimi_nsbta = 5,
+	NARC_gym_elec_gym04_s_kiiro_nsbta = 6,
+	NARC_gym_elec_gym04_s_mura_nsbta = 7,
+	NARC_gym_elec_gym04_s_ore_nsbta = 8,
+	NARC_gym_elec_gym04_s_aka_nsbta = 9,
+	NARC_gym_elec_gym04_s_pin_nsbta = 10,
+	NARC_gym_elec_gym04_rail_01a_nsbca = 11,
+	NARC_gym_elec_gym04_rail_01b_nsbca = 12,
+	NARC_gym_elec_gym04_rail_01_nsbmd = 13,
+	NARC_gym_elec_gym04_rail_02_nsbmd = 14,
+	NARC_gym_elec_gym04_rail_03_nsbmd = 15,
+	NARC_gym_elec_gym04_rail_04_nsbmd = 16,
+	NARC_gym_elec_gym04_rail_01a_nsbta = 17,
+	NARC_gym_elec_gym04_rail_01b_nsbta = 18,
+	NARC_gym_elec_gym04_rail_02a_nsbta = 19,
+	NARC_gym_elec_gym04_rail_02b_nsbta = 20,
+	NARC_gym_elec_gym04_rail_03a_nsbta = 21,
+	NARC_gym_elec_gym04_rail_03b_nsbta = 22,
+	NARC_gym_elec_gym04_rail_04a_nsbta = 23,
+	NARC_gym_elec_gym04_rail_04b_nsbta = 24
+};
+
+/* NARC_GYM_ELEC_NAIX_ */
+#endif
