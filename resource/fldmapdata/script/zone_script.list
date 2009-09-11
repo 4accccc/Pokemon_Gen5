@@ -534,5 +534,11 @@ SCRIPTFILES = \
 	sp_n01r0101.ev \
 	d08r0101.ev \
 	sp_d08r0101.ev \
+	c04r0202.ev \
+	sp_c04r0202.ev \
+	palace01.ev \
+	sp_palace01.ev \
+	palace02.ev \
+	sp_palace02.ev \
 
 #©“®¶¬ƒtƒ@ƒCƒ‹ zone_script.list ––”ö
