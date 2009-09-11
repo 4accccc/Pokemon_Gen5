@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="kitakaze_tomohiro" host="W00198" date="2009-09-11T16:06:37" source="aura_03.mb"/>
+	<create user="kitakaze_tomohiro" host="W00198" date="2009-09-11T17:31:03" source="aura_03.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 </head>
 
 <body>
 
-<original_create user="kitakaze_tomohiro" host="W00198" date="2009-09-11T16:06:37" source="aura_03.mb"/>
+<original_create user="kitakaze_tomohiro" host="W00198" date="2009-09-11T17:31:03" source="aura_03.mb"/>
 <original_generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 
 <model_info
@@ -33,7 +33,7 @@
 	<material index="0" name="lambert1"
 		light0="on" light1="off" light2="off" light3="off"
 		face="front"
-		alpha="18"
+		alpha="30"
 		wire_mode="off"
 		polygon_mode="modulate"
 		polygon_id="0"
@@ -42,17 +42,17 @@
 		translucent_update_depth="off"
 		render_1_pixel="off"
 		far_clipping="off"
-		diffuse="4 25 21"
-		ambient="11 27 27"
+		diffuse="12 25 22"
+		ambient="23 31 29"
 		specular="0 0 0"
-		emission="0 0 0"
+		emission="7 7 7"
 		shininess_table_flag="off"
 		tex_image_idx="-1" tex_palette_idx="-1"
 	/>
 	<material index="1" name="lambert2"
 		light0="on" light1="off" light2="off" light3="off"
 		face="front"
-		alpha="21"
+		alpha="22"
 		wire_mode="off"
 		polygon_mode="modulate"
 		polygon_id="0"
@@ -61,7 +61,7 @@
 		translucent_update_depth="off"
 		render_1_pixel="off"
 		far_clipping="off"
-		diffuse="0 25 24"
+		diffuse="10 25 24"
 		ambient="0 31 31"
 		specular="0 0 0"
 		emission="6 6 6"
@@ -71,7 +71,7 @@
 	<material index="2" name="lambert4"
 		light0="on" light1="off" light2="off" light3="off"
 		face="front"
-		alpha="16"
+		alpha="29"
 		wire_mode="off"
 		polygon_mode="modulate"
 		polygon_id="0"
@@ -90,7 +90,7 @@
 	<material index="3" name="lambert5"
 		light0="on" light1="off" light2="off" light3="off"
 		face="front"
-		alpha="27"
+		alpha="30"
 		wire_mode="off"
 		polygon_mode="modulate"
 		polygon_id="0"
@@ -99,10 +99,10 @@
 		translucent_update_depth="off"
 		render_1_pixel="off"
 		far_clipping="off"
-		diffuse="14 24 25"
-		ambient="17 31 22"
+		diffuse="16 25 25"
+		ambient="20 31 24"
 		specular="0 0 0"
-		emission="2 2 2"
+		emission="4 4 4"
 		shininess_table_flag="off"
 		tex_image_idx="-1" tex_palette_idx="-1"
 	/>
@@ -1395,7 +1395,7 @@
 		brother_prev="-1"
 		draw_mtx="on"
 		billboard="off"
-		scale="1.000000 1.000000 1.000000"
+		scale="1.250000 1.250000 1.250000"
 		rotate="0.000000 0.000000 0.000000"
 		translate="0.000000 0.000000 3.993652"
 		visibility="on"
