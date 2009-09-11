@@ -206,10 +206,10 @@ file.each do |line|
 		wfile.write( line_pack )
 
 		# DEBUG:
-		puts( "[0]:zone_id = " + array[0].to_s );
-		puts( "[0]:key     = " + array[1].to_s );
-		puts( "[0]:tempo   = " + array[2].to_s );
-		puts( "[0]:reverb  = " + array[3].to_s );
+		#puts( "[0]:zone_id = " + array[0].to_s );
+		#puts( "[0]:key     = " + array[1].to_s );
+		#puts( "[0]:tempo   = " + array[2].to_s );
+		#puts( "[0]:reverb  = " + array[3].to_s );
 
 	end
 

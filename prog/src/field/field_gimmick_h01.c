@@ -7,26 +7,17 @@
 #include "gamesystem/iss_3ds_unit.h"
 #include "gamesystem/iss_3ds_sys.h"
 #include "sound/pm_sndsys.h"
+#include "arc/iss.naix"
+#include "system/ica_anime.h"   // TEST:
+#include "arc/debug_obata.naix"// TEST:
 
+#define ICA_NUM (4)//TEST:
 
 //======================================================================
 /**
  * @breif 定数
  */
 //======================================================================
-//-----
-// BGM
-//-----
-// トラック番号
-#define TRACK_WIND (7)
-#define TRACK_SHIP (8)
-#define TRACK_TR1  (9)
-#define TRACK_TR2  (10)
-// トラックマスク
-#define TRACK_MASK_WIND (1 << (TRACK_WIND - 1))
-#define TRACK_MASK_SHIP (1 << (TRACK_SHIP - 1))
-#define TRACK_MASK_TR1  (1 << (TRACK_TR1  - 1))
-#define TRACK_MASK_TR2  (1 << (TRACK_TR2  - 1))
 
 //------------
 // トレーラー
@@ -39,8 +30,6 @@
 #define TR_Y    (490 << FX32_SHIFT) 
 // 移動時間
 #define TR_FRAME (300)
-// 音が届く距離
-#define TR_SOUND_RANGE (1000 << FX32_SHIFT)
 
 //-----
 // 船
@@ -52,14 +41,6 @@
 #define SHIP_Z     (2386 << FX32_SHIFT)  
 // 移動時間
 #define SHIP_FRAME (1000)
-// 音が届く距離
-#define SHIP_SOUND_RANGE (3000 << FX32_SHIFT)
-
-//------
-// 風
-//------
-#define WIND_Y_MIN (800 << FX32_SHIFT)
-#define WIND_Y_MAX (1200 << FX32_SHIFT)
 
 //-------------
 // FLD_EXP_OBJ
@@ -91,8 +72,8 @@ static GFL_G3D_UTIL_SETUP setup = { res_table, NELEMS(res_table), obj_table, NEL
 //----------------------
 typedef enum
 {
-  SOUNDOBJ_TR1,
-  SOUNDOBJ_TR2,
+  SOUNDOBJ_TR_L,
+  SOUNDOBJ_TR_R,
   SOUNDOBJ_SHIP,
   SOUNDOBJ_NUM
 } SOUNDOBJ_INDEX;
@@ -125,6 +106,10 @@ typedef struct
 {
   ISS_3DS_SYS*          iss3DSSys;  // 3Dサウンドシステム
   SOUNDOBJ soundObj[SOUNDOBJ_NUM];  // 音源オブジェクト
+  int                windTrackBit;  // 風音のトラックマスク
+  fx32               windRangeMin;  // 風音が最小になる高さ
+  fx32               windRangeMax;  // 風音が最大になる高さ
+  ICA_ANIME* icaAnime[ICA_NUM]; // TEST:
 }
 H01WORK;
 
@@ -134,8 +119,10 @@ H01WORK;
  * @brief プロトタイプ宣言
  */
 //============================================================================================
+static void Load3DSoundInfo( H01WORK* work, HEAPID heap_id );
 static void MoveSoundObj( FIELDMAP_WORK* fieldmap, SOUNDOBJ* sobj );
-static void UpdateWindVolume( FIELDMAP_WORK* fieldmap );
+static void UpdateWindVolume( FIELDMAP_WORK* fieldmap, H01WORK* work );
+
 
 
 //======================================================================
@@ -191,39 +178,44 @@ void H01_GIMMICK_Setup( FIELDMAP_WORK* fieldmap )
     FIELD_CAMERA* fc = FIELDMAP_GetFieldCamera( fieldmap );
     const GFL_G3D_CAMERA* camera = FIELD_CAMERA_GetCameraPtr( fc );
     h01work->iss3DSSys = ISS_3DS_SYS_Create( heap_id, SOUNDOBJ_NUM, camera );
+
+    // TEST:
+    {
+      int i;
+      for( i=0; i<ICA_NUM; i++ )
+      {
+        h01work->icaAnime[i] = ICA_ANIME_CreateStreaming( 
+            heap_id, ARCID_OBATA_DEBUG, NARC_debug_obata_ica_test_data2_bin, 10 );
+      }
+    }
   }
 
   // 各オブジェクトの初期ステータスを設定
-  sobj = &h01work->soundObj[SOUNDOBJ_TR1];
-  sobj->index = SOUNDOBJ_TR1;
-  sobj->frame = frame[SOUNDOBJ_TR1];
+  sobj = &h01work->soundObj[SOUNDOBJ_TR_L];
+  sobj->index = SOUNDOBJ_TR_L;
+  sobj->frame = frame[SOUNDOBJ_TR_L];
   sobj->endFrame = TR_FRAME;
   VEC_Set( &sobj->startPos, TR_X_01, TR_Y, TR_Z_MIN );
   VEC_Set( &sobj->endPos,   TR_X_01, TR_Y, TR_Z_MAX );
-  status = FLD_EXP_OBJ_GetUnitObjStatus( ptr, EXPOBJ_UNIT_IDX, SOUNDOBJ_TR1 );
+  status = FLD_EXP_OBJ_GetUnitObjStatus( ptr, EXPOBJ_UNIT_IDX, SOUNDOBJ_TR_L );
   VEC_Set( &status->trans, 0, 0, 0 );
   VEC_Set( &status->scale, FX32_ONE, FX32_ONE, FX32_ONE );
   MTX_RotY33( &status->rotate, FX_SinIdx( 32768 ), FX_CosIdx( 32768 ) );	  // y軸180度回転
   sobj->iss3dsUnitIdx = ISS_3DS_SYS_AddUnit( h01work->iss3DSSys );
   sobj->iss3dsUnit = ISS_3DS_SYS_GetUnit( h01work->iss3DSSys, sobj->iss3dsUnitIdx );
-  ISS_3DS_UNIT_SetRange( sobj->iss3dsUnit, TR_SOUND_RANGE );
-  ISS_3DS_UNIT_SetMaxVolume( sobj->iss3dsUnit, 127 );
-  ISS_3DS_UNIT_SetTrackBit( sobj->iss3dsUnit, TRACK_MASK_TR1 );
 
-  sobj = &h01work->soundObj[SOUNDOBJ_TR2];
-  sobj->index = SOUNDOBJ_TR2;
-  sobj->frame = frame[SOUNDOBJ_TR2];
+  sobj = &h01work->soundObj[SOUNDOBJ_TR_R];
+  sobj->index = SOUNDOBJ_TR_R;
+  sobj->frame = frame[SOUNDOBJ_TR_R];
   sobj->endFrame = TR_FRAME;
   VEC_Set( &sobj->startPos, TR_X_02, TR_Y, TR_Z_MAX );
   VEC_Set( &sobj->endPos,   TR_X_02, TR_Y, TR_Z_MIN );
-  status = FLD_EXP_OBJ_GetUnitObjStatus( ptr, EXPOBJ_UNIT_IDX, SOUNDOBJ_TR2 );
+  status = FLD_EXP_OBJ_GetUnitObjStatus( ptr, EXPOBJ_UNIT_IDX, SOUNDOBJ_TR_R );
   VEC_Set( &status->trans, 0, 0, 0 );
   VEC_Set( &status->scale, FX32_ONE, FX32_ONE, FX32_ONE );
   MTX_Identity33( &status->rotate );
   sobj->iss3dsUnitIdx = ISS_3DS_SYS_AddUnit( h01work->iss3DSSys );
   sobj->iss3dsUnit = ISS_3DS_SYS_GetUnit( h01work->iss3DSSys, sobj->iss3dsUnitIdx );
-  ISS_3DS_UNIT_SetRange( sobj->iss3dsUnit, TR_SOUND_RANGE ); ISS_3DS_UNIT_SetMaxVolume( sobj->iss3dsUnit, 127 );
-  ISS_3DS_UNIT_SetTrackBit( sobj->iss3dsUnit, TRACK_MASK_TR2 );
 
   sobj = &h01work->soundObj[SOUNDOBJ_SHIP];
   sobj->index = SOUNDOBJ_SHIP;
@@ -237,9 +229,9 @@ void H01_GIMMICK_Setup( FIELDMAP_WORK* fieldmap )
   MTX_Identity33( &status->rotate );
   sobj->iss3dsUnitIdx = ISS_3DS_SYS_AddUnit( h01work->iss3DSSys );
   sobj->iss3dsUnit = ISS_3DS_SYS_GetUnit( h01work->iss3DSSys, sobj->iss3dsUnitIdx );
-  ISS_3DS_UNIT_SetRange( sobj->iss3dsUnit, SHIP_SOUND_RANGE );
-  ISS_3DS_UNIT_SetMaxVolume( sobj->iss3dsUnit, 127 );
-  ISS_3DS_UNIT_SetTrackBit( sobj->iss3dsUnit, TRACK_MASK_SHIP );
+
+  // 3Dサウンド情報を取得
+  Load3DSoundInfo( h01work, heap_id );
 }
 
 //--------------------------------------------------------------------
@@ -264,15 +256,25 @@ void H01_GIMMICK_End( FIELDMAP_WORK* fieldmap )
 
   // データを保存
   ofs = 4;
-  *( (u16*)(work_adrs + ofs) ) = h01work->soundObj[SOUNDOBJ_TR1].frame;
+  *( (u16*)(work_adrs + ofs) ) = h01work->soundObj[SOUNDOBJ_TR_L].frame;
   ofs += sizeof( u16 );
-  *( (u16*)(work_adrs + ofs) ) = h01work->soundObj[SOUNDOBJ_TR2].frame;
+  *( (u16*)(work_adrs + ofs) ) = h01work->soundObj[SOUNDOBJ_TR_R].frame;
   ofs += sizeof( u16 );
   *( (u16*)(work_adrs + ofs) ) = h01work->soundObj[SOUNDOBJ_SHIP].frame;
   ofs += sizeof( u16 );
 
   // 3Dサウンドシステム破棄
   ISS_3DS_SYS_Delete( h01work->iss3DSSys );
+
+  // TEST:
+  {
+    int i;
+
+    for( i=0; i<ICA_NUM; i++ )
+    {
+      ICA_ANIME_Delete( h01work->icaAnime[i] );
+    }
+  }
 
   // ギミック管理ワーク破棄
   GFL_HEAP_FreeMemory( h01work );
@@ -303,9 +305,79 @@ void H01_GIMMICK_Move( FIELDMAP_WORK* fieldmap )
   ISS_3DS_SYS_Main( h01work->iss3DSSys );
 
   // 風の音量を調整
-  UpdateWindVolume( fieldmap );
+  UpdateWindVolume( fieldmap, h01work );
+
+  // TEST:
+  {
+    int i;
+    for( i=0; i<ICA_NUM; i++ )
+    {
+      ICA_ANIME_IncAnimeFrame( h01work->icaAnime[i], FX32_ONE );
+    }
+  }
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief 3Dサウンド情報を取得する
+ *
+ * @param work    取得したデータを反映させるギミック管理ワーク
+ * @param heap_id 使用するヒープID
+ */
+//--------------------------------------------------------------------------------------------
+static void Load3DSoundInfo( H01WORK* work, HEAPID heap_id )
+{
+  void* data;
+  int ofs = 0;
+  int track, volume;
+  float height0, height1, range;
+  ISS_3DS_UNIT* unit;
+
+  // アーカイブファイルデータを読み込む
+  data = GFL_ARC_LoadDataAlloc( ARCID_ISS_UNIT, NARC_iss_3d_sound_h01_bin, heap_id );
+
+  // 風
+  track   = *( (int*)((int)data + ofs) );   ofs += sizeof(int);
+  height0 = *( (float*)((int)data + ofs) ); ofs += sizeof(float);
+  height1 = *( (float*)((int)data + ofs) ); ofs += sizeof(float);
+  work->windTrackBit = 1 << (track - 1);
+  work->windRangeMin = FX_F32_TO_FX32( height0 );
+  work->windRangeMax = FX_F32_TO_FX32( height1 );
+  OBATA_Printf( "WIND : %d, %d, %d\n", track, (int)height0, (int)height1 );
+
+  // 船
+  track = *( (int*)((int)data + ofs) );   ofs += sizeof(int);
+  range = *( (float*)((int)data + ofs) ); ofs += sizeof(float);
+  volume = *( (int*)((int)data + ofs) );   ofs += sizeof(int);
+  unit = work->soundObj[SOUNDOBJ_SHIP].iss3dsUnit;
+  ISS_3DS_UNIT_SetTrackBit( unit, 1<<(track-1) );
+  ISS_3DS_UNIT_SetRange( unit, FX_F32_TO_FX32(range) );
+  ISS_3DS_UNIT_SetMaxVolume( unit, volume );
+  OBATA_Printf( "SOUNDOBJ_SHIP : %d, %d, %d\n", track, (int)range, volume );
+
+  // トレーラL
+  track = *( (int*)((int)data + ofs) );   ofs += sizeof(int);
+  range = *( (float*)((int)data + ofs) ); ofs += sizeof(float);
+  volume = *( (int*)((int)data + ofs) );   ofs += sizeof(int);
+  unit = work->soundObj[SOUNDOBJ_TR_L].iss3dsUnit;
+  ISS_3DS_UNIT_SetTrackBit( unit, 1<<(track-1) );
+  ISS_3DS_UNIT_SetRange( unit, FX_F32_TO_FX32(range) );
+  ISS_3DS_UNIT_SetMaxVolume( unit, volume );
+  OBATA_Printf( "SOUNDOBJ_TR_L : %d, %d, %d\n", track, (int)range, volume );
+
+  // トレーラR
+  track = *( (int*)((int)data + ofs) );   ofs += sizeof(int);
+  range = *( (float*)((int)data + ofs) ); ofs += sizeof(float);
+  volume = *( (int*)((int)data + ofs) );   ofs += sizeof(int);
+  unit = work->soundObj[SOUNDOBJ_TR_R].iss3dsUnit;
+  ISS_3DS_UNIT_SetTrackBit( unit, 1<<(track-1) );
+  ISS_3DS_UNIT_SetRange( unit, FX_F32_TO_FX32(range) );
+  ISS_3DS_UNIT_SetMaxVolume( unit, volume );
+  OBATA_Printf( "SOUNDOBJ_TR_R : %d, %d, %d\n", track, (int)range, volume );
+
+  // 後始末
+  GFL_HEAP_FreeMemory( data );
+}
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -342,9 +414,10 @@ static void MoveSoundObj( FIELDMAP_WORK* fieldmap, SOUNDOBJ* sobj )
  * @brief 風の音量を調整する
  *
  * @param fieldmap フィールドマップ
+ * @param work     ギミック管理ワーク
  */
 //--------------------------------------------------------------------------------------------
-static void UpdateWindVolume( FIELDMAP_WORK* fieldmap )
+static void UpdateWindVolume( FIELDMAP_WORK* fieldmap, H01WORK* work )
 {
   int volume;
   VecFx32 pos;
@@ -354,22 +427,22 @@ static void UpdateWindVolume( FIELDMAP_WORK* fieldmap )
   FIELD_CAMERA_GetCameraPos( camera, &pos );
 
   // 風の音量を算出
-  if( pos.y <= WIND_Y_MIN ) 
+  if( pos.y <= work->windRangeMin ) 
   {
     volume = 0;
   }
-  else if( WIND_Y_MAX <= pos.y )
+  else if( work->windRangeMax <= pos.y )
   {
     volume = 127;
   }
   else
   {
-    fx32    max = WIND_Y_MAX - WIND_Y_MIN;
-    fx32 height = pos.y - WIND_Y_MIN;
+    fx32    max = work->windRangeMax - work->windRangeMin;
+    fx32 height = pos.y - work->windRangeMin;
     fx32 rate   = FX_Div( height, max );
     volume = 127 * FX_FX32_TO_F32( rate );
   }
 
   // 音量を調整
-  PMSND_ChangeBGMVolume( TRACK_MASK_WIND, volume );
+  PMSND_ChangeBGMVolume( work->windTrackBit, volume );
 }

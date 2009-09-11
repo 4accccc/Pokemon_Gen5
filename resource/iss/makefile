@@ -28,7 +28,7 @@ SUBDIRS	=
 include	$(PROJECT_RSCDIR)\macro_define
 
 
-CONVERTDATA = city.bin dungeon.bin
+CONVERTDATA = city.bin dungeon.bin 3d_sound_h01.bin
 
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
 # サフィックスルールを定義することで 依存関係を自動で判断してくれる
@@ -71,6 +71,12 @@ dungeon.txt: dungeon.xls
 dungeon.bin: dungeon.txt
 	ruby dungeon.rb dungeon.txt
 
+3d_sound.txt: 3d_sound.xls
+	$(PROJECT_ROOT)tools/exceltool/exceltabconv 3d_sound.xls
+
+3d_sound_h01.bin: 3d_sound.txt
+	ruby 3d_sound.rb 3d_sound.txt
+
 endif
 
 #------------------------------------------------------------------------------
@@ -85,6 +91,7 @@ ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、中間ファイル削除
 	rm -f $(targetname).naix
 	rm -f city.txt
 	rm -f dungeon.txt
+	rm -f 3d_sound.txt
 endif
 	rm -f $(TARGETDIR)/$(targetname).narc
 	rm -f $(TARGETDIR)/$(targetname).naix
