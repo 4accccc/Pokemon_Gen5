@@ -19,19 +19,30 @@
 //=============================================================================
 #define SOUND_MIC_WAIT (3*30) ///< AMPをONにしてからマイクが使用可能になるまで
 
+#define SWAVE_BUFFER_SIZE		(2000)						//2k * 8bit
+
+// ペラップ
+#define PERAP_SAMPLING_RATE		(2000)									//サンプリングレート
+#define PERAP_SAMPLING_TIME		(1)										//サンプリングする時間
+#define PERAP_SAMPLING_SIZE		(PERAP_SAMPLING_RATE * PERAP_SAMPLING_TIME)	//必要なデータ量
+
+
 //=============================================================================
 /**
  *								構造体定義
  */
 //=============================================================================
 //--------------------------------------------------------------
-/// オートサンプリング用ワーク
+/// マイク用ワーク
 //==============================================================
 typedef struct {
+  // オートサンプリング用
   MICAutoParam  AutoParamBuff;
   BOOL          isAutoSampStart;
 	u32           amp_init_flag:1;		// Amp設定フラグ
   u32           amp_wait_cnt:31;
+  // ペラップ波形保存ワーク
+  void*         p_PerapBuff;
 } SND_MIC_WORK;
 
 // シングルトン
@@ -43,6 +54,7 @@ static SND_MIC_WORK* sp_SndMic = NULL;
  */
 //=============================================================================
 static void MicCallback( MICResult /*result*/, void* /*arg*/ );
+static void* Snd_GetWaveBufAdrs( void );
 
 //=============================================================================
 /**
@@ -52,7 +64,7 @@ static void MicCallback( MICResult /*result*/, void* /*arg*/ );
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief  マイクモジュール初期化
+ *	@brief  マイクモジュール 初期化
  *
  *	@param	HEAPID heap_id  ヒープID
  *
@@ -65,6 +77,14 @@ void SND_MIC_Init( HEAPID heap_id )
 
   wk = GFL_HEAP_AllocMemory( heap_id, sizeof( SND_MIC_WORK ) );
   GFL_STD_MemClear( wk, sizeof(SND_MIC_WORK) );
+  
+  //	ペラップバッファ作成
+	{	
+		u32 size  = sizeof(u8)*SWAVE_BUFFER_SIZE + 32;	//	後にバッファアドレスを32バイトアラインするため+32
+		u8 *p_buf	= GFL_HEAP_AllocMemory( heap_id, size );
+		MI_CpuClear8( p_buf, size );
+		wk->p_PerapBuff = p_buf;
+  }
 
   {
     //MIC_Init関数の初期化は、2回目以降の呼び出しは無効になるように、
@@ -86,7 +106,7 @@ void SND_MIC_Init( HEAPID heap_id )
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief  マイクモジュール開放
+ *	@brief  マイクモジュール 開放
  *
  *	@param	void 
  *
@@ -97,12 +117,13 @@ void SND_MIC_Exit( void )
 {
   GF_ASSERT( sp_SndMic );
 
+  GFL_HEAP_FreeMemory( sp_SndMic->p_PerapBuff );
   GFL_HEAP_FreeMemory( sp_SndMic );
 }
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief
+ *	@brief  マイクモジュール 主処理
  *
  *	@param	void 
  *
@@ -173,7 +194,7 @@ MICResult SND_MIC_StartAutoSampling( MICAutoParam* p )
 	ret = MIC_StartAutoSampling( p );
 
 	if( ret != MIC_RESULT_SUCCESS ){
-		OS_Printf( "マイク自動サンプリング開始が失敗しました！\n" );
+		OS_Printf( "StartMicAutoSamoling Failed ret=%d \n", ret );
 	}
 
   // オートサンプリング開始
@@ -205,7 +226,7 @@ MICResult SND_MIC_StopAutoSampling(void)
 	ret = MIC_StopAutoSampling();
 
 	if( ret != MIC_RESULT_SUCCESS ){
-		OS_Printf( "マイク自動サンプリング停止が失敗しました！\n" );
+		OS_Printf( "MicStopAutoSampling Failed ret=%d \n", ret );
 	}
 
 	return ret;
@@ -270,6 +291,79 @@ MICResult SND_MIC_ManualSampling(MICSamplingType type ,void* heap,MICCallback ca
 	return ret;
 }
 
+//--------------------------------------------------------------
+/**
+ * @brief	ペラップデータ録音開始(サウンドシステムの領域に一時保存する)
+ *
+ * @param	none
+ *
+ * @retval	"MIC_RESULT_SUCCESS		処理が正常に完了"
+ * @retval	"それ以外				何らかの原因で失敗"
+ */
+//--------------------------------------------------------------
+MICResult SND_PERAP_VoiceRecStart( void )
+{
+	MICAutoParam mic;	//マイクパラメータ
+
+	//波形再生用チャンネルを確保する
+	//Snd_WaveOutAllocChannel( WAVEOUT_CH_NORMAL );
+
+	mic.type			= MIC_SAMPLING_TYPE_SIGNED_8BIT;	//サンプリング種別
+
+	//バッファは32バイトアラインされたアドレスでないとダメ！
+	mic.buffer		= Snd_GetWaveBufAdrs();
+
+	mic.size			= PERAP_SAMPLING_SIZE;
+
+	if( (mic.size&0x1f) != 0 ){
+		mic.size &= 0xffffffe0;
+	}
+
+	//代表的なサンプリングレートをARM7のタイマー周期に換算した値の定義
+	//mic.rate			= MIC_SAMPLING_RATE_8K;
+	mic.rate			= HW_CPU_CLOCK_ARM7 / PERAP_SAMPLING_RATE;
+
+	//連続サンプリング時にバッファをループさせるフラグ
+	mic.loop_enable		= FALSE;
+
+	//バッファが飽和した際に呼び出すコールバック関数へのポインタ
+	mic.full_callback	= NULL;
+
+	//バッファが飽和した際に呼び出すコールバック関数へ渡す引数
+	mic.full_arg		= NULL;
+
+	return SND_MIC_StartAutoSampling( &mic );		//録音開始
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief	ペラップデータ録音停止
+ *
+ * @param	none
+ *
+ * @retval	"MIC_RESULT_SUCCESS		処理が正常に完了"
+ * @retval	"それ以外				何らかの原因で失敗"
+ */
+//--------------------------------------------------------------
+MICResult SND_PERAP_VoiceRecStop( void )
+{
+	return SND_MIC_StopAutoSampling();
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief	録音したデータをセーブデータにセット
+ *
+ * @param	none
+ *
+ * @retval	none
+ */
+//--------------------------------------------------------------
+void SND_PERAP_VoiceDataSave( PERAPVOICE* perap )
+{
+	PERAPVOICE_SetVoiceData( perap, (const s8*)Snd_GetWaveBufAdrs() );
+}
+
 //=============================================================================
 /**
  *								static関数
@@ -288,5 +382,23 @@ MICResult SND_MIC_ManualSampling(MICSamplingType type ,void* heap,MICCallback ca
 static void MicCallback( MICResult /*result*/, void* /*arg*/ )
 {
     OS_Printf( "Mic Callback Done\n" );
+}
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  波形保存バッファへのアクセサ
+ *
+ *	@param	none
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void* Snd_GetWaveBufAdrs( void )
+{
+  u8* p_buf = sp_SndMic->p_PerapBuff;
+
+  GF_ASSERT( sp_SndMic );
+
+  return (void*)MATH_ROUNDUP32( (int)(p_buf) );
 }
 

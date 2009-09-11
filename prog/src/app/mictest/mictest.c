@@ -609,6 +609,8 @@ GFL_PROC_RESULT MicTestProc_Exit( GFL_PROC *proc,int *seq, void *pwk, void *mywk
 	return GFL_PROC_RES_FINISH;
 }
 
+#include "sound/pm_wb_voice.h"
+#include "poke_tool/monsno_def.h"
 //-----------------------------------------------------------------------------
 /**
  *	@brief	プロックメイン処理
@@ -635,7 +637,7 @@ GFL_PROC_RESULT MicTestProc_Main( GFL_PROC *proc,int *seq, void *pwk, void *mywk
 	MicTest_MIC_Main( &p_wk->mic );
 
 	GFL_TCB_Main( p_wk->tcbSys );
-
+  
 	return GFL_PROC_RES_CONTINUE;
 }
 //=============================================================================

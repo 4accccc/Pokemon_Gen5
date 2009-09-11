@@ -10,6 +10,8 @@
 //============================================================================
 #pragma once
 
+#include "savedata/perapvoice.h"
+
 //=============================================================================
 /**
  *								íËêîíËã`
@@ -37,4 +39,8 @@ extern MICResult SND_MIC_StopAutoSampling(void);
 extern void SND_MIC_StopSleep(void);
 extern void SND_MIC_ReStartSleep(void);
 extern MICResult SND_MIC_ManualSampling(MICSamplingType type ,void* heap,MICCallback callback,void* arg);
+extern MICResult SND_PERAP_VoiceRecStart( void );
+extern MICResult SND_PERAP_VoiceRecStop( void );
+extern void SND_PERAP_VoiceDataSave( PERAPVOICE* perap );
+
 
