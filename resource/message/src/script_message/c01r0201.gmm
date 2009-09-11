@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-07-31T16:12:01"/>
+	<create user="matsumiya" host="W00207" date="2009-09-10T12:18:47"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -292,7 +292,7 @@
 	</lock>
 
 
-	<row id="msg_c01r0201_bigman_01">
+	<row id="msg_c01r0201_bigman_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・アイテム入手前
 　0＝内容未定</comment>
@@ -308,7 +308,7 @@
 もっともっと　よさげに　なるよ！</language>
 	</row>
 
-	<row id="msg_c01r0201_bigman_02">
+	<row id="msg_c01r0201_bigman_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・アイテム入手後</comment>
 		<attribute name="キャラ指定">BIGMAN
