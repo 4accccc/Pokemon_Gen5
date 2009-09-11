@@ -12,6 +12,9 @@
 #include "iss_3ds_sys.h"
 #include "sound/pm_sndsys.h"
 
+// デバッグ出力スイッチ
+//#define ISS_3DS_SYS_DEBUG
+
 
 //===============================================================================
 /**
@@ -134,6 +137,7 @@ u8 ISS_3DS_SYS_AddUnit( ISS_3DS_SYS* system )
   // 空きがない場合
   if( system->maxUnitNum <= index )
   {
+    // DEBUG:
     OBATA_Printf( "-----------------------------------\n" );
     OBATA_Printf( "ERROR : ISS_3DS_SYS unit over flow\n" );
     OBATA_Printf( "-----------------------------------\n" );
@@ -334,6 +338,9 @@ static void UpdatePan( ISS_3DS_SYS* system, u8 index )
 
     // パンを設定
     PMSND_SetStatusBGM_EX( track, 256, 0, pan );
+
+#ifdef ISS_3DS_SYS_DEBUG:
     OBATA_Printf( "pan = %d\n", pan );
+#endif
   }
 }
