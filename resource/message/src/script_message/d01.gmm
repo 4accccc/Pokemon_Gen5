@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-09-11T17:38:01"/>
+	<create user="matsumiya" host="W00207" date="2009-09-11T17:55:23"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -315,7 +315,7 @@
 		<band id="2" index="3" style="0000" width="540"/>
 		<band id="3" index="4" style="0000" width="155"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -426,6 +426,18 @@
 夢ポケモン　探してみるね[BE:01:ページ切り替え（クリア）]
 ジムに　挑戦するのは
 もう少し　先かな……？</language>
+	</row>
+
+	<row id="mes_d01_white_05" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♀
+・c01ジムバッジ取得後
+・r03イベント開始で動作モデルを削除（暫定）
+※仮メッセージ</comment>
+		<attribute name="キャラ指定">友達♀</attribute>
+		<language name="JPN" width="256">それって……
+すごーい！！</language>
+		<language name="JPN_KANJI" width="256">それって……
+すごーい！！</language>
 	</row>
 
 	<row id="mes_d01_boy2_01" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
