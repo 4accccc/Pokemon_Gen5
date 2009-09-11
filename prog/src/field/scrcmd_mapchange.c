@@ -40,6 +40,54 @@
 //======================================================================
 //--------------------------------------------------------------
 /**
+ * マップ遷移（通常）
+ * @param	core		仮想マシン制御構造体へのポインタ
+ * @retval VMCMD_RESULT
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdMapChange( VMHANDLE *core, void *wk )
+{
+  SCRCMD_WORK *work = wk;
+  SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
+  GAMESYS_WORK * gsys = SCRIPT_GetGameSysWork( sc );
+  FIELDMAP_WORK * fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
+
+  VecFx32 appear_pos;
+
+  u16 zone_id = VMGetU16(core); //2byte read  ZONE指定
+  u16 next_x = VMGetU16(core);  //2byte read  X位置グリッド単位
+  u16 next_z = VMGetU16(core);  //2byte read  Z位置グリッド単位
+  u16 dir = VMGetU16(core);     //2byte read  方向
+  
+  {
+    FIELD_PLAYER *fld_player = FIELDMAP_GetFieldPlayer( fieldmap );
+    MMDL *mmdl = FIELD_PLAYER_GetMMdl( fld_player );
+  }
+  
+  {
+    GMEVENT * mapchange_event;
+    GMEVENT * parent_event;
+    u16 dir = 0;                  //仮  仕様としてはどうするべきなのか？
+
+    VEC_Set(&appear_pos,
+        GRID_TO_FX32(next_x),
+        GRID_TO_FX32(0),      //todo 高さ（Y）も指定するべきかどうか？
+        GRID_TO_FX32(next_z)
+        ); 
+    
+    parent_event = GAMESYSTEM_GetEvent( gsys ); //現在のイベント
+    mapchange_event = DEBUG_EVENT_ChangeMapPos( gsys, fieldmap,
+         zone_id, &appear_pos, dir );
+    GMEVENT_CallEvent( parent_event, mapchange_event );
+  }
+
+  return VMCMD_RESULT_SUSPEND;
+}
+
+
+
+//--------------------------------------------------------------
+/**
  * マップ遷移（流砂）
  * @param	core		仮想マシン制御構造体へのポインタ
  * @retval VMCMD_RESULT

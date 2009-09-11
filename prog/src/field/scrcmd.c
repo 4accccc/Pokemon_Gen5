@@ -2732,6 +2732,7 @@ const VMCMD_FUNC ScriptCmdTbl[] = {
 
   //ƒ}ƒbƒv‘JˆÚ
   EvCmdMapChangeBySandStream,
+  EvCmdMapChange
 };
 
 
