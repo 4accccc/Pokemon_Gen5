@@ -1,0 +1,1120 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<?xml-stylesheet type="text/xsl" href="" ?>
+
+<gmml version="4.5">
+
+<head>
+	<create user="hiro_nakamura" host="W00144" date="2009-09-10T19:34:41"/>
+	<generator name="MessageEditor" version="4.9.2.5"/>
+</head>
+
+<body language="japanese">
+	<color>
+		<list entry="0" r="00" g="00" b="00" a="FF"/>
+		<list entry="1" r="FF" g="00" b="00" a="FF"/>
+		<list entry="2" r="00" g="00" b="FF" a="FF"/>
+		<list entry="3" r="00" g="8C" b="00" a="FF"/>
+	</color>
+
+	<tag-table>
+		<group entry="0" japanese="タググループ" english="タググループ">
+		</group>
+
+		<group entry="1" japanese="ポケモンＷＢ（単語）" english="PokemonDP" color="#c0c0c0">
+			<tag entry="00" japanese="トレーナー名" english="トレーナー名" view="EP" width="60" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="01" japanese="ポケモン種族名" english="ポケモン種族名" view="EP" width="60" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">ポケモンの名前。
+ピカチュウとかフシギダネとか。</comment>
+				<comment language="english">ポケモンの名前。
+ピカチュウとかフシギダネとか。</comment>
+			</tag>
+			<tag entry="02" japanese="ポケモンニックネーム" english="ポケモンニックネーム" view="EP" width="60" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">ポケモンのニックネーム</comment>
+				<comment language="english">ポケモンのニックネーム</comment>
+			</tag>
+			<tag entry="03" japanese="ポケモンタイプ" english="ポケモンタイプ" view="EP" width="48" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">みず、くさ、ほのお…とか。</comment>
+				<comment language="english">みず、くさ、ほのお…とか。</comment>
+			</tag>
+			<tag entry="04" japanese="ポケモン分類" english="ポケモン分類" view="EP" width="60" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">「DNAポケモン」など。</comment>
+				<comment language="english">「DNAポケモン」など。</comment>
+			</tag>
+			<tag entry="05" japanese="マップ名" english="マップ名" view="EP" width="120" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="06" japanese="とくせい名" english="とくせい名" view="EP" width="84" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="07" japanese="わざ名" english="わざ名" view="EP" width="84" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="08" japanese="せいかく" english="せいかく" view="EP" width="60" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="09" japanese="どうぐ名" english="どうぐ名" view="EP" width="96" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="10" japanese="グッズ名" english="グッズ名" view="EP" length="8" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="11" japanese="ボックス名" english="ボックス名" view="EP" width="96" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="13" japanese="ステータス名" english="ステータス名" view="EP" width="74" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">たいりょく、こうげきりょく、ぼうぎょりょく、とくこう、とくぼう、すばやさ、かいひりつ、めいちゅう</comment>
+				<comment language="english">たいりょく、こうげきりょく、ぼうぎょりょく、とくこう、とくぼう、すばやさ、かいひりつ、めいちゅう</comment>
+			</tag>
+			<tag entry="14" japanese="トレーナー種別名" english="トレーナー種別名" view="EP" width="120" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">「たんぱんこぞう」「エリートトレーナー」など</comment>
+				<comment language="english">「たんぱんこぞう」「エリートトレーナー」など</comment>
+			</tag>
+			<tag entry="17" japanese="特殊状態名" english="特殊状態名" view="EP" width="48" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">ポケモンの特殊状態です。</comment>
+				<comment language="english">ポケモンの特殊状態です。</comment>
+			</tag>
+			<tag entry="18" japanese="バッグのポケット名" english="バッグのポケット名" view="EP" width="132" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">バッグのポケットの名前。「ポケット」の部分も含む。</comment>
+				<comment language="english">バッグのポケットの名前。「ポケット」の部分も含む。</comment>
+			</tag>
+			<tag entry="26" japanese="カップ名" english="カップ名" view="EP" width="72" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">対戦のレギュレーション名</comment>
+				<comment language="english">対戦のレギュレーション名</comment>
+			</tag>
+			<tag entry="28" japanese="簡易会話単語" english="簡易会話単語" view="EP" width="84" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="31" japanese="アクセサリー名" english="アクセサリー名" view="EP" width="96" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">ポケモンにつけるアクセサリー</comment>
+				<comment language="english">ポケモンにつけるアクセサリー</comment>
+			</tag>
+			<tag entry="32" japanese="ジム名" english="ジム名" view="EP" width="72" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="33" japanese="時間帯" english="時間帯" view="EP" width="48" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">ぼうけんノートなどで使う</comment>
+				<comment language="english">ぼうけんノートなどで使う</comment>
+			</tag>
+			<tag entry="34" japanese="コンテスト名称" english="コンテスト名称" view="EP" width="120" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">コンテストのジャンル
+「○○○○○コンテスト」</comment>
+				<comment language="english">コンテストのジャンル
+「○○○○○コンテスト」</comment>
+			</tag>
+			<tag entry="35" japanese="コンテストランク" english="コンテストランク" view="EP" width="84" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">○○○○ランク
+「ランク」も含む</comment>
+				<comment language="english">○○○○ランク
+「ランク」も含む</comment>
+			</tag>
+			<tag entry="36" japanese="国名" english="国名" view="EP" width="216" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">プレイヤーが入力する、自分が住んでいる国名</comment>
+				<comment language="english">プレイヤーが入力する、自分が住んでいる国名</comment>
+			</tag>
+			<tag entry="37" japanese="地域名" english="地域名" view="EP" width="216" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">プレイヤーが入力する、自分が住んでいる地域名</comment>
+				<comment language="english">プレイヤーが入力する、自分が住んでいる地域名</comment>
+			</tag>
+			<tag entry="39" japanese="リボンの名前" english="リボンの名前" view="EP" width="168" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">リボンの名前</comment>
+				<comment language="english">リボンの名前</comment>
+			</tag>
+			<tag entry="40" japanese="広場ミニゲーム" english="広場ミニゲーム" view="EP" width="120" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">WiFi広場のミニゲーム名</comment>
+				<comment language="english">WiFi広場のミニゲーム名</comment>
+			</tag>
+			<tag entry="41" japanese="広場イベント名" english="広場イベント名" view="EP" width="60" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">WiFi広場イベント名</comment>
+				<comment language="english">WiFi広場イベント名</comment>
+			</tag>
+			<tag entry="42" japanese="広場アイテム名" english="広場アイテム名" view="EP" width="120" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">WiFi広場のアイテム名</comment>
+				<comment language="english">WiFi広場のアイテム名</comment>
+			</tag>
+			<tag entry="43" japanese="日本の挨拶" english="日本の挨拶" view="EP" width="143" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">日本の挨拶</comment>
+				<comment language="english">日本の挨拶</comment>
+			</tag>
+			<tag entry="44" japanese="英語の挨拶" english="英語の挨拶" view="EP" width="143" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">英語の挨拶</comment>
+				<comment language="english">英語の挨拶</comment>
+			</tag>
+			<tag entry="45" japanese="フランス語の挨拶" english="フランス語の挨拶" view="EP" width="143" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">フランス語の挨拶</comment>
+				<comment language="english">フランス語の挨拶</comment>
+			</tag>
+			<tag entry="46" japanese="ドイツ語の挨拶" english="ドイツ語の挨拶" view="EP" width="143" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">ドイツ語の挨拶</comment>
+				<comment language="english">ドイツ語の挨拶</comment>
+			</tag>
+			<tag entry="47" japanese="イタリア語の挨拶" english="イタリア語の挨拶" view="EP" width="143" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">イタリア語の挨拶</comment>
+				<comment language="english">イタリア語の挨拶</comment>
+			</tag>
+			<tag entry="48" japanese="スペイン語の挨拶" english="スペイン語の挨拶" view="EP" width="143" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">スペイン語の挨拶</comment>
+				<comment language="english">スペイン語の挨拶</comment>
+			</tag>
+		</group>
+
+		<group entry="2" japanese="ポケモンＷＢ（数値）" english="ポケモンＷＢ（数値）" color="#c0c0c0">
+			<tag entry="00" japanese="１桁" english="１桁" view="EP" width="8" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="01" japanese="２桁" english="２桁" view="EP" width="16" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="02" japanese="３桁" english="３桁" view="EP" width="24" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="03" japanese="４桁" english="４桁" view="EP" width="32" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="04" japanese="５桁" english="５桁" view="EP" width="40" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="05" japanese="６桁" english="６桁" view="EP" width="48" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">
+</comment>
+				<comment language="english">
+</comment>
+			</tag>
+			<tag entry="06" japanese="７桁" english="７桁" view="EP" width="56" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="07" japanese="８桁" english="８桁" view="EP" width="64" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+		</group>
+
+		<group entry="189" japanese="汎用コントロール" english="汎用コントロール" color="#c0c0c0">
+			<tag entry="00" japanese="カラー変更" english="カラー変更" view="EP" length="0" line="1">
+				<parameter number="0" japanese="文字色番号" english="文字色番号" type="int8"/>
+				<parameter number="1" japanese="影色番号" english="影色番号" type="int8"/>
+				<parameter number="2" japanese="背景色番号" english="背景色番号" type="int8"/>
+				<comment language="japanese">システムのカラータグより細かい設定が可能な低レベル版。
+ほとんどの場合、システムタグを使えば問題ないと思います。</comment>
+				<comment language="english">システムのカラータグより細かい設定が可能な低レベル版。
+ほとんどの場合、システムタグを使えば問題ないと思います。</comment>
+			</tag>
+			<tag entry="01" japanese="カラー変更リセット" english="カラー変更リセット" view="EP" length="0" line="1"/>
+			<tag entry="02" japanese="Ｘセンタリング" english="Ｘセンタリング" view="EP" length="0" line="1"/>
+			<tag entry="03" japanese="Ｘ右寄せ" english="Ｘ右寄せ" view="EP" length="0" line="1">
+				<parameter number="0" japanese="右スペース" english="右スペース" type="int8"/>
+				<comment language="japanese">当該行の文字列を
+ウィンドウ内で右寄せします。</comment>
+				<comment language="english">当該行の文字列を
+ウィンドウ内で右寄せします。</comment>
+			</tag>
+		</group>
+
+		<group entry="190" japanese="動的コントロール" english="Word" color="#c0c0c0">
+			<tag entry="00" japanese="ページ切り替え（行送り）" english="ページ切り替え（行送り）" view="EP" length="0" line="1"/>
+			<tag entry="01" japanese="ページ切り替え（クリア）" english="ページ切り替え（クリア）" view="EP" length="0" line="1"/>
+			<tag entry="02" japanese="ウェイト変更（単発）" english="ウェイト変更（単発）" view="EP" length="0" line="1">
+				<parameter number="0" japanese="フレーム数" english="フレーム数" type="int16"/>
+			</tag>
+			<tag entry="03" japanese="ウェイト変更（継続）" english="ウェイト変更（継続）" view="EP" length="0" line="1">
+				<parameter number="0" japanese="フレーム数" english="フレーム数" type="int16"/>
+			</tag>
+			<tag entry="04" japanese="ウェイトリセット" english="ウェイトリセット" view="EP" length="0" line="1"/>
+			<tag entry="05" japanese="コールバック引数変更（単発）" english="コールバック引数変更（単発）" view="EP" length="0" line="1">
+				<parameter number="0" japanese="引数" english="引数" type="int16"/>
+			</tag>
+			<tag entry="06" japanese="コールバック引数変更（継続）" english="コールバック引数変更（継続）" view="EP" length="0" line="1">
+				<parameter number="0" japanese="引数" english="引数" type="int16"/>
+			</tag>
+			<tag entry="07" japanese="コールバック引数リセット" english="コールバック引数リセット" view="EP" length="0" line="1"/>
+			<tag entry="08" japanese="描画領域クリア" english="描画領域クリア" view="EP" length="0" line="1"/>
+		</group>
+
+		<group entry="254" japanese="文字列展開" english="Word">
+		</group>
+
+		<set japanese="500%" english="500%" value="FF:01:サイズ:500"/>
+		<set japanese="400%" english="400%" value="FF:01:サイズ:400"/>
+		<set japanese="300%" english="300%" value="FF:01:サイズ:300"/>
+		<set japanese="200%" english="200%" value="FF:01:サイズ:200"/>
+		<set japanese="150%" english="150%" value="FF:01:サイズ:150"/>
+		<set japanese="100%" english="100%" value="FF:01:サイズ:100"/>
+		<set japanese="75%" english="75%" value="FF:01:サイズ:75"/>
+		<set japanese="50%" english="50%" value="FF:01:サイズ:50"/>
+		<set japanese="カラーデフォルト" english="Black" value="FF:00:色:0"/>
+		<set japanese="カラー１" english="Red" value="FF:00:色:1"/>
+		<set japanese="カラー２" english="Green" value="FF:00:色:2"/>
+		<set japanese="カラー３" english="Blue" value="FF:00:色:3"/>
+	</tag-table>
+
+	<columns>
+		<id position="0" width="117"/>
+		<group default=" 0:デフォルト" position="-1" width="100">
+			<list entry="0" japanese="デフォルト" english="Default" colorID="0"/>
+		</group>
+		<number position="-1" width="100"/>
+		<comment position="1" width="100"/>
+		<erase position="-1" width="100"/>
+		<language japanese="JPN" english="JPN">
+			<message position="2" width="274"/>
+			<font default=" 0:large" position="4" width="109">
+				<list entry="0" file="W:\font\large.nftr"/>
+				<list entry="1" file="W:\font\small.nftr"/>
+			</font>
+			<size position="-1" width="100"/>
+			<space position="-1" width="100"/>
+			<width position="6" width="70"/>
+			<line position="-1" width="100"/>
+		</language>
+		<language japanese="JPN_KANJI" english="JPN_KANJI">
+			<message position="3" width="246"/>
+			<font default=" 0:large" position="5" width="106">
+				<list entry="0" file="W:\font\large.nftr"/>
+				<list entry="1" file="W:\font\small.nftr"/>
+			</font>
+			<size position="-1" width="100"/>
+			<space position="-1" width="100"/>
+			<width position="7" width="75"/>
+			<line position="-1" width="100"/>
+		</language>
+	</columns>
+
+	<dialog left="248" top="176" right="953" bottom="796" maximized="no" rayout="Vertical2">
+		<comment-input left="733" top="589" right="1080" bottom="739" visible="yes"/>
+		<tag-palette left="797" top="73" right="1270" bottom="471" visible="yes"/>
+		<band id="0" index="0" style="0000" width="530"/>
+		<band id="1" index="1" style="0000" width="165"/>
+		<band id="2" index="2" style="0000" width="697"/>
+		<band id="3" index="3" style="0000" width="697"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
+		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
+		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
+	</dialog>
+
+	<output default="デフォルト">
+		<target japanese="デフォルト" english="default" endian="big" encoding="Shift_JIS" letter-list-encoding="Shift_JIS" header-file-encoding="Shift_JIS" language="JPN">
+			<struct name="JMSMesgEntry" id="" message="mesgOffset">
+			</struct>
+			<entry sort="id" id-block="no" flowlabel-block="no"/>
+			<header divide="no" id-prefix="JMS_" query-prefix="JMS_QUERY_" flownode-prefix="JMS_FLOWNODE_" id="" struct="" query=""/>
+		</target>
+	</output>
+
+
+	<lock>
+		<operation add_message="no" header_setting="no" tag_setting="no" output_setting="no" display="no" sort="no" flowchart_window="no"/>
+	</lock>
+
+
+	<row id="mes_b_plist_01_001">
+		<comment>ポケモン選択画面
+１番目のニックネームを表示します
+0：ニックネーム</comment>
+		<language name="JPN" width="70">[1:02:ポケモンニックネーム:0]</language>
+		<language name="JPN_KANJI" width="70">[1:02:ポケモンニックネーム:0]</language>
+	</row>
+
+	<row id="mes_b_plist_01_101">
+		<comment>ポケモン選択画面
+２番目のニックネームを表示します
+0：ニックネーム</comment>
+		<language name="JPN" width="70">[1:02:ポケモンニックネーム:0]</language>
+		<language name="JPN_KANJI" width="70">[1:02:ポケモンニックネーム:0]</language>
+	</row>
+
+	<row id="mes_b_plist_01_201">
+		<comment>ポケモン選択画面
+３番目のニックネームを表示します
+0：ニックネーム</comment>
+		<language name="JPN" width="70">[1:02:ポケモンニックネーム:0]</language>
+		<language name="JPN_KANJI" width="70">[1:02:ポケモンニックネーム:0]</language>
+	</row>
+
+	<row id="mes_b_plist_01_301">
+		<comment>ポケモン選択画面
+４番目のニックネームを表示します
+0：ニックネーム</comment>
+		<language name="JPN" width="70">[1:02:ポケモンニックネーム:0]</language>
+		<language name="JPN_KANJI" width="70">[1:02:ポケモンニックネーム:0]</language>
+	</row>
+
+	<row id="mes_b_plist_01_401">
+		<comment>ポケモン選択画面
+５番目のニックネームを表示します
+0：ニックネーム</comment>
+		<language name="JPN" width="70">[1:02:ポケモンニックネーム:0]</language>
+		<language name="JPN_KANJI" width="70">[1:02:ポケモンニックネーム:0]</language>
+	</row>
+
+	<row id="mes_b_plist_01_501">
+		<comment>ポケモン選択画面
+６番目のニックネームを表示します
+0：ニックネーム</comment>
+		<language name="JPN" width="70">[1:02:ポケモンニックネーム:0]</language>
+		<language name="JPN_KANJI" width="70">[1:02:ポケモンニックネーム:0]</language>
+	</row>
+
+	<row id="mes_b_plist_01_600">
+		<comment>会話ウインドウ：基本ポケモン選択メッセージ</comment>
+		<language name="JPN" width="176">ポケモンを　えらんでください</language>
+		<language name="JPN_KANJI" width="176">ポケモンを　えらんでください</language>
+	</row>
+
+	<row id="mes_b_plist_01_601">
+		<comment>会話ウインドウ：道具を使うポケモン選択メッセージ</comment>
+		<language name="JPN" width="176">どの　ポケモンに　つかう？</language>
+		<language name="JPN_KANJI" width="176">どの　ポケモンに　つかう？</language>
+	</row>
+
+	<row id="mes_b_plist_01_701" back-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,#ff0000,,#ff0000,#ff0000,,,#ff0000,,">
+		<comment>ポケモン選択画面
+レベル表示</comment>
+		<language name="JPN" width="176">Lv.[2:02:３桁:0]</language>
+		<language name="JPN_KANJI" width="176">Lv.[2:02:３桁:0]</language>
+	</row>
+
+	<row id="mes_b_plist_01_702" back-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,#ff0000,,#ff0000,#ff0000,,,#ff0000,,">
+		<comment>ポケモン選択画面
+HP表示</comment>
+		<language name="JPN" width="176">/</language>
+		<language name="JPN_KANJI" width="176">/</language>
+	</row>
+
+	<row id="mes_b_plist_01_703" back-color="#ff0000,,,,,,#ff0000,,,#ff0000,,,#ff0000,,,#ff0000,,">
+		<comment>ポケモン選択画面
+HP表示</comment>
+		<language name="JPN" width="176">[2:02:３桁:0]</language>
+		<language name="JPN_KANJI" width="176">[2:02:３桁:0]</language>
+	</row>
+
+	<row id="mes_b_plist_02_000">
+		<comment>強さを見る画面
+特性名
+0：特性名</comment>
+		<language name="JPN" font=" 1:small" width="84">[1:06:とくせい名:0]</language>
+		<language name="JPN_KANJI" font=" 1:small" width="84">[1:06:とくせい名:0]</language>
+	</row>
+
+	<row id="mes_b_plist_02_001">
+		<comment>強さを見る画面
+道具名
+0：道具名</comment>
+		<language name="JPN" font=" 1:small" width="96">[1:09:どうぐ名:0]</language>
+		<language name="JPN_KANJI" font=" 1:small" width="96">[1:09:どうぐ名:0]</language>
+	</row>
+
+	<row id="mes_b_plist_02_100" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,#c0c0c0,,#c0c0c0,#c0c0c0,,,,,,,">
+		<comment>ステータスメイン
+技名１
+0：技名</comment>
+		<language name="JPN" font=" 1:small" width="84">[1:07:わざ名:0]</language>
+		<language name="JPN_KANJI" font=" 1:small" width="84">[1:07:わざ名:0]</language>
+	</row>
+
+	<row id="mes_b_plist_02_200" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,#c0c0c0,,#c0c0c0,#c0c0c0,,,,,,,">
+		<comment>ステータスメイン
+技名２
+0：技名</comment>
+		<language name="JPN" font=" 1:small" width="84">[1:07:わざ名:0]</language>
+		<language name="JPN_KANJI" font=" 1:small" width="84">[1:07:わざ名:0]</language>
+	</row>
+
+	<row id="mes_b_plist_02_300" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,#c0c0c0,,#c0c0c0,#c0c0c0,,,,,,,">
+		<comment>ステータスメイン
+技名３
+0：技名</comment>
+		<language name="JPN" font=" 1:small" width="84">[1:07:わざ名:0]</language>
+		<language name="JPN_KANJI" font=" 1:small" width="84">[1:07:わざ名:0]</language>
+	</row>
+
+	<row id="mes_b_plist_02_400" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,#c0c0c0,,#c0c0c0,#c0c0c0,,,,,,,">
+		<comment>ステータスメイン
+技名４
+0：技名</comment>
+		<language name="JPN" font=" 1:small" width="84">[1:07:わざ名:0]</language>
+		<language name="JPN_KANJI" font=" 1:small" width="84">[1:07:わざ名:0]</language>
+	</row>
+
+	<row id="mes_b_plist_02_500" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,#c0c0c0,,#c0c0c0,#c0c0c0,,,,,,,">
+		<comment>ステータスメイン
+「PP」
+プラチナで修正。　全角を半角に修正。</comment>
+		<language name="JPN" font=" 1:small" width="16">PP</language>
+		<language name="JPN_KANJI" font=" 1:small" width="16">PP</language>
+	</row>
+
+	<row id="mes_b_plist_02_501">
+		<comment>コマンド選択画面
+「いれかえる」ボタン名</comment>
+		<language name="JPN" width="70">いれかえる</language>
+		<language name="JPN_KANJI" width="70">いれかえる</language>
+	</row>
+
+	<row id="mes_b_plist_02_502">
+		<comment>全画面共通
+ポケモンの「♂」表記</comment>
+		<language name="JPN" font=" 1:small" width="14">♂</language>
+		<language name="JPN_KANJI" font=" 1:small" width="14">♂</language>
+	</row>
+
+	<row id="mes_b_plist_02_503">
+		<comment>全画面共通
+ポケモンの「♀」表記</comment>
+		<language name="JPN" font=" 1:small" width="14">♀</language>
+		<language name="JPN_KANJI" font=" 1:small" width="14">♀</language>
+	</row>
+
+	<row id="mes_b_plist_02_504">
+		<comment>全画面共通
+「つよさをみる」ボタン名</comment>
+		<language name="JPN" width="176">つよさをみる</language>
+		<language name="JPN_KANJI" width="176">つよさをみる</language>
+	</row>
+
+	<row id="mes_b_plist_02_505">
+		<comment>全画面共通
+「わざをみる」ボタン名</comment>
+		<language name="JPN" width="176">わざをみる</language>
+		<language name="JPN_KANJI" width="176">わざをみる</language>
+	</row>
+
+	<row id="mes_b_plist_02_600">
+		<comment>強さを見る画面
+道具がない場合の共通表示</comment>
+		<language name="JPN" font=" 1:small" width="96">もちものなし</language>
+		<language name="JPN_KANJI" font=" 1:small" width="96">もちものなし</language>
+	</row>
+
+	<row id="mes_b_plist_02_700">
+		<comment>強さを見る画面/技詳細画面/技忘れ画面のシステムフォント
+0：選択ポケモンのニックネーム</comment>
+		<language name="JPN" font=" 1:small" width="84">[1:02:ポケモンニックネーム:0]</language>
+		<language name="JPN_KANJI" font=" 1:small" width="84">[1:02:ポケモンニックネーム:0]</language>
+	</row>
+
+	<row id="mes_b_plist_02_800">
+		<comment>コマンド選択画面のボタンフォント
+0：選択ポケモンのニックネーム</comment>
+		<language name="JPN" width="96">[1:02:ポケモンニックネーム:0]</language>
+		<language name="JPN_KANJI" width="96">[1:02:ポケモンニックネーム:0]</language>
+	</row>
+
+	<row id="mes_b_plist_03_000">
+		<comment>強さを見る画面
+レベル項目名</comment>
+		<language name="JPN" font=" 1:small" width="24">Lv.</language>
+		<language name="JPN_KANJI" font=" 1:small" width="24">Lv.</language>
+	</row>
+
+	<row id="mes_b_plist_03_001">
+		<comment>強さを見る画面
+対象ポケモンのレベル
+0：レベル数</comment>
+		<language name="JPN" font=" 1:small" width="24">[2:02:３桁:0]</language>
+		<language name="JPN_KANJI" font=" 1:small" width="24">[2:02:３桁:0]</language>
+	</row>
+
+	<row id="mes_b_plist_03_100">
+		<comment>強さを見る画面
+「つぎのポケモンのレベルまで」</comment>
+		<language name="JPN" font=" 1:small" width="96">つぎのレベルまで</language>
+		<language name="JPN_KANJI" font=" 1:small" width="96">つぎのレベルまで</language>
+	</row>
+
+	<row id="mes_b_plist_03_101">
+		<comment>強さを見る画面
+対象ポケモンのレベルアップに必要な経験値
+0：レベルアップまでの経験値</comment>
+		<language name="JPN" font=" 1:small" width="48">[2:05:６桁:0]</language>
+		<language name="JPN_KANJI" font=" 1:small" width="48">[2:05:６桁:0]</language>
+	</row>
+
+	<row id="mes_b_plist_03_200" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,#c0c0c0,,#c0c0c0,#c0c0c0,,,,,,,">
+		<comment>強さを見る画面
+0：特性名</comment>
+		<language name="JPN" font=" 1:small" width="84">[1:06:とくせい名:0]</language>
+		<language name="JPN_KANJI" font=" 1:small" width="84">[1:06:とくせい名:0]</language>
+	</row>
+
+	<row id="mes_b_plist_03_300">
+		<comment>強さを見る画面
+「ＨＰ」</comment>
+		<language name="JPN" font=" 1:small" width="24">HP</language>
+		<language name="JPN_KANJI" font=" 1:small" width="24">HP</language>
+	</row>
+
+	<row id="mes_b_plist_03_301">
+		<comment>強さを見る画面
+0：現在ＨＰ
+</comment>
+		<language name="JPN" font=" 1:small" width="56">[2:02:３桁:0]</language>
+		<language name="JPN_KANJI" font=" 1:small" width="56">[2:02:３桁:0]</language>
+	</row>
+
+	<row id="mes_b_plist_03_302">
+		<comment>強さを見る画面
+0：最大ＨＰ</comment>
+		<language name="JPN" font=" 1:small" width="56">[2:02:３桁:0]</language>
+		<language name="JPN_KANJI" font=" 1:small" width="56">[2:02:３桁:0]</language>
+	</row>
+
+	<row id="mes_b_plist_03_303">
+		<comment>強さを見る画面
+ＨＰの「/」
+</comment>
+		<language name="JPN" font=" 1:small" width="56">/</language>
+		<language name="JPN_KANJI" font=" 1:small" width="56">/</language>
+	</row>
+
+	<row id="mes_b_plist_03_400">
+		<comment>強さを見る画面
+「こうげき」</comment>
+		<language name="JPN" font=" 1:small" width="48">こうげき</language>
+		<language name="JPN_KANJI" font=" 1:small" width="48">こうげき</language>
+	</row>
+
+	<row id="mes_b_plist_03_401">
+		<comment>強さを見る画面
+0：攻撃値</comment>
+		<language name="JPN" font=" 1:small" width="24">[2:02:３桁:0]</language>
+		<language name="JPN_KANJI" font=" 1:small" width="24">[2:02:３桁:0]</language>
+	</row>
+
+	<row id="mes_b_plist_03_500">
+		<comment>強さを見る画面
+「ぼうぎょ」</comment>
+		<language name="JPN" font=" 1:small" width="48">ぼうぎょ</language>
+		<language name="JPN_KANJI" font=" 1:small" width="48">ぼうぎょ</language>
+	</row>
+
+	<row id="mes_b_plist_03_501">
+		<comment>強さを見る画面
+0：防御値</comment>
+		<language name="JPN" font=" 1:small" width="24">[2:02:３桁:0]</language>
+		<language name="JPN_KANJI" font=" 1:small" width="24">[2:02:３桁:0]</language>
+	</row>
+
+	<row id="mes_b_plist_03_600">
+		<comment>強さを見る画面
+「とくこう」</comment>
+		<language name="JPN" font=" 1:small" width="48">とくこう</language>
+		<language name="JPN_KANJI" font=" 1:small" width="48">とくこう</language>
+	</row>
+
+	<row id="mes_b_plist_03_601">
+		<comment>強さを見る画面
+0：特攻値</comment>
+		<language name="JPN" font=" 1:small" width="24">[2:02:３桁:0]</language>
+		<language name="JPN_KANJI" font=" 1:small" width="24">[2:02:３桁:0]</language>
+	</row>
+
+	<row id="mes_b_plist_03_700">
+		<comment>強さを見る画面
+「とくぼう」</comment>
+		<language name="JPN" font=" 1:small" width="48">とくぼう</language>
+		<language name="JPN_KANJI" font=" 1:small" width="48">とくぼう</language>
+	</row>
+
+	<row id="mes_b_plist_03_701">
+		<comment>強さを見る画面
+0：特防値</comment>
+		<language name="JPN" font=" 1:small" width="24">[2:02:３桁:0]</language>
+		<language name="JPN_KANJI" font=" 1:small" width="24">[2:02:３桁:0]</language>
+	</row>
+
+	<row id="mes_b_plist_03_800">
+		<comment>強さを見る画面
+「すばやさ」</comment>
+		<language name="JPN" font=" 1:small" width="48">すばやさ</language>
+		<language name="JPN_KANJI" font=" 1:small" width="48">すばやさ</language>
+	</row>
+
+	<row id="mes_b_plist_03_801">
+		<comment>強さを見る画面
+0：素早さ値</comment>
+		<language name="JPN" font=" 1:small" width="24">[2:02:３桁:0]</language>
+		<language name="JPN_KANJI" font=" 1:small" width="24">[2:02:３桁:0]</language>
+	</row>
+
+	<row id="mes_b_plist_04_000">
+		<comment>技詳細画面
+選択している技名
+0：技名</comment>
+		<language name="JPN" font=" 1:small" width="84">[1:07:わざ名:0]</language>
+		<language name="JPN_KANJI" font=" 1:small" width="84">[1:07:わざ名:0]</language>
+	</row>
+
+	<row id="mes_b_plist_04_001">
+		<comment>全画面共通
+ＰＰ項目名</comment>
+		<language name="JPN" font=" 1:small" width="16">PP</language>
+		<language name="JPN_KANJI" font=" 1:small" width="16">PP</language>
+	</row>
+
+	<row id="mes_b_plist_04_002">
+		<comment>技詳細画面
+0：選択中の技の現在のPP値
+</comment>
+		<language name="JPN" font=" 1:small" width="40">[2:01:２桁:0]</language>
+		<language name="JPN_KANJI" font=" 1:small" width="40">[2:01:２桁:0]</language>
+	</row>
+
+	<row id="mes_b_plist_04_003">
+		<comment>技詳細画面
+0：選択中の技の最大PP値
+</comment>
+		<language name="JPN" font=" 1:small" width="40">[2:01:２桁:0]</language>
+		<language name="JPN_KANJI" font=" 1:small" width="40">[2:01:２桁:0]</language>
+	</row>
+
+	<row id="mes_b_plist_04_004">
+		<comment>全画面共通
+ＰＰの間に入る／</comment>
+		<language name="JPN" font=" 1:small" width="40">/</language>
+		<language name="JPN_KANJI" font=" 1:small" width="40">/</language>
+	</row>
+
+	<row id="mes_b_plist_04_005" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,#c0c0c0,,#c0c0c0,#c0c0c0,,,,,,,">
+		<comment>技がないときのＰＰ値の表記</comment>
+		<language name="JPN" font=" 1:small" width="16">ーー</language>
+		<language name="JPN_KANJI" font=" 1:small" width="16">ーー</language>
+	</row>
+
+	<row id="mes_b_plist_04_100">
+		<comment>技詳細画面
+「いりょく」</comment>
+		<language name="JPN" font=" 1:small" width="14">いりょく</language>
+		<language name="JPN_KANJI" font=" 1:small" width="14">いりょく</language>
+	</row>
+
+	<row id="mes_b_plist_04_101">
+		<comment>技詳細画面
+選択している技の威力
+0：技の威力</comment>
+		<language name="JPN" font=" 1:small" width="24">[2:02:３桁:0]</language>
+		<language name="JPN_KANJI" font=" 1:small" width="24">[2:02:３桁:0]</language>
+	</row>
+
+	<row id="mes_b_plist_04_102">
+		<comment>威力or命中率がないときの表記</comment>
+		<language name="JPN" font=" 1:small" width="24">ーーー</language>
+		<language name="JPN_KANJI" font=" 1:small" width="24">ーーー</language>
+	</row>
+
+	<row id="mes_b_plist_04_200">
+		<comment>技詳細画面
+「めいちゅう」</comment>
+		<language name="JPN" font=" 1:small" width="14">めいちゅう</language>
+		<language name="JPN_KANJI" font=" 1:small" width="14">めいちゅう</language>
+	</row>
+
+	<row id="mes_b_plist_04_201">
+		<comment>技詳細画面
+選択している技の命中率
+0：命中率</comment>
+		<language name="JPN" font=" 1:small" width="24">[2:02:３桁:0]</language>
+		<language name="JPN_KANJI" font=" 1:small" width="24">[2:02:３桁:0]</language>
+	</row>
+
+	<row id="mes_b_plist_04_300">
+		<comment>技詳細画面
+「ぶんるい」</comment>
+		<language name="JPN" font=" 1:small" width="88">ぶんるい</language>
+		<language name="JPN_KANJI" font=" 1:small" width="88">ぶんるい</language>
+	</row>
+
+	<row id="mes_b_plist_04_301">
+		<comment>技詳細画面
+アイコンの補助テキスト「ぶつり」</comment>
+		<language name="JPN" font=" 1:small" width="64">ぶつり</language>
+		<language name="JPN_KANJI" font=" 1:small" width="64">ぶつり</language>
+	</row>
+
+	<row id="mes_b_plist_04_302">
+		<comment>技詳細画面
+アイコンの補助テキスト「へんか」</comment>
+		<language name="JPN" font=" 1:small" width="64">へんか</language>
+		<language name="JPN_KANJI" font=" 1:small" width="64">へんか</language>
+	</row>
+
+	<row id="mes_b_plist_04_303">
+		<comment>技詳細画面
+アイコンの補助テキスト「とくしゅ」</comment>
+		<language name="JPN" font=" 1:small" width="64">とくしゅ</language>
+		<language name="JPN_KANJI" font=" 1:small" width="64">とくしゅ</language>
+	</row>
+
+	<row id="mes_b_plist_04_400">
+		<comment>技詳細画面
+技忘れ時のコンテスト技用項目</comment>
+		<language name="JPN" font=" 1:small" width="96">アピールポイント</language>
+		<language name="JPN_KANJI" font=" 1:small" width="96">アピールポイント</language>
+	</row>
+
+	<row id="mes_b_plist_05_000">
+		<comment>技忘れ画面
+ボタンの項目名
+「わすれさせる」</comment>
+		<language name="JPN" width="84">わすれさせる</language>
+		<language name="JPN_KANJI" width="84">わすれさせる</language>
+	</row>
+
+	<row id="mes_b_plist_05_001">
+		<comment>技忘れ画面
+ボタンの項目名：これから覚える技
+「やめる」</comment>
+		<language name="JPN" width="56">やめる</language>
+		<language name="JPN_KANJI" width="56">やめる</language>
+	</row>
+
+	<row id="mes_b_plist_05_002">
+		<comment>技忘れ画面
+秘伝技を忘れさせようとしたときのテキスト</comment>
+		<language name="JPN" font=" 1:small" width="120">たいせつな　わざです。
+わすれさせることは
+できません！</language>
+		<language name="JPN_KANJI" font=" 1:small" width="120">たいせつな　わざです。
+わすれさせることは
+できません！</language>
+	</row>
+
+	<row id="mes_b_plist_05_100">
+		<comment>技を見る画面/技忘れ画面
+技名１
+0：技名</comment>
+		<language name="JPN" width="98">[1:07:わざ名:0]</language>
+		<language name="JPN_KANJI" width="98">[1:07:わざ名:0]</language>
+	</row>
+
+	<row id="mes_b_plist_05_101">
+		<comment>技を見る画面/技忘れ画面
+技名１の現在のＰＰ値
+0：現在のＰＰ</comment>
+		<language name="JPN" font=" 1:small" width="16">[2:01:２桁:0]</language>
+		<language name="JPN_KANJI" font=" 1:small" width="16">[2:01:２桁:0]</language>
+	</row>
+
+	<row id="mes_b_plist_05_102">
+		<comment>技を見る画面/技忘れ画面
+技名１の最大ＰＰ値
+0：最大ＰＰ</comment>
+		<language name="JPN" font=" 1:small" width="16">[2:01:２桁:0]</language>
+		<language name="JPN_KANJI" font=" 1:small" width="16">[2:01:２桁:0]</language>
+	</row>
+
+	<row id="mes_b_plist_05_200">
+		<comment>技を見る画面/技忘れ画面
+技名２
+0：技名</comment>
+		<language name="JPN" width="98">[1:07:わざ名:0]</language>
+		<language name="JPN_KANJI" width="98">[1:07:わざ名:0]</language>
+	</row>
+
+	<row id="mes_b_plist_05_201">
+		<comment>技を見る画面/技忘れ画面
+技名２の現在のＰＰ値
+0：現在のＰＰ</comment>
+		<language name="JPN" font=" 1:small" width="16">[2:01:２桁:0]</language>
+		<language name="JPN_KANJI" font=" 1:small" width="16">[2:01:２桁:0]</language>
+	</row>
+
+	<row id="mes_b_plist_05_202">
+		<comment>技を見る画面/技忘れ画面
+技名２の最大ＰＰ値
+0：最大ＰＰ</comment>
+		<language name="JPN" font=" 1:small" width="16">[2:01:２桁:0]</language>
+		<language name="JPN_KANJI" font=" 1:small" width="16">[2:01:２桁:0]</language>
+	</row>
+
+	<row id="mes_b_plist_05_300">
+		<comment>技を見る画面/技忘れ画面
+技名３
+0：技名</comment>
+		<language name="JPN" width="98">[1:07:わざ名:0]</language>
+		<language name="JPN_KANJI" width="98">[1:07:わざ名:0]</language>
+	</row>
+
+	<row id="mes_b_plist_05_301">
+		<comment>技を見る画面/技忘れ画面
+技名３の現在のＰＰ値
+0：現在のＰＰ</comment>
+		<language name="JPN" font=" 1:small" width="16">[2:01:２桁:0]</language>
+		<language name="JPN_KANJI" font=" 1:small" width="16">[2:01:２桁:0]</language>
+	</row>
+
+	<row id="mes_b_plist_05_302">
+		<comment>技を見る画面/技忘れ画面
+技名３の最大ＰＰ値
+0：最大ＰＰ</comment>
+		<language name="JPN" font=" 1:small" width="16">[2:01:２桁:0]</language>
+		<language name="JPN_KANJI" font=" 1:small" width="16">[2:01:２桁:0]</language>
+	</row>
+
+	<row id="mes_b_plist_05_400">
+		<comment>技を見る画面/技忘れ画面
+技名４
+0：技名</comment>
+		<language name="JPN" width="98">[1:07:わざ名:0]</language>
+		<language name="JPN_KANJI" width="98">[1:07:わざ名:0]</language>
+	</row>
+
+	<row id="mes_b_plist_05_401">
+		<comment>技を見る画面/技忘れ画面
+技名４の現在のＰＰ値
+0：現在のＰＰ</comment>
+		<language name="JPN" font=" 1:small" width="16">[2:01:２桁:0]</language>
+		<language name="JPN_KANJI" font=" 1:small" width="16">[2:01:２桁:0]</language>
+	</row>
+
+	<row id="mes_b_plist_05_402">
+		<comment>技を見る画面/技忘れ画面
+技名４の最大ＰＰ値
+0：最大ＰＰ</comment>
+		<language name="JPN" font=" 1:small" width="16">[2:01:２桁:0]</language>
+		<language name="JPN_KANJI" font=" 1:small" width="16">[2:01:２桁:0]</language>
+	</row>
+
+	<row id="mes_b_plist_05_500">
+		<comment>技を見る画面/技忘れ画面
+技名５（技忘れ用）
+0：技名</comment>
+		<language name="JPN" width="98">[1:07:わざ名:0]</language>
+		<language name="JPN_KANJI" width="98">[1:07:わざ名:0]</language>
+	</row>
+
+	<row id="mes_b_plist_05_501">
+		<comment>技を見る画面/技忘れ画面
+技名５の現在のＰＰ値
+0：現在のＰＰ</comment>
+		<language name="JPN" font=" 1:small" width="16">[2:01:２桁:0]</language>
+		<language name="JPN_KANJI" font=" 1:small" width="16">[2:01:２桁:0]</language>
+	</row>
+
+	<row id="mes_b_plist_05_502">
+		<comment>技を見る画面/技忘れ画面
+技名５の最大ＰＰ値
+0：最大ＰＰ</comment>
+		<language name="JPN" font=" 1:small" width="16">[2:01:２桁:0]</language>
+		<language name="JPN_KANJI" font=" 1:small" width="16">[2:01:２桁:0]</language>
+	</row>
+
+	<row id="mes_b_plist_m01">
+		<comment>選択したポケモンが既に出ている戦闘用メッセージ
+0：選択したポケモンにニックネーム</comment>
+		<language name="JPN" width="216" line="2">[1:02:ポケモンニックネーム:0]は
+すでに　せんとうに　でています</language>
+		<language name="JPN_KANJI" width="216" line="2">[1:02:ポケモンニックネーム:0]は
+すでに　せんとうに　でています</language>
+	</row>
+
+	<row id="mes_b_plist_m02">
+		<comment>瀕死したポケモンを選択したときの戦闘用メッセージ
+0：選択したポケモンにニックネーム</comment>
+		<language name="JPN" width="216" line="2">[1:02:ポケモンニックネーム:0]は　たたかうための
+げんきが　のこっていません！</language>
+		<language name="JPN_KANJI" width="216" line="2">[1:02:ポケモンニックネーム:0]は　たたかうための
+げんきが　のこっていません！</language>
+	</row>
+
+	<row id="mes_b_plist_m03">
+		<comment>【かげふみ】で戻せない戦闘用メッセージ
+0：選択したポケモンにニックネーム</comment>
+		<language name="JPN" width="216" line="2">[1:02:ポケモンニックネーム:0]を
+もどすことが　できない！</language>
+		<language name="JPN_KANJI" width="216" line="2">[1:02:ポケモンニックネーム:0]を
+もどすことが　できない！</language>
+	</row>
+
+	<row id="mes_b_plist_m04">
+		<comment>タマゴを選択したときの戦闘用メッセージ
+0：選択したポケモンにニックネーム</comment>
+		<language name="JPN" width="216" line="2">タマゴを
+せんとうに　だすことは　できません</language>
+		<language name="JPN_KANJI" width="216" line="2">タマゴを
+せんとうに　だすことは　できません</language>
+	</row>
+
+	<row id="mes_b_plist_m05">
+		<comment>他人のポケモンを選択したときの戦闘用メッセージ
+0：選択したポケモンのトレーナー名</comment>
+		<language name="JPN" width="216" line="2">[1:00:トレーナー名:0]の　ポケモンと　
+いれかえることは　できません！</language>
+		<language name="JPN_KANJI" width="216" line="2">[1:00:トレーナー名:0]の　ポケモンと　
+いれかえることは　できません！</language>
+	</row>
+
+	<row id="mes_b_plist_m06">
+		<comment>道具使用で使用不可メッセージ</comment>
+		<language name="JPN" width="216" line="2">つかっても　こうかが　ないよ</language>
+		<language name="JPN_KANJI" width="216" line="2">つかっても　こうかが　ないよ</language>
+	</row>
+
+	<row id="mes_b_plist_m07">
+		<comment>道具使用でＨＰ回復メッセージ
+0：選択したポケモンニックネーム
+1：回復したＨＰ</comment>
+		<language name="JPN" width="216" line="2">[1:02:ポケモンニックネーム:0]の　たいりょくが
+[2:02:３桁:1]　かいふくした！</language>
+		<language name="JPN_KANJI" width="216" line="2">[1:02:ポケモンニックネーム:0]の　たいりょくが
+[2:02:３桁:1]　かいふくした！</language>
+	</row>
+
+	<row id="mes_b_plist_m08">
+		<comment>道具使用で毒回復メッセージ
+0：選択したポケモンニックネーム
+</comment>
+		<language name="JPN" width="216" line="2">[1:02:ポケモンニックネーム:0]の　どくは
+きれい　さっぱり　なくなった！</language>
+		<language name="JPN_KANJI" width="216" line="2">[1:02:ポケモンニックネーム:0]の　どくは
+きれい　さっぱり　なくなった！</language>
+	</row>
+
+	<row id="mes_b_plist_m09">
+		<comment>
+0：選択したポケモンニックネーム
+</comment>
+		<language name="JPN" width="216" line="2">[1:02:ポケモンニックネーム:0]の
+からだの　しびれが　とれた！</language>
+		<language name="JPN_KANJI" width="216" line="2">[1:02:ポケモンニックネーム:0]の
+からだの　しびれが　とれた！</language>
+	</row>
+
+	<row id="mes_b_plist_m10">
+		<comment>道具使用でやけど回復メッセージ
+0：選択したポケモンニックネーム
+</comment>
+		<language name="JPN" width="216" line="2">[1:02:ポケモンニックネーム:0]の
+やけどが　なおった！</language>
+		<language name="JPN_KANJI" width="216" line="2">[1:02:ポケモンニックネーム:0]の
+やけどが　なおった！</language>
+	</row>
+
+	<row id="mes_b_plist_m11">
+		<comment>道具使用でこおり回復メッセージ
+0：選択したポケモンニックネーム
+</comment>
+		<language name="JPN" width="216" line="2">[1:02:ポケモンニックネーム:0]の
+からだの　こおりが　とけた！</language>
+		<language name="JPN_KANJI" width="216" line="2">[1:02:ポケモンニックネーム:0]の
+からだの　こおりが　とけた！</language>
+	</row>
+
+	<row id="mes_b_plist_m12">
+		<comment>道具使用でＰＰ回復メッセージ
+
+</comment>
+		<language name="JPN" width="216" line="2">わざポイントが　かいふくした！　</language>
+		<language name="JPN_KANJI" width="216" line="2">わざポイントが　かいふくした！　</language>
+	</row>
+
+	<row id="mes_b_plist_m13">
+		<comment>道具使用で瀕死回復メッセージ
+0：選択したポケモンニックネーム
+</comment>
+		<language name="JPN" width="216" line="2">[1:02:ポケモンニックネーム:0]は
+げんきを　とりもどした！</language>
+		<language name="JPN_KANJI" width="216" line="2">[1:02:ポケモンニックネーム:0]は
+げんきを　とりもどした！</language>
+	</row>
+
+	<row id="mes_b_plist_m14">
+		<comment>
+0：選択したポケモンニックネーム
+</comment>
+		<language name="JPN" width="216" line="2">[1:02:ポケモンニックネーム:0]は
+けんこうに　なった！</language>
+		<language name="JPN_KANJI" width="216" line="2">[1:02:ポケモンニックネーム:0]は
+けんこうに　なった！</language>
+	</row>
+
+	<row id="mes_b_plist_m15">
+		<comment>道具使用で混乱回復メッセージ
+0：選択したポケモンニックネーム
+</comment>
+		<language name="JPN" width="216" line="2">[1:02:ポケモンニックネーム:0]の
+こんらんが　とけた！</language>
+		<language name="JPN_KANJI" width="216" line="2">[1:02:ポケモンニックネーム:0]の
+こんらんが　とけた！</language>
+	</row>
+
+	<row id="mes_b_plist_m16">
+		<comment>道具使用でメロメロ回復メッセージ
+0：選択したポケモンニックネーム
+</comment>
+		<language name="JPN" width="216" line="2">[1:02:ポケモンニックネーム:0]の
+メロメロが　とけた！</language>
+		<language name="JPN_KANJI" width="216" line="2">[1:02:ポケモンニックネーム:0]の
+メロメロが　とけた！</language>
+	</row>
+
+	<row id="mes_b_plist_m17">
+		<comment>道具使用で眠り回復メッセージ
+0：選択したポケモンニックネーム
+</comment>
+		<language name="JPN" width="216" line="2">[1:02:ポケモンニックネーム:0]は
+めを　さました！</language>
+		<language name="JPN_KANJI" width="216" line="2">[1:02:ポケモンニックネーム:0]は
+めを　さました！</language>
+	</row>
+
+	<row id="mes_b_plist_m18">
+		<comment>ダブルバトルで既に選択されたポケモンを選んだときのメッセージ
+0：選択したポケモンニックネーム
+</comment>
+		<language name="JPN" width="216" line="2">[1:02:ポケモンニックネーム:0]は　すでに
+せんたく　されています</language>
+		<language name="JPN_KANJI" width="216" line="2">[1:02:ポケモンニックネーム:0]は　すでに
+せんたく　されています</language>
+	</row>
+
+	<row id="mes_b_plist_m19">
+		<comment>ＰＰを回復するときのアナウンスメッセージ
+</comment>
+		<language name="JPN" width="216" line="2">どの　わざを　かいふくする？</language>
+		<language name="JPN_KANJI" width="216" line="2">どの　わざを　かいふくする？</language>
+	</row>
+
+	<row id="mes_b_plist_m20">
+		<comment>技による道具使用不可メッセージ
+０：ニックネーム
+１：技名
+</comment>
+		<language name="JPN" font=" 1:small" width="216" line="2">[1:07:わざ名:1]の　こうかで
+[1:02:ポケモンニックネーム:0]には　つかえません！</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216" line="2">[1:07:わざ名:1]の　こうかで
+[1:02:ポケモンニックネーム:0]には　つかえません！</language>
+	</row>
+
+	<flowchart-group-list>
+		<flowchart-group japanese="root" english="root" group-id="0" parent-id="-1"/>
+	</flowchart-group-list>
+</body>
+
+</gmml>

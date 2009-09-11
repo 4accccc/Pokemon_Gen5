@@ -173,6 +173,7 @@
   ARCID_CALENDER "calender.narc"  # カレンダー情報
 	ARCID_ZUKAN_DATA "zukan_data.narc"	#図鑑データ（金銀のを持ってきただけ）
     ARCID_B_BAG_GRA "b_bag_gra.narc"    #戦闘バッグ画面グラフィック
+    ARCID_B_PLIST_GRA   "b_plist_gra.narc"    #戦闘ポケモンリスト画面グラフィック
   ARCID_GIMMICK_ASSIGN "fieldmap/gimmick_assign.narc"	#ギミックアサインデータ
 	ARCID_POKETRADE			"trade.narc"	# ポケモン交換
 	ARCID_REGULATION			"regulation.narc"	# ポケモンバトルレギュレーションデータ
