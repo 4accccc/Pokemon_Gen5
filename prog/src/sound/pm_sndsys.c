@@ -520,7 +520,7 @@ void	PMSND_ChangeBGMtrack( u16 trackBit )
  * @brief	ＢＧＭステータス変更
  */
 //------------------------------------------------------------------
-void	PMSND_SetStatusBGM( int tempoRatio, int pitch, int pan )
+void	PMSND_SetStatusBGM_EX( u16 trackBit, int tempoRatio, int pitch, int pan )
 {
 	NNSSndHandle* pBgmHandle = SOUNDMAN_GetHierarchyPlayerSndHandle();
 
@@ -528,10 +528,10 @@ void	PMSND_SetStatusBGM( int tempoRatio, int pitch, int pan )
 		NNS_SndPlayerSetTempoRatio(pBgmHandle, tempoRatio);
 	}
 	if(pitch != PMSND_NOEFFECT){
-		NNS_SndPlayerSetTrackPitch(pBgmHandle, 0xffff, pitch);
+		NNS_SndPlayerSetTrackPitch(pBgmHandle, trackBit, pitch);
 	}
 	if(pan != PMSND_NOEFFECT){
-		NNS_SndPlayerSetTrackPan(pBgmHandle, 0xffff, pan);
+		NNS_SndPlayerSetTrackPan(pBgmHandle, trackBit, pan);
 	}
 }
 

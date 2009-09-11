@@ -87,7 +87,9 @@ extern BOOL	PMSND_CheckPlayBGM( void );
 //ＢＧＭの再生トラック変更
 extern void	PMSND_ChangeBGMtrack( u16 trackBit );
 //ＢＧＭステータス変更
-extern void	PMSND_SetStatusBGM( int tempoRatio, int pitch, int pan );
+extern void	PMSND_SetStatusBGM_EX( u16 trackBit, int tempoRatio, int pitch, int pan );
+#define PMSND_SetStatusBGM( tempoRatio, pitch, pan ) \
+          PMSND_SetStatusBGM_EX( 0xffff, tempoRatio, pitch, pan )   // 上記簡易版
 //ＢＧＭボリューム変更
 extern void PMSND_ChangeBGMVolume( u16 trackBit, int volume );
 
