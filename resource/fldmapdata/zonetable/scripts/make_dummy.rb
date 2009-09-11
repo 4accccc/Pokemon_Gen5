@@ -41,7 +41,7 @@ def makeGMMs( zone_ids )
     unless FileTest.exists?(target) then
       FileUtils.cp("dummyfiles/dummy.gmm", target)
       #system ("svn add " + target)
-      puts "#{id}.gmm not found. made it!!"
+      puts "#{id}.gmm がみつからなかったのでダミーを作成しました！"
     end
   }
 end
@@ -69,12 +69,12 @@ def check_files( ids, filepath, ext)
     if real_files.has_key?(idfile) then
       real_files[idfile] = true
     else
-      puts "#{idfile} not exist."
+      puts "#{idfile}:ファイルが存在しません。"
     end
   }
   real_files.each{|key, value|
     if value == nil then
-      puts "#{key} exists, but not defined."
+      puts "#{key}:ファイルは存在しますが、定義されていません"
     end
   }
   

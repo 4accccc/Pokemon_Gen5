@@ -268,6 +268,9 @@
 #define ZONE_ID_C09R0201         (264)
 #define ZONE_ID_N01R0101         (265)
 #define ZONE_ID_D08R0101         (266)
-#define ZONE_ID_MAX	(267)
+#define ZONE_ID_C04R0202         (267)
+#define ZONE_ID_PALACE01         (268)
+#define ZONE_ID_PALACE02         (269)
+#define ZONE_ID_MAX	(270)
 #endif // __ZONE_ID_H__
 
